@@ -1,0 +1,53 @@
+{
+  "id": "grail-c-19",
+  "schema": "augment@1",
+  "name": "魔術・星之雨 C",
+  "description": "[週期][隨機區域] 每15秒在自身附近降下2道星光，每道造成80＋15% AP範圍魔法傷害。",
+  "tier": "silver",
+  "weight": 100,
+  "tags": [
+    "grail-wish",
+    "interval",
+    "random-area",
+    "aoe"
+  ],
+  "selectionSlot": "pivot",
+  "hooks": [
+    {
+      "on": "onInterval",
+      "effects": [
+        {
+          "kind": "randomArea",
+          "who": "self",
+          "count": [
+            2
+          ],
+          "intervalSec": 0.25,
+          "scatterRadius": 8,
+          "firstAtCast": true,
+          "stopOnCasterDeath": true,
+          "effects": [
+            {
+              "kind": "damageArea",
+              "damageType": "magic",
+              "amount": {
+                "flat": 80,
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.15
+                  }
+                ]
+              },
+              "radius": 2.5,
+              "radiusTier": "小",
+              "includeOrigin": true
+            }
+          ]
+        }
+      ],
+      "target": "self",
+      "internalCooldown": 15
+    }
+  ]
+}

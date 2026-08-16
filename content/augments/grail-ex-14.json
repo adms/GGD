@@ -1,0 +1,53 @@
+{
+  "id": "grail-ex-14",
+  "schema": "augment@1",
+  "name": "概念武裝・起源彈 EX",
+  "description": "[R命中][驅散][破盾] R命中敵方英雄時，移除其全部可驅散增益與全部護盾。30秒冷卻。",
+  "tier": "prismatic",
+  "weight": 25,
+  "tags": [
+    "grail-wish",
+    "r-hit",
+    "dispel",
+    "shield-break"
+  ],
+  "selectionSlot": "synergy",
+  "eligibility": {
+    "requiresSelfMechanic": [
+      "abilityDamage"
+    ],
+    "requiresAbilitySlots": [
+      "R"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onAbilityHit",
+      "effects": [
+        {
+          "kind": "dispel",
+          "shape": "single",
+          "pools": {
+            "status": false,
+            "shields": false,
+            "dot": false,
+            "buffs": true
+          },
+          "polarity": "buff",
+          "count": 50,
+          "order": "newest"
+        },
+        {
+          "kind": "shieldBreak",
+          "shape": "single",
+          "count": 20,
+          "order": "newest"
+        }
+      ],
+      "target": "event",
+      "victim": "enemyChampion",
+      "abilitySlot": "R",
+      "internalCooldown": 30
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "id": "grail-a-06",
+  "schema": "augment@1",
+  "name": "職階技能・單獨行動 A",
+  "description": "[隊友死亡][回魔][淨化] 隊友死亡時，回復25%最大魔力、淨化所有負面狀態並獲得0.75秒無敵。30秒冷卻。",
+  "tier": "gold",
+  "weight": 60,
+  "tags": [
+    "grail-wish",
+    "ally-death",
+    "clutch",
+    "cleanse"
+  ],
+  "selectionSlot": "synergy",
+  "eligibility": {
+    "requiresModeFeature": [
+      "team"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onAllyDeath",
+      "effects": [
+        {
+          "kind": "restore",
+          "manaPct": 0.25,
+          "applyTo": "self"
+        },
+        {
+          "kind": "dispel",
+          "shape": "single",
+          "pools": {
+            "status": true,
+            "shields": false,
+            "dot": true,
+            "buffs": true
+          },
+          "polarity": "debuff",
+          "count": 50,
+          "order": "newest"
+        },
+        {
+          "kind": "invulnerable",
+          "durationSec": 0.75,
+          "applyTo": "self",
+          "blocksDamage": "all",
+          "blocksTrueDamage": true,
+          "blocksControl": true
+        }
+      ],
+      "target": "self",
+      "internalCooldown": 30
+    }
+  ]
+}

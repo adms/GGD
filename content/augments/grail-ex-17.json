@@ -1,0 +1,63 @@
+{
+  "id": "grail-ex-17",
+  "schema": "augment@1",
+  "name": "靈基換裝・零距離決戰 EX",
+  "description": "[射程捨棄][技能重置] 僅遠程英雄可選。普攻距離固定為近戰・中1.6；普攻命中英雄時完成Q／W／E／R冷卻。6秒冷卻。",
+  "tier": "prismatic",
+  "weight": 25,
+  "tags": [
+    "grail-wish",
+    "ranged-only",
+    "range-sacrifice",
+    "cooldown-reset"
+  ],
+  "selectionSlot": "pivot",
+  "eligibility": {
+    "onlyAttackType": "ranged"
+  },
+  "modifiers": [
+    {
+      "stat": "range",
+      "op": "override",
+      "value": 1.6
+    }
+  ],
+  "hooks": [
+    {
+      "on": "onBasicAttack",
+      "effects": [
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "Q",
+          "mode": "reset"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "W",
+          "mode": "reset"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "E",
+          "mode": "reset"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "R",
+          "mode": "reset"
+        }
+      ],
+      "target": "self",
+      "victim": "enemyChampion",
+      "internalCooldown": 6
+    }
+  ]
+}

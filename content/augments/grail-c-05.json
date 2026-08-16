@@ -1,0 +1,26 @@
+{
+  "id": "grail-c-05",
+  "schema": "augment@1",
+  "name": "魔術・魔力裝甲 C",
+  "description": "[最大魔力][最大生命] 最大魔力的20%同時視為額外最大生命。",
+  "tier": "silver",
+  "weight": 100,
+  "tags": [
+    "grail-wish",
+    "mana",
+    "health",
+    "stat-conversion"
+  ],
+  "selectionSlot": "pivot",
+  "eligibility": {
+    "requiresMana": true
+  },
+  "modifiers": [
+    {
+      "stat": "maxHealth",
+      "op": "percentOf",
+      "value": 0.2,
+      "from": "maxMana"
+    }
+  ]
+}

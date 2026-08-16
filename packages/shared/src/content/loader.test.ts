@@ -65,7 +65,9 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
     // #188 added the 17th prismatic (`limit-breaker`, 攻速 ×2 + 上限解鎖 10.0),
     // so the closed pool is 31: silver 6 / gold 8 / prismatic 17.
     expect(Augments.ids()).toEqual(expect.arrayContaining(["bloodlust", "chill-touch", "aegis-surge"]));
-    expect(Augments.ids().length).toBe(31);
+    // ⚠️ 同 ex-skills.test.ts（GH#333）：這一條要守的是「每個集合都真的註冊進來」，
+    // ⛔ 不是「剛好幾張」。上面那行 `arrayContaining` 才是骨架集合的守衛。
+    expect(Augments.ids().length).toBeGreaterThanOrEqual(31);
     expect(Projectiles.ids().length).toBeGreaterThanOrEqual(2);
     expect(LootTables.get("round-reward").entries).toHaveLength(4);
 
@@ -121,6 +123,10 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
       // 與【暴走】同一條路（`applyStatus` 的一個布林），但方向相反：暴走是
       // 自我增益帶 downside 所以**不算 CC**，恐懼是敵人施加的純減益所以**算**。
       "fear",
+      // ⭐ 2026-08-17（GH#333）—— 聖杯願望 `grail-c-20`「投影魔術・強化投影」
+      //    施法後掛在自己身上的待命標記（下一次普攻追加一枚投影彈）。
+      //    ⛔ 它自己不改任何數值：效果整個住在標記的 `onBasicAttack` 觸發器上。
+      "grail-strengthened-projection",
       // A6（#278）—— 【重創】與【禁療】。禁療**不是第二個機制**：它就是三格倍率
       // 都填 0 的一份文件，所以它與重創共用 `sim/grievousWounds.ts` 的同一支
       // `woundMult`，也一樣被淨化拔得掉。

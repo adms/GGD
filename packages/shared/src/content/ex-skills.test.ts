@@ -105,7 +105,11 @@ describe("EX 技能 per-hero ability (ex-skills)", () => {
     // round match draws 7-9 prismatic cards without replacement), then 16 -> 17
     // when #188 added 破限超頻 (`limit-breaker`). silver 6 / gold 8 /
     // prismatic 17.
-    expect(Augments.ids().length).toBe(31);
+    // ⚠️ 2026-08-17（GH#333）：這裡本來寫 `toBe(31)`。那是一個**出貨數量**住進
+    // 測試裡，而這一條真正要守的是「EX 不是一張增益卡」——上面兩行就是它。
+    // 60 張聖杯願望進池讓它變 91，卻用「pseudo-EX augment cards removed」
+    // 這個完全無關的訊息紅。改成守「池子沒有縮水」。
+    expect(Augments.ids().length).toBeGreaterThanOrEqual(31);
     expect(result.warnings).toEqual([]); // content tree stays closed
   });
 

@@ -1,0 +1,51 @@
+{
+  "id": "grail-a-17",
+  "schema": "augment@1",
+  "name": "固有技能・無窮之武練 A",
+  "description": "[普攻][技能重置] 普攻命中敵方英雄時，完成Q／W／E冷卻。8秒冷卻。",
+  "tier": "gold",
+  "weight": 60,
+  "tags": [
+    "grail-wish",
+    "basic-attack",
+    "cooldown-reset",
+    "hybrid"
+  ],
+  "selectionSlot": "synergy",
+  "eligibility": {
+    "prefersSelfMechanic": [
+      "abilityDamage"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onBasicAttack",
+      "effects": [
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "Q",
+          "mode": "reset"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "W",
+          "mode": "reset"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "E",
+          "mode": "reset"
+        }
+      ],
+      "target": "self",
+      "victim": "enemyChampion",
+      "internalCooldown": 8
+    }
+  ]
+}

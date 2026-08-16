@@ -1,0 +1,65 @@
+{
+  "id": "grail-ex-09",
+  "schema": "augment@1",
+  "name": "聖杯權能・終末宣告 EX",
+  "description": "[火圈][隨機轟炸] 火圈開始燃燒時，獲得1秒無敵，並在5秒內於自身附近降下10道終末星光。",
+  "tier": "prismatic",
+  "weight": 25,
+  "tags": [
+    "grail-wish",
+    "fire-ring",
+    "random-area",
+    "clutch"
+  ],
+  "selectionSlot": "pivot",
+  "eligibility": {
+    "requiresModeFeature": [
+      "fireRing"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onFireRingIgnite",
+      "effects": [
+        {
+          "kind": "invulnerable",
+          "durationSec": 1.0,
+          "applyTo": "self",
+          "blocksDamage": "all",
+          "blocksTrueDamage": true,
+          "blocksControl": true
+        },
+        {
+          "kind": "randomArea",
+          "who": "self",
+          "count": [
+            10
+          ],
+          "intervalSec": 0.5,
+          "scatterRadius": 8,
+          "firstAtCast": true,
+          "stopOnCasterDeath": true,
+          "effects": [
+            {
+              "kind": "damageArea",
+              "damageType": "magic",
+              "amount": {
+                "flat": 100,
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.2
+                  }
+                ]
+              },
+              "radius": 2.5,
+              "radiusTier": "小",
+              "includeOrigin": true
+            }
+          ]
+        }
+      ],
+      "target": "self"
+    }
+  ]
+}

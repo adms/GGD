@@ -1,0 +1,37 @@
+{
+  "id": "grail-a-16",
+  "schema": "augment@1",
+  "name": "魔術・心象防壁 A",
+  "description": "[AP][護盾] 施放Q／W／E／R時，獲得相當於50% AP的護盾，持續3秒。4秒冷卻。",
+  "tier": "gold",
+  "weight": 60,
+  "tags": [
+    "grail-wish",
+    "ap",
+    "ability-cast",
+    "shield"
+  ],
+  "selectionSlot": "synergy",
+  "hooks": [
+    {
+      "on": "onAbilityCast",
+      "effects": [
+        {
+          "kind": "shield",
+          "amount": {
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.5
+              }
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all"
+        }
+      ],
+      "target": "self",
+      "internalCooldown": 4
+    }
+  ]
+}

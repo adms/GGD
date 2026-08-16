@@ -1,0 +1,38 @@
+{
+  "id": "grail-c-18",
+  "schema": "augment@1",
+  "name": "固有技能・魔力放出（炎）C",
+  "description": "[技能命中][燃燒] 技能命中敵方英雄時，使其燃燒3秒。8秒冷卻。",
+  "tier": "silver",
+  "weight": 100,
+  "tags": [
+    "grail-wish",
+    "ability-hit",
+    "burn",
+    "elemental"
+  ],
+  "selectionSlot": "synergy",
+  "eligibility": {
+    "requiresSelfMechanic": [
+      "abilityDamage"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onAbilityHit",
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "burn",
+          "duration": 3,
+          "applyTo": "target",
+          "refresh": "extend",
+          "dispellable": true
+        }
+      ],
+      "target": "event",
+      "victim": "enemyChampion",
+      "internalCooldown": 8
+    }
+  ]
+}

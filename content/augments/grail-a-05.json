@@ -1,0 +1,53 @@
+{
+  "id": "grail-a-05",
+  "schema": "augment@1",
+  "name": "固有技能・獵殺本能 A",
+  "description": "[英雄擊殺][技能重置] 擊殺敵方英雄時，完成Q／W／E／R冷卻。45秒冷卻。",
+  "tier": "gold",
+  "weight": 60,
+  "tags": [
+    "grail-wish",
+    "kill",
+    "cooldown-reset",
+    "snowball"
+  ],
+  "selectionSlot": "synergy",
+  "hooks": [
+    {
+      "on": "onKill",
+      "effects": [
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "Q",
+          "mode": "reset"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "W",
+          "mode": "reset"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "E",
+          "mode": "reset"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "R",
+          "mode": "reset"
+        }
+      ],
+      "target": "self",
+      "victim": "enemyChampion",
+      "internalCooldown": 45
+    }
+  ]
+}

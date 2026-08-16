@@ -47,6 +47,7 @@ import { DEFAULT_STEALTH_RULES, stealthSystem, type StealthRules } from "./steal
 import { DEFAULT_BERSERK_RULES, type BerserkRules } from "./abilities/berserkRules";
 import { DEFAULT_DISPEL_RULES, type DispelRules } from "./dispelRules";
 import { DEFAULT_COOLDOWN_RULES, type CooldownRules } from "./cooldownRules";
+import { DEFAULT_GRAIL_DRAFT, type GrailDraftRules } from "./economy/grailVocabulary";
 import { DEFAULT_CAST_TIME_RULES, type CastTimeRules } from "./castTimeRules";
 import { DEFAULT_WOUND_RULES, type WoundRules } from "./grievousWounds";
 import { DEFAULT_WEAKNESS_RULES, type WeaknessRules } from "./weakness";
@@ -1076,6 +1077,14 @@ export class SimWorld {
    * owner 2026-08-10：cdr 天花板 0.99，但秒數卡 0.1。見 `sim/cooldownRules.ts`。
    */
   cooldownRules: CooldownRules = DEFAULT_COOLDOWN_RULES;
+  /**
+   * 聖杯顯現規則 (`config.arena-rules@1` 的 `grailDraft`) —— 靈基適性條件開不開、
+   * 三張要不要湊不同的顯現位置、連動加權多少、舊的 31 張純屬性增益進不進卡池。
+   *
+   * ⚠️ 讀它的**只有開牌那一刻**（`economy/draft.ts::offerAugments`），
+   * ⛔ 不是每 tick —— 它決定「哪幾張卡出現在你面前」，不是任何執行期效果。
+   */
+  grailDraft: GrailDraftRules = DEFAULT_GRAIL_DRAFT;
 
   /**
    * 吟唱規則（倍率 / 下限 / 上限）。owner 2026-08-13 的三句話，見 `sim/castTimeRules.ts`。

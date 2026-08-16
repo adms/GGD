@@ -978,6 +978,10 @@ export class MatchController {
     this.world.berserkRules = berserkRules;
     // 淨化規則 (`config.dispel@1`) —— 同樣在 tick 0 之前定格。
     this.world.dispelRules = dispelRules;
+    // 聖杯顯現規則 (`config.arena-rules@1` 的 `grailDraft`) —— 同樣在 tick 0 之前定格。
+    // ⚠️ 少了這一行就是 `augmentEnemyFilter` 的同型故障：後台編得到、schema 有那一格、
+    // 而開牌讀的永遠是 `SimWorld` 的出貨預設，於是「把靈基適性條件關掉」按不下去。
+    this.world.grailDraft = this.rules.grailDraft;
     this.world.cooldownRules = cooldownRules;
     this.world.castTimeRules = castTimeRules;
     this.world.woundRules = woundRules;

@@ -4,6 +4,12 @@
   "ultUnlockRound": 3,
   "exUnlockRound": 7,
   "offerCount": 3,
+  "grailDraft": {
+    "eligibilityEnabled": true,
+    "slotDiversityEnabled": true,
+    "preferenceBonus": 1.5,
+    "legacyPool": "exclude"
+  },
   "itemDraft": {
     "shortPoolMode": "short",
     "fallbackTable": "",

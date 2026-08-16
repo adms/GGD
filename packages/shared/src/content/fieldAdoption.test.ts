@@ -180,6 +180,181 @@ interface Exemption {
  * Sorted by key, matching the census output order.
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
+  "enum:abilities.effects[]#applyBuff.damageTypeOverride.impactType=converted": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `applyBuff` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].damageCrit=any": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `applyBuff` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].damageCrit=nonCrit": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `applyBuff` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].onConsumed=stop": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `applyBuff` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "enum:abilities.effects[]#blink.applyTo=target": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "enum:abilities.effects[]#blink.shape=circle": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "enum:abilities.effects[]#blink.to=caster": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "enum:abilities.effects[]#blink.to=point": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "enum:abilities.effects[]#dispel.order=oldest": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `dispel` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "enum:abilities.effects[]#eventValueConversion.basis=mitigated": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "enum:abilities.effects[]#eventValueConversion.basis=raw": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "enum:abilities.effects[]#eventValueConversion.shape=circle": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "enum:abilities.effects[]#eventValueConversion.source=targetCurrentHealth": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "enum:abilities.effects[]#eventValueConversion.who=target": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "enum:abilities.effects[]#proxyCast.payCosts=mana": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "enum:abilities.effects[]#proxyCast.payCosts=manaAndCooldown": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "enum:abilities.effects[]#proxyCast.rankMode=fixed": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "enum:abilities.effects[]#proxyCast.shape=circle": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "field:abilities.effects[]#blink.condition": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "field:abilities.effects[]#blink.maxTargets": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "field:abilities.effects[]#blink.radius": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "field:abilities.effects[]#blink.radiusTier": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "field:abilities.effects[]#blink.side": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "field:abilities.effects[]#eventValueConversion.condition": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "field:abilities.effects[]#eventValueConversion.maxTargets": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "field:abilities.effects[]#eventValueConversion.radius": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "field:abilities.effects[]#eventValueConversion.radiusTier": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "field:abilities.effects[]#eventValueConversion.side": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "field:abilities.effects[]#proxyCast.abilityId": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "field:abilities.effects[]#proxyCast.condition": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "field:abilities.effects[]#proxyCast.fixedRank": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "field:abilities.effects[]#proxyCast.maxTargets": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "field:abilities.effects[]#proxyCast.radius": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "field:abilities.effects[]#proxyCast.radiusTier": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
+  "field:abilities.effects[]#proxyCast.side": {
+    status: "landing",
+    since: "2026-08-17",
+    why: "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
+  },
   "enum:maps.interactions[].kind=channel": {
     status: "landing",
     since: "2026-08-14",
@@ -211,29 +386,9 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-14",
     why: "GH#324 —— **可開關的幾何**（route swap／城門／崩塌的橋）。Phase 2 出貨的無限城 `gimmick.kind` 是 `none`，所以一個 gate 都沒有，而那是**對的**：⛔ 一張圖最多一個特殊機制，母版刻意先不上機制，讓「graybox 好不好玩」這件事單獨被驗。⚠️ 而且既有 6 張手寫場地的圓柱也一格都不該填它（省略＝永遠擋路，就是它們今天的行為）。**到期**：Phase 5 把 route swap 接上去、無限城長出第一組 gateGroup 的那一刻。",
   },
-  "enum:abilities.effects[]#applyBuff.polarity=buff": {
-    status: "default-live",
-    why: "`polarity` 這一格是這一批的四支減益帶進來的（79-01/92-02 破魔、45-02 攻速、45-002 攻擊力）—— 它們**全部**要 `\"debuff\"`，因為那一格的用途就是讓【淨化】認得出「這是可以被拔掉的壞東西」。`buff` 那一邊要的是「明確標成正面、⛔ 不可以被敵方驅散」，而出貨的增益全部**省略**這一格（省略＝引擎預設就當它是正面）。⇒ 零採用是對的：要填 `buff` 只有在「有人會驅散友方增益」的時候才有意義，而 GGD 今天沒有那種技能。",
-  },
   "enum:abilities.effects[]#applyBuff.damageTypeOverride.scope=all": {
     status: "default-live",
     why: "59-02 高週波短刀的規格逐字是「將**該次攻擊**轉為真傷」⇒ `scope:\"basic\"`（只蓋普攻）。`all` 要的是「這段期間**連技能傷害**也一起變真傷」—— 那是一個強得多的效果，出貨內容裡沒有任何一支這樣寫。⇒ 零採用是對的。",
-  },
-  "field:abilities.effects[]#applyBuff.damageTypeOverride.applyAt": {
-    status: "default-live",
-    why: "省略＝引擎預設的套用時機。59-02 是 1 tick 的授予窗（basicAttackSystem 推封包 → 同一 tick combatResolveSystem 抽乾），所以時機本來就是唯一的那一個 —— 這一格是「延後到結算的另一階段」才要填的覆寫鈕，今天沒有客戶。",
-  },
-  "enum:abilities.effects[]#applyBuff.applyTo=target": {
-    status: "default-live",
-    why: "`applyBuff.applyTo` 這一格是 59-02 高週波短刀「把這一刀**轉為**真傷」帶進來的（1 tick 的自我授予窗，所以是 self）。`target` 那一邊要的是「我放一顆 buff 到**敵人**身上」—— 出貨 90 支裡沒有一支這樣寫：負面效果全部走 `applyStatus`（因為快照的 statusIds 只讀 world.status，走 applyBuff 受害者 HUD 上就沒有圖示）。⇒ 零採用是對的，那一格留給「給隊友的增益」那一族，今天沒有。",
-  },
-  "enum:abilities.effects[]#applyBuff.damageTypeOverride.becomes=magic": {
-    status: "default-live",
-    why: "型別轉換這格是 59-02 帶進來的，而它的規格逐字是「轉為[真實傷害]」⇒ 只用得到 `true`。`magic` / `physical` 那兩邊要的是「把普攻轉成法傷」這種道具/天賦，出貨內容裡沒有。⛔ 不要為了填滿 enum 去發明一支技能 —— 那正是這個普查要防的反面。",
-  },
-  "enum:abilities.effects[]#applyBuff.damageTypeOverride.becomes=physical": {
-    status: "default-live",
-    why: "同上（`becomes=magic` 那一條）：59-02 只要 `true`，另外兩個成員今天沒有客戶。",
   },
   // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
   "field:abilities.effects[]#damage.incomingPct.basis": {
@@ -442,10 +597,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // (`field:items.block` 4/4、`field:augments.block`、…) 各自還在。
   // ⛔ 不要為了讓名字穩定就把 schema 拆成兩份 —— 那正是上面 `fromResource` 那一格
   // 已經寫過的警告:「分開兩份 schema 只為了讓其中一邊閉嘴,會讓規則變成兩份」。
-  "field:abilities.effects[]#applyBuff.block.lethalBasis": {
-    status: "default-live",
-    why: "省略 = \"hpAndShields\" = 血 + 這一發吃得到的護盾,也就是「這一發真的會殺死我嗎」。晨曦之光 / 殺豬刀 兩件都用預設,所以零採用正是它該有的樣子。寫 \"hp\" 是文案的字面讀法(只看血條),留著是因為那是 owner 會想切的一題 —— 見 sim/combat/block.ts BlockLethalBasis。⚠️ 這個 key 的名字掛在 applyBuff 路徑上,但 reach 數的是**道具**那四支:格擋 grant 的 schema 是四個授權面共用的同一個實例。",
-  },
   // 技能授予格擋 —— 引擎側 2026-08-08 接通(`abilities/abilityPassives.ts` 把
   // `passive.ranks[].block` 轉發到同一個 `ModifierSource.block`,行為守衛
   // `sim/combat/blockFromPassive.test.ts`,兩個突變都驗過會紅)。內容側是 owner
@@ -478,11 +629,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "landing",
     since: "2026-08-09",
     why: "同上,暴擊那一半:「這支大招期間 20% 機率 3 倍」在此之前完全沒有形狀。rankedGrants 本來就在跳過過期的 source,所以限時不需要第二個時鐘。",
-  },
-  "field:augments.block": {
-    status: "landing",
-    since: "2026-08-09",
-    why: "引擎側已通(economy/draft.ts::applyAugmentPick 轉發到 kind:\"augment\" 的來源)。零採用是內容決定:出貨的 31 張三選一卡是 #260 那一版的三圍卡,沒有一張是防禦卡。",
   },
   "field:augments.critStrike": {
     status: "landing",
@@ -524,11 +670,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   },
   // ⭐ 2026-08-12 B2：landing 豁免移除 —— **它落地了**（77-03 GLADIARIA ALAT 的翅膀）。
   //    出口在 `tools/skill-remake/batch1.py` 開了、表格填了值，採用率從 0 變成有。
-  "field:augments.flight": {
-    status: "landing",
-    since: "2026-08-09",
-    why: "同一格授權的三選一卡那一面。⛔ 與 applyBuff.flight 是同一個 SOURCE_GRANT_SHAPE 展開出來的,所以**一起豁免**（見 ggd-mirror-authority-model:鏡像的兩側分開處理就會有一天只修到一邊）。",
-  },
 
   // ── 跨技能強化 ability@1.augment (2026-08-08) ─────────────────────────────
   //
@@ -602,11 +743,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "landing",
     since: "2026-08-10",
     why: "同 damageArea.onHitTargetsMode —— batch（預設）還是 perTarget。⛔ 兩個 kind 在這一族上必須同名同語意：欄位名一旦分岔，編輯器上長得一樣的兩格就會是兩件事，那是最難查的一種缺陷。",
-  },
-  "field:abilities.effects[]#applyBuff.exclusiveOnExisting": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "G5 的另一半：同組已有一份時 replace（預設，抄 shield.onExisting）或 reject。⚠️ 沒有 exclusiveGroup 卻填它 = 載入時錯誤，兩格要一起填。",
   },
   "field:abilities.effects[]#applyBuff.modifiers[].scopeSlot": {
     status: "landing",
@@ -783,11 +919,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-09",
     why: "三選一增益卡授予三圍。⚠️ 與 #260 的「能力屬性強化」**不是**同一條路：那張卡走 `ChampionComp.attrBonus`（永久累加），這一格騎在 source 上（卡片被移除就跟著消失），兩者由 `sourceAttrGrants` 折在同一個地方，下游分不出來。",
   },
-  "field:augments.damageTypeOverride": {
-    status: "landing",
-    since: "2026-08-09",
-    why: "三選一增益卡授予傷害型別轉換（「這一場你的技能都是真傷」是一張典型的 prismatic 卡）。卡池重排見 #149。",
-  },
 
 
   "field:champions.abilities.*.marks": {
@@ -841,11 +972,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // 退回去。`victim: "enemyChampion"` 不會從任何地方自己發生，它要有一份文件
   // 寫下來才存在。所以 30 天之後這一格再紅一次是對的 —— 那時候如果還是零，
   // 代表批 2/4 沒有落地，而那才是真正該被看到的事實。
-  "enum:abilities.effects[]#applyBuff.hooks[].victim=enemyChampion": {
-    status: "landing",
-    since: "2026-08-04",
-    why: "批 1 決策點 1-2 的成員：17 張稜彩卡有 13 個 hook 位置寫「敵方英雄」，而在它之前引擎的 `champion` 對隊友也成立。sim 那一側已經完整實作並有行為守衛（sim/effects/hookVocabulary.test.ts ①，突變驗證過），等的是批 2/4 的卡片文件。",
-  },
   "enum:abilities.effects[]#applyBuff.hooks[].victim=allyChampion": {
     status: "landing",
     since: "2026-08-04",
@@ -855,11 +981,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "landing",
     since: "2026-08-04",
     why: "`ability` 的補集（既不是普攻也不是技能：火圈、守衛塔、小怪）。列舉加寬時一起做，因為「只加正面那一半」的過濾器等於逼下一個作者用 not() 繞路。守衛同上 ②。",
-  },
-  "field:abilities.effects[]#applyBuff.hooks[].internalCooldownScope": {
-    status: "landing",
-    since: "2026-08-04",
-    why: "批 1 決策點 1-4：末日預言的 perAbilityCooldown 不是第二個冷卻數字，是既有 internalCooldown 的**作用域**。省略 = \"source\" = 這個欄位出現之前每一份文件的行為，所以零採用等於零位移。第一個消費者是 doomsayer（批 2）。守衛：hookVocabulary.test.ts ③，突變驗證過。",
   },
   "field:items.passive[].internalCooldownScope": {
     status: "landing",
@@ -922,11 +1043,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "landing",
     since: "2026-07-30",
     why: "Has REAL JASS provenance — war3map.j:51731 (52-02 蹂躪編年史) and :52065 (52-002 射殺百頭) both add 'Avul' to the spell TARGET — plus the AoE form 29-03 有功夫無懦夫「統統進入無敵狀態」. Not bound yet because in the source the victim's Avul is a mechanic shield removed (:51835) before the ability's own damage lands; porting it literally would make the skill refuse its own damage. Needs an owner decision (fidelity vs. the simpler self-window), which is why the 30-day clock is the right pressure here.",
-  },
-  "enum:abilities.effects[]#invulnerable.blocksDamage=none": {
-    status: "landing",
-    since: "2026-07-30",
-    why: "純免控 (07-01 臨、兵、鬥「可抵擋對方負性魔法」) — the one shape that blocks CC while still taking damage; text-only, same follow-up pass.",
   },
   "enum:abilities.effects[]#invulnerable.blocksDamage=physical": {
     status: "landing",
@@ -1068,10 +1184,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // WC3 `Aam2` anti-magic barrier and now says so, which is what proves the
   // filter runs end to end. These are the three OTHER members, and each is
   // zero for a DIFFERENT reason:
-  "enum:abilities.effects[]#shield.absorbs=all": {
-    status: "default-live",
-    why: "`all` IS the absent behaviour, and combat/damage.ts `addShield` NORMALISES an explicit \"all\" away rather than storing it — so a doc that writes it produces a byte-identical pool to a doc that omits it. Zero adoption is the designed resting state (every one of the other shipped shields is an all-shield spelled by omission); a non-zero count here would mean somebody wrote the default into a doc for no behaviour change.",
-  },
   "enum:abilities.effects[]#shield.absorbs=physical": {
     status: "debt",
     why: "the sim honours it (sim/effects/shieldAbsorb.test.ts drives a real step for every member) but NO shipped doc is a physical-only barrier: the map's three shield spells are 破法對咒 (magic, now authored), 守護之光 「阻擋任何傷害」 and 機警 「可抵擋90%傷害」, both genuinely all-type. The member exists because the enum mirrors `DamageType` — the seam's stated reason (sim/effects/effect.ts) — not because content asked. Kept `debt` rather than `landing` so it stays in the banner instead of expiring into silence; delete this entry when a physical-only barrier is imported, or narrow the enum to `\"all\" | \"magic\"` if owner rules none ever will be.",
@@ -1410,10 +1522,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   },
 
   // ── 不寫就是它(default-live):寫出來與不寫出來產生一模一樣的行為 ──────
-  "enum:abilities.effects[]#applyStatus.applyTo=target": {
-    status: "default-live",
-    why: "sim/effects/applyStatus.ts:20 `e.applyTo === \"self\" ? [ctx.caster] : ctx.targets` —— 缺席就是 target。唯一被寫出來的是 \"self\"(暴走把 berserk 貼在自己身上、moon-combo 的連段視窗),而那是因為它跟預設相反。target 永遠會是 0,除非有人為了可讀性刻意寫滿。",
-  },
   // ── dot 的兩個覆寫欄位(2026-08-01 第一次被 census 看見) ─────────────────
   //    ⚠️ 它們不是新欄位,也不是「掉了最後一個使用者」。這一批把 `dot` 從 2 份
   //    文件(godie-efur 的 R + 他的 champion 鏡像)推到 4 份(血染八月
@@ -1472,10 +1580,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   "field:abilities.effects[]#dot.tickOnApply": {
     status: "default-live",
     why: "缺席 = false = 「等一個 interval 才第一次結算」(`dot.ts` 的 `firstTick`)。寫 true 是**多加**一次結算,而四份出貨 DoT 的數字都是照『總量 ÷ 次數』寫的:血染八月「88流血傷害,持續3秒」= 29.33×3、妖物碎殺牙「255傷害,持續3秒」= 85×3、揍敵客 R「持續 2 秒、每 0.2 秒」= 10 跳。任何一支打開它,玩家吃到的總量就會比 owner 文案上的數字多一跳。所以這一格空著不只是預設,是**文案正確性的條件**。",
-  },
-  "field:abilities.effects[]#knockback.applyTo": {
-    status: "default-live",
-    why: "缺席就是「每個被打到的人」。寫出來只有一個用途:`self`,也就是後座力(自己被自己的招震退)。四支出貨的擊退全部是正常的推人,所以這一格空著才是對的。",
   },
   "field:abilities.effects[]#knockback.hpBasis": {
     status: "default-live",
@@ -1599,27 +1703,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // optional 子欄位就第一次跨過 MIN_REACH 而變得可回報（THE CASCADE RULE）。
 
 
-  "variant:abilities.effects[]#shieldBreak": {
-    status: "landing",
-    since: "2026-08-05",
-    why:
-      "D1【破盾】。行為在 `sim/effects/shieldBreak.ts`,三條守衛在 " +
-      "`sim/effects/shieldBreak.test.ts`(含「⛔ 只碰護盾,身上的增益一格都沒動」" +
-      "那一條 —— 破盾與淨化的全部差別就在那裡,而畫面上看不出來)。" +
-      "⚠️ 它與 `dispel` 分開的理由是**止血閥**:`dispelRules.enabled = false` 的意思是" +
-      "「關掉淨化那一族」,不該順手廢掉一件破盾道具。" +
-      "零採用是因為今天沒有任何一件出貨道具是破盾 —— 那是 owner 的內容決定。" +
-      "第一件破盾道具上架的那天,這條豁免就該被刪掉。",
-  },
 
-  "field:abilities.effects[]#dispel.order": {
-    status: "default-live",
-    why:
-      "省略 = 讀 `dispelRules.defaultOrder`(出貨 `newest` = 先拔最晚掛上的," +
-      "也就是「剛被暈到就解得掉」那一種玩家預期)。逐支覆寫的意義只有在" +
-      "「這一支專門清殘渣」時才成立,今天沒有那一支。" +
-      "⚠️ 它不是裝飾:`count` 砍不完時「留下哪幾筆」必須決定性,見 `sim/clearPools.ts` 的全序註解。",
-  },
   "field:abilities.effects[]#dispel.maxTargets": {
     status: "default-live",
     why:
@@ -1636,13 +1720,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   //
   // 三格都是「省略 = 讀 `config.dispel@1` 的那一格全域預設」,所以零採用正是它們
   // 該有的樣子 —— 有人寫它的那天,意思是「這一筆跟全域規則不一樣」。
-  "field:abilities.effects[]#applyStatus.dispellable": {
-    status: "default-live",
-    why:
-      "省略 = 讀 `dispelRules.statusDefaultDispellable`(出貨 **true**),也就是今天每一份狀態的行為。" +
-      "填它只有一個意思:`false` = 這一筆解不掉。零採用 = 沒有任何一支想要一個拔不掉的減速,那是誠實的。" +
-      "⚠️ 回合重置與復活不看它(`clearForFreshBody` 傳 requireDispellable:false)。守衛在 sim/effects/dispel.test.ts。",
-  },
   "field:abilities.effects[]#dot.dispellable": {
     status: "default-live",
     why:
@@ -1668,16 +1745,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // ⛔ 不要為了餵綠它去硬加一張卡：先有一支真的疊層的技能（owner 手動重製中），
   // 這一格才有東西可寫。機制本身由 `sim/counterAxes.test.ts` 走真的 `world.step()`
   // 驗過（軸②那條就是靠它才不會續期續成永久）。
-  "field:abilities.effects[]#applyStatus.refresh": {
-    status: "landing",
-    since: "2026-08-09",
-    why:
-      "GH#304 軸②【隨時間】的必要條件 —— 「重複施加要不要把到期時間往後推」。" +
-      "省略 = \"extend\" = 這一格出現之前的行為，所以零採用時引擎行為逐字不變。" +
-      "它存在的理由是：一個掛在 `onInterval` 上每 N 秒 ±M 的計數器如果每次都續期，" +
-      "那筆狀態永遠不會到期，「20 秒內疊到 5 層」會變成「永久 5 層」，而畫面上看不出差別" +
-      "（失敗形態②）。零採用＝owner 手動重製中的疊層技能還沒進 content/abilities/。",
-  },
   "field:abilities.effects[]#applyStatus.breakOnDamage": {
     status: "landing",
     since: "2026-08-05",
@@ -1742,16 +1809,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   //
   // ⛔ 六筆分開記而不是合成一筆,是因為它們**會各自被採用**:第一支「死亡時
   // 爆炸」的技能上架時,只有 onDeath 那一筆該被刪掉,其餘五筆仍然誠實。
-  "enum:abilities.effects[]#applyBuff.hooks[].on=onBossSpawn": {
-    status: "landing",
-    since: "2026-08-06",
-    why: "殭屍王出現(世界廣播,發給場上每一位活著的單位)。發射點是 `sim/mobs.ts` 早就在發的 `mobBossSpawn` 事件。零採用是因為樹上還沒有任何一張卡寫「殭屍王出現時⋯」——那是內容決定。",
-  },
-  "enum:abilities.effects[]#applyBuff.hooks[].on=onFireRingIgnite": {
-    status: "landing",
-    since: "2026-08-06",
-    why: "火圈點燃(世界廣播)。⚠️ 只在點燃那**一** tick 發一次,不是每 tick —— 來源是 `FireRingSystem` 的 `ticksSinceStart === 0` 那一發 `fireRingStart`。",
-  },
   "enum:abilities.effects[]#applyBuff.hooks[].on=onGuardianDown": {
     status: "landing",
     since: "2026-08-06",
@@ -1761,11 +1818,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "landing",
     since: "2026-08-06",
     why: "死亡的那一刻。持有者＝死掉的那個人,target＝兇手。⚠️ 火圈/DoT 燒死時**沒有兇手**,那時 hook 沒有 target —— 所以「死亡時對兇手爆炸」的卡要自己帶條件,不能假設 target 一定在。",
-  },
-  "enum:abilities.effects[]#applyBuff.hooks[].on=onRevive": {
-    status: "landing",
-    since: "2026-08-06",
-    why: "被復活的那一刻。持有者＝被復活的人,不是頂著圈圈的隊友 —— 兩個都合理,選前者是因為「復活後獲得無敵 2 秒」是這一格最常見的用法。",
   },
 
   "enum:abilities.effects[]#dispel.polarity=any": {
@@ -1901,16 +1953,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "landing",
     since: "2026-08-09",
     why: "護盾破碎時(護盾池歸零那一格)。✅ 發射點已接（GH#300）：吃 `combat/damage.ts` 早就在發的 `guardBreak`（判準逐字就是「打之前 >0、這一發吃到、之後合格總量 <=0」），沒有第二套判斷。⚠️ 三件**不算**破碎:被打到但還有剩 · 自然到期 · 【破盾】(`shieldBreak` effect)主動拆掉別人的——最後這一項是**已知缺口不是漏掉**（那是動作，這是時刻），要不要納入是 owner 的裁決。零採用＝owner 手動重製中的技能還沒進 content/abilities/。",
-  },
-  "enum:abilities.effects[]#applyBuff.hooks[].on=onAllyDeath": {
-    status: "landing",
-    since: "2026-08-09",
-    why: "隊友陣亡時。⚠️ 持有者＝**還活著的隊友**,方向與 `onDeath` 相反 —— 「隊友死了我暴怒」掛在死人身上不會發生任何事。✅ 發射點已接（GH#300）：**沒有新事件**，吃的是【死亡時】同一則 `death`，差別只在 `WorldHookSystem` 的新作用域 `scope:\"allies\"`（成員規則走現成的 `alliedChampions`，死者自己排除，活著的閘由 `fireHooks` 那一道負責）。零採用＝owner 手動重製中的技能還沒進 content/abilities/。",
-  },
-  "enum:abilities.effects[]#applyBuff.hooks[].on=onStatusApplied": {
-    status: "landing",
-    since: "2026-08-09",
-    why: "狀態被掛上的那一刻。⚠️ 與 owner 說的「身上有某狀態時」不是同一件事:那一族的答案是效果上的 `condition`(EffectCommon.condition),因為「持續期間都成立」是狀態查詢不是時刻。✅ 發射點已接（GH#300）：`effects/applyStatus.ts` 在 `st.effects.push` 那一支發 `statusApplied`。⛔ 兩道窄化都在發射端:**續期不重觸發**(`!existing`)、**被免控擋掉的不算**(在那道 `continue` 之後)。零採用＝owner 手動重製中的技能還沒進 content/abilities/。",
   },
   // ═══════════════════════════════════════════════════════════════════════════
   // ⭐ 2026-08-12 —— owner 的 90 支重製技能落地之後，**第一次可回報**的那一批
@@ -2063,27 +2105,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
 
   // ── ⑤「省略正是出貨行為」的九格旋鈕（default-live） ────────────────────────
   // 每一格都逐字對過 sim 的那一行 `?? 預設`，不是憑印象分類的。
-  "field:abilities.effects[]#delayed.targetMode": {
-    status: "default-live",
-    why:
-      "省略 = `\"frozen\"`（`sim/effects/delayed.ts` 的 `(e.targetMode ?? \"frozen\")" +
-      "`）＝施放那一刻鎖定名單、追著他打，而那正是「連續七次斬擊」要的手感。`\"reresolve\"`（到期以落點重解、走開就打空）" +
-      "是留給「原地爆的連擊」的另一種讀法，沒有人需要它的時候零採用就是對的。",
-  },
-  "field:abilities.effects[]#delayed.dropDeadTargets": {
-    status: "default-live",
-    why:
-      "省略 = `true`（`sim/effects/delayed.ts` 的 `e.dropDeadTargets ?? true`）" +
-      "＝鎖定的目標死了就跳過他，不繼續鞭屍。寫 `false` 的意思是「屍體也要打滿七下」，那是一個 owner 會想切但今天沒有人要的決策點（第一守則）" +
-      "，所以零採用正是它該有的樣子。",
-  },
-  "field:abilities.effects[]#delayed.stopOnCasterDeath": {
-    status: "default-live",
-    why:
-      "省略 = `false`（`sim/effects/delayed.ts` 的 `e.stopOnCasterDeath ?? false`）" +
-      "＝施法者死了那一串還是會打完，與「技能一旦放出去就不回頭」的既有手感一致。寫 `true` 的是「詠唱型」的那一種招式，" +
-      "樹上還沒有。",
-  },
   "field:abilities.effects[]#devour.onDevourPer": {
     status: "default-live",
     why:
@@ -2105,13 +2126,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "`，而 `clampKb` 的 `fallback = 0`）＝落地即可行動，沒有額外的爬起來硬直。14 份擊退全部吃這個預設是**刻意**的：多加一格硬直是設計決策，" +
       "而它一旦有人寫就會出現在這張表上。",
   },
-  "field:abilities.effects[]#dispel.pools.shields": {
-    status: "default-live",
-    why:
-      "省略 = 讀後台 `config.dispel@1` 的 `defaultPoolShields`（`sim/effects/dispel.ts` 的 `shields: rules.defaultPoolShields`）" +
-      "——同上面那一段「不寫最好」的三格是同一種東西，寫進文件等於在一支技能上烘死一個全域可調的決定。⭐ 而且拆掉別人護盾這件事有專屬的 kind（`shieldBreak`）" +
-      "，所以連需要覆寫的動機都被別的機制吸收了。",
-  },
   "field:abilities.effects[]#damage.canCrit": {
     status: "default-live",
     why:
@@ -2132,14 +2146,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // ── ⑥ 五個「真的還沒有人選」的成員（landing，30 天後回來看） ────────────────
   // 與 ⑤ 的差別是一句話：⑤ 的省略等於一個活著的預設值，這五個的省略等於**另一個
   // 選擇被選走了**，沒有預設值在替它服務。所以它們吃 30 天的時鐘。
-  "enum:abilities.effects[]#applyBuff.hooks[].abilitySlot=EX": {
-    status: "landing",
-    since: "2026-08-12",
-    why:
-      "觸發器的「只算這一格放出來的傷害」過濾。⚠️ 過濾器本身**已經有客戶**（13 份文件用它，值分佈 Q1 / W3 / E8 / R3）" +
-      "，零的只有 EX 這個成員 —— 90 支重製稿裡沒有一支寫「EX 造成傷害時…」。第一支需要「大招打中才觸發」的卡出現時，" +
-      "這一筆就該被刪掉。",
-  },
   "enum:abilities.effects[]#applyBuff.hooks[].abilitySlot=PASSIVE": {
     status: "landing",
     since: "2026-08-12",
@@ -2266,14 +2272,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "零採用是**刻意的**：P1（速度天花板，無條件、零欄位）已經單獨修好 #318 的技術牆，" +
       "P2 會改 8 支技能的位移距離 —— 那是 owner 沒勾過的手感變更（第〇·六守則：可以停就停）。" +
       "⭐ 想要「零數值變更」的半套 P2，只要給**距離正好落在級距刻度上**的節點填級別即可。",
-  },
-  "field:abilities.effects[]#knockback.distanceTier": {
-    status: "landing",
-    since: "2026-08-13",
-    why:
-      "同 dash 那一格的另一半（擊退用 push 梯，距離比 travel 短）。⚠️ 它與 `launchDistance` " +
-      "**互斥**（`refineKnockbackTier` 在擋）：後者是執行期解析、跳過 gap 減法與 impactPower，" +
-      "兩格同時填就是「編輯器顯示 4.5、場上打 6.0」。零採用同上：14 支擊退的距離由 P1 一格未動。",
   },
 };
 

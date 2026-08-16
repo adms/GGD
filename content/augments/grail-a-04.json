@@ -1,0 +1,23 @@
+{
+  "id": "grail-a-04",
+  "schema": "augment@1",
+  "name": "固有技能・高速神言 A",
+  "description": "[AP][CDR] 每100 AP同時提供5%冷卻縮減，最多30%。AP不會消失。",
+  "tier": "gold",
+  "weight": 60,
+  "tags": [
+    "grail-wish",
+    "ap",
+    "cdr",
+    "stat-conversion"
+  ],
+  "selectionSlot": "pivot",
+  "modifiers": [
+    {
+      "stat": "cdr",
+      "op": "percentOf",
+      "value": 0.0005,
+      "from": "ap"
+    }
+  ]
+}

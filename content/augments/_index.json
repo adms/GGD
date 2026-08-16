@@ -1,6 +1,6 @@
 {
   "collection": "augments",
-  "hash": "d22834c05d11",
+  "hash": "3fac6ff2c5ef",
   "entries": [
     {
       "id": "aegis-surge",
@@ -79,6 +79,366 @@
       "path": "augments/frost-shatter.json",
       "hash": "14f2eed5bd8e",
       "size": 450
+    },
+    {
+      "id": "grail-a-01",
+      "path": "augments/grail-a-01.json",
+      "hash": "0332f4a33f83",
+      "size": 1683
+    },
+    {
+      "id": "grail-a-02",
+      "path": "augments/grail-a-02.json",
+      "hash": "d2629bd9020b",
+      "size": 1067
+    },
+    {
+      "id": "grail-a-03",
+      "path": "augments/grail-a-03.json",
+      "hash": "12665f178c77",
+      "size": 550
+    },
+    {
+      "id": "grail-a-04",
+      "path": "augments/grail-a-04.json",
+      "hash": "b3b08199bfe9",
+      "size": 453
+    },
+    {
+      "id": "grail-a-05",
+      "path": "augments/grail-a-05.json",
+      "hash": "0a750b63def6",
+      "size": 1162
+    },
+    {
+      "id": "grail-a-06",
+      "path": "augments/grail-a-06.json",
+      "hash": "1e0c818a9354",
+      "size": 1229
+    },
+    {
+      "id": "grail-a-07",
+      "path": "augments/grail-a-07.json",
+      "hash": "23e874ca1dbc",
+      "size": 1499
+    },
+    {
+      "id": "grail-a-08",
+      "path": "augments/grail-a-08.json",
+      "hash": "43cd0bd67029",
+      "size": 3595
+    },
+    {
+      "id": "grail-a-09",
+      "path": "augments/grail-a-09.json",
+      "hash": "d15fa9a20652",
+      "size": 592
+    },
+    {
+      "id": "grail-a-10",
+      "path": "augments/grail-a-10.json",
+      "hash": "a81c99d071fd",
+      "size": 800
+    },
+    {
+      "id": "grail-a-11",
+      "path": "augments/grail-a-11.json",
+      "hash": "f70dcfa08ce8",
+      "size": 512
+    },
+    {
+      "id": "grail-a-12",
+      "path": "augments/grail-a-12.json",
+      "hash": "b7800aa71680",
+      "size": 502
+    },
+    {
+      "id": "grail-a-13",
+      "path": "augments/grail-a-13.json",
+      "hash": "6bcc5f99443a",
+      "size": 890
+    },
+    {
+      "id": "grail-a-14",
+      "path": "augments/grail-a-14.json",
+      "hash": "d7f5d4ae6139",
+      "size": 771
+    },
+    {
+      "id": "grail-a-15",
+      "path": "augments/grail-a-15.json",
+      "hash": "1725309fc371",
+      "size": 1147
+    },
+    {
+      "id": "grail-a-16",
+      "path": "augments/grail-a-16.json",
+      "hash": "6b99b5e27252",
+      "size": 750
+    },
+    {
+      "id": "grail-a-17",
+      "path": "augments/grail-a-17.json",
+      "hash": "d358ed58048a",
+      "size": 1093
+    },
+    {
+      "id": "grail-a-18",
+      "path": "augments/grail-a-18.json",
+      "hash": "7fec542bf9d4",
+      "size": 1213
+    },
+    {
+      "id": "grail-a-19",
+      "path": "augments/grail-a-19.json",
+      "hash": "fe598b310880",
+      "size": 999
+    },
+    {
+      "id": "grail-a-20",
+      "path": "augments/grail-a-20.json",
+      "hash": "5b9f81fdd775",
+      "size": 1062
+    },
+    {
+      "id": "grail-c-01",
+      "path": "augments/grail-c-01.json",
+      "hash": "8c0a81c10545",
+      "size": 910
+    },
+    {
+      "id": "grail-c-02",
+      "path": "augments/grail-c-02.json",
+      "hash": "873b6cc4d370",
+      "size": 1101
+    },
+    {
+      "id": "grail-c-03",
+      "path": "augments/grail-c-03.json",
+      "hash": "d1fc2ed99aa7",
+      "size": 898
+    },
+    {
+      "id": "grail-c-04",
+      "path": "augments/grail-c-04.json",
+      "hash": "521a99d1168d",
+      "size": 784
+    },
+    {
+      "id": "grail-c-05",
+      "path": "augments/grail-c-05.json",
+      "hash": "26aa5038d3d3",
+      "size": 515
+    },
+    {
+      "id": "grail-c-06",
+      "path": "augments/grail-c-06.json",
+      "hash": "a68626ff719e",
+      "size": 478
+    },
+    {
+      "id": "grail-c-07",
+      "path": "augments/grail-c-07.json",
+      "hash": "1bdd1fff2b1b",
+      "size": 486
+    },
+    {
+      "id": "grail-c-08",
+      "path": "augments/grail-c-08.json",
+      "hash": "f1ed3069ca89",
+      "size": 925
+    },
+    {
+      "id": "grail-c-09",
+      "path": "augments/grail-c-09.json",
+      "hash": "af41cdfaa045",
+      "size": 745
+    },
+    {
+      "id": "grail-c-10",
+      "path": "augments/grail-c-10.json",
+      "hash": "671025080d7d",
+      "size": 1201
+    },
+    {
+      "id": "grail-c-11",
+      "path": "augments/grail-c-11.json",
+      "hash": "b670fa3690be",
+      "size": 1092
+    },
+    {
+      "id": "grail-c-12",
+      "path": "augments/grail-c-12.json",
+      "hash": "43694903e5e4",
+      "size": 816
+    },
+    {
+      "id": "grail-c-13",
+      "path": "augments/grail-c-13.json",
+      "hash": "89c8e2cdf91f",
+      "size": 661
+    },
+    {
+      "id": "grail-c-14",
+      "path": "augments/grail-c-14.json",
+      "hash": "a44857c6911b",
+      "size": 1115
+    },
+    {
+      "id": "grail-c-15",
+      "path": "augments/grail-c-15.json",
+      "hash": "5e55adeef48f",
+      "size": 987
+    },
+    {
+      "id": "grail-c-16",
+      "path": "augments/grail-c-16.json",
+      "hash": "ca55bef20978",
+      "size": 1136
+    },
+    {
+      "id": "grail-c-17",
+      "path": "augments/grail-c-17.json",
+      "hash": "16be87d515a8",
+      "size": 846
+    },
+    {
+      "id": "grail-c-18",
+      "path": "augments/grail-c-18.json",
+      "hash": "09bd1753fbb5",
+      "size": 810
+    },
+    {
+      "id": "grail-c-19",
+      "path": "augments/grail-c-19.json",
+      "hash": "d3d73cb0dd3d",
+      "size": 1211
+    },
+    {
+      "id": "grail-c-20",
+      "path": "augments/grail-c-20.json",
+      "hash": "5c4a273a3cbc",
+      "size": 1906
+    },
+    {
+      "id": "grail-ex-01",
+      "path": "augments/grail-ex-01.json",
+      "hash": "c46ebb6b4694",
+      "size": 603
+    },
+    {
+      "id": "grail-ex-02",
+      "path": "augments/grail-ex-02.json",
+      "hash": "9eec016c6162",
+      "size": 1131
+    },
+    {
+      "id": "grail-ex-03",
+      "path": "augments/grail-ex-03.json",
+      "hash": "6b2d2f9bf242",
+      "size": 1335
+    },
+    {
+      "id": "grail-ex-04",
+      "path": "augments/grail-ex-04.json",
+      "hash": "50375f29b786",
+      "size": 1627
+    },
+    {
+      "id": "grail-ex-05",
+      "path": "augments/grail-ex-05.json",
+      "hash": "9d3eba87cd22",
+      "size": 1193
+    },
+    {
+      "id": "grail-ex-06",
+      "path": "augments/grail-ex-06.json",
+      "hash": "8bf9cce0ea36",
+      "size": 583
+    },
+    {
+      "id": "grail-ex-07",
+      "path": "augments/grail-ex-07.json",
+      "hash": "749ebe627e37",
+      "size": 577
+    },
+    {
+      "id": "grail-ex-08",
+      "path": "augments/grail-ex-08.json",
+      "hash": "743d0edb229a",
+      "size": 4318
+    },
+    {
+      "id": "grail-ex-09",
+      "path": "augments/grail-ex-09.json",
+      "hash": "ad9dfdc4cb0d",
+      "size": 1506
+    },
+    {
+      "id": "grail-ex-10",
+      "path": "augments/grail-ex-10.json",
+      "hash": "30cf61bbad1f",
+      "size": 709
+    },
+    {
+      "id": "grail-ex-11",
+      "path": "augments/grail-ex-11.json",
+      "hash": "866f2cd0e12b",
+      "size": 1667
+    },
+    {
+      "id": "grail-ex-12",
+      "path": "augments/grail-ex-12.json",
+      "hash": "99dcb3149f1d",
+      "size": 912
+    },
+    {
+      "id": "grail-ex-13",
+      "path": "augments/grail-ex-13.json",
+      "hash": "f9b7a4462293",
+      "size": 1109
+    },
+    {
+      "id": "grail-ex-14",
+      "path": "augments/grail-ex-14.json",
+      "hash": "098223fbb654",
+      "size": 1141
+    },
+    {
+      "id": "grail-ex-15",
+      "path": "augments/grail-ex-15.json",
+      "hash": "46dd251e2440",
+      "size": 2643
+    },
+    {
+      "id": "grail-ex-16",
+      "path": "augments/grail-ex-16.json",
+      "hash": "1ee7f2bd99b1",
+      "size": 1197
+    },
+    {
+      "id": "grail-ex-17",
+      "path": "augments/grail-ex-17.json",
+      "hash": "76e8fc210aa3",
+      "size": 1404
+    },
+    {
+      "id": "grail-ex-18",
+      "path": "augments/grail-ex-18.json",
+      "hash": "63b5080454fe",
+      "size": 913
+    },
+    {
+      "id": "grail-ex-19",
+      "path": "augments/grail-ex-19.json",
+      "hash": "21bfa911945b",
+      "size": 1008
+    },
+    {
+      "id": "grail-ex-20",
+      "path": "augments/grail-ex-20.json",
+      "hash": "814146e6cd13",
+      "size": 837
     },
     {
       "id": "guardian-ward",

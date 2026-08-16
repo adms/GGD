@@ -1,0 +1,51 @@
+{
+  "id": "grail-a-02",
+  "schema": "augment@1",
+  "name": "魔術・反射術式 A",
+  "description": "[反彈][迴避][回復] 成功反彈時回復等同反彈傷害50%的生命；成功迴避時回復6%最大生命。8秒冷卻。",
+  "tier": "gold",
+  "weight": 60,
+  "tags": [
+    "grail-wish",
+    "reflect",
+    "heal",
+    "counter"
+  ],
+  "selectionSlot": "synergy",
+  "eligibility": {
+    "requiresSelfMechanic": [
+      "evasion",
+      "reflect"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onReflectSuccess",
+      "effects": [
+        {
+          "kind": "eventValueConversion",
+          "shape": "single",
+          "source": "incomingDamage",
+          "basis": "hpLost",
+          "ratio": 0.5,
+          "to": "health",
+          "who": "self"
+        }
+      ],
+      "target": "self",
+      "internalCooldown": 8
+    },
+    {
+      "on": "onEvade",
+      "effects": [
+        {
+          "kind": "restore",
+          "healthPct": 0.06,
+          "applyTo": "self"
+        }
+      ],
+      "target": "self",
+      "internalCooldown": 8
+    }
+  ]
+}

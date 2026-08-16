@@ -1,0 +1,76 @@
+{
+  "id": "grail-ex-11",
+  "schema": "augment@1",
+  "name": "靈基再臨 EX",
+  "description": "[復活][完全重置] 自身被復活時，完成Q／W／E／R／EX冷卻、回滿魔力並獲得1.5秒無敵。",
+  "tier": "prismatic",
+  "weight": 25,
+  "tags": [
+    "grail-wish",
+    "revive",
+    "full-reset",
+    "invulnerable"
+  ],
+  "selectionSlot": "generic",
+  "eligibility": {
+    "requiresModeFeature": [
+      "revive"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onRevive",
+      "effects": [
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "Q",
+          "mode": "reset"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "W",
+          "mode": "reset"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "E",
+          "mode": "reset"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "R",
+          "mode": "reset"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "EX",
+          "mode": "reset"
+        },
+        {
+          "kind": "restore",
+          "manaPct": 1.0,
+          "applyTo": "self"
+        },
+        {
+          "kind": "invulnerable",
+          "durationSec": 1.5,
+          "applyTo": "self",
+          "blocksDamage": "all",
+          "blocksTrueDamage": true,
+          "blocksControl": true
+        }
+      ],
+      "target": "self"
+    }
+  ]
+}

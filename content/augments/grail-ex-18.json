@@ -1,0 +1,43 @@
+{
+  "id": "grail-ex-18",
+  "schema": "augment@1",
+  "name": "魔術刻印・生命爐心 EX",
+  "description": "[最大生命][最大魔力][受傷回魔] 最大生命的100%同時視為額外最大魔力；生命損失的25%轉化為魔力。",
+  "tier": "prismatic",
+  "weight": 25,
+  "tags": [
+    "grail-wish",
+    "health",
+    "mana",
+    "magic-crest"
+  ],
+  "selectionSlot": "pivot",
+  "eligibility": {
+    "requiresMana": true
+  },
+  "modifiers": [
+    {
+      "stat": "maxMana",
+      "op": "percentOf",
+      "value": 1.0,
+      "from": "maxHealth"
+    }
+  ],
+  "hooks": [
+    {
+      "on": "onDamageTaken",
+      "effects": [
+        {
+          "kind": "eventValueConversion",
+          "shape": "single",
+          "source": "incomingDamage",
+          "basis": "hpLost",
+          "ratio": 0.25,
+          "to": "mana",
+          "who": "self"
+        }
+      ],
+      "target": "self"
+    }
+  ]
+}

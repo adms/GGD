@@ -1,0 +1,69 @@
+{
+  "id": "grail-ex-04",
+  "schema": "augment@1",
+  "name": "令咒・三重詠唱 EX",
+  "description": "[R施放][技能代放] 主動施放R時，同時免費施放Q、W、E。45秒冷卻。",
+  "tier": "prismatic",
+  "weight": 25,
+  "tags": [
+    "grail-wish",
+    "r-cast",
+    "proxy-cast",
+    "command-spell"
+  ],
+  "selectionSlot": "pivot",
+  "eligibility": {
+    "requiresAbilitySlots": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onAbilityCast",
+      "effects": [
+        {
+          "kind": "proxyCast",
+          "shape": "single",
+          "slot": "Q",
+          "payCosts": "none",
+          "respectCooldown": false,
+          "requireLearned": true,
+          "rankMode": "casterRank",
+          "targetMode": "reresolve",
+          "maxDepth": 1,
+          "emitCastEvents": false
+        },
+        {
+          "kind": "proxyCast",
+          "shape": "single",
+          "slot": "W",
+          "payCosts": "none",
+          "respectCooldown": false,
+          "requireLearned": true,
+          "rankMode": "casterRank",
+          "targetMode": "reresolve",
+          "maxDepth": 1,
+          "emitCastEvents": false
+        },
+        {
+          "kind": "proxyCast",
+          "shape": "single",
+          "slot": "E",
+          "payCosts": "none",
+          "respectCooldown": false,
+          "requireLearned": true,
+          "rankMode": "casterRank",
+          "targetMode": "reresolve",
+          "maxDepth": 1,
+          "emitCastEvents": false
+        }
+      ],
+      "target": "self",
+      "abilitySlot": "R",
+      "internalCooldown": 45
+    }
+  ]
+}

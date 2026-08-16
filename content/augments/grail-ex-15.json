@@ -1,0 +1,109 @@
+{
+  "id": "grail-ex-15",
+  "schema": "augment@1",
+  "name": "魔術禮裝・寶石劍 EX",
+  "description": "[技能施放][機率再演] 每次施放Q／W／E／R時，有25%機率立即免費再施放一次相同技能。再演不會再次觸發本願望。",
+  "tier": "prismatic",
+  "weight": 25,
+  "tags": [
+    "grail-wish",
+    "ability-cast",
+    "proxy-cast",
+    "magic-craft"
+  ],
+  "selectionSlot": "synergy",
+  "eligibility": {
+    "requiresAbilitySlots": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onAbilityCast",
+      "effects": [
+        {
+          "kind": "proxyCast",
+          "shape": "single",
+          "slot": "Q",
+          "payCosts": "none",
+          "respectCooldown": false,
+          "requireLearned": true,
+          "rankMode": "casterRank",
+          "targetMode": "reresolve",
+          "maxDepth": 1,
+          "emitCastEvents": false
+        }
+      ],
+      "target": "self",
+      "abilitySlot": "Q",
+      "chance": 0.25,
+      "internalCooldownScope": "perAbilitySlot"
+    },
+    {
+      "on": "onAbilityCast",
+      "effects": [
+        {
+          "kind": "proxyCast",
+          "shape": "single",
+          "slot": "W",
+          "payCosts": "none",
+          "respectCooldown": false,
+          "requireLearned": true,
+          "rankMode": "casterRank",
+          "targetMode": "reresolve",
+          "maxDepth": 1,
+          "emitCastEvents": false
+        }
+      ],
+      "target": "self",
+      "abilitySlot": "W",
+      "chance": 0.25,
+      "internalCooldownScope": "perAbilitySlot"
+    },
+    {
+      "on": "onAbilityCast",
+      "effects": [
+        {
+          "kind": "proxyCast",
+          "shape": "single",
+          "slot": "E",
+          "payCosts": "none",
+          "respectCooldown": false,
+          "requireLearned": true,
+          "rankMode": "casterRank",
+          "targetMode": "reresolve",
+          "maxDepth": 1,
+          "emitCastEvents": false
+        }
+      ],
+      "target": "self",
+      "abilitySlot": "E",
+      "chance": 0.25,
+      "internalCooldownScope": "perAbilitySlot"
+    },
+    {
+      "on": "onAbilityCast",
+      "effects": [
+        {
+          "kind": "proxyCast",
+          "shape": "single",
+          "slot": "R",
+          "payCosts": "none",
+          "respectCooldown": false,
+          "requireLearned": true,
+          "rankMode": "casterRank",
+          "targetMode": "reresolve",
+          "maxDepth": 1,
+          "emitCastEvents": false
+        }
+      ],
+      "target": "self",
+      "abilitySlot": "R",
+      "chance": 0.25,
+      "internalCooldownScope": "perAbilitySlot"
+    }
+  ]
+}

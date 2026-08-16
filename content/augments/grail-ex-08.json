@@ -1,0 +1,158 @@
+{
+  "id": "grail-ex-08",
+  "schema": "augment@1",
+  "name": "固有技能・無我境地 EX",
+  "description": "[迴避][反彈][技能代放] 成功迴避或反彈敵方英雄攻擊時，從Q／W／E中隨機免費施放一個技能攻擊該敵人。12秒冷卻。",
+  "tier": "prismatic",
+  "weight": 25,
+  "tags": [
+    "grail-wish",
+    "evasion",
+    "proxy-cast",
+    "counter"
+  ],
+  "selectionSlot": "synergy",
+  "eligibility": {
+    "requiresSelfMechanic": [
+      "evasion",
+      "reflect"
+    ],
+    "requiresAbilitySlots": [
+      "Q",
+      "W",
+      "E"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onEvade",
+      "effects": [
+        {
+          "kind": "weightedBranch",
+          "shape": "single",
+          "branches": [
+            {
+              "weight": 1,
+              "effects": [
+                {
+                  "kind": "proxyCast",
+                  "shape": "single",
+                  "slot": "Q",
+                  "payCosts": "none",
+                  "respectCooldown": false,
+                  "requireLearned": true,
+                  "rankMode": "casterRank",
+                  "targetMode": "inherit",
+                  "maxDepth": 1,
+                  "emitCastEvents": false
+                }
+              ]
+            },
+            {
+              "weight": 1,
+              "effects": [
+                {
+                  "kind": "proxyCast",
+                  "shape": "single",
+                  "slot": "W",
+                  "payCosts": "none",
+                  "respectCooldown": false,
+                  "requireLearned": true,
+                  "rankMode": "casterRank",
+                  "targetMode": "inherit",
+                  "maxDepth": 1,
+                  "emitCastEvents": false
+                }
+              ]
+            },
+            {
+              "weight": 1,
+              "effects": [
+                {
+                  "kind": "proxyCast",
+                  "shape": "single",
+                  "slot": "E",
+                  "payCosts": "none",
+                  "respectCooldown": false,
+                  "requireLearned": true,
+                  "rankMode": "casterRank",
+                  "targetMode": "inherit",
+                  "maxDepth": 1,
+                  "emitCastEvents": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "target": "event",
+      "victim": "enemyChampion",
+      "internalCooldown": 12
+    },
+    {
+      "on": "onReflectSuccess",
+      "effects": [
+        {
+          "kind": "weightedBranch",
+          "shape": "single",
+          "branches": [
+            {
+              "weight": 1,
+              "effects": [
+                {
+                  "kind": "proxyCast",
+                  "shape": "single",
+                  "slot": "Q",
+                  "payCosts": "none",
+                  "respectCooldown": false,
+                  "requireLearned": true,
+                  "rankMode": "casterRank",
+                  "targetMode": "inherit",
+                  "maxDepth": 1,
+                  "emitCastEvents": false
+                }
+              ]
+            },
+            {
+              "weight": 1,
+              "effects": [
+                {
+                  "kind": "proxyCast",
+                  "shape": "single",
+                  "slot": "W",
+                  "payCosts": "none",
+                  "respectCooldown": false,
+                  "requireLearned": true,
+                  "rankMode": "casterRank",
+                  "targetMode": "inherit",
+                  "maxDepth": 1,
+                  "emitCastEvents": false
+                }
+              ]
+            },
+            {
+              "weight": 1,
+              "effects": [
+                {
+                  "kind": "proxyCast",
+                  "shape": "single",
+                  "slot": "E",
+                  "payCosts": "none",
+                  "respectCooldown": false,
+                  "requireLearned": true,
+                  "rankMode": "casterRank",
+                  "targetMode": "inherit",
+                  "maxDepth": 1,
+                  "emitCastEvents": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "target": "event",
+      "victim": "enemyChampion",
+      "internalCooldown": 12
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "id": "grail-ex-10",
+  "schema": "augment@1",
+  "name": "契約・反魂 EX",
+  "description": "[隊友死亡][復活] 隊友死亡時，使該隊友以20%生命復活。60秒冷卻。",
+  "tier": "prismatic",
+  "weight": 25,
+  "tags": [
+    "grail-wish",
+    "ally-death",
+    "revive",
+    "contract"
+  ],
+  "selectionSlot": "synergy",
+  "eligibility": {
+    "requiresModeFeature": [
+      "team"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onAllyDeath",
+      "effects": [
+        {
+          "kind": "revive",
+          "hpPct": 0.2,
+          "manaPct": 0,
+          "side": "ally",
+          "teamCharge": "ignore"
+        }
+      ],
+      "target": "event",
+      "internalCooldown": 60
+    }
+  ]
+}

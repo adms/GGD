@@ -1,0 +1,35 @@
+{
+  "id": "grail-c-13",
+  "schema": "augment@1",
+  "name": "固有技能・王殺 C",
+  "description": "[Boss][寶具重置] 殭屍王出現時，立即完成R冷卻。",
+  "tier": "silver",
+  "weight": 100,
+  "tags": [
+    "grail-wish",
+    "boss",
+    "objective",
+    "cooldown-reset"
+  ],
+  "selectionSlot": "pivot",
+  "eligibility": {
+    "requiresModeFeature": [
+      "boss"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onBossSpawn",
+      "effects": [
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "R",
+          "mode": "reset"
+        }
+      ],
+      "target": "self"
+    }
+  ]
+}

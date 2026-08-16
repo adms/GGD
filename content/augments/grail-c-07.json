@@ -1,0 +1,21 @@
+{
+  "id": "grail-c-07",
+  "schema": "augment@1",
+  "name": "固有技能・魔力放出 C",
+  "description": "[普攻][傷害轉換] 所有普通攻擊改為魔法傷害，原傷害數值不變。",
+  "tier": "silver",
+  "weight": 100,
+  "tags": [
+    "grail-wish",
+    "basic-attack",
+    "damage-type",
+    "magic"
+  ],
+  "selectionSlot": "pivot",
+  "damageTypeOverride": {
+    "scope": "basic",
+    "becomes": "magic",
+    "applyAt": "afterGates",
+    "impactType": "original"
+  }
+}

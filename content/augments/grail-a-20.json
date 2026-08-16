@@ -1,0 +1,49 @@
+{
+  "id": "grail-a-20",
+  "schema": "augment@1",
+  "name": "固有技能・千里眼 A",
+  "description": "[技能命中][距離增幅] 技能命中英雄時追加一次魔法傷害；實際命中距離越遠，追加傷害越高。4秒冷卻。",
+  "tier": "gold",
+  "weight": 60,
+  "tags": [
+    "grail-wish",
+    "ability-hit",
+    "distance",
+    "magic"
+  ],
+  "selectionSlot": "pivot",
+  "eligibility": {
+    "prefersSelfMechanic": [
+      "abilityDamage"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onAbilityHit",
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "flat": 60,
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.2
+              }
+            ]
+          },
+          "applyTo": "target",
+          "distanceScale": {
+            "atRange": 12,
+            "near": 0.5,
+            "far": 1.5
+          }
+        }
+      ],
+      "target": "event",
+      "victim": "enemyChampion",
+      "internalCooldown": 4
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "grail-ex-07",
+  "schema": "augment@1",
+  "name": "固有技能・戰鬥續行 EX",
+  "description": "[致命傷害][完全格擋] 每20秒可以完全格擋一次致命傷害，包含真實傷害。",
+  "tier": "prismatic",
+  "weight": 25,
+  "tags": [
+    "grail-wish",
+    "lethal",
+    "block",
+    "survival"
+  ],
+  "selectionSlot": "generic",
+  "block": {
+    "damageTypes": [
+      "physical",
+      "magic",
+      "true"
+    ],
+    "chance": 1.0,
+    "fraction": 1.0,
+    "lethalOnly": true,
+    "lethalBasis": "hpAndShields",
+    "internalCooldown": 20
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "id": "grail-a-14",
+  "schema": "augment@1",
+  "name": "固有技能・縮地 A",
+  "description": "[迴避][瞬移] 成功迴避敵方英雄攻擊時，瞬移至該攻擊者身旁。10秒冷卻。",
+  "tier": "gold",
+  "weight": 60,
+  "tags": [
+    "grail-wish",
+    "evasion",
+    "blink",
+    "engage"
+  ],
+  "selectionSlot": "synergy",
+  "eligibility": {
+    "requiresSelfMechanic": [
+      "evasion",
+      "reflect"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onEvade",
+      "effects": [
+        {
+          "kind": "blink",
+          "shape": "single",
+          "to": "targetUnit",
+          "applyTo": "self",
+          "stopShortUnits": 1
+        }
+      ],
+      "target": "event",
+      "victim": "enemyChampion",
+      "internalCooldown": 10
+    }
+  ]
+}

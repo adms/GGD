@@ -1,0 +1,36 @@
+{
+  "id": "grail-c-04",
+  "schema": "augment@1",
+  "name": "魔術・魔力回收 C",
+  "description": "[受傷][傷害轉魔力] 實際失去生命時，將該次生命損失的15%轉化為魔力。1秒冷卻。",
+  "tier": "silver",
+  "weight": 100,
+  "tags": [
+    "grail-wish",
+    "damage-taken",
+    "mana",
+    "conversion"
+  ],
+  "selectionSlot": "pivot",
+  "eligibility": {
+    "requiresMana": true
+  },
+  "hooks": [
+    {
+      "on": "onDamageTaken",
+      "effects": [
+        {
+          "kind": "eventValueConversion",
+          "shape": "single",
+          "source": "incomingDamage",
+          "basis": "hpLost",
+          "ratio": 0.15,
+          "to": "mana",
+          "who": "self"
+        }
+      ],
+      "target": "self",
+      "internalCooldown": 1
+    }
+  ]
+}

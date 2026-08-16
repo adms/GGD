@@ -6,12 +6,14 @@
  */
 import type { AugmentId, EntityId, ItemId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
-import type { AugmentTier } from "../content/defs";
+import type { AugmentDef, AugmentTier } from "../content/defs";
 import { Augments, LootTables } from "../content/registry";
 import { attachSource } from "../stats/statPipeline";
 import { sourceGrants } from "../stats/sourceGrants";
 import { grantItemFree } from "./shop";
 import { DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES, itemOfferableTo } from "./offerEligibility";
+import { grailPreferenceMultiplier, grailWishEligible, modeFeaturesFor } from "./augmentEligibility";
+import { GRAIL_WISH_TAG } from "./grailVocabulary";
 
 export interface AugmentOffer {
   entity: EntityId;
@@ -93,29 +95,73 @@ export function offerAugments(world: SimWorld, entity: EntityId, tier: AugmentTi
   const champ = world.champion.get(entity);
   const owned = new Set(champ?.augments ?? []);
 
+  // ⭐ §15 靈基適性條件 + §16 顯現差異。兩者都在 `working` 的**組成**上生效,
+  // ⛔ 不在抽完之後過濾 —— 抽完再丟就是 GH#249 那個「卡片 3 → 2 → 1」的形狀。
+  const rules = world.grailDraft;
+  const features = modeFeaturesFor(world, entity);
+  const pickedSlots = new Set<string>();
+
+  /**
+   * ⭐ **兩道閘，只有一道可以被放寬。**
+   *
+   * · `legacyPool` 是一個**偏好** —— 舊的 31 張對每一位英雄都動得起來,
+   *   所以寧可發一張舊卡也不要發一張空卡（同這個檔案上面那段 tier fallback
+   *   的理由:「a card that is not a choice is task #47 all over again」）。
+   *   ⚠️ 這不是假設性的:骨架內容樹**一張聖杯願望都沒有**,所以純粹的
+   *   `exclude` 會讓那些場次整個三選一消失,而畫面上只是「沒有跳卡片」。
+   * · `eligibility` 是一道**硬閘**,⛔ 永遠不放寬 —— 放寬它等於把死願望發出去,
+   *   而一張按不到的卡比一張弱卡更糟(玩家以為自己選了東西)。
+   */
+  const admissible = (a: AugmentDef, allowLegacy: boolean): boolean => {
+    if (!allowLegacy && rules.legacyPool === "exclude" && !a.tags.includes(GRAIL_WISH_TAG)) return false;
+    if (!rules.eligibilityEnabled) return true;
+    return grailWishEligible(world, entity, a.eligibility, features);
+  };
+  const weightOf = (a: AugmentDef): number =>
+    a.weight * grailPreferenceMultiplier(world, entity, a.eligibility, rules.preferenceBonus);
+
   const choices: AugmentId[] = [];
-  const drawFrom = (t: AugmentTier): void => {
-    const working = Augments.all().filter((a) => a.tier === t && !owned.has(a.id) && !choices.includes(a.id));
-    while (choices.length < count && working.length > 0) {
-      const total = working.reduce((s, a) => s + a.weight, 0);
+  const drawFrom = (t: AugmentTier, allowLegacy: boolean): void => {
+    const pool = Augments.all().filter(
+      (a) => a.tier === t && !owned.has(a.id) && !choices.includes(a.id) && admissible(a, allowLegacy),
+    );
+    while (choices.length < count && pool.length > 0) {
+      // §16：⭐ **偏好不是分配** —— 先看還有沒有「玩家這一張還沒看過的顯現位置」,
+      // 有就只從那一群抽,沒有就退回全池。出貨 60 張裡 generic 只有 10 張,
+      // 硬性一格一種會讓第二張願望每一場都是那三張裡的一張。
+      const fresh = pool.filter((a) => !pickedSlots.has(a.selectionSlot ?? "generic"));
+      const working = rules.slotDiversityEnabled && fresh.length > 0 ? fresh : pool;
+
+      const total = working.reduce((s, a) => s + weightOf(a), 0);
       let roll = world.rng.next() * total;
       let idx = working.length - 1;
       for (let i = 0; i < working.length; i++) {
-        roll -= working[i]!.weight;
+        roll -= weightOf(working[i]!);
         if (roll <= 0) {
           idx = i;
           break;
         }
       }
-      choices.push(working[idx]!.id);
-      working.splice(idx, 1); // without replacement
+      const drawn = working[idx]!;
+      choices.push(drawn.id);
+      pickedSlots.add(drawn.selectionSlot ?? "generic");
+      pool.splice(pool.indexOf(drawn), 1); // without replacement
     }
   };
 
-  drawFrom(tier);
+  drawFrom(tier, false);
   for (const lower of TIER_FALLBACK[tier]) {
     if (choices.length >= count) break;
-    drawFrom(lower);
+    drawFrom(lower, false);
+  }
+  // ⭐ 最後一輪：偏好用完了還沒填滿，就放行舊卡池。⛔ `eligibility` 仍然不放寬。
+  // 這一輪存在的理由與上面的 tier fallback 逐字相同 —— 一張發不滿的卡不是選擇。
+  if (choices.length < count && rules.legacyPool === "exclude") {
+    drawFrom(tier, true);
+    for (const lower of TIER_FALLBACK[tier]) {
+      if (choices.length >= count) break;
+      drawFrom(lower, true);
+    }
   }
 
   const offer: AugmentOffer = { entity, tier, choices, picked: null };

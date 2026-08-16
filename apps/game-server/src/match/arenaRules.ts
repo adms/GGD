@@ -11,6 +11,8 @@ import type { CoreAbilitySlot } from "@ggd/shared/sim/intents";
 import type { AugmentTier } from "@ggd/shared/sim/content/defs";
 import { AUGMENT_TIER_SCHEDULE, DEFAULT_ITEM_DRAFT_POLICY } from "@ggd/shared/sim/economy/draft";
 import type { ItemDraftPolicy } from "@ggd/shared/sim/economy/draft";
+import { DEFAULT_GRAIL_DRAFT } from "@ggd/shared/sim/economy/grailVocabulary";
+import type { GrailDraftRules } from "@ggd/shared/sim/economy/grailVocabulary";
 import { Configs, scheduledRetiredTables } from "@ggd/shared/content";
 import { MAX_ROUNDS_UNLIMITED } from "@ggd/shared/roomSettings";
 import type {
@@ -45,6 +47,12 @@ export interface ArenaRules {
    * answer is.
    */
   itemDraft: ItemDraftPolicy;
+  /**
+   * ⭐ 聖杯顯現規則（§15 靈基適性條件 · §16 顯現差異）。NEVER null，同
+   * `itemDraft` 的理由：「不發卡條件」不是一個機制可以待著的狀態，缺席的
+   * 那份文件要的是**出貨規則**，不是「這個閘不存在」。
+   */
+  grailDraft: GrailDraftRules;
   /** round number -> grants applied at that round's intermission entry */
   rounds: ReadonlyMap<number, RoundGrant>;
   /** grants for every round past the highest `rounds` key (escalating gold) */
@@ -107,6 +115,7 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
   exUnlockRound: null,
   offerCount: 3,
   itemDraft: DEFAULT_ITEM_DRAFT_POLICY,
+  grailDraft: DEFAULT_GRAIL_DRAFT,
   rounds: new Map(
     Object.entries(AUGMENT_TIER_SCHEDULE).map(([round, tier]) => [
       Number(round),
@@ -180,6 +189,7 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
     itemDraft: retiredFields.has("itemDraft.fallbackTable")
       ? { ...(doc.itemDraft ?? DEFAULT_ITEM_DRAFT_POLICY), fallbackTable: "" }
       : (doc.itemDraft ?? DEFAULT_ITEM_DRAFT_POLICY),
+    grailDraft: doc.grailDraft ?? DEFAULT_GRAIL_DRAFT,
     rounds,
     overflow: doc.overflow ?? null,
     // A retired gacha pool turns the legacy per-round gacha OFF rather than

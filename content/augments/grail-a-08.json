@@ -1,0 +1,145 @@
+{
+  "id": "grail-a-08",
+  "schema": "augment@1",
+  "name": "魔術・殘響詠唱 A",
+  "description": "[技能再演] 施放Q／W／E／R後，1.2秒後自動再施放一次相同技能，不再次消耗魔力。各技能格24秒冷卻。",
+  "tier": "gold",
+  "weight": 60,
+  "tags": [
+    "grail-wish",
+    "ability-cast",
+    "proxy-cast",
+    "echo"
+  ],
+  "selectionSlot": "synergy",
+  "eligibility": {
+    "requiresAbilitySlots": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onAbilityCast",
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "single",
+          "delaySec": 1.2,
+          "count": 1,
+          "intervalSec": 1,
+          "effects": [
+            {
+              "kind": "proxyCast",
+              "shape": "single",
+              "slot": "Q",
+              "payCosts": "none",
+              "respectCooldown": false,
+              "requireLearned": true,
+              "rankMode": "casterRank",
+              "targetMode": "reresolve",
+              "maxDepth": 1,
+              "emitCastEvents": false
+            }
+          ]
+        }
+      ],
+      "target": "self",
+      "abilitySlot": "Q",
+      "internalCooldown": 24,
+      "internalCooldownScope": "perAbilitySlot"
+    },
+    {
+      "on": "onAbilityCast",
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "single",
+          "delaySec": 1.2,
+          "count": 1,
+          "intervalSec": 1,
+          "effects": [
+            {
+              "kind": "proxyCast",
+              "shape": "single",
+              "slot": "W",
+              "payCosts": "none",
+              "respectCooldown": false,
+              "requireLearned": true,
+              "rankMode": "casterRank",
+              "targetMode": "reresolve",
+              "maxDepth": 1,
+              "emitCastEvents": false
+            }
+          ]
+        }
+      ],
+      "target": "self",
+      "abilitySlot": "W",
+      "internalCooldown": 24,
+      "internalCooldownScope": "perAbilitySlot"
+    },
+    {
+      "on": "onAbilityCast",
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "single",
+          "delaySec": 1.2,
+          "count": 1,
+          "intervalSec": 1,
+          "effects": [
+            {
+              "kind": "proxyCast",
+              "shape": "single",
+              "slot": "E",
+              "payCosts": "none",
+              "respectCooldown": false,
+              "requireLearned": true,
+              "rankMode": "casterRank",
+              "targetMode": "reresolve",
+              "maxDepth": 1,
+              "emitCastEvents": false
+            }
+          ]
+        }
+      ],
+      "target": "self",
+      "abilitySlot": "E",
+      "internalCooldown": 24,
+      "internalCooldownScope": "perAbilitySlot"
+    },
+    {
+      "on": "onAbilityCast",
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "single",
+          "delaySec": 1.2,
+          "count": 1,
+          "intervalSec": 1,
+          "effects": [
+            {
+              "kind": "proxyCast",
+              "shape": "single",
+              "slot": "R",
+              "payCosts": "none",
+              "respectCooldown": false,
+              "requireLearned": true,
+              "rankMode": "casterRank",
+              "targetMode": "reresolve",
+              "maxDepth": 1,
+              "emitCastEvents": false
+            }
+          ]
+        }
+      ],
+      "target": "self",
+      "abilitySlot": "R",
+      "internalCooldown": 24,
+      "internalCooldownScope": "perAbilitySlot"
+    }
+  ]
+}

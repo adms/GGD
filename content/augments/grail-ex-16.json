@@ -1,0 +1,50 @@
+{
+  "id": "grail-ex-16",
+  "schema": "augment@1",
+  "name": "秘劍・燕返 EX",
+  "description": "[普攻][多重投影] 每次普通攻擊有30%機率產生兩次額外攻擊投影，每次造成100% AD物理傷害，但不觸發其他On-hit。",
+  "tier": "prismatic",
+  "weight": 25,
+  "tags": [
+    "grail-wish",
+    "basic-attack",
+    "multi-hit",
+    "secret-sword"
+  ],
+  "selectionSlot": "synergy",
+  "hooks": [
+    {
+      "on": "onBasicAttack",
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "single",
+          "delaySec": 0.1,
+          "count": 2,
+          "intervalSec": 0.1,
+          "targetMode": "frozen",
+          "dropDeadTargets": true,
+          "stopOnCasterDeath": false,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "ratios": [
+                  {
+                    "stat": "ad",
+                    "coeff": 1.0
+                  }
+                ]
+              },
+              "applyTo": "target"
+            }
+          ]
+        }
+      ],
+      "target": "event",
+      "victim": "enemy",
+      "chance": 0.3
+    }
+  ]
+}

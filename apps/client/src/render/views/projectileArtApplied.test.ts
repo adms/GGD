@@ -140,9 +140,15 @@ function snap(view: ProjectileView): EngineSnap {
 }
 
 describe("#251 投射物的特效文件真的到得了畫面 (projectile-art-applied)", () => {
-  it("前提：出貨的 18 份彈道文件真的有三種不同的打擊半徑", () => {
+  it("前提：出貨的彈道文件真的有三種不同的打擊半徑", () => {
     // 這一條在守「下面那條不是恆真」。哪天所有彈道半徑被統一，先紅的會是它。
-    expect(SHIPPED.size).toBe(18);
+    //
+    // ⚠️ 2026-08-17：這裡本來寫 `toBe(18)`。那是一個**出貨數量**住進測試裡
+    // （CLAUDE.md「驗機制不驗數字」），而它擋下的是「新增了兩份彈道文件」——
+    // 一個完全正常的內容編輯，卻用「投射物特效沒送到畫面」的錯誤訊息紅。
+    // 這條要驗的性質從頭到尾都是**半徑有分檔**，不是「剛好幾份」，所以下界改成
+    // 「多到足以談分佈」。
+    expect(SHIPPED.size, "出貨彈道文件少到不足以談半徑分檔").toBeGreaterThanOrEqual(10);
     const radii = new Set([...SHIPPED.values()].map((p) => p.hitRadius));
     expect(radii.size, `半徑只剩 ${[...radii].join("/")} 一種 —— 大小差異無從證起`).toBeGreaterThanOrEqual(3);
     expect(Math.max(...radii)).toBeGreaterThan(Math.min(...radii) * 1.5);

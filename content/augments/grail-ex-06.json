@@ -1,0 +1,26 @@
+{
+  "id": "grail-ex-06",
+  "schema": "augment@1",
+  "name": "職階技能・騎乘 EX",
+  "description": "[飛行][地形無視] 永久進入飛行狀態，無視單位與一般障礙物碰撞，但不能離開競技場邊界。",
+  "tier": "prismatic",
+  "weight": 25,
+  "tags": [
+    "grail-wish",
+    "flight",
+    "terrain",
+    "class-skill"
+  ],
+  "selectionSlot": "pivot",
+  "eligibility": {
+    "excludeSelfMechanic": [
+      "flight"
+    ]
+  },
+  "flight": {
+    "hoverHeight": 1.5,
+    "ignoreUnits": true,
+    "ignoreObstacles": true,
+    "stayInsideBoundary": true
+  }
+}

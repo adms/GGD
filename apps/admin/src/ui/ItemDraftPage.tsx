@@ -44,6 +44,19 @@ import {
   type ItemDraftField,
   type ItemDraftForm,
 } from "../itemDraft";
+import {
+  GRAIL_DRAFT_FIELD_ORDER,
+  GRAIL_DRAFT_LABELS,
+  LEGACY_POOL_OPTIONS,
+  PREFERENCE_BONUS_MAX,
+  PREFERENCE_BONUS_MIN,
+  SHIPPED_GRAIL_DRAFT,
+  changedGrailFields,
+  extractGrailDraft,
+  grailDraftSummary,
+  patchGrailDraft,
+} from "../grailDraft";
+import type { GrailDraftRules } from "@ggd/shared/sim/economy/grailVocabulary";
 
 function errText(err: unknown): string {
   return err instanceof Error ? err.message : String(err);
@@ -55,6 +68,8 @@ export function ItemDraftPage(): JSX.Element {
   /** 退場清單是 arena-rules 的頂層欄位，不是 `itemDraft` 區塊的一格 —— 見 itemDraft.ts。 */
   const [retiredText, setRetiredText] = useState(formatRetiredTables(SHIPPED_RETIRED_LOOT_TABLES));
   const [offerCount, setOfferCount] = useState(readOfferCount(null));
+  /** 🏆 聖杯顯現 —— arena-rules 的 `grailDraft` 區塊（見 ../grailDraft.ts）。 */
+  const [grail, setGrail] = useState<GrailDraftRules>({ ...SHIPPED_GRAIL_DRAFT });
   const [busy, setBusy] = useState(false);
   const [apiErr, setApiErr] = useState<string | null>(null);
   const [flash, setFlash] = useState<string | null>(null);
@@ -77,6 +92,7 @@ export function ItemDraftPage(): JSX.Element {
         setBaseDoc(full);
         setOfferCount(readOfferCount(full));
         setRetiredText(formatRetiredTables(readRetiredTables(full)));
+        setGrail(extractGrailDraft(full));
         const cfg = extractItemDraft(full);
         if (cfg) setForm(formFromConfig(cfg));
       } catch (err) {
@@ -105,7 +121,7 @@ export function ItemDraftPage(): JSX.Element {
     try {
       // 兩個 patch 疊在**同一份基底文件**上，一次 PUT。分兩次寫的話，第二次會
       // 用第一次之前的基底覆蓋回去 —— 那正是覆蓋層存整份文件的那個陷阱。
-      const next = patchRetiredTables(patchItemDraft(baseDoc, preview), retiredIds);
+      const next = patchGrailDraft(patchRetiredTables(patchItemDraft(baseDoc, preview), retiredIds), grail);
       const head = await putOverlayDoc(ARENA_RULES_COLLECTION, ARENA_RULES_DOC_ID, next);
       setBaseDoc(next);
       setFlash(`✓ 已寫入耐久覆蓋層（generation ${head.generation}）`);
@@ -120,6 +136,7 @@ export function ItemDraftPage(): JSX.Element {
   const resetToShipped = (): void => {
     setForm(formFromConfig(SHIPPED_ITEM_DRAFT));
     setRetiredText(formatRetiredTables(SHIPPED_RETIRED_LOOT_TABLES));
+    setGrail({ ...SHIPPED_GRAIL_DRAFT });
     setFlash(null);
   };
 
@@ -336,6 +353,89 @@ export function ItemDraftPage(): JSX.Element {
             )}
           </div>
         </div>
+      </div>
+
+      <div style={{ marginTop: 18 }}>
+        <div style={{ color: ACCENT, fontSize: 13, fontWeight: 600, marginBottom: 6 }}>
+          🏆 聖杯顯現（回合願望三選一）
+        </div>
+        <div style={{ color: TEXT_DIM, fontSize: 11, marginBottom: 8, lineHeight: 1.7 }}>
+          這一組決定<b style={{ color: TEXT_MAIN }}>哪幾張願望會出現在玩家面前</b>，
+          ⛔ 不改任何一張願望自己的效果 —— 那些整份住在{" "}
+          <code>content/augments/grail-*.json</code>，每次 build / 重啟都重讀。
+        </div>
+        {GRAIL_DRAFT_FIELD_ORDER.map((field) => {
+          const label = GRAIL_DRAFT_LABELS[field];
+          const isChanged = changedGrailFields(grail).includes(field);
+          return (
+            <div key={field} style={rowStyle}>
+              <div style={{ width: 150, flexShrink: 0 }}>
+                <div style={{ color: TEXT_MAIN, fontSize: 13 }}>
+                  {label.zh}
+                  {isChanged && <span style={{ color: GOLD, fontSize: 11, marginLeft: 5 }}>已改</span>}
+                </div>
+              </div>
+              <div style={{ flex: 1 }}>
+                {(field === "eligibilityEnabled" || field === "slotDiversityEnabled") && (
+                  <label style={{ color: TEXT_MAIN, fontSize: 13, cursor: "pointer" }}>
+                    <input
+                      type="checkbox"
+                      checked={grail[field]}
+                      onChange={(e) => setGrail({ ...grail, [field]: e.target.checked })}
+                      style={{ marginRight: 6 }}
+                    />
+                    {grail[field] ? "開" : "關"}
+                  </label>
+                )}
+                {field === "preferenceBonus" && (
+                  <input
+                    type="number"
+                    step={0.1}
+                    min={PREFERENCE_BONUS_MIN}
+                    max={PREFERENCE_BONUS_MAX}
+                    value={grail.preferenceBonus}
+                    onChange={(e) =>
+                      setGrail({ ...grail, preferenceBonus: Number(e.target.value) })
+                    }
+                    style={{
+                      width: 90,
+                      background: "#0b0e17",
+                      color: TEXT_MAIN,
+                      border: `1px solid ${PANEL_BORDER}`,
+                      borderRadius: 3,
+                      padding: "4px 6px",
+                    }}
+                  />
+                )}
+                {field === "legacyPool" && (
+                  <select
+                    value={grail.legacyPool}
+                    onChange={(e) =>
+                      setGrail({ ...grail, legacyPool: e.target.value as GrailDraftRules["legacyPool"] })
+                    }
+                    style={{
+                      background: "#0b0e17",
+                      color: TEXT_MAIN,
+                      border: `1px solid ${PANEL_BORDER}`,
+                      borderRadius: 3,
+                      padding: "4px 6px",
+                    }}
+                  >
+                    {LEGACY_POOL_OPTIONS.map((o) => (
+                      <option key={o.value} value={o.value}>
+                        {o.zh}
+                      </option>
+                    ))}
+                  </select>
+                )}
+                <div style={{ color: TEXT_DIM, fontSize: 11, marginTop: 4, lineHeight: 1.6 }}>
+                  {label.note}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+        <div style={{ color: GOLD, fontSize: 12, marginTop: 6 }}>{grailDraftSummary(grail)}</div>
       </div>
 
       <div style={{ display: "flex", gap: 8, marginTop: 16 }}>

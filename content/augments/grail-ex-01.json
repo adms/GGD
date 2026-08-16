@@ -1,0 +1,26 @@
+{
+  "id": "grail-ex-01",
+  "schema": "augment@1",
+  "name": "聖杯權能・真理改寫 EX",
+  "description": "[技能傷害][真實傷害] 所有技能傷害改為真實傷害，並在免疫與迴避判定前完成轉換。",
+  "tier": "prismatic",
+  "weight": 25,
+  "tags": [
+    "grail-wish",
+    "ability",
+    "true-damage",
+    "rule-rewrite"
+  ],
+  "selectionSlot": "pivot",
+  "eligibility": {
+    "requiresSelfMechanic": [
+      "abilityDamage"
+    ]
+  },
+  "damageTypeOverride": {
+    "scope": "ability",
+    "becomes": "true",
+    "applyAt": "beforeGates",
+    "impactType": "original"
+  }
+}

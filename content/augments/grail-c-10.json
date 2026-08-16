@@ -1,0 +1,56 @@
+{
+  "id": "grail-c-10",
+  "schema": "augment@1",
+  "name": "固有技能・魂喰 C",
+  "description": "[擊殺][成長] 每累積擊殺5個單位，永久獲得1力量、1敏捷、1智慧；各最多20點。",
+  "tier": "silver",
+  "weight": 100,
+  "tags": [
+    "grail-wish",
+    "kill",
+    "scaling",
+    "attributes"
+  ],
+  "selectionSlot": "pivot",
+  "eligibility": {
+    "requiresModeFeature": [
+      "mobs"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onKill",
+      "effects": [
+        {
+          "kind": "grantAttribute",
+          "attr": "str",
+          "mode": "flat",
+          "amount": 1,
+          "everyNth": 5,
+          "store": "source",
+          "maxSourceTotal": 20
+        },
+        {
+          "kind": "grantAttribute",
+          "attr": "agi",
+          "mode": "flat",
+          "amount": 1,
+          "everyNth": 5,
+          "store": "source",
+          "maxSourceTotal": 20
+        },
+        {
+          "kind": "grantAttribute",
+          "attr": "int",
+          "mode": "flat",
+          "amount": 1,
+          "everyNth": 5,
+          "store": "source",
+          "maxSourceTotal": 20
+        }
+      ],
+      "target": "self",
+      "victim": "any"
+    }
+  ]
+}

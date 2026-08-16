@@ -1,0 +1,43 @@
+{
+  "id": "grail-ex-12",
+  "schema": "augment@1",
+  "name": "固有結界・魔力海 EX",
+  "description": "[最大魔力][最大生命][受傷回魔] 最大魔力的100%同時視為額外最大生命；生命損失的50%轉化為魔力。",
+  "tier": "prismatic",
+  "weight": 25,
+  "tags": [
+    "grail-wish",
+    "mana",
+    "health",
+    "reality-marble"
+  ],
+  "selectionSlot": "pivot",
+  "eligibility": {
+    "requiresMana": true
+  },
+  "modifiers": [
+    {
+      "stat": "maxHealth",
+      "op": "percentOf",
+      "value": 1.0,
+      "from": "maxMana"
+    }
+  ],
+  "hooks": [
+    {
+      "on": "onDamageTaken",
+      "effects": [
+        {
+          "kind": "eventValueConversion",
+          "shape": "single",
+          "source": "incomingDamage",
+          "basis": "hpLost",
+          "ratio": 0.5,
+          "to": "mana",
+          "who": "self"
+        }
+      ],
+      "target": "self"
+    }
+  ]
+}

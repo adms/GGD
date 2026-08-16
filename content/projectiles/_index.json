@@ -1,12 +1,24 @@
 {
   "collection": "projectiles",
-  "hash": "3fb7d49dc6da",
+  "hash": "436be16f46cb",
   "entries": [
     {
       "id": "basic-attack",
       "path": "projectiles/basic-attack.json",
       "hash": "b05f0b7fe7ac",
       "size": 162
+    },
+    {
+      "id": "grail.projection-bolt",
+      "path": "projectiles/grail.projection-bolt.json",
+      "hash": "dae2616e0ea4",
+      "size": 153
+    },
+    {
+      "id": "grail.tracking-bolt",
+      "path": "projectiles/grail.tracking-bolt.json",
+      "hash": "c607c6826d78",
+      "size": 150
     },
     {
       "id": "imported.bolt",

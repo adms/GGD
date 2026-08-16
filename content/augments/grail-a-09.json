@@ -1,0 +1,32 @@
+{
+  "id": "grail-a-09",
+  "schema": "augment@1",
+  "name": "靈基轉換・虛數體 A",
+  "description": "[防禦捨棄][迴避] 護甲與魔抗固定為0，迴避率固定為35%。",
+  "tier": "gold",
+  "weight": 60,
+  "tags": [
+    "grail-wish",
+    "tradeoff",
+    "evasion",
+    "defense-sacrifice"
+  ],
+  "selectionSlot": "pivot",
+  "modifiers": [
+    {
+      "stat": "armor",
+      "op": "override",
+      "value": 0
+    },
+    {
+      "stat": "mr",
+      "op": "override",
+      "value": 0
+    },
+    {
+      "stat": "evasion",
+      "op": "override",
+      "value": 0.35
+    }
+  ]
+}

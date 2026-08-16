@@ -1,0 +1,44 @@
+{
+  "id": "grail-a-13",
+  "schema": "augment@1",
+  "name": "固有技能・怪力 A",
+  "description": "[AD捨棄][生命普攻] 攻擊力固定為0；每次普通攻擊額外造成自身最大生命5%的物理傷害。",
+  "tier": "gold",
+  "weight": 60,
+  "tags": [
+    "grail-wish",
+    "tradeoff",
+    "basic-attack",
+    "max-health"
+  ],
+  "selectionSlot": "pivot",
+  "modifiers": [
+    {
+      "stat": "ad",
+      "op": "override",
+      "value": 0
+    }
+  ],
+  "hooks": [
+    {
+      "on": "onBasicAttack",
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "ratios": [
+              {
+                "stat": "maxHealth",
+                "coeff": 0.05
+              }
+            ]
+          },
+          "applyTo": "target"
+        }
+      ],
+      "target": "event",
+      "victim": "enemy"
+    }
+  ]
+}

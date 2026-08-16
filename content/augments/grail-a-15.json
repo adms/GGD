@@ -1,0 +1,50 @@
+{
+  "id": "grail-a-15",
+  "schema": "augment@1",
+  "name": "固有技能・不屈之魂 A",
+  "description": "[負面狀態][淨化][無敵] 被掛上負面狀態時，淨化所有負面狀態並獲得0.75秒無敵。20秒冷卻。",
+  "tier": "gold",
+  "weight": 60,
+  "tags": [
+    "grail-wish",
+    "stun",
+    "dispel",
+    "invulnerable"
+  ],
+  "selectionSlot": "generic",
+  "hooks": [
+    {
+      "on": "onStatusApplied",
+      "effects": [
+        {
+          "kind": "dispel",
+          "shape": "single",
+          "pools": {
+            "status": true,
+            "shields": false,
+            "dot": true,
+            "buffs": true
+          },
+          "polarity": "debuff",
+          "count": 50,
+          "order": "newest"
+        },
+        {
+          "kind": "invulnerable",
+          "durationSec": 0.75,
+          "applyTo": "self",
+          "blocksDamage": "all",
+          "blocksTrueDamage": true,
+          "blocksControl": true
+        }
+      ],
+      "target": "self",
+      "internalCooldown": 20,
+      "condition": {
+        "kind": "status",
+        "subject": "self",
+        "tag": "debuff"
+      }
+    }
+  ]
+}

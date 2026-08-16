@@ -1,0 +1,45 @@
+{
+  "id": "grail-ex-19",
+  "schema": "augment@1",
+  "name": "固有技能・魔力爐心（無限）EX",
+  "description": "[技能命中][無限成長] 每次技能命中敵方英雄，永久獲得1 AP，沒有成長上限。",
+  "tier": "prismatic",
+  "weight": 25,
+  "tags": [
+    "grail-wish",
+    "ability-hit",
+    "infinite-scaling",
+    "ap"
+  ],
+  "selectionSlot": "pivot",
+  "eligibility": {
+    "requiresSelfMechanic": [
+      "abilityDamage"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onAbilityHit",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ap",
+              "op": "flat",
+              "value": 1
+            }
+          ],
+          "permanent": true,
+          "applyTo": "self",
+          "stackKey": "grail-infinite-mana-core-ex",
+          "stackVisual": true,
+          "dispellable": false,
+          "polarity": "buff"
+        }
+      ],
+      "target": "self",
+      "victim": "enemyChampion"
+    }
+  ]
+}

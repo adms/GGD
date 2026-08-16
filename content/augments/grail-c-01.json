@@ -1,0 +1,42 @@
+{
+  "id": "grail-c-01",
+  "schema": "augment@1",
+  "name": "固有技能・對魔力 C",
+  "description": "[負面狀態][淨化] 被掛上負面狀態時，立即移除最新一個負面狀態。25秒冷卻。",
+  "tier": "silver",
+  "weight": 100,
+  "tags": [
+    "grail-wish",
+    "control",
+    "dispel",
+    "defense"
+  ],
+  "selectionSlot": "generic",
+  "hooks": [
+    {
+      "on": "onStatusApplied",
+      "effects": [
+        {
+          "kind": "dispel",
+          "shape": "single",
+          "pools": {
+            "status": true,
+            "shields": false,
+            "dot": true,
+            "buffs": true
+          },
+          "polarity": "debuff",
+          "count": 1,
+          "order": "newest"
+        }
+      ],
+      "target": "self",
+      "internalCooldown": 25,
+      "condition": {
+        "kind": "status",
+        "subject": "self",
+        "tag": "debuff"
+      }
+    }
+  ]
+}

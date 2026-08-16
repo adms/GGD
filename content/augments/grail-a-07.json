@@ -1,0 +1,69 @@
+{
+  "id": "grail-a-07",
+  "schema": "augment@1",
+  "name": "魔術・靈基修復 A",
+  "description": "[復活][技能重置] 被復活時，完成Q／W／E／R冷卻、回滿魔力並獲得1秒無敵。",
+  "tier": "gold",
+  "weight": 60,
+  "tags": [
+    "grail-wish",
+    "revive",
+    "cooldown-reset",
+    "invulnerable"
+  ],
+  "selectionSlot": "generic",
+  "eligibility": {
+    "requiresModeFeature": [
+      "revive"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onRevive",
+      "effects": [
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "Q",
+          "mode": "reset"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "W",
+          "mode": "reset"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "E",
+          "mode": "reset"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "R",
+          "mode": "reset"
+        },
+        {
+          "kind": "restore",
+          "manaPct": 1.0,
+          "applyTo": "self"
+        },
+        {
+          "kind": "invulnerable",
+          "durationSec": 1.0,
+          "applyTo": "self",
+          "blocksDamage": "all",
+          "blocksTrueDamage": true,
+          "blocksControl": true
+        }
+      ],
+      "target": "self"
+    }
+  ]
+}

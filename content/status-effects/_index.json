@@ -1,6 +1,6 @@
 {
   "collection": "status-effects",
-  "hash": "d13929fea91c",
+  "hash": "6565a0cff1df",
   "entries": [
     {
       "id": "armor-break",
@@ -61,6 +61,12 @@
       "path": "status-effects/fear.json",
       "hash": "560cef434917",
       "size": 555
+    },
+    {
+      "id": "grail-strengthened-projection",
+      "path": "status-effects/grail-strengthened-projection.json",
+      "hash": "d77c1fb4ec33",
+      "size": 588
     },
     {
       "id": "grievous-wounds",

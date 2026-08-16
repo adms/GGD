@@ -1,0 +1,51 @@
+{
+  "id": "grail-c-14",
+  "schema": "augment@1",
+  "name": "魔術・地脈接續 C",
+  "description": "[中立物件][技能重置] 擊毀可觸發擊殺事件的中立單位或中立物件後，完成Q／W／E冷卻。15秒冷卻。",
+  "tier": "silver",
+  "weight": 100,
+  "tags": [
+    "grail-wish",
+    "neutral-object",
+    "objective",
+    "cooldown-reset"
+  ],
+  "selectionSlot": "pivot",
+  "eligibility": {
+    "requiresModeFeature": [
+      "neutralObjects"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onKill",
+      "effects": [
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "Q",
+          "mode": "reset"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "W",
+          "mode": "reset"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "E",
+          "mode": "reset"
+        }
+      ],
+      "target": "self",
+      "victim": "mob",
+      "internalCooldown": 15
+    }
+  ]
+}

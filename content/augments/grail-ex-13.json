@@ -1,0 +1,52 @@
+{
+  "id": "grail-ex-13",
+  "schema": "augment@1",
+  "name": "寶具・死棘之槍 EX",
+  "description": "[R命中][處決] R命中最大生命10%以下的敵方英雄時，直接處決目標，無視護盾。30秒冷卻。",
+  "tier": "prismatic",
+  "weight": 25,
+  "tags": [
+    "grail-wish",
+    "r-hit",
+    "execute",
+    "noble-phantasm"
+  ],
+  "selectionSlot": "synergy",
+  "eligibility": {
+    "requiresSelfMechanic": [
+      "abilityDamage"
+    ],
+    "requiresAbilitySlots": [
+      "R"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onAbilityHit",
+      "effects": [
+        {
+          "kind": "devour",
+          "shape": "single",
+          "thresholdPctOfMax": [
+            0.1
+          ],
+          "healPct": 0,
+          "victim": "champion",
+          "throughShields": true
+        }
+      ],
+      "target": "event",
+      "victim": "enemyChampion",
+      "abilitySlot": "R",
+      "internalCooldown": 30,
+      "condition": {
+        "kind": "stat",
+        "subject": "target",
+        "stat": "hp",
+        "mode": "percent",
+        "op": "<=",
+        "value": 0.1
+      }
+    }
+  ]
+}

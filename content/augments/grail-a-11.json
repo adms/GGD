@@ -1,0 +1,26 @@
+{
+  "id": "grail-a-11",
+  "schema": "augment@1",
+  "name": "魔術・魔力裝甲 A",
+  "description": "[最大魔力][最大生命] 最大魔力的50%同時視為額外最大生命。",
+  "tier": "gold",
+  "weight": 60,
+  "tags": [
+    "grail-wish",
+    "mana",
+    "health",
+    "stat-conversion"
+  ],
+  "selectionSlot": "pivot",
+  "eligibility": {
+    "requiresMana": true
+  },
+  "modifiers": [
+    {
+      "stat": "maxHealth",
+      "op": "percentOf",
+      "value": 0.5,
+      "from": "maxMana"
+    }
+  ]
+}

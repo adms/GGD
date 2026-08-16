@@ -1,0 +1,21 @@
+{
+  "id": "grail-a-12",
+  "schema": "augment@1",
+  "name": "魔術・術式反轉 A",
+  "description": "[技能傷害][物理化] 所有技能傷害改為物理傷害；原本AP、AD或其他傷害係數不變。",
+  "tier": "gold",
+  "weight": 60,
+  "tags": [
+    "grail-wish",
+    "ability",
+    "damage-type",
+    "physical"
+  ],
+  "selectionSlot": "pivot",
+  "damageTypeOverride": {
+    "scope": "ability",
+    "becomes": "physical",
+    "applyAt": "afterGates",
+    "impactType": "original"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "id": "grail.tracking-bolt",
+  "schema": "projectile@1",
+  "speed": 26,
+  "maxRange": 14,
+  "hitRadius": 0.5,
+  "vfxKey": "fx.prim.arcane.bolt"
+}

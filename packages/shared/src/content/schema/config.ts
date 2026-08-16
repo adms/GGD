@@ -1040,6 +1040,46 @@ export type GoldDropConfig = z.infer<typeof zGoldDropConfig>;
  * Optional: an absent block means the shipped policy, so every pre-GH#249 doc
  * (and `DEFAULT_ARENA_RULES`) keeps behaving exactly as it did.
  */
+/**
+ * ⭐ **聖杯顯現的四個旋鈕**（第一守則：決策點要可調）。
+ *
+ * 型別與出貨值住在 `sim/economy/grailVocabulary.ts` 的 {@link DEFAULT_GRAIL_DRAFT}
+ * —— 這裡只寫上下界與中文說明。⛔ 不要在這裡再抄一份預設值：那會變成第四個
+ * 住處，而三個住處之間已經有 drift 測試在守。
+ */
+export const zGrailDraftConfig = z
+  .object({
+    eligibilityEnabled: z
+      .boolean()
+      .describe(
+        "靈基適性條件（§15 禁止死願望）。開 = 一張願望的觸發機制你身上沒有就不發給你" +
+          "（例:全 repo 只有 1 支技能產得出反彈,所以「反彈成功時⋯」對其他人是按不到的卡）。" +
+          "關 = 每張願望都可能發給任何人。",
+      ),
+    slotDiversityEnabled: z
+      .boolean()
+      .describe(
+        "三張要不要湊不同的顯現位置（§16）。開 = 優先湊齊 連動／泛用／轉向 三種," +
+          "湊不到才照權重補。關 = 純照權重抽,可能三張都是同一種。",
+      ),
+    preferenceBonus: z
+      .number()
+      .min(1)
+      .max(10)
+      .describe(
+        "「與你現有 build 連動」的願望權重乘幾倍（1 = 這一格等於關掉）。" +
+          "只乘一次,命中兩個不會乘兩次。",
+      ),
+    legacyPool: z
+      .enum(["exclude", "include"])
+      .describe(
+        "舊的 31 張增益卡進不進卡池。exclude（出貨）= 只發聖杯願望——設計規則 §8" +
+          "「禁止純屬性增益」而舊池 31 張裡 16 張是純屬性。include = 兩批一起發。" +
+          "⛔ 舊的 JSON 一份都沒有刪,切回來就整批回來。",
+      ),
+  })
+  .strict();
+
 export const zItemDraftConfig = z
   .object({
     /**
@@ -2529,6 +2569,15 @@ export const zConfigArenaRulesDoc = z
     exUnlockRound: z.number().int().min(1).optional(),
     /** choices per offer (augment + weapon offers) */
     offerCount: z.number().int().min(1).max(5),
+    /**
+     * ⭐ **聖杯顯現規則**（聖杯願望三選一 §15 · §16）。省略 = 出貨的
+     * {@link DEFAULT_GRAIL_DRAFT}。
+     *
+     * ⚠️ 它住在 arena-rules 而不是自成一份 config 文件，理由是 `offerCount`
+     * 就在上面一行 —— 這四格講的是**同一張卡怎麼發出來**，分兩個文件只會讓
+     * 「開幾張」與「發哪幾張」的規則各自漂移。
+     */
+    grailDraft: zGrailDraftConfig.optional(),
     /**
      * 傳說武器卡候選不足時的補抽規則 (GH#249); omit = the shipped `short`
      * policy. See {@link zItemDraftConfig} — and note that the whitelist

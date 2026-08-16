@@ -1,0 +1,26 @@
+{
+  "id": "grail-a-03",
+  "schema": "augment@1",
+  "name": "固有技能・戰鬥續行 A",
+  "description": "[致命傷害][格擋] 每60秒一次，完全格擋一發原本會使你死亡的傷害。",
+  "tier": "gold",
+  "weight": 60,
+  "tags": [
+    "grail-wish",
+    "lethal",
+    "block",
+    "survival"
+  ],
+  "selectionSlot": "generic",
+  "block": {
+    "damageTypes": [
+      "physical",
+      "magic"
+    ],
+    "chance": 1.0,
+    "fraction": 1.0,
+    "lethalOnly": true,
+    "lethalBasis": "hpAndShields",
+    "internalCooldown": 60
+  }
+}

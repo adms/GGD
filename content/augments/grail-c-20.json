@@ -1,0 +1,73 @@
+{
+  "id": "grail-c-20",
+  "schema": "augment@1",
+  "name": "投影魔術・強化投影 C",
+  "description": "[施法][下一次普攻] 施法後5秒內，下一次普攻追加一枚投影彈，造成40＋20% AP魔法傷害。8秒冷卻。",
+  "tier": "silver",
+  "weight": 100,
+  "tags": [
+    "grail-wish",
+    "ability-cast",
+    "basic-attack",
+    "projectile"
+  ],
+  "selectionSlot": "synergy",
+  "eligibility": {
+    "requiresAnyAbilitySlot": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onAbilityCast",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [],
+          "duration": 5,
+          "applyTo": "self",
+          "statusId": "grail-strengthened-projection",
+          "exclusiveGroup": "grail-strengthened-projection",
+          "exclusiveOnExisting": "replace",
+          "dispellable": false,
+          "polarity": "buff",
+          "hooks": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "spawnProjectile",
+                  "projectileId": "grail.projection-bolt",
+                  "onHit": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "flat": 40,
+                        "ratios": [
+                          {
+                            "stat": "ap",
+                            "coeff": 0.2
+                          }
+                        ]
+                      },
+                      "applyTo": "target"
+                    }
+                  ]
+                }
+              ],
+              "target": "event",
+              "maxTriggers": 1,
+              "onConsumed": "detachSource"
+            }
+          ]
+        }
+      ],
+      "target": "self",
+      "internalCooldown": 8
+    }
+  ]
+}

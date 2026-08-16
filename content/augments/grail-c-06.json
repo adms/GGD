@@ -1,0 +1,23 @@
+{
+  "id": "grail-c-06",
+  "schema": "augment@1",
+  "name": "固有技能・高速詠唱 C",
+  "description": "[攻速][CDR] 每1.0攻速同時提供5%冷卻縮減，最多20%。原攻速不會消失。",
+  "tier": "silver",
+  "weight": 100,
+  "tags": [
+    "grail-wish",
+    "attack-speed",
+    "cdr",
+    "stat-conversion"
+  ],
+  "selectionSlot": "pivot",
+  "modifiers": [
+    {
+      "stat": "cdr",
+      "op": "percentOf",
+      "value": 0.05,
+      "from": "as"
+    }
+  ]
+}

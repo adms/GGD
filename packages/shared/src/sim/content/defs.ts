@@ -688,6 +688,16 @@ export interface AugmentDef extends SourceGrantFields {
   block?: import("../combat/block").BlockGrant;
   critStrike?: import("../combat/critStrike").CritStrikeGrant;
   tags: string[];
+  /**
+   * ⭐ **靈基適性條件**（聖杯願望設計規則 §15「⛔ 禁止死願望」）。缺席 = 無條件。
+   *
+   * 讀它的**只有** `economy/draft.ts::offerAugments` —— 這是一個**開牌時**的閘,
+   * ⛔ 不是一個執行期效果。一張條件不成立的願望**不進卡池**,而不是進了之後
+   * 靜靜地什麼都不做（那正是要關掉的失敗形態 ②）。
+   */
+  eligibility?: import("../economy/grailVocabulary").GrailEligibility;
+  /** ⭐ §16 顯現位置偏好。缺席時開牌視同 `generic`。 */
+  selectionSlot?: import("../economy/grailVocabulary").AugmentSelectionSlot;
 }
 
 export interface ProjectileDef {

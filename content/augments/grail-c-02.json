@@ -1,0 +1,53 @@
+{
+  "id": "grail-c-02",
+  "schema": "augment@1",
+  "name": "固有技能・心眼（偽）C",
+  "description": "[迴避][反彈][擊退] 成功迴避或反彈敵方攻擊時，將攻擊者小幅擊退。8秒冷卻。",
+  "tier": "silver",
+  "weight": 100,
+  "tags": [
+    "grail-wish",
+    "evasion",
+    "knockback",
+    "counter"
+  ],
+  "selectionSlot": "synergy",
+  "eligibility": {
+    "requiresSelfMechanic": [
+      "evasion",
+      "reflect"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onEvade",
+      "effects": [
+        {
+          "kind": "knockback",
+          "distanceTier": "小",
+          "from": "caster",
+          "applyTo": "target",
+          "distance": 2,
+          "speed": 16
+        }
+      ],
+      "target": "event",
+      "internalCooldown": 8
+    },
+    {
+      "on": "onReflectSuccess",
+      "effects": [
+        {
+          "kind": "knockback",
+          "distanceTier": "小",
+          "from": "caster",
+          "applyTo": "target",
+          "distance": 2,
+          "speed": 16
+        }
+      ],
+      "target": "event",
+      "internalCooldown": 8
+    }
+  ]
+}

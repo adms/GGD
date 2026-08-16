@@ -1,0 +1,40 @@
+{
+  "id": "grail-c-12",
+  "schema": "augment@1",
+  "name": "魔術・詠唱結界 C",
+  "description": "[施法][控制免疫] 施放Q／W／E／R後，獲得0.4秒控制免疫。8秒冷卻。",
+  "tier": "silver",
+  "weight": 100,
+  "tags": [
+    "grail-wish",
+    "ability-cast",
+    "control-immunity",
+    "defense"
+  ],
+  "selectionSlot": "generic",
+  "eligibility": {
+    "requiresAnyAbilitySlot": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onAbilityCast",
+      "effects": [
+        {
+          "kind": "invulnerable",
+          "durationSec": 0.4,
+          "applyTo": "self",
+          "blocksDamage": "none",
+          "blocksTrueDamage": false,
+          "blocksControl": true
+        }
+      ],
+      "target": "self",
+      "internalCooldown": 8
+    }
+  ]
+}

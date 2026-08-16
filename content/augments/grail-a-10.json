@@ -1,0 +1,40 @@
+{
+  "id": "grail-a-10",
+  "schema": "augment@1",
+  "name": "魔術刻印・閉鎖回路 A",
+  "description": "[回魔捨棄][傷害回魔] 魔力回復固定為0；每次對敵人造成傷害時，回復3%最大魔力。1秒冷卻。",
+  "tier": "gold",
+  "weight": 60,
+  "tags": [
+    "grail-wish",
+    "tradeoff",
+    "mana",
+    "damage-dealt"
+  ],
+  "selectionSlot": "pivot",
+  "eligibility": {
+    "requiresMana": true
+  },
+  "modifiers": [
+    {
+      "stat": "manaRegen",
+      "op": "override",
+      "value": 0
+    }
+  ],
+  "hooks": [
+    {
+      "on": "onDamageDealt",
+      "effects": [
+        {
+          "kind": "restore",
+          "manaPct": 0.03,
+          "applyTo": "self"
+        }
+      ],
+      "target": "self",
+      "victim": "enemy",
+      "internalCooldown": 1
+    }
+  ]
+}

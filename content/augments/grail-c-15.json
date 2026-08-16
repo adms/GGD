@@ -1,0 +1,44 @@
+{
+  "id": "grail-c-15",
+  "schema": "augment@1",
+  "name": "職階技能・單獨行動 C",
+  "description": "[隊友死亡][回魔] 隊友死亡後，魔力回復效果變為2倍，持續15秒。不可疊加，只刷新時間。",
+  "tier": "silver",
+  "weight": 100,
+  "tags": [
+    "grail-wish",
+    "ally-death",
+    "mana-regen",
+    "clutch"
+  ],
+  "selectionSlot": "synergy",
+  "eligibility": {
+    "requiresModeFeature": [
+      "team"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onAllyDeath",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "manaRegen",
+              "op": "pctMult",
+              "value": 1.0
+            }
+          ],
+          "duration": 15,
+          "applyTo": "self",
+          "exclusiveGroup": "grail-single-action-c",
+          "exclusiveOnExisting": "replace",
+          "dispellable": false,
+          "polarity": "buff"
+        }
+      ],
+      "target": "self"
+    }
+  ]
+}

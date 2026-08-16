@@ -1,0 +1,47 @@
+{
+  "id": "grail-c-03",
+  "schema": "augment@1",
+  "name": "魔術・反射術式 C",
+  "description": "[反彈][迴避][回魔] 成功反彈或迴避時，回復6%最大魔力。5秒冷卻。",
+  "tier": "silver",
+  "weight": 100,
+  "tags": [
+    "grail-wish",
+    "reflect",
+    "mana",
+    "sustain"
+  ],
+  "selectionSlot": "synergy",
+  "eligibility": {
+    "requiresSelfMechanic": [
+      "evasion",
+      "reflect"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onReflectSuccess",
+      "effects": [
+        {
+          "kind": "restore",
+          "manaPct": 0.06,
+          "applyTo": "self"
+        }
+      ],
+      "target": "self",
+      "internalCooldown": 5
+    },
+    {
+      "on": "onEvade",
+      "effects": [
+        {
+          "kind": "restore",
+          "manaPct": 0.06,
+          "applyTo": "self"
+        }
+      ],
+      "target": "self",
+      "internalCooldown": 5
+    }
+  ]
+}

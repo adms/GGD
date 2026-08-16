@@ -1,0 +1,39 @@
+{
+  "id": "grail-c-17",
+  "schema": "augment@1",
+  "name": "固有技能・直感 C",
+  "description": "[受到暴擊][護盾] 被敵方英雄暴擊時，獲得相當於8%最大生命的護盾，持續3秒。10秒冷卻。",
+  "tier": "silver",
+  "weight": 100,
+  "tags": [
+    "grail-wish",
+    "damage-taken",
+    "crit",
+    "shield"
+  ],
+  "selectionSlot": "generic",
+  "hooks": [
+    {
+      "on": "onDamageTaken",
+      "effects": [
+        {
+          "kind": "shield",
+          "amount": {
+            "ratios": [
+              {
+                "stat": "maxHealth",
+                "coeff": 0.08
+              }
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all"
+        }
+      ],
+      "target": "self",
+      "victim": "enemyChampion",
+      "damageCrit": "crit",
+      "internalCooldown": 10
+    }
+  ]
+}

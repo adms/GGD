@@ -1,0 +1,37 @@
+{
+  "id": "grail-ex-20",
+  "schema": "augment@1",
+  "name": "固有技能・魔力放出（雷）EX",
+  "description": "[攻速][普攻傷害] 每次普通攻擊追加等同「60 × 當前攻速」的魔法傷害。攻速同時決定攻擊頻率與單次威力。",
+  "tier": "prismatic",
+  "weight": 25,
+  "tags": [
+    "grail-wish",
+    "attack-speed",
+    "basic-attack",
+    "lightning"
+  ],
+  "selectionSlot": "pivot",
+  "hooks": [
+    {
+      "on": "onBasicAttack",
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "ratios": [
+              {
+                "stat": "as",
+                "coeff": 60.0
+              }
+            ]
+          },
+          "applyTo": "target"
+        }
+      ],
+      "target": "event",
+      "victim": "enemy"
+    }
+  ]
+}

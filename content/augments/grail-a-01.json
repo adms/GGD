@@ -1,0 +1,79 @@
+{
+  "id": "grail-a-01",
+  "schema": "augment@1",
+  "name": "固有技能・心眼（真）A",
+  "description": "[迴避][反彈][彈反] 成功迴避或反彈後，立即對攻擊者造成一次100% AD物理傷害並小幅擊退。6秒冷卻。",
+  "tier": "gold",
+  "weight": 60,
+  "tags": [
+    "grail-wish",
+    "evasion",
+    "counter",
+    "physical"
+  ],
+  "selectionSlot": "synergy",
+  "eligibility": {
+    "requiresSelfMechanic": [
+      "evasion",
+      "reflect"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onEvade",
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 1.0
+              }
+            ]
+          },
+          "applyTo": "target"
+        },
+        {
+          "kind": "knockback",
+          "distanceTier": "小",
+          "from": "caster",
+          "applyTo": "target",
+          "distance": 2,
+          "speed": 16
+        }
+      ],
+      "target": "event",
+      "internalCooldown": 6
+    },
+    {
+      "on": "onReflectSuccess",
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 1.0
+              }
+            ]
+          },
+          "applyTo": "target"
+        },
+        {
+          "kind": "knockback",
+          "distanceTier": "小",
+          "from": "caster",
+          "applyTo": "target",
+          "distance": 2,
+          "speed": 16
+        }
+      ],
+      "target": "event",
+      "internalCooldown": 6
+    }
+  ]
+}

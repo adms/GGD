@@ -1,0 +1,51 @@
+{
+  "id": "grail-ex-05",
+  "schema": "augment@1",
+  "name": "寶具・二重真名解放 EX",
+  "description": "[R施放][寶具再演] 施放R後，1.25秒後自動再施放一次R，不再次消耗魔力。60秒冷卻。",
+  "tier": "prismatic",
+  "weight": 25,
+  "tags": [
+    "grail-wish",
+    "r-cast",
+    "proxy-cast",
+    "noble-phantasm"
+  ],
+  "selectionSlot": "synergy",
+  "eligibility": {
+    "requiresAbilitySlots": [
+      "R"
+    ]
+  },
+  "hooks": [
+    {
+      "on": "onAbilityCast",
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "single",
+          "delaySec": 1.25,
+          "count": 1,
+          "intervalSec": 1,
+          "effects": [
+            {
+              "kind": "proxyCast",
+              "shape": "single",
+              "slot": "R",
+              "payCosts": "none",
+              "respectCooldown": false,
+              "requireLearned": true,
+              "rankMode": "casterRank",
+              "targetMode": "reresolve",
+              "maxDepth": 1,
+              "emitCastEvents": false
+            }
+          ]
+        }
+      ],
+      "target": "self",
+      "abilitySlot": "R",
+      "internalCooldown": 60
+    }
+  ]
+}

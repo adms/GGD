@@ -1,0 +1,52 @@
+{
+  "id": "grail-ex-02",
+  "schema": "augment@1",
+  "name": "固有結界・時間神殿 EX",
+  "description": "[時間][技能重置] 每20秒完成Q／W／E／R冷卻。EX不受影響。",
+  "tier": "prismatic",
+  "weight": 25,
+  "tags": [
+    "grail-wish",
+    "interval",
+    "cooldown-reset",
+    "reality-marble"
+  ],
+  "selectionSlot": "generic",
+  "hooks": [
+    {
+      "on": "onInterval",
+      "effects": [
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "Q",
+          "mode": "reset"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "W",
+          "mode": "reset"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "E",
+          "mode": "reset"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "R",
+          "mode": "reset"
+        }
+      ],
+      "target": "self",
+      "internalCooldown": 20
+    }
+  ]
+}
