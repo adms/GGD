@@ -142,7 +142,12 @@ ok "部署前帳號數: $ACCOUNTS_BEFORE（住在 host 的 data/，不在映像�
 # 磁碟不夠的時候，**線上那一版必須一個位元組都沒被動到**。
 #
 # 兩個數字都是決策點，所以是環境變數而不是寫死（CLAUDE.md 第一守則）。
-BUILD_CACHE_CAP="${GGD_BUILD_CACHE_CAP:-25GB}"
+# owner 2026-08-16 把 docker 那顆碟擴到 300G，於是把快取上限從 25G 放寬到 40G。
+# ⚠️ 這兩個數字**問的是不同的問題**，所以擴碟只動得到上面那個：
+#   · BUILD_CACHE_CAP —— 「我願意花多少空間換 build 速度」。碟變大 ⇒ 可以更大方
+#   · MIN_FREE_GB     —— 「一次 build 要多少空間才跑得完」。⛔ 跟碟多大無關，
+#                          所以碟擴到 300G 它照樣是 20 —— 它是**需求**不是**餘裕**
+BUILD_CACHE_CAP="${GGD_BUILD_CACHE_CAP:-40GB}"
 MIN_FREE_GB="${GGD_MIN_FREE_GB:-20}"
 if [ "$MODE" = full ]; then
   say "磁碟閘（build cache 上限 $BUILD_CACHE_CAP，可用空間下限 ${MIN_FREE_GB}G）"

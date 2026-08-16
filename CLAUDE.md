@@ -734,7 +734,7 @@ client 每次載入都重抓 `bundle.json`，所以不必重建映像，只要�
 
 | | 做什麼 | 為什麼是這個 |
 |---|---|---|
-| ① | `docker builder prune -f --max-used-space 25GB` | **位元組**上限。⛔ 不是 `--filter until=168h` —— 那是對「一天發幾版」的假設，而 2026-08-05 發過 5 版 |
+| ① | `docker builder prune -f --max-used-space 40GB` | **位元組**上限。⛔ 不是 `--filter until=168h` —— 那是對「一天發幾版」的假設，而 2026-08-05 發過 5 版 |
 | ② | 剩餘空間 ≥ 20G，否則 `die` | 這是**兩個名詞的關係**（空間 vs 一次 build 要的量），不是「快取多大」這種單一名詞 |
 
 ⚠️ **閘在 pull 之前是刻意的**：`content/` 是 live bind-mount。先 pull 成功、
