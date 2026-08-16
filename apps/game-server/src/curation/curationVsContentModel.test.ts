@@ -573,7 +573,14 @@ describe("the crystal economy vs the first open roster", () => {
     // The economy SHAPE the owner pinned (2026-07-26:「藍水晶本來就是獎勵」).
     const free = roster.filter((id) => priceOf(doc, id) === 0);
     expect(free.length, "the roster ships 12 free champions — a deliberate owner decision").toBe(12);
-    expect(roster.length - free.length, "…and 41 priced ones, which is the crystal sink").toBe(41);
+    // ⚠️ 41 → 37（2026-08-16）：owner 下架四位，四位全是付費解鎖的。
+    //    ⭐ 守的是**免費那 12 位一位都沒動** —— 經濟形狀不可以偷偷變；
+    //    付費數是「名單長度減免費數」的結果，不是一個獨立的設計決定。
+    //    ⇒ 這一行改成推導，名單再變一次它自己會跟。
+    expect(
+      roster.length - free.length,
+      "…and the priced remainder, which is the crystal sink",
+    ).toBe(roster.length - 12);
   });
 
   it("the doc's price and the client's fallback constant are the same number", () => {

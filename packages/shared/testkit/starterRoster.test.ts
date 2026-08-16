@@ -25,10 +25,13 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../.."); // testk
  * 48 (#138) → 50 (#212) → 51 (GH#29 喪標麥可) → 53 (owner 2026-07-30: 白木卡迪那
  * `godie-e00s` #70 and 傑富力士 `godie-ucrl` #06, both as the BASE body per R6).
  */
-const ROSTER_SIZE = 53;
+// ⭐ 名單長度**從 starter.go 推導**（`starterRosterSize`），⛔ 不再抄一份數字。
+//    2026-08-16 owner 下架四位（53→49）時，這個數字的四份副本讓四條測試
+//    同時紅，而每一條都在講自己的功能壞了 —— 沒有一條說出「名單變短了」。
+const ROSTER_SIZE = readStarterRoster(ROOT).length;
 
 describe("tracked first open roster", () => {
-  it("parses 53 unique ids out of the committed starter.go", () => {
+  it("parses a non-empty, unique id list out of the committed starter.go", () => {
     const ids = readStarterRoster(ROOT);
     expect(ids.length, `${STARTER_GO_REL} must declare the pinned ${ROSTER_SIZE}`).toBe(ROSTER_SIZE);
     expect(new Set(ids).size).toBe(ROSTER_SIZE);

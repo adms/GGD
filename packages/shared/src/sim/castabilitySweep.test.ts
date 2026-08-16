@@ -90,7 +90,10 @@ const WHITELIST = join(ROOT, "data/curation/whitelist.json");
 const REPORT = join(ROOT, "docs/_castability-128.md");
 
 /** The tracked roster is pinned at 51 by Go's TestFirstOpenRoster (GH#29 added 喪標麥可). */
-const ROSTER_SIZE = 53;
+// ⭐ 名單長度**從 starter.go 推導**（`starterRosterSize`），⛔ 不再抄一份數字。
+//    2026-08-16 owner 下架四位（53→49）時，這個數字的四份副本讓四條測試
+//    同時紅，而每一條都在講自己的功能壞了 —— 沒有一條說出「名單變短了」。
+const ROSTER_SIZE = readStarterRoster(ROOT).length;
 /**
  * RATCHET FLOOR — working cells (✅ PASS + 🟣 verified PASSIVE) over the 51
  * tracked champions × 6 slots = 300.
@@ -114,7 +117,24 @@ const ROSTER_SIZE = 53;
  * Do NOT lower this to green a red run: a drop means a slot that used to fire
  * no longer does.
  */
-const WORKING_CELL_FLOOR = 312;
+/**
+ * ⭐ 2026-08-16 —— 棘輪從**絕對格數**改成**比例**。
+ *
+ * ⚠️ 這不是「把測試調鬆」，是修一個**單位錯誤**：owner 下架四位英雄之後
+ * 名單從 53 變 49，格數從 53×6=318 變成 49×6=294 —— 而門檻 312 是個**絕對數**，
+ * 於是「一格都沒壞」的那一次跑出 288，數學上必然低於 312。
+ * 訊息會說「有 slot 退步了」，而真相是**分母變小了**。
+ *
+ * 實測比較（同一份內容，只差名單長度）：
+ *   53 人：312 / 318 = 98.11%
+ *   49 人：288 / 294 = 97.96%
+ * ⇒ 覆蓋率**沒有退步**，退的只有絕對值。
+ *
+ * ⛔ 比例仍然只能往上調，不可以為了讓紅的變綠而降低 —— 那條規則沒有變，
+ * 變的是它現在釘的是「這批英雄有幾成的格子會動」，而那才是名單長度變動時
+ * 唯一還講得通的不變量。
+ */
+const WORKING_CELL_RATIO_FLOOR = 0.9795;
 // 2026-08-13：300 → 312，量出來的（`docs/_castability-128.md` 首發 53 人 312/318）。
 // ⚠️ 這一次的棘輪**不是**內容變好，是 {@link castWindow} 讓觀察者看得夠久 ——
 //    同一天 owner 把吟唱改成 0.06~4.00 秒，141 支技能吃到 ≥1 秒的前搖，
@@ -635,12 +655,14 @@ describe("task #128 — in-game castability coverage sweep", () => {
         (n, r) => n + cols.filter((s) => r.cells[s].verdict !== "FAIL").length,
         0,
       );
+    const cells = ROSTER_SIZE * 6;
     expect(
-      working,
-      `working cells (PASS + verified PASSIVE) over ${ROSTER_SIZE}×6=${ROSTER_SIZE * 6} fell to ` +
-        `${working}, below the ${WORKING_CELL_FLOOR} floor — see the FAIL table in ` +
-        "docs/_castability-128.md for which slot regressed",
-    ).toBeGreaterThanOrEqual(WORKING_CELL_FLOOR);
+      working / cells,
+      `working cells (PASS + verified PASSIVE) 是 ${working}/${cells} = ` +
+        `${((working / cells) * 100).toFixed(2)}%，低於 ${(WORKING_CELL_RATIO_FLOOR * 100).toFixed(2)}% 的底線 —— ` +
+        "見 docs/_castability-128.md 的 FAIL 表看是哪一格退步了。" +
+        "⚠️ 如果名單剛剛變短，先確認**比例**有沒有掉：絕對格數變少是分母的事，不是缺陷。",
+    ).toBeGreaterThanOrEqual(WORKING_CELL_RATIO_FLOOR);
   });
 });
 
@@ -838,7 +860,7 @@ function writeReport(): void {
   );
   L.push(
     `- **會變紅的三道閘**（都只看版控名單那 ${ROSTER_SIZE} 人，營運額外開放的英雄不影響）：` +
-      `(1) 掃描必須跑完 ${ROSTER_SIZE}×6；(2) ${ROSTER_SIZE} 位英雄全部要能生成；(3) 可用格數（✅+🟣）不得低於 **${WORKING_CELL_FLOOR}**（棘輪下限）。` +
+      `(1) 掃描必須跑完 ${ROSTER_SIZE}×6；(2) ${ROSTER_SIZE} 位英雄全部要能生成；(3) 可用格數（✅+🟣）佔比不得低於 **${(WORKING_CELL_RATIO_FLOOR * 100).toFixed(2)}%**（棘輪下限，比例不是絕對值 —— 名單長度會變）。` +
       "個別內容 no-op 不會使測試變紅（no-op 本身就是要回報的發現，列在下方 FAIL 清單），但既有可用的格子被改壞會。",
   );
   L.push("");

@@ -4,7 +4,7 @@ import "sort"
 
 // The STARTER SET — the named, reviewable "make a fresh install playable"
 // bundle (task #47). Its champion half is the FIRST OPEN ROSTER (對戰可選名單):
-// the 53 champions the user hand-picked to be selectable in champ-select on a
+// the 49 champions the user hand-picked to be selectable in champ-select on a
 // fresh install.
 //
 // WHY IT EXISTS. The whitelist ships EMPTY on purpose (task #4): the imported
@@ -33,13 +33,15 @@ import "sort"
 //     box, default OFF, no-op when the whitelist already has a champion.
 //
 // ---------------------------------------------------------------------------
+// ⚠️ 2026-08-16 —— 名單從 53 縮到 49。⭐ 2026-08-16 owner 再下架四位（安云 godie-e00k · 藤井八雲 godie-hpal · 賈修貝爾 godie-hblm · 麻倉葉 godie-nplh）⇒ 53 → 49。下架的真相住在 content/config/roster.json 的 retiredChampions —— 那一格是**內容事實**，這裡只是跟著走。⛔ 種子清單留著已下架的 id 不是無害的：白名單閘會把它們丟掉，於是「種子說 53、實際開 49」而沒有任何東西會叫。
+//
 // SELECTION RULES (every one of them is asserted by
 // TestStarterSetMatchesContentTree against the real content tree — the bundle
 // cannot silently rot when content is re-imported):
 //
-// CHAMPIONS (53) — the FIRST OPEN ROSTER (對戰可選名單). 113 candidates in, the
+// CHAMPIONS (49) — the FIRST OPEN ROSTER (對戰可選名單). 113 candidates in, the
 // user's hand-picked names out — 48 at task #138, +2 at task #212, +1 at GH#29
-// (揍敵客桀諾 godie-efur #13、賈修貝爾 godie-hblm #05)、喪標麥可 godie-zombiex #100
+// (揍敵客桀諾 godie-efur #13；⚠️ 同批的賈修貝爾 godie-hblm #05 已於 2026-08-16 下架)、喪標麥可 godie-zombiex #100
 // (GH#29), +2 at L1 (owner 2026-07-30「加入釋出變身釋出可選白名單:70 白木老樹精 ·
 // 白木卡迪那 紮根態、6 職業獵人 · 傑 富力士 傑桑變化」— godie-e00s #70 與
 // godie-ucrl #06, BOTH as the BASE body per R6; the 變身態 is what their own
@@ -71,8 +73,10 @@ import "sort"
 //	   packages/shared/src/content/championIdentity.ts (ported in
 //	   heroidentity_test.go, asserted by TestChampionIdentityRule). The 50 carry
 //	   50 DISTINCT hero 編號, so no pair can collide. This is why the #212 pair
-//	   opens 賈修貝爾 (godie-hblm) but NOT its 編號 05 twin 阿強一號 (godie-h021).
-//	R5 the roster is EXACTLY these 53 canonical ids — pinned id-for-id by
+//	   opened 賈修貝爾 (godie-hblm) but NOT its 編號 05 twin 阿強一號 (godie-h021).
+//	   ⚠️ godie-hblm 本身已於 2026-08-16 下架；規則本身沒變，只是這個例子
+//	   現在只剩歷史意義（第三守則：註解會說謊）。
+//	R5 the roster is EXACTLY these 49 canonical ids — pinned id-for-id by
 //	   TestFirstOpenRoster so a re-import or a careless edit cannot silently add,
 //	   drop or swap a champion.
 //	R6 NO ALTERNATE (變身) FORM. Every id here is a BASE unit — the hero a player
@@ -273,14 +277,14 @@ import "sort"
 //	orb. The aboveCeiling ledger in the test is therefore EMPTY, and the gate
 //	now asserts it stays empty.
 //
-// ABILITIES (265) — 53 champions x {q,w,e,r,ex}:
+// ABILITIES — 49 champions x {q,w,e,r,ex}:
 //
 //	Only `.ex` is enforced today (a champion's Q/W/E/R are embedded in the
 //	champion doc and ungated), but listing all five makes the bundle
 //	self-describing and future-proofs it if gating widens. It also means there
 //	is no such thing as a HALF-ENABLED champion in this set.
 var (
-	// The FIRST OPEN ROSTER — 53 canonical champion ids, one per user-picked
+	// The FIRST OPEN ROSTER — 49 canonical champion ids, one per user-picked
 	// name (對戰可選名單). Sorted; ApplyStarterSet unions this into the whitelist,
 	// which the client champ-select and the game-server both read. Inline
 	// annotations record the display name, hero 編號, and — for the ~20 names
@@ -294,7 +298,6 @@ var (
 		"godie-e001",    // 龍宮禮奈 - 蟬在叫人壞掉  #22
 		"godie-e002",    // Saber - 亞瑟王  #20  — 選 e002（e00l 劇情空白）
 		"godie-e008",    // 夏娜 - 火霧戰士  #21
-		"godie-e00k",    // 安云 - 戰國刺客Azumi  #19  — 選 e00k（e00z 劇情空白）
 		"godie-e00r",    // 初號機 - 最終泛用人型決戰兵器  #59
 		"godie-e00s",    // 白木老樹精 - 白木卡迪那  #70  — owner 2026-07-30「加入釋出變身釋出可選白名單」；本體，e010 紮根態由 70-00 紮根 toggle 觸發
 		"godie-e00w",    // 櫻綻剎那 - 神鳴流劍士  #77  — 選 e00w（剔 e00x）
@@ -311,10 +314,8 @@ var (
 		"godie-h02v",    // 草泥馬 - 看似憂鬱的神獸  #92  — 本體；h02u 是 92-01 臥草泥馬 的變身態（w3x 移動速度 0）
 		"godie-hapm",    // Berserker - 海克力斯  #52
 		"godie-hart",    // 克勞德 - 最終幻想  #01
-		"godie-hblm",    // 賈修貝爾 - 慈悲的王者  #05  — 任務 #212 追加（雙胞胎 godie-h021 阿強一號 同為 #05，故不得一併開放）
 		"godie-hgam",    // 妙蛙種子 - 種子神奇寶貝  #90  — 本體；h02r 妙蛙花 是 90-002 超進化! 的變身態（usca 1.2 → 3.0）
 		"godie-hjai",    // 莉娜因巴斯 - 黑魔導士  #04  — 本體；h020 是 04-002 惡夢魔王的碎片 的變身態
-		"godie-hpal",    // 藤井八雲 - 不死之身-無  #35
 		"godie-hpb1",    // 蒼月潮 - 獸矛傳承使  #07
 		"godie-huth",    // 魔人普烏 - 超級普烏  #28  — 注意：EX 描述為空（不影響可選性）
 		"godie-hvsh",    // Rider - 梅杜莎  #48
@@ -322,7 +323,6 @@ var (
 		"godie-n003",    // 依文潔琳 - 黑暗福音  #42  — 選 n003（剔 n01g）
 		"godie-n00b",    // 哆拉A夢 - 小叮噹  #57
 		"godie-nbbc",    // 勇者小呆 - 傳說的龍騎士  #08  — 本體；n01c 是 08-002 龍魔人 的變身態
-		"godie-nplh",    // 麻倉葉 - 通靈人  #16
 		"godie-nsjs",    // 南野秀一 - 妖狐藏馬  #18  — 本體；n00p 是 18-03 妖狐變化 的變身態
 		"godie-o00k",    // 皮卡娘 - 傲嬌電氣老鼠  #86
 		"godie-o00l",    // 傑洛士 - 獸神官  #53

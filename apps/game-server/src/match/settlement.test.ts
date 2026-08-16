@@ -206,6 +206,14 @@ function runFullMatch(matchId: string, seed: number, doc: Record<string, unknown
 describe("per-team elimination settlement (elimination-settlement, task #193 / GH#264)", () => {
   it("出貨模式:沒有人在比賽中途出局,所以未來的冠軍拿不到「戰鬥結束」卡", () => {
     cover("elimination-settlement");
+    // GH#329 —— seed 4263 換成 4260。⚠️ 同樣不是「把測試調鬆」：2026-08-16 的
+    //    移動速度第二版（極小5/小6/中8/大10/極大12，上限 18）+ owner 下架四位
+    //    英雄，bot 的選角與走位都變了，4263 那一場冠軍不再是被打光過的隊伍。
+    //    實測掃 4260–4560：**72/300 場**有隊伍歸零，其中 4260 / 4288 / 4318 /
+    //    4319 / 4331 五個 seed 冠軍本人也歸零過，取最小的。
+    //    ⭐ 「72/300」這個數字本身是這次掃描的副產品，但它是有意義的：
+    //    如果哪天它變成 0/300，那就不是換 seed 的問題，是**淘汰這條路整個死了**。
+    //
     // GH#324 —— seed 4245 換成 4263。⚠️ 同樣不是「把測試調鬆」：Phase 3 讓單位
     //    改走**烘焙好的路徑點**（不再撞牆卡死），bot 的走位因此改變，4245 那一場
     //    不再有任何隊伍把血打光。實測掃 4240–4290，4263 / 4275 / 4276 都重現，
@@ -216,7 +224,7 @@ describe("per-team elimination settlement (elimination-settlement, task #193 / G
     //    於是這條測試的前提消失（下面那兩行原本就寫著「這一行紅了不要刪，
     //    要換一個會重現的 seed」）。4245 實測：spent=隊伍2/3，winner=隊伍2 ——
     //    冠軍本人被打光過，正是 GH#264 的重現本身。
-    const run = runFullMatch("elim1", 4263, matchDocWithCard(false));
+    const run = runFullMatch("elim1", 4260, matchDocWithCard(false));
     // 這一條測的是 OFF 那一側 —— 而且是**經由內容文件**到達控制器的。
     expect(run.ctl.settlementCardOnHealthSpent).toBe(false);
 
@@ -243,7 +251,7 @@ describe("per-team elimination settlement (elimination-settlement, task #193 / G
   it("後台打開就退回舊行為 —— 這個功能是被關掉,不是被刪掉", () => {
     cover("elimination-settlement");
     // 同上，與 OFF 那一側用同一個 seed 才比得出「打開的代價」。
-    const run = runFullMatch("elim1", 4263, matchDocWithCard(true));
+    const run = runFullMatch("elim1", 4260, matchDocWithCard(true));
     expect(run.ctl.settlementCardOnHealthSpent).toBe(true);
 
     // 血歸零的隊伍**當場**拿到一張卡:不多不少就是那些隊伍，各一張。

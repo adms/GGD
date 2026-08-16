@@ -44,6 +44,16 @@ import { cover } from "@ggd/shared/testkit/cover";
 import { isAlternateForm, zVfxDoc } from "@ggd/shared/content";
 import { rosterBindings, abilityVfxKeys, curatedDocs, vfxKeyFor } from "./bindings";
 
+import { readStarterRoster } from "@ggd/shared/testkit/starterRoster";
+
+/** `config/roster.json` 的 `retiredChampions` —— ⛔ 不抄一份 id 清單。 */
+function retiredChampionIds(): string[] {
+  const doc = JSON.parse(
+    readFileSync(join(REPO, "content/config/roster.json"), "utf8"),
+  ) as { retiredChampions?: string[] };
+  return doc.retiredChampions ?? [];
+}
+
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../../..");
 const STARTER_GO = join(REPO, "apps/platform/internal/curation/starter.go");
 const CONTENT = join(REPO, "content");
@@ -80,10 +90,13 @@ const roster: string[] = goList(readFileSync(STARTER_GO, "utf8"), "starterChampi
  * five casts still fails here. 51 → 53 on 2026-07-30 when the owner opened
  * 白木卡迪那 `godie-e00s` and 傑富力士 `godie-ucrl`; both owed rows and got them.
  */
-const ROSTER_SIZE = 53;
+// ⭐ 名單長度**從 starter.go 推導**（`starterRosterSize`），⛔ 不再抄一份數字。
+//    2026-08-16 owner 下架四位（53→49）時，這個數字的四份副本讓四條測試
+//    同時紅，而每一條都在講自己的功能壞了 —— 沒有一條說出「名單變短了」。
+const ROSTER_SIZE = readStarterRoster(REPO).length;
 
-describe("roster bindings cover the 53 whitelisted champions (ability-vfx-bindings)", () => {
-  it("binds every ability of all 53 champions (265 rows, none missing)", () => {
+describe("roster bindings cover every whitelisted champion (ability-vfx-bindings)", () => {
+  it("binds every ability of every roster champion (none missing)", () => {
     cover("ability-vfx-bindings");
     // Guard the parse itself: a silently-empty goList would make every
     // assertion below vacuous, which is the failure mode this file just had.
@@ -105,7 +118,15 @@ describe("roster bindings cover the 53 whitelisted champions (ability-vfx-bindin
     const extra = [...new Set(binds.map((b) => b.abilityId.replace(/\.[a-z]+$/, "")))].filter(
       (id) => !rosterIds.has(id),
     );
+    // ⭐ 2026-08-16 —— 第三種合法身分：**已下架**（`config/roster.json` 的
+    //    `retiredChampions`）。owner 下架四位之後它們掉出 roster，而綁定列還在，
+    //    於是這條把「資料留著」報成「多了一列錯的」。
+    // ⛔ 正解不是刪掉那些綁定 —— 下架在這個專案是**可逆的**（roster.json 的註解
+    //    自己寫著「技能補完之後把 id 從這裡拿掉就是重新上架，不用改程式」）。
+    //    綁定跟著英雄走，重新上架那天它們要在原地。⇒ 補上這一類就好。
+    const retired = new Set(retiredChampionIds());
     for (const id of extra) {
+      if (retired.has(id)) continue;
       expect(isAlternateForm(id), `${id} is bound but is neither on the roster nor a 變身 form`).toBe(
         true,
       );

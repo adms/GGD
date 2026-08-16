@@ -55,9 +55,8 @@ export function goStringSlice(src: string, name: string): string[] {
 }
 
 /**
- * The canonical champion ids of the first open roster, in declaration order
- * (53 today — the count itself is pinned by `starterRoster.test.ts`, not here,
- * so this doc comment cannot go stale the next time the owner opens a hero).
+ * The canonical champion ids of the first open roster, in declaration order.
+ * ⛔ 這裡刻意**不寫數字** —— 名單長度是 `starter.go` 的事實，不是這份註解的。
  * `repoRoot` is the monorepo root (the directory holding `apps/`).
  */
 export function readStarterRoster(repoRoot: string): string[] {
@@ -77,4 +76,20 @@ export function readStarterRoster(repoRoot: string): string[] {
     throw new Error(`${STARTER_GO_REL} declares an EMPTY starterChampions block`);
   }
   return ids;
+}
+
+/**
+ * ⭐ 名單**長度**的唯一住處 —— 從 `starter.go` 推導。
+ *
+ * ⚠️ 2026-08-16 之前這個數字被**抄在四個地方**（`starterRoster.test.ts` 的
+ * `ROSTER_SIZE`、`castabilitySweep.test.ts`、`combatVoiceCoverage.test.ts`、
+ * `bindings.test.ts`），於是 owner 下架四位英雄時**四條測試同時紅**，而每一條
+ * 的訊息都在講自己的功能壞了（「語音覆蓋率不對」「VFX 綁定少了」），
+ * 沒有一條說出真相：**名單變短了，這四條都是對的。**
+ *
+ * ⇒ 現在它們一起讀這一支。名單再變一次，四個消費端零改動。
+ * 這正是 CLAUDE.md 第零守則⑨（N 個同型 = 一個模板 + 一張表）在測試上的樣子。
+ */
+export function starterRosterSize(repoRoot: string): number {
+  return readStarterRoster(repoRoot).length;
 }

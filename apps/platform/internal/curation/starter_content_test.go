@@ -176,7 +176,7 @@ func TestStarterSetMatchesContentTree(t *testing.T) {
 	}
 
 	set := curation.StarterSet()
-	require.GreaterOrEqual(t, len(set.Champions), 40, "the first open roster is 53 champions")
+	require.GreaterOrEqual(t, len(set.Champions), 40, "the first open roster is 49 champions")
 	require.GreaterOrEqual(t, len(set.Items), 24, "starter set must enable at least 24 items")
 	require.GreaterOrEqual(t, len(set.Abilities), len(set.Champions)*5,
 		"every starter champion contributes its full Q/W/E/R/EX kit")
@@ -628,7 +628,7 @@ func TestStarterDraftIsQuestSet(t *testing.T) {
 	check("content/loot-tables/quest-rewards.json", tableIDs)
 }
 
-// firstOpenRoster is the user's 53 hand-picked champions — the FIRST OPEN
+// firstOpenRoster is the user's 49 hand-picked champions — the FIRST OPEN
 // ROSTER (對戰可選名單), one canonical id per requested name after dropping the
 // test/placeholder and duplicate-reskin candidates (see starter.go and 附錄A of
 // docs/hero-popularity-ranking.md). Pinned here id-for-id so a re-import or a
@@ -654,14 +654,13 @@ func TestStarterDraftIsQuestSet(t *testing.T) {
 // trigger ability reaches: godie-e00s #70 toggles into godie-e010 via 70-00 紮根,
 // godie-ucrl #06 morphs into godie-u034 for 7s via 06-04 傑桑變化.
 var firstOpenRoster = []string{
-	"godie-e001", "godie-e002", "godie-e008", "godie-e00k", "godie-e00r",
+	"godie-e001", "godie-e002", "godie-e008", "godie-e00r",
 	"godie-e00s", "godie-e00w", "godie-edem", "godie-efur", "godie-emfr",
 	"godie-emns",
 	"godie-etyr", "godie-ewar", "godie-h00l", "godie-h01n", "godie-h01u",
-	"godie-h02k", "godie-h02v", "godie-hapm", "godie-hart", "godie-hblm",
-	"godie-hgam", "godie-hjai", "godie-hpal", "godie-hpb1", "godie-huth",
+	"godie-h02k", "godie-h02v", "godie-hapm", "godie-hart", "godie-hgam", "godie-hjai", "godie-hpb1", "godie-huth",
 	"godie-hvsh", "godie-hvwd", "godie-n003", "godie-n00b", "godie-nbbc",
-	"godie-nplh", "godie-nsjs", "godie-o00k", "godie-o00l", "godie-o02p",
+	"godie-nsjs", "godie-o00k", "godie-o00l", "godie-o02p",
 	"godie-ofar", "godie-ogld", "godie-ogrh", "godie-orkn", "godie-osam",
 	"godie-u00h", "godie-u00j", "godie-u00k", "godie-u00n", "godie-u00v",
 	"godie-ubal", "godie-ucrl", "godie-udea", "godie-udre", "godie-umal",
@@ -670,13 +669,13 @@ var firstOpenRoster = []string{
 }
 
 // whitelist-first-open-roster: the enabled champion set the starter bundle
-// seeds is EXACTLY the 53 canonical first-open-roster ids — no more, no fewer,
+// seeds is EXACTLY the 49 canonical first-open-roster ids — no more, no fewer,
 // none swapped. This is the guard the task asks for; it needs no content tree,
 // so it runs in any environment.
 func TestFirstOpenRoster(t *testing.T) {
 	testkit.Cover(t, "whitelist-first-open-roster")
 
-	require.Len(t, firstOpenRoster, 53, "the first open roster is 53 champions")
+	require.Len(t, firstOpenRoster, 49, "the first open roster is 49 champions")
 	seen := map[string]struct{}{}
 	for _, id := range firstOpenRoster {
 		_, dup := seen[id]
@@ -687,7 +686,7 @@ func TestFirstOpenRoster(t *testing.T) {
 	want := append([]string(nil), firstOpenRoster...)
 	sort.Strings(want)
 	assert.Equal(t, want, curation.StarterSet().Champions,
-		"the starter bundle's enabled champion set must be EXACTLY the 53 canonical first-open-roster ids")
+		"the starter bundle's enabled champion set must be EXACTLY the 49 canonical first-open-roster ids")
 }
 
 // storeDoc is the FLAT-PRICE half of content/config/store.json — the same two
@@ -704,9 +703,15 @@ type storeDoc struct {
 // FREE / PRICED is the ECONOMY SHAPE the owner has deliberately decided not to
 // change (2026-07-26:「藍水晶本來就是獎勵 有人抱怨我們再來改」). The roster may
 // move ids; it may not quietly move these two numbers.
+//
+// ⚠️ 2026-08-16 —— 41 → 37。**這不是改經濟形狀，是名單變短了**：owner 下架四位
+// （安云 godie-e00k · 藤井八雲 godie-hpal · 賈修貝爾 godie-hblm · 麻倉葉 godie-nplh），
+// 四位全部是付費解鎖的，所以 53−4=49 位裡 12 免費、37 付費。免費那 12 位一位都沒動
+// —— 那才是這條斷言真正在守的東西（「免費的比例不可以偷偷變」）。
+// ⛔ 如果哪天 free 也跟著動了，那就**不是**跟著名單走，要回來問 owner。
 const (
 	starterFreeChampions   = 12
-	starterPricedChampions = 41
+	starterPricedChampions = 37
 )
 
 // clientWalletMetaPath is the champ-select module that carries the client's

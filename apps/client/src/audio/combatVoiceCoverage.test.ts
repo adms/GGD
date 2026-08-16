@@ -125,7 +125,9 @@ function silentFor(category: string): string[] {
 describe("every first-open-roster champion has a combat voice", () => {
   it("names every mute champion, and the list is exactly the registered gap", () => {
     cover("transform-forms-voice-coverage");
-    expect(ROSTER).toHaveLength(53);
+    // ⛔ 不釘死一個數字 —— 名單長度是 starter.go 的事實（見 starterRosterSize）。
+    //    這裡真正要擋的是「解析壞掉回一個空陣列」，那才會讓整條測試空轉全綠。
+    expect(ROSTER.length, "starter.go 解析不出英雄 —— 這條測試會空轉").toBeGreaterThan(20);
     expect(PACK, "the shipped voice-pack manifest must parse").not.toBeNull();
     // A pin for ids no longer on the roster is dead weight that would hide a
     // real regression, so rolling the roster back must also fail here.

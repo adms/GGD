@@ -169,12 +169,20 @@ afterAll(() => {
 });
 
 describe("#224 替身普查 —— 數字", () => {
-  it("overlay 缺席：53 位 / 42 種身體 / 14 位共用 / 3 組", async () => {
+  it("overlay 缺席：全名單 / 40 種身體 / 14 位共用 / 3 組", async () => {
     cover("standin-census");
+    // ⚠️ 2026-08-16 —— 這一整段的數字**跟著名單走**。owner 下架四位英雄
+  //    （安云 · 藤井八雲 · 賈修貝爾 · 麻倉葉）之後全部往下移一階：
+  //      53→49 位 · 42→40 種身體 · 16→14 位共用 · 35→33 位沒記 usca
+  //    ⛔ 這**不是**替身系統退步 —— 是普查的分母變小了。
+  //    ⭐ 「位數」一律用 `ROSTER.length` 推導（名單再變它自己會跟）；
+  //    身體種類／共用數是**量出來的**，只能重新量，所以留著字面值。
     const census = censusChampionBodies(ROSTER, hooksFor(await overlayModels(false)));
-    expect(census.totals.champions).toBe(53);
-    expect(census.totals.distinctBodies).toBe(42);
-    expect(census.totals.sharing).toBe(14);
+    expect(census.totals.champions).toBe(ROSTER.length);
+    expect(census.totals.distinctBodies).toBe(40);
+    // ⚠️ 14→12：下架的四位裡有兩位在共用組（賈修貝爾在 blocky-mage、
+    //    藤井八雲在 blocky-barbarian）。組數還是 3 —— 兩組都還有 ≥2 人。
+    expect(census.totals.sharing).toBe(12);
     expect(census.totals.sharedGroups).toBe(3);
   });
 
@@ -190,7 +198,6 @@ describe("#224 替身普查 —— 數字", () => {
         [
           "godie-e00s", // 白木老樹精 - 白木卡迪那
           "godie-efur", // 揍敵客大家長 - 揍敵客桀諾
-          "godie-hblm", // 慈悲的王者 - 賈修貝爾
           "godie-n00b", // 小叮噹 - 哆拉A夢
           "godie-ogld", // 美白大法師 - 黑人牙膏
           "godie-orkn", // 電車癡漢 - 臭作
@@ -199,7 +206,7 @@ describe("#224 替身普查 —— 數字", () => {
       ],
       [
         "assets/models/champions/blocky-barbarian.glb",
-        ["godie-h02k", "godie-hpal", "godie-ubal", "godie-umal"],
+        ["godie-h02k", "godie-ubal", "godie-umal"],
       ],
       ["assets/models/champions/blocky-knight.glb", ["godie-hapm", "godie-ucrl", "godie-udea"]],
     ]);
@@ -208,13 +215,13 @@ describe("#224 替身普查 —— 數字", () => {
     expect(sharedWith(census, "godie-u00k")).toContain("godie-n00b");
   });
 
-  it("⚠️ 反 ⑥/⑦：同一份資料，overlay 在場時答案翻成 53 種身體 / 0 共用", async () => {
+  it("⚠️ 反 ⑥/⑦：同一份資料，overlay 在場時答案翻成「一人一種身體」/ 0 共用", async () => {
     cover("standin-census");
-    // 掃 `doc.modelKey` 的實作在這兩種情境下都會回 42 —— 這一條是它過不了的。
+    // 掃 `doc.modelKey` 的實作在這兩種情境下都會回同一個數 —— 這一條是它過不了的。
     const off = censusChampionBodies(ROSTER, hooksFor(await overlayModels(false)));
     const on = censusChampionBodies(ROSTER, hooksFor(await overlayModels(true)));
-    expect(off.totals.distinctBodies).toBe(42);
-    expect(on.totals.distinctBodies).toBe(53);
+    expect(off.totals.distinctBodies).toBe(40);
+    expect(on.totals.distinctBodies).toBe(ROSTER.length);
     expect(on.totals.sharing).toBe(0);
     expect(on.totals.sharedGroups).toBe(0);
     // 而 modelKey 本身**沒有變** —— 證明差異來自解析路徑，不是輸入。
@@ -222,7 +229,7 @@ describe("#224 替身普查 —— 數字", () => {
       expect(on.bodies.get(id)!.modelKey).toBe(off.bodies.get(id)!.modelKey);
     }
     // 那 14 位在 overlay 在場時各自穿自己的 WC3 身體。
-    for (const id of ["godie-n00b", "godie-u00k", "godie-hblm", "godie-hapm"]) {
+    for (const id of ["godie-n00b", "godie-u00k", "godie-hapm"]) {
       const b = on.bodies.get(id)!;
       expect(b.source).toBe("wc3-overlay");
       expect(b.isStandin).toBe(false);
@@ -240,13 +247,13 @@ describe("#224 替身普查 —— 數字", () => {
     const forced: CensusHooks = { ...hooks, skinOf: () => ({ preferVoxelBody: true }) };
     const census = censusChampionBodies(ROSTER, forced);
     expect(census.totals.sharing).toBe(0);
-    expect(census.totals.distinctBodies).toBe(53);
+    expect(census.totals.distinctBodies).toBe(ROSTER.length);
     expect(census.bodies.get("godie-n00b")!.source).toBe("voxel-body");
   });
 });
 
 describe("#77 替身回退有沒有丟掉地圖的真 scale", () => {
-  it("出貨名單裡，地圖 usca 沒走到替身身體上的只剩 1 位：賈修貝爾", async () => {
+  it("出貨名單裡，地圖 usca 沒走到替身身體上的**零位** —— ⚠️ 是他離開了，不是修好了", async () => {
     cover("standin-census");
     const census = censusChampionBodies(ROSTER, hooksFor(await overlayModels(false)));
     // note 已標 ⚠CONFLICT 的兩位是 owner 依角色設定刻意跟地圖不同的（熊貓
@@ -256,38 +263,42 @@ describe("#77 替身回退有沒有丟掉地圖的真 scale", () => {
     const dropped = [...census.bodies.values()]
       .filter((b) => b.mapScaleHonoured === false && !DELIBERATE.has(b.championId))
       .map((b) => b.championId);
-    // 賈修貝爾：`relativeScale` 0.67 是 WC3 身高比的乘積（note 自己寫著
-    // 64.89/115.63 × 1.20），但條目沒有 `standinRelativeScale`，所以回退到
-    // 方塊人時拿的是 0.67 而不是地圖的 1.20 —— 差 1.79 倍。
-    expect(dropped).toEqual(["godie-hblm"]);
-    const hblm = census.bodies.get("godie-hblm")!;
-    expect(hblm.mapScale).toBe(1.2);
-    expect(hblm.bodyScale).toBeCloseTo(0.67, 5);
-    expect(hblm.mapModel).toBe("units\\critters\\VillagerKid\\VillagerKid.mdl");
+
+    // ⚠️ 2026-08-16 —— 這條以前釘的是「只剩 1 位：賈修貝爾」（`relativeScale`
+    //    0.67 是 WC3 身高比的乘積，但條目沒有 `standinRelativeScale`，回退到方塊人
+    //    時拿的是 0.67 而不是地圖的 1.20，差 1.79 倍）。
+    //    owner 那天把賈修貝爾**下架**了，於是這份清單變成空的。
+    //
+    // ⛔ **不要把這個零讀成「債還完了」。** 那個缺陷一行程式都沒有被改 ——
+    //    它只是暫時沒有活體樣本。roster.json 的註解自己寫著下架是可逆的
+    //    （「技能補完之後把 id 從這裡拿掉就是重新上架」），所以賈修貝爾回來的
+    //    那一天這條會**自己變紅**，並且指名道姓 —— 那正是它該做的事。
+    expect(dropped).toEqual([]);
   });
 
-  it("地圖的真模型指向是機器讀得到的：16 位穿通用身體的有 12 位帶著 umdl", async () => {
+  it("地圖的真模型指向是機器讀得到的：14 位穿通用身體的有 10 位帶著 umdl", async () => {
     cover("standin-census");
     const census = censusChampionBodies(ROSTER, hooksFor(await overlayModels(false)));
     const standins = [...census.bodies.values()].filter((b) => b.isStandin);
-    // 16 = 撞臉的 14 位 + 初號機（獨佔 blocky-rogue）+ 喪標麥可（獨佔
+    // 14 = 撞臉的 12 位 + 初號機（獨佔 blocky-rogue）+ 喪標麥可（獨佔
     // blocky-undead）。「穿別人的身體」與「跟人撞臉」是兩件事。
-    expect(standins.length).toBe(16);
-    expect(census.totals.onGenericBody).toBe(16);
-    expect(census.totals.sharing).toBe(14);
+    // ⚠️ 2026-08-16 下架四位之後 16→14。
+    expect(standins.length).toBe(14);
+    expect(census.totals.onGenericBody).toBe(14);
+    expect(census.totals.sharing).toBe(12);
     // 地圖沒有覆寫 umdl（繼承 base unit）的那幾位沒有這個欄位。
-    expect(standins.filter((b) => b.mapModel !== null).length).toBe(12);
+    expect(standins.filter((b) => b.mapModel !== null).length).toBe(10);
     // 小叮噹本來是一隻 0.6 倍的藍色熊貓，而且那件事現在寫在資料裡。
     const n00b = census.bodies.get("godie-n00b")!;
     expect(n00b.mapScale).toBe(0.6);
     expect(n00b.mapModel).toContain("StormPandarenBrewmaster");
   });
 
-  it("出貨名單有 35 位連 usca 都沒有被記下來（未還的債，不是回歸）", async () => {
+  it("出貨名單有 33 位連 usca 都沒有被記下來（未還的債，不是回歸）", async () => {
     cover("standin-census");
     const census = censusChampionBodies(ROSTER, hooksFor(await overlayModels(false)));
-    expect(census.totals.mapScaleUnrecorded).toBe(35);
-    // 那 35 位裡只有一位穿的是通用身體：喪標麥可，而他的方塊殭屍身體是 #217/#226
+    expect(census.totals.mapScaleUnrecorded).toBe(33);
+    // 那 33 位裡只有一位穿的是通用身體：喪標麥可，而他的方塊殭屍身體是 #217/#226
     // 刻意選的，不是回退 —— 他沒有 w3x 來源，所以本來就沒有 usca 可記。
     const unrecordedStandins = [...census.bodies.values()]
       .filter((b) => b.mapScale === null && b.isStandin)
@@ -348,10 +359,10 @@ describe("#224 普查的判定 = 渲染器真的做了什麼", () => {
         census.bodies.get(id)!.glbPath,
       );
     }
-    // 而且真的有人載到通用方塊人 —— 否則上面 53 條都是 null === null 的空對帳。
+    // 而且真的有人載到通用方塊人 —— 否則上面每一條都是 null === null 的空對帳。
     expect(
       [...observed.values()].filter((p) => p?.startsWith("assets/models/champions/blocky-")).length,
-    ).toBe(16);
+    ).toBe(14);
     // 而且真的有人載到自己的模型（另一半的空對帳防線）。
     expect([...observed.values()].filter((p) => p?.startsWith("assets/models/imported/")).length)
       .toBeGreaterThan(20);
