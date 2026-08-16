@@ -742,8 +742,16 @@ client 每次載入都重抓 `bundle.json`，所以不必重建映像，只要�
 磁碟不夠的時候，線上那一版必須**一個位元組都沒被動到**。
 
 ⚠️ **量的是 `docker info --format '{{.DockerRootDir}}'`，不是 `/`。**
-這台的 data-root 是 **`/data/docker`（sdb，98G）**，而 `/`（sda1）是另一顆、
+這台的 data-root 是 **`/data/docker`（sdb）**，而 `/`（sda1，99G）是另一顆、
 從頭到尾都在 11%。2026-08-16 我第一次回報就讀了 `/`，於是對 owner 講了一個假的根因。
+
+| 碟 | 掛載 | 大小 | 裝什麼 |
+|---|---|---|---|
+| sda1 | `/` | 99G | 只有作業系統 |
+| **sdb** | **`/data`** | **300G**（owner 2026-08-16 從 100G 擴充） | docker 全部 + GGD repo（`/home/can/GGD` 是 symlink → `/data/GGD`） |
+
+實測（2026-08-16，擴充後）：`FREE_GB = 292`，穩態 docker 只吃 2.7G，
+所以 40G 快取上限的穩態約 43G / 295G。
 兩個門檻可用 `GGD_BUILD_CACHE_CAP` / `GGD_MIN_FREE_GB` 覆寫。
 守衛：`hostDeployScript.test.ts` 的「磁碟閘」（突變：把 `$DOCKER_ROOT` 換成 `/` → 紅）。
 
