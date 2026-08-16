@@ -37,7 +37,15 @@ import {
   DEFAULT_COOLDOWN_RULES_DOC,
   type ConfigAuthoringRulesDoc,
 } from "./schema/config";
-import { DEFAULT_STAT_CAPS } from "../sim/statCaps";
+import { DEFAULT_STAT_CAPS, statCapsFromDoc } from "../sim/statCaps";
+import { COMBAT_ENV_DEFAULTS } from "../sim/combatEnv";
+import {
+  BAND_MEANING,
+  NORMAL_BANDS,
+  NORMALIZED_STAT_KEYS,
+  ORIGINS,
+  statNormalizationFromDoc,
+} from "./statNormalization";
 import { Stat } from "../sim/stats/statTypes";
 
 
@@ -81,8 +89,75 @@ export interface AuthoringRulesManifest {
    * 這一格是給編輯器讀的旗標,讓它把那個輸入框**關掉**而不是留著讓人填錯。
    */
   readonly manaIsDerived: true;
+  /**
+   * ⭐ **數值調校 —— 讓外部編輯器讀 JSON,⛔ 不要讀散文**（owner 2026-08-16：
+   * 「應該是**大家都讀同一份 JSON 設定檔** 並且引用到文件裡」）。
+   *
+   * 🔴 這一格是被**四處說謊**逼出來的。2026-08-16 抓到合約文件的散文裡
+   * 攻擊距離五格、移速上限、`manaRegen`、`damageDealt` 全是舊值,而
+   * 那份文件開頭就寫著「給外部技能模板編輯器」。對方照著做出來的東西
+   * 在引擎裡不是那個量級,⛔ 而且沒有任何一步會報錯。
+   *
+   * ⇒ 現在**同一批數字有一個共同來源**（`content/config/*.json`）,三個消費端：
+   *   · 引擎    → `Configs` 登錄表
+   *   · 後台    → 欄位表（drift 測試在守）
+   *   · 外部編輯器 → **這一格**（profile 就在 CDN 上,一個 GET）
+   *   · 文件    → `pnpm contract:numbers` 產生的標記區塊（引用同一份 JSON）
+   */
+  readonly statTuning: StatTuning;
   /** 每一條規則現在的實際值都從這裡算出來,所以它跟著後台走。 */
   readonly derivedFrom: readonly string[];
+}
+
+export interface StatTuning {
+  /**
+   * ⭐ 五級距的名字與**語意**（owner 2026-08-15）。順序就是由小到大。
+   * ⚠️ 語意不是裝飾 —— 「極大 = 特化」是說它應該**少數**且有明顯代價，
+   * ⛔ 不是「這一格比較強」。
+   */
+  readonly bandNames: readonly { readonly band: string; readonly meaning: string }[];
+  /** 十種出身的名字。⛔ 這是完整清單，不是範例。 */
+  readonly origins: readonly string[];
+  /**
+   * 🔴 **出身 × 屬性 → 級距**（owner 2026-08-16：「英雄 出身 五級距
+   * **互相對應**的部分也是」）。這是三者對應的中間那一層。
+   */
+  readonly bandByOriginAndStat: Readonly<Record<string, Readonly<Record<string, string>>>>;
+  /**
+   * 🔴 **級距 → 實際數值**。與上一格相乘就是一位英雄的每一項數值。
+   * ⚠️ 這些是**基準等級的最終總值**（見 {@link referenceLevel}），⛔ 不是初始值。
+   */
+  readonly bandValues: Readonly<Record<string, Readonly<Record<string, number>>>>;
+  /**
+   * 分成兩把尺的那幾項（今天只有 `range`）——查得到就**優先於** {@link bandValues}。
+   * 走哪一把由 {@link rangeByOrigin} 的 `scale` 決定。
+   */
+  readonly bandValuesByScale: Readonly<Record<string, Readonly<Record<string, Readonly<Record<string, number>>>>>>;
+  /** `bandValues` 的數字是**這一級**的最終總值。出貨 99。 */
+  readonly referenceLevel: number;
+  /** 硬上限。`unlocked` > `base` 的那幾項要靠 `capRaise` 才碰得到。 */
+  readonly caps: Readonly<Record<string, { readonly base: number; readonly unlocked: number }>>;
+  /** 每一場都會套用的全域倍率 —— ⚠️ 你寫的每個數字最後都被它乘一次。 */
+  readonly envMultipliers: Readonly<Record<string, number>>;
+  /**
+   * ⛔ **這幾項填在英雄卡上沒有用** —— 註冊時 `resolveChampionStats()` 會依
+   * 該英雄的**出身**改寫它們。編輯器應該把這幾格設成唯讀並指向出身。
+   */
+  readonly normalizedStats: readonly string[];
+  /**
+   * 出身 → 普攻距離的完整換算（⭐ 這就是「同一份 JSON」最尖銳的一格）。
+   *
+   * ⚠️ `scale` 由**出身**決定,⛔ 不是英雄卡的 `attackType` ——
+   * 出貨資料裡有 10 位兩者刻意相反。
+   */
+  readonly rangeByOrigin: readonly {
+    readonly origin: string;
+    readonly scale: string;
+    readonly band: string;
+    readonly value: number;
+  }[];
+  /** 每一格的出處 —— ⭐ 編輯器要顯示「去哪裡改」時印這個。 */
+  readonly sources: Readonly<Record<"caps" | "envMultipliers" | "normalization", string>>;
 }
 
 /**
@@ -235,12 +310,82 @@ export function buildAuthoringRules(read: ConfigReader): AuthoringRulesManifest 
     hard,
     principle,
     manaIsDerived: true,
+    statTuning: buildStatTuning(read),
     derivedFrom: [
       "config.cast-time@1",
       "config.cooldown-rules@1",
       "config.aoe-tiers@1",
       "config.stat-caps@1",
       "config.authoring-rules@1",
+      "config.combat-env@1",
+      "config.stat-normalization@1",
     ],
+  };
+}
+
+/**
+ * 數值調校的三張表 —— ⛔ 全部從 `content/config/*.json` 讀,一個手打的常數都沒有。
+ *
+ * ⚠️ 缺席的設定檔一律**退回出貨預設**（`statNormalizationFromDoc` / `statCapsFromDoc`
+ * 自己就是逐格 fallback），⛔ 不要回空物件 —— 對方會把「空」讀成「沒有上限」。
+ */
+function buildStatTuning(read: ConfigReader): StatTuning {
+  const caps = statCapsFromDoc(read("stat-caps"));
+  const norm = statNormalizationFromDoc(read("stat-normalization"));
+  // ⚠️ `combat-env` 沒有 `*FromDoc` 幫手（它的消費端都直接吃 `multipliers`），
+  //   所以逐格 fallback 到出貨預設 —— ⛔ 不要回文件裡的原樣物件：
+  //   一份少了一半 key 的 override 會讓對方以為那些倍率不存在。
+  const raw = (read("combat-env") as { multipliers?: Record<string, unknown> } | undefined)?.multipliers;
+  const env: Record<string, number> = { ...COMBAT_ENV_DEFAULTS };
+  for (const [k, v] of Object.entries(raw ?? {})) {
+    if (typeof v === "number" && Number.isFinite(v)) env[k] = v;
+  }
+
+  const scales = norm.scaleByOrigin.range;
+  const ladders = norm.bandsByScale.range;
+  const rangeByOrigin: { origin: string; scale: string; band: string; value: number }[] = [];
+  for (const origin of ORIGINS) {
+    const scale = scales?.[origin];
+    const band = norm.byOrigin.range?.[origin];
+    const value = scale !== undefined && band !== undefined ? ladders?.[scale]?.[band] : undefined;
+    // ⛔ 表不完整就整列不出現 —— 印一個猜的值等於讓對方照錯的量級設計技能
+    if (scale === undefined || band === undefined || typeof value !== "number") continue;
+    rangeByOrigin.push({ origin, scale, band, value });
+  }
+
+  // ⭐ 出身 × 屬性 → 級距。⛔ 逐格從設定讀，缺格就不出現（⛔ 不填「中」當預設 ——
+  //   那會讓對方以為那一格被指定過）。
+  const bandByOriginAndStat: Record<string, Record<string, string>> = {};
+  for (const origin of ORIGINS) {
+    const row: Record<string, string> = {};
+    for (const stat of NORMALIZED_STAT_KEYS) {
+      const band = norm.byOrigin[stat]?.[origin];
+      if (band !== undefined) row[stat] = band;
+    }
+    bandByOriginAndStat[origin] = row;
+  }
+
+  return {
+    bandNames: NORMAL_BANDS.map((band) => ({ band, meaning: BAND_MEANING[band] })),
+    origins: [...ORIGINS],
+    bandByOriginAndStat,
+    bandValues: Object.fromEntries(
+      NORMALIZED_STAT_KEYS.map((k) => [k, { ...norm.bands[k] }]),
+    ),
+    bandValuesByScale: Object.fromEntries(
+      Object.entries(norm.bandsByScale).flatMap(([k, v]) =>
+        v === undefined ? [] : [[k, Object.fromEntries(Object.entries(v).map(([s, b]) => [s, { ...b }]))]],
+      ),
+    ),
+    referenceLevel: norm.referenceLevel,
+    caps: Object.fromEntries(Object.entries(caps).map(([k, v]) => [k, { base: v.base, unlocked: v.unlocked }])),
+    envMultipliers: { ...env },
+    normalizedStats: [...norm.appliesTo],
+    rangeByOrigin,
+    sources: {
+      caps: "config.stat-caps@1",
+      envMultipliers: "config.combat-env@1",
+      normalization: "config.stat-normalization@1",
+    },
   };
 }

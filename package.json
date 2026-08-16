@@ -40,6 +40,8 @@
     "champions:csv:export": "python3 tools/champion-csv/champion_csv.py export -o champions.csv",
     "champions:csv:import": "python3 tools/champion-csv/champion_csv.py import -i champions.csv",
     "champions:csv:requests": "python3 tools/champion-csv/champion_csv.py requests -i champions.csv",
+    "contract:numbers": "python3 tools/editor-contract/gen_contract_numbers.py",
+    "contract:numbers:check": "python3 tools/editor-contract/gen_contract_numbers.py --check",
     "atlas": "tsx tools/engine-atlas/atlas.ts && tsx tools/engine-atlas/page.ts",
     "atlas:check": "tsx tools/engine-atlas/atlas.ts --check",
     "roster:check": "tsx tools/roster-guard/check.ts"

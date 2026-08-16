@@ -1,6 +1,6 @@
 {
   "schema": "ggd-editor-target-profile@1",
-  "generatedAt": "2026-08-16T07:28:29.197Z",
+  "generatedAt": "2026-08-16T11:43:24.842Z",
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
@@ -794,12 +794,451 @@
         }
       ],
       "manaIsDerived": true,
+      "statTuning": {
+        "bandNames": [
+          {
+            "band": "極小",
+            "meaning": "缺陷"
+          },
+          {
+            "band": "小",
+            "meaning": "偏低"
+          },
+          {
+            "band": "中",
+            "meaning": "標準"
+          },
+          {
+            "band": "大",
+            "meaning": "優勢"
+          },
+          {
+            "band": "極大",
+            "meaning": "特化"
+          }
+        ],
+        "origins": [
+          "坦克",
+          "砲手",
+          "鬥士",
+          "射手",
+          "法鬥",
+          "法師",
+          "狂戰",
+          "硬輔",
+          "法刺",
+          "軟輔"
+        ],
+        "bandByOriginAndStat": {
+          "坦克": {
+            "ms": "小",
+            "mr": "極大",
+            "armor": "極大",
+            "maxHealth": "大",
+            "maxMana": "極小",
+            "ad": "小",
+            "ap": "小",
+            "as": "小",
+            "healthRegen": "大",
+            "manaRegen": "極小",
+            "range": "小"
+          },
+          "砲手": {
+            "ms": "大",
+            "mr": "極小",
+            "armor": "極小",
+            "maxHealth": "極小",
+            "maxMana": "小",
+            "ad": "極大",
+            "ap": "小",
+            "as": "小",
+            "healthRegen": "小",
+            "manaRegen": "小",
+            "range": "極大"
+          },
+          "鬥士": {
+            "ms": "中",
+            "mr": "中",
+            "armor": "中",
+            "maxHealth": "中",
+            "maxMana": "中",
+            "ad": "大",
+            "ap": "小",
+            "as": "中",
+            "healthRegen": "大",
+            "manaRegen": "中",
+            "range": "中"
+          },
+          "射手": {
+            "ms": "中",
+            "mr": "極小",
+            "armor": "極小",
+            "maxHealth": "小",
+            "maxMana": "中",
+            "ad": "極大",
+            "ap": "極小",
+            "as": "大",
+            "healthRegen": "小",
+            "manaRegen": "中",
+            "range": "中"
+          },
+          "法鬥": {
+            "ms": "小",
+            "mr": "小",
+            "armor": "小",
+            "maxHealth": "中",
+            "maxMana": "中",
+            "ad": "大",
+            "ap": "大",
+            "as": "小",
+            "healthRegen": "中",
+            "manaRegen": "中",
+            "range": "中"
+          },
+          "法師": {
+            "ms": "中",
+            "mr": "小",
+            "armor": "小",
+            "maxHealth": "中",
+            "maxMana": "中",
+            "ad": "小",
+            "ap": "大",
+            "as": "小",
+            "healthRegen": "中",
+            "manaRegen": "中",
+            "range": "中"
+          },
+          "狂戰": {
+            "ms": "大",
+            "mr": "小",
+            "armor": "小",
+            "maxHealth": "小",
+            "maxMana": "極小",
+            "ad": "大",
+            "ap": "小",
+            "as": "極大",
+            "healthRegen": "極大",
+            "manaRegen": "極小",
+            "range": "小"
+          },
+          "硬輔": {
+            "ms": "小",
+            "mr": "大",
+            "armor": "大",
+            "maxHealth": "大",
+            "maxMana": "小",
+            "ad": "小",
+            "ap": "大",
+            "as": "小",
+            "healthRegen": "小",
+            "manaRegen": "小",
+            "range": "中"
+          },
+          "法刺": {
+            "ms": "大",
+            "mr": "極小",
+            "armor": "極小",
+            "maxHealth": "極小",
+            "maxMana": "小",
+            "ad": "極小",
+            "ap": "極大",
+            "as": "極小",
+            "healthRegen": "小",
+            "manaRegen": "小",
+            "range": "小"
+          },
+          "軟輔": {
+            "ms": "小",
+            "mr": "小",
+            "armor": "小",
+            "maxHealth": "小",
+            "maxMana": "小",
+            "ad": "小",
+            "ap": "大",
+            "as": "小",
+            "healthRegen": "大",
+            "manaRegen": "大",
+            "range": "中"
+          }
+        },
+        "bandValues": {
+          "ms": {
+            "極小": 5,
+            "小": 6,
+            "中": 8,
+            "大": 10,
+            "極大": 12
+          },
+          "mr": {
+            "極小": 129.35,
+            "小": 206.96,
+            "中": 258.7,
+            "大": 323.38,
+            "極大": 517.4
+          },
+          "armor": {
+            "極小": 45.05,
+            "小": 72.07,
+            "中": 90.09,
+            "大": 112.61,
+            "極大": 180.18
+          },
+          "maxHealth": {
+            "極小": 4074.6,
+            "小": 6519.36,
+            "中": 8149.2,
+            "大": 10186.5,
+            "極大": 16298.4
+          },
+          "maxMana": {
+            "極小": 2492.75,
+            "小": 3988.4,
+            "中": 4985.5,
+            "大": 6231.88,
+            "極大": 9971
+          },
+          "ad": {
+            "極小": 210,
+            "小": 336,
+            "中": 420,
+            "大": 525,
+            "極大": 840
+          },
+          "ap": {
+            "極小": 94.25,
+            "小": 150.8,
+            "中": 188.5,
+            "大": 235.63,
+            "極大": 377
+          },
+          "as": {
+            "極小": 1,
+            "小": 1.6,
+            "中": 2,
+            "大": 2.5,
+            "極大": 4
+          },
+          "healthRegen": {
+            "極小": 8.43,
+            "小": 13.48,
+            "中": 16.85,
+            "大": 21.06,
+            "極大": 33.7
+          },
+          "manaRegen": {
+            "極小": 10.11,
+            "小": 16.18,
+            "中": 20.22,
+            "大": 25.27,
+            "極大": 40.44
+          },
+          "range": {
+            "極小": 1.2,
+            "小": 1.4,
+            "中": 1.6,
+            "大": 1.8,
+            "極大": 2
+          }
+        },
+        "bandValuesByScale": {
+          "range": {
+            "melee": {
+              "極小": 1.2,
+              "小": 1.4,
+              "中": 1.6,
+              "大": 1.8,
+              "極大": 2
+            },
+            "ranged": {
+              "極小": 6,
+              "小": 7,
+              "中": 8.2,
+              "大": 10,
+              "極大": 12
+            }
+          }
+        },
+        "referenceLevel": 99,
+        "caps": {
+          "as": {
+            "base": 4,
+            "unlocked": 10
+          },
+          "cdr": {
+            "base": 0.99,
+            "unlocked": 0.99
+          },
+          "ms": {
+            "base": 18,
+            "unlocked": 18
+          },
+          "lifesteal": {
+            "base": 0.8,
+            "unlocked": 20
+          },
+          "ap": {
+            "base": 500000,
+            "unlocked": 500000
+          },
+          "maxHealth": {
+            "base": 375960,
+            "unlocked": 375960
+          },
+          "maxMana": {
+            "base": 232150,
+            "unlocked": 232150
+          },
+          "healthRegen": {
+            "base": 744,
+            "unlocked": 744
+          },
+          "manaRegen": {
+            "base": 926,
+            "unlocked": 926
+          },
+          "ad": {
+            "base": 21200,
+            "unlocked": 21200
+          },
+          "armor": {
+            "base": 5078,
+            "unlocked": 5078
+          },
+          "mr": {
+            "base": 15344,
+            "unlocked": 15344
+          },
+          "range": {
+            "base": 16,
+            "unlocked": 16
+          }
+        },
+        "envMultipliers": {
+          "cooldown": 0.2,
+          "damageDealt": 1,
+          "defense": 1,
+          "attackDamage": 0.6,
+          "abilityPower": 1,
+          "maxHealth": 4,
+          "healthRegen": 1,
+          "maxMana": 1,
+          "manaRegen": 8,
+          "moveSpeed": 1,
+          "attackSpeed": 1,
+          "healing": 1,
+          "shield": 1,
+          "critChance": 1,
+          "critDamage": 1,
+          "lifesteal": 1,
+          "attackRange": 0.6,
+          "abilityRange": 0.8,
+          "itemCooldown": 1,
+          "strToMaxHealth": 23,
+          "strToHealthRegen": 0.04,
+          "strToAttackDamage": 0.4,
+          "agiToArmor": 0.3,
+          "agiToAttackSpeed": 0.01,
+          "intToMaxMana": 15,
+          "intToManaRegen": 0.07,
+          "intToAbilityPower": 6.5,
+          "intToMagicResist": 0,
+          "goldRoundPayout": 1,
+          "goldMobKill": 0.5,
+          "goldEliteKill": 0.1,
+          "goldHeroKill": 1,
+          "goldQuest": 1,
+          "moveSpeedMelee": 0.8,
+          "moveSpeedRanged": 0.6,
+          "magicResistMult": 0.2
+        },
+        "normalizedStats": [
+          "ms",
+          "mr",
+          "armor",
+          "maxHealth",
+          "maxMana",
+          "ad",
+          "ap",
+          "healthRegen",
+          "manaRegen",
+          "range"
+        ],
+        "rangeByOrigin": [
+          {
+            "origin": "坦克",
+            "scale": "melee",
+            "band": "小",
+            "value": 1.4
+          },
+          {
+            "origin": "砲手",
+            "scale": "ranged",
+            "band": "極大",
+            "value": 12
+          },
+          {
+            "origin": "鬥士",
+            "scale": "melee",
+            "band": "中",
+            "value": 1.6
+          },
+          {
+            "origin": "射手",
+            "scale": "ranged",
+            "band": "中",
+            "value": 8.2
+          },
+          {
+            "origin": "法鬥",
+            "scale": "melee",
+            "band": "中",
+            "value": 1.6
+          },
+          {
+            "origin": "法師",
+            "scale": "ranged",
+            "band": "中",
+            "value": 8.2
+          },
+          {
+            "origin": "狂戰",
+            "scale": "melee",
+            "band": "小",
+            "value": 1.4
+          },
+          {
+            "origin": "硬輔",
+            "scale": "melee",
+            "band": "中",
+            "value": 1.6
+          },
+          {
+            "origin": "法刺",
+            "scale": "melee",
+            "band": "小",
+            "value": 1.4
+          },
+          {
+            "origin": "軟輔",
+            "scale": "ranged",
+            "band": "中",
+            "value": 8.2
+          }
+        ],
+        "sources": {
+          "caps": "config.stat-caps@1",
+          "envMultipliers": "config.combat-env@1",
+          "normalization": "config.stat-normalization@1"
+        }
+      },
       "derivedFrom": [
         "config.cast-time@1",
         "config.cooldown-rules@1",
         "config.aoe-tiers@1",
         "config.stat-caps@1",
-        "config.authoring-rules@1"
+        "config.authoring-rules@1",
+        "config.combat-env@1",
+        "config.stat-normalization@1"
       ]
     },
     "normative": [
@@ -829,5 +1268,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "d8071c5ff59e"
+  "profileDigest": "b86bfa7925a9"
 }

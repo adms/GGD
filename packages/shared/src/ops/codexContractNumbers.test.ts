@@ -1,5 +1,5 @@
 /**
- * ⭐【貼在 Codex 合約散文裡的**數字**，必須等於出貨設定算出來的那一個】
+ * ⭐【Codex 合約散文裡的**數字**，必須等於出貨設定】
  *
  * ─────────────────────────────────────────────────────────────────────────────
  * 為什麼指紋那一條擋不住這個
@@ -21,98 +21,73 @@
  * 對方照著 `1.5 / 3 / 5 / 7 / 10` 去設計一支「射程極大」的技能，
  * 會做出一個在引擎裡完全不是那個量級的東西 —— 而且**沒有任何一步會報錯**。
  *
- * ⚠️ 這是 CLAUDE.md 第〇·五守則那句話的**第三次**應驗：
- * 「a flag defended by prose outlives the prose's expiry date and nothing goes red」。
- * 前兩次的解法都是**推導**；這一次沒辦法（散文要人讀），所以退而求其次：
- * ⭐ **把散文裡的每一個數字都拉回來對帳。**
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⭐ 這條測試自己也改過一次形狀，而那一次比修數字重要
+ * ─────────────────────────────────────────────────────────────────────────────
+ * 第一版是**解析散文表格**再逐格比對。它會紅，所以比沒有好 ——
+ * ⛔ 但它守的是「手打的數字現在剛好是對的」，⚠️ 下一個人照樣要手打，
+ * 只是這次會被罵。而且它自己就踩了一個真 bug：這份文件裡「小/中/大/極大」
+ * **同時**是射程級距、AoE 範圍級距與魔耗倍率的列名，第一版把 AoE 那張表的
+ * 「小 = 約打到 5 人」讀成射程的「小 = 5」。
  *
- * ⛔ 這條**不要求**文件複製整張表 —— 它只檢查文件裡**已經寫了**的那幾格。
- * 想從文件拿掉一格，這條就不再管它（那是編輯決定）；但只要還寫著，就必須是真的。
+ * ⇒ owner 2026-08-16「do it」：三張表改成**產生的**（標記區塊），
+ * 這條測試跟著降級成 `skillRemakeDocsFresh` 的形狀 —— 真的把產生器用
+ * `--check` 跑起來（唯讀、回非零），⛔ 不是掃原始碼字串（失敗形態⑥）。
  *
- * 突變紀錄（跑過）：把文件裡的 `manaRegen | **8.0**` 改回 `**16**` → 紅並指名那一格。
+ * ⚠️ 它紅了**不要改這條測試**，跑：
+ *     pnpm contract:numbers
+ * 然後把那份文件一起 commit。
+ *
+ * 突變紀錄（跑過）：
+ *   · 把 `combat-env.json` 的 `manaRegen` 改成 99 → 紅（`--check` 回 1 並列出哪幾個區塊 stale）
  */
 import { describe, it, expect } from "vitest";
-import { readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../testkit/cover";
+import { BAND_MEANING, NORMAL_BANDS } from "../content/statNormalization";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
+const GEN = join(REPO, "tools/editor-contract/gen_contract_numbers.py");
 const DOC = join(REPO, "docs/技能編輯器引擎須知 20260811.md");
 
-const readJson = (p: string): Record<string, never> =>
-  JSON.parse(readFileSync(join(REPO, p), "utf8")) as Record<string, never>;
-
-/** 文件裡的數字寫法有 `**8.0**` / `8.0` / `**18**` 幾種，統一剝成數字。 */
-function cellNumber(cell: string): number | null {
-  const m = /-?\d+(?:\.\d+)?/.exec(cell.replace(/\*/g, ""));
-  return m ? Number(m[0]) : null;
-}
-
-/**
- * 找出以 `| <label> |` 開頭的那一列，回傳第 n 個欄位。
- *
- * ⚠️ `after` 不是選配的講究 —— 這份文件裡「小 / 中 / 大 / 極大」**同時**是
- * 射程級距、AoE 範圍級距與魔耗倍率的列名（實測三張表都有 `| 小 |`）。
- * 少了錨點，第一版把 AoE 那張表的 `| 小 | 約打到 5 人 |` 讀成射程的「小 = 5」。
- * ⛔ 所以每一次查詢都要指定從哪個標題之後開始找。
- */
-function rowCell(doc: string, label: string, col: number, after?: string): number | null {
-  let body = doc;
-  if (after !== undefined) {
-    const at = doc.indexOf(after);
-    if (at < 0) return null;
-    body = doc.slice(at);
-  }
-  for (const line of body.split("\n")) {
-    if (!line.startsWith("|")) continue;
-    const cells = line.split("|").map((c) => c.trim());
-    if (cells[1] === undefined) continue;
-    if (cells[1].replace(/`/g, "").replace(/\*/g, "").trim() !== label) continue;
-    return cellNumber(cells[col + 1] ?? "");
-  }
-  return null;
-}
-
 describe("Codex 合約散文裡的數字", () => {
-  const doc = readFileSync(DOC, "utf8");
-
-  it("🔴 全域倍率表的每一格 = combat-env.json", () => {
+  it("🔴 三張數字表與 content/config/ 一致（真的跑 --check，⛔ 不是掃字串）", () => {
     cover("codex-contract-numbers");
-    const env = readJson("content/config/combat-env.json");
-    const mult = (env["multipliers"] ?? env) as unknown as Record<string, number>;
-    // ⛔ 名單從**文件**推 —— 文件寫了哪幾格就對哪幾格，⛔ 不要求它列完全部。
-    for (const key of ["maxHealth", "magicResistMult", "attackRange", "abilityRange", "cooldown", "manaRegen", "damageDealt"]) {
-      const inDoc = rowCell(doc, key, 1, "## 八、全域倍率");
-      if (inDoc === null) continue; // 文件沒寫這一格 —— 編輯決定，不管
-      expect(`${key}=${inDoc}`).toBe(`${key}=${mult[key]}`);
+    expect(existsSync(GEN), `${GEN} 不存在`).toBe(true);
+    // ⛔ 失敗時把產生器自己的訊息原樣拋出來 —— 它會指名哪一個區塊 stale。
+    try {
+      execFileSync("python3", [GEN, "--check"], { cwd: REPO, encoding: "utf8", stdio: "pipe" });
+    } catch (e) {
+      const err = e as { stdout?: string; stderr?: string };
+      throw new Error(
+        `合約文件的數字表過期了 —— 跑 \`pnpm contract:numbers\` 然後 commit 那份文件。\n` +
+          `${err.stderr ?? ""}${err.stdout ?? ""}`,
+      );
     }
   });
 
-  it("🔴 上限表的每一格 = stat-caps.json", () => {
+  it("⛔ 產生器與引擎的級距語意是同一組字（它是第二個住處）", () => {
     cover("codex-contract-numbers");
-    const caps = readJson("content/config/stat-caps.json")["caps"] as unknown as Record<
-      string,
-      { base: number; unlocked: number }
-    >;
-    for (const [label, key] of [["攻擊速度 as", "as"], ["移動速度 ms", "ms"], ["冷卻縮減 cdr", "cdr"], ["吸血 lifesteal", "lifesteal"]] as const) {
-      const inDoc = rowCell(doc, label, 1, "### 目前的天花板");
-      if (inDoc === null) continue;
-      expect(`${key}=${inDoc}`).toBe(`${key}=${caps[key]!.base}`);
+    // ⚠️ python 產生器讀不到 TS 常數，所以「極小=缺陷…」在它裡面抄了一份。
+    //    ⛔ 抄一份就是第二個住處 —— 這一條就是它的守衛。
+    const py = readFileSync(join(REPO, "tools/editor-contract/gen_contract_numbers.py"), "utf8");
+    for (const band of NORMAL_BANDS) {
+      expect(`${band}=${py.includes(`"${band}": "${BAND_MEANING[band]}"`)}`).toBe(`${band}=true`);
     }
   });
 
-  it("🔴 攻擊距離的兩把尺 = stat-normalization.json（⛔ 而且必須是兩把）", () => {
+  it("⛔ 四個標記區塊都還在 —— 有人把它們刪掉就等於把表變回手打的", () => {
     cover("codex-contract-numbers");
-    const two = (readJson("content/config/stat-normalization.json")["bandsByScale"] as unknown as Record<
-      string,
-      Record<string, Record<string, number>>
-    >)["range"]!;
-    const RANGE_TABLE = "### 攻擊距離 —— **兩把尺**";
-    // 文件那張表每一列是「級距 | 近戰 | 遠程」——⛔ 只有一欄數字就代表它還停在單尺那一版。
-    for (const band of ["極小", "小", "中", "大", "極大"]) {
-      expect(`${band}近戰=${rowCell(doc, band, 1, RANGE_TABLE)}`).toBe(`${band}近戰=${two["melee"]![band]}`);
-      expect(`${band}遠程=${rowCell(doc, band, 2, RANGE_TABLE)}`).toBe(`${band}遠程=${two["ranged"]![band]}`);
+    // ⚠️ 少了這一條，「刪掉標記 + 手打一張表」會讓上面那條**永遠綠**：
+    //   `splice()` 找不到標記時是把區塊**附加在檔尾**，而 --check 只比對
+    //   「產生器的輸出 == 檔案現況」。附加之後兩者一致，於是文件中段那張
+    //   手打的假表沒有任何人在看（失敗形態③：可以刪掉而測試全綠）。
+    const doc = readFileSync(DOC, "utf8");
+    for (const name of ["contract-caps", "contract-env", "contract-range", "contract-bands"]) {
+      expect(`${name}:${doc.includes(`<!-- BEGIN GENERATED:${name} -->`)}`).toBe(`${name}:true`);
     }
   });
 });
