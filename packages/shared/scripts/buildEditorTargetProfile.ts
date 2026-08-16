@@ -28,7 +28,7 @@
  *    ⛔ 不要填 "unknown" / 0 / "" —— 那些會被對方當成真值。
  */
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildCapabilityManifest } from "../src/content/editorCapabilities";
@@ -66,6 +66,153 @@ function readJson<T>(p: string): T | null {
  */
 const readShippedConfig = (id: string): unknown =>
   readJson<unknown>(join(CONTENT, "config", `${id}.json`)) ?? undefined;
+
+/** 一個 collection 底下的每一份文件（⛔ 跳過 `_` 開頭 —— 那些是索引不是 doc）。 */
+function readCollection<T extends { id?: string }>(name: string): T[] {
+  const dir = join(CONTENT, name);
+  if (!existsSync(dir)) return [];
+  const out: T[] = [];
+  for (const f of readdirSync(dir).sort()) {
+    if (!f.endsWith(".json") || f.startsWith("_")) continue;
+    const d = readJson<T>(join(dir, f));
+    if (d && typeof d.id === "string") out.push(d);
+  }
+  return out;
+}
+
+const sortedUnique = (xs: readonly string[]): string[] => [...new Set(xs)].sort();
+
+/**
+ * ⭐【內容詞彙表】—— owner 2026-08-16：「技能對應 技能標籤 效果 機制 **特效**
+ * 跟**傳說武器道具**對應 效果與特效 也是」。
+ *
+ * ⚠️ 這與 `runtimeCapabilities` **不重疊**，兩者回答不同的問題：
+ *
+ * | | `runtimeCapabilities` | 這一格 |
+ * |---|---|---|
+ * | 回答 | 引擎**做得到**什麼（37 個 effect kind、19 個 hook…） | 出貨內容**實際用了**哪些值 |
+ * | 來源 | 出貨註冊表（程式） | `content/` 底下的文件 |
+ * | 少了它會怎樣 | 對方做出引擎不認得的機制 | 對方填一個**解析不到的 id**，技能照放但**什麼都不會出現** |
+ *
+ * 🔴 最尖銳的一格是 `vfx.keys`：`vfxKey` 是 423/461 支技能的特效綁定，
+ * 而 `content/vfx/` 有 **632** 份文件 —— ⛔ 對方沒有辦法知道哪些是給技能用的、
+ * 哪些是道具或環境用的。填錯一個 id，技能**照樣放得出來、照樣造成傷害**，
+ * 只是畫面上什麼都沒有（失敗形態①：算出來但沒有畫出來）。
+ */
+function buildVocabulary(): Record<string, unknown> {
+  type Ability = {
+    id?: string;
+    vfxKey?: unknown;
+    sfxKey?: unknown;
+    innateKind?: unknown;
+    template?: { ref?: unknown };
+  };
+  type Item = { id?: string; tags?: unknown; craftRole?: unknown; modifiers?: unknown };
+  type Template = { id?: string; family?: unknown; status?: unknown; params?: unknown };
+
+  const abilities = readCollection<Ability>("abilities");
+  const items = readCollection<Item>("items");
+  const templates = readCollection<Template>("ability-templates");
+  const vfxIds = new Set(readCollection<{ id?: string }>("vfx").map((v) => v.id!));
+
+  const str = (v: unknown): string | null => (typeof v === "string" && v !== "" ? v : null);
+
+  const vfxKeys = sortedUnique(abilities.map((a) => str(a.vfxKey)).filter((x): x is string => x !== null));
+  const sfxKeys = sortedUnique(abilities.map((a) => str(a.sfxKey)).filter((x): x is string => x !== null));
+  // ⛔ 這一格必須是**量出來的**，不是宣稱的：dangling 一旦 > 0，
+  //   代表出貨內容自己就有壞掉的綁定，而對方會照著抄。
+  const dangling = vfxKeys.filter((k) => !vfxIds.has(k));
+
+  const modifierStats = sortedUnique(
+    items.flatMap((i) =>
+      Array.isArray(i.modifiers)
+        ? (i.modifiers as { stat?: unknown }[]).map((m) => str(m?.stat)).filter((x): x is string => x !== null)
+        : [],
+    ),
+  );
+  const modifierOps = sortedUnique(
+    items.flatMap((i) =>
+      Array.isArray(i.modifiers)
+        ? (i.modifiers as { op?: unknown }[]).map((m) => str(m?.op)).filter((x): x is string => x !== null)
+        : [],
+    ),
+  );
+
+  const legendary = readJson<{ entries?: { itemId?: string }[] }>(
+    join(CONTENT, "loot-tables", "legendary-weapons.json"),
+  );
+  const legendaryIds = sortedUnique((legendary?.entries ?? []).map((e) => e.itemId ?? "").filter(Boolean));
+  const itemById = new Map(items.map((i) => [i.id!, i]));
+
+  return {
+    note:
+      "出貨內容**實際用了**哪些值。⚠️ 與 runtimeCapabilities 不同：那一份說引擎做得到什麼，" +
+      "這一份說內容裡有哪些合法的 id。⛔ 填一個不在這裡的 vfxKey，技能照放但畫面上什麼都不會出現。",
+    // ── 技能鏈：技能 → 模板 → 效果/機制 → 特效/音效 ──────────────────────
+    ability: {
+      count: abilities.length,
+      /** 用模板組出來的支數（其餘是逐支寫的 effects）。 */
+      fromTemplate: abilities.filter((a) => str(a.template?.ref) !== null).length,
+      /**
+       * ⭐ 模板家族 + **它們吃的參數（含型別與上下界）** ——
+       * 這就是「技能 = JSON 模板組合，沒有例外」那條守則的機器可讀版。
+       *
+       * ⚠️ `params` 原樣帶出去（`{type, default, min, max, unit}`），⛔ 不是只給 key ——
+       * 編輯器要拿它畫滑桿並在**送出前**就擋掉越界，⛔ 而不是等引擎拒收。
+       * ⚠️ `status: "draft"` 的那幾支參數是空的：它們**還不能用**，
+       * 編輯器應該把它們列成不可選而不是列出來讓人填。
+       */
+      templates: templates.map((t) => ({
+        id: t.id,
+        family: t.family ?? null,
+        status: t.status ?? null,
+        params: (t.params as Record<string, unknown>) ?? {},
+      })),
+      /** 各狀態各幾支 —— ⭐ 對方一眼看得出「可用的模板有幾個」。 */
+      templateStatus: templates.reduce<Record<string, number>>((acc, t) => {
+        const s = str(t.status) ?? "unknown";
+        acc[s] = (acc[s] ?? 0) + 1;
+        return acc;
+      }, {}),
+      /** 天生技的兩種形態。⛔ 不是 castType —— 它講的是「被動還是主動」。 */
+      innateKinds: sortedUnique(abilities.map((a) => str(a.innateKind)).filter((x): x is string => x !== null)),
+      effectKindsSource: "runtimeCapabilities.effectKinds（⛔ 不在這裡重複一份）",
+    },
+    // ── 特效鏈 ────────────────────────────────────────────────────────────
+    vfx: {
+      /** `content/vfx/` 的總量 —— ⚠️ 遠大於技能可用的那一群。 */
+      docCount: vfxIds.size,
+      /** ⭐ 技能**實際綁過**的 key。編輯器的 vfxKey 欄位應該從這裡取值。 */
+      keys: vfxKeys,
+      sfxKeys,
+      boundAbilities: abilities.filter((a) => str(a.vfxKey) !== null).length,
+      /** ⛔ 量出來的。> 0 = 出貨內容自己有壞掉的綁定，⛔ 不要照抄。 */
+      danglingKeys: dangling,
+    },
+    // ── 道具鏈：道具 → 角色/標籤 → 效果 ─────────────────────────────────
+    item: {
+      count: items.length,
+      craftRoles: sortedUnique(items.map((i) => str(i.craftRole)).filter((x): x is string => x !== null)),
+      tags: sortedUnique(items.flatMap((i) => (Array.isArray(i.tags) ? (i.tags as unknown[]).map(str) : [])).filter((x): x is string => x !== null)),
+      modifierStats,
+      modifierOps,
+    },
+    /** ⭐ 傳說武器池 —— 抽得到的那 N 件。⚠️ 池外的 `legendary` 標籤只是分類。 */
+    legendaryWeapons: {
+      poolSize: legendaryIds.length,
+      itemIds: legendaryIds,
+      /** ⛔ 量出來的：池裡指到不存在的道具 = 那一格抽出來是空的。 */
+      missingItemIds: legendaryIds.filter((id) => !itemById.has(id)),
+    },
+    sources: {
+      ability: "content/abilities/*.json",
+      templates: "content/ability-templates/*.json",
+      vfx: "content/vfx/*.json",
+      item: "content/items/*.json",
+      legendaryWeapons: "content/loot-tables/legendary-weapons.json",
+    },
+  };
+}
 
 interface Unavailable {
   field: string;
@@ -242,6 +389,10 @@ export function buildEditorTargetProfile(opts: { generatedAt: string }): Record<
 
     // ③
     runtimeCapabilities: caps,
+
+    // ── ③b 內容詞彙表（owner 2026-08-16「技能對應…特效…傳說武器道具」）────
+    //    ⚠️ 與 ③ 不重疊：那一份說引擎做得到什麼，這一份說內容裡有哪些合法的 id。
+    contentVocabulary: buildVocabulary(),
 
     // ④
     tagManifest: {
