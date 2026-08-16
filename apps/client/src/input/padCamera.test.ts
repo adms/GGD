@@ -21,7 +21,7 @@ import {
  * The real rig's clamp + scale. NOT imported: `render/CameraRig` pulls in
  * @babylonjs, and `input/` may not (client-08).
  *
- * ⭐ 這裡**推導**自 `DEFAULT_CAMERA`（GH#329 之後那四個數字住在
+ * ⭐ 這裡**推導**自 `DEFAULT_CAMERA`（GH#332 之後那四個數字住在
  * `config.camera@1`），⛔ 不再是四個抄過來的字面量。
  *
  * ⚠️ 它本來是這樣寫的：

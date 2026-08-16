@@ -2327,7 +2327,7 @@ const MAP_SPEC_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
-// ── 戰鬥鏡頭（config/camera）—— GH#329 ─────────────────────────────────────
+// ── 戰鬥鏡頭（config/camera）—— GH#332 ─────────────────────────────────────
 const CAMERA_SPEC: ConfigDocSpec = {
   page: "camera",
   collection: "config",

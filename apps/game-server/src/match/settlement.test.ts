@@ -206,7 +206,7 @@ function runFullMatch(matchId: string, seed: number, doc: Record<string, unknown
 describe("per-team elimination settlement (elimination-settlement, task #193 / GH#264)", () => {
   it("出貨模式:沒有人在比賽中途出局,所以未來的冠軍拿不到「戰鬥結束」卡", () => {
     cover("elimination-settlement");
-    // GH#329 —— seed 4263 換成 4260。⚠️ 同樣不是「把測試調鬆」：2026-08-16 的
+    // GH#332 —— seed 4263 換成 4260。⚠️ 同樣不是「把測試調鬆」：2026-08-16 的
     //    移動速度第二版（極小5/小6/中8/大10/極大12，上限 18）+ owner 下架四位
     //    英雄，bot 的選角與走位都變了，4263 那一場冠軍不再是被打光過的隊伍。
     //    實測掃 4260–4560：**72/300 場**有隊伍歸零，其中 4260 / 4288 / 4318 /

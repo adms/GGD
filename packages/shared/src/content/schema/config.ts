@@ -5835,7 +5835,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigContentLoadDoc,
   // ⭐ 外部編輯器的原則界（GH#327）。⚠️ 漏掉這一行 = 內容整份驗證失敗 → 骨架英雄。
   zConfigAuthoringRulesDoc,
-  // ⭐ 戰鬥鏡頭的滾輪縮放界線（GH#329，owner 2026-08-15「最大視野減少兩節」）。
+  // ⭐ 戰鬥鏡頭的滾輪縮放界線（GH#332，owner 2026-08-15「最大視野減少兩節」）。
   //    ⚠️ 漏掉這一行 = 內容整份驗證失敗 → 骨架英雄。
   zConfigCameraDoc,
 ]);

@@ -11,7 +11,7 @@ import { DEFAULT_MAP_CORNER_LABEL, DEFAULT_CAMERA, resolveCamera } from "@ggd/sh
 import { MapCornerLabelView, minimapBox } from "./MapCornerLabel";
 import { hudSlot } from "./hudLayout";
 
-describe("常駐地名（GH#329）", () => {
+describe("常駐地名（GH#332）", () => {
   it("⭐ 畫面上真的有那個地名 —— 讀回渲染出來的字，⛔ 不是斷言某個變數", () => {
     const html = renderToStaticMarkup(
       createElement(MapCornerLabelView, {
@@ -53,7 +53,7 @@ describe("常駐地名（GH#329）", () => {
   });
 });
 
-describe("鏡頭縮放界線（GH#329）", () => {
+describe("鏡頭縮放界線（GH#332）", () => {
   it("⭐ 讀不到設定要退回出貨預設，⛔ 不是 0 或 NaN", () => {
     // 這是「後台還沒存過任何東西」與「開機最早期」都會走到的那條路。
     expect(resolveCamera(null)).toEqual({ ...DEFAULT_CAMERA });
