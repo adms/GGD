@@ -118,6 +118,12 @@ var KnownCollections = []string{
 	"config",
 	"items",
 	"loot-tables",
+	// GH#328 —— **漏了 13 天**。`maps` 在 2026-08-03 隨 GH#324 進了 shared 的
+	// COLLECTIONS，這份鏡像沒跟上，於是後台**存不進任何地圖文件**（overlay 直接
+	// 拒絕一個合法的 collection）。⚠️ 這正是「兩份清單各自維護」的標準壞法：
+	// 兩邊分開看都是對的，只有**比對**看得出來 ——
+	// 而 `TestKnownCollectionsMatchTheSharedSchemaTable` 就是那個比對。
+	"maps",
 	"models",
 	"projectiles",
 	"skins",

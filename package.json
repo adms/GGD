@@ -38,7 +38,8 @@
     "items:csv:import": "python3 tools/item-csv/item_csv.py import -i items.csv",
     "items:csv:requests": "python3 tools/item-csv/item_csv.py requests -i items.csv",
     "atlas": "tsx tools/engine-atlas/atlas.ts && tsx tools/engine-atlas/page.ts",
-    "atlas:check": "tsx tools/engine-atlas/atlas.ts --check"
+    "atlas:check": "tsx tools/engine-atlas/atlas.ts --check",
+    "roster:check": "tsx tools/roster-guard/check.ts"
   },
   "devDependencies": {
     "@eslint/js": "^10",

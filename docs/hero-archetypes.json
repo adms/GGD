@@ -2,7 +2,7 @@
   "schema": "ggd-hero-archetypes@1",
   "generatedBy": "tools/hero-archetypes/build.ts",
   "generatedFrom": {
-    "population": "docs/hero-stat-tiers.json → population.rows（74 = 可選本體 53 + 可達變身 21）",
+    "population": "docs/hero-stat-tiers.json → population.rows（70 = 可選本體 49 + 可達變身 21（⚠️ 2026-08-16 下架四位，53→49））",
     "statFunction": "championStatBase(def, stat, L) —— 出貨的那一支，⛔ 沒有抄公式",
     "initial": "L1 的最終值",
     "perLevel": "L2 − L1（含三圍成長那一項）"

@@ -38,6 +38,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"sort"
 	"strings"
 	"testing"
 
@@ -223,6 +224,21 @@ func isW3xFormPair(a, b string) bool {
 }
 
 // loadRoster reads every champion@1 doc in the content tree, keyed by id.
+// indexedChampionCount 讀**被 commit 的**索引 —— 那是「這棵樹應該有幾隻」的
+// 權威來源（`pnpm content:build` 產出、跟 bundle 一起進版控）。
+func indexedChampionCount(t *testing.T, root string) int {
+	t.Helper()
+	var idx struct {
+		Entries []struct {
+			ID string `json:"id"`
+		} `json:"entries"`
+	}
+	raw, err := os.ReadFile(filepath.Join(root, "champions", "_index.json"))
+	require.NoError(t, err, "champions/_index.json 讀不到 —— 它是被 commit 的產物，缺了代表 checkout 不完整")
+	require.NoError(t, json.Unmarshal(raw, &idx))
+	return len(idx.Entries)
+}
+
 func loadRoster(t *testing.T, root string) map[string]championDoc {
 	t.Helper()
 	dir := filepath.Join(root, "champions")
@@ -253,8 +269,50 @@ func TestChampionIdentityRule(t *testing.T) {
 		t.Skipf("content tree not present at %s — skipping identity pins", root)
 	}
 	roster := loadRoster(t, root)
-	require.GreaterOrEqual(t, len(roster), 100, "content tree looks truncated")
+	// GH#331 —— 這裡本來是 `>= 100`，而內容樹早就只有 78 隻（v0.17.0 / v0.18.0 /
+	// HEAD 都是 79 個檔）。那個 100 是 2026-07-22 初始 commit 寫的，之後名單一路
+	// 縮編，於是這條**紅了不知道多久** —— 而一條永遠紅的守衛擋不住任何東西。
+	//
+	// ⭐ 它真正要擋的是「**內容樹被截斷了**」，而那是一個**關係**不是一個數字：
+	//    「掃到的檔案數」要對得上「被 commit 的索引裡有幾筆」。
+	//    ⇒ 改成跟 `_index.json` 比。索引跟著 `pnpm content:build` 走，所以名單
+	//    再縮一次這條不會紅；而真的少讀到檔案（權限、掛載、部分 checkout）
+	//    它立刻紅，並且說得出差幾筆。
+	// ⚠️ 另外留一個**很低**的絕對下界 —— 索引本身是空的那種壞法，比對會兩邊都 0
+	//    而「相等」，那正是失敗形態④：斷言方向跟缺陷無關。
+	indexed := indexedChampionCount(t, root)
+	require.GreaterOrEqualf(t, len(roster), 20,
+		"content tree looks truncated: only %d champion docs on disk", len(roster))
+	require.Equalf(t, indexed, len(roster),
+		"磁碟上有 %d 份英雄文件，但被 commit 的 champions/_index.json 記著 %d 筆 —— "+
+			"兩者不一致代表這棵內容樹是**部分的**（沒跑 content:build，或 checkout 不完整）。"+
+			"⛔ 不要改這個數字：跑 `pnpm content:build` 然後 `git add content/`。",
+		len(roster), indexed)
 
+	// ⭐ GH#331 —— 這些**逐位釘住的 id 會隨著內容樹縮編而消失**（113 → 78）。
+	//    2026-08-16 實測：53 個點名的 id 裡有 11 個已經不在樹裡。
+	//
+	// ⛔ 兩條都不能走：
+	//    ① `require` 它一定在 ⇒ 內容一縮這條就永遠紅（GH#331 本身）；
+	//    ② 直接把那 11 行刪掉 ⇒ 規則**悄悄地被削掉一塊**，而且沒有人會知道。
+	//
+	// ⇒ 第三條路：**不在就休眠，但記帳**。休眠的 id 會被列出來，
+	//    而且下面有一條「跑掉的釘子不可以太少」——⛔ 這條測試不可以變成空的
+	//    （失敗形態③：可以整段刪掉而測試還是綠的）。
+	var dormant, exercised []string
+	have := func(ids ...string) bool {
+		ok := true
+		for _, id := range ids {
+			if _, found := roster[id]; !found {
+				dormant = append(dormant, id)
+				ok = false
+			}
+		}
+		if ok {
+			exercised = append(exercised, ids...)
+		}
+		return ok
+	}
 	get := func(id string) championDoc {
 		doc, ok := roster[id]
 		require.Truef(t, ok, "champion %q missing from the content tree", id)
@@ -263,13 +321,20 @@ func TestChampionIdentityRule(t *testing.T) {
 
 	// 黑化Saber: same mesh, same extracted portrait, near-identical name —
 	// but hero 69, not 20. It is its OWN character and must never fold.
-	saber, saberTwin, alter := get("godie-e002"), get("godie-e00l"), get("godie-e00q")
-	require.Equal(t, saber.ModelKey, alter.ModelKey, "the premise: e002 and e00q share a mesh")
-	assert.Equal(t, "20", heroNumberOf(saber))
-	assert.Equal(t, "69", heroNumberOf(alter))
-	assert.False(t, sameCharacter(alter, saber), "黑化Saber must not fold into Saber")
-	assert.False(t, sameCharacter(alter, saberTwin), "黑化Saber must not fold into Saber's twin")
-	assert.True(t, sameCharacter(saber, saberTwin), "e002/e00l ARE one character")
+	if have("godie-e002", "godie-e00l", "godie-e00q") {
+		saber, saberTwin, alter := get("godie-e002"), get("godie-e00l"), get("godie-e00q")
+		require.Equal(t, saber.ModelKey, alter.ModelKey, "the premise: e002 and e00q share a mesh")
+		assert.Equal(t, "20", heroNumberOf(saber))
+		assert.Equal(t, "69", heroNumberOf(alter))
+		assert.False(t, sameCharacter(alter, saber), "黑化Saber must not fold into Saber")
+		assert.False(t, sameCharacter(alter, saberTwin), "黑化Saber must not fold into Saber's twin")
+		assert.True(t, sameCharacter(saber, saberTwin), "e002/e00l ARE one character")
+	}
+	if have("godie-e002", "godie-e00l") {
+		// ⭐ 這一半**不依賴 e00q**，所以樹裡沒有黑化Saber 時它照樣跑：
+		//    「同一個角色的兩個條目要摺在一起」是規則的另一半。
+		assert.True(t, sameCharacter(get("godie-e002"), get("godie-e00l")))
+	}
 
 	// Known duplicate ENTRIES still fold (canonical id first).
 	for _, pair := range [][2]string{
@@ -282,6 +347,9 @@ func TestChampionIdentityRule(t *testing.T) {
 		{"godie-e001", "godie-e00n"}, {"godie-nbbc", "godie-n01c"},
 		{"godie-ucrl", "godie-u034"}, {"godie-nsjs", "godie-n00p"},
 	} {
+		if !have(pair[0], pair[1]) {
+			continue
+		}
 		assert.Truef(t, sameCharacter(get(pair[0]), get(pair[1])),
 			"%s and %s are the same character", pair[0], pair[1])
 	}
@@ -294,7 +362,15 @@ func TestChampionIdentityRule(t *testing.T) {
 				wearers = append(wearers, doc)
 			}
 		}
-		require.Greaterf(t, len(wearers), 1, "%s should be worn by several champions", mesh)
+		// ⚠️ 同 GH#331：內容縮編之後某個替身網格可能只剩一位（或零位）穿它。
+		//    這一組要驗的是「**共穿同一張皮的兩位不可以被當成同一個角色**」——
+		//    只有一位時那個關係根本不存在，⇒ 休眠，⛔ 不是紅。
+		//    （下面的反空轉門檻會擋住「全部網格都只剩一位」那種真的空掉的情況。）
+		if len(wearers) < 2 {
+			dormant = append(dormant, "mesh:"+mesh)
+			continue
+		}
+		exercised = append(exercised, "mesh:"+mesh)
 		for _, a := range wearers {
 			for _, b := range wearers {
 				if a.ID == b.ID {
@@ -323,6 +399,9 @@ func TestChampionIdentityRule(t *testing.T) {
 		{"godie-o00l", "godie-o02s"}, // 53 傑洛士 / 涼宮八ㄦ匕
 		{"godie-h02s", "godie-h02z"}, // 91 死亡騎士 / 不良少年
 	} {
+		if !have(pair[0], pair[1]) {
+			continue
+		}
 		a, b := get(pair[0]), get(pair[1])
 		require.Equalf(t, heroNumberOf(a), heroNumberOf(b), "%s/%s premise: same 編號", pair[0], pair[1])
 		require.Falsef(t, isW3xFormPair(a.ID, b.ID), "%s/%s premise: NO Eme1/Emeu evidence", a.ID, b.ID)
@@ -340,6 +419,9 @@ func TestChampionIdentityRule(t *testing.T) {
 		{"godie-ofar", "godie-o02l"}, // 58 神奇寶貝兒 / 神騎寶貝     A040 瘋狂皮卡丘
 		{"godie-u012", "godie-u011"}, // 61 克勞薩II世 / 克勞薩先生    Aphx 百連我殺
 	} {
+		if !have(pair[0], pair[1]) {
+			continue
+		}
 		a, b := get(pair[0]), get(pair[1])
 		require.Equalf(t, heroNumberOf(a), heroNumberOf(b), "%s/%s premise: same 編號", pair[0], pair[1])
 		require.NotEqualf(t, a.ModelKey, b.ModelKey, "%s/%s premise: different meshes", pair[0], pair[1])
@@ -350,11 +432,16 @@ func TestChampionIdentityRule(t *testing.T) {
 	}
 	// The exception can NEVER cross a hero number — the 黑化Saber guard holds.
 	assert.False(t, isW3xFormPair("godie-e002", "godie-e00q"))
-	assert.False(t, sameCharacter(get("godie-e002"), get("godie-e00q")))
+	if have("godie-e002", "godie-e00q") {
+		assert.False(t, sameCharacter(get("godie-e002"), get("godie-e00q")))
+	}
 
 	// Numberless champions each keep their own identity — including the test
 	// hero, which shares BOTH its mesh and a name component with hero 11.
 	for _, id := range []string{"godie-e00u", "godie-u01f", "godie-h02n", "godie-u01q", "sela", "thorne"} {
+		if !have(id) {
+			continue
+		}
 		doc := get(id)
 		assert.Emptyf(t, heroNumberOf(doc), "%s (%s) should have no parseable hero number", id, doc.Name)
 		for other, otherDoc := range roster {
@@ -365,6 +452,25 @@ func TestChampionIdentityRule(t *testing.T) {
 				"numberless champion %s must not merge into %s", id, other)
 		}
 	}
+
+	// ── ⭐ 反空轉：這條測試不可以悄悄變成空的 ────────────────────────────
+	//
+	// 上面每一組釘子都會在 id 不存在時跳過。那個設計是對的（內容樹會縮編），
+	// 但它有一個明顯的失效模式：**id 全部消失時整條測試會全綠地什麼都沒驗**。
+	// 那正是 CLAUDE.md 失敗形態③——「可以整段刪掉而測試還是綠的」。
+	//
+	// ⇒ 所以這裡釘住「**真的跑過幾個釘子**」。門檻取一個很低但不可能被空轉
+	//    達成的數（30）：今天實際跑到 80+，而全部休眠時是 0。
+	// ⚠️ 這一行紅了**不要調低它** —— 它的意思是內容樹縮到讓這條規則失去樣本，
+	//    那時候要問的是「這些角色去哪了」，不是「門檻該多少」。
+	if len(dormant) > 0 {
+		sort.Strings(dormant)
+		t.Logf("休眠中的釘子（id 已不在內容樹，%d 個）：%v", len(dormant), dormant)
+	}
+	require.GreaterOrEqualf(t, len(exercised), 30,
+		"身分規則只真的驗到 %d 個釘子（休眠 %d 個）—— 樣本少到這條測試等於沒跑。"+
+			"⛔ 不要調低這個門檻：去看那些 id 為什麼從內容樹消失了。",
+		len(exercised), len(dormant))
 }
 
 // whitelist-no-alternate-forms: THE REGRESSION THAT WOULD HAVE CAUGHT THE LIVE

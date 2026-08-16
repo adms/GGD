@@ -4,6 +4,7 @@
  * content/bundle.json (the one-file transport bundle).
  * Pure function of the docs on disk — no timestamps, deterministic output.
  */
+import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { writeEditorTargetProfile } from "./buildEditorTargetProfile";
 import { gzipSync, brotliCompressSync, constants as zlibConstants } from "node:zlib";
@@ -108,3 +109,40 @@ if (existsSync(bfile)) {
     `bundle.json:    ${docCount} doc(s)  ${statSync(bfile).size} B raw  ${gz} B gzip-9  ${br} B brotli-11`,
   );
 }
+
+const REPO_ROOT = join(CONTENT_DIR, "..");
+
+// ─────────────────────────────────────────────────────────── 英雄名單漣漪 ──
+/**
+ * ⭐ owner 2026-08-16：「請把調整上下架英雄會影響到的程式檔案、機制、說明文件、
+ * 測試 等 做成一個 **重 build 會自動檢查**的 script」。
+ *
+ * ⚠️ 掛在**這裡**而不是只做成一條測試，理由是 CLAUDE.md 的元規則
+ *（判準沒用，只有閘有用）：改名單的人不一定會跑 `pnpm test`，但他**一定**要跑
+ * `pnpm content:build`（改 content/ 就得跑，否則 shippedBundleIsCurrent 會紅）。
+ * ⇒ 把檢查放在他必經的那條路上。
+ *
+ * ⛔ 失敗直接 `exit 1` —— 一行沒有人讀的 warn 不算守衛（fail-open 那條規則）。
+ */
+// ⚠️ 用**子行程**呼叫，⛔ 不 import —— `tools/` 在 `packages/shared` 的 rootDir
+//    之外，直接 import 會讓 tsc 報 TS6059。而且這樣它保持成一支**獨立可跑的
+//    腳本**（`pnpm roster:check`），⛔ 不變成 shared 的一部分。
+// ⚠️ 只在**真的 repo** 上跑。`buildIndexesValidates.test.ts` 會把 content/ 複製到
+//    一棵 temp 樹再跑這支 build —— 那裡沒有 `apps/platform/`，而名單檢查驗的是
+//    **跨 repo 的關係**，在只有內容的樹上它沒有東西可比。
+// ⛔ 這不是「測試環境跳過檢查」那種豁免：真的 build 一定在 repo 根，一定會跑到。
+const rosterGuard = join(REPO_ROOT, "tools/roster-guard/check.ts");
+const starterGo = join(REPO_ROOT, "apps/platform/internal/curation/starter.go");
+if (!existsSync(rosterGuard) || !existsSync(starterGo)) {
+  console.log("（跳過英雄名單漣漪檢查：這不是完整的 repo 樹）");
+  process.exit(0);
+}
+const rosterCheck = spawnSync(
+  process.execPath,
+  [
+    join(REPO_ROOT, "node_modules/tsx/dist/cli.mjs"),
+    join(REPO_ROOT, "tools/roster-guard/check.ts"),
+  ],
+  { stdio: "inherit" },
+);
+if (rosterCheck.status !== 0) process.exit(rosterCheck.status ?? 1);

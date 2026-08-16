@@ -370,9 +370,13 @@ export function restoreOverlayDoc(
   collection: string,
   id: string,
 ): Promise<unknown> {
+  // ⚠️ 路徑寫成**一整條 template literal**，⛔ 不要拆成兩段用 `+` 接 ——
+  //    `orphan_route_test.go` 是**grep 前端原始碼**找路由字串的，拆開之後它看不到
+  //    這一個呼叫，於是把一個**真的有人用**的路由報成孤兒（2026-08-16 實際發生）。
+  //    ⇒ 這不是為了讓測試過而遷就它：那個掃描器的價值就是「路由有沒有人叫」，
+  //    而一段機器讀不到的呼叫，對它跟不存在是一樣的。
   return api.request<unknown>(
-    `/content-overlay/restore/${encodeURIComponent(hash)}` +
-      `/${encodeURIComponent(collection)}/${encodeURIComponent(id)}`,
+    `/content-overlay/restore/${encodeURIComponent(hash)}/${encodeURIComponent(collection)}/${encodeURIComponent(id)}`,
     { method: "POST" },
   );
 }

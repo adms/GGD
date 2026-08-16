@@ -220,14 +220,26 @@ func IsGoldFactor(k string) bool {
 var AttrDefaults = map[string]float64{
 	"strToMaxHealth":    23,   // war3mapMisc.txt StrHitPointBonus  (Blizzard 25)
 	"strToHealthRegen":  0.04, // war3mapMisc.txt StrRegenBonus     (Blizzard 0.05)
-	"strToAttackDamage": 1,    // war3mapMisc.txt StrAttackBonus    (Blizzard 1.0)
+	"strToAttackDamage": 0.4,  // owner 2026-08-13 從 1 調降（原 war3mapMisc.txt StrAttackBonus 1.0）
 	"agiToArmor":        0.15, // war3mapMisc.txt AgiDefenseBonus   (Blizzard 0.30)
-	"agiToAttackSpeed":  0.02, // Blizzard MiscGame.txt AgiAttackSpeedBonus (map silent)
+	"agiToAttackSpeed":  0.01, // ⚠️ 這一格是 MULTIPLICATIVE —— 見 shared 的說明
 	"intToMaxMana":      15,   // war3mapMisc.txt IntManaBonus      (Blizzard 15)
 	"intToManaRegen":    0.07, // war3mapMisc.txt IntRegenBonus     (Blizzard 0.05)
-	"intToAbilityPower": 1,    // OWNER'S DESIGN — no WC3 source exists
-	"intToMagicResist":  0.6,  // OWNER'S DESIGN — no WC3 source exists (#221)
+	"intToAbilityPower": 6.5,  // OWNER'S DESIGN — no WC3 source exists
+	"intToMagicResist":  0,    // ⭐ owner 2026-08-16「**拆掉智慧→魔抗**」（屬性表第二版）
 }
+
+// ⚠️ 2026-08-16 —— 上面四格是**跟著 shared 改的**，⛔ 不是這裡自己調的：
+//
+//	strToAttackDamage  1   → 0.4    agiToAttackSpeed  0.02 → 0.01
+//	intToAbilityPower  1   → 6.5    intToMagicResist  0.6  → 0（拆掉）
+//
+// 平行 session 在 `3d26ac15`（十定位 × 十一屬性第二版）改了
+// `packages/shared/src/sim/combatEnv.ts` 的 ATTRIBUTE_ENV_DEFAULTS，這份鏡像沒跟上。
+//
+// ⭐ 這跟同一天的英雄名單事故是**同一種病**：一張表兩份抄寫，分開看兩邊都「對」，
+// 只有**比對**看得出來。抓到它的正是那個比對（`keysync_test.go`）——
+// ⇒ 它紅的時候不要改測試，去看 shared 那一份寫什麼。
 
 // IsAttrCoef reports whether k is one of the eight 三圍 coefficients.
 func IsAttrCoef(k string) bool {
@@ -321,12 +333,12 @@ type contentDoc struct {
 // updates, and `scripts/host-deploy.sh --content-only` deliberately restarts
 // only the game shard — so after a content-only deploy:
 //
-//   · a real MATCH reads the NEW value. The game-server merges
-//     `{...content, ...adminOverride}` itself (apps/game-server/src/config/
-//     combatEnv.ts) off the same bind-mount, and it was restarted.
-//   · the 後台 戰鬥系統 page shows the OLD one, because the "base an operator
-//     edits from" is this stale map — and every un-overridden key renders from
-//     it.
+//	· a real MATCH reads the NEW value. The game-server merges
+//	  `{...content, ...adminOverride}` itself (apps/game-server/src/config/
+//	  combatEnv.ts) off the same bind-mount, and it was restarted.
+//	· the 後台 戰鬥系統 page shows the OLD one, because the "base an operator
+//	  edits from" is this stale map — and every un-overridden key renders from
+//	  it.
 //
 // Concretely: edit `goldMobKill` / `goldEliteKill` in content/config/
 // combat-env.json, deploy with --content-only, and the console will keep
