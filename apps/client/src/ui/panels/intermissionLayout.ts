@@ -86,6 +86,7 @@
  * inversion. Both the shop and ready-up now declare {@link INTERMISSION_Z.panel}
  * (= `HUD_Z.screen`), so the declaration and the pixels are the same number.
  */
+import { GRAIL_MANIFEST_PROMPT } from "./fateLexicon";
 import { HUD_Z } from "../hud/hudLayout";
 
 /**
@@ -131,8 +132,13 @@ export const FOCUS_FADE_MS = 200;
  * The whole P2 complaint is a player being asked four things at once with no
  * indication of what to do first; this says what to do first, and promises the
  * rest is coming back.
+ *
+ * ⭐ owner 2026-08-16（`docs/聖杯願望三選一-設計規則.md` §2）換成 Fate 語感。
+ * ⚠️ **兩件事都要留著** —— 舊文案「先選一張 — 選完就能繼續逛商店」只講了
+ * 「選完會怎樣」，而世界觀那一句只講「這是什麼」。P2 那個抱怨要的是**後者**，
+ * ⛔ 所以不能只換成漂亮的一句就把「選完就能繼續逛商店」丟掉。
  */
-export const FOCUS_HINT = "先選一張 — 選完就能繼續逛商店";
+export const FOCUS_HINT = `${GRAIL_MANIFEST_PROMPT}（選完就能繼續逛商店）`;
 
 /** Which surface owns the player's attention right now. */
 export type IntermissionFocus = "draft" | "shop";

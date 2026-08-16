@@ -35,6 +35,8 @@
  * label at all, because it reads as an EMPTY name.
  */
 
+import { draftSuffixFor } from "./fateLexicon";
+
 /** Prefix for every id this module mints. */
 const PREFIX = "ggd-draft";
 
@@ -93,12 +95,19 @@ export function draftDialogLabelId(offerId: string): string {
 }
 
 /**
- * The dialog's spoken label. `tierLabel` already yields 「GOLD AUGMENT」/
- * 「傳說武器 · WEAPON」; the 三選一 suffix is what makes it a sentence rather
+ * The dialog's spoken label. `tierLabel` already yields 「A級願望」/
+ * 「傳說武器 · WEAPON」; this suffix is what makes it a sentence rather
  * than a rarity word, and it matches the visible header exactly.
+ *
+ * ⭐ owner 2026-08-16（`docs/聖杯願望三選一-設計規則.md` §2）：玩家端的系統名是
+ * **聖杯顯現**，⛔ 不是「三選一」——「三選一」是內部說法。
+ * ⚠️ 這一格與畫面上那一行是**同一個常數**（見檔頭：唸出來的字必須逐字等於看到的字），
+ * ⛔ 改一邊會讓螢幕閱讀器唸舊的而目視測試看不出來。
  */
-export const DRAFT_CHOICE_SUFFIX = "三選一";
+export function draftChoiceSuffix(tier: string): string {
+  return draftSuffixFor(tier);
+}
 
-export function draftDialogLabel(tierLabel: string): string {
-  return `${tierLabel} · ${DRAFT_CHOICE_SUFFIX}`;
+export function draftDialogLabel(tierLabel: string, tier: string): string {
+  return `${tierLabel} · ${draftChoiceSuffix(tier)}`;
 }

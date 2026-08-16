@@ -201,7 +201,7 @@ const HUD_LABELS: HudBoundaryLabels = new Map<unknown, string>([
   [ChampSelectPanel, "選角畫面"],
   [IntermissionStage, "中場畫面"],
   [MerchantShop, "商店"],
-  [AugmentDraftPanel, "三選一"],
+  [AugmentDraftPanel, "聖杯顯現"],
   [PrepClock, "商店倒數"],
   [ReadyButton, "準備按鈕"],
   [RoundOverPill, "回合結束提示"],

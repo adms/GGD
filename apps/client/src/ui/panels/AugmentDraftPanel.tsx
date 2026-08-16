@@ -63,7 +63,7 @@ import { DRAFT_CONFIRM_SFX, tierColor, tierLabel, weaponEffectDescription } from
 import { ItemCardBody } from "../components/ItemCardBody";
 import { itemCardDescription } from "./draftCardStyle";
 import {
-  DRAFT_CHOICE_SUFFIX,
+  draftChoiceSuffix,
   draftCardDescId,
   draftCardFallbackLabel,
   draftCardLabelledBy,
@@ -204,7 +204,7 @@ export function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
         <span style={{ fontSize: 14, fontWeight: "bold", color: accent, letterSpacing: "0.06em" }}>
           {tierLabel(offer.tier)}
         </span>
-        <span style={{ fontSize: 11, color: TEXT_DIM }}> · {DRAFT_CHOICE_SUFFIX}</span>
+        <span style={{ fontSize: 11, color: TEXT_DIM }}> · {draftChoiceSuffix(offer.tier)}</span>
       </div>
       <div style={{ display: "flex", gap: 8 }}>
         {offer.choices.map((choice, idx) => {

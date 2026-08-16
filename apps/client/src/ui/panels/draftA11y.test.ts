@@ -36,7 +36,7 @@ import type { AugmentDef, ItemDef } from "@ggd/shared/sim/content/defs";
 import { DraftOffer } from "./AugmentDraftPanel";
 import { tierLabel } from "./draftCardStyle";
 import {
-  DRAFT_CHOICE_SUFFIX,
+  draftChoiceSuffix,
   draftCardDescId,
   draftCardLabelledBy,
   draftCardNameId,
@@ -423,8 +423,10 @@ describe("the 三選一 modal family has accessible names (rr-15..rr-18)", () =>
       const header = ids.get(draftDialogLabelId(`offer/${tier}#1`));
       expect(header, `${tier}: no dialog label node`).toBeDefined();
       const spoken = textOf(header!).replace(/\s+/g, " ").trim();
-      expect(spoken).toBe(draftDialogLabel(tierLabel(tier)));
-      expect(spoken).toContain(DRAFT_CHOICE_SUFFIX);
+      expect(spoken).toBe(draftDialogLabel(tierLabel(tier), tier));
+      // ⭐ 後綴跟著**階級**走：三個願望階級唸「聖杯顯現」，
+      //    ⛔ 傳說武器唸「三選一」（規則 §1 它屬於裝備層不是願望）。
+      expect(`${tier}:${spoken.includes(draftChoiceSuffix(tier))}`).toBe(`${tier}:true`);
     }
   });
 

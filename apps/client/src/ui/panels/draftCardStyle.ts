@@ -12,6 +12,7 @@
  */
 import { Items } from "@ggd/shared/sim/content/registry";
 import { ATTR_OFFER_TIER } from "@ggd/shared/sim/economy/attrDraft";
+import { fateRankLabel } from "./fateLexicon";
 import type { ItemId } from "@ggd/shared/ids";
 import { GOLD } from "../theme";
 import { buildItemRow, formatAuthoredBonus, type RowItem } from "./itemStats";
@@ -87,7 +88,17 @@ export const DRAFT_TIER_LABEL: Record<string, string> = {
   [ATTR_OFFER_TIER]: "能力屬性強化 · 力／敏／智",
 };
 
-/** The tier header text (e.g. "GOLD AUGMENT", "傳說武器 · WEAPON"). */
+/**
+ * 這張卡的階級標頭。
+ *
+ * ⭐ 三個增益階級走 Fate Rank（owner 2026-08-16，`docs/聖杯願望三選一-設計規則.md` §3）：
+ * `silver/gold/prismatic` → **C級／A級／EX級願望**。
+ * ⛔ 後台與 `augment@1` 的 tier **一個字都沒動** —— 這是純顯示層轉換。
+ *
+ * ⚠️ 順序是刻意的：Fate Rank 先查，查不到才走 {@link DRAFT_TIER_LABEL}。
+ * 傳說武器與能力屬性強化**不是願望**（規則 §1 把它們劃給「裝備」那一層），
+ * ⛔ 所以它們留著自己的標頭，不要一起改成 Fate 味。
+ */
 export function tierLabel(tier: string): string {
-  return DRAFT_TIER_LABEL[tier] ?? `${tier.toUpperCase()} AUGMENT`;
+  return fateRankLabel(tier) ?? DRAFT_TIER_LABEL[tier] ?? `${tier.toUpperCase()} AUGMENT`;
 }

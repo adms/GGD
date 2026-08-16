@@ -2,6 +2,7 @@
  * hud-draft-card-style: the pure tier→accent / tier-label / confirm-sfx mapping
  * behind the 3-choose-1 draft cards. Node-testable (no React/store import).
  */
+import { FATE_RANK_LABEL, GRAIL_MANIFEST, PLAIN_DRAFT_SUFFIX, draftSuffixFor } from "./fateLexicon";
 import { describe, it, expect, beforeAll } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import { Items } from "@ggd/shared/sim/content/registry";
@@ -32,11 +33,32 @@ describe("draftCardStyle (hud-draft-card-style)", () => {
     expect(tierColor("")).toBe(GOLD);
   });
 
-  it("labels the weapon tier bespoke and augment tiers generically", () => {
+  it("⭐ 三個增益階級走 Fate Rank，⛔ 而傳說武器不是願望所以不改", () => {
     cover("hud-draft-card-style");
+    // owner 2026-08-16（`docs/聖杯願望三選一-設計規則.md` §3）：
+    // 後台 silver/gold/prismatic 保留，玩家端顯示 C/A/EX。
+    // ⛔ 斷言從詞彙表推導，⛔ 不抄字面值 —— 抄了就是第二個住處。
+    for (const [tier, label] of Object.entries(FATE_RANK_LABEL)) {
+      expect(`${tier}=${tierLabel(tier)}`).toBe(`${tier}=${label}`);
+    }
+    // ⚠️ 規則 §1 把傳說武器與屬性強化劃給「裝備」那一層 —— 它們不是願望，
+    //    ⛔ 所以不能一起被 Fate 化（那會讓玩家以為它們也在改規則）。
     expect(tierLabel("weapon")).toBe("傳說武器 · WEAPON");
-    expect(tierLabel("gold")).toBe("GOLD AUGMENT");
-    expect(tierLabel("prismatic")).toBe("PRISMATIC AUGMENT");
+    // 未知階級仍然難看得很明顯 —— ⛔ 不要被塞進「C級願望」假裝有人設計過它。
+    expect(tierLabel("mythic")).toBe("MYTHIC AUGMENT");
+  });
+
+  it("🔴 標頭後綴跟著階級走 —— 武器卡⛔不可以掛「聖杯顯現」", () => {
+    cover("hud-draft-card-style");
+    // 這一條釘的是一個**我真的做出來過**的缺陷：第一版把後綴換成一個全域常數，
+    // 於是傳說武器卡變成「傳說武器 · WEAPON · 聖杯顯現」——
+    // ⛔ 兩個字串都合法、畫面也很正常，型別與既有測試都不會紅。
+    for (const tier of Object.keys(FATE_RANK_LABEL)) {
+      expect(`${tier}=${draftSuffixFor(tier)}`).toBe(`${tier}=${GRAIL_MANIFEST}`);
+    }
+    for (const tier of ["weapon", "mythic"]) {
+      expect(`${tier}=${draftSuffixFor(tier)}`).toBe(`${tier}=${PLAIN_DRAFT_SUFFIX}`);
+    }
   });
 
   it("pins the confirm sfx key to the audio-map entry", () => {
