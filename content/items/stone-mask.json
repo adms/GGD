@@ -1,0 +1,101 @@
+{
+  "id": "stone-mask",
+  "schema": "item@1",
+  "name": "石鬼面",
+  "description": "防具\n效能\n[究極肉體] 生命首次低於 50%時啟動至回合結束：最大生命 ×1.25、生命回復 ×3、全能吸血 +25%、攻速 ×1.25、移速 ×1.15\n[疊層] 每損失 10%生命，再使生命回復 ×1.10\n\n解說\n戴上去就回不去了。反正這一回合本來也沒打算當人。",
+  "cost": 0,
+  "tier": 5,
+  "tags": [
+    "legendary",
+    "defense",
+    "lifesteal"
+  ],
+  "passive": [
+    {
+      "key": "stone-mask-ultimate-body",
+      "on": "onDamageTaken",
+      "target": "self",
+      "condition": {
+        "kind": "stat",
+        "subject": "self",
+        "stat": "hp",
+        "mode": "percent",
+        "op": "<",
+        "value": 0.5
+      },
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "permanentScope": "round",
+          "stackKey": "stone-mask-ultimate-body",
+          "maxStacks": 1,
+          "statusId": "stone-mask-ultimate-body",
+          "modifiers": [
+            {
+              "stat": "maxHealth",
+              "op": "pctMult",
+              "value": 0.25
+            },
+            {
+              "stat": "healthRegen",
+              "op": "pctMult",
+              "value": 2.0
+            },
+            {
+              "stat": "lifesteal",
+              "op": "flat",
+              "value": 0.25
+            },
+            {
+              "stat": "spellVamp",
+              "op": "flat",
+              "value": 0.25
+            },
+            {
+              "stat": "as",
+              "op": "pctMult",
+              "value": 0.25
+            },
+            {
+              "stat": "ms",
+              "op": "pctMult",
+              "value": 0.15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "stone-mask-regen-stack",
+      "on": "onDamageTaken",
+      "target": "self",
+      "internalCooldown": 1,
+      "condition": {
+        "kind": "status",
+        "subject": "self",
+        "statusId": "stone-mask-ultimate-body"
+      },
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "permanentScope": "round",
+          "maxStacks": 5,
+          "modifiers": [
+            {
+              "stat": "healthRegen",
+              "op": "pctMult",
+              "value": 0.1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "icon": "assets/icons/items/stone-mask.webp",
+  "craftRole": "none",
+  "authoringNote": "[究極肉體]「生命首次低於 50%時啟動至回合結束」= passive[0]：onDamageTaken + condition hp/percent < 0.5。「至回合結束」= permanent + permanentScope:\"round\"（⛔ 不猜秒數，回合長度是相位機決定的）。「首次」= stackKey + maxStacks:1 —— 一份來源，第二次觸發只把層數夾回 1、不會再疊一份加成；permanent 不回寫到期 tick。⚠️ clearForFreshBody 只清 status/shields/dot，**不清 buff 來源**，所以中途死掉再站起來這一份仍在（＝文案說的「至回合結束」）。\n逐句：最大生命 ×1.25 = maxHealth pctMult 0.25；生命回復 ×3 = healthRegen pctMult 2.0；全能吸血 +25% = lifesteal flat 0.25 **加** spellVamp flat 0.25（這個 repo 的「全能吸血」就是這兩條，⛔ 沒有第三條屬性）；攻速 ×1.25 = as pctMult 0.25；移速 ×1.15 = ms pctMult 0.15。\n[疊層]「每損失 10%生命，再使生命回復 ×1.10」= passive[1]，⚠️ **這一句被換過做法**：owner 已裁決不做「由屬性狀態推導層數」(G6)，改成事件驅動疊層。做法是 onDamageTaken + condition「身上有〔究極肉體〕」→ 每次挨打加一層 healthRegen pctMult 0.10，**不填 stackKey** 所以走真複利 (1.10)^N，maxStacks 5（對應 50%→0% 的五段）。\n⚠️ 兩處與原文不同，明講：① 量尺從「損失 10% 生命」換成「受到一次傷害」；② 為了不讓一發 DoT 在一秒內灌滿五層，我加了 internalCooldown 1 秒 —— **那個 1 是我補的節流，不是 owner 的數字**，要調就調這一格。\n⚠️ 為什麼 passive[0] 走 stackKey 而不是 exclusiveGroup：複利路徑的 maxStacks 用 `buff:hook:<來源>#` 前綴數份數，而同一件道具的每一條 hook 共用同一個 origin —— 走 stackKey 的 id 是 `buff:stack:…`，才不會把究極肉體本體算進 passive[1] 的五份額度裡。"
+}

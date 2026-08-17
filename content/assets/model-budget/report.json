@@ -1,25 +1,25 @@
 {
  "schema": "model-budget@1",
- "generatedAt": "2026-08-17T16:23:48.050Z",
+ "generatedAt": "2026-08-17T17:13:31.567Z",
  "generatedBy": "tools/model-budget/emit_report.ts (task #99)",
  "sources": [
   {
    "path": "content/models/_index.json",
    "sha256": "dc20d995ac6b2d40",
    "bytes": 17832,
-   "mtime": "2026-08-17T16:23:27.835Z"
+   "mtime": "2026-08-17T17:12:37.962Z"
   },
   {
    "path": "content/arenas/_index.json",
    "sha256": "3832f76e1deb2882",
    "bytes": 1874,
-   "mtime": "2026-08-17T16:23:27.824Z"
+   "mtime": "2026-08-17T17:12:37.950Z"
   },
   {
    "path": "content/champions/_index.json",
    "sha256": "4e463912b5a10c26",
    "bytes": 10293,
-   "mtime": "2026-08-17T16:23:27.772Z"
+   "mtime": "2026-08-17T17:12:37.906Z"
   },
   {
    "path": "apps/client/src/render/ArenaGround.ts",
@@ -325,14 +325,14 @@
    "procedural": [],
    "extraDraws": null,
    "extraVram": {
-    "bytes": 80347136,
-    "why": "1008 張圖示（英雄/技能/道具）：890 張 128² WEBP + 118 張 64² PNG，瀏覽器解成 RGBA8。"
+    "bytes": 82094763,
+    "why": "1028 張圖示（英雄/技能/道具）：910 張 128² WEBP + 118 張 64² PNG，瀏覽器解成 RGBA8。"
    },
    "triangles": 0,
    "drawCalls": 0,
    "animChannels": 0,
    "textureBytes": 0,
-   "vramBytes": 80347136,
+   "vramBytes": 82094763,
    "limits": [
     {
      "key": "triangles",

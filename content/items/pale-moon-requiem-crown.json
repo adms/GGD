@@ -1,0 +1,78 @@
+{
+  "id": "pale-moon-requiem-crown",
+  "schema": "item@1",
+  "name": "蒼月葬送・千年彼方花冠",
+  "description": "武器\n效能\n[蒼月開花] 每產生相當於目標最大生命 8%的過量治療或過量護盾，生成 1 朵蒼月花，最多 8 朵\n[花瓣] 每朵使治療與護盾 ×1.04\n[千年花園] 八朵後展開 8 秒「千年花園」，我方兩人的治療與護盾 ×1.40，其中 50%同步給另一名隊友，所有過量治療轉為護盾\n\n解說\n治過頭的那一半沒有浪費，它開成花了",
+  "cost": 0,
+  "tier": 5,
+  "tags": [
+    "legendary",
+    "support",
+    "shield"
+  ],
+  "passive": [
+    {
+      "key": "moonflower-bloom",
+      "on": "onOverheal",
+      "target": "self",
+      "internalCooldown": 3,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "modifiers": [
+            {
+              "stat": "outputHealingPct",
+              "op": "flat",
+              "value": 0.04
+            },
+            {
+              "stat": "outputShieldPct",
+              "op": "flat",
+              "value": 0.04
+            }
+          ],
+          "permanent": true,
+          "permanentScope": "round",
+          "maxStacks": 8,
+          "statusId": "pale-moon-flower"
+        }
+      ]
+    },
+    {
+      "key": "millennium-garden",
+      "on": "onOverheal",
+      "target": "allies",
+      "internalCooldown": 30,
+      "condition": {
+        "kind": "status",
+        "subject": "self",
+        "statusId": "pale-moon-flower",
+        "minStacks": 8
+      },
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "outputHealingPct",
+              "op": "flat",
+              "value": 0.4
+            },
+            {
+              "stat": "outputShieldPct",
+              "op": "flat",
+              "value": 0.4
+            }
+          ],
+          "duration": 8,
+          "stackKey": "pale-moon-garden",
+          "maxStacks": 1
+        }
+      ]
+    }
+  ],
+  "icon": "assets/icons/items/pale-moon-requiem-crown.webp",
+  "craftRole": "none",
+  "authoringNote": "[蒼月開花]「每產生相當於目標最大生命 8%的過量治療或過量護盾，生成 1 朵蒼月花，最多 8 朵」= passive[0]（onOverheal + internalCooldown 3）。⚠️ **三重降級**：\n① **量讀不到**（G7「讀這一發的量」引擎沒有）——hook payload 不把溢出的數值交給內容側，所以「相當於目標最大生命 8%」寫不出來。改成「每一次過量治療事件 = 1 朵」，用 internalCooldown 3 秒當節流閥（沒有它的話一段持續治療會在幾個 tick 內把八朵開滿）。\n② **過量護盾沒有事件** —— 只有 heal 那一則帶 overheal 欄位（WorldHookSystem 的 onOverheal 那一列），護盾溢出不發任何東西。所以只有過量**治療**算數。\n③ **方向反了** —— 引擎的 onOverheal 持有者是**被治療的那個身體**（actorKey: \"target\"），不是治療者。所以花是在「花冠持有者自己被治滿」時開的，⛔ 不是「他把隊友治滿」時。這是這一支最大的落差，要修得掉需要一個以治療者為持有者的溢出事件。\n[花瓣]「每朵使治療與護盾 ×1.04」= outputHealingPct / outputShieldPct 各 flat +0.04。⚠️ 這一條**只能線性**，⛔ 不是我偷懶：那兩格的語意是**加成**（0 = ×1），pctMult 乘的是加成本身，而 0 乘任何東西都是 0 —— 一張只寫 pctMult 的卡會完全沒有效果（失敗形態②）。所以八朵 = +0.32 = ×1.32，而 owner 的複利讀法是 1.04^8 ≈ ×1.369，差 3.7 個百分點，記在這裡。\n· 「最多 8 朵」= maxStacks 8（GH#354 之後複利路徑也吃得到）。每一份來源帶 statusId「pale-moon-flower」，一份來源 = 一朵，所以朵數就是 statusStacks 讀得到的層數，下面那一段才問得出「八朵了沒」。⚠️ 這個 statusId **沒有** status-effect@1 文件（它只是計數器，不需要圖示）；applyBuff.statusId 不是 refs.ts 抽得到的 ref 邊，所以不會有 dangling 警告。\n· 朵數取 permanentScope: \"round\"（owner 沒寫壽命，同批 #54「整個回合不會衰退」的讀法），⛔ 不猜秒數。\n[千年花園]「八朵後展開 8 秒，我方兩人的治療與護盾 ×1.40」= passive[1]：condition status minStacks 8 → duration 8 的 +0.40 兩格，hook target: \"allies\"（＝同隊每一位英雄，也就是文案的「我方兩人」）。用 stackKey 而不是複利路徑是**必要的**：同一件道具的兩條 hook 共用同一個 origin，複利路徑的 id 是 `buff:<origin>#<tick>`，同一 tick 兩份會互相覆蓋。\n⚠️ internalCooldown 30 是**這份文件自己決定的參數**：花朵是回合永久的，沒有節流的話花園會每一次治療重新展開＝變成常駐。owner 的規格沒有寫再觸發規則。\n⚠️ 「其中 50%同步給另一名隊友」（G18 治療分流）與「所有過量治療轉為護盾」（G9 溢出轉換）**兩條都沒有實作**，引擎沒有對應機制。前者的意圖被 target:\"allies\" 部分蓋掉（兩人都直接拿到 ×1.40），後者整條沒有。"
+}

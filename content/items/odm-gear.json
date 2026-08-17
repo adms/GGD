@@ -1,0 +1,57 @@
+{
+  "id": "odm-gear",
+  "schema": "item@1",
+  "name": "立體機動裝置",
+  "description": "武器\n效能\n[機動上限解放] 移速上限 18 → 24\n[超速] 當移速超過 18 後，每超出 1 點，使位移距離 +8%、移動後 2 秒內造成的傷害／治療／護盾 +3%\n[回收] 每累積移動 10 距離，立即使位移技能剩餘冷卻降低 30%\n\n解說\n瓦斯還夠嗎？夠。刀片呢？……先別問。",
+  "cost": 0,
+  "tier": 5,
+  "tags": [
+    "legendary",
+    "mobility",
+    "movement-speed"
+  ],
+  "modifiers": [
+    {
+      "stat": "ms",
+      "op": "capRaisePct",
+      "value": 0.3333
+    }
+  ],
+  "passive": [
+    {
+      "key": "post-displace",
+      "on": "onDashOrBlink",
+      "target": "self",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "duration": 2,
+          "stackKey": "odm-gear.momentum",
+          "maxStacks": 1,
+          "statusId": "odm-gear.momentum",
+          "modifiers": [
+            {
+              "stat": "outputDamagePct",
+              "op": "flat",
+              "value": 0.03
+            },
+            {
+              "stat": "outputHealingPct",
+              "op": "flat",
+              "value": 0.03
+            },
+            {
+              "stat": "outputShieldPct",
+              "op": "flat",
+              "value": 0.03
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "icon": "assets/icons/items/odm-gear.webp",
+  "craftRole": "none",
+  "authoringNote": "這是這一批缺口最多的一件（5 條裡只有 1 條寫得出來）。逐條交代：\n[機動上限解放]「移速上限 18 → 24」= `modifiers` 的 `capRaisePct 0.3333`（一般上限 ×1.3333 = 18 → 24.0）。用百分比而不是 `capRaise: 24` 是刻意的：`ms.base` 是後台可調的，絕對值那一天不會跟著動而卡片還寫著「→24」。\n⚠️ **它今天是 no-op，而且原因不只一個**：① `content/config/stat-caps.json` 的 `ms` 是 `base 18 / unlocked 18`，而 `statCaps.effectiveCap` 把任何解鎖硬夾到 `unlocked` —— 出貨 13 條上限裡**只有攻速（4→10）與吸血（0.8→20）留了解鎖空間**，其餘 11 條 `unlocked === base`，寫了等於沒寫。② 更重要：`sim/statCaps.ts` 那一列有 owner 2026-08-15 的量測註解 —— **18.0 = 30Hz 離散碰撞的穿牆平手線**（每 tick 0.6u = 身體半徑 100%），第一版的「上限 24 / 解鎖 30」正是因為穿牆才被退回來的。所以把 `ms.unlocked` 抬到 24 **不是一格數字**，是一個帶已知物理風險的決定 —— 那是 owner 的裁決，⛔ 不是這張卡的缺陷，也不是我可以在道具檔裡繞過去的東西。\n[超速]「每超出 1 點⋯」⚠️ **降級①**：引擎**沒有「由某條屬性的讀數推導層數」**的機制（條件葉只做布林比較，`applyBuff` 只做次數疊層）。⇒ 「每超出 1 點」整個縮成**一份固定量**。\n· 「位移距離 +8%」⚠️ **降級②：完全沒有實作**。沒有「位移距離」這條屬性，`dash.maxDistance` / `blink` 是每一支技能自己文件裡的常數，道具碰不到。\n· 「移動後 2 秒內造成的傷害／治療／護盾 +3%」= passive[0]：`onDashOrBlink` → 2 秒的 outputDamagePct / outputHealingPct / outputShieldPct 各 **flat 0.03**（＝「超出 1 點」那一格的量）。⚠️ 「移動後」讀成**位移技能之後**（衝刺／閃現／跳躍），⛔ 不是「走路之後」—— 後者沒有事件。\n[回收]「每累積移動 10 距離，立即使位移技能剩餘冷卻降低 30%」⚠️ **降級③：完全沒有實作**，兩個獨立的原因：① 移動距離累積器不存在（同 #59 的 G10 缺口）；② `modifyCooldown` **必須指名 `slot` 或 `abilityId`**（`refineModifyCooldown` 擋，因為兩個都不填等於全域 CDR），而「位移技能」不是一個槽位 —— `onDashOrBlink` 由 `WorldHookSystem` 發射，那條路**傳的 abilitySlot 是 undefined**，所以連 `abilitySlot` 過濾都永遠不匹配。硬寫成 Q/W/E/R/EX 五格全減 30% 是一件完全不同（強太多）的道具，⛔ 不做。"
+}

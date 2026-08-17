@@ -319,6 +319,116 @@ ITEM_ID_SUBJECT: dict[str, tuple[str, str]] = {
         "radiant golden light bursting outward behind them, bold centred silhouette",
         "brilliant gold and deep amber",
     ),
+    # ── [EX∅ 根源] 19 件新寶具（owner 2026-08-18）──────────────────────────
+    # ⚠️ 同上：⛔ 不走推導。這 19 份的 `description` 是**同一個模板**
+    # （「武器\n效能\n[標籤]…\n\n解說」），而 `item_keywords` 的名字表只認單一
+    # 語素 —— 「刀」「槍」「劍」「杖」「戒」「書」「面具」「冠」會把其中 8 件
+    # 收斂成 5 種通用物件（katana / spear / longsword / staff / ring…），
+    # 另外 11 件（紙片・手套・火把・立體機動裝置・淚珠・首輪…）名字裡一個語素
+    # 都沒有，會整批掉到 STAT_OBJECT 或 "an ornate adventuring relic"。
+    # 這些是**寶具**，在商店與背包裡並排出現 —— 撞圖就是白做。
+    "ultimate-mod-shiranui": (
+        "an over-engineered katana, extra bolted-on metal plates and screws along "
+        "the blade, pale flame licking off the cutting edge, held upright, "
+        "bold centred silhouette",
+        "gunmetal grey and pale blue",
+    ),
+    "lance-kongotetsu": (
+        "a very long ceremonial lance, a diamond-faceted spearhead above a ringed "
+        "vajra collar, standing upright, clean centred silhouette",
+        "polished silver and warm gold",
+    ),
+    "mystery-scrap-of-paper": (
+        "a single small torn scrap of old parchment floating in the dark, faded "
+        "unreadable marks on it, edges strangely uncharred, bold centred silhouette",
+        "aged parchment cream and ink brown",
+    ),
+    "fingerless-gloves": (
+        "a pair of worn fingerless leather gloves with reinforced knuckle straps, "
+        "one laid across the other, bold centred silhouette",
+        "dark leather brown and brass",
+    ),
+    "torch-master": (
+        "a wooden torch with a cloth-wrapped burning head, one tall steady flame, "
+        "held upright, bold centred silhouette",
+        "molten orange and charred brown",
+    ),
+    # ⚠️ soul-eater 重跑到上限（2 次）。三版都不理想，出貨的是第 2 版。
+    # 量到的：第 3 版把 "pale ghost wisps" 畫成了**一個幽靈少女角色**（寶具畫成人物
+    # ＝完全走鐘），所以這一句刻意**不含任何 wisp/soul/ghost 的形容** —— 那些詞會把
+    # 主體從「一把劍」拉成「一個亡靈」。要再試的話請動別的地方。
+    "soul-eater": (
+        "one upright black broadsword planted point down, a fanged skull mouth "
+        "carved into the base of the blade, bold centred silhouette",
+        "obsidian black and spectral cyan",
+    ),
+    "meat-cleaver": (
+        "one butcher's meat cleaver standing upright, a broad flat rectangular "
+        "chopping blade much wider than its short wooden handle, bold centred "
+        "silhouette",
+        "dull steel and wood brown",
+    ),
+    "meteor-ring": (
+        "a golden finger ring set with three small burning star gems, thin meteor "
+        "trails curving around the band, bold centred silhouette",
+        "warm gold and starlight white",
+    ),
+    "staff-of-ainz-ooal-gown": (
+        "an ornate black magic staff crowned with coiled serpent heads gripping a "
+        "single glowing jewel, standing upright, bold centred silhouette",
+        "obsidian black and deep violet",
+    ),
+    "spear-of-lightning": (
+        "a slender javelin forged out of crackling lightning, sharp arcs jumping "
+        "off the shaft, driven point-down, bold centred silhouette",
+        "electric white and deep blue",
+    ),
+    "odm-gear": (
+        "a leather harness rig with twin pressurised gas canisters and a steel "
+        "grapple-hook launcher, one coiled wire trailing, bold centred silhouette",
+        "leather brown and steel grey",
+    ),
+    "stone-mask": (
+        "a carved stone face mask with hollow empty eyes and a slack open mouth, "
+        "thin bone spines bristling from its inner rim, bold centred silhouette",
+        "pale stone grey and blood red",
+    ),
+    "gravity-sword-black-rod": (
+        "a featureless matte black rectangular rod sword with no edge and no guard, "
+        "the ground cratering under its weight, bold centred silhouette",
+        "matte black and dark violet",
+    ),
+    "teardrop-of-rebirth": (
+        "one large teardrop-shaped crystal droplet hanging in the dark, a tiny "
+        "curled sprout of light glowing inside it, bold centred silhouette",
+        "clear aqua and pale gold",
+    ),
+    "book-of-gospel": (
+        "a thick gospel book lying open, gilded page ribbons lifting, faint script "
+        "glowing across the spread pages, bold centred silhouette",
+        "ivory white and warm gold",
+    ),
+    "magic-armor-type-zero": (
+        "a knight's chest plate armour with wide shoulder pauldrons, a round "
+        "glowing reactor core set in the middle of the chest, brass pipes running "
+        "up to the shoulders, bold centred silhouette",
+        "brass and glowing cyan",
+    ),
+    "usagizuki-twin-crescents": (
+        "exactly two curved crescent-moon swords crossed in an X, each blade a "
+        "thin sickle-shaped sliver of moon, bold centred silhouette",
+        "moonlight silver and deep indigo",
+    ),
+    "collar-of-the-deadly-soul": (
+        "a thick studded black neck collar with a heavy iron ring hanging at the "
+        "front and a small skull clasp, bold centred silhouette",
+        "black leather and iron grey",
+    ),
+    "pale-moon-requiem-crown": (
+        "a woven circlet crown of pale moon blossoms with long trailing petals, "
+        "resting tilted, bold centred silhouette",
+        "pale blue-white and soft green",
+    ),
 }
 
 

@@ -1,7 +1,13 @@
 {
   "collection": "items",
-  "hash": "32becfb5abf3",
+  "hash": "1e78bb1675b9",
   "entries": [
+    {
+      "id": "book-of-gospel",
+      "path": "items/book-of-gospel.json",
+      "hash": "bb486d169b1b",
+      "size": 12976
+    },
     {
       "id": "bulwark-charge-greaves",
       "path": "items/bulwark-charge-greaves.json",
@@ -15,6 +21,12 @@
       "size": 1465
     },
     {
+      "id": "collar-of-the-deadly-soul",
+      "path": "items/collar-of-the-deadly-soul.json",
+      "hash": "d827a8465f5b",
+      "size": 4667
+    },
+    {
       "id": "ember-rod",
       "path": "items/ember-rod.json",
       "hash": "35997ee76d35",
@@ -25,6 +37,12 @@
       "path": "items/endless-edge.json",
       "hash": "a8111646a0b9",
       "size": 2262
+    },
+    {
+      "id": "fingerless-gloves",
+      "path": "items/fingerless-gloves.json",
+      "hash": "76b9a5347d8d",
+      "size": 7666
     },
     {
       "id": "godie-i000",
@@ -1275,16 +1293,64 @@
       "size": 841
     },
     {
+      "id": "gravity-sword-black-rod",
+      "path": "items/gravity-sword-black-rod.json",
+      "hash": "3b3e67ce3d2d",
+      "size": 3190
+    },
+    {
       "id": "ironhide-vest",
       "path": "items/ironhide-vest.json",
       "hash": "3d736fc013ba",
       "size": 389
     },
     {
+      "id": "lance-kongotetsu",
+      "path": "items/lance-kongotetsu.json",
+      "hash": "ce2f66bd88bd",
+      "size": 4322
+    },
+    {
       "id": "legendary-orb",
       "path": "items/legendary-orb.json",
       "hash": "f14ddf663e3e",
       "size": 536
+    },
+    {
+      "id": "magic-armor-type-zero",
+      "path": "items/magic-armor-type-zero.json",
+      "hash": "a2afeb8ab4ab",
+      "size": 4541
+    },
+    {
+      "id": "meat-cleaver",
+      "path": "items/meat-cleaver.json",
+      "hash": "fcfaaf7e7673",
+      "size": 4973
+    },
+    {
+      "id": "meteor-ring",
+      "path": "items/meteor-ring.json",
+      "hash": "e1b9408e739c",
+      "size": 9755
+    },
+    {
+      "id": "mystery-scrap-of-paper",
+      "path": "items/mystery-scrap-of-paper.json",
+      "hash": "176d91904bc3",
+      "size": 3374
+    },
+    {
+      "id": "odm-gear",
+      "path": "items/odm-gear.json",
+      "hash": "3ddebdc5403b",
+      "size": 4166
+    },
+    {
+      "id": "pale-moon-requiem-crown",
+      "path": "items/pale-moon-requiem-crown.json",
+      "hash": "73003957b658",
+      "size": 5243
     },
     {
       "id": "piercer-crossbow",
@@ -1305,16 +1371,70 @@
       "size": 669
     },
     {
+      "id": "shining-golden-orbs",
+      "path": "items/shining-golden-orbs.json",
+      "hash": "47ea8044cad6",
+      "size": 10972
+    },
+    {
+      "id": "soul-eater",
+      "path": "items/soul-eater.json",
+      "hash": "e994f1f0e73e",
+      "size": 4950
+    },
+    {
+      "id": "spear-of-lightning",
+      "path": "items/spear-of-lightning.json",
+      "hash": "b271ae486520",
+      "size": 4835
+    },
+    {
+      "id": "staff-of-ainz-ooal-gown",
+      "path": "items/staff-of-ainz-ooal-gown.json",
+      "hash": "04ae56bb3a45",
+      "size": 11628
+    },
+    {
       "id": "stat-attunement",
       "path": "items/stat-attunement.json",
       "hash": "be9101c31c78",
       "size": 584
     },
     {
+      "id": "stone-mask",
+      "path": "items/stone-mask.json",
+      "hash": "52da79516cc1",
+      "size": 4481
+    },
+    {
       "id": "swift-boots",
       "path": "items/swift-boots.json",
       "hash": "7e7d321a50d5",
       "size": 316
+    },
+    {
+      "id": "teardrop-of-rebirth",
+      "path": "items/teardrop-of-rebirth.json",
+      "hash": "39670e6a09d2",
+      "size": 4390
+    },
+    {
+      "id": "torch-master",
+      "path": "items/torch-master.json",
+      "hash": "f4c448064d74",
+      "size": 4495
+    },
+    {
+      "id": "ultimate-mod-shiranui",
+      "path": "items/ultimate-mod-shiranui.json",
+      "hash": "16bbb4d1a7b7",
+      "size": 4069
+    },
+    {
+      "id": "usagizuki-twin-crescents",
+      "path": "items/usagizuki-twin-crescents.json",
+      "hash": "975d8ec13ad0",
+      "size": 6656
     }
   ]
 }

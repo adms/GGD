@@ -1,0 +1,77 @@
+{
+  "id": "lance-kongotetsu",
+  "schema": "item@1",
+  "name": "神槍・金剛徹",
+  "description": "武器\n效能\n[必中解放] 連續攻擊獲得〔金剛〕最多 6 層，每層普攻傷害 ×1.04、攻擊速度 ×1.05\n[必中解放] 滿層後普攻無法被迴避，仍可被格擋、護盾抵消\n[長柄] 攻擊距離 +1\n\n解說\n槍夠長的時候，閃避就只是一種心情。",
+  "cost": 0,
+  "tier": 5,
+  "tags": [
+    "legendary",
+    "on-hit",
+    "attack-speed",
+    "ad"
+  ],
+  "modifiers": [
+    {
+      "stat": "range",
+      "op": "flat",
+      "value": 1
+    }
+  ],
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "key": "kongo-stack",
+      "target": "self",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "duration": 4,
+          "maxStacks": 6,
+          "statusId": "kongotetsu",
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "pctMult",
+              "value": 0.04
+            },
+            {
+              "stat": "as",
+              "op": "pctMult",
+              "value": 0.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "on": "onBasicAttack",
+      "key": "kongo-pierce",
+      "target": "self",
+      "condition": {
+        "kind": "status",
+        "subject": "self",
+        "statusId": "kongotetsu",
+        "minStacks": 6
+      },
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "duration": 4,
+          "stackKey": "kongotetsu-pierce",
+          "maxStacks": 1,
+          "modifiers": [
+            {
+              "stat": "unavoidablePct",
+              "op": "flat",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "icon": "assets/icons/items/lance-kongotetsu.webp",
+  "craftRole": "none",
+  "authoringNote": "[EX解放] owner 規格 #51（貓耳貓／神槍）。逐句：\n[必中解放]「最多 6 層，每層普攻傷害 ×1.04、攻擊速度 ×1.05」= passive[0]。\n· **複利**（⛔ 不填 stackKey）—— 判準是文案寫的是 ×1.0X 這種乘積：6 層 = ad ×1.04⁶ ≈ **×1.265**、as ×1.05⁶ ≈ **×1.34**。填 stackKey 會被 statPipeline 折成線性（1+0.04×6 = ×1.24 / ×1.30），與文案不同。\n· 「最多 6 層」= maxStacks 6。⭐ 複利路徑現在也吃得到它（GH#354/G1，用 buff:<origin># 前綴數份數）。\n⚠️ **降級①**：原文是「連續攻擊**同一英雄**」。「換目標就歸零」是 G14，引擎**沒有實作**（沒有 per-target 疊層記帳）。降級成**一般疊層 + 短 duration 4 秒**：4 秒內沒有再打就會逐份到期（複利路徑每份各自到期，⛔ 不是全部一起歸零）。換目標繼續打**照樣**疊得上去。\n⚠️ **降級②**：「普攻**傷害** ×1.04」寫成 ad pctMult。引擎沒有 basic-only 的輸出倍率；用 outputDamagePct 會把技能傷害一起放大，離原文更遠。ad 是普攻傷害的驅動屬性，但也會餵到吃 AD 係數的技能。\n[必中解放]「滿層後普攻無法被迴避」= passive[1]：condition 讀〔金剛〕層數 ≥6（statusId 讓那份增益**同時是具名標記**，statusStacks 把每一份來源各算 1 層 ⇒ 6 份 = 6 層），命中則掛 unavoidablePct 1。\n⚠️ unavoidablePct **只關迴避**；格擋、護盾、免疫全部照舊 —— 正是原文「仍可被格擋、護盾抵消」那條界線。\n⚠️ 但它**同時影響技能通道**：引擎只有一個折扣（rollEvade 與 rollEvadeAbility 共用），沒有 basic-only 的 scope。\n⚠️ 它**寫在 applyBuff 裡而不是 modifiers**：ITEM_MODIFIER_LIMITS[unavoidablePct] 是 0.5，常駐 modifier 填 1 會被 Zod 拒收；而且常駐也不對（要滿層才有）。\n⚠️ 時序：第 6 刀先疊到 6 層、同一 tick 第二條 hook 才掛必中 ⇒ 生效的是**接下來**那幾刀（duration 4，與層數同壽）。\n⚠️ statusId \"kongotetsu\" 是 **soft ref**，目前 content/status-effects/ 沒有這份文件 ⇒ 機制正常，但 UI 上沒有圖示與名稱。要補就加一份 status-effect@1。\n⚠️ 文案的 ×1.0X 標記用〔〕不是「」—— 「」在這個 repo 是角色對白，會被機制解析器整段剝掉。\n[長柄]「攻擊距離 +1」= modifiers range flat 1（Stat.AttackRange 的值是 \"range\"）。"
+}

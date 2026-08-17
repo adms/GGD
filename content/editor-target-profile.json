@@ -1,10 +1,10 @@
 {
   "schema": "ggd-editor-target-profile@1",
-  "generatedAt": "2026-08-17T16:24:20.670Z",
+  "generatedAt": "2026-08-17T17:14:06.165Z",
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_8a90b1eb0894",
+    "contentVersion": "cv_1e707a1e419e",
     "collections": {
       "champions": {
         "hash": "fd3e966af6a8",
@@ -15,8 +15,8 @@
         "count": 461
       },
       "items": {
-        "hash": "32becfb5abf3",
-        "count": 219
+        "hash": "1e78bb1675b9",
+        "count": 239
       },
       "augments": {
         "hash": "3fac6ff2c5ef",
@@ -31,7 +31,7 @@
         "count": 30
       },
       "loot-tables": {
-        "hash": "09693d9f5659",
+        "hash": "decb082d5636",
         "count": 4
       },
       "arenas": {
@@ -2115,7 +2115,7 @@
       "danglingKeys": []
     },
     "item": {
-      "count": 219,
+      "count": 239,
       "craftRoles": [
         "component",
         "final",
@@ -2125,24 +2125,40 @@
         "token"
       ],
       "tags": [
+        "ability-power",
         "ad",
         "ap",
+        "attack-damage",
         "attack-speed",
         "boots",
+        "burst",
         "cleave",
+        "cooldown",
+        "crit",
+        "defense",
         "gacha",
         "legendary",
+        "lifesteal",
         "mage",
+        "mana",
         "marksman",
         "melee",
         "mobility",
+        "movement-speed",
+        "on-cast",
         "on-hit",
         "onhit",
+        "revive",
+        "scaling",
+        "shield",
         "shop-service",
+        "stat-cap",
         "stat-path",
+        "support",
         "survivability",
         "tank",
         "true-damage",
+        "utility",
         "wc3-import"
       ],
       "modifierStats": [
@@ -2158,6 +2174,7 @@
         "lifesteal",
         "manaRegen",
         "maxHealth",
+        "maxHitPctMaxHp",
         "maxMana",
         "mr",
         "ms",
@@ -2166,6 +2183,7 @@
       ],
       "modifierOps": [
         "capRaise",
+        "capRaisePct",
         "flat",
         "pctAdd",
         "pctMult",
@@ -2841,5 +2859,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "1f7a5985c1cc"
+  "profileDigest": "a03274317cbe"
 }

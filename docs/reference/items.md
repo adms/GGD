@@ -2,10 +2,10 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_8a90b1eb0894`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
-> 資料列：**219**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-07-24T11:14:58.268286Z`）
+> 產生自 contentVersion **`cv_1e707a1e419e`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 資料列：**239**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-07-24T11:14:58.268286Z`）
 
-`content/items/*.json` 共 **219** 份，依 `content/items/<id>.json` 的 **`craftRole`** 標記分類（來源：source-map triggers，見 `tools/w3x-import/extract_item_roles.py`）。實際能在商店買到的只有 **38** 件最終合成武器（`craftRole:final` 且有效果）＋ **2** 項服務；三選一 draft 抽 **13** 件任務道具，傳說寶玉抽 **49** 件傳說。其餘（106 組件、8 代幣、31 無角色、4 無 payload 的 final）是配方半成品或 w3x 殘件，不會單獨出現在任何商店或抽卡。
+`content/items/*.json` 共 **239** 份，依 `content/items/<id>.json` 的 **`craftRole`** 標記分類（來源：source-map triggers，見 `tools/w3x-import/extract_item_roles.py`）。實際能在商店買到的只有 **38** 件最終合成武器（`craftRole:final` 且有效果）＋ **2** 項服務；三選一 draft 抽 **13** 件任務道具，傳說寶玉抽 **49** 件傳說。其餘（106 組件、8 代幣、51 無角色、4 無 payload 的 final）是配方半成品或 w3x 殘件，不會單獨出現在任何商店或抽卡。
 
 > 本檔的數值是 `content/` 的**原始值**，未套用 `combat-env` 全域倍率（`content/config/combat-env.json`）。遊戲內顯示的一律是乘算後的最終值，所以畫面上的冷卻／傷害／生命與這裡不會相同 —— 那是預期行為，不是資料錯誤。
 >
@@ -292,13 +292,16 @@
 | `godie-i05a` | 兌換泰坦之魂 | 代幣 token | — | T1 | — | — | — | — |
 | `godie-i05e` | 兌換斯巴達圓盾 | 代幣 token | — | T1 | — | — | — | — |
 
-## 8. 其餘 none（31）
+## 8. 其餘 none（51）
 
 沒有 craftRole 角色的殘件，留著做 w3x 對照與未來策展。
 
 | id | 名稱 | craftRole | 價格 | tier | 傳說池 | 開放 | 屬性 modifiers | 被動 passive |
 |---|---|---|---|---|---|---|---|---|
+| `book-of-gospel` | 福音書 | 無角色 none | — | T5 | — | — | — | onAbilityCast→applyBuff/modifyCooldown/applyBuff/applyBuff · onAbilityCast→applyBuff/modifyCooldown/applyBuff/applyBuff · onAbilityCast→applyBuff/modifyCooldown/applyBuff/applyBuff |
+| `collar-of-the-deadly-soul` | 致命魂之首輪 | 無角色 none | — | T5 | — | — | — | onKill→applyBuff |
 | `ember-rod` | 餘燼魔杖 | 無角色 none | 300g | T1 | — | — | 法強 +31.6 | — |
+| `fingerless-gloves` | 指貫手套 | 無角色 none | — | T5 | — | — | 攻擊力 +20% | onInterval→applyBuff/applyBuff/applyBuff/applyBuff/applyBuff/applyBuff/applyBuff/applyBuff/applyBuff/applyBuff |
 | `godie-i001` | 出動怨念射手兵團 | 無角色 none | 1200g | T2 | — | — | — | — |
 | `godie-i008` | 初級傳送捲軸 | 無角色 none | 300g | T1 | — | — | 生命 +39 · 攻擊力 +1.9 · 魔力 +23 | — |
 | `godie-i00d` | 出動戀愛戰士兵團 | 無角色 none | 1600g | T3 | — | — | — | — |
@@ -324,9 +327,26 @@
 | `godie-i062` | 飛鼠跳刀 | 無角色 none | 1550g | T3 | — | — | — | — |
 | `godie-i063` | 防狼電擊棒 | 無角色 none | — | T1 | — | — | 魔力 +185 · 回魔 +16.8% | onBasicAttack→damageArea |
 | `godie-i06l` | 生肉 | 無角色 none | 150g | T1 | — | — | — | — |
+| `gravity-sword-black-rod` | 重力劍〈黑棒〉 | 無角色 none | — | T5 | — | — | — | onInterval→applyBuff |
 | `ironhide-vest` | 鐵皮護甲背心 | 無角色 none | 1200g | T2 | — | — | 護甲 +36.7 · 生命 +122 | — |
+| `lance-kongotetsu` | 神槍・金剛徹 | 無角色 none | — | T5 | — | — | 射程 +1 | onBasicAttack→applyBuff · onBasicAttack→applyBuff |
+| `magic-armor-type-zero` | 魔導鎧・零式 | 無角色 none | — | T5 | — | — | — | onAbilityCast→applyBuff · onAbilityCast→applyBuff |
+| `meat-cleaver` | 肉切菜刀 | 無角色 none | — | T5 | — | — | — | onInterval→applyBuff · onBasicAttack→applyBuff · onBasicAttack→damageArea |
+| `meteor-ring` | 流星之戒 | 無角色 none | — | T5 | — | — | — | onUltimateCast→applyBuff/modifyCooldown/applyBuff/applyBuff/applyBuff · onAbilityCast→applyBuff/restore/modifyCooldown/applyBuff · onAbilityCast→applyBuff/restore/modifyCooldown/applyBuff · onAbilityCast→applyBuff/restore/modifyCooldown/applyBuff |
+| `mystery-scrap-of-paper` | 謎之紙片 | 無角色 none | — | T5 | — | — | maxHitPctMaxHp +0.2 | onDamageTaken→applyBuff |
+| `odm-gear` | 立體機動裝置 | 無角色 none | — | T5 | — | — | 移速 +0.33 | onDashOrBlink→applyBuff |
+| `pale-moon-requiem-crown` | 蒼月葬送・千年彼方花冠 | 無角色 none | — | T5 | — | — | — | onOverheal→applyBuff · onOverheal→applyBuff |
 | `piercer-crossbow` | 穿甲弩 | 無角色 none | — | T5 | — | — | 攻擊力 +38 · 攻速 +45% | onBasicAttack→damage |
 | `sage-ward-amulet` | 賢者的護身符 | 無角色 none | — | T5 | — | — | 法強 +35 · 魔力 +220 | onDamageTaken→shield |
 | `serrated-edge` | 鋸齒之刃 | 無角色 none | 1200g | T2 | — | ✅ | 攻擊力 +26 | onBasicAttack→damage |
+| `shining-golden-orbs` | 閃耀金玉 | 無角色 none | — | T5 | — | — | — | onStatCapReached→applyBuff/applyBuff |
+| `soul-eater` | 噬魂者 | 無角色 none | — | T5 | — | — | — | onKill→restore · onKill→applyBuff · onKill→applyBuff |
+| `spear-of-lightning` | 雷槍 | 無角色 none | — | T5 | — | — | — | onInterval→applyBuff · onBasicAttack→damageArea · onAbilityHit→damageArea |
+| `staff-of-ainz-ooal-gown` | 安茲・烏爾・恭之杖 | 無角色 none | — | T5 | — | — | — | onAbilityCast→applyBuff · onAbilityCast→applyBuff · onAbilityCast→applyBuff · onAbilityCast→applyBuff · onAbilityCast→applyBuff · onAbilityCast→applyBuff · onBasicAttack→applyBuff · onAbilityCast→applyBuff |
+| `stone-mask` | 石鬼面 | 無角色 none | — | T5 | — | — | — | onDamageTaken→applyBuff · onDamageTaken→applyBuff |
 | `swift-boots` | 疾風之靴 | 無角色 none | 300g | T1 | — | ✅ | 移速 +0.83 | — |
+| `teardrop-of-rebirth` | 再誕之淚珠 | 無角色 none | — | T5 | — | — | — | onDeath→applyBuff/delayed |
+| `torch-master` | 火把師父 | 無角色 none | — | T5 | — | — | — | onBasicAttack→applyBuff · onAbilityHit→applyBuff |
+| `ultimate-mod-shiranui` | 終極魔改・不知火 | 無角色 none | — | T5 | — | — | 攻擊力 +0.5 · 攻速 +0.5 · 暴擊傷害 +0.5 · 攻擊力 +0.5 · 攻速 +0.5 · 暴擊傷害 +0.5 | onStatCapReached→applyBuff |
+| `usagizuki-twin-crescents` | 兎月【雙弦月】 | 無角色 none | — | T5 | — | — | — | onBasicAttack→applyBuff · onBasicAttack→applyBuff · onBasicAttack→applyBuff · onBasicAttack→applyBuff · onBasicAttack→applyBuff |
 

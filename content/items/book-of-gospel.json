@@ -1,0 +1,396 @@
+{
+  "id": "book-of-gospel",
+  "schema": "item@1",
+  "name": "福音書",
+  "description": "法器\n效能\n[福音] 使用不同基礎技能時累積「頁」，最多 4 頁；每頁使下一個不同技能效果 ×1.08\n[福音] 四頁後下一個技能進入「既定未來」，效果 ×1.60 並返還 50%剩餘冷卻，之後清空\n\n解說\n書上寫的都會發生，只是沒寫是誰的未來。",
+  "cost": 0,
+  "tier": 5,
+  "tags": [
+    "legendary",
+    "ability-power",
+    "cooldown"
+  ],
+  "passive": [
+    {
+      "key": "gospel-page-q",
+      "on": "onAbilityCast",
+      "abilitySlot": "Q",
+      "target": "self",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "duration": 3,
+          "condition": {
+            "all": [
+              {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "gospel-page",
+                "minStacks": 4
+              },
+              {
+                "not": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "gospel-fated-future-spent"
+                }
+              }
+            ]
+          },
+          "modifiers": [
+            {
+              "stat": "outputDamagePct",
+              "op": "flat",
+              "value": 0.6
+            },
+            {
+              "stat": "outputHealingPct",
+              "op": "flat",
+              "value": 0.6
+            },
+            {
+              "stat": "outputShieldPct",
+              "op": "flat",
+              "value": 0.6
+            }
+          ]
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "Q",
+          "mode": "reduce",
+          "basis": "remaining",
+          "amount": 0.5,
+          "condition": {
+            "all": [
+              {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "gospel-page",
+                "minStacks": 4
+              },
+              {
+                "not": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "gospel-fated-future-spent"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "permanentScope": "round",
+          "stackKey": "gospel-fated-future-spent",
+          "maxStacks": 1,
+          "statusId": "gospel-fated-future-spent",
+          "modifiers": [],
+          "condition": {
+            "all": [
+              {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "gospel-page",
+                "minStacks": 4
+              },
+              {
+                "not": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "gospel-fated-future-spent"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "permanentScope": "round",
+          "stackKey": "gospel-page",
+          "maxStacks": 4,
+          "statusId": "gospel-page",
+          "modifiers": [
+            {
+              "stat": "outputDamagePct",
+              "op": "flat",
+              "value": 0.08
+            },
+            {
+              "stat": "outputHealingPct",
+              "op": "flat",
+              "value": 0.08
+            },
+            {
+              "stat": "outputShieldPct",
+              "op": "flat",
+              "value": 0.08
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "gospel-page-w",
+      "on": "onAbilityCast",
+      "abilitySlot": "W",
+      "target": "self",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "duration": 3,
+          "condition": {
+            "all": [
+              {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "gospel-page",
+                "minStacks": 4
+              },
+              {
+                "not": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "gospel-fated-future-spent"
+                }
+              }
+            ]
+          },
+          "modifiers": [
+            {
+              "stat": "outputDamagePct",
+              "op": "flat",
+              "value": 0.6
+            },
+            {
+              "stat": "outputHealingPct",
+              "op": "flat",
+              "value": 0.6
+            },
+            {
+              "stat": "outputShieldPct",
+              "op": "flat",
+              "value": 0.6
+            }
+          ]
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "W",
+          "mode": "reduce",
+          "basis": "remaining",
+          "amount": 0.5,
+          "condition": {
+            "all": [
+              {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "gospel-page",
+                "minStacks": 4
+              },
+              {
+                "not": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "gospel-fated-future-spent"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "permanentScope": "round",
+          "stackKey": "gospel-fated-future-spent",
+          "maxStacks": 1,
+          "statusId": "gospel-fated-future-spent",
+          "modifiers": [],
+          "condition": {
+            "all": [
+              {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "gospel-page",
+                "minStacks": 4
+              },
+              {
+                "not": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "gospel-fated-future-spent"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "permanentScope": "round",
+          "stackKey": "gospel-page",
+          "maxStacks": 4,
+          "statusId": "gospel-page",
+          "modifiers": [
+            {
+              "stat": "outputDamagePct",
+              "op": "flat",
+              "value": 0.08
+            },
+            {
+              "stat": "outputHealingPct",
+              "op": "flat",
+              "value": 0.08
+            },
+            {
+              "stat": "outputShieldPct",
+              "op": "flat",
+              "value": 0.08
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "gospel-page-e",
+      "on": "onAbilityCast",
+      "abilitySlot": "E",
+      "target": "self",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "duration": 3,
+          "condition": {
+            "all": [
+              {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "gospel-page",
+                "minStacks": 4
+              },
+              {
+                "not": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "gospel-fated-future-spent"
+                }
+              }
+            ]
+          },
+          "modifiers": [
+            {
+              "stat": "outputDamagePct",
+              "op": "flat",
+              "value": 0.6
+            },
+            {
+              "stat": "outputHealingPct",
+              "op": "flat",
+              "value": 0.6
+            },
+            {
+              "stat": "outputShieldPct",
+              "op": "flat",
+              "value": 0.6
+            }
+          ]
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "E",
+          "mode": "reduce",
+          "basis": "remaining",
+          "amount": 0.5,
+          "condition": {
+            "all": [
+              {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "gospel-page",
+                "minStacks": 4
+              },
+              {
+                "not": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "gospel-fated-future-spent"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "permanentScope": "round",
+          "stackKey": "gospel-fated-future-spent",
+          "maxStacks": 1,
+          "statusId": "gospel-fated-future-spent",
+          "modifiers": [],
+          "condition": {
+            "all": [
+              {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "gospel-page",
+                "minStacks": 4
+              },
+              {
+                "not": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "gospel-fated-future-spent"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "permanentScope": "round",
+          "stackKey": "gospel-page",
+          "maxStacks": 4,
+          "statusId": "gospel-page",
+          "modifiers": [
+            {
+              "stat": "outputDamagePct",
+              "op": "flat",
+              "value": 0.08
+            },
+            {
+              "stat": "outputHealingPct",
+              "op": "flat",
+              "value": 0.08
+            },
+            {
+              "stat": "outputShieldPct",
+              "op": "flat",
+              "value": 0.08
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "icon": "assets/icons/items/book-of-gospel.webp",
+  "craftRole": "none",
+  "authoringNote": "[福音]「使用不同基礎技能時累積『頁』，最多 4 頁」= Q/W/E **三條同型 hook**（一張表，⛔ 不是三段 if）：onAbilityCast + abilitySlot。R 是終極技（WorldHookSystem 用 `slot===\"R\"` 切出 onUltimateCast）、EX 是寶具，兩者都不是基礎技能所以不在表上。一頁 = applyBuff stackKey \"gospel-page\" + maxStacks 4 + statusId \"gospel-page\"（⭐ statusId 讓下面三段用 `condition.status.minStacks` 問得到層數 —— 標記與數值是**同一份**來源，不會出現「圖示還在、條件讀不到」），permanent + permanentScope:\"round\"。\n「每頁使下一個不同技能效果 ×1.08」= 輸出倍率三軸各 flat 0.08。\n⚠️ 降級①：**線性，不是複利**。三軸的讀取點是 `1 + final[stat]`（sim/stats/outputMult.ts），多份加成只會相加，所以 4 頁是 ×1.32 而不是 owner 算的 1.08^4 = ×1.36。⛔ 這不是選錯 stackKey：這族屬性本身表達不出複利（pctMult 乘一個底值 0 還是 0）。\n⚠️ 降級②：「**不同**基礎技能」做不到 —— 沒有「這一發跟上一發是不是同一支」的條件葉，所以同一格連放四次也會累到 4 頁。\n「四頁後下一個技能進入『既定未來』，效果 ×1.60 並返還 50%剩餘冷卻」= 每條 hook 的前三個 effect，共用同一個 condition（已有 4 頁 **且** 這一回合還沒用過）。它排在「加一頁」**前面**是刻意的：湊滿第 4 頁的那一發不會自己觸發，下一發才會 —— 正是文案的「四頁**後**下一個技能」。×1.60 = 三軸各 flat 0.60；duration 3 秒只是**涵蓋這一發結算**的技術窗口（hook 在施放那一刻發射、傷害之後才落地，所以吃到的就是觸發它的那一發）。返還冷卻 = modifyCooldown mode:reduce / basis:remaining / amount 0.5 / who:self / slot 指自己這一格 —— modifyCooldown **必須**指名 slot，而 hook 讀不到「剛剛放的是哪一格」，三條 hook 各自指名自己那一格就是為了避開這件事。\n⚠️ 降級③：「之後清空」做不到（引擎沒有拔掉指定 buff 的機制；dispel 是整池的）。改成**一回合只發一次**：effects[2] 掛 permanent+round 的標記 \"gospel-fated-future-spent\"，條件裡的 not 讀它，回合開始由 clearRoundScoped 拔掉。代價是頁數留著，所以既定未來那一發實際是 +0.32 疊 +0.60 = ×1.92，而不是清空後的 ×1.60。\n⚠️ G7（讀「這一發/這一次的量」，例如已付魔力）引擎沒有，但這張卡的原文沒有用到它 —— 「50%剩餘冷卻」讀的是冷卻剩餘量，那是 modifyCooldown 的 `basis:\"remaining\"`，已經有了。"
+}

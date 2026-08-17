@@ -1,0 +1,41 @@
+{
+  "id": "gravity-sword-black-rod",
+  "schema": "item@1",
+  "name": "重力劍〈黑棒〉",
+  "description": "武器\n效能\n[質量解放] 戰鬥中每 0.6 秒未普攻獲得 1 層質量，最多 5 層\n[質量解放] 下一次近戰普攻傷害 ×1.18^層數，五層約 ×2.29，並使範圍傷害半徑增加 100%\n\n解說\n它不重，只是這一秒的地球比較認真。",
+  "cost": 0,
+  "tier": 5,
+  "tags": [
+    "legendary",
+    "melee",
+    "attack-damage"
+  ],
+  "requiresAttackType": "melee",
+  "passive": [
+    {
+      "key": "gravity-sword-mass",
+      "on": "onInterval",
+      "target": "self",
+      "internalCooldown": 0.6,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "permanentScope": "round",
+          "maxStacks": 5,
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "pctMult",
+              "value": 0.18
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "icon": "assets/icons/items/gravity-sword-black-rod.webp",
+  "craftRole": "none",
+  "authoringNote": "[質量解放]「每 0.6 秒⋯獲得 1 層質量，最多 5 層」= passive[0]：onInterval + internalCooldown 0.6（引擎的節奏就寫在 ICD，⛔ 沒有第二個叫 interval 的欄位）+ maxStacks 5。\n「下一次近戰普攻傷害 ×1.18^層數，五層約 ×2.29」= applyBuff ad pctMult 0.18，**刻意不填 stackKey** —— 不填才是複利（每次施加各自一份來源，乘起來 (1.18)^5 = ×2.288，正好是 owner 給的 ×2.29）。⛔ 填了 stackKey 會被折算成 1+0.18×5 = ×1.90，對不上文案。「近戰」= requiresAttackType:\"melee\"（這件武器只發給近戰英雄）。\n「本回合內」= permanent + permanentScope:\"round\"（⛔ 不猜秒數）。\n⚠️ 三處降級，逐條明講：\n① 「**未**普攻」與「**戰鬥中**」兩個閘都做不到：條件葉只有 chance/stat/kind/status/equipment，沒有「距離上一次普攻多久」也沒有「現在是不是戰鬥中」。所以層數是**無條件**每 0.6 秒加一層，包含你正在砍人的時候。\n② 「**下一次**普攻⋯消耗全部層數」做不到：applyBuff 只加不減，引擎沒有「用掉層數」的機制（`maxTriggers` 是掛在 hook 上的**次數界**，管的是觸發器發幾次，不是把一份增益吃掉）。所以層數**留到回合結束**。⚠️ **這是這份文件最大的偏離**：它把一把蓄力重擊武器變成「開打 3 秒後常駐 ×2.29 攻擊力」。要回到原設計得先有一個「消耗疊層」的引擎機制，請 owner 過目要不要擋下這一句。\n③ 「並使範圍傷害半徑增加 100%」**整條沒有實作**，⛔ 而且不是降級成固定半徑：Stat 裡根本沒有任何一條是 AoE 半徑（只有 `range` = 普攻距離），applyBuff 也改不到別支技能的 radius/radiusTier。G8「半徑隨層數放大」沒有，「固定半徑加成」也沒有。\n⚠️ 另外，ad pctMult 放大的是攻擊力本身，所以吃 AD 係數的技能也會一起變強（原文只講普攻）—— 引擎沒有「只放大普攻那一發」的屬性。"
+}

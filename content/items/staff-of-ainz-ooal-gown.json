@@ -1,0 +1,339 @@
+{
+  "id": "staff-of-ainz-ooal-gown",
+  "schema": "item@1",
+  "name": "安茲・烏爾・恭之杖",
+  "description": "武器\n效能\n[七寶玉解放] 每完成一次不同的有效技能行動點亮 1 顆寶玉，最多 7 顆。每顆使技能效果 +5%\n[自主迎擊] 七顆全亮後進入 7 秒「自主迎擊」，持有者每次施放非終極技能，法杖於 0.5 秒後以 35%效果再施放一次\n\n解說\n公會會長的杖，七顆寶玉七個人 —— 只有你一個人在用，這件事先不要想。",
+  "cost": 0,
+  "tier": 5,
+  "tags": [
+    "legendary",
+    "ability-power",
+    "on-cast"
+  ],
+  "passive": [
+    {
+      "key": "orb-q",
+      "on": "onAbilityCast",
+      "abilitySlot": "Q",
+      "target": "self",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "stackKey": "staff-of-ainz-ooal-gown.orb.q",
+          "maxStacks": 1,
+          "statusId": "staff-of-ainz-ooal-gown.orb",
+          "modifiers": [
+            {
+              "stat": "outputDamagePct",
+              "op": "flat",
+              "value": 0.05
+            },
+            {
+              "stat": "outputHealingPct",
+              "op": "flat",
+              "value": 0.05
+            },
+            {
+              "stat": "outputShieldPct",
+              "op": "flat",
+              "value": 0.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "orb-w",
+      "on": "onAbilityCast",
+      "abilitySlot": "W",
+      "target": "self",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "stackKey": "staff-of-ainz-ooal-gown.orb.w",
+          "maxStacks": 1,
+          "statusId": "staff-of-ainz-ooal-gown.orb",
+          "modifiers": [
+            {
+              "stat": "outputDamagePct",
+              "op": "flat",
+              "value": 0.05
+            },
+            {
+              "stat": "outputHealingPct",
+              "op": "flat",
+              "value": 0.05
+            },
+            {
+              "stat": "outputShieldPct",
+              "op": "flat",
+              "value": 0.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "orb-e",
+      "on": "onAbilityCast",
+      "abilitySlot": "E",
+      "target": "self",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "stackKey": "staff-of-ainz-ooal-gown.orb.e",
+          "maxStacks": 1,
+          "statusId": "staff-of-ainz-ooal-gown.orb",
+          "modifiers": [
+            {
+              "stat": "outputDamagePct",
+              "op": "flat",
+              "value": 0.05
+            },
+            {
+              "stat": "outputHealingPct",
+              "op": "flat",
+              "value": 0.05
+            },
+            {
+              "stat": "outputShieldPct",
+              "op": "flat",
+              "value": 0.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "orb-r",
+      "on": "onAbilityCast",
+      "abilitySlot": "R",
+      "target": "self",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "stackKey": "staff-of-ainz-ooal-gown.orb.r",
+          "maxStacks": 1,
+          "statusId": "staff-of-ainz-ooal-gown.orb",
+          "modifiers": [
+            {
+              "stat": "outputDamagePct",
+              "op": "flat",
+              "value": 0.05
+            },
+            {
+              "stat": "outputHealingPct",
+              "op": "flat",
+              "value": 0.05
+            },
+            {
+              "stat": "outputShieldPct",
+              "op": "flat",
+              "value": 0.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "orb-ex",
+      "on": "onAbilityCast",
+      "abilitySlot": "EX",
+      "target": "self",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "stackKey": "staff-of-ainz-ooal-gown.orb.ex",
+          "maxStacks": 1,
+          "statusId": "staff-of-ainz-ooal-gown.orb",
+          "modifiers": [
+            {
+              "stat": "outputDamagePct",
+              "op": "flat",
+              "value": 0.05
+            },
+            {
+              "stat": "outputHealingPct",
+              "op": "flat",
+              "value": 0.05
+            },
+            {
+              "stat": "outputShieldPct",
+              "op": "flat",
+              "value": 0.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "orb-innate",
+      "on": "onAbilityCast",
+      "abilitySlot": "PASSIVE",
+      "target": "self",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "stackKey": "staff-of-ainz-ooal-gown.orb.innate",
+          "maxStacks": 1,
+          "statusId": "staff-of-ainz-ooal-gown.orb",
+          "modifiers": [
+            {
+              "stat": "outputDamagePct",
+              "op": "flat",
+              "value": 0.05
+            },
+            {
+              "stat": "outputHealingPct",
+              "op": "flat",
+              "value": 0.05
+            },
+            {
+              "stat": "outputShieldPct",
+              "op": "flat",
+              "value": 0.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "orb-basic",
+      "on": "onBasicAttack",
+      "target": "self",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "stackKey": "staff-of-ainz-ooal-gown.orb.basic",
+          "maxStacks": 1,
+          "statusId": "staff-of-ainz-ooal-gown.orb",
+          "modifiers": [
+            {
+              "stat": "outputDamagePct",
+              "op": "flat",
+              "value": 0.05
+            },
+            {
+              "stat": "outputHealingPct",
+              "op": "flat",
+              "value": 0.05
+            },
+            {
+              "stat": "outputShieldPct",
+              "op": "flat",
+              "value": 0.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "autonomous",
+      "on": "onAbilityCast",
+      "target": "self",
+      "maxTriggers": 1,
+      "condition": {
+        "kind": "status",
+        "subject": "self",
+        "statusId": "staff-of-ainz-ooal-gown.orb",
+        "minStacks": 7
+      },
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "duration": 7,
+          "stackKey": "staff-of-ainz-ooal-gown.autonomous",
+          "maxStacks": 1,
+          "statusId": "staff-of-ainz-ooal-gown.autonomous",
+          "modifiers": [],
+          "hooks": [
+            {
+              "on": "onAbilityCast",
+              "abilitySlot": "Q",
+              "target": "self",
+              "chance": 0.35,
+              "effects": [
+                {
+                  "kind": "delayed",
+                  "shape": "single",
+                  "delaySec": 0.5,
+                  "effects": [
+                    {
+                      "kind": "proxyCast",
+                      "shape": "single",
+                      "slot": "Q",
+                      "payCosts": "none",
+                      "targetMode": "inherit"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "on": "onAbilityCast",
+              "abilitySlot": "W",
+              "target": "self",
+              "chance": 0.35,
+              "effects": [
+                {
+                  "kind": "delayed",
+                  "shape": "single",
+                  "delaySec": 0.5,
+                  "effects": [
+                    {
+                      "kind": "proxyCast",
+                      "shape": "single",
+                      "slot": "W",
+                      "payCosts": "none",
+                      "targetMode": "inherit"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "on": "onAbilityCast",
+              "abilitySlot": "E",
+              "target": "self",
+              "chance": 0.35,
+              "effects": [
+                {
+                  "kind": "delayed",
+                  "shape": "single",
+                  "delaySec": 0.5,
+                  "effects": [
+                    {
+                      "kind": "proxyCast",
+                      "shape": "single",
+                      "slot": "E",
+                      "payCosts": "none",
+                      "targetMode": "inherit"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "icon": "assets/icons/items/staff-of-ainz-ooal-gown.webp",
+  "craftRole": "none",
+  "authoringNote": "owner 裁決③：保住「七」＝ Q/W/E/R/EX ＋普攻＋道具主動 ＝ 7 種行動。\n[七寶玉]「每完成一次不同的有效技能行動點亮 1 顆寶玉，最多 7 顆」= passive[0..6]，**一種行動一條 hook、一個自己的 stackKey + maxStacks 1** —— 所以同一種行動做一百次仍然只點亮一顆，而七條加起來就是上限 7。⛔ 不用 maxStacks 7 的單一疊層：那會讓「只按 Q 七次」就全亮，而規格說的是**不同的**行動。\n「每顆使技能效果 +5%」= 每顆各 outputDamagePct / outputHealingPct / outputShieldPct **flat 0.05**（0 = ×1，七顆 = +35%）。線性不是複利：文案寫「+5%」。\n⚠️ 降級①：輸出倍率三兄弟**沒有 scope**（`scopeSlot` 只開給 cdr），所以「技能效果」實際上連**普攻**也一起放大。引擎沒有「只放大技能」的旋鈕。\n⚠️ 降級②（最重要）：第 7 顆本來要掛「道具主動」，而 `sim/systems/CommandSystem.ts` 的 `useItem` 今天是 **deferred feature、accepted but inert**，⛔ 沒有任何事件 —— 照原案寫下去那一顆**永遠點不亮**，於是「七顆全亮」是一句死承諾（失敗形態②）。⇒ 第 7 顆改掛**天生技的主動施放**（`abilitySlot:\"PASSIVE\"`，約 57 位英雄的天生技是 active），它同樣是「引擎分得出來的第 7 種行動」。天生技是純被動的英雄仍然只點得到 6 顆。`useItem` 接上之後把那一條的 `on` 換掉即可。\n[自主迎擊]「七顆全亮後進入 7 秒」= passive[7]：`condition.status{minStacks:7}` 讀的就是七顆寶玉共用的那個 statusId（`statusStacks` 把七份來源相加），`maxTriggers: 1` 讓它一場只發生一次（= 文案的「後」是一個一次性的轉場）。7 秒 = 那份 buff 的 duration，而它用 `hooks` 帶著限時觸發器 —— 到期跟著 buff 自己的 expiresAtTick，沒有第二個時鐘。\n「非終極技能」= Q/W/E。引擎的「終極」判準是 `slot === \"R\"`（WorldHookSystem 的 onUltimateCast），而 owner 在 #57 把技能分成基礎／終極兩類，所以取 基礎 = Q/W/E；EX 沒有代放（它是寶具槽，另一件事）。\n「0.5 秒後再施放一次」= `delayed{delaySec:0.5}` → `proxyCast{slot, payCosts:\"none\", targetMode:\"inherit\"}`（不扣魔、不轉冷卻，否則每次施法都會把自己那一格鎖住）。\n⚠️ 降級③：「以 **35% 效果**」寫不出來 —— `proxyCast` **沒有強度比例欄位**，而 `scaleEffects` 只在職業限定閘不符時才折。⇒ 降級成 **35% 機率代放一次全額**（`chance: 0.35`）：期望輸出相同、方差不同。要真的做成 35% 強度需要新機制。"
+}

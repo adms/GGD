@@ -180,6 +180,16 @@ interface Exemption {
  * Sorted by key, matching the census output order.
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
+  "enum:abilities.effects[]#applyBuff.permanentScope=match": {
+    status: "default-live",
+    why:
+      "GH#354 / G3 —— `permanentScope` 的預設就是 match（**省略**這一格＝整場），所以沒有人需要把它明著寫出來。⭐ 零採用是**對的而且永久**：這一格存在的理由是讓作者選 `\"round\"`，而 `\"match\"` 是它不填時本來就會得到的東西。⛔ 有人把它明著寫進 JSON 反而是雜訊。（同一批的 `\"round\"` 已經被 9 份 [EX解放] 採用。）",
+  },
+  "field:abilities.effects[]#revive.condition": {
+    status: "default-live",
+    why:
+      "GH#354 —— `revive` 這個 kind 在 2026-08-18 才第一次被內容採用（#64 再誕之淚珠），而它用的是**外層 hook 的**條件閘（`onDeath` + 一個回合作用域的標記 buff），⛔ 不是 effect 自己這一格。兩者等價而外層那條可讀性高得多（條件寫在觸發點旁邊）。零採用是對的：這一格是給「同一次觸發裡有多個 effect、只有其中一個要加條件」用的，而今天沒有那種寫法。",
+  },
   "enum:abilities.effects[]#applyBuff.damageTypeOverride.impactType=converted": {
     status: "landing",
     since: "2026-08-17",
@@ -430,15 +440,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why: "60-002 用 hookKey 指名一條 hook 的 ICD，不是指名一支技能。指名技能的客戶還沒出現。",
   },
   // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
-  "field:abilities.effects[]#modifyCooldown.basis": {
-    status: "default-live",
-    why: "省略＝以**剩餘**冷卻為基準。60-002 是 mode:「reset」，基準不參與。",
-  },
   // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
-  "field:abilities.effects[]#modifyCooldown.condition": {
-    status: "default-live",
-    why: "省略＝無條件。60-002 的條件寫在 hook 上（onReflectSuccess 本身就是條件）。",
-  },
   // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
   "field:abilities.effects[]#modifyCooldown.maxTargets": {
     status: "default-live",
@@ -772,16 +774,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // ⭐ 2026-08-13 B3：landing 豁免移除 —— 它落地了（89-01 憤怒的頭槌）。
   // ⭐ 2026-08-13 B3：landing 豁免移除 —— 它落地了（60-04 完美盾反）。
   // ⭐ 2026-08-13 B3：landing 豁免移除 —— 它落地了（60-04 完美盾反）。
-  "field:items.passive[].key": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
-  },
-  "field:items.passive[].maxTriggers": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
-  },
   "field:items.passive[].consumeOn": {
     status: "landing",
     since: "2026-08-10",
@@ -988,11 +980,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why: "同一個欄位落在共用的 zHookDefBase 上，所以普查在道具與技能 applyBuff 兩個節點各看到一次（同 fromResource 那一格的形狀）。道具這一側今天沒有需求：每一件道具被動的 ICD 都是「這件裝備多久觸發一次」，不分槽位。分兩份 schema 只為了讓其中一邊閉嘴，會讓這條規則變成兩份。",
   },
 
-  "field:items.passive[].abilitySlot": {
-    status: "landing",
-    since: "2026-07-30",
-    why: "Restricts an item hook to one ability slot. No shipped item wants that yet — every item passive today keys off 普攻/受擊/施法 in general, not off Q vs W. New census key from the item-hook split, not a new capability.",
-  },
   // `field:items.passive[].victim` LOST ITS EXEMPTION on 2026-08-01: 天生牙
   // (godie-i031) adopted it, and the field is the whole design of that card —
   // 「殺死任一個敵方**英雄**單位」 revives, 「殺死任一個敵方**單位**」 heals, and the
@@ -1227,58 +1214,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // one of them has a painter and a PNG on disk.
 
   // --- the same id, on the OTHER axis: authored in `map@1` but not yet used there.
-  "enum:abilities.effects[]#applyBuff.hooks[].on=onStatCapReached": {
-    status: "landing",
-    since: "2026-08-17",
-    why:
-      "GH#354 / G19 —— 【某條屬性首次到頂】。#61 閃耀金玉「每當自身任一屬性首次達到一般上限時，獲得 1 層『金玉』」。⭐ 事件負載帶 `stat`，那一格**同時**解掉「已達上限的那些屬性 +25%」—— 所以 owner 2026-08-17 裁掉的 G20（跨屬性計數器）確實不需要存在。⚠️ 門檻是**一般**上限而不是解鎖後的高度：後者會讓一件「到頂就解鎖」的寶具永遠追不到自己。⚠️ 閂掛在 `StatsComp.capReached` 上（跟著身體消失），⛔ 不是一張新的 world Map。機制**整條路都通了**（emit → WorldHookSystem 的發射列 → fireHooks → 守衛 `sim/stats/statCapReached.test.ts`），內容側 0 筆是因為這一批是**先開路再寫卡**。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。",
-  },
-  "enum:abilities.effects[]#applyBuff.maxStat.stat=cooldownDrainRate": {
-    status: "landing",
-    since: "2026-08-17",
-    why:
-      "GH#354 / G17 —— 冷卻流逝速度（#66 魔導鎧・零式「滿層後基礎技能冷卻流逝 ×1.5」· #61 閃耀金玉「×1.20」）。⛔ 與冷卻縮減不同：CDR 在施放那一刻決定要等幾 tick，這一條對**正在轉的**冷卻立刻生效 —— 而 #66 的層數是打出來的，疊滿的那一刻身上多半有好幾格正在轉。⚠️ 實作是整數 tick 的 Bresenham（`abilitySystem.cooldownDrainTicks`），⛔ 不把計數器改成小數。機制**整條路都通了**（Stat → tickCooldowns → 守衛 `sim/abilities/cooldownDrain.test.ts`），內容側 0 筆是因為這一批是**先開路再寫卡**。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。",
-  },
-  "enum:abilities.effects[]#applyBuff.maxStat.stat=maxHitPctMaxHp": {
-    status: "landing",
-    since: "2026-08-17",
-    why:
-      "GH#354 / G12 —— 單發傷害上限（#52 謎之紙片「單次受到超過最大生命 20% 的傷害時，該傷害最多只能造成 20% 最大生命」）。⚠️ 0 = **沒有上限**，⛔ 不是「上限 0%」。與守衛塔那一格同語意同位置（抗性四段之後），⭐ 而且**真傷也吃**。 機制**整條路都通了**（Stat → 封包層/迴避層的讀取點 → 守衛`sim/combat/hitCapAndUnavoidable.test.ts`），內容側 0 筆是因為這一批是**先開路再寫卡**。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。",
-  },
-  "enum:abilities.effects[]#applyBuff.maxStat.stat=unavoidablePct": {
-    status: "landing",
-    since: "2026-08-17",
-    why:
-      "GH#354 / G13 —— 無法被迴避（#51 神槍・金剛徹「滿層後普攻無法被迴避，仍可被格擋、護盾抵消」）。⛔ 不是第三種迴避率，是**對方那一格的折扣**；1 時 p 變 0 → 走既有的 ZERO GUARANTEE，所以「絕對命中」在重播位元層上等於「對方本來就沒有迴避」。 機制**整條路都通了**（Stat → 封包層/迴避層的讀取點 → 守衛`sim/combat/hitCapAndUnavoidable.test.ts`），內容側 0 筆是因為這一批是**先開路再寫卡**。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。",
-  },
-  "enum:abilities.effects[]#applyBuff.modifiers[].op=capRaisePct": {
-    status: "landing",
-    since: "2026-08-17",
-    why:
-      "GH#354 / G5 —— 百分比式解鎖上限（#61 閃耀金玉「解鎖上限 +25%」· #50 · #60）。⚠️ 另有一半**不是程式**：出貨的 13 條上限裡只有攻速與吸血留了解鎖空間，其餘 11 條 `unlocked === base`，所以對它們寫 capRaise（兩種形式都一樣）是 no-op —— 那是 content/config/stat-caps.json 的一個資料決定，等 owner 裁決。 機制**整條路都通了**（schema → 引擎讀取點 → 守衛），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 2026-08-17 列那張 20 件 [EX解放] 清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/gapBatch354.test.ts。",
-  },
-  "field:abilities.effects[]#applyBuff.permanentScope": {
-    status: "landing",
-    since: "2026-08-17",
-    why:
-      "GH#354 / G3 —— 「永久，但只到這一回合結束」（#52 · #55 · #62 · #63 · #68 五件寫著「本回合內」而沒有秒數）。拆除點是 clearRoundScoped，由 host 在進入戰鬥、發射 roundStart 之前逐席位跑一次。 機制**整條路都通了**（schema → 引擎讀取點 → 守衛），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 2026-08-17 列那張 20 件 [EX解放] 清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/gapBatch354.test.ts。",
-  },
-  "field:abilities.effects[]#applyBuff.condition|0|1|0.other": {
-    status: "landing",
-    since: "2026-08-17",
-    why:
-      "GH#354 / G4 —— 條件比較式的第二個運算元（資源葉那一支）。#67 兎月【下剋上】的唯一缺口，另擋 #52 · #55。右手邊 = value + scale × 另一個主體／屬性的讀數。 機制**整條路都通了**（schema → 引擎讀取點 → 守衛），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 2026-08-17 列那張 20 件 [EX解放] 清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/gapBatch354.test.ts。",
-  },
-  "field:abilities.effects[]#applyBuff.condition|0|1|1.other": {
-    status: "landing",
-    since: "2026-08-17",
-    why:
-      "GH#354 / G4 —— 同上，一般屬性葉那一支（兩支是因為 zStatLeaf 用 union 表達 DECISION 3）。 機制**整條路都通了**（schema → 引擎讀取點 → 守衛），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 2026-08-17 列那張 20 件 [EX解放] 清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/gapBatch354.test.ts。",
-  },
-  "enum:abilities.effects[]#applyBuff.hooks[].on=onUltimateCast": {
-    status: "default-live",
-    why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「放大絕的時候⋯」——`abilityCast` 的 slot 切片。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
-  },
   "enum:abilities.effects[]#applyBuff.hooks[].on=onUltimateHit": {
     status: "default-live",
     why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「大絕打中的時候⋯」——`abilityHit` 的 slot 切片。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
@@ -1295,10 +1230,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "default-live",
     why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「治療生效的時候⋯」——`heal` 事件（`restore.ts` 已經擋掉零治療）。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
   },
-  "enum:abilities.effects[]#applyBuff.hooks[].on=onOverheal": {
-    status: "default-live",
-    why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「補超過的時候⋯」——同一則事件，`overheal > 0` 的切片。補師/吸血流的骨架。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
-  },
   "enum:abilities.effects[]#applyBuff.hooks[].on=onAllyDamaged": {
     status: "default-live",
     why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「隊友被打的時候⋯」——`damage` 換 `allies` scope（同 `onAllyDeath` 的形狀）。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
@@ -1311,10 +1242,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "default-live",
     why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「碰到場地邊界的時候⋯」——火圈就是這張地圖的邊界，吃 `fireRingDamage`。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
   },
-  "enum:abilities.effects[]#applyBuff.hooks[].on=onDashOrBlink": {
-    status: "default-live",
-    why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「使用位移技之後⋯」——衝刺／閃現／跳躍共用的 `displace`，`mode` 帶種類。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
-  },
   "enum:abilities.effects[]#applyBuff.hooks[].on=onLethalDamage": {
     status: "default-live",
     why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「受到致命傷害的時候⋯」——⚠️ 與免死（`lethalSaved`）不同：這一則在判斷**之前**發，所以身上沒有免死標記的人也收得到。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
@@ -1326,18 +1253,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   "enum:abilities.effects[]#applyBuff.hooks[].on=onRoundEnd": {
     status: "default-live",
     why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「回合結束時⋯」——同上，而且是唯一帶 `firesOutsideCombat` 的一列。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
-  },
-  "enum:abilities.effects[]#applyBuff.maxStat.stat=outputDamagePct": {
-    status: "default-live",
-    why: "GH#354 / G2 —— 「造成傷害整體 ×N」的輸出倍率。owner 2026-08-17 的 20 件 [EX解放] 裡有 7 件要它（#54 · #57 · #58 · #60 · #64 · #65 · #69），加上重設計後的 #61 閃耀金玉。機制**整條路都通了**（Stat → 三個封包層的入口 → 行為守衛 sim/stats/outputMult.test.ts），內容側 0 筆是因為那 20 件的 JSON 還沒上架（等 G3/G4/G5 補完，見 GH#356）。⚠️ 語意是**加成**（0 = ×1），⛔ 不是預設 1 的倍率 —— 所以 0 筆採用是**嚴格 no-op**，既有的每一場逐位元不變。⚠️ 這條豁免的到期日就是第一件 [EX解放] 上架的那天，那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。",
-  },
-  "enum:abilities.effects[]#applyBuff.maxStat.stat=outputHealingPct": {
-    status: "default-live",
-    why: "GH#354 / G2 —— 「治療輸出整體 ×N」的輸出倍率。owner 2026-08-17 的 20 件 [EX解放] 裡有 7 件要它（#54 · #57 · #58 · #60 · #64 · #65 · #69），加上重設計後的 #61 閃耀金玉。機制**整條路都通了**（Stat → 三個封包層的入口 → 行為守衛 sim/stats/outputMult.test.ts），內容側 0 筆是因為那 20 件的 JSON 還沒上架（等 G3/G4/G5 補完，見 GH#356）。⚠️ 語意是**加成**（0 = ×1），⛔ 不是預設 1 的倍率 —— 所以 0 筆採用是**嚴格 no-op**，既有的每一場逐位元不變。⚠️ 這條豁免的到期日就是第一件 [EX解放] 上架的那天，那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。",
-  },
-  "enum:abilities.effects[]#applyBuff.maxStat.stat=outputShieldPct": {
-    status: "default-live",
-    why: "GH#354 / G2 —— 「護盾輸出整體 ×N」的輸出倍率。owner 2026-08-17 的 20 件 [EX解放] 裡有 7 件要它（#54 · #57 · #58 · #60 · #64 · #65 · #69），加上重設計後的 #61 閃耀金玉。機制**整條路都通了**（Stat → 三個封包層的入口 → 行為守衛 sim/stats/outputMult.test.ts），內容側 0 筆是因為那 20 件的 JSON 還沒上架（等 G3/G4/G5 補完，見 GH#356）。⚠️ 語意是**加成**（0 = ×1），⛔ 不是預設 1 的倍率 —— 所以 0 筆採用是**嚴格 no-op**，既有的每一場逐位元不變。⚠️ 這條豁免的到期日就是第一件 [EX解放] 上架的那天，那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。",
   },
   "enum:maps.groundStyle=sand": {
     status: "default-live",
@@ -1543,20 +1458,10 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // 出貨的兩張條件卡都讀 `hp`。下面十個成員是同一個下拉選單的其他選項。
   // 它們共用一條 why:機制是同一條 `evaluateCondition` 的 `stat` 分支,
   // 已經被 hp 證明會動(sim/content/condition.test.ts 讀真的 world.stats)。
-  "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=ad": {
-    status: "landing",
-    since: "2026-07-31",
-    why: "條件的屬性軸。`hp` 已採用並由 condition.test.ts 讀真實 world.stats 驗證,所以走訪路徑是活的;這十個成員差在「有沒有一張卡想讀它」。攻擊力門檻的自然客戶是「攻擊力高於 N 時追加」這一類 —— owner 2026-07-30 明說要的「>=< 某個常數或某個數值條件」正是這個軸,所以它是 landing 不是 debt。",
-  },
   "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=agi": {
     status: "landing",
     since: "2026-07-31",
     why: "同 stat=ad。三圍軸(str/agi/int)在 #248 之後才真的活起來(三圍→AD/攻速/AP),條件讀它是下一步而不是這一步。",
-  },
-  "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=ap": {
-    status: "landing",
-    since: "2026-07-31",
-    why: "條件的法強軸。`hp` 已採用並由 condition.test.ts 讀真實 world.stats 驗證,所以走訪路徑是活的;差的是「有沒有一張卡想讀它」。法強門檻的自然客戶是法系的「法強超過 N 時改放強化版」—— w3x 那批「智力達 X」的敘述今天全部靠 perRank 表達,而 perRank 是技能等級不是屬性。",
   },
   "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=armor": {
     status: "landing",
@@ -1572,11 +1477,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "landing",
     since: "2026-07-31",
     why: "條件的智力軸。三圍(str/agi/int)在 #248 之後才真的活起來(三圍→AD/攻速/AP),而條件讀三圍是再下一步:今天所有「智力達 X」的敘述都寫在描述文字裡,沒有一支變成可判定的門檻。",
-  },
-  "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=level": {
-    status: "landing",
-    since: "2026-07-31",
-    why: "同 stat=ad,而且是這十個裡最可能先被採用的一個:w3x 有一整批「N 級之後才…」的天生技,它們今天全部靠 perRank 表達,那是升技能等級不是升英雄等級 —— 兩者在這個遊戲裡並不同步。",
   },
   "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=magicResist": {
     status: "landing",
@@ -1934,11 +1834,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-06",
     why: "守衛塔倒下(世界廣播)。⚠️ 打倒守衛塔**不發 `onKill`**(獎勵由 GuardianSystem 自己付),所以在這個成員之前,「塔倒了」在內容側完全接不到。⭐ 它同時是 GH#263(拆塔即勝)的掛載點。",
   },
-  "enum:abilities.effects[]#applyBuff.hooks[].on=onDeath": {
-    status: "landing",
-    since: "2026-08-06",
-    why: "死亡的那一刻。持有者＝死掉的那個人,target＝兇手。⚠️ 火圈/DoT 燒死時**沒有兇手**,那時 hook 沒有 target —— 所以「死亡時對兇手爆炸」的卡要自己帶條件,不能假設 target 一定在。",
-  },
 
   "enum:abilities.effects[]#dispel.polarity=any": {
     status: "default-live",
@@ -1977,11 +1872,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // ⛔ #300 收尾時沒接到的那幾個要從 `zHookEvent` **刪掉**，不是留在這裡。
   //
   // 三族全部 30 天到期。到期時若仍是 0，誠實的結論不是「再展延」。
-  "field:abilities.effects[]#applyBuff.condition": {
-    status: "landing",
-    since: "2026-08-09",
-    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
-  },
   // ⭐ 2026-08-13 B3：landing 豁免移除 —— 它落地了（B3-C 條件葉：8 份文件）。
   "field:abilities.effects[]#championForm.condition": {
     status: "landing",
@@ -2266,13 +2156,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // ── ⑥ 五個「真的還沒有人選」的成員（landing，30 天後回來看） ────────────────
   // 與 ⑤ 的差別是一句話：⑤ 的省略等於一個活著的預設值，這五個的省略等於**另一個
   // 選擇被選走了**，沒有預設值在替它服務。所以它們吃 30 天的時鐘。
-  "enum:abilities.effects[]#applyBuff.hooks[].abilitySlot=PASSIVE": {
-    status: "landing",
-    since: "2026-08-12",
-    why:
-      "同 abilitySlot=EX：過濾器有 13 份客戶，缺的是「天生技造成傷害時」這一種寫法。⚠️ 它不是不可能 —— 天生技照樣打得出傷害（`godie-n00p.passive` 的鞭子就是）" +
-      "，只是還沒有一支技能想把觸發條件窄化到天生技那一格。",
-  },
   "enum:abilities.effects[]#knockback.from=facing": {
     status: "landing",
     since: "2026-08-12",

@@ -1,0 +1,101 @@
+{
+  "id": "spear-of-lightning",
+  "schema": "item@1",
+  "name": "雷槍",
+  "description": "武器\n效能\n[雷槍裝填] 每移動 3 距離獲得 1 層裝填，最多 5 層\n[爆炸] 下一次普攻或技能命中英雄時消耗全部層數，產生額外爆炸，每層使該爆炸 ×1.10、範圍 +10%。五層時約 ×1.61\n\n解說\n背著它跑步的時候請不要跌倒，這句話不是玩笑。",
+  "cost": 0,
+  "tier": 5,
+  "tags": [
+    "legendary",
+    "mobility",
+    "burst"
+  ],
+  "passive": [
+    {
+      "key": "load",
+      "on": "onInterval",
+      "target": "self",
+      "internalCooldown": 1.5,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "permanentScope": "round",
+          "maxStacks": 5,
+          "statusId": "spear-of-lightning.load",
+          "modifiers": [
+            {
+              "stat": "outputDamagePct",
+              "op": "flat",
+              "value": 0.1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "burst-basic",
+      "on": "onBasicAttack",
+      "victim": "enemyChampion",
+      "internalCooldown": 3,
+      "condition": {
+        "kind": "status",
+        "subject": "self",
+        "statusId": "spear-of-lightning.load",
+        "minStacks": 1
+      },
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "flat": 150,
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "radius": 4,
+          "radiusTier": "中",
+          "includeOrigin": true
+        }
+      ]
+    },
+    {
+      "key": "burst-ability",
+      "on": "onAbilityHit",
+      "victim": "enemyChampion",
+      "internalCooldown": 3,
+      "condition": {
+        "kind": "status",
+        "subject": "self",
+        "statusId": "spear-of-lightning.load",
+        "minStacks": 1
+      },
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "flat": 150,
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "radius": 4,
+          "radiusTier": "中",
+          "includeOrigin": true
+        }
+      ]
+    }
+  ],
+  "icon": "assets/icons/items/spear-of-lightning.webp",
+  "craftRole": "none",
+  "authoringNote": "[裝填]「每移動 3 距離獲得 1 層」⚠️ **降級①（G10 缺口）**：引擎**沒有移動距離累積器**，也沒有任何條件葉問得到「這一 tick 有沒有在移動」（`condition.stat` 的 moveSpeed 讀的是屬性值，不是速度向量）。⇒ 降級成 **`onInterval` + `internalCooldown: 1.5`（每 1.5 秒 1 層）**。⛔ 代價要講清楚：**站著不動也會裝填**，正好與原設計「用移動換火力」的取捨相反。G10 上線後把這一條的 `on` 換掉即可，其餘不用動。\n「最多 5 層」= `maxStacks: 5`，而且**不填 stackKey**（複利路徑），因為文案給的是「×1.10、五層約 ×1.61」= 1.1^5 —— 判準見簡報。⚠️ 但見降級③：這一族的乘法在引擎裡仍然是加的。\n「本回合」語意：`permanent: true` + `permanentScope: \"round\"`，⛔ 不猜秒數（回合長度是相位機決定的）。\n[爆炸]「下一次普攻或技能命中英雄時」= passive[1]（`onBasicAttack`）與 passive[2]（`onAbilityHit`），兩條都帶 `victim: \"enemyChampion\"`（打小怪不引爆）。\n⚠️ **降級②**：「**消耗全部層數**」寫不出來 —— 引擎沒有「清掉自己某一份增益」的效果。`dispel` 是範圍＋極性導向的，要用它就得把裝填標成 `dispellable: true`，那等於讓**敵人**也拔得掉這件寶具的層數。⇒ 降級成 **爆炸帶 3 秒內部冷卻、層數不被消耗**（照 `onInterval` 的節奏自然停在 5 層上限）。\n⚠️ **降級③**：「每層使該爆炸 ×1.10」= 裝填層帶的 `outputDamagePct flat 0.1`。輸出倍率三兄弟的語意是**加成**（0 = ×1）而不是乘區，`pctMult` 對一個基底為 0 的屬性是 0 —— 所以 5 層是 **×1.50**，不是文案的 ×1.61。⛔ 沒有靜默改數字：要 ×1.61 得改成 flat 0.122，那會讓「每層 ×1.10」這句話變假，所以留在 0.1。\n⚠️ **降級④**：`outputDamagePct` **沒有 scope**，所以裝填期間**所有**傷害都 ×(1+0.1N)，不只爆炸。\n⚠️ **降級⑤（G8 缺口）**：「範圍 +10% 每層」寫不出來 —— `damageArea.radius` 是一個固定數字，沒有隨層數縮放的形狀。⇒ 固定半徑（`radiusTier: \"中\"`，後台 `config.aoe-tiers@1` 可調；同時填的 `radius: 4` 是級別關掉時的退路）。"
+}

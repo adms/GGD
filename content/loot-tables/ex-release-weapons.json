@@ -2,10 +2,105 @@
   "id": "ex-release-weapons",
   "schema": "loot-table@1",
   "entries": [
-    { "itemId": "endless-edge", "weight": 1 },
-    { "itemId": "godie-i004", "weight": 1 },
-    { "itemId": "godie-i021", "weight": 1 },
-    { "itemId": "godie-i031", "weight": 1 },
-    { "itemId": "godie-i067", "weight": 1 }
+    {
+      "itemId": "endless-edge",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i004",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i021",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i031",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i067",
+      "weight": 1
+    },
+    {
+      "itemId": "ultimate-mod-shiranui",
+      "weight": 1
+    },
+    {
+      "itemId": "lance-kongotetsu",
+      "weight": 1
+    },
+    {
+      "itemId": "mystery-scrap-of-paper",
+      "weight": 1
+    },
+    {
+      "itemId": "fingerless-gloves",
+      "weight": 1
+    },
+    {
+      "itemId": "torch-master",
+      "weight": 1
+    },
+    {
+      "itemId": "soul-eater",
+      "weight": 1
+    },
+    {
+      "itemId": "meat-cleaver",
+      "weight": 1
+    },
+    {
+      "itemId": "meteor-ring",
+      "weight": 1
+    },
+    {
+      "itemId": "staff-of-ainz-ooal-gown",
+      "weight": 1
+    },
+    {
+      "itemId": "spear-of-lightning",
+      "weight": 1
+    },
+    {
+      "itemId": "odm-gear",
+      "weight": 1
+    },
+    {
+      "itemId": "shining-golden-orbs",
+      "weight": 1
+    },
+    {
+      "itemId": "stone-mask",
+      "weight": 1
+    },
+    {
+      "itemId": "gravity-sword-black-rod",
+      "weight": 1
+    },
+    {
+      "itemId": "teardrop-of-rebirth",
+      "weight": 1
+    },
+    {
+      "itemId": "book-of-gospel",
+      "weight": 1
+    },
+    {
+      "itemId": "magic-armor-type-zero",
+      "weight": 1
+    },
+    {
+      "itemId": "usagizuki-twin-crescents",
+      "weight": 1
+    },
+    {
+      "itemId": "collar-of-the-deadly-soul",
+      "weight": 1
+    },
+    {
+      "itemId": "pale-moon-requiem-crown",
+      "weight": 1
+    }
   ]
 }
