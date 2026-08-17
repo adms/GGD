@@ -22,7 +22,9 @@ func TestTierBoundaries(t *testing.T) {
 		tier     string
 		division string
 	}{
-		{0, ranking.TierIron, "IV"},
+		// ⛔ 0 分沒有位階（GH#352，owner:「這是底線」）。空字串 = 未定級。
+		{0, "", ""},
+		{1, ranking.TierIron, "IV"},
 		{399, ranking.TierIron, "I"},
 		{400, ranking.TierBronze, "IV"},
 		{799, ranking.TierBronze, "I"},
@@ -53,7 +55,8 @@ func TestDivisionBands(t *testing.T) {
 	iron := []struct {
 		points   int
 		division string
-	}{{0, "IV"}, {99, "IV"}, {100, "III"}, {199, "III"}, {200, "II"}, {299, "II"}, {300, "I"}, {399, "I"}}
+		// ⛔ 0 不在這張表裡：GH#352 之後它是「未定級」，不是鐵 IV。鐵段從 1 分開始。
+	}{{1, "IV"}, {99, "IV"}, {100, "III"}, {199, "III"}, {200, "II"}, {299, "II"}, {300, "I"}, {399, "I"}}
 	for _, tc := range iron {
 		tier, div := c.BaseTier(tc.points)
 		require.Equal(t, ranking.TierIron, tier)
@@ -218,9 +221,11 @@ func TestPointsFloor(t *testing.T) {
 	require.Equal(t, 0, ranking.FloorPoints(-30))
 	require.Equal(t, 0, ranking.FloorPoints(-1))
 	require.Equal(t, 40, ranking.FloorPoints(40))
+	// ⛔ 沒有分數就沒有位階（owner 2026-08-17：「沒分數不應該有位階，這是底線」，GH#352）。
+	// 空字串是既有的「未定級」訊號，客戶端 ui/components/tier.ts 已經在畫它。
 	tier, div := c.BaseTier(-100)
-	require.Equal(t, ranking.TierIron, tier)
-	require.Equal(t, "IV", div)
+	require.Equal(t, "", tier, "0 分不是最低位階,是還沒進榜")
+	require.Equal(t, "", div)
 }
 
 // TestPlacementAward is the contract's placement→points table.

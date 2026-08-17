@@ -49,7 +49,10 @@ export const LEGENDARY_WIN_AFTER_LAND_MS = 160;
  * the roll build-up + jackpot; augment tiers do not.
  */
 export function isLegendaryOffer(tier: string): boolean {
-  return tier === ITEM_OFFER_TIER;
+  // ⭐ 更高階寶具的 tier 是 `weapon:<id>`（EX解放 / EX∅ 根源）。⚠️ 前綴比對不是
+  // 偷懶：那幾階**就是**寶具，只是池不同 —— 少了這一行，逆轉用的那張卡會走一般
+  // 增益卡的揭示節奏（沒有寶具的鼓聲與金光），而且**畫面上看起來一切正常**。
+  return tier === ITEM_OFFER_TIER || tier.startsWith(`${ITEM_OFFER_TIER}:`);
 }
 
 /** One scheduled cue: play `event` at `atMs` after the offer mounts. */

@@ -167,7 +167,15 @@ export const FALLBACK_TABLE_MAXLEN = 64;
  * `itemDraftShippedCopy.test.ts` 對著 `content/loot-tables/_index.json` 釘住，
  * 所以新增一張表而忘了更新這裡會紅。
  */
-export const KNOWN_LOOT_TABLES: readonly string[] = ["legendary-weapons", "quest-rewards", "round-reward"];
+export const KNOWN_LOOT_TABLES: readonly string[] = [
+  // ⚠️ 排序與 content/loot-tables/ 的檔名一致（守衛真的去讀那個目錄）。
+  // ⭐ `ex-release-weapons` 是 owner 2026-08-17 的 EX解放 那一階；
+  // `ex-origin-weapons`（EX∅ 根源）**刻意還不存在** —— 見 DEFAULT_WEAPON_TIERS 的註解。
+  "ex-release-weapons",
+  "legendary-weapons",
+  "quest-rewards",
+  "round-reward",
+];
 
 // ─────────────────────────────────────────────────── 已退場的抽獎池 ───────
 //
@@ -236,9 +244,14 @@ export const DRAFT_CONFLICT_LABEL: FieldLabel & { group: "conflict" } = Object.f
 /** 下拉選項 —— 每一個都寫「玩家會看到什麼」。 */
 export const DRAFT_CONFLICT_OPTIONS: readonly { value: DraftConflict; zh: string; note: string }[] = [
   {
+    value: "alternate",
+    zh: "輪流讓路（出貨值）",
+    note: "撞到的回合輪流:**第一個**排了寶具的回合發聖杯,**第二個**發寶具,依此類推。出貨排程下 = 第 2 回合聖杯、第 5 回合寶具 ⇒ 一場保證有一次免費寶具,而兩張卡一秒都沒有同時出現。⭐ 這一格是為了修 GH#347:每一回合都排了聖杯,所以「只發聖杯」等於免費寶具那條路整場關閉。",
+  },
+  {
     value: "grail-wins",
-    zh: "只發聖杯願望（出貨值）",
-    note: "撞到的那幾回合,玩家只看到能力三選一;寶具卡不出現,那一回合就拿不到免費傳說武器。",
+    zh: "只發聖杯願望（嚴格）",
+    note: "撞到的那幾回合,玩家只看到能力三選一;寶具卡不出現。⚠️ 出貨排程裡**每一回合**都排了聖杯,所以選這個 = 一場比賽下來**一張免費傳說武器都不會發**（商店仍然買得到）。",
   },
   {
     value: "weapon-wins",
@@ -265,7 +278,7 @@ export function readDraftConflict(doc: unknown): DraftConflict {
 }
 
 export function isDraftConflict(v: unknown): v is DraftConflict {
-  return v === "grail-wins" || v === "weapon-wins" || v === "both";
+  return v === "grail-wins" || v === "weapon-wins" || v === "both" || v === "alternate";
 }
 
 /**

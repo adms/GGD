@@ -98,6 +98,13 @@ func FloorPoints(points int) int {
 // (AssignApex) once the account's standing on the board is known.
 func (c LadderConfig) BaseTier(points int) (tier, division string) {
 	points = FloorPoints(points)
+	// ⛔ 沒有分數就沒有位階（owner 2026-08-17：「沒分數不應該有位階，這是底線」）。
+	// 空字串是**既有**的「未定級」訊號 —— 客戶端 ui/components/tier.ts 的
+	// normalizeTier 對空字串回 null，呼叫端就畫灰色的「未定級」徽章。
+	// ⛔ 不要為此新增一個 TierUnranked 常數：那會是第二個真相，而畫面那一半已經有了。
+	if points <= 0 {
+		return "", ""
+	}
 	if points >= c.MasterFloor() {
 		return TierMaster, ""
 	}
@@ -190,6 +197,14 @@ func (c LadderConfig) AssignApex(rows []ApexCandidate, total int) map[string]str
 	for _, r := range rows {
 		if r.Games < c.MinApexGames {
 			continue // not yet apex-eligible: the place passes to the next account
+		}
+		// ⛔ 沒有分數就沒有位階（owner 2026-08-17：「沒分數不應該有位階，這是底線」）。
+		// apex 是按**名次比例**發的，所以兩個人的榜上、一個 0 分的帳號照樣會被冠上
+		// 「宗師」。⚠️ 這一條在此之前是靠 MinApexGames 誤打誤撞擋住的 —— 場數夠了
+		// 就擋不住，而那正是 GH#352。同一句話也適用於**空榜**：0 分不是最低位階，
+		// 是「還沒進榜」。
+		if FloorPoints(r.Points) <= 0 {
+			continue
 		}
 		switch {
 		case filledC < challenger:

@@ -1,7 +1,13 @@
 {
   "collection": "loot-tables",
-  "hash": "4066b41a8cfc",
+  "hash": "09693d9f5659",
   "entries": [
+    {
+      "id": "ex-release-weapons",
+      "path": "loot-tables/ex-release-weapons.json",
+      "hash": "3fb7d9843fb9",
+      "size": 307
+    },
     {
       "id": "legendary-weapons",
       "path": "loot-tables/legendary-weapons.json",

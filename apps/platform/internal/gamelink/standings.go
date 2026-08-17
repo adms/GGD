@@ -61,10 +61,10 @@ func (s *Service) standingsAwards(ctx context.Context, sr ranking.StandingsRules
 
 	out := make(map[string]standingsAward, len(seats))
 	for _, me := range seats {
-		beaten := []ranking.H2H{}
+		faced := []ranking.H2H{}
 		for _, other := range seats {
-			// 同隊不算（沒有勝負），同名次不算，輸的那一方不拿加成。
-			if other.AccountID == me.AccountID || other.Team == me.Team || me.Place >= other.Place {
+			// 同隊不算（沒有勝負）。⚠️ 名次**不再**過濾：見下面的對稱性註解。
+			if other.AccountID == me.AccountID || other.Team == me.Team {
 				continue
 			}
 			prior, err := s.rank.HeadToHead(ctx, me.AccountID, other.AccountID)
@@ -74,12 +74,21 @@ func (s *Service) standingsAwards(ctx context.Context, sr ranking.StandingsRules
 					"me", me.AccountID, "opponent", other.AccountID, "err", err)
 				continue
 			}
-			beaten = append(beaten, prior)
+			faced = append(faced, prior)
 		}
-		rivalry := sr.RivalryTotalPct(beaten)
+		// ⭐ 2026-08-17：收集的是**交手過的每一個對手**，⛔ 不再是「我贏的那些」。
+		// 這一行看起來只是放寬一個條件，實際上是刷分漏洞的修補點：
+		//   舊：加成只掛在贏家 ⇒ A 贏的 > B 輸的 ⇒ 這一對可以無中生有製造 MMR。
+		//   新：一對的兩邊拿到同一個加成 ⇒ 那一對的 Elo 變動零和 ⇒ 串通只能搬分。
+		// 「誰該多拿」不是靠這裡決定的 —— Elo 的期望值項本來就會把分給以小博大的
+		// 那一邊（見 ranking/standings.go 檔頭）。
+		// ⛔ 不要因為「輸的人不該拿加成」而把 me.Place >= other.Place 加回來：
+		// 賽季積分那一半已經由 AwardPointsScaled 只乘正的名次分擋掉了，而 K 值那一半
+		// 加回去就等於把漏洞裝回去，且畫面上完全看不出來。
+		rivalry := sr.RivalryTotalPct(faced)
 		out[me.AccountID] = standingsAward{
 			PointsPct:  pointsBase * (100 + rivalry) / 100,
-			KMulPct:    sr.RatingKMulPct(mult, rivalry),
+			KMulPct:    sr.RatingKMulPct(humans, mult, rivalry),
 			RivalryPct: rivalry,
 		}
 	}

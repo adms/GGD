@@ -369,6 +369,14 @@ export function offerItems(
   tableId: string,
   count = 3,
   policy: ItemDraftPolicy = DEFAULT_ITEM_DRAFT_POLICY,
+  /**
+   * offer 的 tier 字串。省略 = {@link ITEM_OFFER_TIER}（＝這一格出現之前的行為）。
+   * 更高階寶具（EX解放 / EX∅ 根源）由 `weaponTiers.pickWeaponTable` 算出
+   * `weapon:<id>` 傳進來，畫面就靠它換標題與配色。
+   * ⛔ 這裡**不重算**是哪一階：抽池與標籤必須是同一次判斷的兩個輸出，
+   * 分兩處算就會出現「標題寫 EX解放、卡片是普通寶具」而且沒有任何東西會紅。
+   */
+  offerTier: string = ITEM_OFFER_TIER,
 ): ItemOffer {
   const budget = Math.max(1, Math.trunc(policy.maxDraws));
   const working = eligibleItemPool(world, entity, tableId);
@@ -399,7 +407,7 @@ export function offerItems(
     }
   }
 
-  const offer: ItemOffer = { entity, tier: ITEM_OFFER_TIER, choices, picked: null };
+  const offer: ItemOffer = { entity, tier: offerTier, choices, picked: null };
   // `poolSize` rides the event so the host can say WHY a card came up short
   // (exhausted pool) instead of guessing. `itemOffer` is SERVER_ONLY in
   // net/eventFanout.ts — the card itself reaches the client as SeatState.offers.

@@ -71,6 +71,7 @@ import { StoreEconomyPage } from "./StoreEconomyPage";
 // 這份文件是 apps/admin/src 全樹零引用的（configDocCoverage 的 KNOWN_GAP 那一列）。
 import { RosterPage } from "./RosterPage";
 import { ConfigDocPage } from "./ConfigDocPage";
+import { IconWorkshopPage } from "./IconWorkshopPage";
 import { MapReportPage } from "./MapReportPage";
 import { ArenaPoolPage } from "./ArenaPoolPage";
 import { specForPage } from "../configForms";
@@ -306,6 +307,10 @@ export const NAV: NavItem[] = [
   // 圖示風格 (GH#178)：地端兩階段產圖器的 PASS-2 風格字串與參數。
   // ⚠️ 它是**產圖時**的設定，不是遊戲執行期的 —— 改了要重跑產圖器才看得到。
   { page: "iconStyle", label: "圖示風格", emoji: "🖌", section: SEC_ASSETS },
+  // 圖示工坊 (owner 2026-08-17「動態單個/批次產生的功能頁」)：緊接在 圖示風格
+  // 後面，因為那一頁決定「畫成什麼樣子」而這一頁決定「畫哪幾張」——
+  // 操作者的順序永遠是先調風格再重畫。
+  { page: "iconWorkshop", label: "圖示工坊", emoji: "🏭", section: SEC_ASSETS },
   // 護盾規則 —— 一個人身上兩道盾時誰先被吃掉。它是**傷害結算規則**（跟 戰鬥系統
   // 的倍率、屬性上限的天花板同一個家族），不是畫質也不是調性，但排在這裡是因為
   // 它和上面三頁共用同一個 schema 驅動的元件；改到它的人會從左欄找「護盾」。
@@ -973,6 +978,7 @@ function Console(): React.JSX.Element {
         ) : (
           <>
             {page === "hub" && <ConsoleHub />}
+            {page === "iconWorkshop" && <IconWorkshopPage />}
             {page === "approvals" && <ApprovalsPage />}
             {page === "quickApproval" && <QuickApprovalPage />}
             {page === "players" && <PlayersPage />}

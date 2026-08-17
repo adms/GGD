@@ -51,6 +51,7 @@ describe("排名獎勵的三個住處", () => {
       [D.share.seasonPointsPct, "DefaultSeasonPointsSharePct"],
       [D.share.ratingPct, "DefaultRatingSharePct"],
       [D.share.ratingMaxPct, "DefaultRatingMaxPct"],
+      [D.share.botKPct, "DefaultBotKPct"],
       [D.rivalry.basePct, "DefaultRivalryBasePct"],
       [D.rivalry.halfLife, "DefaultRivalryHalfLife"],
       [D.rivalry.repeatHalfLife, "DefaultRivalryRepeatHalfLife"],

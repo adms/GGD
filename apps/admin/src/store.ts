@@ -219,6 +219,12 @@ export type Page =
    * 改了要**下一次跑產圖**才生效，⛔ 不影響已經產出的圖。
    */
   | "iconStyle"
+  /**
+   * 圖示工坊 (owner 2026-08-17) —— 多選 + 批次重畫。
+   * ⚠️ 它的請求走 daemon（`/icon-api`），⛔ 不是 overlay，所以它**不在** gate 名單裡：
+   * daemon 自己只收 loopback，而這一頁在遠端本來就會顯示「服務未啟動」。
+   */
+  | "iconWorkshop"
   // 英雄屬性正規化 (owner 2026-08-12): 小/中/大 的三格 + 角色定位對照表。
   // 極小/極大 不在這裡 —— 它們是硬上下限，住「屬性上限」頁。
   | "statNormalization"

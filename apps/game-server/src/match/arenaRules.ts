@@ -13,7 +13,14 @@ import { AUGMENT_TIER_SCHEDULE, DEFAULT_ITEM_DRAFT_POLICY } from "@ggd/shared/si
 import type { ItemDraftPolicy } from "@ggd/shared/sim/economy/draft";
 import { DEFAULT_GRAIL_DRAFT } from "@ggd/shared/sim/economy/grailVocabulary";
 import type { GrailDraftRules } from "@ggd/shared/sim/economy/grailVocabulary";
-import { Configs, scheduledRetiredTables, DEFAULT_DRAFT_CONFLICT, DEFAULT_LEGENDARY_SHELF } from "@ggd/shared/content";
+import {
+  Configs,
+  scheduledRetiredTables,
+  DEFAULT_DRAFT_CONFLICT,
+  DEFAULT_LEGENDARY_SHELF,
+  DEFAULT_WEAPON_TIERS,
+} from "@ggd/shared/content";
+import type { WeaponTierRule } from "@ggd/shared/sim/economy/weaponTiers";
 import { DEFAULT_SELL_REFUND_PCT } from "@ggd/shared/sim/economy/shopShelf";
 import type { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { MAX_ROUNDS_UNLIMITED } from "@ggd/shared/roomSettings";
@@ -107,6 +114,11 @@ export interface ArenaRules {
    * 並還原成當時真的發生的「兩張都發」。
    */
   draftConflict: DraftConflict;
+  /**
+   * ⭐ 更高階寶具（EX解放 / EX∅ 根源），由**高到低**排。空陣列 = 關掉。
+   * 機制住在 `sim/economy/weaponTiers.ts`，這裡只是把設定送過去。
+   */
+  weaponTiers: readonly WeaponTierRule[];
   /** round number -> grants applied at that round's intermission entry */
   rounds: ReadonlyMap<number, RoundGrant>;
   /** grants for every round past the highest `rounds` key (escalating gold) */
@@ -178,6 +190,7 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
   // 本身一個回合都沒排寶具，所以它在這裡沒有可見後果 —— 但它讓「新建構點忘了
   // 想這一格」時落到的那個值是**設計**，不是 2026-08-17 之前的行為。
   draftConflict: DEFAULT_DRAFT_CONFLICT,
+  weaponTiers: DEFAULT_WEAPON_TIERS,
   rounds: new Map(
     Object.entries(AUGMENT_TIER_SCHEDULE).map(([round, tier]) => [
       Number(round),
@@ -261,6 +274,8 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
     // 存在之前存的，少了它。缺席要拿到的是新的出貨預設（owner 的裁決），
     // ⛔ 不是 `both`（＝靜靜地維持他剛剛抱怨的那個行為）。
     draftConflict: doc.draftConflict ?? DEFAULT_DRAFT_CONFLICT,
+    // ⚠️ `??` 同上：線上耐久覆蓋層那份文件是這一格出現之前存的。
+    weaponTiers: doc.weaponTiers ?? DEFAULT_WEAPON_TIERS,
     rounds,
     overflow: doc.overflow ?? null,
     // A retired gacha pool turns the legacy per-round gacha OFF rather than
@@ -310,14 +325,48 @@ export function grantForRound(rules: ArenaRules, round: number): RoundGrant | nu
 // ⛔ 也**不為第 2、5 回合寫 if**：這兩支只讀「這一回合排了什麼」，
 // 所以任何一個新的雙排回合（後台排的、overflow 排的）自動受同一條規則管。
 
+/**
+ * `alternate` 的裁決：**這是第幾個排了寶具的回合**（1-based）。
+ *
+ * ⛔ 刻意不是「回合編號的奇偶」—— 那會隨排程漂移：operator 把寶具從第 5 回合搬到
+ * 第 6 回合，奇偶就翻面，而畫面上完全看不出來為什麼這一場沒有寶具。
+ * 數的是**序位**，所以「第一次讓給聖杯、第二次讓給寶具」在任何排程下都成立。
+ *
+ * round 讀不到（舊錄影的表頭沒有這一格）時回 0 ⇒ 下面兩支都放行 ⇒ 兩張都發，
+ * 那**正是**當時真的發生的事。
+ */
+function weaponRoundOrdinal(rules: ArenaRules, round: number | undefined): number {
+  if (round === undefined) return 0;
+  let n = 0;
+  // ⚠️ Map 迭代排序過再數：這一支住在 game-server 不是 sim，但同一份錄影要在
+  // 任何機器上還原成同一個答案，所以順序不可以靠插入序。
+  for (const r of [...rules.rounds.keys()].sort((a, b) => a - b)) {
+    if (r > round) break;
+    if (rules.rounds.get(r)?.weaponLootTable) n++;
+  }
+  return n;
+}
+
 /** 這一回合發不發**聖杯願望**三選一（`augmentTier` 已經確定有排的前提下）。 */
-export function grailDraftAllowed(rules: ArenaRules, grant: RoundGrant): boolean {
-  return !(grant.weaponLootTable && rules.draftConflict === "weapon-wins");
+export function grailDraftAllowed(rules: ArenaRules, grant: RoundGrant, round?: number): boolean {
+  if (!grant.weaponLootTable) return true; // 沒撞卡
+  if (rules.draftConflict === "weapon-wins") return false;
+  if (rules.draftConflict === "alternate") {
+    const n = weaponRoundOrdinal(rules, round);
+    return n === 0 || n % 2 === 1; // 第 1、3、5… 次撞卡：聖杯贏
+  }
+  return true;
 }
 
 /** 這一回合發不發**寶具**三選一（`weaponLootTable` 已經確定有排的前提下）。 */
-export function weaponDraftAllowed(rules: ArenaRules, grant: RoundGrant): boolean {
-  return !(grant.augmentTier && rules.draftConflict === "grail-wins");
+export function weaponDraftAllowed(rules: ArenaRules, grant: RoundGrant, round?: number): boolean {
+  if (!grant.augmentTier) return true; // 沒撞卡
+  if (rules.draftConflict === "grail-wins") return false;
+  if (rules.draftConflict === "alternate") {
+    const n = weaponRoundOrdinal(rules, round);
+    return n === 0 || n % 2 === 0; // 第 2、4、6… 次撞卡：寶具贏
+  }
+  return true;
 }
 
 /**

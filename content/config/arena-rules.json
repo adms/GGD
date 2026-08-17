@@ -4,7 +4,7 @@
   "ultUnlockRound": 3,
   "exUnlockRound": 7,
   "offerCount": 3,
-  "draftConflict": "grail-wins",
+  "draftConflict": "alternate",
   "grailDraft": {
     "eligibilityEnabled": true,
     "slotDiversityEnabled": true,
@@ -29,6 +29,24 @@
     "sellRefundPct": 0.4,
     "randomOnlyTables": []
   },
+  "weaponTiers": [
+    {
+      "id": "ex-origin",
+      "label": "EX∅ 根源",
+      "table": "ex-origin-weapons",
+      "minRound": 10,
+      "basePct": 8,
+      "underdogPct": 30
+    },
+    {
+      "id": "ex-release",
+      "label": "EX解放",
+      "table": "ex-release-weapons",
+      "minRound": 1,
+      "basePct": 15,
+      "underdogPct": 45
+    }
+  ],
   "rounds": {
     "1": {
       "grantLevels": 2,

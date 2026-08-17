@@ -2638,17 +2638,27 @@ export function mobSettlementWordingFromDoc(doc: unknown): MobSettlementWording 
  * **兩種**只發法。一格布林逼人在「關掉衝突處理」與「聖杯贏」之間二選一，
  * 而 owner 想換成寶具贏的那一天就得改程式（第一守則）。
  */
-export const zDraftConflict = z.enum(["grail-wins", "weapon-wins", "both"]);
+export const zDraftConflict = z.enum(["grail-wins", "weapon-wins", "both", "alternate"]);
 export type DraftConflict = z.infer<typeof zDraftConflict>;
 
 /**
- * 出貨預設：**聖杯願望贏**。
+ * 出貨預設：**輪流**（`alternate`）。
  *
- * owner 2026-08-17「兩者衝突不顯示寶具三選一」。⭐ 第〇·六守則：優先權大的
- * 更新後**預設啟動**，開關存在是為了回頭 —— 所以測試只做這一邊（`both` 那條
- * 舊行為不另外測）。
+ * ⭐ 2026-08-17 傍晚由 `grail-wins` 改成這個，理由是 GH#347 量到的後果：
+ * 出貨排程**每一回合都有 `augmentTier`**，而第 2、5 回合是全表僅有的兩個
+ * `weaponLootTable` ⇒ `grail-wins` 之下，**一場比賽下來一張免費傳說武器都不會發**。
+ * owner 問「如果永遠不會出現，你建議怎麼改比較能避免呢?」——
+ *
+ * `alternate` 的規則只有一句：**撞卡的回合輪流讓路，第一次聖杯贏、第二次寶具贏**。
+ * 判準是「這是第幾個排了寶具的回合」（⛔ 不是回合編號的奇偶，那會隨排程漂移）。
+ * 出貨排程下就是：第 2 回合發聖杯、第 5 回合發寶具 ⇒ **一場保證有一次**免費寶具，
+ * 而 owner 原本要的「兩張不同時出現」一秒都沒有被破壞。
+ *
+ * ⚠️ 它**不是**在推翻 owner 的決定（第〇·六守則第 1 層）：他要的是「不要同時出現」，
+ * ⛔ 不是「寶具那條路關掉」——後者是排程的副作用，不是設計。四個值都在後台那一格，
+ * 想回到嚴格的舊行為就選 `grail-wins`。
  */
-export const DEFAULT_DRAFT_CONFLICT = "grail-wins" as const;
+export const DEFAULT_DRAFT_CONFLICT = "alternate" as const;
 
 /**
  * ⭐ **寶具（傳說武器）貨架**（owner 2026-08-17：「寶具(傳說武器) 可以上架直接
@@ -2703,6 +2713,83 @@ export const zLegendaryShelfConfig = z
   })
   .strict();
 export type LegendaryShelfConfig = z.infer<typeof zLegendaryShelfConfig>;
+
+/**
+ * ⭐ **更高階寶具**（owner 2026-08-17 第三則）。
+ *
+ *	「改寫為 **[EX解放]** 等級寶具，比 EX 更高級一點，隨機三選一會出現，
+ *	  特別是**劣勢方出現機率會明顯變高**」
+ *	「接下來我還會增加一個等級 **[EX∅ 根源]** 只會出現在**第九回合後**，
+ *	  特別是劣勢方抽到機率明顯變高，用來**逆轉**」
+ *
+ * ⛔ 引擎裡**沒有**「EX解放」「EX∅ 根源」這兩個名字（第〇·五守則）：owner 的兩句話
+ * 形狀一樣，只差三個數字加一張獎池，所以這裡是**一張表**，引擎只有一條規則
+ * （`sim/economy/weaponTiers.ts`）。第三、第四階都是填一列。
+ *
+ * ⚠️ 順序有意義：**由高到低**。引擎逐階問「開放了嗎 × 骰中了嗎 × 這張池對這位玩家
+ * 有東西嗎」，第一個全中的就用它；全都沒中就走這一回合原本排的獎池。
+ */
+export const zWeaponTier = z
+  .object({
+    id: z.string().min(1).max(32).describe("內部 id；會變成卡片的 tier（`weapon:<id>`）。"),
+    label: z.string().min(1).max(24).describe("玩家看到的階級名（「EX解放」）。"),
+    table: zId.describe("這一階的獎池（content/loot-tables/<id>.json）。"),
+    minRound: z
+      .number()
+      .int()
+      .min(1)
+      .max(99)
+      .describe("第幾回合起才可能出現。owner：EX∅ 根源「只會出現在第九回合後」⇒ 10。"),
+    basePct: z
+      .number()
+      .int()
+      .min(0)
+      .max(100)
+      .describe("領先／持平的玩家抽到這一階的百分比。0＝這一階只發給劣勢方。"),
+    underdogPct: z
+      .number()
+      .int()
+      .min(0)
+      .max(100)
+      .describe(
+        "**劣勢方**（回合勝場落後領先者）抽到這一階的百分比。owner 要的是「明顯變高」，" +
+          "所以出貨兩格差 2~4 倍。⚠️ 它是**逆轉**用的，不是保底。",
+      ),
+  })
+  .strict();
+export type WeaponTierConfig = z.infer<typeof zWeaponTier>;
+
+/**
+ * 出貨值。
+ *
+ * ⚠️ **EX∅ 根源那一階指向一張還不存在的獎池**（owner：「接下來我還會增加⋯50~70 個」）。
+ * 這是刻意的，而且比「放一張空的 loot-table」正確：`loot-table@1` 的 `entries`
+ * 下界是 1，所以空檔案根本過不了 `pnpm content:build` 的驗證（它擋下來了，2026-08-17）。
+ * ⛔ 也不塞一個佔位道具 —— 那會真的被抽到。
+ *
+ * 引擎對「這張池抽不到東西」早就有答案：`pickWeaponTable` 的 `hasEligible` 探針
+ * 探不到就往下一階讓。⇒ 今天這一階**永遠不會中**，owner 把
+ * `content/loot-tables/ex-origin-weapons.json` 建出來的那一天它自己就活了，
+ * ⛔ 不必改任何程式。
+ */
+export const DEFAULT_WEAPON_TIERS: WeaponTierConfig[] = [
+  {
+    id: "ex-origin",
+    label: "EX∅ 根源",
+    table: "ex-origin-weapons",
+    minRound: 10,
+    basePct: 8,
+    underdogPct: 30,
+  },
+  {
+    id: "ex-release",
+    label: "EX解放",
+    table: "ex-release-weapons",
+    minRound: 1,
+    basePct: 15,
+    underdogPct: 45,
+  },
+];
 
 /**
  * 出貨值。⚠️ 這是**第三個住處**（`content/config/arena-rules.json` ·
@@ -2810,6 +2897,20 @@ export const zConfigArenaRulesDoc = z
           "open＝上不上架（出貨 true，owner 2026-08-17：「寶具可以上架直接販售了」）；" +
           "priceMultiplier＝統一價的倍率，實際售價 = 傳說寶玉價 × 這個數（出貨 6 ＝ 14,400 金）。" +
           "⛔ 它不會打開 #261 暫時下架的那些普通武器道具。",
+      ),
+    /**
+     * ⭐ **更高階寶具**（EX解放 / EX∅ 根源）。省略 = {@link DEFAULT_WEAPON_TIERS}。
+     * ⚠️ 由**高到低**排；引擎照這個順序逐階骰。
+     */
+    weaponTiers: z
+      .array(zWeaponTier)
+      .max(8)
+      .optional()
+      .describe(
+        "排了寶具三選一的回合，可以改抽**更高階**的獎池。由高到低逐階骰，第一個中的就用它；" +
+          "全沒中（或該池對這位玩家沒有合格的東西）就走這一回合原本排的那一張。" +
+          "⭐ 劣勢方的機率是另一格，owner 2026-08-17：「特別是劣勢方出現機率會明顯變高」。" +
+          "⛔ 空陣列 = 完全關掉，回到只有一張基礎獎池的行為。",
       ),
     /** round number (string key) -> grants for that round */
     rounds: z.record(z.string().regex(/^[0-9]+$/), zArenaRoundGrant),

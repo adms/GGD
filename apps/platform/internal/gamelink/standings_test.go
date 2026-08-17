@@ -111,7 +111,16 @@ func TestRivalryBonusDecaysOnRepeatWins(t *testing.T) {
 	require.Less(t, r.RivalryBonusPct(ranking.H2H{Wins: 10, Losses: 10}), first,
 		"⭐ 輪流讓對方贏會讓淨勝永遠是 0;擋住它的是「這一對打過幾場」那個遞減項")
 
-	// 反過來:贏一個過去輸多贏少的對手,加成要比持平時高。
-	require.Greater(t, r.RivalryBonusPct(ranking.H2H{Losses: 2}), first,
-		"贏一個過去壓著你打的對手,加成要更高")
+	// ⭐ 2026-08-17 改寫：這裡原本斷言「贏一個過去壓著你打的對手加成更高」，
+	// 而那條規則**已經被刻意換掉**（見 ranking/standings.go 檔頭）——
+	// 舊版把「誰是弱勢」寫進加成本身，加成只掛贏家 ⇒ A 贏的比 B 輸的多 ⇒
+	// 這一對可以無中生有製造 MMR，而重複項只能讓它變慢、擋不住「先刻意輸十場」。
+	//
+	// 新的性質是**對稱**：同一對的兩邊拿到同一個加成（`|淨勝|`），
+	// 所以那一對的 Elo 變動零和，串通只能搬分不能造分。
+	// 「誰該多拿」交給 Elo 自己的期望值項 —— ⛔ 不在這一支函式裡。
+	require.Equal(t, r.RivalryBonusPct(ranking.H2H{Losses: 2}), r.RivalryBonusPct(ranking.H2H{Wins: 2}),
+		"⭐ 反刷分的承重線：加成對一對的兩邊必須相同,否則這一對就能製造分數")
+	require.Less(t, r.RivalryBonusPct(ranking.H2H{Losses: 5}), r.RivalryBonusPct(ranking.H2H{Losses: 1}),
+		"一面倒的宿敵不值錢(owner:「欺負弱小並不值得」);勢均力敵的才是滿的")
 }

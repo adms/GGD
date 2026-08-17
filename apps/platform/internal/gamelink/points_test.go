@@ -13,7 +13,6 @@ import (
 
 	"github.com/ggd/platform/internal/gamelink"
 	"github.com/ggd/platform/internal/gamelink/gamelinktest"
-	"github.com/ggd/platform/internal/ranking"
 	"github.com/ggd/platform/internal/testutil"
 	"github.com/ggd/platform/pkg/testkit"
 )
@@ -156,9 +155,12 @@ func TestPointsAccumulateAcrossMatches(t *testing.T) {
 	// 段位讀的是**分數推出來的**那一層。⛔ 不讀 rows[1].Tier:菁英/宗師是按**名次比例**
 	// 發的(tiers.go 刻意的設計),而這個夾具現在會打到 MinApexGames 以上,兩個人的榜上
 	// 連 0 分的那一位都會被冠上宗師 —— 那是 apex 規則,不是這一條要守的地板。
+	// ⭐ GH#352（owner 2026-08-17:「沒分數不應該有位階，這是底線」）——
+	// 0 分現在回「未定級」（空字串），⛔ 不是鐵 IV。這一條同時守住了上面那句註解
+	// 提到的 apex 問題：0 分連 apex 的候選都進不去了。
 	tier, div := ts.Srv.Ranking.Ladder().BaseTier(rows[1].Points)
-	require.Equal(t, ranking.TierIron, tier)
-	require.Equal(t, "IV", div)
+	require.Equal(t, "", tier, "0 分不是最低位階,是還沒進榜")
+	require.Equal(t, "", div)
 }
 
 // TestSettlementPointsIdempotent is the double-delivery regression: a duplicate

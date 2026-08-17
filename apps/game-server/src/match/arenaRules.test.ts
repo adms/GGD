@@ -429,7 +429,11 @@ describe("同一回合撞卡：聖杯願望贏、寶具讓路 (#340, arena-02, a
     // `offerItems` 那一段的設定，所以卡面本身的性質留在這裡驗。
     const round = conflictRound();
     const table = ARENA.rounds.get(round)!.weaponLootTable!;
-    const both: ArenaRules = { ...ARENA, draftConflict: "both" };
+    // ⚠️ `weaponTiers: []` 是刻意的：這一條驗的是**撞卡裁決**，而更高階寶具
+    // （EX解放 / EX∅ 根源）會把獎池換成另一張 —— 那是對的行為，但會讓「卡片來自
+    // 這一回合排的那張池」這個斷言變成在驗兩件事。階級那一層由
+    // `sim/economy/weaponTiers.test.ts` 單獨守。
+    const both: ArenaRules = { ...ARENA, draftConflict: "both", weaponTiers: [] };
     const ctl = new MatchController("conflict-both", 555, allBots(), FAST, 3, both);
     runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === round);
 

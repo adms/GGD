@@ -191,6 +191,8 @@ describe("分類重編一頁都沒有掉", () => {
     // 的快照，動它會讓這條守衛失去它比較的那個時間點。新頁走這張明示的清單，
     // 一列一個看得見的決定（同 configDocCoverage 的豁免表精神）。
     const SINCE_BASELINE = new Set<string>([
+      // 圖示工坊 (owner 2026-08-17「動態單個/批次產生的功能頁」)。
+      "iconWorkshop",
       // 2026-08-17：介面用語（Fate）—— owner「這些替換的介面提示等用語，
       // 應該是一個 JSON 檔，可以在後台替換設定」。
       "uiLexicon",

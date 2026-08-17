@@ -47,7 +47,8 @@ func TestPointsAwardAndFloor(t *testing.T) {
 	require.NoError(t, err)
 	require.True(t, found)
 	require.Equal(t, 0, me.Points, "cumulative points floor at 0")
-	require.Equal(t, ranking.TierIron, me.Tier)
+	// ⛔ GH#352 —— 0 分沒有位階（owner:「這是底線」）。空字串 = 未定級。
+	require.Equal(t, "", me.Tier, "0 分不是鐵 IV,是還沒進榜")
 
 	acc, err = ts.Srv.Accounts.GetByID(ctx, a.ID)
 	require.NoError(t, err)

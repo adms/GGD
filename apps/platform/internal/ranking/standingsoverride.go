@@ -52,6 +52,7 @@ type rankingDoc struct {
 		SeasonPointsPct *int `json:"seasonPointsPct"`
 		RatingPct       *int `json:"ratingPct"`
 		RatingMaxPct    *int `json:"ratingMaxPct"`
+		BotKPct         *int `json:"botKPct"`
 	} `json:"share"`
 	Rivalry *struct {
 		BasePct        *int `json:"basePct"`
@@ -103,6 +104,7 @@ func (s *Service) StandingsRulesNow() StandingsRules {
 		putInt(&cand.SeasonPointsSharePct, sh.SeasonPointsPct)
 		putInt(&cand.RatingSharePct, sh.RatingPct)
 		putInt(&cand.RatingMaxPct, sh.RatingMaxPct)
+		putInt(&cand.BotKPct, sh.BotKPct)
 	}
 	if rv := d.Rivalry; rv != nil {
 		putInt(&cand.RivalryBasePct, rv.BasePct)
@@ -138,6 +140,7 @@ func ValidateStandingsRules(r StandingsRules) error {
 		{"share.seasonPointsPct", r.SeasonPointsSharePct, SharePctMin, SharePctMax},
 		{"share.ratingPct", r.RatingSharePct, SharePctMin, SharePctMax},
 		{"share.ratingMaxPct", r.RatingMaxPct, RatingMaxPctMin, RatingMaxPctMax},
+		{"share.botKPct", r.BotKPct, BotKPctMin, BotKPctMax},
 		{"rivalry.basePct", r.RivalryBasePct, RivalryPctMin, RivalryPctMax},
 		{"rivalry.halfLife", r.RivalryHalfLife, RivalryHalfLifeMin, RivalryHalfLifeMax},
 		{"rivalry.repeatHalfLife", r.RivalryRepeatHalfLife, RivalryHalfLifeMin, RivalryHalfLifeMax},

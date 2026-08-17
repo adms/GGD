@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "c3f4df406d4a",
+  "hash": "14d7e40bba44",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -23,8 +23,8 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "ddb052d39ff9",
-      "size": 7070
+      "hash": "1e5c2ce10ee7",
+      "size": 7432
     },
     {
       "id": "audio-map",
@@ -239,8 +239,8 @@
     {
       "id": "ranking",
       "path": "config/ranking.json",
-      "hash": "6976e63617c5",
-      "size": 288
+      "hash": "601d5eb9e578",
+      "size": 304
     },
     {
       "id": "regen",

@@ -86,14 +86,23 @@ export const zRankingShare = z
         "⚠️ 只放大**正的**名次分 —— 把 −30 的懲罰乘 13 不是獎勵。",
     ),
     ratingPct: int(RANKING_BOUNDS.sharePct).describe(
-      "**MMR（Elo）的 K 值**吃多少倍率。出貨 **5**：13 倍的 lobby 只讓 K 變成 1.6 倍。" +
-        "⭐ 刻意只吃一小部分 —— Elo 是「收斂到真實實力的估計值」，直接乘 13 會讓排名劇烈震盪，" +
-        "而且打一場 bot 局（倍率 1）就把它拉回去，估計值反而更差。" +
+      "**MMR（Elo）的 K 值**吃多少倍率。出貨 **25**：13 倍的 lobby 讓 K 變成 4 倍，" +
+        "再由下面那格夾在 3 倍。⭐ 刻意不吃滿 —— Elo 是「收斂到真實實力的估計值」，" +
+        "直接乘 13 會讓排名劇烈震盪。真人賽該多算的那一半，主要交給下面的" +
+        "**bot 局 K 值**去縮小 bot 賽，而不是無限放大真人賽。" +
         "調到 100＝ MMR 也吃滿倍率（排名變化會很暴力）；調到 0＝ MMR 完全不受真人數影響。",
     ),
     ratingMaxPct: int(RANKING_BOUNDS.ratingMaxPct).describe(
-      "MMR 的 K 值**最多**變成原本的百分之幾（出貨 200 ＝ 2 倍）。⚠️ 宿敵加成也算在這個天花板裡，" +
+      "MMR 的 K 值**最多**變成原本的百分之幾（出貨 300 ＝ 3 倍）。⚠️ 宿敵加成也算在這個天花板裡，" +
         "所以它是「一場最多能撼動排名多少」的**單一保險絲**。100＝完全不放大（等於關掉排名側的加成）。",
+    ),
+    botKPct: int(RANKING_BOUNDS.sharePct).describe(
+      "**純 bot 局**（真人數沒到「最少真人數」）的 MMR K 值只算百分之幾。出貨 **40**。" +
+        "⭐ owner 2026-08-17：「bot AI 的行為模式太容易被克制，並沒有太高的鑑別度」——" +
+        "所以一場 bot 局本來就**資訊量低**，該少移動排名一點。" +
+        "⚠️ 這不是懲罰，是 Elo 的 K 本來的語意（這一場有多值得相信）。" +
+        "0＝ bot 局完全不動 MMR；100＝ bot 局跟真人局一樣重（＝這一格關掉）。" +
+        "⛔ 它只影響 MMR，**不影響**水晶、賽季積分與英雄積分。",
     ),
   })
   .strict();
@@ -155,6 +164,6 @@ export const DEFAULT_RANKING: ConfigRankingDoc = {
   id: RANKING_DOC_ID,
   schema: "config.ranking@1",
   humanMultiplier: { minHumans: 2, offset: 1, maxMultiplier: 13 },
-  share: { seasonPointsPct: 100, ratingPct: 5, ratingMaxPct: 200 },
+  share: { seasonPointsPct: 100, ratingPct: 25, ratingMaxPct: 300, botKPct: 40 },
   rivalry: { basePct: 20, halfLife: 3, repeatHalfLife: 10, maxPct: 60 },
 };

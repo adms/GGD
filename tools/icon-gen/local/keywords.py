@@ -441,14 +441,12 @@ GRAIL_SUBJECT: dict[str, tuple[str, str]] = {
     "grail-a-12": ("a violet spell bolt hardening in mid-flight into a heavy steel "
                    "spearhead", "violet and steel"),
     "grail-a-13": ("a massive iron gauntlet clenched into a fist, crushing a cracked boulder in its grip, dust bursting from between the fingers", "flesh red and gold"),
-    "grail-a-14": ("a pair of empty footprints left in dust while the figure is "
-                   "already reappearing a step behind", "amber gold and dust grey"),
+    "grail-a-14": ('a single straw sandal wrapped in a spiralling wind ribbon, one bold centred silhouette, sharp motion streak behind it', 'amber gold and dust grey'),
     "grail-a-15": ("a golden soul flame bursting upward out of snapping black "
                    "chains", "golden flame and black"),
     "grail-a-16": ("stacked panes of glass forming a hexagonal mind-wall in front of "
                    "a raised open palm", "pale gold and glass blue"),
-    "grail-a-17": ("a tall rack of many different weapons with one blade being drawn "
-                   "out of it", "steel and warm gold"),
+    "grail-a-17": ('one upright sword in front, two more swords crossed behind it forming a tight fan, bold clean silhouette centred', 'steel and warm gold'),
     "grail-a-18": ("a molten circuit line running along a bare forearm, embers "
                    "dripping off the elbow", "molten orange and gold"),
     "grail-a-19": ("a mechanical arm being rebuilt, one fresh violet crystal plate "
@@ -466,8 +464,7 @@ GRAIL_SUBJECT: dict[str, tuple[str, str]] = {
                    "they fall into a flask", "crimson and mana blue"),
     "grail-c-05": ("a thin shirt of blue mana chainmail worn over a plain cloth "
                    "tunic", "mana blue and grey"),
-    "grail-c-06": ("a metronome made of swinging silver blades, motion streaks "
-                   "behind each swing", "silver and cyan"),
+    "grail-c-06": ('a large round stopwatch whose single hand is a sword blade, blurred sweep arc, one bold centred object', 'silver and cyan'),
     "grail-c-07": ("a plain steel blade sheathed edge to tip in humming blue mana "
                    "light", "mana blue and steel"),
     "grail-c-08": ("a dull lead bullet drilling a neat hole clean through a golden "
@@ -476,8 +473,7 @@ GRAIL_SUBJECT: dict[str, tuple[str, str]] = {
                    "barrier glass", "crimson and pale blue"),
     "grail-c-10": ("a pale hungry soul mouth swallowing three small glowing orbs "
                    "whole", "spectral cyan and white"),
-    "grail-c-11": ("a kneeling figure pushing back up onto one knee as purple "
-                   "shackles crack apart", "silver and bruised purple"),
+    "grail-c-11": ('a clenched fist punching upward out of a shattered purple shackle cuff, off-centre diagonal composition, broken chain fragments flying', 'silver and bruised purple'),
     "grail-c-12": ("a small hexagonal chant barrier of silver runes closing around a "
                    "caster's shoulders", "silver and pale cyan"),
     "grail-c-13": ("a crowned skull with a single silver blade driven down through "
@@ -502,7 +498,7 @@ GRAIL_SUBJECT: dict[str, tuple[str, str]] = {
                     "spin backwards", "pale blue and gold"),
     "grail-ex-03": ("a golden ouroboros ring closing around a raised victory laurel",
                     "deep gold"),
-    "grail-ex-04": ("three angular crimson command-seal runes arranged in a tight triangle, each stroke burning like hot iron", "crimson and gold"),
+    "grail-ex-04": ('a raised open hand seen from the back, three glowing crimson command-seal marks burning on the skin, bold centred silhouette', 'crimson and gold'),
     "grail-ex-05": ("a blazing sword raised overhead with a second identical blade of "
                     "light overlapping it", "white and gold"),
     "grail-ex-06": ("a spurred riding boot in a stirrup of light with feathered wings "

@@ -71,6 +71,10 @@ export const DRAFT_TIER_COLOR: Record<string, string> = {
   gold: "#f2c637",
   prismatic: "#c67ef2",
   weapon: "#f28a37",
+  // ⭐ 更高階寶具（owner 2026-08-17）。⚠️ 兩色都比 `weapon` 更亮更冷，因為它們是
+  // 「逆轉用」的卡 —— 玩家要在 0.3 秒內看出「這一張不一樣」，⛔ 不是靠讀標題。
+  "weapon:ex-release": "#ff5fa2",
+  "weapon:ex-origin": "#8affff",
   // 能力屬性強化 (#260) — a teal that belongs to no augment rarity, because the
   // card is not a rarity roll: all three magnitudes come off the same uniform
   // 0.1–2.0 draw, so tinting it silver/gold would promise a quality it never has.
@@ -85,6 +89,12 @@ export function tierColor(tier: string): string {
 /** Bespoke header labels; unknown tiers render as "<TIER> AUGMENT". */
 export const DRAFT_TIER_LABEL: Record<string, string> = {
   weapon: "寶具",
+  // ⚠️ 這兩行是**顯示**用的第二份文字（權威那一份是 `config.arena-rules@1`
+  // 的 `weaponTiers[].label`）。刻意如此：那一份要跟著網路過來，而卡片在快照
+  // 到達之前就要畫。⛔ 但 id 對不上時這裡會靜靜退回「WEAPON:XXX AUGMENT」，
+  // 所以 operator 新增一階的當天要補一行 —— `weaponTierLabels.test.ts` 在守。
+  "weapon:ex-release": "寶具 · EX解放",
+  "weapon:ex-origin": "寶具 · EX∅ 根源",
   [ATTR_OFFER_TIER]: "能力屬性強化 · 力／敏／智",
 };
 

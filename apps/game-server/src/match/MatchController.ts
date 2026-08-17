@@ -198,9 +198,11 @@ import {
   offerItems,
   applyItemPick,
   ITEM_OFFER_TIER,
+  eligibleItemPool,
   type AugmentOffer,
   type ItemOffer,
 } from "@ggd/shared/sim/economy/draft";
+import { pickWeaponTable } from "@ggd/shared/sim/economy/weaponTiers";
 import { rollItemReward, grantItemFree, commitShopSession } from "@ggd/shared/sim/economy/shop";
 import { releaseOrbSlot } from "@ggd/shared/sim/economy/legendaryOrb";
 import { DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES } from "@ggd/shared/sim/economy/offerEligibility";
@@ -1503,7 +1505,7 @@ export class MatchController {
     //    stand-in; see settleRound for why it is offer WIDTH and not a reroll).
     //    #340 —— 同一回合也排了寶具時，由 `draftConflict` 裁決誰讓路（出貨預設
     //    是聖杯贏，所以這一支照發）。判斷住在 `arenaRules.ts`，不是這裡。
-    if (grant?.augmentTier && grailDraftAllowed(this.rules, grant)) {
+    if (grant?.augmentTier && grailDraftAllowed(this.rules, grant, round)) {
       const spentBonus = new Set<TeamId>();
       for (const [seatId, seat, entity] of this.activeSeats()) {
         const bonus = this.highStakesDraftBonus.has(seat.teamId) ? 1 : 0;
@@ -1543,14 +1545,29 @@ export class MatchController {
     //    #340 —— owner 2026-08-17「兩者有衝突不顯示寶具三選一」。⚠️ 這一格是
     //    **靜靜地不發**，而且刻意如此：兩張三選一共用同一段中場倒數，讓路的那一張
     //    在畫面上就是不存在（叫一句 warn 只會在每一場的第 2、5 回合各刷 12 行）。
-    if (grant?.weaponLootTable && weaponDraftAllowed(this.rules, grant)) {
-      for (const [seatId, , entity] of this.activeSeats()) {
+    if (grant?.weaponLootTable && weaponDraftAllowed(this.rules, grant, round)) {
+      // ⭐ 更高階寶具（EX解放 / EX∅ 根源，owner 2026-08-17 第三則）。
+      // 「劣勢方」＝這一隊的回合勝場落後領先者，**逐座位**問（同一隊的人答案一樣）。
+      // ⚠️ 骰子在 sim 的 `world.rng` 上，所以它是錄影/重播吃得下的決定性輸入；
+      // 落後量由 host 算出來當**參數**傳進去（sim 沒有 roundWins 這份帳）。
+      const leadWins = Math.max(0, ...[...this.roundWins.values()]);
+      for (const [seatId, seat, entity] of this.activeSeats()) {
+        const behind = leadWins - (this.roundWins.get(seat.teamId) ?? 0);
+        const tier = pickWeaponTable(
+          this.rules.weaponTiers,
+          round,
+          behind > 0,
+          grant.weaponLootTable,
+          this.world.rng,
+          (t) => eligibleItemPool(this.world, entity, t).length > 0,
+        );
         const offer = offerItems(
           this.world,
           entity,
-          grant.weaponLootTable,
+          tier.table,
           this.rules.offerCount,
           this.rules.itemDraft,
+          tier.offerTier,
         );
         if (offer.choices.length > 0) {
           this.offers.set(`${round}:${seatId}:w`, {
