@@ -1679,18 +1679,14 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "`berserkerPctRegen.test.ts` 另有一條掃全 119 份英雄卡的守衛釘住「真的沒有人填」," +
       "所以第一位採用者出現的那一天,那一條會紅,而**這條豁免就該被刪掉**。",
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|1|0.op=>": {
-    status: "debt",
-    why:
-      "條件比較子 `>` 在 2026-08-02 之前唯一的內容使用者是 52-00 十二道試煉的" +
-      "`onInterval` hook(「只在生命高於最大生命的 1% 時才流失」)。owner 的更正把那條流失" +
-      "搬去 `healthDrainPctOfMax` + `config.regen@1` 的地板 —— 因為 hook 的 `condition` 是" +
-      "**發不發射**的前提而不是一條夾值(把流失調到比門檻大就會穿過去把人打死)," +
-      "而且 hook 走傷害管線會被 `combatEnv.damageDealt` 乘過,「1%」就不是 1%。" +
-      "所以 `>` 掉到 0 是那次搬家的直接後果,不是有人忘了寫。" +
-      "比較子本身還在編輯器的條件選單上、`effects/hooks.ts` 也照樣解析它;" +
-      "第一支需要「數值高於門檻才觸發」的卡出現時,這條豁免就該被刪掉。",
-  },
+  // ⭐ 2026-08-18 已刪除:`enum:…applyBuff.condition|0|1|0.op=>`
+  //
+  // 那條豁免自己的最後一句寫著「第一支需要**數值高於門檻才觸發**的卡出現時,
+  // 這條豁免就該被刪掉」—— 那一支出現了:`items/teardrop-of-rebirth` 再誕之淚珠
+  // 的復活後增益掛了 `{hp, percent, op:">", value:0}`,用來確認**復活真的成功**
+  // (火圈全閉合時 `reviveChampionAt` 回 null,那 6 秒倍率會掛在屍體上)。
+  // ⛔ 不要把它加回來 —— 這條普查的整個意義就是「機制出貨了、內容 0」,
+  // 而它現在不是 0 了。
 
   // ── 【淨化】dispel 的四格「不寫最好」旋鈕 (A4b, 2026-08-05, #278) ─────────
   //

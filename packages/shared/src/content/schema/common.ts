@@ -377,7 +377,7 @@ export const ITEM_MODIFIER_LIMITS: Record<Stat, number> = {
   // OVERRULED it on 2026-07-30:「天堂之劍 critChance 0.03 + critDamage 48.25 =>
   // 調整 6% 10 倍暴擊，不然太誇張了」. content/items/godie-i01n.json now carries
   // critChance 0.06 / critDamage 8.25 (1.75 + 8.25 = 10.0x), and the SHIPPED
-  // maximum across all 219 item docs is that 8.25 — the next three crit items
+  // maximum across all 239 item docs is that 8.25 — the next three crit items
   // are 斬龍刀 0.448, 龍騎士之劍 0.287, 武聖手鐲 0.286.
   //
   // THE BAND IS DELIBERATELY LEFT AT 50 ANYWAY, and that is a decision, not

@@ -105,16 +105,16 @@ a{color:var(--accent)}
 <header class="top">
   <h1>GGD 引擎地圖</h1>
   <p class="sub">引擎到底組得出什麼 —— 每一格都是<b>推導</b>的：從引擎常數、出貨檔，或<b>真的跑一次</b>之後量到的結果。這一頁沒有任何手打的數字。</p>
-  <p class="fp">capability fingerprint <b>7f2a3d75</b> · 產生器 <code>tools/engine-atlas/</code> · 重跑一次就是最新</p>
+  <p class="fp">capability fingerprint <b>9a5fed3e</b> · 產生器 <code>tools/engine-atlas/</code> · 重跑一次就是最新</p>
 </header>
 
 <div class="counts">
-  <div class="count"><b>37</b><span>效果 kind</span></div><div class="count"><b>19</b><span>[xxx時] 事件</span></div><div class="count"><b>5</b><span>條件葉</span></div><div class="count"><b>17</b><span>模板家族</span></div><div class="count"><b>186</b><span>參數欄位</span></div><div class="count"><b>17</b><span>屬性</span></div><div class="count"><b>36</b><span>全域倍率</span></div>
+  <div class="count"><b>37</b><span>效果 kind</span></div><div class="count"><b>33</b><span>[xxx時] 事件</span></div><div class="count"><b>5</b><span>條件葉</span></div><div class="count"><b>17</b><span>模板家族</span></div><div class="count"><b>191</b><span>參數欄位</span></div><div class="count"><b>23</b><span>屬性</span></div><div class="count"><b>36</b><span>全域倍率</span></div>
 </div>
 
 <div class="alarm ok">
   <h2>更正：先前那份「29 支全場命中」是誤報</h2>
-  <p class="big">29 / 29 支模板技能的 AoE 半徑都在 zone 半徑 24 之內</p>
+  <p class="big">23 / 23 支模板技能的 AoE 半徑都在 zone 半徑 24 之內</p>
   <p class="lede">這一頁的第一版宣稱有 29 支技能「等於全場命中」（GH#310）。<b>那是錯的，錯在量尺。</b><br><br>
   WC3 單位換算一直都有做 —— <code>expand.ts</code> 的 <code>if (slot.unit === "wc3u") return toLen(v)</code>，
   係數 <code>GGD_PER_WC3 = 11/600</code>。513.5 × 11/600 = 9.41，與文件裡的 <code>radius</code> 逐位吻合。
@@ -136,35 +136,63 @@ a{color:var(--accent)}
   <thead><tr><th>運算子</th><th>實際觀察到的結果</th><th class="c">來源</th></tr></thead>
   <tbody><tr>
       <th scope="row">沒有任何 modifier（基準）</th>
-      <td><div class="v">AP 26</div><p class="note">下面每一列都拿它當比較基準。它是骨架英雄的值，不是平衡數字。</p></td>
+      <td><div class="v">AP 169</div><p class="note">下面每一列都拿它當比較基準。它是骨架英雄的值，不是平衡數字。</p></td>
       <td class="c"><span class="chip p-measured">實測</span></td>
     </tr><tr>
       <th scope="row">flat（相加）</th>
-      <td><div class="v">基底 AP 26 → 61（×2.346154）</div><p class="note">flat 10 ＋ flat 25 → 直接加 35 在基底上。多條就一路加下去。</p></td>
+      <td><div class="v">基底 AP 169 → 204（×1.207101）</div><p class="note">flat 10 ＋ flat 25 → 直接加 35 在基底上。多條就一路加下去。</p></td>
       <td class="c"><span class="chip p-measured">實測</span></td>
     </tr><tr>
       <th scope="row">⭐ pctAdd（同一個總和桶）</th>
-      <td><div class="v">基底 AP 26 → 130（×5）</div><p class="note">pctAdd +100% ＋ pctAdd +300% → 全部先相加再乘<strong>一次</strong>：×(1 + 1.0 + 3.0) = ×5.0。這就是「死之王套裝 +300% ＋ 惡夢魔王碎片 +100% = ×5.0 而不是 ×8.0」的原因。</p></td>
+      <td><div class="v">基底 AP 169 → 845（×5）</div><p class="note">pctAdd +100% ＋ pctAdd +300% → 全部先相加再乘<strong>一次</strong>：×(1 + 1.0 + 3.0) = ×5.0。這就是「死之王套裝 +300% ＋ 惡夢魔王碎片 +100% = ×5.0 而不是 ×8.0」的原因。</p></td>
       <td class="c"><span class="chip p-measured">實測</span></td>
     </tr><tr>
       <th scope="row">pctMult（各自相乘）</th>
-      <td><div class="v">基底 AP 26 → 208（×8）</div><p class="note">同樣的 +100% 與 +300%，但每一條各乘一次：×(1+1.0) × (1+3.0) = ×8.0。和上面是<strong>不同的桶</strong>，不會互相合併 —— 選錯 op 就是 5 倍與 8 倍的差別。</p></td>
+      <td><div class="v">基底 AP 169 → 1352（×8）</div><p class="note">同樣的 +100% 與 +300%，但每一條各乘一次：×(1+1.0) × (1+3.0) = ×8.0。和上面是<strong>不同的桶</strong>，不會互相合併 —— 選錯 op 就是 5 倍與 8 倍的差別。</p></td>
       <td class="c"><span class="chip p-measured">實測</span></td>
     </tr><tr>
       <th scope="row">flat 與 pctAdd 的先後</th>
-      <td><div class="v">基底 AP 26 → 252（×9.692308）</div><p class="note">flat +100 再 pctAdd +100%：<strong>先加完 flat 才乘百分比</strong>，也就是 (基底+100)×2。</p></td>
+      <td><div class="v">基底 AP 169 → 538（×3.183432）</div><p class="note">flat +100 再 pctAdd +100%：<strong>先加完 flat 才乘百分比</strong>，也就是 (基底+100)×2。</p></td>
       <td class="c"><span class="chip p-measured">實測</span></td>
     </tr><tr>
       <th scope="row">percentOf（取另一條屬性的百分比）</th>
-      <td><div class="v">基底 AP 26 → 46（×1.769231）</div><p class="note">「AP ＝ 5% 的最大魔力」（光魔杖那一條）。⚠️ 缺 <code>from</code> 會被 schema 拒收 —— 沒有那道閘的話這條 modifier 會<strong>靜默無效</strong>，而文件看起來一切正常。</p></td>
+      <td><div class="v">基底 AP 169 → 219（×1.295858）</div><p class="note">「AP ＝ 5% 的最大魔力」（光魔杖那一條）。⚠️ 缺 <code>from</code> 會被 schema 拒收 —— 沒有那道閘的話這條 modifier 會<strong>靜默無效</strong>，而文件看起來一切正常。</p></td>
       <td class="c"><span class="chip p-measured">實測</span></td>
     </tr></tbody>
 </table></div></section><section id="caps"><h2>上限：一條屬性有四道關卡</h2><p class="lede">一個數字要真的到得了玩家身上，得同時過<strong>結構夾限</strong>、<strong>上限表</strong>（後台可調）、<strong>後台基礎加成上界</strong>、以及<strong>道具欄位帶</strong>。任何一道漏掉，症狀都是「後台存得下去、玩家拿不到」。</p>
 <div class="scroll"><table>
   <thead><tr><th>屬性</th><th>四道關卡</th><th class="c">來源</th></tr></thead>
   <tbody><tr>
+      <th scope="row">maxHealth</th>
+      <td><div class="v">預設上限 base 375960 / 解鎖 375960　·　⚙️出貨 base 375960 / 解鎖 375960　·　後台基礎加成上限 20000　·　道具欄位帶 ±2500</div></td>
+      <td class="c"><span class="chip p-shipped">出貨檔</span></td>
+    </tr><tr>
+      <th scope="row">healthRegen</th>
+      <td><div class="v">預設上限 base 744 / 解鎖 744　·　⚙️出貨 base 744 / 解鎖 744　·　後台基礎加成上限 200　·　道具欄位帶 ±100</div></td>
+      <td class="c"><span class="chip p-shipped">出貨檔</span></td>
+    </tr><tr>
+      <th scope="row">maxMana</th>
+      <td><div class="v">預設上限 base 232150 / 解鎖 232150　·　⚙️出貨 base 232150 / 解鎖 232150　·　後台基礎加成上限 20000　·　道具欄位帶 ±2500</div></td>
+      <td class="c"><span class="chip p-shipped">出貨檔</span></td>
+    </tr><tr>
+      <th scope="row">manaRegen</th>
+      <td><div class="v">預設上限 base 926 / 解鎖 926　·　⚙️出貨 base 926 / 解鎖 926　·　後台基礎加成上限 200　·　道具欄位帶 ±50</div></td>
+      <td class="c"><span class="chip p-shipped">出貨檔</span></td>
+    </tr><tr>
+      <th scope="row">ad</th>
+      <td><div class="v">預設上限 base 21200 / 解鎖 21200　·　⚙️出貨 base 21200 / 解鎖 21200　·　後台基礎加成上限 2000　·　道具欄位帶 ±400</div></td>
+      <td class="c"><span class="chip p-shipped">出貨檔</span></td>
+    </tr><tr>
       <th scope="row">ap</th>
-      <td><div class="v">預設上限 base 100000 / 解鎖 100000　·　⚙️出貨 base 100000 / 解鎖 100000　·　後台基礎加成上限 2000　·　道具欄位帶 ±400</div></td>
+      <td><div class="v">預設上限 base 500000 / 解鎖 500000　·　⚙️出貨 base 500000 / 解鎖 500000　·　後台基礎加成上限 2000　·　道具欄位帶 ±400</div></td>
+      <td class="c"><span class="chip p-shipped">出貨檔</span></td>
+    </tr><tr>
+      <th scope="row">armor</th>
+      <td><div class="v">預設上限 base 5078 / 解鎖 5078　·　⚙️出貨 base 5078 / 解鎖 5078　·　後台基礎加成上限 500　·　道具欄位帶 ±150</div></td>
+      <td class="c"><span class="chip p-shipped">出貨檔</span></td>
+    </tr><tr>
+      <th scope="row">mr</th>
+      <td><div class="v">預設上限 base 15344 / 解鎖 15344　·　⚙️出貨 base 15344 / 解鎖 15344　·　後台基礎加成上限 500　·　道具欄位帶 ±200</div></td>
       <td class="c"><span class="chip p-shipped">出貨檔</span></td>
     </tr><tr>
       <th scope="row">as</th>
@@ -172,8 +200,8 @@ a{color:var(--accent)}
       <td class="c"><span class="chip p-shipped">出貨檔</span></td>
     </tr><tr>
       <th scope="row">ms</th>
-      <td><div class="v">結構夾限 [2, 14]　·　後台基礎加成上限 12　·　道具欄位帶 ±5</div></td>
-      <td class="c"><span class="chip p-import">引擎常數</span></td>
+      <td><div class="v">結構夾限 [2, 14]　·　預設上限 base 18 / 解鎖 24　·　⚙️出貨 base 18 / 解鎖 24　·　後台基礎加成上限 12　·　道具欄位帶 ±5</div></td>
+      <td class="c"><span class="chip p-shipped">出貨檔</span></td>
     </tr><tr>
       <th scope="row">critChance</th>
       <td><div class="v">結構夾限 [0, 1]　·　後台基礎加成上限 1　·　道具欄位帶 ±1</div></td>
@@ -184,7 +212,11 @@ a{color:var(--accent)}
       <td class="c"><span class="chip p-shipped">出貨檔</span></td>
     </tr><tr>
       <th scope="row">lifesteal</th>
-      <td><div class="v">結構夾限 [0, 0.8]　·　預設上限 base 0.8 / 解鎖 1　·　⚙️出貨 base 0.8 / 解鎖 1　·　後台基礎加成上限 0.8　·　道具欄位帶 ±1</div></td>
+      <td><div class="v">結構夾限 [0, 0.8]　·　預設上限 base 0.8 / 解鎖 20　·　⚙️出貨 base 0.8 / 解鎖 20　·　後台基礎加成上限 0.8　·　道具欄位帶 ±1</div></td>
+      <td class="c"><span class="chip p-shipped">出貨檔</span></td>
+    </tr><tr>
+      <th scope="row">range</th>
+      <td><div class="v">預設上限 base 16 / 解鎖 16　·　⚙️出貨 base 16 / 解鎖 16　·　後台基礎加成上限 50　·　道具欄位帶 ±5</div></td>
       <td class="c"><span class="chip p-shipped">出貨檔</span></td>
     </tr><tr>
       <th scope="row">evasion</th>
@@ -228,7 +260,7 @@ a{color:var(--accent)}
       <td class="c"><span class="chip p-shipped">出貨檔</span></td>
     </tr><tr>
       <th scope="row">attackDamage</th>
-      <td><div class="v">×1</div><p class="note">作用於屬性：ad</p></td>
+      <td><div class="v">×0.6</div><p class="note">作用於屬性：ad</p></td>
       <td class="c"><span class="chip p-shipped">出貨檔</span></td>
     </tr><tr>
       <th scope="row">abilityPower</th>
@@ -248,7 +280,7 @@ a{color:var(--accent)}
       <td class="c"><span class="chip p-shipped">出貨檔</span></td>
     </tr><tr>
       <th scope="row">manaRegen</th>
-      <td><div class="v">×16</div><p class="note">作用於屬性：manaRegen</p></td>
+      <td><div class="v">×8</div><p class="note">作用於屬性：manaRegen</p></td>
       <td class="c"><span class="chip p-shipped">出貨檔</span></td>
     </tr><tr>
       <th scope="row">moveSpeed</th>
@@ -300,7 +332,7 @@ a{color:var(--accent)}
       <td class="c"><span class="chip p-shipped">出貨檔</span></td>
     </tr><tr>
       <th scope="row">strToAttackDamage</th>
-      <td><div class="v">×1</div><p class="note">公式格（不直接乘任何一條屬性）</p></td>
+      <td><div class="v">×0.4</div><p class="note">公式格（不直接乘任何一條屬性）</p></td>
       <td class="c"><span class="chip p-shipped">出貨檔</span></td>
     </tr><tr>
       <th scope="row">agiToArmor</th>
@@ -308,7 +340,7 @@ a{color:var(--accent)}
       <td class="c"><span class="chip p-shipped">出貨檔</span></td>
     </tr><tr>
       <th scope="row">agiToAttackSpeed</th>
-      <td><div class="v">×0.02</div><p class="note">公式格（不直接乘任何一條屬性）</p></td>
+      <td><div class="v">×0.01</div><p class="note">公式格（不直接乘任何一條屬性）</p></td>
       <td class="c"><span class="chip p-shipped">出貨檔</span></td>
     </tr><tr>
       <th scope="row">intToMaxMana</th>
@@ -320,11 +352,11 @@ a{color:var(--accent)}
       <td class="c"><span class="chip p-shipped">出貨檔</span></td>
     </tr><tr>
       <th scope="row">intToAbilityPower</th>
-      <td><div class="v">×1</div><p class="note">公式格（不直接乘任何一條屬性）</p></td>
+      <td><div class="v">×6.5</div><p class="note">公式格（不直接乘任何一條屬性）</p></td>
       <td class="c"><span class="chip p-shipped">出貨檔</span></td>
     </tr><tr>
       <th scope="row">intToMagicResist</th>
-      <td><div class="v">×0.6</div><p class="note">公式格（不直接乘任何一條屬性）</p></td>
+      <td><div class="v">×0</div><p class="note">公式格（不直接乘任何一條屬性）</p></td>
       <td class="c"><span class="chip p-shipped">出貨檔</span></td>
     </tr><tr>
       <th scope="row">goldRoundPayout</th>
@@ -364,20 +396,20 @@ a{color:var(--accent)}
   <thead><tr><th>量什麼</th><th>分布</th><th class="c">來源</th></tr></thead>
   <tbody><tr>
       <th scope="row">AoE 半徑樣本（技能＋道具）</th>
-      <td><div class="v">165 個　最小 1.5 / 中位 6 / 最大 513.5</div></td>
+      <td><div class="v">147 個　最小 1.5 / 中位 6 / 最大 513.5</div></td>
       <td class="c"><span class="chip p-shipped">出貨檔</span></td>
     </tr><tr>
       <th scope="row">英雄攻擊距離（baseStats.range）</th>
       <td><div class="v">0 位　最小 0 / 中位 0 / 最大 0</div><p class="note">⚠️ 這是<strong>基底</strong>，實際射程還要乘 combat-env 的 <code>attackRange</code>（下面那張表）。</p></td>
       <td class="c"><span class="chip p-shipped">出貨檔</span></td>
     </tr></tbody>
-</table></div><div class="buckets"><div class="bucket"><div class="bk-l">小</div><div class="bk-r">&lt; 5.5</div><div class="bk-c">48 個</div></div><div class="bucket"><div class="bk-l">中</div><div class="bk-r">5.5 – 7.33</div><div class="bk-c">58 個</div></div><div class="bucket"><div class="bk-l">大</div><div class="bk-r">≥ 7.33</div><div class="bk-c">59 個</div></div></div></section><section id="vocab"><h2>JSON 的完整詞彙</h2><p class="lede">引擎認得的全部 token。<strong>不在這裡的東西寫不出來</strong> —— 需要它就要先做機制（第〇·五守則），不是為某一支技能寫一個 if。</p>
+</table></div><div class="buckets"><div class="bucket"><div class="bk-l">小</div><div class="bk-r">&lt; 4.5</div><div class="bk-c">42 個</div></div><div class="bucket"><div class="bk-l">中</div><div class="bk-r">4.5 – 6.42</div><div class="bk-c">53 個</div></div><div class="bucket"><div class="bk-l">大</div><div class="bk-r">≥ 6.42</div><div class="bk-c">52 個</div></div></div></section><section id="vocab"><h2>JSON 的完整詞彙</h2><p class="lede">引擎認得的全部 token。<strong>不在這裡的東西寫不出來</strong> —— 需要它就要先做機制（第〇·五守則），不是為某一支技能寫一個 if。</p>
       <h3>效果 kind（37）</h3><ul class="tokens"><li><code>applyBuff</code></li><li><code>applyStatus</code></li><li><code>blink</code></li><li><code>championForm</code></li><li><code>cycleBuff</code></li><li><code>damage</code></li><li><code>damageArea</code></li><li><code>damageLine</code></li><li><code>dash</code></li><li><code>delayed</code></li><li><code>devour</code></li><li><code>dispel</code></li><li><code>dot</code></li><li><code>evasion</code></li><li><code>eventValueConversion</code></li><li><code>extendBuff</code></li><li><code>grantAttribute</code></li><li><code>grantGold</code></li><li><code>heal</code></li><li><code>invulnerable</code></li><li><code>knockback</code></li><li><code>leap</code></li><li><code>manaBarrier</code></li><li><code>modifyCooldown</code></li><li><code>proxyCast</code></li><li><code>randomArea</code></li><li><code>restore</code></li><li><code>revive</code></li><li><code>shield</code></li><li><code>shieldBreak</code></li><li><code>spawnProjectile</code></li><li><code>spawnVfx</code></li><li><code>spendMana</code></li><li><code>summon</code></li><li><code>swapResource</code></li><li><code>taunt</code></li><li><code>weightedBranch</code></li></ul>
-      <h3>[xxx時] 觸發事件（19）</h3><ul class="tokens"><li><code>onAbilityCast</code></li><li><code>onAbilityHit</code></li><li><code>onAllyDeath</code></li><li><code>onBasicAttack</code></li><li><code>onBossSpawn</code></li><li><code>onDamageDealt</code></li><li><code>onDamageTaken</code></li><li><code>onDeath</code></li><li><code>onEvade</code></li><li><code>onFireRingIgnite</code></li><li><code>onGuardianDown</code></li><li><code>onInterval</code></li><li><code>onKill</code></li><li><code>onReflectSuccess</code></li><li><code>onRevive</code></li><li><code>onShieldBroken</code></li><li><code>onShieldGained</code></li><li><code>onStatusApplied</code></li><li><code>onStunned</code></li></ul>
+      <h3>[xxx時] 觸發事件（33）</h3><ul class="tokens"><li><code>onAbilityCast</code></li><li><code>onAbilityHit</code></li><li><code>onAllyDamaged</code></li><li><code>onAllyDeath</code></li><li><code>onBasicAttack</code></li><li><code>onBossSpawn</code></li><li><code>onBoundaryTouch</code></li><li><code>onCrowdControlApplied</code></li><li><code>onCrowdControlReceived</code></li><li><code>onDamageDealt</code></li><li><code>onDamageTaken</code></li><li><code>onDashOrBlink</code></li><li><code>onDeath</code></li><li><code>onEvade</code></li><li><code>onFireRingIgnite</code></li><li><code>onGuardianDown</code></li><li><code>onHeal</code></li><li><code>onInterval</code></li><li><code>onKill</code></li><li><code>onLethalDamage</code></li><li><code>onOverheal</code></li><li><code>onProjectileExpire</code></li><li><code>onReflectSuccess</code></li><li><code>onRevive</code></li><li><code>onRoundEnd</code></li><li><code>onRoundStart</code></li><li><code>onShieldBroken</code></li><li><code>onShieldGained</code></li><li><code>onStatCapReached</code></li><li><code>onStatusApplied</code></li><li><code>onStunned</code></li><li><code>onUltimateCast</code></li><li><code>onUltimateHit</code></li></ul>
       <h3>條件葉（5）</h3><ul class="tokens"><li><code>chance</code></li><li><code>equipment</code></li><li><code>kind</code></li><li><code>stat</code></li><li><code>status</code></li></ul>
       <h3>技能模板家族（17）</h3><ul class="tokens"><li><code>buff-self</code></li><li><code>charge-push</code></li><li><code>ground-nova</code></li><li><code>instant-blast</code></li><li><code>leap-strike</code></li><li><code>line-sweep</code></li><li><code>lock-combo</code></li><li><code>mark-stacks</code></li><li><code>on-attack</code></li><li><code>on-hit-react</code></li><li><code>orbit-array</code></li><li><code>proxy-cast</code></li><li><code>proxy-fanout</code></li><li><code>random-barrage</code></li><li><code>single-strike</code></li><li><code>teleport</code></li><li><code>traveling-wave</code></li></ul>
       <h3>參數欄位（依用途分組）</h3>
-      <h4>範圍與形狀</h4><ul class="tokens"><li><code>falloff</code></li><li><code>includeOrigin</code></li><li><code>length</code></li><li><code>maxTargets</code></li><li><code>radius</code></li><li><code>shape</code></li><li><code>width</code></li></ul><h4>距離與位移</h4><ul class="tokens"><li><code>distance</code></li><li><code>distanceScale</code></li><li><code>launchDistance</code></li><li><code>maxDistance</code></li><li><code>moveSpeedMult</code></li><li><code>speed</code></li><li><code>throwDistance</code></li></ul><h4>時間</h4><ul class="tokens"><li><code>addSec</code></li><li><code>amountPerTick</code></li><li><code>delaySec</code></li><li><code>duration</code></li><li><code>durationSec</code></li><li><code>getupTicks</code></li><li><code>intervalSec</code></li><li><code>maxRemainingSec</code></li><li><code>respectCooldown</code></li><li><code>tickOnApply</code></li></ul><h4>疊層與標記</h4><ul class="tokens"><li><code>exclusiveOnExisting</code></li><li><code>maxStacks</code></li><li><code>onExisting</code></li><li><code>stackKey</code></li><li><code>stackVisual</code></li><li><code>stacking</code></li><li><code>stacks</code></li></ul></section><section id="gaps"><h2>還沒有的、以及已知壞掉的</h2><p class="lede">⭐ 對外契約多一格「已知壞掉」—— 推導只回答「這個名詞在不在」，發不發得出來是另一回事。</p>
+      <h4>範圍與形狀</h4><ul class="tokens"><li><code>falloff</code></li><li><code>includeOrigin</code></li><li><code>length</code></li><li><code>maxTargets</code></li><li><code>radius</code></li><li><code>shape</code></li><li><code>width</code></li></ul><h4>距離與位移</h4><ul class="tokens"><li><code>distance</code></li><li><code>distanceScale</code></li><li><code>distanceTier</code></li><li><code>launchDistance</code></li><li><code>maxDistance</code></li><li><code>moveSpeedMult</code></li><li><code>speed</code></li><li><code>throwDistance</code></li></ul><h4>時間</h4><ul class="tokens"><li><code>addSec</code></li><li><code>amountPerTick</code></li><li><code>delaySec</code></li><li><code>duration</code></li><li><code>durationSec</code></li><li><code>getupTicks</code></li><li><code>intervalSec</code></li><li><code>maxRemainingSec</code></li><li><code>respectCooldown</code></li><li><code>tickOnApply</code></li></ul><h4>疊層與標記</h4><ul class="tokens"><li><code>exclusiveOnExisting</code></li><li><code>maxStacks</code></li><li><code>onExisting</code></li><li><code>stackKey</code></li><li><code>stackVisual</code></li><li><code>stacking</code></li><li><code>stacks</code></li></ul></section><section id="gaps"><h2>還沒有的、以及已知壞掉的</h2><p class="lede">⭐ 對外契約多一格「已知壞掉」—— 推導只回答「這個名詞在不在」，發不發得出來是另一回事。</p>
       <h3>不支援（3）</h3><ul class="tokens"><li><code>condition.ability-state@1</code></li><li><code>effect.attack-dash@1</code></li><li><code>effect.control-restriction@1</code></li></ul>
       <h3>部分支援 / 計畫中（28）</h3>
       <div class="scroll"><table><thead><tr><th>capability</th><th>狀態</th><th>說明</th></tr></thead><tbody>

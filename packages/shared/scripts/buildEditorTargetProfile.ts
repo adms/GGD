@@ -90,7 +90,7 @@ const sortedUnique = (xs: readonly string[]): string[] => [...new Set(xs)].sort(
  *
  * | | `runtimeCapabilities` | 這一格 |
  * |---|---|---|
- * | 回答 | 引擎**做得到**什麼（37 個 effect kind、19 個 hook…） | 出貨內容**實際用了**哪些值 |
+ * | 回答 | 引擎**做得到**什麼（effect kind、hook 事件、條件葉、模板家族…） | 出貨內容**實際用了**哪些值 |
  * | 來源 | 出貨註冊表（程式） | `content/` 底下的文件 |
  * | 少了它會怎樣 | 對方做出引擎不認得的機制 | 對方填一個**解析不到的 id**，技能照放但**什麼都不會出現** |
  *

@@ -39,6 +39,9 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(REPO / "tools" / "engine-vocab"))
+
+import engine_vocab as V  # noqa: E402  — python 端唯一的引擎詞彙來源
 DOC = REPO / "docs" / "技能編輯器引擎須知 20260811.md"
 CMD = "pnpm contract:numbers"
 
@@ -95,18 +98,23 @@ def splice(text, name, body):
 # 三張表
 # ---------------------------------------------------------------------------
 
-# 上限表的列：標籤 → (caps key, 備註)。
 # ⚠️ 備註是**手寫的規格**（為什麼 18 是那個數字），所以它住在這裡而不是設定檔裡；
-#   ⛔ 但數字一格都不手打。
-CAP_ROWS = [
-    ("攻擊速度 `as`", "as", "只有技能／變身／傳說道具能用 `capRaise` 解鎖"),
-    ("冷卻縮減 `cdr`", "cdr", "⭐ 但還有一道**秒數地板 0.1s**，見第九節"),
-    ("暴擊率 `critChance`", "critChance", ""),
-    ("移動速度 `ms`", "ms", "下限 2。⚠️ 這個上限是**穿牆平手線**：30Hz × 0.6 身體半徑 = 每 tick 走滿一個半徑"),
-    ("吸血 `lifesteal`", "lifesteal", "普攻吸血"),
-    ("技能吸血 `spellVamp`", "spellVamp", "⭐ 2026-08-10 新增。非普攻傷害的吸血"),
-    ("攻擊距離 `range`", "range", "⚠️ 這是**硬上限**；實際射程由出身的級距決定，見第七節"),
-]
+#   ⛔ 但「有哪幾列」與每一格數字都不手打。
+#
+# ⛔ 2026-08-18 之前這裡是一份**手挑的 7 列**，而它同時犯了兩個方向的錯：
+#   · 出貨的 `config.stat-caps@1` 有 13 條上限，表上只印得出 5 條 —— 外部編輯器
+#     看不到另外 8 條，於是它產出的內容會在載入時被夾掉而**沒有人知道為什麼**
+#   · `critChance` / `spellVamp` 兩列在 `stat-caps.json` 裡**根本不存在**，
+#     而舊程式碼對這種情況是 `continue` —— 一列憑空消失，⛔ 沒有任何訊息
+# 現在列是從 `stat-caps.json` 的鍵推導的，備註只是覆蓋，而且**備註指到一條不存在
+# 的屬性就 raise**（那正是 critChance/spellVamp 當初該紅的地方）。
+CAP_NOTES = {
+    "as": "只有技能／變身／傳說道具能用 `capRaise` 解鎖",
+    "cdr": "⭐ 但還有一道**秒數地板 0.1s**，見第九節",
+    "ms": "下限 2。⚠️ 這個上限是**穿牆平手線**：30Hz × 0.6 身體半徑 = 每 tick 走滿一個半徑",
+    "lifesteal": "普攻吸血。⭐ 技能吸血 `spellVamp` **不在這張表裡** —— 它的 0..0.8 由 `STAT_CLAMPS` 夾，不是後台可調的上限",
+    "range": "⚠️ 這是**硬上限**；實際射程由出身的級距決定，見第七節",
+}
 
 ENV_ROWS = [
     ("maxHealth", "生命上限（另外 base-bonus 再加一次）"),
@@ -125,15 +133,38 @@ ENV_ROWS = [
 
 
 def table_caps():
-    caps = cfg("stat-caps")["caps"]
+    """出貨的**每一條**上限，⛔ 不是手挑的幾條。
+
+    列 = `content/config/stat-caps.json` 的鍵（後台改的就是它），
+    順序 = `Stat` 枚舉的宣告順序（也是推導的，⛔ 不是第二份手寫排序）。
+    """
+    caps = V.stat_caps()
+    zh = V.stat_labels()
+    unknown = sorted(k for k in CAP_NOTES if k not in zh)
+    if unknown:
+        sys.exit(f"CAP_NOTES 有 {len(unknown)} 條引擎不認得的屬性：{'、'.join(unknown)}")
+
     out = ["| 屬性 | 一般上限 | 解鎖上限 | 備註 |", "|---|---:|---:|---|"]
-    for label, key, note in CAP_ROWS:
+    for key in V.stats():
         c = caps.get(key)
         if c is None:
-            continue  # 這一項沒有上限 —— ⛔ 不要印一個假的
+            continue  # 這一條沒有後台上限 —— 它會出現在下面那一行，⛔ 不是靜默消失
         base, unlocked = num(c["base"]), num(c["unlocked"])
         # 兩者相同時解鎖欄印 `—`：印同一個數字會讓人以為「解鎖」是一條真的路
-        out.append(f"| {label} | **{base}** | {'—' if base == unlocked else '**' + unlocked + '**'} | {note} |")
+        out.append(f"| {zh[key]} `{key}` | **{base}** | "
+                   f"{'—' if base == unlocked else '**' + unlocked + '**'} | {CAP_NOTES.get(key, '')} |")
+
+    # ⭐ 沒有上限的那幾條要**寫出來**。舊版對它們是 `continue`，於是「這條沒有上限」
+    #    與「這條被漏掉了」在文件上長得一模一樣（＝ critChance/spellVamp 那兩列）。
+    uncapped = [k for k in V.stats() if k not in caps]
+    if uncapped:
+        out += ["", f"⚠️ 另外 **{len(uncapped)}** 條屬性**不在** `config.stat-caps@1` 裡 ——"
+                    "它們沒有後台可調的上限（有些由 `STAT_CLAMPS` 夾在程式裡，"
+                    "有些本來就是 0..1 的比例）：", "",
+                "　" + "　".join(f"`{k}`（{zh[k]}）" for k in uncapped)]
+        for key in uncapped:
+            if key in CAP_NOTES:
+                out.append(f"- `{key}` —— {CAP_NOTES[key]}")
     return "\n".join(out)
 
 

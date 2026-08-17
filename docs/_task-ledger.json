@@ -1,8 +1,8 @@
 {
   "_doc": "帳本快照，由 tools/status/gen_status.py 產生。手改無效（下次執行就被覆蓋），要改請改任務帳本本身。CI 上沒有帳本目錄時，這份就是 --check 的資料來源。",
-  "generated": "2026-07-24 21:57",
+  "generated": "2026-08-18 01:51",
   "source": "~/.claude/tasks/1fc1e42e-e26b-4bec-88ef-ca25238c0f4c",
-  "count": 188,
+  "count": 286,
   "tasks": [
     {
       "id": 1,
@@ -361,7 +361,7 @@
     },
     {
       "id": 73,
-      "subject": "Sweep ALL models for un-merged sphere/orb + locust-swarm attachment geometry (孫悟空 headless is ONE case, not the whole task) — STATUS CORRECTED 2026-07-26 by #267: what shipped was strip_teamglow.py (a DELETION), the sweep in the title never ran; 孫悟空 fixed, 3 candidates + locust-swarm still open",
+      "subject": "Sweep ALL models for un-merged sphere/orb + locust-swarm attachment geometry (孫悟空 headless is ONE case, not the whole task)",
       "status": "in_progress"
     },
     {
@@ -372,7 +372,7 @@
     {
       "id": 75,
       "subject": "Re-match the ambient cries to the SHORTENED anchor + deepen their reverb",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": 76,
@@ -617,7 +617,7 @@
     {
       "id": 124,
       "subject": "Re-arrange 中場「合間 / Between the Bells」 into a cheerful 下課打鐘 school-recess style (needs a new bell voice)",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": 125,
@@ -672,7 +672,7 @@
     {
       "id": 135,
       "subject": "Distinctive 5–10s signature intros per non-theme BGM (context-fitting, identifiable, optional rap) — fix \"the openings all sound alike\"",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": 136,
@@ -917,7 +917,7 @@
     {
       "id": 184,
       "subject": "Voice distinctiveness: break the 2-voice monoculture so combat is legible by ear",
-      "status": "in_progress"
+      "status": "completed"
     },
     {
       "id": 185,
@@ -937,12 +937,502 @@
     {
       "id": 188,
       "subject": "Lobby one-click bot match for registered players → then ship v0.4.2 + deploy",
-      "status": "in_progress"
+      "status": "completed"
     },
     {
       "id": 189,
       "subject": "Durable content overlay in data/ so 內容管理 works on ggd.adms.ai/admin",
       "status": "in_progress"
+    },
+    {
+      "id": 190,
+      "subject": "Shop music: drop the 26s recess bell so the intermission BGM is what plays",
+      "status": "completed"
+    },
+    {
+      "id": 191,
+      "subject": "Dead-player gold drop: throw unspent 100g coins onto the arena floor for anyone to pick up",
+      "status": "completed"
+    },
+    {
+      "id": 192,
+      "subject": "Ability bar order must be 天生技 / Q / W / E / R / EX",
+      "status": "completed"
+    },
+    {
+      "id": 193,
+      "subject": "Match-over exit must pass through the settlement screen before the lobby",
+      "status": "in_progress"
+    },
+    {
+      "id": 194,
+      "subject": "Fix the 3 BROKEN in the 3D spatial combat audio before merging it",
+      "status": "completed"
+    },
+    {
+      "id": 195,
+      "subject": "Fire ring redesign: starts at 60s, shrinks over 20s, outside burns",
+      "status": "completed"
+    },
+    {
+      "id": 196,
+      "subject": "Floor ripple bug + revive circle needs no expiry (LoL Arena)",
+      "status": "completed"
+    },
+    {
+      "id": 197,
+      "subject": "Gamepad must drive the WHOLE UI flow, not just combat",
+      "status": "pending"
+    },
+    {
+      "id": 198,
+      "subject": "Hunt the sim non-determinism the castability ratchet exposed",
+      "status": "pending"
+    },
+    {
+      "id": 199,
+      "subject": "QR phone-scan reverse login for the keyboard-less handheld",
+      "status": "completed"
+    },
+    {
+      "id": 200,
+      "subject": "一鍵開打 first press bounces to lobby, every press after works",
+      "status": "completed"
+    },
+    {
+      "id": 201,
+      "subject": "Locked champions are still pickable in champ-select (manual + random)",
+      "status": "completed"
+    },
+    {
+      "id": 202,
+      "subject": "Store shows raw item ID instead of description",
+      "status": "completed"
+    },
+    {
+      "id": 203,
+      "subject": "邀請鏈自動審核推廣 (referral-chain auto-approval)",
+      "status": "completed"
+    },
+    {
+      "id": 204,
+      "subject": "大廳顯示藍水晶 + 新帳號送 1000 藍水晶",
+      "status": "completed"
+    },
+    {
+      "id": 205,
+      "subject": "後台特效編輯器 + 技能編輯器（選特效/排序/個別參數）",
+      "status": "in_progress"
+    },
+    {
+      "id": 206,
+      "subject": "復活圈需累積 5 秒 + 圈圈進度條提示",
+      "status": "completed"
+    },
+    {
+      "id": 207,
+      "subject": "三選一來不及選 → 進戰鬥時自動隨機幫選一個",
+      "status": "completed"
+    },
+    {
+      "id": 208,
+      "subject": "只剩一隊存活時立即宣佈回合勝利（驗證/調整）",
+      "status": "completed"
+    },
+    {
+      "id": 209,
+      "subject": "Slack 通知待審註冊 + 一鍵核准連結",
+      "status": "completed"
+    },
+    {
+      "id": 210,
+      "subject": "#126 漏洞：被拒玩家持有效 token 仍能進大廳 WS",
+      "status": "completed"
+    },
+    {
+      "id": 211,
+      "subject": "玩家端自助變更密碼 UI（#172 只做了後台）",
+      "status": "completed"
+    },
+    {
+      "id": 212,
+      "subject": "開放英雄名單 +2：賈修(godie-hblm)、揍敵客(godie-efur)",
+      "status": "completed"
+    },
+    {
+      "id": 213,
+      "subject": "水晶不足解鎖時提示「打場賺水晶·結束發放·第一名翻倍」",
+      "status": "completed"
+    },
+    {
+      "id": 214,
+      "subject": "新英雄上架 SOP（release checklist + 對 godie-hblm/godie-efur 稽核）",
+      "status": "pending"
+    },
+    {
+      "id": 215,
+      "subject": "肉鴿小怪波系統：第3場起喪標麥可喪屍湧入 (spawn/AI/20金+XP/30殺升級/上限30)",
+      "status": "completed"
+    },
+    {
+      "id": 216,
+      "subject": "回商店時戰鬥沒真正結束：火圈聲/扣血/血條殘留",
+      "status": "completed"
+    },
+    {
+      "id": 217,
+      "subject": "喪標麥可換真殭屍模型 + 數值/等級調整",
+      "status": "completed"
+    },
+    {
+      "id": 218,
+      "subject": "戰鬥場景柱子沒清乾淨（遮擋視線）",
+      "status": "completed"
+    },
+    {
+      "id": 219,
+      "subject": "技能冷卻進度在圖示上不易辨識",
+      "status": "completed"
+    },
+    {
+      "id": 220,
+      "subject": "死亡 3 秒後半透明升天消失（有復活圈例外）",
+      "status": "completed"
+    },
+    {
+      "id": 221,
+      "subject": "玩家英雄自動攻擊附近敵人（威脅→低血→最近）",
+      "status": "completed"
+    },
+    {
+      "id": 222,
+      "subject": "手把選取框太不明顯 → 改成明顯漸層炫光",
+      "status": "completed"
+    },
+    {
+      "id": 223,
+      "subject": "受傷/死亡語音只有自己會叫，敵人打了沒反應",
+      "status": "completed"
+    },
+    {
+      "id": 224,
+      "subject": "天生技效果落地：29 支空 modifier 補 9 支（48 為誤報）",
+      "status": "completed"
+    },
+    {
+      "id": 225,
+      "subject": "後台發放藍水晶：單筆 + 一鍵全帳號發放",
+      "status": "completed"
+    },
+    {
+      "id": 226,
+      "subject": "砍掉 4 個高面數 CC0 角色 → 改用方塊人（體素）",
+      "status": "completed"
+    },
+    {
+      "id": 227,
+      "subject": "Lobby Store 英雄仍顯示 ID 而非名稱/描述",
+      "status": "completed"
+    },
+    {
+      "id": 228,
+      "subject": "技能預告特效不明顯／未每個角色實作 → 無法反應閃避",
+      "status": "completed"
+    },
+    {
+      "id": 229,
+      "subject": "體素角色生成器網頁（整合進後台）",
+      "status": "completed"
+    },
+    {
+      "id": 230,
+      "subject": "VFX 真實引用普查：93% 技能用通用替身，106 支抽出的原作特效閒置",
+      "status": "pending"
+    },
+    {
+      "id": 231,
+      "subject": "體素角色貼圖自動生成 + 補完所有缺模組角色",
+      "status": "completed"
+    },
+    {
+      "id": 232,
+      "subject": "每回合進商店：右側顯示 S~D 評價 + 改善建議",
+      "status": "pending"
+    },
+    {
+      "id": 233,
+      "subject": "施法向天光束預告（程序生成）— 讓人來得及閃",
+      "status": "completed"
+    },
+    {
+      "id": 234,
+      "subject": "擊殺敵方英雄 → 角色擊殺語音(一殺/二殺…) + 周圍觀眾歡呼",
+      "status": "pending"
+    },
+    {
+      "id": 235,
+      "subject": "#93 煙火從來沒被看到：回合煙火 + 全場結束烤雞煙火",
+      "status": "completed"
+    },
+    {
+      "id": 236,
+      "subject": "喪標麥可是英雄不是小兵：補滿 5 格技能 + VFX 綁定列",
+      "status": "pending"
+    },
+    {
+      "id": 237,
+      "subject": "邀請碼用完沒被標記 redeemed — 線上 v0.5.10 就有",
+      "status": "completed"
+    },
+    {
+      "id": 238,
+      "subject": "#216 只修一半：火圈聲音仍會播進商店（被打倒的玩家）",
+      "status": "pending"
+    },
+    {
+      "id": 239,
+      "subject": "版權閘退役（owner 2026-07-26 決定全開）+ geo 順序陷阱修正",
+      "status": "completed"
+    },
+    {
+      "id": 240,
+      "subject": "4 個 KayKit 模組退場後：清殘留引用 + 加永久防回歸守衛",
+      "status": "pending"
+    },
+    {
+      "id": 241,
+      "subject": "/editor/ 烤進正式映像且完全沒有驗證",
+      "status": "pending"
+    },
+    {
+      "id": 242,
+      "subject": "後台 Quick Approval 頁：所有待 owner 確認的項目，打勾一鍵送出",
+      "status": "completed"
+    },
+    {
+      "id": 243,
+      "subject": "後台一鍵 ZIP 匯出/匯入平台資料（無痛移機）",
+      "status": "completed"
+    },
+    {
+      "id": 244,
+      "subject": "喪標麥可・黑泥吞噬：拆文件 + 數值重定 + 擊殺永久疊加 + 體素門檻",
+      "status": "completed"
+    },
+    {
+      "id": 245,
+      "subject": "版本號徽章：後台與編輯器完全沒有（#66 只做了 client）",
+      "status": "completed"
+    },
+    {
+      "id": 246,
+      "subject": "後台 Players 上線燈號 + 邀請碼頁排版優化",
+      "status": "completed"
+    },
+    {
+      "id": 247,
+      "subject": "從 JASS 重建 leap 類技能並真的實作（模板 + 模擬器 + 渲染）",
+      "status": "completed"
+    },
+    {
+      "id": 248,
+      "subject": "從 w3x 重抓三圍：力量→AD／敏捷→攻速／智慧→AP，全 114 位重算",
+      "status": "completed"
+    },
+    {
+      "id": 249,
+      "subject": "變身系統：從 w3x 逐一找出第二形態（獨立數值/技能組/模型/特效）並實作",
+      "status": "in_progress"
+    },
+    {
+      "id": 250,
+      "subject": "#257 四拍令咒節奏表演：貝斯 riff + 狼人舞",
+      "status": "pending"
+    },
+    {
+      "id": 251,
+      "subject": "#258 大廳英靈殿：3D 英雄展示櫃，每分鐘輪播",
+      "status": "pending"
+    },
+    {
+      "id": 252,
+      "subject": "三選一卡片沒有無障礙名稱 —— 手把焦點停上去沒東西可念",
+      "status": "pending"
+    },
+    {
+      "id": 253,
+      "subject": "#259 語音空間化（spatial voice）",
+      "status": "completed"
+    },
+    {
+      "id": 254,
+      "subject": "#263 沒讀 w3x 顏色的角色重新上色（tint 還原）",
+      "status": "completed"
+    },
+    {
+      "id": 255,
+      "subject": "#267 孫悟空的頭：從物件資料烘進 glb（#73 沒做到）",
+      "status": "completed"
+    },
+    {
+      "id": 256,
+      "subject": "#272 ping 常駐上畫面 + 伺服器 tick 健康度可觀測",
+      "status": "completed"
+    },
+    {
+      "id": 257,
+      "subject": "戰鬥中即時顯示自己回合分數+排名,回合結束提示排名變化",
+      "status": "completed"
+    },
+    {
+      "id": 258,
+      "subject": "殭屍來襲提示 + 戰鬥中即時已擊殺數",
+      "status": "completed"
+    },
+    {
+      "id": 259,
+      "subject": "戰鬥前後的特效/物件清理機制",
+      "status": "completed"
+    },
+    {
+      "id": 260,
+      "subject": "能力屬性強化改三選一:力/敏/智 隨機 0.1-2,卡片顯示數值",
+      "status": "completed"
+    },
+    {
+      "id": 261,
+      "subject": "商店只留能力屬性強化與傳說寶玉,其餘武器道具暫時下架",
+      "status": "completed"
+    },
+    {
+      "id": 262,
+      "subject": "戰場任務:殭屍跨回合累積 100 隻召喚殭屍王",
+      "status": "pending"
+    },
+    {
+      "id": 263,
+      "subject": "戰場任務:mini dota —— 拆掉對面塔立即獲勝(塔 HP 100,000)",
+      "status": "pending"
+    },
+    {
+      "id": 264,
+      "subject": "揮劍/施法時角色沒有轉向目標",
+      "status": "completed"
+    },
+    {
+      "id": 265,
+      "subject": "平衡:初始 HP +300、maxHealth 倍率 4→3、查 HP 回復過快的原因",
+      "status": "completed"
+    },
+    {
+      "id": 266,
+      "subject": "FPS 鎖 60 —— 省手機資源避免發燙",
+      "status": "completed"
+    },
+    {
+      "id": 267,
+      "subject": "攻速上限分析 —— 近戰上限應可更高",
+      "status": "completed"
+    },
+    {
+      "id": 268,
+      "subject": "自己角色更顯眼 + 預設跟隨視角(Y 切換鎖定/解除)",
+      "status": "completed"
+    },
+    {
+      "id": 269,
+      "subject": "不要自動跳去別的競技場,改成按鈕前往/返回",
+      "status": "completed"
+    },
+    {
+      "id": 270,
+      "subject": "競技場燃燒改為真實傷害",
+      "status": "completed"
+    },
+    {
+      "id": 271,
+      "subject": "查喪標麥可是否有控制技影響英雄施法順手度",
+      "status": "completed"
+    },
+    {
+      "id": 272,
+      "subject": "/editor/ 的編輯能力搬進線上 admin(含鑄技工坊)",
+      "status": "pending"
+    },
+    {
+      "id": 273,
+      "subject": "初始 HP/MP/AP/AD 加成移到後台且不參與倍率計算",
+      "status": "completed"
+    },
+    {
+      "id": 274,
+      "subject": "FPS 桌機強制 60 / 手機預設 30,可額外調整",
+      "status": "completed"
+    },
+    {
+      "id": 275,
+      "subject": "面向改為瞄準優先(取代出手即承諾)",
+      "status": "completed"
+    },
+    {
+      "id": 276,
+      "subject": "後台小怪波頁補上 killsPerLevel 輸入欄",
+      "status": "completed"
+    },
+    {
+      "id": 277,
+      "subject": "後台基礎加成零驗證:負值會讓全英雄一開場就死",
+      "status": "pending"
+    },
+    {
+      "id": 278,
+      "subject": "基礎加成後台存檔不是「下一場生效」,要重啟 shard",
+      "status": "pending"
+    },
+    {
+      "id": 279,
+      "subject": "基礎加成頁「清除」語意誤導 + clamp 靜默吃掉數字",
+      "status": "pending"
+    },
+    {
+      "id": 280,
+      "subject": "面向鎖窗口內每隔一 tick 硬跳 90°(aim 不是每 tick 都到)",
+      "status": "pending"
+    },
+    {
+      "id": 281,
+      "subject": "客戶端預測不餵 aim —— 自己的英雄看不到任何面向行為",
+      "status": "pending"
+    },
+    {
+      "id": 282,
+      "subject": "手機 30fps 把 intent 送出率打到 15.6–21.8/s",
+      "status": "pending"
+    },
+    {
+      "id": 283,
+      "subject": "overlay 寫入路徑全程沒有 Zod 驗證(註解宣稱有,是假的)",
+      "status": "pending"
+    },
+    {
+      "id": 284,
+      "subject": "平衡:基礎加成移出倍率後的四個連鎖(等 owner 裁決)",
+      "status": "pending"
+    },
+    {
+      "id": 285,
+      "subject": "重跑 v0.9.9 稽核未驗完的 17 個發現(33 個 verifier 撞額度死掉)",
+      "status": "pending"
+    },
+    {
+      "id": 286,
+      "subject": "攻速解鎖上限 10.0:ModOp.CapRaise + config.stat-caps@1 + 後台頁",
+      "status": "pending"
+    },
+    {
+      "id": 287,
+      "subject": "殭屍波系統後台頁:功能修正 + 補完測試(排 v0.9.12)",
+      "status": "pending"
     }
   ]
 }

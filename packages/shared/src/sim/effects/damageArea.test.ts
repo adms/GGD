@@ -344,8 +344,8 @@ describe("傳說池的近戰擴散武器 (co-spread-content)", () => {
   it("every 擴散 the pool ships is inside the limits and hangs off a real hook", () => {
     cover("co-spread-content");
     const withArea = pool.filter((d) => areaEffects(d).length > 0);
-    // 8 today (owner 2026-08-01 pool): 丈八蛇矛 / 泰坦九頭蛇 / 炎龍巨弩 /
-    // 雷神之鎚 / 天地崩裂魔杖 / 冰晶虎魄-改 / 死之王的神盾 / 月牙魔杖.
+    // 7 today: 丈八蛇矛 / 炎龍巨弩 / 雷神之鎚 / 天地崩裂魔杖 / 冰晶虎魄-改 /
+    // 死之王的神盾 / 月牙魔杖.
     //
     // ⚠️ The floor was 5 under a comment that listed SEVEN ids, three of which
     // (熾天使之弓 / 斬岩刃 / 防狼電擊棒) no longer carry a 擴散 or are no longer
@@ -353,7 +353,18 @@ describe("傳說池的近戰擴散武器 (co-spread-content)", () => {
     // (CLAUDE.md 第三守則). Raised to the shipped count for the same reason the
     // width above is floored: 擴散 is the feature this file exists for, so the
     // set of weapons that ship it must not thin out unnoticed.
-    expect(withArea.length, "the pool ships fewer 擴散 weapons than it did").toBeGreaterThanOrEqual(8);
+    //
+    // ⭐ 2026-08-18: 8 → 7, and the ratchet did its job — it caught the drop,
+    // which is why this note exists instead of a silent thinning. 泰坦九頭蛇
+    // (cleaver-of-the-warden) left the set ON PURPOSE. Its card says the
+    // shockwave hits the enemies **behind the target**, and `damageArea` is a
+    // CIRCLE centred on the victim — it also hits everyone beside and in front,
+    // so the word 「身後」 described nothing (owner 2026-08-18「不放任何無效說明」).
+    // It is now a `damageLine` (capsule from the victim, aimed along
+    // caster→victim), which is the same 擴散 fantasy expressed by the effect
+    // that can actually say "behind". ⛔ Do NOT raise this back to 8 by moving
+    // it to `damageArea` — that would restore the count and the lie together.
+    expect(withArea.length, "the pool ships fewer 擴散 weapons than it did").toBeGreaterThanOrEqual(7);
     for (const d of withArea) {
       for (const e of areaEffects(d)) {
         expect(e.radius, `${d.name} radius`).toBeGreaterThan(0);

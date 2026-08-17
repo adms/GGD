@@ -7016,6 +7016,11 @@ export const DEFAULT_ITEM_CARD: ConfigItemCardDoc = {
     格擋: "passive", // 機率抵擋
     迴避: "passive", // 機率迴避物理傷害
     流星: "passive", // 每秒自動範圍傷害
+    // ⭐ 2026-08-18:被動子句**帶著使用條件**的那一族。標的仍然是一個被動效果
+    // (所以歸 passive),只是那一行自己先講清楚「誰吃得到」——這是 owner 當天立的
+    // 「不放任何無效說明」的直接產物:不講,拿到的人就會以為它對自己有效。
+    限遠程: "passive", // 只有遠程英雄吃得到的被動 (piercer-crossbow)
+    限智力: "passive", // 只有智力主屬性吃得到全額 (sage-ward-amulet)
     // ── 負面/控場:作用在敵人身上 ──
     緩慢: "debuff",
     暈眩: "debuff",

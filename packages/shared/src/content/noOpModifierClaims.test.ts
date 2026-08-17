@@ -224,6 +224,79 @@ describe("⛔ 卡片上不可以有「說了但不會發生」的字（owner 202
     ).toEqual([]);
   });
 
+  /**
+   * ⭐ **抬移速上限的文件必須同時給飛行。**
+   *
+   * owner 2026-08-18 對 #60 立體機動裝置的裁決是「**改成飛行型態 並且移動速度上限就好**」——
+   * 那兩件事是**一個決定**，不是兩個。
+   *
+   * ⚠️ 理由是量到的：`sim/statCaps.ts` 記著 30Hz × 0.6(身體半徑) = **18.0 就是離散碰撞的
+   * 穿牆平手線**，而新的 `unlocked` 24 = 每 tick 0.8u = 半徑 **133%**，確實在線外。
+   * 它安全的**唯一**理由是持有者在飛：`sim/flight.ts` 讓 `MovementSystem` 跳過全部三處推擠，
+   * 所以「會不會穿牆」對飛行者不是一個問題 —— 它本來就被允許穿過去。
+   *
+   * ⛔ 但 `stat-caps` 的 `unlocked` 是**全域**的：任何帶 `ms` capRaise 的來源都吃得到 24，
+   * 包含**不會飛的**。那正是平手線會回來的那條路，而它的症狀是「偶爾穿牆」——
+   * 查不出來、也不會有任何測試紅。
+   *
+   * ⇒ 把那個耦合寫成閘。⛔ 它紅了不要改閘：要嘛給那份文件 `flight`，
+   * 要嘛把 `ms` 的 capRaise 拿掉。
+   */
+  it("★ ⛔ 抬「移速上限」的文件必須同時給飛行（穿牆平手線的唯一豁免）", () => {
+    const offenders: string[] = [];
+    for (const coll of ["items", "abilities", "augments", "champions"]) {
+      let files: string[];
+      try {
+        files = readdirSync(join(CONTENT, coll));
+      } catch {
+        continue;
+      }
+      for (const f of files) {
+        if (!f.endsWith(".json") || f === "_index.json") continue;
+        const raw = readFileSync(join(CONTENT, coll, f), "utf8");
+        // 先便宜地篩掉絕大多數文件，再做結構檢查。
+        if (!raw.includes("capRaise")) continue;
+        let doc: unknown;
+        try {
+          doc = JSON.parse(raw);
+        } catch {
+          continue;
+        }
+        let raisesMs = false;
+        const hunt = (n: unknown): void => {
+          if (Array.isArray(n)) return n.forEach(hunt);
+          if (n === null || typeof n !== "object") return;
+          const o = n as Record<string, unknown>;
+          if (o.stat === Stat.MoveSpeed && (o.op === ModOp.CapRaise || o.op === ModOp.CapRaisePct)) {
+            raisesMs = true;
+          }
+          Object.values(o).forEach(hunt);
+        };
+        hunt(doc);
+        if (!raisesMs) continue;
+        // 給飛行的形狀有兩種：頂層授權格，或某個 effect 帶 `flight`。
+        if (!raw.includes('"flight"')) {
+          offenders.push(`${coll}/${basename(f, ".json")}`);
+        }
+      }
+    }
+    expect(
+      offenders,
+      [
+        "",
+        "⛔ 這些文件抬高了**移動速度上限**卻沒有給飛行：",
+        ...offenders.map((o) => `  ${o}`),
+        "",
+        "⚠️ `ms.unlocked` 24 = 每 tick 0.8u = 身體半徑 133%，**在穿牆平手線之外**",
+        "（30Hz × 0.6 = 18.0，見 sim/statCaps.ts 的量測）。它安全的唯一理由是",
+        "持有者在飛 —— 飛行讓 MovementSystem 跳過全部三處推擠。",
+        "",
+        "⛔ 不要改這條測試。要嘛給那份文件 `flight`，要嘛把 ms 的 capRaise 拿掉。",
+        "",
+      ].join("\n"),
+    ).toEqual([]);
+  });
+
   it("⭐ 而且它讀的是 config，不是寫死的名單", () => {
     const raisable = raisableStats();
     expect(raisable.size, "config.stat-caps@1 一條解鎖空間都沒有 —— 那整族機制是死的").toBeGreaterThan(0);
@@ -238,5 +311,83 @@ describe("⛔ 卡片上不可以有「說了但不會發生」的字（owner 202
       out,
     );
     expect(out, `${someRaisable} 有解鎖空間卻被判成無效`).toEqual([]);
+  });
+
+  /**
+   * ⭐ 同一族的另一半：上面幾條抓「說了不會發生」，這一條抓「**根本拿不到**」。
+   *
+   * 出貨慣例是 `cost: 0` ＝「不上架賣，只從獎池掉」。所以一件 `cost: 0` 的寶具
+   * 如果**不在任何 loot table 裡**，它對玩家而言不存在 —— 而且**沒有任何東西會叫**：
+   * schema 綠、bundle 綠、圖示綠、描述漂亮，只是永遠不會出現在任何一場遊戲裡。
+   * 這正是失敗形態②（做了但從沒送到玩家手上）在內容側的樣子。
+   *
+   * 量到的前例（2026-08-18）：`piercer-crossbow` 穿甲弩 與 `sage-ward-amulet`
+   * 賢者的護身符 —— 兩件 tier-5、各有 2 條 modifier + 1 個 passive，`legendary`
+   * 標籤也掛著，**在 51 件的基礎池裡一件都沒有**。⚠️ 而 `legendary` 標籤全 repo
+   * 沒有任何行為消費者，所以「有標籤」從來就不是「拿得到」的證據。
+   *
+   * 突變紀錄：把其中一件從 `legendary-weapons.json` 拿掉 → 這條紅並指名它；放回 → 綠。
+   */
+  it("★ ⛔ 沒有任何 `cost: 0` 的寶具是**任何獎池都抽不到**的（失敗形態②）", () => {
+    const pooled = new Set<string>();
+    for (const f of readdirSync(join(CONTENT, "loot-tables"))) {
+      if (!f.endsWith(".json") || f === "_index.json") continue;
+      const doc = JSON.parse(readFileSync(join(CONTENT, "loot-tables", f), "utf8")) as {
+        entries?: { itemId?: string }[];
+      };
+      for (const e of doc.entries ?? []) if (e.itemId) pooled.add(e.itemId);
+    }
+    expect(pooled.size, "一個獎池條目都讀不到 —— 這條守衛是空轉的").toBeGreaterThan(0);
+
+    /**
+     * ⛔ 具名豁免 —— **不是**把守衛放寬，是把「為什麼還拿不到」寫下來讓它會過期。
+     *
+     * ⚠️ 加一筆進來之前先確認：真的**沒有任何一個池收得下它**嗎？三個 draft 池
+     * 依設計全部關閉 —— `legendary-weapons` 策展定死 49（`legendaryTags.test.ts`）、
+     * `quest-rewards` 宣告退場凍結 13（`retiredLootTables.test.ts`）、
+     * `ex-release-weapons` 是 tier-5 [EX解放] 專用。所以「開一條取得路徑」是
+     * **策展決定**，不是隨手能補的欄位 —— 那正是這格豁免存在的理由。
+     */
+    const CURATION_PENDING: Record<string, string> = {
+      "godie-i04v":
+        "正義之杖（tier 3、wc3-import）。定價上架被 `itemTiers.test.ts`（只有 300/1200 兩個價）" +
+        "與 `buildPath.test.ts`（逐字把它當 draft-only 0g 的樣本）擋下；" +
+        "加進 quest-rewards 被 `retiredLootTables.test.ts` 擋下。等 owner 決定要不要為它" +
+        "開一條 draft 路徑，或明確讓它退場。",
+    };
+
+    const orphans: string[] = [];
+    for (const f of readdirSync(join(CONTENT, "items"))) {
+      if (!f.endsWith(".json") || f === "_index.json") continue;
+      const doc = JSON.parse(readFileSync(join(CONTENT, "items", f), "utf8")) as {
+        id?: string;
+        cost?: number;
+        craftRole?: string;
+        modifiers?: unknown[];
+        passive?: unknown[];
+      };
+      const id = doc.id ?? basename(f, ".json");
+      // ⛔ 只看「不上架賣」而且**真的有效果**的：合成元件與空殼不是這條要管的。
+      if (doc.cost !== 0) continue;
+      if (doc.craftRole === "component") continue;
+      if ((doc.modifiers?.length ?? 0) + (doc.passive?.length ?? 0) === 0) continue;
+      if (!pooled.has(id) && !(id in CURATION_PENDING)) orphans.push(id);
+    }
+
+    // ⭐ 豁免自己也要會過期:某一天有人把它放進池裡,這一行就紅,提醒把豁免刪掉。
+    const stale = Object.keys(CURATION_PENDING).filter((id) => pooled.has(id));
+    expect(
+      stale,
+      `這幾筆豁免過期了 —— 它們已經在獎池裡,把 CURATION_PENDING 的對應條目刪掉:\n${stale.join("\n")}`,
+    ).toEqual([]);
+
+    expect(
+      orphans,
+      [
+        "這幾件寶具 `cost: 0`（＝不上架賣）卻不在任何 loot table 裡 —— **玩家永遠拿不到**：",
+        ...orphans.map((o) => `  · ${o}`),
+        "把它放進 content/loot-tables/ 的某一張表，或把它改成買得到（cost > 0）。",
+      ].join("\n"),
+    ).toEqual([]);
   });
 });

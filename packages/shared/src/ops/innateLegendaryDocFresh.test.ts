@@ -1,0 +1,64 @@
+/**
+ * 《固有能力及寶具總覽》不可以無聲過期。
+ *
+ * owner 2026-08-18 要的是「script 自動產出 **固有能力及寶具總覽** md」。
+ * ⚠️ 「自動」不能靠人記得跑 `pnpm overview:build` —— CLAUDE.md 的元規則說得很清楚：
+ * **判準要靠人在當下想起來，閘不用。** 所以真正的機制是這一條：
+ *
+ *   `content/` 或引擎的註冊表一動 → 文件內容就該變 → 沒重跑 → 這條紅
+ *   → `pnpm test` 紅 → 部署協定第 1 步（commit 前跑全套）就擋下來。
+ *
+ * ⛔ **刻意不在 `host-deploy.sh` 產生**（與 `skillSpecFresh.test.ts` 同一個理由）：
+ * 那台機器是 `git pull` 來的,在遠端產生文件只會造出一份沒有人 commit 的工作區漂移
+ * —— 那正是 2026-08-02「未追蹤來源被烘進產物」事故的形狀。閘要在**編輯發生的當下**響。
+ *
+ * 做法與 `skillSpecFresh.test.ts` / `skillRemakeDocsFresh.test.ts` 相同：
+ * **真的把產生器跑起來**（`--check` 唯讀、過期回非零），⛔ 不是掃原始碼字串
+ * （失敗形態⑥：用掃字串代替行為）。
+ *
+ * ⚠️ 它紅了**不要改這條測試**，跑：
+ *     pnpm overview:build
+ * 然後 `git add docs/`。
+ *
+ * 突變紀錄（2026-08-18）：
+ *   · 在 `docs/固有能力及寶具總覽.md` 插一行字 → 紅（`--check` 回 1）✅
+ */
+import { describe, it, expect } from "vitest";
+import { execFileSync } from "node:child_process";
+import { existsSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+import { cover } from "../../testkit/cover";
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
+const SCRIPT = join(ROOT, "tools/innate-legendary/gen_overview.ts");
+const DOC = join(ROOT, "docs/固有能力及寶具總覽.md");
+
+describe("固有能力及寶具總覽與 content 同步", () => {
+  it("⭐ 那份 md 是從現在這棵 content／註冊表生出來的 —— 過期就紅", () => {
+    cover("innate-legendary-doc-fresh");
+    // 夾具前提：任何一個不在，下面的 try 就會把一切吞掉，這條守衛變成永遠綠。
+    expect(existsSync(SCRIPT), "gen_overview.ts 不見了 —— 這條守衛在測空氣").toBe(true);
+    expect(existsSync(DOC), "固有能力及寶具總覽還沒產生 —— 跑 `pnpm overview:build`").toBe(true);
+
+    let code = 0;
+    let out: string;
+    try {
+      out = execFileSync("npx", ["tsx", SCRIPT, "--check"], {
+        cwd: ROOT,
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "pipe"],
+      });
+    } catch (e) {
+      const err = e as { status?: number; stdout?: string; stderr?: string };
+      code = err.status ?? 1;
+      out = `${err.stdout ?? ""}${err.stderr ?? ""}`;
+    }
+    expect(
+      code,
+      "固有能力及寶具總覽與 content 不同步了。⛔ 不要改這條測試 —— 跑：\n" +
+        "    pnpm overview:build\n" +
+        `再 \`git add docs/\`。產生器說：${out.trim()}`,
+    ).toBe(0);
+  });
+});

@@ -7,7 +7,7 @@
 > 設計母規則：[`docs/聖杯願望三選一-設計規則.md`](../聖杯願望三選一-設計規則.md)。
 > 每個效果的參數與上下界：[`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 
-contentVersion `cv_1e707a1e419e`
+contentVersion `cv_07059e40820e`
 
 ---
 
@@ -764,7 +764,7 @@ contentVersion `cv_1e707a1e419e`
 | **權重** | 100 |
 | **顯現位置** | 泛用 —— 泛用防守、控制反制或技能循環 |
 | **標籤** | `grail-wish` `ability-cast` `control-immunity` `defense` |
-| **觸發事件** | 施放技能時 · CD 8s |
+| **觸發事件** | 施法時 · CD 8s |
 | **效果機制** | `invulnerable` |
 | **條件葉** | — |
 | **靈基適性條件** | 需要 Q／W／E／R 任一 |
@@ -971,7 +971,7 @@ contentVersion `cv_1e707a1e419e`
 | **權重** | 100 |
 | **顯現位置** | 連動 —— 與現有英雄／裝備／願望產生連動 |
 | **標籤** | `grail-wish` `ally-death` `mana-regen` `clutch` |
-| **觸發事件** | 隊友死亡時 |
+| **觸發事件** | 隊友陣亡時 |
 | **效果機制** | `applyBuff` |
 | **條件葉** | — |
 | **靈基適性條件** | 需要有隊友 |
@@ -1250,7 +1250,7 @@ contentVersion `cv_1e707a1e419e`
 | **權重** | 100 |
 | **顯現位置** | 轉向 —— 改變戰術方向的特殊願望 |
 | **標籤** | `grail-wish` `interval` `random-area` `aoe` |
-| **觸發事件** | 每隔一段時間 · CD 15s |
+| **觸發事件** | 週期（每 N 秒） · CD 15s |
 | **效果機制** | `damageArea` `randomArea` |
 | **條件葉** | — |
 | **靈基適性條件** | — |
@@ -1330,7 +1330,7 @@ contentVersion `cv_1e707a1e419e`
 | **權重** | 100 |
 | **顯現位置** | 連動 —— 與現有英雄／裝備／願望產生連動 |
 | **標籤** | `grail-wish` `ability-cast` `basic-attack` `projectile` |
-| **觸發事件** | 施放技能時 · CD 8s |
+| **觸發事件** | 施法時 · CD 8s |
 | **效果機制** | `applyBuff` `damage` `spawnProjectile` |
 | **條件葉** | — |
 | **靈基適性條件** | 需要 Q／W／E／R 任一 |
@@ -1801,7 +1801,7 @@ contentVersion `cv_1e707a1e419e`
 | **權重** | 60 |
 | **顯現位置** | 連動 —— 與現有英雄／裝備／願望產生連動 |
 | **標籤** | `grail-wish` `ally-death` `clutch` `cleanse` |
-| **觸發事件** | 隊友死亡時 · CD 30s |
+| **觸發事件** | 隊友陣亡時 · CD 30s |
 | **效果機制** | `dispel` `invulnerable` `restore` |
 | **條件葉** | — |
 | **靈基適性條件** | 需要有隊友 |
@@ -1883,7 +1883,7 @@ contentVersion `cv_1e707a1e419e`
 | **權重** | 60 |
 | **顯現位置** | 泛用 —— 泛用防守、控制反制或技能循環 |
 | **標籤** | `grail-wish` `revive` `cooldown-reset` `invulnerable` |
-| **觸發事件** | 復活時 |
+| **觸發事件** | 被復活時 |
 | **效果機制** | `invulnerable` `modifyCooldown` `restore` |
 | **條件葉** | — |
 | **靈基適性條件** | 需要有復活圈 |
@@ -1979,7 +1979,7 @@ contentVersion `cv_1e707a1e419e`
 | **權重** | 60 |
 | **顯現位置** | 連動 —— 與現有英雄／裝備／願望產生連動 |
 | **標籤** | `grail-wish` `ability-cast` `proxy-cast` `echo` |
-| **觸發事件** | 施放技能時 · CD 24s |
+| **觸發事件** | 施法時 · CD 24s |
 | **效果機制** | `delayed` `proxyCast` |
 | **條件葉** | — |
 | **靈基適性條件** | 需要 QWER |
@@ -2378,7 +2378,7 @@ contentVersion `cv_1e707a1e419e`
 | **權重** | 60 |
 | **顯現位置** | 轉向 —— 改變戰術方向的特殊願望 |
 | **標籤** | `grail-wish` `tradeoff` `basic-attack` `max-health` |
-| **觸發事件** | 普通攻擊時 |
+| **觸發事件** | 普攻時 |
 | **效果機制** | `damage` |
 | **條件葉** | — |
 | **靈基適性條件** | — |
@@ -2591,7 +2591,7 @@ contentVersion `cv_1e707a1e419e`
 | **權重** | 60 |
 | **顯現位置** | 連動 —— 與現有英雄／裝備／願望產生連動 |
 | **標籤** | `grail-wish` `ap` `ability-cast` `shield` |
-| **觸發事件** | 施放技能時 · CD 4s |
+| **觸發事件** | 施法時 · CD 4s |
 | **效果機制** | `shield` |
 | **條件葉** | — |
 | **靈基適性條件** | — |
@@ -2655,7 +2655,7 @@ contentVersion `cv_1e707a1e419e`
 | **權重** | 60 |
 | **顯現位置** | 連動 —— 與現有英雄／裝備／願望產生連動 |
 | **標籤** | `grail-wish` `basic-attack` `cooldown-reset` `hybrid` |
-| **觸發事件** | 普通攻擊時 · CD 8s |
+| **觸發事件** | 普攻時 · CD 8s |
 | **效果機制** | `modifyCooldown` |
 | **條件葉** | — |
 | **靈基適性條件** | 偏好技能傷害 |
@@ -3022,7 +3022,7 @@ contentVersion `cv_1e707a1e419e`
 | **權重** | 25 |
 | **顯現位置** | 泛用 —— 泛用防守、控制反制或技能循環 |
 | **標籤** | `grail-wish` `interval` `cooldown-reset` `reality-marble` |
-| **觸發事件** | 每隔一段時間 · CD 20s |
+| **觸發事件** | 週期（每 N 秒） · CD 20s |
 | **效果機制** | `modifyCooldown` |
 | **條件葉** | — |
 | **靈基適性條件** | — |
@@ -3188,7 +3188,7 @@ contentVersion `cv_1e707a1e419e`
 | **權重** | 25 |
 | **顯現位置** | 轉向 —— 改變戰術方向的特殊願望 |
 | **標籤** | `grail-wish` `r-cast` `proxy-cast` `command-spell` |
-| **觸發事件** | 施放技能時 · CD 45s |
+| **觸發事件** | 施法時 · CD 45s |
 | **效果機制** | `proxyCast` |
 | **條件葉** | — |
 | **靈基適性條件** | 需要 QWER |
@@ -3284,7 +3284,7 @@ contentVersion `cv_1e707a1e419e`
 | **權重** | 25 |
 | **顯現位置** | 連動 —— 與現有英雄／裝備／願望產生連動 |
 | **標籤** | `grail-wish` `r-cast` `proxy-cast` `noble-phantasm` |
-| **觸發事件** | 施放技能時 · CD 60s |
+| **觸發事件** | 施法時 · CD 60s |
 | **效果機制** | `delayed` `proxyCast` |
 | **條件葉** | — |
 | **靈基適性條件** | 需要 R |
@@ -3746,7 +3746,7 @@ contentVersion `cv_1e707a1e419e`
 | **權重** | 25 |
 | **顯現位置** | 連動 —— 與現有英雄／裝備／願望產生連動 |
 | **標籤** | `grail-wish` `ally-death` `revive` `contract` |
-| **觸發事件** | 隊友死亡時 · CD 60s |
+| **觸發事件** | 隊友陣亡時 · CD 60s |
 | **效果機制** | `revive` |
 | **條件葉** | — |
 | **靈基適性條件** | 需要有隊友 |
@@ -3809,7 +3809,7 @@ contentVersion `cv_1e707a1e419e`
 | **權重** | 25 |
 | **顯現位置** | 泛用 —— 泛用防守、控制反制或技能循環 |
 | **標籤** | `grail-wish` `revive` `full-reset` `invulnerable` |
-| **觸發事件** | 復活時 |
+| **觸發事件** | 被復活時 |
 | **效果機制** | `invulnerable` `modifyCooldown` `restore` |
 | **條件葉** | — |
 | **靈基適性條件** | 需要有復活圈 |
@@ -4141,7 +4141,7 @@ contentVersion `cv_1e707a1e419e`
 | **權重** | 25 |
 | **顯現位置** | 連動 —— 與現有英雄／裝備／願望產生連動 |
 | **標籤** | `grail-wish` `ability-cast` `proxy-cast` `magic-craft` |
-| **觸發事件** | 施放技能時 · 25% |
+| **觸發事件** | 施法時 · 25% |
 | **效果機制** | `proxyCast` |
 | **條件葉** | — |
 | **靈基適性條件** | 需要 QWER |
@@ -4277,7 +4277,7 @@ contentVersion `cv_1e707a1e419e`
 | **權重** | 25 |
 | **顯現位置** | 連動 —— 與現有英雄／裝備／願望產生連動 |
 | **標籤** | `grail-wish` `basic-attack` `multi-hit` `secret-sword` |
-| **觸發事件** | 普通攻擊時 · 30% |
+| **觸發事件** | 普攻時 · 30% |
 | **效果機制** | `damage` `delayed` |
 | **條件葉** | — |
 | **靈基適性條件** | — |
@@ -4354,7 +4354,7 @@ contentVersion `cv_1e707a1e419e`
 | **權重** | 25 |
 | **顯現位置** | 轉向 —— 改變戰術方向的特殊願望 |
 | **標籤** | `grail-wish` `ranged-only` `range-sacrifice` `cooldown-reset` |
-| **觸發事件** | 普通攻擊時 · CD 6s |
+| **觸發事件** | 普攻時 · CD 6s |
 | **效果機制** | `modifyCooldown` |
 | **條件葉** | — |
 | **靈基適性條件** | 僅遠程 |
@@ -4586,7 +4586,7 @@ contentVersion `cv_1e707a1e419e`
 | **權重** | 25 |
 | **顯現位置** | 轉向 —— 改變戰術方向的特殊願望 |
 | **標籤** | `grail-wish` `attack-speed` `basic-attack` `lightning` |
-| **觸發事件** | 普通攻擊時 |
+| **觸發事件** | 普攻時 |
 | **效果機制** | `damage` |
 | **條件葉** | — |
 | **靈基適性條件** | — |

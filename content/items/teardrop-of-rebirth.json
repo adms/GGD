@@ -51,6 +51,14 @@
               "kind": "applyBuff",
               "applyTo": "self",
               "duration": 6,
+              "condition": {
+                "kind": "stat",
+                "subject": "self",
+                "stat": "hp",
+                "mode": "percent",
+                "op": ">",
+                "value": 0
+              },
               "modifiers": [
                 {
                   "stat": "outputDamagePct",
@@ -81,5 +89,5 @@
   ],
   "icon": "assets/icons/items/teardrop-of-rebirth.webp",
   "craftRole": "none",
-  "authoringNote": "[再誕]「每回合一次」= passive[0] 的 condition `not status teardrop-of-rebirth-spent` ＋ effects[0] 掛上那個標記：applyBuff modifiers:[]（純標記，沒有數值）+ statusId + permanent + permanentScope:\"round\"。⭐ 這是「每回合一次」唯一不用猜秒數的寫法，而且**兩半都是量得到的**：`clearForFreshBody`（死亡/復活共用的那支）只清 status/shields/dot，**不清 buff 來源**，所以這個標記跨得過持有者自己這一次死亡；`clearRoundScoped` 在下一回合開打前才把它拔掉。⛔ 刻意**不用** revive 的 `teamCharge:\"requireAndSpend\"` —— 那是**全隊共用的復活圈額度**，用它等於「隊友用過復活圈就沒有淚珠」，那不是 owner 寫的東西。\n「死亡 3 秒後」= onDeath（這個事件的持有者依定義就是剛死的那個）→ delayed delaySec 3。⚠️ `dropDeadTargets:false` 是**承重的一行**：那一格的預設是 true（跳過死掉的目標），而這裡的目標依定義就是一具屍體 —— 少了它整張卡一次都不會生效。`stopOnCasterDeath:false` 是預設值，明寫是因為這張卡的施法者就是死人。\n「以 100%生命、100%魔力復活」= revive hpPct 1 / manaPct 1。⚠️ 兩格**不可以省略**：省略會落到 `config.arena-rules@1` 的 reviveCircles 出貨值 0.5/0.5，也就是半血半魔。\n「復活後 6 秒內總傷害、治療與護盾 ×1.25」= ⭐ 新的輸出倍率三軸 outputDamagePct / outputHealingPct / outputShieldPct 各 **flat 0.25**，duration 6。⛔ 不可以寫 pctMult：這三條的底值是 0，讀取點（sim/stats/outputMult.ts）是 `1 + final[stat]`，乘一個 0 還是 0。三格分開填正是 owner 這一句「傷害、治療與護盾」三樣都要的寫法。\n「移速 ×1.20」= ms pctMult 0.20。\n⚠️ 增益排在 revive **後面**，這樣它落在已經站起來的身體上。唯一的取捨：復活若被拒（火圈全閉合時 reviveChampionAt 會拒絕，#195），這 6 秒增益仍會掛在屍體上 —— 無害，但那一回合的額度已經扣掉了。"
+  "authoringNote": "[再誕]「每回合一次」= passive[0] 的 condition `not status teardrop-of-rebirth-spent` ＋ effects[0] 掛上那個標記：applyBuff modifiers:[]（純標記，沒有數值）+ statusId + permanent + permanentScope:\"round\"。⭐ 這是「每回合一次」唯一不用猜秒數的寫法，而且**兩半都是量得到的**：`clearForFreshBody`（死亡/復活共用的那支）只清 status/shields/dot，**不清 buff 來源**，所以這個標記跨得過持有者自己這一次死亡；`clearRoundScoped` 在下一回合開打前才把它拔掉。⛔ 刻意**不用** revive 的 `teamCharge:\"requireAndSpend\"` —— 那是**全隊共用的復活圈額度**，用它等於「隊友用過復活圈就沒有淚珠」，那不是 owner 寫的東西。\n「死亡 3 秒後」= onDeath（這個事件的持有者依定義就是剛死的那個）→ delayed delaySec 3。⚠️ `dropDeadTargets:false` 是**承重的一行**：那一格的預設是 true（跳過死掉的目標），而這裡的目標依定義就是一具屍體 —— 少了它整張卡一次都不會生效。`stopOnCasterDeath:false` 是預設值，明寫是因為這張卡的施法者就是死人。\n「以 100%生命、100%魔力復活」= revive hpPct 1 / manaPct 1。⚠️ 兩格**不可以省略**：省略會落到 `config.arena-rules@1` 的 reviveCircles 出貨值 0.5/0.5，也就是半血半魔。\n「復活後 6 秒內總傷害、治療與護盾 ×1.25」= ⭐ 新的輸出倍率三軸 outputDamagePct / outputHealingPct / outputShieldPct 各 **flat 0.25**，duration 6。⛔ 不可以寫 pctMult：這三條的底值是 0，讀取點（sim/stats/outputMult.ts）是 `1 + final[stat]`，乘一個 0 還是 0。三格分開填正是 owner 這一句「傷害、治療與護盾」三樣都要的寫法。\n「移速 ×1.20」= ms pctMult 0.20。\n⚠️ 增益排在 revive **後面**，這樣它落在已經站起來的身體上。\n⭐ **2026-08-18 逐句徹查補上的一格**：那份增益現在帶 `condition{stat:hp, percent, > 0}`。文案寫的是「**復活後** 6 秒內」，而在這一格之前**復活成功與否根本沒被檢查** —— 火圈全閉合時 `reviveChampionAt` 會回 null（#195），於是那 6 秒倍率會掛在一具**還躺著的屍體**上（失敗形態②：卡片、後台、JSON 全都對，玩家什麼都沒拿到）。`DeathSystem` 死亡那一 tick 明寫 `hp.hp = 0`，而復活成功是 100%，所以「hp% > 0」逐字就是「真的站起來了」。⚠️ 求值時機是承重的：`runEffects` 逐一 `applyEffect`，revive 是 effects[0]、這一格是 effects[1]，所以條件讀到的是**復活跑完之後**的身體。\n⚠️ 仍然存在的取捨（引擎題，不是這張卡的）：復活被拒時**那一回合的額度已經扣掉了** —— `teardrop-of-rebirth-spent` 在 onDeath 當下就掛上，⛔ 沒有搬進 delayed 裡是刻意的（搬進去的話回合在 3 秒內結束就等於沒扣過，而那條路更難看出來）。"
 }

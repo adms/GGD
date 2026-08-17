@@ -2,7 +2,7 @@
   "id": "stone-mask",
   "schema": "item@1",
   "name": "石鬼面",
-  "description": "防具\n效能\n[究極肉體] 生命首次低於 50%時啟動至回合結束：最大生命 ×1.25、生命回復 ×3、全能吸血 +25%、攻速 ×1.25、移速 ×1.15\n[疊層] 每損失 10%生命，再使生命回復 ×1.10\n\n解說\n戴上去就回不去了。反正這一回合本來也沒打算當人。",
+  "description": "防具\n效能\n[究極肉體] 生命首次低於 50%時啟動至回合結束：最大生命 ×1.25、生命回復 ×3、全能吸血 +25%、攻速 ×1.25、移速 ×1.15\n[疊層] 究極肉體啟動後，生命每再掉一階（低於 50%／40%／30%／20%／10%）各再使生命回復 ×1.10，五階合計 ×1.61\n\n解說\n戴上去就回不去了。反正這一回合本來也沒打算當人。",
   "cost": 0,
   "tier": 5,
   "tags": [
@@ -68,14 +68,25 @@
       ]
     },
     {
-      "key": "stone-mask-regen-stack",
+      "key": "stone-mask-regen-50",
       "on": "onDamageTaken",
       "target": "self",
-      "internalCooldown": 1,
       "condition": {
-        "kind": "status",
-        "subject": "self",
-        "statusId": "stone-mask-ultimate-body"
+        "all": [
+          {
+            "kind": "status",
+            "subject": "self",
+            "statusId": "stone-mask-ultimate-body"
+          },
+          {
+            "kind": "stat",
+            "subject": "self",
+            "stat": "hp",
+            "mode": "percent",
+            "op": "<",
+            "value": 0.5
+          }
+        ]
       },
       "effects": [
         {
@@ -83,7 +94,164 @@
           "applyTo": "self",
           "permanent": true,
           "permanentScope": "round",
-          "maxStacks": 5,
+          "stackKey": "stone-mask.regen.50",
+          "maxStacks": 1,
+          "modifiers": [
+            {
+              "stat": "healthRegen",
+              "op": "pctMult",
+              "value": 0.1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "stone-mask-regen-40",
+      "on": "onDamageTaken",
+      "target": "self",
+      "condition": {
+        "all": [
+          {
+            "kind": "status",
+            "subject": "self",
+            "statusId": "stone-mask-ultimate-body"
+          },
+          {
+            "kind": "stat",
+            "subject": "self",
+            "stat": "hp",
+            "mode": "percent",
+            "op": "<",
+            "value": 0.4
+          }
+        ]
+      },
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "permanentScope": "round",
+          "stackKey": "stone-mask.regen.40",
+          "maxStacks": 1,
+          "modifiers": [
+            {
+              "stat": "healthRegen",
+              "op": "pctMult",
+              "value": 0.1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "stone-mask-regen-30",
+      "on": "onDamageTaken",
+      "target": "self",
+      "condition": {
+        "all": [
+          {
+            "kind": "status",
+            "subject": "self",
+            "statusId": "stone-mask-ultimate-body"
+          },
+          {
+            "kind": "stat",
+            "subject": "self",
+            "stat": "hp",
+            "mode": "percent",
+            "op": "<",
+            "value": 0.3
+          }
+        ]
+      },
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "permanentScope": "round",
+          "stackKey": "stone-mask.regen.30",
+          "maxStacks": 1,
+          "modifiers": [
+            {
+              "stat": "healthRegen",
+              "op": "pctMult",
+              "value": 0.1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "stone-mask-regen-20",
+      "on": "onDamageTaken",
+      "target": "self",
+      "condition": {
+        "all": [
+          {
+            "kind": "status",
+            "subject": "self",
+            "statusId": "stone-mask-ultimate-body"
+          },
+          {
+            "kind": "stat",
+            "subject": "self",
+            "stat": "hp",
+            "mode": "percent",
+            "op": "<",
+            "value": 0.2
+          }
+        ]
+      },
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "permanentScope": "round",
+          "stackKey": "stone-mask.regen.20",
+          "maxStacks": 1,
+          "modifiers": [
+            {
+              "stat": "healthRegen",
+              "op": "pctMult",
+              "value": 0.1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "stone-mask-regen-10",
+      "on": "onDamageTaken",
+      "target": "self",
+      "condition": {
+        "all": [
+          {
+            "kind": "status",
+            "subject": "self",
+            "statusId": "stone-mask-ultimate-body"
+          },
+          {
+            "kind": "stat",
+            "subject": "self",
+            "stat": "hp",
+            "mode": "percent",
+            "op": "<",
+            "value": 0.1
+          }
+        ]
+      },
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "permanentScope": "round",
+          "stackKey": "stone-mask.regen.10",
+          "maxStacks": 1,
           "modifiers": [
             {
               "stat": "healthRegen",
@@ -97,5 +265,5 @@
   ],
   "icon": "assets/icons/items/stone-mask.webp",
   "craftRole": "none",
-  "authoringNote": "[究極肉體]「生命首次低於 50%時啟動至回合結束」= passive[0]：onDamageTaken + condition hp/percent < 0.5。「至回合結束」= permanent + permanentScope:\"round\"（⛔ 不猜秒數，回合長度是相位機決定的）。「首次」= stackKey + maxStacks:1 —— 一份來源，第二次觸發只把層數夾回 1、不會再疊一份加成；permanent 不回寫到期 tick。⚠️ clearForFreshBody 只清 status/shields/dot，**不清 buff 來源**，所以中途死掉再站起來這一份仍在（＝文案說的「至回合結束」）。\n逐句：最大生命 ×1.25 = maxHealth pctMult 0.25；生命回復 ×3 = healthRegen pctMult 2.0；全能吸血 +25% = lifesteal flat 0.25 **加** spellVamp flat 0.25（這個 repo 的「全能吸血」就是這兩條，⛔ 沒有第三條屬性）；攻速 ×1.25 = as pctMult 0.25；移速 ×1.15 = ms pctMult 0.15。\n[疊層]「每損失 10%生命，再使生命回復 ×1.10」= passive[1]，⚠️ **這一句被換過做法**：owner 已裁決不做「由屬性狀態推導層數」(G6)，改成事件驅動疊層。做法是 onDamageTaken + condition「身上有〔究極肉體〕」→ 每次挨打加一層 healthRegen pctMult 0.10，**不填 stackKey** 所以走真複利 (1.10)^N，maxStacks 5（對應 50%→0% 的五段）。\n⚠️ 兩處與原文不同，明講：① 量尺從「損失 10% 生命」換成「受到一次傷害」；② 為了不讓一發 DoT 在一秒內灌滿五層，我加了 internalCooldown 1 秒 —— **那個 1 是我補的節流，不是 owner 的數字**，要調就調這一格。\n⚠️ 為什麼 passive[0] 走 stackKey 而不是 exclusiveGroup：複利路徑的 maxStacks 用 `buff:hook:<來源>#` 前綴數份數，而同一件道具的每一條 hook 共用同一個 origin —— 走 stackKey 的 id 是 `buff:stack:…`，才不會把究極肉體本體算進 passive[1] 的五份額度裡。"
+  "authoringNote": "[究極肉體]「生命首次低於 50%時啟動至回合結束」= passive[0]：onDamageTaken + condition hp/percent < 0.5。「至回合結束」= permanent + permanentScope:\"round\"（⛔ 不猜秒數，回合長度是相位機決定的；拆除點是 `clearRoundScoped`，host 在 enterCombat 跑）。「首次」= stackKey + maxStacks:1 —— 一份來源，第二次觸發只把層數夾回 1；permanent 不回寫到期 tick。⚠️ `clearForFreshBody`（死亡/復活共用）只清 status/shields/dot，**不清 buff 來源**，所以中途死掉再站起來這一份仍在（＝文案的「至回合結束」）。\n逐句：最大生命 ×1.25 = maxHealth pctMult 0.25；生命回復 ×3 = healthRegen pctMult 2.0；全能吸血 +25% = lifesteal flat 0.25 **加** spellVamp flat 0.25（這個 repo 的「全能吸血」就是這兩條，⛔ 沒有第三條屬性）；攻速 ×1.25 = as pctMult 0.25；移速 ×1.15 = ms pctMult 0.15。\n[疊層] ⭐ **2026-08-18 逐句徹查時重做**（被取代的舊做法全文 + 完整理由：`docs/legacy/_item-authoring-notes-full.md` 的「石鬼面 (#55)」）。現在是 passive[1..5]，**五道獨立的門檻 hook**，形狀與 #69 兎月【雙弦月】的五道階梯逐字相同：\n· 每道的 condition = all[〔究極肉體〕在身上, `hp percent < 0.5 / 0.4 / 0.3 / 0.2 / 0.1`]，各給 healthRegen pctMult 0.10。\n· **各自一個 stackKey + maxStacks 1** ⇒ 一階只算一次；五份獨立來源的 pctMult 相乘（statPipeline 的 Π(1+v)）= 1.10^5 = **×1.6105**，與描述的「五階合計 ×1.61」逐字相符。\n⭐ 為什麼換掉舊做法：舊版量的是「受到一次傷害」而描述寫「每損失 **10%生命**」（量尺不對），而且它靠一個**我自己補的** `internalCooldown: 1` 節流才不會被一發 DoT 灌滿。門檻階梯讓描述逐字為真，⛔ 而且不需要任何新機制、也不需要任何我發明的常數。強度一分未減。\n⚠️ 走 stackKey 而不是複利路徑：複利路徑的額度用 `buff:hook:<來源>#` **前綴**數，而同一件道具的每一條 hook 共用同一個 origin（`fireHooks` 的 `hook:${src.id}`）—— 六道會共用一本帳。stackKey 的 id 是 `buff:stack:…`，六道各自獨立。\n⚠️ 觸發點是 onDamageTaken，所以「掉到門檻以下」要**由一次傷害造成**才會結算。"
 }

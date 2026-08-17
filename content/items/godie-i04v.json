@@ -26,5 +26,6 @@
       "value": 185
     }
   ],
-  "craftRole": "none"
+  "craftRole": "none",
+  "authoringNote": "⚠️ 2026-08-18 量到：這件道具 `cost: 0`（＝不上架賣）**而且不在任何 loot table 裡**，所以兩條取得路徑都沒有 —— **玩家永遠拿不到**（失敗形態②：做了但從沒送到玩家手上）。\n⛔ 我試過的兩種修法都是錯的，兩次都被既有守衛擋下來，記在這裡免得下一輪重犯：\n  ① **定價上架** → `ITEM_TIER_PRICE` 只有 SIMPLE 300 / POWERFUL 1200 兩個價（`itemTiers.test.ts`「THERE IS NO PRICE CURVE」），而且 `apps/game-server/src/ai/buildPath.test.ts` 逐字把這一支當成「**draft-only 0g**」的代表樣本。\n  ② **加進 quest-rewards** → 那張表是**宣告退場**的凍結表（`retiredLootTables.test.ts`：「表還在、13 支還在 —— 退場不是刪除」）。\n⭐ 結論：三個 draft 池**依設計全部關閉**（legendary-weapons 策展定死 49、quest-rewards 退場凍結 13、ex-release-weapons 是 tier-5 EX 專用），所以「讓它拿得到」是一個**策展決定**，⛔ 不是我可以定的。已列進給 owner 的決策清單，並在 `noOpModifierClaims.test.ts` 登記為**具名豁免**（附這個理由），⛔ 不是把守衛放寬。"
 }

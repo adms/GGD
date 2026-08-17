@@ -5,7 +5,7 @@
   "craftRole": "none",
   "id": "sage-ward-amulet",
   "name": "賢者的護身符",
-  "description": "傳說\n效能\n法術強度+35\n魔力+220\n受到傷害時獲得 180 + 法術強度×1.2 的護盾，持續 4 秒（冷卻 12 秒）\n其他英雄僅有 40% 效果\n\n解說\n護符認得出誰真的在唸咒，誰只是把它掛在脖子上。",
+  "description": "傳說\n效能\n法術強度+35\n魔力+220\n[限智力] 受到傷害時獲得 180 + 法術強度×1.2 的護盾，持續 4 秒（冷卻 12 秒）\n主屬性不是智力的英雄，護盾量與持續時間都只有 40%\n\n解說\n護符認得出誰真的在唸咒，誰只是把它掛在脖子上。",
   "tags": [
     "legendary",
     "survivability",
@@ -49,5 +49,6 @@
         }
       ]
     }
-  ]
+  ],
+  "authoringNote": "⭐ 2026-08-18 逐句稽核（第一·五守則「不放任何無效說明」）。四句逐一對照，**四句都有實作**，這一支是九件裡最乾淨的：\n「法術強度+35」= modifiers[0] `ap` flat 35 ✅。\n「魔力+220」= modifiers[1] `maxMana` flat 220 ✅（`config.stat-caps@1` 的 maxMana base===unlocked，這裡沒有 capRaise，不是問題）。\n「受到傷害時獲得 180 + 法術強度×1.2 的護盾，持續 4 秒（冷卻 12 秒）」= passive[0] `onDamageTaken` + `shield{flat:180, ratios:[ap 1.2], duration:4}` + `internalCooldown: 12` ✅。⚠️ `ap` 是**觸發當下**讀的，所以它把自己那 +35 也算進去。⚠️ 12 秒還會再乘後台 combat-env 的 `itemCooldown`，所以那是出貨值不是硬保證。\n「其他英雄僅有 40% 效果」= `requires{primaryStat:\"INT\", onMismatch:\"reduced\", mismatchScale:0.4}` ✅ —— `scaleEffects` 對 `shield` 是 `amount × k` **且** `duration × k`，所以不合格的英雄拿到 72 + AP×0.48、持續 1.6 秒。\n\n⚠️ **卡面改了一句**：舊文案寫「其他英雄僅有 40% 效果」卻**從頭到尾沒說誰是「自己人」** —— 玩家讀不出這是智力英雄的護符。現在第三行掛 [限智力]，第四行寫明「主屬性不是智力的英雄，護盾量**與持續時間**都只有 40%」（後者是量到的，不是猜的）。實作零改動。"
 }

@@ -164,7 +164,9 @@ export interface StatModifier {
 
 /** Game events hooks can react to. */
 export type HookEvent =
-  // ⭐ GH#354（owner 2026-08-17）—— 13 個新時刻。⛔ 沒有一個需要新的系統：
+  // ⭐ GH#354（owner 2026-08-17）—— **14** 個新時刻。⛔ 沒有一個需要新的系統：
+  // ⚠️ 這裡原本寫「13」，而逐筆比對 union 與 `WorldHookSystem` 的對照表都是 14
+  //（19 → 33，0 個被刪）。散文裡的計數沒有守衛，所以它必然過期 —— 2026-08-18 修正。
   // 六個是既有事件的切片（`WorldHookRow.when`），四個是新的發射點，
   // 三個是既有事件換一個 scope。發射與收件的對照表住在 systems/WorldHookSystem.ts。
   | "onUltimateCast"

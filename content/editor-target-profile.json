@@ -1,10 +1,10 @@
 {
   "schema": "ggd-editor-target-profile@1",
-  "generatedAt": "2026-08-17T17:37:20.479Z",
+  "generatedAt": "2026-08-17T18:22:38.988Z",
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_6e3d7560c86a",
+    "contentVersion": "cv_07059e40820e",
     "collections": {
       "champions": {
         "hash": "fd3e966af6a8",
@@ -15,7 +15,7 @@
         "count": 461
       },
       "items": {
-        "hash": "585a47fa2816",
+        "hash": "015a90bd83d4",
         "count": 239
       },
       "augments": {
@@ -31,7 +31,7 @@
         "count": 30
       },
       "loot-tables": {
-        "hash": "decb082d5636",
+        "hash": "a0971377c045",
         "count": 4
       },
       "arenas": {
@@ -43,7 +43,7 @@
         "count": 7
       },
       "config": {
-        "hash": "50b107f9ef48",
+        "hash": "4d9df7c6bb39",
         "count": 62
       },
       "models": {
@@ -2136,6 +2136,7 @@
         "cooldown",
         "crit",
         "defense",
+        "flight",
         "gacha",
         "legendary",
         "lifesteal",
@@ -2661,7 +2662,7 @@
           },
           "ms": {
             "base": 18,
-            "unlocked": 18
+            "unlocked": 24
           },
           "lifesteal": {
             "base": 0.8,
@@ -2859,5 +2860,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "81c5f37a1bd6"
+  "profileDigest": "6d6472d97e37"
 }

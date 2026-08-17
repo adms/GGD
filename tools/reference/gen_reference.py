@@ -39,6 +39,10 @@ import re
 import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(REPO, "tools", "engine-vocab"))
+
+import engine_vocab as V  # noqa: E402  — python 端唯一的引擎詞彙來源
+
 CONTENT = os.environ.get("GGD_CONTENT_DIR") or os.path.join(REPO, "content")
 WHITELIST = os.path.join(REPO, "data", "curation", "whitelist.json")
 OUTDIR = os.path.join(REPO, "docs", "reference")
@@ -134,10 +138,16 @@ def classify_items(ctx):
         "other": other,
     }
 
-STAT_LABEL = {
-    "ad": "攻擊力",
+# 表格用的**簡稱**（一格塞得下）。⛔ 這不是「有哪些屬性」的清單 ——
+# 「有哪些」永遠是 `Stat` 枚舉，這裡只覆蓋想寫短一點的那幾條，其餘自動落到
+# `baseBonus.ts::STAT_LABEL_ZH`（`Record<Stat,…>`，TypeScript 逼它完整）。
+#
+# ⛔ 2026-08-18 之前這裡是一份手抄的 15 條清單，於是 `evasion` / `spellVamp` /
+# `maxHitPctMaxHp` 這些真的出現在出貨道具上的屬性，在 `docs/reference/items.md`
+# 上印的是**裸 key**（`spellVamp +0.2`）。`V.label_table` 讓那件事不可能再發生：
+# 引擎多一條屬性，這張表當天就多一條，⛔ 不是安靜地少一條。
+STAT_LABEL = V.label_table({
     "ap": "法強",
-    "armor": "護甲",
     "mr": "魔抗",
     "as": "攻速",
     "ms": "移速",
@@ -145,12 +155,26 @@ STAT_LABEL = {
     "maxMana": "魔力",
     "healthRegen": "回血",
     "manaRegen": "回魔",
-    "critChance": "暴擊率",
-    "critDamage": "暴擊傷害",
-    "lifesteal": "吸血",
-    "cdr": "冷卻縮減",
     "range": "射程",
+    "maxHitPctMaxHp": "單發傷害上限",
+    "cooldownDrainRate": "冷卻流逝",
+}, what="docs/reference 的屬性簡稱")
+
+# 每一個 `ModOp` 在這份文件裡怎麼讀。⛔ 缺一個就 raise（`V.require_ops`）——
+# 一個沒被想過的運算子被當成 `+N` 印出來，是**一句帶著數字的假話**：
+# `capRaise as 10`（解鎖攻速上限到 10）以前印的是「攻速 +10」。
+#   None      = 一般加減（`+N` / `+N%`）
+#   否則      = 一個 format 字串，`{label}` `{num}` `{extra}` 三個欄位
+OP_FORM = {
+    "flat": None,
+    "pctAdd": None,
+    "pctMult": None,
+    "override": "{label} 固定為 {num}",
+    "capRaise": "{label}上限解鎖至 {num}",
+    "capRaisePct": "{label}上限解鎖 +{num}%",
+    "percentOf": "{label} +{extra}的 {num}%",
 }
+V.require_ops(OP_FORM, "docs/reference 的 modifier 呈現")
 
 
 # ---------------------------------------------------------------------------
@@ -267,20 +291,46 @@ def desc_tag(text):
     return m.group(1) if m else None
 
 
+def _trim(num):
+    num = round(num, 2)
+    return int(num) if isinstance(num, float) and num.is_integer() else num
+
+
+# `percentOf` 的**來源**：一條屬性（`from`）或一項當下的資源（`fromResource`）。
+# 兩者互斥（`zStatModifier` 擋），語意差別寫在 `stats/resourceStats.ts` 的檔頭。
+RESOURCE_LABEL = {"hp": "目前生命", "mp": "目前魔力"}
+
+
+def _modifier_source(m):
+    if m.get("from") in STAT_LABEL:
+        return STAT_LABEL[m["from"]]
+    res = m.get("fromResource")
+    if res:
+        return RESOURCE_LABEL.get(res, res)
+    return "來源"
+
+
 def fmt_modifier(m):
-    stat = m.get("stat")
-    label = STAT_LABEL.get(stat, stat)
+    stat, op = m.get("stat"), m.get("op")
+    if stat not in STAT_LABEL:
+        # ⛔ 以前這裡是 `.get(stat, stat)` —— 一個引擎不認得的屬性會被印成裸 key，
+        #   看起來像「這條沒有中文名」，實際上是「這份內容寫了一條不存在的屬性」。
+        raise V.VocabError(
+            f"modifier 用了引擎不認得的屬性 `{stat}` —— 改那份內容 JSON，⛔ 不要改這支")
+    if op not in OP_FORM:
+        raise V.VocabError(f"modifier 用了引擎不認得的運算子 `{op}`")
+    label = STAT_LABEL[stat]
     val = m.get("value")
     if not isinstance(val, (int, float)):
         return f"{label} ?"
-    if m.get("op") == "pctAdd":
-        num = round(val * 100, 2)
-    else:
-        num = round(val, 2)
-    if isinstance(num, float) and num.is_integer():
-        num = int(num)
+    form = OP_FORM[op]
+    if form is not None:
+        num = _trim(val * 100) if op in ("capRaisePct", "percentOf") else _trim(val)
+        return form.format(label=label, num=num, extra=_modifier_source(m))
+    is_pct = op in ("pctAdd", "pctMult")
+    num = _trim(val * 100) if is_pct else _trim(val)
     sign = "+" if num >= 0 else ""
-    return f"{label} {sign}{num}%" if m.get("op") == "pctAdd" else f"{label} {sign}{num}"
+    return f"{label} {sign}{num}%" if is_pct else f"{label} {sign}{num}"
 
 
 def fmt_modifiers(doc):

@@ -40,7 +40,7 @@
           }
         },
         {
-          "kind": "damageArea",
+          "kind": "damageLine",
           "damageType": "physical",
           "amount": {
             "flat": 40,
@@ -51,11 +51,15 @@
               }
             ]
           },
-          "radius": 3.5,
+          "aim": "target",
+          "fromCaster": false,
+          "length": 3.5,
+          "width": 2.4,
           "maxTargets": 4
         }
       ]
     }
   ],
-  "requiresAttackType": "melee"
+  "requiresAttackType": "melee",
+  "authoringNote": "逐句對照（2026-08-18 稽核）：\n「最大生命+10%」= modifiers maxHealth pctAdd 0.1。✅\n「[普通攻擊時] 攻擊附帶額外的（15+1.5%自身最大生命值）物理傷害攻擊特效」= passive[0].effects[0] 的 damage（flat 15 + ratios maxHealth 0.015）。⭐「自身」= ratios 讀的是**施法者**的面板（`effects/effectCommon.ts::casterStats`），⛔ 不是被打的人。onBasicAttack 發射點在迴避／失手兩道閘**之後**（`BasicAttackSystem`），所以「命中」是字面意思。✅\n「並生成一道衝擊波來對**目標身後**的敵人們造成（40+3%最大生命值）物理傷害」= effects[1]。\n⭐ 2026-08-18 修正：這一句原本寫成 `damageArea`（以受害者為圓心、半徑 3.5 的**圓**），而圓會同時打到目標**旁邊與前面**的人 —— 「身後」整個詞是空的。改成 `damageLine` + `aim:\"target\"` + `fromCaster:false`：膠囊的起點是受害者、方向是**施法者→受害者**，也就是「這一刀穿過去之後繼續前進」= 身後。`includeOrigin` 省略 = false，所以震央那個人不會再吃一次（他已經吃過上面那一發攻擊特效）。\n· `length` 3.5 沿用原本的圓半徑（同樣的縱深，⛔ 不是趁機加強）。\n· `width` 2.4 = 兩個身位（英雄碰撞半徑 0.6 ⇒ 體寬 1.2）—— 衝擊波要有寬度，一個身位的線在近戰混戰裡幾乎打不到人。\n· `maxTargets` 4 不變。\n⚠️ 兩個沒有寫在文案上的閘，兩個都是**發卡限制**不是效果限制，所以文案不必提（與其餘 6 件帶 `requiresAttackType` 的道具同一個慣例）：頂層 `requiresAttackType:\"melee\"`（只發給近戰英雄）與 hook 上的 `requires.attackType:\"melee\"`（第二道保險，變身成遠程時 `syncItemSources` 會重算）。"
 }

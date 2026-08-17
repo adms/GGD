@@ -45,7 +45,7 @@ pnpm dev
 - client 的 vite port 是寫死的 `39527` + `strictPort`（`apps/client/vite.config.ts` 的 `server.port` / `server.strictPort`），`pnpm dev` 不用加任何參數。
 - client 走同源 `/colyseus` proxy 打到 `localhost:2567`（同檔 `server.proxy["/colyseus"]`，`ws: true`）。
 - game-server 抓不到 platform 時，白名單**fail-safe 成 allow-all**（`apps/game-server/src/curation/whitelist.ts:14-21`），所以不跑 platform 也有完整英雄可選。
-- `content/manifest.json` 與各 `_index.json` **都在 git 裡**（113 英雄 / 662 技能 / 214 道具），fresh clone **不需要**先跑 `content:build`。
+- `content/manifest.json` 與各 `_index.json` **都在 git 裡**（78 英雄 / 461 技能 / 239 道具），fresh clone **不需要**先跑 `content:build`。
 - `@ggd/shared` **沒有 build 步驟** —— `package.json` 的 `main`/`types`/`exports` 全部直接指向 `./src/*.ts`，由 vite / tsx 就地編譯。所以 `pnpm install` 之後不用先 `pnpm build` 也不用先 build shared。
 
 > 前兩條刻意只寫欄位名不寫行號 —— `apps/client/vite.config.ts` 是常被改的檔案，這兩處在寫這份 README 的期間就漂過兩次（504 → 505 → 514）。要找就 grep `39527` 與 `"/colyseus"`。
@@ -329,7 +329,7 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 
 **傳說寶玉 2400 金**：不是道具，是抽卡觸發器 —— 買下即從傳說池 roll 出三選一並預留一格。
 
-> ⚠ **「不可重複」不是全域規則**。`buyItem` 只在道具標了 `unique` 時才擋（`shop.ts:98`），而 214 份道具文件裡**只有 `swift-boots.json` 標了 `unique: true`**。也就是說在目前資料下絕大多數道具買得到第二個。是否有其他策展層另外過濾 —— **未驗證**。
+> ⚠ **「不可重複」不是全域規則**。`buyItem` 只在道具標了 `unique` 時才擋（`shop.ts:98`），而 239 份道具文件裡**只有 `swift-boots.json` 標了 `unique: true`**（2026-08-18 重新實測，仍是一份）。也就是說在目前資料下絕大多數道具買得到第二個。是否有其他策展層另外過濾 —— **未驗證**。
 
 ### 屬性路線與畢業裝
 
@@ -518,23 +518,26 @@ make lan-probe
 
 **開放（whitelisted）的英雄、技能與商店清單就直接印在下面、預設展開、不用點任何摺疊**。完整的全表搬到 `docs/reference/roster.md`、`abilities.md`、`items.md`（各區塊都有連結），這樣 README 才不會又肥又被 GitHub 折疊。所有數字都從 repo 量出來，權威計數在 `content/manifest.json`（由 `pnpm content:build` 產生）。
 
-下表是 `cv_99511e0b9180`（2026-08-16）的實測值。
+下表是 `cv_6e3d7560c86a`（2026-08-18）的實測值。
 
 | collection | docs | 說明 |
 | --- | ---: | --- |
-| `content/champions/` | **78** | 全部英雄文件。扣掉 **21** 個變身態與 **7** 位下架的，可選本體 **51**（其中 49 位有出身與玩法設定，sela / thorne 是骨架備援用的開發角色） |
+| `content/champions/` | **78** | 全部英雄文件。扣掉變身態與下架的，可選本體約 50（sela / thorne 是骨架備援用的開發角色） |
 | `content/abilities/` | **461** | 每英雄每 slot 一份，**一名英雄六個 slot**：天生技 `PASSIVE`、Q/W/E/R、EX |
-| `content/items/` | **219** | 依 `craftRole` 標記（task #70）：最終合成武器真能買、三選一 draft 抽 quest、傳說寶玉抽傳說；其餘是組件 / 代幣 / 無角色 |
+| `content/items/` | **239** | 依 `craftRole` 標記（task #70）：最終合成武器真能買、寶具只能抽（或後台上架）；其餘是組件 / 代幣 / 無角色 |
 | `content/vfx/` | 632 | 這個數字跟著 VFX 綁定工作一直在動，以 `manifest.json` 為準 |
 | `content/models/` | 124 | 目錄下另有 `_index.json` 與 `_standin-overrides.json`（底線開頭＝非 doc，不進 index） |
-| `content/config/` | 57 | 後台可調的每一組旋鈕各一份 |
+| `content/config/` | 62 | 後台可調的每一組旋鈕各一份 |
 | `content/arenas/` · `maps/` | 13 · 7 | 七張動漫競技場（GH#324）＋既有場地 |
-| 其餘 5 個 collection | 116 | ability-templates 34 / augments 31 / status-effects 29 / projectiles 18 / skins 5 / loot-tables 3 |
-| **合計** | **1711** | 這是**此刻**的磁碟實測；權威計數永遠是 `content/manifest.json` |
+| 其餘 6 個 collection | 184 | augments 91 / ability-templates 34 / status-effects 30 / projectiles 20 / skins 5 / loot-tables 4 |
+| **合計** | **1800** | 這是**此刻**的磁碟實測；權威計數永遠是 `content/manifest.json` |
 
-> ⚠️ **2026-08-16 更正**：上表在此之前寫著 113 英雄 / 662 技能 / 1598 合計 ——
-> 那是 41 隻搬進 `_legacy/`（GH#323）**之前**的數字，整整過期了一批。
-> 各行的細部拆解（「天生技 108、EX 102」那類）也一併拿掉了，因為它們同樣是舊母體算的；
+> ⚠️ **這張表被更正過兩次，兩次都是同一個形狀（第三守則）。**
+> 2026-08-16：原本寫 113 英雄 / 662 技能 / 1598 合計 —— 那是 41 隻搬進 `_legacy/`（GH#323）
+> **之前**的數字。2026-08-18：`items` 219→**239**、`config` 57→**62**、`augments` 31→**91**
+> （60 張聖杯願望進來之後）、合計 1711→**1800**；而「其餘 5 個 collection」那一列
+> 寫著 116、底下卻列了 **6** 個加起來 120 的項目 —— 一列自己跟自己對不上，
+> 正是「手寫的統計沒有守衛」的標準症狀。
 > ⛔ 與其留一個看起來精確的舊數字，不如只留量得到的那一格。
 
 `manifest.json` 裡的 `contentVersion` 是整棵 `content/` 的純函數，**改內容就會變**。不要相信任何抄在文件裡的雜湊 —— 包含這份 README 的散文部分。下面三個產生區塊會自己印出產生當下的 `contentVersion`，那個才是可信的。
@@ -626,7 +629,7 @@ pnpm docs:readme:check
 
 第二條只檢查不寫入，README 過期就 exit 1（適合掛 pre-commit / CI）。產生是確定性的、**無時間戳**；區塊結尾印的 `contentVersion` 就是新鮮度戳記。標記之外的每一個手寫字元都會逐位保留；標記若成對缺失，區塊會被**附加在檔尾**（不會靜默覆寫任何東西）。標記重複或落單，產生器會直接中止並說明。
 
-`pnpm docs:readme` **一次寫兩個目標**：README 裡的**開放**清單，以及 `docs/reference/roster.md` / `abilities.md` / `items.md` 裡的**完整**全表（全 113 / 662 / 214）。兩者讀同一棵 `content/`、同一個 `build_context()`，所以永遠不會互相矛盾。（`pnpm docs:reference` 只重寫 docs 那三個檔，是 CI 用的子集。）
+`pnpm docs:readme` **一次寫兩個目標**：README 裡的**開放**清單，以及 `docs/reference/roster.md` / `abilities.md` / `items.md` 裡的**完整**全表（全 78 / 461 / 239）。兩者讀同一棵 `content/`、同一個 `build_context()`，所以永遠不會互相矛盾。（`pnpm docs:reference` 只重寫 docs 那三個檔，是 CI 用的子集。）
 
 > ⚠️ **fresh clone 目前跑不了這兩條指令。** 實測 `git ls-files tools/reference docs/reference` 是空的、`git show HEAD:package.json` 裡也沒有 `docs:readme` / `docs:reference` —— 產生器與那三個 script 只存在於目前的工作區，**尚未 commit**。README 裡的表格本身會隨 README 一起進版控（它們就是檔案內容），但「重新產生」的能力要等產生器進版控。產生器需要 python3。
 
@@ -638,26 +641,30 @@ client 的一個 hash route，不用登入、不用開對戰，大廳右上「�
 
 下面的表格是**離線快照式的清單**（要 Ctrl-F、要離線看、要 diff 用），圖鑑是**互動版**（要查關聯、要編輯用）。兩者讀的是同一棵 `content/`。
 
-> **README 印開放的、預設展開；完整的搬到 docs。** 下面三段（`roster` / `abilities` / `items` 標記之間）只放**開放名單**的英雄、技能與商店貨架，且**不包在 `<details>` 裡**——GitHub 對 `<details>` 預設折疊，之前就是這個原因讓人以為清單不見了。全 113 名 / 662 技能 / 214 道具的逐欄表在 `docs/reference/*.md`（各區塊有連結）。**描述類欄位為了可讀性被截斷**：英雄「一句話說明」40 字、技能效果 34 字、道具 modifiers 52 字、被動 28 字（`gen_readme_lists.py` 頂端的 `LIMIT_*`）；**結尾的 `…` 是產生器加的**。要完整逐字請開 `#codex` 或讀 `content/<collection>/<id>.json`。
+> **README 印開放的、預設展開；完整的搬到 docs。** 下面三段（`roster` / `abilities` / `items` 標記之間）只放**開放名單**的英雄、技能與商店貨架，且**不包在 `<details>` 裡**——GitHub 對 `<details>` 預設折疊，之前就是這個原因讓人以為清單不見了。全 78 名 / 461 技能 / 239 道具的逐欄表在 `docs/reference/*.md`（各區塊有連結）。**描述類欄位為了可讀性被截斷**：英雄「一句話說明」40 字、技能效果 34 字、道具 modifiers 52 字、被動 28 字（`gen_readme_lists.py` 頂端的 `LIMIT_*`）；**結尾的 `…` 是產生器加的**。要完整逐字請開 `#codex` 或讀 `content/<collection>/<id>.json`。
 
 ### 怎麼讀這三張表
 
-**開放名單 vs 全部 113 名。** 能不能被選到，是**營運策展狀態**，不是程式常數：真相在 `data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` 提供、由 game-server 在**建房當下**執行（5 秒行程快取，並據以過濾可選英雄／RANDOM 池／商店／draft，拒絕非白名單的 `SELECT_CHAMPION`）。所以：
+**開放名單 vs 全部 78 名。** 能不能被選到，是**營運策展狀態**，不是程式常數：真相在 `data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` 提供、由 game-server 在**建房當下**執行（5 秒行程快取，並據以過濾可選英雄／RANDOM 池／商店／draft，拒絕非白名單的 `SELECT_CHAMPION`）。所以：
 
-- `content/champions/` 的 113 份是**這個 repo 有的東西**。
-- 表格裡「開放名單」那 48 名是**這台機器此刻啟用的東西**（任務 #138 的 48 名指定名冊）。
+- `content/champions/` 的 78 份是**這個 repo 有的東西**（另有 41 份在 `_legacy/champions/`，**不進出貨 bundle**）。
+- 表格裡「開放名單」那幾名是**這台機器此刻啟用的東西** —— 實際數字看下面產生區塊自己印的那一行，⛔ 不要相信這段散文抄的數字。
 - `/data/**` 是 gitignored（`.gitignore:21`），**fresh clone 的白名單是空的** —— 開放數會是 0，復原步驟見 §4。
-- platform 沒跑時 game-server **fail-safe 成 allow-all**，所以離線 bot 模式永遠是完整 113 名可選，不受白名單影響。
+- platform 沒跑時 game-server **fail-safe 成 allow-all**，所以離線 bot 模式永遠是完整 78 名可選，不受白名單影響。
 
-**一名英雄是六個 slot：天生技（`PASSIVE`）＋ Q/W/E/R/EX。** 天生技就是 w3x 作者的 `NN-00`，**等級 1 就擁有**、不用點技能點；在原始地圖裡它掛在英雄單位的 `abilities`（innate、非 learnable），而 `NN-01..04` 才是 `hero_abilities` 裡學得到的那四個。**最初的匯入把這個 slot 整個漏掉了**，所以舊版 README 寫「只有五種、全樹沒有任何 `xx-00` 文件」—— 那句話對當時的**磁碟內容**是真的，但對**模型**是錯的。現在 108 份天生技已經從原始地圖還原成 `content/abilities/<championId>.passive.json`，由 champion doc 的 `passiveAbility` 指過來（`exAbility` 的同款寫法）。
+**一名英雄是六個 slot：天生技（`PASSIVE`）＋ Q/W/E/R/EX。** 天生技就是 w3x 作者的 `NN-00`，**等級 1 就擁有**、不用點技能點；在原始地圖裡它掛在英雄單位的 `abilities`（innate、非 learnable），而 `NN-01..04` 才是 `hero_abilities` 裡學得到的那四個。**最初的匯入把這個 slot 整個漏掉了**，所以舊版 README 寫「只有五種、全樹沒有任何 `xx-00` 文件」—— 那句話對當時的**磁碟內容**是真的，但對**模型**是錯的。現在 75 份天生技已經從原始地圖還原成 `content/abilities/<championId>.passive.json`，由 champion doc 的 `passiveAbility` 指過來（`exAbility` 的同款寫法）。
 
-- 108 份中 **48 份 `innateKind: "passive"`**（光環／閃避／命中觸發／回復／每殺成長，沒有冷卻、標 `[被動]` 或 `[靈氣]`），**60 份 `innateKind: "active"`**（真的有冷卻，原本在 D 鍵的招式）。兩者都是同一個等級 1 的 slot，只是建模方式不同。
-- **113 名裡有 108 名帶 `passiveAbility`，5 名沒有**，而且每一個「沒有」都有可查的原因：`sela` / `thorne` 不是 w3x 原創英雄（本來就沒有 `NN` 編號）；`godie-h02n` 腦包英雄與 `godie-u01q` 測試英雄在原始地圖裡**完全沒有技能**；`godie-ogld` 有 `72-01..04` + `72-002`，但整張地圖裡不存在 `72-00`。**沒有 `passiveAbility` 是還原出來的事實，不是待辦。**
+- 75 份中 **39 份 `innateKind: "passive"`**（光環／閃避／命中觸發／回復／每殺成長，沒有冷卻、標 `[被動]` 或 `[靈氣]`），**36 份 `innateKind: "active"`**（真的有冷卻，原本在 D 鍵的招式）。兩者都是同一個等級 1 的 slot，只是建模方式不同。
+- **78 名裡有 75 名帶 `passiveAbility`，3 名沒有**，而且每一個「沒有」都有可查的原因：`sela` / `thorne` 不是 w3x 原創英雄（本來就沒有 `NN` 編號）；`godie-ogld` 有 `72-01..04` + `72-002`，但整張地圖裡不存在 `72-00`。**沒有 `passiveAbility` 是還原出來的事實，不是待辦。**
 - **別跟 champion doc 上那個舊的 `passive` 區塊搞混**：那是掛在某個 QWER 技能上的被動型效果（`docs/reference/abilities.md` 的 `型態` 欄標「被動」的那些，7 份 champion doc 有），跟天生技 slot 是兩回事。
+- 📘 **逐支天生技的完整清單**（編號 · 擁有者 · 被動/主動 · 從 JSON 推導的效果摘要）在
+  [`docs/固有能力及寶具總覽.md`](docs/固有能力及寶具總覽.md)，⛔ 那份是 `pnpm overview:build` 產生的，不要手改。
 
-README 的開放名冊把每名英雄的六個 slot 直接列成六條「技能名稱＋一行效果」（天生技那條會標 `天生·被動` 或 `天生·主動`）；全 662 技能的逐欄表在 `docs/reference/abilities.md`。
+README 的開放名冊把每名英雄的六個 slot 直接列成六條「技能名稱＋一行效果」（天生技那條會標 `天生·被動` 或 `天生·主動`）；全 461 技能的逐欄表在 `docs/reference/abilities.md`。
 
-**上架看 `craftRole`，不是看價格（task #70）。** 商店只讓 `craftRole === "final"` **且**真有效果（有 `modifiers` 或 `passive`）的最終合成武器上架（`packages/shared/src/sim/economy/shop.ts:110`、`apps/client/src/ui/panels/champSelectFilter.ts:150`）—— 214 件裡是 **28 件**，加 2 項服務。元件、製作書、任務、代幣一律拒賣，即使有價格、有效果、被白名單放行。有 **6 件 `final` 沒有 payload**（雷神之鎚／黑色魔書…主動效果 schema 還裝不下，#56）留在 final 分類但不上架。**三選一 draft 抽的是 `legendary-weapons`**（owner 2026-08-01「隨機三選一發放道具 都改成棱彩武器道具」）；`quest-rewards` 那 13 件 `quest` 道具**已退場**（表與道具都還在，但沒有任何回合排它，見下方 🎴 那一節）。傳說寶玉抽同一張 `legendary-weapons`；兩者都買不到、只能抽。價格只有簡易 **300g**、強力 **1200g**。表上的 `tier` 欄（1..5）是 **w3x 匯入的遺留欄位，與 craftRole 無關**。
+**上架看 `craftRole`，不是看價格（task #70）。** 商店只讓 `craftRole === "final"` **且**真有效果（有 `modifiers` 或 `passive`）的最終合成武器上架（`packages/shared/src/sim/economy/shop.ts`、`apps/client/src/ui/panels/champSelectFilter.ts`）—— 239 件裡 `final` 有 **42 件**，其中 **38 件**真有 payload 會上架，加 2 項服務。元件、製作書、任務、代幣一律拒賣，即使有價格、有效果、被白名單放行。剩下 **4 件 `final` 沒有 payload**（主動效果 schema 還裝不下，#56）留在 final 分類但不上架。`quest-rewards` 那 13 件 `quest` 道具**已退場**（`arena-rules.json` 的 `retiredLootTables` 就列著它，表與道具都還在但沒有任何回合排它，見下方 🎴 那一節）。價格只有簡易 **300g**、強力 **1200g**。表上的 `tier` 欄（1..5）是 **w3x 匯入的遺留欄位，與 craftRole 無關**。
+
+**⭐ 寶具（傳說武器）是另一條路，⛔ 不走 `craftRole`。** 判準是「它在不在 `legendary-weapons` 那張獎池裡」（`sim/economy/itemTiers.ts` 的 `LEGENDARY_POOL_TABLE`），⛔ 不是道具上的 `tags`／`tier`。回合間的三選一與傳說寶玉都抽這張表；`config.arena-rules@1.weaponTiers` 再往上疊**更高階的獎池**，出貨階級是 **EX ＜ [EX解放] ＜ [EX∅ 根源]**。⚠️ 「只能抽、買不到」這句話**在 2026-08-17 之後只對一半** —— 後台 `legendaryShelf.open` 出貨是**開的**，寶具會用統一價上架（＝傳說寶玉價 2400 × `priceMultiplier`，出貨 4 倍 = 9,600g）。逐件清單（階級 · 取得獎池 · 效果摘要 · 用到哪些機制）在 [`docs/固有能力及寶具總覽.md`](docs/固有能力及寶具總覽.md)。
 
 **數值是 `content/` 的原始值，未套用 combat-env 倍率。** 遊戲內顯示的一律是乘算後的最終值（`cooldown` ×0.25、`damageDealt` ×0.5、`maxHealth` ×8.0、`abilityRange` ×0.6，見 §5），所以畫面上的冷卻／傷害／生命跟表格**不會相同** —— 那是預期行為，不是 bug。
 
@@ -669,38 +676,38 @@ schema 在 `packages/shared/src/content/schema/champion.ts`（`champion@1`，str
 
 | 你要找的 | 實際欄位 |
 | --- | --- |
-| 稱號 + 全名 | **都在 `name` 裡**，格式 `稱號 - 全名`。**沒有**獨立的 title 欄位。113 名裡 109 名符合，例外是 `sela`、`thorne`、不良少年、死亡騎士（表上顯示 `—`） |
-| 描述 | `description`（選填，113 份裡有 100 份） |
-| **名言** | **champion doc 裡沒有**。在 `docs/champions.csv` 與 `content/assets/audio/voices/quotes/quotes.json`（各 113 句），所以下面的名冊表也沒有這一欄 |
+| 稱號 + 全名 | **都在 `name` 裡**，格式 `稱號 - 全名`。**沒有**獨立的 title 欄位。78 名裡 76 名符合，例外只剩 `sela`、`thorne`（表上顯示 `—`） |
+| 描述 | `description`（選填，78 份裡有 68 份） |
+| **名言** | **champion doc 裡沒有**。在 `docs/champions.csv`（113 列）與 `content/assets/audio/voices/quotes/quotes.json`（114 句），所以下面的名冊表也沒有這一欄。⚠️ 兩者都還是 `_legacy` 搬走**之前**的母體 |
 | 職業／攻擊類型 | `role`、`attackType`（`melee` \| `ranged`） |
 | 數值 | `baseStats` + `growth` |
 | 技能 | `abilities.{Q,W,E,R}` **內嵌整份 ability def**；`exAbility` 是 ref |
 | 模型 | `modelKey`，另有 `tint` / `alpha` / `icon` |
 
-`docs/champions.csv`（7 欄、113 列、UTF-8 with BOM）**是手工維護的，沒有任何程式會產生它**。全 repo 只有兩個讀者：`tools/bgm-gen/src/audition.py:31` 與 `tools/tts-gen/src/build-champ-quotes.mjs:195`。改內容 JSON 不會同步這份 CSV —— 這是已知的漂移風險，也正是下面三張表要用產生器而不是手打的原因。
+`docs/champions.csv`（7 欄、113 列、UTF-8 with BOM）**是手工維護的，沒有任何程式會產生它** —— 它的 113 列比出貨的 78 名多，因為 41 隻搬進 `_legacy/` 時沒有人動它，這正是下一段講的那個漂移。全 repo 只有兩個讀者：`tools/bgm-gen/src/audition.py:31` 與 `tools/tts-gen/src/build-champ-quotes.mjs:195`。改內容 JSON 不會同步這份 CSV —— 這是已知的漂移風險，也正是下面三張表要用產生器而不是手打的原因。
 
 ### 技能編號慣例
 
-w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用 `NN-00`**、EX 用三位數 `NN-00X`。唯一的解析器是一條 regex —— `HERO_NUMBER_RE = /^(\d{2})-(\d{2,3})(?!\d)/`（`packages/shared/src/content/championIdentity.ts:89`）。它**刻意不要求前綴後面有分隔符**，就是為了 `61-01惡魔球` 這種少空格的名字（同檔 `:86-87` 的 NOTE 寫明；那個名字有兩份文件 `godie-u011.q` / `godie-u012.q`，兩份都解析得出來）。
+w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用 `NN-00`**、EX 用三位數 `NN-00X`。唯一的解析器是一條 regex —— `HERO_NUMBER_RE = /^(\d{2,3})-(\d{2,3})(?!\d)/`（`packages/shared/src/content/championIdentity.ts`）。它**刻意不要求前綴後面有分隔符**，就是為了 `61-01惡魔球` 這種少空格的名字（同檔的 NOTE 寫明）。⚠️ 英雄編號那一段是 `\d{2,3}` 而不是 `\d{2}`：`100-00 黑泥吞噬` 這種三位數的英雄編號**已經存在**，只收兩位數會把它整個漏掉。
 
-662 份實測，兩種切法都列出來（前者是「編號寫了什麼」，後者是「編號跟 slot 對不對得上」）：
+461 份實測，兩種切法都列出來（前者是「編號寫了什麼」，後者是「編號跟 slot 對不對得上」）：
 
 | | `00` | `01` | `02` | `03` | `04` | `002` | `001` | 無法解析 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| **依解析出的編號**（總和 662） | 107 | 107 | 108 | 107 | 106 | 98 | 5 | 24 |
-| **編號與檔名 slot 相符** | 天生 107/108 | Q 101/113 | W 96/113 | E 98/113 | R 103/113 | EX 98 | EX 4 | — |
+| **依解析出的編號**（總和 461） | 75 | 74 | 75 | 74 | 74 | 72 | 1 | 16 |
+| **編號與檔名 slot 相符** | 天生 75/75 | Q 70/78 | W 67/79 | E 69/78 | R 73/78 | EX 73/73 | — | — |
 
-也就是說：**天生技那 108 份裡 107 份寫著 `NN-00`**，唯一的例外是 `godie-e00q.passive`「69-001 黑化之力」（原稿就這樣寫，`001` 那欄的第 5 份就是它）；EX 那 102 份**全部**編號正確；QWER 的 452 份裡 398 份對得上、24 份無法解析、**剩下 30 份編號與 slot 不一致**（例如 6 份 `w` 檔寫 `01`、6 份 `e` 檔寫 `02`）—— 這是 w3x 原稿本身的偏差，不是匯入的 bug。
+也就是說：**天生技那 75 份 100% 寫著 `NN-00`**，EX 那 73 份也**全部**編號正確（72 份 `002` + 1 份 `001`）；QWER 的 313 份裡 279 份對得上、16 份無法解析、**剩下 18 份編號與 slot 不一致**（`W` 那一格最多，12 份）—— 這是 w3x 原稿本身的偏差，不是匯入的 bug。
 
-**24 份完全沒有可解析編號**，來源乾淨可數：兩名非 w3x 原創英雄 `sela` / `thorne`（各 4 份 = 8），加上四名技能名稱字面就是 `none` 的英雄 `godie-e00u` / `godie-h02n` / `godie-u01f` / `godie-u01q`（各 4 份 = 16）。
+**16 份完全沒有可解析編號**，來源乾淨可數：兩名非 w3x 原創英雄 `sela` / `thorne`（各 4 份 = 8），加上兩名技能名稱字面就是 `none` 的英雄 `godie-e00u` / `godie-u01f`（各 4 份 = 8）。
 
 編號同時是**英雄身分的唯一判準** —— 同模型 ≠ 同角色（`championIdentity.ts` 開頭的黑化Saber 案例值得讀一次）。
 
-> ⚠️ 程式裡有幾則**過期註解**，不要抄：`CodexPage.tsx:18`、`codexSearch.ts:3` 與 `:229` 都寫 879、`codexData.ts:67` 寫 "~879 docs"，但 113+662+214 = **989**（天生技 slot 還原後又多了 108 份）；`apps/admin/src/content.ts:4` 寫 "212 items"，實際 **214**。以 `manifest.json` 為準。
+> ⚠️ 程式裡有幾則**過期註解**，不要抄：`apps/client/src/ui/codex/` 的 `CodexPage.tsx`、`codexSearch.ts`、`codexData.ts` 都還寫著 879 entries，`apps/admin/src/content.ts` 寫 "113 champions / 212 items / 554 abilities" —— 實際是 78 + 461 + 239 = **778**。以 `manifest.json` 為準。（`codexLive.test.ts` 已經有一條守衛禁止把 113/212/554/879 寫進 codex 的**原始碼**，但它管不到註解，也管不到別的 app。）
 
 ### 開放清單（以下預設展開，不用點）
 
-以下三段是機器產生的**開放名單**：開放英雄＋技能、商店貨架＋抽卡池。全 113／662／214 的完整表在各段結尾連到 `docs/reference/*.md`。
+以下三段是機器產生的**開放名單**：開放英雄＋技能、商店貨架＋抽卡池。全 78／461／239 的完整表在各段結尾連到 `docs/reference/*.md`。
 
 <!-- BEGIN GENERATED:roster -->
 #### 開放名單 OPEN roster（49 名）— 角色 + 六個技能 slot
@@ -1153,7 +1160,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **完整 78 名英雄**（含 29 名未開放）與逐欄資料（開放旗標、技能 id、攻擊類型…）在 [`docs/reference/roster.md`](./docs/reference/roster.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_1e707a1e419e` 產生。 開放 49 / 全 78 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_07059e40820e` 產生。 開放 49 / 全 78 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:roster -->
 
 <!-- BEGIN GENERATED:abilities -->
@@ -1169,7 +1176,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **全 461 個技能的逐欄表**（id、名稱、slot、型態、編號、擁有英雄、開放旗標、完整短效果）在 [`docs/reference/abilities.md`](./docs/reference/abilities.md)；互動版在 <http://localhost:39527/#codex>。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_1e707a1e419e` 產生。 開放英雄技能 293 / 全 461 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_07059e40820e` 產生。 開放英雄技能 293 / 全 461 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:abilities -->
 
 <!-- BEGIN GENERATED:items -->
@@ -1194,7 +1201,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 | `godie-i00u` | 名刀-天狼 | — | ✅ | 攻速 +60% · 吸血 +0.1 | onBasicAttack→damage |
 | `godie-i012` | 熾天使之弓 | — | ✅ | 攻速 +30% | onBasicAttack→spendMana/dot |
 | `godie-i013` | 緣一零式 | — | ✅ | 攻擊力 +38 | onBasicAttack→damage/applyS… |
-| `godie-i014` | 天叢雲劍 | — | ✅ | 攻速 +30% · 移速 +0.2 | — |
+| `godie-i014` | 天叢雲劍 | — | ✅ | 攻速 +30% · 移速 +20% | — |
 | `godie-i016` | 晨曦之光 | — | ✅ | 回魔 +8 · 冷卻縮減 +0.3 | onDamageTaken→applyBuff |
 | `godie-i018` | 朗基努斯之槍 | — | ✅ | — | onBasicAttack→damage · onBa… |
 | `godie-i01g` | 貫雷槍 | — | ✅ | 射程 +4 · 射程 +2 | onBasicAttack→applyStatus ·… |
@@ -1204,11 +1211,11 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 | `godie-i01v` | 螺旋劍 | — | ✅ | 攻速 +100% · 移速 +2 | onBasicAttack→spendMana/dam… |
 | `godie-i01w` | 祕銀鎖子甲 | — | ✅ | 護甲 +40 · 魔抗 +66.7 | onDamageTaken→applyBuff |
 | `godie-i020` | 瑪那魔杖 | — | ✅ | 法強 +78 · 魔力 +520 · 回魔 +12 | onBasicAttack→damage |
-| `godie-i027` | 光魔杖 | — | ✅ | 法強 +0.05 · 回魔 +18 | onBasicAttack→spendMana/dam… |
+| `godie-i027` | 光魔杖 | — | ✅ | 法強 +目前魔力的 5% · 回魔 +18 | onBasicAttack→spendMana/dam… |
 | `godie-i02e` | 狂暴軒轅劍 | — | ✅ | 攻速 +200% | onBasicAttack→applyStatus |
 | `godie-i02r` | 奇蹟之墜 | 1200g | ✅ | 法強 +28.9 · 魔力 +87 · 生命 +174 | — |
 | `godie-i031` | 天生牙 | — | ✅ | 回血 +20 | onKill→revive · onKill→rest… |
-| `godie-i039` | 幻之匕首 | — | ✅ | evasion +0.1 | onBasicAttack→damage |
+| `godie-i039` | 幻之匕首 | — | ✅ | 迴避 +0.1 | onBasicAttack→damage |
 | `godie-i03b` | 真．雅典娜的驚嘆號 | 1200g | ✅ | 法強 +81.6 · 魔力 +245 · 回魔 +81.6% | — |
 | `godie-i03d` | 光明虎徹 | 300g | ✅ | 生命 +39 · 攻擊力 +1.9 · 魔力 +23 | — |
 | `godie-i03f` | 甘豆腐之袍 | — | ✅ | 魔力 +600 · 回魔 +4 | onKill→grantAttribute |
@@ -1241,11 +1248,11 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 | id | 名稱 | 價格 | 開放 | 屬性 modifiers | 被動 |
 |---|---|---|---|---|---|
-| `godie-i004` | 至尊魔戒 | 抽卡 | ✅ | 魔力 +1000 · spellVamp +0.2 | — |
+| `godie-i004` | 至尊魔戒 | 抽卡 | ✅ | 魔力 +1000 · 技能吸血 +0.2 | — |
 | `godie-i00z` | 四魂之玉 | 抽卡 | ✅ | 魔力 +300 | — |
 | `godie-i01k` | 火焰泰坦腰帶 | 抽卡 | ✅ | 攻擊力 +8 · 生命 +175 · 護甲 +2.1 | onBasicAttack→damageArea |
 | `godie-i01n` | 天堂之劍 | 抽卡 | ✅ | 生命 -50% | — |
-| `godie-i01s` | 仙后座 | 抽卡 | ✅ | evasion +0.25 · 魔力 +100% · 回魔 +25 · 冷卻縮減 +0.5 | onInterval→dispel |
+| `godie-i01s` | 仙后座 | 抽卡 | ✅ | 迴避 +0.25 · 魔力 +100% · 回魔 +25 · 冷卻縮減 +0.5 | onInterval→dispel |
 | `godie-i02h` | 戰旗 | 抽卡 | ✅ | — | — |
 | `godie-i02j` | 復仇之袍 | 抽卡 | ✅ | 護甲 +12 | — |
 | `godie-i02k` | 惡魔吉他 | 抽卡 | ✅ | — | — |
@@ -1263,36 +1270,36 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 |---|---|---|---|---|---|
 | `bulwark-charge-greaves` | 近擊的巨人鎧 | 抽卡 | ✅ | 護甲 +100 · 回血 +12 | onAbilityCast→dash |
 | `cleaver-of-the-warden` | 泰坦九頭蛇 | 抽卡 | ✅ | 生命 +10% | onBasicAttack→damage/damage… |
-| `endless-edge` | 無盡連刃 | 抽卡 | ✅ | 攻速 +10 | onBasicAttack→applyBuff |
+| `endless-edge` | 無盡連刃 | 抽卡 | ✅ | 攻速上限解鎖至 10 | onBasicAttack→applyBuff |
 | `godie-i000` | 丈八蛇矛 | 抽卡 | ✅ | 攻擊力 +87 · 生命 +872 | onBasicAttack→damageArea |
-| `godie-i004` | 至尊魔戒 | 抽卡 | ✅ | 魔力 +1000 · spellVamp +0.2 | — |
+| `godie-i004` | 至尊魔戒 | 抽卡 | ✅ | 魔力 +1000 · 技能吸血 +0.2 | — |
 | `godie-i006` | 雅典娜的驚嘆號 | 抽卡 | ✅ | 法強 +33% · 回魔 +13 · 法強 +333 | onBasicAttack→damage |
 | `godie-i007` | 虛哭神去 | 抽卡 | ✅ | 吸血 +0.2 | onBasicAttack→damage |
 | `godie-i00f` | 霸王破甲槍 | 抽卡 | ✅ | 護甲 +10% · 攻擊力 +10% | — |
 | `godie-i00i` | 炎龍巨弩 | 抽卡 | ✅ | 魔力 +20% · 法強 +228 | onBasicAttack→damageArea |
 | `godie-i00j` | 奇門盾甲 | 抽卡 | ✅ | — | onInterval→heal |
-| `godie-i00l` | 落魂的嗜血劍 | 抽卡 | ✅ | 攻擊力 +128 · 攻速 +200% · 攻速 +10 · 吸血 +0.3 · spellVamp… | onInterval→damage |
-| `godie-i00s` | 黃金聖鬥衣 | 抽卡 | ✅ | 生命 +1200 · 魔力 +1200 · 攻速 +120% · 移速 +0.2 | — |
+| `godie-i00l` | 落魂的嗜血劍 | 抽卡 | ✅ | 攻擊力 +128 · 攻速 +200% · 攻速上限解鎖至 10 · 吸血 +0.3 · 技能吸血 +… | onInterval→damage |
+| `godie-i00s` | 黃金聖鬥衣 | 抽卡 | ✅ | 生命 +1200 · 魔力 +1200 · 攻速 +120% · 移速 +20% | — |
 | `godie-i00u` | 名刀-天狼 | 抽卡 | ✅ | 攻速 +60% · 吸血 +0.1 | onBasicAttack→damage |
 | `godie-i00z` | 四魂之玉 | 抽卡 | ✅ | 魔力 +300 | — |
 | `godie-i012` | 熾天使之弓 | 抽卡 | ✅ | 攻速 +30% | onBasicAttack→spendMana/dot |
 | `godie-i013` | 緣一零式 | 抽卡 | ✅ | 攻擊力 +38 | onBasicAttack→damage/applyS… |
-| `godie-i014` | 天叢雲劍 | 抽卡 | ✅ | 攻速 +30% · 移速 +0.2 | — |
+| `godie-i014` | 天叢雲劍 | 抽卡 | ✅ | 攻速 +30% · 移速 +20% | — |
 | `godie-i016` | 晨曦之光 | 抽卡 | ✅ | 回魔 +8 · 冷卻縮減 +0.3 | onDamageTaken→applyBuff |
 | `godie-i018` | 朗基努斯之槍 | 抽卡 | ✅ | — | onBasicAttack→damage · onBa… |
 | `godie-i01d` | 死之王的長槍 | 抽卡 | ✅ | 攻擊力 +17% | onBasicAttack→restore |
 | `godie-i01g` | 貫雷槍 | 抽卡 | ✅ | 射程 +4 · 射程 +2 | onBasicAttack→applyStatus ·… |
 | `godie-i01i` | 雷神之鎚 | 抽卡 | ✅ | 護甲 +20 · 法強 +130 | onBasicAttack→damageArea/ap… |
 | `godie-i01n` | 天堂之劍 | 抽卡 | ✅ | 生命 -50% | — |
-| `godie-i01s` | 仙后座 | 抽卡 | ✅ | evasion +0.25 · 魔力 +100% · 回魔 +25 · 冷卻縮減 +0.5 | onInterval→dispel |
+| `godie-i01s` | 仙后座 | 抽卡 | ✅ | 迴避 +0.25 · 魔力 +100% · 回魔 +25 · 冷卻縮減 +0.5 | onInterval→dispel |
 | `godie-i01v` | 螺旋劍 | 抽卡 | ✅ | 攻速 +100% · 移速 +2 | onBasicAttack→spendMana/dam… |
 | `godie-i01w` | 祕銀鎖子甲 | 抽卡 | ✅ | 護甲 +40 · 魔抗 +66.7 | onDamageTaken→applyBuff |
 | `godie-i020` | 瑪那魔杖 | 抽卡 | ✅ | 法強 +78 · 魔力 +520 · 回魔 +12 | onBasicAttack→damage |
-| `godie-i027` | 光魔杖 | 抽卡 | ✅ | 法強 +0.05 · 回魔 +18 | onBasicAttack→spendMana/dam… |
-| `godie-i02d` | 消失的密室 | 抽卡 | ✅ | 護甲 +100 · 魔抗 +200 · 攻速 +100% · 攻速 +10 · 移速 +4 | onBasicAttack→applyStatus |
+| `godie-i027` | 光魔杖 | 抽卡 | ✅ | 法強 +目前魔力的 5% · 回魔 +18 | onBasicAttack→spendMana/dam… |
+| `godie-i02d` | 消失的密室 | 抽卡 | ✅ | 護甲 +100 · 魔抗 +200 · 攻速 +100% · 攻速上限解鎖至 10 · 移速 +4 | onBasicAttack→applyStatus |
 | `godie-i02e` | 狂暴軒轅劍 | 抽卡 | ✅ | 攻速 +200% | onBasicAttack→applyStatus |
 | `godie-i031` | 天生牙 | 抽卡 | ✅ | 回血 +20 | onKill→revive · onKill→rest… |
-| `godie-i039` | 幻之匕首 | 抽卡 | ✅ | evasion +0.1 | onBasicAttack→damage |
+| `godie-i039` | 幻之匕首 | 抽卡 | ✅ | 迴避 +0.1 | onBasicAttack→damage |
 | `godie-i03f` | 甘豆腐之袍 | 抽卡 | ✅ | 魔力 +600 · 回魔 +4 | onKill→grantAttribute |
 | `godie-i03h` | 天地崩裂魔杖 | 抽卡 | ✅ | 法強 +255 · 法強 +10% | onAbilityCast→damageArea/ap… |
 | `godie-i03m` | 反射之盾 | 抽卡 | ✅ | — | onDamageTaken→damage |
@@ -1315,7 +1322,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **全 239 件道具依 craftRole 的完整分類表**（component 106 / token 8 / none 51 …）在 [`docs/reference/items.md`](./docs/reference/items.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_1e707a1e419e` 產生。 可取得 102 / 全 239 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_07059e40820e` 產生。 可取得 102 / 全 239 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:items -->
 
 <!-- BEGIN GENERATED:grail -->
@@ -1340,15 +1347,15 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 | **概念武裝・破界之槍 C**<br>`grail-c-09` | [技能命中][破盾] 技能命中敵方英雄時，移除其一層護盾。12秒冷卻。 | 技能命中時 · CD 12s | `shieldBreak` | 需要敵方有護盾 | 連動 |
 | **固有技能・魂喰 C**<br>`grail-c-10` | [擊殺][成長] 每累積擊殺5個單位，永久獲得1力量、1敏捷、1智慧；各最多20點。 | 擊殺時 | `grantAttribute` | 需要有小怪 | 轉向 |
 | **固有技能・逆境再起 C**<br>`grail-c-11` | [負面狀態][技能重置] 被掛上負面狀態時，立即完成Q／W／E冷卻。25秒冷卻。 | 被掛上狀態時 · CD 25s | `modifyCooldown` | — | 泛用 |
-| **魔術・詠唱結界 C**<br>`grail-c-12` | [施法][控制免疫] 施放Q／W／E／R後，獲得0.4秒控制免疫。8秒冷卻。 | 施放技能時 · CD 8s | `invulnerable` | 需要 Q／W／E／R 任一 | 泛用 |
+| **魔術・詠唱結界 C**<br>`grail-c-12` | [施法][控制免疫] 施放Q／W／E／R後，獲得0.4秒控制免疫。8秒冷卻。 | 施法時 · CD 8s | `invulnerable` | 需要 Q／W／E／R 任一 | 泛用 |
 | **固有技能・王殺 C**<br>`grail-c-13` | [Boss][寶具重置] 殭屍王出現時，立即完成R冷卻。 | 殭屍王出現時 | `modifyCooldown` | 需要有殭屍王 | 轉向 |
 | **魔術・地脈接續 C**<br>`grail-c-14` | [中立物件][技能重置] 擊毀可觸發擊殺事件的中立單位或中立物件後，完成Q／W／E冷卻。15秒冷卻。 | 擊殺時 · CD 15s | `modifyCooldown` | 需要有中立物件 | 轉向 |
-| **職階技能・單獨行動 C**<br>`grail-c-15` | [隊友死亡][回魔] 隊友死亡後，魔力回復效果變為2倍，持續15秒。不可疊加，只刷新時間。 | 隊友死亡時 | `applyBuff` | 需要有隊友 | 連動 |
+| **職階技能・單獨行動 C**<br>`grail-c-15` | [隊友死亡][回魔] 隊友死亡後，魔力回復效果變為2倍，持續15秒。不可疊加，只刷新時間。 | 隊友陣亡時 | `applyBuff` | 需要有隊友 | 連動 |
 | **投影魔術・追尾彈 C**<br>`grail-c-16` | [技能命中][彈體] 技能命中敵方英雄時，追加一枚追尾魔彈，造成60＋15% AP魔法傷害。6秒冷卻。 | 技能命中時 · CD 6s | `damage` `spawnProjectile` | 需要自己有技能傷害 | 連動 |
 | **固有技能・直感 C**<br>`grail-c-17` | [受到暴擊][護盾] 被敵方英雄暴擊時，獲得相當於8%最大生命的護盾，持續3秒。10秒冷卻。 | 受到傷害時 · CD 10s | `shield` | — | 泛用 |
 | **固有技能・魔力放出（炎）C**<br>`grail-c-18` | [技能命中][燃燒] 技能命中敵方英雄時，使其燃燒3秒。8秒冷卻。 | 技能命中時 · CD 8s | `applyStatus` | 需要自己有技能傷害 | 連動 |
-| **魔術・星之雨 C**<br>`grail-c-19` | [週期][隨機區域] 每15秒在自身附近降下2道星光，每道造成80＋15% AP範圍魔法傷害。 | 每隔一段時間 · CD 15s | `damageArea` `randomArea` | — | 轉向 |
-| **投影魔術・強化投影 C**<br>`grail-c-20` | [施法][下一次普攻] 施法後5秒內，下一次普攻追加一枚投影彈，造成40＋20% AP魔法傷害。8秒冷卻。 | 施放技能時 · CD 8s | `applyBuff` `damage` `spawnProjectile` | 需要 Q／W／E／R 任一 | 連動 |
+| **魔術・星之雨 C**<br>`grail-c-19` | [週期][隨機區域] 每15秒在自身附近降下2道星光，每道造成80＋15% AP範圍魔法傷害。 | 週期（每 N 秒） · CD 15s | `damageArea` `randomArea` | — | 轉向 |
+| **投影魔術・強化投影 C**<br>`grail-c-20` | [施法][下一次普攻] 施法後5秒內，下一次普攻追加一枚投影彈，造成40＋20% AP魔法傷害。8秒冷卻。 | 施法時 · CD 8s | `applyBuff` `damage` `spawnProjectile` | 需要 Q／W／E／R 任一 | 連動 |
 
 ### A級願望（後台 `gold`）—— 建立可利用的玩法循環
 
@@ -1359,18 +1366,18 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 | **固有技能・戰鬥續行 A**<br>`grail-a-03` | [致命傷害][格擋] 每60秒一次，完全格擋一發原本會使你死亡的傷害。 | 常駐（屬性） | — | — | 泛用 |
 | **固有技能・高速神言 A**<br>`grail-a-04` | [AP][CDR] 每100 AP同時提供5%冷卻縮減，最多30%。AP不會消失。 | 常駐（屬性） | — | — | 轉向 |
 | **固有技能・獵殺本能 A**<br>`grail-a-05` | [英雄擊殺][技能重置] 擊殺敵方英雄時，完成Q／W／E／R冷卻。45秒冷卻。 | 擊殺時 · CD 45s | `modifyCooldown` | — | 連動 |
-| **職階技能・單獨行動 A**<br>`grail-a-06` | [隊友死亡][回魔][淨化] 隊友死亡時，回復25%最大魔力、淨化所有負面狀態並獲得0.75秒無敵。30秒冷卻。 | 隊友死亡時 · CD 30s | `dispel` `invulnerable` `restore` | 需要有隊友 | 連動 |
-| **魔術・靈基修復 A**<br>`grail-a-07` | [復活][技能重置] 被復活時，完成Q／W／E／R冷卻、回滿魔力並獲得1秒無敵。 | 復活時 | `invulnerable` `modifyCooldown` `restore` | 需要有復活圈 | 泛用 |
-| **魔術・殘響詠唱 A**<br>`grail-a-08` | [技能再演] 施放Q／W／E／R後，1.2秒後自動再施放一次相同技能，不再次消耗魔力。各技能格24秒冷卻。 | 施放技能時 · CD 24s | `delayed` `proxyCast` | 需要 QWER | 連動 |
+| **職階技能・單獨行動 A**<br>`grail-a-06` | [隊友死亡][回魔][淨化] 隊友死亡時，回復25%最大魔力、淨化所有負面狀態並獲得0.75秒無敵。30秒冷卻。 | 隊友陣亡時 · CD 30s | `dispel` `invulnerable` `restore` | 需要有隊友 | 連動 |
+| **魔術・靈基修復 A**<br>`grail-a-07` | [復活][技能重置] 被復活時，完成Q／W／E／R冷卻、回滿魔力並獲得1秒無敵。 | 被復活時 | `invulnerable` `modifyCooldown` `restore` | 需要有復活圈 | 泛用 |
+| **魔術・殘響詠唱 A**<br>`grail-a-08` | [技能再演] 施放Q／W／E／R後，1.2秒後自動再施放一次相同技能，不再次消耗魔力。各技能格24秒冷卻。 | 施法時 · CD 24s | `delayed` `proxyCast` | 需要 QWER | 連動 |
 | **靈基轉換・虛數體 A**<br>`grail-a-09` | [防禦捨棄][迴避] 護甲與魔抗固定為0，迴避率固定為35%。 | 常駐（屬性） | — | — | 轉向 |
 | **魔術刻印・閉鎖回路 A**<br>`grail-a-10` | [回魔捨棄][傷害回魔] 魔力回復固定為0；每次對敵人造成傷害時，回復3%最大魔力。1秒冷卻。 | 造成傷害時 · CD 1s | `restore` | 需要魔力 | 轉向 |
 | **魔術・魔力裝甲 A**<br>`grail-a-11` | [最大魔力][最大生命] 最大魔力的50%同時視為額外最大生命。 | 常駐（屬性） | — | 需要魔力 | 轉向 |
 | **魔術・術式反轉 A**<br>`grail-a-12` | [技能傷害][物理化] 所有技能傷害改為物理傷害；原本AP、AD或其他傷害係數不變。 | 常駐（屬性） | — | — | 轉向 |
-| **固有技能・怪力 A**<br>`grail-a-13` | [AD捨棄][生命普攻] 攻擊力固定為0；每次普通攻擊額外造成自身最大生命5%的物理傷害。 | 普通攻擊時 | `damage` | — | 轉向 |
+| **固有技能・怪力 A**<br>`grail-a-13` | [AD捨棄][生命普攻] 攻擊力固定為0；每次普通攻擊額外造成自身最大生命5%的物理傷害。 | 普攻時 | `damage` | — | 轉向 |
 | **固有技能・縮地 A**<br>`grail-a-14` | [迴避][瞬移] 成功迴避敵方英雄攻擊時，瞬移至該攻擊者身旁。10秒冷卻。 | 迴避成功時 · CD 10s | `blink` | 需要自己有迴避／反彈 | 連動 |
 | **固有技能・不屈之魂 A**<br>`grail-a-15` | [負面狀態][淨化][無敵] 被掛上負面狀態時，淨化所有負面狀態並獲得0.75秒無敵。20秒冷卻。 | 被掛上狀態時 · CD 20s | `dispel` `invulnerable` | — | 泛用 |
-| **魔術・心象防壁 A**<br>`grail-a-16` | [AP][護盾] 施放Q／W／E／R時，獲得相當於50% AP的護盾，持續3秒。4秒冷卻。 | 施放技能時 · CD 4s | `shield` | — | 連動 |
-| **固有技能・無窮之武練 A**<br>`grail-a-17` | [普攻][技能重置] 普攻命中敵方英雄時，完成Q／W／E冷卻。8秒冷卻。 | 普通攻擊時 · CD 8s | `modifyCooldown` | 偏好技能傷害 | 連動 |
+| **魔術・心象防壁 A**<br>`grail-a-16` | [AP][護盾] 施放Q／W／E／R時，獲得相當於50% AP的護盾，持續3秒。4秒冷卻。 | 施法時 · CD 4s | `shield` | — | 連動 |
+| **固有技能・無窮之武練 A**<br>`grail-a-17` | [普攻][技能重置] 普攻命中敵方英雄時，完成Q／W／E冷卻。8秒冷卻。 | 普攻時 · CD 8s | `modifyCooldown` | 偏好技能傷害 | 連動 |
 | **魔術刻印・灼熱回路 A**<br>`grail-a-18` | [燃燒][技能重置] 對帶有燃燒狀態的敵方英雄造成傷害時，完成Q／W／E冷卻。10秒冷卻。 | 造成傷害時 · CD 10s | `modifyCooldown` | 需要自己有燃燒 | 連動 |
 | **固有技能・自己改造 A**<br>`grail-a-19` | [技能命中][永久成長] 每次技能命中敵方英雄，永久獲得1 AP，最多60 AP。 | 技能命中時 | `applyBuff` | 需要自己有技能傷害 | 轉向 |
 | **固有技能・千里眼 A**<br>`grail-a-20` | [技能命中][距離增幅] 技能命中英雄時追加一次魔法傷害；實際命中距離越遠，追加傷害越高。4秒冷卻。 | 技能命中時 · CD 4s | `damage` | 偏好技能傷害 | 轉向 |
@@ -1380,32 +1387,73 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 | 願望 | 效果 | 觸發 | 效果機制 | 靈基適性條件 | 顯現位置 |
 |---|---|---|---|---|---|
 | **聖杯權能・真理改寫 EX**<br>`grail-ex-01` | [技能傷害][真實傷害] 所有技能傷害改為真實傷害，並在免疫與迴避判定前完成轉換。 | 常駐（屬性） | — | 需要自己有技能傷害 | 轉向 |
-| **固有結界・時間神殿 EX**<br>`grail-ex-02` | [時間][技能重置] 每20秒完成Q／W／E／R冷卻。EX不受影響。 | 每隔一段時間 · CD 20s | `modifyCooldown` | — | 泛用 |
+| **固有結界・時間神殿 EX**<br>`grail-ex-02` | [時間][技能重置] 每20秒完成Q／W／E／R冷卻。EX不受影響。 | 週期（每 N 秒） · CD 20s | `modifyCooldown` | — | 泛用 |
 | **聖杯權能・勝利輪迴 EX**<br>`grail-ex-03` | [英雄擊殺][完全重置] 擊殺敵方英雄時，完成Q／W／E／R／EX全部冷卻。60秒冷卻。 | 擊殺時 · CD 60s | `modifyCooldown` | — | 連動 |
-| **令咒・三重詠唱 EX**<br>`grail-ex-04` | [R施放][技能代放] 主動施放R時，同時免費施放Q、W、E。45秒冷卻。 | 施放技能時 · CD 45s | `proxyCast` | 需要 QWER | 轉向 |
-| **寶具・二重真名解放 EX**<br>`grail-ex-05` | [R施放][寶具再演] 施放R後，1.25秒後自動再施放一次R，不再次消耗魔力。60秒冷卻。 | 施放技能時 · CD 60s | `delayed` `proxyCast` | 需要 R | 連動 |
+| **令咒・三重詠唱 EX**<br>`grail-ex-04` | [R施放][技能代放] 主動施放R時，同時免費施放Q、W、E。45秒冷卻。 | 施法時 · CD 45s | `proxyCast` | 需要 QWER | 轉向 |
+| **寶具・二重真名解放 EX**<br>`grail-ex-05` | [R施放][寶具再演] 施放R後，1.25秒後自動再施放一次R，不再次消耗魔力。60秒冷卻。 | 施法時 · CD 60s | `delayed` `proxyCast` | 需要 R | 連動 |
 | **職階技能・騎乘 EX**<br>`grail-ex-06` | [飛行][地形無視] 永久進入飛行狀態，無視單位與一般障礙物碰撞，但不能離開競技場邊界。 | 常駐（屬性） | — | 排除已有飛行 | 轉向 |
 | **固有技能・戰鬥續行 EX**<br>`grail-ex-07` | [致命傷害][完全格擋] 每20秒可以完全格擋一次致命傷害，包含真實傷害。 | 常駐（屬性） | — | — | 泛用 |
 | **固有技能・無我境地 EX**<br>`grail-ex-08` | [迴避][反彈][技能代放] 成功迴避或反彈敵方英雄攻擊時，從Q／W／E中隨機免費施放一個技能攻擊該敵人。12秒冷卻。 | 迴避成功時 · CD 12s<br>反彈成功時 · CD 12s | `proxyCast` `weightedBranch` | 需要自己有迴避／反彈<br>需要 QWE | 連動 |
 | **聖杯權能・終末宣告 EX**<br>`grail-ex-09` | [火圈][隨機轟炸] 火圈開始燃燒時，獲得1秒無敵，並在5秒內於自身附近降下10道終末星光。 | 火圈點燃時 | `damageArea` `invulnerable` `randomArea` | 需要有火圈 | 轉向 |
-| **契約・反魂 EX**<br>`grail-ex-10` | [隊友死亡][復活] 隊友死亡時，使該隊友以20%生命復活。60秒冷卻。 | 隊友死亡時 · CD 60s | `revive` | 需要有隊友 | 連動 |
-| **靈基再臨 EX**<br>`grail-ex-11` | [復活][完全重置] 自身被復活時，完成Q／W／E／R／EX冷卻、回滿魔力並獲得1.5秒無敵。 | 復活時 | `invulnerable` `modifyCooldown` `restore` | 需要有復活圈 | 泛用 |
+| **契約・反魂 EX**<br>`grail-ex-10` | [隊友死亡][復活] 隊友死亡時，使該隊友以20%生命復活。60秒冷卻。 | 隊友陣亡時 · CD 60s | `revive` | 需要有隊友 | 連動 |
+| **靈基再臨 EX**<br>`grail-ex-11` | [復活][完全重置] 自身被復活時，完成Q／W／E／R／EX冷卻、回滿魔力並獲得1.5秒無敵。 | 被復活時 | `invulnerable` `modifyCooldown` `restore` | 需要有復活圈 | 泛用 |
 | **固有結界・魔力海 EX**<br>`grail-ex-12` | [最大魔力][最大生命][受傷回魔] 最大魔力的100%同時視為額外最大生命；生命損失的50%轉化為魔力。 | 受到傷害時 | `eventValueConversion` | 需要魔力 | 轉向 |
 | **寶具・死棘之槍 EX**<br>`grail-ex-13` | [R命中][處決] R命中最大生命10%以下的敵方英雄時，直接處決目標，無視護盾。30秒冷卻。 | 技能命中時 · CD 30s | `devour` | 需要自己有技能傷害<br>需要 R | 連動 |
 | **概念武裝・起源彈 EX**<br>`grail-ex-14` | [R命中][驅散][破盾] R命中敵方英雄時，移除其全部可驅散增益與全部護盾。30秒冷卻。 | 技能命中時 · CD 30s | `dispel` `shieldBreak` | 需要自己有技能傷害<br>需要 R | 連動 |
-| **魔術禮裝・寶石劍 EX**<br>`grail-ex-15` | [技能施放][機率再演] 每次施放Q／W／E／R時，有25%機率立即免費再施放一次相同技能。再演不會再次觸發本願望。 | 施放技能時 · 25% | `proxyCast` | 需要 QWER | 連動 |
-| **秘劍・燕返 EX**<br>`grail-ex-16` | [普攻][多重投影] 每次普通攻擊有30%機率產生兩次額外攻擊投影，每次造成100% AD物理傷害，但不觸發其他On-hit。 | 普通攻擊時 · 30% | `damage` `delayed` | — | 連動 |
-| **靈基換裝・零距離決戰 EX**<br>`grail-ex-17` | [射程捨棄][技能重置] 僅遠程英雄可選。普攻距離固定為近戰・中1.6；普攻命中英雄時完成Q／W／E／R冷卻。6秒冷卻。 | 普通攻擊時 · CD 6s | `modifyCooldown` | 僅遠程 | 轉向 |
+| **魔術禮裝・寶石劍 EX**<br>`grail-ex-15` | [技能施放][機率再演] 每次施放Q／W／E／R時，有25%機率立即免費再施放一次相同技能。再演不會再次觸發本願望。 | 施法時 · 25% | `proxyCast` | 需要 QWER | 連動 |
+| **秘劍・燕返 EX**<br>`grail-ex-16` | [普攻][多重投影] 每次普通攻擊有30%機率產生兩次額外攻擊投影，每次造成100% AD物理傷害，但不觸發其他On-hit。 | 普攻時 · 30% | `damage` `delayed` | — | 連動 |
+| **靈基換裝・零距離決戰 EX**<br>`grail-ex-17` | [射程捨棄][技能重置] 僅遠程英雄可選。普攻距離固定為近戰・中1.6；普攻命中英雄時完成Q／W／E／R冷卻。6秒冷卻。 | 普攻時 · CD 6s | `modifyCooldown` | 僅遠程 | 轉向 |
 | **魔術刻印・生命爐心 EX**<br>`grail-ex-18` | [最大生命][最大魔力][受傷回魔] 最大生命的100%同時視為額外最大魔力；生命損失的25%轉化為魔力。 | 受到傷害時 | `eventValueConversion` | 需要魔力 | 轉向 |
 | **固有技能・魔力爐心（無限）EX**<br>`grail-ex-19` | [技能命中][無限成長] 每次技能命中敵方英雄，永久獲得1 AP，沒有成長上限。 | 技能命中時 | `applyBuff` | 需要自己有技能傷害 | 轉向 |
-| **固有技能・魔力放出（雷）EX**<br>`grail-ex-20` | [攻速][普攻傷害] 每次普通攻擊追加等同「60 × 當前攻速」的魔法傷害。攻速同時決定攻擊頻率與單次威力。 | 普通攻擊時 | `damage` | — | 轉向 |
+| **固有技能・魔力放出（雷）EX**<br>`grail-ex-20` | [攻速][普攻傷害] 每次普通攻擊追加等同「60 × 當前攻速」的魔法傷害。攻速同時決定攻擊頻率與單次威力。 | 普攻時 | `damage` | — | 轉向 |
 
 > ⚠️ 另外還有 **31 張舊增益卡**留在 `content/augments/`，但**預設不進卡池**（設計規則 §8「⛔ 禁止純屬性增益」）。後台「傳說武器三選一」頁的〈舊增益卡〉切成「兩批一起發」就整批回來。
 
 逐張的完整 JSON（每一格參數、每一個 hook、每一條條件）在 [`docs/reference/grail-wishes.md`](docs/reference/grail-wishes.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_1e707a1e419e` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_07059e40820e` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:grail -->
+
+### ⭐ 2026-08-17／18 這一批新加的機制（GH#354）
+
+⚠️ 下一段那五張產生的表**涵蓋不到這一批的大部分** —— 它們數的是 effect kind /
+hook event / 條件葉 / 狀態標籤 / 特效的**用量**，而這一批加的是**屬性**、**運算**、
+以及兩個**欄位**（`applyBuff.permanentScope`、`stat` 條件葉的 `other`），那三類在那些表裡
+根本沒有欄位可以住；唯一露臉的 `onStatCapReached` 也只會是一列數字，不解釋語意。
+所以先寫在這裡。⚠️ 每一個名字都已經對出貨原始碼確認過存在，
+逐格參數與上下界看 [`docs/技能標記機制與效果規則.md`](docs/技能標記機制與效果規則.md)。
+
+**六條新屬性 `Stat`**（全部出貨值 0 ＝ 嚴格 no-op，內容不開就等於它不存在）：
+
+| `Stat` | 意思 | 為什麼不能用既有的表達 |
+| --- | --- | --- |
+| `outputDamagePct` | 我造成的**傷害**整體 ×(1+N) | 一支「造成 300 點固定傷害」的技能對 `ad`/`ap` 完全免疫 —— 它必須坐在**封包層**，不是屬性層 |
+| `outputHealingPct` | 我造成的**治療**整體 ×(1+N) | 同上（唯一入口 `combat/restore.ts::heal`） |
+| `outputShieldPct` | 我給出的**護盾**整體 ×(1+N) | 同上（唯一入口 `combat/damage.ts::addShield`）。⛔ 三個分開是因為有的寶具只放大治療、有的只放大傷害 |
+| `maxHitPctMaxHp` | **單發**傷害上限，以**承受者**最大生命的比例表示 | 0 ＝ 沒有上限（⛔ 不是「上限 0%」，那會讓沒填的人免疫一切） |
+| `unavoidablePct` | 我的攻擊有多難被**迴避**，0..1 | ⛔ 它不是第三種迴避率，是**對方那一格的折扣**；1 ＝ 走既有的 zero-guarantee，所以「絕對命中」在重播位元層上等於「對方本來就沒迴避」。⚠️ 只關迴避，格擋／護盾／免疫照舊 |
+| `cooldownDrainRate` | 冷卻**流逝速度**加成，0 ＝ ×1 | ⛔ 不是 `cdr`：CDR 在**施放那一刻**決定要等幾 tick，流逝速度是**持續**的，所以冷卻進行中才掛上的增益立刻生效 |
+
+**一個新運算 `ModOp`**：`capRaisePct` —— 把這條屬性的上限**抬高幾成**
+（`capRaise` 是「抬到某個絕對值」，多來源取 max）。
+
+**一個新觸發 `hook`**：`onStatCapReached`（屬性首次到頂）。持有者是**那個身體自己**，
+payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**的事件之一 ——
+屬性到頂多半發生在商店買完裝備的那一刻。
+
+**一個新的「永久有多久」欄位**：`applyBuff.permanentScope`（`match` 預設／`round`）。
+沒有到期時間的增益從此可以只活到**這一回合結束**。⛔ 它不是「幫你算一個到期秒數」——
+引擎記的是旗標，拆除點在回合開始（`sim/clearPools.ts::clearRoundScoped`）。
+
+**條件葉的第二個運算元**：`stat` 條件葉新增 `other`，於是「比較**自身與目標**」
+（`右手邊 = 對方的讀數 × 倍率 + 那個數字`）第一次寫得出來。⚠️ 兩個分支各帶一份
+（資源 `hp`/`mp` 一份、一般屬性一份），所以拿魔力去比攻速在**解析階段**就會被擋。
+
+**寶具階級**：`config.arena-rules@1.weaponTiers` 是一張**有序的「更高階獎池」表**，
+出貨兩列 —— **EX ＜ [EX解放] ＜ [EX∅ 根源]**。逐階問「這回合開不開放 × 骰不骰得到」，
+第一個中的就用它的獎池。⇒ 加第三、第四階是**填一列**，⛔ 不改程式。
+逐件寶具（階級 · 取得獎池 · 效果摘要）在
+[`docs/固有能力及寶具總覽.md`](docs/固有能力及寶具總覽.md)。
 
 <!-- BEGIN GENERATED:mechanics -->
 ## 🧩 技能機制詞彙（效果 / 觸發 / 條件 / 標籤 / 特效）
@@ -1436,39 +1484,39 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 | 事件 | 中文 | 用它的內容 |
 |---|---|--:|
-| `onAbilityCast` | 施放技能時 | 19 |
+| `onAbilityCast` | 施法時 | 19 |
 | `onAbilityHit` | 技能命中時 | 19 |
-| `onAllyDamaged` | — | 0 |
-| `onAllyDeath` | 隊友死亡時 | 3 |
-| `onBasicAttack` | 普通攻擊時 | 71 |
+| `onAllyDamaged` | 隊友受傷時 | 0 |
+| `onAllyDeath` | 隊友陣亡時 | 3 |
+| `onBasicAttack` | 普攻時 | 71 |
 | `onBossSpawn` | 殭屍王出現時 | 1 |
-| `onBoundaryTouch` | — | 0 |
-| `onCrowdControlApplied` | — | 0 |
-| `onCrowdControlReceived` | — | 0 |
+| `onBoundaryTouch` | 碰到場地邊界時（＝踏進火圈） | 0 |
+| `onCrowdControlApplied` | 對別人施加控場時 | 0 |
+| `onCrowdControlReceived` | 自己被控場時 | 0 |
 | `onDamageDealt` | 造成傷害時 | 7 |
 | `onDamageTaken` | 受到傷害時 | 31 |
-| `onDashOrBlink` | — | 0 |
+| `onDashOrBlink` | 位移時（衝刺／閃現／跳躍） | 0 |
 | `onDeath` | 死亡時 ⛔ 已知壞掉（GH#296） | 0 |
 | `onEvade` | 迴避成功時 | 10 |
 | `onFireRingIgnite` | 火圈點燃時 | 1 |
-| `onGuardianDown` | 守衛塔被拆時 | 0 |
-| `onHeal` | — | 0 |
-| `onInterval` | 每隔一段時間 | 7 |
+| `onGuardianDown` | 守衛塔倒下時 | 0 |
+| `onHeal` | 治療真的補到血時 | 0 |
+| `onInterval` | 週期（每 N 秒） | 7 |
 | `onKill` | 擊殺時 | 13 |
-| `onLethalDamage` | — | 0 |
-| `onOverheal` | — | 0 |
-| `onProjectileExpire` | — | 0 |
+| `onLethalDamage` | 受到致命傷害時（免死有沒有生效都會發） | 0 |
+| `onOverheal` | 治療溢出時 | 0 |
+| `onProjectileExpire` | 自己的投射物消失時 | 0 |
 | `onReflectSuccess` | 反彈成功時 | 11 |
-| `onRevive` | 復活時 | 2 |
-| `onRoundEnd` | — | 0 |
-| `onRoundStart` | — | 0 |
-| `onShieldBroken` | 護盾破裂時 | 0 |
+| `onRevive` | 被復活時 | 2 |
+| `onRoundEnd` | 回合結束時 | 0 |
+| `onRoundStart` | 回合開始時 | 0 |
+| `onShieldBroken` | 護盾破碎時 | 0 |
 | `onShieldGained` | 獲得護盾時 | 0 |
-| `onStatCapReached` | — | 0 |
+| `onStatCapReached` | 屬性首次到頂時 | 0 |
 | `onStatusApplied` | 被掛上狀態時 | 3 |
 | `onStunned` | 被暈眩時 | 2 |
-| `onUltimateCast` | — | 0 |
-| `onUltimateHit` | — | 0 |
+| `onUltimateCast` | 大招（R）施放時 | 0 |
+| `onUltimateHit` | 大招（R）命中時 | 0 |
 
 ### 條件葉（condition leaf）—— 5 種
 
@@ -1500,7 +1548,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 完整的參數與上下界（每個效果每一格能填什麼）在 [`docs/技能標記機制與效果規則.md`](docs/技能標記機制與效果規則.md)，同樣是產生的。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_1e707a1e419e` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_07059e40820e` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:mechanics -->
 
 
@@ -1712,6 +1760,22 @@ pnpm content:validate   # 全量載入 + schema + 硬參照 + 索引過期偵測
 
 改完 `content/**` 沒跑 `content:build`，`content:validate` 會直接 fail 並叫你去 build —— 它同時是 testrunner 的 `content-validate` suite，所以會擋測試。
 
+`content:build` 是一條**鏈**，它連帶重新產生兩份「不可以手改」的文件，所以改內容不會讓它們過期：
+
+```bash
+pnpm spec:build         # docs/技能標記機制與效果規則.md    —— 一個機制「怎麼用」
+```
+
+```bash
+pnpm overview:build     # docs/固有能力及寶具總覽.md        —— 「誰」用了它們
+```
+
+兩者都有 `:check` 版（`spec:check` / `overview:check`）只比對不寫入，過期就 exit 1，
+而且各有一條測試（`skillSpecFresh.test.ts` / `innateLegendaryDocFresh.test.ts`）**真的把腳本跑起來**，
+所以忘了重新產生會在 `pnpm test` 就紅，⛔ 不會拖到部署。兩支都**刻意沒有時間戳** ——
+任何隨時鐘變動的欄位都會讓逐位元組比對永遠不相等，於是 `--check` 只能被放寬成模糊比對，
+而一條被放寬的閘等於沒有閘。
+
 ```bash
 pnpm docs:readme        # 一次寫兩處：README §7 的開放清單 + docs/reference/*.md 的完整全表
 ```
@@ -1741,6 +1805,8 @@ pnpm docs:reference     # 只重寫 docs/reference/*.md 那三個完整檔（doc
 
 | 檔案 | 是什麼 |
 | --- | --- |
+| `docs/固有能力及寶具總覽.md` | **產生的**：每位英雄的天生技、每一件寶具（階級 · 獎池 · 效果摘要 · 用到哪些機制）。`pnpm overview:build` |
+| `docs/技能標記機制與效果規則.md` | **產生的**：每個機制的參數與上下界。`pnpm spec:build` |
 | `docs/todo/_index.md` + `docs/todo/*.md` | 每功能一份 TODO，每項對應一個測試函式（`todo:check` 守著） |
 | `docs/_requirements-audit-gaps.md` | **需求 ↔ 實作的落差記錄**。每條需求一發現就要立刻登記在這裡 |
 | `docs/requirements-status.md` | 需求逐項狀態 |

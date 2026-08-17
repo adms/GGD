@@ -642,15 +642,30 @@ $ grep -rn "startLeap" packages/shared/src     # 0 hits
 |---|---|---|
 | 定時屬性加成 | `applyBuff` + `duration` + `modifiers`（可 `perRank`） | `sim/effects/effectRunner.ts:109-156` |
 | 移速歸零／定身 | `applyStatus` 的 `root` / `moveSpeedMult` | `effectRunner.ts:79-108`、`sim/components.ts:185-186` |
-| 攻速 / 移速 / 護甲 / 射程 / 迴避 等 18 種屬性 | `Stat` enum | `sim/stats/statTypes.ts:3-31` |
+| 攻速 / 移速 / 護甲 / 射程 / 迴避 等 **23 種**屬性 | `Stat` enum | `sim/stats/statTypes.ts` |
 | 每秒扣血（76 的 `A0IX −10/s`） | `healthRegen` 負值 modifier（**現行 content doc 已經這樣做**） | `content/abilities/godie-u00n.passive.json` |
-| 事件掛鉤 | `HookEvent`：`onAbilityCast` / `onAbilityHit` / `onBasicAttack` / `onDamageDealt` / `onDamageTaken` / `onKill` / `onLevelUp` | `sim/stats/modifiers.ts:27-34` |
+| 事件掛鉤 | `HookEvent` —— **33 個**（⛔ 不要抄清單，權威是 `docs/editor-contract/ggd-runtime-capabilities.json` 的 `hookEvents`）。⚠️ `onLevelUp` 已於 2026-08-05 刪除 | `sim/stats/modifiers.ts` |
 | 死而復生的狀態機骨架 | 復活圈（#84/#206） | `sim/revive.ts` |
 
 **光靠 `applyBuff` 就能忠實表達 23 支「A 形狀」的數值面**（`umvs` 差、`Eme5` 生命加成、`AIsx` 攻速、`Arll` 扣血）。
 `content/abilities/godie-u00n.passive.json` 與 `godie-uvng.passive.json` 已經是這個做法，數字對得上 w3a。
 
 ### 7.2 還沒有的（#249 / #119 真正要蓋的）
+
+> 🔴 **2026-08-18 追記（第三守則）：下面這張表已經全部被實作追過去了。**
+> 它是 2026-07-26 那天的引擎快照，⛔ **不要再照它去判斷「引擎缺什麼」**——
+> 缺口清單的權威是 `docs/editor-contract/ggd-runtime-capabilities.json`
+> （`pnpm caps:export` 從出貨註冊表推導）。逐列的現況：
+>
+> | 表上寫「缺」的 | 今天在哪 |
+> |---|---|
+> | 形態切換原語 | `championForm` effect kind（換模型／技能列／名稱／音效） |
+> | 可再按一次關掉的姿態 | `ability@1.toggle`（`sim/abilities/toggle.ts`；`exitToggle()` 是唯一出口，手動關與 MP 不足自動關共用） |
+> | 每次普攻扣資源、不足自動失效 | `spendMana` effect kind ＋ `toggle.upkeepCost` / `upkeepCadence`（`none`／`perAttack`／`perSecond`）|
+> | `onDeath`(self) hook | `onDeath` **英雄那一半已修**（GH#293）。⛔ 小怪那一半仍掛不上去（殭屍沒有 `StatsComp`，見 `knownBroken`）|
+> | 回合邊界重置 | `applyBuff.permanentScope: "round"`（GH#354，2026-08-18）＋ `onRoundStart` / `onRoundEnd` 兩個 hook 事件 |
+>
+> 留著原表是因為它解釋了**為什麼**這幾件事要做成機制而不是逐支寫 if。
 
 | 形狀 | 缺什麼 | 為什麼 buff 表達不了 |
 |---|---|---|

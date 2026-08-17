@@ -187,7 +187,20 @@ export const DEFAULT_STAT_CAPS: StatCapTable = Object.freeze({
   //   ⚠️ 新地圖的牆是整格厚（GH#324，2 世界單位），比舊註解假設的 0.4 深牆段厚
   //   很多，穿牆的實際機率因此比量測時低 —— 但沒有重新量過，這是「風險降低」
   //   不是「風險消失」，貼著線走仍然值得留意。
-  [Stat.MoveSpeed]: Object.freeze({ base: 18, unlocked: 18 }),
+  //
+  //   ⭐ **2026-08-18 第三版：`unlocked` 18 → 24，而且那個「風險消失」是有條件的。**
+  //   owner 對 #60 立體機動裝置的裁決：「**改成飛行型態 並且移動速度上限就好**」。
+  //   ⚠️ 這不是把上面那條平手線推翻掉 —— 它整條**不適用於飛行者**：
+  //   `sim/flight.ts` 的飛行讓 `MovementSystem` 跳過**全部三處**推擠
+  //   （`moveWithCollision` 撞牆、soft separation、`pushOutOfObstacle`），
+  //   所以「會不會穿牆」對一個飛行單位**不是一個問題** —— 它本來就被允許穿過去。
+  //   ⛔ 但 `unlocked` 是**全域**的：任何帶 `ms` capRaise 的來源都吃得到 24，
+  //   包含**不會飛的**。那正是平手線會回來的那條路。
+  //   ⇒ 所以這個耦合被寫成一道**閘**而不是一句提醒：
+  //   `content/noOpModifierClaims.test.ts` 的「抬移速上限的文件必須同時給飛行」。
+  //   ⚠️ 24 = 每 tick 0.8u = 身體半徑 133%，**確實在線外** —— 它安全的唯一理由
+  //   就是持有者在飛。那道閘紅掉的時候，⛔ 不要改閘，去給那份文件飛行或改回 18。
+  [Stat.MoveSpeed]: Object.freeze({ base: 18, unlocked: 24 }),
 });
 
 // ------------------------------------------------------------- bounds ------

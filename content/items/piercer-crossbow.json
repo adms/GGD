@@ -5,7 +5,7 @@
   "craftRole": "none",
   "id": "piercer-crossbow",
   "name": "穿甲弩",
-  "description": "傳說\n效能\n攻擊力+38\n攻擊速度+45%\n普攻額外造成攻擊力 35% 的真實傷害（無視護甲）\n\n解說\n弩箭不管對面穿了幾層鐵；它只認得距離。",
+  "description": "傳說\n效能\n攻擊力+38\n攻擊速度+45%\n[限遠程] 遠程英雄的普攻額外造成攻擊力 35% 的真實傷害（無視護甲與魔抗）；近戰英雄拿不到這一條\n\n解說\n弩箭不管對面穿了幾層鐵；它只認得距離。",
   "tags": [
     "legendary",
     "true-damage",
@@ -45,5 +45,7 @@
         }
       ]
     }
-  ]
+  ],
+  "authoringNote": "⭐ 2026-08-18 逐句稽核（第一·五守則「不放任何無效說明」）。三句逐一對照：\n「攻擊力+38」= modifiers[0] `ad` flat 38 ✅。\n「攻擊速度+45%」= modifiers[1] `as` **pctAdd** 0.45 ✅ —— 走 `(base+Σflat)×(1+ΣpctAdd)` 的加法區，⛔ 沒有 `capRaise`，所以它照 `config.stat-caps@1` 的 as.base 4.0 夾（unlocked 10.0 要另一件道具去解）。\n「普攻額外造成攻擊力 35% 的真實傷害」= passive[0] `damage{damageType:\"true\", ratios:[ad 0.35]}` ✅。\n\n⚠️ **卡面改了一句，改的是描述不是實作**：這條 hook 帶 `requires:{attackType:\"ranged\", onMismatch:\"block\"}`，而 `requirementScale` 對不合格的持有者回 **0**，`fireHooks` 在骰子與 ICD 之前就 `continue` ⇒ **近戰英雄拿到的是一件三句只兌現兩句的武器，而且畫面上沒有任何訊息**（失敗形態②）。舊卡面一個字都沒提遠程，所以現在加上「[限遠程]…近戰英雄拿不到這一條」。\n⭐ 另一條路（**沒有走，留給 owner 決定**）：這份文件**沒有** `requiresAttackType: \"ranged\"`，所以三選一／寶玉照樣會把它發給近戰英雄。填上那一格就會在 roll **之前**過濾掉，卡面也就不必寫那句但書。⛔ 我沒有自己填：那會動到抽卡池，是平衡決策不是描述修正。\n⚠️ 「無視護甲」補成「無視護甲與魔抗」—— `mitigate` 的 `pkt.type === \"true\"` 分支把整個抗性四段跳掉，不是只跳護甲。（仍然吃 `capPerHit` 的單發上限，見 #52。）\n⭐ 2026-08-18：補上 `requiresAttackType: \"ranged\"`。原因是同一天它被放進 `legendary-weapons` 池（在此之前它 `cost: 0` 又不在任何池 —— 玩家根本拿不到），而它的主力子句掛著 `requires{attackType:\"ranged\", onMismatch:\"block\"}`，所以近戰英雄抽到會拿到一張**招牌那條是死的**卡。\n⛔ 這不是我發明的平衡決策，是**照 repo 既有慣例**：`gravity-sword-black-rod` 用 `melee`、`cleaver-of-the-warden` 用 `melee`、`godie-i04d` 用 `melee`、`godie-i012` 用 `ranged`，四份全部是同一個形狀（整件武器的身分綁定攻擊型態）。這一格在 roll **之前**過濾，所以近戰英雄從此不會看到它。\n⚠️ 代價要說清楚：近戰因此也拿不到它的 +38 攻擊力／+45% 攻速。如果 owner 覺得「給近戰一張只有兩條數值的傳說也可以」，把這一格拿掉即可，⛔ 不用改任何程式。",
+  "requiresAttackType": "ranged"
 }

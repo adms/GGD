@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_1e707a1e419e`
+contentVersion `cv_07059e40820e`
 
 ---
 
@@ -16,91 +16,91 @@ contentVersion `cv_1e707a1e419e`
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
-| `applyBuff` | — | 113 | `godie-e001.passive`、`godie-e001.q`、`godie-e001.r`、`godie-e002.r`、`godie-e008.w`、`godie-e00k.ex`、`godie-e00k.r`、`godie-e00l.ex`、`godie-e00n.ex`、`godie-e00n.passive`、`godie-e00n.q`、`godie-e00n.r` …（共 113） |
-| `applyStatus` | — | 97 | `godie-e001.e`、`godie-e001.passive`、`godie-e007.ex`、`godie-e007.q`、`godie-e008.e`、`godie-e008.q`、`godie-e00k.passive`、`godie-e00n.e`、`godie-e00n.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00s.e` …（共 97） |
-| `blink` | — | 2 | `godie-efur.q`、`grail-a-14` |
-| `championForm` | — | 24 | `godie-e001.r`、`godie-e002.w`、`godie-e00k.ex`、`godie-e00l.w`、`godie-e00s.passive`、`godie-e00w.e`、`godie-e010.passive`、`godie-h01n.r`、`godie-h02v.q`、`godie-hgam.ex`、`godie-hjai.ex`、`godie-n003.ex` …（共 24） |
-| `cycleBuff` | — | 1 | `godie-efur.passive` |
-| `damage` | — | 178 | `godie-e001.e`、`godie-e001.passive`、`godie-e002.ex`、`godie-e002.r`、`godie-e002.w`、`godie-e007.e`、`godie-e007.ex`、`godie-e007.q`、`godie-e007.r`、`godie-e008.e`、`godie-e008.q`、`godie-e00k.e` …（共 178） |
-| `damageArea` | — | 28 | `godie-e002.w`、`godie-e00s.e`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00s.w`、`godie-e00w.ex`、`godie-e00w.q`、`godie-e00w.r`、`godie-e00w.w`、`godie-edem.ex`、`godie-edem.q`、`godie-edem.r` …（共 28） |
-| `damageLine` | — | 10 | `godie-e002.e`、`godie-e002.ex`、`godie-e00r.r`、`godie-edem.e`、`godie-emfr.q`、`godie-h01n.e`、`godie-h01u.e`、`godie-h02v.e`、`godie-n00p.passive`、`godie-nsjs.passive` |
-| `dash` | — | 15 | `godie-edem.e`、`godie-h01n.q`、`godie-h01u.e`、`godie-hapm.r`、`godie-hblm.w`、`godie-n00b.e`、`godie-o00k.w`、`godie-o00x.w`、`godie-o02l.passive`、`godie-ofar.passive`、`godie-ogrh.w`、`godie-udea.q` …（共 15） |
-| `delayed` | — | 8 | `godie-e002.ex`、`godie-h02v.ex`、`godie-h02v.q`、`godie-hapm.ex`、`godie-hapm.passive`、`grail-a-08`、`grail-ex-05`、`grail-ex-16` |
-| `devour` | — | 3 | `godie-e00r.q`、`godie-h02v.w`、`grail-ex-13` |
-| `dispel` | — | 8 | `godie-ewar.r`、`godie-ewar.w`、`godie-h00l.passive`、`grail-c-01`、`grail-c-08`、`grail-a-06`、`grail-a-15`、`grail-ex-14` |
-| `dot` | — | 4 | `godie-edem.ex`、`godie-edem.q`、`godie-h02v.e`、`godie-hart.r` |
-| `evasion` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `eventValueConversion` | — | 5 | `godie-emfr.ex`、`grail-c-04`、`grail-a-02`、`grail-ex-12`、`grail-ex-18` |
-| `extendBuff` | — | 1 | `godie-hapm.q` |
-| `grantAttribute` | — | 4 | `godie-hpb1.passive`、`godie-n01c.passive`、`godie-nbbc.passive`、`grail-c-10` |
-| `grantGold` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `heal` | — | 9 | `godie-e007.w`、`godie-etyr.q`、`godie-h02r.passive`、`godie-n003.w`、`godie-n01c.q`、`godie-n01g.w`、`godie-nbbc.q`、`godie-o02p.r`、`godie-o02p.w` |
-| `invulnerable` | — | 18 | `godie-e00k.e`、`godie-e00z.e`、`godie-hapm.ex`、`godie-hapm.passive`、`godie-hapm.w`、`godie-hart.r`、`godie-hpb1.w`、`godie-u00j.q`、`godie-u00n.r`、`godie-u00o.r`、`godie-u010.q`、`godie-uvng.q` …（共 18） |
-| `knockback` | — | 11 | `godie-e00w.q`、`godie-efur.w`、`godie-ewar.ex`、`godie-h00l.q`、`godie-h00l.r`、`godie-h01u.w`、`godie-h02k.r`、`godie-hapm.ex`、`godie-hapm.passive`、`grail-c-02`、`grail-a-01` |
-| `leap` | — | 7 | `godie-h00l.w`、`godie-hapm.w`、`godie-hart.q`、`godie-hart.w`、`godie-hpb1.e`、`godie-u00n.r`、`godie-u00o.r` |
-| `manaBarrier` | — | 1 | `godie-emns.passive` |
-| `modifyCooldown` | — | 13 | `godie-h00l.ex`、`godie-h01n.r`、`grail-c-11`、`grail-c-13`、`grail-c-14`、`grail-a-05`、`grail-a-07`、`grail-a-17`、`grail-a-18`、`grail-ex-02`、`grail-ex-03`、`grail-ex-11` …（共 13） |
-| `proxyCast` | — | 6 | `godie-h01u.r`、`grail-a-08`、`grail-ex-04`、`grail-ex-05`、`grail-ex-08`、`grail-ex-15` |
-| `randomArea` | — | 4 | `godie-e00s.r`、`godie-efur.r`、`grail-c-19`、`grail-ex-09` |
-| `restore` | — | 16 | `godie-e00s.ex`、`godie-emfr.passive`、`godie-ewar.w`、`godie-h00l.r`、`godie-h02v.ex`、`godie-h02v.q`、`godie-hapm.passive`、`godie-o02p.ex`、`grail-c-03`、`grail-a-02`、`grail-a-06`、`grail-a-07` …（共 16） |
-| `revive` | — | 1 | `grail-ex-10` |
-| `shield` | — | 11 | `godie-e00l.passive`、`godie-e00r.e`、`godie-e00u.passive`、`godie-h00l.ex`、`godie-o00l.e`、`sela.w`、`thorne.w`、`grail-c-17`、`grail-a-16`、`aegis-surge`、`guardian-ward` |
-| `shieldBreak` | — | 2 | `grail-c-09`、`grail-ex-14` |
-| `spawnProjectile` | — | 35 | `godie-e002.e`、`godie-e008.e`、`godie-e00l.e`、`godie-e00r.r`、`godie-e00s.q`、`godie-e010.q`、`godie-h01n.q`、`godie-h01o.q`、`godie-h01u.r`、`godie-h01u.w`、`godie-h02r.r`、`godie-hpal.q` …（共 35） |
-| `spawnVfx` | — | 12 | `godie-e00s.r`、`godie-e00x.r`、`godie-emfr.r`、`godie-h01o.e`、`godie-hvwd.r`、`godie-n00b.passive`、`godie-n01c.passive`、`godie-nbbc.passive`、`godie-o00k.passive`、`godie-o00l.passive`、`godie-o030.passive`、`godie-orkn.passive` |
-| `spendMana` | — | 2 | `godie-e00l.w`、`godie-emfr.passive` |
-| `summon` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `swapResource` | — | 1 | `godie-emns.ex` |
-| `taunt` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `weightedBranch` | — | 4 | `godie-e00s.ex`、`godie-h02k.ex`、`godie-h02v.ex`、`grail-ex-08` |
+| `applyBuff` | 增益／減益（改屬性） | 113 | `godie-e001.passive`、`godie-e001.q`、`godie-e001.r`、`godie-e002.r`、`godie-e008.w`、`godie-e00k.ex`、`godie-e00k.r`、`godie-e00l.ex`、`godie-e00n.ex`、`godie-e00n.passive`、`godie-e00n.q`、`godie-e00n.r` …（共 113） |
+| `applyStatus` | 掛狀態 | 97 | `godie-e001.e`、`godie-e001.passive`、`godie-e007.ex`、`godie-e007.q`、`godie-e008.e`、`godie-e008.q`、`godie-e00k.passive`、`godie-e00n.e`、`godie-e00n.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00s.e` …（共 97） |
+| `blink` | 瞬移 | 2 | `godie-efur.q`、`grail-a-14` |
+| `championForm` | 變身／切換形態 | 24 | `godie-e001.r`、`godie-e002.w`、`godie-e00k.ex`、`godie-e00l.w`、`godie-e00s.passive`、`godie-e00w.e`、`godie-e010.passive`、`godie-h01n.r`、`godie-h02v.q`、`godie-hgam.ex`、`godie-hjai.ex`、`godie-n003.ex` …（共 24） |
+| `cycleBuff` | 輪替增益 | 1 | `godie-efur.passive` |
+| `damage` | 傷害 | 178 | `godie-e001.e`、`godie-e001.passive`、`godie-e002.ex`、`godie-e002.r`、`godie-e002.w`、`godie-e007.e`、`godie-e007.ex`、`godie-e007.q`、`godie-e007.r`、`godie-e008.e`、`godie-e008.q`、`godie-e00k.e` …（共 178） |
+| `damageArea` | 範圍傷害 | 28 | `godie-e002.w`、`godie-e00s.e`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00s.w`、`godie-e00w.ex`、`godie-e00w.q`、`godie-e00w.r`、`godie-e00w.w`、`godie-edem.ex`、`godie-edem.q`、`godie-edem.r` …（共 28） |
+| `damageLine` | 直線傷害 | 10 | `godie-e002.e`、`godie-e002.ex`、`godie-e00r.r`、`godie-edem.e`、`godie-emfr.q`、`godie-h01n.e`、`godie-h01u.e`、`godie-h02v.e`、`godie-n00p.passive`、`godie-nsjs.passive` |
+| `dash` | 衝刺（腳不離地） | 15 | `godie-edem.e`、`godie-h01n.q`、`godie-h01u.e`、`godie-hapm.r`、`godie-hblm.w`、`godie-n00b.e`、`godie-o00k.w`、`godie-o00x.w`、`godie-o02l.passive`、`godie-ofar.passive`、`godie-ogrh.w`、`godie-udea.q` …（共 15） |
+| `delayed` | 延遲落地／排程 | 8 | `godie-e002.ex`、`godie-h02v.ex`、`godie-h02v.q`、`godie-hapm.ex`、`godie-hapm.passive`、`grail-a-08`、`grail-ex-05`、`grail-ex-16` |
+| `devour` | 吞噬 | 3 | `godie-e00r.q`、`godie-h02v.w`、`grail-ex-13` |
+| `dispel` | 淨化／驅散 | 8 | `godie-ewar.r`、`godie-ewar.w`、`godie-h00l.passive`、`grail-c-01`、`grail-c-08`、`grail-a-06`、`grail-a-15`、`grail-ex-14` |
+| `dot` | 持續傷害（燃燒／流血／中毒） | 4 | `godie-edem.ex`、`godie-edem.q`、`godie-h02v.e`、`godie-hart.r` |
+| `evasion` | 迴避 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `eventValueConversion` | 把事件的數值換算成別的 | 5 | `godie-emfr.ex`、`grail-c-04`、`grail-a-02`、`grail-ex-12`、`grail-ex-18` |
+| `extendBuff` | 延長既有增益 | 1 | `godie-hapm.q` |
+| `grantAttribute` | 加三圍（力／敏／智） | 4 | `godie-hpb1.passive`、`godie-n01c.passive`、`godie-nbbc.passive`、`grail-c-10` |
+| `grantGold` | 發錢 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `heal` | 治療（吃係數） | 9 | `godie-e007.w`、`godie-etyr.q`、`godie-h02r.passive`、`godie-n003.w`、`godie-n01c.q`、`godie-n01g.w`、`godie-nbbc.q`、`godie-o02p.r`、`godie-o02p.w` |
+| `invulnerable` | 免疫／魔免／免控 | 18 | `godie-e00k.e`、`godie-e00z.e`、`godie-hapm.ex`、`godie-hapm.passive`、`godie-hapm.w`、`godie-hart.r`、`godie-hpb1.w`、`godie-u00j.q`、`godie-u00n.r`、`godie-u00o.r`、`godie-u010.q`、`godie-uvng.q` …（共 18） |
+| `knockback` | 擊退／擊飛／拉扯／擊倒 | 11 | `godie-e00w.q`、`godie-efur.w`、`godie-ewar.ex`、`godie-h00l.q`、`godie-h00l.r`、`godie-h01u.w`、`godie-h02k.r`、`godie-hapm.ex`、`godie-hapm.passive`、`grail-c-02`、`grail-a-01` |
+| `leap` | 跳躍（拋物線離地） | 7 | `godie-h00l.w`、`godie-hapm.w`、`godie-hart.q`、`godie-hart.w`、`godie-hpb1.e`、`godie-u00n.r`、`godie-u00o.r` |
+| `manaBarrier` | 魔力護盾 | 1 | `godie-emns.passive` |
+| `modifyCooldown` | 改冷卻 | 13 | `godie-h00l.ex`、`godie-h01n.r`、`grail-c-11`、`grail-c-13`、`grail-c-14`、`grail-a-05`、`grail-a-07`、`grail-a-17`、`grail-a-18`、`grail-ex-02`、`grail-ex-03`、`grail-ex-11` …（共 13） |
+| `proxyCast` | 代放別的技能 | 6 | `godie-h01u.r`、`grail-a-08`、`grail-ex-04`、`grail-ex-05`、`grail-ex-08`、`grail-ex-15` |
+| `randomArea` | 隨機落點 | 4 | `godie-e00s.r`、`godie-efur.r`、`grail-c-19`、`grail-ex-09` |
+| `restore` | 回復（按最大值百分比） | 16 | `godie-e00s.ex`、`godie-emfr.passive`、`godie-ewar.w`、`godie-h00l.r`、`godie-h02v.ex`、`godie-h02v.q`、`godie-hapm.passive`、`godie-o02p.ex`、`grail-c-03`、`grail-a-02`、`grail-a-06`、`grail-a-07` …（共 16） |
+| `revive` | 復活 | 1 | `grail-ex-10` |
+| `shield` | 吸收（護盾） | 11 | `godie-e00l.passive`、`godie-e00r.e`、`godie-e00u.passive`、`godie-h00l.ex`、`godie-o00l.e`、`sela.w`、`thorne.w`、`grail-c-17`、`grail-a-16`、`aegis-surge`、`guardian-ward` |
+| `shieldBreak` | 破盾 | 2 | `grail-c-09`、`grail-ex-14` |
+| `spawnProjectile` | 投射物 | 35 | `godie-e002.e`、`godie-e008.e`、`godie-e00l.e`、`godie-e00r.r`、`godie-e00s.q`、`godie-e010.q`、`godie-h01n.q`、`godie-h01o.q`、`godie-h01u.r`、`godie-h01u.w`、`godie-h02r.r`、`godie-hpal.q` …（共 35） |
+| `spawnVfx` | 純演出（特效／音效） | 12 | `godie-e00s.r`、`godie-e00x.r`、`godie-emfr.r`、`godie-h01o.e`、`godie-hvwd.r`、`godie-n00b.passive`、`godie-n01c.passive`、`godie-nbbc.passive`、`godie-o00k.passive`、`godie-o00l.passive`、`godie-o030.passive`、`godie-orkn.passive` |
+| `spendMana` | 燒魔 | 2 | `godie-e00l.w`、`godie-emfr.passive` |
+| `summon` | 召喚 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `swapResource` | 資源互換 | 1 | `godie-emns.ex` |
+| `taunt` | 嘲諷 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `weightedBranch` | 加權分支（隨機挑一段） | 4 | `godie-e00s.ex`、`godie-h02k.ex`、`godie-h02v.ex`、`grail-ex-08` |
 
 ## 觸發事件（hook event） —— 33 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
-| `onAbilityCast` | 施放技能時 | 19 | `godie-e00s.ex`、`godie-emfr.r`、`godie-h02v.ex`、`grail-c-12`、`grail-c-20`、`grail-a-08`、`grail-a-08`、`grail-a-08`、`grail-a-08`、`grail-a-16`、`grail-ex-04`、`grail-ex-05` …（共 19） |
+| `onAbilityCast` | 施法時 | 19 | `godie-e00s.ex`、`godie-emfr.r`、`godie-h02v.ex`、`grail-c-12`、`grail-c-20`、`grail-a-08`、`grail-a-08`、`grail-a-08`、`grail-a-08`、`grail-a-16`、`grail-ex-04`、`grail-ex-05` …（共 19） |
 | `onAbilityHit` | 技能命中時 | 19 | `godie-edem.r`、`godie-edem.r`、`godie-edem.r`、`godie-efur.ex`、`godie-h01n.w`、`godie-h01n.w`、`grail-c-08`、`grail-c-09`、`grail-c-16`、`grail-c-18`、`grail-a-19`、`grail-a-20` …（共 19） |
-| `onAllyDamaged` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `onAllyDeath` | 隊友死亡時 | 3 | `grail-c-15`、`grail-a-06`、`grail-ex-10` |
-| `onBasicAttack` | 普通攻擊時 | 71 | `godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e00k.passive`、`godie-e00l.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00s.w`、`godie-e00s.w` …（共 71） |
+| `onAllyDamaged` | 隊友受傷時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onAllyDeath` | 隊友陣亡時 | 3 | `grail-c-15`、`grail-a-06`、`grail-ex-10` |
+| `onBasicAttack` | 普攻時 | 71 | `godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e00k.passive`、`godie-e00l.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00s.w`、`godie-e00s.w` …（共 71） |
 | `onBossSpawn` | 殭屍王出現時 | 1 | `grail-c-13` |
-| `onBoundaryTouch` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `onCrowdControlApplied` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `onCrowdControlReceived` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onBoundaryTouch` | 碰到場地邊界時（＝踏進火圈） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onCrowdControlApplied` | 對別人施加控場時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onCrowdControlReceived` | 自己被控場時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onDamageDealt` | 造成傷害時 | 7 | `godie-emfr.e`、`godie-h02k.q`、`godie-h02k.q`、`godie-h02k.q`、`godie-h02k.q`、`grail-a-10`、`grail-a-18` |
 | `onDamageTaken` | 受到傷害時 | 31 | `godie-e002.r`、`godie-e00l.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-edem.passive`、`godie-emfr.ex`、`godie-h00l.ex`、`godie-h00l.r`、`godie-h01u.r`、`godie-h02k.e`、`godie-h02k.e`、`godie-h02k.e` …（共 31） |
-| `onDashOrBlink` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onDashOrBlink` | 位移時（衝刺／閃現／跳躍） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onDeath` | 死亡時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onEvade` | 迴避成功時 | 10 | `godie-e00w.passive`、`godie-h02k.r`、`godie-h02k.r`、`godie-h02k.r`、`grail-c-02`、`grail-c-03`、`grail-a-01`、`grail-a-02`、`grail-a-14`、`grail-ex-08` |
 | `onFireRingIgnite` | 火圈點燃時 | 1 | `grail-ex-09` |
-| `onGuardianDown` | 守衛塔被拆時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `onHeal` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `onInterval` | 每隔一段時間 | 7 | `godie-e00r.e`、`godie-e00r.e`、`godie-e00r.e`、`godie-e00r.e`、`godie-emfr.passive`、`grail-c-19`、`grail-ex-02` |
+| `onGuardianDown` | 守衛塔倒下時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onHeal` | 治療真的補到血時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onInterval` | 週期（每 N 秒） | 7 | `godie-e00r.e`、`godie-e00r.e`、`godie-e00r.e`、`godie-e00r.e`、`godie-emfr.passive`、`grail-c-19`、`grail-ex-02` |
 | `onKill` | 擊殺時 | 13 | `godie-h01u.passive`、`godie-hpb1.passive`、`godie-o00x.passive`、`godie-ogrh.passive`、`godie-zombiex.passive`、`godie-zombiex.passive`、`grail-c-10`、`grail-c-14`、`grail-a-05`、`grail-ex-03`、`conqueror`、`last-stand` …（共 13） |
-| `onLethalDamage` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `onOverheal` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `onProjectileExpire` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onLethalDamage` | 受到致命傷害時（免死有沒有生效都會發） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onOverheal` | 治療溢出時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onProjectileExpire` | 自己的投射物消失時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onReflectSuccess` | 反彈成功時 | 11 | `godie-e002.ex`、`godie-emfr.ex`、`godie-h00l.ex`、`godie-h00l.r`、`godie-h00l.r`、`godie-h02k.w`、`grail-c-02`、`grail-c-03`、`grail-a-01`、`grail-a-02`、`grail-ex-08` |
-| `onRevive` | 復活時 | 2 | `grail-a-07`、`grail-ex-11` |
-| `onRoundEnd` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `onRoundStart` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `onShieldBroken` | 護盾破裂時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onRevive` | 被復活時 | 2 | `grail-a-07`、`grail-ex-11` |
+| `onRoundEnd` | 回合結束時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onRoundStart` | 回合開始時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onShieldBroken` | 護盾破碎時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onShieldGained` | 獲得護盾時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `onStatCapReached` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onStatCapReached` | 屬性首次到頂時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onStatusApplied` | 被掛上狀態時 | 3 | `grail-c-01`、`grail-c-11`、`grail-a-15` |
 | `onStunned` | 被暈眩時 | 2 | `godie-n01c.passive`、`godie-nbbc.passive` |
-| `onUltimateCast` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `onUltimateHit` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onUltimateCast` | 大招（R）施放時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onUltimateHit` | 大招（R）命中時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 
 ## 條件葉（condition leaf） —— 5 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
-| `chance` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `equipment` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `kind` | — | 1 | `godie-h02k.ex` |
-| `stat` | — | 7 | `godie-e002.w`、`godie-e00l.w`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-h00l.ex`、`godie-h02v.w`、`grail-ex-13` |
-| `status` | — | 20 | `godie-edem.r`、`godie-efur.ex`、`godie-emns.e`、`godie-emns.r`、`godie-ewar.e`、`godie-h00l.e`、`godie-h01n.e`、`godie-h01n.w`、`godie-h01u.e`、`godie-h02k.ex`、`godie-h02k.passive`、`godie-h02k.q` …（共 20） |
+| `chance` | 機率 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `equipment` | 裝備了某道具時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `kind` | 對象是誰（小兵／英雄／BOSS） | 1 | `godie-h02k.ex` |
+| `stat` | 屬性門檻（血量低於 X%…） | 7 | `godie-e002.w`、`godie-e00l.w`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-h00l.ex`、`godie-h02v.w`、`grail-ex-13` |
+| `status` | 身上有某狀態時 | 20 | `godie-edem.r`、`godie-efur.ex`、`godie-emns.e`、`godie-emns.r`、`godie-ewar.e`、`godie-h00l.e`、`godie-h01n.e`、`godie-h01n.w`、`godie-h01u.e`、`godie-h02k.ex`、`godie-h02k.passive`、`godie-h02k.q` …（共 20） |
 
 ## 狀態標籤 —— 86 個
 

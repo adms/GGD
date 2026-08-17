@@ -2,7 +2,7 @@
   "id": "ultimate-mod-shiranui",
   "schema": "item@1",
   "name": "終極魔改・不知火",
-  "description": "武器\n效能\n[魔改解放] 攻擊力、攻擊速度、暴擊傷害 各自 ×1.5\n[上限突破] 攻擊速度的上限 +50%\n[溢出] 任一屬性首次達到一般上限時，這三項再 ×1.15，最多 3 次\n\n解說\n把三個 BUG 焊在同一把刀上，然後管它叫設計。",
+  "description": "武器\n效能\n[魔改解放] 攻擊力、攻擊速度、暴擊傷害 各自 ×1.5\n[上限突破] 攻擊速度上限提升至 10（預設上限為 4）\n[萬象凋零] 普攻命中敵方英雄時，附加全部負面效果 1 秒：破甲・破魔・致盲・詛咒・燃燒・重創・禁療・混亂・恐懼・麻痺・癱瘓・纏繞・減速40%・暈眩\n[溢出] 任一屬性首次達到一般上限時，這三項再 ×1.15，最多 3 次\n\n解說\n把三個 BUG 焊在同一把刀上，然後管它叫設計。",
   "cost": 0,
   "tier": 5,
   "tags": [
@@ -29,11 +29,88 @@
     },
     {
       "stat": "as",
-      "op": "capRaisePct",
-      "value": 0.5
+      "op": "capRaise",
+      "value": 10.0
     }
   ],
   "passive": [
+    {
+      "on": "onBasicAttack",
+      "target": "event",
+      "victim": "enemyChampion",
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "armor-break",
+          "duration": 1.0
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "blind",
+          "duration": 1.0
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "burn",
+          "duration": 1.0
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "confusion",
+          "duration": 1.0
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "curse",
+          "duration": 1.0
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "fear",
+          "duration": 1.0
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "grievous-wounds",
+          "duration": 1.0
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "magic-break",
+          "duration": 1.0
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "no-heal",
+          "duration": 1.0
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "numbness",
+          "duration": 1.0
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "paralysis",
+          "duration": 1.0
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "root",
+          "duration": 1.0
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 1.0
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "stun",
+          "duration": 1.0
+        }
+      ]
+    },
     {
       "on": "onStatCapReached",
       "key": "shiranui-overflow",
@@ -66,5 +143,5 @@
   ],
   "icon": "assets/icons/items/ultimate-mod-shiranui.webp",
   "craftRole": "none",
-  "authoringNote": "[EX解放] owner 規格 #50（貓耳貓／日本刀）。⚠️ 原文有兩句 owner 2026-08-17 已裁決**換做法**，⛔ 不是我自作主張：\n① 原文「找出**其他裝備**提供最高的 3 項正屬性，各自效果再 ×1.5」——「讀別件裝備、排名挑前三」引擎沒有這個機制（道具之間沒有互讀介面），裁決改成**指定三條屬性**。這裡挑 ad / as / critDamage（日本刀＝普攻流的三條主軸）。\n② 原文「任一屬性超過原上限後，**溢出部分仍以 100% 效率生效**」——「溢出轉換」引擎沒有（上限是硬夾，夾掉的量不留存），裁決改成**「達標後的第二段」**，用 onStatCapReached 在屬性到頂時再發一份。\n\n逐句：\n[魔改解放]「各自效果再 ×1.5」= modifiers 三條 pctMult 0.5。⚠️ pctMult 在同一份來源內是線性（1+v×stacks），這裡只有一份 stacks=1，所以就是 ×1.5。\n[上限突破]「這三項屬性上限 +50%」= 三條 capRaisePct 0.5（新機制：抬到一般上限 ×1.5）。\n⚠️ **三條裡今天只有 as 真的會動**。出貨 config.stat-caps@1 只有 as(4→10) 與 lifesteal(0.8→20) 留了解鎖空間；ad 是 base=unlocked=21200（effectiveCap 夾回 unlocked ⇒ no-op），critDamage 不在 cap 表也沒有 STAT_CLAMPS（上限本來就 +∞ ⇒ no-op）。⛔ 這兩條**不是**寫錯：後台把那兩格的 unlocked 調高就活過來（第一守則）。as 實際 4.0 → **6.0**。\n[溢出] = passive onStatCapReached + **永久** applyBuff（三條 pctMult 0.15）。\n· **複利**：⛔ 不填 stackKey ⇒ 每次一份新來源 ⇒ 三次 = 1.15³ ≈ **×1.52**，刻意回到 owner 那個 ×1.5。\n· 「最多 3 次」= maxTriggers 3（對應原文「3 項屬性」）。⛔ 不另寫 maxStacks：兩個機制講同一件事只會分岔。\n⚠️ 兩個引擎限制：① onStatCapReached 的 payload 帶 stat，但**條件葉讀不到它** ⇒ 這條 hook 不挑屬性，任意三條到頂就用完額度。② 同一 tick 兩條屬性同時到頂時 applyBuff 的 id 是 buff:<origin>#<tick> ⇒ 那一 tick 只留一份。\n⚠️ description 已改寫成**這件道具真的做的事**，⛔ 不是原文照抄：卡面若還寫「讀其他裝備」就是一句永遠不兌現的承諾。\n\n【2026-08-18 依 owner「不放任何無效說明」規則修正】⛔ 刪掉了指向零解鎖空間屬性的 capRaise/capRaisePct（無效宣稱），描述同步改成只講真的會發生的事。⚠️ **完整理由與逐句對照全文在 `docs/legacy/_item-authoring-notes-full.md`** —— authoringNote 有 2000 字上限，⛔ 不可以靠壓縮原文來塞。守衛：`packages/shared/src/content/noOpModifierClaims.test.ts`。"
+  "authoringNote": "【owner 2026-08-18 裁決】「**提高攻速上限至10 另外攻擊附加全部負面效果就好**」。\n\n[上限突破] = `as capRaise 10.0`（絕對高度，⛔ 不是 capRaisePct）。\n⭐ 這一條在此之前是**三條無效宣稱**：原本對 `ad` / `as` / `critDamage` 各掛 `capRaisePct 0.5`，而 `ad` 的 `unlocked === base`、`critDamage` **根本不在 `config.stat-caps@1` 裡**（`capFor` 對未列出的屬性回 `base === unlocked`）—— 兩條逐位元等於不存在。只有 `as` 真的解得開（4→10），所以現在只剩它，而且照 owner 的話直接抬到硬上限 10。\n\n[萬象凋零] = `onBasicAttack` + `victim: \"enemyChampion\"` → 14 個 `applyStatus`，各 1 秒。\n⚠️ 名單是**出貨的通用負面狀態**（`polarity: \"debuff\"`），⛔ 已排除 `named-variant` 那幾個（`burnstun` / `fang-stun` / `ingredient` / `omnislash-lock` / `trial-stun`）—— 那些是**別支技能專屬的 stun 別名**，借過來會讓「誰把我暈的」在戰報上指到錯的招式。\n⚠️ 三段減速只留最強的 `slow40`：25/30/40 是同一件事的三份，疊上去只是三個圖示。\n\n⚠️⚠️ **平衡後果要 owner 知道**：這一條字面上包含 `stun` / `root` / `fear` / `confusion` / `paralysis` / `numbness` 六種行動剝奪，而普攻在攻速 10 時是每秒 10 次 ⇒ 被鎖定的目標**實質上永遠無法行動**。1.0 秒是我照既有 `slow25` 的出貨值選的，⛔ 不是 owner 給的數字。要調的話最小的旋鈕有三個：時長、改成 `internalCooldown` 每 N 秒一次、或把六種行動剝奪從名單移除只留減益。\n\n[魔改解放] / [溢出] 未動。完整沿革見 `docs/legacy/_item-authoring-notes-full.md`。"
 }

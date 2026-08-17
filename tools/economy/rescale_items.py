@@ -64,10 +64,29 @@ TOL = 0.005
 # packages/shared/src/content/schema/common.ts ITEM_MODIFIER_LIMITS / ITEM_PERCENT_LIMIT.
 # A rescale that would push a modifier past the loader's guard must not be written
 # silently — it is reported instead.
+#
+# ⛔ THIS IS A HAND-COPIED MIRROR OF A ZOD TABLE — i.e. a second home for a number
+# that has no drift guard. It has already rotted twice, both times SILENTLY:
+#   · a stat MISSING here disables the check entirely (`MODIFIER_LIMITS.get()`
+#     returns None and every caller does `if lim is not None`), so the run reports
+#     a clean bill of health on a band it never looked at. 8 stats were in that
+#     state until 2026-08-18 — evasion / spellVamp plus the 6 added by GH#354.
+#   · a stat whose band moved in schema/common.ts keeps the OLD number here; the
+#     script then refuses a value the loader would happily accept.
+# ⚠️ Two rows are still knowingly out of sync with the shipped Zod as of
+# 2026-08-18 — NOT fixed here because raising a band loosens what the AEP rescale
+# is allowed to write, and that is a balance call for the owner, not a typo:
+#       as   here 2.5  ← shipped 4.0 (STAT_CLAMPS 一般上限, owner 2026-07-28)
+#       cdr  here 0.45 ← shipped 1   (STAT_CLAMPS 上界 0.99, owner 2026-08-10)
 MODIFIER_LIMITS = {
     "maxHealth": 2500, "healthRegen": 100, "maxMana": 2500, "manaRegen": 50,
     "ad": 400, "ap": 400, "armor": 150, "mr": 200, "as": 2.5, "ms": 5,
     "critChance": 1, "critDamage": 50, "cdr": 0.45, "lifesteal": 1, "range": 5,
+    "evasion": 1, "spellVamp": 1,
+    # GH#354 (2026-08-18). All six are rates whose band is a MIS-PARSE guard
+    # ("0.2 typed as 20"), not a balance opinion — same wording as the Zod table.
+    "outputDamagePct": 0.5, "outputHealingPct": 0.5, "outputShieldPct": 0.5,
+    "maxHitPctMaxHp": 0.5, "unavoidablePct": 0.5, "cooldownDrainRate": 0.5,
 }
 PERCENT_LIMIT = 3
 

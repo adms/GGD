@@ -526,12 +526,15 @@ def gen_mechanics(ctx):
         "| 事件 | 中文 | 用它的內容 |",
         "|---|---|--:|",
     ]
+    # ⛔ 缺中文名 = 非零離開。以前這裡是 `.get(h, '—')`，於是 2026-08-17 新增的
+    # 14 個事件在 README 上是 14 格 `—`，而沒有任何東西會紅。
+    GR.V.reconcile(GR.HOOK_LABEL, hooks, "README 的觸發事件")
     for h in hooks:
         flag = ""
         for b in broken:
             if isinstance(b, dict) and b.get("token") == f"hook:{h}":
                 flag = f" ⛔ 已知壞掉（{b.get('issue', '')}）"
-        out.append(f"| `{h}` | {GR.HOOK_LABEL.get(h, '—')}{flag} | {len(hooks_used.get(h, []))} |")
+        out.append(f"| `{h}` | {GR.HOOK_LABEL[h]}{flag} | {len(hooks_used.get(h, []))} |")
     out.append("")
 
     out += [

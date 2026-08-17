@@ -35,10 +35,21 @@ ITEMS = ROOT / "content" / "items"
 TIERS = Path(__file__).resolve().parent / "tiers.json"
 TOL = 0.005
 
+# ⛔ Hand-copied mirror of `ITEM_MODIFIER_LIMITS` in
+# packages/shared/src/content/schema/common.ts — see the long note on the same
+# table in rescale_items.py. Check 5 below does `MODIFIER_LIMITS.get(stat)` and
+# skips when it is None, so a stat missing here makes check 5 report PASS on a
+# band it never looked at. 8 stats were in exactly that state until 2026-08-18.
+# ⚠️ `as` (2.5 vs shipped 4.0) and `cdr` (0.45 vs shipped 1) are still stale on
+# purpose — they are STRICTER than the loader, so they raise false alarms rather
+# than false all-clears; moving them is an owner/balance call.
 MODIFIER_LIMITS = {
     "maxHealth": 2500, "healthRegen": 100, "maxMana": 2500, "manaRegen": 50,
     "ad": 400, "ap": 400, "armor": 150, "mr": 200, "as": 2.5, "ms": 5,
     "critChance": 1, "critDamage": 50, "cdr": 0.45, "lifesteal": 1, "range": 5,
+    "evasion": 1, "spellVamp": 1,
+    "outputDamagePct": 0.5, "outputHealingPct": 0.5, "outputShieldPct": 0.5,
+    "maxHitPctMaxHp": 0.5, "unavoidablePct": 0.5, "cooldownDrainRate": 0.5,
 }
 PERCENT_LIMIT = 3
 

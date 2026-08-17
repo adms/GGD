@@ -2,7 +2,7 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_1e707a1e419e`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 產生自 contentVersion **`cv_07059e40820e`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
 > 資料列：**239**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-07-24T11:14:58.268286Z`）
 
 `content/items/*.json` 共 **239** 份，依 `content/items/<id>.json` 的 **`craftRole`** 標記分類（來源：source-map triggers，見 `tools/w3x-import/extract_item_roles.py`）。實際能在商店買到的只有 **38** 件最終合成武器（`craftRole:final` 且有效果）＋ **2** 項服務；三選一 draft 抽 **13** 件任務道具，傳說寶玉抽 **49** 件傳說。其餘（106 組件、8 代幣、51 無角色、4 無 payload 的 final）是配方半成品或 w3x 殘件，不會單獨出現在任何商店或抽卡。
@@ -36,7 +36,7 @@
 | `godie-i00u` | 名刀-天狼 | 最終合成 final | — | T3 | ✅ | ✅ | 攻速 +60% · 吸血 +0.1 | onBasicAttack→damage |
 | `godie-i012` | 熾天使之弓 | 最終合成 final | — | T3 | ✅ | ✅ | 攻速 +30% | onBasicAttack→spendMana/dot |
 | `godie-i013` | 緣一零式 | 最終合成 final | — | T3 | ✅ | ✅ | 攻擊力 +38 | onBasicAttack→damage/applyStatus |
-| `godie-i014` | 天叢雲劍 | 最終合成 final | — | T3 | ✅ | ✅ | 攻速 +30% · 移速 +0.2 | — |
+| `godie-i014` | 天叢雲劍 | 最終合成 final | — | T3 | ✅ | ✅ | 攻速 +30% · 移速 +20% | — |
 | `godie-i016` | 晨曦之光 | 最終合成 final | — | T1 | ✅ | ✅ | 回魔 +8 · 冷卻縮減 +0.3 | onDamageTaken→applyBuff |
 | `godie-i018` | 朗基努斯之槍 | 最終合成 final | — | T2 | ✅ | ✅ | — | onBasicAttack→damage · onBasicAttack→dispel |
 | `godie-i01g` | 貫雷槍 | 最終合成 final | — | T3 | ✅ | ✅ | 射程 +4 · 射程 +2 | onBasicAttack→applyStatus · onDamageTaken→applyBuff |
@@ -46,11 +46,11 @@
 | `godie-i01v` | 螺旋劍 | 最終合成 final | — | T2 | ✅ | ✅ | 攻速 +100% · 移速 +2 | onBasicAttack→spendMana/damageLine |
 | `godie-i01w` | 祕銀鎖子甲 | 最終合成 final | — | T1 | ✅ | ✅ | 護甲 +40 · 魔抗 +66.7 | onDamageTaken→applyBuff |
 | `godie-i020` | 瑪那魔杖 | 最終合成 final | — | T2 | ✅ | ✅ | 法強 +78 · 魔力 +520 · 回魔 +12 | onBasicAttack→damage |
-| `godie-i027` | 光魔杖 | 最終合成 final | — | T2 | ✅ | ✅ | 法強 +0.05 · 回魔 +18 | onBasicAttack→spendMana/damage |
+| `godie-i027` | 光魔杖 | 最終合成 final | — | T2 | ✅ | ✅ | 法強 +目前魔力的 5% · 回魔 +18 | onBasicAttack→spendMana/damage |
 | `godie-i02e` | 狂暴軒轅劍 | 最終合成 final | — | T2 | ✅ | ✅ | 攻速 +200% | onBasicAttack→applyStatus |
 | `godie-i02r` | 奇蹟之墜 | 最終合成 final | 1200g | T2 | — | ✅ | 法強 +28.9 · 魔力 +87 · 生命 +174 | — |
 | `godie-i031` | 天生牙 | 最終合成 final | — | T2 | ✅ | ✅ | 回血 +20 | onKill→revive · onKill→restore · onInterval→dispel |
-| `godie-i039` | 幻之匕首 | 最終合成 final | — | T2 | ✅ | ✅ | evasion +0.1 | onBasicAttack→damage |
+| `godie-i039` | 幻之匕首 | 最終合成 final | — | T2 | ✅ | ✅ | 迴避 +0.1 | onBasicAttack→damage |
 | `godie-i03b` | 真．雅典娜的驚嘆號 | 最終合成 final | 1200g | T2 | — | ✅ | 法強 +81.6 · 魔力 +245 · 回魔 +81.6% | — |
 | `godie-i03d` | 光明虎徹 | 最終合成 final | 300g | T1 | — | ✅ | 生命 +39 · 攻擊力 +1.9 · 魔力 +23 | — |
 | `godie-i03f` | 甘豆腐之袍 | 最終合成 final | — | T1 | ✅ | ✅ | 魔力 +600 · 回魔 +4 | onKill→grantAttribute |
@@ -83,11 +83,11 @@
 
 | id | 名稱 | craftRole | 價格 | tier | 傳說池 | 開放 | 屬性 modifiers | 被動 passive |
 |---|---|---|---|---|---|---|---|---|
-| `godie-i004` | 至尊魔戒 | 任務獎勵 quest | — | T1 | ✅ | ✅ | 魔力 +1000 · spellVamp +0.2 | — |
+| `godie-i004` | 至尊魔戒 | 任務獎勵 quest | — | T1 | ✅ | ✅ | 魔力 +1000 · 技能吸血 +0.2 | — |
 | `godie-i00z` | 四魂之玉 | 任務獎勵 quest | — | T2 | ✅ | ✅ | 魔力 +300 | — |
 | `godie-i01k` | 火焰泰坦腰帶 | 任務獎勵 quest | — | T2 | — | ✅ | 攻擊力 +8 · 生命 +175 · 護甲 +2.1 | onBasicAttack→damageArea |
 | `godie-i01n` | 天堂之劍 | 任務獎勵 quest | — | T2 | ✅ | ✅ | 生命 -50% | — |
-| `godie-i01s` | 仙后座 | 任務獎勵 quest | — | T1 | ✅ | ✅ | evasion +0.25 · 魔力 +100% · 回魔 +25 · 冷卻縮減 +0.5 | onInterval→dispel |
+| `godie-i01s` | 仙后座 | 任務獎勵 quest | — | T1 | ✅ | ✅ | 迴避 +0.25 · 魔力 +100% · 回魔 +25 · 冷卻縮減 +0.5 | onInterval→dispel |
 | `godie-i02h` | 戰旗 | 任務獎勵 quest | — | T5 | — | ✅ | — | — |
 | `godie-i02j` | 復仇之袍 | 任務獎勵 quest | — | T5 | — | ✅ | 護甲 +12 | — |
 | `godie-i02k` | 惡魔吉他 | 任務獎勵 quest | — | T5 | — | ✅ | — | — |
@@ -104,37 +104,37 @@
 | id | 名稱 | craftRole | 價格 | tier | 傳說池 | 開放 | 屬性 modifiers | 被動 passive |
 |---|---|---|---|---|---|---|---|---|
 | `bulwark-charge-greaves` | 近擊的巨人鎧 | 無角色 none | — | T5 | ✅ | ✅ | 護甲 +100 · 回血 +12 | onAbilityCast→dash |
-| `cleaver-of-the-warden` | 泰坦九頭蛇 | 無角色 none | — | T5 | ✅ | ✅ | 生命 +10% | onBasicAttack→damage/damageArea |
-| `endless-edge` | 無盡連刃 | 無角色 none | — | T5 | ✅ | ✅ | 攻速 +10 | onBasicAttack→applyBuff |
+| `cleaver-of-the-warden` | 泰坦九頭蛇 | 無角色 none | — | T5 | ✅ | ✅ | 生命 +10% | onBasicAttack→damage/damageLine |
+| `endless-edge` | 無盡連刃 | 無角色 none | — | T5 | ✅ | ✅ | 攻速上限解鎖至 10 | onBasicAttack→applyBuff |
 | `godie-i000` | 丈八蛇矛 | 無角色 none | — | T3 | ✅ | ✅ | 攻擊力 +87 · 生命 +872 | onBasicAttack→damageArea |
-| `godie-i004` | 至尊魔戒 | 任務獎勵 quest | — | T1 | ✅ | ✅ | 魔力 +1000 · spellVamp +0.2 | — |
+| `godie-i004` | 至尊魔戒 | 任務獎勵 quest | — | T1 | ✅ | ✅ | 魔力 +1000 · 技能吸血 +0.2 | — |
 | `godie-i006` | 雅典娜的驚嘆號 | 最終合成 final | — | T2 | ✅ | ✅ | 法強 +33% · 回魔 +13 · 法強 +333 | onBasicAttack→damage |
 | `godie-i007` | 虛哭神去 | 無角色 none | — | T3 | ✅ | ✅ | 吸血 +0.2 | onBasicAttack→damage |
 | `godie-i00f` | 霸王破甲槍 | 最終合成 final | — | T2 | ✅ | ✅ | 護甲 +10% · 攻擊力 +10% | — |
 | `godie-i00i` | 炎龍巨弩 | 最終合成 final | — | T2 | ✅ | ✅ | 魔力 +20% · 法強 +228 | onBasicAttack→damageArea |
 | `godie-i00j` | 奇門盾甲 | 最終合成 final | — | T2 | ✅ | ✅ | — | onInterval→heal |
-| `godie-i00l` | 落魂的嗜血劍 | 無角色 none | — | T3 | ✅ | ✅ | 攻擊力 +128 · 攻速 +200% · 攻速 +10 · 吸血 +0.3 · spellVamp +0.3 | onInterval→damage |
-| `godie-i00s` | 黃金聖鬥衣 | 無角色 none | — | T2 | ✅ | ✅ | 生命 +1200 · 魔力 +1200 · 攻速 +120% · 移速 +0.2 | — |
+| `godie-i00l` | 落魂的嗜血劍 | 無角色 none | — | T3 | ✅ | ✅ | 攻擊力 +128 · 攻速 +200% · 攻速上限解鎖至 10 · 吸血 +0.3 · 技能吸血 +0.3 | onInterval→damage |
+| `godie-i00s` | 黃金聖鬥衣 | 無角色 none | — | T2 | ✅ | ✅ | 生命 +1200 · 魔力 +1200 · 攻速 +120% · 移速 +20% | — |
 | `godie-i00u` | 名刀-天狼 | 最終合成 final | — | T3 | ✅ | ✅ | 攻速 +60% · 吸血 +0.1 | onBasicAttack→damage |
 | `godie-i00z` | 四魂之玉 | 任務獎勵 quest | — | T2 | ✅ | ✅ | 魔力 +300 | — |
 | `godie-i012` | 熾天使之弓 | 最終合成 final | — | T3 | ✅ | ✅ | 攻速 +30% | onBasicAttack→spendMana/dot |
 | `godie-i013` | 緣一零式 | 最終合成 final | — | T3 | ✅ | ✅ | 攻擊力 +38 | onBasicAttack→damage/applyStatus |
-| `godie-i014` | 天叢雲劍 | 最終合成 final | — | T3 | ✅ | ✅ | 攻速 +30% · 移速 +0.2 | — |
+| `godie-i014` | 天叢雲劍 | 最終合成 final | — | T3 | ✅ | ✅ | 攻速 +30% · 移速 +20% | — |
 | `godie-i016` | 晨曦之光 | 最終合成 final | — | T1 | ✅ | ✅ | 回魔 +8 · 冷卻縮減 +0.3 | onDamageTaken→applyBuff |
 | `godie-i018` | 朗基努斯之槍 | 最終合成 final | — | T2 | ✅ | ✅ | — | onBasicAttack→damage · onBasicAttack→dispel |
 | `godie-i01d` | 死之王的長槍 | 無角色 none | — | T3 | ✅ | ✅ | 攻擊力 +17% | onBasicAttack→restore |
 | `godie-i01g` | 貫雷槍 | 最終合成 final | — | T3 | ✅ | ✅ | 射程 +4 · 射程 +2 | onBasicAttack→applyStatus · onDamageTaken→applyBuff |
 | `godie-i01i` | 雷神之鎚 | 最終合成 final | — | T2 | ✅ | ✅ | 護甲 +20 · 法強 +130 | onBasicAttack→damageArea/applyStatus · onDamageTaken→applyBuff |
 | `godie-i01n` | 天堂之劍 | 任務獎勵 quest | — | T2 | ✅ | ✅ | 生命 -50% | — |
-| `godie-i01s` | 仙后座 | 任務獎勵 quest | — | T1 | ✅ | ✅ | evasion +0.25 · 魔力 +100% · 回魔 +25 · 冷卻縮減 +0.5 | onInterval→dispel |
+| `godie-i01s` | 仙后座 | 任務獎勵 quest | — | T1 | ✅ | ✅ | 迴避 +0.25 · 魔力 +100% · 回魔 +25 · 冷卻縮減 +0.5 | onInterval→dispel |
 | `godie-i01v` | 螺旋劍 | 最終合成 final | — | T2 | ✅ | ✅ | 攻速 +100% · 移速 +2 | onBasicAttack→spendMana/damageLine |
 | `godie-i01w` | 祕銀鎖子甲 | 最終合成 final | — | T1 | ✅ | ✅ | 護甲 +40 · 魔抗 +66.7 | onDamageTaken→applyBuff |
 | `godie-i020` | 瑪那魔杖 | 最終合成 final | — | T2 | ✅ | ✅ | 法強 +78 · 魔力 +520 · 回魔 +12 | onBasicAttack→damage |
-| `godie-i027` | 光魔杖 | 最終合成 final | — | T2 | ✅ | ✅ | 法強 +0.05 · 回魔 +18 | onBasicAttack→spendMana/damage |
-| `godie-i02d` | 消失的密室 | 無角色 none | — | T1 | ✅ | ✅ | 護甲 +100 · 魔抗 +200 · 攻速 +100% · 攻速 +10 · 移速 +4 | onBasicAttack→applyStatus |
+| `godie-i027` | 光魔杖 | 最終合成 final | — | T2 | ✅ | ✅ | 法強 +目前魔力的 5% · 回魔 +18 | onBasicAttack→spendMana/damage |
+| `godie-i02d` | 消失的密室 | 無角色 none | — | T1 | ✅ | ✅ | 護甲 +100 · 魔抗 +200 · 攻速 +100% · 攻速上限解鎖至 10 · 移速 +4 | onBasicAttack→applyStatus |
 | `godie-i02e` | 狂暴軒轅劍 | 最終合成 final | — | T2 | ✅ | ✅ | 攻速 +200% | onBasicAttack→applyStatus |
 | `godie-i031` | 天生牙 | 最終合成 final | — | T2 | ✅ | ✅ | 回血 +20 | onKill→revive · onKill→restore · onInterval→dispel |
-| `godie-i039` | 幻之匕首 | 最終合成 final | — | T2 | ✅ | ✅ | evasion +0.1 | onBasicAttack→damage |
+| `godie-i039` | 幻之匕首 | 最終合成 final | — | T2 | ✅ | ✅ | 迴避 +0.1 | onBasicAttack→damage |
 | `godie-i03f` | 甘豆腐之袍 | 最終合成 final | — | T1 | ✅ | ✅ | 魔力 +600 · 回魔 +4 | onKill→grantAttribute |
 | `godie-i03h` | 天地崩裂魔杖 | 最終合成 final | — | T2 | ✅ | ✅ | 法強 +255 · 法強 +10% | onAbilityCast→damageArea/applyStatus |
 | `godie-i03m` | 反射之盾 | 無角色 none | — | T1 | ✅ | ✅ | — | onDamageTaken→damage |
@@ -325,28 +325,28 @@
 | `godie-i05q` | 友情呼喚號角 | 無角色 none | 1200g | T2 | — | — | 攻速 +61.6% | — |
 | `godie-i05z` | 出動正義射手兵團 | 無角色 none | 1200g | T2 | — | — | — | — |
 | `godie-i062` | 飛鼠跳刀 | 無角色 none | 1550g | T3 | — | — | — | — |
-| `godie-i063` | 防狼電擊棒 | 無角色 none | — | T1 | — | — | 魔力 +185 · 回魔 +16.8% | onBasicAttack→damageArea |
+| `godie-i063` | 防狼電擊棒 | 無角色 none | 300g | T1 | — | — | 魔力 +185 · 回魔 +16.8% | onBasicAttack→damageArea |
 | `godie-i06l` | 生肉 | 無角色 none | 150g | T1 | — | — | — | — |
-| `gravity-sword-black-rod` | 重力劍〈黑棒〉 | 無角色 none | — | T5 | — | — | — | onInterval→applyBuff |
+| `gravity-sword-black-rod` | 重力劍〈黑棒〉 | 無角色 none | — | T5 | — | — | — | onInterval→applyBuff · onBasicAttack→applyBuff · onBasicAttack→applyStatus |
 | `ironhide-vest` | 鐵皮護甲背心 | 無角色 none | 1200g | T2 | — | — | 護甲 +36.7 · 生命 +122 | — |
 | `lance-kongotetsu` | 神槍・金剛徹 | 無角色 none | — | T5 | — | — | 射程 +1 | onBasicAttack→applyBuff · onBasicAttack→applyBuff |
 | `magic-armor-type-zero` | 魔導鎧・零式 | 無角色 none | — | T5 | — | — | — | onAbilityCast→applyBuff · onAbilityCast→applyBuff |
 | `meat-cleaver` | 肉切菜刀 | 無角色 none | — | T5 | — | — | — | onInterval→applyBuff · onBasicAttack→applyBuff · onBasicAttack→damageArea |
 | `meteor-ring` | 流星之戒 | 無角色 none | — | T5 | — | — | — | onUltimateCast→applyBuff/modifyCooldown/applyBuff/applyBuff/applyBuff · onAbilityCast→applyBuff/restore/modifyCooldown/applyBuff · onAbilityCast→applyBuff/restore/modifyCooldown/applyBuff · onAbilityCast→applyBuff/restore/modifyCooldown/applyBuff |
-| `mystery-scrap-of-paper` | 謎之紙片 | 無角色 none | — | T5 | — | — | maxHitPctMaxHp +0.2 | onDamageTaken→applyBuff |
-| `odm-gear` | 立體機動裝置 | 無角色 none | — | T5 | — | — | 移速 +0.33 | onDashOrBlink→applyBuff |
-| `pale-moon-requiem-crown` | 蒼月葬送・千年彼方花冠 | 無角色 none | — | T5 | — | — | — | onOverheal→applyBuff · onOverheal→applyBuff |
+| `mystery-scrap-of-paper` | 謎之紙片 | 無角色 none | — | T5 | — | — | 單發傷害上限 +0.2 | onDamageTaken→applyBuff |
+| `odm-gear` | 立體機動裝置 | 無角色 none | — | T5 | — | — | 移速上限解鎖 +33.33% · 移速 +50% | onDashOrBlink→applyBuff |
+| `pale-moon-requiem-crown` | 蒼月葬送・千年彼方花冠 | 無角色 none | — | T5 | — | — | — | onOverheal→applyBuff/shield · onOverheal→applyBuff/shield |
 | `piercer-crossbow` | 穿甲弩 | 無角色 none | — | T5 | — | — | 攻擊力 +38 · 攻速 +45% | onBasicAttack→damage |
 | `sage-ward-amulet` | 賢者的護身符 | 無角色 none | — | T5 | — | — | 法強 +35 · 魔力 +220 | onDamageTaken→shield |
 | `serrated-edge` | 鋸齒之刃 | 無角色 none | 1200g | T2 | — | ✅ | 攻擊力 +26 | onBasicAttack→damage |
 | `shining-golden-orbs` | 閃耀金玉 | 無角色 none | — | T5 | — | — | — | onStatCapReached→applyBuff/applyBuff |
 | `soul-eater` | 噬魂者 | 無角色 none | — | T5 | — | — | — | onKill→restore · onKill→applyBuff · onKill→applyBuff |
-| `spear-of-lightning` | 雷槍 | 無角色 none | — | T5 | — | — | — | onInterval→applyBuff · onBasicAttack→damageArea · onAbilityHit→damageArea |
+| `spear-of-lightning` | 雷槍 | 無角色 none | — | T5 | — | — | — | onInterval→applyBuff · onBasicAttack→damageArea/applyStatus · onAbilityHit→damageArea/applyStatus |
 | `staff-of-ainz-ooal-gown` | 安茲・烏爾・恭之杖 | 無角色 none | — | T5 | — | — | — | onAbilityCast→applyBuff · onAbilityCast→applyBuff · onAbilityCast→applyBuff · onAbilityCast→applyBuff · onAbilityCast→applyBuff · onAbilityCast→applyBuff · onBasicAttack→applyBuff · onAbilityCast→applyBuff |
-| `stone-mask` | 石鬼面 | 無角色 none | — | T5 | — | — | — | onDamageTaken→applyBuff · onDamageTaken→applyBuff |
+| `stone-mask` | 石鬼面 | 無角色 none | — | T5 | — | — | — | onDamageTaken→applyBuff · onDamageTaken→applyBuff · onDamageTaken→applyBuff · onDamageTaken→applyBuff · onDamageTaken→applyBuff · onDamageTaken→applyBuff |
 | `swift-boots` | 疾風之靴 | 無角色 none | 300g | T1 | — | ✅ | 移速 +0.83 | — |
 | `teardrop-of-rebirth` | 再誕之淚珠 | 無角色 none | — | T5 | — | — | — | onDeath→applyBuff/delayed |
 | `torch-master` | 火把師父 | 無角色 none | — | T5 | — | — | — | onBasicAttack→applyBuff · onAbilityHit→applyBuff |
-| `ultimate-mod-shiranui` | 終極魔改・不知火 | 無角色 none | — | T5 | — | — | 攻擊力 +0.5 · 攻速 +0.5 · 暴擊傷害 +0.5 · 攻擊力 +0.5 · 攻速 +0.5 · 暴擊傷害 +0.5 | onStatCapReached→applyBuff |
+| `ultimate-mod-shiranui` | 終極魔改・不知火 | 無角色 none | — | T5 | — | — | 攻擊力 +50% · 攻速 +50% · 暴擊傷害 +50% · 攻速上限解鎖至 10 | onBasicAttack→applyStatus/applyStatus/applyStatus/applyStatus/applyStatus/applyStatus/applyStatus/applyStatus/applyStatus/applyStatus/applyStatus/applyStatus/applyStatus/applyStatus · onStatCapReached→applyBuff |
 | `usagizuki-twin-crescents` | 兎月【雙弦月】 | 無角色 none | — | T5 | — | — | — | onBasicAttack→applyBuff · onBasicAttack→applyBuff · onBasicAttack→applyBuff · onBasicAttack→applyBuff · onBasicAttack→applyBuff |
 

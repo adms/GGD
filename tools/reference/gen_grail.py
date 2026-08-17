@@ -15,6 +15,7 @@ owner 2026-08-17：
 | `content/editor-target-profile.json` 的 `runtimeCapabilities` | 引擎**真的有**的 effect kinds / hook events / 條件葉 / 模板家族 / unsupported / knownBroken | `pnpm content:build` ← `buildCapabilityManifest()`（出貨註冊表） |
 | `content/status-effects/*.json` | 狀態標籤詞彙 | 內容作者 |
 | `content/vfx/*.json` | 特效清單 | 內容作者 |
+| `tools/skill-spec/curated.json` | 每個 token 的**中文名**（推導不出來的那一半） | 人（唯一一份手寫檔） |
 
 ⭐ 詞彙那一半刻意讀 `editor-target-profile.json` 而不是自己掃原始碼：那份是
 `buildCapabilityManifest()` 的輸出，也就是**外部編輯器契約讀的同一份**。自己掃
@@ -31,10 +32,15 @@ owner 2026-08-17：
 
 import json
 import os
+import sys
+
+sys.path.insert(0, os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "engine-vocab"))
+
+import engine_vocab as V  # noqa: E402  — python 端唯一的引擎詞彙來源
 
 # ── 顯示用的中文名。⛔ 這裡**只有名字**，沒有清單 ────────────────────────────
 # 「有哪些」永遠從 JSON 數出來；這張表只回答「這個 token 中文叫什麼」。
-# 一個 token 沒有中文名時印 token 本身（看得見的缺口，⛔ 不是靜默略過）。
 RANK_LABEL = {"silver": "C級願望", "gold": "A級願望", "prismatic": "EX級願望"}
 RANK_ORDER = ("silver", "gold", "prismatic")
 RANK_ROLE = {
@@ -52,17 +58,18 @@ SLOT_ROLE = {
     "generic": "泛用防守、控制反制或技能循環",
     "pivot": "改變戰術方向的特殊願望",
 }
-HOOK_LABEL = {
-    "onAbilityCast": "施放技能時", "onAbilityHit": "技能命中時",
-    "onBasicAttack": "普通攻擊時", "onDamageDealt": "造成傷害時",
-    "onDamageTaken": "受到傷害時", "onKill": "擊殺時", "onDeath": "死亡時",
-    "onAllyDeath": "隊友死亡時", "onRevive": "復活時", "onEvade": "迴避成功時",
-    "onReflectSuccess": "反彈成功時", "onStunned": "被暈眩時",
-    "onStatusApplied": "被掛上狀態時", "onShieldGained": "獲得護盾時",
-    "onShieldBroken": "護盾破裂時", "onInterval": "每隔一段時間",
-    "onBossSpawn": "殭屍王出現時", "onFireRingIgnite": "火圈點燃時",
-    "onGuardianDown": "守衛塔被拆時",
-}
+# ⭐ 觸發事件／效果／條件葉的中文名 —— **一份都不手抄在這裡**。
+#
+# ⛔ 這三張表在 2026-08-18 之前是手打的，而 `HOOK_LABEL` 只有 19 個事件。
+# 引擎在 2026-08-17 加到 33 個之後，`mechanics.md` 的中文欄對 14 個新事件印 `—`、
+# `grail-wishes.md` 的觸發欄直接印裸 token —— 而**沒有任何東西會紅**。
+#
+# 現在三張都讀 `tools/skill-spec/curated.json`（這個 repo 唯一一份手寫詞彙檔，
+# 已經被 `gen_spec.ts::reconcileLabels` 兩個方向對帳），而且**缺一個就 raise**：
+# 引擎多一個事件而沒有人替它取名 → 這支產生器當場非零離開，⛔ 不是印 `—`。
+HOOK_LABEL = V.hook_labels()
+EFFECT_KIND_LABEL = V.curated_labels("effectKinds")
+CONDITION_LEAF_LABEL = V.curated_labels("conditionLeaves")
 MECHANIC_LABEL = {
     "evasion": "迴避", "reflect": "反彈", "burn": "燃燒",
     "shield": "護盾", "flight": "飛行", "abilityDamage": "技能傷害",
@@ -191,7 +198,7 @@ def trigger_cell(doc):
         if on in seen:
             continue
         seen.add(on)
-        label = HOOK_LABEL.get(on, on)
+        label = V.hook_label(on)  # ⛔ 查不到 raise —— 以前這裡印裸 token
         icd = h.get("internalCooldown")
         chance = h.get("chance")
         bits = [label]
@@ -399,7 +406,9 @@ def gen_mechanics_doc(ctx, content_dir, abilities):
         "",
     ]
 
-    def section(title, tokens, used, labels=None, limit=12):
+    def section(title, tokens, used, labels, limit=12):
+        # ⛔ 缺中文名 = **非零離開**，不是印一格 `—`。理由見 engine_vocab.reconcile。
+        V.reconcile(labels, tokens, title)
         L.append(f"## {title} —— {len(tokens)} 種")
         L.append("")
         L.append("| token | 中文 | 用它的內容 | 例（前 %d 份） |" % limit)
@@ -409,12 +418,15 @@ def gen_mechanics_doc(ctx, content_dir, abilities):
             sample = "、".join(f"`{i}`" for i in ids[:limit])
             if len(ids) > limit:
                 sample += f" …（共 {len(ids)}）"
-            L.append(f"| `{t}` | {(labels or {}).get(t, '—')} | {len(ids)} | {sample or '⚠️ 0 —— 機制在，還沒有內容用'} |")
+            L.append(f"| `{t}` | {labels[t]} | {len(ids)} | {sample or '⚠️ 0 —— 機制在，還沒有內容用'} |")
         L.append("")
 
-    section("效果（effect kind）", prof.get("effectKinds") or sorted(kinds_used), kinds_used)
-    section("觸發事件（hook event）", prof.get("hookEvents") or sorted(hooks_used), hooks_used, HOOK_LABEL)
-    section("條件葉（condition leaf）", prof.get("conditionLeafKinds") or sorted(leaves_used), leaves_used)
+    section("效果（effect kind）", prof.get("effectKinds") or sorted(kinds_used),
+            kinds_used, EFFECT_KIND_LABEL)
+    section("觸發事件（hook event）", prof.get("hookEvents") or sorted(hooks_used),
+            hooks_used, HOOK_LABEL)
+    section("條件葉（condition leaf）", prof.get("conditionLeafKinds") or sorted(leaves_used),
+            leaves_used, CONDITION_LEAF_LABEL)
 
     L += [f"## 狀態標籤 —— {len(status_tags)} 個", "",
           "開放詞彙（自由字串）。條件葉 `status` 的**類別分支**查的就是它。", "",

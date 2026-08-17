@@ -33,9 +33,22 @@ so cannot survive as written. Everything else is prose about an unported active
 or aura and is left exactly where it is — those mechanics still exist even
 though `item@1` has nowhere to put them yet.
 
-The generated lines use the map's vocabulary where the map has a word for the
-stat. `ap`, `mr`, `lifesteal`, `cdr` and `range` have no WC3 equivalent the
-author ever wrote, so they take the standard zh-TW game terms.
+⭐ 2026-08-18 —— **屬性與運算子的清單不再手抄在這裡**（CLAUDE.md 第〇·五守則）。
+
+這一支是全 repo 最危險的一支手抄清單，因為它**改寫的是出貨道具的文案**：
+表上沒有的東西不會報錯，它只是**不出現在描述裡**。稽核當天量到的三筆真實後果：
+
+  · `evasion`（幻之匕首・仙后座）、`spellVamp`（至尊魔戒・落魂的嗜血劍）、
+    `maxHitPctMaxHp`（謎之紙片）—— 道具真的給了，而文案**一個字都不會提**
+  · `capRaise as 10`（無盡連刃）被折進 flat 加總 → 印出 **「攻擊速度+1000%」**
+  · `manaRegen` 被標成比例 → 每秒回魔 +13 印出 **「魔力回復速度+1300%」**
+
+後兩者比第一者更糟：一句**帶著數字的假話**，而它跟正確的長得一模一樣。
+
+現在「有哪些屬性 / 有哪些運算子」一律由 `tools/engine-vocab/engine_vocab.py`
+從出貨的 `Stat` / `ModOp` 推導；這裡只留三樣**人才決定得了**的東西 ——
+原圖的用字（`WC3_LABEL`）、單位（`UNIT`）、出現順序（`EMIT_ORDER`）。
+前兩樣**缺一條就 raise**，第三樣缺了只會少一次排序意見（⛔ 不會少一行文案）。
 """
 from __future__ import annotations
 
@@ -46,6 +59,10 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "tools" / "engine-vocab"))
+
+import engine_vocab as V  # noqa: E402  — python 端唯一的引擎詞彙來源
+
 ITEMS = ROOT / "content" / "items"
 
 # The block header is 「效能」, written with or without a colon (狂暴軒轅劍 uses
@@ -58,31 +75,87 @@ SECTION_HEADERS = ("解說", "歷史")
 def _is_effect_header(line: str) -> bool:
     return line.strip().rstrip("：:") == EFFECT_HEADER
 
-# stat -> (label, kind). Order is the order lines are emitted in.
-STAT_LABEL = [
-    ("ad", "攻擊力", "flat"),
-    ("ap", "法術強度", "flat"),
-    ("armor", "裝甲", "flat"),
-    ("mr", "魔法抗性", "flat"),
-    ("maxHealth", "生命", "flat"),
-    ("maxMana", "魔力", "flat"),
-    ("healthRegen", "每秒回復生命", "flat"),
-    ("manaRegen", "魔力回復速度", "percent"),
-    ("as", "攻擊速度", "percent"),
-    ("ms", "移動速度", "flat"),
-    ("lifesteal", "吸血", "percent"),
-    ("cdr", "冷卻縮減", "percent"),
-    ("range", "攻擊距離", "flat"),
-]
-LABELS = {s: (label, kind) for s, label, kind in STAT_LABEL}
+# ── 屬性的用字 ───────────────────────────────────────────────────────────────
+#
+# ⛔ 2026-08-18 之前這裡是一份**手抄的 13 條**清單，而這一支會**改寫出貨道具的文案**
+# —— 所以落在 13 條之外的 modifier（出貨道具上真的有：`evasion` / `spellVamp` /
+# `maxHitPctMaxHp`）會被**靜默地從描述裡刪掉**：道具給了，文案不講。
+#
+# 現在只覆蓋「原圖有自己說法」的那幾條，其餘自動落到 `baseBonus.ts::STAT_LABEL_ZH`
+# （`Record<Stat,…>`，TypeScript 逼它完整），所以**不可能有一條屬性沒有名字**。
+WC3_LABEL = {
+    "armor": "裝甲",              # 原圖寫「裝甲」不是「護甲」
+    "maxHealth": "生命",
+    "maxMana": "魔力",
+    "healthRegen": "每秒回復生命",
+    "manaRegen": "魔力回復速度",
+    "as": "攻擊速度",
+    "ms": "移動速度",
+    # `STAT_LABEL_ZH` 的「單發傷害上限（最大生命比例）」是**面板**用的說明式名字，
+    # 放進一行「⋯+20%」的效能文案裡太長。⚠️ 只是短一點的別名，不是第二個定義。
+    "maxHitPctMaxHp": "單發傷害上限",
+}
+LABELS = V.label_table(WC3_LABEL, what="道具效能文案的屬性用字")
+
+# 一條 **flat** modifier 該印成什麼單位。⛔ 每一條屬性都要有答案，缺一條就 raise。
+#
+# ⚠️ `rate` = 值本身是 0..1 的比例（吸血 0.2 → 「+20%」）。
+# ⚠️ 舊版把 `manaRegen` 與 `as` 也標成比例，於是「每秒回魔 +13」被印成
+#    **「魔力回復速度+1300%」** —— 一句帶著數字的假話，而且它看起來跟正確的一模一樣。
+#    這兩條在 GGD 是**絕對量**（點/秒、次/秒），所以它們在這裡是 `amount`。
+UNIT = {
+    "critDamage": "multiple",  # 1.75 基礎上的**增量**，讀作「倍」
+    **{s: "rate" for s in (
+        "critChance", "cdr", "lifesteal", "evasion", "spellVamp",
+        "outputDamagePct", "outputHealingPct", "outputShieldPct",
+        "maxHitPctMaxHp", "unavoidablePct", "cooldownDrainRate",
+    )},
+    **{s: "amount" for s in (
+        "maxHealth", "healthRegen", "maxMana", "manaRegen",
+        "ad", "ap", "armor", "mr", "as", "ms", "range",
+    )},
+}
+_unclassified = [s for s in V.stats() if s not in UNIT]
+if _unclassified:
+    sys.exit("⛔ regen_descriptions.py 的 UNIT 少了 %d 條屬性：%s\n"
+             "   → 一條沒有單位的屬性會被印成一個沒有單位的數字（＝一句假話）。"
+             % (len(_unclassified), "、".join(_unclassified)))
+
+# 每一個 `ModOp` 印成什麼。⛔ 缺一個就 raise（`V.require_ops`）。
+#
+# ⚠️ 舊版把「不是 pctAdd/pctMult 的一律當成 flat 加總」，於是
+# `capRaise as 10`（解鎖攻速上限到 10）被折進攻速的 flat 桶，印出
+# **「攻擊速度+1000%」**。⛔ 一個沒被想過的運算子不可以被折進加總。
+#   None = 走上面的 UNIT（一般加減）
+OP_FORM = {
+    "flat": None,
+    "pctAdd": None,
+    "pctMult": None,
+    "override": "{label}固定為{num}",
+    "capRaise": "{label}上限解鎖至{num}",
+    "capRaisePct": "{label}上限解鎖+{num}%",
+    "percentOf": "{label}+{extra}的{num}%",
+}
+V.require_ops(OP_FORM, "道具效能文案的 modifier 呈現")
+
+RESOURCE_LABEL = {"hp": "目前生命", "mp": "目前魔力"}
+
+# 出現的順序。⛔ 這**不是**清單 —— 沒被點名的屬性照 `Stat` 的宣告順序接在後面，
+# 所以引擎多一條屬性時這裡只會少一次排序意見，⛔ 不會少一行文案。
+EMIT_ORDER = ["ad", "ap", "armor", "mr", "maxHealth", "maxMana",
+              "healthRegen", "manaRegen", "as", "ms", "lifesteal", "cdr", "range"]
+EMIT_ORDER += [s for s in V.stats() if s not in EMIT_ORDER]
 
 # Lines the generator OWNS: anything it could have written itself, plus the
 # WC3 attribute lines that no longer survive as attributes.
-OWNED_LABELS = {label for _, label, _ in STAT_LABEL} | {
+OWNED_LABELS = set(LABELS.values()) | {
     "敏捷", "力量", "智慧", "智力", "全能力",
     "生命最大", "魔力最大", "生命上限", "範圍裝甲", "範圍每秒回復生命",
 }
 STAT_LINE = re.compile(r"^([一-鿿]{2,10})\s*([+-])\s*([\d.]+)\s*(%?)$")
+# 標籤含括號時（`單發傷害上限（最大生命比例）`）上面那條字元類別對不上，而**對不上
+# 就等於不擁有**，於是下一次執行會把同一行再寫一次。所以擁有權改成「已知標籤 + 數字尾」。
+OWNED_TAIL = re.compile(r"^\s*[+-]\s*[\d.]+\s*[%倍]?$")
 
 # Stat lines the map writes as a phrase rather than as `label ± number`. Each
 # maps onto a GGD modifier the generator emits, so leaving them behind would
@@ -95,6 +168,12 @@ PHRASE_LINES = [
     re.compile(r"^吸血[\d.]+%\s*[（(].*[）)]$"),            # lifesteal
     # 「力量、敏捷+15」 — one ability granting several attributes at once.
     re.compile(r"^(?:力量|敏捷|智慧|智力)(?:、(?:力量|敏捷|智慧|智力))+\s*[+-][\d.]+$"),
+    # ⭐ 產生器自己寫得出來的**片語**形式（`OP_FORM` 的四種）。少了它們，
+    #   下一次執行會把同一句再寫一次 —— 擁有權缺一格 = 一行重複，而且會累積。
+    re.compile(r"^[^+]{1,16}上限解鎖至[\d.]+$"),
+    re.compile(r"^[^+]{1,16}上限解鎖\+[\d.]+%$"),
+    re.compile(r"^[^+]{1,16}固定為[\d.]+$"),
+    re.compile(r"^[^+]{1,16}\+[^+]{1,10}的[\d.]+%$"),
 ]
 
 
@@ -104,38 +183,69 @@ def fmt(value: float) -> str:
     return text or "0"
 
 
+def _signed(label: str, value: float, unit: str) -> str:
+    sign = "+" if value > 0 else "-"
+    if unit == "rate":
+        return f"{label}{sign}{fmt(abs(value) * 100)}%"
+    if unit == "multiple":
+        return f"{label}{sign}{fmt(abs(value))}倍"
+    return f"{label}{sign}{fmt(abs(value))}"
+
+
+def _source_label(m: dict) -> str:
+    """`percentOf` 的來源：一條屬性（`from`）或一項當下的資源（`fromResource`）。"""
+    if m.get("from") in LABELS:
+        return LABELS[m["from"]]
+    res = m.get("fromResource")
+    return RESOURCE_LABEL.get(res, res) if res else "來源"
+
+
 def stat_lines(modifiers: list) -> list[str]:
+    """出貨 modifier → 效能區塊的行。⛔ **一條 modifier 都不可以被靜默丟掉。**"""
     by_stat: dict[str, float] = {}
     percent: dict[str, float] = {}
+    phrases: list[tuple[str, str]] = []  # (stat, 那一行) —— 折不進加總的運算子
     for m in modifiers or []:
-        if m["op"] in ("pctAdd", "pctMult"):
-            percent[m["stat"]] = percent.get(m["stat"], 0.0) + m["value"]
+        stat, op = m.get("stat"), m.get("op")
+        if stat not in LABELS:
+            raise V.VocabError(
+                f"道具的 modifier 用了引擎不認得的屬性 `{stat}` —— 改那份內容 JSON")
+        if op not in OP_FORM:
+            raise V.VocabError(
+                f"道具的 modifier 用了引擎不認得的運算子 `{op}` —— 改那份內容 JSON")
+        form = OP_FORM[op]
+        if form is not None:
+            # ⛔ 解鎖上限／覆寫／衍生屬性**不是加成**，折進加總會印出假的數字。
+            num = fmt(m["value"] * 100) if op in ("capRaisePct", "percentOf") else fmt(m["value"])
+            phrases.append((stat, form.format(label=LABELS[stat], num=num,
+                                              extra=_source_label(m))))
+        elif op in ("pctAdd", "pctMult"):
+            percent[stat] = percent.get(stat, 0.0) + m["value"]
         else:
-            by_stat[m["stat"]] = by_stat.get(m["stat"], 0.0) + m["value"]
+            by_stat[stat] = by_stat.get(stat, 0.0) + m["value"]
 
-    out = []
-    for stat, label, kind in STAT_LABEL:
-        # A stat can arrive flat AND as a percentage (as/manaRegen do); each
-        # gets its own line so neither is silently folded into the other.
-        for source, is_pct in ((by_stat, False), (percent, True)):
-            if stat not in source:
-                continue
-            value = source[stat]
-            if not value:
-                continue
-            if is_pct or (kind == "percent" and not is_pct):
-                text = f"{label}{'+' if value > 0 else '-'}{fmt(abs(value) * 100)}%"
-            else:
-                text = f"{label}{'+' if value > 0 else '-'}{fmt(abs(value))}"
-            out.append(text)
-
+    # 暴擊的兩條併成原圖的說法「N%機率造成M倍傷害」，所以它們不再各自出一行。
+    crit_line = None
     chance = by_stat.get("critChance")
     if chance:
         # `critDamage` is a DELTA on the 1.75 champion base, and the tooltip
         # form states the absolute multiple — the same convention the source
         # descriptions use, so this line reads like the ones it replaces.
-        multiplier = 1.75 + by_stat.get("critDamage", 0.0)
-        out.append(f"{fmt(chance * 100)}%機率造成{fmt(multiplier)}倍傷害")
+        multiplier = 1.75 + by_stat.pop("critDamage", 0.0)
+        crit_line = f"{fmt(by_stat.pop('critChance') * 100)}%機率造成{fmt(multiplier)}倍傷害"
+
+    out = []
+    for stat in EMIT_ORDER:
+        # A stat can arrive flat AND as a percentage (as/manaRegen do); each
+        # gets its own line so neither is silently folded into the other.
+        for source, is_pct in ((by_stat, False), (percent, True)):
+            value = source.get(stat)
+            if not value:
+                continue
+            out.append(_signed(LABELS[stat], value, "rate" if is_pct else UNIT[stat]))
+        out += [line for s, line in phrases if s == stat]
+    if crit_line:
+        out.append(crit_line)
     return out
 
 
@@ -143,7 +253,11 @@ def is_owned(line: str) -> bool:
     if any(p.match(line) for p in PHRASE_LINES):
         return True
     m = STAT_LINE.match(line)
-    return bool(m and m.group(1) in OWNED_LABELS)
+    if m and m.group(1) in OWNED_LABELS:
+        return True
+    # 括號、空白、「倍」結尾的標籤，上面那條字元類別對不上 —— 直接比已知標籤。
+    return any(line.startswith(lbl) and OWNED_TAIL.match(line[len(lbl):])
+               for lbl in OWNED_LABELS)
 
 
 def rewrite(description: str, modifiers: list) -> str | None:

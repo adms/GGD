@@ -1,49 +1,49 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "7f2a3d75",
+  "capabilityFingerprint": "9a5fed3e",
   "counts": {
     "effectKinds": 37,
-    "hookEvents": 19,
+    "hookEvents": 33,
     "conditionLeafKinds": 5,
     "templateFamilies": 17,
-    "effectFields": 186,
-    "stats": 17,
+    "effectFields": 191,
+    "stats": 23,
     "combatEnvKeys": 36
   },
   "stacking": [
     {
       "key": "沒有任何 modifier（基準）",
-      "value": "AP 26",
+      "value": "AP 169",
       "from": "measured",
       "note": "下面每一列都拿它當比較基準。它是骨架英雄的值，不是平衡數字。"
     },
     {
       "key": "flat（相加）",
-      "value": "基底 AP 26 → 61（×2.346154）",
+      "value": "基底 AP 169 → 204（×1.207101）",
       "from": "measured",
       "note": "flat 10 ＋ flat 25 → 直接加 35 在基底上。多條就一路加下去。"
     },
     {
       "key": "⭐ pctAdd（同一個總和桶）",
-      "value": "基底 AP 26 → 130（×5）",
+      "value": "基底 AP 169 → 845（×5）",
       "from": "measured",
       "note": "pctAdd +100% ＋ pctAdd +300% → 全部先相加再乘**一次**：×(1 + 1.0 + 3.0) = ×5.0。這就是「死之王套裝 +300% ＋ 惡夢魔王碎片 +100% = ×5.0 而不是 ×8.0」的原因。"
     },
     {
       "key": "pctMult（各自相乘）",
-      "value": "基底 AP 26 → 208（×8）",
+      "value": "基底 AP 169 → 1352（×8）",
       "from": "measured",
       "note": "同樣的 +100% 與 +300%，但每一條各乘一次：×(1+1.0) × (1+3.0) = ×8.0。和上面是**不同的桶**，不會互相合併 —— 選錯 op 就是 5 倍與 8 倍的差別。"
     },
     {
       "key": "flat 與 pctAdd 的先後",
-      "value": "基底 AP 26 → 252（×9.692308）",
+      "value": "基底 AP 169 → 538（×3.183432）",
       "from": "measured",
       "note": "flat +100 再 pctAdd +100%：**先加完 flat 才乘百分比**，也就是 (基底+100)×2。"
     },
     {
       "key": "percentOf（取另一條屬性的百分比）",
-      "value": "基底 AP 26 → 46（×1.769231）",
+      "value": "基底 AP 169 → 219（×1.295858）",
       "from": "measured",
       "note": "「AP ＝ 5% 的最大魔力」（光魔杖那一條）。⚠️ 缺 `from` 會被 schema 拒收 —— 沒有那道閘的話這條 modifier 會**靜默無效**，而文件看起來一切正常。"
     }
@@ -55,14 +55,50 @@
       "pctMult",
       "override",
       "capRaise",
+      "capRaisePct",
       "percentOf"
     ],
     "itemPercentLimit": 3
   },
   "caps": [
     {
+      "key": "maxHealth",
+      "value": "預設上限 base 375960 / 解鎖 375960　·　⚙️出貨 base 375960 / 解鎖 375960　·　後台基礎加成上限 20000　·　道具欄位帶 ±2500",
+      "from": "shipped"
+    },
+    {
+      "key": "healthRegen",
+      "value": "預設上限 base 744 / 解鎖 744　·　⚙️出貨 base 744 / 解鎖 744　·　後台基礎加成上限 200　·　道具欄位帶 ±100",
+      "from": "shipped"
+    },
+    {
+      "key": "maxMana",
+      "value": "預設上限 base 232150 / 解鎖 232150　·　⚙️出貨 base 232150 / 解鎖 232150　·　後台基礎加成上限 20000　·　道具欄位帶 ±2500",
+      "from": "shipped"
+    },
+    {
+      "key": "manaRegen",
+      "value": "預設上限 base 926 / 解鎖 926　·　⚙️出貨 base 926 / 解鎖 926　·　後台基礎加成上限 200　·　道具欄位帶 ±50",
+      "from": "shipped"
+    },
+    {
+      "key": "ad",
+      "value": "預設上限 base 21200 / 解鎖 21200　·　⚙️出貨 base 21200 / 解鎖 21200　·　後台基礎加成上限 2000　·　道具欄位帶 ±400",
+      "from": "shipped"
+    },
+    {
       "key": "ap",
-      "value": "預設上限 base 100000 / 解鎖 100000　·　⚙️出貨 base 100000 / 解鎖 100000　·　後台基礎加成上限 2000　·　道具欄位帶 ±400",
+      "value": "預設上限 base 500000 / 解鎖 500000　·　⚙️出貨 base 500000 / 解鎖 500000　·　後台基礎加成上限 2000　·　道具欄位帶 ±400",
+      "from": "shipped"
+    },
+    {
+      "key": "armor",
+      "value": "預設上限 base 5078 / 解鎖 5078　·　⚙️出貨 base 5078 / 解鎖 5078　·　後台基礎加成上限 500　·　道具欄位帶 ±150",
+      "from": "shipped"
+    },
+    {
+      "key": "mr",
+      "value": "預設上限 base 15344 / 解鎖 15344　·　⚙️出貨 base 15344 / 解鎖 15344　·　後台基礎加成上限 500　·　道具欄位帶 ±200",
       "from": "shipped"
     },
     {
@@ -72,8 +108,8 @@
     },
     {
       "key": "ms",
-      "value": "結構夾限 [2, 14]　·　後台基礎加成上限 12　·　道具欄位帶 ±5",
-      "from": "import"
+      "value": "結構夾限 [2, 14]　·　預設上限 base 18 / 解鎖 24　·　⚙️出貨 base 18 / 解鎖 24　·　後台基礎加成上限 12　·　道具欄位帶 ±5",
+      "from": "shipped"
     },
     {
       "key": "critChance",
@@ -87,7 +123,12 @@
     },
     {
       "key": "lifesteal",
-      "value": "結構夾限 [0, 0.8]　·　預設上限 base 0.8 / 解鎖 1　·　⚙️出貨 base 0.8 / 解鎖 1　·　後台基礎加成上限 0.8　·　道具欄位帶 ±1",
+      "value": "結構夾限 [0, 0.8]　·　預設上限 base 0.8 / 解鎖 20　·　⚙️出貨 base 0.8 / 解鎖 20　·　後台基礎加成上限 0.8　·　道具欄位帶 ±1",
+      "from": "shipped"
+    },
+    {
+      "key": "range",
+      "value": "預設上限 base 16 / 解鎖 16　·　⚙️出貨 base 16 / 解鎖 16　·　後台基礎加成上限 50　·　道具欄位帶 ±5",
       "from": "shipped"
     },
     {
@@ -140,7 +181,7 @@
     },
     {
       "key": "attackDamage",
-      "value": "×1",
+      "value": "×0.6",
       "from": "shipped",
       "note": "作用於屬性：ad"
     },
@@ -170,7 +211,7 @@
     },
     {
       "key": "manaRegen",
-      "value": "×16",
+      "value": "×8",
       "from": "shipped",
       "note": "作用於屬性：manaRegen"
     },
@@ -248,7 +289,7 @@
     },
     {
       "key": "strToAttackDamage",
-      "value": "×1",
+      "value": "×0.4",
       "from": "shipped",
       "note": "公式格（不直接乘任何一條屬性）"
     },
@@ -260,7 +301,7 @@
     },
     {
       "key": "agiToAttackSpeed",
-      "value": "×0.02",
+      "value": "×0.01",
       "from": "shipped",
       "note": "公式格（不直接乘任何一條屬性）"
     },
@@ -278,13 +319,13 @@
     },
     {
       "key": "intToAbilityPower",
-      "value": "×1",
+      "value": "×6.5",
       "from": "shipped",
       "note": "公式格（不直接乘任何一條屬性）"
     },
     {
       "key": "intToMagicResist",
-      "value": "×0.6",
+      "value": "×0",
       "from": "shipped",
       "note": "公式格（不直接乘任何一條屬性）"
     },
@@ -341,7 +382,7 @@
     "rows": [
       {
         "key": "AoE 半徑樣本（技能＋道具）",
-        "value": "165 個　最小 1.5 / 中位 6 / 最大 513.5",
+        "value": "147 個　最小 1.5 / 中位 6 / 最大 513.5",
         "from": "shipped"
       },
       {
@@ -354,26 +395,26 @@
     "buckets": [
       {
         "label": "小",
-        "range": "< 5.5",
-        "count": 48
+        "range": "< 4.5",
+        "count": 42
       },
       {
         "label": "中",
-        "range": "5.5 – 7.33",
-        "count": 58
+        "range": "4.5 – 6.42",
+        "count": 53
       },
       {
         "label": "大",
-        "range": "≥ 7.33",
-        "count": 59
+        "range": "≥ 6.42",
+        "count": 52
       }
     ]
   },
   "oversizedAoe": {
     "zoneRadius": 24,
-    "total": 29,
+    "total": 23,
     "over": [],
-    "note": "29 支模板技能的 AoE 半徑全部在 zone 半徑 24 之內 —— WC3 單位換算（GGD_PER_WC3 = 11/600）由 expand() 正確套用。"
+    "note": "23 支模板技能的 AoE 半徑全部在 zone 半徑 24 之內 —— WC3 單位換算（GGD_PER_WC3 = 11/600）由 expand() 正確套用。"
   },
   "geometryFields": {
     "範圍與形狀": [
@@ -388,6 +429,7 @@
     "距離與位移": [
       "distance",
       "distanceScale",
+      "distanceTier",
       "launchDistance",
       "maxDistance",
       "moveSpeedMult",
@@ -459,23 +501,37 @@
     "hookEvents": [
       "onAbilityCast",
       "onAbilityHit",
+      "onAllyDamaged",
       "onAllyDeath",
       "onBasicAttack",
       "onBossSpawn",
+      "onBoundaryTouch",
+      "onCrowdControlApplied",
+      "onCrowdControlReceived",
       "onDamageDealt",
       "onDamageTaken",
+      "onDashOrBlink",
       "onDeath",
       "onEvade",
       "onFireRingIgnite",
       "onGuardianDown",
+      "onHeal",
       "onInterval",
       "onKill",
+      "onLethalDamage",
+      "onOverheal",
+      "onProjectileExpire",
       "onReflectSuccess",
       "onRevive",
+      "onRoundEnd",
+      "onRoundStart",
       "onShieldBroken",
       "onShieldGained",
+      "onStatCapReached",
       "onStatusApplied",
-      "onStunned"
+      "onStunned",
+      "onUltimateCast",
+      "onUltimateHit"
     ],
     "conditionLeafKinds": [
       "chance",
