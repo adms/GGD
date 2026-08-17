@@ -166,6 +166,64 @@ describe("⛔ 卡片上不可以有「說了但不會發生」的字（owner 202
     expect(out.map((c) => c.stat)).toEqual([Stat.OutputDamagePct]);
   });
 
+  /**
+   * ⛔ **撞到字數上限時要另存，不是壓縮取代。**
+   *
+   * owner 2026-08-18：
+   *
+   * > 「應該是**先備份原本內容成另一份檔案**，不應該直接壓縮取代」
+   *
+   * 前科（同一天，就在修無效宣稱的那一手）：`authoringNote` 有 2000 字硬上限，
+   * 我把補充寫進去撐爆之後，**直接把原文截斷**塞回去 —— `shining-golden-orbs`
+   * 因此少了 **254 字**（[完全體] 那一段的逐句對照），而 `content:build` 是綠的。
+   *
+   * ⚠️ 這與 `docs/legacy/_w3x-fidelity-superseded.md` 是同一條規矩：
+   * 被取代的東西要另存 —— **測試可以跟著設計走，知識不可以無聲消失**。
+   *
+   * 這一條把它變成閘：**任何 `authoringNote` 都不可以帶截斷標記**。
+   * 撞到上限的正解是把全文寫進 `docs/legacy/_item-authoring-notes-full.md`，
+   * 然後在 JSON 裡留一行指標 —— ⛔ 不是把原文剪掉。
+   */
+  it("★ ⛔ 沒有任何 authoringNote 是被**截斷**的（撞上限要另存，不是壓縮）", () => {
+    const MARKERS = ["…（略）", "…(略)", "……（略", "[truncated]", "（以下略）"];
+    const bad: string[] = [];
+    for (const coll of ["items", "abilities", "augments", "champions"]) {
+      let files: string[];
+      try {
+        files = readdirSync(join(CONTENT, coll));
+      } catch {
+        continue;
+      }
+      for (const f of files) {
+        if (!f.endsWith(".json") || f === "_index.json") continue;
+        let d: { authoringNote?: unknown };
+        try {
+          d = JSON.parse(readFileSync(join(CONTENT, coll, f), "utf8")) as { authoringNote?: unknown };
+        } catch {
+          continue;
+        }
+        const note = typeof d.authoringNote === "string" ? d.authoringNote : "";
+        for (const m of MARKERS) {
+          if (note.includes(m)) bad.push(`${coll}/${basename(f, ".json")} —— 帶截斷標記「${m}」`);
+        }
+      }
+    }
+    expect(
+      bad,
+      [
+        "",
+        "⛔ 這些 authoringNote 是被**截斷**的（owner 2026-08-18：「應該是先備份原本內容成另一份檔案，",
+        "不應該直接壓縮取代」）。",
+        "",
+        ...bad.map((b) => `  ${b}`),
+        "",
+        "正解：把**全文**寫進 docs/legacy/_item-authoring-notes-full.md，",
+        "JSON 裡只留一行指標。⛔ 不是把原文剪掉。",
+        "",
+      ].join("\n"),
+    ).toEqual([]);
+  });
+
   it("⭐ 而且它讀的是 config，不是寫死的名單", () => {
     const raisable = raisableStats();
     expect(raisable.size, "config.stat-caps@1 一條解鎖空間都沒有 —— 那整族機制是死的").toBeGreaterThan(0);

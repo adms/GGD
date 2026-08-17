@@ -263,6 +263,22 @@ schema 收得下、後台存得起來、卡片上印著那句話、`content:buil
 順手寫了一句「[回收] 位移技能命中後回復魔力」—— **那張卡根本沒有那個 effect**。
 ⇒ 改完描述要**逐句回頭對照 JSON**，⛔ 不可以憑印象寫。
 
+### ⛔ 撞到字數上限時：**另存**，不是壓縮取代
+
+owner 2026-08-18：
+
+> 「應該是**先備份原本內容成另一份檔案**，不應該直接壓縮取代」
+
+前科就在同一手上：`item@1.authoringNote` 有 **2000 字硬上限**，我把補充寫進去撐爆之後
+**直接把原文截斷**塞回去 —— `shining-golden-orbs` 因此少了 **254 字**
+（[完全體] 那一段的逐句對照），而 `content:build` 是綠的、測試是綠的。
+
+⚠️ 這與 `docs/legacy/_w3x-fidelity-superseded.md` 是**同一條規矩**：
+被取代的東西要另存 —— **測試可以跟著設計走，知識不可以無聲消失。**
+
+**正解**：全文寫進 `docs/legacy/_item-authoring-notes-full.md`，JSON 裡只留一行指標。
+⛔ 不是把原文剪掉。⭐ 指標本身要**按剩餘額度挑長短**，⛔ 不可以為了塞指標再去動原文。
+
 ### 閘（⛔ 不是判準）
 
 `packages/shared/src/content/noOpModifierClaims.test.ts` ——
