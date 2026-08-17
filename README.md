@@ -1153,7 +1153,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **完整 78 名英雄**（含 29 名未開放）與逐欄資料（開放旗標、技能 id、攻擊類型…）在 [`docs/reference/roster.md`](./docs/reference/roster.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_8a90b1eb0894` 產生。 開放 49 / 全 78 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_1e707a1e419e` 產生。 開放 49 / 全 78 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:roster -->
 
 <!-- BEGIN GENERATED:abilities -->
@@ -1169,13 +1169,13 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **全 461 個技能的逐欄表**（id、名稱、slot、型態、編號、擁有英雄、開放旗標、完整短效果）在 [`docs/reference/abilities.md`](./docs/reference/abilities.md)；互動版在 <http://localhost:39527/#codex>。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_8a90b1eb0894` 產生。 開放英雄技能 293 / 全 461 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_1e707a1e419e` 產生。 開放英雄技能 293 / 全 461 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:abilities -->
 
 <!-- BEGIN GENERATED:items -->
 #### 商店貨架 + 抽卡池（能實際取得的道具）
 
-> 全部 219 件道具依 `craftRole` 標記分類（task #70）。**真正能買的只有 38 件最終合成武器＋2 項服務**；三選一 draft 抽 13 件任務道具、傳說寶玉抽 49 件傳說。其餘 149 件是配方組件、代幣、殘件或還沒 payload 的 final，不會單獨出現在商店或抽卡。
+> 全部 239 件道具依 `craftRole` 標記分類（task #70）。**真正能買的只有 38 件最終合成武器＋2 項服務**；三選一 draft 抽 13 件任務道具、傳說寶玉抽 49 件傳說。其餘 169 件是配方組件、代幣、殘件或還沒 payload 的 final，不會單獨出現在商店或抽卡。
 >
 > 只有兩種商店價格：簡易 **300g**、強力 **1200g**（`packages/shared/src/sim/economy/itemTiers.ts:43-46`）。**傳說沒有價格**，只能抽。背包 6 格、賣出退 40%。
 >
@@ -1313,9 +1313,9 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > ⚠️ 另有 **4 件 `final` 沒有 payload**（風行天衣、盾甲天書、黑色魔書、嗜血邪書）：主動效果 schema 還裝不下（#56），所以商店拒賣。詳見完整表。
 
-> 📖 **全 219 件道具依 craftRole 的完整分類表**（component 106 / token 8 / none 31 …）在 [`docs/reference/items.md`](./docs/reference/items.md)。
+> 📖 **全 239 件道具依 craftRole 的完整分類表**（component 106 / token 8 / none 51 …）在 [`docs/reference/items.md`](./docs/reference/items.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_8a90b1eb0894` 產生。 可取得 102 / 全 219 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_1e707a1e419e` 產生。 可取得 102 / 全 239 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:items -->
 
 <!-- BEGIN GENERATED:grail -->
@@ -1404,7 +1404,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 逐張的完整 JSON（每一格參數、每一個 hook、每一條條件）在 [`docs/reference/grail-wishes.md`](docs/reference/grail-wishes.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_8a90b1eb0894` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_1e707a1e419e` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:grail -->
 
 <!-- BEGIN GENERATED:mechanics -->
@@ -1500,7 +1500,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 完整的參數與上下界（每個效果每一格能填什麼）在 [`docs/技能標記機制與效果規則.md`](docs/技能標記機制與效果規則.md)，同樣是產生的。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_8a90b1eb0894` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_1e707a1e419e` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:mechanics -->
 
 
