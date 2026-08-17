@@ -315,4 +315,28 @@ describe("scripts/host-deploy.sh —— 部署程序是程式，不是要人記�
         "把序列寫成腳本卻沒有人被導向它，等於沒寫。",
     ).toBe(true);
   });
+
+  /**
+   * GH#335 —— 煙霧測試那一行**不可以描述一個公式產不出來的格式**。
+   *
+   * 之前 CLAUDE.md 寫「版本徽章要顯示 `v0.9.xx`」，而這支腳本算的是
+   * `git rev-parse --short HEAD` —— 部署完徽章是 `df2680e7 2026-08-16`，
+   * 也就是那條檢查**既看不出失敗、也不會通過**。文件與程式各自都「對」，
+   * 只有兩者的**關係**是錯的（同 GH#285 的 `ENTITY_FLAG` 那一行）。
+   */
+  it("★ 版本身分：stamp 公式帶得出版號，而 CLAUDE.md 那一行說的就是它", () => {
+    const code = readFileSync(SCRIPT, "utf8");
+    expect(
+      /GIT_SHA=\$\(git describe --tags/.test(code),
+      "stamp 沒有用 `git describe --tags` —— 裸的 short hash 讓徽章永遠不帶版號，" +
+        "而「這是哪一版」是徽章存在的唯一理由（task #66）。",
+    ).toBe(true);
+
+    const claude = readFileSync(join(REPO, "CLAUDE.md"), "utf8");
+    expect(
+      claude.includes("git describe --tags --always --dirty"),
+      "CLAUDE.md 的煙霧測試沒有指名 stamp 的公式 —— 那一行就會再一次描述一個" +
+        "產不出來的格式，而沒有任何東西會紅。",
+    ).toBe(true);
+  });
 });

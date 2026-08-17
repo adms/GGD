@@ -714,7 +714,16 @@ deploy 完打開 `https://ggd.adms.ai` 的瀏覽器 console，**第一件事就�
 
 順手一起看：
 - `GET /api/v1/curation/whitelist` → `champions` 不是 0（0 = 白名單被洗掉了）
-- 版本徽章要顯示 `v0.9.xx`，不是 `v0.9.15-20-g4af1b5c1`（那代表 host 沒抓 tag）
+- 版本徽章要**以 `v` 開頭**（`v0.19.0`；剛好在 tag 上就是乾淨的版號）。
+  ⚠️ `v0.19.0-3-g4af1b5c1` 不是壞掉 —— 那是「這一版是 tag 之後第 3 個 commit」，
+  部署一個沒打 tag 的 commit 時本來就長這樣。**真正壞掉的是看到裸的 hash**
+  （`df2680e7 2026-08-16`，沒有 `v`）＝ host 一個 tag 都沒抓到。
+  ⛔ 這一行以前寫「要顯示 `v0.9.xx`」，而 `host-deploy.sh` 當時算的是
+  `git rev-parse --short HEAD` —— **那個格式永遠產不出來**，所以這條檢查
+  描述的失敗形態既看不出來也不會發生（GH#335，第三守則的形狀）。
+  現在公式是 `git describe --tags --always --dirty`，而
+  `hostDeployScript.test.ts` 的「版本身分」那一條**真的讀這一行**，
+  它再說謊就會紅。
 - `GET http://127.0.0.1:2567/healthz` → `content.ok` 為 true、`replay.ok` 為 true
   （`replay.ok=false` 通常是 `data/replays` 的 EACCES，修法寫在 `host-deploy.sh` 的註解裡，
   需要 owner 用 sudo 手動跑一次 chown）

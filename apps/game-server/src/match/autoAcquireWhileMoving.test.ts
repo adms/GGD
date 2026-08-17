@@ -70,6 +70,36 @@ const SABER = "godie-e002" as ChampionId;
 const MOVE_LEAD = 4;
 const SEED = 7919;
 
+/**
+ * ⭐ GH#334 —— 離 `from` 最近的**活著的敵方英雄**的位置，沒有就回 null。
+ *
+ * `stick` 情境用它決定搖桿往哪推。⛔ 它只被 harness 用來**建立前提**
+ * （「握著搖桿走向敵人」），⛔ 不參與任何斷言 —— 斷言仍然是索敵機制本身。
+ * ⚠️ 走排序過的 id：`world.team` 是 Map，而兩次 run 的插入序不同會讓
+ * 「最近的那個」在平手時搖擺，那就把不決定性帶進了一條種子固定的測試。
+ */
+function nearestEnemy(world: MatchController["world"], me: EntityId, from: Vec2): Vec2 | null {
+  const mine = world.team.get(me);
+  if (!mine) return null;
+  let best: Vec2 | null = null;
+  let bestD = Infinity;
+  for (const id of [...world.team.keys()].sort((a, b) => a - b)) {
+    if (id === me) continue;
+    if (world.team.get(id)!.teamId === mine.teamId) continue;
+    if (!world.champion.has(id)) continue;
+    const hp = world.health.get(id);
+    if (!hp || hp.hp <= 0) continue;
+    const t = world.transform.get(id);
+    if (!t) continue;
+    const d = Math.hypot(t.pos.x - from.x, t.pos.z - from.z);
+    if (d < bestD) {
+      bestD = d;
+      best = t.pos;
+    }
+  }
+  return best;
+}
+
 function seats(champ: ChampionId): SeatSpec[] {
   return Array.from({ length: 12 }, (_, i) => ({
     seatId: i,
@@ -263,8 +293,33 @@ function runMatch(feed: Feed, seed = SEED): Result {
         // ahead. (Cited by SYMBOL, not by line: the previous
         // `GamepadInput.ts:193-198` had already drifted onto an unrelated
         // camera-intent interface.)
+        //
+        // ⭐ GH#334 —— **推向最近的敵人，不是固定的 +x**。
+        //
+        // 這裡本來是 `x + MOVE_LEAD`（一路往右走）。那讓「這一場有沒有敵人晃進
+        // 射程」變成**運氣**，而這條測試的斷言 `hits > 0` 直接掛在那個運氣上：
+        // 量到的（GH#333 把 60 張願望加進卡池、rng 串流位移之後）——
+        //   舊卡池 `hits=1/1 swings`（綠）· 新卡池 `hits=0/0 swings`（紅），
+        //   而**兩邊 `hijacked` 都是 0**，也就是被測的那個機制一次都沒發生。
+        // 一條靠運氣綠的測試不是守衛（七種失敗形態的第 ④ 種：斷言方向與缺陷無關）。
+        //
+        // ⛔ 這**不是**把期望放寬 —— 搖桿仍然每一 tick 推一次全新的移動指令，
+        // 而那正是 #274 的回歸條件（`autoAcquirePass` 以前每 tick 都 `continue`）。
+        // 改的只是「往哪裡推」，讓「握著搖桿走向敵人時仍然會自動攻擊」這個前提
+        // **由 harness 自己建立**，而不是等它剛好發生。
+        const foe = nearestEnemy(ctl.world, me, t.pos);
+        const dir = foe
+          ? { x: foe.x - t.pos.x, z: foe.z - t.pos.z }
+          : { x: 1, z: 0 };
+        const len = Math.hypot(dir.x, dir.z) || 1;
         human.mailbox.push({
-          order: { kind: "move", point: { x: t.pos.x + MOVE_LEAD, z: t.pos.z } },
+          order: {
+            kind: "move",
+            point: {
+              x: t.pos.x + (dir.x / len) * MOVE_LEAD,
+              z: t.pos.z + (dir.z / len) * MOVE_LEAD,
+            },
+          },
         } as never);
       } else if (feed === "aclick" && t) {
         human.mailbox.push({
@@ -430,11 +485,28 @@ describe("#274 auto-acquire survives a live move order (real match, real human s
     // Movement authority: with a live explicit move order the sim must never
     // rewrite the destination, no matter what it acquired.
     expect(r.hijackedTicks).toBe(0);
-    // And it must actually have WALKED the ordered way (+x), not stood and
-    // brawled: the trace advances monotonically in x for the first seconds.
-    const xs = r.trace.map((p) => p.x);
-    expect(xs.length).toBeGreaterThanOrEqual(4);
-    for (let i = 1; i < xs.length; i++) expect(xs[i]!).toBeGreaterThan(xs[i - 1]!);
+    // And it must actually have WALKED, not stood and brawled.
+    //
+    // ⚠️ GH#334 —— 這裡本來斷言「x 逐點遞增」，那是綁在**舊的餵法**上的
+    //（搖桿一路往 +x 推）。餵法改成「推向最近的敵人」之後 x 本來就會來回，
+    // 而這條斷言真正要守的是「他有沒有真的走」，⛔ 不是「他往右走」。
+    // 改成方向無關的量：每一段取樣都真的位移過，而且整段有淨位移。
+    expect(r.trace.length).toBeGreaterThanOrEqual(4);
+    let travelled = 0;
+    for (let i = 1; i < r.trace.length; i++) {
+      const a = r.trace[i - 1]!;
+      const b = r.trace[i]!;
+      const step = Math.hypot(b.x - a.x, b.z - a.z);
+      expect(step, `第 ${i} 段取樣完全沒有位移 —— 他站著沒走`).toBeGreaterThan(0.5);
+      travelled += step;
+    }
+    const first = r.trace[0]!;
+    const last = r.trace[r.trace.length - 1]!;
+    expect(travelled, "走過的總路程太短 —— 移動指令沒有被執行").toBeGreaterThan(5);
+    expect(
+      Math.hypot(last.x - first.x, last.z - first.z),
+      "起點到終點幾乎沒動 —— 他在原地繞圈，那不是「走向指定點」",
+    ).toBeGreaterThan(5);
   }, 300_000);
 
   // GH#216 修好 → 翻回 `it`。一次點到場外，身體被夾在邊界上永遠到不了，

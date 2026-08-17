@@ -226,11 +226,20 @@ fi
 #    徽章就寫 UNSTAMPED-BUILD —— 而那是「這是哪一版」的唯一答案（task #66）。
 #    這裡**失敗就停**，不接受一個沒有身分的映像被送上線。
 if [ "$MODE" = full ]; then
-  GIT_SHA=$(git rev-parse --short HEAD 2>/dev/null || true)
-  [ -n "$GIT_SHA" ] || die "拿不到 git sha —— 拒絕建一個沒有版本身分的映像（徽章會寫 UNSTAMPED-BUILD）"
-  GIT_DIRTY=""
-  [ -n "$(git status --porcelain --untracked-files=no 2>/dev/null)" ] && GIT_DIRTY="-dirty"
-  export GGD_BUILD_STAMP="${GIT_SHA}${GIT_DIRTY} $(date -u +%Y-%m-%d)"
+  # ⭐ GH#335 —— **用 `git describe --tags`，不是裸的 short hash**。
+  #
+  # CLAUDE.md 的煙霧測試逐字寫著「版本徽章要顯示 `v0.9.xx`」，而這一行以前算的是
+  # `git rev-parse --short HEAD`，也就是**那個格式永遠產不出來**：v0.19.0 部署完
+  # 徽章寫 `df2680e7 2026-08-16`，而同一次部署 host 上的 tag 其實抓到了。
+  # ⇒ 文件描述的失敗形態用這支腳本看不出來也不會發生（第三守則的形狀）。
+  #
+  # `--tags` 在 tag 上回 `v0.19.0`，離開 tag 回 `v0.19.0-3-gabc1234`
+  #（＝「這一版是 tag 之後第 3 個 commit」，那正是 CLAUDE.md 要人看出來的事），
+  # 抓不到任何 tag 才 fallback 到 `--always` 的短 hash。
+  # `--dirty` 取代了下面那三行手寫的 porcelain 檢查（同一件事，少一份會漂走的抄本）。
+  GIT_SHA=$(git describe --tags --always --dirty 2>/dev/null || true)
+  [ -n "$GIT_SHA" ] || die "拿不到 git 版本身分 —— 拒絕建一個沒有版本身分的映像（徽章會寫 UNSTAMPED-BUILD）"
+  export GGD_BUILD_STAMP="${GIT_SHA} $(date -u +%Y-%m-%d)"
   ok "build stamp = $GGD_BUILD_STAMP"
 
   # ── 建置前：把現役映像標成 :prev，並記下現役 commit ──────────────────────
