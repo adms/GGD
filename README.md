@@ -8,7 +8,7 @@
 - [4. 有哪些頁面 / Feature pages](#4-有哪些頁面--feature-pages)
 - [5. 怎麼玩 / How to play](#5-怎麼玩--how-to-play)
 - [6. 各平台操作 / Controls](#6-各平台操作--controls)
-- [7. 內容 / Content](#7-內容--content) — 含**完整的 113 英雄 / 662 技能 / 214 道具清單**
+- [7. 內容 / Content](#7-內容--content) — 含**完整的英雄 / 技能 / 道具清單**、**60 張聖杯願望三選一**、以及**技能機制詞彙**（效果 / 觸發 / 條件 / 標籤 / 特效）
 - [8. 架構 / Architecture](#8-架構--architecture)
 - [9. 開發 / Development](#9-開發--development)
 - [10. 社群 / Community](#10-社群--community)
@@ -1153,7 +1153,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **完整 78 名英雄**（含 29 名未開放）與逐欄資料（開放旗標、技能 id、攻擊類型…）在 [`docs/reference/roster.md`](./docs/reference/roster.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_99511e0b9180` 產生。 開放 49 / 全 78 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_1b9a82955e35` 產生。 開放 49 / 全 78 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:roster -->
 
 <!-- BEGIN GENERATED:abilities -->
@@ -1169,7 +1169,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **全 461 個技能的逐欄表**（id、名稱、slot、型態、編號、擁有英雄、開放旗標、完整短效果）在 [`docs/reference/abilities.md`](./docs/reference/abilities.md)；互動版在 <http://localhost:39527/#codex>。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_99511e0b9180` 產生。 開放英雄技能 293 / 全 461 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_1b9a82955e35` 產生。 開放英雄技能 293 / 全 461 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:abilities -->
 
 <!-- BEGIN GENERATED:items -->
@@ -1315,8 +1315,180 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **全 219 件道具依 craftRole 的完整分類表**（component 106 / token 8 / none 31 …）在 [`docs/reference/items.md`](./docs/reference/items.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_99511e0b9180` 產生。 可取得 102 / 全 219 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_1b9a82955e35` 產生。 可取得 102 / 全 219 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:items -->
+
+<!-- BEGIN GENERATED:grail -->
+## 🏆 聖杯願望三選一（回合獎勵）
+
+> 每個回合結束顯現三張願望，選一張**刻入靈基**直到本場結束。共 **60 張**：C 20 · A 20 · EX 20。
+>
+> ⛔ **這一段沒有任何一行是手寫的** —— 觸發事件、效果、適性條件全部從 `content/augments/grail-*.json` 讀出來，而那 60 份 JSON 由 owner 的 CSV 產生。願望本身**零程式**：用到的 effect kinds / hook events 全部是引擎已有的機制。
+
+### C級願望（後台 `silver`）—— 小幅干涉一條規則
+
+| 願望 | 效果 | 觸發 | 效果機制 | 靈基適性條件 | 顯現位置 |
+|---|---|---|---|---|---|
+| **固有技能・對魔力 C**<br>`grail-c-01` | [負面狀態][淨化] 被掛上負面狀態時，立即移除最新一個負面狀態。25秒冷卻。 | 被掛上狀態時 · CD 25s | `dispel` | — | 泛用 |
+| **固有技能・心眼（偽）C**<br>`grail-c-02` | [迴避][反彈][擊退] 成功迴避或反彈敵方攻擊時，將攻擊者小幅擊退。8秒冷卻。 | 迴避成功時 · CD 8s<br>反彈成功時 · CD 8s | `knockback` | 需要自己有迴避／反彈 | 連動 |
+| **魔術・反射術式 C**<br>`grail-c-03` | [反彈][迴避][回魔] 成功反彈或迴避時，回復6%最大魔力。5秒冷卻。 | 反彈成功時 · CD 5s<br>迴避成功時 · CD 5s | `restore` | 需要自己有迴避／反彈 | 連動 |
+| **魔術・魔力回收 C**<br>`grail-c-04` | [受傷][傷害轉魔力] 實際失去生命時，將該次生命損失的15%轉化為魔力。1秒冷卻。 | 受到傷害時 · CD 1s | `eventValueConversion` | 需要魔力 | 轉向 |
+| **魔術・魔力裝甲 C**<br>`grail-c-05` | [最大魔力][最大生命] 最大魔力的20%同時視為額外最大生命。 | 常駐（屬性） | — | 需要魔力 | 轉向 |
+| **固有技能・高速詠唱 C**<br>`grail-c-06` | [攻速][CDR] 每1.0攻速同時提供5%冷卻縮減，最多20%。原攻速不會消失。 | 常駐（屬性） | — | — | 轉向 |
+| **固有技能・魔力放出 C**<br>`grail-c-07` | [普攻][傷害轉換] 所有普通攻擊改為魔法傷害，原傷害數值不變。 | 常駐（屬性） | — | — | 轉向 |
+| **概念武裝・起源彈 C**<br>`grail-c-08` | [技能命中][驅散] 技能命中敵方英雄時，移除其最新一個可驅散增益。12秒冷卻。 | 技能命中時 · CD 12s | `dispel` | 需要自己有技能傷害 | 連動 |
+| **概念武裝・破界之槍 C**<br>`grail-c-09` | [技能命中][破盾] 技能命中敵方英雄時，移除其一層護盾。12秒冷卻。 | 技能命中時 · CD 12s | `shieldBreak` | 需要敵方有護盾 | 連動 |
+| **固有技能・魂喰 C**<br>`grail-c-10` | [擊殺][成長] 每累積擊殺5個單位，永久獲得1力量、1敏捷、1智慧；各最多20點。 | 擊殺時 | `grantAttribute` | 需要有小怪 | 轉向 |
+| **固有技能・逆境再起 C**<br>`grail-c-11` | [負面狀態][技能重置] 被掛上負面狀態時，立即完成Q／W／E冷卻。25秒冷卻。 | 被掛上狀態時 · CD 25s | `modifyCooldown` | — | 泛用 |
+| **魔術・詠唱結界 C**<br>`grail-c-12` | [施法][控制免疫] 施放Q／W／E／R後，獲得0.4秒控制免疫。8秒冷卻。 | 施放技能時 · CD 8s | `invulnerable` | 需要 Q／W／E／R 任一 | 泛用 |
+| **固有技能・王殺 C**<br>`grail-c-13` | [Boss][寶具重置] 殭屍王出現時，立即完成R冷卻。 | 殭屍王出現時 | `modifyCooldown` | 需要有殭屍王 | 轉向 |
+| **魔術・地脈接續 C**<br>`grail-c-14` | [中立物件][技能重置] 擊毀可觸發擊殺事件的中立單位或中立物件後，完成Q／W／E冷卻。15秒冷卻。 | 擊殺時 · CD 15s | `modifyCooldown` | 需要有中立物件 | 轉向 |
+| **職階技能・單獨行動 C**<br>`grail-c-15` | [隊友死亡][回魔] 隊友死亡後，魔力回復效果變為2倍，持續15秒。不可疊加，只刷新時間。 | 隊友死亡時 | `applyBuff` | 需要有隊友 | 連動 |
+| **投影魔術・追尾彈 C**<br>`grail-c-16` | [技能命中][彈體] 技能命中敵方英雄時，追加一枚追尾魔彈，造成60＋15% AP魔法傷害。6秒冷卻。 | 技能命中時 · CD 6s | `damage` `spawnProjectile` | 需要自己有技能傷害 | 連動 |
+| **固有技能・直感 C**<br>`grail-c-17` | [受到暴擊][護盾] 被敵方英雄暴擊時，獲得相當於8%最大生命的護盾，持續3秒。10秒冷卻。 | 受到傷害時 · CD 10s | `shield` | — | 泛用 |
+| **固有技能・魔力放出（炎）C**<br>`grail-c-18` | [技能命中][燃燒] 技能命中敵方英雄時，使其燃燒3秒。8秒冷卻。 | 技能命中時 · CD 8s | `applyStatus` | 需要自己有技能傷害 | 連動 |
+| **魔術・星之雨 C**<br>`grail-c-19` | [週期][隨機區域] 每15秒在自身附近降下2道星光，每道造成80＋15% AP範圍魔法傷害。 | 每隔一段時間 · CD 15s | `damageArea` `randomArea` | — | 轉向 |
+| **投影魔術・強化投影 C**<br>`grail-c-20` | [施法][下一次普攻] 施法後5秒內，下一次普攻追加一枚投影彈，造成40＋20% AP魔法傷害。8秒冷卻。 | 施放技能時 · CD 8s | `applyBuff` `damage` `spawnProjectile` | 需要 Q／W／E／R 任一 | 連動 |
+
+### A級願望（後台 `gold`）—— 建立可利用的玩法循環
+
+| 願望 | 效果 | 觸發 | 效果機制 | 靈基適性條件 | 顯現位置 |
+|---|---|---|---|---|---|
+| **固有技能・心眼（真）A**<br>`grail-a-01` | [迴避][反彈][彈反] 成功迴避或反彈後，立即對攻擊者造成一次100% AD物理傷害並小幅擊退。6秒冷卻。 | 迴避成功時 · CD 6s<br>反彈成功時 · CD 6s | `damage` `knockback` | 需要自己有迴避／反彈 | 連動 |
+| **魔術・反射術式 A**<br>`grail-a-02` | [反彈][迴避][回復] 成功反彈時回復等同反彈傷害50%的生命；成功迴避時回復6%最大生命。8秒冷卻。 | 反彈成功時 · CD 8s<br>迴避成功時 · CD 8s | `eventValueConversion` `restore` | 需要自己有迴避／反彈 | 連動 |
+| **固有技能・戰鬥續行 A**<br>`grail-a-03` | [致命傷害][格擋] 每60秒一次，完全格擋一發原本會使你死亡的傷害。 | 常駐（屬性） | — | — | 泛用 |
+| **固有技能・高速神言 A**<br>`grail-a-04` | [AP][CDR] 每100 AP同時提供5%冷卻縮減，最多30%。AP不會消失。 | 常駐（屬性） | — | — | 轉向 |
+| **固有技能・獵殺本能 A**<br>`grail-a-05` | [英雄擊殺][技能重置] 擊殺敵方英雄時，完成Q／W／E／R冷卻。45秒冷卻。 | 擊殺時 · CD 45s | `modifyCooldown` | — | 連動 |
+| **職階技能・單獨行動 A**<br>`grail-a-06` | [隊友死亡][回魔][淨化] 隊友死亡時，回復25%最大魔力、淨化所有負面狀態並獲得0.75秒無敵。30秒冷卻。 | 隊友死亡時 · CD 30s | `dispel` `invulnerable` `restore` | 需要有隊友 | 連動 |
+| **魔術・靈基修復 A**<br>`grail-a-07` | [復活][技能重置] 被復活時，完成Q／W／E／R冷卻、回滿魔力並獲得1秒無敵。 | 復活時 | `invulnerable` `modifyCooldown` `restore` | 需要有復活圈 | 泛用 |
+| **魔術・殘響詠唱 A**<br>`grail-a-08` | [技能再演] 施放Q／W／E／R後，1.2秒後自動再施放一次相同技能，不再次消耗魔力。各技能格24秒冷卻。 | 施放技能時 · CD 24s | `delayed` `proxyCast` | 需要 QWER | 連動 |
+| **靈基轉換・虛數體 A**<br>`grail-a-09` | [防禦捨棄][迴避] 護甲與魔抗固定為0，迴避率固定為35%。 | 常駐（屬性） | — | — | 轉向 |
+| **魔術刻印・閉鎖回路 A**<br>`grail-a-10` | [回魔捨棄][傷害回魔] 魔力回復固定為0；每次對敵人造成傷害時，回復3%最大魔力。1秒冷卻。 | 造成傷害時 · CD 1s | `restore` | 需要魔力 | 轉向 |
+| **魔術・魔力裝甲 A**<br>`grail-a-11` | [最大魔力][最大生命] 最大魔力的50%同時視為額外最大生命。 | 常駐（屬性） | — | 需要魔力 | 轉向 |
+| **魔術・術式反轉 A**<br>`grail-a-12` | [技能傷害][物理化] 所有技能傷害改為物理傷害；原本AP、AD或其他傷害係數不變。 | 常駐（屬性） | — | — | 轉向 |
+| **固有技能・怪力 A**<br>`grail-a-13` | [AD捨棄][生命普攻] 攻擊力固定為0；每次普通攻擊額外造成自身最大生命5%的物理傷害。 | 普通攻擊時 | `damage` | — | 轉向 |
+| **固有技能・縮地 A**<br>`grail-a-14` | [迴避][瞬移] 成功迴避敵方英雄攻擊時，瞬移至該攻擊者身旁。10秒冷卻。 | 迴避成功時 · CD 10s | `blink` | 需要自己有迴避／反彈 | 連動 |
+| **固有技能・不屈之魂 A**<br>`grail-a-15` | [負面狀態][淨化][無敵] 被掛上負面狀態時，淨化所有負面狀態並獲得0.75秒無敵。20秒冷卻。 | 被掛上狀態時 · CD 20s | `dispel` `invulnerable` | — | 泛用 |
+| **魔術・心象防壁 A**<br>`grail-a-16` | [AP][護盾] 施放Q／W／E／R時，獲得相當於50% AP的護盾，持續3秒。4秒冷卻。 | 施放技能時 · CD 4s | `shield` | — | 連動 |
+| **固有技能・無窮之武練 A**<br>`grail-a-17` | [普攻][技能重置] 普攻命中敵方英雄時，完成Q／W／E冷卻。8秒冷卻。 | 普通攻擊時 · CD 8s | `modifyCooldown` | 偏好技能傷害 | 連動 |
+| **魔術刻印・灼熱回路 A**<br>`grail-a-18` | [燃燒][技能重置] 對帶有燃燒狀態的敵方英雄造成傷害時，完成Q／W／E冷卻。10秒冷卻。 | 造成傷害時 · CD 10s | `modifyCooldown` | 需要自己有燃燒 | 連動 |
+| **固有技能・自己改造 A**<br>`grail-a-19` | [技能命中][永久成長] 每次技能命中敵方英雄，永久獲得1 AP，最多60 AP。 | 技能命中時 | `applyBuff` | 需要自己有技能傷害 | 轉向 |
+| **固有技能・千里眼 A**<br>`grail-a-20` | [技能命中][距離增幅] 技能命中英雄時追加一次魔法傷害；實際命中距離越遠，追加傷害越高。4秒冷卻。 | 技能命中時 · CD 4s | `damage` | 偏好技能傷害 | 轉向 |
+
+### EX級願望（後台 `prismatic`）—— 直接改寫正常遊戲規則
+
+| 願望 | 效果 | 觸發 | 效果機制 | 靈基適性條件 | 顯現位置 |
+|---|---|---|---|---|---|
+| **聖杯權能・真理改寫 EX**<br>`grail-ex-01` | [技能傷害][真實傷害] 所有技能傷害改為真實傷害，並在免疫與迴避判定前完成轉換。 | 常駐（屬性） | — | 需要自己有技能傷害 | 轉向 |
+| **固有結界・時間神殿 EX**<br>`grail-ex-02` | [時間][技能重置] 每20秒完成Q／W／E／R冷卻。EX不受影響。 | 每隔一段時間 · CD 20s | `modifyCooldown` | — | 泛用 |
+| **聖杯權能・勝利輪迴 EX**<br>`grail-ex-03` | [英雄擊殺][完全重置] 擊殺敵方英雄時，完成Q／W／E／R／EX全部冷卻。60秒冷卻。 | 擊殺時 · CD 60s | `modifyCooldown` | — | 連動 |
+| **令咒・三重詠唱 EX**<br>`grail-ex-04` | [R施放][技能代放] 主動施放R時，同時免費施放Q、W、E。45秒冷卻。 | 施放技能時 · CD 45s | `proxyCast` | 需要 QWER | 轉向 |
+| **寶具・二重真名解放 EX**<br>`grail-ex-05` | [R施放][寶具再演] 施放R後，1.25秒後自動再施放一次R，不再次消耗魔力。60秒冷卻。 | 施放技能時 · CD 60s | `delayed` `proxyCast` | 需要 R | 連動 |
+| **職階技能・騎乘 EX**<br>`grail-ex-06` | [飛行][地形無視] 永久進入飛行狀態，無視單位與一般障礙物碰撞，但不能離開競技場邊界。 | 常駐（屬性） | — | 排除已有飛行 | 轉向 |
+| **固有技能・戰鬥續行 EX**<br>`grail-ex-07` | [致命傷害][完全格擋] 每20秒可以完全格擋一次致命傷害，包含真實傷害。 | 常駐（屬性） | — | — | 泛用 |
+| **固有技能・無我境地 EX**<br>`grail-ex-08` | [迴避][反彈][技能代放] 成功迴避或反彈敵方英雄攻擊時，從Q／W／E中隨機免費施放一個技能攻擊該敵人。12秒冷卻。 | 迴避成功時 · CD 12s<br>反彈成功時 · CD 12s | `proxyCast` `weightedBranch` | 需要自己有迴避／反彈<br>需要 QWE | 連動 |
+| **聖杯權能・終末宣告 EX**<br>`grail-ex-09` | [火圈][隨機轟炸] 火圈開始燃燒時，獲得1秒無敵，並在5秒內於自身附近降下10道終末星光。 | 火圈點燃時 | `damageArea` `invulnerable` `randomArea` | 需要有火圈 | 轉向 |
+| **契約・反魂 EX**<br>`grail-ex-10` | [隊友死亡][復活] 隊友死亡時，使該隊友以20%生命復活。60秒冷卻。 | 隊友死亡時 · CD 60s | `revive` | 需要有隊友 | 連動 |
+| **靈基再臨 EX**<br>`grail-ex-11` | [復活][完全重置] 自身被復活時，完成Q／W／E／R／EX冷卻、回滿魔力並獲得1.5秒無敵。 | 復活時 | `invulnerable` `modifyCooldown` `restore` | 需要有復活圈 | 泛用 |
+| **固有結界・魔力海 EX**<br>`grail-ex-12` | [最大魔力][最大生命][受傷回魔] 最大魔力的100%同時視為額外最大生命；生命損失的50%轉化為魔力。 | 受到傷害時 | `eventValueConversion` | 需要魔力 | 轉向 |
+| **寶具・死棘之槍 EX**<br>`grail-ex-13` | [R命中][處決] R命中最大生命10%以下的敵方英雄時，直接處決目標，無視護盾。30秒冷卻。 | 技能命中時 · CD 30s | `devour` | 需要自己有技能傷害<br>需要 R | 連動 |
+| **概念武裝・起源彈 EX**<br>`grail-ex-14` | [R命中][驅散][破盾] R命中敵方英雄時，移除其全部可驅散增益與全部護盾。30秒冷卻。 | 技能命中時 · CD 30s | `dispel` `shieldBreak` | 需要自己有技能傷害<br>需要 R | 連動 |
+| **魔術禮裝・寶石劍 EX**<br>`grail-ex-15` | [技能施放][機率再演] 每次施放Q／W／E／R時，有25%機率立即免費再施放一次相同技能。再演不會再次觸發本願望。 | 施放技能時 · 25% | `proxyCast` | 需要 QWER | 連動 |
+| **秘劍・燕返 EX**<br>`grail-ex-16` | [普攻][多重投影] 每次普通攻擊有30%機率產生兩次額外攻擊投影，每次造成100% AD物理傷害，但不觸發其他On-hit。 | 普通攻擊時 · 30% | `damage` `delayed` | — | 連動 |
+| **靈基換裝・零距離決戰 EX**<br>`grail-ex-17` | [射程捨棄][技能重置] 僅遠程英雄可選。普攻距離固定為近戰・中1.6；普攻命中英雄時完成Q／W／E／R冷卻。6秒冷卻。 | 普通攻擊時 · CD 6s | `modifyCooldown` | 僅遠程 | 轉向 |
+| **魔術刻印・生命爐心 EX**<br>`grail-ex-18` | [最大生命][最大魔力][受傷回魔] 最大生命的100%同時視為額外最大魔力；生命損失的25%轉化為魔力。 | 受到傷害時 | `eventValueConversion` | 需要魔力 | 轉向 |
+| **固有技能・魔力爐心（無限）EX**<br>`grail-ex-19` | [技能命中][無限成長] 每次技能命中敵方英雄，永久獲得1 AP，沒有成長上限。 | 技能命中時 | `applyBuff` | 需要自己有技能傷害 | 轉向 |
+| **固有技能・魔力放出（雷）EX**<br>`grail-ex-20` | [攻速][普攻傷害] 每次普通攻擊追加等同「60 × 當前攻速」的魔法傷害。攻速同時決定攻擊頻率與單次威力。 | 普通攻擊時 | `damage` | — | 轉向 |
+
+> ⚠️ 另外還有 **31 張舊增益卡**留在 `content/augments/`，但**預設不進卡池**（設計規則 §8「⛔ 禁止純屬性增益」）。後台「傳說武器三選一」頁的〈舊增益卡〉切成「兩批一起發」就整批回來。
+
+逐張的完整 JSON（每一格參數、每一個 hook、每一條條件）在 [`docs/reference/grail-wishes.md`](docs/reference/grail-wishes.md)。
+
+*由 `pnpm docs:readme` 從 contentVersion `cv_1b9a82955e35` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+<!-- END GENERATED:grail -->
+
+<!-- BEGIN GENERATED:mechanics -->
+## 🧩 技能機制詞彙（效果 / 觸發 / 條件 / 標籤 / 特效）
+
+> **一支技能或一張願望能寫什麼，由這五張表決定。**「有哪些」從 `content/editor-target-profile.json` 的 `runtimeCapabilities` 讀 ——那是出貨註冊表推導出來的同一份（外部編輯器契約讀的也是它），⛔ 不是手抄的清單。「用了幾份」是從 `content/` 逐檔數的。
+>
+> ⚠️ 一個 token 出現在這裡＝**引擎認得它**；「內容」欄是 0 ＝ 機制在但還沒有人用，⛔ 不是壞掉。
+
+### 效果（effect kind）—— 37 種
+
+| 效果 | 用它的內容 | 效果 | 用它的內容 | 效果 | 用它的內容 |
+|---|--:|---|--:|---|--:|
+| `applyBuff` | 113 | `applyStatus` | 97 | `blink` | 2 |
+| `championForm` | 24 | `cycleBuff` | 1 | `damage` | 178 |
+| `damageArea` | 28 | `damageLine` | 10 | `dash` | 15 |
+| `delayed` | 8 | `devour` | 3 | `dispel` | 8 |
+| `dot` | 4 | `evasion` | 0 | `eventValueConversion` | 5 |
+| `extendBuff` | 1 | `grantAttribute` | 4 | `grantGold` | 0 |
+| `heal` | 9 | `invulnerable` | 18 | `knockback` | 11 |
+| `leap` | 7 | `manaBarrier` | 1 | `modifyCooldown` | 13 |
+| `proxyCast` | 6 | `randomArea` | 4 | `restore` | 16 |
+| `revive` | 1 | `shield` | 11 | `shieldBreak` | 2 |
+| `spawnProjectile` | 35 | `spawnVfx` | 12 | `spendMana` | 2 |
+| `summon` | 0 | `swapResource` | 1 | `taunt` | 0 |
+| `weightedBranch` | 4 |  |  |  |  |
+
+### 觸發事件（hook event）—— 19 種
+
+| 事件 | 中文 | 用它的內容 |
+|---|---|--:|
+| `onAbilityCast` | 施放技能時 | 19 |
+| `onAbilityHit` | 技能命中時 | 19 |
+| `onAllyDeath` | 隊友死亡時 | 3 |
+| `onBasicAttack` | 普通攻擊時 | 71 |
+| `onBossSpawn` | 殭屍王出現時 | 1 |
+| `onDamageDealt` | 造成傷害時 | 7 |
+| `onDamageTaken` | 受到傷害時 | 31 |
+| `onDeath` | 死亡時 ⛔ 已知壞掉（GH#296） | 0 |
+| `onEvade` | 迴避成功時 | 10 |
+| `onFireRingIgnite` | 火圈點燃時 | 1 |
+| `onGuardianDown` | 守衛塔被拆時 | 0 |
+| `onInterval` | 每隔一段時間 | 7 |
+| `onKill` | 擊殺時 | 13 |
+| `onReflectSuccess` | 反彈成功時 | 11 |
+| `onRevive` | 復活時 | 2 |
+| `onShieldBroken` | 護盾破裂時 | 0 |
+| `onShieldGained` | 獲得護盾時 | 0 |
+| `onStatusApplied` | 被掛上狀態時 | 3 |
+| `onStunned` | 被暈眩時 | 2 |
+
+### 條件葉（condition leaf）—— 5 種
+
+| 條件 | 用它的內容 |
+|---|--:|
+| `chance` | 0 |
+| `equipment` | 0 |
+| `kind` | 1 |
+| `stat` | 7 |
+| `status` | 20 |
+
+### 狀態標籤 —— 86 個（`content/status-effects/*.json` 逐檔數出來）
+
+標籤是**開放**詞彙（自由字串），條件葉 `status` 的類別分支就是查它：
+
+`accuracy-down`×2 `ai-override`×3 `antiheal`×2 `armor-break`×1 `armor-down`×1 `attack-debuff`×2 `attack-denied`×8 `auto-target`×1 `bankai`×1 `banked`×2 `berserk`×1 `blind`×1 `buff`×9 `burn`×1 `burnstun`×1 `cast-denied`×7 `cc`×16 `channel`×1 `combo`×1 `confusion`×1 `counter`×1 `curse`×1 `damage-bank`×2 `debuff`×21 `disable`×11 `dot`×1 `elemental`×1 `fang-stun`×1 `fear`×1 `fire`×2 `flee`×1 `form`×1 `frenzy`×1 `friendly-fire`×1 `generic`×1 `grail-strengthened-projection`×1 `grail-wish`×1 `grievous-wounds`×1 `hard-cc`×6 `haste`×1 `heal-block`×1 `heal-down`×2 `immobilize`×1 `ingredient`×1 `lifesteal-down`×2 `lifesteal-up`×1 `light-wand-banked`×1 `magic-break`×1 `magic-resist-down`×1 `magical`×1 `mana-banked`×2 `marker`×1 `mechanism-on-card`×4 `miss`×2 `moon-combo`×1 `move-denied`×8 `move-speed-down`×3 `named-variant`×6 `nen-banked`×1 `next-attack`×1 `no-heal`×1 `numbness`×1 `omnislash-lock`×1 `omnislash-perform`×1 `paralysis`×1 `physical`×1 `projectile`×1 `rage`×1 `regen-down`×2 `resist-down`×2 `root`×1 `self-lock`×1 `shred`×2 `slow`×3 `slow25`×1 `slow30`×1 `slow40`×1 `soft-cc`×5 `stat-down`×5 `stat-up`×1 `stun`×7 `timed-window`×1 `trial-stun`×1 `triforce-courage`×1 `uncontrollable`×3 `wound`×2
+
+### 特效（vfx）—— 632 份
+
+`content/vfx/*.json`，由 `spawnVfx.vfxId` 與技能的 `vfxKey` 引用。逐份清單在 [`docs/reference/mechanics.md`](docs/reference/mechanics.md)。
+
+### 技能模板家族 —— 17 種
+
+`buff-self` `charge-push` `ground-nova` `instant-blast` `leap-strike` `line-sweep` `lock-combo` `mark-stacks` `on-attack` `on-hit-react` `orbit-array` `proxy-cast` `proxy-fanout` `random-barrage` `single-strike` `teleport` `traveling-wave`
+
+### ⛔ 宣告為 unsupported（引擎沒有，⛔ 不要寫進 JSON）
+
+`condition.ability-state@1` `effect.attack-dash@1` `effect.control-restriction@1`
+
+完整的參數與上下界（每個效果每一格能填什麼）在 [`docs/技能標記機制與效果規則.md`](docs/技能標記機制與效果規則.md)，同樣是產生的。
+
+*由 `pnpm docs:readme` 從 contentVersion `cv_1b9a82955e35` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+<!-- END GENERATED:mechanics -->
+
 
 ---
 

@@ -56,6 +56,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import gen_reference as G  # noqa: E402  — sibling module, same directory
+import gen_grail as GR  # noqa: E402  — 聖杯願望 + 機制詞彙，同一次 run
 
 REPO = G.REPO
 README = os.path.join(REPO, "README.md")
@@ -76,8 +77,10 @@ LIMIT_ITEM_PASSIVE = 28
 DOC_ROSTER = "docs/reference/roster.md"
 DOC_ABILITIES = "docs/reference/abilities.md"
 DOC_ITEMS = "docs/reference/items.md"
+DOC_GRAIL = "docs/reference/grail-wishes.md"
+DOC_MECHANICS = "docs/reference/mechanics.md"
 
-BLOCKS = ("roster", "abilities", "items")
+BLOCKS = ("roster", "abilities", "items", "grail", "mechanics")
 
 
 # ---------------------------------------------------------------------------
@@ -408,7 +411,169 @@ def gen_items(ctx):
 
 # ---------------------------------------------------------------------------
 
-GENERATORS = {"roster": gen_roster, "abilities": gen_abilities, "items": gen_items}
+
+# ---------------------------------------------------------------------------
+# grail — 聖杯願望三選一，全部 60 張（owner 2026-08-17：「詳細列表在 readme」）
+# ---------------------------------------------------------------------------
+
+def gen_grail(ctx):
+    """README 區塊：三個階級各一張表，每一格都是從願望 JSON 讀出來的。"""
+    grail, legacy = GR.load_grail(G.CONTENT)
+    out = ["## 🏆 聖杯願望三選一（回合獎勵）", ""]
+    out += note([
+        f"每個回合結束顯現三張願望，選一張**刻入靈基**直到本場結束。共 **{len(grail)} 張**："
+        f"C {sum(1 for a in grail if a['tier'] == 'silver')} · "
+        f"A {sum(1 for a in grail if a['tier'] == 'gold')} · "
+        f"EX {sum(1 for a in grail if a['tier'] == 'prismatic')}。",
+        "",
+        "⛔ **這一段沒有任何一行是手寫的** —— 觸發事件、效果、適性條件全部從 "
+        "`content/augments/grail-*.json` 讀出來，而那 60 份 JSON 由 owner 的 CSV 產生。"
+        "願望本身**零程式**：用到的 effect kinds / hook events 全部是引擎已有的機制。",
+    ])
+
+    for tier in GR.RANK_ORDER:
+        rows = [a for a in grail if a.get("tier") == tier]
+        if not rows:
+            continue
+        out += [
+            f"### {GR.RANK_LABEL[tier]}（後台 `{tier}`）—— {GR.RANK_ROLE[tier]}",
+            "",
+            "| 願望 | 效果 | 觸發 | 效果機制 | 靈基適性條件 | 顯現位置 |",
+            "|---|---|---|---|---|---|",
+        ]
+        for a in rows:
+            out.append("| **{name}**<br>`{id}` | {desc} | {trig} | {eff} | {elig} | {slot} |".format(
+                name=a.get("name", a["id"]),
+                id=a["id"],
+                desc=G.cell(a.get("description", "")),
+                trig=GR.trigger_cell(a),
+                eff=GR.effects_cell(a),
+                elig=GR.eligibility_cell(a.get("eligibility")),
+                slot=GR.SLOT_LABEL.get(a.get("selectionSlot"), "泛用"),
+            ))
+        out.append("")
+
+    out += note([
+        f"⚠️ 另外還有 **{len(legacy)} 張舊增益卡**留在 `content/augments/`，"
+        "但**預設不進卡池**（設計規則 §8「⛔ 禁止純屬性增益」）。"
+        "後台「傳說武器三選一」頁的〈舊增益卡〉切成「兩批一起發」就整批回來。",
+    ])
+    out += [
+        f"逐張的完整 JSON（每一格參數、每一個 hook、每一條條件）在 [`{DOC_GRAIL}`]({DOC_GRAIL})。",
+        "",
+    ]
+    out += provenance(ctx)
+    return "\n".join(out), len(grail)
+
+
+# ---------------------------------------------------------------------------
+# mechanics — 引擎詞彙：標籤 / 觸發事件 / 條件 / 效果 / 特效
+# ---------------------------------------------------------------------------
+
+def gen_mechanics(ctx):
+    """README 區塊：引擎**真的有**的詞彙 + 內容用到多少。
+
+    ⭐ 「有哪些」讀 `content/editor-target-profile.json` 的 `runtimeCapabilities`
+    —— 那是 `buildCapabilityManifest()` 的輸出，也就是外部編輯器契約讀的同一份。
+    ⛔ 不自己掃原始碼：那會是第二個真相來源。
+    """
+    prof = GR.load_profile(G.CONTENT)
+    grail, legacy = GR.load_grail(G.CONTENT)
+    abilities = ctx["abilities"]
+    everything = list(abilities) + grail + legacy
+
+    kinds_used = GR.usage_census(everything, GR.effect_kinds_of)
+    hooks_used = GR.usage_census(everything, GR.hooks_of)
+    leaves_used = GR.usage_census(everything, GR.condition_leaves_of)
+    status_tags = GR.load_status_tags(G.CONTENT)
+    vfx = GR.load_vfx(G.CONTENT)
+
+    kinds = prof.get("effectKinds") or sorted(kinds_used)
+    hooks = prof.get("hookEvents") or sorted(hooks_used)
+    leaves = prof.get("conditionLeafKinds") or sorted(leaves_used)
+    families = prof.get("templateFamilies") or []
+    unsupported = prof.get("unsupported") or []
+    broken = prof.get("knownBroken") or []
+
+    out = ["## 🧩 技能機制詞彙（效果 / 觸發 / 條件 / 標籤 / 特效）", ""]
+    out += note([
+        "**一支技能或一張願望能寫什麼，由這五張表決定。**"
+        "「有哪些」從 `content/editor-target-profile.json` 的 `runtimeCapabilities` 讀 ——"
+        "那是出貨註冊表推導出來的同一份（外部編輯器契約讀的也是它），"
+        "⛔ 不是手抄的清單。「用了幾份」是從 `content/` 逐檔數的。",
+        "",
+        "⚠️ 一個 token 出現在這裡＝**引擎認得它**；「內容」欄是 0 ＝ 機制在但還沒有人用，"
+        "⛔ 不是壞掉。",
+    ])
+
+    out += [
+        f"### 效果（effect kind）—— {len(kinds)} 種",
+        "",
+        "| 效果 | 用它的內容 | 效果 | 用它的內容 | 效果 | 用它的內容 |",
+        "|---|--:|---|--:|---|--:|",
+    ]
+    cells = [f"`{k}` | {len(kinds_used.get(k, []))}" for k in kinds]
+    for i in range(0, len(cells), 3):
+        row = cells[i:i + 3]
+        while len(row) < 3:
+            row.append(" | ")
+        out.append("| " + " | ".join(row) + " |")
+    out.append("")
+
+    out += [
+        f"### 觸發事件（hook event）—— {len(hooks)} 種",
+        "",
+        "| 事件 | 中文 | 用它的內容 |",
+        "|---|---|--:|",
+    ]
+    for h in hooks:
+        flag = ""
+        for b in broken:
+            if isinstance(b, dict) and b.get("token") == f"hook:{h}":
+                flag = f" ⛔ 已知壞掉（{b.get('issue', '')}）"
+        out.append(f"| `{h}` | {GR.HOOK_LABEL.get(h, '—')}{flag} | {len(hooks_used.get(h, []))} |")
+    out.append("")
+
+    out += [
+        f"### 條件葉（condition leaf）—— {len(leaves)} 種",
+        "",
+        "| 條件 | 用它的內容 |",
+        "|---|--:|",
+    ]
+    for c in leaves:
+        out.append(f"| `{c}` | {len(leaves_used.get(c, []))} |")
+    out.append("")
+
+    out += [
+        f"### 狀態標籤 —— {len(status_tags)} 個（`content/status-effects/*.json` 逐檔數出來）",
+        "",
+        "標籤是**開放**詞彙（自由字串），條件葉 `status` 的類別分支就是查它：",
+        "",
+    ]
+    out.append(" ".join(f"`{t}`×{len(ids)}" for t, ids in status_tags.items()))
+    out.append("")
+
+    out += [
+        f"### 特效（vfx）—— {len(vfx)} 份",
+        "",
+        f"`content/vfx/*.json`，由 `spawnVfx.vfxId` 與技能的 `vfxKey` 引用。逐份清單在 [`{DOC_MECHANICS}`]({DOC_MECHANICS})。",
+        "",
+    ]
+    if families:
+        out += [f"### 技能模板家族 —— {len(families)} 種", "",
+                " ".join(f"`{f}`" for f in families), ""]
+    if unsupported:
+        out += ["### ⛔ 宣告為 unsupported（引擎沒有，⛔ 不要寫進 JSON）", "",
+                " ".join(f"`{u}`" for u in unsupported), ""]
+
+    out += [f"完整的參數與上下界（每個效果每一格能填什麼）在 "
+            f"[`docs/技能標記機制與效果規則.md`](docs/技能標記機制與效果規則.md)，同樣是產生的。", ""]
+    out += provenance(ctx)
+    return "\n".join(out), len(kinds) + len(hooks) + len(leaves)
+
+
+GENERATORS = {"roster": gen_roster, "abilities": gen_abilities, "items": gen_items,
+              "grail": gen_grail, "mechanics": gen_mechanics}
 
 
 def render(ctx):
@@ -424,6 +589,12 @@ def _render_docs(ctx):
         "roster": (G.gen_roster, os.path.join(G.OUTDIR, "roster.md")),
         "abilities": (G.gen_abilities, os.path.join(G.OUTDIR, "abilities.md")),
         "items": (G.gen_items, os.path.join(G.OUTDIR, "items.md")),
+        # ⭐ 聖杯願望與機制詞彙 —— 同一次 run，同一份 ctx，所以 README 的摘要與
+        # 這兩份完整清單不可能互相矛盾（owner 2026-08-17「統一用程式建立」）。
+        "grail": (lambda c: (GR.gen_grail_doc(c, G.CONTENT), 0),
+                  os.path.join(G.OUTDIR, "grail-wishes.md")),
+        "mechanics": (lambda c: (GR.gen_mechanics_doc(c, G.CONTENT, c["abilities"]), 0),
+                      os.path.join(G.OUTDIR, "mechanics.md")),
     }
 
 
