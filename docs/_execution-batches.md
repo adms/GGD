@@ -1356,3 +1356,61 @@ owner 2026-08-15 那四項（鏡頭視野 -2 節／常駐地名／新場地殭�
 ⚠️ 工作區還留著那個 session 在飛的東西（`package.json` 的 `contract:numbers` 兩行、
 未追蹤的 `tools/editor-contract/`），⛔ **一個都沒 commit** —— 那正是
 `ggd-untracked-sources-baked-into-artifacts` 的形狀。HEAD 自洽（新測試不呼叫那支腳本）。
+
+---
+
+## v0.20.1 —— EX 三階寶具歸位 · 17 個假狀態全部落地 · 清掉四類舊資料
+
+| | |
+|---|---|
+| tag | `v0.20.1`（同天 → patch+1） · BUILD_STAMP `v0.20.1 2026-08-17` |
+| 驗證 | content:build EXIT=0 · typecheck EXIT=0 · pnpm test EXIT=0（3,610 + 5,281 + 1,156 + 795 + …） |
+| 後置條件 | 六項全綠 · 帳號數 **177 → 177** |
+| 煙霧測試 | 全新分頁 `content loaded: 78 champions (cv_f0447d80c8e8) via bundle` |
+| 線上驗證 | 三張池 `legendary-weapons 29 · ex-release-weapons 35 · ex-origin-weapons 5` · items 127 · 白名單 63 英雄 / 104 道具 |
+
+### ⛔ 這一版最大的一筆是**修上一版自己造成的 T0**
+
+`ultimate-mod-shiranui`(14) · `spear-of-lightning`(2) · `gravity-sword-black-rod`(1)
+的 17 個 `applyStatus` **全部沒有機制欄位**：卡面寫的暈眩／纏繞／恐懼／致盲／減速／
+混亂／禁療／麻痺一個都不會發生，而**狀態列照樣畫圖示**。
+
+⭐ **根因是一個可以複製的認知錯誤**：把「schema 過得了」當成「會發生」的證據。
+`applyStatus` 收得下任何 `statusId` 字串，但那個 id 沒有對應機制欄位時它就只是一個字串。
+⇒ 守衛 `noOpModifierClaims` 擴到 `applyStatus`，判準從 `status-effects/` 的 tags 與
+`components.ts::StatusEffect` 的 keyof **兩邊推導**。
+
+### ⛔ 結構性缺陷：[EX∅ 根源] 永遠不可能出現
+
+寶具三選一**只在有 `rounds[N].weaponLootTable` 的回合發生**，出貨只有 R2/R5；
+而 `ex-origin` 要求 `round >= 10` ⇒ **兩個條件互斥，跟池裡放什麼無關**。
+
+    會發寶具的回合   [2,5] → [2,5,10]     第 10 回合拿到根源卡  0% → 86.2%
+
+⇒ 守衛 `weaponTierWindows`：每階的回合窗口至少要有一個回合真的排了 `weaponLootTable`。
+
+### ⚠️ 我這一輪讀錯**舊資料**至少四次
+
+EX根源的用途 · 「任務道具三選一」· 最終回合 · 隊伍生命值。
+**每一次都是程式碼對、資料或註解在說謊，而我信了資料。**
+最誇張的是 `arena-rules.json` 還寫著第 11–13 回合，而 `PairedDuels.ts` 的
+`FINAL_ROUND = 10` 早就定案 —— 那個檔自己的註解甚至寫著「這條線不可以碰它」。
+
+⇒ 清掉四類舊資料進 `_legacy`：101 件退場道具 · 7 件拿不到的任務道具 + `quest-rewards` ·
+4 件回合獎勵 + `round-reward` · `arena-rules` 的 R11/12/13 + overflow。
+
+### ⭐ 對抗式複驗比第一輪找到的還多
+
+45 件既有寶具徹查：第一輪判出 17 句非✅，**複驗新增 31 條**（26 條是件內問題）。
+其中一條是真的大魚：`godie-i061` 死之王的神盾 `armor pctMult 0.7` 應為 `-0.3`
+—— 它原本是**幫敵人 +70% 護甲**。
+
+### 未在本版處理（已知、已量、等 owner）
+
+- **魔抗百分比過期**：月牙魔杖／消失的密室 66.7%→**28.6%**、祕銀鎖子甲 40%→**11.8%**
+  （owner 親筆 49 支被 fixture 逐位元釘死，只寫進 authoringNote）。
+  ⚠️ 而且「印百分比」本身會過期 —— 它是從後台旋鈕 `magicResistMult` 推導的
+- **66 位英雄的 bot 推薦出裝為空**（退場的 4 件基礎道具是骨幹，swift-boots 出現 76 次）
+- [EX∅ 根源] 第 10 回合是 86.2% 不是 100%（`ex-release` 無上限會搶走）；
+  且「每隊限一件」在保底路徑上不生效
+- GH#357 三選一重構（每回合只給一種 · 階級由劣勢決定 · 最終回合弱勢保底抽根源）
