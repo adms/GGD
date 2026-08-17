@@ -60,7 +60,12 @@ import {
   forgetTauntsBy,
   type TauntRules,
 } from "./taunt";
-import { WEAPON_SHELF_OPEN } from "./economy/shopShelf";
+import {
+  DEFAULT_SELL_REFUND_PCT,
+  LEGENDARY_PRICE_MULTIPLIER,
+  LEGENDARY_SHELF_OPEN,
+  WEAPON_SHELF_OPEN,
+} from "./economy/shopShelf";
 import type { StatsComp, AbilitiesComp } from "./stats/statsComp";
 import type { PlayerMatchStats } from "./stats/matchStats";
 import { accumulateTimeAlive } from "./stats/matchStats";
@@ -610,6 +615,53 @@ export class SimWorld {
    * perturbs no rng stream and replays identically.
    */
   weaponShelfOpen: boolean = WEAPON_SHELF_OPEN;
+
+  /**
+   * 寶具（傳說武器）貨架 + 2026-08-17 那一則的整組**金流旋鈕**。
+   *
+   * ⚠️ 與 {@link weaponShelfOpen} 是**兩格**：#261 下架的 70 把普通武器仍然
+   * 關著。開錯一格會讓 owner 沒要求的那 70 把一起上架。
+   *
+   * | 欄位 | owner 的話 |
+   * |---|---|
+   * | `open` | 「寶具(傳說武器) 可以上架直接販售了」 |
+   * | `priceMultiplier` | 「價格統一是隨機抽的 N 倍」（08-17 第二則：6 → **4**） |
+   * | `sellRefundPct` | 「賣價一定是**取得價**的 40%（後台可設定）」 |
+   * | `randomOnlyTables` | 「仍然可以有寶具是**隨機才能取得**的」（EX理外 50~70 把） |
+   *
+   * 後三格不只管寶具（退款率是整間商店的、隨機限定是任何抽獎表的）—— 它們
+   * 同住一個區塊，是因為它們是**同一個平衡決定**的四個面（見 shopShelf.ts 的
+   * {@link DEFAULT_SELL_REFUND_PCT}）。
+   *
+   * 出貨值引用 `economy/shopShelf.ts` 的常數；後台欄位是 `config.arena-rules@1`
+   * 的 `legendaryShelf`。Host CONFIG，⛔ 沒有任何 system 會改它，所以不擾動
+   * rng、replay 完全相同（同 `weaponShelfOpen` / `itemEligible`）。
+   *
+   * 接線：`arenaRules.rulesFromDoc` 讀 `doc.legendaryShelf`，`MatchController` 在
+   * tick 0 之前**整塊**指派給 `world.legendaryShelf`。
+   *
+   * ⚠️ 這一段有過一段**它自己是假的**的歷史，留著當警告：2026-08-17 這四格
+   * 做完了 Zod + 出貨 JSON + 後台頁 + sim 讀取，唯獨**沒有人把它從 config 送進 sim**
+   * —— 那時 `grep legendaryShelf apps/game-server` 是空的，而這段註解卻寫著
+   * 「由 rulesFromDoc 在 tick 0 之前指派一次」。後台四格全部無效，而畫面上看不出來
+   * （商店照樣有價格，只是那個價格永遠是程式常數）。⇒ 失敗形態②。
+   * 守衛：`apps/game-server/src/match/legendaryShelfWiring.test.ts` ——
+   * 它驗的是**配對關係**（把 config 的倍率換掉 → 商店真的收不同的錢），
+   * ⛔ 不是「`rules.legendaryShelf` 有值」這種名詞。
+   */
+  legendaryShelf: {
+    open: boolean;
+    priceMultiplier: number;
+    sellRefundPct: number;
+    randomOnlyTables: string[];
+  } = {
+    open: LEGENDARY_SHELF_OPEN,
+    priceMultiplier: LEGENDARY_PRICE_MULTIPLIER,
+    sellRefundPct: DEFAULT_SELL_REFUND_PCT,
+    // 出貨**空的**：這一批只做機制，49 把寶具照樣全部上架（owner 說的 50~70 把
+    // EX理外 還沒有內容）。填一個表名就開始生效，⛔ 不用改程式。
+    randomOnlyTables: [],
+  };
 
   /**
    * Arena-rules override for the ultimate rank gate. false (default) keeps the

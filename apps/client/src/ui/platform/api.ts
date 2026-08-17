@@ -284,6 +284,16 @@ export function startSoloMatch(settings?: {
   mapId?: string;
   botDifficulty?: string;
   rogueliteMobs?: boolean;
+  /**
+   * 練習模式（GH#343）。⭐ 刻意**沒有開新端點**：練習房就是一間 solo 房，差別
+   * 只有這一格旗標，所以它走同一條 POST /rooms/solo —— 開第二條路等於開第二份
+   * 會各自腐爛的座位／回呼／心跳接線。
+   *
+   * ⚠️ 平台這一層只轉送，不判斷；真正決定「這是不是練習房」的是 game server
+   * （`MatchRoom.onCreate`），而練習房**完全沒有獎勵積分**是由結算那一端保證的
+   * （練習房不發 result callback），⛔ 不是靠這裡少送什麼。
+   */
+  practice?: boolean;
 }): Promise<StartInfo> {
   return api.request<StartInfo>("/rooms/solo", { body: settings ?? {} });
 }

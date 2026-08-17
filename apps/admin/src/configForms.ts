@@ -78,6 +78,10 @@ import {
   zConfigAudioMixDoc,
   // 練習模式（GH#343）—— 同上，schema/index.ts 有 re-export，走 barrel。
   zConfigPracticeDoc,
+  // 排名獎勵（owner 2026-08-17）—— 同上，schema/index.ts 有 re-export，走 barrel。
+  zConfigRankingDoc,
+  // 地端產圖的風格（owner 2026-08-17）—— 同上，schema/index.ts 有 re-export。
+  zConfigIconStyleDoc,
 } from "@ggd/shared/content";
 // ⚠️ 同上的深路徑理由：這兩份 Zod 住自己的檔案（欄位理由長、且 sim 直接吃）。
 import { DEFAULT_STAT_NORMALIZATION } from "@ggd/shared/content/statNormalization";
@@ -2478,6 +2482,144 @@ const PRACTICE_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
+// ─────────────────────────────────────────── 排名獎勵 (config/ranking) ─
+
+const RANKING_SPEC: ConfigDocSpec = {
+  page: "ranking",
+  collection: "config",
+  docId: "ranking",
+  schemaTag: "config.ranking@1",
+  zod: zConfigRankingDoc,
+  title: "排名獎勵",
+  intro: [
+    "⭐ owner 2026-08-17：「**MMR 倍率跟賽季積分也是類似的規則**，獎勵大家多打真人賽，並且**真實記錄 vs 特定玩家的幾勝幾敗**來影響 MMR & 賽季積分」。這一頁就是那兩件事的全部參數。",
+    "⚠️ 這一組真人倍率與**藍水晶那一組是分開的兩份**（可以各自調，出貨值刻意一致）：operator 想加碼經濟獎勵而不動排名、或反過來，都不該被迫連動。要改水晶那一半請去 商店經濟。",
+    "⭐ **賽季積分吃滿倍率、MMR 只吃 5%**，這是設計判斷不是做一半：Elo 是一個**收斂到真實實力的估計值**，直接乘 13 會讓排名劇烈震盪，而且**打一場 bot 局就把它拉回去**（bot 局倍率是 1，同一個實力估計被兩種尺度輪流拉扯，估得更差）。想讓 MMR 也吃滿就把「MMR 吃多少倍率」調到 100。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/ranking.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果，要改就從這一頁改。",
+  ],
+  consumer:
+    "apps/platform/internal/ranking/standingsoverride.go 的 StandingsRulesNow()（每一場結算重讀覆蓋層）→ standings.go 的 SeasonPointsMulPct / RatingKMulPct / RivalryTotalPct",
+  effect:
+    "**存檔就生效，下一場結算就是新規則。** ⛔ 不需要重啟任何東西 —— platform 在每一場結算的當下重讀覆蓋層（⚠️ 和 M幣 那一段不一樣，那一段要重啟）。",
+  fields: [
+    {
+      path: "humanMultiplier.minHumans",
+      zh: "真人門檻（幾人才算真人賽）",
+      note: "**整場**至少要有幾個真人，這一場才拿得到倍率；沒到門檻倍率就是 1，賽季積分與 MMR 都照原本的量走。⚠️ 數的是整場**不分陣營**（owner:「不論哪個陣營」），⛔ 不是自己這一隊 —— 所以一個人帶一個朋友進來就開得起加成。調到 1＝連單人 bot 局都算真人賽，那會讓刷 bot 局變成最有效率的爬分路線。",
+    },
+    {
+      path: "humanMultiplier.offset",
+      zh: "倍率加成（真人數 + 這一格）",
+      note: "倍率 = 真人數 **+ 這一格**。2 個真人 × 出貨 1 ⇒ 3 倍，12 人滿房 ⇒ 13 倍（owner 的原話）。調到 0＝倍率就等於真人數本身（2 人只有 2 倍）。⚠️ 它把**每一級**都往上推，動的是整條曲線的高度不是只有起點。",
+    },
+    {
+      path: "humanMultiplier.maxMultiplier",
+      zh: "倍率上限",
+      note: "倍率的天花板（出貨 13 = 12 人滿房 +1）。⚠️ 它是**保險絲**：房間人數上限哪天變大時，沒有這一格就會讓一場的產出跟著人數無限長。調低＝滿房與半房的差別被抹平，多找人一起打的誘因跟著消失。",
+    },
+    {
+      path: "share.seasonPointsPct",
+      zh: "賽季積分吃多少倍率",
+      note: "賽季積分（含每位英雄的積分）吃多少真人倍率。100（出貨值）＝ 吃滿，13 倍的房就是 13 倍的名次分；50＝只吃一半的增幅；0＝賽季積分完全不理會真人數。⚠️ 只放大**正的**名次分 —— 把 −30 的懲罰乘 13 不是獎勵，而 owner 那句話是「獎勵大家多打真人賽」。",
+    },
+    {
+      path: "share.ratingPct",
+      zh: "MMR 吃多少倍率",
+      note: "MMR（Elo）的 K 值吃多少增幅，出貨 **5** —— 13 倍的房只讓 K 變成 1.6 倍。⭐ 刻意只吃一小部分：Elo 是**收斂到真實實力的估計值**，把一場的變動乘 13 會讓排名劇烈震盪，而且**打一場 bot 局（倍率 1）就把它拉回去**，估計值反而更差。調到 100＝ MMR 也吃滿倍率（排名會很暴力）；0＝ MMR 完全不受真人數影響，只剩宿敵加成。",
+    },
+    {
+      path: "share.ratingMaxPct",
+      zh: "MMR 單場變動上限",
+      note: "Elo 的 K 值最多變成原本的百分之幾（出貨 200 = 2 倍）。⚠️ **宿敵加成也算在這個天花板裡**，所以它是「一場最多能撼動排名多少」的單一保險絲。100＝完全不放大，也就是排名側的加成整個關掉。",
+    },
+    {
+      path: "rivalry.basePct",
+      zh: "宿敵加成・基礎值",
+      note: "勝負持平、而且**初次交手**時，打贏這個對手額外拿到的百分比。它是整條曲線的高度，下面兩格都是從這個數字往下折。0＝整個宿敵系統關掉，也就是這個功能出現之前的行為（一鍵 rollback）。",
+    },
+    {
+      path: "rivalry.halfLife",
+      zh: "宿敵加成・淨勝衰減",
+      note: "對這個人的**淨勝場**每增加大約這麼多，加成砍半。出貨 3 ⇒ 贏一個過去把你打爆的對手加成最高，而重複輾壓同一個人時淨勝一路上升、加成一路掉。調大＝加成掉得慢，輾壓同一個人比較久還有賺頭。",
+    },
+    {
+      path: "rivalry.repeatHalfLife",
+      zh: "宿敵加成・重複對戰衰減（反刷分）",
+      note: "⭐ **這一格是反刷分的閘**：這一對**打過的總場數**每增加大約這麼多，加成砍半 —— ⛔ 不管勝負怎麼分。⚠️ 少了它，兩個帳號輪流讓對方贏就能把**淨勝永遠壓在 0**，於是上一格永遠不生效、加成永遠是滿的。有了它之後，同一對帳號打得越多這條路的產出越接近零，**跟不同的人打**才拿得到加成。調大＝互餵分的窗口變寬，⛔ 調大之前先想清楚這一點。",
+    },
+    {
+      path: "rivalry.maxPct",
+      zh: "宿敵加成・單場總上限",
+      note: "一場之內**所有**被打敗的對手的宿敵加成加起來的上限（單一對手也吃這個上限）。它擋的是「一場打贏六個宿敵」把加成疊成天文數字。⚠️ MMR 那一側還要再吃一次上面的「MMR 單場變動上限」，賽季積分那一側只吃這一格。",
+    },
+  ],
+  preserved: [],
+};
+
+// ─────────────────────────────────────── 圖示畫風 (config/icon-style) ─
+
+const ICON_STYLE_SPEC: ConfigDocSpec = {
+  page: "iconStyle",
+  collection: "config",
+  docId: "icon-style",
+  schemaTag: "config.icon-style@1",
+  zod: zConfigIconStyleDoc,
+  title: "圖示畫風",
+  intro: [
+    "⭐ owner 2026-08-17：圖示要**地端生成**，兩階段 ——「第一階段生成**特徵**，第二階段生成**風格（日本 2D RPG）**，精緻但**不要過度花俏複雜**的顏色內容」。這一頁就是**第二階段**那一段風格，以及兩階段共用的取樣火候。",
+    "⚠️⚠️ **這一頁跟其他每一頁的生效時機都不一樣。** 別的設定是遊戲執行時讀的，改了下一場就不同；這一份是**產圖那台機器**讀的 —— 它只在**下一次跑產圖時生效，⛔ 不影響任何一張已經產出的圖**。改完之後畫面上不會有任何變化，要重跑產圖（`python3 tools/icon-gen/local/batch.py --force`）才看得到差別。",
+    "⚠️ 第一階段畫的是**「這張圖畫的是什麼」**（哪一位英雄、哪一張聖杯願望），那份特徵表住在 `tools/icon-gen/local/keywords.py`，⛔ 不在這一頁。這一頁只管**畫風**。兩者分開是刻意的：把風格詞寫進第一階段，主體會被塗成一團看不出是什麼的東西 —— 那正是兩階段當初要修的缺陷。",
+    "⚠️⚠️ **要在跑產圖的那台機器上改這一頁。** 產圖器讀的是 repo 裡的 `content/config/icon-style.json`；在**線上** admin 存檔寫的是伺服器 `data/` 的耐久覆蓋層，⛔ 那份覆蓋層不會回到任何人的工作區，所以線上改完再去本機跑產圖，畫出來的還是舊風格。在 localhost 的後台／編輯器改就沒這個問題（那條路直接寫 repo 檔案）。",
+  ],
+  consumer:
+    "tools/icon-gen/local/keywords.py 的 load_icon_style() → pass2_prompt()（風格與負向提示詞）與 batch.py 的取樣參數預設值（strength / 步數 / CFG / 邊長）",
+  effect:
+    "**下一次跑產圖時生效，⛔ 不影響已經產出的圖。** 遊戲端、game-server 都不讀這份文件，所以⛔ 不需要重啟任何東西。",
+  fields: [
+    {
+      path: "stylePrompt",
+      zh: "風格提示詞（第二階段·正向）",
+      note: "整張圖的畫風就是這一段。出貨值把 owner 的原話落成可畫的詞：日本 2D RPG 手繪選單插畫、清楚的墨線輪廓、兩階柔和賽璐璐上色、**約四色的限制色盤**、自然不刺眼的色調、單一主體置中。⛔ 不要在這裡寫「畫什麼」（角色、武器、火焰）—— 那會把每一張圖都拉向同一個主體，也就是兩階段當初要修的缺陷。",
+    },
+    {
+      path: "negativePrompt",
+      zh: "排除提示詞（第二階段·負向）",
+      note: "明著不要的東西。除了老三樣（文字／浮水印／邊框／畸形）之外，出貨值特別排除**霓虹 · 過飽和 · 彩虹漸層 · 過度發光 · 雜亂細節** —— 那幾個字就是「過度花俏複雜的顏色」的機器版本。⚠️ 這裡多寫一個詞的代價是**那個東西整批消失**，所以只放**風格**詞：寫 `fire` 會讓所有火焰技能的圖示一起沒有火。",
+    },
+    {
+      path: "strength",
+      zh: "風格覆蓋強度",
+      note: "第二階段被允許把第一階段那張圖改掉多少。出貨 0.58 ——「保留得住主體、又真的換得掉畫風」的實測落點（0.45 量到的結果是畫風根本沒套上去，出來的是打光漂亮的 3D 產品照）。調高 → 畫風更統一，但**主體會開始被塗掉**（0.8 以上幾乎等於重畫一張新圖，看不出是哪一招）；調低 → 主體很安全，但風格幾乎沒套上去，看起來還是半成品。這一格是這一頁最值得先試的旋鈕。",
+    },
+    {
+      path: "pass1Steps",
+      zh: "第一階段步數（特徵）",
+      note: "決定「看不看得出畫的是什麼」，所以它是**辨識度**的旋鈕。出貨 26。往下調省時間但輪廓會糊；往上調到 40 以上幾乎看不出差別，只是讓全量那一批多跑好幾分鐘。",
+    },
+    {
+      path: "pass1Guidance",
+      zh: "第一階段有多聽話（CFG）",
+      note: "出貨 7.5。調高＝更貼特徵描述，代價是構圖僵硬、顏色容易燒；調低＝更自然，但常常畫出描述以外的東西 —— 三選一同時出三張時「根本分不出哪張是哪張」多半是從這裡開始的。",
+    },
+    {
+      path: "pass2Steps",
+      zh: "第二階段步數（風格）",
+      note: "出貨 30。⚠️ 它跟「風格覆蓋強度」**相乘**才是真正的工作量（第二階段只跑 strength 那一段），所以兩格一起調大，時間是相乘不是相加的。",
+    },
+    {
+      path: "pass2Guidance",
+      zh: "第二階段有多聽話（CFG）",
+      note: "出貨 7.0。**這一格對「顏色會不會太花」最敏感**：調高會把畫風推向高飽和的動漫海報（＝ owner 明說不要的那一種），想更收斂就往 6～7 調，通常比改文字提示詞有效。",
+    },
+    {
+      path: "size",
+      zh: "存檔邊長（像素）",
+      note: "出貨 128。全 app 最大的使用面是登入頁跑馬燈的 54 CSS px（DPR 2 ＝ 108 裝置像素），128 已經超取樣。⚠️ 模型一律在 512 算完再縮，所以這一格**不影響產圖時間**，只影響檔案大小與放大時的銳利度。",
+    },
+  ],
+  preserved: [],
+};
+
 const DISPLACEMENT_TIERS_SPEC: ConfigDocSpec = {
   page: "displacementTiers",
   collection: "config",
@@ -2594,6 +2736,14 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   // store.ts 的 `Page` union / App.tsx 的導覽列一起才到得了操作者手上，那兩個檔
   // 不在這條 lane 手上（見 needsFromIntegrator）。
   PRACTICE_SPEC,
+  // 排名獎勵（owner 2026-08-17）。⚠️ 同 AUDIO_MIX_SPEC 那一段的三件事，外加一件
+  // 這一頁獨有的：它的消費端是 **Go**（`internal/ranking/standingsoverride.go`），
+  // 所以「後台存了、Go 端讀不到」不會有任何 TypeScript 測試看得見 ——
+  // 對得起來的那條守衛在 `packages/shared/src/content/rankingShipped.test.ts`。
+  RANKING_SPEC,
+  // 圖示畫風（owner 2026-08-17）。⚠️ 同上：這一列要跟 store.ts 的 `Page` union /
+  // App.tsx 的導覽列一起才到得了操作者手上，那兩個檔不在這條 lane 手上。
+  ICON_STYLE_SPEC,
   DISPLACEMENT_TIERS_SPEC,
   MODEL_LOD_SPEC,
   VFX_CLEANUP_SPEC,

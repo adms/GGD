@@ -22,7 +22,7 @@ import { spawnChampion } from "../spawnChampion";
 import { asSeatId, asTeamId, type ChampionId, type EntityId, type ItemId } from "../../ids";
 import { buyItem } from "./shop";
 import { buyLegendaryOrb, legendaryPool, purchasableSlots, releaseOrbSlot } from "./legendaryOrb";
-import { LEGENDARY_ORB_ITEM_ID, LEGENDARY_ORB_PRICE, LEGENDARY_POOL_TABLE, STAT_TICK_ITEM_ID } from "./itemTiers";
+import { LEGENDARY_ORB_ITEM_ID, LEGENDARY_ORB_PRICE, LEGENDARY_POOL_TABLE, STAT_TICK_ITEM_ID, legendaryShelfPrice } from "./itemTiers";
 
 /** The four skeleton items stand in for the 29 shipped legendaries. */
 const POOL: ItemId[] = ["ember-rod", "ironhide-vest", "serrated-edge", "swift-boots"] as ItemId[];
@@ -252,6 +252,11 @@ describe("a rolled orb holds the slot its legendary will land in", () => {
     releaseOrbSlot(world, id); // never goes negative — a freed slot stays freed
     expect(champ.pendingOrbSlots).toBe(0);
     expect(purchasableSlots(champ)).toBe(1);
+    // ⚠️ 這個檔案把**四件骨架道具當成傳說池**（見 POOL），所以 2026-08-17 之後
+    // 它們在商店裡是**寶具價**（傳說寶玉 × 倍率），⛔ 不是 `def.cost` 的 900。
+    // 這一條驗的是「放掉的格子可以再買東西」這個機制，不是價格，所以直接補到
+    // 買得起 —— 金額**推導**，⛔ 不寫字面值（倍率是後台旋鈕，隨時會被調）。
+    champ.gold += legendaryShelfPrice(world.legendaryShelf.priceMultiplier);
     expect(buyItem(world, id, "ember-rod" as ItemId)).toBe("ok");
   });
 
@@ -261,6 +266,8 @@ describe("a rolled orb holds the slot its legendary will land in", () => {
     const { world, id } = makeWorld();
     const champ = world.champion.get(id)!;
     expect(purchasableSlots(champ)).toBe(6);
+    // 同上：這裡驗的是「沒碰過寶玉的人六格都花得掉」，⛔ 不是價格。
+    champ.gold = legendaryShelfPrice(world.legendaryShelf.priceMultiplier) * 6;
     for (let i = 0; i < 6; i++) expect(buyItem(world, id, "ember-rod" as ItemId)).toBe("ok");
     expect(champ.items.every((s) => s !== null)).toBe(true);
   });

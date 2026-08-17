@@ -301,6 +301,31 @@ export class SeatState extends Schema {
   declare counterIds: ArraySchema<string>;
   /** {@link counterIds} 每一筆的層數，index-aligned。0 是合法且**有意義**的值。 */
   declare counterCounts: ArraySchema<number>;
+  /**
+   * ⭐【逐格退款】—— {@link items} 每一格**現在賣掉會拿到多少金幣**，index-aligned
+   * （owner 2026-08-17「賣價一定是取得價的 40%（後台可設定）」）。
+   *
+   * ⛔ 為什麼這件事**必須**過線，不能讓客戶端自己算：退款＝**那一格實付的金額**
+   * × 後台退款率，而「實付了多少」只有伺服器有（`ChampionComp.itemAcq`）。
+   * 客戶端唯一算得出來的是 `def.cost × 退款率`，而那條式子對 49 把寶具全部得到
+   * 0（它們的標價是 0，售價是推導的）、對三選一免費發到手的武器得到一個玩家
+   * 永遠拿不到的數字 —— 兩個方向都在說謊，而畫面上都長得像真的。
+   *
+   * ⚠️ 這兩格與 {@link counterIds} 一樣是**一個邏輯欄位分兩條 index-aligned 陣列**，
+   * 所以**一起** append 在最後。分兩次 append 會讓中間插進來的欄位把它們拆散。
+   *
+   * ⚠️ 金額走 `economy/shop.slotRefund`（**同一支**函式付錢與投影），⛔ 投影端
+   * 不可以自己再乘一次退款率 —— 那就是 #106 那個「面板寫的和實際拿到的不一樣」，
+   * 而這一次差距不是四捨五入，是 3,840 對 0。
+   */
+  declare itemRefund: ArraySchema<number>;
+  /**
+   * {@link itemRefund} 每一格是不是**隨機取得**的（三選一卡 / 傳說寶玉 / 任何
+   * `grantItemFree`），index-aligned。玩家問的是「這一把我是買的還是抽到的」，
+   * 而退款 0 有兩種完全不同的原因（免費拿到 vs. 伺服器沒送資料）—— 少了這一格，
+   * 畫面就得從金額反推來源，而 0 反推不出任何東西。
+   */
+  declare itemRandom: ArraySchema<boolean>;
 
   constructor() {
     super();
@@ -340,6 +365,8 @@ export class SeatState extends Schema {
     this.roundDeathTick = 0;
     this.counterIds = new ArraySchema<string>();
     this.counterCounts = new ArraySchema<number>();
+    this.itemRefund = new ArraySchema<number>();
+    this.itemRandom = new ArraySchema<boolean>();
   }
 }
 defineTypes(SeatState, {
@@ -392,6 +419,12 @@ defineTypes(SeatState, {
   // 一個荒謬的數字。完整的三個決策（格式 / id / 上限）寫在 SeatState 的宣告上。
   counterIds: ["string"],
   counterCounts: ["uint16"],
+  // APPEND-ONLY (見上)：⭐【逐格退款】owner 2026-08-17。⛔ **最後兩格**，而且是
+  // **一起**加的 —— 金額與「是不是隨機取得的」是同一個邏輯欄位的兩半，與 `items`
+  // index-aligned。uint32 與 `gold` 同寬（退款永遠 ≤ 手上曾經有過的金幣），
+  // 投影端 `net/snapshot.ts` 仍然夾一次，所以永遠不會繞回一個荒謬的數字。
+  itemRefund: ["uint32"],
+  itemRandom: ["boolean"],
 });
 
 /**

@@ -20,13 +20,14 @@ import { mobModelKeyFor, mobSizeMultFor, mobVisualJson } from "@ggd/shared/sim/m
 import { currentFireRingRadius, isBurnedByFireRing } from "@ggd/shared/sim/fireRing";
 import { isHidden } from "@ggd/shared/sim/stealth";
 import { attrBonusArray } from "@ggd/shared/sim/economy/statPath";
+import { slotAcquisition, slotRefund } from "@ggd/shared/sim/economy/shop";
 import type { ChampionId, EntityId } from "@ggd/shared/ids";
 import type { SimWorld } from "@ggd/shared/sim/SimWorld";
 import type { MatchController } from "../match/MatchController";
 import type { HumanDriver } from "../seat/HumanDriver";
 
 /** Replace an ArraySchema's contents (schema v3 lacks a compatible splice). */
-function setArray<T extends string | number>(arr: ArraySchema<T>, values: readonly T[]): void {
+function setArray<T extends string | number | boolean>(arr: ArraySchema<T>, values: readonly T[]): void {
   // mutate only when changed to avoid redundant patches
   if (arr.length === values.length && values.every((v, i) => arr[i] === v)) return;
   arr.clear();
@@ -196,6 +197,21 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         ss.gold = champ.gold;
         ss.xp = champ.xp;
         setArray(ss.items, champ.items.map((i) => i ?? ""));
+        // ⭐【逐格退款】(owner 2026-08-17) —— 每一格**現在賣掉拿多少** + 那一把是
+        // 不是隨機取得的，與上面那條 `items` index-aligned。
+        //
+        // ⚠️ 金額呼叫 sim 的 `slotRefund`，⛔ 這裡**不**自己乘一次退款率：付錢的
+        // `sellItem` 讀的是同一支函式，兩邊各算一次就是 #106 的「面板寫的和實際
+        // 拿到的不一樣」。而客戶端根本算不出來（實付金額只有伺服器有），所以在
+        // 這兩行存在之前，裝備格的退款一律顯示「?」—— 失敗形態②。
+        //
+        // 夾在 uint32 是線路寬度的事，⛔ 不是規則：退款永遠 ≤ 曾經付出的金幣，
+        // 所以夾到本來就不該發生，夾了只是不讓一個爆掉的值繞回小數字。
+        setArray(
+          ss.itemRefund,
+          champ.items.map((_, slot) => Math.max(0, Math.min(0xffffffff, slotRefund(world, champ, slot)))),
+        );
+        setArray(ss.itemRandom, champ.items.map((_, slot) => slotAcquisition(champ, slot)?.random === true));
         setArray(ss.augments, champ.augments);
         // 能力屬性強化 progress (task #82) — N/20 and whether the capstone has
         // landed. The shop panel (#38) owns the presentation; this is the state

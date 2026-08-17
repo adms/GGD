@@ -100,6 +100,7 @@ import { asSeatId, asTeamId, type ChampionId, type EntityId, type ItemId } from 
 // client's own `shopCatalogue` rather than restated here. A restatement would
 // pass forever while the real shelf rotted — which is the whole failure mode.
 import { shopCatalogue, whitelistFromDoc } from "../../../client/src/ui/panels/champSelectFilter";
+import { legendaryShelfListable } from "@ggd/shared/sim/economy/shopShelf";
 import { resolveArenaRules, type ArenaRules } from "../match/arenaRules";
 import { Whitelist, type WhitelistDoc } from "./whitelist";
 
@@ -149,13 +150,10 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "this exemption must be deleted, which is what the stale-exemption guard below enforces.",
     owner: "#261",
   },
-  "shop.inventory-fill": {
-    reason:
-      "#261 暫時下架, same cause: with the shelf closed the buyable-weapon count is 0 by design. The " +
-      "6 inventory slots are still fillable — through the 3-choose-1 cards and the 傳說寶玉, which " +
-      "the flag deliberately does NOT gate (「隨機三選一仍然可以隨機到」, pinned by shopShelf.test.ts).",
-    owner: "#261",
-  },
+  // ⚠️ RETIRED 2026-08-17 — "shop.inventory-fill" 被刪掉，⛔ 不是失效了沒人管。
+  // owner:「寶具(傳說武器) 可以上架直接販售了」⇒ 49 把寶具現在真的在架上，
+  // 買得到的武器數 0 → 49，遠超過 6 格背包，所以那條 finding 不再發生。
+  // 上面的 stale-exemption 守衛就是在等這一刻，把它留著會紅。
 };
 
 // ---------------------------------------------------------------------------
@@ -265,8 +263,15 @@ function auditWhitelist(doc: WhitelistDoc): Finding[] {
   //     `shopCatalogue` is ever loosened back toward the old `cost > 0`
   //     derivation, components and recipe books reappear on the shelf and this
   //     goes red immediately.
+  //
+  // ⭐ AMENDED 2026-08-17. owner:「寶具(傳說武器) 可以上架直接販售了」—— 那 49 把
+  // 之中有 23 把不是 `craftRole:"final"`（17 none + 6 quest），所以規則現在是
+  // 「final ∨ **在 legendary-weapons 表裡**」。⛔ 這不是把 final 那一條放寬：
+  // 旁路只認那張表，70 把普通武器的合成原料照樣被擋（GH#70 的理由沒有變）。
+  const onLegendaryShelf = (id: string): boolean => legendaryShelfListable(id);
   for (const i of weapons) {
     if (i.craftRole === "final" && itemHasEffect(i)) continue;
+    if (onLegendaryShelf(i.id)) continue;
     add(
       "shop.listing-rule",
       `${i.id} (${(Items.get(i.id as ItemId) as { name: string }).name}) is on the SHOP SHELF but is ` +

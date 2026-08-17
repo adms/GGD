@@ -48,10 +48,24 @@ import {
   isDraftConflict,
   patchDraftConflict,
   readDraftConflict,
+  LEGENDARY_SHELF_LABEL,
+  PRICE_MULTIPLIER_LABEL,
+  PRICE_MULTIPLIER_MAX,
+  PRICE_MULTIPLIER_MIN,
+  RANDOM_ONLY_TABLES_LABEL,
+  RANDOM_ONLY_TABLES_MAX,
+  SELL_REFUND_PCT_LABEL,
+  SELL_REFUND_PCT_MAX,
+  SELL_REFUND_PCT_MIN,
+  SHIPPED_LEGENDARY_SHELF,
+  legendaryShelfSummary,
+  patchLegendaryShelf,
+  readLegendaryShelf,
+  validateLegendaryShelf,
   type ItemDraftField,
   type ItemDraftForm,
 } from "../itemDraft";
-import type { DraftConflict } from "@ggd/shared/content/schema/config";
+import type { DraftConflict, LegendaryShelfConfig } from "@ggd/shared/content/schema/config";
 import {
   GRAIL_DRAFT_FIELD_ORDER,
   GRAIL_DRAFT_LABELS,
@@ -78,6 +92,8 @@ export function ItemDraftPage(): JSX.Element {
   const [offerCount, setOfferCount] = useState(readOfferCount(null));
   /** #340 撞卡裁決 —— 同樣是 arena-rules 的頂層欄位。 */
   const [conflict, setConflict] = useState<DraftConflict>(SHIPPED_DRAFT_CONFLICT);
+  /** ⚔️ 寶具直接販售（owner 2026-08-17）—— 也是頂層欄位。 */
+  const [shelf, setShelf] = useState<LegendaryShelfConfig>({ ...SHIPPED_LEGENDARY_SHELF });
   /** 🏆 聖杯顯現 —— arena-rules 的 `grailDraft` 區塊（見 ../grailDraft.ts）。 */
   const [grail, setGrail] = useState<GrailDraftRules>({ ...SHIPPED_GRAIL_DRAFT });
   const [busy, setBusy] = useState(false);
@@ -103,6 +119,7 @@ export function ItemDraftPage(): JSX.Element {
         setOfferCount(readOfferCount(full));
         setRetiredText(formatRetiredTables(readRetiredTables(full)));
         setConflict(readDraftConflict(full));
+        setShelf(readLegendaryShelf(full));
         setGrail(extractGrailDraft(full));
         const cfg = extractItemDraft(full);
         if (cfg) setForm(formFromConfig(cfg));
@@ -124,17 +141,21 @@ export function ItemDraftPage(): JSX.Element {
     [retiredText, form.fallbackTable],
   );
   const retiredIds = parseRetiredTables(retiredText);
+  const shelfErr = useMemo(() => validateLegendaryShelf(shelf), [shelf]);
 
   const save = async (): Promise<void> => {
-    if (!preview || !baseDoc || retiredErr) return;
+    if (!preview || !baseDoc || retiredErr || shelfErr) return;
     setBusy(true);
     setApiErr(null);
     try {
-      // 兩個 patch 疊在**同一份基底文件**上，一次 PUT。分兩次寫的話，第二次會
-      // 用第一次之前的基底覆蓋回去 —— 那正是覆蓋層存整份文件的那個陷阱。
-      const next = patchDraftConflict(
-        patchGrailDraft(patchRetiredTables(patchItemDraft(baseDoc, preview), retiredIds), grail),
-        conflict,
+      // 每個 patch 疊在**同一份基底文件**上，一次 PUT。分次寫的話，後一次會
+      // 用前一次之前的基底覆蓋回去 —— 那正是覆蓋層存整份文件的那個陷阱。
+      const next = patchLegendaryShelf(
+        patchDraftConflict(
+          patchGrailDraft(patchRetiredTables(patchItemDraft(baseDoc, preview), retiredIds), grail),
+          conflict,
+        ),
+        shelf,
       );
       const head = await putOverlayDoc(ARENA_RULES_COLLECTION, ARENA_RULES_DOC_ID, next);
       setBaseDoc(next);
@@ -151,6 +172,7 @@ export function ItemDraftPage(): JSX.Element {
     setForm(formFromConfig(SHIPPED_ITEM_DRAFT));
     setRetiredText(formatRetiredTables(SHIPPED_RETIRED_LOOT_TABLES));
     setConflict(SHIPPED_DRAFT_CONFLICT);
+    setShelf({ ...SHIPPED_LEGENDARY_SHELF });
     setGrail({ ...SHIPPED_GRAIL_DRAFT });
     setFlash(null);
   };
@@ -409,6 +431,140 @@ export function ItemDraftPage(): JSX.Element {
         </div>
       </div>
 
+      {/* ⚔️ 寶具直接販售 —— arena-rules 的頂層 `legendaryShelf`（owner 2026-08-17） */}
+      <div style={{ marginTop: 14 }}>
+        <div style={{ color: ACCENT, fontSize: 12, marginBottom: 6 }}>
+          {ITEM_DRAFT_GROUP_ZH.shelf}
+        </div>
+        <div style={rowStyle}>
+          <span style={{ color: TEXT_MAIN, minWidth: 150 }}>{LEGENDARY_SHELF_LABEL.zh}</span>
+          <code style={{ color: TEXT_DIM, fontSize: 11, minWidth: 150 }}>legendaryShelf.open</code>
+          <div style={{ flex: 1 }}>
+            <label style={{ color: TEXT_MAIN, fontSize: 13, cursor: "pointer" }}>
+              <input
+                type="checkbox"
+                aria-label={LEGENDARY_SHELF_LABEL.zh}
+                data-field="legendaryShelfOpen"
+                checked={shelf.open}
+                onChange={(e) => setShelf({ ...shelf, open: e.target.checked })}
+                style={{ marginRight: 6 }}
+              />
+              {shelf.open ? "上架（出貨值）" : "不上架"}
+            </label>
+            <div style={{ color: TEXT_DIM, fontSize: 11, marginTop: 4, lineHeight: 1.6 }}>
+              {LEGENDARY_SHELF_LABEL.note}
+            </div>
+          </div>
+        </div>
+        <div style={rowStyle}>
+          <span style={{ color: TEXT_MAIN, minWidth: 150 }}>{PRICE_MULTIPLIER_LABEL.zh}</span>
+          <code style={{ color: TEXT_DIM, fontSize: 11, minWidth: 150 }}>
+            legendaryShelf.priceMultiplier
+          </code>
+          <div style={{ flex: 1 }}>
+            <input
+              type="number"
+              step={0.5}
+              min={PRICE_MULTIPLIER_MIN}
+              max={PRICE_MULTIPLIER_MAX}
+              aria-label={PRICE_MULTIPLIER_LABEL.zh}
+              data-field="legendaryShelfPriceMultiplier"
+              value={shelf.priceMultiplier}
+              onChange={(e) => setShelf({ ...shelf, priceMultiplier: Number(e.target.value) })}
+              style={{
+                width: 90,
+                background: "#0b0e17",
+                color: shelfErr ? DANGER : TEXT_MAIN,
+                border: `1px solid ${shelfErr ? DANGER : PANEL_BORDER}`,
+                borderRadius: 3,
+                padding: "4px 6px",
+              }}
+            />
+            <div style={{ color: TEXT_DIM, fontSize: 11, marginTop: 4, lineHeight: 1.6 }}>
+              {PRICE_MULTIPLIER_LABEL.note}
+            </div>
+            <div style={{ color: TEXT_DIM, fontSize: 11, marginTop: 3 }}>
+              合法範圍 {PRICE_MULTIPLIER_MIN}–{PRICE_MULTIPLIER_MAX} · 出貨值{" "}
+              {SHIPPED_LEGENDARY_SHELF.priceMultiplier}
+            </div>
+            {shelfErr && <div style={{ color: DANGER, fontSize: 12, marginTop: 4 }}>{shelfErr}</div>}
+          </div>
+        </div>
+        {/* 💰 賣出退款率 —— owner 2026-08-17「賣價一定是取得價的 40%（後台可設定）」 */}
+        <div style={rowStyle}>
+          <span style={{ color: TEXT_MAIN, minWidth: 150 }}>{SELL_REFUND_PCT_LABEL.zh}</span>
+          <code style={{ color: TEXT_DIM, fontSize: 11, minWidth: 150 }}>
+            legendaryShelf.sellRefundPct
+          </code>
+          <div style={{ flex: 1 }}>
+            <input
+              type="number"
+              step={0.05}
+              min={SELL_REFUND_PCT_MIN}
+              max={SELL_REFUND_PCT_MAX}
+              aria-label={SELL_REFUND_PCT_LABEL.zh}
+              data-field="legendaryShelfSellRefundPct"
+              value={shelf.sellRefundPct ?? SHIPPED_LEGENDARY_SHELF.sellRefundPct ?? 0}
+              onChange={(e) => setShelf({ ...shelf, sellRefundPct: Number(e.target.value) })}
+              style={{
+                width: 90,
+                background: "#0b0e17",
+                color: shelfErr ? DANGER : TEXT_MAIN,
+                border: `1px solid ${shelfErr ? DANGER : PANEL_BORDER}`,
+                borderRadius: 3,
+                padding: "4px 6px",
+              }}
+            />
+            <div style={{ color: TEXT_DIM, fontSize: 11, marginTop: 4, lineHeight: 1.6 }}>
+              {SELL_REFUND_PCT_LABEL.note}
+            </div>
+            <div style={{ color: TEXT_DIM, fontSize: 11, marginTop: 3 }}>
+              合法範圍 {SELL_REFUND_PCT_MIN}–{SELL_REFUND_PCT_MAX} · 出貨值{" "}
+              {SHIPPED_LEGENDARY_SHELF.sellRefundPct}
+            </div>
+          </div>
+        </div>
+        {/* 🎲 隨機限定抽獎表 —— owner 2026-08-17「仍然可以有寶具是隨機才能取得的」 */}
+        <div style={rowStyle}>
+          <span style={{ color: TEXT_MAIN, minWidth: 150 }}>{RANDOM_ONLY_TABLES_LABEL.zh}</span>
+          <code style={{ color: TEXT_DIM, fontSize: 11, minWidth: 150 }}>
+            legendaryShelf.randomOnlyTables
+          </code>
+          <div style={{ flex: 1 }}>
+            <textarea
+              rows={2}
+              aria-label={RANDOM_ONLY_TABLES_LABEL.zh}
+              data-field="legendaryShelfRandomOnlyTables"
+              value={formatRetiredTables(shelf.randomOnlyTables ?? [])}
+              onChange={(e) =>
+                setShelf({ ...shelf, randomOnlyTables: parseRetiredTables(e.target.value) })
+              }
+              placeholder="例：ex-rigai"
+              style={{
+                width: "100%",
+                background: "#0b0e17",
+                color: shelfErr ? DANGER : TEXT_MAIN,
+                border: `1px solid ${shelfErr ? DANGER : PANEL_BORDER}`,
+                borderRadius: 3,
+                padding: "4px 6px",
+                fontFamily: "monospace",
+                fontSize: 12,
+              }}
+            />
+            <div style={{ color: TEXT_DIM, fontSize: 11, marginTop: 4, lineHeight: 1.6 }}>
+              {RANDOM_ONLY_TABLES_LABEL.note}
+            </div>
+            <div style={{ color: TEXT_DIM, fontSize: 11, marginTop: 3 }}>
+              最多 {RANDOM_ONLY_TABLES_MAX} 張 · 出貨值：空（沒有任何道具被限定成隨機取得）
+            </div>
+          </div>
+        </div>
+        {/* ⭐ 唯讀的推導結果 —— 操作者不用心算，而且「乘在哪個價格上」是明說的 */}
+        {!shelfErr && (
+          <div style={{ color: GOLD, fontSize: 12, marginTop: 4 }}>{legendaryShelfSummary(shelf)}</div>
+        )}
+      </div>
+
       <div style={{ marginTop: 18 }}>
         <div style={{ color: ACCENT, fontSize: 13, fontWeight: 600, marginBottom: 6 }}>
           🏆 聖杯顯現（回合願望三選一）
@@ -493,7 +649,10 @@ export function ItemDraftPage(): JSX.Element {
       </div>
 
       <div style={{ display: "flex", gap: 8, marginTop: 16 }}>
-        <Btn onClick={() => void save()} disabled={busy || !preview || !baseDoc || retiredErr !== null}>
+        <Btn
+          onClick={() => void save()}
+          disabled={busy || !preview || !baseDoc || retiredErr !== null || shelfErr !== null}
+        >
           {busy ? "儲存中…" : "儲存"}
         </Btn>
         <Btn onClick={resetToShipped} disabled={busy}>

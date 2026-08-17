@@ -234,17 +234,27 @@ describe("傳說寶玉 → a real 3-choose-1 offer on the controller", () => {
   });
 });
 
-describe("no legendary is directly purchasable, whatever the surface says", () => {
-  it("the sim refuses a 0g item even when nothing filtered it out", () => {
+describe("寶具直接販售 —— 但關掉那一格就一塊錢都不收", () => {
+  /**
+   * ⚠️ RE-AIMED 2026-08-17。這一條原本叫「no legendary is directly purchasable」，
+   * 守的是 owner 2026-08-01 的裁決「傳說的武器道具，只能隨機三選一」。
+   * owner 2026-08-17 推翻了它：「寶具(傳說武器) 可以上架直接販售了，價格統一是
+   * 隨機抽的 6 倍（後台可設定）」。
+   *
+   * 所以守的性質換成**開關真的關得住** —— 那才是舊裁決現在剩下的機械形狀，
+   * 也是 rollback 這條路唯一的保證。「開著會怎樣」在
+   * packages/shared/src/sim/economy/legendaryShelf.test.ts。
+   */
+  it("關掉寶具貨架：金幣滿手也逐件被拒，一塊錢都不收", () => {
     cover("econ-legendary-refused");
     const ctl = spawnedMatch(3);
     const entity = firstEntity(ctl);
     ctl.world.champion.get(entity)!.gold = 100_000;
-    // This is the LAST line of defence: `gold >= 0` is always true, so a
-    // legendary that leaked into any shop listing (a dev build with the
-    // whitelist off, a hand-rolled buyItem command) would otherwise be free.
+    ctl.world.legendaryShelf = { ...ctl.world.legendaryShelf, open: false };
+    // 這仍然是最後一道防線：`gold >= 0` 永遠為真，所以一件漏進任何商店列表的
+    // 寶具（白名單關掉的 dev build、手打的 buyItem 指令）不可以因此變成免費。
     for (const e of LootTables.get(LEGENDARY_POOL_TABLE).entries) {
-      expect(buyItem(ctl.world, entity, e.itemId), `${e.itemId} was purchasable`).toBe("not-purchasable");
+      expect(buyItem(ctl.world, entity, e.itemId), `${e.itemId} was purchasable`).toBe("shelf-closed");
     }
     expect(ctl.world.champion.get(entity)!.items.every((s) => s === null)).toBe(true);
     expect(ctl.world.champion.get(entity)!.gold).toBe(100_000);

@@ -156,6 +156,12 @@ export const NAV: NavItem[] = [
   { page: "quickApproval", label: "Quick Approval", emoji: "🚦", section: SEC_OPS },
   { page: "players", label: "Players", emoji: "👤", section: SEC_OPS },
   { page: "matches", label: "Matches", emoji: "⚔️", section: SEC_OPS },
+  // 排名獎勵 (owner 2026-08-17「MMR 倍率跟賽季積分也是類似的規則」) —— 一場比賽
+  // 值多少 MMR／賽季積分。⚠️ 放「營運」而**不是**「戰鬥規則」是刻意的：那一區問
+  // 的是「英雄在場上多強」，這一頁一個字都不影響場上，它決定的是**打完之後排行榜
+  // 怎麼動** —— 跟 Matches／M幣 發放 同一類（玩家帳上的東西）。緊接在 Matches 後面，
+  // 因為它調的就是那一頁每一列產出的東西。
+  { page: "ranking", label: "排名獎勵", emoji: "🏅", section: SEC_OPS },
   { page: "replays", label: "對戰回放", emoji: "🎞️", section: SEC_OPS },
   { page: "announcements", label: "Announcements", emoji: "📢", section: SEC_OPS },
   { page: "mcoinGrant", label: "M幣 發放", emoji: "🪙", section: SEC_OPS },
@@ -297,6 +303,9 @@ export const NAV: NavItem[] = [
   // 六格開關（總開關／無限戰鬥／自動生怪／火圈／自動復活／一次生幾隻）。
   // 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   { page: "practice", label: "練習模式", emoji: "🎯", section: SEC_SYS },
+  // 圖示風格 (GH#178)：地端兩階段產圖器的 PASS-2 風格字串與參數。
+  // ⚠️ 它是**產圖時**的設定，不是遊戲執行期的 —— 改了要重跑產圖器才看得到。
+  { page: "iconStyle", label: "圖示風格", emoji: "🖌", section: SEC_ASSETS },
   // 護盾規則 —— 一個人身上兩道盾時誰先被吃掉。它是**傷害結算規則**（跟 戰鬥系統
   // 的倍率、屬性上限的天花板同一個家族），不是畫質也不是調性，但排在這裡是因為
   // 它和上面三頁共用同一個 schema 驅動的元件；改到它的人會從左欄找「護盾」。

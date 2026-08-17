@@ -1,0 +1,13 @@
+{
+  "id": "icon-style",
+  "schema": "config.icon-style@1",
+  "note": "地端產圖(tools/icon-gen/local/)的風格與火候。owner 2026-08-17:「聖杯願望也要補圖示,地端生成,兩階段:第一階段生成特徵,第二階段生成風格(日本 2D RPG),精緻但不要過度花俏複雜的顏色內容」。這一份是**第二階段**那一段風格,以及兩階段共用的取樣參數。在這份文件出現之前,風格是寫死在 keywords.py 的 ANIME_STYLE / ANIME_NEGATIVE 兩個 Python 常數裡,而且寫的是「Japanese anime style, vibrant saturated colours」—— 既不是 owner 要的日本 2D RPG,顏色方向也剛好相反,而且改一個字要改程式(第一守則)。⚠️ 這一頁的生效時機跟其他 config 都不一樣:它是**產圖那台機器**讀的,不是遊戲讀的。改完之後**已經產出的 .webp 一張都不會變**,要重跑 `python3 tools/icon-gen/local/batch.py --force` 才看得到差別。⛔ negativePrompt 裡只放**風格**詞不放**題材**詞:寫 fire 會讓所有火焰技能的圖示一起沒有火。 ⚠️ **提示詞長度沒有 77 token 的限制** —— `pipeline._encode_long()` 會把超長的提示詞切成 75-token 窗格逐段編碼再串接，正負向補到同樣窗格數。`diffusers` 印的那行`Token indices sequence length is longer than the specified maximum` 是**別處的計數呼叫**發出的，⛔ 不代表有東西被丟掉。2026-08-17 我一度照那行警告把負向詞砍到 69 token，那是誤診 —— 產出一張都沒變，因為本來就沒被截斷。",
+  "stylePrompt": "Japanese 2D RPG game illustration, hand-painted JRPG menu art, flat matte colours, clean ink outline, soft cel shading, limited palette of about four muted natural colours, single subject centred, plain dark background, even lighting",
+  "negativePrompt": "neon, oversaturated, garish clashing colours, rainbow gradient, glitter, excessive glow, lens flare, chromatic aberration, busy cluttered detail, kaleidoscope, mandala, radial symmetry, emblem, logo, photorealistic, photograph, product photography, studio photo, 3d render, glossy plastic, chrome, specular highlight, glare, depth of field, text, letters, words, watermark, signature, border, frame, ui panel, multiple views, collage, split image, grid, blurry, lowres, deformed, extra limbs, extra fingers, mutated, western cartoon, sketch, monochrome",
+  "strength": 0.58,
+  "pass1Steps": 26,
+  "pass1Guidance": 7.5,
+  "pass2Steps": 30,
+  "pass2Guidance": 7.0,
+  "size": 128
+}

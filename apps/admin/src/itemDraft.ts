@@ -23,7 +23,13 @@
  * (同 `matchConfig.ts` 的理由:替代方案是用一份猜出來的文件蓋掉線上)。
  */
 
-import { DEFAULT_DRAFT_CONFLICT, type DraftConflict } from "@ggd/shared/content/schema/config";
+import {
+  DEFAULT_DRAFT_CONFLICT,
+  DEFAULT_LEGENDARY_SHELF,
+  type DraftConflict,
+  type LegendaryShelfConfig,
+} from "@ggd/shared/content/schema/config";
+import { LEGENDARY_ORB_PRICE, legendaryShelfPrice } from "@ggd/shared/sim/economy/itemTiers";
 
 /** The `config` collection doc this page edits (one doc, one block). */
 export const ARENA_RULES_COLLECTION = "config";
@@ -71,7 +77,7 @@ export const ITEM_DRAFT_FIELD_ORDER: readonly ItemDraftField[] = [
  * (見下面 SHIPPED_RETIRED_LOOT_TABLES 的說明),但它調的是同一個東西 ——
  * 「這一場的三選一可以從哪些池子抽」 —— 所以放在同一頁。
  */
-export type ItemDraftGroup = "policy" | "safety" | "retire" | "pool" | "conflict";
+export type ItemDraftGroup = "policy" | "safety" | "retire" | "pool" | "conflict" | "shelf";
 
 export const ITEM_DRAFT_GROUP_ZH: Readonly<Record<ItemDraftGroup, string>> = Object.freeze({
   policy: "候選不足時怎麼辦",
@@ -79,6 +85,7 @@ export const ITEM_DRAFT_GROUP_ZH: Readonly<Record<ItemDraftGroup, string>> = Obj
   retire: "退場的獎池",
   pool: "哪些東西可以被發出去",
   conflict: "同一回合撞卡時",
+  shelf: "寶具能不能直接買",
 });
 
 export interface FieldLabel {
@@ -275,6 +282,196 @@ export function patchDraftConflict(
 /** 給操作者看的一句話：**這一場實際上會發生什麼**。 */
 export function draftConflictSummary(value: DraftConflict): string {
   return DRAFT_CONFLICT_OPTIONS.find((o) => o.value === value)?.note ?? "";
+}
+
+// ──────────────────── 寶具（傳說武器）能不能直接買（owner 2026-08-17）──────
+//
+// 「寶具(傳說武器) 可以上架直接販售了，價格統一是**隨機抽的 6 倍**（後台可設定）」
+//
+// ⚠️ 為什麼這一組也**不在** `ItemDraftField` 裡:同 `retiredLootTables` /
+// `draftConflict`，它是 arena-rules 的**頂層**欄位，不是 `itemDraft` 區塊的一格。
+// `itemDraftShippedCopy.test.ts` 釘死「後台的欄位清單 === `zItemDraftConfig`
+// 的鍵」，混進去那條守衛就從此對不上。
+//
+// ⚠️ 為什麼放在**這一頁**：這一頁已經是「寶具怎麼到玩家手上」的那一頁（發卡
+// 規則、撞卡裁決、退場獎池）。上架直接買是第四條路，分到別頁只會讓操作者以為
+// 三選一與商店是兩個互不相干的系統。
+
+/**
+ * 出貨值。⛔ **不是**在這裡重打一份 —— 直接引用 schema 那一份（同
+ * {@link SHIPPED_DRAFT_CONFLICT}），所以三個住處只有兩份抄本。
+ */
+export const SHIPPED_LEGENDARY_SHELF: LegendaryShelfConfig = DEFAULT_LEGENDARY_SHELF;
+
+/** 鏡射 `zLegendaryShelfConfig.priceMultiplier` 的 `.min(0.1).max(50)`。 */
+export const PRICE_MULTIPLIER_MIN = 0.1;
+export const PRICE_MULTIPLIER_MAX = 50;
+/**
+ * 鏡射 `zLegendaryShelfConfig.sellRefundPct` 的 `.min(0).max(1)`。
+ * ⚠️ 上界 1 不是裝飾：> 1 = 賣得比買得多 = 買了賣、買了賣的無限金幣。
+ */
+export const SELL_REFUND_PCT_MIN = 0;
+export const SELL_REFUND_PCT_MAX = 1;
+/** 鏡射 `zLegendaryShelfConfig.randomOnlyTables` 的 `.max(32)`。 */
+export const RANDOM_ONLY_TABLES_MAX = 32;
+
+export const LEGENDARY_SHELF_LABEL: FieldLabel & { group: "shelf" } = Object.freeze({
+  zh: "寶具直接販售",
+  note:
+    "開啟後，49 把寶具會出現在中場商店，玩家可以直接用金幣買 —— " +
+    "⛔ 這**不會**打開 #261 暫時下架的那些普通武器道具（那是另一個開關）。" +
+    "關掉就回到 2026-08-01 的舊裁決「寶具只能隨機三選一 / 傳說寶玉抽到」，" +
+    "三選一與寶玉在**兩種狀態下都照常發卡**，這一格只管商店那條路。",
+  group: "shelf",
+});
+
+export const PRICE_MULTIPLIER_LABEL: FieldLabel & { group: "shelf" } = Object.freeze({
+  zh: "統一價倍率",
+  note:
+    "寶具的售價 = **傳說寶玉價 × 這個數**，49 把同一個價（owner：「價格統一是隨機抽的 N 倍」）。" +
+    "⛔ 它不是一個金額：寫成金額的話，寶玉之後調價兩者就會各自漂走。" +
+    "調大 = 直接買更貴、抽寶玉更划算；調小 = 直接買會取代抽獎。" +
+    "⚠️ 買不買得起要對照**回合固定發放**的累計金幣：" +
+    "第 3 場 1,575 · 第 5 場 3,625 · 第 8 場 7,575 · 第 10 場 12,075 · " +
+    "第 12 場 20,075 · 第 13 場 24,075（外加小怪 20/隻、守護塔 150、精英 5,000、殭屍王 30,000）。",
+  group: "shelf",
+});
+
+export const SELL_REFUND_PCT_LABEL: FieldLabel & { group: "shelf" } = Object.freeze({
+  zh: "賣出退款率",
+  note:
+    "賣掉一件裝備退回 **那一格當初實付金額 × 這個數**（owner：「賣價一定是取得價的 40%」）。" +
+    "⛔ 乘的**不是**道具標價 —— 49 把寶具的標價全部是 0，照標價算會變成「買 9,600、賣回 0」。" +
+    "⭐ 三選一卡與傳說寶玉**免費**發到手的那幾把，實付是 0，所以賣掉也退 0（否則等於印鈔機）。" +
+    "⚠️ 它管的是**整間商店**，不只是寶具。1 = 原價賣回（不虧），0 = 賣出不退錢。",
+  group: "shelf",
+});
+
+export const RANDOM_ONLY_TABLES_LABEL: FieldLabel & { group: "shelf" } = Object.freeze({
+  zh: "隨機限定抽獎表",
+  note:
+    "填**抽獎表 id**（逗號或換行分隔）。這些表裡的每一件道具**永遠不會出現在商店**，" +
+    "只能靠三選一卡或傳說寶玉抽到（owner：「仍然可以有寶具是隨機才能取得的」）。" +
+    "⭐ 為 EX理外 那 50~70 把準備：那一批做成**一張新的抽獎表**，這裡填一個表名就整批生效，" +
+    "⛔ 不用逐份道具改設定、也不用改程式。出貨是空的 —— 現在 49 把寶具全部買得到。",
+  group: "shelf",
+});
+
+/**
+ * 給操作者看的一句話：**現在實際會發生什麼**。
+ *
+ * ⭐ 這一行是**唯讀的推導結果**，不是複述欄位值 —— 操作者不用心算，
+ * 而且「乘的是哪一個價格」在畫面上是明說的（不是藏在程式裡的一個常數）。
+ */
+export function legendaryShelfSummary(cfg: LegendaryShelfConfig): string {
+  const pct = cfg.sellRefundPct ?? SHIPPED_LEGENDARY_SHELF.sellRefundPct ?? 0;
+  const tables = cfg.randomOnlyTables ?? [];
+  const extras =
+    `；賣掉退回**實付金額的 ${Math.round(pct * 100)}%**` +
+    `（免費抽到的實付 0 → 退 0）` +
+    (tables.length > 0 ? `；${tables.length} 張抽獎表被設成隨機限定，裡面的道具不上架` : "");
+  if (!cfg.open) {
+    return (
+      "寶具**不上架** —— 商店裡買不到，只能靠三選一或 " +
+      `${LEGENDARY_ORB_PRICE.toLocaleString("en-US")} 金傳說寶玉抽到（2026-08-01 的舊行為）` +
+      extras
+    );
+  }
+  const price = legendaryShelfPrice(cfg.priceMultiplier);
+  return (
+    `目前寶具統一價：${price.toLocaleString("en-US")} 金` +
+    `（＝寶玉 ${LEGENDARY_ORB_PRICE.toLocaleString("en-US")} × ${cfg.priceMultiplier}）` +
+    `，49 把同價，商店直接買得到` +
+    // ⭐ 唯讀的推導結果：操作者不用去翻回合表就知道「這個價要打到第幾場」。
+    // 對照的是 arena-rules 的 `grantGold` 累計（保證收入，不含打怪）。
+    `${roundAffordability(price)}` +
+    extras
+  );
+}
+
+/**
+ * 「這個價，第幾回合買得起第一把 / 第二把」——⭐ 推導，⛔ 不是寫死的一句話。
+ *
+ * 讀的是 arena-rules `grantGold` 的**累計保證收入**（整合者量的那一組）。
+ * ⚠️ 這幾個數字會隨回合表被調而過期，所以它們住在**一個地方**，而且畫面上
+ * 明說了它們是「固定發放」不含打怪 —— 一個標了計算基礎的估計值，比一句
+ * 沒有基礎的斷言誠實。
+ */
+const GUARANTEED_GOLD_BY_ROUND: readonly (readonly [round: number, cumulative: number])[] = [
+  [3, 1575],
+  [5, 3625],
+  [8, 7575],
+  [10, 12075],
+  [12, 20075],
+  [13, 24075],
+];
+
+function roundAffordability(price: number): string {
+  const firstAt = GUARANTEED_GOLD_BY_ROUND.find(([, g]) => g >= price)?.[0];
+  const secondAt = GUARANTEED_GOLD_BY_ROUND.find(([, g]) => g >= price * 2)?.[0];
+  const say = (r: number | undefined): string => (r === undefined ? "整場固定發放都不夠" : `第 ${r} 場`);
+  return `（只算回合固定發放：${say(firstAt)}買得起第一把、${say(secondAt)}買得起第二把）`;
+}
+
+/** 從 API 回來的文件裡挖出這一組；schema 不符或缺欄位 → 出貨值。 */
+export function readLegendaryShelf(doc: unknown): LegendaryShelfConfig {
+  if (!doc || typeof doc !== "object") return { ...SHIPPED_LEGENDARY_SHELF };
+  const d = doc as Record<string, unknown>;
+  if (d.schema !== ARENA_RULES_SCHEMA) return { ...SHIPPED_LEGENDARY_SHELF };
+  const block = d.legendaryShelf;
+  // ⚠️ 缺欄位回**出貨值**：線上的耐久覆蓋層是這一格存在之前存的，照
+  // `rulesFromDoc` 的 `??` 它在遊戲裡拿到的就是出貨值。後台畫成別的東西的話，
+  // 畫面會說一件遊戲裡沒有在做的事。
+  if (!block || typeof block !== "object" || Array.isArray(block)) return { ...SHIPPED_LEGENDARY_SHELF };
+  const b = block as Record<string, unknown>;
+  return {
+    open: typeof b.open === "boolean" ? b.open : SHIPPED_LEGENDARY_SHELF.open,
+    priceMultiplier:
+      typeof b.priceMultiplier === "number" && Number.isFinite(b.priceMultiplier)
+        ? b.priceMultiplier
+        : SHIPPED_LEGENDARY_SHELF.priceMultiplier,
+    sellRefundPct:
+      typeof b.sellRefundPct === "number" && Number.isFinite(b.sellRefundPct)
+        ? b.sellRefundPct
+        : SHIPPED_LEGENDARY_SHELF.sellRefundPct,
+    // 缺欄位 → 出貨值（空陣列）。⛔ 不要退回 `undefined`：畫面上那格輸入框
+    // 會變成 uncontrolled，而操作者存檔時會不小心把整格刪掉。
+    randomOnlyTables: Array.isArray(b.randomOnlyTables)
+      ? b.randomOnlyTables.filter((t): t is string => typeof t === "string")
+      : [...(SHIPPED_LEGENDARY_SHELF.randomOnlyTables ?? [])],
+  };
+}
+
+/**
+ * 這一組填得對不對。回 null = 沒問題。
+ * **兩端都檢查**（CLAUDE.md #277）：6 打成 60 = 144,000 金，一整場都買不起，
+ * 而畫面上只會看起來「好貴」—— 沒有人會發現那是設定打錯。
+ */
+export function validateLegendaryShelf(cfg: LegendaryShelfConfig): string | null {
+  const m = cfg.priceMultiplier;
+  if (!Number.isFinite(m)) return "統一價倍率必須是數字";
+  if (m < PRICE_MULTIPLIER_MIN) return `統一價倍率不可小於 ${PRICE_MULTIPLIER_MIN}（schema 下限）`;
+  if (m > PRICE_MULTIPLIER_MAX) return `統一價倍率不可超過 ${PRICE_MULTIPLIER_MAX}（schema 上限）`;
+  const pct = cfg.sellRefundPct;
+  if (pct !== undefined) {
+    if (!Number.isFinite(pct)) return "賣出退款率必須是數字";
+    if (pct < SELL_REFUND_PCT_MIN) return `賣出退款率不可小於 ${SELL_REFUND_PCT_MIN}（schema 下限）`;
+    // ⛔ 上界不是裝飾：1.2 = 買 100 賣 120 = 無限金幣，而畫面上只會是「錢變多」。
+    if (pct > SELL_REFUND_PCT_MAX) return `賣出退款率不可超過 ${SELL_REFUND_PCT_MAX}（賣得比買得多＝無限金幣）`;
+  }
+  const tables = cfg.randomOnlyTables;
+  if (tables !== undefined && tables.length > RANDOM_ONLY_TABLES_MAX) {
+    return `隨機限定抽獎表最多 ${RANDOM_ONLY_TABLES_MAX} 張（schema 上限）`;
+  }
+  return null;
+}
+
+/** 把這一組接回**整份** arena-rules 文件（同 {@link patchDraftConflict} 的理由）。 */
+export function patchLegendaryShelf(
+  doc: Record<string, unknown>,
+  cfg: LegendaryShelfConfig,
+): Record<string, unknown> {
+  return { ...doc, legendaryShelf: { ...cfg } };
 }
 
 /** 逗號 / 換行分隔的輸入 → 乾淨的 id 陣列（去空白、去重複、保持輸入順序）。 */

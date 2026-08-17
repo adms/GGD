@@ -178,39 +178,45 @@ func (s *Service) buildSettlement(ctx context.Context, req ResultRequest) (Settl
 	// else the champion recorded on the pending-match seats at reservation.
 	champOf := s.pendingChampions(ctx, req.MatchID)
 
-	// ANTI-FARM, two tiers. Owner's rule, after he refined it:
-	//   「全部玩家位置都真人才有 M幣；如果是自己隊伍 3 人都是真人那可以拿水晶，
-	//     若有 bot 只能拿一半水晶」
+	// TWO CURRENCIES, TWO RULES, AND THEY ASK DIFFERENT QUESTIONS.
 	//
-	//   M幣  — the whole 12-seat lobby must be human. It is the scarce cosmetic
-	//          currency (#118), one coin, first place only; a bot anywhere means
-	//          the win was not earned against people.
-	//   水晶 — judged on the EARNER'S OWN TEAM, not the lobby. Three humans on
-	//          your team pays in full; a bot beside you halves it.
+	//   M幣  — the whole 12-seat lobby must be human (owner: 「全部玩家位置都真人
+	//          才有 M幣」). It is the scarce cosmetic currency (#118), one coin,
+	//          first place only; a bot anywhere means the win was not earned
+	//          against people. UNCHANGED.
+	//   水晶 — scaled by HOW MANY PEOPLE ARE IN THE LOBBY. owner 2026-08-17, 逐字:
+	//          「只要有兩真人(N≥2)參加，不論哪個陣營都可以，所有玩家都 (N+1) 倍，
+	//            所以最大 13 倍」「120 × 13 (MAX)、120 × 3 (N=2)、120 (N=1)」
 	//
-	// Why the split matters: 4 teams × 3 = 12 seats, so a lobby-wide rule would
-	// mean a family of five never earns a crystal — 「打場免費賺」 would exist and
-	// never happen, which is the exact failure this batch has been removing. The
-	// per-team rule still kills the real exploit (soloing bots forever pays half
-	// at most) while a family that fills one team together earns in full.
+	// ⭐ N IS THE WHOLE LOBBY, ⛔ NOT THE EARNER'S TEAM. That single word is the
+	// entire difference from the 2026-08-01 rule it replaces (a per-team test
+	// that halved the grant when a bot sat beside you). Under the old rule two
+	// friends who joined the SAME lobby but drew OPPOSITE teams each got half —
+	// playing together paid worse than soloing bots. Both now get ×3.
 	//
-	// A disconnect collapses into the same check: MatchRoom swaps a dropped
-	// seat's driver to AI (rooms/MatchRoom.ts:5), so a leaver arrives as isBot.
-	// A COUCH GUEST IS A PERSON. `:pN` seats (couch.ts / guest.go) are local
-	// players 2..4 sharing one machine and one gamepad each — the owner's family
-	// on the sofa. They earn nothing individually because they have no account
-	// file, but they are emphatically not bots, and counting them as such would
-	// mean four people playing together in one room get NO M幣 and HALF 水晶.
-	// That is the opposite of what the anti-farm rule is for: it exists to stop
-	// someone soloing bots, not to punish playing with people.
+	// A disconnect collapses into the bot case: MatchRoom swaps a dropped seat's
+	// driver to AI (rooms/MatchRoom.ts:5), so a leaver arrives as isBot and stops
+	// counting towards N — which is the right direction, since the lobby really
+	// did shrink.
+	//
+	// ⚠️ A COUCH GUEST COUNTS A HEAD BUT CANNOT BE PAID. `:pN` seats (couch.ts /
+	// guest.go) are local players 2..4 sharing one machine — real people, so they
+	// raise N for everybody in the lobby, but they have no account file, so the
+	// settlement loop below skips them and they receive nothing themselves. The
+	// asymmetry is deliberate: four people on one sofa should make the lobby pay
+	// like a four-human lobby, and the alternative (not counting them) is the
+	// 「打場免費賺」 failure the owner has been removing all batch.
 	humanSeat := func(s ResultSeat) bool { return !s.IsBot }
+	humansInLobby := 0
 	perfectLobby := true
 	botsOnTeam := map[int]int{}
 	for _, seat := range req.Seats {
 		if !humanSeat(seat) {
 			perfectLobby = false
 			botsOnTeam[seat.Team]++
+			continue
 		}
+		humansInLobby++
 	}
 	if !perfectLobby {
 		slog.Info("no M幣 this match: lobby is not all-human",
@@ -218,6 +224,8 @@ func (s *Service) buildSettlement(ctx context.Context, req ResultRequest) (Settl
 			"why", "a bot seat or a disconnected player (leavers arrive as isBot)")
 	}
 	ladder := s.rank.Ladder()
+	// 排名獎勵的規則,跟水晶一樣是**每一場重讀**的(後台存檔不必重開 shard)。
+	standingsRules := s.rank.StandingsRulesNow()
 	// Group human seats into teams with their current ratings.
 	byTeam := map[int][]ranking.PlayerRating{}
 	games := map[string]int{}
@@ -227,6 +235,10 @@ func (s *Service) buildSettlement(ctx context.Context, req ResultRequest) (Settl
 	points := map[string]int{}
 	champID := map[string]string{}
 	champPoints := map[string]int{}
+	// 賽前的積分,留到迴圈之後才換算 —— 宿敵加成要先看過**整場**的名次才算得出來。
+	preSeasonPoints := map[string]int{}
+	preChampPoints := map[string]int{}
+	standSeats := []standingsSeat{}
 	for _, seat := range req.Seats {
 		if seat.IsBot || isGuestSeat(seat.AccountID) {
 			continue
@@ -246,10 +258,11 @@ func (s *Service) buildSettlement(ctx context.Context, req ResultRequest) (Settl
 		if placeOf[seat.Team] == 1 {
 			wins[a.ID] = a.Wins + 1
 		}
-		// Ratings, wins and season points above are deliberately NOT gated:
-		// those are standings, not currency, and nothing is farmed by inflating
-		// a number that ranks you against the same people. Only the two
-		// spendable currencies below are.
+		// ⚠️ 這裡以前寫著「名次與積分不設閘,因為它們不是貨幣」。owner 2026-08-17
+		// 推翻了那一句:「MMR 倍率跟賽季積分也是類似的規則,獎勵大家多打真人賽」。
+		// 所以它們現在也吃真人倍率(＋宿敵加成),只是**吃法不同** —— 積分吃滿、
+		// MMR 的 K 值只吃一小部分,理由寫在 internal/ranking/standings.go 的檔頭。
+		// 換算在迴圈之後做,因為宿敵加成要先知道整場有誰、名次如何。
 
 		// M幣: whole lobby must be human.
 		//
@@ -263,18 +276,20 @@ func (s *Service) buildSettlement(ctx context.Context, req ResultRequest) (Settl
 		if perfectLobby {
 			mcoin[a.ID] = a.MCoin + s.cat.RewardFor(placeOf[seat.Team])
 		}
-		// 水晶 (task #118): the free 「打場免費賺」 grant. Full if this seat's OWN
-		// team is three humans, HALVED if a bot (or a leaver) sits beside them.
-		// Same absolute shape as M幣, but the balance lives in the wallet's own
-		// meta collection rather than on the account struct, so it is read
-		// through the wallet service the settler already owns (nil in narrow
-		// fixtures). Integer halving rounds DOWN — a half-grant is meant to
-		// sting slightly, and every place-1..4 value stays positive at half.
+		// 水晶 (task #118, re-ruled 2026-08-17): the free 「打場免費賺」 grant =
+		// placement base × the whole-lobby multiplier explained above. Same
+		// absolute shape as M幣, but the balance lives in the wallet's own meta
+		// collection rather than on the account struct, so it is read through the
+		// wallet service the settler already owns (nil in narrow fixtures).
+		//
+		// ⛔ The `N+1` arithmetic is NOT written here — wallet.CrystalMultiplier
+		// owns it, so the number the owner retunes has exactly one home. The
+		// rules themselves come from Service.CrystalRulesNow (shipped values with
+		// the operator's live 商店經濟 override on top), read per settlement so a
+		// console save reaches the very next match with no restart.
 		if s.settle != nil && s.settle.wallet != nil {
-			grant := wallet.CrystalRewardFor(placeOf[seat.Team])
-			if botsOnTeam[seat.Team] > 0 {
-				grant /= 2
-			}
+			rules := s.settle.wallet.CrystalRulesNow()
+			grant := rules.RewardFor(placeOf[seat.Team]) * wallet.CrystalMultiplier(humansInLobby, rules)
 			crystal[a.ID] = s.settle.wallet.CrystalOf(ctx, a.ID) + grant
 		}
 		// Visible cumulative points: absolute post-match value = current +
@@ -283,14 +298,30 @@ func (s *Service) buildSettlement(ctx context.Context, req ResultRequest) (Settl
 		// Only HUMAN, non-guest seats reach here — bots and couch guests were
 		// skipped above, exactly like MMR.
 		place := placeOf[seat.Team]
-		points[a.ID] = ladder.AwardPoints(a.SeasonPoints, place)
 		cid := seat.ChampionID
 		if cid == "" {
 			cid = champOf[seat.AccountID]
 		}
 		champID[a.ID] = cid
-		if cid != "" {
-			champPoints[a.ID] = ladder.AwardPoints(a.ChampionPoints[cid], place)
+		preSeasonPoints[a.ID] = a.SeasonPoints
+		preChampPoints[a.ID] = a.ChampionPoints[cid]
+		standSeats = append(standSeats, standingsSeat{AccountID: a.ID, Team: seat.Team, Place: place})
+	}
+	// 真人倍率 + 宿敵加成。⚠️ 讀的是**這一場之前**的對戰紀錄:這一場的勝負要等
+	// Settler.Apply 才寫進去,所以同一場裡沒有人會被自己這一場的結果加成到。
+	awards := s.standingsAwards(ctx, standingsRules, humansInLobby, standSeats)
+	for _, ss := range standSeats {
+		aw := awardOf(awards, ss.AccountID)
+		points[ss.AccountID] = ladder.AwardPointsScaled(preSeasonPoints[ss.AccountID], ss.Place, aw.PointsPct)
+		if champID[ss.AccountID] != "" {
+			champPoints[ss.AccountID] = ladder.AwardPointsScaled(preChampPoints[ss.AccountID], ss.Place, aw.PointsPct)
+		}
+	}
+	// Elo 的 K 值。⛔ 這裡要用索引改回 slice 裡的那一份 —— 對 range 變數的副本
+	// 寫入會編譯得過、跑得過,而 MMR 的加成整個消失且沒有任何東西會紅。
+	for team := range byTeam {
+		for i := range byTeam[team] {
+			byTeam[team][i].KMulPct = awardOf(awards, byTeam[team][i].AccountID).KMulPct
 		}
 	}
 	teams := make([]ranking.TeamResult, 0, len(byTeam))

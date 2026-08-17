@@ -205,6 +205,20 @@ export type Page =
    * —— 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
    */
   | "practice"
+  /**
+   * 排名獎勵 (`config/ranking.json`, owner 2026-08-17「MMR 倍率跟賽季積分也是類似
+   * 的規則」) —— 真人倍率進 MMR／賽季積分的兩格 share，加上宿敵加成。
+   * ⚠️ 它的消費端是 **Go**（`internal/ranking/standingsoverride.go`），而且是
+   * **每一場結算重讀**，所以存檔就生效，⛔ 不必重啟 shard。
+   */
+  | "ranking"
+  /**
+   * 圖示風格 (`config/icon-style.json`, GH#178/#101 的地端兩階段產圖器)
+   * —— PASS-2 的風格字串與兩階段的步數／CFG／strength。
+   * ⚠️ 它的消費端是 **Python**（`tools/icon-gen/local/keywords.py`），不是遊戲；
+   * 改了要**下一次跑產圖**才生效，⛔ 不影響已經產出的圖。
+   */
+  | "iconStyle"
   // 英雄屬性正規化 (owner 2026-08-12): 小/中/大 的三格 + 角色定位對照表。
   // 極小/極大 不在這裡 —— 它們是硬上下限，住「屬性上限」頁。
   | "statNormalization"
@@ -559,6 +573,12 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // 練習模式 (GH#343): 同上。⛔ 這一頁決定練習房開不開得起來與作弊碼的第二扇門，
   // 少了 session gate 等於讓沒登入的人改得到那些開關。
   "practice",
+  // 排名獎勵 (owner 2026-08-17): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  // ⛔ 漏掉 gate 的後果在這一頁特別重: 它決定的是「一場比賽值多少排名分」,
+  // 而沒登入的人改得到它 = 任何人都能替自己開加成。
+  "ranking",
+  // 圖示風格 (GH#178): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  "iconStyle",
   // 英雄屬性正規化: 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "statNormalization",
   // GH#324 —— 走 `putOverlayDoc`（沒有 session 一律 401）。

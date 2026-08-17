@@ -95,6 +95,14 @@ export * from "./audioMixDoc";
 // 練習模式（GH#343）—— 同上；後台的 `PRACTICE_SPEC` 與 game-server 的
 // `resolvePracticeRules` 都從這個 barrel 拿。
 export * from "./practiceDoc";
+// 排名獎勵（owner 2026-08-17）—— 同上；後台的 `RANKING_SPEC` 從這個 barrel 拿
+// `zConfigRankingDoc`。⚠️ 型別由這一行負責，⛔ config.ts 不再 re-export 一次
+// （兩條 star export 匯出同一個名字會互相遮蔽）。
+export * from "./rankingDoc";
+// 地端產圖的風格（owner 2026-08-17）—— 同上；後台的 `ICON_STYLE_SPEC` 從這個
+// barrel 拿 `zConfigIconStyleDoc`。⚠️ 型別由這一行負責，⛔ config.ts 不再
+// re-export 一次（兩條 star export 匯出同一個名字會互相遮蔽）。
+export * from "./iconStyleDoc";
 export * from "./config";
 export * from "./model";
 export * from "./vfx";

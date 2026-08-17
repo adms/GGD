@@ -261,7 +261,14 @@ describe("設定文件標籤表 (adminui-config-forms-labels)", () => {
   it("`consumer` 指的檔案真的存在 —— 註解會說謊，這一條讓它說不了謊", () => {
     cover("adminui-config-forms-labels");
     for (const spec of CONFIG_DOC_SPECS) {
-      const path = spec.consumer.match(/[\w./-]+\.ts/)?.[0];
+      // ⚠️ 副檔名不是只有 `.ts`：`config.icon-style@1` 的真正消費端是 **Python**
+      // （`tools/icon-gen/local/keywords.py` —— 地端兩階段產圖器），而
+      // `config.ranking@1` 的是 **Go**（`internal/ranking/standingsoverride.go`
+      // —— 每一場結算重讀覆蓋層的那一支）。
+      // ⛔ 不可以為了通過這一條，在 consumer 裡塞一個存在但其實不讀它的 `.ts`：
+      // 那正是「用散文護住一個旗標」，而這條守衛存在的理由就是不讓那件事發生。
+      // 放寬的只有副檔名，牙齒（那個檔案必須真的存在）一顆都沒少。
+      const path = spec.consumer.match(/[\w./-]+\.(ts|tsx|py|go)/)?.[0];
       expect(path, `${spec.docId} 的 consumer 沒有指到任何檔案`).toBeTypeOf("string");
       // 存在即可；「它真的會讀到這個值」由 configFormsSave.test.ts 實際跑一次證明。
       expect(() => readFileSync(`${REPO}${path}`, "utf8")).not.toThrow();

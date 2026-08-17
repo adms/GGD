@@ -48,6 +48,15 @@ type Room struct {
 	// "unset" === ON (the owner's default-ON directive); only an explicit false
 	// disarms the mobs. Forwarded to the game server as *bool as well.
 	RogueliteMobs *bool `json:"rogueliteMobs,omitempty"`
+	// Practice 是練習模式（GH#343）：單人沙盒、不結算、測試碼可用。
+	//
+	// ⚠️ 它刻意是**純 bool 而不是 *bool**，跟上面那一格相反。RogueliteMobs 用指標
+	// 是因為它的「缺席」要讀成 ON；練習模式的缺席就是「這不是練習房」，零值正好
+	// 是對的答案，多一層指標只會多一種讀錯的方式。
+	//
+	// ⛔ 只有 StartSolo 那條路（listed=false 的單人房）可以把它設成 true：
+	// Create() 會主動清成 false，UpdateSettings() 不看它。理由見 Create()。
+	Practice bool `json:"practice,omitempty"`
 	// MatchSettings are the #288 host-set pacing knobs. Embedded (JSON-inlined)
 	// so Room, Settings and gamelink.MatchRequest carry ONE declaration of the
 	// four fields — forwarding is `x.MatchSettings = y.MatchSettings`, which is
@@ -133,6 +142,9 @@ type Settings struct {
 	// Per-room 肉鴿殭屍模式 toggle (#215); nil = unchanged/ON (see Room). *bool so
 	// an omitted field on the wire never zero-values a live room to OFF.
 	RogueliteMobs *bool `json:"rogueliteMobs,omitempty"`
+	// 練習模式（GH#343）。只有 POST /rooms/solo 這條路讀得到它 —— 房間建好之後
+	// 就沒有任何入口能翻轉它了（見 Room.Practice 與 Create()）。
+	Practice bool `json:"practice,omitempty"`
 	// The #288 pacing knobs, same nil = unchanged rule (see MatchSettings).
 	MatchSettings
 }
@@ -206,6 +218,9 @@ func (s *Service) Get(ctx context.Context, roomID string) (Room, error) {
 		// Absent field (old rooms, ON-by-default) → nil pointer → ON. "1"/"0"
 		// otherwise. Never zero-value to false on a missing key.
 		RogueliteMobs: parseOptBool(m, "rogueliteMobs"),
+		// 練習模式（GH#343）：缺席 = 不是練習房。這裡不需要 parseOptBool 的三態，
+		// 因為 false 本來就是那個「沒設過」要得到的答案。
+		Practice: m["practice"] == "1",
 		// Same rule for the #288 knobs: a missing key stays nil (host never set
 		// it) so the game server applies the shipped config.match@1 value.
 		MatchSettings: matchSettingsFromRedis(m),
@@ -222,6 +237,11 @@ func (s *Service) write(ctx context.Context, rm Room) error {
 	// leaves the key absent so it reads back as ON (default-ON directive).
 	if rm.RogueliteMobs != nil {
 		fields["rogueliteMobs"] = boolToRedis(*rm.RogueliteMobs)
+	}
+	// 練習模式只在 true 的時候留下一格 —— 一般房間的 hash 完全沒有這個鍵，
+	// 讀回來就是 false（Get()）。
+	if rm.Practice {
+		fields["practice"] = "1"
 	}
 	rm.MatchSettings.redisFields(fields)
 	return s.rdb.R.HSet(ctx, redisx.KeyRoom(rm.ID), fields).Err()
@@ -282,7 +302,17 @@ func floatToRedis(f float64) string {
 
 // Create makes a new open room hosted by actor, joins them, and lists it in the
 // lobby browser.
+//
+// ⛔ 練習模式（GH#343）在這裡被**主動清成 false**，而且 UpdateSettings() 連碰都
+// 不碰它。理由不是潔癖，是那一格旗標同時是**測試碼的鑰匙**（MatchRoom 的
+// `cheatsAllowed` 讀 options.practice）：
+//   - 允許「開一間 listed 練習房再邀朋友進來」→ 有旁人、開著測試碼、而且不結算。
+//   - 允許「把一間有別人的房事後翻成練習房」→ 同一個結果，只是慢一步。
+//
+// 練習房唯一的入口因此是 StartSolo：它建的是 listed=false 的單人房，房裡永遠
+// 只有按下按鈕的那個人。少了這一行，練習模式就從「單人沙盒」變成「作弊房」。
 func (s *Service) Create(ctx context.Context, actor string, st Settings) (Room, error) {
+	st.Practice = false
 	return s.create(ctx, actor, st, true)
 }
 
@@ -303,6 +333,9 @@ func (s *Service) create(ctx context.Context, actor string, st Settings, listed 
 		// Pass the per-room toggle straight through: nil (unset) === ON, so both
 		// the solo/bot path (empty Settings) and a normal create default to mobs.
 		RogueliteMobs: st.RogueliteMobs,
+		// 練習模式（GH#343）。⚠️ 到得了這裡的 true 只可能來自 StartSolo ——
+		// Create() 在呼叫之前就把它清掉了。
+		Practice: st.Practice,
 		// #288: whatever the host sent at create, verbatim. A fresh room has
 		// nothing to preserve, so this is a straight copy — every knob the host
 		// omitted stays nil and the game server uses the shipped value.

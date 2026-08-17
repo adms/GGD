@@ -486,10 +486,17 @@ def contact_sheet(args) -> None:
 # --------------------------------------------------------------------- cli ---
 
 def main() -> None:
+    # 取樣火候的**出貨值**住在 content/config/icon-style.json（後台可調，第一守則）。
+    # ⛔ 不再是這裡的字面常數 —— 那樣的話後台那一頁的四格步數/CFG 會是沒有消費端的
+    # 假欄位。CLI 的旗標仍然贏（明著給了就照給的走），所以「臨時試一組參數」不必存檔。
+    style = keywords.load_icon_style()
     ap = argparse.ArgumentParser(description="resumable local two-pass icon driver")
     ap.add_argument("--category",
                     choices=["all", "champions", "items", "abilities", "augments"],
                     default="all")
+    ap.add_argument("--only", default=None,
+                    help="comma-separated doc ids; render ONLY these (sampling a "
+                         "few before committing to a full run)")
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--contact-sheet", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
@@ -501,13 +508,13 @@ def main() -> None:
                          "cannot carry one) — fills the coverage hole without "
                          "redrawing already-shipping art")
     ap.add_argument("--no-write-icon-field", action="store_true")
-    ap.add_argument("--strength", type=float, default=0.45,
+    ap.add_argument("--strength", type=float, default=style["strength"],
                     help="PASS-2 img2img denoise strength (0.4-0.55)")
-    ap.add_argument("--size", type=int, default=128)
-    ap.add_argument("--pass1-steps", type=int, default=26)
-    ap.add_argument("--pass1-guidance", type=float, default=7.5)
-    ap.add_argument("--pass2-steps", type=int, default=30)
-    ap.add_argument("--pass2-guidance", type=float, default=8.0)
+    ap.add_argument("--size", type=int, default=style["size"])
+    ap.add_argument("--pass1-steps", type=int, default=style["pass1Steps"])
+    ap.add_argument("--pass1-guidance", type=float, default=style["pass1Guidance"])
+    ap.add_argument("--pass2-steps", type=int, default=style["pass2Steps"])
+    ap.add_argument("--pass2-guidance", type=float, default=style["pass2Guidance"])
     ap.add_argument("--seed", type=int, default=None)
     args = ap.parse_args()
 
@@ -518,6 +525,24 @@ def main() -> None:
     work = build_worklist(args.category, include_blocked=not args.no_blocked_champions)
     if args.gap:
         work = gap_only(work)
+    if args.only:
+        wanted = {i.strip() for i in args.only.split(",") if i.strip()}
+        work = [w for w in work if w["id"] in wanted]
+        # 明著點名的 id 就算不在**掃描出來的**工作清單裡也要畫得到。
+        # ⚠️ 這不是方便性，是一個踩過的陷阱：`build_worklist` 的 champion 分支只收
+        # 「計畫裡的」加上「還沒有 icon 欄位的」，所以這支驅動器**替一份文件寫完
+        # icon 欄位之後，那份文件就從清單裡消失了** —— 想重畫它（例如換了畫風設定
+        # 之後）連 `--force` 都救不回來，因為它根本沒被列進來。
+        for doc_id in sorted(wanted - {w["id"] for w in work}):
+            for fam in FAMILY_DIR:
+                doc = _load_doc(fam, doc_id)
+                if doc:
+                    work.append({"family": fam, "id": doc_id, "doc": doc})
+                    break
+            else:
+                # ⛔ 不要靜默少畫一張：打錯一個 id 的症狀本來會是「跑完了但那張沒出現」。
+                print(f"--only: 找不到任何一份 id 是 {doc_id} 的文件，跳過。",
+                      file=sys.stderr)
 
     if args.dry_run:
         from collections import Counter

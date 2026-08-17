@@ -23,6 +23,12 @@
   "retiredLootTables": [
     "quest-rewards"
   ],
+  "legendaryShelf": {
+    "open": true,
+    "priceMultiplier": 4,
+    "sellRefundPct": 0.4,
+    "randomOnlyTables": []
+  },
   "rounds": {
     "1": {
       "grantLevels": 2,

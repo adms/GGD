@@ -21,6 +21,13 @@
  *             numerically against the AEP rates it needs 208 AEP, and the
  *             canonical end state (4 POWERFUL bought + 2 draft-granted
  *             LEGENDARY = 32 SIMPLE-budgets) fixes B_SIMPLE = 6.5 AEP.
+ *
+ * ⚠️ CORRECTED 2026-08-17 (CLAUDE.md 第三守則). 上面那個「32 SIMPLE 預算」曾經
+ * 被當成「終局 = 9,600 金」在引用，而那是 **#82 時代的舊回合表**。現在的
+ * `content/config/arena-rules.json` 給的是：R3 累計 1,575 · R5 3,625 ·
+ * R8 7,575 · R10 12,075 · R12 20,075 · R13 24,075（`grantGold` 保證收入），
+ * 外加小怪 20/隻 · 守護塔 150 · 精英 5,000 · 殭屍王 30,000。⛔ 不要再拿
+ * 「32 × 300」當終局金額 —— 兩者早就不是同一個數，而排程隨時會被調。
  *   rho*    = 300 g / 6.5 AEP = 46.15 gold per AEP, UNIFORM across the ladder.
  *
  * WHY 4x BETWEEN TIERS AND NOT A PREMIUM. B_POWERFUL = 4 x B_SIMPLE exactly
@@ -71,6 +78,23 @@ export const LEGENDARY_ORB_ITEM_ID = "legendary-orb" as ItemId;
 export const LEGENDARY_ORB_PRICE = 2400;
 /** The pool the orb rolls from — the same table the round-5 card uses. */
 export const LEGENDARY_POOL_TABLE = "legendary-weapons";
+
+/**
+ * 寶具（傳說武器）直接上架時的**統一價**（owner 2026-08-17：「價格統一是隨機抽的
+ * N 倍」）。
+ *
+ * ⭐ 它是**推導**出來的，不是第三個價階：49 把寶具的 `cost` 全部是 0，所以價格
+ * 只有一個來源 —— {@link LEGENDARY_ORB_PRICE}（「隨機抽的」那顆寶玉）乘上倍率。
+ * ⛔ 任何地方都不要重打 2400 或最後那個金額；要改倍率就改後台的
+ * `legendaryShelf.priceMultiplier`（出貨 **4** → 9,600 金；owner 同日把 6 改成
+ * 4，因為 14,400 讓「終局至少買得起兩把」在保證收入下做不到）。
+ *
+ * `Math.round` 是因為倍率可以是小數（後台合法區間 0.1–50），而金幣是整數：
+ * 不取整的話玩家會看到 3192.5 這種價格，而扣款與退款會對不上一塊錢。
+ */
+export function legendaryShelfPrice(multiplier: number): number {
+  return Math.round(LEGENDARY_ORB_PRICE * multiplier);
+}
 
 /**
  * 能力屬性強化 — the repeatable stat tick. 375g for the same 6.5 AEP a SIMPLE

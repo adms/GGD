@@ -84,11 +84,28 @@ describe("INPUT validator — prototype-key injection (sec-input-01)", () => {
     expect(() => commandSystem(world, frameOf(safe.commands ?? []))).not.toThrow();
   });
 
-  it("RAW malicious sellItem itemSlot='__proto__' DOES throw; sanitized is dropped", () => {
+  it("RAW malicious sellItem itemSlot='__proto__' is now REFUSED by the sim too; sanitized is still dropped", () => {
+    // ⚠️ 這一條的上半段在 2026-08-17 之前是 `.toThrow()` —— 它刻意證明「原始惡意
+    // 指令真的會炸」，好說明入口清洗器不是裝飾。那個 throw 來自 `Items.get(Array.prototype)`。
+    //
+    // 賣價改成「取得價 × 退款率」之後那句 `Items.get` 不再需要而被拿掉，於是這條
+    // 路**不再丟例外** —— 但它也不再安全：它會走到 `champ.items["__proto__"] = null`，
+    // 把背包陣列的原型拔掉，而且靜悄悄的。⇒ `sellItem` 現在自己擋整數索引。
+    //
+    // 所以這一條改成守**更強**的性質：不是「它會炸」，而是「它什麼都不會做」——
+    // ⛔ 不丟例外、⛔ 不動金幣、⛔ 不動背包。入口清洗器那一層一個字都沒放鬆。
     const worldRaw = worldWithChampion();
+    const champ = [...worldRaw.champion.values()][0]!;
+    const goldBefore = champ.gold;
+    const itemsBefore = [...champ.items];
     expect(() =>
       commandSystem(worldRaw, frameOf([{ kind: "sellItem", itemSlot: "__proto__" }])),
-    ).toThrow();
+    ).not.toThrow();
+    expect(champ.gold, "惡意 slot 不可以生出金幣").toBe(goldBefore);
+    expect([...champ.items], "惡意 slot 不可以動到背包").toEqual(itemsBefore);
+    // 背包還是一個正常的陣列 —— 原型沒有被 `items["__proto__"] = null` 拔掉。
+    expect(Array.isArray(champ.items)).toBe(true);
+    expect(typeof champ.items.map).toBe("function");
 
     const worldSafe = worldWithChampion();
     const safe = sanitizeInputMessage({ seq: 1, commands: [{ kind: "sellItem", itemSlot: "__proto__" }] });

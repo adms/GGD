@@ -169,6 +169,20 @@ export interface SeatView {
   counterIds?: string[];
   counterCounts?: number[];
   /**
+   * ⭐【逐格退款】(owner 2026-08-17) —— `items` 每一格現在賣掉拿多少金幣，
+   * 以及那一把是不是**隨機取得**的（三選一／寶玉）。index-aligned。
+   *
+   * ⛔ 客戶端算不出來，所以它必須從線上讀：退款＝**那一格實付**的金額 × 後台
+   * 退款率，而實付只有伺服器有。用 `def.cost × 退款率` 推的話，49 把寶具全部
+   * 得到 0（標價是 0）、免費發的武器得到一個玩家拿不到的數字。
+   *
+   * OPTIONAL 的理由與 `statusIds` 一字不差；⚠️ 但這一格缺席的意思是「**還不
+   * 知道**」而不是「0」—— 商店那邊要顯示「?」，⛔ 不可以寫 0（那會讓玩家以為
+   * 系統把錢吃掉了）。
+   */
+  itemRefund?: number[];
+  itemRandom?: boolean[];
+  /**
    * How many buy/sell steps of THIS shopping session can still be reversed
    * (task #121) — the server's own `champ.undoStack.length`.
    *
@@ -802,6 +816,11 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
       // 計數器」,跟這裡每一個 append 上來的欄位同一種降級。
       counterIds: [...(ss.counterIds ?? [])],
       counterCounts: [...(ss.counterCounts ?? [])],
+      // 【逐格退款】(owner 2026-08-17)。⚠️ 舊/未投影的快照留下**空陣列**，而
+      // 商店讀的是 `itemRefund[slot] === undefined` → 顯示「?」。⛔ 不要在這裡
+      // 補 0：那會把「還不知道」變成一個看起來很確定的假金額。
+      itemRefund: [...(ss.itemRefund ?? [])],
+      itemRandom: [...(ss.itemRandom ?? [])],
       undoDepth: ss.undoDepth,
       roundKills: ss.roundKills,
       roundDeaths: ss.roundDeaths,

@@ -97,6 +97,14 @@ type MatchRequest struct {
 	// match the game server's InternalMatchRequest.rogueliteMobs byte-for-byte;
 	// a typo would drop the field and mask an intended OFF as an ON.
 	RogueliteMobs *bool `json:"rogueliteMobs,omitempty"`
+	// Practice 是練習模式（GH#343）：單人沙盒、不結算、測試碼可用。
+	// ⚠️ JSON tag 必須逐位元組是 `practice` —— game server 那一端讀的是
+	// `InternalMatchRequest.practice`，再由 `MatchRoom.onCreate` 的
+	// `options.practice === true` 決定這一場是不是練習房。tag 打錯不會有人報錯：
+	// 欄位靜靜地消失，玩家拿到的是一間**會結算、沒有測試碼**的普通房，而
+	// 客戶端仍然畫著練習模式的樣子。守衛：`practice_wire_test.go` 讀的是真的
+	// JSON 字串鍵，不是這個 struct。
+	Practice bool `json:"practice,omitempty"`
 	// The #288 host-set pacing knobs (選角 / 商店 / 每回合秒數 + 總回合數),
 	// embedded so they inline into this JSON body under the SAME field names the
 	// room hash and the client form use. Every field is a pointer: nil is absent
@@ -313,6 +321,17 @@ func (s *Service) StartMatch(ctx context.Context, rm room.Room, members []room.M
 		CallbackURL: s.callback + "/api/v1/internal/matches/" + matchID + "/result",
 		// Forward the per-room #215 toggle; nil stays nil === ON on the wire.
 		RogueliteMobs: rm.RogueliteMobs,
+		// 練習模式（GH#343）跟著房間走。只有 StartSolo 建的單人房會是 true
+		// （room.Create 主動清掉它），所以這條線上不需要再擋一次。
+		//
+		// ⚠️ 已知副作用，寫在這裡是因為它就發生在這條路的下游：練習房的
+		// `endlessCombat` 讓它永遠不會 finishMatch，所以結束時沒有人送結果回來，
+		// pending 記錄最後會被 `reaper.go` 的 ReapStuck 收掉 —— 而 ReapStuck
+		// ⛔ 不呼叫 Settler.Apply，它直接寫一筆 Status:"abandoned"。
+		// ⇒ 每一場練習都會在 data/matches-YYYY-MM/ 留下一筆 abandoned 記錄，
+		// 而它**不動任何貨幣、MMR、賽季積分或戰績**（那五條路全部收斂在 Apply）。
+		// 也就是說「完全沒有獎勵積分」仍然成立，多出來的只有一行歷史。
+		Practice: rm.Practice,
 		// Forward the #288 pacing knobs wholesale — one assignment for all four,
 		// so a new knob added to room.MatchSettings cannot be left behind here.
 		MatchSettings: rm.MatchSettings,

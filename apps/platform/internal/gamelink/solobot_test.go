@@ -138,11 +138,11 @@ func TestSoloBotMatchSettles(t *testing.T) {
 	require.Equal(t, before.MMR, after.MMR,
 		"a match with no rated opponent must not move the hidden matchmaking rating")
 
-	// It PAYS, at exactly half: the earner's own team has bots on it.
+	// It PAYS, at the x1 floor: one human in the lobby means no multiplier.
 	w, err := ts.Srv.Wallet.Get(ctx, player.ID)
 	require.NoError(t, err)
-	require.Equal(t, wallet.CrystalPlace1/2, w.Crystal,
-		"soloing bots pays HALF crystals — worth playing, not worth farming")
+	require.Equal(t, wallet.CrystalPlace1, w.Crystal,
+		"soloing bots pays the BASE grant with no lobby multiplier (owner 2026-08-17: 「120 (N=1)」)")
 	require.Positive(t, w.Crystal, "…but it must still pay something: 「打場免費賺」")
 	require.Equal(t, 0, w.MCoin, "M幣 needs an all-human lobby; a bot match can never mint one")
 
@@ -150,7 +150,7 @@ func TestSoloBotMatchSettles(t *testing.T) {
 	rec := readMatchRecord(t, ts, matchID)
 	require.Equal(t, "completed", rec.Status)
 	require.Contains(t, rec.Ratings, player.ID)
-	require.Equal(t, wallet.CrystalPlace1/2, rec.Ratings[player.ID].Crystal)
+	require.Equal(t, wallet.CrystalPlace1, rec.Ratings[player.ID].Crystal)
 }
 
 // TestSoloBotMatchIsOneClick: the player presses one button and the seat token

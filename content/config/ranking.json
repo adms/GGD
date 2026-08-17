@@ -1,0 +1,7 @@
+{
+  "id": "ranking",
+  "schema": "config.ranking@1",
+  "humanMultiplier": { "minHumans": 2, "offset": 1, "maxMultiplier": 13 },
+  "share": { "seasonPointsPct": 100, "ratingPct": 5, "ratingMaxPct": 200 },
+  "rivalry": { "basePct": 20, "halfLife": 3, "repeatHalfLife": 10, "maxPct": 60 }
+}

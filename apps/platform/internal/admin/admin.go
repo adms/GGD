@@ -431,6 +431,17 @@ func (s *Service) GetProfile(ctx context.Context, id string) (Profile, error) {
 	return Profile{Account: rows[0], UpdatedAt: a.UpdatedAt, Wallet: w, FriendsCount: friendsCount}, nil
 }
 
+// HeadToHead 回傳一個帳號對每一個對手的累計勝負(owner 2026-08-17)。
+//
+// 帳號不存在是 404 而不是空清單:一張空表在「這個人還沒跟任何人對戰過」與
+// 「你打錯 id 了」之間長得一模一樣,而後者是操作員唯一會犯的錯。
+func (s *Service) HeadToHead(ctx context.Context, accountID string) ([]ranking.H2H, error) {
+	if _, err := s.accounts.GetByID(ctx, accountID); err != nil {
+		return nil, notFoundOr(err)
+	}
+	return s.rank.HeadToHeadFor(ctx, accountID)
+}
+
 // ---- account mutations (all audited) ----------------------------------------
 
 // MaxMCoinGrant bounds a single operator M幣 action, mirroring MaxCrystalGrant.

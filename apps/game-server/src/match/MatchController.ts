@@ -1036,6 +1036,22 @@ export class MatchController {
     // ⚠️ 少了這一行就是 `augmentEnemyFilter` 的同型故障：後台編得到、schema 有那一格、
     // 而開牌讀的永遠是 `SimWorld` 的出貨預設，於是「把靈基適性條件關掉」按不下去。
     this.world.grailDraft = this.rules.grailDraft;
+    // ⭐ 寶具貨架 + 那一則的整組金流旋鈕 (`config.arena-rules@1` 的 `legendaryShelf`,
+    // owner 2026-08-17) —— 同樣在 tick 0 之前**整塊**定格。
+    //
+    // ⛔ 2026-08-17 這一行本來不存在：Zod、出貨 JSON、後台頁、sim 的讀取端全部
+    // 做完了，而 `grep legendaryShelf apps/game-server` 是**空的** —— 後台那四格
+    // (上架 / 統一價倍率 / 賣出退款率 / 隨機限定表) 一格都到不了比賽，只有
+    // `sim/economy/shopShelf.ts` 的常數會生效。與 `augmentEnemyFilter`、
+    // `combatFeel` 同一個五行窗口裡的同一種手滑（失敗形態 ②）。
+    //
+    // ⚠️ **整塊**指派而不是逐欄位：config 之後長出第五格時，漏掉那一格會是
+    // tsc 紅（`LegendaryShelfRules` 由 `SimWorld` 推導），不是靜靜地少送一格。
+    // ⚠️ `??` 是**舊錄影**那條路：`replay/headerCodec.rebuildRules` 是整份 spread，
+    // 2026-08-17 之前錄的表頭沒有這一區塊 → `undefined`。直接指派 undefined 會讓
+    // 每一次購買讀 `world.legendaryShelf.open` 時炸掉；落到出貨預設**正是**那些
+    // 場次當時真的跑的東西（當時 sim 讀的就是 `SimWorld` 的預設值）。
+    this.world.legendaryShelf = this.rules.legendaryShelf ?? DEFAULT_ARENA_RULES.legendaryShelf;
     this.world.cooldownRules = cooldownRules;
     this.world.castTimeRules = castTimeRules;
     this.world.woundRules = woundRules;

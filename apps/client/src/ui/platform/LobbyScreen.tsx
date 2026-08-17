@@ -331,13 +331,22 @@ function BotMatchStrip(props: { mapId: string; onMapId: (id: string) => void }):
         <div style={{ flex: "1 1 220px", fontSize: 11, color: TEXT_DIM, lineHeight: 1.5 }}>
           隊上有 BOT，水晶只發一半；M幣要 12 人全真人。半份也是白賺，想拿滿就揪人。
         </div>
-        {/* 練習模式 (GH#343, owner 2026-08-17)。⭐ 場地下拉**重用**上面那一顆
-            （`props.mapId`），角色照常在選角相位挑 —— 那兩件事本來就有了，這一批
-            缺的只是「這是練習房」那一格旗標。 */}
+        {/* 練習模式 (GH#343, owner 2026-08-17：「練習模式也開放線上喔，只是完全
+            沒有獎勵積分」)。⭐ 場地下拉與肉鴿開關**重用**上面那兩顆，角色照常在
+            選角相位挑 —— 那些事本來就有了，這一批缺的只是「這是練習房」那格旗標。
+
+            ⚠️ 它現在走 `playBotMatch(..., practice=true)`，⛔ 不再走 `playOffline`。
+            playOffline 是 dev 直連（客戶端自己 joinOrCreate），而正式站的 game
+            shard 一定帶 shared secret，`MatchRoom` 會用 createToken 擋下所有非平台
+            的建房 —— 也就是說這顆按鈕在線上**從來沒有真的開起來過**。改走平台
+            solo reservation 之後它跟一鍵開打是同一條路，只多帶一格旗標。
+
+            `busy` 共用是刻意的：兩顆按鈕最後都是一張座位，一次只能有一張。 */}
         <Btn
           small
           kind="ghost"
-          onClick={() => playOffline(props.mapId, true)}
+          disabled={busy}
+          onClick={() => void playBotMatch(props.mapId, rogueliteMobs, true)}
           title="練習模式：進去沒有對手、時間到也不會被踢回商店，可以開測試碼、即時生殭屍。不記錄戰績、不算積分、不發水晶。"
         >
           練習模式

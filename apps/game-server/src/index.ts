@@ -132,6 +132,15 @@ interface InternalMatchRequest {
   // only an explicit `false` from the room host disarms the mobs. Passed straight
   // into the MatchRoom bag and merged onto arenaRules in onCreate.
   rogueliteMobs?: boolean;
+  /**
+   * 練習模式 (GH#343)。缺席 = 這不是練習房（練習模式沒有「缺席 = ON」那種語意，
+   * 所以這裡不需要 `rogueliteMobs` 的三態）。
+   *
+   * ⚠️ 這一格是**平台這條路唯一的練習房入口**：客戶端自己 joinOrCreate 帶
+   * `practice` 在正式站會被 `MatchRoom` 的 createToken 閘擋掉（那才是對的），
+   * 所以練習房只能由 `/_internal/matches` 這條 HMAC 簽章的路開出來。
+   */
+  practice?: boolean;
   // PER-ROOM 開房設定 (#288). 和 `rogueliteMobs` 同一條路：Go 那一層只做透明轉送
   // （界限只能有一份，而 Go 沒辦法 import `@ggd/shared/roomSettings`），權威的
   // 夾取在 `MatchRoom.onCreate` 的 `sanitizeRoomSettings()`。
@@ -186,6 +195,9 @@ async function handleInternalMatches(req: IncomingMessage, res: ServerResponse, 
     callbackUrl: body.callbackUrl,
     // Per-room roguelite-mob toggle (#215); undefined here keeps it ON.
     rogueliteMobs: body.rogueliteMobs,
+    // 練習模式 (GH#343) —— ⛔ 少了這一行，平台送對了旗標也會在這道門口消失，
+    // 開出來的是一間會結算的普通房（失敗形態②：算出來了但從沒送到下游）。
+    practice: body.practice,
     // 開房設定 (#288) —— 原封不動地轉送，**不在這裡驗**。這裡驗就是第二份界限，
     // 而界限只能有一份（`@ggd/shared/roomSettings`），權威在 MatchRoom.onCreate。
     // undefined 一路保持 undefined = 缺席 = 用出貨值（語意①：缺席 ≠ 重設）。

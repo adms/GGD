@@ -189,6 +189,19 @@ func (s *Settler) Apply(ctx context.Context, st Settlement) error {
 		}
 		_ = s.pres.Set(ctx, seat.AccountID, presence.StateInLobby)
 	}
+	// 4.5 對戰紀錄(head-to-head,owner 2026-08-17):同一場裡每一對敵對真人,
+	// 名次高的算贏。
+	//
+	// ⚠️ 它是**累加**的,不像上面每一項都是絕對值,所以冪等要自己顧:
+	// RecordHeadToHead 用每一列記著的最近 matchId 去重。會走第二次的是開機 WAL
+	// 重播(data/boot),而那條路一定帶同一個 matchId。
+	//
+	// ⚠️ 練習房不會到這裡:game server 的 MatchRoom.settleToPlatform 對練習房整條
+	// return,連結算回呼都不發。⛔ 不要在這裡再放一道「假的」練習房閘 —— 那會讓人
+	// 以為這條路擋得住,而真正的閘在另一個 repo 的另一個檔案。
+	if err := s.recordHeadToHead(ctx, st, placeOf); err != nil {
+		return err
+	}
 	// 5. Pending-match cleanup.
 	pipe := s.rdb.R.TxPipeline()
 	pipe.ZRem(ctx, redisx.KeyMatchesPending(), st.MatchID)
@@ -199,6 +212,47 @@ func (s *Settler) Apply(ctx context.Context, st Settlement) error {
 	// 6. Room disposal (members are back in the lobby).
 	if st.RoomID != "" && s.rooms != nil {
 		_ = s.rooms.Dispose(ctx, st.RoomID)
+	}
+	return nil
+}
+
+// recordHeadToHead 把這一場每一對**敵對且都有帳號**的真人記進對戰紀錄。
+//
+// 誰算數的判準跟 Apply 的主迴圈一模一樣:非 bot,而且 st.Ratings 裡有這個 id。
+// 後半句才是關鍵 —— 沙發客(`:pN`)與沒有帳號檔的座位是真人、會推高全場的真人倍率,
+// 但他們沒有帳號可以掛紀錄,而 Ratings 正是「這個座位真的有帳號」的那份名單。
+//
+// 錯誤是往上回的,⛔ 不吞:沒有 commit 的 intent 會在開機時重播,而重播對這一項是
+// 安全的(已寫好的那幾對被去重,失敗的那一對重試)。
+func (s *Settler) recordHeadToHead(ctx context.Context, st Settlement, placeOf map[int]int) error {
+	if s.rank == nil {
+		return nil
+	}
+	seats := make([]ResultSeat, 0, len(st.Seats))
+	for _, seat := range st.Seats {
+		if seat.IsBot {
+			continue
+		}
+		if _, ok := st.Ratings[seat.AccountID]; !ok {
+			continue
+		}
+		seats = append(seats, seat)
+	}
+	for i := 0; i < len(seats); i++ {
+		for j := i + 1; j < len(seats); j++ {
+			a, b := seats[i], seats[j]
+			pa, pb := placeOf[a.Team], placeOf[b.Team]
+			if a.Team == b.Team || pa == pb {
+				continue // 同隊、或同名次:沒有勝負可記
+			}
+			winner, loser := a.AccountID, b.AccountID
+			if pb < pa {
+				winner, loser = b.AccountID, a.AccountID
+			}
+			if err := s.rank.RecordHeadToHead(ctx, st.MatchID, winner, loser, st.EndedAt); err != nil {
+				return err
+			}
+		}
 	}
 	return nil
 }

@@ -258,6 +258,10 @@ var knownOrphans = map[string]string{
 	"GET /api/v1/admin/match-stats/{matchId}": "#207 — one match's full ledger (picks / casts / item " +
 		"transactions / declined 三選一). Same missing front half as the index route above; the data is on " +
 		"disk and unreachable from any screen until the console page exists.",
+	"GET /api/v1/admin/accounts/{id}/head-to-head": "owner 2026-08-17 —— 「真實記錄 vs 特定玩家的" +
+		"幾勝幾敗」的唯讀查詢。紀錄已經在結算時寫進 data/headtohead 並影響 MMR/賽季積分,但後台還沒有" +
+		"那一頁(前端是另一批)。這條路刻意先上,因為看不到的資料等於沒有做。" +
+		"在 apps/admin/src 接一個 typed wrapper(照 ContentOverlayPage 的家規)之後刪掉這一行。",
 
 	// ---- superseded / aspirational ----------------------------------------
 	"GET /api/v1/wallet/owns": "superseded, probably deletable: the client reads ownedChampions off the " +

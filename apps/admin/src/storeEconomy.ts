@@ -26,6 +26,11 @@
  * 這是 屬性上限 那一頁同一條教訓的第二個受害者。
  */
 
+import {
+  DEFAULT_CRYSTAL_REWARDS,
+  crystalMultiplier,
+} from "@ggd/shared/content/schema/config";
+
 /** The `config` collection doc the console writes through the durable overlay. */
 export const STORE_COLLECTION = "config";
 export const STORE_DOC_ID = "store";
@@ -64,13 +69,115 @@ export const SANE_UNLOCK_COST = 1000;
  */
 export type RandomPickOwnership = "block" | "whitelist";
 
+/**
+ * 多人比賽的藍水晶獎勵（owner 2026-08-17，逐字）：
+ *
+ * > 「只要有**兩真人(N≥2)**參加，**不論哪個陣營**都可以，所有玩家都 **(N+1) 倍**，
+ * >   所以**最大 13 倍**」「120 × 13 (MAX)、120 × 3 (N=2)、120 (N=1)」
+ *
+ * `base` 是**一個人打 bot 的實拿數**（＝ ×1 那一格）；有兩個以上真人時
+ * 全部人乘 `humans + offset`，夾在 `maxMultiplier`。
+ */
+export interface CrystalRewards {
+  base: { place1: number; place2: number; place3: number; place4: number };
+  minHumans: number;
+  offset: number;
+  maxMultiplier: number;
+}
+
 /** The fields this page owns, plus the reward table it must preserve. */
 export interface StoreEconomy {
   championUnlockCost: number;
   freeChampionIds: string[];
   /** 見 {@link RandomPickOwnership} */
   randomPickOwnership: RandomPickOwnership;
+  /** 見 {@link CrystalRewards} */
+  crystalRewards: CrystalRewards;
   mcoinRewards: McoinRewards;
+}
+
+/**
+ * 上下界 —— MIRROR `zConfigStoreDoc.crystalRewards` 與
+ * `apps/platform/internal/wallet/meta.go` 的 Crystal*Min/Max。
+ *
+ * ⚠️ **兩端都要有**（GH#277）：`maxMultiplier` 只檢查下界的話，13 打成 130 會
+ * 靜靜存進去，而 130 倍是一場對戰付掉 56 隻英雄的解鎖價。
+ */
+export const CRYSTAL_FIELD_BOUNDS: Record<
+  "place1" | "place2" | "place3" | "place4" | "minHumans" | "offset" | "maxMultiplier",
+  { min: number; max: number; label: string }
+> = {
+  place1: { min: 0, max: 100_000, label: "第一名基礎值" },
+  place2: { min: 0, max: 100_000, label: "第二名基礎值" },
+  place3: { min: 0, max: 100_000, label: "第三名基礎值" },
+  place4: { min: 0, max: 100_000, label: "第四名基礎值" },
+  minHumans: { min: 1, max: 12, label: "起算真人數" },
+  offset: { min: 0, max: 12, label: "倍率加成" },
+  maxMultiplier: { min: 1, max: 50, label: "倍率上限" },
+};
+
+export type CrystalField = keyof typeof CRYSTAL_FIELD_BOUNDS;
+
+/** 出貨值 —— 與 `content/config/store.json` 及 Go 的 `DefaultCrystalRules()` 同一組。 */
+export const SHIPPED_CRYSTAL_REWARDS: CrystalRewards = {
+  base: { ...DEFAULT_CRYSTAL_REWARDS.base },
+  minHumans: DEFAULT_CRYSTAL_REWARDS.minHumans,
+  offset: DEFAULT_CRYSTAL_REWARDS.offset,
+  maxMultiplier: DEFAULT_CRYSTAL_REWARDS.maxMultiplier,
+};
+
+/** 讀出某一格現在的值（表單與推導列共用同一個取值路徑）。 */
+export function crystalFieldValue(r: CrystalRewards, f: CrystalField): number {
+  switch (f) {
+    case "place1":
+      return r.base.place1;
+    case "place2":
+      return r.base.place2;
+    case "place3":
+      return r.base.place3;
+    case "place4":
+      return r.base.place4;
+    default:
+      return r[f];
+  }
+}
+
+/** 寫回某一格（回傳新物件，不就地改）。 */
+export function withCrystalField(r: CrystalRewards, f: CrystalField, value: number): CrystalRewards {
+  if (f === "minHumans" || f === "offset" || f === "maxMultiplier") {
+    return { ...r, [f]: value };
+  }
+  return { ...r, base: { ...r.base, [f]: value } };
+}
+
+/** 逐格驗證（**兩端**）。回傳每一格的錯誤訊息，全合法時是空物件。 */
+export function validateCrystalRewards(r: CrystalRewards): Partial<Record<CrystalField, string>> {
+  const errs: Partial<Record<CrystalField, string>> = {};
+  for (const f of Object.keys(CRYSTAL_FIELD_BOUNDS) as CrystalField[]) {
+    const { min, max, label } = CRYSTAL_FIELD_BOUNDS[f];
+    const v = crystalFieldValue(r, f);
+    if (!Number.isInteger(v)) errs[f] = `${label}必須是整數`;
+    else if (v < min) errs[f] = `${label}不可小於 ${min}`;
+    else if (v > max) errs[f] = `${label}不可超過 ${max.toLocaleString()}（schema 上限）`;
+  }
+  return errs;
+}
+
+/**
+ * 推導列：把 owner 的算式畫成操作者不用心算的一行。
+ *
+ * ⛔ 倍率**不在這裡重算** —— 它呼叫 shared 的 `crystalMultiplier`，和平台
+ * 結算走的是同一條規則，所以這一行不可能跟實際發下去的數字說不一樣的話。
+ */
+export function crystalPayoutPreview(r: CrystalRewards, humanCounts: readonly number[]): string {
+  const parts = humanCounts.map((n) => {
+    const m = crystalMultiplier(n, r);
+    return `${n} 人 ${r.base.place1 * m}`;
+  });
+  return (
+    `目前第一名：${parts.join(" · ")}` +
+    `（＝基礎 ${r.base.place1} ×（人數+${r.offset}），${r.minHumans} 人以上才有倍率，上限 ${r.maxMultiplier} 倍）`
+  );
 }
 
 /** 下拉選單的兩個選項 —— 說明寫「它影響什麼」，不是複述欄位名。 */
@@ -140,6 +247,11 @@ export function extractStore(doc: unknown): StoreEconomy | null {
   const d = doc as Record<string, unknown>;
   if (d.schema !== STORE_SCHEMA) return null;
   const rewardsRaw = (d.mcoinRewards ?? {}) as Record<string, unknown>;
+  // 缺 `crystalRewards`（2026-08-17 之前存的每一份 overlay）⇒ 出貨值，一格一格
+  // 補。⛔ 不可以退回 0：0 倍率＝打完一場什麼都沒有。
+  const crystalRaw = (d.crystalRewards ?? {}) as Record<string, unknown>;
+  const baseRaw = (crystalRaw.base ?? {}) as Record<string, unknown>;
+  const shippedBase = SHIPPED_CRYSTAL_REWARDS.base;
   return {
     championUnlockCost: intOr(d.championUnlockCost, SHIPPED_UNLOCK_COST),
     freeChampionIds: Array.isArray(d.freeChampionIds)
@@ -151,6 +263,17 @@ export function extractStore(doc: unknown): StoreEconomy | null {
       d.randomPickOwnership === "whitelist" || d.randomPickOwnership === "block"
         ? d.randomPickOwnership
         : SHIPPED_RANDOM_PICK_OWNERSHIP,
+    crystalRewards: {
+      base: {
+        place1: intOr(baseRaw.place1, shippedBase.place1),
+        place2: intOr(baseRaw.place2, shippedBase.place2),
+        place3: intOr(baseRaw.place3, shippedBase.place3),
+        place4: intOr(baseRaw.place4, shippedBase.place4),
+      },
+      minHumans: intOr(crystalRaw.minHumans, SHIPPED_CRYSTAL_REWARDS.minHumans),
+      offset: intOr(crystalRaw.offset, SHIPPED_CRYSTAL_REWARDS.offset),
+      maxMultiplier: intOr(crystalRaw.maxMultiplier, SHIPPED_CRYSTAL_REWARDS.maxMultiplier),
+    },
     mcoinRewards: {
       placement1: intOr(rewardsRaw.placement1, DEFAULT_REWARDS.placement1),
       placement2: intOr(rewardsRaw.placement2, DEFAULT_REWARDS.placement2),
@@ -238,6 +361,15 @@ export function storeDocFor(economy: StoreEconomy): Record<string, unknown> {
     championUnlockCost: economy.championUnlockCost,
     freeChampionIds: [...economy.freeChampionIds].sort(),
     randomPickOwnership: economy.randomPickOwnership,
+    // ⚠️ 同一條教訓的第三個受害者：不寫這一格，覆蓋層裡就會出現一份沒有
+    // `crystalRewards` 的 store 文件，而下一次讀它的人拿到的是出貨值 ——
+    // 操作者調過的倍率會**靜靜地**回到 13 倍，畫面上不會有任何錯誤。
+    crystalRewards: {
+      base: { ...economy.crystalRewards.base },
+      minHumans: economy.crystalRewards.minHumans,
+      offset: economy.crystalRewards.offset,
+      maxMultiplier: economy.crystalRewards.maxMultiplier,
+    },
     mcoinRewards: { ...economy.mcoinRewards },
   };
 }

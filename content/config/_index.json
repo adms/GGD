@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "3a267ce21272",
+  "hash": "c3f4df406d4a",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -23,8 +23,8 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "c6b72372bdd0",
-      "size": 6946
+      "hash": "ddb052d39ff9",
+      "size": 7070
     },
     {
       "id": "audio-map",
@@ -177,6 +177,12 @@
       "size": 1542
     },
     {
+      "id": "icon-style",
+      "path": "config/icon-style.json",
+      "hash": "f0c19636a3cc",
+      "size": 2527
+    },
+    {
       "id": "item-card",
       "path": "config/item-card.json",
       "hash": "dbb14d08f98e",
@@ -231,6 +237,12 @@
       "size": 931
     },
     {
+      "id": "ranking",
+      "path": "config/ranking.json",
+      "hash": "6976e63617c5",
+      "size": 288
+    },
+    {
       "id": "regen",
       "path": "config/regen.json",
       "hash": "c51fc34f99aa",
@@ -281,8 +293,8 @@
     {
       "id": "store",
       "path": "config/store.json",
-      "hash": "99d410f3ca98",
-      "size": 464
+      "hash": "1f9242bdfe64",
+      "size": 653
     },
     {
       "id": "taunt",

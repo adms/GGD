@@ -10,6 +10,7 @@ import (
 
 	"github.com/ggd/platform/internal/account"
 	"github.com/ggd/platform/internal/data/jsonstore"
+	"github.com/ggd/platform/internal/data/keyedmutex"
 	"github.com/ggd/platform/internal/data/redisx"
 )
 
@@ -71,6 +72,11 @@ type Service struct {
 	apexMu    sync.Mutex
 	apexCache map[string]apexEntry
 	apexTTL   time.Duration
+
+	// h2hLocks 守 head-to-head 的 read-modify-write。那一列是**累加**的（不像
+	// MMR/積分寫絕對值），所以兩場同時結算的同一對帳號會掉一筆 —— jsonstore 自己
+	// 的鎖只保護單次讀或單次寫，蓋不住中間那段。見 headtohead.go。
+	h2hLocks *keyedmutex.M
 }
 
 // New builds the ranking service. An optional LadderConfig tunes the visible
@@ -84,6 +90,7 @@ func New(rdb *redisx.Client, store *jsonstore.Store, accounts *account.Repo, sea
 		rdb: rdb, store: store, accounts: accounts, season: season, ladder: cfg,
 		cDirty: map[string]bool{}, champIDs: map[string]bool{}, wait: 2 * time.Second,
 		apexCache: map[string]apexEntry{}, apexTTL: 2 * time.Second,
+		h2hLocks: keyedmutex.New(),
 	}
 }
 

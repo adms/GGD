@@ -22,26 +22,87 @@ them apart is the whole point — mixing them is what broke the first attempt.
 """
 from __future__ import annotations
 
+import json
+import os
 import re
+import sys
 
 METHOD_VERSION = "twopass-v3"  # written into each PNG; bump to force regeneration
 
 # ─────────────────────────────────────────────────────────── PASS 2 STYLE ──
-# Japanese-anime finish (日本動漫風格), applied by img2img so it colours/【styles】
-# the pass-1 subject instead of replacing it. Deliberately light on composition
-# words — the composition already exists in the init image.
+# 風格（PASS 2）現在**住在後台可調的 JSON 裡**，⛔ 不再是這裡的 Python 常數。
+#
+# 為什麼搬走（第一守則）：owner 2026-08-17 要的是「**日本 2D RPG**、精緻，但**不要
+# 過度花俏複雜的顏色**」。而在這一行以前，風格是下面那兩個常數，寫的是
+# "Japanese anime style … vibrant saturated colours" —— 既不是他要的風格，顏色方向
+# 還剛好相反，而且**沒有任何後台入口**：改一個形容詞要改程式。
+# 「精緻到哪、花俏到哪算過頭」是看過圖才知道的體感取捨，不是事實 ⇒ 一律可調。
+#
+# 下面兩個常數**留著當 fail-open 的退路**（讀不到 JSON 時仍然畫得出圖），
+# ⛔ 但它們不再是出貨值 —— 出貨值在 content/config/icon-style.json。
 ANIME_STYLE = (
-    "Japanese anime style, anime key visual, cel shading, clean bold line art, "
-    "vibrant saturated colours, dramatic rim lighting, polished digital "
-    "illustration, single subject centred, dark vignette background, "
-    "video game icon"
+    "Japanese 2D RPG game illustration, hand-painted JRPG menu art, clean "
+    "confident ink outline, soft cel shading in two tone steps, restrained "
+    "limited palette of about four colours, muted natural tones, matte painted "
+    "finish, single subject centred, plain dark background, calm even lighting"
 )
 ANIME_NEGATIVE = (
     "text, letters, words, watermark, signature, logo, border, frame, ui panel, "
     "multiple views, collage, split image, grid, blurry, lowres, deformed, "
     "extra limbs, extra fingers, mutated, photorealistic, 3d render, "
-    "western cartoon, sketch, monochrome"
+    "western cartoon, sketch, monochrome, neon, oversaturated, rainbow gradient, "
+    "garish clashing colours, glitter, excessive glow, lens flare, "
+    "chromatic aberration, busy cluttered detail"
 )
+
+_HERE = os.path.dirname(os.path.abspath(__file__))
+# local -> icon-gen -> tools -> repo root
+ICON_STYLE_PATH = os.path.abspath(
+    os.path.join(_HERE, "..", "..", "..", "content", "config", "icon-style.json"))
+
+# 這幾格對應 `config.icon-style@1` 的 Zod（packages/shared/.../iconStyleDoc.ts）。
+# ⚠️ 這裡的值是**退路**不是出貨值；出貨值在那份 JSON 裡，兩者刻意逐字相同。
+_ICON_STYLE_FALLBACK = {
+    "stylePrompt": ANIME_STYLE,
+    "negativePrompt": ANIME_NEGATIVE,
+    "strength": 0.58,
+    "pass1Steps": 26,
+    "pass1Guidance": 7.5,
+    "pass2Steps": 30,
+    "pass2Guidance": 7.0,
+    "size": 128,
+}
+_icon_style_cache: dict | None = None
+
+
+def load_icon_style(path: str | None = None) -> dict:
+    """讀 `content/config/icon-style.json` —— PASS 2 的風格與兩階段的取樣火候。
+
+    **fail-open，但⛔ 不靜默。** 讀不到／壞掉時退回上面那份常數並在 stderr 印一行
+    說它退回了。理由是 CLAUDE.md 第二守則那條：fail-open 沒錯，靜默才是缺陷 ——
+    這支工具跑起來要好幾分鐘，一份沒被讀到的風格設定如果不出聲，操作者會以為
+    「我明明調了」而整批 61 張都用舊風格畫完。
+    """
+    global _icon_style_cache
+    if path is None and _icon_style_cache is not None:
+        return _icon_style_cache
+    target = path or ICON_STYLE_PATH
+    style = dict(_ICON_STYLE_FALLBACK)
+    try:
+        with open(target, encoding="utf-8") as fh:
+            doc = json.load(fh)
+        if not isinstance(doc, dict):
+            raise ValueError("not a JSON object")
+        for key in _ICON_STYLE_FALLBACK:
+            if key in doc and doc[key] is not None:
+                style[key] = doc[key]
+    except Exception as exc:
+        print(f"[icon-gen] WARNING: 讀不到 {target} ({exc}) —— "
+              f"風格退回程式內建的常數，後台這一頁的設定這一輪不會生效。",
+              file=sys.stderr)
+    if path is None:
+        _icon_style_cache = style
+    return style
 
 
 # ────────────────────────────────────────────────────────── CHAMPIONS ─────
@@ -86,6 +147,15 @@ CHAMPION_SUBJECT: dict[str, tuple[str, str]] = {
                    "bulb sprouting from its back", "turquoise and leaf green"),
     "godie-n00b": ("a round blue robot cat with a big white face, a red collar "
                    "and golden bell, a belly pocket", "bright blue and red"),
+    # 喪標麥可（聖杯黑泥醬）—— owner 2026-08-17：「要補頭圖，可參考**植物大戰殭屍
+    # 的殭屍頭圖**」。所以它是**頭部特寫**不是全身照，而且是**卡通化的**：⛔ 不血腥、
+    # ⛔ 不寫實。灰綠皮膚 / 凹陷眼窩 / 外露的牙 / 破爛衣領是那張頭圖的四個辨識點。
+    # ⚠️ 沒有這一列它會掉到 ROLE_FALLBACK —— 它的 role 是 "tank"，而那張表沒有
+    # "tank" 這個鍵，所以會落到 `ROLE_FALLBACK["fighter"]`＝「輕甲拿武器的動漫戰士」。
+    # 79 份英雄文件裡**只有它沒有 icon 欄位**，少了這一列的後果就是那個泛用戰士上架。
+    "godie-zombiex": ("a goofy cartoon zombie man, head and shoulders, grey-green "
+                      "rotten skin, dark sunken eye sockets, crooked teeth in a "
+                      "wide grin, a tattered shirt collar", "grey-green and dull violet"),
     "godie-n01l": ("a cheerful anime schoolgirl senpai in a sailor uniform, "
                    "long ponytail", "pink and white"),
     "godie-o02w": ("a wandering wuxia swordsman with a slim jian sword, flowing "
@@ -328,6 +398,145 @@ AUGMENT_SUBJECT: dict[str, tuple[str, str]] = {
                       "pale ice blue"),
 }
 
+# ─────────────────────────────────────────────── 聖杯願望 60 張（#333）──────
+# ⭐ **一張卡一句特徵，60 張 60 句，⛔ 不分組。**
+#
+# 為什麼不能分組（量到的，不是猜的）：把出貨的 `augment_keywords` 跑過這 60 份文件，
+# 只長出 **16 種**不同的特徵，其中 **33/60（55%）**掉在同一句
+# "a glowing heraldic power sigil"。而聖杯願望是**三選一**——一次同時出三張，玩家要
+# 在幾秒內分辨。三張裡有兩張長一樣，那個畫面就是 #110 當初要修的
+# 「根本不知道哪招是哪招」原地重演。
+#
+# ⚠️ 這 60 句是**內容不是程式**：寫的時候想的是「這張卡在畫面上長什麼樣」，所以
+# 每一句都要有**主體物件 + 材質 + 動作**，⛔ 不可以是 "a glowing sigil" 這種通用詞。
+# 同名的 A/C/EX 三階（反射術式 · 魔力裝甲 · 戰鬥續行 · 單獨行動 · 起源彈 · 魔力放出）
+# 刻意畫成**不同的東西**而不是同一個東西換顏色 —— 它們在牌庫裡會同時出現。
+#
+# 顏色一律**兩個色詞以內**：owner 2026-08-17「⛔ 不要過度花俏複雜的顏色」。
+# 格式與 CHAMPION_SUBJECT 相同：id -> (english subject, dominant colour phrase)
+GRAIL_SUBJECT: dict[str, tuple[str, str]] = {
+    # ── A 階（金）：固有技能 / 魔術，主體大、動作明確 ──────────────────────
+    "grail-a-01": ("a golden mystic eye set into a raised parry dagger, a snapped "
+                   "arrow flung back off the blade", "amber gold and steel"),
+    "grail-a-02": ("a round mirror rune catching a spell bolt and pouring red "
+                   "healing light back out", "mirror silver and crimson"),
+    "grail-a-03": ("a chipped steel gorget stopping a killing blade a finger from "
+                   "the throat, sparks at the point", "steel grey and gold"),
+    "grail-a-04": ("an open floating grimoire whose glowing runes spin like a "
+                   "clock face", "violet and gold"),
+    "grail-a-05": ("a predator's slit amber eye above a set of bared fangs, hunting "
+                   "embers rising past it", "amber gold and blood red"),
+    "grail-a-06": ("a lone armoured figure walking on alone past a comrade's fallen "
+                   "cloak", "pale gold and ash grey"),
+    "grail-a-07": ("a shattered crystal statue knitting itself back together along "
+                   "glowing golden seams", "warm gold and pale blue"),
+    "grail-a-08": ("two overlapping casting circles, the rear one a ghostly echo "
+                   "trailing a beat behind", "violet and gold"),
+    "grail-a-09": ("a translucent glass-bodied figure whose armour plates are "
+                   "dissolving into empty air", "pale violet and glass white"),
+    "grail-a-10": ("a copper circuit ring clamped shut by a valve, sparks feeding a "
+                   "blue core through it", "copper and deep blue"),
+    "grail-a-11": ("a suit of armour woven out of flowing blue mana light worn over "
+                   "a beating red heart", "mana blue and crimson"),
+    "grail-a-12": ("a violet spell bolt hardening in mid-flight into a heavy steel "
+                   "spearhead", "violet and steel"),
+    "grail-a-13": ("a massive iron gauntlet clenched into a fist, crushing a cracked boulder in its grip, dust bursting from between the fingers", "flesh red and gold"),
+    "grail-a-14": ("a pair of empty footprints left in dust while the figure is "
+                   "already reappearing a step behind", "amber gold and dust grey"),
+    "grail-a-15": ("a golden soul flame bursting upward out of snapping black "
+                   "chains", "golden flame and black"),
+    "grail-a-16": ("stacked panes of glass forming a hexagonal mind-wall in front of "
+                   "a raised open palm", "pale gold and glass blue"),
+    "grail-a-17": ("a tall rack of many different weapons with one blade being drawn "
+                   "out of it", "steel and warm gold"),
+    "grail-a-18": ("a molten circuit line running along a bare forearm, embers "
+                   "dripping off the elbow", "molten orange and gold"),
+    "grail-a-19": ("a mechanical arm being rebuilt, one fresh violet crystal plate "
+                   "slotting into place", "violet and brass"),
+    "grail-a-20": ("a single wide-open eye at the end of a long telescope of light "
+                   "reaching to the horizon", "sky blue and gold"),
+    # ── C 階（銀）：同名技能的樸素版，主體刻意小一號 ───────────────────────
+    "grail-c-01": ("a small silver ward charm burning away one strand of purple "
+                   "curse smoke", "silver and pale violet"),
+    "grail-c-02": ("an open palm shoving an attacker's blade aside in a burst of "
+                   "wind", "silver grey and white"),
+    "grail-c-03": ("a jagged mirror shard bouncing a spell away as a single blue "
+                   "mana droplet", "mirror silver and blue"),
+    "grail-c-04": ("a cracked breastplate leaking red droplets that turn blue as "
+                   "they fall into a flask", "crimson and mana blue"),
+    "grail-c-05": ("a thin shirt of blue mana chainmail worn over a plain cloth "
+                   "tunic", "mana blue and grey"),
+    "grail-c-06": ("a metronome made of swinging silver blades, motion streaks "
+                   "behind each swing", "silver and cyan"),
+    "grail-c-07": ("a plain steel blade sheathed edge to tip in humming blue mana "
+                   "light", "mana blue and steel"),
+    "grail-c-08": ("a dull lead bullet drilling a neat hole clean through a golden "
+                   "aura ring", "lead grey and gold"),
+    "grail-c-09": ("a red-corded spear tip cracking straight through a pane of blue "
+                   "barrier glass", "crimson and pale blue"),
+    "grail-c-10": ("a pale hungry soul mouth swallowing three small glowing orbs "
+                   "whole", "spectral cyan and white"),
+    "grail-c-11": ("a kneeling figure pushing back up onto one knee as purple "
+                   "shackles crack apart", "silver and bruised purple"),
+    "grail-c-12": ("a small hexagonal chant barrier of silver runes closing around a "
+                   "caster's shoulders", "silver and pale cyan"),
+    "grail-c-13": ("a crowned skull with a single silver blade driven down through "
+                   "the crown", "silver and rot green"),
+    "grail-c-14": ("a vein of green leyline light pouring out of a cracked stone "
+                   "monolith", "leyline green and stone grey"),
+    "grail-c-15": ("one lit lantern left standing beside a comrade's dropped helm",
+                   "pale gold and ash grey"),
+    "grail-c-16": ("a small blue homing bolt curving hard along a looping trail of "
+                   "light", "mana blue and white"),
+    "grail-c-17": ("a silver guard plate snapping into place an instant before a "
+                   "critical strike lands", "silver and warning red"),
+    "grail-c-18": ("a plain steel blade wrapped in a spiralling coil of orange flame, "
+                   "embers dripping", "molten orange and steel"),
+    "grail-c-19": ("two burning star-shaped shards falling side by side, sharp four-pointed flares, close up filling the frame", "starlight silver and indigo"),
+    "grail-c-20": ("a translucent blueprint copy of a sword forming beside the real "
+                   "one", "projection blue and gold"),
+    # ── EX 階（稜彩）：權能 / 寶具 / 固有結界，最大最誇張的那一組 ────────────
+    "grail-ex-01": ("a golden quill rewriting a line of law text on a floating page, "
+                    "the words turning white hot", "gold and white"),
+    "grail-ex-02": ("a marble temple built out of floating clock gears whose hands "
+                    "spin backwards", "pale blue and gold"),
+    "grail-ex-03": ("a golden ouroboros ring closing around a raised victory laurel",
+                    "deep gold"),
+    "grail-ex-04": ("three angular crimson command-seal runes arranged in a tight triangle, each stroke burning like hot iron", "crimson and gold"),
+    "grail-ex-05": ("a blazing sword raised overhead with a second identical blade of "
+                    "light overlapping it", "white and gold"),
+    "grail-ex-06": ("a spurred riding boot in a stirrup of light with feathered wings "
+                    "spread from the heel", "sky blue and gold"),
+    "grail-ex-07": ("a battered warrior standing calm with a blade stopped dead "
+                    "against one bare palm", "off-white and blood red"),
+    "grail-ex-08": ("a still swordsman standing with eyes closed while three ghost "
+                    "blades strike outward around him", "pale blue and white"),
+    "grail-ex-09": ("a golden herald's trumpet pouring ten falling meteor lights down "
+                    "over a burning ring", "ember red and gold"),
+    "grail-ex-10": ("an unrolled contract scroll marked with a red handprint, a soul "
+                    "flame sinking back into a fallen body", "crimson and pale gold"),
+    "grail-ex-11": ("a figure rising out of a blooming lotus of light while broken "
+                    "armour re-forms around it", "white and gold"),
+    "grail-ex-12": ("a floating glass orb filled with a deep blue ocean, waves "
+                    "curling inside the glass", "deep blue"),
+    "grail-ex-13": ("a barbed crimson bone spear piercing a cracked heart, its thorns "
+                    "curling backwards", "dark crimson"),
+    "grail-ex-14": ("a black bullet blowing apart a nested cage of gold aura and blue "
+                    "barrier glass", "gunmetal and gold"),
+    "grail-ex-15": ("a sword whose blade is a stacked column of cut gemstones, each "
+                    "facet flaring", "jewel green and violet"),
+    "grail-ex-16": ("three swallow-tail sword arcs crossing at once inside a single "
+                    "cut", "steel blue and white"),
+    "grail-ex-17": ("a gun barrel pressed point blank against a breastplate, muzzle "
+                    "flare at zero range", "gunmetal and orange"),
+    "grail-ex-18": ("a glowing furnace heart inside an armoured chest with blue pipes "
+                    "drawing light out of it", "furnace red and blue"),
+    "grail-ex-19": ("an endless spiral of violet mana rings receding inward, brighter "
+                    "at every turn", "deep violet"),
+    "grail-ex-20": ("a sword blade split by a white lightning arc, thunder sparks "
+                    "jumping off the edge", "white and blue"),
+}
+
 AUG_TAG_OBJECT = {
     "defense": ("a glowing blue guardian shield rune", "steel blue"),
     "ad": ("a crossed pair of red steel blades", "crimson and steel"),
@@ -494,6 +703,18 @@ AUG_NAME_HINT: list[tuple[str, str, str]] = [
 
 def augment_keywords(doc: dict) -> tuple[str, str, str]:
     aug_id = (doc.get("id") or "").strip()
+    # 聖杯願望先查它自己那張表（60 張各一句）。
+    if aug_id in GRAIL_SUBJECT:
+        subj, hue = GRAIL_SUBJECT[aug_id]
+        return subj, hue, "grail"
+    if aug_id.startswith("grail-"):
+        # ⛔ 不要靜默掉進下面的啟發式。一張沒進表的聖杯願望還是畫得出圖（fail-open），
+        # 但它畫出來的會是那句通用的 "a glowing heraldic power sigil" —— 而三選一
+        # 同時出三張，一張通用圖就是一張玩家分不出來的卡。所以退回這件事要出聲
+        # （第二守則：fail-open 沒錯，靜默才是缺陷）。
+        print(f"[icon-gen] WARNING: {aug_id} 不在 GRAIL_SUBJECT —— "
+              f"這張聖杯願望會退回通用啟發式，畫出來很可能跟別張撞圖。"
+              f"請到 keywords.py 的 GRAIL_SUBJECT 補一句特徵。", file=sys.stderr)
     if aug_id in AUGMENT_SUBJECT:
         subj, hue = AUGMENT_SUBJECT[aug_id]
         return subj, hue, "curated"
@@ -1012,6 +1233,19 @@ def pass1_prompt(family: str, doc: dict) -> tuple[str, str, str]:
         pos = (f"{subject}, glowing magical skill effect, {hue} colour scheme, "
                f"centred, one single subject, plain dark background, clear sharp "
                f"silhouette, full subject in frame")
+    elif family == "augments":
+        # ⭐ 2026-08-17（聖杯願望 60 張）—— augments **不可以**走下面那條
+        # `studio product shot`。那是一個**風格詞長在特徵階段**，而且方向剛好跟
+        # owner 要的「日本 2D RPG · 平塗 · 不花俏」相反：量到的第一輪 6 張樣本
+        # 全部出成亮面 3D 產品照（桌面、硬投影、玻璃高光），PASS 2 要把 strength
+        # 拉到 0.58 才壓得過去 —— 而那個 strength 是全家族共用的。
+        #
+        # ⛔ 沒有直接改下面 items 那一條：那 700 多張道具圖已經出貨，換掉它的框架
+        # 等於讓「重跑一次就變另一種畫風」，blast radius 遠超這一批。
+        # 願望是**祝福/效果**不是桌上的商品，所以它跟 abilities 同一種框架。
+        pos = (f"{_one_of(subject)}, {hue} colour scheme, centred, one single "
+               f"subject, plain background, clear sharp silhouette, "
+               f"full subject in frame")
     else:
         pos = (f"{_one_of(subject)}, {hue} colour scheme, centred, one object, "
                f"studio product shot, plain background, clear sharp silhouette, "
@@ -1023,6 +1257,12 @@ def pass1_prompt(family: str, doc: dict) -> tuple[str, str, str]:
 
 def pass2_prompt(family: str, doc: dict) -> tuple[str, str]:
     """The PASS-2 (style) positive + negative. The subject's colour is echoed so
-    img2img keeps the right hue while applying the anime finish."""
+    img2img keeps the right hue while applying the finish.
+
+    ⭐ 風格那一段來自 `content/config/icon-style.json`（後台可調），⛔ 不再是寫死的
+    常數 —— 見這個檔頂 `load_icon_style()`。主色 `hue` 仍然由 PASS 0 推導：那是
+    「這張圖是什麼顏色」，屬於**特徵**不是**風格**，兩者刻意不放同一個地方。
+    """
     _subject, hue, _signal = DERIVERS[family](doc)
-    return f"{ANIME_STYLE}, {hue} accents", ANIME_NEGATIVE
+    style = load_icon_style()
+    return f"{style['stylePrompt']}, {hue} accents", style["negativePrompt"]

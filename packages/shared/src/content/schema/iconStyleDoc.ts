@@ -1,0 +1,168 @@
+/**
+ * `config.icon-style@1` —— **地端產圖**的風格與火候。
+ *
+ * ── 為什麼這份東西要是資料 ────────────────────────────────────────────────
+ * 圖示是用 `tools/icon-gen/local/` 的**兩階段**地端 Stable Diffusion 產的：
+ *   PASS 1（特徵）text2img 先把「這張圖畫的是什麼」畫清楚；
+ *   PASS 2（風格）img2img 再把**風格**塗上去。
+ * 兩階段是為了修一個真的踩過的缺陷：單階段餵一段很重的風格提示詞，主體會被
+ * 塗成一團看不出是什麼的東西（`keywords.py` 檔頭記著這件事）。
+ *
+ * 而 PASS 2 的那一段風格字串，在這份文件出現之前是**寫死在 Python 常數裡的**
+ * （`keywords.ANIME_STYLE` / `ANIME_NEGATIVE`），沒有任何後台入口 —— 改一個字
+ * 就要改程式。owner 2026-08-17 的要求是「**日本 2D RPG**、精緻，但**不要過度
+ * 花俏複雜的顏色**」，而「精緻到哪裡」「花俏到哪裡算過頭」是**看過圖才知道**的
+ * 體感取捨，不是事實。第一守則：這種東西一律做成可調。
+ *
+ * ── ⚠️ 這一頁的生效時機跟其他 config 都不一樣 ──────────────────────────────
+ * 其他 config 是**遊戲執行時**讀的，改了下一場就不同。這一份不是：它是
+ * **產圖那台機器（authoring 動作）**讀的。改完之後**已經產出的 .webp 一張都不會
+ * 變**，要重跑產圖（`--force`）才看得到差別。⛔ 這是操作者最容易誤會的一件事，
+ * 所以後台頁的 `effect` 必須把它講死。
+ *
+ * ── 上下界的理由（兩端都有界，#277）─────────────────────────────────────
+ * 每一格都是**餵給取樣器的參數**，不是平衡數值 —— 打錯一個 0 的後果不是「圖比較
+ * 醜」，是那一批 61 張全部重畫（每張數秒到十幾秒，全量以分鐘計）。所以上界的角色
+ * 是**誤讀保險絲**：`pass2Steps: 300` 讀作「這是打錯」而不是「操作者想要很慢」。
+ */
+import { z } from "zod";
+
+/** 取樣步數的兩端。8 以下 SD1.5 出來的是噪點；80 以上早就收斂，只是在燒時間。 */
+export const ICON_STEPS_MIN = 8;
+export const ICON_STEPS_MAX = 80;
+/** CFG 的兩端。1 = 幾乎不看提示詞；20 以上會過曝並把顏色燒成色塊。 */
+export const ICON_GUIDANCE_MIN = 1;
+export const ICON_GUIDANCE_MAX = 20;
+
+export const zConfigIconStyleDoc = z
+  .object({
+    id: z.literal("icon-style"),
+    schema: z.literal("config.icon-style@1"),
+    note: z.string().optional(),
+
+    stylePrompt: z
+      .string()
+      .min(1)
+      .max(600)
+      .describe(
+        "PASS 2(風格)的**正向**提示詞 —— 這一整段就是「圖長什麼風格」。" +
+          "出貨值落實 owner 2026-08-17 的原話:日本 2D RPG、精緻、" +
+          "⛔ 顏色不要過度花俏(限制色數 · 柔和自然色 · 清楚的輪廓線)。" +
+          "⚠️ ⛔ 不要在這裡描述**畫的是什麼**(角色/物件) —— 那是 PASS 1 的工作," +
+          "寫進來會把每一張圖都拉向同一個主體,也就是兩階段當初要修的那個缺陷。",
+      ),
+    negativePrompt: z
+      .string()
+      .min(1)
+      .max(600)
+      .describe(
+        "PASS 2 的**負向**提示詞 —— 明著排除掉的東西。" +
+          "除了老三樣(文字/浮水印/邊框/畸形)之外,出貨值特別排除**霓虹 · 過飽和 · " +
+          "彩虹漸層 · 過度發光 · 雜亂細節**,那幾個字就是 owner 說的「過度花俏複雜」。" +
+          "⚠️ 這裡多寫一個詞的代價是**那個東西整批消失**,所以要排除的是風格不是題材" +
+          "(寫 `fire` 會讓所有火焰技能的圖示一起沒有火)。",
+      ),
+
+    strength: z
+      .number()
+      .min(0.1)
+      .max(0.9)
+      .describe(
+        "PASS 2 的 img2img **重畫幅度**:模型被允許把 PASS 1 的圖改掉多少。" +
+          "0.58(出貨值)＝保留主體的輪廓與顏色,同時真的把畫風換掉。" +
+          "調高 → 風格更統一,但**主體會開始被塗掉**(0.8 以上幾乎等於重畫一張新圖," +
+          "也就是兩階段當初要修的缺陷回來了);" +
+          "調低 → 主體很安全,但風格幾乎沒套上去,看起來還是 PASS 1 的半成品。",
+      ),
+
+    pass1Steps: z
+      .number()
+      .int()
+      .min(ICON_STEPS_MIN)
+      .max(ICON_STEPS_MAX)
+      .describe(
+        "PASS 1(特徵)的取樣步數。這一階決定「看不看得出畫的是什麼」,所以它是" +
+          "**辨識度**的旋鈕。出貨 26。往下調省時間但輪廓會糊掉;往上調到 40 以上" +
+          "幾乎看不出差別,只是讓全量那一批多跑幾分鐘。",
+      ),
+    pass1Guidance: z
+      .number()
+      .min(ICON_GUIDANCE_MIN)
+      .max(ICON_GUIDANCE_MAX)
+      .describe(
+        "PASS 1 的 CFG(有多聽話)。出貨 7.5。調高 → 更貼特徵描述,但構圖會變僵硬、" +
+          "顏色容易燒;調低 → 更自然,但常常畫出描述以外的東西(那正是「這張到底是哪一招」" +
+          "的來源)。",
+      ),
+    pass2Steps: z
+      .number()
+      .int()
+      .min(ICON_STEPS_MIN)
+      .max(ICON_STEPS_MAX)
+      .describe(
+        "PASS 2(風格)的取樣步數。出貨 30。⚠️ 它跟 `strength` 相乘才是真正的工作量" +
+          "(img2img 只跑 strength 那一段),所以兩格同時調大,時間是相乘的。",
+      ),
+    pass2Guidance: z
+      .number()
+      .min(ICON_GUIDANCE_MIN)
+      .max(ICON_GUIDANCE_MAX)
+      .describe(
+        "PASS 2 的 CFG。出貨 7.0。這一格對「顏色會不會太花」最敏感:調高會把畫風推向" +
+          "高飽和的動漫海報(＝ owner 不要的那一種),想更收斂就往 6~7 調。",
+      ),
+
+    size: z
+      .number()
+      .int()
+      .min(32)
+      .max(512)
+      .describe(
+        "存檔的圖示邊長(像素,正方形)。出貨 128 —— 全 app 最大的使用面是登入頁跑馬燈的" +
+          "54 CSS px(DPR 2 = 108 裝置像素),128 已經超取樣。⚠️ 模型一律在 512 算完再縮," +
+          "所以這一格**不影響產圖時間**,只影響檔案大小與放大時的銳利度。",
+      ),
+  })
+  .strict();
+
+export type ConfigIconStyleDoc = z.infer<typeof zConfigIconStyleDoc>;
+
+/**
+ * 出貨值 —— 也是**文件讀不到時**（舊部署／檔案被刪／`content/` 沒同步）
+ * `tools/icon-gen/local/keywords.py` 退回的那一份。
+ *
+ * ⚠️ 這份物件與 `content/config/icon-style.json` 必須**逐字相同**（第一守則的
+ * 三個住處）。⛔ 未來要加欄位的話**一律 `.optional()`** —— 線上已經存過的耐久
+ * override 不會有那一格，少了 optional 會讓整份 config 被 Zod 拒絕 → 內容載入
+ * 全滅 → 退回 2 隻骨架英雄（2026-08-02 事故的形狀）。
+ */
+export const DEFAULT_ICON_STYLE: ConfigIconStyleDoc = {
+  id: "icon-style",
+  schema: "config.icon-style@1",
+  // ⛔⛔ 兩段都必須塞得進 SD1.5 的 CLIP **77 token** 上限。超過的部分會被
+  // **靜默截斷**，日誌只有一行不起眼的 warning。
+  // 2026-08-17 的第一版 negativePrompt 是 **117 token**，於是排在最後的 13 個詞
+  // ——`neon` / `oversaturated` / `rainbow gradient` / `garish clashing colours` /
+  // `glitter` / `excessive glow` / `lens flare` / `chromatic aberration` /
+  // `busy cluttered detail`——**一個都沒有送進模型**。那正好是 owner 明說的
+  // 「不要過度花俏複雜的顏色」那一整組，而 91 張產出看起來只是「畫風不對」。
+  // ⇒ 現在的順序是**刻意的**：owner 要的顏色克制排最前面，通用品質詞墊底
+  //   （真的又超了的話，被丟掉的會是最不痛的那些）。
+  // 守衛：`tools/icon-gen/local/test_icon_style_fits.py`（真的用 CLIP tokenizer 數）。
+  stylePrompt:
+    "Japanese 2D RPG game illustration, hand-painted JRPG menu art, flat matte " +
+    "colours, clean ink outline, soft cel shading, limited palette of about four " +
+    "muted natural colours, single subject centred, plain dark background, " +
+    "even lighting",
+  negativePrompt:
+    "neon, oversaturated, garish clashing colours, rainbow gradient, glitter, " +
+    "excessive glow, lens flare, busy cluttered detail, kaleidoscope, mandala, " +
+    "photorealistic, 3d render, glossy plastic, chrome, specular highlight, " +
+    "text, watermark, logo, frame, blurry, lowres, deformed, collage",
+  strength: 0.58,
+  pass1Steps: 26,
+  pass1Guidance: 7.5,
+  pass2Steps: 30,
+  pass2Guidance: 7.0,
+  size: 128,
+};

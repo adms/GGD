@@ -1,15 +1,30 @@
 /**
  * Pure, testable logic for the champion-select roster: substring filtering
  * (Chinese/CJK names included — plain substring, no locale casing tricks) and
- * uniform-random pick. No React / registry imports so it unit-tests cleanly.
+ * uniform-random pick. No React imports so it unit-tests cleanly.
+ *
+ * ⚠️ CORRECTED 2026-08-17：這裡本來寫「No React / **registry** imports」。
+ * `shopCatalogue` 現在要知道**哪 49 把是寶具**，而那個答案只住在
+ * `legendary-weapons` 那張 loot table 裡（⛔ 沒有任何 per-item 標記對得上），
+ * 所以 `shopShelf.legendaryShelfIds()` 會讀登錄表 —— 這個模組因此**間接**依賴
+ * 它。登錄表是純資料（一個 Map，沒有副作用），登錄表沒填時回空集合，所以
+ * 既有的純函式單元測試一條都不用改。
  */
 import {
   baseFormIdOf,
   isSplitFormBody,
   isTransformedBody,
 } from "@ggd/shared/content/championForms";
-import { isShopService, itemHasEffect } from "@ggd/shared/sim/economy/itemTiers";
-import { shelfListable, WEAPON_SHELF_OPEN } from "@ggd/shared/sim/economy/shopShelf";
+import { isShopService, itemHasEffect, legendaryShelfPrice } from "@ggd/shared/sim/economy/itemTiers";
+import {
+  LEGENDARY_PRICE_MULTIPLIER,
+  LEGENDARY_SHELF_OPEN,
+  legendaryShelfIds,
+  legendaryShelfListable,
+  randomOnlyIds,
+  shelfListable,
+  WEAPON_SHELF_OPEN,
+} from "@ggd/shared/sim/economy/shopShelf";
 
 export interface RosterChampion {
   id: string;
@@ -289,6 +304,19 @@ export function shopCatalogue<
    * `shopShelfListing.test.ts` pins the closed default on its own.
    */
   shelfOpen: boolean = WEAPON_SHELF_OPEN,
+  /**
+   * 寶具（傳說武器）貨架 open/closed（owner 2026-08-17）。與上面那格**分開**：
+   * #261 下架的 70 把普通武器不會因為寶具上架而一起回來。
+   */
+  legendaryOpen: boolean = LEGENDARY_SHELF_OPEN,
+  /** 寶具統一價的倍率（× 傳說寶玉價）。出貨 4 ＝ 9,600 金。 */
+  legendaryMultiplier: number = LEGENDARY_PRICE_MULTIPLIER,
+  /**
+   * ⭐ **隨機限定**的抽獎表（`legendaryShelf.randomOnlyTables`，出貨空的）。
+   * 表裡的道具永遠不上架 —— 這裡與 sim 的 `buyItem` 讀**同一支** `randomOnlyIds`，
+   * ⛔ 只擋一邊 = 畫面上買得到、按下去被伺服器拒絕。
+   */
+  randomOnlyTables: readonly string[] = [],
 ): T[] {
   // A final crafted weapon is buyable only when it does SOMETHING the sim can
   // apply. Six finals (雷神之鎚/黑色魔書/…) carry only an active ability item@1
@@ -296,28 +324,53 @@ export function shopCatalogue<
   // listing one is a dead 1200g button. They stay classified `final` but off
   // the shelf until the schema grows — exactly the shop's S3 gate.
   const isFinal = (i: T) => i.craftRole === "final" && itemHasEffect(i as never);
+  // ⭐ 寶具的具名旁路（owner 2026-08-17「寶具可以上架直接販售了」）。與 sim 的
+  // `buyItem` 讀**同一支** `legendaryShelfListable`，所以「架上有、買不到」那種
+  // 兩邊各說各話的死按鈕不可能出現。⛔ 這不是把 `isFinal` 放寬：那 49 把裡有
+  // 23 把不是 `final`，而放寬 `isFinal` 會把 70 把普通武器的合成原料一起放上架。
+  const legendaryIds = legendaryShelfIds();
+  // 兩個集合都提到迴圈外：這支函式一次掃一千多份文件。
+  const randomOnly = randomOnlyIds(randomOnlyTables);
+  const onLegendaryShelf = (i: T) =>
+    legendaryShelfListable(i.id, legendaryOpen, legendaryIds, randomOnly);
+  const legendaryPrice = legendaryShelfPrice(legendaryMultiplier);
+  /**
+   * 唯一的出口。⭐ 下面每一條 `return` 都經過它，所以⛔ 沒有任何一條分支能送出
+   * 一件**標價 0 元的寶具** —— 那正是失敗形態②（算出來了但玩家看不到）的樣子：
+   * 商店會照樣畫出卡片，只是價格是 0，而 sim 收的是 14,400。
+   */
+  const priced = (list: readonly T[]): T[] =>
+    list.map((i) => (onLegendaryShelf(i) ? ({ ...i, cost: legendaryPrice } as T) : i));
   // 暫時下架 (#261) — the LAST word on every branch below, so no fallback path
   // can re-list a weapon the shelf flag closed. The two SERVICES always pass
   // (`shelfListable`), which is exactly 「除了能力屬性強化、及傳說寶玉外」.
   // The DRAFT/loot path never calls this function, so 「隨機三選一仍然可以隨機
   // 到」 holds by construction — see economy/shopShelf.ts.
-  const shelved = (list: readonly T[]): T[] => list.filter((i) => shelfListable(i.id, shelfOpen));
-  const buyable = shelved(items.filter((i) => isFinal(i) || isShopService(i.id)));
-  if (wl.enforced) return applyItemWhitelist(buyable, wl);
+  // ⭐ `!randomOnly.has` 排在最外層，與 `buyItem` 的那一道全域閘同一個位置：
+  // EX理外 那批將來若帶價格又是 `final`，只擋寶具那條路的話它們會從普通武器
+  // 那條路上架（而 sim 會拒絕）—— 兩邊必須是**同一條**規則。
+  const shelved = (list: readonly T[]): T[] =>
+    list.filter(
+      (i) => !randomOnly.has(i.id) && (shelfListable(i.id, shelfOpen) || onLegendaryShelf(i)),
+    );
+  const buyable = shelved(
+    items.filter((i) => isFinal(i) || isShopService(i.id) || onLegendaryShelf(i)),
+  );
+  if (wl.enforced) return priced(applyItemWhitelist(buyable, wl));
   // Unenforced / offline dev is where the shop actually gets played, and the
   // final/service rule holds there too. The ONLY concession is the bare
   // skeleton box (unit tests, `pnpm dev` with no imported content): if not a
   // single final-role item is loaded, fall back to the demo stat sticks so the
   // shop is not an empty grid. Real matches always load the 34 map finals, so
   // this branch never runs in the product.
-  if (buyable.some((i) => i.craftRole === "final")) return buyable;
+  if (buyable.some((i) => i.craftRole === "final")) return priced(buyable);
   const services = items.filter((i) => isShopService(i.id));
   const demo = shelved(items.filter((i) => (i.cost ?? 0) > 0 && !isShopService(i.id)));
-  if (demo.length > 0) return [...services, ...demo];
+  if (demo.length > 0) return priced([...services, ...demo]);
   // last-resort skeleton branch: still shelf-filtered, so a closed shelf shows
   // the services alone rather than the entire unfiltered content box.
   const all = shelved(items);
-  return all.length > 0 ? all : [...services];
+  return priced(all.length > 0 ? all : [...services]);
 }
 
 /**

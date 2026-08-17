@@ -293,14 +293,26 @@ describe("the daemon refuses the things it must refuse", () => {
     expect(KEYWORDS_SRC).toMatch(/TRIED AND REJECTED/);
   });
 
-  it("keeps the render knobs identical to batch.py's defaults", () => {
+  it("後台即時產圖與批次讀的是**同一份**火候，⛔ 不是各自寫死的六個數字", () => {
     cover("adminui-icon-autogen");
-    expect(DAEMON_SRC).toMatch(/strength=0\.45, size=128/);
-    expect(DAEMON_SRC).toMatch(/pass1_steps=26, pass1_guidance=7\.5/);
-    expect(DAEMON_SRC).toMatch(/pass2_steps=30, pass2_guidance=8\.0/);
-    expect(BATCH_SRC).toMatch(/"--strength", type=float, default=0\.45/);
-    expect(BATCH_SRC).toMatch(/"--pass1-steps", type=int, default=26/);
-    expect(BATCH_SRC).toMatch(/"--pass2-steps", type=int, default=30/);
+    // ⚠️ 這一條以前釘的是字面值（`strength=0.45` 之類），而它的檔頭理由是
+    // 「一邊調參數要變成看得見的分歧，不是無聲的」—— 那個保證靠的是**人記得同時改兩處**。
+    // 2026-08-17 風格搬進 `content/config/icon-style.json` 之後，`batch.py` 改成從那份
+    // JSON 拿預設值而 `daemon.py` 沒跟上：後台按一下「重畫」出來的圖會跟批次不同畫風，
+    // 而兩張都是成功的圖，畫面上看不出來 —— 正是它要防的那件事，它卻只報「0.45 不見了」。
+    // ⇒ 改成守真正的性質：**兩支都從 `load_icon_style()` 取值**。
+    //    ⛔ 不斷言任何一個火候的數字（那是後台欄位，owner 會改）。
+    for (const [name, src] of [
+      ["daemon.py", DAEMON_SRC],
+      ["batch.py", BATCH_SRC],
+    ] as const) {
+      expect(src, `${name} 沒有讀 content/config/icon-style.json`).toMatch(/load_icon_style\(\)/);
+    }
+    // 六個旋鈕一個都不能漏 —— 漏掉的那一格會靜靜退回 Python 的常數。
+    for (const key of ["strength", "size", "pass1Steps", "pass1Guidance", "pass2Steps", "pass2Guidance"]) {
+      expect(DAEMON_SRC, `daemon.py 沒有從設定拿 ${key}`).toContain(`style["${key}"]`);
+      expect(BATCH_SRC, `batch.py 沒有從設定拿 ${key}`).toContain(`style["${key}"]`);
+    }
   });
 
   it("answers the same routes through the vite mount prefix and a direct curl", () => {

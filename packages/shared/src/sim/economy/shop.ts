@@ -1,22 +1,82 @@
 /** Shop (道具購買), item gacha (道具抽卡), inventory, and buy/sell undo. */
 import type { EntityId, ItemId } from "../../ids";
-import type { ShopTxn } from "../components";
+import type { ChampionComp, ItemAcquisition, ShopTxn } from "../components";
 import type { SimWorld } from "../SimWorld";
 import { Items, LootTables } from "../content/registry";
 import { attachItemSource, detachItemSource } from "./itemSource";
-import { LEGENDARY_ORB_ITEM_ID, STAT_TICK_ITEM_ID, itemHasEffect } from "./itemTiers";
+import {
+  LEGENDARY_ORB_ITEM_ID,
+  STAT_TICK_ITEM_ID,
+  itemHasEffect,
+  legendaryShelfPrice,
+} from "./itemTiers";
 import { buyLegendaryOrb, purchasableSlots } from "./legendaryOrb";
-import { shelfListable } from "./shopShelf";
+import { DEFAULT_SELL_REFUND_PCT, legendaryShelfIds, randomOnlyIds, shelfListable } from "./shopShelf";
 import { buyStatUpgrade, resetStatPath } from "./statPath";
 
 export const INVENTORY_SLOTS = 6;
 /**
- * Selling refunds 40% of the item's ORIGINAL price — a real loss, per the user
- * (「賣出會打折是原價的 40%」). Was 0.7; corrected to 0.4. Any UI that shows a
- * "sell for N" figure and any undo/restore must use THIS constant so the number
- * a player sees, the gold they get, and an undo's book-keeping never disagree.
+ * 出貨的賣出退款率。⛔ **不是**執行期讀的那一個 —— 那是後台可調的
+ * {@link sellRefundPct}（`config.arena-rules@1` 的 `legendaryShelf.sellRefundPct`）。
+ * 這個名字留著是因為十來個既有守衛 import 它，而它們算的是同一件事：
+ * 「出貨設定下賣掉退多少」。
  */
-export const SELL_REFUND = 0.4;
+export const SELL_REFUND = DEFAULT_SELL_REFUND_PCT;
+
+/**
+ * 這一場的賣出退款率（owner 2026-08-17「賣價一定是取得價的 40%（後台可設定）」）。
+ *
+ * ⭐ 存在的理由是**位置不該外洩**：這一格今天住在 `legendaryShelf` 區塊裡
+ * （見 shopShelf.ts 的 `DEFAULT_SELL_REFUND_PCT`），而它管的是整間商店。
+ * 呼叫端問的是「退款率是多少」，⛔ 不是「它住在哪一個 config 區塊」。
+ */
+export function sellRefundPct(world: SimWorld): number {
+  return world.legendaryShelf.sellRefundPct;
+}
+
+/**
+ * ⭐ 一格裝備的**取得紀錄**（實付多少 · 是不是隨機拿到的）。
+ * 沒有紀錄 = 不知道付了多少 = 當作 0（fail-closed，⛔ 不會憑空生錢）。
+ *
+ * 這是**唯一**的讀取口：UI、退款、undo 全部走它，所以
+ * 「`itemAcq` 是 optional」這件事只有這裡需要知道。
+ */
+export function slotAcquisition(champ: ChampionComp, slot: number): ItemAcquisition | null {
+  return champ.itemAcq?.[slot] ?? null;
+}
+
+/** 免費且隨機取得（三選一卡 / 傳說寶玉 / 任何 `grantItemFree`）。 */
+const FREE_RANDOM: ItemAcquisition = Object.freeze({ paid: 0, random: true });
+
+/**
+ * ⚠️ THE ONLY WAY 一件道具進入一個格子。`items` 與 `itemAcq` **一起**寫。
+ *
+ * 分開寫的代價是量得到的：三個 attach 點（買 / undo 賣 / 免費發）漏掉任何一個，
+ * 那一格的取得價就是 `null` → 退款 0 → 玩家賣掉一把 9,600 金的寶具拿回 0，
+ * 而**畫面上不會有任何錯誤**（失敗形態 ②）。
+ */
+function setSlot(champ: ChampionComp, slot: number, itemId: ItemId, acq: ItemAcquisition): void {
+  champ.items[slot] = itemId;
+  if (champ.itemAcq === undefined) champ.itemAcq = new Array(champ.items.length).fill(null);
+  champ.itemAcq[slot] = acq;
+}
+
+/** {@link setSlot} 的反面 —— 賣出與 undo-買 的唯一出口。 */
+function clearSlot(champ: ChampionComp, slot: number): void {
+  champ.items[slot] = null;
+  if (champ.itemAcq !== undefined) champ.itemAcq[slot] = null;
+}
+
+/**
+ * ⭐ 這一格**現在賣掉會拿到多少金幣**。
+ *
+ * `sellItem` 付的是這個函式，畫面上顯示的也要是這個函式（透過 snapshot 投影）——
+ * ⛔ 兩邊各自算一次就是 #106 的老問題「面板寫的和實際拿到的不一樣」，而這一次
+ * 差距不是四捨五入，是 3,840 對 0。
+ */
+export function slotRefund(world: SimWorld, champ: ChampionComp, slot: number): number {
+  return Math.floor((slotAcquisition(champ, slot)?.paid ?? 0) * sellRefundPct(world));
+}
 
 export type BuyResult =
   | "ok"
@@ -103,15 +163,42 @@ export function buyItem(world: SimWorld, id: EntityId, itemId: ItemId): BuyResul
     return "ok";
   }
 
-  // 暫時下架 (#261) — checked FIRST on the inventory path, and above every gold
-  // move, so a closed shelf can never take a coin. Both SERVICES were already
-  // dispatched by id above, so this only ever refuses a normal weapon. It does
-  // NOT touch `grantItemFree` / the draft path: 「隨機三選一仍然可以隨機到」.
-  if (!shelfListable(itemId, world.weaponShelfOpen)) return "shelf-closed";
+  // ⭐ 寶具（傳說武器）—— owner 2026-08-17「寶具可以上架直接販售了」。
+  // 「在 legendary-weapons 那張表裡」是**唯一**的判準（`legendaryShelfIds`），
+  // ⛔ 不是 tier / tag / craftRole（量過：那三個都對不上這 49 把）。
+  const inLegendaryPool = legendaryShelfIds().has(itemId);
+
+  // ⭐ 隨機限定階層（owner 2026-08-17：「仍然可以有寶具是**隨機才能取得**的，
+  // 我預計是新增的 50~70 個 EX理外 寶具」）。⛔ 它排在**寶具旁路之前**，而且
+  // 是**全域**的一道閘 —— 不是只擋寶具：EX理外 那批會是自己一張表，如果它們
+  // 剛好帶價格又是 `final`，只擋寶具那一條路的話它們會從普通武器那條路上架。
+  //
+  // ⚠️ 這道閘與 `shopCatalogue` 的同一條規則**必須同時在**（同一支
+  // `randomOnlyIds`）：只擋伺服器 = 畫面上買得到、按下去被拒；只擋畫面 =
+  // 一個改過的客戶端就買得到。回 `shelf-closed`，因為對玩家而言它就是
+  // 「這件東西不在商店賣」，而 HUD 已經有那一句文案。
+  if (randomOnlyIds(world.legendaryShelf.randomOnlyTables).has(itemId)) return "shelf-closed";
+
+  // 兩格**獨立**的貨架，各自回同一個 `shelf-closed` 理由：
+  //   寶具   world.legendaryShelf.open —— owner 2026-08-17 起出貨是開的
+  //   普通武器 world.weaponShelfOpen  —— #261 暫時下架，仍然關著
+  // 都排在任何金幣移動之前，所以關著的貨架不可能收到一塊錢。兩者都 NOT 影響
+  // `grantItemFree` / 三選一：「隨機三選一仍然可以隨機到」。
+  if (inLegendaryPool) {
+    if (!world.legendaryShelf.open) return "shelf-closed";
+  } else if (!shelfListable(itemId, world.weaponShelfOpen)) {
+    return "shelf-closed";
+  }
 
   const def = Items.tryGet(itemId);
   if (!def) return "unknown-item";
-  if (def.cost <= 0) return "not-purchasable";
+  // 這一場的**成交價**。寶具是推導出來的（49 把 `cost` 全部是 0，統一價 =
+  // 傳說寶玉 × 後台倍率），其餘照 doc 上的標價。⚠️ 下面每一處金額都讀這個
+  // 變數 —— 扣款、`no-gold` 門檻、undo 的 `goldDelta` 三者對不上就是憑空生錢。
+  const price = inLegendaryPool
+    ? legendaryShelfPrice(world.legendaryShelf.priceMultiplier)
+    : def.cost;
+  if (price <= 0) return "not-purchasable";
   // Both halves of "you may never be charged for nothing". The two SERVICES
   // are legitimately payload-free and are dispatched by id above, so they
   // never reach this line. Checked BEFORE the role backstop so an inert item
@@ -128,7 +215,15 @@ export function buyItem(world: SimWorld, id: EntityId, itemId: ItemId): BuyResul
   // items are 0g and already rejected as `not-purchasable`; a legacy doc with
   // no marker is left alone. A component/token/direct/none is refused here even
   // when priced, effectful and whitelisted.
-  if (def.craftRole !== undefined && def.craftRole !== "final") return "not-purchasable";
+  //
+  // ⭐ 寶具走一條**具名的旁路**（owner 2026-08-17）。那 49 把裡有 17 把 `none`
+  // 與 6 把 `quest`，照這道閘會有 23 把靜靜地上不了架 —— 而 owner 說的是整批。
+  // ⛔ 旁路只認 `inLegendaryPool`，⛔ 不是把 craftRole 檢查拿掉：那道閘同時
+  // 擋著 70 把普通武器的合成原料（GH#70「合成原料不可以直接買」），拿掉它們
+  // 就一起上架了。
+  if (!inLegendaryPool && def.craftRole !== undefined && def.craftRole !== "final") {
+    return "not-purchasable";
+  }
   if (def.unique && champ.items.includes(itemId)) return "unique-owned";
   // A slot held by an unpicked 傳說寶玉 card is NOT available to buy into: the
   // orb was paid for and its legendary has to have somewhere to land. Without
@@ -136,13 +231,16 @@ export function buyItem(world: SimWorld, id: EntityId, itemId: ItemId): BuyResul
   // silently voided a 2400g purchase.
   const slot = champ.items.findIndex((s) => s === null);
   if (slot < 0 || purchasableSlots(champ) < 1) return "no-slot";
-  if (champ.gold < def.cost) return "no-gold";
+  if (champ.gold < price) return "no-gold";
 
   // Capture the stat-streak BEFORE resetStatPath zeroes it, so an undo of this
   // buy can restore it EXACTLY (task #121).
   const statStacksBefore = champ.statStacks;
-  champ.gold -= def.cost;
-  champ.items[slot] = itemId;
+  champ.gold -= price;
+  // ⭐ 取得紀錄與格子**同一行**寫進去（`setSlot`）：`paid` 是這一場真的收走的
+  // 金額（寶具＝推導價），`random: false` 因為這是掏錢買的。賣出退款讀的就是
+  // 這個 `paid`，⛔ 不是 `def.cost`（那對 49 把寶具全部是 0）。
+  setSlot(champ, slot, itemId, { paid: price, random: false });
   // SITE 1 of 3. All three go through `attachItemSource` (economy/itemSource.ts)
   // rather than building the literal here: the 光環 field once had to be pasted
   // onto three sites and 「an item that projects an aura when bought but not when
@@ -165,7 +263,9 @@ export function buyItem(world: SimWorld, id: EntityId, itemId: ItemId): BuyResul
   resetStatPath(world, id, itemId);
   // Record the exact reversal for the undo button. goldDelta is NEGATIVE (gold
   // spent); undo does `gold -= goldDelta` to refund precisely what was charged.
-  champ.undoStack.push({ kind: "buy", itemId, slot, goldDelta: -def.cost, statStacksBefore });
+  // goldDelta 記的是**真的收了多少**（寶具＝推導價），⛔ 不是 `def.cost` ——
+  // undo 做的是 `gold -= goldDelta`，抄錯一個來源就是一台印鈔機。
+  champ.undoStack.push({ kind: "buy", itemId, slot, goldDelta: -price, statStacksBefore });
   world.emit("itemBought", { id, itemId, slot, gold: champ.gold });
   return "ok";
 }
@@ -173,22 +273,50 @@ export function buyItem(world: SimWorld, id: EntityId, itemId: ItemId): BuyResul
 export function sellItem(world: SimWorld, id: EntityId, slot: number): boolean {
   const champ = world.champion.get(id);
   if (!champ) return false;
+  // ⛔⛔ **格子編號必須是一個真的陣列索引** —— sec-input-01 的那條線。
+  //
+  // 客戶端送得出 `itemSlot: "__proto__"`，而 `champ.items["__proto__"]` 回的是
+  // `Array.prototype`：**truthy**，所以它會直接穿過下面那道 `if (!itemId)`。
+  // 2026-08-17 之前這條路會在 `Items.get(Array.prototype)` 丟例外，而 #46 的
+  // tick catch 把例外變成整房斷線（一則訊息就能 DoS 6–12 個人）。
+  // 那一句 `Items.get` 在賣價改成「取得價 × 退款率」之後不再需要，於是它被拿掉了 ——
+  // ⚠️ **而它同時是唯一擋住這條路的東西**。少了它就不會炸了，但會走到
+  // `clearSlot(champ, "__proto__")`，也就是 `champ.items["__proto__"] = null`
+  // ⇒ **把那個陣列的原型設成 null**，那位英雄的背包從此沒有任何陣列方法，
+  // 而且**完全不丟例外**。比原本的崩潰更難查。
+  //
+  // ⇒ 這道閘是**深度防禦**：`sanitizeInputMessage` 在入口已經丟掉它（那是外層），
+  // 這裡確保就算有人繞過入口，sim 也只是**拒絕**而不是損毀狀態。
+  // 守衛：`apps/game-server/src/net/validateInput.test.ts` 的 sec-input-01。
+  if (!Number.isInteger(slot) || slot < 0 || slot >= champ.items.length) return false;
   const itemId = champ.items[slot];
   if (!itemId) return false;
-  const def = Items.get(itemId);
-  // The REFUND that is actually applied — a floored 40% (SELL_REFUND). The undo
-  // reverses THIS figure, never a re-derived one, so a floor rounding can never
-  // leak or burn a coin across a buy→sell→undo cycle (task #121).
-  const refund = Math.floor(def.cost * SELL_REFUND);
+  // ⚠️ 這裡本來有一句 `const def = Items.get(itemId)`，唯一的用途是 `def.cost`。
+  // 退款不再讀它，所以它整句拿掉 —— 留著會是一個「看起來在驗證什麼」的空 call。
+  // ⭐ 賣價 = **這一格當初實付的金額** × 後台退款率（owner 2026-08-17：
+  // 「賣價一定是取得價的 40%（後台可設定）」）。
+  //
+  // ⛔ 乘的**不是** `def.cost`。那是 2026-08-17 之前的寫法，而它對 49 把寶具
+  // 全部是 0 —— 花 14,400 買一把，賣掉退 0，畫面上還理直氣壯地寫著「+0 g」。
+  // ⛔ 也**不是**「推導的上架價 × 40%」：那會讓每一張**免費**發出去的三選一
+  // 寶具都能換一筆錢（回合 2、5 各一張），是一台比前者嚴重得多的印鈔機。
+  // 唯一不會兩邊都錯的量是**真的付了多少**，所以它被記在格子上。
+  //
+  // 沒有紀錄（舊 replay / 手寫夾具 / 繞過 `setSlot` 的路徑）→ `paid` 當 0，
+  // fail-CLOSED：退不到錢是看得見的，而憑空生錢不是。
+  const acq = slotAcquisition(champ, slot);
+  const refund = slotRefund(world, champ, slot);
   champ.gold += refund;
-  champ.items[slot] = null;
+  clearSlot(champ, slot);
   // DETACH SITE 1 of 2 — through `detachItemSource`, never `detachSource`
   // directly: the slot is cleared first, then the helper re-runs the 套裝 check
   // so a completed set stops paying the moment a piece is sold. Bypassing it
   // gives 「賣掉還留著」, which no per-item test can see.
   detachItemSource(world, id, itemId, slot);
   // goldDelta is POSITIVE (refund received); undo does `gold -= goldDelta`.
-  champ.undoStack.push({ kind: "sell", itemId, slot, goldDelta: refund, statStacksBefore: 0 });
+  // `acq` 一起收進去：undo 要把格子還原成**當初那一格**，取得價也是那一格的
+  // 一部分。少了它，undo 之後再賣一次只退 0（見 ShopTxn.acq）。
+  champ.undoStack.push({ kind: "sell", itemId, slot, goldDelta: refund, statStacksBefore: 0, acq });
   world.emit("itemSold", { id, itemId, slot, gold: champ.gold });
   return true;
 }
@@ -223,7 +351,7 @@ export function undoShopAction(world: SimWorld, id: EntityId): UndoResult {
   if (txn.kind === "buy") {
     // reversing a buy: the item must still sit where it landed
     if (champ.items[txn.slot] !== txn.itemId) return "stale";
-    champ.items[txn.slot] = null;
+    clearSlot(champ, txn.slot);
     // DETACH SITE 2 of 2 — see sellItem.
     detachItemSource(world, id, txn.itemId, txn.slot);
     champ.gold -= txn.goldDelta; // goldDelta < 0 → refund the exact cost
@@ -232,7 +360,9 @@ export function undoShopAction(world: SimWorld, id: EntityId): UndoResult {
     // reversing a sell: the slot must still be empty for the item to return
     if (champ.items[txn.slot] !== null) return "stale";
     const def = Items.get(txn.itemId);
-    champ.items[txn.slot] = txn.itemId;
+    // 取得紀錄跟著回來。⚠️ `?? FREE_RANDOM` 是給**這一格出現之前**存下的
+    // 交易（沒有 `acq`）用的：當作「免費隨機拿到的」，退款 0，⛔ 不會生錢。
+    setSlot(champ, txn.slot, txn.itemId, txn.acq ?? FREE_RANDOM);
     // SITE 2 of 3 — see the buy path.
     attachItemSource(world, id, txn.itemId, txn.slot, def);
     champ.gold -= txn.goldDelta; // goldDelta > 0 → take the exact refund back
@@ -264,15 +394,25 @@ export function commitShopSession(world: SimWorld, id: EntityId): void {
  * Grant an item for free into the first open inventory slot (no gold cost) —
  * the landing path for gacha rolls and arena weapon-offer picks.
  * Returns the slot index, or -1 when the inventory is full / item unknown.
+ *
+ * ⭐ 記下來的取得紀錄是 `{ paid: 0, random: true }`（owner 2026-08-17：三選一與
+ * 寶玉抽到的都算**隨機取得**，而且賣掉退 0）。`acq` 有預設值是為了讓未來
+ * 「免費但**不是**隨機」的發法（活動 / 劇情 / 後台送）不必再開一條路 ——
+ * 今天全部四個呼叫端（三選一、寶玉、gacha、dev cheat）都是隨機路徑。
  */
-export function grantItemFree(world: SimWorld, id: EntityId, itemId: ItemId): number {
+export function grantItemFree(
+  world: SimWorld,
+  id: EntityId,
+  itemId: ItemId,
+  acq: ItemAcquisition = FREE_RANDOM,
+): number {
   const champ = world.champion.get(id);
   if (!champ) return -1;
   const def = Items.tryGet(itemId);
   if (!def) return -1;
   const slot = champ.items.findIndex((s) => s === null);
   if (slot < 0) return -1;
-  champ.items[slot] = itemId;
+  setSlot(champ, slot, itemId, acq);
   // SITE 3 of 3 — the 三選一 / gacha path, the one a hand-copied literal has
   // already been forgotten on once. See the buy path.
   attachItemSource(world, id, itemId, slot, def);

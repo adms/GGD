@@ -186,34 +186,41 @@ describe("legendary is DRAFT-ONLY", () => {
     for (const e of table!.entries) {
       const doc = byId.get(e.itemId);
       expect(doc, `legendary ${e.itemId} has no content doc`).toBeDefined();
-      // 「傳說的武器道具，只能隨機三選一」 — a price here would make it buyable.
-      //
-      // ⚠️ 訊息把**理由**一起講出來 (owner 2026-08-01):「所有傳說武器道具都是
-      // 0元，避免平衡問題 (目前只能抽到)」。0 不是「便宜」也不是還沒定價 ——
-      // 它是這件道具**唯一的發放管道是三選一**的那個開關(`economy/shop.ts`
-      // `buyItem` 在任何金幣移動之前就用 `def.cost <= 0` 擋掉)。所以看到這條紅
-      // 的人要改的是**定價**,不是這條測試。
+      // ⚠️ RE-AIMED 2026-08-17，斷言沒變、**理由換了**。
+      //   2026-08-01 owner:「所有傳說武器道具都是 0元，避免平衡問題 (目前只能
+      //     抽到)」—— 那時 0 是「買不到」的**開關**（`buyItem` 用 cost<=0 擋）。
+      //   2026-08-17 owner:「寶具(傳說武器) 可以上架直接販售了，價格統一是
+      //     隨機抽的 6 倍」—— 現在寶具**買得到**，而價格是**推導**的
+      //     （傳說寶玉 × 後台倍率，見 `legendaryShelfPrice`）。
+      // 所以 0 現在的意思是「這件道具**沒有自己的標價**」：統一價只有一個來源。
+      // 一個非 0 的標價會是一個**永遠被忽略的數字** —— 商店顯示與實收都走推導
+      // 價，而讀 JSON 的人會以為那格有意義。看到這條紅：把標價改回 0，
+      // 要調價就調後台的 `legendaryShelf.priceMultiplier`。
       expect(
         doc!.cost,
-        `傳說 ${e.itemId}（${doc!.name}）標價 ${doc!.cost}g —— 它在 legendary-weapons ` +
-          `池裡，也就是「只能抽到」的那一批。owner 2026-08-01:「所有傳說武器道具都是` +
-          `0元，避免平衡問題 (目前只能抽到)」。標價會讓它同時變成可購買，` +
-          `平衡是照「只能抽到」算的。要上架就先把它移出 loot table。`,
+        `寶具 ${e.itemId}（${doc!.name}）標價 ${doc!.cost}g —— 它在 legendary-weapons ` +
+          `池裡，而寶具是**統一價**（傳說寶玉 × legendaryShelf.priceMultiplier）。` +
+          `這個標價不會被任何人讀，只會讓下一個看 JSON 的人以為它有效。` +
+          `要改價請調後台的倍率；要讓它有自己的價，先把它移出 loot table。`,
       ).toBe(0);
       expect(hasEffect(doc!), `legendary ${e.itemId} does nothing`).toBe(true);
     }
   });
 
-  it("而且是真的買不到 —— 貨架全開、金幣滿手，`buyItem` 仍然逐件拒絕", async () => {
+  it("而且 0 元是「沒有自己的標價」不是「不能賣」—— 收的是統一價", async () => {
     cover("econ-legendary-not-purchasable");
-    // 上面那一條是**屬性**斷言(cost === 0)。這一條是**行為**斷言,因為
-    // 「cost 0」與「買不到」是兩件事:0 也可以被讀成「免費送」。CLAUDE.md 失敗
-    // 形態 ⑦「掃屬性代替掃行為」就是這個形狀,所以兩條都在。
+    // ⚠️ 這一條 2026-08-17 **整條換掉了守的性質**，因為 owner 換了裁決：
+    //   2026-08-01「傳說的武器道具，只能隨機三選一」→ 它守「逐件被拒絕」。
+    //   2026-08-17「寶具(傳說武器) 可以上架直接販售了，價格統一是隨機抽的 6 倍」
+    //             → 它改守「⛔ 沒有一把是被**內容模型**擋下來的」。
+    // 上面那一條是**屬性**斷言(cost === 0)；這一條仍然是**行為**斷言 ——
+    // 「cost 0」與「賣得掉」是兩件事（失敗形態 ⑦：掃屬性代替掃行為）。
     //
-    // ⚠️ `world.weaponShelfOpen = true` 是刻意的。出貨旗標是 CLOSED (#261
-    // 暫時下架),而 `buyItem` 的貨架檢查排在價格檢查**前面** —— 不打開的話這條
-    // 測試會拿到 "shelf-closed",對「0 元擋不擋得住」一個字都沒說,而 #261 是
-    // 「暫時」的。打開之後,擋住傳說的就只剩 `def.cost <= 0` 那一行。
+    // ⚠️ 為什麼不是斷言「49 把都回 ok」：一個英雄只有 6 格背包，第 7 把之後
+    // 一定是 `no-slot`。所以斷言的是**沒有一把落進內容模型的拒絕**
+    // （not-purchasable / no-effect / unknown-item）—— 那三個才是「這件東西
+    // 在商店裡是死的」，`no-slot` 只是背包滿了。
+    // 完整的「買得到 + 收多少錢 + 關掉會怎樣」在 economy/legendaryShelf.test.ts。
     const { registerAll } = await import("../../content/registries");
     const { ContentLoader } = await import("../../content/loader");
     const { FsContentSource } = await import("../../content/node/FsContentSource");
@@ -236,22 +243,23 @@ describe("legendary is DRAFT-ONLY", () => {
     });
     const champ = world.champion.get(id)!;
     // 遠超過任何價格,所以拒絕的理由不可能是「錢不夠」。
-    champ.gold = 999_999;
-    const goldBefore = champ.gold;
+    champ.gold = 9_999_999;
 
     const table = lootTables.find((t) => t.id === "legendary-weapons")!;
-    const sold: string[] = [];
+    const MODEL_REFUSALS = new Set(["not-purchasable", "no-effect", "unknown-item"]);
+    const dead: string[] = [];
     for (const e of table.entries) {
       const outcome = buyItem(world, id, e.itemId as never);
-      if (outcome !== "not-purchasable") sold.push(`${e.itemId} → ${outcome}`);
+      if (MODEL_REFUSALS.has(outcome)) dead.push(`${e.itemId} → ${outcome}`);
     }
     expect(
-      sold,
-      "這些傳說在貨架全開時**不是**被價格擋下來的 —— 「只能抽到」在那一刻就破了",
+      dead,
+      "這些寶具在商店裡是死的 —— owner 2026-08-17 說它們可以直接買，" +
+        "而內容模型把它們擋在金幣移動之前（0 元標價／craftRole 不是 final）",
     ).toEqual([]);
-    // 沒有付出任何一塊錢,也沒有佔掉任何一格。
-    expect(champ.gold).toBe(goldBefore);
-    expect(champ.items.filter((s) => s !== null)).toEqual([]);
+    // 而且真的收了錢、真的佔了格子（⛔ 不是靜靜地回 ok 什麼都沒做）。
+    expect(champ.gold).toBeLessThan(9_999_999);
+    expect(champ.items.filter((s) => s !== null).length).toBeGreaterThan(0);
   });
 
   it("a DELISTED final still has a way to reach the player — 0g is off the shelf, not deleted", () => {

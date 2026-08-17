@@ -77,13 +77,24 @@ import (
 // (task #241); the numbers below are derived against the shipped 300, so an
 // operator who changes it has changed this table's conclusions too. The client
 // reads the live value off GET /wallet (`crystalUnlockCost`) rather than
-// compiling in a copy. The tuning lever is still the GRANT, not the cost:
+// compiling in a copy. The tuning lever is still the GRANT, not the cost.
 //
-//	place 1  240  -> 1.25 matches per unlock (~0.4h of play)
-//	place 2   90  -> 3.3  matches per unlock (~1.0h of play)
-//	place 3   70  -> 4.3  matches per unlock (~1.3h of play)
-//	place 4   60  -> 5.0  matches per unlock (~1.5h of play)
-//	average  115  -> 2.6  matches per unlock (~0.8h of play)
+// ⚠️ THE TABLE BELOW IS THE **SOLO-AGAINST-BOTS** RATE (2026-08-17), i.e. the
+// multiplier-1 floor. A lobby with two or more humans multiplies every row —
+// see 「多人比賽水晶倍率」 on CrystalRules below:
+//
+//	place 1  120  ->  2.5 matches per unlock (~0.8h of play)
+//	place 2   45  ->  6.7 matches per unlock (~2.0h of play)
+//	place 3   35  ->  8.6 matches per unlock (~2.6h of play)
+//	place 4   30  -> 10.0 matches per unlock (~3.0h of play)
+//	average   58  ->  5.2 matches per unlock (~1.6h of play)
+//
+// Those are the SAME numbers a bot lobby has paid since #118 — they are the old
+// 240/90/70/60 table after the anti-farm halving that gamelink applied to every
+// bot-assisted seat. Nothing about playing alone changed on 2026-08-17; what
+// changed is that playing WITH PEOPLE now pays a multiple instead of merely
+// avoiding a penalty (average with one friend: ~1.7 matches per unlock; a full
+// 12-human lobby: ~0.4, i.e. two champions an evening).
 //
 // THE MATCH GOT SHORTER; THE GRANTS DID NOT MOVE, AND THAT IS THE DECISION —
 // NOT AN OVERSIGHT (#250). Read the history in order, because the obvious
@@ -130,8 +141,9 @@ import (
 // through winning. The 4:1 first:last spread (吃雞 doubling included) makes
 // placement matter without stalling the family member who keeps losing. Across
 // the 41 priced champions of the first open roster the full set is a long-term
-// goal (~107 matches at the average), which is why content/config/store.json
-// keeps 12 champions on `freeChampionIds` as a generous starter roster.
+// goal (~212 matches at the solo-vs-bot average, ~71 with one friend in the
+// lobby), which is why content/config/store.json keeps 12 champions on
+// `freeChampionIds` as a generous starter roster.
 const (
 	// CrystalUnlockCost is a FALLBACK, NOT THE PRICE (2026-07-30). The live
 	// number is `championUnlockCost`: shipped in content/config/store.json,
@@ -159,19 +171,33 @@ const (
 	// task removed.
 	CrystalUnlockCost = 300
 
-	// CrystalPlace1..4 are the per-match crystal grants by final team
-	// placement. See the balance model above.
+	// CrystalPlace1..4 are the BASE per-match crystal grants by final team
+	// placement — what ONE human alone against bots takes home. See the balance
+	// model above, and CrystalRules below for the lobby multiplier stacked on
+	// top of them.
 	//
 	// 吃雞 (1st) is DOUBLE, by the owner's instruction: 「如果是該場次吃雞，水晶
 	// 則 2 倍領取」. Written as base × CrystalWinMultiplier rather than a bare
-	// 240 so the intent survives a retune — change the base and the win bonus
+	// 120 so the intent survives a retune — change the base and the win bonus
 	// scales with it, instead of the two silently drifting apart.
-	crystalPlace1Base    = 120
+	//
+	// ⚠️ 2026-08-17: this table WAS 240/90/70/60, and gamelink halved it for
+	// every seat with a bot on its team. Since a bot-free lobby is now paid for
+	// by the multiplier instead, the halving is gone and the table was folded
+	// down to the values it effectively had — so the solo-vs-bot payout is
+	// byte-for-byte what it was (owner: 「120」 at N=1). 4:1 first:last is
+	// unchanged.
+	crystalPlace1Base    = 60
 	CrystalWinMultiplier = 2
-	CrystalPlace1        = crystalPlace1Base * CrystalWinMultiplier // 240
-	CrystalPlace2        = 90
-	CrystalPlace3        = 70
-	CrystalPlace4        = 60
+	CrystalPlace1        = crystalPlace1Base * CrystalWinMultiplier // 120
+	CrystalPlace2        = 45
+	CrystalPlace3        = 35
+	CrystalPlace4        = 30
+
+	// ── 多人比賽水晶倍率的出貨值（owner 2026-08-17）── see CrystalRules.
+	DefaultCrystalMinHumans     = 2
+	DefaultCrystalOffset        = 1
+	DefaultCrystalMaxMultiplier = 13
 
 	// MCoinWinGrant is the M COIN a 吃雞 earns, by the owner's instruction:
 	// 「並且可以領到 1 枚 M幣」. ONE coin, and only for first place.
@@ -186,13 +212,118 @@ const (
 	MCoinWinGrant = 1
 )
 
-// crystalRewards maps final team placement (1 = winner) -> crystal grant.
-var crystalRewards = map[int]int{1: CrystalPlace1, 2: CrystalPlace2, 3: CrystalPlace3, 4: CrystalPlace4}
+// 上下界。⚠️ 兩端都要有（GH#277 的教訓：只檢查 min 會讓 13 打成 130 靜靜過去，
+// 而 130 倍是一場付掉 56 隻英雄）。這一組必須跟 packages/shared 的
+// zConfigStoreDoc 與 apps/admin/src/storeEconomy.ts 對得起來。
+const (
+	CrystalBaseMin          = 0
+	CrystalBaseMax          = 100_000
+	CrystalMinHumansMin     = 1
+	CrystalMinHumansMax     = 12
+	CrystalOffsetMin        = 0
+	CrystalOffsetMax        = 12
+	CrystalMaxMultiplierMin = 1
+	CrystalMaxMultiplierMax = 50
+)
 
-// CrystalRewardFor returns the per-match crystal grant for a final team
-// placement. An unknown or zero placement grants nothing — same shape (and
-// same safety property) as Catalog.RewardFor for M COIN.
-func CrystalRewardFor(place int) int { return crystalRewards[place] }
+// CrystalRules is the operator-editable 藍水晶 payout: the four base grants plus
+// the 多人比賽倍率 knobs.
+//
+// ── owner 2026-08-17, 逐字 ──────────────────────────────────────────────────
+//
+//	「只要有兩真人(N≥2)參加，不論哪個陣營都可以，所有玩家都 (N+1) 倍，
+//	  所以最大 13 倍」
+//	「120 × 13 (MAX)、120 × 3 (N=2)、120 (N=1)」
+//
+// N 是**整場 lobby 的真人座位數**，⛔ 不分隊。那是這條規則和它取代的規則之間唯一
+// 的、也是全部的差別:2026-08-01 的規則問「你這一隊有沒有 bot」,所以兩個朋友分坐
+// 敵對兩隊時,兩個人都只拿一半 —— 一起玩反而比獨自打 bot 還糟。現在同一個 lobby
+// 就算分屬四隊,兩個人都是 ×3。
+//
+// ⚠️ 沙發客(`:pN`)算人頭但領不到錢:他們是真人(所以推高全場的倍率),但沒有帳號
+// 檔可以入帳。這個不對稱是刻意的,見 gamelink/callback.go 的說明。
+type CrystalRules struct {
+	// Place1..4 是名次基礎值 —— 一個人打 bot 的實拿數。
+	Place1, Place2, Place3, Place4 int
+	// MinHumans 是「開始給倍率」的真人門檻(出貨 2 = owner 的 N≥2)。
+	MinHumans int
+	// Offset 加在真人數上得到倍率(出貨 1 = owner 的 N+1)。
+	Offset int
+	// MaxMultiplier 是倍率上限(出貨 13 = owner 的「最大 13 倍」)。
+	MaxMultiplier int
+}
+
+// DefaultCrystalRules is the SHIPPED payout — the same values
+// content/config/store.json carries under `crystalRewards`. Derived from the
+// constants above rather than re-typed, so there is exactly one Go-side number
+// per knob.
+func DefaultCrystalRules() CrystalRules {
+	return CrystalRules{
+		Place1: CrystalPlace1, Place2: CrystalPlace2, Place3: CrystalPlace3, Place4: CrystalPlace4,
+		MinHumans:     DefaultCrystalMinHumans,
+		Offset:        DefaultCrystalOffset,
+		MaxMultiplier: DefaultCrystalMaxMultiplier,
+	}
+}
+
+// RewardFor returns the BASE grant for a final team placement. An unknown or
+// zero placement grants nothing — same shape (and same safety property) as
+// Catalog.RewardFor for M COIN: a zero-value int must never fall through to a
+// payout.
+func (r CrystalRules) RewardFor(place int) int {
+	switch place {
+	case 1:
+		return r.Place1
+	case 2:
+		return r.Place2
+	case 3:
+		return r.Place3
+	case 4:
+		return r.Place4
+	default:
+		return 0
+	}
+}
+
+// CrystalMultiplier is owner 2026-08-17's rule as ONE pure function:
+// `humans >= MinHumans ? humans + Offset : 1`, clamped to MaxMultiplier.
+//
+// It lives here rather than inline in gamelink/callback.go on purpose — the
+// arithmetic that decides what a match pays is the thing the owner retunes, and
+// a copy of it in the settlement loop is a second place for it to drift.
+//
+// The result is never below 1: a grant is a REWARD, so no configuration an
+// operator can save may turn a played match into zero crystals.
+func CrystalMultiplier(humans int, cfg CrystalRules) int {
+	if cfg.MinHumans <= 0 || humans < cfg.MinHumans {
+		return 1
+	}
+	m := humans + cfg.Offset
+	if cfg.MaxMultiplier > 0 && m > cfg.MaxMultiplier {
+		m = cfg.MaxMultiplier
+	}
+	if m < 1 {
+		m = 1
+	}
+	return m
+}
+
+// CrystalRewardFor returns the SHIPPED base grant for a final team placement.
+// Kept as a package function because callers outside the settlement path (and
+// the boot log in internal/server)只想知道出貨值;結算路徑要用的是
+// Service.CrystalRulesNow(),它會把 operator 的覆寫疊上來。
+func CrystalRewardFor(place int) int { return DefaultCrystalRules().RewardFor(place) }
+
+// CrystalRulesNow is the 藍水晶 payout in force RIGHT NOW: the shipped table with
+// the operator's live 商店經濟 override laid over it (economy.go), read per
+// request for the same reason UnlockCost is — a console save must not need a
+// restart to reach a player. See EconomyOverride.
+func (s *Service) CrystalRulesNow() CrystalRules {
+	if ov, ok := s.EconomyOverride(); ok {
+		return ov.Crystal
+	}
+	return DefaultCrystalRules()
+}
 
 // ColWalletMeta is the jsonstore collection holding per-account meta
 // progression (crystals + favourites). Kept OFF the account struct because a

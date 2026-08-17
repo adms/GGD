@@ -143,8 +143,14 @@ export function boughtToast(itemName: string): ShopToast {
 }
 
 /** A completed sale, with the gold actually refunded. */
-export function soldToast(itemName: string, refund: number): ShopToast {
-  return { tone: "ok", text: `賣出 ${itemName}（+${refund} g）`, sfx: SELL_SFX };
+/**
+ * `refund` 是**這一格實付價 × 退款率**（owner 2026-08-17）——⛔ 不再是
+ * 「道具標價 × 40%」。`null` = 這個客戶端不知道實付了多少（尚未接上逐格投影），
+ * 這時**不報數字**：報一個推導不出來的金額，比不報還糟。
+ */
+export function soldToast(itemName: string, refund: number | null): ShopToast {
+  const amount = refund === null ? "退款已入帳" : `+${refund} g`;
+  return { tone: "ok", text: `賣出 ${itemName}（${amount}）`, sfx: SELL_SFX };
 }
 
 /**

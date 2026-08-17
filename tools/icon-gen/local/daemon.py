@@ -99,15 +99,23 @@ FIELDLESS_FAMILIES = {"augments"}
 
 RECENT_CAP = 40
 
-# The two-pass render knobs, byte-identical to batch.py's argparse defaults.
-# Named here rather than re-parsed so a tuning change in one place is a visible
-# divergence rather than a silent one.
-RENDER_ARGS = dict(
-    strength=0.45, size=128,
-    pass1_steps=26, pass1_guidance=7.5,
-    pass2_steps=30, pass2_guidance=8.0,
-    seed=None,
-)
+# 兩階段的火候 —— ⭐ **與 batch.py 讀同一份 `content/config/icon-style.json`**。
+#
+# ⚠️ 這裡以前是六個寫死的數字，註解寫著「與 batch.py 的 argparse 預設逐位元組相同」。
+# 2026-08-17 把風格搬進後台之後，batch.py 改成從那份 JSON 拿預設值，而這裡沒跟上
+# ⇒ **後台按一下「重畫」出來的圖，會跟批次跑出來的不同畫風**，而且畫面上看不出來
+# （兩張都是成功的圖）。那正是這段註解本來要防的「silent divergence」，
+# 它靠的是人記得同時改兩處 —— 而那沒有發生。
+# ⇒ 現在兩邊讀同一個來源，⛔ 沒有第二份可以漂。
+def _icon_style_knobs() -> dict:
+    """每次呼叫都重讀 —— 操作者在後台改完風格不必重啟 daemon。"""
+    style = keywords.load_icon_style()
+    return dict(
+        strength=style["strength"], size=style["size"],
+        pass1_steps=style["pass1Steps"], pass1_guidance=style["pass1Guidance"],
+        pass2_steps=style["pass2Steps"], pass2_guidance=style["pass2Guidance"],
+        seed=None,
+    )
 
 ALLOWED_ORIGINS = {
     "http://127.0.0.1:60721",
@@ -399,7 +407,7 @@ class Jobs:
             return {"state": "failed", "reason": "no-engine", "error": eng["reason"],
                     "message": f"這台機器不能產圖：{eng['reason']}"}
 
-        args = SimpleNamespace(**RENDER_ARGS)
+        args = SimpleNamespace(**_icon_style_knobs())
         item = {"family": family, "id": doc_id, "doc": doc}
         _base, styled, signal = batch.render_two_pass(item, args)
 

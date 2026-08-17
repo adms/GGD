@@ -216,6 +216,32 @@ export interface ProjectileComp {
   critSources?: readonly string[];
 }
 
+/**
+ * 一格裝備是**怎麼進來的** —— owner 2026-08-17 的兩句話，一個物件。
+ *
+ * 「賣價一定是取得價的 40%（後台可設定）」 → {@link paid}
+ * 「可註記目前取得的寶具是否為隨機取得」   → {@link random}
+ *
+ * ⛔ 這兩件事都**推不出來**：`ItemDef.cost` 對 49 把寶具全部是 0，而「免費發的
+ * 那一把」與「花 9,600 買的同一把」在 `items[]` 上長得一模一樣。只能記。
+ */
+export interface ItemAcquisition {
+  /**
+   * 這一格**實付**了多少金幣。三選一卡／傳說寶玉抽到的 = **0**。
+   *
+   * ⚠️ 寶玉抽到的記 0 而**不是**寶玉的 2400：那 2400 買的是「抽一次」這件事，
+   * 抽到的那一把本身沒有收錢。記 2400 的話，連抽三次的人可以把三把都賣掉，
+   * 每一把多退 960 —— 一台一場多印 2,880 金的機器。
+   */
+  paid: number;
+  /**
+   * 是不是**隨機**拿到的（三選一卡 / 傳說寶玉 / 任何 `grantItemFree`）。
+   * 商店掏錢買的 = `false`。⛔ 它不是 `paid === 0` 的同義詞：未來一定會有
+   * 「免費但不是隨機」的發法（活動、劇情、後台送），那時這一格仍然是對的。
+   */
+  random: boolean;
+}
+
 /** Marker/state bags filled in by later steps (stats, abilities, …). */
 export interface ChampionComp {
   championId: ChampionId;
@@ -223,6 +249,29 @@ export interface ChampionComp {
   xp: number;
   gold: number;
   items: (ItemId | null)[];
+  /**
+   * ⭐ 每一格**怎麼拿到的** —— 與 {@link items} **同一個索引**、同一個長度
+   * （owner 2026-08-17：「賣價一定是取得價的 40%」「可註記目前取得的寶具是否為
+   * 隨機取得」）。空格是 `null`。
+   *
+   * ⛔ 為什麼不是另一張 map（`Map<ItemId, …>` 或 `Record<itemId, …>`）：
+   * 身分是**格子**不是道具。同一把道具可以同時躺在兩格（不 unique 的），一格
+   * 用買的一格是三選一發的 —— 用 itemId 當 key 的表只裝得下其中一個答案，
+   * 而 undo / 賣掉 / 換裝 會讓那個答案指向錯的那一格。
+   *
+   * ⚠️ 它是 {@link items} 的**同位**欄位，所以⛔ 任何地方都不要單獨寫
+   * `champ.items[slot] = …` —— `economy/shop.ts` 的 `setSlot`/`clearSlot` 是
+   * 唯二的寫入口，兩條陣列一起動。漂掉的代價是玩家賣掉一把 9,600 金的寶具
+   * 拿回 0（或反過來，一台印鈔機）。
+   *
+   * OPTIONAL + 由 `spawnChampion` 配置，理由與 `attrGrantProgress` 一字不差：
+   * 全 repo 手寫的 `ChampionComp` 夾具不用一個一個改，而讀取一律走
+   * `slotAcquisition()`，缺這一格 = 「不知道付了多少」= 退款 0（fail-closed，
+   * ⛔ 不會憑空生錢）。
+   *
+   * SIM state：跟著 seed replay、重連還在、⛔ 不碰 `world.rng`。
+   */
+  itemAcq?: (ItemAcquisition | null)[];
   augments: AugmentId[];
   /**
    * 能力屬性強化 progress — CONSECUTIVE stat-tick purchases with no item
@@ -336,6 +385,14 @@ export interface ChampionComp {
 export interface ShopTxn {
   kind: "buy" | "sell";
   itemId: ItemId;
+  /**
+   * 這一格被賣掉之前的**取得紀錄**（只有 `kind: "sell"` 會有）。
+   *
+   * ⚠️ 沒有它，undo 一次賣出會把「當初實付 9,600」還原成「不知道付了多少」，
+   * 於是同一把寶具**再賣一次只退 0** —— 玩家白白蒸發 3,840 金，而畫面上
+   * 什麼都不會報錯。undo 的契約是「精確反轉」，取得價也在那個契約裡。
+   */
+  acq?: ItemAcquisition | null;
   /** the inventory slot the item occupied (buy) or vacated (sell) */
   slot: number;
   /** exact gold change applied by the action; undo does `gold -= goldDelta` */

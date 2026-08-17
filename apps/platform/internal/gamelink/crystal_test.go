@@ -36,12 +36,12 @@ func TestCrystalsEarnedOnSettlement(t *testing.T) {
 	// Host's team placed 1st, guest's team 2nd.
 	hostW, err := ts.Srv.Wallet.Get(ctx, host.ID)
 	require.NoError(t, err)
-	require.Equal(t, 55+wallet.CrystalPlace1/2, hostW.Crystal,
-		"winner: 55 + HALF the place-1 grant — the fixture seats bots on his team (anti-farm)")
+	require.Equal(t, 55+wallet.CrystalPlace1*resultWithGuestsMultiplier(), hostW.Crystal,
+		"winner: 55 + the place-1 grant x the WHOLE-LOBBY multiplier (owner 2026-08-17)")
 	guestW, err := ts.Srv.Wallet.Get(ctx, guest.ID)
 	require.NoError(t, err)
-	require.Equal(t, wallet.CrystalPlace2/2, guestW.Crystal,
-		"second place: HALF the place-2 grant — same reason")
+	require.Equal(t, wallet.CrystalPlace2*resultWithGuestsMultiplier(), guestW.Crystal,
+		"second place: same lobby, so the same multiplier — 「不論哪個陣營」")
 
 	// Every placement pays something: 「打場免費賺」 must hold for last place too.
 	require.Positive(t, wallet.CrystalPlace4, "last place must still earn crystals")
@@ -49,8 +49,8 @@ func TestCrystalsEarnedOnSettlement(t *testing.T) {
 	// The match record journals the ABSOLUTE post-match balances, and conjures
 	// no entries for bots or couch guests.
 	rec := readMatchRecord(t, ts, matchID)
-	require.Equal(t, 55+wallet.CrystalPlace1/2, rec.Ratings[host.ID].Crystal)
-	require.Equal(t, wallet.CrystalPlace2/2, rec.Ratings[guest.ID].Crystal)
+	require.Equal(t, 55+wallet.CrystalPlace1*resultWithGuestsMultiplier(), rec.Ratings[host.ID].Crystal)
+	require.Equal(t, wallet.CrystalPlace2*resultWithGuestsMultiplier(), rec.Ratings[guest.ID].Crystal)
 	require.NotContains(t, rec.Ratings, "guest-77:p")
 	require.NotContains(t, rec.Ratings, "bot-02")
 }
@@ -71,7 +71,7 @@ func TestCrystalSettlementIdempotent(t *testing.T) {
 	require.Equal(t, http.StatusOK, resp1.StatusCode)
 	w1, err := ts.Srv.Wallet.Get(ctx, host.ID)
 	require.NoError(t, err)
-	require.Equal(t, wallet.CrystalPlace1/2, w1.Crystal)
+	require.Equal(t, wallet.CrystalPlace1*resultWithGuestsMultiplier(), w1.Crystal)
 
 	// Duplicate callback: acknowledged, grants NOTHING again.
 	resp2, err := gamelinktest.SendResult(ts.HTTP.URL, testutil.GameSecret, res, 0)
@@ -86,14 +86,14 @@ func TestCrystalSettlementIdempotent(t *testing.T) {
 	require.Equal(t, "duplicate", body["status"])
 	w2, err := ts.Srv.Wallet.Get(ctx, host.ID)
 	require.NoError(t, err)
-	require.Equal(t, wallet.CrystalPlace1/2, w2.Crystal, "duplicate must not double-grant crystals")
+	require.Equal(t, wallet.CrystalPlace1*resultWithGuestsMultiplier(), w2.Crystal, "duplicate must not double-grant crystals")
 
 	// Boot replay (WAL) converges to the same absolute balance too.
 	require.NoError(t, ts.Srv.Journal.AppendIntent(matchID, readMatchRecord(t, ts, matchID)))
 	require.NoError(t, ts.Srv.Boot(ctx))
 	w3, err := ts.Srv.Wallet.Get(ctx, host.ID)
 	require.NoError(t, err)
-	require.Equal(t, wallet.CrystalPlace1/2, w3.Crystal, "WAL replay applies the absolute balance idempotently")
+	require.Equal(t, wallet.CrystalPlace1*resultWithGuestsMultiplier(), w3.Crystal, "WAL replay applies the absolute balance idempotently")
 }
 
 // TestLegacySettlementDoesNotWipeCrystals: match records written before the
@@ -122,6 +122,6 @@ func TestLegacySettlementDoesNotWipeCrystals(t *testing.T) {
 
 	w, err := ts.Srv.Wallet.Get(ctx, host.ID)
 	require.NoError(t, err)
-	require.Equal(t, wallet.CrystalPlace1/2, w.Crystal,
+	require.Equal(t, wallet.CrystalPlace1*resultWithGuestsMultiplier(), w.Crystal,
 		"replaying a pre-crystal settlement record must not wipe the balance")
 }

@@ -40,6 +40,9 @@ export function spawnChampion(world: SimWorld, args: SpawnChampionArgs): EntityI
     xp: 0,
     gold: 0,
     items: new Array(INVENTORY_SLOTS).fill(null),
+    // ⭐ 與 `items` **同長度、同索引**的取得紀錄（owner 2026-08-17）。在這裡
+    // 一起配置，所以「格子存在但沒有紀錄陣列」這個狀態在正式流程裡不存在。
+    itemAcq: new Array(INVENTORY_SLOTS).fill(null),
     augments: [],
     statStacks: 0,
     // 三圍 bought this match (#260) — starts empty; every 能力屬性強化 pick adds

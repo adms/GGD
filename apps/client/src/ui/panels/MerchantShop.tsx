@@ -31,7 +31,7 @@
  */
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Champions, Items } from "@ggd/shared/sim/content/registry";
-import { SELL_REFUND, INVENTORY_SLOTS } from "@ggd/shared/sim/economy/shop";
+import { INVENTORY_SLOTS } from "@ggd/shared/sim/economy/shop";
 import { itemHasEffect, isShopService, shopServicePrice } from "@ggd/shared/sim/economy/itemTiers";
 import { parseCombatEnvJson } from "@ggd/shared/sim/combatEnv";
 import { Stat, type StatBlock } from "@ggd/shared/sim/stats/statTypes";
@@ -323,7 +323,7 @@ export function MerchantShop(): React.JSX.Element | null {
       shopEvent.kind === "bought"
         ? boughtToast(name)
         : shopEvent.kind === "sold"
-          ? soldToast(name, refundOf(shopEvent.itemId))
+          ? soldToast(name, lastSellRefund)
           : shopEvent.kind === "undone"
             ? undoneToast(shopEvent.undoneKind, name, shopEvent.gold)
             : rejectToast(shopEvent.reason, name);
@@ -635,10 +635,46 @@ function readDensity(): Density {
   return typeof window !== "undefined" && window.innerHeight < 780 ? "compact" : "detail";
 }
 
-/** Sell refund for an item id (matches the sim's SELL_REFUND exactly). */
-function refundOf(itemId: string): number {
-  const def = itemId ? Items.tryGet(itemId as ItemId) : undefined;
-  return def ? Math.floor(def.cost * SELL_REFUND) : 0;
+/**
+ * ⭐ 一格裝備賣掉會拿到多少 · 那一把是不是**隨機取得**的（owner 2026-08-17）。
+ *
+ * ⛔ 這裡**不再**算 `def.cost × 40%`。那條式子對 49 把寶具全部得到 0（它們的
+ * 標價是 0，售價是推導的），而對三選一**免費**發到手的普通武器會得到一個
+ * 玩家永遠拿不到的數字 —— 兩個方向都在說謊，而畫面上都長得像真的。
+ *
+ * 退款的真相只有伺服器有（那一格**實付**了多少），所以它由 snapshot 逐格送過來
+ * （`SeatState.itemRefund` / `itemRandom`，與 `items` index-aligned）。
+ *
+ * ⛔ 沒送到的時候（還沒收到第一份快照 / 舊 shard）**不推導**，一律 `null` →
+ * 畫面上寫「?」。這裡曾經有一段「這件東西現在上不了架 ⇒ 一定是免費拿到的 ⇒
+ * 退 0」的 fallback，接線之後它就只是一份**會漂走的第二實作**：那條規則活在
+ * `shopShelf.ts`，而它一旦與伺服器不同步，畫面就會用十足的把握寫出一個假的 0。
+ * ⭐ 寧可說不知道。
+ */
+interface SlotRefundView {
+  /** 退款金額；`null` = 這個客戶端還不知道（顯示 `?`）。 */
+  gold: number | null;
+  /** 是不是隨機取得的（三選一卡 / 傳說寶玉）。 */
+  random: boolean;
+}
+
+/**
+ * 玩家**按下賣出的那一刻**，那一格畫面上寫的退款金額（`null` = 寫的是「?」）。
+ *
+ * ⭐ 為什麼是這個而不是從事件回推：伺服器的 `itemSold` 只送**賣完之後的總金幣**，
+ * 差額推不出來；而畫面上那個數字與伺服器付的是**同一條規則**（實付 × 退款率），
+ * 所以直接沿用玩家剛剛看到的那一個 —— 兩者不一致的唯一情況就是客戶端不知道，
+ * 而那一種情況這裡是 `null`，吐司就不報數字。
+ *
+ * 模組層變數而不是 React state：一個畫面只有一個商店，而且它是**點擊到吐司**
+ * 之間的一次性接力，⛔ 不參與任何一次 render 的輸出。
+ */
+let lastSellRefund: number | null = null;
+
+function slotRefundView(seat: SeatView, slot: number): SlotRefundView {
+  // 還沒收到快照的那一幀（以及舊 shard）→ undefined → 「?」。這就是安全值。
+  const gold = seat.itemRefund?.[slot];
+  return gold === undefined ? { gold: null, random: false } : { gold, random: seat.itemRandom?.[slot] === true };
 }
 
 /** Effective purchase price — services are priced by the sim, not the doc. */
@@ -1134,6 +1170,11 @@ function InventoryGrid(props: { seat: SeatView; filled: number }): React.JSX.Ele
           ]
             .filter(Boolean)
             .join("\n");
+          // ⭐ owner 2026-08-17：退款要顯示**實付推導**的值，而且看得出這一把
+          // 是不是隨機取得的。`?` 是「這個客戶端不知道」，⛔ 不是 0 —— 寫 0 會
+          // 讓玩家以為系統把錢吃掉了。
+          const rf = slotRefundView(seat, slot);
+          const refundText = rf.gold === null ? "? g" : `+${rf.gold} g`;
           return (
             <Tooltip
               key={slot}
@@ -1144,7 +1185,16 @@ function InventoryGrid(props: { seat: SeatView; filled: number }): React.JSX.Ele
                   <ItemCardBody description={row.description} fontSize={11.5} />
                 ) : undefined
               }
-              meta={[{ label: "點擊賣出", value: `+${refundOf(itemId)} g` }]}
+              meta={[
+                { label: "取得方式", value: rf.random ? "🎲 隨機取得（三選一／寶玉）" : "商店購買" },
+                {
+                  label: "點擊賣出",
+                  value:
+                    rf.gold === null
+                      ? "退款＝實付價 × 退款率（等伺服器回報）"
+                      : `${refundText}（實付價 × 退款率）`,
+                },
+              ]}
               style={{ display: "block" }}
             >
               {/* #24: a SELL is a real, gold-moving gameplay action — the one
@@ -1164,7 +1214,11 @@ function InventoryGrid(props: { seat: SeatView; filled: number }): React.JSX.Ele
                 // toggles on this card already use.
                 kind="subdued"
                 sfxVolume={0.4}
-                onClick={() => hudActions.sendCommand({ kind: "sellItem", itemSlot: slot })}
+                onClick={() => {
+                  // 交棒給吐司：玩家剛剛看到的退款金額（見 lastSellRefund）
+                  lastSellRefund = rf.gold;
+                  hudActions.sendCommand({ kind: "sellItem", itemSlot: slot });
+                }}
                 style={{
                   position: "relative",
                   width: "100%",
@@ -1182,6 +1236,30 @@ function InventoryGrid(props: { seat: SeatView; filled: number }): React.JSX.Ele
                     格子的一部分。圓角刻意不傳:GlyphTile 的 fill 會 `inherit`
                     上面那顆 SfxButton 的圓角,兩邊就不會各自寫一個會漂移的數字。 */}
                 <GlyphTile seed={itemId} icon={def?.icon ?? null} label={name} fill style={iconInset} />
+                {/* 🎲 = 這一把是隨機拿到的（三選一／寶玉），所以賣掉退 0。
+                    ⭐ 它與角落那個金額是**同一份**資料，⛔ 不會出現「標成隨機
+                    但寫著退 3,840」這種各說各話。 */}
+                {rf.random && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      // ⚠️ 貼齊 0/0 而不是 1/2：`hudLayout.test.ts` 的
+                      //「沒有 HUD 檔案自己寫死角落座標」掃的是
+                      // `position:absolute` 視窗內**非零**的 top/bottom + left/right。
+                      // 這個角標的父層是裝備格（`position:relative`），它釘的是**自己那一格**
+                      // 而不是螢幕角落，所以它不該進那張豁免表 —— 那張表會反過來斷言
+                      // 每一筆豁免都還是一個真的違規，塞一個假的註冊槽進去就是說謊。
+                      // 0/0 在 84px 的格子上與 1/2 看不出差別，而守衛的牙齒一顆沒少。
+                      top: 0,
+                      left: 0,
+                      fontSize: 9,
+                      textShadow: "0 0 3px #000",
+                    }}
+                    title="隨機取得（三選一／傳說寶玉）"
+                  >
+                    🎲
+                  </span>
+                )}
                 <span
                   style={{
                     position: "absolute",
@@ -1193,7 +1271,7 @@ function InventoryGrid(props: { seat: SeatView; filled: number }): React.JSX.Ele
                     textShadow: "0 0 3px #000",
                   }}
                 >
-                  {refundOf(itemId)}g
+                  {rf.gold === null ? "?" : rf.gold}g
                 </span>
               </SfxButton>
             </Tooltip>

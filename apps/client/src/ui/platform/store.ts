@@ -201,6 +201,18 @@ export interface AppState {
    * click must not become two matches.
    */
   botMatchBusy: boolean;
+  /**
+   * 練習模式（GH#343）—— **這一次按下去的是不是練習模式那顆按鈕**。
+   *
+   * ⚠️ 為什麼需要一格狀態：座位是**非同步**回來的（POST /rooms/solo 之後，
+   * `match_ready` 才從大廳 WS 推過來），而那則推播裡沒有「這是練習房」這件事。
+   * `platformLaunch()` 因此讀這一格來決定 `MatchLaunch.practice`。
+   *
+   * ⛔ 它**不是**權威：伺服器有自己的一份（`MatchRoom.cheatsAllowed`）。它只
+   * 決定客戶端要不要畫 🐞 測試碼面板 —— 少了它，伺服器開的是練習房而畫面上
+   * 什麼都沒有（失敗形態②：算出來了但從沒送到看得到的地方）。
+   */
+  practiceIntent: boolean;
   lastError: string | null;
 
   /**
@@ -301,8 +313,14 @@ export interface AppState {
    * the platform creates a private room, starts it with 11 bots and pushes the
    * seat token over the lobby WS, so it records, rates and pays half crystals.
    * This is NOT `playOffline`, which is the dev direct-join and settles nowhere.
+   *
+   * @param practice 練習模式（GH#343）—— 同一條路，只多帶一格旗標。⭐ 它刻意
+   *   **不是**另一個 action：練習房就是一間 solo 房（不列在大廳、只有自己），
+   *   座位／回呼／心跳／#200 的內容預熱通通共用，⛔ 第二條路只會各自腐爛。
+   *   練習房**完全沒有獎勵積分**（owner 2026-08-17）是伺服器保證的：它不發
+   *   result callback，所以水晶／MMR／賽季積分／M幣／戰績五條路一條都不會跑。
    */
-  playBotMatch(mapId?: string, rogueliteMobs?: boolean): Promise<void>;
+  playBotMatch(mapId?: string, rogueliteMobs?: boolean, practice?: boolean): Promise<void>;
   createInvite(accountId: string, username: string): Promise<void>;
   joinByCode(token: string): Promise<void>;
   dismissInvite(token: string): void;
@@ -492,8 +510,12 @@ export const appStore = createStore<AppState>()((set, get) => {
       accountId: account?.id ?? null,
       skinOverrides,
       mapId: null, // platform matches render the server-authoritative state.mapId
-      // 平台賽永遠不是練習房：練習房走的是 `playOffline(mapId, true)` 那條路。
-      practice: false,
+      // 練習模式（GH#343）跟著**這一次開的房**走，⛔ 不再寫死 false。
+      // 這一行寫死的那段時間裡，練習模式只能走 `playOffline`（dev 直連），而那條路
+      // 在正式站被 MatchRoom 的 createToken 閘擋死 —— 也就是說線上根本沒有練習模式。
+      // 現在練習房是一間真的 solo 房，座位從 `match_ready` 回來，所以「它是不是練習房」
+      // 只能由按下按鈕的那一刻記住（`practiceIntent`）。
+      practice: get().practiceIntent,
     };
   }
 
@@ -533,6 +555,7 @@ export const appStore = createStore<AppState>()((set, get) => {
     matchLoading: null,
     matchEpoch: 0,
     botMatchBusy: false,
+    practiceIntent: false,
     lastError: null,
     leaveGate: false,
 
@@ -664,6 +687,8 @@ export const appStore = createStore<AppState>()((set, get) => {
         match: null,
         matchLoading: null,
         botMatchBusy: false,
+        // 換一個人登入不能繼承上一個人的練習模式意圖。
+        practiceIntent: false,
         leaveGate: false,
       });
     },
@@ -908,6 +933,9 @@ export const appStore = createStore<AppState>()((set, get) => {
     async startMatch() {
       const room = get().room;
       if (!room) return;
+      // 一般房間永遠不是練習房（伺服器的 room.Create 也把那一格清掉了）；
+      // 這裡讓畫面那一半跟著對齊，⛔ 不要讓上一次按練習模式的意圖漏進來。
+      set({ practiceIntent: false });
       try {
         await apiFns.startRoom(room.room.id);
         // seat token arrives over the lobby WS (match_ready) for everyone
@@ -916,8 +944,12 @@ export const appStore = createStore<AppState>()((set, get) => {
       }
     },
 
-    async playBotMatch(mapId?: string, rogueliteMobs?: boolean) {
+    async playBotMatch(mapId?: string, rogueliteMobs?: boolean, practice?: boolean) {
       if (get().botMatchBusy) return; // one click is one match
+      // 記住這一次按的是哪一顆按鈕：座位是非同步回來的，`platformLaunch()` 到時候
+      // 只剩這一格能回答「這一場是不是練習房」。⚠️ 每一次按都要重寫（含 false），
+      // ⛔ 不可以只在 true 的時候設 —— 那樣上一場練習會沾到下一場一鍵開打。
+      set({ practiceIntent: practice === true });
       set({ botMatchBusy: true, lastError: null });
       // PRIME THE ONE-TIME CONTENT LOAD BEFORE THE SEAT IS MINTED (task #200).
       // A colyseus seat reservation starts its expiry clock the instant the
@@ -938,10 +970,12 @@ export const appStore = createStore<AppState>()((set, get) => {
       if (!get().botMatchBusy || get().screen !== "lobby") return;
       try {
         // Only include a field when it deviates from the default: map when set,
-        // rogueliteMobs only when explicitly OFF (sending nothing = ON, #215).
-        const solo: { mapId?: string; rogueliteMobs?: boolean } = {};
+        // rogueliteMobs only when explicitly OFF (sending nothing = ON, #215),
+        // practice only when it IS a practice room (缺席 = 不是練習房，GH#343).
+        const solo: { mapId?: string; rogueliteMobs?: boolean; practice?: boolean } = {};
         if (mapId) solo.mapId = mapId;
         if (rogueliteMobs === false) solo.rogueliteMobs = false;
+        if (practice === true) solo.practice = true;
         await apiFns.startSoloMatch(Object.keys(solo).length ? solo : undefined);
       } catch (err) {
         set({ botMatchBusy: false, lastError: errText(err) });

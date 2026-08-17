@@ -28,22 +28,52 @@ import { Panel, Btn } from "./widgets";
 import { ACCENT, DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
 import { getOverlayDoc, getShippedDoc, getWhitelist, putOverlayDoc } from "../api";
 import {
+  CRYSTAL_FIELD_BOUNDS,
   RANDOM_PICK_OWNERSHIP_OPTIONS,
   SANE_UNLOCK_COST,
+  SHIPPED_CRYSTAL_REWARDS,
   SHIPPED_FREE_CHAMPION_IDS,
   SHIPPED_RANDOM_PICK_OWNERSHIP,
   SHIPPED_UNLOCK_COST,
   STORE_COLLECTION,
   STORE_DOC_ID,
+  crystalFieldValue,
+  crystalPayoutPreview,
   economySummary,
   extractStore,
   freeListText,
   parseFreeChampionIds,
   parseUnlockCost,
   storeDocFor,
+  validateCrystalRewards,
+  withCrystalField,
+  type CrystalField,
+  type CrystalRewards,
   type RandomPickOwnership,
   type StoreEconomy,
 } from "../storeEconomy";
+
+/** 表單上的排列順序 —— 基礎值四格在前，三顆倍率旋鈕在後。 */
+const CRYSTAL_FIELD_ORDER: readonly CrystalField[] = [
+  "place1",
+  "place2",
+  "place3",
+  "place4",
+  "minHumans",
+  "offset",
+  "maxMultiplier",
+];
+
+/** 每一格的說明寫「**它影響什麼**」，⛔ 不是複述欄位名。 */
+const CRYSTAL_FIELD_HELP: Record<CrystalField, string> = {
+  place1: "吃雞（第一名）在只有自己一個真人時實拿多少水晶。其餘名次照同一個倍率放大。",
+  place2: "第二名的基礎值。第一名與最後一名的差距就是「名次值不值得拼」。",
+  place3: "第三名的基礎值。",
+  place4: "最後一名的基礎值 —— 調到 0 就等於「輸了不給」，一直輸的家人會完全賺不到水晶。",
+  minHumans: "要幾個真人在場才開始給倍率。出貨 2 = owner 的「兩真人」；設成 1 會讓自己打 bot 也吃倍率。",
+  offset: "倍率 = 真人數 + 這個數。出貨 1 = owner 的「(N+1) 倍」。設 0 就是「幾個人幾倍」。",
+  maxMultiplier: "倍率的天花板。出貨 13 = 滿場 12 人的 (12+1)，所以實際上不會夾到；調小就會提早封頂。",
+};
 
 function errText(err: unknown): string {
   return err instanceof Error ? err.message : String(err);
@@ -54,6 +84,7 @@ export function StoreEconomyPage(): JSX.Element {
   const [costText, setCostText] = useState("");
   const [freeText, setFreeText] = useState("");
   const [randomPick, setRandomPick] = useState<RandomPickOwnership>(SHIPPED_RANDOM_PICK_OWNERSHIP);
+  const [crystal, setCrystal] = useState<CrystalRewards>(SHIPPED_CRYSTAL_REWARDS);
   const [roster, setRoster] = useState<string[] | null>(null);
   const [busy, setBusy] = useState(false);
   const [apiErr, setApiErr] = useState<string | null>(null);
@@ -75,6 +106,7 @@ export function StoreEconomyPage(): JSX.Element {
           setCostText(String(economy.championUnlockCost));
           setFreeText(freeListText(economy.freeChampionIds));
           setRandomPick(economy.randomPickOwnership);
+          setCrystal(economy.crystalRewards);
         }
       } catch (err) {
         setApiErr(errText(err));
@@ -97,12 +129,16 @@ export function StoreEconomyPage(): JSX.Element {
   const cost = useMemo(() => parseUnlockCost(costText), [costText]);
   const free = useMemo(() => parseFreeChampionIds(freeText, known), [freeText, known]);
 
+  const crystalErrs = useMemo(() => validateCrystalRewards(crystal), [crystal]);
+  const crystalOK = Object.keys(crystalErrs).length === 0;
+
   const preview: StoreEconomy | null =
-    loaded && cost.ok
+    loaded && cost.ok && crystalOK
       ? {
           championUnlockCost: cost.value,
           freeChampionIds: free.ids,
           randomPickOwnership: randomPick,
+          crystalRewards: crystal,
           mcoinRewards: loaded.mcoinRewards,
         }
       : null;
@@ -111,7 +147,8 @@ export function StoreEconomyPage(): JSX.Element {
     loaded !== null &&
     (costText.trim() !== String(loaded.championUnlockCost) ||
       free.ids.join("\n") !== freeListText(loaded.freeChampionIds) ||
-      randomPick !== loaded.randomPickOwnership);
+      randomPick !== loaded.randomPickOwnership ||
+      JSON.stringify(crystal) !== JSON.stringify(loaded.crystalRewards));
 
   const save = async (): Promise<void> => {
     if (!preview) return;
@@ -137,6 +174,7 @@ export function StoreEconomyPage(): JSX.Element {
     setCostText(String(SHIPPED_UNLOCK_COST));
     setFreeText(freeListText(SHIPPED_FREE_CHAMPION_IDS));
     setRandomPick(SHIPPED_RANDOM_PICK_OWNERSHIP);
+    setCrystal(SHIPPED_CRYSTAL_REWARDS);
     setFlash(null);
   };
 
@@ -164,14 +202,19 @@ export function StoreEconomyPage(): JSX.Element {
         <b style={{ color: TEXT_MAIN }}>還沒解鎖的人下一次要付多少</b>。
       </p>
       <p style={{ color: TEXT_DIM, fontSize: 13, lineHeight: 1.7, margin: "0 0 14px" }}>
-        ⚠️ 這一頁<b style={{ color: GOLD }}>只有解鎖價與免費名單是即時生效的</b>。
-        存檔會連同 <code>mcoinRewards</code>（吃雞的 M幣）一起寫回去（不寫會讓那張表消失），
-        但<b style={{ color: GOLD }}>結算發 M幣 讀的仍然是開機時載入的出貨值</b>，
-        要改名次獎勵目前還是得重新部署。
+        ⚠️ 這一頁<b style={{ color: GOLD }}>只有解鎖價、免費名單與藍水晶獎勵是即時生效的</b>
+        （這三樣平台都是每一次請求／每一場結算現讀）。存檔會連同 <code>mcoinRewards</code>
+        （吃雞的 M幣）一起寫回去（不寫會讓那張表消失），但
+        <b style={{ color: GOLD }}>結算發 M幣 讀的仍然是開機時載入的出貨值</b>，
+        要改 M幣 名次獎勵得<b style={{ color: GOLD }}>重啟 platform</b>（或重新部署）才會生效。
       </p>
 
       <div style={{ color: TEXT_MAIN, fontSize: 13, marginBottom: 12 }}>
-        {preview ? economySummary(preview, roster?.length ?? null) : "讀取中…"}
+        {preview
+          ? economySummary(preview, roster?.length ?? null)
+          : loaded
+            ? "有欄位不合法 —— 下面標紅的地方修好才會重新計算"
+            : "讀取中…"}
       </div>
 
       {flash && <div style={{ color: OK, fontSize: 13, marginBottom: 10 }}>{flash}</div>}
@@ -264,6 +307,83 @@ export function StoreEconomyPage(): JSX.Element {
         </p>
       </div>
 
+      {/* owner 2026-08-17：「只要有兩真人(N≥2)參加，不論哪個陣營都可以，所有玩家都
+          (N+1) 倍，所以最大 13 倍」。放在解鎖價後面因為它是同一個經濟的另一半：
+          上面決定英雄要多少水晶，這裡決定水晶多快進得來。 */}
+      <div
+        style={{
+          padding: "9px 10px",
+          border: `1px solid ${PANEL_BORDER}`,
+          borderRadius: 4,
+          fontSize: 13,
+          marginBottom: 12,
+        }}
+      >
+        <div style={{ color: TEXT_MAIN, marginBottom: 4 }}>
+          💎 多人比賽水晶獎勵 <code style={{ color: TEXT_DIM, fontSize: 11 }}>crystalRewards</code>
+        </div>
+        <p style={{ color: TEXT_DIM, fontSize: 12, lineHeight: 1.7, margin: "0 0 8px" }}>
+          場上<b style={{ color: TEXT_MAIN }}>只要有兩個以上真人</b>（
+          <b style={{ color: ACCENT }}>不分陣營</b>，敵對兩隊也算），全場所有人的水晶都乘上
+          <b style={{ color: TEXT_MAIN }}>（人數 + 倍率加成）</b>，夾在倍率上限。
+          一個人打 bot 拿的就是下面的基礎值，<b style={{ color: OK }}>跟今天完全一樣</b>。
+          沙發客（同一台機器的 2~4 號玩家）<b style={{ color: TEXT_MAIN }}>算人頭</b>把倍率推高，
+          但他們沒有帳號，所以領不到自己那一份。
+        </p>
+
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+          {CRYSTAL_FIELD_ORDER.map((f) => {
+            const bad = crystalErrs[f];
+            return (
+              <label
+                key={f}
+                title={CRYSTAL_FIELD_HELP[f]}
+                style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12 }}
+              >
+                <span style={{ color: TEXT_MAIN }}>{CRYSTAL_FIELD_BOUNDS[f].label}</span>
+                <input
+                  aria-label={`${CRYSTAL_FIELD_BOUNDS[f].label}（${CRYSTAL_FIELD_HELP[f]}）`}
+                  data-field={`crystalRewards.${f}`}
+                  inputMode="numeric"
+                  value={String(crystalFieldValue(crystal, f))}
+                  onChange={(e) =>
+                    setCrystal((c) => withCrystalField(c, f, Number(e.target.value.trim())))
+                  }
+                  style={{
+                    width: 78,
+                    padding: "4px 6px",
+                    background: "transparent",
+                    color: bad ? DANGER : TEXT_MAIN,
+                    border: `1px solid ${bad ? DANGER : PANEL_BORDER}`,
+                    borderRadius: 3,
+                    textAlign: "right",
+                  }}
+                />
+                <span style={{ color: TEXT_DIM, fontSize: 11 }}>
+                  {CRYSTAL_FIELD_BOUNDS[f].min}–{CRYSTAL_FIELD_BOUNDS[f].max.toLocaleString()}
+                </span>
+              </label>
+            );
+          })}
+        </div>
+
+        {Object.entries(crystalErrs).map(([f, msg]) => (
+          <div key={f} style={{ color: DANGER, fontSize: 12, marginTop: 6 }}>
+            {msg}
+          </div>
+        ))}
+
+        {/* 唯讀推導列 —— 讓操作者不用心算。算式來自 shared 的 crystalMultiplier，
+            跟平台結算走的是同一條規則，所以它不可能跟實際發下去的數字說不一樣的話。 */}
+        <p style={{ color: crystalOK ? OK : TEXT_DIM, fontSize: 12, lineHeight: 1.7, margin: "8px 0 0" }}>
+          {crystalOK ? crystalPayoutPreview(crystal, [1, 2, 12]) : "數值超出範圍，先修正上面標紅的欄位。"}
+        </p>
+        <p style={{ color: TEXT_DIM, fontSize: 12, lineHeight: 1.7, margin: "4px 0 0" }}>
+          <b style={{ color: OK }}>存檔後下一場結算就生效</b>，不用重啟、玩家也不用重整
+          —— 平台是在每一場結算現讀這份覆寫。
+        </p>
+      </div>
+
       <div style={{ marginBottom: 6 }}>
         <span style={{ color: TEXT_MAIN, fontSize: 13 }}>免費名單</span>{" "}
         <code style={{ color: TEXT_DIM, fontSize: 11 }}>freeChampionIds</code>{" "}
@@ -310,16 +430,22 @@ export function StoreEconomyPage(): JSX.Element {
       )}
 
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 14 }}>
-        <Btn kind="primary" disabled={busy || !dirty || !cost.ok} onClick={() => void save()}>
+        <Btn
+          kind="primary"
+          disabled={busy || !dirty || !cost.ok || !crystalOK}
+          onClick={() => void save()}
+        >
           儲存 Save
         </Btn>
         <Btn onClick={resetToShipped} disabled={busy}>
           回到出貨值
         </Btn>
         <span style={{ color: TEXT_DIM, fontSize: 12 }}>
-          {cost.ok
-            ? "整份文件一起寫入（含 M幣 名次獎勵，但那一段要重啟才生效）"
-            : "價格不合法，無法儲存"}
+          {!cost.ok
+            ? "價格不合法，無法儲存"
+            : !crystalOK
+              ? "水晶獎勵有欄位超出範圍，無法儲存"
+              : "整份文件一起寫入（含 M幣 名次獎勵，但那一段要重啟才生效）"}
         </span>
       </div>
     </Panel>

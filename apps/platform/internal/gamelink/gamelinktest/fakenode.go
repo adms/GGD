@@ -22,9 +22,10 @@ type FakeNode struct {
 	Server *httptest.Server
 	Secret string
 
-	mu       sync.Mutex
-	requests []gamelink.MatchRequest
-	rejected int
+	mu        sync.Mutex
+	requests  []gamelink.MatchRequest
+	rawBodies [][]byte
+	rejected  int
 }
 
 // New starts the fake game server. Close it via Close().
@@ -46,6 +47,21 @@ func (f *FakeNode) Requests() []gamelink.MatchRequest {
 	defer f.mu.Unlock()
 	out := make([]gamelink.MatchRequest, len(f.requests))
 	copy(out, f.requests)
+	return out
+}
+
+// RawBodies returns the exact JSON bytes of every accepted request, in order.
+//
+// ⚠️ 為什麼要有這一個，而不是只看 Requests()：Requests() 已經被
+// `json.Unmarshal` 成 `gamelink.MatchRequest` 了，而**那個 struct 自己就是
+// tag 的來源**。所以「tag 打錯」這一類缺陷用 Requests() 是驗不出來的 ——
+// 送出去的鍵與讀回來的鍵一起錯，測試照樣綠（第二守則的失敗形態⑤：
+// 被測的不是出貨的那個）。要驗線上真的長什麼樣，只能讀原始位元組。
+func (f *FakeNode) RawBodies() [][]byte {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	out := make([][]byte, len(f.rawBodies))
+	copy(out, f.rawBodies)
 	return out
 }
 
@@ -79,6 +95,7 @@ func (f *FakeNode) handle(w http.ResponseWriter, r *http.Request) {
 	}
 	f.mu.Lock()
 	f.requests = append(f.requests, req)
+	f.rawBodies = append(f.rawBodies, append([]byte(nil), body...))
 	f.mu.Unlock()
 
 	resp := gamelink.MatchResponse{

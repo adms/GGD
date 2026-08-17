@@ -44,6 +44,10 @@ func (h *Handlers) Mount(r chi.Router) {
 		ar.Post("/accounts/{id}/mmr", h.setMMR)
 		ar.Post("/accounts/{id}/ban", h.ban)
 		ar.Post("/accounts/{id}/unban", h.unban)
+		// 「我 vs 某人 幾勝幾敗」(owner 2026-08-17)。唯讀,而且刻意只有 API ——
+		// 前端那一頁是另一批的事,但沒有這條路 owner 就完全看不到那份紀錄,
+		// 而看不到的資料等於沒有做。
+		ar.Get("/accounts/{id}/head-to-head", h.headToHead)
 
 		ar.Get("/matches", h.listMatches)
 		ar.Get("/matches/{id}", h.getMatch)
@@ -235,6 +239,18 @@ func (h *Handlers) unban(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	httpx.WriteJSON(w, http.StatusOK, map[string]any{"account": row})
+}
+
+// headToHead 唯讀:列出這個帳號對每一個對手的累計勝負(owner 2026-08-17
+// 「真實記錄 vs 特定玩家的幾勝幾敗」)。⛔ 沒有任何寫入 —— 那份紀錄只有結算路徑
+// 可以動,而結算是 HMAC 驗過的伺服器對伺服器回呼。
+func (h *Handlers) headToHead(w http.ResponseWriter, r *http.Request) {
+	rows, err := h.svc.HeadToHead(r.Context(), chi.URLParam(r, "id"))
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, map[string]any{"accountId": chi.URLParam(r, "id"), "opponents": rows})
 }
 
 // ---- matches ----------------------------------------------------------------

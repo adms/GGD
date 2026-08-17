@@ -17,6 +17,17 @@
     "godie-udre"
   ],
   "randomPickOwnership": "block",
+  "crystalRewards": {
+    "base": {
+      "place1": 120,
+      "place2": 45,
+      "place3": 35,
+      "place4": 30
+    },
+    "minHumans": 2,
+    "offset": 1,
+    "maxMultiplier": 13
+  },
   "mcoinRewards": {
     "placement1": 1,
     "placement2": 0,

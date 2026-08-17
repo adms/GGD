@@ -54,6 +54,7 @@ package wallet
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"log/slog"
 
 	"github.com/ggd/platform/internal/data/jsonstore"
@@ -96,6 +97,18 @@ type Economy struct {
 	// FreeIDs is the free-champion list AS AUTHORED (a typo stays visible, the
 	// same contract Catalog.FreeChampionIDs keeps).
 	FreeIDs []string
+	// Crystal is the per-match 藍水晶 payout: the four placement bases plus the
+	// 多人比賽倍率 knobs (owner 2026-08-17). ALWAYS populated — an override doc
+	// with no `crystalRewards` block yields DefaultCrystalRules, so a caller can
+	// use this field without a second nil/zero check.
+	//
+	// ⚠️ IT IS LIVE, unlike `mcoinRewards` two paragraphs up. That is not an
+	// inconsistency, it is which service reads it: M幣 is credited from
+	// gamelink's own boot-time Catalog copy, while 藍水晶 is credited through the
+	// wallet Service the settler already holds (Service.CrystalRulesNow), which
+	// re-reads this file on every settlement. The console page has to say both
+	// things, because it saves both fields in one document.
+	Crystal CrystalRules
 }
 
 // overlayFile is the slice of contentoverlay.Overlay this package needs. Docs
@@ -134,6 +147,17 @@ func parseStoreEconomy(raw []byte) (Economy, bool) {
 		Schema             string   `json:"schema"`
 		ChampionUnlockCost *int     `json:"championUnlockCost"`
 		FreeChampionIDs    []string `json:"freeChampionIds"`
+		CrystalRewards     *struct {
+			Base *struct {
+				Place1 *int `json:"place1"`
+				Place2 *int `json:"place2"`
+				Place3 *int `json:"place3"`
+				Place4 *int `json:"place4"`
+			} `json:"base"`
+			MinHumans     *int `json:"minHumans"`
+			Offset        *int `json:"offset"`
+			MaxMultiplier *int `json:"maxMultiplier"`
+		} `json:"crystalRewards"`
 	}
 	if err := json.Unmarshal(raw, &d); err != nil {
 		slog.Warn("wallet: 商店經濟 override is not readable JSON — serving the shipped store prices",
@@ -163,7 +187,64 @@ func parseStoreEconomy(raw []byte) (Economy, bool) {
 			free = append(free, id)
 		}
 	}
-	return Economy{UnlockCost: *d.ChampionUnlockCost, FreeIDs: free}, true
+	// 水晶那一組是 2026-08-17 才加的,所以「整塊不在」是**每一份既有覆蓋層**的常態,
+	// ⛔ 不能跟上面那些 reject 一樣讓整份 override 失效 —— 那會讓線上所有存過價格的
+	// 站台一夜之間退回出貨價。缺塊 = 出貨值,而不是 0(0 倍率 = 打完一場沒東西拿)。
+	crystal := DefaultCrystalRules()
+	if c := d.CrystalRewards; c != nil {
+		cand := crystal
+		if b := c.Base; b != nil {
+			putInt(&cand.Place1, b.Place1)
+			putInt(&cand.Place2, b.Place2)
+			putInt(&cand.Place3, b.Place3)
+			putInt(&cand.Place4, b.Place4)
+		}
+		putInt(&cand.MinHumans, c.MinHumans)
+		putInt(&cand.Offset, c.Offset)
+		putInt(&cand.MaxMultiplier, c.MaxMultiplier)
+		if err := validateCrystalRules(cand); err != nil {
+			// 同一條哲學:⛔ 不夾,退回出貨值並吼一聲。夾出來的倍率是沒有人選過的
+			// 數字,而且它會長得跟正常的一模一樣。
+			slog.Warn("wallet: 商店經濟 的水晶獎勵超出範圍 —— 這一塊退回出貨值",
+				"key", OverlayStoreKey, "err", err)
+		} else {
+			crystal = cand
+		}
+	}
+	return Economy{UnlockCost: *d.ChampionUnlockCost, FreeIDs: free, Crystal: crystal}, true
+}
+
+// putInt copies an OPTIONAL override field over a shipped default. A field the
+// console did not write keeps the shipped value; it never lands as 0.
+func putInt(dst *int, src *int) {
+	if src != nil {
+		*dst = *src
+	}
+}
+
+// validateCrystalRules checks BOTH ENDS of every knob (GH#277: a min-only check
+// is how 13 typed as 130 gets past a form and pays out 56 champions in one
+// match). The bounds are the same ones zConfigStoreDoc and the console enforce.
+func validateCrystalRules(r CrystalRules) error {
+	for i, v := range []int{r.Place1, r.Place2, r.Place3, r.Place4} {
+		if v < CrystalBaseMin || v > CrystalBaseMax {
+			return fmt.Errorf("crystalRewards.base.place%d = %d, want %d..%d",
+				i+1, v, CrystalBaseMin, CrystalBaseMax)
+		}
+	}
+	if r.MinHumans < CrystalMinHumansMin || r.MinHumans > CrystalMinHumansMax {
+		return fmt.Errorf("crystalRewards.minHumans = %d, want %d..%d",
+			r.MinHumans, CrystalMinHumansMin, CrystalMinHumansMax)
+	}
+	if r.Offset < CrystalOffsetMin || r.Offset > CrystalOffsetMax {
+		return fmt.Errorf("crystalRewards.offset = %d, want %d..%d",
+			r.Offset, CrystalOffsetMin, CrystalOffsetMax)
+	}
+	if r.MaxMultiplier < CrystalMaxMultiplierMin || r.MaxMultiplier > CrystalMaxMultiplierMax {
+		return fmt.Errorf("crystalRewards.maxMultiplier = %d, want %d..%d",
+			r.MaxMultiplier, CrystalMaxMultiplierMin, CrystalMaxMultiplierMax)
+	}
+	return nil
 }
 
 // EconomyOverride returns the operator's live 商店經濟 override, or false when

@@ -48,32 +48,38 @@ func TestSettlementAwardsPoints(t *testing.T) {
 	resp.Body.Close()
 	require.Equal(t, http.StatusOK, resp.StatusCode)
 
-	// Account JSON is the durable truth: host placed 1st (+100), guest 2nd (+40).
+	// Account JSON is the durable truth: host placed 1st, guest 2nd.
+	//
+	// ⛔ 這裡以前寫死 100 / 40。2026-08-17 之後名次分會吃真人倍率與宿敵加成
+	// (owner:「MMR 倍率跟賽季積分也是類似的規則」),而那些倍率是 operator 每週會調的
+	// 後台欄位 —— 把它們的乘積抄進斷言等於在測試裡開第四個住處,而且它會用錯誤的訊息紅
+	// (「積分結算壞了」,真相是有人調了一格倍率)。守的是**機制**:名次有差、四個面
+	// (帳號檔 / 玩家榜 / 英雄榜 / 結算紀錄)講的是同一個數字。
 	hostAcc, err := ts.Srv.Accounts.GetByID(ctx, host.ID)
 	require.NoError(t, err)
-	require.Equal(t, 100, hostAcc.SeasonPoints)
-	require.Equal(t, 100, hostAcc.ChampionPoints["sela"])
 	guestAcc, err := ts.Srv.Accounts.GetByID(ctx, guest.ID)
 	require.NoError(t, err)
-	require.Equal(t, 40, guestAcc.SeasonPoints)
-	require.Equal(t, 40, guestAcc.ChampionPoints["thorne"])
+	require.Greater(t, guestAcc.SeasonPoints, 0, "第二名也要拿到分")
+	require.Greater(t, hostAcc.SeasonPoints, guestAcc.SeasonPoints, "第一名拿得比第二名多")
+	require.Equal(t, hostAcc.SeasonPoints, hostAcc.ChampionPoints["sela"], "英雄榜與玩家榜同一次入帳")
+	require.Equal(t, guestAcc.SeasonPoints, guestAcc.ChampionPoints["thorne"])
 
 	// Both visible boards agree with the record.
 	rows, total, err := ts.Srv.Ranking.PlayerPage(ctx, "", 20, 0)
 	require.NoError(t, err)
 	require.EqualValues(t, 2, total)
 	require.Equal(t, host.ID, rows[0].AccountID)
-	require.Equal(t, 100, rows[0].Points)
+	require.Equal(t, hostAcc.SeasonPoints, rows[0].Points)
 	require.NotEmpty(t, rows[0].Tier)
 	sela, _, err := ts.Srv.Ranking.ChampionPage(ctx, "sela", 20, 0)
 	require.NoError(t, err)
 	require.Len(t, sela, 1, "only the host played sela")
-	require.Equal(t, 100, sela[0].Points)
+	require.Equal(t, hostAcc.ChampionPoints["sela"], sela[0].Points)
 	thorne, _, err := ts.Srv.Ranking.ChampionPage(ctx, "thorne", 20, 0)
 	require.NoError(t, err)
 	require.Len(t, thorne, 1)
 	require.Equal(t, guest.ID, thorne[0].AccountID)
-	require.Equal(t, 40, thorne[0].Points)
+	require.Equal(t, guestAcc.ChampionPoints["thorne"], thorne[0].Points)
 
 	// The hidden MMR ladder still moved, independently of the points track.
 	require.Greater(t, hostAcc.MMR, 1000)
@@ -82,10 +88,10 @@ func TestSettlementAwardsPoints(t *testing.T) {
 	// The settlement record carries the ABSOLUTE cumulative points so a Redis
 	// wipe (or a WAL replay) recovers exactly.
 	rec := readMatchRecord(t, ts, matchID)
-	require.Equal(t, 100, rec.Ratings[host.ID].Points)
+	require.Equal(t, hostAcc.SeasonPoints, rec.Ratings[host.ID].Points)
 	require.Equal(t, "sela", rec.Ratings[host.ID].ChampionID)
-	require.Equal(t, 100, rec.Ratings[host.ID].ChampionPoints)
-	require.Equal(t, 40, rec.Ratings[guest.ID].Points)
+	require.Equal(t, hostAcc.ChampionPoints["sela"], rec.Ratings[host.ID].ChampionPoints)
+	require.Equal(t, guestAcc.SeasonPoints, rec.Ratings[guest.ID].Points)
 }
 
 // TestPointsAccumulateAcrossMatches proves the ladder is CUMULATIVE (not
@@ -96,11 +102,13 @@ func TestPointsAccumulateAcrossMatches(t *testing.T) {
 	ctx := context.Background()
 	host, guest, _, matchID := startMatch(ts)
 
-	// Match 1: host 1st (+100), guest 2nd (+40).
+	// Match 1: host 1st, guest 2nd.
 	resp, err := gamelinktest.SendResult(ts.HTTP.URL, testutil.GameSecret,
 		resultWithChampions(matchID, host, guest, "sela", "sela"), 0)
 	require.NoError(t, err)
 	resp.Body.Close()
+	afterOne, err := ts.Srv.Accounts.GetByID(ctx, host.ID)
+	require.NoError(t, err)
 
 	// Match 2 (same seats, fresh matchId): host 1st again, guest 2nd again.
 	res2 := resultWithChampions(matchID+"-2", host, guest, "sela", "sela")
@@ -111,16 +119,21 @@ func TestPointsAccumulateAcrossMatches(t *testing.T) {
 
 	hostAcc, err := ts.Srv.Accounts.GetByID(ctx, host.ID)
 	require.NoError(t, err)
-	require.Equal(t, 200, hostAcc.SeasonPoints, "100+100 accumulates across the season")
-	require.Equal(t, 200, hostAcc.ChampionPoints["sela"])
+	require.Greater(t, hostAcc.SeasonPoints, afterOne.SeasonPoints, "分數跨場累加,不是每場重算")
+	require.Equal(t, hostAcc.SeasonPoints, hostAcc.ChampionPoints["sela"])
 	guestAcc, err := ts.Srv.Accounts.GetByID(ctx, guest.ID)
 	require.NoError(t, err)
-	require.Equal(t, 80, guestAcc.SeasonPoints)
+	require.Greater(t, guestAcc.SeasonPoints, 0)
 
-	// Three last places (−30 each) drive the guest's 80 points below zero — the
-	// floor holds it at 0.
-	for i := 3; i <= 5; i++ {
-		res := resultWithChampions(fmt.Sprintf("%s-%d", matchID, i), host, guest, "sela", "sela")
+	// 連續墊底直到跌破 0:0 是地板,分數永遠不會是負的。
+	//
+	// ⛔ 次數不寫死(以前是 3 場,因為以前的分數剛好是 80)。第四名的懲罰**不吃**真人
+	// 倍率(加成只作用在正的名次分上,見 ranking/standings.go),所以每一場就是原本那個
+	// 負值 —— 需要幾場由「現在有多少分 ÷ 一場扣多少」推出來。
+	drop := -ts.Srv.Ranking.Ladder().PlacementDelta(4)
+	require.Greater(t, drop, 0, "夾具前提:最後一名要真的扣分,否則下面的地板測試是空的")
+	for i := 0; i <= guestAcc.SeasonPoints/drop; i++ {
+		res := resultWithChampions(fmt.Sprintf("%s-drop-%d", matchID, i), host, guest, "sela", "sela")
 		// Flip placements: the guest's team finishes 4th.
 		res.Placements = []gamelink.TeamPlace{{Team: 0, Place: 1}, {Team: 1, Place: 4}, {Team: 2, Place: 2}, {Team: 3, Place: 3}}
 		resp, err := gamelinktest.SendResult(ts.HTTP.URL, testutil.GameSecret, res, 0)
@@ -129,17 +142,23 @@ func TestPointsAccumulateAcrossMatches(t *testing.T) {
 	}
 	guestAcc, err = ts.Srv.Accounts.GetByID(ctx, guest.ID)
 	require.NoError(t, err)
-	require.Equal(t, 0, guestAcc.SeasonPoints, "80−30−30−30 floors at 0, never negative")
+	require.Equal(t, 0, guestAcc.SeasonPoints, "扣到負的會被夾在 0")
 	require.Equal(t, 0, guestAcc.ChampionPoints["sela"])
 
+	hostAcc, err = ts.Srv.Accounts.GetByID(ctx, host.ID)
+	require.NoError(t, err)
 	rows, _, err := ts.Srv.Ranking.PlayerPage(ctx, "", 20, 0)
 	require.NoError(t, err)
 	require.Equal(t, host.ID, rows[0].AccountID)
-	require.Equal(t, 500, rows[0].Points, "five wins = 500 points")
+	require.Equal(t, hostAcc.SeasonPoints, rows[0].Points, "榜上的數字就是帳號檔裡的數字")
 	require.Equal(t, guest.ID, rows[1].AccountID)
 	require.Equal(t, 0, rows[1].Points)
-	require.Equal(t, ranking.TierIron, rows[1].Tier)
-	require.Equal(t, "IV", rows[1].Division)
+	// 段位讀的是**分數推出來的**那一層。⛔ 不讀 rows[1].Tier:菁英/宗師是按**名次比例**
+	// 發的(tiers.go 刻意的設計),而這個夾具現在會打到 MinApexGames 以上,兩個人的榜上
+	// 連 0 分的那一位都會被冠上宗師 —— 那是 apex 規則,不是這一條要守的地板。
+	tier, div := ts.Srv.Ranking.Ladder().BaseTier(rows[1].Points)
+	require.Equal(t, ranking.TierIron, tier)
+	require.Equal(t, "IV", div)
 }
 
 // TestSettlementPointsIdempotent is the double-delivery regression: a duplicate
@@ -155,6 +174,11 @@ func TestSettlementPointsIdempotent(t *testing.T) {
 	resp, err := gamelinktest.SendResult(ts.HTTP.URL, testutil.GameSecret, res, 0)
 	require.NoError(t, err)
 	resp.Body.Close()
+	// 第一次結算之後的絕對值 —— 後面兩次交付都要收斂回這個數字。
+	// ⛔ 不寫死:守的是「不會重複入帳」,不是「入帳多少」。
+	once, err := ts.Srv.Accounts.GetByID(ctx, host.ID)
+	require.NoError(t, err)
+	require.Greater(t, once.SeasonPoints, 0, "夾具前提:第一次結算真的有入帳")
 
 	// Duplicate delivery of the same matchId: acknowledged, awards nothing.
 	resp, err = gamelinktest.SendResult(ts.HTTP.URL, testutil.GameSecret, res, 0)
@@ -168,25 +192,30 @@ func TestSettlementPointsIdempotent(t *testing.T) {
 
 	hostAcc, err := ts.Srv.Accounts.GetByID(ctx, host.ID)
 	require.NoError(t, err)
-	require.Equal(t, 100, hostAcc.SeasonPoints, "duplicate callback must not double-award")
-	require.Equal(t, 100, hostAcc.ChampionPoints["sela"])
+	require.Equal(t, once.SeasonPoints, hostAcc.SeasonPoints, "duplicate callback must not double-award")
+	require.Equal(t, once.ChampionPoints["sela"], hostAcc.ChampionPoints["sela"])
 
 	// WAL replay: re-applying the stored settlement converges on the same
-	// absolute values instead of adding another +100.
+	// absolute values instead of awarding a second time.
 	require.NoError(t, ts.Srv.Journal.AppendIntent(matchID, readMatchRecord(t, ts, matchID)))
 	require.NoError(t, ts.Srv.Boot(ctx))
 
 	hostAcc, err = ts.Srv.Accounts.GetByID(ctx, host.ID)
 	require.NoError(t, err)
-	require.Equal(t, 100, hostAcc.SeasonPoints, "replayed settlement must not double-award")
-	require.Equal(t, 100, hostAcc.ChampionPoints["sela"])
+	require.Equal(t, once.SeasonPoints, hostAcc.SeasonPoints, "replayed settlement must not double-award")
+	require.Equal(t, once.ChampionPoints["sela"], hostAcc.ChampionPoints["sela"])
 	rows, total, err := ts.Srv.Ranking.PlayerPage(ctx, "", 20, 0)
 	require.NoError(t, err)
 	require.EqualValues(t, 2, total)
-	require.Equal(t, 100, rows[0].Points)
+	require.Equal(t, once.SeasonPoints, rows[0].Points)
 	sela, _, err := ts.Srv.Ranking.ChampionPage(ctx, "sela", 20, 0)
 	require.NoError(t, err)
-	require.Equal(t, 100, sela[0].Points, "champion board is idempotent too")
+	require.Equal(t, once.ChampionPoints["sela"], sela[0].Points, "champion board is idempotent too")
+
+	// 對戰紀錄是**累加**式的,所以它是這一整條路上唯一有機會被重播算兩次的東西。
+	h2h, err := ts.Srv.Ranking.HeadToHead(ctx, host.ID, guest.ID)
+	require.NoError(t, err)
+	require.Equal(t, 1, h2h.Wins, "重複交付 + WAL 重播之後,對戰紀錄仍然只有一勝")
 }
 
 // TestPointsSkipGuestsAndBots: only HUMAN, non-guest seats earn ladder points —
@@ -228,11 +257,22 @@ func TestPointsSkipGuestsAndBots(t *testing.T) {
 	resp.Body.Close()
 	require.Equal(t, http.StatusOK, resp.StatusCode)
 
-	// The owner earns the +100 exactly once — not once per couch seat.
+	// The owner earns the placement award exactly once — not once per couch seat.
+	// ⛔ 不寫死數字(名次分現在會吃真人倍率):守的是「入帳一次」,而沙發客那一個座位
+	// 沒有自己的紀錄列。
 	hostAcc, err := ts.Srv.Accounts.GetByID(ctx, host.ID)
 	require.NoError(t, err)
-	require.Equal(t, 100, hostAcc.SeasonPoints)
-	require.Equal(t, 100, hostAcc.ChampionPoints["sela"])
+	require.GreaterOrEqual(t, hostAcc.SeasonPoints, ts.Srv.Ranking.Ladder().PlacementDelta(1))
+	require.Equal(t, hostAcc.SeasonPoints, hostAcc.ChampionPoints["sela"], "一次入帳,兩個榜同一個值")
+	require.Equal(t, hostAcc.SeasonPoints, readMatchRecord(t, ts, matchID).Ratings[host.ID].Points)
+
+	// 沙發客推高全場真人數,但他沒有帳號 ⇒ ⛔ 沒有自己的對戰紀錄列。
+	guestSeatH2H, err := ts.Srv.Ranking.HeadToHead(ctx, host.ID, guestID)
+	require.NoError(t, err)
+	require.Equal(t, 0, guestSeatH2H.Played(), "沙發客沒有帳號,不會有對戰紀錄")
+	realH2H, err := ts.Srv.Ranking.HeadToHead(ctx, host.ID, guest.ID)
+	require.NoError(t, err)
+	require.Equal(t, 1, realH2H.Wins, "有帳號的那一位對手才進紀錄")
 
 	// Neither the guest pseudo-id nor any bot reaches either board.
 	rows, total, err := ts.Srv.Ranking.PlayerPage(ctx, "", 50, 0)

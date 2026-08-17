@@ -82,6 +82,13 @@ import { zConfigMitigationDoc } from "./mitigationDoc";
 import { zConfigAudioMixDoc } from "./audioMixDoc";
 // 練習模式（GH#343，owner 2026-08-17）—— 同上。
 import { zConfigPracticeDoc } from "./practiceDoc";
+// 排名獎勵（owner 2026-08-17「MMR 倍率跟賽季積分也是類似的規則」）—— 同上。
+// ⚠️ 這一份的消費端是 **Go**（`internal/ranking/standingsoverride.go`），但它仍然
+// 必須進這個 union：`content/config/ranking.json` 是內容 bundle 的一份文件，
+// union 不認得它的 schema tag = 整份內容驗證失敗 → 客戶端退回 2 隻骨架英雄。
+import { zConfigRankingDoc } from "./rankingDoc";
+// 地端產圖的風格（owner 2026-08-17「日本 2D RPG」）—— 同上，schema 住自己的檔案。
+import { zConfigIconStyleDoc } from "./iconStyleDoc";
 import { zConfigMapSpecDoc } from "./mapSpecDoc";
 import { zConfigMapReportDoc } from "./mapReportDoc";
 import { zConfigArenaPoolDoc } from "./arenaPoolDoc";
@@ -739,6 +746,46 @@ export const zConfigStoreDoc = z
      * for what a new account then faces.
      */
     freeChampionIds: z.array(zId),
+    /**
+     * 多人比賽的藍水晶獎勵 —— owner 2026-08-17（逐字）：
+     *
+     *   「只要有**兩真人(N≥2)**參加，**不論哪個陣營**都可以，
+     *     所有玩家都 **(N+1) 倍**，所以**最大 13 倍**」
+     *   「120 × 13 (MAX)、120 × 3 (N=2)、120 (N=1)」
+     *
+     * 倍率 = `N >= minHumans ? N + offset : 1`，再夾在 `maxMultiplier` 上；
+     * **N 是整場 lobby 的真人座位數，⛔ 不分隊**（沙發客算人頭但沒帳號可領）。
+     * 實作在 `apps/platform/internal/wallet/meta.go` 的 `CrystalMultiplier`，
+     * 結算在 `internal/gamelink/callback.go`。
+     *
+     * ⚠️ 缺欄位 ⇒ 出貨值（`DEFAULT_CRYSTAL_REWARDS`）。整塊 `.optional()` 是
+     * **必要的**：線上耐久 override 是 2026-08-17 之前存的，沒有這一格，而
+     * `.strict()` 會讓整份 config 被拒 → 內容載入整份失敗 → 退回骨架英雄。
+     *
+     * ⚠️ 每一格**上下界都有**。GH#277 的教訓：只檢查 min 會讓 13 打成 130
+     * 靜靜過去，而 130 倍是一場對戰付掉 56 隻英雄的解鎖價。
+     */
+    crystalRewards: z
+      .object({
+        /** 名次基礎值 —— 一個人打 bot 的實拿數（1 = 冠軍，已含吃雞加倍） */
+        base: z
+          .object({
+            place1: z.number().int().min(0).max(100_000),
+            place2: z.number().int().min(0).max(100_000),
+            place3: z.number().int().min(0).max(100_000),
+            place4: z.number().int().min(0).max(100_000),
+          })
+          .strict()
+          .optional(),
+        /** 開始給倍率的真人門檻（出貨 2 = owner 的「兩真人」） */
+        minHumans: z.number().int().min(1).max(12).optional(),
+        /** 加在真人數上得到倍率（出貨 1 = owner 的 N+1） */
+        offset: z.number().int().min(0).max(12).optional(),
+        /** 倍率上限（出貨 13 = owner 的「最大 13 倍」） */
+        maxMultiplier: z.number().int().min(1).max(50).optional(),
+      })
+      .strict()
+      .optional(),
     /** M COIN granted per final team placement (1 = winner) */
     mcoinRewards: z
       .object({
@@ -780,6 +827,31 @@ export const DEFAULT_RANDOM_PICK_OWNERSHIP = "block" as const;
 
 /** 擁有權讀不到時 🎲 的兩種模式（`config.store@1.randomPickOwnership`）。 */
 export type RandomPickOwnershipMode = "block" | "whitelist";
+
+/**
+ * 缺 `crystalRewards`（或缺其中一格）時的出貨值 —— 與
+ * `content/config/store.json` 及 `apps/platform/internal/wallet/meta.go` 的
+ * `DefaultCrystalRules()` 是同一組數字。
+ */
+export const DEFAULT_CRYSTAL_REWARDS = {
+  base: { place1: 120, place2: 45, place3: 35, place4: 30 },
+  minHumans: 2,
+  offset: 1,
+  maxMultiplier: 13,
+} as const;
+
+/**
+ * 倍率的唯一算式（owner 2026-08-17：`N >= minHumans ? N + offset : 1`，夾在
+ * `maxMultiplier`）。後台那一頁用它畫「1 人 / 2 人 / 12 人各拿多少」的推導列，
+ * ⛔ 不要在畫面上另外手算一次 —— 那就是第二份會漂走的算式。
+ */
+export function crystalMultiplier(
+  humans: number,
+  rules: { minHumans: number; offset: number; maxMultiplier: number },
+): number {
+  if (rules.minHumans <= 0 || humans < rules.minHumans) return 1;
+  return Math.max(1, Math.min(humans + rules.offset, rules.maxMultiplier));
+}
 
 /**
  * config.arena-rules@1 — LoL-Arena style ROUND RULES (`config/arena-rules.json`).
@@ -2578,6 +2650,76 @@ export type DraftConflict = z.infer<typeof zDraftConflict>;
  */
 export const DEFAULT_DRAFT_CONFLICT = "grail-wins" as const;
 
+/**
+ * ⭐ **寶具（傳說武器）貨架**（owner 2026-08-17：「寶具(傳說武器) 可以上架直接
+ * 販售了，價格統一是**隨機抽的 6 倍**（後台可設定）」）。
+ *
+ * ── 兩格，各自是一個決策點（第一守則）─────────────────────────────────────
+ * `open`            寶具上不上架。它**推翻**了 2026-08-01 的「只能隨機三選一」，
+ *                   所以第〇·六守則：預設 `true`，開關存在是為了一鍵回頭。
+ * `priceMultiplier` 統一價 = **傳說寶玉價 × 這個數**（`legendaryShelfPrice`）。
+ *                   ⛔ 它不是一個金額 —— 寫成金額的話，寶玉調價之後兩者就會各自
+ *                   漂走，而 owner 說的是「隨機抽的 N 倍」這個**關係**。
+ *
+ * ⚠️ 上界 50 不可以省（GH#277 的教訓：只檢查下界時 6 打成 60 會靜靜地過去，
+ * 而 60 = 144,000 金 —— 一整場的金幣都買不起，畫面上卻只是「好貴」，看不出是
+ * 設定打錯）。下界 0.1 = 240 金，仍然是一個真的價格而不是免費送。
+ *
+ * ⚠️ 整塊必須 `.optional()`：線上已經有 `config.arena-rules@1` 的耐久覆蓋層，
+ * 那份文件沒有這一格 —— 少一個必填欄會讓整份 config 被 Zod 退回 → 內容載入
+ * 全滅 → 退回 2 隻骨架英雄（2026-08-02 線上事故）。省略 = 下面的出貨預設。
+ */
+export const zLegendaryShelfConfig = z
+  .object({
+    open: z.boolean(),
+    priceMultiplier: z.number().min(0.1).max(50),
+    /**
+     * ⭐ 賣出退款率：**取得價 × 這個數**（owner 2026-08-17「賣價一定是取得價的
+     * 40%（後台可設定）」）。「取得價」＝那一格**實付**的金額，三選一／寶玉發
+     * 的是 0 —— ⛔ 不是道具標價（49 把寶具的標價全部是 0）。
+     *
+     * ⚠️ **它管的是整間商店**，不只是寶具；住在這個區塊是因為它與寶具價格是
+     * 同一則裡的同一條金流決定（買得起幾把 ↔ 賣掉退多少）。
+     *
+     * ⚠️ 上界 1 不可以省：> 1 = 賣得比買得多 = 買了賣、買了賣的無限金幣，
+     * 而畫面上只會是「金幣一直變多」，看不出是設定打錯（同 GH#277）。
+     * 下界 0 是合法的「賣出不退錢」。⭐ `.optional()` 讓線上舊 override
+     * （沒有這一格）照常載入 → 拿出貨值。
+     */
+    sellRefundPct: z.number().min(0).max(1).optional(),
+    /**
+     * ⭐ **隨機限定階層**（owner 2026-08-17：「仍然可以有寶具是隨機才能取得的，
+     * 我預計是新增的 50~70 個 **EX理外** 寶具」）。
+     *
+     * 填的是**抽獎表 id**，不是道具 id：那一批本來就要有一張表才抽得到，所以
+     * 上架 50~70 把＝新增一張表 + 這裡填一個表名，⛔ 不用改程式、也不用逐份
+     * 道具 JSON 加旗標（第〇·五守則：機制在引擎、內容在 JSON）。
+     * 表裡的每一件道具**永遠不上架**，只能靠三選一／寶玉抽到。
+     *
+     * 出貨是**空的** —— 49 把寶具照樣全部上架。上限 32 張表是防呆（一份寫壞的
+     * 設定不該讓每一次購買掃幾百張表）；未登錄的表名靜靜跳過。
+     */
+    randomOnlyTables: z.array(zId).max(32).optional(),
+  })
+  .strict();
+export type LegendaryShelfConfig = z.infer<typeof zLegendaryShelfConfig>;
+
+/**
+ * 出貨值。⚠️ 這是**第三個住處**（`content/config/arena-rules.json` ·
+ * 這裡 · admin 的 `SHIPPED_LEGENDARY_SHELF`），三者由 drift 測試釘在一起。
+ * 引擎那一份常數（`sim/economy/shopShelf.ts`）是 world 的預設值，兩邊必須同值 ——
+ * ⛔ 這裡刻意不 import 它：`content/schema` 不可以依賴 `sim`。
+ */
+export const DEFAULT_LEGENDARY_SHELF: LegendaryShelfConfig = {
+  open: true,
+  // ⭐ 4，不是 6（owner 2026-08-17 第二則：「一場根本買不起 2 把⋯改成 4 倍
+  // 比較好?」）。2400 × 4 = 9,600：第 10 回合買得起一把、第 12 回合兩把。
+  priceMultiplier: 4,
+  sellRefundPct: 0.4,
+  // 出貨沒有任何一張隨機限定表 —— 49 把寶具照樣全部上架，這一批只做機制。
+  randomOnlyTables: [],
+};
+
 export const zConfigArenaRulesDoc = z
   .object({
     id: zId,
@@ -2656,6 +2798,19 @@ export const zConfigArenaRulesDoc = z
      * 是 17 個字元）。省略 = 沒有任何表退場（＝這個機制以前的行為）。
      */
     retiredLootTables: z.array(z.string().min(1).max(64)).max(16).optional(),
+    /**
+     * ⭐ **寶具貨架**（owner 2026-08-17）。省略 = {@link DEFAULT_LEGENDARY_SHELF}。
+     * ⚠️ 它管的是**寶具**那 49 把；#261 下架的 70 把普通武器是另一個開關
+     * （`sim/economy/shopShelf.ts` 的 `WEAPON_SHELF_OPEN`），⛔ 不會被這一格打開。
+     */
+    legendaryShelf: zLegendaryShelfConfig
+      .optional()
+      .describe(
+        "寶具（傳說武器）能不能在中場商店直接用金幣買。" +
+          "open＝上不上架（出貨 true，owner 2026-08-17：「寶具可以上架直接販售了」）；" +
+          "priceMultiplier＝統一價的倍率，實際售價 = 傳說寶玉價 × 這個數（出貨 6 ＝ 14,400 金）。" +
+          "⛔ 它不會打開 #261 暫時下架的那些普通武器道具。",
+      ),
     /** round number (string key) -> grants for that round */
     rounds: z.record(z.string().regex(/^[0-9]+$/), zArenaRoundGrant),
     /** grants applied on every round PAST the highest `rounds` key */
@@ -6099,6 +6254,13 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   // 練習模式（GH#343，owner 2026-08-17）。⚠️ 漏掉這一行 = 一份 practice.json 進了
   // content/ 之後整份內容驗證失敗 → 骨架英雄。
   zConfigPracticeDoc,
+  // 排名獎勵：真人倍率進 MMR／賽季積分 + 宿敵加成（owner 2026-08-17）。
+  // ⚠️ 漏掉這一行 = 一份 ranking.json 進了 content/ 之後整份內容驗證失敗 → 骨架英雄。
+  // ⛔ 「消費端是 Go，所以 TS 不用管」是**錯的**：擋下整份 bundle 的是這個 union。
+  zConfigRankingDoc,
+  // 地端產圖的風格（owner 2026-08-17）。⚠️ 漏掉這一行 = 一份 icon-style.json 進了
+  // content/ 之後整份內容驗證失敗 → 骨架英雄。
+  zConfigIconStyleDoc,
   // 小地圖規格（GH#324，owner 2026-08-14）。⚠️ 漏掉這一行 = 內容整份驗證失敗 → 骨架英雄。
   zConfigMapSpecDoc,
   // 地圖驗證報告（GH#324，產生器輸出）。⚠️ 漏掉這一行 = 內容整份驗證失敗 → 骨架英雄。

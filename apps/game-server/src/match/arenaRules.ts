@@ -13,10 +13,13 @@ import { AUGMENT_TIER_SCHEDULE, DEFAULT_ITEM_DRAFT_POLICY } from "@ggd/shared/si
 import type { ItemDraftPolicy } from "@ggd/shared/sim/economy/draft";
 import { DEFAULT_GRAIL_DRAFT } from "@ggd/shared/sim/economy/grailVocabulary";
 import type { GrailDraftRules } from "@ggd/shared/sim/economy/grailVocabulary";
-import { Configs, scheduledRetiredTables, DEFAULT_DRAFT_CONFLICT } from "@ggd/shared/content";
+import { Configs, scheduledRetiredTables, DEFAULT_DRAFT_CONFLICT, DEFAULT_LEGENDARY_SHELF } from "@ggd/shared/content";
+import { DEFAULT_SELL_REFUND_PCT } from "@ggd/shared/sim/economy/shopShelf";
+import type { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { MAX_ROUNDS_UNLIMITED } from "@ggd/shared/roomSettings";
 import type {
   DraftConflict,
+  LegendaryShelfConfig,
   ConfigArenaRulesDoc,
   FlowerConfig,
   ReviveCircleConfig,
@@ -32,6 +35,33 @@ export interface RoundGrant {
   autoLearn?: CoreAbilitySlot[];
   augmentTier?: AugmentTier;
   weaponLootTable?: string;
+}
+
+/**
+ * 寶具貨架那一區塊**解析完**的樣子 —— 從 `SimWorld` 那一格推導，⛔ 不重打形狀。
+ *
+ * config 那一份（`LegendaryShelfConfig`）有兩格是 `.optional()`（線上舊 override
+ * 沒有它們），而 sim 讀的是必填的四格；`legendaryShelfRules` 就是這兩者之間
+ * **唯一**的一道解析。
+ */
+export type LegendaryShelfRules = SimWorld["legendaryShelf"];
+
+/**
+ * `config.arena-rules@1` 的 `legendaryShelf` → sim 讀得懂的四格。
+ *
+ * ⚠️ 缺席的欄位拿的是**引擎常數**（`DEFAULT_SELL_REFUND_PCT` / 空表），也就是
+ * `SimWorld` 自己的預設值 —— 所以「舊 override 少一格」與「沒有接線」得到的是
+ * 同一個結果，⛔ 不會有第三種行為。
+ */
+export function legendaryShelfRules(cfg: LegendaryShelfConfig): LegendaryShelfRules {
+  return {
+    open: cfg.open,
+    priceMultiplier: cfg.priceMultiplier,
+    sellRefundPct: cfg.sellRefundPct ?? DEFAULT_SELL_REFUND_PCT,
+    // 複製一份：`world.legendaryShelf` 是整塊指派的，共用同一個陣列會讓一場比賽
+    // 有辦法動到 DEFAULT_ARENA_RULES（模組層常數，每一場都在讀它）。
+    randomOnlyTables: [...(cfg.randomOnlyTables ?? [])],
+  };
 }
 
 export interface ArenaRules {
@@ -54,6 +84,15 @@ export interface ArenaRules {
    * 那份文件要的是**出貨規則**，不是「這個閘不存在」。
    */
   grailDraft: GrailDraftRules;
+  /**
+   * ⭐ **寶具貨架 + 那一則的整組金流旋鈕**（owner 2026-08-17：上架 / 統一價倍率 /
+   * 賣出退款率 / 隨機限定表）。NEVER null，同 `grailDraft` 的理由。
+   *
+   * ⚠️ 型別是 `SimWorld` 那一格**推導**出來的（⛔ 不重打一份形狀）：它會被
+   * `MatchController` **整塊**指派給 `world.legendaryShelf`，所以 config 長出新欄位
+   * 時這裡跟著 tsc 紅，而不是靜靜地只送舊的兩格。
+   */
+  legendaryShelf: LegendaryShelfRules;
   /**
    * ⭐ 同一回合**同時**排了聖杯願望（`augmentTier`）與寶具（`weaponLootTable`）
    * 時要發哪一個（owner 2026-08-17「兩者衝突不顯示寶具三選一」，#340）。
@@ -131,6 +170,9 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
   offerCount: 3,
   itemDraft: DEFAULT_ITEM_DRAFT_POLICY,
   grailDraft: DEFAULT_GRAIL_DRAFT,
+  // ⭐ 出貨的寶具貨架（owner 2026-08-17）。引用 shared 的那一份，⛔ 不重打 ——
+  // 重打一份就是第四個住處，而它沒有 drift 測試在守。
+  legendaryShelf: legendaryShelfRules(DEFAULT_LEGENDARY_SHELF),
   // ⚠️ 這一格**不是**「保留舊行為」的那個值。第〇·六守則：優先權大的更新
   // 預設啟動，所以連骨架/單元測試的預設也走 owner 的裁決。DEFAULT_ARENA_RULES
   // 本身一個回合都沒排寶具，所以它在這裡沒有可見後果 —— 但它讓「新建構點忘了
@@ -210,6 +252,11 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
       ? { ...(doc.itemDraft ?? DEFAULT_ITEM_DRAFT_POLICY), fallbackTable: "" }
       : (doc.itemDraft ?? DEFAULT_ITEM_DRAFT_POLICY),
     grailDraft: doc.grailDraft ?? DEFAULT_GRAIL_DRAFT,
+    // ⭐ 寶具貨架 —— 後台那四格從這裡進比賽（`MatchController` 在 tick 0 之前
+    // 整塊指派給 `world.legendaryShelf`）。
+    // ⚠️ `??` 同下面 `draftConflict` 那一條：線上耐久覆蓋層那份文件是這一區塊
+    // 存在之前存的，缺席拿到的是**出貨預設**。
+    legendaryShelf: legendaryShelfRules(doc.legendaryShelf ?? DEFAULT_LEGENDARY_SHELF),
     // ⚠️ `??` 不是防禦性寫法，它是**線上耐久覆蓋層**的那條路：那份文件是這一格
     // 存在之前存的，少了它。缺席要拿到的是新的出貨預設（owner 的裁決），
     // ⛔ 不是 `both`（＝靜靜地維持他剛剛抱怨的那個行為）。

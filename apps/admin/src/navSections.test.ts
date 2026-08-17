@@ -203,6 +203,13 @@ describe("分類重編一頁都沒有掉", () => {
       "audioMix",
       // 2026-08-17 GH#343：練習模式（總開關 + 五格行為）。
       "practice",
+      // 2026-08-17：圖示風格（地端兩階段產圖器的 PASS-2 風格與參數）。
+      // ⚠️ 它是 authoring-time 的設定，消費端是 Python 不是遊戲。
+      "iconStyle",
+      // 2026-08-17：排名獎勵（真人倍率進 MMR／賽季積分 + 宿敵加成）。
+      // ⚠️ 它住「營運」不是「戰鬥規則」：那一區問的是英雄在場上多強，
+      // 這一頁決定的是打完之後排行榜怎麼動。消費端是 Go（platform）。
+      "ranking",
     ]);
     const added = [...after].filter((p) => !before.has(p) && !SINCE_BASELINE.has(p));
     expect(lost, `搬家把這些頁面弄丟了（元件還在，但左欄按不到）：${lost.join(", ")}`).toEqual([]);

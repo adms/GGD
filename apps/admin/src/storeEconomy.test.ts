@@ -16,15 +16,19 @@
 import { describe, it, expect } from "vitest";
 import {
   MAX_UNLOCK_COST,
+  SHIPPED_CRYSTAL_REWARDS,
   SHIPPED_FREE_CHAMPION_IDS,
   SHIPPED_UNLOCK_COST,
   STORE_SCHEMA,
+  crystalPayoutPreview,
   economySummary,
   extractStore,
   freeListText,
   parseFreeChampionIds,
   parseUnlockCost,
   storeDocFor,
+  validateCrystalRewards,
+  withCrystalField,
   type StoreEconomy,
 } from "./storeEconomy";
 
@@ -34,6 +38,7 @@ const economy = (over: Partial<StoreEconomy> = {}): StoreEconomy => ({
   championUnlockCost: SHIPPED_UNLOCK_COST,
   freeChampionIds: ["godie-e002", "godie-hart"],
   randomPickOwnership: "block",
+  crystalRewards: SHIPPED_CRYSTAL_REWARDS,
   mcoinRewards: REWARDS,
   ...over,
 });
@@ -52,6 +57,9 @@ describe("商店經濟: reading the doc", () => {
       freeChampionIds: ["godie-hart"],
       // 缺欄位的舊文件讀成出貨預設（owner 的「只能隨機到有解鎖的」）。
       randomPickOwnership: "block",
+      // 2026-08-17 之前存的 overlay 沒有這一塊 ⇒ 出貨值，⛔ 不是 0
+      //（0 倍率＝打完一場什麼都沒有）。
+      crystalRewards: SHIPPED_CRYSTAL_REWARDS,
       mcoinRewards: REWARDS,
     });
   });
@@ -141,6 +149,7 @@ describe("商店經濟: saving writes the WHOLE doc", () => {
       championUnlockCost: 250,
       freeChampionIds: ["godie-e002", "godie-hart"],
       randomPickOwnership: "block",
+      crystalRewards: SHIPPED_CRYSTAL_REWARDS,
       mcoinRewards: REWARDS,
     });
   });
@@ -184,5 +193,35 @@ describe("商店經濟: the header tells the operator what he just did", () => {
 
   it("says so out loud when the price itself is 0", () => {
     expect(economySummary(economy({ championUnlockCost: 0 }), 53)).toContain("所有英雄免費");
+  });
+});
+
+// ── 多人比賽水晶倍率（owner 2026-08-17）───────────────────────────────────────
+//
+// 體驗層一條薄守衛：這一頁做的是**接線**（讀 → 驗 → 寫回整份文件 → 畫一行推導）。
+// 倍率本身的行為由 Go 那邊的 CrystalMultiplier 與 gamelink 的 crystal_lobby_test
+// 守，這裡只保證這一頁不會**吃掉**它。
+describe("商店經濟: 多人水晶倍率", () => {
+  it("★ 存檔一定寫得回去 —— 少了這一格，操作者調過的倍率會靜靜回到出貨值", () => {
+    // 突變：把 storeDocFor 的 `crystalRewards:` 那一段刪掉 → 這一條紅。
+    const tuned = withCrystalField(SHIPPED_CRYSTAL_REWARDS, "maxMultiplier", 5);
+    expect(storeDocFor(economy({ crystalRewards: tuned })).crystalRewards).toEqual(tuned);
+  });
+
+  it("兩端都驗 —— 只擋下界的話 13 打成 130 會靜靜存進去（GH#277）", () => {
+    expect(validateCrystalRewards(SHIPPED_CRYSTAL_REWARDS)).toEqual({});
+    expect(
+      validateCrystalRewards(withCrystalField(SHIPPED_CRYSTAL_REWARDS, "maxMultiplier", 130)),
+    ).toHaveProperty("maxMultiplier");
+    expect(
+      validateCrystalRewards(withCrystalField(SHIPPED_CRYSTAL_REWARDS, "minHumans", 0)),
+    ).toHaveProperty("minHumans");
+  });
+
+  it("推導列跟平台算的是同一條規則（1 人不加倍、2 人以上 N+offset）", () => {
+    const line = crystalPayoutPreview(SHIPPED_CRYSTAL_REWARDS, [1, 2]);
+    const base = SHIPPED_CRYSTAL_REWARDS.base.place1;
+    expect(line).toContain(`1 人 ${base}`);
+    expect(line).toContain(`2 人 ${base * (2 + SHIPPED_CRYSTAL_REWARDS.offset)}`);
   });
 });

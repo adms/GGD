@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/ggd/platform/internal/account"
+	"github.com/ggd/platform/internal/ranking"
 	"github.com/ggd/platform/internal/admin"
 	"github.com/ggd/platform/internal/ai"
 	"github.com/ggd/platform/internal/combatenv"
@@ -114,6 +115,7 @@ var (
 	colAccountsEmail    = account.ColByEmail
 	colInvites          = invite.Collection
 	colWalletMeta       = wallet.ColWalletMeta
+	colHeadToHead       = ranking.ColHeadToHead
 	colCuration         = curation.Collection
 	colConfig           = combatenv.Collection // == opsenv.Collection == ai.Collection
 	colOverlay          = contentoverlay.Collection
@@ -247,6 +249,9 @@ func Rules() []Rule {
 		simple(colOverlay, GroupCore, KindDoc, PolicySingleton, "內容覆蓋層"),
 		simple(colOverlayLog, GroupCore, KindJSONL, PolicyAppendOnly, "內容覆蓋層歷程"),
 		simple(colHistory, GroupHistory, KindJSONL, PolicyAppendOnly, "個人戰績履歷"),
+		// GH 2026-08-17 宿敵紀錄。⚠️ 這張白名單是**明列**的 —— 沒加進來的集合
+		// 換主機時會安靜地留在舊機（沒有測試會紅），所以新集合一定要補這一行。
+		simple(colHeadToHead, GroupHistory, KindDoc, PolicyAdditive, "宿敵對戰紀錄"),
 		simple(colAudit, GroupAudit, KindJSONL, PolicyAppendOnly, "管理稽核紀錄"),
 	}
 

@@ -24,6 +24,21 @@ type PlayerRating struct {
 	AccountID string
 	MMR       int
 	Games     int
+	// KMulPct 是這一場專屬的 K 值百分比乘數（100 = 不動），由結算路徑算出來：
+	// 真人倍率（打折過）加上宿敵加成，見 standings.go。
+	//
+	// ⭐ 0 也是「不動」。既有的呼叫端（後台工具、測試、AwardPlacement）不知道這一格
+	// 存在，它們建出來的零值必須是**現狀行為** —— 否則加上這個欄位的那一刻，每一條
+	// 不經過結算的路徑都會把 K 變成 0，而 MMR 從此再也不會動，且沒有任何東西會紅。
+	KMulPct int
+}
+
+// kScale 把 KMulPct 翻成倍數。0（未設定）與負值都當成 1。
+func (p PlayerRating) kScale() float64 {
+	if p.KMulPct <= 0 {
+		return 1
+	}
+	return float64(p.KMulPct) / 100
 }
 
 // TeamResult is one team's outcome: Place 1 is best. Bots carry no players.
@@ -91,7 +106,7 @@ func ComputeElo(teams []TeamResult) map[string]int {
 		}
 		perTeamDelta := sum / n
 		for _, p := range ti.Players {
-			delta := KFor(p.Games) * perTeamDelta
+			delta := KFor(p.Games) * p.kScale() * perTeamDelta
 			out[p.AccountID] = int(math.Round(float64(p.MMR) + delta))
 		}
 	}

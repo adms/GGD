@@ -483,12 +483,12 @@ func TestBotOnYourTeamHalvesCrystals(t *testing.T) {
 	// Host placed 1st with two bots beside him → half of the place-1 grant.
 	hostW, err := ts.Srv.Wallet.Get(ctx, host.ID)
 	require.NoError(t, err)
-	require.Equal(t, 55+wallet.CrystalPlace1/2, hostW.Crystal, "bot teammate halves 水晶")
+	require.Equal(t, 55+wallet.CrystalPlace1*resultMultiplier(), hostW.Crystal, "two humans in the lobby = x(N+1) 水晶")
 	require.Equal(t, 0, hostW.MCoin, "a bot anywhere in the lobby means no M幣, even for 1st")
 
 	// Half of every placement is still worth having — 「打場免費賺」 must not
 	// round away to nothing for the family member who keeps losing.
-	require.Positive(t, wallet.CrystalPlace4/2, "half of last place must still be > 0")
+	require.Positive(t, wallet.CrystalPlace4, "last place must still be > 0")
 
 	// The match still COUNTED: standings are not currency.
 	a, err := ts.Srv.Accounts.GetByID(ctx, host.ID)
