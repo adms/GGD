@@ -17,11 +17,12 @@
       "effects": [
         {
           "kind": "applyStatus",
-          "statusId": "burnstun",
+          "statusId": "stun",
           "duration": 1,
           "stun": true
         }
       ]
     }
-  ]
+  ],
+  "authoringNote": "⭐ 2026-08-18 雙向逐句稽核（第一·五守則「不放任何無效說明」）：唯一那句效能有實作，卡面一個字都沒改。\n\n「[暈眩] 11%機率攻擊附帶暈眩1秒」= passive[0]，三個詞逐一對上：\n· 「攻擊附帶」= `onBasicAttack`（普攻那一發），⛔ 不是 onDamageDealt —— 那會把技能傷害與 DoT 每一跳都算成一次機會，等於偷偷把 11% 變成好幾倍。\n· 「11%機率」= `chance: 0.11`。骰子在 hooks.ts，失敗的一次不燒內部冷卻。\n· 「暈眩」= `stun: true`。sim 裡「不能動作」就是這一格（movementHold／abilitySystem／CastResolveSystem／BasicAttackSystem／RecoverySystem 全部讀它）；root 只擋位移，沒有 silence。\n· 「1秒」= `duration: 1` → 30 Hz 下 30 tick（applyStatus 的 `Math.round(duration/dt)`，不是被 round 吃掉的邊界值）。\n\n⚠️ **2026-08-18 改了一個欄位：statusId `burnstun` → `stun`。** `burnstun`（content/status-effects/burnstun.json）是**火焰**風味的具名變體 —— 名字寫「Searing Stun」、描述寫「Stunned by the firestorm.」、標籤帶 `fire` —— 掛在一把十字鎬上，玩家的狀態列會出現一個跟這件道具毫無關係的火焰圖示。⛔ 這不是機制缺陷（statusId 是 soft ref，機制照樣動），是 **UI 說謊**，跟第一·五守則同一個方向。`stun` 是出貨的通用那一份（「這是通用的那一份 —— 帶名字的那幾種是同一種硬控的不同張臉」），正是這種沒有特殊風味的硬控該指的。機制、機率、秒數、rng 抽取順序**一個都沒有動**。\n\n⚠️ **刻意沒有 `internalCooldown`**：卡面只寫機率沒有寫冷卻，補一個 ICD 等於安靜地把 11% 打折（同一批的 殺豬刀 godie-i06g 就帶著一個 owner 沒裁決過的 3 秒 ICD，那一件的 note 也把它記成待決）。要收節奏是 owner 的決定，不是稽核線的。\n⚠️ JSON→描述 方向：**沒有**任何卡面沒講的效果 —— 無 modifiers、無 block、無 aura、無 requires 閘。"
 }

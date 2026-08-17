@@ -47,16 +47,18 @@
           },
           "radius": 4,
           "maxTargets": 6,
-          "includeOrigin": true
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "burnstun",
-          "duration": 2,
-          "stun": true
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "statusId": "burnstun",
+              "duration": 2,
+              "stun": true
+            }
+          ]
         }
       ]
     }
   ],
-  "authoringNote": "[暈眩]「施展技能的時候有 5%的機率招喚隕石流星雨，造成範圍 100% AP傷害及 2秒暈眩」= passive[0]。\n· 「施展技能的時候」= on:\"onAbilityCast\"（abilities/abilitySystem.ts:326 與 CastResolveSystem.ts:92 都會發），「5%的機率」= chance 0.05，「100% AP」= ratios ap 1.0，「2秒暈眩」= applyStatus burnstun duration 2 stun:true（burnstun 的文案就是「被火風暴擊暈」，正好是隕石）。\n· radius 4.0 / maxTargets 6 是**文案沒有給的數字**，兩個都是欄位。4.0 取自同批的死之王的神盾 godie-i061 焚身光環（也是「範圍」沒給數字的那一種），maxTargets 6 與月牙魔杖 godie-i06e 的流星同級。damageArea **不吃** combatEnv.abilityRange（見 sim/effects/effect.ts），所以 4.0 就是場上的 4.0。\n· ⚠️ 一個誠實的限制：隕石的圓心是 areaCentre()（sim/effects/damageArea.ts）的第一順位 = 這次施法的第一個目標；**自我指向的技能沒有目標**，那時圓心退回施法者自己（傷害照樣打得到周圍敵人），但 applyStatus 因為 ctx.targets 是空的而**不會暈到任何人**。也就是說對純自 buff 型的技能，這張卡只有傷害沒有暈。要補需要 damageArea 能帶 status payload，與雷神之鎚 godie-i01i 記的是同一個缺口。"
+  "authoringNote": "⭐ 2026-08-18 逐句稽核（第一·五守則「不放任何無效說明」）：三句效能全部對得上，**而且補好了原本半殘的那一句**。\n\n「AP + 255」= modifiers ap flat 255。「總AP + 10%」= 同一條 stat 的 pctAdd 0.1 —— 管線是 `(base+Σflat)×(1+ΣpctAdd)×…`，所以它乘的是**含這件自己那 255 在內的總 AP**，逐字就是「總AP」。\n\n[暈眩]「施展技能的時候有 5%的機率招喚隕石流星雨，造成範圍 100% AP傷害及 2秒暈眩」= passive[0]。\n· 「施展技能的時候」= on:\"onAbilityCast\"（abilitySystem.ts 與 CastResolveSystem.ts 都會發），「5%的機率」= chance 0.05，「100% AP」= ratios ap 1.0，「2秒暈眩」= applyStatus burnstun duration 2 stun:true（burnstun 的文案就是「被火風暴擊暈」，正好是隕石）。\n· ⛔ **2026-08-18 修正：暈眩原本掛在 damageArea 的外面**，也就是與傷害**平行**的第二個效果。applyStatus 的受眾是 `ctx.targets`（sim/effects/applyStatus.ts 的 `subjects`），而那是**上游交下來的施法目標**，不是隕石真的砸到的那群人 —— 於是卡面寫「範圍傷害**及** 2秒暈眩」，實際上是「範圍傷害 + 只暈原本那一個目標」，而且**自我指向的技能沒有目標**（ctx.targets 空）時**一個人都不會被暈**。畫面上跟壞掉一模一樣（失敗形態②）。\n· ⭐ 修法是**替換成做得到的等效機制**，⛔ 不是刪掉那句話：改用 `damageArea.onHitTargets`（`effect.target-set-chain@1`，sim/effects/victimFilter.ts::runOnHitChain）——它把**這一圈真的打到的那群人**當成 ctx.targets 交給下一段。所以現在「被隕石砸到的每一個人」都吃 2 秒暈，逐字等於卡面，而且自我指向技能那條路也一起活了（圓心退回施法者，砸到誰暈誰）。onHitTargetsMode 省略 = batch（applyStatus 自己就會迭代整群，⛔ 不需要 perTarget，那只有下游是 damageArea/damageLine 這種自己解幾何的 kind 才需要）。runOnEmptyHit 省略 = 打空了不跑。\n· radius 4.0 / maxTargets 6 / damageType magic 是**文案沒有給的三個值**，三個都是欄位。4.0 取自同批的死之王的神盾 godie-i061 焚身光環（也是「範圍」沒給數字的那一種），maxTargets 6 與月牙魔杖 godie-i06e 的流星同級。damageArea **不吃** combatEnv.abilityRange，所以 4.0 就是場上的 4.0。includeOrigin true = 震央本人也吃一發（隕石不是普攻濺射，沒有「他已經吃過觸發那一擊」這回事）。\n\n✅ 反向對帳（JSON → 描述）：modifiers 兩條、passive 一條，沒有任何「給了但卡面沒講」的效果。recipe/craftRole 是取得方式不是效果，照慣例不上卡面。"
 }

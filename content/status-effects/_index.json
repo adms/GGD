@@ -1,6 +1,6 @@
 {
   "collection": "status-effects",
-  "hash": "6565a0cff1df",
+  "hash": "e9936d7778a9",
   "entries": [
     {
       "id": "armor-break",
@@ -147,6 +147,12 @@
       "size": 231
     },
     {
+      "id": "slow20",
+      "path": "status-effects/slow20.json",
+      "hash": "1d81832bebc9",
+      "size": 272
+    },
+    {
       "id": "slow25",
       "path": "status-effects/slow25.json",
       "hash": "a7ffd23fed49",
@@ -159,9 +165,27 @@
       "size": 272
     },
     {
+      "id": "slow35",
+      "path": "status-effects/slow35.json",
+      "hash": "e07b87837b8f",
+      "size": 272
+    },
+    {
       "id": "slow40",
       "path": "status-effects/slow40.json",
       "hash": "d5cfebaef43a",
+      "size": 272
+    },
+    {
+      "id": "slow50",
+      "path": "status-effects/slow50.json",
+      "hash": "b39142bbf3fe",
+      "size": 272
+    },
+    {
+      "id": "slow60",
+      "path": "status-effects/slow60.json",
+      "hash": "fd535e089c94",
       "size": 272
     },
     {

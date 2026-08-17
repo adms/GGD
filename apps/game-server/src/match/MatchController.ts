@@ -4007,12 +4007,54 @@ export class MatchController {
   }
 
   /**
+   * WHY the last {@link applyCheat} returned false — drained by {@link takeCheatRejection}.
+   *
+   * ⚠️ 為什麼是一格狀態而不是改回傳型別：`applyCheat` 的 `boolean` 被**六支測試檔**
+   * 逐條 `toBe(true/false)` 釘住，還被 replay 的 `Player.ts` 當成無回饋的重放呼叫。
+   * 把它換成物件 = 動一堆不相干的檔，而這裡真正缺的東西只有「理由」一個字串。
+   */
+  private cheatRejection: string | null = null;
+
+  /**
+   * 記下理由並回 `false` —— 讓每一條 `return this.refuseCheat("…")` 讀起來就是
+   * 「拒絕，因為 X」。
+   */
+  private refuseCheat(reason: string): false {
+    this.cheatRejection = reason;
+    return false;
+  }
+
+  /**
+   * 讀走（並清掉）上一次 `applyCheat` 回 false 的理由。
+   *
+   * ⭐ 一定有東西可以回：沒有人指名理由時，回一個**指名那一格按鈕**的字串，
+   * ⛔ 不是空字串 —— 「按了沒反應」與「按了說不行」的差別，正是這個功能的全部。
+   */
+  takeCheatRejection(): string {
+    const reason = this.cheatRejection ?? "cheat-refused";
+    this.cheatRejection = null;
+    return reason;
+  }
+
+  /**
    * Apply a cheat to `seatId`'s champion. Callers (MatchRoom) resolve seatId
    * from the client's OWN session, so a client can never target a foreign seat;
    * the channel itself is hard-gated to dev mode (see cheatGate.ts). Returns
    * true when the cheat was applied.
+   *
+   * ⭐ 回 false 時**一定**留下一個理由（{@link takeCheatRejection}）。這一層是
+   * 「一次修好全部 cheat 路徑」的那一層：底下幾十個 `return false` 不必逐條補，
+   * 沒指名理由的那些在這裡拿到 `cheat-refused:<kind>`，於是⛔ 沒有任何一條
+   * cheat 路徑可以靜默失敗。
    */
   applyCheat(seatId: SeatId, cheat: Cheat): boolean {
+    this.cheatRejection = null;
+    const ok = this.runCheat(seatId, cheat);
+    if (!ok && this.cheatRejection === null) this.cheatRejection = `cheat-refused:${cheat.kind}`;
+    return ok;
+  }
+
+  private runCheat(seatId: SeatId, cheat: Cheat): boolean {
     const seat = this.seats.get(seatId);
     if (!seat) return false;
 
@@ -4206,7 +4248,10 @@ export class MatchController {
     const rules = this.world.mobRules;
     // 規則表沒備妥 = 這一場沒有小怪系統（沒排到 fromRound、房間關掉了、或根本
     // 不是練習房）。回 false 讓客戶端看得到「這裡按了沒用」，⛔ 不要靜默吞掉。
-    if (!t || !rules) return false;
+    // ⚠️ 這句話在 GH#343 當下是**假的**（第三守則）—— `MatchRoom` 的 cheat handler
+    // 只在成功時做事，false 整個掉在地上。現在理由真的走到客戶端了（見
+    // `takeCheatRejection`）。
+    if (!t || !rules) return this.refuseCheat("no-mob-rules");
     const zone = t.zone;
 
     // ⭐ 數量夾在**王與一般共用**的這一行，⛔ 不是只給一般路徑 —— owner 2026-08-18
@@ -4221,7 +4266,7 @@ export class MatchController {
     );
 
     if (what === "boss") {
-      if (rules.boss === null || !rules.boss.enabled) return false;
+      if (rules.boss === null || !rules.boss.enabled) return this.refuseCheat("boss-disabled");
       let bosses = 0;
       for (let i = 0; i < batch; i++) {
         // ⚠️ 練習房**清掉每回合的王上限**。`summonMobBoss` 的 `maxPerRoundScope`
@@ -4233,10 +4278,21 @@ export class MatchController {
         if (this.practice) this.world.bossSpawnsThisRound.clear();
         // 王也吃每區存活上限 —— 同一個理由：練習房不可以被自己生出來的東西打死。
         if (mobsAliveInZone(this.world, zone) >= rules.maxAlivePerZone) break;
-        if (summonMobBoss(this.world, zone, rules, entity, this.world.tick) === null) break;
+        // ⭐ 第六個引數是**位置 nonce**，⛔ 不是 `kills`（GH#343）。少了它，N 隻王
+        // 拿到同一個 `this.world.tick` 當位置鑰匙 ⇒ 全部生在**同一個座標**：畫面上
+        // 是一塊王形狀的東西、N 條血條疊在同一個錨點、出場演出連播 N 次，而且沒有
+        // 任何錯誤 —— 隔壁 `spawnMob` 那條路一直有把 `i` 傳進去，王這條沒有。
+        // ⛔ 不可以改用 `kills` 來錯開：那個值同時被 `mobBossSpawn` 送出去當
+        // 「累積擊殺數」顯示，動它等於讓 HUD 說謊（第一·五守則）。
+        // ⚠️ 用 `tick + i` 而不是裸的 `i`：王的 `k` 被釘死在 `BOSS_SPAWN_WAVE`，
+        // 所以位置只由這一個數字決定 —— 傳裸的 `i` 會讓**每一次**按鈕都落在同一組
+        // 點上（連按兩次 = 第二批疊在第一批身上）。絕對 tick 是這裡唯一的時間來源。
+        if (summonMobBoss(this.world, zone, rules, entity, this.world.tick, this.world.tick + i) === null) {
+          break;
+        }
         bosses++;
       }
-      return bosses > 0;
+      return bosses > 0 ? true : this.refuseCheat("zone-full");
     }
 
     let spawned = 0;
@@ -4246,7 +4302,9 @@ export class MatchController {
       spawnMob(this.world, zone, rules, this.world.tick, i, what);
       spawned++;
     }
-    return spawned > 0;
+    // ⭐ 一隻都沒生 = 這一區已經滿了。⛔ 靜默回 false 就是 owner 量到的那個症狀：
+    // 「先按滿一般殭屍再按王，**完全沒反應**」。
+    return spawned > 0 ? true : this.refuseCheat("zone-full");
   }
 
   /** Kill every alive enemy champion sharing the caller's zone (fast-forward). */

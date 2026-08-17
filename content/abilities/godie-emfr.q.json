@@ -47,7 +47,7 @@
       "onHitTargets": [
         {
           "kind": "applyStatus",
-          "statusId": "slow40",
+          "statusId": "slow50",
           "duration": 1.0,
           "moveSpeedMult": 0.5
         }

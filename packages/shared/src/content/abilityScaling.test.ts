@@ -30,6 +30,7 @@ import { zChampionDoc, type ChampionDoc } from "./schema/champion";
 import { zItemDoc, type ItemDoc } from "./schema/item";
 import { NO_ATTR_LOOKUP, resolveScaling, type Scaling } from "../sim/effects/effect";
 import { Stat, zeroStats } from "../sim/stats/statTypes";
+import { ModOp } from "../sim/stats/modifiers";
 import { championStatBase } from "../sim/stats/attributes";
 import { DEFAULT_COMBAT_ENV } from "../sim/combatEnv";
 
@@ -289,10 +290,20 @@ describe("imported ability stat scaling", () => {
     // must not come back is the ORIGINAL defect: raw WC3 INT points (ap 10),
     // ~14x less gold-efficient than a native item and never worth buying.
     expect(ap!.value).toBeGreaterThanOrEqual(20);
-    // …and the pure-ap reference item still spends its whole budget on ap.
-    const rod = zItemDoc.parse(read<ItemDoc>("items", "ember-rod.json"));
-    const rodAp = (rod.modifiers ?? []).find((m) => m.stat === Stat.AbilityPower);
-    expect(rodAp!.value).toBeGreaterThanOrEqual(30);
+    // …and the shipped tree still carries at least one item whose budget really
+    // goes into ap.
+    // ⚠️ 2026-08-18 (#356): this used to read `ember-rod.json` by name, and that
+    // item was retired into `content/_legacy/items/` — the test then failed with
+    // ENOENT, i.e. with a message about a missing FILE rather than about ap being
+    // un-buyable. The property has nothing to do with which item it is, so read it
+    // off the tree instead of naming one: ⛔ don't swap in another hard-coded id,
+    // the next retirement would break it the same way.
+    const bestAp = readdirSync(join(CONTENT, "items"))
+      .filter((f) => f.endsWith(".json") && f !== "_index.json")
+      .flatMap((f) => zItemDoc.parse(read<ItemDoc>("items", f)).modifiers ?? [])
+      .filter((m) => m.stat === Stat.AbilityPower && (m.op === undefined || m.op === ModOp.Flat))
+      .reduce((max, m) => Math.max(max, m.value), 0);
+    expect(bestAp, "出貨樹裡沒有一件道具真的在賣 ap").toBeGreaterThanOrEqual(30);
 
     const lina = champs.find((c) => c.id === "godie-h020")!;
     const stats = zeroStats();

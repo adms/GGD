@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_ec6a1028850d`
+contentVersion `cv_f0447d80c8e8`
 
 ---
 
@@ -102,7 +102,7 @@ contentVersion `cv_ec6a1028850d`
 | `stat` | 屬性門檻（血量低於 X%…） | 7 | `godie-e002.w`、`godie-e00l.w`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-h00l.ex`、`godie-h02v.w`、`grail-ex-13` |
 | `status` | 身上有某狀態時 | 20 | `godie-edem.r`、`godie-efur.ex`、`godie-emns.e`、`godie-emns.r`、`godie-ewar.e`、`godie-h00l.e`、`godie-h01n.e`、`godie-h01n.w`、`godie-h01u.e`、`godie-h02k.ex`、`godie-h02k.passive`、`godie-h02k.q` …（共 20） |
 
-## 狀態標籤 —— 86 個
+## 狀態標籤 —— 90 個
 
 開放詞彙（自由字串）。條件葉 `status` 的**類別分支**查的就是它。
 
@@ -124,14 +124,14 @@ contentVersion `cv_ec6a1028850d`
 | `burn` | `burn` |
 | `burnstun` | `burnstun` |
 | `cast-denied` | `burnstun`、`fang-stun`、`ingredient`、`omnislash-lock`、`omnislash-perform`、`stun`、`trial-stun` |
-| `cc` | `blind`、`burnstun`、`confusion`、`curse`、`fang-stun`、`fear`、`ingredient`、`numbness`、`omnislash-lock`、`paralysis`、`root`、`slow25`、`slow30`、`slow40`、`stun`、`trial-stun` |
+| `cc` | `blind`、`burnstun`、`confusion`、`curse`、`fang-stun`、`fear`、`ingredient`、`numbness`、`omnislash-lock`、`paralysis`、`root`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60`、`stun`、`trial-stun` |
 | `channel` | `omnislash-perform` |
 | `combo` | `moon-combo` |
 | `confusion` | `confusion` |
 | `counter` | `triforce-courage` |
 | `curse` | `curse` |
 | `damage-bank` | `light-wand-banked`、`nen-banked` |
-| `debuff` | `armor-break`、`blind`、`burn`、`burnstun`、`confusion`、`curse`、`fang-stun`、`fear`、`grievous-wounds`、`ingredient`、`magic-break`、`no-heal`、`numbness`、`omnislash-lock`、`paralysis`、`root`、`slow25`、`slow30`、`slow40`、`stun`、`trial-stun` |
+| `debuff` | `armor-break`、`blind`、`burn`、`burnstun`、`confusion`、`curse`、`fang-stun`、`fear`、`grievous-wounds`、`ingredient`、`magic-break`、`no-heal`、`numbness`、`omnislash-lock`、`paralysis`、`root`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60`、`stun`、`trial-stun` |
 | `disable` | `burnstun`、`fang-stun`、`fear`、`ingredient`、`numbness`、`omnislash-lock`、`omnislash-perform`、`paralysis`、`root`、`stun`、`trial-stun` |
 | `dot` | `burn` |
 | `elemental` | `burn` |
@@ -164,7 +164,7 @@ contentVersion `cv_ec6a1028850d`
 | `miss` | `blind`、`curse` |
 | `moon-combo` | `moon-combo` |
 | `move-denied` | `burnstun`、`fang-stun`、`ingredient`、`omnislash-lock`、`omnislash-perform`、`root`、`stun`、`trial-stun` |
-| `move-speed-down` | `slow25`、`slow30`、`slow40` |
+| `move-speed-down` | `slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60` |
 | `named-variant` | `burnstun`、`fang-stun`、`ingredient`、`omnislash-lock`、`omnislash-perform`、`trial-stun` |
 | `nen-banked` | `nen-banked` |
 | `next-attack` | `grail-strengthened-projection` |
@@ -181,12 +181,16 @@ contentVersion `cv_ec6a1028850d`
 | `root` | `root` |
 | `self-lock` | `omnislash-perform` |
 | `shred` | `armor-break`、`magic-break` |
-| `slow` | `slow25`、`slow30`、`slow40` |
+| `slow` | `slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60` |
+| `slow20` | `slow20` |
 | `slow25` | `slow25` |
 | `slow30` | `slow30` |
+| `slow35` | `slow35` |
 | `slow40` | `slow40` |
-| `soft-cc` | `blind`、`curse`、`slow25`、`slow30`、`slow40` |
-| `stat-down` | `armor-break`、`magic-break`、`slow25`、`slow30`、`slow40` |
+| `slow50` | `slow50` |
+| `slow60` | `slow60` |
+| `soft-cc` | `blind`、`curse`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60` |
+| `stat-down` | `armor-break`、`magic-break`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60` |
 | `stat-up` | `rage` |
 | `stun` | `burnstun`、`fang-stun`、`ingredient`、`omnislash-lock`、`omnislash-perform`、`stun`、`trial-stun` |
 | `timed-window` | `moon-combo` |

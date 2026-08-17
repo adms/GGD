@@ -57,7 +57,13 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
 ITEMS_DIR = REPO / "content" / "items"
+# ⭐ owner 2026-08-18 的三階寶具池。`LEGENDARY_POOL` 留著指 EX 那一張（CSV 的
+# 「在不在傳說池」欄與上架流程都是以它為主），三張的聯集在 `LEGENDARY_POOLS`。
 LEGENDARY_POOL = REPO / "content" / "loot-tables" / "legendary-weapons.json"
+LEGENDARY_POOLS = [
+    REPO / "content" / "loot-tables" / f"{t}.json"
+    for t in ("legendary-weapons", "ex-release-weapons", "ex-origin-weapons")
+]
 STARTER_GO = REPO / "apps" / "platform" / "internal" / "curation" / "starter.go"
 
 # 與 packages/shared/src/content/schema/item.ts 對齊。新增 stat/op 時這裡要跟著加，

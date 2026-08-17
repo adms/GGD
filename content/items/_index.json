@@ -1,6 +1,6 @@
 {
   "collection": "items",
-  "hash": "359c9a3e735d",
+  "hash": "4fc647e3f0bc",
   "entries": [
     {
       "id": "book-of-gospel",
@@ -27,12 +27,6 @@
       "size": 5720
     },
     {
-      "id": "ember-rod",
-      "path": "items/ember-rod.json",
-      "hash": "35997ee76d35",
-      "size": 290
-    },
-    {
       "id": "endless-edge",
       "path": "items/endless-edge.json",
       "hash": "6de4f4ff280a",
@@ -47,8 +41,8 @@
     {
       "id": "godie-i000",
       "path": "items/godie-i000.json",
-      "hash": "7ecc564d37c0",
-      "size": 1013
+      "hash": "b1a257ca5f55",
+      "size": 3694
     },
     {
       "id": "godie-i001",
@@ -77,14 +71,14 @@
     {
       "id": "godie-i006",
       "path": "items/godie-i006.json",
-      "hash": "058fcec3904e",
-      "size": 1097
+      "hash": "4df095995e13",
+      "size": 2991
     },
     {
       "id": "godie-i007",
       "path": "items/godie-i007.json",
-      "hash": "66c7573543b5",
-      "size": 2541
+      "hash": "10749604410a",
+      "size": 4065
     },
     {
       "id": "godie-i008",
@@ -113,14 +107,14 @@
     {
       "id": "godie-i00f",
       "path": "items/godie-i00f.json",
-      "hash": "c93e74a1d279",
-      "size": 2450
+      "hash": "ee4af163426f",
+      "size": 3419
     },
     {
       "id": "godie-i00i",
       "path": "items/godie-i00i.json",
-      "hash": "b7d8550444da",
-      "size": 2056
+      "hash": "d11bc04d6ea0",
+      "size": 3632
     },
     {
       "id": "godie-i00j",
@@ -149,20 +143,20 @@
     {
       "id": "godie-i00s",
       "path": "items/godie-i00s.json",
-      "hash": "0a5131debe18",
-      "size": 3656
+      "hash": "9b1e28655426",
+      "size": 4322
     },
     {
       "id": "godie-i00u",
       "path": "items/godie-i00u.json",
-      "hash": "3ebd7baa7315",
-      "size": 1004
+      "hash": "1e1b012a7b79",
+      "size": 3175
     },
     {
       "id": "godie-i00z",
       "path": "items/godie-i00z.json",
-      "hash": "f187d7a96eda",
-      "size": 2151
+      "hash": "a163e363507d",
+      "size": 2914
     },
     {
       "id": "godie-i010",
@@ -173,32 +167,32 @@
     {
       "id": "godie-i012",
       "path": "items/godie-i012.json",
-      "hash": "4b6e1324af68",
-      "size": 4261
+      "hash": "d8aaaf45961c",
+      "size": 4738
     },
     {
       "id": "godie-i013",
       "path": "items/godie-i013.json",
-      "hash": "794d2a04bc22",
-      "size": 978
+      "hash": "842f86e82d21",
+      "size": 3423
     },
     {
       "id": "godie-i014",
       "path": "items/godie-i014.json",
-      "hash": "0b9c41155b87",
-      "size": 1939
+      "hash": "65dd65f5608d",
+      "size": 2590
     },
     {
       "id": "godie-i016",
       "path": "items/godie-i016.json",
-      "hash": "3054bd4e144f",
-      "size": 5149
+      "hash": "7b8cb24a10e4",
+      "size": 5541
     },
     {
       "id": "godie-i018",
       "path": "items/godie-i018.json",
-      "hash": "44f779b431f5",
-      "size": 4555
+      "hash": "23e15bfc4ef2",
+      "size": 5016
     },
     {
       "id": "godie-i01a",
@@ -209,20 +203,20 @@
     {
       "id": "godie-i01d",
       "path": "items/godie-i01d.json",
-      "hash": "c393a26631e6",
-      "size": 3986
+      "hash": "c4277699c8d6",
+      "size": 4889
     },
     {
       "id": "godie-i01g",
       "path": "items/godie-i01g.json",
-      "hash": "b058a40d428b",
-      "size": 4225
+      "hash": "e9139d8ca888",
+      "size": 4805
     },
     {
       "id": "godie-i01i",
       "path": "items/godie-i01i.json",
-      "hash": "b81259446b81",
-      "size": 3939
+      "hash": "9ee2c60c9696",
+      "size": 5125
     },
     {
       "id": "godie-i01j",
@@ -231,16 +225,10 @@
       "size": 611
     },
     {
-      "id": "godie-i01k",
-      "path": "items/godie-i01k.json",
-      "hash": "06abe9fab5f6",
-      "size": 1025
-    },
-    {
       "id": "godie-i01n",
       "path": "items/godie-i01n.json",
-      "hash": "e2972243958b",
-      "size": 4203
+      "hash": "0c9b552c048c",
+      "size": 4314
     },
     {
       "id": "godie-i01o",
@@ -251,68 +239,50 @@
     {
       "id": "godie-i01s",
       "path": "items/godie-i01s.json",
-      "hash": "aca07b542ed9",
-      "size": 2305
+      "hash": "c8289afce40a",
+      "size": 4481
     },
     {
       "id": "godie-i01v",
       "path": "items/godie-i01v.json",
-      "hash": "30b422424e98",
-      "size": 3053
+      "hash": "d1c780daff78",
+      "size": 3850
     },
     {
       "id": "godie-i01w",
       "path": "items/godie-i01w.json",
-      "hash": "fb317cdd4a8a",
-      "size": 3744
+      "hash": "c550ba66254d",
+      "size": 4645
     },
     {
       "id": "godie-i020",
       "path": "items/godie-i020.json",
-      "hash": "15c6aca59ec9",
-      "size": 2729
+      "hash": "b0ba737229e7",
+      "size": 3070
     },
     {
       "id": "godie-i027",
       "path": "items/godie-i027.json",
-      "hash": "d2fc6c70237f",
-      "size": 4771
+      "hash": "ae2433735aa3",
+      "size": 5109
     },
     {
       "id": "godie-i02d",
       "path": "items/godie-i02d.json",
-      "hash": "e6ddde4e5a2f",
-      "size": 2083
+      "hash": "8a52a27cdb40",
+      "size": 4044
     },
     {
       "id": "godie-i02e",
       "path": "items/godie-i02e.json",
-      "hash": "82a3c074a09e",
-      "size": 856
+      "hash": "1828472f8c67",
+      "size": 2827
     },
     {
       "id": "godie-i02g",
       "path": "items/godie-i02g.json",
       "hash": "6c927677a6cd",
       "size": 658
-    },
-    {
-      "id": "godie-i02h",
-      "path": "items/godie-i02h.json",
-      "hash": "21c7c7e880bc",
-      "size": 594
-    },
-    {
-      "id": "godie-i02j",
-      "path": "items/godie-i02j.json",
-      "hash": "ac64db903ca6",
-      "size": 1213
-    },
-    {
-      "id": "godie-i02k",
-      "path": "items/godie-i02k.json",
-      "hash": "8642a4bdd26c",
-      "size": 1512
     },
     {
       "id": "godie-i02r",
@@ -351,18 +321,6 @@
       "size": 732
     },
     {
-      "id": "godie-i034",
-      "path": "items/godie-i034.json",
-      "hash": "1e43e3aa6e9d",
-      "size": 786
-    },
-    {
-      "id": "godie-i035",
-      "path": "items/godie-i035.json",
-      "hash": "5d15f89b5bd0",
-      "size": 755
-    },
-    {
       "id": "godie-i038",
       "path": "items/godie-i038.json",
       "hash": "334c2c254bd2",
@@ -371,8 +329,8 @@
     {
       "id": "godie-i039",
       "path": "items/godie-i039.json",
-      "hash": "bb37fd9707cc",
-      "size": 1045
+      "hash": "4f623958bcd1",
+      "size": 3238
     },
     {
       "id": "godie-i03b",
@@ -395,8 +353,8 @@
     {
       "id": "godie-i03h",
       "path": "items/godie-i03h.json",
-      "hash": "dea0a3f80386",
-      "size": 2707
+      "hash": "33d560a577e3",
+      "size": 4224
     },
     {
       "id": "godie-i03j",
@@ -455,8 +413,8 @@
     {
       "id": "godie-i04d",
       "path": "items/godie-i04d.json",
-      "hash": "e73ee5360e2c",
-      "size": 2563
+      "hash": "24258e0fc6c2",
+      "size": 3880
     },
     {
       "id": "godie-i04i",
@@ -549,12 +507,6 @@
       "size": 444
     },
     {
-      "id": "godie-i05y",
-      "path": "items/godie-i05y.json",
-      "hash": "9eea1dd72cb4",
-      "size": 634
-    },
-    {
       "id": "godie-i05z",
       "path": "items/godie-i05z.json",
       "hash": "7da85e7019ed",
@@ -563,14 +515,14 @@
     {
       "id": "godie-i060",
       "path": "items/godie-i060.json",
-      "hash": "20a695fbca7d",
-      "size": 4111
+      "hash": "d3efe9d2c00c",
+      "size": 4980
     },
     {
       "id": "godie-i061",
       "path": "items/godie-i061.json",
-      "hash": "6bcb1c83e503",
-      "size": 2309
+      "hash": "e48c743a5526",
+      "size": 4165
     },
     {
       "id": "godie-i062",
@@ -581,8 +533,8 @@
     {
       "id": "godie-i063",
       "path": "items/godie-i063.json",
-      "hash": "d9b21523831c",
-      "size": 1726
+      "hash": "76339e656d9f",
+      "size": 3748
     },
     {
       "id": "godie-i067",
@@ -599,8 +551,8 @@
     {
       "id": "godie-i06a",
       "path": "items/godie-i06a.json",
-      "hash": "70ffcd8260e0",
-      "size": 1051
+      "hash": "219da272a62b",
+      "size": 3290
     },
     {
       "id": "godie-i06c",
@@ -611,26 +563,26 @@
     {
       "id": "godie-i06d",
       "path": "items/godie-i06d.json",
-      "hash": "05580451ef07",
-      "size": 906
+      "hash": "d2f80205be3f",
+      "size": 2589
     },
     {
       "id": "godie-i06e",
       "path": "items/godie-i06e.json",
-      "hash": "696598e40a50",
-      "size": 1848
+      "hash": "8bb7629b2d3e",
+      "size": 4584
     },
     {
       "id": "godie-i06f",
       "path": "items/godie-i06f.json",
-      "hash": "d31d4d2e0269",
-      "size": 773
+      "hash": "db88d7e7c82c",
+      "size": 2569
     },
     {
       "id": "godie-i06g",
       "path": "items/godie-i06g.json",
-      "hash": "39ee9dda9d09",
-      "size": 4904
+      "hash": "b4de4e8236e7",
+      "size": 4884
     },
     {
       "id": "godie-i06h",
@@ -641,14 +593,14 @@
     {
       "id": "godie-i06i",
       "path": "items/godie-i06i.json",
-      "hash": "8f0c42281355",
-      "size": 4160
+      "hash": "6bf1869b359e",
+      "size": 4662
     },
     {
       "id": "godie-i06j",
       "path": "items/godie-i06j.json",
-      "hash": "197a394caf3a",
-      "size": 650
+      "hash": "6811f403029b",
+      "size": 2765
     },
     {
       "id": "godie-i06k",
@@ -665,20 +617,20 @@
     {
       "id": "godie-i06n",
       "path": "items/godie-i06n.json",
-      "hash": "34dfa27d3dc6",
-      "size": 672
+      "hash": "274f68f77e8a",
+      "size": 2395
     },
     {
       "id": "godie-i06o",
       "path": "items/godie-i06o.json",
-      "hash": "5d31b43b2692",
-      "size": 2436
+      "hash": "55c3f2b78781",
+      "size": 3421
     },
     {
       "id": "godie-i06q",
       "path": "items/godie-i06q.json",
-      "hash": "2dad728e201e",
-      "size": 3575
+      "hash": "16c8e2033d82",
+      "size": 4537
     },
     {
       "id": "godie-i06s",
@@ -689,14 +641,8 @@
     {
       "id": "gravity-sword-black-rod",
       "path": "items/gravity-sword-black-rod.json",
-      "hash": "f765120ae754",
-      "size": 5882
-    },
-    {
-      "id": "ironhide-vest",
-      "path": "items/ironhide-vest.json",
-      "hash": "3d736fc013ba",
-      "size": 389
+      "hash": "2053f0b90024",
+      "size": 4989
     },
     {
       "id": "lance-kongotetsu",
@@ -749,20 +695,14 @@
     {
       "id": "piercer-crossbow",
       "path": "items/piercer-crossbow.json",
-      "hash": "fa7af1792c9b",
-      "size": 3634
+      "hash": "6cd09657b3bc",
+      "size": 4134
     },
     {
       "id": "sage-ward-amulet",
       "path": "items/sage-ward-amulet.json",
       "hash": "d9c30ea65d1b",
       "size": 2631
-    },
-    {
-      "id": "serrated-edge",
-      "path": "items/serrated-edge.json",
-      "hash": "0890da39c56a",
-      "size": 669
     },
     {
       "id": "shining-golden-orbs",
@@ -779,8 +719,8 @@
     {
       "id": "spear-of-lightning",
       "path": "items/spear-of-lightning.json",
-      "hash": "bc1f3c472f07",
-      "size": 6829
+      "hash": "28887d5400a3",
+      "size": 5821
     },
     {
       "id": "staff-of-ainz-ooal-gown",
@@ -801,12 +741,6 @@
       "size": 8843
     },
     {
-      "id": "swift-boots",
-      "path": "items/swift-boots.json",
-      "hash": "7e7d321a50d5",
-      "size": 316
-    },
-    {
       "id": "teardrop-of-rebirth",
       "path": "items/teardrop-of-rebirth.json",
       "hash": "279e0b43b06f",
@@ -821,8 +755,8 @@
     {
       "id": "ultimate-mod-shiranui",
       "path": "items/ultimate-mod-shiranui.json",
-      "hash": "a95f54523808",
-      "size": 5283
+      "hash": "94878bcaa2b6",
+      "size": 8752
     },
     {
       "id": "usagizuki-twin-crescents",

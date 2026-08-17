@@ -175,13 +175,14 @@ let starterItems: string[] = [];
 beforeAll(async () => {
   registerAll((await new ContentLoader(new FsContentSource(CONTENT_DIR)).load()).store);
   const src = readFileSync(STARTER_GO, "utf-8");
-  // ApplyStarterSet unions these four lists into the served whitelist — see
-  // starter.go's `starterItems = concat(shop, services, legendary, draft)`.
+  // ApplyStarterSet unions these three lists into the served whitelist — see
+  // starter.go's `starterItems = concat(shop, services, legendary)`.
+  // ⚠️ 2026-08-18：第四面（`starterDraftItems`，0g 任務道具）沒有了 —— owner 退掉了
+  // 那個標籤，那 6 件現在是三階寶具池裡的普通寶具。
   starterItems = [
     ...goList(src, "starterShopItems"),
     ...goList(src, "starterServiceItems"),
     ...goList(src, "starterLegendaryItems"),
-    ...goList(src, "starterDraftItems"),
   ];
   const champions = goList(src, "starterChampions");
   // bypass = false: this is the ENFORCING whitelist, the one a fresh install

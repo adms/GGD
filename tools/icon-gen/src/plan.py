@@ -64,9 +64,12 @@ FAMILIES = ("champions", "abilities", "items")
 # because a silently-absent surface file is how a veto quietly narrows.
 LIVE_SURFACE_FILES = [
     "apps/platform/internal/curation/starter.go",
+    # ⭐ owner 2026-08-18 的三階寶具池。`quest-rewards` / `round-reward` 同一天整張
+    # 搬進 `content/_legacy/loot-tables/`（缺檔本來就容忍並回報，但列著一個永遠不會
+    # 出現的檔案 = 每一次執行都報一則假的警告）。
     "content/loot-tables/legendary-weapons.json",
-    "content/loot-tables/quest-rewards.json",
-    "content/loot-tables/round-reward.json",
+    "content/loot-tables/ex-release-weapons.json",
+    "content/loot-tables/ex-origin-weapons.json",
     "content/config/store.json",
     "content/config/arena-rules.json",
     "packages/shared/src/sim/content/skeleton.ts",

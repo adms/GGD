@@ -36,5 +36,6 @@
       "godie-i013"
     ],
     "book": "godie-i02c"
-  }
+  },
+  "authoringNote": "⭐ 2026-08-18 逐句稽核（第一·五守則「不放任何無效說明」）：**兩句效能都對得上，資料與描述一個字都沒改**，這一輪只補上本來缺席的這份備註。\n\n「攻擊速度+200%」= modifiers 的 as **pctAdd 2.0**。管線是 `(base+Σflat)×(1+ΣpctAdd)×Π(1+pctMult)`，所以它是 ×3.0 的加成型 —— 逐字就是「+200%」。⛔ 刻意**不是** pctMult：pctMult 是獨立乘區，兩件同樣寫「+X%」的攻速裝會變成相乘而不是相加，而卡面上的加號說的是相加。\n⚠️ 一個誠實的天花板：`config.stat-caps@1` 的 `as.base` 是 **4.0**，而近戰基礎攻速中位數 lv18 約 1.77 —— 也就是說這一件單獨就足以把多數英雄推到夾限附近，再疊第二件攻速裝的收益會被夾掉。要突破 4.0 需要一件帶 `capRaise` 的道具（出貨只有無盡連刃 endless-edge 解到 10.0）。這是**平衡資料**不是這張卡的缺陷，記下來給 owner 看，⛔ 沒有自己改數字。\n\n[暈眩]「10%的機率普攻造成暈眩 0.1秒」= passive[0]。「普攻」= on:\"onBasicAttack\"；「10%的機率」= chance 0.1；「暈眩 0.1秒」= applyStatus fang-stun duration 0.1 stun:true。\n· `target` 省略 = 事件的那個實體（sim/effects/hooks.ts 的 `resolveAgainst`），也就是**被這一刀打中的人**，⛔ 不是持有者 —— 方向是對的。\n· duration 0.1 在 schema 的下界 0.034（30 Hz 的一 tick）之上，所以它真的會掛上至少 3 個 tick，⛔ 不會被 round 成 0（那是失敗形態②）。\n· fang-stun 有對應的 `content/status-effects/fang-stun.json`，所以 UI 有圖示有名字。\n\n✅ 反向對帳（JSON → 描述）：modifiers 一條、passive 一條，沒有 auras、沒有 sets、沒有 requires 閘 —— 沒有任何「給了但卡面沒講」的效果。recipe / craftRole 是**取得方式**不是效果，照出貨慣例不上卡面。"
 }

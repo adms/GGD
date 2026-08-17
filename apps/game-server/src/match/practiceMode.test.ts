@@ -21,9 +21,12 @@ import { asSeatId } from "@ggd/shared/ids";
 import { DEFAULT_MOB_WAVES_CONFIG, type MobWavesConfig } from "@ggd/shared/content";
 import { DEFAULT_PRACTICE_RULES, type PracticeRules } from "@ggd/shared/content";
 import { MONSTER_TEAM } from "@ggd/shared/sim/mobs";
+import { MSG } from "@ggd/shared/protocol/messages";
 import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
 import { MatchController, type SeatSpec } from "./MatchController";
 import { DEFAULT_ARENA_RULES, type ArenaRules } from "./arenaRules";
+import { Whitelist } from "../curation/whitelist";
+import { MatchRoom, type MatchRoomOptions } from "../rooms/MatchRoom";
 
 const FAST = { champSelectTicks: 5, intermissionTicks: 10, combatMaxTicks: 60, resolutionTicks: 5 };
 const SEAT0 = asSeatId(0);
@@ -138,5 +141,77 @@ describe("練習模式 (GH#343)", () => {
     );
     // 上限仍然是伺服器夾的那一個，⛔ 不是客戶端說了算。
     expect(many.world.mob.size).toBeLessThanOrEqual(many.world.mobRules!.maxAlivePerZone);
+  });
+
+  /**
+   * ⭐ **這一批唯一被 owner 點名的功能**：「殭屍王 ×N」要看得到 N 隻王。
+   *
+   * ③c 只證明了「生出 N 個實體」，而那個斷言對**壞掉的實作也是綠的** ——
+   * 王那條路把 `this.world.tick` 同時當成 `kills`（顯示用）與位置鑰匙，於是 N 隻王
+   * 逐位元疊在**同一個座標**：畫面上是一塊王形狀的東西、N 條血條在同一個錨點、
+   * 出場演出連播 N 次。隔壁 8 行的一般路徑一直有把迴圈索引 `i` 傳進位置計算。
+   * （失敗形態①：算出來了，但畫在同一個點上。）
+   *
+   * ⛔ 這裡不斷言「站在哪裡」——那是 `mobSpawnPos` 的查表，不是這條線的機制。
+   * 斷言的是機制本身：**兩隻王不會共用一個座標**。
+   *
+   * 突變紀錄（承重的那一條，已驗）：把 `cheatSpawnMob` 王迴圈第六個引數
+   * `this.world.tick + i` 改回不傳（＝退回 `posNonce = kills`）⇒ 這一條紅
+   * （distinct spots 掉到 1），而 ③c 仍然全綠 —— 正是它抓不到的那半邊。
+   */
+  it("★ ③d 「殭屍王 ×N」站在 N 個**不同**的點上（⛔ 不是全部疊在同一個座標）", () => {
+    const ctl = build({ ...DEFAULT_PRACTICE_RULES });
+    expect(ctl.applyCheat(SEAT0, { kind: "spawnMob", what: "boss", count: 5 })).toBe(true);
+    const spots = new Set<string>();
+    for (const [id] of ctl.world.mob) {
+      const t = ctl.world.transform.get(id)!;
+      spots.add(`${t.pos.x},${t.pos.z}`);
+    }
+    expect(ctl.world.mob.size).toBeGreaterThan(1);
+    expect(spots.size, "N 隻王全部生在同一個座標").toBe(ctl.world.mob.size);
+  });
+
+  /**
+   * ⭐ 被拒的作弊指令要**回話**（owner 2026-08-18：區域滿了按「王 ×5」只出 2 隻然後
+   * 靜默；先按滿一般殭屍再按王則完全沒反應）。
+   *
+   * `MatchRoom` 的 cheat handler 在此之前**沒有 else**：`applyCheat` 的 false
+   * 整個掉在地上，而按鈕、伺服器與網路都是好的 —— 這是「壞掉跟正常長得一模一樣」。
+   *
+   * 這是**接線**（體驗層，一條薄守衛就夠）：故意從真的 `MatchRoom` 訊息處理器打進去，
+   * ⛔ 不是直接呼叫 `applyCheat` —— 後者對「handler 沒把理由送出去」永遠是綠的
+   * （失敗形態③：可以整段刪掉而測試全綠）。
+   *
+   * 突變（已驗）：刪掉那個 `else` ⇒ 這一條紅。
+   */
+  it("★ ④ 作弊被拒 → 客戶端收到一則帶理由的 REJECT（⛔ 不是靜默）", async () => {
+    const handlers = new Map<string, (c: unknown, m: unknown) => void>();
+    const room = new MatchRoom() as unknown as {
+      onCreate(o: MatchRoomOptions): Promise<void>;
+      onDispose(): void;
+      setSimulationInterval: () => void;
+      onMessage: (type: string, handler: (c: unknown, m: unknown) => void) => void;
+      cheatsAllowed: boolean;
+      seatBySession: Map<string, number>;
+    };
+    room.setSimulationInterval = (): void => {};
+    room.onMessage = (type, handler): void => void handlers.set(type, handler);
+    await room.onCreate({ matchId: "practice-reject", seed: 7, whitelist: Whitelist.allowAll(), combatEnv: {} });
+    room.cheatsAllowed = true;
+    room.seatBySession.set("sess", SEAT0);
+
+    const sent: { type: string; payload: { reason?: string } }[] = [];
+    const client = {
+      sessionId: "sess",
+      send: (type: string, payload: { reason?: string }): void => void sent.push({ type, payload }),
+    };
+    // 一個伺服器**一定**會拒的指令（不存在的道具），這樣驗的是「拒了會不會回話」，
+    // ⛔ 不是某一條特定的拒絕理由。
+    handlers.get(MSG.CHEAT)!(client, { cheat: { kind: "giveItem", itemId: "no-such-item" } });
+
+    expect(sent, "被拒的 cheat 一則訊息都沒送回去").toHaveLength(1);
+    expect(sent[0]!.type).toBe(MSG.REJECT);
+    expect(sent[0]!.payload.reason).toBeTruthy();
+    room.onDispose();
   });
 });

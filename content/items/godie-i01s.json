@@ -10,7 +10,7 @@
     "wc3-import"
   ],
   "craftRole": "quest",
-  "authoringNote": "【2026-08-01 owner 重寫，draftEligible 重新開啟】舊的關閉理由是「完全沒有 payload」——modifiers/passive/auras 三個都空，抽到什麼都拿不到。owner 新文案給了實際數值：最大魔力+100% (maxMana pctAdd 1.0)、每秒回魔+25 (manaRegen flat 25)、以及 25%物理傷害迴避 —— 最後這項用既有的 Stat.Evasion 表達 (evasion flat 0.25；ITEM_MODIFIER_LIMITS 帶 0..1，STAT_CLAMPS 再折到 [0,0.8]；判定在 sim/combat/evasion.ts)。空卡問題解決，關閉的理由消失。【仍缺】『迴避成功時瞬間移動 (前進一小段距離)』——迴避本身有了，但「迴避成功」目前不是一個掛鉤事件，item@1 也還存不下主動/觸發式位移 (見 #56)。要補需要一個 onEvade 事件 + 一個能掛在 item 上的 dash 效果。 ｜ [淨化]（A4b/#278）：節奏寫在 `internalCooldown: 1`（onInterval 沒填它 = 每 tick 發 30 次/秒）。`count: 1` = 一次解一層，所以連續控場仍然壓得住它。`polarity: \"debuff\"` 讓它不會把自己的增益也吃掉。",
+  "authoringNote": "⭐ 2026-08-18 雙向稽核（第一·五守則「不放任何無效說明」）：卡面 5 句 → 4 句原本就對得上，**第 1 句的後半「迴避成功時瞬間移動」原本是零實作，這一次補上（唯一一處資料改動）**；反向看 JSON 沒有任何一條效果是卡面沒講的。\n\n『[迴避] 25%物理傷害迴避』= modifiers 的 evasion flat 0.25（ITEM_MODIFIER_LIMITS 帶 0..1，STAT_CLAMPS 再折到 [0,0.8]；判定在 sim/combat/evasion.ts）。⚠️ 引擎的迴避**只擋普通攻擊**（evasion.ts 決策 1，那是 WC3 `Aevd` 的忠實移植，也是 12-00／74-00／92-00 三支天生技共用的同一條），所以一發**物理型別的技能**傷害不會被它閃掉。這是卡面比引擎寬的唯一一處，⛔ 沒有偷偷改成別的意思 —— 要不要讓技能也可迴避是引擎級的設計題（`rollEvadeAbility` 已經存在，開關在別處），列給 owner。\n\n『迴避成功時瞬間移動 (前進一小段距離)』= **passive[0]**：`onEvade`（`WorldHookSystem` 的那一列，持有者＝**閃掉的那個**、target＝攻擊者）→ `dash{mode:\"forward\"}`。⛔ 舊 authoringNote 寫的「onEvade 不是一個掛鉤事件、item 存不下位移」**兩句都過期了**（第三守則）：`onEvade` 在 2026-08-06 那批世界事件裡就有了，而 `zItemHookDef.effects` 吃的是同一份 `zEffectDef`，dash 一直在裡面。\n· 距離用 `distanceTier: \"小\"`（owner 2026-08-11「原則上不寫範圍數字」），speed/maxDistance 填的就是那一級距自己的兩個數字（16 / 5.5），⛔ 沒有自己挑值 —— 級別會贏，改後台「位移級距」頁就一起改。\n· ⚠️ **降級一處**：文案寫「瞬間移動」而 `dash` 是**有速度的位移**（5.5 ÷ 16 ≈ 0.34 秒，會被地形擋）。真瞬移是 `blink`，但 blink 的目的地只有「指定點／目標身上／集結到施法者」三種，而一個 hook 沒有點可以指 —— 「往面向前方一小段」在 blink 的詞彙裡寫不出來。要精準需要 blink 多一個 `to:\"forward\"`。\n· ⛔ **刻意不加 internalCooldown**：卡面說的是「迴避成功時」，加一道沒有寫在卡上的冷卻就是第二種說謊。\n\n『[淨化] 每 1 秒移除自己身上的一個減益』= passive[1]（A4b/#278）：節奏寫在 `internalCooldown: 1`（onInterval 沒填它 = 每 tick 發 30 次/秒）。`count: 1` = 一次解一層，所以連續控場仍然壓得住它。`polarity: \"debuff\"` 讓它不會把自己的增益也吃掉。\n『最大魔力+100%』= maxMana pctAdd 1.0。『每秒回魔+25』= manaRegen flat 25。『冷卻縮減+50%』= cdr flat 0.5（config.stat-caps@1 的 cdr 上限 0.99，這一格拿得到）。\n\n【沿革】2026-08-01 之前 draftEligible 是關的，理由是「完全沒有 payload」——三個陣列都空，抽到什麼都拿不到。owner 重寫文案給了實際數值之後開回來；今天連最後那半句也不再是空頭支票。",
   "modifiers": [
     {
       "stat": "evasion",
@@ -34,6 +34,19 @@
     }
   ],
   "passive": [
+    {
+      "on": "onEvade",
+      "target": "self",
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "forward",
+          "distanceTier": "小",
+          "speed": 16,
+          "maxDistance": 5.5
+        }
+      ]
+    },
     {
       "on": "onInterval",
       "internalCooldown": 1,

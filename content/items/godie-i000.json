@@ -44,5 +44,6 @@
     "wc3-import"
   ],
   "craftRole": "none",
-  "requiresAttackType": "melee"
+  "requiresAttackType": "melee",
+  "authoringNote": "逐句對照（2026-08-18 稽核，這份文件在此之前**沒有** authoringNote）：\n「攻擊力+87」= modifiers ad flat 87。✅\n「生命+872」= modifiers maxHealth flat 872。✅\n「[擴散] 擴散傷害87%」= passive[0] 的 damageArea（ratios ad 0.87、radius 3.5、maxTargets 4、canCrit true）。機制是有的，⛔ **但那一行原本只說了「87%」**：87% 的什麼、什麼時候發生、擴散給幾個人、會不會暴擊，卡面一個字都沒有 —— 那是「給了但不說」（第一·五守則的另一半）。\n⛔ **2026-08-18 我把那一行改寫上卡面，當天又還原了。** 這 49 支是 owner 2026-08-01 親筆交來的，被 `packages/shared/src/content/legendary49OwnerText.test.ts` **逐位元釘死**（在這一批裡文案就是規格，modifiers 是從文案翻譯出來的不是反過來）。要改是「更新 fixture + 寫進 _sanctionedRewrites」，⛔ 那是 owner 的刻意動作，不是我順手做的事。\n⭐ **但發現本身是對的，留在這裡等核准。** 資料一個數字都沒動；想補上卡面的是 JSON 裡本來就存在的四件事 ——「普通攻擊命中時」（on: onBasicAttack，發射點在迴避／失手兩道閘之後，所以「命中」是字面意思）、「目標周圍」（damageArea 是以**受害者**為圓心的圓）、「最多 4 名」（maxTargets 4）、「87% 攻擊力的物理傷害」（ratios 讀的是**施法者**面板的 ad，damageType physical）、「可暴擊」（canCrit true —— 走 combat/critStrike.ts::rollAbilityCrit，與普攻同一支）。\n**提案卡面（⚠️ 需 owner 核准才能上，在那之前這一行維持原稿「[擴散] 擴散傷害87%」）**：「[擴散] 普通攻擊命中時，向目標周圍最多 4 名敵人擴散 87% 攻擊力的物理傷害（可暴擊）」。\n⚠️ `includeOrigin` 省略 = false：被普攻打中的那個人**不會**再吃一次擴散（他已經吃過那一刀），所以「擴散」是字面意思 —— 這是預設值，卡面不必提。\n⚠️ `requiresAttackType:\"melee\"` 是**發卡限制**不是效果限制（三選一／寶玉不會發給遠程英雄），與其餘帶這一格的道具同一個慣例，所以卡面不提。⛔ 而且它是 roll **之前**的濾網，不會產生「拿到一張招牌是死的卡」。\n⚠️ 解說那一句「使用者智力會降低」是**玩笑文案**，⛔ 不是效果：JSON 沒有任何 int 減益，也**不應該**照著補一個 —— 它落在解說段而不是效能段。owner 若真要它，那是 `attributes` 的一格（負值）＋ 一行寫進效能段，屬於平衡改動。"
 }

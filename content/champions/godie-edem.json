@@ -59,16 +59,16 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        150,
-        190,
-        230,
-        240
+        150.0,
+        190.0,
+        230.0,
+        240.0
       ],
       "range": 14.67,
       "radiusTier": "大",
@@ -79,26 +79,26 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              250,
-              350,
-              450,
-              550
+              250.0,
+              350.0,
+              450.0,
+              550.0
             ]
           },
-          "radius": 6,
+          "radius": 6.0,
           "radiusTier": "大",
           "includeOrigin": true,
           "onHitTargets": [
             {
               "kind": "applyStatus",
               "statusId": "burn",
-              "duration": 3
+              "duration": 3.0
             },
             {
               "kind": "dot",
               "damageType": "magic",
               "amountPerTick": {
-                "flat": 1
+                "flat": 1.0
               },
               "resourcePct": {
                 "subject": "target",
@@ -110,8 +110,8 @@
                 ]
               },
               "resourcePctPhase": "onTick",
-              "intervalSec": 1,
-              "durationSec": 3,
+              "intervalSec": 1.0,
+              "durationSec": 3.0,
               "stacking": "refresh"
             }
           ]
@@ -130,18 +130,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        70,
-        120,
-        170,
-        220
+        70.0,
+        120.0,
+        170.0,
+        220.0
       ],
-      "range": 0,
+      "range": 0.0,
       "radiusTier": "大",
       "targetsEnemies": true,
       "effects": [
@@ -150,10 +150,10 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              75,
-              150,
-              225,
-              300
+              75.0,
+              150.0,
+              225.0,
+              300.0
             ],
             "ratios": [
               {
@@ -162,7 +162,7 @@
               }
             ]
           },
-          "radius": 6,
+          "radius": 6.0,
           "radiusTier": "大",
           "includeOrigin": true,
           "onHitTargets": [
@@ -175,14 +175,14 @@
                   "value": -0.5
                 }
               ],
-              "duration": 3,
+              "duration": 3.0,
               "dispellable": true,
               "polarity": "debuff"
             },
             {
               "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 3,
+              "statusId": "slow50",
+              "duration": 3.0,
               "moveSpeedMult": 0.5
             }
           ]
@@ -201,16 +201,16 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        120,
-        185,
-        250,
-        315
+        120.0,
+        185.0,
+        250.0,
+        315.0
       ],
       "range": 12.83,
       "radiusTier": "大",
@@ -227,20 +227,20 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              400,
-              500,
-              600,
-              700
+              400.0,
+              500.0,
+              600.0,
+              700.0
             ],
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1
+                "coeff": 1.0
               }
             ]
           },
           "length": 12.83,
-          "width": 12,
+          "width": 12.0,
           "aim": "facing",
           "fromCaster": true,
           "includeOrigin": true
@@ -259,16 +259,16 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -284,15 +284,15 @@
                     "kind": "damageArea",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 400,
+                      "flat": 400.0,
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 3
+                          "coeff": 3.0
                         }
                       ]
                     },
-                    "radius": 3,
+                    "radius": 3.0,
                     "radiusTier": "小",
                     "includeOrigin": true
                   }
@@ -316,15 +316,15 @@
                     "kind": "damageArea",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 700,
+                      "flat": 700.0,
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 3
+                          "coeff": 3.0
                         }
                       ]
                     },
-                    "radius": 3,
+                    "radius": 3.0,
                     "radiusTier": "小",
                     "includeOrigin": true
                   }
@@ -348,15 +348,15 @@
                     "kind": "damageArea",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 1000,
+                      "flat": 1000.0,
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 3
+                          "coeff": 3.0
                         }
                       ]
                     },
-                    "radius": 3,
+                    "radius": 3.0,
                     "radiusTier": "小",
                     "includeOrigin": true
                   }
@@ -384,10 +384,8 @@
     "R"
   ],
   "buildPriority": [
-    "swift-boots",
     "godie-i002",
-    "serrated-edge",
-    "godie-i06k",
+    "godie-i05o",
     "godie-i007"
   ],
   "tags": [

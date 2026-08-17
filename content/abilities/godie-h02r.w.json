@@ -23,7 +23,7 @@
   "effects": [
     {
       "kind": "applyStatus",
-      "statusId": "slow40",
+      "statusId": "slow60",
       "duration": 4.0,
       "moveSpeedMult": 0.4
     }

@@ -37,5 +37,6 @@
   "tags": [
     "wc3-import"
   ],
-  "craftRole": "final"
+  "craftRole": "final",
+  "authoringNote": "⭐ 2026-08-18 逐句稽核（第一·五守則「不放任何無效說明」）—— **兩個方向都對得上，資料一個位元都沒改**；這一輪只補這份備註。\n\n「攻擊力+38」= `modifiers ad flat 38`。⛔ 沒有 capRaise：出貨 `config.stat-caps@1` 的 ad 是 base = unlocked = 21200（那是防 mis-parse 的柵欄，玩家一輩子碰不到），所以任何 ad 的 capRaise/capRaisePct 在這裡都是逐位元的 no-op。\n\n[暈眩]「8%的機率增加 140點傷害並暈眩0.1秒」= passive[0]，三個數字各自落在一格：\n· 「8%的機率」= `HookDef.chance 0.08`。⭐ **只抽一次籤**：傷害與暈眩是同一條 hook 底下的兩個 effect，所以不可能出現「加了傷但沒暈」。⛔ 拆成兩條 hook 就會變成兩次獨立判定 —— 那是同一句文案的另一個意思。\n· 「增加 140點傷害」= `damage {damageType:\"physical\", amount.flat:140}`。physical 是因為它是刀刃的追加、應該吃護甲；文案沒指定型別，這是選擇不是抄寫。\n· 「暈眩0.1秒」= `applyStatus {stun:true, duration:0.1}`。⚠️ 0.1 秒在 30 Hz 下是 `Math.round(0.1 / (1/30))` = **3 tick**，真的會發生。對照 殺豬刀 godie-i06o 的「0.01 秒」= `Math.round(0.3)` = **0 tick** = 一次都不會發生（那一件的出貨值被刻意抬到 0.034 = 1 tick）。這一件不需要那個處理，所以文案的數字原封不動。\n· ⛔ 沒有 `internalCooldown`：文案只給了機率，沒有給節流。8% × 0.1 秒在任何攻速下都不構成鎖定。\n\n⚠️ **要 owner 過目的一件事（我沒有動它）**：`statusId` 是 `fang-stun`「牙突・僵直」—— 那是 13-02 揍敵客牙突的**具名**僵直，被 godie-i013 / 消失的密室 godie-i02d / 殺豬刀 godie-i06o 三件道具共用。機制完全正確（真正讓人不能動的是 `stun: true`，statusId 只是標籤），但玩家的狀態列會看到「牙突・僵直」而不是「暈眩」。⭐ 同一個 repo 已經有兩種相反的說法：godie-i06o 的備註把 fang-stun 當成「出貨的極短僵直通用標記」，而 ultimate-mod-shiranui 的備註把它列進 `named-variant` 並寫著「借過來會讓『誰把我暈的』在戰報上指到錯的招式」。要換成通用的 `stun`（content/status-effects/stun.json 已存在）是**三件一起改**的決定，⛔ 不是我這一輪可以單方面做的。"
 }

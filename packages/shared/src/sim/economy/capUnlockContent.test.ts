@@ -55,6 +55,9 @@ const CONTENT_DIR = join(dirname(fileURLToPath(import.meta.url)), "../../../../.
 const AUGMENT_ID = "limit-breaker" as AugmentId;
 const ITEM_ID = "endless-edge" as ItemId;
 
+/** 三階寶具池（owner 2026-08-18）。⛔ 這裡列的是**檔名**，成員從磁碟讀。 */
+const POOL_TABLES = ["legendary-weapons", "ex-release-weapons", "ex-origin-weapons"];
+
 /** 一般上限 / 解鎖硬上限 (sim/statCaps.ts DEFAULT_STAT_CAPS). */
 const BASE_CAP = 4.0;
 const UNLOCKED_CAP = 10.0;
@@ -197,25 +200,43 @@ describe("GH#189 無盡連刃 —— 傳說近戰武器", () => {
   it("★ 只出現在近戰英雄的傳說池 —— 三選一與傳說寶玉兩條路都要擋", () => {
     cover("legendary-melee-only");
     // 兩條路,因為傳說池有兩個消費者;只修一條是這個功能最可能的半套做法。
+    //
+    // ⚠️ 2026-08-18:這裡本來兩條路都寫死用 `LEGENDARY_POOL_TABLE`。owner 那天把
+    // 上架寶具切成三階,無盡連刃搬進了 `ex-release-weapons`,於是「寶玉池裡有這把
+    // 刀」變成一句假話 —— 而它守的機制(`requiresAttackType` 過濾)⛔ 一點都沒變。
+    // ⇒ 現在**推導**:三選一那條路問「它真的住在哪張池」,寶玉那條路改成對**寶玉池
+    // 自己**的近戰限定成員陳述同一條性質。兩條路都還在,⛔ 沒有放寬。
     const world = new SimWorld(SKELETON_ARENA, 1);
     const melee = spawn(world, meleeChampion, 0);
     const ranged = spawn(world, rangedChampion, 1);
 
-    expect(legendaryPool(world, melee), "近戰英雄的寶玉池裡沒有這把刀").toContain(ITEM_ID);
-    expect(legendaryPool(world, ranged), "遠程英雄的寶玉池竟然有近戰限定武器").not.toContain(ITEM_ID);
+    // ── 傳說寶玉那條路:寶玉池自己的近戰限定成員(⛔ 不寫死是哪一件)
+    const orbMeleeOnly = LootTables.get(LEGENDARY_POOL_TABLE)
+      .entries.map((e) => e.itemId as ItemId)
+      .filter((id) => Items.get(id).requiresAttackType === "melee");
+    expect(orbMeleeOnly.length, "寶玉池裡一件近戰限定武器都沒有 —— 這條斷言會變成空的").toBeGreaterThan(0);
+    const orbForMelee = legendaryPool(world, melee);
+    const orbForRanged = legendaryPool(world, ranged);
+    for (const id of orbMeleeOnly) {
+      expect(orbForMelee, `近戰英雄的寶玉池裡沒有 ${id}`).toContain(id);
+      expect(orbForRanged, `遠程英雄的寶玉池竟然有近戰限定武器 ${id}`).not.toContain(id);
+    }
 
-    // 三選一那條路:抽很多次都不該抽到 —— 一次沒抽到證明不了任何事。
-    expect(LootTables.get(LEGENDARY_POOL_TABLE).entries.map((e) => e.itemId)).toContain(ITEM_ID);
+    // ── 三選一那條路:抽很多次都不該抽到 —— 一次沒抽到證明不了任何事。
+    const itemTable = POOL_TABLES.find((t) =>
+      LootTables.get(t).entries.some((e) => e.itemId === ITEM_ID),
+    );
+    expect(itemTable, `${ITEM_ID} 不在任何一張出貨的寶具池裡 —— 玩家拿不到它`).toBeDefined();
     let rangedSaw = 0;
     let meleeSaw = 0;
     for (let seed = 0; seed < 40; seed++) {
       const w = new SimWorld(SKELETON_ARENA, seed + 1);
       const r = spawn(w, rangedChampion, 0);
       const m = spawn(w, meleeChampion, 1);
-      if (offerItems(w, r, LEGENDARY_POOL_TABLE, 3).choices.includes(ITEM_ID)) rangedSaw++;
-      if (offerItems(w, m, LEGENDARY_POOL_TABLE, 3).choices.includes(ITEM_ID)) meleeSaw++;
+      if (offerItems(w, r, itemTable!, 3).choices.includes(ITEM_ID)) rangedSaw++;
+      if (offerItems(w, m, itemTable!, 3).choices.includes(ITEM_ID)) meleeSaw++;
     }
-    expect(rangedSaw, "遠程英雄的傳說三選一抽到了近戰限定武器").toBe(0);
+    expect(rangedSaw, "遠程英雄的寶具三選一抽到了近戰限定武器").toBe(0);
     // …而且對近戰是真的抽得到的。少了這一條,一個「永遠回空池」的實作也會全綠。
     expect(meleeSaw, "近戰英雄 40 次抽卡一次都沒看到它 —— 過濾器把所有人都擋了").toBeGreaterThan(0);
   });

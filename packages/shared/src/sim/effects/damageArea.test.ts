@@ -263,19 +263,24 @@ describe("damageArea — 決定性 (do-spread-determinism)", () => {
 describe("傳說池的近戰擴散武器 (co-spread-content)", () => {
   let byId: Map<string, ItemDoc>;
   let pool: ItemDoc[];
+  /** 三張寶具池本身（每一階要能單獨湊滿一張三選一）。 */
+  let tables: LootTableDoc[];
 
   beforeAll(async () => {
     const store = (await new ContentLoader(new FsContentSource(CONTENT_DIR)).load()).store;
     byId = new Map(store.all<ItemDoc>("items").map((d) => [d.id as string, d]));
-    const table = store
-      .all<LootTableDoc>("loot-tables")
-      .find((t) => t.id === "legendary-weapons");
-    if (!table) throw new Error("content/loot-tables/legendary-weapons.json is missing");
-    pool = table.entries.map((e) => {
-      const doc = byId.get(e.itemId as string);
-      if (!doc) throw new Error(`legendary ${e.itemId} has no content doc`);
-      return doc;
-    });
+    // ⭐ 2026-08-18：三張池的**聯集**。owner 那天把上架寶具切成
+    // EX / [EX解放] / [EX∅ 根源]，只讀 `legendary-weapons` 會讓另外兩階的近戰擴散
+    // 武器沒有人守 —— 而它們一樣是「三選一是唯一取得路徑」的東西。
+    tables = store.all<LootTableDoc>("loot-tables");
+    if (tables.length === 0) throw new Error("content/loot-tables/ 是空的");
+    pool = tables
+      .flatMap((t) => t.entries)
+      .map((e) => {
+        const doc = byId.get(e.itemId as string);
+        if (!doc) throw new Error(`寶具 ${e.itemId} has no content doc`);
+        return doc;
+      });
   });
 
   const areaEffects = (d: ItemDoc): Extract<EffectDef, { kind: "damageArea" }>[] =>
@@ -322,9 +327,27 @@ describe("傳說池的近戰擴散武器 (co-spread-content)", () => {
     const ids = pool.map((d) => d.id as string);
     // A duplicated entry would inflate the width while masking a removal — and
     // it also double-weights that item in every roll, since the table is drawn
-    // by weight and every entry ships weight 1.
-    expect(new Set(ids).size, "the pool lists the same item twice").toBe(ids.length);
-    expect(pool.length, "the legendary pool shrank — an entry left the ONLY door it ships through").toBeGreaterThanOrEqual(49);
+    // by weight and every entry ships weight 1. ⭐ 2026-08-18 這一條變得更強：
+    // 聯集去重 ＝「一件寶具只屬於一個池」，而**跨池重複**在此之前真的存在
+    // （5 件同時掛兩個池，會被抽兩次）。
+    expect(new Set(ids).size, "同一件寶具出現在兩個池（或同一個池兩次）—— 它會被抽兩次").toBe(ids.length);
+    // ⚠️ THE WIDTH RATCHET IS GONE, 2026-08-18, and this is the second time the
+    // same lesson arrived: it was `toBe(24)`, then `>= 49`, and owner's
+    // 2026-08-18 re-cut (29 EX + 35 [EX解放] + 5 [EX∅ 根源]) turned `>= 49` red on
+    // a table that had not lost a single reachable item. A curation snapshot
+    // living in an assertion is CLAUDE.md 第二守則's 「數字住在測試裡」 exactly:
+    // it rots, and it rots with a MISLEADING message (「the legendary pool
+    // shrank」 while nothing shrank). The file's own comment above already
+    // concedes a width cannot see an equal-sized swap, i.e. it was buying very
+    // little to begin with.
+    // What is left is the property that actually has a player-visible failure:
+    // a pool too narrow to deal one card without repeating itself.
+    for (const t of tables) {
+      expect(
+        new Set(t.entries.map((e) => e.itemId)).size,
+        `content/loot-tables/${t.id}.json 湊不滿一張不重複的三選一 —— 那一階的卡面會有重複或是空的`,
+      ).toBeGreaterThanOrEqual(3);
+    }
   });
 
   it("近戰擴散 is a NON-EMPTY category — the thing owner asked for", () => {

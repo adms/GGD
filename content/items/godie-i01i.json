@@ -47,13 +47,16 @@
           },
           "radius": 3.5,
           "maxTargets": 5,
-          "includeOrigin": true
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 1,
-          "moveSpeedMult": 0.5
+          "includeOrigin": true,
+          "onHitTargetsMode": "batch",
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "statusId": "slow50",
+              "duration": 1,
+              "moveSpeedMult": 0.5
+            }
+          ]
         }
       ]
     },
@@ -77,5 +80,5 @@
       ]
     }
   ],
-  "authoringNote": "[普通攻擊時]「7%機率產生造成 100% AP 雷電範圍傷害」= passive[0] 的 damageArea（chance 0.07 / ratios ap 1.0 / damageType magic）。\n· includeOrigin:true —— 雷打在被你打中的那個人**身上**，所以震央本人要吃。（預設是 false，那是給泰坦九頭蛇那種「打 A 濺到 A 身後的 B」用的。）\n· radius 3.5 與 maxTargets 5 是**文案沒有給的數字**，兩個都是欄位不是常數：3.5 是這一批 on-hit 範圍傷害的出貨慣例（泰坦九頭蛇 / 丈八蛇矛 / 炎龍巨弩 都是 3.5），maxTargets 5 是為了不讓一發普攻掃掉整波殭屍（省略的話預設是上界 20，見 sim/effects/spreadLimits.ts）。要調就改這裡。\n\n[緩慢]「並使範圍內部隊移動速度下降50%，持續1秒」= passive[0] 的 applyStatus（slow40 + moveSpeedMult 0.5 = 減半，與老衲的棒子 godie-i06n 同一個寫法）。\n· ⚠️ **只落在被普攻打中的那一個人身上，不是「範圍內部隊」**。applyStatus 沒有 radius，作用對象是 ctx.targets；damageArea 也沒有辦法帶一個 status payload。這是這件道具唯一打折的地方，而且是刻意寫出來而不是假裝沒有。要補的最小改動是給 damageArea 一個「命中者一併套用的 status」欄位，或給 applyStatus 一個 radius —— 後者會一次服務全部 7 件 [緩慢] 道具，是共用 CC 機制的改動，不該塞在單件道具的工作裡。\n\n[重創]「敵方攻擊時吸血效果降低50%吸血回復量」= onDamageTaken + damageSource:\"basic\" 的 applyBuff（lifesteal pctMult −0.5，落在**攻擊者**身上 —— onDamageTaken 的事件實體是他，見 sim/combat/damage.ts:772）。持續 3 秒是文案沒給的唯一數字。**stackKey \"grievous-wounds\" 由四件 [重創] 共用**（晨曦之光 / 貫雷槍 / 雷神之鎚 / 祕銀鎖子甲），因為四段文案都是「降低50%」，兩件疊起來不該變 75%。完整理由（包含 2026-08-01 突變驗證改正的「maxStacks 其實是惰性的」那一段）寫在 祕銀鎖子甲 content/items/godie-i01w.json，不重複。"
+  "authoringNote": "⭐ 2026-08-18 雙向稽核（第一·五守則「不放任何無效說明」）：卡面 5 句 → 4 句原本就對得上，**第 5 句「範圍內部隊」被修好了（唯一一處資料改動）**；反向看 JSON 也沒有任何一條效果是卡面沒講的。\n⭐ **修法是替換不是刪除**：applyStatus 從 effects[] 搬進 `damageArea.onHitTargets`（`onHitTargetsMode:\"batch\"`）。`victimFilter.ts::runOnHitChain` 把**這一圈真的打到的那群人**當成 ctx.targets 交下去，而 applyStatus 逐一掃 ctx.targets —— 所以現在是「圈內每一個」，不再是「被普攻打中的那一個」。⚠️ 因為 `includeOrigin:true`，震央本人也在那份名單裡，卡面「範圍內部隊」逐字成立。⛔ 舊 authoringNote 說這件事「需要給 applyStatus 一個 radius」是**過期的**（第三守則）：G1 的 `onHitTargets` 上線之後不需要新機制。\n\n[普通攻擊時]「7%機率產生造成 100% AP 雷電範圍傷害」= passive[0] 的 damageArea（chance 0.07 / ratios ap 1.0 / damageType magic）。\n· includeOrigin:true —— 雷打在被你打中的那個人**身上**，所以震央本人要吃。（預設是 false，那是給泰坦九頭蛇那種「打 A 濺到 A 身後的 B」用的。）\n· radius 3.5 與 maxTargets 5 是**文案沒有給的數字**，兩個都是欄位不是常數：3.5 是這一批 on-hit 範圍傷害的出貨慣例（泰坦九頭蛇 / 丈八蛇矛 / 炎龍巨弩 都是 3.5），maxTargets 5 是為了不讓一發普攻掃掉整波殭屍（省略的話預設是上界 20，見 sim/effects/spreadLimits.ts）。要調就改這裡。\n\n[緩慢]「並使範圍內部隊移動速度下降50%，持續1秒」= damageArea.onHitTargets 的 applyStatus（**slow50** + moveSpeedMult 0.5 = 減半，與老衲的棒子 godie-i06n 同一個寫法）。⚠️ 2026-08-18 這一格本來掛的是 `slow40`，而倍率是減 50% —— 標籤與機制脫鉤（`isCc` 只讀 moveSpeedMult，statusId 只決定狀態列那顆圖示的名字），遊戲裡減一半而圖示寫 Slow(40%)。改的是**標籤**，⛔ 不是倍率（倍率是設計）。守衛 `content/slowLabelMatchesMultiplier.test.ts` 兩邊都從內容推導。⚠️ 上限跟著雷擊走：最多 5 個（maxTargets，含震央），⛔ 不是「圈內無限人」—— 那是刻意的，理由與 maxTargets 那一段相同。⚠️ 減速仍然是一筆 CC（moveSpeedMult < 1 進 `isCc`），所以免控擋得掉、【淨化】拔得掉、秒數進 ccAppliedTicks 戰績。\n\n[重創]「敵方攻擊時吸血效果降低50%吸血回復量」= onDamageTaken + damageSource:\"basic\" 的 applyBuff（lifesteal pctMult −0.5，落在**攻擊者**身上 —— onDamageTaken 的事件實體是他，見 sim/combat/damage.ts:772）。持續 3 秒是文案沒給的唯一數字。**stackKey \"grievous-wounds\" 由四件 [重創] 共用**（晨曦之光 / 貫雷槍 / 雷神之鎚 / 祕銀鎖子甲），因為四段文案都是「降低50%」，兩件疊起來不該變 75%。完整理由（包含 2026-08-01 突變驗證改正的「maxStacks 其實是惰性的」那一段）寫在 祕銀鎖子甲 content/items/godie-i01w.json，不重複。"
 }

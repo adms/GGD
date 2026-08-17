@@ -2404,11 +2404,31 @@ export function mixInt(a: number, b: number, c: number): number {
  * outside the boundary still yields legal ground.
  */
 export function mobSpawnPos(world: SimWorld, zone: number, k: number, i: number, radius: number): Vec2 {
+  return mobSpawnPosAtDir(world, zone, mixInt(zone, k, i) % DIR_TABLE.length, radius);
+}
+
+/**
+ * ⭐ 同一段落地邏輯，但**方向格由呼叫端指定**（GH#343 的第二半，2026-08-18）。
+ *
+ * 為什麼要有這一支：`mobSpawnPos` 的方向是一個**雜湊**，而雜湊在 12 格上會撞。
+ * 「同一瞬間召 N 隻王，每一隻站不同點」這個保證**雜湊給不了** —— 實測 12 個
+ * 連號 nonce 只散得出 7–10 個相異方向（zone 0 / K=1 的 i=3 與 i=4 逐位元同格）。
+ * ⇒ 需要「相異」的呼叫端改用**輪轉**：`(base + n) % 12`，N ≤ 12 時鴿籠原理保證互異。
+ *
+ * ⛔ 波次路徑**不改**：那裡要的是「看起來隨機」而不是「保證分散」，
+ * 而且 30 隻小怪本來就多於 12 格，輪轉只會讓它們排成規律的一圈。
+ */
+export function mobSpawnPosAtDir(
+  world: SimWorld,
+  zone: number,
+  dirIndex: number,
+  radius: number,
+): Vec2 {
   const zoneDef = world.arena.zones[zone] ?? world.arena.zones[0]!;
   // ⭐ GH#324 —— 矩形場地從**矩形周邊**生成（owner 2026-08-14「火圈殭屍波一樣要有」）。
   // ⛔ 不是用內接圓：那會讓四個角落永遠不生怪，而角落正是玩家躲的地方。
   // ⚠️ 圓形場地走**原本那一條**（DIR_TABLE 查表），既有行為一個字都沒變。
-  const idx = mixInt(zone, k, i) % DIR_TABLE.length;
+  const idx = ((dirIndex % DIR_TABLE.length) + DIR_TABLE.length) % DIR_TABLE.length;
   const body =
     zoneDef.bounds?.kind === "rect"
       ? {
@@ -2481,11 +2501,17 @@ export function spawnMob(
  * about kings. Only {@link MobComp}'s `kind` differs, and everything that forks
  * on it forks through {@link mobProfile}.
  *
- * The spawn point comes from the SAME pure `mobSpawnPos` table the waves use,
- * keyed by (zone, {@link BOSS_SPAWN_WAVE}, kills): the king walks in from the
- * rim like everything else, deterministically, without touching `world.rng`.
- * `kills` is in the key so two kings summoned in one zone in one match do not
- * stack on the same rim point.
+ * The spawn point comes from the SAME pure DIR_TABLE the waves use: the king
+ * walks in from the rim like everything else, deterministically, without
+ * touching `world.rng`.
+ *
+ * ⚠️ 2026-08-18 —— 這一段以前寫「the nonce is in the key so two kings summoned in
+ * one zone do not stack on the same rim point」，**而那是假的**：方向格是
+ * `mixInt(...) % 12` 這個**雜湊**，12 個連號 nonce 實測只散得出 7–10 個相異方向
+ * （zone 0 / K=1 的 i=3 與 i=4 逐位元同格），複驗量到 32% 的 tick 有兩隻王完全重疊。
+ * ⇒ 現在王改走 {@link mobSpawnPosAtDir} 的**輪轉**：`(base(zone) + posNonce) % 12`，
+ * 鴿籠原理保證 **N ≤ 12 隻連號互異**（超過 12 隻才會繞回來重疊，那是 12 格的上限，
+ * 不是一個 bug）。守衛：`mobs.boss.test.ts`。
  *
  * #L1 — SUMMONING A KING ALSO PUSHES THE ROUND'S TWO DEADLINES OUT (owner
  * 2026-07-30 「殭屍王出現回合結束時間延長 3 分鐘(火圈時間也延後)…避免打到一半
@@ -2502,6 +2528,23 @@ export function summonMobBoss(
   rules: MobRules,
   summoner: EntityId,
   kills: number,
+  /**
+   * ⭐ 位置 nonce —— **只**餵 `mobSpawnPos` 的 `i`，⛔ 與 `kills` 分開（GH#343）。
+   *
+   * 這兩件事以前是同一個數字，而它們的責任其實相反：`kills` 是**要顯示給玩家看的
+   * 累積擊殺數**（隨 `mobBossSpawn` 送出去，HUD 與出場演出都讀它），`posNonce` 只是
+   * 一把**讓兩隻王站不到同一格**的鑰匙。共用一個數字的代價是：任何一個「同一瞬間
+   * 召 N 隻」的呼叫端（練習房的「殭屍王 ×5」）只能傳同一個 `kills` ⇒ N 隻**逐位元
+   * 疊在同一個錨點**，畫面上是一塊王形狀的東西、N 條血條重疊、出場演出連播 N 次。
+   * 想錯開就得去動 `kills`，而那會讓 HUD 上的「累積擊殺數」開始說謊。
+   *
+   * ⚠️ 2026-08-18：光是「分開一個參數」還不夠 —— 它當時仍然餵進一個**雜湊**，
+   * 而雜湊在 12 格上會撞（複驗實測 32% 的 tick 有兩隻逐位元重疊）。現在它餵進
+   * {@link mobSpawnPosAtDir} 的輪轉，`N ≤ 12` 保證互異。
+   *
+   * 省略 ⇒ `kills`。
+   */
+  posNonce: number = kills,
 ): EntityId | null {
   if (rules.boss === null || !rules.boss.enabled) return null;
   // #247 —— 每回合最多幾隻 (owner 2026-08-01 「每回合最多只會出現一次殭屍王，不會
@@ -2522,7 +2565,11 @@ export function summonMobBoss(
   // The king walks into the SUMMONER's zone, so that is the zone whose heroes
   // 「跟場上最高」 would read (inert while the shipped king is `"fixed"` at 99).
   const profile = mobSpawnProfile(world, zone, rules, "boss");
-  const pos = mobSpawnPos(world, zone, BOSS_SPAWN_WAVE, kills, profile.radius);
+  // ⭐ 王走**輪轉**而不是雜湊（見 `mobSpawnPosAtDir` 的檔頭）：連號的 posNonce
+  //    在 N ≤ 12 時保證落在 12 個不同的方向格上。錨點仍然由 zone 決定，
+  //    所以不同區域的王還是從不同邊走進來。
+  const base = mixInt(zone, BOSS_SPAWN_WAVE, 0);
+  const pos = mobSpawnPosAtDir(world, zone, base + posNonce, profile.radius);
   const id = spawnMobBody(world, zone, "boss", profile, pos);
   world.bossSpawnsThisRound.set(capKey, already + 1);
   // #247 —— 無視碰撞穿透地形. The king is handed the SAME `FlightGrant` a flying

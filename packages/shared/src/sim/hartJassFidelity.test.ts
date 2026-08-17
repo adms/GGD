@@ -238,7 +238,17 @@ describe("GH#250 A — 01-01 凶斬 really flies over", () => {
     expect(castAbility(world, cloud, "Q", { type: "entity", entityId: foe })).toBe("ok");
     for (let i = 0; i < settleTicks("Q", "godie-hart" as ChampionId, 2); i++) world.step(NO_INTENTS);
     expect(before - hp.hp).toBeGreaterThan(100);
-    expect(world.status.get(foe)!.effects.map((e) => e.statusId)).toContain("slow25");
+    // ⚠️ 2026-08-18（#356）：這裡本來寫死 `"slow25"`，而 `slowLabelMatchesMultiplier`
+    //    那條守衛（標籤必須等於 `moveSpeedMult` 換算出來的減速）把這一支的
+    //    `moveSpeedMult: 0.6` 從 slow25 正名成 slow40 —— 於是這條用「凶斬掉了減速」
+    //    這句假話紅了。⭐ 這條要守的是「那個 applyStatus 真的在 sim 裡開火」，
+    //    ⛔ 不是那個標籤叫什麼，所以名字從**出貨的技能文件**推導。
+    const qId = Champions.get("godie-hart" as ChampionId).abilities.Q.id;
+    const slowId = (Abilities.get(qId).effects ?? []).find(
+      (e) => e.kind === "applyStatus",
+    )?.statusId;
+    expect(slowId, "凶斬的 applyStatus 效果整個不見了").toBeDefined();
+    expect(world.status.get(foe)!.effects.map((e) => e.statusId)).toContain(slowId);
   });
 });
 

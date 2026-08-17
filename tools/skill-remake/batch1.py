@@ -857,6 +857,14 @@ def status(sid, dur, **kw):
     ⛔ 只是這支 helper 之前把它 `float()` 掉了。
     ⚠️ 症狀是靜默的：70-03 木束縛之術規格寫 0.6/1.2/1.8/2.4，出貨四階全是 0.6，
        而升階的玩家看到的是「點了沒有變強」。
+
+    ⛔ **`slowNN` 的 NN 必須等於 `moveSpeedMult` 換算出來的減速**（2026-08-18 / #356）。
+       `moveSpeedMult=0.5` ⇒ 減 50% ⇒ `slow50`，⛔ 不是 `slow40`。
+       守衛是 `packages/shared/src/content/slowLabelMatchesMultiplier.test.ts`，
+       而它明說「改 statusId，⛔ 不要改 moveSpeedMult」——
+       標籤只是名字，減速多少是這一格的參數。
+       ⚠️ 這四支（godie-edem.w / emfr.q / emns.r / h02v.r）曾經被**繞過產生器**
+       直接改 JSON，於是 `skillRemakeJsonFresh` 紅了。要改請改這裡再重生成。
     """
     o = {
         "kind": "applyStatus",
@@ -1485,7 +1493,7 @@ A("45-02", "45-02 千鳥流", "self", [45, 45, 45, 45], [70, 120, 170, 220], 0,
   effects=[area("magic", tier="大", per=[75, 150, 225, 300], ap=0.2,
                 onhit=[buff([M("as", "pctAdd", -0.5)], 3.0,
                             polarity="debuff", dispellable=True)]),
-           status("slow40", 3.0, moveSpeedMult=0.5)])
+           status("slow50", 3.0, moveSpeedMult=0.5)])
 
 A("45-03", "45-03 千鳥", "ground", [45, 45, 45, 45], [120, 185, 250, 315], 12.83,
   "[主動][指向][範圍][衝刺][AP加成]\n45秒冷卻，吟唱2秒\n消耗MP120/185/250/315\n施法距離12.83\n有效半徑6\n\n「千鳥・雷切」\n將查克拉集中在手上，以高速[直線][衝刺]，對沿途[周圍]敵人造成400/500/600/700+100% [AP]點傷害。",
@@ -1668,7 +1676,7 @@ A("15-00", "15-00 真·不死不滅", "self", [0], [0], 0,
 A("15-01", "15-01 雷神槍「巨神殺手」", "ground", [30, 30, 30, 30], [175, 275, 375, 475], 6.42,
   "[主動][指向][範圍][AP加成]\n30秒冷卻\n消耗[MP] 175/275/375/475\n施法距離6.42\n\n「千之雷是頂級魔法，但我還可以開掛」\n對[前方]一[直線]敵方單位造成 250/350/450/550 +30% [AP]傷害，附帶麻痺 [緩慢] [移動速度]，持續1秒",
   effects=[line("magic", length=6.42, width=1.6, per=[250, 350, 450, 550], ap=0.3),
-           status("slow40", 1.0, moveSpeedMult=0.5)])
+           status("slow50", 1.0, moveSpeedMult=0.5)])
 
 A("15-02", "15-02 疾風迅雷", "self", [60, 60, 60, 60], [120, 180, 240, 300], 0,
   "[主動][輔助][變身][普攻時][AP加成]\n60秒冷卻\n消耗[MP] 120/180/240/300\n持續12秒\n\n「質疑魔法、成為魔法、超越魔法」\n獲得 1.2倍 [移動速度] 與 30/60/90/120% [攻擊速度]，普通攻擊附加 30/45/60/75 +10% [AP] 雷電傷害。\n([變身]為唯一狀態不可疊加)",
@@ -1858,7 +1866,7 @@ A("44-04", "44-04 心臟麻痺", "targeted", [35, 35, 35], [150, 250, 350], 12,
                              "basis": "current", "perRank": [0.3, 0.4, 0.5]}),
                 condition={"kind": "status", "subject": "target", "statusId": "curse"}),
            # 同一句話的第二半：[緩慢] 也只落在被標記的目標身上。
-           status("slow40", 5.0, moveSpeedMult=0.5,
+           status("slow50", 5.0, moveSpeedMult=0.5,
                   condition={"kind": "status", "subject": "target", "statusId": "curse"})])
 
 A("44-002", "44-002 交換筆記本", "targeted", [120], [450], 5.29,
@@ -2581,7 +2589,7 @@ A("92-04", "92-04 馬勒戈壁", "self", [90, 90, 90], [300, 420, 540], 0,
   "[主動][範圍][AP加成]\n90秒冷卻\n消耗MP300/420/540\n\n「將自己的心靈內景具現化並覆蓋現實世界的強力魔術」\n將[周圍] [範圍] 敵人附加 [緩慢] 及 [致盲]，持續6秒。\n(攻擊身上有 [致盲] 標記的敵人將額外附加 100/200/300% [AP] 傷害)",
   maxRank=3, radiusTier="超大",
   effects=[area("magic", tier="超大", flat=1),
-           status("slow40", 6.0, moveSpeedMult=0.5),
+           status("slow50", 6.0, moveSpeedMult=0.5),
            status("blind", 6.0, missChance=0.5)],
   # ⭐ 逐階 100/200/300% AP。`ratios.coeff` 是**純量**，所以逐階的唯一落點是
   #    **多個 rank 區塊** —— 模板與 45-04 哥哥逐字相同。

@@ -97,8 +97,18 @@ import { asSeatId, asTeamId, type ChampionId, type EntityId, type ItemId } from 
 
 const CONTENT_DIR = join(dirname(fileURLToPath(import.meta.url)), "../../../../../content");
 
-/** 任務三選一的池子 —— `arena-rules` 的 draft 表。 */
-const QUEST_TABLE = "quest-rewards";
+/**
+ * 寶具三選一的池子。
+ *
+ * ⚠️ 2026-08-18：這裡本來是 `quest-rewards`（那張 0g「任務道具」表）。owner 那天
+ * 把它整張搬進 `content/_legacy/loot-tables/` —— 「任務道具」的標籤在競技場新玩法
+ * **完全不考慮**，那 6 件現在是散在三階寶具池裡的普通寶具。
+ * ⇒ 判準改成陳述在**每一張出貨的寶具池**上，⛔ 不是換一張表繼續點名。這比原本強：
+ * 「有付出東西 ⇔ 發得出來」本來就該對所有會發到玩家手上的池子成立。
+ * ⭐ 兩件被點名的道具（天堂之劍 / 仙后座）2026-08-18 之後分屬**不同的池**，
+ * 所以下面找的是「在**某一張**池裡」，⛔ 不是「在這一張池裡」。
+ */
+const QUEST_TABLES = ["legendary-weapons", "ex-release-weapons", "ex-origin-weapons"];
 /** 出貨的三選一寬度。 */
 const OFFER_COUNT = 3;
 
@@ -214,9 +224,11 @@ function questCards(seeds: number): { seen: Set<string>; minWidth: number } {
   let minWidth = Number.POSITIVE_INFINITY;
   for (let seed = 1; seed <= seeds; seed++) {
     const { world, id } = solo(seed);
-    const offer = offerItems(world, id, QUEST_TABLE, OFFER_COUNT);
-    minWidth = Math.min(minWidth, offer.choices.length);
-    for (const itemId of offer.choices) seen.add(itemId as string);
+    for (const table of QUEST_TABLES) {
+      const offer = offerItems(world, id, table, OFFER_COUNT);
+      minWidth = Math.min(minWidth, offer.choices.length);
+      for (const itemId of offer.choices) seen.add(itemId as string);
+    }
   }
   return { seen, minWidth };
 }
@@ -233,16 +245,24 @@ describe("draftEligible —— 有付出東西 ⇔ 發得出來 (eco-draft-eligi
     //   · 付得出東西的 → 必須真的發得出來(擋住「有人又把好卡默默關掉」,
     //     也就是 2026-08-01 那次重新開啟的守衛);
     //   · 付不出東西的 → 一次都不准出現(原本那條規則,只是不再點名兩件道具)。
-    const table = LootTables.get(QUEST_TABLE).entries.map((e) => e.itemId as string);
-    // 兩件仍然要在池子的**內容**裡:被移出表 = 刪除,不是開關(而且下面的斷言
-    // 會因為「表裡本來就沒有」而空綠 —— 失敗形態④)。
-    expect(table, "quest-rewards 不再含天堂之劍 —— 那就變成刪除而不是開關了").toContain(HEAVEN_SWORD);
-    expect(table, "quest-rewards 不再含仙后座 —— 那就變成刪除而不是開關了").toContain(CASSIOPEIA);
+    const table = QUEST_TABLES.flatMap((t) =>
+      LootTables.get(t).entries.map((e) => e.itemId as string),
+    );
+    // 兩件仍然要在**某一張**池子的內容裡:被移出所有表 = 刪除,不是開關(而且下面
+    // 的斷言會因為「表裡本來就沒有」而空綠 —— 失敗形態④)。
+    expect(table, "沒有任何一張寶具池含天堂之劍 —— 那就變成刪除而不是開關了").toContain(HEAVEN_SWORD);
+    expect(table, "沒有任何一張寶具池含仙后座 —— 那就變成刪除而不是開關了").toContain(CASSIOPEIA);
 
     const { seen } = questCards(400);
+    // ⚠️ 攻擊型態閘不是「被誰擋住了」——`requiresAttackType` 對不上的道具**依設計**
+    // 發不到這支英雄手上（`economy/offerEligibility.ts`）。取樣英雄是固定的一支近戰，
+    // 所以先把型態不合的剔掉，⛔ 否則這條會把一個正確的過濾器報成缺陷。
+    const heroType = Champions.get(HERO).attackType;
     for (const id of table) {
       const doc = itemDocs.get(id);
-      expect(doc, `${id} 在 quest-rewards 裡卻沒有 item@1 文件`).toBeDefined();
+      expect(doc, `${id} 在寶具池裡卻沒有 item@1 文件`).toBeDefined();
+      const needs = (doc as { requiresAttackType?: string }).requiresAttackType;
+      if (needs !== undefined && needs !== heroType) continue;
       const pays = paysSomething(doc!);
       expect(
         seen.has(id),

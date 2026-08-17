@@ -720,11 +720,8 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-10",
     why: "G1 ② —— 一個人都沒打到時要不要照樣跑下游。省略 = false = 今天什麼都不會發生的那個語意。",
   },
-  "field:abilities.effects[]#damageArea.onHitTargetsMode": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "G1 ② —— 下一段收到的是整群人一次（batch，預設＝onHitTargets 檔頭已經公告過的語意，⛔ 不是新語意）還是一個一個分開跑（perTarget）。⭐ perTarget 存在的理由是**下游若是 damageArea / damageLine 這種自己解幾何的 kind**：它們只讀 ctx.targets[0] 當圓心，所以 batch 模式下 5 個受害者只會炸出一個圈，而畫面上跟壞掉一模一樣。⚠️ perTarget 讓下游 rng draw 隨受害者數線性成長（受害者清單本身是全序決定性的，決定性不破，但那是一筆看得見的成本）。",
-  },
+  // ⭐ 2026-08-18 · `damageArea.onHitTargetsMode` **落地了**（items/godie-i01i），
+  //    所以它的 landing 豁免照這份清單自己的規矩被刪掉 —— ⛔ 不是放寬，是它不再需要。
   "field:abilities.effects[]#damageLine.victimCondition": {
     status: "landing",
     since: "2026-08-10",
@@ -744,7 +741,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   "field:abilities.effects[]#damageLine.onHitTargetsMode": {
     status: "landing",
     since: "2026-08-10",
-    why: "同 damageArea.onHitTargetsMode —— batch（預設）還是 perTarget。⛔ 兩個 kind 在這一族上必須同名同語意：欄位名一旦分岔，編輯器上長得一樣的兩格就會是兩件事，那是最難查的一種缺陷。",
+    why: "batch（預設，下一段收到整群人一次）還是 perTarget（一個一個分開跑）。⛔ 兩個 kind 在這一族上必須同名同語意：欄位名一旦分岔，編輯器上長得一樣的兩格就會是兩件事，那是最難查的一種缺陷。⭐ 圓形那一半（damageArea）已於 2026-08-18 落地並拿掉豁免；膠囊這一半還沒有內容需要它。",
   },
   "field:abilities.effects[]#applyBuff.modifiers[].scopeSlot": {
     status: "landing",
@@ -1783,34 +1780,11 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "它該有的樣子。它存在的理由是第 3 回合之後場上到處是 DoT:一個「被燃燒每 tick " +
       "3 點打醒」的睡眠等於沒有睡眠,而那是設計決定不是常數。與 `breakOnDamage` 同一批。",
   },
-  "field:abilities.effects[]#applyStatus.healingTakenMult": {
-    status: "landing",
-    since: "2026-08-05",
-    why:
-      "A6【重創】三格之一(治療)。owner 2026-08-03 逐字:「【減療 / 禁療】=> 用重創代替就好," +
-      "吸血/治療同時減半」,裁決⑥「三格獨立倍率,預設全部 0.5」。三個讀取點都接上了" +
-      "(`combat/restore.ts` / `combat/damage.ts` / `systems/RegenSystem.ts`)," +
-      "四條守衛在 `sim/grievousWounds.test.ts`,含「吸血不可以打折兩次」那一條。" +
-      "缺的是掛重創的那幾張卡 —— 那是 owner 的內容決定。",
-  },
-  "field:abilities.effects[]#applyStatus.lifestealMult": {
-    status: "landing",
-    since: "2026-08-05",
-    why:
-      "A6【重創】三格之一(吸血係數)。⛔ 它與 `healingTakenMult` 分成兩格是**必要的**," +
-      "不是對稱美學:吸血最後是一發 `healTarget`,所以 `healingTakenMult` 已經會咬到它 —— " +
-      "`lifestealMult` 必須作用在 `dmg * ls` 那一步,否則帶重創的人吸血是 0.25 倍而不是 " +
-      "0.5 倍,而畫面上只是「好像有點少」。`sim/grievousWounds.test.ts` 的第四條走出貨的" +
-      "傷害管線釘住這一點。缺的是掛重創的那幾張卡,那是 owner 的內容決定。",
-  },
-  "field:abilities.effects[]#applyStatus.regenMult": {
-    status: "landing",
-    since: "2026-08-05",
-    why:
-      "A6【重創】三格之一(自然回復)。⚠️ 它是 owner 的裁決**推翻我的建議**的那一格" +
-      "(我原本主張自然回復不打折),而且是三個讀取點裡最容易被漏掉的一個 —— " +
-      "regen 不經過 `healTarget`。理由同 healingTakenMult。",
-  },
+  // ⭐ 2026-08-18 · A6【重創】三格（`healingTakenMult` / `lifestealMult` /
+  //    `regenMult`）的 landing 豁免**全部刪掉** —— `items/ultimate-mod-shiranui`
+  //    真的掛上了重創，三格同時從零採用畢業。⛔ 這不是放寬，是它們不再需要豁免。
+  //    （引擎那一側從 2026-08-05 就備妥：三個讀取點 + `sim/grievousWounds.test.ts`
+  //    的四條守衛。缺的一直只是「掛重創的那張卡」，而那張卡現在存在了。）
 
   // ⭐ 2026-08-12 —— C1【沉默】+ C2【混亂】的**兩筆豁免已刪除**(棘輪生效)。
   // 2026-08-05 的停止條件逐字是「樹上今天沒有任何一支技能是沉默系或混亂系,
@@ -2220,6 +2194,28 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     witness: "content/_legacy/abilities/godie-nman.w.json",
     why: "唯一填過分層高度的是 40-02 必殺！爆熱神音（godie-nman.w，三層 sonicbreathstream 各自 148/161/169 的離地高度），而 40 號英雄在 2026-08-13 隨未上架名單搬進 _legacy。省略時特效貼地，所以留下來的 17 份 vfxLayers 文件逐字不變、畫面上也沒有東西壞掉 —— 這是一個「沒有人需要抬高特效」的零，不是一條死掉的渲染路徑。",
   },
+  // ══ 2026-08-18 · 道具光環的兩格,隨 7 件無取得路徑的任務道具一起退場 ════════
+  //
+  // 那 7 件只被**已宣告退場**的 `quest-rewards` 引用（`retiredLootTables.ts`），
+  // 而那張表沒有任何回合／gacha／備援入口 ⇒ 玩家一場也拿不到。判準是「拿不拿得
+  // 到」，所以它們搬進 `content/_legacy/items/`。⚠️ 光環機制本身**沒有**退場：
+  // `items.auras[].radius/affects/modifiers` 還有 godie-i00z / i060 / i061 三份
+  // 現役客戶在用，零的只有下面這兩格 —— 它們的唯一客戶剛好都在那 7 件裡。
+  "field:items.auras[].includeSelf": {
+    status: "legacy-parked",
+    witness: "content/_legacy/items/godie-i02h.json",
+    why: "「光環也套在自己身上」的唯一客戶是戰旗 godie-i02h（warbanner-ad，ad pctAdd +35% 含自己）、復仇之袍 godie-i02j 與惡魔吉他 godie-i02k，三件都在 2026-08-18 隨 7 件無取得路徑的任務道具搬進 _legacy。留在營運樹上的三份 auras 文件都是純隊友光環，所以這是一個「沒有人需要把自己算進去」的零，⛔ 不是一條死掉的光環路徑。",
+  },
+  "field:items.auras[].hooks": {
+    status: "legacy-parked",
+    witness: "content/_legacy/items/godie-i02j.json",
+    why: "「光環給範圍內的人掛一個 hook」的唯一客戶是復仇之袍 godie-i02j（vengeance-thorns：onDamageTaken 回敬 40 + 2×armor 魔法傷害，0.5s internalCooldown）與惡魔吉他 godie-i02k（guitar-melee-drain：onBasicAttack 吸取），兩件都在 2026-08-18 退場。現役的三份 auras 只用 modifiers，所以零的是**授權面**而不是機制 —— sim 那一側照樣把 aura hooks 發出去。",
+  },
+  "field:items.unique": {
+    status: "legacy-parked",
+    witness: "content/_legacy/items/swift-boots.json",
+    why: "「同一件只能持有一份」的唯一採用者是輕靈之靴 swift-boots（`\"unique\": true`），而它在 2026-08-18（#356）隨 101 件退場道具一起搬進 `content/_legacy/items/`。⛔ 機制沒有退場：`sim/economy/shop.ts` 的 `unique-owned` 拒買、`MerchantShop` 的灰卡、`EquipmentBar` 的獨佔外框三條路都還在讀這一格，只是這一版沒有一件現役道具宣告它。⭐ 所以它是 `legacy-parked` 而不是 `landing` —— 它曾經是綠的、靠一份真的文件綠的，缺的不是內容而是那件道具回到營運樹上（那一天 STALE 那條會自己紅並要求刪掉這一列）。",
+  },
   "enum:abilities.effects[]#invulnerable.blocksDamage=magic": {
     status: "legacy-parked",
     witness: "content/_legacy/abilities/godie-hlgr.passive.json",
@@ -2260,22 +2256,41 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "⛔ 加一張是內容決策，屬於 owner 的排序，不是這一批引擎工作的一部分。",
   },
 
-  // ══ 2026-08-13 · 位移級距（`distanceTier`，GH#318）════════════════════════
+  // ══ 2026-08-18 · 位移級距（`distanceTier`，GH#318）════════════════════════
   //
-  // ⚠️ 這一輪只做了 **P1（速度天花板）**，那一半是**無條件**的、不需要任何內容
-  // 欄位（註冊期夾在 `floor(TICK_HZ × 最小身體半徑 × safetyFactor)`），32 個出貨
-  // 速度節點已經全部改到天花板以下，`displacementTiers.test.ts` 逐份掃。
-  // `distanceTier`（P2）是**選填的距離級距**，填下去會動 8 支 dash 的距離
-  // （−14.3% .. +22.2%）—— 那是手感變更，owner 還沒勾。
-  "field:abilities.effects[]#dash.distanceTier": {
+  // ⭐ **欄位那一列的豁免已經刪掉** —— `items/godie-i01s` 填了 `"小"`，所以
+  // `field:abilities.effects[]#dash.distanceTier` 不再是零採用，照這份清單自己的
+  // 規矩（STALE 那一條）它必須消失。⛔ 這不是放寬。
+  //
+  // 但那一格採用**只用掉四個刻度裡的一個**，於是剩下三個 enum 成員從「整個欄位
+  // 零採用」底下浮出來，變成三個單獨的零採用鍵。⚠️ 它們**不是**新機制沒接線：
+  // `displacementTiers.test.ts` 的「級別贏過手寫值」用一支只填 `distanceTier` 的
+  // 技能真的跑過三條註冊路徑，四個刻度共用同一段查表程式 —— 差別只在查到第幾格。
+  //
+  // ⛔ 也**不要**為了讓這三列變綠去替既有技能填級別：把一支 dash 從手寫距離改成
+  // 中／大／極大，是 −14.3%..+22.2% 的手感變更，owner 沒勾過（第〇·六守則：
+  // 可以停就停）。⭐ 唯一「零數值變更」的補法是**距離正好落在該刻度上**的節點。
+  "enum:abilities.effects[]#dash.distanceTier=中": {
     status: "landing",
-    since: "2026-08-13",
+    since: "2026-08-18",
     why:
-      "GH#318 位移級距的 P2。⭐ 引擎這一側是活的且有守衛：`displacementTiers.test.ts` 的" +
-      "「級別贏過手寫值」用一支只填 `distanceTier` 的技能真的跑過三條註冊路徑。" +
-      "零採用是**刻意的**：P1（速度天花板，無條件、零欄位）已經單獨修好 #318 的技術牆，" +
-      "P2 會改 8 支技能的位移距離 —— 那是 owner 沒勾過的手感變更（第〇·六守則：可以停就停）。" +
-      "⭐ 想要「零數值變更」的半套 P2，只要給**距離正好落在級距刻度上**的節點填級別即可。",
+      "GH#318 位移級距。第一個採用（`items/godie-i01s` 的「小」）在 2026-08-18 落地，" +
+      "四個刻度共用同一段查表，所以這一列講的是**內容還沒有一支中距離位移需要改用級別**，" +
+      "⛔ 不是引擎少了什麼。等哪一支距離正好落在「中」的刻度上時把它改過去，這一列就會自己過期。",
+  },
+  "enum:abilities.effects[]#dash.distanceTier=大": {
+    status: "landing",
+    since: "2026-08-18",
+    why:
+      "同「中」—— 四個刻度共用同一段查表的第三格，引擎那一側與已落地的「小」逐字是同一條路。" +
+      "零採用講的是內容排序（沒有一支長距離位移需要改用級別），⛔ 不是機制缺口。",
+  },
+  "enum:abilities.effects[]#dash.distanceTier=極大": {
+    status: "landing",
+    since: "2026-08-18",
+    why:
+      "同「中」—— 四個刻度共用同一段查表的第四格，引擎那一側與已落地的「小」逐字是同一條路。" +
+      "零採用講的是內容排序（沒有一支超長距離位移需要改用級別），⛔ 不是機制缺口。",
   },
 };
 

@@ -276,9 +276,11 @@ describe("legendary is DRAFT-ONLY", () => {
     // player can never get it」, the failure form this repo has shipped before.
     // A DELIBERATE delisting always moves the item into the legendary table, so
     // that membership is exactly the evidence that the zero was intended.
-    const pool = new Set(
-      lootTables.find((t) => t.id === "legendary-weapons")!.entries.map((e) => e.itemId),
-    );
+    // ⭐ 2026-08-18：**每一張**寶具池，⛔ 不只 `legendary-weapons`。owner 那天把
+    // 上架寶具切成三階，10 支 final 因此搬進了 `ex-release-weapons` /
+    // `ex-origin-weapons` —— 只讀一張的話，這條守衛會把它們報成「玩家永遠拿不到」，
+    // 而它們其實在另一張池上。⇒ 判準是「**有沒有一張池收它**」，⛔ 不是「哪一張」。
+    const pool = new Set(lootTables.flatMap((t) => t.entries.map((e) => e.itemId)));
     const orphaned = items
       .filter((d) => d.craftRole === "final" && hasEffect(d) && d.cost <= 0 && !pool.has(d.id as string))
       .map((d) => `${d.id} ${d.name}`);
@@ -298,10 +300,18 @@ describe("legendary is DRAFT-ONLY", () => {
     expect(delisted.length, "no final is delisted at all — the rule above proves nothing").toBeGreaterThan(0);
   });
 
-  it("the free quest card's items are free too", () => {
+  it("every 寶具 pool deals FREE items — a priced entry would be a card you cannot take", () => {
     cover("econ-quest-draft-free");
-    const table = lootTables.find((t) => t.id === "quest-rewards")!;
-    for (const e of table.entries) expect(byId.get(e.itemId)!.cost).toBe(0);
+    // ⚠️ 這一條本來只讀 `quest-rewards`（0g 任務道具那張）。owner 2026-08-18 把那張
+    // 表整張搬進 `content/_legacy/loot-tables/`（「任務道具」的標籤在競技場新玩法
+    // **完全不考慮**），所以判準改成陳述在**每一張出貨的抽獎池**上 —— 這比原本強：
+    // 三選一發下去的東西一律免費，⛔ 不是只有那一張表。
+    expect(lootTables.length, "content/loot-tables/ 是空的 —— 這條會變成空的").toBeGreaterThan(0);
+    for (const table of lootTables) {
+      for (const e of table.entries) {
+        expect(byId.get(e.itemId)!.cost, `${table.id} 發的 ${e.itemId} 標了價 —— 三選一是免費的`).toBe(0);
+      }
+    }
   });
 });
 

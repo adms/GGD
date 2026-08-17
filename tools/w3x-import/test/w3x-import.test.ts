@@ -129,7 +129,16 @@ describe("w3x importer — real imported content", () => {
     const items = readdirSync(join(contentDir, "items")).filter((f) =>
       f.startsWith("godie-"),
     );
-    expect(items.length).toBeGreaterThan(100);
+    // ⚠️ 2026-08-18（#356）：這裡本來是 `toBeGreaterThan(100)` —— 一個**出貨件數**
+    //    住在測試裡（第二守則的「第四個住處」）。101 件退場到 `content/_legacy/items/`
+    //    之後它用「匯入器壞了」這句假話紅了，而匯入器一個位元組都沒改。
+    //    ⭐ 這一條要問的是「匯入器有沒有產出道具、產出的是不是 item@1」，
+    //    ⛔ 不是「還剩幾件」（那是策展，每週都在動）。
+    expect(items.length).toBeGreaterThan(0);
+    for (const f of items) {
+      const doc = JSON.parse(readFileSync(join(contentDir, "items", f), "utf-8"));
+      expect(doc.schema, `${f} 不是 item@1`).toBe("item@1");
+    }
     expect(existsSync(join(contentDir, "arenas", "arena.godie.json"))).toBe(true);
     cover("w3x-content-drafts");
   });

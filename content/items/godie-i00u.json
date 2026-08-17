@@ -25,6 +25,7 @@
   "passive": [
     {
       "on": "onBasicAttack",
+      "victim": "champion",
       "effects": [
         {
           "kind": "damage",
@@ -39,5 +40,6 @@
         }
       ]
     }
-  ]
+  ],
+  "authoringNote": "⭐ 2026-08-18 逐句稽核（第一·五守則「不放任何無效說明」）—— 三句效能都對得上，**改動只有一格 `victim`**，數值一個字都沒動。\n\n[普通攻擊時]「每次攻擊造成敵方英雄現存生命 6%傷害」= passive[0]：\n· 「現存生命 6%」= `damage.hpPct {basis:\"current\", perRank:[0.06]}`。`hpPct` 讀的是**受害者**的血 —— `zScaling.ratios` 只讀得到施法者的屬性表，所以這一句用 ratios 寫不出來（理由逐字在 content/schema/effect.ts 的 hpPct 上）。上界 HP_PCT_DAMAGE_MAX = 0.35。damageType 選 magic（吃魔抗）；文案沒指定型別，這是選擇不是抄寫。\n· ⚠️ **「敵方英雄」四個字在此之前沒有落地**：這條 hook 原本沒有 `victim`，於是它對**殭屍波的小怪也照付 6% 現存生命**。那是「JSON 給了、卡面沒說」的那一種偏差（第一·五守則的鏡像 —— 沒有任何守衛會紅，因為每一個零件都是對的）。⇒ 補上 `victim: \"champion\"`，與同一句話寫法的 熾天使之弓 godie-i012 對齊。⛔ 這不是平衡調整，是把資料改成卡面說的那件事：要讓它也削殭屍，把這一格改成 `\"any\"` 就好（一格下拉，不用改程式）。`victimPasses` 坐在 ICD 閘與機率骰**之前**，所以被它擋掉的一發不燒冷卻、也不動 seed。\n· ⛔ 沒有 `internalCooldown` —— 文案是「每次攻擊」，所以每一下都付。godie-i012 的 1 秒 ICD 是 owner 2026-08-01 對**那一件**的裁決，⛔ 不可以推廣過來。\n\n「攻擊速度+60%」= `as pctAdd 0.6`。出貨攻速上限 base 4.0 / unlocked 10.0，這件沒有 capRaise，所以它只能把人推到 4.0。\n「普攻吸血+10%」= `lifesteal flat 0.1`。⛔ **不可以寫成 pctAdd/pctMult**：lifesteal 的 base 是 0，管線是 `(base+Σflat)×(1+ΣpctAdd)×Π(1+pctMult)`，所以只有 flat 推得動它（0 乘任何東西還是 0）。⚠️ 反過來說，晨曦之光 godie-i016 的 [重創] 用 `lifesteal pctMult -0.5` **是有效的** —— 它乘的是這一件付出來的那個 0.1。"
 }

@@ -26,6 +26,14 @@
  * `arena-rules.retiredLootTables` 這個新欄位上,而它的意思是**沒有任何發放
  * 入口可以再指到它**。
  *
+ * ⚠️ 2026-08-18 更新(#356 道具／獎池／回合表退場):`quest-rewards` 與
+ * `round-reward` 兩張表已經從 `content/loot-tables/` 搬進
+ * `content/_legacy/loot-tables/` —— 那是**更強**的退場(載入器根本讀不到),
+ * 但 `retiredLootTables` 的宣告**仍然留著而且必須留著**:後台耐久覆蓋層的
+ * 寫入路徑沒有 Zod(#283),那一欄是唯一還擋得住「有人把它排回某回合」的東西。
+ * 下面 ① 的第三條因此從「從 store 裡 get 得到」改成「封存品還在 + 不在登錄表 +
+ * 引用的道具都沒被刪掉」。
+ *
  * ═══════════════════════════════════════════════════════════════════════════
  * 突變紀錄(每一條都真的手動做過:改壞 → 確認紅 → 改回 → 確認綠)
  * ═══════════════════════════════════════════════════════════════════════════
@@ -48,6 +56,7 @@
  *       ⇒ `apps/game-server/src/match/retiredDraftPool.test.ts` **1 紅 / 6**。
  */
 import { describe, it, expect, beforeAll } from "vitest";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ContentLoader } from "./loader";
@@ -81,16 +90,34 @@ function checkDoc(doc: unknown): string[] {
 // ───────────────────────────────────────────────────── ① 出貨的狀態 ─────
 
 describe("① 出貨樹:quest-rewards 退場了,而且是**宣告**的不是漏排的", () => {
-  it("沒有任何回合 / gacha / 備援欄位指到 quest-rewards", () => {
+  it("沒有任何回合 / gacha / 備援欄位指到已退場的表 —— 而且指到的每一張都真的存在", () => {
     // owner 的診斷,量出來的版本。
+    // ⚠️ 2026-08-18 之前這一條寫的是 `toEqual(["legendary-weapons"])` —— 那是把
+    //    **出貨的池子名單**抄進測試(第二守則的「第四個住處」)。EX 兩階上線之後
+    //    出貨真的有三張池,於是它用「退場守衛壞了」的訊息紅,而真相只是池子擴充了。
+    //    改成驗**性質**,兩條都與這條守衛真正要守的東西同向:
+    //      ① 沒有任何入口指到 `retiredLootTables` 宣告的表
+    //      ② 每一個被指到的表在出貨樹裡真的存在(打錯字不會變成靜默的空回合)
     const tables = new Set<string>();
     for (const g of Object.values(SHIPPED.rounds)) {
       if (g?.weaponLootTable) tables.add(g.weaponLootTable);
     }
     if (SHIPPED.gacha) tables.add(SHIPPED.gacha.lootTable);
     if (SHIPPED.itemDraft?.fallbackTable) tables.add(SHIPPED.itemDraft.fallbackTable);
-    expect([...tables].sort()).toEqual(["legendary-weapons"]);
-    expect(tables.has("quest-rewards")).toBe(false);
+    expect(tables.size, "一個發放入口都沒排 —— 這條守衛在空轉").toBeGreaterThan(0);
+
+    const retired = retiredLootTables(SHIPPED);
+    expect(
+      [...tables].filter((t) => retired.has(t)).sort(),
+      "這幾張表已經宣告退場,卻還有發放入口指著它",
+    ).toEqual([]);
+
+    const onDisk = new Set(
+      readdirSync(join(CONTENT_DIR, "loot-tables"))
+        .filter((f) => f.endsWith(".json") && f !== "_index.json")
+        .map((f) => f.slice(0, -5)),
+    );
+    expect([...tables].filter((t) => !onDisk.has(t)).sort(), "指到一張不存在的池").toEqual([]);
   });
 
   it("`retiredLootTables` 明著寫了 quest-rewards —— 這是決定,不是疏漏", () => {
@@ -100,22 +127,38 @@ describe("① 出貨樹:quest-rewards 退場了,而且是**宣告**的不是漏�
     expect(scheduledRetiredTables(SHIPPED), "出貨樹必須是乾淨的").toEqual([]);
   });
 
-  it("表**還在**,13 支道具**還在** —— 退場不是刪除", () => {
+  it("退場的表被**封存**而不是刪除 —— 而且宣告仍然在", async () => {
     // 這一條是「最小破壞」的守衛:哪天有人把退場理解成刪檔,這裡紅,而紅的原因
     // 會把他指回 starter.go 的白名單與 Go 側的雙向對照。
-    const store = new ContentStore();
-    expect(store).toBeDefined();
-    // 讀真的 store(beforeAll 已經載過一次,這裡重載一次拿 loot-tables)。
-    return new ContentLoader(new FsContentSource(CONTENT_DIR)).load().then((loaded) => {
-      const table = loaded.store.get<{ entries: { itemId: string }[] }>(
-        "loot-tables",
-        "quest-rewards",
-      );
-      expect(table.entries.length, "13 支任務道具").toBe(13);
-      for (const e of table.entries) {
-        expect(loaded.store.has("items", e.itemId), `${e.itemId} 的 item@1 文件`).toBe(true);
+    //
+    // ⚠️ 2026-08-18 這一條的**形狀**變了,但守的東西沒有變。之前退場的表留在
+    // `content/loot-tables/` 裡(只是沒有人排它);現在它們搬進了
+    // `content/_legacy/loot-tables/` —— 那是更強的退場(載入器根本讀不到它),
+    // 所以「從 store 裡 get 出來」這件事本身已經是錯的期待。
+    //
+    // ⭐ 但是**退場宣告不可以跟著走**:後台耐久覆蓋層的寫入路徑至今沒有 Zod
+    // (#283),所以 `retiredLootTables` 這一欄是唯一還擋得住「有人把它排回某回合」
+    // 的東西。宣告消失 = 那道閘消失,而磁碟上看起來只是「清乾淨了」。
+    const declared = [...retiredLootTables(SHIPPED)].sort();
+    expect(declared.length, "一張退場宣告都沒有 —— 這條守衛在空轉").toBeGreaterThan(0);
+
+    const loaded = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load();
+    for (const id of declared) {
+      // ① 封存品還在(退場 ≠ 刪除;知識不可以無聲消失)
+      const archived = join(CONTENT_DIR, "_legacy", "loot-tables", `${id}.json`);
+      expect(existsSync(archived), `${id} 的封存檔不見了 —— 退場不是刪除`).toBe(true);
+      // ② 它**不在**出貨登錄表裡 —— 這才是「拿不到」的機械意義
+      expect(loaded.store.has("loot-tables", id), `${id} 竟然還在出貨登錄表裡`).toBe(false);
+      // ③ 它引用的每一件道具仍然有一份文件(出貨樹或封存區),沒有被順手刪掉
+      const doc = JSON.parse(readFileSync(archived, "utf8")) as { entries?: { itemId: string }[] };
+      expect((doc.entries ?? []).length, `${id} 封存成一張空表 = 內容被刪掉了`).toBeGreaterThan(0);
+      for (const e of doc.entries ?? []) {
+        const alive =
+          loaded.store.has("items", e.itemId) ||
+          existsSync(join(CONTENT_DIR, "_legacy", "items", `${e.itemId}.json`));
+        expect(alive, `${id} 引用的 ${e.itemId} 兩邊都不在了`).toBe(true);
       }
-    });
+    }
   });
 });
 

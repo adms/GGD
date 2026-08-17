@@ -1,33 +1,23 @@
 {
   "id": "ex-release-weapons",
   "schema": "loot-table@1",
+  "name": "[EX解放] 寶具池",
+  "note": "⭐ owner 2026-08-18 交來的上架寶具清單為**唯一真相**：「舊時代上架傳說武器道具全部捏平成 EX寶具，只有五件我們特別拎出來寫 EX解放，再加上新一批的 EX／EX解放／EX根源，組成全部上架的隨機三選一寶具」。⚠️「任務道具」是舊時代 DOTA 玩法的標籤，**競技場新玩法完全不考慮它** —— 所以四魂之玉／天堂之劍／獸人船長十字鎬／老衲的棒子／至尊魔戒／仙后座 都是正規寶具，⛔ 不是任務殘留。\n⛔ 一件寶具**只屬於一個池**（在此之前有 5 件同時掛在兩個池上，會被抽兩次）。\n本表 = owner 清單標 EX解放 的 19 件 ＋ 新一批 20 件，扣掉移進根源的。",
   "entries": [
     {
+      "itemId": "book-of-gospel",
+      "weight": 1
+    },
+    {
+      "itemId": "bulwark-charge-greaves",
+      "weight": 1
+    },
+    {
+      "itemId": "collar-of-the-deadly-soul",
+      "weight": 1
+    },
+    {
       "itemId": "endless-edge",
-      "weight": 1
-    },
-    {
-      "itemId": "godie-i004",
-      "weight": 1
-    },
-    {
-      "itemId": "godie-i031",
-      "weight": 1
-    },
-    {
-      "itemId": "godie-i067",
-      "weight": 1
-    },
-    {
-      "itemId": "ultimate-mod-shiranui",
-      "weight": 1
-    },
-    {
-      "itemId": "lance-kongotetsu",
-      "weight": 1
-    },
-    {
-      "itemId": "mystery-scrap-of-paper",
       "weight": 1
     },
     {
@@ -35,11 +25,71 @@
       "weight": 1
     },
     {
-      "itemId": "torch-master",
+      "itemId": "godie-i004",
       "weight": 1
     },
     {
-      "itemId": "soul-eater",
+      "itemId": "godie-i006",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i00f",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i00l",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i014",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i01d",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i01s",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i01v",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i02d",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i03f",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i067",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i06f",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i06i",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i06q",
+      "weight": 1
+    },
+    {
+      "itemId": "gravity-sword-black-rod",
+      "weight": 1
+    },
+    {
+      "itemId": "lance-kongotetsu",
+      "weight": 1
+    },
+    {
+      "itemId": "magic-armor-type-zero",
       "weight": 1
     },
     {
@@ -51,11 +101,7 @@
       "weight": 1
     },
     {
-      "itemId": "staff-of-ainz-ooal-gown",
-      "weight": 1
-    },
-    {
-      "itemId": "spear-of-lightning",
+      "itemId": "mystery-scrap-of-paper",
       "weight": 1
     },
     {
@@ -63,7 +109,23 @@
       "weight": 1
     },
     {
+      "itemId": "pale-moon-requiem-crown",
+      "weight": 1
+    },
+    {
       "itemId": "shining-golden-orbs",
+      "weight": 1
+    },
+    {
+      "itemId": "soul-eater",
+      "weight": 1
+    },
+    {
+      "itemId": "spear-of-lightning",
+      "weight": 1
+    },
+    {
+      "itemId": "staff-of-ainz-ooal-gown",
       "weight": 1
     },
     {
@@ -71,39 +133,15 @@
       "weight": 1
     },
     {
-      "itemId": "gravity-sword-black-rod",
+      "itemId": "torch-master",
       "weight": 1
     },
     {
-      "itemId": "teardrop-of-rebirth",
-      "weight": 1
-    },
-    {
-      "itemId": "book-of-gospel",
-      "weight": 1
-    },
-    {
-      "itemId": "magic-armor-type-zero",
+      "itemId": "ultimate-mod-shiranui",
       "weight": 1
     },
     {
       "itemId": "usagizuki-twin-crescents",
-      "weight": 1
-    },
-    {
-      "itemId": "collar-of-the-deadly-soul",
-      "weight": 1
-    },
-    {
-      "itemId": "pale-moon-requiem-crown",
-      "weight": 1
-    },
-    {
-      "itemId": "piercer-crossbow",
-      "weight": 1
-    },
-    {
-      "itemId": "sage-ward-amulet",
       "weight": 1
     }
   ]

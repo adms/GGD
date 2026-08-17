@@ -192,7 +192,7 @@
         },
         {
           "kind": "applyStatus",
-          "statusId": "slow25",
+          "statusId": "slow40",
           "duration": 1.5,
           "moveSpeedMult": 0.6
         }
@@ -242,7 +242,7 @@
         },
         {
           "kind": "applyStatus",
-          "statusId": "slow25",
+          "statusId": "slow40",
           "duration": 2.0,
           "moveSpeedMult": 0.6
         }
@@ -259,10 +259,9 @@
     "R"
   ],
   "buildPriority": [
-    "swift-boots",
     "godie-i05x",
-    "godie-i06h",
-    "godie-i003",
+    "godie-i041",
+    "godie-i03d",
     "godie-i04b"
   ],
   "tags": [

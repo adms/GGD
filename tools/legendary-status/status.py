@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""棱彩三選一 · 49 支傳說武器的實作進度表 —— 從 content/ 現況「算出來」，不是手寫的。
+"""寶具三選一的實作進度表 —— 從 content/ 現況「算出來」，不是手寫的。
 
     python3 tools/legendary-status/status.py            # 重新產生 docs/_legendary-49-status.md
     python3 tools/legendary-status/status.py --print    # 只印到終端機，不寫檔
@@ -30,7 +30,10 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
 ITEMS = REPO / "content" / "items"
-POOL = REPO / "content" / "loot-tables" / "legendary-weapons.json"
+# ⭐ owner 2026-08-18 把上架寶具切成三階。⛔ 這裡列的是檔名，件數一律**算出來**
+# —— 標題以前寫死「49 支」，而 owner 每週都在動策展。
+POOL_TABLES = ["legendary-weapons", "ex-release-weapons", "ex-origin-weapons"]
+POOLS = [REPO / "content" / "loot-tables" / f"{t}.json" for t in POOL_TABLES]
 OUT = REPO / "docs" / "_legendary-49-status.md"
 STARTER_GO = REPO / "apps" / "platform" / "internal" / "curation" / "starter.go"
 ARENA_RULES = REPO / "content" / "config" / "arena-rules.json"
@@ -455,7 +458,7 @@ def classify(doc: dict, line: str, kinds: set[str]) -> tuple[str, str]:
     return "❔", "無法分類（純敘述？還是漏掉的機制？）"
 
 
-HTML_HEAD = """<title>棱彩三選一 · 49 支傳說武器 實作進度</title>
+HTML_HEAD = """<title>寶具三選一 實作進度</title>
 <style>
 :root{--bg:#12131a;--surface:#191b24;--surface2:#20222d;--line:#2c2f3d;--ink:#e8e9f0;
 --soft:#a4a8bd;--mute:#6f7488;--ok:#5fd08a;--okbg:#16301f;--bad:#f2726b;--badbg:#33191c;
@@ -510,7 +513,7 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);font-fa
 def render_html(rows, totals, done, n, whitelist, pool, rounds, off, stamp) -> str:
     pct = round(100 * done / n) if n else 0
     h = [HTML_HEAD, '<div class="wrap">']
-    h.append("<h1>棱彩三選一 · 49 支傳說武器 實作進度</h1>")
+    h.append(f"<h1>寶具三選一 · {n} 支寶具 實作進度</h1>")
     h.append('<p class="sub">逐行比對 owner authored 的「效能」文案，與該道具實際帶的 '
              "<code>modifiers</code> / <code>passive</code> / <code>auras</code>。"
              "這一頁是從 <code>content/</code> 現況產生的，不是手寫的進度表。</p>")
@@ -525,7 +528,7 @@ def render_html(rows, totals, done, n, whitelist, pool, rounds, off, stamp) -> s
     h.append(f'<div class="tile"><div class="n">{totals["❔"]}</div><div class="l">❔ 沒有規則在檢查</div></div>')
     h.append("</div>")
     h.append('<div class="panel"><h2>上架管線</h2>')
-    h.append(f"<div>抽獎池 <code>legendary-weapons.json</code>：<b>{n}</b> 支</div>")
+    h.append(f"<div>抽獎池（三階，{' / '.join(POOL_TABLES)}）：<b>{n}</b> 支</div>")
     gap = sorted(set(pool) - whitelist)
     h.append(f"<div>白名單 <code>starter.go</code>：<b>{len(whitelist)}</b> 支 "
              f"（缺口：<b>{'、'.join(gap) if gap else '無'}</b>）</div>")
@@ -569,12 +572,18 @@ def main() -> int:
     ap.add_argument("--quiet", action="store_true", help="只印 done/total，給 watcher 用")
     args = ap.parse_args()
 
-    pool = [e["itemId"] for e in json.loads(POOL.read_text(encoding="utf-8"))["entries"]]
+    pool = [
+        e["itemId"]
+        for f in POOLS
+        for e in json.loads(f.read_text(encoding="utf-8"))["entries"]
+    ]
     go = STARTER_GO.read_text(encoding="utf-8")
     m = re.search(r"starterLegendaryItems\s*=\s*\[\]string\{(.*?)\n\t\}", go, re.S)
     whitelist = set(re.findall(r'"([\w-]+)"', m.group(1))) if m else set()
     rules = json.loads(ARENA_RULES.read_text(encoding="utf-8"))
-    rounds = sorted(k for k, v in rules["rounds"].items() if v.get("weaponLootTable") == "legendary-weapons")
+    rounds = sorted(
+        k for k, v in rules["rounds"].items() if v.get("weaponLootTable") in POOL_TABLES
+    )
 
     rows, totals = [], {"✅": 0, "❌": 0, "📝": 0, "❔": 0}
     done_items = 0
@@ -594,7 +603,7 @@ def main() -> int:
     bar = "█" * (pct // 5) + "░" * (20 - pct // 5)
 
     out = []
-    out.append("# 棱彩三選一 · 49 支傳說武器 實作進度\n")
+    out.append(f"# 寶具三選一 · {n} 支寶具 實作進度\n")
     out.append("> **這一頁是產生出來的，不要手改。** 重新產生：\n>\n"
                "> ```bash\n> python3 tools/legendary-status/status.py\n> ```\n>\n"
                "> 它每次都重讀 `content/`，逐行比對 owner 寫的「效能」文案與該道具真正帶的\n"
@@ -608,7 +617,9 @@ def main() -> int:
     out.append(f"| ❔ | 這支工具讀不出來 —— **代表沒有人在檢查它** | {totals['❔']} |")
 
     out.append("\n## 上架管線\n")
-    out.append(f"- 抽獎池 `content/loot-tables/legendary-weapons.json`：**{n}** 支")
+    out.append("- 抽獎池（三階）：" + " · ".join(
+        f"`{t}` **{len(json.loads((REPO / 'content' / 'loot-tables' / (t + '.json')).read_text(encoding='utf-8'))['entries'])}** 支"
+        for t in POOL_TABLES) + f" ⇒ 合計 **{n}** 支")
     out.append(f"- 白名單 `starter.go` `starterLegendaryItems`：**{len(whitelist)}** 支 "
                f"（缺口：{sorted(set(pool) - whitelist) or '無'}）")
     out.append(f"- 會滾這張表的回合：**{', '.join(rounds) or '（無）'}**")

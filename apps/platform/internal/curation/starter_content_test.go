@@ -154,6 +154,22 @@ var servicePrices = map[string]int{
 	"stat-attunement": 375,
 }
 
+// ⭐ The THREE weapon tier tables (owner 2026-08-18: 「舊時代上架傳說武器道具全部捏平
+// 成 EX寶具，只有五件我們特別拎出來寫 EX解放，再加上新一批的 EX／EX解放／EX根源，
+// 組成全部上架的隨機三選一寶具」). This is a list of FILE NAMES, not of items — the
+// item sets are read off disk, so promoting a 寶具 between tiers never touches Go.
+//
+// ⚠️ It has to be all three. `weaponTiers.pickWeaponTable` can point a card at any
+// of them, and MatchController rolls BEFORE it filters to the whitelist: a tier
+// whose members are unlisted deals the seat nothing, silently, with `offerCount`
+// still reading 3. Mirrors DEFAULT_WEAPON_TIERS[].table plus the base pool that
+// `rounds[].weaponLootTable` schedules.
+var weaponPoolTables = []string{
+	"legendary-weapons",  // EX
+	"ex-release-weapons", // [EX解放]
+	"ex-origin-weapons",  // [EX∅ 根源]
+}
+
 // whitelist-starter-content: every id in the STARTER SET names a document that
 // actually exists in the content tree AND still satisfies the selection gates
 // documented in starter.go. This is the guard that keeps the bundle from
@@ -266,7 +282,6 @@ func TestStarterSetMatchesContentTree(t *testing.T) {
 	// The surfaces of the arena item model (task #70): an item is bought with
 	// gold OR handed out free, never both.
 	shop := curation.StarterShopItems()
-	draft := curation.StarterDraftItems()
 	services := curation.StarterServiceItems()
 	legendary := curation.StarterLegendaryItems()
 	// `>= 20` was July's shelf size and stopped meaning anything when owner
@@ -276,8 +291,7 @@ func TestStarterSetMatchesContentTree(t *testing.T) {
 	// — a shelf at or below that is a fixed loadout, not a shop.
 	require.Greater(t, len(shop), inventorySlots,
 		"the shop surface must offer more finals than a build has slots to fill")
-	require.GreaterOrEqual(t, len(draft), 6, "the draft surface must be able to fill a 3-choose-1 twice")
-	require.GreaterOrEqual(t, len(legendary), 6, "the legendary pool must be able to fill a 3-choose-1 twice")
+	require.GreaterOrEqual(t, len(legendary), 6, "the weapon pools must be able to fill a 3-choose-1 twice")
 	require.Len(t, services, 2, "the shop services are exactly 傳說寶玉 + 能力屬性強化")
 
 	// PAID vs FREE is absolute, and it is the half that matters:
@@ -293,53 +307,24 @@ func TestStarterSetMatchesContentTree(t *testing.T) {
 			paidSurfaceOf[id] = name
 		}
 	}
-	freeSurfaceOf := map[string]string{}
-	for name, list := range map[string][]string{"legendary": legendary, "draft": draft} {
-		for _, id := range list {
-			if prev, dup := freeSurfaceOf[id]; dup && prev == name {
-				t.Errorf("the %s surface lists %q twice", name, id)
-			}
-			if paid, dup := paidSurfaceOf[id]; dup {
-				t.Errorf("item %q is on the paid %s surface AND the free %s surface — it can be bought",
-					id, paid, name)
-			}
-			freeSurfaceOf[id] = name
-		}
-	}
-
-	// FREE∩FREE is NOT empty any more, and pretending otherwise would be the
-	// lie. owner 2026-08-01 —「請你將我剛剛輸入的 49 項傳說武器道具都實作完，登錄
-	// 在隨機三選一」— named six craftRole-"quest" items into the 棱彩 pool, and
-	// owner rule 2 「所有任務道具」 (TestStarterDraftIsQuestSet, both directions)
-	// keeps them on the DRAFT surface at the same time. Pinned id-for-id so a
-	// SEVENTH overlap still fails; each one must still be a 0g quest item, i.e.
-	// free through both doors and purchasable through neither.
-	legendarySet := map[string]struct{}{}
+	legendarySeen := map[string]struct{}{}
 	for _, id := range legendary {
-		legendarySet[id] = struct{}{}
-	}
-	bothFree := []string{}
-	for _, id := range draft {
-		if _, dup := legendarySet[id]; dup {
-			bothFree = append(bothFree, id)
+		if _, dup := legendarySeen[id]; dup {
+			t.Errorf("the weapon-pool surface lists %q twice", id)
 		}
+		if paid, dup := paidSurfaceOf[id]; dup {
+			t.Errorf("item %q is on the paid %s surface AND the free weapon surface — it can be bought",
+				id, paid)
+		}
+		legendarySeen[id] = struct{}{}
 	}
-	sort.Strings(bothFree)
-	assert.Equal(t, []string{
-		"godie-i004", // 至尊魔戒
-		"godie-i00z", // 四魂之玉
-		"godie-i01n", // 天堂之劍
-		"godie-i01s", // 仙后座
-		"godie-i06j", // 獸人船長十字鎬
-		"godie-i06n", // 老衲的棒子
-	}, bothFree, "the DRAFT∩LEGENDARY overlap is owner's 2026-08-01 list, exactly")
 
-	// The served bundle is a SET (`StarterSet` runs the concat through `union`),
-	// so the overlap collapses exactly once each. This used to read
-	// `len(shop)+len(services)+len(legendary)+len(draft)` and was the assertion
-	// that caught the duplicates in the first place.
-	require.Len(t, set.Items, len(shop)+len(services)+len(legendary)+len(draft)-len(bothFree),
-		"the served bundle is SHOP + SERVICES + LEGENDARY + DRAFT deduped — an unlisted id on two "+
+	// ⭐ 2026-08-18 the surfaces are a PARTITION again. FREE∩FREE used to be a
+	// pinned 6-id overlap because the same 任務道具 sat on both the DRAFT and the
+	// 棱彩 surface; owner retired the 任務道具 label 「在競技場新玩法則完全不考慮這個
+	// 標籤」, so there is no second free surface to overlap with any more.
+	require.Len(t, set.Items, len(shop)+len(services)+len(legendary),
+		"the served bundle is SHOP + SERVICES + WEAPONS deduped — an unlisted id on two "+
 			"surfaces would be silently swallowed here")
 
 	// S1–S5 — every SHOP item is a FINAL crafted weapon (owner rule 1, task
@@ -406,18 +391,25 @@ func TestStarterSetMatchesContentTree(t *testing.T) {
 		assert.Equalf(t, want, item.Cost, "SV2: service %q costs %dg, expected %dg", id, item.Cost, want)
 	}
 
-	// L1–L3 — the legendary pool. L3 is the user's rule made mechanical.
+	// L1–L4 — the weapon-pool surface. L3 is the user's rule made mechanical.
 	for _, id := range legendary {
 		item := readJSON[itemDoc](t, filepath.Join(root, "items", id+".json"))
-		assert.NotEqualf(t, id, item.Name, "L1: legendary %q has no display name", id)
+		assert.NotEqualf(t, id, item.Name, "L1: 寶具 %q has no display name", id)
 		assert.Truef(t, item.hasEffect(),
-			"L2: legendary %q has no modifier and no passive — the card would grant NOTHING", id)
+			"L2: 寶具 %q has no modifier and no passive — the card would grant NOTHING", id)
 		assert.Zerof(t, item.Cost,
-			"L3: legendary %q carries a price of %dg. 「傳說的武器道具，只能隨機三選一」 — a legendary "+
-				"is reachable only through the round-5 card or the 2400g 傳說寶玉, never by paying "+
+			"L3: 寶具 %q carries a price of %dg. 「傳說的武器道具，只能隨機三選一」 — a 寶具 "+
+				"is reachable only through the free weapon card or the 2400g 傳說寶玉, never by paying "+
 				"for the item itself", id, item.Cost)
+		// ⭐ The surviving half of the retired D4: no 四魂之玉 shard may be offered.
+		// In a game with no combining, an item named "shard OF the jewel" next to
+		// the completed jewel is the surest way to send a player hunting for a
+		// crafting UI that does not exist.
+		assert.NotContainsf(t, item.Name, "四魂之玉的碎片",
+			"L4: %q (%s) is a 四魂之玉 shard — shards are never offered, only the assembled jewel is",
+			id, item.Name)
 		assert.Emptyf(t, item.insaneModifiers(),
-			"legendary %q carries impossible values %v", id, item.insaneModifiers())
+			"寶具 %q carries impossible values %v", id, item.insaneModifiers())
 	}
 
 	// The stat path must be REACHABLE, and only just: 20 ticks at 375g is
@@ -431,74 +423,44 @@ func TestStarterSetMatchesContentTree(t *testing.T) {
 		"20 stat ticks cost only %dg of a %dg match — the stat path is supposed to cost you the "+
 			"WHOLE match, not leave room to also buy items", tickCost*20, matchGoldCeiling)
 
-	// D1–D5 — every DRAFT item is a named, FREE, effective QUEST reward (owner
-	// rule 2, task #70). D5 is the structural gate: the draft is the set of
-	// `craftRole == "quest"` items, recovered from the source-map quest triggers
-	// — so nothing that is not a quest item can appear here, which is the half
-	// of the owner's rule 「不要放這些任務道具以外的東西」 most likely to be dropped.
-	// (D4, "no 四魂之玉 shards", is a policy call asserted separately below.)
-	for _, id := range draft {
-		item := readJSON[itemDoc](t, filepath.Join(root, "items", id+".json"))
-		assert.NotEqualf(t, id, item.Name, "D1: draft item %q has no display name", id)
-		assert.Zerof(t, item.Cost, "D2: draft item %q costs %dg — a draft reward is free", id, item.Cost)
-		// D3 is DELIBERATELY NOT an effect gate here (unlike the shop's S3).
-		// 仙后座/戰旗/復仇之袍/惡魔吉他 are quest items the owner named or implied,
-		// but their whole payload is an active/aura ability item@1 cannot express
-		// yet (blocked on #56), so they carry no modifiers. Owner rule 2 is
-		// 「所有任務道具」 — ALL quest items — so they belong in the draft anyway;
-		// dropping them for lacking ported stats is how 仙后座 went missing before.
-		assert.Emptyf(t, item.insaneModifiers(),
-			"draft item %q carries impossible values %v", id, item.insaneModifiers())
-		assert.NotContainsf(t, item.Name, "四魂之玉的碎片",
-			"D4: %q (%s) is a 四魂之玉 shard — shards are dropped, only the assembled jewel is drafted",
-			id, item.Name)
-		assert.Equalf(t, "quest", item.CraftRole,
-			"D5: draft item %q has craftRole %q, not \"quest\" — 「隨機三選一…不要放這些任務道具以外的"+
-				"東西」. The draft is EXACTLY the quest set from the source-map triggers.", id, item.CraftRole)
-	}
+	// ⚠️ D1–D5 (the 任務道具 draft gates) WERE HERE. owner 2026-08-18 retired the
+	// label —「在競技場新玩法**則完全不考慮這個標籤**」— and the six items moved into
+	// the tier tables, where L1–L4 below already hold them to a stricter bar
+	// (D3 was deliberately NOT an effect gate; L2 is). ⭐ The one clause that
+	// outlived the surface is D4「no 四魂之玉 shards」, re-stated over the pools below.
 
-	// LOOT CLOSURE, both tables. MatchController filters a weapon offer to the
-	// whitelist and SKIPS the grant when nothing survives, so an under-seeded
-	// bundle makes the round-2/round-5 cards silently give the player nothing.
-	// quest-rewards is the round-2 table and must be the draft surface exactly;
-	// legendary-weapons is the round-5 table.
-	quest := readJSON[lootTable](t, filepath.Join(root, "loot-tables", "quest-rewards.json"))
-	questIDs := make([]string, 0, len(quest.Entries))
-	for _, e := range quest.Entries {
-		questIDs = append(questIDs, e.ItemID)
-	}
-	sort.Strings(questIDs)
-	wantDraft := append([]string(nil), draft...)
-	sort.Strings(wantDraft)
-	assert.Equalf(t, wantDraft, questIDs,
-		"content/loot-tables/quest-rewards.json and the bundle's draft surface have drifted apart")
-
-	// Same closure for the legendary table: it is BOTH the round-5 card's pool
-	// and the 傳說寶玉's pool, so a drift here would sell a 2400g token that
-	// rolls from a table the whitelist does not match.
-	legend := readJSON[lootTable](t, filepath.Join(root, "loot-tables", "legendary-weapons.json"))
-	legendIDs := make([]string, 0, len(legend.Entries))
-	for _, e := range legend.Entries {
-		legendIDs = append(legendIDs, e.ItemID)
-	}
-	sort.Strings(legendIDs)
-	wantLegendary := append([]string(nil), legendary...)
-	sort.Strings(wantLegendary)
-	assert.Equalf(t, wantLegendary, legendIDs,
-		"content/loot-tables/legendary-weapons.json and the bundle's legendary surface have drifted apart")
-
-	for _, table := range []string{"quest-rewards", "legendary-weapons"} {
+	// ═══════════════════════════════════════════════════════════════════════
+	// LOOT CLOSURE — the whitelist ⟷ the THREE tier tables, BOTH directions
+	// ═══════════════════════════════════════════════════════════════════════
+	// MatchController filters a weapon offer to the whitelist and rolls BEFORE it
+	// filters, so an id in a pool but not on the whitelist eats a card slot in
+	// silence, and a whole pool of unlisted ids deals a seat NOTHING while
+	// `offerCount` still reads 3. Measured 2026-08-18 before this was widened:
+	// 22 of ex-release-weapons' entries were unlisted and nothing warned.
+	//
+	// ⭐ DERIVED, NOT PINNED: the expectation is the union of the files, read at
+	// test time. Moving a 寶具 between tiers therefore needs NO edit here — only
+	// adding or removing one does, which is exactly the change worth a red test.
+	poolIDs := []string{}
+	for _, table := range weaponPoolTables {
 		loot := readJSON[lootTable](t, filepath.Join(root, "loot-tables", table+".json"))
-		enabled := 0
+		require.NotEmptyf(t, loot.Entries, "content/loot-tables/%s.json is empty — that tier deals nothing", table)
 		for _, e := range loot.Entries {
-			if _, ok := itemSet[e.ItemID]; ok {
-				enabled++
-			}
+			poolIDs = append(poolIDs, e.ItemID)
 		}
-		assert.Positivef(t, enabled,
-			"no %s entry is enabled — that weapon-draft round would silently grant nothing (%d entries in the table)",
-			table, len(loot.Entries))
 	}
+	sort.Strings(poolIDs)
+	// A 寶具 belongs to EXACTLY ONE pool (owner 2026-08-18 「請將所有寶具回歸到所屬
+	// 池子」). Before that edit 5 items sat in two pools and could be rolled twice.
+	for i := 1; i < len(poolIDs); i++ {
+		assert.NotEqualf(t, poolIDs[i-1], poolIDs[i],
+			"%q is in TWO tier tables — a 寶具 belongs to exactly one pool, or it is rolled twice", poolIDs[i])
+	}
+	wantWeapons := append([]string(nil), legendary...)
+	sort.Strings(wantWeapons)
+	assert.Equalf(t, wantWeapons, poolIDs,
+		"the three loot tables and the bundle's weapon surface have drifted apart — "+
+			"an id here that is not whitelisted is silently never offered")
 }
 
 // allItemDocs reads every shippable content/items/*.json (skipping the _index
@@ -536,18 +498,22 @@ func TestStarterShopIsFinalWeapons(t *testing.T) {
 		shop[id] = struct{}{}
 	}
 
-	// The 棱彩 pool CLAIMS a final away from the shelf. owner 2026-08-01 put 18
-	// effective finals into content/loot-tables/legendary-weapons.json and zeroed
-	// their price in the same edit, so rule 1 (「最終合成武器…可直接購買」) and
-	// 「傳說＝三選一專屬」 point the same way for those 18: they are drafted, not
-	// sold. Read from the shipped loot table so moving an item between the two
-	// surfaces needs no edit here — an exclusion LIST would rot on the next move.
-	table := readJSON[lootTable](t, filepath.Join(contentRoot(), "loot-tables", "legendary-weapons.json"))
+	// A weapon pool CLAIMS a final away from the shelf: owner moved the effective
+	// finals into the pools and zeroed their price in the same edit, so rule 1
+	// (「最終合成武器…可直接購買」) and 「傳說＝三選一專屬」 point the same way for them —
+	// they are drafted, not sold. Read from the shipped loot tables so moving an
+	// item between surfaces needs no edit here — an exclusion LIST would rot on
+	// the next move.
+	// ⚠️ 2026-08-18: ALL THREE tables, not just legendary-weapons. Reading one of
+	// three would let a 寶具 promoted to [EX解放] quietly become shop-eligible again.
 	legendary := map[string]struct{}{}
-	for _, e := range table.Entries {
-		legendary[e.ItemID] = struct{}{}
+	for _, name := range weaponPoolTables {
+		table := readJSON[lootTable](t, filepath.Join(contentRoot(), "loot-tables", name+".json"))
+		for _, e := range table.Entries {
+			legendary[e.ItemID] = struct{}{}
+		}
 	}
-	require.NotEmpty(t, legendary, "the 棱彩 pool is empty — the exclusion below would be vacuous")
+	require.NotEmpty(t, legendary, "the weapon pools are empty — the exclusion below would be vacuous")
 
 	// EXCLUSION: nothing on the shelf may be anything but a final crafted weapon,
 	// and nothing on the shelf may be a 棱彩 entry.
@@ -559,7 +525,7 @@ func TestStarterShopIsFinalWeapons(t *testing.T) {
 			id, d.Name, d.CraftRole)
 		_, drafted := legendary[id]
 		assert.Falsef(t, drafted,
-			"shop item %q (%s) is also in content/loot-tables/legendary-weapons.json — "+
+			"shop item %q (%s) is also in one of the weapon tier tables — "+
 				"「傳說的武器道具，只能隨機三選一」. It carries cost 0 now, so listing it is a dead "+
 				"0g button on the shelf the moment 武器貨架 (#261) reopens.", id, d.Name)
 	}
@@ -581,52 +547,13 @@ func TestStarterShopIsFinalWeapons(t *testing.T) {
 	}
 }
 
-// TestStarterDraftIsQuestSet — THE guard the owner asked for, draft half. It
-// fails if a non-quest item reaches the 3-choose-1 OR a quest item is missing
-// from it. The EXCLUSION half is 「不要放這些任務道具以外的東西」; the INCLUSION
-// half is 「所有任務道具」. Both are checked against the craftRole marker AND the
-// loot table the running match actually rolls, so the guard covers the whitelist
-// bundle and content/loot-tables/quest-rewards.json together.
-func TestStarterDraftIsQuestSet(t *testing.T) {
-	testkit.Cover(t, "whitelist-draft-quest-only")
-	docs := allItemDocs(t)
-
-	wantQuest := map[string]struct{}{}
-	for id, d := range docs {
-		if d.CraftRole == "quest" {
-			wantQuest[id] = struct{}{}
-		}
-	}
-	require.GreaterOrEqual(t, len(wantQuest), 6, "the content tree must carry the quest set")
-
-	check := func(surface string, ids []string) {
-		got := map[string]struct{}{}
-		for _, id := range ids {
-			got[id] = struct{}{}
-			assert.Equalf(t, "quest", docs[id].CraftRole,
-				"%s offers %q (%s), craftRole %q — 「不要放這些任務道具以外的東西」: only quest items "+
-					"may be drafted.", surface, id, docs[id].Name, docs[id].CraftRole)
-		}
-		for id, d := range docs {
-			if d.CraftRole != "quest" {
-				continue
-			}
-			_, ok := got[id]
-			assert.Truef(t, ok,
-				"%s is MISSING quest item %q (%s) — 「隨機三選一才能選到所有任務道具」 requires every "+
-					"quest item to be draftable.", surface, id, d.Name)
-		}
-	}
-
-	check("the draft whitelist surface", curation.StarterDraftItems())
-
-	table := readJSON[lootTable](t, filepath.Join(contentRoot(), "loot-tables", "quest-rewards.json"))
-	tableIDs := make([]string, 0, len(table.Entries))
-	for _, e := range table.Entries {
-		tableIDs = append(tableIDs, e.ItemID)
-	}
-	check("content/loot-tables/quest-rewards.json", tableIDs)
-}
+// ⚠️ TestStarterDraftIsQuestSet WAS HERE and is gone, 2026-08-18. It pinned the
+// DRAFT surface to the `craftRole == "quest"` marker and to
+// content/loot-tables/quest-rewards.json, both of which owner retired:
+// 「他有個舊標籤叫做任務道具，但在競技場新玩法**則完全不考慮這個標籤**」.
+// ⛔ Nothing was left unguarded: the six items are 寶具 in the tier tables now, and
+// TestStarterSetMatchesContentTree's LOOT CLOSURE pins those tables to the
+// whitelist in BOTH directions — a stricter bar than the D-gates were.
 
 // firstOpenRoster is the user's 49 hand-picked champions — the FIRST OPEN
 // ROSTER (對戰可選名單), one canonical id per requested name after dropping the

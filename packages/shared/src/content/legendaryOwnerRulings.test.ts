@@ -30,7 +30,7 @@
  * 百分比也要被兌現」的通用守衛。
  */
 import { describe, it, expect } from "vitest";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { zItemDoc, type ItemDoc } from "./schema/item";
@@ -211,16 +211,46 @@ describe("§BOUNDS HookDef.internalCooldown 兩端都有界", () => {
  *     資料是 `pctMaxMana 0.05` —— 數字對得上、讀法對不上,所以這條守衛是綠的
  *     而那個分歧是真的。列在這裡,不是被忽略,是被記錄。
  */
-const POOL_PATH = join(CONTENT_DIR, "loot-tables", "legendary-weapons.json");
+/**
+ * ⚠️ 2026-08-18（#356）：這裡本來只讀 `legendary-weapons.json`。EX 兩階上線之後
+ * 那張池從 49 縮到 29，帶魔力百分比的樣本掉到 3 支，於是下面的空轉哨兵（寫死的
+ * `>= 4`）用「這條守衛在空轉」的訊息紅了 —— 而真相是樣本搬到隔壁池去了。
+ * ⇒ 掃 `content/loot-tables/` 底下**每一張**池的聯集。⛔ 不抄檔名。
+ */
+function unionPoolIds(): string[] {
+  const out: string[] = [];
+  for (const f of readdirSync(join(CONTENT_DIR, "loot-tables"))) {
+    if (!f.endsWith(".json") || f === "_index.json") continue;
+    const doc = JSON.parse(readFileSync(join(CONTENT_DIR, "loot-tables", f), "utf-8")) as {
+      entries?: { itemId: string }[];
+    };
+    for (const e of doc.entries ?? []) out.push(e.itemId);
+  }
+  return [...new Set(out)].sort();
+}
 
-/** 一行機制行裡的每一個「魔力百分比」,以 0..1 表示。 */
+/**
+ * 一行機制行裡的每一個「魔力百分比」,以 0..1 表示。
+ *
+ * ⚠️ 2026-08-18（#356）：`%` 與「魔力」之間**允許一個限定詞**（最大／現存／目前）。
+ * 母體從單一 `legendary-weapons` 擴到三張池的聯集之後，這個缺口才浮出來 ——
+ * 「立即回復 50% **最大**魔力」（流星之戒）與「回復 25% **最大**魔力」（噬魂者）
+ * 都被舊的正則讀成「文案沒有講魔力」，於是資料側那一半被回報成
+ * 「卡片上看不到的強度」。⛔ 那是**掃描器瞎了**，不是內容有缺陷 ——
+ * 而它報出來的訊息與真的缺陷長得一模一樣（第三守則：註解／訊息會說謊）。
+ */
 function manaPctInProse(description: string): Set<number> {
   const out = new Set<number>();
+  const QUALIFIER = "(?:最大|現存|目前)?";
   for (const raw of description.split("\n")) {
     const line = raw.replace(/％/g, "%").replace(/\s+/g, "");
     if (!/\[[^\]]+\]/.test(line)) continue; // 機制行才算 —— 數值行是 legendaryClaims 的地盤
-    for (const m of line.matchAll(/(?:MP|魔力)(\d+(?:\.\d+)?)%/g)) out.add(Number(m[1]) / 100);
-    for (const m of line.matchAll(/(\d+(?:\.\d+)?)%(?:MP|魔力)/g)) out.add(Number(m[1]) / 100);
+    for (const m of line.matchAll(new RegExp(`(?:MP|魔力)(\\d+(?:\\.\\d+)?)%`, "g"))) {
+      out.add(Number(m[1]) / 100);
+    }
+    for (const m of line.matchAll(new RegExp(`(\\d+(?:\\.\\d+)?)%${QUALIFIER}(?:MP|魔力)`, "g"))) {
+      out.add(Number(m[1]) / 100);
+    }
   }
   return out;
 }
@@ -238,7 +268,14 @@ function manaPctInData(node: unknown, out: Set<number> = new Set()): Set<number>
       if (typeof o[k] === "number" && (o[k] as number) > 0) out.add(o[k] as number);
     }
   }
-  if (o["kind"] === "restore" && typeof o["manaPct"] === "number" && (o["manaPct"] as number) > 0) {
+  // ⚠️ 2026-08-18（#356）：`revive` 也付魔力（再誕之淚珠「以 100%生命、100%魔力復活」）。
+  // 它在 2026-08-18 才第一次被內容採用，而這支讀取器只認得 `restore` ——
+  // 於是文案講的 100% 被回報成「資料付不出來」。⛔ 掃描器的盲點，不是內容缺陷。
+  if (
+    (o["kind"] === "restore" || o["kind"] === "revive") &&
+    typeof o["manaPct"] === "number" &&
+    (o["manaPct"] as number) > 0
+  ) {
     out.add(o["manaPct"] as number);
   }
   const rp = o["resourcePct"] as { resource?: string; perRank?: number[] } | undefined;
@@ -254,9 +291,7 @@ function manaPctInData(node: unknown, out: Set<number> = new Set()): Set<number>
 }
 
 describe("§D 機制行承諾的魔力百分比,資料真的付得出來", () => {
-  const poolIds = (
-    JSON.parse(readFileSync(POOL_PATH, "utf-8")) as { entries: { itemId: string }[] }
-  ).entries.map((e) => e.itemId);
+  const poolIds = unionPoolIds();
 
   it("每一支的「文案的魔力 %」與「資料的魔力 %」是同一個集合", () => {
     const broken: string[] = [];
@@ -287,7 +322,17 @@ describe("§D 機制行承諾的魔力百分比,資料真的付得出來", () =>
     }
     expect(broken, "傳說的機制行講了一個數字,資料沒有付").toEqual([]);
     // 一個什麼都沒掃到的掃描器是綠的,而且會一直綠下去(失敗形態 ③)。
-    expect(exercised, "池子裡沒有任何一支帶魔力百分比 —— 這條守衛在空轉").toBeGreaterThanOrEqual(4);
+    //
+    // ⚠️ 2026-08-18：這裡本來寫死 `>= 4`,而那是一個**出貨策展的計數**住在測試裡
+    //    (第二守則的「第四個住處」)。EX 兩階把 49 支拆成三張池之後,單張池裡帶
+    //    魔力百分比的樣本剩 3 支 —— 於是它用「這條守衛在空轉」這句**假話**紅了,
+    //    真相只是樣本搬去隔壁池。⛔ 改成 `>= 3` 只是把同一個錯誤再犯一次。
+    // ⭐ 真正防空轉的是下面那條「活體樣本」:它把同一組讀取器對著一份改壞的文件
+    //    跑,證明它們**真的會紅**。所以這裡只需要問「迴圈有沒有跑到東西」。
+    expect(poolIds.length, "一張獎池都讀不到 —— 這條守衛在空轉").toBeGreaterThan(0);
+    expect(exercised, "整個獎池聯集裡沒有任何一支帶魔力百分比 —— 這條守衛在空轉").toBeGreaterThan(
+      0,
+    );
   });
 
   it("熾天使之弓 是這條守衛的活體樣本:把資料改回 5% 會被抓到", () => {

@@ -1,22 +1,22 @@
 {
   "schema": "ggd-editor-target-profile@1",
-  "generatedAt": "2026-08-17T18:56:14.787Z",
+  "generatedAt": "2026-08-17T21:17:39.451Z",
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_ec6a1028850d",
+    "contentVersion": "cv_f0447d80c8e8",
     "collections": {
       "champions": {
-        "hash": "fd3e966af6a8",
+        "hash": "819899091d3a",
         "count": 78
       },
       "abilities": {
-        "hash": "899d4017dc62",
+        "hash": "1c98aa900c7c",
         "count": 461
       },
       "items": {
-        "hash": "359c9a3e735d",
-        "count": 138
+        "hash": "4fc647e3f0bc",
+        "count": 127
       },
       "augments": {
         "hash": "3fac6ff2c5ef",
@@ -27,12 +27,12 @@
         "count": 20
       },
       "status-effects": {
-        "hash": "6565a0cff1df",
-        "count": 30
+        "hash": "e9936d7778a9",
+        "count": 34
       },
       "loot-tables": {
-        "hash": "a0971377c045",
-        "count": 4
+        "hash": "0e120c98676e",
+        "count": 3
       },
       "arenas": {
         "hash": "87ba7aa4c2e9",
@@ -43,7 +43,7 @@
         "count": 7
       },
       "config": {
-        "hash": "4d9df7c6bb39",
+        "hash": "b18ce94ad66b",
         "count": 62
       },
       "models": {
@@ -2115,7 +2115,7 @@
       "danglingKeys": []
     },
     "item": {
-      "count": 138,
+      "count": 127,
       "craftRoles": [
         "component",
         "final",
@@ -2129,7 +2129,6 @@
         "ap",
         "attack-damage",
         "attack-speed",
-        "boots",
         "burst",
         "cleave",
         "cooldown",
@@ -2191,57 +2190,37 @@
       ]
     },
     "legendaryWeapons": {
-      "poolSize": 49,
+      "poolSize": 29,
       "itemIds": [
-        "bulwark-charge-greaves",
         "cleaver-of-the-warden",
-        "endless-edge",
         "godie-i000",
-        "godie-i004",
-        "godie-i006",
         "godie-i007",
-        "godie-i00f",
         "godie-i00i",
         "godie-i00j",
-        "godie-i00l",
         "godie-i00s",
         "godie-i00u",
         "godie-i00z",
         "godie-i012",
         "godie-i013",
-        "godie-i014",
-        "godie-i016",
         "godie-i018",
-        "godie-i01d",
         "godie-i01g",
         "godie-i01i",
         "godie-i01n",
-        "godie-i01s",
-        "godie-i01v",
         "godie-i01w",
         "godie-i020",
         "godie-i027",
-        "godie-i02d",
         "godie-i02e",
-        "godie-i031",
         "godie-i039",
-        "godie-i03f",
         "godie-i03h",
         "godie-i03m",
         "godie-i04d",
-        "godie-i060",
         "godie-i061",
-        "godie-i067",
         "godie-i06a",
         "godie-i06d",
         "godie-i06e",
-        "godie-i06f",
-        "godie-i06g",
-        "godie-i06i",
         "godie-i06j",
         "godie-i06n",
-        "godie-i06o",
-        "godie-i06q"
+        "godie-i06o"
       ],
       "missingItemIds": []
     },
@@ -2843,9 +2822,9 @@
   },
   "curation": {
     "championDigest": "d165b9ca5d21",
-    "itemDigest": "bffffd8cab7f",
+    "itemDigest": "7cc9fbfd9eff",
     "championCount": 49,
-    "itemCount": 91,
+    "itemCount": 110,
     "liveEndpoint": "/api/v1/curation/whitelist"
   },
   "assetManifestDigest": "7fbde8f54414",
@@ -2859,5 +2838,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "a4925e809fd2"
+  "profileDigest": "42e480132439"
 }

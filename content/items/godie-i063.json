@@ -4,7 +4,7 @@
   "name": "防狼電擊棒",
   "icon": "assets/icons/items/godie-i063.webp",
   "description": "施展需求魔力：75點\n技能冷卻時間：25秒\n效能\n魔力+185\n魔力回復速度+16.8%\n防狼電擊，傷害275，最多4人\n\n解說\n近距離電擊圖謀不軌的壞人，根據電弧效應在旁邊以及後方的敵人也會受到波及。",
-  "cost": 300,
+  "cost": 0,
   "tier": 1,
   "modifiers": [
     {
@@ -40,5 +40,5 @@
     "wc3-import"
   ],
   "craftRole": "none",
-  "authoringNote": "⚠️ 2026-08-18：這件道具原本 `cost: 0` **而且不在任何 loot table 裡** —— 出貨慣例是「cost 0 ＝ 不上架賣、只從獎池掉」，所以它兩條路都沒有，**玩家永遠拿不到**（失敗形態②：做了但從沒送到玩家手上）。\n⭐ 它是 tier 1 的 wc3-import 一般道具（不是寶具），所以正解是上架而不是進獎池。價格 300 取自**同階已上架道具的眾數**，⛔ 不是我編的數字 —— #82 的三階統一價下，tier 1 的出貨價就是這個。\n守衛：`packages/shared/src/content/noOpModifierClaims.test.ts` 的「沒有任何 cost:0 的寶具是任何獎池都抽不到的」，突變驗過。"
+  "authoringNote": "⚠️ **2026-08-18：`cost` 0 → 300 → 退回 0（同一天內兩次改動，結論是退回）。**\n\n【當初為什麼改成 300】新守衛 `packages/shared/src/content/noOpModifierClaims.test.ts` 的「沒有任何 cost:0 的寶具是任何獎池都抽不到的」點名了它：出貨慣例 `cost: 0` ＝「不上架賣、只從獎池掉」，而它不在任何 loot table 裡 → 兩條取得路徑都沒有。當時判斷「它是 tier 1 的 wc3-import 一般道具，正解是上架」，於是定價 300 並宣告「上架了」。\n\n【為什麼那是錯的 —— 它**根本沒上架**】\n· #261 已經把武器道具**整批下架**：商店只留「能力屬性強化」與「傳說寶玉」。\n· 購買閘（`packages/shared/src/sim/economy/shop.ts`）只放行 `craftRole === final`（或在傳說池裡），而它是 `craftRole: none` → **定了價也永遠不會出現在商店**。\n· 它仍然不在任何獎池。\n⇒ 於是它從「拿不到」變成「**拿不到，而且守衛看不見它**」—— 那條守衛第一行就是 `if (doc.cost !== 0) continue`，改成 300 等於把警報關掉。⛔ **一個把問題藏起來的修法比不修更糟**（失敗形態②的變體）。\n\n【現在的狀態，明講】它**仍然拿不到**，而那是 **owner 的策展決定（#261）**，⛔ 不是缺陷、⛔ 也不是我可以自己補一條取得路徑的東西：三個 draft 池依設計全部關閉（`legendary-weapons` 策展定死 49、`quest-rewards` 宣告退場凍結、`ex-release-weapons` 是 tier-5 [EX解放] 專用）。所以 `cost: 0` 是**誠實**的狀態 —— 它就是不賣。\n⚠️ 因為 cost 回到 0，那條守衛會重新點名它。正解是在它的 `CURATION_PENDING` 給一格**具名豁免**（⛔ 不是放寬守衛），理由寫「#261 武器道具整批下架中，取得路徑是策展決定」。\n\n【等 owner 決定的一題】#261 的下架什麼時候結束、結束時這一批 wc3-import 一般道具（⛔ 不只這一件）怎麼回到貨架。\n\n【資料一個數字都沒動】魔力+185 / 魔力回復+16.8% / passive onBasicAttack（damageArea 275 magic、maxTargets 4、internalCooldown 25）。\n⚠️ 另外記一筆給 owner（⛔ 這一輪沒有改描述）：卡面前兩行寫「施展需求魔力：75點／技能冷卻時間：25秒」，但實作是**普攻觸發的被動**，⛔ 不耗魔、⛔ 沒有主動施放 —— 「75點魔力」那一句在出貨設定下不會發生（第一·五守則）。冷卻 25 秒對得上 internalCooldown。修法二選一由 owner 決定：把它做成主動技（改資料），或把那兩行改成「[普攻觸發] 冷卻 25 秒」（改文案）。"
 }

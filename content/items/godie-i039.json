@@ -23,6 +23,7 @@
     ],
     "book": "godie-i03a"
   },
+  "authoringNote": "⭐ 2026-08-18 逐句稽核（第一·五守則「不放任何無效說明」）：**兩句效能都對得上，資料與描述一個字都沒改**，這一輪只補上本來缺席的這份備註。\n\n[普通攻擊時]「3%機率造成敵方 20%生命傷害」= passive[0]。「普通攻擊時」= on:\"onBasicAttack\"；「3%機率」= chance 0.03；「敵方 20%生命傷害」= `damage.hpPct {basis:\"current\", perRank:[0.2]}`。\n· ⭐ **為什麼是 hpPct 而不是 ratios**：`Scaling.ratios` 讀的是**施法者**的屬性，而這一句講的是**受害者**身上的一塊肉（見 sim/effects/effect.ts 的 hpPct 說明）。`amount: {}` 是刻意的空 —— 這一發的傷害**全部**來自那 20%，沒有任何固定值。\n· ⚠️ `basis` 是**文案沒有給**的一格決策：「20%生命」可以讀成現有生命或最大生命，這裡選 `current`（比較保守的那一個 —— 對殘血的人是收尾、對滿血的人才是重擊）。0.2 也在 `HP_PCT_DAMAGE_MAX`(0.35) 之內。要改成 `max` 就改這一個字，⛔ 沒有自己動平衡。\n· damageType physical 是第二個**文案沒有給**的值：這是一把匕首的一刀，走物理讓它吃護甲，與同族的死之王的意志（斬殺走 true）刻意不同。\n\n[閃避]「閃避 + 10%」= modifiers 的 evasion **flat 0.1**。⛔ 刻意是 flat 不是 pctAdd/pctMult：`evasion` 是**加成型**屬性，出貨每一位英雄的 base 都是 **0**，而管線 `(base+Σflat)×(1+ΣpctAdd)×Π(1+pctMult)` 在 base=0 時對百分比類的 op **逐位元等於零**（第一·五守則量到的四個陷阱之一）—— 只有 flat 動得了它。0.1 也在 `STAT_CLAMPS.Evasion` 的 [0, 0.8] 之內。\n⚠️ `evasion` 只對**普通攻擊**生效（sim/combat/evasion.ts，WC3 Evasion 的保真模型），技能傷害不受影響 —— 卡面寫「閃避」沒有承諾技能，所以不算無效說明，但下一個改這件裝的人要知道。\n\n✅ 反向對帳（JSON → 描述）：modifiers 一條、passive 一條，沒有 auras、沒有 sets、沒有 requires 閘。recipe / craftRole 是取得方式不是效果，照慣例不上卡面。",
   "passive": [
     {
       "on": "onBasicAttack",

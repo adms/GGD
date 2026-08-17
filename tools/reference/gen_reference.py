@@ -52,7 +52,10 @@ SCRIPT = "tools/reference/gen_reference.py"
 
 # The two prices a weapon may carry — packages/shared/src/sim/economy/itemTiers.ts:43-46.
 TIER_PRICE = {"SIMPLE": 300, "POWERFUL": 1200}
-LEGENDARY_POOL_TABLE = "legendary-weapons"
+# ⭐ owner 2026-08-18 把上架寶具切成三階：EX / [EX解放] / [EX∅ 根源]。
+# ⛔ 列的是**檔名**，成員一律從磁碟讀 —— 搬一件寶具換階不必動這支腳本。
+WEAPON_POOL_TABLES = ["legendary-weapons", "ex-release-weapons", "ex-origin-weapons"]
+LEGENDARY_POOL_TABLE = WEAPON_POOL_TABLES[0]
 # The two shop SERVICES: real item docs that never occupy an inventory slot.
 SERVICE_IDS = {"stat-attunement", "legendary-orb"}
 
@@ -80,9 +83,10 @@ NO_PASSIVE_REASON = {
     "godie-ogld": "有 `72-01..04` 與 `72-002`，但地圖裡不存在 `72-00`",
 }
 
-# The 3-choose-1 draft pool: exactly the `quest` items. `仙后座` resolves to
-# godie-i01s here. Table lives at content/loot-tables/quest-rewards.json.
-QUEST_POOL_TABLE = "quest-rewards"
+# ⚠️ QUEST_POOL_TABLE（`quest-rewards`）沒有了：owner 2026-08-18 把整張表搬進
+# `content/_legacy/loot-tables/` ——「任務道具」的標籤在競技場新玩法完全不考慮，
+# 那 6 件現在是三階寶具池裡的普通寶具。`craftRole:"quest"` 這個**標記**還在道具文件上
+# （它是 w3x 匯入的來源紀錄），所以下面第 3 節照樣列得出來，只是它不再是一個「面」。
 
 # Reader-facing labels for the `craftRole` marker recovered from the source-map
 # triggers (packages/shared/src/sim/content/defs.ts is the vocabulary, task #70).
@@ -660,8 +664,8 @@ def gen_items(ctx):
             f"**{len(inert)} 件 `final` 沒有 payload**（雷神之鎚／黑色魔書…）：item@1 目前只能存 "
             "`modifiers` / `passive`，它們的主動效果 schema 還裝不下（卡在 #56），所以留在 "
             "`final` 分類但不上架，避免變成花 1200g 的空按鈕。",
-            f"**三選一 draft 抽的是 {len(quest)} 件 `quest` 道具**"
-            f"（`content/loot-tables/{QUEST_POOL_TABLE}.json`；`仙后座` = `godie-i01s`）。"
+            f"**帶著 `quest` 舊標記的有 {len(quest)} 件**"
+            "（owner 2026-08-18：這個標籤在競技場新玩法**完全不考慮**，它們現在照樣住在三階寶具池裡）。"
             "只有兩種商店價格：簡易 **300g**、強力 **1200g**"
             "（`packages/shared/src/sim/economy/itemTiers.ts:43-46`）。",
             "`tier` 欄是 doc 上的 1..5 分級，那是 w3x 匯入的遺留欄位，**與 craftRole 無關**。",
@@ -687,11 +691,13 @@ def gen_items(ctx):
     section("2", "商店服務 services",
             "真的是 `item@1` 文件，但 `buyItem` 在進背包路徑前就以 id 攔截它們：不佔格、可重複買"
             "（傳說寶玉 2400g／能力屬性強化 375g）。", services)
-    section("3", "三選一 draft — quest（三選一 augment/武器卡）",
-            f"每回合三選一 draft 從這 {len(quest)} 件抽 3 張。買不到，只能抽到。", quest)
-    section("4", "傳說池 legendary pool",
-            f"`content/loot-tables/{LEGENDARY_POOL_TABLE}.json`，等權重抽取。買不到，"
-            "只能從武器三選一或 2400g 傳說寶玉取得。", legend)
+    section("3", "舊標記 quest（⚠️ 已不是一個取得面）",
+            f"這 {len(quest)} 件帶著 w3x 匯入留下的 `craftRole:\"quest\"` 標記。"
+            "owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新玩法**則完全不考慮這個標籤**」"
+            "—— 它們的取得路徑跟其他寶具一樣，就是三階寶具池。", quest)
+    section("4", "寶具池 weapon pools（三階）",
+            "三張表等權重抽取（`" + "` · `".join(WEAPON_POOL_TABLES) + "`）。買不到，"
+            "只能從寶具三選一或 2400g 傳說寶玉取得。⭐ 一件寶具**只屬於一個池**。", legend)
     section("5", "final 但無 payload（暫不上架）",
             "分類是最終合成，但沒有 `modifiers`／`passive`，主動效果 schema 還裝不下（#56），"
             "所以商店拒賣。", inert)
@@ -724,11 +730,13 @@ def build_context():
     items = load_collection("items")
     retired_items = load_legacy_items()
 
-    pool_doc = load_json(os.path.join(CONTENT, "loot-tables", f"{LEGENDARY_POOL_TABLE}.json"), {})
-    legendary_pool = {e["itemId"] for e in (pool_doc.get("entries") or []) if e.get("itemId")}
+    legendary_pool = set()
+    for _t in WEAPON_POOL_TABLES:
+        _doc = load_json(os.path.join(CONTENT, "loot-tables", f"{_t}.json"), {})
+        legendary_pool |= {e["itemId"] for e in (_doc.get("entries") or []) if e.get("itemId")}
 
-    quest_doc = load_json(os.path.join(CONTENT, "loot-tables", f"{QUEST_POOL_TABLE}.json"), {})
-    quest_pool = [e["itemId"] for e in (quest_doc.get("entries") or []) if e.get("itemId")]
+    # 舊的 `quest-rewards` 表不存在了；`quest` 現在只是道具文件上的一個標記。
+    quest_pool = []
 
     wl = load_json(WHITELIST)
     if wl is None:

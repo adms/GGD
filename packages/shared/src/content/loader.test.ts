@@ -69,7 +69,14 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
     // ⛔ 不是「剛好幾張」。上面那行 `arrayContaining` 才是骨架集合的守衛。
     expect(Augments.ids().length).toBeGreaterThanOrEqual(31);
     expect(Projectiles.ids().length).toBeGreaterThanOrEqual(2);
-    expect(LootTables.get("round-reward").entries).toHaveLength(4);
+    // ⚠️ 2026-08-18（#356）：這一行本來讀 `round-reward`，而那張表已經退場搬進
+    //    `content/_legacy/loot-tables/`（見 retiredLootTables.test.ts）。這一條要守的
+    //    是「loot-tables 這個集合真的被註冊進來了」，⛔ 不是某一張表叫什麼名字 ——
+    //    所以改成從登錄表推導：至少有一張，而且沒有一張是空的（空表 = 靜默不發卡）。
+    expect(LootTables.ids().length).toBeGreaterThan(0);
+    for (const id of LootTables.ids()) {
+      expect(LootTables.get(id).entries.length, `loot-table ${id} 是空的`).toBeGreaterThan(0);
+    }
 
     // content registries (new collections)
     expect(Arenas.get("arena.skeleton").zones).toHaveLength(2);
@@ -160,9 +167,17 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
       "paralysis",
       "rage",
       "root",
+      // ⭐ 2026-08-18（#356）：`slowLabelMatchesMultiplier` 這條守衛要求
+      //    `applyStatus` 的名字等於它真的做的減速，於是內容側把 20/35/50/60 這四段
+      //    真的存在的倍率補上身分文件。⛔ 它們不是新機制 —— 減速多少仍然住在施加它
+      //    的那支技能/道具的 `moveSpeedMult` 上，這四份只是**身分**。
+      "slow20",
       "slow25",
       "slow30",
+      "slow35",
       "slow40",
+      "slow50",
+      "slow60",
       "stun",
       // 2026-08-08 52-00【十二道試煉】重製：免死觸發時對 [周圍] 敵人的
       //   trial-stun  擊退 + 0.5 秒暈眩的 debuff（`marks[].lethal.aoeEffects`）
@@ -212,10 +227,18 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
   const NORMALIZED_BASE_KEYS = DEFAULT_STAT_NORMALIZATION.appliesTo.filter(
     (k) => DEFAULT_STAT_NORMALIZATION.channel[k] === "baseStats",
   );
+  // ⭐ `buildPriority` 是第三個被授權的分歧（2026-08-18 / #356）。
+  //    `sim/content/skeleton.ts` 是一份**自給自足**的離線夾具：它自己宣告
+  //    ember-rod / ironhide-vest / serrated-edge / swift-boots 四件道具與一張
+  //    round-reward 表，兩位骨架英雄的 buildPriority 指的就是它自己那四件。
+  //    出貨樹把那四件退場搬進 `content/_legacy/items/`，所以 `content/champions/*.json`
+  //    的 buildPriority 必須清空 —— 否則就是一個 dangling ref，載入器會擋。
+  //    ⛔ 反過來把骨架的那兩行也清掉是錯的：骨架是內容全毀時的 fail-open 註冊表，
+  //    它指的四件在它自己的宇宙裡都還在。⇒ 兩邊都對，只是不再相等。
   const stripCastTime = (v: unknown): Record<string, unknown> => {
     const out = JSON.parse(
       JSON.stringify(v, (k, val: unknown) =>
-        k === "castTimeSec" || k === "growth" ? undefined : val,
+        k === "castTimeSec" || k === "growth" || k === "buildPriority" ? undefined : val,
       ),
     ) as Record<string, unknown>;
     const base = out["baseStats"] as Record<string, unknown> | undefined;

@@ -39,6 +39,8 @@ import { join, dirname, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Stat } from "../sim/stats/statTypes";
 import { ModOp } from "../sim/stats/modifiers";
+import type { StatusEffect } from "../sim/components";
+import { zEffectDefUnion } from "./schema/effect";
 
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
 
@@ -73,6 +75,32 @@ interface Claim {
   why: string;
 }
 
+/** 這份文件裡有沒有一條**抬高移速上限**的 modifier。 */
+function raisesMoveSpeedCap(doc: unknown): boolean {
+  if (Array.isArray(doc)) return doc.some(raisesMoveSpeedCap);
+  if (doc === null || typeof doc !== "object") return false;
+  const o = doc as Record<string, unknown>;
+  if (o.stat === Stat.MoveSpeed && (o.op === ModOp.CapRaise || o.op === ModOp.CapRaisePct)) return true;
+  return Object.values(o).some(raisesMoveSpeedCap);
+}
+
+/**
+ * 這份文件裡有沒有一格**真的飛行授權**（`zFlightGrant`）。
+ *
+ * ⛔ 判準是「`flight` 這個鍵的值是一個**物件**」，⛔ 不是「檔案裡出現 flight 這個字」——
+ * 後者被 `tags: ["flight"]`、`authoringNote`、`description` 逐字滿足，而那三個
+ * 都不會讓任何人飛起來。授權面有四個（道具頂層 / 天生技 rank / 增益卡頂層 /
+ * `applyBuff` effect，見 `schema/effect.ts` 的 `SOURCE_GRANT_SHAPE`），所以遞迴找。
+ */
+function grantsFlight(doc: unknown): boolean {
+  if (Array.isArray(doc)) return doc.some(grantsFlight);
+  if (doc === null || typeof doc !== "object") return false;
+  const o = doc as Record<string, unknown>;
+  const g = o.flight;
+  if (g !== null && typeof g === "object" && !Array.isArray(g)) return true;
+  return Object.values(o).some(grantsFlight);
+}
+
 function walk(node: unknown, path: string, doc: string, raisable: Set<string>, out: Claim[]): void {
   if (Array.isArray(node)) {
     node.forEach((v, i) => walk(v, `${path}[${i}]`, doc, raisable, out));
@@ -103,6 +131,120 @@ function walk(node: unknown, path: string, doc: string, raisable: Set<string>, o
     }
   }
   for (const [k, v] of Object.entries(n)) walk(v, `${path}.${k}`, doc, raisable, out);
+}
+
+/**
+ * ⭐ 機制欄位的名字**從 `sim/components.ts` 的 `StatusEffect` 推導**（`keyof`）。
+ * ⛔ 這裡不可以是一串裸 string —— 哪天那個介面把 `moveSpeedMult` 改名，
+ * 這一行要在 tsc 就紅，⛔ 不是等到某一場比賽裡沒有人被減速。
+ */
+type MechField = keyof StatusEffect;
+const ANTIHEAL: readonly MechField[] = ["healingTakenMult", "lifestealMult", "regenMult"];
+/**
+ * 狀態文件的 **tag** ⇒ 這筆狀態要真的發生，`applyStatus` 上至少要有其中一格。
+ *
+ * ⚠️ 只收「除了這幾格之外**沒有別的表達方式**」的 tag。泛用的 `cc` / `disable`
+ * 不在這裡（理由見下面那條測試的檔頭：那一族的正解是隔壁的 effect）。
+ */
+const TAG_NEEDS: Readonly<Record<string, readonly MechField[]>> = {
+  stun: ["stun"],
+  root: ["root"],
+  immobilize: ["root"],
+  slow: ["moveSpeedMult"],
+  "move-speed-down": ["moveSpeedMult"],
+  antiheal: ANTIHEAL,
+  "heal-down": ANTIHEAL,
+  miss: ["missChance"],
+  "accuracy-down": ["missChance"],
+  flee: ["feared"],
+};
+
+/** 出貨的 Zod union 上 `applyStatus` 真的開了哪幾格。⛔ 不抄字面值。 */
+function applyStatusSchemaFields(): Set<string> {
+  const options = (zEffectDefUnion as unknown as { options: { shape?: Record<string, unknown> }[] })
+    .options;
+  const opt = options.find(
+    (o) => (o.shape?.kind as { _def?: { value?: unknown } } | undefined)?._def?.value === "applyStatus",
+  );
+  return new Set(Object.keys(opt?.shape ?? {}));
+}
+
+/** 每一份狀態文件宣告的 tags（＝內容側自己講的身分）。 */
+function statusTags(): Map<string, Set<string>> {
+  const out = new Map<string, Set<string>>();
+  for (const f of readdirSync(join(CONTENT, "status-effects"))) {
+    if (!f.endsWith(".json") || f === "_index.json") continue;
+    const d = JSON.parse(readFileSync(join(CONTENT, "status-effects", f), "utf8")) as {
+      id?: unknown;
+      tags?: unknown;
+    };
+    if (typeof d.id !== "string" || !Array.isArray(d.tags)) continue;
+    out.set(d.id, new Set(d.tags.filter((t): t is string => typeof t === "string")));
+  }
+  return out;
+}
+
+interface FakeStatus {
+  doc: string;
+  path: string;
+  statusId: string;
+  needs: string[];
+}
+
+/** `docs` 省略時掃出貨內容；給值時是夾具（掃描器自我驗證用）。 */
+function scanFakeStatuses(
+  tags: Map<string, Set<string>>,
+  docs?: readonly (readonly [string, unknown])[],
+): FakeStatus[] {
+  const out: FakeStatus[] = [];
+  const visit = (n: unknown, path: string, doc: string, siblings: readonly unknown[]): void => {
+    if (Array.isArray(n)) {
+      n.forEach((v, i) => visit(v, `${path}[${i}]`, doc, n));
+      return;
+    }
+    if (n === null || typeof n !== "object") return;
+    const o = n as Record<string, unknown>;
+    if (o.kind === "applyStatus" && typeof o.statusId === "string") {
+      const t = tags.get(o.statusId) ?? new Set<string>();
+      const needs = new Set<string>();
+      for (const [tag, fields] of Object.entries(TAG_NEEDS)) {
+        if (!t.has(tag)) continue;
+        // ⭐ 機制寫在**同一個 effects[] 裡的另一格**也算數（52-03【麻痺】那種寫法）。
+        const covered = [o, ...siblings].some(
+          (s) =>
+            s !== null &&
+            typeof s === "object" &&
+            fields.some((f) => (s as Record<string, unknown>)[f] !== undefined),
+        );
+        if (!covered) for (const f of fields) needs.add(f);
+      }
+      if (needs.size > 0) out.push({ doc, path, statusId: o.statusId, needs: [...needs].sort() });
+    }
+    for (const [k, v] of Object.entries(o)) visit(v, `${path}.${k}`, doc, siblings);
+  };
+  if (docs !== undefined) {
+    for (const [name, d] of docs) visit(d, "", name, []);
+    return out;
+  }
+  for (const coll of ["items", "abilities", "augments", "champions"]) {
+    let files: string[];
+    try {
+      files = readdirSync(join(CONTENT, coll));
+    } catch {
+      continue;
+    }
+    for (const f of files) {
+      if (!f.endsWith(".json") || f === "_index.json") continue;
+      let parsed: unknown;
+      try {
+        parsed = JSON.parse(readFileSync(join(CONTENT, coll, f), "utf8"));
+      } catch {
+        continue;
+      }
+      visit(parsed, "", `${coll}/${basename(f, ".json")}`, []);
+    }
+  }
+  return out;
 }
 
 function scan(): Claim[] {
@@ -241,6 +383,22 @@ describe("⛔ 卡片上不可以有「說了但不會發生」的字（owner 202
    *
    * ⇒ 把那個耦合寫成閘。⛔ 它紅了不要改閘：要嘛給那份文件 `flight`，
    * 要嘛把 `ms` 的 capRaise 拿掉。
+   *
+   * ── ⚠️ 2026-08-18：這一條在此之前是**字串比對**，所以它可以空轉 ──────────
+   * 它問的是 `raw.includes('"flight"')` —— 而 `"flight"` 這個字在一份 JSON 裡
+   * 出現的地方**不只有授權格**：`tags` 裡一個字、`authoringNote` / `description`
+   * 裡一句話，逐字都長成同一個樣子。實測：把 `odm-gear` 的**頂層 flight 授權格
+   * 整個刪掉**、`ms` 的 `capRaisePct` 一個字都不動 ⇒ 這條守衛**仍然是綠的**，
+   * 因為它的 `tags` 裡還留著 `"flight"`。
+   *
+   * 那正是它存在要擋的那個結果：移速抬到 24、而持有者**不會飛** ⇒ 偶爾穿牆。
+   * ⭐ 而「把 `ms.unlocked` 從 18 抬到 24」這件事的**唯一安全理由**就是這道耦合，
+   * 所以一道會空轉的閘等於那次抬高沒有任何依據。
+   *
+   * ⇒ 現在改成**結構檢查**：`flight` 必須是一格真的授權物件（`zFlightGrant`），
+   * ⛔ 不看 tags / authoringNote / description。授權面有四個（道具頂層、天生技
+   * rank、增益卡頂層、`applyBuff` effect —— 見 `schema/effect.ts` 的
+   * `SOURCE_GRANT_SHAPE`），所以它是**整份文件遞迴找一格物件**，不是只看頂層。
    */
   it("★ ⛔ 抬「移速上限」的文件必須同時給飛行（穿牆平手線的唯一豁免）", () => {
     const offenders: string[] = [];
@@ -262,20 +420,7 @@ describe("⛔ 卡片上不可以有「說了但不會發生」的字（owner 202
         } catch {
           continue;
         }
-        let raisesMs = false;
-        const hunt = (n: unknown): void => {
-          if (Array.isArray(n)) return n.forEach(hunt);
-          if (n === null || typeof n !== "object") return;
-          const o = n as Record<string, unknown>;
-          if (o.stat === Stat.MoveSpeed && (o.op === ModOp.CapRaise || o.op === ModOp.CapRaisePct)) {
-            raisesMs = true;
-          }
-          Object.values(o).forEach(hunt);
-        };
-        hunt(doc);
-        if (!raisesMs) continue;
-        // 給飛行的形狀有兩種：頂層授權格，或某個 effect 帶 `flight`。
-        if (!raw.includes('"flight"')) {
+        if (raisesMoveSpeedCap(doc) && !grantsFlight(doc)) {
           offenders.push(`${coll}/${basename(f, ".json")}`);
         }
       }
@@ -297,6 +442,25 @@ describe("⛔ 卡片上不可以有「說了但不會發生」的字（owner 202
     ).toEqual([]);
   });
 
+  it("⭐ 飛行閘認的是**授權格**，不是 tags 裡那個字（兩個方向）", () => {
+    // ⚠️ 這一條就是上面那條守衛的突變驗證，寫成斷言而不是一次手動改檔：
+    // ⛔ 突變靶不可以是 content/items（會與別人的編輯打架），而寫成夾具之後
+    // 它每一次 CI 都重跑，⛔ 不是只有我改的那一天成立。
+    const msCapRaise = { modifiers: [{ stat: Stat.MoveSpeed, op: ModOp.CapRaise, value: 24 }] };
+    // ① 授權格刪掉、只剩 tags/描述裡那個字 → 必須被抓到（舊的字串比對會漏掉這個）
+    const tagOnly = { ...msCapRaise, tags: ["flight"], description: "[飛行] 你會飛" };
+    expect(raisesMoveSpeedCap(tagOnly) && !grantsFlight(tagOnly), "tags 裡一個字就讓閘空轉了").toBe(
+      true,
+    );
+    // ② 真的有授權格 → 必須放行
+    const granted = { ...msCapRaise, flight: { ignoreObstacles: true } };
+    expect(grantsFlight(granted), "真的有 flight 授權格卻被判成沒有").toBe(true);
+    // ③ 沒有抬移速上限的文件不受這條管（否則整個 repo 都會紅）
+    expect(raisesMoveSpeedCap({ modifiers: [{ stat: Stat.MoveSpeed, op: ModOp.Flat, value: 3 }] })).toBe(
+      false,
+    );
+  });
+
   it("⭐ 而且它讀的是 config，不是寫死的名單", () => {
     const raisable = raisableStats();
     expect(raisable.size, "config.stat-caps@1 一條解鎖空間都沒有 —— 那整族機制是死的").toBeGreaterThan(0);
@@ -314,6 +478,88 @@ describe("⛔ 卡片上不可以有「說了但不會發生」的字（owner 202
   });
 
   /**
+   * ⭐ **第三個口子：`applyStatus` 的假狀態**（2026-08-18）。
+   *
+   * 上面三條全部只掃 `modifiers`，所以整個 `applyStatus` 家族從它們旁邊走過去
+   * 一路全綠。而那一族有一個**比無效 modifier 更糟**的形態：
+   *
+   * `applyStatus` 的 `statusId` 是一個**軟參照的字串**，schema 收得下任何一個
+   * 存在的 id。但機制**不住在狀態文件上** —— `sim/effects/applyStatus.ts` 讀的是
+   * `e.stun` / `e.root` / `e.moveSpeedMult` / `e.missChance` / `e.feared` /
+   * 三格治療倍率，全部在 **effect 節點自己身上**（`status-effects/*.json` 只負責
+   * 身分與文案，那份 schema 的檔頭自己寫著 mechanical parameters live on the card）。
+   *
+   * ⇒ 一張寫 `{ kind: "applyStatus", statusId: "stun", duration: 1.5 }` 的卡：
+   * schema 綠、`content:build` 綠、狀態列**真的會畫出暈眩圖示**、HUD 有倒數 ——
+   * 而對方**完全自由**。⚠️ 這比「什麼都沒發生」更貴：玩家看到對面被暈了就衝上去，
+   * 於是它不是少一個效果，是**主動誤導決策**。
+   *
+   * ── 判準怎麼來的（⛔ 兩邊都不抄字面值） ──────────────────────────────────
+   * · **要求什麼**：從 `content/status-effects/*.json` 的 `tags` 推導 ——
+   *   帶 `stun` 就要有 `stun`、`slow` 要有 `moveSpeedMult`、`antiheal` 要有三格
+   *   治療倍率其中之一⋯。tag 是內容側自己宣告的身分，⛔ 不是我在這裡發明的分類。
+   * · **有哪些格可以填**：`MechField = keyof StatusEffect`（`sim/components.ts`），
+   *   所以任何一格被改名或刪掉，**tsc 當場紅**；再加一條測試比對**出貨的 Zod
+   *   union**真的有這幾個鍵，把「型別有但 schema 沒開」那個方向也關起來。
+   *
+   * ── ⚠️ 已知缺口，⛔ 不要宣稱「applyStatus 的口子全關了」 ──────────────────
+   * 這一刀**只做 cc 與 antiheal 那兩族**。刻意留著的：
+   * · `shred`（`armor-break` / `magic-break`）與 `dot`（`burn`）在 `applyStatus`
+   *   上**根本沒有對應欄位** —— 它們的機制走別條路（`applyBuff` 的 modifier /
+   *   週期傷害），所以在這裡沒有東西可以檢查。要關這一族得先有欄位。
+   * · 泛用的 `cc` / `disable` 桶（麻痺、癱瘓、混亂）**故意不管**：它們的狀態文件
+   *   自己掛著 `mechanism-on-card`，而出貨的正解是把機制寫在**隔壁的 effect** 上
+   *   （52-03 無銘斧劍的【麻痺】＝同一個 hook 裡一格 `as -40%` 的 `applyBuff`）。
+   *   ⛔ 拿泛用桶去要求節點自己帶欄位會誤報那一整族 —— 實測 8 處。
+   */
+  it("★ ⛔ 沒有任何 `applyStatus` 是**只有名字沒有機制**的假狀態", () => {
+    const tags = statusTags();
+    expect(tags.size, "一份狀態文件都讀不到 —— 這條守衛是空轉的").toBeGreaterThan(0);
+    const fakes = scanFakeStatuses(tags);
+    expect(
+      fakes.map((k) => `${k.doc}${k.path} —— [${k.statusId}] 少了 ${k.needs.join(" / ")}`),
+      [
+        "",
+        "⛔ 這幾筆 `applyStatus` **只掛得上名字**：狀態列會畫圖示、HUD 會倒數，",
+        "而 `sim/effects/applyStatus.ts` 讀的那幾格一個都沒填 ⇒ 對方完全自由。",
+        "",
+        "⚠️ 它比「沒有效果」更糟：玩家看到圖示就當對方被控住，於是這是一個",
+        "**主動誤導決策**的缺陷，而不是一個少掉的效果。",
+        "",
+        "修法：把機制那一格填在**這個 effect 節點上**（機制不住在狀態文件上），",
+        "或者機制真的在隔壁那個 effect 上時，把它放進同一個 effects[] 陣列。",
+        "⛔ 不要改這條測試，也⛔ 不要只改描述 —— 圖示還是會畫出來。",
+        "",
+      ].join("\n"),
+    ).toEqual([]);
+  });
+
+  it("⭐ 假狀態掃描器自己是活的，而且它認的是**出貨 schema** 上真的有的欄位", () => {
+    // ① 兩邊對帳：`keyof StatusEffect` 上有的那幾格，出貨的 Zod union 也要開。
+    //    ⛔ 少了這條，型別改對了而 schema 沒開 = 作者永遠填不進去，掃描器卻照樣要求。
+    const offered = applyStatusSchemaFields();
+    expect(offered.size, "讀不到 applyStatus 的 schema 形狀 —— 掃描器沒有依據").toBeGreaterThan(0);
+    const notOffered = [...new Set(Object.values(TAG_NEEDS).flat())].filter((f) => !offered.has(f));
+    expect(notOffered, "這幾格 StatusEffect 有、出貨 schema 卻沒開，作者填不進去").toEqual([]);
+
+    // ② 掃描器真的會抓 —— ⛔ 突變靶用夾具，不用 content/items（那是別人正在改的檔）。
+    const tags = new Map([["stun", new Set(["stun", "cc", "hard-cc"])]]);
+    const fake = { effects: [{ kind: "applyStatus", statusId: "stun", duration: 1.5 }] };
+    expect(scanFakeStatuses(tags, [["fixture", fake]]).map((k) => k.needs)).toEqual([["stun"]]);
+    // ③ 填了機制那一格就放行
+    const real = { effects: [{ kind: "applyStatus", statusId: "stun", duration: 1.5, stun: true }] };
+    expect(scanFakeStatuses(tags, [["fixture", real]])).toEqual([]);
+    // ④ 機制在**隔壁**那個 effect 上也放行（52-03【麻痺】那種寫法）
+    const sibling = {
+      effects: [
+        { kind: "applyStatus", statusId: "stun", duration: 1.5 },
+        { kind: "applyStatus", statusId: "stun", duration: 1.5, stun: true },
+      ],
+    };
+    expect(scanFakeStatuses(tags, [["fixture", sibling]])).toEqual([]);
+  });
+
+  /**
    * ⭐ 同一族的另一半：上面幾條抓「說了不會發生」，這一條抓「**根本拿不到**」。
    *
    * 出貨慣例是 `cost: 0` ＝「不上架賣，只從獎池掉」。所以一件 `cost: 0` 的寶具
@@ -326,7 +572,11 @@ describe("⛔ 卡片上不可以有「說了但不會發生」的字（owner 202
    * 標籤也掛著，**在 51 件的基礎池裡一件都沒有**。⚠️ 而 `legendary` 標籤全 repo
    * 沒有任何行為消費者，所以「有標籤」從來就不是「拿得到」的證據。
    *
-   * 突變紀錄：把其中一件從 `legendary-weapons.json` 拿掉 → 這條紅並指名它；放回 → 綠。
+   * ⚠️ 2026-08-18 稍晚的獎池重新策展（#356）把 49 支拆成三張池，那兩件一張都沒進，
+   * 於是它們與 `godie-i063` 一起落進下面的 `CURATION_PENDING`（連同各自的理由）。
+   *
+   * 突變紀錄：把任何一件現役 `cost: 0` 寶具從它所在的 loot table 拿掉 → 這條紅並
+   * 指名它；放回 → 綠。
    */
   it("★ ⛔ 沒有任何 `cost: 0` 的寶具是**任何獎池都抽不到**的（失敗形態②）", () => {
     const pooled = new Set<string>();
@@ -342,13 +592,37 @@ describe("⛔ 卡片上不可以有「說了但不會發生」的字（owner 202
     /**
      * ⛔ 具名豁免 —— **不是**把守衛放寬，是把「為什麼還拿不到」寫下來讓它會過期。
      *
-     * ⚠️ 加一筆進來之前先確認：真的**沒有任何一個池收得下它**嗎？三個 draft 池
-     * 依設計全部關閉 —— `legendary-weapons` 策展定死 49（`legendaryTags.test.ts`）、
-     * `quest-rewards` 宣告退場凍結 13（`retiredLootTables.test.ts`）、
-     * `ex-release-weapons` 是 tier-5 [EX解放] 專用。所以「開一條取得路徑」是
+     * ⚠️ 加一筆進來之前先確認：真的**沒有任何一個池收得下它**嗎？出貨的三張池
+     * 依設計全部關閉 —— `legendary-weapons` 是策展過的基礎池、
+     * `ex-release-weapons` 與 `ex-origin-weapons` 是 tier-5 的 [EX解放] / [EX∅ 根源]
+     * 專用（owner 2026-08-18：「我們最近新建的不要變更 EX EX解放 EX根源都不要動到」），
+     * 而 `quest-rewards` / `round-reward` 已經封存進 `content/_legacy/loot-tables/`
+     * 並且宣告退場（`retiredLootTables.test.ts`）。所以「開一條取得路徑」是
      * **策展決定**，不是隨手能補的欄位 —— 那正是這格豁免存在的理由。
      */
     const CURATION_PENDING: Record<string, string> = {
+      // ══ 2026-08-18（#356）獎池重新策展之後新增的三筆 ══════════════════════
+      // ⚠️ 這三筆**不是**把守衛放寬：這條斷言問的是「玩家拿不拿得到」，而三件的
+      // 答案現在都是「拿不到」。差別在於**該由誰決定怎麼修** —— 把一件寶具塞進
+      // 哪一張池是策展決定（owner 2026-08-18：「我們最近新建的不要變更
+      // EX EX解放 EX根源都不要動到」），⛔ 不是清紅燈的人隨手能補的欄位。
+      // ⭐ 而且每一筆都會過期：任何一件被排進任何一張池的那一刻，上面的 `stale`
+      //    那條就會紅並要求刪掉這一列。
+      "piercer-crossbow":
+        "穿甲弩（tier 5、`legendary` + `true-damage` + `marksman`，2 條 modifier + 1 個 " +
+        "[限遠程] passive）。2026-08-18 把 49 支傳說拆成三張池（legendary-weapons 29 / " +
+        "ex-release-weapons 35 / ex-origin-weapons 5）時它一張都沒進 —— 而它**不在 owner " +
+        "親筆的 49 支基準裡**（`__fixtures__/legendary49OwnerText.json`），所以它進哪一張、" +
+        "或者要不要退場，是 owner 的策展決定。⛔ 不要自己挑一張池塞進去。",
+      "sage-ward-amulet":
+        "賢者的護身符（tier 5、`legendary` + `survivability` + `mage`，2 條 modifier + 1 個 " +
+        "[限智力] 護盾 passive）。與穿甲弩完全同一個處境、同一批被留在池外，同樣不在 " +
+        "owner 的 49 支基準裡。",
+      "godie-i063":
+        "防狼電擊棒（tier 1、`wc3-import`，2 條 modifier + 1 個主動 passive）。與下面的 " +
+        "正義之杖同型：三張武器池全部是 tier-5 策展池收不下 tier-1，而定價上架會被 " +
+        "`itemTiers.test.ts`（只有 300/1200 兩個價）擋下。等 owner 決定要不要為這一族 " +
+        "wc3-import 舊道具開一條 draft 路徑，或明確讓它們退場到 `content/_legacy/items/`。",
       "godie-i04v":
         "正義之杖（tier 3、wc3-import）。定價上架被 `itemTiers.test.ts`（只有 300/1200 兩個價）" +
         "與 `buildPath.test.ts`（逐字把它當 draft-only 0g 的樣本）擋下；" +

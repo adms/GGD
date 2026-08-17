@@ -59,18 +59,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        40,
-        40,
-        40,
-        40
+        40.0,
+        40.0,
+        40.0,
+        40.0
       ],
       "manaCost": [
-        75,
-        110,
-        145,
-        180
+        75.0,
+        110.0,
+        145.0,
+        180.0
       ],
-      "range": 0,
+      "range": 0.0,
       "radiusTier": "大",
       "targetsEnemies": true,
       "effects": [
@@ -79,10 +79,10 @@
           "damageType": "physical",
           "amount": {
             "perRank": [
-              200,
-              300,
-              400,
-              500
+              200.0,
+              300.0,
+              400.0,
+              500.0
             ],
             "ratios": [
               {
@@ -91,14 +91,14 @@
               }
             ]
           },
-          "radius": 6,
+          "radius": 6.0,
           "radiusTier": "大",
           "includeOrigin": true,
           "onHitTargets": [
             {
               "kind": "knockback",
-              "distance": 3,
-              "speed": 15,
+              "distance": 3.0,
+              "speed": 15.0,
               "from": "caster"
             }
           ]
@@ -118,18 +118,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -139,7 +139,7 @@
             "critStrike": {
               "chance": 0.1,
               "damageMult": 1.5,
-              "lifestealFraction": 0
+              "lifestealFraction": 0.0
             },
             "hooks": [
               {
@@ -156,7 +156,7 @@
                         }
                       ]
                     },
-                    "radius": 3,
+                    "radius": 3.0,
                     "radiusTier": "小"
                   }
                 ],
@@ -179,28 +179,28 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        120,
-        120,
-        120,
-        120
+        120.0,
+        120.0,
+        120.0,
+        120.0
       ],
       "manaCost": [
-        90,
-        180,
-        270,
-        360
+        90.0,
+        180.0,
+        270.0,
+        360.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [
         {
           "kind": "championForm",
           "to": "alternate",
           "durationSec": [
-            6,
-            9,
-            12,
-            15
+            6.0,
+            9.0,
+            12.0,
+            15.0
           ]
         },
         {
@@ -212,7 +212,7 @@
               "value": 0.6
             }
           ],
-          "duration": 6,
+          "duration": 6.0,
           "perRank": [
             {
               "modifiers": [
@@ -222,7 +222,7 @@
                   "value": 0.6
                 }
               ],
-              "duration": 6
+              "duration": 6.0
             },
             {
               "modifiers": [
@@ -232,7 +232,7 @@
                   "value": 0.9
                 }
               ],
-              "duration": 9
+              "duration": 9.0
             },
             {
               "modifiers": [
@@ -242,7 +242,7 @@
                   "value": 1.2
                 }
               ],
-              "duration": 12
+              "duration": 12.0
             },
             {
               "modifiers": [
@@ -252,7 +252,7 @@
                   "value": 1.5
                 }
               ],
-              "duration": 15
+              "duration": 15.0
             }
           ],
           "flight": {
@@ -276,16 +276,16 @@
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        70,
-        70,
-        70
+        70.0,
+        70.0,
+        70.0
       ],
       "manaCost": [
-        150,
-        225,
-        300
+        150.0,
+        225.0,
+        300.0
       ],
-      "range": 11,
+      "range": 11.0,
       "radiusTier": "小",
       "targetsEnemies": true,
       "effects": [
@@ -294,9 +294,9 @@
           "damageType": "physical",
           "amount": {
             "perRank": [
-              600,
-              800,
-              1000
+              600.0,
+              800.0,
+              1000.0
             ],
             "ratios": [
               {
@@ -305,7 +305,7 @@
               }
             ]
           },
-          "radius": 3,
+          "radius": 3.0,
           "radiusTier": "小",
           "includeOrigin": true
         }
@@ -321,10 +321,7 @@
     "E",
     "R"
   ],
-  "buildPriority": [
-    "swift-boots",
-    "serrated-edge"
-  ],
+  "buildPriority": [],
   "tags": [
     "wc3-import",
     "godie",

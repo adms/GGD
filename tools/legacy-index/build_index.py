@@ -173,6 +173,18 @@ def describe_content_doc(path: str) -> tuple[str, str]:
         return ("（無法解析的 JSON）", "")
     schema = str(d.get("schema", "?"))
     name = str(d.get("name") or d.get("displayName") or d.get("id") or "")
+    # ⚠️ 不是每一份歸檔的 JSON 都是一份 content 文件。`content/_legacy/config/` 收的是
+    # **從一份還在服役的文件裡切下來的片段**（例如 arena-rules 那三個永遠打不到的回合），
+    # 它們沒有 `schema`／`name`，走上面那條會產出「?「」」這種空白列 —— 而一份看起來
+    # 有查過、其實什麼都沒說的索引，比沒有索引更糟（這支腳本檔頭的原話）。
+    # ⇒ 這一類自己帶 `note` + `supersededBy`，就用它們。
+    if schema == "?" and not name and d.get("note"):
+        # 第一句常常是「這不是一份會被載入的 content 文件」那句共用的樣板 —— 它對
+        # 每一份都成立，所以說不出這一份是什麼。跳過它，取第一句有內容的。
+        sents = [x.strip(" ⛔⭐⚠️") for x in re.split(r"[。\n]", str(d["note"])) if x.strip(" ⛔⭐⚠️")]
+        first = next((x for x in sents if "不在 COLLECTION_NAMES" not in x), sents[0] if sents else "")
+        why = str(d.get("supersededBy") or "").strip()
+        return (first[:120] or "歸檔的設定片段", f"被 {why} 取代" if why else "已被取代，留著備查")
     kind = {"ability@1": "技能", "champion@1": "英雄", "item@1": "道具"}.get(schema, schema)
     extra = ""
     if schema == "champion@1":

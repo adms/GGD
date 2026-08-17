@@ -149,7 +149,7 @@
       "effects": [
         {
           "kind": "applyStatus",
-          "statusId": "slow40",
+          "statusId": "slow60",
           "duration": 4,
           "moveSpeedMult": 0.4
         }
@@ -270,10 +270,7 @@
     "E",
     "R"
   ],
-  "buildPriority": [
-    "swift-boots",
-    "serrated-edge"
-  ],
+  "buildPriority": [],
   "tags": [
     "wc3-import",
     "godie"

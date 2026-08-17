@@ -365,6 +365,8 @@ describe("ability whitelist gates EX unlock (wl-11)", () => {
 // --------------------------------------------------------------------------
 describe("demo starter set is playable (wl-starter-playable)", () => {
   const CONTENT_DIR = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
+  /** 三階寶具池（owner 2026-08-18）。⛔ 列的是檔名，成員從註冊表讀。 */
+  const POOL_TABLES = ["legendary-weapons", "ex-release-weapons", "ex-origin-weapons"];
   const STARTER_GO = join(
     dirname(fileURLToPath(import.meta.url)),
     "../../../platform/internal/curation/starter.go",
@@ -387,7 +389,6 @@ describe("demo starter set is playable (wl-starter-playable)", () => {
   let starterChampions: string[] = [];
   let starterItems: string[] = [];
   let starterShopItems: string[] = [];
-  let starterDraftItems: string[] = [];
   let starterServiceItems: string[] = [];
   let starterLegendaryItems: string[] = [];
   let starterAbilities: string[] = [];
@@ -397,27 +398,19 @@ describe("demo starter set is playable (wl-starter-playable)", () => {
     registerAll(result.store);
     const src = readFileSync(STARTER_GO, "utf-8");
     starterChampions = goList(src, "starterChampions");
-    // The bundle's item half is declared as FOUR surfaces (task #70 drew the
-    // first two, task #82 split LEGENDARY out of the shop and added SERVICES),
-    // and the whitelist gates their union. LEGENDARY must stay in the union
-    // even though nothing there is purchasable, or the round-2/5 cards starve.
+    // The bundle's item half is declared as THREE surfaces and the whitelist
+    // gates their union. The WEAPON surface must stay in the union even though
+    // nothing there is purchasable, or the weapon cards starve.
     //
-    // ⚠️ owner 2026-08-01 — THE UNION HAS DUPLICATES NOW. 6 craftRole-"quest"
-    // items are on the DRAFT surface and in the 49-entry 棱彩 pool at once, so
-    // this concat is 76 long and the SET behind it is 70. Go's `StarterSet()`
-    // runs the same concat through `union()`, which sorts and dedupes, so the
-    // served doc carries each id once — every comparison against a filtered
-    // catalogue below must therefore compare SETS, not arrays.
+    // ⚠️ 2026-08-18 the fourth (DRAFT, 0g 任務道具) surface is GONE — owner:
+    // 「他有個舊標籤叫做任務道具，但在競技場新玩法**則完全不考慮這個標籤**」.
+    // Its 6 ids moved into the tier tables, so the surfaces are a PARTITION
+    // again and the concat no longer collapses. Comparisons still go through
+    // SETS, because `StarterSet()` unions and that must stay the shape under test.
     starterShopItems = goList(src, "starterShopItems");
-    starterDraftItems = goList(src, "starterDraftItems");
     starterServiceItems = goList(src, "starterServiceItems");
     starterLegendaryItems = goList(src, "starterLegendaryItems");
-    starterItems = [
-      ...starterShopItems,
-      ...starterServiceItems,
-      ...starterLegendaryItems,
-      ...starterDraftItems,
-    ];
+    starterItems = [...starterShopItems, ...starterServiceItems, ...starterLegendaryItems];
     // abilities are DERIVED in Go (champions x {q,w,e,r,ex}) — mirror that here.
     starterAbilities = starterChampions.flatMap((id) =>
       ["q", "w", "e", "r", "ex"].map((slot) => `${id}.${slot}`),
@@ -433,24 +426,20 @@ describe("demo starter set is playable (wl-starter-playable)", () => {
     // property worth holding is that the shelf still outnumbers the 6 slots a
     // build has to fill, i.e. it is a shop and not a fixed loadout.
     expect(starterShopItems.length).toBeGreaterThan(INVENTORY_SLOTS);
-    expect(starterDraftItems.length).toBeGreaterThanOrEqual(6);
     expect(starterLegendaryItems.length).toBeGreaterThanOrEqual(6);
     // This used to assert `starterItems.length === sum of the four` — true by
     // construction (it IS the concat) and therefore untestable. Re-aimed at the
     // thing that is NOT free: how much the union collapses, i.e. exactly which
     // ids sit on two surfaces. Pinned id-for-id, so a seventh overlap fails.
+    // ⭐ 2026-08-18 THE SURFACES ARE A PARTITION AGAIN. The pinned 6-id overlap
+    // that used to live here was owner's own doing (quest items named into the
+    // 棱彩 pool while 「所有任務道具」 kept them on the DRAFT surface); he retired the
+    // 任務道具 label that day, so there is no second free surface to overlap with.
+    // Stated as「一件都不重複」rather than deleted — a NEW overlap is exactly the
+    // shape that would silently double-weight an id in a roll.
     const twice = starterItems.filter((id, i) => starterItems.indexOf(id) !== i).sort();
-    expect(twice, "an id is on two starter surfaces that owner did not put there").toEqual(
-      [
-        "godie-i004", // 至尊魔戒   ┐
-        "godie-i00z", // 四魂之玉   │ quest items owner named into the 49-entry
-        "godie-i01n", // 天堂之劍   │ 棱彩 pool on 2026-08-01, while owner rule 2
-        "godie-i01s", // 仙后座     │ 「所有任務道具」 keeps them on the DRAFT
-        "godie-i06j", // 獸人船長十字鎬 │ surface too.
-        "godie-i06n", // 老衲的棒子 ┘
-      ].sort(),
-    );
-    expect(new Set(starterItems).size).toBe(starterItems.length - twice.length);
+    expect(twice, "an id is on two starter surfaces — the three surfaces are a partition").toEqual([]);
+    expect(new Set(starterItems).size).toBe(starterItems.length);
     for (const id of starterChampions) {
       expect(Champions.tryGet(id as ChampionId), `champion ${id} is not in the registry`).toBeDefined();
     }
@@ -528,15 +517,15 @@ describe("demo starter set is playable (wl-starter-playable)", () => {
     }
   });
 
-  it("BOTH weapon-draft rounds can still roll a card (each table survives the filter)", () => {
+  it("EVERY shipped weapon pool can still roll a card (each table survives the filter)", () => {
     cover("wl-starter-playable");
     const wl = new Whitelist(doc({ items: starterItems }), false);
-    // Both weapon-draft rounds (2 and 5) roll legendary-weapons as of
-    // 2026-07-31; quest-rewards is checked here too since it's still real,
-    // shipped content a future round could point weaponLootTable at again.
-    // MatchController SKIPS the grant when nothing survives the filter, so an
-    // under-seeded bundle makes the card silently give the player NOTHING.
-    for (const id of ["quest-rewards", "legendary-weapons"]) {
+    // ⭐ 2026-08-18: all THREE tier tables, because `weaponTiers.pickWeaponTable`
+    // can point a card at any of them. MatchController SKIPS the grant when
+    // nothing survives the filter, so an under-seeded bundle makes the card
+    // silently give the player NOTHING — measured that day: 22 of
+    // ex-release-weapons' entries were unlisted and nothing warned.
+    for (const id of POOL_TABLES) {
       const table = LootTables.tryGet(id);
       expect(table, `${id} loot table must exist`).toBeTruthy();
       const survivors = table!.entries.filter((e) => wl.allowsItem(e.itemId));
@@ -546,28 +535,12 @@ describe("demo starter set is playable (wl-starter-playable)", () => {
     }
   });
 
-  it("the draft surface is exactly the quest-rewards table, and is unbuyable", () => {
-    cover("wl-starter-playable");
-    const table = LootTables.get("quest-rewards");
-    expect([...table.entries.map((e) => e.itemId)].sort()).toEqual([...starterDraftItems].sort());
-    // Every draft card grants something, and none of them is purchasable —
-    // that is what makes the free card worth more than the gold it saves.
-    for (const id of starterDraftItems) {
-      const def = Items.get(id as ItemId);
-      expect(def.cost, `${id} (${def.name}) is buyable — it belongs in the shop`).toBe(0);
-      // A draft item is a QUEST item (owner rule 2), not "an item with stats".
-      // Four quest items (仙后座/戰旗/復仇之袍/惡魔吉他) carry only an active item@1
-      // cannot express yet (#56); 「所有任務道具」 still requires them draftable,
-      // so no effect gate here — the craftRole marker IS the membership rule.
-      expect(
-        (def as { craftRole?: string }).craftRole,
-        `${id} (${def.name}) is not a quest item`,
-      ).toBe("quest");
-      expect(starterShopItems, `${id} is on both surfaces`).not.toContain(id);
-    }
-  });
+  // ⚠️ 「the draft surface is exactly the quest-rewards table」 WAS HERE and is gone,
+  // 2026-08-18: owner retired both the 任務道具 label and that table. Its 6 items are
+  // now ordinary 寶具 held to the STRICTER bar of the weapon-surface test below
+  // (which does gate on effect; the draft test deliberately did not).
 
-  it("the legendary surface is exactly the legendary-weapons table, and is UNBUYABLE", () => {
+  it("the weapon surface is exactly the THREE tier tables, and is UNBUYABLE", () => {
     cover("wl-starter-playable");
     // 「傳說的武器道具，只能隨機三選一」 (task #82). Before this, all 29 of these
     // were ALSO in starterShopItems — 29 of 29 — so every legendary in the game
@@ -579,8 +552,11 @@ describe("demo starter set is playable (wl-starter-playable)", () => {
     // still carried a shop price. 16 of those 25 stayed in `starterShopItems`
     // until this batch pulled them — this assertion is what caught it, and it is
     // deliberately stated over the WHOLE list rather than a sample.
-    const table = LootTables.get("legendary-weapons");
-    expect([...table.entries.map((e) => e.itemId)].sort()).toEqual([...starterLegendaryItems].sort());
+    // ⭐ 2026-08-18: the surface is the UNION of the three tier tables. Reading
+    // one of three would let a whole tier go unwhitelisted in silence.
+    const pooled = POOL_TABLES.flatMap((t) => LootTables.get(t).entries.map((e) => e.itemId as string));
+    expect(new Set(pooled).size, "同一件寶具出現在兩個池 —— 它會被抽兩次").toBe(pooled.length);
+    expect([...pooled].sort()).toEqual([...starterLegendaryItems].sort());
     for (const id of starterLegendaryItems) {
       const def = Items.get(id as ItemId);
       expect(def.cost, `${id} (${def.name}) is directly purchasable — legendaries are draft-only`).toBe(0);

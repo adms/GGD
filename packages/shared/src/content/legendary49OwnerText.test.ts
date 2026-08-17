@@ -40,7 +40,7 @@
 import { describe, it, expect } from "vitest";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(HERE, "../../../../content");
@@ -75,9 +75,61 @@ const itemDoc = (id: string) =>
   readJson<{ id: string; name: string; description?: string }>(
     join(CONTENT_DIR, "items", `${id}.json`),
   );
-const poolIds = readJson<{ entries: { itemId: string }[] }>(
-  join(CONTENT_DIR, "loot-tables", "legendary-weapons.json"),
-).entries.map((e) => e.itemId);
+/**
+ * ⚠️ 2026-08-18（#356）：這裡本來只讀 `legendary-weapons.json`，而那時它就是**整個**
+ * 出貨池。EX 兩階上線之後 owner 的 49 支被**拆進三張池**（legendary-weapons 29 /
+ * ex-release-weapons 16 / ex-origin-weapons 4），於是「基準裡有已經不在池子裡的道具」
+ * 那條用「基準腐爛了」的訊息紅了 20 支 —— 而真相是它們搬到隔壁池去了。
+ *
+ * ⇒ 改成讀 `content/loot-tables/` 底下**每一張**池的聯集。⛔ 不是抄三個檔名：
+ *    第四張池出現的那天，這裡不需要改一個字。
+ */
+const poolIds = readdirSync(join(CONTENT_DIR, "loot-tables"))
+  .filter((f) => f.endsWith(".json") && f !== "_index.json")
+  .flatMap((f) =>
+    readJson<{ entries?: { itemId: string }[] }>(
+      join(CONTENT_DIR, "loot-tables", f),
+    ).entries?.map((e) => e.itemId) ?? [],
+  );
+
+/**
+ * ⛔ **具名豁免** —— 池子裡有、但**不屬於 owner 2026-08-01 那 49 支**的道具。
+ *
+ * 這條清單存在的唯一理由，是讓下面第二條測試的「池子擴充時基準不會被漏掉」那半邊
+ * 繼續有效。沒有它就只有兩個選擇，兩個都是壞的：
+ *   · 整條拿掉 ⇒ 明天有人把一支新道具丟進池子而忘了保護它的文案，⛔ 沒有東西會叫；
+ *   · 把它們塞進 fixture ⇒ 那份檔案的意思就從「owner 2026-08-01 親筆的 49 支」
+ *     變成「池子的目錄」，而**它的價值全部來自它是前者**。
+ *
+ * ⭐ 這 20 支是 2026-08-17～18 的 [EX解放] / [EX∅ 根源] 批次（GH#354 / #356），
+ * owner 另外交稿、由 `docs/legacy/_item-authoring-notes-full.md` 與
+ * `LEGENDARY_WEAPON_FULL_AUDIT.md` 記錄來歷。它們**不是**這份基準要守的東西。
+ *
+ * ⚠️ 它會過期：任何一支被收進 fixture 的那一刻，下面的 stale 檢查就會紅並要求
+ * 把它從這裡刪掉。
+ */
+const NOT_IN_THE_2026_08_01_BATCH = new Set([
+  "book-of-gospel",
+  "collar-of-the-deadly-soul",
+  "fingerless-gloves",
+  "gravity-sword-black-rod",
+  "lance-kongotetsu",
+  "magic-armor-type-zero",
+  "meat-cleaver",
+  "meteor-ring",
+  "mystery-scrap-of-paper",
+  "odm-gear",
+  "pale-moon-requiem-crown",
+  "shining-golden-orbs",
+  "soul-eater",
+  "spear-of-lightning",
+  "staff-of-ainz-ooal-gown",
+  "stone-mask",
+  "teardrop-of-rebirth",
+  "torch-master",
+  "ultimate-mod-shiranui",
+  "usagizuki-twin-crescents",
+]);
 
 describe("owner 2026-08-01 的 49 支傳說文案 (legendary49-owner-text)", () => {
   it("每一支的 description 都與 owner 交來的原稿逐字相同", () => {
@@ -108,13 +160,19 @@ describe("owner 2026-08-01 的 49 支傳說文案 (legendary49-owner-text)", () 
     // 一個「只保護它剛好認識的東西」的守衛, 會隨著內容成長慢慢失效。
     const inBaseline = new Set(Object.keys(baseline.items));
     const inPool = new Set(poolIds);
+    expect(inPool.size, "一張池都讀不到 —— 這條守衛在空轉").toBeGreaterThan(0);
     expect(
-      [...inPool].filter((id) => !inBaseline.has(id)),
-      "傳說池裡有基準檔沒收錄的道具 —— 它的文案目前沒有任何保護",
+      [...inPool].filter((id) => !inBaseline.has(id) && !NOT_IN_THE_2026_08_01_BATCH.has(id)),
+      "獎池裡有基準檔沒收錄、也沒被具名豁免的道具 —— 它的文案目前沒有任何保護",
     ).toEqual([]);
     expect(
       [...inBaseline].filter((id) => !inPool.has(id)),
-      "基準檔裡有已經不在池子裡的道具 —— 基準已經腐爛",
+      "基準檔裡有三張池都抽不到的道具 —— 基準已經腐爛",
+    ).toEqual([]);
+    // 豁免自己也要會過期:被收進 fixture 或退出所有池之後,這一列就是死的。
+    expect(
+      [...NOT_IN_THE_2026_08_01_BATCH].filter((id) => inBaseline.has(id) || !inPool.has(id)).sort(),
+      "這幾筆豁免過期了 —— 把它們從 NOT_IN_THE_2026_08_01_BATCH 刪掉",
     ).toEqual([]);
   });
 

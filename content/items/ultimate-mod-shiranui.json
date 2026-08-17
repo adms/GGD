@@ -2,7 +2,7 @@
   "id": "ultimate-mod-shiranui",
   "schema": "item@1",
   "name": "終極魔改・不知火",
-  "description": "武器\n效能\n[魔改解放] 攻擊力、攻擊速度、暴擊傷害 各自 ×1.5\n[上限突破] 攻擊速度上限提升至 10（預設上限為 4）\n[萬象凋零] 普攻命中敵方英雄時，附加全部負面效果 1 秒：破甲・破魔・致盲・詛咒・燃燒・重創・禁療・混亂・恐懼・麻痺・癱瘓・纏繞・減速40%・暈眩\n[溢出] 任一屬性首次達到一般上限時，這三項再 ×1.15，最多 3 次\n\n解說\n把三個 BUG 焊在同一把刀上，然後管它叫設計。",
+  "description": "武器\n效能\n[魔改解放] 攻擊力、攻擊速度、暴擊傷害 各自 ×1.5\n[上限突破] 攻擊速度上限提升至 10（預設上限為 4）\n[萬象凋零] 普攻命中敵方英雄時，附加全部負面效果各 1 秒：破甲（防禦 −50%）・破魔（魔抗 −50%）・致盲＋詛咒（普攻失手 50%）・燃燒（每 0.5 秒 50 點魔法傷害）・重創＋禁療（治療／吸血／自然回復歸零）・混亂・恐懼・麻痺（攻速 −40%）・癱瘓（不能施法也不能普攻）・纏繞・減速 40%・暈眩\n[溢出] 任一屬性首次達到一般上限時，這三項再 ×1.15，最多 3 次\n\n解說\n把三個 BUG 焊在同一把刀上，然後管它叫設計。",
   "cost": 0,
   "tier": 5,
   "tags": [
@@ -45,9 +45,25 @@
           "duration": 1.0
         },
         {
+          "kind": "applyBuff",
+          "duration": 1.0,
+          "stackKey": "shiranui-armor-break",
+          "maxStacks": 1,
+          "dispellable": true,
+          "polarity": "debuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "pctAdd",
+              "value": -0.5
+            }
+          ]
+        },
+        {
           "kind": "applyStatus",
           "statusId": "blind",
-          "duration": 1.0
+          "duration": 1.0,
+          "missChance": 0.5
         },
         {
           "kind": "applyStatus",
@@ -55,24 +71,41 @@
           "duration": 1.0
         },
         {
+          "kind": "dot",
+          "damageType": "magic",
+          "amountPerTick": {
+            "flat": 50.0
+          },
+          "intervalSec": 0.5,
+          "durationSec": 1.0,
+          "stacking": "refresh"
+        },
+        {
           "kind": "applyStatus",
           "statusId": "confusion",
-          "duration": 1.0
+          "duration": 1.0,
+          "berserk": true,
+          "targetsAllies": true
         },
         {
           "kind": "applyStatus",
           "statusId": "curse",
-          "duration": 1.0
+          "duration": 1.0,
+          "missChance": 0.5
         },
         {
           "kind": "applyStatus",
           "statusId": "fear",
-          "duration": 1.0
+          "duration": 1.0,
+          "feared": true
         },
         {
           "kind": "applyStatus",
           "statusId": "grievous-wounds",
-          "duration": 1.0
+          "duration": 1.0,
+          "healingTakenMult": 0.5,
+          "lifestealMult": 0.5,
+          "regenMult": 0.5
         },
         {
           "kind": "applyStatus",
@@ -80,9 +113,27 @@
           "duration": 1.0
         },
         {
+          "kind": "applyBuff",
+          "duration": 1.0,
+          "stackKey": "shiranui-magic-break",
+          "maxStacks": 1,
+          "dispellable": true,
+          "polarity": "debuff",
+          "modifiers": [
+            {
+              "stat": "mr",
+              "op": "pctAdd",
+              "value": -0.5
+            }
+          ]
+        },
+        {
           "kind": "applyStatus",
           "statusId": "no-heal",
-          "duration": 1.0
+          "duration": 1.0,
+          "healingTakenMult": 0.0,
+          "lifestealMult": 0.0,
+          "regenMult": 0.0
         },
         {
           "kind": "applyStatus",
@@ -90,24 +141,44 @@
           "duration": 1.0
         },
         {
+          "kind": "applyBuff",
+          "duration": 1.0,
+          "stackKey": "shiranui-numbness",
+          "maxStacks": 1,
+          "dispellable": true,
+          "polarity": "debuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": -0.4
+            }
+          ]
+        },
+        {
           "kind": "applyStatus",
           "statusId": "paralysis",
-          "duration": 1.0
+          "duration": 1.0,
+          "silenced": true,
+          "disarmed": true
         },
         {
           "kind": "applyStatus",
           "statusId": "root",
-          "duration": 1.0
+          "duration": 1.0,
+          "root": true
         },
         {
           "kind": "applyStatus",
           "statusId": "slow40",
-          "duration": 1.0
+          "duration": 1.0,
+          "moveSpeedMult": 0.6
         },
         {
           "kind": "applyStatus",
           "statusId": "stun",
-          "duration": 1.0
+          "duration": 1.0,
+          "stun": true
         }
       ]
     },
@@ -143,5 +214,5 @@
   ],
   "icon": "assets/icons/items/ultimate-mod-shiranui.webp",
   "craftRole": "none",
-  "authoringNote": "【owner 2026-08-18 裁決】「**提高攻速上限至10 另外攻擊附加全部負面效果就好**」。\n\n[上限突破] = `as capRaise 10.0`（絕對高度，⛔ 不是 capRaisePct）。\n⭐ 這一條在此之前是**三條無效宣稱**：原本對 `ad` / `as` / `critDamage` 各掛 `capRaisePct 0.5`，而 `ad` 的 `unlocked === base`、`critDamage` **根本不在 `config.stat-caps@1` 裡**（`capFor` 對未列出的屬性回 `base === unlocked`）—— 兩條逐位元等於不存在。只有 `as` 真的解得開（4→10），所以現在只剩它，而且照 owner 的話直接抬到硬上限 10。\n\n[萬象凋零] = `onBasicAttack` + `victim: \"enemyChampion\"` → 14 個 `applyStatus`，各 1 秒。\n⚠️ 名單是**出貨的通用負面狀態**（`polarity: \"debuff\"`），⛔ 已排除 `named-variant` 那幾個（`burnstun` / `fang-stun` / `ingredient` / `omnislash-lock` / `trial-stun`）—— 那些是**別支技能專屬的 stun 別名**，借過來會讓「誰把我暈的」在戰報上指到錯的招式。\n⚠️ 三段減速只留最強的 `slow40`：25/30/40 是同一件事的三份，疊上去只是三個圖示。\n\n⚠️⚠️ **平衡後果要 owner 知道**：這一條字面上包含 `stun` / `root` / `fear` / `confusion` / `paralysis` / `numbness` 六種行動剝奪，而普攻在攻速 10 時是每秒 10 次 ⇒ 被鎖定的目標**實質上永遠無法行動**。1.0 秒是我照既有 `slow25` 的出貨值選的，⛔ 不是 owner 給的數字。要調的話最小的旋鈕有三個：時長、改成 `internalCooldown` 每 N 秒一次、或把六種行動剝奪從名單移除只留減益。\n\n[魔改解放] / [溢出] 未動。完整沿革見 `docs/legacy/_item-authoring-notes-full.md`。"
+  "authoringNote": "【owner 2026-08-18 裁決】「提高攻速上限至10 另外**攻擊附加全部負面效果**就好」。\n\n[上限突破] = `as capRaise 10.0`。原本三條 capRaisePct 有兩條是空頭（`ad` 的 unlocked===base、`critDamage` 根本不在 `config.stat-caps@1`），只有 `as` 解得開（4→10）。\n\n⭐ **2026-08-18 第二輪修正 —— 14 個 applyStatus 原本一格機制欄位都沒有。** applyStatus 收得下任何 statusId 字串，但 `sim/components.ts::StatusEffect` 只認得固定那幾格；沒填就只是一個字串：狀態列照樣畫圖示、玩家看到「他被暈了」就不敢上，而對方完全自由。⛔ 比沒效果更糟，它會誤導決策。逐個對照 StatusEffect 補上：\n· **破甲／破魔／麻痺** → applyStatus **沒有**護甲、魔抗、攻速這三格 ⇒ 走「標記 + 同秒數 applyBuff」（出貨前例：80-02 `godie-h01u.w` 破甲、92-02 `godie-h02v.e` 破魔、52-03 `godie-hapm.e` 麻痺）。armor/mr `pctAdd −0.5`、as `pctAdd −0.4`。⚠️ **stackKey + maxStacks:1 是承重的一格**：不填 stackKey 每一刀 attach 一個新的 ModifierSource，而 statPipeline 對 PercentAdd 會乘 `src.stacks` ⇒ 攻速 10 時一秒疊 10 份，防禦瞬間變負。\n· **燃燒** → applyStatus 沒有 dot 欄位 ⇒ 標記 + `dot`（50／0.5 秒，共 1 秒，`refresh`）。⛔ 不可以用 `independent`：普攻 10/s 會在一個受害者身上堆出幾十段燒傷（同 炎龍巨弩 godie-i00i 的風險）。\n· **致盲／詛咒** → `missChance 0.5`（`combat/evasion.ts::missChanceOf` 取 MAX，同值所以不會疊成 100%）。**混亂** → `berserk`+`targetsAllies`（同 `godie-h02k.r`）。**恐懼** → `feared`。**纏繞** → `root`。**暈眩** → `stun`。**減速40%** → `moveSpeedMult 0.6`。**癱瘓** → `silenced`+`disarmed`（stun 已含這兩格；分開填是為了 stun 被免控擋掉時還留得下一半）。\n· **重創** 0.5/0.5/0.5（owner 裁決⑥的預設）＋**禁療** 0/0/0（`no-heal.json`：禁療就是三格填 0 的重創）。⚠️ `sim/grievousWounds.ts` 的 `stackMode` 出貨是 `\"max\"` ＝取最小倍率 ⇒ **兩者同時在身上時禁療的 0 蓋過重創的 0.5**，重創那三個數字要等禁療先被拔掉才看得到。\n\n⚠️⚠️ **平衡後果，要 owner 知道**：14 條同時上，其中 `stun`/`root`/`feared`/混亂/癱瘓/麻痺 是行動剝奪，而攻速 10 ＝每秒 10 刀 ⇒ 被鎖定的目標**實質上永遠不能行動**，而且治療、吸血、自然回復全部歸零。**duration 1.0 秒、破甲／破魔 −50%、麻痺 −40%、燃燒 50／0.5 秒、失手 50% 全部是我定的數字，⛔ 不是 owner 給的。** 收斂的旋鈕有三個，三個都是欄位：時長、hook 加 `internalCooldown`（每 N 秒才附加一次）、或把六條行動剝奪從名單移除。\n\n⚠️ 名單刻意排除 named-variant（`burnstun`/`fang-stun`/`ingredient`/`omnislash-lock`/`trial-stun`）—— 那些是別支技能專屬的 stun 別名，借過來會讓戰報指到錯的招式；三段減速只留最強的 `slow40`。\n\n[魔改解放]／[溢出] 未動。完整沿革見 `docs/legacy/_item-authoring-notes-full.md`。"
 }

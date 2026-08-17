@@ -39,15 +39,32 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1
+                "coeff": 0.25
               }
             ]
           },
           "radius": 3.5,
-          "maxTargets": 3
+          "maxTargets": 3,
+          "onHitTargets": [
+            {
+              "kind": "dot",
+              "damageType": "magic",
+              "amountPerTick": {
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.25
+                  }
+                ]
+              },
+              "intervalSec": 1,
+              "durationSec": 3,
+              "stacking": "independent"
+            }
+          ]
         }
       ]
     }
   ],
-  "authoringNote": "[普通攻擊時]「每次普攻會同時發出 100% AP 傷害的炎龍怒火造成周圍 3名敵人燃燒傷害」= passive[0] 的 damageArea（ratios ap 1.0、maxTargets 3 = 文案的「3名敵人」、radius 3.5 = 這一批 on-hit 範圍傷害的出貨慣例，文案沒有給半徑）。\n【仍缺】「**持續3秒**」—— 現在是**一次打完**，不是分 3 秒燒。`dot` 效果（content/schema/effect.ts）是**單體**的：它作用在 ctx.targets 上，而 `damageArea` 沒有辦法帶一個 dot payload。要補需要 (a) 給 damageArea 一個「命中者各自套用的效果」陣列，或 (b) 給 dot 一個 radius。總傷害量是對的，分佈不是 —— 差別在對手有沒有機會在燒完之前把血補回來。\n已落地：最大魔力+20%。"
+  "authoringNote": "逐句對照（2026-08-18 稽核）：\n「AP+228」= modifiers ap flat 228。✅ 「最大魔力+20%」= maxMana pctAdd 0.2。✅\n\n[普通攻擊時]「每次普攻會同時發出 100% AP 傷害的炎龍怒火造成周圍 3名敵人燃燒傷害，持續3秒」= passive[0]。radius 3.5 = 這一批 on-hit 範圍傷害的出貨慣例（文案沒有給半徑）；maxTargets 3 = 文案的「3名敵人」；includeOrigin 省略 = false，被普攻打中的那個人不會再吃一次（他已經吃過普攻了）。\n⭐ **2026-08-18 修的是「持續3秒」**。這一行在此之前登記為【仍缺】：整份 100% AP **一次打完**，卡面上「燃燒⋯持續3秒」是一句零實作的話（第一·五守則要消滅的形狀）。當時的理由是「damageArea 沒辦法帶 dot payload」—— 那個理由已經過期了，`damageArea.onHitTargets`（effect.target-set-chain@1）就是「這個圓真的打到的那群人再跑一段」，而 `dot` 讀的正是 ctx.targets。\n⛔ **總傷害一個字都沒動**：100% AP 拆成 **4 次 ×25% AP**——命中當下 1 次（damageArea 自己那一發）＋ dot 3 秒每秒 1 次（intervalSec 1、durationSec 3）。所以這是**分佈**的修正，不是加強；差別正是舊備註寫的那一句「對手有沒有機會在燒完之前把血補回來」。\n⚠️ `stacking: \"independent\"` 是承重的一格，⛔ 不可以改成預設的 refresh：refresh 只延長期限、不加傷害，於是攻速再快每秒也只燒 25% AP —— 那會把這件武器**砍掉大半**。independent 讓每一次普攻各自帶一段自己的 3 秒燒，N 刀就是 N×100% AP，與修改前逐位元同量。\n⚠️ 燒傷預設吃得到【淨化】（`config.dispel@1` 的 dotDefaultDispellable，出貨 true）—— 這是新出現的互動，文案沒有講，因為它是全 repo 燒傷的共同規則而不是這件武器的特性。"
 }

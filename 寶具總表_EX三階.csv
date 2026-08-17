@@ -1,0 +1,205 @@
+階級,id,寶具名,權重,出現回合,抽中機率,每隊/每角上限,效能（卡面逐行）,翻盤力,引擎機制,tags,設計意圖／審查意見,修改需求
+EX,godie-i00z,四魂之玉,1,2 / 5,—,—,"力敏智+30
+魔力+300
+[緩慢] 周圍敵方 總攻擊速度 減半
+[緩慢] 周圍敵方 總移動速度 減半",2｜團隊光環,flat pctMult,wc3-import,,
+EX,godie-i061,死之王的神盾,1,2 / 5,—,—,"[焚身] 每秒造成周圍範圍燃燒 10% AP 傷害
+[腐蝕] 周圍敵方單位防禦 -30%
+額外 [死之王套裝] 同時裝備死之王長槍、意志、神盾，則總 AP 額外 + 300%",2｜團隊光環,damageArea onInterval pctAdd pctMult,wc3-import,,
+EX,godie-i03h,天地崩裂魔杖,1,2 / 5,—,—,"AP + 255
+總AP + 10%
+[暈眩] 施展技能的時候有 5%的機率招喚隕石流星雨，造成範圍 100% AP傷害及 2秒暈眩",1｜硬控,applyStatus damageArea onAbilityCast flat pctAdd,wc3-import,,
+EX,godie-i02e,狂暴軒轅劍,1,2 / 5,—,—,,1｜硬控,applyStatus onBasicAttack pctAdd,wc3-import,,
+EX,godie-i06j,獸人船長十字鎬,1,2 / 5,—,—,[暈眩] 11%機率攻擊附帶暈眩1秒,1｜硬控,applyStatus onBasicAttack,wc3-import,,
+EX,godie-i013,緣一零式,1,2 / 5,—,—,"攻擊力+38
+[暈眩] 8%的機率增加 140點傷害並暈眩0.1秒",1｜硬控,applyStatus damage onBasicAttack flat,wc3-import,,
+EX,godie-i06o,血染八月,1,2 / 5,—,—,"攻擊力+88
+[普通攻擊時] 攻擊敵方額外造成 88流血傷害，持續3秒
+[暈眩] 50%機率造成 0.01秒暈眩",1｜硬控,applyStatus dot onBasicAttack flat,"wc3-import,onhit",,
+EX,godie-i000,丈八蛇矛,1,2 / 5,—,—,"攻擊力+87
+生命+872
+[擴散] 擴散傷害87%",0｜數值型,damageArea onBasicAttack flat,wc3-import,,
+EX,godie-i027,光魔杖,1,2 / 5,—,—,"[普通攻擊時] 普攻附加消耗自己現存 MP 5%並造成傷害
+AP+ (目前MP的 5%)
+每秒魔力回復+18",0｜數值型,damage spendMana stat onBasicAttack > flat percentOf,"wc3-import,onhit",,
+EX,godie-i04d,冰晶虎魄 - 改,1,2 / 5,—,—,"[普通攻擊時] 普通攻擊附加冰凍效果，造成緩速 30%，持續0.6秒
+[緩慢] 10%機率寒冰爆，範圍 300點傷害並緩速3秒",0｜數值型,applyStatus damageArea onBasicAttack,wc3-import,,
+EX,godie-i03m,反射之盾,1,2 / 5,—,—,[反彈] 反彈普通攻擊傷害 200%,0｜數值型,damage onDamageTaken,wc3-import,,
+EX,godie-i00u,名刀-天狼,1,2 / 5,—,—,"[普通攻擊時] 每次攻擊造成敵方英雄現存生命 6%傷害
+攻擊速度+60%
+普攻吸血+10%",0｜數值型,damage onBasicAttack flat pctAdd,wc3-import,,
+EX,godie-i01n,天堂之劍,1,2 / 5,—,—,"總生命-50%
+[暴擊吸血] 6%機率造成10倍暴擊傷害，暴擊時吸血回復100%傷害",0｜數值型,pctAdd,wc3-import,,
+EX,godie-i00j,奇門盾甲,1,2 / 5,—,—,"每秒回復最大生命+1%
+[格擋] 50%格擋 AD 及 AP 傷害 (真實傷害無法阻擋)",0｜數值型,heal onInterval,wc3-import,,
+EX,godie-i06a,妖物碎殺牙,1,2 / 5,—,—,"攻擊力+112
+吸血+15％
+[普通攻擊時] 6%機率造成255傷害，持續3秒",0｜數值型,dot onBasicAttack flat,wc3-import,,
+EX,godie-i039,幻之匕首,1,2 / 5,—,—,"[普通攻擊時] 3%機率造成敵方 20%生命傷害
+[閃避] 閃避 + 10%",0｜數值型,damage onBasicAttack flat,wc3-import,,
+EX,godie-i06d,斬龍刀,1,2 / 5,—,—,"攻擊力+128
+防禦+12
+[暴擊] 20%機率造成 2倍傷害",0｜數值型,flat,wc3-import,,
+EX,godie-i06e,月牙魔杖,1,2 / 5,—,—,"[流星] 流星每秒造成 100% AP 範圍傷害（距離越遠流星傷害越低）
+AP+369
+魔抗+66.7%",0｜數值型,damageArea onInterval flat,wc3-import,,
+EX,godie-i018,朗基努斯之槍,1,2 / 5,—,—,"力量+12
+敏捷+12
+[普通攻擊時] (總敏捷)% 機率性造成等同 (總力量) 之閃電傷害
+[淨化] 普通攻擊時機率移除目標身上的增益",0｜數值型,damage dispel onBasicAttack,wc3-import,,
+EX,cleaver-of-the-warden,泰坦九頭蛇,1,2 / 5,—,—,"最大生命+10%
+[普通攻擊時] 攻擊附帶額外的（15+1.5%自身最大生命值）物理傷害攻擊特效，並生成一道衝擊波來對目標身後的敵人們造成（40+3%最大生命值）物理傷害。",0｜數值型,damage damageLine onBasicAttack pctAdd,"legendary,cleave,melee",,
+EX,godie-i00i,炎龍巨弩,1,2 / 5,—,—,"[普通攻擊時] 每次普攻會同時發出 100% AP 傷害的炎龍怒火造成周圍 3名敵人燃燒傷害，持續3秒
+AP+228
+最大魔力+20%",0｜數值型,damageArea dot onBasicAttack flat pctAdd,wc3-import,,
+EX,godie-i012,熾天使之弓,1,2 / 5,—,—,"[普通攻擊時] 每次削去敵方英雄現存 MP 3%，並附帶燃燒效果每秒燃燒3%最大生命，持續2秒
+攻擊速度+30%",0｜數值型,dot spendMana onBasicAttack pctAdd,wc3-import,,
+EX,godie-i020,瑪那魔杖,1,2 / 5,—,—,"AP+78
+魔力+520
+每秒魔力回復速度+12
+[普通攻擊時] 普攻附加敵方現存 MP 5%傷害，並且回復己方 MP 該傷害量",0｜數值型,damage onBasicAttack flat,wc3-import,,
+EX,godie-i01w,祕銀鎖子甲,1,2 / 5,—,—,"防禦+40
+魔抗+40%
+[重創] 敵方攻擊時吸血效果降低50%吸血回復量",0｜數值型,applyBuff onDamageTaken flat pctMult,wc3-import,,
+EX,godie-i06n,老衲的棒子,1,2 / 5,—,—,[緩慢] 10%機率攻擊附帶移動速度減半，持續 4秒,0｜數值型,applyStatus onBasicAttack,"wc3-import,onhit",,
+EX,godie-i007,虛哭神去,1,2 / 5,—,—,"普攻吸血+20%
+[普通攻擊時] 每次攻擊造成造成額外 [自身已損失的生命百分比數值(0~100)]",0｜數值型,damage onBasicAttack flat,wc3-import,,
+EX,godie-i01g,貫雷槍,1,2 / 5,—,—,"[緩慢] 8%的機率造成敵方緩速，移動速度 -2，持續 0.6秒
+[伸長] 近戰攻擊距離+4；遠戰攻擊距離+2
+[重創] 敵方攻擊時吸血效果降低50%吸血回復量",0｜數值型,applyBuff applyStatus onBasicAttack onDamageTaken flat pctMult,wc3-import,,
+EX,godie-i01i,雷神之鎚,1,2 / 5,—,—,"[普通攻擊時] 7%機率產生造成 100% AP 雷電範圍傷害，[緩慢] 並使範圍內部隊移動速度下降50%，持續1秒
+防禦+20
+AP+130
+[重創] 敵方攻擊時吸血效果降低50%吸血回復量",0｜數值型,applyBuff applyStatus damageArea onBasicAttack onDamageTaken flat pctMult,wc3-import,,
+EX,godie-i00s,黃金聖鬥衣,1,2 / 5,—,—,"[格擋] 50%機率抵擋 100% AP傷害
+生命+1200
+魔力+1200
+攻擊速度+120%
+總移動速度*1.2",0｜數值型,flat pctAdd pctMult,wc3-import,,
+EX∅ 根源,godie-i060,死之王的意志,1,10–10,8%,team 限 1,"AP+174
+[斬殺] 可直接斬殺生命低於 3%的敵方單位
+[緩慢] 周圍敵方 總移動速度 減半
+額外 [死之王套裝] 同時裝備死之王長槍、意志、神盾，則總 AP 額外 + 300%",6｜斬殺·團隊光環·真傷,damage stat onBasicAttack < flat pctAdd pctMult,wc3-import,,
+EX∅ 根源,teardrop-of-rebirth,再誕之淚珠,1,10–10,8%,team 限 1,"[再誕] 每回合一次，死亡 3 秒後以 100%生命、100%魔力復活
+[再誕] 復活後 6 秒內總傷害、治療與護盾 ×1.25、移速 ×1.20",3｜復活,applyBuff delayed revive stat status onDeath > flat pctMult,"legendary,revive,utility",,
+EX∅ 根源,godie-i031,天生牙,1,10–10,8%,team 限 1,"[復活] 殺死任一個敵方英雄單位，將復活我方所有英雄
+[回復] 殺死任一個敵方單位，回復我們全部英雄 1%生命
+[淨化] 每 10 秒移除周圍隊友身上的減益
+每秒生命回復+20",3｜復活,dispel restore revive onInterval onKill flat,wc3-import,,
+EX∅ 根源,godie-i06g,殺豬刀,1,10–10,8%,team 限 1,"攻擊力+37
+防禦+13
+攻擊速度+30%
+[變形] 專殺畜牲，7%機率將敵人變成食材，無法動作
+[格擋] 30%機率 抵擋致命一擊(超過現存生命的傷害)",1｜硬控,applyStatus onBasicAttack flat pctAdd,wc3-import,,
+EX∅ 根源,godie-i016,晨曦之光,1,10–10,8%,team 限 1,"[看穿] 看穿隱形
+[格擋] 30%機率 抵擋致命一擊(超過現存生命的傷害)
+每秒回魔+8
+冷卻縮減+30%
+[重創] 敵方攻擊時吸血效果降低50%吸血回復量",0｜數值型,applyBuff onDamageTaken flat pctMult,wc3-import,,
+EX解放,odm-gear,立體機動裝置,1,1+,15%,champion 限 1,"[飛行型態] 常駐飛行：無視單位與牆壁碰撞（仍受場地邊界與火圈約束）
+[機動上限解放] 移動速度上限 18 → 24，並使移動速度 +50%
+[超速] 使用位移或閃現之後 2 秒內，造成的傷害・治療・護盾 各 +3%",4｜解鎖上限·飛行,applyBuff onDashOrBlink capRaisePct flat pctAdd,"flight,legendary,mobility,movement-speed",,
+EX解放,godie-i02d,消失的密室,1,1+,15%,champion 限 1,"防禦+100
+魔抗+66.7%
+[神速] 攻擊速度+100%，上限提升至10 (預設上限為4)
+移動速度+4
+[暈眩] 4%的機率普攻造成暈眩 0.1秒",3｜解鎖上限·硬控,applyStatus onBasicAttack capRaise flat pctAdd,wc3-import,,
+EX解放,ultimate-mod-shiranui,終極魔改・不知火,1,1+,15%,champion 限 1,"[魔改解放] 攻擊力、攻擊速度、暴擊傷害 各自 ×1.5
+[上限突破] 攻擊速度上限提升至 10（預設上限為 4）
+[萬象凋零] 普攻命中敵方英雄時，附加全部負面效果各 1 秒：破甲（防禦 −50%）・破魔（魔抗 −50%）・致盲＋詛咒（普攻失手 50%）・燃燒（每 0.5 秒 50 點魔法傷害）・重創＋禁療（治療／吸血／自然回復歸零）・混亂・恐懼・麻痺（攻速 −40%）・癱瘓（不能施法也不能普攻）・纏繞・減速 40%・暈眩
+[溢出] 任一屬性首次達到一般上限時，這三項再 ×1.15，最多 3 次",3｜解鎖上限·硬控,applyBuff applyStatus dot onBasicAttack onStatCapReached capRaise pctAdd pctMult,"legendary,ad,attack-speed,crit",,
+EX解放,godie-i00l,落魂的嗜血劍,1,1+,15%,champion 限 1,"攻擊力+128
+[神速] 攻擊速度+200%，攻速上限提升到10 (預設上限為4)
+全能吸血+30%
+每秒損失 3%現存生命",3｜解鎖上限·真傷,damage onInterval capRaise flat pctAdd,wc3-import,,
+EX解放,godie-i014,天叢雲劍,1,1+,15%,champion 限 1,"攻擊速度+30%
+總移動速度*1.2
+[飛昇] 移動轉變為無視碰撞的飛行形態",2｜飛行,pctAdd pctMult,wc3-import,,
+EX解放,staff-of-ainz-ooal-gown,安茲・烏爾・恭之杖,1,1+,15%,champion 限 1,"[七寶玉解放] 七種行動各點亮 1 顆寶玉，最多 7 顆，整場不熄：Q／W／E／R／EX／天生技／普攻（同一種做再多次也只算一顆）
+[七寶玉解放] 每顆使你造成的傷害／治療／護盾 +5%（7 顆 = +35%）
+[自主迎擊] 七顆全亮的狀態下施放技能，即進入 7 秒「自主迎擊」，整場只會發生一次
+[自主迎擊] 期間每次施放基礎技能（Q／W／E）有 35%機率，法杖於 0.5 秒後免費再施放同一招一次（同等威力）",2｜額外施放,applyBuff delayed proxyCast status onAbilityCast onBasicAttack flat,"legendary,ability-power,on-cast",,
+EX解放,endless-edge,無盡連刃,1,1+,15%,champion 限 1,"[神速] 攻擊速度上限提升至 10 (預設上限為4)
+[疊層] 每次普攻命中攻擊速度增加10%，可無限疊加，1秒內沒有新的普攻命中則全部層數歸零",2｜解鎖上限,applyBuff onBasicAttack capRaise pctAdd,"legendary,attack-speed,melee,on-hit",,
+EX解放,shining-golden-orbs,閃耀金玉,1,1+,15%,champion 限 1,"[EX解放・金玉回歸] 每當自身任一屬性首次達到一般上限時，獲得 1 層「金玉」，最多 2 層。每層使：攻擊速度與吸血的上限解鎖 +25% ／ 攻擊力・法強・護甲・魔抗・生命上限・魔力上限・雙回復・攻速 各 ×1.15 ／ 移動速度 ×1.10
+[完全體] 取得第 2 層時觸發：上述屬性再 ×1.20 ／ 造成傷害、治療、護盾 ×1.20 ／ 技能冷卻流逝速度 ×1.20",2｜解鎖上限,applyBuff status onStatCapReached capRaisePct flat pctMult,"legendary,stat-cap,scaling",,
+EX解放,godie-i06q,鍊金術之盾,1,1+,15%,champion 限 1,"[嘲弄] 每秒吸引周圍敵人優先攻擊自己，持續 0.5秒
+[煉金術] 受敵人攻擊時，有 10%機率將直接將 HP 低於 5% 的敵人變成黃金 (敵方單位直接死亡，黃金數量為敵方等級)",1｜真傷,damage grantGold stat taunt onDamageTaken onInterval <,wc3-import,,
+EX解放,spear-of-lightning,雷槍,1,1+,15%,champion 限 1,"[雷槍裝填] 戰鬥中每 1.5 秒獲得 1 層裝填，最多 5 層，本回合內不衰退
+[爆炸] 帶著裝填時，普攻或技能命中敵方英雄會在他腳下炸開 150 + AP×0.6 的中範圍魔法傷害（普攻與技能各自 3 秒冷卻，層數不會被消耗）
+[雷槍裝填] 每層裝填使你造成的所有傷害 +10%，五層 ×1.50
+[感電] 爆炸同時讓範圍內的敵人癱瘓（走不動、打不出手、放不出技能）0.75 秒",1｜硬控,applyBuff applyStatus damageArea status onAbilityHit onBasicAttack onInterval flat,"legendary,mobility,burst",,
+EX解放,godie-i01s,仙后座,1,1+,15%,champion 限 1,"[迴避] 25%物理傷害迴避，迴避成功時瞬間移動 (前進一小段距離)
+[淨化] 每 1 秒移除自己身上的一個減益
+最大魔力+100%
+每秒回魔+25
+冷卻縮減+50%",0｜數值型,dash dispel onEvade onInterval flat pctAdd,wc3-import,,
+EX解放,godie-i06f,傲慢水龍王,1,1+,15%,champion 限 1,"總 AP 額外 + 300%
+每秒回魔 + 7",0｜數值型,flat pctAdd,wc3-import,,
+EX解放,usagizuki-twin-crescents,兎月【雙弦月】,1,1+,15%,champion 限 1,"[下剋上] 普攻時比較雙方攻擊力：自身低於目標的 90%／80%／70%／60%／50%，每達成一條算一階，最多 5 階
+[下剋上] 每階暴擊率 +6%、暴擊傷害 ×1.10，持續 3 秒（每次普攻重新計算並延長）
+[滿階] 五階 = 暴擊率 +30%、暴擊傷害 ×1.61",0｜數值型,applyBuff stat onBasicAttack < flat pctMult,"legendary,crit,on-hit",,
+EX解放,soul-eater,噬魂者,1,1+,15%,champion 限 1,"[魂食] 親手擊殺一名敵方英雄獲得 1 個魂，最多 5 魂，效果整場保留
+[魂食] 每個魂使攻擊力或 AP ×1.08 —— 取得那一刻誰高就吃誰，逐魂各自判定（5 魂約 ×1.47）
+[魂食] 已經滿魂之後再擊殺敵方英雄，額外回復 25% 最大生命與 25% 最大魔力",0｜數值型,applyBuff restore stat status onKill >= pctMult,"legendary,ad,ap",,
+EX解放,godie-i067,惡夢魔王碎片,1,1+,15%,champion 限 1,"魔力 + 2200
+魔力回復速度+50
+總 AP 額外 + 100%
+[真實傷害] 所有裝備者技能傷害都轉為真實傷害",0｜數值型,flat pctAdd,wc3-import,,
+EX解放,fingerless-gloves,指貫手套,1,1+,15%,champion 限 1,"[計算式解放] 攻擊力 +20%
+[計算式解放] 攻擊力每跨過一道門檻（120／140／160／180／200／220／240／260／280／300），最終攻擊力再 ×1.03，最多 10 段乘算",0｜數值型,applyBuff stat onInterval >= pctAdd pctMult,"legendary,ad,stat-path",,
+EX解放,godie-i01d,死之王的長槍,1,1+,15%,champion 限 1,"攻擊力額外增加 17%
+[無視] 普通攻擊無視防禦給予傷害
+[普通攻擊時] 普攻附加敵方現存 MP 10%傷害，並且回復敵方最大 MP 10%
+額外 [死之王套裝] 同時裝備死之王長槍、意志、神盾，則總 AP 額外 + 300%",0｜數值型,damage restore onBasicAttack pctAdd,wc3-import,,
+EX解放,meteor-ring,流星之戒,1,1+,15%,champion 限 1,"[三星許願] 每回合開始時重新獲得 3 顆流星
+[三星許願] 基礎技能（Q／W／E）施放後消耗 1 顆：接下來 2 秒內你的傷害·治療·護盾 ×1.25、立即回復 50% 最大魔力、該格冷卻立刻縮短 40%
+[三星許願] 施放終極技能（R）時三顆都還在，則三顆一起消耗：接下來 2 秒內你的傷害·治療·護盾 ×1.5、R 冷卻立刻縮短 30%",0｜數值型,applyBuff modifyCooldown restore status onAbilityCast onUltimateCast flat,"legendary,on-cast,mana",,
+EX解放,torch-master,火把師父,1,1+,15%,champion 限 1,"[熟練度解放] 每次命中敵方英雄累積 1 層熟練度，最多 20 層，整個回合不會衰退
+[熟練度解放] 每層使你造成的傷害／治療／護盾 +2%（20 層 = ×1.40）。普攻與技能共用同一份熟練度",0｜數值型,applyBuff onAbilityHit onBasicAttack flat,"legendary,on-hit,stat-path",,
+EX解放,godie-i06i,炎神弩,1,1+,15%,champion 限 1,"攻擊力+42
+攻擊速度+60%
+[普通攻擊時] 攻擊額外造成 10-1000 傷害，敵我距離越遠傷害越高 (0~10)(冷卻1秒)",0｜數值型,damage onBasicAttack flat pctAdd,wc3-import,,
+EX解放,godie-i03f,甘豆腐之袍,1,1+,15%,champion 限 1,"MP + 600
+每秒魔力回復速度+4
+[疊層] 每殺死一名英雄可以額外獲得 10點智慧，上限 160",0｜數值型,grantAttribute onKill flat,wc3-import,,
+EX解放,stone-mask,石鬼面,1,1+,15%,champion 限 1,"[究極肉體] 生命首次低於 50%時啟動至回合結束：最大生命 ×1.25、生命回復 ×3、全能吸血 +25%、攻速 ×1.25、移速 ×1.15
+[疊層] 究極肉體啟動後，生命每再掉一階（低於 50%／40%／30%／20%／10%）各再使生命回復 ×1.10，五階合計 ×1.61",0｜數值型,applyBuff stat status onDamageTaken < flat pctMult,"legendary,defense,lifesteal",,
+EX解放,lance-kongotetsu,神槍・金剛徹,1,1+,15%,champion 限 1,"[必中解放] 連續攻擊獲得〔金剛〕最多 6 層，每層普攻傷害 ×1.04、攻擊速度 ×1.05
+[必中解放] 滿層後普攻無法被迴避，仍可被格擋、護盾抵消
+[長柄] 攻擊距離 +1",0｜數值型,applyBuff status onBasicAttack flat pctMult,"legendary,on-hit,attack-speed,ad",,
+EX解放,book-of-gospel,福音書,1,1+,15%,champion 限 1,"[福音] 每次使用基礎技能（Q／W／E）累積 1 頁〔福音〕，最多 4 頁；每頁使自身造成的傷害・治療・護盾 +8%（四頁 ×1.32）
+[福音] 集滿四頁後的下一個基礎技能進入〔既定未來〕：接下來 3 秒內的傷害・治療・護盾再 +60%（與頁數合計約 ×1.92），並返還該格 50% 剩餘冷卻。每回合限一次",0｜數值型,applyBuff modifyCooldown status onAbilityCast flat,"legendary,ability-power,cooldown",,
+EX解放,meat-cleaver,肉切菜刀,1,1+,15%,champion 限 1,"[重量解放] 戰鬥中每 0.5 秒沒有普攻便獲得 1 層重量，最多 5 層；打出普攻後停止累積，已累積的層數 2.5 秒內逐層落下
+[重量解放] 每層使攻擊力 ×1.15（五層約 ×2.01）
+[重量解放] 帶著重量的普攻，會以目標為圓心炸開一道 50% 攻擊力的中範圍物理震波，波及他周圍的敵人（目標本人不再吃這一道）",0｜數值型,applyBuff damageArea status onBasicAttack onInterval pctMult,"legendary,ad,cleave",,
+EX解放,godie-i004,至尊魔戒,1,1+,15%,champion 限 1,"魔力+1000
+技能吸血+20%
+[隱身] 永久隱身 (不會被主動索敵)，但攻擊會現身，無動作 3秒後再次隱身。",0｜數值型,flat,wc3-import,,
+EX解放,collar-of-the-deadly-soul,致命魂之首輪,1,1+,15%,champion 限 1,"[成長曲線解放] 力量、敏捷、智慧各 +30
+[不再浪費] 達到等級上限後，每擊殺一名敵方英雄使攻擊力・法強・護甲・魔抗・生命上限・魔力上限・攻速・移速各 ×1.05，最多 5 層（乘算，五層約 ×1.28）",0｜數值型,applyBuff stat onKill >= pctMult,"legendary,stat-path,survivability",,
+EX解放,pale-moon-requiem-crown,蒼月葬送・千年彼方花冠,1,1+,15%,champion 限 1,"[蒼月開花] 自己受到過量治療時（每 3 秒最多一次）生成 1 朵蒼月花，最多 8 朵，本回合內不凋謝
+[花瓣] 每朵使你的治療與護盾輸出 +4%（八朵 ×1.32）
+[溢流成盾] 開花的同時，把那一次的溢出化成 120 + AP×0.5 的護盾，持續 4 秒
+[千年花園] 集滿八朵時展開 8 秒「千年花園」：我方全體的治療與護盾輸出 ×1.40，並各自獲得 200 + AP×0.8 的護盾（每 30 秒最多展開一次）",0｜數值型,applyBuff shield status onOverheal flat,"legendary,support,shield",,
+EX解放,godie-i01v,螺旋劍,1,1+,15%,champion 限 1,"[普通攻擊時] 每次普通攻擊皆會施展螺旋擊，直線範圍造成魔力5%傷害，同時消耗1%魔力
+攻擊速度+100%
+移動速度+2",0｜數值型,damageLine spendMana stat onBasicAttack >= flat pctAdd,wc3-import,,
+EX解放,mystery-scrap-of-paper,謎之紙片,1,1+,15%,champion 限 1,"[不可壞] 單次受到超過最大生命 20% 的傷害時，該傷害最多只能造成 20% 最大生命
+[不可壞] 每受到一次傷害（每 8 秒最多一次），最大生命 ×1.05，最多 3 層，整場保留",0｜數值型,applyBuff onDamageTaken flat pctMult,"legendary,tank,survivability",,
+EX解放,bulwark-charge-greaves,近擊的巨人鎧,1,1+,15%,champion 限 1,"裝甲+100
+每秒生命回復+12
+[衝刺] 力量主屬性的近戰英雄施放技能時向前衝刺 4.5 距離（冷卻 8 秒）",0｜數值型,dash onAbilityCast flat,"legendary,mobility,tank",,
+EX解放,gravity-sword-black-rod,重力劍〈黑棒〉,1,1+,15%,champion 限 1,"[質量解放] 戰鬥中每 0.6 秒未普攻獲得 1 層〔質量〕，最多 5 層；普攻會讓計時重新開始
+[質量解放] 每層使攻擊力 ×1.18，五層約 ×2.29，本回合內持續
+[重力壓制] 五層〔質量〕時的普攻讓敵方英雄緩速 30%，持續 1.5 秒",0｜數值型,applyBuff applyStatus status onBasicAttack onInterval pctMult,"legendary,melee,attack-damage",,
+EX解放,godie-i006,雅典娜的驚嘆號,1,1+,15%,champion 限 1,"AP+333
+AP+33%
+每秒魔力回復速度+13
+[普通攻擊時] 每次攻擊造成造成額外 33% AP傷害",0｜數值型,damage onBasicAttack flat pctAdd,wc3-import,,
+EX解放,godie-i00f,霸王破甲槍,1,1+,15%,champion 限 1,"[穿透] 普攻無視敵方 100% 護甲
+總防禦+10%
+總攻擊+10%",0｜數值型,pctAdd,wc3-import,,
+EX解放,magic-armor-type-zero,魔導鎧・零式,1,1+,15%,champion 限 1,"[爐心解放] 每施放一次技能獲得 1 層魔導輸出，最多 5 層，本回合內不衰退
+[魔導輸出] 每層使攻擊力、AP、裝甲、魔抗 ×1.06；五層約 ×1.34
+[過載] 滿層後所有技能（含 EX）冷卻流逝 ×1.5、移速 +2；普攻不受影響",0｜數值型,applyBuff status onAbilityCast flat pctMult,"legendary,mana,ap,tank",,

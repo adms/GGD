@@ -76,7 +76,11 @@ const CONTENT_DIR = join(dirname(fileURLToPath(import.meta.url)), "../../../../.
 
 /** 出貨的棱彩池 + 出貨的卡片寬度（`content/config/arena-rules.json` offerCount）。 */
 const POOL = "legendary-weapons";
-const FALLBACK_POOL = "quest-rewards";
+// ⚠️ 2026-08-18：備援表本來是 `quest-rewards`，owner 那天把它整張搬進
+// `content/_legacy/loot-tables/`。改用 `[EX解放]` 那一階 —— 它跟主池
+// **完全不相交**（owner「一件寶具只屬於一個池」），所以「借到的」與「本來就抽得到的」
+// 分得比以前更乾淨。
+const FALLBACK_POOL = "ex-release-weapons";
 const CARD = 3;
 
 /**
@@ -191,10 +195,12 @@ describe("候選池真的耗盡時的三種合約 (eco-draft-topup)", () => {
   it("★ fallback：只剩一條可用時從第二張表借滿三張，借來的也要過白名單", () => {
     cover(TAG);
     const fallbackIds = LootTables.get(FALLBACK_POOL).entries.map((e) => e.itemId as string);
-    // 借得到的必須是 quest-rewards 獨有的條目，否則「借到」和「本來就抽得到」
-    // 分不開。兩張表有重疊（godie-i004 等 8 條同時在兩邊）。
+    // 借得到的必須是備援表**獨有**的條目，否則「借到」和「本來就抽得到」分不開。
     const onlyInFallback = fallbackIds.filter((id) => !poolIds.includes(id));
-    expect(onlyInFallback.length, "quest-rewards 已經是 legendary-weapons 的子集，換一張備援表").toBeGreaterThan(0);
+    expect(
+      onlyInFallback.length,
+      `${FALLBACK_POOL} 已經是 ${POOL} 的子集，換一張備援表`,
+    ).toBeGreaterThan(0);
 
     const policy: ItemDraftPolicy = {
       ...DEFAULT_ITEM_DRAFT_POLICY,

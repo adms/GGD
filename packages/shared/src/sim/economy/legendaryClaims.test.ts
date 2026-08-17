@@ -502,18 +502,31 @@ function key(stat: Stat, op: ModOp, attackType?: string): string {
 }
 
 let pool: ItemDoc[];
+/** 三張寶具池的聯集 —— 只給「解析器還活著嗎」那兩條覆蓋率斷言用。 */
+let allPool: ItemDoc[];
 let champions: ChampionDoc[];
 
 beforeAll(async () => {
   const store = (await new ContentLoader(new FsContentSource(CONTENT_DIR)).load()).store;
   const byId = new Map(store.all<ItemDoc>("items").map((d) => [d.id as string, d]));
+  const resolve = (itemId: string): ItemDoc => {
+    const doc = byId.get(itemId);
+    if (!doc) throw new Error(`寶具 ${itemId} has no content doc`);
+    return doc;
+  };
   const table = store.all<LootTableDoc>("loot-tables").find((t) => t.id === LEGENDARY_POOL_TABLE);
   if (!table) throw new Error(`content/loot-tables/${LEGENDARY_POOL_TABLE}.json is missing`);
-  pool = table.entries.map((e) => {
-    const doc = byId.get(e.itemId as string);
-    if (!doc) throw new Error(`legendary ${e.itemId} has no content doc`);
-    return doc;
-  });
+  pool = table.entries.map((e) => resolve(e.itemId as string));
+  // ⭐ 2026-08-18：**每一張**寶具池的聯集。owner 那天把上架寶具切成
+  // EX / [EX解放] / [EX∅ 根源] 三階，而 `LEGENDARY_POOL_TABLE` 只是傳說寶玉那一張
+  // （EX）。⚠️ 這裡刻意分成兩個變數，因為這個檔案問的是**兩種不同的問題**：
+  //   · `pool`     ——「這一件有沒有說出它給的數值」。主體是 EX 池（傳說寶玉那張）。
+  //   · `allPool`  ——「這些**解析器**還讀得到東西嗎」。解析器是共用機器，
+  //                   它的樣本本來就散在三張池上：[神速]/[迴避] 的樣本 2026-08-18
+  //                   搬進了 ex-release，只讀 EX 池會讓那兩個 reader 被誤判成死的。
+  allPool = store.all<LootTableDoc>("loot-tables").flatMap((t) =>
+    t.entries.map((e) => resolve(e.itemId as string)),
+  );
   champions = store.all<ChampionDoc>("champions");
 });
 
@@ -678,7 +691,7 @@ describe("傳說武器 say what they do (效能 ⇔ modifiers)", () => {
     // to the unannounced-modifier test.
     const deaf: string[] = [];
     for (const tag of Object.keys(TAG_READERS)) {
-      const lines = pool.flatMap((d) => efficacyLines(d).filter((l) => l.includes(`[${tag}]`)));
+      const lines = allPool.flatMap((d) => efficacyLines(d).filter((l) => l.includes(`[${tag}]`)));
       if (lines.length === 0) {
         deaf.push(`[${tag}] has a TAG_READER but no line in the pool carries it`);
         continue;
@@ -770,7 +783,7 @@ describe("傳說武器 say what they do (效能 ⇔ modifiers)", () => {
 
     // Every named exemption must still match something the pool ships. A dead
     // exemption is cover for a line nobody reads any more.
-    const shipped = pool.flatMap((d) => efficacyLines(d)).map(collapse);
+    const shipped = allPool.flatMap((d) => efficacyLines(d)).map(collapse);
     for (const f of FORMULA_EXEMPT) {
       expect(shipped.some((l) => f.re.test(l)), `FORMULA_EXEMPT ${f.re} matches no shipped line — dead cover`).toBe(true);
     }

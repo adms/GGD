@@ -2,7 +2,7 @@
 """傳說武器道具 → Excel。
 
 來源全部是 repo 裡出貨的那一份（content/），不是任何手寫清單：
-  · 池子    content/loot-tables/legendary-weapons.json
+  · 池子    content/loot-tables/{legendary,ex-release,ex-origin}-weapons.json（三階）
   · 文件    content/items/<id>.json
   · 標記表  content/config/item-card.json
 
@@ -185,9 +185,14 @@ def fmt_set(s):
 
 
 # ---------------------------------------------------------------- 讀資料
-lt = load("content/loot-tables/legendary-weapons.json")
-ids = [e.get("itemId") or e.get("id") if isinstance(e, dict) else e
-       for e in (lt.get("entries") or lt.get("items") or [])]
+# ⭐ owner 2026-08-18 把上架寶具切成三階（EX / [EX解放] / [EX∅ 根源]）。
+# ⛔ 件數不再寫死 —— 讀三張檔，一件寶具只屬於一個池。
+POOL_TABLES = ["legendary-weapons", "ex-release-weapons", "ex-origin-weapons"]
+ids = []
+for _t in POOL_TABLES:
+    _lt = load(f"content/loot-tables/{_t}.json")
+    ids += [e.get("itemId") or e.get("id") if isinstance(e, dict) else e
+            for e in (_lt.get("entries") or _lt.get("items") or [])]
 docs = {}
 for fn in os.listdir(os.path.join(ROOT, "content/items")):
     if fn.endswith(".json") and not fn.startswith("_"):
@@ -351,7 +356,7 @@ NOTES = [
     ["", "content/ 出貨檔直接產生的，不是手寫清單。改了內容重跑一次就是最新的。"],
     ["", ""],
     ["來源（全部可追）", ""],
-    ["池子（哪 49 件會出現在三選一）", "content/loot-tables/legendary-weapons.json"],
+    [f"池子（哪 {len(ids)} 件會出現在三選一）", "content/loot-tables/{" + ",".join(POOL_TABLES) + "}.json"],
     ["每一件的資料", "content/items/<id>.json"],
     ["標記→分類", "content/config/item-card.json 的 markers"],
     ["", ""],
@@ -370,7 +375,7 @@ NOTES = [
     ["", "⚠️ 只看 modifiers 會漏掉它們（2026-08-10 我就是這樣看漏的）。"],
     ["完整 JSON", "原始文件全文，可以直接貼回 content/items/<id>.json。"],
     ["", ""],
-    ["JSON 可組性", "每一件「需不需要額外程式」。今天 49/49 都是「不用」——"],
+    ["JSON 可組性", f"每一件「需不需要額外程式」。今天 {len(ids)} 件全部都是「不用」——"],
     ["", "機制全部由現有的 item@1 欄位組出來。這一欄有一天變成「需要」時，說明欄會寫出卡在哪一個機制。"],
     ["機制詞彙表", "引擎目前提供的 12 個機制欄位各自能表達什麼、誰在用。"],
     ["", "這一頁就是「JSON 能組出什麼」的完整答案 —— 要新機制才寫得出來的東西，不會出現在這裡。"],
@@ -405,7 +410,7 @@ style_sheet(ws5, widths=[4, 16, 14, 10, 40, 6, 12, 62], wrap_cols=set("EH"))
 
 # ============================ Sheet 6：機制詞彙表 ============================
 ws6 = wb.create_sheet("機制詞彙表")
-ws6.append(["機制欄位", "住在哪", "它能表達什麼", "這 49 件裡誰在用"])
+ws6.append(["機制欄位", "住在哪", "它能表達什麼", f"這 {len(ids)} 件裡誰在用"])
 VOCAB = [
     ("modifiers", "item@1.modifiers",
      "常駐屬性。op 決定怎麼疊：flat 相加／pctAdd 進**同一個總和桶**（+100% 與 +300% ⇒ ×5.0，不是 ×8.0）／"

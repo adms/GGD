@@ -115,8 +115,10 @@ function factsOf(id: string): ItemFacts {
 /** The four 四魂之玉 shards — dropped by policy, see starter.go gate D4. */
 const isJewelShard = (f: ItemFacts): boolean => f.name.includes("四魂之玉的碎片");
 
+/** 三階寶具池（owner 2026-08-18）。⛔ 列的是檔名，成員從註冊表讀。 */
+const POOL_TABLES = ["legendary-weapons", "ex-release-weapons", "ex-origin-weapons"];
+
 let shop: string[] = [];
-let draft: string[] = [];
 let services: string[] = [];
 let legendary: string[] = [];
 let allItems: string[] = [];
@@ -125,7 +127,6 @@ beforeAll(async () => {
   registerAll((await new ContentLoader(new FsContentSource(CONTENT_DIR)).load()).store);
   const src = readFileSync(STARTER_GO, "utf-8");
   shop = goList(src, "starterShopItems");
-  draft = goList(src, "starterDraftItems");
   services = goList(src, "starterServiceItems");
   legendary = goList(src, "starterLegendaryItems");
   allItems = [...Items.ids()] as string[];
@@ -149,7 +150,11 @@ describe("the two surfaces are exactly what the gates say (item-01)", () => {
     // way — an effective final that the pool claims is NOT shop stock. This is
     // derived from the shipped loot table, not from a hand-kept exclusion list,
     // so moving an item between the two surfaces needs no edit here.
-    const claimedByLegendary = new Set(LootTables.get("legendary-weapons").entries.map((e) => e.itemId as string));
+    // ⭐ 2026-08-18: ALL THREE tier tables. Reading one of three would let a 寶具
+    // promoted to [EX解放] quietly become shop stock again.
+    const claimedByLegendary = new Set(
+      POOL_TABLES.flatMap((t) => LootTables.get(t).entries.map((e) => e.itemId as string)),
+    );
     const want = allItems
       .filter((id) => {
         const f = factsOf(id);
@@ -182,21 +187,23 @@ describe("the two surfaces are exactly what the gates say (item-01)", () => {
     }
   });
 
-  it("DRAFT = exactly the QUEST set, both halves (item-01)", () => {
+  it("WEAPONS = exactly the union of the three tier tables, both halves (item-01)", () => {
     cover("arena-item-surfaces");
-    // Owner rule 2: 「隨機三選一才能選到 所有任務道具 … 不要放這些任務道具以外的
-    // 東西」. The draft is derived from craftRole == "quest" — and crucially the
-    // effect gate is NOT applied, because four quest items (仙后座/戰旗/復仇之袍/
-    // 惡魔吉他) carry only an active/aura item@1 cannot express yet (#56) and the
-    // owner still wants them draftable. INCLUSION and EXCLUSION are both pinned.
-    const wantQuest = allItems.filter((id) => factsOf(id).role === "quest").sort();
-    expect([...draft].sort(), "the draft surface has drifted from the quest set").toEqual(wantQuest);
-    expect(draft.length).toBeGreaterThanOrEqual(6);
-    for (const id of draft) {
-      expect(factsOf(id).role, `draft item ${id} is not a quest item`).toBe("quest");
-    }
-    // The legendary/orb pool is a SEPARATE surface (not a 3-choose-1 draft); it
-    // is asserted for its own closure below.
+    // ⚠️ 「DRAFT = exactly the QUEST set」 WAS HERE. owner 2026-08-18 retired the
+    // 任務道具 label —「在競技場新玩法**則完全不考慮這個標籤**」— and its 6 items moved
+    // into the tier tables. What replaces it is the closure that actually decides
+    // whether a player can be dealt a card: the whitelist's weapon surface must be
+    // the union of the pools, id for id, BOTH directions.
+    //
+    // Measured 2026-08-18 before this existed: 22 of ex-release-weapons' listed
+    // entries were not whitelisted, `offerCount` still read 3, and nothing warned
+    // — MatchController rolls BEFORE it filters, so an unlisted id eats a slot.
+    const pooled = POOL_TABLES.flatMap((t) => LootTables.get(t).entries.map((e) => e.itemId as string));
+    expect(new Set(pooled).size, "同一件寶具出現在兩個池 —— 它會被抽兩次").toBe(pooled.length);
+    expect(
+      [...legendary].sort(),
+      "starter.go's weapon surface has drifted from the three loot tables",
+    ).toEqual([...pooled].sort());
     expect(legendary.length).toBeGreaterThanOrEqual(6);
   });
 
@@ -218,10 +225,7 @@ describe("the two surfaces are exactly what the gates say (item-01)", () => {
       }
     }
     const free = new Map<string, string>();
-    for (const [surface, list] of [
-      ["legendary", legendary],
-      ["draft", draft],
-    ] as const) {
+    for (const [surface, list] of [["legendary", legendary]] as const) {
       for (const id of list) {
         expect(
           paid.get(id),
@@ -231,35 +235,14 @@ describe("the two surfaces are exactly what the gates say (item-01)", () => {
       }
     }
 
-    // THE HALF owner 2026-08-01 BROKE, stated honestly instead of asserted away.
-    // 「請你將我剛剛輸入的 49 項傳說武器道具都實作完，登錄在隨機三選一」 named 6
-    // craftRole-"quest" items into the 棱彩 pool. They therefore sit on the DRAFT
-    // surface (owner rule 2 is 「所有任務道具」 — every quest item is draftable,
-    // and the Go guard TestStarterDraftIsQuestSet enforces that in both
-    // directions) and in the legendary pool at the same time.
-    //
-    // This is NOT a skip-list: the overlap is pinned id-for-id, so a SEVENTH id
-    // drifting in fails here, and each of the 6 still has to be a 0g quest item
-    // (i.e. free through both doors, never purchasable through either).
-    // 2026-08-01: quest-rewards is not wired to any round, so nothing in a live
-    // match reaches these two ways today — the round card rolls legendary-weapons
-    // for both weapon rounds. See match/arenaRules.test.ts.
-    const bothFree = [...draft].filter((id) => legendary.includes(id)).sort();
-    expect(bothFree, "the DRAFT∩LEGENDARY overlap is owner's 2026-08-01 list, exactly").toEqual(
-      [
-        "godie-i004", // 至尊魔戒
-        "godie-i00z", // 四魂之玉
-        "godie-i01n", // 天堂之劍
-        "godie-i01s", // 仙后座
-        "godie-i06j", // 獸人船長十字鎬
-        "godie-i06n", // 老衲的棒子
-      ].sort(),
-    );
-    for (const id of bothFree) {
-      const f = factsOf(id);
-      expect(f.role, `${id} (${f.name}) is on two FREE surfaces but is not a quest item`).toBe("quest");
-      expect(f.cost, `${id} (${f.name}) is on two FREE surfaces and carries a price`).toBe(0);
-    }
+    // ⭐ 2026-08-18 THE SURFACES ARE A PARTITION AGAIN. owner 2026-08-01 had made
+    // DRAFT∩LEGENDARY a pinned 6-id overlap (quest items named into the 棱彩 pool
+    // while 「所有任務道具」 kept them on the draft surface); he retired the 任務道具
+    // label on 2026-08-18, so there is no second free surface left to overlap with.
+    // Stated as an emptiness rather than deleted — a NEW overlap is exactly the
+    // shape that double-weights an id in a roll.
+    const bothFree = [...shop, ...services].filter((id) => legendary.includes(id)).sort();
+    expect(bothFree, "an id is on a GOLD surface and the free weapon surface at once").toEqual([]);
     // The old single-pass `seen` map also caught a list that repeats an id.
     // Keeping that: two surfaces are now allowed to share an id, one surface
     // listing it twice never was.
@@ -267,7 +250,6 @@ describe("the two surfaces are exactly what the gates say (item-01)", () => {
       ["shop", shop],
       ["services", services],
       ["legendary", legendary],
-      ["draft", draft],
     ] as const) {
       expect(new Set(list).size, `the ${surface} surface lists the same id twice`).toBe(list.length);
     }
@@ -298,7 +280,7 @@ describe("the two surfaces are exactly what the gates say (item-01)", () => {
     // item literally named "shard OF the jewel" sitting next to the completed
     // jewel is the last artefact that could send a player hunting for a
     // crafting UI that does not exist.
-    expect(draft).toContain("godie-i00z"); // 四魂之玉
+    expect(legendary).toContain("godie-i00z"); // 四魂之玉（2026-08-18 起是 EX 池的一員）
     // ⚠️ 2026-08-18: the four shards are `craftRole: "component"` — the purest
     // 「合成過渡期道具」 there is — so they left the operating tree with the other
     // 100. That is the STRONGER form of what this always wanted: the jewel ships,
@@ -357,9 +339,9 @@ describe("nothing that cannot work is reachable (item-02)", () => {
     expect(dead.length).toBeGreaterThan(10);
     for (const id of dead) {
       expect(shop, `no-effect item ${id} is on the shop shelf`).not.toContain(id);
-      if (factsOf(id).role !== "quest") {
-        expect(draft, `no-effect non-quest item ${id} is draftable`).not.toContain(id);
-      }
+      // ⚠️ 2026-08-18：`draft` 那一面沒有了（owner 退掉 任務道具 標籤）。空殼不可以
+      // 出現在**寶具池**上 —— 那比舊規則嚴格：舊的對 craftRole==="quest" 開了豁免。
+      expect(legendary, `no-effect item ${id} is in a 寶具 pool`).not.toContain(id);
       expect(Items.tryGet(id as ItemId), `${id} must still exist as content`).toBeDefined();
     }
   });
@@ -370,7 +352,7 @@ describe("nothing that cannot work is reachable (item-02)", () => {
     // player reached least (the 2400g orb only); it is now what BOTH weapon
     // 3-choose-1 rounds hand out, so it is the MOST reachable of the three and
     // was the only one nothing scanned for a unit/import blowout.
-    for (const id of [...shop, ...draft, ...legendary]) {
+    for (const id of [...shop, ...legendary]) {
       const f = factsOf(id);
       expect(f.insane, `${id} (${f.name}) carries impossible values`).toEqual([]);
     }
@@ -386,14 +368,12 @@ describe("nothing that cannot work is reachable (item-02)", () => {
   });
 });
 
-describe("both draft tables can actually pay out (item-03)", () => {
-  it("quest-rewards mirrors the draft surface exactly", () => {
-    cover("arena-item-draft-tables");
-    const table = LootTables.get("quest-rewards");
-    expect([...table.entries.map((e) => e.itemId)].sort()).toEqual([...draft].sort());
-  });
+describe("the weapon pools can actually pay out (item-03)", () => {
+  // ⚠️ 「quest-rewards mirrors the draft surface exactly」 WAS HERE. owner 2026-08-18
+  // moved that table wholesale into `content/_legacy/loot-tables/`; the mirror it
+  // pinned is now the three-table union asserted in the WEAPONS surface test above.
 
-  it("every legendary-weapons entry is real, effective, and NOT purchasable", () => {
+  it("every 寶具 pool entry is real, effective, and NOT purchasable", () => {
     cover("arena-item-draft-tables");
     // This assertion is INVERTED from task #70's, on purpose. #70 required
     // every legendary to be in the shop so a drop was never something you
@@ -407,10 +387,9 @@ describe("both draft tables can actually pay out (item-03)", () => {
     // them were still listed in starter.go's `starterShopItems` until this batch
     // pulled them (see the surface note in that file).
     const inShop = new Set(shop);
-    expect([...LootTables.get("legendary-weapons").entries.map((e) => e.itemId)].sort()).toEqual(
-      [...legendary].sort(),
-    );
-    for (const e of LootTables.get("legendary-weapons").entries) {
+    const poolEntries = POOL_TABLES.flatMap((t) => LootTables.get(t).entries);
+    expect([...poolEntries.map((e) => e.itemId)].sort()).toEqual([...legendary].sort());
+    for (const e of poolEntries) {
       expect(Items.tryGet(e.itemId), `${e.itemId} must exist`).toBeDefined();
       expect(factsOf(e.itemId).effective, `${e.itemId} would grant NOTHING`).toBe(true);
       expect(inShop.has(e.itemId), `${e.itemId} is a legendary you can simply BUY`).toBe(false);

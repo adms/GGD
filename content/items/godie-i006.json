@@ -27,6 +27,7 @@
     }
   ],
   "craftRole": "final",
+  "authoringNote": "逐句對照（2026-08-18 稽核，這份文件在此之前**沒有** authoringNote）：四句效能全部對得上，**資料與描述一個字都沒改**。\n「AP+333」= modifiers ap flat 333。✅\n「AP+33%」= modifiers ap pctAdd 0.33。✅ ⚠️ 這一條**不是**那四個結構性 no-op 的形狀：屬性管線是 `(base+Σflat)×(1+ΣpctAdd)×Π(1+pctMult)`，`ap` 有真的 base（來自智慧），而且同一件武器自己就給了 flat 333 —— 所以 pctAdd 乘的是「英雄基礎 AP + 333 + 其他 flat」，一定動得了。（⛔ 會逐位元無效的是掛在 base=0 的加成型屬性上的 **pctMult**，這裡兩個條件都不成立。）\n「每秒魔力回復速度+13」= modifiers manaRegen flat 13（`Stat.ManaRegen` 的單位就是每秒）。✅\n「[普通攻擊時] 每次攻擊造成造成額外 33% AP傷害」= passive[0] 的 damage（damageType magic、ratios ap 0.33）。✅ ratios 讀的是**施法者**面板（effects/effectCommon.ts::casterStats），而那份面板已經含上面兩條 —— 所以 333 與 +33% 會回頭放大這一發，是**同一件武器內部**刻意的自乘。onBasicAttack 的發射點在迴避／失手兩道閘之後，所以「每次攻擊」＝每次真的命中。\n⚠️ 描述裡的「造成造成」是 w3x 匯入留下的疊字，⛔ **沒有動它** —— 它不是效能宣稱，而 owner 的文案逐字為準（第〇·六守則）。同一個疊字也在 虛哭神去 godie-i007 上，是同一批匯入的痕跡。\n⚠️ 「神器」與 `tier: 2` 不衝突：前者是 w3x 時代的稀有度字樣（寫在描述第一行），後者是經濟層的階，兩者從匯入起就不是同一根軸。\n⛔ 這件武器**沒有** requiresAttackType、沒有 hook `requires` —— 遠程英雄拿到它四句話全部有效，所以卡面沒有任何隱藏的閘要交代。",
   "passive": [
     {
       "on": "onBasicAttack",

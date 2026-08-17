@@ -48,7 +48,19 @@ import { rulesFromDoc } from "./arenaRules";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(HERE, "../../../../content");
-const RETIRED = "quest-rewards";
+/**
+ * 被宣告退場的那張表。
+ *
+ * ⚠️ 2026-08-18：本來是 `quest-rewards`。owner 那天把它**整張**搬進
+ * `content/_legacy/loot-tables/`，於是它連對照組都發不出卡 —— 這個檔量的是
+ * 「宣告退場」這一個變因，用一張根本不存在的表當夾具會讓對照組跟著死掉，
+ * 實驗組則會用**錯誤的理由**通過（0 張是因為表不存在，不是因為退場）＝失敗形態④。
+ * ⇒ 換成一張真的存在的出貨池。⛔ 這不是換掉被守的機制：`retiredLootTables`
+ * 是一份 arena-rules 的宣告，它對**任何**表都成立，而這個檔的兩份文件仍然只差那一格。
+ * ⚠️ 出貨的 arena-rules 沒有宣告這張表退場（它是 [EX解放] 那一階），
+ * 退場宣告只活在這個檔自己合成的那兩份文件裡。
+ */
+const RETIRED = "ex-release-weapons";
 /** A round with NO weapon card of its own, so the one we add is unambiguous. */
 const TEST_ROUND = "4";
 
@@ -61,7 +73,7 @@ beforeAll(async () => {
   expect(SHIPPED_DOC.rounds[TEST_ROUND]?.weaponLootTable, "round 4 must ship with no card").toBeUndefined();
 });
 
-/** The overlay an operator could save today: quest-rewards back on round 4. */
+/** The overlay an operator could save today: a retired table back on round 4. */
 function docSchedulingRetired(retire: boolean): ConfigArenaRulesDoc {
   return zConfigArenaRulesDoc.parse({
     ...SHIPPED_DOC,

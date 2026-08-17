@@ -21,7 +21,8 @@
     ]
   },
   "retiredLootTables": [
-    "quest-rewards"
+    "quest-rewards",
+    "round-reward"
   ],
   "legendaryShelf": {
     "open": true,
@@ -35,7 +36,7 @@
       "label": "EX∅ 根源",
       "table": "ex-origin-weapons",
       "minRound": 10,
-      "maxRound": 12,
+      "maxRound": 10,
       "basePct": 8,
       "underdogFactor": 4,
       "underdogExponent": 2,
@@ -110,29 +111,9 @@
     "10": {
       "grantLevels": 10,
       "grantGold": 3750,
-      "augmentTier": "prismatic"
-    },
-    "11": {
-      "grantLevels": 0,
-      "grantGold": 4000,
-      "augmentTier": "prismatic"
-    },
-    "12": {
-      "grantLevels": 0,
-      "grantGold": 4000,
-      "augmentTier": "prismatic"
-    },
-    "13": {
-      "grantLevels": 0,
-      "grantGold": 4000,
-      "augmentTier": "prismatic"
+      "augmentTier": "prismatic",
+      "weaponLootTable": "ex-origin-weapons"
     }
-  },
-  "overflow": {
-    "grantLevels": 0,
-    "grantGold": 4000,
-    "grantGoldPerRound": 0,
-    "augmentTier": "prismatic"
   },
   "flowers": {
     "firstSpawnSec": 15,

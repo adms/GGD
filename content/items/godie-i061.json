@@ -60,10 +60,10 @@
         {
           "stat": "armor",
           "op": "pctMult",
-          "value": 0.7
+          "value": -0.3
         }
       ]
     }
   ],
-  "authoringNote": "【2026-08-01 落地】[死之王套裝]「同時裝備死之王長槍、意志、神盾，則總 AP 額外 + 100%」= 三份文件各自帶一份**一模一樣**的 sets 區塊（item@1.sets，pieces 三件、requiredPieces 省略 = 全部）。獎勵不是掛在每一件上，而是 sim/economy/itemSets.ts 依 set id 掛**一個** `item-set:` 來源 —— 每件各掛一份就會變成 pctAdd 3.0（+300%）。重算點在 economy/itemSource.ts 的 attachItemSource / detachItemSource，所以買 / 賣 / 反悔 / 三選一 / 商店預覽全都會重跑，不必各自記得。守衛：sim/lichkingSet.test.ts（出貨文件）與 sim/economy/itemSets.test.ts（機制）。"
+  "authoringNote": "⭐ 2026-08-18 逐句稽核（第一·五守則「不放任何無效說明」）——**這一件抓到一個真的反了的符號**。\n\n[焚身]「每秒造成周圍範圍燃燒 10% AP 傷害」= passive[0]。「每秒」= on:\"onInterval\" + internalCooldown 1（⛔ onInterval 漏填 ICD 會變成每 tick 一次，schema 有 refine 在擋）；「10% AP」= damageArea ratios ap 0.1；damageType magic 與 radius 4 / maxTargets 5 是**文案沒有給**的三個值，三個都是欄位 —— radius 4 與下面那圈腐蝕靈氣**刻意同半徑**，讓玩家看到的「周圍」只有一個圈。includeOrigin 省略 = false，而 onInterval 沒有震央，所以這一格在這裡本來就無關。\n\n[腐蝕]「周圍敵方單位防禦 -30%」= auras[0]（affects enemy，armor pctMult **-0.3**）。\n⛔ **2026-08-18 修正：這一格出貨時寫的是 `0.7`。** 管線是 `(base+Σflat)×(1+ΣpctAdd)×Π(1+pctMult)`（sim/stats/statPipeline.ts:183 `pctMult *= 1 + m.value * stacks`），所以 `0.7` 的意思是 **×1.7 = 敵人護甲 +70%**，正好是卡面那句話的**反面** —— 一件寫著「敵方防禦 -30%」的傳說裝，實際上在幫敵人加護甲。作者顯然想寫的是「×0.7」，而這一格收的是**加成**不是倍率本身。改成 -0.3 之後 ×0.7，逐字等於卡面。\n⭐ 同批的另外兩圈減益靈氣都是負值（四魂之玉 godie-i00z 的 as/ms 各 -0.5、死之王的意志 godie-i060 的 ms -0.5「減半」），所以出貨慣例本身沒有分歧，分歧的只有這一格。\n\n[死之王套裝]「同時裝備死之王長槍、意志、神盾，則總 AP 額外 + **300%**」= sets 區塊（ap pctAdd **3**）。⚠️ 這一段的舊備註寫的是「+ 100%」，而卡面與資料都是 300% —— 三份套裝文件的備註是同一段複製的，一起更正（第三守則：註解會說謊）。三份文件各自帶一份**一模一樣**的 sets 區塊（pieces 三件、requiredPieces 省略 = 全部）；獎勵不是掛在每一件上，而是 sim/economy/itemSets.ts 依 set id 掛**一個** `item-set:` 來源 —— 每件各掛一份才會變成 +300%×3。重算點在 economy/itemSource.ts 的 attach/detachItemSource，所以買 / 賣 / 反悔 / 三選一 / 商店預覽全都會重跑。守衛：sim/lichkingSet.test.ts 與 sim/economy/itemSets.test.ts。\n\n✅ 反向對帳（JSON → 描述）：modifiers 不存在、passive 只有一條、auras 只有一圈、sets 一份 —— 沒有任何「給了但卡面沒講」的效果。"
 }

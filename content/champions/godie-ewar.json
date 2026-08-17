@@ -59,18 +59,18 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        12,
-        12,
-        12,
-        12
+        12.0,
+        12.0,
+        12.0,
+        12.0
       ],
       "manaCost": [
-        30,
-        57,
-        83,
-        90
+        30.0,
+        57.0,
+        83.0,
+        90.0
       ],
-      "range": 4,
+      "range": 4.0,
       "targetsEnemies": true,
       "effects": [
         {
@@ -78,10 +78,10 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              150,
-              283,
-              350,
-              350
+              150.0,
+              283.0,
+              350.0,
+              350.0
             ],
             "ratios": [
               {
@@ -94,7 +94,7 @@
         {
           "kind": "applyStatus",
           "statusId": "confusion",
-          "duration": 1,
+          "duration": 1.0,
           "berserk": true,
           "targetsAllies": true
         }
@@ -112,18 +112,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        60,
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        50,
-        100,
-        150,
-        200
+        50.0,
+        100.0,
+        150.0,
+        200.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [
         {
@@ -160,18 +160,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -201,7 +201,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1
+                          "coeff": 1.0
                         }
                       ]
                     }
@@ -240,7 +240,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1
+                          "coeff": 1.0
                         }
                       ]
                     }
@@ -279,7 +279,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1
+                          "coeff": 1.0
                         }
                       ]
                     }
@@ -318,7 +318,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1
+                          "coeff": 1.0
                         }
                       ]
                     }
@@ -347,16 +347,16 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        250,
-        350,
-        450
+        250.0,
+        350.0,
+        450.0
       ],
-      "range": 0,
+      "range": 0.0,
       "radiusTier": "大",
       "targetsEnemies": true,
       "effects": [
@@ -365,25 +365,25 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              550,
-              750,
-              950
+              550.0,
+              750.0,
+              950.0
             ],
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 2
+                "coeff": 2.0
               }
             ]
           },
-          "radius": 6,
+          "radius": 6.0,
           "radiusTier": "大",
           "includeOrigin": true
         },
         {
           "kind": "dispel",
           "shape": "circle",
-          "radius": 6,
+          "radius": 6.0,
           "radiusTier": "大",
           "side": "enemies",
           "pools": {
@@ -403,7 +403,7 @@
         "shakeStyle": "omni",
         "sparkKind": "magic",
         "flashColor": [
-          1,
+          1.0,
           0.92,
           0.6
         ],
@@ -419,10 +419,7 @@
     "E",
     "R"
   ],
-  "buildPriority": [
-    "swift-boots",
-    "serrated-edge"
-  ],
+  "buildPriority": [],
   "tags": [
     "wc3-import",
     "godie"

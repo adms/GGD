@@ -28,8 +28,11 @@ import { ITEM_TIER_PRICE, STAT_TICK_PRICE, STAT_TICK_TARGET } from "@ggd/shared/
 import { GOLD_REWARDS, LEVEL_CAP, STARTING_GOLD } from "@ggd/shared/sim/economy/progression";
 import type { SeatId } from "@ggd/shared/ids";
 import { MatchController, type SeatSpec } from "./MatchController";
-import { HIGH_STAKES_FIRST_ROUND, HIGH_STAKES_PERIOD } from "./PairedDuels";
+import { FINAL_ROUND, HIGH_STAKES_FIRST_ROUND, HIGH_STAKES_PERIOD } from "./PairedDuels";
 import { DEFAULT_ARENA_RULES, grantForRound, resolveArenaRules, rulesFromDoc, type ArenaRules } from "./arenaRules";
+
+/** 三階寶具池（owner 2026-08-18）。⛔ 列的是檔名，成員從註冊表讀。 */
+const POOL_TABLES = ["legendary-weapons", "ex-release-weapons", "ex-origin-weapons"];
 
 const CONTENT_DIR = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
 
@@ -96,17 +99,19 @@ describe("config doc + rules resolution (arena-06)", () => {
     expect(ARENA.rounds.get(5)).toMatchObject({ grantLevels: 6, weaponLootTable: "legendary-weapons" });
     expect(ARENA.rounds.get(3)).toMatchObject({ grantLevels: 3, grantGold: 375 });
     expect(ARENA.gacha).toBeNull(); // weapon offers replace the legacy gacha
-    // The table is authored out to round 13. The owner's 2026-07-27 curve reaches
-    // the L50 cap at round 10, so rounds 11+ grant 0 levels and `overflow` is
-    // gold-only.
+    // ⭐ owner 2026-08-18:「EX根源是**最終回合大戰前**會出現的類別…請確定一定有
+    // 出現的機會至少一次」。第 10 回合的那一格既是保底池,也是 `weaponTiers` 的
+    // `ex-origin` 窗口(10..10)唯一會發寶具的回合 —— 少了它那一階在**結構上**
+    // 永遠不會出現(`weaponTierWindows.test.ts` 是那條關係的守衛)。
+    expect(ARENA.rounds.get(10)).toMatchObject({ weaponLootTable: "ex-origin-weapons" });
     expect(grantForRound(ARENA, 7)).toMatchObject({ grantLevels: 5, grantGold: 600, augmentTier: "prismatic" });
-    // owner 2026-08-01: 「第十回合後,每場都是 +4,000金幣」. Rounds 11-13 went
-    // 750 → 4000, and `overflow` went with them (4000 flat, per-round escalation
-    // ZEROED) so 「每場」 stays literal for any round past the authored table
-    // instead of falling off a cliff back to 750 at round 14.
-    expect(grantForRound(ARENA, 13)).toMatchObject({ grantLevels: 0, grantGold: 4000, augmentTier: "prismatic" });
-    expect(grantForRound(ARENA, 14)).toMatchObject({ grantLevels: 0, grantGold: 4000, augmentTier: "prismatic" });
-    expect(grantForRound(ARENA, 16)).toMatchObject({ grantLevels: 0, grantGold: 4000, augmentTier: "prismatic" });
+    // ⚠️ 2026-08-18: 第 11–13 回合與 `overflow` 搬進了
+    // `content/_legacy/config/arena-rules-rounds-11-13.json`。owner:「我早就已經把
+    // **第十回合作為最終回合**…打完就全部結算了」,而 `PairedDuels.FINAL_ROUND = 10`
+    // 就是那個結束條件 ⇒ 第 11 回合起**沒有比賽**,那幾筆設定永遠讀不到。
+    // 這裡改成陳述那件事本身:排程停在終局,而終局之後沒有 grant 可以領。
+    expect(Math.max(...ARENA.rounds.keys()), "排程超過終局回合 —— 那幾筆永遠讀不到").toBe(FINAL_ROUND);
+    expect(grantForRound(ARENA, FINAL_ROUND + 1), "終局之後還有 grant —— 那是舊資料").toBeNull();
 
     // the loaded content registry resolves to the SAME active rules
     expect(resolveArenaRules()).toEqual(ARENA);
@@ -141,15 +146,21 @@ describe("weapon-draft loot tables (arena-07)", () => {
     return (def.modifiers?.length ?? 0) > 0 || def.passive !== undefined;
   };
 
-  it("legendary-weapons: the shared round-card + 傳說寶玉 orb pool, all effective and unbuyable", () => {
+  it("三階寶具池: the round cards + 傳說寶玉 orb pool, all effective and unbuyable", () => {
     cover("arena-loot-table");
-    // Owner 2026-07-31: both round-2/5 weapon cards AND the 傳說寶玉 gacha roll
-    // this same table (see the per-round-curve test below) — reached two ways,
-    // not one. Owner 2026-08-01 then replaced the pool wholesale: 「隨機三選一
-    // 發放道具 都改成棱彩武器道具」, 24 → 49 entries, and the 25 of them that
-    // still carried a 300/1200 shop price were delisted to 0 in the same edit.
-    const table = LootTables.get("legendary-weapons");
-    expect(table.entries.length).toBeGreaterThanOrEqual(6);
+    // Owner 2026-07-31: the round weapon cards AND the 傳說寶玉 gacha roll the
+    // same tables — reached two ways, not one.
+    // ⭐ owner 2026-08-18 re-cut the surface into THREE tiers (EX / [EX解放] /
+    // [EX∅ 根源]). Every property below held over one table and holds over all
+    // three; reading only `legendary-weapons` would leave 40 寶具 unguarded.
+    const tables = POOL_TABLES.map((id) => LootTables.get(id));
+    const table = { entries: tables.flatMap((t) => t.entries) };
+    for (const t of tables) {
+      expect(t.entries.length, `${t.id} 湊不滿一張不重複的三選一`).toBeGreaterThanOrEqual(3);
+    }
+    // 一件寶具只屬於一個池 —— 跨池重複會被抽兩次（2026-08-18 之前有 5 件是這樣）。
+    const allIds = table.entries.map((e) => e.itemId as string);
+    expect(new Set(allIds).size, "同一件寶具出現在兩個池").toBe(allIds.length);
     // GGD 自撰的傳說（不是從 w3x 匯入的，所以沒有 `godie-` 前綴）。
     // ⚠️ 這是**允許清單**不是描述：新增一件自撰傳說而忘了列在這裡，這條就紅，
     //    而那正是它的工作 —— 它擋的是「悄悄多了一件沒人審過的傳說」。
@@ -157,9 +168,32 @@ describe("weapon-draft loot tables (arena-07)", () => {
     //    piercer-crossbow 射手百分比傷害）**也要從這裡拿掉**：留著等於預先核准
     //    它們無聲回鍋，而那正好是這條允許清單存在的理由。內容檔本身沒動。
     const GGD_AUTHORED = new Set([
-      "endless-edge", // #189 無盡連刃（近戰限定）
+      // ── EX
       "cleaver-of-the-warden", // 泰坦九頭蛇（近戰專用擴散）
+      // ── [EX解放]
+      "endless-edge", // #189 無盡連刃（近戰限定）
       "bulwark-charge-greaves", // 近擊的巨人鎧（坦克衝刺）
+      "book-of-gospel", // 福音書
+      "collar-of-the-deadly-soul", // 致命魂之首輪
+      "fingerless-gloves", // 指貫手套
+      "gravity-sword-black-rod", // 重力劍〈黑棒〉
+      "lance-kongotetsu", // 神槍・金剛徹
+      "magic-armor-type-zero", // 魔導鎧・零式
+      "meat-cleaver", // 肉切菜刀
+      "meteor-ring", // 流星之戒
+      "mystery-scrap-of-paper", // 謎之紙片
+      "odm-gear", // 立體機動裝置
+      "pale-moon-requiem-crown", // 蒼月葬送・千年彼方花冠
+      "shining-golden-orbs", // 閃耀金玉
+      "soul-eater", // 噬魂者
+      "spear-of-lightning", // 雷槍
+      "staff-of-ainz-ooal-gown", // 安茲・烏爾・恭之杖
+      "stone-mask", // 石鬼面
+      "torch-master", // 火把師父
+      "ultimate-mod-shiranui", // 終極魔改・不知火
+      "usagizuki-twin-crescents", // 兎月【雙弦月】
+      // ── [EX∅ 根源]
+      "teardrop-of-rebirth", // 再誕之淚珠
     ]);
     for (const e of table.entries) {
       expect(Items.tryGet(e.itemId), `item ${e.itemId} must exist`).toBeDefined();
@@ -192,63 +226,22 @@ describe("weapon-draft loot tables (arena-07)", () => {
     // the only two ways to one.
     const costs = table.entries.map((e) => Items.get(e.itemId).cost);
     expect(Math.max(...costs), "a legendary with a price is directly purchasable").toBe(0);
-  });
-
-  it("quest-rewards: the 0g quest set, unbuyable and effective", () => {
-    cover("arena-loot-table");
-    // ⚠️ Not wired to any round card as of 2026-07-31 (both weapon-draft
-    // rounds roll legendary-weapons now) — the table is still real, shipped
-    // content, still exercised directly by questDraftGate.test.ts's
-    // offerItems() calls, and stays a candidate table any future round could
-    // point weaponLootTable at again.
-    const table = LootTables.get("quest-rewards");
-    // has to fill a 3-choose-1 for every seat, twice over if re-rolled
-    expect(table.entries.length).toBeGreaterThanOrEqual(6);
+    // ⭐ 退場的「任務三選一」那條測試留下的唯一一句：四魂之玉的**碎片**永遠不發。
+    // 在一個沒有合成的遊戲裡，一件名字寫著「碎片」的東西擺在完成品旁邊，是最容易
+    // 把玩家送去找一個不存在的合成介面的東西。
     for (const e of table.entries) {
-      const def = Items.tryGet(e.itemId as never);
-      expect(def, `item ${e.itemId} must exist`).toBeDefined();
-      expect(e.weight).toBeGreaterThan(0);
-      // THE defining property of this surface: the shop cannot sell it to you.
-      expect(def!.cost, `${e.itemId} is buyable — it belongs in the shop`).toBe(0);
-      // NB: no doesSomething() gate here. Four quest items (仙后座/戰旗/復仇之袍/
-      // 惡魔吉他) carry only an active/aura item@1 cannot express yet (#56); owner
-      // rule 2 「所有任務道具」 still requires them draftable. See arenaItemModel.
-      expect(def!.craftRole, `${e.itemId} is not a quest item`).toBe("quest");
       expect(
-        def!.name.includes("四魂之玉的碎片"),
-        `${e.itemId} is a 四魂之玉 shard — shards are dropped, only the assembled jewel is drafted`,
+        Items.get(e.itemId).name.includes("四魂之玉的碎片"),
+        `${e.itemId} 是四魂之玉的碎片 —— 只有組好的那顆會被發出去`,
       ).toBe(false);
     }
-    // THE TWO FREE TABLES USED TO BE DISJOINT — free-quest-trinket vs
-    // free-legendary — so that which table a round pointed at decided what kind
-    // of thing you got. owner 2026-08-01 named SIX quest items into the 49-entry
-    // 棱彩 pool (「請你將我剛剛輸入的 49 項傳說武器道具都實作完，登錄在隨機三
-    // 選一」), so the two tables now share exactly those six.
-    //
-    // Pinned id-for-id rather than relaxed to "some overlap is fine": a seventh
-    // id drifting in, or one of these six quietly leaving one of the tables,
-    // still fails. The remaining 7 quest items are what keeps this table a
-    // distinct surface at all rather than a subset of the 棱彩 pool.
-    const legendary = new Set(LootTables.get("legendary-weapons").entries.map((e) => e.itemId as string));
-    const shared = table.entries
-      .map((e) => e.itemId as string)
-      .filter((id) => legendary.has(id))
-      .sort();
-    expect(shared, "the quest∩legendary overlap is owner's 2026-08-01 list, exactly").toEqual(
-      [
-        "godie-i004", // 至尊魔戒
-        "godie-i00z", // 四魂之玉
-        "godie-i01n", // 天堂之劍
-        "godie-i01s", // 仙后座
-        "godie-i06j", // 獸人船長十字鎬
-        "godie-i06n", // 老衲的棒子
-      ].sort(),
-    );
-    expect(
-      table.entries.length - shared.length,
-      "every quest item is now also a 棱彩 entry — quest-rewards has stopped being its own surface",
-    ).toBeGreaterThan(0);
   });
+
+  // ⚠️ 「quest-rewards: the 0g quest set」那條測試 2026-08-18 拿掉了。owner 那天把
+  // 整張表搬進 `content/_legacy/loot-tables/`（「任務道具」的標籤在競技場新玩法
+  // **完全不考慮**），它的 6 件成了三階池裡的普通寶具。
+  // ⛔ 沒有東西變得沒人守：0 元、weight>0、item 文件存在、不是四魂之玉碎片 ——
+  //    四條全部在上面那條合併後的守衛裡，而且現在陳述在 69 件而不是 6 件上。
 });
 
 describe("arena round grants (arena-01, arena-04, arena-05)", () => {
@@ -690,20 +683,27 @@ describe("the per-round curve (arena-curve)", () => {
   /** grantGold by round, straight off the authored doc. */
   const gold = (r: number): number => ARENA.rounds.get(r)?.grantGold ?? 0;
   const levels = (r: number): number => ARENA.rounds.get(r)?.grantLevels ?? 0;
-  const LAST = 13;
+  /**
+   * ⭐ 2026-08-18：`LAST` 從寫死的 13 改成**從終局回合推導**。
+   * owner:「我早就已經把**第十回合作為最終回合**全部玩家同一地圖大亂鬥，並且
+   * **打完就全部結算了**」「你是不是又查到舊資料了阿 快整理到 legacy 去」。
+   * 第 11–13 回合與 `overflow` 已經搬進
+   * `content/_legacy/config/arena-rules-rounds-11-13.json`。
+   */
+  const LAST = FINAL_ROUND;
 
-  it("is authored to round 13 — 3 rounds past the cap, so overflow is a guard rail", () => {
+  it("排程剛好蓋住整場比賽 —— 一格不多、一格不少", () => {
     cover("arena-config-parse");
-    // ⚠️ TITLE FIXED 2026-08-01: it used to say 「the measured longest match」,
-    // which stopped being true when FINAL_ROUND became the only end condition.
-    // Every round a match can actually reach has an EXPLICIT entry — and the
-    // table goes three rounds FURTHER than that, deliberately.
+    // ⚠️ 標題與內容 2026-08-18 改寫。它本來是「authored to round 13 — 3 rounds
+    // past the cap, so overflow is a guard rail」，而那三格是**永遠讀不到的舊資料**：
+    // `PairedDuels.FINAL_ROUND = 10` 是唯一的結束條件。owner:「打完就全部結算了」。
+    // ⛔ 那三格不是被刪掉，是搬進 `content/_legacy/config/`（知識不可以無聲消失）。
     for (let r = 1; r <= LAST; r++) {
-      expect(ARENA.rounds.get(r), `round ${r} must be authored, not inherited from overflow`).toBeDefined();
+      expect(ARENA.rounds.get(r), `round ${r} must be authored`).toBeDefined();
     }
-    expect(Math.max(...ARENA.rounds.keys())).toBe(LAST);
-    // …and overflow still exists, so a 14+ round outlier is never a dead round.
-    expect(grantForRound(ARENA, LAST + 1)?.augmentTier).toBe("prismatic");
+    expect(Math.max(...ARENA.rounds.keys()), "排程超過終局回合 —— 那幾格永遠讀不到").toBe(LAST);
+    // …而終局之後什麼都不發：沒有 overflow 就沒有「一個永遠打不到的回合還在付錢」。
+    expect(grantForRound(ARENA, LAST + 1), "終局之後還有 grant —— 那是舊資料").toBeNull();
   });
 
   it("gold no longer ramps monotonically — the owner's curve spikes and dips", () => {
@@ -741,10 +741,8 @@ describe("the per-round curve (arena-curve)", () => {
       expect(gold(r), `round ${r} spike dips after`).toBeGreaterThan(gold(r + 1));
     }
     expect(gold(10), "round 10 still steps UP off round 9").toBeGreaterThan(gold(9));
-    for (let r = 11; r <= LAST; r++) {
-      expect(gold(r), `round ${r} is on the owner's +4,000 plateau`).toBe(4000);
-      expect(gold(r), `the plateau must not sag below round 10`).toBeGreaterThan(gold(10));
-    }
+    // ⚠️ 2026-08-18:「第十回合後每場 +4,000 的高原」那一段拿掉了 —— 第 11 回合起
+    // 沒有比賽（`FINAL_ROUND = 10`），那個高原是舊資料，已搬進 `content/_legacy/config/`。
     // Every price in the ladder is a multiple of 25 (the 75g ladder no longer
     // holds: the owner's +1525 / +2750 spikes are not multiples of 75).
     for (let r = 1; r <= LAST; r++) expect(gold(r) % 25, `round ${r} gold is off the 25g ladder`).toBe(0);
@@ -790,9 +788,10 @@ describe("the per-round curve (arena-curve)", () => {
     // length the format does not produce today; the reachable ceiling is
     // `ceiling(10)`. Kept (rather than dropped to 10) because they are what
     // `overflow` + the authored 11-13 rows would pay the day the cap moves.
+    // ⚠️ 2026-08-18：`ceiling(11)` / `ceiling(13)` 拿掉了。它們是「第 11–13 回合的
+    // 舊排程 + overflow 會付多少」的算術，而那三格已經搬進 `content/_legacy/config/`
+    // —— 一個算在不存在的回合上的天花板，正是 owner 說的「舊資料」。
     expect(ceiling(10)).toBe(15675); // EVERY round of a real match, winning all of them
-    expect(ceiling(11)).toBe(19975);
-    expect(ceiling(13)).toBe(28575);
     expect(
       ceiling(LAST),
       "owner 2026-07-27: both paths ARE affordable now — if this ever goes back " +
@@ -908,32 +907,40 @@ describe("the per-round curve (arena-curve)", () => {
         `tier ${tier} runs for ${n} rounds against a ${pool}-card pool — the last card cannot fill`,
       ).toBeGreaterThanOrEqual(ARENA.offerCount);
     }
-    // and the shape that produces: silver 1-3, gold 4-6, prismatic 7-13
+    // and the shape that produces: silver 1-3, gold 4-6, prismatic 7-10
+    // ⚠️ prismatic 7 → 4（2026-08-18）：第 11–13 回合是永遠打不到的舊資料，已搬進
+    // `content/_legacy/config/`。⛔ 這不是把稜彩調短，是把不存在的三格拿掉。
     expect([...roundsPerTier.entries()].sort()).toEqual([
       ["gold", 3],
-      ["prismatic", 7],
+      ["prismatic", 4],
       ["silver", 3],
     ]);
   });
 
-  it("fires exactly two weapon cards, both legendary, matching the 6-slot build", () => {
+  it("fires three weapon cards — two EX plus the [EX∅ 根源] window before the finale", () => {
     cover("arena-config-parse");
-    // Owner rule (2026-07-31, supersedes #70): 「隨機三選一發放道具 都改成棱彩武器道具」
-    // — a weapon card rolls the SAME legendary-weapons pool the 2400g 傳說寶玉
-    // gacha rolls from. The card and the orb are now two different ways to the
-    // same pool, not two different pools.
+    // Owner rule (2026-07-31): 「隨機三選一發放道具 都改成棱彩武器道具」 — a weapon
+    // card rolls the same pool the 2400g 傳說寶玉 gacha rolls from.
+    // ⭐ owner 2026-08-18 added the third: 「EX根源是**最終回合大戰前**會出現的類別，
+    // 用途是扭轉戰局，**請確定一定有出現的機會至少一次**」. Round 10's entry is that
+    // guarantee — `pickWeaponTable` falls back to the round's own table when no
+    // tier rolls, so scheduling `ex-origin-weapons` there is what makes the tier
+    // reachable at all (its window is 10..10 and NO other round deals weapons).
     const cards = [...Array(LAST)]
       .map((_, i) => [i + 1, ARENA.rounds.get(i + 1)?.weaponLootTable] as const)
       .filter(([, t]) => t !== undefined);
-    expect(cards.map(([r]) => r)).toEqual([2, 5]);
-    for (const [r, table] of cards) {
-      expect(table, `round ${r} weapon card must roll the legendary pool`).toBe("legendary-weapons");
+    expect(cards).toEqual([
+      [2, "legendary-weapons"],
+      [5, "legendary-weapons"],
+      [10, "ex-origin-weapons"],
+    ]);
+    // 每一張排到的池都要真的存在（⛔ 排一張不存在的表 = 那一回合靜靜地不發卡）。
+    for (const [r, t] of cards) {
+      expect(LootTables.tryGet(t as never), `round ${r} 排的 ${t} 不是一張出貨的池`).toBeDefined();
     }
-    // TWO cards is a function of the SLOT COUNT, not the round count: they fill
-    // 2 of 6 slots free, which is what leaves exactly 4 POWERFUL to buy. A third
-    // card in a longer match would hand back a slot's worth of gold and reopen
-    // the fork this curve is holding shut.
-    expect(cards.length).toBe(2);
+    // 前兩張填掉 6 格裡的 2 格 —— 剩下 4 件 POWERFUL 要買，這就是金幣曲線撐著的那個數字。
+    // 第三張落在最終回合本身，⛔ 不進「買不買得起」的算術（那一場打完就結算）。
+    expect(cards.filter(([r]) => r < FINAL_ROUND).length).toBe(2);
   });
 
   it("round grants carry to L50 by round 10; the true cap is 99 (mob XP fills the rest)", () => {

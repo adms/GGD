@@ -271,7 +271,7 @@
         },
         {
           "kind": "applyStatus",
-          "statusId": "slow40",
+          "statusId": "slow60",
           "duration": 5,
           "moveSpeedMult": 0.4
         }
@@ -329,9 +329,7 @@
     "R"
   ],
   "buildPriority": [
-    "swift-boots",
     "godie-i002",
-    "serrated-edge",
     "godie-i05r",
     "godie-i06s"
   ],

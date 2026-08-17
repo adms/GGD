@@ -17,12 +17,13 @@
       "effects": [
         {
           "kind": "applyStatus",
-          "statusId": "slow40",
+          "statusId": "slow50",
           "duration": 4,
           "moveSpeedMult": 0.5
         }
       ]
     }
   ],
-  "craftRole": "quest"
+  "craftRole": "quest",
+  "authoringNote": "⭐ 2026-08-18 雙向逐句稽核（第一·五守則「不放任何無效說明」）：唯一那句效能**機制上**有實作，但有一處 **UI 標籤說謊**要 owner 裁決（見下）。\n\n「[緩慢] 10%機率攻擊附帶移動速度減半，持續 4秒」= passive[0]：\n· 「攻擊附帶」= `onBasicAttack`（普攻那一發），⛔ 不是 onDamageDealt。\n· 「10%機率」= `chance: 0.1`。\n· 「移動速度減半」= `moveSpeedMult: 0.5`（**乘算**）。⛔ 刻意不用 ms 的 flat/pctAdd：那兩個會跟英雄自己的移速加成、加速道具、以及 `config.stat-caps@1` 的 ms 上限（18／解鎖 24）混在同一個加總裡，「減半」就會變成「減某個數字」——對走得快的人是輕傷、對走得慢的人是釘死。乘算才是卡面那個字。\n· 「持續 4秒」= `duration: 4`。\n\n✅ **2026-08-18 同日稍後已修（出路①）**：`statusId` 原本是 `slow40` 而這一發實際減 50%，狀態列那顆圖示會對玩家說 40%。已新增 `content/status-effects/slow50.json` 並把 statusId 指過去。⛔ 沒有動 `moveSpeedMult`（玩家實際吃到的那一半本來就是對的 —— 真的減半）、⛔ 沒有動 description（owner 親筆，被 `legendary49OwnerText.test.ts` 逐位元釘住）。改的只有標籤。\n守衛：`packages/shared/src/content/slowLabelMatchesMultiplier.test.ts` —— statusId 裡的數字必須等於同一格 moveSpeedMult 換算出來的減速，⛔ 兩邊都從內容推導，不抄名單。\n\n⚠️ JSON→描述 方向（給了但不說）：**沒有**任何卡面沒講的效果 —— 無 modifiers、無 block、無 aura、無 requires 閘、無 internalCooldown。"
 }

@@ -63,6 +63,13 @@ class MissingIsLoud(unittest.TestCase):
         with self.assertRaises(V.VocabError):
             V.require_ops({"flat": None}, "測試")
 
+    def test_a_requirement_key_nobody_handles_raises(self):
+        # ⭐ 一個沒被處理的閘不會讓文案報錯，它只會讓那句閘門文字**少講一半**。
+        V.require_requirement_fields("測試")          # 出貨的欄位全部讀得懂
+        self.assertEqual(V.requirement_short_label({"attackType": "melee"}), "近戰")
+        with self.assertRaises(V.VocabError):
+            V.requirement_short_label({"attackType": "melee", "somethingNew": 1})
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

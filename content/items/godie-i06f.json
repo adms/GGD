@@ -27,5 +27,6 @@
       "godie-i06b"
     ],
     "book": "godie-i028"
-  }
+  },
+  "authoringNote": "⭐ 2026-08-18 雙向逐句稽核（第一·五守則「不放任何無效說明」）：兩句效能都有實作、資料與描述一個字都沒改。\n\n「總 AP 額外 + 300%」= modifiers ap **pctAdd 3.0**。屬性管線是 `(base+Σflat)×(1+ΣpctAdd)×Π(1+pctMult)`，所以 pctAdd 3.0 = 總 AP **×4**。「總」這個字正是選 pctAdd 而不是 flat 的理由 —— 它吃的是**加總之後**的 AP（英雄自己的智慧換算 + 其它裝備的 flat 都算進去），寫成 flat 就變成一個固定值、跟「總」無關。\n⚠️ 它也**不可以**寫成 pctMult：pctMult 那一族的陷阱是掛在 base=0 的加成型屬性上會 0×任何東西=0，而 ap 有 base 所以兩種都動得了；選 pctAdd 是因為卡面講的是**相加**的 +300%（多件同時帶會線性相加），⛔ 不是複利。\n⚠️ 3.0 剛好坐在 `ITEM_PERCENT_LIMIT`（schema/common.ts，出貨 3）上 —— 再高一格 Zod 就會整份拒收這份文件。要調高得先動那個帶寬。\n⚠️ 這一條**不是**那種「上限解不開所以逐位元無效」的空 modifier：`config.stat-caps@1` 的 ap 是 500000/500000，量到的最強 AP 組合是 4,125.7，離天花板還有兩個數量級。\n\n「每秒回魔 + 7」= modifiers manaRegen flat 7（單位本來就是每秒；ITEM_MODIFIER_LIMITS.manaRegen 上界 50）。\n\n⚠️ 解說裡的「因為三個老婆所以三倍!?」是**風味台詞**不是效果（CLAUDE.md 第〇·六守則②：`「」` 是對白）—— ⛔ 不要把它讀成第三條 modifier，也不要把「三倍」跟上面的 ×4 對帳。\n⚠️ JSON→描述 方向（同族缺陷：給了但不說）：**沒有**任何卡面沒講的效果 —— 無 passive、無 block、無 aura、無 requires 閘。"
 }

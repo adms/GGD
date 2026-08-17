@@ -60,16 +60,16 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        30,
-        30,
-        30,
-        30
+        30.0,
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
-        175,
-        275,
-        375,
-        475
+        175.0,
+        275.0,
+        375.0,
+        475.0
       ],
       "range": 6.42,
       "targetsEnemies": true,
@@ -79,10 +79,10 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              250,
-              350,
-              450,
-              550
+              250.0,
+              350.0,
+              450.0,
+              550.0
             ],
             "ratios": [
               {
@@ -99,8 +99,8 @@
           "onHitTargets": [
             {
               "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 1,
+              "statusId": "slow50",
+              "duration": 1.0,
               "moveSpeedMult": 0.5
             }
           ]
@@ -119,18 +119,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        60,
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        120,
-        180,
-        240,
-        300
+        120.0,
+        180.0,
+        240.0,
+        300.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [
         {
@@ -147,7 +147,7 @@
               "value": 0.3
             }
           ],
-          "duration": 12,
+          "duration": 12.0,
           "exclusiveGroup": "emfr-form",
           "perRank": [
             {
@@ -163,7 +163,7 @@
                   "value": 0.3
                 }
               ],
-              "duration": 12
+              "duration": 12.0
             },
             {
               "modifiers": [
@@ -178,7 +178,7 @@
                   "value": 0.6
                 }
               ],
-              "duration": 12
+              "duration": 12.0
             },
             {
               "modifiers": [
@@ -193,7 +193,7 @@
                   "value": 0.9
                 }
               ],
-              "duration": 12
+              "duration": 12.0
             },
             {
               "modifiers": [
@@ -208,7 +208,7 @@
                   "value": 1.2
                 }
               ],
-              "duration": 12
+              "duration": 12.0
             }
           ],
           "hooks": [
@@ -220,10 +220,10 @@
                   "damageType": "magic",
                   "amount": {
                     "perRank": [
-                      30,
-                      45,
-                      60,
-                      75
+                      30.0,
+                      45.0,
+                      60.0,
+                      75.0
                     ],
                     "ratios": [
                       {
@@ -253,18 +253,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        55,
-        55,
-        55,
-        55
+        55.0,
+        55.0,
+        55.0,
+        55.0
       ],
       "manaCost": [
-        180,
-        260,
-        340,
-        420
+        180.0,
+        260.0,
+        340.0,
+        420.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [
         {
@@ -276,7 +276,7 @@
               "value": -0.5
             }
           ],
-          "duration": 12,
+          "duration": 12.0,
           "exclusiveGroup": "emfr-form",
           "hooks": [
             {
@@ -287,10 +287,10 @@
                   "damageType": "magic",
                   "amount": {
                     "perRank": [
-                      60,
-                      90,
-                      120,
-                      150
+                      60.0,
+                      90.0,
+                      120.0,
+                      150.0
                     ],
                     "ratios": [
                       {
@@ -311,10 +311,10 @@
                   "damageType": "magic",
                   "amount": {
                     "perRank": [
-                      100,
-                      150,
-                      200,
-                      250
+                      100.0,
+                      150.0,
+                      200.0,
+                      250.0
                     ],
                     "ratios": [
                       {
@@ -329,7 +329,7 @@
                 {
                   "kind": "applyStatus",
                   "statusId": "burn",
-                  "duration": 3
+                  "duration": 3.0
                 }
               ],
               "target": "event",
@@ -351,16 +351,16 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        200,
-        400,
-        600
+        200.0,
+        400.0,
+        600.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [
         {
@@ -369,20 +369,20 @@
             {
               "stat": "ms",
               "op": "pctMult",
-              "value": 1
+              "value": 1.0
             },
             {
               "stat": "as",
               "op": "pctAdd",
-              "value": 1
+              "value": 1.0
             },
             {
               "stat": "as",
               "op": "capRaise",
-              "value": 10
+              "value": 10.0
             }
           ],
-          "duration": 12,
+          "duration": 12.0,
           "exclusiveGroup": "emfr-form",
           "perRank": [
             {
@@ -390,27 +390,27 @@
                 {
                   "stat": "ms",
                   "op": "pctMult",
-                  "value": 1
+                  "value": 1.0
                 },
                 {
                   "stat": "as",
                   "op": "pctAdd",
-                  "value": 1
+                  "value": 1.0
                 },
                 {
                   "stat": "as",
                   "op": "capRaise",
-                  "value": 10
+                  "value": 10.0
                 }
               ],
-              "duration": 12
+              "duration": 12.0
             },
             {
               "modifiers": [
                 {
                   "stat": "ms",
                   "op": "pctMult",
-                  "value": 1
+                  "value": 1.0
                 },
                 {
                   "stat": "as",
@@ -420,30 +420,30 @@
                 {
                   "stat": "as",
                   "op": "capRaise",
-                  "value": 10
+                  "value": 10.0
                 }
               ],
-              "duration": 12
+              "duration": 12.0
             },
             {
               "modifiers": [
                 {
                   "stat": "ms",
                   "op": "pctMult",
-                  "value": 1
+                  "value": 1.0
                 },
                 {
                   "stat": "as",
                   "op": "pctAdd",
-                  "value": 2
+                  "value": 2.0
                 },
                 {
                   "stat": "as",
                   "op": "capRaise",
-                  "value": 10
+                  "value": 10.0
                 }
               ],
-              "duration": 12
+              "duration": 12.0
             }
           ],
           "hooks": [
@@ -453,7 +453,7 @@
                 {
                   "kind": "applyBuff",
                   "modifiers": [],
-                  "duration": 3,
+                  "duration": 3.0,
                   "stackKey": "emfr-thunder-arm",
                   "maxStacks": 1,
                   "hooks": [
@@ -465,9 +465,9 @@
                           "damageType": "magic",
                           "amount": {
                             "perRank": [
-                              150,
-                              225,
-                              300
+                              150.0,
+                              225.0,
+                              300.0
                             ],
                             "ratios": [
                               {
@@ -507,10 +507,7 @@
     "E",
     "R"
   ],
-  "buildPriority": [
-    "swift-boots",
-    "serrated-edge"
-  ],
+  "buildPriority": [],
   "tags": [
     "wc3-import",
     "godie",

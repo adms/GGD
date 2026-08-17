@@ -23,12 +23,12 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 421 個檔案**，分佈在 2 個隔離區。
+**目前共 435 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
 | [`docs/legacy/`](legacy-index.md#docslegacy) | 43 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
-| [`content/_legacy/`](legacy-index.md#contentlegacy) | 378 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
+| [`content/_legacy/`](legacy-index.md#contentlegacy) | 392 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
 要用它之前先問「現行的那一份說什麼」—— 衝突時**現行的贏**（第〇·六守則）。
@@ -87,7 +87,7 @@ owner 2026-08-13：
 
 ---
 
-## `content/_legacy/` —— 378 檔
+## `content/_legacy/` —— 392 檔
 
 **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡
 
@@ -381,16 +381,18 @@ owner 2026-08-13：
 | `godie-usyl.json` | 英雄「殺戮之牙 - 異形」，4 格技能 |
 | `godie-uwar.json` | 英雄「食神 - 撒尿牛丸」，4 格技能 |
 
-### `config/` （1 檔）
+### `config/` （2 檔）
 
 | 檔案 | 是什麼 |
 |---|---|
-| `unit-tints-legacy.json` | ?「」 |
+| `arena-rules-rounds-11-13.json` | owner 2026-08-18：「我早就已經把**第十回合作為最終回合**全部玩家同一地圖大亂鬥，並且**打完就全部結算了**」「你是不是又查到舊資料了阿 快整理到 legacy 去」 |
+| `unit-tints-legacy.json` | 它是 41 位未上架英雄的 tint 保真度紀錄，跟著他們一起搬過來的 |
 
-### `items/` （101 檔）
+### `items/` （112 檔）
 
 | 檔案 | 是什麼 |
 |---|---|
+| `ember-rod.json` | 道具「餘燼魔杖」，craftRole=none |
 | `godie-i005.json` | 道具「初心者寶石」，合成過渡期道具（craftRole=component，原價 300） |
 | `godie-i009.json` | 道具「分手之鎚製作書」，製作書系列 |
 | `godie-i00a.json` | 道具「刺針製作書」，製作書系列 |
@@ -416,6 +418,7 @@ owner 2026-08-13：
 | `godie-i01e.json` | 道具「和道一文字製作書」，製作書系列 |
 | `godie-i01f.json` | 道具「和道一文字」，合成過渡期道具（craftRole=component，原價 300） |
 | `godie-i01h.json` | 道具「貫雷槍製作書」，製作書系列 |
+| `godie-i01k.json` | 道具「火焰泰坦腰帶」，craftRole=quest |
 | `godie-i01l.json` | 道具「雷神之鎚製作書」，製作書系列 |
 | `godie-i01m.json` | 道具「黑核晶」，合成過渡期道具（craftRole=component，原價 300） |
 | `godie-i01p.json` | 道具「聖誕之靴製作書」，製作書系列 |
@@ -438,7 +441,10 @@ owner 2026-08-13：
 | `godie-i02b.json` | 道具「妖物碎殺牙製作書」，製作書系列 |
 | `godie-i02c.json` | 道具「狂暴軒轅劍製作書」，製作書系列 |
 | `godie-i02f.json` | 道具「死神裝束製作書」，製作書系列 |
+| `godie-i02h.json` | 道具「戰旗」，craftRole=quest |
 | `godie-i02i.json` | 道具「泰坦之魂」，合成過渡期道具（craftRole=component，原價 0） |
+| `godie-i02j.json` | 道具「復仇之袍」，craftRole=quest |
+| `godie-i02k.json` | 道具「惡魔吉他」，craftRole=quest |
 | `godie-i02l.json` | 道具「舊系服」，合成過渡期道具（craftRole=component，原價 0） |
 | `godie-i02m.json` | 道具「牛蒡男」，合成過渡期道具（craftRole=component，原價 0） |
 | `godie-i02n.json` | 道具「斯巴達圓盾」，合成過渡期道具（craftRole=component，原價 0） |
@@ -452,6 +458,8 @@ owner 2026-08-13：
 | `godie-i02y.json` | 道具「斬岩刃製作書」，製作書系列 |
 | `godie-i02z.json` | 道具「盾甲天書製作書」，製作書系列 |
 | `godie-i032.json` | 道具「天生牙製作書」，製作書系列 |
+| `godie-i034.json` | 道具「大地泰坦角盔」，craftRole=quest |
+| `godie-i035.json` | 道具「海潮泰坦護盾」，craftRole=quest |
 | `godie-i036.json` | 道具「嗜血邪書製作書」，製作書系列 |
 | `godie-i037.json` | 道具「隱密介紹信」，合成過渡期道具（craftRole=component，原價 1000） |
 | `godie-i03a.json` | 道具「幻之匕首製作書」，製作書系列 |
@@ -485,6 +493,7 @@ owner 2026-08-13：
 | `godie-i05g.json` | 道具「世界樹的果實」，合成過渡期道具（craftRole=component，原價 1800） |
 | `godie-i05s.json` | 道具「嚇人假面」，合成過渡期道具（craftRole=component，原價 300） |
 | `godie-i05w.json` | 道具「觀音菩薩護身符」，合成過渡期道具（craftRole=component，原價 1650） |
+| `godie-i05y.json` | 道具「蜂蜜罐」，craftRole=quest |
 | `godie-i065.json` | 道具「godie-i065」，合成過渡期道具（craftRole=component，原價 1150） |
 | `godie-i066.json` | 道具「復仇之玉」，合成過渡期道具（craftRole=component，原價 300） |
 | `godie-i069.json` | 道具「女神之淚製作書」，製作書系列 |
@@ -492,4 +501,14 @@ owner 2026-08-13：
 | `godie-i06m.json` | 道具「真知之石」，合成過渡期道具（craftRole=component，原價 950） |
 | `godie-i06p.json` | 道具「godie-i06p」，合成過渡期道具（craftRole=component，原價 1250） |
 | `godie-i06r.json` | 道具「一克拉鑽戒」，合成過渡期道具（craftRole=component，原價 300） |
+| `ironhide-vest.json` | 道具「鐵皮護甲背心」，craftRole=none |
+| `serrated-edge.json` | 道具「鋸齒之刃」，craftRole=none |
+| `swift-boots.json` | 道具「疾風之靴」，craftRole=none |
+
+### `loot-tables/` （2 檔）
+
+| 檔案 | 是什麼 |
+|---|---|
+| `quest-rewards.json` | loot-table@1「quest-rewards」 |
+| `round-reward.json` | loot-table@1「round-reward」 |
 

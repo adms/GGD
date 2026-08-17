@@ -50,6 +50,7 @@ REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 
 STAT_TYPES_TS = os.path.join(REPO, "packages", "shared", "src", "sim", "stats", "statTypes.ts")
 MODIFIERS_TS = os.path.join(REPO, "packages", "shared", "src", "sim", "stats", "modifiers.ts")
+REQUIREMENT_TS = os.path.join(REPO, "packages", "shared", "src", "sim", "content", "requirement.ts")
 BASE_BONUS_TS = os.path.join(REPO, "packages", "shared", "src", "sim", "baseBonus.ts")
 CURATED_JSON = os.path.join(REPO, "tools", "skill-spec", "curated.json")
 STAT_CAPS_JSON = os.path.join(REPO, "content", "config", "stat-caps.json")
@@ -295,6 +296,112 @@ def label_table(overrides: dict, what: str = "屬性") -> dict:
     if blank:
         raise VocabError(f"{what} 有 {len(blank)} 條的名字是空字串：{'、'.join(blank)}")
     return table
+
+
+# ---------------------------------------------------------------------------
+# 職業限定閘（`StatModifier.requires`）—— 一條 modifier 上的**條件**
+# ---------------------------------------------------------------------------
+#
+# ⚠️ 為什麼這一段住在這裡而不是住在某一支產生器裡：`requires` 是**任何**吃
+# `StatModifier[]` 的東西都會遇到的（道具、三選一、靈氣、套裝加成、將來每一種）。
+# 抄在一支產生器裡，第二支就會漏 —— 而漏掉的形狀是**靜默相加**：
+# 貫雷槍的 `range +4（近戰）` 與 `range +2（遠程）` 被折成一句
+# **「攻擊距離+6」**，一個沒有任何英雄拿得到的數字，印在作者自己寫對的那句話正上方。
+
+
+@functools.lru_cache(maxsize=None)
+def _requirement_src() -> str:
+    return _strip_comments(_read(REQUIREMENT_TS))
+
+
+@functools.lru_cache(maxsize=None)
+def requirement_fields() -> tuple:
+    """`ClassRequirement` 的每一個欄位名，照宣告順序（⛔ 不是手抄的四個）。"""
+    body = _block(_requirement_src(), "export interface ClassRequirement", REQUIREMENT_TS)
+    fields = tuple(dict.fromkeys(re.findall(r"^\s*(\w+)\??\s*:", body, re.M)))
+    if not fields:
+        raise VocabError("`ClassRequirement` 解析出 0 個欄位 —— 解析器與程式碼分家了")
+    return fields
+
+
+def _ts_string_record(const_name: str) -> dict:
+    body = _block(_requirement_src(), f"const {const_name}", REQUIREMENT_TS)
+    table = dict(re.findall(r"(\w+)\s*:\s*\"([^\"]+)\"", body))
+    if not table:
+        raise VocabError(f"requirement.ts 的 `{const_name}` 解析出 0 列")
+    return table
+
+
+@functools.lru_cache(maxsize=None)
+def _mismatch_default() -> float:
+    m = re.search(r"DEFAULT_MISMATCH_SCALE\s*=\s*([\d.]+)", _requirement_src())
+    if not m:
+        raise VocabError("requirement.ts 裡找不到 `DEFAULT_MISMATCH_SCALE`")
+    return float(m.group(1))
+
+
+#: `requirement_short_label` 真的讀得懂的欄位。⛔ 這不是清單 ——
+#: 「有哪些欄位」永遠是 `requirement_fields()`，這裡只說「哪幾個我處理得了」。
+_HANDLED_REQUIREMENT_FIELDS = ("attackType", "primaryStat", "onMismatch", "mismatchScale")
+
+
+def require_requirement_fields(what: str) -> None:
+    """`ClassRequirement` 新長出一個欄位而這裡讀不懂 → raise。
+
+    ⚠️ 這是這一段的閘，理由與 {@link require_ops} 一模一樣：一個沒被想過的條件
+    欄位**不會**讓文案報錯，它只會讓那句閘門文字**少講一半** —— 一張寫著
+    「攻擊距離+4（近戰）」的卡片，實際上還要求主屬性是力量。
+    """
+    unknown = [f for f in requirement_fields() if f not in _HANDLED_REQUIREMENT_FIELDS]
+    if unknown:
+        raise VocabError(
+            "%s 讀不懂 `ClassRequirement` 的這 %d 個欄位：%s\n"
+            "   → 補進 tools/engine-vocab/engine_vocab.py 的 `requirement_short_label`，"
+            "⛔ 不要讓它們被靜默忽略（那句閘門文字會少講一半）"
+            % (what, len(unknown), "、".join(unknown))
+        )
+
+
+def requirement_short_label(req) -> str:
+    """一條 gated modifier 的**短標**——「近戰」/「近戰·力量」/「遠程，其他 50%」。
+
+    ⭐ 這是 `sim/content/requirement.ts::requirementShortLabel` 的 python 對應，
+    連中文用字都從**同一份 TS** 讀（`ATTACK_TYPE_LABEL` / `PRIMARY_LABEL`），
+    所以兩邊不可能對同一個閘講出兩種話。
+
+    回空字串 = 這個 `requires` 什麼都沒限制（TS 那邊回 `null`）。
+    ⛔ 讀不懂的欄位一律 raise，見 {@link require_requirement_fields}。
+    """
+    if not req:
+        return ""
+    if not isinstance(req, dict):
+        raise VocabError(f"modifier 的 `requires` 不是一個物件：{req!r}")
+    require_requirement_fields("道具效能文案的職業限定閘")
+    unknown = sorted(k for k in req if k not in _HANDLED_REQUIREMENT_FIELDS)
+    if unknown:
+        raise VocabError(
+            "一條 modifier 的 `requires` 有 %d 個沒有人處理的鍵：%s —— 改那份內容 JSON"
+            % (len(unknown), "、".join(unknown))
+        )
+    parts = []
+    if req.get("attackType") is not None:
+        table = _ts_string_record("ATTACK_TYPE_LABEL")
+        if req["attackType"] not in table:
+            raise VocabError(f"`requires.attackType` 是引擎不認得的 `{req['attackType']}`")
+        parts.append(table[req["attackType"]])
+    if req.get("primaryStat") is not None:
+        table = _ts_string_record("PRIMARY_LABEL")
+        if req["primaryStat"] not in table:
+            raise VocabError(f"`requires.primaryStat` 是引擎不認得的 `{req['primaryStat']}`")
+        parts.append(table[req["primaryStat"]])
+    if not parts:
+        return ""
+    who = "·".join(parts)
+    if req.get("onMismatch") != "reduced":
+        return who
+    pct = round((req.get("mismatchScale") if req.get("mismatchScale") is not None
+                 else _mismatch_default()) * 100)
+    return f"{who}，其他 {pct}%"
 
 
 def require_ops(known: dict, what: str) -> None:

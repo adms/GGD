@@ -22,7 +22,7 @@
     }
   ],
   "craftRole": "final",
-  "authoringNote": "[飛昇] = item@1 的 flight。「無視碰撞」拆成 ignoreUnits + ignoreObstacles 兩個既有旗標。stayInsideBoundary 保持 true 是刻意的：文案說的是「無視碰撞」，不是「可以飛出競技場」，而飛出邊界會直接繞過火圈這個回合結束機制。hoverHeight 留空（沿用預設）——文案沒有給高度，不該由我發明一個。\n\n【先前紀錄】【仍缺】[飛昇]「移動轉變為無視碰撞的飛行形態」。\n· 原語存在但**道具接不到**，形狀與 至尊魔戒 godie-i004 的隱身完全一樣：zFlightGrant（content/schema/effect.ts）帶 hoverHeight / ignoreUnits / ignoreObstacles / stayInsideBoundary，而 sim/flight.ts:158 的 syncFlightGrants 是走 `sc.sources` 的，任何 ModifierSource 都可以帶它。缺的是 zItemDef 的 `flight` 欄位 + sim/economy/itemSource.ts 的轉發。\n· ⚠️ 接上去的時候 `stayInsideBoundary` **一定要留在預設的 true**：「無視碰撞」如果連場地邊界也無視，決鬥判定 / teamAliveInZone / 小地圖 都會開始推理一個不在任何地方的英雄（那個預設的理由寫在 zFlightGrant 的註解裡）。\n已落地：攻擊速度+30%、總移動速度×1.2。",
+  "authoringNote": "⭐ 2026-08-18 逐句稽核（第一·五守則「不放任何無效說明」）—— **三句效能全部對得上，資料一個位元都沒改**。⚠️ 舊備註裡那段「【仍缺】[飛昇]…道具接不到」已經**作廢並刪除**：`zItemDef.flight` 與 sim/economy/itemSource.ts 的轉發早就補上了（守衛 sim/economy/itemVisionFlight.test.ts 用**出貨文件**驗），而那段話與同一份備註第一行「[飛昇] = item@1 的 flight」直接矛盾 —— 那正是第三守則說的「註解會說謊」。\n\n「攻擊速度+30%」= `as pctAdd 0.3`（出貨攻速上限 base 4.0；這件沒有 capRaise，所以它只能把人推到 4.0）。\n「總移動速度*1.2」= `ms pctMult 0.2`。⭐ **文案寫的是乘號**，所以是 `pctMult`（乘區）而不是 `pctAdd`（加成相加）—— 兩者在只有這一件時同值，帶第二件加速道具時才分岔，而卡面說的是「總」。出貨 ms 上限 base 18 / unlocked 24。\n[飛昇]「移動轉變為無視碰撞的飛行形態」= `flight`。「無視碰撞」拆成兩個既有旗標：`ignoreUnits`（穿人）+ `ignoreObstacles`（穿障礙物）。\n· ⭐ `stayInsideBoundary` 留在預設的 **true** 是刻意的，而且是承重的：文案說的是「無視碰撞」，⛔ 不是「可以飛出競技場」。飛出邊界會直接繞過**火圈**這個回合結束機制，而決鬥判定 / teamAliveInZone / 小地圖三個下游都會開始推理一個不在任何地方的英雄。理由逐字在 zFlightGrant 的註解裡。\n· `hoverHeight` 留空（沿用預設）—— 文案沒有給高度，⛔ 不該由我發明一個數字。\n\n⛔ **JSON → 描述方向也乾淨**：這份文件除了上面三項沒有任何其他效果（沒有 passive、沒有 auras、沒有 block、沒有 sets），所以不存在「給了但卡面沒說」的那一半。",
   "flight": {
     "ignoreUnits": true,
     "ignoreObstacles": true,

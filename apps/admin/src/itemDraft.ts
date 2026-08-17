@@ -169,12 +169,17 @@ export const FALLBACK_TABLE_MAXLEN = 64;
  */
 export const KNOWN_LOOT_TABLES: readonly string[] = [
   // ⚠️ 排序與 content/loot-tables/ 的檔名一致（守衛真的去讀那個目錄）。
-  // ⭐ `ex-release-weapons` 是 owner 2026-08-17 的 EX解放 那一階；
-  // `ex-origin-weapons`（EX∅ 根源）**刻意還不存在** —— 見 DEFAULT_WEAPON_TIERS 的註解。
+  // ⭐ owner 2026-08-18：三個池 = 三個**階級**，一件寶具只屬於一個池
+  //   （`legendary-weapons` = EX · `ex-release-weapons` = [EX解放] ·
+  //    `ex-origin-weapons` = [EX∅ 根源]）。
+  // ⚠️ `quest-rewards` / `round-reward` 同一天整張搬進 `content/_legacy/loot-tables/`
+  //   （owner：「任務道具」是舊 DOTA 玩法的標籤，競技場新玩法完全不考慮它；
+  //    四件基礎道具「完全沒用請放到 legacy」）。它們仍然列在
+  //   `SHIPPED_RETIRED_LOOT_TABLES`，因為**退場宣告擋的是後台覆蓋層那條路**
+  //   （#283 那裡沒有 Zod），⛔ 表不在了不代表沒有人排得到它。
+  "ex-origin-weapons",
   "ex-release-weapons",
   "legendary-weapons",
-  "quest-rewards",
-  "round-reward",
 ];
 
 // ─────────────────────────────────────────────────── 已退場的抽獎池 ───────
@@ -194,8 +199,19 @@ export const KNOWN_LOOT_TABLES: readonly string[] = [
 // `packages/shared/src/content/retiredLootTables.ts`,`ContentLoader` 與
 // game-server 的 `rulesFromDoc` 讀的是同一支函式。
 
-/** 出貨值 —— `content/config/arena-rules.json` 的 `retiredLootTables`。 */
-export const SHIPPED_RETIRED_LOOT_TABLES: readonly string[] = Object.freeze(["quest-rewards"]);
+/**
+ * 出貨值 —— `content/config/arena-rules.json` 的 `retiredLootTables`。
+ *
+ * ⚠️ 2026-08-18 從 1 變 2：owner 把 `quest-rewards` 與 `round-reward` 兩張表
+ * **整張**搬進 `content/_legacy/loot-tables/`。搬走之後 content 那條路已經由
+ * 參照圖擋住（排一張不存在的表 = DanglingRefError），但**後台耐久覆蓋層那條路
+ * 仍然沒有 Zod**（#283）—— 所以退場宣告留著，而且 `round-reward` 必須補上：
+ * 它以前是 `gacha.lootTable` 的出貨值，是最容易被覆蓋層寫回去的那一個。
+ */
+export const SHIPPED_RETIRED_LOOT_TABLES: readonly string[] = Object.freeze([
+  "quest-rewards",
+  "round-reward",
+]);
 
 /** 鏡射 `zConfigArenaRulesDoc.retiredLootTables` 的 `.max(16)`。 */
 export const RETIRED_TABLES_MAX = 16;

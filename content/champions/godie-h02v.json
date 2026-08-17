@@ -61,29 +61,29 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        60,
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        160,
-        220,
-        280,
-        340
+        160.0,
+        220.0,
+        280.0,
+        340.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [
         {
           "kind": "championForm",
           "to": "alternate",
-          "durationSec": 6
+          "durationSec": 6.0
         },
         {
           "kind": "applyStatus",
           "statusId": "root",
-          "duration": 6,
+          "duration": 6.0,
           "root": true,
           "disarmed": true
         },
@@ -96,7 +96,7 @@
               "value": 20
             }
           ],
-          "duration": 6,
+          "duration": 6.0,
           "perRank": [
             {
               "modifiers": [
@@ -106,7 +106,7 @@
                   "value": 20
                 }
               ],
-              "duration": 6
+              "duration": 6.0
             },
             {
               "modifiers": [
@@ -116,7 +116,7 @@
                   "value": 40
                 }
               ],
-              "duration": 6
+              "duration": 6.0
             },
             {
               "modifiers": [
@@ -126,7 +126,7 @@
                   "value": 60
                 }
               ],
-              "duration": 6
+              "duration": 6.0
             },
             {
               "modifiers": [
@@ -136,16 +136,16 @@
                   "value": 80
                 }
               ],
-              "duration": 6
+              "duration": 6.0
             }
           ]
         },
         {
           "kind": "delayed",
           "shape": "single",
-          "delaySec": 1,
+          "delaySec": 1.0,
           "count": 6,
-          "intervalSec": 1,
+          "intervalSec": 1.0,
           "effects": [
             {
               "kind": "restore",
@@ -173,18 +173,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -210,14 +210,14 @@
                           {
                             "stat": "ap",
                             "op": "flat",
-                            "value": 1
+                            "value": 1.0
                           }
                         ],
                         "permanent": true,
                         "applyTo": "self",
                         "maxStat": {
                           "stat": "ap",
-                          "value": 200,
+                          "value": 200.0,
                           "basis": "thisSource"
                         },
                         "stackKey": "caonima-devour-ap"
@@ -257,14 +257,14 @@
                           {
                             "stat": "ap",
                             "op": "flat",
-                            "value": 1
+                            "value": 1.0
                           }
                         ],
                         "permanent": true,
                         "applyTo": "self",
                         "maxStat": {
                           "stat": "ap",
-                          "value": 200,
+                          "value": 200.0,
                           "basis": "thisSource"
                         },
                         "stackKey": "caonima-devour-ap"
@@ -304,14 +304,14 @@
                           {
                             "stat": "ap",
                             "op": "flat",
-                            "value": 1
+                            "value": 1.0
                           }
                         ],
                         "permanent": true,
                         "applyTo": "self",
                         "maxStat": {
                           "stat": "ap",
-                          "value": 200,
+                          "value": 200.0,
                           "basis": "thisSource"
                         },
                         "stackKey": "caonima-devour-ap"
@@ -351,14 +351,14 @@
                           {
                             "stat": "ap",
                             "op": "flat",
-                            "value": 1
+                            "value": 1.0
                           }
                         ],
                         "permanent": true,
                         "applyTo": "self",
                         "maxStat": {
                           "stat": "ap",
-                          "value": 200,
+                          "value": 200.0,
                           "basis": "thisSource"
                         },
                         "stackKey": "caonima-devour-ap"
@@ -393,18 +393,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -419,7 +419,7 @@
                     "kind": "damageLine",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 20,
+                      "flat": 20.0,
                       "ratios": [
                         {
                           "stat": "ap",
@@ -436,7 +436,7 @@
                         "kind": "dot",
                         "damageType": "magic",
                         "amountPerTick": {
-                          "flat": 20,
+                          "flat": 20.0,
                           "ratios": [
                             {
                               "stat": "ap",
@@ -444,14 +444,14 @@
                             }
                           ]
                         },
-                        "intervalSec": 1,
-                        "durationSec": 3,
+                        "intervalSec": 1.0,
+                        "durationSec": 3.0,
                         "stacking": "refresh"
                       },
                       {
                         "kind": "applyStatus",
                         "statusId": "magic-break",
-                        "duration": 3
+                        "duration": 3.0
                       },
                       {
                         "kind": "applyBuff",
@@ -459,17 +459,17 @@
                           {
                             "stat": "mr",
                             "op": "pctAdd",
-                            "value": -1
+                            "value": -1.0
                           }
                         ],
-                        "duration": 3,
+                        "duration": 3.0,
                         "dispellable": true,
                         "polarity": "debuff"
                       }
                     ]
                   }
                 ],
-                "internalCooldown": 2,
+                "internalCooldown": 2.0,
                 "chance": 0.1,
                 "target": "event"
               }
@@ -484,7 +484,7 @@
                     "kind": "damageLine",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 30,
+                      "flat": 30.0,
                       "ratios": [
                         {
                           "stat": "ap",
@@ -501,7 +501,7 @@
                         "kind": "dot",
                         "damageType": "magic",
                         "amountPerTick": {
-                          "flat": 30,
+                          "flat": 30.0,
                           "ratios": [
                             {
                               "stat": "ap",
@@ -509,14 +509,14 @@
                             }
                           ]
                         },
-                        "intervalSec": 1,
-                        "durationSec": 3,
+                        "intervalSec": 1.0,
+                        "durationSec": 3.0,
                         "stacking": "refresh"
                       },
                       {
                         "kind": "applyStatus",
                         "statusId": "magic-break",
-                        "duration": 3
+                        "duration": 3.0
                       },
                       {
                         "kind": "applyBuff",
@@ -524,17 +524,17 @@
                           {
                             "stat": "mr",
                             "op": "pctAdd",
-                            "value": -1
+                            "value": -1.0
                           }
                         ],
-                        "duration": 3,
+                        "duration": 3.0,
                         "dispellable": true,
                         "polarity": "debuff"
                       }
                     ]
                   }
                 ],
-                "internalCooldown": 2,
+                "internalCooldown": 2.0,
                 "chance": 0.1,
                 "target": "event"
               }
@@ -549,7 +549,7 @@
                     "kind": "damageLine",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 40,
+                      "flat": 40.0,
                       "ratios": [
                         {
                           "stat": "ap",
@@ -566,7 +566,7 @@
                         "kind": "dot",
                         "damageType": "magic",
                         "amountPerTick": {
-                          "flat": 40,
+                          "flat": 40.0,
                           "ratios": [
                             {
                               "stat": "ap",
@@ -574,14 +574,14 @@
                             }
                           ]
                         },
-                        "intervalSec": 1,
-                        "durationSec": 3,
+                        "intervalSec": 1.0,
+                        "durationSec": 3.0,
                         "stacking": "refresh"
                       },
                       {
                         "kind": "applyStatus",
                         "statusId": "magic-break",
-                        "duration": 3
+                        "duration": 3.0
                       },
                       {
                         "kind": "applyBuff",
@@ -589,17 +589,17 @@
                           {
                             "stat": "mr",
                             "op": "pctAdd",
-                            "value": -1
+                            "value": -1.0
                           }
                         ],
-                        "duration": 3,
+                        "duration": 3.0,
                         "dispellable": true,
                         "polarity": "debuff"
                       }
                     ]
                   }
                 ],
-                "internalCooldown": 2,
+                "internalCooldown": 2.0,
                 "chance": 0.1,
                 "target": "event"
               }
@@ -614,7 +614,7 @@
                     "kind": "damageLine",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 50,
+                      "flat": 50.0,
                       "ratios": [
                         {
                           "stat": "ap",
@@ -631,7 +631,7 @@
                         "kind": "dot",
                         "damageType": "magic",
                         "amountPerTick": {
-                          "flat": 50,
+                          "flat": 50.0,
                           "ratios": [
                             {
                               "stat": "ap",
@@ -639,14 +639,14 @@
                             }
                           ]
                         },
-                        "intervalSec": 1,
-                        "durationSec": 3,
+                        "intervalSec": 1.0,
+                        "durationSec": 3.0,
                         "stacking": "refresh"
                       },
                       {
                         "kind": "applyStatus",
                         "statusId": "magic-break",
-                        "duration": 3
+                        "duration": 3.0
                       },
                       {
                         "kind": "applyBuff",
@@ -654,17 +654,17 @@
                           {
                             "stat": "mr",
                             "op": "pctAdd",
-                            "value": -1
+                            "value": -1.0
                           }
                         ],
-                        "duration": 3,
+                        "duration": 3.0,
                         "dispellable": true,
                         "polarity": "debuff"
                       }
                     ]
                   }
                 ],
-                "internalCooldown": 2,
+                "internalCooldown": 2.0,
                 "chance": 0.1,
                 "target": "event"
               }
@@ -684,16 +684,16 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        90,
-        90,
-        90
+        90.0,
+        90.0,
+        90.0
       ],
       "manaCost": [
-        300,
-        420,
-        540
+        300.0,
+        420.0,
+        540.0
       ],
-      "range": 0,
+      "range": 0.0,
       "radiusTier": "超大",
       "targetsEnemies": true,
       "effects": [
@@ -701,22 +701,22 @@
           "kind": "damageArea",
           "damageType": "magic",
           "amount": {
-            "flat": 1
+            "flat": 1.0
           },
-          "radius": 8,
+          "radius": 8.0,
           "radiusTier": "超大",
           "includeOrigin": true,
           "onHitTargets": [
             {
               "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 6,
+              "statusId": "slow50",
+              "duration": 6.0,
               "moveSpeedMult": 0.5
             },
             {
               "kind": "applyStatus",
               "statusId": "blind",
-              "duration": 6,
+              "duration": 6.0,
               "missChance": 0.5
             }
           ]
@@ -737,7 +737,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1
+                          "coeff": 1.0
                         }
                       ]
                     }
@@ -764,7 +764,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 2
+                          "coeff": 2.0
                         }
                       ]
                     }
@@ -791,7 +791,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 3
+                          "coeff": 3.0
                         }
                       ]
                     }
@@ -819,10 +819,7 @@
     "E",
     "R"
   ],
-  "buildPriority": [
-    "swift-boots",
-    "serrated-edge"
-  ],
+  "buildPriority": [],
   "tags": [
     "wc3-import",
     "godie"

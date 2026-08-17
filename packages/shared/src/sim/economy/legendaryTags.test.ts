@@ -1,5 +1,9 @@
 /**
- * 傳說武器 49 支 —— 這一輪新授權的括號標籤，逐條打在**出貨的那份 JSON** 上。
+ * 寶具的括號標籤 —— 逐條打在**出貨的那份 JSON** 上。
+ *
+ * ⚠️ 標題以前寫「49 支」。owner 2026-08-18 把上架寶具重新切成三階
+ *（EX / [EX解放] / [EX∅ 根源]），49 這個數字當場過期 —— 檔尾的底線守衛現在
+ * **從三張池檔推導**，⛔ 不再抄件數（CLAUDE.md 第二守則：驗機制不驗數字）。
  *
  * ═══════════════════════════════════════════════════════════════════════════
  * 為什麼是這個形狀
@@ -415,7 +419,10 @@ describe("新授權的範圍 proc 真的打得到旁邊的人", () => {
   }
 
   it("★ 雷神之鎚 godie-i01i：範圍雷電打到旁邊的人 + 主目標被減速 1 秒", () => {
-    const r = proc("godie-i01i", "onBasicAttack", "slow40");
+    // 2026-08-18：標籤從 `slow40` 改成 `slow50`（moveSpeedMult 0.5 = 減 50%，
+    // 見 content/slowLabelMatchesMultiplier.test.ts）。⛔ 斷言強度未變 —— 仍然
+    // 要求那筆減速真的掛在主目標身上滿 1 秒，改的只是它的名字。
+    const r = proc("godie-i01i", "onBasicAttack", "slow50");
     expect(r.splash).toBeGreaterThan(0);
     expect(r.ticks).toBeGreaterThanOrEqual(Math.round(1 / (1 / 30)) - 1);
   });
@@ -477,14 +484,38 @@ describe("[On-Hit] 死之王的長槍 godie-i01d —— 幫對方補魔", () => 
 });
 
 // ═══════════════════════════════════════════════════════════════════════════
-// 49 支的底線 —— 每一支都要有 payload
+// 寶具池的底線 —— 每一支都要有 payload
 // ═══════════════════════════════════════════════════════════════════════════
-describe("傳說池 49 支的底線", () => {
-  it("★ 沒有任何一支是 modifiers/passive/auras 三個都空的空卡", () => {
-    const table = JSON.parse(
-      readFileSync(join(CONTENT_DIR, "loot-tables/legendary-weapons.json"), "utf8"),
+/**
+ * ⭐ 2026-08-18：**從池檔推導**，⛔ 不再抄一個數字。
+ *
+ * 這裡以前寫 `toHaveLength(49)`。owner 那天把池重新切成三階（EX 29 · [EX解放] 35 ·
+ * [EX∅ 根源] 5），49 當場變成一個**用錯誤訊息紅**的斷言：它會說「傳說池壞了」，
+ * 而真相只是 owner 改了策展。⚠️ 出貨件數是 owner 每週在動的東西
+ * （CLAUDE.md 第二守則：守衛驗機制、⛔ 不驗數字），所以它不可以住在測試裡。
+ *
+ * ⚠️ 三張表全讀，⛔ 不只讀 `legendary-weapons` —— 一張沒被讀到的表就是一整階
+ * 的空卡沒有人守。
+ */
+const POOL_FILES = [
+  "legendary-weapons", // EX
+  "ex-release-weapons", // [EX解放]
+  "ex-origin-weapons", // [EX∅ 根源]
+] as const;
+
+function poolEntries(): { itemId: string }[] {
+  return POOL_FILES.flatMap((f) => {
+    const doc = JSON.parse(
+      readFileSync(join(CONTENT_DIR, `loot-tables/${f}.json`), "utf8"),
     ) as { entries: { itemId: string }[] };
-    expect(table.entries).toHaveLength(49);
+    expect(doc.entries.length, `${f}.json 是空的 —— 那一階發不出東西`).toBeGreaterThan(0);
+    return doc.entries;
+  });
+}
+
+describe("寶具三階的底線", () => {
+  it("★ 沒有任何一支是 modifiers/passive/auras 三個都空的空卡", () => {
+    const table = { entries: poolEntries() };
     const empty = table.entries
       .map((e) => e.itemId)
       .filter((id) => {
@@ -497,9 +528,7 @@ describe("傳說池 49 支的底線", () => {
   });
 
   it("★ 帶著 [重創] / [斬殺] 文案的每一支，資料裡都真的有那個機制", () => {
-    const table = JSON.parse(
-      readFileSync(join(CONTENT_DIR, "loot-tables/legendary-weapons.json"), "utf8"),
-    ) as { entries: { itemId: string }[] };
+    const table = { entries: poolEntries() };
     const missing: string[] = [];
     for (const { itemId } of table.entries) {
       const text = prose(itemId);

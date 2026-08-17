@@ -685,6 +685,15 @@ export class MatchRoom extends Room<MatchState> {
       // on the very next tick. Recorded even though they are dev-only.
       if (this.ctl.applyCheat(seatId, msg.cheat)) {
         this.recorder?.recordCheat(this.ctl.world.tick, seatId, msg.cheat);
+      } else {
+        // ⭐ 被拒也要回話（GH#343）。在此之前這個 `if` **沒有 else**，於是每一條
+        // 被拒的 cheat 都掉在地上：練習房區域只剩 2 格時按「殭屍王 ×5」出 2 隻然後
+        // 靜默；先按滿一般殭屍再按王則**完全沒反應**，而按鈕、伺服器與網路都是好的。
+        // ⚠️ 這正是 `cheatSpawnMob` 檔頭那句「回 false 讓客戶端看得到」——
+        // 那句話當時是假的（第三守則），這一行讓它變成真的。
+        // 走既有的 `MSG.REJECT` 頻道（選英雄被拒用的同一條），⛔ 不另外發明一個
+        // 客戶端沒有人訂閱的訊息名 —— 那只是把靜默換一個地方發生。
+        client.send(MSG.REJECT, { reason: this.ctl.takeCheatRejection() });
       }
     });
 

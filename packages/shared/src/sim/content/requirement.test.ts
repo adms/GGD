@@ -45,7 +45,7 @@
  *      全部還是綠的,所以這條突變單獨證明了**第二根軸真的在被讀**。
  */
 import { describe, it, expect, afterAll, beforeAll } from "vitest";
-import { cpSync, mkdtempSync, rmSync } from "node:fs";
+import { cpSync, existsSync, mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -108,9 +108,29 @@ const CLEAVER = "cleaver-of-the-warden" as ItemId;
 const AMULET = "sage-ward-amulet" as ItemId;
 const GREAVES = "bulwark-charge-greaves" as ItemId;
 const CROSSBOW = "piercer-crossbow" as ItemId;
-const BANNER = "godie-i02h" as ItemId;
-const ROBE = "godie-i02j" as ItemId;
-const GUITAR = "godie-i02k" as ItemId;
+/**
+ * ⑤ 那一段用的三件**光環**道具 —— 2026-08-18（#356）已經退場到
+ * `content/_legacy/items/`，所以下面的 `beforeAll` 會把它們**複製回暫存樹**再重建索引。
+ *
+ * ⚠️ 這不是「為了讓測試綠而放寬」，判斷過程寫在這裡：
+ *   · 退場的理由是**取得路徑**（那 7 件任務道具只被已宣告退場的 `quest-rewards`
+ *     引用 ⇒ 玩家一場也拿不到），⛔ 不是「這個機制不要了」。
+ *   · 它們守的是三個**引擎機制**：光環真的投影到隊友身上（`shop.ts` 轉發
+ *     `def.auras`）、光環可以帶 hook、以及**閘掛在光環投影出去的 hook 上**
+ *     （hook 的 owner 是站在圈內的隊友，不是持有者）。M4 突變（拿掉
+ *     `auras: def.auras`）紅的正是這三條。
+ *   · ⛔ 換成現役的光環道具做不到：出貨樹裡剩下的三份 `auras`
+ *     （godie-i00z / i060 / i061）**全部是 `affects:"enemy"` 的純 modifier 光環**，
+ *     一份都沒有隊友光環、沒有 aura hook（見 `fieldAdoption.test.ts` 裡
+ *     `items.auras[].hooks` / `.includeSelf` 兩筆 `legacy-parked` 豁免）。
+ *     所以「換一件現役的」等於「刪掉這三條守衛」。
+ *   · 那兩筆 `legacy-parked` 豁免帶著 witness，一旦有現役道具重新採用這兩格，
+ *     它們會紅並要求刪掉 —— 那也就是這裡該改回讀出貨樹的時候。
+ */
+const BANNER = "godie-i02h" as ItemId; // 戰旗（隊友 ad 光環）
+const ROBE = "godie-i02j" as ItemId; // 復仇之袍（隊友光環 + onDamageTaken hook）
+const GUITAR = "godie-i02k" as ItemId; // 惡魔吉他（隊友光環 hook + 限近戰閘）
+const REVIVED_FROM_LEGACY = [BANNER, ROBE, GUITAR];
 
 const C = SKELETON_ARENA.zones[0]!.center;
 
@@ -139,6 +159,20 @@ beforeAll(async () => {
     recursive: true,
     filter: (p) => !p.includes(`${"/"}assets`),
   });
+  // 把三件退場的光環道具從封存區搬回暫存樹（理由見 REVIVED_FROM_LEGACY 上面那段）。
+  // ⛔ 一個位元組都不會寫回 repo —— `dir` 是 mkdtemp 出來的。
+  for (const id of REVIVED_FROM_LEGACY) {
+    const from = join(dir, "_legacy", "items", `${id}.json`);
+    if (!existsSync(from)) {
+      throw new Error(
+        `${id} 在 content/items/ 與 content/_legacy/items/ 都不見了 —— ` +
+          `⑤ 那一段守的光環機制失去了唯一的樣本，⛔ 不要把它刪掉：` +
+          `先確認是不是有現役道具重新採用了 auras hooks（fieldAdoption 的兩筆 ` +
+          `legacy-parked 豁免會同時紅），有的話改讀那一件。`,
+      );
+    }
+    cpSync(from, join(dir, "items", `${id}.json`));
+  }
   rebuildAllIndexes(dir, { write: true });
   registerAll((await new ContentLoader(new FsContentSource(dir)).load()).store);
   // 註冊表填好之後才挑得到人 —— 四個格子各挑一位代表。
@@ -447,6 +481,8 @@ describe("沒有 requires 的內容完全不受影響", () => {
   });
 
   it("★ 出貨內容裡帶 requires 的道具就是這一輪加的那幾件,沒有誤傷別人", () => {
+    // ⚠️ 這裡的「出貨內容」＝ 這支測試載入的那棵樹，也就是出貨樹 **+** 上面
+    //    `REVIVED_FROM_LEGACY` 那三件（GUITAR 帶閘，所以它在這張名單上）。
     const gated = Items.ids()
       .filter((id) => itemRequirementLabels(Items.get(id)).length > 0)
       .sort();

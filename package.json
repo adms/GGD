@@ -28,7 +28,9 @@
     "caps:check": "tsx tools/capability-export/export.ts --check",
     "spec:build": "tsx tools/skill-spec/gen_spec.ts",
     "spec:check": "tsx tools/skill-spec/gen_spec.ts --check",
-    "content:build": "pnpm --filter @ggd/shared content:build && pnpm spec:build",
+    "overview:build": "tsx tools/innate-legendary/gen_overview.ts",
+    "overview:check": "tsx tools/innate-legendary/gen_overview.ts --check",
+    "content:build": "pnpm --filter @ggd/shared content:build && pnpm spec:build && pnpm overview:build",
     "content:validate": "pnpm --filter @ggd/shared content:validate",
     "docs:reference": "python3 tools/reference/gen_reference.py",
     "docs:readme": "python3 tools/reference/gen_readme_lists.py",
@@ -44,9 +46,12 @@
     "champions:csv:requests": "python3 tools/champion-csv/champion_csv.py requests -i champions.csv",
     "contract:numbers": "python3 tools/editor-contract/gen_contract_numbers.py",
     "contract:numbers:check": "python3 tools/editor-contract/gen_contract_numbers.py --check",
+    "vocab:test": "python3 tools/engine-vocab/test_engine_vocab.py",
     "atlas": "tsx tools/engine-atlas/atlas.ts && tsx tools/engine-atlas/page.ts",
     "atlas:check": "tsx tools/engine-atlas/atlas.ts --check",
-    "roster:check": "tsx tools/roster-guard/check.ts"
+    "roster:check": "tsx tools/roster-guard/check.ts",
+    "treasure:csv": "python3 tools/economy/gen_treasure_csv.py",
+    "treasure:csv:check": "python3 tools/economy/gen_treasure_csv.py --check"
   },
   "devDependencies": {
     "@eslint/js": "^10",

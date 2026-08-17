@@ -66,8 +66,11 @@ describe("出貨值 = 真的出貨文件 (adminui-item-draft)", () => {
     cover(TAG);
     expect(realDoc.retiredLootTables, "arena-rules 沒有 retiredLootTables 了").toBeTruthy();
     expect(realDoc.retiredLootTables).toEqual([...SHIPPED_RETIRED_LOOT_TABLES]);
-    // owner 的裁決本身 —— 不是「隨便一張表」,是 quest-rewards。
-    expect([...SHIPPED_RETIRED_LOOT_TABLES]).toEqual(["quest-rewards"]);
+    // owner 的裁決本身 —— 不是「隨便一張表」。2026-08-01 是 quest-rewards;
+    // 2026-08-18 owner 把 quest-rewards 與 round-reward **整張**搬進
+    // `content/_legacy/loot-tables/`,兩張都要留在這裡:退場宣告擋的是**後台耐久
+    // 覆蓋層**那條沒有 Zod 的路(#283),表不在磁碟上不代表沒有人排得回去。
+    expect([...SHIPPED_RETIRED_LOOT_TABLES]).toEqual(["quest-rewards", "round-reward"]);
   });
 
   it("★ 出貨的那份仍然通得過 Zod（後台送回去的東西不會被拒）", () => {

@@ -186,7 +186,8 @@ function starterDoc(): WhitelistDoc {
     ...goList(src, "starterShopItems"),
     ...goList(src, "starterServiceItems"),
     ...goList(src, "starterLegendaryItems"),
-    ...goList(src, "starterDraftItems"),
+    // ⚠️ 2026-08-18：`starterDraftItems`（0g 任務道具那一面）沒有了 —— owner 退掉了
+    // 那個標籤，6 件已經在三階寶具池裡，所以它們仍然在 `starterLegendaryItems` 上。
   ];
   // buildStarterAbilities(): every champion x {q,w,e,r,ex}. Mirrored rather
   // than parsed because the Go side computes it too.

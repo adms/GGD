@@ -47,6 +47,7 @@ import {
   mobRulesFromConfig,
   summonMobBoss,
   spawnMob,
+  DIR_TABLE,
 } from "./mobs";
 import { splitBossBounty, bossSummonsAt } from "./mobBoss";
 import { beginCombatMobs, endCombatMobs, mobSystem } from "./systems/MobSystem";
@@ -1075,20 +1076,26 @@ describe("殭屍王 / 特殊殭屍 — guards the delivered suite was blind to",
     expect(ev?.data["gold"]).toBe(RULES.rewardGold);
   });
 
-  it("MUTANT N8: two kings in one zone do NOT stand on the same rim point", () => {
+  it("MUTANT N8: DIR_TABLE.length kings in one zone all stand on DIFFERENT rim points", () => {
     cover("mob-boss-summon");
-    // `summonMobBoss` keys the spawn position by `kills` precisely so a
+    // `summonMobBoss` keys the spawn position by `posNonce` precisely so a
     // repeatable king cannot stack on its predecessor — a claim in its own
-    // docblock that nothing measured. Dropping `kills` from the key kept the
+    // docblock that nothing measured. Dropping the nonce from the key kept the
     // suite green and put both kings on one pixel.
+    //
+    // ⚠️ 2026-08-18 —— 兩隻的版本**太弱**：那時方向格是 `mixInt(...) % 12` 這個
+    //    **雜湊**，而雜湊在 12 格上會撞。恰好 nonce 3 與 6 沒撞，所以這一條是綠的，
+    //    同時「同一瞬間召 N 隻」實測 32% 的 tick 有兩隻逐位元重疊 —— 綠燈與缺陷並存。
+    // ⇒ 現在把母體拉到 `DIR_TABLE.length` 個**連號** nonce，也就是 docblock 現在
+    //    宣稱的那個保證（輪轉 ⇒ N ≤ 12 互異）。雜湊實作在這裡必紅。
     const w = newWorld();
-    const first = summonMobBoss(w, 0, RULES, asEntityId(1), 3)!;
-    const second = summonMobBoss(w, 0, RULES, asEntityId(1), 6)!;
-    const a = w.transform.get(first)!.pos;
-    const b = w.transform.get(second)!.pos;
-    const d2 = (a.x - b.x) * (a.x - b.x) + (a.z - b.z) * (a.z - b.z);
-    // Farther apart than the two bodies are wide, so they are not overlapping.
-    expect(d2).toBeGreaterThan((2 * RULES.boss!.radius) ** 2);
+    const spots = new Set<string>();
+    for (let n = 0; n < DIR_TABLE.length; n++) {
+      const id = summonMobBoss(w, 0, RULES, asEntityId(1), 3, n)!;
+      const p = w.transform.get(id)!.pos;
+      spots.add(`${p.x},${p.z}`);
+    }
+    expect(spots.size, "連號的 posNonce 撞在同一個方向格上").toBe(DIR_TABLE.length);
   });
 
   it("MUTANT N9: a damager that despawns takes its contribution with it", () => {

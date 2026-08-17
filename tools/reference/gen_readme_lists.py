@@ -385,12 +385,12 @@ def gen_items(ctx):
     section("🔧 商店服務 services",
             "不佔背包格、可重複買：傳說寶玉（抽傳說）與能力屬性強化（20 疊屬性路線）。",
             services)
-    section("🎴 三選一 draft — `craftRole:quest`",
-            f"每回合三選一 draft 從這些抽（`content/loot-tables/{G.QUEST_POOL_TABLE}.json`；"
-            "`仙后座` = `godie-i01s`）。**買不到，只能抽到。**", quest, price_override="抽卡")
-    section("💎 傳說池 legendary pool",
-            f"`content/loot-tables/{G.LEGENDARY_POOL_TABLE}.json`，等權重。只能從武器三選一或 "
-            "2400g 傳說寶玉取得。", legend, price_override="抽卡")
+    section("🎴 舊標記 `craftRole:quest`（⚠️ 已不是一個取得面）",
+            "owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新玩法**則完全不考慮這個標籤**」"
+            "—— 這些道具的取得路徑跟其他寶具一樣，就是下面那三階寶具池。", quest, price_override="抽卡")
+    section("💎 寶具池 weapon pools（三階）",
+            "三張表等權重（`" + "` · `".join(G.WEAPON_POOL_TABLES) + "`）。只能從寶具三選一或 "
+            "2400g 傳說寶玉取得。⭐ 一件寶具**只屬於一個池**。", legend, price_override="抽卡")
 
     if inert:
         L.append(

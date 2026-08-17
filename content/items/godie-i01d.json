@@ -46,9 +46,24 @@
         {
           "kind": "restore",
           "manaPct": 0.1
+        },
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "flat": 0
+          },
+          "resourcePct": {
+            "subject": "target",
+            "resource": "mana",
+            "basis": "current",
+            "perRank": [
+              0.1
+            ]
+          }
         }
       ]
     }
   ],
-  "authoringNote": "[普通攻擊時]「普攻附加敵方現存 MP 10%傷害，並且回復敵方最大 MP 10%」—— **後半段落地了，前半段還沒有。**\n· 已做：「回復敵方最大 MP 10%」= passive[0] 的 restore manaPct 0.1。hook 的 target 省略 = \"event\"，onBasicAttack 的事件實體就是被你打的那個人，而 restore 是「目標自己最大值的一個比例」（WC3 SetUnitManaPercentBJ，見 sim/effects/restore.ts），所以這一行是**逐字**落地的 —— 連這件道具的笑點（「幫對方補魔就是我的攻擊方式」）都在。\n· 【仍缺】「敵方現存 MP 10%傷害」—— damage 可以按受害者的**生命**比例算（hpPct，content/schema/effect.ts），但**沒有魔力的對應物**；而 zScaling.ratios 讀的是施法者的表，不是受害者的。要補需要給 damage 一個 mpPct: {basis:\"max\"|\"current\", perRank}，與 hpPct 同一個形狀、同一種上下界。這個缺口同時卡住 瑪那魔杖 godie-i020 與 熾天使之弓 godie-i012。\n· 【2026-08-01 落地】[無視]「普通攻擊無視防禦給予傷害」= damageTypeOverride {scope:\"basic\", becomes:\"true\"}，與 霸王破甲槍 godie-i00f 同一個機制、同一組參數。mitigate() 在 `pkt.type === \"true\"` 直接回傳原值，所以「無視防禦」不是新的減傷數學，只是把封包重蓋成 true；蓋的地方在**傷害佇列**（sim/combat/damage.ts 的抽乾迴圈 → sim/combat/damageTypeOverride.ts），不是這份備註舊版本寫的 BasicAttackSystem —— 那裡蓋的話遠程普攻（走 systems/ProjectileSystem.ts）拿不到，是失敗形態 ②。\n· ⚠️ 兩件事的先後：[無視] 只改**這一發普攻封包**的型別，而下面 passive 那條 restore 是一個獨立的 hook，兩者不互相影響。\n· 【2026-08-01 落地】[死之王套裝] = item@1.sets，三份文件各帶一份相同的區塊；獎勵依 set id 只發**一份** `item-set:` 來源（每件各發一份 = +300%，不是 +100%）。機制與決策在 sim/economy/itemSets.ts，守衛在 sim/lichkingSet.test.ts。⚠️ 平衡註記：這件（套裝 +100% AP）與 惡夢魔王碎片 godie-i067（也是 +100% AP，且技能傷害轉真傷）是同一個 pctAdd 桶，套裝實作之後兩件同時帶 = AP ×3.0（1 + 1.0 + 1.0，見 sim/stats/statPipeline.ts 的 `(base+flat)·(1+ΣpctAdd)·Π(1+pctMult)`），而且那 3 倍 AP 打出來的技能全部無視魔抗。這是量出來的數字，不是估的；要不要封頂是 owner 的決定，這裡沒有偷偷夾。"
+  "authoringNote": "⭐ 2026-08-18 逐句稽核（第一·五守則「不放任何無效說明」）—— 四句效能全部對得上，而且**補回了唯一一句零實作的**：「敵方現存 MP 10%傷害」。\n\n[普通攻擊時]「普攻附加敵方現存 MP 10%傷害，並且回復敵方最大 MP 10%」= passive[0] 的兩個 effect：\n· 「回復敵方最大 MP 10%」= `restore {manaPct: 0.1}`。hook 的 `target` 省略 = 事件實體 = 被你打的那個人，`restore` 讀的是目標自己的最大值（WC3 SetUnitManaPercentBJ）—— 連這件道具的笑點（「幫對方補魔就是我的攻擊方式」）都逐字在。\n· ⭐ **【2026-08-18 落地】「敵方現存 MP 10%傷害」** = `damage.resourcePct {subject:\"target\", resource:\"mana\", basis:\"current\", perRank:[0.1]}`。這一句在此之前是**整句空的**，而 `content:build` 與全套測試都是綠的 —— 舊備註寫的「damage 沒有魔力的對應物」在 GH#299 的 `zResourcePctTerm` 上線後就變成假話（第三守則）。形狀直接照 瑪那魔杖 godie-i020 「普攻附加敵方現存 MP 5%傷害」那一份抄，同一個 schema、同一個讀取器（sim/effects/dynamicTerms.ts::resourcePctAmount）。上界：`subject:\"target\"` 的 ratio 模式是 RESOURCE_PCT_RATIO_MAX = 1，0.1 遠低於它。\n· ⚠️ **順序上的一個已知偏差，故意留著，請主控端裁決**：卡面的順序是「先傷害、後補魔」，而出貨的 `effects[]` 是「先補魔、後傷害」。`resourcePctAmount` 在**發射當下**求值（damage 才進佇列），所以傷害讀到的是**補魔之後**的現存 MP ⇒ 每一下多出 `0.01 × 目標最大魔力`（1,000 魔的目標約 +10 點）。⛔ 沒有把 damage 放到 index 0，是因為 `sim/economy/legendaryTags.test.ts` 用 `effects[0]` 硬索引釘住 restore，而這一輪不准動 packages/。正解是那條測試改成 `find(kind===\"restore\")`，再把兩個 effect 對調。\n\n「攻擊力額外增加 17%」= `ad pctAdd 0.17`。\n[無視]「普通攻擊無視防禦給予傷害」= `damageTypeOverride {scope:\"basic\", becomes:\"true\"}`，與 霸王破甲槍 godie-i00f 同一個機制。蓋的地方在**傷害佇列**（combat/damage.ts → combat/damageTypeOverride.ts），⛔ 不是 BasicAttackSystem —— 那裡蓋的話遠程普攻（ProjectileSystem）拿不到，是失敗形態②。⚠️ 它只重蓋**那一發普攻封包**的型別；上面兩個 hook effect 是獨立的，補魔與 MP 傷害不受它影響（MP 傷害自己填 magic，會吃魔抗）。\n[死之王套裝]「同時裝備死之王長槍、意志、神盾，則總 AP 額外 + 300%」= `sets` 的 `ap pctAdd 3`。三份成員文件各帶一份相同區塊，獎勵依 set id 只發**一份** `item-set:` 來源（⛔ 不是每件各發一份）。機制在 sim/economy/itemSets.ts，守衛在 sim/lichkingSet.test.ts。⚠️ 平衡註記（量到的，不是估的）：它與 惡夢魔王碎片 godie-i067（也是 +100% AP）同一個 pctAdd 桶，兩者齊帶時 AP 是 base×(1+3+1) —— 要不要封頂是 owner 的決定，這裡沒有偷偷夾。"
 }

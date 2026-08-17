@@ -37,5 +37,6 @@
       "godie-i06s"
     ],
     "book": "godie-i029"
-  }
+  },
+  "authoringNote": "⭐ 2026-08-18 雙向逐句稽核（第一·五守則「不放任何無效說明」）：三句效能全部有實作、資料與描述一個字都沒改。\n\n「攻擊力+128」= modifiers ad flat 128（ITEM_MODIFIER_LIMITS.ad 上界 400，沒有被夾）。\n「防禦+12」= modifiers armor flat 12。\n「[暴擊] 20%機率造成 2倍傷害」= critChance flat 0.2 ＋ critDamage flat **0.25**。\n\n⚠️ 那個 0.25 看起來像打錯，它不是：`Stat.CritDamage` 是**倍率本身**而不是加成，出貨的每一張英雄卡 baseStats.critDamage 都是 **1.75**（BasicAttackSystem 的 `sc.final[Stat.CritDamage] || 1.75` 是同一個數字），所以 1.75 + 0.25 = **2.00** —— 正是卡面那個「2倍」。⛔ 把它「修好」成 2.0 會變成 3.75 倍。combat-env 的 `critDamage` 出貨倍率是 1.0，`config.stat-caps@1` 也沒有夾 critDamage/critChance，所以面板與實打都是 2.00 —— 這一條不是那種「上限解不開所以逐位元無效」的空 modifier。\n\n⚠️ 這一件**刻意不用** `critStrike`（天堂之劍 godie-i01n 的那一格）。那一格是「自己一條機率＋自己一條倍率」的獨立骰，與 critChance/critDamage 兩條 modifier **不可並存**（legendaryCritStrike.test.ts 逐件釘死）。本件走的是普通暴擊，所以它會跟英雄自己的暴擊率**相加**，而那正是卡面「20%機率」的讀法。\n\n⚠️ JSON→描述 方向（同族缺陷：給了但不說）：**沒有**任何卡面沒講的效果 —— 無 passive、無 block、無 aura、無 requires 閘、無 requiresAttackType。`craftRole`/`recipe` 是 w3x 來源記錄不是效果。"
 }
