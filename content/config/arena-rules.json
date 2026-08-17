@@ -35,8 +35,12 @@
       "label": "EX∅ 根源",
       "table": "ex-origin-weapons",
       "minRound": 10,
+      "maxRound": 12,
       "basePct": 8,
-      "underdogPct": 30
+      "underdogFactor": 4,
+      "underdogExponent": 2,
+      "limitScope": "team",
+      "limitCount": 1
     },
     {
       "id": "ex-release",
@@ -44,7 +48,10 @@
       "table": "ex-release-weapons",
       "minRound": 1,
       "basePct": 15,
-      "underdogPct": 45
+      "underdogFactor": 1.5,
+      "underdogExponent": 1,
+      "limitScope": "champion",
+      "limitCount": 1
     }
   ],
   "rounds": {
@@ -338,5 +345,10 @@
       "chance": 0.12,
       "damage": 0
     }
+  },
+  "disadvantageWeights": {
+    "roundGapPct": 50,
+    "itemValueGapPct": 30,
+    "recentFormPct": 20
   }
 }

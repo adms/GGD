@@ -169,8 +169,8 @@ export function buyItem(world: SimWorld, id: EntityId, itemId: ItemId): BuyResul
   const inLegendaryPool = legendaryShelfIds().has(itemId);
 
   // ⭐ 隨機限定階層（owner 2026-08-17：「仍然可以有寶具是**隨機才能取得**的，
-  // 我預計是新增的 50~70 個 EX理外 寶具」）。⛔ 它排在**寶具旁路之前**，而且
-  // 是**全域**的一道閘 —— 不是只擋寶具：EX理外 那批會是自己一張表，如果它們
+  // 我預計是新增的 50~70 個⋯」；名字後來定為 [EX解放]/[EX∅ 根源]）。⛔ 它排在**寶具旁路之前**，而且
+  // 是**全域**的一道閘 —— 不是只擋寶具：更高階那兩批各自是一張表，如果它們
   // 剛好帶價格又是 `final`，只擋寶具那一條路的話它們會從普通武器那條路上架。
   //
   // ⚠️ 這道閘與 `shopCatalogue` 的同一條規則**必須同時在**（同一支

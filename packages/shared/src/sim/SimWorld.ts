@@ -627,7 +627,7 @@ export class SimWorld {
    * | `open` | 「寶具(傳說武器) 可以上架直接販售了」 |
    * | `priceMultiplier` | 「價格統一是隨機抽的 N 倍」（08-17 第二則：6 → **4**） |
    * | `sellRefundPct` | 「賣價一定是**取得價**的 40%（後台可設定）」 |
-   * | `randomOnlyTables` | 「仍然可以有寶具是**隨機才能取得**的」（EX理外 50~70 把） |
+   * | `randomOnlyTables` | 「仍然可以有寶具是**隨機才能取得**的」（[EX解放] / [EX∅ 根源]） |
    *
    * 後三格不只管寶具（退款率是整間商店的、隨機限定是任何抽獎表的）—— 它們
    * 同住一個區塊，是因為它們是**同一個平衡決定**的四個面（見 shopShelf.ts 的
@@ -659,7 +659,7 @@ export class SimWorld {
     priceMultiplier: LEGENDARY_PRICE_MULTIPLIER,
     sellRefundPct: DEFAULT_SELL_REFUND_PCT,
     // 出貨**空的**：這一批只做機制，49 把寶具照樣全部上架（owner 說的 50~70 把
-    // EX理外 還沒有內容）。填一個表名就開始生效，⛔ 不用改程式。
+    // [EX∅ 根源] 還沒有內容）。填一個表名就開始生效，⛔ 不用改程式。
     randomOnlyTables: [],
   };
 

@@ -347,7 +347,7 @@ export function shopCatalogue<
   // The DRAFT/loot path never calls this function, so 「隨機三選一仍然可以隨機
   // 到」 holds by construction — see economy/shopShelf.ts.
   // ⭐ `!randomOnly.has` 排在最外層，與 `buyItem` 的那一道全域閘同一個位置：
-  // EX理外 那批將來若帶價格又是 `final`，只擋寶具那條路的話它們會從普通武器
+  // 更高階那兩批（[EX解放] / [EX∅ 根源]）將來若帶價格又是 `final`，只擋寶具那條路的話它們會從普通武器
   // 那條路上架（而 sim 會拒絕）—— 兩邊必須是**同一條**規則。
   const shelved = (list: readonly T[]): T[] =>
     list.filter(

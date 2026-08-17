@@ -2699,7 +2699,9 @@ export const zLegendaryShelfConfig = z
     sellRefundPct: z.number().min(0).max(1).optional(),
     /**
      * ⭐ **隨機限定階層**（owner 2026-08-17：「仍然可以有寶具是隨機才能取得的，
-     * 我預計是新增的 50~70 個 **EX理外** 寶具」）。
+     * 我預計是新增的 50~70 個⋯」）。⚠️ owner 2026-08-17 稍後**正式廢除**了他當時用的
+     * 「EX理外」這個名字，改成 **EX ＜ [EX解放] ＜ [EX∅ 根源]** —— 理由是玩家拿到的是
+     * 「既有能力被解封」，不是「一件裝備突然推翻所有規則」。
      *
      * 填的是**抽獎表 id**，不是道具 id：那一批本來就要有一張表才抽得到，所以
      * 上架 50~70 把＝新增一張表 + 這裡填一個表名，⛔ 不用改程式、也不用逐份
@@ -2739,25 +2741,82 @@ export const zWeaponTier = z
       .int()
       .min(1)
       .max(99)
-      .describe("第幾回合起才可能出現。owner：EX∅ 根源「只會出現在第九回合後」⇒ 10。"),
+      .describe("第幾回合起才可能出現。[EX∅ 根源] 是「第九回合**結束後**」⇒ 10。"),
+    maxRound: z
+      .number()
+      .int()
+      .min(1)
+      .max(99)
+      .optional()
+      .describe(
+        "最後在第幾回合出現（含）。省略 = 沒有上界。" +
+          "⭐ owner 2026-08-17：[EX∅ 根源]「只會在第九回合**結束後**，到**最終回合開始前**出現」——" +
+          "那個「前」就是這一格。⛔ 沒有它的話根源會在最終回合本身也發，而那時候拿到已經來不及逆轉。",
+      ),
     basePct: z
       .number()
       .int()
       .min(0)
       .max(100)
-      .describe("領先／持平的玩家抽到這一階的百分比。0＝這一階只發給劣勢方。"),
-    underdogPct: z
+      .describe("**平手方**（劣勢值 D = 0）抽到這一階的百分比。0＝這一階只發給劣勢方。"),
+    underdogFactor: z
+      .number()
+      .min(0)
+      .max(20)
+      .describe(
+        "劣勢加權的**強度**。最終機率 = `basePct × (1 + factor × D^exponent)`，D ∈ [0,1] 是劣勢值。" +
+          "owner 2026-08-17 給的兩組：[EX解放] factor 1.5（嚴重劣勢 2.5 倍）、[EX∅ 根源] factor 4。",
+      ),
+    underdogExponent: z
+      .number()
+      .min(1)
+      .max(4)
+      .describe(
+        "劣勢加權的**曲線**。1 = 線性（[EX解放]）；2 = 平方（[EX∅ 根源]）。" +
+          "⭐ owner：「使用平方是為了讓**小幅落後只得到有限補償**，真正瀕臨淘汰的隊伍才明顯提高機率」——" +
+          "⛔ 這正是它不能跟 factor 合成一個數字的原因：兩者調的是不同的東西。",
+      ),
+    limitScope: z
+      .enum(["champion", "team"])
+      .describe(
+        "數量限制算在誰頭上。owner 2026-08-17：[EX解放]「每名英雄最多一件」⇒ champion；" +
+          "[EX∅ 根源]「每隊最多一件」⇒ team。",
+      ),
+    limitCount: z
       .number()
       .int()
-      .min(0)
-      .max(100)
-      .describe(
-        "**劣勢方**（回合勝場落後領先者）抽到這一階的百分比。owner 要的是「明顯變高」，" +
-          "所以出貨兩格差 2~4 倍。⚠️ 它是**逆轉**用的，不是保底。",
-      ),
+      .min(1)
+      .max(6)
+      .describe("同一個 scope 最多持有幾件這一階。達到之後這一階對他就不再出現。"),
   })
   .strict();
 export type WeaponTierConfig = z.infer<typeof zWeaponTier>;
+
+/**
+ * 劣勢值 `D` 的三個權重（owner 2026-08-17 逐字給的公式）。
+ *
+ *	D = 50% × 回合／隊伍生命差距
+ *	  + 30% × 已完成裝備價值差距
+ *	  + 20% × 最近三回合勝負差距
+ *
+ * ⭐ 為什麼不能只看「目前生命值」——owner 自己講了：「否則容易被**刻意壓血**利用」。
+ * 三項一起看才擋得住。⚠️ 三項各自已經正規化到 [0,1] 再加權，所以 D 也在 [0,1]。
+ */
+export const zDisadvantageWeights = z
+  .object({
+    roundGapPct: z.number().int().min(0).max(100).describe("回合勝場差距佔多少（出貨 50）。"),
+    itemValueGapPct: z.number().int().min(0).max(100).describe("已完成裝備價值差距佔多少（出貨 30）。"),
+    recentFormPct: z.number().int().min(0).max(100).describe("最近三回合勝負差距佔多少（出貨 20）。"),
+  })
+  .strict();
+export type DisadvantageWeights = z.infer<typeof zDisadvantageWeights>;
+
+/** 出貨值 —— 逐字等於 owner 給的 50/30/20。 */
+export const DEFAULT_DISADVANTAGE_WEIGHTS: DisadvantageWeights = {
+  roundGapPct: 50,
+  itemValueGapPct: 30,
+  recentFormPct: 20,
+};
 
 /**
  * 出貨值。
@@ -2777,9 +2836,14 @@ export const DEFAULT_WEAPON_TIERS: WeaponTierConfig[] = [
     id: "ex-origin",
     label: "EX∅ 根源",
     table: "ex-origin-weapons",
+    // 「第九回合**結束後**，到**最終回合開始前**」——出貨排程 13 回合 ⇒ 10..12。
     minRound: 10,
+    maxRound: 12,
     basePct: 8,
-    underdogPct: 30,
+    underdogFactor: 4,
+    underdogExponent: 2, // 平方：小輸只得到有限補償
+    limitScope: "team",
+    limitCount: 1,
   },
   {
     id: "ex-release",
@@ -2787,7 +2851,10 @@ export const DEFAULT_WEAPON_TIERS: WeaponTierConfig[] = [
     table: "ex-release-weapons",
     minRound: 1,
     basePct: 15,
-    underdogPct: 45,
+    underdogFactor: 1.5,
+    underdogExponent: 1, // 線性
+    limitScope: "champion",
+    limitCount: 1,
   },
 ];
 
@@ -2911,6 +2978,18 @@ export const zConfigArenaRulesDoc = z
           "全沒中（或該池對這位玩家沒有合格的東西）就走這一回合原本排的那一張。" +
           "⭐ 劣勢方的機率是另一格，owner 2026-08-17：「特別是劣勢方出現機率會明顯變高」。" +
           "⛔ 空陣列 = 完全關掉，回到只有一張基礎獎池的行為。",
+      ),
+    /**
+     * 劣勢值 `D` 的三項權重（owner 2026-08-17 的 50/30/20）。
+     * 省略 = {@link DEFAULT_DISADVANTAGE_WEIGHTS}。
+     */
+    disadvantageWeights: zDisadvantageWeights
+      .optional()
+      .describe(
+        "「誰算劣勢方」怎麼算。三項各自正規化到 0~1 再加權：回合勝場差距／已完成裝備價值差距／" +
+          "最近三回合勝負差距（出貨 50/30/20）。⭐ owner：「不能只用目前生命值判斷劣勢，" +
+          "否則容易被**刻意壓血**利用」—— 壓血壓得動第一項，壓不動另外兩項。" +
+          "三格都調成 0 = 完全關掉劣勢加權（每個人都拿 basePct）。",
       ),
     /** round number (string key) -> grants for that round */
     rounds: z.record(z.string().regex(/^[0-9]+$/), zArenaRoundGrant),

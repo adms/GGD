@@ -114,7 +114,7 @@ import {
   type ArenaDef,
 } from "@ggd/shared/sim/world/ArenaDef";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
-import { Champions, Abilities, LootTables } from "@ggd/shared/sim/content/registry";
+import { Champions, Abilities, LootTables, Items } from "@ggd/shared/sim/content/registry";
 import { Configs, Models } from "@ggd/shared/content";
 import { spawnChampion } from "@ggd/shared/sim/spawnChampion";
 import { createMatchStats, type PlayerMatchStats } from "@ggd/shared/sim/stats/matchStats";
@@ -202,7 +202,7 @@ import {
   type AugmentOffer,
   type ItemOffer,
 } from "@ggd/shared/sim/economy/draft";
-import { pickWeaponTable } from "@ggd/shared/sim/economy/weaponTiers";
+import { pickWeaponTable, disadvantageScore } from "@ggd/shared/sim/economy/weaponTiers";
 import { rollItemReward, grantItemFree, commitShopSession } from "@ggd/shared/sim/economy/shop";
 import { releaseOrbSlot } from "@ggd/shared/sim/economy/legendaryOrb";
 import { DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES } from "@ggd/shared/sim/economy/offerEligibility";
@@ -1550,20 +1550,67 @@ export class MatchController {
     //    **靜靜地不發**，而且刻意如此：兩張三選一共用同一段中場倒數，讓路的那一張
     //    在畫面上就是不存在（叫一句 warn 只會在每一場的第 2、5 回合各刷 12 行）。
     if (grant?.weaponLootTable && weaponDraftAllowed(this.rules, grant, round)) {
-      // ⭐ 更高階寶具（EX解放 / EX∅ 根源，owner 2026-08-17 第三則）。
-      // 「劣勢方」＝這一隊的回合勝場落後領先者，**逐座位**問（同一隊的人答案一樣）。
-      // ⚠️ 骰子在 sim 的 `world.rng` 上，所以它是錄影/重播吃得下的決定性輸入；
-      // 落後量由 host 算出來當**參數**傳進去（sim 沒有 roundWins 這份帳）。
-      const leadWins = Math.max(0, ...[...this.roundWins.values()]);
+      // ⭐ 更高階寶具（[EX解放] / [EX∅ 根源]，owner 2026-08-17）。
+      //
+      // 「劣勢值 D」由 host 算（sim 沒有回合勝場與道具價格那兩份帳），**逐座位**算 ——
+      // 同一隊的人回合項一樣，但裝備價值是逐人的。⚠️ 骰子仍在 `world.rng` 上，
+      // 所以整件事是錄影/重播吃得下的決定性輸入。
+      //
+      // ⭐ 三項而不是一項，是 owner 明說的：「不能只用目前生命值判斷劣勢，
+      // 否則容易被**刻意壓血**利用」—— 壓血壓得動第一項，壓不動另外兩項。
+      const wins = [...this.roundWins.values()];
+      const leadWins = wins.length > 0 ? Math.max(...wins) : 0;
+      const totalWins = wins.reduce((a, b) => a + b, 0);
+      // 各隊的裝備總價值（逐座位加總），用來算「已完成裝備價值差距」。
+      const teamValue = new Map<TeamId, number>();
+      for (const [, s2, e2] of this.activeSeats()) {
+        const inv = this.world.champion.get(e2)?.items ?? [];
+        let v = 0;
+        for (const it of inv) if (it) v += Items.tryGet(it)?.cost ?? 0;
+        teamValue.set(s2.teamId, (teamValue.get(s2.teamId) ?? 0) + v);
+      }
+      const topValue = Math.max(0, ...teamValue.values());
       for (const [seatId, seat, entity] of this.activeSeats()) {
-        const behind = leadWins - (this.roundWins.get(seat.teamId) ?? 0);
+        const myWins = this.roundWins.get(seat.teamId) ?? 0;
+        const myValue = teamValue.get(seat.teamId) ?? 0;
+        // 三項都正規化到 [0,1]。⚠️ 分母為 0（第一回合、大家都沒裝備）時是 0 而不是
+        // NaN —— 「還沒有人領先」本來就不是劣勢。
+        const d = disadvantageScore(
+          {
+            roundGap: leadWins > 0 ? (leadWins - myWins) / leadWins : 0,
+            itemValueGap: topValue > 0 ? (topValue - myValue) / topValue : 0,
+            // 「最近三回合」用整場勝場佔比近似：落後越多、佔比越低。
+            // ⚠️ 這是**近似**而不是原文的「最近三回合」——真正的三回合視窗需要一份
+            // 逐回合勝負的環狀紀錄，那是下一輪的事（見 GH#355）。⛔ 沒有靜靜當成 0：
+            // 它現在餵的是同一個方向的訊號，只是視窗比較長。
+            recentForm: totalWins > 0 ? 1 - myWins / totalWins : 0,
+          },
+          this.rules.disadvantageWeights,
+        );
+        // 數量限制（[EX解放] 每名英雄一件、[EX∅ 根源] 每隊一件）——
+        // ⚠️ 用**這一階的獎池成員**數已持有的件數，⛔ 不是「持有任何寶具」。
+        const heldOf = (tableId: string, ids: readonly EntityId[]): number => {
+          const pool = new Set(LootTables.tryGet(tableId as never)?.entries.map((e) => e.itemId) ?? []);
+          let n = 0;
+          for (const id of ids) {
+            for (const it of this.world.champion.get(id)?.items ?? []) {
+              if (it && pool.has(it)) n++;
+            }
+          }
+          return n;
+        };
+        const teamEntities = [...this.activeSeats()]
+          .filter(([, s3]) => s3.teamId === seat.teamId)
+          .map(([, , e3]) => e3);
         const tier = pickWeaponTable(
           this.rules.weaponTiers,
           round,
-          behind > 0,
+          d,
           grant.weaponLootTable,
           this.world.rng,
           (t) => eligibleItemPool(this.world, entity, t).length > 0,
+          (t) =>
+            heldOf(t.table, t.limitScope === "team" ? teamEntities : [entity]) < t.limitCount,
         );
         const offer = offerItems(
           this.world,

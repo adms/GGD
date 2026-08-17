@@ -19,6 +19,7 @@ import {
   DEFAULT_DRAFT_CONFLICT,
   DEFAULT_LEGENDARY_SHELF,
   DEFAULT_WEAPON_TIERS,
+  DEFAULT_DISADVANTAGE_WEIGHTS,
 } from "@ggd/shared/content";
 import type { WeaponTierRule } from "@ggd/shared/sim/economy/weaponTiers";
 import { DEFAULT_SELL_REFUND_PCT } from "@ggd/shared/sim/economy/shopShelf";
@@ -34,6 +35,7 @@ import type {
   GoldDropConfig,
   NightPactConfig,
   MobWavesConfig,
+  DisadvantageWeights,
 } from "@ggd/shared/content";
 
 export interface RoundGrant {
@@ -119,6 +121,11 @@ export interface ArenaRules {
    * 機制住在 `sim/economy/weaponTiers.ts`，這裡只是把設定送過去。
    */
   weaponTiers: readonly WeaponTierRule[];
+  /**
+   * 劣勢值 `D` 的三項權重（owner 2026-08-17 的 50/30/20）。NEVER null —— 同
+   * `itemDraft` 的理由：「沒有權重」不是一個狀態，缺席的文件要的是出貨規則。
+   */
+  disadvantageWeights: DisadvantageWeights;
   /** round number -> grants applied at that round's intermission entry */
   rounds: ReadonlyMap<number, RoundGrant>;
   /** grants for every round past the highest `rounds` key (escalating gold) */
@@ -191,6 +198,7 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
   // 想這一格」時落到的那個值是**設計**，不是 2026-08-17 之前的行為。
   draftConflict: DEFAULT_DRAFT_CONFLICT,
   weaponTiers: DEFAULT_WEAPON_TIERS,
+  disadvantageWeights: DEFAULT_DISADVANTAGE_WEIGHTS,
   rounds: new Map(
     Object.entries(AUGMENT_TIER_SCHEDULE).map(([round, tier]) => [
       Number(round),
@@ -276,6 +284,7 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
     draftConflict: doc.draftConflict ?? DEFAULT_DRAFT_CONFLICT,
     // ⚠️ `??` 同上：線上耐久覆蓋層那份文件是這一格出現之前存的。
     weaponTiers: doc.weaponTiers ?? DEFAULT_WEAPON_TIERS,
+    disadvantageWeights: doc.disadvantageWeights ?? DEFAULT_DISADVANTAGE_WEIGHTS,
     rounds,
     overflow: doc.overflow ?? null,
     // A retired gacha pool turns the legacy per-round gacha OFF rather than
