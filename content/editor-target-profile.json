@@ -1,6 +1,6 @@
 {
   "schema": "ggd-editor-target-profile@1",
-  "generatedAt": "2026-08-17T10:29:23.107Z",
+  "generatedAt": "2026-08-17T10:57:54.562Z",
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
@@ -90,7 +90,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "8d30566f",
+    "fingerprint": "c8deb8d8",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -133,23 +133,36 @@
     "hookEvents": [
       "onAbilityCast",
       "onAbilityHit",
+      "onAllyDamaged",
       "onAllyDeath",
       "onBasicAttack",
       "onBossSpawn",
+      "onBoundaryTouch",
+      "onCrowdControlApplied",
+      "onCrowdControlReceived",
       "onDamageDealt",
       "onDamageTaken",
+      "onDashOrBlink",
       "onDeath",
       "onEvade",
       "onFireRingIgnite",
       "onGuardianDown",
+      "onHeal",
       "onInterval",
       "onKill",
+      "onLethalDamage",
+      "onOverheal",
+      "onProjectileExpire",
       "onReflectSuccess",
       "onRevive",
+      "onRoundEnd",
+      "onRoundStart",
       "onShieldBroken",
       "onShieldGained",
       "onStatusApplied",
-      "onStunned"
+      "onStunned",
+      "onUltimateCast",
+      "onUltimateHit"
     ],
     "conditionLeafKinds": [
       "chance",
@@ -2226,12 +2239,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "8d30566f",
+    "engineFingerprint": "c8deb8d8",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 8d30566f —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 c8deb8d8 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -2825,5 +2838,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "7c743762bedd"
+  "profileDigest": "2f98befcb8d6"
 }

@@ -437,6 +437,23 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
  * classified; a name here is a decision, not an oversight.
  */
 export const SERVER_ONLY_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
+  // ── GH#354（2026-08-17）—— 四則**只餵 hook** 的事件 ────────────────────
+  // ⚠️ 四則都刻意不外送：它們沒有任何客戶端表現，而且每一則都與一個**已經在
+  // 外送**的事件講同一件事（送出去就是同一件事在線上出現兩次，浮動數字與特效
+  // 會重播）：
+  //   · `abilityHit`   ↔ 已外送的 `damage` / `projectileHit`
+  //   · `displace`     ↔ 已外送的 `leapStart`（衝刺／閃現的畫面走 nav override）
+  //   · `lethalDamage` ↔ 已外送的 `damage`（同一發），而 `lethalSaved` 也在這張表上
+  // ⛔ 哪天真的要畫「致命一擊」的表現，正確的做法是讓客戶端讀 `damage` 的
+  // `killingBlow`，不是把這一則放出去。
+  //
+  // ⚠️ 同一批的 `roundStart` / `roundEnd` **刻意不在這張表上**：它們由
+  // `MatchController` 發，不是 sim，而這兩個集合的守衛掃的是
+  // `packages/shared/src/sim` —— 列進來會被正確地判成「分類了但沒有人發」。
+  // 它們不外送是**因為外送是白名單**（`isFannedOutEvent`），不是因為列在這裡。
+  "abilityHit",
+  "displace",
+  "lethalDamage",
   // ── WIRE FLOOD: per-tick, and the client already has the beat it needs ─────
   // `fireRingTick` is emitted UNCONDITIONALLY every tick from the moment the
   // ring arms until the round ends — 30 messages/second/client for ~60 s, and

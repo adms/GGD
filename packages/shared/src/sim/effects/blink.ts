@@ -133,6 +133,10 @@ export const blinkEffect: EffectKindSpec<"blink"> = {
       const landed = teleportBody(world, mover, aim);
       if (landed === null) continue;
 
+      // GH#354 —— 位移的統一時刻（見 effects/dash.ts）。⚠️ 在 `landed === null`
+      // 那道閘**之後**：瞬移被地形擋掉時什麼都沒發生，不該觸發「位移後⋯」。
+      world.emit("displace", { id: mover, mode: "blink" });
+
       // 抵達之後**立刻**執行，同一個 tick。`point` 換成落點，`targets` 不動。
       if (onArrive !== undefined) {
         runEffects(onArrive, { ...ctx, point: { x: landed.x, z: landed.z } });

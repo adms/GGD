@@ -54,29 +54,42 @@ contentVersion `cv_70e7186a863c`
 | `taunt` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `weightedBranch` | — | 4 | `godie-e00s.ex`、`godie-h02k.ex`、`godie-h02v.ex`、`grail-ex-08` |
 
-## 觸發事件（hook event） —— 19 種
+## 觸發事件（hook event） —— 32 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
 | `onAbilityCast` | 施放技能時 | 19 | `godie-e00s.ex`、`godie-emfr.r`、`godie-h02v.ex`、`grail-c-12`、`grail-c-20`、`grail-a-08`、`grail-a-08`、`grail-a-08`、`grail-a-08`、`grail-a-16`、`grail-ex-04`、`grail-ex-05` …（共 19） |
 | `onAbilityHit` | 技能命中時 | 19 | `godie-edem.r`、`godie-edem.r`、`godie-edem.r`、`godie-efur.ex`、`godie-h01n.w`、`godie-h01n.w`、`grail-c-08`、`grail-c-09`、`grail-c-16`、`grail-c-18`、`grail-a-19`、`grail-a-20` …（共 19） |
+| `onAllyDamaged` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onAllyDeath` | 隊友死亡時 | 3 | `grail-c-15`、`grail-a-06`、`grail-ex-10` |
 | `onBasicAttack` | 普通攻擊時 | 71 | `godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e00k.passive`、`godie-e00l.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00s.w`、`godie-e00s.w` …（共 71） |
 | `onBossSpawn` | 殭屍王出現時 | 1 | `grail-c-13` |
+| `onBoundaryTouch` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onCrowdControlApplied` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onCrowdControlReceived` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onDamageDealt` | 造成傷害時 | 7 | `godie-emfr.e`、`godie-h02k.q`、`godie-h02k.q`、`godie-h02k.q`、`godie-h02k.q`、`grail-a-10`、`grail-a-18` |
 | `onDamageTaken` | 受到傷害時 | 31 | `godie-e002.r`、`godie-e00l.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-edem.passive`、`godie-emfr.ex`、`godie-h00l.ex`、`godie-h00l.r`、`godie-h01u.r`、`godie-h02k.e`、`godie-h02k.e`、`godie-h02k.e` …（共 31） |
+| `onDashOrBlink` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onDeath` | 死亡時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onEvade` | 迴避成功時 | 10 | `godie-e00w.passive`、`godie-h02k.r`、`godie-h02k.r`、`godie-h02k.r`、`grail-c-02`、`grail-c-03`、`grail-a-01`、`grail-a-02`、`grail-a-14`、`grail-ex-08` |
 | `onFireRingIgnite` | 火圈點燃時 | 1 | `grail-ex-09` |
 | `onGuardianDown` | 守衛塔被拆時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onHeal` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onInterval` | 每隔一段時間 | 7 | `godie-e00r.e`、`godie-e00r.e`、`godie-e00r.e`、`godie-e00r.e`、`godie-emfr.passive`、`grail-c-19`、`grail-ex-02` |
 | `onKill` | 擊殺時 | 13 | `godie-h01u.passive`、`godie-hpb1.passive`、`godie-o00x.passive`、`godie-ogrh.passive`、`godie-zombiex.passive`、`godie-zombiex.passive`、`grail-c-10`、`grail-c-14`、`grail-a-05`、`grail-ex-03`、`conqueror`、`last-stand` …（共 13） |
+| `onLethalDamage` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onOverheal` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onProjectileExpire` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onReflectSuccess` | 反彈成功時 | 11 | `godie-e002.ex`、`godie-emfr.ex`、`godie-h00l.ex`、`godie-h00l.r`、`godie-h00l.r`、`godie-h02k.w`、`grail-c-02`、`grail-c-03`、`grail-a-01`、`grail-a-02`、`grail-ex-08` |
 | `onRevive` | 復活時 | 2 | `grail-a-07`、`grail-ex-11` |
+| `onRoundEnd` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onRoundStart` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onShieldBroken` | 護盾破裂時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onShieldGained` | 獲得護盾時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onStatusApplied` | 被掛上狀態時 | 3 | `grail-c-01`、`grail-c-11`、`grail-a-15` |
 | `onStunned` | 被暈眩時 | 2 | `godie-n01c.passive`、`godie-nbbc.passive` |
+| `onUltimateCast` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onUltimateHit` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 
 ## 條件葉（condition leaf） —— 5 種
 

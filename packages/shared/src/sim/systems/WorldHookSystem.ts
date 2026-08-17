@@ -58,6 +58,7 @@ import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import type { HookEvent } from "../stats/modifiers";
 import { alliedChampions, fireHooks } from "../effects/hooks";
+import { StatusEffects } from "../../content/registries";
 
 interface WorldHookRow {
   /** `world.emit()` 的事件名。 */
@@ -95,6 +96,52 @@ interface WorldHookRow {
    * 死人」—— 只有兩種答案是 true：死亡當下，以及未來某種「陣亡後遺留」。
    */
   readonly firesWhenOwnerDead?: boolean;
+  /**
+   * ⭐ 2026-08-17（GH#354）—— 同一則 sim 事件的**子集合**。
+   *
+   * 加它的理由是量到的：owner 要的 13 個新事件裡有 6 個**沒有自己的時刻**，
+   * 它們是既有時刻的一個切片 ——「R 的施放」是 `abilityCast` 的一個 slot、
+   * 「控場」是 `statusApplied` 裡帶 `cc` 標籤的那些、「溢出治療」是 `heal` 裡
+   * `overheal > 0` 的那些。
+   *
+   * ⛔ 為那 6 個各開一個新的 `world.emit` 是錯的：同一件事會在事件流上出現兩次，
+   * 而客戶端與錄影都讀那條流。⛔ 在迴圈裡為它們寫 if 也是錯的（第〇·五守則）。
+   * ⇒ 一格謂詞，判斷留在**這一列**上。
+   *
+   * ⚠️ 它必須是**純**的：不抽 rng、不看時鐘、不改世界。它每 tick 對每一則事件
+   * 跑一次，任何副作用都會變成一個沒有人記得的隱藏系統。
+   */
+  readonly when?: (world: SimWorld, data: Record<string, unknown>) => boolean;
+  /**
+   * 戰鬥沒開始時也發？省略 = 不發（與這支系統的早退一致）。
+   *
+   * ⚠️ 只有【回合結束】需要它，而且**非有不可**：`MatchController` 是先發事件
+   * 再把 `combatActive` 關掉，但事件要到**下一次 step()** 才被派發 —— 那時旗標
+   * 已經是 false，早退會把整列吃掉（失敗形態②：發了但沒有人收得到）。
+   */
+  readonly firesOutsideCombat?: boolean;
+}
+
+/**
+ * 「這個狀態算不算控場」——⛔ 不是一份寫在程式裡的名單。
+ *
+ * `content/status-effects/*.json` 每一份都帶 `tags`，而硬控那幾份本來就標了
+ * `cc`（`stun` 還多一個 `hard-cc`）。⇒ 分類是**內容**，新增一種控場狀態只要在
+ * 那份文件的 tags 加一個字，⛔ 不必回來改這裡。
+ *
+ * ⚠️ 查不到那份文件時回 false：一個沒登錄的 statusId 不該讓「被控場時」誤觸發。
+ */
+function isControlStatus(data: Record<string, unknown>): boolean {
+  const id = data.statusId;
+  if (typeof id !== "string") return false;
+  const doc = StatusEffects.tryGet(id as never) as { tags?: readonly string[] } | undefined;
+  return doc?.tags?.includes("cc") === true;
+}
+
+/** `ev.data` 的一格是不是大於零的數（`overheal` / `amount` 用）。 */
+function positiveAt(data: Record<string, unknown>, key: string): boolean {
+  const v = data[key];
+  return typeof v === "number" && v > 0;
 }
 
 /**
@@ -182,6 +229,104 @@ const WORLD_HOOKS: readonly WorldHookRow[] = [
   // ⚠️ `firesWhenOwnerDead` **刻意留空**：這一列的持有者依定義是還站著的人。
   // 填 true 的話一次團滅會讓每一具屍體互相觸發，而那正是這個事件的反面。
   { simEvent: "death", hook: "onAllyDeath", scope: "allies", actorKey: "id", targetKey: "id" },
+
+  // ══ GH#354 的 13 列（2026-08-17）════════════════════════════════════════
+  // ⭐ 這一批是這張表**第二次**證明自己：owner 列了 18 個事件，其中 13 個是新的，
+  // 而系統本體只多了兩格（`when` / `firesOutsideCombat`）加兩個小謂詞。
+  // 逐一寫成 13 支系統的話是 13 份會各自腐爛的排序推導。
+
+  // ── 既有時刻的**切片**（沒有新的 emit）──────────────────────────────
+  // 終極技（R）的施放與命中。⚠️ 判準是 `slot === "R"`，⛔ 不是「最後一個槽」——
+  // EX 是另一個槽而且是另一件事（owner 的清單把 ultimate 與 EX 分開講）。
+  {
+    simEvent: "abilityCast",
+    hook: "onUltimateCast",
+    scope: "actor",
+    actorKey: "caster",
+    when: (_w, d) => d.slot === "R",
+  },
+  {
+    simEvent: "abilityHit",
+    hook: "onUltimateHit",
+    scope: "actor",
+    actorKey: "caster",
+    targetKey: "target",
+    when: (_w, d) => d.slot === "R",
+  },
+  // 控場：同一則 `statusApplied` 的兩種讀法（⛔ 不是兩個事件）。
+  // `Applied` 的持有者是**施加的人**，`Received` 的持有者是**中控的人** ——
+  // 兩列的 actorKey/targetKey 剛好對調，這正是它們要各自一列的原因。
+  {
+    simEvent: "statusApplied",
+    hook: "onCrowdControlApplied",
+    scope: "actor",
+    actorKey: "source",
+    targetKey: "target",
+    when: (_w, d) => isControlStatus(d),
+  },
+  {
+    simEvent: "statusApplied",
+    hook: "onCrowdControlReceived",
+    scope: "actor",
+    actorKey: "target",
+    targetKey: "source",
+    when: (_w, d) => isControlStatus(d),
+  },
+  // 治療。⚠️ `restore.ts` 在 `applied <= RESTORE_EPSILON` 時**提早 return**，
+  // 所以這一則事件本身就代表「真的補到血了」，這裡不必再驗一次。
+  { simEvent: "heal", hook: "onHeal", scope: "actor", actorKey: "target", targetKey: "source" },
+  // 溢出治療 —— 同一則事件、多一格判斷。`overheal` 是發射端算好的
+  //（`requested - applied`），⛔ 這裡不重算，重算就是第二份真相。
+  {
+    simEvent: "heal",
+    hook: "onOverheal",
+    scope: "actor",
+    actorKey: "target",
+    targetKey: "source",
+    when: (_w, d) => positiveAt(d, "overheal"),
+  },
+  // 隊友受傷時。吃的是既有的 `damage` 事件，差別只在 scope（同 onAllyDeath）。
+  // ⚠️ 持有者是**還站著的隊友**，target 是打人的那個 —— 「隊友被打時反擊」寫得出來。
+  {
+    simEvent: "damage",
+    hook: "onAllyDamaged",
+    scope: "allies",
+    actorKey: "target",
+    targetKey: "source",
+  },
+  // 投射物消失時。⚠️ `owner` 而不是 `id`：`id` 是**投射物本身**的實體，
+  // 而且它在同一 tick 就 destroy 了（#294 那個坑的同一個形狀）。
+  {
+    simEvent: "projectileEnd",
+    hook: "onProjectileExpire",
+    scope: "actor",
+    actorKey: "owner",
+  },
+  // 碰到場地邊界。⭐ **沒有新的判斷** —— 火圈就是這張地圖的邊界，而
+  // `fireRingDamage` 的判準逐字是「這個人在圈外」。⛔ 不另外寫一份半徑檢查：
+  // 兩份「什麼叫出界」分歧的那天，卡片與燒傷會對同一個人給出不同答案。
+  { simEvent: "fireRingDamage", hook: "onBoundaryTouch", scope: "actor", actorKey: "target" },
+
+  // ── 需要新發射點的四列 ────────────────────────────────────────────────
+  // 位移（衝刺／閃現／跳躍）。三支效果共用一則 `displace` 事件，`mode` 帶種類，
+  // 所以「使用位移技後⋯」一張卡就涵蓋三種，而想只吃閃現的人可以用條件葉讀 mode。
+  { simEvent: "displace", hook: "onDashOrBlink", scope: "actor", actorKey: "id" },
+  // 受到致命傷害的那一刻。⚠️ 與 `lethalSaved` **不是同一件事**：那一則只在
+  // 真的被免死救回來時才發，而 owner 要的是「這一發本來會殺死我」——
+  // 免死沒生效（沒有標記／被火圈無視）時它照樣要響。
+  {
+    simEvent: "lethalDamage",
+    hook: "onLethalDamage",
+    scope: "actor",
+    actorKey: "victim",
+    targetKey: "source",
+    firesWhenOwnerDead: true,
+  },
+  // 回合開始／結束。⚠️ 兩者都由 `MatchController` 發（回合是 host 的概念，
+  // sim 沒有那份帳），⛔ 不在 sim 裡重建一份回合狀態機。
+  { simEvent: "roundStart", hook: "onRoundStart", scope: "world" },
+  // ⚠️ `firesOutsideCombat` 非有不可 —— 見那個欄位的註解。
+  { simEvent: "roundEnd", hook: "onRoundEnd", scope: "world", firesOutsideCombat: true },
 ];
 
 const BY_EVENT = new Map<string, WorldHookRow[]>();
@@ -221,7 +366,8 @@ const MAX_DISPATCH_PASSES = 4;
 export function worldHookSystem(world: SimWorld): void {
   // 與 `intervalHookSystem` 同一道閘：戰鬥沒開始時整支是 no-op，
   // 所以既有的錄影與測試逐位元不變。
-  if (!world.combatActive) return;
+  // ⚠️ 早退**不再**看 combatActive —— 回合結束那一列必須在旗標關掉之後仍然發得出去。
+  // 過濾移到逐列（`firesOutsideCombat`），所以其餘每一列的行為逐位元不變。
   if (world.events.length === 0) return;
 
   // ⚠️ 收件人只算一次。`world` 作用域的六列如果各自重算，同一 tick 內
@@ -241,6 +387,8 @@ export function worldHookSystem(world: SimWorld): void {
       const rows = BY_EVENT.get(ev.type);
       if (!rows) continue;
       for (const row of rows) {
+        if (!world.combatActive && row.firesOutsideCombat !== true) continue;
+        if (row.when !== undefined && !row.when(world, ev.data)) continue;
         if (row.scope === "actor") {
           const owner = idAt(ev.data, row.actorKey);
           if (owner === undefined) continue;

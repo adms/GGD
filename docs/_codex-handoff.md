@@ -3,7 +3,7 @@
 > **一句話**：讀 3 份**必給**，其餘照需要。⛔ 權威是**端點**不是文件；
 > 而定價規則目前**還只是散文**（端點沒做）—— 那一格下面明講。
 
-最後更新：**2026-08-14（v0.16.2）** · 引擎能力指紋 **`8d30566f`**
+最後更新：**2026-08-14（v0.16.2）** · 引擎能力指紋 **`c8deb8d8`**
 
 > ⚠️ **這一頁本身也會過期，所以它現在有守衛。**
 > `packages/shared/src/ops/codexHandoffFresh.test.ts` 逐一檢查下面每一個檔案路徑
@@ -111,7 +111,7 @@ content-api，而**正式站沒有把 content-api 對外開**。編輯器拿得�
 
 ⭐ **`tagManifest.matchesEngine` 是最該先看的一格**：標籤清單宣稱的引擎指紋
 等不等於引擎現在算出來的。⚠️ 2026-08-14 它是 **false**（清單記 `ef984bcc`、
-引擎已是 `8d30566f`）—— 代表那 139 個標籤的裁決是**對舊引擎**做的。
+引擎已是 `c8deb8d8`）—— 代表那 139 個標籤的裁決是**對舊引擎**做的。
 
 ⛔ 整份是**推導**的，跟著 `pnpm content:build` 走，守衛
 `shippedEditorProfileIsCurrent.test.ts` 比對 `profileDigest`（刻意不含
@@ -139,9 +139,9 @@ GET  <content-api prefix>/health
 | `planned`（逐筆 supported / partial / unsupported） | 28 |
 | `knownBroken` | **1** |
 
-⭐ 它有 `fingerprint`（現在是 `8d30566f`）—— 拿它 pin base，引擎一變你就知道。
+⭐ 它有 `fingerprint`（現在是 `c8deb8d8`）—— 拿它 pin base，引擎一變你就知道。
 
-> ⚠️ **但別忘了文件裡那一份是快照。** 2026-08-14 實測：引擎已經走到 `8d30566f`，
+> ⚠️ **但別忘了文件裡那一份是快照。** 2026-08-14 實測：引擎已經走到 `c8deb8d8`，
 > 合約文件卻還貼著 `7f2a3d75`，而**四個數字（37/19/5/17）當時全部還是對的** ——
 > 逐項核對也看不出來。變的是 `knownBroken` 的內文。
 > ⇒ **每次交付前先打一次端點，用回來的 fingerprint 對一次文件。**

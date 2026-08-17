@@ -1432,29 +1432,42 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 | `summon` | 0 | `swapResource` | 1 | `taunt` | 0 |
 | `weightedBranch` | 4 |  |  |  |  |
 
-### 觸發事件（hook event）—— 19 種
+### 觸發事件（hook event）—— 32 種
 
 | 事件 | 中文 | 用它的內容 |
 |---|---|--:|
 | `onAbilityCast` | 施放技能時 | 19 |
 | `onAbilityHit` | 技能命中時 | 19 |
+| `onAllyDamaged` | — | 0 |
 | `onAllyDeath` | 隊友死亡時 | 3 |
 | `onBasicAttack` | 普通攻擊時 | 71 |
 | `onBossSpawn` | 殭屍王出現時 | 1 |
+| `onBoundaryTouch` | — | 0 |
+| `onCrowdControlApplied` | — | 0 |
+| `onCrowdControlReceived` | — | 0 |
 | `onDamageDealt` | 造成傷害時 | 7 |
 | `onDamageTaken` | 受到傷害時 | 31 |
+| `onDashOrBlink` | — | 0 |
 | `onDeath` | 死亡時 ⛔ 已知壞掉（GH#296） | 0 |
 | `onEvade` | 迴避成功時 | 10 |
 | `onFireRingIgnite` | 火圈點燃時 | 1 |
 | `onGuardianDown` | 守衛塔被拆時 | 0 |
+| `onHeal` | — | 0 |
 | `onInterval` | 每隔一段時間 | 7 |
 | `onKill` | 擊殺時 | 13 |
+| `onLethalDamage` | — | 0 |
+| `onOverheal` | — | 0 |
+| `onProjectileExpire` | — | 0 |
 | `onReflectSuccess` | 反彈成功時 | 11 |
 | `onRevive` | 復活時 | 2 |
+| `onRoundEnd` | — | 0 |
+| `onRoundStart` | — | 0 |
 | `onShieldBroken` | 護盾破裂時 | 0 |
 | `onShieldGained` | 獲得護盾時 | 0 |
 | `onStatusApplied` | 被掛上狀態時 | 3 |
 | `onStunned` | 被暈眩時 | 2 |
+| `onUltimateCast` | — | 0 |
+| `onUltimateHit` | — | 0 |
 
 ### 條件葉（condition leaf）—— 5 種
 

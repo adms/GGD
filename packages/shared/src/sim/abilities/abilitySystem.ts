@@ -443,6 +443,10 @@ export function castAbility(
   fireHooks(world, caster, "onAbilityCast", targets[0], slot);
   for (const hitId of targets) {
     if (hitId !== caster) fireHooks(world, caster, "onAbilityHit", hitId, slot);
+    // GH#354 —— 事件流上的「技能命中」。⚠️ 它**只**餵 `onUltimateHit`
+    // （WorldHookSystem 用 slot 切片），⛔ 不是 `onAbilityHit` 的第二條路：
+    // 那一支就在上面一行直接發，兩條路會讓同一張卡響兩次。
+    if (hitId !== caster) world.emit("abilityHit", { caster: caster, target: hitId, slot: slot });
   }
   // RECOVERY starts at the END of startup. For an instant cast startup is zero
   // ticks long, so "end of startup" IS this moment. Effects above only QUEUED

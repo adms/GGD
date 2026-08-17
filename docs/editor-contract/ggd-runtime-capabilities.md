@@ -1,6 +1,6 @@
 # GGD 遊戲端執行期能力清單（`ggd-runtime-capabilities@1`）
 
-**指紋 `8d30566f`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
+**指紋 `c8deb8d8`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
 
 ## 這份文件是什麼
 
@@ -65,7 +65,7 @@
 
 ## 4. 可以掛的 hook 事件
 
-`onAbilityCast` · `onAbilityHit` · `onAllyDeath` · `onBasicAttack` · `onBossSpawn` · `onDamageDealt` · `onDamageTaken` · `onDeath` · `onEvade` · `onFireRingIgnite` · `onGuardianDown` · `onInterval` · `onKill` · `onReflectSuccess` · `onRevive` · `onShieldBroken` · `onShieldGained` · `onStatusApplied` · `onStunned`
+`onAbilityCast` · `onAbilityHit` · `onAllyDamaged` · `onAllyDeath` · `onBasicAttack` · `onBossSpawn` · `onBoundaryTouch` · `onCrowdControlApplied` · `onCrowdControlReceived` · `onDamageDealt` · `onDamageTaken` · `onDashOrBlink` · `onDeath` · `onEvade` · `onFireRingIgnite` · `onGuardianDown` · `onHeal` · `onInterval` · `onKill` · `onLethalDamage` · `onOverheal` · `onProjectileExpire` · `onReflectSuccess` · `onRevive` · `onRoundEnd` · `onRoundStart` · `onShieldBroken` · `onShieldGained` · `onStatusApplied` · `onStunned` · `onUltimateCast` · `onUltimateHit`
 
 ## 5. 可展開的技能模板家族
 

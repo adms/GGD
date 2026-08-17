@@ -140,6 +140,22 @@ export interface StatModifier {
 
 /** Game events hooks can react to. */
 export type HookEvent =
+  // ⭐ GH#354（owner 2026-08-17）—— 13 個新時刻。⛔ 沒有一個需要新的系統：
+  // 六個是既有事件的切片（`WorldHookRow.when`），四個是新的發射點，
+  // 三個是既有事件換一個 scope。發射與收件的對照表住在 systems/WorldHookSystem.ts。
+  | "onUltimateCast"
+  | "onUltimateHit"
+  | "onCrowdControlApplied"
+  | "onCrowdControlReceived"
+  | "onHeal"
+  | "onOverheal"
+  | "onAllyDamaged"
+  | "onProjectileExpire"
+  | "onBoundaryTouch"
+  | "onDashOrBlink"
+  | "onLethalDamage"
+  | "onRoundStart"
+  | "onRoundEnd"
   | "onAbilityCast"
   | "onAbilityHit"
   | "onBasicAttack"

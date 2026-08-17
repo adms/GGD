@@ -27,6 +27,15 @@ export const dashEffect: EffectKindSpec<"dash"> = {
         : ctx.direction ?? t.facing;
     startDash(world, ctx.caster, dir, e.speed, e.maxDistance);
 
+    // GH#354 —— 位移的統一時刻（衝刺／閃現／跳躍共用一則），
+    // `mode` 帶種類，所以「使用位移技後⋯」一張卡就涵蓋三種，
+    // 而只想吃閃現的人用條件葉讀 mode。⛔ 不為三種各開一個事件。
+    // ⚠️ 方向是零向量時 `startDash` 不建 override＝衝刺沒有發生，所以這道閘
+    // 與下面 onEnd 那一道是**同一個判準**，⛔ 不是兩份。
+    if (world.nav.get(ctx.caster)?.override?.kind === "dash") {
+      world.emit("displace", { id: ctx.caster, mode: "dash" });
+    }
+
     // ⭐ S7 —— 缺席 = 沒有回呼 = 這個欄位出現之前的行為，一個 tick 都不差。
     if (!e.onEnd || e.onEnd.length === 0) return;
     // `startDash` 在方向為零向量時**不建 override**，那時登記一筆回呼會讓它在

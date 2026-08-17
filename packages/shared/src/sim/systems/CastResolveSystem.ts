@@ -100,6 +100,10 @@ export function castResolveSystem(world: SimWorld): void {
     fireHooks(world, id, "onAbilityCast", targets[0], cast.slot);
     for (const hitId of targets) {
       if (hitId !== id) fireHooks(world, id, "onAbilityHit", hitId, cast.slot);
+      // GH#354 —— 事件流上的「技能命中」。⚠️ 它**只**餵 `onUltimateHit`
+      // （WorldHookSystem 用 slot 切片），⛔ 不是 `onAbilityHit` 的第二條路：
+      // 那一支就在上面一行直接發，兩條路會讓同一張卡響兩次。
+      if (hitId !== id) world.emit("abilityHit", { caster: id, target: hitId, slot: cast.slot });
     }
     world.emit("castEnd", { caster: id, slot: cast.slot, abilityId: cast.abilityId });
     // RECOVERY begins at the END of startup — this tick, never later. Effects

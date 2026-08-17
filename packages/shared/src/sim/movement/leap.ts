@@ -234,6 +234,9 @@ export function startLeap(world: SimWorld, id: EntityId, opts: StartLeapOptions)
     ticks,
     apex: opts.apexHeight,
   });
+  // GH#354 —— 位移的統一時刻（見 effects/dash.ts）。⛔ 不取代 `leapStart`：
+  // 那一則是客戶端的起跳動畫線索，這一則是內容側的觸發時刻。
+  world.emit("displace", { id, mode: "leap" });
   return true;
 }
 

@@ -1227,6 +1227,58 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // one of them has a painter and a PNG on disk.
 
   // --- the same id, on the OTHER axis: authored in `map@1` but not yet used there.
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onUltimateCast": {
+    status: "default-live",
+    why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「放大絕的時候⋯」——`abilityCast` 的 slot 切片。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onUltimateHit": {
+    status: "default-live",
+    why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「大絕打中的時候⋯」——`abilityHit` 的 slot 切片。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onCrowdControlApplied": {
+    status: "default-live",
+    why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「控到人的時候⋯」——`statusApplied` 裡帶 `cc` 標籤的那些，施加者視角。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onCrowdControlReceived": {
+    status: "default-live",
+    why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「被控的時候⋯」——同一則事件，承受者視角。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onHeal": {
+    status: "default-live",
+    why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「治療生效的時候⋯」——`heal` 事件（`restore.ts` 已經擋掉零治療）。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onOverheal": {
+    status: "default-live",
+    why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「補超過的時候⋯」——同一則事件，`overheal > 0` 的切片。補師/吸血流的骨架。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onAllyDamaged": {
+    status: "default-live",
+    why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「隊友被打的時候⋯」——`damage` 換 `allies` scope（同 `onAllyDeath` 的形狀）。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onProjectileExpire": {
+    status: "default-live",
+    why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「投射物消失的時候⋯」——`projectileEnd`，持有者是**發射者**不是投射物。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onBoundaryTouch": {
+    status: "default-live",
+    why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「碰到場地邊界的時候⋯」——火圈就是這張地圖的邊界，吃 `fireRingDamage`。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onDashOrBlink": {
+    status: "default-live",
+    why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「使用位移技之後⋯」——衝刺／閃現／跳躍共用的 `displace`，`mode` 帶種類。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onLethalDamage": {
+    status: "default-live",
+    why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「受到致命傷害的時候⋯」——⚠️ 與免死（`lethalSaved`）不同：這一則在判斷**之前**發，所以身上沒有免死標記的人也收得到。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onRoundStart": {
+    status: "default-live",
+    why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「回合開始時⋯」——`MatchController` 發，`world` scope。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onRoundEnd": {
+    status: "default-live",
+    why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「回合結束時⋯」——同上，而且是唯一帶 `firesOutsideCombat` 的一列。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
+  },
   "enum:maps.groundStyle=sand": {
     status: "default-live",
     why: "`sand` (raked arena sand) IS shipped and IS on screen — `content/arenas/arena.colosseum.json` (羅馬大擂台) uses it. What has zero adoption is the `map@1` half: colosseum is a hand-authored arena doc that predates the map compiler (GH#324/#342), so no `content/maps/*.json` declares `sand`. The painter, the PNG and the runtime lookup all exist; this row is about which AUTHORING surface reaches it, not about a dead mechanism. It expires the day someone rebuilds colosseum as a compiled map.",

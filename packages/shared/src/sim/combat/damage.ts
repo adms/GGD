@@ -976,6 +976,13 @@ export function combatResolveSystem(world: SimWorld): void {
       // 標記時，它在碰任何東西之前就回 undefined），所以在內容填進來之前這一段
       // 是嚴格的 no-op —— 既有 replay 與 digest 逐位元不變。
       if (dmg > 0) {
+        // ⭐ GH#354 —— 「這一發本來會殺死我」。⚠️ 與 `lethalSaved` **不是同一件事**：
+        // 那一則只在免死真的生效時才發，而這一則在**判斷之前**發，所以身上沒有
+        // 免死標記的人也收得到。⛔ 判準只有一個（削減後的 dmg >= 現在的血），
+        // 不重算「會不會死」——重算就是第二份真相。
+        if (dmg >= hp.hp) {
+          world.emit("lethalDamage", { victim: pkt.target, source: pkt.source, amount: dmg });
+        }
         const floor = lethalSaveFor(world, pkt.target, pkt.type, dmg, hp.hp);
         // 把這一發削到「剛好留下 floor」。⛔ 不是 `dmg = 0`：留著這一段扣血
         // 才能讓下游（浮動數字、吸血、擊殺歸屬）看到一發真的發生過的傷害，

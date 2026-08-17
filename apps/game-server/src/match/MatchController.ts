@@ -1454,6 +1454,10 @@ export class MatchController {
 
   private enterIntermission(): void {
     this.world.economyOpen = true;
+    // ⭐ GH#354 —— 【回合結束】。⚠️ 一定要在關掉 `combatActive` **之前**發，
+    // 而那一列帶著 `firesOutsideCombat` —— 事件要到下一次 step() 才被派發，
+    // 那時旗標已經是 false（見 WorldHookSystem 的那個欄位）。
+    this.world.emit("roundEnd", { round: this.phase.round });
     this.world.combatActive = false; // scoreboard time-alive pauses between rounds
     // 結算窗口結束 —— 中場對所有人開放，不再需要「只有陣亡者」那條規則。
     this.world.roundResolving = false;
@@ -1714,6 +1718,9 @@ export class MatchController {
   private enterCombat(): void {
     this.world.economyOpen = false;
     this.world.combatActive = true; // scoreboard time-alive accrues during combat
+    // ⭐ GH#354 —— 【回合開始】。回合是 host 的概念（sim 沒有那份帳），
+    // 所以發射點在這裡，而收件由 `worldHookSystem` 的那張表做。
+    this.world.emit("roundStart", { round: this.phase.round });
     // 保險：正常路徑上 enterIntermission 已經清過，但 skipPhase / failsafe
     // 會直接跳到這裡，而一個沒清掉的 roundResolving 會讓下一次結算的判斷失真。
     this.world.roundResolving = false;

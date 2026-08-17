@@ -204,6 +204,22 @@ export const CYCLE_BUFF_MAX_STEPS = 8;
 export const HOOK_INTERNAL_COOLDOWN_MAX_SEC = 300;
 
 export const zHookEvent = z.enum([
+  // ⭐ GH#354（owner 2026-08-17）—— 這 13 個與 sim 的 `HookEvent` 逐字對齊，
+  // 而「誰在發射」寫在 systems/WorldHookSystem.ts 的那張表上。
+  // ⚠️ 只加這裡而沒有那一列 = 下拉裡多一個永遠不會發生的選項（`onLevelUp` 的前科）。
+  "onUltimateCast",
+  "onUltimateHit",
+  "onCrowdControlApplied",
+  "onCrowdControlReceived",
+  "onHeal",
+  "onOverheal",
+  "onAllyDamaged",
+  "onProjectileExpire",
+  "onBoundaryTouch",
+  "onDashOrBlink",
+  "onLethalDamage",
+  "onRoundStart",
+  "onRoundEnd",
   "onAbilityCast",
   "onAbilityHit",
   "onBasicAttack",
