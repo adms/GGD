@@ -37,6 +37,8 @@ import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import { recordHealing } from "../stats/matchStats";
 import { woundMult } from "../grievousWounds";
+import { outputMult } from "../stats/outputMult";
+import { Stat } from "../stats/statTypes";
 
 /**
  * Restores below this are not worth an event (and would otherwise let a
@@ -71,7 +73,14 @@ export function healTarget(world: SimWorld, opts: RestoreOpts): number {
   // 治療花 / 守衛塔 / 吸血），所以打折一次就全部到位。
   // ⚠️ `restoreMana` 底下那一份**故意**不打折 —— 重創是治療軸，不是法力軸。
   // ⚠️ 吸血的**係數**在 `combat/damage.ts` 另外打折，那不是重複，見那一段。
-  const requested = opts.amount * woundMult(world, opts.target, "healingTakenMult");
+  // ⭐ G2（GH#354）—— 兩個乘數方向**相反**而且都要：
+  //   · `woundMult(opts.target, …)`  = **承受側**（重創：我被治療打折）
+  //   · `outputMult(opts.source, …)` = **產出側**（[EX解放]：我治療別人更多）
+  // ⚠️ 一個讀 target 一個讀 source —— 抄錯一個就會變成「幫誰補血誰自己決定」。
+  const requested =
+    opts.amount *
+    woundMult(world, opts.target, "healingTakenMult") *
+    outputMult(world, opts.source, Stat.OutputHealingPct);
   if (!(requested > 0)) return 0;
 
   const before = hp.hp;

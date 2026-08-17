@@ -307,6 +307,18 @@ ITEM_ID_SUBJECT: dict[str, tuple[str, str]] = {
                    "deep crimson"),
     "godie-i06p": ("a glossy black crow feather tipped with blood",
                    "black and blood red"),
+    # ── [EX解放] #50–#69（owner 2026-08-17）────────────────────────────────
+    # ⚠️ 這一批**一定要走這張覆寫表**，⛔ 不能讓 `item_keywords` 從名字/描述推導。
+    # 前科量得到：60 張聖杯願望走推導時只長出 16 種特徵，33/60（55%）撞在同一句。
+    # 傳說武器的描述格式又更整齊（「武器\n效能\n[標籤]…」），推導的塌陷會更嚴重。
+    #
+    # ⭐ #61 是 owner 2026-08-17 把「弓與箭」**整件換掉**之後的新設計 ——
+    # 舊主題（弓／箭／Stand 使者）一個字都不能留，否則畫出來的是上一版的東西。
+    "shining-golden-orbs": (
+        "two large polished golden spheres resting side by side on a dark pedestal, "
+        "radiant golden light bursting outward behind them, bold centred silhouette",
+        "brilliant gold and deep amber",
+    ),
 }
 
 

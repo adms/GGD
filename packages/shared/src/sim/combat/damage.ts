@@ -34,6 +34,7 @@ import { noteAbilityConnect } from "../abilities/abilityRecovery";
 import { breakStatusesOnDamage } from "../statusBreak";
 import { woundMult } from "../grievousWounds";
 import { weaknessMult } from "../weakness";
+import { outputMult } from "../stats/outputMult";
 import {
   deriveCosmetics,
   mergeCosmetics,
@@ -891,6 +892,12 @@ export function combatResolveSystem(world: SimWorld): void {
       // 位元等價的 —— 直到有一份帶 `weakness` 分類的狀態文件上架。
       pkt.amount *= weaknessMult(world, pkt.source, "damageDealtMult");
 
+      // ⭐ G2（GH#354）—— **輸出倍率**。緊接在虛弱那一行後面是刻意的：兩者是同一
+      // 個位置的兩半（減益／增益），而且都必須在減傷之前，否則「造成的傷害 ×1.25」
+      // 會變成「穿甲之後才 ×1.25」，對高護甲目標的效果被吃掉一大半。
+      // 沒有任何人填這一格時 `outputMult` 回 1 ⇒ 對今天每一場比賽位元等價。
+      pkt.amount *= outputMult(world, pkt.source, Stat.OutputDamagePct);
+
       // "impact" = post-mitigation, PRE-shield damage: the blow's raw force,
       // used to scale hitstop/knockback even when a shield eats the hp loss.
       const impact = mitigate(world, pkt);
@@ -1317,9 +1324,19 @@ export function addShield(
    * 畫面上兩片盾長得跟一片厚的一模一樣（失敗形態②）。
    */
   stack?: { stackKey: string; onExisting: "replace" | "keepLarger" | "stack" },
+  /**
+   * ⭐ G2（GH#354）—— **是誰生的這片盾**。省略 = 沒有主人（守衛塔、環境、
+   * 測試夾具）⇒ `outputMult` 回 1 ⇒ 逐位元等同這一格出現之前的行為。
+   * ⚠️ 刻意不從 `sourceId` 那個**字串**反推：那是一個給去重用的標籤
+   * （`"item:xxx"` / `"ability:yyy#3"`），不是實體 id，反推就是在猜。
+   */
+  grantedBy?: EntityId,
 ): void {
   const hp = world.health.get(target);
   if (!hp) return;
+  // ⭐ G2 —— 護盾的輸出倍率。⚠️ 在**任何一條合併路徑之前**：`keepLarger` /
+  // `stack` 比的是「這一片有多大」，先合併再乘會讓比較用的是未放大的量。
+  amount *= outputMult(world, grantedBy, Stat.OutputShieldPct);
   const expiresAtTick = world.tick + Math.round(durationSecs / world.dt);
   const absorbsPart = absorbs !== undefined && absorbs !== "all" ? { absorbs } : {};
   if (stack !== undefined) {

@@ -36,6 +36,9 @@ export const shieldEffect: EffectKindSpec<"shield"> = {
         e.stackKey !== undefined
           ? { stackKey: e.stackKey, onExisting: e.onExisting ?? "replace" }
           : undefined,
+        // ⭐ G2（GH#354）—— **施法者**，不是 target：「我給出的護盾 ×1.25」
+        // 放大的是給的人的能力，⛔ 不是收的人的。
+        ctx.caster,
       );
       // 【護盾產生時】(GH#300) —— 一個**時刻**，交給 `systems/WorldHookSystem.ts`
       // 那張表轉成 `onShieldGained`。這裡只 emit，不 `fireHooks`：直接呼叫會關上

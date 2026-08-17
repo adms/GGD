@@ -308,6 +308,12 @@ export const zStatModifier = zStatModifierFields
  * short-lived numbers, so they are not gated by this.
  */
 export const ITEM_MODIFIER_LIMITS: Record<Stat, number> = {
+  // ⭐ G2（GH#354）—— 輸出倍率三兄弟。語意是**加成**（0 = ×1）。
+  // ⚠️ 0.5 = 單件最多 +50% 輸出。[EX解放] 的文案最大是 ×1.6（#65 福音書），
+  // 而那是**觸發時的短期 buff** 不是道具常駐值 —— 道具那一格刻意留在 0.5。
+  [Stat.OutputDamagePct]: 0.5,
+  [Stat.OutputHealingPct]: 0.5,
+  [Stat.OutputShieldPct]: 0.5,
   [Stat.MaxHealth]: 2500, // strongest in catalogue: 960
   [Stat.HealthRegen]: 100, // 40
   [Stat.MaxMana]: 2500, // 600

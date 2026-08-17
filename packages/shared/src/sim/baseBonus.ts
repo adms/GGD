@@ -158,6 +158,10 @@ export const BASE_BONUS_MIN = 0;
  * 有 clamp 的六項必須等於自己的區間跨度,由 `baseBonus.test.ts` 逐條驗算。
  */
 export const BASE_BONUS_MAX: Readonly<Record<Stat, number>> = Object.freeze({
+  // ⭐ G2（GH#354）—— 輸出倍率三兄弟。語意是**加成**（0 = ×1）。
+  [Stat.OutputDamagePct]: 5,
+  [Stat.OutputHealingPct]: 5,
+  [Stat.OutputShieldPct]: 5,
   // 沒有 clamp —— 天花板是「遠超過任何內容值,但仍是個有限數字」。
   // 全 115 張英雄卡的 baseStats.maxHealth 最大是 4977,20000 給了 4 倍餘裕。
   [Stat.MaxHealth]: 20000,
@@ -363,6 +367,9 @@ export function finalizeStat(
 
 /** 中文標籤,後台表格與 codex 共用一份,避免兩邊叫法不同。 */
 export const STAT_LABEL_ZH: Readonly<Record<Stat, string>> = Object.freeze({
+  [Stat.OutputDamagePct]: "造成傷害加成",
+  [Stat.OutputHealingPct]: "治療輸出加成",
+  [Stat.OutputShieldPct]: "護盾輸出加成",
   [Stat.MaxHealth]: "生命上限",
   [Stat.HealthRegen]: "生命回復 /秒",
   [Stat.MaxMana]: "魔力上限",

@@ -1279,6 +1279,18 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "default-live",
     why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「回合結束時⋯」——同上，而且是唯一帶 `firesOutsideCombat` 的一列。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
   },
+  "enum:abilities.effects[]#applyBuff.maxStat.stat=outputDamagePct": {
+    status: "default-live",
+    why: "GH#354 / G2 —— 「造成傷害整體 ×N」的輸出倍率。owner 2026-08-17 的 20 件 [EX解放] 裡有 7 件要它（#54 · #57 · #58 · #60 · #64 · #65 · #69），加上重設計後的 #61 閃耀金玉。機制**整條路都通了**（Stat → 三個封包層的入口 → 行為守衛 sim/stats/outputMult.test.ts），內容側 0 筆是因為那 20 件的 JSON 還沒上架（等 G3/G4/G5 補完，見 GH#356）。⚠️ 語意是**加成**（0 = ×1），⛔ 不是預設 1 的倍率 —— 所以 0 筆採用是**嚴格 no-op**，既有的每一場逐位元不變。⚠️ 這條豁免的到期日就是第一件 [EX解放] 上架的那天，那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。",
+  },
+  "enum:abilities.effects[]#applyBuff.maxStat.stat=outputHealingPct": {
+    status: "default-live",
+    why: "GH#354 / G2 —— 「治療輸出整體 ×N」的輸出倍率。owner 2026-08-17 的 20 件 [EX解放] 裡有 7 件要它（#54 · #57 · #58 · #60 · #64 · #65 · #69），加上重設計後的 #61 閃耀金玉。機制**整條路都通了**（Stat → 三個封包層的入口 → 行為守衛 sim/stats/outputMult.test.ts），內容側 0 筆是因為那 20 件的 JSON 還沒上架（等 G3/G4/G5 補完，見 GH#356）。⚠️ 語意是**加成**（0 = ×1），⛔ 不是預設 1 的倍率 —— 所以 0 筆採用是**嚴格 no-op**，既有的每一場逐位元不變。⚠️ 這條豁免的到期日就是第一件 [EX解放] 上架的那天，那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。",
+  },
+  "enum:abilities.effects[]#applyBuff.maxStat.stat=outputShieldPct": {
+    status: "default-live",
+    why: "GH#354 / G2 —— 「護盾輸出整體 ×N」的輸出倍率。owner 2026-08-17 的 20 件 [EX解放] 裡有 7 件要它（#54 · #57 · #58 · #60 · #64 · #65 · #69），加上重設計後的 #61 閃耀金玉。機制**整條路都通了**（Stat → 三個封包層的入口 → 行為守衛 sim/stats/outputMult.test.ts），內容側 0 筆是因為那 20 件的 JSON 還沒上架（等 G3/G4/G5 補完，見 GH#356）。⚠️ 語意是**加成**（0 = ×1），⛔ 不是預設 1 的倍率 —— 所以 0 筆採用是**嚴格 no-op**，既有的每一場逐位元不變。⚠️ 這條豁免的到期日就是第一件 [EX解放] 上架的那天，那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。",
+  },
   "enum:maps.groundStyle=sand": {
     status: "default-live",
     why: "`sand` (raked arena sand) IS shipped and IS on screen — `content/arenas/arena.colosseum.json` (羅馬大擂台) uses it. What has zero adoption is the `map@1` half: colosseum is a hand-authored arena doc that predates the map compiler (GH#324/#342), so no `content/maps/*.json` declares `sand`. The painter, the PNG and the runtime lookup all exist; this row is about which AUTHORING surface reaches it, not about a dead mechanism. It expires the day someone rebuilds colosseum as a compiled map.",

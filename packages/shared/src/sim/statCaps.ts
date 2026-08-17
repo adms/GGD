@@ -216,6 +216,10 @@ export const DEFAULT_STAT_CAPS: StatCapTable = Object.freeze({
  * (= 那一列永遠填不進去)或 Infinity(= 又變回沒有上界)。
  */
 export const STAT_CAP_MAX: Readonly<Record<Stat, number>> = Object.freeze({
+  // ⭐ G2（GH#354）—— 輸出倍率三兄弟。語意是**加成**（0 = ×1）。
+  [Stat.OutputDamagePct]: 20,
+  [Stat.OutputHealingPct]: 20,
+  [Stat.OutputShieldPct]: 20,
   // 量出來的:全 115 張卡最強的 baseStats.maxHealth 是 4977,乘 maxHealth 9.0
   // 的環境倍率大約 45k。100 萬留了 20 倍以上。
   [Stat.MaxHealth]: 1_000_000,

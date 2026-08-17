@@ -43,6 +43,33 @@ export enum Stat {
    * no-op until content asks for it (same shape as {@link Evasion}).
    */
   SpellVamp = "spellVamp", // 0..1 of NON-basic damage
+  /**
+   * ── ⭐ G2 「輸出倍率」三兄弟（GH#354 / #356）─────────────────────────────
+   *
+   * owner 2026-08-17 的 20 件 [EX解放] 裡有 **7 件**要的是同一件事：
+   * 「這一次施放／這一段時間內，我造成的**傷害·治療·護盾整體** ×N」
+   * （#54 熟練度 · #57 三星許願 · #58 七寶玉 · #60 機動 · #64 再誕 · #65 福音 · #69 蒼月）。
+   *
+   * ⚠️ 這**不能**用既有的 `ad` / `ap` 表達，而理由是量到的：一支「造成 300 點固定
+   * 傷害」的技能對 `ad`/`ap` 完全免疫。owner 的文案講的是**輸出**不是**屬性**，
+   * 所以它必須坐在**封包層**（每一發傷害/治療/護盾各乘一次），⛔ 不是屬性層。
+   *
+   * ⭐ 三個消費端**都已經存在而且都在封包層**，所以這一族是「接上」不是「新建」：
+   *   · 傷害 → `combat/damage.ts` 的傷害佇列（普攻／技能／DoT／道具觸發全走它）
+   *   · 治療 → `combat/restore.ts::heal`（全 repo 唯一的補血入口）
+   *   · 護盾 → `combat/damage.ts::addShield`（全 repo 唯一的生盾入口）
+   *
+   * ⚠️ 語意是**加成**不是倍率本身：0 = 不動（×1），0.25 = ×1.25。
+   * ⛔ 刻意不是「預設 1 的倍率」—— 一個沒填的英雄會拿到 0，而 ×0 是**全部歸零**。
+   * 這與 {@link SpellVamp} / {@link Evasion} 同一個形狀：出貨 0，內容不開就是嚴格 no-op。
+   *
+   * ⛔ 三個分開而不是一個 —— owner 的 20 件裡有的只放大治療（#69 蒼月）、
+   * 有的只放大傷害（#54 熟練度）。合成一格就表達不出來。
+   * 要「三個一起」的（#64 再誕）就在同一張卡填三格。
+   */
+  OutputDamagePct = "outputDamagePct", // 0 = ×1
+  OutputHealingPct = "outputHealingPct", // 0 = ×1
+  OutputShieldPct = "outputShieldPct", // 0 = ×1
 }
 
 export type StatBlock = Record<Stat, number>;
