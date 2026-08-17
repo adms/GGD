@@ -1227,6 +1227,18 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // one of them has a painter and a PNG on disk.
 
   // --- the same id, on the OTHER axis: authored in `map@1` but not yet used there.
+  "enum:abilities.effects[]#applyBuff.maxStat.stat=maxHitPctMaxHp": {
+    status: "landing",
+    since: "2026-08-17",
+    why:
+      "GH#354 / G12 —— 單發傷害上限（#52 謎之紙片「單次受到超過最大生命 20% 的傷害時，該傷害最多只能造成 20% 最大生命」）。⚠️ 0 = **沒有上限**，⛔ 不是「上限 0%」。與守衛塔那一格同語意同位置（抗性四段之後），⭐ 而且**真傷也吃**。 機制**整條路都通了**（Stat → 封包層/迴避層的讀取點 → 守衛`sim/combat/hitCapAndUnavoidable.test.ts`），內容側 0 筆是因為這一批是**先開路再寫卡**。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。",
+  },
+  "enum:abilities.effects[]#applyBuff.maxStat.stat=unavoidablePct": {
+    status: "landing",
+    since: "2026-08-17",
+    why:
+      "GH#354 / G13 —— 無法被迴避（#51 神槍・金剛徹「滿層後普攻無法被迴避，仍可被格擋、護盾抵消」）。⛔ 不是第三種迴避率，是**對方那一格的折扣**；1 時 p 變 0 → 走既有的 ZERO GUARANTEE，所以「絕對命中」在重播位元層上等於「對方本來就沒有迴避」。 機制**整條路都通了**（Stat → 封包層/迴避層的讀取點 → 守衛`sim/combat/hitCapAndUnavoidable.test.ts`），內容側 0 筆是因為這一批是**先開路再寫卡**。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。",
+  },
   "enum:abilities.effects[]#applyBuff.modifiers[].op=capRaisePct": {
     status: "landing",
     since: "2026-08-17",

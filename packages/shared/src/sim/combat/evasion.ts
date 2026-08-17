@@ -189,8 +189,34 @@ export function evasionOf(world: SimWorld, target: EntityId): number {
  * BASIC ATTACKS ONLY — do not call this from an ability/DoT/proc path
  * (DECISION 1). Consumes exactly one rng draw when `evasion > 0`, and none at 0.
  */
+/**
+ * ⭐ G13（GH#354）—— **攻擊方**的「無法被迴避」折扣，0..1。
+ *
+ * #51 神槍・金剛徹「滿層後普攻無法被迴避，仍可被格擋、護盾抵消」。
+ *
+ * ⛔ 它**不是第三種迴避率**（那會踩到本檔 DECISION 2 的整段推導：`evasionOf` 與
+ * `missChanceOf` 已經是方向相反的兩個數，第三個同族的數字只會讓它們更難分）。
+ * 它是**對方那一格的折扣**，套在兩支 roll 函式裡、`p` 算完之後：
+ *
+ *     p_effective = p_evade × (1 - unavoidable)
+ *
+ * ⭐ 這個形狀讓「絕對命中」在**重播位元層**上等於「對方本來就沒有迴避」——
+ * `unavoidable = 1` 時 `p` 變 0，於是走的是既有的 **ZERO GUARANTEE**
+ *（不抽 rng、不動狀態）。換句話說它不會像一個「命中後再抽一次」的實作那樣
+ * 多消耗一次亂數而讓每一場既有錄影 desync。
+ *
+ * ⚠️ 讀的是**攻擊者**的 `sc.final`。攻擊者沒有 StatsComp（殭屍、守衛塔）→ 0。
+ */
+function unavoidableOf(world: SimWorld, source: EntityId): number {
+  const v = world.stats.get(source)?.final[Stat.UnavoidablePct];
+  if (v === undefined || v <= 0) return 0;
+  return v >= 1 ? 1 : v;
+}
+
 export function rollEvade(world: SimWorld, source: EntityId, target: EntityId): boolean {
-  const p = evasionOf(world, target);
+  // ⭐ G13 —— 折扣在 ZERO GUARANTEE **之前**乘進去，這樣「完全無法被迴避」
+  // 才會走那條「不抽 rng」的路（見 `unavoidableOf` 檔頭）。
+  const p = evasionOf(world, target) * (1 - unavoidableOf(world, source));
   if (p <= 0) return false; // THE ZERO GUARANTEE: no rng draw, no state change
   if (!world.rng.chance(p)) return false;
   emitEvade(world, source, target);
@@ -356,7 +382,8 @@ export function rollEvadeAbility(
   target: EntityId,
   isTrue: boolean,
 ): boolean {
-  const p = abilityEvasionOf(world, target, isTrue);
+  // ⭐ G13 —— 技能通道走**同一個**折扣，⛔ 不是第二套 scope 詞彙。
+  const p = abilityEvasionOf(world, target, isTrue) * (1 - unavoidableOf(world, source));
   if (p <= 0) return false; // THE ZERO GUARANTEE
   if (!world.rng.chance(p)) return false;
   emitEvade(world, source, target);

@@ -345,6 +345,10 @@ export const ITEM_MODIFIER_LIMITS: Record<Stat, number> = {
   [Stat.OutputDamagePct]: 0.5,
   [Stat.OutputHealingPct]: 0.5,
   [Stat.OutputShieldPct]: 0.5,
+  // ⭐ G12 / G13 —— 兩條都是 0..1 的比例，所以 0.5 這個帶寬與上面三兄弟同口徑：
+  // 它擋的是「0.2 打成 20」那種 mis-parse，⛔ 不是平衡意見。
+  [Stat.MaxHitPctMaxHp]: 0.5,
+  [Stat.UnavoidablePct]: 0.5,
   [Stat.MaxHealth]: 2500, // strongest in catalogue: 960
   [Stat.HealthRegen]: 100, // 40
   [Stat.MaxMana]: 2500, // 600

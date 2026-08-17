@@ -721,6 +721,28 @@ function mitigateStructure(
   return dmg;
 }
 
+/**
+ * ⭐ G12（GH#354）—— **單發傷害上限**（`Stat.MaxHitPctMaxHp`）。
+ * #52 謎之紙片「單次受到超過最大生命 20% 的傷害時，該傷害最多只能造成 20% 最大生命」。
+ *
+ * ⚠️ 它與守衛塔那一格（`mitigateStructure` 的 `sc.maxHitPctMaxHp`）是**同一個
+ * 語意、同一個位置**，⛔ 但不是同一格：塔沒有 `StatsComp`。兩處共用「`> 0` 才
+ * 生效」這一條，所以「0 = 沒有上限」不可能在某一邊變成「上限 0%」。
+ *
+ * ⚠️ **真傷也吃這條**（所以它坐在 `mitigate` 的真傷早退**之前**）——
+ * owner 的文案是「單次受到超過⋯的傷害」，講的是**受到多少**，⛔ 不是「哪一種」。
+ * 一個能被 300 點固定真傷穿過去的「單發上限」正是失敗形態②：卡片寫著、
+ * 後台存得起來，而真正會殺死你的那一發不吃它。
+ */
+function capPerHit(world: SimWorld, pkt: DamagePacket, dmg: number): number {
+  const pct = world.stats.get(pkt.target)?.final[Stat.MaxHitPctMaxHp];
+  if (pct === undefined || pct <= 0) return dmg; // 0 = 沒有上限（⛔ 不是上限 0%）
+  const maxHp = world.health.get(pkt.target)?.maxHp;
+  if (maxHp === undefined || !(maxHp > 0)) return dmg;
+  const cap = maxHp * pct;
+  return dmg > cap ? cap : dmg;
+}
+
 function mitigate(world: SimWorld, pkt: DamagePacket): number {
   // structures answer to their OWN armor/MR + per-packet cap (never a StatsComp)
   const structure = world.structure.get(pkt.target);
@@ -728,7 +750,8 @@ function mitigate(world: SimWorld, pkt: DamagePacket): number {
   // ⭐ 真傷仍然**完全跳過**四段 —— 100% 穿透與真傷不是同義詞:前者在**數字**上
   // 恆 ≥ 真傷(負抗性時放大),在**型別**上恆 ≤ 真傷(照樣被格擋、被物理護盾吃、
   // 照樣觸發反傷)。見 `penetration.ts` 檔頭。
-  if (pkt.type === "true") return pkt.amount;
+  // ⭐ G12 —— 但**單發上限吃得到真傷**（見 `capPerHit` 檔頭）。
+  if (pkt.type === "true") return capPerHit(world, pkt, pkt.amount);
   const targetStats = world.stats.get(pkt.target);
   const physical = pkt.type === "physical";
   // ⚠️ 沒有 StatsComp 的目標(殭屍/小怪)= 0,不是「跳過減傷」—— 0 在兩個分支上
@@ -745,7 +768,11 @@ function mitigate(world: SimWorld, pkt: DamagePacket): number {
     resolvePenetration(world, pkt.source, pkt.origin),
     physical,
   );
-  return pkt.amount * mitigationMult(resist, world.mitigationRules.negativeResistAmplifyCeiling);
+  // ⭐ G12 —— 上限在**抗性四段之後**（＝與守衛塔那一份逐字同序）。位置是承重的：
+  // 放在抗性之前的話「最多只能造成 20% 最大生命」會先被護甲再砍一次，
+  // 於是實際上限變成 20% × 減傷率 —— 卡片上的那個數字永遠到不了。
+  const after = pkt.amount * mitigationMult(resist, world.mitigationRules.negativeResistAmplifyCeiling);
+  return capPerHit(world, pkt, after);
 }
 
 /**
