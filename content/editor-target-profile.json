@@ -1,10 +1,10 @@
 {
   "schema": "ggd-editor-target-profile@1",
-  "generatedAt": "2026-08-17T18:22:38.988Z",
+  "generatedAt": "2026-08-17T18:56:14.787Z",
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_07059e40820e",
+    "contentVersion": "cv_ec6a1028850d",
     "collections": {
       "champions": {
         "hash": "fd3e966af6a8",
@@ -15,8 +15,8 @@
         "count": 461
       },
       "items": {
-        "hash": "015a90bd83d4",
-        "count": 239
+        "hash": "359c9a3e735d",
+        "count": 138
       },
       "augments": {
         "hash": "3fac6ff2c5ef",
@@ -2115,14 +2115,13 @@
       "danglingKeys": []
     },
     "item": {
-      "count": 239,
+      "count": 138,
       "craftRoles": [
         "component",
         "final",
         "none",
         "quest",
-        "service",
-        "token"
+        "service"
       ],
       "tags": [
         "ability-power",
@@ -2860,5 +2859,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "6d6472d97e37"
+  "profileDigest": "a4925e809fd2"
 }

@@ -48,7 +48,7 @@
  * nobody checks is a record nobody can trust.
  */
 import { describe, it, expect, beforeAll } from "vitest";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../../../packages/shared/testkit/cover";
@@ -290,7 +290,7 @@ describe("the two surfaces are exactly what the gates say (item-01)", () => {
     }
   });
 
-  it("the assembled 四魂之玉 is offered whole and no shard is offered at all", () => {
+  it("the assembled 四魂之玉 is offered whole and no shard is anywhere near a surface", () => {
     cover("arena-item-surfaces");
     // The governing decision resolved the 四魂之玉 question: no collection
     // chain, because nothing combines. The jewel is a single draft reward and
@@ -299,30 +299,47 @@ describe("the two surfaces are exactly what the gates say (item-01)", () => {
     // jewel is the last artefact that could send a player hunting for a
     // crafting UI that does not exist.
     expect(draft).toContain("godie-i00z"); // 四魂之玉
-    const shards = allItems.filter((id) => isJewelShard(factsOf(id)));
-    expect(shards.length, "the four shards must still exist as content").toBe(4);
-    for (const id of shards) {
-      expect(shop, `shard ${id} is purchasable`).not.toContain(id);
-      expect(draft, `shard ${id} is draftable`).not.toContain(id);
-    }
+    // ⚠️ 2026-08-18: the four shards are `craftRole: "component"` — the purest
+    // 「合成過渡期道具」 there is — so they left the operating tree with the other
+    // 100. That is the STRONGER form of what this always wanted: the jewel ships,
+    // the shards are not merely off both surfaces, they are not in the shop's
+    // universe at all. Both halves are still stated so 「歸檔 ≠ 刪除」 holds.
+    expect(
+      allItems.filter((id) => isJewelShard(factsOf(id))),
+      "a 四魂之玉的碎片 came back to the operating tree",
+    ).toEqual([]);
+    const archivedShards = readdirSync(join(CONTENT_DIR, "_legacy", "items"))
+      .filter((f) => f.endsWith(".json"))
+      .map((f) => JSON.parse(readFileSync(join(CONTENT_DIR, "_legacy", "items", f), "utf-8")) as { name: string })
+      .filter((d) => d.name.includes("四魂之玉的碎片"));
+    expect(archivedShards.length, "the four shards must still EXIST, archived").toBe(4);
   });
 });
 
 describe("nothing that cannot work is reachable (item-02)", () => {
-  it("no recipe book is on either surface — they are pure no-ops", () => {
+  it("no recipe book is on either surface — they are ARCHIVED, not deleted", () => {
     cover("arena-item-noop-unreachable");
+    // ⚠️ RE-AIMED 2026-08-18 (owner: 「不應該再出現在現有任何文件上或讓任何 script
+    // 浪費算力處理（像製作書系列、合成過渡期道具系列等已經沒上架的武器道具）」).
+    //
+    // 這一條以前是 `expect(books.length).toBe(55)` + 「這 55 本都不在兩個 surface
+    // 上」。55 本現在整批搬進 `content/_legacy/items/`，於是舊的斷言會用**最壞的
+    // 方式**通過：`allItems` 掃不到它們 ⇒ books 是空陣列 ⇒ 那個 for 迴圈一圈都
+    // 不跑 ⇒ 全綠，而它到底在守什麼沒有人看得出來（失敗形態③）。
+    //
+    // 所以兩個方向一起釘，而且**兩邊都從磁碟推導**：
+    //   ① 出貨樹一本都不剩 —— 這是新的、比舊斷言更強的性質
+    //   ② 55 本原封不動躺在 `_legacy/` —— 「歸檔 ≠ 刪除」，⛔ 不可以無聲消失
     const books = allItems.filter((id) => Items.get(id as ItemId).name.includes("製作書"));
-    // Delete recipe books by the 製作書 SUBSTRING, never by a count: an earlier
-    // pass quoted "64 books", which is a 書 query that also catches the five
-    // 山/林/火/澤/風之書 elemental items and three genuine shop items
-    // (嗜血邪書 / 盾甲天書 / 黑色魔書). The real count is 55.
-    expect(books.length).toBe(55);
-    for (const id of books) {
-      expect(shop, `recipe book ${id} is purchasable`).not.toContain(id);
-      expect(draft, `recipe book ${id} is draftable`).not.toContain(id);
-      // and every one of them is a no-op, which is WHY it is unreachable
-      expect(factsOf(id).effective).toBe(false);
-    }
+    expect(books, "製作書 回到了出貨樹 —— 它們沒有任何取得路徑").toEqual([]);
+    // Count books by the 製作書 SUBSTRING, never by 書: an earlier pass quoted
+    // "64 books", which also catches the five 山/林/火/澤/風之書 elemental items
+    // and three genuine shop items (嗜血邪書 / 盾甲天書 / 黑色魔書).
+    const archivedBooks = readdirSync(join(CONTENT_DIR, "_legacy", "items"))
+      .filter((f) => f.endsWith(".json"))
+      .map((f) => JSON.parse(readFileSync(join(CONTENT_DIR, "_legacy", "items", f), "utf-8")) as { name: string })
+      .filter((d) => d.name.includes("製作書"));
+    expect(archivedBooks.length, "製作書 從 _legacy/ 也消失了 —— 知識不可以無聲消失").toBe(55);
   });
 
   it("no zero-effect item is in the SHOP, and none was deleted from content", () => {
@@ -333,7 +350,11 @@ describe("nothing that cannot work is reachable (item-02)", () => {
     // owner named/implied whose whole payload is an active item@1 cannot express
     // yet (#56). Owner rule 2 is 「所有任務道具」, so they are draftable regardless
     // — dropping them for lacking ported stats is how 仙后座 went missing before.
-    expect(dead.length).toBeGreaterThan(50);
+    //
+    // ⚠️ 下界從 50 降到 10（2026-08-18）：101 件無取得路徑的道具搬進 `_legacy/`，
+    // 其中絕大多數正是空殼。這個數字守的是「空殼還在、只是買不到」，⛔ 不是
+    // 「空殼有幾件」—— 後者現在由 legacy 那一邊的守衛負責。
+    expect(dead.length).toBeGreaterThan(10);
     for (const id of dead) {
       expect(shop, `no-effect item ${id} is on the shop shelf`).not.toContain(id);
       if (factsOf(id).role !== "quest") {
@@ -488,13 +509,26 @@ describe("the WC3 crafting tree artefact round-trips against the JASS (item-05)"
 
   it("every id the artefact names still resolves to a real content item", () => {
     cover("arena-recipe-tree-roundtrip");
+    // ⚠️ 2026-08-18: 「resolves」 now means 出貨樹 **∪** `content/_legacy/items/`.
+    // owner archived the 55 recipe books and every crafting component, so most of
+    // this artefact's ids left the operating registry — and that is the archive
+    // working as designed, not the record rotting. What this test has always been
+    // for is unchanged and still absolute: **an id the artefact names may never
+    // be DELETED**. Resolving through both trees says exactly that, and nothing
+    // weaker: a file that is in neither place still fails, by name.
+    const archived = new Set(
+      readdirSync(join(CONTENT_DIR, "_legacy", "items"))
+        .filter((f) => f.endsWith(".json"))
+        .map((f) => f.slice(0, -".json".length)),
+    );
+    const exists = (id: string): boolean => Items.tryGet(id as ItemId) !== undefined || archived.has(id);
     const tree = JSON.parse(readFileSync(CRAFT_TREE, "utf-8")) as {
       recipes: { product: { contentId: string }; components: { contentId: string }[] }[];
     };
     for (const r of tree.recipes) {
-      expect(Items.tryGet(r.product.contentId as ItemId), `${r.product.contentId} vanished`).toBeDefined();
+      expect(exists(r.product.contentId), `${r.product.contentId} vanished`).toBe(true);
       for (const c of r.components) {
-        expect(Items.tryGet(c.contentId as ItemId), `${c.contentId} vanished`).toBeDefined();
+        expect(exists(c.contentId), `${c.contentId} vanished`).toBe(true);
       }
     }
   });

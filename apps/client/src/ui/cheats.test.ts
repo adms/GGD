@@ -12,6 +12,7 @@ import {
   clampLevel,
   filterEntries,
   isCheatToggleKey,
+  parseSpawnCount,
 } from "./cheats";
 
 describe("cheat console availability (cheat-panel-gating)", () => {
@@ -115,5 +116,43 @@ describe("cheat payload shapes (cheat-payload)", () => {
     expect(cheat.killEnemies()).toEqual({ kind: "killEnemies" });
     expect(cheat.skipPhase()).toEqual({ kind: "skipPhase" });
     expect(cheat.rerollOffers()).toEqual({ kind: "rerollOffers" });
+  });
+});
+
+/**
+ * 生怪數量輸入框（owner 2026-08-18「一鍵呼喚 **N 個**⋯」）。
+ *
+ * ⭐ 承重的是 `undefined`：它代表「不要送 count，用後台 `config.practice@1` 的
+ * 預設」。⛔ 這一格壞掉的樣子是**清空輸入框後按鈕靜默失效**（`Number("")` 是 0，
+ * 送出去就是「生 0 隻」，畫面上什麼都不會發生）。
+ */
+describe("生怪數量（GH#343 · owner 2026-08-18）", () => {
+  it("★ 空白／空白字元 ⇒ undefined（＝交給後台預設，⛔ 不是 0）", () => {
+    expect(parseSpawnCount("")).toBeUndefined();
+    expect(parseSpawnCount("   ")).toBeUndefined();
+  });
+
+  it("★ 0 與負數也是 undefined —— ⛔ 不可以送出「生 0 隻」", () => {
+    expect(parseSpawnCount("0")).toBeUndefined();
+    expect(parseSpawnCount("-3")).toBeUndefined();
+  });
+
+  it("正常數字直接用，小數取整，非數字退回 undefined", () => {
+    expect(parseSpawnCount("5")).toBe(5);
+    expect(parseSpawnCount("2.9")).toBe(2);
+    expect(parseSpawnCount("abc")).toBeUndefined();
+  });
+
+  it("上界只防手滑；⛔ 真正的上限由伺服器夾", () => {
+    expect(parseSpawnCount("99999")).toBe(99);
+  });
+
+  it("送出去的 Cheat：省略 vs 帶上 count", () => {
+    expect(cheat.spawnMob("boss", parseSpawnCount(""))).toEqual({ kind: "spawnMob", what: "boss" });
+    expect(cheat.spawnMob("boss", parseSpawnCount("4"))).toEqual({
+      kind: "spawnMob",
+      what: "boss",
+      count: 4,
+    });
   });
 });

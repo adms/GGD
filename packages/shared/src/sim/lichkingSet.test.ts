@@ -280,7 +280,15 @@ describe("每一份出貨道具文件的套裝宣告都自洽", () => {
   it("auditItemSets finds nothing wrong across all shipped items", () => {
     cover("lichking-set-audit");
     const all = Items.all();
-    expect(all.length).toBeGreaterThan(200); // the walk really saw the tree
+    // ⛔ 這裡**曾經**寫 `expect(all.length).toBeGreaterThan(200)`，理由是「證明真的走過
+    // 整棵樹」。2026-08-18 把 101 件退場道具搬進 `content/_legacy/items/` 之後出貨樹
+    // 剩 138 件，那一行就紅了 —— 而它紅的訊息（「expected 138 to be greater than 200」）
+    // 跟「套裝宣告有沒有自洽」**一點關係都沒有**，查的人會先去找不存在的套裝缺陷。
+    //
+    // ⭐ 它本來就不該存在：那是一個**出貨件數**住進測試（第二守則點名的第四個住處，
+    // 沒有守衛、必然過期）。而**下面那一行是嚴格更強的防空轉證明** —— 它要求
+    // 「有 sets 宣告的那一組 id **逐字等於** PIECES」，樹是空的就不可能通過。
+    // ⛔ 不要用「改成 > 100」把它救回來：那只是把同一個過期時鐘往後撥。
     expect(auditItemSets(all)).toEqual([]);
     // …and the audit is looking at a tree that really contains a set
     expect(all.filter((d) => (d.sets?.length ?? 0) > 0).map((d) => d.id).sort()).toEqual(

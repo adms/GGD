@@ -32,6 +32,10 @@ from aep import BUDGET_AEP, DECIMALS, TIER_PRICE, TIER_RANK, item_aep, modifier_
 
 ROOT = Path(__file__).resolve().parents[2]
 ITEMS = ROOT / "content" / "items"
+# ⭐ 退場的道具（owner 2026-08-18「已經沒上架的武器道具」）。**目錄位置本身就是宣告**
+#    —— ⛔ 這裡沒有、也不可以有一份「這些 id 要跳過」的名單：那會是第四個住處，
+#    而 `tiers.json` 一改它就過期。搬一件進去／搬一件出來，這支腳本自動跟上。
+LEGACY_ITEMS = ROOT / "content" / "_legacy" / "items"
 TIERS = Path(__file__).resolve().parent / "tiers.json"
 TOL = 0.005
 
@@ -54,26 +58,47 @@ MODIFIER_LIMITS = {
 PERCENT_LIMIT = 3
 
 
-def docs() -> dict:
+def _read_dir(d: Path) -> dict:
     out = {}
-    for p in sorted(ITEMS.glob("*.json")):
+    if not d.is_dir():
+        return out
+    for p in sorted(d.glob("*.json")):
         if p.name.startswith("_"):
             continue
         out[p.stem] = json.loads(p.read_text(encoding="utf-8"))
     return out
 
 
+def docs() -> dict:
+    return _read_dir(ITEMS)
+
+
+def retired() -> dict:
+    """已退場的道具 —— 從 `content/_legacy/items/` 這個**事實**推導。"""
+    return _read_dir(LEGACY_ITEMS)
+
+
 def main(backup: Path | None) -> int:
     design = json.loads(TIERS.read_text(encoding="utf-8"))["items"]
     live = docs()
+    gone = retired()
     fail, warn = [], []
 
     # ---- 1-5: the tier + budget invariant, per design item
     at_budget = 0
+    n_retired = 0
     for iid, d in design.items():
         doc = live.get(iid)
         if doc is None:
-            fail.append(f"[1 missing]  {iid}: no content/items/{iid}.json")
+            # ⭐ 退場 ≠ 遺失。#82 的設計表是 2026-08 的**當時**快照，而 owner
+            #    2026-08-18 把 101 件沒有取得路徑的道具搬進了 `_legacy/`。
+            #    一件躺在 `_legacy/` 的道具**沒有價格層級可言**（買不到就沒有價），
+            #    所以它退出這張表的檢查是正確的，⛔ 不是一個要修的失敗。
+            #    真的不見了（兩邊都沒有）才是失敗 —— 那才叫「被刪掉」。
+            if iid in gone:
+                n_retired += 1
+                continue
+            fail.append(f"[1 missing]  {iid}: content/items/ 與 content/_legacy/items/ 都沒有 {iid}.json")
             continue
         tier = d["tier"]
         # Only shop items are buyable; draft legendaries and quest rewards are
@@ -163,7 +188,8 @@ def main(backup: Path | None) -> int:
     print("TASK #82 PHASE 2 — TIER + RESCALE INVARIANT")
     print("=" * 78)
     print(f"design items      : {len(design)}")
-    print(f"at tier budget    : {at_budget} / {len(design)}   (tolerance +/-{TOL*100:.1f}%)")
+    print(f"retired (_legacy) : {n_retired}   ← 已無取得路徑，退出價格層級檢查（owner 2026-08-18）")
+    print(f"at tier budget    : {at_budget} / {len(design) - n_retired}   (tolerance +/-{TOL*100:.1f}%)")
     print(f"stat-mix compared : {mix_checked} items against the pre-rescale backup")
     print(f"hard failures     : {len(fail)}")
 

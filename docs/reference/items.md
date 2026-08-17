@@ -2,12 +2,14 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_07059e40820e`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
-> 資料列：**239**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-07-24T11:14:58.268286Z`）
+> 產生自 contentVersion **`cv_ec6a1028850d`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 資料列：**138**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-07-24T11:14:58.268286Z`）
 
-`content/items/*.json` 共 **239** 份，依 `content/items/<id>.json` 的 **`craftRole`** 標記分類（來源：source-map triggers，見 `tools/w3x-import/extract_item_roles.py`）。實際能在商店買到的只有 **38** 件最終合成武器（`craftRole:final` 且有效果）＋ **2** 項服務；三選一 draft 抽 **13** 件任務道具，傳說寶玉抽 **49** 件傳說。其餘（106 組件、8 代幣、51 無角色、4 無 payload 的 final）是配方半成品或 w3x 殘件，不會單獨出現在任何商店或抽卡。
+`content/items/*.json` 共 **138** 份，依 `content/items/<id>.json` 的 **`craftRole`** 標記分類（來源：source-map triggers，見 `tools/w3x-import/extract_item_roles.py`）。實際能在商店買到的只有 **38** 件最終合成武器（`craftRole:final` 且有效果）＋ **2** 項服務；三選一 draft 抽 **13** 件任務道具，傳說寶玉抽 **49** 件傳說。其餘（16 組件、0 代幣、48 無角色、4 無 payload 的 final）是配方半成品或 w3x 殘件，不會單獨出現在任何商店或抽卡。
 
 > 本檔的數值是 `content/` 的**原始值**，未套用 `combat-env` 全域倍率（`content/config/combat-env.json`）。遊戲內顯示的一律是乘算後的最終值，所以畫面上的冷卻／傷害／生命與這裡不會相同 —— 那是預期行為，不是資料錯誤。
+>
+> 🗄️ **另有 101 件已退場道具不列在本表**（製作書系列 55、合成過渡期道具 38、兌換券 8）—— 它們在出貨的商店貨架與每一張抽獎表上都不存在，所以玩家拿不到。全文原封不動保存於 [`content/_legacy/items/`](../../content/_legacy/items/)，逐筆索引見 [`docs/legacy-index.md`](../../docs/legacy-index.md)。⛔ 這一行是**指標**不是清單：退場與否由檔案在哪個目錄決定，沒有第二份名單。
 >
 > **上架規則（task #70）**：`shopCatalogue` / `buyItem` 只讓 `craftRole === "final"` **且** 真有效果的武器上架（`packages/shared/src/sim/economy/shop.ts:110`、`apps/client/src/ui/panels/champSelectFilter.ts:150`）。元件、製作書、任務、代幣一律拒賣，即使有價格、有效果、被白名單放行也一樣。
 >
@@ -164,7 +166,7 @@
 | `godie-i030` | 黑色魔書 | 最終合成 final | 1200g | T2 | — | — | — | — |
 | `godie-i038` | 嗜血邪書 | 最終合成 final | 1200g | T2 | — | — | — | — |
 
-## 6. 組件 component（106）
+## 6. 組件 component（16）
 
 配方半成品：只在合成路徑上，不單獨上架。
 
@@ -172,127 +174,29 @@
 |---|---|---|---|---|---|---|---|---|
 | `godie-i002` | 武聖手鐲 | 組件 component | 300g | T1 | — | ✅ | 暴擊率 +0.17 · 暴擊傷害 +0.29 | — |
 | `godie-i003` | 聖光石 | 組件 component | 1450g | T2 | — | ✅ | — | — |
-| `godie-i005` | 初心者寶石 | 組件 component | 300g | T1 | — | — | 生命 +39 · 攻擊力 +1.9 · 魔力 +23 | — |
-| `godie-i009` | 分手之鎚製作書 | 組件 component | 1150g | T2 | — | — | — | — |
-| `godie-i00a` | 刺針製作書 | 組件 component | 500g | T2 | — | — | — | — |
-| `godie-i00b` | 失心匕首製作書 | 組件 component | 4000g | T4 | — | — | — | — |
-| `godie-i00g` | 奇美拉之翼 | 組件 component | 300g | T1 | — | — | 生命 +39 · 攻擊力 +1.9 · 魔力 +23 | — |
-| `godie-i00h` | 風行天衣製作書 | 組件 component | 1000g | T2 | — | — | — | — |
-| `godie-i00k` | 女神之淚 | 組件 component | 300g | T1 | — | — | 護甲 +0.8 · 魔力 +42 · 生命 +48 | — |
 | `godie-i00m` | 米索莉護板 | 組件 component | 300g | T1 | — | ✅ | 護甲 +17 | — |
-| `godie-i00n` | 分手之鎚 | 組件 component | 1200g | T2 | — | — | 攻擊力 +26 | onBasicAttack→applyBuff |
-| `godie-i00p` | 聖誕之靴 | 組件 component | 300g | T1 | — | — | 攻速 +11.2% · 移速 +0.23 | — |
-| `godie-i00q` | 伊娃之盾 | 組件 component | 300g | T1 | — | — | 回魔 +22.3% · 生命 +59 · 護甲 +1.2 | — |
-| `godie-i00r` | 山之書 | 組件 component | 2785g | T3 | — | — | — | — |
-| `godie-i00t` | 風之書 | 組件 component | 1950g | T3 | — | — | — | — |
-| `godie-i00v` | 四魂之玉的碎片-荒魂 | 組件 component | — | T1 | — | — | 攻擊力 +6 · 生命 +132 | — |
-| `godie-i00w` | 四魂之玉的碎片-和魂 | 組件 component | — | T1 | — | — | 生命 +40 · 攻擊力 +2 · 魔力 +24 | — |
-| `godie-i00x` | 四魂之玉的碎片-幸魂 | 組件 component | — | T1 | — | — | 護甲 +1.8 · 攻速 +12% | — |
-| `godie-i00y` | 四魂之玉的碎片-奇魂 | 組件 component | — | T1 | — | — | 法強 +30 · 魔力 +90 | — |
 | `godie-i010` | 熱戀魔杖 | 組件 component | 300g | T1 | — | ✅ | 法強 +21.1 · 魔力 +63 | — |
-| `godie-i011` | 名刀-天狼製作書 | 組件 component | 1750g | T3 | — | — | — | — |
-| `godie-i015` | 瑪那魔杖製作書 | 組件 component | 1500g | T3 | — | — | — | — |
-| `godie-i017` | 祕銀鎖子甲製作書 | 組件 component | 1500g | T3 | — | — | — | — |
-| `godie-i019` | 霸王槍製作書 | 組件 component | 3650g | T4 | — | — | — | — |
-| `godie-i01b` | 林之書 | 組件 component | 2550g | T3 | — | — | — | — |
-| `godie-i01c` | 火之書 | 組件 component | 2040g | T3 | — | — | — | — |
-| `godie-i01e` | 和道一文字製作書 | 組件 component | 1200g | T2 | — | — | — | — |
-| `godie-i01f` | 和道一文字 | 組件 component | 300g | T1 | — | — | 護甲 +1.2 · 攻速 +14.3% | — |
-| `godie-i01h` | 貫雷槍製作書 | 組件 component | 2000g | T3 | — | — | — | — |
-| `godie-i01l` | 雷神之鎚製作書 | 組件 component | 4000g | T4 | — | — | — | — |
-| `godie-i01m` | 黑核晶 | 組件 component | 300g | T1 | — | — | 回魔 +115.9% · 魔力 +155 | — |
-| `godie-i01p` | 聖誕之靴製作書 | 組件 component | 500g | T2 | — | — | — | — |
-| `godie-i01q` | 光魔杖製作書 | 組件 component | 3700g | T4 | — | — | — | — |
-| `godie-i01r` | 一克拉鑽戒製作書 | 組件 component | 150g | T1 | — | — | — | — |
-| `godie-i01t` | 晨曦之光製作書 | 組件 component | — | T1 | — | — | — | — |
-| `godie-i01u` | 伊娃之盾製作書 | 組件 component | 1500g | T3 | — | — | — | — |
-| `godie-i01x` | 思念的守護製作書 | 組件 component | 1000g | T2 | — | — | — | — |
-| `godie-i01y` | 熾天使之弓製作書 | 組件 component | 500g | T2 | — | — | — | — |
-| `godie-i01z` | 八取武士刀製作書 | 組件 component | 1000g | T2 | — | — | — | — |
-| `godie-i021` | 天叢雲劍製作書 | 組件 component | 1000g | T2 | — | — | — | — |
-| `godie-i022` | 龍騎士之劍製作書 | 組件 component | 800g | T2 | — | — | — | — |
-| `godie-i024` | 朗基努斯之槍製作書 | 組件 component | 3750g | T4 | — | — | — | — |
-| `godie-i025` | 惡夢魔王碎片製作書 | 組件 component | 4500g | T4 | — | — | — | — |
-| `godie-i026` | 雅典娜的驚嘆號製作書 | 組件 component | 4500g | T4 | — | — | — | — |
-| `godie-i028` | 月神槍製作書 | 組件 component | 4150g | T4 | — | — | — | — |
-| `godie-i029` | 斬龍刀製作書 | 組件 component | 4500g | T4 | — | — | — | — |
-| `godie-i02a` | 炎神弩製作書 | 組件 component | 4000g | T4 | — | — | — | — |
-| `godie-i02c` | 狂暴軒轅劍製作書 | 組件 component | 5000g | T4 | — | — | — | — |
-| `godie-i02f` | 死神裝束製作書 | 組件 component | 4500g | T4 | — | — | — | — |
-| `godie-i02i` | 泰坦之魂 | 組件 component | — | T1 | — | — | — | — |
-| `godie-i02l` | 舊系服 | 組件 component | — | T1 | — | — | — | — |
-| `godie-i02m` | 牛蒡男 | 組件 component | — | T1 | — | — | — | — |
-| `godie-i02n` | 斯巴達圓盾 | 組件 component | — | T1 | — | — | — | — |
-| `godie-i02o` | 空罐頭 | 組件 component | — | T1 | — | — | — | — |
-| `godie-i02p` | 網友手環 | 組件 component | 300g | T1 | — | — | 護甲 +17 | — |
-| `godie-i02q` | 澤之書 | 組件 component | 2785g | T3 | — | — | — | — |
-| `godie-i02s` | 奇蹟之墜製作書 | 組件 component | 2500g | T3 | — | — | — | — |
-| `godie-i02u` | 黑色魔書製作書 | 組件 component | 1500g | T3 | — | — | — | — |
-| `godie-i02v` | 黑核晶製作書 | 組件 component | 150g | T1 | — | — | — | — |
-| `godie-i02w` | 靈魂魔石製作書 | 組件 component | 2750g | T3 | — | — | — | — |
 | `godie-i02x` | 斬岩刃 | 組件 component | — | T3 | — | ✅ | 攻擊力 +30.2 · 生命 +222 | onBasicAttack→damageArea |
-| `godie-i02y` | 斬岩刃製作書 | 組件 component | 800g | T2 | — | — | — | — |
-| `godie-i02z` | 盾甲天書製作書 | 組件 component | 2500g | T3 | — | — | — | — |
-| `godie-i032` | 天生牙製作書 | 組件 component | 1500g | T3 | — | — | — | — |
-| `godie-i036` | 嗜血邪書製作書 | 組件 component | 3000g | T4 | — | — | — | — |
-| `godie-i037` | 隱密介紹信 | 組件 component | 1000g | T2 | — | — | — | — |
-| `godie-i03a` | 幻之匕首製作書 | 組件 component | 4500g | T4 | — | — | — | — |
-| `godie-i03c` | 雅典娜的驚嘆號．改 | 組件 component | 1200g | T2 | — | — | 法強 +81.8 · 魔力 +245 · 回魔 +76.7% | — |
-| `godie-i03e` | 光明虎徹製作書 | 組件 component | 600g | T2 | — | — | — | — |
-| `godie-i03g` | 甘豆腐之袍製作書 | 組件 component | 4000g | T4 | — | — | — | — |
-| `godie-i03i` | 天地崩裂魔杖製作書 | 組件 component | 2750g | T3 | — | — | — | — |
-| `godie-i03o` | 死之王長槍的碎片 | 組件 component | 4300g | T4 | — | — | — | — |
-| `godie-i03p` | 死之王意志的碎片 | 組件 component | 4600g | T4 | — | — | — | — |
-| `godie-i03q` | 死之王神盾的碎片 | 組件 component | 4000g | T4 | — | — | — | — |
-| `godie-i03x` | 破甲槍製作書 | 組件 component | 4000g | T4 | — | — | — | — |
-| `godie-i03z` | 螺旋劍製作書 | 組件 component | 4700g | T4 | — | — | — | — |
-| `godie-i042` | 火閃電製作書 | 組件 component | 1500g | T3 | — | — | — | — |
-| `godie-i044` | 寂靜刃 - 詠月製作書 | 組件 component | 2200g | T3 | — | — | — | — |
-| `godie-i04a` | 賢者之石製作書 | 組件 component | 1000g | T2 | — | — | — | — |
 | `godie-i04b` | 冰晶虎魄 | 組件 component | 1200g | T2 | — | ✅ | 法強 +27.7 · 魔力 +83 · 攻擊力 +5.5 · 生命 +122 | onBasicAttack→applyStatus |
-| `godie-i04c` | 冰晶虎魄製作書 | 組件 component | 2000g | T3 | — | — | — | — |
-| `godie-i04e` | 冰晶虎魄 - 改製作書 | 組件 component | 3750g | T4 | — | — | — | — |
-| `godie-i04g` | 奇門遁甲製作書 | 組件 component | 4700g | T4 | — | — | — | — |
-| `godie-i04h` | 炎龍巨弩製作書 | 組件 component | 4150g | T4 | — | — | — | — |
-| `godie-i04k` | 厄夜鐮刀製作書 | 組件 component | 2000g | T3 | — | — | — | — |
-| `godie-i053` | 仙后座殘骸 | 組件 component | — | T1 | — | — | — | — |
-| `godie-i05g` | 世界樹的果實 | 組件 component | 1800g | T3 | — | — | — | — |
 | `godie-i05r` | 吸血石 | 組件 component | 300g | T1 | — | ✅ | 吸血 +0.27 | — |
-| `godie-i05s` | 嚇人假面 | 組件 component | 300g | T1 | — | — | 回魔 +300% | — |
 | `godie-i05t` | 定情戒指 | 組件 component | 300g | T1 | — | ✅ | 回血 +3.28 | — |
 | `godie-i05u` | 熱舞之靴 | 組件 component | 300g | T1 | — | ✅ | 移速 +0.83 | — |
 | `godie-i05v` | 破壞王手套 | 組件 component | 300g | T1 | — | ✅ | 攻速 +15.4% | — |
-| `godie-i05w` | 觀音菩薩護身符 | 組件 component | 1650g | T3 | — | — | — | — |
 | `godie-i05x` | 辣妹護腕 | 組件 component | 300g | T1 | — | ✅ | 魔抗 +37.8 | — |
-| `godie-i065` | godie-i065 | 組件 component | 1150g | T2 | — | — | 生命 +320 | — |
-| `godie-i066` | 復仇之玉 | 組件 component | 300g | T1 | — | — | — | onBasicAttack→applyBuff |
 | `godie-i068` | 瑪那寶石 | 組件 component | 300g | T1 | — | ✅ | 魔力 +190 | — |
-| `godie-i069` | 女神之淚製作書 | 組件 component | 350g | T1 | — | — | — | — |
-| `godie-i06b` | 思念的守護 | 組件 component | 300g | T1 | — | ✅ | 法強 +17.6 · 魔力 +53 · 護甲 +2.8 | — |
 | `godie-i06c` | 恐龍之斧 | 組件 component | 1200g | T2 | — | ✅ | 攻擊力 +8.2 · 生命 +181 | — |
 | `godie-i06h` | 求生護腕 | 組件 component | 300g | T1 | — | ✅ | 生命 +39 · 攻擊力 +1.9 · 魔力 +23 | — |
 | `godie-i06k` | 奧理哈魯根劍身 | 組件 component | 1200g | T2 | — | ✅ | 攻擊力 +26 | — |
-| `godie-i06m` | 真知之石 | 組件 component | 950g | T2 | — | — | — | — |
-| `godie-i06p` | godie-i06p | 組件 component | 1250g | T2 | — | — | 護甲 +3 · 攻速 +20% | — |
-| `godie-i06r` | 一克拉鑽戒 | 組件 component | 300g | T1 | — | — | 護甲 +0.8 · 生命 +63 | — |
 | `godie-i06s` | 龍騎士之劍 | 組件 component | — | T3 | — | ✅ | 護甲 +3.4 · 攻速 +23% · 攻擊力 +34.5 · 暴擊率 +0.17 · 暴擊傷害 +0.29 | — |
 
-## 7. 代幣 token（8）
+## 7. 代幣 token（0）
 
 任務／成就代幣，不是可裝備的道具。
 
 | id | 名稱 | craftRole | 價格 | tier | 傳說池 | 開放 | 屬性 modifiers | 被動 passive |
 |---|---|---|---|---|---|---|---|---|
-| `godie-i04y` | 兌換空罐頭 | 代幣 token | — | T1 | — | — | — | — |
-| `godie-i051` | 兌換仙后座 | 代幣 token | — | T1 | — | — | — | — |
-| `godie-i054` | 認領寵物 | 代幣 token | — | T1 | — | — | — | — |
-| `godie-i055` | 兌換牛蒡男 | 代幣 token | — | T1 | — | — | — | — |
-| `godie-i056` | 交換寵物 | 代幣 token | — | T1 | — | — | — | — |
-| `godie-i059` | 兌換舊系服 | 代幣 token | — | T1 | — | — | — | — |
-| `godie-i05a` | 兌換泰坦之魂 | 代幣 token | — | T1 | — | — | — | — |
-| `godie-i05e` | 兌換斯巴達圓盾 | 代幣 token | — | T1 | — | — | — | — |
 
-## 8. 其餘 none（51）
+## 8. 其餘 none（48）
 
 沒有 craftRole 角色的殘件，留著做 w3x 對照與未來策展。
 
@@ -308,15 +212,12 @@
 | `godie-i00e` | 出動兄貴戰士兵團 | 無角色 none | 1600g | T3 | — | — | — | — |
 | `godie-i00o` | 金雞蛋 | 無角色 none | — | T1 | — | — | — | — |
 | `godie-i01a` | 好像有毒的生肉 | 無角色 none | — | T1 | — | — | — | — |
-| `godie-i023` | 妖刀村正製作書 | 無角色 none | 500g | T2 | — | — | — | — |
-| `godie-i02b` | 妖物碎殺牙製作書 | 無角色 none | 5500g | T4 | — | — | — | — |
 | `godie-i02g` | 奇美拉之翼(電腦) | 無角色 none | 1200g | T2 | — | — | 生命 +154 · 攻擊力 +7.7 · 魔力 +93 | — |
 | `godie-i033` | 初心者護腕 | 無角色 none | 300g | T1 | — | — | 護甲 +1.7 · 生命 +35 · 攻擊力 +1.7 · 魔力 +21 | — |
 | `godie-i03j` | 黃昏公主的血脈 | 無角色 none | 450g | T1 | — | ✅ | — | — |
 | `godie-i03l` | 我愛一條柴 | 無角色 none | 200g | T1 | — | — | — | — |
 | `godie-i03n` | 餅乾 | 無角色 none | 150g | T1 | — | — | — | — |
 | `godie-i04j` | 金幣(寶箱) | 無角色 none | — | T1 | — | — | — | — |
-| `godie-i04m` | 殺豬刀製作書 | 無角色 none | 5500g | T4 | — | — | — | — |
 | `godie-i04v` | 正義之杖 | 無角色 none | — | T3 | — | ✅ | 生命 +308 · 攻擊力 +15.4 · 魔力 +185 | — |
 | `godie-i05k` | 打我阿笨蛋卷軸 | 無角色 none | 300g | T1 | — | — | 生命 +39 · 攻擊力 +1.9 · 魔力 +23 | — |
 | `godie-i05l` | 力量護腕 | 無角色 none | 300g | T1 | — | — | 護甲 +0.8 · 攻擊力 +2 · 生命 +43 | — |

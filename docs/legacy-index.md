@@ -23,12 +23,12 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 320 個檔案**，分佈在 2 個隔離區。
+**目前共 421 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
 | [`docs/legacy/`](legacy-index.md#docslegacy) | 43 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
-| [`content/_legacy/`](legacy-index.md#contentlegacy) | 277 | **下架的內容文件** —— 英雄、技能、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
+| [`content/_legacy/`](legacy-index.md#contentlegacy) | 378 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
 要用它之前先問「現行的那一份說什麼」—— 衝突時**現行的贏**（第〇·六守則）。
@@ -87,11 +87,13 @@ owner 2026-08-13：
 
 ---
 
-## `content/_legacy/` —— 277 檔
+## `content/_legacy/` —— 378 檔
 
-**下架的內容文件** —— 英雄、技能、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡
+**下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡
 
 **下架的內容文件**。它們不是「規格過期」，是「這一支不再出貨」——`invulnerableBinding.test.ts` 逐字釘著「**消失 ≠ 歸檔**」：白名單上不再出貨的，必須真的躺在這裡而不是憑空不見。⚠️ 有 6 支以上的活測試會讀這個目錄，⛔ 不要清空。
+
+⭐ **目錄位置本身就是宣告**（owner 2026-08-18：「不應該再出現在現有任何文件上或讓任何 script 浪費算力處理」）。`content/_legacy/` 不在 `COLLECTION_NAMES` 裡，所以 `pnpm content:build`、`bundle.json`、每一支 `content/<collection>/` 逐檔掃描的產生器（`gen_overview.ts` / `gen_spec.ts` / `gen_reference.py` / `gen_readme_lists.py`）與後台的道具清單**全部自動看不到它們** —— ⛔ 沒有任何一份「要跳過哪些 id」的硬編名單，那會是第四個住處，必然過期。
 
 ### `abilities/` （235 檔）
 
@@ -384,4 +386,110 @@ owner 2026-08-13：
 | 檔案 | 是什麼 |
 |---|---|
 | `unit-tints-legacy.json` | ?「」 |
+
+### `items/` （101 檔）
+
+| 檔案 | 是什麼 |
+|---|---|
+| `godie-i005.json` | 道具「初心者寶石」，合成過渡期道具（craftRole=component，原價 300） |
+| `godie-i009.json` | 道具「分手之鎚製作書」，製作書系列 |
+| `godie-i00a.json` | 道具「刺針製作書」，製作書系列 |
+| `godie-i00b.json` | 道具「失心匕首製作書」，製作書系列 |
+| `godie-i00g.json` | 道具「奇美拉之翼」，合成過渡期道具（craftRole=component，原價 300） |
+| `godie-i00h.json` | 道具「風行天衣製作書」，製作書系列 |
+| `godie-i00k.json` | 道具「女神之淚」，合成過渡期道具（craftRole=component，原價 300） |
+| `godie-i00n.json` | 道具「分手之鎚」，合成過渡期道具（craftRole=component，原價 1200） |
+| `godie-i00p.json` | 道具「聖誕之靴」，合成過渡期道具（craftRole=component，原價 300） |
+| `godie-i00q.json` | 道具「伊娃之盾」，合成過渡期道具（craftRole=component，原價 300） |
+| `godie-i00r.json` | 道具「山之書」，合成過渡期道具（craftRole=component，原價 2785） |
+| `godie-i00t.json` | 道具「風之書」，合成過渡期道具（craftRole=component，原價 1950） |
+| `godie-i00v.json` | 道具「四魂之玉的碎片-荒魂」，合成過渡期道具（craftRole=component，原價 0） |
+| `godie-i00w.json` | 道具「四魂之玉的碎片-和魂」，合成過渡期道具（craftRole=component，原價 0） |
+| `godie-i00x.json` | 道具「四魂之玉的碎片-幸魂」，合成過渡期道具（craftRole=component，原價 0） |
+| `godie-i00y.json` | 道具「四魂之玉的碎片-奇魂」，合成過渡期道具（craftRole=component，原價 0） |
+| `godie-i011.json` | 道具「名刀-天狼製作書」，製作書系列 |
+| `godie-i015.json` | 道具「瑪那魔杖製作書」，製作書系列 |
+| `godie-i017.json` | 道具「祕銀鎖子甲製作書」，製作書系列 |
+| `godie-i019.json` | 道具「霸王槍製作書」，製作書系列 |
+| `godie-i01b.json` | 道具「林之書」，合成過渡期道具（craftRole=component，原價 2550） |
+| `godie-i01c.json` | 道具「火之書」，合成過渡期道具（craftRole=component，原價 2040） |
+| `godie-i01e.json` | 道具「和道一文字製作書」，製作書系列 |
+| `godie-i01f.json` | 道具「和道一文字」，合成過渡期道具（craftRole=component，原價 300） |
+| `godie-i01h.json` | 道具「貫雷槍製作書」，製作書系列 |
+| `godie-i01l.json` | 道具「雷神之鎚製作書」，製作書系列 |
+| `godie-i01m.json` | 道具「黑核晶」，合成過渡期道具（craftRole=component，原價 300） |
+| `godie-i01p.json` | 道具「聖誕之靴製作書」，製作書系列 |
+| `godie-i01q.json` | 道具「光魔杖製作書」，製作書系列 |
+| `godie-i01r.json` | 道具「一克拉鑽戒製作書」，製作書系列 |
+| `godie-i01t.json` | 道具「晨曦之光製作書」，製作書系列 |
+| `godie-i01u.json` | 道具「伊娃之盾製作書」，製作書系列 |
+| `godie-i01x.json` | 道具「思念的守護製作書」，製作書系列 |
+| `godie-i01y.json` | 道具「熾天使之弓製作書」，製作書系列 |
+| `godie-i01z.json` | 道具「八取武士刀製作書」，製作書系列 |
+| `godie-i021.json` | 道具「天叢雲劍製作書」，製作書系列 |
+| `godie-i022.json` | 道具「龍騎士之劍製作書」，製作書系列 |
+| `godie-i023.json` | 道具「妖刀村正製作書」，製作書系列 |
+| `godie-i024.json` | 道具「朗基努斯之槍製作書」，製作書系列 |
+| `godie-i025.json` | 道具「惡夢魔王碎片製作書」，製作書系列 |
+| `godie-i026.json` | 道具「雅典娜的驚嘆號製作書」，製作書系列 |
+| `godie-i028.json` | 道具「月神槍製作書」，製作書系列 |
+| `godie-i029.json` | 道具「斬龍刀製作書」，製作書系列 |
+| `godie-i02a.json` | 道具「炎神弩製作書」，製作書系列 |
+| `godie-i02b.json` | 道具「妖物碎殺牙製作書」，製作書系列 |
+| `godie-i02c.json` | 道具「狂暴軒轅劍製作書」，製作書系列 |
+| `godie-i02f.json` | 道具「死神裝束製作書」，製作書系列 |
+| `godie-i02i.json` | 道具「泰坦之魂」，合成過渡期道具（craftRole=component，原價 0） |
+| `godie-i02l.json` | 道具「舊系服」，合成過渡期道具（craftRole=component，原價 0） |
+| `godie-i02m.json` | 道具「牛蒡男」，合成過渡期道具（craftRole=component，原價 0） |
+| `godie-i02n.json` | 道具「斯巴達圓盾」，合成過渡期道具（craftRole=component，原價 0） |
+| `godie-i02o.json` | 道具「空罐頭」，合成過渡期道具（craftRole=component，原價 0） |
+| `godie-i02p.json` | 道具「網友手環」，合成過渡期道具（craftRole=component，原價 300） |
+| `godie-i02q.json` | 道具「澤之書」，合成過渡期道具（craftRole=component，原價 2785） |
+| `godie-i02s.json` | 道具「奇蹟之墜製作書」，製作書系列 |
+| `godie-i02u.json` | 道具「黑色魔書製作書」，製作書系列 |
+| `godie-i02v.json` | 道具「黑核晶製作書」，製作書系列 |
+| `godie-i02w.json` | 道具「靈魂魔石製作書」，製作書系列 |
+| `godie-i02y.json` | 道具「斬岩刃製作書」，製作書系列 |
+| `godie-i02z.json` | 道具「盾甲天書製作書」，製作書系列 |
+| `godie-i032.json` | 道具「天生牙製作書」，製作書系列 |
+| `godie-i036.json` | 道具「嗜血邪書製作書」，製作書系列 |
+| `godie-i037.json` | 道具「隱密介紹信」，合成過渡期道具（craftRole=component，原價 1000） |
+| `godie-i03a.json` | 道具「幻之匕首製作書」，製作書系列 |
+| `godie-i03c.json` | 道具「雅典娜的驚嘆號．改」，合成過渡期道具（craftRole=component，原價 1200） |
+| `godie-i03e.json` | 道具「光明虎徹製作書」，製作書系列 |
+| `godie-i03g.json` | 道具「甘豆腐之袍製作書」，製作書系列 |
+| `godie-i03i.json` | 道具「天地崩裂魔杖製作書」，製作書系列 |
+| `godie-i03o.json` | 道具「死之王長槍的碎片」，合成過渡期道具（craftRole=component，原價 4300） |
+| `godie-i03p.json` | 道具「死之王意志的碎片」，合成過渡期道具（craftRole=component，原價 4600） |
+| `godie-i03q.json` | 道具「死之王神盾的碎片」，合成過渡期道具（craftRole=component，原價 4000） |
+| `godie-i03x.json` | 道具「破甲槍製作書」，製作書系列 |
+| `godie-i03z.json` | 道具「螺旋劍製作書」，製作書系列 |
+| `godie-i042.json` | 道具「火閃電製作書」，製作書系列 |
+| `godie-i044.json` | 道具「寂靜刃 - 詠月製作書」，製作書系列 |
+| `godie-i04a.json` | 道具「賢者之石製作書」，製作書系列 |
+| `godie-i04c.json` | 道具「冰晶虎魄製作書」，製作書系列 |
+| `godie-i04e.json` | 道具「冰晶虎魄 - 改製作書」，製作書系列 |
+| `godie-i04g.json` | 道具「奇門遁甲製作書」，製作書系列 |
+| `godie-i04h.json` | 道具「炎龍巨弩製作書」，製作書系列 |
+| `godie-i04k.json` | 道具「厄夜鐮刀製作書」，製作書系列 |
+| `godie-i04m.json` | 道具「殺豬刀製作書」，製作書系列 |
+| `godie-i04y.json` | 道具「兌換空罐頭」，兌換券（craftRole=token） |
+| `godie-i051.json` | 道具「兌換仙后座」，兌換券（craftRole=token） |
+| `godie-i053.json` | 道具「仙后座殘骸」，合成過渡期道具（craftRole=component，原價 0） |
+| `godie-i054.json` | 道具「認領寵物」，兌換券（craftRole=token） |
+| `godie-i055.json` | 道具「兌換牛蒡男」，兌換券（craftRole=token） |
+| `godie-i056.json` | 道具「交換寵物」，兌換券（craftRole=token） |
+| `godie-i059.json` | 道具「兌換舊系服」，兌換券（craftRole=token） |
+| `godie-i05a.json` | 道具「兌換泰坦之魂」，兌換券（craftRole=token） |
+| `godie-i05e.json` | 道具「兌換斯巴達圓盾」，兌換券（craftRole=token） |
+| `godie-i05g.json` | 道具「世界樹的果實」，合成過渡期道具（craftRole=component，原價 1800） |
+| `godie-i05s.json` | 道具「嚇人假面」，合成過渡期道具（craftRole=component，原價 300） |
+| `godie-i05w.json` | 道具「觀音菩薩護身符」，合成過渡期道具（craftRole=component，原價 1650） |
+| `godie-i065.json` | 道具「godie-i065」，合成過渡期道具（craftRole=component，原價 1150） |
+| `godie-i066.json` | 道具「復仇之玉」，合成過渡期道具（craftRole=component，原價 300） |
+| `godie-i069.json` | 道具「女神之淚製作書」，製作書系列 |
+| `godie-i06b.json` | 道具「思念的守護」，合成過渡期道具（craftRole=component，原價 300） |
+| `godie-i06m.json` | 道具「真知之石」，合成過渡期道具（craftRole=component，原價 950） |
+| `godie-i06p.json` | 道具「godie-i06p」，合成過渡期道具（craftRole=component，原價 1250） |
+| `godie-i06r.json` | 道具「一克拉鑽戒」，合成過渡期道具（craftRole=component，原價 300） |
 

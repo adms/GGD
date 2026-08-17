@@ -113,4 +113,30 @@ describe("練習模式 (GH#343)", () => {
     for (let i = 0; i < 20; i++) ctl.applyCheat(SEAT0, { kind: "spawnMob", what: "normal" });
     expect(ctl.world.mob.size).toBeLessThanOrEqual(ctl.world.mobRules!.maxAlivePerZone);
   });
+
+  /**
+   * ⭐ owner 2026-08-18：「也沒辦法一鍵呼喚 **N 個**特定殭屍 特殊殭屍 **殭屍王**」。
+   *
+   * ⚠️ 王那條路在此之前**把 `count` 整個丟掉**，一次只召一隻 —— 而 UI 上完全看不出
+   * 它被忽略了（失敗形態②：送到了但沒有人讀）。⛔ 這裡不斷言「幾隻」，只斷言
+   * 「N 比 1 多」，因為每區存活上限是後台的一格設定（第二守則：驗機制不驗數字）。
+   *
+   * 突變紀錄：把 `cheatSpawnMob` 王分支的 `for` 迴圈改回單次 `summonMobBoss`
+   * ⇒ 這一條紅（N 隻退化成 1 隻）；改回來。
+   * ⚠️ 另一個等價的突變也驗過：把 `bossSpawnsThisRound.clear()` 搬到迴圈**外面**
+   * ⇒ 同樣紅 —— 第 2 隻起會被自己剛寫進去的那一筆擋掉，而且不會有任何錯誤訊息。
+   */
+  it("★ ③c 殭屍王也吃 count —— 「N 個殭屍王」不是只召一隻", () => {
+    const one = build({ ...DEFAULT_PRACTICE_RULES });
+    expect(one.applyCheat(SEAT0, { kind: "spawnMob", what: "boss", count: 1 })).toBe(true);
+    const single = one.world.mob.size;
+
+    const many = build({ ...DEFAULT_PRACTICE_RULES });
+    expect(many.applyCheat(SEAT0, { kind: "spawnMob", what: "boss", count: 4 })).toBe(true);
+    expect(many.world.mob.size, "count 被王那條路丟掉了 —— N 隻退化成 1 隻").toBeGreaterThan(
+      single,
+    );
+    // 上限仍然是伺服器夾的那一個，⛔ 不是客戶端說了算。
+    expect(many.world.mob.size).toBeLessThanOrEqual(many.world.mobRules!.maxAlivePerZone);
+  });
 });

@@ -4209,16 +4209,9 @@ export class MatchController {
     if (!t || !rules) return false;
     const zone = t.zone;
 
-    if (what === "boss") {
-      if (rules.boss === null || !rules.boss.enabled) return false;
-      // ⚠️ 練習房**清掉每回合的王上限**。`summonMobBoss` 的 `maxPerRoundScope`
-      // 守的是「一場比賽的王不可以無限出場」，而練習房的回合永遠不結束，所以那個
-      // 上限在這裡會退化成「一場練習只能看一次王」——正好把要練的東西鎖起來。
-      // ⛔ 只在練習房清；正式賽的那條規矩一個字都沒動。
-      if (this.practice) this.world.bossSpawnsThisRound.clear();
-      return summonMobBoss(this.world, zone, rules, entity, this.world.tick) !== null;
-    }
-
+    // ⭐ 數量夾在**王與一般共用**的這一行，⛔ 不是只給一般路徑 —— owner 2026-08-18
+    // 「也沒辦法一鍵呼喚 **N 個**⋯殭屍王」。在此之前王這條路把 `count` 整個丟掉，
+    // 一次只召一隻，而 UI 上完全看不出它被忽略了（失敗形態②：送到了但沒有人讀）。
     const batch = Math.max(
       1,
       Math.min(
@@ -4226,6 +4219,26 @@ export class MatchController {
         Math.floor(count ?? this.practice?.spawnBatch ?? DEFAULT_PRACTICE_RULES.spawnBatch),
       ),
     );
+
+    if (what === "boss") {
+      if (rules.boss === null || !rules.boss.enabled) return false;
+      let bosses = 0;
+      for (let i = 0; i < batch; i++) {
+        // ⚠️ 練習房**清掉每回合的王上限**。`summonMobBoss` 的 `maxPerRoundScope`
+        // 守的是「一場比賽的王不可以無限出場」，而練習房的回合永遠不結束，所以那個
+        // 上限在這裡會退化成「一場練習只能看一次王」——正好把要練的東西鎖起來。
+        // ⛔ 只在練習房清；正式賽的那條規矩一個字都沒動。
+        // ⚠️ 要在**迴圈裡**清：清一次再連召 N 隻的話，第 2 隻起會被自己剛寫進去的
+        // 那一筆擋掉，於是「王 ×5」只會出現 1 隻，而且不會有任何錯誤。
+        if (this.practice) this.world.bossSpawnsThisRound.clear();
+        // 王也吃每區存活上限 —— 同一個理由：練習房不可以被自己生出來的東西打死。
+        if (mobsAliveInZone(this.world, zone) >= rules.maxAlivePerZone) break;
+        if (summonMobBoss(this.world, zone, rules, entity, this.world.tick) === null) break;
+        bosses++;
+      }
+      return bosses > 0;
+    }
+
     let spawned = 0;
     for (let i = 0; i < batch; i++) {
       // 每一隻都重數：上一隻剛剛才把 zone 填滿的情況必須被看見。

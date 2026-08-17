@@ -195,6 +195,51 @@ def load_collection(name):
     return out
 
 
+def load_legacy_items():
+    """`content/_legacy/items/` 的退場道具。
+
+    ⭐ owner 2026-08-18：「不應該再出現在現有任何文件上⋯**包括道具總表**，
+    但**可附註 legacy 路徑供有必要考古的話進一步查找**」。
+
+    ⛔ 這裡**沒有**、也不可以有一份「哪些 id 退場了」的名單 —— 目錄位置本身
+    就是宣告。`load_collection("items")` 掃的是 `content/items/`（非遞迴），
+    所以退場的那些**自動**不在總表裡；這一支只是為了把「還有 N 件在哪裡」
+    這句話也變成推導出來的，⛔ 不是手寫的數字。
+    """
+    d = os.path.join(CONTENT, "_legacy", "items")
+    if not os.path.isdir(d):
+        return []
+    out = []
+    for fn in sorted(os.listdir(d)):
+        if not fn.endswith(".json") or fn.startswith("_"):
+            continue
+        with open(os.path.join(d, fn), encoding="utf-8") as f:
+            out.append(json.load(f))
+    return out
+
+
+def legacy_items_note(ctx, root=""):
+    """現役文件裡那一行**指標**（⛔ 不是逐筆內容）。缺席時回 None。
+
+    `root` 是「從這份文件走回 repo 根」的相對前綴（README 是 ""，
+    `docs/reference/*.md` 是 "../../"）。
+    """
+    gone = ctx.get("retired_items") or []
+    if not gone:
+        return None
+    books = sum(1 for i in gone if "製作書" in (i.get("name") or ""))
+    comp = sum(1 for i in gone if i.get("craftRole") == "component" and "製作書" not in (i.get("name") or ""))
+    token = sum(1 for i in gone if i.get("craftRole") == "token")
+    return (
+        f"🗄️ **另有 {len(gone)} 件已退場道具不列在本表**"
+        f"（製作書系列 {books}、合成過渡期道具 {comp}、兌換券 {token}）—— "
+        "它們在出貨的商店貨架與每一張抽獎表上都不存在，所以玩家拿不到。"
+        f"全文原封不動保存於 [`content/_legacy/items/`]({root}content/_legacy/items/)，"
+        f"逐筆索引見 [`docs/legacy-index.md`]({root}docs/legacy-index.md)。"
+        "⛔ 這一行是**指標**不是清單：退場與否由檔案在哪個目錄決定，沒有第二份名單。"
+    )
+
+
 def load_json(path, default=None):
     if not os.path.exists(path):
         return default
@@ -602,6 +647,11 @@ def gen_items(ctx):
         len(items),
         ctx,
         extra_notes=[
+            n
+            for n in [legacy_items_note(ctx, "../../")]
+            if n
+        ]
+        + [
             "**上架規則（task #70）**：`shopCatalogue` / `buyItem` 只讓 "
             "`craftRole === \"final\"` **且** 真有效果的武器上架"
             "（`packages/shared/src/sim/economy/shop.ts:110`、"
@@ -672,6 +722,7 @@ def build_context():
     champions = load_collection("champions")
     abilities = load_collection("abilities")
     items = load_collection("items")
+    retired_items = load_legacy_items()
 
     pool_doc = load_json(os.path.join(CONTENT, "loot-tables", f"{LEGENDARY_POOL_TABLE}.json"), {})
     legendary_pool = {e["itemId"] for e in (pool_doc.get("entries") or []) if e.get("itemId")}
@@ -717,6 +768,7 @@ def build_context():
         "abilities": abilities,
         "ability_by_id": {a["id"]: a for a in abilities},
         "items": sorted(items, key=lambda i: i["id"]),
+        "retired_items": sorted(retired_items, key=lambda i: i["id"]),
         "legendary_pool": legendary_pool,
         "quest_pool": quest_pool,
         "open_champions": open_champions,

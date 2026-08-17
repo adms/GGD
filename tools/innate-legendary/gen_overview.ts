@@ -112,6 +112,30 @@ function readCollection(name: string): Doc[] {
   return out.sort((a, b) => str(a["id"]).localeCompare(str(b["id"])));
 }
 
+/**
+ * 已退場的道具（`content/_legacy/items/`）—— ⭐ owner 2026-08-18：
+ * 「不應該再出現在現有任何文件上⋯**包括道具總表**，但**可附註 legacy 路徑**」。
+ *
+ * ⛔ 這裡回的是**數量與分類**，⛔ 不是逐筆內容 —— 逐筆的家在 `docs/legacy-index.md`。
+ * ⛔ 也沒有任何「哪些 id 退場了」的硬編名單：`readCollection` 只掃
+ * `content/<name>/` 頂層，所以退場的東西**自動**不在這份總覽裡，這一支只是把
+ * 「還有幾件、在哪裡」也變成推導出來的一句話。
+ */
+function readRetiredItems(): Doc[] {
+  const dir = join(CONTENT, "_legacy", "items");
+  if (!existsSync(dir)) return [];
+  const out: Doc[] = [];
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    if (e.name.startsWith("_") || !e.name.endsWith(".json") || !e.isFile()) continue;
+    try {
+      out.push(JSON.parse(readFileSync(join(dir, e.name), "utf8")) as Doc);
+    } catch {
+      /* 壞掉的 JSON 由 content:validate 負責報 */
+    }
+  }
+  return out;
+}
+
 function str(v: unknown): string {
   return typeof v === "string" ? v : "";
 }
@@ -583,6 +607,21 @@ export function buildOverviewMarkdown(): string {
   const bothPools = treasures.filter((t) => t.grades.length > 1);
   p(`- 同時屬於 ${bothPools.length > 0 ? "兩階以上" : "多階"} 的有 **${bothPools.length}** 件。`);
   p(`- 沒有 payload（沒有 \`modifiers\` 也沒有 \`passive\`）的有 **${treasures.filter((t) => !t.hasPayload).length}** 件 —— 抽到等於空手。`);
+  const retired = readRetiredItems();
+  if (retired.length > 0) {
+    const books = retired.filter((i) => str(i["name"]).includes("製作書")).length;
+    const comp = retired.filter(
+      (i) => str(i["craftRole"]) === "component" && !str(i["name"]).includes("製作書"),
+    ).length;
+    const token = retired.filter((i) => str(i["craftRole"]) === "token").length;
+    p(
+      `- 🗄️ **另有 ${retired.length} 件已退場道具不在這份總覽裡**（製作書系列 ${books}、` +
+        `合成過渡期道具 ${comp}、兌換券 ${token}）—— 它們在商店貨架與每一張獎池上都不存在。` +
+        "全文保存於 [`content/_legacy/items/`](../content/_legacy/items/)，" +
+        "逐筆索引見 [`docs/legacy-index.md`](legacy-index.md)。" +
+        "⛔ 退場與否由檔案在哪個目錄決定，這份總覽沒有第二份名單。",
+    );
+  }
   const emptyGrades = grades.filter((g) => !g.tableExists);
   if (emptyGrades.length > 0) {
     p(

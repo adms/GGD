@@ -119,3 +119,27 @@ export const cheat = {
     ...(count === undefined ? {} : { count }),
   }),
 } as const;
+
+/**
+ * 生怪數量輸入框 → `spawnMob` 的 `count`（GH#343 · owner 2026-08-18
+ * 「也沒辦法一鍵呼喚 **N 個**特定殭屍」）。
+ *
+ * ⭐ `undefined` 是一個**有意義的回傳值**，不是失敗：它代表「不要送 count，
+ * 讓伺服器用 `config.practice@1` 的預設數量」。所以預設值仍然只住在後台那一格，
+ * ⛔ 客戶端沒有第二份（第一守則）。
+ *
+ * ⚠️ 空字串 / 空白 / 非數字 / ≤0 全部退回 `undefined` —— 尤其是**清空輸入框**：
+ * 那時 `Number("")` 是 **0**，直接送出去會變成「生 0 隻」，而畫面上什麼都不會發生，
+ * 使用者只會覺得按鈕壞了（失敗形態②的手感版本）。
+ * 上界 99 只是防手滑打太多位數；⭐ 真正的上限**由伺服器夾**（小怪波的每區存活上限），
+ * ⛔ 這裡不重複那個規則。
+ */
+export function parseSpawnCount(raw: string): number | undefined {
+  const t = raw.trim();
+  if (t === "") return undefined;
+  const n = Number(t);
+  if (!Number.isFinite(n)) return undefined;
+  const i = Math.floor(n);
+  if (i <= 0) return undefined;
+  return Math.min(99, i);
+}

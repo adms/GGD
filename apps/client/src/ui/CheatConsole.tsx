@@ -26,6 +26,7 @@ import {
   clampLevel,
   filterEntries,
   isCheatToggleKey,
+  parseSpawnCount,
   type CheatListEntry,
 } from "./cheats";
 import { SfxButton } from "./SfxButton";
@@ -125,6 +126,13 @@ export function CheatConsole(): React.JSX.Element | null {
   const [gold, setGold] = useState(1000);
   const [god, setGod] = useState(false);
   const [zeroCd, setZeroCd] = useState(false);
+  /**
+   * 生怪數量。**字串**而不是數字，因為「空白」是一個有意義的狀態：
+   * 空白 ⇒ `count` 省略 ⇒ 伺服器用 `config.practice@1` 的預設。
+   * ⛔ 用 `number` 存的話，清空會變成 0 或 NaN，兩個都會被誤讀成「使用者要 0 隻」。
+   */
+  const [mobCount, setMobCount] = useState("");
+  const parsedMobCount = parseSpawnCount(mobCount);
 
   // registries are static after boot — snapshot once
   const champions = useMemo<CheatListEntry[]>(
@@ -306,25 +314,44 @@ export function CheatConsole(): React.JSX.Element | null {
         </SfxButton>
       </Section>
 
-      {/* 即時生成殭屍 (GH#343)。數量刻意**不給輸入框**：一次生幾隻是
-          `config.practice@1` 的一格後台設定，這裡再開一個輸入框就是第四個住處。 */}
+      {/* 即時生成殭屍 (GH#343)。
+          ⭐ 2026-08-18 owner：「也沒辦法一鍵呼喚 **N 個**特定殭屍」——補上數量框。
+          ⚠️ 這**不是**第四個住處：空白時 `count` 整個省略，伺服器就走
+          `config.practice@1` 的「生怪指令的預設數量」。填了數字才覆寫，而那是
+          「這一次點擊」的臨時輸入，⛔ 不是一個出貨值。預設值仍然只住在後台那一格。
+          ⚠️ 上限一律由伺服器夾（小怪波的每區同時存活上限）——填 999 也不會把沙盒撐爆。 */}
       <Section title="生怪 Spawn">
+        <input
+          type="number"
+          min={1}
+          max={99}
+          value={mobCount}
+          onChange={(e) => setMobCount(e.target.value)}
+          placeholder="N（空白＝後台預設）"
+          style={{ ...searchInput, width: 150, minHeight: 30 }}
+          aria-label="spawn count"
+          title="要生幾隻。空白 = 用後台『生怪指令的預設數量』。伺服器一律吃每區存活上限。"
+        />
         <SfxButton
-          onClick={() => send(cheat.spawnMob("normal"))}
+          onClick={() => send(cheat.spawnMob("normal", parsedMobCount))}
           style={btn}
-          title="在自己所在的區域生一批一般殭屍（數量走後台的『生怪指令的預設數量』，並吃每區存活上限）"
+          title="在自己所在的區域生一批一般殭屍（吃每區存活上限）"
         >
-          一般殭屍
+          一般殭屍{parsedMobCount === undefined ? "" : ` ×${parsedMobCount}`}
         </SfxButton>
         <SfxButton
-          onClick={() => send(cheat.spawnMob("special"))}
+          onClick={() => send(cheat.spawnMob("special", parsedMobCount))}
           style={btn}
           title="特殊殭屍（精英），規則同上"
         >
-          特殊殭屍
+          特殊殭屍{parsedMobCount === undefined ? "" : ` ×${parsedMobCount}`}
         </SfxButton>
-        <SfxButton onClick={() => send(cheat.spawnMob("boss"))} style={btn} title="召喚殭屍王">
-          殭屍王
+        <SfxButton
+          onClick={() => send(cheat.spawnMob("boss", parsedMobCount))}
+          style={btn}
+          title="召喚殭屍王"
+        >
+          殭屍王{parsedMobCount === undefined ? "" : ` ×${parsedMobCount}`}
         </SfxButton>
       </Section>
 

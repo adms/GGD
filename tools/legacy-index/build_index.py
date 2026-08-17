@@ -37,7 +37,7 @@ OUT = os.path.join(ROOT, "docs", "legacy-index.md")
 #    ⛔ 不要掃 .venv（第三方 pip 自己也有一個叫 legacy 的模組）。
 LEGACY_ROOTS = [
     ("docs/legacy", "規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）"),
-    ("content/_legacy", "**下架的內容文件** —— 英雄、技能、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡"),
+    ("content/_legacy", "**下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡"),
 ]
 
 # ---------------------------------------------------------------------------
@@ -136,7 +136,13 @@ CURATED: dict[str, tuple[str, str]] = {
 CONTENT_LEGACY_NOTE = (
     "**下架的內容文件**。它們不是「規格過期」，是「這一支不再出貨」——"
     "`invulnerableBinding.test.ts` 逐字釘著「**消失 ≠ 歸檔**」：白名單上不再出貨的，"
-    "必須真的躺在這裡而不是憑空不見。⚠️ 有 6 支以上的活測試會讀這個目錄，⛔ 不要清空。"
+    "必須真的躺在這裡而不是憑空不見。⚠️ 有 6 支以上的活測試會讀這個目錄，⛔ 不要清空。\n\n"
+    "⭐ **目錄位置本身就是宣告**（owner 2026-08-18：「不應該再出現在現有任何文件上"
+    "或讓任何 script 浪費算力處理」）。`content/_legacy/` 不在 `COLLECTION_NAMES` 裡，"
+    "所以 `pnpm content:build`、`bundle.json`、每一支 `content/<collection>/` 逐檔掃描的"
+    "產生器（`gen_overview.ts` / `gen_spec.ts` / `gen_reference.py` / `gen_readme_lists.py`）"
+    "與後台的道具清單**全部自動看不到它們** —— ⛔ 沒有任何一份「要跳過哪些 id」的硬編名單，"
+    "那會是第四個住處，必然過期。"
 )
 
 
@@ -167,7 +173,7 @@ def describe_content_doc(path: str) -> tuple[str, str]:
         return ("（無法解析的 JSON）", "")
     schema = str(d.get("schema", "?"))
     name = str(d.get("name") or d.get("displayName") or d.get("id") or "")
-    kind = {"ability@1": "技能", "champion@1": "英雄", }.get(schema, schema)
+    kind = {"ability@1": "技能", "champion@1": "英雄", "item@1": "道具"}.get(schema, schema)
     extra = ""
     if schema == "champion@1":
         ab = d.get("abilities") or {}
@@ -175,7 +181,29 @@ def describe_content_doc(path: str) -> tuple[str, str]:
     elif schema == "ability@1":
         slot = d.get("slot")
         extra = f"，槽位 {slot}" if slot else ""
+    elif schema == "item@1":
+        # ⚠️ 這一列的「為什麼」是**推導**的，⛔ 不是一份手抄的 id → 理由對照表。
+        #    判準逐字對應 owner 2026-08-18 點名的兩個系列（製作書／合成過渡期），
+        #    第三種是兌換券。三種都是「GGD 沒有合成系統」的殘留：
+        #    `shopCatalogue` 只上架 `craftRole:"final"` ＋ 兩個 service ＋ 寶具貨架，
+        #    所以這三類**在任何一扇門後面都拿不到**。
+        return (
+            f"道具「{name}」，{_item_series(d)}",
+            "沒有任何取得路徑（不在商店貨架、不在任何抽獎表）",
+        )
     return (f"{kind}「{name}」{extra}".strip("，"), "下架，不再出貨")
+
+
+def _item_series(d: dict) -> str:
+    """一件退場道具屬於哪一個系列 —— ⛔ 從文件自己的欄位推導，不查表。"""
+    if "製作書" in str(d.get("name", "")):
+        return "製作書系列"
+    role = str(d.get("craftRole", ""))
+    if role == "component":
+        return f"合成過渡期道具（craftRole=component，原價 {d.get('cost', 0)}）"
+    if role == "token":
+        return "兌換券（craftRole=token）"
+    return f"craftRole={role or '—'}"
 
 
 def collect() -> list[tuple[str, str, list[tuple[str, str, str]]]]:

@@ -349,7 +349,8 @@ def gen_items(ctx):
         f"#### 商店貨架 + 抽卡池（能實際取得的道具）",
         "",
     ]
-    L += note([
+    legacy_line = G.legacy_items_note(ctx, "")
+    L += note(([legacy_line, ""] if legacy_line else []) + [
         f"全部 {len(items)} 件道具依 `craftRole` 標記分類（task #70）。**真正能買的只有 "
         f"{len(shop)} 件最終合成武器＋{len(services)} 項服務**；三選一 draft 抽 {len(quest)} 件任務道具、"
         f"傳說寶玉抽 {len(legend)} 件傳說。其餘 {rest_n} 件是配方組件、代幣、殘件或還沒 payload 的 "

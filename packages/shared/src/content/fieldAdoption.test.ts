@@ -1322,6 +1322,11 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-05",
     why: "道具那一面的【暴擊時】。這四格裡它是最接近被採用的一格 —— 天堂之劍 godie-i01n 是一件道具,它的文案「暴擊時吸血回復100%傷害」就是這一格的第一個消費者,卡住它的是缺一個「治療觸發這一發的 X%」原語(`heal` 只吃 zScaling,對稱的 `damage.incomingPct` 是傷害不是治療)。",
   },
+  "enum:items.craftRole=token": {
+    status: "legacy-parked",
+    witness: "content/_legacy/items/godie-i04y.json",
+    why: "8 件 `craftRole:\"token\"` 的兌換券（兌換空罐頭／兌換仙后座／認領寵物…）在 2026-08-18 隨「已經沒上架的武器道具」一起搬進 `content/_legacy/items/`。它們零 payload、零價格、`arena-rules.itemDraft.excludedCraftRoles` 出貨值逐字含 `token`，而且不在任何一張抽獎表上 —— 所以歸零是**移出營運樹**的結果，⛔ 不是引擎少了什麼：`shopCatalogue` 與 `itemOfferableTo` 兩條路都還讀得懂這個成員，只是這一版沒有一件內容用它。",
+  },
   "enum:items.craftRole=direct": {
     status: "debt",
     why: "extract_item_roles.py recovers 7 roles from the map triggers and assigned `direct` to nothing across 214 items. Either the extractor never emits it (a recovery gap worth checking against the JASS) or the role is redundant and should leave the enum.",
