@@ -2,7 +2,7 @@
   "id": "shining-golden-orbs",
   "schema": "item@1",
   "name": "閃耀金玉",
-  "description": "武器\n效能\n[EX解放・金玉回歸] 每當自身任一屬性首次達到一般上限時，獲得 1 層「金玉」，最多 2 層。每層使：所有已達上限的屬性 解鎖上限 +25% ／ 所有正屬性增益 ×1.15 ／ 移動速度 ×1.10\n[完全體] 取得第 2 層時觸發：所有正屬性增益再 ×1.20 ／ 造成傷害、治療、護盾 ×1.20 ／ 技能冷卻流逝速度 ×1.20\n\n解說\n兩顆就完全體了，第三顆本來就沒有 —— 別再找了。",
+  "description": "武器\n效能\n[EX解放・金玉回歸] 每當自身任一屬性首次達到一般上限時，獲得 1 層「金玉」，最多 2 層。每層使：攻擊速度與吸血的上限解鎖 +25% ／ 攻擊力・法強・護甲・魔抗・生命上限・魔力上限・雙回復・攻速 各 ×1.15 ／ 移動速度 ×1.10\n[完全體] 取得第 2 層時觸發：上述屬性再 ×1.20 ／ 造成傷害、治療、護盾 ×1.20 ／ 技能冷卻流逝速度 ×1.20\n\n解說\n兩顆就完全體了，第三顆本來就沒有 —— 別再找了。",
   "cost": 0,
   "tier": 5,
   "tags": [
@@ -30,61 +30,6 @@
             },
             {
               "stat": "lifesteal",
-              "op": "capRaisePct",
-              "value": 0.25
-            },
-            {
-              "stat": "ap",
-              "op": "capRaisePct",
-              "value": 0.25
-            },
-            {
-              "stat": "cdr",
-              "op": "capRaisePct",
-              "value": 0.25
-            },
-            {
-              "stat": "maxHealth",
-              "op": "capRaisePct",
-              "value": 0.25
-            },
-            {
-              "stat": "maxMana",
-              "op": "capRaisePct",
-              "value": 0.25
-            },
-            {
-              "stat": "healthRegen",
-              "op": "capRaisePct",
-              "value": 0.25
-            },
-            {
-              "stat": "manaRegen",
-              "op": "capRaisePct",
-              "value": 0.25
-            },
-            {
-              "stat": "ad",
-              "op": "capRaisePct",
-              "value": 0.25
-            },
-            {
-              "stat": "armor",
-              "op": "capRaisePct",
-              "value": 0.25
-            },
-            {
-              "stat": "mr",
-              "op": "capRaisePct",
-              "value": 0.25
-            },
-            {
-              "stat": "range",
-              "op": "capRaisePct",
-              "value": 0.25
-            },
-            {
-              "stat": "ms",
               "op": "capRaisePct",
               "value": 0.25
             },
@@ -165,61 +110,6 @@
               "value": 0.5
             },
             {
-              "stat": "ap",
-              "op": "capRaisePct",
-              "value": 0.5
-            },
-            {
-              "stat": "cdr",
-              "op": "capRaisePct",
-              "value": 0.5
-            },
-            {
-              "stat": "maxHealth",
-              "op": "capRaisePct",
-              "value": 0.5
-            },
-            {
-              "stat": "maxMana",
-              "op": "capRaisePct",
-              "value": 0.5
-            },
-            {
-              "stat": "healthRegen",
-              "op": "capRaisePct",
-              "value": 0.5
-            },
-            {
-              "stat": "manaRegen",
-              "op": "capRaisePct",
-              "value": 0.5
-            },
-            {
-              "stat": "ad",
-              "op": "capRaisePct",
-              "value": 0.5
-            },
-            {
-              "stat": "armor",
-              "op": "capRaisePct",
-              "value": 0.5
-            },
-            {
-              "stat": "mr",
-              "op": "capRaisePct",
-              "value": 0.5
-            },
-            {
-              "stat": "range",
-              "op": "capRaisePct",
-              "value": 0.5
-            },
-            {
-              "stat": "ms",
-              "op": "capRaisePct",
-              "value": 0.5
-            },
-            {
               "stat": "ad",
               "op": "pctMult",
               "value": 0.2
@@ -296,5 +186,5 @@
   ],
   "icon": "assets/icons/items/shining-golden-orbs.webp",
   "craftRole": "none",
-  "authoringNote": "⭐ owner 2026-08-17 親自重新設計，⛔ 規格表第 61 列的「弓與箭」已作廢，不要照那一列改。\n「每當自身任一屬性**首次**達到一般上限時」= `onStatCapReached`（`statPipeline` 對 `capFor().base` 判、每條屬性一生一次，且 `firesOutsideCombat` —— 屬性到頂多半發生在商店買完裝備那一刻）。\n「獲得 1 層金玉，最多 2 層」= effects[0]：**不填 stackKey**（複利路徑，每次施加各自一份來源）＋ `maxStacks: 2`。複利是刻意的 —— 文案是「每層 ×1.15」而 2 層要是 1.3225 而不是 1.30（填 stackKey 會被折算成 1 + 0.15×2）。\n「所有已達上限的屬性 解鎖上限 +25%」= 13 條 `capRaisePct 0.25`（＝出貨 `config.stat-caps@1` 的**全部** 13 條）。引擎的 payload 帶著 `stat`，但**內容側讀不到它**，所以「已達上限的那一條」只能寫成「全部 13 條」—— 對還沒到頂的那幾條，抬高上限本來就不給任何數值（`CapRaise` 家族只搬天花板）。\n⚠️ **出貨 13 條上限裡只有攻速（4→10）與吸血（0.8→20）留了解鎖空間，其餘 11 條 `unlocked === base`，所以 `capRaisePct` 對它們今天是 no-op** —— `statCaps.effectiveCap` 把任何解鎖硬夾到 `unlocked`。⛔ 這**不是這張卡的缺陷**，是一個等 owner 裁決的 config 資料決定（`content/config/stat-caps.json`，後台一格、存檔生效）。⚠️ 其中 `ms` 那一格另有已量到的物理風險（18.0 = 30Hz 離散碰撞的穿牆平手線），見 `sim/statCaps.ts`。\n⚠️ **降級**：「所有**正**屬性增益 ×1.15」—— 引擎沒有「只放大正的增益」這個概念（一份來源可以同時帶 +ms 與 -armor，任何啟發式都會在某張卡上錯，這也正是 `applyBuff.polarity` 要作者明寫的理由）。⇒ 降級成**指名的 9 條主要屬性各自 `pctMult 0.15`**（ad/ap/armor/mr/maxHealth/maxMana/healthRegen/manaRegen/as）。⛔ 兩點要知道：① `pctMult` 乘的是**最終值**不是「增益的部分」；② 比率型（critChance / cdr / lifesteal / evasion）與 range 刻意不在名單裡 —— ×1.15 一個 0..1 的比率是另一種語意。\n「移動速度 ×1.10」= 同一份來源的 `ms pctMult 0.10`（所以 ms 不重複吃上面那 9 條的 ×1.15）。\n「取得第 2 層時觸發[完全體]」= effects[1]，同一條 hook 的**第二段**：`condition.status{minStacks:2}` 讀的是金玉自己的 statusId（`statusStacks` 把兩份來源相加），而 effects 是**照順序**跑的 —— 第 2 層在 effects[0] 就已經掛上，所以這一段在同一次事件裡就成立。用 `stackKey` + `maxStacks: 1` 讓它只發生一次（⛔ 不能也走複利路徑：那條路的額度是用 `buff:hook:<來源>#` **前綴**數的，會跟金玉共用同一本帳）。\n「再 ×1.20」= 同 9 條 + ms 的 `pctMult 0.20`（獨立一份來源 ⇒ 真的再乘一次）。「造成傷害、治療、護盾 ×1.20」= `outputDamagePct` / `outputHealingPct` / `outputShieldPct` 各 flat 0.2（語意是加成，0 = ×1）。「技能冷卻流逝速度 ×1.20」= `cooldownDrainRate` flat 0.2（⛔ 不是 CDR：那一格在施放的瞬間就結算完了，而這裡要的是**冷卻進行中**也立刻加速）。"
+  "authoringNote": "⭐ owner 2026-08-17 親自重新設計，⛔ 規格表第 61 列的「弓與箭」已作廢，不要照那一列改。\n「每當自身任一屬性**首次**達到一般上限時」= `onStatCapReached`（`statPipeline` 對 `capFor().base` 判、每條屬性一生一次，且 `firesOutsideCombat` —— 屬性到頂多半發生在商店買完裝備那一刻）。\n「獲得 1 層金玉，最多 2 層」= effects[0]：**不填 stackKey**（複利路徑，每次施加各自一份來源）＋ `maxStacks: 2`。複利是刻意的 —— 文案是「每層 ×1.15」而 2 層要是 1.3225 而不是 1.30（填 stackKey 會被折算成 1 + 0.15×2）。\n「所有已達上限的屬性 解鎖上限 +25%」= 13 條 `capRaisePct 0.25`（＝出貨 `config.stat-caps@1` 的**全部** 13 條）。引擎的 payload 帶著 `stat`，但**內容側讀不到它**，所以「已達上限的那一條」只能寫成「全部 13 條」—— 對還沒到頂的那幾條，抬高上限本來就不給任何數值（`CapRaise` 家族只搬天花板）。\n⚠️ **出貨 13 條上限裡只有攻速（4→10）與吸血（0.8→20）留了解鎖空間，其餘 11 條 `unlocked === base`，所以 `capRaisePct` 對它們今天是 no-op** —— `statCaps.effectiveCap` 把任何解鎖硬夾到 `unlocked`。⛔ 這**不是這張卡的缺陷**，是一個等 owner 裁決的 config 資料決定（`content/config/stat-caps.json`，後台一格、存檔生效）。⚠️ 其中 `ms` 那一格另有已量到的物理風險（18.0 = 30Hz 離散碰撞的穿牆平手線），見 `sim/statCaps.ts`。\n⚠️ **降級**：「所有**正**屬性增益 ×1.15」—— 引擎沒有「只放大正的增益」這個概念（一份來源可以同時帶 +ms 與 -armor，任何啟發式都會在某張卡上錯，這也正是 `applyBuff.polarity` 要作者明寫的理由）。⇒ 降級成**指名的 9 條主要屬性各自 `pctMult 0.15`**（ad/ap/armor/mr/maxHealth/maxMana/healthRegen/manaRegen/as）。⛔ 兩點要知道：① `pctMult` 乘的是**最終值**不是「增益的部分」；② 比率型（critChance / cdr / lifesteal / evasion）與 range 刻意不在名單裡 —— ×1.15 一個 0..1 的比率是另一種語意。\n「移動速度 ×1.10」= 同一份來源的 `ms pctMult 0.10`（所以 ms 不重複吃上面那 9 條的 ×1.15）。\n「取得第 2 層時觸發[完全體]」= effects[1]，同一條 hook 的**第二段**：`condition.status{minStacks:2}` 讀的是金玉自己的 statusId（`statusStacks` 把兩份來源相加），而 effects 是**照順序**跑的 —— 第 2 層在 effects[0] 就已經掛上，所以這一段在同一次事件裡就成立。用 `stackKey` + `maxStacks: 1` 讓它只發生一次（⛔ 不能也走複利路徑：那條路的額度是用 `buff:hook:<來源>#` **前綴**數的，會跟金玉共用同一本帳）。 …（略）\n\n【2026-08-18 修無效宣稱】原文「所有已達上限的屬性 解鎖上限 +25%」曾對 13 條屬性各掛一條 capRaisePct，⛔ 其中 11 條是**無效宣稱**：config.stat-caps@1 只有 as(4→10) 與 lifesteal(0.8→20) 有解鎖空間，其餘 unlocked===base，effectiveCap 會夾回去。⚠️ 而且即使生效也不改變任何一場比賽 —— 那 11 條的 base 是防 mis-parse 的柵欄(ad 21200、maxHealth 375960)，玩家碰不到。換句話說這張卡的前提「已達上限」本來就只在 as/lifesteal 上成立。⇒ 保留真的兩條、刪掉 11 條假的、描述改成只講真的。強度一分未減。⚠️ 要讓其餘屬性真的可解鎖是 config/stat-caps.json 的**平衡決定**（owner）。守衛：content/noOpModifierClaims.test.ts。"
 }
