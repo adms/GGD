@@ -218,6 +218,30 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
         }
         continue;
       }
+      // ⭐ GH#354 / G1 —— **複利疊層也要吃得到 `maxStacks`**（owner 2026-08-17 的
+      // 20 件 [EX解放] 裡有 8 件是這個形狀：「每層 ×1.04，最多 6 層」）。
+      //
+      // ⚠️ 在這一行之前，`maxStacks` 的夾取**只寫在上面 `if (e.stackKey !== undefined)`
+      // 區塊裡**，所以不填 stackKey 的那條路（＝真正的複利路徑，N 份來源乘起來就是
+      // (1+v)^N，見 `ModOp.PercentMult` 的檔頭）完全不讀它。後果是作者只能二選一：
+      //   · 填 stackKey → 有上限，但 `statPipeline` 折算成 `1 + v×stacks`（**線性**）
+      //   · 不填        → 真的複利，但**沒有上限**，而且 schema 收得下 `maxStacks`
+      //                   ⇒ 卡片上寫著「最多 6 層」，遊戲裡疊到無限（失敗形態②）
+      //
+      // ⛔ 修法**不是**讓折算式變複利（那會改掉每一張既有的疊層卡）。這裡只補上
+      // 缺的那一半：同一個 origin 已經掛了幾份，滿了就 refuse。
+      // ⚠️ 用 **id 前綴**數，⛔ 不是數 `sources.length` —— 一個單位身上同時有道具、
+      // 技能、增益卡的來源，數全部會讓別人的 buff 把這一張的額度吃掉。
+      if (e.maxStacks !== undefined) {
+        const sc = world.stats.get(target);
+        if (sc) {
+          const prefix = `buff:${ctx.origin}#`;
+          let held = 0;
+          for (const src of sc.sources) if (src.id.startsWith(prefix)) held++;
+          // ⚠️ `>=` 不是 `>`：`maxStacks: 6` 是「最多六份」，第七份要被擋掉。
+          if (held >= e.maxStacks) continue;
+        }
+      }
       attachSource(world, target, {
         id: selfId,
         kind: "buff",
