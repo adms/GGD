@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "5f1cd23e",
+  "fingerprint": "9a5fed3e",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -69,6 +69,7 @@
     "onRoundStart",
     "onShieldBroken",
     "onShieldGained",
+    "onStatCapReached",
     "onStatusApplied",
     "onStunned",
     "onUltimateCast",

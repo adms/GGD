@@ -178,6 +178,7 @@ export type HookEvent =
   | "onBoundaryTouch"
   | "onDashOrBlink"
   | "onLethalDamage"
+  | "onStatCapReached"
   | "onRoundStart"
   | "onRoundEnd"
   | "onAbilityCast"

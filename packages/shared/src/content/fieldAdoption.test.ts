@@ -1227,6 +1227,12 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // one of them has a painter and a PNG on disk.
 
   // --- the same id, on the OTHER axis: authored in `map@1` but not yet used there.
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onStatCapReached": {
+    status: "landing",
+    since: "2026-08-17",
+    why:
+      "GH#354 / G19 —— 【某條屬性首次到頂】。#61 閃耀金玉「每當自身任一屬性首次達到一般上限時，獲得 1 層『金玉』」。⭐ 事件負載帶 `stat`，那一格**同時**解掉「已達上限的那些屬性 +25%」—— 所以 owner 2026-08-17 裁掉的 G20（跨屬性計數器）確實不需要存在。⚠️ 門檻是**一般**上限而不是解鎖後的高度：後者會讓一件「到頂就解鎖」的寶具永遠追不到自己。⚠️ 閂掛在 `StatsComp.capReached` 上（跟著身體消失），⛔ 不是一張新的 world Map。機制**整條路都通了**（emit → WorldHookSystem 的發射列 → fireHooks → 守衛 `sim/stats/statCapReached.test.ts`），內容側 0 筆是因為這一批是**先開路再寫卡**。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。",
+  },
   "enum:abilities.effects[]#applyBuff.maxStat.stat=cooldownDrainRate": {
     status: "landing",
     since: "2026-08-17",

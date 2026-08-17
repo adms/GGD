@@ -218,6 +218,7 @@ export const zHookEvent = z.enum([
   "onBoundaryTouch",
   "onDashOrBlink",
   "onLethalDamage",
+  "onStatCapReached",
   "onRoundStart",
   "onRoundEnd",
   "onAbilityCast",

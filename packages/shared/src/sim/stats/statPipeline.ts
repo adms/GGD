@@ -280,6 +280,30 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
   sc.final = next;
   sc.dirty = false;
 
+  /**
+   * ⭐ G19（GH#354）—— 「**首次**達到一般上限」。
+   * #61 閃耀金玉「每當自身任一屬性首次達到一般上限時，獲得 1 層『金玉』」。
+   *
+   * ⚠️ 門檻是 `capFor(...).base`（**一般**上限），⛔ 不是 `effectiveCap`
+   *（解鎖後的高度）—— 後者會讓一件「到頂就解鎖 +25%」的寶具**永遠追不到自己**：
+   * 每解鎖一次門檻就跟著抬高一次。
+   *
+   * ⚠️ 走 `ALL_STATS`（陣列、宣告序），⛔ 不走 Set/Map 的迭代順序 ——
+   * 同一 tick 有兩條屬性同時到頂時，事件的先後必須是決定性的（purity）。
+   *
+   * ⛔ `emit` 只是把事件推進 `world.events`（`SimWorld.emit` 就一行 push），
+   * 所以這裡**不會**在屬性管線中途重入去跑 hook。
+   */
+  for (const stat of ALL_STATS) {
+    if (sc.capReached?.has(stat) === true) continue;
+    const v = next[stat];
+    if (!(v > 0)) continue;
+    const { base } = capFor(world.statCaps, stat);
+    if (!Number.isFinite(base) || v < base) continue;
+    (sc.capReached ??= new Set()).add(stat);
+    world.emit("statCapReached", { entity: id, stat });
+  }
+
   // Preserve hp/mana RATIO when maxima change (LoL behavior on level/buy).
   const hp = world.health.get(id);
   if (hp) {

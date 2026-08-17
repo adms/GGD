@@ -1432,7 +1432,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 | `summon` | 0 | `swapResource` | 1 | `taunt` | 0 |
 | `weightedBranch` | 4 |  |  |  |  |
 
-### 觸發事件（hook event）—— 32 種
+### 觸發事件（hook event）—— 33 種
 
 | 事件 | 中文 | 用它的內容 |
 |---|---|--:|
@@ -1464,6 +1464,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 | `onRoundStart` | — | 0 |
 | `onShieldBroken` | 護盾破裂時 | 0 |
 | `onShieldGained` | 獲得護盾時 | 0 |
+| `onStatCapReached` | — | 0 |
 | `onStatusApplied` | 被掛上狀態時 | 3 |
 | `onStunned` | 被暈眩時 | 2 |
 | `onUltimateCast` | — | 0 |

@@ -1,6 +1,6 @@
 /** Stats + abilities runtime components (stored on the World). */
 import type { AbilityId, ChampionId, EntityId } from "../../ids";
-import type { StatBlock } from "./statTypes";
+import type { Stat, StatBlock } from "./statTypes";
 import type { ModifierSource } from "./modifiers";
 import type { CastableSlot, CoreAbilitySlot } from "../intents";
 import type { Vec2 } from "../math/vec2";
@@ -24,6 +24,26 @@ export interface StatsComp {
    * which IS digested, so digesting it too would only be able to disagree.
    */
   resourceSig?: number;
+  /**
+   * ⭐ G19（GH#354）—— 這個身體上**已經發過**「首次達到一般上限」的那幾條屬性。
+   * `undefined` = 一條都還沒有 = 每一個既有的世界。
+   *
+   * #61 閃耀金玉「每當自身**任一屬性首次達到一般上限**時，獲得 1 層『金玉』」。
+   * 「首次」需要一個閂，而閂需要一個住處。
+   *
+   * ⛔ **不開一張 `world.xxx` Map**：那是一份新的 world state，要進 `digest()`、
+   * 要在復活/回合重置/實體銷毀時各自記得清 —— 四個站點漏掉任何一個，
+   * 一個死掉的實體的閂就會活得比它久（`clearPools.ts` 檔頭記的就是這個形態）。
+   * 掛在 `StatsComp` 上的話它**跟著身體一起消失**，串接數是零。
+   *
+   * ⛔ **不進 snapshot**：客戶端不問「你哪幾條屬性到頂過」，它只看得到結果。
+   * ⛔ 也不進 `digest()`：它完全由 `final` 與 `statCaps` 推導，digest 它只能製造
+   * 一個「跟推導不合」的機會（同 {@link resourceSig} 的理由）。
+   *
+   * ⚠️ 語意是**整場**，⛔ 不隨回合重置：「首次」對玩家的意思是「這場比賽第一次」。
+   * 一件寶具如果要回合內生效，那是 `permanentScope: "round"`（G3）在管的事。
+   */
+  capReached?: Set<Stat>;
 }
 
 export interface AbilityInstance {

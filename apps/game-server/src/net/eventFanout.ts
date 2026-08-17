@@ -454,6 +454,12 @@ export const SERVER_ONLY_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   "abilityHit",
   "displace",
   "lethalDamage",
+  // ⭐ G19（同一批）—— `statCapReached`「某條屬性首次到頂」。同樣只餵 hook：
+  // 客戶端從**已經複製過去的** `MatchState` 屬性欄自己看得到那個數字到頂了，
+  // 而這一則的意義是「這是**第一次**」——一個只有伺服器的閂知道的事。
+  // ⚠️ 它是**每 tick 的屬性管線**發的，外送等於在買裝備那一刻多灌一批訊息，
+  // 而畫面上沒有任何東西在等它。
+  "statCapReached",
   // ── WIRE FLOOD: per-tick, and the client already has the beat it needs ─────
   // `fireRingTick` is emitted UNCONDITIONALLY every tick from the moment the
   // ring arms until the round ends — 30 messages/second/client for ~60 s, and

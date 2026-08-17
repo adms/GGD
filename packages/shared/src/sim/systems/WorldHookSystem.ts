@@ -324,6 +324,18 @@ const WORLD_HOOKS: readonly WorldHookRow[] = [
   },
   // 回合開始／結束。⚠️ 兩者都由 `MatchController` 發（回合是 host 的概念，
   // sim 沒有那份帳），⛔ 不在 sim 裡重建一份回合狀態機。
+  // ⭐ G19 —— 【屬性首次到頂】。持有者是**那個身體自己**（`entity`），
+  // 而 payload 帶著 `stat` —— 那一格同時解掉「已達上限的屬性 +25%」，
+  // ⛔ 所以不必再開一個跨屬性計數器（owner 2026-08-17 裁掉的 G20）。
+  // ⚠️ `firesOutsideCombat` 非有不可：屬性到頂多半發生在**商店**買完裝備的
+  // 那一刻，而那時 `combatActive` 是 false —— 少了它整條機制只在戰鬥中才活。
+  {
+    simEvent: "statCapReached",
+    hook: "onStatCapReached",
+    scope: "actor",
+    actorKey: "entity",
+    firesOutsideCombat: true,
+  },
   { simEvent: "roundStart", hook: "onRoundStart", scope: "world" },
   // ⚠️ `firesOutsideCombat` 非有不可 —— 見那個欄位的註解。
   { simEvent: "roundEnd", hook: "onRoundEnd", scope: "world", firesOutsideCombat: true },

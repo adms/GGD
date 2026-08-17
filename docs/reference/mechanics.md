@@ -54,7 +54,7 @@ contentVersion `cv_8a90b1eb0894`
 | `taunt` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `weightedBranch` | — | 4 | `godie-e00s.ex`、`godie-h02k.ex`、`godie-h02v.ex`、`grail-ex-08` |
 
-## 觸發事件（hook event） —— 32 種
+## 觸發事件（hook event） —— 33 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
@@ -86,6 +86,7 @@ contentVersion `cv_8a90b1eb0894`
 | `onRoundStart` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onShieldBroken` | 護盾破裂時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onShieldGained` | 獲得護盾時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onStatCapReached` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onStatusApplied` | 被掛上狀態時 | 3 | `grail-c-01`、`grail-c-11`、`grail-a-15` |
 | `onStunned` | 被暈眩時 | 2 | `godie-n01c.passive`、`godie-nbbc.passive` |
 | `onUltimateCast` | — | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
