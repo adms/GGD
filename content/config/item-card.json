@@ -2,6 +2,7 @@
  "id": "item-card",
  "schema": "config.item-card@1",
  "note": "道具卡片的排版與配色。owner 2026-08-02「卡片道具的排版連在一起不好閱讀，關於效果及數值的部分應該要特殊顏色表示」。markers 這張表是從 49 支傳說武器的 description 逐字掃出來的：改一列就換一個標記的分類，不必改程式。新標記查不到時落到 unknownCategory，卡片照常畫。 ⚠️ 2026-08-05（A4b/#278）新增「淨化」一列，分到 active：它是一個**會發生的事件**（On-Hit 機率觸發／每 N 秒觸發），不是一條常駐屬性，所以與 On-Hit／擴散／暴擊同一類。",
+ "iconFillPct": 100,
  "categories": {
   "stat": {
    "label": "屬性加成",

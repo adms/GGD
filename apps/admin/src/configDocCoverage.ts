@@ -41,6 +41,7 @@ import { COMBAT_FEEL_DOC_ID } from "./combatFeel";
 import { FORM_VISUALS_DOC_ID } from "./formVisuals";
 import { ARENA_RULES_DOC_ID } from "./itemDraft";
 import { MATCH_DOC_ID } from "./matchConfig";
+import { ROSTER_DOC_ID } from "./roster";
 import { CAPS_DOC_ID } from "./statCaps";
 import { STORE_DOC_ID } from "./storeEconomy";
 import { VFX_FAMILIES_DOC_ID } from "./vfxForge";
@@ -178,6 +179,15 @@ export const CONFIG_DOC_EXEMPTIONS: readonly ConfigDocExemption[] = [
       "ui/StoreEconomyPage.tsx 被刪、storeEconomy 從 session 表上消失、或 STORE_DOC_ID 指到別份文件時失效。",
   },
   {
+    docId: "roster",
+    kind: "OWN_PAGE",
+    page: "roster",
+    docIdConstant: ROSTER_DOC_ID,
+    why: "英雄上下架有自己的頁（🎭 英雄上下架，GH#336）：retiredChampions（手動與隨機兩條路都擋）與 hiddenChampions（彩蛋 —— 隨機抽得到、手動選不到）兩張 id 清單。⛔ 它不走通用引擎，理由與 arena-pool 完全相同：那個引擎畫的是**固定形狀的純量葉**，而這裡是兩份會長大的英雄 id 清單。⚠️ 2026-08-17 之前這一列是 KNOWN_GAP，理由逐字是「apps/admin/src 對 roster / retiredChampions 零引用」—— 那張帳單現在付掉了，而 roster.json 那句「不用改程式、不用重新部署」也跟著從謊話變成真話（入口就是這一頁）。",
+    expiresWhen:
+      "ui/RosterPage.tsx 被刪、roster 從 session 表上消失、或 ROSTER_DOC_ID 指到別份文件時失效。⭐ 通用引擎長出「從某個集合挑多個 id」的欄位型別那一天，這一列與 arena-pool 會一起解鎖退場。",
+  },
+  {
     docId: "vfx-families",
     kind: "OWN_PAGE",
     page: "vfxForge",
@@ -300,13 +310,6 @@ export const CONFIG_DOC_EXEMPTIONS: readonly ConfigDocExemption[] = [
     issue: "owner 2026-08-12 指名要一頁「新英雄轉生設計」，這一份是它的資料基礎",
     why: "10 個出身 × 一句話 + 32 條路線 × 三句 = **110 個文案葉節點**，而通用長表單畫出來會是 110 個沒有上下界的文字框 —— 那不叫可調。⚠️ 而且 owner 一定會改：那 32 個路線名是 Claude 取的提案，他還沒定稿。⛔ 它也**不是** NOT_TUNABLE —— 內容確實該由人編輯，只是形狀應該是「一頁出身卡＋路線卡」，不是 Zod 走訪出來的欄位清單。今天的入口是內容編輯器（貼整份 JSON）。",
     expiresWhen: "「新英雄轉生設計」那一頁做出來的那一天 —— 它本來就要顯示出身與路線來推薦技能組合，順手就是這一份的編輯入口。做出來之後這一列會被守衛強迫刪掉。",
-  },
-  {
-    docId: "roster",
-    kind: "KNOWN_GAP",
-    issue: "owner 2026-07-30 與 2026-08-02 就這兩隻改過兩次口徑",
-    why: "下架/上架一隻英雄的那張表，而且它自己的 note 是一句假話（第三守則）：「技能補完之後把 id 從這裡拿掉就是重新上架，不用改程式、不用重新部署」—— 實際上 apps/admin/src 對 roster / retiredChampions 零引用，今天要編 repo + pnpm content:build + content deploy。真消費端有兩個且都在關鍵路徑：game-server 的 whitelist.isRetiredChampionId、客戶端的 retiredChampionIds()。⚠️ 後台的 CurationPage 管的是白名單，不是這一份。",
-    expiresWhen: "那一頁做出來的那一天（同上，屆時這一列會被守衛強迫刪掉）。⚠️ 在那之前，那句 note 應該先被改成真話。",
   },
 ];
 

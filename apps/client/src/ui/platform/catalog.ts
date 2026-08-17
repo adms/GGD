@@ -7,7 +7,7 @@
 import type { ChampionDisplay } from "./championDisplay";
 import { championDisplayFrom } from "./championDisplay";
 import { applyChampionWhitelist, type Whitelist } from "../panels/champSelectFilter";
-import { retiredChampionIds } from "@ggd/shared/content/championRetirement";
+import { hiddenChampionIds, retiredChampionIds } from "@ggd/shared/content/championRetirement";
 import { CHAMPION_CURRENCY, SKIN_CURRENCY, type StoreCurrency } from "./currency";
 import type { Catalog, CatalogSkin, SkinDoc, Wallet } from "./types";
 
@@ -126,7 +126,10 @@ export function deriveStoreRows(
  */
 export function storeRowsForWhitelist(rows: readonly ChampionRow[], wl: Whitelist): ChampionRow[] {
   // 下架的不上架 —— 讓玩家花水晶解鎖一隻 QWER 全空的英雄是最糟的失敗形態。
-  return applyChampionWhitelist(rows, wl, retiredChampionIds());
+  // ⛔ 隱藏英雄（彩蛋）**絕對不能上架**，而且理由比下架更硬：商店裡一顆
+  // 「🔓 解鎖」按鈕就是彩蛋的告示牌，而且按下去之後那隻英雄仍然選不到
+  // （伺服器的 selectChampion 一律拒絕）—— 那就變成收了水晶不給貨。
+  return applyChampionWhitelist(rows, wl, retiredChampionIds(), hiddenChampionIds());
 }
 
 /**

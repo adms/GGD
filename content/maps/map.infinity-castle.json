@@ -3,6 +3,7 @@
   "id": "map.infinity-castle",
   "name": "無限城",
   "template": "CENTRAL_RING",
+  "groundStyle": "tatami",
   "grid": {
     "cols": 24,
     "rows": 18,
@@ -222,8 +223,253 @@
       ]
     }
   },
-  "landmarkProps": [],
-  "backgroundProps": [],
+  "landmarkProps": [
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 2,
+        "row": 4
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 2,
+        "row": 7
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 2,
+        "row": 10
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 20,
+        "row": 4
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 20,
+        "row": 7
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 18,
+        "row": 10
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "at": {
+        "col": 7,
+        "row": 8
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "at": {
+        "col": 14,
+        "row": 8
+      },
+      "rotQuarter": 2,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/hex/hex_water.glb",
+      "at": {
+        "col": 9,
+        "row": 14
+      },
+      "rotQuarter": 0,
+      "scale": 1.15
+    },
+    {
+      "model": "assets/models/hex/hex_water.glb",
+      "at": {
+        "col": 10,
+        "row": 14
+      },
+      "rotQuarter": 0,
+      "scale": 1.15
+    },
+    {
+      "model": "assets/models/hex/hex_water.glb",
+      "at": {
+        "col": 11,
+        "row": 14
+      },
+      "rotQuarter": 0,
+      "scale": 1.15
+    },
+    {
+      "model": "assets/models/hex/hex_water.glb",
+      "at": {
+        "col": 12,
+        "row": 14
+      },
+      "rotQuarter": 0,
+      "scale": 1.15
+    },
+    {
+      "model": "assets/models/hex/hex_water.glb",
+      "at": {
+        "col": 13,
+        "row": 14
+      },
+      "rotQuarter": 0,
+      "scale": 1.15
+    },
+    {
+      "model": "assets/models/hex/waterlily.glb",
+      "at": {
+        "col": 10,
+        "row": 13
+      },
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/hex/waterlily.glb",
+      "at": {
+        "col": 13,
+        "row": 15
+      },
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/props/floor_tile_large.glb",
+      "at": {
+        "col": 11,
+        "row": 12
+      },
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/props/floor_tile_large.glb",
+      "at": {
+        "col": 11,
+        "row": 16
+      },
+      "rotQuarter": 0,
+      "scale": 1
+    }
+  ],
+  "backgroundProps": [
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "at": {
+        "col": 3,
+        "row": 0
+      },
+      "rotQuarter": 0,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "at": {
+        "col": 9,
+        "row": 0
+      },
+      "rotQuarter": 0,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "at": {
+        "col": 14,
+        "row": 0
+      },
+      "rotQuarter": 0,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "at": {
+        "col": 20,
+        "row": 0
+      },
+      "rotQuarter": 0,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "at": {
+        "col": 0,
+        "row": 5
+      },
+      "rotQuarter": 0,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "at": {
+        "col": 23,
+        "row": 5
+      },
+      "rotQuarter": 2,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "at": {
+        "col": 0,
+        "row": 12
+      },
+      "rotQuarter": 0,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "at": {
+        "col": 23,
+        "row": 12
+      },
+      "rotQuarter": 2,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 0,
+        "row": 8
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 23,
+        "row": 8
+      },
+      "rotQuarter": 2,
+      "scale": 1.2
+    }
+  ],
   "backdrop": {
     "layers": [
       {

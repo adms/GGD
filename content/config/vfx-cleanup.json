@@ -1,7 +1,7 @@
 {
   "id": "vfx-cleanup",
   "schema": "config.vfx-cleanup@1",
-  "note": "回合邊界要把特效層的共用池子回收到什麼程度 (#262)。Telegraph 的預告圈網格是「每個 Scene 共用、以半徑為 key」的 free-list,#259 沒有清到它:實測 60 個不同半徑打完,連 dispose() 之後 scene 上都還留著 72 mesh / 73 material。enabled=false 是止血閥(完全回到 #259 的行為)。purgeSharedPoolsOnRoundEnd=true 時 maxPooledRings 不生效。 2026-08-03 GH#267 再加三格死亡火焰(復活圈的火柱/火舌/餘燼):deathFxBurnSec 全亮幾秒、deathFxCalmScale 收斂後剩幾成亮度(1 = 一鍵回到 #196 永不收斂的行為)、deathFxRelightOnChannel 有人來救時要不要燒回全亮。⚠️ 只改看起來多久,不改復活圈救不救得回來(那是伺服器決定的);地上那圈的亮度一格都不動,因為它是玩家判斷『這裡還救得回來』的錨點。消費端是 apps/client/src/render/views/deathFxBurn.ts。 2026-08-04 GH#270 再加三格一次性發射器預算:owner 在線上量到發射器數線性成長(第2回合 144 個 / 2,819 顆粒子 → 第4回合 266 / 5,975)。原因是打擊感的共用 ImpactComposer(vfx-preset-*)掛在 per-Scene WeakMap 上、不屬於 VfxSystem,resetForRound() 明文不碰它,而它唯一的回收器只在還有活的 HitSpark 時才被打點;AmbientVfx.psPool 同樣只增不減。maxOneShotEmitters 是硬上限(超過就回收最久沒用的,而且會把驅逐數說出來),emitterSweepSec 是掃描頻率,purgeImpactPoolOnRoundEnd=false 是止血閥。消費端是 apps/client/src/vfx/vfxCleanupPolicy.ts → VfxSystem.update()/resetForRound()。",
+  "note": "回合邊界要把特效層的共用池子回收到什麼程度 (#262)。Telegraph 的預告圈網格是「每個 Scene 共用、以半徑為 key」的 free-list,#259 沒有清到它:實測 60 個不同半徑打完,連 dispose() 之後 scene 上都還留著 72 mesh / 73 material。enabled=false 是止血閥(完全回到 #259 的行為)。purgeSharedPoolsOnRoundEnd=true 時 maxPooledRings 不生效。 2026-08-03 GH#267 再加三格死亡火焰(復活圈的火柱/火舌/餘燼):deathFxBurnSec 全亮幾秒、deathFxCalmScale 收斂後剩幾成亮度(1 = 一鍵回到 #196 永不收斂的行為)、deathFxRelightOnChannel 有人來救時要不要燒回全亮。⚠️ 只改看起來多久,不改復活圈救不救得回來(那是伺服器決定的);地上那圈的亮度一格都不動,因為它是玩家判斷『這裡還救得回來』的錨點。消費端是 apps/client/src/render/views/deathFxBurn.ts。 2026-08-04 GH#270 再加三格一次性發射器預算:owner 在線上量到發射器數線性成長(第2回合 144 個 / 2,819 顆粒子 → 第4回合 266 / 5,975)。原因是打擊感的共用 ImpactComposer(vfx-preset-*)掛在 per-Scene WeakMap 上、不屬於 VfxSystem,resetForRound() 明文不碰它,而它唯一的回收器只在還有活的 HitSpark 時才被打點;AmbientVfx.psPool 同樣只增不減。maxOneShotEmitters 是硬上限(超過就回收最久沒用的,而且會把驅逐數說出來),emitterSweepSec 是掃描頻率,purgeImpactPoolOnRoundEnd=false 是止血閥。消費端是 apps/client/src/vfx/vfxCleanupPolicy.ts → VfxSystem.update()/resetForRound()。 2026-08-17 GH#337 owner「場地莫名其妙的特效又回來了」:根因不是回歸,是回合邊界從第一天起就只清 VfxSystem 一個物件(RoundVfxLifecycle 吃單一 target),而 GameApp.dispose() 手寫的清單有十個。現在改成一張註冊表(apps/client/src/render/roundFxRegistry.ts),AmbientVfx 的兩個 free-list 與 WhirlwindFx 的漏斗 free-list 都補上 resetForRound —— 所以上面那句「AmbientVfx.psPool 同樣只增不減」已經不成立了,它現在每個回合邊界都會被還回去(活著的英雄身上的常駐特效不動)。新增的 purgeVictoryFxOnCombatStart=true:下一回合開打那一幀停掉上一回合還在飛的勝利煙火並重新武裝勝利偵測;它**只在開打那一側**生效,因為回合煙火正是在 combat→resolution 那一幀發射的,兩側都清等於刪掉 #235。false 是止血閥(煙火飄進下一回合當表演)。",
   "enabled": true,
   "purgeSharedPoolsOnRoundEnd": true,
   "maxPooledRings": 24,
@@ -10,5 +10,6 @@
   "deathFxRelightOnChannel": true,
   "maxOneShotEmitters": 96,
   "emitterSweepSec": 2,
-  "purgeImpactPoolOnRoundEnd": true
+  "purgeImpactPoolOnRoundEnd": true,
+  "purgeVictoryFxOnCombatStart": true
 }

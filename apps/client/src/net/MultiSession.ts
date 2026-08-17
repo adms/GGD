@@ -90,8 +90,12 @@ export class MultiSession {
    * Dev flow (no platform): player 0 joinOrCreates the shared dev match;
    * players 2..N join the SAME room by id with their own dev ids.
    */
-  async connectDev(mapId?: string): Promise<Room<MatchState>> {
-    const room = await this.connections[0]!.connectDev(mapId);
+  async connectDev(mapId?: string, practice?: boolean): Promise<Room<MatchState>> {
+    // 練習模式（GH#343）只寫在**開房**那一次；沙發客走 `connectDevJoin`，
+    // 房間的身分是開房時決定的，⛔ 不是每個連線各自宣告的。
+    // `undefined` 的那一格是 endpoint（用 RoomConnection 自己的預設）——
+    // practice 排在它後面的理由寫在 `RoomConnection.connectDev` 的參數說明。
+    const room = await this.connections[0]!.connectDev(mapId, undefined, practice);
     for (let i = 1; i < this.connections.length; i++) {
       await this.connections[i]!.connectDevJoin(room.roomId);
     }

@@ -278,10 +278,34 @@ export class AmbientVfx {
     if (dead) for (const id of dead) this.detach(id);
   }
 
+  /**
+   * 回合邊界（GH#337）：把兩個 free-list 整個還給引擎。
+   *
+   * ⚠️ **⛔ 不碰 `attachments`。** 活著的英雄身上的常駐特效是 WC3 語意（英雄光暈、
+   * 武器餘燼、緞帶）—— 清掉的話玩家會看到「第二回合開始鋼彈的推進器熄了」，
+   * 那是把一個殘留缺陷換成一個更明顯的缺陷。這裡只回收**已經沒有主人**的東西。
+   *
+   * 為什麼非做不可：`psPool` / `ribbonPool` 是 **per-doc-id 的 free-list，只增不減**，
+   * 而在此之前它們唯一的回收路徑是 `dispose()`（＝整個 GameApp 被銷毀）。一場
+   * 比賽看過的 modelKey 是一直在增加的（升級解鎖形態、第 3 回合起殭屍加入、
+   * 每回合換地圖），所以每個閒置的 emitter 都帶著一個 ParticleSystem + 一個 Mesh
+   * 留在 `scene` 上被每一幀走訪。⚠️ `content/config/vfx-cleanup.json` 的 note
+   * 從 GH#270 起就寫著「AmbientVfx.psPool 同樣只增不減」—— 文件承認了、程式沒修。
+   */
+  resetForRound(): void {
+    if (this.disposed) return;
+    this.drainPools();
+  }
+
   dispose(): void {
     if (this.disposed) return;
     for (const id of [...this.attachments.keys()]) this.detach(id);
     this.disposed = true;
+    this.drainPools();
+  }
+
+  /** 兩個 free-list 上的閒置資源全部 dispose 並清空（回合邊界與 teardown 共用）。 */
+  private drainPools(): void {
     for (const list of this.psPool.values()) {
       for (const e of list) {
         e.ps.dispose();

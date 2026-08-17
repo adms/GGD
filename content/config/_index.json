@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "eff7e0c9bdee",
+  "hash": "3a267ce21272",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -23,14 +23,20 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "78694f464c24",
-      "size": 6913
+      "hash": "c6b72372bdd0",
+      "size": 6946
     },
     {
       "id": "audio-map",
       "path": "config/audio-map.json",
       "hash": "a36465eb3e58",
       "size": 28438
+    },
+    {
+      "id": "audio-mix",
+      "path": "config/audio-mix.json",
+      "hash": "e056c0157e42",
+      "size": 1069
     },
     {
       "id": "augment-filter",
@@ -173,8 +179,8 @@
     {
       "id": "item-card",
       "path": "config/item-card.json",
-      "hash": "e4bd0839819a",
-      "size": 1984
+      "hash": "dbb14d08f98e",
+      "size": 2005
     },
     {
       "id": "lobby-layout",
@@ -219,6 +225,12 @@
       "size": 649
     },
     {
+      "id": "practice",
+      "path": "config/practice.json",
+      "hash": "0584289e7571",
+      "size": 931
+    },
+    {
       "id": "regen",
       "path": "config/regen.json",
       "hash": "c51fc34f99aa",
@@ -233,8 +245,8 @@
     {
       "id": "roster",
       "path": "config/roster.json",
-      "hash": "bd4fdaf1dc99",
-      "size": 1771
+      "hash": "6bb9ecb1b0f4",
+      "size": 2707
     },
     {
       "id": "round-grade",
@@ -299,8 +311,8 @@
     {
       "id": "vfx-cleanup",
       "path": "config/vfx-cleanup.json",
-      "hash": "7a77135c1149",
-      "size": 1926
+      "hash": "bae13330de93",
+      "size": 2872
     },
     {
       "id": "vfx-families",

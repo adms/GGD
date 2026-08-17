@@ -16,6 +16,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Arenas } from "@ggd/shared/content";
+import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
 import { arenaOptions, arenaLabel, DEFAULT_MAP_ID } from "./maps";
 
 const ARENA_DIR = join(dirname(fileURLToPath(import.meta.url)), "../../../../../content/arenas");
@@ -55,6 +56,37 @@ describe("建房的地圖選單 (GH#324)", () => {
 
   it("⚠️ 內容還沒載完時回骨架那一筆，⛔ 不是空陣列（空選單看起來像壞了）", () => {
     Arenas.clear();
-    expect(arenaOptions()).toEqual([{ id: DEFAULT_MAP_ID, label: "Skeleton (預設)" }]);
+    expect(arenaOptions().map((o) => o.id)).toEqual([DEFAULT_MAP_ID]);
+  });
+
+  /**
+   * GH#341：骨架的名字被寫了三份（arena doc /`SKELETON_ARENA`/ 這個檔案裡一個手寫的
+   * `"Skeleton (預設)"`），其中兩份是英文 —— 而選單**無條件**用那個手寫常數，
+   * 所以只改 doc 沒有用。這一條把三個方向一起關起來：
+   *   ① doc 的 `name` ＝ 內建常數 `SKELETON_ARENA.name`（兩份不可以各說各話）
+   *   ② 選單真的去讀那份 doc（換個名字註冊，選單就要跟著變）
+   *   ③ 內容還沒載完那一筆也取同一個常數，而且**不含英文字母**
+   * ⛔ 不把「新手競技場」寫進斷言 —— 那會變成第四份會過期的抄本。
+   */
+  it("⭐ 骨架的標籤取自 arena doc／SKELETON_ARENA，而且不是英文 (GH#341)", () => {
+    const PROBE = "＿探針場地名＿";
+    const shipped = shippedArenas();
+    const doc = shipped.find((a) => a.id === DEFAULT_MAP_ID);
+    expect(doc, "content/arenas/arena.skeleton.json 不見了，這條測不到東西").toBeDefined();
+    expect(doc!.name, "arena.skeleton.json 的 name 與內建的 SKELETON_ARENA.name 對不上").toBe(
+      SKELETON_ARENA.name,
+    );
+
+    Arenas.clear();
+    for (const a of shipped) Arenas.register((a.id === doc!.id ? { ...a, name: PROBE } : a) as never);
+    expect(
+      arenaOptions().find((o) => o.id === DEFAULT_MAP_ID)?.label,
+      "選單用一個手寫常數蓋掉了 arena doc 的 name（GH#341 的原形）",
+    ).toBe(PROBE);
+
+    Arenas.clear();
+    const fallback = arenaOptions()[0]?.label;
+    expect(fallback, "內容還沒載完那一筆又自己手寫了一份標籤").toBe(SKELETON_ARENA.name);
+    expect(fallback, `預設場地名還是英文：${fallback}`).not.toMatch(/[A-Za-z]/);
   });
 });

@@ -65,6 +65,14 @@ beforeAll(async () => {
 function docSchedulingRetired(retire: boolean): ConfigArenaRulesDoc {
   return zConfigArenaRulesDoc.parse({
     ...SHIPPED_DOC,
+    // ⚠️ GH#340 之後出貨預設是 `grail-wins`：同一回合既排了 `augmentTier` 又排了
+    // `weaponLootTable` 時，寶具那一張整張不發。而 `TEST_ROUND` 在出貨排程裡本來
+    // 就有 `augmentTier` ⇒ 不釘死這一格的話，這個檔的**對照組**會拿到 0 張
+    // （紅），而**實驗組**會用錯誤的理由通過（0 張是因為撞卡閘，不是因為退場）——
+    // 也就是整支測試從此對「退場」這個機制是空跑（失敗形態④）。
+    // ⇒ 這裡明確關掉撞卡閘，讓這個檔量的仍然只有「退場」那一個變因。
+    // 撞卡閘自己的守衛在 `arenaRules.test.ts`。
+    draftConflict: "both",
     retiredLootTables: retire ? [RETIRED] : [],
     rounds: {
       ...SHIPPED_DOC.rounds,

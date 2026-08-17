@@ -41,9 +41,17 @@ import {
   readRetiredTables,
   retiredTablesSummary,
   validateRetiredTables,
+  DRAFT_CONFLICT_LABEL,
+  DRAFT_CONFLICT_OPTIONS,
+  SHIPPED_DRAFT_CONFLICT,
+  draftConflictSummary,
+  isDraftConflict,
+  patchDraftConflict,
+  readDraftConflict,
   type ItemDraftField,
   type ItemDraftForm,
 } from "../itemDraft";
+import type { DraftConflict } from "@ggd/shared/content/schema/config";
 import {
   GRAIL_DRAFT_FIELD_ORDER,
   GRAIL_DRAFT_LABELS,
@@ -68,6 +76,8 @@ export function ItemDraftPage(): JSX.Element {
   /** 退場清單是 arena-rules 的頂層欄位，不是 `itemDraft` 區塊的一格 —— 見 itemDraft.ts。 */
   const [retiredText, setRetiredText] = useState(formatRetiredTables(SHIPPED_RETIRED_LOOT_TABLES));
   const [offerCount, setOfferCount] = useState(readOfferCount(null));
+  /** #340 撞卡裁決 —— 同樣是 arena-rules 的頂層欄位。 */
+  const [conflict, setConflict] = useState<DraftConflict>(SHIPPED_DRAFT_CONFLICT);
   /** 🏆 聖杯顯現 —— arena-rules 的 `grailDraft` 區塊（見 ../grailDraft.ts）。 */
   const [grail, setGrail] = useState<GrailDraftRules>({ ...SHIPPED_GRAIL_DRAFT });
   const [busy, setBusy] = useState(false);
@@ -92,6 +102,7 @@ export function ItemDraftPage(): JSX.Element {
         setBaseDoc(full);
         setOfferCount(readOfferCount(full));
         setRetiredText(formatRetiredTables(readRetiredTables(full)));
+        setConflict(readDraftConflict(full));
         setGrail(extractGrailDraft(full));
         const cfg = extractItemDraft(full);
         if (cfg) setForm(formFromConfig(cfg));
@@ -121,7 +132,10 @@ export function ItemDraftPage(): JSX.Element {
     try {
       // 兩個 patch 疊在**同一份基底文件**上，一次 PUT。分兩次寫的話，第二次會
       // 用第一次之前的基底覆蓋回去 —— 那正是覆蓋層存整份文件的那個陷阱。
-      const next = patchGrailDraft(patchRetiredTables(patchItemDraft(baseDoc, preview), retiredIds), grail);
+      const next = patchDraftConflict(
+        patchGrailDraft(patchRetiredTables(patchItemDraft(baseDoc, preview), retiredIds), grail),
+        conflict,
+      );
       const head = await putOverlayDoc(ARENA_RULES_COLLECTION, ARENA_RULES_DOC_ID, next);
       setBaseDoc(next);
       setFlash(`✓ 已寫入耐久覆蓋層（generation ${head.generation}）`);
@@ -136,6 +150,7 @@ export function ItemDraftPage(): JSX.Element {
   const resetToShipped = (): void => {
     setForm(formFromConfig(SHIPPED_ITEM_DRAFT));
     setRetiredText(formatRetiredTables(SHIPPED_RETIRED_LOOT_TABLES));
+    setConflict(SHIPPED_DRAFT_CONFLICT);
     setGrail({ ...SHIPPED_GRAIL_DRAFT });
     setFlash(null);
   };
@@ -351,6 +366,45 @@ export function ItemDraftPage(): JSX.Element {
                 {retiredTablesSummary(retiredIds)}
               </div>
             )}
+          </div>
+        </div>
+      </div>
+
+      {/* #340 撞卡裁決 —— 同樣是 arena-rules 的頂層欄位，不是 itemDraft 區塊的一格 */}
+      <div style={{ marginTop: 14 }}>
+        <div style={{ color: ACCENT, fontSize: 12, marginBottom: 6 }}>
+          {ITEM_DRAFT_GROUP_ZH.conflict}
+        </div>
+        <div style={rowStyle}>
+          <span style={{ color: TEXT_MAIN, minWidth: 150 }}>{DRAFT_CONFLICT_LABEL.zh}</span>
+          <code style={{ color: TEXT_DIM, fontSize: 11, minWidth: 150 }}>draftConflict</code>
+          <div style={{ flex: 1 }}>
+            <select
+              aria-label={DRAFT_CONFLICT_LABEL.zh}
+              data-field="draftConflict"
+              value={conflict}
+              onChange={(e) => {
+                const v = e.target.value;
+                if (isDraftConflict(v)) setConflict(v);
+              }}
+              style={{
+                padding: "4px 6px",
+                background: "transparent",
+                color: TEXT_MAIN,
+                border: `1px solid ${PANEL_BORDER}`,
+                borderRadius: 3,
+              }}
+            >
+              {DRAFT_CONFLICT_OPTIONS.map((o) => (
+                <option key={o.value} value={o.value}>
+                  {o.zh}
+                </option>
+              ))}
+            </select>
+            <div style={{ color: TEXT_DIM, fontSize: 11, marginTop: 4, lineHeight: 1.6 }}>
+              {DRAFT_CONFLICT_LABEL.note}
+            </div>
+            <div style={{ color: GOLD, fontSize: 12, marginTop: 4 }}>{draftConflictSummary(conflict)}</div>
           </div>
         </div>
       </div>

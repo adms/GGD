@@ -23,6 +23,7 @@
 import { z } from "zod";
 import { zId } from "./common";
 import { zBackdrop } from "./arena";
+import { GROUND_STYLE_IDS, GROUND_STYLE_LABELS, DEFAULT_GROUND_STYLE } from "./groundStyle";
 import {
   GIMMICKS_PER_MAP_MAX,
   GRID_COLS_MAX,
@@ -211,6 +212,26 @@ const zMapBase = z
     landmark: z.string().min(1).describe("招牌景觀的 region id。玩家報位置時的地標。"),
     interactions: z.array(zInteraction).max(INTERACTIONS_MAX).default([]),
     gimmick: zGimmick,
+
+    /**
+     * ⭐ GH#342 —— 地板長什麼樣，是**內容**不是程式。
+     *
+     * ⚠️ 在這一格存在之前 `compileMap()` 對每一張圖都寫死 `"stone"`（歐式地牢石板），
+     * 所以七張動漫場地**共用同一張地板** —— 無限城的紙門走廊踩在冷灰花崗岩上。
+     * 作者連宣告的欄位都沒有，那正是第一守則說的「決策點寫死在程式裡」。
+     *
+     * ⛔ 省略 = `stone`（既有行為，⛔ 不偷改沒宣告的圖）。
+     * 合法值來自 `./groundStyle` 的單一真相 —— 每一個都真的有 painter 與貼圖。
+     */
+    groundStyle: z
+      .enum(GROUND_STYLE_IDS)
+      .optional()
+      .describe(
+        `地板材質。省略 = ${DEFAULT_GROUND_STYLE}。` +
+          Object.entries(GROUND_STYLE_LABELS)
+            .map(([id, label]) => `${id}=${label}`)
+            .join("／"),
+      ),
 
     landmarkProps: z.array(zLandmarkProp).default([]),
     backgroundProps: z.array(zBackgroundProp).default([]),

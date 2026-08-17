@@ -177,8 +177,18 @@ import {
   ROUND_HOLD_KINDS,
   DEFAULT_ROUND_HOLD_KINDS,
   DEFAULT_STOP_SPAWN_ON_TEAM_WIPE,
+  // GH#343 練習模式的生怪指令 —— 走的是波次用的**同兩扇門**，⛔ 不另外開一條
+  // 生怪路徑（第二守則失敗形態⑤：被測的不是出貨的那個）。
+  spawnMob,
+  summonMobBoss,
+  mobsAliveInZone,
   type MobChampionPicker,
 } from "@ggd/shared/sim/mobs";
+import {
+  DEFAULT_PRACTICE_RULES,
+  PRACTICE_SPAWN_BATCH_MAX,
+  type PracticeRules,
+} from "@ggd/shared/content";
 import { DEFAULT_FLOWER_CONFIG, type FireRingConfig } from "@ggd/shared/content";
 import type { IntentFrame, AbilitySlot } from "@ggd/shared/sim/intents";
 import type { Cheat } from "@ggd/shared/protocol/messages";
@@ -209,6 +219,10 @@ import { Seat, type SeatDriver } from "../seat/Seat";
 import { AIDriver } from "../ai/Tier0Brain";
 import { Whitelist } from "../curation/whitelist";
 import { Ownership } from "../curation/ownership";
+// 隱藏英雄（彩蛋，owner 2026-08-17「隱藏角色可以隨機到 但不能選到」）。
+// ⛔ 刻意**不**走 `Whitelist.allowsChampion` —— 那個 seam 同時餵隨機池
+// (`filterChampions` → `randomChampionPool`)，放進去就等於把隱藏做成下架。
+import { hiddenChampionIds, isHiddenChampionId } from "@ggd/shared/content/championRetirement";
 import { PhaseMachine, type MatchPhase, type PhaseConfig, DEFAULT_PHASE_CONFIG } from "./PhaseMachine";
 import { resolveVsBotPacing, type VsBotPacing } from "./phaseConfig";
 import { roundCapReached } from "@ggd/shared/roomSettings";
@@ -226,7 +240,13 @@ import {
   type DuelPairing,
   type RoyaleBout,
 } from "./PairedDuels";
-import { DEFAULT_ARENA_RULES, grantForRound, type ArenaRules } from "./arenaRules";
+import {
+  DEFAULT_ARENA_RULES,
+  grantForRound,
+  grailDraftAllowed,
+  weaponDraftAllowed,
+  type ArenaRules,
+} from "./arenaRules";
 import { resolveRoyaleArena } from "./arenaSelect";
 
 /**
@@ -413,6 +433,19 @@ export function settlementCardOnHealthSpentFromDoc(doc: unknown): boolean {
   const v = d.match?.settlementCardOnHealthSpent;
   return typeof v === "boolean" ? v : DEFAULT_SETTLEMENT_CARD_ON_HEALTH_SPENT;
 }
+
+/**
+ * 練習房裡**唯一**上場的隊伍與**唯一**使用的競技場分區（GH#343）。
+ *
+ * 兩個都是常數而不是欄位，這是刻意的：一間單人沙盒沒有「我要站哪一區」這個決策
+ * ——場地本身已經是玩家在大廳選的（`mapId`），分區只是那張圖裡的一塊地。⛔ 把它
+ * 做成後台欄位只會多一格沒有人會動、卻可能指到不存在的 zone 的設定。
+ *
+ * ⚠️ 隊伍是 0，因為 dev 直連的座位接管永遠拿到第一個 AI 座位（seat 0 ⇒ team 0），
+ * 平台側也把房主排在 `seats[0]`。
+ */
+const PRACTICE_TEAM: TeamId = asTeamId(0);
+const PRACTICE_ZONE = 0;
 
 export class MatchController {
   readonly world: SimWorld;
@@ -726,6 +759,27 @@ export class MatchController {
    * 限制:`Configs` 是 **boot 時**載入的,後台改了要重啟 shard。
    */
   public readonly vsBotPacing: VsBotPacing;
+
+  /**
+   * 練習模式 (`config.practice@1`, GH#343) —— `null` ＝ **這不是練習房**，也就是
+   * 今天的每一場比賽，逐位元不變。非 null ＝ 這間房是單人沙盒（沒有敵隊、不結算、
+   * ⛔ 不發水晶、⛔ 不動 MMR、⛔ 不寫任何玩家資料）。
+   *
+   * ⚠️ 它是 **host 的規則**，⛔ 不寫進 `SimWorld`，所以 `digest()` 碰不到它、重播
+   * 照樣逐位元相同。唯一穿進 sim 的是 `autoMobWaves`，而那是透過 `MobRules.autoWaves`
+   * 一格布林走的（見 {@link enterCombat}）。
+   *
+   * ⚠️ 由**呼叫端**解析（MatchRoom 的 `resolvePracticeRules(options.practice, doc)`），
+   * ⛔ 不在這裡讀 `Configs`（同 #278 的理由，而且「這間房是不是練習房」根本不是
+   * 內容能回答的問題）。
+   *
+   * ⚠️ 刻意**不是建構子參數**：建構子已經有二十幾個位置參數，再加一個等於逼每個
+   * 呼叫端數一排 `undefined`，而數錯**不會報錯**，只會把別人的規則悄悄塞進來。
+   * 走的是 `recorder` / `statsSink` 已經在用的同一條路：`onCreate` 在**第一個
+   * tick 之前**指定一次，之後整場不再變（比賽中途改等於在跑到一半的相位底下改
+   * 結束條件）。
+   */
+  practice: PracticeRules | null = null;
 
   constructor(
     public readonly matchId: string,
@@ -1065,6 +1119,18 @@ export class MatchController {
     const seat = this.seats.get(seatId);
     if (!seat) return { ok: false, reason: "no-seat" };
     if (!Champions.tryGet(championId as ChampionId)) return { ok: false, reason: "unknown-champion" };
+    // 隱藏英雄（彩蛋，owner 2026-08-17「隱藏角色可以隨機到 但不能選到」）——
+    // **手動那一側的權威閘**。進得來這裡的一律拒絕：`SelectChampionMessage` 上只有
+    // 一個 `championId`，客戶端的 🎲 抽完之後送的是一樣的訊息（見 autoPickAndSpawn
+    // 的註解），所以伺服器分不出手動與隨機，也就不存在「只擋手動」的訊息級判準。
+    // 隱藏角色改由**伺服器自己抽**的兩條路發放（autoPickAndSpawn / mobChampionPicker），
+    // 那兩條不經過這裡。
+    //
+    // ⭐ 刻意回 `unknown-champion` 而不是新增一個 `hidden-champion` 理由：
+    // 一個專屬的拒絕理由等於在 REJECT 訊息裡公告「這個 id 是彩蛋」，探測用的客戶端
+    // 掃一輪 id 就把整張隱藏名單挖出來 —— 那個彩蛋當場就沒了。回「不存在」讓隱藏
+    // 與根本不存在的 id **在線上無法區分**。
+    if (isHiddenChampionId(championId)) return { ok: false, reason: "unknown-champion" };
     // AUTHORITATIVE whitelist gate: a champion not enabled by the operator can
     // never be selected online (allow-all in dev/bypass leaves this open).
     if (!this.whitelist.allowsChampion(championId)) return { ok: false, reason: "not-whitelisted" };
@@ -1178,6 +1244,12 @@ export class MatchController {
    */
   private isEnabledSpawnablePick(championId: string, accountId?: string): boolean {
     if (!championId) return false;
+    // 隱藏英雄不是一個**被帶進來的**合法選擇。這一條擋的不是 SELECT_CHAMPION（那個
+    // 在 `selectChampion` 已經擋掉了），是 `SeatSpec.championId` —— 平台在建房時把
+    // 座位的英雄一起送進來（建構子 :1045），那條路完全不經過 selectChampion。
+    // 少了這一行，一個帶著隱藏 id 的房間請求就把「手動選不到」整條繞過去了。
+    // ⚠️ 它回 false 之後 `autoPickAndSpawn` 會替那個座位重擲，所以座位不會壞掉。
+    if (isHiddenChampionId(championId)) return false;
     if (!this.whitelist.allowsChampion(championId)) return false;
     // A carried pick the account does not own is NOT spawnable — re-roll it into
     // an owned champion below (task #201). A seat with unknown ownership (bot /
@@ -1191,7 +1263,16 @@ export class MatchController {
     // to the full pool when the whitelist would starve the match — see
     // randomChampionPool).
     const pool = this.randomChampionPool();
+    // 隱藏英雄（彩蛋）**留在池子裡** —— 這條路（沒鎖英雄／逾時／bot）正是 owner
+    // 說的「可以隨機到」。讀一次給下面每個座位共用。
+    const hidden = hiddenChampionIds();
     for (const [seatId, seat] of this.seats) {
+      // 練習房（GH#343「進入不會有對戰」）：⛔ 只有練習席上場，其餘座位連英雄都不抽，
+      // `entityId` 永遠是 null。這是「場上沒有敵方隊伍」**最強的那個形式** —— 它們不是
+      // 被藏起來、不是被調弱、也不是開場就被殺掉，而是從來沒有進過這個世界。
+      // 所有以 `entityId !== null` 過濾的下游（計分板、決鬥判定、帳本、快照）因此
+      // 天生就看不到它們，不需要一處一處記得跳過。
+      if (this.practice && seat.teamId !== PRACTICE_TEAM) continue;
       // AUTO-ASSIGN (the 隨機英雄 path): a seat with no pick, or one carrying a
       // champion that is no longer enabled / no longer a valid model-backed
       // champion / not owned by this account, gets a random champion at lock-in.
@@ -1209,7 +1290,18 @@ export class MatchController {
         // floor) we fall back to the whitelisted pool so the match still runs —
         // mirroring randomChampionPool's own "the match must not brick" stance.
         const owned = this.ownership.filterOwned(seat.accountId, pool);
-        const drawPool = owned.length > 0 ? owned : pool;
+        // ⭐ 隱藏英雄**豁免擁有權過濾**，少了這一行整個彩蛋等於沒做（失敗形態②：
+        // 算出來了但玩家拿不到）。理由是它沒有價格也不在商店（`catalog.ts` 把它濾
+        // 掉了），所以它永遠不會出現在任何帳號的 `ownedChampions` 陣列裡 ——
+        // 一個登入中的真人玩家，他的 `owned` 集合裡永遠沒有隱藏角色，於是「隨機
+        // 抽得到」那一半只有 bot 與沒有帳號的座位享受得到。
+        // ⚠️ 只補**池子裡本來就有**的（白名單 ∩ 有模型），所以這不是把任何一道閘
+        // 放寬，只是把擁有權那一道對彩蛋開一個洞。
+        const eligible =
+          hidden.size === 0
+            ? owned
+            : [...owned, ...pool.filter((id) => hidden.has(id) && !owned.includes(id))];
+        const drawPool = eligible.length > 0 ? eligible : pool;
         seat.championId = drawPool[this.world.rng.int(drawPool.length)]!;
       }
       // spawn at team's eventual side; positions are reset at each combat entry
@@ -1393,7 +1485,9 @@ export class MatchController {
     // 2) augment offers (3-choose-1) on scheduled rounds — 4-choose-1 for a
     //    team holding an unspent HIGH STAKES draft bonus (the Lucky Dice
     //    stand-in; see settleRound for why it is offer WIDTH and not a reroll).
-    if (grant?.augmentTier) {
+    //    #340 —— 同一回合也排了寶具時，由 `draftConflict` 裁決誰讓路（出貨預設
+    //    是聖杯贏，所以這一支照發）。判斷住在 `arenaRules.ts`，不是這裡。
+    if (grant?.augmentTier && grailDraftAllowed(this.rules, grant)) {
       const spentBonus = new Set<TeamId>();
       for (const [seatId, seat, entity] of this.activeSeats()) {
         const bonus = this.highStakesDraftBonus.has(seat.teamId) ? 1 : 0;
@@ -1430,7 +1524,10 @@ export class MatchController {
     //    place the 傳說寶玉 has always checked it), so the card is full whenever
     //    `offerCount` enabled weapons exist. `filterItems` is GONE from this
     //    path on purpose: a second, later filter is the defect, not a safety net.
-    if (grant?.weaponLootTable) {
+    //    #340 —— owner 2026-08-17「兩者有衝突不顯示寶具三選一」。⚠️ 這一格是
+    //    **靜靜地不發**，而且刻意如此：兩張三選一共用同一段中場倒數，讓路的那一張
+    //    在畫面上就是不存在（叫一句 warn 只會在每一場的第 2、5 回合各刷 12 行）。
+    if (grant?.weaponLootTable && weaponDraftAllowed(this.rules, grant)) {
       for (const [seatId, , entity] of this.activeSeats()) {
         const offer = offerItems(
           this.world,
@@ -1660,9 +1757,15 @@ export class MatchController {
       if (seat.entityId !== null) commitShopSession(this.world, seat.entityId);
     }
 
-    // THE FINALE (round FINAL_ROUND): one bout, every team, one zone. On any
-    // other round the classic round-robin split into two duel zones.
-    if (isRoyaleRound(this.phase.round)) {
+    // 練習房（GH#343）：⛔ **不配對手**。這一格是 owner 那句「進入不會有對戰」的
+    // 結構那一半 —— `pairTeams` 每一回合都一定把玩家配進一支敵隊，所以做法不是把
+    // 敵人調弱或叫牠們別動，是根本不排。三個欄位一起清空，`activeZones()` 之後改
+    // 由練習分區回答（火圈／小怪／守衛塔全部讀它）。
+    if (this.practice) {
+      this.royale = null;
+      this.pairings = [];
+      this.bye = null;
+    } else if (isRoyaleRound(this.phase.round)) {
       this.pairings = [];
       this.bye = null;
       this.royale = royaleBout(this.participatingTeams());
@@ -1720,6 +1823,7 @@ export class MatchController {
     // beginCombatCoins. A bye team never reaches that loop, so it gets no coin
     // budget and therefore cannot throw into someone else's duel (task #191).
     const fighters: EntityId[] = [];
+    if (this.practice) this.placePractice(fighters);
     if (this.royale) this.placeRoyale(this.royale, fighters);
     for (const pairing of this.pairings) {
       const zoneDef = this.arena.zones[pairing.zone]!;
@@ -1805,7 +1909,10 @@ export class MatchController {
     // converted back to seconds because that is the unit the sim's config
     // converter takes — is what makes 「殭屍王出現回合結束時間延長 3 分鐘(火圈時間
     // 也延後)」 real rather than a knob wired to nothing.
-    const ring = this.fireRingForRound(this.phase.round);
+    // 練習房（GH#343）：火圈照 `config.practice@1` 走。出貨預設**不點燃** —— 練習房
+    // 沒有「把回合逼到結束」這件事要做（`endlessCombat` 已經說了它不結束），而一個
+    // 會慢慢燒死你的沙盒沒辦法拿來慢慢看特效。
+    const ring = this.practice && !this.practice.fireRing ? null : this.fireRingForRound(this.phase.round);
     if (ring) {
       beginCombatFireRing(
         this.world,
@@ -1872,10 +1979,16 @@ export class MatchController {
     // absent/undefined/true all pass (default ON — old rooms/replays keep
     // spawning), and only an explicit `false` from a room override falls through
     // to the else-branch endCombatMobs → zero mobs, byte-identical mobless run.
+    //
+    // GH#343 練習房走**同一條**手臂，只是閘不同：房間開關與 `fromRound` 都跳過，
+    // 因為那兩個問的是「這一場比賽現在該不該有殭屍」，而練習房問的是「測試碼要不要
+    // 有東西可以生」。⭐ 規則表**一定要備妥**（等級、賞金、每區存活上限、模型全在
+    // 裡面），⛔ 不可以用 `endCombatMobs` 來達成「不自動湧怪」—— 那會把整張表拆掉，
+    // 生怪指令就沒有東西可讀。「不自動湧怪」由 `autoWaves: false` 那一格負責。
     if (
-      this.rules.rogueliteMobs !== false &&
       this.rules.mobWaves &&
-      this.phase.round >= this.rules.mobWaves.fromRound
+      (this.practice !== null ||
+        (this.rules.rogueliteMobs !== false && this.phase.round >= this.rules.mobWaves.fromRound))
     ) {
       // #217: the ROUND is the mob's LEVEL channel. `this.phase.round` is the same
       // deterministic host counter that already arms guardian HP two blocks up;
@@ -1886,29 +1999,83 @@ export class MatchController {
       // in this comment is exactly what went stale.
       // The sim never sees a round, and a replay re-arms from its
       // own recorded ArenaRules + its own replayed round, so it round-trips exactly.
+      // #289 — the fifth argument is the 隨機英雄 draw. THE ONLY PRODUCTION
+      // CALL SITE that passes one: everything else (the client's prediction
+      // shadow, the replay player's pure re-arm, every unit test) calls with
+      // four arguments or fewer and gets 「沿用今天的行為」.
+      const mobRules = mobRulesFromConfig(
+        this.rules.mobWaves,
+        this.world.dt,
+        this.phase.round,
+        // ⚠️ `undefined`, NOT `this.combatEnv`. This call has ALWAYS used the
+        // shipped coefficients (the parameter default) and swapping in the
+        // live table here would silently re-scale every hero-derived king /
+        // special on any host with a tuned 戰鬥系統 — a balance edit disguised
+        // as a plumbing change. Stated explicitly because the slot is now
+        // visible in the call rather than omitted.
+        undefined,
+        this.mobChampionPicker(),
+      );
       beginCombatMobs(
         this.world,
-        // #289 — the fifth argument is the 隨機英雄 draw. THE ONLY PRODUCTION
-        // CALL SITE that passes one: everything else (the client's prediction
-        // shadow, the replay player's pure re-arm, every unit test) calls with
-        // four arguments or fewer and gets 「沿用今天的行為」.
-        mobRulesFromConfig(
-          this.rules.mobWaves,
-          this.world.dt,
-          this.phase.round,
-          // ⚠️ `undefined`, NOT `this.combatEnv`. This call has ALWAYS used the
-          // shipped coefficients (the parameter default) and swapping in the
-          // live table here would silently re-scale every hero-derived king /
-          // special on any host with a tuned 戰鬥系統 — a balance edit disguised
-          // as a plumbing change. Stated explicitly because the slot is now
-          // visible in the call rather than omitted.
-          undefined,
-          this.mobChampionPicker(),
-        ),
+        // GH#343 —— 練習房把「排程波次要不要自己來」蓋上去。這是**唯一**一格穿進
+        // sim 的練習設定，而且它是 `MobRules` 上的一個布林，⛔ 不是 `SimWorld` 上
+        // 的一個新欄位：規則表本來就每回合重建，所以它跟著回合走、不會有殘留。
+        this.practice ? { ...mobRules, autoWaves: this.practice.autoMobWaves } : mobRules,
         this.activeZones(),
       );
     } else {
       endCombatMobs(this.world);
+    }
+  }
+
+  /**
+   * 練習房的入場（GH#343）—— {@link enterCombat} 的 placement 迴圈在練習房裡是空的
+   * （沒有 pairing），所以練習席由這裡放進 {@link PRACTICE_ZONE}。
+   *
+   * 逐字沿用決鬥那一段的四個步驟（位置 / 分區 / 面向 / 新身體），⛔ 不是另一套
+   * 出生流程：`clearForFreshBody` 少呼叫一次，上一回合的燃燒就會燒進這一場練習。
+   * `fighters` 一樣要 push —— 陣亡投幣讀的是它，而不是 `this.seats`。
+   */
+  private placePractice(fighters: EntityId[]): void {
+    const zoneDef = this.arena.zones[PRACTICE_ZONE] ?? this.arena.zones[0]!;
+    let slot = 0;
+    for (const seat of this.seats.values()) {
+      if (seat.entityId === null || seat.teamId !== PRACTICE_TEAM) continue;
+      const t = this.world.transform.get(seat.entityId)!;
+      const spawn = zoneDef.spawns[0]![slot % TEAM_SIZE]!;
+      t.pos = { x: spawn.x, z: spawn.z };
+      t.zone = PRACTICE_ZONE;
+      t.facing = { x: 1, z: 0 };
+      const hp = this.world.health.get(seat.entityId)!;
+      hp.alive = true;
+      hp.hp = hp.maxHp;
+      hp.mana = hp.maxMana;
+      clearForFreshBody(this.world, seat.entityId);
+      fighters.push(seat.entityId);
+      slot++;
+    }
+    // ⛔ 刻意**不**寫 `roundOutcome`：練習房不結算，而 FOUGHT 會讓帳本把一段練習
+    // 記成一場真的對局。留在 NONE（＝輪空）是這件事最誠實的表示法。
+  }
+
+  /**
+   * 練習房的自動復活（GH#343）—— 和 {@link sustainCheats} 同一個位置、同一個理由：
+   * 在 sim 走完之後、快照送出之前把人扶起來，所以玩家看不到那具屍體。
+   *
+   * 沒有這一格的話，被自己召來的殭屍王打死就會讓整場練習卡住 —— 練習房沒有隊友，
+   * 所以復活圈永遠不會有人來踩，而 `endlessCombat` 又讓回合不會結束。
+   */
+  private sustainPractice(): void {
+    for (const seat of this.seats.values()) {
+      if (seat.entityId === null) continue;
+      const hp = this.world.health.get(seat.entityId);
+      if (!hp || hp.alive) continue;
+      hp.alive = true;
+      hp.hp = hp.maxHp;
+      hp.mana = hp.maxMana;
+      // 和入場同一支：不清乾淨的話，殺死他的那一份延燒會在復活的下一 tick 再殺一次。
+      clearForFreshBody(this.world, seat.entityId);
     }
   }
 
@@ -1922,6 +2089,9 @@ export class MatchController {
    * tower at that zone's centre (#89's rule is "one per active zone", not "two").
    */
   private activeZones(): number[] {
+    // 練習房沒有 pairing，所以這裡不回答的話火圈／小怪／守衛塔就全部拿到空陣列
+    // ＝ 一間什麼都不會發生的房（失敗形態②的一種：設定都對，只是沒送到現場）。
+    if (this.practice) return [PRACTICE_ZONE];
     if (this.royale) return [this.royale.zone];
     return this.pairings.map((p) => p.zone);
   }
@@ -3462,6 +3632,8 @@ export class MatchController {
     // 4b) sustain dev cheats AFTER the sim step (god mode / 0-CD). Dev-only and
     //     off by default, so this branch is dead weight in normal play.
     if (this.godModeSeats.size > 0 || this.zeroCdSeats.size > 0) this.sustainCheats();
+    // 4c) 練習房的自動復活 (GH#343)。同一個窗口、同一個理由（見 sustainPractice）。
+    if (this.practice?.autoRevive) this.sustainPractice();
   }
 
   /**
@@ -3511,6 +3683,15 @@ export class MatchController {
         break;
       }
       case "combat":
+        // ⭐ 練習房（GH#343）：`endlessCombat` 時這個相位**永遠不推進**。
+        //
+        // 這一行就是 owner 那句「進入不會有對戰」的另一半。沒有它，練習房會在進場的
+        // 第一 tick 就被踢回商店 —— 因為沒有 pairing 時 `checkCombatEnd` 的收斂條件
+        // `duelWinners.size === pairings.length` 是 `0 === 0`，恆真。
+        //
+        // ⛔ 不可以改成「把 checkCombatEnd 的結束條件放寬」：那會動到**每一場**比賽
+        // 的結束判定。這裡擋的是這一間房的相位推進，正式賽一個字都沒碰到。
+        if (this.practice?.endlessCombat) break;
         if (this.checkCombatEnd(this.combatTimeUp(expired))) {
           this.concludeCombat(); // despawn flowers + settle + maybe latch freeze
           this.phase.advance(); // -> resolution
@@ -3825,6 +4006,8 @@ export class MatchController {
         return this.cheatKillEnemies(seat.teamId, entity);
       case "spawnFlower":
         return this.cheatSpawnFlower(entity);
+      case "spawnMob":
+        return this.cheatSpawnMob(entity, cheat.what, cheat.count);
       case "skipPhase":
         return this.cheatSkipPhase();
       case "rerollOffers":
@@ -3892,6 +4075,64 @@ export class MatchController {
     const pos = pickFlowerSpawnPos(this.world, t.zone);
     spawnFlower(this.world, t.zone, pos, this.world.flowerRules.hp);
     return true;
+  }
+
+  /**
+   * 即時生成殭屍（GH#343，owner 2026-08-17「以及即時生成殭屍等特殊單位」）。
+   *
+   * ⭐ 走的是波次用的**同兩扇門**：`spawnMob` 與 `summonMobBoss`。這一點是承重的
+   * —— 那兩支各自帶著自己的規矩（王的每回合上限、回合延長、無碰撞、體型與模型），
+   * 從旁邊另開一條生怪路徑就是失敗形態⑤（被測的不是出貨的那個）。
+   *
+   * 三個上界，一個都不能少：
+   *   · `spawnBatch` —— 沒填數量時一次幾隻（`config.practice@1`，⛔ 不寫死）；
+   *   · `PRACTICE_SPAWN_BATCH_MAX` —— 誤讀保險絲（30 打成 300）；
+   *   · `maxAlivePerZone` —— **真正的**天花板，每一隻生出來之前都重新數一次。
+   *     少了它，一個連按幾下的練習房會被自己生出來的怪打死。
+   *
+   * ⚠️ 決定性：位置由 `mobSpawnPos(zone, k, i)` 這張純表決定，`k` 用**絕對 tick**
+   * （CLAUDE.md 的硬性約束：到期與序列一律用絕對 tick），所以同一場練習裡按兩次
+   * 不會疊在同一個點上，而且⛔ 完全不抽 `world.rng` —— 一個手動指令不可以推動
+   * 亂數狀態，否則按幾下按鈕就會改變後面每一次抽獎的結果（作弊本身有被錄影，
+   * 重播會重放這一則指令，所以「不動 rng」是重播能對上的前提）。
+   */
+  private cheatSpawnMob(
+    entity: EntityId,
+    what: "normal" | "special" | "boss",
+    count: number | undefined,
+  ): boolean {
+    const t = this.world.transform.get(entity);
+    const rules = this.world.mobRules;
+    // 規則表沒備妥 = 這一場沒有小怪系統（沒排到 fromRound、房間關掉了、或根本
+    // 不是練習房）。回 false 讓客戶端看得到「這裡按了沒用」，⛔ 不要靜默吞掉。
+    if (!t || !rules) return false;
+    const zone = t.zone;
+
+    if (what === "boss") {
+      if (rules.boss === null || !rules.boss.enabled) return false;
+      // ⚠️ 練習房**清掉每回合的王上限**。`summonMobBoss` 的 `maxPerRoundScope`
+      // 守的是「一場比賽的王不可以無限出場」，而練習房的回合永遠不結束，所以那個
+      // 上限在這裡會退化成「一場練習只能看一次王」——正好把要練的東西鎖起來。
+      // ⛔ 只在練習房清；正式賽的那條規矩一個字都沒動。
+      if (this.practice) this.world.bossSpawnsThisRound.clear();
+      return summonMobBoss(this.world, zone, rules, entity, this.world.tick) !== null;
+    }
+
+    const batch = Math.max(
+      1,
+      Math.min(
+        PRACTICE_SPAWN_BATCH_MAX,
+        Math.floor(count ?? this.practice?.spawnBatch ?? DEFAULT_PRACTICE_RULES.spawnBatch),
+      ),
+    );
+    let spawned = 0;
+    for (let i = 0; i < batch; i++) {
+      // 每一隻都重數：上一隻剛剛才把 zone 填滿的情況必須被看見。
+      if (mobsAliveInZone(this.world, zone) >= rules.maxAlivePerZone) break;
+      spawnMob(this.world, zone, rules, this.world.tick, i, what);
+      spawned++;
+    }
+    return spawned > 0;
   }
 
   /** Kill every alive enemy champion sharing the caller's zone (fast-forward). */

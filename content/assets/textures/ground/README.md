@@ -18,8 +18,8 @@ much first-party as the source that emits them. Nothing to add to
 
 ## Layout
 
-Per style (`stone`, `dirt`, `grass`, `sand` — the four `groundStyle` values the
-shipped arenas actually use):
+Per style (`stone`, `dirt`, `grass`, `sand`, `wood`, `tatami`, `obsidian` — every `groundStyle`
+the schema can name, from `packages/shared/src/content/schema/groundStyle.ts`):
 
 | file | size | space | contents |
 |---|---|---|---|

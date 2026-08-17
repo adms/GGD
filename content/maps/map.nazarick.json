@@ -3,6 +3,7 @@
   "id": "map.nazarick",
   "name": "納薩力克大墳墓",
   "template": "CROSS_RING",
+  "groundStyle": "obsidian",
   "grid": {
     "cols": 24,
     "rows": 20,
@@ -232,8 +233,199 @@
       ]
     }
   },
-  "landmarkProps": [],
-  "backgroundProps": [],
+  "landmarkProps": [
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "at": {
+        "col": 10,
+        "row": 2
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "at": {
+        "col": 12,
+        "row": 2
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 1,
+        "row": 8
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 22,
+        "row": 8
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 11,
+        "row": 1
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 11,
+        "row": 16
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/floor_tile_large.glb",
+      "at": {
+        "col": 11,
+        "row": 10
+      },
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/props/floor_tile_large.glb",
+      "at": {
+        "col": 11,
+        "row": 11
+      },
+      "rotQuarter": 0,
+      "scale": 1
+    }
+  ],
+  "backgroundProps": [
+    {
+      "model": "assets/models/props/chest.glb",
+      "at": {
+        "col": 3,
+        "row": 2
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/props/chest.glb",
+      "at": {
+        "col": 5,
+        "row": 3
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/props/chest.glb",
+      "at": {
+        "col": 17,
+        "row": 4
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/props/chest.glb",
+      "at": {
+        "col": 17,
+        "row": 13
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/props/crates_stacked.glb",
+      "at": {
+        "col": 6,
+        "row": 13
+      },
+      "rotQuarter": 0,
+      "scale": 1.1
+    },
+    {
+      "model": "assets/models/props/crates_stacked.glb",
+      "at": {
+        "col": 5,
+        "row": 14
+      },
+      "rotQuarter": 0,
+      "scale": 1.1
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 0,
+        "row": 9
+      },
+      "rotQuarter": 0,
+      "scale": 1.3
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 23,
+        "row": 9
+      },
+      "rotQuarter": 2,
+      "scale": 1.3
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 0,
+        "row": 15
+      },
+      "rotQuarter": 0,
+      "scale": 1.3
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 23,
+        "row": 15
+      },
+      "rotQuarter": 2,
+      "scale": 1.3
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "at": {
+        "col": 6,
+        "row": 0
+      },
+      "rotQuarter": 0,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "at": {
+        "col": 12,
+        "row": 0
+      },
+      "rotQuarter": 0,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "at": {
+        "col": 18,
+        "row": 0
+      },
+      "rotQuarter": 0,
+      "scale": 0.11
+    }
+  ],
   "backdrop": {
     "layers": [
       {

@@ -34,6 +34,8 @@ import { isFannedOutEvent, privateEventAddress, PRIVATE_EVENT_FANOUT } from "../
 import type { PrivateEventAddress } from "../net/eventFanout";
 import { EventBatcher, resolveEventBatch } from "../net/eventBatch";
 import { cheatsEnabled } from "../match/cheatGate";
+// 練習模式 (GH#343) —— 「這間房是不是練習房 + 規則是什麼」只有這一支答案。
+import { Configs, PRACTICE_DOC_ID, resolvePracticeRules } from "@ggd/shared/content";
 import { HumanDriver } from "../seat/HumanDriver";
 import type { Seat } from "../seat/Seat";
 import type { SimEvent } from "@ggd/shared/sim/SimWorld";
@@ -122,6 +124,19 @@ export interface MatchRoomOptions {
    * rest of ArenaRules, so a tape replays with the value it was played on.
    */
   rogueliteMobs?: boolean;
+  /**
+   * 練習模式 (GH#343, owner 2026-08-17「新增練習模式…進入不會有對戰…可以使用各種
+   * 功能測試碼…以及即時生成殭屍」)。走的路和 `rogueliteMobs` 逐字相同：
+   * client → Go room → gamelink → 這個袋子。
+   *
+   * ⚠️ **這個旗標就是測試碼的鑰匙**（見 `cheatGate.ts`），所以它的可信度來自
+   * `createToken`：有 shared secret 時（正式站）`onCreate` 第一件事就是驗簽，
+   * 沒過就中止，於是這一格只可能由平台寫入。沒有 secret 時（dev）任何客戶端都能
+   * 建房，但 dev 本來就是測試碼全開的環境，所以沒有新的破口。
+   *
+   * ⛔ 它**不是** CheatMessage 上的旗標：那條路等於讓要被擋的一方自己說自己該放行。
+   */
+  practice?: boolean;
   /**
    * PER-ROOM 開房設定 (#288, owner 2026-08-08:「開房房主可以設定 選角、商店、
    * 每回合的時間跟總回合數，但**預設值保留現在**（包含 vs bot）」).
@@ -239,11 +254,21 @@ const RECONNECT_GRACE_SECS = 60;
  * dev defaults on unless GGD_DEV_CHEATS=0.
  */
 const DEV_CHEATS = cheatsEnabled(SHARED_SECRET, process.env.GGD_DEV_CHEATS);
+/**
+ * ⚠️ `DEV_CHEATS` 是**製程級**的答案，而 GH#343 之後這個問題變成**每間房**的：
+ * 一間練習房在正式站上也要開測試碼。所以那個常數只剩「這間房不是練習房時的答案」，
+ * 真正被訊息處理器讀的是 `this.cheatsAllowed`（`onCreate` 用房間自己的身分算的）。
+ */
 /** WS close code used when a session is booted for sustained message flooding. */
 const RATE_LIMIT_CLOSE_CODE = 4290;
 
 export class MatchRoom extends Room<MatchState> {
   private ctl!: MatchController;
+  /**
+   * 這間房准不准測試碼（GH#343）。`onCreate` 用**伺服器端解析出來的**練習房身分
+   * 算一次就凍結；⛔ 訊息處理器不再讀製程級的 `DEV_CHEATS`。
+   */
+  private cheatsAllowed = DEV_CHEATS;
   private accumulator = 0;
   private humanDrivers = new Map<number, HumanDriver>();
   private seatByAccount = new Map<string, SeatId>();
@@ -493,6 +518,14 @@ export class MatchRoom extends Room<MatchState> {
     // its roster to the same set, but THIS is the authoritative gate: a forged
     // SELECT_CHAMPION for an unowned champion is rejected by MatchController.
     const ownership = Ownership.fromSeats(humanSeats);
+    // 練習模式 (GH#343) —— **一支**函式回答「這是不是練習房 + 規則是什麼」，
+    // 所以房間與控制器不可能對這件事有兩種看法。`null` = 一般比賽 = 今天的行為。
+    //
+    // ⚠️ 這一行也是測試碼閘的來源。它讀的是 `options.practice`，而在有 shared
+    // secret 的部署上 `options` 已經被 `verifyCreateToken` 擋在門外（onCreate 的
+    // 第一件事），所以正式站上這一格只可能由平台寫入。
+    const practice = resolvePracticeRules(options.practice === true, Configs.tryGet(PRACTICE_DOC_ID));
+    this.cheatsAllowed = cheatsEnabled(SHARED_SECRET, process.env.GGD_DEV_CHEATS, practice !== null);
     this.ctl = new MatchController(
       matchId,
       seed,
@@ -517,6 +550,9 @@ export class MatchRoom extends Room<MatchState> {
       // —— 後台改了要重啟 shard。#278 對 baseBonus 修掉的正是這件事,這一份還沒
       // 修,已記進驗收表,不要以為它和隔壁一樣是即時的。
     );
+    // 練習模式 (GH#343)：在**第一個 tick 之前**交給控制器（同 `recorder` /
+    // `statsSink` 那條路，見 `MatchController.practice` 的說明）。
+    this.ctl.practice = practice;
     for (const h of humanSeats) {
       this.seatByAccount.set(h.accountId, asSeatId(h.seatId));
     }
@@ -636,9 +672,11 @@ export class MatchRoom extends Room<MatchState> {
       }
     });
     this.onMessage(MSG.CHEAT, (client, msg: CheatMessage) => {
-      // HARD GATE: dev mode only, never trusting the client. Seat is resolved
-      // from the sender's OWN session, so a client can only cheat its own seat.
-      if (!DEV_CHEATS) return;
+      // HARD GATE: dev mode **or a practice room** (GH#343), never trusting the
+      // client. `cheatsAllowed` was resolved server-side in onCreate — the client's
+      // message carries no flag that could open this. Seat is resolved from the
+      // sender's OWN session, so a client can only cheat its own seat.
+      if (!this.cheatsAllowed) return;
       if (this.rateLimiter.check(client.sessionId) !== "ok") return;
       const seatId = this.seatBySession.get(client.sessionId);
       if (seatId === undefined || !msg?.cheat) return;
@@ -1017,6 +1055,18 @@ export class MatchRoom extends Room<MatchState> {
   private async settleToPlatform(): Promise<void> {
     const result = this.ctl.result;
     if (!result) return;
+    // ⛔ 練習房什麼都不結算（GH#343 的裁決：不發水晶、不動 MMR、不寫任何玩家資料）。
+    // 這一行是「開放測試碼不是經濟漏洞」那個論證**唯一**的支點：測試碼的另一頭
+    // 如果接得到平台，那它就不是沙盒了。
+    //
+    // ⚠️ 出貨預設 (`endlessCombat`) 讓練習房根本走不到結算，所以這是**第二道**閘。
+    // 刻意留著：`endlessCombat` 是一格後台開關，而「練習不能換水晶」不是。
+    if (this.ctl.practice) {
+      console.warn(
+        `[match ${this.ctl.matchId}] 練習房：⛔ 不回報結果（不發水晶、不動 MMR、不寫玩家資料）。`,
+      );
+      return;
+    }
     const payload = buildPlatformResult(result, this.ctl.arena.id, (seatId) =>
       this.ctl.seats.get(asSeatId(seatId))?.championId ?? "",
     );

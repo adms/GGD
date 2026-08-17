@@ -177,7 +177,10 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // ⚠️ 改這幾個數字是一個**決定**，不是順手。加一列的人必須在這裡留下痕跡，
     // 而 code review 看得到這一行的 diff。
     expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(24);
-    expect(byKind("OWN_PAGE")).toHaveLength(13);
+    // 2026-08-17：13 → 14。`roster`（英雄上下架）**往下走了一格** —— 它從
+    // KNOWN_GAP 變成 OWN_PAGE，因為 ui/RosterPage.tsx 做出來了。⚠️ 這是這張表
+    // 唯一「健康」的移動方向：帳單被付掉，而總列數不變。
+    expect(byKind("OWN_PAGE")).toHaveLength(14);
     expect(byKind("NOT_TUNABLE")).toHaveLength(3);
     // 2026-08-02：2 → 5。新增的三列是 lobby-layout / valhalla-sandbox /
     // victory-podium —— 三份文件與 Zod 都接完了,只差客戶端還在讀寫死的常數。
@@ -186,8 +189,10 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // ⚠️ 這個數字往上長 = 「做了一半」的份數變多,所以它必須是一個看得見的 diff。
     expect(byKind("DEFERRED")).toHaveLength(4);
     // ⚠️ KNOWN_GAP 是**帳單**：audio-map（混音表）、origin-routes（出身×路線文案）
-    // 與 roster（英雄上下架）。這個數字往上長就是欠債變多，
-    // 而它變多的那一刻要有人按下同意。
+    // 與 per-level-bonus（record 型欄位，通用引擎走不動）。這個數字往上長就是欠債
+    // 變多，而它變多的那一刻要有人按下同意。
+    // 2026-08-17：4 → 3。`roster` 那一列的到期條件是「那一頁做出來的那一天」，
+    // 而 ui/RosterPage.tsx 做出來了 —— 它移到 OWN_PAGE，不是被免掉。
     // 2026-08-12：2 → 3。origin-routes 是 owner 指名的「新英雄轉生設計」那一頁的
     // 資料基礎 —— 110 個文案葉節點，通用長表單畫出來不叫可調。那一頁做出來時
     // 這一列會被守衛強迫刪掉。
@@ -198,7 +203,6 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
       "per-level-bonus",
       "audio-map",
       "origin-routes",
-      "roster",
     ]);
   });
 

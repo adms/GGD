@@ -331,6 +331,17 @@ function BotMatchStrip(props: { mapId: string; onMapId: (id: string) => void }):
         <div style={{ flex: "1 1 220px", fontSize: 11, color: TEXT_DIM, lineHeight: 1.5 }}>
           隊上有 BOT，水晶只發一半；M幣要 12 人全真人。半份也是白賺，想拿滿就揪人。
         </div>
+        {/* 練習模式 (GH#343, owner 2026-08-17)。⭐ 場地下拉**重用**上面那一顆
+            （`props.mapId`），角色照常在選角相位挑 —— 那兩件事本來就有了，這一批
+            缺的只是「這是練習房」那一格旗標。 */}
+        <Btn
+          small
+          kind="ghost"
+          onClick={() => playOffline(props.mapId, true)}
+          title="練習模式：進去沒有對手、時間到也不會被踢回商店，可以開測試碼、即時生殭屍。不記錄戰績、不算積分、不發水晶。"
+        >
+          練習模式
+        </Btn>
         <Btn
           small
           kind="ghost"

@@ -30,9 +30,25 @@
 /** 什麼樣的 phase 算「正在打」。 */
 export const COMBAT_PHASE = "combat";
 
+/**
+ * 這一次清場站在戰鬥的哪一側（GH#337）。
+ *
+ * ⚠️ 兩邊分開**不是潔癖**，是必要條件：回合勝利煙火正是在 combat → resolution
+ * 的那一幀發射的。如果 `leave` 也把煙火清掉，#235 那個功能會整個消失，而畫面上
+ * 它跟「煙火壞了」長得一模一樣（沒有任何錯誤、沒有任何 log）。所以每一個
+ * 註冊進來的特效自己說它要在哪幾個邊界被清。
+ */
+export type RoundEdge = "enter" | "leave";
+
 export interface RoundVfxTarget {
-  /** 把這一回合的一次性特效與只增不減的池子全部收回。 */
-  resetForRound(): void;
+  /**
+   * 把這一回合的一次性特效與只增不減的池子全部收回。
+   *
+   * `edge` 是這一幀站在戰鬥的哪一側。⚠️ 參數是**可選的**（實作可以整個不宣告
+   * 它）—— `VfxSystem.resetForRound()` 兩邊做的事完全一樣，逼它接一個用不到的
+   * 參數只會多一個會腐爛的名字。
+   */
+  resetForRound(edge: RoundEdge): void;
 }
 
 export class RoundVfxLifecycle {
@@ -64,7 +80,9 @@ export class RoundVfxLifecycle {
     const enteringCombat = phase === COMBAT_PHASE;
     const leavingCombat = prev === COMBAT_PHASE;
     if (!enteringCombat && !leavingCombat) return false;
-    this.target.resetForRound();
+    // GH#337 —— 把「哪一側」一起交出去。⛔ 不可以兩邊都當成同一件事：
+    // 見上面 `RoundEdge` 的註解（`leave` 清煙火 = 刪掉 #235）。
+    this.target.resetForRound(enteringCombat ? "enter" : "leave");
     this.resets++;
     return true;
   }

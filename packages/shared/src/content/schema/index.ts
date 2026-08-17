@@ -87,6 +87,14 @@ export * from "./arena";
 // 深進 `schema/*`（而那條路沒有守衛在看，遲早會指到搬走的檔案）。
 export * from "./map";
 export * from "./mapSpecDoc";
+// 混音（owner 2026-08-17）—— 和 mapSpecDoc 同一條路：schema 住自己的檔案，
+// 但**一定要從這個 barrel 出去**，否則後台與編輯器只能繞路深進 `schema/*`。
+// ⚠️ 型別由這一行負責，⛔ config.ts 不再 re-export 一次（兩條 star export
+// 匯出同一個名字會互相遮蔽）。
+export * from "./audioMixDoc";
+// 練習模式（GH#343）—— 同上；後台的 `PRACTICE_SPEC` 與 game-server 的
+// `resolvePracticeRules` 都從這個 barrel 拿。
+export * from "./practiceDoc";
 export * from "./config";
 export * from "./model";
 export * from "./vfx";

@@ -149,8 +149,8 @@ much first-party as the source that emits them. Nothing to add to
 
 ## Layout
 
-Per style (\`stone\`, \`dirt\`, \`grass\`, \`sand\` — the four \`groundStyle\` values the
-shipped arenas actually use):
+Per style (${GROUND_STYLES.map((s) => `\`${s.id}\``).join(", ")} — every \`groundStyle\`
+the schema can name, from \`packages/shared/src/content/schema/groundStyle.ts\`):
 
 | file | size | space | contents |
 |---|---|---|---|

@@ -87,6 +87,9 @@ function startMatch(): void {
     localPlayers: match.localPlayers,
     seatTokens: platform ? (match.seatTokens ?? undefined) : undefined,
     mapId: match.mapId ?? undefined,
+    // 練習模式 (GH#343)：⛔ 漏掉這一行，大廳那顆按鈕就會開出一間普通的房，
+    // 而畫面上完全看不出差別（失敗形態②：算出來了但從沒送到）。
+    practice: match.practice,
   });
   app.start(); // render the arena immediately; entities appear once connected
   const join = platform ? app.connectPlatform(match.endpoint!, match.seatTokens!) : app.connect();

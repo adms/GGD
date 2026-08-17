@@ -1,0 +1,116 @@
+/**
+ * 練習模式（GH#343，owner 2026-08-17「新增練習模式，可以選擇場地及角色，但進入
+ * 不會有對戰，可以使用各種功能測試碼，以及即時生成殭屍等特殊單位」）——
+ * **承重那一條線**。
+ *
+ * 驗的是機制，⛔ 不是數字（第二守則）：
+ *   ① 跑過「一般房會結束好幾個回合」的 tick 數之後，相位**仍然是 combat**；
+ *   ② 場上**沒有敵方隊伍的實體**；
+ *   ③ 生怪指令之後小怪數**變多**（⛔ 不斷言幾隻 —— 那是 `config.practice@1` 的
+ *      一格後台設定，抄進測試就是第四個住處）。
+ *
+ * ⭐ **反向那一條是這支測試的一半**：同一段 tick 數、同一組座位、`practice = null`
+ * ⇒ 相位**會**推進。少了它，一個「把所有房間的 combat 結束都關掉」的錯誤實作
+ * 會全部通過（失敗形態④：斷言方向跟缺陷無關）。
+ *
+ * 突變（驗過）：拿掉 `advancePhase` 的 `if (this.practice?.endlessCombat) break;`
+ * ⇒ ① 紅（相位變成 intermission），而反向那一條仍然綠。
+ */
+import { describe, it, expect } from "vitest";
+import { asSeatId } from "@ggd/shared/ids";
+import { DEFAULT_MOB_WAVES_CONFIG, type MobWavesConfig } from "@ggd/shared/content";
+import { DEFAULT_PRACTICE_RULES, type PracticeRules } from "@ggd/shared/content";
+import { MONSTER_TEAM } from "@ggd/shared/sim/mobs";
+import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
+import { MatchController, type SeatSpec } from "./MatchController";
+import { DEFAULT_ARENA_RULES, type ArenaRules } from "./arenaRules";
+
+const FAST = { champSelectTicks: 5, intermissionTicks: 10, combatMaxTicks: 60, resolutionTicks: 5 };
+const SEAT0 = asSeatId(0);
+
+/** 12 個座位、四支隊伍 —— 和一般房**完全一樣**的輸入。差別只有 `practice`。 */
+const allBots = (): SeatSpec[] =>
+  Array.from({ length: 12 }, (_, i) => ({ seatId: i, teamId: Math.floor(i / 3), isBot: true }));
+
+/** 小怪規則從第 1 回合就備妥，這樣生怪指令有一張表可以讀。 */
+const MOB_WAVES: MobWavesConfig = { ...DEFAULT_MOB_WAVES_CONFIG, fromRound: 1 };
+const RULES: ArenaRules = { ...DEFAULT_ARENA_RULES, mobWaves: MOB_WAVES };
+
+function build(practice: PracticeRules | null): MatchController {
+  const ctl = new MatchController("practice", 4242, allBots(), FAST, 3, RULES, SKELETON_ARENA);
+  ctl.practice = practice;
+  let guard = 0;
+  while (ctl.phase.phase !== "combat" && guard++ < 5000) ctl.tick();
+  expect(ctl.phase.phase).toBe("combat");
+  return ctl;
+}
+
+/** 遠超過一個 combat 相位（60 tick）+ resolution + intermission 的長度。 */
+const WAY_PAST_ONE_ROUND = 400;
+
+/**
+ * 跑 `WAY_PAST_ONE_ROUND` tick，回答「這段期間**有沒有離開過** combat」。
+ *
+ * ⚠️ 問「離開過沒有」而不是「最後停在哪個相位」是有理由的：一般房會 combat →
+ * resolution → intermission → combat 繞回來，所以只看最後那一格，兩種房會長得
+ * 一模一樣（失敗形態④）。玩家真正感覺到的正是「被踢回商店」那一瞬間。
+ */
+function everLeftCombat(ctl: MatchController): boolean {
+  for (let i = 0; i < WAY_PAST_ONE_ROUND; i++) {
+    ctl.tick();
+    if (ctl.phase.phase !== "combat") return true;
+  }
+  return false;
+}
+
+describe("練習模式 (GH#343)", () => {
+  it("① 練習房跑過好幾個回合的 tick 數，**一次都沒有**離開 combat（不會被踢回商店）", () => {
+    const ctl = build({ ...DEFAULT_PRACTICE_RULES });
+    expect(everLeftCombat(ctl)).toBe(false);
+    expect(ctl.phase.phase).toBe("combat");
+  });
+
+  it("⭐ 反向：非練習房跑同一段 tick 數**會**離開 combat（所以①驗的是練習房而不是全部）", () => {
+    const ctl = build(null);
+    expect(everLeftCombat(ctl)).toBe(true);
+  });
+
+  it("② 練習房場上沒有敵方隊伍的實體（沒有對手可以打）", () => {
+    const ctl = build({ ...DEFAULT_PRACTICE_RULES });
+    const myTeam = ctl.seats.get(SEAT0)!.teamId;
+    for (const [id, team] of ctl.world.team) {
+      if (!ctl.world.champion.has(id)) continue; // 小怪/召喚物不是「敵方隊伍」
+      expect(team.teamId).toBe(myTeam);
+    }
+    // …而且那些座位是**從來沒有進過世界**，不是被藏起來或開場就被殺掉。
+    for (const seat of ctl.seats.values()) {
+      if (seat.teamId !== myTeam) expect(seat.entityId).toBeNull();
+    }
+  });
+
+  it("③ 生怪指令讓場上多出小怪（一般 / 特殊 / 王三種都真的進場）", () => {
+    const ctl = build({ ...DEFAULT_PRACTICE_RULES });
+    // 出貨預設 `autoMobWaves: false` ⇒ 排程一隻都不生，所以起點必須是 0。
+    for (let i = 0; i < 90; i++) ctl.tick();
+    expect(ctl.world.mob.size).toBe(0);
+
+    expect(ctl.applyCheat(SEAT0, { kind: "spawnMob", what: "normal" })).toBe(true);
+    const afterNormal = ctl.world.mob.size;
+    expect(afterNormal).toBeGreaterThan(0);
+
+    expect(ctl.applyCheat(SEAT0, { kind: "spawnMob", what: "special" })).toBe(true);
+    expect(ctl.world.mob.size).toBeGreaterThan(afterNormal);
+
+    const beforeBoss = ctl.world.mob.size;
+    expect(ctl.applyCheat(SEAT0, { kind: "spawnMob", what: "boss" })).toBe(true);
+    expect(ctl.world.mob.size).toBeGreaterThan(beforeBoss);
+    // 生出來的都掛在小怪隊伍上（＝計分板／決鬥判定看不到它們）。
+    for (const [id] of ctl.world.mob) expect(ctl.world.team.get(id)!.teamId).toBe(MONSTER_TEAM);
+  });
+
+  it("③b 生怪吃 maxAlivePerZone 上限 —— 連按不會把練習房淹掉", () => {
+    const ctl = build({ ...DEFAULT_PRACTICE_RULES, spawnBatch: 50 });
+    for (let i = 0; i < 20; i++) ctl.applyCheat(SEAT0, { kind: "spawnMob", what: "normal" });
+    expect(ctl.world.mob.size).toBeLessThanOrEqual(ctl.world.mobRules!.maxAlivePerZone);
+  });
+});

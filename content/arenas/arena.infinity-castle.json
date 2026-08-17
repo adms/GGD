@@ -7468,6 +7468,196 @@
       }
     ]
   },
-  "decor": [],
-  "groundStyle": "stone"
+  "decor": [
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": -19,
+      "z": -9,
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": -19,
+      "z": -3,
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": -19,
+      "z": 3,
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": 17,
+      "z": -9,
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": 17,
+      "z": -3,
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": 13,
+      "z": 3,
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "x": -9,
+      "z": -1,
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "x": 5,
+      "z": -1,
+      "rotQuarter": 2,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/hex/hex_water.glb",
+      "x": -5,
+      "z": 11,
+      "rotQuarter": 0,
+      "scale": 1.15
+    },
+    {
+      "model": "assets/models/hex/hex_water.glb",
+      "x": -3,
+      "z": 11,
+      "rotQuarter": 0,
+      "scale": 1.15
+    },
+    {
+      "model": "assets/models/hex/hex_water.glb",
+      "x": -1,
+      "z": 11,
+      "rotQuarter": 0,
+      "scale": 1.15
+    },
+    {
+      "model": "assets/models/hex/hex_water.glb",
+      "x": 1,
+      "z": 11,
+      "rotQuarter": 0,
+      "scale": 1.15
+    },
+    {
+      "model": "assets/models/hex/hex_water.glb",
+      "x": 3,
+      "z": 11,
+      "rotQuarter": 0,
+      "scale": 1.15
+    },
+    {
+      "model": "assets/models/hex/waterlily.glb",
+      "x": -3,
+      "z": 9,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/hex/waterlily.glb",
+      "x": 3,
+      "z": 13,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/props/floor_tile_large.glb",
+      "x": -1,
+      "z": 7,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/props/floor_tile_large.glb",
+      "x": -1,
+      "z": 15,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "x": -17,
+      "z": -17,
+      "rotQuarter": 0,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "x": -5,
+      "z": -17,
+      "rotQuarter": 0,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "x": 5,
+      "z": -17,
+      "rotQuarter": 0,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "x": 17,
+      "z": -17,
+      "rotQuarter": 0,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "x": -23,
+      "z": -7,
+      "rotQuarter": 0,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "x": 23,
+      "z": -7,
+      "rotQuarter": 2,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "x": -23,
+      "z": 7,
+      "rotQuarter": 0,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "x": 23,
+      "z": 7,
+      "rotQuarter": 2,
+      "scale": 0.11
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "x": -23,
+      "z": -1,
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "x": 23,
+      "z": -1,
+      "rotQuarter": 2,
+      "scale": 1.2
+    }
+  ],
+  "groundStyle": "tatami"
 }

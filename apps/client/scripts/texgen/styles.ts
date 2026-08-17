@@ -22,6 +22,7 @@
  * Colour is authored in LINEAR light and sRGB-encoded on write (gen-ground.ts),
  * because Babylon reads albedo PNGs as gamma-space.
  */
+import type { GroundStyleId } from "@ggd/shared/content/schema/groundStyle";
 import { clamp01, fbm, fbmAniso, hash1, ridged, smoothstep, worley } from "./noise";
 
 /** World units covered by one repeat of the detail set. */
@@ -56,7 +57,9 @@ export interface MacroTexel {
 }
 
 export interface GroundStyle {
-  id: string;
+  /** ⛔ from the single source of truth — a painter with no schema id ships pixels
+   *  nothing can ask for, and a schema id with no painter ships a dead floor. */
+  id: GroundStyleId;
   label: string;
   /**
    * Peak-to-peak relief of the DETAIL height field, in WORLD UNITS — how far a
@@ -363,10 +366,242 @@ const sand: GroundStyle = {
   },
 };
 
+// ------------------------------------------------------------------ wood ---
+// Polished hinoki corridor — the 縁側 of a Japanese castle (GH#342). Boards run
+// along V, and each board's butt joints are STAGGERED by a per-board hash: a
+// shared joint row running clean across the tile is the loudest tell a plank
+// floor is tiled, louder than the board edges themselves.
+/** boards across one TILE_WORLD_SIZE tile → ~33 cm boards */
+const PLANKS = 12;
+/** butt joints per board per tile */
+const PLANK_SEGMENTS = 2;
+
+const wood: GroundStyle = {
+  id: "wood",
+  label: "polished hinoki corridor",
+  reliefWorld: 0.022,
+  macroReliefWorld: 0.1,
+  ao: 0.62,
+  paint(u, v) {
+    const pf = u * PLANKS;
+    const pi = Math.floor(pf);
+    const pu = pf - pi; // 0..1 across the board
+    // stagger: each board starts its segment run at its own offset, so no two
+    // neighbouring boards share a butt joint
+    const off = hash1(pi, 11) * PLANK_SEGMENTS;
+    const sf = v * PLANK_SEGMENTS + off;
+    const si = Math.floor(sf);
+    const sv = sf - si; // 0..1 along the board segment — continuous across v=0/1
+    const boardId = (((si % PLANK_SEGMENTS) + PLANK_SEGMENTS) % PLANK_SEGMENTS) * PLANKS + pi;
+
+    // grooves: board edges (deep) and butt joints (shallower, they butt tight)
+    const edge = Math.min(pu, 1 - pu);
+    const seam = 1 - smoothstep(0.012, 0.05, edge);
+    const butt = (1 - smoothstep(0.004, 0.02, Math.min(sv, 1 - sv))) * 0.7;
+    const groove = clamp01(seam + butt);
+
+    // grain: stretched along the board (fast across x, slow along y) plus a
+    // finer figure. Both are global fBm, so the grain does NOT restart at a
+    // board edge — real boards are cut from one log, and a grain that resets
+    // per board reads as printed wallpaper.
+    const grain = fbmAniso(u, v, 220, 10, 4, 501);
+    const figure = fbmAniso(u, v, 60, 4, 3, 502);
+    const micro = fbm(u, v, 190, 2, 503);
+
+    // knots: at most one per board segment, and only on ~18 % of them
+    const kx = hash1(boardId, 61);
+    const ky = hash1(boardId, 62);
+    const knotOn = hash1(boardId, 63) > 0.82 ? 1 : 0;
+    const kd = Math.hypot((pu - kx) * 0.6, sv - ky);
+    const knot = knotOn * smoothstep(0.11, 0.02, kd);
+
+    const tone = hash1(boardId, 71);
+    const h =
+      0.66 + (tone - 0.5) * 0.05 + (grain - 0.5) * 0.1 + micro * 0.02 - groove * 0.5 - knot * 0.18;
+
+    // warm pale hinoki; per-board tone spread is what keeps a corridor from
+    // reading as one printed sheet
+    const t = clamp01(0.28 + tone * 0.5 + (figure - 0.5) * 0.55 + (grain - 0.5) * 0.35);
+    let r = lerp(0.078, 0.225, t);
+    let g = r * (0.66 + (figure - 0.5) * 0.06);
+    let b = r * (0.35 + (grain - 0.5) * 0.05);
+    // dark heartwood streaks along the grain
+    const dark = smoothstep(0.66, 0.9, grain) * 0.5;
+    r = lerp(r, r * 0.62, dark);
+    g = lerp(g, g * 0.58, dark);
+    b = lerp(b, b * 0.6, dark);
+    // knots are near-black resin
+    r = lerp(r, 0.028, knot * 0.85);
+    g = lerp(g, 0.019, knot * 0.85);
+    b = lerp(b, 0.012, knot * 0.85);
+    // grooves: shadowed gaps, not painted lines
+    r = lerp(r, 0.012, groove);
+    g = lerp(g, 0.009, groove);
+    b = lerp(b, 0.006, groove);
+
+    // waxed boards are the smoothest floor in the set; the grooves are not
+    const rough = clamp01(0.34 + (grain - 0.5) * 0.12 + groove * 0.45 + knot * 0.2);
+    return { r, g, b, h, rough };
+  },
+  macro(u, v) {
+    const f = macroFields(u, v, 500);
+    return {
+      // the walked centre is polished pale; the edges keep their dark wax
+      tint: (f.blotch - 0.5) * 1.1 + (f.fine - 0.5) * 0.4 + f.centre * 0.5 - f.rim * 0.55,
+      rough: (f.patch - 0.5) * 0.8 - f.centre * 0.6 + f.rim * 0.35,
+      h: f.blotch * 0.7 + f.patch * 0.3,
+    };
+  },
+};
+
+// ---------------------------------------------------------------- tatami ---
+// Rush mats in the 市松 layout (GH#342). Unlike every other style here the
+// LATTICE IS THE MOTIF — a tatami room is laid on a grid and reads wrong
+// without one. What must not repeat is the mats' CONTENT, so tone, bleaching
+// and rush direction are per-mat hashes and the macro layer carries the
+// sun-fade. A 4u tile holds four 2u blocks; each block is two 1u×2u mats, and
+// neighbouring blocks lay theirs on opposite axes.
+/** rush ribs across one tile — integer, so the ribbing wraps */
+const TATAMI_RIBS = 96;
+
+const tatami: GroundStyle = {
+  id: "tatami",
+  label: "igusa tatami, 市松 layout",
+  reliefWorld: 0.02,
+  macroReliefWorld: 0.09,
+  ao: 0.55,
+  paint(u, v) {
+    const bx = u * 2;
+    const by = v * 2;
+    const bi = Math.floor(bx);
+    const bj = Math.floor(by);
+    const fx = bx - bi;
+    const fy = by - bj;
+    const vertical = (bi + bj) % 2 === 0;
+    // `ml` runs across the mat's SHORT side (the 1u one), `mlong` along it
+    const pair = vertical ? fx * 2 : fy * 2;
+    const matIdx = Math.floor(pair);
+    const ml = pair - matIdx;
+    const mlong = vertical ? fy : fx;
+    const matId = (bj * 2 + bi) * 2 + matIdx;
+
+    // 縁 — the cloth border runs down the two LONG edges only
+    const heri = 1 - smoothstep(0.035, 0.07, Math.min(ml, 1 - ml));
+    // gaps between mats: a hair of shadow on every side
+    const gap = clamp01(
+      (1 - smoothstep(0.004, 0.016, Math.min(ml, 1 - ml))) +
+        (1 - smoothstep(0.002, 0.008, Math.min(mlong, 1 - mlong))),
+    );
+
+    // rush ribs run ALONG the mat, so their phase axis is the short one
+    const ribPhase = (vertical ? u : v) * TATAMI_RIBS;
+    const rib = Math.abs((ribPhase - Math.floor(ribPhase)) * 2 - 1);
+    const weave = fbmAniso(u, v, vertical ? 300 : 14, vertical ? 14 : 300, 3, 601);
+    const fibre = fbm(u, v, 160, 2, 602);
+
+    const age = hash1(matId, 81); // sun-bleached mats go straw-yellow
+    const wear = hash1(matId, 82);
+
+    const h =
+      0.6 + (0.5 - Math.abs(ml - 0.5)) * 0.06 + rib * 0.14 + weave * 0.08 - gap * 0.55 + heri * 0.06;
+
+    // fresh igusa is green; aged igusa is straw
+    const t = clamp01(age * 0.75 + (weave - 0.5) * 0.5 + fibre * 0.2);
+    let r = lerp(0.082, 0.2, t);
+    let g = lerp(0.105, 0.168, t);
+    let b = lerp(0.042, 0.072, t);
+    // ribs catch the light; the valleys between them stay dark
+    const shade = 0.86 + rib * 0.26 - wear * 0.08;
+    r *= shade;
+    g *= shade;
+    b *= shade;
+    // 縁: dark indigo cloth with a faint woven sheen
+    const heriSheen = 0.8 + fbmAniso(u, v, vertical ? 6 : 240, vertical ? 240 : 6, 2, 603) * 0.5;
+    r = lerp(r, 0.021 * heriSheen, heri);
+    g = lerp(g, 0.018 * heriSheen, heri);
+    b = lerp(b, 0.032 * heriSheen, heri);
+    // gaps
+    r = lerp(r, 0.01, gap);
+    g = lerp(g, 0.01, gap);
+    b = lerp(b, 0.009, gap);
+
+    const rough = clamp01(0.82 - rib * 0.08 + gap * 0.12 - heri * 0.16);
+    return { r, g, b, h, rough };
+  },
+  macro(u, v) {
+    const f = macroFields(u, v, 600);
+    // sun through the shoji bleaches whole stretches of floor, not single mats
+    const sun = smoothstep(0.35, 0.85, fbm(u, v, 2, 3, 650));
+    return {
+      tint: (f.blotch - 0.5) * 1.0 + sun * 0.85 - f.centre * 0.35,
+      rough: (f.patch - 0.5) * 0.7 - f.centre * 0.45 + sun * 0.2,
+      h: f.blotch * 0.6 + f.patch * 0.4,
+    };
+  },
+};
+
+// -------------------------------------------------------------- obsidian ---
+// Polished black slabs with gold veining — the Great Tomb's floor (GH#342).
+// Slabs are VORONOI, same reason as stone: a square lattice of black tiles at
+// 12 repeats across the zone is a chessboard. The joints are BRIGHT here (gold
+// inlay), which is the whole read: dark field, luminous seams.
+const obsidian: GroundStyle = {
+  id: "obsidian",
+  label: "polished obsidian with gold veins",
+  reliefWorld: 0.028,
+  macroReliefWorld: 0.11,
+  ao: 0.55,
+  paint(u, v) {
+    const wu = u + 0.012 * (fbm(u, v, 5, 3, 701) - 0.5);
+    const wv = v + 0.012 * (fbm(u, v, 5, 3, 702) - 0.5);
+    const cell = worley(wu, wv, 3, 13); // ~1.3u slabs
+    const border = cell.f2 - cell.f1;
+    const joint = 1 - smoothstep(0.006, 0.03, border);
+
+    const tone = hash1(cell.id, 91);
+    const polish = hash1(cell.id, 92);
+    // Veins wander across slab faces; each slab decides how veined it is. The
+    // threshold is HIGH on purpose — the first cut used 0.9 and the gold網
+    // covered more of the floor than the stone did, which reads as lava, not
+    // as inlay. Inlay is a thin bright line on a dark field.
+    const veinField = ridged(u + 0.03 * fbm(u, v, 6, 2, 703), v, 7, 3, 704);
+    const vein = smoothstep(0.965, 1.0, veinField) * (0.2 + 0.8 * hash1(cell.id, 93));
+    const micro = fbm(u, v, 200, 2, 705);
+    const swirl = fbm(u, v, 26, 3, 706);
+
+    const h = 0.7 + (tone - 0.5) * 0.03 + micro * 0.015 + vein * 0.05 - joint * 0.45;
+
+    // near-black with a cold blue cast; the swirl keeps it from reading as felt
+    const baseL = 0.011 + tone * 0.016 + swirl * 0.01 + micro * 0.004;
+    let r = baseL * 0.92;
+    let g = baseL * 0.96;
+    let b = baseL * 1.25;
+    // gold: veins and the inlaid joints are the same metal
+    const gold = clamp01(vein * 0.9 + joint * 0.85);
+    r = lerp(r, 0.24, gold);
+    g = lerp(g, 0.165, gold);
+    b = lerp(b, 0.052, gold);
+
+    // mirror-polished stone; the gold is duller than the slab it sits in
+    const rough = clamp01(0.16 + polish * 0.1 + gold * 0.35 + swirl * 0.05);
+    return { r, g, b, h, rough };
+  },
+  macro(u, v) {
+    const f = macroFields(u, v, 700);
+    return {
+      // scuffed dull centre where the fighting happens, mirror rim
+      tint: (f.blotch - 0.5) * 0.9 + (f.fine - 0.5) * 0.3 - f.centre * 0.4,
+      rough: (f.patch - 0.5) * 0.9 + f.centre * 0.6 - f.rim * 0.3,
+      h: f.blotch * 0.6 + f.patch * 0.4,
+    };
+  },
+};
+
 /**
- * Every style a shipped arena actually asks for. `wood` is legal in the schema
- * enum but NO arena sets it (all five use stone/dirt/grass/sand), so shipping a
- * wood set would be ~1.5 MB of pixels nothing loads — groundMaterials.ts maps
- * wood onto the stone set instead.
+ * Every style the schema can name. ⛔ This list and
+ * `GROUND_STYLE_IDS` (packages/shared/src/content/schema/groundStyle.ts) must
+ * stay the SAME SET — a painter with no id ships pixels nothing can ask for, an
+ * id with no painter ships a floor that silently falls back to flat colour.
+ * `groundMaterials.test.ts` holds both directions.
  */
-export const GROUND_STYLES: GroundStyle[] = [stone, dirt, grass, sand];
+export const GROUND_STYLES: GroundStyle[] = [stone, dirt, grass, sand, wood, tatami, obsidian];

@@ -157,9 +157,13 @@ export function CheatConsole(): React.JSX.Element | null {
   // (env tier "loopback", task #127's classifier). Read from the same store key
   // AppRoot gates the mount on, so the two decisions cannot drift apart.
   const mode = useApp((s) => s.match?.mode);
+  // 練習房（GH#343）豁免環境分級：那間房裡沒有比賽可以被破壞，而 owner 要的正是
+  // 「進去就能用測試碼」—— 藏起來等於這個功能在 ggd.adms.ai 上完全找不到。
+  const practice = useApp((s) => s.match?.practice === true);
   const buttonVisible = cheatButtonVisible(
     mode,
     typeof window === "undefined" ? undefined : window.location.hostname,
+    practice,
   );
 
   const send = hudActions.sendCheat;
@@ -299,6 +303,28 @@ export function CheatConsole(): React.JSX.Element | null {
         </SfxButton>
         <SfxButton onClick={() => send(cheat.spawnFlower())} style={btn} title="戰鬥階段生成治療花朵">
           生成花朵
+        </SfxButton>
+      </Section>
+
+      {/* 即時生成殭屍 (GH#343)。數量刻意**不給輸入框**：一次生幾隻是
+          `config.practice@1` 的一格後台設定，這裡再開一個輸入框就是第四個住處。 */}
+      <Section title="生怪 Spawn">
+        <SfxButton
+          onClick={() => send(cheat.spawnMob("normal"))}
+          style={btn}
+          title="在自己所在的區域生一批一般殭屍（數量走後台的『生怪指令的預設數量』，並吃每區存活上限）"
+        >
+          一般殭屍
+        </SfxButton>
+        <SfxButton
+          onClick={() => send(cheat.spawnMob("special"))}
+          style={btn}
+          title="特殊殭屍（精英），規則同上"
+        >
+          特殊殭屍
+        </SfxButton>
+        <SfxButton onClick={() => send(cheat.spawnMob("boss"))} style={btn} title="召喚殭屍王">
+          殭屍王
         </SfxButton>
       </Section>
 

@@ -63,3 +63,50 @@ export function retiredChampionIds(): ReadonlySet<string> {
 export function isRetiredChampionId(id: string): boolean {
   return retiredChampionIds().has(id);
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+ * 隱藏英雄（彩蛋）—— owner 2026-08-17「隱藏角色可以隨機到 但不能選到」
+ * ══════════════════════════════════════════════════════════════════════════
+ *
+ * ⚠️ 與上面那一組（下架）的差別只有一個：**擋幾條路**。
+ *
+ *   · 下架 = 手動選 ⛔ + 隨機抽 ⛔（`Whitelist.allowsChampion` 一個 seam 蓋住兩條）
+ *   · 隱藏 = 手動選 ⛔ + 隨機抽 ✅（所以它必須**避開**那個 seam）
+ *
+ * ⛔ 這就是為什麼隱藏**不可以**放進 `Whitelist.allowsChampion`：那支函式同時餵
+ * `filterChampions` → `randomChampionPool()`，放進去就等於把隱藏做成下架，而且
+ * 兩者的測試長得幾乎一樣（失敗形態 ④：斷言方向跟缺陷無關）。
+ *
+ * ⭐ 「不可以被手動選到」是**伺服器權威**的：`SelectChampionMessage` 上只有一個
+ * `championId`，客戶端的 🎲 抽完之後送的是一模一樣的訊息 —— 伺服器分不出手動與
+ * 隨機。所以隱藏角色**只由伺服器自己抽的兩條路**發放（`autoPickAndSpawn` 與
+ * `mobChampionPicker`），任何一個進來的 SELECT_CHAMPION 一律拒絕。
+ */
+
+/**
+ * 從一份 `config.roster@1` 讀出隱藏清單。
+ *
+ * ⚠️ 缺文件 / 缺欄位 → 空集合（沒有人被藏起來），理由與 {@link
+ * retiredChampionIdsFromDoc}（:43-48）**完全相同**：讀不到時 fail-open 的代價是
+ * 「彩蛋角色暫時可以被選到」（難看，可回復），fail-closed 的代價是「內容載入
+ * 出問題時全部英雄消失」——那是 2026-08-01 選人畫面整個空掉的那個事故。
+ * ⚠️ 欄位是 `.optional()` 的（線上已經有 roster 的耐久覆蓋層），所以「沒有這一格」
+ * 是**正常狀態**不是壞掉。
+ */
+export function hiddenChampionIdsFromDoc(doc: unknown): ReadonlySet<string> {
+  if (!doc || typeof doc !== "object") return EMPTY;
+  const d = doc as { schema?: unknown; hiddenChampions?: unknown };
+  if (d.schema !== ROSTER_SCHEMA) return EMPTY;
+  if (!Array.isArray(d.hiddenChampions)) return EMPTY;
+  return new Set(d.hiddenChampions.filter((x): x is string => typeof x === "string" && x !== ""));
+}
+
+/** 目前生效的隱藏清單（讀 `Configs` registry）。 */
+export function hiddenChampionIds(): ReadonlySet<string> {
+  return hiddenChampionIdsFromDoc(Configs.tryGet(ROSTER_DOC_ID));
+}
+
+/** 這一隻是不是隱藏英雄（＝隨機抽得到、手動選不到）。 */
+export function isHiddenChampionId(id: string): boolean {
+  return hiddenChampionIds().has(id);
+}

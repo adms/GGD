@@ -32,7 +32,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
-import { zConfigArenaRulesDoc } from "@ggd/shared/content/schema/config";
+import { zConfigArenaRulesDoc, zDraftConflict } from "@ggd/shared/content/schema/config";
 import {
   ITEM_DRAFT_GROUP_ZH,
   RETIRED_TABLES_LABEL,
@@ -45,6 +45,11 @@ import {
   readRetiredTables,
   retiredTablesSummary,
   validateRetiredTables,
+  DRAFT_CONFLICT_LABEL,
+  DRAFT_CONFLICT_OPTIONS,
+  SHIPPED_DRAFT_CONFLICT,
+  patchDraftConflict,
+  readDraftConflict,
 } from "./itemDraft";
 
 const TAG = "adminui-item-draft";
@@ -68,6 +73,37 @@ describe("出貨值 = 真的出貨文件 (adminui-item-draft)", () => {
   it("★ 出貨的那份仍然通得過 Zod（後台送回去的東西不會被拒）", () => {
     cover(TAG);
     expect(() => zConfigArenaRulesDoc.parse(realDoc)).not.toThrow();
+  });
+});
+
+describe("撞卡裁決那一格也對得起出貨的東西 (#340, adminui-item-draft)", () => {
+  it("★ 出貨值 = 真的出貨文件；選項窮舉 Zod 的列舉；缺欄位讀成出貨值不是舊行為", () => {
+    cover(TAG);
+    expect(realDoc.draftConflict, "arena-rules 沒有 draftConflict").toBe(SHIPPED_DRAFT_CONFLICT);
+    // 三個選項 = Zod 的三個值，一個不多一個不少（漏一個 = 後台選不到那條路）。
+    expect([...DRAFT_CONFLICT_OPTIONS.map((o) => o.value)].sort()).toEqual(
+      [...zDraftConflict.options].sort(),
+    );
+    expect(readDraftConflict(realDoc)).toBe(SHIPPED_DRAFT_CONFLICT);
+    const legacy = { ...realDoc };
+    delete (legacy as Record<string, unknown>).draftConflict;
+    // ⚠️ 線上的耐久覆蓋層就長這樣。遊戲側 `rulesFromDoc` 的 `??` 讓它拿到出貨值，
+    // 後台畫成別的東西就是在說一件遊戲裡沒有在做的事。
+    expect(readDraftConflict(legacy)).toBe(SHIPPED_DRAFT_CONFLICT);
+    expect(DRAFT_CONFLICT_LABEL.note.length, "說明太短，看起來像在複述欄位名").toBeGreaterThan(20);
+  });
+
+  it("★ 頁面畫得出來、存檔真的把它寫出去，而且兄弟區塊一個都不掉", () => {
+    cover(TAG);
+    expect(PAGE, "沒有下拉 —— 欄位存在但操作者碰不到").toContain('data-field="draftConflict"');
+    expect(PAGE, "存檔沒有把撞卡裁決寫出去").toContain("patchDraftConflict(");
+    const next = patchDraftConflict(realDoc, "both");
+    expect(next.draftConflict).toBe("both");
+    for (const key of Object.keys(realDoc)) {
+      if (key === "draftConflict") continue;
+      expect(next[key], `存檔把 ${key} 弄丟了 —— 覆蓋層存的是整份文件`).toEqual(realDoc[key]);
+    }
+    expect(() => zConfigArenaRulesDoc.parse(next)).not.toThrow();
   });
 });
 

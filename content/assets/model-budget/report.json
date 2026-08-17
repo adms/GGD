@@ -1,31 +1,31 @@
 {
  "schema": "model-budget@1",
- "generatedAt": "2026-08-14T04:36:31.620Z",
+ "generatedAt": "2026-08-17T06:44:09.950Z",
  "generatedBy": "tools/model-budget/emit_report.ts (task #99)",
  "sources": [
   {
    "path": "content/models/_index.json",
    "sha256": "dc20d995ac6b2d40",
    "bytes": 17832,
-   "mtime": "2026-08-14T04:31:15.201Z"
+   "mtime": "2026-08-17T06:33:36.295Z"
   },
   {
    "path": "content/arenas/_index.json",
-   "sha256": "3c3a9c9f809d9ee8",
-   "bytes": 1872,
-   "mtime": "2026-08-14T04:31:15.190Z"
+   "sha256": "3832f76e1deb2882",
+   "bytes": 1874,
+   "mtime": "2026-08-17T06:33:36.284Z"
   },
   {
    "path": "content/champions/_index.json",
-   "sha256": "aed6f1fa19633314",
+   "sha256": "fa3c2c51cb085586",
    "bytes": 10293,
-   "mtime": "2026-08-14T04:31:15.127Z"
+   "mtime": "2026-08-17T06:33:36.237Z"
   },
   {
    "path": "apps/client/src/render/ArenaGround.ts",
-   "sha256": "c4416a17c22c0c9f",
-   "bytes": 27203,
-   "mtime": "2026-07-22T07:39:35.433Z"
+   "sha256": "285610b24b45c9d9",
+   "bytes": 30096,
+   "mtime": "2026-08-17T05:52:56.216Z"
   },
   {
    "path": "apps/client/src/render/intermission/layout.ts",
@@ -982,6 +982,30 @@
    "note": "12 名英雄以最壞合法陣容計（12 份 cloud.glb —— champ select 與 MatchRoom 都沒有禁止重複選角）。dressArena 無條件擺滿兩個 zone，且預設 drawDistance 140 > 兩個 zone 的最大距離 128u，所以沒有東西會被 drawDistance 剔除。",
    "models": [
     {
+     "id": "assets/models/props/torch.glb",
+     "count": 6
+    },
+    {
+     "id": "assets/models/props/torch_mounted.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/props/floor_tile_large.glb",
+     "count": 4
+    },
+    {
+     "id": "assets/models/hex/rock.glb",
+     "count": 8
+    },
+    {
+     "id": "assets/models/props/chest.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/props/crates_stacked.glb",
+     "count": 2
+    },
+    {
      "id": "assets/models/imported/cloud.glb",
      "count": 12
     }
@@ -1007,18 +1031,18 @@
     },
     {
      "label": "接地陰影（thin instance）",
-     "triangles": 0,
+     "triangles": 3360,
      "meshes": 1,
-     "note": "0 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+     "note": "24 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
     }
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 59012,
-   "drawCalls": 79,
+   "triangles": 69238,
+   "drawCalls": 105,
    "animChannels": 216,
-   "textureBytes": 293625,
-   "vramBytes": 17498103,
+   "textureBytes": 388378,
+   "vramBytes": 51052533,
    "limits": [
     {
      "key": "triangles",
@@ -1061,37 +1085,37 @@
     "triangles": "ok",
     "drawCalls": "ok",
     "animChannels": "ok",
-    "vramBytes": "ok"
+    "vramBytes": "over"
    },
    "variants": [
     {
      "id": "median",
      "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 29804,
-     "drawCalls": 79,
+     "triangles": 40030,
+     "drawCalls": 105,
      "animChannels": 240,
-     "textureBytes": 123970,
-     "vramBytes": 6291455,
+     "textureBytes": 218723,
+     "vramBytes": 39845885,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "ok"
+      "vramBytes": "warn"
      }
     },
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 21788,
-     "drawCalls": 43,
+     "triangles": 32014,
+     "drawCalls": 69,
      "animChannels": 96,
-     "textureBytes": 1108,
-     "vramBytes": 5593770,
+     "textureBytes": 95861,
+     "vramBytes": 39148200,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "ok"
+      "vramBytes": "warn"
      }
     }
    ]
@@ -1226,6 +1250,34 @@
    "note": "12 名英雄以最壞合法陣容計（12 份 cloud.glb —— champ select 與 MatchRoom 都沒有禁止重複選角）。dressArena 無條件擺滿兩個 zone，且預設 drawDistance 140 > 兩個 zone 的最大距離 128u，所以沒有東西會被 drawDistance 剔除。",
    "models": [
     {
+     "id": "assets/models/props/torch_mounted.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/props/torch.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/props/floor_tile_large.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/props/crates_stacked.glb",
+     "count": 4
+    },
+    {
+     "id": "assets/models/props/barrel_small.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/imported/japanesecherry.glb",
+     "count": 3
+    },
+    {
+     "id": "assets/models/hex/rock.glb",
+     "count": 2
+    },
+    {
      "id": "assets/models/imported/cloud.glb",
      "count": 12
     }
@@ -1251,18 +1303,18 @@
     },
     {
      "label": "接地陰影（thin instance）",
-     "triangles": 0,
+     "triangles": 2380,
      "meshes": 1,
-     "note": "0 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+     "note": "17 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
     }
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 59084,
-   "drawCalls": 85,
-   "animChannels": 216,
-   "textureBytes": 293625,
-   "vramBytes": 17498103,
+   "triangles": 68824,
+   "drawCalls": 105,
+   "animChannels": 219,
+   "textureBytes": 476977,
+   "vramBytes": 51314677,
    "limits": [
     {
      "key": "triangles",
@@ -1305,37 +1357,37 @@
     "triangles": "ok",
     "drawCalls": "ok",
     "animChannels": "ok",
-    "vramBytes": "ok"
+    "vramBytes": "over"
    },
    "variants": [
     {
      "id": "median",
      "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 29876,
-     "drawCalls": 85,
-     "animChannels": 240,
-     "textureBytes": 123970,
-     "vramBytes": 6291455,
+     "triangles": 39616,
+     "drawCalls": 105,
+     "animChannels": 243,
+     "textureBytes": 307322,
+     "vramBytes": 40108029,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "ok"
+      "vramBytes": "warn"
      }
     },
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 21860,
-     "drawCalls": 49,
-     "animChannels": 96,
-     "textureBytes": 1108,
-     "vramBytes": 5593770,
+     "triangles": 31600,
+     "drawCalls": 69,
+     "animChannels": 99,
+     "textureBytes": 184460,
+     "vramBytes": 39410344,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "ok"
+      "vramBytes": "warn"
      }
     }
    ]
@@ -1345,6 +1397,22 @@
    "label": "戰鬥 · 大聖杯洞窟",
    "note": "12 名英雄以最壞合法陣容計（12 份 cloud.glb —— champ select 與 MatchRoom 都沒有禁止重複選角）。dressArena 無條件擺滿兩個 zone，且預設 drawDistance 140 > 兩個 zone 的最大距離 128u，所以沒有東西會被 drawDistance 剔除。",
    "models": [
+    {
+     "id": "assets/models/props/torch.glb",
+     "count": 6
+    },
+    {
+     "id": "assets/models/props/torch_mounted.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/props/floor_tile_large.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/hex/rock.glb",
+     "count": 12
+    },
     {
      "id": "assets/models/imported/cloud.glb",
      "count": 12
@@ -1371,18 +1439,18 @@
     },
     {
      "label": "接地陰影（thin instance）",
-     "triangles": 0,
+     "triangles": 3080,
      "meshes": 1,
-     "note": "0 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+     "note": "22 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
     }
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 59132,
-   "drawCalls": 89,
+   "triangles": 64656,
+   "drawCalls": 111,
    "animChannels": 216,
-   "textureBytes": 293625,
-   "vramBytes": 17498103,
+   "textureBytes": 356790,
+   "vramBytes": 39867723,
    "limits": [
     {
      "key": "triangles",
@@ -1425,17 +1493,17 @@
     "triangles": "ok",
     "drawCalls": "ok",
     "animChannels": "ok",
-    "vramBytes": "ok"
+    "vramBytes": "warn"
    },
    "variants": [
     {
      "id": "median",
      "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 29924,
-     "drawCalls": 89,
+     "triangles": 35448,
+     "drawCalls": 111,
      "animChannels": 240,
-     "textureBytes": 123970,
-     "vramBytes": 6291455,
+     "textureBytes": 187135,
+     "vramBytes": 28661075,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
@@ -1446,11 +1514,11 @@
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 21908,
-     "drawCalls": 53,
+     "triangles": 27432,
+     "drawCalls": 75,
      "animChannels": 96,
-     "textureBytes": 1108,
-     "vramBytes": 5593770,
+     "textureBytes": 64273,
+     "vramBytes": 27963390,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
@@ -1465,6 +1533,34 @@
    "label": "戰鬥 · 無限城",
    "note": "12 名英雄以最壞合法陣容計（12 份 cloud.glb —— champ select 與 MatchRoom 都沒有禁止重複選角）。dressArena 無條件擺滿兩個 zone，且預設 drawDistance 140 > 兩個 zone 的最大距離 128u，所以沒有東西會被 drawDistance 剔除。",
    "models": [
+    {
+     "id": "assets/models/props/torch.glb",
+     "count": 6
+    },
+    {
+     "id": "assets/models/props/torch_mounted.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/hex/hex_water.glb",
+     "count": 5
+    },
+    {
+     "id": "assets/models/hex/waterlily.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/props/floor_tile_large.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/imported/japanesecherry.glb",
+     "count": 8
+    },
+    {
+     "id": "assets/models/hex/rock.glb",
+     "count": 2
+    },
     {
      "id": "assets/models/imported/cloud.glb",
      "count": 12
@@ -1491,18 +1587,18 @@
     },
     {
      "label": "接地陰影（thin instance）",
-     "triangles": 0,
+     "triangles": 3780,
      "meshes": 1,
-     "note": "0 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+     "note": "27 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
     }
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 59228,
-   "drawCalls": 97,
-   "animChannels": 216,
-   "textureBytes": 293625,
-   "vramBytes": 17498103,
+   "triangles": 66120,
+   "drawCalls": 132,
+   "animChannels": 224,
+   "textureBytes": 476955,
+   "vramBytes": 51314677,
    "limits": [
     {
      "key": "triangles",
@@ -1545,37 +1641,37 @@
     "triangles": "ok",
     "drawCalls": "ok",
     "animChannels": "ok",
-    "vramBytes": "ok"
+    "vramBytes": "over"
    },
    "variants": [
     {
      "id": "median",
      "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 30020,
-     "drawCalls": 97,
-     "animChannels": 240,
-     "textureBytes": 123970,
-     "vramBytes": 6291455,
+     "triangles": 36912,
+     "drawCalls": 132,
+     "animChannels": 248,
+     "textureBytes": 307300,
+     "vramBytes": 40108029,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "ok"
+      "vramBytes": "warn"
      }
     },
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 22004,
-     "drawCalls": 61,
-     "animChannels": 96,
-     "textureBytes": 1108,
-     "vramBytes": 5593770,
+     "triangles": 28896,
+     "drawCalls": 96,
+     "animChannels": 104,
+     "textureBytes": 184438,
+     "vramBytes": 39410344,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "ok"
+      "vramBytes": "warn"
      }
     }
    ]
@@ -1585,6 +1681,34 @@
    "label": "戰鬥 · 納薩力克大墳墓",
    "note": "12 名英雄以最壞合法陣容計（12 份 cloud.glb —— champ select 與 MatchRoom 都沒有禁止重複選角）。dressArena 無條件擺滿兩個 zone，且預設 drawDistance 140 > 兩個 zone 的最大距離 128u，所以沒有東西會被 drawDistance 剔除。",
    "models": [
+    {
+     "id": "assets/models/props/torch_mounted.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/props/torch.glb",
+     "count": 4
+    },
+    {
+     "id": "assets/models/props/floor_tile_large.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/props/chest.glb",
+     "count": 4
+    },
+    {
+     "id": "assets/models/props/crates_stacked.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/hex/rock.glb",
+     "count": 4
+    },
+    {
+     "id": "assets/models/imported/japanesecherry.glb",
+     "count": 3
+    },
     {
      "id": "assets/models/imported/cloud.glb",
      "count": 12
@@ -1611,18 +1735,18 @@
     },
     {
      "label": "接地陰影（thin instance）",
-     "triangles": 0,
+     "triangles": 2940,
      "meshes": 1,
-     "note": "0 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+     "note": "21 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
     }
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 59744,
-   "drawCalls": 81,
-   "animChannels": 216,
-   "textureBytes": 293625,
-   "vramBytes": 17498103,
+   "triangles": 70348,
+   "drawCalls": 109,
+   "animChannels": 219,
+   "textureBytes": 476977,
+   "vramBytes": 51314677,
    "limits": [
     {
      "key": "triangles",
@@ -1665,37 +1789,37 @@
     "triangles": "ok",
     "drawCalls": "ok",
     "animChannels": "ok",
-    "vramBytes": "ok"
+    "vramBytes": "over"
    },
    "variants": [
     {
      "id": "median",
      "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 30536,
-     "drawCalls": 81,
-     "animChannels": 240,
-     "textureBytes": 123970,
-     "vramBytes": 6291455,
+     "triangles": 41140,
+     "drawCalls": 109,
+     "animChannels": 243,
+     "textureBytes": 307322,
+     "vramBytes": 40108029,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "ok"
+      "vramBytes": "warn"
      }
     },
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 22520,
-     "drawCalls": 45,
-     "animChannels": 96,
-     "textureBytes": 1108,
-     "vramBytes": 5593770,
+     "triangles": 33124,
+     "drawCalls": 73,
+     "animChannels": 99,
+     "textureBytes": 184460,
+     "vramBytes": 39410344,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "ok"
+      "vramBytes": "warn"
      }
     }
    ]
@@ -1834,6 +1958,38 @@
    "note": "12 名英雄以最壞合法陣容計（12 份 cloud.glb —— champ select 與 MatchRoom 都沒有禁止重複選角）。dressArena 無條件擺滿兩個 zone，且預設 drawDistance 140 > 兩個 zone 的最大距離 128u，所以沒有東西會被 drawDistance 剔除。",
    "models": [
     {
+     "id": "assets/models/props/torch_mounted.glb",
+     "count": 4
+    },
+    {
+     "id": "assets/models/props/torch.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/props/floor_tile_large.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/props/crates_stacked.glb",
+     "count": 4
+    },
+    {
+     "id": "assets/models/props/barrel_small.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/props/chest.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/imported/japanesecherry.glb",
+     "count": 3
+    },
+    {
+     "id": "assets/models/hex/rock.glb",
+     "count": 2
+    },
+    {
      "id": "assets/models/imported/cloud.glb",
      "count": 12
     }
@@ -1859,18 +2015,18 @@
     },
     {
      "label": "接地陰影（thin instance）",
-     "triangles": 0,
+     "triangles": 2940,
      "meshes": 1,
-     "note": "0 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+     "note": "21 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
     }
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 59012,
-   "drawCalls": 79,
-   "animChannels": 216,
-   "textureBytes": 293625,
-   "vramBytes": 17498103,
+   "triangles": 71324,
+   "drawCalls": 105,
+   "animChannels": 219,
+   "textureBytes": 492771,
+   "vramBytes": 56907082,
    "limits": [
     {
      "key": "triangles",
@@ -1913,44 +2069,44 @@
     "triangles": "ok",
     "drawCalls": "ok",
     "animChannels": "ok",
-    "vramBytes": "ok"
+    "vramBytes": "over"
    },
    "variants": [
     {
      "id": "median",
      "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 29804,
-     "drawCalls": 79,
-     "animChannels": 240,
-     "textureBytes": 123970,
-     "vramBytes": 6291455,
+     "triangles": 42116,
+     "drawCalls": 105,
+     "animChannels": 243,
+     "textureBytes": 323116,
+     "vramBytes": 45700434,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "ok"
+      "vramBytes": "warn"
      }
     },
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 21788,
-     "drawCalls": 43,
-     "animChannels": 96,
-     "textureBytes": 1108,
-     "vramBytes": 5593770,
+     "triangles": 34100,
+     "drawCalls": 69,
+     "animChannels": 99,
+     "textureBytes": 200254,
+     "vramBytes": 45002749,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "ok"
+      "vramBytes": "warn"
      }
     }
    ]
   },
   {
    "id": "combat-skeleton",
-   "label": "戰鬥 · Skeleton Arena",
+   "label": "戰鬥 · 新手競技場",
    "note": "12 名英雄以最壞合法陣容計（12 份 cloud.glb —— champ select 與 MatchRoom 都沒有禁止重複選角）。dressArena 無條件擺滿兩個 zone，且預設 drawDistance 140 > 兩個 zone 的最大距離 128u，所以沒有東西會被 drawDistance 剔除。",
    "models": [
     {
@@ -2094,6 +2250,38 @@
    "note": "12 名英雄以最壞合法陣容計（12 份 cloud.glb —— champ select 與 MatchRoom 都沒有禁止重複選角）。dressArena 無條件擺滿兩個 zone，且預設 drawDistance 140 > 兩個 zone 的最大距離 128u，所以沒有東西會被 drawDistance 剔除。",
    "models": [
     {
+     "id": "assets/models/hex/hex_grass.glb",
+     "count": 4
+    },
+    {
+     "id": "assets/models/hex/waterlily.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/hex/hex_water.glb",
+     "count": 4
+    },
+    {
+     "id": "assets/models/props/torch.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/hex/trees_medium.glb",
+     "count": 4
+    },
+    {
+     "id": "assets/models/hex/tree_single.glb",
+     "count": 4
+    },
+    {
+     "id": "assets/models/imported/japanesecherry.glb",
+     "count": 3
+    },
+    {
+     "id": "assets/models/hex/rock.glb",
+     "count": 2
+    },
+    {
      "id": "assets/models/imported/cloud.glb",
      "count": 12
     }
@@ -2119,18 +2307,18 @@
     },
     {
      "label": "接地陰影（thin instance）",
-     "triangles": 0,
+     "triangles": 3500,
      "meshes": 1,
-     "note": "0 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+     "note": "25 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
     }
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 59132,
-   "drawCalls": 89,
-   "animChannels": 216,
-   "textureBytes": 293625,
-   "vramBytes": 17498103,
+   "triangles": 65818,
+   "drawCalls": 117,
+   "animChannels": 219,
+   "textureBytes": 492716,
+   "vramBytes": 56907082,
    "limits": [
     {
      "key": "triangles",
@@ -2173,37 +2361,37 @@
     "triangles": "ok",
     "drawCalls": "ok",
     "animChannels": "ok",
-    "vramBytes": "ok"
+    "vramBytes": "over"
    },
    "variants": [
     {
      "id": "median",
      "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 29924,
-     "drawCalls": 89,
-     "animChannels": 240,
-     "textureBytes": 123970,
-     "vramBytes": 6291455,
+     "triangles": 36610,
+     "drawCalls": 117,
+     "animChannels": 243,
+     "textureBytes": 323061,
+     "vramBytes": 45700434,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "ok"
+      "vramBytes": "warn"
      }
     },
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 21908,
-     "drawCalls": 53,
-     "animChannels": 96,
-     "textureBytes": 1108,
-     "vramBytes": 5593770,
+     "triangles": 28594,
+     "drawCalls": 81,
+     "animChannels": 99,
+     "textureBytes": 200199,
+     "vramBytes": 45002749,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "ok"
+      "vramBytes": "warn"
      }
     }
    ]
@@ -2825,6 +3013,12 @@
      "detail": ""
     },
     {
+     "kind": "COMBAT:arena.world-tree",
+     "label": "競技場擺設 · 世界樹核心",
+     "count": 4,
+     "detail": ""
+    },
+    {
      "kind": "INTERMISSION",
      "label": "中場市集",
      "count": 78,
@@ -2874,6 +3068,18 @@
      "label": "競技場擺設 · Dota 三路河道（迷你）",
      "count": 28,
      "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.infinity-castle",
+     "label": "競技場擺設 · 無限城",
+     "count": 5,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.world-tree",
+     "label": "競技場擺設 · 世界樹核心",
+     "count": 4,
+     "detail": ""
     }
    ],
    "broken": "near-zero",
@@ -2912,12 +3118,54 @@
     }
    ],
    "fileBytes": 18656,
-   "worstCount": 4,
+   "worstCount": 12,
    "usedBy": [
     {
      "kind": "COMBAT:arena.dota",
      "label": "競技場擺設 · Dota 三路河道（迷你）",
      "count": 4,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.frieren",
+     "label": "競技場擺設 · 芙莉蓮迷宮",
+     "count": 8,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.heavens-arena",
+     "label": "競技場擺設 · 天空鬥技場",
+     "count": 2,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.holy-grail",
+     "label": "競技場擺設 · 大聖杯洞窟",
+     "count": 12,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.infinity-castle",
+     "label": "競技場擺設 · 無限城",
+     "count": 2,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.nazarick",
+     "label": "競技場擺設 · 納薩力克大墳墓",
+     "count": 4,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.shiganshina",
+     "label": "競技場擺設 · 希干希納",
+     "count": 2,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.world-tree",
+     "label": "競技場擺設 · 世界樹核心",
+     "count": 2,
      "detail": ""
     },
     {
@@ -3062,6 +3310,12 @@
      "detail": ""
     },
     {
+     "kind": "COMBAT:arena.world-tree",
+     "label": "競技場擺設 · 世界樹核心",
+     "count": 4,
+     "detail": ""
+    },
+    {
      "kind": "INTERMISSION",
      "label": "中場市集",
      "count": 3,
@@ -3164,6 +3418,12 @@
      "detail": ""
     },
     {
+     "kind": "COMBAT:arena.world-tree",
+     "label": "競技場擺設 · 世界樹核心",
+     "count": 4,
+     "detail": ""
+    },
+    {
      "kind": "INTERMISSION",
      "label": "中場市集",
      "count": 3,
@@ -3212,6 +3472,18 @@
      "kind": "COMBAT:arena.dota",
      "label": "競技場擺設 · Dota 三路河道（迷你）",
      "count": 4,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.infinity-castle",
+     "label": "競技場擺設 · 無限城",
+     "count": 2,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.world-tree",
+     "label": "競技場擺設 · 世界樹核心",
+     "count": 2,
      "detail": ""
     },
     {
@@ -6612,6 +6884,36 @@
      "label": "競技場擺設 · 去死團的逆襲 EX 2.2s",
      "count": 50,
      "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.heavens-arena",
+     "label": "競技場擺設 · 天空鬥技場",
+     "count": 3,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.infinity-castle",
+     "label": "競技場擺設 · 無限城",
+     "count": 8,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.nazarick",
+     "label": "競技場擺設 · 納薩力克大墳墓",
+     "count": 3,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.shiganshina",
+     "label": "競技場擺設 · 希干希納",
+     "count": 3,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.world-tree",
+     "label": "競技場擺設 · 世界樹核心",
+     "count": 3,
+     "detail": ""
     }
    ],
    "broken": "",
@@ -8554,7 +8856,7 @@
     },
     {
      "kind": "COMBAT:arena.skeleton",
-     "label": "競技場擺設 · Skeleton Arena",
+     "label": "競技場擺設 · 新手競技場",
      "count": 1,
      "detail": ""
     },
@@ -8617,7 +8919,7 @@
     },
     {
      "kind": "COMBAT:arena.skeleton",
-     "label": "競技場擺設 · Skeleton Arena",
+     "label": "競技場擺設 · 新手競技場",
      "count": 1,
      "detail": ""
     }
@@ -8674,7 +8976,7 @@
     },
     {
      "kind": "COMBAT:arena.skeleton",
-     "label": "競技場擺設 · Skeleton Arena",
+     "label": "競技場擺設 · 新手競技場",
      "count": 1,
      "detail": ""
     }
@@ -8731,7 +9033,7 @@
     },
     {
      "kind": "COMBAT:arena.skeleton",
-     "label": "競技場擺設 · Skeleton Arena",
+     "label": "競技場擺設 · 新手競技場",
      "count": 1,
      "detail": ""
     }
@@ -8787,6 +9089,18 @@
      "detail": ""
     },
     {
+     "kind": "COMBAT:arena.heavens-arena",
+     "label": "競技場擺設 · 天空鬥技場",
+     "count": 2,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.shiganshina",
+     "label": "競技場擺設 · 希干希納",
+     "count": 2,
+     "detail": ""
+    },
+    {
      "kind": "INTERMISSION",
      "label": "中場市集",
      "count": 2,
@@ -8829,11 +9143,29 @@
     }
    ],
    "fileBytes": 81412,
-   "worstCount": 2,
+   "worstCount": 4,
    "usedBy": [
     {
      "kind": "COMBAT:arena.castle",
      "label": "競技場擺設 · 城堡競技場（室內）",
+     "count": 2,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.frieren",
+     "label": "競技場擺設 · 芙莉蓮迷宮",
+     "count": 2,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.nazarick",
+     "label": "競技場擺設 · 納薩力克大墳墓",
+     "count": 4,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.shiganshina",
+     "label": "競技場擺設 · 希干希納",
      "count": 2,
      "detail": ""
     },
@@ -8895,6 +9227,30 @@
      "detail": ""
     },
     {
+     "kind": "COMBAT:arena.frieren",
+     "label": "競技場擺設 · 芙莉蓮迷宮",
+     "count": 2,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.heavens-arena",
+     "label": "競技場擺設 · 天空鬥技場",
+     "count": 4,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.nazarick",
+     "label": "競技場擺設 · 納薩力克大墳墓",
+     "count": 2,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.shiganshina",
+     "label": "競技場擺設 · 希干希納",
+     "count": 4,
+     "detail": ""
+    },
+    {
      "kind": "INTERMISSION",
      "label": "中場市集",
      "count": 1,
@@ -8915,7 +9271,7 @@
    "path": "assets/models/props/floor_tile_large.glb",
    "group": "props",
    "shipping": true,
-   "role": "intermission-prop",
+   "role": "arena-decor",
    "triangles": 188,
    "vertices": 311,
    "drawCalls": 1,
@@ -8940,6 +9296,42 @@
    "worstCount": 49,
    "usedBy": [
     {
+     "kind": "COMBAT:arena.frieren",
+     "label": "競技場擺設 · 芙莉蓮迷宮",
+     "count": 4,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.heavens-arena",
+     "label": "競技場擺設 · 天空鬥技場",
+     "count": 2,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.holy-grail",
+     "label": "競技場擺設 · 大聖杯洞窟",
+     "count": 2,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.infinity-castle",
+     "label": "競技場擺設 · 無限城",
+     "count": 2,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.nazarick",
+     "label": "競技場擺設 · 納薩力克大墳墓",
+     "count": 2,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.shiganshina",
+     "label": "競技場擺設 · 希干希納",
+     "count": 2,
+     "detail": ""
+    },
+    {
      "kind": "INTERMISSION",
      "label": "中場市集",
      "count": 49,
@@ -8950,7 +9342,7 @@
    "verdicts": {
     "triangles": "ok",
     "drawCalls": "ok",
-    "maxTextureEdge": "over",
+    "maxTextureEdge": "warn",
     "animChannels": "ok"
    },
    "note": ""
@@ -9114,15 +9506,57 @@
      "detail": ""
     },
     {
+     "kind": "COMBAT:arena.frieren",
+     "label": "競技場擺設 · 芙莉蓮迷宮",
+     "count": 6,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.heavens-arena",
+     "label": "競技場擺設 · 天空鬥技場",
+     "count": 2,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.holy-grail",
+     "label": "競技場擺設 · 大聖杯洞窟",
+     "count": 6,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.infinity-castle",
+     "label": "競技場擺設 · 無限城",
+     "count": 6,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.nazarick",
+     "label": "競技場擺設 · 納薩力克大墳墓",
+     "count": 4,
+     "detail": ""
+    },
+    {
      "kind": "COMBAT:arena.royale",
      "label": "競技場擺設 · 終局大混戰",
      "count": 4,
      "detail": ""
     },
     {
+     "kind": "COMBAT:arena.shiganshina",
+     "label": "競技場擺設 · 希干希納",
+     "count": 2,
+     "detail": ""
+    },
+    {
      "kind": "COMBAT:arena.skeleton",
-     "label": "競技場擺設 · Skeleton Arena",
+     "label": "競技場擺設 · 新手競技場",
      "count": 16,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.world-tree",
+     "label": "競技場擺設 · 世界樹核心",
+     "count": 2,
      "detail": ""
     },
     {
@@ -9174,6 +9608,42 @@
      "kind": "COMBAT:arena.colosseum",
      "label": "競技場擺設 · 羅馬大擂台（室外）",
      "count": 16,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.frieren",
+     "label": "競技場擺設 · 芙莉蓮迷宮",
+     "count": 2,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.heavens-arena",
+     "label": "競技場擺設 · 天空鬥技場",
+     "count": 2,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.holy-grail",
+     "label": "競技場擺設 · 大聖杯洞窟",
+     "count": 2,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.infinity-castle",
+     "label": "競技場擺設 · 無限城",
+     "count": 2,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.nazarick",
+     "label": "競技場擺設 · 納薩力克大墳墓",
+     "count": 2,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.shiganshina",
+     "label": "競技場擺設 · 希干希納",
+     "count": 4,
      "detail": ""
     }
    ],

@@ -13,9 +13,10 @@ import { AUGMENT_TIER_SCHEDULE, DEFAULT_ITEM_DRAFT_POLICY } from "@ggd/shared/si
 import type { ItemDraftPolicy } from "@ggd/shared/sim/economy/draft";
 import { DEFAULT_GRAIL_DRAFT } from "@ggd/shared/sim/economy/grailVocabulary";
 import type { GrailDraftRules } from "@ggd/shared/sim/economy/grailVocabulary";
-import { Configs, scheduledRetiredTables } from "@ggd/shared/content";
+import { Configs, scheduledRetiredTables, DEFAULT_DRAFT_CONFLICT } from "@ggd/shared/content";
 import { MAX_ROUNDS_UNLIMITED } from "@ggd/shared/roomSettings";
 import type {
+  DraftConflict,
   ConfigArenaRulesDoc,
   FlowerConfig,
   ReviveCircleConfig,
@@ -53,6 +54,20 @@ export interface ArenaRules {
    * 那份文件要的是**出貨規則**，不是「這個閘不存在」。
    */
   grailDraft: GrailDraftRules;
+  /**
+   * ⭐ 同一回合**同時**排了聖杯願望（`augmentTier`）與寶具（`weaponLootTable`）
+   * 時要發哪一個（owner 2026-08-17「兩者衝突不顯示寶具三選一」，#340）。
+   *
+   * ⚠️ 它是一個**決策點**不是數值（第一守則）：兩張三選一共用同一段中場倒數，
+   * 所以「都發」的代價是玩家的選擇時間被切成兩半。判斷哪一張讓路是設計，
+   * 不是調參 —— 所以它是一格後台開關，而 `both` 逐字等於 2026-08-17 之前的行為。
+   *
+   * ⚠️ 消費端一律走 {@link grailDraftAllowed} / {@link weaponDraftAllowed}，
+   * ⛔ 不要在別處再寫一次這個比較 —— 舊錄影的表頭沒有這一格（見
+   * `replay/headerCodec.ts` 的 `rebuildRules`），那兩支函式吃得下 undefined
+   * 並還原成當時真的發生的「兩張都發」。
+   */
+  draftConflict: DraftConflict;
   /** round number -> grants applied at that round's intermission entry */
   rounds: ReadonlyMap<number, RoundGrant>;
   /** grants for every round past the highest `rounds` key (escalating gold) */
@@ -116,6 +131,11 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
   offerCount: 3,
   itemDraft: DEFAULT_ITEM_DRAFT_POLICY,
   grailDraft: DEFAULT_GRAIL_DRAFT,
+  // ⚠️ 這一格**不是**「保留舊行為」的那個值。第〇·六守則：優先權大的更新
+  // 預設啟動，所以連骨架/單元測試的預設也走 owner 的裁決。DEFAULT_ARENA_RULES
+  // 本身一個回合都沒排寶具，所以它在這裡沒有可見後果 —— 但它讓「新建構點忘了
+  // 想這一格」時落到的那個值是**設計**，不是 2026-08-17 之前的行為。
+  draftConflict: DEFAULT_DRAFT_CONFLICT,
   rounds: new Map(
     Object.entries(AUGMENT_TIER_SCHEDULE).map(([round, tier]) => [
       Number(round),
@@ -190,6 +210,10 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
       ? { ...(doc.itemDraft ?? DEFAULT_ITEM_DRAFT_POLICY), fallbackTable: "" }
       : (doc.itemDraft ?? DEFAULT_ITEM_DRAFT_POLICY),
     grailDraft: doc.grailDraft ?? DEFAULT_GRAIL_DRAFT,
+    // ⚠️ `??` 不是防禦性寫法，它是**線上耐久覆蓋層**的那條路：那份文件是這一格
+    // 存在之前存的，少了它。缺席要拿到的是新的出貨預設（owner 的裁決），
+    // ⛔ 不是 `both`（＝靜靜地維持他剛剛抱怨的那個行為）。
+    draftConflict: doc.draftConflict ?? DEFAULT_DRAFT_CONFLICT,
     rounds,
     overflow: doc.overflow ?? null,
     // A retired gacha pool turns the legacy per-round gacha OFF rather than
@@ -224,6 +248,29 @@ export function grantForRound(rules: ArenaRules, round: number): RoundGrant | nu
     grantGold: rules.overflow.grantGold + rules.overflow.grantGoldPerRound * (round - maxRound - 1),
     augmentTier: rules.overflow.augmentTier,
   };
+}
+
+// ────────────────────────────── 同一回合撞卡的裁決（#340）──────────────────
+//
+// owner 2026-08-17：「調整寶具跟固有能力三選一 不要同時出現 造成選擇時間不夠
+// (兩者有衝突不顯示寶具三選一)」。
+//
+// ⛔ **機制在這裡，不在內容裡**（第〇·五守則）：解法不是把第 2、5 回合的
+// `weaponLootTable` 從 arena-rules.json 刪掉。刪掉的話 owner 改主意就得改內容 +
+// 重新部署，而且「為什麼那兩回合沒有寶具」會變成一段沒有人記得的歷史。留著排程、
+// 由這兩支謂詞在發卡當下裁決，`draftConflict` 一格就切得回來。
+//
+// ⛔ 也**不為第 2、5 回合寫 if**：這兩支只讀「這一回合排了什麼」，
+// 所以任何一個新的雙排回合（後台排的、overflow 排的）自動受同一條規則管。
+
+/** 這一回合發不發**聖杯願望**三選一（`augmentTier` 已經確定有排的前提下）。 */
+export function grailDraftAllowed(rules: ArenaRules, grant: RoundGrant): boolean {
+  return !(grant.weaponLootTable && rules.draftConflict === "weapon-wins");
+}
+
+/** 這一回合發不發**寶具**三選一（`weaponLootTable` 已經確定有排的前提下）。 */
+export function weaponDraftAllowed(rules: ArenaRules, grant: RoundGrant): boolean {
+  return !(grant.augmentTier && rules.draftConflict === "grail-wins");
 }
 
 /**

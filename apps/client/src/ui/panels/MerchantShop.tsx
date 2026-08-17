@@ -76,6 +76,7 @@ import { buildItemRow, itemDisplayName, type RowItem } from "./itemStats";
 import { Tooltip } from "../components/Tooltip";
 // owner 2026-08-02 的卡片排版,四個渲染點之二(商店卡片 + 商店裡的道具欄 hover)。
 import { ItemCardBody } from "../components/ItemCardBody";
+import { itemIconFillPct } from "../components/itemCardTheme";
 import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "../components/abilityText";
 import {
   computeStatBlock,
@@ -1086,6 +1087,13 @@ export function StatPanel(props: {
 
 function InventoryGrid(props: { seat: SeatView; filled: number }): React.JSX.Element {
   const { seat, filled } = props;
+  // #338:圖示佔一格多少是**後台旋鈕**(config.item-card@1 的 iconFillPct)。
+  // 出貨 100 = 貼齊格子邊 → GlyphTile 自己的 inset:0 就是答案,這裡什麼都不加;
+  // 調小 = 圖示縮回格子中央、四周留白變多。
+  // ⛔ 這一格不改**格子**的大小:owner 抱怨的是圖太小,而 `repeat(6,1fr)` 那一格
+  // 同時是觸控目標,縮小它等於用一個新缺陷換掉舊的。
+  const iconPct = itemIconFillPct();
+  const iconInset = iconPct >= 100 ? undefined : { inset: `${(100 - iconPct) / 2}%` };
   return (
     <div style={{ marginBottom: 4 }}>
       <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 3 }}>
@@ -1169,7 +1177,11 @@ function InventoryGrid(props: { seat: SeatView; filled: number }): React.JSX.Ele
                   overflow: "hidden",
                 }}
               >
-                <GlyphTile seed={itemId} icon={def?.icon ?? null} label={name} size={38} />
+                {/* #338:`fill` 而不是 `size={38}` —— 這一格是 `repeat(6,1fr)` 的
+                    流動寬度(桌機實測約 84px),所以任何寫死的 px 邊長都只會填滿
+                    格子的一部分。圓角刻意不傳:GlyphTile 的 fill 會 `inherit`
+                    上面那顆 SfxButton 的圓角,兩邊就不會各自寫一個會漂移的數字。 */}
+                <GlyphTile seed={itemId} icon={def?.icon ?? null} label={name} fill style={iconInset} />
                 <span
                   style={{
                     position: "absolute",

@@ -250,6 +250,8 @@ const GROUND_BASE: Record<string, Color3> = {
   wood: new Color3(0.24, 0.18, 0.12),
   grass: new Color3(0.22, 0.4, 0.19),
   sand: new Color3(0.6, 0.5, 0.32),
+  tatami: new Color3(0.3, 0.31, 0.16),
+  obsidian: new Color3(0.09, 0.09, 0.12),
 };
 
 /** The kerb is built masonry, not more field: darker and flatter than the floor

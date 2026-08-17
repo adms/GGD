@@ -194,6 +194,15 @@ describe("分類重編一頁都沒有掉", () => {
       // 2026-08-17：介面用語（Fate）—— owner「這些替換的介面提示等用語，
       // 應該是一個 JSON 檔，可以在後台替換設定」。
       "uiLexicon",
+      // 2026-08-17 GH#336：英雄上下架。⚠️ 它補的是一個**存在已久的洞** ——
+      // `configDocCoverage` 一直把 `config.roster@1` 記成 KNOWN_GAP
+      //（「apps/admin/src 對 roster / retiredChampions 零引用」），
+      // 而那份 JSON 自己的 note 卻寫著「不用改程式、不用重新部署」。
+      "roster",
+      // 2026-08-17 GH#339：混音（其他角色的語音音量倍率）。
+      "audioMix",
+      // 2026-08-17 GH#343：練習模式（總開關 + 五格行為）。
+      "practice",
     ]);
     const added = [...after].filter((p) => !before.has(p) && !SINCE_BASELINE.has(p));
     expect(lost, `搬家把這些頁面弄丟了（元件還在，但左欄按不到）：${lost.join(", ")}`).toEqual([]);
@@ -224,11 +233,18 @@ describe("分類重編一頁都沒有掉", () => {
     expect(strays, `這些列的分組不在 SECTION_ORDER 裡：${strays.join(", ")}`).toEqual([]);
   });
 
-  it("「系統」真的變短了 —— 這次重編的目的就是這件事", () => {
+  it("「系統」沒有把搬出去的頁面收回來 —— 這次重編的目的就是這件事", () => {
     cover(TAG);
-    const sys = NAV.filter((n) => n.section === "系統").length;
-    // 重編前是 26 列。四個新分類共搬走 11 列，所以這裡必須明顯少於 26。
-    expect(sys, "「系統」沒有變短 —— 分類搬走了但成員沒跟著走？").toBeLessThan(26);
+    // ⚠️ 這一條原本是 `sys.length < 26`（重編前的列數）。那是一個**會過期的絕對
+    // 數字**：後來每加一頁真正屬於系統的設定（GH#339 混音、GH#343 練習模式）
+    // 它就會紅，而訊息會說「分類搬走了但成員沒跟著走」—— 一個與缺陷無關的謊。
+    // ⇒ 改成守真正的性質：**被搬走的那些頁，一頁都不可以回到「系統」**。
+    // 它擋得住真正的回歸（有人把 storeEconomy 改回 SEC_SYS），而且加新的系統頁
+    // 不會誤報。
+    const sys = new Set(NAV.filter((n) => n.section === "系統").map((n) => n.page));
+    const movedOut = APPROVED_MOVES.flatMap((m) => m.pages);
+    const backInSys = movedOut.filter((p) => sys.has(p));
+    expect(backInSys, `這些頁被搬出「系統」之後又跑回去了：${backInSys.join(", ")}`).toEqual([]);
   });
 });
 

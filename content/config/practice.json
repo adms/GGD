@@ -1,0 +1,11 @@
+{
+  "id": "practice",
+  "schema": "config.practice@1",
+  "note": "練習模式（GH#343，owner 2026-08-17「新增練習模式，可以選擇場地及角色，但進入不會有對戰，可以使用各種功能測試碼（之前做過），以及即時生成殭屍等特殊單位」）。⭐ 練習房是**單人沙盒**：沒有敵隊、不結算、不發水晶、不動 MMR、不寫任何玩家資料 —— 正因為它對經濟與排名零影響，「在練習房裡開放測試碼」才不是經濟漏洞。⚠️ 這份文件只有在一間房被開成練習房時才會被讀到，所以除了 enabled 以外的每一格預設值選的都是「練習房裡最有用」，不是「最像正式賽」。⚠️ 存檔寫進的是耐久覆蓋層（data/），覆蓋層會蓋掉這個檔案。",
+  "enabled": true,
+  "endlessCombat": true,
+  "autoMobWaves": false,
+  "fireRing": false,
+  "autoRevive": true,
+  "spawnBatch": 3
+}

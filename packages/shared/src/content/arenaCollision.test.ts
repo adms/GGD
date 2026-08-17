@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../testkit/cover";
 import { zArenaDoc, zArenaDef } from "./schema/arena";
+import { GROUND_STYLE_IDS } from "./schema/groundStyle";
 import { auditArenaCollision, classifyModel, circleObstacleForDecor } from "./arenaCollision";
 
 const miniZone = {
@@ -15,11 +16,17 @@ const miniZone = {
 };
 
 describe("arena groundStyle enum (arena-groundstyle)", () => {
-  it("accepts grass and sand alongside the existing stone/dirt/wood", () => {
+  it("accepts EVERY id the single source of truth declares", () => {
     cover("arena-groundstyle-enum");
-    for (const groundStyle of ["stone", "dirt", "wood", "grass", "sand"] as const) {
+    // ⭐ GH#342 —— ⛔ 這裡刻意**不**抄一份字面清單。名字只住在
+    // `./schema/groundStyle.ts`，`arena@1` 要收得下它宣告的每一個 ——
+    // 收不下的那一個，就是一張編出來會被自己的 schema 拒收的場地。
+    for (const groundStyle of GROUND_STYLE_IDS) {
       const r = zArenaDef.safeParse({ id: "arena.x", name: "X", zones: [miniZone], groundStyle });
-      expect(r.success, groundStyle).toBe(true);
+      expect(
+        r.success,
+        `arena@1 收不下 "${groundStyle}" —— 把 schema/arena.ts 的 groundStyle 改成 z.enum(GROUND_STYLE_IDS)`,
+      ).toBe(true);
     }
     // unknown styles still rejected
     expect(zArenaDef.safeParse({ id: "arena.x", name: "X", zones: [miniZone], groundStyle: "lava" }).success).toBe(false);

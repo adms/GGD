@@ -36,6 +36,7 @@
  */
 import { useMemo } from "react";
 import { Arenas } from "@ggd/shared/content";
+import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
 import { useContentReady } from "./ContentGate";
 
 export interface ArenaOption {
@@ -48,7 +49,16 @@ export interface ArenaOption {
  * 也是選單的預設值。內容還沒載完時它是唯一的選項。
  */
 export const DEFAULT_MAP_ID = "arena.skeleton";
-const SKELETON_OPTION: ArenaOption = { id: DEFAULT_MAP_ID, label: "Skeleton (預設)" };
+
+/**
+ * ⚠️ 內容還沒載完時的那一筆 fallback（見檔頭：⛔ 不是空陣列）。
+ *
+ * 標籤取內建常數 `SKELETON_ARENA.name`，⛔ **不在這裡手寫字串** ——
+ * 這一行原本寫死成 `"Skeleton (預設)"`（GH#341），於是骨架圖有三份名字、
+ * 其中兩份是英文，而且 `arenaOptions()` 無條件用這一份 ⇒ **改了 arena doc
+ * 也沒有用，下拉選單還是英文**。手寫的標籤正好違反這個檔案檔頭立的規矩。
+ */
+const SKELETON_FALLBACK: ArenaOption = { id: DEFAULT_MAP_ID, label: SKELETON_ARENA.name };
 
 interface ArenaDocLike {
   id: string;
@@ -63,19 +73,22 @@ interface ArenaDocLike {
  */
 export function arenaOptions(): ArenaOption[] {
   const docs = Arenas.all() as ArenaDocLike[];
-  if (docs.length === 0) return [SKELETON_OPTION];
+  if (docs.length === 0) return [SKELETON_FALLBACK];
 
   const rest: ArenaOption[] = [];
-  let hasSkeleton = false;
+  // ⭐ 骨架走跟其他 12 張**同一條路**（標籤取 doc 自己的 `name`），只有排序
+  // 特別 —— 它是預設值所以排第一。⛔ 不再用一個手寫常數蓋掉它。
+  let skeleton: ArenaOption | null = null;
   for (const d of docs) {
+    const opt: ArenaOption = { id: d.id, label: d.name && d.name.length > 0 ? d.name : d.id };
     if (d.id === DEFAULT_MAP_ID) {
-      hasSkeleton = true;
+      skeleton = opt;
       continue;
     }
-    rest.push({ id: d.id, label: d.name && d.name.length > 0 ? d.name : d.id });
+    rest.push(opt);
   }
   rest.sort((a, b) => a.label.localeCompare(b.label, "zh-Hant"));
-  return hasSkeleton ? [SKELETON_OPTION, ...rest] : rest;
+  return skeleton ? [skeleton, ...rest] : rest;
 }
 
 /** React 版：內容載完之後自動重算（#170 的背景載入）。 */
@@ -87,6 +100,9 @@ export function useArenaOptions(): ArenaOption[] {
 
 /** 一個 id 在選單上叫什麼。查不到就回 id 本身，⛔ 不要回空字串。 */
 export function arenaLabel(id: string): string {
-  if (id === "" ) return SKELETON_OPTION.label;
-  return arenaOptions().find((o) => o.id === id)?.label ?? id;
+  const key = id === "" ? DEFAULT_MAP_ID : id;
+  const hit = arenaOptions().find((o) => o.id === key);
+  if (hit) return hit.label;
+  // 骨架連 doc 都沒註冊時仍要有一個中文名可以顯示，⛔ 不要退回 `arena.skeleton`。
+  return key === DEFAULT_MAP_ID ? SKELETON_FALLBACK.label : key;
 }

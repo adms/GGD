@@ -17,6 +17,9 @@
  * schemas spell "no value".
  */
 import type { EditCollection, FieldKind } from "@ggd/shared/content/editModel";
+// ⚠️ 地面材質名**推導**自引擎認得的那一份，⛔ 不在提示字串裡手抄 ——
+// 手抄的那一版在 GH#342 之前少了 tatami / obsidian 兩個，而它不會有東西變紅。
+import { GROUND_STYLE_IDS } from "@ggd/shared/content/schema/groundStyle";
 
 export interface FieldSpec {
   /** dot path into the document ("baseStats.maxHealth") */
@@ -281,7 +284,7 @@ const ARENA_GROUPS: readonly FieldGroup[] = [
         path: "groundStyle",
         label: "地面樣式",
         kind: "text",
-        hint: "stone / dirt / wood / grass / sand（視覺，不影響碰撞）",
+        hint: `${GROUND_STYLE_IDS.join(" / ")}（視覺，不影響碰撞）`,
       },
     ],
   },

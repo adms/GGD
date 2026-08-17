@@ -22,6 +22,7 @@ import type {
   ConfigVoxelBodiesDoc,
   ConfigFormVisualsDoc,
   ConfigVictoryFxDoc,
+  ConfigAudioMixDoc,
   ConfigUiLexiconDoc,
   FormVisual,
   AmbientVfxBinding,
@@ -53,6 +54,11 @@ import { applyDamageColorsDoc } from "../render/damagePalette";
 // `content/config/item-card.json` 就是一份沒人讀的檔案。
 import { applyItemCardDoc } from "../ui/components/itemCardTheme";
 import { applyVictoryFxDoc } from "../vfx/victoryFxPolicy";
+// GH#339 混音表 (owner 2026-08-17「其他角色的語音音量應該減少一半」)。同一條縫、
+// 同一個理由:沒有這一行,`content/config/audio-mix.json` 就是一份沒人讀的檔案 ——
+// 後台把滑桿拉到 0.2,場上還是一樣吵(第②號故障)。傳 null(檔案不存在／schema
+// 不合)= `DEFAULT_AUDIO_MIX` 的出貨倍率,不是「跟自己一樣大聲」。
+import { applyAudioMixDoc } from "../audio/voiceMixPolicy";
 // GH#230 L2 —— w3x 特效家族的後台旋鈕。跟 applyGoreDoc 同一條縫、同一個理由:
 // render/** 不能自己讀 content mount,所以由這裡把 config doc 推進去。
 import { setFamilyTuning } from "../render/vfx/w3xAbilityArt";
@@ -275,6 +281,10 @@ export class ContentDb {
     // 煙火打開,場上還是不會放(第②號故障:算出來了但從沒送到)。傳 null(檔案
     // 不存在／schema 不合)= `DEFAULT_VICTORY_FX`,也就是兩格都關,不是「全開」。
     applyVictoryFxDoc(this.configDoc<ConfigVictoryFxDoc>("victory-fx", "config.victory-fx@1"));
+    // GH#339 —— 別人的語音要比自己小多少 (owner 2026-08-17)。少了這一行就是
+    // `config.combat-feel@1` 的前例:文件與 Zod 都接好了、客戶端還在讀 DEFAULT 常數,
+    // 而後台那一格永遠是裝飾品。傳 null = 出貨倍率,不是 1。
+    applyAudioMixDoc(this.configDoc<ConfigAudioMixDoc>("audio-mix", "config.audio-mix@1"));
     // 玩家端 Fate 用語（owner 2026-08-16：「應該是一個 JSON 檔，可以在後台替換設定」）。
     // ⛔ 沒有這一行，`content/config/ui-lexicon.json` 就是一份沒有人讀的檔案：
     // 後台把「聖杯顯現」改成別的字，畫面上完全不會變（失敗形態②）。

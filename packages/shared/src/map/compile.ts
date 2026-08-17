@@ -26,6 +26,7 @@
  * （`tools/capability-export` 與 `tools/legacy-index` 都記錄了這個失敗形態）。
  */
 import type { ArenaDoc } from "../content/schema/arena";
+import { DEFAULT_GROUND_STYLE } from "../content/schema/groundStyle";
 import type { MapDoc } from "../content/schema/map";
 import type { DEFAULT_MAP_SPEC } from "../content/schema/mapSpecDoc";
 import { bakeNav, isWalkable, pickNodes, type GridPos, type TileGrid } from "./graph";
@@ -207,7 +208,11 @@ export function compileMap(doc: MapDoc, spec: Spec, duelZones = DUEL_ZONES_PER_M
       rotQuarter: p.rotQuarter,
       scale: p.scale,
     })),
-    groundStyle: "stone",
+    // ⭐ GH#342 —— 地板材質**跟著 map doc 走**。
+    // ⚠️ 這一行以前寫死 `"stone"`，於是七張動漫場地共用同一張歐式地牢石板，
+    //    而作者在 `map@1` 裡連宣告的欄位都沒有（第一守則說的「決策點寫死」）。
+    // ⛔ 沒宣告時仍然是 `stone` —— 舊圖的行為一個位元組都不變。
+    groundStyle: doc.groundStyle ?? DEFAULT_GROUND_STYLE,
   };
 
   const report = validateMap(doc, spec, spawnTiles, duelZones);

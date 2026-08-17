@@ -17,6 +17,21 @@
  * 為什麼「每回合出現的效果種類會變多」不是造假的前提：英雄升級解鎖 R/EX、
  * 第 3 回合起殭屍加入、每回合換地圖（#145），一場比賽看過的 vfx doc id
  * 就是一直在增加的；而 pool 是 per-doc-id 的 free-list，只長不縮。
+ *
+ * ── ⚠️ 這一檔量的是 **VfxSystem 這一層**，⛔ 不是「回合邊界清乾淨了」──────────
+ * GH#337:下面那段 `new RoundVfxLifecycle(vfx)` **複製了出貨接線的形狀,卻沒有
+ * 複製它的內容** —— 出貨的 GameApp 也只塞了一個 target,而它另外還有四個持有
+ * Babylon 資源的 FX 從來沒被清過(AmbientVfx 的兩個 free-list、WhirlwindFx 的
+ * 漏斗 free-list、從沒被呼叫的 `victoryFx.reset`、`dressArena` 的 in-flight
+ * 孤兒)。那正是失敗形態⑤:**被測的不是出貨的那個**,所以這一檔全綠了一整年
+ * 而 owner 一直看得到殘留。
+ *
+ * **「整張清單完不完整」現在由另外兩支守:**
+ *   · `render/roundFxRegistry.test.ts` —— 用**出貨的** `createRoundFx()` 建全部
+ *     場景型 FX,跑兩個回合再量 `scene.particleSystems` / `scene.meshes`;
+ *   · `GameApp.roundFxWiring.test.ts` —— 比對 `GameApp.dispose()` 的清單與註冊
+ *     清單,新加一個 FX 忘了註冊就紅。
+ * ⛔ 不要把那兩件事搬回這一檔:這裡的職責就只是 VfxSystem 自己的池子。
  */
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";

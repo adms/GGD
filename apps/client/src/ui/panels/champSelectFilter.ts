@@ -138,12 +138,30 @@ export function whitelistFromDoc(raw: unknown): Whitelist {
  * `@ggd/shared/content/championRetirement` 拿。預設空集合，所以既有呼叫端
  * 的行為完全不變。
  */
-export function isPickableChampionId(id: string, retired: ReadonlySet<string> = NO_RETIRED): boolean {
-  return !isTransformedBody(id) && !retired.has(id);
+export function isPickableChampionId(
+  id: string,
+  retired: ReadonlySet<string> = NO_RETIRED,
+  hidden: ReadonlySet<string> = NO_HIDDEN,
+): boolean {
+  return !isTransformedBody(id) && !retired.has(id) && !hidden.has(id);
 }
 
 /** 「沒有人下架」。模組級常數而不是每次 `new Set()`，避免在熱路徑配置。 */
 const NO_RETIRED: ReadonlySet<string> = new Set();
+
+/**
+ * 「沒有人被藏起來」（隱藏英雄 = 彩蛋，owner 2026-08-17「隱藏角色可以隨機到
+ * 但不能選到」）。
+ *
+ * ⚠️ 形狀與理由跟 `retired` **完全一樣**：它是**注入**的，因為這個模組刻意不
+ * import registry（見檔頭）。算好的 Set 由呼叫端從
+ * `@ggd/shared/content/championRetirement` 的 `hiddenChampionIds()` 拿。
+ *
+ * ⚠️ 這一層擋的是「畫面上出現／點得到」，它不是安全邊界 —— 真正的閘在伺服器
+ * (`MatchController.selectChampion`)。這裡的價值是**彩蛋不會被劇透**：格子上沒有
+ * 它、🎲 的母體沒有它、商店也不賣它。
+ */
+const NO_HIDDEN: ReadonlySet<string> = new Set();
 
 /**
  * ⚠️ SUBSTITUTE, DO NOT DELETE — the difference is the whole safety of this fix.
@@ -163,13 +181,22 @@ const NO_RETIRED: ReadonlySet<string> = new Set();
  * SPLIT-FORM tiers have no base to fall back to (they are ranks of one caster's
  * `Nef1` split, not halves of a pair), so those are dropped outright.
  */
-function resolveToPickable(id: string, retired: ReadonlySet<string>): string | null {
+function resolveToPickable(
+  id: string,
+  retired: ReadonlySet<string>,
+  hidden: ReadonlySet<string> = NO_HIDDEN,
+): string | null {
   if (isSplitFormBody(id)) return null;
   const base = baseFormIdOf(id);
   // ⚠️ 下架檢查在 baseFormIdOf **之後**：下架的是「這位英雄」，而變身態會被
   // 解析回本體，所以只檢查傳進來的 id 會漏掉「勾了變身態 → 解析回一個已下架的
   // 本體」這條路。兩個 id 都查是刻意的冗餘。
   if (retired.has(id) || retired.has(base)) return null;
+  // ⚠️ 隱藏英雄**直接 return null，不做 base 代換**。上面那個「變身態解析回本體」
+  // 的替代規則存在是為了「英雄不可以無聲消失」（#55 黑化Saber 的形狀），而彩蛋
+  // 要的**正是**它在選人畫面上不存在 —— 代換成別人反而會把一個不相干的英雄推上
+  // 格子。同樣兩個 id 都查：勾了變身態也不可以繞回一位隱藏本體。
+  if (hidden.has(id) || hidden.has(base)) return null;
   return base;
 }
 
@@ -183,6 +210,7 @@ export function applyChampionWhitelist<T extends RosterChampion>(
   champs: readonly T[],
   wl: Whitelist,
   retired: ReadonlySet<string> = NO_RETIRED,
+  hidden: ReadonlySet<string> = NO_HIDDEN,
 ): T[] {
   const byId = new Map(champs.map((c) => [c.id, c]));
   // The whitelist is compared in BASE space too: an operator who ticked only the
@@ -192,7 +220,7 @@ export function applyChampionWhitelist<T extends RosterChampion>(
   const out: T[] = [];
   const seen = new Set<string>();
   for (const entry of champs) {
-    const id = resolveToPickable(entry.id, retired);
+    const id = resolveToPickable(entry.id, retired, hidden);
     if (id === null) continue;
     if (allowed && !allowed.has(id)) continue;
     if (seen.has(id)) continue;
@@ -212,11 +240,13 @@ export function whitelistedChampionIds(
   ids: readonly string[],
   wl: Whitelist,
   retired: ReadonlySet<string> = NO_RETIRED,
+  hidden: ReadonlySet<string> = NO_HIDDEN,
 ): string[] {
   return applyChampionWhitelist(
     ids.map((id) => ({ id, name: "" })),
     wl,
     retired,
+    hidden,
   ).map((c) => c.id);
 }
 

@@ -83,7 +83,18 @@ export function buildHeader(input: BuildHeaderInput): ReplayHeader {
   };
 }
 
-/** Turn the recorded rules back into a live ArenaRules (rounds Map restored). */
+/**
+ * Turn the recorded rules back into a live ArenaRules (rounds Map restored).
+ *
+ * ⚠️ 這裡是**整份 spread**，不是逐格複製 —— 所以 `ArenaRules` 新增的欄位
+ * （例：#340 的 `draftConflict`）自動被錄下來也自動被還原，⛔ 不需要在這裡列名。
+ *
+ * ⚠️ 2026-08-17 之前錄的表頭**沒有** `draftConflict`，所以還原出來是 `undefined`。
+ * 那**正是對的**：那些場次真的是兩張三選一一起發的，而 `grailDraftAllowed` /
+ * `weaponDraftAllowed` 對 undefined 的答案就是「兩張都發」。⛔ 不要在這裡補
+ * `?? DEFAULT_DRAFT_CONFLICT` —— 那會讓舊錄影用**今天的規則**重播，發卡少一張、
+ * rng 串流從那一刻起整個錯開。回放要重現的是當時發生的事，不是現在的設計。
+ */
 export function rebuildRules(header: ReplayHeader): ArenaRules {
   const raw = header.arenaRules as SerializedArenaRules | undefined;
   if (!raw || !Array.isArray(raw.rounds)) return DEFAULT_ARENA_RULES;

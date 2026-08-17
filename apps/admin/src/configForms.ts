@@ -72,6 +72,12 @@ import {
   zConfigVfxCleanupDoc,
   zConfigVictoryFxDoc,
   zConfigUiLexiconDoc,
+  // 混音（owner 2026-08-17）。⚠️ 它的 Zod 住在 `schema/audioMixDoc.ts`，但
+  // `schema/index.ts` 有把它 re-export 出來（和 mapSpecDoc 同一條路），所以這裡
+  // 走 barrel 而不是深路徑 —— 深路徑那條沒有守衛在看，遲早會指到搬走的檔案。
+  zConfigAudioMixDoc,
+  // 練習模式（GH#343）—— 同上，schema/index.ts 有 re-export，走 barrel。
+  zConfigPracticeDoc,
 } from "@ggd/shared/content";
 // ⚠️ 同上的深路徑理由：這兩份 Zod 住自己的檔案（欄位理由長、且 sim 直接吃）。
 import { DEFAULT_STAT_NORMALIZATION } from "@ggd/shared/content/statNormalization";
@@ -398,6 +404,11 @@ const VFX_CLEANUP_SPEC: ConfigDocSpec = {
       path: "purgeImpactPoolOnRoundEnd",
       zh: "回合結束清空打擊感池",
       note: "開＝進商店前把白光／火花／煙的共用發射器全部還回去，商店那一段場上一個一次性發射器都不留（出貨值）。關＝留著，下一回合第一拳不用重新配置，代價是那些系統整場都在場景裡被每一幀走訪 —— 那正是量到的那條成長曲線，所以關它是**止血閥**不是省事。",
+    },
+    {
+      path: "purgeVictoryFxOnCombatStart",
+      zh: "開打就掐掉上一回合的勝利煙火",
+      note: "上面每一格管的都是「池子」，這一格管的是另一種殘留：上一回合的勝利煙火還在天上飛，而下一回合已經開打了。開著＝下一回合開打的那一幀把還在飛的煙火停掉，並且把勝利偵測重新武裝（所以這一回合的煙火照樣放得出來）—— 場地乾淨，出貨值。關掉＝煙火可以飄進下一回合當表演；⚠️ 它同時是**止血閥**：萬一「強制停掉」這個動作本身造成閃爍、或連這一回合的煙火一起吃掉，關這一格就回到舊行為，不必重新 build 客戶端。",
     },
   ],
   preserved: [],
@@ -2185,6 +2196,11 @@ const ITEM_CARD_SPEC: ConfigDocSpec = {
       note: "下面那張表查不到的方括號標記落到這一類。它存在的理由是**新道具不可以讓卡片壞掉**：owner 明天寫一支用了新標記的道具，卡片照樣要畫得出 chip、有顏色、有分行，只是分類是這一格。⚠️ 這不是「錯誤處理」而是預設值，所以選一個最不會誤導人的：出貨選 passive（被動效果），因為把未知的東西說成「主動」或「負面」都是在講一件可能不是真的事。",
       optionLabels: Object.fromEntries(ITEM_CARD_CATEGORY_OPTIONS.map((o) => [o.value, o.zh])),
     },
+    {
+      path: "iconFillPct",
+      zh: "道具圖示佔一格的百分比",
+      note: "裝備欄／商店那一格方框裡，圖示自己佔掉幾成邊長。100＝填滿整格（出貨值）。⚠️ 這一格是為了修一個看得見的落差：商店裝備格是流動寬度（實測約 84px）而圖示的邊長寫死 38px，也就是只佔了 45%，於是格子裡有一大圈空白、圖案本身小到看不出是哪一件。調小＝圖示縮回格子中央、四周留白變多（想讓格線與數字更明顯時用）；調到 100＝圖示貼齊格子邊。⛔ 它不改格子本身的大小，也不改任何一件道具的效果。",
+    },
   ],
   tables: [
     {
@@ -2381,6 +2397,87 @@ const MITIGATION_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
+// ────────────────────────────────────────────────── 混音 (config/audio-mix) ─
+
+const AUDIO_MIX_SPEC: ConfigDocSpec = {
+  page: "audioMix",
+  collection: "config",
+  docId: "audio-mix",
+  schemaTag: "config.audio-mix@1",
+  zod: zConfigAudioMixDoc,
+  title: "混音",
+  intro: [
+    "⭐ owner 2026-08-17：「**其他角色語音應該是自己的一半**」。這一頁就是那個比例。",
+    "⚠️ 它**疊在**空間化衰減之上，不取代它：遠處的敵人本來就比較小聲，這一格是把「不是我」那一整族（敵人／隊友／小怪）整體再壓下去。所以調它不會讓遠近的差別消失。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/audio-mix.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果，要改就從這一頁改。",
+  ],
+  consumer:
+    "apps/client/src/audio/voiceAudience.ts 的「其他角色」音量（文件由 ContentDb 載入時餵進去；接線本身屬於 #339 那一條 lane，這一頁只負責讓它可調）",
+  effect:
+    "玩家**下一次重新整理遊戲頁面**時生效（客戶端開機時才讀內容覆蓋層）。⛔ 不需要重啟 game-server —— 語音整段活在客戶端。",
+  fields: [
+    {
+      path: "voice.othersGain",
+      zh: "其他角色的語音音量（相對於自己）",
+      note: "敵人、隊友與小怪講話時，相對於**你自己的角色**要多大聲。0.5＝一半（出貨值，owner 2026-08-17 的原話）；1＝跟自己一樣大聲，也就是這一格出現之前的行為，所以填 1 就是一鍵 rollback；0＝其他人完全不出聲（⚠️ 那會讓「我打中了」這個用耳朵接收的回饋整個消失，不建議）。調小＝自己的角色更聽得清楚，代價是一場團戰聽起來比較空。",
+    },
+  ],
+  preserved: [],
+};
+
+// ───────────────────────────────────────────── 練習模式 (config/practice) ─
+
+const PRACTICE_SPEC: ConfigDocSpec = {
+  page: "practice",
+  collection: "config",
+  docId: "practice",
+  schemaTag: "config.practice@1",
+  zod: zConfigPracticeDoc,
+  title: "練習模式",
+  intro: [
+    "⭐ owner 2026-08-17：「新增練習模式，可以選擇場地及角色，但**進入不會有對戰**，可以使用各種功能測試碼，以及**即時生成殭屍**等特殊單位」。這一頁是那間沙盒房的五格規則。",
+    "⚠️ 練習房是**單人沙盒**：沒有敵隊、不結算、⛔ 不發水晶、⛔ 不動 MMR、⛔ 不寫任何玩家資料。正因為它對經濟與排名零影響，「在練習房裡開放測試碼」才不是經濟漏洞。",
+    "⚠️ 這一頁**不影響任何一場正式比賽** —— 一間房要先被開成練習房才會讀到這份文件。要整個關掉就把總開關關掉，那就是一鍵 rollback。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/practice.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "apps/game-server/src/match/MatchController.ts（相位機不配對手／不結束、火圈與自動復活）與 apps/game-server/src/match/cheatGate.ts（練習房開放測試碼）",
+  effect: "**要重啟 game-server shard 才生效**。和 冷卻規則／減傷規則 同一個形態(#278)。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "練習模式總開關",
+      note: "關掉之後，大廳按了練習模式也只會開出一間**普通的房**（有對手、時間到就結算、測試碼照舊只在 dev 開）——也就是這個功能出現之前的行為，所以它就是一鍵 rollback。",
+    },
+    {
+      path: "endlessCombat",
+      zh: "戰鬥階段永不結束",
+      note: "開著（出貨值）＝ 進去就一直待在場上，⛔ 不會因為時間到或場上只剩一隊被踢回商店 —— 這是「進入不會有對戰」那句話真正的機制。關掉＝照正常回合流程跑（沒有對手所以幾乎立刻進中場），適合拿來測商店與三選一的接線。",
+    },
+    {
+      path: "autoMobWaves",
+      zh: "自動殭屍波",
+      note: "關掉（出貨值）＝ 場上乾淨，殭屍**只由測試碼的生怪指令**產生，所以要看一隻特定的怪不會被一整波蓋掉。開著＝連波次排程一起跑，用來看「一波一波湧進來」在這張場地上長什麼樣子。⚠️ 兩種模式下生怪指令都能用。",
+    },
+    {
+      path: "fireRing",
+      zh: "火圈",
+      note: "關掉（出貨值）＝ 不燒。練習房沒有「把回合逼到結束」這件事要做，而一個會慢慢燒死你的沙盒沒辦法拿來慢慢看特效。開著＝照這張場地的火圈設定走，用來確認縮圈半徑與燒傷節奏。",
+    },
+    {
+      path: "autoRevive",
+      zh: "自動復活",
+      note: "開著（出貨值）＝ 倒下的下一 tick 就滿血站起來，所以被自己召來的殭屍王打死不會讓整場練習卡住。關掉＝照正常規則（要隊友來復活圈救，而練習房沒有隊友），適合拿來測死亡表演與觀戰畫面。",
+    },
+    {
+      path: "spawnBatch",
+      zh: "生怪指令的預設數量",
+      note: "測試碼按一次生怪、又**沒有指定數量**時，一次生幾隻。⚠️ 它是預設值不是上限：真正的天花板是小怪波設定的「每區同時存活上限」，生怪撞到就停，所以這一格調大不會讓練習房被自己生出來的怪淹掉。",
+    },
+  ],
+  preserved: [],
+};
+
 const DISPLACEMENT_TIERS_SPEC: ConfigDocSpec = {
   page: "displacementTiers",
   collection: "config",
@@ -2489,6 +2586,14 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   MAP_SPEC_SPEC,
   CAMERA_SPEC,
   MITIGATION_SPEC,
+  // 混音（owner 2026-08-17）。⚠️ 這一列要跟三件事一起才到得了操作者手上：
+  // store.ts 的 `Page` union + `SESSION_REQUIRED_PAGES`、App.tsx 的導覽列與路由、
+  // 以及 `content/config/audio-mix.json` 出貨檔（三者都不在這條 lane 手上）。
+  AUDIO_MIX_SPEC,
+  // 練習模式（GH#343，owner 2026-08-17）。⚠️ 同 AUDIO_MIX_SPEC 那一段：這一列要跟
+  // store.ts 的 `Page` union / App.tsx 的導覽列一起才到得了操作者手上，那兩個檔
+  // 不在這條 lane 手上（見 needsFromIntegrator）。
+  PRACTICE_SPEC,
   DISPLACEMENT_TIERS_SPEC,
   MODEL_LOD_SPEC,
   VFX_CLEANUP_SPEC,

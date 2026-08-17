@@ -20,6 +20,11 @@
  * floor comes from it and is therefore unique per position, while the only
  * repeating content is too fine-grained to fingerprint.
  */
+import {
+  DEFAULT_GROUND_STYLE,
+  isGroundStyleId,
+  type GroundStyleId,
+} from "@ggd/shared/content/schema/groundStyle";
 import { withContentVersion } from "../content/assetVersion";
 
 /** Where the generated sets are served from (vite dev + prod nginx both map
@@ -30,28 +35,27 @@ export const GROUND_TEXTURE_BASE = "/content/assets/textures/ground";
  *  TILE_WORLD_SIZE in apps/client/scripts/texgen/styles.ts. */
 export const TILE_WORLD_SIZE = 4;
 
-/** The generated sets — one per `groundStyle` a shipped arena actually uses. */
-export type GroundTextureSet = "stone" | "dirt" | "grass" | "sand";
+/**
+ * The generated sets. ⭐ GH#342 — one set per `groundStyle`, **identically
+ * named**, so this module no longer keeps a second list of style names.
+ *
+ * Before #342 there was a hand-written `STYLE_TO_SET` map here whose only
+ * non-identity row was `wood → stone` (「no arena asks for wood, don't ship
+ * 700 KB of planks nobody loads」). That row was a silent downgrade waiting to
+ * happen: the day an arena DID ask for wood it would have got flagstone and
+ * nothing would have said so. The rule is now structural instead —
+ * `GROUND_STYLE_IDS` is the only list, every id has a painter, and
+ * `groundMaterials.test.ts` fails if a set's PNGs are not on disk.
+ */
+export type GroundTextureSet = GroundStyleId;
 
 /**
- * ArenaDef `groundStyle` → generated set.
- *
- * `wood` is legal in the schema enum (packages/shared/src/content/schema/arena.ts)
- * but NO shipped arena sets it — colosseum=sand, castle=stone, skeleton=stone,
- * godie=dirt, dota=grass. Rather than ship ~700 KB of planks nothing loads, it
- * falls back to stone; generate a real wood set in texgen/styles.ts on the day
- * an arena asks for one.
+ * ArenaDef `groundStyle` → generated set. Unknown / absent → the schema default.
+ * ⚠️ Unknown is only reachable from hand-edited or future content; the schema
+ * already rejects it, so this is a last-resort floor, not a mapping table.
  */
-const STYLE_TO_SET: Record<string, GroundTextureSet> = {
-  stone: "stone",
-  dirt: "dirt",
-  grass: "grass",
-  sand: "sand",
-  wood: "stone",
-};
-
 export function groundTextureSet(groundStyle: string | undefined): GroundTextureSet {
-  return STYLE_TO_SET[groundStyle ?? "stone"] ?? "stone";
+  return isGroundStyleId(groundStyle) ? groundStyle : DEFAULT_GROUND_STYLE;
 }
 
 export interface GroundTextureUrls {

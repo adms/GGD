@@ -13,8 +13,18 @@
  *   「不可以把戰場弄安靜」    → the measured level of every OTHER band at real
  *                              engagement ranges, with a floor asserted rather
  *                              than described.
+ *
+ * ⚠️ **這個檔量的是幾何，⛔ 不是混音政策**（GH#339 之後）。`voiceSpatialMix` 現在
+ * 會再乘上一個後台可調的「其他角色語音倍率」（出貨 0.5），所以下面每一個手算的
+ * 幾何期望值都會被那一格等比縮放。⇒ `beforeEach` 把政策釘成 **1（＝不衰減）**，
+ * 讓這裡的每一條斷言仍然在講它本來要講的那件事：**距離／關係／方向的法則**。
+ * ⛔ 不要改成把 0.5 乘進 6 個期望值 —— 那會讓出貨數值在測試裡多一個沒有守衛的
+ * 住處（第二守則：驗機制、不驗數字），而且 owner 每次調那一格都要改這個檔。
+ * 倍率本身有它自己的守衛：`voiceOtherGain.test.ts`。
  */
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
+import { DEFAULT_AUDIO_MIX } from "@ggd/shared/content";
+import { applyAudioMixDoc } from "./voiceMixPolicy";
 import { cover } from "@ggd/shared/testkit/cover";
 import {
   audienceToRelation,
@@ -32,6 +42,14 @@ import {
   type SpatialListener,
 } from "./spatial";
 import { VOICE_FAR as AUDIENCE_VOICE_FAR, type VoiceAudience } from "./voiceAudience";
+
+/**
+ * 把 GH#339 的「其他角色語音倍率」釘成 1，這個檔才量得到**純幾何**。
+ * ⚠️ 政策是模組級單例，⛔ 一定要每一條前面重設 —— 別的檔設過的值會漏過來。
+ */
+beforeEach(() => {
+  applyAudioMixDoc({ ...DEFAULT_AUDIO_MIX, voice: { othersGain: 1 } });
+});
 
 /** Listener at the origin with both anchors coincident (normal combat). */
 const AT_ORIGIN: SpatialListener = { levelX: 0, levelZ: 0, dirX: 0, dirZ: 0 };

@@ -14,7 +14,12 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../../../packages/shared/testkit/cover";
-import { ContentLoader, zConfigArenaRulesDoc, type ConfigArenaRulesDoc } from "@ggd/shared/content";
+import {
+  ContentLoader,
+  zConfigArenaRulesDoc,
+  DEFAULT_DRAFT_CONFLICT,
+  type ConfigArenaRulesDoc,
+} from "@ggd/shared/content";
 import { FsContentSource } from "@ggd/shared/content/node";
 import { registerAll } from "@ggd/shared/content";
 import { Augments, Champions, Items, LootTables } from "@ggd/shared/sim/content/registry";
@@ -363,31 +368,83 @@ describe("arena round grants (arena-01, arena-04, arena-05)", () => {
   });
 });
 
-describe("free 3-choose-1 weapon offers (arena-02, arena-03)", () => {
-  it("round 2: every seat gets a free 3-choose-1 legendary-weapon offer; AI auto-picks it", () => {
+// ---------------------------------------------------------------------------
+// #340 —— 聖杯願望三選一與寶具三選一撞在同一回合
+// ---------------------------------------------------------------------------
+/**
+ * owner 2026-08-17：「調整寶具跟固有能力三選一 不要同時出現 造成選擇時間不夠
+ * (兩者有衝突不顯示寶具三選一)」。
+ *
+ * ⚠️ 這個 describe 取代了原本的「round 2: 每個座位都拿到免費寶具三選一」與
+ * 「round 5: 聖杯願望與第二張寶具卡並存」兩條 —— 後者的斷言現在**逐字是相反的**，
+ * 留著改一半會變成「一條說得出舊行為的守衛」（第三守則）。寶具卡本身的機制
+ * （三張相異、來自正確的表、AI 自動選）沒有消失，它搬到下面的反向那一條，
+ * 因為那是今天**唯一**發得出寶具卡的設定。
+ */
+describe("同一回合撞卡：聖杯願望贏、寶具讓路 (#340, arena-02, arena-03)", () => {
+  /**
+   * 出貨排程裡第一個**兩欄都填**的回合。⛔ 不寫死 2 / 5 / "silver" /
+   * "legendary-weapons" —— 那些是 owner 每週在調的排程，釘住它們的話這條會用
+   * 「撞卡壞了」的訊息報「回合排程被改過」（第二守則：驗機制不驗數字）。
+   */
+  const conflictRound = (): number => {
+    for (const [round, g] of [...ARENA.rounds.entries()].sort((a, b) => a[0] - b[0])) {
+      if (g.augmentTier && g.weaponLootTable) return round;
+    }
+    throw new Error("arena-rules 沒有任何回合同時排了聖杯願望與寶具 —— 這一支要重寫");
+  };
+
+  it("★ 出貨預設：撞卡回合只發聖杯願望，寶具那一張不出現", () => {
+    cover("arena-weapon-offer");
+    const round = conflictRound();
+    // 前置：這個實驗真的有鑑別力 —— 這一回合的排程**兩欄都在**，
+    // 而生效的規則是 owner 裁決的那一個（不是「這一格根本沒被讀到」）。
+    const grant = ARENA.rounds.get(round);
+    expect(grant?.augmentTier && grant?.weaponLootTable, `round ${round} 不是撞卡回合`).toBeTruthy();
+    expect(ARENA.draftConflict, "出貨文件的裁決漂走了").toBe(DEFAULT_DRAFT_CONFLICT);
+
+    const ctl = makeArenaMatch(555);
+    runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === round);
+    let checked = 0;
+    for (const seat of ctl.seats.values()) {
+      if ((ctl.lives.get(seat.teamId) ?? 0) <= 0) continue;
+      // 兩個方向一起讀：讓路的是寶具，⛔ 不是「這一回合什麼都沒發」。
+      const grail = ctl.offers.get(`${round}:${seat.seatId}`);
+      expect(grail, `seat ${seat.seatId} 的聖杯願望不見了 —— 讓路的方向反了`).toBeDefined();
+      expect(grail!.kind).toBe("augment");
+      expect(
+        ctl.offers.get(`${round}:${seat.seatId}:w`),
+        `seat ${seat.seatId} 同一段倒數裡還是收到了寶具卡 —— owner 回報的「選擇時間不夠」`,
+      ).toBeUndefined();
+      checked++;
+    }
+    expect(checked).toBeGreaterThan(0);
+  });
+
+  it("★ 反向：切成「兩張都發」時寶具照發，三張相異、來自排定的表、AI 自動選", () => {
     cover("arena-weapon-offer");
     cover("arena-weapon-ai-pick");
-    const ctl = makeArenaMatch(555);
-    runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 2);
+    // ⚠️ 這一條擋的是失敗形態④：一個「永遠不發寶具卡」的實作會讓上面那條全綠。
+    // 壓下去的必須是**衝突**，不是整條寶具卡的路 —— 順帶它也是今天唯一還跑得到
+    // `offerItems` 那一段的設定，所以卡面本身的性質留在這裡驗。
+    const round = conflictRound();
+    const table = ARENA.rounds.get(round)!.weaponLootTable!;
+    const both: ArenaRules = { ...ARENA, draftConflict: "both" };
+    const ctl = new MatchController("conflict-both", 555, allBots(), FAST, 3, both);
+    runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === round);
 
-    // one weapon offer per surviving seat, 3 DISTINCT choices from the ROUND-2
-    // table (owner 2026-07-31: 「隨機三選一發放道具 都改成棱彩武器道具」 — the same
-    // legendary-weapons pool the 2400g 傳說寶玉 gacha rolls from). Round 2 ALSO
-    // carries a silver augment now (#157), so filter to the weapon (item)
-    // offers keyed `${round}:${seatId}:w`.
     const offered = new Map<SeatId, string[]>();
-    expect(ctl.offers.size).toBeGreaterThan(0);
+    const pool = LootTables.get(table as never).entries.map((e) => e.itemId);
     for (const offer of ctl.offers.values()) {
-      if (offer.kind !== "item") continue; // skip the coexisting silver augment
+      if (offer.kind !== "item") continue; // 跳過並存的聖杯願望
       expect(offer.tier).toBe("weapon");
       const choices = offer.choices as string[];
-      expect(choices).toHaveLength(3);
-      expect(new Set(choices).size).toBe(3);
-      const table = LootTables.get("legendary-weapons").entries.map((e) => e.itemId);
-      for (const c of choices) expect(table).toContain(c);
+      expect(choices).toHaveLength(ARENA.offerCount);
+      expect(new Set(choices).size).toBe(ARENA.offerCount);
+      for (const c of choices) expect(pool).toContain(c);
       offered.set(offer.seatId, [...choices]);
     }
-    expect(offered.size).toBeGreaterThan(0);
+    expect(offered.size, "切成 both 之後一張寶具卡都沒有 —— 壓的是整條路不是衝突").toBeGreaterThan(0);
 
     // AI seats auto-pick after the short delay -> item granted FREE
     for (let i = 0; i < 15; i++) ctl.tick();
@@ -442,24 +499,10 @@ describe("every-round augment 3-choose-1 restored (arena-08, #157)", () => {
     assertAugmentPerSeat(ctl, 4, "gold");
   });
 
-  it("round 5: a gold augment AND the second weapon card coexist per seat", () => {
-    cover("arena-config-parse");
-    // the Arena reservoir so the match reliably reaches round 5 with seats alive
-    const ctl = new MatchController("aug-r5", 4242, allBots(), FAST, 20, ARENA);
-    runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 5);
-    assertAugmentPerSeat(ctl, 5, "gold");
-    // the round-5 weapon card lives alongside the augment card under a distinct
-    // `${round}:${seatId}:w` key — both surfaces open at once, as intended.
-    let weaponSeats = 0;
-    for (const seat of ctl.seats.values()) {
-      if ((ctl.lives.get(seat.teamId) ?? 0) <= 0) continue;
-      const weapon = ctl.offers.get(`5:${seat.seatId}:w`);
-      expect(weapon, `seat ${seat.seatId} needs a round-5 weapon offer`).toBeDefined();
-      expect(weapon!.kind).toBe("item");
-      weaponSeats++;
-    }
-    expect(weaponSeats).toBeGreaterThan(0);
-  });
+  // ⚠️ 「round 5: 聖杯願望與第二張寶具卡並存」那一條**被刪掉了**（#340）。
+  // owner 2026-08-17 之後那正好是**不可以發生**的事，改一半會留下一條說得出舊
+  // 行為的守衛（第三守則）。取而代之的是上面 #340 那個 describe，它從排程推導
+  // 撞卡回合、兩個方向一起讀。這裡不重複第二份。
 
   it("a picked augment is excluded from the next round's silver re-offer", () => {
     cover("arena-config-parse");

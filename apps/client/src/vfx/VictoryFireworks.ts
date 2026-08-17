@@ -36,7 +36,8 @@ import { ChickenFireworkFx, type ChickenFireworkOptions } from "./ChickenFirewor
 import { SmallFireworkFx } from "./SmallFireworkFx";
 import { VictoryGate, type VictoryFire, type VictoryInput } from "./victoryTrigger";
 import { victoryFxPolicy } from "./victoryFxPolicy";
-import type { VictoryFxPolicy } from "@ggd/shared/content";
+import { purgeVictoryFxOnCombatStart, vfxCleanupPolicy } from "./vfxCleanupPolicy";
+import type { VictoryFxPolicy, ConfigVfxCleanupDoc } from "@ggd/shared/content";
 
 export interface VictoryFireworksOptions extends ChickenFireworkOptions {
   cameraFor?: () => Camera | null;
@@ -53,6 +54,12 @@ export interface VictoryFireworksOptions extends ChickenFireworkOptions {
    * 選項本身就會變成第②號故障（後台關了但某條路照樣放煙火）的來源。
    */
   policy?: () => VictoryFxPolicy;
+  /**
+   * 回合邊界清場政策的來源（測試 seam，GH#337）。省略 = 讀
+   * `config/vfx-cleanup@1` 現行的那一份，同 `policy` 的理由:忘了接的結果必須
+   * 和出貨狀態一致。
+   */
+  cleanupPolicy?: () => ConfigVfxCleanupDoc;
 }
 
 export class VictoryFireworks {
@@ -119,6 +126,25 @@ export class VictoryFireworks {
     this.gate.reset();
     this.chicken.stop();
     this.small.stop();
+  }
+
+  /**
+   * 回合邊界（GH#337）。owner 2026-08-17「場地莫名其妙的特效又回來了」。
+   *
+   * ⚠️ **只在 `"enter"` 做事。** 回合勝利煙火就是在 combat → resolution 的那一幀
+   * 發射的 —— 在 `"leave"` 清它等於在它出生的同一幀殺掉它，也就是把 #235 整個
+   * 功能刪掉，而畫面上那跟「煙火壞了」長得一模一樣。所以這裡清的是**上一回合
+   * 還在飛的那一發**，時機是下一回合開打。
+   *
+   * 讀後台旗標（第一守則）：`purgeVictoryFxOnCombatStart=false` ⇒ 煙火可以飄進
+   * 下一回合當表演。`reset()` 同時重新武裝 `VictoryGate`，所以這一回合的勝利
+   * 照樣放得出來。
+   */
+  resetForRound(edge: "enter" | "leave"): void {
+    if (edge !== "enter") return;
+    const policy = this.opts.cleanupPolicy?.() ?? vfxCleanupPolicy();
+    if (!purgeVictoryFxOnCombatStart(policy)) return;
+    this.reset();
   }
 
   dispose(): void {

@@ -67,6 +67,9 @@ import { StatCapsPage } from "./StatCapsPage";
 import { CombatFeelPage } from "./CombatFeelPage";
 import { MatchConfigPage } from "./MatchConfigPage";
 import { StoreEconomyPage } from "./StoreEconomyPage";
+// 英雄上下架 (GH#336) —— `config/roster.json` 的下架 / 隱藏兩張清單。在它之前
+// 這份文件是 apps/admin/src 全樹零引用的（configDocCoverage 的 KNOWN_GAP 那一列）。
+import { RosterPage } from "./RosterPage";
 import { ConfigDocPage } from "./ConfigDocPage";
 import { MapReportPage } from "./MapReportPage";
 import { ArenaPoolPage } from "./ArenaPoolPage";
@@ -169,6 +172,11 @@ export const NAV: NavItem[] = [
   // 內容·素材管理 — the dev content routes + 角色語音生成 splice in AFTER audit and
   // BEFORE this always-present member, so the whole section reads contiguously.
   { page: "curation", label: "內容白名單", emoji: "✅", section: SEC_CONTENT },
+  // 英雄上下架 (GH#336) —— 下架（誰都拿不到）與隱藏（彩蛋：隨機抽得到、選不到）。
+  // ⚠️ 放在 內容白名單 旁邊而**不是**「武器道具」：它編的是 `config/roster.json`
+  // 裡的兩張英雄 id 清單，跟白名單是同一類問題（**這位英雄存不存在於這個安裝**），
+  // 而武器道具那一區問的是「玩家要打幾場才買得起」。
+  { page: "roster", label: "英雄上下架", emoji: "🎭", section: SEC_CONTENT },
   // #189 — the one content-editing route that EXISTS IN A PRODUCTION BUILD.
   // It writes to the platform's durable data/ overlay (admin JWT + audited),
   // never to the loopback content-api, so it needs no dev gate and is the only
@@ -281,6 +289,14 @@ export const NAV: NavItem[] = [
   // 傷害數字配色 (owner 2026-08-01) —— 物理紅／魔法紫／真實白／治療綠。緊接在
   // 濺血程度 後面，因為兩頁問的是同一類問題：「打中的那一瞬間畫面上出現什麼」。
   { page: "damageColors", label: "傷害數字配色", emoji: "🎨", section: SEC_SYS },
+  // 混音 (owner 2026-08-17「其他角色語音應該是自己的一半」) —— 緊接在 傷害數字配色
+  // 後面，因為兩頁問的是同一類問題的兩個感官：「打中的那一瞬間**看到**什麼／**聽到**
+  // 什麼」。同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  { page: "audioMix", label: "混音", emoji: "🎚️", section: SEC_SYS },
+  // 練習模式 (GH#343)：選場地 + 選角色進場、不對戰、可用測試碼與即時生怪。
+  // 六格開關（總開關／無限戰鬥／自動生怪／火圈／自動復活／一次生幾隻）。
+  // 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  { page: "practice", label: "練習模式", emoji: "🎯", section: SEC_SYS },
   // 護盾規則 —— 一個人身上兩道盾時誰先被吃掉。它是**傷害結算規則**（跟 戰鬥系統
   // 的倍率、屬性上限的天花板同一個家族），不是畫質也不是調性，但排在這裡是因為
   // 它和上面三頁共用同一個 schema 驅動的元件；改到它的人會從左欄找「護盾」。
@@ -981,6 +997,7 @@ function Console(): React.JSX.Element {
             {page === "combatFeel" && <CombatFeelPage />}
             {page === "matchConfig" && <MatchConfigPage />}
             {page === "storeEconomy" && <StoreEconomyPage />}
+            {page === "roster" && <RosterPage />}
             {/*
               E2 —— 四份原本沒有後台入口的 config，共用同一個 schema 驅動的元件。
               路由 key 和 `configForms.ts` 裡 spec 的 `page` 一字不差；對不上的話

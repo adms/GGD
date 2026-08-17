@@ -7396,6 +7396,161 @@
       }
     ]
   },
-  "decor": [],
+  "decor": [
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": -1,
+      "z": -3,
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": 1,
+      "z": -3,
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": -1,
+      "z": 3,
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": 1,
+      "z": 3,
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": -17,
+      "z": 1,
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": 17,
+      "z": 1,
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "x": -1,
+      "z": -9,
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "x": 1,
+      "z": 9,
+      "rotQuarter": 2,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/floor_tile_large.glb",
+      "x": -1,
+      "z": 1,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/props/floor_tile_large.glb",
+      "x": 1,
+      "z": 1,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "x": -7,
+      "z": -5,
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "x": 7,
+      "z": -5,
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "x": -7,
+      "z": 7,
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "x": 7,
+      "z": 7,
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "x": -9,
+      "z": -1,
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "x": 9,
+      "z": -1,
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "x": -9,
+      "z": 5,
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "x": 9,
+      "z": 5,
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "x": -23,
+      "z": -7,
+      "rotQuarter": 0,
+      "scale": 1.3
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "x": 23,
+      "z": -7,
+      "rotQuarter": 2,
+      "scale": 1.3
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "x": -23,
+      "z": 9,
+      "rotQuarter": 0,
+      "scale": 1.3
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "x": 23,
+      "z": 9,
+      "rotQuarter": 2,
+      "scale": 1.3
+    }
+  ],
   "groundStyle": "stone"
 }

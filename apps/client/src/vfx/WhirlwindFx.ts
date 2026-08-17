@@ -438,10 +438,33 @@ export class WhirlwindFx {
     this.debris.update(nowMs);
   }
 
+  /**
+   * 回合邊界（GH#337）：把 free-list 上的漏斗殼還給引擎。
+   *
+   * ⚠️ **⛔ 不碰 `live`** —— 同 `AmbientVfx.resetForRound()` 的理由：還掛在活著的
+   * 英雄身上的那些是他這一刻的樣子，不是上一回合的殘留。
+   *
+   * 每一個閒置的 funnel 是 2 mesh + 2 material + 2 texture，在此之前只有
+   * `dispose()` 收得回。它的數量有上界（`MAX_ACTIVE_WHIRLWINDS`），所以這一條
+   * 不是在修一個會爆的洩漏，而是把「回合之間場上不留東西」這件事做完整 ——
+   * 它同時也是 `sweep(seen)` 漏掉的那條路的兜底：`GameApp.syncAmbient()` 被
+   * `if (state && this.contentDb.ready)` 擋著，掉線那幾幀根本不掃。
+   */
+  resetForRound(): void {
+    if (this.disposed) return;
+    this.drainPool();
+  }
+
   dispose(): void {
     if (this.disposed) return;
     for (const id of [...this.live.keys()]) this.detach(id);
     this.disposed = true;
+    this.drainPool();
+    this.debris.dispose();
+  }
+
+  /** free-list 上的漏斗殼全部 dispose 並清空（回合邊界與 teardown 共用）。 */
+  private drainPool(): void {
     for (const f of this.funnelPool) {
       f.outerTex?.dispose();
       f.innerTex?.dispose();
@@ -452,7 +475,6 @@ export class WhirlwindFx {
       f.pivot.dispose();
     }
     this.funnelPool.length = 0;
-    this.debris.dispose();
   }
 
   // -------------------------------------------------------------------------

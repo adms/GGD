@@ -102,7 +102,11 @@ beforeAll(async () => {
   const doc = zConfigArenaRulesDoc.parse(
     JSON.parse(readFileSync(join(CONTENT_DIR, "config/arena-rules.json"), "utf8")),
   ) as ConfigArenaRulesDoc;
-  ARENA = rulesFromDoc(doc);
+  // ⚠️ `draftConflict: "both"` 是這場實驗的**前提**，不是在測非預設路徑（#340）：
+  // 出貨排程裡發寶具的那兩個回合同時也排了聖杯願望，而 owner 2026-08-17 的裁決
+  // 讓聖杯贏 ⇒ 出貨預設下這一支一張寶具卡都觀察不到，整份會變成空跑。這一支的
+  // 主題是**卡面寬度**（GH#249 先抽後濾），它需要一個真的發得出卡的世界。
+  ARENA = { ...rulesFromDoc(doc), draftConflict: "both" };
   poolIds = LootTables.get(LEGENDARY_POOL_TABLE).entries.map((e) => e.itemId as string);
   unrestrictedIds = poolIds.filter((id) => Items.get(id as never).requiresAttackType === undefined);
   allChampions = Champions.all().map((c) => c.id as string);

@@ -78,6 +78,10 @@ import { AIM_ASSIST_MOB_PENALTY_MAX, AIM_ASSIST_MOB_PENALTY_MIN } from "../../si
 // ⛔ 漏掉任何一行 = 那份 json 進了 content/ 之後整份驗證失敗 → 骨架英雄。
 import { zConfigDisplacementTiersDoc } from "./displacementDoc";
 import { zConfigMitigationDoc } from "./mitigationDoc";
+// 混音（owner 2026-08-17）—— 同上，schema 住自己的檔案，這裡只接進 union。
+import { zConfigAudioMixDoc } from "./audioMixDoc";
+// 練習模式（GH#343，owner 2026-08-17）—— 同上。
+import { zConfigPracticeDoc } from "./practiceDoc";
 import { zConfigMapSpecDoc } from "./mapSpecDoc";
 import { zConfigMapReportDoc } from "./mapReportDoc";
 import { zConfigArenaPoolDoc } from "./arenaPoolDoc";
@@ -2555,6 +2559,25 @@ export function mobSettlementWordingFromDoc(doc: unknown): MobSettlementWording 
   };
 }
 
+/**
+ * 聖杯願望 × 寶具**撞在同一回合**時的裁決（owner 2026-08-17）。
+ *
+ * ⛔ 三個值刻意不是布林：`both` 是「回到舊行為」的那條路，而「只發一張」有
+ * **兩種**只發法。一格布林逼人在「關掉衝突處理」與「聖杯贏」之間二選一，
+ * 而 owner 想換成寶具贏的那一天就得改程式（第一守則）。
+ */
+export const zDraftConflict = z.enum(["grail-wins", "weapon-wins", "both"]);
+export type DraftConflict = z.infer<typeof zDraftConflict>;
+
+/**
+ * 出貨預設：**聖杯願望贏**。
+ *
+ * owner 2026-08-17「兩者衝突不顯示寶具三選一」。⭐ 第〇·六守則：優先權大的
+ * 更新後**預設啟動**，開關存在是為了回頭 —— 所以測試只做這一邊（`both` 那條
+ * 舊行為不另外測）。
+ */
+export const DEFAULT_DRAFT_CONFLICT = "grail-wins" as const;
+
 export const zConfigArenaRulesDoc = z
   .object({
     id: zId,
@@ -2578,6 +2601,29 @@ export const zConfigArenaRulesDoc = z
      * 「開幾張」與「發哪幾張」的規則各自漂移。
      */
     grailDraft: zGrailDraftConfig.optional(),
+    /**
+     * ⭐ **同一回合同時排了聖杯願望與寶具時，發哪一個**（owner 2026-08-17）。
+     *
+     * `zArenaRoundGrant` 的 `augmentTier`（聖杯願望）與 `weaponLootTable`（寶具）
+     * 是兩格獨立的欄位，所以「同一回合兩格都填」一直是合法的 —— 而它的後果是
+     * 玩家在同一個休息段被連續丟兩張三選一，回報是**選擇時間不夠**。
+     *
+     * ⚠️ 這是一個**決策點**不是數值（第一守則）：哪一張該讓路是設計判斷，
+     * 而 owner 已經明說是聖杯 ⇒ 出貨預設 {@link DEFAULT_DRAFT_CONFLICT}。
+     * 這一格同時是那個決定的**一鍵 rollback**：`both` 逐字等於 2026-08-17 之前
+     * 的行為。省略 = 出貨預設（⛔ 不是 `both`）。
+     *
+     * ⚠️ 必須 `.optional()`：線上已有 `config.arena-rules@1` 的耐久覆蓋層，
+     * 少一個必填欄會讓整份 config 被 Zod 退回 → 內容載入失敗 → 骨架英雄。
+     */
+    draftConflict: zDraftConflict
+      .optional()
+      .describe(
+        "同一回合**同時**排了聖杯願望（augmentTier）與寶具（weaponLootTable）時要發哪一個。" +
+          "grail-wins＝只發聖杯願望（出貨預設，owner 2026-08-17：兩者衝突不顯示寶具三選一）；" +
+          "weapon-wins＝只發寶具；" +
+          "both＝兩張都發（＝2026-08-17 之前的行為，玩家反應選擇時間不夠）。",
+      ),
     /**
      * 傳說武器卡候選不足時的補抽規則 (GH#249); omit = the shipped `short`
      * policy. See {@link zItemDraftConfig} — and note that the whitelist
@@ -4079,6 +4125,27 @@ export const zConfigVfxCleanupDoc = z
      * 被每一幀走訪 —— 那正是 GH#270 量到的東西，所以關它是**止血閥**不是省事。
      */
     purgeImpactPoolOnRoundEnd: z.boolean().optional(),
+
+    /* ── 勝利煙火跨回合殘留（owner 2026-08-17）──────────────────────────────
+     *
+     * 上面三批管的都是**池子**（預告圈網格 / 一次性發射器 / 打擊感）。這一格管
+     * 的是另一種殘留：上一回合的**勝利煙火**還在飛的時候，下一回合已經開打了。
+     *
+     * ⚠️ 它是一個**決策點**（第一守則）：場地乾淨 vs 煙火當表演，兩邊都講得通，
+     * 而 owner 會改主意 —— 所以⛔ 不寫死。同 `.optional()`，理由與上面六格逐字
+     * 相同（線上已有耐久覆蓋層）。
+     */
+
+    /**
+     * 下一回合開打的那一幀，要不要強制停掉上一回合還在飛的勝利煙火並**重新武裝
+     * 勝利偵測**。
+     *
+     * true（出貨）= 場地乾淨：開打的畫面上不會有上一局的煙火，而且勝利偵測回到
+     * 待命狀態，這一回合的勝利照樣放得出來。
+     * false = 煙火可以飄進下一回合當表演（**止血閥**：如果強制停掉的動作本身造成
+     * 閃爍或把這一回合的煙火一起吃掉，這一格是不必重新 build 就能回頭的路）。
+     */
+    purgeVictoryFxOnCombatStart: z.boolean().optional(),
   })
   .strict();
 
@@ -5358,8 +5425,39 @@ export const zConfigItemCardDoc = z
     efficacyHeadings: z.array(z.string().min(1)),
     /** 同上，但這些標題以下的內容是**解說**（暗色、不解析數值）。 */
     loreHeadings: z.array(z.string().min(1)),
+    /**
+     * 道具**圖示**佔一格的百分比（見 {@link DEFAULT_ITEM_ICON_FILL_PCT}）。
+     *
+     * ⚠️ **必須 `.optional()`**，理由和 `vfx-cleanup` 那六格逐字相同：
+     * `config.item-card@1` 線上已經有耐久覆蓋層，一份存於這個欄位出現之前的
+     * override 少了必填欄就會整份被 Zod 退回 → 內容載入失敗 → 退回骨架英雄。
+     */
+    iconFillPct: z
+      .number()
+      .min(50)
+      .max(100)
+      .optional()
+      .describe(
+        "道具圖示佔格子的百分比。100 = 填滿整格。" +
+          "⚠️ 商店裝備格今天是流動寬度（約 84px）而圖示寫死 38px（邊長 45%），" +
+          "這一格是那個比例的後台旋鈕。",
+      ),
   })
   .strict();
+
+/**
+ * 缺 `iconFillPct` 時圖示佔格子幾成 —— **出貨 100（填滿整格）**。
+ *
+ * 三個住處都有它（第一守則）：這個常數 · {@link DEFAULT_ITEM_CARD} ·
+ * `content/config/item-card.json`。⚠️ 中間那個**引用**這個常數而不是重打 100 ——
+ * `itemCardShipped.test.ts` 把 `DEFAULT_ITEM_CARD` 逐鍵釘死等於出貨 JSON
+ * （去掉 `note` 之後 `toEqual`），所以那兩份會互相守；但它守不到「這個常數」，
+ * 重打一份就會是一個沒有守衛的第四個住處。
+ *
+ * 這個常數本身仍然是**缺席時的退路** —— 線上已存的耐久 override 是舊文件、
+ * 沒有這一格，消費端一律寫 `doc.iconFillPct ?? DEFAULT_ITEM_ICON_FILL_PCT`。
+ */
+export const DEFAULT_ITEM_ICON_FILL_PCT = 100;
 
 /* ══════════════════════════════════════════════════════════════════════════
  * config.boss-intro@1 —— 殭屍王出場演出 (owner 2026-08-02)
@@ -5535,8 +5633,37 @@ export const zConfigRosterDoc = z
      * ⚠️ 空陣列 = 沒有人下架，是合法且有意義的狀態（全部上架）。
      */
     retiredChampions: z.array(z.string()),
+    /**
+     * 隱藏英雄 id：**隨機抽得到、手動選不到**（彩蛋）。
+     *
+     * ⚠️ 與上面那一格（`retiredChampions` 下架）的差別是**擋幾條路**：
+     * 下架把手動與隨機兩條路都擋掉，隱藏只擋手動那一條 —— 所以一位隱藏英雄
+     * 仍然會出現在別人的隨機結果裡，那正是「彩蛋」的定義。
+     * 缺席時的退路是 {@link DEFAULT_HIDDEN_CHAMPIONS}。
+     *
+     * ⚠️ **必須 `.optional()`**：`config.roster@1` 線上已經有耐久覆蓋層（後台存過
+     * 就有），一份存於這個欄位出現之前的 override 少了必填欄就會整份被 Zod 退回
+     * → 內容載入失敗 → fail-open 退回 2 隻骨架英雄。那是 2026-08-02 兩次事故的
+     * 形狀，不要再走一次。
+     */
+    hiddenChampions: z
+      .array(z.string())
+      .optional()
+      .describe(
+        "隱藏英雄 id：**隨機抽得到、手動選不到**（彩蛋）。" +
+          "⚠️ 與 retiredChampions 的差別是後者手動與隨機兩條路都擋。",
+      ),
   })
   .strict();
+
+/**
+ * 出貨的隱藏名單 —— **空的**。
+ *
+ * ⛔ 缺欄位（舊 override）與空陣列是**同一個意思**：沒有人被藏起來。
+ * 兩者刻意不分家，因為「未設定」與「設定成空」在這個機制上沒有可觀測差異，
+ * 而多一種狀態就是多一條沒有人測的路。
+ */
+export const DEFAULT_HIDDEN_CHAMPIONS: readonly string[] = [];
 
 /* ══════════════════════════════════════════════════════════════════════════
  * config.replay@1 —— 對戰錄影政策 (owner 2026-08-02)
@@ -5966,6 +6093,12 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigDisplacementTiersDoc,
   // 減傷曲線的負抗性放大上限（owner 2026-08-13）。⚠️ 同上。
   zConfigMitigationDoc,
+  // 混音：其他角色的語音音量（owner 2026-08-17）。⚠️ 漏掉這一行 = 一份
+  // audio-mix.json 進了 content/ 之後整份內容驗證失敗 → 骨架英雄。
+  zConfigAudioMixDoc,
+  // 練習模式（GH#343，owner 2026-08-17）。⚠️ 漏掉這一行 = 一份 practice.json 進了
+  // content/ 之後整份內容驗證失敗 → 骨架英雄。
+  zConfigPracticeDoc,
   // 小地圖規格（GH#324，owner 2026-08-14）。⚠️ 漏掉這一行 = 內容整份驗證失敗 → 骨架英雄。
   zConfigMapSpecDoc,
   // 地圖驗證報告（GH#324，產生器輸出）。⚠️ 漏掉這一行 = 內容整份驗證失敗 → 骨架英雄。
@@ -5988,6 +6121,9 @@ export type ConfigRegenDoc = z.infer<typeof zConfigRegenDoc>;
 export type VictoryFireworkTier = z.infer<typeof zVictoryFireworkTier>;
 export type ConfigVictoryFxDoc = z.infer<typeof zConfigVictoryFxDoc>;
 export type ConfigUiLexiconDoc = z.infer<typeof zConfigUiLexiconDoc>;
+// 練習模式（GH#343）的型別**刻意不在這裡再匯出一次** —— 它跟 audioMixDoc 走同一條
+// 路：由 `schema/index.ts` 的 `export * from "./practiceDoc"` 出去。兩條 star export
+// 匯出同一個名字會互相遮蔽（那一行的註解就是為此而寫的）。
 /** 道具卡片的四個語意分類（owner 2026-08-02 核准）。 */
 export type ItemCardCategory = z.infer<typeof zItemCardCategory>;
 export type ConfigItemCardDoc = z.infer<typeof zConfigItemCardDoc>;
@@ -6159,6 +6295,10 @@ export const DEFAULT_VFX_CLEANUP: ConfigVfxCleanupDoc = {
   maxOneShotEmitters: 96,
   emitterSweepSec: 2,
   purgeImpactPoolOnRoundEnd: true,
+  // owner 2026-08-17 —— 下一回合開打就把上一回合的勝利煙火停掉並重新武裝勝利偵測。
+  // 三個住處都有它：這裡 · Zod（`.optional()`，線上舊 override 沒有這一格）·
+  // `content/config/vfx-cleanup.json`。
+  purgeVictoryFxOnCombatStart: true,
 };
 
 /**
@@ -6484,6 +6624,10 @@ export const DEFAULT_DAMAGE_COLORS: ConfigDamageColorsDoc = {
 export const DEFAULT_ITEM_CARD: ConfigItemCardDoc = {
   id: "item-card",
   schema: "config.item-card@1",
+  // ⚠️ 值一律引用 {@link DEFAULT_ITEM_ICON_FILL_PCT}，⛔ 不重打 100 ——
+  // 重打就是第四個住處，而 `itemCardShipped.test.ts` 只比得出「JSON 與這裡對不對得上」，
+  // 比不出「這裡與那個常數對不對得上」。
+  iconFillPct: DEFAULT_ITEM_ICON_FILL_PCT,
   categories: {
     stat: { label: "屬性加成", color: "#6FD3C4" },
     active: { label: "主動效果", color: "#FFC24D" },

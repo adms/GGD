@@ -348,10 +348,16 @@ export function royaleSpawnAt(zone: ZoneDef, group: number, slot: number): Vec2 
   return flat[i % flat.length]!;
 }
 
-/** Built-in skeleton arena: two circular zones with a pillar each. */
+/**
+ * Built-in skeleton arena: two circular zones with a pillar each.
+ *
+ * ⚠️ `name` 玩家真的看得到（開場大字／小地圖上緣／建房下拉選單），所以它必須是
+ * 中文，而且必須與 `content/arenas/arena.skeleton.json` 的 `name` 逐字相同 ——
+ * 這裡是 doc 載不到時的內建身分，兩份對不上就會在同一個安裝裡出現兩個名字。
+ */
 export const SKELETON_ARENA: ArenaDef = {
   id: "arena.skeleton",
-  name: "Skeleton Arena",
+  name: "新手競技場",
   zones: [0, 1].map((i) => {
     const cx = i === 0 ? -40 : 40;
     return {

@@ -50,7 +50,7 @@ import {
   whitelistedChampionIds,
   type RosterChampion,
 } from "./champSelectFilter";
-import { retiredChampionIds } from "@ggd/shared/content/championRetirement";
+import { hiddenChampionIds, retiredChampionIds } from "@ggd/shared/content/championRetirement";
 import { useWhitelist } from "./whitelist";
 import { ChampionProfile } from "./champselect/ProfileBlock";
 import { RulesBriefing } from "./champselect/RulesBriefing";
@@ -147,9 +147,14 @@ export function ChampSelectPanel(): React.JSX.Element {
   // 下架清單（owner 2026-08-02「預設不應該再有」）。刻意在**白名單之外**：
   // 平台連不上時 whitelist 退成 NO_FILTER 全開,而下架是內容事實,那時也必須擋住。
   const retired = useMemo(() => retiredChampionIds(), [roster]);
+  // 隱藏英雄（彩蛋，owner 2026-08-17「隱藏角色可以隨機到 但不能選到」）。格子上
+  // 不出現、🎲 的母體也沒有它 —— 但**伺服器自己抽**的那條路（沒鎖英雄／逾時／bot）
+  // 照樣抽得到，那正是「可以隨機到」。這一層只是不劇透，真正的閘在
+  // MatchController.selectChampion。
+  const hidden = useMemo(() => hiddenChampionIds(), [roster]);
   const whitelisted = useMemo(
-    () => applyChampionWhitelist(roster, whitelist, retired),
-    [roster, whitelist, retired],
+    () => applyChampionWhitelist(roster, whitelist, retired, hidden),
+    [roster, whitelist, retired, hidden],
   );
   const { available, selectableIds } = useMemo(() => {
     if (!meta.available) return { available: whitelisted, selectableIds: null as ReadonlySet<string> | null };
@@ -232,7 +237,10 @@ export function ChampSelectPanel(): React.JSX.Element {
     // `if (meta.available) pool = selectableIdsByOwnership(...)`，而 available
     // 是 false 時 prices 是空的、過濾器是恆等函式 —— 那一行不管加不加都一樣，
     // 平台故障時 🎲 照樣抽得到沒解鎖的英雄（伺服器那道閘在同一個故障下也失效）。
-    const whitelistedIds = whitelistedChampionIds(Champions.ids(), whitelist, retired);
+    // ⚠️ 這一行就是 🎲 的**母體**。隱藏英雄從這裡拿掉 = 玩家自己按隨機鈕抽不到它
+    // —— 那是刻意的：伺服器分不出「玩家按 🎲」與「玩家點格子」（同一個
+    // SELECT_CHAMPION），所以彩蛋只由**伺服器自己抽**的那條路發放。
+    const whitelistedIds = whitelistedChampionIds(Champions.ids(), whitelist, retired, hidden);
     const plan = planRandomPick({
       whitelisted: whitelistedIds,
       ownership: meta.ownership,

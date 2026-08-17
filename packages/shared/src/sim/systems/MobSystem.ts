@@ -104,7 +104,16 @@ export function mobSystem(world: SimWorld): void {
   fireRingBurnMobs(world);
 
   // 2) WAVE SCHEDULE — fire on the cadence; spawn min(k,cap) per active zone.
-  if (mt >= rules.firstWaveTicks && (mt - rules.firstWaveTicks) % rules.waveIntervalTicks === 0) {
+  //
+  // GH#343 —— `autoWaves === false`（只有練習房會寫）整條排程停掉，但**規則表仍在**：
+  // 測試碼的生怪指令、每區存活上限、賞金與等級都讀 `world.mobRules`，所以「不自動
+  // 湧怪」不可以用 `endCombatMobs` 來達成（那會把整張表拆掉，生怪指令就沒東西可讀）。
+  // ⚠️ ABSENT ⇒ true：正式比賽、舊錄影與既有測試一個 tick 都沒變。
+  if (
+    rules.autoWaves !== false &&
+    mt >= rules.firstWaveTicks &&
+    (mt - rules.firstWaveTicks) % rules.waveIntervalTicks === 0
+  ) {
     const k = (mt - rules.firstWaveTicks) / rules.waveIntervalTicks + 1;
     const count = Math.min(k, rules.mobsPerWaveCap);
     // active zones in sorted order (deterministic); each zone independently

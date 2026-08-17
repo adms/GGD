@@ -52,6 +52,7 @@ import {
   type SpatialMix,
 } from "./spatial";
 import { isNearAudience, type VoiceAudience } from "./voiceAudience";
+import { othersVoiceGain } from "./voiceMixPolicy";
 
 /**
  * `VoiceAudience` → `SfxRelation`, written out rather than cast.
@@ -151,6 +152,20 @@ export interface VoiceSpatialInput {
  * player has nothing to do but listen to it. The result is never louder than
  * today's behaviour — today every voice plays flat at 1.0 — it is that same
  * level with distance and direction finally applied to it.
+ *
+ * ⭐ GH#339 —— **然後整族再乘一格後台倍率**。owner 2026-08-17：「相較於自己英雄的
+ * 語音 其他角色的語音音量應該減少一半」。那一格是 `voiceMixPolicy.othersVoiceGain()`
+ * （`content/config/audio-mix.json`），⛔ 不是寫死的 0.5。
+ *
+ * 三件事是刻意的：
+ *  · **只乘 `volume`，⛔ 絕不碰 `priority`。** priority 是每幀候選的排序鍵
+ *    （`voiceAudience` 的 band + `GameApp.orderVoiceCandidates`）。把倍率乘進去
+ *    等於把 #223 的「自己 > 交手中 > 敵 > 友 > 路人」壓平，症狀是「偶爾聽到路人、
+ *    聽不到自己」——而它不會讓任何既有測試變紅。
+ *  · **`self` 完全不經過這裡**（上面第 1 條早退），因為這一格的定義就是「相對於
+ *    自己」。自己也乘＝分母跟著動＝這一格什麼都沒做。
+ *  · **觀戰時不套用。** 觀戰的人全場都是「別人」，壓下去等於把他唯一能聽的東西
+ *    關掉；跟同一支函式既有的「觀戰丟掉 relation duck」走同一條理由。
  */
 export function voiceSpatialMix(
   listener: SpatialListener | null,
@@ -159,6 +174,21 @@ export function voiceSpatialMix(
   const relation = audienceToRelation(inp.audience);
   // 1) the owner's rule — no listener read, no source read, no distance.
   if (relation === "self") return SELF_VOICE_MIX;
+
+  const m = othersMix(listener, inp);
+  if (!m) return null;
+
+  const g = inp.spectating === true ? 1 : othersVoiceGain();
+  return { ...m, volume: Math.min(1, Math.max(0, m.volume * g)) };
+}
+
+/**
+ * 「不是自己」那一族的**幾何**部分 —— #253 原封不動的四條規則（觀戰降級、無座標的
+ * centred 分支、`spatialMix`、越界拉回）。抽出來只是為了讓 GH#339 的倍率有一個
+ * 單一的乘點；⛔ 它自己不知道有倍率這回事。
+ */
+function othersMix(listener: SpatialListener | null, inp: VoiceSpatialInput): SpatialMix | null {
+  const relation = audienceToRelation(inp.audience);
 
   // While spectating "how does this relate to me" has no answer, so the duck is
   // not information — the geometry is all that is left, and it must survive.

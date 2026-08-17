@@ -24,6 +24,11 @@ const GROUND_COLORS: Record<ArenaDoc["groundStyle"], string> = {
   wood: "#52402a",
   grass: "#39662f",
   sand: "#9a8253",
+  // GH#342 —— 兩支日式主題的 painter。⚠️ 這張表的鍵是
+  // `Record<ArenaDoc["groundStyle"], …>`，所以 `schema/groundStyle.ts` 加一個 id
+  // 這裡就會**編譯錯誤**（⛔ 不是靜默退回灰色）—— 那正是它該有的行為。
+  tatami: "#4d502a",
+  obsidian: "#17171f",
 };
 
 export function ArenaPanel({ doc }: { doc: unknown }) {

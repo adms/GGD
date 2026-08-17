@@ -354,6 +354,19 @@ export interface MobRules {
   maxAlivePerZone: number;
 
   /**
+   * 排程波次要不要自己來（GH#343 練習模式）。
+   *
+   * ABSENT ⇒ **true** ＝ 這一格出現之前的行為，所以每一場正式比賽、每一份舊錄影、
+   * 每一條既有測試都一個 tick 都沒變。`false` 只由**練習房**寫入：那間房仍然要有
+   * 一份完整的規則表（測試碼的生怪指令、每區存活上限、賞金與等級全部讀它），
+   * 但⛔ 不要自動湧怪 —— 「要看一隻特定的怪」和「一波蓋過來」是兩件事。
+   *
+   * ⚠️ 它擋的是 {@link mobSystem} 步驟 2 那一條排程，⛔ 不是整個系統：AI、近戰、
+   * 火圈燒怪、賞金結算照跑，否則手動生出來的怪會站著不動。
+   */
+  autoWaves?: boolean;
+
+  /**
    * 「一隊全滅之後，這個 zone 還要不要繼續生殭屍」（owner 2026-08-02
    * 「敵方英雄全死光 或我方英雄全死光 殭屍就不應該再生成」）。主機在偵測到
    * 全滅的那一刻寫 `world.spawnHaltedZones`，`MobSystem` 的波次迴圈讀它。
@@ -2424,11 +2437,29 @@ export function mobSpawnPos(world: SimWorld, zone: number, k: number, i: number,
  * ChampionComp / seat / StatsComp / AbilitiesComp. Emits
  * `mobSpawn {id, zone, x, z, maxHp}`.
  */
-export function spawnMob(world: SimWorld, zone: number, rules: MobRules, k: number, i: number): EntityId {
+export function spawnMob(
+  world: SimWorld,
+  zone: number,
+  rules: MobRules,
+  k: number,
+  i: number,
+  /**
+   * GH#343 —— **指定**要生哪一種，而不是照機率抽。
+   *
+   * 省略（出貨的波次路徑）⇒ `rollMobKind`，也就是這個參數出現之前的行為，
+   * 一個 rng 位元都沒變。填了（練習房的生怪指令）⇒ 直接生那一種，而且**完全不
+   * 抽 rng** —— 這一點是刻意的：一個手動指令不可以推動 `world.rng` 的狀態，
+   * 否則同一場練習裡按幾次按鈕就會改變後面每一次抽獎的結果。
+   *
+   * ⛔ 這個參數不接受 `"boss"`：王有自己的門（{@link summonMobBoss}），那扇門
+   * 還管每回合上限與回合延長。從這裡放王進來 = 失敗形態⑤（被測的不是出貨的那個）。
+   */
+  kindOverride?: Exclude<MobKind, "boss">,
+): EntityId {
   // ROLL FIRST, then place: the body radius (and therefore the edge inset) is
   // kind-dependent, so a special zombie spawned at the normal inset would clip
   // through the boundary on its first tick.
-  const kind = rollMobKind(world, rules);
+  const kind = kindOverride ?? rollMobKind(world, rules);
   // #290 — `mobSpawnProfile`, not `mobProfile`: 「跟當時場上英雄最高等級相同」 is
   // resolved HERE, at the one moment 「當時」 means something. Identical to
   // `mobProfile` for every other mode (short-circuits on `heroDerive === null`).

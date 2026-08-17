@@ -262,6 +262,10 @@ describe("cheat hard gate & seat isolation", () => {
     expect(cheatsEnabled("", "0")).toBe(false); // explicitly disabled
     expect(cheatsEnabled("shared-secret", undefined)).toBe(false); // prod: never
     expect(cheatsEnabled("shared-secret", "1")).toBe(false); // prod wins over flag
+    // GH#343 —— 練習房是**第二扇門**：正式站（有 shared secret）也開，因為那間房
+    // 沒有對戰、不結算、不寫玩家資料。⚠️ `GGD_DEV_CHEATS=0` 仍然關得掉兩扇。
+    expect(cheatsEnabled("shared-secret", undefined, true)).toBe(true);
+    expect(cheatsEnabled("shared-secret", "0", true)).toBe(false);
   });
 
   it("applyCheat is a no-op for a seat that does not exist (cheat-foreign-seat)", () => {

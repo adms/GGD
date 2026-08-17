@@ -28,6 +28,8 @@ import { AudioSystem } from "./AudioSystem";
 import { AudioSettingsStore } from "./audioSettings";
 import { ContextualVoicePlayer } from "./contextualVoice";
 import { voicePlayOptions, voiceSpatialMix } from "./voiceSpatial";
+import { DEFAULT_AUDIO_MIX } from "@ggd/shared/content";
+import { applyAudioMixDoc } from "./voiceMixPolicy";
 import { panForOffset, RELATION_GAIN, type SpatialListener } from "./spatial";
 import type { VoiceAudience } from "./voiceAudience";
 import type { ChampionVoicePack } from "./selectVoiceLadder";
@@ -225,7 +227,15 @@ async function speak(
 }
 
 describe("the voice mix reaches the audio graph (voice-delivery)", () => {
-  beforeEach(() => vi.useFakeTimers());
+  beforeEach(() => {
+    vi.useFakeTimers();
+    // ⚠️ GH#339 之後 `voiceSpatialMix` 還會乘上後台可調的「其他角色語音倍率」
+    // （出貨 0.5）。這個檔問的是「幾何算出來的數字**有沒有到達 audio graph**」，
+    // 所以把倍率釘成 1，斷言才留在 RELATION_GAIN 那一組手算的值上。
+    // ⛔ 不要改成期望 `RELATION_GAIN.enemy * 0.5` —— 那是把出貨值抄進測試。
+    // 倍率自己的守衛在 `voiceOtherGain.test.ts`。
+    applyAudioMixDoc({ ...DEFAULT_AUDIO_MIX, voice: { othersGain: 1 } });
+  });
   afterEach(() => vi.useRealTimers());
 
   it("an enemy 6 u to your RIGHT builds a panner carrying +0.476", async () => {

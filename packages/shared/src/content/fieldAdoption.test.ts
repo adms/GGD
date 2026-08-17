@@ -1218,10 +1218,18 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // `items/endless-edge` (傳說近戰武器). The mechanism is no longer a mechanism
   // with no content.
 
-  // --- an enum member with a documented decision to stay unused.
-  "enum:arenas.groundStyle=wood": {
+  // `enum:arenas.groundStyle=wood` exemption DELETED 2026-08-17 (GH#342): the
+  // arena-art batch gave 天空鬥技場 a real `wood` floor, so the member is adopted
+  // and this row would now be STALE. It also outlived its own justification —
+  // `groundMaterials.ts` used to carry a hand-written `wood → stone` fallback,
+  // i.e. anyone who did use `wood` got silently downgraded to flagstone. That
+  // table is gone; the style ids now live in `schema/groundStyle.ts` and every
+  // one of them has a painter and a PNG on disk.
+
+  // --- the same id, on the OTHER axis: authored in `map@1` but not yet used there.
+  "enum:maps.groundStyle=sand": {
     status: "default-live",
-    why: "apps/client/src/render/groundMaterials.test.ts:25 already pins this: `wood` is in the enum, no shipped arena uses it, and groundTextureSet falls back to stone. Deliberate.",
+    why: "`sand` (raked arena sand) IS shipped and IS on screen — `content/arenas/arena.colosseum.json` (羅馬大擂台) uses it. What has zero adoption is the `map@1` half: colosseum is a hand-authored arena doc that predates the map compiler (GH#324/#342), so no `content/maps/*.json` declares `sand`. The painter, the PNG and the runtime lookup all exist; this row is about which AUTHORING surface reaches it, not about a dead mechanism. It expires the day someone rebuilds colosseum as a compiled map.",
   },
 
   // ===================================================================

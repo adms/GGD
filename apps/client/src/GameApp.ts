@@ -122,14 +122,18 @@ import { qualityController, type RenderParams } from "./render/QualityController
 import { driveFrame, FrameDelta, type FrameWork } from "./render/frameCap";
 import { FrameRateMeter } from "./render/fpsMeter";
 import { RoundVfxLifecycle } from "./render/roundVfxLifecycle";
-import { VfxSystem } from "./vfx/VfxSystem";
-import { AmbientVfx } from "./vfx/AmbientVfx";
+// GH#337 —— 場景型 FX 的**唯一組裝點**。⛔ 不要在這個檔案裡再 new 一個。
+import { createRoundFx } from "./render/roundFxRegistry";
+import type { VfxSystem } from "./vfx/VfxSystem";
+import type { AmbientVfx } from "./vfx/AmbientVfx";
+// ⚠️ 值匯入（不是 type-only）：`WhirlwindFx.handles()` 是 static，syncAmbient 用它
+// 先過濾 modelKey。實例本身仍由 `createRoundFx` 建。
 import { WhirlwindFx } from "./vfx/WhirlwindFx";
 import { CombatPostFx } from "./vfx/CombatPostFx";
 import { DeathFocusFx, type DeathFocusFrame } from "./vfx/DeathFocusFx";
 import { BurnTintFx, type BurnTintFrame } from "./vfx/BurnTintFx";
-import { FireRingFx, type FireRingFrame } from "./render/vfx/FireRingFx";
-import { VictoryFireworks } from "./vfx/VictoryFireworks";
+import type { FireRingFx, FireRingFrame } from "./render/vfx/FireRingFx";
+import type { VictoryFireworks } from "./vfx/VictoryFireworks";
 import type { VictoryInput } from "./vfx/victoryTrigger";
 import { ContentDb } from "./content/ContentDb";
 import {
@@ -246,6 +250,11 @@ export interface GameAppOptions {
    * Platform flow ignores this — the room's map comes from the server state.
    */
   mapId?: string;
+  /**
+   * Offline flow: 開成**練習房**（GH#343）—— 單人沙盒，沒有敵隊、不結算、測試碼
+   * 可用、可以即時生殭屍。Platform flow ignores this，同 `mapId`。
+   */
+  practice?: boolean;
 }
 
 export class GameApp {
@@ -702,37 +711,60 @@ export class GameApp {
           this.contentDb.modelFor(modelKey)?.glbPath ?? null,
         ),
     });
-    this.vfx = new VfxSystem(this.renderer.scene, {
-      entityPos: (id) => this.views.posOf(id) ?? this.schemaPos(id),
-      vfxDoc: (key) => this.contentDb.vfxFor(key),
-      // floating combat text (task #92) is coloured by RELATIONSHIP to the
-      // local player, so the vfx layer needs the same seat→team table the
-      // healthbars use. render/** may not read the HUD store (client-08), which
-      // is why the lookup is injected from here rather than done inside vfx/**.
-      localEntityId: () => hudStore.getState().localEntityId,
-      teamOf: (id) => this.teamOfEntity(id),
-      // #228 CAST TELEGRAPH TIMING. The ground shape fills off the SAME source
-      // the overhead cast bar does — CastTracker, fed castBegin/castEnd/
-      // castInterrupt/death — instead of a wall clock inside the vfx layer. A
-      // locally-timed fill drifts from the sim (CastResolveSystem pauses the
-      // wind-up on hitstop/hitstun) and never cancels on an interrupt, so the
-      // old ring could pop "it lands HERE" for damage that never landed.
-      // Only a `cast` counts: an auto-attack `windup` shares the tracker slot
-      // but is not the ability wind-up this telegraph is portraying.
-      castProgress: (id, nowMs) => {
-        const p = this.casts.progressFor(id, nowMs);
-        return p !== null && p.kind === "cast" ? p.fraction : null;
+    // ⭐ GH#337 —— 場景型 FX 只有**一個組裝點**（render/roundFxRegistry）。
+    //    這裡以前是五段各自 new 的程式碼，而回合邊界只認得其中一個（`this.vfx`），
+    //    另外四個從第一天起就沒有被清過。⛔ 加新的場景型 FX 要加在 createRoundFx
+    //    裡並註冊，否則 `GameApp.roundFxWiring.test.ts` 會紅。
+    const roundFx = createRoundFx(this.renderer.scene, {
+      vfx: {
+        entityPos: (id) => this.views.posOf(id) ?? this.schemaPos(id),
+        vfxDoc: (key) => this.contentDb.vfxFor(key),
+        // floating combat text (task #92) is coloured by RELATIONSHIP to the
+        // local player, so the vfx layer needs the same seat→team table the
+        // healthbars use. render/** may not read the HUD store (client-08), which
+        // is why the lookup is injected from here rather than done inside vfx/**.
+        localEntityId: () => hudStore.getState().localEntityId,
+        teamOf: (id) => this.teamOfEntity(id),
+        // #228 CAST TELEGRAPH TIMING. The ground shape fills off the SAME source
+        // the overhead cast bar does — CastTracker, fed castBegin/castEnd/
+        // castInterrupt/death — instead of a wall clock inside the vfx layer. A
+        // locally-timed fill drifts from the sim (CastResolveSystem pauses the
+        // wind-up on hitstop/hitstun) and never cancels on an interrupt, so the
+        // old ring could pop "it lands HERE" for damage that never landed.
+        // Only a `cast` counts: an auto-attack `windup` shares the tracker slot
+        // but is not the ability wind-up this telegraph is portraying.
+        castProgress: (id, nowMs) => {
+          const p = this.casts.progressFor(id, nowMs);
+          return p !== null && p.kind === "cast" ? p.fraction : null;
+        },
+      },
+      ambient: {
+        bindingsFor: (key) => this.contentDb.ambientBindingsFor(key),
+        vfxDocFor: (id) => this.contentDb.vfxFor(id),
+        ribbonDocFor: (id) => this.contentDb.ribbonFor(id),
+      },
+      // THE FIRE RING (task #195). ⚠️ 它現在在這裡建，比 `burnTint` 早 —— 那個
+      // 「burnTint 先建所以先掛」的順序講的是**同一台相機上的 post-process 掛載
+      // 順序**（burnTint 之於 deathFocus），火圈不是 post-process，不在那條線上。
+      fireRing: { vfxDocFor: (id) => this.contentDb.vfxFor(id) },
+      // Victory fireworks frame themselves against player 0's camera (the whole
+      // table watches player 0's screen at settlement anyway) and cost nothing
+      // until a win edge fires. Quality tier scales the point budget, never a
+      // truncation — a low-tier bird is still a whole bird.
+      victory: {
+        cameraFor: () => this.viewports.rigFor(0).camera,
+        scale: this.renderParams.particleDensity,
       },
     });
-    this.ambient = new AmbientVfx(this.renderer.scene, {
-      bindingsFor: (key) => this.contentDb.ambientBindingsFor(key),
-      vfxDocFor: (id) => this.contentDb.vfxFor(id),
-      ribbonDocFor: (id) => this.contentDb.ribbonFor(id),
-    });
-    // 回合邊界 → 特效清場 (#16 / #259)。餵它 phase，它在進/出 combat 的那一幀
-    // 呼叫 vfx.resetForRound()。見 render/roundVfxLifecycle 的模組註解。
-    this.roundVfx = new RoundVfxLifecycle(this.vfx);
-    this.whirlwind = new WhirlwindFx(this.renderer.scene);
+    this.vfx = roundFx.vfx;
+    this.ambient = roundFx.ambient;
+    this.whirlwind = roundFx.whirlwind;
+    this.fireRing = roundFx.fireRing;
+    this.victoryFx = roundFx.victoryFx;
+    // 回合邊界 → 特效清場 (#16 / #259 / GH#337)。餵它 phase，它在進/出 combat 的
+    // 那一幀對**整張註冊表**扇出。⛔ 這裡以前寫的是 `new RoundVfxLifecycle(this.vfx)`
+    // ——「只有一個 target」正是 owner 看到的殘留的根因。
+    this.roundVfx = new RoundVfxLifecycle(roundFx.registry);
 
     // Combat post-fx (red vignette) on the LOCAL player's camera. Heavy
     // full-screen pass → quality-tier gated: constructed disabled on mobile/low,
@@ -748,13 +780,11 @@ export class GameApp {
       this.postFx.setEnabled(heavyPostFxEnabled(q));
     });
 
-    // THE FIRE RING (task #195). The burn tint is constructed FIRST and
-    // therefore attaches BEFORE the death focus: post-process order on a
-    // Babylon camera is attach order, so a champion who burns to death sees the
+    // The burn tint is constructed BEFORE the death focus: post-process order on
+    // a Babylon camera is attach order, so a champion who burns to death sees the
     // red washed down to grey rather than a red film over a grey frame.
-    this.fireRing = new FireRingFx(this.renderer.scene, {
-      vfxDocFor: (id) => this.contentDb.vfxFor(id),
-    });
+    // (THE FIRE RING, task #195, moved to `createRoundFx` — GH#337. It is not a
+    // post-process, so it was never part of this ordering constraint.)
     this.burnTint = new BurnTintFx(
       { cameraFor: (p) => this.viewports.rigFor(p).camera },
       playerCount,
@@ -774,14 +804,9 @@ export class GameApp {
       playerCount,
     );
 
-    // Victory fireworks frame themselves against player 0's camera (the whole
-    // table watches player 0's screen at settlement anyway) and cost nothing
-    // until a win edge fires. Quality tier scales the point budget, never a
-    // truncation — a low-tier bird is still a whole bird.
-    this.victoryFx = new VictoryFireworks(this.renderer.scene, {
-      cameraFor: () => this.viewports.rigFor(0).camera,
-      scale: this.renderParams.particleDensity,
-    });
+    // (Victory fireworks moved to `createRoundFx` — GH#337. They are the one FX
+    // that must NOT be cleared on the `leave` edge: the round volley fires on
+    // exactly that frame.)
 
     // Round-end winner stage (task #143): mounts a centred overlay canvas over
     // the arena when a round is won. Lazy — no canvas / WebGL context exists
@@ -949,7 +974,7 @@ export class GameApp {
   }
 
   async connect(): Promise<void> {
-    const room = await this.sessions.connectDev(this.opts.mapId);
+    const room = await this.sessions.connectDev(this.opts.mapId, this.opts.practice);
     setLocalAccounts(this.sessions.localAccountIds());
     room.onStateChange((state) => this.onStatePatch(state));
     this.onStatePatch(room.state);
@@ -1165,7 +1190,11 @@ export class GameApp {
         // groundStyle picks the floor's PBR texture set (task #80); it lives on
         // the authored doc, not the collision-truth ArenaDef, so it is threaded
         // in here rather than derived inside the builder.
-        this.arenaHandles = buildArena(this.renderer.scene, def, doc?.groundStyle);
+        // ⭐ GH#337 —— 這一趟建出來的 handles 也留一份在區域變數裡。下面
+        // `dressArena` 的 staleness 判準要比對的正是**這一顆物件**跟
+        // `this.arenaHandles` 現在是不是同一顆。
+        const handles = buildArena(this.renderer.scene, def, doc?.groundStyle);
+        this.arenaHandles = handles;
         // The minimap projects AND bakes its terrain background from the ACTIVE
         // map's collision truth — the same ArenaDef the server collides against,
         // so the picture the player reads can never disagree with the walls they
@@ -1214,6 +1243,11 @@ export class GameApp {
             // 第 7 個參數是 GH#324 的圓盤外背景政策。同一條縫、同一個理由:
             // 少了它後台的「畫幾層 / 要不要開」永遠調不動(第②號故障)。
             this.contentDb.arenaBackdrop(),
+            // ⭐ 第 8 個是 GH#337 的 staleness 判準（in-flight 孤兒）。地圖每回合換，
+            // 而 dressArena 的 .glb 載入是 async：醒來時這一趟很可能早就被
+            // `disposeArena` 拆掉了。比對的是 `handles` **物件同一性**，
+            // ⛔ 不是 mapId 字串 —— 隨機輪替連續抽到同一張圖時字串會相等。
+            () => this.disposed || this.arenaHandles !== handles,
           );
       })
       .catch(() => {

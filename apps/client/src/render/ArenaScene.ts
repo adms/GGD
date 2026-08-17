@@ -468,6 +468,22 @@ export async function dressArena(
    * 「有背景」而不是「一片黑」，因為 owner 明說要填補場景外的空缺。
    */
   backdrop: ArenaBackdropPolicy = DEFAULT_ARENA_BACKDROP,
+  /**
+   * ⭐ GH#337 —— 「這一趟 dress 還算不算數？」（**in-flight 孤兒**的閘）。
+   *
+   * 下面那個 `await` 中間隔著整批 .glb 下載，而**地圖是每回合換的**（#145 +
+   * GH#324 的七張新圖）。醒來的時候呼叫端很可能已經 `disposeArena()` 過、換上
+   * 另一張圖了 —— 這時候繼續跑會把道具 parent 到**已經 dispose 的 root**、把
+   * `attachFlame()` 的 ParticleSystem push 進**已經清空、而且再也不會被讀**的
+   * `handles.flames`。Babylon 不會抱怨：它把孤兒留在 `scene.meshes` /
+   * `scene.particleSystems` 裡，⛔ 永遠沒有人 dispose 得到它們。那正是 owner
+   * 看到的「場地莫名其妙的特效」。
+   *
+   * 省略 = 用 `handles.root.isDisposed()`（呼叫端忘了接的結果是**仍然有閘**，
+   * 不是沒有閘）。⛔ 判準不可以是 mapId 字串:隨機輪替本來就會連續抽到同一張，
+   * 那時字串相等但 root 是新的一顆。
+   */
+  isStale: () => boolean = () => handles.root.isDisposed(),
 ): Promise<void> {
   // ---- 圓盤外的 2D 景深背景（GH#324 第三層）----
   // ⚠️ 先建，⛔ 不要在 await 之後 —— 道具 GLB 可能要好幾秒，而「圓盤外一片黑」
@@ -485,8 +501,16 @@ export async function dressArena(
     }),
   );
 
+  // ⭐ GH#337 —— `await` 之後的**第一件事**。從這一行往下的每一個副作用都寫進
+  // `handles`，而 `handles` 可能已經被 `disposeArena()` 拆掉了。
+  if (isStale()) return;
+
   const contacts: ContactShadow[] = [];
   for (const d of doc.decor) {
+    // 每一件道具之前再問一次。今天這個迴圈從上面那個 await 之後是**同步**的，
+    // 所以它只有在有人日後把 await 搬進迴圈（分批載入）時才會真的擋下東西 ——
+    // 留著的理由是那一天不會有人回頭重新推導這個不變量，而代價是一次布林呼叫。
+    if (isStale()) return;
     const container = containers.get(d.model);
     if (!container) continue;
     const isFade = FADE_MODELS.some((m) => d.model.includes(m));

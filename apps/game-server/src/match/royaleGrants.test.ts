@@ -289,7 +289,16 @@ describe("…and the cards the shipped table does not schedule late (royale-no-e
   beforeAll(() => {
     const rounds = new Map(SHIPPED.rounds);
     for (const r of LATE_ROUNDS) rounds.set(r, { ...rounds.get(r)!, weaponLootTable: "quest-rewards" });
-    const rules: ArenaRules = { ...SHIPPED, rounds, gacha: { fromRound: 7, lootTable: "round-reward" } };
+    // ⚠️ `draftConflict: "both"` 是這場實驗的前提（#340）：rounds 7-9 本來就排了
+    // prismatic 聖杯願望，出貨預設（聖杯贏）會把剛剛塞上去的寶具卡壓掉，於是
+    // 下面那條「0 生命的隊伍照樣拿得到寶具卡」會用空集合過關（失敗形態④）。
+    // 這一支問的是「陣亡的隊伍有沒有被排除在發卡迴圈外」，不是撞卡裁決本身。
+    const rules: ArenaRules = {
+      ...SHIPPED,
+      rounds,
+      draftConflict: "both",
+      gacha: { fromRound: 7, lootTable: "round-reward" },
+    };
     const ctl = new MatchController("r10-grants-late", 777, seats(), FAST, 20, rules);
     ledger = ledgerThrough(ctl, FINAL_ROUND - 1, true);
   });

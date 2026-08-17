@@ -26,8 +26,12 @@ export function clampLevel(n: number): number {
  * platform match). This is a UX gate; the server independently rejects cheats
  * outside dev mode and never trusts this flag.
  */
-export function cheatsAvailable(mode: "platform" | "offline" | null | undefined): boolean {
-  return mode === "offline";
+export function cheatsAvailable(
+  mode: "platform" | "offline" | null | undefined,
+  /** 練習房（GH#343）—— 單人沙盒，測試碼就是它存在的理由之一。 */
+  practice?: boolean,
+): boolean {
+  return mode === "offline" || practice === true;
 }
 
 /**
@@ -58,7 +62,14 @@ export function cheatsAvailable(mode: "platform" | "offline" | null | undefined)
 export function cheatButtonVisible(
   mode: "platform" | "offline" | null | undefined,
   hostname: string | undefined,
+  /**
+   * 練習房（GH#343）**豁免環境分級**。上面那段講的是「好奇的小孩在真的比賽裡按到
+   * 一顆作弊鈕」；練習房裡沒有比賽可以被破壞，而 owner 要的正是「進去就能用測試碼」。
+   * 藏起來只會讓這個功能在 ggd.adms.ai 上完全找不到（那台是 "public" 級）。
+   */
+  practice?: boolean,
 ): boolean {
+  if (practice === true) return true;
   return cheatsAvailable(mode) && classifyEnvTier(hostname) === "loopback";
 }
 
@@ -98,4 +109,13 @@ export const cheat = {
   skipPhase: (): Cheat => ({ kind: "skipPhase" }),
   rerollOffers: (): Cheat => ({ kind: "rerollOffers" }),
   spawnFlower: (): Cheat => ({ kind: "spawnFlower" }),
+  /**
+   * 即時生成殭屍（GH#343）。`count` 省略 ⇒ 伺服器用 `config.practice@1` 的
+   * 「生怪指令的預設數量」，⛔ 客戶端不自己決定（那會變成第四個住處，而且沒有守衛）。
+   */
+  spawnMob: (what: "normal" | "special" | "boss", count?: number): Cheat => ({
+    kind: "spawnMob",
+    what,
+    ...(count === undefined ? {} : { count }),
+  }),
 } as const;

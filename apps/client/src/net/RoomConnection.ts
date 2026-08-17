@@ -238,11 +238,24 @@ export class RoomConnection {
    * (cleared battlefield, round 1) and can't rejoin a not-yet-disposed old room.
    * Couch guests join this room by id via connectDevJoin.
    */
-  async connectDev(mapId?: string, endpoint: string = defaultEndpoint()): Promise<Room<MatchState>> {
+  async connectDev(
+    mapId?: string,
+    endpoint: string = defaultEndpoint(),
+    /**
+     * 練習模式（GH#343）—— 只在 true 時才送出這一格，缺席就是「一般房」，
+     * 逐字沿用 `mapId` 與 #215 `rogueliteMobs` 的約定（缺席 ≠ 關掉）。
+     * ⚠️ 這只是**請求**：伺服器自己解析身分並據此開閘（見 `cheatGate.ts`）。
+     *
+     * ⚠️ 排在 `endpoint` **後面**是刻意的：既有呼叫端（含 roomConnectionName.test）
+     * 用位置參數傳 endpoint，插在中間會讓那些呼叫悄悄把 URL 當成旗標。
+     */
+    practice?: boolean,
+  ): Promise<Room<MatchState>> {
     const client = new Client(endpoint);
     const room = await client.create<MatchState>("match", {
       ...this.joinOptions(),
       ...(mapId ? { mapId } : {}),
+      ...(practice ? { practice: true } : {}),
     });
     this.bind(room);
     return room;

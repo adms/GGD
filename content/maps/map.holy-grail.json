@@ -3,6 +3,7 @@
   "id": "map.holy-grail",
   "name": "大聖杯洞窟",
   "template": "CENTRAL_RING",
+  "groundStyle": "stone",
   "grid": {
     "cols": 24,
     "rows": 18,
@@ -230,8 +231,208 @@
       ]
     }
   },
-  "landmarkProps": [],
-  "backgroundProps": [],
+  "landmarkProps": [
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 11,
+        "row": 7
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 12,
+        "row": 7
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 11,
+        "row": 10
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 12,
+        "row": 10
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 3,
+        "row": 9
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "at": {
+        "col": 20,
+        "row": 9
+      },
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "at": {
+        "col": 11,
+        "row": 4
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "at": {
+        "col": 12,
+        "row": 13
+      },
+      "rotQuarter": 2,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/floor_tile_large.glb",
+      "at": {
+        "col": 11,
+        "row": 9
+      },
+      "rotQuarter": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/props/floor_tile_large.glb",
+      "at": {
+        "col": 12,
+        "row": 9
+      },
+      "rotQuarter": 0,
+      "scale": 1.0
+    }
+  ],
+  "backgroundProps": [
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 8,
+        "row": 6
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 15,
+        "row": 6
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 8,
+        "row": 12
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 15,
+        "row": 12
+      },
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 7,
+        "row": 8
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 16,
+        "row": 8
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 7,
+        "row": 11
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 16,
+        "row": 11
+      },
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 0,
+        "row": 5
+      },
+      "rotQuarter": 0,
+      "scale": 1.3
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 23,
+        "row": 5
+      },
+      "rotQuarter": 2,
+      "scale": 1.3
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 0,
+        "row": 13
+      },
+      "rotQuarter": 0,
+      "scale": 1.3
+    },
+    {
+      "model": "assets/models/hex/rock.glb",
+      "at": {
+        "col": 23,
+        "row": 13
+      },
+      "rotQuarter": 2,
+      "scale": 1.3
+    }
+  ],
   "backdrop": {
     "layers": [
       {

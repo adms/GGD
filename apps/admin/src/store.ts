@@ -106,6 +106,15 @@ export type Page =
    */
   | "storeEconomy"
   /**
+   * 英雄上下架 (`config/roster.json`, GH#336): **下架**（手動與隨機兩條路都擋）
+   * 與**隱藏**（彩蛋 —— 隨機抽得到、手動選不到，owner 2026-08-17）兩張 id 清單。
+   * 自己一頁而不是走通用引擎：那個引擎畫的是**固定形狀的純量葉**，這裡要的是
+   * 「兩份會長大的英雄 id 清單 × textarea」（與 arenaPool 同一個形狀）。
+   * ⚠️ 這一頁**必須同時**擁有兩張清單 —— 存檔寫的是整份文件，而 `retiredChampions`
+   * 是 `.strict()` 必填，只寫一半會讓那七位下架英雄靜靜復活。寫入走 `putOverlayDoc`。
+   */
+  | "roster"
+  /**
    * 變身外觀 (`config/form-visuals.json`, #249 GH#288): 變身態的顏色 / 大小 /
    * 球體掛件。自己一頁,因為 26 對變身裡有 21 對**前後同一個模型** —— 這三樣
    * 是唯一能讓玩家看出變身的東西,而其中顏色與大小在 w3x 裡是空的,只能由
@@ -186,6 +195,16 @@ export type Page =
   // 尺」，操作者會一起找。
   | "aoeTiers"
   | "uiLexicon"
+  /**
+   * 混音 (`config/audio-mix.json`, owner 2026-08-17「其他角色語音應該是自己的一半」)
+   * —— 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+   */
+  | "audioMix"
+  /**
+   * 練習模式 (`config/practice.json`, GH#343「進入不會有對戰⋯即時生成殭屍」)
+   * —— 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+   */
+  | "practice"
   // 英雄屬性正規化 (owner 2026-08-12): 小/中/大 的三格 + 角色定位對照表。
   // 極小/極大 不在這裡 —— 它們是硬上下限，住「屬性上限」頁。
   | "statNormalization"
@@ -501,6 +520,10 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "matchConfig",
   // 商店經濟: 同上 —— eager page + `putOverlayDoc`,沒有 session 每一次儲存都 401。
   "storeEconomy",
+  // 英雄上下架 (GH#336): 同上 —— eager page + `putOverlayDoc`。⛔ 漏掉 gate 的話,
+  // 登出的操作者會把兩張名單編完才在儲存時發現從頭到尾就沒有可以寫入的 session,
+  // 而這一頁存不下去的後果是「他以為那位英雄已經下架了」。
+  "roster",
   // 變身外觀: 同上 —— eager page + `putOverlayDoc`,沒有 session 每一次儲存都 401。
   "formVisuals",
   // 畫質分級 / 特效回收 / 濺血程度 (E2): 同一個 `ConfigDocPage` 元件、同一條
@@ -531,6 +554,11 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // AoE 四級距: 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "aoeTiers",
   "uiLexicon",
+  // 混音 (owner 2026-08-17): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  "audioMix",
+  // 練習模式 (GH#343): 同上。⛔ 這一頁決定練習房開不開得起來與作弊碼的第二扇門，
+  // 少了 session gate 等於讓沒登入的人改得到那些開關。
+  "practice",
   // 英雄屬性正規化: 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "statNormalization",
   // GH#324 —— 走 `putOverlayDoc`（沒有 session 一律 401）。

@@ -23,6 +23,8 @@
  * (同 `matchConfig.ts` 的理由:替代方案是用一份猜出來的文件蓋掉線上)。
  */
 
+import { DEFAULT_DRAFT_CONFLICT, type DraftConflict } from "@ggd/shared/content/schema/config";
+
 /** The `config` collection doc this page edits (one doc, one block). */
 export const ARENA_RULES_COLLECTION = "config";
 export const ARENA_RULES_DOC_ID = "arena-rules";
@@ -69,13 +71,14 @@ export const ITEM_DRAFT_FIELD_ORDER: readonly ItemDraftField[] = [
  * (見下面 SHIPPED_RETIRED_LOOT_TABLES 的說明),但它調的是同一個東西 ——
  * 「這一場的三選一可以從哪些池子抽」 —— 所以放在同一頁。
  */
-export type ItemDraftGroup = "policy" | "safety" | "retire" | "pool";
+export type ItemDraftGroup = "policy" | "safety" | "retire" | "pool" | "conflict";
 
 export const ITEM_DRAFT_GROUP_ZH: Readonly<Record<ItemDraftGroup, string>> = Object.freeze({
   policy: "候選不足時怎麼辦",
   safety: "保險",
   retire: "退場的獎池",
   pool: "哪些東西可以被發出去",
+  conflict: "同一回合撞卡時",
 });
 
 export interface FieldLabel {
@@ -193,6 +196,86 @@ export const RETIRED_TABLES_LABEL: FieldLabel & { group: "retire" } = Object.fre
     "沒移除就直接排回去的話，存檔會被拒絕並指名是哪一個回合。",
   group: "retire",
 });
+
+// ────────────────────────────── 同一回合撞卡時發哪一個（#340）─────────────
+//
+// owner 2026-08-17:「調整寶具跟固有能力三選一 不要同時出現 造成選擇時間不夠
+// (兩者有衝突不顯示寶具三選一)」
+//
+// ⚠️ 為什麼這一組也**不在** `ItemDraftField` 裡:同 `retiredLootTables`,它是
+// arena-rules 的**頂層**欄位,不是 `itemDraft` 區塊的一格。`itemDraftShippedCopy.
+// test.ts` 釘死「後台的欄位清單 === `zItemDraftConfig` 的鍵」,混進去那條守衛就
+// 從此對不上。所以走同一條已經驗過的路:同一頁上的第三組欄位,自己的出貨值 +
+// 自己的 drift 測試。
+
+/**
+ * 出貨值。⛔ **不是**在這裡重打一份 —— 直接引用 schema 那一份(同
+ * `grailDraft.ts` 的 `SHIPPED_GRAIL_DRAFT`),所以三個住處
+ * (`content/config/arena-rules.json` · Zod `DEFAULT_DRAFT_CONFLICT` · 這裡)
+ * 少掉一個會漂走的抄本。
+ */
+export const SHIPPED_DRAFT_CONFLICT: DraftConflict = DEFAULT_DRAFT_CONFLICT;
+
+export const DRAFT_CONFLICT_LABEL: FieldLabel & { group: "conflict" } = Object.freeze({
+  zh: "撞卡時發哪一個",
+  note:
+    "有些回合**同時**排了聖杯願望（能力三選一）與寶具（傳說武器三選一）。" +
+    "兩張卡共用同一段中場倒數,所以「都發」的代價是玩家的選擇時間被切成兩半 —— " +
+    "owner 2026-08-17 實測回報的就是這個。這一格決定撞到時誰讓路。" +
+    "⚠️ 它**不會**改動回合排程:那些回合照樣排著兩者,切回「兩張都發」就整批回來。",
+  group: "conflict",
+});
+
+/** 下拉選項 —— 每一個都寫「玩家會看到什麼」。 */
+export const DRAFT_CONFLICT_OPTIONS: readonly { value: DraftConflict; zh: string; note: string }[] = [
+  {
+    value: "grail-wins",
+    zh: "只發聖杯願望（出貨值）",
+    note: "撞到的那幾回合,玩家只看到能力三選一;寶具卡不出現,那一回合就拿不到免費傳說武器。",
+  },
+  {
+    value: "weapon-wins",
+    zh: "只發寶具",
+    note: "反過來:玩家只看到傳說武器三選一,那一回合沒有聖杯願望可挑。",
+  },
+  {
+    value: "both",
+    zh: "兩張都發（2026-08-17 之前的行為）",
+    note: "兩張三選一擠在同一段倒數裡連續跳出來。這是 owner 回報「選擇時間不夠」的那個狀態。",
+  },
+];
+
+/** 從 API 回來的文件裡挖出這一格；schema 不符或缺欄位 → 出貨值。 */
+export function readDraftConflict(doc: unknown): DraftConflict {
+  if (!doc || typeof doc !== "object") return SHIPPED_DRAFT_CONFLICT;
+  const d = doc as Record<string, unknown>;
+  if (d.schema !== ARENA_RULES_SCHEMA) return SHIPPED_DRAFT_CONFLICT;
+  const v = d.draftConflict;
+  // ⚠️ 缺欄位回**出貨值**不是 `both`:線上的耐久覆蓋層是這一格存在之前存的,
+  // 照 `rulesFromDoc` 的 `??` 它在遊戲裡拿到的就是出貨值。後台畫成 `both` 的話
+  // 畫面會說一件遊戲裡沒有在做的事。
+  return isDraftConflict(v) ? v : SHIPPED_DRAFT_CONFLICT;
+}
+
+export function isDraftConflict(v: unknown): v is DraftConflict {
+  return v === "grail-wins" || v === "weapon-wins" || v === "both";
+}
+
+/**
+ * 把這一格接回**整份** arena-rules 文件（同 {@link patchRetiredTables} 的理由：
+ * 覆蓋層存的是整份，少送一個區塊就是把那個機制從線上刪掉）。
+ */
+export function patchDraftConflict(
+  doc: Record<string, unknown>,
+  value: DraftConflict,
+): Record<string, unknown> {
+  return { ...doc, draftConflict: value };
+}
+
+/** 給操作者看的一句話：**這一場實際上會發生什麼**。 */
+export function draftConflictSummary(value: DraftConflict): string {
+  return DRAFT_CONFLICT_OPTIONS.find((o) => o.value === value)?.note ?? "";
+}
 
 /** 逗號 / 換行分隔的輸入 → 乾淨的 id 陣列（去空白、去重複、保持輸入順序）。 */
 export function parseRetiredTables(text: string): string[] {

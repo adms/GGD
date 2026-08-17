@@ -105,3 +105,20 @@ export function purgeImpactPoolOnRoundEnd(policy: ConfigVfxCleanupDoc): boolean 
   if (!policy.enabled) return false;
   return policy.purgeImpactPoolOnRoundEnd ?? DEFAULT_VFX_CLEANUP.purgeImpactPoolOnRoundEnd ?? true;
 }
+
+/**
+ * 下一回合**開打的那一幀**要不要停掉上一回合還在飛的勝利煙火並重新武裝勝利偵測
+ * （owner 2026-08-17「場地莫名其妙的特效又回來了」）。
+ *
+ * `enabled=false` ⇒ false，和上面三格同一個止血閥語意：整份政策關掉 = 回到
+ * 這些回收動作全都不做的行為。缺這一格（舊的耐久 override）⇒ 出貨值。
+ *
+ * ⚠️ 這一格只在 **`"enter"`** 那一側被讀。`"leave"` 也停煙火的話，回合勝利煙火
+ * 會在它發射的同一幀被清掉 —— 見 `render/roundVfxLifecycle` 的 `RoundEdge`。
+ */
+export function purgeVictoryFxOnCombatStart(policy: ConfigVfxCleanupDoc): boolean {
+  if (!policy.enabled) return false;
+  return (
+    policy.purgeVictoryFxOnCombatStart ?? DEFAULT_VFX_CLEANUP.purgeVictoryFxOnCombatStart ?? true
+  );
+}

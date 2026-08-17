@@ -48,7 +48,18 @@ export type Cheat =
   | { kind: "killEnemies" } // kill all enemy champions in my zone (fast-forward)
   | { kind: "spawnFlower" } // spawn a healing flower in my zone (flower testing)
   | { kind: "skipPhase" } // force intermission→combat / end the round
-  | { kind: "rerollOffers" }; // re-roll this seat's open augment/weapon offers
+  | { kind: "rerollOffers" } // re-roll this seat's open augment/weapon offers
+  /**
+   * 即時生成殭屍（GH#343，owner 2026-08-17「以及即時生成殭屍等特殊單位」）。
+   *
+   * `what` 逐字沿用 sim 的 {@link MobKind}（一般 / 特殊 / 殭屍王），⛔ 不另外發明
+   * 一套 grunt/elite 的詞彙 —— 兩套名字之於同一件事，就是遲早會對不上的那種債。
+   *
+   * `count` 省略時走 `config.practice@1` 的「生怪指令的預設數量」。⚠️ 無論填多少，
+   * 伺服器一律吃小怪波設定的**每區同時存活上限**，撞到就停：練習房不可以被自己
+   * 生出來的怪打死（那會讓沙盒變成一個沒得練的地方）。
+   */
+  | { kind: "spawnMob"; what: "normal" | "special" | "boss"; count?: number };
 
 export interface CheatMessage {
   cheat: Cheat;

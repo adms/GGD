@@ -1,6 +1,7 @@
 /** arena@1 — mirrors `ArenaDef` in sim/world/ArenaDef.ts. */
 import { z } from "zod";
 import { zId, zVec2 } from "./common";
+import { GROUND_STYLE_IDS, DEFAULT_GROUND_STYLE } from "./groundStyle";
 
 /**
  * ⚠️ GH#324 —— 這個 union 多了兩樣東西，兩樣都**向後相容**（既有 6 張場地照樣 parse）：
@@ -368,8 +369,15 @@ export const zArenaDef = z
     zones: z.array(zZoneDef).min(1),
     /** visual-only props (client renders; sim ignores) */
     decor: z.array(zDecor).default([]),
-    /** ground texture/tile hint for the client (visual only) */
-    groundStyle: z.enum(["stone", "dirt", "wood", "grass", "sand"]).default("stone"),
+    /**
+     * ground texture/tile hint for the client (visual only)
+     *
+     * ⚠️ 合法值**不寫在這裡** —— 它們住在 `./groundStyle`，因為同一份名單同時要被
+     * `map@1`（作者宣告）、`texgen/styles.ts`（PNG 從這產）與 `groundMaterials.ts`
+     * （執行期載得到哪些）讀。四份各抄一份的漂移是**靜默的**：schema 收下一個沒有
+     * painter 的值 ⇒ 地板退回純色；painter 產了 schema 不收的值 ⇒ PNG 沒有人載。
+     */
+    groundStyle: z.enum(GROUND_STYLE_IDS).default(DEFAULT_GROUND_STYLE),
   })
   .strict();
 

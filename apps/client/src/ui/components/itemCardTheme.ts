@@ -15,6 +15,8 @@
  */
 import {
   DEFAULT_ITEM_CARD,
+  DEFAULT_ITEM_ICON_FILL_PCT,
+  zConfigItemCardDoc,
   type ConfigItemCardDoc,
   type ItemCardCategory,
 } from "@ggd/shared/content";
@@ -38,6 +40,19 @@ function acceptCategory(candidate: unknown, fallback: ItemCardCategory): ItemCar
   return CATEGORIES.includes(candidate as ItemCardCategory)
     ? (candidate as ItemCardCategory)
     : fallback;
+}
+
+/**
+ * 圖示佔一格的百分比(#338)。⚠️ 上下界**直接借 Zod 的那一格**,⛔ 不在這裡再抄
+ * 一次數字 —— 抄一份就是第二個住處,而第二個住處沒有守衛在守(第零守則)。
+ * 那一格是 `.optional()`,所以 `undefined` 也 parse 得過 → 還要確認拿到的
+ * 真的是數字,否則就退回缺席時的預設。
+ */
+const zIconFillPct = zConfigItemCardDoc.shape.iconFillPct;
+
+function acceptPct(candidate: unknown, fallback: number): number {
+  const parsed = zIconFillPct.safeParse(candidate);
+  return parsed.success && typeof parsed.data === "number" ? parsed.data : fallback;
 }
 
 function acceptStrings(candidate: unknown, fallback: readonly string[]): string[] {
@@ -94,12 +109,28 @@ export function applyItemCardDoc(doc: ConfigItemCardDoc | null | undefined): voi
     inlineValueMarkers: acceptStrings(d.inlineValueMarkers, S.inlineValueMarkers),
     efficacyHeadings: acceptStrings(d.efficacyHeadings, S.efficacyHeadings),
     loreHeadings: acceptStrings(d.loreHeadings, S.loreHeadings),
+    // ⚠️ 退路刻意不是 `S.iconFillPct` —— 這一格不住在 DEFAULT_ITEM_CARD 裡
+    //(那個物件被 itemCardShipped.test.ts 逐鍵釘死等於出貨 JSON),
+    // 它的缺席預設是 config.ts 另外匯出的那個常數。
+    iconFillPct: acceptPct(d.iconFillPct, DEFAULT_ITEM_ICON_FILL_PCT),
   };
 }
 
 /** 現在生效的那一份(出貨預設,或 `applyItemCardDoc` 餵進來的那一份)。 */
 export function getItemCardConfig(): ConfigItemCardDoc {
   return card;
+}
+
+/**
+ * 道具圖示佔一格的百分比(#338)。100 = 貼齊格子邊。
+ *
+ * ⚠️ 開一個函式而不是叫呼叫端自己寫 `?? DEFAULT_ITEM_ICON_FILL_PCT`:
+ * 缺席時的退路只能有**一個**住處。`applyItemCardDoc` 還沒跑過(或那份 doc
+ * 根本沒有這一格)時 `card.iconFillPct` 就是 undefined,而那是常態不是例外 ——
+ * 出貨的 item-card.json 今天並沒有寫這一格。
+ */
+export function itemIconFillPct(): number {
+  return card.iconFillPct ?? DEFAULT_ITEM_ICON_FILL_PCT;
 }
 
 /** 一個分類的顏色 —— 給不方便拿整份 config 的地方。 */

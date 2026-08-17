@@ -113,6 +113,12 @@ export interface MatchLaunch {
   skinOverrides: Map<string, string>;
   /** selected arena id (offline picker); platform matches learn it from state */
   mapId: string | null;
+  /**
+   * 練習模式（GH#343）—— 這一場是不是**單人沙盒**。只影響 `connectDev` 送出的
+   * 開房參數與測試碼面板要不要出現；⛔ 它不是權威，伺服器自己有一份
+   * （`MatchRoom.cheatsAllowed`）。
+   */
+  practice: boolean;
 }
 
 export interface AppState {
@@ -233,14 +239,20 @@ export interface AppState {
   /** Dismiss the "awaiting approval" card and return to the auth form (#203/#126). */
   clearPendingRegistration(): void;
   doLogout(): Promise<void>;
-  playOffline(mapId?: string): void;
+  /**
+   * @param practice 練習模式（GH#343）—— 開一間**單人沙盒**：沒有敵隊、不結算、
+   *   測試碼直接可用、可以即時生殭屍。場地由 `mapId` 決定（重用大廳現有的下拉），
+   *   角色照常在選角相位挑。⛔ 客戶端這一格只是**請求**，真正決定的是伺服器
+   *   （`cheatGate.ts`：客戶端說自己是練習房不算數）。
+   */
+  playOffline(mapId?: string, practice?: boolean): void;
   /**
    * login→battle handoff (task #74): stage an offline launch behind the >=1s
    * loading transition and request the login-roar fade — instead of jumping
    * straight to "match". `commitMatchLaunch` performs the actual screen flip
    * once the loading bar has run its minimum.
    */
-  beginOfflineLoading(mapId?: string): void;
+  beginOfflineLoading(mapId?: string, practice?: boolean): void;
   /** Flip to the staged match once the loading transition has run (task #74). */
   commitMatchLaunch(): void;
   /** Abort a staged loading transition without launching (task #74). */
@@ -435,7 +447,7 @@ export const appStore = createStore<AppState>()((set, get) => {
   }
 
   /** Compute the launch payload for an offline (dev direct-join) match. */
-  function offlineLaunch(mapId?: string): MatchLaunch {
+  function offlineLaunch(mapId?: string, practice = false): MatchLaunch {
     // equipped skins still apply offline when a platform session exists
     const { wallet, catalog, account } = get();
     const skinOverrides =
@@ -452,6 +464,7 @@ export const appStore = createStore<AppState>()((set, get) => {
       accountId: account?.id ?? null,
       skinOverrides,
       mapId: mapId ?? null,
+      practice,
     };
   }
 
@@ -479,6 +492,8 @@ export const appStore = createStore<AppState>()((set, get) => {
       accountId: account?.id ?? null,
       skinOverrides,
       mapId: null, // platform matches render the server-authoritative state.mapId
+      // 平台賽永遠不是練習房：練習房走的是 `playOffline(mapId, true)` 那條路。
+      practice: false,
     };
   }
 
@@ -653,23 +668,23 @@ export const appStore = createStore<AppState>()((set, get) => {
       });
     },
 
-    playOffline(mapId?: string) {
+    playOffline(mapId?: string, practice?: boolean) {
       set({
         screen: "match",
         // snapshot the pre-match standing for the post-match rank-delta screen
         rankBefore: get().myStanding,
         showRankChange: false,
         matchLoading: null,
-        match: offlineLaunch(mapId),
+        match: offlineLaunch(mapId, practice === true),
       });
     },
 
-    beginOfflineLoading(mapId?: string) {
+    beginOfflineLoading(mapId?: string, practice?: boolean) {
       // Stage the launch and request the roar fade NOW; the loading bar
       // (MatchLoadingOverlay) shows for >=MATCH_LOADING_MIN_MS, then calls
       // commitMatchLaunch. `screen` stays "auth" meanwhile, so AuthScreen (and
       // its login scene) remain mounted and no combat voice has started yet.
-      set({ matchLoading: { launch: offlineLaunch(mapId), roarFadeRequested: true } });
+      set({ matchLoading: { launch: offlineLaunch(mapId, practice === true), roarFadeRequested: true } });
     },
 
     commitMatchLaunch() {
