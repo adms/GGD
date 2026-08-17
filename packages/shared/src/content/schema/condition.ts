@@ -41,6 +41,8 @@ import {
   CONDITION_MAX_DEPTH,
   CONDITION_PERCENT_MAX,
   CONDITION_PERCENT_MIN,
+  CONDITION_SCALE_MAX,
+  CONDITION_SCALE_MIN,
   COMPARE_OPS,
   PLAIN_STATS,
   RESOURCE_STATS,
@@ -76,6 +78,34 @@ export const zChanceLeaf = z
   })
   .strict();
 
+/**
+ * ⭐ GH#354 / G4 —— 比較式右手邊的**第二個運算元**（`value + scale × 那個讀數`）。
+ *
+ * 兩個分支各自帶一份，⛔ 不是一份共用的：`stat` 必須跟左手邊**同一族**
+ *（資源 vs 一般），而 Zod 表達「同族」的方式就是把它放進各自那一格的 enum ——
+ * 一份共用的 `other` 會讓 `{stat:"hp", mode:"percent", other:{stat:"attackSpeed"}}`
+ * 通過解析，而那個比較沒有意義（mode 對右手邊不適用），⛔ 而且在編輯器裡看起來
+ * 完全正常。這跟 `zStatLeaf` 自己用 union 表達 DECISION 3 是同一個路數。
+ */
+function operandOf<T extends string>(stat: z.ZodEnum<[T, ...T[]]>) {
+  return z
+    .object({
+      subject: zConditionSubject,
+      stat: stat.optional().describe("讀哪一個屬性。留空 = 跟左邊比的是同一個。"),
+      scale: z
+        .number()
+        .min(CONDITION_SCALE_MIN)
+        .max(CONDITION_SCALE_MAX)
+        .optional()
+        .describe("乘上去的倍率，留空 = 1。「比對方少兩成」寫 0.8。"),
+    })
+    .strict()
+    .describe(
+      "跟另一個讀數比，而不是跟一個固定數字比（右手邊 = 這個讀數 × 倍率 + 上面那個數字）。" +
+        "⭐ 這是「比較自身與目標」那一族唯一的寫法。",
+    );
+}
+
 /** hp/mp — the only two stats with a maximum, so the only two offering `percent`. */
 export const zResourceStatLeaf = z
   .object({
@@ -85,6 +115,7 @@ export const zResourceStatLeaf = z
     mode: z.enum(["absolute", "percent"]),
     op: zCompareOp,
     value: z.number(),
+    other: operandOf(zResourceStat).optional(),
   })
   .strict()
   .superRefine((leaf, ctx) => {
@@ -117,6 +148,7 @@ export const zPlainStatLeaf = z
     mode: z.literal("absolute").optional(),
     op: zCompareOp,
     value: z.number().min(CONDITION_ABSOLUTE_MIN).max(CONDITION_ABSOLUTE_MAX),
+    other: operandOf(zPlainStat).optional(),
   })
   .strict();
 

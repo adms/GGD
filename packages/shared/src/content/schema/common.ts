@@ -270,7 +270,7 @@ export const refineStatModifierScope = (
         "要多開一條屬性，先在 sim/stats/scopedStat.ts 加它的讀取點。",
     });
   }
-  if (m.op === ModOp.PercentOf || m.op === ModOp.CapRaise) {
+  if (m.op === ModOp.PercentOf || m.op === ModOp.CapRaise || m.op === ModOp.CapRaisePct) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["op"],
@@ -281,9 +281,40 @@ export const refineStatModifierScope = (
   }
 };
 
+/**
+ * ⭐ GH#354 / G5 —— `capRaisePct` 的 `value` 上界（2 = 一般上限的三倍）。
+ *
+ * ⚠️ 它需要**自己的**上下界，因為 G5 讓它從兩張既有的量級表**雙雙豁免**
+ *（`refineItemModifierBand` 與 `zMarkPerStackModifier`，兩處的理由都是「它不是
+ * 一份加成」）。少了這一行，`capRaisePct: 100` 會一路通過所有 schema ——
+ * 而 `statCaps` 的 `unlocked` 雖然攔得住結果，攔不住**那份文件**：後台存得起來、
+ * 卡片印著「解鎖上限 +10000%」，玩家拿到的卻是 `unlocked` 那個數字（失敗形態②）。
+ * ⛔ 下界不是 0：`+0%` 是一條看起來有設、什麼都不做的 modifier。
+ */
+export const CAP_RAISE_PCT_MIN = 0.01;
+export const CAP_RAISE_PCT_MAX = 2;
+
+const refineCapRaisePct = (
+  m: { op: ModOp; value: number },
+  ctx: z.RefinementCtx,
+): void => {
+  if (m.op !== ModOp.CapRaisePct) return;
+  if (m.value < CAP_RAISE_PCT_MIN || m.value > CAP_RAISE_PCT_MAX) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["value"],
+      message:
+        `百分比式解鎖上限要在 ${CAP_RAISE_PCT_MIN}..${CAP_RAISE_PCT_MAX} 之間` +
+        `（0.25 = 一般上限 +25%），收到 ${m.value}。` +
+        "⚠️ 這一格填的是**比一般上限多幾成**，不是要抬到多少（那是 capRaise）。",
+    });
+  }
+};
+
 export const zStatModifier = zStatModifierFields
   .superRefine(refineStatModifierFrom)
-  .superRefine(refineStatModifierScope);
+  .superRefine(refineStatModifierScope)
+  .superRefine(refineCapRaisePct);
 
 /**
  * Per-stat sanity band for ONE item modifier, as an absolute magnitude.
@@ -400,7 +431,11 @@ export const refineItemModifierBand = (
   // (attack speed 10.0). The BAND is not the backstop here — the cap table is,
   // and it is the same one the panel reads. Proven by
   // `sim/statCapsReach.test.ts` (道具真的解得開).
-  if (m.op === ModOp.CapRaise) return;
+  // ⭐ G5 —— 百分比式解鎖走同一條豁免，理由逐字相同：它的 `value` 是「比一般
+  // 上限多幾成」，跟 `ITEM_MODIFIER_LIMITS` 的「一件道具給多少」是兩個單位。
+  // 它自己的上下界由 `zStatModifier` 的 `CAP_RAISE_PCT_MAX` 管（0..2 = 最多三倍），
+  // 而真正的硬閘仍然是 `statCaps` 的 `unlocked`，跟絕對式共用同一個。
+  if (m.op === ModOp.CapRaise || m.op === ModOp.CapRaisePct) return;
   const percent = m.op === ModOp.PercentAdd || m.op === ModOp.PercentMult;
   const limit = percent ? ITEM_PERCENT_LIMIT : ITEM_MODIFIER_LIMITS[m.stat];
   if (Math.abs(m.value) > limit) {

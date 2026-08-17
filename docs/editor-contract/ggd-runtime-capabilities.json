@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "c8deb8d8",
+  "fingerprint": "5f1cd23e",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -88,6 +88,7 @@
     "minStacks",
     "mode",
     "op",
+    "other",
     "p",
     "stat",
     "statusId",
@@ -256,6 +257,7 @@
     "perRank",
     "perTargetLevel",
     "permanent",
+    "permanentScope",
     "polarity",
     "pools",
     "projectileId",

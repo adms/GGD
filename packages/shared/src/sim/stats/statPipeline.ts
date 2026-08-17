@@ -20,6 +20,10 @@ import { addAttrGrants, championStatBase } from "./attributes";
 import { sourceAttrGrants } from "./attrSources";
 import { liveResource } from "./resourceStats";
 import { ModOp, type ModifierSource } from "./modifiers";
+// ⭐ G5 —— 百分比式解鎖要讀「這條屬性的一般上限」。⛔ 一份讀取器，不是在這裡
+// 重新推導：`capFor` 已經處理了「表裡沒有這條 → 退回 STAT_CLAMPS 的上界，
+// 而且不可解鎖」那一段，抄第二份就會在某一條沒列進表的屬性上分岔。
+import { capFor } from "../statCaps";
 import { Champions } from "../content/registry";
 
 /**
@@ -184,6 +188,19 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
           case ModOp.CapRaise:
             if (m.value > maxCapRaise) maxCapRaise = m.value;
             break;
+          case ModOp.CapRaisePct: {
+            // ⭐ GH#354 / G5 —— 百分比式解鎖：先折成一個**絕對高度**，再跟
+            // `CapRaise` 進同一個 max。⛔ 不開第二個累積器：兩個累積器就得決定
+            // 「+25% 與 抬到 7.0 同時掛著時誰贏」，而任何寫在 `effectiveCap` 之外
+            // 的答案都會跟面板/商店預覽分岔（它們全部只讀 `capRaise` 這一格）。
+            // ⚠️ 讀的是這條屬性**現在的一般上限**（`capFor(...).base`），⛔ 不是
+            // 「解鎖後的硬上限」也不是這個單位當下的值：前者會讓 +25% 在攻速上
+            // 變成 12.5（超過 10 再被夾回去，等於百分比失效），後者會讓天花板
+            // 跟著自己升降，變成一個追不到的目標。
+            const lifted = capFor(world.statCaps, stat).base * (1 + m.value);
+            if (lifted > maxCapRaise) maxCapRaise = lifted;
+            break;
+          }
           case ModOp.PercentOf:
             // 第二趟才算得出來(它要讀別條屬性的 pass-1 值),所以第一趟這裡
             // 什麼都不做。**不要**在這裡 `flat += m.value * next[m.from]` ——

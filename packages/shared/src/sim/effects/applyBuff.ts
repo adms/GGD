@@ -127,6 +127,15 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
         ? undefined
         : world.tick + Math.round(duration / world.dt);
     /**
+     * ⭐ GH#354 / G3 —— 「永久，但只到這一回合結束」。
+     *
+     * ⚠️ 只有在真的沒有到期 tick 時才掛：一份帶秒數的增益本來就會自己到期，
+     * 標上它只會多一個永遠不會被讀到的旗標（schema 的 refine 也把這種寫法擋在
+     * 載入時，這裡是同一條規矩的第二道 —— 引擎不可以依賴 schema 曾經跑過）。
+     * ⛔ 這裡**不**換算成任何 tick：回合長度是 host 相位機的事，見檔頭。
+     */
+    const roundScoped = expiresAtTick === undefined && e.permanentScope === "round";
+    /**
      * ⭐ S9b —— 落在誰身上。省略 = `ctx.targets` = 今天（240 份既有文件逐位元
      * 不變）。它解鎖的是「**一條** hook 讀敵人狀態、增益自己」：拆成兩條 hook
      * 的話 ICD 記在 `src.hookLastFired[hi]`（逐 hook 一格）、機率也逐 hook 各抽
@@ -212,6 +221,12 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
             // 那個層數 —— 一個計數器，不是兩個。
             ...(e.statusId !== undefined ? { statusId: e.statusId } : {}),
             ...(expiresAtTick !== undefined ? { expiresAtTick } : {}),
+            // ⭐ GH#354 / G3 —— 疊層路徑也要帶，理由與上面 `hooks` / `statusId`
+            // 逐字相同：一支技能一旦也填了 `stackKey`，這一格就會靜默失效，
+            // 於是一份本來只有一回合的疊層增益整場留著（失敗形態②）。
+            // ⚠️ 同一格的既有 source **不回寫** —— 與 `expiresAtTick` 同一條
+            // （第一次施放寫下的身分才是這一疊的身分）。
+            ...(roundScoped ? { roundScoped: true } : {}),
             stacks: 1,
             ...(e.stackVisual ? { visualStacks: true } : {}),
           });
@@ -273,6 +288,9 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
         // 串接，因為沒有第二個物件可以忘記拆。
         ...(e.statusId !== undefined ? { statusId: e.statusId } : {}),
         ...(expiresAtTick !== undefined ? { expiresAtTick } : {}),
+        // ⭐ GH#354 / G3 —— 「永久，但只到這一回合結束」。owner 的 20 件裡
+        // 5 件寫著「本回合內」而沒有秒數，這是它們唯一寫得出來的形狀。
+        ...(roundScoped ? { roundScoped: true } : {}),
       });
     }
     // ONE discrete `buffApply` cue for the status-up (audio COMBAT-AUDIO): the

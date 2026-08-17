@@ -671,6 +671,19 @@ function refineApplyBuff(
       });
     });
   }
+  // ⭐ GH#354 / G3 —— 「永久有多久」需要先是永久。
+  // 與 `exclusiveOnExisting` 需要 `exclusiveGroup`、`shield.onExisting` 需要
+  // `stackKey` 是同一條規矩、同一個訊息形狀：一格永遠不會被讀到的設定，
+  // 在編輯器裡看起來跟生效的一模一樣。
+  if (!perm && e.permanentScope !== undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["permanentScope"],
+      message:
+        "「永久有多久」只有在勾了「永久」時才會被讀到 —— 有持續秒數的增益本來就會" +
+        "自己到期，這一格是一個看起來有設、沒有人讀的選項。",
+    });
+  }
   // ⭐ S4b —— 「只算這份增益自己」需要一個 key 才認得出「這份」。
   // 與 `shield.onExisting` 需要 `stackKey`、`grantAttribute.maxSourceTotal` 需要
   // `store:"source"`、`exclusiveOnExisting` 需要 `exclusiveGroup` 是同一條規矩、
@@ -2019,13 +2032,36 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
        *
        * 引擎層從第一天就做得到（`ModifierSource.expiresAtTick` 缺席 = 永久），
        * 缺的一直是這一格 —— 於是出貨已經有四份文件用 `duration: 99999` 假裝永久。
-       * 語意是**整場**。⛔ 沒有 `permanentScope:"round"`：今天唯一能掛「回合清掉」
-       * 的鉤子復活時也會跑，所以那個值實際的意思會是「直到你死一次」。
+       * 預設語意是**整場**；⭐ GH#354 / G3 之後可以用 {@link permanentScope}
+       * 改成「只到這一回合結束」。
        */
       permanent: z
         .boolean()
         .optional()
         .describe("永久生效（不會到期）。勾了就不要填持續秒數，兩者只能填一格。"),
+      /**
+       * ⭐ GH#354 / G3 —— 這份**永久**增益的永久到哪裡為止。
+       *
+       * 省略 = `"match"` = 整場 = 今天（既有的每一份 `permanent` 逐位元不變）。
+       *
+       * owner 2026-08-17 的 20 件 [EX解放] 裡有 5 件寫著「本回合內」而**沒有秒數**
+       *（#52 王者之財 · #55 噬魂 · #62 破界 · #63 重力劍 · #68 終焉）。在這一格之前
+       * 那一族只能二選一：填一個猜的秒數（回合長度是相位機決定的 ——
+       * `combatMaxTicksForRound` 決賽 180 秒而平時 100 秒，火圈提前收場更是常態，
+       * 所以猜長了跨進下一回合、猜短了在回合中途無聲消失），或填 `permanent` 讓它
+       * **整場**留著（＝ 一件本來只有一回合的寶具變成滾雪球）。
+       *
+       * ⛔ 這一格**不是**「幫你算一個到期秒數」—— 引擎端記的是一個旗標，
+       * 拆除點是 host 的回合開始（`sim/clearPools.ts::clearRoundScoped`）。
+       * 把事件寫成數字正是上面那兩種失敗的來源。
+       */
+      permanentScope: z
+        .enum(["match", "round"])
+        .optional()
+        .describe(
+          "「永久」有多久：match（預設，整場都在）或 round（只到這一回合結束，" +
+            "下一回合開打前會被拿掉）。⛔ 只有勾了「永久」才填得了。",
+        ),
       /**
        * ⭐ G10 —— 這份增益**同時是一個具名標記**（52-01 的〔狂怒〕、破甲、破魔）。
        *

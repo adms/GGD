@@ -1227,6 +1227,30 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // one of them has a painter and a PNG on disk.
 
   // --- the same id, on the OTHER axis: authored in `map@1` but not yet used there.
+  "enum:abilities.effects[]#applyBuff.modifiers[].op=capRaisePct": {
+    status: "landing",
+    since: "2026-08-17",
+    why:
+      "GH#354 / G5 —— 百分比式解鎖上限（#61 閃耀金玉「解鎖上限 +25%」· #50 · #60）。⚠️ 另有一半**不是程式**：出貨的 13 條上限裡只有攻速與吸血留了解鎖空間，其餘 11 條 `unlocked === base`，所以對它們寫 capRaise（兩種形式都一樣）是 no-op —— 那是 content/config/stat-caps.json 的一個資料決定，等 owner 裁決。 機制**整條路都通了**（schema → 引擎讀取點 → 守衛），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 2026-08-17 列那張 20 件 [EX解放] 清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/gapBatch354.test.ts。",
+  },
+  "field:abilities.effects[]#applyBuff.permanentScope": {
+    status: "landing",
+    since: "2026-08-17",
+    why:
+      "GH#354 / G3 —— 「永久，但只到這一回合結束」（#52 · #55 · #62 · #63 · #68 五件寫著「本回合內」而沒有秒數）。拆除點是 clearRoundScoped，由 host 在進入戰鬥、發射 roundStart 之前逐席位跑一次。 機制**整條路都通了**（schema → 引擎讀取點 → 守衛），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 2026-08-17 列那張 20 件 [EX解放] 清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/gapBatch354.test.ts。",
+  },
+  "field:abilities.effects[]#applyBuff.condition|0|1|0.other": {
+    status: "landing",
+    since: "2026-08-17",
+    why:
+      "GH#354 / G4 —— 條件比較式的第二個運算元（資源葉那一支）。#67 兎月【下剋上】的唯一缺口，另擋 #52 · #55。右手邊 = value + scale × 另一個主體／屬性的讀數。 機制**整條路都通了**（schema → 引擎讀取點 → 守衛），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 2026-08-17 列那張 20 件 [EX解放] 清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/gapBatch354.test.ts。",
+  },
+  "field:abilities.effects[]#applyBuff.condition|0|1|1.other": {
+    status: "landing",
+    since: "2026-08-17",
+    why:
+      "GH#354 / G4 —— 同上，一般屬性葉那一支（兩支是因為 zStatLeaf 用 union 表達 DECISION 3）。 機制**整條路都通了**（schema → 引擎讀取點 → 守衛），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 2026-08-17 列那張 20 件 [EX解放] 清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/gapBatch354.test.ts。",
+  },
   "enum:abilities.effects[]#applyBuff.hooks[].on=onUltimateCast": {
     status: "default-live",
     why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「放大絕的時候⋯」——`abilityCast` 的 slot 切片。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",

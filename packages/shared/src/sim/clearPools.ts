@@ -295,3 +295,30 @@ export function clearForFreshBody(world: SimWorld, id: EntityId): ClearPoolsResu
     requireDispellable: false,
   });
 }
+
+/**
+ * ⭐ GH#354 / G3 —— 拔掉這個身體上所有**只到這一回合為止**的永久來源
+ *（`applyBuff.permanentScope: "round"` → `ModifierSource.roundScoped`）。
+ *
+ * ⛔ **不是** `clearForFreshBody` 的一部分，而且刻意不合併進去。那一支
+ * **復活時也會跑**（`revive.ts`），所以掛進去的話「這一回合」的實際語意會變成
+ * 「直到你死一次」—— 一個名字與行為對不上的旋鈕，而且是**看不出來**的那種：
+ * 沒死的人身上留著、死過的人身上沒了，兩邊都不會有任何訊息。
+ *
+ * ⚠️ 呼叫點只有一個，而且**時機是承重的**：host 在 `enterCombat()` 裡、
+ * **發射 `roundStart` 之前**逐席位跑一次。順序反過來的話，一條回應
+ * 【回合開始】而掛上回合增益的 hook 會在同一幀被這支函式立刻拔掉
+ *（失敗形態②：文件、後台、卡片全都對，遊戲裡什麼都沒有）。
+ *
+ * ⚠️ 掃的是**每一個席位**，⛔ 不是「這一回合被排進對戰的那些」——
+ * 輪空的隊伍不進 pairing 迴圈，漏掉他們就等於「輪空 = 回合增益多留一回合」。
+ */
+export function clearRoundScoped(world: SimWorld, id: EntityId): number {
+  const sc = world.stats.get(id);
+  if (!sc) return 0;
+  // ⛔ 先收集再拔 —— `detachSource` 會改寫 `sc.sources`，邊走邊拔會跳過元素。
+  const doomed: string[] = [];
+  for (const s of sc.sources) if (s.roundScoped === true) doomed.push(s.id);
+  for (const sid of doomed) detachSource(world, id, sid);
+  return doomed.length;
+}

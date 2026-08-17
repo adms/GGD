@@ -1285,12 +1285,25 @@ type EffectVariant =
        * 下來的原因）。缺的一直是 **authoring 面** —— 於是出貨已經有四份文件用
        * `duration: 99999` 假裝永久。
        *
-       * 語意是**整場**（回合重置不清 buff 來源）。⛔ 不做 `permanentScope:
-       * "match" | "round"`：今天唯一能掛「回合清掉」的鉤子是 `clearForFreshBody`，
-       * 而它**復活時也會跑**，所以 `"round"` 實際的意思會是「直到你死一次」——
-       * 一個值不等於它名字的旋鈕（`extendBuff` 檔頭②同一條理由）。
+       * 預設語意是**整場**（回合重置不清 buff 來源）；⭐ GH#354 / G3 之後
+       * {@link permanentScope} 可以把它改成「只到這一回合結束」。
        */
       permanent?: boolean;
+      /**
+       * ⭐ GH#354 / G3 —— 這份**永久**增益的永久到哪裡為止。
+       * 缺席 = `"match"` = 整場 = 今天。
+       *
+       * ⛔ `"round"` **不是**「幫你換算成一個到期 tick」：回合長度是 host 相位機
+       * 決定的（決賽 180 秒 vs 平時 100 秒，火圈提前收場是常態），sim 端沒有那份帳。
+       * 它變成 `ModifierSource.roundScoped` 一個旗標，由
+       * `sim/clearPools.ts::clearRoundScoped` 在**下一回合開打前**拔掉。
+       *
+       * ⚠️ 這一格在 2026-08-17 之前的註解寫著「⛔ 不做」，理由是唯一的回合鉤子
+       * `clearForFreshBody` 復活時也會跑。那個理由**已經過期**：#354 的
+       * `roundStart` 落地之後，回合開始有了一個與復活無關的座標，
+       * 所以 `"round"` 現在真的等於「這一回合」。（第三守則：註解會說謊。）
+       */
+      permanentScope?: "match" | "round";
       /**
        * ⭐ G10 —— 這份來源**同時是一個具名標記**（52-01 狂怒 / 破甲 / 破魔）。
        *

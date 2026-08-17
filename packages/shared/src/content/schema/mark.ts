@@ -52,11 +52,12 @@ const zMarkCount = z.number().int().min(0).max(MARK_MAX_COUNT);
  * 一層就把人變成神的錯字。⚠️ **允許負值**：「每失去一層永久降低移速」是一個
  * 合法設計，不該由這一行否決。
  *
- * `capRaise` 跳過：它的 `value` 是「把上限抬到多少」，不是「給多少」——
- * 拿量級去量它是在比較兩種單位（同 GH#286 在 `refineItemModifierBand` 的推導）。
+ * `capRaise` / `capRaisePct` 跳過：它們的 `value` 是「把上限抬到多少 / 多幾成」，
+ * 不是「給多少」—— 拿量級去量它是在比較兩種單位（同 GH#286 在
+ * `refineItemModifierBand` 的推導）。
  */
 export const zMarkPerStackModifier = zStatModifier.superRefine((m, ctx) => {
-  if (m.op === ModOp.CapRaise) return;
+  if (m.op === ModOp.CapRaise || m.op === ModOp.CapRaisePct) return;
   if (Math.abs(m.value) > MARK_MAX_PER_STACK_VALUE) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,

@@ -44,7 +44,7 @@ import {
   berserkRulesFromDoc,
   type BerserkRules,
 } from "@ggd/shared/sim/abilities/berserkRules";
-import { clearForFreshBody } from "@ggd/shared/sim/clearPools";
+import { clearForFreshBody, clearRoundScoped } from "@ggd/shared/sim/clearPools";
 import { resetMarksForRound } from "@ggd/shared/sim/marks";
 import {
   DISPEL_DOC_ID,
@@ -1765,6 +1765,20 @@ export class MatchController {
   private enterCombat(): void {
     this.world.economyOpen = false;
     this.world.combatActive = true; // scoreboard time-alive accrues during combat
+    // ⭐ GH#354 / G3 —— 上一回合的「本回合內」增益到此為止
+    //（`applyBuff.permanentScope: "round"`）。
+    //
+    // ⚠️ 順序是承重的，兩個方向都是：
+    //  ① **在 `roundStart` 之前** —— 反過來的話，一條回應【回合開始】而掛上
+    //     回合增益的 hook 會在同一幀被這個迴圈立刻拔掉（失敗形態②）。
+    //  ② **在下面的配對迴圈之前，而且掃的是每一個席位** —— 那個迴圈只走
+    //     被排進對戰的隊伍，輪空的隊伍不進去。漏掉他們 = 「輪空 = 回合增益
+    //     多留一回合」，而那是看不出來的。
+    // ⛔ 刻意不掛進 `clearForFreshBody`：那一支復活時也會跑，於是「這一回合」
+    // 會變成「直到你死一次」（見 `sim/clearPools.ts::clearRoundScoped`）。
+    for (const seat of this.seats.values()) {
+      if (seat.entityId !== null) clearRoundScoped(this.world, seat.entityId);
+    }
     // ⭐ GH#354 —— 【回合開始】。回合是 host 的概念（sim 沒有那份帳），
     // 所以發射點在這裡，而收件由 `worldHookSystem` 的那張表做。
     this.world.emit("roundStart", { round: this.phase.round });

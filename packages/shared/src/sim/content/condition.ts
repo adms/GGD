@@ -293,6 +293,43 @@ export interface ChanceLeaf {
   p: number;
 }
 
+/**
+ * ⭐ GH#354 / G4 —— 比較式的**第二個運算元**。
+ *
+ * 在這一格之前，條件葉的右手邊只能是一個**常數**，所以整整一族「跟對方比」的
+ * 設計寫不出來。owner 2026-08-17 的 [EX解放] 裡：
+ *   · #67 兎月【雙弦月】「比較自身與攻擊目標的核心戰鬥屬性，每低於敵方一個
+ *     差距階級⋯」——【下剋上】整張卡就是這件事，這是它**唯一**的缺口
+ *   · #55 噬魂者「依自身攻擊力與 AP **較高者**」——同一主體、跨屬性
+ *
+ * ── 右手邊的完整式子是 `value + scale × 另一個讀數` ────────────────────────
+ * `other` 缺席 → 右手邊就是 `value` = **今天**（既有的每一條條件逐位元不變）。
+ *
+ * ⛔ 刻意**不**把 `value` 變成選填、也不讓 `value` 在 `other` 出現時改讀成
+ * 「倍率」—— 一個意思會隨著旁邊那一格而變的欄位，讀的人與編輯器都得先看另一格
+ * 才知道自己在看什麼，而 `value` 的上下界檢查（percent 是 0..1、absolute 是
+ * 0..1e6，那是「35 打成 0.35」唯一的攔截點）也會跟著失去意義。
+ * 加法式讓兩者都成立：`value` 永遠是「同一個單位的一個量」。
+ *
+ * ⚠️ `stat` 缺席 = **跟左邊同一個屬性**（跨主體比較的常見情況）。
+ * ⚠️ `mode` 沒有第二格：兩邊**一定**用左邊那一個。「我的血量%」對「他的血量絕對值」
+ * 不是一個有意義的比較，而它看起來完全正常。
+ * ⚠️ 型別上 `other.stat` 只收**同一族**的屬性（資源葉收資源、一般葉收一般），
+ * 所以「hp percent 比 攻速」連寫都寫不出來 —— 與 DECISION 3 同一條路數。
+ */
+export interface ConditionOperand<S extends ConditionStat> {
+  /** 讀誰的。`target` 不存在時整條葉子是 false（與左手邊同一條規矩）。 */
+  subject: ConditionSubject;
+  /** 讀哪一個屬性。省略 = 跟左邊同一個。 */
+  stat?: S;
+  /** 乘上去的倍率。省略 = 1。「比對方少 20%」= `scale: 0.8`。 */
+  scale?: number;
+}
+
+/** {@link ConditionOperand.scale} 的上下界。⛔ 兩端都要有（第一守則）。 */
+export const CONDITION_SCALE_MIN = 0.01;
+export const CONDITION_SCALE_MAX = 10;
+
 /** A number comparison on a body that HAS a maximum, so `percent` is offered. */
 export interface ResourceStatLeaf {
   kind: "stat";
@@ -302,6 +339,8 @@ export interface ResourceStatLeaf {
   mode: "absolute" | "percent";
   op: CompareOp;
   value: number;
+  /** ⭐ G4 —— 右手邊 = `value + scale × other`。見 {@link ConditionOperand}。 */
+  other?: ConditionOperand<ResourceStat>;
 }
 
 /** A number comparison on a stat with no denominator — absolute only (DECISION 3). */
@@ -313,6 +352,8 @@ export interface PlainStatLeaf {
   mode?: "absolute";
   op: CompareOp;
   value: number;
+  /** ⭐ G4 —— 右手邊 = `value + scale × other`。見 {@link ConditionOperand}。 */
+  other?: ConditionOperand<PlainStat>;
 }
 
 export type StatLeaf = ResourceStatLeaf | PlainStatLeaf;
@@ -1079,9 +1120,22 @@ function evalNode(
   }
   const id = subjectOf(ctx, cond.subject);
   if (id === undefined) return false;
-  const have = readConditionStat(world, id, cond.stat, cond.mode ?? "absolute");
+  const mode = cond.mode ?? "absolute";
+  const have = readConditionStat(world, id, cond.stat, mode);
   if (have === null) return false;
-  return compare(cond.op, have, cond.value);
+  // ⭐ G4 —— 右手邊 = `value + scale × 另一個讀數`。`other` 缺席 = 就是 `value`
+  // = 今天。⚠️ 讀不到（沒有 target、對方沒有那一池）時整條葉子 **false**，
+  // ⛔ 不是「當成 0 再比一次」—— 後者會讓「我的血比對方多」對著一個不存在的
+  // 對手回 true，而那是最難查的那種：只在事件沒有 target 的那幾發上發生。
+  let want = cond.value;
+  if (cond.other !== undefined) {
+    const otherId = subjectOf(ctx, cond.other.subject);
+    if (otherId === undefined) return false;
+    const read = readConditionStat(world, otherId, cond.other.stat ?? cond.stat, mode);
+    if (read === null) return false;
+    want += (cond.other.scale ?? 1) * read;
+  }
+  return compare(cond.op, have, want);
 }
 
 /**
@@ -1128,10 +1182,41 @@ export function evaluateCondition(
  * any future surface get the same repair, and — more to the point — that it is
  * testable against the real Zod schema instead of through a DOM.
  */
+/**
+ * ⭐ G4 —— 換屬性時**第二個運算元**怎麼搬。
+ *
+ * ⛔ 一律丟掉是**資料損失**：hp→mp 之後「我的 X 比對方的 X 低」仍然完全合法。
+ * ⛔ 一律留著會做出**一張存不回去的卡**：`other.stat` 是資源屬性而葉子換成了
+ * 攻速時，`zStatLeaf` 的兩個分支都不收它（那是 DECISION 3 的閘）。
+ * ⚠️ `other.stat` 缺席 = **跟著左邊走**，所以它永遠合法，一定留著。
+ *
+ * ⚠️ 這裡是這個機制唯一的型別斷言，而它斷言的正是上一行那個**執行期等式**：
+ * 「兩邊 `statSupportsPercent` 相同」就是「同族」的定義，TypeScript 追不進去。
+ * ⛔ 拿掉那個檢查只留斷言 = 前一段講的那張存不回去的卡。
+ */
+function carryOperand<S extends ConditionStat>(
+  other: ConditionOperand<ConditionStat> | undefined,
+  stat: ConditionStat,
+): { other?: ConditionOperand<S> } {
+  if (other === undefined) return {};
+  if (other.stat !== undefined && statSupportsPercent(other.stat) !== statSupportsPercent(stat)) {
+    return {};
+  }
+  return { other: other as ConditionOperand<S> };
+}
+
 export function retargetStatLeaf(leaf: StatLeaf, stat: ConditionStat): StatLeaf {
   const mode = leaf.mode ?? "absolute";
   if (statSupportsPercent(stat)) {
-    return { kind: "stat", subject: leaf.subject, stat, mode, op: leaf.op, value: leaf.value };
+    return {
+      kind: "stat",
+      subject: leaf.subject,
+      stat,
+      mode,
+      op: leaf.op,
+      value: leaf.value,
+      ...carryOperand<ResourceStat>(leaf.other, stat),
+    };
   }
   return {
     kind: "stat",
@@ -1140,6 +1225,7 @@ export function retargetStatLeaf(leaf: StatLeaf, stat: ConditionStat): StatLeaf 
     mode: "absolute",
     op: leaf.op,
     value: mode === "percent" ? 0 : leaf.value,
+    ...carryOperand<PlainStat>(leaf.other, stat),
   };
 }
 
@@ -1151,6 +1237,12 @@ export function retargetStatLeaf(leaf: StatLeaf, stat: ConditionStat): StatLeaf 
  */
 export function setStatLeafMode(leaf: StatLeaf, mode: "absolute" | "percent"): StatLeaf {
   if (!statSupportsPercent(leaf.stat)) return leaf;
+  // ⭐ G4 —— 這裡的 `other` **一定**留著：族沒有變（能走到這裡的葉子必是資源葉，
+  // 而資源葉的 `other.stat` 也只收得到資源屬性），而且兩邊共用同一個 `mode`，
+  // 所以切換絕對值/百分比對它是逐位元無害的。⛔ 跟著重建卻不複製 = 靜默丟掉
+  // 作者剛設好的比較對象。（`carryOperand` 的同族檢查在這裡恆真，走它是為了
+  // 讓那個斷言只存在一處。）
+  const other = carryOperand<ResourceStat>(leaf.other, leaf.stat);
   if (mode === "percent") {
     const v = leaf.value < CONDITION_PERCENT_MIN ? CONDITION_PERCENT_MIN : leaf.value;
     return {
@@ -1160,6 +1252,7 @@ export function setStatLeafMode(leaf: StatLeaf, mode: "absolute" | "percent"): S
       mode: "percent",
       op: leaf.op,
       value: v > CONDITION_PERCENT_MAX ? CONDITION_PERCENT_MAX : v,
+      ...other,
     };
   }
   return {
@@ -1169,6 +1262,7 @@ export function setStatLeafMode(leaf: StatLeaf, mode: "absolute" | "percent"): S
     mode: "absolute",
     op: leaf.op,
     value: 0,
+    ...other,
   };
 }
 
@@ -1285,8 +1379,20 @@ function describeLeaf(leaf: ConditionLeaf): string {
   const who = SUBJECT_LABEL[leaf.subject];
   const what = STAT_LABEL[leaf.stat];
   const op = OP_LABEL[leaf.op];
-  const rhs = (leaf.mode ?? "absolute") === "percent" ? pct(leaf.value) : num(leaf.value);
-  return `${who}${what} ${op} ${rhs}`;
+  const percent = (leaf.mode ?? "absolute") === "percent";
+  const konst = percent ? pct(leaf.value) : num(leaf.value);
+  // ⭐ G4 —— 第二個運算元一定要進句子。少了它，「自己攻擊力 < 0」印在卡片上
+  // 是一句**假話**（真正的閘是「< 目標攻擊力 ×0.8」），而那正是這個專案已經修過
+  // 三次的形態（#202 / #227 / `statusMatchLabel` 的層數）。
+  if (leaf.other === undefined) return `${who}${what} ${op} ${konst}`;
+  const oWho = SUBJECT_LABEL[leaf.other.subject];
+  const oWhat = STAT_LABEL[leaf.other.stat ?? leaf.stat];
+  const scale = leaf.other.scale ?? 1;
+  const term = scale === 1 ? `${oWho}${oWhat}` : `${oWho}${oWhat} ×${num(scale)}`;
+  // 常數項為 0 是跨主體比較的常見寫法，這時候不要印出一個沒有意義的「0 +」。
+  return leaf.value === 0
+    ? `${who}${what} ${op} ${term}`
+    : `${who}${what} ${op} ${term} + ${konst}`;
 }
 
 /**
