@@ -16,6 +16,8 @@ import { normalize, sub, distSq, clampLen, add } from "../math/vec2";
 import { isPassiveOnly, syncAbilityPassives } from "./abilityPassives";
 import { applyAugmentToEffects, collectAugmentOps } from "./abilityAugment";
 import { scopedCooldownReduction } from "../stats/scopedStat";
+// ⭐ G17 —— 冷卻流逝速度（`tickCooldowns` 讀它）。
+import { Stat } from "../stats/statTypes";
 import { applyCooldownFloor } from "../cooldownRules";
 import { applyCastTimeRules } from "../castTimeRules";
 import { abilityInstanceFor, innateCastBlock } from "./innateActive";
@@ -483,20 +485,55 @@ export function rankUpAbility(world: SimWorld, id: EntityId, slot: CoreAbilitySl
   return true;
 }
 
+/**
+ * ⭐ G17（GH#354）—— 這一 tick 要扣掉幾格冷卻。
+ *
+ * `rate` 是「流逝速度」（1 = 今天）。回傳一定是**非負整數**，因為
+ * `cooldownRemainingTicks` 進 snapshot、也被冷卻圈讀 —— 把它改成小數等於讓每一格
+ * 冷卻圈多一個看不見的尾數，而那個尾數會出現在 UI 的取整邊界上。
+ *
+ * ⭐ 用 **Bresenham** 而不是「累積器」：`floor((t+1)×r) - floor(t×r)`
+ * 只讀 `world.tick` 與 `rate`，所以
+ *   ① **零新狀態** —— 不必為每一格技能存一個小數餘額（那會進 snapshot、進錄影，
+ *      而且 `defineTypes` 是 append-only）
+ *   ② 任何 N tick 的區間內**剛好**扣掉 `round(N × r)` 格，不會累積漂移
+ *   ③ 完全決定性：同一個 tick、同一個 rate 永遠給同一個答案，重播逐位元相同
+ *
+ * ⚠️ `rate <= 0` 一律回 0（冷卻凍結）而**不是**負數 —— 負的扣除會讓冷卻**往上長**，
+ * 那是一個沒有任何卡片描述過、而且畫面上只是「這技能好像永遠不好」的行為。
+ * ⛔ 沒有 `**`、沒有三角函式、沒有時鐘（`sim/purity.test.ts` 在守）。
+ */
+export function cooldownDrainTicks(tick: number, rate: number): number {
+  if (rate <= 0) return 0;
+  if (rate === 1) return 1; // 今天。⛔ 走這一條保證逐位元不變，不進下面的算式。
+  const d = Math.floor((tick + 1) * rate) - Math.floor(tick * rate);
+  return d > 0 ? d : 0;
+}
+
 /** Tick down cooldowns (called by commandSystem each tick). */
 export function tickCooldowns(world: SimWorld): void {
-  for (const [, ab] of world.abilities) {
+  for (const [id, ab] of world.abilities) {
+    // ⭐ G17 —— 這個單位的流逝速度。0 = ×1 = 今天（同 `OutputDamagePct` 那一族：
+    // 出貨 0，內容不開就是**嚴格 no-op**，而且下面走的是原本那條 `--`）。
+    const bonus = world.stats.get(id)?.final[Stat.CooldownDrainRate] ?? 0;
+    const drain = bonus === 0 ? 1 : cooldownDrainTicks(world.tick, 1 + bonus);
+    if (drain === 0) continue; // 冷卻凍結：一格都不扣（⛔ 不是往回長）
+    const step = (n: number): number => (n > drain ? n - drain : 0);
     for (const slot of ["Q", "W", "E", "R"] as const) {
       const inst = ab.slots[slot];
-      if (inst.cooldownRemainingTicks > 0) inst.cooldownRemainingTicks--;
+      if (inst.cooldownRemainingTicks > 0) inst.cooldownRemainingTicks = step(inst.cooldownRemainingTicks);
     }
-    if (ab.exSlot && ab.exSlot.cooldownRemainingTicks > 0) ab.exSlot.cooldownRemainingTicks--;
+    if (ab.exSlot && ab.exSlot.cooldownRemainingTicks > 0)
+      ab.exSlot.cooldownRemainingTicks = step(ab.exSlot.cooldownRemainingTicks);
     // The SIXTH slot's cooldown is REAL and owned by the slot. Replay-neutral:
     // the counter can only be raised by a `castAbility(slot "PASSIVE")`, which
     // no historical input log contains, so on every existing recording this
     // line reads 0 and does nothing (innateActive.ts DECISION 5).
     if (ab.passiveSlot && ab.passiveSlot.cooldownRemainingTicks > 0)
-      ab.passiveSlot.cooldownRemainingTicks--;
+      ab.passiveSlot.cooldownRemainingTicks = step(ab.passiveSlot.cooldownRemainingTicks);
+    // ⛔ 普攻的冷卻**不吃**流逝速度：那是攻速那條屬性管的東西（`attackSpeed`，
+    // 而且它有自己的上限與解鎖）。讓「技能冷卻流逝」順便加快普攻，等於開一條
+    // 繞過攻速上限的後門，而且沒有任何一張卡片這樣寫。
     if (ab.basicAttackCdTicks > 0) ab.basicAttackCdTicks--;
   }
 }

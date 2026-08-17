@@ -101,6 +101,22 @@ export enum Stat {
    * 「仍可被格擋、護盾抵消」講的就是這條界線。
    */
   UnavoidablePct = "unavoidablePct", // 0..1，1 = 無法被迴避
+  /**
+   * ⭐ G17（GH#354）—— **冷卻流逝速度**加成。0 = ×1 = 今天。
+   * #66 魔導鎧・零式「滿層後基礎技能冷卻流逝 ×1.5」、#61 閃耀金玉「×1.20」。
+   *
+   * ⛔ 它**不是**冷卻縮減（`CooldownReduction`），而且兩者不可以互相假裝：
+   *   · CDR 在**施放的那一刻**決定這一輪要等幾 tick —— 之後就是一個固定的數字
+   *   · 流逝速度是**持續**的，所以一份在冷卻**進行中**才掛上的增益立刻生效，
+   *     而同一份寫成 CDR 的話要等下一次施放才看得到
+   * #66 的文案是「滿層**後**⋯流逝 ×1.5」，講的正是後者：層數是打出來的，
+   * 疊滿的那一刻玩家身上多半有好幾格正在轉。
+   *
+   * ⚠️ 實作是**整數 tick 的 Bresenham 排程**（見 `abilitySystem.tickCooldowns`），
+   * ⛔ 不是把計數器改成小數：那一格會進 snapshot 也會被 UI 讀，
+   * 小數化等於讓每一格冷卻圈多一個看不見的尾數。
+   */
+  CooldownDrainRate = "cooldownDrainRate", // 0 = ×1
 }
 
 export type StatBlock = Record<Stat, number>;

@@ -224,6 +224,7 @@ export const STAT_CAP_MAX: Readonly<Record<Stat, number>> = Object.freeze({
   // 完全無法被迴避）。留 20 是給操作者調空間用的，⛔ 不是說 20 有意義。
   [Stat.MaxHitPctMaxHp]: 20,
   [Stat.UnavoidablePct]: 20,
+  [Stat.CooldownDrainRate]: 20,
   // 量出來的:全 115 張卡最強的 baseStats.maxHealth 是 4977,乘 maxHealth 9.0
   // 的環境倍率大約 45k。100 萬留了 20 倍以上。
   [Stat.MaxHealth]: 1_000_000,

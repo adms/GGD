@@ -349,6 +349,7 @@ export const ITEM_MODIFIER_LIMITS: Record<Stat, number> = {
   // 它擋的是「0.2 打成 20」那種 mis-parse，⛔ 不是平衡意見。
   [Stat.MaxHitPctMaxHp]: 0.5,
   [Stat.UnavoidablePct]: 0.5,
+  [Stat.CooldownDrainRate]: 0.5,
   [Stat.MaxHealth]: 2500, // strongest in catalogue: 960
   [Stat.HealthRegen]: 100, // 40
   [Stat.MaxMana]: 2500, // 600

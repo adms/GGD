@@ -164,6 +164,7 @@ export const BASE_BONUS_MAX: Readonly<Record<Stat, number>> = Object.freeze({
   [Stat.OutputShieldPct]: 5,
   [Stat.MaxHitPctMaxHp]: 5,
   [Stat.UnavoidablePct]: 5,
+  [Stat.CooldownDrainRate]: 5,
   // 沒有 clamp —— 天花板是「遠超過任何內容值,但仍是個有限數字」。
   // 全 115 張英雄卡的 baseStats.maxHealth 最大是 4977,20000 給了 4 倍餘裕。
   [Stat.MaxHealth]: 20000,
@@ -374,6 +375,7 @@ export const STAT_LABEL_ZH: Readonly<Record<Stat, string>> = Object.freeze({
   [Stat.OutputShieldPct]: "護盾輸出加成",
   [Stat.MaxHitPctMaxHp]: "單發傷害上限（最大生命比例）",
   [Stat.UnavoidablePct]: "無法被迴避",
+  [Stat.CooldownDrainRate]: "冷卻流逝速度加成",
   [Stat.MaxHealth]: "生命上限",
   [Stat.HealthRegen]: "生命回復 /秒",
   [Stat.MaxMana]: "魔力上限",

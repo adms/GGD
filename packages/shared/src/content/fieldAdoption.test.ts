@@ -1227,6 +1227,12 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // one of them has a painter and a PNG on disk.
 
   // --- the same id, on the OTHER axis: authored in `map@1` but not yet used there.
+  "enum:abilities.effects[]#applyBuff.maxStat.stat=cooldownDrainRate": {
+    status: "landing",
+    since: "2026-08-17",
+    why:
+      "GH#354 / G17 —— 冷卻流逝速度（#66 魔導鎧・零式「滿層後基礎技能冷卻流逝 ×1.5」· #61 閃耀金玉「×1.20」）。⛔ 與冷卻縮減不同：CDR 在施放那一刻決定要等幾 tick，這一條對**正在轉的**冷卻立刻生效 —— 而 #66 的層數是打出來的，疊滿的那一刻身上多半有好幾格正在轉。⚠️ 實作是整數 tick 的 Bresenham（`abilitySystem.cooldownDrainTicks`），⛔ 不把計數器改成小數。機制**整條路都通了**（Stat → tickCooldowns → 守衛 `sim/abilities/cooldownDrain.test.ts`），內容側 0 筆是因為這一批是**先開路再寫卡**。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。",
+  },
   "enum:abilities.effects[]#applyBuff.maxStat.stat=maxHitPctMaxHp": {
     status: "landing",
     since: "2026-08-17",
