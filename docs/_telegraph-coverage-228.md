@@ -20,10 +20,10 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | castType | cells | shape language |
 | --- | ---: | --- |
 | `self` | 93 | self marker at the caster's feet |
-| `targeted` | 74 | lock (arc at the victim + tether to the caster) — walking does not help |
+| `targeted` | 73 | lock (arc at the victim + tether to the caster) — walking does not help |
 | `—` | 56 | not cast |
 | `ground` | 49 | circle — the real `enemiesInCircle` disc; you can walk out |
-| `skillshot` | 14 | line — the projectile's corridor; step sideways |
+| `skillshot` | 15 | line — the projectile's corridor; step sideways |
 | `dash` | 7 | line — the sweep of the dash body |
 
 ## Per-ability matrix
@@ -249,7 +249,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 犬妖 - 殺生丸 `godie-osam` | Q | 34-01 毒華爪 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 犬妖 - 殺生丸 `godie-osam` | W | 34-02 閃光鞭 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 犬妖 - 殺生丸 `godie-osam` | E | 34-03 爆碎牙 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 犬妖 - 殺生丸 `godie-osam` | R | 34-04 奧義˙蒼龍破 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 犬妖 - 殺生丸 `godie-osam` | R | 34-04 奧義˙蒼龍破 | `skillshot` | line 11.81×10.27u | ✅ OK | delayed.advance 12×1.23（起始 0）× abilityRange 0.8, radius 6.42 ×2 × abilityRange 0.8 |
 | 犬妖 - 殺生丸 `godie-osam` | EX | 34-002 冥道殘月破 | `ground` | circle r=3.77u | ✅ OK | radius 4.71 × abilityRange 0.8 |
 | 鬼畜紅王 - 鬼畜狂刀KYO `godie-u00h` | PASSIVE | 39-00 無明神風流-玄武 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 鬼畜紅王 - 鬼畜狂刀KYO `godie-u00h` | Q | 39-01 無明神風流-白虎 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |

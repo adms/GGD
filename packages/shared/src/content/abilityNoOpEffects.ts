@@ -88,7 +88,7 @@ function anyPresent(o: Record<string, unknown>, keys: readonly string[]): boolea
  *
  * ⭐ 從**登錄表裡那一份的欄位**推導，⛔ 不抄 `projectile@1` 今天的形狀：
  * 出貨的投射物文件只有 `speed / maxRange / hitRadius / pierce / vfxKey /
- * meshShape` 六格飛行與外觀參數，一格都不帶傷害 —— 所以
+ * meshShape / flight` 七格飛行與外觀參數，一格都不帶傷害 —— 所以
  * `spawnProjectile{onHit: []}` 射出去的是一顆**純特效**。
  * 哪天有人替投射物開了 `onHit` / `damage` 這一類欄位，這裡自己就會回 true，
  * ⛔ 不必回來改這條規則（也就不會有一條靠註解續命的假規則）。

@@ -38,7 +38,6 @@ import type {
   ReviveCircleConfig,
   GuardianTowerConfig,
   GoldDropConfig,
-  NightPactConfig,
   MobWavesConfig,
   DisadvantageWeights,
 } from "@ggd/shared/content";
@@ -166,8 +165,6 @@ export interface ArenaRules {
   guardianTower: GuardianTowerConfig | null;
   /** 陣亡投幣 rules (task #191); null = dead players cannot throw gold (legacy) */
   goldDrop: GoldDropConfig | null;
-  /** 71-00 暗夜契約 (死之王). Absent = OFF, same legacy-compat shape as goldDrop. */
-  nightPact: NightPactConfig | null;
   /** roguelite mob-wave rules (task #215); null = mechanic off (legacy) */
   mobWaves: MobWavesConfig | null;
   /**
@@ -235,7 +232,6 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
   reviveCircles: null,
   guardianTower: null,
   goldDrop: null,
-  nightPact: null,
   mobWaves: null,
   // Default ON (owner directive): every match/test/room without an explicit
   // override plays with the roguelite mobs armed. `mobWaves` being null here
@@ -327,7 +323,6 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
     reviveCircles: doc.reviveCircles ?? null,
     guardianTower: doc.guardianTower ?? null,
     goldDrop: doc.goldDrop ?? null,
-    nightPact: doc.nightPact ?? null,
     mobWaves: doc.mobWaves ?? null,
     // NOT a content-doc field: the per-room toggle defaults ON here and is only
     // ever driven to false by the room override merged in MatchRoom.onCreate.

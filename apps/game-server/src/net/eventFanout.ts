@@ -190,7 +190,8 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // per resolved buff effect, fired only when the target set was non-empty, so
   // an ability that buffed nobody stays silent. Rate is bounded by casts.
   "buffApply",
-  // 71-00 暗夜契約 (sim/nightPact.ts): a 暗夜旗 was raised on a fallen hero.
+  // 【死亡遺留】(sim/deathWard.ts): a ward was raised on a fallen hero —
+  // 71-00 暗夜契約's 暗夜旗 is the shipped one.
   //
   // CONSUMER: the client's world VFX layer — the black ring itself is rendered
   // from the ENTITY (ENTITY_KIND.NIGHT_FLAG, which carries the authoritative
@@ -198,13 +199,15 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // entity patch cannot express: the raise burst + its cue at {x, z}. Rate is
   // bounded by champion deaths (≤12 per round, and by `maxFlagsPerZone`), so it
   // is nowhere near a per-tick flood.
-  "nightFlagSpawn",
-  // 71-00's second half: an enemy cast beside 死之王 was drained (「魔力全失」).
-  // CONSUMER: floating combat text (the blue MP number, task #92) + the drain
-  // sting on the victim. Without it the caster's bar simply empties with no
-  // explanation, which is exactly the silence P7 exists to delete. Rate is
-  // bounded by enemy casts × a 12 % roll.
-  "nightPactBurn",
+  "deathWardSpawn",
+  // ⛔ `"nightPactBurn"` 在 2026-08-19 退場了：71-00 的第二半（「敵方在附近施法
+  // 有 12% 機率魔力全失」）現在**沒有引擎程式** —— 它是
+  // `auras[] → hooks[onAbilityCast] → spendMana` 的組合（第〇·五守則）。
+  // ⚠️ 那則事件在整個 apps/client 樹裡**零個消費端**（量過），所以拿掉它
+  // 在畫面上是嚴格的 no-op；法力條本來就每 tick 從 `Health.mana` 投影。
+  // 想要那個藍色數字的話，正確的做法是給 `spendMana` 一則**通用**的
+  // `manaSpend` 事件（那支檔案的檔頭自己寫著這是它的後續），⛔ 不是把一支
+  // 技能專屬的事件名留在這張表上。
   // revive circles (task #84): spawn/end drive world VFX + the HUD banner.
   "reviveCircleSpawn",
   "reviveCircleEnd",
@@ -454,6 +457,15 @@ export const SERVER_ONLY_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   "abilityHit",
   "displace",
   "lethalDamage",
+  // ── GH#374（2026-08-19）—— `resourceSwap`（44-002 交換筆記本）────────────
+  // ⚠️ 它**不是**「沒人想到」，是**今天真的沒有客戶端消費者**：`swapResource` 刻意
+  // 繞開傷害／治療佇列（護甲、護盾、【重創】都不該因為「交換」而醒），所以既有的
+  // 飄字／音效／特效路徑一條都不會接住它。把一則沒有人畫的事件外送出去，只是
+  // 白佔頻寬（同上面那四則的理由）。
+  // ⛔ 這是**暫時**的分類，⛔ 不是設計終點：玩家按下交換筆記本，畫面上現在毫無
+  // 回饋，只有血條突然對調 —— 那是 GH#406 要修的東西。接上呈現的那一版，
+  // 這一列要**搬到 `FANNED_OUT_EVENT_TYPES`**，並在那裡註明客戶端消費者是誰。
+  "resourceSwap",
   // ⭐ G19（同一批）—— `statCapReached`「某條屬性首次到頂」。同樣只餵 hook：
   // 客戶端從**已經複製過去的** `MatchState` 屬性欄自己看得到那個數字到頂了，
   // 而這一則的意義是「這是**第一次**」——一個只有伺服器的閂知道的事。

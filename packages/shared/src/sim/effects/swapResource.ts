@@ -65,6 +65,34 @@ export const swapResourceEffect: EffectKindSpec<"swapResource"> = {
         mine.hp = toMe;
         theirs.hp = toThem;
       }
+      /**
+       * ⭐ 2026-08-19（GH#374 / #385）—— **交換必須說出它發生了**。
+       *
+       * 上面那四行是這個引擎裡唯一一處「兩條血條同時被改寫上百點，而世界上
+       * 沒有任何人知道」：交換刻意繞開 `damageQueue` 與 `healTarget`（檔頭第二
+       * 段講的就是為什麼），而那兩條路正好是**所有**觀察者的來源 —— 戰績、
+       * 客戶端事件扇出、以及 castability 普查。
+       *
+       * 量到的代價：44-002 交換筆記本在普查上是 ❌「接受施放但量不到效果」，
+       * 而它其實把施法者從 572.5 換到 679.2、目標從 676.0 換到 575.3。
+       * 這正是失敗形態②的鏡像 —— 不是「算出來沒送出去」，是「改完了沒人看見」。
+       *
+       * ⛔ 它**不可以**改成發 `damage`／`heal`：那會讓護甲、護盾、【重創】、
+       * onDamageTaken 全部醒過來，而卡片上寫的是「交換」（檔頭第二段）。
+       * 所以它發自己的事件，而且**只有這裡發得出來** —— 與 `championForm`
+       * 只從 `ChampionFormSystem.setBody` 發出來是同一個論證，那也正是
+       * `castabilityVerdict.ts` 收一個事件進 `EFFECT_EVENTS` 的門檻。
+       *
+       * ⚠️ `world.events` 是**每 tick 清空的呈現層記錄**（`SimWorld.ts` 檔內
+       * 那段註解），⛔ 不進 digest ⇒ 既有 replay 逐位元不變。
+       */
+      world.emit("resourceSwap", {
+        caster: ctx.caster,
+        target: id,
+        resource: isMana ? "mana" : "health",
+        toCaster: toMe,
+        toTarget: toThem,
+      });
     }
   },
 };

@@ -221,6 +221,32 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-18",
     why: "同上（三選一增益卡那一面）：schema 一次補齊四個授權面是刻意的判例，內容今天只走道具那一面（slime-suit）。⛔ 這不是機制沒接線 —— 增益卡與道具共用同一支 `sourceGrants()`，一張「這一回合免疫連續同型傷害」的卡片今天就寫得出來。**到期**：owner 的下一批增益卡填了它。",
   },
+  // ⭐ 三格都是 v0.22.0 的新機制，而它們零採用的**理由各不相同** —— ⛔ 不要當成同一批放掉。
+  "field:abilities.effects[]#delayed.advance": {
+    status: "landing",
+    since: "2026-08-19",
+    why: "GH#393 —— 34-04 奧義˙蒼龍破的「沿向量分段推進」。⚠️ 這一格的零採用是**普查看不到**，不是沒有內容：蒼龍破走 `template.ref: tpl-traveling-wave`，`advance` 是**展開時**才長出來的，而這支普查掃的是磁碟上的原始 JSON（同 `abilityNoOpEffects` 檔頭記載的「106 支技能的 effects 住在 template.ref 裡，掃原始 JSON 會得到假的空技能」）。實測展開結果：`delayed{count:12, advance{stepDist:1.23, dir:\"facing\"}, hitOncePerTarget:true}`。⛔ 這不是機制沒接線 —— `sim/effects/delayed.ts` 有處理器、`travelingWaveAdvance.test.ts` 跑真的 SimWorld 驗過它。**到期**：任何一支**不經模板**直接寫 `delayed`+`advance` 的技能，或普查學會展開模板（見 GH#413）。",
+  },
+  "field:abilities.effects[]#delayed.hitOncePerTarget": {
+    status: "landing",
+    since: "2026-08-19",
+    why: "同上（同一個模板展開出來的第二格）。它的存在理由是**平衡**：12 段各結算一次，若不去重，一個站在線上不動的人會挨 12 份傷害，而卡片寫的是 600。⛔ 所以它跟 `advance` 是綁在一起的，不會單獨變綠。",
+  },
+  "field:arenas.decor[].y": {
+    status: "landing",
+    since: "2026-08-19",
+    why: "GH#386 —— `decor[]` 在此之前**根本沒有 y**（`ArenaScene.placeInstance()` 寫的是 `root.position.set(x, 0, z)`，那個 `0` 是字面值），所以任何「架在別的東西上面」的構件（屋頂／橫梁／天花板）只會平躺在地板 —— 6 件 C 級 CC0 素材裡有 4 件卡在這個缺口上。⭐ **這一版刻意「機制上線、內容 0 筆」**：用 `.optional()` 而非 `.default(0)`，讓 13 張出貨 arena 的 JSON **逐位元組不變**，也讓「沒填」真的是沒有這個 key。⚠️ 第一支填它的內容那一版**必須完整重建映像**（⛔ 不可 `--content-only`）。**到期**：任何一張 arena 把那 4 件屋頂類架起來。",
+  },
+  "field:maps.backgroundProps[].y": {
+    status: "landing",
+    since: "2026-08-19",
+    why: "`arenas.decor[].y` 的**來源側孿生欄位** —— 出貨 arena 是 `compileMap()` 從 `content/maps/*.json` 產生的，所以高度要能表達必須兩邊都有這一格，否則編譯時就掉了。零採用的理由與去向逐字同 `field:arenas.decor[].y`（機制上線、內容 0 筆、13 張 arena JSON 逐位元組不變）。**到期**：同那一列 —— 它們會一起變綠。",
+  },
+  "field:maps.landmarkProps[].y": {
+    status: "landing",
+    since: "2026-08-19",
+    why: "同上（地標道具那一族）。⚠️ 這一族**比背景道具更可能先變綠**：地標本來就常是「架在台座／柱頂上」的東西，而那正是缺 y 時唯一表達不出來的形狀。",
+  },
   "field:abilities.passive.ranks[].auras[].scaleByNearby": {
     status: "landing",
     since: "2026-08-18",
@@ -1031,10 +1057,21 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-07-30",
     why: "MEASURED, there is no number to port: `Dur1`/`HeroDur1` is 0 on all 32 stock aura rows AND on both imported auras (`A0GM`, `A0ID`). WC3's tail is ENGINE behaviour; authoring one would be inventing content. If we ever want it, it is uniform across every aura and belongs in a 後台-tunable default, not per-doc.",
   },
-  "field:abilities.passive.ranks[].auras[].hooks": {
+  // ⭐ 2026-08-19 —— `field:abilities.passive.ranks[].auras[].hooks` 的豁免**刪掉了**：
+  // 71-00 暗夜契約的「敵方在附近施法有 12% 機率魔力全失」就是靠它落地的
+  // （`affects:"enemy"` 的一圈 × `on:"onAbilityCast"` × `spendMana`）。
+  // ⚠️ 那半支技能在此之前是 `sim/nightPact.ts` 裡的 55 行專屬程式，
+  // 而這一格豁免的存在正好證明了它：機制早就在，只是沒有人用它寫技能。
+  // --- 【死亡遺留】的另外兩個授權面（2026-08-19）--------------------------
+  "field:abilities.effects[]#applyBuff.deathWard": {
     status: "landing",
-    since: "2026-07-30",
-    why: 'NOT "nobody needs it": 86 map abilities derive from a stock aura row and only 5 are ported. Waiting on three Thorns auras (`ACah` CP-00 棘刺之光, `AEah` 25-04 無想轉生 7/14/21 %, `A0XK`) and three Plague auras (`Aap1`/`Aap2`/`Aap3` 汗臭味 / 疫病雲) — neither reflection nor a periodic tick is expressible as a `StatModifier`. Resolve by porting 無想轉生 onto an `onDamageTaken` aura hook.',
+    since: "2026-08-19",
+    why: "第九個「騎在來源上的授予」一次落在五個授權面上（天生技 rank / 切換技 whileOn / 道具 / 增益卡 / applyBuff），而落地的第一支只用了天生技那一面（71-00 暗夜契約）。⛔ 這一格不是投機：`applyBuff` 那一面是「大招期間陣亡的人才留下遺留物」唯一寫得出來的形狀，而它到期由那份 buff 自己收掉。要嘛有人 author 第一支限時死亡遺留技能，要嘛把 `deathWard` 從 `SOURCE_GRANT_SHAPE` 拿掉改成只掛 rank —— 兩條都是明確的動作，⛔ 不是永久豁免。",
+  },
+  "field:augments.deathWard": {
+    status: "landing",
+    since: "2026-08-19",
+    why: "同上，三選一增益卡那一面。「這一場剩下的時間，敵人陣亡處留下一圈治療」是一張顯而易見的卡，而它零程式；今天沒有任何一張三選一卡用它。與上面那一格同進退。",
   },
   "enum:abilities.passive.ranks[].auras[].affects=all": {
     status: "landing",

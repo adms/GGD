@@ -12,13 +12,14 @@ import { fileURLToPath } from "node:url";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
+import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { AssetContainer } from "@babylonjs/core/assetContainer";
 import type { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import type { ArenaDoc, ArenaScenery } from "@ggd/shared/content";
 import { DEFAULT_ARENA_SCENERY_POLICY, zArenaDoc, zConfigAmbientVfxDoc } from "@ggd/shared/content";
 import { arenaDefFromDoc } from "@ggd/shared/sim/world/ArenaDef";
 import type { AssetManager } from "./AssetManager";
-import { buildArena, dressArena, disposeArena } from "./ArenaScene";
+import { buildArena, dressArena, disposeArena, SIGHTLINE_HEIGHT_CAP } from "./ArenaScene";
 import { setupLighting } from "./Lighting";
 
 const REPO = fileURLToPath(new URL("../../../../", import.meta.url));
@@ -39,6 +40,15 @@ function stubAssets(scene: Scene): AssetManager {
       scene.removeMesh(box);
       c.meshes.push(box);
       c.rootNodes.push(box);
+      // GH#386 ② —— 下載來的 CC0 布景多帶一層描邊殼。⚠️ 它是同一份 .glb 裡的
+      // **另一個 primitive**，所以夾具也要長成那樣：藏的必須是它、不是整件道具。
+      if (p.includes("scenery-cc0")) {
+        const shell = MeshBuilder.CreateBox("outline-shell", { size: 0.7 }, scene);
+        shell.material = new StandardMaterial("Outliner_Mat", scene);
+        shell.parent = box;
+        scene.removeMesh(shell);
+        c.meshes.push(shell);
+      }
       return c;
     },
   } as unknown as AssetManager;
@@ -85,6 +95,51 @@ describe("場地場景特色真的到得了畫面 (GH#362)", () => {
     };
     expect(await pillars(true), "散佈規則沒有變成任何一顆 mesh").toBeGreaterThan(0);
     expect(await pillars(false), "後台關掉了，場上還是長出裝飾").toBe(0);
+  });
+
+  it("★ 描邊殼是一格後台開關，出貨值是**留著**（GH#386 ②）", async () => {
+    // 出貨的預設 = 今天畫面上的樣子。⛔ 這一行不是裝飾：它是 owner 沒指定時
+    // 「維持原樣」那個決定的唯一住處，改掉它就等於偷偷換掉 16 件道具的外觀。
+    expect(DEFAULT_ARENA_SCENERY_POLICY.outlineShells).toBe(true);
+    const shells = async (outlineShells: boolean): Promise<number> => {
+      const h = buildArena(scene, DEF, DOC.groundStyle, DOC.scenery);
+      const pol = { ...DEFAULT_ARENA_SCENERY_POLICY, outlineShells };
+      await dressArena(scene, stubAssets(scene), DEF, DOC, h, undefined, undefined, undefined, pol);
+      const n = scene.meshes.filter((m) => m.name.includes("outline-shell") && m.isEnabled()).length;
+      disposeArena(scene, h);
+      return n;
+    };
+    expect(await shells(true), "出貨設定下描邊殼被藏起來了 —— 那是偷偷改外觀").toBeGreaterThan(0);
+    expect(await shells(false), "關掉了，描邊殼還在畫").toBe(0);
+  });
+
+  it("★ decor 的 y 真的把道具架起來，而且架高**不能**穿過視線上限（GH#386 ③）", async () => {
+    const zone = DEF.zones[0]!;
+    const lifted = (x: number, z: number): ArenaDoc =>
+      zArenaDoc.parse({
+        ...(read("content/arenas/arena.skeleton.json") as object),
+        scenery: undefined,
+        decor: [{ model: "assets/models/props/pillar.glb", x, z, y: 3 }],
+      });
+    const topOf = async (doc: ArenaDoc): Promise<number> => {
+      const h = buildArena(scene, DEF, doc.groundStyle, undefined);
+      const pol = { ...DEFAULT_ARENA_SCENERY_POLICY, enabled: false };
+      await dressArena(scene, stubAssets(scene), DEF, doc, h, undefined, undefined, undefined, pol);
+      const m = scene.meshes.find((x) => x.name.includes("pillar.glb"))!;
+      m.computeWorldMatrix(true);
+      const top = m.getHierarchyBoundingVectors(true).max.y;
+      disposeArena(scene, h);
+      return top;
+    };
+    // 圈外：y 完整生效 —— 沒有它，「屋頂只會平躺在地板上」那個缺口就還在。
+    expect(await topOf(lifted(999, 999)), "y 沒有到達畫面：道具還躺在地板上").toBeGreaterThan(
+      SIGHTLINE_HEIGHT_CAP,
+    );
+    // 打鬥區上空：照樣被壓回上限 —— ⛔ 內容不可以重新武裝「道具吃掉英雄」那個 bug。
+    expect(
+      await topOf(lifted(zone.center.x, zone.center.z)),
+      "架高的道具浮在打鬥區上空，攝影機保證被內容撤銷了",
+    ).toBeLessThanOrEqual(SIGHTLINE_HEIGHT_CAP + 1e-6);
   });
 
   it("★ 光**會動**，而且後台關得掉（owner：不是靜態不會變動的光）", () => {

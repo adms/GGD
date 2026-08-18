@@ -21,6 +21,12 @@
     <!-- BEGIN GENERATED:contract-env -->       … <!-- END GENERATED:contract-env -->
     <!-- BEGIN GENERATED:contract-range -->     … <!-- END GENERATED:contract-range -->
 
+⭐ 它現在也管**第二份**文件：`docs/效果標籤詞彙表v2.md`（GH#381）。那份是退役告示牌，
+整份的論點就是「手寫的能力清單會過期而沒有東西會紅」——然後它自己用一個手打的
+「37 個 kind」在說謊（引擎 39）。⛔ 改成 39 只是把過期往後推，所以那一句也進了區塊：
+
+    <!-- BEGIN GENERATED:vocab-kind-count --> … <!-- END GENERATED:vocab-kind-count -->
+
 ⛔ **標記之間的任何一個字都不要手改** —— 下次重新產生就沒了。
 要改數字請改 `content/config/*.json`（那也正是後台在改的東西），然後：
 
@@ -43,9 +49,20 @@ sys.path.insert(0, str(REPO / "tools" / "engine-vocab"))
 
 import engine_vocab as V  # noqa: E402  — python 端唯一的引擎詞彙來源
 DOC = REPO / "docs" / "技能編輯器引擎須知 20260811.md"
+# ⭐ GH#381 —— 退役告示牌 `docs/效果標籤詞彙表v2.md`。它整份的論點就是
+#   「一份手寫的能力清單會過期而沒有東西會紅」，而它自己第 18 行寫著
+#   「實測引擎現在有 **37 個**」—— 引擎已經 39。⛔ 改成 39 只是把過期往後推一次，
+#   所以那一句改成從 `EFFECT_HANDLERS` 產生的區塊，跟第十章走同一支產生器、
+#   同一條 `--check` 守衛。
+VOCAB_DOC = REPO / "docs" / "效果標籤詞彙表v2.md"
 CMD = "pnpm contract:numbers"
 
 BLOCKS = ("contract-caps", "contract-env", "contract-range", "contract-bands", "contract-effects")
+VOCAB_BLOCKS = ("vocab-kind-count",)
+
+# 哪一份文件裡有哪些產生區塊。⛔ 不要把它攤平成一份清單 —— `splice()` 的每一個
+# 錯誤訊息都要指名是哪一份文件被手改了。
+DOCS = ((DOC, BLOCKS), (VOCAB_DOC, VOCAB_BLOCKS))
 
 BANDS = ["極小", "小", "中", "大", "極大"]
 
@@ -72,17 +89,18 @@ def markers(name):
     return (f"<!-- BEGIN GENERATED:{name} -->", f"<!-- END GENERATED:{name} -->")
 
 
-def splice(text, name, body):
+def splice(text, name, body, doc):
     """把標記之間換成 `body`。缺標記 → 附加在檔尾（第一次執行就是這樣長出來的）。
 
     ⛔ BEGIN 沒有配對的 END（或順序顛倒）是手改事故，⛔ 不猜，直接中止。
+    ⚠️ `doc` 是**訊息用的**：兩份文件共用這一支，訊息裡沒有檔名就得靠猜。
     """
     begin, end = markers(name)
     n_begin, n_end = text.count(begin), text.count(end)
     if n_begin > 1 or n_end > 1:
-        sys.exit(f"{DOC.name}: '{name}' 有 {n_begin} 個 BEGIN / {n_end} 個 END —— 各最多一個")
+        sys.exit(f"{doc.name}: '{name}' 有 {n_begin} 個 BEGIN / {n_end} 個 END —— 各最多一個")
     if n_begin != n_end:
-        sys.exit(f"{DOC.name}: '{name}' 的標記沒有配對（BEGIN={n_begin}, END={n_end}）—— 請手動修")
+        sys.exit(f"{doc.name}: '{name}' 的標記沒有配對（BEGIN={n_begin}, END={n_end}）—— 請手動修")
     block = f"{begin}\n{body.rstrip()}\n{end}"
     if n_begin == 0:
         sep = "" if text.endswith("\n\n") else ("\n" if text.endswith("\n") else "\n\n")
@@ -90,7 +108,7 @@ def splice(text, name, body):
     i = text.index(begin)
     j = text.index(end, i)
     if j < i:
-        sys.exit(f"{DOC.name}: '{name}' 的 END 在 BEGIN 前面 —— 請手動修")
+        sys.exit(f"{doc.name}: '{name}' 的 END 在 BEGIN 前面 —— 請手動修")
     return text[:i] + block + text[j + len(end):], "replaced"
 
 
@@ -307,6 +325,18 @@ def table_effects():
     return "\n".join(out)
 
 
+def vocab_kind_count():
+    """退役告示牌上那一句「實測引擎現在有 **N 個**」（GH#381）。
+
+    ⚠️ 這一句的處境比第十章更難堪：`docs/效果標籤詞彙表v2.md` **整份的論點**就是
+    「手寫的能力清單會過期而沒有東西會紅」，它甚至逐字引用自己的舊句子當證據 ——
+    然後用一個**手打的 37** 去對照。引擎走到 39 的那一天，這份文件就變成它自己
+    在控訴的那個東西，而且**沒有任何測試會紅**。
+    ⛔ 所以正解不是把 37 改成 39（那只是把過期日期往後推一次），是讓它不必手寫。
+    """
+    return f"實測引擎現在有 **{len(V.effect_kinds())} 個**。"
+
+
 # 一行印幾個 kind。⛔ 不是「看起來剛好」——它決定這一段會不會在 GitHub 的
 # 程式碼區塊裡橫向捲動，而那正是外部作者第一眼會看到的東西。
 COLS = 5
@@ -317,6 +347,7 @@ BODIES = {
     "contract-range": table_range,
     "contract-bands": table_bands,
     "contract-effects": table_effects,
+    "vocab-kind-count": vocab_kind_count,
 }
 
 DEFAULT_SOURCE = "`content/config/`"
@@ -324,8 +355,10 @@ DEFAULT_SOURCE = "`content/config/`"
 # 區塊 → (出處, 要不要蓋內容版號)。
 # ⚠️ `contract-effects` **不蓋版號**：它一格 `content/` 都沒讀，蓋上去會讓它在每一次
 #    內容改動時被重寫一遍，而那個版號說的是一件與這一段無關的事。
+ENGINE_REGISTRY_SOURCE = "`packages/shared/src/sim/effects/effectRegistry.ts`（引擎註冊表）"
 SOURCES = {
-    "contract-effects": ("`packages/shared/src/sim/effects/effectRegistry.ts`（引擎註冊表）", False),
+    "contract-effects": (ENGINE_REGISTRY_SOURCE, False),
+    "vocab-kind-count": (ENGINE_REGISTRY_SOURCE, False),
 }
 
 
@@ -336,30 +369,45 @@ def content_version():
         return "?"
 
 
+def render(name):
+    """一個產生區塊的完整內容（含出處那一行 `<sub>`）。"""
+    body = BODIES[name]()
+    # ⛔ 出處要逐塊講對。全部掛 `content/config/` 的話，effect kind 那一塊會帶著一個
+    #    假的出處 —— 它讀的是引擎註冊表，而下一個人會照著那句話去改錯的檔。
+    src, stamped = SOURCES.get(name, (DEFAULT_SOURCE, True))
+    stamp = f" · {content_version()}" if stamped else ""
+    return body + f"\n\n<sub>⚙️ 由 `{CMD}` 從 {src} 產生{stamp} · ⛔ 不要手改這一段</sub>"
+
+
 def main():
     check_only = "--check" in sys.argv[1:]
-    if not DOC.exists():
-        sys.exit(f"找不到 {DOC}")
-    original = DOC.read_text(encoding="utf-8")
-    text = original
-    actions = []
-    for name in BLOCKS:
-        body = BODIES[name]()
-        # ⛔ 出處要逐塊講對。全部掛 `content/config/` 的話，effect kind 那一塊會帶著一個
-        #    假的出處 —— 它讀的是引擎註冊表，而下一個人會照著那句話去改錯的檔。
-        src, stamped = SOURCES.get(name, (DEFAULT_SOURCE, True))
-        stamp = f" · {content_version()}" if stamped else ""
-        body += f"\n\n<sub>⚙️ 由 `{CMD}` 從 {src} 產生{stamp} · ⛔ 不要手改這一段</sub>"
-        text, how = splice(text, name, body)
-        actions.append(f"{name}({how})")
+    stale, wrote, total = [], [], 0
+    for doc, names in DOCS:
+        if not doc.exists():
+            sys.exit(f"找不到 {doc}")
+        original = doc.read_text(encoding="utf-8")
+        text = original
+        actions = []
+        total += len(names)
+        for name in names:
+            text, how = splice(text, name, render(name), doc)
+            actions.append(f"{name}({how})")
+        if text == original:
+            continue
+        if check_only:
+            stale.append(f"{doc.name}: {', '.join(actions)}")
+            continue
+        doc.write_text(text, encoding="utf-8")
+        wrote.append(f"{doc.name} — {', '.join(actions)}")
 
-    if text == original:
-        print(f"✓ {DOC.name} 的 {len(BLOCKS)} 個產生區塊都是最新的")
-        return 0
-    if check_only:
-        sys.exit(f"stale — 請跑 `{CMD}`：{', '.join(actions)}")
-    DOC.write_text(text, encoding="utf-8")
-    print(f"✓ 寫入 {DOC.name} — {', '.join(actions)}")
+    # ⛔ 一份 stale 就整支回非零，⚠️ 但要把**每一份**都列出來 —— 只報第一份會讓
+    #    下一個人修完再跑一次又紅一次，而他不知道還有第二份。
+    if stale:
+        sys.exit(f"stale — 請跑 `{CMD}`：{' ｜ '.join(stale)}")
+    for w in wrote:
+        print(f"✓ 寫入 {w}")
+    if not wrote:
+        print(f"✓ {len(DOCS)} 份文件的 {total} 個產生區塊都是最新的")
     return 0
 
 

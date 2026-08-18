@@ -32,7 +32,7 @@ const GATES = [
  *  a clean model, and a scene over its cap. */
 const REPORT: BudgetReportLike = {
   schema: "model-budget@1",
-  generatedAt: "2026-07-22T00:00:00Z",
+  sourcesDigest: "aaaabbbbccccdddd",
   gates: GATES,
   screens: [
     { id: "combat-castle", label: "城堡", verdicts: { triangles: "ok", drawCalls: "warn", animChannels: "over", vramBytes: "over" } },

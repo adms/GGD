@@ -79,7 +79,7 @@ describe("Codex 合約散文裡的數字", () => {
     }
   });
 
-  it("⛔ 五個標記區塊都還在 —— 有人把它們刪掉就等於把表變回手打的", () => {
+  it("⛔ 六個標記區塊都還在 —— 有人把它們刪掉就等於把表變回手打的", () => {
     cover("codex-contract-numbers");
     // ⚠️ 少了這一條，「刪掉標記 + 手打一張表」會讓上面那條**永遠綠**：
     //   `splice()` 找不到標記時是把區塊**附加在檔尾**，而 --check 只比對
@@ -92,5 +92,12 @@ describe("Codex 合約散文裡的數字", () => {
     for (const name of ["contract-caps", "contract-env", "contract-range", "contract-bands", "contract-effects"]) {
       expect(`${name}:${doc.includes(`<!-- BEGIN GENERATED:${name} -->`)}`).toBe(`${name}:true`);
     }
+    // ⭐ GH#381 —— 同一支產生器現在也管退役告示牌上那一句「實測引擎現在有 N 個」。
+    //    ⚠️ 少了這一條，把標記刪掉 + 手打一個數字會讓上面那條 `--check` **永遠綠**
+    //    （`splice()` 找不到標記是附加在檔尾，於是文件中段那句手打的又沒人看了）。
+    const vocab = readFileSync(join(REPO, "docs/效果標籤詞彙表v2.md"), "utf8");
+    expect(`vocab-kind-count:${vocab.includes("<!-- BEGIN GENERATED:vocab-kind-count -->")}`).toBe(
+      "vocab-kind-count:true",
+    );
   });
 });

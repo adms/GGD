@@ -127,11 +127,30 @@ describe("golden per family (template + exemplar params → EffectDef shape)", (
     expect(ex.effects[0]).toMatchObject({ kind: "spawnProjectile", projectileId: "imported.wave" });
   });
 
-  it("traveling-wave → skillshot wave with terminal burst radius", () => {
+  // ⚠️ 這一條在 GH#393 之前斷言 `ex.radius === toLen(450)` —— 那是**折算**的
+  // 形狀：整個家族被壓成一顆投射體，而終點爆發只好寄生成技能自己的 AoE 半徑。
+  // 現在它是 `delayed` + `advance`，終點爆發回到它本來的位置（`finalEffects`，
+  // ＝「只有最後一下才追加」）。行為守衛在 sim/effects/travelingWaveAdvance.test.ts。
+  it("traveling-wave → 逐段推進的 delayed，終點爆發掛在 finalEffects", () => {
     const t = loadTemplate("tpl-traveling-wave");
-    const ex = expand(t, { terminalBurst: 450, damage: { perRank: [200] }, damageType: "magic" });
+    const ex = expand(t, {
+      stepSize: 45,
+      stepCount: 20,
+      stepIntervalSec: 0.03,
+      aoePerStep: 200,
+      terminalBurst: 450,
+      damage: { perRank: [200] },
+      damageType: "magic",
+    });
     expect(ex.castType).toBe("skillshot");
-    expect(ex.radius).toBe(toLen(450));
+    expect(ex.effects[0]).toMatchObject({
+      kind: "delayed",
+      targetMode: "reresolve",
+      hitOncePerTarget: true,
+      count: 20,
+      advance: { stepDist: toLen(45), dir: "facing" },
+      finalEffects: [{ kind: "damageArea", radius: toLen(450) }],
+    });
   });
 
   it("on-attack → passive hook, effects stays []", () => {

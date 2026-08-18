@@ -180,12 +180,17 @@ export interface BudgetSource {
   readonly path: string;
   readonly sha256: string;
   readonly bytes: number | null;
-  readonly mtime: string;
 }
 
 export interface BudgetReport {
   readonly schema: string;
-  readonly generatedAt: string;
+  /**
+   * Content-derived identity of the inputs this report was measured from.
+   * ⭐ GH#389 replaced `generatedAt` with it: a clock in a checked-in artefact
+   * dirties the tree on every run, and "when" was never the question the page
+   * asks — "are these still the same bytes?" is.
+   */
+  readonly sourcesDigest: string;
   readonly generatedBy: string;
   readonly sources: readonly BudgetSource[];
   readonly limits: readonly BudgetLimit[];
@@ -337,7 +342,6 @@ function readSources(raw: unknown): BudgetSource[] {
         path,
         sha256: pickStr(d, ["sha256", "sha", "hash", "digest"]),
         bytes: pickNum(d, ["bytes", "size"]),
-        mtime: pickStr(d, ["mtime", "modified", "mtimeIso"]),
       };
     })
     .filter((s): s is BudgetSource => s !== null);
@@ -361,7 +365,7 @@ export function parseBudgetReport(raw: unknown, url: string): BudgetReport | nul
   if (models.length === 0) return null;
   return {
     schema: str(d["schema"]),
-    generatedAt: pickStr(d, ["generatedAt", "generated", "createdAt", "at"]),
+    sourcesDigest: pickStr(d, ["sourcesDigest", "sourceDigest", "inputsDigest"]),
     generatedBy: pickStr(d, ["generatedBy", "tool", "by"]),
     sources: readSources(d["sources"]),
     limits: readLimits(d["limits"] ?? d["budget"] ?? d["caps"]),
@@ -623,7 +627,7 @@ export interface OptimiseWorklist {
   readonly generatedAt: string;
   readonly generatedBy: string;
   readonly threshold: "warn" | "over";
-  readonly source: { readonly report: string; readonly generatedAt: string; readonly schema: string };
+  readonly source: { readonly report: string; readonly sourcesDigest: string; readonly schema: string };
   readonly items: readonly OptimiseItem[];
   readonly totals: { readonly queued: number; readonly estVramSavedBytes: number };
 }
@@ -708,7 +712,7 @@ export function buildOptimiseWorklist(
     threshold,
     source: {
       report: report?.url ?? "",
-      generatedAt: report?.generatedAt ?? "",
+      sourcesDigest: report?.sourcesDigest ?? "",
       schema: report?.schema ?? "",
     },
     items,

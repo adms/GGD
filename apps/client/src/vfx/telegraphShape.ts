@@ -84,6 +84,19 @@ export interface TelegraphEffectLike {
   readonly kind?: string;
   readonly projectileId?: string;
   readonly maxDistance?: number;
+  /**
+   * GH#393 沿向量分段推進（`delayed` + `advance`）—— 走廊的長與寬從這三格算出來。
+   * ⚠️ `count` 寫成聯集是**必要**的，⛔ 不是偷懶：`delayed.count` 是單一數字，
+   * 而同一個 `EffectDef` union 裡的 `randomArea.count` 是 **per-rank 陣列**。
+   * 窄成 `number` 會讓整個 union 賦值不過去 —— 使用端一律 `typeof === "number"` 才讀。
+   */
+  readonly count?: number | readonly number[];
+  readonly radius?: number;
+  readonly advance?: {
+    readonly stepDist: number;
+    readonly startDist?: number;
+    readonly dir?: "facing" | "target";
+  };
 }
 
 export interface TelegraphProjectileLike {
@@ -190,10 +203,36 @@ export function deriveTelegraphGeometry(
     case "skillshot": {
       const eff = firstEffect(def, (e) => typeof e.projectileId === "string" && e.projectileId.length > 0);
       const proj = eff?.projectileId ? env.projectile(eff.projectileId) : null;
-      // No projectile doc ⇒ nothing in content states how far or how wide this
-      // skillshot flies. Fail loudly rather than draw the cast range as if it
-      // were the corridor.
-      if (!proj) return null;
+      if (!proj) {
+        // ⭐ GH#393（2026-08-19）—— 沿向量分段推進（`delayed` + `advance`）。
+        // 它**不是**投射物：沒有飛行體、沒有 projectileId，而是「一條線上逐段落點、
+        // 每段各結算一次」。⛔ 但玩家要閃的東西完全一樣是一條走廊，而走廊的兩個
+        // 尺寸**全部推導得出來**，⛔ 不必為它發明一格新欄位：
+        //   長 = 段數 × 每段位移（＋起始位移）· 寬 = 每段半徑 × 2
+        // ⚠️ 兩者都要吃 `mult`（`abilityRange`），理由同下面投射物那段 ——
+        // sim 的 `resolveAbilityRadius` 對兩者都套，只縮長不縮寬會讓走廊說謊。
+        const adv = firstEffect(
+          def,
+          (e) => e.kind === "delayed" && e.advance != null && typeof e.advance.stepDist === "number",
+        );
+        if (adv?.advance) {
+          const steps = typeof adv.count === "number" ? adv.count : 0;
+          const reach = ((adv.advance.startDist ?? 0) + steps * adv.advance.stepDist) * mult;
+          const span = (typeof adv.radius === "number" ? adv.radius : 0) * 2 * mult;
+          if (reach >= MIN_EXTENT && span >= MIN_EXTENT) {
+            return {
+              kind: "line",
+              length: reach,
+              width: span,
+              anchor: "caster",
+              source: `delayed.advance ${steps}×${adv.advance.stepDist}（起始 ${adv.advance.startDist ?? 0}）× abilityRange ${mult}, radius ${String(adv.radius)} ×2 × abilityRange ${mult}`,
+            };
+          }
+        }
+        // 兩條都推不出來 ⇒ 內容沒有講這一發飛多遠多寬。**大聲失敗**，
+        // ⛔ 不要拿施法距離當走廊畫（那會讓玩家閃錯地方）。
+        return null;
+      }
       const length = proj.maxRange * mult;
       // The WIDTH is scaled too. An earlier revision multiplied only the length
       // and justified it with "the sim does NOT scale hitRadius" — that was

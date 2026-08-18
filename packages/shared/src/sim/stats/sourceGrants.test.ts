@@ -48,6 +48,8 @@ import type { CritStrikeGrant } from "../combat/critStrike";
 import type { DamageTypeOverride } from "../combat/damageTypeOverride";
 import type { AttrGrant } from "./attributes";
 import { sourceGrants } from "./sourceGrants";
+import { Stat } from "./statTypes";
+import { ModOp } from "./modifiers";
 import { SOURCE_GRANT_SHAPE } from "../../content/schema/effect";
 import { asSeatId, asTeamId, type AbilityId, type AugmentId, type ChampionId, type EntityId } from "../../ids";
 
@@ -196,6 +198,15 @@ describe("格擋 / 暴擊的授權格 —— 四種來源同一條路", () => {
         //    與 `sourceGrants()`，但沒進這個夾具，於是兩個方向的比對逐鍵指名它。
         //    ⛔ 正解就是補這一行，不是放寬斷言。
         vision: { stealthFadeDelaySec: 3, trueSightRadius: 24 },
+        // ⭐ 2026-08-19：【死亡遺留】是第九格（71-00 暗夜契約的暗夜旗，從
+        //    `sim/nightPact.ts` 這份專屬程式收編進來的）。同上，這一行是維護點。
+        deathWard: {
+          radius: 6.42,
+          maxPerZone: 12,
+          beneficiary: "owner",
+          stacking: "max",
+          modifiers: [{ stat: Stat.MoveSpeed, op: ModOp.PercentAdd, value: 1 }],
+        },
       }),
     ).sort();
     expect(forwarded).toEqual(Object.keys(SOURCE_GRANT_SHAPE).sort());

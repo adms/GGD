@@ -82,8 +82,36 @@ export {
  */
 export const NON_LAYER_ABILITY_FIELDS: readonly string[] = ["family", "anchor"];
 
+/**
+ * ⭐ **層真的收得下的欄位** —— 從 `zAbilityVfxLayer` 自己的 shape 讀，⛔ 不是手打。
+ *
+ * ⚠️ 2026-08-19（GH#390）：上面那句「推導出來的」以前是**半真的** ——
+ * 它從 `ABILITY_FIELDS` 減掉一份**手打的** `NON_LAYER_ABILITY_FIELDS`。
+ * 於是音效那批（`soundLaunch` / `soundImpact` / `soundLoop` / `soundDissipate`）
+ * 一加進 `ABILITY_FIELDS`，就**自動漏進層編輯器**：畫得出格子、沒有上下界
+ * （它們是字串，`ForgeBound` 是純數值）、被 `NUMERIC_LAYER_FIELDS` 當成數字，
+ * 而 `zAbilityVfxLayer` 是 `.strict()` ⇒ **按存檔時整層被拒**。
+ * ⛔ 那正是這個檔案檔頭記載過的同一個病（allowlist 會漂移）。
+ *
+ * ⇒ 現在真的問 schema。音效住在**家族／逐支**那兩層（見 `zVfxFamilyTuning`），
+ *    ⛔ 不在層裡，所以它們自己就落選了 —— 不必有人記得去維護一份排除名單。
+ */
+const LAYER_SCHEMA_KEYS: ReadonlySet<string> = new Set(Object.keys(zAbilityVfxLayer.shape));
+
+/**
+ * ⚠️ `tint` 在 schema 是**一個三元組**，而後台表把它拆成 `tintR`/`tintG`/`tintB`
+ * 三格草稿欄位（見下面的 `TINT_DRAFT_FIELDS`）。⇒ 逐字比對 schema 會把三格都
+ * 濾掉，而那是**刪掉一個能用的功能**（我第一版就這樣做了）。
+ * ⇒ 這一格把「後台的表示法」映回「schema 的鍵」，⛔ 只有這一個例外。
+ */
+const schemaKeyForDraftField = (f: string): string =>
+  f === "tintR" || f === "tintG" || f === "tintB" ? "tint" : f;
+
 export const LAYER_PARAM_FIELDS = ABILITY_FIELDS.filter(
-  (f) => !NON_LAYER_ABILITY_FIELDS.includes(f) && f !== "enabled",
+  (f) =>
+    LAYER_SCHEMA_KEYS.has(schemaKeyForDraftField(f)) &&
+    !NON_LAYER_ABILITY_FIELDS.includes(f) &&
+    f !== "enabled",
 ) as readonly string[];
 
 /** 一層的所有格子,畫面上的順序就是這個順序。 */

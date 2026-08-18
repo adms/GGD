@@ -12,20 +12,27 @@
       "worldW": 48,
       "worldD": 36,
       "regions": 5,
-      "walkableTiles": 290,
+      "walkableTiles": 294,
       "disconnectedAreas": 1,
       "deadEnds": 0,
       "loops": 2,
-      "chokepoints": 3,
+      "chokepoints": 1,
       "shortcuts": 2,
       "interactions": 8,
-      "avgShortestPath": 16,
+      "avgShortestPath": 15,
       "longestShortestPath": 36,
       "estimatedTraversalSec": 12,
       "duelZones": 2,
       "unreachableObjects": [],
       "invalidSpawns": [],
-      "issues": [],
+      "issues": [
+        {
+          "kind": "soft",
+          "check": "chokepoints",
+          "severity": "warn",
+          "message": "1 個瓶頸（規格 2–3）"
+        }
+      ],
       "ok": true
     },
     {
@@ -116,16 +123,23 @@
       "disconnectedAreas": 1,
       "deadEnds": 0,
       "loops": 2,
-      "chokepoints": 2,
+      "chokepoints": 1,
       "shortcuts": 2,
       "interactions": 8,
-      "avgShortestPath": 14.5,
+      "avgShortestPath": 14.6,
       "longestShortestPath": 36,
       "estimatedTraversalSec": 12,
       "duelZones": 2,
       "unreachableObjects": [],
       "invalidSpawns": [],
-      "issues": [],
+      "issues": [
+        {
+          "kind": "soft",
+          "check": "chokepoints",
+          "severity": "warn",
+          "message": "1 個瓶頸（規格 2–3）"
+        }
+      ],
       "ok": true
     },
     {
@@ -137,20 +151,27 @@
       "worldW": 48,
       "worldD": 36,
       "regions": 5,
-      "walkableTiles": 290,
+      "walkableTiles": 294,
       "disconnectedAreas": 1,
       "deadEnds": 0,
       "loops": 2,
-      "chokepoints": 3,
+      "chokepoints": 1,
       "shortcuts": 2,
       "interactions": 8,
-      "avgShortestPath": 16,
+      "avgShortestPath": 15.1,
       "longestShortestPath": 36,
       "estimatedTraversalSec": 12,
       "duelZones": 2,
       "unreachableObjects": [],
       "invalidSpawns": [],
-      "issues": [],
+      "issues": [
+        {
+          "kind": "soft",
+          "check": "chokepoints",
+          "severity": "warn",
+          "message": "1 個瓶頸（規格 2–3）"
+        }
+      ],
       "ok": true
     },
     {

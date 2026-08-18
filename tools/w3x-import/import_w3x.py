@@ -189,12 +189,15 @@ def main() -> int:
         emit("models", doc)
 
     # 4c. shared projectiles for imported skillshots
+    # ⚠️ `meshShape` / `flight` (#394) 要跟著寫出來，否則重跑這支匯入器會把飛行
+    #    姿態靜靜地退回「每一發都是同一支頭朝前的飛鏢」——而 content:build 全綠。
     emit("projectiles", {"id": "imported.bolt", "schema": "projectile@1",
                          "speed": 22, "maxRange": 12, "hitRadius": 0.5,
-                         "vfxKey": "fx.ember-bolt"})
+                         "vfxKey": "fx.ember-bolt", "meshShape": "bolt"})
     emit("projectiles", {"id": "imported.wave", "schema": "projectile@1",
                          "speed": 18, "maxRange": 12, "hitRadius": 0.9,
-                         "pierce": True, "vfxKey": "fx.thorn"})
+                         "pierce": True, "vfxKey": "fx.thorn",
+                         "meshShape": "shard", "flight": {"yawOffsetDeg": 90}})
 
     # 4d. champions
     champions = []

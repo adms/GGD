@@ -98,9 +98,9 @@
           "includeOrigin": true
         },
         {
-          "kind": "spawnProjectile",
-          "projectileId": "imported.wave.arcane",
-          "onHit": []
+          "kind": "spawnVfx",
+          "vfxId": "fx.prim.arcane.bolt",
+          "at": "point"
         }
       ],
       "icon": "assets/icons/abilities/godie-e00s.q.webp",

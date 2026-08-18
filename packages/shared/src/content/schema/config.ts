@@ -1226,104 +1226,20 @@ export const zItemDraftConfig = z
 export type ItemDraftConfig = z.infer<typeof zItemDraftConfig>;
 
 /**
- * 71-00 暗夜契約 (owner 2026-07-30 re-design) — while a 暗夜契約 carrier fights
- * in a zone, EVERY champion death there (friend or foe) raises a 暗夜旗 that
- * radiates 黑夜靈氣; every flag is cleared at round end. Optional + additive: an
- * absent block means the mechanic is simply OFF (the same legacy-compat
- * convention as `flowers` / `reviveCircles` / `guardianTower` / `goldDrop`),
- * which is what every unit test and the client's prediction shadow world see.
+ * ⛔ `zNightPactConfig` / `DEFAULT_NIGHT_PACT_CONFIG` 在 2026-08-19 被**刪掉**了，
+ * 而那不是清理 —— 是 CLAUDE.md 第〇·五守則的一次落地。
  *
- * ⚠️ EVERY FIELD HERE IS A DECISION THE OWNER WILL WANT TO FLIP, and each has an
- * UPPER bound as well as a lower one — `validateField` only checked `min` until
- * 2026-07-29, which is how 50 typed as 500 used to sail through the admin form
- * and get silently clamped downstream (#277).
+ * 那個區塊把**一支技能的**半徑／上限／受益者／疊加規則／加成內容寫在
+ * **競技場規則**裡，而且第一格是 `abilityIds: ["godie-u00k.passive"]` ——
+ * 引擎被一支技能的 id 綁死。於是 71-00 暗夜契約的 `passive.ranks[0]` 是**空的**，
+ * castability 普查每一次跑都量出一格 ❌（而那個 ❌ 說的是實話）。
+ *
+ * ⇒ 現在它是**一格 JSON**：`ability@1.passive.ranks[].deathWard`
+ *（`content/schema/effect.ts` 的 `zDeathWardGrant`，第九個「騎在來源上的授予」），
+ * 機制在 `packages/shared/src/sim/deathWard.ts`。
+ * ⚠️ 那半句「敵方在附近施法有 12% 機率魔力全失」現在**完全沒有引擎程式**：
+ * 它是 `auras[] → hooks[on:"onAbilityCast"] → spendMana`，一份既有機制的組合。
  */
-export const zNightPactConfig = z
-  .object({
-    /**
-     * WHICH 天生技 docs count as 暗夜契約. A LIST, not the single literal
-     * `"godie-u00k.passive"`, for the reason `championPrices` taught us: one
-     * hard-coded id means a re-id or a second hero with the same mechanic
-     * silently disables the whole feature with no error anywhere.
-     */
-    abilityIds: z.array(z.string().min(1)).min(1).max(16),
-    /**
-     * BASE 黑夜靈氣 radius in sim units, BEFORE the combat-env `abilityRange`
-     * factor (#136).
-     *
-     * ⚠️ THIS NUMBER IS NOT PORTED — it is a design choice, and it says so here
-     * because a reader would otherwise assume fidelity. `A0HH` has an EMPTY
-     * `area` column (`OBJECTS.json` → `"area": {}`), so the source map supplies
-     * nothing. The shipped default is the ORDER OF MAGNITUDE the rest of this
-     * content tree uses for a hero aura: 芬多精 `A0GM` is 4.58 (250 WC3 units),
-     * 靈壓 `A0ID` is 9.17 (500), and 6.42 (350) is the modal `radius` among the
-     * innate 天生技 docs in `content/abilities`. The 40 ceiling is the same
-     * mis-parse guard `zAuraDef.radius` carries: the zone's `boundaryRadius` is
-     * 24, so anything past 40 is a raw un-converted WC3 number.
-     */
-    auraRadius: z.number().positive().max(40),
-    /**
-     * WHO 黑夜靈氣 reaches. `owner` = only the unit carrying 暗夜契約 (死之王
-     * himself); `team` = its whole team.
-     *
-     * ⚠️ THE OWNER DID NOT RULE ON THIS. The shipped default is the CONSERVATIVE
-     * reading of 「帶來暗夜效果」 — the ubertip's 夜間 clauses are all about 死之王
-     * — and it is a dropdown precisely so the answer costs one save.
-     */
-    beneficiary: z.enum(["owner", "team"]),
-    /**
-     * HOW SEVERAL FLAGS COMBINE. `max` = any number of overlapping flags is one
-     * dose; `add` = they sum. A 12-champion massacre can leave a lot of banners
-     * on one battlefield, so this is the difference between a flavour buff and
-     * +600 % move speed — a real gameplay decision, hence a field.
-     */
-    stacking: z.enum(["max", "add"]),
-    /** hard cap on simultaneously standing flags PER ZONE (0 would disable it) */
-    maxFlagsPerZone: z.number().int().min(1).max(64),
-    /** 移動速度提升 100% → 1.0 (a PercentAdd). The ubertip's own number. */
-    msPercent: z.number().min(0).max(10),
-    /** 生命回復速度提升 30 點 → a flat healthRegen. The ubertip's own number. */
-    healthRegenFlat: z.number().min(0).max(500),
-    /**
-     * 「在死之王附近想施展技能的敵方單位有 12% 的機率魔力全失,並且受到傷害」.
-     * NOT about the flag — it keys off proximity to a LIVING carrier.
-     */
-    manaBurn: z
-      .object({
-        enabled: z.boolean(),
-        /** enemy casts within this distance of a living carrier are at risk */
-        radius: z.number().positive().max(40),
-        /** the ubertip's 12 % */
-        chance: z.number().min(0).max(1),
-        /**
-         * TRUE damage on a successful proc.
-         *
-         * ⚠️ SHIPS AT 0 BECAUSE THE NUMBER DOES NOT EXIST. `A0HH`'s only two
-         * data fields are `Def1`/`Def5` = 1.0, the NEUTERED damage-reduction
-         * columns of its base `Aegr` (Elune's Grace, stock `AIdd`, `DataA1
-         * 0.65`) — ×1.0 is "no reduction", not a damage value — and the rawcode
-         * appears ZERO times in `war3map.j`. 0 is the honest encoding of
-         * "unknown"; a made-up number would launder a guess into balance.
-         */
-        damage: z.number().min(0).max(10000),
-      })
-      .strict(),
-  })
-  .strict();
-
-export type NightPactConfig = z.infer<typeof zNightPactConfig>;
-
-/** Contract defaults for the nightPact block (dev cheats / fallbacks). */
-export const DEFAULT_NIGHT_PACT_CONFIG: NightPactConfig = {
-  abilityIds: ["godie-u00k.passive"],
-  auraRadius: 6.42,
-  beneficiary: "owner",
-  stacking: "max",
-  maxFlagsPerZone: 12,
-  msPercent: 1.0,
-  healthRegenFlat: 30,
-  manaBurn: { enabled: true, radius: 6.42, chance: 0.12, damage: 0 },
-};
 
 /** Contract defaults for the goldDrop block (dev cheats / fallbacks). */
 export const DEFAULT_GOLD_DROP_CONFIG: GoldDropConfig = {
@@ -3110,7 +3026,7 @@ export const zConfigArenaRulesDoc = z
      * 要復活它是一個**看得見的兩步編輯**（把 id 從這裡拿掉），不是一次靜靜地
      * 把 `weaponLootTable` 打回去。
      *
-     * ⚠️ 這是**列表不是布林**，理由和 `nightPact.abilityIds` 同源：寫死單一
+     * ⚠️ 這是**列表不是布林**，理由和「一份設定寫死一個 id」同源：寫死單一
      * 字面值 `"quest-rewards"` 的話，第二張要退場的表就得改程式。
      *
      * 上界 16：出貨樹只有 3 張 loot table，16 遠高於任何合理的退場清單，而且
@@ -3245,8 +3161,6 @@ export const zConfigArenaRulesDoc = z
     goldDrop: zGoldDropConfig.optional(),
     /** roguelite mob-wave rules (task #215); omit = no mobs (legacy behavior) */
     mobWaves: zMobWavesConfig.optional(),
-    /** 71-00 暗夜契約 rules; omit = no 暗夜旗, no 黑夜靈氣, no mana burn */
-    nightPact: zNightPactConfig.optional(),
   })
   .strict();
 
@@ -3810,6 +3724,20 @@ export const zArenaSceneryPolicy = z
     maxPropsPerZone: z.number().int().min(0).max(96),
     /** 燈要不要真的動。false = 用這張圖的顏色與角度，但停在波形的起點（靜止）。 */
     animateLights: z.boolean(),
+    /**
+     * ④ 下載來的 CC0 布景**自帶的黑色描邊殼**要不要留（GH#386 ②）。
+     *
+     * `content/assets/models/scenery-cc0/` 的 16 件 `crystal-crossroads` 帶一層反面
+     * 外擴的輪廓殼（材質名 `Outliner_Mat`）。GGD 的英雄沒有描邊 ⇒ 這 16 件在場上會
+     * 自帶一圈黑邊。⭐ 那是**視覺決定**不是缺陷，owner 沒有指定 ⇒ 做成開關。
+     *
+     * ⚠️ `.default(true)` 而不是必填，⛔ 也刻意**不**寫進 `content/config/ambient-vfx.json`：
+     * 加一把鑰匙到那個檔案 = 舊映像的 `.strict()` 會整份拒絕（2026-08-02 事故的形狀），
+     * 而這一格的出貨值就是「今天的樣子」，用 Zod 預設表達它零風險、零 drift
+     * （`resolveArenaScenery` 走的是 `DEFAULT_ARENA_SCENERY_POLICY`，兩邊同一個值）。
+     * 同一個手法見 `maxRounds` 的 `.default(MAX_ROUNDS_UNLIMITED)`。
+     */
+    outlineShells: z.boolean().default(true),
   })
   .strict();
 
@@ -7192,6 +7120,8 @@ export const DEFAULT_ARENA_SCENERY_POLICY: ArenaSceneryPolicy = {
   enabled: true,
   maxPropsPerZone: 40,
   animateLights: true,
+  /** ⭐ 維持原樣（GH#386 ②）—— 出貨的 16 件 CC0 水晶今天就是帶著黑邊在跑的。 */
+  outlineShells: true,
 };
 
 /** 讀出場景特色政策。文件缺席 / 沒有 `scenery` 區塊時回退到 `DEFAULT_ARENA_SCENERY_POLICY`。 */

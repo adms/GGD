@@ -53,6 +53,54 @@ import {
 export type ProjectileMeshShape = "bolt" | "orb" | "shard";
 
 // ---------------------------------------------------------------------------
+// #394 —— 飛行姿態。⛔ 一格參數 × N 列資料，不是 N 個 if
+// ---------------------------------------------------------------------------
+
+/** `projectile@1.flight` 的執行期形狀（弧度，已夾回範圍內）。 */
+export interface ProjectileFlightRad {
+  /** 疊在行進方向上的偏航（弧度）。0 = 鼻子朝前。 */
+  readonly yawOffset: number;
+  /** 鼻子的抬頭角（弧度）。0 = 水平。 */
+  readonly pitch: number;
+  /** 每飛行一個世界單位自轉的角度（弧度）。0 = 不轉。 */
+  readonly rollPerUnit: number;
+}
+
+/** 出貨預設 = 鼻朝行進方向、水平、不自轉 = #394 之前的畫面。 */
+export const LEVEL_FLIGHT: ProjectileFlightRad = { yawOffset: 0, pitch: 0, rollPerUnit: 0 };
+
+const DEG2RAD = Math.PI / 180;
+
+function clampDeg(v: number | undefined, lo: number, hi: number): number {
+  if (v === undefined || !Number.isFinite(v)) return 0;
+  return v < lo ? lo : v > hi ? hi : v;
+}
+
+/**
+ * `projectile@1.flight` → 弧度。
+ *
+ * ⚠️ 夾子在這裡**再做一次**（Zod 已經有上下界）是刻意的：骨架註冊表與編輯器預覽
+ * 都走這條路，而它們不一定經過嚴格載入器 —— 一個 `pitchDeg: 1e9` 會讓彈體翻到
+ * 攝影機背後，而畫面上「它不見了」查起來比「它角度不對」貴得多。
+ *
+ * ⭐ 缺席（或整包缺席）一律回 `LEVEL_FLIGHT` **同一個物件 reference**，呼叫端靠
+ * 這一點走一位元不差的舊路徑。
+ */
+export function resolveProjectileFlight(
+  flight:
+    | { yawOffsetDeg?: number; pitchDeg?: number; rollDegPerUnit?: number }
+    | null
+    | undefined,
+): ProjectileFlightRad {
+  if (!flight) return LEVEL_FLIGHT;
+  const yawOffset = clampDeg(flight.yawOffsetDeg, -180, 180) * DEG2RAD;
+  const pitch = clampDeg(flight.pitchDeg, -90, 90) * DEG2RAD;
+  const rollPerUnit = clampDeg(flight.rollDegPerUnit, -1440, 1440) * DEG2RAD;
+  if (yawOffset === 0 && pitch === 0 && rollPerUnit === 0) return LEVEL_FLIGHT;
+  return { yawOffset, pitch, rollPerUnit };
+}
+
+// ---------------------------------------------------------------------------
 // 出貨基準值 —— 升級前 `ProjectileView` 裡那八個常數，一個不改地搬過來
 // ---------------------------------------------------------------------------
 

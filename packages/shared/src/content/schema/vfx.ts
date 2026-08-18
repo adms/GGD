@@ -657,6 +657,86 @@ export const zW3xTint255 = z.tuple([
   z.number().int().min(0).max(255),
 ]);
 
+/* ──────────────────────────────────────────────────────────────────────────
+ * 特效自帶的音效（GH#390）
+ * ────────────────────────────────────────────────────────────────────────── */
+
+/**
+ * WC3 把特效與音效綁在一起：mdx 的事件軌（`SNDx`）在**四個時機**上掛音 ——
+ * 發射 · 命中 · 循環 · 消散。這四個名字就是那四條軌，⛔ 不是我們發明的分類。
+ *
+ * ⚠️ ⛔ 不要跟 `zVfxElement` 裡的 `"sound"` 搞混 —— **那是元素名**（音波系技能
+ * 的顏色，跟 lightning / wind / holy 並列），不是音訊欄位。GH#390 的檔頭專門
+ * 記了這個誤讀，因為 `fx.prim.sound.nova` 這種檔名長得像「已經有了」。
+ */
+export const VFX_SOUND_CUES = ["launch", "impact", "loop", "dissipate"] as const;
+export type VfxSoundCue = (typeof VFX_SOUND_CUES)[number];
+
+/** 四個時機 → 它在 family / ability 兩張表上的欄位名。 */
+export const VFX_SOUND_CUE_FIELD: Readonly<Record<VfxSoundCue, string>> = {
+  launch: "soundLaunch",
+  impact: "soundImpact",
+  loop: "soundLoop",
+  dissipate: "soundDissipate",
+};
+
+/**
+ * 一格音效填的是 **`config.audio-map@1.sfx` 的 key**（例：`wc3.axemissilelaunch1`、
+ * `impact`、`chime_burst`），⛔ 不是檔名也不是 URL。
+ *
+ * ⭐ 這是刻意的，而且是這一條**唯一**沒有繞過玩家設定的寫法：音量 / 冷卻 /
+ * 同時發聲數全部住在 audio-map 那一份，播放走 `AudioSystem.playSfx` ⇒ 總音量、
+ * SFX 開關（#14）與空間化（#253）自動全部適用。⛔ 開一條新的載入路徑就會繞過它們。
+ */
+export const zVfxSoundKey = z
+  .string()
+  .min(1)
+  .max(64)
+  .regex(/^[A-Za-z0-9][A-Za-z0-9._-]*$/, "必須是 audio-map 的 sfx key（英數 . _ -）");
+
+/**
+ * 四個時機的欄位，**定義一次、用在兩個地方**（第零守則⑨：K 個模板 + 一張表）：
+ * `families[]` 是 21 個原型的預設，`abilities[]` 是 258 支的逐支覆寫。
+ *
+ * 全部 optional，理由與這份 doc 上其餘的 optional 欄位一模一樣：已經存過的
+ * durable overlay 沒有這些 key，設成必填會讓那些 overlay 整份 `safeParse` 失敗
+ * → `extractFamiliesDoc` 回 null → **整個家族層一起消失**（不只是音效）。
+ */
+const vfxSoundCueShape = {
+  /** 發射／施放的那一刻（WC3 的 `…Launch`／`…Caster` 那一族） */
+  soundLaunch: zVfxSoundKey.optional(),
+  /** 命中／落地的那一刻（`…Hit`／`…Target` 那一族） */
+  soundImpact: zVfxSoundKey.optional(),
+  /** 持續期間每 `soundLoopMs` 重播一次的循環音（`…Loop`／`…Birth` 那一族） */
+  soundLoop: zVfxSoundKey.optional(),
+  /** 效果結束／消散的那一刻（`…Death`／`…Dissipate` 那一族） */
+  soundDissipate: zVfxSoundKey.optional(),
+} as const;
+
+/** 循環音兩次之間的間隔（毫秒）。 */
+export const DEFAULT_VFX_SOUND_LOOP_MS = 900;
+export const MIN_VFX_SOUND_LOOP_MS = 200;
+export const MAX_VFX_SOUND_LOOP_MS = 20000;
+
+/**
+ * 一發循環音最長活多久（毫秒）—— **回收的硬上界**。
+ *
+ * ⚠️ #259 的教訓：不回收的循環 = 越打越鈍，而且回合切換後還會有殘留聲音。
+ * 所以循環不是「播到有人叫停」，它有一個從開始那一刻就算好的絕對到期時間。
+ */
+export const DEFAULT_VFX_SOUND_LOOP_MAX_MS = 8000;
+
+/** 音量倍率：疊在 audio-map 那一格 `gain` 上面，1 = 不動。 */
+export const DEFAULT_VFX_SOUND_GAIN = 1;
+export const MIN_VFX_SOUND_GAIN = 0;
+export const MAX_VFX_SOUND_GAIN = 2;
+
+/**
+ * 音訊層的總開關。**預設 on**（第〇·六守則：優先權大的更新後都是預設啟動；
+ * 開關存在是為了回頭，不是為了觀望）。
+ */
+export const DEFAULT_VFX_SOUND_ENABLED = true;
+
 export const zVfxFamilyTuning = z
   .object({
     /** false = this family stops overriding; its abilities keep `fx.prim.*` */
@@ -673,6 +753,14 @@ export const zVfxFamilyTuning = z
     timeScale: z.number().min(0.2).max(4),
     /** world-y the effect plays at (0.1 = on the floor, 3.5 = overhead) */
     heightY: z.number().min(0).max(8),
+    // ── 特效自帶的音效（GH#390）——— 這個原型的四個時機各自播哪一個 sfx key ──
+    ...vfxSoundCueShape,
+    /** 這個家族的音量倍率，疊在 audio-map 的 `gain` 上面（1 = 不動） */
+    soundGain: z.number().min(0).max(2).optional(),
+    /** 循環音兩次之間隔多久，毫秒（省略 = `DEFAULT_VFX_SOUND_LOOP_MS`） */
+    soundLoopMs: z.number().int().min(200).max(20000).optional(),
+    /** 循環音最長活多久，毫秒 —— 回收的硬上界（省略 = `DEFAULT_VFX_SOUND_LOOP_MAX_MS`） */
+    soundLoopMaxMs: z.number().int().min(200).max(60000).optional(),
   })
   .strict();
 export type VfxFamilyTuning = z.infer<typeof zVfxFamilyTuning>;
@@ -711,6 +799,16 @@ export const zVfxAbilityFamilyBinding = z
     pitchDeg: z.number().min(-180).max(180).optional(),
     /** WC3 attachment string, verbatim ("chest", "origin", "right,hand") */
     anchor: z.string().min(1).max(32).optional(),
+    // ── 特效自帶的音效（GH#390）—— **這一支**技能的四個時機各自播哪一個 sfx key。
+    // ⭐ 逐格覆寫家族原型的那一格：填了 `soundImpact` 只換命中音，其餘三格仍然走
+    // 家族。⛔ 不是「填一格就整組換掉」—— WC3 的原作音效多半只有一兩個時機是特別
+    // 的（例：迴旋斬有自己的發射音，命中音跟家族一樣）。
+    // ⚠️ 這一段刻意是行註解而不是 TSDoc：`gen_spec.tsdocFields` 會把一段 TSDoc 綁到
+    // 它後面第一個「欄位名:」上，而 spread 不是欄位 —— 寫成 TSDoc 的話這整段會被掛到
+    // `soundGain` 頭上（實測過，產出的文件上真的長成那樣）。
+    ...vfxSoundCueShape,
+    /** 這一支的音量倍率，疊在家族與 audio-map 的 `gain` 上面（1 = 不動） */
+    soundGain: z.number().min(0).max(2).optional(),
   })
   .strict();
 export type VfxAbilityFamilyBinding = z.infer<typeof zVfxAbilityFamilyBinding>;
@@ -799,6 +897,14 @@ export const zConfigVfxFamiliesDoc = z
     boltPitchDeg: z.number().min(-180).max(180).optional(),
     dashPitchDeg: z.number().min(-180).max(180).optional(),
     tornadoPitchDeg: z.number().min(-180).max(180).optional(),
+    /**
+     * GH#390 —— 特效自帶音效的**總開關**。省略 = `DEFAULT_VFX_SOUND_ENABLED`（true）。
+     * false = 一發都不播 = 這一版落地之前的行為（一鍵 rollback）。
+     *
+     * OPTIONAL 的理由和上面那幾格一模一樣：已經存過的 durable overlay 沒有這個 key，
+     * 設成必填會讓那些 overlay 整份 `safeParse` 失敗 → 整個家族層一起消失。
+     */
+    soundEnabled: z.boolean().optional(),
     families: z.record(zW3xFamilyId, zVfxFamilyTuning),
     abilities: z.record(z.string().min(1), zVfxAbilityFamilyBinding),
   })
@@ -828,4 +934,85 @@ export type ConfigVfxFamiliesDoc = z.infer<typeof zConfigVfxFamiliesDoc>;
  */
 export function vfxFamiliesScaleOrdered(doc: ConfigVfxFamiliesDoc): boolean {
   return doc.scaleMax >= doc.scaleMin;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+ * 特效音效的**解析**（GH#390）—— 純函式，client / editor / 測試共用同一支
+ * ────────────────────────────────────────────────────────────────────────── */
+
+/** 一發解出來的特效音：要播哪一個 audio-map key，以及疊了多少音量。 */
+export interface ResolvedVfxSound {
+  readonly key: string;
+  /** family × ability 兩層 `soundGain` 相乘的結果（1 = 不動） */
+  readonly gain: number;
+}
+
+/**
+ * 一支技能的某一個時機該播什麼。
+ *
+ * ⭐ **兩層，逐格**：`abilities[id].soundX` 覆寫 `families[fam].soundX`，
+ * 一格一格各自決定 —— 這就是「K 個模板 + 一張表」在音效上的樣子。
+ * ⛔ 不是「ability 那一列有東西就整組換掉」。
+ *
+ * 回 null 的三種情況（全部都是「安靜」而不是「播錯的」）：
+ *   ① 總開關關掉；② 這一格兩層都沒填；③ 這支技能不在家族表上。
+ *
+ * ⚠️ 它**不知道** audio-map 有沒有這個 key —— 那是 `vfxSoundKeysAreReal` 那條
+ * 閘的工作（第一·五守則：卡片上不可以有說了但不會發生的字）。
+ */
+export function resolveVfxSound(
+  doc: ConfigVfxFamiliesDoc | null | undefined,
+  familyId: string | undefined,
+  abilityId: string | undefined,
+  cue: VfxSoundCue,
+): ResolvedVfxSound | null {
+  if (!doc) return null;
+  if ((doc.soundEnabled ?? DEFAULT_VFX_SOUND_ENABLED) === false) return null;
+  const field = VFX_SOUND_CUE_FIELD[cue] as keyof VfxFamilyTuning;
+  const fam = familyId ? doc.families[familyId as W3xFamilyId] : undefined;
+  const ab = abilityId ? doc.abilities[abilityId] : undefined;
+  // 家族被關掉 = 這一族整個不覆寫,音效跟著一起不播(⛔ 不可以只留聲音沒有畫面)。
+  if (fam && fam.enabled === false) return null;
+  if (ab && ab.enabled === false) return null;
+  const key =
+    (ab?.[field as keyof VfxAbilityFamilyBinding] as string | undefined) ??
+    (fam?.[field] as string | undefined);
+  if (!key) return null;
+  const gain =
+    (fam?.soundGain ?? DEFAULT_VFX_SOUND_GAIN) * (ab?.soundGain ?? DEFAULT_VFX_SOUND_GAIN);
+  return { key, gain };
+}
+
+/** 這個家族的循環音間隔（毫秒）。 */
+export function vfxSoundLoopMs(doc: ConfigVfxFamiliesDoc | null | undefined, familyId: string | undefined): number {
+  const fam = doc && familyId ? doc.families[familyId as W3xFamilyId] : undefined;
+  return fam?.soundLoopMs ?? DEFAULT_VFX_SOUND_LOOP_MS;
+}
+
+/** 這個家族的循環音**到期上界**（毫秒）—— 回收用，見 `DEFAULT_VFX_SOUND_LOOP_MAX_MS`。 */
+export function vfxSoundLoopMaxMs(doc: ConfigVfxFamiliesDoc | null | undefined, familyId: string | undefined): number {
+  const fam = doc && familyId ? doc.families[familyId as W3xFamilyId] : undefined;
+  return fam?.soundLoopMaxMs ?? DEFAULT_VFX_SOUND_LOOP_MAX_MS;
+}
+
+/**
+ * 這份家族設定裡出現過的每一個 sfx key（去重、排序）。
+ *
+ * ⭐ 守衛用它去問 audio-map「這些 key 你認得嗎」——`content:build` 綠、schema 綠、
+ * 後台存得起來，而遊戲裡什麼都不響，正是第一·五守則點名的那種失敗。
+ */
+export function vfxSoundKeysUsed(doc: ConfigVfxFamiliesDoc | null | undefined): string[] {
+  if (!doc) return [];
+  const out = new Set<string>();
+  const take = (row: unknown): void => {
+    if (!row || typeof row !== "object") return;
+    const r = row as Record<string, unknown>;
+    for (const f of Object.values(VFX_SOUND_CUE_FIELD)) {
+      const v = r[f];
+      if (typeof v === "string" && v) out.add(v);
+    }
+  };
+  for (const k of Object.keys(doc.families).sort()) take(doc.families[k as W3xFamilyId]);
+  for (const k of Object.keys(doc.abilities).sort()) take(doc.abilities[k]);
+  return [...out].sort();
 }

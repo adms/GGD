@@ -8,7 +8,7 @@
     "⚠️ 它會被**兩個方向**對帳（gen_spec.ts::reconcileLabels）：",
     "  · 這裡有、引擎沒有的 token → 產生器回非零（＝這份檔在說謊）",
     "  · 引擎有、這裡沒有的 token → 文件上標「待命名」（看得見，不是無聲）",
-    "所以它不可能像 docs/效果標籤詞彙表v2.md 那樣，寫著 24 個 kind 而引擎已經有 37 個。",
+    "所以它不可能像 docs/效果標籤詞彙表v2.md 退役前那樣，寫著 24 個 kind 而引擎早就更多。",
     "",
     "取代：docs/效果標籤詞彙表v2.md · docs/_status-effect-tag-vocabulary.md 的詞彙部分。"
   ],

@@ -12,6 +12,7 @@
 import type { Scene } from "@babylonjs/core/scene";
 import type { EventMessage } from "@ggd/shared/protocol/messages";
 import type { ModelDoc, VfxDoc } from "@ggd/shared/content";
+import type { ProjectileFlight } from "@ggd/shared/content";
 import type { VoxelSkinRecipe } from "@ggd/shared/content/voxelSkin";
 import { TICK_MS } from "@ggd/shared/constants";
 import { standinRelativeScaleOf } from "@ggd/shared/content/standinScale";
@@ -192,6 +193,13 @@ export interface ViewContentHooks {
    * 0.4-radius basic attack drew the identical comet.
    */
   projectileHitRadiusFor?(projectileKey: string): number | null;
+  /**
+   * #394 —— this missile's own `projectile@1.flight` (yaw offset / pitch /
+   * spin). Absent ⇒ nose along the travel direction, level, no spin, i.e. the
+   * shipped-before-#394 picture: a piercing WAVE and a dart drew the identical
+   * nose-first bolt.
+   */
+  projectileFlightFor?(projectileKey: string): ProjectileFlight | null;
   /**
    * w3x vertex tint + alpha for a champion entity (task #49). The registry
    * CANNOT resolve this itself: the entity → championId step needs the seat
@@ -736,6 +744,7 @@ export class EntityViewRegistry {
             this.content.projectileVfxFor?.(e.key) ?? null,
             this.content.projectileMeshShapeFor?.(e.key) ?? "bolt",
             this.content.projectileHitRadiusFor?.(e.key) ?? undefined,
+            this.content.projectileFlightFor?.(e.key) ?? null,
           );
           this.projectiles.set(e.id, view);
         }

@@ -90,7 +90,8 @@ interface ReportScreen {
 }
 export interface BudgetReportLike {
   schema?: string;
-  generatedAt?: string;
+  /** content-derived id of the report's inputs (GH#389 replaced `generatedAt`). */
+  sourcesDigest?: string;
   models: ReportModel[];
   gates: ReportGate[];
   screens: ReportScreen[];
@@ -126,7 +127,7 @@ export interface Worklist {
   generatedAt: string;
   generatedBy: string;
   threshold: "warn" | "over";
-  source: { report: string; generatedAt: string; schema: string };
+  source: { report: string; sourcesDigest: string; schema: string };
   items: WorklistItem[];
   needsReauthor: { id: string; path: string; role: string; metrics: string[] }[];
   broken: { id: string; path: string; kind: string }[];
@@ -271,7 +272,7 @@ export function buildWorklist(
     threshold,
     source: {
       report: "content/assets/model-budget/report.json",
-      generatedAt: report.generatedAt ?? "",
+      sourcesDigest: report.sourcesDigest ?? "",
       schema: report.schema ?? "",
     },
     items,

@@ -919,6 +919,27 @@ TEMPLATE_PROJECTILE = {
 # 逐支稽核紀錄，`main()` 的閘讀它。key = ability id。
 AUDIT = {}
 
+#: `cosmetic_projectile` 換掉了哪幾支的哪一顆 → 報表印出來（GH#375）。
+COSMETIC_LOG = {}
+
+#: 彈道文件所在。⭐ `cosmetic_projectile` 從**這裡**讀外觀，⛔ 不在表格裡手打。
+PROJ_DIR = os.path.join(ROOT, "content", "projectiles")
+
+
+def projectile_vfx(pid):
+    """一顆彈道的**外觀** —— 住在彈道文件自己的 `vfxKey` 上。
+
+    ⭐ 這是 GH#251 量到的事實，⛔ 不是推論：`EntityViewRegistry` 拿的是
+    `projectileVfxFor(e.key)` 而 `e.key` 是 **projectileId**，所以飛在空中那顆
+    長什麼樣完全由 `content/projectiles/<id>.json` 決定，技能自己的 `vfxKey`
+    在飛行途中一點作用都沒有。⇒ 把彈道換成 `spawnVfx` 時，要接手的是**這一格**。
+
+    ⛔ 不要把特效 id 抄進表格：抄一次就多一個住處，而彈道文件改了元素（GH#251
+    正在做的事）之後沒有任何東西會紅。
+    """
+    with open(os.path.join(PROJ_DIR, pid + ".json"), encoding="utf-8") as fh:
+        return json.load(fh)["vfxKey"]
+
 
 def _template_refs(tpl):
     """`ability.template` 的三種合法形狀 → ref 清單（normalizeTemplateBinding 的 py 版）。"""
@@ -974,7 +995,33 @@ def carry_mechanisms(aid, prev, new_effects, row):
       · projectile="deliver" → 彈道**載著**新酬載飛（onHit = 規格的效果）。
         ⚠️ 這會把整包效果關在「命中才發生」後面，自身增益型的技能填了就壞掉，
            所以⛔ 不是預設。這一批 90 支**一列都沒有填**，是留給 owner 的旋鈕。
+      · cosmetic_projectile="<projectileId>" → 那顆彈道**只是視覺**：退場，改掛一顆
+        指向**同一份彈道文件 vfxKey** 的 `spawnVfx`（見 {@link projectile_vfx}）。
       · retire={"spawnProjectile": "理由"} → 這一列**明說**要讓它退場（留紙本痕跡）
+
+    ── ⭐ `cosmetic_projectile` 為什麼存在（GH#375，量到的，⛔ 不是潔癖）─────────
+
+    A-5「沉默 ≠ 移除」把舊 w3x 文件的彈道沿用了回來，但新版規格從頭到尾沒有點名
+    過任何一顆彈道 ⇒ 沿用回來的那些 `onHit` 是**空的**。而一顆 `onHit: []` 的
+    **技能**彈道**不是**無害的裝飾 —— `sim/systems/ProjectileSystem.ts` 對
+    `origin` 帶 `ability:` 前綴的彈道，在命中時**除了跑 onHit 還做兩件事**：
+
+      ① `recordAbilityHit(world, owner, bestId)` —— 戰績記一筆**假命中**
+      ② `fireHooks(world, owner, "onAbilityHit", bestId, proj.abilitySlot)`
+         —— **真的觸發** onAbilityHit 掛勾（增益卡／天生技），
+            而這支技能在施法當下已經由 `abilitySystem` 發過一次了 ⇒ **重複觸發**
+      ③ 一顆都沒打到時 `recordAbilityWhiff` —— 戰績再記一筆假落空
+
+    ⚠️ `pierce: true` 的那幾顆是**穿過幾個人就各做一次**。
+    ⇒ 這是「說了但不會發生」的**反面**：沒有人說，但它真的在發生。
+
+    前例（同一個修法，2026-08-13）：15-04 雷天大壯。貳式 用 `retire=` 讓那顆
+    `imported.bolt.lightning` 退場、視覺改掛 `spawnVfx`。這一格是把那次的逐支
+    處置變成**一個旋鈕**（第零守則⑨：N 個同型 = K 個模板 + 一張表）。
+
+    `at` 是**推導**的，⛔ 不是一列一列填：`castType: "self"` 的技能沒有落點
+    （`spawnProjectile` 當初就是往 `t.facing` 亂射的），所以掛在施法者身上；
+    其餘（ground / targeted）掛在落點 —— 那正是傷害結算的地方。
     """
     retire = row.get("retire") or {}
     new_kinds = [n.get("kind") for n in new_effects if isinstance(n, dict)]
@@ -999,7 +1046,29 @@ def carry_mechanisms(aid, prev, new_effects, row):
             carried.append("invulnerable")
 
     pids = old_projectile_ids(prev)
-    if pids and "spawnProjectile" not in new_kinds:
+    cos = row.get("cosmetic_projectile")
+    if cos:
+        # ⭐ 退場的是**碰撞體**，不是畫面：外觀本來就住在彈道文件的 vfxKey 上
+        #    （GH#251），所以 spawnVfx 指同一份 = 同一個元素的粒子照樣播，
+        #    而假命中／重複掛勾／假落空三件事一起沒了。
+        # ⚠️ 這一格**刻意不讀 `prev`**（其餘的 A-5 沿用都讀）。第一版讀了 `prev`，
+        #    結果第一次跑完之後舊文件裡的 `spawnProjectile` 就沒了 ⇒ 第二次跑
+        #    `pids` 是空的 ⇒ spawnVfx 整顆消失。`skillRemakeJsonFresh` 的
+        #    `--check` 當場抓到（6 份不一致）——**一個不冪等的產生器就是一顆
+        #    定時炸彈**：下一個人為了別的事重跑一次，這 6 支的特效就無聲不見了。
+        post.append(
+            {
+                "kind": "spawnVfx",
+                "vfxId": projectile_vfx(cos),
+                "at": "self" if row["cast"] == "self" else "point",
+            }
+        )
+        COSMETIC_LOG[aid] = [f"{cos} → {projectile_vfx(cos)}"]
+        if pids:
+            # 只有**還看得到舊彈道的那一次**才對得起來 —— 對完之後這條自己退場。
+            assert cos in pids, f"{aid}: cosmetic_projectile={cos} 不在舊文件的 {pids} 裡"
+            dropped.append("spawnProjectile")
+    elif pids and "spawnProjectile" not in new_kinds:
         if "spawnProjectile" in retire:
             dropped.append("spawnProjectile")
         else:
@@ -1115,6 +1184,9 @@ A("20-02", "20-02 感知能力", "self", [0], [0], 0,
 A("20-03", "20-03 約束與勝利之劍", "ground", [60, 60, 60, 60], [250, 350, 450, 550], 14,
   "[主動][指向][範圍][AP加成]\n60秒冷卻 吟唱1秒\n消耗[MP] 250/350/450/550\n施法距離14\n\n「放了這招我就要補魔了」\n它會將所有者的魔力轉換成光後收束，對[前方][直線]敵人造成 350/550/750/950 + 100% [AP]點傷害。",
   cast_time=1.0,
+  # GH#375 —— 舊文件那顆 `imported.wave` 是 A-5 沿用回來的，規格沒點名過它；
+  #           傷害整包住在上面那條 damageLine。改掛 spawnVfx（理由見 carry_mechanisms）。
+  cosmetic_projectile="imported.wave",
   effects=[line("magic", length=14, width=2.0, per=[350, 550, 750, 950], ap=1.0)])
 
 A("20-04", "20-04 Avalon-永恆的理想鄉", "self", [60, 60, 60], [150, 250, 350], 0,
@@ -1212,6 +1284,8 @@ A("59-03", "59-03 AT力場", "self", [0], [0], 0,
 A("59-04", "59-04 野戰型陽電子砲", "ground", [90, 90, 90], [350, 500, 650], 8.25,
   "[主動][指向][範圍][真傷]\n90秒冷卻，吟唱3秒\n消耗MP350/500/650\n施法距離8.25\n\n「站著不要動，我...我要射了」\n對[前方][直線]敵人造成750/1200/1650點[真實傷害]。",
   maxRank=3, cast_time=3.0,
+  # GH#375 —— `imported.wave.ki` 是純視覺（傷害在 damageLine 上）。
+  cosmetic_projectile="imported.wave.ki",
   effects=[line("true", length=8.25, width=2.2, per=[750, 1200, 1650])])
 
 A("59-002", "59-001 完全暴走", "self", [150], [0], 0,
@@ -1287,6 +1361,10 @@ A("70-00", "70-00 紮根", "self", [15], [0], 0,
 A("70-01", "70-01 伸卡球", "ground", [60, 60, 60, 60], [250, 300, 350, 400], 11,
   "[主動][指向][範圍]\n60秒冷卻\n消耗[MP] 250/300/350/400\n施法距離11\n\n「我餵人人，人人餵我」\n造成[範圍]敵人150/300/450/600+[力量]*3傷害。",
   radiusTier="中",
+  # GH#375 —— `imported.wave.arcane` 是純視覺（傷害在 damageArea 上）。
+  #           ⚠️ 「伸卡球」聽起來該是一顆**真的會飛的球**，但那是設計變更
+  #           （傷害改成命中才結算）⇒ 要換就填 projectile="deliver"，是 owner 的決定。
+  cosmetic_projectile="imported.wave.arcane",
   effects=[area("physical", tier="中", per=[150, 300, 450, 600], ad=1.0)])
 
 A("70-02", "70-02 大怒石", "self", [0], [0], 0,
@@ -2101,6 +2179,8 @@ A("79-00", "79-00 靈壓", "self", [0], [0], 0,
 
 A("79-01", "79-01 瞬步", "ground", [30, 30, 30, 30], [60, 80, 100, 120], 9.17,
   "[主動][指向][範圍][衝刺]\n30秒冷卻\n消耗[MP] 60/80/100/120\n施法距離9.17\n\n「不是我消失，是你反應太慢」\n以急快的速度[直線] [衝刺] 至對方身旁，造成 [範圍] 敵方單位 [破魔] 魔抗減半，持續 3秒。",
+  # GH#375 —— `imported.bolt.void` 是純視覺（酬載在 dash + damageArea 上）。
+  cosmetic_projectile="imported.bolt.void",
   effects=[{"kind": "dash", "mode": "toPoint", "speed": 16, "maxDistance": 9.17},
            area("magic", tier="小", flat=1),
            # ⭐【破魔】的**數字**（2026-08-13）：`status-effect@1` 的 schema 只有
@@ -2237,6 +2317,10 @@ A("80-01", "80-01 天下無雙", "self", [0], [0], 0,
 A("80-02", "80-02 弒鬼神", "self", [60, 60, 60, 60], [90, 180, 270, 360], 0,
   "[主動][範圍]\n60秒冷卻\n消耗MP90/180/270/360\n\n「鬼神都殺了，剩下的只是血條」\n造成[周圍][範圍]敵方部隊 120/220/320/420 傷害，並 [擊退]及造成敵人 [破甲]，持續1秒。",
   radiusTier="中",
+  # GH#375 —— 規格是「造成[**周圍**][範圍]敵方部隊」＝ 一個 360° 的圓，
+  #           而沿用回來的 `imported.wave.physical` 是往 `t.facing` 直線飛出去的
+  #           （castType self ⇒ 沒有落點）。改掛 spawnVfx{at:"self"}。
+  cosmetic_projectile="imported.wave.physical",
   # ⭐【破甲】的**數值**那一半（形狀逐字比照 79-01 / 92-02 的【破魔】）。
   #    `armor-break` 在引擎裡是**純標記**：`status-effect@1` 只有 name/description/
   #    iconKey/polarity/tags，**沒有 modifiers**，而 `content/status-effects/
@@ -2295,6 +2379,10 @@ A("80-03", "80-03 鬼神烈戟", "ground", [60, 60, 60, 60], [150, 200, 250, 300
 A("80-04", "80-04 赤兔咆哮", "self", [90, 90, 90], [250, 400, 550], 0,
   "[主動][輔助][機率][普攻時]\n90秒冷卻\n消耗MP250/400/550\n\n「赤兔不是交通工具，是交通事故」\n[AP] 與 [AD] 暫時提升至 150/200/250%，[攻擊時]與 [受傷時] 都有 20%[機率]使出弒鬼神反擊，持續 8秒。",
   maxRank=3,
+  # GH#375 —— 這一支是**純自身增益**（AP/AD + 兩條 hook），規格裡沒有任何東西
+  #           會飛出去；沿用回來的 `imported.wave.physical` 記假命中、還會替
+  #           onAbilityHit 多觸發一輪。改掛 spawnVfx{at:"self"}。
+  cosmetic_projectile="imported.wave.physical",
   # ⭐ owner 2026-08-12：「你應該要有 **×150% 的效果標籤**來實作，因為這是**提升至**」。
   #    「提升**至** 150%」＝ 最終值是基礎的 **1.5 倍**；`pctAdd 1.5` 是 **+150% ＝ 2.5 倍**，
   #    整整多一倍。`pctMult v` 給的是 ×(1+v)，所以 150/200/250% → v = 0.5/1.0/1.5。
@@ -3041,6 +3129,10 @@ def main():
         print(f"── A-6 明示退場的欄位：{len(DROP_LOG)} 份文件 ──")
         for aid in sorted(DROP_LOG):
             print(f"  {aid}: " + "、".join(sorted(DROP_LOG[aid])))
+    if COSMETIC_LOG:
+        print(f"── GH#375 純視覺彈道 → spawnVfx：{len(COSMETIC_LOG)} 支 ──")
+        for aid in sorted(COSMETIC_LOG):
+            print(f"  {aid}: " + "、".join(COSMETIC_LOG[aid]))
     if FOLD_LOG:
         n = sum(len(v) for v in FOLD_LOG.values())
         print(f"── B1-B 兄弟酬載折進 onHitTargets：{n} 個節點 / {len(FOLD_LOG)} 支 ──")

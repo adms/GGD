@@ -17,6 +17,7 @@
     "trimClips.ts",
     "worklist.ts",
     "limits.test.ts",
+    "placement.test.ts",
     "report.test.ts",
     "glb.test.ts",
     "guard.test.ts",

@@ -377,6 +377,8 @@ describe("鑄技工坊 · 存得進去讀得回來 (adminui-vfx-forge-roundtrip)
       projectileArtFromDoc: false,
       // GH#379 —— 出貨是 true，所以哨兵值必須是 false。
       familyPitchDefaults: false,
+      // GH#390 —— 同上，出貨是 true（特效音效預設開），哨兵值必須是 false。
+      soundEnabled: false,
     };
     const withSentinels = { ...BASE_DOC() } as Record<string, unknown>;
     for (const f of GLOBAL_CHOICE_FIELDS) withSentinels[f] = SENT_CHOICE[f];
@@ -397,7 +399,7 @@ describe("鑄技工坊 · 存得進去讀得回來 (adminui-vfx-forge-roundtrip)
         expect(validateGlobalChoiceField(f, opt.value), `${f}=${opt.value}`).toBe("");
         // 布林欄位的下拉用 "1"/"0"；字串列舉直接照抄。
         const raw =
-          f === "projectileArtFromDoc" || f === "familyPitchDefaults"
+          f === "projectileArtFromDoc" || f === "familyPitchDefaults" || f === "soundEnabled"
             ? opt.value === "1"
             : opt.value;
         expect(

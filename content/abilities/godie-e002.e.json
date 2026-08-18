@@ -46,9 +46,9 @@
       "includeOrigin": true
     },
     {
-      "kind": "spawnProjectile",
-      "projectileId": "imported.wave",
-      "onHit": []
+      "kind": "spawnVfx",
+      "vfxId": "fx.thorn",
+      "at": "point"
     }
   ],
   "icon": "assets/icons/abilities/godie-e002.e.webp",
@@ -67,11 +67,11 @@
     "flashMs": 132,
     "camKick": 0.33
   },
-  "castTimeSec": 1,
   "vfxLayers": [
     {
       "vfxKey": "fx.prim.holy.beam-flat",
       "attachTo": "point"
     }
-  ]
+  ],
+  "castTimeSec": 1
 }

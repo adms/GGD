@@ -5,5 +5,9 @@
   "maxRange": 12,
   "hitRadius": 0.9,
   "pierce": true,
-  "vfxKey": "fx.thorn"
+  "vfxKey": "fx.thorn",
+  "meshShape": "shard",
+  "flight": {
+    "yawOffsetDeg": 90
+  }
 }

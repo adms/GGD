@@ -4,5 +4,6 @@
   "speed": 22,
   "maxRange": 12,
   "hitRadius": 0.5,
-  "vfxKey": "fx.prim.ki.bolt"
+  "vfxKey": "fx.prim.ki.bolt",
+  "meshShape": "bolt"
 }

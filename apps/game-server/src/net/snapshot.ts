@@ -14,7 +14,7 @@ import { Champions } from "@ggd/shared/sim/content/registry";
 import { FLOWER_MODEL_KEY } from "@ggd/shared/sim/flowers";
 import { REVIVE_CIRCLE_MODEL_KEY } from "@ggd/shared/sim/revive";
 import { GOLD_COIN_MODEL_KEY } from "@ggd/shared/sim/coins";
-import { NIGHT_FLAG_MODEL_KEY } from "@ggd/shared/sim/nightPact";
+import { DEFAULT_DEATH_WARD_MODEL_KEY } from "@ggd/shared/sim/deathWard";
 import { resolveAuraRadius } from "@ggd/shared/sim/aura/aura";
 import { mobModelKeyFor, mobSizeMultFor, mobVisualJson } from "@ggd/shared/sim/mobs";
 import { currentFireRingRadius, isBurnedByFireRing } from "@ggd/shared/sim/fireRing";
@@ -433,22 +433,24 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         es.flags = 0;
         continue;
       }
-      const flag = world.nightFlag.get(id);
+      const flag = world.deathWard.get(id);
       if (flag) {
-        // 暗夜旗 (71-00 暗夜契約). Ground furniture: no team component, no
-        // health, untargetable. `shield` carries the POST-`abilityRange` aura
-        // radius so the black ring the client draws IS the radius the sim
-        // tests — a ring computed client-side from the config would drift the
-        // moment an operator changed `auraRadius` or the range multiplier.
-        const rules = world.nightPactRules;
+        // 死亡遺留物 (出貨的那一支是 71-00 暗夜契約的暗夜旗). Ground furniture:
+        // no team component, no health, untargetable. `shield` carries the
+        // POST-`abilityRange` aura radius so the black ring the client draws IS
+        // the radius the sim tests — a ring computed client-side would drift
+        // the moment an author changed the grant's radius or an operator
+        // changed the range multiplier.
+        // ⭐ 2026-08-19: both the radius AND the model now come off the WARD's
+        // own grant, ⛔ not off a config block keyed to one ability id.
         es.kind = ENTITY_KIND.NIGHT_FLAG;
         es.seatId = -1;
-        es.key = NIGHT_FLAG_MODEL_KEY;
+        es.key = flag.grant.modelKey ?? DEFAULT_DEATH_WARD_MODEL_KEY;
         es.hp = 0;
         es.maxHp = 0;
         es.mana = flag.teamId; // tint only; maxMana stays 0 so no bar is drawn
         es.maxMana = 0;
-        es.shield = rules ? resolveAuraRadius(world, rules.auraRadius) : 0;
+        es.shield = resolveAuraRadius(world, flag.grant.radius);
         es.alive = true;
         es.flags = 0;
         continue;

@@ -213,18 +213,13 @@ const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<
 const VC = { ok: "var(--ok)", warn: "var(--warn)", over: "var(--over)" };
 const VLABEL = { ok: "通過", warn: "警戒", over: "超線" };
 
-/** "3 分鐘前" / "2 小時前" / "5 天前" from an ISO timestamp. */
-function relAge(iso) {
-  const ms = Date.now() - Date.parse(iso);
-  if (!isFinite(ms)) return "時間不明";
-  const s = Math.round(ms / 1000);
-  if (s < 90) return `${Math.max(0, s)} 秒前`;
-  const m = Math.round(s / 60);
-  if (m < 90) return `${m} 分鐘前`;
-  const h = Math.round(m / 60);
-  if (h < 36) return `${h} 小時前`;
-  return `${Math.round(h / 24)} 天前`;
-}
+/* ⭐ GH#389 — a `relAge()` used to render "5 天前" from the report's
+   `generatedAt`. That field is gone: the report is a CHECKED-IN artefact, so a
+   clock in it made `git status` dirty on every run. And age was never the
+   question this page asks — the freshness comment below already explains why a
+   timestamp comparison flags a correctly-deployed build as stale. The report's
+   identity is now `sourcesDigest` (the hash of its inputs), and whether it is
+   still true is answered by the HEAD/Content-Length sweep, not by a clock. */
 
 let R = null;
 
@@ -589,10 +584,11 @@ function renderModels() {
    swapped in place, or deleted shifts that length (or 404s); a byte-for-byte
    match means the numbers on this page still describe the bytes on disk.
 
-   Deliberately size + existence, never mtime: a deploy resets every file's
-   mtime to deploy time (which is always AFTER this report's generatedAt), so an
-   "older than the models" timestamp test would flag a correctly-deployed build
-   as stale on every prod load. Content-Length is invariant across that.
+   Deliberately size + existence, never a timestamp: a deploy resets every
+   file's mtime to deploy time, so an "older than the models" test would flag a
+   correctly-deployed build as stale on every prod load. Content-Length is
+   invariant across that. (GH#389 took the same reasoning one step further and
+   removed the report's own `generatedAt` — see the note where relAge used to be.)
 
    What this CANNOT see, stated on the page: source-CODE inputs (ArenaGround.ts,
    layout.ts, limits.ts) are not HTTP-served, and a brand-new .glb that nothing
@@ -722,7 +718,7 @@ function boot(rep, url) {
   ];
   document.getElementById("app").style.display = "";
   document.getElementById("stamp").innerHTML =
-    `量測於 ${esc(R.generatedAt)}（${esc(relAge(R.generatedAt))}）` +
+    `量測基準 <code>${esc(R.sourcesDigest ?? "—")}</code>（輸入檔的雜湊，⛔ 不是時間）` +
     `<span id="freshchip" class="pill na">核對資產中…</span>　·　${esc(R.generatedBy)}　·　來源 <code>${esc(url)}</code><br>` +
     `${R.totals.files} 支 .glb（出貨 ${R.totals.shipping}）· ${int(R.totals.triangles)} 面（出貨 ${int(R.totals.shippingTriangles)}）· ` +
     `內嵌貼圖 ${mb(R.totals.textureBytes)} 磁碟 → ${mb(R.totals.vramBytes)} VRAM`;

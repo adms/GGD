@@ -34,7 +34,7 @@ import {
 
 const REPORT = {
   schema: "model-budget/report@1",
-  generatedAt: "2026-07-22T09:00:00Z",
+  sourcesDigest: "aaaabbbbccccdddd",
   generatedBy: "tools/model-budget/measure.py",
   limits: [
     { key: "triangles", label: "三角面", limit: 20000, warn: 15000 },
@@ -217,7 +217,7 @@ describe("adminui-model-budget-limits", () => {
 // shape #99 actually publishes and the over-threshold panel + queue button read.
 const SCORED = {
   schema: "model-budget@1",
-  generatedAt: "2026-07-22T09:00:00Z",
+  sourcesDigest: "aaaabbbbccccdddd",
   gates: [
     { role: "champion", tris: { warn: 16000, limit: 28000 }, texEdge: { warn: 512, limit: 1024 } },
     { role: "arena-decor", tris: { warn: 4000, limit: 8000 }, texEdge: { warn: 512, limit: 1024 } },
@@ -282,7 +282,7 @@ describe("adminui-model-budget-optimise", () => {
     expect(decor.actions[0]).toMatchObject({ kind: "geometry-decimate", fromTris: 5659, targetTris: 4000 });
     expect(wl.totals.queued).toBe(2);
     expect(wl.totals.estVramSavedBytes).toBe(Math.round(5_592_405 * 0.75));
-    expect(wl.source).toMatchObject({ generatedAt: "2026-07-22T09:00:00Z", schema: "model-budget@1" });
+    expect(wl.source).toMatchObject({ sourcesDigest: "aaaabbbbccccdddd", schema: "model-budget@1" });
     cover("adminui-model-budget-optimise");
   });
 

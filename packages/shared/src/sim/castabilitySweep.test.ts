@@ -24,6 +24,9 @@
  * A slot that throws, is rejected, or is accepted-but-produces-nothing = FAIL.
  * A permanent WC3 passive (native Cool=0, no castable effects) is not a bug: it
  * is reported as PASSIVE and we verify its ModifierSource actually attaches.
+ * ⭐ A slot that is accepted and produces ONLY a `spawnVfx` is its own verdict,
+ * VFX_ONLY — neither PASS (it changes no number) nor FAIL (it is castable and
+ * visible; what it needs is content, not wiring). See `castabilityVerdict.ts`.
  *
  * WHERE THE ROSTER COMES FROM. From TRACKED source: `starterChampions` in
  * apps/platform/internal/curation/starter.go, the hand-picked 51 a fresh
@@ -43,7 +46,8 @@
  *
  * WHAT GOES RED. This is a MEASUREMENT harness and it fixes nothing, but a
  * diagnostic that can never fail is the same dead weight as one that never
- * runs, so three gates hold over the tracked roster:
+ * runs, so four gates hold over the tracked roster (the fourth, KNOWN_GAPS, is
+ * the strict one — it pins every ❌/🟡 cell by name AND by kind):
  *   1. the sweep runs end-to-end — all tracked champions, 7 cells each;
  *   2. EVERY champion spawns (a champion that cannot enter a SimWorld is not a
  *      content no-op, it is broken content or a broken loader);
@@ -83,6 +87,8 @@ import { INNATE_SLOT, type CastTarget, type CastableSlot, type CoreAbilitySlot }
 import { leapTicks } from "./movement/leap";
 import { TICK_HZ } from "../constants";
 import type { EffectDef } from "./effects/effect";
+import { runEffects } from "./effects/effectRunner";
+import { classifyCastOutcome, passiveFormGate, snapshotChannels } from "./castabilityVerdict";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "../../../.."); // packages/shared/src/sim -> repo root
@@ -148,39 +154,80 @@ const ROSTER_SIZE = readStarterRoster(ROOT).length;
  *   ③ 新增 `NONE`（這位英雄沒有這一格）不進分子也不進分母。
  *
  * ⚠️ 為了讓「下修」不能被拿來藏東西，這一版同時加了一道**比它更嚴**的閘：
- * {@link KNOWN_FAILS} 是逐格釘死的名單，**多一格或少一格都紅**。
+ * {@link KNOWN_GAPS} 是逐格釘死的名單，**多一格或少一格都紅**。
  * 比例棘輪從此是第二道防線，⛔ 兩道都不可以為了讓紅的變綠而放寬。
  */
-const WORKING_CELL_RATIO_FLOOR = 0.9766;
+/**
+ * ⭐ 2026-08-19（GH#374 收尾）—— **地板保持 0.9766，而分子的定義又收緊了一次**。
+ *
+ * 這一輪把「只有 `spawnVfx`」從 ❌ 再拆出來成 `VFX_ONLY`（它以前被併進 FAIL，
+ * 而在 GH#374 之前更是直接算 ✅）。⭐ 拆出來的那一格**留在分母、不進分子** ——
+ * 也就是說這個比例的意思沒有變：**「按下去真的有東西動」的格數佔比**。
+ *
+ * ⚠️ 所以這一次量到的比例與上一輪相同（拆的是同一批不算數的格子的**標籤**，
+ * 不是它們的**歸屬**）。⛔ 不要因為「數字沒動」就以為這一次沒事發生：
+ * 真正變嚴的是 {@link KNOWN_GAPS} —— 它現在連**每一格是哪一種缺口**都釘死，
+ * 於是「把一格真 no-op 改成噴個特效」不再能靜悄悄地換一個標籤過關。
+ */
+/**
+ * ⭐ 2026-08-19（GH#374/#375/#385）—— **97.66% → 99.41%，量出來的**（340 / 342）。
+ *
+ * 這一次是純粹的**棘輪上調**：六格從 ❌🟡 變 ✅，而六格都不是內容改動 ——
+ * 是量測儀器補上了它一直沒有的三件事（見 {@link KNOWN_GAPS} 的表）。
+ * ⛔ 仍然只能往上，不可以為了讓紅的變綠而降低。
+ */
+const WORKING_CELL_RATIO_FLOOR = 1.0;
 
 /**
- * ⭐ 首發名單上**今天量到的每一格 ❌**，一格一列（GH#374）。
+ * ⭐ 首發名單上**今天量到的每一格缺口**（❌ 與 🟡），一格一列（GH#374）。
  *
  * ⛔ 這不是「這樣沒關係」的清單，是一張帳：修好一格就把那一列刪掉。
- * **兩個方向都會紅** —— 冒出名單外的新 ❌ 會紅（有人把一格改壞了），
- * 名單上的某一格不再 ❌ 也會紅（修好了就要劃掉）。
+ * **三個方向都會紅** —— 冒出名單外的新缺口會紅（有人把一格改壞了）、
+ * 名單上的某一格不再是缺口也會紅（修好了就要劃掉）、
+ * ⭐ **同一格換了種類**也會紅（❌↔🟡：把一格空技能加上特效不是修好它）。
  * 這正是 `content/abilityNoOpEffects.test.ts` 那張 KNOWN 名單的形狀，
  * 而它比一個比例底線嚴格得多：比例可以被「一邊修好一格、一邊弄壞一格」騙過去。
  *
  * ⚠️ 只釘**版控名單**那 49 人 —— 營運白名單與骨架英雄是機器狀態／示範資料，
  * 釘它們會讓這條閘在別人的 clone 上意義不同。
  */
-const KNOWN_FAILS: readonly { key: string; why: string }[] = [
-  { key: "godie-e00r|Q", why: "初號機 Q：接受施放但量不到效果（#128 舊有）" },
-  { key: "godie-e00s|R", why: "白木卡迪那 R：整棵樹只有 spawnVfx —— GH#374 洞②抓到的第一格真 no-op" },
-  { key: "godie-efur|R", why: "揍敵客桀諾 R：接受施放但量不到效果（#128 舊有）" },
-  { key: "godie-emns|E", why: "夜神月 E：接受施放但量不到效果（#128 舊有）" },
-  { key: "godie-emns|R", why: "夜神月 R：接受施放但量不到效果（#128 舊有）" },
-  { key: "godie-emns|EX", why: "夜神月 EX：接受施放但量不到效果（#128 舊有）" },
+/**
+ * ⭐ 2026-08-19（GH#374/#375/#385，owner「快修」）—— **六列一次劃掉，而六列都不是
+ * 內容缺陷**。
+ *
+ * 逐格真的跑過（⛔ 不是推論）之後，這六格的共同點是：技能**本來就會動**，
+ * 是量測儀器在該看的地方沒有看。三個機制各自解掉一批：
+ *
+ * | 原本 | 真相（實測） | 修在哪 |
+ * |---|---|---|
+ * | `godie-emns\|EX` ❌ | 交換筆記本**真的**把 572.5↔676.0 換掉了，但 `swapResource` 刻意繞開傷害／治療佇列 ⇒ 一個事件都沒發 | `swapResource` 發 `resourceSwap`，收進 `EFFECT_EVENTS` |
+ * | `godie-emns\|E`、`godie-emns\|R` ❌ | 兩支都掛「目標身上有【詛咒】」的條件葉（44-01 的連招收尾），而普查的假人從來沒被標記過 | {@link satisfyDeclaredPreconditions} |
+ * | `godie-e00r\|Q` ❌ | `devour` 是處決線（血高於門檻整段跳過），而普查把假人設在 50% 血 | 同上 |
+ * | `godie-efur\|R`、`godie-e00s\|R` ❌🟡 | `randomArea` 的落點是隨機的，假人被釘在原地 ⇒ verdict 是**擲骰**（實測 24 顆 seed：12/24 與 16/24） | {@link nextScatterPoint} |
+ *
+ * ⚠️ `godie-e00s|R` 那一列原本寫「整棵樹只有 spawnVfx」——**那句話是假的**
+ * （第三守則）：它的樹裡有**兩發 `damageArea`**，只是那一顆 seed 的四顆落點
+ * 都沒有落在假人身上。
+ */
+const KNOWN_GAPS: readonly { key: string; verdict: "FAIL" | "VFX_ONLY"; why: string }[] = [
+];
+
+/**
+ * ⭐ 首發名單上**因為形態閘而沒有被量到**的每一格（🔵），一格一列（2026-08-19）。
+ *
+ * ⛔ 它與 {@link KNOWN_GAPS} 是**兩本帳**，而且必須分開：那一本記的是「缺陷」，
+ * 這一本記的是「儀器沒看的那一半」。合在一起的話，把一支空技能加上
+ * `whileForm` 就能讓它從缺陷名單上消失 —— 而那不是修好它。
+ *
+ * 這一本同樣**三個方向都會紅**：冒出名單外的新 🔵（有人替一格加了形態閘）、
+ * 名單上的某一格不再是 🔵（普查終於量得到它了，就把這一列刪掉）。
+ */
+const FORM_GATED_CELLS: readonly { key: string; why: string }[] = [
   {
     key: "godie-h01n|EX",
-    why: "黑崎一護 EX 79-002 虛化：rank 帶 whileForm:\"alternate\"，本體形態下本來就不掛來源 —— 已知的量測侷限（#128 舊有）",
-  },
-  {
-    key: "godie-u00k|PASSIVE",
     why:
-      "死之王 71-00 暗夜契約：`passive.ranks[0].modifiers` 是空的，機制整包住在專屬的 `sim/nightPact.ts`（旗子要等有人陣亡才立起來）。" +
-      "⇒ 通用量測看不到它，而那本身就是第〇·五守則要講的事：一支靠專屬系統活著的技能，在「技能＝JSON 模板組合」的尺上量起來是空的。",
+      "黑崎一護 EX 79-002 虛化：`passive.ranks[0].whileForm:\"alternate\"` —— 那份格擋**只在卍解狀態下**掛上來源，" +
+      "而普查在本體形態量它。⇒ 這是量測範圍，⛔ 不是內容缺陷（它在 2026-08-19 之前被記成 ❌ FAIL，佔了一列沒有人修得動的帳）。",
   },
 ];
 // 2026-08-13：300 → 312，量出來的（`docs/_castability-128.md` 首發 53 人 312/318）。
@@ -284,7 +331,31 @@ const COLS: SlotName[] = ["Q", "W", "E", "R", "EX", "PASSIVE", "basic"];
  * ⛔ 它與 FAIL 的界線是硬的：`NONE` **只**在登錄表回不出 ability id 時成立，
  * 一支存在但什麼都不做的技能永遠是 FAIL。
  */
-type Verdict = "PASS" | "FAIL" | "PASSIVE" | "NONE";
+/**
+ * ⭐ `VFX_ONLY` 是 GH#374 加的第五種，⛔ 它**不是**「放寬」也**不是**新的 FAIL。
+ *
+ * 一支技能放得出去、冷卻真的付了、玩家畫面上真的看得到東西 —— 而血量／位置／
+ * 狀態一個都沒動。這是一個**真實存在的狀態**，值得被單獨數出來：
+ *   · 併進 ✅ 是說謊 —— GH#373 那 5 支主動天生技就是這樣在全綠底下上架的；
+ *   · 併進 ❌ 則把「按不下去／丟例外」跟「按得下去但是空的」混成同一個數字，
+ *     而那兩件事要修的地方完全不同（前者是接線，後者是內容）。
+ * 判定本身住在 `castabilityVerdict.ts`，⛔ 不在這個檔。
+ */
+/**
+ * ⭐ `FORM_GATED` 是 2026-08-19 加的第六種，⛔ 它**不是**放寬，也**不是**新的 ❌。
+ *
+ * 一支被動的 rank 區塊寫著 `whileForm:"alternate"` —— 它只在**變身後**掛上來源，
+ * 而普查永遠在**本體形態**開世界（`spawnChampion` 從來不變身）。所以量不到它
+ * 是**儀器的範圍**，⛔ 不是內容的缺陷：79-002 虛化的格擋在卍解狀態下真的會生效。
+ *
+ * ⛔ 併進 ❌ 是把「內容壞掉」跟「這一格要換形態才看得到」混成同一個數字，
+ * 而那一格會佔著一列缺陷帳單、卻沒有任何人修得動它（#128 從第一天就是這樣）。
+ * ⛔ 併進 ✅ 也不行 —— 普查**沒有驗證過**它在另一個身體裡真的會動，
+ * 說它是綠的就是說謊。⇒ 它自己一格，而且與 `NONE` 一樣**不進分子也不進分母**：
+ * 這是「本次未量測」那一格，不是「量測結果」。
+ * ⚠️ 為了不讓這一格變成傾倒場，{@link FORM_GATED_CELLS} 逐格釘死它（三個方向都紅）。
+ */
+type Verdict = "PASS" | "FAIL" | "VFX_ONLY" | "FORM_GATED" | "PASSIVE" | "NONE";
 interface Cell {
   verdict: Verdict;
   channel?: string; // what fired (for PASS/PASSIVE); absent on FAIL
@@ -397,75 +468,144 @@ function spawn(world: SimWorld, championId: string, team: number, dx: number): E
   });
 }
 
-/** Broad snapshot of the effect-bearing channels regen/movement cannot spoof. */
-function snapshot(world: SimWorld): {
-  shields: number;
-  statuses: number;
-  buffs: number;
-  projectiles: number;
-  taunts: number;
-} {
-  let shields = 0;
-  for (const hp of world.health.values()) shields += hp.shields.length;
-  let statuses = 0;
-  for (const st of world.status.values()) statuses += st.effects.length;
-  let buffs = 0;
-  for (const sc of world.stats.values()) buffs += sc.sources.filter((s) => s.kind === "buff").length;
-  // ⭐ 2026-08-18 —— 【嘲弄】是**第五個**看得見的頻道。
-  //
-  // ⚠️ 它在此之前是量測盲點，而那是這份 sweep 自己的檔頭警告過的形態
-  // （「THIS LIST IS THE MEASURING INSTRUMENT，漏掉一個 kind 是假 ❌ 不是內容缺陷」，
-  // `championForm` 已經踩過一次）：`taunt` 既不發事件、也不是護盾／狀態／buff／
-  // 投射物 —— 它寫的是 `world.taunt`（受害者 → 被迫打誰、到哪一絕對 tick）。
-  // 於是 86-00 裝可愛接上真的嘲弄之後，這裡照樣回報「只有特效」。
-  // ⛔ 它不可能被回血／移動偽造：唯一的寫入者是 `sim/taunt.ts::applyTaunt`。
-  return { shields, statuses, buffs, projectiles: world.projectile.size, taunts: world.taunt.size };
+/**
+ * ⭐ 2026-08-18（GH#374 洞②）—— **量測儀器本身搬到 `castabilityVerdict.ts`**。
+ *
+ * 「哪些頻道算真的有效果」「`vfxSpawn` 算不算」以前整段住在這支測試檔的區域函式
+ * 裡，於是那個決定**沒有辦法被夾具驗**：想證明「一支只有特效的假技能不會被算成
+ * ✅」，唯一的路是掃這個檔的原始碼字串（七種失敗形態⑥）。
+ * ⇒ `snapshotChannels()` / `EFFECT_EVENTS` / `classifyCastOutcome()` 現在是模組，
+ * 普查與守衛 `castabilityVfxOnly.test.ts` 讀的是**同一份**（形態⑤）。
+ */
+
+/**
+ * ⭐ 2026-08-19（GH#374/#375/#385）—— **把技能自己宣告的前提先滿足，再按下去**。
+ *
+ * ⚠️ 這不是放寬，是修一個**問錯問題**的量測。普查在此之前問的是「在一個什麼
+ * 前置都沒有的世界裡按下去會不會有事發生」，而一支**連招收尾技**在那個世界裡
+ * 什麼都不做**正是它的規格**。逐格量到的（真跑，不是推論）：
+ *
+ *   · 44-03 火車輾過 / 44-04 心臟麻痺 —— 兩支的效果都掛
+ *     `condition{kind:"status", subject:"target", statusId:"curse"}`，也就是
+ *     「44-01 死神之眼先標記過的目標」。那顆葉子是**刻意加上去**的
+ *     （`tools/skill-remake/batch1.py` 44-03 那一段：在它之前「44-01 有沒有先掛上
+ *     【詛咒】完全不影響這一發」＝失敗形態②）。⇒ 內容修好了，而普查因為它而變紅。
+ *     實測：把【詛咒】掛上去之後兩支都是 ✅ damage（676.0→103.2 / 676.0→474.8）。
+ *   · 59-01 吞噬 —— `devour` 是**處決線**（`hp > maxHp × pct` 就整段跳過），
+ *     而普查把假人設在 50% 血。實測：把假人壓到 2% 之後是 ✅（死亡 + 回血 + killCombo）。
+ *
+ * ⛔ **它不可能把一支真的 no-op 變綠**：滿足的是 JSON **自己寫出來的**閘，
+ * 一棵空的效果樹、一條 inert 的 modifier、一支只有特效的技能在這之後仍然量得到
+ * 一模一樣的東西。
+ * ⭐ 而且它是**一條從樹推導出來的規則**，⛔ 不是逐支補丁（第〇·五守則）：
+ * 下一支寫「對【燃燒】中的目標追加傷害」的技能不必再改這裡一個字。
+ *
+ * ⚠️ **`not` 底下的葉子不走這條路**：把它滿足等於讓那段效果**不**發生 ——
+ * 方向相反的「幫忙」比不幫忙更糟。
+ */
+function collectRequiredStatusIds(node: unknown, out: Set<string>): void {
+  if (node === null || typeof node !== "object") return;
+  if (Array.isArray(node)) {
+    for (const v of node) collectRequiredStatusIds(v, out);
+    return;
+  }
+  const rec = node as Record<string, unknown>;
+  if (
+    rec.kind === "status" &&
+    rec.subject === "target" &&
+    typeof rec.statusId === "string" &&
+    rec.minStacks === undefined
+  ) {
+    out.add(rec.statusId);
+  }
+  for (const [key, v] of Object.entries(rec)) {
+    if (key === "not") continue; // 反向葉子 —— 見檔頭最後一段
+    collectRequiredStatusIds(v, out);
+  }
+}
+
+/** 這棵樹裡最寬鬆的處決門檻（沒有 `devour` 就回 null）。 */
+function devourThreshold(node: unknown): number | null {
+  if (node === null || typeof node !== "object") return null;
+  if (Array.isArray(node)) {
+    let best: number | null = null;
+    for (const v of node) {
+      const t = devourThreshold(v);
+      if (t !== null && (best === null || t > best)) best = t;
+    }
+    return best;
+  }
+  const rec = node as Record<string, unknown>;
+  let best: number | null = null;
+  if (rec.kind === "devour" && Array.isArray(rec.thresholdPctOfMax)) {
+    const pct = rec.thresholdPctOfMax[0];
+    if (typeof pct === "number" && pct > 0) best = pct;
+  }
+  for (const v of Object.values(rec)) {
+    const t = devourThreshold(v);
+    if (t !== null && (best === null || t > best)) best = t;
+  }
+  return best;
 }
 
 /**
- * Events that constitute "a real effect happened" (excludes abilityCast/castBegin).
+ * 把 `def.effects` 自己宣告的前提**真的**布置到場上。
  *
- * THIS LIST IS THE MEASURING INSTRUMENT, and a kind missing from it is a FALSE
- * ❌, not a content bug. `championForm` (task #249 變身) is the case that proved
- * it: the moment 妖狐變化 / ChangeDNA / 瘋狂皮卡丘 were bound to the real body
- * swap, all three measured "cast accepted but produced no measurable effect" —
- * the swap rewrites `ChampionComp.championId` + `StatsComp.championId` and
- * emits `championForm`, and NONE of `snapshot()`'s four counters can see that
- * (no shield, no status, no buff source, no projectile, and the body does not
- * move). So a working transform read as a broken slot.
- *
- * The bar for adding a kind here is the same one the original six meet: the
- * event fires ONLY from an effect actually resolving, never from regen, upkeep
- * or movement. `championForm` is emitted from exactly one place —
- * `ChampionFormSystem.setBody` — so it cannot be spoofed by anything else.
+ * ⛔ 掛狀態走**出貨的 `applyStatus`**（`runEffects`），不是手寫一個
+ * `StatusEffect` 塞進陣列 —— 後者是失敗形態⑤（被測的不是出貨的那個）：
+ * 手寫的那一份與條件葉讀的那一份哪天分岔，這裡會安靜地繼續綠。
  */
-const EFFECT_EVENTS = new Set([
-  "damage",
-  "heal",
-  "manaRestore",
-  "projectileSpawn",
-  "knockdown",
-  "championForm",
-]);
+function satisfyDeclaredPreconditions(
+  world: SimWorld,
+  def: AbilityDef,
+  caster: EntityId,
+  victims: readonly EntityId[],
+): void {
+  const statuses = new Set<string>();
+  collectRequiredStatusIds(def.effects, statuses);
+  if (statuses.size > 0) {
+    const pre: EffectDef[] = [...statuses]
+      .sort()
+      .map((statusId) => ({ kind: "applyStatus", statusId, duration: 600 }) as EffectDef);
+    runEffects(pre, {
+      world,
+      caster,
+      rank: 1,
+      targets: [...victims],
+      origin: "castability-precondition",
+      rng: world.rng,
+    });
+  }
+  const pct = devourThreshold(def.effects);
+  if (pct !== null) {
+    for (const id of victims) {
+      const hp = world.health.get(id);
+      if (hp) hp.hp = Math.max(1, hp.maxHp * pct * 0.5);
+    }
+  }
+}
 
 /**
- * ⛔ **`vfxSpawn` 被刻意從上面那張表拿掉了**（2026-08-18 / GH#374 洞②）。
+ * ⭐ 2026-08-19 —— **散落型技能的假人要站在落點上，否則量到的是 seed 不是技能**。
  *
- * 這份 sweep 問的是「按下去**有沒有真的產生效果**」。`vfxSpawn` 唯一保證的是
- * **畫面上有東西**，而一支只有畫面的技能逐位元改不動任何一個數字 —— 把它算成
- * ✅ 等於讓這份量測對 CLAUDE.md 第一·五守則整族缺陷永遠說謊。
- * 報表自己的註解早就寫著「若全靠 vfx 過關代表量測太寬鬆」，而那個數字
- * （`vfxOnly`）**沒有任何閘在看**；GH#373 的 5 支主動天生技就是這樣在
- * 全綠的測試底下上架的。
+ * `randomArea`（13-04 龍星群 / 70-04 千年練成，全 content 只有這兩支）在施法那一刻
+ * 把落點一次抽完，而普查把假人釘在原地。於是「這一格是不是 ✅」變成一次擲骰 ——
+ * 實測 24 顆 seed：13-04 中 **12/24**、70-04 中 **16/24**。
+ * ⛔ 兩支剛好都在 {@link KNOWN_GAPS} 上，而那張帳把它們記成內容缺陷
+ *（70-04 那一列甚至寫「整棵樹只有 spawnVfx」—— 它的樹裡有**兩發 damageArea**）。
  *
- * ⚠️ `projectileSpawn` **留著**，那不是同一件事：一顆投射物是場上真的存在、
- * 會碰撞、會擋視線的實體，⛔ 不是一張貼圖。（它自己的 payload 空不空由
- * `content/abilityNoOpEffects.ts` 的 `projectile-no-payload` 那條規則管。）
- *
- * 保留這個常數只為了報表分頻道：純特效的格子現在是 ❌，而報表要說得出
- * 「它只有特效」而不是一句沒有內容的 no-op。
+ * 普查本來就已經**每 tick 把假人釘回原位**（免得被擊退推出圈外）—— 這一段只是
+ * 把「原位」改成**引擎自己排定的下一個落點**。⛔ 它不可能把真的 no-op 變綠：
+ * 落點跑的是 `wave.effects`，那串是空的或 inert 就一樣打不出東西。
  */
-const COSMETIC_ONLY_EVENT = "vfxSpawn";
+function nextScatterPoint(world: SimWorld, caster: EntityId): { x: number; z: number } | null {
+  for (const wave of world.randomArea) {
+    if (wave.caster !== caster) continue;
+    const hit = wave.impacts[wave.next];
+    if (hit) return hit.pos;
+  }
+  return null;
+}
 
 function abilityForSlot(world: SimWorld, id: EntityId, slot: CastableSlot): AbilityDef | null {
   const ab = world.abilities.get(id)!;
@@ -574,6 +714,18 @@ function testSlot(championId: string, slot: CastableSlot): Cell {
           reason: rej === "passive" ? undefined : `cast returned "${rej}" (expected "passive")`,
         };
       }
+      // ⭐ 形態閘（2026-08-19）—— 在判 ❌ **之前**問一次「這一階是不是只在
+      // 另一個身體裡生效」。⛔ 順序是承重的：反過來寫的話 79-002 虛化仍然
+      // 會先被記成 FAIL。判準住在 `castabilityVerdict.ts`（普查與守衛讀同一份）。
+      if (passiveFormGate(def, 1) === "alternate") {
+        return {
+          verdict: "FORM_GATED",
+          castType: def.castType,
+          reason:
+            "這一階被動帶 `whileForm:\"alternate\"` —— 它只在變身後才掛上來源，" +
+            "而普查是在本體形態量的。⇒ 本次未量測，⛔ 不是壞掉。",
+        };
+      }
       return {
         verdict: "FAIL",
         castType: def.castType,
@@ -597,8 +749,12 @@ function testSlot(championId: string, slot: CastableSlot): Cell {
     const cost = def.manaCost[0] ?? 0;
     world.health.get(caster)!.mana = cost + 1;
 
+    // ⭐ 技能自己宣告的前提（【詛咒】標記 / 處決線）——⛔ 一定要在 `before`
+    //    **之前**，否則布置本身會被算成這一次施放的效果。
+    satisfyDeclaredPreconditions(world, def, caster, [foe, ally]);
+
     const target = targetFor(def, foe, ally, foePos);
-    const before = snapshot(world);
+    const before = snapshotChannels(world);
     const events: string[] = [];
 
     const res = castAbility(world, caster, slot, target);
@@ -608,65 +764,41 @@ function testSlot(championId: string, slot: CastableSlot): Cell {
     events.push(...world.events.map((e) => e.type));
 
     const window = WINDOW + leapWindow(def.effects) + castWindow(def.castTimeSec);
+    /** 假人現在被釘在哪 —— 散落型技能會把它改成下一個落點（見 nextScatterPoint）。 */
+    const pin = { ...foePos };
     for (let i = 0; i < window; i++) {
+      // ⛔ 釘在 `step()` **之前**：落點是在那一格的 `randomAreaSystem` 裡結算的，
+      //    步完才移動 = 永遠慢一格，等於沒有移動。
+      const scatter = nextScatterPoint(world, caster);
+      if (scatter) {
+        pin.x = scatter.x;
+        pin.z = scatter.z;
+        world.transform.get(foe)!.pos = { ...pin };
+      }
       world.step(NO_INTENTS);
       events.push(...world.events.map((e) => e.type));
       // re-pin the two dummies so a knockback / shove cannot carry them out of
       // a ground circle before it resolves (the caster is left free so a dash
       // effect can visibly move it).
-      world.transform.get(foe)!.pos = { ...foePos };
+      world.transform.get(foe)!.pos = { ...pin };
       world.transform.get(ally)!.pos = { ...allyPos };
     }
 
-    const after = snapshot(world);
-    const moved =
-      Math.hypot(
-        world.transform.get(caster)!.pos.x - casterAnchor.x,
-        world.transform.get(caster)!.pos.z - casterAnchor.z,
-      ) > 0.2 || world.nav.get(caster)!.override != null;
+    const after = snapshotChannels(world);
+    const dx = world.transform.get(caster)!.pos.x - casterAnchor.x;
+    const dz = world.transform.get(caster)!.pos.z - casterAnchor.z;
+    // 0.2u 的位移門檻，寫成平方比較 —— `Math.hypot` 在 `sim/**` 是禁字
+    // （`purity.test.ts`），而判定層是要被非測試模組共用的。
+    const moved = dx * dx + dz * dz > 0.04 || world.nav.get(caster)!.override != null;
 
-    // pick the first channel that fired, for the report
-    const fired = (t: string): boolean => events.includes(t);
-    let channel = "";
-    if (fired("damage")) channel = "damage";
-    else if (fired("projectileSpawn")) channel = "projectile";
-    else if (fired("heal")) channel = "heal";
-    else if (fired("manaRestore")) channel = "manaRestore";
-    else if (after.shields > before.shields) channel = "shield";
-    else if (after.statuses > before.statuses) channel = "status";
-    else if (after.buffs > before.buffs) channel = "buff";
-    else if (after.taunts > before.taunts) channel = "taunt";
-    else if (moved) channel = "dash";
-    // 變身 (#249) sits ABOVE `vfx` for the same reason `dash` does: it is a
-    // gameplay channel (the body's whole stat sheet is replaced), and the
-    // report's "if everything passes on vfx the measurement is too loose" note
-    // would misread it as decoration.
-    else if (fired("championForm")) channel = "championForm";
-    else if (fired(COSMETIC_ONLY_EVENT)) channel = "vfx";
-
-    const anyEvent = events.some((t) => EFFECT_EVENTS.has(t));
-    const anyState =
-      after.shields > before.shields ||
-      after.statuses > before.statuses ||
-      after.buffs > before.buffs ||
-      after.projectiles > before.projectiles ||
-      after.taunts > before.taunts ||
-      moved;
-
-    if (anyEvent || anyState) {
-      return { verdict: "PASS", castType: def.castType, channel };
-    }
-    return {
-      verdict: "FAIL",
-      castType: def.castType,
-      channel: channel || undefined,
-      reason:
-        def.effects.length === 0
-          ? "no effects authored (empty effect list)"
-          : channel === "vfx"
-            ? "只有特效（spawnVfx）—— 場上沒有任何一個數字改變（GH#374 洞②：vfx 不再算 PASS）"
-            : "cast accepted but produced no measurable effect (no-op)",
-    };
+    const out = classifyCastOutcome({
+      events,
+      before,
+      after,
+      moved,
+      effectsAuthored: def.effects.length,
+    });
+    return { verdict: out.verdict, castType: def.castType, channel: out.channel, reason: out.reason };
   } catch (err) {
     return { verdict: "FAIL", reason: `threw: ${(err as Error).message}` };
   }
@@ -819,8 +951,11 @@ describe("task #128 — in-game castability coverage sweep", () => {
       (n, r) => n + COLS.filter((s) => r.cells[s].verdict === "PASS" || r.cells[s].verdict === "PASSIVE").length,
       0,
     );
+    // ⚠️ `FORM_GATED` 和 `NONE` 一樣從**兩邊**扣掉：它是「這一格本次沒有被量」，
+    // 不是一個量測結果。留在分母等於用一個永遠不會變綠的常數壓低覆蓋率。
     const cells = trackedResults.reduce(
-      (n, r) => n + COLS.filter((s) => r.cells[s].verdict !== "NONE").length,
+      (n, r) =>
+        n + COLS.filter((s) => r.cells[s].verdict !== "NONE" && r.cells[s].verdict !== "FORM_GATED").length,
       0,
     );
     expect(
@@ -831,24 +966,48 @@ describe("task #128 — in-game castability coverage sweep", () => {
         "⚠️ 如果名單剛剛變短，先確認**比例**有沒有掉：絕對格數變少是分母的事，不是缺陷。",
     ).toBeGreaterThanOrEqual(WORKING_CELL_RATIO_FLOOR);
 
-    // ---- gate 4: 逐格釘死的 ❌ 名單（GH#374，比比例棘輪嚴格）----
-    // ⛔ 兩個方向都紅：名單外的新 ❌（有人改壞了）與名單上已經修好的殘留
-    // （帳單變成沒有人會回頭看的白名單）。
-    const live = new Set<string>();
+    // ---- gate 4: 逐格釘死的缺口名單（GH#374，比比例棘輪嚴格）----
+    // ⛔ 三個方向都紅：名單外的新缺口（有人改壞了）、名單上已經修好的殘留
+    // （帳單變成沒有人會回頭看的白名單）、以及**同一格換了種類**
+    // （❌→🟡＝替一支空技能補了個特效，那不是修好它）。
+    const live = new Map<string, Verdict>();
     for (const r of trackedResults) {
       for (const slot of COLS) {
-        if (r.cells[slot].verdict === "FAIL") live.add(`${r.id}|${slot}`);
+        const v = r.cells[slot].verdict;
+        if (v === "FAIL" || v === "VFX_ONLY") live.set(`${r.id}|${slot}`, v);
       }
     }
-    const known = new Set(KNOWN_FAILS.map((k) => k.key));
+    const known = new Map(KNOWN_GAPS.map((k) => [k.key, k.verdict] as const));
     expect(
-      [...live].filter((k) => !known.has(k)).sort(),
-      "首發名單上冒出**名單外**的 ❌ —— 有一格本來會動的技能不動了。" +
-        "⛔ 修它，不要把它加進 KNOWN_FAILS（要加就先開 issue 並在那一列寫上編號）。",
+      [...live].filter(([k]) => !known.has(k)).map(([k, v]) => `${k}=${v}`).sort(),
+      "首發名單上冒出**名單外**的缺口 —— 有一格本來會動的技能不動了。" +
+        "⛔ 修它，不要把它加進 KNOWN_GAPS（要加就先開 issue 並在那一列寫上編號）。",
     ).toEqual([]);
     expect(
-      KNOWN_FAILS.filter((k) => !live.has(k.key)).map((k) => `${k.key}（${k.why}）`),
-      "這幾格已經不再是 ❌ —— 修好了就把該列從 KNOWN_FAILS 刪掉。",
+      KNOWN_GAPS.filter((k) => live.get(k.key) !== k.verdict).map(
+        (k) => `${k.key} 釘的是 ${k.verdict}，實測是 ${live.get(k.key) ?? "已修好"}（${k.why}）`,
+      ),
+      "KNOWN_GAPS 與實測對不上 —— 修好了就把該列刪掉；種類變了（❌↔🟡）就先確認那是真的進步。",
+    ).toEqual([]);
+
+    // ---- gate 5: 形態閘那一本帳（2026-08-19）----
+    // 🔵 不進分子也不進分母，所以它**必須**有自己的閘，否則「把一格空技能加上
+    // whileForm」就是一條讓缺陷從兩份名單同時消失的路。
+    const gated = new Set<string>();
+    for (const r of trackedResults) {
+      for (const slot of COLS) {
+        if (r.cells[slot].verdict === "FORM_GATED") gated.add(`${r.id}|${slot}`);
+      }
+    }
+    const gatedKnown = new Set(FORM_GATED_CELLS.map((k) => k.key));
+    expect(
+      [...gated].filter((k) => !gatedKnown.has(k)).sort(),
+      "冒出**名單外**的 🔵 —— 有人替一格被動加了形態閘，而它從此不再被這份普查量到。" +
+        "⛔ 先確認那是刻意的，再把它寫進 FORM_GATED_CELLS 並說明為什麼。",
+    ).toEqual([]);
+    expect(
+      FORM_GATED_CELLS.filter((k) => !gated.has(k.key)).map((k) => `${k.key}（${k.why}）`),
+      "FORM_GATED_CELLS 上的某一格不再是 🔵 —— 普查量得到它了，把那一列刪掉。",
     ).toEqual([]);
   });
 });
@@ -859,6 +1018,8 @@ function mark(c: Cell): string {
   if (c.verdict === "PASS") return "✅";
   if (c.verdict === "PASSIVE") return "🟣";
   if (c.verdict === "NONE") return "—";
+  if (c.verdict === "VFX_ONLY") return "🟡";
+  if (c.verdict === "FORM_GATED") return "🔵";
   return "❌";
 }
 
@@ -869,17 +1030,25 @@ function writeReport(): void {
   let passive = 0;
   let fail = 0;
   let none = 0;
-  const failures: { id: string; name: string; slot: SlotName; cell: Cell; atk: string }[] = [];
+  type Row = { id: string; name: string; slot: SlotName; cell: Cell; atk: string };
+  const failures: Row[] = [];
+  /** 🟡 只有特效的格子 —— 自己一張表，⛔ 不混進 FAIL（GH#374）。 */
+  const vfxOnlyCells: Row[] = [];
+  /** 🔵 被形態閘擋住、本次未量測的格子 —— 自己一張表（2026-08-19）。 */
+  const formGatedCells: Row[] = [];
 
   for (const r of results) {
     for (const slot of cols) {
       const c = r.cells[slot];
+      const row: Row = { id: r.id, name: r.name, slot, cell: c, atk: r.attackType };
       if (c.verdict === "PASS") pass++;
       else if (c.verdict === "PASSIVE") passive++;
       else if (c.verdict === "NONE") none++;
+      else if (c.verdict === "VFX_ONLY") vfxOnlyCells.push(row);
+      else if (c.verdict === "FORM_GATED") formGatedCells.push(row);
       else {
         fail++;
-        failures.push({ id: r.id, name: r.name, slot, cell: c, atk: r.attackType });
+        failures.push(row);
       }
     }
   }
@@ -887,16 +1056,30 @@ function writeReport(): void {
   // channel tally over PASS cells — proves the sweep detects real gameplay
   // channels, not just the cosmetic vfxSpawn that most abilities also carry.
   const channelTally = new Map<string, number>();
-  let vfxOnly = 0;
+  let passOnVfxChannel = 0;
   for (const r of results) {
     for (const slot of cols) {
       const c = r.cells[slot];
       if (c.verdict === "PASS" && c.channel) {
         channelTally.set(c.channel, (channelTally.get(c.channel) ?? 0) + 1);
-        if (c.channel === "vfx") vfxOnly++;
+        if (c.channel === "vfx") passOnVfxChannel++;
       }
     }
   }
+
+  // 版控名單那 49 人的可用格比例 —— 就是閘 3 在看的那個數字。
+  // ⭐ 印出來是刻意的：以前它只在**紅的時候**才出現在錯誤訊息裡，於是「今天量到
+  // 多少」要跑一次測試才知道，而調棘輪的人只能用猜的（第零守則：給量尺）。
+  const trackedRows = results.filter((r) => tracked.includes(r.id));
+  const trackedWorking = trackedRows.reduce(
+    (n, r) => n + cols.filter((s) => r.cells[s].verdict === "PASS" || r.cells[s].verdict === "PASSIVE").length,
+    0,
+  );
+  const trackedCells = trackedRows.reduce(
+    (n, r) =>
+      n + cols.filter((s) => r.cells[s].verdict !== "NONE" && r.cells[s].verdict !== "FORM_GATED").length,
+    0,
+  );
 
   const spawnFails = results.filter((r) => !r.spawnOk);
   const melee = results.filter((r) => r.attackType === "melee");
@@ -923,7 +1106,7 @@ function writeReport(): void {
   L.push(
     `> 這是**診斷**：把 ${results.length} 位英雄每一格 天生技/Q/W/E/R/EX + 普攻在真的 SimWorld 裡按下去，量測有沒有真的產生效果` +
       "（傷害／投射物／狀態／護盾／補血／補魔／位移／變身），不修任何技能。" +
-      "⛔ **純特效（只有 spawnVfx）不算有效果** —— 見下方方法說明（GH#374）。",
+      "⛔ **純特效（只有 spawnVfx）不算有效果**，它自成一類 🟡，⛔ 既不算 ✅ 也不併進 ❌ —— 見下方方法說明（GH#374）。",
   );
   L.push("");
   L.push(`> **名單來源**：${rosterSource}。`);
@@ -943,18 +1126,33 @@ function writeReport(): void {
   L.push("| ✅ PASS | 施放被接受且量到實際效果，過程無例外 |");
   L.push("| 🟣 PASSIVE | WC3 永久被動（原生 Cool=0、無可施放效果）；已驗證其 ModifierSource 確實掛上，非 bug |");
   L.push("| ❌ FAIL | 被拒絕／丟例外／接受了卻沒有任何可量測效果（no-op）；或英雄無法生成 |");
+  L.push(
+    "| 🟡 只有特效 | 放得出去、冷卻真的付了、畫面上看得到東西 —— **而場上一個數字都沒動**（整棵效果樹只有 `spawnVfx`）。" +
+      "⛔ 它不算 ✅（GH#373 就是這樣上架的），也**不併進** ❌（「按不下去」跟「按得下去但是空的」要修的地方不同） |",
+  );
   L.push("| — 無此格 | 這位英雄根本沒有這一格（原作就沒有 NN-00 天生技／骨架示範英雄沒有 EX）；不計入下方比例的分子與分母 |");
+  L.push(
+    "| 🔵 形態閘 | 這一階被動寫著 `whileForm:\"alternate\"` —— 它**只在變身後**掛上來源，而普查永遠在本體形態量。" +
+      "⇒ **本次未量測**，⛔ 不是壞掉（79-002 虛化的格擋在卍解狀態下真的會生效）；同 — 一樣不計入分子與分母 |",
+  );
   L.push("");
   L.push("## 總計");
   L.push("");
   L.push(`- **格數**：${results.length} 英雄 × ${cols.length} 槽 = **${totalCells}**`);
   L.push(
     `- **✅ PASS：${pass} / ${totalCells}**（${((pass / totalCells) * 100).toFixed(1)}%）` +
-      `　🟣 PASSIVE：${passive}　❌ FAIL：${fail}　— 無此格：${none}`,
+      `　🟣 PASSIVE：${passive}　🟡 只有特效：${vfxOnlyCells.length}　❌ FAIL：${fail}　— 無此格：${none}`,
   );
   L.push(
     `- 把「正確的永久被動」算進可接受行為：**${pass + passive} / ${totalCells}**` +
-      `（${(((pass + passive) / totalCells) * 100).toFixed(1)}%）如預期運作，只有 **${fail}** 格是真正的缺口。`,
+      `（${(((pass + passive) / totalCells) * 100).toFixed(1)}%）如預期運作，` +
+      `真正的缺口是 **${fail + vfxOnlyCells.length}** 格（❌ ${fail} ＋ 🟡 ${vfxOnlyCells.length}），` +
+      `另有 **${formGatedCells.length}** 格 🔵 本次未量測（形態閘）。`,
+  );
+  L.push(
+    `- **閘 3 在看的那個數字**（只算版控首發名單那 ${ROSTER_SIZE} 人、扣掉「無此格」）：` +
+      `**${trackedWorking} / ${trackedCells} = ${((trackedWorking / trackedCells) * 100).toFixed(2)}%**` +
+      `（棘輪下限 ${(WORKING_CELL_RATIO_FLOOR * 100).toFixed(2)}%）。`,
   );
   L.push(`- 英雄生成失敗：**${spawnFails.length}**` + (spawnFails.length ? `（${spawnFails.map((r) => r.id).join(", ")}）` : "（無）"));
   L.push("");
@@ -984,7 +1182,10 @@ function writeReport(): void {
     L.push(`| ${ch} | ${n} |`);
   }
   L.push("");
-  L.push(`- 僅靠 \`vfx\`（純特效、無 gameplay 頻道）過關：**${vfxOnly}** 格` + (vfxOnly ? "（下方以註記標出）" : "。"));
+  L.push(
+    `- 僅靠 \`vfx\` 頻道拿到 ✅ 的格數：**${passOnVfxChannel}**` +
+      "（GH#374 之後這個數字結構上就該是 0 —— 純特效已經自成一類 🟡，不再走 ✅）。",
+  );
   L.push("");
   L.push("## 矩陣");
   L.push("");
@@ -1008,6 +1209,45 @@ function writeReport(): void {
       L.push(
         `| ${f.name} | \`${f.id}\` | ${f.slot} | ${f.cell.castType ?? "—"} | ${atk} | ${f.cell.reason ?? "—"} |`,
       );
+    }
+  }
+  L.push("");
+  L.push("## 🟡 只有特效清單（放得出去、但場上一個數字都沒動）");
+  L.push("");
+  L.push(
+    "> ⛔ 這一張表**不是** FAIL 的子集，它是 GH#374 洞②之前**被算成 ✅** 的那一族：" +
+      "整棵效果樹只有 `spawnVfx`，玩家按下去看得到光，血量／位置／狀態一個都沒動。" +
+      "修法見 CLAUDE.md 第一·五守則（替換成做得到的效果，⛔ 不是刪掉描述）。",
+  );
+  L.push("");
+  if (vfxOnlyCells.length === 0) {
+    L.push("（無）");
+  } else {
+    L.push("| 英雄 | ID | 槽 | castType | 型 | 說明 |");
+    L.push("| --- | --- | --- | --- | --- | --- |");
+    for (const f of vfxOnlyCells) {
+      const atk = f.atk === "ranged" ? "遠" : "近";
+      L.push(
+        `| ${f.name} | \`${f.id}\` | ${f.slot} | ${f.cell.castType ?? "—"} | ${atk} | ${f.cell.reason ?? "—"} |`,
+      );
+    }
+  }
+  L.push("");
+  L.push("## 🔵 形態閘清單（本次未量測，⛔ 不是缺陷）");
+  L.push("");
+  L.push(
+    "> 這些格子的 rank 區塊帶 `whileForm:\"alternate\"`：它們**只在變身後**才掛上來源，" +
+      "而這份普查永遠在本體形態開世界。⛔ 它們既不算 ✅（普查沒有驗證過）也不算 ❌（內容是對的）。" +
+      "⭐ 要把它們變綠，普查得先學會**在正確的形態下**量 —— 那是 #128 的下一步，不是內容側的事。",
+  );
+  L.push("");
+  if (formGatedCells.length === 0) {
+    L.push("（無）");
+  } else {
+    L.push("| 英雄 | ID | 槽 | 說明 |");
+    L.push("| --- | --- | --- | --- |");
+    for (const f of formGatedCells) {
+      L.push(`| ${f.name} | \`${f.id}\` | ${f.slot} | ${f.cell.reason ?? "—"} |`);
     }
   }
   L.push("");
@@ -1054,9 +1294,12 @@ function writeReport(): void {
     `- **完整跑遍全 ${results.length} 英雄 × ${cols.length} 槽 = ${totalCells} 格，無抽樣**。`,
   );
   L.push(
-    `- **會變紅的三道閘**（都只看版控名單那 ${ROSTER_SIZE} 人，營運額外開放的英雄不影響）：` +
-      `(1) 掃描必須跑完 ${ROSTER_SIZE}×${cols.length}；(2) ${ROSTER_SIZE} 位英雄全部要能生成；(3) 可用格數（✅+🟣）佔比不得低於 **${(WORKING_CELL_RATIO_FLOOR * 100).toFixed(2)}%**（棘輪下限，比例不是絕對值 —— 名單長度會變）。` +
-      "個別內容 no-op 不會使測試變紅（no-op 本身就是要回報的發現，列在下方 FAIL 清單），但既有可用的格子被改壞會。",
+    `- **會變紅的四道閘**（都只看版控名單那 ${ROSTER_SIZE} 人，營運額外開放的英雄不影響）：` +
+      `(1) 掃描必須跑完 ${ROSTER_SIZE}×${cols.length}；(2) ${ROSTER_SIZE} 位英雄全部要能生成；` +
+      `(3) 可用格數（✅+🟣）佔比不得低於 **${(WORKING_CELL_RATIO_FLOOR * 100).toFixed(2)}%**（棘輪下限，比例不是絕對值 —— 名單長度會變）；` +
+      "(4) **逐格釘死的缺口名單**（`KNOWN_GAPS`）：冒出名單外的新缺口會紅、名單上的缺口修好了沒劃掉會紅、" +
+      "同一格從 ❌ 變 🟡（或反過來）也會紅 —— 替一支空技能補個特效不是修好它。" +
+      "個別既知 no-op 不會使測試變紅（它們是要回報的發現，列在上方兩張表），但既有可用的格子被改壞會。",
   );
   L.push("");
 

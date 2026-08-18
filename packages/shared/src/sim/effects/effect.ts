@@ -2368,6 +2368,31 @@ type EffectVariant =
        * 連擊」那是**正確**的，所以留成一格下拉而不是刪掉。
        */
       targetMode?: "frozen" | "reresolve";
+      /**
+       * ⭐【沿向量分段推進】(GH#393) —— 這一串**不在原地落下，它往前走**：
+       * 第 i 發的落點是 `錨點 + 方向 × (startDist + i × stepDist)`。
+       *
+       * owner 2026-08-19（34-04 蒼龍破）：「JASS 應該有安排**位置移動**播放的
+       * **多次特效搭配傷害**」。配 `targetMode: "reresolve"` + `shape: "circle"`
+       * 就是「逐段移動、每段結算一次」，⛔ 不需要為任何一支技能寫一行程式。
+       *
+       * 缺席 = 原地連擊 = 這一格出現以前的每一份文件（嚴格 no-op）。
+       * 方向與起點在**施放那一刻凍住**（原作只讀一次 `GetUnitFacing`）。
+       */
+      advance?: {
+        /** 每一發往前推幾格（GGD 單位）。上界 `DELAYED_MAX_STEP_DIST`。 */
+        stepDist: number;
+        /** 第一發離施法者多遠。省略 = 0（第一發就在腳下）。 */
+        startDist?: number;
+        /** 線往哪指：`"target"`（預設，穿過觸發者）或 `"facing"`（身體面向）。 */
+        dir?: "facing" | "target";
+      };
+      /**
+       * 同一個人整串只吃一次。省略 = `false` = 這一格出現以前的行為。
+       * ⭐ 原作三支自己帶著它（11-04 `ThworldGroup` / 27-01 `safe-group` /
+       * 60-01 `SafeTargets`）—— 一條掃過去的線，卡片寫的是**一次**的傷害。
+       */
+      hitOncePerTarget?: boolean;
       /** 凍住的目標死了就跳過他。省略 = `true`（不繼續鞭屍）。 */
       dropDeadTargets?: boolean;
       /**

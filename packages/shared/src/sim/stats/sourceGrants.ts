@@ -37,6 +37,7 @@
  * 這支照抄同一個形狀，所以既有來源的物件形狀逐鍵不變。
  */
 import type { BlockGrant } from "../combat/block";
+import type { DeathWardGrant } from "../deathWard";
 import type { CritStrikeGrant } from "../combat/critStrike";
 import type { DamageTypeOverride } from "../combat/damageTypeOverride";
 import type { FlightGrant } from "../flight";
@@ -110,6 +111,17 @@ export interface SourceGrantFields {
    * 與 30-00 攝影機因此整棵效果樹只剩一個 `spawnVfx`（GH#373）。
    */
   vision?: VisionGrant;
+  /**
+   * ⭐ 2026-08-19 ——【死亡遺留】。**第九格**，而它是這一族裡第一個**把既有的
+   * 專屬程式收編**進來的：`sim/nightPact.ts` 整支檔案（71-00 暗夜契約）在此之前
+   * 是一份靠 `config.arena-rules@1.nightPact.abilityIds` 綁死一支技能的機制，
+   * 也就是 CLAUDE.md 第〇·五守則點名的那個形狀。
+   *
+   * ⛔ 同前八格，引擎不看 `kind`：`sim/deathWard.ts` 掃 `StatsComp.sources`
+   * 找 `src.deathWard`。所以「大招期間陣亡的人會留下治療陣」是一份
+   * `applyBuff` 的限時來源，到期由那份 source 自己收掉，⛔ 不需要第二支掃描器。
+   */
+  deathWard?: DeathWardGrant;
 }
 
 /**
@@ -133,6 +145,7 @@ export function sourceGrants(from: SourceGrantFields): SourceGrantFields {
       ? { typeStreakImmunity: from.typeStreakImmunity }
       : {}),
     ...(from.vision !== undefined ? { vision: from.vision } : {}),
+    ...(from.deathWard !== undefined ? { deathWard: from.deathWard } : {}),
   };
 }
 
@@ -154,6 +167,7 @@ export function hasSourceGrant(from: SourceGrantFields): boolean {
     from.flight !== undefined ||
     from.penetration !== undefined ||
     from.typeStreakImmunity !== undefined ||
-    from.vision !== undefined
+    from.vision !== undefined ||
+    from.deathWard !== undefined
   );
 }

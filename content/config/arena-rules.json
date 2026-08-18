@@ -348,22 +348,5 @@
       "settlementMode": "panel",
       "countsAsChampion": true
     }
-  },
-  "nightPact": {
-    "abilityIds": [
-      "godie-u00k.passive"
-    ],
-    "auraRadius": 6.42,
-    "beneficiary": "owner",
-    "stacking": "max",
-    "maxFlagsPerZone": 12,
-    "msPercent": 1,
-    "healthRegenFlat": 30,
-    "manaBurn": {
-      "enabled": true,
-      "radius": 6.42,
-      "chance": 0.12,
-      "damage": 0
-    }
   }
 }

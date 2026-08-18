@@ -4,5 +4,6 @@
   "speed": 24,
   "maxRange": 12,
   "hitRadius": 0.45,
-  "vfxKey": "fx.prim.arcane.bolt"
+  "vfxKey": "fx.prim.arcane.bolt",
+  "meshShape": "orb"
 }

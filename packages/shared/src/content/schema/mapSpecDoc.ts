@@ -25,6 +25,8 @@ import {
   REGIONS_MIN,
   SPAWN_CLEARANCE_BODY_RADII_MAX,
   SPAWN_CLEARANCE_BODY_RADII_MIN,
+  NAV_HEADROOM_MAX,
+  NAV_HEADROOM_MIN,
   SPAWN_POCKET_PATH_FACTOR_MAX,
   SPAWN_POCKET_PATH_FACTOR_MIN,
   TILE_SIZE_MAX,
@@ -224,6 +226,29 @@ export const zConfigMapSpecDoc = z
       .optional(),
 
     /**
+     * ⭐ **通道淨空**（owner 2026-08-19：「地圖路徑缺口大一點 不要那麼小氣
+     * 導致來回測量修改」）。
+     *
+     * ⚠️ 這一格與上面的 `spawn` 是**兩件事**：`spawn` 管「座位擺在哪」，
+     * 這一格管「**兩個座位之間走不走得通**」。GH#387 就是後者壞掉而前者全綠 ——
+     * 六個座位每一個都合法，而中央牆把場地切成兩半。
+     */
+    nav: z
+      .object({
+        headroom: z
+          .number()
+          .min(NAV_HEADROOM_MIN)
+          .max(NAV_HEADROOM_MAX)
+          .describe(
+            "場地通道的最小淨空 = **最大身體直徑 × 這個倍率**。" +
+              "⭐ 最大身體半徑從出貨的 mobWaves 推導，⛔ 不是寫死的公尺數 —— " +
+              "調胖殭屍時門檻自己跟著長。1 = 剛好塞得下（等於關掉這把尺）。",
+          ),
+      })
+      .strict()
+      .optional(),
+
+    /**
      * ⭐ 戰鬥開場報地名（owner 2026-08-14：「戰鬥開始的時候不會顯示這是什麼地圖，
      * 請你記得要顯示出來」）。
      *
@@ -316,6 +341,22 @@ export const DEFAULT_MAP_SPAWN: MapSpawnSpec = {
   maxPocketPathFactor: 0.8,
 };
 
+/** 通道淨空的餘裕倍率。⚠️ 具名而且非選填，理由同 {@link MapIntroSpec}。 */
+export type MapNavSpec = NonNullable<ConfigMapSpecDoc["nav"]>;
+
+/**
+ * ⭐ 出貨值 **1.5**（owner 2026-08-19：「地圖路徑缺口大一點 **不要那麼小氣**
+ * 導致**來回測量修改**」）。
+ *
+ * 1.5 ⇒ 出貨門檻 `2 × 1.08 × 1.5 = 3.24` 單位 —— 特殊殭屍走過去，**兩側各還剩
+ * 半個身體**的空間。⛔ 這個 3.24 沒有第二個住處：它是 `mobProfile` × 這一格算出來的。
+ *
+ * ⚠️ 選 1.5 而不是「剛好過」（1.0）的理由是**成本**，不是手感：GH#387/#388 的餘裕
+ * 分別只有 0.92 與 0.43 單位，而 owner 每週在調 `radiusMult` —— 一次微調就要再走一次
+ * 「量→改→重測」。1.5 讓那一格可以動到 **1.5 倍**才需要有人回頭看。
+ */
+export const DEFAULT_MAP_NAV: MapNavSpec = { headroom: 1.5 };
+
 /** 常駐角落地名的三格。⚠️ 具名而且非選填，理由同 {@link MapIntroSpec}。 */
 export type MapCornerLabelSpec = NonNullable<ConfigMapSpecDoc["cornerLabel"]>;
 
@@ -348,6 +389,7 @@ export const DEFAULT_MAP_SPEC: Omit<ConfigMapSpecDoc, "id" | "schema" | "note"> 
   },
   interactions: { countMin: 6, countMax: 10 },
   spawn: DEFAULT_MAP_SPAWN,
+  nav: DEFAULT_MAP_NAV,
   severity: {
     deadEnds: "warn",
     loops: "warn",
@@ -369,6 +411,7 @@ export function resolveMapSpec(doc?: Partial<ConfigMapSpecDoc> | null): typeof D
     topology: { ...DEFAULT_MAP_SPEC.topology, ...(doc.topology ?? {}) },
     interactions: { ...DEFAULT_MAP_SPEC.interactions, ...(doc.interactions ?? {}) },
     spawn: { ...DEFAULT_MAP_SPAWN, ...(doc.spawn ?? {}) },
+    nav: { ...DEFAULT_MAP_NAV, ...(doc.nav ?? {}) },
     severity: { ...DEFAULT_MAP_SPEC.severity, ...(doc.severity ?? {}) },
     intro: { ...DEFAULT_MAP_INTRO, ...(doc.intro ?? {}) },
     cornerLabel: { ...DEFAULT_MAP_CORNER_LABEL, ...(doc.cornerLabel ?? {}) },

@@ -33,10 +33,12 @@
  *   ② 07-00 獸化心靈  godie-hpb1  — +1 AGI on the 8th kill, NOT the 7th, and
  *                     nothing at all past 120 AGI. Both edges are asserted; the
  *                     120 one is the hidden cap the tooltip never mentioned.
- *   ③ 71-00 暗夜契約  godie-u00k  — a death raises a flag and the aura lands on
- *                     the carrier. Guards the doc's IDENTITY: `nightPact.ts`
- *                     matches on `passiveAbility`, so a re-id would silently
- *                     kill it.
+ *   ③ 71-00 暗夜契約  godie-u00k  — a death raises a ward and the aura lands on
+ *                     the carrier, PLUS an enemy casting beside him loses all
+ *                     mana. ⭐ 2026-08-19: both halves are now authored in the
+ *                     SHIPPED doc (`passive.ranks[0].deathWard` + `auras[]`),
+ *                     so deleting either block turns this red — which is the
+ *                     whole point of the 第〇·五守則 decomposition.
  *   ④ 04-00 翔封界    godie-h020/hjai — walks THROUGH a body, and is still
  *                     inside the arena disc afterwards.
  *   ⑤ 18-00 薔薇荊棘  godie-n00p/nsjs — a second enemy standing BEHIND the one
@@ -57,7 +59,8 @@ import { SimWorld } from "./SimWorld";
 import { SKELETON_ARENA } from "./world/ArenaDef";
 import { spawnChampion } from "./spawnChampion";
 import { runEffects } from "./effects/effectRunner";
-import { nightPactRulesFromConfig, beginCombatNightPact, nightFlagIds, NIGHT_PACT_AURA_SOURCE_ID } from "./nightPact";
+import { deathWardIds, deathWardSourceId } from "./deathWard";
+import { fireHooks } from "./effects/hooks";
 import { missChanceOf } from "./combat/evasion";
 import { isFlying } from "./flight";
 import { championAttribute } from "./stats/attributes";
@@ -347,30 +350,23 @@ describe("② 07-00 獸化心靈 (godie-hpb1) — 每 8 殺 +1 敏，120 敏封�
 
 // ─────────────────────────────────────────── ③ 71-00 暗夜契約 (godie-u00k)
 
-describe("③ 71-00 暗夜契約 (godie-u00k) — 旗子 + 黑夜靈氣", () => {
-  const RULES = nightPactRulesFromConfig(
-    JSON.parse(readFileSync(join(CONTENT_DIR, "config/arena-rules.json"), "utf-8")).nightPact,
-  );
-
-  it("the SHIPPED config still names the SHIPPED doc — a re-id would kill this silently", () => {
-    // `nightPact.ts` matches champions by `passiveAbility`, so this join key is
-    // the whole mechanism. Nothing else in the repo asserts it.
-    const doc = JSON.parse(
-      readFileSync(join(CONTENT_DIR, "champions/godie-u00k.json"), "utf-8"),
-    ) as { passiveAbility?: string };
-    expect(RULES.abilityIds).toContain(doc.passiveAbility);
-  });
-
-  it("a champion death near a living 死之王 raises a flag and the carrier gets +100% ms / +30 regen", () => {
+describe("③ 71-00 暗夜契約 (godie-u00k) — 死亡遺留旗 + 靈氣魔力全失（出貨文件）", () => {
+  /**
+   * ⭐ 2026-08-19 —— 這裡以前釘的是 `config.arena-rules@1.nightPact.abilityIds`
+   * 與 `champions/godie-u00k.json.passiveAbility` 的 join key。那個 join key
+   * **不存在了**：機制不再靠一份設定認人，參數就寫在那一支技能自己身上
+   * （CLAUDE.md 第〇·五守則）。所以現在釘的是**行為**，而它比 join key 嚴格 ——
+   * 把 `deathWard` 或 `auras` 任何一塊從出貨文件刪掉，下面就紅。
+   */
+  it("陣亡 → 立旗 → 死之王吃到 +100% 移速 / +30 回復（全部來自出貨的 JSON）", () => {
     const world = new SimWorld(SKELETON_ARENA, 51);
     world.combatActive = true;
-    beginCombatNightPact(world, RULES);
     const lord = spawn(world, DEATHLORD, 0, P(0));
     const prey = spawn(world, DUMMY, 1, P(1.5));
     idle(world, new Map(), 1);
 
     const msBefore = world.stats.get(lord)!.final[Stat.MoveSpeed];
-    expect(nightFlagIds(world).length).toBe(0);
+    expect(deathWardIds(world).length).toBe(0);
 
     const hp = world.health.get(prey)!;
     world.damageQueue.push({
@@ -383,11 +379,49 @@ describe("③ 71-00 暗夜契約 (godie-u00k) — 旗子 + 黑夜靈氣", () => 
     });
     idle(world, new Map(), 3);
 
-    expect(nightFlagIds(world).length).toBe(1);
-    const src = world.stats.get(lord)!.sources.find((s) => s.id === NIGHT_PACT_AURA_SOURCE_ID);
-    expect(src).toBeDefined();
-    // +100 % move speed, read off the FINAL stat, not off the source.
+    expect(deathWardIds(world).length).toBe(1);
+    expect(
+      world.stats.get(lord)!.sources.find((s) => s.id === deathWardSourceId("abilityPassive:godie-u00k.passive")),
+    ).toBeDefined();
+    // +100% 移速，讀最終數字，⛔ 不是讀來源在不在。
     expect(world.stats.get(lord)!.final[Stat.MoveSpeed]).toBeGreaterThan(msBefore);
+  });
+
+  it("敵方在他身邊施法 → 那一圈的 onAbilityCast 觸發器真的掛在敵人身上", () => {
+    // 出貨的機率是 12%，所以「一次施放就一定歸零」不成立 —— 這裡驗的是
+    // **這條路是通的**：靈氣把 `spendMana` 觸發器投到圈內敵人身上，而不是
+    // 掛在死之王自己身上（方向錯了的話魔力全失會燒到自己人）。
+    const world = new SimWorld(SKELETON_ARENA, 52);
+    world.combatActive = true;
+    const lord = spawn(world, DEATHLORD, 0, P(0));
+    const foe = spawn(world, DUMMY, 1, P(2));
+    const mate = spawn(world, DUMMY, 0, P(-2));
+    idle(world, new Map(), 2);
+
+    const burnHooks = (id: EntityId): number =>
+      world.stats
+        .get(id)!
+        .sources.flatMap((s) => s.hooks ?? [])
+        .filter(
+          (h) => h.on === "onAbilityCast" && (h.effects ?? []).some((e) => e.kind === "spendMana"),
+        ).length;
+
+    expect(burnHooks(foe), "圈內的敵人身上有那條觸發器").toBeGreaterThan(0);
+    expect(burnHooks(mate), "自己人不受影響（affects: enemy）").toBe(0);
+    expect(burnHooks(lord), "死之王自己也不會燒到自己").toBe(0);
+
+    // …而且觸發的時候扣的是**全部**現存法力。出貨機率是 12%，所以這裡連發
+    // 60 次施法事件（固定種子 → 決定性），只問兩件事：中過，而且中的那一次歸零。
+    // ⛔ 走的是出貨的 `fireHooks`（`castAbility` 內部就是呼叫它），
+    // ⛔ 不是把 `spendMana` 的參數抄一份出來自己算。
+    const hp = world.health.get(foe)!;
+    let drained = false;
+    for (let i = 0; i < 60 && !drained; i++) {
+      hp.mana = hp.maxMana;
+      fireHooks(world, foe, "onAbilityCast", lord, "Q");
+      if (hp.mana === 0) drained = true;
+    }
+    expect(drained, "12% 的骰子在 60 次施法裡至少中一次，而中的時候是**歸零**").toBe(true);
   });
 });
 

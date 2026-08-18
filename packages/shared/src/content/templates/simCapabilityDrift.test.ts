@@ -61,6 +61,8 @@ const CAPABILITY_KIND: Readonly<Record<string, EffectDef["kind"]>> = {
   // 器做不到」 badge for a primitive that landed with lane P3. Found by building
   // tpl-lock-combo, whose 7-of-8 members wear `Avul` for the whole 演出.
   invulnerable: "invulnerable",
+  // GH#393 行進波動 —— 作者要用它就是發一個 `delayed`（帶 `advance`）。
+  travelingWave: "delayed",
 };
 
 describe("SIM_CAPABILITIES vs the shipped effect registry", () => {

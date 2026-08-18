@@ -8,8 +8,8 @@ export const QUARTER_TURN = Math.PI / 2;
 
 export interface DecorPlacement {
   x: number;
-  /** props sit on the ground plane */
-  y: 0;
+  /** ground plane unless the doc lifts it (`decor[].y`, GH#386 ③ — roofs/beams) */
+  y: number;
   z: number;
   /** rotation around +Y in radians */
   rotationY: number;
@@ -18,6 +18,7 @@ export interface DecorPlacement {
 
 export function decorTransform(d: {
   x: number;
+  y?: number;
   z: number;
   rotQuarter?: number;
   scale?: number;
@@ -25,7 +26,7 @@ export function decorTransform(d: {
   const q = ((d.rotQuarter ?? 0) % 4 + 4) % 4;
   return {
     x: d.x,
-    y: 0,
+    y: d.y ?? 0,
     z: d.z,
     rotationY: q * QUARTER_TURN,
     scale: d.scale ?? 1,

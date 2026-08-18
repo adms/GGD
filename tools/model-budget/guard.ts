@@ -199,7 +199,7 @@ function main(): void {
       );
     } else if (fresh.stale) {
       process.stderr.write(
-        "guard: report.json is older than a source it derives from — roles may be stale. Consider `pnpm budget:report`.\n",
+        "guard: report.json no longer matches a source it derives from — roles may be stale. Consider `pnpm budget:report`.\n",
       );
     }
   }

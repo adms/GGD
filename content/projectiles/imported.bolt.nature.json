@@ -4,5 +4,9 @@
   "speed": 22,
   "maxRange": 12,
   "hitRadius": 0.5,
-  "vfxKey": "fx.prim.nature.bolt"
+  "vfxKey": "fx.prim.nature.bolt",
+  "meshShape": "shard",
+  "flight": {
+    "rollDegPerUnit": 240
+  }
 }

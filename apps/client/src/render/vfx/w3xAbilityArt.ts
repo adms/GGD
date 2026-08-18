@@ -630,6 +630,36 @@ export function w3xArtFor(abilityId: string | undefined): W3xAbilityArt | undefi
 }
 
 /**
+ * GH#391 —— 這一支技能自己的**方位覆寫**(`config.vfx-families@1.abilities.<id>`
+ * 的 `pitchDeg` / `facingDeg`)。沒有覆寫時 `undefined`,呼叫端因此走一位元不差的
+ * 舊路徑。
+ *
+ * ⚠️ 這兩格在 2026-08-19 之前是**死旋鈕**,而且死得比 `alpha`/`timeScale` 當年更
+ * 隱蔽:後台 `vfxForge.ts` 有欄位、有上下界、有標籤、有說明、有 `configFromForm`
+ * 的往返,Zod 收得下,存檔會成功 —— 而 `playCastVfx` 的 `tune()` 只讀 `alpha` 與
+ * `timeScale`,所以操作者填的仰角**從來沒有離開過那份 JSON**。第一·五守則點名的
+ * 「說了但不會發生」,每一個零件都是對的,只有它們的組合是空的。
+ *
+ * ⭐ 這裡刻意**不**綁 `w3xArtFor`:一支沒有被晉升、沒有家族列的技能(41 支揮砍裡
+ * 有 16 支是這樣)照樣要拿得到自己的仰角。方位是**這一次施法**的性質,不是
+ * 「有沒有原作藝術」的性質 —— 綁在一起的話,覆寫就會在最需要它的那一半技能上
+ * 靜靜地失效。
+ */
+export function abilityOrientOverrideFor(
+  abilityId: string | undefined,
+): { readonly pitchDeg?: number; readonly facingDeg?: number } | undefined {
+  if (!abilityId) return undefined;
+  const row = activeFamilyTuning?.abilities?.[abilityId];
+  if (!row) return undefined;
+  const { pitchDeg, facingDeg } = row;
+  if (pitchDeg === undefined && facingDeg === undefined) return undefined;
+  return {
+    ...(pitchDeg !== undefined ? { pitchDeg } : {}),
+    ...(facingDeg !== undefined ? { facingDeg } : {}),
+  };
+}
+
+/**
  * The family's NON-primary emitter docs for an ability. The primary already
  * plays through `vfxKey`, so firing these completes the original effect
  * instead of showing 1-of-N of it. Empty for single-emitter families.

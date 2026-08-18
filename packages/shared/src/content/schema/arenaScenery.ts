@@ -307,6 +307,27 @@ export const DEFAULT_SCENERY_LIGHTING: SceneryLighting = zSceneryLighting.parse(
 // 純函式 —— 兩個，都沒有 Babylon、都可以逐點斷言
 // ---------------------------------------------------------------------------
 
+/**
+ * 這個材質是**描邊殼**嗎（GH#386 ②）？
+ *
+ * ⚠️ 這不是品味，是**量到的**：下載來的 53 件 CC0 布景裡有 16 件（`crystal-crossroads`
+ * 全系列）帶一層反面外擴的輪廓殼，材質名逐字叫 `Outliner_Mat`。GGD 的英雄是 168 面的
+ * 平面著色方塊人，⛔ 沒有描邊 —— 所以那 16 件放進場會自帶一圈黑邊，跟旁邊的東西不同調。
+ *
+ * ⭐ 「要不要黑邊」是**視覺決定**，owner 沒有指定 ⇒ 第一守則：做成一格後台開關，
+ * ⛔ 不是在程式裡挑一個然後在註解裡辯護。預設是**維持原樣**（不藏）——
+ * 那是今天畫面上真的長的樣子，開關存在是為了能改，不是為了觀望。
+ *
+ * ⚠️ 判準是**材質名**而不是檔名：同一份 .glb 裡只有描邊那幾個 primitive 該消失，
+ * 其他 primitive（本體）必須留著。判成整檔就是把水晶整顆藏起來。
+ */
+export const OUTLINE_SHELL_MATERIALS: readonly string[] = ["Outliner_Mat"];
+
+export function isOutlineShellMaterial(materialName: string | null | undefined): boolean {
+  if (!materialName) return false;
+  return OUTLINE_SHELL_MATERIALS.some((n) => materialName === n || materialName.startsWith(`${n}.`));
+}
+
 /** `#rrggbb` → 0..1 的 rgb。⛔ 不做錯誤處理：schema 已經擋掉非法字串。 */
 export function hexToRgb01(hex: string): { r: number; g: number; b: number } {
   const n = Number.parseInt(hex.slice(1), 16);

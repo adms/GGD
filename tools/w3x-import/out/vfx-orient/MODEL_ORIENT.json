@@ -1,0 +1,608 @@
+{
+  "schema": "vfx-model-orient@1",
+  "family": "slash",
+  "how": "PRE2 發射軸(靜止姿態,父鏈相乘)的仰角;沒有發射器時用網格質量分佈 atan2(σz, √((σx²+σy²)/2))",
+  "note": "⛔ 刻意沒有產生日期 —— 有的話 --check 就只能模糊比對(GH#389)",
+  "models": {
+    "Abilities\\Spells\\Human\\FlameStrike\\FlameStrikeTarget.mdl": {
+      "source": "stock:War3x.mpq",
+      "method": "emitter",
+      "elevationDeg": 47.1,
+      "emitters": [
+        {
+          "name": "BlizParticle01",
+          "elevationDeg": 46.4,
+          "mass": 60.0
+        },
+        {
+          "name": "BlizParticleShockWave1",
+          "elevationDeg": 89.9,
+          "mass": 1.0
+        }
+      ]
+    },
+    "Abilities\\Spells\\Human\\Polymorph\\PolyMorphDoneGround.mdl": {
+      "source": "stock:war3.mpq",
+      "method": "emitter",
+      "elevationDeg": 67.5,
+      "emitters": [
+        {
+          "name": "BlizParticle02",
+          "elevationDeg": 90.0,
+          "mass": 1.0
+        },
+        {
+          "name": "BlizParticle05white02",
+          "elevationDeg": 90.0,
+          "mass": 1.0
+        },
+        {
+          "name": "BlizParticle05white03",
+          "elevationDeg": 90.0,
+          "mass": 1.0
+        },
+        {
+          "name": "FF_Particles",
+          "elevationDeg": 0.0,
+          "mass": 1.0
+        }
+      ]
+    },
+    "Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl": {
+      "source": "stock:war3.mpq",
+      "method": "emitter",
+      "elevationDeg": 0.0,
+      "emitters": [
+        {
+          "name": "BlizParticle01",
+          "elevationDeg": 0.0,
+          "mass": 1.0
+        }
+      ]
+    },
+    "Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl": {
+      "source": "stock:War3x.mpq",
+      "method": "mesh",
+      "elevationDeg": 49.6,
+      "mesh": {
+        "vertices": 136,
+        "sigma": [
+          24.1,
+          37.0,
+          36.7
+        ]
+      }
+    },
+    "Abilities\\Spells\\NightElf\\BattleRoar\\RoarCaster.mdl": {
+      "source": "stock:war3.mpq",
+      "method": "mesh",
+      "elevationDeg": 87.6,
+      "mesh": {
+        "vertices": 120,
+        "sigma": [
+          3.0,
+          3.1,
+          73.1
+        ]
+      }
+    },
+    "Abilities\\Spells\\NightElf\\Blink\\BlinkCaster.mdl": {
+      "source": "stock:War3x.mpq",
+      "method": "emitter",
+      "elevationDeg": 90.0,
+      "emitters": [
+        {
+          "name": "BlizParticle01healtail01",
+          "elevationDeg": 90.0,
+          "mass": 10.0
+        },
+        {
+          "name": "BlizParticle01healtail03",
+          "elevationDeg": 90.0,
+          "mass": 33.57
+        }
+      ]
+    },
+    "Abilities\\Spells\\Orc\\FeralSpirit\\feralspiritdone.mdl": {
+      "source": "stock:war3.mpq",
+      "method": "emitter",
+      "elevationDeg": 90.0,
+      "emitters": [
+        {
+          "name": "BlizParticle05white02",
+          "elevationDeg": 90.0,
+          "mass": 1.0
+        },
+        {
+          "name": "BlizParticle05white03",
+          "elevationDeg": 90.0,
+          "mass": 1.0
+        }
+      ]
+    },
+    "Abilities\\Spells\\Orc\\LightningBolt\\LightningBoltMissile.mdl": {
+      "source": "stock:war3.mpq",
+      "method": "mesh",
+      "elevationDeg": 52.7,
+      "mesh": {
+        "vertices": 132,
+        "sigma": [
+          17.0,
+          41.9,
+          41.9
+        ]
+      }
+    },
+    "Abilities\\Spells\\Orc\\MirrorImage\\MirrorImageCaster.mdl": {
+      "source": "stock:war3.mpq",
+      "method": "emitter",
+      "elevationDeg": 0.0,
+      "emitters": [
+        {
+          "name": "BlizParticle01",
+          "elevationDeg": 0.0,
+          "mass": 14.0
+        }
+      ]
+    },
+    "Abilities\\Spells\\Orc\\Shockwave\\ShockwaveMissile.mdl": {
+      "source": "stock:war3.mpq",
+      "method": "emitter",
+      "elevationDeg": 68.5,
+      "emitters": [
+        {
+          "name": "BlizParticle02",
+          "elevationDeg": 90.0,
+          "mass": 1.0
+        },
+        {
+          "name": "BlizParticle03head",
+          "elevationDeg": 47.0,
+          "mass": 1.0
+        }
+      ]
+    },
+    "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl": {
+      "source": "stock:war3.mpq",
+      "method": "emitter",
+      "elevationDeg": 0.0,
+      "emitters": [
+        {
+          "name": "BlizParticle01pulse",
+          "elevationDeg": 0.0,
+          "mass": 1.0
+        }
+      ]
+    },
+    "Abilities\\Spells\\Other\\Cleave\\CleaveDamageTarget.mdl": {
+      "source": "stock:War3x.mpq",
+      "method": "emitter",
+      "elevationDeg": 0.8,
+      "emitters": [
+        {
+          "name": "BlizParticle01",
+          "elevationDeg": 0.8,
+          "mass": 26.63
+        }
+      ]
+    },
+    "Abilities\\Spells\\Other\\ForkedLightning\\ForkedLightningTarget.mdl": {
+      "source": "stock:War3x.mpq",
+      "method": "emitter",
+      "elevationDeg": 90.0,
+      "emitters": [
+        {
+          "name": "BlizParticle01",
+          "elevationDeg": 90.0,
+          "mass": 15.0
+        },
+        {
+          "name": "BlizParticle02smoke",
+          "elevationDeg": 90.0,
+          "mass": 50.0
+        }
+      ]
+    },
+    "Abilities\\Spells\\Other\\TalkToMe\\TalkToMe": {
+      "source": "stock:war3.mpq",
+      "method": "mesh",
+      "elevationDeg": 77.9,
+      "mesh": {
+        "vertices": 160,
+        "sigma": [
+          2.8,
+          4.9,
+          18.5
+        ]
+      }
+    },
+    "Abilities\\Spells\\Other\\TinkerRocket\\TinkerRocketMissile.mdl": {
+      "source": "stock:War3Patch.mpq",
+      "method": "emitter",
+      "elevationDeg": 61.0,
+      "emitters": [
+        {
+          "name": "BlizParticle01",
+          "elevationDeg": 90.0,
+          "mass": 21.0
+        },
+        {
+          "name": "BlizParticle07",
+          "elevationDeg": 90.0,
+          "mass": 15.9
+        },
+        {
+          "name": "BlizParticle08",
+          "elevationDeg": 0.0,
+          "mass": 8.75
+        },
+        {
+          "name": "BlizParticle10",
+          "elevationDeg": 0.0,
+          "mass": 8.75
+        }
+      ]
+    },
+    "Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl": {
+      "source": "stock:war3.mpq",
+      "method": "mesh",
+      "elevationDeg": 54.7,
+      "mesh": {
+        "vertices": 200,
+        "sigma": [
+          69.9,
+          69.9,
+          98.7
+        ]
+      }
+    },
+    "Abilities\\Spells\\Undead\\DeathCoil\\DeathCoilSpecialArt.mdl": {
+      "source": "stock:war3.mpq",
+      "method": "emitter",
+      "elevationDeg": 90.0,
+      "emitters": [
+        {
+          "name": "BlastFlareStreamers",
+          "elevationDeg": 90.0,
+          "mass": 1.0
+        },
+        {
+          "name": "BlizParticle022222",
+          "elevationDeg": 90.0,
+          "mass": 1.0
+        },
+        {
+          "name": "BlizParticle05white02",
+          "elevationDeg": 90.0,
+          "mass": 1.0
+        },
+        {
+          "name": "BlizParticle05white03",
+          "elevationDeg": 90.0,
+          "mass": 1.0
+        }
+      ]
+    },
+    "Abilities\\Spells\\Undead\\DeathPact\\DeathPactTarget.mdl": {
+      "source": "stock:war3.mpq",
+      "method": "emitter",
+      "elevationDeg": 0.0,
+      "emitters": [
+        {
+          "name": "BlizParticle03",
+          "elevationDeg": 0.0,
+          "mass": 45.0
+        },
+        {
+          "name": "BlizParticle04",
+          "elevationDeg": 0.0,
+          "mass": 45.0
+        }
+      ]
+    },
+    "Abilities\\Spells\\Undead\\FrostNova\\FrostNovaTarget.mdl": {
+      "source": "stock:war3.mpq",
+      "method": "emitter",
+      "elevationDeg": 90.0,
+      "emitters": [
+        {
+          "name": "BlizParticle03explodering",
+          "elevationDeg": 90.0,
+          "mass": 1.0
+        },
+        {
+          "name": "BlizParticle03up",
+          "elevationDeg": 90.0,
+          "mass": 30.0
+        },
+        {
+          "name": "BlizParticle03up01sparkle",
+          "elevationDeg": 90.0,
+          "mass": 18.75
+        },
+        {
+          "name": "BlizParticle05shockwave",
+          "elevationDeg": 90.0,
+          "mass": 10.5
+        }
+      ]
+    },
+    "Abilities\\Weapons\\Bolt\\BoltImpact.mdl": {
+      "source": "stock:war3.mpq",
+      "method": "mesh",
+      "elevationDeg": 51.4,
+      "mesh": {
+        "vertices": 157,
+        "sigma": [
+          29.5,
+          38.4,
+          42.9
+        ]
+      }
+    },
+    "Abilities\\Weapons\\DemolisherFireMissile\\DemolisherFireMissile.mdl": {
+      "source": "stock:War3x.mpq",
+      "method": "emitter",
+      "elevationDeg": 89.4,
+      "emitters": [
+        {
+          "name": "BlizParticle01",
+          "elevationDeg": 90.0,
+          "mass": 1.0
+        },
+        {
+          "name": "BlizParticle02",
+          "elevationDeg": 90.0,
+          "mass": 25.0
+        },
+        {
+          "name": "BlizParticle04boom",
+          "elevationDeg": 90.0,
+          "mass": 39.38
+        },
+        {
+          "name": "BlizParticle04firering",
+          "elevationDeg": 0.0,
+          "mass": 1.0
+        },
+        {
+          "name": "BlizParticle04firestatic",
+          "elevationDeg": 90.0,
+          "mass": 25.0
+        },
+        {
+          "name": "BlizParticle08rocks",
+          "elevationDeg": 90.0,
+          "mass": 50.72
+        },
+        {
+          "name": "BlizParticle08shockwaves01",
+          "elevationDeg": 90.0,
+          "mass": 9.28
+        }
+      ]
+    },
+    "Abilities\\Weapons\\RedDragonBreath\\RedDragonMissile.mdl": {
+      "source": "stock:war3.mpq",
+      "method": "emitter",
+      "elevationDeg": 90.0,
+      "emitters": [
+        {
+          "name": "BlizParticle01",
+          "elevationDeg": 90.0,
+          "mass": 20.0
+        },
+        {
+          "name": "BlizParticle02",
+          "elevationDeg": 90.0,
+          "mass": 60.0
+        },
+        {
+          "name": "BlizParticle02burst",
+          "elevationDeg": 90.0,
+          "mass": 45.0
+        },
+        {
+          "name": "BlizParticle02burst01snow",
+          "elevationDeg": 90.0,
+          "mass": 20.25
+        }
+      ]
+    },
+    "EarthTornado2.mdx": {
+      "source": "map",
+      "method": "emitter",
+      "elevationDeg": 90.0,
+      "emitters": [
+        {
+          "name": "BlizParticle03tubespinner",
+          "elevationDeg": 90.0,
+          "mass": 20.79
+        },
+        {
+          "name": "UNNAMED",
+          "elevationDeg": 90.0,
+          "mass": 12.0
+        },
+        {
+          "name": "UNNAMED",
+          "elevationDeg": 90.0,
+          "mass": 10.0
+        },
+        {
+          "name": "UNNAMED",
+          "elevationDeg": 90.0,
+          "mass": 10.0
+        },
+        {
+          "name": "UNNAMED",
+          "elevationDeg": 90.0,
+          "mass": 12.0
+        },
+        {
+          "name": "UNNAMED",
+          "elevationDeg": 90.0,
+          "mass": 12.0
+        },
+        {
+          "name": "UNNAMED",
+          "elevationDeg": 90.0,
+          "mass": 10.0
+        },
+        {
+          "name": "UNNAMED",
+          "elevationDeg": 90.0,
+          "mass": 10.0
+        },
+        {
+          "name": "UNNAMED",
+          "elevationDeg": 90.0,
+          "mass": 12.0
+        },
+        {
+          "name": "UNNAMED",
+          "elevationDeg": 90.0,
+          "mass": 10.0
+        },
+        {
+          "name": "UNNAMED",
+          "elevationDeg": 90.0,
+          "mass": 12.0
+        },
+        {
+          "name": "UNNAMED",
+          "elevationDeg": 90.0,
+          "mass": 10.0
+        },
+        {
+          "name": "UNNAMED",
+          "elevationDeg": 90.0,
+          "mass": 12.0
+        },
+        {
+          "name": "UNNAMED",
+          "elevationDeg": 90.0,
+          "mass": 20.0
+        }
+      ]
+    },
+    "HeroCloudCyd.mdx": {
+      "source": "map",
+      "method": "mesh",
+      "elevationDeg": 54.7,
+      "mesh": {
+        "vertices": 4,
+        "sigma": [
+          0.0,
+          107.5,
+          107.4
+        ]
+      }
+    },
+    "HeroShanaWingSmall.mdx": {
+      "source": "map",
+      "method": "mesh",
+      "elevationDeg": 53.4,
+      "mesh": {
+        "vertices": 12,
+        "sigma": [
+          16.3,
+          57.9,
+          57.4
+        ]
+      }
+    },
+    "MinitypeFlame.MDX": {
+      "source": "map",
+      "method": "emitter",
+      "elevationDeg": 12.7,
+      "emitters": [
+        {
+          "name": "BlizParticle01",
+          "elevationDeg": 3.1,
+          "mass": 40.5
+        },
+        {
+          "name": "BlizParticle02",
+          "elevationDeg": 90.0,
+          "mass": 5.0
+        }
+      ]
+    },
+    "Objects\\Spawnmodels\\Human\\HCancelDeath\\HCancelDeath.mdl": {
+      "source": "stock:war3.mpq",
+      "method": "emitter",
+      "elevationDeg": 90.0,
+      "emitters": [
+        {
+          "name": "BlastFlare",
+          "elevationDeg": 90.0,
+          "mass": 1.0
+        },
+        {
+          "name": "BlastFlareStreamers",
+          "elevationDeg": 90.0,
+          "mass": 1.0
+        },
+        {
+          "name": "BlizParticle01fire05",
+          "elevationDeg": 90.0,
+          "mass": 1.0
+        },
+        {
+          "name": "MushroomCap",
+          "elevationDeg": 90.0,
+          "mass": 1.0
+        },
+        {
+          "name": "SmallBlastDebris",
+          "elevationDeg": 90.0,
+          "mass": 1.0
+        },
+        {
+          "name": "SmallBlastSpinningBoard01",
+          "elevationDeg": 90.0,
+          "mass": 1.0
+        }
+      ]
+    },
+    "crescent.mdx": {
+      "source": "map",
+      "method": "mesh",
+      "elevationDeg": 29.1,
+      "mesh": {
+        "vertices": 87,
+        "sigma": [
+          46.9,
+          80.2,
+          36.6
+        ]
+      }
+    },
+    "doom.mdx": {
+      "source": "map",
+      "method": "mesh",
+      "elevationDeg": 54.2,
+      "mesh": {
+        "vertices": 12,
+        "sigma": [
+          0.0,
+          84.7,
+          83.0
+        ]
+      }
+    },
+    "units\\creeps\\RedDragon\\RedDragon.mdl": {
+      "source": "stock:war3.mpq",
+      "method": "emitter",
+      "elevationDeg": 18.0,
+      "emitters": [
+        {
+          "name": "BlizParticle_Breath",
+          "elevationDeg": 18.0,
+          "mass": 50.0
+        }
+      ]
+    }
+  }
+}

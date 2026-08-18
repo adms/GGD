@@ -75,6 +75,29 @@ export const SPAWN_POCKET_PATH_FACTOR_MIN = 0.2;
 export const SPAWN_POCKET_PATH_FACTOR_MAX = 1.5;
 
 /**
+ * ⭐ **通道淨空的餘裕倍率**（owner 2026-08-19：「地圖路徑**缺口大一點 不要那麼小氣**
+ * 導致**來回測量修改**」）。
+ *
+ * 場地通道的最小淨空是**推導**出來的，⛔ 不是一個寫死的公尺數：
+ *
+ * ```
+ *   minClearance = 2 × maxBodyRadius × navHeadroom
+ * ```
+ *
+ * `maxBodyRadius` 從出貨的 `mobWaves` 經 `mobProfile` 算（今天是特殊殭屍 1.08），
+ * 所以 owner 哪天把 `special.radiusMult` 調胖，門檻自己跟著長，⛔ 不必有人記得回來改。
+ *
+ * ⚠️ **為什麼要有這一格而不是直接用 `2 × maxBodyRadius`**：剛好等於身體直徑的通道
+ * 在數學上過得去，實際上一動就卡（碰撞是推出去再夾回來，貼著兩邊走一定磨蹭）。
+ * 更重要的是它讓「調胖一點點就整張圖壞掉」不可能發生 —— 那正是 owner 講的「來回測量修改」。
+ *
+ * 下界 1 = 「剛好塞得下，一絲餘裕都沒有」（＝這一格等於關掉）。
+ * 上界 4 = 通道要 8.64 單位寬；24×18 的圖放不下幾條那種走廊，再大這把尺就會擋掉每一張圖。
+ */
+export const NAV_HEADROOM_MIN = 1;
+export const NAV_HEADROOM_MAX = 4;
+
+/**
  * ⭐ 一張編譯出來的場地**至少**要有幾個對戰分區。
  *
  * owner 2026-08-14「這是一個 3v3 地形」⇒ 一張地圖 = 一個對戰分區的地形，

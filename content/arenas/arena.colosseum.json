@@ -33,7 +33,7 @@
             "x": -19,
             "z": 0
           },
-          "radius": 2
+          "radius": 1
         },
         {
           "kind": "circle",
@@ -97,7 +97,7 @@
             "x": -61,
             "z": 0
           },
-          "radius": 2
+          "radius": 1
         },
         {
           "kind": "circle",
@@ -233,7 +233,7 @@
             "x": 61,
             "z": 0
           },
-          "radius": 2
+          "radius": 1
         },
         {
           "kind": "circle",
@@ -297,7 +297,7 @@
             "x": 19,
             "z": 0
           },
-          "radius": 2
+          "radius": 1
         },
         {
           "kind": "circle",
@@ -424,7 +424,7 @@
       "x": -19,
       "z": 0,
       "rotQuarter": 0,
-      "scale": 2
+      "scale": 1
     },
     {
       "model": "assets/models/props/pillar.glb",
@@ -480,7 +480,7 @@
       "x": -61,
       "z": 0,
       "rotQuarter": 0,
-      "scale": 2
+      "scale": 1
     },
     {
       "model": "assets/models/props/pillar.glb",
@@ -648,7 +648,7 @@
       "x": 61,
       "z": 0,
       "rotQuarter": 0,
-      "scale": 2
+      "scale": 1
     },
     {
       "model": "assets/models/props/pillar.glb",
@@ -704,7 +704,7 @@
       "x": 19,
       "z": 0,
       "rotQuarter": 0,
-      "scale": 2
+      "scale": 1
     },
     {
       "model": "assets/models/props/pillar.glb",

@@ -72,6 +72,8 @@ import { applyAudioMixDoc } from "../audio/voiceMixPolicy";
 // GH#230 L2 —— w3x 特效家族的後台旋鈕。跟 applyGoreDoc 同一條縫、同一個理由:
 // render/** 不能自己讀 content mount,所以由這裡把 config doc 推進去。
 import { setFamilyTuning } from "../render/vfx/w3xAbilityArt";
+import { vfxSoundLayer } from "../audio/vfxSound";
+import { resolveFamilyArt } from "../render/vfx/familyTuning";
 import { setMaxAbilityVfxLayers } from "../render/vfx/abilityLayers";
 import { setOneShotMaxLifeSec } from "../vfx/oneShotLife";
 import { setCastHeightSource } from "../render/vfx/familyCastHeight";
@@ -333,6 +335,13 @@ export class ContentDb {
       "config.vfx-families@1",
     );
     setFamilyTuning(vfxFamiliesDoc);
+    // GH#390 —— **特效自帶的音效**。同一份 config、同一個第②號故障的位置:
+    // 少了這一行,`families[].soundLaunch` / `abilities[].soundImpact` 就是
+    // 一批沒有人讀的欄位 —— 後台填了、schema 收下了、卡片上寫著,而遊戲裡不響。
+    vfxSoundLayer.setFamiliesDoc(vfxFamiliesDoc);
+    // 技能 → 家族原型,用**出貨的那一支解析器**(⛔ 不是音效層自己再推一份):
+    // 畫面走哪個家族,聲音就走哪個家族,兩者不可能漂開。
+    vfxSoundLayer.setFamilyResolver((id) => resolveFamilyArt(id, vfxFamiliesDoc)?.family);
     // #205 —— 同一份 config 上的層數上限。沒有這一行,後台把上限從 5 調成 2 之後
     // 場上照樣播五層(同樣是第②號故障)。傳 undefined = 出貨預設,不是 0 層。
     setMaxAbilityVfxLayers(vfxFamiliesDoc?.maxAbilityVfxLayers);

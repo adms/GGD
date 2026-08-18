@@ -85,7 +85,12 @@ import { HitSpark, impactComposerFor } from "./HitSpark";
 import { scaledBurstCount, toParticleSystem } from "./particleFactory";
 import { frontLoadCounts, IMPACT_TINTS, type ImpactIntensity, type Rgb } from "./vfxPresets";
 import { asImpactProfile, type SparkKind } from "../render/combatFeedback";
-import { extraVfxDocIds, primitiveFallbackFor, w3xArtFor } from "../render/vfx/w3xAbilityArt";
+import {
+  abilityOrientOverrideFor,
+  extraVfxDocIds,
+  primitiveFallbackFor,
+  w3xArtFor,
+} from "../render/vfx/w3xAbilityArt";
 import { familyCastHeightY } from "../render/vfx/familyCastHeight";
 import {
   applyLayerOverrides,
@@ -842,6 +847,11 @@ export class VfxSystem {
       return;
     }
     const art = w3xArtFor(abilityId);
+    // GH#391 —— 這一支技能自己的仰角/方位角(`config.vfx-families@1.abilities`)。
+    // ⭐ 取在 `if (!art)` **之前**是這一格的全部重點:41 支揮砍裡有 16 支沒有家族列,
+    // 而它們正是「只剩 primitive、最需要一個自己的角度」的那一半 —— 取在後面等於
+    // 讓覆寫只對已經有原作藝術的技能生效。
+    const orient = abilityOrientOverrideFor(abilityId);
     // #230 —— 施法高度從**一個有名字的接縫**來,不是四個匿名的 `1.0`。今天它回傳
     // 出貨值,所以行為一位元不差;`familyCastHeight.ts` 的檔頭記著量到的落差
     // (258 支家族技能有 229 支的 `heightY` 不是 1.0),以及為什麼接上去是 owner
@@ -849,7 +859,11 @@ export class VfxSystem {
     // 高度」,所以接上去的那一天,②號故障(算了但沒送到)不可能再發生一次。
     const castY = familyCastHeightY(art);
     if (!art) {
-      this.play(doc ? applyAimYaw(doc, aimYawDeg) : doc, pos.x, pos.z, nowMs, castY, boost);
+      // GH#391 —— 方位覆寫走的是 `applyVfxOverrides`(=`applyArtParams`)那條**既有**
+      // 的路:換 pool key、保住文件自己宣告的 `yawFrom`、沒有覆寫時回傳同一個物件。
+      // ⛔ 不是第二條平行的空間參數管線 —— `flyHeight` 當年就是那樣蒸發的。
+      const tuned = doc && orient ? applyVfxOverrides(doc, orient) : doc;
+      this.play(tuned ? applyAimYaw(tuned, aimYawDeg) : tuned, pos.x, pos.z, nowMs, castY, boost);
       return;
     }
     // #205 —— 鑄技工坊那張表的 per-ability α / 時間倍率。**兩個都沒設時
@@ -863,6 +877,8 @@ export class VfxSystem {
         applyVfxOverrides(d, {
           ...(art.alpha !== undefined ? { alpha: art.alpha } : {}),
           ...(art.timeScale !== undefined ? { timeScale: art.timeScale } : {}),
+          // GH#391 —— 同一格覆寫也套在晉升過的藝術與 rung 3 的 primitive 上。
+          ...orient,
         }),
         aimYawDeg,
       );

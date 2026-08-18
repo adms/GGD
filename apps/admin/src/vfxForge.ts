@@ -277,6 +277,11 @@ export const FAMILY_BOUNDS: Readonly<Record<string, ForgeBound>> = {
   alpha: { min: 0.05, max: 1 },
   timeScale: { min: 0.2, max: 4 },
   heightY: { min: 0, max: 8 },
+  // GH#390 特效自帶的音效。三個數字的上下界都是 shared 的 Zod，⛔ 不是我挑的
+  // （`soundGain` 0–2、`soundLoopMs` 200–20000、`soundLoopMaxMs` 200–60000）。
+  soundGain: { min: 0, max: 2 },
+  soundLoopMs: { min: 200, max: 20000, int: true },
+  soundLoopMaxMs: { min: 200, max: 60000, int: true },
 };
 
 export const ABILITY_BOUNDS: Readonly<Record<string, ForgeBound>> = {
@@ -290,6 +295,8 @@ export const ABILITY_BOUNDS: Readonly<Record<string, ForgeBound>> = {
   // #366 方位 —— owner 的四個參數裡唯一一個以前後台碰不到的
   facingDeg: { min: -360, max: 360 },
   pitchDeg: { min: -180, max: 180 },
+  // GH#390 —— 這一支的音量倍率（疊在家族與 audio-map 的 gain 上面）。
+  soundGain: { min: 0, max: 2 },
 };
 
 export const GLOBAL_FIELDS = [
@@ -321,6 +328,9 @@ export const GLOBAL_CHOICE_FIELDS = [
   "castHeightSource",
   "projectileArtFromDoc",
   "familyPitchDefaults",
+  // GH#390 —— 特效自帶音效的總開關。⭐ 預設**開**（第〇·六守則：優先權大的
+  // 更新後都是預設啟動；開關存在是為了一鍵回頭，不是為了觀望）。
+  "soundEnabled",
 ] as const;
 export type GlobalChoiceField = (typeof GLOBAL_CHOICE_FIELDS)[number];
 
@@ -341,6 +351,10 @@ export const GLOBAL_CHOICE_OPTIONS: Readonly<
     { value: "1", label: "開：有方向的形狀躺下來並朝目標（出貨）" },
     { value: "0", label: "關：全部回到直立，不瞄準（升級前）" },
   ],
+  soundEnabled: [
+    { value: "1", label: "開：特效自己那一份聲音會響（出貨）" },
+    { value: "0", label: "關：特效全部靜音（GH#390 落地之前）" },
+  ],
 };
 
 export const FAMILY_FIELDS = [
@@ -351,6 +365,15 @@ export const FAMILY_FIELDS = [
   "alpha",
   "timeScale",
   "heightY",
+  // GH#390 —— 特效自帶的音效。⭐ 這七格在**家族原型**上，所以填一次 21 個原型
+  // 就覆蓋 258 支技能（第零守則⑨：K 個模板 + 一張表，⛔ 不是 258 格）。
+  "soundLaunch",
+  "soundImpact",
+  "soundLoop",
+  "soundDissipate",
+  "soundGain",
+  "soundLoopMs",
+  "soundLoopMaxMs",
 ] as const;
 export type FamilyField = (typeof FAMILY_FIELDS)[number];
 
@@ -367,6 +390,12 @@ export const ABILITY_FIELDS = [
   "facingDeg",
   "pitchDeg",
   "anchor",
+  // GH#390 —— 逐支覆寫家族那四格（**逐格**，留白 = 沿用家族那一格）。
+  "soundLaunch",
+  "soundImpact",
+  "soundLoop",
+  "soundDissipate",
+  "soundGain",
 ] as const;
 export type AbilityField = (typeof ABILITY_FIELDS)[number];
 
@@ -402,6 +431,14 @@ export const FIELD_LABEL: Readonly<Record<string, string>> = {
   facingDeg: "方位角",
   pitchDeg: "仰角",
   anchor: "錨點",
+  soundEnabled: "特效音效總開關",
+  soundLaunch: "音效·發射",
+  soundImpact: "音效·命中",
+  soundLoop: "音效·循環",
+  soundDissipate: "音效·消散",
+  soundGain: "音效音量倍率",
+  soundLoopMs: "循環音間隔（毫秒）",
+  soundLoopMaxMs: "循環音上限（毫秒）",
 };
 
 /** 說明寫「它影響什麼」。 */
@@ -503,6 +540,26 @@ export const FIELD_HINT: Readonly<Record<string, string>> = {
   anchor:
     "WC3 的掛點字串，原封不動（\"chest\" / \"origin\" / \"right,hand\"）。留白 = 不掛骨頭。" +
     "⚠️ 施法特效走的是共用粒子池那條路，那條路不做骨骼掛載，所以這一格目前不生效",
+  // ── GH#390 特效自帶的音效 ────────────────────────────────────────────
+  soundEnabled:
+    "特效自己那一份聲音要不要響。關掉 = 全部靜音（技能本身的施法音不受影響）。" +
+    "這是一鍵 rollback 用的，出貨是開",
+  soundLaunch:
+    "施放／發射那一刻播哪一個音效。填的是**音效表（audio-map）的 key**，不是檔名 —— " +
+    "例 explosion / projectileSpawn / magicFire。留白 = 這個時機不出聲。" +
+    "⚠️ 填一個音效表裡沒有的名字不會報錯，只會安靜，所以請照音效表填",
+  soundImpact: "命中／落地那一刻播哪一個音效表 key。留白 = 這個時機不出聲",
+  soundLoop:
+    "持續期間的底噪，每「循環音間隔」重播一次。留白 = 沒有循環音。" +
+    "⚠️ 它不是真的 loop，是定時重播；到「循環音上限」就自動停並改播消散音",
+  soundDissipate: "效果結束／消散那一刻播哪一個音效表 key。留白 = 收尾不出聲",
+  soundGain:
+    "音量倍率，疊在音效表那一格自己的音量上（1 = 不動、0.5 = 減半）。家族那一格與單支" +
+    "技能那一格會**相乘**。留白 = 1。⚠️ 它不會繞過玩家的總音量與 SFX 開關",
+  soundLoopMs: "循環音兩次之間隔多久。太短會把同一個音疊成噪音；留白 = 引擎預設",
+  soundLoopMaxMs:
+    "一發循環音最長活多久，到了就自動停。這是**回收**的那條線 —— 留白 = 引擎預設，" +
+    "⛔ 不要期待「一直響到有人叫停」，那條路不存在",
 };
 
 /**
@@ -589,6 +646,9 @@ export function familiesDocFor(doc: ConfigVfxFamiliesDoc): ConfigVfxFamiliesDoc 
     boltPitchDeg: doc.boltPitchDeg,
     dashPitchDeg: doc.dashPitchDeg,
     tornadoPitchDeg: doc.tornadoPitchDeg,
+    // ⚠️ GH#390 —— 同樣的一行。少寫它，操作者把特效音效關掉再按存檔，頁面顯示
+    // 「關」而文件裡那個 key 根本沒被寫出去 —— 下一次載入才發現它又開著。
+    soundEnabled: doc.soundEnabled,
     families: families as ConfigVfxFamiliesDoc["families"],
     abilities,
   };
@@ -636,6 +696,15 @@ export function familyDraftFrom(t: VfxFamilyTuning): FamilyDraft {
     alpha: String(t.alpha),
     timeScale: String(t.timeScale),
     heightY: String(t.heightY),
+    // GH#390 —— optional，所以**沒有就留白**（⛔ 不要幫它填一個預設，那會讓
+    // 「只是打開來看一眼」變成 dirty，見 OPTIONAL_GLOBAL_FIELDS 的同一個坑）。
+    soundLaunch: t.soundLaunch ?? "",
+    soundImpact: t.soundImpact ?? "",
+    soundLoop: t.soundLoop ?? "",
+    soundDissipate: t.soundDissipate ?? "",
+    soundGain: numText(t.soundGain),
+    soundLoopMs: numText(t.soundLoopMs),
+    soundLoopMaxMs: numText(t.soundLoopMaxMs),
   };
 }
 
@@ -653,6 +722,11 @@ export function abilityDraftFrom(b: VfxAbilityFamilyBinding | null): AbilityDraf
     facingDeg: numText(b?.facingDeg),
     pitchDeg: numText(b?.pitchDeg),
     anchor: b?.anchor ?? "",
+    soundLaunch: b?.soundLaunch ?? "",
+    soundImpact: b?.soundImpact ?? "",
+    soundLoop: b?.soundLoop ?? "",
+    soundDissipate: b?.soundDissipate ?? "",
+    soundGain: numText(b?.soundGain),
   };
 }
 
@@ -712,13 +786,37 @@ export function validateGlobalChoiceField(field: GlobalChoiceField, text: string
   return GLOBAL_CHOICE_OPTIONS[field].some((o) => o.value === t) ? "" : "不是一個可選的值";
 }
 
+/**
+ * GH#390 —— 一格音效填的是 **audio-map 的 key**。留白 = 這個時機不出聲（合法）。
+ *
+ * ⚠️ 它**只驗形狀**，⛔ 不驗「這個 key 音效表裡有沒有」：後台這一頁看不到
+ * `config.audio-map@1`，而一個假裝驗過的檢查比不驗更糟。真正的閘在
+ * `packages/shared/src/content/vfxSoundKeys.test.ts`（掃出貨內容 × 出貨音效表）。
+ */
+export const SOUND_KEY_FIELDS: ReadonlySet<string> = new Set([
+  "soundLaunch",
+  "soundImpact",
+  "soundLoop",
+  "soundDissipate",
+]);
+
+function checkSoundKey(text: string): string {
+  const t = text.trim();
+  if (t === "") return "";
+  if (t.length > 64) return "不能超過 64 個字";
+  return /^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(t) ? "" : "只能用英數與 . _ -（這是音效表的 key，不是檔名）";
+}
+
 export function validateFamilyField(field: FamilyField, text: string): string {
   const t = text.trim();
   if (field === "enabled") return t === "1" || t === "0" ? "" : "只能是開或關";
   if (field === "primitive") return PRIMITIVE_KINDS.includes(t) ? "" : "必填：請選一個形狀";
   if (field === "element") return ELEMENT_IDS.includes(t) ? "" : "必填：請選一個元素";
+  if (SOUND_KEY_FIELDS.has(field)) return checkSoundKey(t);
   const b = FAMILY_BOUNDS[field];
-  return b ? checkNumber(b, t, false) : "";
+  // ⚠️ 音效那三個數字是 optional（留白 = 用引擎預設），其餘家族欄位都是必填 ——
+  // 混在一起用 `false` 會讓「沒填循環間隔」變成一個擋住存檔的錯。
+  return b ? checkNumber(b, t, field.startsWith("sound")) : "";
 }
 
 export function validateAbilityField(field: AbilityField, text: string): string {
@@ -736,6 +834,7 @@ export function validateAbilityField(field: AbilityField, text: string): string 
     if (t.length > 32) return "不能超過 32 個字";
     return "";
   }
+  if (SOUND_KEY_FIELDS.has(field)) return checkSoundKey(t);
   const b = ABILITY_BOUNDS[field];
   return b ? checkNumber(b, t, true) : "";
 }
@@ -768,6 +867,24 @@ export function validateAbilityDraft(d: AbilityDraft): AbilityErrors {
   return errs;
 }
 
+/**
+ * 草稿裡那幾格音效 → 要併進文件的部分。**留白的整格不寫**，理由與
+ * `abilityBindingFromDraft` 的 ABSENT ≠ ZERO 一模一樣。
+ * ⭐ family 與 ability 兩張表共用這一支（第零守則⑨），⛔ 不是兩段一樣的程式。
+ */
+function soundPatch(d: Record<string, string>): Record<string, unknown> {
+  const out: Record<string, unknown> = {};
+  for (const f of ["soundLaunch", "soundImpact", "soundLoop", "soundDissipate"]) {
+    const t = (d[f] ?? "").trim();
+    if (t !== "") out[f] = t;
+  }
+  for (const f of ["soundGain", "soundLoopMs", "soundLoopMaxMs"]) {
+    const t = (d[f] ?? "").trim();
+    if (t !== "") out[f] = Number(t);
+  }
+  return out;
+}
+
 export function familyTuningFromDraft(d: FamilyDraft): VfxFamilyTuning | null {
   if (Object.keys(validateFamilyDraft(d)).length > 0) return null;
   const candidate = {
@@ -778,6 +895,10 @@ export function familyTuningFromDraft(d: FamilyDraft): VfxFamilyTuning | null {
     alpha: Number(d.alpha),
     timeScale: Number(d.timeScale),
     heightY: Number(d.heightY),
+    // GH#390 —— **留白的格子整個不寫進去**（ABSENT ≠ 空字串）：`soundLaunch: ""`
+    // 會被 Zod 的 min(1) 拒絕，於是整份 tuning 回 null，而畫面上看起來只是
+    // 一個沒填的欄位。
+    ...soundPatch(d),
   };
   // shared 的 Zod 是最後一道 —— 後台自己的檢查漏了什麼,這裡會擋下來。
   const parsed = zVfxFamilyTuning.safeParse(candidate);
@@ -823,6 +944,7 @@ export function abilityBindingFromDraft(d: AbilityDraft): VfxAbilityFamilyBindin
   if (tr !== undefined && tg !== undefined && tb !== undefined) out["tint"] = [tr, tg, tb];
   const anchor = d.anchor.trim();
   if (anchor !== "") out["anchor"] = anchor;
+  Object.assign(out, soundPatch(d));
   if (Object.keys(out).length === 0) return null;
   const parsed = zVfxAbilityFamilyBinding.safeParse(out);
   return parsed.success ? parsed.data : null;

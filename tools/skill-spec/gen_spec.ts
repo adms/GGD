@@ -72,6 +72,7 @@ import {
   zVfxOrient,
   zRibbonDoc,
   zVfxAbilityFamilyBinding,
+  zVfxFamilyTuning,
 } from "../../packages/shared/src/content/schema/vfx";
 import {
   zAbilityVfxLayer,
@@ -599,6 +600,19 @@ function scanContent(): Usage {
             for (const ok of Object.keys(v as Record<string, unknown>)) {
               bump(u.vfxSurface, `vfx@1.orient.${ok}`, id, collection, doc);
             }
+          }
+        }
+      }
+      // GH#390 —— 家族原型那一層的用量。⛔ 和下面 `abilities` 那一段是**同一個
+      // 迴圈的兩個鍵**,不是兩段程式:少了這一段,§13.6 每一列的「幾份文件在用」
+      // 會整欄是 0,而那是「這一格沒有人用」與「我沒有去數」長得一模一樣的那種錯。
+      if (doc["schema"] === "config.vfx-families@1" && doc["families"] !== null && typeof doc["families"] === "object") {
+        for (const [famId, tuning] of Object.entries(doc["families"] as Record<string, unknown>)) {
+          if (!tuning || typeof tuning !== "object") continue;
+          for (const k of Object.keys(tuning as Record<string, unknown>)) {
+            bump(u.vfxSurface, `config.vfx-families@1.families[].${k}`, famId, collection, {
+              [famId]: tuning,
+            });
           }
         }
       }
@@ -1159,6 +1173,19 @@ export function buildSpecMarkdown(): string {
       "export const zVfxAbilityFamilyBinding = z",
       "export type VfxAbilityFamilyBinding",
     );
+    // GH#390 —— 四個時機的 TSDoc 住在**共用的那一份** `vfxSoundCueShape`（一個模板，
+    // 兩個地方用）。⛔ 少了這一張 map，`soundLaunch` 那四列的說明欄會整欄空白，
+    // 而那看起來跟「這幾格沒有說明」一模一樣（tsdocFields 檔頭記的同一個坑）。
+    const cueDocs = tsdocFields(
+      "packages/shared/src/content/schema/vfx.ts",
+      "const vfxSoundCueShape = {",
+      "} as const;",
+    );
+    const familyDocs = tsdocFields(
+      "packages/shared/src/content/schema/vfx.ts",
+      "export const zVfxFamilyTuning = z",
+      "export type VfxFamilyTuning",
+    );
     const layerDocs = tsdocFields(
       "packages/shared/src/content/schema/abilityVfx.ts",
       "export const zAbilityVfxLayer = z",
@@ -1229,7 +1256,7 @@ export function buildSpecMarkdown(): string {
     p();
     p(
       ...fieldTableWithUsage(
-        withDocs(fieldsOf(zVfxAbilityFamilyBinding), bindDocs),
+        withDocs(fieldsOf(zVfxAbilityFamilyBinding), bindDocs, cueDocs),
         "config.vfx-families@1.abilities[].",
         usage.vfxSurface,
       ),
@@ -1243,6 +1270,39 @@ export function buildSpecMarkdown(): string {
       ...exampleBlock(
         usage.vfxSurface.get("config.vfx-families@1.abilities[].w3xScale"),
         "content/config/vfx-families.json → abilities",
+      ),
+    );
+
+    p("### 13.6 `config.vfx-families@1.families[]` —— 21 個**家族原型**（含特效自帶的音效）");
+    p();
+    p("⭐ 這是 13.5 覆寫的**那個東西**。258 支技能不是 258 份設定，是 21 個原型 +");
+    p("一張覆寫表 —— 形狀（`primitive`）、顏色（`element`）、大小、高度**與四個時機的音效**");
+    p("都在這一層決定，逐支那一張表只填「這一支哪裡不一樣」。");
+    p();
+    p("**特效自帶的音效**（GH#390）。WC3 把特效與音效綁在一起：mdx 的事件軌在四個時機上掛音。");
+    p("`soundLaunch` / `soundImpact` / `soundLoop` / `soundDissipate` 四格填的是");
+    p("**`config.audio-map@1.sfx` 的 key**（例 `explosion`、`projectileHit`），");
+    p("⛔ 不是檔名也不是 URL —— 音量／冷卻／同時發聲數住在 audio-map 那一份，");
+    p("播放走既有的空間化管線，所以玩家的總音量與 SFX 開關自動適用。");
+    p();
+    p("| | |");
+    p("|---|---|");
+    p("| 兩層 | `abilities[<id>].soundX` **逐格**蓋 `families[<fam>].soundX`，⛔ 不是整組換掉 |");
+    p("| 循環 | 每 `soundLoopMs` **重播一次**，`soundLoopMaxMs` 絕對到期時自動回收並改播消散音 |");
+    p("| 填錯 | audio-map 沒有那個 key ⇒ **這個時機安靜**，⛔ 不報錯（所以請對照 audio-map 填） |");
+    p("| 總開關 | `config.vfx-families@1.soundEnabled`（省略 = 開） |");
+    p();
+    p(
+      ...fieldTableWithUsage(
+        withDocs(fieldsOf(zVfxFamilyTuning), familyDocs, cueDocs),
+        "config.vfx-families@1.families[].",
+        usage.vfxSurface,
+      ),
+    );
+    p(
+      ...exampleBlock(
+        usage.vfxSurface.get("config.vfx-families@1.families[].soundLaunch"),
+        "content/config/vfx-families.json → families",
       ),
     );
   }

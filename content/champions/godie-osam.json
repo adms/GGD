@@ -188,28 +188,33 @@
       "name": "34-04 奧義˙蒼龍破",
       "icon": "assets/icons/abilities/godie-osam.r.webp",
       "provenance": "w3x-import",
-      "description": "[主動攻擊]\n45秒冷卻時間\n\n蒼龍破是殺生丸釋放自己的妖力施展出來的絕招，將妖氣集中在劍刃上揮出，傷害範圍900內一直線上的敵人，給予600點傷害。",
+      "description": "[主動攻擊]\n45秒冷卻時間\n\n蒼龍破是殺生丸釋放自己的妖力施展出來的絕招，將妖氣集中在劍刃上揮出，妖氣化作蒼龍沿著面向一路推進，逐段掃過一直線上的敵人，給予600點傷害（每人只吃一次）。",
       "slot": "R",
-      "castType": "targeted",
+      "castType": "skillshot",
       "maxRank": 3,
       "cooldown": [
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        200,
-        300,
-        400
+        200.0,
+        300.0,
+        400.0
       ],
-      "range": 11,
+      "range": 14.7,
       "effects": [],
       "vfxKey": "fx.prim.ki.beam-lg",
       "targetsEnemies": true,
-      "castTimeSec": 1.133,
+      "castTimeSec": 0.833,
       "template": {
-        "ref": "tpl-single-strike",
+        "ref": "tpl-traveling-wave",
         "params": {
+          "stepCount": 12,
+          "stepSize": 67,
+          "stepIntervalSec": 0.13,
+          "aoePerStep": 350,
+          "stepVfx": "fx.fam.bolt-strike.lightning.s115",
           "damage": {
             "perRank": [
               600,
@@ -223,8 +228,7 @@
               }
             ]
           },
-          "damageType": "magic",
-          "castTimeSec": 1.133
+          "damageType": "magic"
         }
       }
     }

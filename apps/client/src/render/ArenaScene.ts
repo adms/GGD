@@ -55,6 +55,7 @@ import {
   decorModelBurns,
   expandSceneryProps,
   hexToRgb01,
+  isOutlineShellMaterial,
 } from "@ggd/shared/content";
 import { buildBackdrop } from "./ArenaBackdrop";
 import type { AssetManager } from "./AssetManager";
@@ -390,6 +391,8 @@ function placeInstance(
   yawRad: number,
   scale: number,
   uniqueMaterials = false,
+  /** ⭐ GH#386 ③ —— 架高（`decor[].y`）。0 = 站在地板上，也就是這格出現之前的唯一行為。 */
+  y = 0,
 ): TransformNode {
   const inst = uniqueMaterials
     ? container.instantiateModelsToScene((n) => `decor-${instCounter++}-${n}`, true, {
@@ -399,7 +402,7 @@ function placeInstance(
   const root = new TransformNode(`decor-root-${instCounter}`, scene);
   root.parent = parent;
   for (const node of inst.rootNodes) node.parent = root;
-  root.position.set(x, 0, z);
+  root.position.set(x, y, z);
   root.rotation.y = yawRad;
   root.scaling.setAll(scale);
   for (const mesh of root.getChildMeshes(false)) mesh.isPickable = false;
@@ -574,7 +577,16 @@ export async function dressArena(
       rotQuarterToRadians(d.rotQuarter),
       d.scale,
       isFade,
+      d.y ?? 0,
     );
+    // ⭐ GH#386 ② —— 下載來的 CC0 布景自帶的黑色描邊殼。後台一格開關，
+    // 出貨值是**留著**（＝今天畫面上的樣子）。⛔ 判準是材質名不是檔名：
+    // 只有描邊那幾個 primitive 消失，本體必須留著。
+    if (!sceneryPolicy.outlineShells) {
+      for (const mesh of root.getChildMeshes(false)) {
+        if (isOutlineShellMaterial(mesh.material?.name)) mesh.setEnabled(false);
+      }
+    }
     // measure the PLACED hierarchy (world space, rot + scale applied)
     root.computeWorldMatrix(true);
     const { min, max } = root.getHierarchyBoundingVectors(true);
@@ -590,7 +602,16 @@ export async function dressArena(
       // cap — footprint (and the sim obstacle underneath) stays exactly as
       // authored, so what you collide with is unchanged. A capped pillar
       // reads as a broken-column stump rather than disappearing.
-      root.scaling.y *= SIGHTLINE_HEIGHT_CAP / max.y;
+      //
+      // ⚠️ GH#386 ③ —— **架高的道具也要一起縮**。`scaling.y` 是繞著節點原點縮的，
+      // 而那個原點現在可能被 `d.y` 抬離了地板：只縮 scaling 會讓世界最高點停在
+      // `y + s·(max.y − y)`，仍然高過上限，於是一個作者填了 `y` 的屋頂就靜默地
+      // 撤銷了攝影機保證（#218 的教訓：⛔ 不可以讓內容重新武裝這個 bug）。
+      // 連 `position.y` 一起乘 = 整件朝地板等比縮小 ⇒ 世界最高點恰好落在上限，
+      // 而 `y = 0` 時逐位元組等於這一行改動之前。
+      const squash = SIGHTLINE_HEIGHT_CAP / max.y;
+      root.scaling.y *= squash;
+      root.position.y *= squash;
       topY = SIGHTLINE_HEIGHT_CAP;
     }
     if (decorModelBurns(fire, d.model) && handles.flames.length < fire.maxEmitters) {
@@ -602,8 +623,11 @@ export async function dressArena(
     // Contact shadow, sized from the placed footprint. Only for props standing
     // ON the floor — a rim banner's blob would spill over the kerb and float in
     // the void, so anything not comfortably inside a zone is skipped.
+    // ⚠️ GH#386 ③ —— 架高的道具 ⛔ 不畫接觸陰影：那塊 blob 畫在地板上，而這件
+    // 東西根本沒有碰到地板（它架在柱頂上）。讀的是**壓扁之後**的 `position.y`，
+    // 所以 `y = 0` 的道具（今天的每一件）一如既往拿得到陰影。
     const footprint = Math.max(max.x - min.x, max.z - min.z) / 2;
-    if (footprint > 0 && standsOnFloor(d.x, d.z, footprint, arena.zones)) {
+    if (root.position.y <= 0.05 && footprint > 0 && standsOnFloor(d.x, d.z, footprint, arena.zones)) {
       contacts.push({ x: d.x, z: d.z, radius: footprint });
     }
   }

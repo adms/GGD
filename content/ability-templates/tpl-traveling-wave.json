@@ -2,7 +2,7 @@
   "id": "tpl-traveling-wave",
   "schema": "template@1",
   "name": "行進波動",
-  "description": "傷害點沿直線逐步推進，可帶終點爆發（設計正典範例：龍破斬）。",
+  "description": "傷害點沿一條線逐段推進，每一段各播一次特效並各結算一次傷害（同一個人整串只吃一次），可帶終點爆發。設計正典範例：龍破斬。",
   "family": "traveling-wave",
   "status": "enabled",
   "params": {
@@ -11,24 +11,31 @@
       "default": 45,
       "min": 20,
       "max": 200,
-      "unit": "wc3u",
-      "inert": "逐步推進未支援：每跳幾何折算為單發投射，推進節奏不表現"
+      "unit": "wc3u"
     },
     "stepCount": {
       "type": "number",
       "default": 20,
       "min": 3,
-      "max": 140,
-      "unit": "count",
-      "inert": "逐步推進未支援：每跳幾何折算為單發投射，推進節奏不表現"
+      "max": 140
+    },
+    "stepIntervalSec": {
+      "type": "number",
+      "default": 0.03,
+      "min": 0.01,
+      "max": 1,
+      "unit": "s"
     },
     "aoePerStep": {
       "type": "number",
       "default": 200,
       "min": 50,
       "max": 900,
-      "unit": "wc3u",
-      "inert": "逐步推進未支援：每跳幾何折算為單發投射，推進節奏不表現"
+      "unit": "wc3u"
+    },
+    "stepVfx": {
+      "type": "docRef",
+      "optional": true
     },
     "terminalBurst": {
       "type": "number",
@@ -55,12 +62,20 @@
         "true"
       ],
       "default": "magic"
+    },
+    "castTimeSec": {
+      "type": "number",
+      "optional": true,
+      "default": 0,
+      "min": 0,
+      "max": 5,
+      "unit": "s"
     }
   },
   "requires": [
-    "projectile"
+    "travelingWave"
   ],
-  "gapScore": 6,
+  "gapScore": 7,
   "exemplar": {
     "skill": "04-03 龍破斬",
     "jass": "A04R"

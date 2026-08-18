@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "b97e9836",
+  "fingerprint": "fcf0c9a1",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -126,6 +126,7 @@
     "abilityId",
     "absorbs",
     "addSec",
+    "advance",
     "aim",
     "amount",
     "amountPerTick",
@@ -165,6 +166,7 @@
     "damageType",
     "damageTypeOverride",
     "damageTypes",
+    "deathWard",
     "delaySec",
     "disarmed",
     "dispellable",
@@ -198,6 +200,7 @@
     "healPct",
     "healingTakenMult",
     "healthPct",
+    "hitOncePerTarget",
     "hookKey",
     "hookScope",
     "hooks",
@@ -432,9 +435,30 @@
       "family",
       "flyHeight",
       "pitchDeg",
+      "soundDissipate",
+      "soundGain",
+      "soundImpact",
+      "soundLaunch",
+      "soundLoop",
       "timeScale",
       "tint",
       "w3xScale"
+    ],
+    "config.vfx-families@1.families[]": [
+      "alpha",
+      "element",
+      "enabled",
+      "heightY",
+      "primitive",
+      "scale",
+      "soundDissipate",
+      "soundGain",
+      "soundImpact",
+      "soundLaunch",
+      "soundLoop",
+      "soundLoopMaxMs",
+      "soundLoopMs",
+      "timeScale"
     ]
   },
   "docSurface": {
@@ -483,6 +507,7 @@
       "roundDelta"
     ],
     "projectile@1": [
+      "flight",
       "hitRadius",
       "id",
       "maxRange",
@@ -641,6 +666,9 @@
     "summon": {
       "available": true,
       "caveat": "召喚物的擊殺歸屬 killCredit: \"owner\" 尚未實作（施放時會擲錯），其餘欄位皆可用"
+    },
+    "travelingWave": {
+      "available": true
     }
   },
   "planned": [
@@ -874,6 +902,14 @@
       "state": "partial",
       "caveat": "⛔ 五個邊界：① **`onHitTargets` 這一格 `convertTeam` 沒有**（`carry` 才有）⇒ 掛在同一個 `effects` 陣列裡的回血／上鎖是**無條件**跑的，捕獲被拒絕的那一刻它們照樣發生。要「成功才給」今天寫不出來；② **不對稱**：被借走的殭屍**會**被其他殭屍打，但它**打不到**其他殭屍（`isMobTargetable` 對一隻沒被捕的普通 mob 一律回 false）。它仍然會去打敵方英雄，所以寶具是有用的；③ **捕獲者死掉不會歸位** —— 歸位只有三條路（被捕者死亡／`until:\"duration\"` 到期／回合開始）。`until` 那個 enum 沒有「載具死亡」這一格（`carry` 的 `onCarrierDeath` 才有）；④ `countsForOriginalTeam` **預設 `false`**（owner 2026-08-18：被捕的單位實質上就是我方單位）—— `true` 是一鍵回頭（被借走的敵方英雄在勝負判定上仍替原隊活著）。填 `false` 只是把原隊那一側的人頭拿掉，⛔ **不會**改算捕獲者那一隊 —— 座位是勝負判定的軸，而借調不動座位；⑤ ⛔ 它**不發任何事件** —— 玩家的可見性靠 `ENTITY_FLAG.TEAM_OVERRIDE*` 三顆 bit 讓那具身體當場換顏色。⇒ 想掛特效的話要自己在同一份 `effects` 裡加一發 `spawnVfx`。",
       "evidence": "packages/shared/src/sim/mindControl.ts + sim/effects/mindControl.ts + apps/game-server/src/net/mindControlWire.test.ts（⭐ 第三條斷言真的跑 `projectSnapshot` + Colyseus encode→decode 再把隊伍序數解回來 —— 那是「遊戲邏輯全對、螢幕全錯」的唯一防線）+ content/items/master-ball.json"
+    },
+    {
+      "key": "vfx.bound-sound@1",
+      "plan": "GH#390 特效自帶的音效一個都沒移植",
+      "state": "supported",
+      "caveat": "⭐ 四個時機（發射 / 命中 / 循環 / 消散）填的是 **`config.audio-map@1.sfx` 的 key**，⛔ 不是檔名也不是 URL —— 音量 / 冷卻 / 同時發聲數住在 audio-map 那一份，播放走 `AudioSystem.playSfx` ⇒ 玩家的總音量與 SFX 開關自動適用。⚠️ 兩層逐格覆寫：`abilities[<id>].soundX` 蓋 `families[<fam>].soundX`，⛔ 不是「填一格就整組換掉」。⚠️ **循環音是重播不是真 loop**：每 `soundLoopMs` 重放一次，並在 `soundLoopMaxMs` 絕對到期時自動回收並改播消散音（⛔ 沒有「一直響到有人叫停」）。⚠️ 填一個 audio-map 沒有的 key = 這個時機安靜（⛔ 不是報錯）；填 `wc3.*` 那一族要注意它們住在只有 full-asset build 才掛得上的 Blizzard overlay，正式站上會**退回家族那一格**。",
+      "evidence": "packages/shared/src/content/schema/vfx.ts（`VFX_SOUND_CUES` / `resolveVfxSound`）+ apps/client/src/audio/vfxSound.ts + apps/client/src/audio/vfxSoundWired.test.ts + content/config/vfx-families.json（21 個家族原型 + 72 支原作 JASS 音效的逐支覆寫，由 tools/w3x-import/build_vfx_sound_bindings.py 產生）",
+      "nearestExisting": "⚠️ `ability@1.sfxKey` 長得很像但**不是同一件事**：那是「這一支技能的身分音」（一顆 `abilityCast` 一發），而這一列是「這一招的**特效**自己帶的那幾發」。同一次施法兩邊都會響，這正是原作的樣子。"
     }
   ],
   "unsupported": [

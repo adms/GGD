@@ -26,6 +26,13 @@
  *
  * ⚠️ 拿不到的東西一律 `null` + 在 `unavailable[]` 說明原因，
  *    ⛔ 不要填 "unknown" / 0 / "" —— 那些會被對方當成真值。
+ *
+ * ---------------------------------------------------------------------------
+ * ⛔ 它**不帶時間戳**（GH#389）
+ * ---------------------------------------------------------------------------
+ * 2026-08-19 之前有一格 `generatedAt`，於是這份進版控的產物每跑一次 build 就髒一次。
+ * 外部編輯器要 pin 的是**內容**不是時鐘：`content.contentVersion` 與 `profileDigest`
+ * 兩格都在，而且只有內容真的變了才會變。⛔ 不要把時間戳加回來。
  */
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
@@ -221,9 +228,19 @@ interface Unavailable {
 
 /**
  * 從出貨資料算出整份 profile。**純函式**（除了讀檔）——
- * 同樣的 `content/` → 同樣的輸出，`generatedAt` 由呼叫端給，⛔ 不看時鐘。
+ * 同樣的 `content/` → 同樣的輸出，**逐位元組相同**。
+ *
+ * ⭐ GH#389 —— 這裡本來有一格 `generatedAt`，由呼叫端把 `new Date()` 灌進來。
+ * ⛔ 那讓一份**進版控的產物**每跑一次就髒一次：`pnpm content:build` 之後
+ * `git status` 必有這一份，於是「有沒有東西該 commit」這個訊號被稀釋掉 ——
+ * 而那正是 2026-08-02 那次生產事故賴以被發現的訊號。
+ * 「這是哪一版產的」由**內容衍生**的兩格回答，兩格都已經在裡面：
+ * `content.contentVersion`（內容變了才變）與 `profileDigest`（每一格的 sha）。
+ * ⚠️ 這也是 CLAUDE.md 對 `caps:export` / `spec:build` 立的同一條規矩：
+ * 任何隨時鐘變動的欄位都會逼 `--check` 從逐位元組退化成模糊比對，
+ * 而一條被放寬的閘等於沒有閘。
  */
-export function buildEditorTargetProfile(opts: { generatedAt: string }): Record<string, unknown> {
+export function buildEditorTargetProfile(): Record<string, unknown> {
   const unavailable: Unavailable[] = [];
 
   // ── ① contentVersion + ⑧ 各 collection hash ─────────────────────────────
@@ -309,7 +326,6 @@ export function buildEditorTargetProfile(opts: { generatedAt: string }): Record<
 
   const body = {
     schema: EDITOR_TARGET_PROFILE_SCHEMA,
-    generatedAt: opts.generatedAt,
     readOnly: true,
     note:
       "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，" +
@@ -528,21 +544,30 @@ export function buildEditorTargetProfile(opts: { generatedAt: string }): Record<
     unavailable,
   };
 
-  // profileDigest：除了 generatedAt 與自己以外的全部欄位。
-  const { generatedAt: _ignored, ...stable } = body;
-  return { ...body, profileDigest: sha12(JSON.stringify(stable)) };
+  // profileDigest：除了它自己以外的全部欄位。
+  // ⭐ GH#389 之前這裡還要排除 `generatedAt`（否則每次乾淨重跑 digest 都不同）——
+  //   那一格拿掉之後就沒有東西要排除了，digest 蓋住整份。
+  return { ...body, profileDigest: sha12(JSON.stringify(body)) };
+}
+
+/**
+ * 出貨檔的**完整位元組**。⭐ 序列化格式（縮排、結尾換行）只住在這一支 ——
+ * 守衛要逐位元組比對，⛔ 它自己再抄一份 `JSON.stringify(…, null, 2)` 就是第二個住處。
+ */
+export function renderEditorTargetProfile(): string {
+  return `${JSON.stringify(buildEditorTargetProfile(), null, 2)}\n`;
 }
 
 /** 寫出檔案。回傳 JSON 文字（守衛拿它比對，⛔ 不重算一次）。 */
-export function writeEditorTargetProfile(generatedAt: string): string {
-  const text = `${JSON.stringify(buildEditorTargetProfile({ generatedAt }), null, 2)}\n`;
+export function writeEditorTargetProfile(): string {
+  const text = renderEditorTargetProfile();
   writeFileSync(join(CONTENT, EDITOR_PROFILE_FILE), text);
   return text;
 }
 
 // 直接執行時才寫檔（被 import 當函式庫時不要有副作用）。
 if (process.argv[1] !== undefined && process.argv[1].endsWith("buildEditorTargetProfile.ts")) {
-  const t = writeEditorTargetProfile(new Date().toISOString());
+  const t = writeEditorTargetProfile();
   const p = JSON.parse(t) as { profileDigest: string; content: { contentVersion: string | null } };
   console.log(`editor-target-profile.json  cv=${p.content.contentVersion}  digest=${p.profileDigest}`);
 }

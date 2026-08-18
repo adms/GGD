@@ -111,9 +111,9 @@
           "polarity": "debuff"
         },
         {
-          "kind": "spawnProjectile",
-          "projectileId": "imported.bolt.void",
-          "onHit": []
+          "kind": "spawnVfx",
+          "vfxId": "fx.prim.void.bolt",
+          "at": "point"
         }
       ],
       "icon": "assets/icons/abilities/godie-h01n.q.webp",

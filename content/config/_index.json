@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "76249632eaff",
+  "hash": "16f1cfec2a06",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -23,8 +23,8 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "d6d8426f2cf7",
-      "size": 8106
+      "hash": "2d143de1f932",
+      "size": 7772
     },
     {
       "id": "audio-map",
@@ -197,14 +197,14 @@
     {
       "id": "map-report",
       "path": "config/map-report.json",
-      "hash": "1a91dba5825f",
-      "size": 4262
+      "hash": "095f60e73b3b",
+      "size": 4774
     },
     {
       "id": "map-spec",
       "path": "config/map-spec.json",
-      "hash": "1fd024bedb2d",
-      "size": 1312
+      "hash": "3bde901de8c5",
+      "size": 1348
     },
     {
       "id": "mitigation",
@@ -335,8 +335,8 @@
     {
       "id": "vfx-families",
       "path": "config/vfx-families.json",
-      "hash": "fe3af74dcf95",
-      "size": 28028
+      "hash": "9ea376888c51",
+      "size": 34745
     },
     {
       "id": "victory-fx",

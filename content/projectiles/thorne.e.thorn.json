@@ -4,5 +4,9 @@
   "speed": 20,
   "maxRange": 10,
   "hitRadius": 0.45,
-  "vfxKey": "fx.thorn"
+  "vfxKey": "fx.thorn",
+  "meshShape": "shard",
+  "flight": {
+    "rollDegPerUnit": 300
+  }
 }

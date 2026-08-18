@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_996fbe189e35`
+contentVersion `cv_317ac4b1a253`
 
 ---
 
@@ -48,9 +48,9 @@ contentVersion `cv_996fbe189e35`
 | `revive` | 復活 | 1 | `grail-ex-10` |
 | `shield` | 吸收（護盾） | 11 | `godie-e00l.passive`、`godie-e00r.e`、`godie-e00u.passive`、`godie-h00l.ex`、`godie-o00l.e`、`sela.w`、`thorne.w`、`grail-c-17`、`grail-a-16`、`aegis-surge`、`guardian-ward` |
 | `shieldBreak` | 破盾 | 2 | `grail-c-09`、`grail-ex-14` |
-| `spawnProjectile` | 投射物 | 35 | `godie-e002.e`、`godie-e008.e`、`godie-e00l.e`、`godie-e00r.r`、`godie-e00s.q`、`godie-e010.q`、`godie-h01n.q`、`godie-h01o.q`、`godie-h01u.r`、`godie-h01u.w`、`godie-h02r.r`、`godie-hpal.q` …（共 35） |
-| `spawnVfx` | 純演出（特效／音效） | 12 | `godie-e00s.r`、`godie-e00x.r`、`godie-emfr.r`、`godie-h01o.e`、`godie-hvwd.r`、`godie-n00b.passive`、`godie-n01c.passive`、`godie-nbbc.passive`、`godie-o00k.passive`、`godie-o00l.passive`、`godie-o030.passive`、`godie-orkn.passive` |
-| `spendMana` | 燒魔 | 2 | `godie-e00l.w`、`godie-emfr.passive` |
+| `spawnProjectile` | 投射物 | 29 | `godie-e008.e`、`godie-e00l.e`、`godie-e010.q`、`godie-h01o.q`、`godie-h02r.r`、`godie-hpal.q`、`godie-n003.e`、`godie-n00p.w`、`godie-n01c.e`、`godie-n01g.e`、`godie-n01g.r`、`godie-nbbc.e` …（共 29） |
+| `spawnVfx` | 純演出（特效／音效） | 18 | `godie-e002.e`、`godie-e00r.r`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00x.r`、`godie-emfr.r`、`godie-h01n.q`、`godie-h01o.e`、`godie-h01u.r`、`godie-h01u.w`、`godie-hvwd.r`、`godie-n00b.passive` …（共 18） |
+| `spendMana` | 燒魔 | 3 | `godie-e00l.w`、`godie-emfr.passive`、`godie-u00k.passive` |
 | `summon` | 召喚 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `swapResource` | 資源互換 | 1 | `godie-emns.ex` |
 | `taunt` | 嘲諷 | 2 | `godie-n00b.passive`、`godie-o00k.passive` |
@@ -60,7 +60,7 @@ contentVersion `cv_996fbe189e35`
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
-| `onAbilityCast` | 施法時 | 19 | `godie-e00s.ex`、`godie-emfr.r`、`godie-h02v.ex`、`grail-c-12`、`grail-c-20`、`grail-a-08`、`grail-a-08`、`grail-a-08`、`grail-a-08`、`grail-a-16`、`grail-ex-04`、`grail-ex-05` …（共 19） |
+| `onAbilityCast` | 施法時 | 20 | `godie-e00s.ex`、`godie-emfr.r`、`godie-h02v.ex`、`godie-u00k.passive`、`grail-c-12`、`grail-c-20`、`grail-a-08`、`grail-a-08`、`grail-a-08`、`grail-a-08`、`grail-a-16`、`grail-ex-04` …（共 20） |
 | `onAbilityHit` | 技能命中時 | 19 | `godie-edem.r`、`godie-edem.r`、`godie-edem.r`、`godie-efur.ex`、`godie-h01n.w`、`godie-h01n.w`、`grail-c-08`、`grail-c-09`、`grail-c-16`、`grail-c-18`、`grail-a-19`、`grail-a-20` …（共 19） |
 | `onAllyDamaged` | 隊友受傷時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onAllyDeath` | 隊友陣亡時 | 3 | `grail-c-15`、`grail-a-06`、`grail-ex-10` |

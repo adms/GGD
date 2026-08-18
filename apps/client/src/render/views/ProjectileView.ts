@@ -43,6 +43,20 @@
  * 就是比平砍的 0.4 大，和 #136「顯示值 == 實際值」同一條原則。
  * 三格旋鈕在 `config.vfx-families@1`（`projectileArtFromDoc` /
  * `projectileRadiusGain` / `projectileFlyHeightY`），關掉就回到升級前的彗星。
+ *
+ * ---------------------------------------------------------------------------
+ * #394 —— 飛行**姿態**（owner 2026-08-19「32支投射物 請接上正確的特效」）
+ * ---------------------------------------------------------------------------
+ * #251 之後每一發的大小/密度/顏色都是文件的了，**姿態**還不是：`setPose` 只把
+ * 鼻子轉到行進方向，所以一道 `pierce: true` 的貫穿波和一發平砍在畫面上是同一支
+ * 頭朝前的飛鏢。而 `vfx@1.orient`（#366/#377/#379）到不了這裡 ——
+ * `toParticleSystem` 才讀它，而這個檔案自己 `new ParticleSystem`。
+ *
+ * 現在姿態從 **`projectile@1.flight`** 來（⛔ 不是 vfx 的 `orient`：那些文件是
+ * 共用的，見 `content/schema/projectile.ts` 的檔頭），三格 ——
+ * `yawOffsetDeg`（90 = 側身的新月）· `pitchDeg`（抬頭的石刺）·
+ * `rollDegPerUnit`（旋轉的扁刃）—— 全部省略就是升級前的畫面一位元不差。
+ * 守衛：`projectileFlightOrient.test.ts`（讀 Babylon 手上那顆 `TransformNode`）。
  */
 import type { Scene } from "@babylonjs/core/scene";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
@@ -57,13 +71,16 @@ import type { VfxDoc } from "@ggd/shared/content";
 import { hotToCoolStops, popShrinkStops, type Rgb } from "../../vfx/vfxPresets";
 import { blendModeFor } from "../../vfx/particleFactory";
 import {
+  LEVEL_FLIGHT,
   MAX_TRAIL_CAPACITY,
   projectileTuning,
   resolveProjectileArt,
+  resolveProjectileFlight,
   SHIPPED_BODY_GIRTH,
   SHIPPED_BODY_LENGTH,
   SHIPPED_HEAD_SIZE,
   type ProjectileArt,
+  type ProjectileFlightRad,
   type ProjectileMeshShape,
 } from "./projectileArt";
 
@@ -151,6 +168,10 @@ export class ProjectileView {
   private trailTintKey = "";
   /** 這一發生效的規格 —— `setPose` 讀它的 `flyHeightY`。 */
   private art: ProjectileArt = resolveProjectileArt(null, undefined);
+  /** #394 —— 這一發的飛行姿態（`projectile@1.flight`）。`setPose` 讀它。 */
+  private flight: ProjectileFlightRad = LEVEL_FLIGHT;
+  /** 累積的自轉角（弧度），依**飛行距離**長大 —— setPose 沒有時鐘。 */
+  private roll = 0;
   /** 目前烘在 system 上的尺寸斜坡峰值(重建 gradient 的判斷依據)。 */
   private trailPeak = -1;
   // last rendered position — the motion delta aims the backward streak
@@ -304,14 +325,25 @@ export class ProjectileView {
     doc: VfxDoc | null = null,
     shape: ProjectileMeshShape = "bolt",
     hitRadius?: number,
+    /**
+     * #394 —— 這一發的 `projectile@1.flight`。省略 = 鼻朝行進方向、水平、不自轉
+     * （升級前的畫面），所以沒填這一格的彈道一位元不差。
+     */
+    flight?: { yawOffsetDeg?: number; pitchDeg?: number; rollDegPerUnit?: number } | null,
   ): void {
     this.setBodyShape(shape);
+    // 池化重用：上一發的姿態與累積自轉都跟這一發無關，兩個都要歸位。
+    this.flight = resolveProjectileFlight(flight);
+    this.roll = 0;
     // #251 —— 每一次啟用都重新解一次:池化的 view 會被不同的彈道輪流用,
     // 沿用上一發的大小/密度就是「貫穿波長得跟平砍一樣」的另一種版本。
     this.applyArt(resolveProjectileArt(doc, hitRadius, projectileTuning()));
     this.setTrailStyle(doc);
     // pooled reuse: the previous projectile's motion delta AND the streak it
-    // aimed are both meaningless — the view teleports to a new cast
+    // aimed are both meaningless — the view teleports to a new cast.
+    // ⚠️ 姿態也要歸零:一發側身的新月被回收成一顆直射彈之後,⛔ 不可以留著上一發
+    // 的 yaw/pitch/roll（那正是 #394 之前 `rotation.y` 就有的舊帳,只是沒人看得出來）。
+    this.bodyPivot.rotation.set(0, 0, 0);
     this.hasPose = false;
     this.aimNeutral();
     this.mesh.setEnabled(true);
@@ -335,13 +367,29 @@ export class ProjectileView {
       if (len > 1e-4) {
         const bx = dx / len;
         const bz = dz / len;
-        // narrow backward cone (±0.18 spread) so the tail stays a streak
+        // narrow backward cone (±0.18 spread) so the tail stays a streak.
+        // ⚠️ 拖尾**不吃** `flight`：煙是沿著真的運動方向留下的,把它跟著彈體一起
+        // 轉會讓一發側身飛的新月拖出一條斜著的假煙。姿態是彈體的,軌跡是物理的。
         this.trail.direction1.set(bx - 0.18, -0.18, bz - 0.18);
         this.trail.direction2.set(bx + 0.18, 0.18, bz + 0.18);
         // …and the 3D body points NOSE-FIRST down the same delta (forward, so
         // negate the backward vector). Render-only: trig here can never reach
         // the sim, which carries facing as a vector and uses no trigonometry.
-        this.bodyPivot.rotation.y = Math.atan2(-bx, -bz);
+        //
+        // #394 —— 這裡是**姿態真的到得了畫面**的那三行。彈體的鼻子是 pivot 的
+        // +Z（`attachBody` 的固定 90° pitch 把建模軸 +Y 轉過去），所以
+        //   · `rotation.y` = 行進方位角 **+ yawOffset**（90° = 側身的新月）
+        //   · `rotation.x` = **−pitch**（Rx 把 +Z 往 −Y 倒 ⇒ 負號才是抬頭）
+        //   · `rotation.z` = 累積自轉（Babylon 的 Euler 是 YXZ，Z 在最內層 ⇒
+        //     它就是繞鼻子那根軸轉，正是「旋轉的扁刃」要的那一個）
+        const f = this.flight;
+        this.bodyPivot.rotation.y = Math.atan2(-bx, -bz) + f.yawOffset;
+        this.bodyPivot.rotation.x = -f.pitch;
+        if (f.rollPerUnit !== 0) {
+          // 自轉按**飛行距離**累積 —— setPose 沒有 dt，而距離讓它與幀率無關。
+          this.roll += f.rollPerUnit * len;
+          this.bodyPivot.rotation.z = this.roll;
+        }
       }
     }
     this.lastX = x;

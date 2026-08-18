@@ -7,7 +7,7 @@
  * ─────────────────────────────────────────────────────────────────────────────
  * 為什麼 `runtimeCapabilities` 擋不住這一類
  * ─────────────────────────────────────────────────────────────────────────────
- * 能力清單回答「引擎**做得到**什麼」（37 個 effect kind / 19 個 hook / 17 個模板家族），
+ * 能力清單回答「引擎**做得到**什麼」（effect kind / hook / 模板家族，數量從註冊表推導），
  * ⛔ 但它一個 **id** 都沒有。而編輯器要填的是 id：
  *
  *   · `vfxKey` —— `content/vfx/` 有 **632** 份文件，技能實際綁得到的只有 **140** 個。
@@ -30,7 +30,7 @@ import { describe, it, expect } from "vitest";
 import { cover } from "../../testkit/cover";
 import { buildEditorTargetProfile } from "../../scripts/buildEditorTargetProfile";
 
-const profile = buildEditorTargetProfile({ generatedAt: "1970-01-01T00:00:00.000Z" });
+const profile = buildEditorTargetProfile();
 const vocab = profile["contentVocabulary"] as {
   ability: { count: number; fromTemplate: number; templates: { id: string; status: string | null; params: Record<string, unknown> }[] };
   vfx: { keys: string[]; danglingKeys: string[]; boundAbilities: number; docCount: number };

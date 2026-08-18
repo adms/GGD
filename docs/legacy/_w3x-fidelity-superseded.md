@@ -244,3 +244,116 @@ owner 逐字：
 新守衛：`packages/shared/src/sim/abilities/emfrThresholdPassive.test.ts`
 驗的是**機制**（門檻之上不跳 / 門檻之下跳），⛔ 不抄 2% / 1% / 50% 這三個數字
 （第二守則：數字住在 JSON，測試裡再抄一份就是第四個住處）。
+
+---
+
+## 34-04 `godie-osam.r` 奧義˙蒼龍破：**從 JASS 重建**（2026-08-19，GH#393）
+
+owner 逐字：
+
+> 「34-04 **JASS 應該有安排位置移動播放的多次特效搭配傷害**」
+
+### 出貨前是什麼
+
+| | |
+|---|---|
+| 模板 | `tpl-single-strike`（一發點爆） |
+| castType / range | `targeted` / `11.0` |
+| 特效 | `w3xFamilyArt.ts` 的 `family: "shockwaveRing"`（地上一個圓環），tint 青色 |
+
+⛔ **卡片寫「一直線」，遊戲裡是一個原地的圓環。轉幾度都不會讓圓變成線。**
+
+### JASS 實測（第 3 層）—— `A0FP`
+
+`tools/w3x-import/out/GoDieEX22s-src/raw/war3map.j`：
+
+* `Trig_BlueDragonWave_Conditions` **j:38857** — `GetSpellAbilityId() == 'A0FP'`
+* `Trig_BlueDragonWave_Actions` **j:38872-38884**
+
+```jass
+set udg_BlueDargon = 1
+loop
+    exitwhen udg_BlueDargon > 12
+    call CreateNUnitsAtLoc( 1, 'n00N', …,
+         PolarProjectionBJ(GetUnitLoc(caster), udg_BlueDargon*12.00, udg_BlueDargon*30.00), … )
+    call UnitApplyTimedLifeBJ( 2.00, 'BTLF', GetLastCreatedUnit() )
+    call TriggerSleepAction( 0.03 )
+    set udg_BlueDargon = udg_BlueDargon + 1
+endloop
+call ForGroupBJ( …'n00N'…, function Trig_BlueDragonWave_Func003A )   // ↓
+call TriggerSleepAction( 2.00 )
+call ForGroupBJ( …'n00N'…, function Trig_BlueDragonWave_Func005A )   // KillUnit + RemoveUnit
+```
+
+`Func003A`（**j:38863-38865**）：
+
+```jass
+call IssuePointOrderLocBJ( GetEnumUnit(), "smart",
+     PolarProjectionBJ(GetUnitLoc(caster), 800.00, GetUnitFacing(caster)) )
+```
+
+| 項 | 值 | 從哪裡讀到 |
+|---|---|---|
+| **段數** | **12** | `exitwhen udg_BlueDargon > 12` |
+| **生成間距** | r = i×12u，θ = i×30°（**一圈螺旋**，最遠 144u） | `PolarProjectionBJ(…, i*12, i*30)` |
+| **每段延遲** | **0.03 s** | `TriggerSleepAction(0.03)` |
+| **行進終點** | 施法者**面向**方向 **800u** 處 | `Func003A` |
+| **行進速度** | 522（`n00N` 的 `move_speed`）⇒ 800u 約 **1.53 s** | `OBJECTS.json` units.n00N |
+| **每段特效** | `n00N` =「**閃電**」，`Abilities\Spells\Other\Monsoon\MonsoonBoltTarget.mdl`，scale 2.0，`Aloc`（locust） | 同上 |
+| **存活** | 2.0 s 定時生命，之後 `KillUnit`+`RemoveUnit` | `UnitApplyTimedLifeBJ(2.00,'BTLF')` |
+| **每段傷害** | **0** —— `n00N` 沒有攻擊、沒有 `UnitDamageTarget` | 整段 JASS 沒有任何傷害呼叫 |
+
+### ⚠️ JASS 與說明打架的地方（第 3 層 vs 第 4 層）
+
+**傷害不在 JASS 裡。** A0FP 的 `base` 是 **`AUcs` = Dreadlord Carrion Swarm**（`STOCK_ABILITIES.json` 的 `comments` 逐字），
+也就是暴雪原生的**直線錐形核爆**；JASS 那 12 隻 dummy 是**純視覺**。所以原作真正的結構是
+「原生一發線傷 ＋ 12 隻沿線飛的閃電演出」，⛔ **不是**「12 段各結算一次」。
+
+w3a 原始欄位（第 5 層，`OBJECTS.json` abilities.A0FP）：
+
+| 欄 | Lv1 / Lv2 / Lv3 | 意思（Carrion Swarm 的欄位語意） |
+|---|---|---|
+| `data.1`（DataA） | **600 / 900 / 1200** | 傷害 |
+| `data.2`（DataB） | 99999 | 總傷害上限（＝無上限） |
+| `data.3`（DataC） | **900 / 1000 / 1100** | 最終區域寬度（＝文案的「作用範圍」） |
+| `data.4`（DataD） | 375 | 距離 |
+| `area` | 350 | 起始區域寬度 |
+| `cast_range` | 600 | 施法距離 |
+
+⚠️ 原作文案自己也不一致：Lv2 的 ubertip 寫「範圍 1100」而 `DataC` 是 1000。
+
+### ✅ 採用（預設啟動，第 1 層贏）
+
+owner 的裁決把「12 次移動特效」讀成**逐段結算**，這比原作的「一發線傷＋演出」更貼卡面的
+「一直線上的敵人」，而且它是**同一個機制**的參數（`tpl-traveling-wave` → `delayed.advance`）。
+
+| 參數 | 值 | 怎麼推出來的 |
+|---|---|---|
+| `stepCount` | **12** | JASS 的 12 |
+| `stepSize` | **67** wc3u | 800 ÷ 12 |
+| `stepIntervalSec` | **0.13** s | 800 ÷ 522 ÷ 12 ≈ 0.128（⛔ 不是 JASS 的 0.03 —— 那是**生成**間隔，不是**推進**節奏） |
+| `aoePerStep` | **350** wc3u | w3a 的起始 `area`（波本身的粗細；⛔ 不取 `DataC` 900，那是終端扇形寬度，會讓「直線」變成一把大扇子） |
+| `stepVfx` | `fx.fam.bolt-strike.lightning.s115` | `n00N` 就叫「閃電」，模型是 `MonsoonBoltTarget` |
+| `hitOncePerTarget` | **true**（家族固定） | 卡片寫的是**一次** 600；原作 11-04/27-01/60-01 三支自己就帶去重表 |
+| `castType` | `targeted` → **`skillshot`** | JASS 讀的是 `GetUnitFacing(caster)`，**從頭到尾沒有用過指定目標** |
+| `range` | 11.0 → **14.7** | 800u ÷ 54.5（顯示的射程＝真的打得到的距離） |
+
+### ⛔ 被取代的原作數值（存在這裡，不要再挖一次 MPQ）
+
+* `castType: "targeted"` + `range: 11.0`（＝ w3a `cast_range` 600 ÷ 54.5）
+* 傷害幾何：**單發** Carrion Swarm，起始寬 350 → 終端寬 900/1000/1100，距離 375
+* 12 隻 dummy 的**生成螺旋** r=i×12 / θ=i×30°（採用版只保留「沿線推進」，
+  ⛔ 沒有重現那一圈螺旋 —— 它的最遠半徑 144u ≈ 2.6 GGD 單位，在 GGD 的尺度下
+  肉眼分不出來，而它會讓前兩段的判定圓歪出線外）
+* 特效家族 `shockwaveRing` / `thunderclapcaster` / tint `[0,255,255]`
+  —— 那一列仍然留在 `apps/client/src/render/vfx/w3xFamilyArt.ts`，
+  ⛔ **刻意不改**：那張表是**證據**（「w3a 的 casterArt 欄位當年填的是什麼」），
+  而且它是 `w3xFamilyArt.test.ts` 從 `MODEL_USAGE.json` + `VFX_BINDINGS.json`
+  **重新推導**出來的，手改一列就是紅。玩家看到的線由技能 JSON 的 `stepVfx` 決定。
+
+### 失去的守衛
+
+沒有 —— 這一支從來沒有專屬測試。
+新守衛：`packages/shared/src/sim/effects/travelingWaveAdvance.test.ts`
+驗的是**機制**（N 段真的落在 N 個**不同**的位置、各結算一次、同一個人只吃一次），
+⛔ 不抄 12 / 67 / 0.13 / 350 這四個數字（第二守則：數字住在 JSON）。

@@ -88,7 +88,7 @@ import { zHookEvent, zHookDefBase, zEffectDefUnion, zAuraDef } from "./schema/ef
 import { SIM_CAPABILITIES, isExpandable } from "./templates/expand";
 import { zAbilityDef } from "./schema/ability";
 import { zConditionLeaf } from "./schema/condition";
-import { zVfxDoc, zVfxOrient, zRibbonDoc, zVfxAbilityFamilyBinding } from "./schema/vfx";
+import { zVfxDoc, zVfxOrient, zRibbonDoc, zVfxAbilityFamilyBinding, zVfxFamilyTuning } from "./schema/vfx";
 import { zAbilityVfxLayer } from "./schema/abilityVfx";
 // ⭐ 文件授權面（GH#380）—— 這五份 Zod 是「一支技能／一件道具／一個狀態長什麼樣」
 //    的出貨定義本身。⛔ 不是為了這份契約另外抄的一張表。
@@ -181,6 +181,17 @@ export interface CapabilityProbeInput {
    * 純度不變：讀 Zod 物件的 shape，沒有 I/O、沒有時鐘。
    */
   readonly auraFields: ReadonlySet<string>;
+  /**
+   * **特效授權面**上的欄位名（`vfxSurface` 每一列的聯集），從出貨的 Zod 推導。
+   *
+   * ⚠️ 為什麼上面七格都不夠：特效的格子**一個都不在** effect / hook / condition /
+   * aura 任何一張表上。GH#390 的「特效自帶的音效」（`soundLaunch` / `soundImpact` /
+   * `soundLoop` / `soundDissipate`）就是這個形狀 —— 沒有這一格，那一列的 probe
+   * 只能手打一個 `() => true`，而那正是檔頭 ③ 記過兩次的撒謊形狀。
+   *
+   * 純度不變：讀 Zod 物件的 shape，沒有 I/O、沒有時鐘。
+   */
+  readonly vfxFields: ReadonlySet<string>;
 }
 export type CapabilityProbe = (f: CapabilityProbeInput) => boolean;
 
@@ -1046,6 +1057,40 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
       "Colyseus encode→decode 再把隊伍序數解回來 —— 那是「遊戲邏輯全對、螢幕全錯」的唯一防線）+ " +
       "content/items/master-ball.json",
   },
+  // ── 2026-08-19 GH#390：特效自帶的音效 ──────────────────────────────────
+  {
+    key: "vfx.bound-sound@1",
+    plan: "GH#390 特效自帶的音效一個都沒移植",
+    expected: "supported",
+    // ⛔ 不可以問 effectKinds/hookEvents —— 音效不是一個 effect kind，它是**特效
+    //    授權面上的四格**（`config.vfx-families@1` 的 families[] 與 abilities[]）。
+    //    這一列正是 `vfxFields` 存在的理由。
+    probe: (f) =>
+      f.vfxFields.has("soundLaunch") &&
+      f.vfxFields.has("soundImpact") &&
+      f.vfxFields.has("soundLoop") &&
+      f.vfxFields.has("soundDissipate"),
+    caveat:
+      "⭐ 四個時機（發射 / 命中 / 循環 / 消散）填的是 **`config.audio-map@1.sfx` 的 key**，" +
+      "⛔ 不是檔名也不是 URL —— 音量 / 冷卻 / 同時發聲數住在 audio-map 那一份，" +
+      "播放走 `AudioSystem.playSfx` ⇒ 玩家的總音量與 SFX 開關自動適用。" +
+      "⚠️ 兩層逐格覆寫：`abilities[<id>].soundX` 蓋 `families[<fam>].soundX`，" +
+      "⛔ 不是「填一格就整組換掉」。" +
+      "⚠️ **循環音是重播不是真 loop**：每 `soundLoopMs` 重放一次，並在 " +
+      "`soundLoopMaxMs` 絕對到期時自動回收並改播消散音（⛔ 沒有「一直響到有人叫停」）。" +
+      "⚠️ 填一個 audio-map 沒有的 key = 這個時機安靜（⛔ 不是報錯）；" +
+      "填 `wc3.*` 那一族要注意它們住在只有 full-asset build 才掛得上的 Blizzard overlay，" +
+      "正式站上會**退回家族那一格**。",
+    evidence:
+      "packages/shared/src/content/schema/vfx.ts（`VFX_SOUND_CUES` / `resolveVfxSound`）+ " +
+      "apps/client/src/audio/vfxSound.ts + apps/client/src/audio/vfxSoundWired.test.ts + " +
+      "content/config/vfx-families.json（21 個家族原型 + 72 支原作 JASS 音效的逐支覆寫，" +
+      "由 tools/w3x-import/build_vfx_sound_bindings.py 產生）",
+    nearestExisting:
+      "⚠️ `ability@1.sfxKey` 長得很像但**不是同一件事**：那是「這一支技能的身分音」" +
+      "（一顆 `abilityCast` 一發），而這一列是「這一招的**特效**自己帶的那幾發」。" +
+      "同一次施法兩邊都會響，這正是原作的樣子。",
+  },
 ];
 
 export interface RuntimeCapabilityManifest {
@@ -1276,6 +1321,13 @@ const VFX_SURFACE_SHAPES: readonly SurfaceShape[] = [
   { key: "ribbon@1", schema: zRibbonDoc },
   { key: "ability@1.vfxLayers[]", schema: zAbilityVfxLayer },
   { key: "config.vfx-families@1.abilities[]", schema: zVfxAbilityFamilyBinding },
+  /**
+   * ⭐ GH#390 —— **家族原型**那一層。它在這之前整片不在合約裡，而它才是
+   * 「K 個模板」的那一半：21 個原型決定形狀、顏色、大小、高度**與四個時機的音效**，
+   * 258 支技能只是覆寫。⛔ 只暴露 `abilities[]` 的話，外部編輯器看得到覆寫、
+   * 看不到被覆寫的那個東西。
+   */
+  { key: "config.vfx-families@1.families[]", schema: zVfxFamilyTuning },
 ];
 
 /**
@@ -1407,6 +1459,7 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
     hookFields: new Set(hookFields),
     effectFields: effectFieldSet,
     auraFields: auraFieldSet,
+    vfxFields: new Set(Object.values(vfxSurface).flat()),
   };
 
   const planned = PLANNED_CAPABILITIES.map((e) => ({
@@ -1505,5 +1558,6 @@ export function probeCapability(e: CapabilityEntry): boolean {
     hookFields: new Set(m.hookFields),
     effectFields: new Set(m.effectFields),
     auraFields: new Set(m.auraFields),
+    vfxFields: new Set(Object.values(m.vfxSurface).flat()),
   });
 }

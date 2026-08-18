@@ -158,18 +158,33 @@ export const LINES: Line[] = [
 /**
  * PER-IMPORT GATES. Each is a scene line divided by the worst-case number of
  * simultaneous copies of an asset in that ROLE — which is why the same triangle
- * count passes as a champion and fails as a 50-instance tree.
+ * count passes as a champion and fails as a 78-instance tree.
  *
  * `simultaneous` is not a guess: 12 comes from twelve seats with no
  * duplicate-pick rule anywhere in champ select or MatchRoom (so twelve copies
- * of ONE model is legal and is the worst case); 50 is godie's japanesecherry
- * placement count; 78 is the intermission grass ring; 2 is the login dragon.
+ * of ONE model is legal and is the worst case); 78 is godie's japanesecherry
+ * placement count AND the intermission grass ring; 2 is the login dragon.
+ *
+ * ⭐ GH#386 —— 「not a guess」以前是一句**話**，而它過期了：`arena-decor` 這一行
+ * 寫著 50，實際是 78（GH#362 加了散佈規則之後沒有人回頭改），而沒有任何東西會紅。
+ * 現在 `placement.test.ts` 逐張 arena 數出每個模型的擺放數並跟這裡比 ——
+ * ⛔ 這一格再說謊就會紅。
  */
 export interface Gate {
   role: string;
   label: string;
   simultaneous: number;
   simultaneousWhy: string;
+  /**
+   * 這個 role 的**成員判準**：content 路徑字首。有值 = 這個字首底下的每一個模型
+   * 一律走這條 gate。
+   *
+   * ⭐ 為什麼是一格資料而不是 emit_report 裡的一個 if：role 推導（報告頁）與擺放數
+   * 守衛（`placement.test.ts`）必須用**同一份**成員名單，否則會出現「報告說它是
+   * cc0 role、守衛卻拿 arena-decor 的 50 去量」這種兩邊各自自洽的謊。
+   * 省略 = 由用途推導（英雄／擺設／中場…），也就是既有四條 gate 的做法。
+   */
+  pathPrefix?: string;
   /** per-instance triangle cap */
   tris: { warn: number; limit: number };
   /** per-model resident meshes (= draw calls; nothing in this project is instanced today) */
@@ -201,8 +216,11 @@ export const GATES: Gate[] = [
   {
     role: "arena-decor",
     label: "競技場擺設（arena doc 的 decor[]）",
-    simultaneous: 50,
-    simultaneousWhy: "godie 放了 50 棵 japanesecherry；這是目前單一擺設模型的最高擺放數。",
+    simultaneous: 78,
+    simultaneousWhy:
+      "godie 的 japanesecherry：50 列手擺 decor + 一條 count 14 的散佈規則 × 2 個分區 = 78 份。" +
+      "⚠️ 這一行以前寫「50 棵」，而 GH#362 把散佈規則加進來之後那句話就過期了 —— " +
+      "現在它由 `placement.test.ts` 逐張 arena 數出來守著，⛔ 不再是一句沒有人驗的散文。",
     tris: { warn: 4_000, limit: 8_000 },
     meshes: { warn: 1, limit: 2 },
     texEdge: { warn: 512, limit: 1024 },
@@ -211,6 +229,40 @@ export const GATES: Gate[] = [
       "閘門看的是「單一模型 × 它的擺放數」的總和，不是模型本身：擺設可用 120 個 mesh 與 120k 面，" +
       "任何一支模型不得吃掉超過 1/4（30 mesh、30k 面）。逐支的 warn/limit 是把該額度攤回單一實例後的值，" +
       "並額外要求擺設模型不得有骨架（通道上限 0）—— 一棵 74 面的樹帶 1 根骨頭，就會讓 50 棵樹變成 100 個無法 instance 的 draw call。",
+  },
+  {
+    /**
+     * GH#386 ① —— 下載來的 CC0 布景（`content/assets/models/scenery-cc0/`，53 件）。
+     *
+     * 這批的 draw call ⛔ 不是「多個 mesh」，是「一個 mesh 多個 primitive，每個材質
+     * 一個」（trim sheet 分材質、或 `Outliner_Mat` 描邊殼），所以 draw call ≈ 材質數：
+     * 53 件裡 23 件 OVER、18 件 WARN，只有 12 件過得了 `arena-decor` 的 warn 1 / limit 2。
+     *
+     * ⭐ 開一條自己的 gate 不是放水，是**修正一個錯的除數**。`arena-decor` 的
+     * warn/limit 是「場景擺設額度 ÷ 擺放數」，而它的擺放數 78 來自「一整片櫻花林」。
+     * 這批是**地標**（山門、鐘樓、水晶叢、神廟柱），一張圖擺 1–8 件 —— 用 78 去除
+     * 它們，量的是一個不存在的畫面。
+     *
+     * ⛔ 而「一張圖不超過 10 件」本身**不可以是一句註解**：它是這條 gate 唯一的
+     * 支撐，所以它是 `placement.test.ts` 裡一條會紅的斷言（今天的最大值是 8）。
+     */
+    role: "arena-decor-cc0",
+    label: "競技場擺設 · 下載的 CC0 布景（scenery-cc0）",
+    pathPrefix: "assets/models/scenery-cc0/",
+    simultaneous: 10,
+    simultaneousWhy:
+      "地標不是草：出貨 13 張圖對這批的最大用量是 8 份（colosseum 的 TempleColumn）。" +
+      "10 留一點餘裕，而且它**被強制**—— `placement.test.ts` 逐張 arena 數過每一件的擺放數，超過就紅。",
+    tris: { warn: 4_000, limit: 8_000 },
+    meshes: { warn: 3, limit: 6 },
+    texEdge: { warn: 512, limit: 1024 },
+    channels: { warn: 0, limit: 0 },
+    why:
+      "跟 `arena-decor` **同一條算術**，只換擺放數：擺設可用 120 個 mesh，單一模型不得吃掉超過 1/4（30 mesh）" +
+      "→ 30 ÷ 10 = 3 是警戒線；硬上限用一半的額度（60 mesh）÷ 10 = 6。" +
+      "面數與貼圖邊長刻意**不放寬**（4k/8k、512/1024 與 arena-decor 一字不差）—— 這批最重的一件 3,540 面本來就在線內，" +
+      "而且 10 份而不是 78 份意味著同樣的面數在畫面上便宜 7.8 倍，所以放寬它沒有任何理由。" +
+      "通道上限同樣是 0：布景不得帶骨架。",
   },
   {
     role: "intermission-prop",

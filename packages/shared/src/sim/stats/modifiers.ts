@@ -1090,6 +1090,19 @@ export interface ModifierSource {
    * 是**嚴格的 no-op**（那兩支解析器的 ZERO GUARANTEE），既有 replay 逐位元不變。
    */
   typeStreakImmunity?: import("../combat/typeStreakImmunity").TypeStreakImmunityGrant;
+  /**
+   * ⭐ 2026-08-19 ——【死亡遺留】：帶著這份來源的人在場時，同區的英雄陣亡會在
+   * 屍體原地留下一個持久的光環物件。71-00 暗夜契約的**暗夜旗**是出貨的那一支。
+   *
+   * 同前八格：讀它的**只有** `sim/deathWard.ts`，而它走 `StatsComp.sources`
+   * 且**不問 `kind`** —— 所以掛在天生技 rank、道具、增益卡或一份 `applyBuff`
+   * 生出來的限時來源上，行為完全相同，⛔ 不需要第二支掃描器。
+   *
+   * ⚠️ 它取代了 `config.arena-rules@1.nightPact`：那個區塊把**一支技能的**
+   * 半徑／上限／受益者／加成寫在**競技場規則**裡，並用一格 `abilityIds` 把
+   * 引擎綁死在 `godie-u00k.passive` 上（CLAUDE.md 第〇·五守則的越線）。
+   */
+  deathWard?: import("../deathWard").DeathWardGrant;
 }
 
 /**

@@ -79,6 +79,16 @@ export interface QueuedSfx {
   source: SpatialSource | null;
   /** priority used for a centred entry (see `push`). */
   centredPriority: number;
+  /**
+   * 呼叫端的音量倍率（GH#390 的 `soundGain`）。1 = 不動 = 這個功能出現之前的
+   * 每一個呼叫端走的那條路：`volume` 完全不出現在 opts 裡，centred 那一支仍然
+   * 是**一個 option 都沒有**的 `playSfx(key)`。
+   *
+   * ⛔ 它不可以變成「乘在 spatialMix 之後就好」—— centred 那一支根本不走
+   * `spatialMix`，只在那裡乘的話 `soundGain` 對每一發置中的音**逐位元等於不存在**
+   * （第一·五守則的形狀：欄位存在、後台存得起來、而它什麼都不做）。
+   */
+  gain: number;
 }
 
 /**
@@ -98,9 +108,9 @@ export class SpatialSfxQueue {
    * The decision to drop belongs to `spatialMix` (out of range / cross-zone) and
    * is taken at flush, when the listener is known.
    */
-  push(key: string, source: SpatialSource | null): void {
+  push(key: string, source: SpatialSource | null, gain = 1): void {
     if (!key) return;
-    const item: QueuedSfx = { key, source, centredPriority: CENTRED_PRIORITY };
+    const item: QueuedSfx = { key, source, centredPriority: CENTRED_PRIORITY, gain };
     if (this.items.length < QUEUE_MAX) {
       this.items.push(item);
       return;
@@ -133,7 +143,11 @@ export class SpatialSfxQueue {
         // centred: no opts at all → identical to the pre-spatial call path, and
         // it keeps the BARE gate key (the self band), which is the same budget
         // it competed in before this feature existed.
-        resolved.push({ key: item.key, opts: undefined, priority: item.centredPriority });
+        resolved.push({
+          key: item.key,
+          opts: item.gain === 1 ? undefined : { volume: item.gain },
+          priority: item.centredPriority,
+        });
         continue;
       }
       const mix = spatialMix(listener, item.source);
@@ -141,7 +155,7 @@ export class SpatialSfxQueue {
       resolved.push({
         key: item.key,
         opts: {
-          volume: mix.volume,
+          volume: mix.volume * item.gain,
           // NODE BUDGET: `pan` present at all is what makes `makeSpatialChain`
           // build a StereoPannerNode, so an inaudible pan is omitted rather than
           // rounded. See spatial.PAN_SKIP — this is what keeps the local

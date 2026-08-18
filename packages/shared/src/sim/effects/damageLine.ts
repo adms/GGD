@@ -70,28 +70,22 @@ import { Stat } from "../stats/statTypes";
 import { capsule } from "../collision/shapes";
 import { queryOverlap } from "../collision/queries";
 import { canSee } from "../stealth";
-import { distSq, len, normalize, sub, type Vec2 } from "../math/vec2";
-import { casterAttrs, casterStats } from "./effectCommon";
+import { distSq, type Vec2 } from "../math/vec2";
+import { aimDirection, casterAttrs, casterStats } from "./effectCommon";
 import { resourcePctAmount } from "./dynamicTerms";
 import { clampSpreadRadius, clampSpreadTargets } from "./spreadLimits";
 import { runOnHitChain, selectVictims } from "./victimFilter";
 import { rollAbilityCrit } from "../combat/critStrike";
 
-/** Which way the lash goes. `aim: "target"` degrades to facing, never to nothing. */
+/**
+ * Which way the lash goes. `aim: "target"` degrades to facing, never to nothing.
+ *
+ * ⭐ 這支的**本體搬去 `effectCommon.ts` 了**（`aimDirection`），因為
+ * `delayed.advance.dir` 需要**同一個**答案，而本檔案原本那份私有 `lineDir` 一旦
+ * 被抄第二份，兩份分岔的那一天沒有人會發現（第零守則⑨）。這裡只留一個轉呼叫。
+ */
 function lineDir(e: { aim?: "facing" | "target" }, ctx: EffectContext): Vec2 | undefined {
-  const from = ctx.world.transform.get(ctx.caster);
-  if (!from) return undefined;
-  if (e.aim !== "facing") {
-    const tid = ctx.targets[0];
-    const tt = tid !== undefined ? ctx.world.transform.get(tid) : undefined;
-    if (tt) {
-      const to = sub(tt.pos, from.pos);
-      if (len(to) > 1e-6) return normalize(to);
-    }
-  }
-  const f = from.facing;
-  if (len(f) > 1e-6) return normalize(f);
-  return undefined;
+  return aimDirection(e.aim, ctx);
 }
 
 export const damageLineEffect: EffectKindSpec<"damageLine"> = {

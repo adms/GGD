@@ -1,6 +1,6 @@
 {
   "collection": "arenas",
-  "hash": "11923c899d34",
+  "hash": "3889132997ec",
   "entries": [
     {
       "id": "arena.castle",
@@ -11,7 +11,7 @@
     {
       "id": "arena.colosseum",
       "path": "arenas/arena.colosseum.json",
-      "hash": "e0a325b27d95",
+      "hash": "981dfdf0ef76",
       "size": 19964
     },
     {
@@ -23,14 +23,14 @@
     {
       "id": "arena.frieren",
       "path": "arenas/arena.frieren.json",
-      "hash": "44410ab579df",
-      "size": 103607
+      "hash": "fa8b19550992",
+      "size": 103825
     },
     {
       "id": "arena.godie",
       "path": "arenas/arena.godie.json",
-      "hash": "2deada1adc4d",
-      "size": 19729
+      "hash": "08258401c253",
+      "size": 19731
     },
     {
       "id": "arena.heavens-arena",
@@ -53,8 +53,8 @@
     {
       "id": "arena.nazarick",
       "path": "arenas/arena.nazarick.json",
-      "hash": "5d536234a166",
-      "size": 101406
+      "hash": "af806dccc4f5",
+      "size": 98388
     },
     {
       "id": "arena.royale",
@@ -65,8 +65,8 @@
     {
       "id": "arena.shiganshina",
       "path": "arenas/arena.shiganshina.json",
-      "hash": "5eae8e103a9d",
-      "size": 106501
+      "hash": "0b2138029e2c",
+      "size": 106909
     },
     {
       "id": "arena.skeleton",

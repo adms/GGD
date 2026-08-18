@@ -407,6 +407,12 @@ describe("the wire → the store", () => {
       audioEntityPos: () => null,
       audioTeamOf: () => null,
       deathFocus: { noteDeath() {} },
+      // GH#390（2026-08-19）—— `handleDrainedEvent` 現在也會轉發給特效自帶的音效層。
+      // ⚠️ 這個 stub 是**手組的**（它跑真的 prototype method，見上面那段註解），
+      // 所以 GameApp 每長一個 per-event 協作者，這裡就要補一格 —— 同
+      // `sourceGrants.test.ts` 檔頭記載的那條「夾具就是它的維護點」。
+      // ⛔ 這不是把守衛放寬：少了它是 `TypeError`，不是靜默跳過。
+      pushVfxSound() {},
     } as unknown as GameApp;
     const handle = (
       GameApp.prototype as unknown as {

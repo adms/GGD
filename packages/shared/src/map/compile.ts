@@ -345,6 +345,11 @@ export function compileMap(
       model: p.model,
       x: -halfW + (p.at.col + 0.5) * ts,
       z: -halfD + (p.at.row + 0.5) * ts,
+      // ⭐ GH#386 ③ —— 架高。⚠️ `y === 0` 時**整格省略**，⛔ 不寫 `y: 0`：
+      // 出貨的 13 張圖一件都沒架高，所以重新編譯出來的 arena doc 必須逐位元組
+      // 不變（`mapArtCannotChangeCollision` 的同一條紀律），而且 `y: 0` 一旦寫進
+      // content 就會被**舊映像**的 `zDecor.strict()` 整份拒絕（2026-08-02 的形狀）。
+      ...(p.y === undefined ? {} : { y: p.y }),
       rotQuarter: p.rotQuarter,
       scale: p.scale,
     })),

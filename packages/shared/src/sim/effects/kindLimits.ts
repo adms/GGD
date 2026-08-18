@@ -160,6 +160,18 @@ export const DELAYED_MAX_COUNT = 32;
  * 整波塞進同一個 tick（畫面上就不是「連擊」而是「一下」）。
  */
 export const DELAYED_MAX_INTERVAL_SEC = 10;
+/**
+ * ⭐ `delayed.advance.stepDist` / `.startDist`（每一發往前推幾格 / 第一發離施法者
+ * 多遠）的上界，**GGD 單位**。
+ *
+ * 8 是 **mis-parse 柵欄**不是平衡政策，而且這一格的 mis-parse 是可以指名的：
+ * 原作的每一步都是 WC3 單位（龍破斬 45、月牙天衝 50、蒼龍破 ~67、光牙 50、
+ * 龍氣爆發 75、神通眼 100），換算是 `GGD_PER_WC3`（≈1/54.5）。一個忘了換算而
+ * 直接貼進來的 `50` 會是 **50 GGD 單位**＝兩倍競技場直徑，於是第一發就落在場外，
+ * 整支技能**一個人都打不到** —— 而畫面上跟「這支技能沒做」一模一樣（失敗形態②）。
+ * 8 GGD ≈ 436 WC3 單位，已經是全 repo 最大一步（100）的四倍餘裕。
+ */
+export const DELAYED_MAX_STEP_DIST = 8;
 
 /**
  * `proxyCast.maxDepth` 的上界 —— ⭐ 這一格是 `proxyCast` 的**終止性證明**。

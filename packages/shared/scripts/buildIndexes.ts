@@ -84,7 +84,7 @@ console.log(`contentVersion: ${manifest.contentVersion}`);
 // 它落在 `content/` 底下 ⇒ 正式站直接服務：
 //     https://ggd.adms.ai/content/editor-target-profile.json
 {
-  const text = writeEditorTargetProfile(new Date().toISOString());
+  const text = writeEditorTargetProfile();
   const p = JSON.parse(text) as { profileDigest: string };
   console.log(`editor-target-profile.json  digest=${p.profileDigest}`);
 }

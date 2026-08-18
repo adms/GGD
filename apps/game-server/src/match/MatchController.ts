@@ -168,10 +168,9 @@ import {
 } from "@ggd/shared/sim/systems/GuardianSystem";
 import { beginCombatCoins, endCombatCoins, coinRulesFromConfig } from "@ggd/shared/sim/coins";
 import {
-  beginCombatNightPact,
-  endCombatNightPact,
-  nightPactRulesFromConfig,
-} from "@ggd/shared/sim/nightPact";
+  beginCombatDeathWards,
+  endCombatDeathWards,
+} from "@ggd/shared/sim/deathWard";
 import { beginCombatMobs, endCombatMobs } from "@ggd/shared/sim/systems/MobSystem";
 import {
   anyMobsAlive,
@@ -2201,18 +2200,13 @@ export class MatchController {
       endCombatCoins(this.world);
     }
 
-    // arm 71-00 暗夜契約 (死之王 godie-u00k). Same legacy-compat shape as the four
-    // systems above: absent config = OFF. This call is the ONLY thing that was
-    // missing — the sim, the guards, the Zod block and `snapshot.ts:353`'s flag
-    // radius were all already built, so `world.nightPactRules` stayed null and
-    // `nightPactSystem` returned at its first line every tick. The whole 天生技
-    // did nothing in a real match while `nightPact.test.ts` stayed green,
-    // because that test calls `beginCombatNightPact` itself (failure shape ②).
-    if (this.rules.nightPact) {
-      beginCombatNightPact(this.world, nightPactRulesFromConfig(this.rules.nightPact));
-    } else {
-      endCombatNightPact(this.world);
-    }
+    // 【死亡遺留】—— 清掉上一回合殘留的遺留物與它們投影出去的加成。
+    // ⚠️ 這裡**沒有東西要武裝**（2026-08-19，第〇·五守則）：開關就是內容，
+    // 場上有人帶著 `deathWard` 授予它就會動。在此之前這裡是
+    // `if (this.rules.nightPact)`，而那一格設定曾經是 null —— sim、守衛、Zod
+    // 區塊與旗子半徑全部都建好了，整支天生技在真的比賽裡什麼都沒做，
+    // 而測試全綠（失敗形態②）。一個「武裝旗標」就是一種可以被忘記的故障。
+    beginCombatDeathWards(this.world);
 
     // arm the ROGUELITE MOB WAVES (task #215): from `mobWaves.fromRound` onward,
     // voxel-zombie mobs (喪標麥可) stream in from the EDGES of each ACTIVE duel
@@ -2944,7 +2938,7 @@ export class MatchController {
     endCombatFireRing(this.world); // …and the round-pacing fire ring re-idles (#132)
     endCombatGuardians(this.world); // …and every neutral guardian despawns (no post-round farming, #89)
     endCombatCoins(this.world); // …and every unclaimed coin BURNS — no carry into the next round (#191)
-    endCombatNightPact(this.world); // …and every 暗夜旗 + 黑夜靈氣 clears (71-00)
+    endCombatDeathWards(this.world); // …and every 死亡遺留物 + 其加成 clears (71-00 暗夜旗)
     endCombatMobs(this.world); // …and every mob despawns — no post-round PvE farming (#215)
     // PER-ROUND SNAPSHOT — must run BEFORE settleRound(). settleRound is where
     // a team can be ELIMINATED, and an elimination there immediately builds a

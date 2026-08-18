@@ -173,9 +173,9 @@
           ]
         },
         {
-          "kind": "spawnProjectile",
-          "projectileId": "imported.wave.physical",
-          "onHit": []
+          "kind": "spawnVfx",
+          "vfxId": "fx.prim.physical.bolt",
+          "at": "self"
         }
       ],
       "icon": "assets/icons/abilities/godie-h01u.w.webp",
@@ -377,9 +377,9 @@
           ]
         },
         {
-          "kind": "spawnProjectile",
-          "projectileId": "imported.wave.physical",
-          "onHit": []
+          "kind": "spawnVfx",
+          "vfxId": "fx.prim.physical.bolt",
+          "at": "self"
         }
       ],
       "icon": "assets/icons/abilities/godie-h01u.r.webp",

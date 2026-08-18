@@ -15,6 +15,42 @@ import { resolveScaling } from "./effect";
 import type { Stat } from "../stats/statTypes";
 import { liveAttribute } from "../stats/attrSources";
 import { clampMarkCount, markExpired } from "../markLimits";
+import { len, normalize, sub, type Vec2 } from "../math/vec2";
+
+/**
+ * ⭐ 「這條線往哪裡指」—— `damageLine.aim` 與 `delayed.advance.dir` 的**同一份**
+ * 解析（它從 `damageLine.ts` 的私有 `lineDir` 搬上來，理由就是本檔檔頭那一句：
+ * 一個只有一個 kind 用的 helper 住在那個 kind 自己的檔裡，用第二次就上來）。
+ *
+ * · `"target"`（預設）—— 從施法者**穿過**觸發這個效果的那個身體。穩：它不依賴
+ *   面向轉完，而 #275（瞄準優先）之後那件事在揮出的那一 tick 真的不保證。
+ * · `"facing"` —— 身體當下的面向。「面前」的字面讀法，也是**沒有單一受害者**
+ *   的那種施放（一條沿面向推出去的波）唯一對的答案。
+ *
+ * ⛔ `"target"` 找不到目標時退回**面向**，⛔ 不是回 undefined —— 一條安靜消失的
+ * 線是失敗形態②穿著一格設定。回 undefined 只發生在施法者連 transform 都沒有
+ * （已經離場）或面向是零向量。
+ *
+ * purity：`normalize` / `sub` / `len`，⛔ 無三角函式、無 `**`、無時鐘。
+ */
+export function aimDirection(
+  aim: "facing" | "target" | undefined,
+  ctx: EffectContext,
+): Vec2 | undefined {
+  const from = ctx.world.transform.get(ctx.caster);
+  if (!from) return undefined;
+  if (aim !== "facing") {
+    const tid = ctx.targets[0];
+    const tt = tid !== undefined ? ctx.world.transform.get(tid) : undefined;
+    if (tt) {
+      const to = sub(tt.pos, from.pos);
+      if (len(to) > 1e-6) return normalize(to);
+    }
+  }
+  const f = from.facing;
+  if (len(f) > 1e-6) return normalize(f);
+  return undefined;
+}
 
 export function casterStats(ctx: EffectContext): Record<Stat, number> {
   return ctx.world.stats.get(ctx.caster)?.final ?? ({} as Record<Stat, number>);

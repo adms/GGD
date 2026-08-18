@@ -15,6 +15,7 @@
  * The GATES themselves (the numbers, and the arithmetic behind each) live in
  * limits.ts and are the single source of budget truth.
  */
+import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -57,16 +58,34 @@ function loadReport(): any | null {
   return reportCache;
 }
 
-/** Is the report present and not older than every source it derives from? */
-export function reportFreshness(): { present: boolean; stale: boolean; generatedAt?: string } {
+/**
+ * Does the report still describe the sources it was derived from?
+ *
+ * ⭐ GH#389 — this used to be `source.mtime > report.generatedAt`, and it was
+ * wrong twice over. (1) The report no longer carries a clock at all, because a
+ * timestamp in a checked-in artefact makes it dirty on every run. (2) mtime was
+ * never the right question anyway: a deploy or a `git checkout` resets every
+ * file's mtime without changing a byte, so the timestamp test flags a correctly
+ * built tree as stale — the standalone page's own comment says exactly this and
+ * uses Content-Length instead. Here we can do better than the page can: hash the
+ * sources and compare against what the report recorded.
+ */
+export function reportFreshness(): { present: boolean; stale: boolean; sourcesDigest?: string } {
   const r = loadReport();
   if (!r) return { present: false, stale: true };
   let stale = false;
   for (const s of r.sources ?? []) {
     const abs = path.join(ROOT, s.path);
-    if (fs.existsSync(abs) && fs.statSync(abs).mtimeMs > Date.parse(r.generatedAt)) stale = true;
+    // A source that has since been DELETED is a change too — emit_report skips
+    // missing paths, so its absence would silently drop a row from `sources`.
+    if (!fs.existsSync(abs) || sha256Of(abs) !== s.sha256) stale = true;
   }
-  return { present: true, stale, generatedAt: r.generatedAt };
+  return { present: true, stale, sourcesDigest: r.sourcesDigest };
+}
+
+/** Same truncation as emit_report.ts writes — ⛔ the two must agree or nothing matches. */
+function sha256Of(file: string): string {
+  return createHash("sha256").update(fs.readFileSync(file)).digest("hex").slice(0, 16);
 }
 
 /** Look a file's traced role up in the generated report, or null if not found. */

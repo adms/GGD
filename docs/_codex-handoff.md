@@ -153,8 +153,13 @@ content-api，而**正式站沒有把 content-api 對外開**。編輯器拿得�
 **沒有任何標籤** —— 它們只能走 typed 那條路。
 
 ⛔ 整份是**推導**的，跟著 `pnpm content:build` 走，守衛
-`shippedEditorProfileIsCurrent.test.ts` 比對 `profileDigest`（刻意不含
-`generatedAt`，否則每次乾淨重跑都會紅）。⛔ 不要手改那個檔。
+`shippedEditorProfileIsCurrent.test.ts` **逐位元組**比對。⛔ 不要手改那個檔。
+
+⚠️ **它刻意沒有時間戳**（GH#389，2026-08-19 拿掉的）。這一段之前寫著
+「`profileDigest` 刻意不含 `generatedAt`，否則每次乾淨重跑都會紅」—— 現在整格都不在了：
+一個隨時鐘變動的欄位會逼守衛從逐位元組退化成模糊比對，而一條被放寬的閘等於沒有閘。
+⇒ 要判「這是不是同一份 / 有沒有更新」，pin **`content.contentVersion`** 或
+**`profileDigest`**（兩者都只有內容真的變了才會變）。⛔ 不要拿抓取時間當版本。
 
 ### 已經在跑（打它，⛔ 不要抄文件）
 

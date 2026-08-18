@@ -104,6 +104,13 @@ const zProp = z
   .object({
     model: z.string().regex(/^assets\//, "prop 的 model 必須是 content/ 底下的路徑"),
     at: zTile,
+    /**
+     * 架高（世界單位，0 = 站在地板上）。⭐ GH#386 ③ —— 屋頂／橫梁／天花板這一類
+     * 「架在別的東西上面」的構件，在這一格出現之前只會平躺在地板上。
+     * ⚠️ 上下界與意義（含「壓在打鬥區上空仍然會被視線上限壓扁」）逐字同
+     * `arena@1` 的 `decor[].y`，⛔ 不要只改一邊。
+     */
+    y: z.number().min(-4).max(24).optional(),
     rotQuarter: z.number().int().min(0).max(3).default(0),
     scale: z.number().positive().default(1),
   })

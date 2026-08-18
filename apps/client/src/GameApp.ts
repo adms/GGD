@@ -179,6 +179,10 @@ import {
 import { voicePlayOptions, voiceSpatialMix } from "./audio/voiceSpatial";
 import { combatSfxKey } from "./audio/combatSfx";
 import { resolveSpatial } from "./audio/combatSfxSpatial";
+import { vfxSoundLayer } from "./audio/vfxSound";
+import type { SpatialSource } from "./audio/spatial";
+import { abilityIdOfOrigin } from "@ggd/shared/sim/combat/damage";
+import { fullAssetsEnabled } from "./config/fullAssets";
 import { SpatialSfxQueue } from "./audio/SpatialSfxQueue";
 import type { SfxRelation, SpatialListener } from "./audio/spatial";
 import { FootstepCadence } from "./audio/footsteps";
@@ -678,6 +682,9 @@ export class GameApp {
       // #251 —— 打得到多寬要看得見。同一份 `projectile@1` 文件,同一個 registry,
       // 所以畫面上的體積和 sim 真的用的 `hitRadius` 不可能漂開。
       projectileHitRadiusFor: (key) => Projectiles.tryGet(key as ProjectileId)?.hitRadius ?? null,
+      // #394 —— 飛行姿態走**同一份** `projectile@1` 文件、同一個 registry,所以
+      // 「畫面上的姿態」和「sim 真的在飛的那一發」不可能指到兩顆不同的子彈。
+      projectileFlightFor: (key) => Projectiles.tryGet(key as ProjectileId)?.flight ?? null,
       // w3x vertex tint (task #49). The seat table lives in the HUD store, and
       // render/** may not read it (client-08), so the entity → champion step
       // happens here — the same `championIdForSeat` the model resolve uses.
@@ -1129,6 +1136,7 @@ export class GameApp {
     this.footstep.reset();
     this.remoteSteps.reset();
     this.sfxQueue.reset(); // drop any un-flushed batch — teardown must be silent
+    vfxSoundLayer.reset(); // GH#390 —— 循環音的登記表也要清,否則殘留聲音跨場景
     this.views.dispose();
     this.renderer.dispose(); // stops + disposes the Babylon engine/scene
     this.interp.clear();
@@ -1711,6 +1719,16 @@ export class GameApp {
     // latency on a one-shot — far under the network jitter already in the pipe,
     // and the queue had to exist for the priority sort anyway.
     const listener = this.audioListener(localPose);
+    // GH#390 —— 循環音的**回收**跑在 flush 之前:到期的那一發在這裡被刪掉並換成
+    // 消散音。⛔ 少了這一行,`soundLoop` 會是一個開始了就停不下來的東西(#259)。
+    // ⚠️ 這兩行必須在 `update()` 之前:音效層要靠**載入的 audio map** 判斷
+    // 「這個 build 供不供應這個 clip」,map 還沒到就會把每一發都判成取不到。
+    // 兩個都是等冪賦值,⛔ 沒有 per-frame 配置。
+    vfxSoundLayer.setAudioMap(audioSystem.sfxMap);
+    vfxSoundLayer.overlayEnabled = fullAssetsEnabled();
+    for (const hit of vfxSoundLayer.update(nowMs)) {
+      this.sfxQueue.push(hit.key, this.vfxSoundSource(hit.entityId, localId), hit.gain);
+    }
     this.sfxQueue.flush(listener, (key, opts) => audioSystem.playSfx(key, opts));
     // 5b-ii) AND THE VOICES, through the SAME listener frame (#259).
     //
@@ -1847,6 +1865,12 @@ export class GameApp {
     if (sfxKey) {
       this.sfxQueue.push(sfxKey, resolveSpatial(ev, this.audioEntityPos, localId, this.audioTeamOf));
     }
+    // GH#390 —— **特效自帶的音效**。四個時機裡的兩個由事件驅動(發射 / 命中),
+    // 另外兩個(循環 / 消散)由 `vfxSoundLayer` 自己的登記表在 5b 收掉。
+    // ⛔ 它不是 `combatSfxKey` 的一個分支:那一支回的是「這顆事件本身叫什麼」,
+    // 而這裡問的是「這一招的**特效**帶了什麼聲音」—— 兩者是不同的軸,同一顆
+    // `abilityCast` 兩邊都會出聲(一個是技能身分,一個是特效自己那一份)。
+    this.pushVfxSound(ev, localId, nowMs);
     // CONTEXTUAL VOICE (client-only cosmetic, owner directive 2026-07-25):
     // event → the champion's own cloned line. Rides audioSystem.playClip inside
     // contextualVoice, so all mixer gates + the per-category throttle apply;
@@ -2190,6 +2214,59 @@ export class GameApp {
   // The SAME two accessors the VFX layer is given at construction, so a sound
   // can never end up where the sparks are not. Bound once as fields rather than
   // built per event — the drain runs them for every combat event, every frame.
+
+  /**
+   * GH#390 —— 一顆事件帶來的**特效自帶音效**（發射 / 命中兩個時機）。
+   *
+   * ⚠️ 它與上面那一行 `combatSfxKey` 是**不同的軸**，⛔ 不是它的一個分支：
+   * `combatSfxKey` 回答「這顆事件叫什麼」（一顆事件一發聲音），這裡回答
+   * 「這一招的**特效**自己帶了什麼聲音」。同一顆 `abilityCast` 兩邊都會出聲，
+   * 而那正是原作的樣子（技能身分音 + 特效自己那一份）。
+   *
+   * 循環 / 消散**不在這裡** —— 它們沒有對應的事件，由 `vfxSoundLayer` 自己的
+   * 登記表在 `renderFrame` 的 5b 收掉（含回收，見 #259）。
+   */
+  private pushVfxSound(ev: EventMessage, localId: number | null, nowMs: number): void {
+    if (ev.type === "abilityCast") {
+      const abilityId = typeof ev.data.abilityId === "string" ? ev.data.abilityId : undefined;
+      const source = resolveSpatial(ev, this.audioEntityPos, localId, this.audioTeamOf);
+      const launch = vfxSoundLayer.cue(abilityId, "launch");
+      if (launch) this.sfxQueue.push(launch.key, source, launch.gain);
+      // 持續型特效的底噪。掛在**施法者**身上,所以位置跟著他走、他死了就跟著回收。
+      const caster = typeof ev.data.caster === "number" ? ev.data.caster : undefined;
+      if (caster !== undefined) {
+        const loop = vfxSoundLayer.startLoop(caster, abilityId, nowMs);
+        if (loop) this.sfxQueue.push(loop.key, source, loop.gain);
+      }
+      return;
+    }
+    if (ev.type !== "damage" && ev.type !== "projectileHit") return;
+    // 每一條技能傷害路徑都蓋 `origin = "ability:<id>"`（instant / cast-time /
+    // projectile onHit 三條都一樣，見 sim/combat/damage.ts 的 `abilityIdOfOrigin`）。
+    // 普攻 / DoT / 道具 proc 沒有這個前綴 ⇒ 這裡直接回，⛔ 不會替它們亂編一個家族。
+    const abilityId = abilityIdOfOrigin(typeof ev.data.origin === "string" ? ev.data.origin : "");
+    if (!abilityId) return;
+    const hit = vfxSoundLayer.cue(abilityId, "impact");
+    if (!hit) return;
+    this.sfxQueue.push(
+      hit.key,
+      resolveSpatial(ev, this.audioEntityPos, localId, this.audioTeamOf),
+      hit.gain,
+    );
+  }
+
+  /** 循環音的空間來源 —— 施法者的**渲染位置**，拿不到就置中（⛔ 不是丟掉）。 */
+  private vfxSoundSource(entityId: number | undefined, localId: number | null): SpatialSource | null {
+    if (entityId === undefined) return null;
+    const pos = this.audioEntityPos(entityId);
+    if (!pos) return null;
+    return {
+      x: pos.x,
+      z: pos.z,
+      cls: "texture",
+      relation: entityId === localId ? "self" : "third",
+    };
+  }
 
   private readonly audioEntityPos = (id: number): { x: number; z: number } | null =>
     this.views.posOf(id) ?? this.schemaPos(id);

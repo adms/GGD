@@ -722,6 +722,17 @@ export interface ProjectileDef {
   vfxKey?: string;
   /** RENDER-ONLY 3D body shape for the flying missile (see projectile@1). */
   meshShape?: "bolt" | "orb" | "shard";
+  /**
+   * RENDER-ONLY flight attitude (#394, see `projectile@1.flight`). Absent =
+   * nose along the travel direction, level, no spin — the pre-#394 picture.
+   * ⚠️ The sim never branches on it; it exists so the CLIENT stops drawing
+   * every missile as the same nose-first dart.
+   */
+  flight?: {
+    yawOffsetDeg?: number;
+    pitchDeg?: number;
+    rollDegPerUnit?: number;
+  };
 }
 
 export interface LootTable {

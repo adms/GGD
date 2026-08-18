@@ -60,8 +60,16 @@ describe("per-import gates are the scene budget divided by simultaneous count", 
     // texture edge is a hard 1024 ceiling, never higher
     expect(champ.texEdge.limit).toBe(1024);
   });
-  it("arena decor gate assumes godie's 50 trees", () => {
-    expect(GATES.find((g) => g.role === "arena-decor")!.simultaneous).toBe(50);
+  it("arena decor gates' simultaneous counts are ENFORCED, not asserted here", () => {
+    // ⛔ 這裡刻意不再寫 `toBe(50)`：出貨的擺放數是**量出來的**，而抄一份到測試裡
+    // 就是第四個住處（它在 GH#362 加了散佈規則之後靜默過期了整整一版）。
+    // 真正的守衛是 `placement.test.ts` —— 它逐張 arena 數，⛔ 不抄字面值。
+    for (const role of ["arena-decor", "arena-decor-cc0"])
+      expect(GATES.find((g) => g.role === role)!.simultaneous).toBeGreaterThan(0);
+    // cc0 是「地標不是草」⇒ 它的除數必須比整片櫻花林小，否則開這條 gate 沒有意義。
+    const cc0 = GATES.find((g) => g.role === "arena-decor-cc0")!;
+    expect(cc0.simultaneous).toBeLessThan(GATES.find((g) => g.role === "arena-decor")!.simultaneous);
+    expect(cc0.pathPrefix, "成員判準不見了 ⇒ 沒有任何檔案會走這條 gate").toBeTruthy();
   });
   it("bulk-placed props are forbidden a skeleton (channels limit 0)", () => {
     expect(GATES.find((g) => g.role === "arena-decor")!.channels.limit).toBe(0);

@@ -17,7 +17,8 @@
 import type { CastType, AbilityPassive, AbilityPassiveRank } from "../../sim/content/defs";
 import type { EffectDef, DamageType, Scaling } from "../../sim/effects/effect";
 import type { HookDef, HookEvent, StatModifier } from "../../sim/stats/modifiers";
-import type { AbilityId, ProjectileId, StatusId } from "../../ids";
+import type { AbilityId, ProjectileId, StatusId, VfxId } from "../../ids";
+import { DELAYED_MAX_COUNT } from "../../sim/effects/kindLimits";
 import type {
   TemplateDoc,
   ParamSlot,
@@ -236,6 +237,22 @@ export const SIM_CAPABILITIES: Readonly<Record<string, SimCapability>> = {
   // it was found by diffing EFFECT_HANDLERS against this table, which is the
   // only way a stale row in here is ever going to be noticed.
   periodicDamage: { p: 3, available: true },
+  /**
+   * ⭐ 行進波動 —— 「傷害點沿一條線**逐段推進**，每一段各播一次特效並各結算
+   * 一次」(GH#393, owner 2026-08-19)。`delayed.advance` + `hitOncePerTarget`
+   * (sim/effects/delayed.ts 檔頭⑤) 出貨之後，`tpl-traveling-wave` 那三格
+   * `inert`（「逐步推進未支援：每跳幾何折算為單發投射」）就過期了。
+   *
+   * ⚠️ 它與 `projectile` 是**兩件事**，而這個家族原本 `requires: ["projectile"]`
+   * 正是那句折算的殘骸：一顆投射體會被碰撞與地形影響、有一顆會被看見的彈體；
+   * 原作這 13 支是 locust dummy 每 tick 硬推固定距離
+   *（`PolarProjection(pos, i×step, angle)`），**沒有一支是投射體**。
+   *
+   * ⚠️ 一次施放最多 `DELAYED_MAX_COUNT` 段（今天 32）。原作有兩支超過 ——
+   * 04-03 龍破斬 70（那是迴圈保險絲不是實際步數）、02-002 神通眼 40 ——
+   * 展開時會**擲一個指名的錯誤**，⛔ 不會被靜默夾掉。要放寬得先動 kindLimits。
+   */
+  travelingWave: { p: 3, available: true },
 };
 
 /** The subset of `reqs` the sim cannot honour today (degrade note source). */
@@ -528,20 +545,85 @@ const FAMILIES: Readonly<Record<string, Family>> = {
   }),
 
   // 5. 行進波動 — travelling wave. 莉娜 04-03 龍破斬 (design canonical example).
-  // Per-step collect + terminal burst collapse to one wave, as current content
-  // does; terminalBurst is carried as the AoE radius when present.
-  "traveling-wave": (t, p) => ({
-    castType: "skillshot",
-    targetsEnemies: true,
-    ...(has(t, p, "terminalBurst") ? { radius: num(t, p, "terminalBurst") } : {}),
-    effects: [
-      {
-        kind: "spawnProjectile",
-        projectileId: "imported.wave" as ProjectileId,
-        onHit: [damageEffect(damageType(t, p, "damageType"), scaling(t, p, "damage"))],
-      },
-    ],
-  }),
+  //
+  // ⭐ GH#393（owner 2026-08-19，34-04 蒼龍破）：「JASS 應該有安排**位置移動**
+  // 播放的**多次特效搭配傷害**」。在這一天之前，這個家族的三格
+  // (`stepSize`/`stepCount`/`aoePerStep`) 全部掛著 `inert`：
+  //
+  //     「逐步推進未支援：每跳幾何折算為單發投射，推進節奏不表現」
+  //
+  // 那不是一句 caveat，那是**這個家族整個折算掉了** —— 一顆投射體的命中集合與
+  // 「20 段各自結算一次」在紙上等價，在畫面上完全不同，而 `JASS_BEHAVIOR.json`
+  // 裡有 **13 支**是這個形狀（龍破斬 45u×70 / 月牙天衝 50u×20 / 三千世界
+  // 50u×15 / 光牙 50u×16 / 龍氣爆發 75u×25 / 神通眼 100u×40 / …），
+  // 每一支都是 `PolarProjection(pos, i×step, angle)` 的逐 tick 硬推，
+  // ⛔ 不是一顆會被碰撞與地形影響的投射體。
+  //
+  // 現在它展開成 `delayed` + `advance`（sim/effects/delayed.ts 檔頭⑤）——
+  // ⛔ **這裡沒有為任何一支技能寫一行 if**（第〇·五守則）：段數、步距、每段
+  // 半徑、節奏、終點爆發全部是這張卡的參數。
+  //
+  // ⭐ `hitOncePerTarget: true` 是**原作的**規則不是我的偏好：11-04 三千世界
+  // (`ThworldGroup`)、27-01 風魔手裡劍 (`safe-group`)、60-01 迴旋鏢
+  // (`SafeTargets`) 三支自己就帶著去重表。少了它，站在線上的人會被 N 段各打一次，
+  // 而卡片寫的是**一次**的數字。
+  "traveling-wave": (t, p) => {
+    const stepCount = num(t, p, "stepCount");
+    // ⛔ 大聲擋下，⛔ 不靜默夾掉：`delayed.count` 的上界是模擬器排程的預算
+    // (`DELAYED_MAX_COUNT`)，而一個被偷偷夾成 32 的 70 段會少掉一半射程，
+    // 畫面上跟「這支技能射程就是這樣」一模一樣（失敗形態②）。
+    if (stepCount > DELAYED_MAX_COUNT) {
+      throw new ExpandError(
+        `template ${t.id}: stepCount=${stepCount} 超過模擬器一次施放能排的段數 ` +
+          `(DELAYED_MAX_COUNT=${DELAYED_MAX_COUNT})。把段數調低、或把 stepSize 加大 ` +
+          `換取同樣的總射程；真的需要更多段要先改 sim/effects/kindLimits.ts 的上界。`,
+      );
+    }
+    const stepVfx = has(t, p, "stepVfx") ? docRef(t, p, "stepVfx") : undefined;
+    const perStep: EffectDef[] = [
+      damageEffect(damageType(t, p, "damageType"), scaling(t, p, "damage")),
+    ];
+    // ② 玩家要**看得見**那條線在走，不是只是挨打。一發一個 one-shot 落在
+    // 那一段自己的落點上（`at: "point"`），所以畫面上的位置與判定的位置是
+    // 同一個座標，⛔ 不是客戶端事後從面向猜出來的。
+    if (stepVfx !== undefined) {
+      perStep.push({ kind: "spawnVfx", vfxId: stepVfx as VfxId, at: "point" });
+    }
+    return {
+      castType: "skillshot",
+      targetsEnemies: true,
+      ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+      effects: [
+        {
+          kind: "delayed",
+          shape: "circle",
+          radius: num(t, p, "aoePerStep"),
+          side: "enemies",
+          delaySec: num(t, p, "stepIntervalSec"),
+          count: stepCount,
+          intervalSec: num(t, p, "stepIntervalSec"),
+          targetMode: "reresolve",
+          hitOncePerTarget: true,
+          advance: { stepDist: num(t, p, "stepSize"), dir: "facing" },
+          effects: perStep,
+          // 終點爆發 —— 只有最後一段追加，這正是 `finalEffects` 存在的理由
+          // （龍破斬 j:「終點爆發: 收集450」/ 真-雷光劍「終點爆發: 500 AoE」）。
+          ...(has(t, p, "terminalBurst")
+            ? {
+                finalEffects: [
+                  {
+                    kind: "damageArea",
+                    radius: num(t, p, "terminalBurst"),
+                    damageType: damageType(t, p, "damageType"),
+                    amount: scaling(t, p, "damage"),
+                  },
+                ] as EffectDef[],
+              }
+            : {}),
+        },
+      ],
+    };
+  },
 
   // 6. 攻擊觸發 — on-attack proc (PASSIVE). 蒼月潮 獸矛.
   //

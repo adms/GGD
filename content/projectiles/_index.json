@@ -1,6 +1,6 @@
 {
   "collection": "projectiles",
-  "hash": "436be16f46cb",
+  "hash": "8f4c13e53770",
   "entries": [
     {
       "id": "basic-attack",
@@ -11,116 +11,116 @@
     {
       "id": "grail.projection-bolt",
       "path": "projectiles/grail.projection-bolt.json",
-      "hash": "dae2616e0ea4",
-      "size": 153
+      "hash": "05b8cb1c569e",
+      "size": 175
     },
     {
       "id": "grail.tracking-bolt",
       "path": "projectiles/grail.tracking-bolt.json",
-      "hash": "c607c6826d78",
-      "size": 150
+      "hash": "34a2fedcafa7",
+      "size": 172
     },
     {
       "id": "imported.bolt",
       "path": "projectiles/imported.bolt.json",
-      "hash": "48c5d957cf82",
-      "size": 137
+      "hash": "171cdead6382",
+      "size": 161
     },
     {
       "id": "imported.bolt.arcane",
       "path": "projectiles/imported.bolt.arcane.json",
-      "hash": "39cf1bd22f7c",
-      "size": 151
+      "hash": "7e97050cd5ea",
+      "size": 174
     },
     {
       "id": "imported.bolt.ki",
       "path": "projectiles/imported.bolt.ki.json",
-      "hash": "806827de5dde",
-      "size": 143
+      "hash": "aaa6a86f2866",
+      "size": 166
     },
     {
       "id": "imported.bolt.lightning",
       "path": "projectiles/imported.bolt.lightning.json",
-      "hash": "5e9a552b210f",
-      "size": 157
+      "hash": "654ba80e9df7",
+      "size": 180
     },
     {
       "id": "imported.bolt.nature",
       "path": "projectiles/imported.bolt.nature.json",
-      "hash": "33f9be7d8f8f",
-      "size": 151
+      "hash": "ac945405b8df",
+      "size": 220
     },
     {
       "id": "imported.bolt.void",
       "path": "projectiles/imported.bolt.void.json",
-      "hash": "894f977b0e09",
-      "size": 147
+      "hash": "e86e542fd0cd",
+      "size": 170
     },
     {
       "id": "imported.wave",
       "path": "projectiles/imported.wave.json",
-      "hash": "b1a18bed6414",
-      "size": 150
+      "hash": "edfe5b7d99ca",
+      "size": 217
     },
     {
       "id": "imported.wave.arcane",
       "path": "projectiles/imported.wave.arcane.json",
-      "hash": "e75a268f25c8",
-      "size": 169
+      "hash": "fff770c770bc",
+      "size": 191
     },
     {
       "id": "imported.wave.earth",
       "path": "projectiles/imported.wave.earth.json",
-      "hash": "e104b6eb8731",
-      "size": 167
+      "hash": "170a9c5819b4",
+      "size": 229
     },
     {
       "id": "imported.wave.fire",
       "path": "projectiles/imported.wave.fire.json",
-      "hash": "07a64e95c28b",
-      "size": 165
+      "hash": "e2f233b1f541",
+      "size": 187
     },
     {
       "id": "imported.wave.ice",
       "path": "projectiles/imported.wave.ice.json",
-      "hash": "fdff0d23b5b1",
-      "size": 163
+      "hash": "c47c347ac403",
+      "size": 229
     },
     {
       "id": "imported.wave.ki",
       "path": "projectiles/imported.wave.ki.json",
-      "hash": "9634d961080e",
-      "size": 161
+      "hash": "aaf05d3b992f",
+      "size": 183
     },
     {
       "id": "imported.wave.lightning",
       "path": "projectiles/imported.wave.lightning.json",
-      "hash": "216be528d378",
-      "size": 175
+      "hash": "e7a06ad4f387",
+      "size": 241
     },
     {
       "id": "imported.wave.physical",
       "path": "projectiles/imported.wave.physical.json",
-      "hash": "088d7e10d0ef",
-      "size": 173
+      "hash": "527691134018",
+      "size": 196
     },
     {
       "id": "imported.wave.void",
       "path": "projectiles/imported.wave.void.json",
-      "hash": "278a59dae799",
-      "size": 165
+      "hash": "d3fa46fe0744",
+      "size": 234
     },
     {
       "id": "sela.q.bolt",
       "path": "projectiles/sela.q.bolt.json",
-      "hash": "1599a4a85d04",
-      "size": 136
+      "hash": "a0421408811d",
+      "size": 159
     },
     {
       "id": "thorne.e.thorn",
       "path": "projectiles/thorne.e.thorn.json",
-      "hash": "34e18d17d738",
-      "size": 135
+      "hash": "aa4b7804cb73",
+      "size": 204
     }
   ]
 }

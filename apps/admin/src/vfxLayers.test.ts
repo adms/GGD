@@ -80,16 +80,43 @@ function draft(over: Record<string, string> = {}): LayerDraft {
 // ---------------------------------------------------------------------------
 
 describe("層的欄位不是這裡發明的 (adminui-vfx-layers-fields)", () => {
-  it("參數格 = ABILITY_FIELDS 減掉 family / anchor / enabled —— 多一個少一個都紅", () => {
+  it("參數格 = **層 schema 真的收得下**的那些 —— 多一個少一個都紅", () => {
     cover("adminui-vfx-layers-fields");
-    const expected = ABILITY_FIELDS.filter(
-      (f) => !NON_LAYER_ABILITY_FIELDS.includes(f) && f !== "enabled",
-    );
+    // ⚠️ 2026-08-19（GH#390）：這一條以前把**同一段推導抄了一遍**
+    // （`ABILITY_FIELDS` 減掉手打的 `NON_LAYER_ABILITY_FIELDS`），
+    // 於是它結構上抓不到自己要抓的那個漏 —— 實作與斷言一起錯就一起綠
+    // （失敗形態⑤：被測的不是出貨的那個）。音效那批一加進 `ABILITY_FIELDS`
+    // 就漏進層編輯器，而這條測試是綠的。
+    // ⇒ 現在錨在**層 schema 自己**，那是唯一的真相來源。
+    const schemaKeys = Object.keys(zAbilityVfxLayer.shape);
+    // ⚠️ `tint` 在 schema 是**一個三元組**，後台表把它拆成 `tintR`/`tintG`/`tintB`
+    // 三格草稿欄位。⛔ 這不是漏，是刻意的表示法差異 —— 而且它是一個**真的陷阱**：
+    // 我第一版把 `tint` 直接濾掉，結果三格顏色旋鈕整個從層編輯器消失，
+    // 而所有測試都是綠的。⇒ 這裡把它**展開**，⛔ 不是排除。
+    const expected = schemaKeys
+      .filter((f) => !["vfxKey", "enabled", "attachTo", "delayMs"].includes(f))
+      .flatMap((f) => (f === "tint" ? ["tintR", "tintG", "tintB"] : [f]));
     expect([...LAYER_PARAM_FIELDS].sort()).toEqual([...expected].sort());
     // 而且那兩個被排除的欄位確實還在家族綁定那張表上（不是被誰刪掉了）
     for (const f of NON_LAYER_ABILITY_FIELDS) {
       expect(ABILITY_FIELDS as readonly string[]).toContain(f);
     }
+  });
+
+  it("⛔ 音效欄位進不了層 —— 它們住在家族／逐支那兩層，硬塞會被 .strict() 擋掉", () => {
+    cover("adminui-vfx-layers-fields");
+    // GH#390 的實際缺陷：`soundLaunch` 一族是**字串**（audio-map 的 key），
+    // 而 `ForgeBound` 是純數值 ⇒ 漏進來就是「畫得出格子、沒有上下界、被當數字、
+    // 存檔時整層被拒」。⛔ 這一條把那個狀態釘死。
+    for (const f of ["soundLaunch", "soundImpact", "soundLoop", "soundDissipate", "soundGain"]) {
+      expect(LAYER_FIELDS, `${f} 不該出現在層編輯器`).not.toContain(f);
+      expect(
+        zAbilityVfxLayer.safeParse({ vfxKey: "fx.prim.arcane.pulse-lg", [f]: "wc3.x" }).success,
+        `層 schema 應該擋掉 ${f}`,
+      ).toBe(false);
+    }
+    // ⭐ 反向：它們**確實**存在於技能那一層（不是被誰刪掉了，也不是打錯字）
+    expect(ABILITY_FIELDS as readonly string[]).toContain("soundLaunch");
   });
 
   it("⚠️ anchor 進不了層 —— schema 的 .strict() 會擋，這是刻意的（沒有 bone parenting）", () => {

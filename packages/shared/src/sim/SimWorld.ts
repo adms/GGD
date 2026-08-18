@@ -86,7 +86,7 @@ import { statRecomputeSystem, buffExpirySystem } from "./stats/statPipeline";
 import { resourceStatSystem } from "./stats/resourceStats";
 import { auraSystem } from "./aura/aura";
 import { auraCarrierSystem } from "./auraCarrier";
-import { nightPactSystem } from "./nightPact";
+import { deathWardSystem } from "./deathWard";
 import { commandSystem } from "./systems/CommandSystem";
 import { castResolveSystem } from "./systems/CastResolveSystem";
 import { recoveryDecaySystem } from "./systems/RecoverySystem";
@@ -527,8 +527,10 @@ export class SimWorld {
   readonly auraCarrier = new Map<EntityId, import("./auraCarrier").AuraCarrierComp>();
 
   /**
-   * 暗夜旗 (71-00 暗夜契約, owner 2026-07-30) — the banners a champion death
-   * raises while a 暗夜契約 carrier fights in that zone, each radiating 黑夜靈氣.
+   * 【死亡遺留】the persistent aura objects a champion death leaves on the spot
+   * while somebody carrying a `deathWard` grant fights in that zone. 71-00
+   * 暗夜契約's 暗夜旗 is the shipped one, but the mechanic is now a GRANT —
+   * see sim/deathWard.ts for why that matters (第〇·五守則).
    *
    * Transform + this marker ONLY: no TeamComp (one would corrupt
    * `teamAliveInZone` and duel resolution) and no Health (one would make a
@@ -537,9 +539,9 @@ export class SimWorld {
    * it structurally untargetable for every ability, projectile, auto-acquire and
    * mob-AI query — but UNLIKE an aura carrier it IS published to the wire, as
    * `ENTITY_KIND.NIGHT_FLAG`, because the owner asked for a black circle sized
-   * to the aura so players can see where the effect reaches. See sim/nightPact.ts.
+   * to the aura so players can see where the effect reaches. See sim/deathWard.ts.
    */
-  readonly nightFlag = new Map<EntityId, import("./nightPact").NightFlagComp>();
+  readonly deathWard = new Map<EntityId, import("./deathWard").DeathWardComp>();
 
   /** queued damage, drained by combatResolveSystem in one ordered pass */
   readonly damageQueue: DamagePacket[] = [];
@@ -856,15 +858,11 @@ export class SimWorld {
    */
   coinRules: CoinRules | null = null;
 
-  /**
-   * 暗夜契約 rules (71-00). null (default) = the mechanic is OFF — unit tests,
-   * the client's prediction shadow world and every match whose rules doc has no
-   * `nightPact` block — and `nightPactSystem` returns on it before doing
-   * anything at all, so a pre-feature world is byte-identical down to the
-   * digest AND draws nothing from `world.rng`. The match host arms these via
-   * `beginCombatNightPact` / `endCombatNightPact` (see nightPact.ts).
-   */
-  nightPactRules: import("./nightPact").NightPactRules | null = null;
+  // ⛔ `nightPactRules` 在 2026-08-19 被刪掉了，而那不是整理：一個「武裝旗標」
+  // 就是一種可以被忘記的故障（`MatchController.ts` 自己記錄過那一次 —— 半徑都
+  // 建好了而旗標是 null，整支天生技在真的比賽裡什麼都沒做，測試全綠）。
+  // 【死亡遺留】現在的開關**就是內容**：場上沒有人帶著 `deathWard` 授予，
+  // `deathWardSystem` 的第一個迴圈就走完了。見 sim/deathWard.ts。
 
   /**
    * Mob-wave rules (ticks), task #215. null (default) = the mechanic is OFF —
@@ -1369,9 +1367,9 @@ export class SimWorld {
     // `auraCarrierSystem`'s reconcile, which sees the host's transform vanish
     // and tears the carrier down on the next tick (sim/auraCarrier.ts).
     this.auraCarrier.delete(id);
-    // …nor a stale 暗夜旗 marker. A recycled entityId that inherited one would
-    // keep radiating 黑夜靈氣 from a body that is now a champion or a projectile.
-    this.nightFlag.delete(id);
+    // …nor a stale 死亡遺留 marker. A recycled entityId that inherited one would
+    // keep radiating its aura from a body that is now a champion or a projectile.
+    this.deathWard.delete(id);
     this.matchStats.delete(id);
     this.recentDamagers.delete(id);
     this.killTracking.delete(id);
@@ -1453,11 +1451,11 @@ export class SimWorld {
       // `auraSystem` queries the grid for an emitter's NEIGHBOURS and reads the
       // emitter's own position straight off `world.transform`.
       if (this.auraCarrier.has(id)) continue;
-      // 暗夜旗 are BANNERS, not bodies: out of the broad-phase means nothing can
-      // target, hit or collide with one, exactly like a revive circle. The night
-      // aura costs nothing for it — nightPactSystem reads flag positions straight
-      // off `world.transform` and never queries the grid.
-      if (this.nightFlag.has(id)) continue;
+      // 死亡遺留物 are MARKERS, not bodies: out of the broad-phase means nothing
+      // can target, hit or collide with one, exactly like a revive circle. The
+      // aura costs nothing for it — deathWardSystem reads their positions
+      // straight off `world.transform` and never queries the grid.
+      if (this.deathWard.has(id)) continue;
       this.grid.insertCircle(id, t.pos, t.radius);
     }
   }
@@ -1643,11 +1641,13 @@ export class SimWorld {
     flowerSystem(this); //   9b. flower burst on death + spawn cadence (no-op unless armed)
     reviveSystem(this); //   9c. revive circles: drop on death, channel, revive/expire
     //                             (no-op unless armed; consumes this tick's deaths)
-    nightPactSystem(this); // 9c′. 71-00 暗夜契約: raise a 暗夜旗 on this tick's
-    //                             champion deaths, reconcile 黑夜靈氣 membership,
-    //                             and roll the 附近敵方施法 mana burn (STRICT no-op
-    //                             unless armed). Same slot rationale as the
-    //                             reviveSystem above it: the flag is raised by a
+    deathWardSystem(this); // 9c′.【死亡遺留】raise a ward on this tick's champion
+    //                             deaths for every carrier of a `deathWard`
+    //                             grant, then reconcile who stands inside one
+    //                             (no-op when nobody carries the grant — the
+    //                             switch IS the content, there is no arm flag).
+    //                             Same slot rationale as the
+    //                             reviveSystem above it: the ward is raised by a
     //                             DEATH, so it has to read this tick's `death`
     //                             events. The aura it attaches is folded in by
     //                             the NEXT tick's statRecomputeSystem — the same

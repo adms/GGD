@@ -436,6 +436,18 @@ export class AudioSystem {
     }
   }
 
+  /**
+   * 唯讀:載入的那一份 SFX 表。
+   *
+   * ⭐ 存在的理由只有一個 —— GH#390 的特效音要問「**這個 build 供不供應這個
+   * clip 的檔案**」(overlay 專用的 `wc3.*` 在正式站上是 404)。那是一個關於
+   * **路徑**的問題,只有這份表答得出來;抄一份 key 名單就是第二個住處,而它一定
+   * 會過期。⛔ 它不是播放路徑:播放一律走 `playSfx`,才吃得到玩家的音量設定。
+   */
+  get sfxMap(): AudioMap {
+    return this.map;
+  }
+
   /** Install a map directly (tests / editor live-reload). */
   setMap(map: AudioMap): void {
     this.map = { bgm: map.bgm ?? {}, sfx: map.sfx ?? {} };

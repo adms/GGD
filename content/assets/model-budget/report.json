@@ -1,43 +1,37 @@
 {
  "schema": "model-budget@1",
- "generatedAt": "2026-08-18T18:06:13.434Z",
+ "sourcesDigest": "9b7bdad82ec2a127",
  "generatedBy": "tools/model-budget/emit_report.ts (task #99)",
  "sources": [
   {
    "path": "content/models/_index.json",
    "sha256": "dc20d995ac6b2d40",
-   "bytes": 17832,
-   "mtime": "2026-08-18T17:26:46.451Z"
+   "bytes": 17832
   },
   {
    "path": "content/arenas/_index.json",
-   "sha256": "d4d20fe02336d667",
-   "bytes": 1876,
-   "mtime": "2026-08-18T17:26:46.441Z"
+   "sha256": "f42520d45b59a350",
+   "bytes": 1875
   },
   {
    "path": "content/champions/_index.json",
-   "sha256": "d4ea0e0e64525586",
-   "bytes": 10293,
-   "mtime": "2026-08-18T17:26:46.376Z"
+   "sha256": "4d77c9daf8591ee2",
+   "bytes": 10293
   },
   {
    "path": "apps/client/src/render/ArenaGround.ts",
    "sha256": "2865d5d4e00a5e39",
-   "bytes": 31755,
-   "mtime": "2026-08-18T12:07:47.296Z"
+   "bytes": 31755
   },
   {
    "path": "apps/client/src/render/intermission/layout.ts",
    "sha256": "870cbcc6f771756f",
-   "bytes": 23574,
-   "mtime": "2026-07-24T04:47:12.033Z"
+   "bytes": 23574
   },
   {
    "path": "tools/model-budget/limits.ts",
-   "sha256": "a313b5a41b460512",
-   "bytes": 12428,
-   "mtime": "2026-07-22T09:13:17.082Z"
+   "sha256": "1a2dd4d8d9299d24",
+   "bytes": 15908
   }
  ],
  "limits": [
@@ -109,8 +103,8 @@
   {
    "role": "arena-decor",
    "label": "競技場擺設（arena doc 的 decor[]）",
-   "simultaneous": 50,
-   "simultaneousWhy": "godie 放了 50 棵 japanesecherry；這是目前單一擺設模型的最高擺放數。",
+   "simultaneous": 78,
+   "simultaneousWhy": "godie 的 japanesecherry：50 列手擺 decor + 一條 count 14 的散佈規則 × 2 個分區 = 78 份。⚠️ 這一行以前寫「50 棵」，而 GH#362 把散佈規則加進來之後那句話就過期了 —— 現在它由 `placement.test.ts` 逐張 arena 數出來守著，⛔ 不再是一句沒有人驗的散文。",
    "tris": {
     "warn": 4000,
     "limit": 8000
@@ -128,6 +122,30 @@
     "limit": 0
    },
    "why": "閘門看的是「單一模型 × 它的擺放數」的總和，不是模型本身：擺設可用 120 個 mesh 與 120k 面，任何一支模型不得吃掉超過 1/4（30 mesh、30k 面）。逐支的 warn/limit 是把該額度攤回單一實例後的值，並額外要求擺設模型不得有骨架（通道上限 0）—— 一棵 74 面的樹帶 1 根骨頭，就會讓 50 棵樹變成 100 個無法 instance 的 draw call。"
+  },
+  {
+   "role": "arena-decor-cc0",
+   "label": "競技場擺設 · 下載的 CC0 布景（scenery-cc0）",
+   "pathPrefix": "assets/models/scenery-cc0/",
+   "simultaneous": 10,
+   "simultaneousWhy": "地標不是草：出貨 13 張圖對這批的最大用量是 8 份（colosseum 的 TempleColumn）。10 留一點餘裕，而且它**被強制**—— `placement.test.ts` 逐張 arena 數過每一件的擺放數，超過就紅。",
+   "tris": {
+    "warn": 4000,
+    "limit": 8000
+   },
+   "meshes": {
+    "warn": 3,
+    "limit": 6
+   },
+   "texEdge": {
+    "warn": 512,
+    "limit": 1024
+   },
+   "channels": {
+    "warn": 0,
+    "limit": 0
+   },
+   "why": "跟 `arena-decor` **同一條算術**，只換擺放數：擺設可用 120 個 mesh，單一模型不得吃掉超過 1/4（30 mesh）→ 30 ÷ 10 = 3 是警戒線；硬上限用一半的額度（60 mesh）÷ 10 = 6。面數與貼圖邊長刻意**不放寬**（4k/8k、512/1024 與 arena-decor 一字不差）—— 這批最重的一件 3,540 面本來就在線內，而且 10 份而不是 78 份意味著同樣的面數在畫面上便宜 7.8 倍，所以放寬它沒有任何理由。通道上限同樣是 0：布景不得帶骨架。"
   },
   {
    "role": "intermission-prop",
@@ -10324,7 +10342,7 @@
    "path": "assets/models/scenery-cc0/christmas__Fence.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 6,
    "vertices": 12,
    "drawCalls": 1,
@@ -10369,7 +10387,7 @@
    "path": "assets/models/scenery-cc0/christmas__Lamp01.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 262,
    "vertices": 430,
    "drawCalls": 2,
@@ -10409,7 +10427,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -10420,7 +10438,7 @@
    "path": "assets/models/scenery-cc0/christmas__MiniTree.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 24,
    "vertices": 54,
    "drawCalls": 1,
@@ -10465,7 +10483,7 @@
    "path": "assets/models/scenery-cc0/christmas__SnowBall.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 204,
    "vertices": 210,
    "drawCalls": 1,
@@ -10510,7 +10528,7 @@
    "path": "assets/models/scenery-cc0/crystal-crossroads__Column_SmallBroken_01.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 564,
    "vertices": 911,
    "drawCalls": 3,
@@ -10550,7 +10568,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "over",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -10561,7 +10579,7 @@
    "path": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Base.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 352,
    "vertices": 354,
    "drawCalls": 2,
@@ -10601,7 +10619,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -10612,7 +10630,7 @@
    "path": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Cluster.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 3540,
    "vertices": 3917,
    "drawCalls": 2,
@@ -10646,7 +10664,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -10756,7 +10774,7 @@
    "path": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Small_03.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 284,
    "vertices": 382,
    "drawCalls": 2,
@@ -10790,7 +10808,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -10801,7 +10819,7 @@
    "path": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Small_04.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 284,
    "vertices": 382,
    "drawCalls": 2,
@@ -10835,7 +10853,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -10930,7 +10948,7 @@
    "path": "assets/models/scenery-cc0/crystal-crossroads__Stairs.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 916,
    "vertices": 1512,
    "drawCalls": 3,
@@ -10970,7 +10988,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "over",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -10981,7 +10999,7 @@
    "path": "assets/models/scenery-cc0/crystal-crossroads__Vase_Broken.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 2539,
    "vertices": 3144,
    "drawCalls": 3,
@@ -11021,7 +11039,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "over",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -11071,7 +11089,7 @@
    "path": "assets/models/scenery-cc0/crystal-crossroads__Wall_Broken_01.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 368,
    "vertices": 648,
    "drawCalls": 3,
@@ -11111,7 +11129,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "over",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -11122,7 +11140,7 @@
    "path": "assets/models/scenery-cc0/crystal-crossroads__Wall_CornerBroken.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 124,
    "vertices": 230,
    "drawCalls": 3,
@@ -11162,7 +11180,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "over",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -11173,7 +11191,7 @@
    "path": "assets/models/scenery-cc0/crystal-crossroads__Wall_Small_01.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 148,
    "vertices": 296,
    "drawCalls": 3,
@@ -11213,7 +11231,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "over",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -11263,7 +11281,7 @@
    "path": "assets/models/scenery-cc0/lunar-year__Banner.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 276,
    "vertices": 386,
    "drawCalls": 3,
@@ -11309,7 +11327,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "over",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -11320,7 +11338,7 @@
    "path": "assets/models/scenery-cc0/lunar-year__Bell.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 132,
    "vertices": 260,
    "drawCalls": 2,
@@ -11360,7 +11378,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -11416,7 +11434,7 @@
    "path": "assets/models/scenery-cc0/lunar-year__Column.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 144,
    "vertices": 150,
    "drawCalls": 3,
@@ -11462,7 +11480,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "over",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -11473,7 +11491,7 @@
    "path": "assets/models/scenery-cc0/lunar-year__ColumnBase.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 120,
    "vertices": 158,
    "drawCalls": 1,
@@ -11563,7 +11581,7 @@
    "path": "assets/models/scenery-cc0/lunar-year__EntranceStairs.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 136,
    "vertices": 244,
    "drawCalls": 2,
@@ -11603,7 +11621,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -11614,7 +11632,7 @@
    "path": "assets/models/scenery-cc0/lunar-year__Fence01.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 108,
    "vertices": 136,
    "drawCalls": 3,
@@ -11660,7 +11678,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "over",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -11716,7 +11734,7 @@
    "path": "assets/models/scenery-cc0/lunar-year__Lamp01.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 194,
    "vertices": 353,
    "drawCalls": 2,
@@ -11756,7 +11774,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -11767,7 +11785,7 @@
    "path": "assets/models/scenery-cc0/lunar-year__Lamp02.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 197,
    "vertices": 354,
    "drawCalls": 2,
@@ -11807,7 +11825,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -11941,7 +11959,7 @@
    "path": "assets/models/scenery-cc0/lunar-year__MainAltar.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 86,
    "vertices": 160,
    "drawCalls": 4,
@@ -11993,7 +12011,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "over",
+    "drawCalls": "warn",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -12004,7 +12022,7 @@
    "path": "assets/models/scenery-cc0/lunar-year__OutterLamp.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 578,
    "vertices": 631,
    "drawCalls": 2,
@@ -12044,7 +12062,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -12055,7 +12073,7 @@
    "path": "assets/models/scenery-cc0/lunar-year__Rock01.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 30,
    "vertices": 20,
    "drawCalls": 1,
@@ -12100,7 +12118,7 @@
    "path": "assets/models/scenery-cc0/lunar-year__Rock02.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 90,
    "vertices": 60,
    "drawCalls": 1,
@@ -12223,7 +12241,7 @@
    "path": "assets/models/scenery-cc0/medieval-fair__Fair_Flags_Line.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 1268,
    "vertices": 1696,
    "drawCalls": 4,
@@ -12293,7 +12311,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "over",
+    "drawCalls": "warn",
     "maxTextureEdge": "warn",
     "animChannels": "ok"
    },
@@ -12304,7 +12322,7 @@
    "path": "assets/models/scenery-cc0/medieval-fair__Lamp.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 733,
    "vertices": 934,
    "drawCalls": 3,
@@ -12362,7 +12380,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "over",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -12520,7 +12538,7 @@
    "path": "assets/models/scenery-cc0/tomb-chaser-2__Shrine_Art.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 186,
    "vertices": 312,
    "drawCalls": 1,
@@ -12571,7 +12589,7 @@
    "path": "assets/models/scenery-cc0/tomb-chaser-2__TempleBaseStaircase_Art.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 106,
    "vertices": 152,
    "drawCalls": 2,
@@ -12629,7 +12647,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -12679,7 +12697,7 @@
    "path": "assets/models/scenery-cc0/tomb-chaser-2__TempleColumn_Art.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 42,
    "vertices": 56,
    "drawCalls": 1,
@@ -12886,7 +12904,7 @@
    "path": "assets/models/scenery-cc0/tomb-chaser-2__TempleWall01_Art.glb",
    "group": "scenery-cc0",
    "shipping": true,
-   "role": "arena-decor",
+   "role": "arena-decor-cc0",
    "triangles": 2,
    "vertices": 4,
    "drawCalls": 1,

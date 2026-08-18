@@ -189,6 +189,32 @@ describe("GH#379 家族仰角", () => {
     }
   });
 
+  /**
+   * #394 owner「**吐息類 我猜是粒子特效 你可以查看看**」。
+   *
+   * 查到的:吐息**是**粒子(`BloodBreathStream.mdx` 三顆 PRE2,見
+   * `tools/w3x-import/out/GoDieEX22s/PARTICLES.md`),而出貨的 `fx.fam.breath.*`
+   * 是用 `beam` primitive 生的錐狀氣流、**沒有 `orient`** ⇒ `pitchDeg` 取預設
+   * 90 ⇒ **一口吐息直直往天上噴**。原因是家族 id 的第二段是**家族**不是**形狀**,
+   * 上面那支 `directionalFamilyOfVfxId` 當時只認 `fx.prim.*`。
+   *
+   * ⚠️ 這裡只驗「吐息落在有方向的那一族、而且真的躺下來瞄準」——
+   * ⛔ 不驗角度是多少(那是 `content/config/vfx-families.json` 的視覺決定)。
+   * ⚠️ 吐息的方位語意 = **施法瞬間的瞄準方向**,⛔ 不是「每幀跟著頭骨轉」——
+   * 執行期附著＋跟隨是 GH#392 還沒做的東西(`W3xCastFx` 的檔頭:plays at a
+   * WORLD POSITION, never parented to a champion node)。
+   */
+  it("吐息落在有方向的家族裡，而且真的躺下來瞄準（不是往天上噴）", () => {
+    setFamilyPitchDefaults(SHIPPED);
+    const breaths = DIRECTIONAL_DOCS.filter((d) => d.id.startsWith("fx.fam.breath."));
+    expect(breaths.length, "出貨的吐息文件沒有被認成有方向的形狀").toBeGreaterThan(0);
+    for (const raw of breaths) {
+      const o = applyFamilyOrient(raw).orient;
+      expect(o?.pitchDeg, `${raw.id} 仍然是直立的 —— 吐息往天上噴`).not.toBe(90);
+      expect(o?.yawFrom, `${raw.id} 沒有在瞄準`).toBe("aim");
+    }
+  });
+
   /** 一鍵 rollback:總開關關掉 = 每一份文件都回到原本那個物件(＝這條機制上線前)。 */
   it("總開關關掉之後，有方向的文件一位元都不變", () => {
     setFamilyPitchDefaults({ ...SHIPPED, familyPitchDefaults: false });

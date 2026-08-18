@@ -1,0 +1,1451 @@
+{
+ "schema": "ggd-vfx-sound-join@1",
+ "generator": "tools/w3x-import/build_vfx_sound_bindings.py",
+ "modelBoundSoundsets": {
+  "modelsWithSoundEvents": 65,
+  "modelsScanned": 132,
+  "animLookupRows": 612,
+  "animSoundRows": 593,
+  "unresolvedEvents": [
+   "SNDXAEFL",
+   "SNDXKPES"
+  ],
+  "byModel": {
+   "aquaspikeversion2": [
+    {
+     "event": "SNDXDNBL",
+     "soundLabel": "NagaBuildingDeath",
+     "files": [
+      "Sound\\Buildings\\Naga\\NagaBuildingCancel.wav"
+     ]
+    }
+   ],
+   "bladestorm-swordeffect": [
+    {
+     "event": "SNDXAOWW",
+     "soundLabel": "Whirlwind",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\BladeMasterWhirlwind.wav"
+     ]
+    }
+   ],
+   "darkraor": [
+    {
+     "event": "SNDXMDCL",
+     "soundLabel": "DeathCoilMissile",
+     "files": [
+      "Abilities\\Spells\\Undead\\DeathCoil\\DeathCoilMissileLaunch1.wav"
+     ]
+    },
+    {
+     "event": "SNDXMMEA",
+     "soundLabel": "MeatWagonMissileHit",
+     "files": [
+      "Abilities\\Weapons\\MeatwagonMissile\\MeatwagonMissileHit1.wav"
+     ]
+    }
+   ],
+   "deathwave": [
+    {
+     "event": "SNDXACCV",
+     "soundLabel": "CrushingWave",
+     "files": [
+      "Abilities\\Spells\\Other\\CrushingWave\\CrushingWaveCaster1.wav"
+     ]
+    }
+   ],
+   "earthtornado2": [
+    {
+     "event": "SNDXAOWW",
+     "soundLabel": "Whirlwind",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\BladeMasterWhirlwind.wav"
+     ]
+    }
+   ],
+   "fireblast": [
+    {
+     "event": "SNDXMKGH",
+     "soundLabel": "KeeperOfTheGroveMissileHit",
+     "files": [
+      "Abilities\\Weapons\\KeeperGroveMissile\\KeeperOfTheGroveMissileHit1.wav",
+      "Abilities\\Weapons\\KeeperGroveMissile\\KeeperOfTheGroveMissileHit2.wav",
+      "Abilities\\Weapons\\KeeperGroveMissile\\KeeperOfTheGroveMissileHit3.wav"
+     ]
+    },
+    {
+     "event": "SNDXMKGL",
+     "soundLabel": "KeeperOfTheGroveMissileLaunch",
+     "files": [
+      "Abilities\\Weapons\\KeeperGroveMissile\\KeeperOfTheGroveMissileLaunch1.wav",
+      "Abilities\\Weapons\\KeeperGroveMissile\\KeeperOfTheGroveMissileLaunch2.wav",
+      "Abilities\\Weapons\\KeeperGroveMissile\\KeeperOfTheGroveMissileLaunch3.wav"
+     ]
+    }
+   ],
+   "flash": [
+    {
+     "event": "SNDXAEBL",
+     "soundLabel": "BlinkCaster",
+     "files": [
+      "Abilities\\Spells\\NightElf\\Blink\\BlinkBirth1.wav"
+     ]
+    }
+   ],
+   "goku": [
+    {
+     "event": "SNDXAAMS",
+     "soundLabel": "AntiMagicshell",
+     "files": []
+    },
+    {
+     "event": "SNDXAAST",
+     "soundLabel": "AncestralSpirit",
+     "files": [
+      "Abilities\\Spells\\Orc\\AncestralSpirit\\AncestralSpirit.wav"
+     ]
+    },
+    {
+     "event": "SNDXDDEM",
+     "soundLabel": "HeroDemonHunterDeath",
+     "files": [
+      "Units\\NightElf\\HeroDemonHunter\\HeroDemonHunterDeath1.wav"
+     ]
+    }
+   ],
+   "herobiggon": [
+    {
+     "event": "SNDXDDSH",
+     "soundLabel": "HumanDissipate",
+     "files": [
+      "Sound\\Units\\Human\\HumanDissipate1.wav"
+     ]
+    },
+    {
+     "event": "SNDXDFOO",
+     "soundLabel": "FootmanDeath",
+     "files": [
+      "Units\\Human\\Footman\\FootmanDeath.wav"
+     ]
+    }
+   ],
+   "herobuu": [
+    {
+     "event": "SNDXAAMS",
+     "soundLabel": "AntiMagicshell",
+     "files": []
+    },
+    {
+     "event": "SNDXAHEA",
+     "soundLabel": "Heal",
+     "files": [
+      "Abilities\\Spells\\Human\\Heal\\HealTarget.wav"
+     ]
+    },
+    {
+     "event": "SNDXAOSH",
+     "soundLabel": "ShockWave",
+     "files": [
+      "Abilities\\Spells\\Orc\\Shockwave\\Shockwave.wav"
+     ]
+    },
+    {
+     "event": "SNDXDTUS",
+     "soundLabel": "TuskarrDeath",
+     "files": [
+      "Units\\Creeps\\tuskar\\TuskarrDeath1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKIRG",
+     "soundLabel": "IronGolemAttack1",
+     "files": [
+      "Units\\Creeps\\IronGolem\\IronGolemAttack1.wav"
+     ]
+    }
+   ],
+   "herogirl": [
+    {
+     "event": "SNDXAEFK",
+     "soundLabel": "FanOfKnives",
+     "files": [
+      "Units\\NightElf\\HeroWarden\\FanOfKnives.wav"
+     ]
+    },
+    {
+     "event": "SNDXDRAN",
+     "soundLabel": "ArcherDeath",
+     "files": [
+      "Units\\NightElf\\Archer\\ArcherDeath1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM1",
+     "soundLabel": "HeroBladeMasterAttack1",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM2",
+     "soundLabel": "HeroBladeMasterAttack2",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack2.wav"
+     ]
+    }
+   ],
+   "herohanzouhattori": [
+    {
+     "event": "SNDXAOCR",
+     "soundLabel": "CriticalStrike",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\CriticalStrike.wav"
+     ]
+    },
+    {
+     "event": "SNDXDBLA",
+     "soundLabel": "HeroBladeMasterDeath",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterDeath.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM1",
+     "soundLabel": "HeroBladeMasterAttack1",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM2",
+     "soundLabel": "HeroBladeMasterAttack2",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack2.wav"
+     ]
+    }
+   ],
+   "herohehi": [
+    {
+     "event": "SNDXAOCR",
+     "soundLabel": "CriticalStrike",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\CriticalStrike.wav"
+     ]
+    },
+    {
+     "event": "SNDXAOWW",
+     "soundLabel": "Whirlwind",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\BladeMasterWhirlwind.wav"
+     ]
+    },
+    {
+     "event": "SNDXDDSO",
+     "soundLabel": "OrcDissipate",
+     "files": [
+      "Sound\\Units\\Orc\\OrcDissipate1.wav"
+     ]
+    },
+    {
+     "event": "SNDXDPAL",
+     "soundLabel": "HeroPaladinDeath",
+     "files": [
+      "Units\\Human\\HeroPaladin\\HeroPaladinDeath.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM1",
+     "soundLabel": "HeroBladeMasterAttack1",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM2",
+     "soundLabel": "HeroBladeMasterAttack2",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack2.wav"
+     ]
+    }
+   ],
+   "herohimurakenshin": [
+    {
+     "event": "SNDXAOCR",
+     "soundLabel": "CriticalStrike",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\CriticalStrike.wav"
+     ]
+    },
+    {
+     "event": "SNDXAOWW",
+     "soundLabel": "Whirlwind",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\BladeMasterWhirlwind.wav"
+     ]
+    },
+    {
+     "event": "SNDXDBLA",
+     "soundLabel": "HeroBladeMasterDeath",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterDeath.wav"
+     ]
+    },
+    {
+     "event": "SNDXDDSO",
+     "soundLabel": "OrcDissipate",
+     "files": [
+      "Sound\\Units\\Orc\\OrcDissipate1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM1",
+     "soundLabel": "HeroBladeMasterAttack1",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM2",
+     "soundLabel": "HeroBladeMasterAttack2",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack2.wav"
+     ]
+    }
+   ],
+   "herokunoichi": [
+    {
+     "event": "SNDXAEFK",
+     "soundLabel": "FanOfKnives",
+     "files": [
+      "Units\\NightElf\\HeroWarden\\FanOfKnives.wav"
+     ]
+    },
+    {
+     "event": "SNDXDRAN",
+     "soundLabel": "ArcherDeath",
+     "files": [
+      "Units\\NightElf\\Archer\\ArcherDeath1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM1",
+     "soundLabel": "HeroBladeMasterAttack1",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM2",
+     "soundLabel": "HeroBladeMasterAttack2",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack2.wav"
+     ]
+    }
+   ],
+   "herolight": [
+    {
+     "event": "SNDXDBES",
+     "soundLabel": "HeroBloodElfDeath",
+     "files": [
+      "Units\\Human\\HeroBloodElf\\BloodElfSorcerorDeath.wav"
+     ]
+    },
+    {
+     "event": "SNDXDUDS",
+     "soundLabel": "UndeadDissipate",
+     "files": [
+      "Sound\\Units\\Undead\\Dissipate\\UndeadDissipate2.wav"
+     ]
+    },
+    {
+     "event": "SNDXMFRL",
+     "soundLabel": "FireballLaunch",
+     "files": [
+      "Abilities\\Weapons\\FireBallMissile\\FireBallMissileLaunch1.wav",
+      "Abilities\\Weapons\\FireBallMissile\\FireBallMissileLaunch2.wav",
+      "Abilities\\Weapons\\FireBallMissile\\FireBallMissileLaunch3.wav"
+     ]
+    }
+   ],
+   "herolingtong": [
+    {
+     "event": "SNDXAEFK",
+     "soundLabel": "FanOfKnives",
+     "files": [
+      "Units\\NightElf\\HeroWarden\\FanOfKnives.wav"
+     ]
+    },
+    {
+     "event": "SNDXDRAN",
+     "soundLabel": "ArcherDeath",
+     "files": [
+      "Units\\NightElf\\Archer\\ArcherDeath1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM1",
+     "soundLabel": "HeroBladeMasterAttack1",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM2",
+     "soundLabel": "HeroBladeMasterAttack2",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack2.wav"
+     ]
+    }
+   ],
+   "heromiku": [
+    {
+     "event": "SNDXDDSN",
+     "soundLabel": "NightElfDissipate",
+     "files": [
+      "Sound\\Units\\NightElf\\NightElfDissipate1.wav"
+     ]
+    }
+   ],
+   "heromusashimiyamoto": [
+    {
+     "event": "SNDXAOCR",
+     "soundLabel": "CriticalStrike",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\CriticalStrike.wav"
+     ]
+    },
+    {
+     "event": "SNDXAOWW",
+     "soundLabel": "Whirlwind",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\BladeMasterWhirlwind.wav"
+     ]
+    },
+    {
+     "event": "SNDXDDSO",
+     "soundLabel": "OrcDissipate",
+     "files": [
+      "Sound\\Units\\Orc\\OrcDissipate1.wav"
+     ]
+    },
+    {
+     "event": "SNDXDPAL",
+     "soundLabel": "HeroPaladinDeath",
+     "files": [
+      "Units\\Human\\HeroPaladin\\HeroPaladinDeath.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM1",
+     "soundLabel": "HeroBladeMasterAttack1",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM2",
+     "soundLabel": "HeroBladeMasterAttack2",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack2.wav"
+     ]
+    }
+   ],
+   "herooichi": [
+    {
+     "event": "SNDXDDMN",
+     "soundLabel": "DemonessDeath",
+     "files": [
+      "Units\\Demon\\Demoness\\SuccubusDeath1.wav"
+     ]
+    }
+   ],
+   "herorider": [
+    {
+     "event": "SNDXDRAN",
+     "soundLabel": "ArcherDeath",
+     "files": [
+      "Units\\NightElf\\Archer\\ArcherDeath1.wav"
+     ]
+    }
+   ],
+   "herosaber": [
+    {
+     "event": "SNDXAOCR",
+     "soundLabel": "CriticalStrike",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\CriticalStrike.wav"
+     ]
+    },
+    {
+     "event": "SNDXDDSO",
+     "soundLabel": "OrcDissipate",
+     "files": [
+      "Sound\\Units\\Orc\\OrcDissipate1.wav"
+     ]
+    },
+    {
+     "event": "SNDXDJAN",
+     "soundLabel": "JainaDeath",
+     "files": [
+      "Units\\Human\\Jaina\\JainaOnFootDeath1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM1",
+     "soundLabel": "HeroBladeMasterAttack1",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM2",
+     "soundLabel": "HeroBladeMasterAttack2",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack2.wav"
+     ]
+    }
+   ],
+   "herosamanosukeakechi": [
+    {
+     "event": "SNDXAOCR",
+     "soundLabel": "CriticalStrike",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\CriticalStrike.wav"
+     ]
+    },
+    {
+     "event": "SNDXDDSO",
+     "soundLabel": "OrcDissipate",
+     "files": [
+      "Sound\\Units\\Orc\\OrcDissipate1.wav"
+     ]
+    },
+    {
+     "event": "SNDXDPAL",
+     "soundLabel": "HeroPaladinDeath",
+     "files": [
+      "Units\\Human\\HeroPaladin\\HeroPaladinDeath.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM1",
+     "soundLabel": "HeroBladeMasterAttack1",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM2",
+     "soundLabel": "HeroBladeMasterAttack2",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack2.wav"
+     ]
+    }
+   ],
+   "herosephiroth": [
+    {
+     "event": "SNDXAOCR",
+     "soundLabel": "CriticalStrike",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\CriticalStrike.wav"
+     ]
+    },
+    {
+     "event": "SNDXDDSO",
+     "soundLabel": "OrcDissipate",
+     "files": [
+      "Sound\\Units\\Orc\\OrcDissipate1.wav"
+     ]
+    },
+    {
+     "event": "SNDXDPAL",
+     "soundLabel": "HeroPaladinDeath",
+     "files": [
+      "Units\\Human\\HeroPaladin\\HeroPaladinDeath.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM1",
+     "soundLabel": "HeroBladeMasterAttack1",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM2",
+     "soundLabel": "HeroBladeMasterAttack2",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack2.wav"
+     ]
+    }
+   ],
+   "heroshana": [
+    {
+     "event": "SNDXAOCR",
+     "soundLabel": "CriticalStrike",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\CriticalStrike.wav"
+     ]
+    },
+    {
+     "event": "SNDXDDSN",
+     "soundLabel": "NightElfDissipate",
+     "files": [
+      "Sound\\Units\\NightElf\\NightElfDissipate1.wav"
+     ]
+    },
+    {
+     "event": "SNDXDRAN",
+     "soundLabel": "ArcherDeath",
+     "files": [
+      "Units\\NightElf\\Archer\\ArcherDeath1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM1",
+     "soundLabel": "HeroBladeMasterAttack1",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM2",
+     "soundLabel": "HeroBladeMasterAttack2",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack2.wav"
+     ]
+    },
+    {
+     "event": "SNDXMFRL",
+     "soundLabel": "FireballLaunch",
+     "files": [
+      "Abilities\\Weapons\\FireBallMissile\\FireBallMissileLaunch1.wav",
+      "Abilities\\Weapons\\FireBallMissile\\FireBallMissileLaunch2.wav",
+      "Abilities\\Weapons\\FireBallMissile\\FireBallMissileLaunch3.wav"
+     ]
+    }
+   ],
+   "herotoshiiemaeda": [
+    {
+     "event": "SNDXAOCR",
+     "soundLabel": "CriticalStrike",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\CriticalStrike.wav"
+     ]
+    },
+    {
+     "event": "SNDXDDSO",
+     "soundLabel": "OrcDissipate",
+     "files": [
+      "Sound\\Units\\Orc\\OrcDissipate1.wav"
+     ]
+    },
+    {
+     "event": "SNDXDPAL",
+     "soundLabel": "HeroPaladinDeath",
+     "files": [
+      "Units\\Human\\HeroPaladin\\HeroPaladinDeath.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM1",
+     "soundLabel": "HeroBladeMasterAttack1",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM2",
+     "soundLabel": "HeroBladeMasterAttack2",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack2.wav"
+     ]
+    }
+   ],
+   "heroxelloss": [
+    {
+     "event": "SNDXDVLM",
+     "soundLabel": "VillagerManDeath",
+     "files": [
+      "Units\\Critters\\VillagerMan\\VillagerMaleDeath1.wav"
+     ]
+    }
+   ],
+   "hero-turtle": [
+    {
+     "event": "SNDXAWRS",
+     "soundLabel": "Pulverize",
+     "files": [
+      "Units\\Orc\\Tauren\\Warstomp.wav"
+     ]
+    },
+    {
+     "event": "SNDXDFUR",
+     "soundLabel": "FurbolgDeath",
+     "files": [
+      "Units\\Creeps\\Furbolg\\FurbolgDeath1.wav"
+     ]
+    }
+   ],
+   "herokyo": [
+    {
+     "event": "SNDXAOCR",
+     "soundLabel": "CriticalStrike",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\CriticalStrike.wav"
+     ]
+    },
+    {
+     "event": "SNDXDDSO",
+     "soundLabel": "OrcDissipate",
+     "files": [
+      "Sound\\Units\\Orc\\OrcDissipate1.wav"
+     ]
+    },
+    {
+     "event": "SNDXDPAL",
+     "soundLabel": "HeroPaladinDeath",
+     "files": [
+      "Units\\Human\\HeroPaladin\\HeroPaladinDeath.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM1",
+     "soundLabel": "HeroBladeMasterAttack1",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM2",
+     "soundLabel": "HeroBladeMasterAttack2",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack2.wav"
+     ]
+    }
+   ],
+   "holyawakening": [
+    {
+     "event": "SNDXAHMC",
+     "soundLabel": "MarkOfChaos",
+     "files": [
+      "Abilities\\Spells\\Human\\MarkOfChaos\\MarkOfChaos.wav"
+     ]
+    }
+   ],
+   "kikyou": [
+    {
+     "event": "SNDXDJAN",
+     "soundLabel": "JainaDeath",
+     "files": [
+      "Units\\Human\\Jaina\\JainaOnFootDeath1.wav"
+     ]
+    }
+   ],
+   "lightningtornado": [
+    {
+     "event": "SNDXAOWW",
+     "soundLabel": "Whirlwind",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\BladeMasterWhirlwind.wav"
+     ]
+    }
+   ],
+   "lightningnova": [
+    {
+     "event": "SNDXASTS",
+     "soundLabel": "StasisTotemDeath",
+     "files": [
+      "Units\\Orc\\StasisTotem\\StasisTotem.wav"
+     ]
+    }
+   ],
+   "linainvers": [
+    {
+     "event": "SNDXDJAN",
+     "soundLabel": "JainaDeath",
+     "files": [
+      "Units\\Human\\Jaina\\JainaOnFootDeath1.wav"
+     ]
+    }
+   ],
+   "lubu": [
+    {
+     "event": "SNDXAOCR",
+     "soundLabel": "CriticalStrike",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\CriticalStrike.wav"
+     ]
+    },
+    {
+     "event": "SNDXDDSO",
+     "soundLabel": "OrcDissipate",
+     "files": [
+      "Sound\\Units\\Orc\\OrcDissipate1.wav"
+     ]
+    },
+    {
+     "event": "SNDXDPAL",
+     "soundLabel": "HeroPaladinDeath",
+     "files": [
+      "Units\\Human\\HeroPaladin\\HeroPaladinDeath.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM1",
+     "soundLabel": "HeroBladeMasterAttack1",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM2",
+     "soundLabel": "HeroBladeMasterAttack2",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack2.wav"
+     ]
+    },
+    {
+     "event": "SNDXKDK1",
+     "soundLabel": "HeroDeathKnightAttack1",
+     "files": [
+      "Units\\Undead\\HeroDeathKnight\\HeroDeathKnightAttack1.wav"
+     ]
+    }
+   ],
+   "luffe": [
+    {
+     "event": "SNDXAAMS",
+     "soundLabel": "AntiMagicshell",
+     "files": []
+    },
+    {
+     "event": "SNDXADIS",
+     "soundLabel": "DispelMagic",
+     "files": [
+      "Abilities\\Spells\\Human\\DispelMagic\\DispelMagicTarget.wav"
+     ]
+    },
+    {
+     "event": "SNDXDNDS",
+     "soundLabel": "HumanDissipate",
+     "files": [
+      "Sound\\Units\\Human\\HumanDissipate1.wav"
+     ]
+    },
+    {
+     "event": "SNDXDPRS",
+     "soundLabel": "PriestDeath",
+     "files": [
+      "Units\\Human\\Priest\\PriestDeath.wav"
+     ]
+    }
+   ],
+   "meteor": [
+    {
+     "event": "SNDXAINB",
+     "soundLabel": "InfernalBirth",
+     "files": [
+      "Units\\Demon\\Infernal\\InfernalBirth1.wav"
+     ]
+    }
+   ],
+   "musiccast": [
+    {
+     "event": "SNDXAORE",
+     "soundLabel": "Reincarnation",
+     "files": [
+      "Abilities\\Spells\\Orc\\Reincarnation\\Reincarnation.wav"
+     ]
+    },
+    {
+     "event": "SNDXAOSF",
+     "soundLabel": "FeralSpiritTarget",
+     "files": [
+      "Abilities\\Spells\\Orc\\FeralSpirit\\FeralSpiritTarget1.wav"
+     ]
+    }
+   ],
+   "netherstrike": [
+    {
+     "event": "SNDXAHFS",
+     "soundLabel": "FlameStrike",
+     "files": [
+      "Abilities\\Spells\\Human\\FlameStrike\\FlameStrikeBirth1.wav"
+     ]
+    }
+   ],
+   "renaryugu2": [
+    {
+     "event": "SNDXAOCR",
+     "soundLabel": "CriticalStrike",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\CriticalStrike.wav"
+     ]
+    },
+    {
+     "event": "SNDXDDSO",
+     "soundLabel": "OrcDissipate",
+     "files": [
+      "Sound\\Units\\Orc\\OrcDissipate1.wav"
+     ]
+    },
+    {
+     "event": "SNDXDJAN",
+     "soundLabel": "JainaDeath",
+     "files": [
+      "Units\\Human\\Jaina\\JainaOnFootDeath1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM1",
+     "soundLabel": "HeroBladeMasterAttack1",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM2",
+     "soundLabel": "HeroBladeMasterAttack2",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack2.wav"
+     ]
+    }
+   ],
+   "sephboom": [
+    {
+     "event": "SNDXDHLB",
+     "soundLabel": "DeathHumanLargeBuilding",
+     "files": [
+      "Sound\\Buildings\\Death\\BuildingDeathLargeHuman.wav"
+     ]
+    }
+   ],
+   "sesshomaru": [
+    {
+     "event": "SNDXAOCR",
+     "soundLabel": "CriticalStrike",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\CriticalStrike.wav"
+     ]
+    },
+    {
+     "event": "SNDXDBES",
+     "soundLabel": "HeroBloodElfDeath",
+     "files": [
+      "Units\\Human\\HeroBloodElf\\BloodElfSorcerorDeath.wav"
+     ]
+    },
+    {
+     "event": "SNDXDDSH",
+     "soundLabel": "HumanDissipate",
+     "files": [
+      "Sound\\Units\\Human\\HumanDissipate1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM1",
+     "soundLabel": "HeroBladeMasterAttack1",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM2",
+     "soundLabel": "HeroBladeMasterAttack2",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack2.wav"
+     ]
+    }
+   ],
+   "supershinythingy": [
+    {
+     "event": "SNDXAIVS",
+     "soundLabel": "Invisibility",
+     "files": [
+      "Abilities\\Spells\\Human\\Invisibility\\InvisibilityTarget.wav"
+     ]
+    }
+   ],
+   "tectonicfury": [
+    {
+     "event": "SNDXMCAT",
+     "soundLabel": "Catapult",
+     "files": [
+      "Abilities\\Weapons\\Catapult\\CatapultMissile1.wav",
+      "Abilities\\Weapons\\Catapult\\CatapultMissile2.wav",
+      "Abilities\\Weapons\\Catapult\\CatapultMissile3.wav",
+      "Abilities\\Weapons\\Catapult\\CatapultMissile4.wav"
+     ]
+    }
+   ],
+   "windmissle": [
+    {
+     "event": "SNDXACCV",
+     "soundLabel": "CrushingWave",
+     "files": [
+      "Abilities\\Spells\\Other\\CrushingWave\\CrushingWaveCaster1.wav"
+     ]
+    }
+   ],
+   "babyface": [
+    {
+     "event": "SNDXDVLC",
+     "soundLabel": "VillagerChildDeath",
+     "files": [
+      "Units\\Critters\\VillagerKid\\VillagerChildDeath1.wav"
+     ]
+    }
+   ],
+   "billy": [
+    {
+     "event": "SNDXAHHB",
+     "soundLabel": "HolyBolt",
+     "files": [
+      "Abilities\\Spells\\Human\\HolyBolt\\HolyBolt.wav"
+     ]
+    },
+    {
+     "event": "SNDXDBNT",
+     "soundLabel": "BanditDeath",
+     "files": [
+      "Units\\Creeps\\Bandit\\BanditDeath1.wav"
+     ]
+    },
+    {
+     "event": "SNDXDDSH",
+     "soundLabel": "HumanDissipate",
+     "files": [
+      "Sound\\Units\\Human\\HumanDissipate1.wav"
+     ]
+    }
+   ],
+   "cloud": [
+    {
+     "event": "SNDXAOCR",
+     "soundLabel": "CriticalStrike",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\CriticalStrike.wav"
+     ]
+    },
+    {
+     "event": "SNDXDDEM",
+     "soundLabel": "HeroDemonHunterDeath",
+     "files": [
+      "Units\\NightElf\\HeroDemonHunter\\HeroDemonHunterDeath1.wav"
+     ]
+    }
+   ],
+   "crescent": [
+    {
+     "event": "SNDXAEFL",
+     "soundLabel": "",
+     "files": []
+    },
+    {
+     "event": "SNDXAIDC",
+     "soundLabel": "NeutralizationWandHit",
+     "files": [
+      "Abilities\\Spells\\Items\\WandOfNeutralization\\WandOfNeutralization.wav"
+     ]
+    }
+   ],
+   "fox": [
+    {
+     "event": "SNDXAEFK",
+     "soundLabel": "FanOfKnives",
+     "files": [
+      "Units\\NightElf\\HeroWarden\\FanOfKnives.wav"
+     ]
+    },
+    {
+     "event": "SNDXDDSN",
+     "soundLabel": "NightElfDissipate",
+     "files": [
+      "Sound\\Units\\NightElf\\NightElfDissipate1.wav"
+     ]
+    },
+    {
+     "event": "SNDXDWRD",
+     "soundLabel": "HeroWardenDeath",
+     "files": [
+      "Units\\NightElf\\HeroWarden\\WardenDeath1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKWAR",
+     "soundLabel": "WardenAttack",
+     "files": [
+      "Units\\NightElf\\HeroWarden\\WardenAttackEffort1.wav"
+     ]
+    }
+   ],
+   "fox2": [
+    {
+     "event": "SNDXAEFK",
+     "soundLabel": "FanOfKnives",
+     "files": [
+      "Units\\NightElf\\HeroWarden\\FanOfKnives.wav"
+     ]
+    },
+    {
+     "event": "SNDXDDSN",
+     "soundLabel": "NightElfDissipate",
+     "files": [
+      "Sound\\Units\\NightElf\\NightElfDissipate1.wav"
+     ]
+    },
+    {
+     "event": "SNDXDWRD",
+     "soundLabel": "HeroWardenDeath",
+     "files": [
+      "Units\\NightElf\\HeroWarden\\WardenDeath1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKWAR",
+     "soundLabel": "WardenAttack",
+     "files": [
+      "Units\\NightElf\\HeroWarden\\WardenAttackEffort1.wav"
+     ]
+    }
+   ],
+   "gumdam": [
+    {
+     "event": "SNDXDIRG",
+     "soundLabel": "IronGolemDeath",
+     "files": [
+      "Units\\Creeps\\IronGolem\\IronGolemDeath1.wav"
+     ]
+    },
+    {
+     "event": "SNDXFDFL",
+     "soundLabel": "DeepFootstep",
+     "files": [
+      "Sound\\Units\\Footsteps\\Step1.wav",
+      "Sound\\Units\\Footsteps\\Step2.wav",
+      "Sound\\Units\\Footsteps\\Step3.wav",
+      "Sound\\Units\\Footsteps\\Step4.wav"
+     ]
+    },
+    {
+     "event": "SNDXFDFR",
+     "soundLabel": "DeepFootstep",
+     "files": [
+      "Sound\\Units\\Footsteps\\Step1.wav",
+      "Sound\\Units\\Footsteps\\Step2.wav",
+      "Sound\\Units\\Footsteps\\Step3.wav",
+      "Sound\\Units\\Footsteps\\Step4.wav"
+     ]
+    },
+    {
+     "event": "SNDXKIRG",
+     "soundLabel": "IronGolemAttack1",
+     "files": [
+      "Units\\Creeps\\IronGolem\\IronGolemAttack1.wav"
+     ]
+    }
+   ],
+   "gx": [
+    {
+     "event": "SNDXMCDA",
+     "soundLabel": "ColdArrow",
+     "files": [
+      "Abilities\\Weapons\\ColdArrow\\ColdArrow1.wav",
+      "Abilities\\Weapons\\ColdArrow\\ColdArrow2.wav",
+      "Abilities\\Weapons\\ColdArrow\\ColdArrow3.wav"
+     ]
+    },
+    {
+     "event": "SNDXMFAR",
+     "soundLabel": "FarseerMissile",
+     "files": [
+      "Abilities\\Weapons\\FarseerMissile\\FarseerMissile.wav"
+     ]
+    }
+   ],
+   "gxhuge": [
+    {
+     "event": "SNDXMCDA",
+     "soundLabel": "ColdArrow",
+     "files": [
+      "Abilities\\Weapons\\ColdArrow\\ColdArrow1.wav",
+      "Abilities\\Weapons\\ColdArrow\\ColdArrow2.wav",
+      "Abilities\\Weapons\\ColdArrow\\ColdArrow3.wav"
+     ]
+    },
+    {
+     "event": "SNDXMFAR",
+     "soundLabel": "FarseerMissile",
+     "files": [
+      "Abilities\\Weapons\\FarseerMissile\\FarseerMissile.wav"
+     ]
+    }
+   ],
+   "herofate": [
+    {
+     "event": "SNDXAOCR",
+     "soundLabel": "CriticalStrike",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\CriticalStrike.wav"
+     ]
+    },
+    {
+     "event": "SNDXDDSO",
+     "soundLabel": "OrcDissipate",
+     "files": [
+      "Sound\\Units\\Orc\\OrcDissipate1.wav"
+     ]
+    },
+    {
+     "event": "SNDXDJAN",
+     "soundLabel": "JainaDeath",
+     "files": [
+      "Units\\Human\\Jaina\\JainaOnFootDeath1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM1",
+     "soundLabel": "HeroBladeMasterAttack1",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM2",
+     "soundLabel": "HeroBladeMasterAttack2",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack2.wav"
+     ]
+    }
+   ],
+   "horse": [
+    {
+     "event": "SNDXDHOR",
+     "soundLabel": "HorseDeath",
+     "files": [
+      "Units\\Human\\KnightNoRider\\KnightNoRiderDeath1.wav"
+     ]
+    }
+   ],
+   "linkstik": [
+    {
+     "event": "SNDXDBNT",
+     "soundLabel": "BanditDeath",
+     "files": [
+      "Units\\Creeps\\Bandit\\BanditDeath1.wav"
+     ]
+    }
+   ],
+   "ma": [
+    {
+     "event": "SNDXDDSH",
+     "soundLabel": "HumanDissipate",
+     "files": [
+      "Sound\\Units\\Human\\HumanDissipate1.wav"
+     ]
+    },
+    {
+     "event": "SNDXDPAL",
+     "soundLabel": "HeroPaladinDeath",
+     "files": [
+      "Units\\Human\\HeroPaladin\\HeroPaladinDeath.wav"
+     ]
+    }
+   ],
+   "mfls": [
+    {
+     "event": "SNDXDVLW",
+     "soundLabel": "VillagerWomanDeath",
+     "files": [
+      "Units\\Critters\\VillagerWoman\\VillagerFemaleDeath1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM1",
+     "soundLabel": "HeroBladeMasterAttack1",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack1.wav"
+     ]
+    }
+   ],
+   "negi": [
+    {
+     "event": "SNDXDDSH",
+     "soundLabel": "HumanDissipate",
+     "files": [
+      "Sound\\Units\\Human\\HumanDissipate1.wav"
+     ]
+    },
+    {
+     "event": "SNDXDVLC",
+     "soundLabel": "VillagerChildDeath",
+     "files": [
+      "Units\\Critters\\VillagerKid\\VillagerChildDeath1.wav"
+     ]
+    }
+   ],
+   "niya": [
+    {
+     "event": "SNDXAOCR",
+     "soundLabel": "CriticalStrike",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\CriticalStrike.wav"
+     ]
+    },
+    {
+     "event": "SNDXDDSO",
+     "soundLabel": "OrcDissipate",
+     "files": [
+      "Sound\\Units\\Orc\\OrcDissipate1.wav"
+     ]
+    },
+    {
+     "event": "SNDXDJAN",
+     "soundLabel": "JainaDeath",
+     "files": [
+      "Units\\Human\\Jaina\\JainaOnFootDeath1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM1",
+     "soundLabel": "HeroBladeMasterAttack1",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM2",
+     "soundLabel": "HeroBladeMasterAttack2",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack2.wav"
+     ]
+    }
+   ],
+   "picacugy": [
+    {
+     "event": "SNDXAOWW",
+     "soundLabel": "Whirlwind",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\BladeMasterWhirlwind.wav"
+     ]
+    },
+    {
+     "event": "SNDXDPMB",
+     "soundLabel": "PandarenBrewmasterDeath",
+     "files": [
+      "Units\\Creeps\\PandarenBrewmaster\\BrewMasterDeath1.wav"
+     ]
+    }
+   ],
+   "pika": [
+    {
+     "event": "SNDXDDSN",
+     "soundLabel": "NightElfDissipate",
+     "files": [
+      "Sound\\Units\\NightElf\\NightElfDissipate1.wav"
+     ]
+    },
+    {
+     "event": "SNDXDWRD",
+     "soundLabel": "HeroWardenDeath",
+     "files": [
+      "Units\\NightElf\\HeroWarden\\WardenDeath1.wav"
+     ]
+    }
+   ],
+   "rabbit": [
+    {
+     "event": "SNDXDPES",
+     "soundLabel": "PeasantDeath",
+     "files": [
+      "Units\\Human\\Peasant\\PeasantDeath.wav"
+     ]
+    },
+    {
+     "event": "SNDXKPES",
+     "soundLabel": "",
+     "files": []
+    }
+   ],
+   "ye-wuqi1": [
+    {
+     "event": "SNDXAOCR",
+     "soundLabel": "CriticalStrike",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\CriticalStrike.wav"
+     ]
+    },
+    {
+     "event": "SNDXDDKN",
+     "soundLabel": "HeroDeathKnightDeath",
+     "files": [
+      "Units\\Undead\\HeroDeathKnight\\HeroDeathKnightDeath.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM1",
+     "soundLabel": "HeroBladeMasterAttack1",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack1.wav"
+     ]
+    },
+    {
+     "event": "SNDXKBM2",
+     "soundLabel": "HeroBladeMasterAttack2",
+     "files": [
+      "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack2.wav"
+     ]
+    }
+   ]
+  }
+ },
+ "abilityDeclaredSounds": {
+  "abilitiesWithJassSound": 98,
+  "keyMissingFromAudioMap": [
+   "wc3.bloodlusttarget",
+   "wc3.farmwhat1",
+   "wc3.flaretarget1",
+   "wc3.flashback1second",
+   "wc3.fountainoflifewhat1",
+   "wc3.gluescreenmeteorhit2",
+   "wc3.gruntwhat2",
+   "wc3.peonwhat2",
+   "wc3.sawch",
+   "wc3.shimmeringportaldeath",
+   "wc3.waterelementalmissile3",
+   "wc3.witchdoctorcastattack1"
+  ],
+  "notAnAbilityDoc": [
+   "godie-e00q.ex",
+   "godie-e00t.w",
+   "godie-e015.q",
+   "godie-h02s.q",
+   "godie-h02z.q",
+   "godie-nbst.ex",
+   "godie-nman.r",
+   "godie-nman.w",
+   "godie-o01z.e",
+   "godie-o01z.q",
+   "godie-o01z.r",
+   "godie-o01z.w",
+   "godie-o02s.r",
+   "godie-o02v.e",
+   "godie-o02v.q",
+   "godie-o02v.r",
+   "godie-o02v.w",
+   "godie-obla.e",
+   "godie-obla.q",
+   "godie-obla.r",
+   "godie-opgh.e",
+   "godie-u011.e",
+   "godie-u012.e",
+   "godie-usyl.e"
+  ],
+  "bound": 72
+ },
+ "familyPrototypes": {
+  "families": 21,
+  "missingAudioMapKeys": []
+ }
+}

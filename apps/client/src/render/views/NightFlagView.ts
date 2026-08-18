@@ -11,7 +11,7 @@
  *  1. IT NEVER COMPUTES THE RADIUS. The ring is scaled from `radius`, which the
  *     server packs into `EntityState.shield` AFTER the combat-env `abilityRange`
  *     factor. A client that re-derived it from the config doc would drift the
- *     moment an operator changed `nightPact.auraRadius` or the range multiplier
+ *     moment an author changed the ward grant's radius or an operator changed the range multiplier
  *     — and a range indicator that disagrees with the rule it indicates is worse
  *     than none. (#22's cautionary tale one step further: the flower was there
  *     and invisible; a wrong ring is there and lying.)

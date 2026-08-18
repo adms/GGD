@@ -256,6 +256,29 @@ export const zDecor = z
     model: z.string().regex(/^assets\//),
     x: z.number(),
     z: z.number(),
+    /**
+     * ⭐ GH#386 ③ —— **架高**（世界單位，0 = 站在地板上）。
+     *
+     * 在這一格出現之前 `decor` 只有 x/z，於是任何「設計上要架在別的東西上面」的
+     * 構件（屋頂 · 橫梁 · 天花板）在 GGD 裡**沒有任何辦法**擺對：它只會平躺在地板上。
+     * 六件下載來的 CC0 布景因此被判成 C 級（`scenery-cc0/PROVENANCE.md` 五之③），
+     * 而那六件的共通根因是**同一個引擎缺口**，⛔ 不是六個模型各自的問題。
+     *
+     * ⚠️ 它 ⛔ **不會**讓道具突破視線上限：架高之後如果整件仍然壓在打鬥區上空，
+     * `dressArena()` 照樣把它整個往地板壓到 `SIGHTLINE_HEIGHT_CAP`
+     * （連 `y` 一起乘）—— 一個 68° 俯角的攝影機底下，浮在頭上的屋頂會把英雄整個吃掉。
+     * ⇒ 架高在**圈外**（列柱、山門、外圈立面）才是完整生效的地方，那也正是這六件的用途。
+     *
+     * 上界 24 是誤植守衛（場地半徑量級是 20–30u，24u 的道具已經在攝影機眼睛高度之上）；
+     * 下界 -4 留給「半埋進地裡」的殘骸。
+     *
+     * ⚠️ `.optional()` 而不是 `.default(0)`，兩個理由都不是風格：
+     * ① 編譯器與散佈規則產出的 `DecorDef` 因此**不必**多帶一格 `y: 0` ——
+     *    出貨的 13 張 arena JSON 逐位元組不變；
+     * ② 一份**帶著 `y` 的內容**會被還沒更新的映像的 `.strict()` 整份拒絕
+     *    （2026-08-02 事故的形狀），所以「沒填」必須真的是「沒有這個 key」。
+     */
+    y: z.number().min(-4).max(24).optional(),
     /** rotation around Y in quarter-turns (0-3) — avoids radians in data */
     rotQuarter: z.number().int().min(0).max(3).default(0),
     scale: z.number().positive().default(1),

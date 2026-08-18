@@ -36,6 +36,7 @@ import {
   DELAYED_MAX_COUNT,
   DELAYED_MAX_DELAY_SEC,
   DELAYED_MAX_INTERVAL_SEC,
+  DELAYED_MAX_STEP_DIST,
   EFFECT_CHAIN_MAX_STEPS,
   HOOK_MAX_TRIGGERS,
   PROXY_MAX_CHAIN_DEPTH,
@@ -1308,8 +1309,75 @@ export const zVisionGrant = z
     },
   );
 
+/**
+ * 【死亡遺留】—— 「帶著這份來源的人在場時，同區有英雄陣亡就在屍體原地留下一個
+ * 持久的光環物件」。71-00 暗夜契約的**暗夜旗**是出貨的那一支。
+ *
+ * ⭐ 2026-08-19（CLAUDE.md 第〇·五守則）—— 這一格是**把一份專屬程式收編成資料**。
+ * 在它之前，這整套機制住在 `sim/nightPact.ts`，參數住在
+ * `config.arena-rules@1.nightPact`，而那個區塊的第一格是
+ * `abilityIds: ["godie-u00k.passive"]` —— 引擎被一支技能的 id 綁死，
+ * 於是 71-00 的 `passive.ranks[0].modifiers` 是**空的**，
+ * castability 普查每一次跑都量出一格 ❌（而那個 ❌ 說的是實話）。
+ *
+ * ⛔ 每一格的上下界都是 MIS-PARSE 護欄，不是平衡意見：
+ *   · `radius` ≤ 40 —— 與 `zAuraDef.radius` 同一條（決鬥區的 `boundaryRadius`
+ *     是 24，超過 40 的一律是沒換算的 WC3 原始數字）。
+ *   · `maxPerZone` ≤ 64 —— 一場 12 人的團滅留不下 65 個遺留物；更大的數字
+ *     是打錯數量級，而它的代價是每 tick 的 O(遺留物 × 英雄) 迴圈。
+ *   · `modifiers` `.min(1)` —— 一個什麼都不給的遺留物看起來 author 過卻一毛不付，
+ *     正是第一·五守則要關的那族洞。
+ */
+export const zDeathWardGrant = z
+  .object({
+    radius: z
+      .number()
+      .positive()
+      .max(40)
+      .describe("遺留物光環的半徑（GGD 單位）。站進這個圈才吃得到下面的加成。"),
+    maxPerZone: z
+      .number()
+      .int()
+      .min(1)
+      .max(64)
+      .describe("同一座競技場裡同時最多幾個遺留物。滿了之後再有人陣亡就不再留下新的。"),
+    beneficiary: z
+      .enum(["owner", "team"])
+      .describe(
+        "誰吃得到這一圈：owner = 只有帶著這支技能／這件道具的人自己；team = 他整隊。" +
+          "⚠️ 這不是隊伍光環（那要用 auras），它問的是「誰帶著這份來源」。",
+      ),
+    stacking: z
+      .enum(["max", "add"])
+      .describe(
+        "多個遺留物重疊時：max = 只算一份（站在三個圈裡和站在一個圈裡一樣）；" +
+          "add = 每一個都算（三個圈就是三倍）。一場團滅會留下很多個，所以這是真的平衡決定。",
+      ),
+    modelKey: z
+      .string()
+      .min(1)
+      .max(64)
+      .optional()
+      .describe("遺留物在畫面上用哪一份模型。留空 = 暗夜旗（prop.night-flag）。"),
+    modifiers: z
+      .array(zStatModifier)
+      .min(1)
+      .describe(
+        "站在圈內的受益者吃到的加成。⚠️ 與這一階自己的 modifiers 是**兩件事**：" +
+          "那一份是持有者常駐，這一份是站進圈裡才有。",
+      ),
+  })
+  .strict();
+
 export const SOURCE_GRANT_SHAPE = {
   block: zBlockGrant.optional(),
+  /**
+   * ⭐ 2026-08-19 —— 第九格，見 {@link zDeathWardGrant}。
+   * 讀它的是 `sim/deathWard.ts`，而它走 `StatsComp.sources` 且不問 `kind`，
+   * 所以天生技 rank / 切換技開著的期間 / 道具 / 增益卡 / `applyBuff` 的限時來源
+   * 五個授權面同時拿得到，⛔ 不需要第二次接線。
+   */
+  deathWard: zDeathWardGrant.optional(),
   critStrike: zCritStrikeGrant.optional(),
   /**
    * ⭐ 2026-08-18（GH#373）—— **限時**隱形 / 真視。**又是同一個授權格**，
@@ -3517,6 +3585,42 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
         .describe(
           "目標怎麼決定：frozen（預設，施放那一刻就鎖定，追著他打）或 " +
             "reresolve（每一發到期時重新以落點解目標，走開就打空）。",
+        ),
+      /**
+       * ⭐【沿向量分段推進】(GH#393，owner 2026-08-19「JASS 應該有安排位置移動
+       * 播放的多次特效搭配傷害」)。填了它，這一串就沿著一條線往前走：第 i 發的
+       * 落點 = 錨點 + 方向 × (startDist + i × stepDist)。
+       * 配 `targetMode: "reresolve"` + `shape: "circle"` = 每一段各結算一次。
+       * 缺席 = 原地連擊（嚴格 no-op）。上下界一律讀 `sim/effects/kindLimits.ts`。
+       */
+      advance: z
+        .object({
+          stepDist: z
+            .number()
+            .positive()
+            .max(DELAYED_MAX_STEP_DIST)
+            .describe("每一發往前推幾格（GGD 單位，⛔ 不是 WC3 單位）。"),
+          startDist: z
+            .number()
+            .min(0)
+            .max(DELAYED_MAX_STEP_DIST)
+            .optional()
+            .describe("第一發離施法者多遠。留空＝0，第一發就在腳下。"),
+          dir: z
+            .enum(["facing", "target"])
+            .optional()
+            .describe(
+              "這條線往哪指：target（預設，從施法者穿過觸發者）或 facing（身體當下面向）。" +
+                "方向在施放那一刻凍住，之後轉身不會把線掰彎。",
+            ),
+        })
+        .strict()
+        .optional(),
+      hitOncePerTarget: z
+        .boolean()
+        .optional()
+        .describe(
+          "同一個人整串只吃一次（一條掃過去的線，卡片寫的是一次的傷害）。留空＝每一段都吃。",
         ),
       dropDeadTargets: z
         .boolean()

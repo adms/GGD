@@ -46,6 +46,7 @@ import {
   type DirectionalPrimitive,
 } from "@ggd/shared/content/schema/vfx";
 import { PRIM_VFX_PREFIX } from "./elements";
+import { FAMILY_VFX_PREFIX, W3X_ART_FAMILIES } from "./w3xArtFamilies";
 
 /** 家族 → 後台那一格的欄位名。⭐ 一張表,⛔ 不是五個 `if`。 */
 const PITCH_FIELD: Readonly<Record<DirectionalPrimitive, keyof ConfigVfxFamiliesDoc>> = {
@@ -66,15 +67,58 @@ const DIRECTIONAL: ReadonlySet<string> = new Set(DIRECTIONAL_PRIMITIVES);
  * 它就開始過期)。變體後綴一律砍在第一個 `-`:primitive 名字裡沒有 `-`,
  * 所以 `-lg` / `-sm` / `-flat` 以及以後任何新變體都自動落回同一個家族。
  *
- * 匯入的 w3x 文件(`fx.fam.*` / `fx.w3x.*` / `godie-*`)不走這條 —— 它們的方位
- * 由 `config.vfx-families@1.abilities[]` 那張逐技能表管。
+ * ⭐ **`fx.fam.*` 也走這條** (#394)。`fx.w3x.*` / `godie-*` 仍然不走 ——
+ * 那些是逐位元從 MDX 抽出來的，方位由 `config.vfx-families@1.abilities[]` 管。
  */
 export function directionalFamilyOfVfxId(id: string | undefined): DirectionalPrimitive | null {
-  if (!id || !id.startsWith(PRIM_VFX_PREFIX)) return null;
-  const parts = id.slice(PRIM_VFX_PREFIX.length).split(".");
-  if (parts.length !== 2) return null;
-  const kind = parts[1]!.split("-")[0]!;
-  return DIRECTIONAL.has(kind) ? (kind as DirectionalPrimitive) : null;
+  if (!id) return null;
+  if (id.startsWith(PRIM_VFX_PREFIX)) {
+    const parts = id.slice(PRIM_VFX_PREFIX.length).split(".");
+    if (parts.length !== 2) return null;
+    const kind = parts[1]!.split("-")[0]!;
+    return DIRECTIONAL.has(kind) ? (kind as DirectionalPrimitive) : null;
+  }
+  if (id.startsWith(FAMILY_VFX_PREFIX)) return directionalFamilyOfFamilyVfxId(id);
+  return null;
+}
+
+/**
+ * `fx.fam.<家族 slug>.<顏色>.s<倍率>` → 那個家族的**形狀** (#394)。
+ *
+ * ---------------------------------------------------------------------------
+ * 為什麼這一段非有不可（量到的，2026-08-19）
+ * ---------------------------------------------------------------------------
+ * owner 2026-08-19：「**吐息類 我猜是粒子特效 你可以查看看**」。查到的是：吐息
+ * 確實是粒子（`BloodBreathStream.mdx` 三顆 PRE2，見 `PARTICLES.md`），而出貨的
+ * `fx.fam.breath.*` 兩份文件是用 **`beam`** primitive 生的錐狀氣流 ——
+ * **沒有 `orient`**，於是 `pitchDeg` 取預設 90 ⇒ **一口吐息直直往天上噴**。
+ *
+ * GH#379 早就替 `beam` 訂了家族仰角 0（躺平、朝目標），只是上面那支函式**只認
+ * `fx.prim.*`**，而 `fx.fam.*` 的第二段是**家族**（`breath`）不是**形狀**
+ * （`beam`）。差的就是一次 `family → primitive` 的查表，而那張表
+ * （`W3X_ART_FAMILIES`）已經在旁邊了。
+ *
+ * ⛔ 這**不是**「替吐息寫一個 if」：同一次查表也接上了 `blink`(dash,4 份)、
+ * `missile`(bolt,1 份)；`tornado` 的形狀本來就是直立的 90 ⇒ 恆等 ⇒ 一位元不變。
+ * 其餘 12 個家族的形狀（explosion / column / nova / swarm / shockwave / pulse /
+ * fall）不在 `DIRECTIONAL_PRIMITIVES` 裡，⛔ 一份都不會被動到。
+ *
+ * ⚠️ **吐息的方位語意在這裡被定死成「施法瞬間的瞄準方向」**，⛔ 不是「每幀跟著
+ * 頭部骨骼轉」。理由不是偷懶而是量到的：家族美術走的是 `W3xCastFx`，而那個檔案
+ * 的檔頭自己寫著「plays at a WORLD POSITION, **never parented to a champion
+ * node**」—— 執行期**附著到骨骼 + 跟隨**是 **GH#392 機制②(a)(b)** 還沒做的東西。
+ * ⇒ 在 #392 落地之前，⛔ 不可以在任何卡片/註解上宣稱吐息「跟著頭轉」
+ * （那正是第一·五守則要擋的「說了但不會發生」）。#392 做完之後，這裡要改的只有
+ * 「yaw 從哪裡來」一格，形狀與仰角不用動。
+ */
+function directionalFamilyOfFamilyVfxId(id: string): DirectionalPrimitive | null {
+  const slug = id.slice(FAMILY_VFX_PREFIX.length).split(".")[0];
+  if (!slug) return null;
+  for (const proto of Object.values(W3X_ART_FAMILIES)) {
+    if (proto.slug !== slug) continue;
+    return DIRECTIONAL.has(proto.primitive) ? (proto.primitive as DirectionalPrimitive) : null;
+  }
+  return null;
 }
 
 interface ActiveTuning {

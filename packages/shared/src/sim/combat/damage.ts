@@ -280,10 +280,12 @@ function deriveTier(impact: number, crit: boolean, guardBreak: boolean): ImpactT
  * (CastResolveSystem) and projectile onHit (which carries the spawning
  * ability's origin verbatim) — so it is the one place origin is parsed.
  */
-function abilityIdOfOrigin(origin: string): string | undefined {
-  const ix = origin.indexOf("ability:");
+export const ABILITY_ORIGIN_PREFIX = "ability:";
+
+export function abilityIdOfOrigin(origin: string): string | undefined {
+  const ix = origin.indexOf(ABILITY_ORIGIN_PREFIX);
   if (ix < 0) return undefined;
-  return origin.slice(ix + "ability:".length);
+  return origin.slice(ix + ABILITY_ORIGIN_PREFIX.length);
 }
 
 /** Authored doc-id suffix of a hero's EX ability (`<hero>.ex`; QWER are .q/.w/.e/.r). */

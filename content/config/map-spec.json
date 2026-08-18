@@ -33,6 +33,9 @@
     "minWallClearanceBodyRadii": 3,
     "maxPocketPathFactor": 0.8
   },
+  "nav": {
+    "headroom": 1.5
+  },
   "severity": {
     "deadEnds": "warn",
     "loops": "warn",

@@ -16,7 +16,6 @@ import { DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "./the
 import { useModelBudget } from "../assets/useModelBudget";
 import {
   BUDGET_CANDIDATE_URLS,
-  ageText,
   buildOptimiseWorklist,
   budgetHealth,
   fmtBytes,
@@ -361,13 +360,17 @@ export function ModelBudgetPage(): React.JSX.Element {
             ) : (
               <span style={{ color: WARN }}>找不到（已依序嘗試 {tried.length} 個位置）</span>
             )}
-            {report?.generatedAt && (
+            {/*
+              ⭐ GH#389 —— 這裡本來印「產生於 <時間>（N 天前）」。那個時間戳讓一份
+              進版控的產物每跑一次就髒一次，所以它被拿掉了；⛔ 而「幾天前」本來就不是
+              這一頁要問的問題 —— 部署會把每個檔的 mtime 重設，一份「三週前產生」的
+              報告只要輸入沒變就仍然是準的。準不準由下面那排 verdict 與 `sourcesDigest`
+              （輸入的雜湊）回答。
+            */}
+            {report?.sourcesDigest && (
               <>
-                {" · 產生於 "}
-                <span style={{ color: TEXT_MAIN }}>{report.generatedAt}</span>
-                {checkedAt !== null && ageText(report.generatedAt, checkedAt) !== "" && (
-                  <span> （{ageText(report.generatedAt, checkedAt)}）</span>
-                )}
+                {" · 量測基準 "}
+                <code style={{ color: TEXT_MAIN }}>{report.sourcesDigest}</code>
               </>
             )}
             {report?.generatedBy && <> · 產生者 <code>{report.generatedBy}</code></>}

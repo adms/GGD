@@ -213,7 +213,12 @@ describe("GameApp.applyArena hands the shadow the same arena it renders", () => 
       // ⇒ 這個假物件**必須**跟得上真的介面；它紅了代表真的呼叫端也可能少東西。
       contentDb: {
         loadArena: () => Promise.resolve(doc),
-        arenaScenery: () => ({ enabled: false, maxPropsPerZone: 0, animateLights: false }),
+        arenaScenery: () => ({
+          enabled: false,
+          maxPropsPerZone: 0,
+          animateLights: false,
+          outlineShells: true,
+        }),
         arenaFire: () => ({}),
         arenaBackdrop: () => ({}),
       },

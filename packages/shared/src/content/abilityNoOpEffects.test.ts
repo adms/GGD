@@ -50,21 +50,17 @@ const KNOWN: readonly { key: string; why: string; issue: string }[] = [
   //    53-00 空間穿梭 = 20 秒隱形、30-00 攝影機 ×2 = 30 秒真視）。
   //    ⛔ 不要把它們加回來 —— 下面的 stale 斷言會紅。
   //
-  // GH#375 —— 裝飾性投射物：傷害由同一支的 damageArea／damageLine／proxyCast 負責，
-  //           這一顆只為了它的 vfxKey 而飛。
-  //   ⚠️ 2026-08-18 查證（給下一個接手的人，省一輪）：issue 建議的「把空的 onHit
-  //   拿掉」**做不到** —— `spawnProjectile.onHit` 在 schema 上是 `z.array(...)`
-  //   **必填**（`content/schema/effect.ts`），拿掉那一格文件會被載入器拒絕；
-  //   而且這條規則判的是 `(e.onHit?.length ?? 0) === 0`，缺席與空陣列**同判**，
-  //   所以拿掉也不會讓這 6 列消失。真正的兩條出路是：①替投射物開一格 payload
-  //   （規則會自己退場，見 `projectileCarriesPayload`）②讓 `spawnVfx` 也能「飛」，
-  //   然後把這六處換過去。兩條都不是內容側改得動的，所以 6 列留著。
-  { key: "godie-e002.e|projectile-no-payload|effects[1]", why: "裝飾尾波（damageLine 負責傷害）", issue: "GH#375" },
-  { key: "godie-e00r.r|projectile-no-payload|effects[1]", why: "裝飾尾波（damageLine 負責傷害）", issue: "GH#375" },
-  { key: "godie-e00s.q|projectile-no-payload|effects[1]", why: "裝飾尾波（damageArea 負責傷害）", issue: "GH#375" },
-  { key: "godie-h01n.q|projectile-no-payload|effects[3]", why: "裝飾彈道（damageArea 負責傷害）", issue: "GH#375" },
-  { key: "godie-h01u.w|projectile-no-payload|effects[1]", why: "裝飾尾波（damageArea 負責傷害）", issue: "GH#375" },
-  { key: "godie-h01u.r|projectile-no-payload|effects[1]", why: "裝飾尾波（proxyCast 負責傷害）", issue: "GH#375" },
+  // ⭐ GH#375 的 6 列在 2026-08-19 **全部劃掉了**。那 6 顆 `onHit: []` 的彈道
+  //    （20-03 / 59-04 / 70-01 / 79-01 / 80-02 / 80-04）現在是 `spawnVfx`，指的
+  //    是**同一份彈道文件的 vfxKey**，所以元素照樣飛出去、碰撞體沒了。
+  //    ⚠️ 前一輪這裡寫著「兩條出路都不是內容側改得動的」，而那句話漏掉了第三條：
+  //    彈道從頭到尾就**不該存在** —— 它是產生器 A-5「沉默 ≠ 移除」從 w3x 舊文件
+  //    沿用回來的，owner 的新版規格一支都沒有點名過。而且它**不是**無害的裝飾：
+  //    `ProjectileSystem.ts` 對 `origin` 帶 `ability:` 的彈道會 `recordAbilityHit`
+  //    ＋ `fireHooks(onAbilityHit)`（施法當下已經發過一次 ⇒ 重複觸發），
+  //    `pierce` 的那幾顆穿過幾個人就各做一次。修法在
+  //    `tools/skill-remake/batch1.py` 的 `projectile="cosmetic"`。
+  //    ⛔ 不要把它們加回來 —— 下面的 stale 斷言會紅。
 ];
 
 const SLOTS = ["PASSIVE", "Q", "W", "E", "R", "EX"] as const;

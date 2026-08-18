@@ -4,8 +4,14 @@
  * scores it against tools/model-budget/limits.ts and writes
  * content/assets/model-budget/report.json.
  *
- *   pnpm exec tsx tools/model-budget/emit_report.ts          # write the report
- *   pnpm exec tsx tools/model-budget/emit_report.ts --check  # exit 1 on any OVER
+ *   pnpm exec tsx tools/model-budget/emit_report.ts             # write the report
+ *   pnpm exec tsx tools/model-budget/emit_report.ts --check     # exit 1 on any OVER
+ *   pnpm exec tsx tools/model-budget/emit_report.ts --out <p>   # write elsewhere
+ *
+ * THE OUTPUT CARRIES NO CLOCK (GH#389). It is a checked-in artefact, so a
+ * `generatedAt` made `git status` dirty on every run and diluted the one signal
+ * that says "something here needs committing". Its identity is `sourcesDigest`
+ * — the hash of the inputs it derived from — which changes iff the inputs do.
  *
  * Consumers: apps/client/public/model-budget.html (the standalone page) and the
  * 後台管理 模型預算 page (task #102), which reads this file and never measures
@@ -60,7 +66,23 @@ const ROOT = path.resolve(HERE, "../..");
 const CONTENT = path.join(ROOT, "content");
 const OVERLAY = path.join(ROOT, "data/blizzard-overlay/models");
 const OUT_DIR = path.join(CONTENT, "assets/model-budget");
-const OUT = path.join(OUT_DIR, "report.json");
+const DEFAULT_OUT = path.join(OUT_DIR, "report.json");
+
+/**
+ * `--out <path>` writes somewhere else. ⭐ It exists so a guard can run this
+ * generator for real, twice, into a temp dir and diff the bytes — without
+ * touching the tree. Reading the committed file instead would only prove the
+ * file is stable, not that the GENERATOR is (GH#389, failure mode ⑤).
+ */
+function outPath(): string {
+  const i = process.argv.indexOf("--out");
+  const v = i >= 0 ? process.argv[i + 1] : undefined;
+  if (i >= 0 && (v === undefined || v.startsWith("--"))) {
+    process.stderr.write("--out needs a path\n");
+    process.exit(2);
+  }
+  return v === undefined ? DEFAULT_OUT : path.resolve(v);
+}
 /** Accepted-breach ratchet — lives next to the tool, checked into the tree. */
 const BASELINE = path.join(HERE, "baseline.json");
 
@@ -393,6 +415,10 @@ const RECORDED = {
 
 function sha256(p: string): string {
   return createHash("sha256").update(fs.readFileSync(p)).digest("hex").slice(0, 16);
+}
+
+function sha256Of(s: string): string {
+  return createHash("sha256").update(s).digest("hex").slice(0, 16);
 }
 
 function main(): void {
@@ -772,18 +798,26 @@ function main(): void {
      * nothing because they never load. It is classified `unused`, which is its
      * own (larger) problem and is counted separately.
      */
+    /**
+     * ⭐ 成員判準寫在 gate 上（`pathPrefix`），⛔ 不是這裡的一個 if：擺放數守衛
+     * （`placement.test.ts`）讀的是同一格，所以報告頁與守衛不可能對「這個檔案是
+     * 哪一條 gate」有兩種答案（GH#386 ①）。
+     */
+    const byPath = GATES.find((x) => x.pathPrefix && g.path.startsWith(x.pathPrefix));
     const role =
       u.length === 0
         ? "unused"
-        : u.some((x) => x.label === "英雄" || x.label === "造型（skin）" || x.scene === "DEV-ONLY")
-          ? "champion"
-          : g.group === "shop" || g.group === "menu"
-            ? "hero-prop"
-            : u.some((x) => x.scene.startsWith("COMBAT:"))
-              ? "arena-decor"
-              : u.some((x) => x.scene === "INTERMISSION")
-                ? "intermission-prop"
-                : "vfx-model";
+        : byPath
+          ? byPath.role
+          : u.some((x) => x.label === "英雄" || x.label === "造型（skin）" || x.scene === "DEV-ONLY")
+            ? "champion"
+            : g.group === "shop" || g.group === "menu"
+              ? "hero-prop"
+              : u.some((x) => x.scene.startsWith("COMBAT:"))
+                ? "arena-decor"
+                : u.some((x) => x.scene === "INTERMISSION")
+                  ? "intermission-prop"
+                  : "vfx-model";
     const gate = GATES.find((x) => x.role === role);
     const broken = g.triangles === 0 ? "zero-geometry" : g.triangles <= 30 ? "near-zero" : "";
     const worstCount = Math.max(1, ...u.map((x) => x.count));
@@ -840,12 +874,24 @@ function main(): void {
     .filter((p) => fs.existsSync(path.join(ROOT, p)))
     .map((p) => {
       const abs = path.join(ROOT, p);
-      return { path: p, sha256: sha256(abs), bytes: fs.statSync(abs).size, mtime: fs.statSync(abs).mtime.toISOString() };
+      // ⛔ 沒有 mtime（GH#389）。`git checkout` / 部署會把每一個檔的 mtime 重設，
+      //    所以它既不是內容也不是版本 —— 而它會讓這份進版控的產物憑空產生 diff。
+      //    `sha256` 已經精確回答了「是不是同一份輸入」。
+      return { path: p, sha256: sha256(abs), bytes: fs.statSync(abs).size };
     });
 
   const report = {
     schema: "model-budget@1",
-    generatedAt: new Date().toISOString(),
+    /**
+     * ⭐ GH#389 —— 這裡本來是 `generatedAt: new Date()`，於是這份**進版控的產物**
+     * 每跑一次就髒一次，把「有沒有東西該 commit」這個訊號稀釋掉。
+     * ⛔ 產物的身分要從**輸入**推導，不是從時鐘：這一格是 `sources[]`（每一份輸入的
+     * sha256）的雜湊 ⇒ 輸入變了它才變，重跑一百次都一樣。
+     * ⚠️ 頁面上的「這份報告還準不準」也**不是**靠時間比大小（部署會把 mtime 全部
+     * 重設成部署時間，任何「比模型舊」的判斷都會把正確部署的版本誤判成過期）——
+     * 那件事由 `roles.ts::reportFreshness()` 逐份比 sha256、由頁面比 Content-Length 回答。
+     */
+    sourcesDigest: sha256Of(JSON.stringify(sources)),
     generatedBy: "tools/model-budget/emit_report.ts (task #99)",
     sources,
     limits: LINES,
@@ -868,9 +914,10 @@ function main(): void {
     },
   };
 
-  fs.mkdirSync(OUT_DIR, { recursive: true });
-  fs.writeFileSync(OUT, `${JSON.stringify(report, null, 1)}\n`);
-  process.stdout.write(`wrote ${path.relative(ROOT, OUT)} — ${glbs.length} models, ${sceneRows.length} screens\n`);
+  const out = outPath();
+  fs.mkdirSync(path.dirname(out), { recursive: true });
+  fs.writeFileSync(out, `${JSON.stringify(report, null, 1)}\n`);
+  process.stdout.write(`wrote ${path.relative(ROOT, out)} — ${glbs.length} models, ${sceneRows.length} screens\n`);
 
   for (const s of sceneRows) {
     process.stdout.write(

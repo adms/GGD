@@ -53,6 +53,36 @@
  * ⚠️ 快照跨 tick 要**定基**，⛔ 不是原封搬過去：`resolvePass` 是那一個 tick 的
  * 排空迴圈的性質，搬到未來就是型別對、語意錯。定基規則寫在
  * `deferredTrigger.ts`（那裡也解釋了為什麼 `reflectDepth` 絕對不能一起歸零）。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⑤ ⭐【沿向量分段推進】`advance`（GH#393，2026-08-19）
+ *
+ * owner 2026-08-19（34-04 蒼龍破）：
+ *   「JASS 應該有安排**位置移動**播放的**多次特效搭配傷害**」
+ *
+ * 這一格把「一串排好的未來 tick」變成「一串排好的未來 tick **而且它往前走**」。
+ * 第 i 發的落點是 `origin + dir × (startDist + i × stepDist)` —— 一條線上的第
+ * i 個點。配上既有的 `targetMode: "reresolve"` + `shape: "circle"`，
+ * `shapeTargets` 每一發都以**那一發自己的落點**當圓心重解，於是「逐段移動、
+ * 每段結算一次」整句話**沒有一行是為某支技能寫的 if**（第〇·五守則）：
+ * 它是 `delayed` 的一格參數。
+ *
+ * ⛔ 這不是 `dash`（施法者不動）也不是 `spawnProjectile`（那是一顆會被地形與
+ * 碰撞影響的實體，而原作這一族是 locust dummy 每 tick 硬推固定距離 ——
+ * 見 `JASS_BEHAVIOR.json` 的 13 支「行進波動」，每一支都是
+ * `PolarProjection(pos, i×step, angle)` 而不是投射體）。
+ *
+ * ⭐ 為什麼**錨點與方向都在施放那一刻凍住**：原作每一支都在 SPELL_EFFECT 當下
+ * 讀一次 `GetUnitFacing(caster)` 就再也不讀（蒼龍破 j:38863、月牙天衝、龍破斬…），
+ * 施法者之後轉身或位移**不會**把已經射出去的那條線掰彎。跟著讀 live facing 是
+ * 一個沒有人要求過的自動導引。
+ *
+ * ⭐ `hitOncePerTarget` —— 這**不是**我發明的旋鈕，原作三支自己就帶著它：
+ * 11-04 三千世界（`ThworldGroup` 去重）、27-01 風魔手裡劍（`safe-group`）、
+ * 60-01 迴旋鏢（`SafeTargets`）。少了它，一個站在線上的人會被 12 段各打一次，
+ * 而卡片上寫的是一次的數字（第一·五守則：卡片上不可以有說了但不會發生的字 ——
+ * 這裡是它的鏡像，發生了但沒說）。預設 **false** = 這一格出現以前每一份既有
+ * 文件的行為，嚴格 no-op。
  */
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
@@ -63,10 +93,12 @@ import type { EffectKindSpec } from "./effectKind";
 import { shapeTargets, type ShapedEffect } from "./shapeTargets";
 import { runEffects } from "./effectRunner";
 import { rebaseTriggerForDeferred } from "./deferredTrigger";
+import { aimDirection } from "./effectCommon";
 import {
   DELAYED_MAX_COUNT,
   DELAYED_MAX_DELAY_SEC,
   DELAYED_MAX_INTERVAL_SEC,
+  DELAYED_MAX_STEP_DIST,
 } from "./kindLimits";
 
 /** 一發：什麼時候、是不是最後一發（`finalEffects` 只跟在最後那一發後面）。 */
@@ -109,6 +141,17 @@ export interface DelayedWave {
   reresolve?: ShapedEffect;
   /** 重解的圓心 / 巢狀效果的落點（施放那一刻的錨點）。 */
   point?: Vec2;
+  /**
+   * ⭐【沿向量分段推進】施放那一刻凍住的**單位方向**與步距（檔頭⑤）。
+   * 缺席 = 整串在 {@link point} 原地落下 = 這一格出現以前的每一份文件。
+   */
+  advance?: { dir: Vec2; step: number; start: number };
+  /**
+   * `hitOncePerTarget` 開著時，這一串**已經打過誰**。
+   * ⚠️ 只 `has`/`add`，⛔ **從不迭代** —— 迭代順序是 desync 的來源，
+   * 而 `sim/purity.test.ts` 守的正是那件事。
+   */
+  struck?: Set<EntityId>;
   strikes: DelayedStrike[];
   /** 下一個還沒付的 index。 */
   next: number;
@@ -146,11 +189,18 @@ export const delayedEffect: EffectKindSpec<"delayed"> = {
     // 已經解好的那一份（它不重新發明目標選擇）。
     const frozen = shapeTargets(e, ctx);
     const t = world.transform.get(ctx.caster);
+    // ⭐【沿向量分段推進】方向在**這一刻**凍住（檔頭⑤：原作只讀一次 facing）。
+    // 找不到方向 = 施法者已離場或面向是零向量 → 這一串退化成不推進的原地連擊，
+    // ⛔ 不是整串消失（一支安靜什麼都不做的技能是失敗形態②）。
+    const dir = e.advance ? aimDirection(e.advance.dir, ctx) : undefined;
     // 錨點：優先用第一個目標的位置（「對目標連續 100 下」），否則落點，否則自己。
-    const anchor =
-      (frozen[0] !== undefined ? world.transform.get(frozen[0])?.pos : undefined) ??
-      ctx.point ??
-      t?.pos;
+    // ⚠️ 推進版**一律從施法者自己出發**：一條「從我身上往前掃出去」的線，起點是
+    // 我的身體。用目標當起點會讓線從對手腳下才開始，站在中間的人整場不會挨打。
+    const anchor = dir
+      ? (t?.pos ?? ctx.point)
+      : ((frozen[0] !== undefined ? world.transform.get(frozen[0])?.pos : undefined) ??
+        ctx.point ??
+        t?.pos);
 
     const strikes: DelayedStrike[] = [];
     for (let i = 0; i < count; i++) {
@@ -182,6 +232,16 @@ export const delayedEffect: EffectKindSpec<"delayed"> = {
           }
         : {}),
       ...(anchor !== undefined ? { point: { x: anchor.x, z: anchor.z } } : {}),
+      ...(dir && e.advance
+        ? {
+            advance: {
+              dir,
+              step: Math.max(0, Math.min(DELAYED_MAX_STEP_DIST, e.advance.stepDist)),
+              start: Math.max(0, Math.min(DELAYED_MAX_STEP_DIST, e.advance.startDist ?? 0)),
+            },
+          }
+        : {}),
+      ...(e.hitOncePerTarget === true ? { struck: new Set<EntityId>() } : {}),
       strikes,
       next: 0,
       dropDeadTargets: e.dropDeadTargets ?? true,
@@ -232,14 +292,27 @@ export function delayedSystem(world: SimWorld): void {
 
     while (wave.next < wave.strikes.length && wave.strikes[wave.next]!.atTick <= world.tick) {
       const strike = wave.strikes[wave.next]!;
+      const index = wave.next;
       wave.next++;
+
+      // ⭐【沿向量分段推進】承重的一行：第 i 發的落點 = 錨點 + 方向 ×
+      // (start + i × step)。⛔ 這是**絕對**位移（乘上 index），不是「每 tick 把
+      // 上一發的落點再往前推一點」的累加器 —— 累加器在錯過一個 tick 時會落後，
+      // 而絕對式的到期時刻與落點都只依賴 `index`（同「到期一律用絕對 tick」）。
+      const point =
+        wave.advance && wave.point
+          ? {
+              x: wave.point.x + wave.advance.dir.x * (wave.advance.start + index * wave.advance.step),
+              z: wave.point.z + wave.advance.dir.z * (wave.advance.start + index * wave.advance.step),
+            }
+          : wave.point;
 
       const base: EffectContext = {
         world,
         caster: wave.caster,
         rank: wave.rank,
         targets: [],
-        ...(wave.point !== undefined ? { point: wave.point } : {}),
+        ...(point !== undefined ? { point } : {}),
         origin: wave.origin,
         ...(wave.abilitySlot !== undefined ? { abilitySlot: wave.abilitySlot } : {}),
         // ⭐ 承重的一行。掛在 `base` 上而不是逐發的 ctx 上，所以 `finalEffects`
@@ -249,11 +322,17 @@ export function delayedSystem(world: SimWorld): void {
         rng: world.rng,
       };
       // ⭐ 這一行是整個機制：`frozen` 的那一份名單，不是重解出來的。
-      const targets = wave.reresolve
+      const resolved = wave.reresolve
         ? shapeTargets(wave.reresolve, base)
         : wave.dropDeadTargets
           ? wave.frozen.filter((id) => world.health.get(id)?.alive === true)
           : [...wave.frozen];
+      // ⭐ 一人只吃一次（檔頭⑤）。過濾在**前**、記帳在**後**，所以同一發裡的
+      // 兩個人不會互相擋掉；`resolved` 已經是全序（`shapeTargets` 排過 / `frozen`
+      // 是插入序），所以記帳順序也是全序。
+      const struck = wave.struck;
+      const targets = struck ? resolved.filter((id) => !struck.has(id)) : resolved;
+      if (struck) for (const id of targets) struck.add(id);
 
       const ctx: EffectContext = { ...base, targets };
       runEffects(wave.effects, ctx);
