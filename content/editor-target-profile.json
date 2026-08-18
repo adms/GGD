@@ -1,17 +1,17 @@
 {
   "schema": "ggd-editor-target-profile@1",
-  "generatedAt": "2026-08-18T12:49:08.224Z",
+  "generatedAt": "2026-08-18T13:58:15.882Z",
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_0fee9994f9ea",
+    "contentVersion": "cv_7e3e634b060c",
     "collections": {
       "champions": {
         "hash": "ea872906f006",
         "count": 78
       },
       "abilities": {
-        "hash": "747383e0787a",
+        "hash": "7f8806f559f1",
         "count": 461
       },
       "items": {
@@ -35,7 +35,7 @@
         "count": 3
       },
       "arenas": {
-        "hash": "127a74943be5",
+        "hash": "963951a6b549",
         "count": 13
       },
       "maps": {
@@ -43,15 +43,15 @@
         "count": 7
       },
       "config": {
-        "hash": "705e03be96e4",
-        "count": 62
+        "hash": "ec0baa9cb483",
+        "count": 63
       },
       "models": {
         "hash": "38d96d54f6e6",
         "count": 124
       },
       "vfx": {
-        "hash": "2e39d382ea96",
+        "hash": "e0c0fe267f0f",
         "count": 634
       },
       "skins": {
@@ -90,7 +90,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "b504b28e",
+    "fingerprint": "a816c401",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -411,6 +411,7 @@
       "vfxId",
       "victim",
       "victimCondition",
+      "vision",
       "who",
       "width"
     ],
@@ -424,6 +425,74 @@
       "radius",
       "scaleByNearby"
     ],
+    "vfxSurface": {
+      "vfx@1": [
+        "ambient",
+        "anchorBone",
+        "blendMode",
+        "burstCount",
+        "color",
+        "colorStops",
+        "emitter",
+        "gravityY",
+        "id",
+        "lifetimeSec",
+        "mode",
+        "orient",
+        "rate",
+        "schema",
+        "size",
+        "sizeStops",
+        "speed",
+        "spriteSheet",
+        "stretched",
+        "tailLength",
+        "texture"
+      ],
+      "vfx@1.orient": [
+        "pitchDeg",
+        "swirlDegPerSec",
+        "yawDeg",
+        "yawFrom"
+      ],
+      "ribbon@1": [
+        "anchorBone",
+        "blendMode",
+        "color",
+        "id",
+        "lifespanSec",
+        "schema",
+        "texture",
+        "uvScrollPerSec",
+        "widthAbove",
+        "widthBelow"
+      ],
+      "ability@1.vfxLayers[]": [
+        "alpha",
+        "attachTo",
+        "delayMs",
+        "enabled",
+        "facingDeg",
+        "flyHeight",
+        "pitchDeg",
+        "timeScale",
+        "tint",
+        "vfxKey",
+        "w3xScale"
+      ],
+      "config.vfx-families@1.abilities[]": [
+        "alpha",
+        "anchor",
+        "enabled",
+        "facingDeg",
+        "family",
+        "flyHeight",
+        "pitchDeg",
+        "timeScale",
+        "tint",
+        "w3xScale"
+      ]
+    },
     "templateFamilies": [
       "buff-self",
       "charge-push",
@@ -2309,12 +2378,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "b504b28e",
+    "engineFingerprint": "a816c401",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 b504b28e —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 a816c401 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -2908,5 +2977,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "382ece65c3c1"
+  "profileDigest": "805c8c56934c"
 }

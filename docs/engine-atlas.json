@@ -1,12 +1,12 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "b504b28e",
+  "capabilityFingerprint": "a816c401",
   "counts": {
     "effectKinds": 39,
     "hookEvents": 33,
     "conditionLeafKinds": 5,
     "templateFamilies": 17,
-    "effectFields": 200,
+    "effectFields": 201,
     "stats": 23,
     "combatEnvKeys": 36
   },
@@ -808,7 +808,7 @@
       "key": "grant.type-streak-immunity@1",
       "plan": "[EX∅ 根源] 史萊姆裝（owner 2026-08-18：「連續受到 2 次同型別傷害後免疫該型別」）",
       "state": "partial",
-      "caveat": "⛔ 四個邊界，寫這種卡的人一定會撞到：① `damageTypes` **必填**且是雙向的 —— **沒被列進去的傷害型別既不累計也不打斷連擊**。所以「只列 physical/magic」的卡，火圈真傷（#270）照樣燒得到你，但也不會替敵人洗掉你的物理連擊；② **被免疫擋掉的那一發不會被記進連擊** ⇒ 連擊**凍結在門檻上**，免疫一直持續到來了另一種被列進 `damageTypes` 的傷害為止 —— 那是這件寶具唯一的破解方式，⛔ 不是 bug，但它必須印在卡片上，否則玩家不知道自己為什麼打不動；③ `streakTimeoutSec` **省略 = 連擊永不逾時**，而且它**跨回合殘留**（`sim/clearPools.ts::clearRoundScoped` 清的是 status/shields/dot/buffs 四池，⛔ 不含連擊表）。面對一波純物理的殭屍，省略它就是**無限免疫** —— `zInvulnerable.durationSec` 已經寫過「an unbounded immunity is an unwinnable round」。填任何一個值同時修掉這兩件事；④ `resetMode` 省略 = `restart`（異型那一發**自己算新連擊第 1 發**），`zero` 才是「歸零、下一發才算」。兩者只在「剛換型別的那一發」不同，一般驗證看不出差別。",
+      "caveat": "⛔ 四個邊界，寫這種卡的人一定會撞到：① `damageTypes` **必填**且是雙向的 —— **沒被列進去的傷害型別既不累計也不打斷連擊**。所以「只列 physical/magic」的卡，火圈真傷（#270）照樣燒得到你，但也不會替敵人洗掉你的物理連擊；② **被免疫擋掉的那一發不會被記進連擊** ⇒ 連擊**凍結在門檻上**，免疫一直持續到來了另一種被列進 `damageTypes` 的傷害為止 —— 那是這件寶具唯一的破解方式，⛔ 不是 bug，但它必須印在卡片上，否則玩家不知道自己為什麼打不動；③ `streakTimeoutSec` **省略 = 連擊在這一回合內永不逾時**，⛔ 但**不會跨回合**（`sim/clearPools.ts::clearRoundScoped` 在 host 的 `enterCombat()` 逐席位把連擊表歸零，owner 2026-08-18：「的確不應該跨回合殘留」）。回合**內**要不要有時鐘仍然由這一格決定 ——省略它，面對一波純物理的敵人就是整回合免疫，而 `zInvulnerable.durationSec` 已經寫過「an unbounded immunity is an unwinnable round」。⭐ 出貨的史萊姆裝刻意留空，理由是 owner 的另一半：「場上一定會有其他敵方或特殊殭屍給 AP 傷害打斷」；④ `resetMode` 省略 = `restart`（異型那一發**自己算新連擊第 1 發**），`zero` 才是「歸零、下一發才算」。兩者只在「剛換型別的那一發」不同，一般驗證看不出差別。",
       "evidence": "packages/shared/src/sim/combat/typeStreakImmunity.ts + packages/shared/src/sim/combat/typeStreakImmunity.test.ts（五發序列 physical×2 → 第三發 hp 逐位元不變並發出 `immune`，再用 magic / physical 各一發證明它不是「隨便發一份 invulnerable」）+ content/items/slime-suit.json"
     },
     {
@@ -836,7 +836,7 @@
       "key": "effect.convert-team@1",
       "plan": "[EX∅ 根源] 大師球（『陣營轉換 —— 把一個既有單位改成友軍』）",
       "state": "partial",
-      "caveat": "⛔ 五個邊界：① **`onHitTargets` 這一格 `convertTeam` 沒有**（`carry` 才有）⇒ 掛在同一個 `effects` 陣列裡的回血／上鎖是**無條件**跑的，捕獲被拒絕的那一刻它們照樣發生。要「成功才給」今天寫不出來；② **不對稱**：被借走的殭屍**會**被其他殭屍打，但它**打不到**其他殭屍（`isMobTargetable` 對一隻沒被捕的普通 mob 一律回 false）。它仍然會去打敵方英雄，所以寶具是有用的；③ **捕獲者死掉不會歸位** —— 歸位只有三條路（被捕者死亡／`until:\"duration\"` 到期／回合開始）。`until` 那個 enum 沒有「載具死亡」這一格（`carry` 的 `onCarrierDeath` 才有）；④ `countsForOriginalTeam` **預設 `true`**（＝2026-08-18 之前的行為：被借走的敵方英雄在勝負判定上仍替原隊活著）。填 `false` 只是把原隊那一側的人頭拿掉，⛔ **不會**改算捕獲者那一隊 —— 座位是勝負判定的軸，而借調不動座位；⑤ ⛔ 它**不發任何事件** —— 玩家的可見性靠 `ENTITY_FLAG.TEAM_OVERRIDE*` 三顆 bit 讓那具身體當場換顏色。⇒ 想掛特效的話要自己在同一份 `effects` 裡加一發 `spawnVfx`。",
+      "caveat": "⛔ 五個邊界：① **`onHitTargets` 這一格 `convertTeam` 沒有**（`carry` 才有）⇒ 掛在同一個 `effects` 陣列裡的回血／上鎖是**無條件**跑的，捕獲被拒絕的那一刻它們照樣發生。要「成功才給」今天寫不出來；② **不對稱**：被借走的殭屍**會**被其他殭屍打，但它**打不到**其他殭屍（`isMobTargetable` 對一隻沒被捕的普通 mob 一律回 false）。它仍然會去打敵方英雄，所以寶具是有用的；③ **捕獲者死掉不會歸位** —— 歸位只有三條路（被捕者死亡／`until:\"duration\"` 到期／回合開始）。`until` 那個 enum 沒有「載具死亡」這一格（`carry` 的 `onCarrierDeath` 才有）；④ `countsForOriginalTeam` **預設 `false`**（owner 2026-08-18：被捕的單位實質上就是我方單位）—— `true` 是一鍵回頭（被借走的敵方英雄在勝負判定上仍替原隊活著）。填 `false` 只是把原隊那一側的人頭拿掉，⛔ **不會**改算捕獲者那一隊 —— 座位是勝負判定的軸，而借調不動座位；⑤ ⛔ 它**不發任何事件** —— 玩家的可見性靠 `ENTITY_FLAG.TEAM_OVERRIDE*` 三顆 bit 讓那具身體當場換顏色。⇒ 想掛特效的話要自己在同一份 `effects` 裡加一發 `spawnVfx`。",
       "evidence": "packages/shared/src/sim/mindControl.ts + sim/effects/mindControl.ts + apps/game-server/src/net/mindControlWire.test.ts（⭐ 第三條斷言真的跑 `projectSnapshot` + Colyseus encode→decode 再把隊伍序數解回來 —— 那是「遊戲邏輯全對、螢幕全錯」的唯一防線）+ content/items/master-ball.json"
     }
   ],

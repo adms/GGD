@@ -180,6 +180,25 @@ interface Exemption {
  * Sorted by key, matching the census output order.
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
+  // ── GH#373 / GH#374 2026-08-18：5 支主動天生技接上真的機制之後浮出來的三格 ──
+  // ⭐ 三格都是**同一個形狀**：一個機制在某個授權面上第一次有內容用它，於是
+  //    「整族零採用」被級聯規則藏起來的那幾格單獨浮出來（同 GH#333 的判例）。
+  //    ⛔ 三格都不是「機制沒接線」。
+  "field:abilities.effects[]#taunt.condition": {
+    status: "landing",
+    since: "2026-08-18",
+    why: "GH#373 —— 86-00 裝可愛與 57-00 四次元口袋是**技能側第一次**用 `taunt`（在此之前只有道具：鍊金術之盾／戰鬥力探測器）。於是同一族裡沒被用到的那幾格從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 處理器與 schema 都在（`sim/effects/taunt.ts`），是還沒有一支技能需要「只有在某個條件成立時才嘲弄」。**到期**：任何一支帶條件的嘲弄填了它，這一列會被 STALE 那半邊叫，刪掉即可。",
+  },
+  "field:abilities.effects[]#taunt.radiusTier": {
+    status: "landing",
+    since: "2026-08-18",
+    why: "同上（`taunt` 的第二格）。⚠️ 這一格**短期內不會自然變綠**，而理由是內容事實不是缺陷：`config.aoe-tiers@1` 四級距最大是 8（超大），而這兩支嘲弄的半徑是 24（決鬥區本身 ＝ 卡面的「全場」）與 14.67 —— 兩個都在級距表之外，所以它們照 owner 的規則走的是 `radius` 那一格。**到期**：級距表加了「全場」那一級，或某一支嘲弄的範圍落進 3/4.5/6/8。",
+  },
+  "field:augments.vision": {
+    status: "landing",
+    since: "2026-08-18",
+    why: "GH#373 —— [隱形／真視] 變成 `SOURCE_GRANT_SHAPE` 的一格（53-00 空間穿梭「持續 20 秒」與 30-00 攝影機需要**限時**的 vision，而它在此之前只掛得到道具與天生技 rank，兩者都是永久）。⛔ 逐字沿用 `block`・`critStrike`・`penetration`・`typeStreakImmunity` 的判例：schema 一次補齊四個授權面，內容今天走的是 `applyBuff`（兩支天生技）與 `items.vision`（至尊魔戒／晨曦之光）。增益卡那一面是零，而那是誠實的 —— 三選一還沒有一張「這一場你看得見隱形」。**到期**：任何一張增益卡填了它。",
+  },
   // ── [EX∅ 根源] 2026-08-18 這一批新開的授權面 ─────────────────────────────
   // ⭐ 五件寶具解鎖的三個機制**都已經有內容在用**（`items.typeStreakImmunity` ←
   //    slime-suit、`items.auras[].scaleByNearby` ← sasumata、`carry`/`convertTeam`
@@ -214,18 +233,17 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   //    · `pitchDeg`       → `fx.prim.{holy,lightning}.beam-flat` 在用
   //                         （owner 2026-08-18 點名的「橫放的柱狀砲」），
   //                         layer 那一面則是 15-01 雷神槍 / 45-03 千鳥
-  //    · `yawDeg`         → 下面這兩列。⛔ 它**不能**被靜態填。
+  //    · `yawFrom`        → `fx.prim.{holy,lightning}.beam-flat`（GH#377 落地）
+  //    · `yawDeg`         → 下面這兩列。⛔ 它**永遠不該**被靜態填成一個方向。
   "field:vfx#vfx@1.orient.yawDeg": {
-    status: "landing",
-    since: "2026-08-18",
+    status: "runtime-authored",
     why:
-      "⛔ 這一格今天填不得，而那**不是**機制沒接線 —— `apps/client/src/vfx/orient.ts` 的約定是 `R = Ry(yawDeg) · Rx(90° − pitchDeg)`，其中 **`yawDeg` 是世界座標方位角**，⛔ 不是相對施法者朝向。所以靜態寫一個值，意思是「這一招**永遠**朝世界的那個方向噴，不管玩家瞄哪裡」—— 那不是把功能做完，是做出一個**會發生但發生錯方向**的效果（第一·五守則的鏡像）。真正缺的是**每次施法的動態瞄準**（caster→target 折進 `artParams`），GH#377，盤點排第 1、擋住 129 支（beam 47 / slash 41 / bolt 11 / dash 6 / tornado 6）。**到期**：#377 落地，這一列會被 STALE 那半邊叫，刪掉即可。⛔ 三十天後若仍是 0，正確處置是做 #377，不是延長豁免。",
+      "⭐ GH#377 已落地（2026-08-18）：`yawDeg` 現在由**施法當下**寫進去 —— `VfxSystem` 的 `abilityCast` 用 `yawDegToward(caster→目標/落點)` 算出世界方位角，`artParams.applyAimYaw` 把它折進**這一格**（走 `scale`/`tint`/`alpha` 同一條 `applyArtParams` 路徑，⛔ 不是平行管線）。所以磁碟上的 0 是**正確且永久**的：靜態寫一個值的意思是「這一招永遠朝世界的那個方向噴，不管你瞄哪裡」—— 那是一個**會發生但發生錯方向**的效果。內容要宣告的是 `orient.yawFrom: \"aim\"`（已被 `fx.prim.{holy,lightning}.beam-flat` 採用），`yawDeg` 只在需要**偏移**（180 = 往身後噴的塵尾）時才填。守衛：`apps/client/src/vfx/aimYaw.test.ts`（真的跑 `VfxSystem.handleEvent`，讀 Babylon 粒子的世界方向）。",
   },
   "field:abilities.vfxLayers[].facingDeg": {
-    status: "landing",
-    since: "2026-08-18",
+    status: "default-live",
     why:
-      "同上（技能圖層那一面，`artParams` 把它折進 `doc.orient.yawDeg` 走同一條路）。⚠️ 對照組就在隔壁：**同一批**加進來的 `abilities.vfxLayers[].pitchDeg` **沒有**豁免，因為仰角是一個真的靜態性質（「這一招的柱子是橫躺的」），15-01 雷神槍與 45-03 千鳥兩支已經在用。兩格一起加、只有一格能填 —— 那個差別本身就是這條豁免的理由。",
+      "GH#377 落地之後這一格的語意變了，所以豁免的理由也跟著變：**方位現在有一個程式預設**（`orient.yawFrom:\"aim\"` 的文件每次施法都朝目標），而 `facingDeg` 只是疊在它上面的**偏移** —— 一把三段的斬擊 = 同一份 doc 的 −25 / 0 / +25 三層。零採用＝「還沒有哪一支技能需要偏離瞄準方向」，⛔ 不是機制沒接線（`abilityLayers.artParamsOf` → `applyArtParams` → `applyAimYaw` 是同一條路，`playLayeredCast` 刻意在套完層覆寫**之後**才疊瞄準）。⚠️ 對照組在隔壁：`pitchDeg` 沒有豁免，因為仰角是真的靜態性質（15-01 雷神槍 / 45-03 千鳥在用）。**到期**：任何一支扇形斬擊或需要偏角的技能填了它。",
   },
 
   // ── 場地場景特色（GH#362）─────────────────────────────────────────────

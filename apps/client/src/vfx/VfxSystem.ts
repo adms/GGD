@@ -96,6 +96,8 @@ import {
   maxAbilityVfxLayers,
   type ResolvedVfxLayer,
 } from "../render/vfx/abilityLayers";
+import { applyAimYaw } from "../render/vfx/artParams";
+import { yawDegToward } from "./orient";
 import { isLegacySingleVfx, type AbilityVfxSource } from "@ggd/shared/content/schema/abilityVfx";
 import { W3xCastFx } from "./W3xCastFx";
 import { BloodFx } from "./BloodFx";
@@ -809,6 +811,13 @@ export class VfxSystem {
     boost: number,
     layers?: readonly ResolvedVfxLayer[] | null,
     point?: { x: number; z: number } | null,
+    /**
+     * #377 —— 這一次施法瞄的方位角(世界座標,度),沒有方向可言時 `null`。
+     * ⚠️ 它**不是**一條新的空間參數管線:它只走到 `applyAimYaw`,而那支把它
+     * 折進 `doc.orient.yawDeg`,也就是 `scale`/`tint`/`alpha` 那條既有的路。
+     * 宣告 `orient.yawFrom: "aim"` 的文件才會被動到,其餘一位元不變。
+     */
+    aimYawDeg?: number | null,
   ): void {
     // ---- RUNG 0: 技能自己寫了 `vfxLayers` (#205) ---------------------------
     // 一份 doc 寫了層堆疊,那就是作者對「這一招施法時畫什麼」的完整陳述 ——
@@ -816,7 +825,7 @@ export class VfxSystem {
     // 646 支只有 `vfxKey` 的技能 `layers` 是 null(見 `handleEvent` 的
     // `isLegacySingleVfx` 分支),一個位元都不經過新程式碼。
     if (layers && layers.length > 0) {
-      this.playLayeredCast(layers, pos, point ?? null, nowMs, boost);
+      this.playLayeredCast(layers, pos, point ?? null, nowMs, boost, aimYawDeg ?? null);
       return;
     }
     const art = w3xArtFor(abilityId);
@@ -827,17 +836,23 @@ export class VfxSystem {
     // 高度」,所以接上去的那一天,②號故障(算了但沒送到)不可能再發生一次。
     const castY = familyCastHeightY(art);
     if (!art) {
-      this.play(doc, pos.x, pos.z, nowMs, castY, boost);
+      this.play(doc ? applyAimYaw(doc, aimYawDeg) : doc, pos.x, pos.z, nowMs, castY, boost);
       return;
     }
     // #205 —— 鑄技工坊那張表的 per-ability α / 時間倍率。**兩個都沒設時
     // `applyVfxOverrides` 回傳同一個物件**,所以沒被碰過的技能連 pool key 都
     // 不變(升級前後一位元不差)。設了才會拿到一份改過的 doc + 自己的 pool key。
+    // #377 —— 瞄準疊在後台覆寫**之後**:`applyVfxOverrides` 可能把作者寫的偏移
+    // 換掉,而瞄準是加在最終偏移上的。兩者共用同一支 `applyArtParams`,所以只有
+    // 一份乘法/合併邏輯。
     const tune = (d: VfxDoc): VfxDoc =>
-      applyVfxOverrides(d, {
-        ...(art.alpha !== undefined ? { alpha: art.alpha } : {}),
-        ...(art.timeScale !== undefined ? { timeScale: art.timeScale } : {}),
-      });
+      applyAimYaw(
+        applyVfxOverrides(d, {
+          ...(art.alpha !== undefined ? { alpha: art.alpha } : {}),
+          ...(art.timeScale !== undefined ? { timeScale: art.timeScale } : {}),
+        }),
+        aimYawDeg,
+      );
     const set: VfxDoc[] = [];
     // `doc` IS the primary for every promoted row (the ability's `vfxKey` is
     // the family's dominant emitter, by construction). Reuse it rather than
@@ -884,12 +899,16 @@ export class VfxSystem {
     point: { x: number; z: number } | null,
     nowMs: number,
     boost: number,
+    /** #377 這一次施法的瞄準方位角(度),沒有方向可言時 null。 */
+    aimYawDeg: number | null = null,
   ): void {
     let drawn = 0;
     for (const layer of layers) {
       const base = this.doc(layer.vfxKey);
       if (!base) continue;
-      const doc = applyLayerOverrides(base, layer);
+      // #377 —— 瞄準疊在這一層自己的 `facingDeg` **之後**,所以層寫的角度是
+      // 「偏離瞄準多少」(一把三段的斬擊 = 同一份 doc 的 −25 / 0 / +25 三層)。
+      const doc = applyAimYaw(applyLayerOverrides(base, layer), aimYawDeg);
       const p = layerPosition(layer, pos, point);
       const y = layerHeightY(layer);
       drawn += 1;
@@ -1096,6 +1115,14 @@ export class VfxSystem {
         // projectile it spawns reads the direction back off this
         const dir = ev.data.direction as { x: number; z: number } | undefined;
         this.noteAim(caster, dir ?? (point ? { x: point.x - pos.x, z: point.z - pos.z } : null));
+        // #377 —— 這一次施法的**世界方位角**。三條來源按可信度排:事件自己帶的
+        // `direction`(技能射線)> caster→落點 > 這名施法者上一次瞄的方向
+        // (`noteAim` 剛剛才更新過,所以 self / dash 這些不帶方向的 castType
+        // 也指得出一個方向,而不是退回「永遠朝 +Z」)。三條都沒有 = null =
+        // 文件保留自己寫的角度,⛔ 不是憑空編一個。
+        const aim = dir ?? (point ? { x: point.x - pos.x, z: point.z - pos.z } : null) ??
+          (caster !== undefined ? (this.aim.get(caster) ?? null) : null);
+        const aimYawDeg = aim ? yawDegToward(aim.x, aim.z) : null;
         const doc = this.doc(def?.vfxKey);
         // EX = the fight-defining cast: scale the doc's burst up AND layer the
         // max-intensity pop (core flash + streaks + smoke + ground shockwave),
@@ -1123,7 +1150,7 @@ export class VfxSystem {
         const layers = isLegacySingleVfx(def as AbilityVfxSource | undefined)
           ? null
           : castLayersFor(def as AbilityVfxSource | undefined, maxAbilityVfxLayers());
-        this.playCastVfx(def?.id, doc, pos, nowMs, isEx ? EX_BURST_BOOST : 1, layers, point);
+        this.playCastVfx(def?.id, doc, pos, nowMs, isEx ? EX_BURST_BOOST : 1, layers, point, aimYawDeg);
         // GROUND SCORCH (task #147): stamp a fading dark mark where the ability
         // lands (its ground `point` when it targets the floor) or, failing that,
         // under the caster — so a cast scars the arena instead of leaving it

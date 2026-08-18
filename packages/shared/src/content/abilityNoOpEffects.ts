@@ -44,6 +44,7 @@ import type { AbilityDef, ProjectileDef } from "../sim/content/defs";
 import type { EffectDef } from "../sim/effects/effect";
 import type { RankScalar } from "../sim/perRank";
 import { rankScalarMax } from "../sim/perRank";
+import { hasSourceGrant } from "../sim/stats/sourceGrants";
 
 /** 一處「說了但不會發生」。 */
 export interface Finding {
@@ -241,9 +242,24 @@ function inspect(
       break;
 
     // ── 空的加成來源 ────────────────────────────────────────────────────
+    //
+    // ⚠️ 「空」的判準**不可以**只看 `modifiers` / `hooks`：一份 `applyBuff` 也
+    // 可以什麼屬性都不給而只授予**騎在來源上**的東西（格擋／暴擊／三圍／傷害型別
+    // 轉換／飛行／穿透／型別連擊免疫／隱形真視）。那幾格的共同性質是引擎走
+    // `StatsComp.sources` 而**不問 `kind`**，所以它們是**真的會發生的事**。
+    // ⭐ 判斷交給 `hasSourceGrant()`（`sim/stats/sourceGrants.ts`）——
+    // 它與 `abilityPassives.ts` 的「這一階是不是空的」用**同一份**答案，
+    // 所以第九個授予出現時這裡不用再改一次（⛔ 不要在這裡逐格列舉）。
     case "applyBuff":
-      if ((e.modifiers?.length ?? 0) === 0 && (e.hooks?.length ?? 0) === 0) {
-        push("empty-buff", "applyBuff 既沒有 modifiers 也沒有 hooks —— 掛上去的是一份空的來源");
+      if (
+        (e.modifiers?.length ?? 0) === 0 &&
+        (e.hooks?.length ?? 0) === 0 &&
+        !hasSourceGrant(e)
+      ) {
+        push(
+          "empty-buff",
+          "applyBuff 既沒有 modifiers、沒有 hooks，也沒有任何騎在來源上的授予 —— 掛上去的是一份空的來源",
+        );
       }
       break;
 

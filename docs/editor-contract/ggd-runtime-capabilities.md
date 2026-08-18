@@ -1,6 +1,6 @@
 # GGD 遊戲端執行期能力清單（`ggd-runtime-capabilities@1`）
 
-**指紋 `b504b28e`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
+**指紋 `a816c401`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
 
 ## 這份文件是什麼
 
@@ -96,6 +96,22 @@
 | `periodicDamage` | ✅ | — |
 | `projectile` | ✅ | — |
 | `summon` | ✅ | 召喚物的擊殺歸屬 killCredit: "owner" 尚未實作（施放時會擲錯），其餘欄位皆可用 |
+
+## 7. 特效（VFX）授權面 —— 你在哪一份 JSON 的哪一層寫得出特效參數
+
+⚠️ **這一節在 2026-08-18 之前完全不存在**，而後果不是「少一個欄位」：特效那一整面對編輯器是**不存在的**，所以它產不出任何一支帶特效參數的技能 —— 而且**不會收到任何錯誤**，因為它根本沒寫那些格子。⛔ 這比「不支援」更難發現：不支援至少會被拒絕。
+
+下表的鍵是**授權的位置**（你在哪一份文件的哪一層寫它），值是那一層收得下的欄位名。欄位名一樣是從出貨的 schema 推導的，所以不會宣稱一個引擎不認得的格子。⚠️ 每一格的**上下界與語意**在這份清單裡看不到 —— 那是另一份文件的工作，這裡只回答「這個名字存不存在」。
+
+| 寫在哪 | 欄位 |
+|---|---|
+| `vfx@1` | `ambient` · `anchorBone` · `blendMode` · `burstCount` · `color` · `colorStops` · `emitter` · `gravityY` · `id` · `lifetimeSec` · `mode` · `orient` · `rate` · `schema` · `size` · `sizeStops` · `speed` · `spriteSheet` · `stretched` · `tailLength` · `texture` |
+| `vfx@1.orient` | `pitchDeg` · `swirlDegPerSec` · `yawDeg` · `yawFrom` |
+| `ribbon@1` | `anchorBone` · `blendMode` · `color` · `id` · `lifespanSec` · `schema` · `texture` · `uvScrollPerSec` · `widthAbove` · `widthBelow` |
+| `ability@1.vfxLayers[]` | `alpha` · `attachTo` · `delayMs` · `enabled` · `facingDeg` · `flyHeight` · `pitchDeg` · `timeScale` · `tint` · `vfxKey` · `w3xScale` |
+| `config.vfx-families@1.abilities[]` | `alpha` · `anchor` · `enabled` · `facingDeg` · `family` · `flyHeight` · `pitchDeg` · `timeScale` · `tint` · `w3xScale` |
+
+⭐ 兩個最容易被漏掉的：`vfx@1.orient` 是**巢狀**的（只看 `vfx@1` 只看得到 `orient` 這個名字，看不到裡面的三格），而 `ability@1.vfxLayers[]` 是**每一支技能自己的覆寫**——同一份 `vfx@1` 文件被兩支技能用，兩支可以各自放大、轉色、改仰角，⛔ 不必複製一份文件。
 
 ---
 

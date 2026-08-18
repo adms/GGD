@@ -1,6 +1,6 @@
 {
   "collection": "arenas",
-  "hash": "127a74943be5",
+  "hash": "963951a6b549",
   "entries": [
     {
       "id": "arena.castle",
@@ -11,20 +11,20 @@
     {
       "id": "arena.colosseum",
       "path": "arenas/arena.colosseum.json",
-      "hash": "8b7384cfe88f",
+      "hash": "f8bf1be46438",
       "size": 17556
     },
     {
       "id": "arena.dota",
       "path": "arenas/arena.dota.json",
-      "hash": "bfd33172c2ab",
+      "hash": "b7a394011b76",
       "size": 13019
     },
     {
       "id": "arena.frieren",
       "path": "arenas/arena.frieren.json",
-      "hash": "a741bfcb58b4",
-      "size": 101775
+      "hash": "f332d8cd4af7",
+      "size": 101724
     },
     {
       "id": "arena.godie",
@@ -35,26 +35,26 @@
     {
       "id": "arena.heavens-arena",
       "path": "arenas/arena.heavens-arena.json",
-      "hash": "68c07fc337bf",
-      "size": 119924
+      "hash": "923d9cfb98e0",
+      "size": 126841
     },
     {
       "id": "arena.holy-grail",
       "path": "arenas/arena.holy-grail.json",
-      "hash": "8d40c380a366",
-      "size": 109869
+      "hash": "2ec9d62ca9b2",
+      "size": 116452
     },
     {
       "id": "arena.infinity-castle",
       "path": "arenas/arena.infinity-castle.json",
-      "hash": "974c7927a140",
-      "size": 112372
+      "hash": "eac74665b494",
+      "size": 118953
     },
     {
       "id": "arena.nazarick",
       "path": "arenas/arena.nazarick.json",
-      "hash": "7012ae837bb8",
-      "size": 93444
+      "hash": "84a86df83b17",
+      "size": 99469
     },
     {
       "id": "arena.royale",
@@ -65,8 +65,8 @@
     {
       "id": "arena.shiganshina",
       "path": "arenas/arena.shiganshina.json",
-      "hash": "67826f4f3892",
-      "size": 101498
+      "hash": "94f2332e4f7e",
+      "size": 104581
     },
     {
       "id": "arena.skeleton",
@@ -77,8 +77,8 @@
     {
       "id": "arena.world-tree",
       "path": "arenas/arena.world-tree.json",
-      "hash": "384e64f25327",
-      "size": 110659
+      "hash": "cf11feebb30e",
+      "size": 117242
     }
   ]
 }

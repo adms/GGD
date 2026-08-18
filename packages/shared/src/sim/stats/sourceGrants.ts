@@ -42,6 +42,7 @@ import type { DamageTypeOverride } from "../combat/damageTypeOverride";
 import type { FlightGrant } from "../flight";
 import type { PenetrationGrant } from "../combat/penetration";
 import type { TypeStreakImmunityGrant } from "../combat/typeStreakImmunity";
+import type { VisionGrant } from "../stealth";
 import type { AttrGrant } from "./attributes";
 
 /**
@@ -96,6 +97,19 @@ export interface SourceGrantFields {
    * ⛔ 不需要第二支掃描器。擋住它的只有 schema 的那一格與下面那一行轉發。
    */
   typeStreakImmunity?: TypeStreakImmunityGrant;
+  /**
+   * ⭐ 2026-08-18（GH#373）—— [隱形 / 真視]。同前七格，而且是這一族裡引擎
+   * **最早**就準備好的那一格：`sim/stealth.ts::syncVisionGrants` 每 tick 掃
+   * `StatsComp.sources` 找 `src.vision` 而**不問 `kind`**，而且**已經在跳過過期
+   * 的 source**。所以掛在 `applyBuff` 生出來的限時 source 上就是「隱身 20 秒」／
+   * 「接下來 30 秒看得見隱形部隊」，到期由那個 source 自己的 `expiresAtTick`
+   * 收掉，⛔ 不需要第二支掃描器。
+   *
+   * ⚠️ 在這一格之前 `vision` 只掛得到**道具**（永久佩戴）與**天生技 rank**
+   * （rank>0 之後永久）—— 兩者都沒有「一段時間」。53-00 空間穿梭「持續 20 秒」
+   * 與 30-00 攝影機因此整棵效果樹只剩一個 `spawnVfx`（GH#373）。
+   */
+  vision?: VisionGrant;
 }
 
 /**
@@ -118,6 +132,7 @@ export function sourceGrants(from: SourceGrantFields): SourceGrantFields {
     ...(from.typeStreakImmunity !== undefined
       ? { typeStreakImmunity: from.typeStreakImmunity }
       : {}),
+    ...(from.vision !== undefined ? { vision: from.vision } : {}),
   };
 }
 
@@ -138,6 +153,7 @@ export function hasSourceGrant(from: SourceGrantFields): boolean {
     from.damageTypeOverride !== undefined ||
     from.flight !== undefined ||
     from.penetration !== undefined ||
-    from.typeStreakImmunity !== undefined
+    from.typeStreakImmunity !== undefined ||
+    from.vision !== undefined
   );
 }

@@ -12,52 +12,61 @@
  * `AimIndicator.ts` 的 alpha、又一個 Color3），而那正是第一守則點名的形狀 ——
  * 「改一個寫死的數字 = 一次完整部署」，乘以三個檔就是三次找。
  *
- * ⚠️ 這裡**還不是**後台欄位。誠實的說法：一份 `config.*@1` 要同時落在
- * `content/config/` + Zod schema + admin 表單三處（見 CLAUDE.md 第一守則），
- * 而 #367 本體是接線（把鍵盤/hover 接上既有那條預覽）。所以這一輪先把三處
- * 魔術數字收斂成**一個具名物件**，讓那一天的搬遷是「換一個 provider」而不是
- * 「去三個檔裡找數字」。搬遷的帳單開在 GH issue 上，⛔ 不是這行註解。
+ * ⭐ GH#376 —— **它現在真的是後台欄位了。** 值住在 `config.range-guide@1`
+ * （`content/config/range-guide.json` + Zod + 後台『範圍指引與預告』頁），
+ * 解析與現值住在 `./rangeGuideConfig`，`ContentDb.load()` 呼叫
+ * `applyRangeGuideDoc()` 把它灌進來。這個檔只留**手勢**（hover 的計時規則）。
  *
- * ⛔ 不要在別的檔案裡再寫一次這些數字。要調就調這裡。
+ * ⚠️ 所以 {@link ABILITY_RANGE_GUIDE} 的每一格是 **getter，不是常數** ——
+ * 讀的當下拿到的是這一場生效的值。既有的呼叫端（`AimIndicator`、
+ * `telegraphChannel.test.ts`）一個字都不用改，而它們現在讀的是後台的值。
+ *
+ * ⛔ 不要在別的檔案裡再寫一次這些數字。要調就去後台那一頁。
  */
 
 import type { ChampionAbilitySlot } from "@ggd/shared/sim/intents";
 import { clearHeldAbility, setHeldAbility } from "./abilityHold";
+import { rangeGuide, type Rgb01 } from "./rangeGuideConfig";
 
-/** RGB 三元組（Babylon `Color3` 的參數，0..1）—— 這個檔刻意不 import 渲染型別。 */
-export type Rgb01 = readonly [number, number, number];
+export type { Rgb01 };
 
+/**
+ * 技能範圍指引的**現值**視圖。
+ *
+ * ⚠️ 這不是一個 `as const` 的常數表了（GH#376）：每一格是 getter，回傳
+ * `rangeGuide()` 這一刻的值。⛔ 不要把它解構起來存著 —— 解構等於把後台的值
+ * 凍在那一行執行的那一瞬間。
+ */
 export const ABILITY_RANGE_GUIDE = {
-  /**
-   * 滑鼠停在技能圖示上幾毫秒後浮出地板範圍圈。
-   *
-   * ⚠️ 不是 0：技能列是六格緊鄰的按鈕，游標從畫面一端掃到另一端會**依序**經過
-   * 全部六格。零延遲 = 地板上閃六個圈。140ms 短到「我停下來了」還是即時，
-   * 長到「路過」不會觸發（跟一般 tooltip 的 ~150ms 同一個量級）。
-   */
-  hoverDelayMs: 140,
-
-  /** 施法距離圈 —— 藍色，「我打得到多遠」。 */
-  rangeRgb: [0.45, 0.75, 1.0] as Rgb01,
-  /**
-   * 距離圈的半透明填滿。⚠️ 刻意很淡：這個圈是**整個施法距離**（大技能十幾單位
-   * 直徑），填太濃會把腳下的地板、屍體、掉落物全部染色，反而看不到要打誰。
-   */
-  rangeFillAlpha: 0.09,
-
-  /** 命中範圍圈 —— 琥珀色，「它落在哪」。 */
-  aoeRgb: [1.0, 0.62, 0.23] as Rgb01,
+  /** 滑鼠停在技能圖示上幾毫秒後浮出地板範圍圈。 */
+  get hoverDelayMs(): number {
+    return rangeGuide().hoverDelayMs;
+  },
+  /** 施法距離圈 —— 「我打得到多遠」。 */
+  get rangeRgb(): Rgb01 {
+    return rangeGuide().rangeRgb;
+  },
+  /** 距離圈的半透明填滿（出貨刻意很淡，理由在後台那一頁）。 */
+  get rangeFillAlpha(): number {
+    return rangeGuide().rangeFillAlpha;
+  },
+  /** 命中範圍圈 —— 「它落在哪」。 */
+  get aoeRgb(): Rgb01 {
+    return rangeGuide().aoeRgb;
+  },
   /** AoE 圈小得多，所以可以濃一點 —— 這是玩家真正要瞄的那一圈。 */
-  aoeFillAlpha: 0.2,
-
-  /** 「特殊顏色框框」的不透明度。框要比填滿實得多，否則邊界讀不出來。 */
-  rimAlpha: 0.85,
-  /**
-   * 框的粗細（世界單位，torus 的管徑）。⚠️ 是**絕對**值不是半徑比例：
-   * 比例會讓大技能的框粗得像另一個 AoE，小技能的框細到消失。
-   */
-  rimThickness: 0.18,
-} as const;
+  get aoeFillAlpha(): number {
+    return rangeGuide().aoeFillAlpha;
+  },
+  /** 「特殊顏色框框」的不透明度。 */
+  get rimAlpha(): number {
+    return rangeGuide().rimAlpha;
+  },
+  /** 框的粗細（世界單位，torus 的管徑）—— **絕對**值不是半徑比例。 */
+  get rimThickness(): number {
+    return rangeGuide().rimThickness;
+  },
+};
 
 // ---------------------------------------------------------------------------
 // hover 手勢的計時器 —— ⛔ 不住在 AbilityBar.tsx 裡
@@ -81,15 +90,23 @@ export function cancelHoverGuide(): void {
   hoverTimer = null;
 }
 
-/** Cursor entered a tile — arm the delayed range guide (never the banner). */
+/**
+ * Cursor entered a tile — arm the delayed range guide.
+ *
+ * ⭐ GH#376：「hover 要不要**同時**打開頂端說明橫幅」現在是後台的
+ * `hoverOpensBanner`，⛔ 不是這一行寫死的 `"aim"`。出貨 false（只出範圍圈）——
+ * 理由是技能格自己的 anchored Tooltip 已經在講同一段文字，而橫幅會在游標掃過
+ * 技能列時閃六次。owner 想要相反的那一側時，那是一格下拉選單，不是一次部署。
+ */
 export function hoverGuideEnter(slot: ChampionAbilitySlot): void {
   cancelHoverGuide();
   hoverSlot = slot;
+  const cfg = rangeGuide();
   hoverTimer = setTimeout(() => {
     hoverTimer = null;
     // still the same tile? (a sweep past it has already re-armed with another)
-    if (hoverSlot === slot) setHeldAbility(slot, "aim");
-  }, ABILITY_RANGE_GUIDE.hoverDelayMs);
+    if (hoverSlot === slot) setHeldAbility(slot, cfg.hoverOpensBanner ? "full" : "aim");
+  }, cfg.hoverDelayMs);
 }
 
 /**

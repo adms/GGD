@@ -243,6 +243,20 @@ export function toParticleSystem(
     case "cone":
       ps.createConeEmitter(doc.emitter.radius, (doc.emitter.angleDeg * Math.PI) / 180);
       break;
+    // RING (#366) —— 貼地向外擴散的一圈。Babylon 的 cylinder emitter 生在一個
+    // 水平圓上、朝**水平徑向**射出(y 只有 ±spread/2 的抖動),那正是衝擊波 /
+    // 震地環 / 新星 / 塵環要的基底。⛔ 球型發射器轉一個角度做不到這件事:
+    // 各向同性分布被旋轉之後還是同一個分布(見 `zEmitter` 的 ring 說明)。
+    // ⭐ 擴散半徑的時間曲線是**免費**的:粒子以 `speed` 往外飛 ⇒ 半徑隨壽命線性
+    // 長大,而 `sizeStops` 已經是環的厚度隨時間的曲線。
+    case "ring":
+      ps.createCylinderEmitter(
+        doc.emitter.radius,
+        doc.emitter.thickness ?? 0.08,
+        doc.emitter.fill ?? 0,
+        doc.emitter.spread ?? 0.12,
+      );
+      break;
   }
 
   ps.minLifeTime = doc.lifetimeSec.min;

@@ -1,0 +1,36 @@
+{
+  "id": "range-guide",
+  "schema": "config.range-guide@1",
+  "note": "技能範圍指引 + 地面預告通道（GH#376）。上半是 hold/hover 時畫在腳下的兩個圈（顏色、填滿濃度、框粗細、hover 幾毫秒才浮出來），下半是 #228 三條預告通道「自己／隊友／來襲」各自怎麼分辨。⚠️ 兩半在同一份文件裡是刻意的：telegraph.self 的出貨顏色就是 aoeColor（自己的預告要和剛剛瞄準的那一圈連續），而 telegraph.incoming 的紅刻意離兩組預覽色都很遠——分兩份文件的話，調了一邊忘了另一邊不會有任何東西紅。⚠️ 後台『範圍指引與預告』頁存的是耐久覆蓋層（data/），覆蓋層會蓋掉這一個檔案——線上存過之後，改這裡不會生效。",
+  "hoverDelayMs": 140,
+  "hoverOpensBanner": false,
+  "rangeColor": "#73BFFF",
+  "rangeFillAlpha": 0.09,
+  "aoeColor": "#FF9E3B",
+  "aoeFillAlpha": 0.2,
+  "rimAlpha": 0.85,
+  "rimThickness": 0.18,
+  "telegraph": {
+    "self": {
+      "ring": "#FF9E3B",
+      "fill": "#FF9E3B",
+      "alpha": 0.6,
+      "dashed": true,
+      "pulseHz": 0
+    },
+    "ally": {
+      "ring": "#59CCFF",
+      "fill": "#59CCFF",
+      "alpha": 0.45,
+      "dashed": false,
+      "pulseHz": 0
+    },
+    "incoming": {
+      "ring": "#FF3824",
+      "fill": "#FF5C33",
+      "alpha": 0.95,
+      "dashed": false,
+      "pulseHz": 6
+    }
+  }
+}

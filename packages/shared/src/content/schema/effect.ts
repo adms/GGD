@@ -1270,9 +1270,60 @@ export const zFlightGrant = z
   })
   .strict();
 
+/**
+ * 隱形 / 真視 grant — mirrors `VisionGrant` in sim/stealth.ts.
+ *
+ * ⚠️ 這一份**定義的位置**是承重的：它被 {@link SOURCE_GRANT_SHAPE} 展開，而那是
+ * 一個模組載入當下就求值的 `const`。定義留在檔案下半部時，展開那一行會撞上
+ * `zVisionGrant` 的 TDZ 而讓整個 `schema/index.ts` 在 import 時當場 TypeError
+ * （與 `zAuraDef` 那一段檔頭記錄的是同一族陷阱）。⛔ 不要把它搬回去。
+ *
+ * BOTH numbers are PORTED, not invented, and both have an upper bound because a
+ * missing ceiling is how a mis-parse ships (#277):
+ *
+ *   · `stealthFadeDelaySec` — the w3x `Dur`/`HeroDur` column of WC3 Permanent
+ *     Invisibility (`Apiv`), which for that ability is the FADE TIME. 27-00
+ *     永久性的隱形術 ships 4.0, matching its own prose 「在4秒內不做任何攻擊或
+ *     施法動作」. Cap 60 s: anything longer is a hero who never goes invisible
+ *     inside a 3-minute round, i.e. a typo that would read as the feature being
+ *     broken. 0 is legal and means "hidden the instant you stop acting".
+ *   · `trueSightRadius` — sim units, so the w3x `cast_range` divided by the
+ *     usual 54.5 (`Atru` 16-00 通靈能力: 500 → 9.17). Cap 40, the same
+ *     mis-parse guard `zAuraDef.radius` uses and for the same reason: the whole
+ *     zone is `boundaryRadius: 24`, so >40 is almost certainly a raw WC3 number
+ *     that leaked through unconverted.
+ */
+export const zVisionGrant = z
+  .object({
+    stealthFadeDelaySec: z.number().min(0).max(60).optional(),
+    trueSightRadius: z.number().positive().max(40).optional(),
+  })
+  .strict()
+  .refine(
+    (v) =>
+      v.stealthFadeDelaySec !== undefined || v.trueSightRadius !== undefined,
+    {
+      message:
+        "vision grant must carry at least one of stealthFadeDelaySec / trueSightRadius",
+    },
+  );
+
 export const SOURCE_GRANT_SHAPE = {
   block: zBlockGrant.optional(),
   critStrike: zCritStrikeGrant.optional(),
+  /**
+   * ⭐ 2026-08-18（GH#373）—— **限時**隱形 / 真視。**又是同一個授權格**，
+   * 而且是這一族裡引擎最早就準備好的那一格：`sim/stealth.ts::syncVisionGrants`
+   * 從 2026-07-30 起每 tick 掃 `StatsComp.sources` 找 `src.vision`、**不問
+   * `kind`**，而且**已經在跳過過期的 source**（`expiresAtTick <= world.tick`
+   * 那一行）。所以「隱身 20 秒」到期由那份 buff 自己收掉，⛔ 不需要第二支掃描器。
+   *
+   * 擋住它的一直只有 schema：`vision` 在此之前只掛得到**道具**（永久佩戴）與
+   * **天生技 rank**（rank>0 之後永久），於是 53-00 空間穿梭「持續 20 秒」與
+   * 30-00 攝影機「可以看到隱形部隊」在引擎裡沒有形狀 —— 兩支的整棵效果樹因此
+   * 只剩一個 `spawnVfx`（GH#373，第一·五守則的形狀）。
+   */
+  vision: zVisionGrant.optional(),
   /**
    * ⭐ 2026-08-09 —— G7 的第三、第四格。**引擎從第一天就不看 `kind`**（真的跑過
    * 模擬：把 `attributes` 掛在 `kind:"buff"/"augment"/"passive"` 的來源上，
@@ -4396,38 +4447,6 @@ export const zAuraDef = z
     }
   });
 
-/**
- * 隱形 / 真視 grant on a passive rank — mirrors `VisionGrant` in sim/stealth.ts.
- *
- * BOTH numbers are PORTED, not invented, and both have an upper bound because a
- * missing ceiling is how a mis-parse ships (#277):
- *
- *   · `stealthFadeDelaySec` — the w3x `Dur`/`HeroDur` column of WC3 Permanent
- *     Invisibility (`Apiv`), which for that ability is the FADE TIME. 27-00
- *     永久性的隱形術 ships 4.0, matching its own prose 「在4秒內不做任何攻擊或
- *     施法動作」. Cap 60 s: anything longer is a hero who never goes invisible
- *     inside a 3-minute round, i.e. a typo that would read as the feature being
- *     broken. 0 is legal and means "hidden the instant you stop acting".
- *   · `trueSightRadius` — sim units, so the w3x `cast_range` divided by the
- *     usual 54.5 (`Atru` 16-00 通靈能力: 500 → 9.17). Cap 40, the same
- *     mis-parse guard `zAuraDef.radius` uses and for the same reason: the whole
- *     zone is `boundaryRadius: 24`, so >40 is almost certainly a raw WC3 number
- *     that leaked through unconverted.
- */
-export const zVisionGrant = z
-  .object({
-    stealthFadeDelaySec: z.number().min(0).max(60).optional(),
-    trueSightRadius: z.number().positive().max(40).optional(),
-  })
-  .strict()
-  .refine(
-    (v) =>
-      v.stealthFadeDelaySec !== undefined || v.trueSightRadius !== undefined,
-    {
-      message:
-        "vision grant must carry at least one of stealthFadeDelaySec / trueSightRadius",
-    },
-  );
 
 
 /** One rank of `ability@1.passive` — mirrors `AbilityPassiveRank`. */
@@ -4436,9 +4455,9 @@ export const zAbilityPassiveRank = z
     modifiers: z.array(zStatModifier).optional(),
     hooks: z.array(zHookDef).optional(),
     auras: z.array(zAuraDef).optional(),
-    vision: zVisionGrant.optional(),
-    // ⭐ 2026-08-09：`flight` 也改由 {@link SOURCE_GRANT_SHAPE} 展開（見那裡的
-    // 說明），所以這裡**不再**單獨列一格 —— 兩處同名會被後展開的那份靜默蓋掉。
+    // ⭐ 2026-08-09：`flight`、⭐ 2026-08-18（GH#373）：`vision` —— 兩者都改由
+    // {@link SOURCE_GRANT_SHAPE} 展開（見那裡的說明），所以這裡**不再**單獨列
+    // 一格 —— 兩處同名會被後展開的那份靜默蓋掉（`tsc` 的 TS2783 會叫）。
     /**
      * 格擋 this rank grants — see {@link zBlockGrant} and `sim/combat/block.ts`.
      *

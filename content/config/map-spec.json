@@ -29,6 +29,10 @@
     "countMin": 6,
     "countMax": 10
   },
+  "spawn": {
+    "minWallClearanceBodyRadii": 3,
+    "maxPocketPathFactor": 0.8
+  },
   "severity": {
     "deadEnds": "warn",
     "loops": "warn",

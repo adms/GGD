@@ -13,7 +13,7 @@
  */
 import type { VfxDoc } from "@ggd/shared/content";
 import type { Rgb } from "./primitives";
-import { DEFAULT_PITCH_DEG } from "../../vfx/orient";
+import { DEFAULT_AIM_YAW_STEP_DEG, DEFAULT_PITCH_DEG, quantizeYawDeg } from "../../vfx/orient";
 
 export interface ArtParams {
   /** multiply every size + the emitter radius */
@@ -58,20 +58,25 @@ function round4(v: number): number {
   return Math.round(v * 10000) / 10000;
 }
 
-/** True when `p` carries no doc-affecting knob (identity fast-path). */
-function isDocIdentity(p: ArtParams): boolean {
+/**
+ * True when `p` carries no doc-affecting knob (identity fast-path).
+ *
+ * ⚠️ 方位那三格要跟**這份文件現在的值**比,⛔ 不是跟出貨預設比。`facingDeg: 0`
+ * 的意思是「把方位轉正」—— 對一份 `orient.yawDeg = 30` 的文件那是**一個真的改動**,
+ * 而拿它跟 0 比會把改動整格吞掉,畫面上看起來只是「這一招沒有轉回來」。
+ * (#377 之前沒有文件填過 `yawDeg`,所以這個坑一直是空的;瞄準偏移一上來就會踩到。)
+ */
+function isDocIdentity(p: ArtParams, doc: VfxDoc): boolean {
+  const o = doc.orient;
   return (
     (p.scale === undefined || p.scale === 1) &&
     p.tint === undefined &&
     (p.alpha === undefined || p.alpha === 1) &&
     p.count === undefined &&
     (p.timeScale === undefined || p.timeScale === 1) &&
-    // #366 —— 方位現在是 doc 表達得出來的東西,所以它必須參與這個判斷。
-    // ⚠️ 用的是**效果**不是「有沒有這個 key」:`facingDeg: 0` / `pitchDeg: 90`
-    // 是恆等,不該憑空多開一格粒子池。
-    (p.facingDeg === undefined || p.facingDeg === 0) &&
-    (p.pitchDeg === undefined || p.pitchDeg === DEFAULT_PITCH_DEG) &&
-    (p.swirlDegPerSec === undefined || p.swirlDegPerSec === 0)
+    (p.facingDeg === undefined || p.facingDeg === (o?.yawDeg ?? 0)) &&
+    (p.pitchDeg === undefined || p.pitchDeg === (o?.pitchDeg ?? DEFAULT_PITCH_DEG)) &&
+    (p.swirlDegPerSec === undefined || p.swirlDegPerSec === (o?.swirlDegPerSec ?? 0))
   );
 }
 
@@ -96,7 +101,7 @@ function retint(rgba: readonly [number, number, number, number], tint: Rgb): [nu
  * `resolveSpatial`.
  */
 export function applyArtParams(doc: VfxDoc, p: ArtParams): VfxDoc {
-  if (isDocIdentity(p)) return doc;
+  if (isDocIdentity(p, doc)) return doc;
   const scale = p.scale ?? 1;
   const alpha = p.alpha ?? 1;
   const ts = p.timeScale ?? 1;
@@ -108,6 +113,14 @@ export function applyArtParams(doc: VfxDoc, p: ArtParams): VfxDoc {
     if (doc.sizeStops) out.sizeStops = doc.sizeStops.map(([t, s]) => [t, round(s * scale)]) as VfxDoc["sizeStops"];
     if (doc.emitter.shape === "sphere") out.emitter = { ...doc.emitter, radius: round(doc.emitter.radius * scale) };
     else if (doc.emitter.shape === "cone") out.emitter = { ...doc.emitter, radius: round(doc.emitter.radius * scale) };
+    // ring (#366) —— 環的**厚度**要跟著半徑一起縮,否則放大 3 倍的衝擊波會變成一條
+    // 相對薄到看不見的線(而「大小」這格是 owner 點名的四個參數之一)。
+    else if (doc.emitter.shape === "ring")
+      out.emitter = {
+        ...doc.emitter,
+        radius: round(doc.emitter.radius * scale),
+        ...(doc.emitter.thickness !== undefined ? { thickness: round(doc.emitter.thickness * scale) } : {}),
+      };
   }
 
   if (p.tint || alpha !== 1) {
@@ -136,6 +149,9 @@ export function applyArtParams(doc: VfxDoc, p: ArtParams): VfxDoc {
       swirlDegPerSec: p.swirlDegPerSec ?? base.swirlDegPerSec,
     };
     const orient: NonNullable<VfxDoc["orient"]> = {};
+    // ⚠️ `yawFrom` 是**文件自己的宣告**(方位從哪裡來),不是一格可覆寫的參數 ——
+    // 重建 orient 物件時漏抄它,這份文件就會在被縮放/染色的那一刻靜靜地失去瞄準。
+    if (base.yawFrom !== undefined) orient.yawFrom = base.yawFrom;
     if (merged.yawDeg !== undefined) orient.yawDeg = round(merged.yawDeg);
     if (merged.pitchDeg !== undefined) orient.pitchDeg = round(merged.pitchDeg);
     if (merged.swirlDegPerSec !== undefined) orient.swirlDegPerSec = round(merged.swirlDegPerSec);
@@ -143,6 +159,37 @@ export function applyArtParams(doc: VfxDoc, p: ArtParams): VfxDoc {
   }
 
   return out;
+}
+
+/**
+ * #377 —— 把**這一次施法的瞄準角**折進一份文件。
+ *
+ * 這是 129 支有方向的技能(beam 47 / slash 41 / bolt 11 / dash 6 / tornado 6)
+ * 從「每次施法都朝同一邊噴」變成「朝你打的那個人噴」的**唯一**接縫。
+ *
+ * ⭐ 走的是 `applyArtParams` 那條已經有池、有 id 簽章、有守衛的路
+ * (`facingDeg` → `doc.orient.yawDeg`),⛔ 不是第二條平行的空間參數管線 ——
+ * `flyHeight` 當年就是走平行管線,在 `familyRow()` 一行之內蒸發掉的。
+ *
+ * 三件事按順序:
+ * ① **opt-in 在文件上**。`orient.yawFrom !== "aim"` 的文件原樣回傳(同一個物件
+ *    reference),所以 633 份沒有 `orient` 的出貨文件一位元都不變。
+ * ② **`yawDeg` 是偏移**。作者寫 180 = 往身後噴的塵尾;寫 0(或不寫)= 正對目標。
+ * ③ ⭐ **換 pool key**。`VfxSystem` 的粒子池 key 是 `doc.id`,不換 key 的話第二次
+ *    施法會借到第一次那個**已經按舊角度建好**的 `ParticleSystem` —— 特效照樣播、
+ *    方向卻是上一次的,而任何只讀 VfxDoc 的斷言都會是綠的(故障 ③)。
+ */
+export function applyAimYaw(
+  doc: VfxDoc,
+  aimYawDeg: number | null | undefined,
+  stepDeg: number = DEFAULT_AIM_YAW_STEP_DEG,
+): VfxDoc {
+  if (doc.orient?.yawFrom !== "aim") return doc;
+  if (aimYawDeg === null || aimYawDeg === undefined || !Number.isFinite(aimYawDeg)) return doc;
+  const yaw = quantizeYawDeg(aimYawDeg + (doc.orient.yawDeg ?? 0), stepDeg);
+  if (yaw === (doc.orient.yawDeg ?? 0)) return doc;
+  const out = applyArtParams(doc, { facingDeg: yaw });
+  return { ...out, id: `${doc.id}@aim${yaw}` };
 }
 
 /** The spatial params, defaulted, for the invocation site (play y / facing). */

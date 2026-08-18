@@ -1,25 +1,25 @@
 {
  "schema": "model-budget@1",
- "generatedAt": "2026-08-18T12:48:34.462Z",
+ "generatedAt": "2026-08-18T13:57:42.615Z",
  "generatedBy": "tools/model-budget/emit_report.ts (task #99)",
  "sources": [
   {
    "path": "content/models/_index.json",
    "sha256": "dc20d995ac6b2d40",
    "bytes": 17832,
-   "mtime": "2026-08-18T12:47:41.569Z"
+   "mtime": "2026-08-18T13:53:32.318Z"
   },
   {
    "path": "content/arenas/_index.json",
-   "sha256": "fdc722d1e209bc4d",
+   "sha256": "e9c140269a82a64c",
    "bytes": 1874,
-   "mtime": "2026-08-18T12:47:41.559Z"
+   "mtime": "2026-08-18T13:53:32.302Z"
   },
   {
    "path": "content/champions/_index.json",
    "sha256": "d4ea0e0e64525586",
    "bytes": 10293,
-   "mtime": "2026-08-18T12:47:41.497Z"
+   "mtime": "2026-08-18T13:53:32.245Z"
   },
   {
    "path": "apps/client/src/render/ArenaGround.ts",
@@ -9657,6 +9657,501 @@
    "note": ""
   },
   {
+   "id": "assets/models/scenery/broken_pillar.glb",
+   "path": "assets/models/scenery/broken_pillar.glb",
+   "group": "scenery",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 60,
+   "vertices": 120,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 1108,
+   "vramBytes": 1365,
+   "maxTextureEdge": 16,
+   "textures": [
+    {
+     "w": 16,
+     "h": 16,
+     "format": "png",
+     "diskBytes": 1108
+    }
+   ],
+   "fileBytes": 6724,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery/dead_tree.glb",
+   "path": "assets/models/scenery/dead_tree.glb",
+   "group": "scenery",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 84,
+   "vertices": 168,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 1108,
+   "vramBytes": 1365,
+   "maxTextureEdge": 16,
+   "textures": [
+    {
+     "w": 16,
+     "h": 16,
+     "format": "png",
+     "diskBytes": 1108
+    }
+   ],
+   "fileBytes": 8396,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery/gravestone.glb",
+   "path": "assets/models/scenery/gravestone.glb",
+   "group": "scenery",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 60,
+   "vertices": 120,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 1108,
+   "vramBytes": 1365,
+   "maxTextureEdge": 16,
+   "textures": [
+    {
+     "w": 16,
+     "h": 16,
+     "format": "png",
+     "diskBytes": 1108
+    }
+   ],
+   "fileBytes": 6720,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery/hanging_banner.glb",
+   "path": "assets/models/scenery/hanging_banner.glb",
+   "group": "scenery",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 96,
+   "vertices": 192,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 1108,
+   "vramBytes": 1365,
+   "maxTextureEdge": 16,
+   "textures": [
+    {
+     "w": 16,
+     "h": 16,
+     "format": "png",
+     "diskBytes": 1108
+    }
+   ],
+   "fileBytes": 9252,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery/ice_blocks.glb",
+   "path": "assets/models/scenery/ice_blocks.glb",
+   "group": "scenery",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 60,
+   "vertices": 120,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 1108,
+   "vramBytes": 1365,
+   "maxTextureEdge": 16,
+   "textures": [
+    {
+     "w": 16,
+     "h": 16,
+     "format": "png",
+     "diskBytes": 1108
+    }
+   ],
+   "fileBytes": 6716,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery/icicle_cluster.glb",
+   "path": "assets/models/scenery/icicle_cluster.glb",
+   "group": "scenery",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 72,
+   "vertices": 144,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 1108,
+   "vramBytes": 1365,
+   "maxTextureEdge": 16,
+   "textures": [
+    {
+     "w": 16,
+     "h": 16,
+     "format": "png",
+     "diskBytes": 1108
+    }
+   ],
+   "fileBytes": 7568,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery/iron_fence.glb",
+   "path": "assets/models/scenery/iron_fence.glb",
+   "group": "scenery",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 192,
+   "vertices": 384,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 1108,
+   "vramBytes": 1365,
+   "maxTextureEdge": 16,
+   "textures": [
+    {
+     "w": 16,
+     "h": 16,
+     "format": "png",
+     "diskBytes": 1108
+    }
+   ],
+   "fileBytes": 15948,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery/leaning_beam.glb",
+   "path": "assets/models/scenery/leaning_beam.glb",
+   "group": "scenery",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 48,
+   "vertices": 96,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 1108,
+   "vramBytes": 1365,
+   "maxTextureEdge": 16,
+   "textures": [
+    {
+     "w": 16,
+     "h": 16,
+     "format": "png",
+     "diskBytes": 1108
+    }
+   ],
+   "fileBytes": 5880,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery/rubble_pile.glb",
+   "path": "assets/models/scenery/rubble_pile.glb",
+   "group": "scenery",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 72,
+   "vertices": 144,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 1108,
+   "vramBytes": 1365,
+   "maxTextureEdge": 16,
+   "textures": [
+    {
+     "w": 16,
+     "h": 16,
+     "format": "png",
+     "diskBytes": 1108
+    }
+   ],
+   "fileBytes": 7560,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery/sarcophagus.glb",
+   "path": "assets/models/scenery/sarcophagus.glb",
+   "group": "scenery",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 60,
+   "vertices": 120,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 1108,
+   "vramBytes": 1365,
+   "maxTextureEdge": 16,
+   "textures": [
+    {
+     "w": 16,
+     "h": 16,
+     "format": "png",
+     "diskBytes": 1108
+    }
+   ],
+   "fileBytes": 6720,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery/shoji_door.glb",
+   "path": "assets/models/scenery/shoji_door.glb",
+   "group": "scenery",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 96,
+   "vertices": 192,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 1108,
+   "vramBytes": 1365,
+   "maxTextureEdge": 16,
+   "textures": [
+    {
+     "w": 16,
+     "h": 16,
+     "format": "png",
+     "diskBytes": 1108
+    }
+   ],
+   "fileBytes": 9240,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery/stand_section.glb",
+   "path": "assets/models/scenery/stand_section.glb",
+   "group": "scenery",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 96,
+   "vertices": 192,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 1108,
+   "vramBytes": 1365,
+   "maxTextureEdge": 16,
+   "textures": [
+    {
+     "w": 16,
+     "h": 16,
+     "format": "png",
+     "diskBytes": 1108
+    }
+   ],
+   "fileBytes": 9244,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery/stone_lantern.glb",
+   "path": "assets/models/scenery/stone_lantern.glb",
+   "group": "scenery",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 72,
+   "vertices": 144,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 1108,
+   "vramBytes": 1365,
+   "maxTextureEdge": 16,
+   "textures": [
+    {
+     "w": 16,
+     "h": 16,
+     "format": "png",
+     "diskBytes": 1108
+    }
+   ],
+   "fileBytes": 7568,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery/stone_steps.glb",
+   "path": "assets/models/scenery/stone_steps.glb",
+   "group": "scenery",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 72,
+   "vertices": 144,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 1108,
+   "vramBytes": 1365,
+   "maxTextureEdge": 16,
+   "textures": [
+    {
+     "w": 16,
+     "h": 16,
+     "format": "png",
+     "diskBytes": 1108
+    }
+   ],
+   "fileBytes": 7560,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery/torii.glb",
+   "path": "assets/models/scenery/torii.glb",
+   "group": "scenery",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 96,
+   "vertices": 192,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 1108,
+   "vramBytes": 1365,
+   "maxTextureEdge": 16,
+   "textures": [
+    {
+     "w": 16,
+     "h": 16,
+     "format": "png",
+     "diskBytes": 1108
+    }
+   ],
+   "fileBytes": 9224,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
    "id": "assets/models/shop/merchant.glb",
    "path": "assets/models/shop/merchant.glb",
    "group": "shop",
@@ -11899,14 +12394,14 @@
   }
  },
  "totals": {
-  "files": 207,
-  "shipping": 167,
-  "triangles": 169779,
-  "shippingTriangles": 145663,
-  "textureBytes": 19159177,
-  "vramBytes": 219572151,
+  "files": 222,
+  "shipping": 182,
+  "triangles": 171015,
+  "shippingTriangles": 146899,
+  "textureBytes": 19175797,
+  "vramBytes": 219592626,
   "zeroGeometry": 11,
   "nearZero": 25,
-  "unused": 94
+  "unused": 109
  }
 }

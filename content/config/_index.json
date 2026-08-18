@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "705e03be96e4",
+  "hash": "ec0baa9cb483",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -197,14 +197,14 @@
     {
       "id": "map-report",
       "path": "config/map-report.json",
-      "hash": "6a8a64228b7a",
-      "size": 4266
+      "hash": "1a91dba5825f",
+      "size": 4262
     },
     {
       "id": "map-spec",
       "path": "config/map-spec.json",
-      "hash": "9daf4979065c",
-      "size": 1227
+      "hash": "1fd024bedb2d",
+      "size": 1312
     },
     {
       "id": "mitigation",
@@ -235,6 +235,12 @@
       "path": "config/practice.json",
       "hash": "0584289e7571",
       "size": 931
+    },
+    {
+      "id": "range-guide",
+      "path": "config/range-guide.json",
+      "hash": "c0cc9ed5d4eb",
+      "size": 1421
     },
     {
       "id": "ranking",

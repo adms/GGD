@@ -191,6 +191,11 @@ describe("格擋 / 暴擊的授權格 —— 四種來源同一條路", () => {
         penetration: { scope: "basic", armorPct: 1 },
         // ⭐ 2026-08-18 (GH#355)：型別連擊免疫是第七格（史萊姆裝）。同上。
         typeStreakImmunity: { damageTypes: ["physical"], threshold: 2 },
+        // ⭐ 2026-08-18 (GH#373)：視野是第八格（53-00 空間穿梭的隱形、30-00 攝影機的真視）。
+        //    這條守衛照它自己的設計紅了一次 —— `vision` 進了 `SOURCE_GRANT_SHAPE`
+        //    與 `sourceGrants()`，但沒進這個夾具，於是兩個方向的比對逐鍵指名它。
+        //    ⛔ 正解就是補這一行，不是放寬斷言。
+        vision: { stealthFadeDelaySec: 3, trueSightRadius: 24 },
       }),
     ).sort();
     expect(forwarded).toEqual(Object.keys(SOURCE_GRANT_SHAPE).sort());

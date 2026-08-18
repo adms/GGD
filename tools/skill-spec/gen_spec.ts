@@ -67,6 +67,17 @@ import { zEffectDef, zHookDef, SOURCE_GRANT_SHAPE } from "../../packages/shared/
 import { zAugmentDoc } from "../../packages/shared/src/content/schema/augment";
 import { zEffectCondition } from "../../packages/shared/src/content/schema/condition";
 import { zScaling } from "../../packages/shared/src/content/schema/common";
+import {
+  zVfxDoc,
+  zVfxOrient,
+  zRibbonDoc,
+  zVfxAbilityFamilyBinding,
+} from "../../packages/shared/src/content/schema/vfx";
+import {
+  zAbilityVfxLayer,
+  ABILITY_VFX_LAYER_HARD_CAP,
+  DEFAULT_MAX_ABILITY_VFX_LAYERS,
+} from "../../packages/shared/src/content/schema/abilityVfx";
 import { Stat } from "../../packages/shared/src/sim/stats/statTypes";
 import { ModOp } from "../../packages/shared/src/sim/stats/modifiers";
 
@@ -303,6 +314,65 @@ function fieldsOf(obj: z.ZodTypeAny, skip: readonly string[] = []): Field[] {
   return out;
 }
 
+/**
+ * 從 schema 原始碼抽欄位的 TSDoc。
+ *
+ * ⚠️ 為什麼需要這一支：`effect.ts` 那一族用 `.describe()`（內省讀得到），
+ * 但 `vfx.ts` / `abilityVfx.ts` 用的是 `/** … *\/` 註解 —— 那些字**不在 Zod 物件裡**，
+ * 所以 {@link fieldsOf} 對特效那一面會回一整欄空白的「說明」。
+ *
+ * ⛔ 解法不是在這裡手抄一份說明（那就是第二個真相來源，而且它會安靜地與 schema
+ * 漂開）。這一支跟 {@link hookDocs} 是同一個做法：**去讀那份原始碼**。
+ *
+ * `from` / `to` 把掃描夾在一段裡 —— 同一個檔裡 `texture` 出現在 `vfx@1` 與
+ * `ribbon@1` 兩處而語意不同，不夾會拿到錯的那一句。
+ */
+function tsdocFields(file: string, from: string, to: string): Map<string, string> {
+  const src = readFileSync(join(REPO, file), "utf8");
+  const i = src.indexOf(from);
+  if (i < 0) {
+    throw new Error(
+      `⛔ ${file} 裡找不到 \`${from}\` —— 特效欄位的說明會整欄變空白，而那看起來` +
+        `跟「這些欄位沒有說明」一模一樣。修 gen_spec.ts 的錨點，⛔ 不要讓它靜靜地空掉。`,
+    );
+  }
+  const j = src.indexOf(to, i);
+  const seg = src.slice(i, j < 0 ? undefined : j);
+  const out = new Map<string, string>();
+  // `/** … */` 後面（可能隔幾行 `//` 註解）緊跟著 `欄位名:` 的那一段就是它的說明。
+  const re = /\/\*\*([\s\S]*?)\*\/\s*(?:\/\/[^\n]*\n\s*)*([A-Za-z_][A-Za-z0-9_]*)\s*:/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(seg)) !== null) {
+    const body = m[1]!
+      .split("\n")
+      .map((l) => l.replace(/^\s*\*\s?/, "").trimEnd())
+      .join("\n")
+      .replace(/\{@link\s+([^}]+)\}/g, "`$1`")
+      .trim();
+    if (body && !out.has(m[2]!)) out.set(m[2]!, body);
+  }
+  return out;
+}
+
+/**
+ * {@link fieldsOf} 的說明欄補件：內省拿不到的，從原始碼的 TSDoc 補上。
+ *
+ * ⚠️ `zRef()` 把 `ref?:vfx` 這種**機器標記**放在 `.description` 裡，於是那一格
+ * 看起來「有說明」而人讀不懂。所以機器標記也要被 TSDoc 蓋掉 —— 但**保留在括號裡**，
+ * 因為「這是一個軟參照」本身是作者要知道的事。
+ */
+function withDocs(fields: Field[], ...maps: Map<string, string>[]): Field[] {
+  return fields.map((f) => {
+    const machineTag = /^ref\??:/.test(f.desc);
+    if (f.desc && !machineTag) return f;
+    for (const m of maps) {
+      const d = m.get(f.name);
+      if (d) return { ...f, desc: machineTag ? `${oneLine(d)}（\`${f.desc}\`）` : oneLine(d) };
+    }
+    return f;
+  });
+}
+
 /** 把 `zEffectDef` 這種 discriminated union 拆成 kind → 欄位表。 */
 function unionArmsByKind(schema: z.ZodTypeAny): Map<string, z.ZodTypeAny> {
   const root = unwrap(schema).inner;
@@ -401,6 +471,12 @@ interface Usage {
   effectKinds: Map<string, Slot>;
   hookEvents: Map<string, Slot>;
   conditionLeaves: Map<string, Slot>;
+  /**
+   * 特效授權面（GH#372）：`<寫在哪>.<欄位>` → 誰在用 + 一個抄得動的實例。
+   * ⭐ 這一格讓「橫放的柱狀砲」那種例子是**量到的**（哪一份出貨文件真的寫了
+   * `orient.pitchDeg`），⛔ 不是我在產生器裡點名一個檔名 —— 點名的那一刻它就開始過期。
+   */
+  vfxSurface: Map<string, Slot>;
   statusTags: Map<string, number>;
   statuses: string[];
   collections: Map<string, number>;
@@ -423,6 +499,7 @@ function scanContent(): Usage {
     effectKinds: new Map(),
     hookEvents: new Map(),
     conditionLeaves: new Map(),
+    vfxSurface: new Map(),
     statusTags: new Map(),
     statuses: [],
     collections: new Map(),
@@ -494,6 +571,41 @@ function scanContent(): Usage {
       u.collections.set(collection, (u.collections.get(collection) ?? 0) + 1);
       walkJson(doc, id, collection, false);
 
+      // ── 特效授權面的用量（GH#372）────────────────────────────────────
+      // ⚠️ 走的是**頂層鍵**而不是 `walkJson`：`walkJson` 只認得 `kind` 與 `on`，
+      // 而特效的授權面一格 `kind` 都沒有 —— 那正是它整片從合約裡消失的原因。
+      if (collection === "vfx") {
+        const shape = doc["schema"] === "ribbon@1" ? "ribbon@1" : "vfx@1";
+        for (const [k, v] of Object.entries(doc)) {
+          if (v === undefined) continue;
+          bump(u.vfxSurface, `${shape}.${k}`, id, collection, doc);
+          // `orient` 是巢狀的：只記 `orient` 會讓三格子欄位的用量永遠是 0。
+          if (shape === "vfx@1" && k === "orient" && v !== null && typeof v === "object") {
+            for (const ok of Object.keys(v as Record<string, unknown>)) {
+              bump(u.vfxSurface, `vfx@1.orient.${ok}`, id, collection, doc);
+            }
+          }
+        }
+      }
+      if (doc["schema"] === "config.vfx-families@1" && doc["abilities"] !== null && typeof doc["abilities"] === "object") {
+        for (const [abilityId, bind] of Object.entries(doc["abilities"] as Record<string, unknown>)) {
+          if (!bind || typeof bind !== "object") continue;
+          for (const k of Object.keys(bind as Record<string, unknown>)) {
+            bump(u.vfxSurface, `config.vfx-families@1.abilities[].${k}`, abilityId, collection, {
+              [abilityId]: bind,
+            });
+          }
+        }
+      }
+      if (collection === "abilities" && Array.isArray(doc["vfxLayers"])) {
+        for (const layer of doc["vfxLayers"] as Record<string, unknown>[]) {
+          if (!layer || typeof layer !== "object") continue;
+          for (const k of Object.keys(layer)) {
+            bump(u.vfxSurface, `ability@1.vfxLayers[].${k}`, id, collection, doc["vfxLayers"]);
+          }
+        }
+      }
+
       if (collection === "status-effects") {
         u.statuses.push(id);
         for (const t of (doc["tags"] as string[] | undefined) ?? [])
@@ -532,6 +644,27 @@ function fieldTable(fields: Field[]): string[] {
   return out;
 }
 
+/**
+ * 同一張參數表，多一欄「出貨內容用量」。
+ *
+ * ⭐ 那一欄不是裝飾：`spriteSheet` 寫在 schema 裡而 634 份出貨文件**一份都沒用過**，
+ * 而「引擎收得下」與「有人真的讓它跑起來過」是兩件事。0 份的格子照抄有風險，
+ * 這一欄讓那個風險看得見。
+ */
+function fieldTableWithUsage(fields: Field[], prefix: string, usage: Map<string, Slot>): string[] {
+  if (fields.length === 0) return ["（沒有參數）", ""];
+  const out = ["| 參數 | 型別 | 必填 | 範圍 | 出貨用量 | 說明 |", "|---|---|---|---|---:|---|"];
+  for (const f of fields) {
+    const u = usage.get(`${prefix}${f.name}`);
+    out.push(
+      `| \`${f.name}\` | ${f.type} | ${f.optional ? "選填" : "**必填**"} | ${f.bounds || "—"} | ` +
+        `${u ? `${u.docs.size} 份` : "**0**"} | ${f.desc || "—"} |`,
+    );
+  }
+  out.push("");
+  return out;
+}
+
 function usageCell(u: Slot | undefined): string {
   if (!u) return "**0 份**（引擎有、內容沒人用）";
   const sample = [...u.docs].sort().slice(0, 3).join("、");
@@ -545,11 +678,12 @@ function usageCell(u: Slot | undefined): string {
  * 就會變成一段「照著抄會被拒絕」的程式碼，而它長得跟正確的一模一樣。
  * 從出貨內容抄的範例有一條免費的保證：它今天真的通過驗證，因為它今天真的在跑。
  */
-function exampleBlock(u: Slot | undefined): string[] {
+function exampleBlock(u: Slot | undefined, pathOverride?: string): string[] {
   if (!u?.example) return [];
   const { doc: id, collection } = u.example;
+  const where = pathOverride ?? `content/${collection}/${id}.json`;
   return [
-    `<details><summary>出貨內容裡的實例 — \`content/${collection}/${id}.json\`</summary>`,
+    `<details><summary>出貨內容裡的實例 — \`${where}\`</summary>`,
     "",
     "```json",
     JSON.stringify(u.example.json, null, 2),
@@ -952,6 +1086,131 @@ export function buildSpecMarkdown(): string {
     );
   }
   p();
+
+  // ── 13 特效授權面 ───────────────────────────────────────────────────
+  p("---");
+  p();
+  p("## 13. 特效（VFX）授權面 —— 一份 `vfx@1` 與一層 `vfxLayers` 寫得出什麼");
+  p();
+  p("⚠️ **這一節在 2026-08-18 之前完全不存在**（GH#372），而少的不是一個欄位，");
+  p("是**整個面**：`vfx@1` 的每一格與 `ability@1.vfxLayers[]` 的每一格覆寫，");
+  p("對讀這份文件的人（與外部編輯器）都是不存在的。⛔ 它的失敗方式是最安靜的一種 ——");
+  p("沒有任何錯誤，只是**不知道有這些格子**，於是做出來的技能一律沒有特效參數。");
+  p();
+  p("兩層的分工（和第〇·五守則一樣的兩層）：");
+  p();
+  p("| 層 | 寫在哪 | 是什麼 |");
+  p("|---|---|---|");
+  p("| **模板** | `content/vfx/<id>.json` | 一份粒子定義。**被很多支技能共用** |");
+  p("| **這一支的覆寫** | `content/abilities/<id>.json` 的 `vfxLayers[]` | 同一份模板，這一支放大／轉色／改仰角／延後播 |");
+  p();
+  p("⭐ 所以「想改一支技能的特效」**幾乎不需要新增 vfx 文件** —— 加一層覆寫就好。");
+  p("⚠️ 反過來也成立：改一份 `content/vfx/` 文件會動到**每一支**引用它的技能。");
+  p();
+  {
+    const vfxDocs = tsdocFields("packages/shared/src/content/schema/vfx.ts", "const zVfxDocBase = z", "type VfxDocShape");
+    const orientDocs = tsdocFields(
+      "packages/shared/src/content/schema/vfx.ts",
+      "export const zVfxOrient = z",
+      "export type VfxOrient",
+    );
+    const ribbonDocs = tsdocFields(
+      "packages/shared/src/content/schema/vfx.ts",
+      "export const zRibbonDoc = z",
+      "export type RibbonDoc",
+    );
+    const bindDocs = tsdocFields(
+      "packages/shared/src/content/schema/vfx.ts",
+      "export const zVfxAbilityFamilyBinding = z",
+      "export type VfxAbilityFamilyBinding",
+    );
+    const layerDocs = tsdocFields(
+      "packages/shared/src/content/schema/abilityVfx.ts",
+      "export const zAbilityVfxLayer = z",
+      "export type AbilityVfxLayer",
+    );
+
+    p("### 13.1 `vfx@1` —— 一份粒子模板");
+    p();
+    p(...fieldTableWithUsage(withDocs(fieldsOf(zVfxDoc, ["id", "schema"]), vfxDocs), "vfx@1.", usage.vfxSurface));
+    p("⚠️ **ABSENT ≠ ZERO**：少一格的意思是「用引擎的預設」，⛔ 不是 0。");
+    p("`alpha: 0` 是「明確要求完全透明」—— 也就是看不見。清空一格要把 key 整個拿掉。");
+    p();
+    p(...exampleBlock(usage.vfxSurface.get("vfx@1.blendMode")));
+
+    p("### 13.2 `vfx@1.orient` —— 方位（⭐ 巢狀，只看 13.1 只看得到 `orient` 這個名字）");
+    p();
+    const orientFields = withDocs(fieldsOf(zVfxOrient), orientDocs);
+    p(`這 ${orientFields.length} 格是「這一招朝哪個方向噴」。⛔ 在它之前，\`beam\` / \`bolt\` / \`dash\` / \`slash\``);
+    p("這些**有方向的形狀，每一次施法都朝同一個方向噴**，跟打誰完全無關。");
+    p();
+    p(...fieldTableWithUsage(orientFields, "vfx@1.orient.", usage.vfxSurface));
+    p("⭐ 預設 `yaw 0 / pitch 90 / swirl 0` 是**恆等變換** —— 沒寫 `orient` 的文件");
+    p("走的是一位元不差的舊路徑。所以「橫放的柱狀砲」不是新程式，是既有的柱狀");
+    p("primitive 加一格 `pitchDeg: 0`：");
+    p();
+    p(...exampleBlock(usage.vfxSurface.get("vfx@1.orient.pitchDeg")));
+    p("而「旋轉」是 `swirlDegPerSec`：");
+    p();
+    p(...exampleBlock(usage.vfxSurface.get("vfx@1.orient.swirlDegPerSec")));
+
+    p("### 13.3 `ability@1.vfxLayers[]` —— 這一支技能自己的特效堆疊");
+    p();
+    p(`一支技能最多 **${ABILITY_VFX_LAYER_HARD_CAP}** 層（schema 硬擋），`);
+    p(`出貨預設上限 **${DEFAULT_MAX_ABILITY_VFX_LAYERS}** 層（後台 \`config.vfx-families@1.maxAbilityVfxLayers\` 可調）。`);
+    p("`vfxLayers` **在的時候就是這支技能的完整堆疊**，由上往下依序播 ——");
+    p("所以**第一層通常就把原本的 `vfxKey` 再寫一次**。");
+    p();
+    p(
+      ...fieldTableWithUsage(
+        withDocs(fieldsOf(zAbilityVfxLayer), layerDocs, bindDocs),
+        "ability@1.vfxLayers[].",
+        usage.vfxSurface,
+      ),
+    );
+    p("⚠️ `anchor`（骨頭掛點）**刻意不在這張表上** —— 施法特效走的是不做骨頭綁定的");
+    p("那條播放路徑，開一格 `anchor` 等於開一個寫了會被吃掉的欄位。");
+    p();
+    p(...exampleBlock(usage.vfxSurface.get("ability@1.vfxLayers[].delayMs")));
+
+    p("### 13.4 `ribbon@1` —— 掛在骨頭後面的拖尾（住在同一個 `vfx` 集合）");
+    p();
+    p("同一個資料夾裡的**第二種**文件，靠 `schema` 欄位分辨。它不是粒子，是一條");
+    p("跟著骨頭掃出來的帶子（刀光那一族）。");
+    p();
+    p(...fieldTableWithUsage(withDocs(fieldsOf(zRibbonDoc, ["id", "schema"]), ribbonDocs), "ribbon@1.", usage.vfxSurface));
+    p(...exampleBlock(usage.vfxSurface.get("ribbon@1.lifespanSec")));
+
+    p("### 13.5 `config.vfx-families@1.abilities[]` —— 後台那一張逐技能覆寫表");
+    p();
+    p("⚠️ **這是第三個授權位置，而且它不在任何一份技能文件裡** ——");
+    p("它住在 `content/config/vfx-families.json`（＝後台可以改的那一張表），");
+    p("鍵是技能 doc 的 id。同一顆 w3x 素材「這一支放大、那一支轉紅」就寫在這裡。");
+    p();
+    p("| 和 13.3 的差別 | |");
+    p("|---|---|");
+    p("| `vfxLayers[]` | 技能**自己**的堆疊，跟著內容一起出貨 |");
+    p("| 這一張表 | **後台**的覆寫，改了不用動技能文件（第一守則的形狀） |");
+    p();
+    p(
+      ...fieldTableWithUsage(
+        withDocs(fieldsOf(zVfxAbilityFamilyBinding), bindDocs),
+        "config.vfx-families@1.abilities[].",
+        usage.vfxSurface,
+      ),
+    );
+    p("⭐ `anchor` 在**這一張**表上是有效的（它走的是會綁骨頭的那條路），");
+    p("在 13.3 的層堆疊上沒有 —— 兩張表 pick 的是同一份 Zod 定義，差別只在誰消費得了。");
+    p();
+    // ⚠️ 這一格的「一份文件」是**一支技能的 entry**，不是一個檔 —— 路徑要指到
+    //    它真正住的地方，⛔ 不可以讓通用組路徑的那一行編出 `content/config/<技能>.json`。
+    p(
+      ...exampleBlock(
+        usage.vfxSurface.get("config.vfx-families@1.abilities[].w3xScale"),
+        "content/config/vfx-families.json → abilities",
+      ),
+    );
+  }
 
   return `${L.join("\n").replace(/\n{3,}/g, "\n\n").trimEnd()}\n`;
 }

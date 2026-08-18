@@ -473,7 +473,7 @@ export class W3xEmitterRig {
     // doc's cone is the closest vfx@1 shape; narrow it to a near-line here so
     // the difference is at least in the right direction.
     if (rt.lineEmitter) {
-      const r = em.doc.emitter.shape === "cone" || em.doc.emitter.shape === "sphere" ? em.doc.emitter.radius : 0.05;
+      const r = em.doc.emitter.shape === "point" ? 0.05 : em.doc.emitter.radius;
       em.ps.createConeEmitter(Math.max(0.001, r * 0.05), (Math.max(1, em.doc.emitter.shape === "cone" ? em.doc.emitter.angleDeg : 1) * Math.PI) / 180);
     }
   }

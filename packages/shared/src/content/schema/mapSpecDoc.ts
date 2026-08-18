@@ -23,6 +23,10 @@ import {
   INTERACTIONS_MAX,
   REGIONS_MAX,
   REGIONS_MIN,
+  SPAWN_CLEARANCE_BODY_RADII_MAX,
+  SPAWN_CLEARANCE_BODY_RADII_MIN,
+  SPAWN_POCKET_PATH_FACTOR_MAX,
+  SPAWN_POCKET_PATH_FACTOR_MIN,
   TILE_SIZE_MAX,
   TILE_SIZE_MIN,
   TILE_SIZE_SHIPPED,
@@ -187,6 +191,39 @@ export const zConfigMapSpecDoc = z
     severity: zSeverityBlock,
 
     /**
+     * ⭐ **出生點怎麼擺**（GH#364 第二半，owner 2026-08-18「fix all」）。
+     *
+     * ⚠️ 這一格調的是**產生器挑座位的規則**，⛔ 不是任何一張已經產生出來的圖 ——
+     * 改完要重跑 `pnpm map:gen`。
+     *
+     * ⛔ 為什麼是**兩把尺**而不是一格「內縮 N 格」：owner 提的是 2–3 格，但
+     * 「格」是一個後台欄位（`grid.tileSize`），同一個數字在兩張圖上是兩個距離。
+     * 而且出生點有**兩個**壞法，貼牆只是其中一個 —— 芙莉蓮那張圖的座位同時
+     * 「貼著外牆」**且**「離火圈收束口袋最遠」，兩件事各要一把尺。
+     */
+    spawn: z
+      .object({
+        minWallClearanceBodyRadii: z
+          .number()
+          .min(SPAWN_CLEARANCE_BODY_RADII_MIN)
+          .max(SPAWN_CLEARANCE_BODY_RADII_MAX)
+          .describe(
+            "出生點到最近一堵牆（含可玩區外緣）至少幾個**身體半徑**。" +
+              "⭐ 用身體半徑而不是格數，是因為格子大小本身是一格欄位。",
+          ),
+        maxPocketPathFactor: z
+          .number()
+          .min(SPAWN_POCKET_PATH_FACTOR_MIN)
+          .max(SPAWN_POCKET_PATH_FACTOR_MAX)
+          .describe(
+            "從出生點**走**到火圈收束口袋的路徑長度上限 = 這一格 × 分區半徑。" +
+              "⚠️ 是繞過牆的路徑長度，⛔ 不是直線距離。",
+          ),
+      })
+      .strict()
+      .optional(),
+
+    /**
      * ⭐ 戰鬥開場報地名（owner 2026-08-14：「戰鬥開始的時候不會顯示這是什麼地圖，
      * 請你記得要顯示出來」）。
      *
@@ -254,6 +291,31 @@ export type MapIntroSpec = NonNullable<ConfigMapSpecDoc["intro"]>;
  *  2.5 秒 = 「看得完四個字 + 不擋開局」（一回合戰鬥只有 90 秒）。 */
 export const DEFAULT_MAP_INTRO: MapIntroSpec = { enabled: true, holdSec: 2.5, fadeSec: 0.8 };
 
+/** 出生點擺放的兩把尺。⚠️ 具名而且非選填，理由同 {@link MapIntroSpec}。 */
+export type MapSpawnSpec = NonNullable<ConfigMapSpecDoc["spawn"]>;
+
+/**
+ * ⭐ 出貨值（GH#364）。**兩個數字都是量出來的，⛔ 不是挑順眼的。**
+ *
+ * ### `minWallClearanceBodyRadii: 3`
+ * 身體半徑 0.6 ⇒ 1.8 個單位 ＝ **你自己那 1 個半徑 + 旁邊還有一整個身體寬度
+ * （2 個半徑）可以側移**。低於它就是 owner 截圖上那條「旁邊就是圖外」的窄走道。
+ * 量到的效果（tileSize 2）：出貨 7 張產生圖的離牆距離 **1.00 → 3.00**，
+ * 座位從最外圈那格退到第 3 格（＝ owner 說的「內縮 2–3 格」，但是推導出來的）。
+ *
+ * ### `maxPocketPathFactor: 0.8`
+ * ⭐ **綁住它的是「兩隊開場不可以互相在射程內」，不是品味。**
+ * 全遊戲最長的射程是 **29.33**（`godie-orkn` / `godie-o030` 的天生技）。
+ * 逐格量過：0.75 會把最近的一對座位壓到 **28.0 —— 已經在那個射程裡**；
+ * 0.8 的最近一對是 **34.0**，還在外面。⇒ 0.8 是**還守得住那條線的最緊預算**。
+ * 上面（0.9 ⇒ 預算 27）則幾乎擋不到出貨最糟的那張（芙莉蓮 28.0），
+ * 一把只剩 1 個單位餘裕的尺等於沒有尺。
+ */
+export const DEFAULT_MAP_SPAWN: MapSpawnSpec = {
+  minWallClearanceBodyRadii: 3,
+  maxPocketPathFactor: 0.8,
+};
+
 /** 常駐角落地名的三格。⚠️ 具名而且非選填，理由同 {@link MapIntroSpec}。 */
 export type MapCornerLabelSpec = NonNullable<ConfigMapSpecDoc["cornerLabel"]>;
 
@@ -285,6 +347,7 @@ export const DEFAULT_MAP_SPEC: Omit<ConfigMapSpecDoc, "id" | "schema" | "note"> 
     shortcutsMax: 2,
   },
   interactions: { countMin: 6, countMax: 10 },
+  spawn: DEFAULT_MAP_SPAWN,
   severity: {
     deadEnds: "warn",
     loops: "warn",
@@ -305,6 +368,7 @@ export function resolveMapSpec(doc?: Partial<ConfigMapSpecDoc> | null): typeof D
     traversal: { ...DEFAULT_MAP_SPEC.traversal, ...(doc.traversal ?? {}) },
     topology: { ...DEFAULT_MAP_SPEC.topology, ...(doc.topology ?? {}) },
     interactions: { ...DEFAULT_MAP_SPEC.interactions, ...(doc.interactions ?? {}) },
+    spawn: { ...DEFAULT_MAP_SPAWN, ...(doc.spawn ?? {}) },
     severity: { ...DEFAULT_MAP_SPEC.severity, ...(doc.severity ?? {}) },
     intro: { ...DEFAULT_MAP_INTRO, ...(doc.intro ?? {}) },
     cornerLabel: { ...DEFAULT_MAP_CORNER_LABEL, ...(doc.cornerLabel ?? {}) },

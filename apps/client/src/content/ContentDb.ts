@@ -16,6 +16,7 @@ import type {
   ConfigAmbientVfxDoc,
   ConfigGoreDoc,
   ConfigStealthDoc,
+  ConfigRangeGuideDoc,
   ConfigDamageColorsDoc,
   ConfigItemCardDoc,
   ConfigVfxFamiliesDoc,
@@ -56,6 +57,11 @@ import { applyDamageColorsDoc } from "../render/damagePalette";
 // 道具卡片的排版與配色 (owner 2026-08-02)。沒有這一行,
 // `content/config/item-card.json` 就是一份沒人讀的檔案。
 import { applyItemCardDoc } from "../ui/components/itemCardTheme";
+// GH#376 技能範圍指引 + 地面預告通道 —— 同一條縫、同一個理由:少了這一行,
+// `content/config/range-guide.json` 就是一份沒人讀的檔案 —— 後台把 hover 延遲、
+// 兩個圈的顏色/濃度、或「自己 vs 來襲」那三組樣式改了,地板上永遠是出貨值
+// (第②號故障)。傳 null(檔案不存在／schema 不合)= `DEFAULT_RANGE_GUIDE`。
+import { applyRangeGuideDoc } from "../ui/rangeGuideConfig";
 import { applyCombatEnvDoc } from "../ui/displayFinal";
 import { applyVictoryFxDoc } from "../vfx/victoryFxPolicy";
 // GH#339 混音表 (owner 2026-08-17「其他角色的語音音量應該減少一半」)。同一條縫、
@@ -283,6 +289,7 @@ export class ContentDb {
       ),
     );
     applyStealthDoc(this.configDoc<ConfigStealthDoc>("stealth", "config.stealth@1"));
+    applyRangeGuideDoc(this.configDoc<ConfigRangeGuideDoc>("range-guide", "config.range-guide@1"));
     applyDamageColorsDoc(
       this.configDoc<ConfigDamageColorsDoc>("damage-colors", "config.damage-colors@1"),
     );

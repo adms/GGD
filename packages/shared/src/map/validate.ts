@@ -17,6 +17,7 @@
  * ⛔ 這個檔**不抄任何規格數字** —— 全部從 `DEFAULT_MAP_SPEC`／傳進來的 spec 讀。
  * 抄一份就是第四個住處，而它沒有守衛（第零守則）。
  */
+import { TEAM_SIZE } from "../constants";
 import type { MapDoc } from "../content/schema/map";
 import type { DEFAULT_MAP_SPEC } from "../content/schema/mapSpecDoc";
 import { DUEL_ZONES_PER_MAP_MIN, type MapCheckSeverity } from "./spec";
@@ -148,6 +149,21 @@ export function validateMap(
     "unreachableSpawn",
     invalidSpawns.length > 0,
     `${invalidSpawns.length} 個出生點不在可走的地面上：${invalidSpawns.join(" / ")}`,
+  );
+  // ⭐ GH#364 —— **湊不滿**也是非法，而在這一行出現之前它是靜靜地少給。
+  // `pickSpawns` 現在會篩掉貼牆與離火圈口袋太遠的格，所以一張太擠的圖有可能
+  // 只湊出 2 個座位；schema 只要求 `spawns[side].min(1)`，消費端卻是
+  // `spawns[side]![slot % TEAM_SIZE]!` ⇒ 少一個就是**線上解參考 undefined**。
+  const shortSides = spawnTiles
+    .map((s, si) => ({ si, n: s.length }))
+    .filter((s) => s.n < TEAM_SIZE);
+  hard(
+    issues,
+    "unreachableSpawn",
+    shortSides.length > 0,
+    `${shortSides.map((s) => `side ${s.si} 只湊出 ${s.n}/${TEAM_SIZE} 個座位`).join(" / ")}` +
+      ` —— 這張圖擺不下合格的出生點（離牆太近或離火圈口袋太遠）。` +
+      `⚠️ 放寬的旋鈕在 config/map-spec.json 的 spawn 區塊，⛔ 不是改這張圖的規則。`,
   );
 
   // ── 互動點可達（⛔ 正確性）───────────────────────────────────────────────

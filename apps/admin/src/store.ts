@@ -164,6 +164,14 @@ export type Page =
    */
   | "damageColors"
   /**
+   * 範圍指引與預告 (`config/range-guide.json`, GH#376): hold/hover 時畫在腳下
+   * 的施法距離圈與命中範圍圈（顏色、填滿濃度、框粗細、hover 延遲），加上 #228
+   * 地面預告的三條通道「自己／隊友／來襲」各自怎麼分辨。⚠️ 兩半同一頁是刻意
+   * 的:自己那條預告的出貨顏色**就是**命中範圍圈的顏色,分兩頁的話調了一邊忘了
+   * 另一邊不會有任何東西紅。
+   */
+  | "rangeGuide"
+  /**
    * 護盾規則 (`config/shield.json`): 一個人身上同時有兩道盾時,一發傷害先花掉
    * 哪一道。自己一頁而不是併進 戰鬥手感,因為手感那一頁的欄位是
    * `deriveFields(zConfigCombatFeelDoc)` 推導出來的而那支推導器只認得
@@ -560,6 +568,8 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "gore",
   // 傷害數字配色: 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "damageColors",
+  // 範圍指引與預告 (GH#376): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  "rangeGuide",
   // 護盾規則: 第四頁,同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`,所以
   // 同一條規則。
   "shieldRules",

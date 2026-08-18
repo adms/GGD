@@ -26,9 +26,15 @@
  *
  *   Hue is NOT the only carrier: task #85 desaturates the whole scene while a
  *   player is dead-spectating, and colour-blind players exist. So each channel
- *   also differs in FILL (enemy filled, ally outline), in EDGE (self dashed —
- *   the #152 language for "I am aiming", enemy solid — "this is incoming"), and
- *   in URGENCY (only the enemy channel ramps brightness + pulses).
+ *   also differs in FILL (enemy filled, ally outline), in EDGE (self dashed,
+ *   enemy solid — "this is incoming"), and in URGENCY (only the enemy channel
+ *   ramps brightness + pulses).
+ *   ⚠️ The dash used to be SHARED vocabulary with the #152 hold-preview ("I am
+ *   aiming"). GH#367 made that preview a solid rim + translucent fill (owner's
+ *   own spec), so this layer is now the only one dashing — which turns "how do
+ *   you tell your own cast from an incoming one" back into a live DESIGN
+ *   question rather than a settled convention. ⇒ GH#376 made all five carriers
+ *   admin fields; see `applyTelegraphChannelStyles` below.
  *
  * UNKNOWN FAILS DANGEROUS. Before the seat/team wiring is up `relationOf`
  * answers "unknown". Painting an unresolved caster as benign would hide a real
@@ -93,15 +99,61 @@ export const SELF_PALETTE: TelegraphPalette = {
   startAlphaFactor: 0.7,
 };
 
+/**
+ * ⭐ GH#376 —— 三條通道現在是**後台欄位**（`config.range-guide@1` 的
+ * `telegraph.{self,ally,incoming}`），而不是三個編譯進去的常數。
+ *
+ * 為什麼：#367 把 hold 預覽改成「實心邊框 + 半透明填滿」（owner 明說的規格）之後，
+ * 「虛線＝我在瞄」那個共用語彙沒有了 —— 虛線只剩這一層在用。要不要換一套區分
+ * 方式是一個**設計決定**，⛔ 不是一個可以在註解裡辯護的常數（第一守則）。
+ * 所以 ring / fill / alpha / dashed / pulseHz 五格都可調，操作者可以把「自己 vs
+ * 來襲」換成任何一組色相＋虛實＋脈動的組合。
+ *
+ * ⚠️ `startAlphaFactor`（起手期間的亮度爬升）刻意**留在程式裡**：它是「快落地了」
+ * 的時間曲線，不是「這一圈是誰的」的分辨器，而這一格管的是後者。
+ *
+ * ⚠️ 沒有人套用文件之前，這張表**就是**上面那三顆常數本人（同一個物件參照）——
+ * 出貨行為與 GH#376 之前逐位元相同。
+ */
+const BASE_PALETTES: Readonly<Record<"self" | "ally" | "incoming", TelegraphPalette>> = {
+  self: SELF_PALETTE,
+  ally: ALLY_PALETTE,
+  incoming: ENEMY_PALETTE,
+};
+
+let livePalettes: Readonly<Record<"self" | "ally" | "incoming", TelegraphPalette>> = BASE_PALETTES;
+
+/** 一條通道**可調**的那五格（`config.range-guide@1` 解析後的樣子）。 */
+export type TelegraphChannelStyle = Pick<
+  TelegraphPalette,
+  "ring" | "fill" | "alpha" | "dashed" | "pulseHz"
+>;
+
+/**
+ * 由 `ui/rangeGuideConfig` 的 `applyRangeGuideDoc()` 推進來（`ContentDb.load` 呼叫）。
+ * `null` = 回到出貨常數。⛔ 這一支沒有被呼叫 = 後台那三組欄位存了也不會上地板。
+ */
+export function applyTelegraphChannelStyles(
+  styles: Readonly<Record<"self" | "ally" | "incoming", TelegraphChannelStyle>> | null,
+): void {
+  livePalettes = styles
+    ? {
+        self: { ...SELF_PALETTE, ...styles.self },
+        ally: { ...ALLY_PALETTE, ...styles.ally },
+        incoming: { ...ENEMY_PALETTE, ...styles.incoming },
+      }
+    : BASE_PALETTES;
+}
+
 export function paletteFor(relation: TelegraphRelation): TelegraphPalette {
   switch (relation) {
     case "self":
-      return SELF_PALETTE;
+      return livePalettes.self;
     case "ally":
-      return ALLY_PALETTE;
+      return livePalettes.ally;
     // "unknown" fails DANGEROUS — see the header.
     default:
-      return ENEMY_PALETTE;
+      return livePalettes.incoming;
   }
 }
 

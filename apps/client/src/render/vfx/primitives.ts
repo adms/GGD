@@ -155,12 +155,20 @@ function build(kind: PrimitiveKind, p: PrimitiveParams, base: Shape): VfxDoc {
   const scale = p.scale ?? 1;
   const alpha = p.coreAlpha ?? 1;
   const peak = base.size * scale;
-  const emitter =
+  const emitter: VfxDoc["emitter"] =
     base.emitter.shape === "sphere"
       ? { shape: "sphere" as const, radius: round(base.emitter.radius * scale) }
       : base.emitter.shape === "cone"
         ? { shape: "cone" as const, radius: round(base.emitter.radius * scale), angleDeg: base.emitter.angleDeg }
-        : { shape: "point" as const };
+        : base.emitter.shape === "ring"
+          ? {
+              ...base.emitter,
+              radius: round(base.emitter.radius * scale),
+              ...(base.emitter.thickness !== undefined
+                ? { thickness: round(base.emitter.thickness * scale) }
+                : {}),
+            }
+          : { shape: "point" as const };
   const lifetime = p.lifetime ?? base.lifetime;
   const speed = p.speed ?? base.speed;
   const colorStops: [number, [number, number, number, number]][] = ramp(p.color, alpha).map(([t, c]) => [
@@ -239,11 +247,28 @@ export function explosion(p: PrimitiveParams): VfxDoc {
   });
 }
 
-/** SHOCKWAVE — a ground-hugging outward kick that settles to the floor.
- *  Earth slams, impact rings, heavy landings. */
+/**
+ * SHOCKWAVE — a ground-hugging outward kick that settles to the floor.
+ * Earth slams, impact rings, heavy landings.
+ *
+ * ⚠️ 「ground-hugging outward」這句話在 2026-08-18 之前是**謊話**(和龍捲風的
+ * 「swirling」同一種形狀,第一·五守則):emitter 是 `sphere`,而球型發射器噴的是
+ * 一顆**各向同性的球**,上下左右一樣多 —— 畫面上是一團炸開的球,不是一圈環。
+ * 這是 `shockwaveRing` 家族的原型,而那是**最大**的一族:273 引用 / 91 支技能。
+ *
+ * ⛔ 修法**不是**在文件上填 `orient: { pitchDeg: 0 }`。`orient` 是一個旋轉,
+ * 而旋轉一個各向同性分布會得到同一個分布 —— 那條 modifier 逐位元等於不存在,
+ * 只有重力會被轉成水平(碎屑往旁邊飄,比沒做還糟)。真正缺的是**第三種發射基底**:
+ * `emitter.shape: "ring"`(見 `zEmitter`),粒子生在水平圓上、朝水平徑向射出。
+ * ⭐ 它不是為衝擊波寫的:同一個 shape 也是新星(nova)、震地環、腳下塵環的基底。
+ *
+ * ⭐ 「擴散半徑的時間曲線」不需要新機制:粒子以 `speed` 往外飛 ⇒ 半徑隨壽命長大,
+ * 而 `sizeStops` 就是環厚度隨時間的曲線。兩條都是既有欄位。
+ */
 export function shockwave(p: PrimitiveParams): VfxDoc {
   return build("shockwave", p, {
-    emitter: { shape: "sphere", radius: 0.3 },
+    // fill 0 = 全部生在環緣;spread 0.18 = 一點點揚起,⛔ 不是往上噴。
+    emitter: { shape: "ring", radius: 0.3, thickness: 0.1, fill: 0, spread: 0.18 },
     count: 36,
     lifetime: { min: 0.2, max: 0.52 },
     speed: { min: 6, max: 12 }, // fast + mostly horizontal

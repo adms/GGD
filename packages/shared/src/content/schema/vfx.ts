@@ -31,6 +31,32 @@ export const zEmitter = z.discriminatedUnion("shape", [
       angleDeg: z.number().min(1).max(180),
     })
     .strict(),
+  /**
+   * RING —— **貼地向外擴散**的一圈 (#366 第二優先:`shockwaveRing`,273 引用 / 91 支)。
+   *
+   * ⛔ 這一格**不是**「衝擊波專用」,它是 `sphere` / `cone` 之外缺的第三種發射基底:
+   * 粒子生在一個**水平圓**上、朝**水平徑向**射出。同一個形狀就是衝擊波、震地環、
+   * 新星(nova)、腳下的塵環 —— 一個 shape 四個家族。
+   *
+   * ⚠️ 為什麼不能用 `orient` 把 `sphere` 轉成環(這是最容易犯的錯):
+   * `sphere` 的出射方向分布是**各向同性**的,而 `orient` 是一個**旋轉** ——
+   * 旋轉一個各向同性分布得到的是同一個分布。所以在球型發射器上填 `pitchDeg: 0`
+   * 是一條**逐位元等於不存在**的宣稱(第一·五守則),而卡片上會寫著「貼地擴散」。
+   * 唯一真的會變的是重力被轉成水平,那讓碎屑往旁邊飄 —— 比沒做還糟。
+   */
+  z
+    .object({
+      shape: z.literal("ring"),
+      /** 環誕生時的半徑(世界單位)。擴散靠 `speed`,⛔ 不是靠改這個數字 */
+      radius: z.number().positive(),
+      /** 環的**厚度**(垂直方向)。省略 = 0.08 = 一層貼地的薄環 */
+      thickness: z.number().min(0).max(4).optional(),
+      /** 0 = 全部生在環緣(真的是一個環);1 = 填滿整個圓盤。省略 = 0 */
+      fill: z.number().min(0).max(1).optional(),
+      /** 出射方向的垂直抖動 0..1。0 = 完全貼地;省略 = 0.12 */
+      spread: z.number().min(0).max(1).optional(),
+    })
+    .strict(),
 ]);
 
 /**
@@ -72,7 +98,8 @@ export const zSpriteSheet = z
  *
  * | 欄位 | 意思 | 預設 |
  * |---|---|---|
- * | `yawDeg` | 繞世界 Y 軸的方位角,0 = +X | 0 |
+ * | `yawFrom` | 方位角**從哪裡來**:`world` = 這份文件自己寫的;`aim` = 每次施法算 | `world` |
+ * | `yawDeg` | 方位角。`yawFrom:"world"` 時是世界方位角;`aim` 時是**疊在瞄準上的偏移** | 0 |
  * | `pitchDeg` | 仰角。**90 = 直立**(柱狀往上),**0 = 完全橫放** | 90 |
  * | `swirlDegPerSec` | 繞自身軸的**切線角速度**。龍捲風的「旋轉」就是這一格 | 0 |
  *
@@ -85,7 +112,24 @@ export const zSpriteSheet = z
  */
 export const zVfxOrient = z
   .object({
-    /** 繞世界 Y 軸的方位角,度。0 = +X。省略 = 0 */
+    /**
+     * 方位角**從哪裡來** (#377)。省略 = `"world"` = 升級前的行為。
+     *
+     * ⚠️ 這一格是 #366 落地時**刻意缺的那一半**,而缺它的後果具體到可以量:
+     * `yawDeg` 是**世界座標**方位角,所以靜態填一個值的意思是「這一招永遠朝世界
+     * 的那個方向噴,不管你瞄哪裡」—— beam(47 支)/ slash(41)/ bolt(11)/
+     * dash(6)/ tornado(6)共 129 支有方向的技能因此**每一次施法都朝同一邊**。
+     * 填一個靜態值不是把功能做完,是做出一個**會發生但發生錯方向**的效果。
+     *
+     * · `"world"` —— `yawDeg` 就是世界方位角(沒有寫 `orient` 的 633 份文件走這條)。
+     * · `"aim"`   —— 每次施法用 **caster → 目標/落點**的方位角,`yawDeg` 變成
+     *                **疊在它上面的偏移**(0 = 正對目標;180 = 朝身後噴的煙塵)。
+     *
+     * ⭐ 它是**引擎機制**不是某支技能的 if:同一格讓「橫放的柱狀砲」對準敵人、
+     * 讓斬擊沿著揮砍方向掃、讓衝刺的塵尾往後拖 —— 三件事一個欄位。
+     */
+    yawFrom: z.enum(["world", "aim"]).optional(),
+    /** 方位角,度。`yawFrom:"world"` = 世界方位角;`"aim"` = 疊在瞄準上的偏移。省略 = 0 */
     yawDeg: z.number().min(-360).max(360).optional(),
     /** 仰角,度。90 = 直立(現況), 0 = 橫放。省略 = 90 */
     pitchDeg: z.number().min(-180).max(180).optional(),
@@ -193,6 +237,25 @@ function vfxRefinements(doc: VfxDocShape, ctx: z.RefinementCtx): void {
       code: z.ZodIssueCode.custom,
       path: ["spriteSheet"],
       message: "spriteSheet requires a texture",
+    });
+  }
+  // ⛔ 方位掛在**球型**發射器上是一條逐位元等於不存在的宣稱(第一·五守則)。
+  // 證明:`orient` 是一個旋轉 R,而球型發射器的出射方向分布是各向同性的 ——
+  // 旋轉一個各向同性分布得到的是同一個分布。唯一還會動的是重力被 R 轉走,
+  // 所以「有 swirl(切線速度,不是旋轉)」或「有重力可轉」時它仍然做得到事情。
+  // 三者皆無 ⇒ 這份文件說了方位而畫面上什麼都不會變 ⇒ 擋在編輯的當下。
+  // ⭐ 要一圈**貼地擴散**的環,用 `emitter.shape: "ring"`,⛔ 不是轉一顆球。
+  if (
+    doc.orient &&
+    doc.emitter.shape === "sphere" &&
+    !doc.orient.swirlDegPerSec &&
+    !doc.gravityY
+  ) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["orient"],
+      message:
+        'orient on a "sphere" emitter with no swirl and no gravity is a NO-OP (an isotropic direction distribution is rotation-invariant) — use emitter.shape "ring" for a ground-spreading ring, or "cone" for a directed one',
     });
   }
   if (doc.speed && doc.speed.max < doc.speed.min) {

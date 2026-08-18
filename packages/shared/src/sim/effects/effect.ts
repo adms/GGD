@@ -1463,6 +1463,17 @@ type EffectVariant =
        * 飛行」的守衛**根本編譯不過**（`pnpm typecheck` 在 main 上就是紅的）。
        */
       flight?: import("../stats/sourceGrants").SourceGrantFields["flight"];
+      /**
+       * ⭐ 2026-08-18 (GH#373) —— 第六格授予：**限時隱形 / 限時真視**。
+       *
+       * 53-00 空間穿梭「持續 20 秒」與 30-00 攝影機「可以看到隱形部隊」在此之前
+       * 寫不出來：`vision` 只掛得到道具（永久佩戴）與天生技 rank（rank>0 之後
+       * 永久），而這兩支是**主動**天生技。引擎那一半從 2026-07-30 就在
+       * （`sim/stealth.ts::syncVisionGrants` 掃 `StatsComp.sources`、不問 `kind`、
+       * 已經在跳過過期的 source），所以整條接線就是這一行 + `SOURCE_GRANT_SHAPE`
+       * 那一格 + `sourceGrants()` 的轉發。
+       */
+      vision?: import("../stats/sourceGrants").SourceGrantFields["vision"];
     }
   /**
    * cycleBuff (揍敵客阿福 13-00 念。攻防轉換) — 輪替增益: apply the NEXT step of a

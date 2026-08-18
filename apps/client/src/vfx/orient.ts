@@ -25,6 +25,12 @@
  *
  *     R = Ry(yawDeg) · Rx(90° − pitchDeg)
  *
+ * ⭐ #377(2026-08-18):`yawDeg` 是**世界**方位角,所以它不可以被靜態填 ——
+ * 「永遠朝東北方噴」不是一支技能。它現在由 `orient.yawFrom: "aim"` 宣告,
+ * 施法當下用 `yawDegToward(caster→目標)` 算出來,由 `artParams.applyAimYaw`
+ * 折進**同一格 `doc.orient`**(⛔ 不是另一條空間參數管線 —— `flyHeight` 當年就是
+ * 那樣在 `familyRow()` 一行之內蒸發的)。
+ *
  * ⭐ `yaw 0 / pitch 90` 因此是**恆等變換**,而那正是出貨預設 —— 沒有寫 `orient`
  * 的 633 份文件一位元都不會變。這不是巧合,是挑這個角度約定的理由。
  */
@@ -47,11 +53,58 @@ const DEG = Math.PI / 180;
  */
 export function orientIsIdentity(o: VfxOrient | undefined): boolean {
   if (!o) return true;
+  // #377 —— 瞄準來源的 orient **永遠不是恆等**,即使這一瞬間解出來的角度是 0。
+  // ⚠️ 這一行擋的是一個會靜默吃掉整個功能的路徑:`primitives.build()` 用這支函式
+  // 決定「要不要把 orient 寫進文件」,所以只寫了 `yawFrom:"aim"`(pitch 仍是 90)
+  // 的形狀會**在產生器裡整格消失**,而畫面上看起來只是「這一招沒在瞄準」。
+  if (o.yawFrom === "aim") return false;
   return (
     (o.yawDeg ?? 0) === 0 &&
     (o.pitchDeg ?? DEFAULT_PITCH_DEG) === DEFAULT_PITCH_DEG &&
     (o.swirlDegPerSec ?? 0) === 0
   );
+}
+
+// ---------------------------------------------------------------------------
+// #377 每次施法的動態瞄準 —— 純數學,和上面同一個角度約定
+// ---------------------------------------------------------------------------
+
+/**
+ * 一個世界方向 (dx, dz) 對應的 `yawDeg`。方向退化(長度 0)或非有限 → `null`。
+ *
+ * ⭐ 公式是從**上面那個旋轉自己**推出來的,⛔ 不是猜的:
+ * 局部 +Y 經 `Rx(90° − pitch)` 再 `Ry(yaw)` 之後,水平投影是
+ * `sin(tilt) · (sin yaw, cos yaw)` —— 也就是說**任何 pitch ≠ 90 的發射器**,
+ * 它的軸在水平面上的方位都是 `atan2(x, z)`。所以要讓它指向 (dx, dz),
+ * `yaw = atan2(dx, dz)`。
+ *
+ * ⚠️ 注意這**不是** `atan2(-dz, dx)`(把 yaw 當成數學上的極角)。寫錯的話
+ * 特效會穩定地偏 90°,而「它有在動、只是指錯邊」是最難從截圖上看出來的一種錯。
+ */
+export function yawDegToward(dx: number, dz: number): number | null {
+  if (!Number.isFinite(dx) || !Number.isFinite(dz)) return null;
+  if (dx === 0 && dz === 0) return null;
+  return (Math.atan2(dx, dz) * 180) / Math.PI;
+}
+
+/**
+ * 瞄準角量化的預設格數 —— 24 格(15°)。
+ *
+ * ⚠️ 它不是視覺參數,是**資源參數**:`VfxSystem` 的粒子池是用 `doc.id` 當 key 的,
+ * 而瞄準過的文件必須換 key(否則第二次施法會借到第一次那個已經按舊角度建好的
+ * `ParticleSystem` —— 故障 ③)。不量化 = 每一個浮點角度一格池。
+ * 15° ⇒ 最壞偏差 7.5°,肉眼在一次 0.3 秒的爆發裡看不出來,而池的上界是
+ * `24 × MAX_POOL_PER_DOC`,是一個有限的數。
+ */
+export const DEFAULT_AIM_YAW_STEP_DEG = 15;
+
+/** 把角度收進 `[0, 360)` 的量化格。`step <= 0` = 不量化(原樣回傳)。 */
+export function quantizeYawDeg(deg: number, stepDeg: number = DEFAULT_AIM_YAW_STEP_DEG): number {
+  if (!Number.isFinite(deg)) return 0;
+  const wrapped = ((deg % 360) + 360) % 360;
+  if (!(stepDeg > 0)) return wrapped;
+  const q = Math.round(wrapped / stepDeg) * stepDeg;
+  return q >= 360 ? q - 360 : q;
 }
 
 /**

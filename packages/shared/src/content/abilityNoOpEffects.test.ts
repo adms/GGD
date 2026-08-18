@@ -45,14 +45,20 @@ const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../conte
  * 帳。修好之後**必須**把該列刪掉，否則下面的 stale 斷言會紅。
  */
 const KNOWN: readonly { key: string; why: string; issue: string }[] = [
-  // GH#373 —— 5 支主動天生技整棵樹只有 spawnVfx（嘲諷／隱形／偵查／隨機道具全部沒接）
-  { key: "godie-n00b.passive|vfx-only|effects", why: "隨機道具＋拉仇恨未接線", issue: "GH#373" },
-  { key: "godie-o00k.passive|vfx-only|effects", why: "嘲諷（Atau）未接線", issue: "GH#373" },
-  { key: "godie-o00l.passive|vfx-only|effects", why: "隱形 20 秒未接線", issue: "GH#373" },
-  { key: "godie-o030.passive|vfx-only|effects", why: "偵查／視野未接線", issue: "GH#373" },
-  { key: "godie-orkn.passive|vfx-only|effects", why: "偵查／視野未接線", issue: "GH#373" },
+  // ⭐ GH#373 的 5 列在 2026-08-18 **全部劃掉了**（那 5 支主動天生技現在真的會改
+  //    場上的數字：86-00 裝可愛 = taunt、57-00 四次元口袋 = weightedBranch + taunt、
+  //    53-00 空間穿梭 = 20 秒隱形、30-00 攝影機 ×2 = 30 秒真視）。
+  //    ⛔ 不要把它們加回來 —— 下面的 stale 斷言會紅。
+  //
   // GH#375 —— 裝飾性投射物：傷害由同一支的 damageArea／damageLine／proxyCast 負責，
-  //           這一顆只為了它的 vfxKey 而飛。正確的載體是 spawnVfx。
+  //           這一顆只為了它的 vfxKey 而飛。
+  //   ⚠️ 2026-08-18 查證（給下一個接手的人，省一輪）：issue 建議的「把空的 onHit
+  //   拿掉」**做不到** —— `spawnProjectile.onHit` 在 schema 上是 `z.array(...)`
+  //   **必填**（`content/schema/effect.ts`），拿掉那一格文件會被載入器拒絕；
+  //   而且這條規則判的是 `(e.onHit?.length ?? 0) === 0`，缺席與空陣列**同判**，
+  //   所以拿掉也不會讓這 6 列消失。真正的兩條出路是：①替投射物開一格 payload
+  //   （規則會自己退場，見 `projectileCarriesPayload`）②讓 `spawnVfx` 也能「飛」，
+  //   然後把這六處換過去。兩條都不是內容側改得動的，所以 6 列留著。
   { key: "godie-e002.e|projectile-no-payload|effects[1]", why: "裝飾尾波（damageLine 負責傷害）", issue: "GH#375" },
   { key: "godie-e00r.r|projectile-no-payload|effects[1]", why: "裝飾尾波（damageLine 負責傷害）", issue: "GH#375" },
   { key: "godie-e00s.q|projectile-no-payload|effects[1]", why: "裝飾尾波（damageArea 負責傷害）", issue: "GH#375" },

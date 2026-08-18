@@ -82,6 +82,9 @@ import {
   zConfigRankingDoc,
   // 地端產圖的風格（owner 2026-08-17）—— 同上，schema/index.ts 有 re-export。
   zConfigIconStyleDoc,
+  // 技能範圍指引 + 地面預告通道（GH#376）—— 走 barrel（`schema/index.ts` 的
+  // `export * from "./config"`），同 zConfigGoreDoc 那一族。
+  zConfigRangeGuideDoc,
 } from "@ggd/shared/content";
 // ⚠️ 同上的深路徑理由：這兩份 Zod 住自己的檔案（欄位理由長、且 sim 直接吃）。
 import { DEFAULT_STAT_NORMALIZATION } from "@ggd/shared/content/statNormalization";
@@ -2346,6 +2349,8 @@ const MAP_SPEC_SPEC: ConfigDocSpec = {
     { path: "topology.shortcutsMax", zh: "特殊捷徑上限", note: "捷徑數的上界。太多會讓地圖的距離感整個失效 —— 追擊變成猜謎，而不是判斷對手往哪跑。" },
     { path: "interactions.countMin", zh: "互動／任務點下限", note: "一張圖至少幾個可互動／任務點。⭐ 它們是除了火圈之外，逼玩家離開安全角落的另一個節奏來源。" },
     { path: "interactions.countMax", zh: "互動／任務點上限", note: "互動點數的上界。太多 = 玩家不知道該去哪一個，每個點的重要性都被稀釋掉。" },
+    { path: "spawn.minWallClearanceBodyRadii", zh: "⭐ 出生點離牆至少幾個身體半徑", note: "GH#364：owner 2026-08-18 的截圖裡，英雄生在**貼著外牆的一條窄走道**上，旁邊就是圖外，火圈在收 —— 只能等死。根因是產生器挑「最左／最右的可走格」，量到的離牆距離**七張圖全部是 1.00**（身體半徑 0.6 ⇒ 旁邊只剩 0.4，動不了）。出貨 3 ＝ 1.8 個單位 ＝ **你自己那 1 個半徑 + 旁邊還有一整個身體寬度可以側移**。⚠️ 用身體半徑而不是「內縮幾格」，是因為一格等於幾個單位本身就是上面那一格欄位 —— 寫成格數的話同一個設定在兩張圖上是兩個距離。⚠️ 調大它會讓合格的落點變少，圖太擠時產生器會**拒絕輸出**（那是刻意的，⛔ 不是靜靜地少給一個座位）。" },
+    { path: "spawn.maxPocketPathFactor", zh: "⭐ 出生點到火圈口袋的路徑上限（× 分區半徑）", note: "從出生點**繞過牆走**到火圈「停止縮圈」那塊口袋，最遠可以走多少 —— 上限 = 這一格 × 分區半徑。⚠️ 是路徑長度，⛔ 不是直線距離：芙莉蓮的迷宮中央有一道貫穿的牆，直線 17.6 的座位實際要走 28。出貨 0.8 是**量出來的**：0.75 會把兩隊最近的一對座位壓到 28.0，而全遊戲最長的射程是 29.33（兩支天生技）—— 那等於開場就互相在射程內；0.8 的最近一對是 34.0，還在外面。往上調到 0.9 則幾乎擋不到出貨最糟的那張圖，一把只剩 1 個單位餘裕的尺等於沒有尺。" },
     { path: "severity.deadEnds", zh: "死路超標時", note: "error = 產生器拒絕輸出、warn = 只記進報告、off = 不看。", optionLabels: { error: "擋下來（產生器拒絕輸出）", warn: "只記進報告", off: "不檢查" } },
     { path: "severity.loops", zh: "迴圈不足時", note: "error = 拒絕輸出、warn = 只記報告、off = 不看。⚠️ 調成 off 等於放棄「被追時能繞回來」的保證。", optionLabels: { error: "擋下來（產生器拒絕輸出）", warn: "只記進報告", off: "不檢查" } },
     { path: "severity.chokepoints", zh: "瓶頸數超出範圍時", note: "error = 產生器拒絕輸出、warn = 只記進報告、off = 不看。瓶頸是品味項，出貨設 warn。", optionLabels: { error: "擋下來（產生器拒絕輸出）", warn: "只記進報告", off: "不檢查" } },
@@ -2750,6 +2755,161 @@ const UI_LEXICON_SPEC: ConfigDocSpec = {
   ],
 };
 
+// ────────────────────────────── 範圍指引與預告 (config/range-guide) ─────────
+
+const RANGE_GUIDE_SPEC: ConfigDocSpec = {
+  page: "rangeGuide",
+  collection: "config",
+  docId: "range-guide",
+  schemaTag: "config.range-guide@1",
+  zod: zConfigRangeGuideDoc,
+  title: "範圍指引與預告",
+  intro: [
+    "owner 2026-08-18（GH#367）：「技能缺乏範圍指引（可參考 LoL 的新手模式與教學），理論上**按著技能按鈕或 hover 時**要能顯示可施展的範圍才對（**特殊顏色框框 + 顏色半透明填滿**）」。這一頁上半就是那兩個圈。",
+    "下半是 #228 的**地面預告**：別人（或你自己）起手一個技能時，畫在地板上那一圈警告。它分三條通道 —— 自己放的、隊友放的、打向你的 —— 而「怎麼一眼分出來」是這一頁真正的問題。",
+    "⚠️ **兩半在同一頁是刻意的，因為它們互相定義。** 「自己」的預告出貨顏色就是上半那個命中範圍圈的琥珀（自己的預告要和剛剛瞄準的那一圈連續），「來襲」的紅則刻意離兩組預覽色都很遠。分成兩頁的話，調了一邊忘了另一邊的那一天不會有任何東西提醒你。",
+    "⚠️ **不要只靠顏色分辨自己與來襲。** 觀戰死亡時整個畫面會去飽和（#85），色盲玩家也讀不到色相 —— 所以每條通道另外還有三個非色相載體：填滿色、不透明度、虛線、脈動。動顏色的時候請至少留一個非顏色的差異。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/range-guide.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "apps/client/src/ui/rangeGuideConfig.ts 的 applyRangeGuideDoc()（由 ContentDb.load 呼叫）→ rangeGuide() 被 ui/abilityRangeGuide.ts 的 hover 計時器與 render/AimIndicator.ts 的 paintCircle() 讀走畫那兩個圈，telegraph 那一半由同一支推進 vfx/telegraphChannel.ts 的 applyTelegraphChannelStyles()，再由 paletteFor() 交給 TelegraphLayer 畫地面預告",
+  effect: "玩家**下一次重新整理遊戲頁面**時生效（客戶端開機載內容時套用）。已經畫在地上的圈不會中途換色。",
+  fields: [
+    {
+      path: "hoverDelayMs",
+      zh: "滑過技能圖示幾毫秒才浮出範圍圈",
+      note: "⚠️ 不可以是 0：技能列是六格緊鄰的按鈕，游標從畫面一端掃到另一端會**依序**經過全部六格，零延遲＝地板上連閃六個圈。出貨 140 短到「我停下來看」仍然像即時，長到「路過」不會觸發（和一般 tooltip 的 ~150 同一個量級）。調大＝要停更久才看得到，對手殘的玩家會以為功能壞了。",
+    },
+    {
+      path: "hoverOpensBanner",
+      zh: "滑過也打開頂端的說明橫幅",
+      note: "出貨**關**：滑過只出地板範圍圈，橫幅留給真的按下去（滑鼠按住／手指／手把／按住 QWERF D）。理由是技能格自己**本來就有** anchored tooltip 在講同一段文字，開著的話同一段字會在畫面上出現兩次，而且游標掃過技能列時橫幅會閃六次。開起來＝滑過就看得到完整說明，適合教學／新手場，代價就是上面那個閃爍。",
+    },
+    {
+      path: "rangeColor",
+      zh: "施法距離圈的顏色",
+      note: "外面那個大圈 —— 回答「我打得到多遠」。出貨 #73BFFF 藍，刻意和命中範圍圈的琥珀分開：兩個圈同時畫在腳下，同色系的話玩家分不出哪一圈是射程、哪一圈是會被炸到的範圍。⚠️ 也不要換成接近隊伍色的顏色，會被讀成隊伍標示。",
+      pattern: HEX6,
+      patternError: HEX6_ERROR,
+    },
+    {
+      path: "rangeFillAlpha",
+      zh: "距離圈的填滿濃度",
+      note: "出貨 0.09 刻意很淡：這個圈是**整個施法距離**（大技能十幾個單位直徑），填太濃會把腳下的地板、屍體、掉落物全部染成一片藍，反而看不到要打誰。0＝只剩一圈框（想要最乾淨畫面的人選這個），往上調＝範圍更好判斷但場面更髒。",
+    },
+    {
+      path: "aoeColor",
+      zh: "命中範圍圈的顏色",
+      note: "裡面那個小圈 —— 回答「它會落在哪」，也是玩家真正要瞄的那一圈。出貨 #FF9E3B 琥珀。⚠️ 改它要**連下面「自己的預告」一起改**：那兩個出貨值是同一個顏色，為的是「我瞄的那一圈」和「我放出去之後地上那一圈」看起來是同一件事。",
+      pattern: HEX6,
+      patternError: HEX6_ERROR,
+    },
+    {
+      path: "aoeFillAlpha",
+      zh: "命中範圍圈的填滿濃度",
+      note: "出貨 0.2，比距離圈濃一倍多：這個圈小得多，而且它回答的是「我站在裡面會不會被打到」——那是一個**面積**問題，只有填滿才一眼答得出來，一條線答不出來。調到 0 等於退回 #367 之前那種「地上一條線」的觀感。",
+    },
+    {
+      path: "rimAlpha",
+      zh: "兩個圈外框的不透明度",
+      note: "框要比填滿實得多，否則邊界糊掉、玩家判斷不出「再往前一步是不是就超出射程」。出貨 0.85。調低到接近填滿的濃度時，兩個圈會看起來像兩片色斑而不是兩個範圍。",
+    },
+    {
+      path: "rimThickness",
+      zh: "外框粗細（世界單位）",
+      note: "⚠️ 這是**絕對**寬度不是半徑的比例，而那是刻意的：用比例的話大技能的框會粗得像另一個 AoE，小技能的框細到看不見。出貨 0.18（角色體半徑 0.6，所以大約是身寬的三分之一）。調太粗會讓小範圍技能的框把自己的圈整個填滿。",
+    },
+    {
+      path: "telegraph.self.ring",
+      zh: "自己的預告 · 外圈顏色",
+      note: "**你自己**起手技能時，地板上那一圈的邊。出貨和上面的命中範圍圈同一個琥珀，讓「我剛剛瞄的」和「我現在放的」看起來連續。⚠️ 改它之前先想清楚要不要一起改上面那一格，否則自己的兩個階段會變成兩個顏色。",
+      pattern: HEX6,
+      patternError: HEX6_ERROR,
+    },
+    {
+      path: "telegraph.self.fill",
+      zh: "自己的預告 · 填滿顏色",
+      note: "同一圈的魔法陣填滿色（畫面上圈太多時這一條會被降級成只有外框，那時看不到它）。出貨與外圈同色 —— 自己的預告不需要吸引注意，它只是在說「這是我放的」。",
+      pattern: HEX6,
+      patternError: HEX6_ERROR,
+    },
+    {
+      path: "telegraph.self.alpha",
+      zh: "自己的預告 · 最大不透明度",
+      note: "出貨 0.6，刻意比來襲的低：你已經知道自己按了什麼，這一圈只是確認，⛔ 不該是畫面上最吵的東西。調到和來襲一樣高＝自己丟一個大招會把對面正在瞄你的那一圈蓋掉。",
+    },
+    {
+      path: "telegraph.self.dashed",
+      zh: "自己的預告 · 虛線邊",
+      note: "出貨**開**。它是「這一圈是我的」唯一一個**不靠顏色**的分辨器 —— 去飽和的觀戰畫面（#85）與色盲玩家只讀得到它。⚠️ 關掉的話，自己與來襲就只剩色相與亮度兩個差異；要關就請同時把兩邊的顏色拉得更開。",
+    },
+    {
+      path: "telegraph.self.pulseHz",
+      zh: "自己的預告 · 急迫脈動（Hz）",
+      note: "起手末段的閃動頻率。出貨 0（不動）：會動的東西會抓走眼睛，而你不需要對自己的技能做反應。開起來＝自己的圈也會跳，代價是「畫面上在動的那一圈＝我要躲」這個規則失效。",
+    },
+    {
+      path: "telegraph.ally.ring",
+      zh: "隊友的預告 · 外圈顏色",
+      note: "隊友起手時地板上那一圈的邊。出貨 #59CCFF 隊伍青 —— 它說的是「有東西會落在那裡，但不是衝著你來」。⚠️ 要離來襲的紅夠遠：這兩個是你在場上最常隔著半個競技場、而且旁邊沒有另一個可以比較的顏色。",
+      pattern: HEX6,
+      patternError: HEX6_ERROR,
+    },
+    {
+      path: "telegraph.ally.fill",
+      zh: "隊友的預告 · 填滿顏色",
+      note: "同一圈的填滿色。出貨與外圈同色，而且這一條通常被降級成只有外框 —— 隊友的技能是背景資訊，不是要你反應的事。",
+      pattern: HEX6,
+      patternError: HEX6_ERROR,
+    },
+    {
+      path: "telegraph.ally.alpha",
+      zh: "隊友的預告 · 最大不透明度",
+      note: "出貨 0.45，三條通道裡最低：一場四人團戰的地板上，隊友的圈數量最多而重要性最低。調高＝更清楚看得到隊友要打哪，代價是自己腳下那一圈與來襲那一圈都會被淹掉。",
+    },
+    {
+      path: "telegraph.ally.dashed",
+      zh: "隊友的預告 · 虛線邊",
+      note: "出貨**關**（實線）。隊友那一條目前靠「最低的不透明度」與青色來分辨，實線讓它看起來像背景而不是一個要處理的東西。開起來＝多一個不靠顏色的分辨器，但會和自己的那一圈撞語彙。",
+    },
+    {
+      path: "telegraph.ally.pulseHz",
+      zh: "隊友的預告 · 急迫脈動（Hz）",
+      note: "出貨 0。同自己那一格的理由，而且更強：隊友的圈在團戰裡數量最多，讓它們一起跳＝整個地板都在閃，那會把真正該躲的那一圈藏起來。",
+    },
+    {
+      path: "telegraph.incoming.ring",
+      zh: "來襲的預告 · 外圈顏色",
+      note: "**打向你**的技能（施法者關係還沒解析出來時也走這一條，因為失敗要往危險那邊倒）。出貨 #FF3824 危險紅，刻意離上面兩個預覽圈都很遠 —— #228 之前這一圈是琥珀，和自己的瞄準預覽同色，那就是玩家回報「預告特效不明顯」的主因。",
+      pattern: HEX6,
+      patternError: HEX6_ERROR,
+    },
+    {
+      path: "telegraph.incoming.fill",
+      zh: "來襲的預告 · 填滿顏色",
+      note: "同一圈的魔法陣填滿色。出貨 #FF5C33 比外圈亮一階，讓「面積」在滿地都是圈的時候仍然讀得出來 —— 這是三條通道裡唯一一條出貨就實心填滿的。",
+      pattern: HEX6,
+      patternError: HEX6_ERROR,
+    },
+    {
+      path: "telegraph.incoming.alpha",
+      zh: "來襲的預告 · 最大不透明度",
+      note: "出貨 0.95，三條裡最高，而且**必須**最高：這是唯一一條玩家非反應不可的通道。調低到和隊友那條差不多＝「該躲的」和「不用管的」在畫面上一樣大聲，等於這三條通道白分了。",
+    },
+    {
+      path: "telegraph.incoming.dashed",
+      zh: "來襲的預告 · 虛線邊",
+      note: "出貨**關**（實線＝「這是真的要落下來的」）。它和上面「自己的預告 · 虛線邊」是**同一個決定的兩半** —— 兩邊都設成一樣（都虛或都實）等於把這個不靠顏色的分辨器丟掉，那時請務必把兩邊的顏色與不透明度拉開。",
+    },
+    {
+      path: "telegraph.incoming.pulseHz",
+      zh: "來襲的預告 · 急迫脈動（Hz）",
+      note: "起手最後三分之一才開始的閃動，出貨 6 Hz。它是「快落地了」這件事**唯一**不靠亮度也不靠顏色的訊號，所以去飽和的觀戰畫面與色盲玩家都讀得到。0＝關掉脈動，這一圈就只剩亮度爬升在報時間。",
+    },
+  ],
+  preserved: [],
+};
+
 export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   MAP_SPEC_SPEC,
   CAMERA_SPEC,
@@ -2775,6 +2935,11 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   VFX_CLEANUP_SPEC,
   GORE_SPEC,
   DAMAGE_COLORS_SPEC,
+  // 範圍指引與預告（GH#376）。⚠️ 同 AUDIO_MIX_SPEC 那一段：這一列要跟 store.ts 的
+  // `Page` union / `SESSION_REQUIRED_PAGES` 與 App.tsx 的導覽列一起，才到得了
+  // 操作者手上；而且要跟 `apps/client/src/content/ContentDb.ts` 的
+  // `applyRangeGuideDoc(...)` 那一行一起，才到得了**地板上**。
+  RANGE_GUIDE_SPEC,
   SHIELD_SPEC,
   BLOCK_SPEC,
   CRIT_SPEC,

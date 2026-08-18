@@ -3,8 +3,8 @@
  *
  * owner 2026-08-18 附圖：英雄站在窄走道上，旁邊就是圖外，火圈在收，只能等死。
  *
- * ⚠️ 這一條驗的是**機制**（站得住 · 點燃時安全 · 走得到口袋），⛔ 不是數字
- * （0.6 與 4 都從出貨來源讀，owner 隨時可以改）。
+ * ⚠️ 這一條驗的是**機制**（站得住 · 點燃時安全 · 走得到口袋 · 旁邊有空間 ·
+ * 口袋不會太遠），⛔ 不是數字（0.6 / 4 / 3 / 0.8 全部從出貨來源讀，owner 隨時可以改）。
  *
  * ⛔ 刻意讀 `content/arenas/*.json` 而不是捏夾具：**新圖上線會自動被納入**，
  * 而這才是這條守衛真正的價值 —— 它守的是下一張圖。
@@ -18,20 +18,30 @@ import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { CHAMPION_BODY_RADIUS } from "../content/displacementTiers";
+import { DEFAULT_MAP_SPAWN, resolveMapSpec } from "../content/schema/mapSpecDoc";
 import { DEFAULT_STAGE1_RADIUS } from "../sim/fireRing";
 import type { ZoneDef } from "../sim/world/ArenaDef";
 import { checkZoneSpawns, formatSpawnIssue, type SpawnLegalityOpts } from "./arenaSpawnLegality";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 
-/** 出貨的火圈口袋半徑 —— ⛔ 不抄 4，owner 改 config 這裡就跟著改。 */
+/**
+ * 出貨的四個數字 —— ⛔ 一個都不抄，全部從 `content/config/` 讀。
+ * owner 改 `map-spec.json` 的 `spawn` 區塊，這條守衛就跟著鬆或緊。
+ */
 function shippedOpts(): SpawnLegalityOpts {
   const cfg = JSON.parse(readFileSync(join(ROOT, "content/config/config.match.json"), "utf8")) as {
     match?: { fireRing?: { stage1Radius?: number } };
   };
+  const spec = resolveMapSpec(
+    JSON.parse(readFileSync(join(ROOT, "content/config/map-spec.json"), "utf8")) as never,
+  );
+  const spawn = spec.spawn ?? DEFAULT_MAP_SPAWN;
   return {
     bodyRadius: CHAMPION_BODY_RADIUS,
     pocketRadius: cfg.match?.fireRing?.stage1Radius ?? DEFAULT_STAGE1_RADIUS,
+    minWallClearanceBodyRadii: spawn.minWallClearanceBodyRadii,
+    maxPocketPathFactor: spawn.maxPocketPathFactor,
   };
 }
 
@@ -50,7 +60,7 @@ function shippedZones(): { arenaId: string; zone: ZoneDef & { id: string } }[] {
 }
 
 describe("出生點合法性 · 每一張出貨場地 (GH#364)", () => {
-  it("⭐ 沒有任何座位站在牆裡／圖外，點燃時全部在圈內，而且都走得到火圈的口袋", () => {
+  it("⭐ 沒有任何座位站在牆裡／圖外／貼著牆，點燃時全部在圈內，而且都走得到（而且走得完）火圈的口袋", () => {
     const opts = shippedOpts();
     const zones = shippedZones();
     expect(zones.length).toBeGreaterThan(0); // 讀不到內容就不算綠
@@ -79,11 +89,24 @@ describe("出生點合法性 · 每一張出貨場地 (GH#364)", () => {
     const of = (side: number, slot: number): string[] =>
       issues.filter((i) => i.side === side && i.slot === slot).map((i) => i.check).sort();
 
-    expect(of(0, 0)).toEqual(["pocketUnreachable", "spawnInsideObstacle"]);
+    expect(of(0, 0)).toEqual(["pocketUnreachable", "spawnInsideObstacle", "wallHugging"]);
     expect(of(0, 1)).toEqual([]); // 乾淨的座位⛔ 不可以被誤報
     // ⭐ 這一條就是「注定被燒死」：站得住、在圖內、點燃時安全 —— 但走不到口袋。
     expect(of(1, 0)).toEqual(["pocketUnreachable"]);
-    // 身體伸出圖外的那 0.3 個單位，同時就是「火圈點燃時已經在圈外」。
-    expect(of(1, 1)).toEqual(["bodyOutsideBounds", "burningAtIgnition", "pocketUnreachable"]);
+    // 身體伸出圖外的那 0.3 個單位，同時就是「火圈點燃時已經在圈外」，
+    // 而且 0.3 遠小於「離牆 3 個身體半徑」⇒ 三條之外再多一條 wallHugging。
+    expect(of(1, 1)).toEqual([
+      "bodyOutsideBounds",
+      "burningAtIgnition",
+      "pocketUnreachable",
+      "wallHugging",
+    ]);
+
+    // ⭐ 路徑上界真的是**從 opts 讀的**，⛔ 不是寫死在實作裡：把預算縮到幾乎 0，
+    //    那個原本乾淨的座位就必須改口 —— 只多這一條，⛔ 其他三條不受影響。
+    const tight = checkZoneSpawns("arena.broken", zone, { ...opts, maxPocketPathFactor: 0.01 });
+    expect(tight.filter((i) => i.side === 0 && i.slot === 1).map((i) => i.check)).toEqual([
+      "pocketTooFar",
+    ]);
   });
 });

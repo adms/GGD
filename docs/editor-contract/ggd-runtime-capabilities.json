@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "b504b28e",
+  "fingerprint": "a816c401",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -321,6 +321,7 @@
     "vfxId",
     "victim",
     "victimCondition",
+    "vision",
     "who",
     "width"
   ],
@@ -334,6 +335,74 @@
     "radius",
     "scaleByNearby"
   ],
+  "vfxSurface": {
+    "vfx@1": [
+      "ambient",
+      "anchorBone",
+      "blendMode",
+      "burstCount",
+      "color",
+      "colorStops",
+      "emitter",
+      "gravityY",
+      "id",
+      "lifetimeSec",
+      "mode",
+      "orient",
+      "rate",
+      "schema",
+      "size",
+      "sizeStops",
+      "speed",
+      "spriteSheet",
+      "stretched",
+      "tailLength",
+      "texture"
+    ],
+    "vfx@1.orient": [
+      "pitchDeg",
+      "swirlDegPerSec",
+      "yawDeg",
+      "yawFrom"
+    ],
+    "ribbon@1": [
+      "anchorBone",
+      "blendMode",
+      "color",
+      "id",
+      "lifespanSec",
+      "schema",
+      "texture",
+      "uvScrollPerSec",
+      "widthAbove",
+      "widthBelow"
+    ],
+    "ability@1.vfxLayers[]": [
+      "alpha",
+      "attachTo",
+      "delayMs",
+      "enabled",
+      "facingDeg",
+      "flyHeight",
+      "pitchDeg",
+      "timeScale",
+      "tint",
+      "vfxKey",
+      "w3xScale"
+    ],
+    "config.vfx-families@1.abilities[]": [
+      "alpha",
+      "anchor",
+      "enabled",
+      "facingDeg",
+      "family",
+      "flyHeight",
+      "pitchDeg",
+      "timeScale",
+      "tint",
+      "w3xScale"
+    ]
+  },
   "templateFamilies": [
     "buff-self",
     "charge-push",

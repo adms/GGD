@@ -25,10 +25,14 @@
  * 把 `--check` 放寬成模糊比對，而放寬的閘不是閘
  * （`tools/capability-export` 與 `tools/legacy-index` 都記錄了這個失敗形態）。
  */
+import { TEAM_SIZE } from "../constants";
 import type { ArenaDoc } from "../content/schema/arena";
+import { CHAMPION_BODY_RADIUS } from "../content/displacementTiers";
 import { DEFAULT_GROUND_STYLE } from "../content/schema/groundStyle";
 import type { MapDoc } from "../content/schema/map";
-import type { DEFAULT_MAP_SPEC } from "../content/schema/mapSpecDoc";
+import { DEFAULT_MAP_SPAWN, type DEFAULT_MAP_SPEC } from "../content/schema/mapSpecDoc";
+import { DEFAULT_STAGE1_RADIUS, fireRingSafeAt } from "../sim/fireRing";
+import type { ZoneDef } from "../sim/world/ArenaDef";
 import { bakeNav, isWalkable, pickNodes, type GridPos, type TileGrid } from "./graph";
 import { mergeWalls, rectToBox, tileCenter } from "./merge";
 import { DUEL_ZONES_PER_MAP_MIN } from "./spec";
@@ -36,8 +40,12 @@ import { validateMap, type MapReport } from "./validate";
 
 type Spec = typeof DEFAULT_MAP_SPEC;
 
-/** 一隊幾個人。⛔ 從 sim 的常數 import，不抄 3（抄一份就是第四個住處）。 */
-export const SPAWNS_PER_SIDE = 3;
+/**
+ * 一隊幾個人。⛔ 從 `constants.ts` 的 `TEAM_SIZE` 來，不抄 3
+ * （這一行以前寫著「⛔ 從 sim 的常數 import，不抄 3」——**而它抄了 3**，
+ *  第三守則的形狀：一句自我描述的註解與它底下那一行不是同一件事）。
+ */
+export const SPAWNS_PER_SIDE = TEAM_SIZE;
 
 /** 導航節點上限。64 節點 ⇒ 64×64 = 4096 個 int，約 4KB／圖。 */
 const MAX_NAV_NODES = 64;
@@ -51,15 +59,134 @@ export interface CompileResult {
 }
 
 /**
+ * 一格中心到最近一堵牆（含格線外緣）的距離，世界單位。
+ *
+ * 牆格 `(bc,br)` 佔住世界上的一個方塊 `[bc·ts,(bc+1)·ts] × [br·ts,(br+1)·ts]`，
+ * 所以「中心到方塊」是逐軸先減半格再取歐氏距離 —— ⛔ 不是格心到格心
+ * （那會把貼著牆的那一格算成一整格遠）。
+ */
+function wallClearance(g: TileGrid, ts: number, col: number, row: number, want: number): number {
+  // 只掃「有可能比 want 更近」的那個窗，⛔ 不掃整張圖：預算是 O(格數×窗)，
+  // 而 want 通常只有一兩格寬。
+  const k = Math.ceil(want / ts + 0.5);
+  let best = ts * Math.min(col + 0.5, g.cols - col - 0.5, row + 0.5, g.rows - row - 0.5);
+  for (let br = row - k; br <= row + k; br++) {
+    for (let bc = col - k; bc <= col + k; bc++) {
+      if (br < 0 || bc < 0 || br >= g.rows || bc >= g.cols) continue;
+      if (isWalkable(g, bc, br)) continue;
+      const dx = Math.max(0, Math.abs(col - bc) - 0.5);
+      const dz = Math.max(0, Math.abs(row - br) - 0.5);
+      const d = ts * Math.hypot(dx, dz);
+      if (d < best) best = d;
+    }
+  }
+  return best;
+}
+
+/**
+ * 每一格**走**到火圈口袋要多少格（4 連通，走不到 = `Infinity`）。
+ *
+ * ⭐ 種子是**真正的口袋** —— 用 sim 自己那一支 {@link fireRingSafeAt} 去問
+ * 「火圈停在 `stage1Radius` 的時候，站在這一格還安全嗎」，⛔ 不在這裡重寫幾何，
+ * 也⛔ 不用「離中心最近的那一格」當代理。
+ *
+ * ⚠️ **那個代理是這一批第一版寫的，而它錯得很難看，留在這裡當紀錄**：芙莉蓮的
+ * 迷宮正中央有一道貫穿的牆，於是口袋被切成**左右兩塊**（兩塊都真的安全）。
+ * 單一種子只落在其中一塊，右半場到它的距離全部要繞過整張圖 ⇒ 右側六個候選格
+ * 幾乎全部被路徑預算刷掉，產生器只好一路往內走，把 side 1 的座位擺到 **x = −3**
+ * ——**跨過中線、貼在 side 0 臉上**。兩邊出生點的最近距離從 42 掉到 **14.42**。
+ * 產生器全綠、驗證器全綠，只有量出來的數字說話（失敗形態⑤：被測的不是出貨的那個）。
+ */
+function stepsToPocket(
+  g: TileGrid,
+  ts: number,
+  halfW: number,
+  halfD: number,
+  pocketRadius: number,
+): number[] {
+  const dist = new Array<number>(g.cols * g.rows).fill(Infinity);
+  // 只為了問「這一格在不在口袋裡」而做的最小 zone —— 障礙由 tiles 那一側管。
+  const zone = {
+    center: { x: 0, z: 0 },
+    boundaryRadius: Math.hypot(halfW, halfD),
+    bounds: { kind: "rect" as const, halfW, halfD },
+    obstacles: [],
+    spawns: [],
+  } as unknown as ZoneDef;
+  const queue: number[] = [];
+  for (let r = 0; r < g.rows; r++) {
+    for (let c = 0; c < g.cols; c++) {
+      if (!isWalkable(g, c, r)) continue;
+      const p = { x: -halfW + (c + 0.5) * ts, z: -halfD + (r + 0.5) * ts };
+      if (!fireRingSafeAt(zone, p, CHAMPION_BODY_RADIUS, pocketRadius)) continue;
+      dist[r * g.cols + c] = 0;
+      queue.push(r * g.cols + c);
+    }
+  }
+  for (let h = 0; h < queue.length; h++) {
+    const cur = queue[h]!;
+    const c = cur % g.cols;
+    const r = (cur - c) / g.cols;
+    for (const [dc, dr] of [
+      [1, 0],
+      [-1, 0],
+      [0, 1],
+      [0, -1],
+    ] as const) {
+      const nc = c + dc;
+      const nr = r + dr;
+      if (!isWalkable(g, nc, nr)) continue;
+      const n = nr * g.cols + nc;
+      if (dist[n] !== Infinity) continue;
+      dist[n] = dist[cur]! + 1;
+      queue.push(n);
+    }
+  }
+  return dist;
+}
+
+/**
  * 從 tiles 挑出生點。
  *
- * 規則（決定性）：side 0 取**最左**的可走格、side 1 取**最右**的，
- * 各往垂直方向散開 `SPAWNS_PER_SIDE` 個。
+ * ⭐ **GH#364 第二半：這裡就是那個 bug。** 舊規則是「side 0 取最左的可走格、
+ * side 1 取最右的」，於是每一張產生出來的圖，六個座位都落在**貼著外牆的那一格**
+ * —— 而那同時也是**離火圈收束口袋最遠**的位置。owner 2026-08-18 的截圖
+ * （芙莉蓮迷宮，站在窄走道上、旁邊就是圖外、火圈在收）就是這條規則的直接輸出，
+ * ⛔ 不是那張圖的資料寫壞了。量到的：七張圖的離牆距離全部是 **1.00**（＝半格）。
+ *
+ * 新規則多了兩個**候選條件**（順序與散開規則一個字都沒動，所以既有圖只會位移，
+ * 不會換一種長相）：
+ *
+ * | 條件 | 尺 | 擋掉什麼 |
+ * |---|---|---|
+ * | 離最近的牆 ≥ `minWallClearanceBodyRadii` × 身體半徑 | 身體半徑 | 貼牆的窄走道 |
+ * | 走到火圈口袋 ≤ `maxPocketPathFactor` × 分區半徑 | 分區半徑 | 「注定燒死」的遠角 |
+ *
+ * ⛔ 兩把尺都**與格子大小無關**。owner 提的是「內縮 2–3 格」，但格子大小
+ * （`grid.tileSize`）本身是一格後台欄位 —— 寫成格數的話同一個設定在兩張圖上
+ * 是兩個距離。出貨值下的實際效果**正好**是內縮 2 格，那是推導出來的結果。
+ *
  * ⚠️ 一定要湊滿 `SPAWNS_PER_SIDE` —— schema 只要求 ≥1，但消費端是
  * `spawns[side]![slot % TEAM_SIZE]!`（GH#325）。湊不滿就讓驗證器紅，
  * ⛔ 不是靜靜地少給。
  */
-function pickSpawns(g: TileGrid): GridPos[][] {
+function pickSpawns(
+  g: TileGrid,
+  ts: number,
+  halfW: number,
+  halfD: number,
+  pocketRadius: number,
+  spawn: Spec["spawn"],
+): GridPos[][] {
+  const rules = spawn ?? DEFAULT_MAP_SPAWN;
+  const wantClearance = rules.minWallClearanceBodyRadii * CHAMPION_BODY_RADIUS;
+  const pathBudget = rules.maxPocketPathFactor * Math.hypot(halfW, halfD);
+  const steps = stepsToPocket(g, ts, halfW, halfD, pocketRadius);
+  const eligible = (c: number, r: number): boolean =>
+    isWalkable(g, c, r) &&
+    wallClearance(g, ts, c, r, wantClearance) >= wantClearance - 1e-9 &&
+    steps[r * g.cols + c]! * ts <= pathBudget + 1e-9;
+
   const bySide: GridPos[][] = [[], []];
   const colOrder = [...Array(g.cols).keys()];
   for (const [side, cols] of [
@@ -74,7 +201,7 @@ function pickSpawns(g: TileGrid): GridPos[][] {
     for (const c of cols) {
       for (const r of rowOrder) {
         if (bySide[side]!.length >= SPAWNS_PER_SIDE) break;
-        if (!isWalkable(g, c, r)) continue;
+        if (!eligible(c, r)) continue;
         // 不要三個疊在同一格附近 —— 至少差 2 列
         if (bySide[side]!.some((p) => Math.abs(p.row - r) < 2 && Math.abs(p.col - c) < 2)) continue;
         bySide[side]!.push({ col: c, row: r });
@@ -89,8 +216,17 @@ function pickSpawns(g: TileGrid): GridPos[][] {
  * 編譯。
  *
  * @param duelZones 要實例化幾個對戰分區。預設 `DUEL_ZONES_PER_MAP_MIN`（2）。
+ * @param pocketRadius 火圈「停止縮圈」停下來的半徑（`config.match@1` 的
+ *   `stage1Radius`）。⭐ 出生點的路徑預算量的就是「走到這塊口袋要多遠」，
+ *   ⛔ 這個數字**沒有第二個住處** —— 呼叫端（`tools/anime-arena-map/gen.ts`）
+ *   從出貨的 `config.match.json` 讀，讀不到才退回 sim 的 `DEFAULT_STAGE1_RADIUS`。
  */
-export function compileMap(doc: MapDoc, spec: Spec, duelZones = DUEL_ZONES_PER_MAP_MIN): CompileResult {
+export function compileMap(
+  doc: MapDoc,
+  spec: Spec,
+  duelZones = DUEL_ZONES_PER_MAP_MIN,
+  pocketRadius = DEFAULT_STAGE1_RADIUS,
+): CompileResult {
   const g: TileGrid = { cols: doc.grid.cols, rows: doc.grid.rows, tiles: doc.tiles };
   const ts = doc.grid.tileSize;
   const halfW = (doc.grid.cols * ts) / 2;
@@ -104,7 +240,7 @@ export function compileMap(doc: MapDoc, spec: Spec, duelZones = DUEL_ZONES_PER_M
   const arenaId = doc.id.startsWith("map.") ? `arena.${doc.id.slice(4)}` : `arena.${doc.id}`;
 
   const wallRects = mergeWalls(g);
-  const spawnTiles = pickSpawns(g);
+  const spawnTiles = pickSpawns(g, ts, halfW, halfD, pocketRadius, spec.spawn);
   const must = spawnTiles.flat().concat(doc.interactions.map((i) => i.at));
   const nav = bakeNav(g, pickNodes(g, must, MAX_NAV_NODES));
 

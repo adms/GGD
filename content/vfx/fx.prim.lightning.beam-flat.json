@@ -92,6 +92,7 @@
   "stretched": true,
   "tailLength": 3.5,
   "orient": {
-    "pitchDeg": 0
+    "pitchDeg": 0,
+    "yawFrom": "aim"
   }
 }

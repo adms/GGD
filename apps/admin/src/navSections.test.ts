@@ -212,6 +212,10 @@ describe("分類重編一頁都沒有掉", () => {
       // ⚠️ 它住「營運」不是「戰鬥規則」：那一區問的是英雄在場上多強，
       // 這一頁決定的是打完之後排行榜怎麼動。消費端是 Go（platform）。
       "ranking",
+      // 2026-08-18 GH#376：範圍指引與預告（hold/hover 的兩個圈 + #228 三條
+      // 地面預告通道）。⚠️ 它補的是 GH#367 誠實留下的那張帳單 —— 那六個旋鈕
+      // 當時只收斂成一個具名物件，還住在程式裡。
+      "rangeGuide",
     ]);
     const added = [...after].filter((p) => !before.has(p) && !SINCE_BASELINE.has(p));
     expect(lost, `搬家把這些頁面弄丟了（元件還在，但左欄按不到）：${lost.join(", ")}`).toEqual([]);

@@ -25,6 +25,7 @@ import { fileURLToPath } from "node:url";
 import { zMapDoc } from "@ggd/shared/content/schema/map";
 import { DEFAULT_MAP_SPEC, resolveMapSpec } from "@ggd/shared/content/schema/mapSpecDoc";
 import { compileMap } from "@ggd/shared/map/compile";
+import { DEFAULT_STAGE1_RADIUS } from "@ggd/shared/sim/fireRing";
 import { formatReport } from "@ggd/shared/map/validate";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -44,6 +45,21 @@ function loadSpec(): typeof DEFAULT_MAP_SPEC {
 }
 
 /**
+ * 火圈「停止縮圈」停下來的半徑 —— **出生點的路徑預算量的就是走到它要多遠**（GH#364）。
+ *
+ * ⛔ 不抄 4：它住在 `config.match.json`，讀不到才退回 sim 自己的 `DEFAULT_STAGE1_RADIUS`。
+ * ⚠️ 守衛 `arenaSpawnLegality.test.ts` 讀的是**同一格**，兩邊因此不可能各自漂移。
+ */
+function loadPocketRadius(): number {
+  const p = join(REPO, "content", "config", "config.match.json");
+  if (!existsSync(p)) return DEFAULT_STAGE1_RADIUS;
+  const doc = JSON.parse(readFileSync(p, "utf8")) as {
+    match?: { fireRing?: { stage1Radius?: number } };
+  };
+  return doc.match?.fireRing?.stage1Radius ?? DEFAULT_STAGE1_RADIUS;
+}
+
+/**
  * 穩定序列化。⚠️ 鍵序**跟著物件的插入序**，⛔ 不排序 ——
  * `zArenaDoc.parse()` 之後的鍵序才是出貨檔的鍵序，兩邊要一致，
  * 否則乾淨的重跑會變成一個純鍵序的 diff（fx-19 那次踩過）。
@@ -56,6 +72,7 @@ function main(): void {
     process.exit(2);
   }
   const spec = loadSpec();
+  const pocketRadius = loadPocketRadius();
   const files = readdirSync(MAPS)
     .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
     .sort();
@@ -82,7 +99,7 @@ function main(): void {
       continue;
     }
 
-    const { arena, report } = compileMap(parsed.data, spec);
+    const { arena, report } = compileMap(parsed.data, spec, undefined, pocketRadius);
     const text0 = formatReport(report);
     console.log(text0);
     console.log("");

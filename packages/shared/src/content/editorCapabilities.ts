@@ -88,6 +88,8 @@ import { zHookEvent, zHookDefBase, zEffectDefUnion, zAuraDef } from "./schema/ef
 import { SIM_CAPABILITIES, isExpandable } from "./templates/expand";
 import { zAbilityDef } from "./schema/ability";
 import { zConditionLeaf } from "./schema/condition";
+import { zVfxDoc, zVfxOrient, zRibbonDoc, zVfxAbilityFamilyBinding } from "./schema/vfx";
+import { zAbilityVfxLayer } from "./schema/abilityVfx";
 
 /** 這份文件的 schema id（計畫 §4.1 的 capabilities 回應）。 */
 export const RUNTIME_CAPABILITIES_SCHEMA = "ggd-runtime-capabilities@1";
@@ -1063,6 +1065,25 @@ export interface RuntimeCapabilityManifest {
    * 所以「這一圈能不能隨人數變強」這種能力只有這一格看得到。
    */
   readonly auraFields: readonly string[];
+  /**
+   * ⭐ **特效授權面**（GH#372）—— 形狀名 → 欄位名，全部從出貨的 Zod 推導。
+   *
+   * ⚠️ 這一格補的不是「一個新欄位」，是**整個面**：在它之前，`vfx@1` 的每一格
+   * （`emitter` / `mode` / `blendMode` / `stretched` / `orient` …）與
+   * `ability@1.vfxLayers[]` 的每一格覆寫（`w3xScale` / `alpha` / `timeScale` /
+   * `tint` / `facingDeg` / `pitchDeg` …）對外部編輯器**一個字都不存在**。
+   * 量到的（v0.20.5）：`convertTeam` 在兩份合約文件裡各出現 2 次，
+   * **`orient` 兩份都是 0** —— effect kind 那一面是通的，特效那一面整片是空的。
+   *
+   * ⛔ 而它的失敗方式是最安靜的一種：對方不會收到任何錯誤，它只是**不知道有這些
+   * 格子**，於是它產得出來的每一支技能都沒有特效參數。
+   * `unsupported` 至少會被拒絕，這個連拒絕都沒有。
+   *
+   * 鍵是**授權的位置**（`vfx@1` / `vfx@1.orient` / `ribbon@1` /
+   * `ability@1.vfxLayers[]` / `config.vfx-families@1.abilities[]`），⛔ 不是 Zod
+   * 匯出名 —— 對方沒有這個 repo，它要的是「我在哪一份 JSON 的哪一層寫這一格」。
+   */
+  readonly vfxSurface: Readonly<Record<string, readonly string[]>>;
   readonly templateFamilies: readonly string[];
   readonly simCapabilities: Readonly<Record<string, { available: boolean; caveat?: string }>>;
   readonly planned: readonly {
@@ -1213,6 +1234,22 @@ function fingerprintOf(parts: readonly string[]): string {
 }
 
 /**
+ * {@link RuntimeCapabilityManifest.vfxSurface} 的來源表 —— **一張表，⛔ 不是五段程式**
+ *（第零守則⑨：N 個同型項目 = K 個模板 + 一張表）。
+ *
+ * 每一列只有兩格：對方在 JSON 裡寫這一格的**位置**，以及出貨的 Zod 物件。
+ * 欄位名由 {@link leafFieldsOf} 從那個物件推導，所以新增一格 schema 欄位不必回來
+ * 改這裡 —— 只有**多開一個授權位置**才需要加一列。
+ */
+const VFX_SURFACE_SHAPES: readonly { readonly key: string; readonly schema: unknown }[] = [
+  { key: "vfx@1", schema: zVfxDoc },
+  { key: "vfx@1.orient", schema: zVfxOrient },
+  { key: "ribbon@1", schema: zRibbonDoc },
+  { key: "ability@1.vfxLayers[]", schema: zAbilityVfxLayer },
+  { key: "config.vfx-families@1.abilities[]", schema: zVfxAbilityFamilyBinding },
+];
+
+/**
  * 從**出貨的註冊表**建出能力清單。
  *
  * ⚠️ 每一格都排序過：這份文件會被 hash 並被外部專案 pin，
@@ -1251,6 +1288,24 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
     );
   }
   const auraFields = [...auraFieldSet].sort();
+  // 特效授權面（GH#372）。⚠️ `zVfxDoc` 是 `.superRefine()` ⇒ ZodEffects，`.shape`
+  // 拿不到 —— `leafFieldsOf` 自己會剝那一層。空集合 = 有人在上面多包了一層，
+  // ⛔ 不可以讓它靜靜地變成空的（那會讓整個特效面**又一次**從合約裡消失，
+  // 而這正是 GH#372 的形狀：沒有錯誤，只是不存在）。
+  const vfxSurface: Record<string, readonly string[]> = {};
+  for (const s of VFX_SURFACE_SHAPES) {
+    const set = new Set<string>();
+    leafFieldsOf(s.schema, set);
+    if (set.size === 0) {
+      throw new Error(
+        `⛔ 特效授權面「${s.key}」的欄位推導回了空集合 —— 幾乎一定是有人在那個 Zod ` +
+          "物件上多包了一層（ZodEffects / ZodPipeline）。修 editorCapabilities.ts 的 " +
+          "`VFX_SURFACE_SHAPES`，⛔ 不要讓這一列靜靜地變成空的：外部編輯器看不到我們的 " +
+          "registry，它不會發現這些格子不見了，只會做不出任何帶特效參數的技能。",
+      );
+    }
+    vfxSurface[s.key] = [...set].sort();
+  }
   const simCapabilities: Record<string, { available: boolean; caveat?: string }> = {};
   for (const key of Object.keys(SIM_CAPABILITIES).sort()) {
     const c = SIM_CAPABILITIES[key]!;
@@ -1304,6 +1359,10 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
       // 同一個理由：`scaleByNearby` 這種「靈氣多一格」的 capability 不改動任何一個
       // kind 名，指紋不含它的話對方 pin 的 base 會在契約真的變了的那天不動。
       ...auraFields,
+      // 同一個理由，而且這一族是**整個面**：`orient` / `swirlDegPerSec` 這種格子
+      // 不改動任何一個 effect kind 名，指紋不含它們的話，特效授權面整片改過了
+      // 而對方 pin 的 base 完全不動。
+      ...Object.entries(vfxSurface).map(([k, v]) => `vfx:${k}=${v.join(",")}`),
       ...templateFamilies,
       ...PLANNED_CAPABILITIES.map((e) => `${e.key}=${e.expected}`),
       // 已知壞掉的清單也折進指紋：一筆進來或修好離開，對方 pin 的 base 就該換。
@@ -1316,6 +1375,7 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
     hookFields,
     effectFields,
     auraFields,
+    vfxSurface,
     templateFamilies,
     simCapabilities,
     planned,
