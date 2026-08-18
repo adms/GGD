@@ -24,6 +24,8 @@
     "voxel:build": "pnpm --filter @ggd/voxel-gen voxel:build",
     "voxel:build:check": "pnpm --filter @ggd/voxel-gen voxel:build:check",
     "voxel:extract": "pnpm --filter @ggd/voxel-gen voxel:extract",
+    "scenery:gen": "tsx tools/scenery-gen/gen.ts",
+    "scenery:check": "tsx tools/scenery-gen/gen.ts --check",
     "caps:export": "tsx tools/capability-export/export.ts",
     "caps:check": "tsx tools/capability-export/export.ts --check",
     "spec:build": "tsx tools/skill-spec/gen_spec.ts",
