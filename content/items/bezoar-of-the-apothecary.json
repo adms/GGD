@@ -6,7 +6,7 @@
   "id": "bezoar-of-the-apothecary",
   "name": "藥師少女的牛黃",
   "icon": "assets/icons/items/bezoar-of-the-apothecary.webp",
-  "description": "道具\n效能\n[貓貓試毒] 身上被掛上減益的瞬間，立刻淨化掉身上全部可淨化的減益\n[貓貓試毒] 同時回復 10%最大魔力\n[貓貓試毒] 並且永久 AP+1（整場累積，上限 300）\n[貓貓試毒] 觸發間隔 1 秒\n\n解說\n她先嚐一口，然後把配方記下來。毒吃得越多，藥理越精。",
+  "description": "道具\n效能\n[貓貓試毒] 身上被掛上減益的瞬間，立刻淨化掉身上全部可淨化的減益\n[貓貓試毒] 同時回復 10%最大魔力\n[貓貓試毒] 並且永久 AP+1（整場累積，這件道具最多累積到 +300）\n[貓貓試毒] 觸發間隔 1 秒\n\n解說\n她先嚐一口，然後把配方記下來。毒吃得越多，藥理越精。",
   "tags": [
     "legendary",
     "ex-origin",
@@ -28,8 +28,7 @@
         {
           "kind": "dispel",
           "shape": "single",
-          "polarity": "debuff",
-          "count": 50
+          "polarity": "debuff"
         },
         {
           "kind": "restore",
@@ -42,12 +41,8 @@
           "permanent": true,
           "permanentScope": "match",
           "stackKey": "bezoar-ap",
-          "maxStacks": 99,
+          "maxStacks": 300,
           "stackVisual": true,
-          "maxStat": {
-            "stat": "ap",
-            "value": 300
-          },
           "modifiers": [
             {
               "stat": "ap",
@@ -59,5 +54,5 @@
       ]
     }
   ],
-  "authoringNote": "⚠️ **與 owner 原文的差異（引擎缺口，已開 issue）**：原文是『**立即免疫**所有負面狀態』，而引擎今天**沒有狀態免疫窗口** —— `applyStatus` 不問任何免疫旗標。這裡做的是**掛上的同一格淨化掉**（`onStatusApplied` → `dispel polarity:debuff`），玩家感受幾乎相同（控制沒有維持時間），但**不是免疫**：一發帶控制的傷害仍然造成傷害，而不可淨化的減益（`dispellable:false`）拔不掉。⛔ 卡面因此**只寫淨化**，不寫免疫（第一·五守則：卡片上不可以有做不到的字）。\n⭐ AP 上限 300 走 `applyBuff.maxStat`，⛔ 不是 `maxStacks: 300` —— 後者是層數不是屬性值，而 owner 說的是 AP 的上限。"
+  "authoringNote": "⚠️ **與 owner 原文的差異（引擎缺口，已開 issue）**：原文是『**立即免疫**所有負面狀態』，而引擎今天**沒有狀態免疫窗口** —— `applyStatus` 不問任何免疫旗標。這裡做的是**掛上的同一格淨化掉**（`onStatusApplied` → `dispel polarity:debuff`），玩家感受幾乎相同（控制沒有維持時間），但**不是免疫**：一發帶控制的傷害仍然造成傷害，而不可淨化的減益（`dispellable:false`）拔不掉。⛔ 卡面因此**只寫淨化**，不寫免疫（第一·五守則：卡片上不可以有做不到的字）。\n⭐ **AP 上限 300 = `maxStacks: 300`**（每層 +1 AP，所以層數上限逐位元等於屬性上限）。⛔ 這一格**曾經寫成 `maxStacks: 99` + `maxStat{ap,300}`，而那兩個數字印在卡面上都是空話**（2026-08-18 修）：① 99 層 ⇒ 這件道具最多只給 +99 AP，卡面的 300 永遠到不了；② `maxStat.basis` 省略 = `\"final\"`，`applyBuff.ts::maxStatReached` 讀的是**整條面板 AP**（含 `intToAbilityPower` 的智力換算），高智力英雄面板破 300 之後這件道具一層都不再疊 —— 而卡面讀起來是「這件道具自己累積到 300」。⇒ 拿掉 `maxStat`，上限只留在層數這一格，卡面因此改寫成「**這件道具最多累積到 +300**」。要做「面板 AP 到 300 就停」是另一個設計，要寫的話是 `maxStat`，⛔ 不要兩個一起放。\n⭐ **`dispel` 刻意不寫 `count`**（owner 2026-08-18：「理論上淨化就是解掉所有負面狀態」）：`sim/effects/dispel.ts` 是 `Math.min(e.count ?? rules.maxCountCap, rules.maxCountCap)` ⇒ **省略 = 直接吃全域 `maxCountCap`**，所以 owner 之後把 `content/config/dispel.json` 的 `maxCountCap` 再調高時，這件道具**自動跟著變多**，⛔ 不用回來改這份 JSON、也不用改卡面。⚠️ 中途曾經寫過 `count: 50` 與 `count: 3`：前者被當時的 `maxCountCap: 3` 夾成 3（卡面「全部」是空話），後者是把那個 3 抄到卡面上（誠實但把上限焊死在文件裡）。兩個都是同一個錯 —— **上限只該有一個住處，而它在後台**。\n⚠️ 卡面「全部」為真的**前提**是 `maxCountCap` 夠大（owner 裁決：3 → **1000**）。⛔ 如果哪天它被調回個位數，這句「全部」就會變回謊話 —— 那一格是這張卡的承重點。（合併鍵是 status id + origin，所以一波 30 隻殭屍各給一個減速就是 30 筆，⛔「全遊戲只有 26 種可淨化減益」不構成筆數上限。）"
 }

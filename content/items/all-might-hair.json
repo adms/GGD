@@ -6,7 +6,7 @@
   "id": "all-might-hair",
   "name": "歐爾麥特的頭髮",
   "icon": "assets/icons/items/all-might-hair.webp",
-  "description": "道具\n效能\n[One For All・強制繼承] 隊友陣亡時，你的下一次普攻附帶巨大衝擊波\n[One For All・強制繼承] 衝擊波造成 200%AD 物理傷害並把命中的敵人擊退 20 碼\n[One For All・強制繼承] 若這一擊參與擊殺，立刻以 30%生命復活一名陣亡隊友\n\n解說\n他把最後一撮頭髮留給還站著的人。「接下來，換你了。」",
+  "description": "道具\n效能\n[One For All・強制繼承] 隊友陣亡時，你的下一次普攻附帶巨大衝擊波\n[One For All・強制繼承] 衝擊波造成 200%AD 物理傷害，並把**你打中的那名敵人**擊退 20 碼\n[One For All・強制繼承] 這 20 秒內你**擊殺敵方英雄**時，立刻以 30%生命復活陣亡的隊友\n\n解說\n他把最後一撮頭髮留給還站著的人。「接下來，換你了。」",
   "tags": [
     "legendary",
     "ex-origin",
@@ -41,6 +41,7 @@
                   "kind": "damageArea",
                   "damageType": "physical",
                   "radius": 9.17,
+                  "includeOrigin": true,
                   "amount": {
                     "flat": 0,
                     "ratios": [
@@ -56,21 +57,23 @@
                   "distance": 20,
                   "speed": 16,
                   "from": "caster",
+                  "subtractGap": false,
                   "uncontrollable": true
-                },
+                }
+              ]
+            },
+            {
+              "key": "ofa-return",
+              "on": "onKill",
+              "victim": "champion",
+              "maxTriggers": 1,
+              "target": "allies",
+              "effects": [
                 {
                   "kind": "revive",
                   "hpPct": 0.3,
                   "side": "ally",
-                  "teamCharge": "ignore",
-                  "condition": {
-                    "kind": "stat",
-                    "subject": "target",
-                    "stat": "hp",
-                    "mode": "percent",
-                    "op": "<=",
-                    "value": 0.001
-                  }
+                  "teamCharge": "ignore"
                 }
               ]
             }
@@ -79,5 +82,5 @@
       ]
     }
   ],
-  "authoringNote": "⭐【下一次普攻】走 `applyBuff.hooks` ＋ `maxTriggers: 1` —— ⛔ 引擎裡**沒有**『武裝下一擊』這個機制，它是一份帶著自己觸發器的增益，打完一次就用光。20 秒是這份增益的保存期限（⛔ 不是效果時間）。\n⚠️ **與 owner 原文的三處差異**：① 原文是**扇形**，引擎的 AoE 形狀只有 single / circle（`shape` enum），所以這裡是半徑 9.17 的圓；② 原文是『擊退至場地邊緣』，`knockback.distance` 上界 20（`KB_MAX_DISTANCE`，防 mis-parse），而競技場是 24×18 —— 20 碼在多數落點就是撞牆，但**不保證**貼邊；③ 原文『技能也算』，這裡**只有普攻** —— `onAbilityCast` 那一半掛上去會讓同一份增益被兩條觸發器搶著用光，而『哪一條先』沒有定義。⇒ 卡面只寫普攻。"
+  "authoringNote": "⭐【下一次普攻】走 `applyBuff.hooks` ＋ `maxTriggers: 1` —— ⛔ 引擎裡**沒有**『武裝下一擊』這個機制，它是一份帶著自己觸發器的增益，打完一次就用光。20 秒是這份增益的保存期限（⛔ 不是效果時間）。\n⛔ **2026-08-18 結構修正（第一·五守則的紅線：復活那一行原本一次都不會發生）**。三處，逐一對照過出貨程式碼：\n① **`revive` 從 `ofa-smash` 搬到自己一條 hook `ofa-return`（`on:\"onKill\"` + `victim:\"champion\"` + `target:\"allies\"`）**。理由：`revive` 這個 effect **沒有 `applyTo`、沒有目標選擇器**，`sim/effects/revive.ts` 只走 `ctx.targets`；掛在 `target:\"event\"` 的 hook 上時 `ctx.targets` 就是**剛被普攻打中的那個敵人**，而同一支的 `side:\"ally\"` 閘（`world.team.get(id)?.teamId !== casterTeam → continue`）把唯一的候選人剔掉 ⇒ `revived` 永遠是 0。**陣亡隊友從頭到尾不在候選名單裡。**唯一含死者的通道是 `target:\"allies\"` → `sim/effects/hooks.ts::alliedChampions`（天生牙 `godie-i031` 的【復活】走的正是同一條）。\n⚠️ 順帶：原文『若**這一擊**參與擊殺』寫不出來 —— `damageArea` 只是把傷害 push 進佇列，扣血與擊殺判定在稍後的 `combatResolveSystem`，所以同一 tick 上問不到『這一發殺掉了誰』。改用 `onKill` = 這份增益還在的 20 秒內你拿到一顆英雄人頭，**卡面已照著改寫**。\n⚠️ `revive` 沒有 `maxTargets`，它會把 `ctx.targets` 裡**每一具**己方屍體都站起來 ⇒ 卡面從『復活**一名**』改成『復活陣亡的隊友』（3v3 最多 2 人）。要收回『一名』得先給 `revive` 一格上限 → 機制工作，owner 排序。\n② **`damageArea` 補 `includeOrigin: true`** —— 缺席時 `damageArea.ts` 把 `ctx.targets` 整組當成震央**排除**，也就是你**真正打中的那個人吃不到衝擊波**，而被擊退的偏偏只有他。\n③ **`knockback` 補 `subtractGap: false`** —— `knockback.ts:285` 是 `(e.subtractGap ?? true) ? afterGap(raw, gap) : raw`，預設**真的是 true** ⇒ 實際位移 = 20 −（雙方當下距離），卡面印的 20 碼在任何距離都不成立。\n⚠️ **與 owner 原文的三處差異（維持不變）**：① 原文是**扇形**，引擎的 AoE 形狀只有 single / circle（`shape` enum），所以這裡是半徑 9.17 的圓（吃 `combatEnv.abilityRange` 0.8 ⇒ 實得約 7.3）；② 原文是『擊退至場地邊緣』，`knockback.distance` 上界 20（`KB_MAX_DISTANCE`，防 mis-parse），而競技場是 24×18 —— 20 碼在多數落點就是撞牆，但**不保證**貼邊；③ 原文『技能也算』，這裡**只有普攻** —— `onAbilityCast` 那一半掛上去會讓同一份增益被兩條觸發器搶著用光，而『哪一條先』沒有定義。⇒ 卡面只寫普攻。\n⚠️ **已知邊界，⛔ 不要當成 bug 修**：`applyBuff` 走 `stackKey` 路徑時，第二次授予只回寫 `expiresAtTick`、**沿用同一份 source**（`applyBuff.ts` 的 existing 分支），所以 `maxTriggers` 的計數跟著留著 —— 20 秒內第二位隊友陣亡不會重新武裝這一擊。這是 `stackKey` 的既有語意，不是這次改出來的。\n守衛：`sim/effects/exOriginStructuralFix.test.ts`。"
 }

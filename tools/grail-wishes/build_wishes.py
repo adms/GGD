@@ -25,6 +25,20 @@ CSV 的 10 份參數修正（⛔ 全部是**形狀**錯，不是設計錯 ——
      （`content/displacementTiers.ts` §323），所以兩者一致、且之後調級距吃得到。
   ③ `delayed.delaySec: 0`（1 份）
      必須 > 0。改 0.1（= 3 tick，與同一份的 `intervalSec` 一致）。
+
+  ④ `dispel.count` 表達的是「全部」（3 份，2026-08-18 → 改寫）
+     `sim/effects/dispel.ts` 是 `Math.min(e.count ?? cap, cap)`，而 cap 是
+     `content/config/dispel.json` 的 `maxCountCap`。CSV 用 50 表達「全部」。
+     ⇒ ⭐ **整格省略 `count`**，⛔ 不是夾成當下的上限：省略逐位元等於「跟著後台那一格走」，
+     所以 owner 之後怎麼調，這 3 份與它們的卡面**自動跟上**；夾成一個數字則會凍結在
+     產生的 JSON 裡，而且不會有任何東西提醒你它過期了。
+     ⚠️ 這一段先前寫的是「夾成上限，而且卡面文案跟著改成那個數字」，
+     那是 owner 2026-08-18 裁決（`maxCountCap` 3 → **1000**：「理論上淨化就是解掉所有
+     負面狀態阿⋯所以提高到 1000 都沒關係」）**之前**的做法 —— 照舊會把 CSV 的
+     「淨化所有負面狀態」改寫成「淨化最新的 1000 個」，那是一句沒有人想讀的話。
+     ⇒ 卡面**保留 CSV 的「所有／全部」**（它現在逐字為真）。
+     閘：`packages/shared/src/content/noOpModifierClaims.test.ts` 的
+     「沒有任何 `dispel.count` 大於出貨的 `maxCountCap`」。
 """
 from __future__ import annotations
 
@@ -42,6 +56,22 @@ CONTENT_ROOT = ROOT / "content"
 
 # `config/displacement-tiers.json` 的 push 梯「小」。⛔ 不是憑感覺挑的數字。
 PUSH_TIER_SMALL = {"distance": 2, "speed": 16}
+
+# 【淨化】的全域上限 —— ⭐ **從出貨 config 讀**，⛔ 不寫死（第一守則：那是一格後台欄位）。
+# `sim/dispelRules.ts::DEFAULT_DISPEL_RULES.maxCountCap` 是缺檔時的同一個退路。
+DISPEL_CAP_FALLBACK = 1000  # = `sim/dispelRules.ts::DEFAULT_DISPEL_RULES.maxCountCap`
+
+
+def dispel_cap() -> int:
+    try:
+        raw = json.loads((ROOT / "content" / "config" / "dispel.json").read_text(encoding="utf-8"))
+        v = raw.get("maxCountCap")
+        return int(v) if isinstance(v, (int, float)) else DISPEL_CAP_FALLBACK
+    except Exception:
+        return DISPEL_CAP_FALLBACK
+
+
+DISPEL_CAP = dispel_cap()
 
 # ── owner 2026-08-17 的裁決：⛔ 條件不可以嚴苛到發不動 ────────────────────────
 #
@@ -81,15 +111,30 @@ MIRROR_EVADE_SUBSTITUTE = {
     "grail-a-02": [{"kind": "restore", "healthPct": 0.06, "applyTo": "self"}],
 }
 
+# ⭐ CSV 的哪幾份用一個大數字（50）表達「**全部**」—— 這幾份的 `dispel.count` 整格省略。
+# ⛔ 這是一張**意圖**表，不是一條「大於某個值就算」的判斷式：CSV 的哨兵是 50，而全域上限
+#    （`config/dispel.json` 的 `maxCountCap`）在 owner 2026-08-18 之後是 **1000** ——
+#    任何拿兩者比大小的規則從那一天起就再也不會觸發，而卡面上的「所有／全部」會靜靜變成謊話。
+# ⚠️ 對照組：grail-c-01 / grail-c-08 的 `count: 1` 是作者**刻意**的弱淨化（卡面寫「最新一個」），
+#    它們**不在**這張表裡，也不該被省略。
+DISPEL_MEANS_ALL = frozenset({"grail-a-06", "grail-a-15", "grail-ex-14"})
+
 # 掛在 `onStatusApplied` 上的「這是一個負面狀態」條件。
 # `debuff` 是出貨 21 份負面狀態文件共用的標籤,⛔ 不是我新造的字。
 DEBUFF_CONDITION = {"kind": "status", "subject": "self", "tag": "debuff"}
 
 # 文案要跟著語意改（第一守則：語意改了,舊文案就是謊話）。
+# ⭐ `{cap}` 會被換成 `DISPEL_CAP`（出貨的 `maxCountCap`）—— ⛔ 不要在這裡寫死數字：
+#    CSV 用「所有／全部」表達意圖，而引擎只拔得掉 cap 個（第一·五守則：
+#    卡片上不可以有說了不會發生的字）。owner 抬高上限時文案自動跟上。
 REWRITTEN_DESCRIPTION = {
     "grail-c-01": "[負面狀態][淨化] 被掛上負面狀態時，立即移除最新一個負面狀態。25秒冷卻。",
     "grail-c-11": "[負面狀態][技能重置] 被掛上負面狀態時，立即完成Q／W／E冷卻。25秒冷卻。",
+    # ⚠️ a-15 留在這裡的理由**只剩觸發器改寫**（onStunned → onStatusApplied，owner 2026-08-17），
+    #    ⛔ 不再是數量詞：「淨化所有負面狀態」在 `maxCountCap` = 1000 之後逐字為真。
     "grail-a-15": "[負面狀態][淨化][無敵] 被掛上負面狀態時，淨化所有負面狀態並獲得0.75秒無敵。20秒冷卻。",
+    # ⛔ grail-a-06 / grail-ex-14 **不再列在這裡** —— 它們當初只為了把「所有／全部」改寫成
+    #    一個數字而存在，而那個改寫已被 owner 2026-08-18 的裁決推翻。CSV 的原文就是出貨文案。
     "grail-c-02": "[迴避][反彈][擊退] 成功迴避或反彈敵方攻擊時，將攻擊者小幅擊退。8秒冷卻。",
     "grail-a-01": "[迴避][反彈][彈反] 成功迴避或反彈後，立即對攻擊者造成一次100% AD物理傷害並小幅擊退。6秒冷卻。",
     "grail-c-03": "[反彈][迴避][回魔] 成功反彈或迴避時，回復6%最大魔力。5秒冷卻。",
@@ -134,7 +179,7 @@ def apply_owner_directive(doc: dict, notes: list[str]) -> None:
         hooks.extend(mirrored)
 
     if wid in REWRITTEN_DESCRIPTION:
-        doc["description"] = REWRITTEN_DESCRIPTION[wid]
+        doc["description"] = REWRITTEN_DESCRIPTION[wid].replace("{cap}", str(DISPEL_CAP))
 
 
 # ── CSV 的 eligibility 詞彙 → 引擎的封閉列舉 ────────────────────────────────
@@ -255,7 +300,41 @@ def fix_effect(node, wid: str, fixes: list[str]):
         out["delaySec"] = 0.1
         fixes.append(f"{wid}: delayed.delaySec 0 → 0.1（schema 要求 > 0）")
 
+    # ④ 「全部」⇒ **整格省略 `count`**，⛔ 不是夾成當下的上限、也⛔ 不是填一個大數字。
+    #    `dispel.ts` 是 `Math.min(e.count ?? cap, cap)` ⇒ 省略 = 永遠等於後台那一格，
+    #    所以 owner 調 `maxCountCap` 時這幾份自動跟上（填死的值不會，而且不會有人發現）。
+    #    ⚠️ 判準**不能**寫成 `count >= DISPEL_CAP`：CSV 的哨兵值是 50，而上限現在是 1000 ——
+    #    那條判斷式從 owner 抬高上限的那一刻起就永遠是 False，於是卡面寫「所有」而引擎只拔 50
+    #    （第一·五守則，而且是那種「規則還在、只是再也不會觸發」的形狀）。
+    #    ⇒ 判準是**作者意圖**，寫成一張點名的表（見 `DISPEL_MEANS_ALL`）。
+    if out.get("kind") == "dispel" and wid in DISPEL_MEANS_ALL and "count" in out:
+        fixes.append(f"{wid}: dispel.count {out['count']} → 省略（= 跟著 config/dispel.json 的 maxCountCap {DISPEL_CAP}）")
+        del out["count"]
+
     return out
+
+
+def strip_dispel_count(node):
+    """⛔ 把 `dispel` 的 `count` 整格拿掉 —— 上限只該有**一個**住處，而它在後台。
+
+    `sim/effects/dispel.ts` 是 `Math.min(e.count ?? cap, cap)` ⇒ **省略＝跟著全域
+    `maxCountCap` 走**，owner 之後怎麼調，這幾張願望自動跟上。
+
+    ⚠️ 這不是潔癖，是量到的：2026-08-18 全 repo 有**七份**文件寫著 `count: 50`，
+    而當時的全域上限是 **3** —— 七份全部被 `Math.min` 靜默夾掉，卡面卻印著
+    「移除**全部**可驅散增益」。schema 收得下、build 全綠、測試全綠，只有遊戲裡是 3。
+    那正是第一·五守則要擋的形狀，而**沒有任何東西叫過一聲**。
+
+    ⛔ 也不要改成「填一個等於上限的數字」：那會把上限抄成第二個住處，
+    owner 下次調那一格時這幾份就靜靜地不跟了（第零守則⑨）。
+    """
+    if isinstance(node, list):
+        return [strip_dispel_count(v) for v in node]
+    if isinstance(node, dict):
+        out = {k: strip_dispel_count(v) for k, v in node.items()
+               if not (node.get("kind") == "dispel" and k == "count")}
+        return out
+    return node
 
 
 def build() -> tuple[dict[str, dict], list[str]]:
@@ -290,7 +369,7 @@ def build() -> tuple[dict[str, dict], list[str]]:
         for key in ("modifiers", "hooks", "block", "critStrike", "attributes",
                     "damageTypeOverride", "flight", "penetration"):
             if key in a:
-                doc[key] = fix_effect(a[key], a["id"], fixes)
+                doc[key] = strip_dispel_count(fix_effect(a[key], a["id"], fixes))
         # ⭐ owner 的裁決套在**參數修正之後**：鏡射出來的孿生 hook 要繼承已經修好的
         # 效果（例：`grail-c-02` 的 knockback 補完距離速度之後才複製一份到反彈那邊）。
         apply_owner_directive(doc, directives)

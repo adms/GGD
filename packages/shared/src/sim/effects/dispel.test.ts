@@ -38,6 +38,9 @@
  *   · `zApplyBuff` 的 `dispellable` 欄位刪掉         → dsp-authoring-schema 紅
  */
 import { describe, it, expect, beforeAll } from "vitest";
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { cover } from "../../../testkit/cover";
 import { SimWorld } from "../SimWorld";
 import { SKELETON_ARENA } from "../world/ArenaDef";
@@ -45,7 +48,7 @@ import { registerSkeletonContent, SELA } from "../content/skeleton";
 import { spawnChampion } from "../spawnChampion";
 import { runEffects } from "./effectRunner";
 import { resolveAbilityRadius } from "../abilities/abilitySystem";
-import { DEFAULT_DISPEL_RULES, type DispelRules } from "../dispelRules";
+import { DEFAULT_DISPEL_RULES, dispelRulesFromDoc, type DispelRules } from "../dispelRules";
 import type { EffectContext, EffectDef } from "./effect";
 import { zEffectDef } from "../../content/schema/effect";
 import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../../ids";
@@ -303,6 +306,54 @@ describe("dispel —— 【淨化】", () => {
 
     // 有文件的被拔走;查不到的留著(「不知道」不當成「是」,見 clearPools)。
     expect(ids(world, hero)).toEqual(["unregistered-slow"]);
+  });
+
+  /**
+   * ⭐ owner 2026-08-18 —— 「淨化 = 解掉**所有**負面狀態」。
+   *
+   * > 「理論上淨化就是解掉所有負面狀態阿⋯所以**提高到 1000 都沒關係**」
+   *
+   * 在 `maxCountCap: 3` 的時代，有一批卡的文案寫著「解除全部負面狀態」，
+   * 而引擎逐位元只會拔 3 筆（第一·五守則：卡片上「說了但不會發生」的字）。
+   *
+   * ⛔ **這一條刻意不斷言 `maxCountCap === 1000`** —— 那是把一個出貨數值抄進
+   * 測試（第四個住處，CLAUDE.md「守衛驗機制不驗數字」）。它斷言的是**行為**：
+   * 一發沒寫 `count` 的淨化，在**出貨那一份 `content/config/dispel.json`** 底下，
+   * 真的拔得掉超過 3 筆減益。owner 哪天調成 500 或 40 這條照樣綠；
+   * 調回 3 就紅，而那正是我們要它叫的那一刻。
+   *
+   * ⚠️ 規則**從磁碟上出貨的那一份讀**，⛔ 不是 `DEFAULT_DISPEL_RULES` ——
+   * 引擎讀的是文件（`MatchController` 開場灌進 `world.dispelRules`），
+   * 只驗 TS 常數會漏掉「常數改了但 JSON 沒改」那一半（失敗形態⑤）。
+   *
+   * ⚠️ 六筆是**六個不同的 statusId**，理由與這個上限為什麼不能是「26 種」一樣：
+   * `applyStatus` 的合併鍵是 status id + 來源，筆數本來就不受種類數限制。
+   */
+  it("★ 一發淨化真的拔得掉超過 3 筆減益（owner 2026-08-18「解掉所有負面狀態」）", () => {
+    const here = dirname(fileURLToPath(import.meta.url));
+    const doc: unknown = JSON.parse(
+      readFileSync(join(here, "../../../../../content/config/dispel.json"), "utf8"),
+    );
+    // 出貨那一份真的 parse 得過、而且真的是這個 schema（⛔ 不可以靜靜退回預設）。
+    expect((doc as { schema?: string }).schema).toBe("config.dispel@1");
+    const { world, hero } = rig(dispelRulesFromDoc(doc));
+
+    for (const s of ["slow", "root", "silence", "curse", "wither", "chill"]) {
+      put(world, hero, s, { polarity: "debuff" });
+    }
+    expect(ids(world, hero)).toHaveLength(6);
+
+    fire(world, hero, [hero], {
+      kind: "dispel",
+      shape: "single",
+      polarity: "debuff",
+      // ⛔ 不寫 `count` —— 那正是「解除全部」那些卡的寫法（跟著全域上限走）。
+    } as EffectDef);
+
+    expect(
+      ids(world, hero),
+      "出貨的 maxCountCap 又把淨化夾回一小撮了 —— 卡面上的「全部」會變成謊話",
+    ).toEqual([]);
   });
 
   it("文件寫的 count 夾不過 dispelRules.maxCountCap", () => {

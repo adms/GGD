@@ -1,25 +1,25 @@
 {
   "schema": "ggd-editor-target-profile@1",
-  "generatedAt": "2026-08-18T09:46:30.885Z",
+  "generatedAt": "2026-08-18T11:14:06.273Z",
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_9691e4458a22",
+    "contentVersion": "cv_debe453d4558",
     "collections": {
       "champions": {
-        "hash": "4cc9f144cf2b",
+        "hash": "b53b676784dc",
         "count": 78
       },
       "abilities": {
-        "hash": "92d74ea6ee05",
+        "hash": "dfc5590107b0",
         "count": 461
       },
       "items": {
-        "hash": "968fdff2abab",
+        "hash": "e238c638b491",
         "count": 142
       },
       "augments": {
-        "hash": "d329dfa22d67",
+        "hash": "a75ef623eb73",
         "count": 91
       },
       "projectiles": {
@@ -27,7 +27,7 @@
         "count": 20
       },
       "status-effects": {
-        "hash": "87725c810a97",
+        "hash": "2d700fbb946c",
         "count": 40
       },
       "loot-tables": {
@@ -43,7 +43,7 @@
         "count": 7
       },
       "config": {
-        "hash": "045a3c827e62",
+        "hash": "2cdf1faa23b7",
         "count": 62
       },
       "models": {
@@ -689,7 +689,7 @@
         "key": "grant.type-streak-immunity@1",
         "plan": "[EX∅ 根源] 史萊姆裝（owner 2026-08-18：「連續受到 2 次同型別傷害後免疫該型別」）",
         "state": "partial",
-        "caveat": "⛔ 四個邊界，寫這種卡的人一定會撞到：① `damageTypes` **必填**且是雙向的 —— **沒被列進去的傷害型別既不累計也不打斷連擊**。所以「只列 physical/magic」的卡，火圈真傷（#270）照樣燒得到你，但也不會替敵人洗掉你的物理連擊；② **被免疫擋掉的那一發不會被記進連擊** ⇒ 連擊**凍結在門檻上**，免疫一直持續到來了另一種被列進 `damageTypes` 的傷害為止 —— 那是這件寶具唯一的破解方式，⛔ 不是 bug，但它必須印在卡片上，否則玩家不知道自己為什麼打不動；③ `streakTimeoutSec` **省略 = 連擊永不逾時**，而且它**跨回合殘留**（`sim/clearPools.ts::clearRoundScoped` 清的是 status/shields/dot/buffs 四池，⛔ 不含連擊表）。面對一波純物理的殭屍，省略它就是**無限免疫** —— `zInvulnerable.durationSec` 已經寫過「an unbounded immunity is an unwinnable round」。填任何一個值同時修掉這兩件事；④ `resetMode` 省略 = `restart`（異型那一發**自己算新連擊第 1 發**），`zero` 才是「歸零、下一發才算」。兩者只在「剛換型別的那一發」不同，一般驗證看不出差別。",
+        "caveat": "⛔ 四個邊界，寫這種卡的人一定會撞到：① `damageTypes` **必填**且是雙向的 —— **沒被列進去的傷害型別既不累計也不打斷連擊**。所以「只列 physical/magic」的卡，火圈真傷（#270）照樣燒得到你，但也不會替敵人洗掉你的物理連擊；② **被免疫擋掉的那一發不會被記進連擊** ⇒ 連擊**凍結在門檻上**，免疫一直持續到來了另一種被列進 `damageTypes` 的傷害為止 —— 那是這件寶具唯一的破解方式，⛔ 不是 bug，但它必須印在卡片上，否則玩家不知道自己為什麼打不動；③ `streakTimeoutSec` **省略 = 連擊在這一回合內永不逾時**，⛔ 但**不會跨回合**（`sim/clearPools.ts::clearRoundScoped` 在 host 的 `enterCombat()` 逐席位把連擊表歸零，owner 2026-08-18：「的確不應該跨回合殘留」）。回合**內**要不要有時鐘仍然由這一格決定 ——省略它，面對一波純物理的敵人就是整回合免疫，而 `zInvulnerable.durationSec` 已經寫過「an unbounded immunity is an unwinnable round」。⭐ 出貨的史萊姆裝刻意留空，理由是 owner 的另一半：「場上一定會有其他敵方或特殊殭屍給 AP 傷害打斷」；④ `resetMode` 省略 = `restart`（異型那一發**自己算新連擊第 1 發**），`zero` 才是「歸零、下一發才算」。兩者只在「剛換型別的那一發」不同，一般驗證看不出差別。",
         "evidence": "packages/shared/src/sim/combat/typeStreakImmunity.ts + packages/shared/src/sim/combat/typeStreakImmunity.test.ts（五發序列 physical×2 → 第三發 hp 逐位元不變並發出 `immune`，再用 magic / physical 各一發證明它不是「隨便發一份 invulnerable」）+ content/items/slime-suit.json"
       },
       {
@@ -2908,5 +2908,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "e4fbd13c722e"
+  "profileDigest": "1e55a3dbd6c2"
 }

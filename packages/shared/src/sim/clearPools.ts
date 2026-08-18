@@ -312,8 +312,31 @@ export function clearForFreshBody(world: SimWorld, id: EntityId): ClearPoolsResu
  *
  * ⚠️ 掃的是**每一個席位**，⛔ 不是「這一回合被排進對戰的那些」——
  * 輪空的隊伍不進 pairing 迴圈，漏掉他們就等於「輪空 = 回合增益多留一回合」。
+ *
+ * ── ⭐ 2026-08-18 —— **同型連擊表也在這裡歸零**（owner 的裁決）───────────────
+ *
+ * > 「純物理殭屍波不存在，場上一定會有其他敵方或特殊殭屍給 AP 傷害打斷，
+ * >  **但的確不應該跨回合殘留**」
+ *
+ * 史萊姆裝的 `typeStreakImmunity` 把「我連續挨了幾發同型」記在
+ * `world.damageStreak`，而那張表**沒有到期**（`streakTimeoutSec` 省略 = 永不逾時，
+ * 見 `combat/typeStreakImmunity.ts`）。上一回合結束時凍結在門檻上的連擊，
+ * 下一回合開打的第一秒就是免疫 —— 而玩家沒有做任何事來換到它。
+ *
+ * ⛔ **修法刻意不是一個 `streakTimeoutSec` 出貨值**：那是一個平衡數字，
+ * 而 owner 明說回合內的打斷本來就會發生。回合邊界是一件**結構**上的事，
+ * 它不該由「猜一個比回合長度短的秒數」來實現（回合長度是相位機決定的，
+ * 決賽 180 秒而平時 100 秒，火圈提前收場更是常態 —— 猜長了跨回合、
+ * 猜短了在回合中途無聲消失）。
+ *
+ * ⚠️ 位置在 `sc` 的早退**之前**：一具沒有 `StatsComp` 的身體照樣可能有連擊紀錄
+ *（`noteDamageStreak` 只在有授予時記帳，但授予會過期而紀錄不會），
+ * 而回合結束時那筆紀錄一樣不可以留著。
  */
 export function clearRoundScoped(world: SimWorld, id: EntityId): number {
+  // ⭐ 回合邊界歸零同型連擊（見上面那一段）。⛔ 不計進回傳值 ——
+  // 回傳的語意是「拔掉幾份 roundScoped 來源」，混進另一池會讓呼叫端的帳失真。
+  world.damageStreak.delete(id);
   const sc = world.stats.get(id);
   if (!sc) return 0;
   // ⛔ 先收集再拔 —— `detachSource` 會改寫 `sc.sources`，邊走邊拔會跳過元素。

@@ -1895,8 +1895,15 @@ A("12-02", "12-02 仙氣．採藥", "self", [60, 60, 60, 60], [50, 100, 150, 200
   #    而 `sim/effects/restore.ts` 開頭就是 `rankScalar(e.healthPct, ctx.rank)` 逐階解算。
   #    ⛔ 填**單一純量** = 2/3/4 階根本沒有第二、三、四欄可讀 ⇒ 面板寫 11%、場上永遠回 5%
   #    （失敗形態②：算出來了但玩家拿不到）。規格逐字是 5/7/9/11%。
+  # ⭐ `count` **刻意整格省略** —— 規格那句「除去身上任何附加法術狀態」要的就是「全部」。
+  #    `sim/effects/dispel.ts` 是 `Math.min(e.count ?? cap, cap)` ⇒ 省略 = 逐位元等於後台
+  #    `content/config/dispel.json` 的 `maxCountCap`（owner 2026-08-18 裁決：3 → **1000**，
+  #    「理論上淨化就是解掉所有負面狀態阿⋯所以提高到 1000 都沒關係」）。
+  #    ⛔ 不要填一個大數字：填死的值不會跟著 owner 之後調那一格而動，而且不會有任何東西提醒你。
+  #    ⚠️ 這一段先前寫著「count 是 3⋯owner 明說不動上限」—— **那句話在裁決當天就變成假的**
+  #    （第三守則），而卡面的「任何」在 cap=3 時是一句空話（第一·五守則）。
   effects=[{"kind": "restore", "healthPct": [0.05, 0.07, 0.09, 0.11], "applyTo": "self"},
-           {"kind": "dispel", "shape": "single", "pools": {"status": True, "dot": True, "buffs": True}, "count": 9}])
+           {"kind": "dispel", "shape": "single", "pools": {"status": True, "dot": True, "buffs": True}}])
 
 A("12-03", "12-03 破凰之心。空破山", "self", [0], [0], 0,
   "[被動][暴擊][機率][普攻時][AP加成]\n\n「放下屠刀，換把手槍」\n[每次攻擊]有10%[機率]造成1.1/2.2/3.3/4.4倍的[暴擊]傷害且敵人身上有[混亂]標記時，額外造成 100% [AP]傷害。",

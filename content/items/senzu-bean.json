@@ -6,7 +6,7 @@
   "id": "senzu-bean",
   "name": "仙豆",
   "icon": "assets/icons/items/senzu-bean.webp",
-  "description": "道具\n效能\n[只剩最後一顆！] 任何一名隊友（**包含你自己**）生命低於 15%時，立刻回復 100%生命與 100%魔力\n[只剩最後一顆！] 並淨化他身上全部可淨化的減益\n[只剩最後一顆！] **每人每回合各一顆** · 冷卻時間 120 秒\n\n解說\n最後一顆總是在最後一刻出現，這是仙豆的物理定律。而且每個人都有他自己的最後一顆。",
+  "description": "道具\n效能\n[只剩最後一顆！] 隊友受傷的那一刻，隊上生命低於 15%的人（**包含你自己**）立刻回復 100%生命與 100%魔力\n[只剩最後一顆！] 並淨化他身上全部可淨化的減益\n[只剩最後一顆！] 你自己受傷時同樣觸發（那一發只救你自己 · 冷卻時間 120 秒）\n[只剩最後一顆！] **每人每回合各一顆**：吃過的人這一回合不會再吃到第二顆\n\n解說\n最後一顆總是在最後一刻出現，這是仙豆的物理定律。而且每個人都有他自己的最後一顆。",
   "tags": [
     "legendary",
     "ex-origin",
@@ -48,8 +48,7 @@
         {
           "kind": "dispel",
           "shape": "single",
-          "polarity": "debuff",
-          "count": 50
+          "polarity": "debuff"
         },
         {
           "kind": "applyBuff",
@@ -66,39 +65,64 @@
     {
       "key": "senzu-ally",
       "on": "onAllyDamaged",
-      "target": "event",
-      "internalCooldown": 120,
-      "condition": {
-        "all": [
-          {
-            "kind": "stat",
-            "subject": "target",
-            "stat": "hp",
-            "mode": "percent",
-            "op": "<",
-            "value": 0.15
-          },
-          {
-            "not": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "senzu-spent"
-            }
-          }
-        ]
-      },
+      "target": "allies",
       "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "target",
+          "duration": 0.2,
+          "stackKey": "senzu-rescue",
+          "maxStacks": 1,
+          "statusId": "senzu-rescue",
+          "modifiers": [],
+          "condition": {
+            "all": [
+              {
+                "kind": "stat",
+                "subject": "target",
+                "stat": "hp",
+                "mode": "percent",
+                "op": "<",
+                "value": 0.15
+              },
+              {
+                "kind": "stat",
+                "subject": "target",
+                "stat": "hp",
+                "mode": "percent",
+                "op": ">",
+                "value": 0
+              },
+              {
+                "not": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "senzu-spent"
+                }
+              }
+            ]
+          }
+        },
         {
           "kind": "restore",
           "applyTo": "target",
           "healthPct": 1,
-          "manaPct": 1
+          "manaPct": 1,
+          "condition": {
+            "kind": "status",
+            "subject": "target",
+            "statusId": "senzu-rescue"
+          }
         },
         {
           "kind": "dispel",
           "shape": "single",
           "polarity": "debuff",
-          "count": 50
+          "condition": {
+            "kind": "status",
+            "subject": "target",
+            "statusId": "senzu-rescue"
+          }
         },
         {
           "kind": "applyBuff",
@@ -108,10 +132,15 @@
           "stackKey": "senzu-spent",
           "maxStacks": 1,
           "statusId": "senzu-spent",
-          "modifiers": []
+          "modifiers": [],
+          "condition": {
+            "kind": "status",
+            "subject": "target",
+            "statusId": "senzu-rescue"
+          }
         }
       ]
     }
   ],
-  "authoringNote": "⭐ owner 2026-08-18 裁決：「**每個隊友包含自己都有一次**」—— 所以它是**兩條觸發器**（`onDamageTaken`＝自己、`onAllyDamaged`＝隊友），而「一次」是**記在被救的那個人頭上**，⛔ 不是記在道具上：`senzu-spent` 這個回合作用域標記掛在**受益者**身上，條件那一格再問「他有沒有吃過」。⇒ 三個座位各自都吃得到一顆，而同一個人這一回合不會吃第二顆。\n⚠️ 為什麼是 `permanentScope:\"round\"` 而不是 match：與 `teardrop-of-rebirth` 同一條路（`clearRoundScoped` 在下一回合開打前把它拔掉），而 owner 原文那格 120 秒冷卻本來就預設一場會用到不只一次。兩層限制**都留著**：per-person 一次擋住「同一個人被連續救」，120 秒 ICD 擋住「同一秒救三個」。\n⚠️ `onAllyDamaged` 的持有者是**旁觀者**、target 是被打的隊友，所以那一條的 `restore` / `applyBuff` 全部走 `applyTo:\"target\"`，條件的 `subject` 也是 `target` —— 寫成 self 會變成「隊友被打時**我**回滿血」。"
+  "authoringNote": "⭐ owner 2026-08-18 裁決：「**每個隊友包含自己都有一次**」—— 兩條觸發器（`onDamageTaken`＝自己、`onAllyDamaged`＝隊友），而「一次」記在**被救的那個人**頭上：`senzu-spent` 是回合作用域標記，掛在受益者身上。\n⛔ **2026-08-18 方向修正（原本是反向生效，不是沒效果）**：`systems/WorldHookSystem.ts` 的 `onAllyDamaged` 那一列逐字是 `scope:\"allies\" / actorKey:\"target\" / targetKey:\"source\"` ⇒ 持有者是**旁觀的隊友**，hook 的 target 是**攻擊者**。原本寫 `target:\"event\"`，所以條件量攻擊者的血、`restore`/`dispel`/`applyBuff` 全落在**敵人**頭上 —— 敵人打殘你的隊友、自己掉到 15%以下時，仙豆替他補滿血魔並解控。⚠️ 這段 note 的上一版把方向**寫反了**（用「已經查過引擎」的語氣），一併改掉。\n⭐ 受傷的那個隊友在 hook 層**沒有**通道（`HookDef.target` 只有 self/event/allies，條件 `subject` 只有 self/target）。⇒ 走 `target:\"allies\"`（`effects/hooks.ts::alliedChampions`）＋**每一段效果自己的 `condition`**（`EFFECT_COMMON_SHAPE`，`effectRunner.ts::gateOnCondition` ③ 逐一過濾目標）。兩者都是既有機制，⛔ 沒有發明新的目標選擇器。\n⛔ **`senzu-rescue` 那一格不是多餘的，不要「簡化」掉**：一串效果是**依序**跑的，而每一段的 condition 在**它自己那一刻**才求值 —— 把「血<15%」寫在三段上的話，第一段 `restore` 補滿血之後，後面的 `dispel` 與 `senzu-spent` 全部不成立（我第一版就是這樣，測試當場紅）。所以第 1 段先用一個 0.2 秒的標記把**這一發的受益者**釘下來，後三段只問「他有沒有這個標記」。⚠️ 反過來把 `senzu-spent` 放第一段也不行：後面改問「他有沒有吃過」就分不出「剛剛吃的」與「這回合早就吃過的」，變成同一個人可以吃無限顆。\n⚠️ `hp% > 0` 是**排除屍體**：`alliedChampions` 刻意含死者，而 `restore` 有 `!hp.alive → continue`、`dispel`/`applyBuff` **沒有** ⇒ 少了它，場上每有一具己方屍體，隊友每挨一下就替屍體蓋掉那顆 `senzu-spent`，他站起來之後豆子已經沒了（畫面上什麼都看不出來）。\n⛔ ally 這一條**沒有** `internalCooldown`：`fireHooks` 的順序是「條件通過 → 寫 `hookLastFired` → 跑效果」，而 hook 層條件讀不到受傷的隊友 ⇒ 留著 120 秒 ICD 的話第一發不相干的傷害就把冷卻燒光，救援幾乎永遠撞在冷卻裡（做了但不會發生）。真正的限流是每人一顆的 `senzu-spent`；120 秒只留給 `senzu-self`（它的條件讀得到自己），卡面照這樣寫。\n⚠️ 兩處 `dispel` 的 `count` **留空**：`effects/dispel.ts` 是 `Math.min(e.count ?? cap, cap)` ⇒ 留空＝永遠等於後台 `config/dispel.json` 的 `maxCountCap`，卡面「全部」跟著操作者那一格走，⛔ 不必回來改這份文件。\n⚠️ 已知近似：ally 那一條吃的是「隊上**別人**受傷」那個時刻；你單獨挨打時只掃你自己。\n守衛：`sim/effects/exOriginStructuralFix.test.ts`。"
 }

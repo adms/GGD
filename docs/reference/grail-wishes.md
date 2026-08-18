@@ -7,7 +7,7 @@
 > 設計母規則：[`docs/聖杯願望三選一-設計規則.md`](../聖杯願望三選一-設計規則.md)。
 > 每個效果的參數與上下界：[`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 
-contentVersion `cv_9691e4458a22`
+contentVersion `cv_debe453d4558`
 
 ---
 
@@ -73,7 +73,6 @@ contentVersion `cv_9691e4458a22`
             "buffs": true
           },
           "polarity": "debuff",
-          "count": 1,
           "order": "newest"
         }
       ],
@@ -522,7 +521,6 @@ contentVersion `cv_9691e4458a22`
             "buffs": true
           },
           "polarity": "buff",
-          "count": 1,
           "order": "newest"
         }
       ],
@@ -1875,7 +1873,6 @@ contentVersion `cv_9691e4458a22`
             "buffs": true
           },
           "polarity": "debuff",
-          "count": 50,
           "order": "newest"
         },
         {
@@ -2587,7 +2584,6 @@ contentVersion `cv_9691e4458a22`
             "buffs": true
           },
           "polarity": "debuff",
-          "count": 50,
           "order": "newest"
         },
         {
@@ -4161,7 +4157,6 @@ contentVersion `cv_9691e4458a22`
             "buffs": true
           },
           "polarity": "buff",
-          "count": 50,
           "order": "newest"
         },
         {

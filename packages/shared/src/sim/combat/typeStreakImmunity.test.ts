@@ -20,6 +20,7 @@ import { SimWorld } from "../SimWorld";
 import { SKELETON_ARENA } from "../world/ArenaDef";
 import { registerSkeletonContent } from "../content/skeleton";
 import { attachSource } from "../stats/statPipeline";
+import { clearRoundScoped } from "../clearPools";
 import { zeroStats } from "../stats/statTypes";
 import { itemModifierSource } from "../economy/itemSource";
 import { zItemDoc } from "../../content/schema/item";
@@ -160,6 +161,21 @@ describe("型別連擊免疫", () => {
     // ⭐ 這一條分開了「真傷被忽略」與「真傷打斷了連擊」：後者的話這裡會是 200。
     expect(hit(r, "physical").hpLoss).toBe(0);
     expect(hit(r, "true").hpLoss).toBe(200); // 免疫只涵蓋列進來的那些型別
+  });
+
+  it("★ 回合邊界把連擊歸零 —— 上一回合凍結的免疫不會跟著過來（owner 2026-08-18）", () => {
+    // ⛔ 斷言讀的是「下一發真的掉不掉血」，⛔ 不是「清池函式被呼叫了」（失敗形態④）。
+    // 突變靶：拿掉 `clearPools.ts::clearRoundScoped` 的 `damageStreak.delete(id)`。
+    const r = rig();
+    give(r, { damageTypes: ["physical"], threshold: 2 });
+    expect(hit(r, "physical").hpLoss).toBe(200);
+    expect(hit(r, "physical").hpLoss).toBe(200);
+    expect(hit(r, "physical").hpLoss).toBe(0); // 連擊凍結在門檻上 = 這一回合免疫
+    // host 的 `enterCombat()` 逐席位跑的就是這一支（MatchController，roundStart 之前）。
+    clearRoundScoped(r.world, r.victim);
+    expect(hit(r, "physical").hpLoss).toBe(200); // 新回合第 1 發
+    expect(hit(r, "physical").hpLoss).toBe(200); // 第 2 發 —— 得重新數起
+    expect(hit(r, "physical").hpLoss).toBe(0); // 而且狀態機還活著，⛔ 不是被關掉
   });
 
   it("出貨的 史萊姆裝 真的走得到這條閘（⛔ 不是夾具，失敗形態 ⑤）", () => {

@@ -43,6 +43,9 @@ export interface DispelRules {
    * 一發淨化最多拔幾層的**全域上限**：文件沒寫 `count` 時用它，
    * 寫了也夾不過它。一句話管到底（照抄 `tauntRules.maxTargetsCap` 的語意），
    * 避免出現「兩個地方各有一個上限，而它們分歧」。
+   *
+   * ⭐ 出貨 **50**＝實務上「全部」（owner 2026-08-18）。⚠️ 它**不是**效能上限 —— 見下面 DISPEL_MAX_COUNT_BOUNDS 的長註解。要做一發「只解一層」的
+   * 弱淨化，是在**那一份文件**寫 `count: 1`，⛔ 不是把這個全域上限調低。
    */
   maxCountCap: number;
   /**
@@ -70,12 +73,39 @@ export const DEFAULT_DISPEL_RULES: DispelRules = Object.freeze({
   defaultPoolDot: true,
   defaultPoolShields: false,
   defaultPoolBuffs: false,
-  maxCountCap: 3,
+  maxCountCap: 50,
   defaultOrder: "newest",
   appliesToMobs: true,
 });
 
-/** `maxCountCap` 的界，兩端都閉。上界 50 只擋多打一個零。 */
+/**
+ * `maxCountCap` 的界，兩端都閉。
+ *
+ * ⭐ 2026-08-18 —— 出貨值從 **3 → 50**（owner 定案：「一律統一到 50 我覺得是可以的」）。
+ * 上界維持 **50** 不動。
+ *
+ * ⇒ 【淨化】的字面意思就是「全部」（owner：「理論上淨化就是解掉所有負面狀態阿，
+ * 這是所有遊戲的 common sense」），而在 3 的時候有**七份**文件寫著 `count: 50`、
+ * 卡面印著「解除全部負面狀態」，引擎卻逐位元只會拔 3 筆
+ * （第一·五守則：卡片上「說了但不會發生」的字）。⚠️ 那七份包含三張與這一批
+ * 無關的聖杯願望 —— 也就是說這個靜默夾取存在很久了，而**沒有任何東西叫過一聲**。
+ *
+ * ⚠️ **50 不是效能上限，這一點最容易被誤讀**（owner 自己也先誤讀過一次，
+ * 而那個誤讀是合理的）：一個單位**身上能帶幾個狀態**是**沒有任何上限**的 ——
+ * `sim/effects/applyStatus.ts` 那一行就是 `st.effects.push(...)`，全 repo 找不到
+ * 任何長度檢查。這一格管的只有「**一發淨化能拔幾個**」。
+ * ⇒ 想限制「一個單位最多帶幾個狀態」是**另一個今天不存在的機制**。
+ *
+ * ⛔ **50 也不是「26 種可淨化減益 + 安全邊際」那種算法**：
+ * `applyStatus.ts` 的合併鍵是 **status id + origin** —— 同一種減速由不同來源掛上來
+ * 是**兩筆**。一波 30 隻殭屍各給一次減速就是 30 筆，所以**筆數沒有「種類數」那個
+ * 上限**。50 的意思是：單挑與小規模團戰（1–5 筆）根本碰不到，只有殭屍海那種極端
+ * 情況才摸得到，而那時候「一發拔 50 個」也已經是壓倒性的了。
+ *
+ * ⭐ 50 同時保住了它原本那個角色：**防手滑**（5 打成 50 擋不住，50 打成 500 擋得住）。
+ * 中途曾經提議過 1000，owner 否決 —— 留下這一段是因為「為什麼不是 1000」
+ * 與「為什麼不是 3」一樣值得下一個人讀到。
+ */
 export const DISPEL_MAX_COUNT_BOUNDS: readonly [number, number] = [1, 50];
 
 function bool(v: unknown, fallback: boolean): boolean {

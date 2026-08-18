@@ -1,7 +1,7 @@
 {
   "id": "dispel",
   "schema": "config.dispel@1",
-  "note": "淨化規則（A4b / #278）。決定一發【淨化】拔掉什麼：哪幾池、拔幾層、拔不完時留下哪幾個、以及「作者沒標 dispellable 時算不算可拔」。⚠️ 三個 *DefaultDispellable 是刻意不對稱的：status 與 dot 出貨 true（減速/纏繞/燃燒本來就該解得掉，否則【淨化】上線當天什麼都拔不到，而那看起來跟壞掉一模一樣），buffs 出貨 false（沒有人預期自己買的裝備效果可以被敵人剝掉 —— 打開它是一個設計決定，不是一個預設值）。語意與上下界寫在 packages/shared/src/sim/dispelRules.ts。⚠️ 後台『淨化規則』頁存的是耐久覆蓋層（data/），覆蓋層會蓋掉這一個檔案 —— 線上存過之後，改這裡不會生效。",
+  "note": "淨化規則（A4b / #278）。決定一發【淨化】拔掉什麼：哪幾池、拔幾層、拔不完時留下哪幾個、以及「作者沒標 dispellable 時算不算可拔」。⚠️ 三個 *DefaultDispellable 是刻意不對稱的：status 與 dot 出貨 true（減速/纏繞/燃燒本來就該解得掉，否則【淨化】上線當天什麼都拔不到，而那看起來跟壞掉一模一樣），buffs 出貨 false（沒有人預期自己買的裝備效果可以被敵人剝掉 —— 打開它是一個設計決定，不是一個預設值）。語意與上下界寫在 packages/shared/src/sim/dispelRules.ts。\n\n⭐⭐ 出貨要生效必須走後台『淨化規則』那一頁，⛔ 不是改這個檔案 ⭐⭐ —— 後台存檔寫的是 data/ 的耐久覆蓋層，而**覆蓋層整份蓋掉這一個檔案**。線上只要有人存過一次，之後改這裡、跑 content:build、deploy 全部會成功，而玩家那一場一格都沒變（⛔ 而且沒有任何東西會叫）。⇒ 調 maxCountCap 這種平衡值時：先去後台那一頁看現值，要嘛在那裡改，要嘛先把覆蓋層清掉。\n\n⭐ maxCountCap 出貨 50（owner 2026-08-18 定案：「一律統一到 50 我覺得是可以的」；⚠️ 他中途提過 1000，但那不必要）⇒ 卡面寫「解除全部負面狀態」現在是**真的**。⚠️ **50 不是效能上限** —— 一個單位身上能帶幾個狀態沒有任何上限（applyStatus 就是 push），這一格只管「一發淨化拔幾個」。⛔ 50 也不是「26 種減益 + 安全邊際」那種算法：applyStatus 的合併鍵是 status id + 來源，所以一波 30 隻殭屍各給一次減速就是 30 筆 —— 筆數沒有種類數的上限。",
   "enabled": true,
   "statusDefaultDispellable": true,
   "dotDefaultDispellable": true,
@@ -10,7 +10,7 @@
   "defaultPoolDot": true,
   "defaultPoolShields": false,
   "defaultPoolBuffs": false,
-  "maxCountCap": 3,
+  "maxCountCap": 50,
   "defaultOrder": "newest",
   "appliesToMobs": true
 }

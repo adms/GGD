@@ -930,10 +930,12 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
       "② **被免疫擋掉的那一發不會被記進連擊** ⇒ 連擊**凍結在門檻上**，免疫一直持續到" +
       "來了另一種被列進 `damageTypes` 的傷害為止 —— 那是這件寶具唯一的破解方式，⛔ 不是 bug，" +
       "但它必須印在卡片上，否則玩家不知道自己為什麼打不動；" +
-      "③ `streakTimeoutSec` **省略 = 連擊永不逾時**，而且它**跨回合殘留**" +
-      "（`sim/clearPools.ts::clearRoundScoped` 清的是 status/shields/dot/buffs 四池，⛔ 不含連擊表）。" +
-      "面對一波純物理的殭屍，省略它就是**無限免疫** —— `zInvulnerable.durationSec` 已經寫過" +
-      "「an unbounded immunity is an unwinnable round」。填任何一個值同時修掉這兩件事；" +
+      "③ `streakTimeoutSec` **省略 = 連擊在這一回合內永不逾時**，⛔ 但**不會跨回合**" +
+      "（`sim/clearPools.ts::clearRoundScoped` 在 host 的 `enterCombat()` 逐席位把連擊表歸零，" +
+      "owner 2026-08-18：「的確不應該跨回合殘留」）。回合**內**要不要有時鐘仍然由這一格決定 ——" +
+      "省略它，面對一波純物理的敵人就是整回合免疫，而 `zInvulnerable.durationSec` 已經寫過" +
+      "「an unbounded immunity is an unwinnable round」。⭐ 出貨的史萊姆裝刻意留空，" +
+      "理由是 owner 的另一半：「場上一定會有其他敵方或特殊殭屍給 AP 傷害打斷」；" +
       "④ `resetMode` 省略 = `restart`（異型那一發**自己算新連擊第 1 發**），" +
       "`zero` 才是「歸零、下一發才算」。兩者只在「剛換型別的那一發」不同，一般驗證看不出差別。",
     evidence:

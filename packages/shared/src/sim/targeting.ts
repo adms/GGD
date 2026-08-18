@@ -257,7 +257,10 @@ export function targetClassOf(world: SimWorld, cand: EntityId): number | null {
   // [背負]（[EX∅ 根源]）—— 躲在箱子裡的身體對**自動索敵**不存在。
   // 閘下在這裡而不是各 picker，正是這個檔檔頭那篇「召喚物被三份獨立答案漏掉」
   // 的驗屍報告要求的：一個謂詞，每個 picker 都走它。
-  // ⛔ 空殼期間 `carryBlocksAuto` 一律回 false，所以這一行今天是嚴格的 no-op。
+  // ⚠️ 這一行**今天真的會擋人**：`carryBlocksAuto` 讀 `world.carried`，而
+  // `effects/carry.ts` 上車那一刻就寫進 `blocksAutoAcquire`（禰豆子的木箱）。
+  // ⛔ 這裡曾經寫著「空殼期間 `carryBlocksAuto` 一律回 false，所以這一行今天是
+  // 嚴格的 no-op」—— 那句話在 [背負] 從空殼變成真的那一刻就過期了（第三守則）。
   if (carryBlocksAuto(world, cand)) return null;
   if (world.champion.has(cand)) return TARGET_CLASS.champion;
   const sm = world.summon.get(cand);

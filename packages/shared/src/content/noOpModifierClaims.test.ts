@@ -41,6 +41,7 @@ import { Stat } from "../sim/stats/statTypes";
 import { ModOp } from "../sim/stats/modifiers";
 import type { StatusEffect } from "../sim/components";
 import { zEffectDefUnion } from "./schema/effect";
+import { DEFAULT_DISPEL_RULES, dispelRulesFromDoc } from "../sim/dispelRules";
 
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
 
@@ -557,6 +558,89 @@ describe("⛔ 卡片上不可以有「說了但不會發生」的字（owner 202
       ],
     };
     expect(scanFakeStatuses(tags, [["fixture", sibling]])).toEqual([]);
+  });
+
+  /**
+   * ⭐ 【淨化】的 `count` 不可以大於出貨的全域上限 —— **靜默夾取**那一族。
+   *
+   * `sim/effects/dispel.ts` 是 `Math.min(e.count ?? cap, cap)`：一份寫 `count: 50`
+   * 的文件在引擎上**逐位元等於寫 3**，而它通過 schema、通過 `content:build`、
+   * 通過全套測試。作者（與後台編輯器、與 Codex）於是照著自己填的那個數字寫卡面
+   * ——「淨化掉身上**全部**可淨化的減益」—— 而遊戲裡只會拔掉 3 個。
+   * 量到的前例（2026-08-18）：8 份文件、7 份寫 50、1 份寫 9。
+   *
+   * ⭐ 上限**從 `content/config/dispel.json` 推導**，⛔ 不抄字面值 3 ——
+   * owner 哪天把 `maxCountCap` 調高，這條守衛自動放行，⛔ 不必改測試。
+   * ⚠️ 缺檔／缺欄位時退回 `DEFAULT_DISPEL_RULES`（＝引擎自己的退路），
+   * ⛔ 不是「讀不到就跳過」——那會讓這條閘在最需要它的時候靜靜關掉。
+   *
+   * ⛔ 它紅了不要改這條測試：要嘛把文件的 `count` 改成真話，
+   * 要嘛去 `content/config/dispel.json` 把 `maxCountCap` 抬高（那是**平衡決定**，
+   * 屬於 owner，而且線上若存過後台覆蓋層，改檔案不會生效）。
+   */
+  it("★ ⛔ 沒有任何 `dispel.count` 大於出貨的 `maxCountCap`（靜默夾取）", () => {
+    const shipped = ((): number => {
+      try {
+        const doc = JSON.parse(readFileSync(join(CONTENT, "config/dispel.json"), "utf8")) as unknown;
+        return dispelRulesFromDoc(doc).maxCountCap;
+      } catch {
+        return DEFAULT_DISPEL_RULES.maxCountCap;
+      }
+    })();
+    const walkDispel = (n: unknown, path: string, doc: string, out: string[]): void => {
+      if (Array.isArray(n)) {
+        n.forEach((v, i) => walkDispel(v, `${path}[${i}]`, doc, out));
+        return;
+      }
+      if (n === null || typeof n !== "object") return;
+      const o = n as Record<string, unknown>;
+      if (o.kind === "dispel" && typeof o.count === "number" && o.count > shipped) {
+        out.push(`${doc}${path} —— count: ${o.count}，引擎實際只會拔 ${shipped}`);
+      }
+      for (const [k, v] of Object.entries(o)) walkDispel(v, `${path}.${k}`, doc, out);
+    };
+    // 掃描器自己是活的：一份寫超過上限的夾具一定被抓到
+    //（⛔ 突變靶用夾具，不用 content/ —— 那是別人正在改的檔）。
+    const canary: string[] = [];
+    walkDispel({ effects: [{ kind: "dispel", count: shipped + 1 }] }, "", "fixture", canary);
+    expect(canary.length, "掃描器空轉 —— 它對一份違規夾具也回空").toBe(1);
+
+    const over: string[] = [];
+    for (const coll of ["items", "abilities", "augments", "champions"]) {
+      let files: string[];
+      try {
+        files = readdirSync(join(CONTENT, coll));
+      } catch {
+        continue;
+      }
+      for (const f of files) {
+        if (!f.endsWith(".json") || f === "_index.json") continue;
+        let parsed: unknown;
+        try {
+          parsed = JSON.parse(readFileSync(join(CONTENT, coll, f), "utf8"));
+        } catch {
+          continue;
+        }
+        walkDispel(parsed, "", `${coll}/${basename(f, ".json")}`, over);
+      }
+    }
+
+    expect(
+      over,
+      [
+        "",
+        `⛔ 這幾處 \`dispel.count\` 大於出貨上限 ${shipped}（\`config/dispel.json.maxCountCap\`）：`,
+        ...over.map((o) => `  ${o}`),
+        "",
+        "`sim/effects/dispel.ts` 是 `Math.min(e.count ?? cap, cap)` —— 多寫的部分**靜默消失**，",
+        "而卡面通常照著那個數字寫成「淨化全部」。",
+        "",
+        "⛔ 不要改這條測試。兩條出路：",
+        "  1. 把文件的 count 改成真的會發生的數字（卡面文案要一起改）",
+        "  2. 抬高 config/dispel.json 的 maxCountCap —— 那是**平衡決定**，屬於 owner",
+        "",
+      ].join("\n"),
+    ).toEqual([]);
   });
 
   /**

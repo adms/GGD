@@ -2,7 +2,7 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_9691e4458a22`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 產生自 contentVersion **`cv_debe453d4558`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
 > 資料列：**142**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-07-24T11:14:58.268286Z`）
 
 `content/items/*.json` 共 **142** 份，依 `content/items/<id>.json` 的 **`craftRole`** 標記分類（來源：source-map triggers，見 `tools/w3x-import/extract_item_roles.py`）。實際能在商店買到的只有 **38** 件最終合成武器（`craftRole:final` 且有效果）＋ **2** 項服務；三選一 draft 抽 **6** 件任務道具，傳說寶玉抽 **84** 件傳說。其餘（16 組件、0 代幣、24 無角色、4 無 payload 的 final）是配方半成品或 w3x 殘件，不會單獨出現在任何商店或抽卡。
@@ -169,7 +169,7 @@
 | `red-comet-mask` | 赤色面具 | 無角色 none | — | T5 | ✅ | — | — | onAllyDeath→applyBuff |
 | `sasumata` | 討伐叉 | 無角色 none | — | T5 | ✅ | — | — | — |
 | `scouter` | 戰鬥力探測器 | 無角色 none | — | T5 | ✅ | — | — | onDamageTaken→taunt |
-| `senzu-bean` | 仙豆 | 無角色 none | — | T5 | ✅ | — | — | onDamageTaken→restore/dispel/applyBuff · onAllyDamaged→restore/dispel/applyBuff |
+| `senzu-bean` | 仙豆 | 無角色 none | — | T5 | ✅ | — | — | onDamageTaken→restore/dispel/applyBuff · onAllyDamaged→applyBuff/restore/dispel/applyBuff |
 | `shining-golden-orbs` | 閃耀金玉 | 無角色 none | — | T5 | ✅ | ✅ | — | onStatCapReached→applyBuff/applyBuff |
 | `slime-suit` | 史萊姆裝 | 無角色 none | — | T5 | ✅ | — | — | — |
 | `soul-eater` | 噬魂者 | 無角色 none | — | T5 | ✅ | ✅ | — | onKill→restore · onKill→applyBuff · onKill→applyBuff |

@@ -1649,10 +1649,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "default-live",
     why: "缺席 = 貼地推(不是拋物線)。> 0 才是「擊飛」。四支出貨的擊退都是牙突/佈壁那種水平推,擊飛留給 06-00 猜猜拳「擊飛目標」那一批 —— 它們今天還是純文字(見 variant#knockback 那條被刪掉的 landing 記錄:機制已經被 13-02 採用了,擊飛這個子選項還沒有)。",
   },
-  "field:abilities.effects[]#knockback.subtractGap": {
-    status: "default-live",
-    why: "缺席 = true,也就是 GH#193 的「站越遠推越少」。這是全遊戲共用的擊退規則,owner 定它是為了讓擊退是近戰的工具而不是遠程的放風箏工具;寫 false 等於為某一支破例。四支出貨的擊退都遵守它 —— 描述裡的「6.0 單位 −(你們的距離)」就是這條。",
-  },
   "enum:abilities.passive.ranks[].whileForm=any": {
     status: "default-live",
     why: "abilityPassives.ts:113 `block.whileForm ?? \"any\"` —— 缺席就是「兩個形態都生效」。被寫出來的只有 \"alternate\"(只有變身後才有的天生技),因為那是跟預設相反的那一個。",
@@ -1894,11 +1890,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-09",
     why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
   },
-  "field:abilities.effects[]#dispel.condition": {
-    status: "landing",
-    since: "2026-08-09",
-    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
-  },
   "field:abilities.effects[]#dot.condition": {
     status: "landing",
     since: "2026-08-09",
@@ -1929,10 +1920,19 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-09",
     why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
   },
-  "field:abilities.effects[]#restore.condition": {
+  // ⚠️ 2026-08-18 —— 這一筆是**掉回零**的，⛔ 不是新機制。唯一的採用者是
+  // `items/all-might-hair` 的 `revive.condition{target hp <= 0.001}`，而那一發 `revive`
+  // 掛在 `target:"event"` 的 hook 上 ⇒ `ctx.targets` 是剛被普攻打中的**敵人**，
+  // `revive.ts` 的 `side:"ally"` 閘再把他剔掉 ⇒ 復活數永遠是 0（第一·五守則的紅線）。
+  // 結構修正把那條 hook 拆成 `target:"allies"` 的 `ofa-return`，條件隨之不再需要。
+  // ⇒ 這一格回到「機制在、內容還沒用」，與同族其他 18 個 kind 同一個狀態。
+  // ⭐ 求值端本身**現在有活的證人**：`items/senzu-bean` 同時採用了 `restore.condition`
+  //    與 `dispel.condition`（同一格 `EFFECT_COMMON_SHAPE`、同一支 `gateOnCondition`），
+  //    所以這裡的 0 逐字只代表「沒有一張卡需要有條件的復活」。
+  "field:abilities.effects[]#revive.condition": {
     status: "landing",
-    since: "2026-08-09",
-    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
+    since: "2026-08-18",
+    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。 ⚠️ 2026-08-18 由 1 掉回 0：見上面那段，唯一的採用者是一發**從來不會發生**的復活。",
   },
   "field:abilities.effects[]#shield.condition": {
     status: "landing",

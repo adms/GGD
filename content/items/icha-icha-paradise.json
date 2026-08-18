@@ -6,7 +6,7 @@
   "id": "icha-icha-paradise",
   "name": "親熱天堂",
   "icon": "assets/icons/items/icha-icha-paradise.webp",
-  "description": "道具\n效能\n[爸爸專屬] 每次施放技能後，立刻回復 100%魔力\n[爸爸專屬] 同時對命中的敵人附加[魅惑]：1 秒內無法控制地朝你走來\n\n解說\n沒有人知道他在看什麼，只知道看完的人都會不由自主地走過去。",
+  "description": "道具\n效能\n[爸爸專屬] 每次施放技能後，立刻回復 100%魔力\n[爸爸專屬] 技能命中時，對其中一名敵人（英雄或殭屍）附加[魅惑]：被強拉向你，這 1 秒交不出操作\n[爸爸專屬] 觸發間隔 1 秒\n\n解說\n沒有人知道他在看什麼，只知道看完的人都會不由自主地走過去。",
   "tags": [
     "legendary",
     "ex-origin",
@@ -29,7 +29,7 @@
     {
       "key": "icha-charm",
       "on": "onAbilityHit",
-      "victim": "champion",
+      "victim": "any",
       "target": "event",
       "internalCooldown": 1,
       "effects": [
@@ -43,10 +43,11 @@
           "distance": 6,
           "speed": 6,
           "from": "pull",
+          "subtractGap": false,
           "uncontrollable": true
         }
       ]
     }
   ],
-  "authoringNote": "⭐【魅惑】＝ `knockback{from:\"pull\", uncontrollable:true}` ＋ 一份 `charmed` 狀態，⛔ 不是一個新的控制種類：`from:\"pull\"` 把目標**朝施法者**拉，`uncontrollable` 讓他在位移期間交不出操作 —— owner 原文『無法控制的向你走來』逐字就是這兩格。\n⚠️ **與原文的差異**：原文是『施展技能時』附加魅惑，這裡掛在 `onAbilityHit`（技能**命中**時）—— `onAbilityCast` 沒有目標，一個沒有人被魅惑的魅惑是卡面上的空話（第一·五守則）。魔力回滿那一半仍然掛在 `onAbilityCast`，所以『魔力永遠維持 100%』對空放的技能也成立。"
+  "authoringNote": "⭐【魅惑】＝ `knockback{from:\"pull\", uncontrollable:true}`，⛔ 不是一個新的控制種類：`from:\"pull\"` 把目標**朝施法者**拉，`uncontrollable` 讓他在位移期間交不出操作 —— owner 原文『無法控制的向你走來』逐字就是這兩格。\n⛔ **`charmed` 這份狀態自己一格機制都沒有** —— `content/status-effects/charmed.json` 只有 `tags`（`charmed / cc / move-denied / debuff`），沒有 stun/root/moveSpeedMult，而 `move-denied` **沒有任何一處在讀**（grep 過整個 `packages/shared/src`）。它是一個**看得到名字的標記**，真正做事的是上面那一發 knockback。⛔ 所以卡面不可以寫成「附加一個會定身的狀態」，寫的是「被強拉向你，這 1 秒交不出操作」——**那是 knockback 在做的事**。\n⛔ **`subtractGap: false` 是承重的一格，⛔ 不可以拿掉**（2026-08-18 修）：`knockback.ts` 是 `distance = (e.subtractGap ?? true) ? afterGap(raw, gap) : raw`，**預設 true**，下一行 `if (!(distance > 0)) continue`。⇒ 沒有這一格的話，實際位移 = 6 − 施法者↔目標距離，而**遠程技能的命中距離常態就 > 6** ⇒ 位移與 `uncontrollable` 鎖**整份不跑**，場上只剩一個沒有機制的 `charmed` 標籤。順帶：這一格同時讓卡面的「1 秒」成真 —— 飛行時間 = `distance / speed` = 6 / 6 = **1 秒**，與 `charmed` 的 1 秒到期逐位元對齊；有 gap 減法時它是 (6−gap)/6 秒，任何距離都不成立。\n⛔ **`victim: \"any\"`（原本是 `\"champion\"`）**：`hooks.ts::victimPasses` 的 `\"champion\"` 分支是 `world.champion.has(target)` ⇒ **殭屍永遠不會被魅惑**，而第 3 場起場上大多數敵人就是殭屍 ⇒ 那半張卡整場不響。卡面因此寫「英雄或殭屍」。\n⚠️ **一次 AoE 只魅惑得到第一個受害者**：`internalCooldown: 1` 沒寫 `internalCooldownScope`，省略 = `\"source\"` ＝ 一份冷卻不分目標。所以卡面寫的是「對**其中一名**敵人」＋「觸發間隔 1 秒」，⛔ 不是「對命中的敵人（全部）」。要做 per-target ICD 是引擎改動。\n⚠️ **與原文的差異**：原文是『施展技能時』附加魅惑，這裡掛在 `onAbilityHit`（技能**命中**時）—— `onAbilityCast` 沒有目標，一個沒有人被魅惑的魅惑是卡面上的空話（第一·五守則）。魔力回滿那一半仍然掛在 `onAbilityCast`，所以『魔力永遠維持 100%』對空放的技能也成立。"
 }
