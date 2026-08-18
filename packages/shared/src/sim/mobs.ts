@@ -49,7 +49,7 @@ import type { LastHitMode } from "./mobBoss";
 import type { FlightGrant } from "./flight";
 import type { Vec2 } from "./math/vec2";
 import { pushOutOfObstacle, clampToBoundary } from "./collision/resolve";
-import { pointOnBoundary } from "./map/bounds";
+import { pointOnBoundary, spotIsClear, freeEdgeSpot } from "./map/bounds";
 // #L1 — 殭屍王在場 → 回合延長. The round clock rides the ring's rules (it is the
 // only per-combat clock the sim has); this module owns the one moment a king
 // enters the world, so it is the module that trips it. No cycle: fireRing.ts
@@ -2417,6 +2417,20 @@ export function mobSpawnPos(world: SimWorld, zone: number, k: number, i: number,
  *
  * ⛔ 波次路徑**不改**：那裡要的是「看起來隨機」而不是「保證分散」，
  * 而且 30 隻小怪本來就多於 12 格，輪轉只會讓它們排成規律的一圈。
+ *
+ * ## ⚠️ 為什麼「推出障礙 → 夾回邊界」不夠（2026-08-19 量到，900 點中 360 點壞）
+ *
+ * 原本這裡寫的是「推出障礙物 + 夾進邊界 ⇒ 一定是合法地面」。**那句話是假的**，
+ * 而且假在**順序**上：出貨的七張矩形圖把整圈周長都砌了 2 單位厚的牆，
+ * 於是靠牆的障礙物把身體推**出界**，`clampToBoundary` 再把它夾**回邊界上** ——
+ * 而邊界上正是那個障礙物。實測 frieren z0 r=0.75 d0：
+ * `rim=(-23.25,-17.25) → push=(-24.75,-17.25) → clamp=(-23.25,-17.25)`，
+ * **逐位元回到原點**。兩個步驟各自都對，錯的是它們的組合是空的（第一·五守則的形狀：
+ * 每一個零件都是對的，而 `content:build` 與全套測試全綠）。
+ *
+ * ⇒ 現在最後一步是**驗**（{@link spotIsClear}）而不是相信；驗不過才走
+ * {@link freeEdgeSpot} 的有界搜尋（沿周長左右交替 × 逐圈往內，⛔ 不是隨機重試，
+ * 所以同一組輸入永遠是同一個位置、錄影重播不會分歧）。
  */
 export function mobSpawnPosAtDir(
   world: SimWorld,
@@ -2429,11 +2443,12 @@ export function mobSpawnPosAtDir(
   // ⛔ 不是用內接圓：那會讓四個角落永遠不生怪，而角落正是玩家躲的地方。
   // ⚠️ 圓形場地走**原本那一條**（DIR_TABLE 查表），既有行為一個字都沒變。
   const idx = ((dirIndex % DIR_TABLE.length) + DIR_TABLE.length) % DIR_TABLE.length;
+  const t0 = idx / DIR_TABLE.length;
   const body =
     zoneDef.bounds?.kind === "rect"
       ? {
           // 沿周長取樣：同一個 idx ⇒ 同一個位置，決定性與 DIR_TABLE 同口徑。
-          pos: pointOnBoundary(zoneDef, idx / DIR_TABLE.length, radius),
+          pos: pointOnBoundary(zoneDef, t0, radius),
           radius,
         }
       : (() => {
@@ -2447,7 +2462,18 @@ export function mobSpawnPosAtDir(
         })();
   for (const ob of zoneDef.obstacles) pushOutOfObstacle(body, ob);
   clampToBoundary(body, zoneDef);
-  return body.pos;
+  // ⭐ 這一行是整段的重點：**驗**，不是相信。上面那兩步各自是對的而它們的組合是
+  // 空的（見檔頭），所以唯一問得到真相的方式是回頭量最終位置。
+  // ⚠️ 站得下就**原封不動回傳** ⇒ 本來就正確的生成點逐位元等於這段程式碼出現之前
+  // （出貨半徑實測：900 個點裡 446 個走這一條，一個都沒移動）。這條缺陷的修法
+  // 因此不動任何一個好的落點，也就不會偷偷改掉既有錄影的落位。
+  if (spotIsClear(zoneDef, body.pos, radius)) return body.pos;
+  const found = freeEdgeSpot(zoneDef, t0, radius);
+  // 退路 = **今天的答案**（貼著邊、在界內、逐位元等於修這個缺陷之前）。
+  // ⛔ 不是場地中央：波次的意義就是「從邊緣湧入」，一個找不到落腳點的病態場地
+  // 不可以因此把殭屍直接倒在英雄臉上。走到這裡代表外圈 1/3 完全被砌死 ——
+  // 那是**場地資料**的缺陷，而守衛（mobs.everyArena.test.ts）會指名它。
+  return found ?? body.pos;
 }
 
 /**

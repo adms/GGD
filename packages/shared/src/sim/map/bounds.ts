@@ -22,6 +22,9 @@ import type { Vec2 } from "../math/vec2";
 //    `sim/**` 裡出現 Math.cos 就會紅，即使它只在模組載入時跑一次。
 //    ⛔ 不要為了繞過它而改閘：那個嚴格是對的。
 import { CIRCLE_STEPS, UNIT_CIRCLE } from "../../map/unitCircle";
+// ⚠️ 單向：`collision/resolve` 不 import 這個檔（它只認 ZoneDef / vec2 / intersect），
+//    所以沒有模組循環。
+import { overlapsObstacle } from "../collision/resolve";
 
 /** 這個分區的半寬／半深。圓形分區兩者都等於 `boundaryRadius`。 */
 export function halfExtents(zone: ZoneDef): { halfW: number; halfD: number; rect: boolean } {
@@ -108,6 +111,80 @@ export function pointOnBoundary(zone: ZoneDef, t: number, inset = 0): Vec2 {
     x: zone.center.x + (a.x + (b.x - a.x) * frac) * r,
     z: zone.center.z + (a.z + (b.z - a.z) * frac) * r,
   };
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * 邊緣上**站得下**的一個點（殭屍波的落地點）
+ *
+ * `pointOnBoundary` 只回答「邊緣在哪」，⛔ 不回答「那裡站不站得下」。出貨的七張
+ * 矩形圖把**整圈周長**都砌了 2 單位厚的牆（`halfD: 1` 的 box 貼著 `halfD: 18` 的
+ * 邊界），所以 inset = 身體半徑的那一圈**逐點都在牆裡** —— 量到 900 個生成點有
+ * 360 個落在障礙物內。
+ *
+ * ⇒ 需要一支會**找**的：沿周長走，走不到就一圈一圈往內縮。
+ * ⛔ 不是隨機重試（決定性是硬需求，見 `mobSpawnPos` 的檔頭）。
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/**
+ * 往內縮最多**可玩範圍最短半徑的這個比例**。
+ *
+ * ⚠️ 它是這支搜尋唯一的「遊戲性」參數，而且刻意**不是無限**：波次的意義就是
+ * 「從邊緣湧入」，放寬到 1 就等於允許把殭屍生在場中央。1/3 = 仍然在外圈，
+ * 而且對出貨的七張矩形圖（minHalf 18–20）給出 6.0–6.7 的餘裕 —— 遠多於清掉
+ * 2 單位厚周長牆所需的 2.0–3.2。
+ */
+export const EDGE_SPAWN_MAX_INWARD_FRACTION = 1 / 3;
+/** 往內縮幾圈。圈距 = `minHalf × FRACTION / RINGS`。 */
+export const EDGE_SPAWN_RINGS = 8;
+/** 每一圈沿周長取樣幾個候選點。 */
+export const EDGE_SPAWN_PERIMETER_SAMPLES = 24;
+
+/**
+ * `p` 這個半徑 `radius` 的身體**站得下**嗎 —— 在界內，而且不壓到任何障礙物。
+ *
+ * ⚠️ 刻意把**兩個**條件綁在一起：分開問正是 `mobSpawnPosAtDir` 原本的缺陷 ——
+ * 「推出障礙」與「夾進邊界」各自成立，而它們的**組合**是空的。
+ *
+ * ⚠️ `gateGroup`（可開關的幾何）在這裡一律視為**擋路**。生成點是一個沒有 tick
+ * 的純函式，拿不到 `gateStateAt` 需要的絕對 tick；把關著的門當成通路會讓殭屍生在
+ * 門後面，而保守地把開著的門當成牆，最差只是少用幾個候選點。
+ */
+export function spotIsClear(zone: ZoneDef, p: Vec2, radius: number): boolean {
+  if (!insideBounds(zone, p, radius)) return false;
+  const body = { pos: p, radius };
+  for (const ob of zone.obstacles) if (overlapsObstacle(body, ob)) return false;
+  return true;
+}
+
+/**
+ * 從周長參數 `t0` 出發，找一個**站得下**的邊緣點；找不到回 `null`。
+ *
+ * 搜尋順序（兩層有界迴圈，⛔ 沒有 `while`、⛔ 沒有隨機重試）：
+ *   外層 = 一圈一圈**往內**（先貼著邊，縮不動才往內）
+ *   內層 = 沿周長**左右交替**離開 `t0`（先靠近原方向，才愈走愈遠）
+ *
+ * ⭐ 這個順序就是優先序：**離邊緣近 > 離原方向近**。反過來排會讓一面牆把整批
+ * 殭屍全部趕到房間中央，而它們本來只需要往內站 2 公尺。
+ *
+ * ⭐ 決定性：純算術（`Math.floor` / `Math.sqrt` / `Math.min|max`），⛔ 無三角函式、
+ * ⛔ 無 `**`、⛔ 無 `Math.random`、⛔ 無時鐘、⛔ 無 Map 迭代 —— 同一組
+ * `(zone, t0, radius)` 永遠得到同一個點，錄影重播不會分歧。
+ */
+export function freeEdgeSpot(zone: ZoneDef, t0: number, radius: number): Vec2 | null {
+  const { halfW, halfD } = halfExtents(zone);
+  const minHalf = Math.min(halfW, halfD);
+  const step = (Math.max(0, minHalf - radius) * EDGE_SPAWN_MAX_INWARD_FRACTION) / EDGE_SPAWN_RINGS;
+  for (let ring = 0; ring <= EDGE_SPAWN_RINGS; ring++) {
+    const inset = radius + ring * step;
+    for (let m = 0; m < EDGE_SPAWN_PERIMETER_SAMPLES; m++) {
+      // m = 0, +1, −1, +2, −2, … 個取樣格，從 t0 向兩側交替展開。
+      const away = (m + 1) >> 1;
+      const dir = (m & 1) === 1 ? 1 : -1;
+      const p = pointOnBoundary(zone, t0 + (dir * away) / EDGE_SPAWN_PERIMETER_SAMPLES, inset);
+      if (spotIsClear(zone, p, radius)) return p;
+    }
+  }
+  return null;
 }
 
 /**

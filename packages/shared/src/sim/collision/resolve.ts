@@ -8,6 +8,7 @@
  */
 import type { Vec2 } from "../math/vec2";
 import { sub, addScaled, lenSq, normalize, dot } from "../math/vec2";
+import type { CircleOverlap } from "./intersect";
 import { circleVsCircle, circleVsSegment, circleVsBox } from "./intersect";
 import type { Obstacle, ZoneDef } from "../world/ArenaDef";
 
@@ -32,25 +33,42 @@ export function separatePair(a: Body, b: Body, strength = 0.5): void {
   b.pos = addScaled(b.pos, ov.normal, -push);
 }
 
+/**
+ * 這個身體壓到這個障礙物了嗎 —— 以及要往哪推多遠。
+ *
+ * ⭐ **一個 kind 分派，兩個消費者**（{@link pushOutOfObstacle} 推、
+ * {@link overlapsObstacle} 只問）。⛔ 不要為了「只想問一句 true/false」再寫第二個
+ * switch：那會變成兩份各自腐爛的分派，而下一個 obstacle kind 只被其中一份認得 ——
+ * 推得出去卻測不到（或反過來）而兩邊看起來都是對的。
+ */
+function obstacleOverlap(body: Body, obstacle: Obstacle): CircleOverlap {
+  const c = { kind: "circle" as const, center: body.pos, radius: body.radius };
+  if (obstacle.kind === "circle") {
+    return circleVsCircle(c, { kind: "circle", center: obstacle.center, radius: obstacle.radius });
+  }
+  if (obstacle.kind === "box") {
+    // GH#324 —— graybox 的牆。⛔ 不可以退化成 4 條線段（見 `circleVsBox` 的檔頭）。
+    return circleVsBox(c, obstacle);
+  }
+  return circleVsSegment(c, { kind: "segment", a: obstacle.a, b: obstacle.b });
+}
+
 /** Push a body fully out of a single obstacle (hard, walls don't yield). */
 export function pushOutOfObstacle(body: Body, obstacle: Obstacle): void {
-  if (obstacle.kind === "circle") {
-    const ov = circleVsCircle(
-      { kind: "circle", center: body.pos, radius: body.radius },
-      { kind: "circle", center: obstacle.center, radius: obstacle.radius },
-    );
-    if (ov.hit) body.pos = addScaled(body.pos, ov.normal, ov.depth);
-  } else if (obstacle.kind === "box") {
-    // GH#324 —— graybox 的牆。⛔ 不可以退化成 4 條線段（見 `circleVsBox` 的檔頭）。
-    const ov = circleVsBox({ kind: "circle", center: body.pos, radius: body.radius }, obstacle);
-    if (ov.hit) body.pos = addScaled(body.pos, ov.normal, ov.depth);
-  } else {
-    const ov = circleVsSegment(
-      { kind: "circle", center: body.pos, radius: body.radius },
-      { kind: "segment", a: obstacle.a, b: obstacle.b },
-    );
-    if (ov.hit) body.pos = addScaled(body.pos, ov.normal, ov.depth);
-  }
+  const ov = obstacleOverlap(body, obstacle);
+  if (ov.hit) body.pos = addScaled(body.pos, ov.normal, ov.depth);
+}
+
+/**
+ * 這個身體**站得進**這裡嗎（就這一個障礙物而言）？
+ *
+ * ⚠️ 存在的理由是「推出去」和「推得掉嗎」是**兩件事**：`pushOutOfObstacle` 推完
+ * 之後可能被 {@link clampToBoundary} 原封不動夾回來（貼著牆的障礙物就是這樣，
+ * 見 `mobSpawnPosAtDir` 的檔頭），而呼叫端從回傳值看不出來 —— 它沒有回傳值。
+ * 要問「最後到底合不合法」就必須有一支**只問不動**的。
+ */
+export function overlapsObstacle(body: Body, obstacle: Obstacle): boolean {
+  return obstacleOverlap(body, obstacle).hit;
 }
 
 /**
