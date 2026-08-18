@@ -97,6 +97,7 @@ import {
   type ResolvedVfxLayer,
 } from "../render/vfx/abilityLayers";
 import { applyAimYaw } from "../render/vfx/artParams";
+import { applyFamilyOrient } from "../render/vfx/familyOrient";
 import { yawDegToward } from "./orient";
 import { isLegacySingleVfx, type AbilityVfxSource } from "@ggd/shared/content/schema/abilityVfx";
 import { W3xCastFx } from "./W3xCastFx";
@@ -774,9 +775,21 @@ export class VfxSystem {
     return ps;
   }
 
+  /**
+   * 解一份 vfx 文件。
+   *
+   * ⭐ GH#379 —— **家族仰角在這裡套**,也就是這個系統解文件的唯一入口:
+   * `beam`/`bolt`/`dash`/`slash` 躺下來(於是 GH#377 的瞄準不再是恆等變換),
+   * `tornado` 維持直立。沒有東西要套時 `applyFamilyOrient` 回傳同一個物件
+   * reference,所以其他 579 份文件走的是一位元不差的舊路徑。
+   *
+   * ⚠️ 套在這裡而不是套在每一個播放點,是因為 `playCastVfx` 的四級階梯 + 層堆疊
+   * 一共有七個地方會解文件 —— 漏掉任何一個,那條路上的技能就會安靜地不瞄準
+   * (而畫面上「它有在動、只是沒轉」是最難看出來的一種錯)。
+   */
   private doc(key: string | undefined): VfxDoc | null {
     if (!key) return null;
-    return this.ctx.vfxDoc?.(key) ?? null;
+    return applyFamilyOrient(this.ctx.vfxDoc?.(key) ?? null);
   }
 
   /**

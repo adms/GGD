@@ -1,6 +1,6 @@
 # GGD 遊戲端執行期能力清單（`ggd-runtime-capabilities@1`）
 
-**指紋 `a816c401`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
+**指紋 `b97e9836`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
 
 ## 這份文件是什麼
 
@@ -112,6 +112,54 @@
 | `config.vfx-families@1.abilities[]` | `alpha` · `anchor` · `enabled` · `facingDeg` · `family` · `flyHeight` · `pitchDeg` · `timeScale` · `tint` · `w3xScale` |
 
 ⭐ 兩個最容易被漏掉的：`vfx@1.orient` 是**巢狀**的（只看 `vfx@1` 只看得到 `orient` 這個名字，看不到裡面的三格），而 `ability@1.vfxLayers[]` 是**每一支技能自己的覆寫**——同一份 `vfx@1` 文件被兩支技能用，兩支可以各自放大、轉色、改仰角，⛔ 不必複製一份文件。
+
+## 8. 文件授權面 —— 一支技能／一件道具／一個狀態**本身**寫得出什麼
+
+⚠️ **這一節在 2026-08-18 之前完全不存在**，而它少的是最基本的一層：第 3 節告訴你一支技能可以做出哪些**效果**，這一節才告訴你「**這一支是指定還是範圍、射得多遠、多久放一次、耗多少魔**」。在它之前 `castType` / `range` / `hitRadius` / `craftRole` 在整份契約裡出現 **0 次** —— ⛔ 所以照著舊契約產出的技能，那幾格一律是引擎的預設，而且**不會收到任何錯誤**。
+
+讀法和第 7 節一樣：鍵是**授權的位置**（你在哪一份 JSON 的哪一層寫它），值是那一層收得下的欄位名，全部從出貨的 schema 推導。⚠️ `id` 與 `schema` 是每一份文件都有的樣板欄位，不是這個面的特色。⚠️ 每一格的**上下界與語意**看另一份文件（這裡只回答「這個名字存不存在」）。
+
+| 寫在哪 | 欄位 |
+|---|---|
+| `ability@1` | `augment` · `castTimeSec` · `castType` · `cooldown` · `description` · `descriptionRoles` · `effects` · `hitFeel` · `icon` · `id` · `innateActivePassive` · `innateKind` · `interruptOn` · `manaCost` · `marks` · `maxRank` · `name` · `passive` · `provenance` · `radius` · `radiusTier` · `range` · `recoveryRoots` · `recoverySec` · `rootWhileCasting` · `sfxKey` · `slot` · `targetsEnemies` · `template` · `toggle` · `vfxKey` · `vfxLayers` |
+| `ability@1.marks[]` | `durationSec` · `initial` · `lethal` · `markId` · `max` · `perStackLost` · `resetOn` · `roundDelta` |
+| `projectile@1` | `hitRadius` · `id` · `maxRange` · `meshShape` · `pierce` · `schema` · `speed` · `vfxKey` |
+| `status-effect@1` | `description` · `iconKey` · `id` · `name` · `polarity` · `schema` · `tags` |
+| `item@1` | `attributes` · `auras` · `authoringNote` · `block` · `cost` · `craftRole` · `critStrike` · `damageTypeOverride` · `description` · `draftEligible` · `flight` · `icon` · `iconKey` · `id` · `marks` · `modifiers` · `name` · `passive` · `penetration` · `recipe` · `requiresAttackType` · `schema` · `sets` · `tags` · `tier` · `typeStreakImmunity` · `unique` · `vision` |
+| `champion@1` | `abilities` · `alpha` · `archetype` · `attackDamagePoint` · `attackType` · `attributes` · `baseAttackTime` · `baseStats` · `bodyScale` · `buildPriority` · `description` · `exAbility` · `growth` · `healthDrainPctOfMax` · `healthRegenPctOfMax` · `hitFeel` · `icon` · `id` · `immobile` · `missileSpeed` · `modelKey` · `name` · `origin` · `passive` · `passiveAbility` · `pitch` · `playstyle` · `role` · `schema` · `skillOrder` · `tags` · `tint` · `transform` |
+| `template@1` | `description` · `exemplar` · `family` · `gapScore` · `id` · `name` · `params` · `requires` · `schema` · `status` |
+
+⭐ `ability@1.marks[]` 是**巢狀**的（只看 `ability@1` 只看得到 `marks` 這個名字），而且 `item@1.marks[]` 用的是**同一份**定義 —— 一件道具給的疊層和一支技能給的疊層寫法完全一樣。⚠️ `template@1` 是**參數化的技能骨架**（第 5 節那些家族的文件形狀），⛔ 不是另一種技能。
+
+## 9. 參數名 —— effect／hook／條件／靈氣各自收得下哪些格子
+
+⚠️ **這一節在 2026-08-19 之前只存在於隨附的 JSON 裡**，人看的這一份一個字都沒印。而 `effectFields` 的 201 個名字有 **109 個**在整份文件裡出現 0 次 —— 第 3 節告訴你有哪些 kind，卻沒有任何一節告訴你**一個 kind 裡面寫得出哪些參數**。⛔ 同一個安靜的失敗：不會被拒絕，只是不知道那些格子存在。
+
+⚠️ 下面每一族都是**所有分支的聯集** —— 一個名字出現在這裡代表「某一個 kind／某一顆條件葉收得下它」，⛔ 不代表每一個都收。哪一個 kind 配哪幾格、以及每一格的上下界與語意，看另一份文件。
+
+**effect 參數（所有 kind 的聯集）**（201）
+
+`abilityId` · `absorbs` · `addSec` · `aim` · `amount` · `amountPerTick` · `apexHeight` · `applyTo` · `at` · `attr` · `attributes` · `autoTargetable` · `bankAs` · `bankedBonus` · `basis` · `berserk` · `block` · `blocksControl` · `blocksDamage` · `blocksTrueDamage` · `body` · `bountyGold` · `branches` · `breakOnDamage` · `breakOnDamageMin` · `buff` · `burnsInFireRing` · `canCrit` · `capScope` · `championId` · `chance` · `clampMin` · `comboBonus` · `condition` · `count` · `countsForOriginalTeam` · `critStrike` · `cycleKey` · `damageMult` · `damageType` · `damageTypeOverride` · `damageTypes` · `delaySec` · `disarmed` · `dispellable` · `distance` · `distanceScale` · `distanceTier` · `dodgesAbilities` · `dodgesTrueDamage` · `dragToCaster` · `dropDeadTargets` · `duration` · `durationSec` · `effects` · `emitCastEvents` · `everyNth` · `exclusiveGroup` · `exclusiveOnExisting` · `fallbackLevel` · `falloff` · `feared` · `finalEffects` · `firstAtCast` · `fixedRank` · `flat` · `flight` · `forcedTarget` · `formation` · `from` · `fromCaster` · `getupTicks` · `healPct` · `healingTakenMult` · `healthPct` · `hookKey` · `hookScope` · `hooks` · `hpBasis` · `hpMult` · `hpPct` · `impactPower` · `includeNeutrals` · `includeOrigin` · `incomingPct` · `intervalSec` · `killCredit` · `kind` · `landRadius` · `launchDistance` · `launchHeight` · `length` · `level` · `lifestealMult` · `manaPct` · `manualTargetable` · `maxAlive` · `maxAttribute` · `maxAttributeBasis` · `maxDepth` · `maxDistance` · `maxHeld` · `maxRemainingSec` · `maxSourceTotal` · `maxStacks` · `maxStat` · `maxTargets` · `maxTargetsCounts` · `minManaReserve` · `missChance` · `mobLevelSource` · `mobTargetable` · `mode` · `modifiers` · `moveSpeedMult` · `onArrive` · `onCap` · `onCarrierDeath` · `onCasterDeath` · `onDevour` · `onDevourPer` · `onEnd` · `onEndOn` · `onEndWhenDead` · `onExisting` · `onHit` · `onHitTargets` · `onHitTargetsMode` · `onInvalidTarget` · `onLand` · `onOwnerDeath` · `oncePerRoundPerVictim` · `order` · `payCosts` · `pctCurrentMana` · `pctMaxMana` · `penetration` · `perDamageFlat` · `perDamagePctOfMaxHealth` · `perMana` · `perRank` · `perTargetLevel` · `permanent` · `permanentScope` · `polarity` · `pools` · `projectileId` · `radius` · `radiusTier` · `rankMode` · `ratio` · `refresh` · `refund` · `regenMult` · `requireLearned` · `resource` · `resourcePct` · `resourcePctPhase` · `respectCooldown` · `root` · `runOnEmptyHit` · `scatterRadius` · `shape` · `side` · `silenced` · `slot` · `source` · `speed` · `spread` · `stackKey` · `stackVisual` · `stacking` · `stacks` · `statusId` · `steps` · `stopOnCasterDeath` · `stopShortUnits` · `store` · `stun` · `subtractGap` · `target` · `targetMode` · `targetPriority` · `targetsAllies` · `team` · `teamCharge` · `thresholdPctOfMax` · `throughShields` · `throwDistance` · `tickOnApply` · `to` · `typeStreakImmunity` · `uncontrollable` · `untargetable` · `until` · `vfxId` · `victim` · `victimCondition` · `vision` · `who` · `width`
+
+**條件葉種類**（5）
+
+`chance` · `equipment` · `kind` · `stat` · `status`
+
+**條件葉參數**（13）
+
+`is` · `itemId` · `kind` · `minStacks` · `mode` · `op` · `other` · `p` · `stat` · `statusId` · `subject` · `tag` · `value`
+
+**hook 參數**（21）
+
+`abilitySlot` · `chance` · `chanceFrom` · `condition` · `consumeOn` · `critSource` · `damageCrit` · `damageSource` · `damageType` · `effects` · `internalCooldown` · `internalCooldownScope` · `key` · `maxTriggers` · `on` · `onConsumed` · `perTarget` · `reflectedDamageSource` · `reflectedDamageType` · `target` · `victim`
+
+**靈氣參數**（8）
+
+`affects` · `hooks` · `includeSelf` · `key` · `lingerSec` · `modifiers` · `radius` · `scaleByNearby`
+
+**`ability@1` 頂層欄位**（32）
+
+`augment` · `castTimeSec` · `castType` · `cooldown` · `description` · `descriptionRoles` · `effects` · `hitFeel` · `icon` · `id` · `innateActivePassive` · `innateKind` · `interruptOn` · `manaCost` · `marks` · `maxRank` · `name` · `passive` · `provenance` · `radius` · `radiusTier` · `range` · `recoveryRoots` · `recoverySec` · `rootWhileCasting` · `sfxKey` · `slot` · `targetsEnemies` · `template` · `toggle` · `vfxKey` · `vfxLayers`
 
 ---
 

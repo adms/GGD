@@ -852,6 +852,76 @@
       "z": -9,
       "rotQuarter": 1,
       "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/medieval-fair__Fair_Flags_Line.glb",
+      "x": -40,
+      "z": 25.05,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleColumn_Art.glb",
+      "x": -22.29,
+      "z": 17.71,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleColumn_Art.glb",
+      "x": -57.71,
+      "z": 17.71,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleColumn_Art.glb",
+      "x": -14.95,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleColumn_Art.glb",
+      "x": -65.05,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/medieval-fair__Fair_Flags_Line.glb",
+      "x": 40,
+      "z": 25.05,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleColumn_Art.glb",
+      "x": 57.71,
+      "z": 17.71,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleColumn_Art.glb",
+      "x": 22.29,
+      "z": 17.71,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleColumn_Art.glb",
+      "x": 65.05,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleColumn_Art.glb",
+      "x": 14.95,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 1
     }
   ],
   "groundStyle": "sand",
@@ -876,8 +946,38 @@
     },
     "props": [
       {
+        "model": "assets/models/scenery/stand_section.glb",
+        "count": 8,
+        "bandFrom": 0.955,
+        "bandTo": 0.99,
+        "scaleMin": 1.1,
+        "scaleMax": 1.28,
+        "facing": "faceIn",
+        "seed": 131
+      },
+      {
+        "model": "assets/models/scenery/hanging_banner.glb",
+        "count": 6,
+        "bandFrom": 0.97,
+        "bandTo": 1.0,
+        "scaleMin": 0.95,
+        "scaleMax": 1.05,
+        "facing": "faceIn",
+        "seed": 132
+      },
+      {
+        "model": "assets/models/scenery/rubble_pile.glb",
+        "count": 4,
+        "bandFrom": 0.85,
+        "bandTo": 0.92,
+        "scaleMin": 1.2,
+        "scaleMax": 1.7,
+        "facing": "random",
+        "seed": 133
+      },
+      {
         "model": "assets/models/props/pillar.glb",
-        "count": 18,
+        "count": 12,
         "bandFrom": 0.945,
         "bandTo": 0.99,
         "scaleMin": 1.6,
@@ -887,7 +987,7 @@
       },
       {
         "model": "assets/models/props/banner_shield_yellow.glb",
-        "count": 8,
+        "count": 4,
         "bandFrom": 0.985,
         "bandTo": 1.0,
         "scaleMin": 1.6,
@@ -897,7 +997,7 @@
       },
       {
         "model": "assets/models/props/barrel_small.glb",
-        "count": 5,
+        "count": 3,
         "bandFrom": 0.87,
         "bandTo": 0.94,
         "scaleMin": 1.1,

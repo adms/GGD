@@ -330,6 +330,13 @@ describe("鑄技工坊 · 存得進去讀得回來 (adminui-vfx-forge-roundtrip)
       // (「projectileRadiusGain 沒有哨兵值」)，所以它不是裝飾。
       projectileRadiusGain: 0.4,
       projectileFlyHeightY: 1.6,
+      // GH#379 —— 五格家族仰角。每一格都刻意**不是**出貨值，否則「掉了之後
+      // 補回預設」會蒙混過關。
+      beamPitchDeg: 12,
+      slashPitchDeg: 44,
+      boltPitchDeg: -8,
+      dashPitchDeg: 6,
+      tornadoPitchDeg: 80,
     };
     const base = BASE_DOC();
     const withSentinels = { ...base } as Record<string, unknown>;
@@ -368,6 +375,8 @@ describe("鑄技工坊 · 存得進去讀得回來 (adminui-vfx-forge-roundtrip)
       // 兩個都刻意選**不是出貨預設**的那一個，否則「掉了之後補回預設」會蒙混過關
       castHeightSource: "family",
       projectileArtFromDoc: false,
+      // GH#379 —— 出貨是 true，所以哨兵值必須是 false。
+      familyPitchDefaults: false,
     };
     const withSentinels = { ...BASE_DOC() } as Record<string, unknown>;
     for (const f of GLOBAL_CHOICE_FIELDS) withSentinels[f] = SENT_CHOICE[f];
@@ -386,7 +395,11 @@ describe("鑄技工坊 · 存得進去讀得回來 (adminui-vfx-forge-roundtrip)
     for (const f of GLOBAL_CHOICE_FIELDS) {
       for (const opt of GLOBAL_CHOICE_OPTIONS[f]) {
         expect(validateGlobalChoiceField(f, opt.value), `${f}=${opt.value}`).toBe("");
-        const raw = f === "projectileArtFromDoc" ? opt.value === "1" : opt.value;
+        // 布林欄位的下拉用 "1"/"0"；字串列舉直接照抄。
+        const raw =
+          f === "projectileArtFromDoc" || f === "familyPitchDefaults"
+            ? opt.value === "1"
+            : opt.value;
         expect(
           zConfigVfxFamiliesDoc.safeParse({ ...BASE_DOC(), [f]: raw }).success,
           `${f} 的下拉選項 ${opt.value} 被 shared 的 Zod 擋下來`,

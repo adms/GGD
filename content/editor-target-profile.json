@@ -1,10 +1,10 @@
 {
   "schema": "ggd-editor-target-profile@1",
-  "generatedAt": "2026-08-18T13:58:15.882Z",
+  "generatedAt": "2026-08-18T17:30:43.810Z",
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_7e3e634b060c",
+    "contentVersion": "cv_996fbe189e35",
     "collections": {
       "champions": {
         "hash": "ea872906f006",
@@ -35,15 +35,15 @@
         "count": 3
       },
       "arenas": {
-        "hash": "963951a6b549",
+        "hash": "11923c899d34",
         "count": 13
       },
       "maps": {
-        "hash": "58b963f7a695",
+        "hash": "605c3f7e747a",
         "count": 7
       },
       "config": {
-        "hash": "ec0baa9cb483",
+        "hash": "76249632eaff",
         "count": 63
       },
       "models": {
@@ -90,7 +90,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "a816c401",
+    "fingerprint": "b97e9836",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -425,6 +425,40 @@
       "radius",
       "scaleByNearby"
     ],
+    "abilityFields": [
+      "augment",
+      "castTimeSec",
+      "castType",
+      "cooldown",
+      "description",
+      "descriptionRoles",
+      "effects",
+      "hitFeel",
+      "icon",
+      "id",
+      "innateActivePassive",
+      "innateKind",
+      "interruptOn",
+      "manaCost",
+      "marks",
+      "maxRank",
+      "name",
+      "passive",
+      "provenance",
+      "radius",
+      "radiusTier",
+      "range",
+      "recoveryRoots",
+      "recoverySec",
+      "rootWhileCasting",
+      "sfxKey",
+      "slot",
+      "targetsEnemies",
+      "template",
+      "toggle",
+      "vfxKey",
+      "vfxLayers"
+    ],
     "vfxSurface": {
       "vfx@1": [
         "ambient",
@@ -491,6 +525,148 @@
         "timeScale",
         "tint",
         "w3xScale"
+      ]
+    },
+    "docSurface": {
+      "ability@1": [
+        "augment",
+        "castTimeSec",
+        "castType",
+        "cooldown",
+        "description",
+        "descriptionRoles",
+        "effects",
+        "hitFeel",
+        "icon",
+        "id",
+        "innateActivePassive",
+        "innateKind",
+        "interruptOn",
+        "manaCost",
+        "marks",
+        "maxRank",
+        "name",
+        "passive",
+        "provenance",
+        "radius",
+        "radiusTier",
+        "range",
+        "recoveryRoots",
+        "recoverySec",
+        "rootWhileCasting",
+        "sfxKey",
+        "slot",
+        "targetsEnemies",
+        "template",
+        "toggle",
+        "vfxKey",
+        "vfxLayers"
+      ],
+      "ability@1.marks[]": [
+        "durationSec",
+        "initial",
+        "lethal",
+        "markId",
+        "max",
+        "perStackLost",
+        "resetOn",
+        "roundDelta"
+      ],
+      "projectile@1": [
+        "hitRadius",
+        "id",
+        "maxRange",
+        "meshShape",
+        "pierce",
+        "schema",
+        "speed",
+        "vfxKey"
+      ],
+      "status-effect@1": [
+        "description",
+        "iconKey",
+        "id",
+        "name",
+        "polarity",
+        "schema",
+        "tags"
+      ],
+      "item@1": [
+        "attributes",
+        "auras",
+        "authoringNote",
+        "block",
+        "cost",
+        "craftRole",
+        "critStrike",
+        "damageTypeOverride",
+        "description",
+        "draftEligible",
+        "flight",
+        "icon",
+        "iconKey",
+        "id",
+        "marks",
+        "modifiers",
+        "name",
+        "passive",
+        "penetration",
+        "recipe",
+        "requiresAttackType",
+        "schema",
+        "sets",
+        "tags",
+        "tier",
+        "typeStreakImmunity",
+        "unique",
+        "vision"
+      ],
+      "champion@1": [
+        "abilities",
+        "alpha",
+        "archetype",
+        "attackDamagePoint",
+        "attackType",
+        "attributes",
+        "baseAttackTime",
+        "baseStats",
+        "bodyScale",
+        "buildPriority",
+        "description",
+        "exAbility",
+        "growth",
+        "healthDrainPctOfMax",
+        "healthRegenPctOfMax",
+        "hitFeel",
+        "icon",
+        "id",
+        "immobile",
+        "missileSpeed",
+        "modelKey",
+        "name",
+        "origin",
+        "passive",
+        "passiveAbility",
+        "pitch",
+        "playstyle",
+        "role",
+        "schema",
+        "skillOrder",
+        "tags",
+        "tint",
+        "transform"
+      ],
+      "template@1": [
+        "description",
+        "exemplar",
+        "family",
+        "gapScore",
+        "id",
+        "name",
+        "params",
+        "requires",
+        "schema",
+        "status"
       ]
     },
     "templateFamilies": [
@@ -2378,12 +2554,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "a816c401",
+    "engineFingerprint": "b97e9836",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 a816c401 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 b97e9836 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -2977,5 +3153,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "805c8c56934c"
+  "profileDigest": "1c0355fe0469"
 }

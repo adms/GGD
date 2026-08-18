@@ -52,6 +52,7 @@ STAT_TYPES_TS = os.path.join(REPO, "packages", "shared", "src", "sim", "stats", 
 MODIFIERS_TS = os.path.join(REPO, "packages", "shared", "src", "sim", "stats", "modifiers.ts")
 REQUIREMENT_TS = os.path.join(REPO, "packages", "shared", "src", "sim", "content", "requirement.ts")
 BASE_BONUS_TS = os.path.join(REPO, "packages", "shared", "src", "sim", "baseBonus.ts")
+EFFECT_REGISTRY_TS = os.path.join(REPO, "packages", "shared", "src", "sim", "effects", "effectRegistry.ts")
 CURATED_JSON = os.path.join(REPO, "tools", "skill-spec", "curated.json")
 STAT_CAPS_JSON = os.path.join(REPO, "content", "config", "stat-caps.json")
 
@@ -159,6 +160,27 @@ def hook_events() -> tuple:
     if not events:
         raise VocabError("`HookEvent` 解析出 0 個成員 —— 解析器與程式碼分家了")
     return events
+
+
+@functools.lru_cache(maxsize=None)
+def effect_kinds() -> tuple:
+    """`EFFECT_HANDLERS` 註冊表的 kind 名，**排序過**。
+
+    ⭐ 這一支存在的理由和檔頭那四張抄本一模一樣，只是被抄的是**數字**而不是清單：
+    合約文件的第十章從 2026-08 起一直寫著「37 個 effect kind」外加一份 37 個名字的
+    清單，而引擎早就走到 39（`carry` 與 `convertTeam` 兩個新的都不在那份清單上）。
+    ⛔ 沒有任何東西會紅 —— 那一段不在任何產生區塊裡，它就只是一段散文。
+    """
+    body = _block(
+        _strip_comments(_read(EFFECT_REGISTRY_TS)), "export const EFFECT_HANDLERS", EFFECT_REGISTRY_TS
+    )
+    kinds = re.findall(r"^\s*([A-Za-z][A-Za-z0-9]*)\s*:", body, re.M)
+    if len(kinds) < 20:
+        raise VocabError(
+            f"`EFFECT_HANDLERS` 只解析出 {len(kinds)} 個 kind —— 解析器與程式碼分家了。"
+            "⛔ 不要讓它回一份短清單：下游會照著印出一份「引擎只有這幾個」的假文件。"
+        )
+    return tuple(sorted(kinds))
 
 
 @functools.lru_cache(maxsize=None)

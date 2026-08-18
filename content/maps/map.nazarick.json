@@ -26,8 +26,48 @@
     },
     "props": [
       {
+        "model": "assets/models/scenery/gravestone.glb",
+        "count": 9,
+        "bandFrom": 0.88,
+        "bandTo": 0.96,
+        "scaleMin": 1.2,
+        "scaleMax": 1.6,
+        "facing": "random",
+        "seed": 111
+      },
+      {
+        "model": "assets/models/scenery/iron_fence.glb",
+        "count": 5,
+        "bandFrom": 0.955,
+        "bandTo": 0.99,
+        "scaleMin": 1.2,
+        "scaleMax": 1.5,
+        "facing": "faceIn",
+        "seed": 112
+      },
+      {
+        "model": "assets/models/scenery/sarcophagus.glb",
+        "count": 3,
+        "bandFrom": 0.86,
+        "bandTo": 0.92,
+        "scaleMin": 1.2,
+        "scaleMax": 1.5,
+        "facing": "faceIn",
+        "seed": 113
+      },
+      {
+        "model": "assets/models/scenery/dead_tree.glb",
+        "count": 3,
+        "bandFrom": 0.9,
+        "bandTo": 0.97,
+        "scaleMin": 1.0,
+        "scaleMax": 1.25,
+        "facing": "random",
+        "seed": 114
+      },
+      {
         "model": "assets/models/props/pillar.glb",
-        "count": 16,
+        "count": 10,
         "bandFrom": 0.93,
         "bandTo": 0.98,
         "scaleMin": 1.6,
@@ -37,7 +77,7 @@
       },
       {
         "model": "assets/models/props/torch.glb",
-        "count": 12,
+        "count": 6,
         "bandFrom": 0.965,
         "bandTo": 0.99,
         "scaleMin": 1.5,
@@ -47,7 +87,7 @@
       },
       {
         "model": "assets/models/props/chest.glb",
-        "count": 4,
+        "count": 2,
         "bandFrom": 0.86,
         "bandTo": 0.92,
         "scaleMin": 1.2,
@@ -358,6 +398,42 @@
       },
       "rotQuarter": 0,
       "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleColumn_Art.glb",
+      "at": {
+        "col": 1,
+        "row": 1
+      },
+      "rotQuarter": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleWall01_Art.glb",
+      "at": {
+        "col": 22,
+        "row": 1
+      },
+      "rotQuarter": 1,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__Shrine_Art.glb",
+      "at": {
+        "col": 1,
+        "row": 18
+      },
+      "rotQuarter": 2,
+      "scale": 0.62
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleBaseStaircase_Art.glb",
+      "at": {
+        "col": 22,
+        "row": 18
+      },
+      "rotQuarter": 3,
+      "scale": 0.49
     }
   ],
   "backgroundProps": [

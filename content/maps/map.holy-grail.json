@@ -26,8 +26,38 @@
     },
     "props": [
       {
+        "model": "assets/models/scenery/icicle_cluster.glb",
+        "count": 8,
+        "bandFrom": 0.88,
+        "bandTo": 0.97,
+        "scaleMin": 1.1,
+        "scaleMax": 1.6,
+        "facing": "random",
+        "seed": 141
+      },
+      {
+        "model": "assets/models/scenery/ice_blocks.glb",
+        "count": 6,
+        "bandFrom": 0.85,
+        "bandTo": 0.93,
+        "scaleMin": 1.2,
+        "scaleMax": 1.8,
+        "facing": "random",
+        "seed": 142
+      },
+      {
+        "model": "assets/models/scenery/broken_pillar.glb",
+        "count": 4,
+        "bandFrom": 0.92,
+        "bandTo": 0.98,
+        "scaleMin": 1.1,
+        "scaleMax": 1.4,
+        "facing": "random",
+        "seed": 143
+      },
+      {
         "model": "assets/models/hex/rock.glb",
-        "count": 16,
+        "count": 10,
         "bandFrom": 0.84,
         "bandTo": 0.99,
         "scaleMin": 1.2,
@@ -37,7 +67,7 @@
       },
       {
         "model": "assets/models/props/torch.glb",
-        "count": 8,
+        "count": 6,
         "bandFrom": 0.94,
         "bandTo": 0.97,
         "scaleMin": 1.5,
@@ -363,6 +393,42 @@
         "row": 9
       },
       "rotQuarter": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Base.glb",
+      "at": {
+        "col": 1,
+        "row": 1
+      },
+      "rotQuarter": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Small_03.glb",
+      "at": {
+        "col": 22,
+        "row": 1
+      },
+      "rotQuarter": 1,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Small_04.glb",
+      "at": {
+        "col": 1,
+        "row": 16
+      },
+      "rotQuarter": 2,
+      "scale": 0.8
+    },
+    {
+      "model": "assets/models/scenery-cc0/christmas__SnowBall.glb",
+      "at": {
+        "col": 22,
+        "row": 16
+      },
+      "rotQuarter": 3,
       "scale": 1.0
     }
   ],

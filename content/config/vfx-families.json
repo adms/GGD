@@ -11,6 +11,12 @@
   "projectileArtFromDoc": true,
   "projectileRadiusGain": 1,
   "projectileFlyHeightY": 1,
+  "familyPitchDefaults": true,
+  "beamPitchDeg": 0,
+  "slashPitchDeg": 30,
+  "boltPitchDeg": 0,
+  "dashPitchDeg": 0,
+  "tornadoPitchDeg": 90,
   "families": {
     "shockwaveRing": {
       "enabled": true,

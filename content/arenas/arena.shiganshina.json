@@ -7097,8 +7097,60 @@
     },
     "props": [
       {
-        "model": "assets/models/props/crates_stacked.glb",
+        "model": "assets/models/scenery/rubble_pile.glb",
         "count": 10,
+        "bandFrom": 0.84,
+        "bandTo": 0.95,
+        "arcFromDeg": 0,
+        "arcSpanDeg": 360,
+        "scaleMin": 1.2,
+        "scaleMax": 1.9,
+        "facing": "random",
+        "rotQuarter": 0,
+        "seed": 171
+      },
+      {
+        "model": "assets/models/scenery/leaning_beam.glb",
+        "count": 6,
+        "bandFrom": 0.88,
+        "bandTo": 0.96,
+        "arcFromDeg": 0,
+        "arcSpanDeg": 360,
+        "scaleMin": 1.1,
+        "scaleMax": 1.4,
+        "facing": "random",
+        "rotQuarter": 0,
+        "seed": 172
+      },
+      {
+        "model": "assets/models/scenery/broken_pillar.glb",
+        "count": 4,
+        "bandFrom": 0.9,
+        "bandTo": 0.97,
+        "arcFromDeg": 0,
+        "arcSpanDeg": 360,
+        "scaleMin": 1.1,
+        "scaleMax": 1.4,
+        "facing": "random",
+        "rotQuarter": 0,
+        "seed": 173
+      },
+      {
+        "model": "assets/models/scenery/iron_fence.glb",
+        "count": 4,
+        "bandFrom": 0.96,
+        "bandTo": 0.995,
+        "arcFromDeg": 0,
+        "arcSpanDeg": 360,
+        "scaleMin": 1.2,
+        "scaleMax": 1.5,
+        "facing": "faceIn",
+        "rotQuarter": 0,
+        "seed": 174
+      },
+      {
+        "model": "assets/models/props/crates_stacked.glb",
+        "count": 6,
         "bandFrom": 0.88,
         "bandTo": 0.97,
         "arcFromDeg": 0,
@@ -7111,7 +7163,7 @@
       },
       {
         "model": "assets/models/props/barrel_small.glb",
-        "count": 8,
+        "count": 5,
         "bandFrom": 0.9,
         "bandTo": 0.98,
         "arcFromDeg": 0,
@@ -7124,7 +7176,7 @@
       },
       {
         "model": "assets/models/hex/rock.glb",
-        "count": 6,
+        "count": 4,
         "bandFrom": 0.85,
         "bandTo": 0.95,
         "arcFromDeg": 0,
@@ -7193,6 +7245,34 @@
       "z": 15,
       "rotQuarter": 0,
       "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/christmas__Fence.glb",
+      "x": -21,
+      "z": -15,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/crystal-crossroads__Wall_CornerBroken.glb",
+      "x": 21,
+      "z": -15,
+      "rotQuarter": 1,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/crystal-crossroads__Wall_Small_01.glb",
+      "x": -21,
+      "z": 15,
+      "rotQuarter": 2,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/christmas__Lamp01.glb",
+      "x": 21,
+      "z": 15,
+      "rotQuarter": 3,
+      "scale": 0.64
     },
     {
       "model": "assets/models/props/crates_stacked.glb",

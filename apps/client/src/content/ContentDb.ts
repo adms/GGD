@@ -75,6 +75,7 @@ import { setFamilyTuning } from "../render/vfx/w3xAbilityArt";
 import { setMaxAbilityVfxLayers } from "../render/vfx/abilityLayers";
 import { setOneShotMaxLifeSec } from "../vfx/oneShotLife";
 import { setCastHeightSource } from "../render/vfx/familyCastHeight";
+import { setFamilyPitchDefaults } from "../render/vfx/familyOrient";
 import { setProjectileTuning } from "../render/views/projectileArt";
 import { ensureContentLoaded } from "./bootContent";
 import { withContentVersion } from "./assetVersion";
@@ -342,6 +343,11 @@ export class ContentDb {
     // #251 owner「衝擊波特效沒有真實套用」—— 施法高度模式。同一個位置、同一種
     // 第②號故障:少了這一行,後台把模式切回 `flat` 之後場上仍然貼地。
     setCastHeightSource(vfxFamiliesDoc?.castHeightSource);
+    // GH#379 —— 有方向的五個形狀的家族仰角(beam/bolt/dash 躺下、slash 斜 30°、
+    // tornado 維持直立)。**少了這一行,GH#377 的瞄準對 126 支技能仍然是恆等變換**:
+    // 後台把 beam 的仰角從 0 調成 45、存了、頁面顯示 45,而場上一支都沒有動。
+    // 傳 undefined = 出貨預設,⛔ 不是「關掉」。
+    setFamilyPitchDefaults(vfxFamiliesDoc);
     // #251 owner「投射物特效沒有真實套用」—— 飛行彈道的三格旋鈕。
     setProjectileTuning(
       vfxFamiliesDoc

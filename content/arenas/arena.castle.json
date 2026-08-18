@@ -448,6 +448,76 @@
       "z": 6,
       "rotQuarter": 3,
       "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleWall01_Art.glb",
+      "x": -40,
+      "z": 25.05,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleWall01_Art.glb",
+      "x": -14.95,
+      "z": 0,
+      "rotQuarter": 1,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleWall01_Art.glb",
+      "x": -65.05,
+      "z": 0,
+      "rotQuarter": 1,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/medieval-fair__Lamp.glb",
+      "x": -53.58,
+      "z": -13.58,
+      "rotQuarter": 0,
+      "scale": 0.44
+    },
+    {
+      "model": "assets/models/scenery-cc0/medieval-fair__Lamp.glb",
+      "x": -26.42,
+      "z": 13.58,
+      "rotQuarter": 0,
+      "scale": 0.44
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleWall01_Art.glb",
+      "x": 40,
+      "z": 25.05,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleWall01_Art.glb",
+      "x": 65.05,
+      "z": 0,
+      "rotQuarter": 1,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleWall01_Art.glb",
+      "x": 14.95,
+      "z": 0,
+      "rotQuarter": 1,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/medieval-fair__Lamp.glb",
+      "x": 26.42,
+      "z": -13.58,
+      "rotQuarter": 0,
+      "scale": 0.44
+    },
+    {
+      "model": "assets/models/scenery-cc0/medieval-fair__Lamp.glb",
+      "x": 53.58,
+      "z": 13.58,
+      "rotQuarter": 0,
+      "scale": 0.44
     }
   ],
   "groundStyle": "stone",
@@ -472,6 +542,36 @@
       "peakColor": "#ffd9a0"
     },
     "props": [
+      {
+        "model": "assets/models/scenery/hanging_banner.glb",
+        "count": 8,
+        "bandFrom": 0.97,
+        "bandTo": 1.0,
+        "scaleMin": 0.95,
+        "scaleMax": 1.05,
+        "facing": "faceIn",
+        "seed": 181
+      },
+      {
+        "model": "assets/models/scenery/stand_section.glb",
+        "count": 4,
+        "bandFrom": 0.94,
+        "bandTo": 0.985,
+        "scaleMin": 1.05,
+        "scaleMax": 1.25,
+        "facing": "faceIn",
+        "seed": 182
+      },
+      {
+        "model": "assets/models/scenery/sarcophagus.glb",
+        "count": 2,
+        "bandFrom": 0.87,
+        "bandTo": 0.93,
+        "scaleMin": 1.2,
+        "scaleMax": 1.5,
+        "facing": "faceIn",
+        "seed": 183
+      },
       {
         "model": "assets/models/props/banner_shield_red.glb",
         "count": 5,

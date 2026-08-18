@@ -41,7 +41,17 @@
     { "model": "assets/models/props/pillar.glb", "x": 14, "z": 14, "rotQuarter": 0, "scale": 2.2 },
     { "model": "assets/models/props/pillar.glb", "x": 14, "z": -14, "rotQuarter": 1, "scale": 2.2 },
     { "model": "assets/models/props/pillar.glb", "x": -14, "z": 14, "rotQuarter": 2, "scale": 2.2 },
-    { "model": "assets/models/props/pillar.glb", "x": -14, "z": -14, "rotQuarter": 3, "scale": 2.2 }
+    { "model": "assets/models/props/pillar.glb", "x": -14, "z": -14, "rotQuarter": 3, "scale": 2.2 },
+    { "model": "assets/models/scenery-cc0/lunar-year__Column.glb", "x": 0, "z": 43.3, "rotQuarter": 0, "scale": 1 },
+    { "model": "assets/models/scenery-cc0/lunar-year__ColumnBase.glb", "x": 0, "z": 43.3, "rotQuarter": 0, "scale": 1 },
+    { "model": "assets/models/scenery-cc0/lunar-year__Column.glb", "x": 30.62, "z": 30.62, "rotQuarter": 0, "scale": 1 },
+    { "model": "assets/models/scenery-cc0/lunar-year__ColumnBase.glb", "x": 30.62, "z": 30.62, "rotQuarter": 0, "scale": 1 },
+    { "model": "assets/models/scenery-cc0/lunar-year__Column.glb", "x": -30.62, "z": 30.62, "rotQuarter": 0, "scale": 1 },
+    { "model": "assets/models/scenery-cc0/lunar-year__ColumnBase.glb", "x": -30.62, "z": 30.62, "rotQuarter": 0, "scale": 1 },
+    { "model": "assets/models/scenery-cc0/lunar-year__Column.glb", "x": 43.3, "z": 0, "rotQuarter": 0, "scale": 1 },
+    { "model": "assets/models/scenery-cc0/lunar-year__ColumnBase.glb", "x": 43.3, "z": 0, "rotQuarter": 0, "scale": 1 },
+    { "model": "assets/models/scenery-cc0/lunar-year__Column.glb", "x": -43.3, "z": 0, "rotQuarter": 0, "scale": 1 },
+    { "model": "assets/models/scenery-cc0/lunar-year__ColumnBase.glb", "x": -43.3, "z": 0, "rotQuarter": 0, "scale": 1 }
   ],
   "groundStyle": "stone",
   "scenery": {
@@ -66,8 +76,38 @@
     },
     "props": [
       {
+        "model": "assets/models/scenery/stand_section.glb",
+        "count": 10,
+        "bandFrom": 0.95,
+        "bandTo": 0.99,
+        "scaleMin": 1.1,
+        "scaleMax": 1.28,
+        "facing": "faceIn",
+        "seed": 211
+      },
+      {
+        "model": "assets/models/scenery/hanging_banner.glb",
+        "count": 8,
+        "bandFrom": 0.97,
+        "bandTo": 1.0,
+        "scaleMin": 0.95,
+        "scaleMax": 1.05,
+        "facing": "faceIn",
+        "seed": 212
+      },
+      {
+        "model": "assets/models/scenery/broken_pillar.glb",
+        "count": 6,
+        "bandFrom": 0.88,
+        "bandTo": 0.94,
+        "scaleMin": 1.1,
+        "scaleMax": 1.4,
+        "facing": "random",
+        "seed": 213
+      },
+      {
         "model": "assets/models/props/pillar.glb",
-        "count": 12,
+        "count": 8,
         "bandFrom": 0.94,
         "bandTo": 0.985,
         "scaleMin": 1.6,
@@ -77,7 +117,7 @@
       },
       {
         "model": "assets/models/props/torch.glb",
-        "count": 8,
+        "count": 6,
         "bandFrom": 0.9,
         "bandTo": 0.93,
         "scaleMin": 1.5,

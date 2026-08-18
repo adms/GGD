@@ -514,6 +514,71 @@ export function clampProjectileFlyHeightY(v: number | undefined): number {
   );
 }
 
+// ---------------------------------------------------------------------------
+// 有方向的形狀的**家族仰角預設** (GH#379) —— 126 支「解鎖了但不會轉」的那一格
+// ---------------------------------------------------------------------------
+
+/**
+ * ⭐ **直立 = 恆等**。`orient` 的角度約定裡 `pitchDeg: 90` 是「軸朝 +Y」,
+ * 而繞 +Y 轉一個朝 +Y 的軸得到的還是它自己 —— 所以**對直立的發射器,yaw 是恆等
+ * 變換**。GH#377 把 `yawFrom: "aim"` 接上去之後 129 支有方向的技能理論上都能瞄準,
+ * 而真的會轉的只有 3 支,原因就是這一行:其餘 126 支的 `pitchDeg` 還是 90。
+ */
+export const UPRIGHT_PITCH_DEG = 90;
+
+/**
+ * 引擎裡**有方向**的五個 primitive 形狀。⛔ 不是「全部 13 個」——
+ * `nova`/`explosion`/`shockwave`/`pulse`/`swarm`/`summon` 是各向同性或貼地的,
+ * 轉它們不會有任何視覺差別(球型發射器的方向分布旋轉不變,見 `zEmitter.ring`
+ * 那一段),`column`/`fall` 的「往哪邊長」是靠重力而不是瞄準。
+ */
+export const DIRECTIONAL_PRIMITIVES = ["beam", "slash", "bolt", "dash", "tornado"] as const;
+export type DirectionalPrimitive = (typeof DIRECTIONAL_PRIMITIVES)[number];
+
+/**
+ * 每個有方向的家族**躺成什麼角度**(度)。90 = 直立、0 = 完全橫放。
+ *
+ * ⚠️ 這五個數字**不是品味**,是從各自 primitive 的錐角 + 施法高度推出來的
+ * (`apps/client/src/render/vfx/primitives.ts` 是那些錐角的出處,施法高度是
+ * `SHIPPED_CAST_HEIGHT_Y = 1.0` ≈ 胸口):
+ *
+ * | 家族 | 錐角 | 出貨仰角 | 為什麼 |
+ * |---|---:|---:|---|
+ * | `beam`    |  9° | **0** | 一道朝目標射出的光束/砲擊。半錐角 4.5°,從胸口打出去要 ~12 單位才觸地 —— 比粒子活得到的距離遠得多 |
+ * | `bolt`    |  6° | **0** | 一顆飛出去的彈丸,同上,更窄 |
+ * | `dash`    | 22° | **0** | 位移的殘影沿著移動線拖,本來就是水平的 |
+ * | `slash`   | 92° | **30** | 斬擊是一道**寬**的新月。半錐角 46°,填 0 的話下緣朝下 46°,從胸口出去約 1 單位就插進地板,而粒子中位飛行距離約 1.8 單位 ⇒ **半個刀光被地板吃掉**。抬到 30° 讓下緣落在 −16°(觸地約 3.5 單位,超出壽命),整道新月留在畫面上 |
+ * | `tornado` | 34° | **90** | 龍捲風本來就直立,而且它的 `gravityY` 是 **+4.2**(柱子往上長)—— 放倒它等於把「往上長」轉成「往旁邊飄」 |
+ *
+ * ⭐ **`yawFrom: "aim"` 不是第二格欄位,是從這一格推出來的**:仰角 ≠ 90 ⇒ 瞄準;
+ * = 90 ⇒ 不瞄準(因為那是恆等變換)。兩格獨立的話就可以組出
+ * 「宣告了瞄準但畫面上永遠不動」的空宣稱(第一·五守則),而**推導出來的東西
+ * 沒有那個狀態可以進入**。
+ */
+export const DEFAULT_FAMILY_PITCH_DEG: Readonly<Record<DirectionalPrimitive, number>> = {
+  beam: 0,
+  slash: 30,
+  bolt: 0,
+  dash: 0,
+  tornado: UPRIGHT_PITCH_DEG,
+};
+
+/**
+ * 家族仰角預設的**總開關**,出貨 `true`(第〇·六守則:優先權大的更新預設啟動)。
+ *
+ * `false` = 每一個有方向的家族都回到 `pitchDeg: 90` = **GH#366/#377 落地之前的
+ * 行為**(每次施法都朝同一邊噴)。它存在是為了一鍵 rollback,⛔ 不是為了觀望。
+ */
+export const DEFAULT_FAMILY_PITCH_DEFAULTS_ENABLED = true;
+
+/** 一個家族的生效仰角:後台的值(界外夾回)→ 出貨預設。 */
+export function familyPitchDeg(
+  family: DirectionalPrimitive,
+  override: number | undefined,
+): number {
+  return clampTo(override, -180, 180, DEFAULT_FAMILY_PITCH_DEG[family]);
+}
+
 /**
  * `hitRadius` → 畫面上的體積倍率。純函式,沒有 Babylon,所以模擬器/後台/測試
  * 三邊看到的是同一條公式。
@@ -711,6 +776,29 @@ export const zConfigVfxFamiliesDoc = z
     projectileRadiusGain: z.number().min(0).max(3).optional(),
     /** 彈道飛在離地多高。上下界 0.2/4 是 `MIN_/MAX_PROJECTILE_FLY_HEIGHT_Y`。 */
     projectileFlyHeightY: z.number().min(0.2).max(4).optional(),
+    /**
+     * GH#379 —— 有方向的五個形狀要不要套用**家族仰角預設**(見
+     * `DEFAULT_FAMILY_PITCH_DEG`)。省略 = `DEFAULT_FAMILY_PITCH_DEFAULTS_ENABLED`
+     * (true)。false = 全部回到直立 = GH#366/#377 落地之前的行為(一鍵 rollback)。
+     *
+     * OPTIONAL 的理由和上面四格一模一樣:已經存過的 durable overlay 沒有這個 key,
+     * 設成必填會讓那些 overlay 整份 `safeParse` 失敗 → `extractFamiliesDoc` 回 null
+     * → **整個家族層一起消失**。
+     */
+    familyPitchDefaults: z.boolean().optional(),
+    /**
+     * 五個有方向的家族各自的仰角(度)。90 = 直立、0 = 完全橫放。
+     * 省略 = `DEFAULT_FAMILY_PITCH_DEG` 的那一格。上下界 −180/180 與
+     * `zVfxOrient.pitchDeg` 同一條線(Zod 的 min/max 要字面值,所以這裡是抄的)。
+     *
+     * ⚠️ 填 90 的意思是「這個家族不瞄準」——**瞄準是從仰角推出來的**,
+     * ⛔ 不是另一格可以獨立打勾的東西(見 `DEFAULT_FAMILY_PITCH_DEG` 的 ⭐)。
+     */
+    beamPitchDeg: z.number().min(-180).max(180).optional(),
+    slashPitchDeg: z.number().min(-180).max(180).optional(),
+    boltPitchDeg: z.number().min(-180).max(180).optional(),
+    dashPitchDeg: z.number().min(-180).max(180).optional(),
+    tornadoPitchDeg: z.number().min(-180).max(180).optional(),
     families: z.record(zW3xFamilyId, zVfxFamilyTuning),
     abilities: z.record(z.string().min(1), zVfxAbilityFamilyBinding),
   })

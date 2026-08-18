@@ -90,6 +90,22 @@
             "z": 0
           },
           "radius": 2.1
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -30.64,
+            "z": 16.21
+          },
+          "radius": 0.7
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -30.64,
+            "z": -16.21
+          },
+          "radius": 0.7
         }
       ],
       "spawns": [
@@ -210,6 +226,22 @@
             "z": 0
           },
           "radius": 2.1
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 49.36,
+            "z": 16.21
+          },
+          "radius": 0.7
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 49.36,
+            "z": -16.21
+          },
+          "radius": 0.7
         }
       ],
       "spawns": [
@@ -636,6 +668,62 @@
       "z": 0,
       "rotQuarter": 3,
       "scale": 1.4
+    },
+    {
+      "model": "assets/models/scenery-cc0/lunar-year__Rock02.glb",
+      "x": -30.64,
+      "z": 16.21,
+      "rotQuarter": 1,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/lunar-year__Rock02.glb",
+      "x": -30.64,
+      "z": -16.21,
+      "rotQuarter": 1,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/lunar-year__Rock02.glb",
+      "x": -58.72,
+      "z": 0,
+      "rotQuarter": 1,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Cluster.glb",
+      "x": -40,
+      "z": 17.28,
+      "rotQuarter": 0,
+      "scale": 0.14
+    },
+    {
+      "model": "assets/models/scenery-cc0/lunar-year__Rock02.glb",
+      "x": 49.36,
+      "z": 16.21,
+      "rotQuarter": 1,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/lunar-year__Rock02.glb",
+      "x": 49.36,
+      "z": -16.21,
+      "rotQuarter": 1,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/lunar-year__Rock02.glb",
+      "x": 21.28,
+      "z": 0,
+      "rotQuarter": 1,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Cluster.glb",
+      "x": 40,
+      "z": 17.28,
+      "rotQuarter": 0,
+      "scale": 0.14
     }
   ],
   "groundStyle": "grass",
@@ -659,6 +747,26 @@
       "yawSweepDeg": 14
     },
     "props": [
+      {
+        "model": "assets/models/scenery/rubble_pile.glb",
+        "count": 4,
+        "bandFrom": 0.85,
+        "bandTo": 0.93,
+        "scaleMin": 1.2,
+        "scaleMax": 1.7,
+        "facing": "random",
+        "seed": 221
+      },
+      {
+        "model": "assets/models/scenery/ice_blocks.glb",
+        "count": 3,
+        "bandFrom": 0.86,
+        "bandTo": 0.93,
+        "scaleMin": 1.2,
+        "scaleMax": 1.7,
+        "facing": "random",
+        "seed": 222
+      },
       {
         "model": "assets/models/hex/trees_medium.glb",
         "count": 12,

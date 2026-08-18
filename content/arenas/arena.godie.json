@@ -874,6 +874,34 @@
       "z": 6.5,
       "rotQuarter": 3,
       "scale": 0.111
+    },
+    {
+      "model": "assets/models/scenery-cc0/lunar-year__MainAltar.glb",
+      "x": -40,
+      "z": 17.76,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/lunar-year__Bell.glb",
+      "x": -40,
+      "z": -19.2,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/lunar-year__MainAltar.glb",
+      "x": 40,
+      "z": 17.76,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/lunar-year__Bell.glb",
+      "x": 40,
+      "z": -19.2,
+      "rotQuarter": 0,
+      "scale": 1
     }
   ],
   "groundStyle": "dirt",
@@ -898,6 +926,36 @@
       "peakColor": "#ffe2c6"
     },
     "props": [
+      {
+        "model": "assets/models/scenery/torii.glb",
+        "count": 3,
+        "bandFrom": 0.94,
+        "bandTo": 0.99,
+        "scaleMin": 0.95,
+        "scaleMax": 1.0,
+        "facing": "faceIn",
+        "seed": 161
+      },
+      {
+        "model": "assets/models/scenery/stone_lantern.glb",
+        "count": 8,
+        "bandFrom": 0.87,
+        "bandTo": 0.95,
+        "scaleMin": 1.0,
+        "scaleMax": 1.35,
+        "facing": "faceIn",
+        "seed": 162
+      },
+      {
+        "model": "assets/models/scenery/stone_steps.glb",
+        "count": 2,
+        "bandFrom": 0.84,
+        "bandTo": 0.9,
+        "scaleMin": 1.5,
+        "scaleMax": 2.0,
+        "facing": "faceIn",
+        "seed": 163
+      },
       {
         "model": "assets/models/imported/japanesecherry.glb",
         "count": 14,

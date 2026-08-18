@@ -78,6 +78,14 @@ import {
   ABILITY_VFX_LAYER_HARD_CAP,
   DEFAULT_MAX_ABILITY_VFX_LAYERS,
 } from "../../packages/shared/src/content/schema/abilityVfx";
+// ⭐ 文件授權面（GH#380）—— §14 的七張表全部從這幾份出貨 Zod 推導。
+import { zAbilityDef } from "../../packages/shared/src/content/schema/ability";
+import { zMarkSpec } from "../../packages/shared/src/content/schema/mark";
+import { zProjectileDoc } from "../../packages/shared/src/content/schema/projectile";
+import { zStatusEffectDoc } from "../../packages/shared/src/content/schema/statusEffect";
+import { zItemDoc } from "../../packages/shared/src/content/schema/item";
+import { zChampionDoc } from "../../packages/shared/src/content/schema/champion";
+import { zTemplateDoc } from "../../packages/shared/src/content/schema/template";
 import { Stat } from "../../packages/shared/src/sim/stats/statTypes";
 import { ModOp } from "../../packages/shared/src/sim/stats/modifiers";
 
@@ -477,6 +485,12 @@ interface Usage {
    * `orient.pitchDeg`），⛔ 不是我在產生器裡點名一個檔名 —— 點名的那一刻它就開始過期。
    */
   vfxSurface: Map<string, Slot>;
+  /**
+   * 文件授權面（GH#380）：`<schema 標籤>.<欄位>` → 誰在用。
+   * ⭐ 和 `vfxSurface` 同一個理由 —— 「`castType` 出貨內容裡有幾份真的寫了」
+   * 是量到的，⛔ 不是我在產生器裡宣稱的。
+   */
+  docSurface: Map<string, Slot>;
   statusTags: Map<string, number>;
   statuses: string[];
   collections: Map<string, number>;
@@ -500,6 +514,7 @@ function scanContent(): Usage {
     hookEvents: new Map(),
     conditionLeaves: new Map(),
     vfxSurface: new Map(),
+    docSurface: new Map(),
     statusTags: new Map(),
     statuses: [],
     collections: new Map(),
@@ -602,6 +617,26 @@ function scanContent(): Usage {
           if (!layer || typeof layer !== "object") continue;
           for (const k of Object.keys(layer)) {
             bump(u.vfxSurface, `ability@1.vfxLayers[].${k}`, id, collection, doc["vfxLayers"]);
+          }
+        }
+      }
+
+      // ── 文件授權面的用量（GH#380）────────────────────────────────────
+      // ⚠️ 和上面同一個理由走**頂層鍵**：`walkJson` 只認得 `kind` 與 `on`，而
+      //    「這一支射多遠、是指定還是範圍」那一層一格 `kind` 都沒有 —— 那正是
+      //    它和特效面在 2026-08-18 之前一起從合約裡消失的原因。
+      const schemaTag = typeof doc["schema"] === "string" ? doc["schema"] : "";
+      if (schemaTag) {
+        for (const [k, v] of Object.entries(doc)) {
+          if (v === undefined) continue;
+          bump(u.docSurface, `${schemaTag}.${k}`, id, collection, doc);
+        }
+        // `marks[]` 是巢狀的一層，而且 `ability@1` 與 `item@1` 共用**同一份** spec ——
+        // 兩邊的用量都記在同一個鍵上，否則道具那邊的疊層看起來像沒有人用。
+        for (const mk of (Array.isArray(doc["marks"]) ? doc["marks"] : []) as unknown[]) {
+          if (!mk || typeof mk !== "object") continue;
+          for (const k of Object.keys(mk as Record<string, unknown>)) {
+            bump(u.docSurface, `ability@1.marks[].${k}`, id, collection, doc["marks"]);
           }
         }
       }
@@ -1210,6 +1245,123 @@ export function buildSpecMarkdown(): string {
         "content/config/vfx-families.json → abilities",
       ),
     );
+  }
+
+  // ── 14 文件授權面 ───────────────────────────────────────────────────
+  p("---");
+  p();
+  p("## 14. 文件授權面 —— 一支技能／一件道具／一個狀態**本身**寫得出什麼");
+  p();
+  p("⚠️ **這一節在 2026-08-19 之前完全不存在**（GH#380），而它少的比 §13 更基本：");
+  p("前面十二節講的是**效果**（打多少、掛什麼狀態），這一節才是");
+  p("「**這一支是指定還是範圍、射得多遠、多久放一次、耗多少魔**」。");
+  p("量到的：`castType` / `range` / `hitRadius` / `craftRole` / `authoringNote`");
+  p("在這份文件裡各出現 **0 次** —— ⛔ 而那不會報錯，只會讓每一支新技能的那幾格");
+  p("都是引擎的預設值。`status-effect@1` 那一列更直接：欄位是 0 就代表**做不出新狀態**。");
+  p();
+  p("⚠️ `id` 與 `schema` 兩格**每一份文件都有**（`id` 是檔名那一個，`schema` 是版本標籤），");
+  p("所以下面每一張表都把它們拿掉了 —— 它們不是這個面的內容。");
+  p();
+  {
+    /**
+     * ⭐ **一張表，⛔ 不是七段程式**（第零守則⑨）。一列 = 一個授權位置：
+     * 出貨的 Zod、TSDoc 說明的錨點、以及一句「它是什麼」。
+     * ⚠️ 欄位名／型別／上下界全部由 `fieldsOf()` 從那份 Zod 推導，所以 schema 多一格
+     * 不必回來改這裡。
+     */
+    const surfaces: {
+      key: string;
+      title: string;
+      schema: z.ZodTypeAny;
+      docs: Map<string, string>;
+      notes: string[];
+    }[] = [
+      {
+        key: "ability@1",
+        title: "一支技能的骨架",
+        schema: zAbilityDef,
+        docs: tsdocFields("packages/shared/src/content/schema/ability.ts", "export const zAbilityDef = z", "export const zAbilityDoc = zAbilityDef"),
+        notes: [
+          "⭐ `effects` 那一格的內容是前面十二節，⛔ 這張表講的是**它外面那一層**。",
+          "⚠️ `castType` 與 `range` / `radius` 一起決定「這一招怎麼指」——",
+          "填了 `targeted` 卻不給 `range`，遊戲端拿的是引擎預設，⛔ 不是你想的那個距離。",
+        ],
+      },
+      {
+        key: "ability@1.marks[]",
+        title: "疊層計數器（⭐ 巢狀；`item@1.marks[]` 是**同一份**定義）",
+        schema: zMarkSpec,
+        docs: tsdocFields("packages/shared/src/content/schema/mark.ts", "export const zMarkSpec = z", "export type MarkSpecDoc"),
+        notes: [
+          "只看 `ability@1` 只看得到 `marks` 這個名字，看不到裡面這八格。",
+          "⚠️ `durationSec: -1` = **永久**；`resetOn` 管的是回合邊界，兩者是**兩根獨立的軸**。",
+        ],
+      },
+      {
+        key: "projectile@1",
+        title: "飛行物 —— `spawnProjectile` 的 `projectileKey` 指到的那份文件",
+        schema: zProjectileDoc,
+        docs: tsdocFields("packages/shared/src/content/schema/projectile.ts", "export const zProjectileDef = z", "export const zProjectileDoc = zProjectileDef"),
+        notes: [
+          "⛔ `spawnProjectile` 進了合約而**它指到的文件沒有** —— 於是「飛得多快、",
+          "碰撞半徑多大、穿幾個人」這三件事沒有任何一份文件講過。",
+        ],
+      },
+      {
+        key: "status-effect@1",
+        title: "一個狀態的身分（`applyStatus` 的 `statusId` 指到這裡）",
+        schema: zStatusEffectDoc,
+        docs: tsdocFields("packages/shared/src/content/schema/statusEffect.ts", "export const zStatusEffectDoc = z", "export type StatusEffectDoc"),
+        notes: [
+          "⚠️ **狀態的行為不在這份文件裡** —— 這份只給身分（名字／圖示／正負面／`tags`），",
+          "真正的機制由引擎依 `tags` 執行。所以新增一個狀態＝挑對 `tags`，",
+          "⛔ 不是在這裡寫一段效果。可用的 `tags` 見前面的狀態章節。",
+        ],
+      },
+      {
+        key: "item@1",
+        title: "一件道具",
+        schema: zItemDoc,
+        docs: tsdocFields("packages/shared/src/content/schema/item.ts", "export const zItemDef = z", "export const zItemDoc = zItemDef"),
+        notes: [
+          "⭐ `craftRole` 決定它在商店／抽獎裡**站哪一格**，填錯不會報錯，只會出現在錯的地方。",
+          "⚠️ `authoringNote` 有硬字數上限；寫爆了要**另存全文**再留一行指標，",
+          "⛔ 不要把原文剪短塞回去。",
+        ],
+      },
+      {
+        key: "champion@1",
+        title: "一位英雄",
+        schema: zChampionDoc,
+        docs: tsdocFields("packages/shared/src/content/schema/champion.ts", "export const zChampionDef = z", "export const zChampionDoc = zChampionDef"),
+        notes: ["`abilities` 是**技能 id 的清單**，每一支的內容住在自己的 `ability@1` 文件裡。"],
+      },
+      {
+        key: "template@1",
+        title: "參數化的技能骨架（鑄技工坊）",
+        schema: zTemplateDoc,
+        docs: tsdocFields("packages/shared/src/content/schema/template.ts", "export const zTemplateDoc = z", "export type TemplateDoc"),
+        notes: [
+          "⛔ 它不是另一種技能：一支技能用 `template: {ref, params}` 引用它，",
+          "展開器在註冊時把 `effects` 那一半填出來。`params` 的型別／上下界寫在這份文件裡。",
+        ],
+      },
+    ];
+    let n = 0;
+    for (const s of surfaces) {
+      n += 1;
+      p(`### 14.${n} \`${s.key}\` —— ${s.title}`);
+      p();
+      for (const line of s.notes) p(line);
+      if (s.notes.length > 0) p();
+      p(
+        ...fieldTableWithUsage(
+          withDocs(fieldsOf(s.schema, ["id", "schema"]), s.docs),
+          `${s.key}.`,
+          usage.docSurface,
+        ),
+      );
+    }
   }
 
   return `${L.join("\n").replace(/\n{3,}/g, "\n\n").trimEnd()}\n`;

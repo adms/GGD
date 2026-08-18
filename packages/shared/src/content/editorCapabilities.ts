@@ -90,6 +90,14 @@ import { zAbilityDef } from "./schema/ability";
 import { zConditionLeaf } from "./schema/condition";
 import { zVfxDoc, zVfxOrient, zRibbonDoc, zVfxAbilityFamilyBinding } from "./schema/vfx";
 import { zAbilityVfxLayer } from "./schema/abilityVfx";
+// ⭐ 文件授權面（GH#380）—— 這五份 Zod 是「一支技能／一件道具／一個狀態長什麼樣」
+//    的出貨定義本身。⛔ 不是為了這份契約另外抄的一張表。
+import { zMarkSpec } from "./schema/mark";
+import { zProjectileDoc } from "./schema/projectile";
+import { zStatusEffectDoc } from "./schema/statusEffect";
+import { zItemDoc } from "./schema/item";
+import { zChampionDoc } from "./schema/champion";
+import { zTemplateDoc } from "./schema/template";
 
 /** 這份文件的 schema id（計畫 §4.1 的 capabilities 回應）。 */
 export const RUNTIME_CAPABILITIES_SCHEMA = "ggd-runtime-capabilities@1";
@@ -1084,6 +1092,27 @@ export interface RuntimeCapabilityManifest {
    * 匯出名 —— 對方沒有這個 repo，它要的是「我在哪一份 JSON 的哪一層寫這一格」。
    */
   readonly vfxSurface: Readonly<Record<string, readonly string[]>>;
+  /**
+   * ⭐ **`ability@1` 自己的頂層欄位**（GH#380）—— `castType` / `range` /
+   * `radius` / `cooldown` / `manaCost` / `targetsEnemies` / `slot` …
+   *
+   * ⚠️ 它在 GH#380 之前**算出來了卻沒有 return**（失敗形態②）。後果不是少一格：
+   * effect 那一面寫得完整，而「**這一支是指定還是範圍、射得多遠**」對外部編輯器
+   * 不存在 —— 它產出的每一支技能都只能拿引擎的預設，而且不會收到任何錯誤。
+   *
+   * ⛔ 它與 `docSurface["ability@1"]` 是**同一個陣列**（同一份 Zod 推導），
+   * 所以兩者不可能漂開。
+   */
+  readonly abilityFields: readonly string[];
+  /**
+   * ⭐ **文件授權面**（GH#380）—— 形狀名 → 欄位名，和 {@link vfxSurface} 是同一個
+   * 機制的第二張表（`ability@1` / `ability@1.marks[]` / `projectile@1` /
+   * `status-effect@1` / `item@1` / `champion@1` / `template@1`）。
+   *
+   * `vfxSurface` 回答「這一招長什麼樣子」，這一格回答「**這一招本身是什麼**」。
+   * 兩者都全部從出貨的 Zod 推導，⛔ 沒有手抄的欄位清單。
+   */
+  readonly docSurface: Readonly<Record<string, readonly string[]>>;
   readonly templateFamilies: readonly string[];
   readonly simCapabilities: Readonly<Record<string, { available: boolean; caveat?: string }>>;
   readonly planned: readonly {
@@ -1241,13 +1270,72 @@ function fingerprintOf(parts: readonly string[]): string {
  * 欄位名由 {@link leafFieldsOf} 從那個物件推導，所以新增一格 schema 欄位不必回來
  * 改這裡 —— 只有**多開一個授權位置**才需要加一列。
  */
-const VFX_SURFACE_SHAPES: readonly { readonly key: string; readonly schema: unknown }[] = [
+const VFX_SURFACE_SHAPES: readonly SurfaceShape[] = [
   { key: "vfx@1", schema: zVfxDoc },
   { key: "vfx@1.orient", schema: zVfxOrient },
   { key: "ribbon@1", schema: zRibbonDoc },
   { key: "ability@1.vfxLayers[]", schema: zAbilityVfxLayer },
   { key: "config.vfx-families@1.abilities[]", schema: zVfxAbilityFamilyBinding },
 ];
+
+/**
+ * {@link RuntimeCapabilityManifest.docSurface} 的來源表（GH#380）——
+ * **同一張表的形狀，⛔ 不是六段新程式**。
+ *
+ * ⚠️ 這一批補的洞和 GH#372 是**同一個**，只是位置不同：v0.20.6 之後特效參數進了
+ * 合約，而「**這一支技能本身**長什麼樣」還是空的。量到的（v0.20.6，兩份文件）：
+ * `castType` / `projectileKey` / `hitRadius` / `craftRole` / `authoringNote`
+ * **全部 0/0**。
+ *
+ * ⛔ 後果比少一個欄位嚴重得多：`castType`（指定／範圍／自身）與 `range` 是一支
+ * 技能**能不能被施放**的形狀。effect 那一面寫得再完整，外部編輯器不知道有這幾格，
+ * 它產出的技能就只能拿引擎的預設 —— 而且**不會收到任何錯誤**。
+ * `status-effect@1` 那一列更直接：欄位是 0 就代表對方**做不出新狀態**。
+ *
+ * ⭐ 鍵是**授權的位置**（你在哪一份 JSON 的哪一層寫它），⛔ 不是 Zod 匯出名。
+ * `ability@1.marks[]` 是巢狀的一層（`item@1.marks[]` 用的是**同一份** spec）——
+ * 只看 `ability@1` 只看得到 `marks` 這個名字，看不到裡面那八格。
+ */
+const DOC_SURFACE_SHAPES: readonly SurfaceShape[] = [
+  { key: "ability@1", schema: zAbilityDef },
+  { key: "ability@1.marks[]", schema: zMarkSpec },
+  { key: "projectile@1", schema: zProjectileDoc },
+  { key: "status-effect@1", schema: zStatusEffectDoc },
+  { key: "item@1", schema: zItemDoc },
+  { key: "champion@1", schema: zChampionDoc },
+  { key: "template@1", schema: zTemplateDoc },
+];
+
+interface SurfaceShape {
+  readonly key: string;
+  readonly schema: unknown;
+}
+
+/**
+ * 一張表 → 一個授權面。**兩張表共用這一支**（第零守則⑨）。
+ *
+ * ⛔ 空集合一定要吵：`zVfxDoc` / `zMarkSpec` / `zChampionDoc` 這幾份是
+ * `.superRefine()` 包起來的（ZodEffects），有人在上面再多包一層的那天，
+ * `leafFieldsOf` 會安靜地回一個空集合 —— 而**空的授權面看起來就跟「這個面
+ * 不存在」一模一樣**，那正是 GH#372／#380 的形狀：沒有錯誤，只是不存在。
+ */
+function deriveSurface(shapes: readonly SurfaceShape[], what: string): Record<string, readonly string[]> {
+  const out: Record<string, readonly string[]> = {};
+  for (const s of shapes) {
+    const set = new Set<string>();
+    leafFieldsOf(s.schema, set);
+    if (set.size === 0) {
+      throw new Error(
+        `⛔ ${what}「${s.key}」的欄位推導回了空集合 —— 幾乎一定是有人在那個 Zod ` +
+          "物件上多包了一層（ZodEffects / ZodPipeline）。修 editorCapabilities.ts 的那張表，" +
+          "⛔ 不要讓這一列靜靜地變成空的：外部編輯器看不到我們的 registry，" +
+          "它不會發現這些格子不見了，只會做出一批沒有這些格子的內容。",
+      );
+    }
+    out[s.key] = [...set].sort();
+  }
+  return out;
+}
 
 /**
  * 從**出貨的註冊表**建出能力清單。
@@ -1258,9 +1346,6 @@ const VFX_SURFACE_SHAPES: readonly { readonly key: string; readonly schema: unkn
 export function buildCapabilityManifest(): RuntimeCapabilityManifest {
   const effectKinds = Object.keys(EFFECT_HANDLERS).sort();
   const hookEvents = [...zHookEvent.options].sort();
-  // `ability@1` 的頂層欄位名 —— 從出貨的 Zod 物件推導，不是手打（見
-  // `CapabilityProbeInput.abilityFields`）。
-  const abilityFields = Object.keys(zAbilityDef.shape).sort();
   // 條件葉與 hook 欄位 —— 兩張表都從出貨的 Zod 物件推導（見 `literalKindsOf` 的檔頭）。
   const conditionLeafSet = new Set<string>();
   literalKindsOf(zConditionLeaf, conditionLeafSet);
@@ -1292,20 +1377,14 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
   // 拿不到 —— `leafFieldsOf` 自己會剝那一層。空集合 = 有人在上面多包了一層，
   // ⛔ 不可以讓它靜靜地變成空的（那會讓整個特效面**又一次**從合約裡消失，
   // 而這正是 GH#372 的形狀：沒有錯誤，只是不存在）。
-  const vfxSurface: Record<string, readonly string[]> = {};
-  for (const s of VFX_SURFACE_SHAPES) {
-    const set = new Set<string>();
-    leafFieldsOf(s.schema, set);
-    if (set.size === 0) {
-      throw new Error(
-        `⛔ 特效授權面「${s.key}」的欄位推導回了空集合 —— 幾乎一定是有人在那個 Zod ` +
-          "物件上多包了一層（ZodEffects / ZodPipeline）。修 editorCapabilities.ts 的 " +
-          "`VFX_SURFACE_SHAPES`，⛔ 不要讓這一列靜靜地變成空的：外部編輯器看不到我們的 " +
-          "registry，它不會發現這些格子不見了，只會做不出任何帶特效參數的技能。",
-      );
-    }
-    vfxSurface[s.key] = [...set].sort();
-  }
+  const vfxSurface = deriveSurface(VFX_SURFACE_SHAPES, "特效授權面");
+  // 文件授權面（GH#380）—— 同一支推導器，第二張表。
+  const docSurface = deriveSurface(DOC_SURFACE_SHAPES, "文件授權面");
+  // ⭐ `ability@1` 的頂層欄位名。⛔ 這裡**不再**自己算一次 `Object.keys(zAbilityDef.shape)`
+  //    —— 那會是第二個住處，而它和 `docSurface["ability@1"]` 是同一個問題的同一個答案。
+  //    ⚠️ 它在 GH#380 之前**算了但沒 return**（失敗形態②：算出來了但從沒送到讀者手上，
+  //    而這份文件的讀者是另一個專案）。
+  const abilityFields = docSurface["ability@1"]!;
   const simCapabilities: Record<string, { available: boolean; caveat?: string }> = {};
   for (const key of Object.keys(SIM_CAPABILITIES).sort()) {
     const c = SIM_CAPABILITIES[key]!;
@@ -1363,6 +1442,10 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
       // 不改動任何一個 effect kind 名，指紋不含它們的話，特效授權面整片改過了
       // 而對方 pin 的 base 完全不動。
       ...Object.entries(vfxSurface).map(([k, v]) => `vfx:${k}=${v.join(",")}`),
+      // 同一個理由，而且這一族更靠近核心：`castType` / `hitRadius` / `craftRole`
+      // 這些格子不改動任何一個 effect kind 名，指紋不含它們的話，「一支技能長什麼樣」
+      // 整片改過了而對方 pin 的 base 完全不動。
+      ...Object.entries(docSurface).map(([k, v]) => `doc:${k}=${v.join(",")}`),
       ...templateFamilies,
       ...PLANNED_CAPABILITIES.map((e) => `${e.key}=${e.expected}`),
       // 已知壞掉的清單也折進指紋：一筆進來或修好離開，對方 pin 的 base 就該換。
@@ -1375,7 +1458,9 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
     hookFields,
     effectFields,
     auraFields,
+    abilityFields,
     vfxSurface,
+    docSurface,
     templateFamilies,
     simCapabilities,
     planned,

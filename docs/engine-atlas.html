@@ -105,7 +105,7 @@ a{color:var(--accent)}
 <header class="top">
   <h1>GGD 引擎地圖</h1>
   <p class="sub">引擎到底組得出什麼 —— 每一格都是<b>推導</b>的：從引擎常數、出貨檔，或<b>真的跑一次</b>之後量到的結果。這一頁沒有任何手打的數字。</p>
-  <p class="fp">capability fingerprint <b>a816c401</b> · 產生器 <code>tools/engine-atlas/</code> · 重跑一次就是最新</p>
+  <p class="fp">capability fingerprint <b>b97e9836</b> · 產生器 <code>tools/engine-atlas/</code> · 重跑一次就是最新</p>
 </header>
 
 <div class="counts">
@@ -396,14 +396,14 @@ a{color:var(--accent)}
   <thead><tr><th>量什麼</th><th>分布</th><th class="c">來源</th></tr></thead>
   <tbody><tr>
       <th scope="row">AoE 半徑樣本（技能＋道具）</th>
-      <td><div class="v">146 個　最小 1.5 / 中位 6 / 最大 513.5</div></td>
+      <td><div class="v">148 個　最小 1.5 / 中位 6 / 最大 513.5</div></td>
       <td class="c"><span class="chip p-shipped">出貨檔</span></td>
     </tr><tr>
       <th scope="row">英雄攻擊距離（baseStats.range）</th>
       <td><div class="v">0 位　最小 0 / 中位 0 / 最大 0</div><p class="note">⚠️ 這是<strong>基底</strong>，實際射程還要乘 combat-env 的 <code>attackRange</code>（下面那張表）。</p></td>
       <td class="c"><span class="chip p-shipped">出貨檔</span></td>
     </tr></tbody>
-</table></div><div class="buckets"><div class="bucket"><div class="bk-l">小</div><div class="bk-r">&lt; 4.5</div><div class="bk-c">41 個</div></div><div class="bucket"><div class="bk-l">中</div><div class="bk-r">4.5 – 6.42</div><div class="bk-c">53 個</div></div><div class="bucket"><div class="bk-l">大</div><div class="bk-r">≥ 6.42</div><div class="bk-c">52 個</div></div></div></section><section id="vocab"><h2>JSON 的完整詞彙</h2><p class="lede">引擎認得的全部 token。<strong>不在這裡的東西寫不出來</strong> —— 需要它就要先做機制（第〇·五守則），不是為某一支技能寫一個 if。</p>
+</table></div><div class="buckets"><div class="bucket"><div class="bk-l">小</div><div class="bk-r">&lt; 4.5</div><div class="bk-c">41 個</div></div><div class="bucket"><div class="bk-l">中</div><div class="bk-r">4.5 – 6.42</div><div class="bk-c">53 個</div></div><div class="bucket"><div class="bk-l">大</div><div class="bk-r">≥ 6.42</div><div class="bk-c">54 個</div></div></div></section><section id="vocab"><h2>JSON 的完整詞彙</h2><p class="lede">引擎認得的全部 token。<strong>不在這裡的東西寫不出來</strong> —— 需要它就要先做機制（第〇·五守則），不是為某一支技能寫一個 if。</p>
       <h3>效果 kind（39）</h3><ul class="tokens"><li><code>applyBuff</code></li><li><code>applyStatus</code></li><li><code>blink</code></li><li><code>carry</code></li><li><code>championForm</code></li><li><code>convertTeam</code></li><li><code>cycleBuff</code></li><li><code>damage</code></li><li><code>damageArea</code></li><li><code>damageLine</code></li><li><code>dash</code></li><li><code>delayed</code></li><li><code>devour</code></li><li><code>dispel</code></li><li><code>dot</code></li><li><code>evasion</code></li><li><code>eventValueConversion</code></li><li><code>extendBuff</code></li><li><code>grantAttribute</code></li><li><code>grantGold</code></li><li><code>heal</code></li><li><code>invulnerable</code></li><li><code>knockback</code></li><li><code>leap</code></li><li><code>manaBarrier</code></li><li><code>modifyCooldown</code></li><li><code>proxyCast</code></li><li><code>randomArea</code></li><li><code>restore</code></li><li><code>revive</code></li><li><code>shield</code></li><li><code>shieldBreak</code></li><li><code>spawnProjectile</code></li><li><code>spawnVfx</code></li><li><code>spendMana</code></li><li><code>summon</code></li><li><code>swapResource</code></li><li><code>taunt</code></li><li><code>weightedBranch</code></li></ul>
       <h3>[xxx時] 觸發事件（33）</h3><ul class="tokens"><li><code>onAbilityCast</code></li><li><code>onAbilityHit</code></li><li><code>onAllyDamaged</code></li><li><code>onAllyDeath</code></li><li><code>onBasicAttack</code></li><li><code>onBossSpawn</code></li><li><code>onBoundaryTouch</code></li><li><code>onCrowdControlApplied</code></li><li><code>onCrowdControlReceived</code></li><li><code>onDamageDealt</code></li><li><code>onDamageTaken</code></li><li><code>onDashOrBlink</code></li><li><code>onDeath</code></li><li><code>onEvade</code></li><li><code>onFireRingIgnite</code></li><li><code>onGuardianDown</code></li><li><code>onHeal</code></li><li><code>onInterval</code></li><li><code>onKill</code></li><li><code>onLethalDamage</code></li><li><code>onOverheal</code></li><li><code>onProjectileExpire</code></li><li><code>onReflectSuccess</code></li><li><code>onRevive</code></li><li><code>onRoundEnd</code></li><li><code>onRoundStart</code></li><li><code>onShieldBroken</code></li><li><code>onShieldGained</code></li><li><code>onStatCapReached</code></li><li><code>onStatusApplied</code></li><li><code>onStunned</code></li><li><code>onUltimateCast</code></li><li><code>onUltimateHit</code></li></ul>
       <h3>條件葉（5）</h3><ul class="tokens"><li><code>chance</code></li><li><code>equipment</code></li><li><code>kind</code></li><li><code>stat</code></li><li><code>status</code></li></ul>

@@ -71,6 +71,7 @@ import {
   type FamilyField,
   type ForgeCatalog,
   type ForgeRow,
+  type GlobalChoiceField,
   type GlobalField,
 } from "../vfxForge";
 import type { ConfigVfxFamiliesDoc, W3xFamilyId } from "@ggd/shared/content/schema/vfx";
@@ -144,9 +145,10 @@ export function VfxForgePage(): React.JSX.Element {
   const [doc, setDoc] = useState<ConfigVfxFamiliesDoc | null>(null);
   const [globals, setGlobals] = useState<Record<string, string> | null>(null);
   const [enabled, setEnabled] = useState(true);
-  // #251 —— 兩格選擇題。空字串 = 文件沒有這個 key（= 用出貨預設）。
+  // #251 / GH#379 —— 三格選擇題。空字串 = 文件沒有這個 key（= 用出貨預設）。
   const [castHeight, setCastHeight] = useState("");
   const [projArt, setProjArt] = useState("");
+  const [famPitch, setFamPitch] = useState("");
   const [famDrafts, setFamDrafts] = useState<Record<string, FamilyDraft>>({});
   const [abDrafts, setAbDrafts] = useState<Record<string, AbilityDraft>>({});
   const [removals, setRemovals] = useState<string[]>([]);
@@ -187,10 +189,21 @@ export function VfxForgePage(): React.JSX.Element {
             parsed.projectileRadiusGain === undefined ? "" : String(parsed.projectileRadiusGain),
           projectileFlyHeightY:
             parsed.projectileFlyHeightY === undefined ? "" : String(parsed.projectileFlyHeightY),
+          // GH#379 —— 五格家族仰角，同一條 optional 規則（留白 ≠ 0，見
+          // `OPTIONAL_GLOBAL_FIELDS`：0 對龍捲風那一族就是「把柱子放倒」）。
+          beamPitchDeg: parsed.beamPitchDeg === undefined ? "" : String(parsed.beamPitchDeg),
+          slashPitchDeg: parsed.slashPitchDeg === undefined ? "" : String(parsed.slashPitchDeg),
+          boltPitchDeg: parsed.boltPitchDeg === undefined ? "" : String(parsed.boltPitchDeg),
+          dashPitchDeg: parsed.dashPitchDeg === undefined ? "" : String(parsed.dashPitchDeg),
+          tornadoPitchDeg:
+            parsed.tornadoPitchDeg === undefined ? "" : String(parsed.tornadoPitchDeg),
         });
         setCastHeight(parsed.castHeightSource ?? "");
         setProjArt(
           parsed.projectileArtFromDoc === undefined ? "" : parsed.projectileArtFromDoc ? "1" : "0",
+        );
+        setFamPitch(
+          parsed.familyPitchDefaults === undefined ? "" : parsed.familyPitchDefaults ? "1" : "0",
         );
       }
     } catch (err) {
@@ -287,6 +300,20 @@ export function VfxForgePage(): React.JSX.Element {
     // 和「沒說,用出貨的 1」是完全不同的兩件事。
     const radiusText = (globals["projectileRadiusGain"] ?? "").trim();
     const flyText = (globals["projectileFlyHeightY"] ?? "").trim();
+    // GH#379 —— 五格家族仰角，同一條規則。⚠️ 這五格**尤其**不能讓 `Number("")`
+    // 變成 0：0 = 完全橫放，對龍捲風那一族就是把直立的柱子放倒。
+    const pitchText: Record<string, string> = {
+      beamPitchDeg: (globals["beamPitchDeg"] ?? "").trim(),
+      slashPitchDeg: (globals["slashPitchDeg"] ?? "").trim(),
+      boltPitchDeg: (globals["boltPitchDeg"] ?? "").trim(),
+      dashPitchDeg: (globals["dashPitchDeg"] ?? "").trim(),
+      tornadoPitchDeg: (globals["tornadoPitchDeg"] ?? "").trim(),
+    };
+    const pitchPatch = Object.fromEntries(
+      Object.entries(pitchText)
+        .filter(([, t]) => t !== "")
+        .map(([k, t]) => [k, Number(t)]),
+    );
     const {
       maxAbilityVfxLayers: _dropped,
       oneShotMaxLifeSec: _droppedLife,
@@ -294,6 +321,12 @@ export function VfxForgePage(): React.JSX.Element {
       projectileFlyHeightY: _droppedFly,
       castHeightSource: _droppedHeight,
       projectileArtFromDoc: _droppedArt,
+      familyPitchDefaults: _droppedPitchOn,
+      beamPitchDeg: _droppedBeam,
+      slashPitchDeg: _droppedSlash,
+      boltPitchDeg: _droppedBolt,
+      dashPitchDeg: _droppedDash,
+      tornadoPitchDeg: _droppedTornado,
       ...docBase
     } = doc;
     let next: ConfigVfxFamiliesDoc = {
@@ -305,6 +338,8 @@ export function VfxForgePage(): React.JSX.Element {
       // 選擇題兩格:留白 = 沒說 = 拿掉 key(下游用出貨預設)。
       ...(castHeight === "" ? {} : { castHeightSource: castHeight as "flat" | "ground" | "family" }),
       ...(projArt === "" ? {} : { projectileArtFromDoc: projArt === "1" }),
+      ...(famPitch === "" ? {} : { familyPitchDefaults: famPitch === "1" }),
+      ...pitchPatch,
       enabled,
       scaleGain: Number(globals["scaleGain"]),
       scaleMin: Number(globals["scaleMin"]),
@@ -323,12 +358,24 @@ export function VfxForgePage(): React.JSX.Element {
       next = b ? setAbilityBinding(next, id, b) : clearAbilityBinding(next, id);
     }
     return familiesDocFor(next);
-  }, [doc, globals, enabled, castHeight, projArt, famDrafts, abDrafts, removals]);
+  }, [doc, globals, enabled, castHeight, projArt, famPitch, famDrafts, abDrafts, removals]);
 
   const dirty = useMemo(
     () => (doc && pending ? JSON.stringify(pending) !== JSON.stringify(familiesDocFor(doc)) : false),
     [pending, doc],
   );
+
+  /** 選擇題那三格的值與 setter —— 一張表，⛔ 不是巢狀三元式（見下面的 ⚠️）。 */
+  const choiceValue: Record<GlobalChoiceField, string> = {
+    castHeightSource: castHeight,
+    projectileArtFromDoc: projArt,
+    familyPitchDefaults: famPitch,
+  };
+  const choiceSetter: Record<GlobalChoiceField, (v: string) => void> = {
+    castHeightSource: setCastHeight,
+    projectileArtFromDoc: setProjArt,
+    familyPitchDefaults: setFamPitch,
+  };
 
   const save = async (): Promise<void> => {
     if (!pending) return;
@@ -431,20 +478,23 @@ export function VfxForgePage(): React.JSX.Element {
             onChange={(v) => setEnabled(v === "1")}
           />
         </label>
-        {/* #251 —— 兩格選擇題。留白（「沿用出貨預設」）= 不寫這個 key。 */}
+        {/* #251 / GH#379 —— 三格選擇題。留白（「沿用出貨預設」）= 不寫這個 key。
+            ⚠️ 值與 setter 走**一張表**：這裡本來是 `f === "castHeightSource" ? a : b`
+            的三元式，第三格一加進去就會被靜靜地綁到第二格上（畫面看起來正常、
+            存下去的是別人的值）。 */}
         {GLOBAL_CHOICE_FIELDS.map((f) => (
           <label key={f} style={{ fontSize: 11, color: TEXT_DIM }}>
             <span title={FIELD_HINT[f]}>{FIELD_LABEL[f]}</span>
             <Select
               field={f}
-              value={f === "castHeightSource" ? castHeight : projArt}
+              value={choiceValue[f]}
               label={FIELD_LABEL[f] ?? f}
               hint={FIELD_HINT[f] ?? ""}
               options={[
                 { value: "", label: "（沿用出貨預設）" },
                 ...GLOBAL_CHOICE_OPTIONS[f].map((o) => ({ value: o.value, label: o.label })),
               ]}
-              onChange={(v) => (f === "castHeightSource" ? setCastHeight(v) : setProjArt(v))}
+              onChange={(v) => choiceSetter[f](v)}
             />
           </label>
         ))}

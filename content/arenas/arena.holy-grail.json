@@ -7890,8 +7890,47 @@
     },
     "props": [
       {
+        "model": "assets/models/scenery/icicle_cluster.glb",
+        "count": 8,
+        "bandFrom": 0.88,
+        "bandTo": 0.97,
+        "arcFromDeg": 0,
+        "arcSpanDeg": 360,
+        "scaleMin": 1.1,
+        "scaleMax": 1.6,
+        "facing": "random",
+        "rotQuarter": 0,
+        "seed": 141
+      },
+      {
+        "model": "assets/models/scenery/ice_blocks.glb",
+        "count": 6,
+        "bandFrom": 0.85,
+        "bandTo": 0.93,
+        "arcFromDeg": 0,
+        "arcSpanDeg": 360,
+        "scaleMin": 1.2,
+        "scaleMax": 1.8,
+        "facing": "random",
+        "rotQuarter": 0,
+        "seed": 142
+      },
+      {
+        "model": "assets/models/scenery/broken_pillar.glb",
+        "count": 4,
+        "bandFrom": 0.92,
+        "bandTo": 0.98,
+        "arcFromDeg": 0,
+        "arcSpanDeg": 360,
+        "scaleMin": 1.1,
+        "scaleMax": 1.4,
+        "facing": "random",
+        "rotQuarter": 0,
+        "seed": 143
+      },
+      {
         "model": "assets/models/hex/rock.glb",
-        "count": 16,
+        "count": 10,
         "bandFrom": 0.84,
         "bandTo": 0.99,
         "arcFromDeg": 0,
@@ -7904,7 +7943,7 @@
       },
       {
         "model": "assets/models/props/torch.glb",
-        "count": 8,
+        "count": 6,
         "bandFrom": 0.94,
         "bandTo": 0.97,
         "arcFromDeg": 0,
@@ -7986,6 +8025,34 @@
       "x": 1,
       "z": 1,
       "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Base.glb",
+      "x": -21,
+      "z": -15,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Small_03.glb",
+      "x": 21,
+      "z": -15,
+      "rotQuarter": 1,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Small_04.glb",
+      "x": -21,
+      "z": 15,
+      "rotQuarter": 2,
+      "scale": 0.8
+    },
+    {
+      "model": "assets/models/scenery-cc0/christmas__SnowBall.glb",
+      "x": 21,
+      "z": 15,
+      "rotQuarter": 3,
       "scale": 1
     },
     {

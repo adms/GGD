@@ -1,6 +1,6 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "a816c401",
+  "capabilityFingerprint": "b97e9836",
   "counts": {
     "effectKinds": 39,
     "hookEvents": 33,
@@ -382,7 +382,7 @@
     "rows": [
       {
         "key": "AoE 半徑樣本（技能＋道具）",
-        "value": "146 個　最小 1.5 / 中位 6 / 最大 513.5",
+        "value": "148 個　最小 1.5 / 中位 6 / 最大 513.5",
         "from": "shipped"
       },
       {
@@ -406,7 +406,7 @@
       {
         "label": "大",
         "range": "≥ 6.42",
-        "count": 52
+        "count": 54
       }
     ]
   },

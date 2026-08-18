@@ -256,6 +256,34 @@
       "z": 0,
       "rotQuarter": 3,
       "scale": 1.6
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleWall01_Art.glb",
+      "x": -40,
+      "z": -19.0,
+      "rotQuarter": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleColumn_Art.glb",
+      "x": -40,
+      "z": 19.0,
+      "rotQuarter": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleWall01_Art.glb",
+      "x": 40,
+      "z": -19.0,
+      "rotQuarter": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleColumn_Art.glb",
+      "x": 40,
+      "z": 19.0,
+      "rotQuarter": 0,
+      "scale": 1.0
     }
   ],
   "groundStyle": "stone",
@@ -279,6 +307,26 @@
       "yawSweepDeg": 6
     },
     "props": [
+      {
+        "model": "assets/models/scenery/gravestone.glb",
+        "count": 6,
+        "bandFrom": 0.88,
+        "bandTo": 0.96,
+        "scaleMin": 1.2,
+        "scaleMax": 1.6,
+        "facing": "random",
+        "seed": 201
+      },
+      {
+        "model": "assets/models/scenery/iron_fence.glb",
+        "count": 4,
+        "bandFrom": 0.955,
+        "bandTo": 0.99,
+        "scaleMin": 1.2,
+        "scaleMax": 1.5,
+        "facing": "faceIn",
+        "seed": 202
+      },
       {
         "model": "assets/models/props/pillar.glb",
         "count": 10,

@@ -1,25 +1,25 @@
 {
  "schema": "model-budget@1",
- "generatedAt": "2026-08-18T13:57:42.615Z",
+ "generatedAt": "2026-08-18T17:30:10.034Z",
  "generatedBy": "tools/model-budget/emit_report.ts (task #99)",
  "sources": [
   {
    "path": "content/models/_index.json",
    "sha256": "dc20d995ac6b2d40",
    "bytes": 17832,
-   "mtime": "2026-08-18T13:53:32.318Z"
+   "mtime": "2026-08-18T17:26:46.451Z"
   },
   {
    "path": "content/arenas/_index.json",
-   "sha256": "e9c140269a82a64c",
-   "bytes": 1874,
-   "mtime": "2026-08-18T13:53:32.302Z"
+   "sha256": "d4d20fe02336d667",
+   "bytes": 1876,
+   "mtime": "2026-08-18T17:26:46.441Z"
   },
   {
    "path": "content/champions/_index.json",
    "sha256": "d4ea0e0e64525586",
    "bytes": 10293,
-   "mtime": "2026-08-18T13:53:32.245Z"
+   "mtime": "2026-08-18T17:26:46.376Z"
   },
   {
    "path": "apps/client/src/render/ArenaGround.ts",
@@ -554,6 +554,14 @@
      "count": 1
     },
     {
+     "id": "assets/models/scenery-cc0/tomb-chaser-2__TempleWall01_Art.glb",
+     "count": 6
+    },
+    {
+     "id": "assets/models/scenery-cc0/medieval-fair__Lamp.glb",
+     "count": 4
+    },
+    {
      "id": "assets/models/imported/cloud.glb",
      "count": 12
     }
@@ -579,18 +587,18 @@
     },
     {
      "label": "接地陰影（thin instance）",
-     "triangles": 4480,
+     "triangles": 5880,
      "meshes": 1,
-     "note": "32 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+     "note": "42 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
     }
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 73346,
-   "drawCalls": 103,
+   "triangles": 77690,
+   "drawCalls": 121,
    "animChannels": 216,
-   "textureBytes": 435771,
-   "vramBytes": 67829748,
+   "textureBytes": 1445011,
+   "vramBytes": 76218354,
    "limits": [
     {
      "key": "triangles",
@@ -639,11 +647,11 @@
     {
      "id": "median",
      "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 44138,
-     "drawCalls": 103,
+     "triangles": 48482,
+     "drawCalls": 121,
      "animChannels": 240,
-     "textureBytes": 266116,
-     "vramBytes": 56623100,
+     "textureBytes": 1275356,
+     "vramBytes": 65011706,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
@@ -654,11 +662,11 @@
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 36122,
-     "drawCalls": 67,
+     "triangles": 40466,
+     "drawCalls": 85,
      "animChannels": 96,
-     "textureBytes": 143254,
-     "vramBytes": 55925415,
+     "textureBytes": 1152494,
+     "vramBytes": 64314021,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
@@ -706,6 +714,14 @@
      "count": 2
     },
     {
+     "id": "assets/models/scenery-cc0/medieval-fair__Fair_Flags_Line.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/scenery-cc0/tomb-chaser-2__TempleColumn_Art.glb",
+     "count": 8
+    },
+    {
      "id": "assets/models/imported/cloud.glb",
      "count": 12
     }
@@ -731,18 +747,18 @@
     },
     {
      "label": "接地陰影（thin instance）",
-     "triangles": 8960,
+     "triangles": 10360,
      "meshes": 1,
-     "note": "64 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+     "note": "74 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
     }
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 81560,
-   "drawCalls": 129,
+   "triangles": 85832,
+   "drawCalls": 145,
    "animChannels": 216,
-   "textureBytes": 419977,
-   "vramBytes": 62237343,
+   "textureBytes": 3070375,
+   "vramBytes": 81810759,
    "limits": [
     {
      "key": "triangles",
@@ -791,11 +807,11 @@
     {
      "id": "median",
      "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 52352,
-     "drawCalls": 129,
+     "triangles": 56624,
+     "drawCalls": 145,
      "animChannels": 240,
-     "textureBytes": 250322,
-     "vramBytes": 51030695,
+     "textureBytes": 2900720,
+     "vramBytes": 70604111,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
@@ -806,11 +822,11 @@
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 44336,
-     "drawCalls": 93,
+     "triangles": 48608,
+     "drawCalls": 109,
      "animChannels": 96,
-     "textureBytes": 127460,
-     "vramBytes": 50333010,
+     "textureBytes": 2777858,
+     "vramBytes": 69906426,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
@@ -862,6 +878,14 @@
      "count": 2
     },
     {
+     "id": "assets/models/scenery-cc0/lunar-year__Rock02.glb",
+     "count": 6
+    },
+    {
+     "id": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Cluster.glb",
+     "count": 2
+    },
+    {
      "id": "assets/models/imported/cloud.glb",
      "count": 12
     }
@@ -875,9 +899,9 @@
     },
     {
      "label": "障礙柱 + 牆",
-     "triangles": 1920,
-     "meshes": 20,
-     "note": "20 根 CreateCylinder(tessellation 24) × 96 面 —— 這個競技場沒有 pillar 擺設，所以柱子全留著。"
+     "triangles": 2304,
+     "meshes": 24,
+     "note": "24 根 CreateCylinder(tessellation 24) × 96 面 —— 這個競技場沒有 pillar 擺設，所以柱子全留著。"
     },
     {
      "label": "出生台座",
@@ -887,18 +911,18 @@
     },
     {
      "label": "接地陰影（thin instance）",
-     "triangles": 7840,
+     "triangles": 8960,
      "meshes": 1,
-     "note": "56 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+     "note": "64 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
     }
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 94200,
-   "drawCalls": 141,
+   "triangles": 103324,
+   "drawCalls": 155,
    "animChannels": 216,
-   "textureBytes": 435672,
-   "vramBytes": 67829748,
+   "textureBytes": 922253,
+   "vramBytes": 70625950,
    "limits": [
     {
      "key": "triangles",
@@ -947,11 +971,11 @@
     {
      "id": "median",
      "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 64992,
-     "drawCalls": 141,
+     "triangles": 74116,
+     "drawCalls": 155,
      "animChannels": 240,
-     "textureBytes": 266017,
-     "vramBytes": 56623100,
+     "textureBytes": 752598,
+     "vramBytes": 59419302,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
@@ -962,11 +986,11 @@
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 56976,
-     "drawCalls": 105,
+     "triangles": 66100,
+     "drawCalls": 119,
      "animChannels": 96,
-     "textureBytes": 143155,
-     "vramBytes": 55925415,
+     "textureBytes": 629736,
+     "vramBytes": 58721617,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
@@ -992,6 +1016,22 @@
     {
      "id": "assets/models/props/floor_tile_large.glb",
      "count": 4
+    },
+    {
+     "id": "assets/models/scenery-cc0/lunar-year__EntranceStairs.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/scenery-cc0/lunar-year__Lamp01.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/scenery-cc0/lunar-year__Lamp02.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/scenery-cc0/lunar-year__Fence01.glb",
+     "count": 1
     },
     {
      "id": "assets/models/hex/rock.glb",
@@ -1031,18 +1071,18 @@
     },
     {
      "label": "接地陰影（thin instance）",
-     "triangles": 3360,
+     "triangles": 3920,
      "meshes": 1,
-     "note": "24 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+     "note": "28 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
     }
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 69238,
-   "drawCalls": 105,
+   "triangles": 70433,
+   "drawCalls": 114,
    "animChannels": 216,
-   "textureBytes": 388378,
-   "vramBytes": 51052533,
+   "textureBytes": 3167432,
+   "vramBytes": 63635442,
    "limits": [
     {
      "key": "triangles",
@@ -1091,31 +1131,31 @@
     {
      "id": "median",
      "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 40030,
-     "drawCalls": 105,
+     "triangles": 41225,
+     "drawCalls": 114,
      "animChannels": 240,
-     "textureBytes": 218723,
-     "vramBytes": 39845885,
+     "textureBytes": 2997777,
+     "vramBytes": 52428794,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "warn"
+      "vramBytes": "over"
      }
     },
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 32014,
-     "drawCalls": 69,
+     "triangles": 33209,
+     "drawCalls": 78,
      "animChannels": 96,
-     "textureBytes": 95861,
-     "vramBytes": 39148200,
+     "textureBytes": 2874915,
+     "vramBytes": 51731109,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "warn"
+      "vramBytes": "over"
      }
     }
    ]
@@ -1128,6 +1168,14 @@
     {
      "id": "assets/models/imported/japanesecherry.glb",
      "count": 50
+    },
+    {
+     "id": "assets/models/scenery-cc0/lunar-year__MainAltar.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/scenery-cc0/lunar-year__Bell.glb",
+     "count": 2
     },
     {
      "id": "assets/models/imported/cloud.glb",
@@ -1155,18 +1203,18 @@
     },
     {
      "label": "接地陰影（thin instance）",
-     "triangles": 7000,
+     "triangles": 7560,
      "meshes": 1,
-     "note": "50 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+     "note": "54 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
     }
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 71048,
-   "drawCalls": 220,
+   "triangles": 72044,
+   "drawCalls": 232,
    "animChannels": 266,
-   "textureBytes": 382224,
-   "vramBytes": 17760247,
+   "textureBytes": 2792589,
+   "vramBytes": 26148853,
    "limits": [
     {
      "key": "triangles",
@@ -1215,11 +1263,11 @@
     {
      "id": "median",
      "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 41840,
-     "drawCalls": 220,
+     "triangles": 42836,
+     "drawCalls": 232,
      "animChannels": 290,
-     "textureBytes": 212569,
-     "vramBytes": 6553599,
+     "textureBytes": 2622934,
+     "vramBytes": 14942205,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
@@ -1230,11 +1278,11 @@
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 33824,
-     "drawCalls": 184,
+     "triangles": 34820,
+     "drawCalls": 196,
      "animChannels": 146,
-     "textureBytes": 89707,
-     "vramBytes": 5855914,
+     "textureBytes": 2500072,
+     "vramBytes": 14244520,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
@@ -1260,6 +1308,22 @@
     {
      "id": "assets/models/props/floor_tile_large.glb",
      "count": 2
+    },
+    {
+     "id": "assets/models/scenery-cc0/tomb-chaser-2__TempleColumn_Art.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/scenery-cc0/medieval-fair__Fair_Flags_Line.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/scenery-cc0/lunar-year__Banner.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/scenery-cc0/medieval-fair__Lamp.glb",
+     "count": 1
     },
     {
      "id": "assets/models/props/crates_stacked.glb",
@@ -1303,18 +1367,18 @@
     },
     {
      "label": "接地陰影（thin instance）",
-     "triangles": 2380,
+     "triangles": 2940,
      "meshes": 1,
-     "note": "17 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+     "note": "21 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
     }
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 68824,
-   "drawCalls": 105,
+   "triangles": 71703,
+   "drawCalls": 116,
    "animChannels": 219,
-   "textureBytes": 476977,
-   "vramBytes": 51314677,
+   "textureBytes": 4692854,
+   "vramBytes": 80674800,
    "limits": [
     {
      "key": "triangles",
@@ -1363,31 +1427,31 @@
     {
      "id": "median",
      "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 39616,
-     "drawCalls": 105,
+     "triangles": 42495,
+     "drawCalls": 116,
      "animChannels": 243,
-     "textureBytes": 307322,
-     "vramBytes": 40108029,
+     "textureBytes": 4523199,
+     "vramBytes": 69468152,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "warn"
+      "vramBytes": "over"
      }
     },
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 31600,
-     "drawCalls": 69,
+     "triangles": 34479,
+     "drawCalls": 80,
      "animChannels": 99,
-     "textureBytes": 184460,
-     "vramBytes": 39410344,
+     "textureBytes": 4400337,
+     "vramBytes": 68770467,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "warn"
+      "vramBytes": "over"
      }
     }
    ]
@@ -1408,6 +1472,22 @@
     {
      "id": "assets/models/props/floor_tile_large.glb",
      "count": 2
+    },
+    {
+     "id": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Base.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Small_03.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Small_04.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/scenery-cc0/christmas__SnowBall.glb",
+     "count": 1
     },
     {
      "id": "assets/models/hex/rock.glb",
@@ -1439,18 +1519,18 @@
     },
     {
      "label": "接地陰影（thin instance）",
-     "triangles": 3080,
+     "triangles": 3640,
      "meshes": 1,
-     "note": "22 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+     "note": "26 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
     }
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 64656,
-   "drawCalls": 111,
+   "triangles": 66340,
+   "drawCalls": 118,
    "animChannels": 216,
-   "textureBytes": 356790,
-   "vramBytes": 39867723,
+   "textureBytes": 708737,
+   "vramBytes": 45460127,
    "limits": [
     {
      "key": "triangles",
@@ -1499,31 +1579,31 @@
     {
      "id": "median",
      "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 35448,
-     "drawCalls": 111,
+     "triangles": 37132,
+     "drawCalls": 118,
      "animChannels": 240,
-     "textureBytes": 187135,
-     "vramBytes": 28661075,
+     "textureBytes": 539082,
+     "vramBytes": 34253479,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "ok"
+      "vramBytes": "warn"
      }
     },
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 27432,
-     "drawCalls": 75,
+     "triangles": 29116,
+     "drawCalls": 82,
      "animChannels": 96,
-     "textureBytes": 64273,
-     "vramBytes": 27963390,
+     "textureBytes": 416220,
+     "vramBytes": 33555794,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "ok"
+      "vramBytes": "warn"
      }
     }
    ]
@@ -1552,6 +1632,22 @@
     {
      "id": "assets/models/props/floor_tile_large.glb",
      "count": 2
+    },
+    {
+     "id": "assets/models/scenery-cc0/crystal-crossroads__Column_SmallBroken_01.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/scenery-cc0/crystal-crossroads__Wall_Broken_01.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/scenery-cc0/lunar-year__OutterLamp.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/scenery-cc0/crystal-crossroads__Vase_Broken.glb",
+     "count": 1
     },
     {
      "id": "assets/models/imported/japanesecherry.glb",
@@ -1587,18 +1683,18 @@
     },
     {
      "label": "接地陰影（thin instance）",
-     "triangles": 3780,
+     "triangles": 4340,
      "meshes": 1,
-     "note": "27 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+     "note": "31 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
     }
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 66120,
-   "drawCalls": 132,
+   "triangles": 70729,
+   "drawCalls": 143,
    "animChannels": 224,
-   "textureBytes": 476955,
-   "vramBytes": 51314677,
+   "textureBytes": 2140367,
+   "vramBytes": 62499485,
    "limits": [
     {
      "key": "triangles",
@@ -1647,31 +1743,31 @@
     {
      "id": "median",
      "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 36912,
-     "drawCalls": 132,
+     "triangles": 41521,
+     "drawCalls": 143,
      "animChannels": 248,
-     "textureBytes": 307300,
-     "vramBytes": 40108029,
+     "textureBytes": 1970712,
+     "vramBytes": 51292837,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "warn"
+      "vramBytes": "over"
      }
     },
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 28896,
-     "drawCalls": 96,
+     "triangles": 33505,
+     "drawCalls": 107,
      "animChannels": 104,
-     "textureBytes": 184438,
-     "vramBytes": 39410344,
+     "textureBytes": 1847850,
+     "vramBytes": 50595152,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "warn"
+      "vramBytes": "over"
      }
     }
    ]
@@ -1692,6 +1788,22 @@
     {
      "id": "assets/models/props/floor_tile_large.glb",
      "count": 2
+    },
+    {
+     "id": "assets/models/scenery-cc0/tomb-chaser-2__TempleColumn_Art.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/scenery-cc0/tomb-chaser-2__TempleWall01_Art.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/scenery-cc0/tomb-chaser-2__Shrine_Art.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/scenery-cc0/tomb-chaser-2__TempleBaseStaircase_Art.glb",
+     "count": 1
     },
     {
      "id": "assets/models/props/chest.glb",
@@ -1735,18 +1847,18 @@
     },
     {
      "label": "接地陰影（thin instance）",
-     "triangles": 2940,
+     "triangles": 3500,
      "meshes": 1,
-     "note": "21 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+     "note": "25 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
     }
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 70348,
-   "drawCalls": 109,
+   "triangles": 71244,
+   "drawCalls": 114,
    "animChannels": 219,
-   "textureBytes": 476977,
-   "vramBytes": 51314677,
+   "textureBytes": 3426906,
+   "vramBytes": 66693788,
    "limits": [
     {
      "key": "triangles",
@@ -1795,31 +1907,31 @@
     {
      "id": "median",
      "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 41140,
-     "drawCalls": 109,
+     "triangles": 42036,
+     "drawCalls": 114,
      "animChannels": 243,
-     "textureBytes": 307322,
-     "vramBytes": 40108029,
+     "textureBytes": 3257251,
+     "vramBytes": 55487140,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "warn"
+      "vramBytes": "over"
      }
     },
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 33124,
-     "drawCalls": 73,
+     "triangles": 34020,
+     "drawCalls": 78,
      "animChannels": 99,
-     "textureBytes": 184460,
-     "vramBytes": 39410344,
+     "textureBytes": 3134389,
+     "vramBytes": 54789455,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "warn"
+      "vramBytes": "over"
      }
     }
    ]
@@ -1836,6 +1948,14 @@
     {
      "id": "assets/models/props/pillar.glb",
      "count": 4
+    },
+    {
+     "id": "assets/models/scenery-cc0/lunar-year__Column.glb",
+     "count": 5
+    },
+    {
+     "id": "assets/models/scenery-cc0/lunar-year__ColumnBase.glb",
+     "count": 5
     },
     {
      "id": "assets/models/imported/cloud.glb",
@@ -1863,18 +1983,18 @@
     },
     {
      "label": "接地陰影（thin instance）",
-     "triangles": 1120,
+     "triangles": 2520,
      "meshes": 1,
-     "note": "8 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+     "note": "18 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
     }
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 54056,
-   "drawCalls": 71,
+   "triangles": 56776,
+   "drawCalls": 91,
    "animChannels": 216,
-   "textureBytes": 325213,
-   "vramBytes": 28682913,
+   "textureBytes": 1807835,
+   "vramBytes": 34275317,
    "limits": [
     {
      "key": "triangles",
@@ -1917,17 +2037,17 @@
     "triangles": "ok",
     "drawCalls": "ok",
     "animChannels": "ok",
-    "vramBytes": "ok"
+    "vramBytes": "warn"
    },
    "variants": [
     {
      "id": "median",
      "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 24848,
-     "drawCalls": 71,
+     "triangles": 27568,
+     "drawCalls": 91,
      "animChannels": 240,
-     "textureBytes": 155558,
-     "vramBytes": 17476265,
+     "textureBytes": 1638180,
+     "vramBytes": 23068669,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
@@ -1938,11 +2058,11 @@
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 16832,
-     "drawCalls": 35,
+     "triangles": 19552,
+     "drawCalls": 55,
      "animChannels": 96,
-     "textureBytes": 32696,
-     "vramBytes": 16778580,
+     "textureBytes": 1515318,
+     "vramBytes": 22370984,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
@@ -1968,6 +2088,22 @@
     {
      "id": "assets/models/props/floor_tile_large.glb",
      "count": 2
+    },
+    {
+     "id": "assets/models/scenery-cc0/christmas__Fence.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/scenery-cc0/crystal-crossroads__Wall_CornerBroken.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/scenery-cc0/crystal-crossroads__Wall_Small_01.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/scenery-cc0/christmas__Lamp01.glb",
+     "count": 1
     },
     {
      "id": "assets/models/props/crates_stacked.glb",
@@ -2015,18 +2151,18 @@
     },
     {
      "label": "接地陰影（thin instance）",
-     "triangles": 2940,
+     "triangles": 3500,
      "meshes": 1,
-     "note": "21 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+     "note": "25 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
     }
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 71324,
-   "drawCalls": 105,
+   "triangles": 72424,
+   "drawCalls": 114,
    "animChannels": 219,
-   "textureBytes": 492771,
-   "vramBytes": 56907082,
+   "textureBytes": 1276031,
+   "vramBytes": 66693789,
    "limits": [
     {
      "key": "triangles",
@@ -2075,31 +2211,31 @@
     {
      "id": "median",
      "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 42116,
-     "drawCalls": 105,
+     "triangles": 43216,
+     "drawCalls": 114,
      "animChannels": 243,
-     "textureBytes": 323116,
-     "vramBytes": 45700434,
+     "textureBytes": 1106376,
+     "vramBytes": 55487141,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "warn"
+      "vramBytes": "over"
      }
     },
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 34100,
-     "drawCalls": 69,
+     "triangles": 35200,
+     "drawCalls": 78,
      "animChannels": 99,
-     "textureBytes": 200254,
-     "vramBytes": 45002749,
+     "textureBytes": 983514,
+     "vramBytes": 54789456,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "warn"
+      "vramBytes": "over"
      }
     }
    ]
@@ -2130,6 +2266,14 @@
      "count": 1
     },
     {
+     "id": "assets/models/scenery-cc0/tomb-chaser-2__TempleWall01_Art.glb",
+     "count": 2
+    },
+    {
+     "id": "assets/models/scenery-cc0/tomb-chaser-2__TempleColumn_Art.glb",
+     "count": 2
+    },
+    {
      "id": "assets/models/imported/cloud.glb",
      "count": 12
     }
@@ -2155,18 +2299,18 @@
     },
     {
      "label": "接地陰影（thin instance）",
-     "triangles": 2800,
+     "triangles": 3360,
      "meshes": 1,
-     "note": "20 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+     "note": "24 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
     }
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 64264,
-   "drawCalls": 89,
+   "triangles": 64912,
+   "drawCalls": 93,
    "animChannels": 216,
-   "textureBytes": 372595,
-   "vramBytes": 45460128,
+   "textureBytes": 1491867,
+   "vramBytes": 51052532,
    "limits": [
     {
      "key": "triangles",
@@ -2209,17 +2353,17 @@
     "triangles": "ok",
     "drawCalls": "ok",
     "animChannels": "ok",
-    "vramBytes": "warn"
+    "vramBytes": "over"
    },
    "variants": [
     {
      "id": "median",
      "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 35056,
-     "drawCalls": 89,
+     "triangles": 35704,
+     "drawCalls": 93,
      "animChannels": 240,
-     "textureBytes": 202940,
-     "vramBytes": 34253480,
+     "textureBytes": 1322212,
+     "vramBytes": 39845884,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
@@ -2230,11 +2374,11 @@
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 27040,
-     "drawCalls": 53,
+     "triangles": 27688,
+     "drawCalls": 57,
      "animChannels": 96,
-     "textureBytes": 80078,
-     "vramBytes": 33555795,
+     "textureBytes": 1199350,
+     "vramBytes": 39148199,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
@@ -2264,6 +2408,22 @@
     {
      "id": "assets/models/props/torch.glb",
      "count": 2
+    },
+    {
+     "id": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Base.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/scenery-cc0/christmas__MiniTree.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/scenery-cc0/lunar-year__Rock01.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/scenery-cc0/crystal-crossroads__Stairs.glb",
+     "count": 1
     },
     {
      "id": "assets/models/hex/trees_medium.glb",
@@ -2307,18 +2467,18 @@
     },
     {
      "label": "接地陰影（thin instance）",
-     "triangles": 3500,
+     "triangles": 4060,
      "meshes": 1,
-     "note": "25 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+     "note": "29 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
     }
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 65818,
-   "drawCalls": 117,
+   "triangles": 67700,
+   "drawCalls": 124,
    "animChannels": 219,
-   "textureBytes": 492716,
-   "vramBytes": 56907082,
+   "textureBytes": 1284622,
+   "vramBytes": 63897587,
    "limits": [
     {
      "key": "triangles",
@@ -2367,31 +2527,31 @@
     {
      "id": "median",
      "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 36610,
-     "drawCalls": 117,
+     "triangles": 38492,
+     "drawCalls": 124,
      "animChannels": 243,
-     "textureBytes": 323061,
-     "vramBytes": 45700434,
+     "textureBytes": 1114967,
+     "vramBytes": 52690939,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "warn"
+      "vramBytes": "over"
      }
     },
     {
      "id": "best",
      "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 28594,
-     "drawCalls": 81,
+     "triangles": 30476,
+     "drawCalls": 88,
      "animChannels": 99,
-     "textureBytes": 200199,
-     "vramBytes": 45002749,
+     "textureBytes": 992105,
+     "vramBytes": 51993254,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
-      "vramBytes": "warn"
+      "vramBytes": "over"
      }
     }
    ]
@@ -2438,6 +2598,14 @@
      "count": 2
     },
     {
+     "id": "assets/models/scenery-cc0/lunar-year__Rock02.glb",
+     "count": 6
+    },
+    {
+     "id": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Cluster.glb",
+     "count": 2
+    },
+    {
      "id": "assets/models/imported/cloud.glb",
      "count": 12
     }
@@ -2451,9 +2619,9 @@
     },
     {
      "label": "障礙柱 + 牆",
-     "triangles": 1920,
-     "meshes": 20,
-     "note": "20 根 CreateCylinder(tessellation 24) × 96 面 —— 這個競技場沒有 pillar 擺設，所以柱子全留著。"
+     "triangles": 2304,
+     "meshes": 24,
+     "note": "24 根 CreateCylinder(tessellation 24) × 96 面 —— 這個競技場沒有 pillar 擺設，所以柱子全留著。"
     },
     {
      "label": "出生台座",
@@ -2463,18 +2631,18 @@
     },
     {
      "label": "接地陰影（thin instance）",
-     "triangles": 7840,
+     "triangles": 8960,
      "meshes": 1,
-     "note": "56 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+     "note": "64 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
     }
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 94200,
-   "drawCalls": 141,
+   "triangles": 103324,
+   "drawCalls": 155,
    "animChannels": 216,
-   "textureBytes": 435672,
-   "vramBytes": 67829748,
+   "textureBytes": 922253,
+   "vramBytes": 70625950,
    "limits": [
     {
      "key": "triangles",
@@ -10152,6 +10320,2631 @@
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
+   "id": "assets/models/scenery-cc0/christmas__Fence.glb",
+   "path": "assets/models/scenery-cc0/christmas__Fence.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 6,
+   "vertices": 12,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 43222,
+   "vramBytes": 1398101,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 43222
+    }
+   ],
+   "fileBytes": 45072,
+   "worstCount": 1,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.shiganshina",
+     "label": "競技場擺設 · 希干希納",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "near-zero",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/christmas__Lamp01.glb",
+   "path": "assets/models/scenery-cc0/christmas__Lamp01.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 262,
+   "vertices": 430,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 140888,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 112985
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 27903
+    }
+   ],
+   "fileBytes": 159024,
+   "worstCount": 1,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.shiganshina",
+     "label": "競技場擺設 · 希干希納",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/christmas__MiniTree.glb",
+   "path": "assets/models/scenery-cc0/christmas__MiniTree.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 24,
+   "vertices": 54,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 112985,
+   "vramBytes": 1398101,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 112985
+    }
+   ],
+   "fileBytes": 116532,
+   "worstCount": 1,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.world-tree",
+     "label": "競技場擺設 · 世界樹核心",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "near-zero",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/christmas__SnowBall.glb",
+   "path": "assets/models/scenery-cc0/christmas__SnowBall.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 204,
+   "vertices": 210,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 112985,
+   "vramBytes": 1398101,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 112985
+    }
+   ],
+   "fileBytes": 122576,
+   "worstCount": 1,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.holy-grail",
+     "label": "競技場擺設 · 大聖杯洞窟",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/crystal-crossroads__Column_SmallBroken_01.glb",
+   "path": "assets/models/scenery-cc0/crystal-crossroads__Column_SmallBroken_01.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 564,
+   "vertices": 911,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 299575,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 115399
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 184176
+    }
+   ],
+   "fileBytes": 335944,
+   "worstCount": 1,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.infinity-castle",
+     "label": "競技場擺設 · 無限城",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Base.glb",
+   "path": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Base.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 352,
+   "vertices": 354,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 8164,
+   "vramBytes": 1398101,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 8164
+    }
+   ],
+   "fileBytes": 24252,
+   "worstCount": 1,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.holy-grail",
+     "label": "競技場擺設 · 大聖杯洞窟",
+     "count": 1,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.world-tree",
+     "label": "競技場擺設 · 世界樹核心",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Cluster.glb",
+   "path": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Cluster.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 3540,
+   "vertices": 3917,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 115399,
+   "vramBytes": 1398101,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 115399
+    }
+   ],
+   "fileBytes": 264680,
+   "worstCount": 2,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.dota",
+     "label": "競技場擺設 · Dota 三路河道（迷你）",
+     "count": 2,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/crystal-crossroads__Crystal_ClusterSurrounded.glb",
+   "path": "assets/models/scenery-cc0/crystal-crossroads__Crystal_ClusterSurrounded.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 2950,
+   "vertices": 3232,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 115399,
+   "vramBytes": 1398101,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 115399
+    }
+   ],
+   "fileBytes": 239216,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Small_01.glb",
+   "path": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Small_01.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 314,
+   "vertices": 334,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 115399,
+   "vramBytes": 1398101,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 115399
+    }
+   ],
+   "fileBytes": 130688,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Small_02.glb",
+   "path": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Small_02.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 284,
+   "vertices": 382,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 115399,
+   "vramBytes": 1398101,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 115399
+    }
+   ],
+   "fileBytes": 132004,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Small_03.glb",
+   "path": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Small_03.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 284,
+   "vertices": 382,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 115399,
+   "vramBytes": 1398101,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 115399
+    }
+   ],
+   "fileBytes": 132008,
+   "worstCount": 1,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.holy-grail",
+     "label": "競技場擺設 · 大聖杯洞窟",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Small_04.glb",
+   "path": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Small_04.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 284,
+   "vertices": 382,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 115399,
+   "vramBytes": 1398101,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 115399
+    }
+   ],
+   "fileBytes": 132004,
+   "worstCount": 1,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.holy-grail",
+     "label": "競技場擺設 · 大聖杯洞窟",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/crystal-crossroads__Platform_Step.glb",
+   "path": "assets/models/scenery-cc0/crystal-crossroads__Platform_Step.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 74,
+   "vertices": 140,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 299575,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 115399
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 184176
+    }
+   ],
+   "fileBytes": 308308,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/crystal-crossroads__Roof_Hole_01.glb",
+   "path": "assets/models/scenery-cc0/crystal-crossroads__Roof_Hole_01.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 2692,
+   "vertices": 4294,
+   "drawCalls": 4,
+   "materials": 4,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 3,
+   "textureBytes": 362364,
+   "vramBytes": 4194303,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 115399
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 62789
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 184176
+    }
+   ],
+   "fileBytes": 520872,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/crystal-crossroads__Stairs.glb",
+   "path": "assets/models/scenery-cc0/crystal-crossroads__Stairs.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 916,
+   "vertices": 1512,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 299575,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 184176
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 115399
+    }
+   ],
+   "fileBytes": 357272,
+   "worstCount": 1,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.world-tree",
+     "label": "競技場擺設 · 世界樹核心",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/crystal-crossroads__Vase_Broken.glb",
+   "path": "assets/models/scenery-cc0/crystal-crossroads__Vase_Broken.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 2539,
+   "vertices": 3144,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 299575,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 115399
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 184176
+    }
+   ],
+   "fileBytes": 419276,
+   "worstCount": 1,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.infinity-castle",
+     "label": "競技場擺設 · 無限城",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/crystal-crossroads__Vase_Large.glb",
+   "path": "assets/models/scenery-cc0/crystal-crossroads__Vase_Large.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 1672,
+   "vertices": 1938,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 299575,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 184176
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 115399
+    }
+   ],
+   "fileBytes": 375460,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/crystal-crossroads__Wall_Broken_01.glb",
+   "path": "assets/models/scenery-cc0/crystal-crossroads__Wall_Broken_01.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 368,
+   "vertices": 648,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 299575,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 115399
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 184176
+    }
+   ],
+   "fileBytes": 326356,
+   "worstCount": 1,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.infinity-castle",
+     "label": "競技場擺設 · 無限城",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/crystal-crossroads__Wall_CornerBroken.glb",
+   "path": "assets/models/scenery-cc0/crystal-crossroads__Wall_CornerBroken.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 124,
+   "vertices": 230,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 299575,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 115399
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 184176
+    }
+   ],
+   "fileBytes": 311468,
+   "worstCount": 1,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.shiganshina",
+     "label": "競技場擺設 · 希干希納",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/crystal-crossroads__Wall_Small_01.glb",
+   "path": "assets/models/scenery-cc0/crystal-crossroads__Wall_Small_01.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 148,
+   "vertices": 296,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 299575,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 115399
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 184176
+    }
+   ],
+   "fileBytes": 313728,
+   "worstCount": 1,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.shiganshina",
+     "label": "競技場擺設 · 希干希納",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/lunar-year__ArchBanner.glb",
+   "path": "assets/models/scenery-cc0/lunar-year__ArchBanner.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 112,
+   "vertices": 164,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 770506,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 346753
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 423753
+    }
+   ],
+   "fileBytes": 779992,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/lunar-year__Banner.glb",
+   "path": "assets/models/scenery-cc0/lunar-year__Banner.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 276,
+   "vertices": 386,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 3,
+   "textureBytes": 991649,
+   "vramBytes": 4194303,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 221143
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 346753
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 423753
+    }
+   ],
+   "fileBytes": 1009288,
+   "worstCount": 1,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.heavens-arena",
+     "label": "競技場擺設 · 天空鬥技場",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/lunar-year__Bell.glb",
+   "path": "assets/models/scenery-cc0/lunar-year__Bell.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 132,
+   "vertices": 260,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 846215,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 422462
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 423753
+    }
+   ],
+   "fileBytes": 857940,
+   "worstCount": 2,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.godie",
+     "label": "競技場擺設 · 去死團的逆襲 EX 2.2s",
+     "count": 2,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/lunar-year__BellStructure.glb",
+   "path": "assets/models/scenery-cc0/lunar-year__BellStructure.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 240,
+   "vertices": 452,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 3,
+   "textureBytes": 1217397,
+   "vramBytes": 4194303,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 423753
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 371182
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 422462
+    }
+   ],
+   "fileBytes": 1236928,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/lunar-year__Column.glb",
+   "path": "assets/models/scenery-cc0/lunar-year__Column.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 144,
+   "vertices": 150,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 3,
+   "textureBytes": 1140397,
+   "vramBytes": 4194303,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 346753
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 371182
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 422462
+    }
+   ],
+   "fileBytes": 1149660,
+   "worstCount": 5,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.royale",
+     "label": "競技場擺設 · 終局大混戰",
+     "count": 5,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/lunar-year__ColumnBase.glb",
+   "path": "assets/models/scenery-cc0/lunar-year__ColumnBase.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 120,
+   "vertices": 158,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 342225,
+   "vramBytes": 1398101,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 342225
+    }
+   ],
+   "fileBytes": 349492,
+   "worstCount": 5,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.royale",
+     "label": "競技場擺設 · 終局大混戰",
+     "count": 5,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/lunar-year__Door.glb",
+   "path": "assets/models/scenery-cc0/lunar-year__Door.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 252,
+   "vertices": 338,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 3,
+   "textureBytes": 1140397,
+   "vramBytes": 4194303,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 422462
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 346753
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 371182
+    }
+   ],
+   "fileBytes": 1156364,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/lunar-year__EntranceStairs.glb",
+   "path": "assets/models/scenery-cc0/lunar-year__EntranceStairs.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 136,
+   "vertices": 244,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 717935,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 346753
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 371182
+    }
+   ],
+   "fileBytes": 729028,
+   "worstCount": 1,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.frieren",
+     "label": "競技場擺設 · 芙莉蓮迷宮",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/lunar-year__Fence01.glb",
+   "path": "assets/models/scenery-cc0/lunar-year__Fence01.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 108,
+   "vertices": 136,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 3,
+   "textureBytes": 1140397,
+   "vramBytes": 4194303,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 346753
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 371182
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 422462
+    }
+   ],
+   "fileBytes": 1149004,
+   "worstCount": 1,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.frieren",
+     "label": "競技場擺設 · 芙莉蓮迷宮",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/lunar-year__Fence02.glb",
+   "path": "assets/models/scenery-cc0/lunar-year__Fence02.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 498,
+   "vertices": 636,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 3,
+   "textureBytes": 1140397,
+   "vramBytes": 4194303,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 346753
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 371182
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 422462
+    }
+   ],
+   "fileBytes": 1167384,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/lunar-year__Lamp01.glb",
+   "path": "assets/models/scenery-cc0/lunar-year__Lamp01.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 194,
+   "vertices": 353,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 460361,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 342840
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 117521
+    }
+   ],
+   "fileBytes": 475648,
+   "worstCount": 1,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.frieren",
+     "label": "競技場擺設 · 芙莉蓮迷宮",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/lunar-year__Lamp02.glb",
+   "path": "assets/models/scenery-cc0/lunar-year__Lamp02.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 197,
+   "vertices": 354,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 460361,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 342840
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 117521
+    }
+   ],
+   "fileBytes": 475700,
+   "worstCount": 1,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.frieren",
+     "label": "競技場擺設 · 芙莉蓮迷宮",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/lunar-year__Lamp03.glb",
+   "path": "assets/models/scenery-cc0/lunar-year__Lamp03.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 221,
+   "vertices": 246,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 460361,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 342840
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 117521
+    }
+   ],
+   "fileBytes": 472380,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/lunar-year__Lamp04.glb",
+   "path": "assets/models/scenery-cc0/lunar-year__Lamp04.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 221,
+   "vertices": 246,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 460361,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 342840
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 117521
+    }
+   ],
+   "fileBytes": 472380,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/lunar-year__LampWreath.glb",
+   "path": "assets/models/scenery-cc0/lunar-year__LampWreath.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 625,
+   "vertices": 734,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 3,
+   "textureBytes": 884114,
+   "vramBytes": 4194303,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 117521
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 423753
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 342840
+    }
+   ],
+   "fileBytes": 915184,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/lunar-year__MainAltar.glb",
+   "path": "assets/models/scenery-cc0/lunar-year__MainAltar.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 86,
+   "vertices": 160,
+   "drawCalls": 4,
+   "materials": 4,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 4,
+   "textureBytes": 1564150,
+   "vramBytes": 5592404,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 422462
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 346753
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 371182
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 423753
+    }
+   ],
+   "fileBytes": 1574432,
+   "worstCount": 2,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.godie",
+     "label": "競技場擺設 · 去死團的逆襲 EX 2.2s",
+     "count": 2,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/lunar-year__OutterLamp.glb",
+   "path": "assets/models/scenery-cc0/lunar-year__OutterLamp.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 578,
+   "vertices": 631,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 764687,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 422462
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 342225
+    }
+   ],
+   "fileBytes": 791028,
+   "worstCount": 1,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.infinity-castle",
+     "label": "競技場擺設 · 無限城",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/lunar-year__Rock01.glb",
+   "path": "assets/models/scenery-cc0/lunar-year__Rock01.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 30,
+   "vertices": 20,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 371182,
+   "vramBytes": 1398101,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 371182
+    }
+   ],
+   "fileBytes": 373460,
+   "worstCount": 1,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.world-tree",
+     "label": "競技場擺設 · 世界樹核心",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "near-zero",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/lunar-year__Rock02.glb",
+   "path": "assets/models/scenery-cc0/lunar-year__Rock02.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 90,
+   "vertices": 60,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 1,
+   "textureBytes": 371182,
+   "vramBytes": 1398101,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 371182
+    }
+   ],
+   "fileBytes": 375104,
+   "worstCount": 6,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.dota",
+     "label": "競技場擺設 · Dota 三路河道（迷你）",
+     "count": 6,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/lunar-year__RoomDoor.glb",
+   "path": "assets/models/scenery-cc0/lunar-year__RoomDoor.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 156,
+   "vertices": 156,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 717935,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 346753
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 371182
+    }
+   ],
+   "fileBytes": 726328,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/lunar-year__RoomRoof.glb",
+   "path": "assets/models/scenery-cc0/lunar-year__RoomRoof.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 92,
+   "vertices": 88,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 793644,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 371182
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 422462
+    }
+   ],
+   "fileBytes": 799656,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/medieval-fair__Fair_Flags_Line.glb",
+   "path": "assets/models/scenery-cc0/medieval-fair__Fair_Flags_Line.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 1268,
+   "vertices": 1696,
+   "drawCalls": 4,
+   "materials": 3,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 6,
+   "textureBytes": 1966536,
+   "vramBytes": 16777214,
+   "maxTextureEdge": 1024,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 278576
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 344306
+    },
+    {
+     "w": 1024,
+     "h": 1024,
+     "format": "png",
+     "diskBytes": 355270
+    },
+    {
+     "w": 1024,
+     "h": 1024,
+     "format": "png",
+     "diskBytes": 675148
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 118791
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 194445
+    }
+   ],
+   "fileBytes": 2033676,
+   "worstCount": 2,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.colosseum",
+     "label": "競技場擺設 · 羅馬大擂台（室外）",
+     "count": 2,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.heavens-arena",
+     "label": "競技場擺設 · 天空鬥技場",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "warn",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/medieval-fair__Lamp.glb",
+   "path": "assets/models/scenery-cc0/medieval-fair__Lamp.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 733,
+   "vertices": 934,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 4,
+   "textureBytes": 573830,
+   "vramBytes": 5592404,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 189061
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 118791
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 194445
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 71533
+    }
+   ],
+   "fileBytes": 612264,
+   "worstCount": 4,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.castle",
+     "label": "競技場擺設 · 城堡競技場（室內）",
+     "count": 4,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.heavens-arena",
+     "label": "競技場擺設 · 天空鬥技場",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/medieval-fair__Roof.glb",
+   "path": "assets/models/scenery-cc0/medieval-fair__Roof.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 2962,
+   "vertices": 4896,
+   "drawCalls": 6,
+   "materials": 5,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 7,
+   "textureBytes": 1655981,
+   "vramBytes": 18175315,
+   "maxTextureEdge": 1024,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 118791
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 194445
+    },
+    {
+     "w": 1024,
+     "h": 1024,
+     "format": "png",
+     "diskBytes": 355270
+    },
+    {
+     "w": 1024,
+     "h": 1024,
+     "format": "png",
+     "diskBytes": 675148
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 71533
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 152313
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 88481
+    }
+   ],
+   "fileBytes": 1837788,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/tomb-chaser-2__Column01_Art.glb",
+   "path": "assets/models/scenery-cc0/tomb-chaser-2__Column01_Art.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 192,
+   "vertices": 336,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 203141,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 82238
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 120903
+    }
+   ],
+   "fileBytes": 216684,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/tomb-chaser-2__Rock01_Art.glb",
+   "path": "assets/models/scenery-cc0/tomb-chaser-2__Rock01_Art.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 30,
+   "vertices": 60,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 635875,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 235166
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 400709
+    }
+   ],
+   "fileBytes": 639856,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "near-zero",
+   "verdicts": {},
+   "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/tomb-chaser-2__Shrine_Art.glb",
+   "path": "assets/models/scenery-cc0/tomb-chaser-2__Shrine_Art.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 186,
+   "vertices": 312,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 635875,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 235166
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 400709
+    }
+   ],
+   "fileBytes": 648860,
+   "worstCount": 1,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.nazarick",
+     "label": "競技場擺設 · 納薩力克大墳墓",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/tomb-chaser-2__TempleBaseStaircase_Art.glb",
+   "path": "assets/models/scenery-cc0/tomb-chaser-2__TempleBaseStaircase_Art.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 106,
+   "vertices": 152,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 5,
+   "textureBytes": 1194782,
+   "vramBytes": 6990505,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 145593
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 196868
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 77403
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 264295
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 510623
+    }
+   ],
+   "fileBytes": 1203516,
+   "worstCount": 1,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.nazarick",
+     "label": "競技場擺設 · 納薩力克大墳墓",
+     "count": 1,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/tomb-chaser-2__TempleBeam01_Art.glb",
+   "path": "assets/models/scenery-cc0/tomb-chaser-2__TempleBeam01_Art.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 30,
+   "vertices": 44,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 683862,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 282746
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 401116
+    }
+   ],
+   "fileBytes": 687264,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "near-zero",
+   "verdicts": {},
+   "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/tomb-chaser-2__TempleColumn_Art.glb",
+   "path": "assets/models/scenery-cc0/tomb-chaser-2__TempleColumn_Art.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 42,
+   "vertices": 56,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 683862,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 282746
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 401116
+    }
+   ],
+   "fileBytes": 687752,
+   "worstCount": 8,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.colosseum",
+     "label": "競技場擺設 · 羅馬大擂台（室外）",
+     "count": 8,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.heavens-arena",
+     "label": "競技場擺設 · 天空鬥技場",
+     "count": 1,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.nazarick",
+     "label": "競技場擺設 · 納薩力克大墳墓",
+     "count": 1,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.skeleton",
+     "label": "競技場擺設 · 新手競技場",
+     "count": 2,
+     "detail": ""
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/scenery-cc0/tomb-chaser-2__TempleRoof01_Art.glb",
+   "path": "assets/models/scenery-cc0/tomb-chaser-2__TempleRoof01_Art.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 26,
+   "vertices": 48,
+   "drawCalls": 4,
+   "materials": 4,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 8,
+   "textureBytes": 1875054,
+   "vramBytes": 11184808,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 235307
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 147945
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 282746
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 401116
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 205932
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 304214
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 270134
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 27660
+    }
+   ],
+   "fileBytes": 1882444,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "near-zero",
+   "verdicts": {},
+   "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/tomb-chaser-2__TempleRoof02_Art.glb",
+   "path": "assets/models/scenery-cc0/tomb-chaser-2__TempleRoof02_Art.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 20,
+   "vertices": 36,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 6,
+   "textureBytes": 1364908,
+   "vramBytes": 8388606,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 270134
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 27660
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 282746
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 401116
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 235307
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 147945
+    }
+   ],
+   "fileBytes": 1370592,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "near-zero",
+   "verdicts": {},
+   "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
+  },
+  {
+   "id": "assets/models/scenery-cc0/tomb-chaser-2__TempleWall01_Art.glb",
+   "path": "assets/models/scenery-cc0/tomb-chaser-2__TempleWall01_Art.glb",
+   "group": "scenery-cc0",
+   "shipping": true,
+   "role": "arena-decor",
+   "triangles": 2,
+   "vertices": 4,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 0,
+   "joints": 0,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 2,
+   "textureBytes": 435410,
+   "vramBytes": 2796202,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 207949
+    },
+    {
+     "w": 512,
+     "h": 512,
+     "format": "png",
+     "diskBytes": 227461
+    }
+   ],
+   "fileBytes": 437352,
+   "worstCount": 6,
+   "usedBy": [
+    {
+     "kind": "COMBAT:arena.castle",
+     "label": "競技場擺設 · 城堡競技場（室內）",
+     "count": 6,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.nazarick",
+     "label": "競技場擺設 · 納薩力克大墳墓",
+     "count": 1,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.skeleton",
+     "label": "競技場擺設 · 新手競技場",
+     "count": 2,
+     "detail": ""
+    }
+   ],
+   "broken": "near-zero",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
+  },
+  {
    "id": "assets/models/shop/merchant.glb",
    "path": "assets/models/shop/merchant.glb",
    "group": "shop",
@@ -12394,14 +15187,14 @@
   }
  },
  "totals": {
-  "files": 222,
-  "shipping": 182,
-  "triangles": 171015,
-  "shippingTriangles": 146899,
-  "textureBytes": 19175797,
-  "vramBytes": 219592626,
+  "files": 275,
+  "shipping": 235,
+  "triangles": 198721,
+  "shippingTriangles": 174605,
+  "textureBytes": 51710368,
+  "vramBytes": 413928669,
   "zeroGeometry": 11,
-  "nearZero": 25,
-  "unused": 109
+  "nearZero": 33,
+  "unused": 130
  }
 }

@@ -45,7 +45,7 @@ import engine_vocab as V  # noqa: E402  — python 端唯一的引擎詞彙來�
 DOC = REPO / "docs" / "技能編輯器引擎須知 20260811.md"
 CMD = "pnpm contract:numbers"
 
-BLOCKS = ("contract-caps", "contract-env", "contract-range", "contract-bands")
+BLOCKS = ("contract-caps", "contract-env", "contract-range", "contract-bands", "contract-effects")
 
 BANDS = ["極小", "小", "中", "大", "極大"]
 
@@ -289,11 +289,43 @@ def table_bands():
     return "\n".join(out)
 
 
+def table_effects():
+    """第十章的 effect kind 清單 —— 標題裡的**數字**與清單本身都從註冊表推導。
+
+    ⚠️ 這一段在 2026-08-19 之前是散文：小標寫「37 個 effect kind」、清單列 37 個名字，
+    而引擎已經是 39（`carry` / `convertTeam` 兩個都不在上面）。
+    ⛔ 手改成 39 只是把過期往後推一次 —— 所以把它整段納進產生區塊。
+    """
+    kinds = V.effect_kinds()
+    width = max(len(k) for k in kinds) + 1
+    rows = []
+    for i in range(0, len(kinds), COLS):
+        rows.append("".join(k.ljust(width) for k in kinds[i:i + COLS]).rstrip())
+    out = [f"### {len(kinds)} 個 effect kind", "", "```"]
+    out.extend(rows)
+    out.append("```")
+    return "\n".join(out)
+
+
+# 一行印幾個 kind。⛔ 不是「看起來剛好」——它決定這一段會不會在 GitHub 的
+# 程式碼區塊裡橫向捲動，而那正是外部作者第一眼會看到的東西。
+COLS = 5
+
 BODIES = {
     "contract-caps": table_caps,
     "contract-env": table_env,
     "contract-range": table_range,
     "contract-bands": table_bands,
+    "contract-effects": table_effects,
+}
+
+DEFAULT_SOURCE = "`content/config/`"
+
+# 區塊 → (出處, 要不要蓋內容版號)。
+# ⚠️ `contract-effects` **不蓋版號**：它一格 `content/` 都沒讀，蓋上去會讓它在每一次
+#    內容改動時被重寫一遍，而那個版號說的是一件與這一段無關的事。
+SOURCES = {
+    "contract-effects": ("`packages/shared/src/sim/effects/effectRegistry.ts`（引擎註冊表）", False),
 }
 
 
@@ -313,12 +345,16 @@ def main():
     actions = []
     for name in BLOCKS:
         body = BODIES[name]()
-        body += f"\n\n<sub>⚙️ 由 `{CMD}` 從 `content/config/` 產生 · {content_version()} · ⛔ 不要手改這一段</sub>"
+        # ⛔ 出處要逐塊講對。全部掛 `content/config/` 的話，effect kind 那一塊會帶著一個
+        #    假的出處 —— 它讀的是引擎註冊表，而下一個人會照著那句話去改錯的檔。
+        src, stamped = SOURCES.get(name, (DEFAULT_SOURCE, True))
+        stamp = f" · {content_version()}" if stamped else ""
+        body += f"\n\n<sub>⚙️ 由 `{CMD}` 從 {src} 產生{stamp} · ⛔ 不要手改這一段</sub>"
         text, how = splice(text, name, body)
         actions.append(f"{name}({how})")
 
     if text == original:
-        print(f"✓ {DOC.name} 的三張數字表與 content/config/ 一致")
+        print(f"✓ {DOC.name} 的 {len(BLOCKS)} 個產生區塊都是最新的")
         return 0
     if check_only:
         sys.exit(f"stale — 請跑 `{CMD}`：{', '.join(actions)}")

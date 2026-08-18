@@ -8635,6 +8635,45 @@
     },
     "props": [
       {
+        "model": "assets/models/scenery/stand_section.glb",
+        "count": 6,
+        "bandFrom": 0.955,
+        "bandTo": 0.99,
+        "arcFromDeg": 0,
+        "arcSpanDeg": 360,
+        "scaleMin": 1.1,
+        "scaleMax": 1.28,
+        "facing": "faceIn",
+        "rotQuarter": 0,
+        "seed": 151
+      },
+      {
+        "model": "assets/models/scenery/hanging_banner.glb",
+        "count": 4,
+        "bandFrom": 0.97,
+        "bandTo": 1,
+        "arcFromDeg": 0,
+        "arcSpanDeg": 360,
+        "scaleMin": 0.95,
+        "scaleMax": 1.05,
+        "facing": "faceIn",
+        "rotQuarter": 0,
+        "seed": 152
+      },
+      {
+        "model": "assets/models/scenery/torii.glb",
+        "count": 2,
+        "bandFrom": 0.94,
+        "bandTo": 0.98,
+        "arcFromDeg": 0,
+        "arcSpanDeg": 360,
+        "scaleMin": 0.9,
+        "scaleMax": 1,
+        "facing": "faceIn",
+        "rotQuarter": 0,
+        "seed": 153
+      },
+      {
         "model": "assets/models/props/banner_shield_blue.glb",
         "count": 6,
         "bandFrom": 0.97,
@@ -8717,6 +8756,34 @@
       "z": 1,
       "rotQuarter": 0,
       "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/tomb-chaser-2__TempleColumn_Art.glb",
+      "x": -21,
+      "z": -15,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/medieval-fair__Fair_Flags_Line.glb",
+      "x": 21,
+      "z": -15,
+      "rotQuarter": 1,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/lunar-year__Banner.glb",
+      "x": -21,
+      "z": 15,
+      "rotQuarter": 2,
+      "scale": 0.67
+    },
+    {
+      "model": "assets/models/scenery-cc0/medieval-fair__Lamp.glb",
+      "x": 21,
+      "z": 15,
+      "rotQuarter": 3,
+      "scale": 0.44
     },
     {
       "model": "assets/models/props/crates_stacked.glb",

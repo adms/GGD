@@ -1,84 +1,84 @@
 {
   "collection": "arenas",
-  "hash": "963951a6b549",
+  "hash": "11923c899d34",
   "entries": [
     {
       "id": "arena.castle",
       "path": "arenas/arena.castle.json",
-      "hash": "f4bdc00bc8cb",
-      "size": 9941
+      "hash": "95d84ed8f7d2",
+      "size": 12318
     },
     {
       "id": "arena.colosseum",
       "path": "arenas/arena.colosseum.json",
-      "hash": "f8bf1be46438",
-      "size": 17556
+      "hash": "e0a325b27d95",
+      "size": 19964
     },
     {
       "id": "arena.dota",
       "path": "arenas/arena.dota.json",
-      "hash": "b7a394011b76",
-      "size": 13019
+      "hash": "64edda3d00b9",
+      "size": 15408
     },
     {
       "id": "arena.frieren",
       "path": "arenas/arena.frieren.json",
-      "hash": "f332d8cd4af7",
-      "size": 101724
+      "hash": "44410ab579df",
+      "size": 103607
     },
     {
       "id": "arena.godie",
       "path": "arenas/arena.godie.json",
-      "hash": "c37f9176746a",
-      "size": 18387
+      "hash": "2deada1adc4d",
+      "size": 19729
     },
     {
       "id": "arena.heavens-arena",
       "path": "arenas/arena.heavens-arena.json",
-      "hash": "923d9cfb98e0",
-      "size": 126841
+      "hash": "099a2efe1c33",
+      "size": 128435
     },
     {
       "id": "arena.holy-grail",
       "path": "arenas/arena.holy-grail.json",
-      "hash": "2ec9d62ca9b2",
-      "size": 116452
+      "hash": "62e9e79ed3f3",
+      "size": 118073
     },
     {
       "id": "arena.infinity-castle",
       "path": "arenas/arena.infinity-castle.json",
-      "hash": "eac74665b494",
-      "size": 118953
+      "hash": "0cf255132367",
+      "size": 121217
     },
     {
       "id": "arena.nazarick",
       "path": "arenas/arena.nazarick.json",
-      "hash": "84a86df83b17",
-      "size": 99469
+      "hash": "5d536234a166",
+      "size": 101406
     },
     {
       "id": "arena.royale",
       "path": "arenas/arena.royale.json",
-      "hash": "b2fca3b9e7ee",
-      "size": 2772
+      "hash": "fe7efff742db",
+      "size": 4724
     },
     {
       "id": "arena.shiganshina",
       "path": "arenas/arena.shiganshina.json",
-      "hash": "94f2332e4f7e",
-      "size": 104581
+      "hash": "5eae8e103a9d",
+      "size": 106501
     },
     {
       "id": "arena.skeleton",
       "path": "arenas/arena.skeleton.json",
-      "hash": "ef479e6e76ec",
-      "size": 5422
+      "hash": "317205c3489f",
+      "size": 6579
     },
     {
       "id": "arena.world-tree",
       "path": "arenas/arena.world-tree.json",
-      "hash": "cf11feebb30e",
-      "size": 117242
+      "hash": "234f6ccf78e8",
+      "size": 118828
     }
   ]
 }

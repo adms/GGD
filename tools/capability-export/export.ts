@@ -204,6 +204,65 @@ export function renderMarkdown(m: RuntimeCapabilityManifest): string {
       "同一份 `vfx@1` 文件被兩支技能用，兩支可以各自放大、轉色、改仰角，⛔ 不必複製一份文件。",
   );
   L.push("");
+  L.push("## 8. 文件授權面 —— 一支技能／一件道具／一個狀態**本身**寫得出什麼");
+  L.push("");
+  L.push(
+    "⚠️ **這一節在 2026-08-18 之前完全不存在**，而它少的是最基本的一層：" +
+      "第 3 節告訴你一支技能可以做出哪些**效果**，這一節才告訴你" +
+      "「**這一支是指定還是範圍、射得多遠、多久放一次、耗多少魔**」。" +
+      "在它之前 `castType` / `range` / `hitRadius` / `craftRole` 在整份契約裡出現 **0 次** —— " +
+      "⛔ 所以照著舊契約產出的技能，那幾格一律是引擎的預設，而且**不會收到任何錯誤**。",
+  );
+  L.push("");
+  L.push(
+    "讀法和第 7 節一樣：鍵是**授權的位置**（你在哪一份 JSON 的哪一層寫它），" +
+      "值是那一層收得下的欄位名，全部從出貨的 schema 推導。" +
+      "⚠️ `id` 與 `schema` 是每一份文件都有的樣板欄位，不是這個面的特色。" +
+      "⚠️ 每一格的**上下界與語意**看另一份文件（這裡只回答「這個名字存不存在」）。",
+  );
+  L.push("");
+  L.push("| 寫在哪 | 欄位 |");
+  L.push("|---|---|");
+  for (const [k, fields] of Object.entries(m.docSurface)) {
+    L.push(`| \`${k}\` | ${fields.map((f) => `\`${f}\``).join(" · ")} |`);
+  }
+  L.push("");
+  L.push(
+    "⭐ `ability@1.marks[]` 是**巢狀**的（只看 `ability@1` 只看得到 `marks` 這個名字），" +
+      "而且 `item@1.marks[]` 用的是**同一份**定義 —— 一件道具給的疊層和一支技能給的疊層" +
+      "寫法完全一樣。⚠️ `template@1` 是**參數化的技能骨架**（第 5 節那些家族的文件形狀），" +
+      "⛔ 不是另一種技能。",
+  );
+  L.push("");
+  L.push("## 9. 參數名 —— effect／hook／條件／靈氣各自收得下哪些格子");
+  L.push("");
+  L.push(
+    "⚠️ **這一節在 2026-08-19 之前只存在於隨附的 JSON 裡**，人看的這一份一個字都沒印。" +
+      "而 `effectFields` 的 201 個名字有 **109 個**在整份文件裡出現 0 次 —— " +
+      "第 3 節告訴你有哪些 kind，卻沒有任何一節告訴你**一個 kind 裡面寫得出哪些參數**。" +
+      "⛔ 同一個安靜的失敗：不會被拒絕，只是不知道那些格子存在。",
+  );
+  L.push("");
+  L.push(
+    "⚠️ 下面每一族都是**所有分支的聯集** —— 一個名字出現在這裡代表「某一個 kind／某一顆" +
+      "條件葉收得下它」，⛔ 不代表每一個都收。哪一個 kind 配哪幾格、以及每一格的" +
+      "上下界與語意，看另一份文件。",
+  );
+  L.push("");
+  const NAME_FAMILIES: readonly { label: string; names: readonly string[] }[] = [
+    { label: "effect 參數（所有 kind 的聯集）", names: m.effectFields },
+    { label: "條件葉種類", names: m.conditionLeafKinds },
+    { label: "條件葉參數", names: m.conditionLeafFields },
+    { label: "hook 參數", names: m.hookFields },
+    { label: "靈氣參數", names: m.auraFields },
+    { label: "`ability@1` 頂層欄位", names: m.abilityFields },
+  ];
+  for (const f of NAME_FAMILIES) {
+    L.push(`**${f.label}**（${f.names.length}）`);
+    L.push("");
+    L.push(f.names.map((k) => `\`${k}\``).join(" · "));
+    L.push("");
+  }
   L.push("---");
   L.push("");
   L.push(

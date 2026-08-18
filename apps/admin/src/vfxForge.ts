@@ -263,6 +263,13 @@ export const GLOBAL_BOUNDS: Readonly<Record<string, ForgeBound>> = {
   projectileRadiusGain: { min: 0, max: 3 },
   // 彈道飛在離地多高。下界 0.2 = 再低就埋進地板;上界 4 = 再高就飛出構圖。
   projectileFlyHeightY: { min: 0.2, max: 4 },
+  // GH#379 —— 五個有方向的形狀各自的仰角。上下界 −180/180 和 `zVfxOrient.pitchDeg`
+  // 同一條線;推導寫在 shared 的 `DEFAULT_FAMILY_PITCH_DEG` 上面(錐角 × 施法高度)。
+  beamPitchDeg: { min: -180, max: 180 },
+  slashPitchDeg: { min: -180, max: 180 },
+  boltPitchDeg: { min: -180, max: 180 },
+  dashPitchDeg: { min: -180, max: 180 },
+  tornadoPitchDeg: { min: -180, max: 180 },
 };
 
 export const FAMILY_BOUNDS: Readonly<Record<string, ForgeBound>> = {
@@ -293,6 +300,12 @@ export const GLOBAL_FIELDS = [
   "oneShotMaxLifeSec",
   "projectileRadiusGain",
   "projectileFlyHeightY",
+  // GH#379 —— 一格一個有方向的家族。⛔ 不是 126 支技能各一格。
+  "beamPitchDeg",
+  "slashPitchDeg",
+  "boltPitchDeg",
+  "dashPitchDeg",
+  "tornadoPitchDeg",
 ] as const;
 export type GlobalField = (typeof GLOBAL_FIELDS)[number];
 
@@ -304,7 +317,11 @@ export type GlobalField = (typeof GLOBAL_FIELDS)[number];
  * 一樣把它們帶上，否則操作者按存檔就會把它們從文件裡刪掉、而畫面上那一格還好好
  * 地顯示著他選的值。`vfxForge.test.ts` 的 round-trip 守衛涵蓋這兩張表。
  */
-export const GLOBAL_CHOICE_FIELDS = ["castHeightSource", "projectileArtFromDoc"] as const;
+export const GLOBAL_CHOICE_FIELDS = [
+  "castHeightSource",
+  "projectileArtFromDoc",
+  "familyPitchDefaults",
+] as const;
 export type GlobalChoiceField = (typeof GLOBAL_CHOICE_FIELDS)[number];
 
 /** 每一格的選項（value 是存進文件的字串，boolean 欄位用 "1"/"0"）。 */
@@ -319,6 +336,10 @@ export const GLOBAL_CHOICE_OPTIONS: Readonly<
   projectileArtFromDoc: [
     { value: "1", label: "開：彈道套用自己的特效文件（出貨）" },
     { value: "0", label: "關：固定彗星，只換顏色（升級前）" },
+  ],
+  familyPitchDefaults: [
+    { value: "1", label: "開：有方向的形狀躺下來並朝目標（出貨）" },
+    { value: "0", label: "關：全部回到直立，不瞄準（升級前）" },
   ],
 };
 
@@ -359,6 +380,12 @@ export const FIELD_LABEL: Readonly<Record<string, string>> = {
   projectileArtFromDoc: "彈道套用特效文件",
   projectileRadiusGain: "彈道大小跟半徑",
   projectileFlyHeightY: "彈道飛行高度",
+  familyPitchDefaults: "有方向的特效躺下來",
+  beamPitchDeg: "光束仰角",
+  slashPitchDeg: "斬擊仰角",
+  boltPitchDeg: "彈丸仰角",
+  dashPitchDeg: "殘影仰角",
+  tornadoPitchDeg: "龍捲仰角",
   enabled: "啟用",
   primitive: "形狀",
   element: "元素",
@@ -415,6 +442,33 @@ export const FIELD_HINT: Readonly<Record<string, string>> = {
   projectileFlyHeightY:
     "子彈飛在離地多高（世界單位）。1 ≈ 胸口。調低會擦地飛、調高會從頭頂過；" +
     "低於 0.2 會埋進地板（等於看不見），高於 4 會飛出戰鬥鏡頭的構圖（玩家看不到子彈從哪來）",
+  familyPitchDefaults:
+    "光束／彈丸／殘影／斬擊這些「有方向」的特效要不要真的躺下來對準目標。" +
+    "2026-08-18 量到的事實：瞄準機制本身已經上線（施法當下由施法者→目標算方位角），" +
+    "但發射器只要是直立的，轉方位就是恆等變換 —— 129 支解得開的技能裡只有 3 支的特效文件是橫放的，" +
+    "所以其餘 126 支在 JSON 上寫著「瞄準」、畫面上一動都沒有。" +
+    "開＝五個家族各按下面那五格的仰角躺下並朝目標噴；" +
+    "關＝全部回到直立、不瞄準，也就是這個機制上線前的畫面（改壞了用這一格一鍵退回，不用重出 client）",
+  beamPitchDeg:
+    "光束／砲擊／貫穿波這一族（47 支）打出去的仰角。90 = 直立往天上噴（升級前的樣子），0 = 完全橫放、朝著目標射出去。" +
+    "0 是出貨值：這族的發射錐只有 9 度寬，從胸口平打出去要 12 個單位才會觸地，遠比粒子活得到的距離長，所以不會插進地板",
+  slashPitchDeg:
+    "斬擊／爪擊／拳打這一族（41 支）刀光的仰角。0 = 完全平掃，90 = 直立往上。" +
+    "出貨 30 度不是隨便挑的：斬擊的發射錐有 92 度寬，填 0 的話下半邊朝地面斜 46 度，" +
+    "從胸口出去約一個單位就插進地板，而粒子平均飛得到約 1.8 個單位 —— 也就是半道刀光會被地板吃掉。" +
+    "抬到 30 度之後整道新月都留在畫面上，同時仍然明顯指著被打的那個人",
+  boltPitchDeg:
+    "彈丸／飛箭／投擲物這一族（11 支）射出去的仰角。0 = 平射（出貨），90 = 朝天上。" +
+    "想要拋物線感（丟炸彈、投石）就往上調一點；這一族的發射錐只有 6 度，是全部裡面最窄的，" +
+    "所以角度改動在畫面上看得最清楚",
+  dashPitchDeg:
+    "位移殘影／衝刺尾流這一族（6 支）拖出來的仰角。0 = 貼著移動線水平拖（出貨），90 = 往上噴。" +
+    "殘影本來就該沿著人跑的那條線，所以這一格基本上只有「要不要讓它稍微揚起來」的空間",
+  tornadoPitchDeg:
+    "龍捲／旋風柱這一族（6 支）的仰角。出貨 90 = 直立，而且這一族刻意維持直立：" +
+    "柱子往上長靠的是它自己那份文件的重力（+4.2），放倒它等於把「往上長」變成「往旁邊飄」。" +
+    "⚠️ 這一格填 90 的時候這一族不會瞄準 —— 因為對直立的發射器，轉方位是恆等變換，" +
+    "宣告瞄準只會變成一句畫面上不會發生的話。想讓它瞄準就要真的把它放倒",
   enabled: "關掉之後這一層不再覆寫，技能回到依名字猜出來的 fx.prim.* 分類",
   primitive: "決定形狀（剪影）。同一個家族換形狀就是整批技能一起換長相",
   element: "決定顏色。技能自己沒有原圖 tint 時用這個",
@@ -526,6 +580,15 @@ export function familiesDocFor(doc: ConfigVfxFamiliesDoc): ConfigVfxFamiliesDoc 
     projectileArtFromDoc: doc.projectileArtFromDoc,
     projectileRadiusGain: doc.projectileRadiusGain,
     projectileFlyHeightY: doc.projectileFlyHeightY,
+    // ⚠️ GH#379 —— 同樣的六行。少寫任何一行，操作者把某個家族的仰角調完按存檔，
+    // 頁面顯示他打的角度，而文件裡那個 key 根本沒被寫出去 —— 下一次載入才發現
+    // 又躺回出貨值。round-trip 守衛涵蓋 `GLOBAL_FIELDS` + `GLOBAL_CHOICE_FIELDS`。
+    familyPitchDefaults: doc.familyPitchDefaults,
+    beamPitchDeg: doc.beamPitchDeg,
+    slashPitchDeg: doc.slashPitchDeg,
+    boltPitchDeg: doc.boltPitchDeg,
+    dashPitchDeg: doc.dashPitchDeg,
+    tornadoPitchDeg: doc.tornadoPitchDeg,
     families: families as ConfigVfxFamiliesDoc["families"],
     abilities,
   };
@@ -623,6 +686,14 @@ export const OPTIONAL_GLOBAL_FIELDS: ReadonlySet<string> = new Set([
   // 一打開就是 dirty。留白 = 不寫這個 key = 用出貨預設。
   "projectileRadiusGain",
   "projectileFlyHeightY",
+  // GH#379 —— 同一條規則。⚠️ 這五格尤其不可以幫忙填預設：`Number("")` 是 **0**，
+  // 而 0 = 完全橫放，對龍捲風那一族就是「把柱子放倒」——「沒說，用出貨的 90」
+  // 和「明確要求 0」是完全不同的兩件事。
+  "beamPitchDeg",
+  "slashPitchDeg",
+  "boltPitchDeg",
+  "dashPitchDeg",
+  "tornadoPitchDeg",
 ]);
 
 export function validateGlobalField(field: GlobalField, text: string): string {

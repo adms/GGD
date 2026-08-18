@@ -25,8 +25,48 @@
     },
     "props": [
       {
-        "model": "assets/models/props/crates_stacked.glb",
+        "model": "assets/models/scenery/rubble_pile.glb",
         "count": 10,
+        "bandFrom": 0.84,
+        "bandTo": 0.95,
+        "scaleMin": 1.2,
+        "scaleMax": 1.9,
+        "facing": "random",
+        "seed": 171
+      },
+      {
+        "model": "assets/models/scenery/leaning_beam.glb",
+        "count": 6,
+        "bandFrom": 0.88,
+        "bandTo": 0.96,
+        "scaleMin": 1.1,
+        "scaleMax": 1.4,
+        "facing": "random",
+        "seed": 172
+      },
+      {
+        "model": "assets/models/scenery/broken_pillar.glb",
+        "count": 4,
+        "bandFrom": 0.9,
+        "bandTo": 0.97,
+        "scaleMin": 1.1,
+        "scaleMax": 1.4,
+        "facing": "random",
+        "seed": 173
+      },
+      {
+        "model": "assets/models/scenery/iron_fence.glb",
+        "count": 4,
+        "bandFrom": 0.96,
+        "bandTo": 0.995,
+        "scaleMin": 1.2,
+        "scaleMax": 1.5,
+        "facing": "faceIn",
+        "seed": 174
+      },
+      {
+        "model": "assets/models/props/crates_stacked.glb",
+        "count": 6,
         "bandFrom": 0.88,
         "bandTo": 0.97,
         "scaleMin": 1.0,
@@ -36,7 +76,7 @@
       },
       {
         "model": "assets/models/props/barrel_small.glb",
-        "count": 8,
+        "count": 5,
         "bandFrom": 0.9,
         "bandTo": 0.98,
         "scaleMin": 1.1,
@@ -46,7 +86,7 @@
       },
       {
         "model": "assets/models/hex/rock.glb",
-        "count": 6,
+        "count": 4,
         "bandFrom": 0.85,
         "bandTo": 0.95,
         "scaleMin": 1.2,
@@ -347,6 +387,42 @@
       },
       "rotQuarter": 0,
       "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/christmas__Fence.glb",
+      "at": {
+        "col": 1,
+        "row": 1
+      },
+      "rotQuarter": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/crystal-crossroads__Wall_CornerBroken.glb",
+      "at": {
+        "col": 22,
+        "row": 1
+      },
+      "rotQuarter": 1,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/crystal-crossroads__Wall_Small_01.glb",
+      "at": {
+        "col": 1,
+        "row": 16
+      },
+      "rotQuarter": 2,
+      "scale": 1.0
+    },
+    {
+      "model": "assets/models/scenery-cc0/christmas__Lamp01.glb",
+      "at": {
+        "col": 22,
+        "row": 16
+      },
+      "rotQuarter": 3,
+      "scale": 0.64
     }
   ],
   "backgroundProps": [

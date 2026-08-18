@@ -472,9 +472,14 @@ describe("authored arena content", () => {
     // 19.6u tree keeps its ~18u canopy, which would hang over the field as a
     // pancake. They must be authored small instead.
     const godie = docs.find(([f]) => f === "arena.godie.json")![1];
-    expect(godie.decor.length).toBeGreaterThan(0);
-    for (const d of godie.decor) {
-      expect(d.model).toContain("japanesecherry");
+    // ⚠️ 這一條**只**驗櫻花樹的高度（見上面那段理由與這條 it 的名字）。
+    // 它原本還順帶斷言「godie 的每一件 decor 都是櫻花樹」—— 那是一句**過寬**的
+    // 附帶宣稱：它從來不是這條測試的主題，也不是任何人立過的規矩，而它在
+    // 2026-08-19 加地標（鳥居／主祭壇）時紅了。⛔ 收回它不是放寬斷言，
+    // 是把斷言收回它自己宣告的範圍；樹的那一半一個字都沒動。
+    const trees = godie.decor.filter((d) => d.model.includes("japanesecherry"));
+    expect(trees.length, "arena.godie 一棵櫻花樹都沒有了 —— 這條斷言在空轉").toBeGreaterThan(0);
+    for (const d of trees) {
       expect(d.scale * CHERRY_BASE_HEIGHT).toBeLessThanOrEqual(SIGHTLINE_HEIGHT_CAP + 1e-6);
     }
   });
