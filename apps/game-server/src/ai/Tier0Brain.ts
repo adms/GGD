@@ -12,6 +12,12 @@ import type { EntityId, ItemId } from "@ggd/shared/ids";
 import type { Command, IntentFrame, Order } from "@ggd/shared/sim/intents";
 import type { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { Champions, Items } from "@ggd/shared/sim/content/registry";
+import {
+  LEGENDARY_ORB_ITEM_ID,
+  LEGENDARY_ORB_PRICE,
+  shopChargeFor,
+} from "@ggd/shared/sim/economy/itemTiers";
+import { DEFAULT_BOT_SHOP, type BotShopConfig } from "@ggd/shared/content";
 import { distSq } from "@ggd/shared/sim/math/vec2";
 import { acquireRadius, acquireTarget } from "@ggd/shared/sim/targeting";
 import { Stat } from "@ggd/shared/sim/stats/statTypes";
@@ -177,7 +183,15 @@ export class AIDriver implements SeatDriver {
    * @param buyable optional purchasability predicate (the match's content
    * whitelist). Omitted = everything is buyable, the pre-whitelist behavior.
    */
-  constructor(private readonly buyable?: (id: ItemId) => boolean) {}
+  constructor(
+    private readonly buyable?: (id: ItemId) => boolean,
+    /**
+     * ⭐ bot 的商店規則（`rules.botShop`）。省略 = 出貨預設（買寶具、半價）——
+     * ⚠️ **不是「關掉」**：一個沒傳它的建構點應該落在**設計**上，⛔ 不是落在
+     * 「這個功能沒發生」（第〇·六守則：優先權大的更新預設啟動）。
+     */
+    private readonly botShop: BotShopConfig = DEFAULT_BOT_SHOP,
+  ) {}
 
   onAttach(_seat: Seat): void {
     this.plan = { commands: [] };
@@ -232,7 +246,29 @@ export class AIDriver implements SeatDriver {
           (itemId) => Items.tryGet(itemId)?.cost ?? null,
           this.buyable,
         );
-        if (buy !== null) commands.push({ kind: "buyItem", itemId: buy });
+        if (buy !== null) {
+          commands.push({ kind: "buyItem", itemId: buy });
+        } else if (this.botShop.buyWeapons) {
+          // ⭐ **bot 花錢買隨機寶具**（owner 2026-08-18：「一樣花錢買隨機寶具，
+          // 只是消耗金錢是半價」）。
+          //
+          // ⛔ 這裡**沒有新機制**：「花錢抽一件隨機寶具」就是**傳說寶玉**，
+          // 它已經存在、已經是決定性的（骰子在 `world.rng` 上、在 sim 裡擲）、
+          // 已經會開一張三選一卡，而 bot 的自動選卡路徑已經會把它選掉。
+          // ⇒ bot 只要送出跟人類一模一樣的那一個 `buyItem` 就好。
+          //
+          // ⚠️ 半價**不在這裡**：折扣是 `ChampionComp.shopPriceMult`，由
+          // MatchController 在開場照座位的 driver 填（`rules.botShop.priceMult`）。
+          // 在這裡先扣一半再送出去，sim 會收全額 —— 兩邊各算一次價就是遲早分岔的
+          // 兩份價目表。這裡只用它算「買不買得起」。
+          //
+          // ⚠️ 為什麼是 `else`：還寫著推薦出裝的那 12 位英雄照走自己的梯子
+          // （那是刻意的內容）。其餘 66 位直接走這一條，⛔ 不必補梯子。
+          const price = shopChargeFor(this.botShop.priceMult, LEGENDARY_ORB_PRICE);
+          if (champ.gold >= price) {
+            commands.push({ kind: "buyItem", itemId: LEGENDARY_ORB_ITEM_ID });
+          }
+        }
         if (!this.didReady) {
           commands.push({ kind: "ready" });
           this.didReady = true;

@@ -207,6 +207,7 @@ import { rollItemReward, grantItemFree, commitShopSession } from "@ggd/shared/si
 import { releaseOrbSlot } from "@ggd/shared/sim/economy/legendaryOrb";
 import { DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES } from "@ggd/shared/sim/economy/offerEligibility";
 import { applyAttrPick, rollAttrChoices, ATTR_OFFER_TIER } from "@ggd/shared/sim/economy/attrDraft";
+import type { AugmentTier } from "@ggd/shared/sim/content/defs";
 import { rankUpAbility, learnEx } from "@ggd/shared/sim/abilities/abilitySystem";
 import {
   grantGold,
@@ -1110,7 +1111,7 @@ export class MatchController {
       const seat = new Seat(
         seatId,
         asTeamId(spec.teamId),
-        new AIDriver((itemId) => this.whitelist.allowsItem(itemId)),
+        new AIDriver((itemId) => this.whitelist.allowsItem(itemId), this.rules.botShop),
       );
       seat.accountId = spec.accountId ?? `bot-${spec.seatId}`;
       seat.displayName = spec.displayName ?? (spec.isBot ? `Bot ${spec.seatId}` : `Player ${spec.seatId}`);
@@ -1334,6 +1335,7 @@ export class MatchController {
         pos: spawn,
         zone,
       });
+      this.applyShopPriceMult(seat);
       // #207 選角紀錄。寫在這裡而不是 `selectChampion`,因為這裡才是**每一個
       // 座位的英雄定案**的唯一一點:沒選的、選了但被白名單/擁有權擋掉的、
       // 選了而且過關的,三種都從這一行走過去。寫在 selectChampion 只會記到
@@ -1445,6 +1447,75 @@ export class MatchController {
    * `teamHealth <= 0 → skip` gate (which silently starved such a team of levels,
    * gold, EX unlocks and augment cards) is gone.
    */
+  /**
+   * ⭐ **每個座位的劣勢值 `D` ∈ [0,1]** —— 兩種三選一（聖杯願望與寶具）**共用**。
+   *
+   * owner 2026-08-17 逐字給的三項加權：
+   *   D = 50% × 回合／隊伍生命差距 + 30% × 已完成裝備價值差距 + 20% × 最近三回合勝負差距
+   *
+   * ⭐ 三項而不是只看血量，是 owner 明說的：「不能只用目前生命值判斷劣勢，
+   * 否則容易被**刻意壓血**利用」—— 壓血壓得動第一項，壓不動另外兩項。
+   *
+   * ⛔ **一份，不是兩份**（GH#357）：在這之前這段算式只長在寶具那一個分支裡，
+   * 而聖杯那一半根本沒有劣勢的概念。兩邊各抄一份 = 兩份會分岔的「誰算劣勢」，
+   * 而那正是 owner 最會調的那一格。
+   *
+   * ⚠️ 逐**座位**而不是逐隊：回合項與勝負項同隊一樣，但裝備價值是逐人的。
+   * ⚠️ 分母為 0（第一回合、大家都沒裝備）時是 0 而不是 NaN —— 「還沒有人領先」
+   * 本來就不是劣勢。
+   */
+  private disadvantageBySeat(): Map<SeatId, number> {
+    const wins = [...this.roundWins.values()];
+    const leadWins = wins.length > 0 ? Math.max(...wins) : 0;
+    const totalWins = wins.reduce((a, b) => a + b, 0);
+    const teamValue = new Map<TeamId, number>();
+    for (const [, s2, e2] of this.activeSeats()) {
+      const inv = this.world.champion.get(e2)?.items ?? [];
+      let v = 0;
+      for (const it of inv) if (it) v += Items.tryGet(it)?.cost ?? 0;
+      teamValue.set(s2.teamId, (teamValue.get(s2.teamId) ?? 0) + v);
+    }
+    const topValue = Math.max(0, ...teamValue.values());
+    const out = new Map<SeatId, number>();
+    for (const [seatId, seat] of this.activeSeats()) {
+      const myWins = this.roundWins.get(seat.teamId) ?? 0;
+      const myValue = teamValue.get(seat.teamId) ?? 0;
+      out.set(
+        seatId,
+        disadvantageScore(
+          {
+            roundGap: leadWins > 0 ? (leadWins - myWins) / leadWins : 0,
+            itemValueGap: topValue > 0 ? (topValue - myValue) / topValue : 0,
+            // 「最近三回合」用整場勝場佔比近似：落後越多、佔比越低。
+            // ⚠️ 這是**近似**而不是原文的「最近三回合」——真正的三回合視窗需要一份
+            // 逐回合勝負的環狀紀錄，那是下一輪的事。⛔ 沒有靜靜當成 0：
+            // 它現在餵的是同一個方向的訊號，只是視窗比較長。
+            recentForm: totalWins > 0 ? 1 - myWins / totalWins : 0,
+          },
+          this.rules.disadvantageWeights,
+        ),
+      );
+    }
+    return out;
+  }
+
+  /**
+   * ⭐ **這個座位的售價倍率**（owner 2026-08-18：bot「消耗金錢是半價」）。
+   *
+   * ⛔ sim 不知道「bot」是什麼，也不該知道 —— 它只讀 `ChampionComp.shopPriceMult`
+   * 這一格倍率（見 `economy/itemTiers.shopChargeFor`）。判斷「誰是 bot」是 host
+   * 的事，而 host 本來就握著 `seat.driverKind`。
+   *
+   * ⚠️ 人類座位**明著寫回 1**，⛔ 不是「不管它」：接管一個 bot 座位
+   * （driver swap 是這個專案的既有功能）之後那位玩家會繼承 bot 的折扣，
+   * 而畫面上只是「他的東西比較便宜」。
+   */
+  private applyShopPriceMult(seat: Seat): void {
+    const champ = seat.entityId === null ? undefined : this.world.champion.get(seat.entityId);
+    if (!champ) return;
+    champ.shopPriceMult = seat.driverKind === "ai" ? this.rules.botShop.priceMult : 1;
+  }
+
   private *activeSeats(): Generator<[SeatId, Seat, EntityId]> {
     for (const [seatId, seat] of this.seats) {
       if (seat.entityId === null) continue;
@@ -1509,13 +1580,40 @@ export class MatchController {
     //    stand-in; see settleRound for why it is offer WIDTH and not a reroll).
     //    #340 —— 同一回合也排了寶具時，由 `draftConflict` 裁決誰讓路（出貨預設
     //    是聖杯贏，所以這一支照發）。判斷住在 `arenaRules.ts`，不是這裡。
-    if (grant?.augmentTier && grailDraftAllowed(this.rules, grant, round)) {
+    // ⭐ GH#357 —— **這一回合的三選一是哪一種**，一回合只擲一次（`round-roll`）。
+    // ⚠️ 骰子在 `world.rng` 上，而且**無論走哪一條裁決都擲** —— 少擲一顆，
+    // operator 換一個 `draftConflict` 就會讓同一顆種子走出不同的一場。
+    const draftRoll = this.world.rng.next();
+
+    // ⭐ 劣勢值 `D` 逐座位算一次，**兩種卡共用**（GH#357：聖杯的等級也隨戰況升級）。
+    // ⛔ 兩邊各算一份 = 兩份會分岔的「誰算劣勢」，而那正是 owner 最會調的東西。
+    const disadvantageBySeat = this.disadvantageBySeat();
+    // ⭐ 兩張都真的發出去了嗎 —— 延長中場的條件（owner 2026-08-18）。
+    // ⚠️ 讀的是「**發出去了**」而不是「排了 draftBoth」：其中一種沒有池的時候
+    // 只發得出一張，而多給 10 秒會讓玩家對著一張卡等一段沒有理由的空白。
+    let dealtGrail = false;
+    let dealtWeapon = false;
+
+    if (grant?.augmentTier && grailDraftAllowed(this.rules, grant, round, draftRoll)) {
       const spentBonus = new Set<TeamId>();
       for (const [seatId, seat, entity] of this.activeSeats()) {
         const bonus = this.highStakesDraftBonus.has(seat.teamId) ? 1 : 0;
         if (bonus) spentBonus.add(seat.teamId);
-        const offer = offerAugments(this.world, entity, grant.augmentTier, this.rules.offerCount + bonus);
+        // ⭐ 等級隨戰況升級（GH#357）—— 與寶具**同一支** `pickWeaponTable`：
+        // 回合表排的等級是**地板**，劣勢只會把你抬高，⛔ 不會把領先方壓低。
+        const d = disadvantageBySeat.get(seatId) ?? 0;
+        const upgraded = pickWeaponTable(
+          this.rules.augmentTiers,
+          round,
+          d,
+          grant.augmentTier,
+          this.world.rng,
+          () => true, // 聖杯的「池」是一個等級名，永遠存在
+        );
+        const tier = upgraded.table as AugmentTier;
+        const offer = offerAugments(this.world, entity, tier, this.rules.offerCount + bonus);
         if (offer.choices.length > 0) {
+          dealtGrail = true;
           this.offers.set(`${round}:${seatId}`, {
             kind: "augment",
             ...offer,
@@ -1549,7 +1647,7 @@ export class MatchController {
     //    #340 —— owner 2026-08-17「兩者有衝突不顯示寶具三選一」。⚠️ 這一格是
     //    **靜靜地不發**，而且刻意如此：兩張三選一共用同一段中場倒數，讓路的那一張
     //    在畫面上就是不存在（叫一句 warn 只會在每一場的第 2、5 回合各刷 12 行）。
-    if (grant?.weaponLootTable && weaponDraftAllowed(this.rules, grant, round)) {
+    if (grant?.weaponLootTable && weaponDraftAllowed(this.rules, grant, round, draftRoll)) {
       // ⭐ 更高階寶具（[EX解放] / [EX∅ 根源]，owner 2026-08-17）。
       //
       // 「劣勢值 D」由 host 算（sim 沒有回合勝場與道具價格那兩份帳），**逐座位**算 ——
@@ -1558,35 +1656,8 @@ export class MatchController {
       //
       // ⭐ 三項而不是一項，是 owner 明說的：「不能只用目前生命值判斷劣勢，
       // 否則容易被**刻意壓血**利用」—— 壓血壓得動第一項，壓不動另外兩項。
-      const wins = [...this.roundWins.values()];
-      const leadWins = wins.length > 0 ? Math.max(...wins) : 0;
-      const totalWins = wins.reduce((a, b) => a + b, 0);
-      // 各隊的裝備總價值（逐座位加總），用來算「已完成裝備價值差距」。
-      const teamValue = new Map<TeamId, number>();
-      for (const [, s2, e2] of this.activeSeats()) {
-        const inv = this.world.champion.get(e2)?.items ?? [];
-        let v = 0;
-        for (const it of inv) if (it) v += Items.tryGet(it)?.cost ?? 0;
-        teamValue.set(s2.teamId, (teamValue.get(s2.teamId) ?? 0) + v);
-      }
-      const topValue = Math.max(0, ...teamValue.values());
       for (const [seatId, seat, entity] of this.activeSeats()) {
-        const myWins = this.roundWins.get(seat.teamId) ?? 0;
-        const myValue = teamValue.get(seat.teamId) ?? 0;
-        // 三項都正規化到 [0,1]。⚠️ 分母為 0（第一回合、大家都沒裝備）時是 0 而不是
-        // NaN —— 「還沒有人領先」本來就不是劣勢。
-        const d = disadvantageScore(
-          {
-            roundGap: leadWins > 0 ? (leadWins - myWins) / leadWins : 0,
-            itemValueGap: topValue > 0 ? (topValue - myValue) / topValue : 0,
-            // 「最近三回合」用整場勝場佔比近似：落後越多、佔比越低。
-            // ⚠️ 這是**近似**而不是原文的「最近三回合」——真正的三回合視窗需要一份
-            // 逐回合勝負的環狀紀錄，那是下一輪的事（見 GH#355）。⛔ 沒有靜靜當成 0：
-            // 它現在餵的是同一個方向的訊號，只是視窗比較長。
-            recentForm: totalWins > 0 ? 1 - myWins / totalWins : 0,
-          },
-          this.rules.disadvantageWeights,
-        );
+        const d = disadvantageBySeat.get(seatId) ?? 0;
         // 數量限制（[EX解放] 每名英雄一件、[EX∅ 根源] 每隊一件）——
         // ⚠️ 用**這一階的獎池成員**數已持有的件數，⛔ 不是「持有任何寶具」。
         const heldOf = (tableId: string, ids: readonly EntityId[]): number => {
@@ -1621,6 +1692,7 @@ export class MatchController {
           tier.offerTier,
         );
         if (offer.choices.length > 0) {
+          dealtWeapon = true;
           this.offers.set(`${round}:${seatId}:w`, {
             kind: "item",
             ...offer,
@@ -1649,6 +1721,21 @@ export class MatchController {
           );
         }
       }
+    }
+
+    // 3.5) ⭐ **兩張都發的回合，中場多給幾秒**（owner 2026-08-18：「有遇到這種
+    //      情形的商店時間要延長 10 秒鐘」）。
+    //
+    //      ⭐ 這一格是 #340 的**正解**：owner 當初要「不要同時出現」的理由逐字是
+    //      **「選擇時間不夠」** —— 那是一個**時間**問題，而丟掉一張卡是拿內容去
+    //      補時間。丟掉的那一張正好就是第 10 回合的寶具，也就是 [EX∅ 根源]
+    //      一次都發不出來的原因。⇒ 補時間，⛔ 不丟卡。
+    //
+    //      ⚠️ 條件是「兩張**真的**都發出去了」，⛔ 不是「排了 draftBoth」。
+    //      ⚠️ 直接寫 `ticksLeft` 與 `enterCombat` 的 `combatMaxTicksForRound` 同一個
+    //      作法（這個檔案既有的路），⛔ 不新開一條相位延長機制。
+    if (dealtGrail && dealtWeapon && this.rules.bothDraftsExtraSec > 0) {
+      this.phase.ticksLeft += Math.round(this.rules.bothDraftsExtraSec * TICK_HZ);
     }
 
     // 4) legacy item gacha reward (道具抽卡) for every surviving seat, rolled
@@ -1717,7 +1804,7 @@ export class MatchController {
     // band from it. Scaling a zone in server memory instead would have moved the
     // collision boundary while every client still drew (and read the ring
     // against) the old 24-radius disc.
-    if (isRoyaleRound(this.phase.round)) {
+    if (isRoyaleRound(this.phase.round, this.rules.finalRound)) {
       const royale = this.royaleArena();
       this.arena = royale;
       this.world.setArena(royale);
@@ -1866,7 +1953,7 @@ export class MatchController {
       this.royale = null;
       this.pairings = [];
       this.bye = null;
-    } else if (isRoyaleRound(this.phase.round)) {
+    } else if (isRoyaleRound(this.phase.round, this.rules.finalRound)) {
       this.pairings = [];
       this.bye = null;
       this.royale = royaleBout(this.participatingTeams());
@@ -2208,7 +2295,7 @@ export class MatchController {
    */
   private fireRingForRound(round: number): FireRingConfig | null {
     if (!this.fireRing) return null;
-    if (!isRoyaleRound(round)) return this.fireRing;
+    if (!isRoyaleRound(round, this.rules.finalRound)) return this.fireRing;
     return { ...this.fireRing, startSec: ROYALE_FIRE_RING_START_SEC };
   }
 
@@ -2237,7 +2324,7 @@ export class MatchController {
     // ROYALE_COMBAT_SEC. Gated on a configured ring exactly as the old inline
     // `if (this.fireRing)` was: a ringless match (unit tests, skeleton boot) has
     // nothing to wait for and keeps the caller's own combat length.
-    if (!this.fireRing || !isRoyaleRound(round)) return authored;
+    if (!this.fireRing || !isRoyaleRound(round, this.rules.finalRound)) return authored;
     return Math.max(authored, Math.round(ROYALE_COMBAT_SEC * TICK_HZ));
   }
 
@@ -3146,7 +3233,7 @@ export class MatchController {
    */
   private isLastRound(): boolean {
     return (
-      isRoyaleRound(this.phase.round) || roundCapReached(this.phase.round, this.rules.maxRounds)
+      isRoyaleRound(this.phase.round, this.rules.finalRound) || roundCapReached(this.phase.round, this.rules.maxRounds)
     );
   }
 

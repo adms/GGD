@@ -50,6 +50,8 @@ export function spawnChampion(world: SimWorld, args: SpawnChampionArgs): EntityI
     attrBonus: zeroAttrBonus(),
     statCapstonePct: 0,
     pendingOrbSlots: 0,
+    // 1 = 原價。host 對 bot 座位改成 `rules.botShop.priceMult`（出貨 0.5）。
+    shopPriceMult: 1,
     undoStack: [],
   });
   world.abilities.set(id, {

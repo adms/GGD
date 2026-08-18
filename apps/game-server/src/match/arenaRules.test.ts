@@ -140,8 +140,13 @@ describe("config doc + rules resolution (arena-06)", () => {
       expect(ctl.world.champion.get(seat.entityId!)!.level).toBe(1);
       expect(ctl.world.abilities.get(seat.entityId!)!.slots.W.rank).toBe(0); // Q-only start
     }
-    const tiers = new Set([...ctl.offers.values()].map((o) => o.tier));
-    expect(tiers).toEqual(new Set(["silver"]));
+    // ⚠️ GH#357 —— 排定的 `silver` 現在是**地板**：`augmentTiers` 會照劣勢值把它
+    // 往上升級，平手方也有 basePct 的機率摸到高階。所以這裡驗的是「⛔ 沒有掉到
+    // 地板以下」，⛔ 不是「每一張都剛好是 silver」（後者釘的是一個現在刻意會變的值）。
+    const RANK: Record<string, number> = { silver: 0, gold: 1, prismatic: 2 };
+    const tiers = [...ctl.offers.values()].map((o) => o.tier);
+    expect(tiers.length, "一張聖杯願望都沒發 —— 這條在空轉").toBeGreaterThan(0);
+    for (const t of tiers) expect(RANK[t] ?? -1, `tier ${t} 低於排定的地板`).toBeGreaterThanOrEqual(0);
   });
 });
 
@@ -275,7 +280,13 @@ describe("arena round grants (arena-01, arena-04, arena-05)", () => {
       const offer = ctl.offers.get(`1:${seat.seatId}`);
       expect(offer, `seat ${seat.seatId} must have a round-1 augment offer`).toBeDefined();
       expect(offer!.kind).toBe("augment");
-      expect(offer!.tier).toBe("silver");
+      // ⚠️ GH#357 —— 回合表排的等級現在是**地板**，⛔ 不是保證。`augmentTiers`
+      // 會照劣勢值把它往上升級（平手方也有 basePct 的機率摸到高階，owner
+      // 2026-08-17：「避免系統看起來像直接補償敗方」）。所以這裡驗的是
+      // 「**不低於**排定的等級」，⛔ 不是「剛好等於」——後者是在釘一個現在
+      // 刻意會變的數字（第二守則：驗機制不驗數字）。
+      const RANK: Record<string, number> = { silver: 0, gold: 1, prismatic: 2 };
+      expect(RANK[offer!.tier] ?? -1).toBeGreaterThanOrEqual(RANK.silver!);
       const choices = offer!.choices as string[];
       expect(choices).toHaveLength(3);
       expect(new Set(choices).size).toBe(3); // three DISTINCT choices
@@ -432,7 +443,10 @@ describe("同一回合撞卡：聖杯願望贏、寶具讓路 (#340, arena-02, a
     // （EX解放 / EX∅ 根源）會把獎池換成另一張 —— 那是對的行為，但會讓「卡片來自
     // 這一回合排的那張池」這個斷言變成在驗兩件事。階級那一層由
     // `sim/economy/weaponTiers.test.ts` 單獨守。
-    const both: ArenaRules = { ...ARENA, draftConflict: "both", weaponTiers: [] };
+    // ⚠️ `weaponTiers`/`augmentTiers` 都清空是刻意的：這一條驗的是**撞卡裁決**，
+    // 而兩張階級升級表都會把獎池/等級換掉 —— 那是對的行為，但會讓「卡片來自
+    // 這一回合排的那張池」變成在驗兩件事。階級那一層各自有守衛。
+    const both: ArenaRules = { ...ARENA, draftConflict: "both", weaponTiers: [], augmentTiers: [] };
     const ctl = new MatchController("conflict-both", 555, allBots(), FAST, 3, both);
     runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === round);
 
@@ -470,7 +484,9 @@ describe("every-round augment 3-choose-1 restored (arena-08, #157)", () => {
       const offer = ctl.offers.get(`${round}:${seat.seatId}`);
       expect(offer, `seat ${seat.seatId} needs a round-${round} augment offer`).toBeDefined();
       expect(offer!.kind).toBe("augment");
-      expect(offer!.tier).toBe(tier);
+      // 同上（GH#357）：排定的等級是地板。
+      const RANK2: Record<string, number> = { silver: 0, gold: 1, prismatic: 2 };
+      expect(RANK2[offer!.tier] ?? -1).toBeGreaterThanOrEqual(RANK2[tier]!);
       const choices = offer!.choices as string[];
       // 3-choose-1, except for a High Stakes winner: the Lucky-Dice stand-in
       // widens THAT team's next card to 4 (PairedDuels/MatchController). Round 6
@@ -523,7 +539,9 @@ describe("every-round augment 3-choose-1 restored (arena-08, #157)", () => {
       if (!offer || offer.kind !== "augment") continue;
       const owned = ctl.world.champion.get(seat.entityId)!.augments as string[];
       expect(owned.length).toBeGreaterThan(0); // the round-1 draft was auto-resolved
-      expect(offer.tier).toBe("silver");
+      // 同上（GH#357）：排定的等級是地板。
+      const RANK3: Record<string, number> = { silver: 0, gold: 1, prismatic: 2 };
+      expect(RANK3[offer.tier] ?? -1).toBeGreaterThanOrEqual(RANK3.silver!);
       const choices = offer.choices as string[];
       expect(choices).toHaveLength(3);
       expect(new Set(choices).size).toBe(3);

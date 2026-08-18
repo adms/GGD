@@ -44,6 +44,7 @@ import {
   CAPSTONE_MIN_PCT,
   CAPSTONE_STEPS,
   STAT_TICK_PRICE,
+  shopChargeFor,
   STAT_TICK_TARGET,
   capstoneModifiers,
 } from "./itemTiers";
@@ -205,11 +206,13 @@ export function statTicksRemaining(world: SimWorld, id: EntityId): number {
 export function buyStatUpgrade(world: SimWorld, id: EntityId): StatTickOutcome {
   const champ = world.champion.get(id);
   if (!champ) return { result: "no-champion", stacks: 0, choices: [], capstonePct: 0 };
-  if (champ.gold < STAT_TICK_PRICE) {
+  // ⭐ 這位英雄的售價倍率（見 `itemTiers.shopChargeFor`）。
+  const price = shopChargeFor(champ.shopPriceMult, STAT_TICK_PRICE);
+  if (champ.gold < price) {
     return { result: "no-gold", stacks: champ.statStacks, choices: [], capstonePct: 0 };
   }
 
-  champ.gold -= STAT_TICK_PRICE;
+  champ.gold -= price;
   champ.statStacks += 1;
   const choices = rollAttrChoices(world);
   world.emit("statUpgradeBought", {

@@ -260,8 +260,13 @@ export const DRAFT_CONFLICT_LABEL: FieldLabel & { group: "conflict" } = Object.f
 /** 下拉選項 —— 每一個都寫「玩家會看到什麼」。 */
 export const DRAFT_CONFLICT_OPTIONS: readonly { value: DraftConflict; zh: string; note: string }[] = [
   {
+    value: "round-roll",
+    zh: "回合表決定（出貨值）",
+    note: "⭐ owner 2026-08-18：「每回合只給一種（固有能力／寶具）—— 回合表決定機率」。這一回合擲**一次**（全場同一種），機率讀回合表的 `weaponDraftPct`；⛔ 沒有池的那一種會讓給另一種，所以**一張卡都不會消失**。⚠️ 回合表寫了 `draftBoth` 的那一回合**兩張都發**，中場自動加 `bothDraftsExtraSec` 秒（出貨第 10 回合就是這樣）。",
+  },
+  {
     value: "alternate",
-    zh: "輪流讓路（出貨值）",
+    zh: "輪流讓路（2026-08-18 之前的出貨值）",
     note: "撞到的回合輪流:**第一個**排了寶具的回合發聖杯,**第二個**發寶具,依此類推。出貨排程下 = 第 2 回合聖杯、第 5 回合寶具 ⇒ 一場保證有一次免費寶具,而兩張卡一秒都沒有同時出現。⭐ 這一格是為了修 GH#347:每一回合都排了聖杯,所以「只發聖杯」等於免費寶具那條路整場關閉。",
   },
   {
@@ -294,7 +299,13 @@ export function readDraftConflict(doc: unknown): DraftConflict {
 }
 
 export function isDraftConflict(v: unknown): v is DraftConflict {
-  return v === "grail-wins" || v === "weapon-wins" || v === "both" || v === "alternate";
+  return (
+    v === "round-roll" ||
+    v === "grail-wins" ||
+    v === "weapon-wins" ||
+    v === "both" ||
+    v === "alternate"
+  );
 }
 
 /**

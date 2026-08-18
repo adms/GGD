@@ -19,6 +19,10 @@ import {
   DEFAULT_DRAFT_CONFLICT,
   DEFAULT_LEGENDARY_SHELF,
   DEFAULT_WEAPON_TIERS,
+  DEFAULT_AUGMENT_TIERS,
+  DEFAULT_FINAL_ROUND,
+  DEFAULT_BOTH_DRAFTS_EXTRA_SEC,
+  DEFAULT_BOT_SHOP,
   DEFAULT_DISADVANTAGE_WEIGHTS,
 } from "@ggd/shared/content";
 import type { WeaponTierRule } from "@ggd/shared/sim/economy/weaponTiers";
@@ -26,6 +30,7 @@ import { DEFAULT_SELL_REFUND_PCT } from "@ggd/shared/sim/economy/shopShelf";
 import type { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { MAX_ROUNDS_UNLIMITED } from "@ggd/shared/roomSettings";
 import type {
+  BotShopConfig,
   DraftConflict,
   LegendaryShelfConfig,
   ConfigArenaRulesDoc,
@@ -44,6 +49,10 @@ export interface RoundGrant {
   autoLearn?: CoreAbilitySlot[];
   augmentTier?: AugmentTier;
   weaponLootTable?: string;
+  /** ⭐ 這一回合的三選一是「寶具」的機率（0–100，`draftConflict: "round-roll"` 才讀）。 */
+  weaponDraftPct?: number;
+  /** ⭐ 這一回合**兩張都發**（推翻 `weaponDraftPct`），中場相對應延長。 */
+  draftBoth?: boolean;
 }
 
 /**
@@ -122,6 +131,17 @@ export interface ArenaRules {
    */
   weaponTiers: readonly WeaponTierRule[];
   /**
+   * ⭐ 聖杯願望的階級升級表（GH#357），與 `weaponTiers` **同一個引擎**。
+   * 空陣列 = 關掉，回合表排什麼等級就發什麼。
+   */
+  augmentTiers: readonly WeaponTierRule[];
+  /** ⭐ 賽制的最後一回合。打完就全場結算，而且它是全員大亂鬥的那一回合。 */
+  finalRound: number;
+  /** ⭐ 真的兩張都發出去的回合，中場多給幾秒。 */
+  bothDraftsExtraSec: number;
+  /** ⭐ bot 怎麼花錢（owner 2026-08-18：買隨機寶具、半價）。 */
+  botShop: BotShopConfig;
+  /**
    * 劣勢值 `D` 的三項權重（owner 2026-08-17 的 50/30/20）。NEVER null —— 同
    * `itemDraft` 的理由：「沒有權重」不是一個狀態，缺席的文件要的是出貨規則。
    */
@@ -198,6 +218,10 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
   // 想這一格」時落到的那個值是**設計**，不是 2026-08-17 之前的行為。
   draftConflict: DEFAULT_DRAFT_CONFLICT,
   weaponTiers: DEFAULT_WEAPON_TIERS,
+  augmentTiers: DEFAULT_AUGMENT_TIERS,
+  finalRound: DEFAULT_FINAL_ROUND,
+  bothDraftsExtraSec: DEFAULT_BOTH_DRAFTS_EXTRA_SEC,
+  botShop: DEFAULT_BOT_SHOP,
   disadvantageWeights: DEFAULT_DISADVANTAGE_WEIGHTS,
   rounds: new Map(
     Object.entries(AUGMENT_TIER_SCHEDULE).map(([round, tier]) => [
@@ -260,6 +284,8 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
       autoLearn: grant.autoLearn,
       augmentTier: grant.augmentTier,
       weaponLootTable: retiredRounds.has(key) ? undefined : grant.weaponLootTable,
+      weaponDraftPct: grant.weaponDraftPct,
+      draftBoth: grant.draftBoth,
     });
   }
   return {
@@ -284,6 +310,11 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
     draftConflict: doc.draftConflict ?? DEFAULT_DRAFT_CONFLICT,
     // ⚠️ `??` 同上：線上耐久覆蓋層那份文件是這一格出現之前存的。
     weaponTiers: doc.weaponTiers ?? DEFAULT_WEAPON_TIERS,
+    // ⚠️ `??` 同上：線上耐久覆蓋層那份文件是這三格出現之前存的。
+    augmentTiers: doc.augmentTiers ?? DEFAULT_AUGMENT_TIERS,
+    finalRound: doc.finalRound ?? DEFAULT_FINAL_ROUND,
+    bothDraftsExtraSec: doc.bothDraftsExtraSec ?? DEFAULT_BOTH_DRAFTS_EXTRA_SEC,
+    botShop: doc.botShop ?? DEFAULT_BOT_SHOP,
     disadvantageWeights: doc.disadvantageWeights ?? DEFAULT_DISADVANTAGE_WEIGHTS,
     rounds,
     overflow: doc.overflow ?? null,
@@ -356,8 +387,46 @@ function weaponRoundOrdinal(rules: ArenaRules, round: number | undefined): numbe
   return n;
 }
 
+/**
+ * ⭐ **`round-roll`：這一回合的三選一是哪一種**（GH#357，出貨預設）。
+ *
+ * owner 2026-08-18：「每回合只給一種（固有能力／寶具）—— 回合表決定機率」。
+ *
+ * ⚠️ **一回合只擲一次**，所以全場拿到同一種 —— 「只給一種」講的是回合，
+ * ⛔ 不是每個人各擲各的（那會變成「有人抽寶具有人抽固有」，而那不是一種）。
+ *
+ * ⭐ **⛔ 不會發生「一張都沒有」**：擲中的那一種如果這一回合根本沒排，就直接
+ * 讓給另一種。owner 的「每回合結束到商店**必定**可以跳出隨機三選一」是硬要求，
+ * 而 `alternate` 的毛病正是它會**靜靜地讓一張消失**（第 10 回合就是這樣把根源
+ * 讓掉的）。
+ *
+ * `pct` 省略時由排程推導：兩種都排了 = 50、只排了一種 = 那一種 100%。
+ *
+ * @returns true = 這一回合發寶具，false = 發聖杯願望
+ */
+export function rollWeaponRound(rules: ArenaRules, grant: RoundGrant, roll: number): boolean {
+  const hasWeapon = grant.weaponLootTable !== undefined;
+  const hasGrail = grant.augmentTier !== undefined;
+  if (!hasWeapon) return false;
+  if (!hasGrail) return true;
+  const pct = grant.weaponDraftPct ?? 50;
+  return roll * 100 < pct;
+}
+
 /** 這一回合發不發**聖杯願望**三選一（`augmentTier` 已經確定有排的前提下）。 */
-export function grailDraftAllowed(rules: ArenaRules, grant: RoundGrant, round?: number): boolean {
+export function grailDraftAllowed(
+  rules: ArenaRules,
+  grant: RoundGrant,
+  round?: number,
+  roll?: number,
+): boolean {
+  // ⭐ owner 2026-08-18：這一回合排了「兩張都發」⇒ 兩支謂詞都放行，⛔ 沒有裁決。
+  if (grant.draftBoth === true) return true;
+  if (rules.draftConflict === "round-roll") {
+    // ⚠️ 沒有骰子（舊錄影的表頭、單元測試的直接呼叫）⇒ 退回「兩張都發」，
+    // 也就是這條路出現之前真的會發生的事。⛔ 不是靜靜地不發。
+    return roll === undefined ? true : !rollWeaponRound(rules, grant, roll);
+  }
   if (!grant.weaponLootTable) return true; // 沒撞卡
   if (rules.draftConflict === "weapon-wins") return false;
   if (rules.draftConflict === "alternate") {
@@ -368,7 +437,16 @@ export function grailDraftAllowed(rules: ArenaRules, grant: RoundGrant, round?: 
 }
 
 /** 這一回合發不發**寶具**三選一（`weaponLootTable` 已經確定有排的前提下）。 */
-export function weaponDraftAllowed(rules: ArenaRules, grant: RoundGrant, round?: number): boolean {
+export function weaponDraftAllowed(
+  rules: ArenaRules,
+  grant: RoundGrant,
+  round?: number,
+  roll?: number,
+): boolean {
+  if (grant.draftBoth === true) return true; // 同上
+  if (rules.draftConflict === "round-roll") {
+    return roll === undefined ? true : rollWeaponRound(rules, grant, roll);
+  }
   if (!grant.augmentTier) return true; // 沒撞卡
   if (rules.draftConflict === "grail-wins") return false;
   if (rules.draftConflict === "alternate") {

@@ -212,3 +212,18 @@ export function capstoneModifiers(pct: number): StatModifier[] {
   const value = pct / 100;
   return CAPSTONE_STATS.map((stat) => ({ stat, op: ModOp.PercentAdd, value }));
 }
+
+/**
+ * ⭐ **這位英雄實際要付多少**（owner 2026-08-18：bot「消耗金錢是半價」）。
+ *
+ * ⛔ 三個收費站（道具 / 能力屬性強化 / 傳說寶玉）**共用這一支**。各自寫
+ * `price * mult` 的話，第四個收費站出現的那天它就會忘記乘 —— 而「忘記打折」
+ * 在畫面上跟「這個人比較窮」長得一模一樣。
+ *
+ * 四捨五入到整數：金幣是整數，`Math.round` 讓 375 × 0.5 = 188 而不是 187.5。
+ * ⚠️ 夾在 0 以上 —— 負倍率會變成「買東西送錢」，那是 #277 那一族的形狀。
+ */
+export function shopChargeFor(priceMult: number | undefined, price: number): number {
+  const m = typeof priceMult === "number" && Number.isFinite(priceMult) && priceMult >= 0 ? priceMult : 1;
+  return Math.round(price * m);
+}

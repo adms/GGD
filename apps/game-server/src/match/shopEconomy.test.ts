@@ -53,7 +53,7 @@ beforeAll(async () => {
 });
 
 function spawnedMatch(seed = 31): MatchController {
-  const ctl = new MatchController(`econ-${seed}`, seed, allBots(), FAST, 3, DEFAULT_ARENA_RULES);
+  const ctl = new MatchController(`econ-${seed}`, seed, allBots(), FAST, 3, SHOP_RULES);
   // #261 — the weapon shelf ships 暫時下架. This suite exists to prove the GOLD
   // rules (rule-1 refusals, the stat-path fork, the undo's no-arbitrage
   // invariant), all of which need a buyable weapon; the shelf being closed today
@@ -116,10 +116,21 @@ function humanBuyer(ctl: MatchController): {
   };
 }
 
+/**
+ * ⚠️ **這一批測的是「商店」，⛔ 不是「bot 的折扣」。**
+ *
+ * owner 2026-08-18 讓 bot 半價（`botShop.priceMult`），而這些夾具全是
+ * `allBots()` ⇒ 每一筆扣款都會被乘 0.5，於是每一條斷言都變成在同時驗
+ * 「商店收對錢」與「折扣是多少」兩件事。折扣有它自己的守衛
+ * （`botShopDiscount.test.ts`），所以這裡把倍率調回 1，讓每一條只驗一件事。
+ */
+const NO_BOT_DISCOUNT = { buyWeapons: true, priceMult: 1 } as const;
+const SHOP_RULES = { ...DEFAULT_ARENA_RULES, botShop: NO_BOT_DISCOUNT };
+
 describe("starting gold is 600, not 500", () => {
   it("every champion spawns able to buy exactly TWO SIMPLE items", () => {
     cover("econ-starting-gold");
-    const ctl = new MatchController("econ-start", 9, allBots(), FAST, 3, DEFAULT_ARENA_RULES);
+    const ctl = new MatchController("econ-start", 9, allBots(), FAST, 3, SHOP_RULES);
     let n = 0;
     // stop the moment champions exist, BEFORE the round-1 grant compounds it
     while ([...ctl.seats.values()].every((s) => s.entityId === null) && n++ < 500) ctl.tick();
@@ -182,7 +193,7 @@ describe("傳說寶玉 → a real 3-choose-1 offer on the controller", () => {
       { version: 1, champions: [], items: ["ember-rod", LEGENDARY_ORB_ITEM_ID], abilities: [] },
       false,
     );
-    const ctl = new MatchController("econ-wl", 5, allBots(), FAST, 3, DEFAULT_ARENA_RULES, undefined, wl);
+    const ctl = new MatchController("econ-wl", 5, allBots(), FAST, 3, SHOP_RULES, undefined, wl);
     let n = 0;
     while (ctl.phase.phase !== "intermission" && n++ < 500) ctl.tick();
     const { entity, buy } = humanBuyer(ctl);
@@ -468,7 +479,7 @@ describe("shop undo has no money exploit, through the real command path (task #1
     // the FAST 30-tick prep window would end mid-loop and enterCombat would
     // (correctly) commit the session, which a separate test already covers.
     const LONG = { champSelectTicks: 5, intermissionTicks: 100_000, combatMaxTicks: 1200, resolutionTicks: 5 };
-    const ctl = new MatchController("econ-cycle", 52, allBots(), LONG, 3, DEFAULT_ARENA_RULES);
+    const ctl = new MatchController("econ-cycle", 52, allBots(), LONG, 3, SHOP_RULES);
     let g = 0;
     while (ctl.phase.phase !== "intermission" && g++ < 500) ctl.tick();
     expect(ctl.phase.phase).toBe("intermission");

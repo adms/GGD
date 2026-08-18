@@ -13,6 +13,7 @@
  * {@link FINAL_ROUND} for the full chain of consequences.
  */
 import type { TeamId } from "@ggd/shared/ids";
+import { DEFAULT_FINAL_ROUND } from "@ggd/shared/content";
 
 export interface DuelPairing {
   zone: number;
@@ -67,11 +68,30 @@ export interface RoyaleBout {
  * derived from content either. One constant, read by every path, is the version
  * that cannot silently not-apply.
  */
-export const FINAL_ROUND = 10;
+/**
+ * ⚠️ **這是預設值，⛔ 不再是唯一的真相**（owner 2026-08-18：「理論上如果要改
+ * 不是第十回合，就要去後台改預設值」）。權威在 `ArenaRules.finalRound`
+ * （`config.arena-rules@1.finalRound`），它由 `DEFAULT_FINAL_ROUND` 起跳。
+ *
+ * ⭐ 上面那段「WHY A CONSTANT AND NOT A CONFIG KNOB」**過期了**（第三守則）：
+ *   · 它說「回合表寫到第 13 回合加 overflow，所以上限推導不出來」——
+ *     第 11–13 回合在 2026-08-18 已經退到 `content/_legacy/`。
+ *   · 它說「只有 MatchRoom 填得了第十三個建構子參數」——
+ *     `ArenaRules` 本來就整包傳進 MatchController，⛔ 不是新開一個參數。
+ *
+ * 留著這個常數是因為它仍然是**沒有 rules 的那些路**（單元測試夾具、骨架開機、
+ * 舊錄影的表頭）的答案，而那個答案必須跟出貨預設同一個數字。
+ */
+export const FINAL_ROUND = DEFAULT_FINAL_ROUND;
 
-/** Is `round` the all-in finale rather than a pair of 3v3 duels? */
-export function isRoyaleRound(round: number): boolean {
-  return round >= FINAL_ROUND;
+/**
+ * Is `round` the all-in finale rather than a pair of 3v3 duels?
+ *
+ * ⚠️ `finalRound` 省略時退回 {@link FINAL_ROUND} —— 那是**出貨預設**，
+ * ⛔ 不是「這條路不管設定」。呼叫端拿得到 rules 就一定要傳。
+ */
+export function isRoyaleRound(round: number, finalRound: number = FINAL_ROUND): boolean {
+  return round >= finalRound;
 }
 
 /**

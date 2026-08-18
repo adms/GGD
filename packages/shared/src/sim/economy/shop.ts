@@ -13,6 +13,7 @@ import {
 import { buyLegendaryOrb, purchasableSlots } from "./legendaryOrb";
 import { DEFAULT_SELL_REFUND_PCT, legendaryShelfIds, randomOnlyIds, shelfListable } from "./shopShelf";
 import { buyStatUpgrade, resetStatPath } from "./statPath";
+import { shopChargeFor } from "./itemTiers";
 
 export const INVENTORY_SLOTS = 6;
 /**
@@ -195,9 +196,14 @@ export function buyItem(world: SimWorld, id: EntityId, itemId: ItemId): BuyResul
   // 這一場的**成交價**。寶具是推導出來的（49 把 `cost` 全部是 0，統一價 =
   // 傳說寶玉 × 後台倍率），其餘照 doc 上的標價。⚠️ 下面每一處金額都讀這個
   // 變數 —— 扣款、`no-gold` 門檻、undo 的 `goldDelta` 三者對不上就是憑空生錢。
-  const price = inLegendaryPool
+  const listPrice = inLegendaryPool
     ? legendaryShelfPrice(world.legendaryShelf.priceMultiplier)
     : def.cost;
+  if (listPrice <= 0) return "not-purchasable";
+  // ⭐ 這位英雄的售價倍率（owner 2026-08-18：bot 半價）。⚠️ 打折要在 `price` **這一格**
+  // 生效，⛔ 不是只在扣款那一行 —— `paid` 也讀它，而賣出退款讀的是 `paid`。
+  // 只在扣款打折的話，bot 用半價買進、原價退出 ＝ 一台印鈔機。
+  const price = shopChargeFor(champ.shopPriceMult, listPrice);
   if (price <= 0) return "not-purchasable";
   // Both halves of "you may never be charged for nothing". The two SERVICES
   // are legitimately payload-free and are dispatched by id above, so they

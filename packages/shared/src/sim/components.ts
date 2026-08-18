@@ -320,6 +320,19 @@ export interface ChampionComp {
    */
   pendingOrbSlots: number;
   /**
+   * ⭐ **這位英雄的售價倍率**（owner 2026-08-18：bot「消耗金錢是半價」）。
+   *
+   * ⛔ 為什麼是一格倍率而不是 `if (isBot)`：sim 從頭到尾**不知道「bot」這個概念**，
+   * 也不該知道 —— 一旦它學會了，第二個、第三個地方就會各自再學一次。host 在
+   * 開場照座位的 driver 把 `rules.botShop.priceMult` 填進來，sim 只做乘法。
+   * ⇒ owner 哪天要「新手前三場半價」或「劣勢方打折」，那也是同一格。
+   *
+   * ⭐ **刻意是 optional 的**：`shopChargeFor` 把 undefined 當成 1，所以每一份
+   * 既有夾具、每一條既有的路都逐位元不變 —— 加一個必填欄位會逼 30 份測試夾具
+   * 各補一行 `shopPriceMult: 1`，而那 30 行沒有一行在表達任何意思。
+   */
+  shopPriceMult?: number;
+  /**
    * The current shopping session's UNDO HISTORY (task #121). A LIFO stack of
    * the exact buy/sell transactions the player made THIS session, newest last;
    * `undoShopAction` pops the top and reverses it precisely (see shop.ts).

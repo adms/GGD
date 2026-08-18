@@ -63,7 +63,12 @@ beforeAll(async () => {
 /** 一場真的比賽，停在中場（商店開著的那一格）。 */
 function shopping(mult: number): { ctl: MatchController; entity: EntityId } {
   const rules = rulesFromDoc({ ...doc, legendaryShelf: { ...doc.legendaryShelf!, priceMultiplier: mult } });
-  const ctl = new MatchController("legendary-shelf-wiring", 42, allBots(), FAST, 3, rules);
+  // ⚠️ 同 shopEconomy：這一條驗的是「後台倍率 → 收的錢」，⛔ 不是 bot 折扣
+  // （owner 2026-08-18 讓 bot 半價，而夾具全是 allBots）。折扣另有守衛。
+  const ctl = new MatchController("legendary-shelf-wiring", 42, allBots(), FAST, 3, {
+    ...rules,
+    botShop: { buyWeapons: true, priceMult: 1 },
+  });
   let n = 0;
   while (ctl.phase.phase !== "intermission" && n++ < 500) ctl.tick();
   expect(ctl.phase.phase).toBe("intermission");

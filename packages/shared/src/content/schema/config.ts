@@ -873,6 +873,30 @@ export const zArenaRoundGrant = z
     augmentTier: zAugmentTier.optional(),
     /** free 3-choose-1 item offer rolled from this loot table id */
     weaponLootTable: z.string().min(1).optional(),
+    /**
+     * ⭐ **這一回合的三選一是「寶具」的機率**（0–100，`draftConflict: "round-roll"`
+     * 才讀它）。owner 2026-08-18：「每回合只給一種（固有能力／寶具），回合表決定機率」。
+     *
+     * ⚠️ 這一回合只擲**一次**，全場所有人拿到同一種 —— 「只給一種」講的是回合，
+     * ⛔ 不是每個人各擲各的。
+     *
+     * 省略時由排程推導：兩種都排了 = 50、只排了一種 = 那一種 100%。
+     * ⭐ 所以**一張卡都不會消失**：擲中的那一種沒有池時會讓給另一種，
+     * ⛔ 不是靜靜地不發（那正是 `alternate` 的毛病）。
+     */
+    weaponDraftPct: z.number().min(0).max(100).optional(),
+    /**
+     * ⭐ **這一回合兩張都發**（owner 2026-08-18：「第十回合成為特殊設定，
+     * 寶具跟固有能力**同時發放**，但有遇到這種情形的商店時間要延長 10 秒鐘」）。
+     *
+     * ⚠️ 它**推翻** `weaponDraftPct` 那一擲 —— 兩張都發就沒有「是哪一種」可以問。
+     *
+     * ⭐ 為什麼這不是在走回 #340 的老路：owner 當初要「不要同時出現」的理由是
+     * **「選擇時間不夠」**，⛔ 不是「兩張同時很糟」。所以正解是把時間補回去
+     * （`bothDraftsExtraSec`），⛔ 不是丟掉一張 —— 而丟掉那一張正是第 10 回合
+     * 的根源一次都發不出來的原因。
+     */
+    draftBoth: z.boolean().optional(),
   })
   .strict();
 
@@ -2638,7 +2662,13 @@ export function mobSettlementWordingFromDoc(doc: unknown): MobSettlementWording 
  * **兩種**只發法。一格布林逼人在「關掉衝突處理」與「聖杯贏」之間二選一，
  * 而 owner 想換成寶具贏的那一天就得改程式（第一守則）。
  */
-export const zDraftConflict = z.enum(["grail-wins", "weapon-wins", "both", "alternate"]);
+export const zDraftConflict = z.enum([
+  "round-roll",
+  "grail-wins",
+  "weapon-wins",
+  "both",
+  "alternate",
+]);
 export type DraftConflict = z.infer<typeof zDraftConflict>;
 
 /**
@@ -2658,7 +2688,25 @@ export type DraftConflict = z.infer<typeof zDraftConflict>;
  * ⛔ 不是「寶具那條路關掉」——後者是排程的副作用，不是設計。四個值都在後台那一格，
  * 想回到嚴格的舊行為就選 `grail-wins`。
  */
-export const DEFAULT_DRAFT_CONFLICT = "alternate" as const;
+export const DEFAULT_DRAFT_CONFLICT = "round-roll" as const;
+
+/**
+ * ⛔ **`alternate` 為什麼被換掉**（owner 2026-08-18「每回合只給一種」＝ GH#357）。
+ *
+ * `alternate` 數的是「這是第幾個排了寶具的回合」，撞卡時輪流讓路。出貨排程有三個
+ * 撞卡回合（2 / 5 / 10）⇒ 序位 1、2、3 ⇒ **聖杯、寶具、聖杯**。
+ *
+ * 也就是說 **第 10 回合的寶具卡讓給了聖杯**，而第 10 回合是 `ex-origin`
+ * （[EX∅ 根源]，窗口 10..10）**唯一**可能出現的回合 ⇒ 根源在出貨設定下
+ * **一次都不會發**。⚠️ 這是根源的**第三個**「結構上不可能」——
+ * 前兩個（池不存在、回合窗口與發卡回合互斥）都修掉了，這一個藏在**裁決規則**裡，
+ * 而且它是「規則本身沒錯，只是排程剛好讓它落在錯的一邊」——⛔ 分開看規則或看排程
+ * 都看不出來。
+ *
+ * ⇒ `round-roll`：**回合表自己說這一回合是哪一種**（`weaponDraftPct`），
+ * 一回合只擲一次、全場同一種。撞卡這個概念因此消失 —— 沒有兩張要裁決。
+ * 舊的四個值全部留著，是 owner 的一鍵回頭（第〇·六守則）。
+ */
 
 /**
  * ⭐ **寶具（傳說武器）貨架**（owner 2026-08-17：「寶具(傳說武器) 可以上架直接
@@ -2731,80 +2779,102 @@ export type LegendaryShelfConfig = z.infer<typeof zLegendaryShelfConfig>;
  * ⚠️ 順序有意義：**由高到低**。引擎逐階問「開放了嗎 × 骰中了嗎 × 這張池對這位玩家
  * 有東西嗎」，第一個全中的就用它；全都沒中就走這一回合原本排的獎池。
  */
-export const zWeaponTier = z
-  .object({
-    id: z.string().min(1).max(32).describe("內部 id；會變成卡片的 tier（`weapon:<id>`）。"),
-    label: z.string().min(1).max(24).describe("玩家看到的階級名（「EX解放」）。"),
-    table: zId.describe("這一階的獎池（content/loot-tables/<id>.json）。"),
-    minRound: z
-      .number()
-      .int()
-      .min(1)
-      .max(99)
-      .describe("第幾回合起才可能出現。[EX∅ 根源] 是「第九回合**結束後**」⇒ 10。"),
-    maxRound: z
-      .number()
-      .int()
-      .min(1)
-      .max(99)
-      .optional()
-      .describe(
-        "最後在第幾回合出現（含）。省略 = 沒有上界。" +
-          "⭐ owner 2026-08-17：[EX∅ 根源]「只會在第九回合**結束後**，到**最終回合開始前**出現」。" +
-          "⚠️ 出貨是 10..10 而最終回合就是第 10 回合 —— 這**不矛盾**：三選一發生在該回合的**商店階段**，" +
-          "也就是最終大亂鬥開打**之前**。owner 2026-08-18：「最後一回合弱勢保底可以抽根源」。",
-      ),
-    basePct: z
-      .number()
-      .int()
-      .min(0)
-      .max(100)
-      .describe("**平手方**（劣勢值 D = 0）抽到這一階的百分比。0＝這一階只發給劣勢方。"),
-    underdogFactor: z
-      .number()
-      .min(0)
-      .max(20)
-      .describe(
-        "劣勢加權的**強度**。最終機率 = `basePct × (1 + factor × D^exponent)`，D ∈ [0,1] 是劣勢值。" +
-          "owner 2026-08-17 給的兩組：[EX解放] factor 1.5（嚴重劣勢 2.5 倍）、[EX∅ 根源] factor 4。",
-      ),
-    underdogExponent: z
-      .number()
-      .min(1)
-      .max(4)
-      .describe(
-        "劣勢加權的**曲線**。1 = 線性（[EX解放]）；2 = 平方（[EX∅ 根源]）。" +
-          "⭐ owner：「使用平方是為了讓**小幅落後只得到有限補償**，真正瀕臨淘汰的隊伍才明顯提高機率」——" +
-          "⛔ 這正是它不能跟 factor 合成一個數字的原因：兩者調的是不同的東西。",
-      ),
-    guaranteeAtD: z
-      .number()
-      .min(0.05)
-      .max(1)
-      .optional()
-      .describe(
-        "⭐ **劣勢保底門檻**：劣勢值 D 到這個數字以上，這一階**必得**（機率 100%）。" +
-          "owner 2026-08-18：「最後一回合弱勢保底可以抽根源」。設了之後這一階改走保底曲線 " +
-          "`basePct + (100−basePct) × min(1, D/門檻)^exponent`，⛔ `underdogFactor` 不再參與。" +
-          "省略 = 沒有保底。出貨 [EX∅ 根源] 0.6 ⇒ 真正在挨打的隊伍第 10 回合一定拿得到根源，" +
-          "領先方仍然只有 basePct。",
-      ),
-    limitScope: z
-      .enum(["champion", "team"])
-      .describe(
-        "數量限制算在誰頭上。owner 2026-08-17：[EX解放]「每名英雄最多一件」⇒ champion。" +
-          "⚠️ [EX∅ 根源] 原本是 team，**owner 2026-08-18 撤掉了**（「不需要每隊限一件的限制」）——" +
-          "保底路徑上同隊三個座位本來就會各拿一張，team 限制只會讓其中兩個人靜默拿不到。",
-      ),
-    limitCount: z
-      .number()
-      .int()
-      .min(1)
-      .max(6)
-      .describe("同一個 scope 最多持有幾件這一階。達到之後這一階對他就不再出現。"),
-  })
+/**
+ * ⭐ **一階「隨戰況升級」的規則**，寶具與聖杯願望**共用同一個形狀**。
+ *
+ * ⛔ 兩份 8 欄位的 schema 是兩份會分岔的 schema（第零守則⑨：N 個同型 = K 個模板）。
+ * 唯一的差別是 `table` 指向什麼：寶具指一張 loot table 的 id，
+ * 聖杯願望指一個 tier 名（silver/gold/prismatic）—— 所以那一格由各自 `.extend()` 補上。
+ * 引擎那一支 `pickWeaponTable()` 兩者共用，⛔ 沒有第二份逐階骰的程式。
+ */
+const zTierRuleBase = z.object({
+  id: z.string().min(1).max(32).describe("內部 id；會變成卡片的 tier（`weapon:<id>`）。"),
+  label: z.string().min(1).max(24).describe("玩家看到的階級名（「EX解放」）。"),
+  minRound: z
+    .number()
+    .int()
+    .min(1)
+    .max(99)
+    .describe("第幾回合起才可能出現。[EX∅ 根源] 是「第九回合**結束後**」⇒ 10。"),
+  maxRound: z
+    .number()
+    .int()
+    .min(1)
+    .max(99)
+    .optional()
+    .describe(
+    "最後在第幾回合出現（含）。省略 = 沒有上界。" +
+      "⭐ owner 2026-08-17：[EX∅ 根源]「只會在第九回合**結束後**，到**最終回合開始前**出現」。" +
+      "⚠️ 出貨是 10..10 而最終回合就是第 10 回合 —— 這**不矛盾**：三選一發生在該回合的**商店階段**，" +
+      "也就是最終大亂鬥開打**之前**。owner 2026-08-18：「最後一回合弱勢保底可以抽根源」。",
+    ),
+  basePct: z
+    .number()
+    .int()
+    .min(0)
+    .max(100)
+    .describe("**平手方**（劣勢值 D = 0）抽到這一階的百分比。0＝這一階只發給劣勢方。"),
+  underdogFactor: z
+    .number()
+    .min(0)
+    .max(20)
+    .describe(
+    "劣勢加權的**強度**。最終機率 = `basePct × (1 + factor × D^exponent)`，D ∈ [0,1] 是劣勢值。" +
+      "owner 2026-08-17 給的兩組：[EX解放] factor 1.5（嚴重劣勢 2.5 倍）、[EX∅ 根源] factor 4。",
+    ),
+  underdogExponent: z
+    .number()
+    .min(1)
+    .max(4)
+    .describe(
+    "劣勢加權的**曲線**。1 = 線性（[EX解放]）；2 = 平方（[EX∅ 根源]）。" +
+      "⭐ owner：「使用平方是為了讓**小幅落後只得到有限補償**，真正瀕臨淘汰的隊伍才明顯提高機率」——" +
+      "⛔ 這正是它不能跟 factor 合成一個數字的原因：兩者調的是不同的東西。",
+    ),
+  guaranteeAtD: z
+    .number()
+    .min(0.05)
+    .max(1)
+    .optional()
+    .describe(
+    "⭐ **劣勢保底門檻**：劣勢值 D 到這個數字以上，這一階**必得**（機率 100%）。" +
+      "owner 2026-08-18：「最後一回合弱勢保底可以抽根源」。設了之後這一階改走保底曲線 " +
+      "`basePct + (100−basePct) × min(1, D/門檻)^exponent`，⛔ `underdogFactor` 不再參與。" +
+      "省略 = 沒有保底。出貨 [EX∅ 根源] 0.6 ⇒ 真正在挨打的隊伍第 10 回合一定拿得到根源，" +
+      "領先方仍然只有 basePct。",
+    ),
+  limitScope: z
+    .enum(["champion", "team"])
+    .describe(
+    "數量限制算在誰頭上。owner 2026-08-17：[EX解放]「每名英雄最多一件」⇒ champion。" +
+      "⚠️ [EX∅ 根源] 原本是 team，**owner 2026-08-18 撤掉了**（「不需要每隊限一件的限制」）——" +
+      "保底路徑上同隊三個座位本來就會各拿一張，team 限制只會讓其中兩個人靜默拿不到。",
+    ),
+  limitCount: z
+    .number()
+    .int()
+    .min(1)
+    .max(6)
+    .describe("同一個 scope 最多持有幾件這一階。達到之後這一階對他就不再出現。"),
+});
+
+/** 寶具階：`table` 是一張 loot table 的 id。 */
+export const zWeaponTier = zTierRuleBase
+  .extend({ table: zId.describe("這一階的獎池（content/loot-tables/<id>.json）。") })
   .strict();
 export type WeaponTierConfig = z.infer<typeof zWeaponTier>;
+
+/**
+ * ⭐ **聖杯願望階**（GH#357「階級由劣勢決定」）：`table` 是一個 tier 名。
+ *
+ * 在這之前 `rounds[N].augmentTier` 是**寫死的一個字**，所以「隨著戰況可以隨機到的
+ * 等級不一樣」這句話只對寶具成立，對固有能力完全不成立 —— 而 owner 那一句話
+ * 講的是**兩種卡**。這張表把同一個機制接到聖杯那一半。
+ */
+export const zAugmentTierRule = zTierRuleBase
+  .extend({ table: zAugmentTier.describe("這一階要發的聖杯願望等級。") })
+  .strict();
+export type AugmentTierRuleConfig = z.infer<typeof zAugmentTierRule>;
 
 /**
  * 劣勢值 `D` 的三個權重（owner 2026-08-17 逐字給的公式）。
@@ -2874,6 +2944,86 @@ export const DEFAULT_WEAPON_TIERS: WeaponTierConfig[] = [
     limitCount: 1,
   },
 ];
+
+/**
+ * ⭐ **聖杯願望的階級升級表**（GH#357）。與 {@link DEFAULT_WEAPON_TIERS} 同一個機制，
+ * 只是 `table` 是 tier 名。由高到低：prismatic ＞ gold。
+ *
+ * ⚠️ 這張表**只往上升級**（`pickWeaponTable` 的不可降級那條）——
+ * 回合表排的 tier 是**地板**，劣勢只會把你抬高，⛔ 不會把領先方壓低。
+ * 領先方仍有 `basePct` 的機率摸到高階（owner 2026-08-17：「避免系統看起來像
+ * 直接補償敗方」，所以 basePct ⛔ 不可以是 0）。
+ */
+export const DEFAULT_AUGMENT_TIERS: AugmentTierRuleConfig[] = [
+  {
+    id: "grail-prismatic",
+    label: "稜彩",
+    table: "prismatic",
+    minRound: 1,
+    basePct: 6,
+    underdogFactor: 4,
+    underdogExponent: 2,
+    limitScope: "champion",
+    limitCount: 6,
+  },
+  {
+    id: "grail-gold",
+    label: "黃金",
+    table: "gold",
+    minRound: 1,
+    basePct: 12,
+    underdogFactor: 3,
+    underdogExponent: 1,
+    limitScope: "champion",
+    limitCount: 6,
+  },
+];
+
+/**
+ * ⭐ **賽制的最後一回合**（owner 2026-08-18：「理論上如果要改不是第十回合，
+ * 就要去後台改預設值」）。
+ *
+ * ⚠️ `PairedDuels.FINAL_ROUND` 以前是一個常數，而它的檔頭寫著「WHY A CONSTANT AND
+ * NOT A CONFIG KNOB」——那段理由現在**過期了**（第三守則）：它說「回合表寫到第 13
+ * 回合加 overflow，所以上限推導不出來」，而第 11–13 回合在 2026-08-18 已經退到
+ * `content/_legacy/`；它也說「只有 MatchRoom 填得了第十三個建構子參數」，而
+ * `ArenaRules` 本來就整包傳進 MatchController。
+ *
+ * ⚠️ 它與 `maxRounds`（房間設定）是**兩件事**：這一格是賽制本身的終點，
+ * `maxRounds` 只能把一場**縮短**。兩條是 OR，先到的贏。
+ */
+export const DEFAULT_FINAL_ROUND = 10;
+
+/** 兩張三選一同時發的回合，中場多給幾秒（owner 2026-08-18：10 秒）。 */
+export const DEFAULT_BOTH_DRAFTS_EXTRA_SEC = 10;
+
+/**
+ * ⭐ **bot 的商店行為**（owner 2026-08-18：「一樣花錢買隨機寶具，
+ * 只是消耗金錢是半價」）。
+ *
+ * ⛔ 為什麼是欄位不是 `if (isBot)`：折扣走的是 `ChampionComp.shopPriceMult`
+ * ——一個**每位英雄**的售價倍率，host 在開場照座位的 driver 填。sim 只做乘法，
+ * 它從頭到尾不知道「bot」這個概念（也就不會有第二個地方需要學會它）。
+ */
+export interface BotShopConfig {
+  /** bot 會不會拿金幣去買隨機寶具。出貨 true。 */
+  buyWeapons: boolean;
+  /** bot 的售價倍率。出貨 **0.5**（半價）。1 = 跟人類同價。 */
+  priceMult: number;
+}
+export const DEFAULT_BOT_SHOP: BotShopConfig = { buyWeapons: true, priceMult: 0.5 };
+export const zBotShopConfig = z
+  .object({
+    buyWeapons: z
+      .boolean()
+      .describe("bot 會不會在中場拿金幣買一件**隨機**寶具（⛔ 不是走每位英雄手寫的推薦出裝）。"),
+    priceMult: z
+      .number()
+      .min(0)
+      .max(4)
+      .describe("bot 買東西的售價倍率。出貨 0.5＝半價；1＝跟人類同價；0＝免費（會讓 bot 每一場都塞滿）。"),
+  })
+  .strict();
 
 /**
  * 出貨值。⚠️ 這是**第三個住處**（`content/config/arena-rules.json` ·
@@ -2995,6 +3145,61 @@ export const zConfigArenaRulesDoc = z
           "全沒中（或該池對這位玩家沒有合格的東西）就走這一回合原本排的那一張。" +
           "⭐ 劣勢方的機率是另一格，owner 2026-08-17：「特別是劣勢方出現機率會明顯變高」。" +
           "⛔ 空陣列 = 完全關掉，回到只有一張基礎獎池的行為。",
+      ),
+    /**
+     * ⭐ **聖杯願望的階級升級表**（GH#357「階級由劣勢決定」）。
+     * 省略 = {@link DEFAULT_AUGMENT_TIERS}；空陣列 = 關掉（回合表排什麼就發什麼）。
+     * ⚠️ 與 `weaponTiers` **同一個引擎**（`pickWeaponTable`），由高到低排。
+     */
+    augmentTiers: z
+      .array(zAugmentTierRule)
+      .max(8)
+      .optional()
+      .describe(
+        "聖杯願望三選一的等級也隨戰況升級。回合表排的等級是**地板**，劣勢只會把你抬高，" +
+          "⛔ 不會把領先方壓低。owner 2026-08-18：「隨著戰況可以隨機到的等級不一樣，" +
+          "會比較偏向弱勢拿好一點等級才有機會扭轉」。空陣列 = 關掉。",
+      ),
+    /**
+     * ⭐ **兩張都發的回合，中場多給幾秒**（owner 2026-08-18：「商店時間要延長
+     * 10 秒鐘」）。省略 = {@link DEFAULT_BOTH_DRAFTS_EXTRA_SEC}。
+     *
+     * ⚠️ 只有真的**兩張都發出去**的那一回合才加 —— ⛔ 不是「排了 draftBoth 就加」。
+     * 兩者的差別在「這一回合的其中一種其實沒有池」那個情況：那時候只發得出一張，
+     * 而多給 10 秒會讓玩家對著一張卡等一段沒有理由的空白。
+     */
+    bothDraftsExtraSec: z
+      .number()
+      .min(0)
+      .max(120)
+      .optional()
+      .describe(
+        "兩張三選一同時發的回合，中場倒數多給幾秒（出貨 10）。" +
+          "owner 2026-08-18：兩張同時出現的問題是「選擇時間不夠」，所以補時間、⛔ 不是丟掉一張。",
+      ),
+    /**
+     * ⭐ **賽制的最後一回合**（owner 2026-08-18）。省略 = {@link DEFAULT_FINAL_ROUND}。
+     * 打完它就全場結算；它同時決定「大亂鬥從第幾回合開始」。
+     */
+    finalRound: z
+      .number()
+      .int()
+      .min(2)
+      .max(99)
+      .optional()
+      .describe(
+        "賽制的最後一回合 —— 打完就全部結算，而且這一回合是**全員同一張地圖的大亂鬥**。" +
+          "⚠️ 它與房間設定的 `maxRounds` 是兩件事：那一格只能把一場**縮短**，兩條是 OR、先到的贏。" +
+          "⛔ 改大之前先確認回合表排到那一回合，否則後面幾回合會落到 overflow 規則上。",
+      ),
+    /**
+     * ⭐ **bot 的商店行為**（owner 2026-08-18）。省略 = {@link DEFAULT_BOT_SHOP}。
+     */
+    botShop: zBotShopConfig
+      .optional()
+      .describe(
+        "bot 在中場怎麼花錢。owner 2026-08-18：「一樣花錢買隨機寶具，只是消耗金錢是半價」。" +
+          "⚠️ 關掉 buyWeapons 之後 bot 整場不會花任何金幣（每位英雄手寫的推薦出裝已經退場）。",
       ),
     /**
      * 劣勢值 `D` 的三項權重（owner 2026-08-17 的 50/30/20）。
