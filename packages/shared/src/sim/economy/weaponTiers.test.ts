@@ -94,11 +94,47 @@ describe("更高階寶具的抽池規則", () => {
     const sq = TIERS.find((t) => t.underdogExponent >= 2);
     expect(sq, "出貨沒有任何一階用平方 —— owner 明說根源要用平方").toBeDefined();
     const at = (d: number): number => tierChancePct(sq!, d);
-    // 小落後拿到的增幅，必須**明顯小於**線性會給的（否則平方等於白寫）。
-    const linearAt025 = sq!.basePct * (1 + sq!.underdogFactor * 0.25);
-    expect(at(0.25)).toBeLessThan(linearAt025);
-    // 而滿劣勢時兩者相等（D=1 時 D^n === D）。
-    expect(at(1)).toBeCloseTo(sq!.basePct * (1 + sq!.underdogFactor), 6);
+    // ⛔ 這裡驗的是**曲線的形狀**，不是某一條公式的字面值 —— 2026-08-18 加了
+    // `guaranteeAtD`（保底曲線）之後，原本那條抄著 `basePct×(1+factor)` 的斷言
+    // 立刻變成謊話，而 owner 要的性質一個字都沒變。形狀寫法兩條曲線都適用。
+    expect(at(0)).toBeCloseTo(sq!.basePct, 6); // 平手方 = basePct
+    // ⭐「小幅落後只得到有限補償」＝ **爬升段**整段凹在直線下面（凸函數）。
+    // ⚠️ 爬升段的終點是保底門檻（沒設保底就是 D=1）。拿 D=1 當終點會誤判：
+    // 保底曲線過了門檻就平在 100，那條弦會被壓得很淺，於是門檻前的點看起來
+    // 「在線上面」—— 而它其實一直是凸的。
+    const top = sq!.guaranteeAtD ?? 1;
+    const straight = (f: number): number => sq!.basePct + f * (at(top) - sq!.basePct);
+    expect(at(0.25 * top), "小幅落後拿到的補償不比線性少 —— 平方等於白寫").toBeLessThan(straight(0.25));
+    expect(at(0.5 * top)).toBeLessThan(straight(0.5));
+    // 而且**單調遞增** —— 劣勢方永遠不會拿得比領先方少（2026-08-18 的缺陷正是這條破了）。
+    for (const [a, b] of [[0, 0.25], [0.25, 0.5], [0.5, 0.75], [0.75, 1]]) {
+      expect(at(b!), `D=${b} 反而比 D=${a} 低`).toBeGreaterThanOrEqual(at(a!));
+    }
+  });
+
+  it("⭐ 劣勢保底：D 到門檻就 100%，領先方仍然只有 basePct（owner 2026-08-18）", () => {
+    const g = TIERS.filter((t) => t.guaranteeAtD !== undefined);
+    expect(g.length, "出貨沒有任何一階帶保底門檻 —— 「最後一回合弱勢保底」沒有被實作").toBeGreaterThan(0);
+    for (const t of g) {
+      expect(tierChancePct(t, t.guaranteeAtD!), `${t.id} 到了門檻還不是必得`).toBeCloseTo(100, 6);
+      expect(tierChancePct(t, 1)).toBeCloseTo(100, 6);
+      expect(tierChancePct(t, 0), `${t.id} 平手方不該吃到保底`).toBeCloseTo(t.basePct, 6);
+    }
+  });
+
+  it("⛔ 抽獎只能升級，不能降級 —— 基礎池本身就是高階時，低階不准搶走", () => {
+    // 這一條釘的是 2026-08-18 那個**把劣勢加權整個倒過來**的缺陷：最終回合的基礎池
+    // 排的是高階池時，一階更低的階中了 = 把玩家從高階**降級**。而低階對劣勢方中得
+    // 更兇 ⇒ 劣勢方拿到高階的機率反而比領先方低（實測 77.5% vs 86.2%）。
+    const [high, low] = [TIERS[0]!, TIERS[1]!];
+    const rng = { next: () => 0 }; // 每一階都中
+    const p = pickWeaponTable(TIERS, high.minRound, 1, low.table, rng, always);
+    expect(p.table, "低階把基礎池的高階換掉了").not.toBe(low.table);
+    expect(p.rule?.id).toBe(high.id);
+    // ⚠️ 而且骰子照擲 —— 少擲一顆，同一顆種子就走不出同一條流。
+    let n = 0;
+    pickWeaponTable(TIERS, high.minRound, 1, low.table, { next: () => (n++, 0.99) }, always);
+    expect(n, "不可降級那條 continue 擺在擲骰之前了").toBe(TIERS.length);
   });
 
   it("⭐ 數量限制：額度滿了那一階就不再出現", () => {

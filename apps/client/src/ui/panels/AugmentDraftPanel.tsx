@@ -302,7 +302,7 @@ export function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
                   style={{ fontSize: 10, color: TEXT_DIM, lineHeight: 1.3 }}
                 >
                   {cardDoc ? (
-                    <ItemCardBody description={cardDoc} fontSize={10} textColor={TEXT_DIM} />
+                    <ItemCardBody description={cardDoc} itemId={choice} fontSize={10} textColor={TEXT_DIM} />
                   ) : (
                     cardDesc
                   )}

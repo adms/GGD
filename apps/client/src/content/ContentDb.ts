@@ -53,6 +53,7 @@ import { applyDamageColorsDoc } from "../render/damagePalette";
 // 道具卡片的排版與配色 (owner 2026-08-02)。沒有這一行,
 // `content/config/item-card.json` 就是一份沒人讀的檔案。
 import { applyItemCardDoc } from "../ui/components/itemCardTheme";
+import { applyCombatEnvDoc } from "../ui/displayFinal";
 import { applyVictoryFxDoc } from "../vfx/victoryFxPolicy";
 // GH#339 混音表 (owner 2026-08-17「其他角色的語音音量應該減少一半」)。同一條縫、
 // 同一個理由:沒有這一行,`content/config/audio-mix.json` 就是一份沒人讀的檔案 ——
@@ -276,6 +277,16 @@ export class ContentDb {
     // 這一行的話那份 JSON 存了也沒人讀(失敗形態 ②)。傳 null(檔案不存在／
     // schema 不合)= `DEFAULT_ITEM_CARD`,不是「沒有配色」。
     applyItemCardDoc(this.configDoc<ConfigItemCardDoc>("item-card", "config.item-card@1"));
+    // ⭐ 戰鬥系統倍率表 —— 卡片上**推導出來**的數字（魔抗減傷 %）要用它現算。
+    // ⛔ 少了這一行，圖鑑／大廳在**進場之前**拿到的是中性表（全部 1.0），於是同一件
+    // 道具在圖鑑印 66.7%、在場上印 28.6%（失敗形態②的變種：算對了但這個畫面讀不到）。
+    // ⚠️ 它不是覆蓋層：MatchState 帶來真的表時 `setDisplayEnvJson` 會換掉它。
+    applyCombatEnvDoc(
+      this.configDoc<{ schema: string; multipliers?: Record<string, number> }>(
+        "combat-env",
+        "config.combat-env@1",
+      ),
+    );
     // 勝利煙火的兩個開關 (owner 2026-08-02「請你直接取消煙火(變成後台開關)」)。
     // 沒有這一行,`content/config/victory-fx.json` 就是一份沒人讀的檔案:後台把
     // 煙火打開,場上還是不會放(第②號故障:算出來了但從沒送到)。傳 null(檔案

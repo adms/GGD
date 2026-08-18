@@ -24,12 +24,24 @@
  * 這個元件裡**沒有任何 hex 字面值** —— 有的話 owner 想換色就要 rebuild。
  */
 import type { CSSProperties } from "react";
-import { parseItemCard, type ItemCard, type ItemCardToken } from "@ggd/shared/content";
+import { parseItemCard, withDerivedNumbers, type ItemCard, type ItemCardToken } from "@ggd/shared/content";
+import { Items } from "@ggd/shared/sim/content/registry";
+import type { ItemId } from "@ggd/shared/ids";
+import { getDisplayEnv } from "../displayFinal";
 import { getItemCardConfig } from "./itemCardTheme";
 
 export interface ItemCardBodyProps {
   /** owner 手寫的原文。undefined/空字串 → 什麼都不畫。 */
   description: string | null | undefined;
+  /**
+   * 這段原文屬於哪一件道具 —— 卡面上**推導出來**的數字（今天只有魔抗減傷 %）
+   * 要用它自己的 modifiers 現算（見 `content/itemCardDerived.ts`）。
+   *
+   * ⭐ **刻意是必填的**（不是 `?`）。三選一的增益卡不是道具文件，那時候傳 `null`；
+   * 但一件真的道具如果忘了傳，卡面就會靜默印回那個過期的數字 —— 而那正是
+   * 這整個模組在修的東西。必填 = 由**編譯器**擋，⛔ 不是靠我記得。
+   */
+  itemId: string | null;
   /** 要不要畫 `解說` 那一段。hover tooltip 這種矮的地方可以關掉。 */
   showLore?: boolean;
   /** 基礎字級(px)。chip 與數值都相對它縮放,所以一個參數就能換場合。 */
@@ -87,13 +99,20 @@ function Token({
 
 export function ItemCardBody({
   description,
+  itemId,
   showLore = true,
   fontSize = 12,
   textColor = "#c3cbdd",
   style,
 }: ItemCardBodyProps): React.JSX.Element | null {
   const cfg = getItemCardConfig();
-  const card: ItemCard = parseItemCard(description, cfg);
+  // ⛔ modifiers 讀**出貨的登錄表**，不是呼叫端手上的那份 —— 失敗形態⑤（被測/被讀的
+  // 不是出貨的那個）。env 走 displayFinal 的同一個 live 鏡子，所以後台改了旋鈕，
+  // 這張卡下一次繪製就是新的數字。
+  const card: ItemCard = withDerivedNumbers(parseItemCard(description, cfg), {
+    modifiers: itemId === null ? undefined : Items.tryGet(itemId as ItemId)?.modifiers,
+    env: getDisplayEnv(),
+  });
   if (card.efficacy.length === 0 && card.lore.length === 0 && card.rarity === null) return null;
   return (
     <div style={{ fontSize, lineHeight: 1.6, color: textColor, ...style }}>

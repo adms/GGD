@@ -48,8 +48,9 @@ export interface WeaponTierRule {
   readonly minRound: number;
   /**
    * 最後在第幾回合出現（含）。省略 = 沒有上界。
-   * ⭐ [EX∅ 根源] 的「到**最終回合開始前**」就是這一格 —— ⛔ 少了它，根源會在最終
-   * 回合本身也發，而那時候拿到已經來不及逆轉（owner 要的是「逆轉窗口」不是「終局彩券」）。
+   * ⭐ [EX∅ 根源] 出貨是 **10..10**，而 `PairedDuels.FINAL_ROUND` 也是 10。
+   * ⚠️ 這**不矛盾**：三選一發生在該回合的**商店階段**，也就是最終大亂鬥開打之前 ——
+   * owner 要的「最終回合大戰**前**」拿到的就是這一張。
    */
   readonly maxRound?: number;
   /** **平手方**（D = 0）抽到這一階的百分比。 */
@@ -58,6 +59,19 @@ export interface WeaponTierRule {
   readonly underdogFactor: number;
   /** 劣勢加權曲線：1 = 線性（[EX解放]）、2 = 平方（[EX∅ 根源]）。 */
   readonly underdogExponent: number;
+  /**
+   * ⭐ **劣勢保底門檻**（owner 2026-08-18：「最後一回合弱勢保底可以抽根源」）。
+   *
+   * 設了之後這一階改走**保底曲線**，⛔ `underdogFactor` 不再參與：
+   *
+   *	pct(D) = basePct + (100 − basePct) × min(1, D / guaranteeAtD)^exponent
+   *
+   * 也就是「平手方 `basePct`，劣勢值到 `guaranteeAtD` 以上**必得**」，中間照
+   * `underdogExponent` 的曲線爬上去。⛔ 刻意**不是**「超過門檻就跳到 100」——
+   * 那個斷崖在門檻兩側差一個 D 的第三位小數就差 70 個百分點，玩家感受得到而且
+   * 沒有道理。省略 = 沒有保底，走原本的倍率曲線。
+   */
+  readonly guaranteeAtD?: number;
   /** 數量限制算在誰頭上。 */
   readonly limitScope: "champion" | "team";
   /** 同一個 scope 最多幾件。 */
@@ -105,12 +119,30 @@ export function disadvantageScore(
   return clamp01(sum / total);
 }
 
-/** `basePct × (1 + factor × D^exponent)`，夾在 [0,100]。⛔ 不用 `**`（sim 純度禁它）。 */
+/**
+ * 這一階對劣勢值 `d` 的中獎百分比，夾在 [0,100]。⛔ 不用 `**`（sim 純度禁它）。
+ *
+ * 兩條曲線，看 {@link WeaponTierRule.guaranteeAtD} 有沒有設：
+ *   · 有 —— `basePct + (100−basePct) × min(1, d/guaranteeAtD)^exponent`（保底）
+ *   · 沒有 —— `basePct × (1 + factor × d^exponent)`（倍率）
+ *
+ * ⭐ 兩條都**對 d 單調遞增**，而那是這支函式唯一不可以壞的性質：劣勢方拿到的
+ * 機率必須 ≥ 領先方。⚠️ 單調的是**這一階**，整條流程的單調性還要靠
+ * {@link pickWeaponTable} 的「不可降級」—— 2026-08-18 的缺陷正是那一半破了。
+ */
 export function tierChancePct(t: WeaponTierRule, d: number): number {
   const x = d < 0 ? 0 : d > 1 ? 1 : d;
   // 指數只有 1..4 且是整數語意，逐次相乘即可 —— `**` 被 sim/purity.test.ts 禁掉。
-  let curved = 1;
   const n = Math.max(1, Math.round(t.underdogExponent));
+  const g = t.guaranteeAtD;
+  if (g !== undefined && g > 0) {
+    const r = x >= g ? 1 : x / g;
+    let curved = 1;
+    for (let i = 0; i < n; i++) curved *= r;
+    const pct = t.basePct + (100 - t.basePct) * curved;
+    return pct < 0 ? 0 : pct > 100 ? 100 : pct;
+  }
+  let curved = 1;
   for (let i = 0; i < n; i++) curved *= x;
   const pct = t.basePct * (1 + t.underdogFactor * curved);
   return pct < 0 ? 0 : pct > 100 ? 100 : pct;
@@ -159,12 +191,27 @@ export function pickWeaponTable(
   /** 這一階對這位玩家還開不開（數量限制已經滿了就回 false）。省略 = 都開。 */
   underLimit: (tier: WeaponTierRule) => boolean = () => true,
 ): WeaponTierPick {
+  // ⭐ **抽獎只能往上升級，⛔ 不能降級。**
+  //
+  // 這一回合原本排的池如果**本身就是某一階**（出貨：最終回合排 `ex-release-weapons`），
+  // 那一階與它以下的每一階都不參加 —— 中了只會把玩家從那張池換到**同級或更差**的池。
+  //
+  // ⛔ 2026-08-18 量到的缺陷就是缺這一行，而且它把整個劣勢加權**倒過來**：
+  // 當時最終回合的基礎池是 `ex-origin-weapons`（根源），而 `ex-release` 沒有回合上界，
+  // 於是「ex-release 中了」＝ 把根源降級成解放。劣勢方的 ex-release 機率更高（37.5%
+  // vs 15%），所以**劣勢方被降級得更頻繁** ⇒ 拿到根源 77.5%，領先方反而 86.2%。
+  // 每一階自己都是單調遞增的，整體卻反過來 —— 這種缺陷分開檢查每一階永遠看不到。
+  const baseRank = tiers.findIndex((t) => t.table === baseTable);
   let hit: WeaponTierRule | null = null;
-  for (const t of tiers) {
+  for (let i = 0; i < tiers.length; i++) {
+    const t = tiers[i]!;
     // ⚠️ 骰子**先擲**再判斷回合閘：這樣一位玩家消耗的亂數個數只跟階級**張數**有關，
     // ⛔ 不跟回合數有關 —— 否則同一顆種子在第 8 與第 9 回合會走岔。
+    // ⚠️ 下面每一個 `continue` 都在這一行**之後**，包括不可降級那一條：任何提早
+    // 跳過都會少擲一顆骰子，同一顆種子就走不出同一條流。
     const roll = rng.next() * 100;
     if (hit !== null) continue; // 已經中了，但仍然要把後面幾階的骰子擲掉
+    if (baseRank >= 0 && i >= baseRank) continue; // 不可降級（含同級）
     if (round < t.minRound) continue;
     if (t.maxRound !== undefined && round > t.maxRound) continue;
     if (!underLimit(t)) continue;

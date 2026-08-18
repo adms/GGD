@@ -100,10 +100,16 @@ describe("config doc + rules resolution (arena-06)", () => {
     expect(ARENA.rounds.get(3)).toMatchObject({ grantLevels: 3, grantGold: 375 });
     expect(ARENA.gacha).toBeNull(); // weapon offers replace the legacy gacha
     // ⭐ owner 2026-08-18:「EX根源是**最終回合大戰前**會出現的類別…請確定一定有
-    // 出現的機會至少一次」。第 10 回合的那一格既是保底池,也是 `weaponTiers` 的
-    // `ex-origin` 窗口(10..10)唯一會發寶具的回合 —— 少了它那一階在**結構上**
-    // 永遠不會出現(`weaponTierWindows.test.ts` 是那條關係的守衛)。
-    expect(ARENA.rounds.get(10)).toMatchObject({ weaponLootTable: "ex-origin-weapons" });
+    // 出現的機會至少一次」。第 10 回合排寶具卡,是 `weaponTiers` 的 `ex-origin`
+    // 窗口(10..10)唯一會發寶具的回合 —— 少了它那一階在**結構上**永遠不會出現
+    // (`weaponTierWindows.test.ts` 是那條關係的守衛)。
+    //
+    // ⚠️ 基礎池是 **`ex-release-weapons`,⛔ 不是 `ex-origin-weapons`**(owner
+    // 2026-08-18 第二則:「劣勢方應該更高才對」)。把根源排成基礎池 = 人人保底拿到
+    // 根源,於是「劣勢方機率更高」在數學上不可能成立,而且實測是**倒過來**的
+    // (領先方 86.2% / 劣勢方 77.5%,因為 ex-release 對劣勢方中得更兇、把根源降級掉)。
+    // 現在根源只能靠 `ex-origin` 那一階**升級**取得:平手方 8%,劣勢值 ≥0.6 必得。
+    expect(ARENA.rounds.get(10)).toMatchObject({ weaponLootTable: "ex-release-weapons" });
     expect(grantForRound(ARENA, 7)).toMatchObject({ grantLevels: 5, grantGold: 600, augmentTier: "prismatic" });
     // ⚠️ 2026-08-18: 第 11–13 回合與 `overflow` 搬進了
     // `content/_legacy/config/arena-rules-rounds-11-13.json`。owner:「我早就已經把
@@ -922,17 +928,18 @@ describe("the per-round curve (arena-curve)", () => {
     // Owner rule (2026-07-31): 「隨機三選一發放道具 都改成棱彩武器道具」 — a weapon
     // card rolls the same pool the 2400g 傳說寶玉 gacha rolls from.
     // ⭐ owner 2026-08-18 added the third: 「EX根源是**最終回合大戰前**會出現的類別，
-    // 用途是扭轉戰局，**請確定一定有出現的機會至少一次**」. Round 10's entry is that
-    // guarantee — `pickWeaponTable` falls back to the round's own table when no
-    // tier rolls, so scheduling `ex-origin-weapons` there is what makes the tier
-    // reachable at all (its window is 10..10 and NO other round deals weapons).
+    // 用途是扭轉戰局，**請確定一定有出現的機會至少一次**」. Round 10 is the ONLY round
+    // whose window the `ex-origin` tier (10..10) can fire in, so scheduling a weapon
+    // card there is what makes that tier reachable at all.
+    // ⚠️ The table itself is `ex-release-weapons`: 根源 is reached by UPGRADING off
+    // this floor, never by being the floor — see the round-10 comment above.
     const cards = [...Array(LAST)]
       .map((_, i) => [i + 1, ARENA.rounds.get(i + 1)?.weaponLootTable] as const)
       .filter(([, t]) => t !== undefined);
     expect(cards).toEqual([
       [2, "legendary-weapons"],
       [5, "legendary-weapons"],
-      [10, "ex-origin-weapons"],
+      [10, "ex-release-weapons"],
     ]);
     // 每一張排到的池都要真的存在（⛔ 排一張不存在的表 = 那一回合靜靜地不發卡）。
     for (const [r, t] of cards) {

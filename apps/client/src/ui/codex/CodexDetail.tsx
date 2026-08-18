@@ -707,7 +707,7 @@ function ItemBody({ item, data, recipes, onNavigate }: { item: CodexItem; data: 
               `Editable` 的編輯態仍然編**原文**(那才是可以存回檔案的東西);
               這裡換掉的只是**唯讀顯示**。 */}
           {item.description ? (
-            <ItemCardBody description={item.description} />
+            <ItemCardBody description={item.description} itemId={item.id} />
           ) : (
             <Description text={item.description} />
           )}

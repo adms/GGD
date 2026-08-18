@@ -37,6 +37,7 @@ import { useHud } from "../net/RoomStore";
 import {
   COMBAT_ENV_KEYS,
   DEFAULT_COMBAT_ENV,
+  normalizeCombatEnv,
   parseCombatEnvJson,
   type CombatEnvKey,
   type CombatEnvMultipliers,
@@ -195,6 +196,23 @@ export function setDisplayEnvJson(json: string | null | undefined): void {
   if (j === currentJson) return;
   currentJson = j;
   currentEnv = parseCombatEnvJson(j);
+}
+
+/**
+ * ⭐ 出貨內容的 `config.combat-env@1` —— **比賽開始前**的那一份。
+ *
+ * ⛔ 為什麼需要它：`combatEnvJson` 只在 **MatchState 快照**上，所以圖鑑／大廳／
+ * 商店預覽在進場之前拿到的是**中性表（全部 1.0）**。魔抗那三張卡就是這樣看起來
+ * 「修好了又沒修好」——同一件道具在圖鑑印 66.7%、在場上印 28.6%。
+ *
+ * ⚠️ 它**不是**覆蓋層：`setDisplayEnvJson` 只在 json 真的變了才動，而空字串
+ * （＝沒有快照／後台沒存過 override）與初值相等 ⇒ 這一份會留著。快照帶了真的表
+ * 就換成快照那一份（權威的那個）。
+ */
+export function applyCombatEnvDoc(
+  doc: { multipliers?: Partial<Record<CombatEnvKey, number>> } | null | undefined,
+): void {
+  currentEnv = normalizeCombatEnv(doc?.multipliers ?? null);
 }
 
 /** Reset the ambient table to neutral — for test isolation. */

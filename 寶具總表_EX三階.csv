@@ -76,22 +76,22 @@ EX,godie-i00s,黃金聖鬥衣,1,2 / 5,—,—,"[格擋] 50%機率抵擋 100% AP�
 魔力+1200
 攻擊速度+120%
 總移動速度*1.2",0｜數值型,flat pctAdd pctMult,wc3-import,,
-EX∅ 根源,godie-i060,死之王的意志,1,10–10,8%,team 限 1,"AP+174
+EX∅ 根源,godie-i060,死之王的意志,1,10–10,8%,champion 限 1,"AP+174
 [斬殺] 可直接斬殺生命低於 3%的敵方單位
 [緩慢] 周圍敵方 總移動速度 減半
 額外 [死之王套裝] 同時裝備死之王長槍、意志、神盾，則總 AP 額外 + 300%",6｜斬殺·團隊光環·真傷,damage stat onBasicAttack < flat pctAdd pctMult,wc3-import,,
-EX∅ 根源,teardrop-of-rebirth,再誕之淚珠,1,10–10,8%,team 限 1,"[再誕] 每回合一次，死亡 3 秒後以 100%生命、100%魔力復活
+EX∅ 根源,teardrop-of-rebirth,再誕之淚珠,1,10–10,8%,champion 限 1,"[再誕] 每回合一次，死亡 3 秒後以 100%生命、100%魔力復活
 [再誕] 復活後 6 秒內總傷害、治療與護盾 ×1.25、移速 ×1.20",3｜復活,applyBuff delayed revive stat status onDeath > flat pctMult,"legendary,revive,utility",,
-EX∅ 根源,godie-i031,天生牙,1,10–10,8%,team 限 1,"[復活] 殺死任一個敵方英雄單位，將復活我方所有英雄
+EX∅ 根源,godie-i031,天生牙,1,10–10,8%,champion 限 1,"[復活] 殺死任一個敵方英雄單位，將復活我方所有英雄
 [回復] 殺死任一個敵方單位，回復我們全部英雄 1%生命
 [淨化] 每 10 秒移除周圍隊友身上的減益
 每秒生命回復+20",3｜復活,dispel restore revive onInterval onKill flat,wc3-import,,
-EX∅ 根源,godie-i06g,殺豬刀,1,10–10,8%,team 限 1,"攻擊力+37
+EX∅ 根源,godie-i06g,殺豬刀,1,10–10,8%,champion 限 1,"攻擊力+37
 防禦+13
 攻擊速度+30%
 [變形] 專殺畜牲，7%機率將敵人變成食材，無法動作
 [格擋] 30%機率 抵擋致命一擊(超過現存生命的傷害)",1｜硬控,applyStatus onBasicAttack flat pctAdd,wc3-import,,
-EX∅ 根源,godie-i016,晨曦之光,1,10–10,8%,team 限 1,"[看穿] 看穿隱形
+EX∅ 根源,godie-i016,晨曦之光,1,10–10,8%,champion 限 1,"[看穿] 看穿隱形
 [格擋] 30%機率 抵擋致命一擊(超過現存生命的傷害)
 每秒回魔+8
 冷卻縮減+30%

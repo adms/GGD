@@ -321,23 +321,35 @@ func checkFiniteNumbers(v any, path string) error {
 const BaseBonusMin = 0
 
 var BaseBonusMax = map[string]float64{
-	"maxHealth":   20000,
-	"maxMana":     20000,
-	"healthRegen": 200,
-	"manaRegen":   200,
-	"ad":          2000,
-	"ap":          2000,
-	"armor":       500,
-	"mr":          500,
-	"critDamage":  10,
-	"range":       50,
-	"as":          3.8,
-	"ms":          12,
-	"critChance":  1,
-	"cdr":         0.99, // 2026-08-10 owner：「天花板可以是 0.99」，另配秒數地板 0.1
-	"lifesteal":   0.8,
-	"evasion":     0.8,
-	"spellVamp":   0.8, // 2026-08-10 新增的技能吸血，區間與 lifesteal 同
+	// ⚠️ 2026-08-18：這六格是 v0.20.x 的「加成型屬性」家族（G17 冷卻流逝速度 +
+	// 20 件 [EX解放] 寶具用到的輸出/治療/護盾/單發上限/不可迴避）。它們在
+	// `BASE_BONUS_MAX` 裡待了一整批而 Go 這一份沒跟上 ——
+	// `TestBaseBonusBoundsMatchTheSharedTable` 一直是紅的，也就是說這六格在
+	// **後台寫入路徑上完全沒有上界**（#277 那一族：一個負數或離譜數字直接落地，
+	// 而 Zod 從這些界推導 .min/.max ⇒ 內容載入整份失敗、覆蓋層全部回退）。
+	"cooldownDrainRate": 5,
+	"maxHitPctMaxHp":    5,
+	"outputDamagePct":   5,
+	"outputHealingPct":  5,
+	"outputShieldPct":   5,
+	"unavoidablePct":    5,
+	"maxHealth":         20000,
+	"maxMana":           20000,
+	"healthRegen":       200,
+	"manaRegen":         200,
+	"ad":                2000,
+	"ap":                2000,
+	"armor":             500,
+	"mr":                500,
+	"critDamage":        10,
+	"range":             50,
+	"as":                3.8,
+	"ms":                12,
+	"critChance":        1,
+	"cdr":               0.99, // 2026-08-10 owner：「天花板可以是 0.99」，另配秒數地板 0.1
+	"lifesteal":         0.8,
+	"evasion":           0.8,
+	"spellVamp":         0.8, // 2026-08-10 新增的技能吸血，區間與 lifesteal 同
 }
 
 // checkBoundedFields applies the per-field numeric bounds Go knows about.

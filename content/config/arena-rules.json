@@ -40,7 +40,8 @@
       "basePct": 8,
       "underdogFactor": 4,
       "underdogExponent": 2,
-      "limitScope": "team",
+      "guaranteeAtD": 0.6,
+      "limitScope": "champion",
       "limitCount": 1
     },
     {
@@ -112,7 +113,7 @@
       "grantLevels": 10,
       "grantGold": 3750,
       "augmentTier": "prismatic",
-      "weaponLootTable": "ex-origin-weapons"
+      "weaponLootTable": "ex-release-weapons"
     }
   },
   "flowers": {

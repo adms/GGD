@@ -43,7 +43,9 @@ const SHIELD =
   "傳說\n效能\n[焚身] 每秒造成周圍範圍燃燒 10% AP 傷害\n[腐蝕] 周圍敵方單位防禦 -30\n額外 [死之王套裝] 同時裝備死之王長槍、意志、神盾，則總 AP 額外 + 100%\n\n解說\n死之王最讓人害怕的時刻，莫過於在魔法學校的大屠殺。";
 
 const html = (description: string, props: Record<string, unknown> = {}): string =>
-  renderToStaticMarkup(createElement(ItemCardBody, { description, ...props }));
+  // ⚠️ `itemId` 是**必填**的（見 ItemCardBody 的 props 註解）——「忘了傳」必須由
+  // 編譯器擋下來，⛔ 不是靜默印回過期的推導數字。這些夾具不是真的道具文件 → null。
+  renderToStaticMarkup(createElement(ItemCardBody, { description, itemId: null, ...props }));
 
 /** react-dom 會把 `#FF7BA6` 寫成 `color:#FF7BA6`;比對時一律轉小寫。 */
 const has = (s: string, needle: string): boolean =>
@@ -91,7 +93,7 @@ describe("卡片本體真的畫出顏色與分行 (item-card-surfaces)", () => {
   });
 
   it("空 description 什麼都不畫(不是畫一個空框)", () => {
-    expect(renderToStaticMarkup(createElement(ItemCardBody, { description: "" }))).toBe("");
+    expect(renderToStaticMarkup(createElement(ItemCardBody, { description: "", itemId: null }))).toBe("");
   });
 
   it("⭐ 換了 config,畫出來的顏色真的跟著換 —— 這才證明那份 JSON 有接上", () => {

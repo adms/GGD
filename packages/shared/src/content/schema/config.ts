@@ -2750,8 +2750,9 @@ export const zWeaponTier = z
       .optional()
       .describe(
         "最後在第幾回合出現（含）。省略 = 沒有上界。" +
-          "⭐ owner 2026-08-17：[EX∅ 根源]「只會在第九回合**結束後**，到**最終回合開始前**出現」——" +
-          "那個「前」就是這一格。⛔ 沒有它的話根源會在最終回合本身也發，而那時候拿到已經來不及逆轉。",
+          "⭐ owner 2026-08-17：[EX∅ 根源]「只會在第九回合**結束後**，到**最終回合開始前**出現」。" +
+          "⚠️ 出貨是 10..10 而最終回合就是第 10 回合 —— 這**不矛盾**：三選一發生在該回合的**商店階段**，" +
+          "也就是最終大亂鬥開打**之前**。owner 2026-08-18：「最後一回合弱勢保底可以抽根源」。",
       ),
     basePct: z
       .number()
@@ -2776,11 +2777,24 @@ export const zWeaponTier = z
           "⭐ owner：「使用平方是為了讓**小幅落後只得到有限補償**，真正瀕臨淘汰的隊伍才明顯提高機率」——" +
           "⛔ 這正是它不能跟 factor 合成一個數字的原因：兩者調的是不同的東西。",
       ),
+    guaranteeAtD: z
+      .number()
+      .min(0.05)
+      .max(1)
+      .optional()
+      .describe(
+        "⭐ **劣勢保底門檻**：劣勢值 D 到這個數字以上，這一階**必得**（機率 100%）。" +
+          "owner 2026-08-18：「最後一回合弱勢保底可以抽根源」。設了之後這一階改走保底曲線 " +
+          "`basePct + (100−basePct) × min(1, D/門檻)^exponent`，⛔ `underdogFactor` 不再參與。" +
+          "省略 = 沒有保底。出貨 [EX∅ 根源] 0.6 ⇒ 真正在挨打的隊伍第 10 回合一定拿得到根源，" +
+          "領先方仍然只有 basePct。",
+      ),
     limitScope: z
       .enum(["champion", "team"])
       .describe(
-        "數量限制算在誰頭上。owner 2026-08-17：[EX解放]「每名英雄最多一件」⇒ champion；" +
-          "[EX∅ 根源]「每隊最多一件」⇒ team。",
+        "數量限制算在誰頭上。owner 2026-08-17：[EX解放]「每名英雄最多一件」⇒ champion。" +
+          "⚠️ [EX∅ 根源] 原本是 team，**owner 2026-08-18 撤掉了**（「不需要每隊限一件的限制」）——" +
+          "保底路徑上同隊三個座位本來就會各拿一張，team 限制只會讓其中兩個人靜默拿不到。",
       ),
     limitCount: z
       .number()
@@ -2836,13 +2850,16 @@ export const DEFAULT_WEAPON_TIERS: WeaponTierConfig[] = [
     id: "ex-origin",
     label: "EX∅ 根源",
     table: "ex-origin-weapons",
-    // 「第九回合**結束後**，到**最終回合開始前**」——出貨排程 13 回合 ⇒ 10..12。
+    // ⚠️ 最終回合是**第 10 回合**（`PairedDuels.FINAL_ROUND`，打完就全部結算）——
+    // 出貨排程曾經寫到 13 回合，那三列在 2026-08-18 已經退到 `content/_legacy/`。
     minRound: 10,
-    maxRound: 12,
+    maxRound: 10,
     basePct: 8,
     underdogFactor: 4,
     underdogExponent: 2, // 平方：小輸只得到有限補償
-    limitScope: "team",
+    // ⭐ 劣勢保底（owner 2026-08-18）。D ≥ 0.6 ⇒ 必得；領先方仍然只有 basePct 8%。
+    guaranteeAtD: 0.6,
+    limitScope: "champion",
     limitCount: 1,
   },
   {

@@ -23,6 +23,17 @@ import { RESOLVE_TS_FIRST } from "./vitest.shared";
  * to resolve `zod`, and reports 「1 failed」 for a file that is green in the
  * real tree — so an honest run looks broken and a broken one is easy to
  * dismiss. They are already in `.git/info/exclude`; exclude them here too.
+ *
+ * ⚠️ `docs/legacy/code/` is a THIRD shape of the same problem (2026-08-18, #356):
+ * owner 2026-08-13「請你把舊規格的相關資料都移到 legacy 資料夾」moved three
+ * one-off probes (`__mana_probe` / `__autoattack_probe` / `__pacing_probe`) out of
+ * `apps/game-server/` and into the archive. They are **exhibits, not tests** —
+ * `docs/legacy/code/README` keeps them so the measurements behind old decisions
+ * stay readable — and their relative imports point at a tree they no longer sit in.
+ * ⛔ Do NOT "fix" their imports: rewriting an archived probe makes it stop being
+ * the thing that was actually run. Per-package `pnpm test` never sees them (each
+ * package resolves its own config); only a root-level run collects them, so the
+ * exclusion belongs here.
  */
 export default defineConfig({
   resolve: RESOLVE_TS_FIRST,
@@ -32,6 +43,7 @@ export default defineConfig({
       "**/.backup*/**",
       "**/backup-*/**",
       "**/.claude/worktrees/**",
+      "docs/legacy/**",
     ],
   },
 });

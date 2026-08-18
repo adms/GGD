@@ -10,6 +10,8 @@ export * from "./schema/index";
 // 道具卡片的渲染時解析 (owner 2026-08-02「排版連在一起不好閱讀」)。純函式,
 // 不動 owner 的 description 一個字 —— 見 itemCardText.ts 的檔頭。
 export * from "./itemCardText";
+// ⭐ 卡面上**推導出來**的數字（魔抗減傷 %）渲染時現算 —— 見 itemCardDerived.ts 檔頭。
+export * from "./itemCardDerived";
 // 對戰錄影政策 (owner 2026-08-02「請幫我預設打開」)。缺文件 = 出貨預設 = 開著,
 // 理由寫在 replayPolicy.ts 的檔頭 —— 內容載入失敗不可以順手把錄影關掉。
 export * from "./replayPolicy";

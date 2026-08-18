@@ -101,7 +101,7 @@ export function EquipmentBar(): React.JSX.Element | null {
               body={cell.tooltipBody ?? undefined}
               bodyNode={
                 cell.description ? (
-                  <ItemCardBody description={cell.description} fontSize={11.5} />
+                  <ItemCardBody description={cell.description} itemId={cell.itemId} fontSize={11.5} />
                 ) : undefined
               }
               meta={cell.meta.length > 0 ? cell.meta.map((m) => ({ label: m.label, value: m.value })) : undefined}

@@ -1182,7 +1182,7 @@ function InventoryGrid(props: { seat: SeatView; filled: number }): React.JSX.Ele
               body={detailBody || undefined}
               bodyNode={
                 row?.description ? (
-                  <ItemCardBody description={row.description} fontSize={11.5} />
+                  <ItemCardBody description={row.description} itemId={itemId} fontSize={11.5} />
                 ) : undefined
               }
               meta={[
@@ -1502,16 +1502,18 @@ function CatalogueRow(props: {
       </div>
 
       {/* --- the accordion body (one open at a time) --- */}
-      {expanded && <ExpandedRow row={row} preview={preview} />}
+      {expanded && <ExpandedRow row={row} itemId={item.id} preview={preview} />}
     </div>
   );
 }
 
 function ExpandedRow(props: {
   row: ReturnType<typeof buildItemRow>;
+  /** ⚠️ `ItemRow` 自己不帶 id —— 卡面上的推導數字要靠它查 modifiers。 */
+  itemId: string;
   preview: ItemPreview | null;
 }): React.JSX.Element {
-  const { row, preview } = props;
+  const { row, itemId, preview } = props;
   const deltas = preview?.buyable
     ? Object.entries(preview.deltas)
         .filter(([stat, d]) => isVisibleDelta(stat as Stat, d as number))
@@ -1540,7 +1542,7 @@ function ExpandedRow(props: {
           `row.lore` / `claims` 那兩塊被它取代了(它們是同一份原文被 ` · ` 接過的
           版本,並存只會出現同一句話兩次)。原文一個字都沒改 —— 見 ItemCardBody。 */}
       {row.description ? (
-        <ItemCardBody description={row.description} fontSize={11} textColor="#b7c0d4" />
+        <ItemCardBody description={row.description} itemId={itemId} fontSize={11} textColor="#b7c0d4" />
       ) : (
         row.lore && <div style={{ color: TEXT_DIM, marginBottom: 3 }}>{row.lore}</div>
       )}
