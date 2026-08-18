@@ -63,6 +63,14 @@ export interface EvadeSighting {
   z: number;
   /** client arrival time (`performance.now()`), the text's birth stamp */
   atMs: number;
+  /**
+   * 這一筆是哪一種 sighting 的 **token**（今天只有 `"immune"`；缺席 = 普通迴避）。
+   * ⭐ 這是 `immune` 借用這個緩衝區的方式 —— ⛔ 不是第二個緩衝區。
+   * ⚠️ 它**不是要畫的那串字**：`net/*` 不擁有任何 UI 文案，連引用都不行
+   *（`evadeSightings.test.ts` 掃這個檔的原始碼）。token → 人看得懂的字
+   * 是 `ui/WorldAnchorLayer.tsx::EVADE_LABELS` 的工作。
+   */
+  label?: string;
 }
 
 /** Bounded: a dropped dodge label is a cosmetic loss, an unbounded queue is not. */
@@ -75,8 +83,17 @@ function nowMsSafe(): number {
   return typeof performance !== "undefined" ? performance.now() : Date.now();
 }
 
-/** Record one dodge, unless this exact dodge was already recorded just now. */
-export function recordEvade(data: Record<string, unknown>): void {
+/**
+ * Record one dodge, unless this exact dodge was already recorded just now.
+ *
+ * `label` overrides the drawn text — that is how `immune` rides this buffer
+ * without a second one. ⚠️ It is part of the DEDUPE key: an immunity and a dodge
+ * on the same body in the same socket turn are two different things the player
+ * must see, so collapsing them would hide one of them. (Neither label's actual
+ * text is quoted here — `net/*` owns no UI copy, and `evadeSightings.test.ts`
+ * greps this file for exactly that.)
+ */
+export function recordEvade(data: Record<string, unknown>, label?: string): void {
   const target = data.target;
   if (typeof target !== "number") return;
   const source = typeof data.source === "number" ? data.source : undefined;
@@ -86,9 +103,9 @@ export function recordEvade(data: Record<string, unknown>): void {
   for (let i = evadeSightings.length - 1; i >= 0; i--) {
     const e = evadeSightings[i]!;
     if (atMs - e.atMs > EVADE_DEDUPE_MS) break; // buffer is append-ordered
-    if (e.target === target && e.source === source) return;
+    if (e.target === target && e.source === source && e.label === label) return;
   }
-  evadeSightings.push({ source, target, x, z, atMs });
+  evadeSightings.push({ source, target, x, z, atMs, ...(label !== undefined ? { label } : {}) });
   if (evadeSightings.length > MAX_EVADE_SIGHTINGS) {
     evadeSightings.splice(0, evadeSightings.length - MAX_EVADE_SIGHTINGS);
   }
@@ -313,6 +330,18 @@ export class RoomConnection {
     // loop's fanout can't carry it, because nothing downstream of the loop
     // has a consumer for an event that produces no damage packet.
     if (ev.type === "evade") recordEvade(ev.data);
+    // ⭐ type-streak immunity / invulnerability —— `immune` 走**完全相同**的通道，
+    // 理由也相同：
+    // 它沒有傷害封包，所以 frame loop 的 fanout 下游沒有消費者。
+    //
+    // ⚠️ `immune` 在 `net/eventFanout.ts` 的 FANNED_OUT 名單裡從 2026-07 就在了，
+    // 而 `grep -rn '"immune"' apps/client/src/` 一直是 **0 筆** —— 伺服器每次
+    // 都在發這個事件，客戶端從來沒有人接（失敗形態②）。這一行是那條線的接頭。
+    //
+    // ⚠️ 傳過去的是**事件型別這個 token**，⛔ 不是要畫在螢幕上的那串字 ——
+    // `net/*` 不擁有任何 UI 文案（`evadeSightings.test.ts` 掃這個檔）。翻成人看的字
+    // 是 `ui/WorldAnchorLayer.tsx::EVADE_LABELS` 的工作。
+    else if (ev.type === "immune") recordEvade(ev.data, "immune");
   }
 
   private bind(room: Room<MatchState>): void {

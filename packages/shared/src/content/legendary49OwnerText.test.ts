@@ -109,6 +109,31 @@ const poolIds = readdirSync(join(CONTENT_DIR, "loot-tables"))
  * 把它從這裡刪掉。
  */
 const NOT_IN_THE_2026_08_01_BATCH = new Set([
+  // ── [EX∅ 根源]（owner 2026-08-18 的 15 件清單，15 件全部落地）────────────
+  // 它們晚於 2026-08-01 那一批兩週半，逐字的規格住在 owner 的訊息與每一支的
+  // `authoringNote`（含「與原文哪裡不一樣、為什麼」）。⚠️ 這幾列在 owner 把
+  // 這批文案也定稿成基準檔的那一天要刪掉。
+  "all-might-hair",
+  "bezoar-of-the-apothecary",
+  "gantz-suit",
+  "grief-seed",
+  "icha-icha-paradise",
+  "millennium-puzzle",
+  "red-comet-mask",
+  "senzu-bean",
+  "soul-gem",
+  "touyako",
+  // ── 2026-08-18 第二輪 (GH#355)：卡在引擎缺口的最後 5 件，機制做完之後進池 ──
+  // ⚠️ 這 5 支的文案**連 owner 的原稿都還沒有** —— 那張『根源寶具 · 簡單逆轉條件 ·
+  // 逆轉效果』15 列的表不在 repo 裡（五條 lane 各自 grep 過）。所以卡面上的逆轉條件
+  // 與數字是 Claude 提的初值，逐句寫在各自的 `authoringNote` 等 owner 覆核。
+  // ⇒ ⛔ 更不可以把它們塞進 fixture：那份檔案的意思是「owner 親筆」。
+  "master-ball",
+  "nezuko-box",
+  "sasumata",
+  "scouter",
+  "slime-suit",
+
   "book-of-gospel",
   "collar-of-the-deadly-soul",
   "fingerless-gloves",

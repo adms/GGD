@@ -1,0 +1,57 @@
+{
+  "schema": "item@1",
+  "cost": 0,
+  "tier": 5,
+  "craftRole": "none",
+  "id": "nezuko-box",
+  "name": "禰豆子的木箱",
+  "icon": "assets/icons/items/nezuko-box.webp",
+  "description": "道具\n效能\n[竹箱庇護] 每 12 秒，把身邊生命低於 25% 的 1 名隊友收進箱子 6 秒\n[竹箱庇護] 箱子裡的人跟著你走，敵人的自動索敵、殭屍仇恨、右鍵點名都選不到他\n[竹箱庇護] 收進去的當下回復他 25%最大生命\n[竹箱庇護] 範圍技能仍然打得到箱子裡的人 —— 選不到不等於無敵\n\n解說\n最強的保護不是擋在前面，是讓對方連要打誰都選不出來。",
+  "tags": [
+    "legendary",
+    "ex-origin",
+    "protect",
+    "reversal"
+  ],
+  "passive": [
+    {
+      "key": "nezuko-box-shelter",
+      "on": "onInterval",
+      "target": "self",
+      "internalCooldown": 12,
+      "effects": [
+        {
+          "kind": "carry",
+          "shape": "circle",
+          "radiusTier": "中",
+          "radius": 4.5,
+          "side": "allies",
+          "maxTargets": 1,
+          "durationSec": 6,
+          "onCarrierDeath": "release",
+          "untargetable": {
+            "autoAcquire": true,
+            "mobAggro": true,
+            "manualTarget": true,
+            "abilityAoe": false
+          },
+          "victimCondition": {
+            "kind": "stat",
+            "subject": "target",
+            "stat": "hp",
+            "mode": "percent",
+            "op": "<",
+            "value": 0.25
+          },
+          "onHitTargets": [
+            {
+              "kind": "restore",
+              "healthPct": 0.25
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "authoringNote": "⭐ [EX∅ 根源] owner 2026-08-18 那份 15 件清單的第 3 件。被擋在池外的理由逐字寫在 `content/loot-tables/ex-origin-weapons.json` 的 note：『需要背負／附著移動 + 不可選取』。這一版把那個機制做出來了（`sim/carry.ts` + `sim/systems/CarrySystem.ts` + `sim/effects/carry.ts` + `sim/systems/MovementSystem.ts` 的四個豁免點），所以這件寶具第一次有內容。\n\n⚠️ **逐句對照的全文（卡面 4 句 ↔ JSON，兩個方向都讀過）在 `docs/legacy/_item-authoring-notes-full.md` 的「禰豆子的木箱」那一節** —— ⛔ 這裡不是把原文剪短，是 2000 字上限撞到之後**另存**（owner 2026-08-18：「應該是先備份原本內容成另一份檔案，不應該直接壓縮取代」）。\n\n⚠️ **與 owner 原文哪裡不一樣、為什麼（摘要，全文見上面那份）**：\n① **原文的逐字內容這一輪拿不到**（這條 lane 手上只有 loot-table note 那一句機制摘要）。⇒ 卡面上的**四個數字（12 秒／25% 門檻／6 秒／25% 回復）與「中」級距是我提的初值，不是 owner 裁決過的**。四個全部是後台可調的資料（hook 的 internalCooldown、條件葉的 value、durationSec、healthPct、AoE 級距），⛔ 改它們不需要動任何程式。**請 owner 過目這四個數字。**\n② **「附著移動」做成了「複製座標」**：乘客每 tick 被寫成載具的位置，⛔ 沒有骨骼附著點（sim 沒有骨骼）。畫面上乘客與載具**完全重疊**而不是背在背上；真的背在背上需要客戶端一條 attach 通道。\n③ **`onCarrierDeath` 走預設 `release`**（載具一倒，乘客立刻下車、恢復可選取）。另一個成員 `drop` 在引擎裡是「留在倒下的箱子裡直到時間走完」—— 那是「跟著倒」在**沒有『被擊倒』機制**的引擎裡最接近的一件事，⛔ 它不會讓乘客受傷。這件沒用到它，依第〇·六守則那條路**不測**。\n④ **沒有 icon**：`content/assets/icons/items/nezuko-box.webp` 還不存在，而 `icon` 是選填 —— ⛔ 我沒有指一個不存在的檔（那會變成商店卡上的破圖，也就是另一種「說了但不會發生」）。\n⑤ **還沒進 `ex-origin-weapons` 的 entries**：那張表由收尾那一位一次補 5 件（5 條 lane 各改一次＝逐字衝突）。⇒ 在那之前它抽不到，⛔ 這是刻意的分工不是漏做。\n⑥ ⛔ **`untargetable.abilityAoe: true` 今天不會生效** —— 唯一閘點 `enemiesInCircle` 在另一條 lane 的獨佔檔裡。謂詞 `carryBlocksAbilityAoe` 已匯出，接上只要一行。出貨這張卡填 `false`（＝今天的行為），所以**卡面沒有說謊**。"
+}

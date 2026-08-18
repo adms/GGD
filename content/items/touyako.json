@@ -1,0 +1,60 @@
+{
+  "schema": "item@1",
+  "cost": 0,
+  "tier": 5,
+  "craftRole": "none",
+  "id": "touyako",
+  "name": "洞爺湖",
+  "icon": "assets/icons/items/touyako.webp",
+  "description": "道具\n效能\n[吐槽式強制淨化] 你被硬控時，立刻淨化掉身上全部可淨化的減益\n[吐槽式強制淨化] 並對兇手造成 100%AP 魔法傷害、附加 1 秒暈眩\n[吐槽式強制淨化] 觸發間隔 1 秒\n\n解說\n木刀敲下去的那一聲，比任何解控技都響。",
+  "tags": [
+    "legendary",
+    "ex-origin",
+    "cleanse",
+    "counter"
+  ],
+  "passive": [
+    {
+      "key": "touyako-cleanse",
+      "on": "onCrowdControlReceived",
+      "target": "self",
+      "internalCooldown": 1,
+      "effects": [
+        {
+          "kind": "dispel",
+          "shape": "single",
+          "polarity": "debuff",
+          "count": 50
+        }
+      ]
+    },
+    {
+      "key": "touyako-retort",
+      "on": "onCrowdControlReceived",
+      "target": "event",
+      "internalCooldown": 1,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "flat": 0,
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "stun",
+          "duration": 1,
+          "stun": true
+        }
+      ]
+    }
+  ],
+  "authoringNote": "⚠️ **與 owner 原文的兩處差異**：① 原文是『把**相同**控制返還』—— hook 的酬載帶不到『剛剛掛上來的是哪一份狀態』，所以引擎今天寫不出『同一種』，這裡固定返還 **1 秒暈眩**（硬控的通用那一份）。要做到原文需要一格新的機制（把事件裡的 statusId 轉成 `applyStatus` 的參數），已列進機制清單。② 原文是『我方英雄受到硬控』（含隊友），`onCrowdControlReceived` 的持有者是**被控的那個人**，所以這張卡只在**持有者自己**被控時響。\n⭐『返還的控制不會再次觸發洞爺湖』**自動成立**：返還的是 `applyStatus`，它落在**敵人**身上，而這條觸發器掛在持有者身上。"
+}

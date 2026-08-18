@@ -152,9 +152,26 @@ describe("config doc + rules resolution (arena-06)", () => {
 
 describe("weapon-draft loot tables (arena-07)", () => {
   /** An item that grants nothing is a draft card that grants nothing. */
+  // ⚠️ RE-AIMED 2026-08-18 (GH#355): 「這件寶具會不會給你東西」 used to be exactly
+  // `modifiers` + `passive`. The [EX∅ 根源] batch added three payout axes that each
+  // stand alone: `auras`（討伐叉）, `marks`（GANTZ Suit / 千年積木的免死）and
+  // `typeStreakImmunity`（史萊姆裝）. Reading the old two would call three FINISHED
+  // 寶具 empty cards — the exact inverse of the truth this guard exists to protect.
   const doesSomething = (id: string): boolean => {
-    const def = Items.get(id as never);
-    return (def.modifiers?.length ?? 0) > 0 || def.passive !== undefined;
+    const def = Items.get(id as never) as {
+      modifiers?: unknown[];
+      passive?: unknown;
+      auras?: unknown[];
+      marks?: unknown[];
+      typeStreakImmunity?: unknown;
+    };
+    return (
+      (def.modifiers?.length ?? 0) > 0 ||
+      def.passive !== undefined ||
+      (def.auras?.length ?? 0) > 0 ||
+      (def.marks?.length ?? 0) > 0 ||
+      def.typeStreakImmunity !== undefined
+    );
   };
 
   it("三階寶具池: the round cards + 傳說寶玉 orb pool, all effective and unbuyable", () => {
@@ -203,6 +220,23 @@ describe("weapon-draft loot tables (arena-07)", () => {
       "torch-master", // 火把師父
       "ultimate-mod-shiranui", // 終極魔改・不知火
       "usagizuki-twin-crescents", // 兎月【雙弦月】
+      // ── [EX∅ 根源]（owner 2026-08-18 的 15 件清單，15 件全部落地）
+      "all-might-hair", // 歐爾麥特的頭髮
+      "bezoar-of-the-apothecary", // 藥師少女的牛黃
+      "gantz-suit", // GANTZ Suit
+      "grief-seed", // 悲嘆之種
+      "icha-icha-paradise", // 親熱天堂
+      "millennium-puzzle", // 千年積木
+      "red-comet-mask", // 赤色面具
+      "senzu-bean", // 仙豆
+      "soul-gem", // 魂之寶石
+      // ⭐ 2026-08-18 第二輪：機制做完之後進池的最後 5 件（GH#355）。
+      "master-ball", // 大師球
+      "nezuko-box", // 禰豆子的木箱
+      "sasumata", // 討伐叉
+      "scouter", // 戰鬥力探測器
+      "slime-suit", // 史萊姆裝
+      "touyako", // 洞爺湖
       // ── [EX∅ 根源]
       "teardrop-of-rebirth", // 再誕之淚珠
     ]);

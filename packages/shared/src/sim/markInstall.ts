@@ -28,12 +28,12 @@
  *
  * ④ 純度：不抽 rng、不看時鐘、迭代順序完全由上面那張固定表決定（不吃 Map 插入序）。
  */
-import type { ChampionId, EntityId } from "../ids";
+import type { ChampionId, EntityId, ItemId } from "../ids";
 import type { SimWorld } from "./SimWorld";
-import type { AbilityDef, ChampionDef } from "./content/defs";
+import type { AbilityDef, ChampionDef, ItemDef } from "./content/defs";
 import type { MarkId, MarkSpec } from "./marks";
-import { Abilities, Champions } from "./content/registry";
-import { installMark } from "./marks";
+import { Abilities, Champions, Items } from "./content/registry";
+import { installMark, removeMark } from "./marks";
 
 /**
  * `AbilityDef` 目前沒有 `marks` 這一格 —— 它是 `zAbilityDoc` 上的新欄位，而
@@ -98,4 +98,57 @@ export function installMarksForChampion(
     }
   }
   return conflicts;
+}
+
+/**
+ * ⭐ 2026-08-18（GH#354）—— **道具**宣告的標記，在它被裝上去的那一刻發下去。
+ *
+ * ── 為什麼道具需要這條路 ────────────────────────────────────────────────────
+ * 「擋下致命傷害並回復到 100% 生命，每擋一次 AD+100%（每回合最多 3 次）」這一族
+ * 卡片在它之前是用 `item.block`（`fraction:1, lethalOnly:true`）+ 一條
+ * `onLethalDamage` 的 hook 寫的，而那個組合的後半段**一次都不會觸發**：
+ * `combat/damage.ts` 的 `blockCut` 先把 `dmg` 削成 0，而
+ * `world.emit("lethalDamage")` 關在 `if (dmg > 0)` 裡面。
+ * ⇒ 卡片上兩行字，遊戲裡只有第一行發生（第一·五守則），而且沒有任何守衛會紅。
+ *
+ * ── ⛔ 為什麼**不是**給 `BlockGrant` 加 `maxUses` ─────────────────────────
+ * 引擎已經有一整套「有次數的免死」：`marks` + `combat/lethalSave.ts` 的
+ * `MarkLethalRule`（consume / surviveHpPct / restoreMode / damageTypes /
+ * internalCooldown / selfEffects），回合重置接在 `enterCombat()` 的
+ * `resetMarksForRound()` 上，層數變動 `markChanged` **本來就過網**。
+ * 做第二套是第〇·五守則的越線 —— 而且第二套做不到層數過網那一半。
+ *
+ * ⚠️ 重複政策與 {@link installMarksForChampion} 一致：**先到先贏**，
+ * 已經有同 markId 的就跳過並發 `markInstallConflict`。⛔ 不覆蓋 —— 覆蓋會把
+ * 前一個來源已經燒掉的層數與 `spent` 一起洗掉，而畫面上完全看不出來。
+ */
+export function installMarksForItem(
+  world: SimWorld,
+  id: EntityId,
+  def: ItemDef,
+): readonly MarkId[] {
+  const specs = (def as ItemDef & MarkBearing).marks;
+  if (specs === undefined) return [];
+  const conflicts: MarkId[] = [];
+  for (const spec of specs) {
+    if (world.marks.get(id)?.has(spec.markId) === true) {
+      conflicts.push(spec.markId);
+      world.emit("markInstallConflict", { id, markId: spec.markId, abilityId: def.id });
+      continue;
+    }
+    installMark(world, id, spec);
+  }
+  return conflicts;
+}
+
+/**
+ * 那件道具離開身上時，把它發的標記收回去。{@link installMarksForItem} 的鏡像。
+ *
+ * ⛔ 它**不還原** `perStackLost` 累積的永久加成（見 `marks.ts::removeMark`）。
+ */
+export function removeMarksForItem(world: SimWorld, id: EntityId, itemId: ItemId): void {
+  const def = Items.tryGet(itemId);
+  const specs = def === undefined ? undefined : (def as ItemDef & MarkBearing).marks;
+  if (specs === undefined) return;
+  for (const spec of specs) removeMark(world, id, spec.markId);
 }

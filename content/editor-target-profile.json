@@ -1,25 +1,25 @@
 {
   "schema": "ggd-editor-target-profile@1",
-  "generatedAt": "2026-08-18T05:34:46.908Z",
+  "generatedAt": "2026-08-18T09:46:30.885Z",
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_deccd4ef6170",
+    "contentVersion": "cv_9691e4458a22",
     "collections": {
       "champions": {
-        "hash": "819899091d3a",
+        "hash": "4cc9f144cf2b",
         "count": 78
       },
       "abilities": {
-        "hash": "1c98aa900c7c",
+        "hash": "92d74ea6ee05",
         "count": 461
       },
       "items": {
-        "hash": "4fc647e3f0bc",
-        "count": 127
+        "hash": "968fdff2abab",
+        "count": 142
       },
       "augments": {
-        "hash": "3fac6ff2c5ef",
+        "hash": "d329dfa22d67",
         "count": 91
       },
       "projectiles": {
@@ -27,11 +27,11 @@
         "count": 20
       },
       "status-effects": {
-        "hash": "e9936d7778a9",
-        "count": 34
+        "hash": "87725c810a97",
+        "count": 40
       },
       "loot-tables": {
-        "hash": "0e120c98676e",
+        "hash": "c60acff50868",
         "count": 3
       },
       "arenas": {
@@ -90,12 +90,14 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "9a5fed3e",
+    "fingerprint": "b504b28e",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
       "blink",
+      "carry",
       "championForm",
+      "convertTeam",
       "cycleBuff",
       "damage",
       "damageArea",
@@ -246,6 +248,7 @@
       "comboBonus",
       "condition",
       "count",
+      "countsForOriginalTeam",
       "critStrike",
       "cycleKey",
       "damageMult",
@@ -277,6 +280,7 @@
       "fixedRank",
       "flat",
       "flight",
+      "forcedTarget",
       "formation",
       "from",
       "fromCaster",
@@ -291,6 +295,7 @@
       "hpMult",
       "hpPct",
       "impactPower",
+      "includeNeutrals",
       "includeOrigin",
       "incomingPct",
       "intervalSec",
@@ -309,6 +314,7 @@
       "maxAttributeBasis",
       "maxDepth",
       "maxDistance",
+      "maxHeld",
       "maxRemainingSec",
       "maxSourceTotal",
       "maxStacks",
@@ -324,6 +330,7 @@
       "moveSpeedMult",
       "onArrive",
       "onCap",
+      "onCarrierDeath",
       "onCasterDeath",
       "onDevour",
       "onDevourPer",
@@ -337,6 +344,7 @@
       "onInvalidTarget",
       "onLand",
       "onOwnerDeath",
+      "oncePerRoundPerVictim",
       "order",
       "payCosts",
       "pctCurrentMana",
@@ -396,12 +404,25 @@
       "throwDistance",
       "tickOnApply",
       "to",
+      "typeStreakImmunity",
       "uncontrollable",
+      "untargetable",
+      "until",
       "vfxId",
       "victim",
       "victimCondition",
       "who",
       "width"
+    ],
+    "auraFields": [
+      "affects",
+      "hooks",
+      "includeSelf",
+      "key",
+      "lingerSec",
+      "modifiers",
+      "radius",
+      "scaleByNearby"
     ],
     "templateFamilies": [
       "buff-self",
@@ -663,6 +684,41 @@
         "caveat": "✅ 代放走的是**目標技能自己的 payload**，所以改 80-02 就等於改 80-04 觸發的那一發。`payCosts`（`none` 預設 / `mana` / `manaAndCooldown`）決定要不要付代價，後兩者走 `castAbility` 的**同一排閘**（魔力／沉默／暈眩／擊倒／暴走／學過沒有／已在吟唱），⛔ 不是在這裡重寫一次那些 if。⛔ 四個邊界，寫技能的人一定會撞到：① **鏈深上界**（`sim/effects/kindLimits.ts::PROXY_MAX_CHAIN_DEPTH`，今天是 3），而 `maxDepth` **省略時是 0** —— 被代放的技能自己的代放直接被擋，那是終止性不是 bug；② `abilityId` 是**軟參照**（代放一支還沒上架的技能不會讓內容載入失敗），代價是**打錯的 id 不會在載入時被擋**，它只是永遠什麼都不發生 —— ⛔ 不要假裝它會紅；③ 三個預設值是**刻意**的，改之前先想一遍：不付冷卻（`payCosts:\"none\"`）、不看那一格的冷卻（`respectCooldown` 省略 = 冷卻中照樣代放）、要求已學會（`requireLearned` 省略 = 沒點那一招時什麼都不發生）。⚠️ 一個每次普攻都可能觸發的 proc 若改成 `manaAndCooldown`，那支大招就會**自己把自己鎖住**，而畫面上只看得到「W 一直是灰的」；④ `slot` 與 `abilityId` **恰好填一個**（superRefine 擋，不是由求值端替作者挑）；代放的主詞永遠是**施法者自己**，⛔ 不會去掃 registry 找「誰有這支」。",
         "evidence": "packages/shared/src/sim/effects/proxyCast.ts（雙載體深度：`EffectContext.proxyDepth` ＋呼叫堆疊上的 `proxyStackDepth`，閘門讀兩者最大值，所以混著走的鏈也停得下來）+ packages/shared/src/content/schema/effect.ts 的 `proxyCast` 分支 + packages/shared/src/sim/effects/lane3Kinds.test.ts（「代放的是那一支技能自己的 payload，而且鏈一定會停」）",
         "nearestExisting": "⛔ **不是** `content/templates/expand.ts` 的 `\"proxy-cast\"` 模板家族 —— 同一個字已經指過兩件事（那個家族自己的檔頭寫著「這裡不召喚任何東西」，展開結果只有 `damage` ＋選配 `applyStatus`）。在此之前這一族只能**手抄一份 payload**：80-04 帶著自己的 `spawnProjectile` + damage 陣列，而 80-02 弒鬼神本人是另一份 —— 兩份會各自腐爛，而畫面上看不出是哪一份在跑。"
+      },
+      {
+        "key": "grant.type-streak-immunity@1",
+        "plan": "[EX∅ 根源] 史萊姆裝（owner 2026-08-18：「連續受到 2 次同型別傷害後免疫該型別」）",
+        "state": "partial",
+        "caveat": "⛔ 四個邊界，寫這種卡的人一定會撞到：① `damageTypes` **必填**且是雙向的 —— **沒被列進去的傷害型別既不累計也不打斷連擊**。所以「只列 physical/magic」的卡，火圈真傷（#270）照樣燒得到你，但也不會替敵人洗掉你的物理連擊；② **被免疫擋掉的那一發不會被記進連擊** ⇒ 連擊**凍結在門檻上**，免疫一直持續到來了另一種被列進 `damageTypes` 的傷害為止 —— 那是這件寶具唯一的破解方式，⛔ 不是 bug，但它必須印在卡片上，否則玩家不知道自己為什麼打不動；③ `streakTimeoutSec` **省略 = 連擊永不逾時**，而且它**跨回合殘留**（`sim/clearPools.ts::clearRoundScoped` 清的是 status/shields/dot/buffs 四池，⛔ 不含連擊表）。面對一波純物理的殭屍，省略它就是**無限免疫** —— `zInvulnerable.durationSec` 已經寫過「an unbounded immunity is an unwinnable round」。填任何一個值同時修掉這兩件事；④ `resetMode` 省略 = `restart`（異型那一發**自己算新連擊第 1 發**），`zero` 才是「歸零、下一發才算」。兩者只在「剛換型別的那一發」不同，一般驗證看不出差別。",
+        "evidence": "packages/shared/src/sim/combat/typeStreakImmunity.ts + packages/shared/src/sim/combat/typeStreakImmunity.test.ts（五發序列 physical×2 → 第三發 hp 逐位元不變並發出 `immune`，再用 magic / physical 各一發證明它不是「隨便發一份 invulnerable」）+ content/items/slime-suit.json"
+      },
+      {
+        "key": "effect.taunt-reverse@1",
+        "plan": "[EX∅ 根源] 戰鬥力探測器（『指定我方去嘲諷指定目標』）",
+        "state": "partial",
+        "caveat": "⭐ 反向 = `side:\"allies\"` + `forcedTarget:\"target\"` 兩格一起填（各自省略時逐位元等於2026-08-18 之前的行為，所以出貨的鍊金術之盾 `godie-i06q` 一個字都沒變）。⛔ 三個邊界：① `includeNeutrals` **只在 `side:\"allies\"` 有作用** —— `enemies` 那一側的圓本來就含 `MONSTER_TEAM`；② 「殭屍也會一起撲上去」有條件：`forcedTargetOf` 的 mob 分支要求嘲弄者與那隻小怪**不同隊**，而殭屍全在同一隊 ⇒ 打你的如果是殭屍，隊友會被指過去，**其他殭屍不會**；③ `config.taunt@1.overridesManualOrder` **出貨 false** ⇒ 一個正在右鍵點名的隊友**不會**被強制轉頭（bot／召喚物／沒有手動指令的人會）。⚠️ 掛在 `onDamageTaken` 上時 ⛔ **不可以**寫 `hook.target:\"self\"` —— `resolveAgainst` 會把targets 換成持有者本人，於是 `forcedTarget:\"target\"` 指的是**自己**，全隊被指去打自己人，而卡片上一個字都不會變（失敗形態②）。",
+        "evidence": "packages/shared/src/sim/effects/taunt.ts + packages/shared/src/sim/tauntReverseDirection.test.ts（⭐ 第三條斷言是 `forcedTargetOf(敵人)===null` —— 「方向真的反了」而不是「圓變寬了」；第二個 it 從磁碟讀出貨的 `godie-i06q` 跑同一支 handler）+ content/items/scouter.json"
+      },
+      {
+        "key": "aura.scale-by-nearby@1",
+        "plan": "[EX∅ 根源] 討伐叉〈さすまた〉（『靈氣強度隨範圍內有幾個隊友變化』）",
+        "state": "partial",
+        "caveat": "⭐ 它做的事是把數到的人頭變成那一份投影的 `stacks`，而 `stacks` 對 Flat／PercentAdd／PercentMult 三種 op 是**線性乘數** —— ⚠️ 所以一條 `pctMult -0.5` 配 2 層就是 ×0 把對方屬性歸零，`max` 因此是**必填**。⛔ 三個邊界：① 「一個人」的定義是**同隊 + 活著 + 有 StatsComp 的身體** ⇒ **召喚物與被復活的隊友算人頭**，殭屍與中立守衛不算，倒地的隊友不算。引擎今天**沒有**「只數英雄」這根軸；② 人數 < `min`（省略 = 1）⇒ **這一圈整份不掛**（連持有者自己都沒有），⛔ 不是「掛 0 層」；③ 人數縮放與**發射源自己的 stacks 相乘**（2 層 buff 投出的圈在 3 名隊友旁邊是 6 層）。⚠️ `.radius` 省略時與這圈共用同一次 `queryOverlap`（零成本）；填了會多查一次，而**今天沒有任何出貨內容在用那條路徑**。",
+        "evidence": "packages/shared/src/sim/aura/aura.ts（auraSystem PASS 1 的兩步）+ packages/shared/src/sim/aura/aura.test.ts（0 名 → 整份不掛／1 名 → stacks 1／2 名 → stacks 2 **且屬性差正好是兩倍**／走出去掉回 1 **而來源 id 不變**）+ content/items/sasumata.json"
+      },
+      {
+        "key": "effect.carry@1",
+        "plan": "[EX∅ 根源] 禰豆子的木箱（『背負／附著移動 + 不可選取』）",
+        "state": "partial",
+        "caveat": "⛔ 五個邊界：① `untargetable` 的四根軸逐字沿用 `sim/stealth.ts::StealthRules`，而 **`abilityAoe` 今天沒有消費者** —— 填 `true` 的文件在引擎裡是空的（謂詞已匯出，閘點 `enemiesInCircle` 差一行）。出貨的木箱填 `false`（＝今天的行為）所以卡片沒有說謊；② `shape:\"circle\"` **一定要有 `radius`**（`radiusTier` 是註冊時才翻譯的，載入時的 refine 讀不到它）；③ `side:\"allies\"` 的圓**含持有者自己而且他離圓心距離 0** ⇒ 拒載條件必須排在切 `maxTargets` **之前**，否則那一刀每次都正好切下持有者本人，結果是一個人都收不進來（實測踩過）；④ `onCarrierDeath:\"drop\"` 的引擎語意是「乘客**留在倒下的箱子裡**（位置凍住、仍不可選取）直到 `durationSec` 走完」—— 引擎沒有「被擊倒」這個機制，也不能讓一件道具憑空造傷害；⑤ **沒有任何東西在回合邊界清 `world.carried`**，它靠絕對 tick 到期自癒（上界 30 秒）。⚠️ `ENTITY_FLAG.CARRIED` 已經過網，但**客戶端今天沒有為它畫任何東西** ⇒ 螢幕上看不出那個人不能被選取。",
+        "evidence": "packages/shared/src/sim/carry.ts + sim/systems/CarrySystem.ts + sim/effects/carry.ts + packages/shared/src/sim/carry.test.ts（①同一 tick 內乘客座標 == 載具座標 ②敵人的 `acquireTarget` 在乘客「應該勝出」的夾具下仍回載具 ③到期後不再跟）+ content/items/nezuko-box.json"
+      },
+      {
+        "key": "effect.convert-team@1",
+        "plan": "[EX∅ 根源] 大師球（『陣營轉換 —— 把一個既有單位改成友軍』）",
+        "state": "partial",
+        "caveat": "⛔ 五個邊界：① **`onHitTargets` 這一格 `convertTeam` 沒有**（`carry` 才有）⇒ 掛在同一個 `effects` 陣列裡的回血／上鎖是**無條件**跑的，捕獲被拒絕的那一刻它們照樣發生。要「成功才給」今天寫不出來；② **不對稱**：被借走的殭屍**會**被其他殭屍打，但它**打不到**其他殭屍（`isMobTargetable` 對一隻沒被捕的普通 mob 一律回 false）。它仍然會去打敵方英雄，所以寶具是有用的；③ **捕獲者死掉不會歸位** —— 歸位只有三條路（被捕者死亡／`until:\"duration\"` 到期／回合開始）。`until` 那個 enum 沒有「載具死亡」這一格（`carry` 的 `onCarrierDeath` 才有）；④ `countsForOriginalTeam` **預設 `false`**（owner 2026-08-18：被捕的單位實質上就是我方單位）—— `true` 是一鍵回頭（被借走的敵方英雄在勝負判定上仍替原隊活著）。填 `false` 只是把原隊那一側的人頭拿掉，⛔ **不會**改算捕獲者那一隊 —— 座位是勝負判定的軸，而借調不動座位；⑤ ⛔ 它**不發任何事件** —— 玩家的可見性靠 `ENTITY_FLAG.TEAM_OVERRIDE*` 三顆 bit 讓那具身體當場換顏色。⇒ 想掛特效的話要自己在同一份 `effects` 裡加一發 `spawnVfx`。",
+        "evidence": "packages/shared/src/sim/mindControl.ts + sim/effects/mindControl.ts + apps/game-server/src/net/mindControlWire.test.ts（⭐ 第三條斷言真的跑 `projectSnapshot` + Colyseus encode→decode 再把隊伍序數解回來 —— 那是「遊戲邏輯全對、螢幕全錯」的唯一防線）+ content/items/master-ball.json"
       }
     ],
     "unsupported": [
@@ -2115,7 +2171,7 @@
       "danglingKeys": []
     },
     "item": {
-      "count": 127,
+      "count": 142,
       "craftRoles": [
         "component",
         "final",
@@ -2129,13 +2185,23 @@
         "ap",
         "attack-damage",
         "attack-speed",
+        "aura",
+        "buff",
         "burst",
+        "cc",
+        "cheat-death",
+        "cleanse",
         "cleave",
+        "convert",
         "cooldown",
+        "counter",
         "crit",
         "defense",
+        "ex-origin",
         "flight",
         "gacha",
+        "heal",
+        "knockback",
         "legendary",
         "lifesteal",
         "mage",
@@ -2147,6 +2213,8 @@
         "on-cast",
         "on-hit",
         "onhit",
+        "protect",
+        "reversal",
         "revive",
         "scaling",
         "shield",
@@ -2156,6 +2224,8 @@
         "support",
         "survivability",
         "tank",
+        "taunt",
+        "teamplay",
         "true-damage",
         "utility",
         "wc3-import"
@@ -2239,12 +2309,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "9a5fed3e",
+    "engineFingerprint": "b504b28e",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 9a5fed3e —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 b504b28e —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -2838,5 +2908,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "b8e2c2b34fd7"
+  "profileDigest": "e4fbd13c722e"
 }

@@ -184,3 +184,53 @@ export const PROXY_MAX_CHAIN_DEPTH = 3;
  * ⛔ 要調平衡請改那張卡自己的 `maxStat.value`，不是這個常數。
  */
 export const STAT_CEILING_MAX = 100000;
+
+// ───────────────────────────────────────────────────────────────────────────
+// [EX∅ 根源] 詞彙包（2026-08-18）—— 五條 lane 共用的上下界，**一份表**。
+// ⛔ 這七個常數一律 import，不抄字面值進 Zod（第零守則⑦：抄一份就是第四個
+// 住處，而它沒有守衛）。
+// ───────────────────────────────────────────────────────────────────────────
+
+/**
+ * `typeStreakImmunity.threshold`（連續幾發同型之後開始免疫）的上界。
+ *
+ * 20 是 mis-parse 柵欄不是平衡政策：卡片上寫的是「連續 2 次」，而一個把 2 打成
+ * 20 的門檻在一場 3 分鐘的回合裡**永遠達不到** —— 畫面上跟「這件寶具沒做」
+ * 一模一樣（失敗形態②）。
+ */
+export const TYPE_STREAK_MAX_THRESHOLD = 20;
+
+/**
+ * `typeStreakImmunity.streakTimeoutSec`（連擊多久沒被續上就歸零）的上界。
+ *
+ * 抄 `zInvulnerable.durationSec` 的同一個判例：一段沒有上界的免疫 = 一個打不完
+ * 的回合。⚠️ **缺席 = 永不逾時**，所以這個上界只約束明確填了秒數的那些；
+ * 出貨值填不填是 owner 的平衡決定。
+ */
+export const TYPE_STREAK_MAX_TIMEOUT_SEC = 30;
+
+/**
+ * `carry.durationSec`（背多久）的上界。
+ *
+ * 6 打成 60 = 一名英雄整個回合退出戰鬥而且不可被選取 —— 那不是一個技能，
+ * 那是一個少打一個 0 的錯字。
+ */
+export const CARRY_MAX_SEC = 30;
+
+/** `carry.maxTargets`（一次背幾個）的上界。一個 zone 只有 6 名英雄。 */
+export const CARRY_MAX_PASSENGERS = 3;
+
+/**
+ * `aura.scaleByNearby.min` / `.max`（人數縮放的層數）的上界。
+ *
+ * 一個 zone 最多 6 名英雄，8 是 mis-parse 柵欄。⚠️ 它承重：`stacks` 是**線性**
+ * 乘數（`statPipeline.ts` 的 `pctMult *= 1 + m.value * stacks`），一條
+ * `pctMult -0.5` 配 stacks 2 就是把對方那條屬性歸零。
+ */
+export const AURA_COUNT_MAX = 8;
+
+/** `convertTeam.durationSec`（借多久）的上界。抄 `summon.durationSec` 的 600。 */
+export const CONVERT_TEAM_MAX_SEC = 600;
+
+/** `convertTeam.maxHeld`（同時控幾隻）的上界。 */
+export const CONVERT_TEAM_MAX_HELD = 8;

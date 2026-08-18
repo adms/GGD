@@ -1,0 +1,108 @@
+{
+  "schema": "item@1",
+  "cost": 0,
+  "tier": 5,
+  "craftRole": "none",
+  "id": "grief-seed",
+  "name": "悲嘆之種",
+  "icon": "assets/icons/items/grief-seed.webp",
+  "description": "道具\n效能\n[魔女孵化場] 每被掛上一個減益就累積 1 層\n[魔女孵化場] 第 3 層時：淨化全隊、回復 100%魔力、所有技能冷卻立刻重置\n[魔女孵化場] 引爆後層數歸零，重新累積\n\n解說\n它一直在收集絕望。收滿三份，就孵出一次翻盤。",
+  "tags": [
+    "legendary",
+    "ex-origin",
+    "cleanse",
+    "reversal"
+  ],
+  "passive": [
+    {
+      "key": "grief-collect",
+      "on": "onStatusApplied",
+      "target": "self",
+      "internalCooldown": 0.5,
+      "condition": {
+        "kind": "status",
+        "subject": "self",
+        "tag": "debuff"
+      },
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "grief-seed-charge",
+          "duration": 60,
+          "stacks": 1,
+          "refresh": "keep"
+        }
+      ]
+    },
+    {
+      "key": "grief-hatch",
+      "on": "onStatusApplied",
+      "target": "self",
+      "internalCooldown": 0.5,
+      "condition": {
+        "kind": "status",
+        "subject": "self",
+        "statusId": "grief-seed-charge",
+        "minStacks": 3
+      },
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "grief-seed-charge",
+          "duration": 60,
+          "stacks": -3,
+          "refresh": "keep"
+        },
+        {
+          "kind": "dispel",
+          "shape": "circle",
+          "side": "allies",
+          "radius": 24,
+          "polarity": "debuff",
+          "count": 50
+        },
+        {
+          "kind": "restore",
+          "applyTo": "self",
+          "manaPct": 1
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "mode": "reset",
+          "slot": "Q"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "mode": "reset",
+          "slot": "W"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "mode": "reset",
+          "slot": "E"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "mode": "reset",
+          "slot": "R"
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "mode": "reset",
+          "slot": "EX"
+        }
+      ]
+    }
+  ],
+  "authoringNote": "⚠️ **與 owner 原文的差異**：原文是『前 3 個效果全部**被吸收**』—— 引擎沒有『攔截狀態不讓它掛上』的機制（`applyStatus` 不問任何免疫旗標），所以這一版是**計數 + 引爆**：三個減益照樣掛上去，第三個掛上的同一格全隊淨化把它們一起拔掉。⛔ 卡面因此寫『累積』與『淨化』，⛔ 不寫『吸收』（第一·五守則）。\n⭐ 半徑 24 = `SPREAD_MAX_RADIUS` = 整座競技場，也就是 owner 說的『全體隊伍』（引擎沒有『不看距離的全隊』這個形狀，最大的圓是最接近的寫法）。\n⭐ 兩條觸發器順序有意義：`grief-collect` 先加一層，`grief-hatch` 再問是不是滿 3 層 —— 同一格事件裡先加後問，所以第三個減益當場引爆，⛔ 不用等第四個。"
+}

@@ -41,6 +41,7 @@ import type { CritStrikeGrant } from "../combat/critStrike";
 import type { DamageTypeOverride } from "../combat/damageTypeOverride";
 import type { FlightGrant } from "../flight";
 import type { PenetrationGrant } from "../combat/penetration";
+import type { TypeStreakImmunityGrant } from "../combat/typeStreakImmunity";
 import type { AttrGrant } from "./attributes";
 
 /**
@@ -87,6 +88,14 @@ export interface SourceGrantFields {
    * ⛔ 不需要第二支掃描器。擋住它的只有 schema 的那一格與這裡的轉發。
    */
   penetration?: PenetrationGrant;
+  /**
+   * ⭐ 2026-08-18 —— [型別連擊免疫]（史萊姆裝）。同前六格：
+   * `combat/typeStreakImmunity.ts` 走 `StatsComp.sources` 而**不問 `kind`**，
+   * 所以掛在 `applyBuff` 生出來的限時 source 上就是「接下來 8 秒連吃兩發物理
+   * 之後免疫物理」，到期由那個 source 自己的 `expiresAtTick` 收掉，
+   * ⛔ 不需要第二支掃描器。擋住它的只有 schema 的那一格與下面那一行轉發。
+   */
+  typeStreakImmunity?: TypeStreakImmunityGrant;
 }
 
 /**
@@ -106,6 +115,9 @@ export function sourceGrants(from: SourceGrantFields): SourceGrantFields {
       : {}),
     ...(from.flight !== undefined ? { flight: from.flight } : {}),
     ...(from.penetration !== undefined ? { penetration: from.penetration } : {}),
+    ...(from.typeStreakImmunity !== undefined
+      ? { typeStreakImmunity: from.typeStreakImmunity }
+      : {}),
   };
 }
 
@@ -125,6 +137,7 @@ export function hasSourceGrant(from: SourceGrantFields): boolean {
     from.attributes !== undefined ||
     from.damageTypeOverride !== undefined ||
     from.flight !== undefined ||
-    from.penetration !== undefined
+    from.penetration !== undefined ||
+    from.typeStreakImmunity !== undefined
   );
 }

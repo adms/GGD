@@ -1,0 +1,63 @@
+{
+  "schema": "item@1",
+  "cost": 0,
+  "tier": 5,
+  "craftRole": "none",
+  "id": "bezoar-of-the-apothecary",
+  "name": "藥師少女的牛黃",
+  "icon": "assets/icons/items/bezoar-of-the-apothecary.webp",
+  "description": "道具\n效能\n[貓貓試毒] 身上被掛上減益的瞬間，立刻淨化掉身上全部可淨化的減益\n[貓貓試毒] 同時回復 10%最大魔力\n[貓貓試毒] 並且永久 AP+1（整場累積，上限 300）\n[貓貓試毒] 觸發間隔 1 秒\n\n解說\n她先嚐一口，然後把配方記下來。毒吃得越多，藥理越精。",
+  "tags": [
+    "legendary",
+    "ex-origin",
+    "cleanse",
+    "scaling"
+  ],
+  "passive": [
+    {
+      "key": "bezoar-taste",
+      "on": "onStatusApplied",
+      "target": "self",
+      "internalCooldown": 1,
+      "condition": {
+        "kind": "status",
+        "subject": "self",
+        "tag": "debuff"
+      },
+      "effects": [
+        {
+          "kind": "dispel",
+          "shape": "single",
+          "polarity": "debuff",
+          "count": 50
+        },
+        {
+          "kind": "restore",
+          "applyTo": "self",
+          "manaPct": 0.1
+        },
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "permanentScope": "match",
+          "stackKey": "bezoar-ap",
+          "maxStacks": 99,
+          "stackVisual": true,
+          "maxStat": {
+            "stat": "ap",
+            "value": 300
+          },
+          "modifiers": [
+            {
+              "stat": "ap",
+              "op": "flat",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "authoringNote": "⚠️ **與 owner 原文的差異（引擎缺口，已開 issue）**：原文是『**立即免疫**所有負面狀態』，而引擎今天**沒有狀態免疫窗口** —— `applyStatus` 不問任何免疫旗標。這裡做的是**掛上的同一格淨化掉**（`onStatusApplied` → `dispel polarity:debuff`），玩家感受幾乎相同（控制沒有維持時間），但**不是免疫**：一發帶控制的傷害仍然造成傷害，而不可淨化的減益（`dispellable:false`）拔不掉。⛔ 卡面因此**只寫淨化**，不寫免疫（第一·五守則：卡片上不可以有做不到的字）。\n⭐ AP 上限 300 走 `applyBuff.maxStat`，⛔ 不是 `maxStacks: 300` —— 後者是層數不是屬性值，而 owner 說的是 AP 的上限。"
+}

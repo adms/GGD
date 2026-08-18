@@ -128,6 +128,9 @@ const KIND_LABEL: Record<ConditionEntityKind, string> = {
   mob: "小兵",
   summon: "召喚物",
   guardian: "守護者",
+  // ⭐ [EX∅ 根源]：`mob` 的兩個子集（一隻殭屍王同時滿足 `mob` 與 `mobBoss`）。
+  mobSpecial: "特殊殭屍",
+  mobBoss: "殭屍王",
 };
 
 const OP_LABEL: Record<CompareOp, string> = {

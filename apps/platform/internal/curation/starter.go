@@ -527,12 +527,33 @@ var (
 		"torch-master", // 火把師父
 		"ultimate-mod-shiranui", // 終極魔改・不知火
 		"usagizuki-twin-crescents", // 兎月【雙弦月】
-		// ── [EX∅ 根源]（content/loot-tables/ex-origin-weapons.json）
+		// ⭐ 2026-08-18 owner 交來真正的 [EX∅ 根源] 清單之後，這 5 件從根源池搬回
+		// [EX解放]（它們是 Claude 的提案，不是 owner 指定的）。⚠️ 白名單是**聯集**，
+		// 所以搬池不影響這裡 —— 少一列的後果是那件寶具**靜靜地永遠不出現**。
 		"godie-i016", // 晨曦之光
 		"godie-i031", // 天生牙
 		"godie-i060", // 死之王的意志
 		"godie-i06g", // 殺豬刀
 		"teardrop-of-rebirth", // 再誕之淚珠
+		// ── [EX∅ 根源]（content/loot-tables/ex-origin-weapons.json，owner 2026-08-18）
+		"all-might-hair", // 歐爾麥特的頭髮
+		"bezoar-of-the-apothecary", // 藥師少女的牛黃
+		"gantz-suit", // GANTZ Suit
+		"grief-seed", // 悲嘆之種
+		"icha-icha-paradise", // 親熱天堂
+		"millennium-puzzle", // 千年積木
+		"red-comet-mask", // 赤色面具
+		"senzu-bean", // 仙豆
+		"soul-gem", // 魂之寶石
+		"touyako", // 洞爺湖
+		// ⭐ 2026-08-18 第二輪：owner 那 15 件裡卡在引擎缺口的最後 5 件，機制做完了
+		// 才進池（第一·五守則）。⚠️ 少一列的後果不是「這件寶具比較少見」——
+		// 它是「做完了但永遠掉不出來，而且沒有任何測試會紅」。
+		"master-ball", // 大師球
+		"nezuko-box", // 禰豆子的木箱
+		"sasumata", // 討伐叉
+		"scouter", // 戰鬥力探測器
+		"slime-suit", // 史萊姆裝
 	}
 
 	// The whitelist gates every surface with ONE item list, so the bundle is the

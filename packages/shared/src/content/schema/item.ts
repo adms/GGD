@@ -18,8 +18,10 @@ import {
   zDamageTypeOverrideGrant,
   zFlightGrant,
   zHookDefBase,
+  zTypeStreakImmunityGrant,
   zVisionGrant,
 } from "./effect";
+import { zMarkSpec } from "./mark";
 import { zPenetrationGrant } from "./mitigationDoc";
 import { MISMATCH_SCALE_MAX, MISMATCH_SCALE_MIN } from "../../sim/content/requirement";
 // 套裝的上下界定義在 sim 那一份(它也是判斷「湊齊了沒」的地方),schema 只是把
@@ -176,6 +178,14 @@ export const zItemAuraDef = zAuraDef.innerType()
   .strict()
   .refine((a) => (a.modifiers?.length ?? 0) + (a.hooks?.length ?? 0) > 0, {
     message: "aura must carry at least one modifier or hook",
+  })
+  // ⭐ [靈氣人數縮放]（2026-08-18）—— `zAuraDef` 上的第二條 refine 也被
+  // `.innerType()` 丟掉了，所以逐字再寫一次。少了這一行，一件把 `min` 寫得比
+  // `max` 大的道具會安靜地永遠掛不上那一圈（失敗形態②），而技能那一側是紅的
+  // —— 一個「只有一半被檢查」的規則比沒有規則更難查。
+  .refine((a) => a.scaleByNearby === undefined || (a.scaleByNearby.min ?? 1) <= a.scaleByNearby.max, {
+    message: "scaleByNearby.min 不可以大於 max —— 那是一個永遠掛不上去的靈氣",
+    path: ["scaleByNearby", "min"],
   });
 
 /**
@@ -339,6 +349,16 @@ export const zItemPenetration = zPenetrationGrant;
  *                    internalCooldown:1}`
  */
 export const zItemBlockGrant = zBlockGrant;
+
+/**
+ * [型別連擊免疫] —— **`zTypeStreakImmunityGrant` 的別名**，定義與每一根軸的
+ * 推導在 `schema/effect.ts`（機制在 `sim/combat/typeStreakImmunity.ts`）。
+ *
+ * ⚠️ **必須是別名，⛔ 不是第二個 z.object**：理由與 {@link zItemBlockGrant}
+ * 逐字相同 —— 既有守衛用 `.shape` 的鍵數在數「這個機制有幾根軸」，兩份定義
+ * 會 drift，而 drift 的那一天兩邊的測試各自只看自己那一半，全綠。
+ */
+export const zItemTypeStreakImmunity = zTypeStreakImmunityGrant;
 
 /**
  * [暴擊吸血] —— **`zCritStrikeGrant` 的別名**,定義與五根軸的完整推導在
@@ -517,6 +537,32 @@ export const zItemDef = z
      * 格擋語音、on-hit 觸發全部照常,而且對技能傷害一樣有效。
      */
     block: zItemBlockGrant.optional(),
+    /**
+     * [型別連擊免疫] —— 史萊姆裝「連續受到 2 次同型別傷害後免疫該型別」。
+     * 見 {@link zItemTypeStreakImmunity} 與 `sim/combat/typeStreakImmunity.ts`。
+     *
+     * ⚠️ 它**不是** `block`：格擋是每一發各抽一次骰的機率門，這一格是
+     * 「同一型別連續打我 N 發之後就打不動我了」的**狀態機**。
+     */
+    typeStreakImmunity: zItemTypeStreakImmunity.optional(),
+    /**
+     * ⭐ 2026-08-18 —— 這件道具**裝上去時**要在持有者身上安裝哪些具名標記
+     *（`sim/marks.ts`）。與 `ability@1.marks` 用的是**同一個** {@link zMarkSpec}，
+     * ⛔ 不是第二份。
+     *
+     * ── 為什麼道具需要它（GH#354 的那個缺陷）─────────────────────────────
+     * 「擋下致命傷害並回復到 100% 生命」這一族卡片，在它之前是用 `block`
+     *（`fraction:1, lethalOnly:true`）+ 一條 `onLethalDamage` 的 hook 寫的，
+     * 而那個組合**永遠不會觸發後半段**：`combat/damage.ts` 的 `blockCut` 先把
+     * `dmg` 削成 0，而 `world.emit("lethalDamage")` 關在 `if (dmg > 0)` 裡面。
+     * 於是卡片上兩行字，遊戲裡一行都不會發生（第一·五守則），⛔ 而且沒有任何
+     * 既有守衛會紅 —— 每一個零件都是對的，只有它們的組合是空的。
+     *
+     * ⛔ 正解**不是**給 `zItemBlockGrant` 加 `maxUses`：引擎已經有一整套
+     * 「有次數的免死」（`marks` + `combat/lethalSave.ts` 的 `MarkLethalRule`，
+     * 含回合重置與 `markChanged` 過網通道），做第二套就是第〇·五守則的越線。
+     */
+    marks: z.array(zMarkSpec).optional(),
     /**
      * [暴擊吸血] —— 天堂之劍 godie-i01n 「6%機率造成10倍暴擊傷害，暴擊時吸血
      * 回復100%傷害」。見 {@link zItemCritStrike} 與 `sim/combat/critStrike.ts`

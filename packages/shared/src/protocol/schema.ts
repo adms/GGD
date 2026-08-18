@@ -652,7 +652,9 @@ defineTypes(EntityState, {
   maxMana: "float32",
   shield: "float32",
   alive: "boolean",
-  flags: "uint16",
+  // ⭐ 2026-08-18 owner「ENTITY_FLAG expand」—— uint16 → uint32。
+  // ⚠️ 這是**改一個既有欄位的型別**，不是 append。理由與代價寫在下面的 BIT BUDGET。
+  flags: "uint32",
   h: "float32",
 });
 
@@ -1044,28 +1046,85 @@ export const ENTITY_FLAG = {
    * 這一格在**非小怪**的實體上沒有定義。
    */
   MOB_ELITE: 32768,
+  /**
+   * ⭐ [背負]（禰豆子的木箱，2026-08-18）—— 「這具身體現在**不可被選取**，
+   * 而且跟著載具走」。高半部的第一顆，由加寬（uint16 → uint32）開出來。
+   *
+   * ⛔ **不重用 `INVISIBLE`(16384)**：`render/stealthVisual.ts` 已經把那一格
+   * 綁死成兩段透明度，重用會讓「隱形」與「躲在箱子裡」在畫面上分不開，而且
+   * `GameApp` 的血條規則會被一起改到。兩件事看起來一樣 = 玩家分不出自己
+   * 為什麼點不到那個人。
+   */
+  CARRIED: 65536,
+  /**
+   * ⭐ [陣營轉換]（大師球，2026-08-18）—— 「這具身體現在**不屬於**它的 seat
+   * 那一隊」。存在性旗標；⛔ 它自己**不**說改到哪一隊，那是下面兩顆的事。
+   *
+   * 分成三顆而不是一顆的理由與 `FORM_A`/`FORM_B` 逐字相同：隊伍是一個**序數**
+   * 不是一個布林，而「有沒有被覆寫」與「覆寫成第幾隊」是兩個獨立的問題 ——
+   * 沒有這一顆的話，「覆寫成第 0 隊」與「沒有覆寫」在線路上是同一個位元組。
+   */
+  TEAM_OVERRIDE: 131072,
+  /** 覆寫隊伍序數的**低位**。逐字照 {@link ENTITY_FLAG.FORM_A} 的 2-bit 0..3 先例。 */
+  TEAM_OVERRIDE_A: 262144,
+  /** 覆寫隊伍序數的**高位**。見 {@link teamOverrideFromFlags} / {@link teamOverrideFlagsFor}。 */
+  TEAM_OVERRIDE_B: 524288,
 } as const;
 
 /**
  * BIT BUDGET FOR `ENTITY_FLAG` — read this before adding a flag.
  *
- * `EntityState.flags` is a **uint16** (`defineTypes` above), so there are
- * EXACTLY 16 bits and they are not extensible. After 精英小怪:
+ * ⭐ **2026-08-18：`EntityState.flags` 從 uint16 加寬成 uint32**（owner：「ENTITY_FLAG
+ * expand!」）。在那之前 16 顆 bit 全部用完，而 CLAUDE.md 說得很清楚：下一個要標記狀態的
+ * 功能「只能**加寬欄位**或**自己開一條頻道**」。[EX∅ 根源] 那一批同時需要「不可選取」、
+ * 「暫時換陣營」、「被魅惑」三種**玩家看得見**的狀態，三條各開一條事件頻道的成本遠高於
+ * 一次加寬 —— 所以走加寬。
  *
- *   used  (16): 1 DASHING · 2 ROOTED · 4 STUNNED · 8 SLOWED · 16 CASTING ·
+ *   used  (20): 1 DASHING · 2 ROOTED · 4 STUNNED · 8 SLOWED · 16 CASTING ·
  *               32 WINDUP · 64 CHANNELLING · 128 CONTESTED · 256 BURNING ·
  *               512 MUD_SWELL · 1024 MUD_BOSS · 2048 AIRBORNE ·
- *               4096 FORM_A · 8192 FORM_B · 16384 INVISIBLE · 32768 MOB_ELITE
- *   FREE   (0): —— 沒有了
+ *               4096 FORM_A · 8192 FORM_B · 16384 INVISIBLE · 32768 MOB_ELITE ·
+ *               65536 CARRIED · 131072 TEAM_OVERRIDE · 262144 TEAM_OVERRIDE_A ·
+ *               524288 TEAM_OVERRIDE_B
+ *   FREE   (11): 2^20 … 2^30（1048576 … 1073741824），見 {@link ENTITY_FLAG_FREE_BITS}
+ *   ⛔ 不可用 (1): 2^31 —— 見 {@link ENTITY_FLAG_RESERVED_BIT}
  *
- * This is the FIFTH feature to collide here (#244 vs #247 fought over 512,
- * #249 took the comfortable pair, 隱形原語 took 16384, 精英小怪 took the last
- * one), so the count is written down rather than recounted by eye.
- * **THE BUDGET IS NOW EXHAUSTED — ZERO BITS LEFT.** The next feature must WIDEN
- * the field or claim its own channel; silently reusing an occupied bit desyncs a
- * live client with no error anywhere.
+ * ════════════════════════════════════════════════════════════════════════════
+ * ⚠️ 加寬的代價，寫下來是因為它不可逆
+ * ════════════════════════════════════════════════════════════════════════════
+ * `defineTypes` 是 APPEND-ONLY，而**改型別不是 append** —— 它改變了這一格在線路上的
+ * 寬度。伺服器與客戶端是**同一個映像**一起 build、一起部署的，所以正常部署沒有問題；
+ * 會出事的是**部署當下已經開著舊分頁的玩家**：他的解碼器仍然按 2 bytes 讀，於是這一格
+ * 之後的每一欄都會錯位。症狀不是報錯，是**整個實體狀態亂掉**。
+ *
+ * ⇒ 部署協定第 6 步的煙霧測試要**開全新分頁**（本來就是規定），而正在打的那一場會斷。
+ * ⛔ 不要用 `--content-only` 部署這一版：`content/` 是 live bind-mount，映像不重建的話
+ * 伺服器仍然是舊的 uint16，而新客戶端按 4 bytes 讀 —— 那是同一個錯位的鏡像。
+ *
+ * ════════════════════════════════════════════════════════════════════════════
+ * ⛔ 為什麼是 15 顆而不是 16 顆
+ * ════════════════════════════════════════════════════════════════════════════
+ * JS 的位元運算子把運算元轉成 **int32**，所以 `flags & 2147483648` 的結果是
+ * **負數**（-2147483648）。`if (flags & BIT)` 仍然是對的（非零即真），但任何寫成
+ * `(flags & BIT) > 0` 的讀端會**靜默回 false** —— 而這個 repo 裡已經有好幾處
+ * `!== 0` 與 `> 0` 混用。一顆會讓「寫對了但讀不到」的 bit 不值得省，所以
+ * 2^31 直接宣告不可用。要用它的那一天，先把讀端統一成 `!== 0` 再說。
  */
-export const ENTITY_FLAG_FREE_BITS = [] as const;
+export const ENTITY_FLAG_FREE_BITS = [
+  // ⚠️ 2026-08-18：[EX∅ 根源] 拿走了 65536 / 131072 / 262144 / 524288
+  //（CARRIED · TEAM_OVERRIDE · TEAM_OVERRIDE_A · TEAM_OVERRIDE_B）——
+  // 也就是加寬那一次逐字說明要給它的四顆。⛔ 不要把它們加回來。
+  1048576, 2097152, 4194304, 8388608,
+  16777216, 33554432, 67108864, 134217728, 268435456, 536870912, 1073741824,
+] as const;
+
+/**
+ * ⛔ **這一顆 bit 存在於線路上，但禁止使用** —— 見上面「為什麼是 15 顆」。
+ * 它不在 {@link ENTITY_FLAG_FREE_BITS} 裡，所以守衛不會把它算成可用額度；
+ * 而它被單獨命名，是為了讓「used | free | reserved 填滿 uint32」這條斷言
+ * 仍然驗得出「沒有缺口也沒有重疊」。
+ */
+export const ENTITY_FLAG_RESERVED_BIT = 2147483648;
 
 /**
  * The two visible-stack thresholds behind `ENTITY_FLAG.MUD_SWELL` / `MUD_BOSS`
@@ -1125,4 +1184,36 @@ export function isEliteMob(kind: number, flags: number): boolean {
 export function formFlagsForIndex(index: number): number {
   if (!Number.isInteger(index) || index < 1 || index > 3) return 0;
   return (index & 1 ? ENTITY_FLAG.FORM_A : 0) | (index & 2 ? ENTITY_FLAG.FORM_B : 0);
+}
+
+/**
+ * [陣營轉換] 的解碼器 —— 這一列快照現在算哪一隊，`null` = 沒有被覆寫。
+ *
+ * ⚠️ 三顆 bit 不是兩顆：`TEAM_OVERRIDE` 是**存在性**，A/B 才是序數。少了存在性
+ * 那一顆，「被覆寫成第 0 隊」與「沒有被覆寫」在線路上是同一個位元組，而後者是
+ * 每一場比賽每一格的常態 —— 客戶端會把整場的藍隊都畫成被搶走的（失敗形態②的
+ * 鏡像：沒發生的事被畫出來）。
+ *
+ * ⚠️ 讀端一律用這一支，⛔ 不要自己 `flags & 131072`：`GameApp` 的 `teamId`
+ * 只有一個擴散點，隊伍色/小地圖/死亡觀戰去飽和三個都從那裡分出去。
+ */
+export function teamOverrideFromFlags(flags: number): 0 | 1 | 2 | 3 | null {
+  if ((flags & ENTITY_FLAG.TEAM_OVERRIDE) === 0) return null;
+  const lo = (flags & ENTITY_FLAG.TEAM_OVERRIDE_A) !== 0 ? 1 : 0;
+  const hi = (flags & ENTITY_FLAG.TEAM_OVERRIDE_B) !== 0 ? 2 : 0;
+  return (lo + hi) as 0 | 1 | 2 | 3;
+}
+
+/**
+ * 上面那一支的**反函式**，給組快照的人用。放在解碼器旁邊，兩邊不可能分岔。
+ * 超出 0..3 的隊伍序數回 0（＝不覆寫），⛔ 不發一個解碼器叫不出名字的位元樣式。
+ */
+export function teamOverrideFlagsFor(teamId: number | null | undefined): number {
+  if (teamId === null || teamId === undefined) return 0;
+  if (!Number.isInteger(teamId) || teamId < 0 || teamId > 3) return 0;
+  return (
+    ENTITY_FLAG.TEAM_OVERRIDE |
+    (teamId & 1 ? ENTITY_FLAG.TEAM_OVERRIDE_A : 0) |
+    (teamId & 2 ? ENTITY_FLAG.TEAM_OVERRIDE_B : 0)
+  );
 }

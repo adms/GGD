@@ -1,0 +1,83 @@
+{
+  "schema": "item@1",
+  "cost": 0,
+  "tier": 5,
+  "craftRole": "none",
+  "id": "all-might-hair",
+  "name": "歐爾麥特的頭髮",
+  "icon": "assets/icons/items/all-might-hair.webp",
+  "description": "道具\n效能\n[One For All・強制繼承] 隊友陣亡時，你的下一次普攻附帶巨大衝擊波\n[One For All・強制繼承] 衝擊波造成 200%AD 物理傷害並把命中的敵人擊退 20 碼\n[One For All・強制繼承] 若這一擊參與擊殺，立刻以 30%生命復活一名陣亡隊友\n\n解說\n他把最後一撮頭髮留給還站著的人。「接下來，換你了。」",
+  "tags": [
+    "legendary",
+    "ex-origin",
+    "knockback",
+    "revive"
+  ],
+  "passive": [
+    {
+      "key": "ofa-arm",
+      "on": "onAllyDeath",
+      "target": "self",
+      "internalCooldown": 5,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "duration": 20,
+          "statusId": "united-states-of-smash",
+          "stackKey": "united-states-of-smash",
+          "maxStacks": 1,
+          "polarity": "buff",
+          "modifiers": [],
+          "hooks": [
+            {
+              "key": "ofa-smash",
+              "on": "onBasicAttack",
+              "victim": "any",
+              "maxTriggers": 1,
+              "target": "event",
+              "effects": [
+                {
+                  "kind": "damageArea",
+                  "damageType": "physical",
+                  "radius": 9.17,
+                  "amount": {
+                    "flat": 0,
+                    "ratios": [
+                      {
+                        "stat": "ad",
+                        "coeff": 2
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "knockback",
+                  "distance": 20,
+                  "speed": 16,
+                  "from": "caster",
+                  "uncontrollable": true
+                },
+                {
+                  "kind": "revive",
+                  "hpPct": 0.3,
+                  "side": "ally",
+                  "teamCharge": "ignore",
+                  "condition": {
+                    "kind": "stat",
+                    "subject": "target",
+                    "stat": "hp",
+                    "mode": "percent",
+                    "op": "<=",
+                    "value": 0.001
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "authoringNote": "⭐【下一次普攻】走 `applyBuff.hooks` ＋ `maxTriggers: 1` —— ⛔ 引擎裡**沒有**『武裝下一擊』這個機制，它是一份帶著自己觸發器的增益，打完一次就用光。20 秒是這份增益的保存期限（⛔ 不是效果時間）。\n⚠️ **與 owner 原文的三處差異**：① 原文是**扇形**，引擎的 AoE 形狀只有 single / circle（`shape` enum），所以這裡是半徑 9.17 的圓；② 原文是『擊退至場地邊緣』，`knockback.distance` 上界 20（`KB_MAX_DISTANCE`，防 mis-parse），而競技場是 24×18 —— 20 碼在多數落點就是撞牆，但**不保證**貼邊；③ 原文『技能也算』，這裡**只有普攻** —— `onAbilityCast` 那一半掛上去會讓同一份增益被兩條觸發器搶著用光，而『哪一條先』沒有定義。⇒ 卡面只寫普攻。"
+}

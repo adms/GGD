@@ -47,6 +47,10 @@ import {
 import { clearForFreshBody, clearRoundScoped } from "@ggd/shared/sim/clearPools";
 import { resetMarksForRound } from "@ggd/shared/sim/marks";
 import {
+  mindControlCountsForOriginalTeam,
+  releaseAllMindControl,
+} from "@ggd/shared/sim/mindControl";
+import {
   DISPEL_DOC_ID,
   dispelRulesFromDoc,
   type DispelRules,
@@ -1930,6 +1934,13 @@ export class MatchController {
     // `resetOn:"match"` / `"never"` 的標記它不碰 —— 十二道試煉跨回合共享 12 層
     // 就是靠這個區分,無條件全部重置會讓那個機制整個消失。
     resetMarksForRound(this.world);
+    // ⭐ [陣營轉換]（[EX∅ 根源]）—— 兩件事，同一個相位，理由與上面那一段逐字相同：
+    //   ① 還回去（`until:"roundEnd"` 的歸位點，也是所有沒被結算掉的殘留的保險）
+    //   ② 「這一回合誰被捕過」歸零（`oncePerRoundPerVictim` 的記帳）
+    // ⛔ 兩件都**不放** `enterIntermission()`：它可以被 `skipPhase` / fault
+    // failsafe 跳過，而一個「有時候會被清、有時候不會」的捕獲名額比沒有更糟。
+    releaseAllMindControl(this.world);
+    this.world.capturedThisRound.clear();
     this.resetRoundTallies();
 
     // Per-round arena rotation (task #145): pick THIS round's map deterministically
@@ -2380,6 +2391,17 @@ export class MatchController {
       if (seat.teamId !== teamId || seat.entityId === null) continue;
       const t = this.world.transform.get(seat.entityId);
       const hp = this.world.health.get(seat.entityId);
+      // ⭐ [陣營轉換] 的勝負語意（`convertTeam.countsForOriginalTeam`）。
+      //
+      // 這一行讀的是 `seat.teamId`（捕獲**不動**它），而 `sim/revive.ts::
+      // teamAliveInZone` 讀的是 `world.team`（捕獲會動）—— 兩份答案在這條機制
+      // 之前永遠一致，之後會在「被敵方捕獲的英雄」身上公開分岔。
+      //
+      // 出貨預設 `true` = 他**仍然替原隊活著**（＝這條機制落地之前的行為），
+      // 所以這個謂詞對每一場既有比賽逐位元回 true（第〇·六守則：⛔ 只測預設
+      // 那一邊）。填 `false` 的那一天，被借走的人在原隊這一側不算人頭 ——
+      // ⛔ 他也**不會**改算捕獲者那一隊：座位是勝負判定的軸，而借調不動座位。
+      if (!mindControlCountsForOriginalTeam(this.world, seat.entityId)) continue;
       if (t?.zone === zone && hp?.alive) n++;
     }
     return n;

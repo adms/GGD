@@ -76,29 +76,47 @@ EX,godie-i00s,黃金聖鬥衣,1,2 / 5,—,—,"[格擋] 50%機率抵擋 100% AP�
 魔力+1200
 攻擊速度+120%
 總移動速度*1.2",0｜數值型,flat pctAdd pctMult,wc3-import,,
-EX∅ 根源,godie-i060,死之王的意志,1,10–10,8%,champion 限 1,"AP+174
+EX∅ 根源,soul-gem,魂之寶石,1,10–10,8%,champion 限 1,"[魔女結界] 死亡時立即以 15%生命重新站起，8 秒內繼續戰鬥（每回合一次）
+[魔女結界] 這 8 秒內擊殺敵方英雄 → 解除魔女化並回復到 30%生命
+[魔女結界] 沒有擊殺 → 8 秒後正式死亡",4｜復活·真傷,applyBuff damage delayed restore revive status onDeath onKill pctMult,"legendary,ex-origin,revive,reversal",,
+EX∅ 根源,all-might-hair,歐爾麥特的頭髮,1,10–10,8%,champion 限 1,"[One For All・強制繼承] 隊友陣亡時，你的下一次普攻附帶巨大衝擊波
+[One For All・強制繼承] 衝擊波造成 200%AD 物理傷害並把命中的敵人擊退 20 碼
+[One For All・強制繼承] 若這一擊參與擊殺，立刻以 30%生命復活一名陣亡隊友",3｜復活,applyBuff damageArea knockback revive stat onAllyDeath onBasicAttack <=,"legendary,ex-origin,knockback,revive",,
+EX∅ 根源,gantz-suit,GANTZ Suit,1,10–10,8%,champion 限 1,"[愉快的一天又來臨了] 擋下致命傷害並回復到 100%生命
+[愉快的一天又來臨了] 每擋一次，AD+100%（每回合最多 3 次，回合結束重置）
+[愉快的一天又來臨了] 觸發間隔 3 秒",0｜數值型,applyBuff restore onLethalDamage pctAdd,"legendary,ex-origin,cheat-death,scaling",,
+EX∅ 根源,senzu-bean,仙豆,1,10–10,8%,champion 限 1,"[只剩最後一顆！] 你的生命低於 15%時，立刻回滿生命與魔力
+[只剩最後一顆！] 並淨化掉身上全部可淨化的減益
+[只剩最後一顆！] 冷卻時間 120 秒",0｜數值型,dispel restore stat onDamageTaken <,"legendary,ex-origin,heal,cleanse",,
+EX∅ 根源,millennium-puzzle,千年積木,1,10–10,8%,champion 限 1,"[我不能輸，因為劇情需要] 擋下敵方英雄造成的致命傷害
+[我不能輸，因為劇情需要] 回復 20%生命，並在 15 秒內 AP ×10
+[我不能輸，因為劇情需要] 冷卻時間 60 秒",0｜數值型,applyBuff restore onLethalDamage pctMult,"legendary,ex-origin,cheat-death,burst",,
+EX∅ 根源,grief-seed,悲嘆之種,1,10–10,8%,champion 限 1,"[魔女孵化場] 每被掛上一個減益就累積 1 層
+[魔女孵化場] 第 3 層時：淨化全隊、魔力回滿、所有技能冷卻立刻重置
+[魔女孵化場] 引爆後層數歸零，重新累積",0｜數值型,applyStatus dispel modifyCooldown restore status onStatusApplied,"legendary,ex-origin,cleanse,reversal",,
+EX∅ 根源,touyako,洞爺湖,1,10–10,8%,champion 限 1,"[吐槽式強制淨化] 你被硬控時，立刻淨化掉身上全部可淨化的減益
+[吐槽式強制淨化] 並對兇手造成 100%AP 魔法傷害、附加 1 秒暈眩
+[吐槽式強制淨化] 觸發間隔 1 秒",0｜數值型,applyStatus damage dispel onCrowdControlReceived,"legendary,ex-origin,cleanse,counter",,
+EX∅ 根源,bezoar-of-the-apothecary,藥師少女的牛黃,1,10–10,8%,champion 限 1,"[貓貓試毒] 身上被掛上減益的瞬間，立刻淨化掉身上全部可淨化的減益
+[貓貓試毒] 同時回復 10%最大魔力
+[貓貓試毒] 並且永久 AP+1（整場累積，上限 300）
+[貓貓試毒] 觸發間隔 1 秒",0｜數值型,applyBuff dispel restore status onStatusApplied flat,"legendary,ex-origin,cleanse,scaling",,
+EX∅ 根源,icha-icha-paradise,親熱天堂,1,10–10,8%,champion 限 1,"[爸爸專屬] 每次施放技能後，魔力立刻回滿
+[爸爸專屬] 同時對命中的敵人附加[魅惑]：1 秒內無法控制地朝你走來",0｜數值型,applyStatus knockback restore onAbilityCast onAbilityHit,"legendary,ex-origin,mana,cc",,
+EX∅ 根源,red-comet-mask,赤色面具,1,10–10,8%,champion 限 1,[赤色彗星] 隊友陣亡時，攻擊速度 ×3、移動速度 ×3、生命回復速度 ×3，持續 10 秒,0｜數值型,applyBuff onAllyDeath pctMult,"legendary,ex-origin,buff",,
+EX解放,godie-i060,死之王的意志,1,1+,15%,champion 限 1,"AP+174
 [斬殺] 可直接斬殺生命低於 3%的敵方單位
 [緩慢] 周圍敵方 總移動速度 減半
 額外 [死之王套裝] 同時裝備死之王長槍、意志、神盾，則總 AP 額外 + 300%",6｜斬殺·團隊光環·真傷,damage stat onBasicAttack < flat pctAdd pctMult,wc3-import,,
-EX∅ 根源,teardrop-of-rebirth,再誕之淚珠,1,10–10,8%,champion 限 1,"[再誕] 每回合一次，死亡 3 秒後以 100%生命、100%魔力復活
-[再誕] 復活後 6 秒內總傷害、治療與護盾 ×1.25、移速 ×1.20",3｜復活,applyBuff delayed revive stat status onDeath > flat pctMult,"legendary,revive,utility",,
-EX∅ 根源,godie-i031,天生牙,1,10–10,8%,champion 限 1,"[復活] 殺死任一個敵方英雄單位，將復活我方所有英雄
-[回復] 殺死任一個敵方單位，回復我們全部英雄 1%生命
-[淨化] 每 10 秒移除周圍隊友身上的減益
-每秒生命回復+20",3｜復活,dispel restore revive onInterval onKill flat,wc3-import,,
-EX∅ 根源,godie-i06g,殺豬刀,1,10–10,8%,champion 限 1,"攻擊力+37
-防禦+13
-攻擊速度+30%
-[變形] 專殺畜牲，7%機率將敵人變成食材，無法動作
-[格擋] 30%機率 抵擋致命一擊(超過現存生命的傷害)",1｜硬控,applyStatus onBasicAttack flat pctAdd,wc3-import,,
-EX∅ 根源,godie-i016,晨曦之光,1,10–10,8%,champion 限 1,"[看穿] 看穿隱形
-[格擋] 30%機率 抵擋致命一擊(超過現存生命的傷害)
-每秒回魔+8
-冷卻縮減+30%
-[重創] 敵方攻擊時吸血效果降低50%吸血回復量",0｜數值型,applyBuff onDamageTaken flat pctMult,wc3-import,,
 EX解放,odm-gear,立體機動裝置,1,1+,15%,champion 限 1,"[飛行型態] 常駐飛行：無視單位與牆壁碰撞（仍受場地邊界與火圈約束）
 [機動上限解放] 移動速度上限 18 → 24，並使移動速度 +50%
 [超速] 使用位移或閃現之後 2 秒內，造成的傷害・治療・護盾 各 +3%",4｜解鎖上限·飛行,applyBuff onDashOrBlink capRaisePct flat pctAdd,"flight,legendary,mobility,movement-speed",,
+EX解放,teardrop-of-rebirth,再誕之淚珠,1,1+,15%,champion 限 1,"[再誕] 每回合一次，死亡 3 秒後以 100%生命、100%魔力復活
+[再誕] 復活後 6 秒內總傷害、治療與護盾 ×1.25、移速 ×1.20",3｜復活,applyBuff delayed revive stat status onDeath > flat pctMult,"legendary,revive,utility",,
+EX解放,godie-i031,天生牙,1,1+,15%,champion 限 1,"[復活] 殺死任一個敵方英雄單位，將復活我方所有英雄
+[回復] 殺死任一個敵方單位，回復我們全部英雄 1%生命
+[淨化] 每 10 秒移除周圍隊友身上的減益
+每秒生命回復+20",3｜復活,dispel restore revive onInterval onKill flat,wc3-import,,
 EX解放,godie-i02d,消失的密室,1,1+,15%,champion 限 1,"防禦+100
 魔抗+66.7%
 [神速] 攻擊速度+100%，上限提升至10 (預設上限為4)
@@ -123,6 +141,11 @@ EX解放,endless-edge,無盡連刃,1,1+,15%,champion 限 1,"[神速] 攻擊速�
 [疊層] 每次普攻命中攻擊速度增加10%，可無限疊加，1秒內沒有新的普攻命中則全部層數歸零",2｜解鎖上限,applyBuff onBasicAttack capRaise pctAdd,"legendary,attack-speed,melee,on-hit",,
 EX解放,shining-golden-orbs,閃耀金玉,1,1+,15%,champion 限 1,"[EX解放・金玉回歸] 每當自身任一屬性首次達到一般上限時，獲得 1 層「金玉」，最多 2 層。每層使：攻擊速度與吸血的上限解鎖 +25% ／ 攻擊力・法強・護甲・魔抗・生命上限・魔力上限・雙回復・攻速 各 ×1.15 ／ 移動速度 ×1.10
 [完全體] 取得第 2 層時觸發：上述屬性再 ×1.20 ／ 造成傷害、治療、護盾 ×1.20 ／ 技能冷卻流逝速度 ×1.20",2｜解鎖上限,applyBuff status onStatCapReached capRaisePct flat pctMult,"legendary,stat-cap,scaling",,
+EX解放,godie-i06g,殺豬刀,1,1+,15%,champion 限 1,"攻擊力+37
+防禦+13
+攻擊速度+30%
+[變形] 專殺畜牲，7%機率將敵人變成食材，無法動作
+[格擋] 30%機率 抵擋致命一擊(超過現存生命的傷害)",1｜硬控,applyStatus onBasicAttack flat pctAdd,wc3-import,,
 EX解放,godie-i06q,鍊金術之盾,1,1+,15%,champion 限 1,"[嘲弄] 每秒吸引周圍敵人優先攻擊自己，持續 0.5秒
 [煉金術] 受敵人攻擊時，有 10%機率將直接將 HP 低於 5% 的敵人變成黃金 (敵方單位直接死亡，黃金數量為敵方等級)",1｜真傷,damage grantGold stat taunt onDamageTaken onInterval <,wc3-import,,
 EX解放,spear-of-lightning,雷槍,1,1+,15%,champion 限 1,"[雷槍裝填] 戰鬥中每 1.5 秒獲得 1 層裝填，最多 5 層，本回合內不衰退
@@ -148,6 +171,11 @@ EX解放,godie-i067,惡夢魔王碎片,1,1+,15%,champion 限 1,"魔力 + 2200
 [真實傷害] 所有裝備者技能傷害都轉為真實傷害",0｜數值型,flat pctAdd,wc3-import,,
 EX解放,fingerless-gloves,指貫手套,1,1+,15%,champion 限 1,"[計算式解放] 攻擊力 +20%
 [計算式解放] 攻擊力每跨過一道門檻（120／140／160／180／200／220／240／260／280／300），最終攻擊力再 ×1.03，最多 10 段乘算",0｜數值型,applyBuff stat onInterval >= pctAdd pctMult,"legendary,ad,stat-path",,
+EX解放,godie-i016,晨曦之光,1,1+,15%,champion 限 1,"[看穿] 看穿隱形
+[格擋] 30%機率 抵擋致命一擊(超過現存生命的傷害)
+每秒回魔+8
+冷卻縮減+30%
+[重創] 敵方攻擊時吸血效果降低50%吸血回復量",0｜數值型,applyBuff onDamageTaken flat pctMult,wc3-import,,
 EX解放,godie-i01d,死之王的長槍,1,1+,15%,champion 限 1,"攻擊力額外增加 17%
 [無視] 普通攻擊無視防禦給予傷害
 [普通攻擊時] 普攻附加敵方現存 MP 10%傷害，並且回復敵方最大 MP 10%

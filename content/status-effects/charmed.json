@@ -1,0 +1,13 @@
+{
+  "id": "charmed",
+  "schema": "status-effect@1",
+  "name": "魅惑",
+  "description": "眼睛離不開那本書的封面，腳就自己走過去了。這一秒你交不出操作。",
+  "polarity": "debuff",
+  "tags": [
+    "charmed",
+    "cc",
+    "move-denied",
+    "debuff"
+  ]
+}

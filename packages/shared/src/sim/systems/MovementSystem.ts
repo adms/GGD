@@ -32,6 +32,7 @@ import { Stat } from "../stats/statTypes";
 import { facingLockDir } from "../facingLock";
 import { movementHold } from "../movementHold";
 import { mobProfile } from "../mobs";
+import { isCarried } from "../carry";
 
 /** Fallback move speed (units/sec) for entities without a stats component. */
 const BASE_MOVE_SPEED = 6;
@@ -136,6 +137,18 @@ export function movementSystem(world: SimWorld): void {
     //    position. So: leave it alone, and leave the velocity LeapSystem set
     //    (it is the real per-tick displacement, which the animation layer reads).
     if (nav.override?.kind === "leap") continue;
+
+    // 0′) 背負 ([EX∅ 根源], sim/carry.ts): 箱子裡的身體不是自走的 —— 它的座標由
+    //    `CarrySystem`(5a) 從載具重建，就在這個系統跑完之後的同一 tick。同一個
+    //    形狀的先例就在上一行（airborne）：position is not its own。
+    //    ⚠️ 速度**要**歸零而不是只 continue：`t.vel` 是動畫層唯一的讀數，留著上一
+    //    tick 的殘值會讓被收進箱子的人在畫面上維持跑步姿勢滑過整個場地。
+    //    ⚠️ 位置寫在這裡而不是只靠 5a 覆蓋：分離 pass（下面）在**同一 tick**就會
+    //    讀 `t.pos`，而一個仍在自己走的乘客會在被複製回箱子之前先把載具推開。
+    if (isCarried(world, id)) {
+      t.vel = { x: 0, z: 0 };
+      continue;
+    }
 
     // 1) Movement override (dash/knockback) — ignores root by design (dashes
     //    committed before CC still complete; knockbacks are forced).
@@ -328,6 +341,12 @@ export function movementSystem(world: SimWorld): void {
     // loop walks `world.transform` directly, so a one-sided guard would still
     // let a HIGHER-id body push the flyer.
     if (flightIgnoresUnits(world, id)) continue;
+    // 背負: 箱子裡的身體既不推人也不被推 —— 它與載具**逐位元同座標**，所以不豁免
+    // 的話 `separatePair` 每 tick 都會把載具從自己的乘客身上推開一步，而那一步是
+    // 寫在載具身上的（乘客下一行就被複製回來，載具不會）：畫面上是一個抱著箱子
+    // 的人自己往旁邊漂。⚠️ 兩個迴圈都要，與上面 airborne / 飛行那兩對同一個理由：
+    // 外圈直接走 `world.transform`，單邊的閘擋不住 id 較大的那一側。
+    if (isCarried(world, id)) continue;
     const hp = world.health.get(id);
     if (hp && !hp.alive) continue;
     const near = world.grid.queryCircle(t.pos, t.radius + 2);
@@ -336,6 +355,7 @@ export function movementSystem(world: SimWorld): void {
       if (world.projectile.has(otherId)) continue;
       if (isAirborneNav(world, otherId)) continue;
       if (flightIgnoresUnits(world, otherId)) continue;
+      if (isCarried(world, otherId)) continue;
       const o = world.transform.get(otherId);
       if (!o || o.zone !== t.zone) continue;
       const oHp = world.health.get(otherId);
@@ -389,6 +409,10 @@ export function movementSystem(world: SimWorld): void {
     // a disc is convex, so the straight segment between two interior points is
     // wholly interior by construction.
     if (isAirborneNav(world, id)) continue;
+    // 背負: 乘客的位置不是他自己的（同上面 aura carrier 那一段的理由，逐字）——
+    // `CarrySystem` 在這個系統跑完後就把它寫成載具的座標，所以在這裡把他推出柱子
+    // 只會在有人讀到之前被覆蓋掉；而載具自己**有**跑這一趟，所以箱子已經是合法的。
+    if (isCarried(world, id)) continue;
     const zone = world.arena.zones[t.zone] ?? world.arena.zones[0]!;
     const body = { pos: t.pos, radius: t.radius };
     // 飛行: the two halves of this sweep are asked SEPARATELY, because they are

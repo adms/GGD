@@ -1160,7 +1160,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **完整 78 名英雄**（含 29 名未開放）與逐欄資料（開放旗標、技能 id、攻擊類型…）在 [`docs/reference/roster.md`](./docs/reference/roster.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_deccd4ef6170` 產生。 開放 49 / 全 78 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_9691e4458a22` 產生。 開放 49 / 全 78 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:roster -->
 
 <!-- BEGIN GENERATED:abilities -->
@@ -1176,7 +1176,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **全 461 個技能的逐欄表**（id、名稱、slot、型態、編號、擁有英雄、開放旗標、完整短效果）在 [`docs/reference/abilities.md`](./docs/reference/abilities.md)；互動版在 <http://localhost:39527/#codex>。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_deccd4ef6170` 產生。 開放英雄技能 293 / 全 461 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_9691e4458a22` 產生。 開放英雄技能 293 / 全 461 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:abilities -->
 
 <!-- BEGIN GENERATED:items -->
@@ -1184,7 +1184,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 🗄️ **另有 112 件已退場道具不列在本表**（製作書系列 55、合成過渡期道具 38、兌換券 8）—— 它們在出貨的商店貨架與每一張抽獎表上都不存在，所以玩家拿不到。全文原封不動保存於 [`content/_legacy/items/`](content/_legacy/items/)，逐筆索引見 [`docs/legacy-index.md`](docs/legacy-index.md)。⛔ 這一行是**指標**不是清單：退場與否由檔案在哪個目錄決定，沒有第二份名單。
 >
-> 全部 127 件道具依 `craftRole` 標記分類（task #70）。**真正能買的只有 38 件最終合成武器＋2 項服務**；三選一 draft 抽 6 件任務道具、傳說寶玉抽 69 件傳說。其餘 44 件是配方組件、代幣、殘件或還沒 payload 的 final，不會單獨出現在商店或抽卡。
+> 全部 142 件道具依 `craftRole` 標記分類（task #70）。**真正能買的只有 38 件最終合成武器＋2 項服務**；三選一 draft 抽 6 件任務道具、傳說寶玉抽 84 件傳說。其餘 44 件是配方組件、代幣、殘件或還沒 payload 的 final，不會單獨出現在商店或抽卡。
 >
 > 只有兩種商店價格：簡易 **300g**、強力 **1200g**（`packages/shared/src/sim/economy/itemTiers.ts:43-46`）。**傳說沒有價格**，只能抽。背包 6 格、賣出退 40%。
 >
@@ -1257,18 +1257,21 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 | `godie-i06j` | 獸人船長十字鎬 | 抽卡 | ✅ | — | onBasicAttack→applyStatus |
 | `godie-i06n` | 老衲的棒子 | 抽卡 | ✅ | — | onBasicAttack→applyStatus |
 
-##### 💎 寶具池 weapon pools（三階）（69）
+##### 💎 寶具池 weapon pools（三階）（84）
 
 三張表等權重（`legendary-weapons` · `ex-release-weapons` · `ex-origin-weapons`）。只能從寶具三選一或 2400g 傳說寶玉取得。⭐ 一件寶具**只屬於一個池**。
 
 | id | 名稱 | 價格 | 開放 | 屬性 modifiers | 被動 |
 |---|---|---|---|---|---|
+| `all-might-hair` | 歐爾麥特的頭髮 | 抽卡 | — | — | onAllyDeath→applyBuff |
+| `bezoar-of-the-apothecary` | 藥師少女的牛黃 | 抽卡 | — | — | onStatusApplied→dispel/rest… |
 | `book-of-gospel` | 福音書 | 抽卡 | ✅ | — | onAbilityCast→applyBuff/mod… |
 | `bulwark-charge-greaves` | 近擊的巨人鎧 | 抽卡 | ✅ | 護甲 +100 · 回血 +12 | onAbilityCast→dash |
 | `cleaver-of-the-warden` | 泰坦九頭蛇 | 抽卡 | ✅ | 生命 +10% | onBasicAttack→damage/damage… |
 | `collar-of-the-deadly-soul` | 致命魂之首輪 | 抽卡 | ✅ | — | onKill→applyBuff |
 | `endless-edge` | 無盡連刃 | 抽卡 | ✅ | 攻速上限解鎖至 10 | onBasicAttack→applyBuff |
 | `fingerless-gloves` | 指貫手套 | 抽卡 | ✅ | 攻擊力 +20% | onInterval→applyBuff/applyB… |
+| `gantz-suit` | GANTZ Suit | 抽卡 | — | — | — |
 | `godie-i000` | 丈八蛇矛 | 抽卡 | ✅ | 攻擊力 +87 · 生命 +872 | onBasicAttack→damageArea |
 | `godie-i004` | 至尊魔戒 | 抽卡 | ✅ | 魔力 +1000 · 技能吸血 +0.2 | — |
 | `godie-i006` | 雅典娜的驚嘆號 | 抽卡 | ✅ | 法強 +33% · 回魔 +13 · 法強 +333 | onBasicAttack→damage |
@@ -1316,28 +1319,40 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 | `godie-i06o` | 血染八月 | 抽卡 | ✅ | 攻擊力 +88 | onBasicAttack→dot · onBasic… |
 | `godie-i06q` | 鍊金術之盾 | 抽卡 | ✅ | — | onInterval→taunt · onDamage… |
 | `gravity-sword-black-rod` | 重力劍〈黑棒〉 | 抽卡 | ✅ | — | onInterval→applyBuff · onBa… |
+| `grief-seed` | 悲嘆之種 | 抽卡 | — | — | onStatusApplied→applyStatus… |
+| `icha-icha-paradise` | 親熱天堂 | 抽卡 | — | — | onAbilityCast→restore · onA… |
 | `lance-kongotetsu` | 神槍・金剛徹 | 抽卡 | ✅ | 射程 +1 | onBasicAttack→applyBuff · o… |
 | `magic-armor-type-zero` | 魔導鎧・零式 | 抽卡 | ✅ | — | onAbilityCast→applyBuff · o… |
+| `master-ball` | 大師球 | 抽卡 | — | — | onDamageDealt→convertTeam/a… |
 | `meat-cleaver` | 肉切菜刀 | 抽卡 | ✅ | — | onInterval→applyBuff · onBa… |
 | `meteor-ring` | 流星之戒 | 抽卡 | ✅ | — | onUltimateCast→applyBuff/mo… |
+| `millennium-puzzle` | 千年積木 | 抽卡 | — | — | — |
 | `mystery-scrap-of-paper` | 謎之紙片 | 抽卡 | ✅ | 單發傷害上限 +0.2 | onDamageTaken→applyBuff |
+| `nezuko-box` | 禰豆子的木箱 | 抽卡 | — | — | onInterval→carry |
 | `odm-gear` | 立體機動裝置 | 抽卡 | ✅ | 移速上限解鎖 +33.33% · 移速 +50% | onDashOrBlink→applyBuff |
 | `pale-moon-requiem-crown` | 蒼月葬送・千年彼方花冠 | 抽卡 | ✅ | — | onOverheal→applyBuff/shield… |
+| `red-comet-mask` | 赤色面具 | 抽卡 | — | — | onAllyDeath→applyBuff |
+| `sasumata` | 討伐叉 | 抽卡 | — | — | — |
+| `scouter` | 戰鬥力探測器 | 抽卡 | — | — | onDamageTaken→taunt |
+| `senzu-bean` | 仙豆 | 抽卡 | — | — | onDamageTaken→restore/dispe… |
 | `shining-golden-orbs` | 閃耀金玉 | 抽卡 | ✅ | — | onStatCapReached→applyBuff/… |
+| `slime-suit` | 史萊姆裝 | 抽卡 | — | — | — |
 | `soul-eater` | 噬魂者 | 抽卡 | ✅ | — | onKill→restore · onKill→app… |
+| `soul-gem` | 魂之寶石 | 抽卡 | — | — | onDeath→applyBuff/delayed/d… |
 | `spear-of-lightning` | 雷槍 | 抽卡 | ✅ | — | onInterval→applyBuff · onBa… |
 | `staff-of-ainz-ooal-gown` | 安茲・烏爾・恭之杖 | 抽卡 | ✅ | — | onAbilityCast→applyBuff · o… |
 | `stone-mask` | 石鬼面 | 抽卡 | ✅ | — | onDamageTaken→applyBuff · o… |
 | `teardrop-of-rebirth` | 再誕之淚珠 | 抽卡 | ✅ | — | onDeath→applyBuff/delayed |
 | `torch-master` | 火把師父 | 抽卡 | ✅ | — | onBasicAttack→applyBuff · o… |
+| `touyako` | 洞爺湖 | 抽卡 | — | — | onCrowdControlReceived→disp… |
 | `ultimate-mod-shiranui` | 終極魔改・不知火 | 抽卡 | ✅ | 攻擊力 +50% · 攻速 +50% · 暴擊傷害 +50% · 攻速上限解鎖至 10 | onBasicAttack→applyStatus/a… |
 | `usagizuki-twin-crescents` | 兎月【雙弦月】 | 抽卡 | ✅ | — | onBasicAttack→applyBuff · o… |
 
 > ⚠️ 另有 **4 件 `final` 沒有 payload**（風行天衣、盾甲天書、黑色魔書、嗜血邪書）：主動效果 schema 還裝不下（#56），所以商店拒賣。詳見完整表。
 
-> 📖 **全 127 件道具依 craftRole 的完整分類表**（component 16 / token 0 / none 24 …）在 [`docs/reference/items.md`](./docs/reference/items.md)。
+> 📖 **全 142 件道具依 craftRole 的完整分類表**（component 16 / token 0 / none 24 …）在 [`docs/reference/items.md`](./docs/reference/items.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_deccd4ef6170` 產生。 可取得 115 / 全 127 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_9691e4458a22` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:items -->
 
 <!-- BEGIN GENERATED:grail -->
@@ -1426,7 +1441,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 逐張的完整 JSON（每一格參數、每一個 hook、每一條條件）在 [`docs/reference/grail-wishes.md`](docs/reference/grail-wishes.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_deccd4ef6170` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_9691e4458a22` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:grail -->
 
 ### ⭐ 2026-08-17／18 這一批新加的機制（GH#354）
@@ -1477,23 +1492,23 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 >
 > ⚠️ 一個 token 出現在這裡＝**引擎認得它**；「內容」欄是 0 ＝ 機制在但還沒有人用，⛔ 不是壞掉。
 
-### 效果（effect kind）—— 37 種
+### 效果（effect kind）—— 39 種
 
 | 效果 | 用它的內容 | 效果 | 用它的內容 | 效果 | 用它的內容 |
 |---|--:|---|--:|---|--:|
 | `applyBuff` | 113 | `applyStatus` | 97 | `blink` | 2 |
-| `championForm` | 24 | `cycleBuff` | 1 | `damage` | 178 |
-| `damageArea` | 28 | `damageLine` | 10 | `dash` | 15 |
-| `delayed` | 8 | `devour` | 3 | `dispel` | 8 |
-| `dot` | 4 | `evasion` | 0 | `eventValueConversion` | 5 |
-| `extendBuff` | 1 | `grantAttribute` | 4 | `grantGold` | 0 |
-| `heal` | 9 | `invulnerable` | 18 | `knockback` | 11 |
-| `leap` | 7 | `manaBarrier` | 1 | `modifyCooldown` | 13 |
-| `proxyCast` | 6 | `randomArea` | 4 | `restore` | 16 |
-| `revive` | 1 | `shield` | 11 | `shieldBreak` | 2 |
-| `spawnProjectile` | 35 | `spawnVfx` | 12 | `spendMana` | 2 |
-| `summon` | 0 | `swapResource` | 1 | `taunt` | 0 |
-| `weightedBranch` | 4 |  |  |  |  |
+| `carry` | 0 | `championForm` | 24 | `convertTeam` | 0 |
+| `cycleBuff` | 1 | `damage` | 178 | `damageArea` | 28 |
+| `damageLine` | 10 | `dash` | 15 | `delayed` | 8 |
+| `devour` | 3 | `dispel` | 8 | `dot` | 4 |
+| `evasion` | 0 | `eventValueConversion` | 5 | `extendBuff` | 1 |
+| `grantAttribute` | 4 | `grantGold` | 0 | `heal` | 9 |
+| `invulnerable` | 18 | `knockback` | 11 | `leap` | 7 |
+| `manaBarrier` | 1 | `modifyCooldown` | 13 | `proxyCast` | 6 |
+| `randomArea` | 4 | `restore` | 16 | `revive` | 1 |
+| `shield` | 11 | `shieldBreak` | 2 | `spawnProjectile` | 35 |
+| `spawnVfx` | 12 | `spendMana` | 2 | `summon` | 0 |
+| `swapResource` | 1 | `taunt` | 0 | `weightedBranch` | 4 |
 
 ### 觸發事件（hook event）—— 33 種
 
@@ -1543,11 +1558,11 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 | `stat` | 7 |
 | `status` | 20 |
 
-### 狀態標籤 —— 90 個（`content/status-effects/*.json` 逐檔數出來）
+### 狀態標籤 —— 98 個（`content/status-effects/*.json` 逐檔數出來）
 
 標籤是**開放**詞彙（自由字串），條件葉 `status` 的類別分支就是查它：
 
-`accuracy-down`×2 `ai-override`×3 `antiheal`×2 `armor-break`×1 `armor-down`×1 `attack-debuff`×2 `attack-denied`×8 `auto-target`×1 `bankai`×1 `banked`×2 `berserk`×1 `blind`×1 `buff`×9 `burn`×1 `burnstun`×1 `cast-denied`×7 `cc`×20 `channel`×1 `combo`×1 `confusion`×1 `counter`×1 `curse`×1 `damage-bank`×2 `debuff`×25 `disable`×11 `dot`×1 `elemental`×1 `fang-stun`×1 `fear`×1 `fire`×2 `flee`×1 `form`×1 `frenzy`×1 `friendly-fire`×1 `generic`×1 `grail-strengthened-projection`×1 `grail-wish`×1 `grievous-wounds`×1 `hard-cc`×6 `haste`×1 `heal-block`×1 `heal-down`×2 `immobilize`×1 `ingredient`×1 `lifesteal-down`×2 `lifesteal-up`×1 `light-wand-banked`×1 `magic-break`×1 `magic-resist-down`×1 `magical`×1 `mana-banked`×2 `marker`×1 `mechanism-on-card`×4 `miss`×2 `moon-combo`×1 `move-denied`×8 `move-speed-down`×7 `named-variant`×6 `nen-banked`×1 `next-attack`×1 `no-heal`×1 `numbness`×1 `omnislash-lock`×1 `omnislash-perform`×1 `paralysis`×1 `physical`×1 `projectile`×1 `rage`×1 `regen-down`×2 `resist-down`×2 `root`×1 `self-lock`×1 `shred`×2 `slow`×7 `slow20`×1 `slow25`×1 `slow30`×1 `slow35`×1 `slow40`×1 `slow50`×1 `slow60`×1 `soft-cc`×9 `stat-down`×9 `stat-up`×1 `stun`×7 `timed-window`×1 `trial-stun`×1 `triforce-courage`×1 `uncontrollable`×3 `wound`×2
+`accuracy-down`×2 `ai-override`×3 `antiheal`×2 `armor-break`×1 `armor-down`×1 `attack-debuff`×2 `attack-denied`×8 `auto-target`×1 `bankai`×1 `banked`×2 `berserk`×1 `blind`×1 `buff`×14 `burn`×1 `burnstun`×1 `cast-denied`×7 `cc`×21 `channel`×1 `charmed`×1 `combo`×1 `confusion`×1 `counter`×2 `curse`×1 `damage-bank`×2 `debuff`×26 `disable`×11 `dot`×1 `elemental`×1 `empowered`×1 `empowered-next`×1 `fang-stun`×1 `fear`×1 `fire`×2 `flee`×1 `form`×2 `frenzy`×1 `friendly-fire`×1 `generic`×1 `grail-strengthened-projection`×1 `grail-wish`×1 `grief-seed-charge`×1 `grievous-wounds`×1 `hard-cc`×6 `haste`×2 `heal-block`×1 `heal-down`×2 `immobilize`×1 `ingredient`×1 `lifesteal-down`×2 `lifesteal-up`×1 `light-wand-banked`×1 `magic-break`×1 `magic-resist-down`×1 `magical`×1 `mana-banked`×2 `marker`×1 `mechanism-on-card`×4 `millennium-plot-armor`×1 `miss`×2 `moon-combo`×1 `move-denied`×9 `move-speed-down`×7 `named-variant`×6 `nen-banked`×1 `next-attack`×1 `no-heal`×1 `numbness`×1 `omnislash-lock`×1 `omnislash-perform`×1 `paralysis`×1 `physical`×1 `projectile`×1 `rage`×1 `red-comet`×1 `regen-down`×2 `resist-down`×2 `root`×1 `self-lock`×1 `shred`×2 `slow`×7 `slow20`×1 `slow25`×1 `slow30`×1 `slow35`×1 `slow40`×1 `slow50`×1 `slow60`×1 `soft-cc`×9 `stat-down`×9 `stat-up`×1 `stun`×7 `timed-window`×2 `trial-stun`×1 `triforce-courage`×1 `uncontrollable`×3 `united-states-of-smash`×1 `witch-form`×1 `wound`×2
 
 ### 特效（vfx）—— 632 份
 
@@ -1563,7 +1578,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 完整的參數與上下界（每個效果每一格能填什麼）在 [`docs/技能標記機制與效果規則.md`](docs/技能標記機制與效果規則.md)，同樣是產生的。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_deccd4ef6170` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_9691e4458a22` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:mechanics -->
 
 

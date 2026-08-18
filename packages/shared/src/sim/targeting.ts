@@ -67,6 +67,9 @@ import { queryOverlap } from "./collision/queries";
 import { reachTo } from "./systems/BasicAttackSystem";
 import { mobAggroRank } from "./mobs";
 import { canSee } from "./stealth";
+// [EX∅ 根源] 的兩支謂詞模組。⛔ 空殼期間全部回 false，見它們的 ZERO GUARANTEE。
+import { carryBlocksAuto, carryBlocksManualTarget, carryBlocksMobAggro } from "./carry";
+import { isMindControlled } from "./mindControl";
 import { tauntedBy, type TauntPriority } from "./taunt";
 import {
   TARGET_CLASS,
@@ -251,6 +254,11 @@ export function acquireRadius(sc: StatsComp | undefined, selfRadius: number): nu
  * body must remember to carry.
  */
 export function targetClassOf(world: SimWorld, cand: EntityId): number | null {
+  // [背負]（[EX∅ 根源]）—— 躲在箱子裡的身體對**自動索敵**不存在。
+  // 閘下在這裡而不是各 picker，正是這個檔檔頭那篇「召喚物被三份獨立答案漏掉」
+  // 的驗屍報告要求的：一個謂詞，每個 picker 都走它。
+  // ⛔ 空殼期間 `carryBlocksAuto` 一律回 false，所以這一行今天是嚴格的 no-op。
+  if (carryBlocksAuto(world, cand)) return null;
   if (world.champion.has(cand)) return TARGET_CLASS.champion;
   const sm = world.summon.get(cand);
   if (sm !== undefined) {
@@ -350,9 +358,16 @@ export function isMobTargetable(world: SimWorld, cand: EntityId, seeker?: Entity
   // change to a predicate three other lanes are editing this week.
   if (world.stealthRules.blocksMobAggro && !canSee(world, seeker ?? (-1 as EntityId), cand))
     return false;
+  // [背負]：箱子裡的人也不吃小怪仇恨（它自己的軸，⛔ 不與自動索敵共用一格）。
+  if (carryBlocksMobAggro(world, cand)) return false;
   if (world.champion.has(cand)) return true;
   const sm = world.summon.get(cand);
   if (sm !== undefined) return summonMobTargetable(sm);
+  // [陣營轉換]（[EX∅ 根源]）—— 一隻**被借走的**小怪對其他小怪來說是敵人。
+  // 沒有這一行的話，被捕的殭屍王在 `MobSystem` 的隊伍閘那一側是敵人、在這一側
+  // 卻選不到，於是整群殭屍**站著不動**：兩份答案各自為真，而畫面上像是 AI 壞了。
+  // ⛔ 空殼期間 `isMindControlled` 一律回 false，所以今天是嚴格的 no-op。
+  if (world.mob.has(cand) && isMindControlled(world, cand)) return true;
   return false;
 }
 
@@ -383,6 +398,9 @@ export function isManuallyTargetable(
     !canSee(world, clicker, cand)
   )
     return false;
+  // [背負]：箱子裡的人點不到（它自己的軸 —— 「隊友看不看得見」與「箱子擋不擋
+  // 右鍵」是兩個問題，⛔ 不共用一格）。
+  if (carryBlocksManualTarget(world, cand)) return false;
   const sm = world.summon.get(cand);
   if (sm === undefined) return true;
   return summonManualTargetable(sm);

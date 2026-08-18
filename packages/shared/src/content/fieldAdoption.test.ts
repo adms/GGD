@@ -180,15 +180,61 @@ interface Exemption {
  * Sorted by key, matching the census output order.
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
-  "enum:abilities.effects[]#applyBuff.permanentScope=match": {
-    status: "default-live",
-    why:
-      "GH#354 / G3 —— `permanentScope` 的預設就是 match（**省略**這一格＝整場），所以沒有人需要把它明著寫出來。⭐ 零採用是**對的而且永久**：這一格存在的理由是讓作者選 `\"round\"`，而 `\"match\"` 是它不填時本來就會得到的東西。⛔ 有人把它明著寫進 JSON 反而是雜訊。（同一批的 `\"round\"` 已經被 9 份 [EX解放] 採用。）",
+  // ── [EX∅ 根源] 2026-08-18 這一批新開的授權面 ─────────────────────────────
+  // ⭐ 五件寶具解鎖的三個機制**都已經有內容在用**（`items.typeStreakImmunity` ←
+  //    slime-suit、`items.auras[].scaleByNearby` ← sasumata、`carry`/`convertTeam`
+  //    兩個 kind ← nezuko-box / master-ball），所以那四個鍵**沒有**豁免，也不該有。
+  //    下面這幾格是**同一個機制的其他授權面**：schema 一次補齊四面（道具／天生技
+  //    rank／增益卡／applyBuff）是刻意的（走 block・critStrike・penetration 的同一個
+  //    判例），而內容今天只走道具那一面。
+  "field:abilities.effects[]#applyBuff.typeStreakImmunity": {
+    status: "landing",
+    since: "2026-08-18",
+    why: "GH#355 [EX∅ 根源] 史萊姆裝把「連續同型傷害後免疫該型別」做成 `SOURCE_GRANT_SHAPE` 的一格，於是它**一次出現在四個授權面**（道具／天生技 rank／增益卡／applyBuff）—— 逐字沿用 `block`・`critStrike`・`penetration` 的判例，⛔ 不是四份各自的實作。內容今天只走道具那一面（`items.typeStreakImmunity` = slime-suit）。⛔ 這不是機制沒接線：閘在 `sim/combat/damage.ts`，`sourceGrants()` 四面共用同一條轉發。**到期**：任何一張「一段時間內免疫某型別連擊」的 buff 填了它，這一列會被 STALE 那半邊叫，刪掉即可。",
   },
-  "field:abilities.effects[]#revive.condition": {
+  "field:abilities.passive.ranks[].typeStreakImmunity": {
+    status: "landing",
+    since: "2026-08-18",
+    why: "同上（天生技 rank 那一面）。⚠️ 這一面是**最可能自然變綠**的一個 —— 一支「越挨打越硬」的天生技就是這一格。⛔ 若三十天後仍是 0，正確的處置是問「有沒有英雄該拿這個」，不是延長豁免。",
+  },
+  "field:augments.typeStreakImmunity": {
+    status: "landing",
+    since: "2026-08-18",
+    why: "同上（三選一增益卡那一面）：schema 一次補齊四個授權面是刻意的判例，內容今天只走道具那一面（slime-suit）。⛔ 這不是機制沒接線 —— 增益卡與道具共用同一支 `sourceGrants()`，一張「這一回合免疫連續同型傷害」的卡片今天就寫得出來。**到期**：owner 的下一批增益卡填了它。",
+  },
+  "field:abilities.passive.ranks[].auras[].scaleByNearby": {
+    status: "landing",
+    since: "2026-08-18",
+    why: "GH#355 [EX∅ 根源] 討伐叉把「這一圈的強度隨範圍內人數變化」做成 `zAuraDef` 的一格，而 `zAuraDef` **同時**被 `item@1.auras[]` 與 `ability@1.passive.ranks[].auras[]` 用 —— ⛔ 掛在圈上不掛在 `zStatModifier` 上是刻意的（後者會同時開放給沒有「範圍」概念的四個授權面）。道具那一面已經有採用者（sasumata），天生技靈氣那一面還沒有。⛔ 這不是機制沒接線：`auraSystem` PASS 1 不分來源，兩面走同一段程式。**到期**：任何一支「隊友越多光環越強」的天生技填了它。",
+  },
+
+  // ── 具名標記（marks）家族裡沒被用到的那幾格 ─────────────────────────────
+  // ⚠️ 這兩列**不是**這一批造成的：2026-08-18 之前 `abilities.marks[]` 唯一的採用者
+  //    是 `godie-hapm.passive`（十二道試煉），它填 `resetOn:"match"` 且沒有 `roundDelta`
+  //    ⇒ 這兩格從標記上架那天起就是 0，只是一直沒有人替它們寫豁免。
+  //    這一批（millennium-puzzle 用 `resetOn:"round"`）只是讓 `round` 那一格變綠。
+  "enum:abilities.marks[].resetOn=never": {
+    status: "default-live",
+    why: "三個重置語意裡的第三個。`match`（十二道試煉：一場比賽用完就沒有）與 `round`（千年積木：每回合補回去）都有採用者，而 `never` 的意思是「**連比賽結束都不重置**」—— `SimWorld` 一場比賽一個，所以它在遊戲裡與 `match` 逐位元同義，只有跨場持久化真的存在時才會分岔。⛔ 不要為了讓這一列消失而把某張卡改成 `never`：那會讓兩個語意在內容裡看起來是兩件事，而引擎裡是同一件。**到期**：跨場（meta）標記真的做出來的那一天。",
+  },
+  "field:abilities.marks[].roundDelta": {
+    status: "default-live",
+    why: "「每個回合開始自動加/減幾層」。省略 = 0 = 回合邊界不自動變動，而今天兩份標記文件要的都正是這個：十二道試煉是**用掉就沒了**（`resetOn:\"match\"`），千年積木是**整份補滿**（`resetOn:\"round\"`）—— 兩者都不是「每回合慢慢長回來」。⛔ 這不是機制沒接線（`resetMarksForRound()` 讀它，守衛 `apps/game-server/src/match/markRoundReset.test.ts`），是還沒有一張卡要那種節奏。**到期**：任何一張「每回合回復一次充能」的卡。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onLethalDamage": {
+    status: "default-live",
+    why: "⚠️ 這一列**不是**這一批造成的 —— `onLethalDamage` 在**道具的 passive hook** 那一層一直有採用者（gantz-suit / millennium-puzzle 改寫前都掛在 `items.passive[].on`），零採用的是**巢在一張 buff 裡面的那一份**（`applyBuff.hooks[]`）。⛔ 而且今天寫這種卡的正解**不是**這一格：`combat/damage.ts:1012` 的 `if (dmg > 0)` 讓「擋滿的那一發」根本不發 `lethalDamage`，所以走 `block` + `onLethalDamage` 的免死卡後續效果一次都不會觸發（2026-08-18 兩件寶具就是這樣被改寫成 `marks` + `lethal` 的）。⇒ 這一格今天是**做得出來但不該用**的一條路。**到期**：那個閘被修好，或某張 buff 真的需要在自己身上聽致命傷害。",
+  },
+
+  "enum:abilities.effects[]#revive.side=any": {
     status: "default-live",
     why:
-      "GH#354 —— `revive` 這個 kind 在 2026-08-18 才第一次被內容採用（#64 再誕之淚珠），而它用的是**外層 hook 的**條件閘（`onDeath` + 一個回合作用域的標記 buff），⛔ 不是 effect 自己這一格。兩者等價而外層那條可讀性高得多（條件寫在觸發點旁邊）。零採用是對的：這一格是給「同一次觸發裡有多個 effect、只有其中一個要加條件」用的，而今天沒有那種寫法。",
+      "GH#355 批的 [EX∅ 根源] 讓 `revive` 從 2 份長到 4 份，於是同一族裡**沒被用到的那幾格**單獨浮出來。⛔ 這不是機制沒接線：`side:\"ally\"` 是四份文件全部要的語意（只復活隊友），而 `\"any\"`（連敵人也復活）今天沒有任何一張卡想要。**到期**：有人寫出一張復活敵人的卡時，這一列會被 STALE 那半邊叫，刪掉即可。",
+  },
+  "enum:abilities.effects[]#revive.teamCharge=requireAndSpend": {
+    status: "default-live",
+    why:
+      "同上。四份文件全部填 `\"ignore\"`，而那是**刻意**的：`requireAndSpend` 花的是**全隊共用的復活圈額度**，用它等於「隊友用過復活圈就沒有這件寶具」—— 那不是任何一張卡寫的東西（見 `teardrop-of-rebirth.authoringNote` 的同一段推導）。",
   },
   "enum:abilities.effects[]#applyBuff.damageTypeOverride.impactType=converted": {
     status: "landing",
@@ -1219,17 +1265,9 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "default-live",
     why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「控到人的時候⋯」——`statusApplied` 裡帶 `cc` 標籤的那些，施加者視角。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
   },
-  "enum:abilities.effects[]#applyBuff.hooks[].on=onCrowdControlReceived": {
-    status: "default-live",
-    why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「被控的時候⋯」——同一則事件，承受者視角。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
-  },
   "enum:abilities.effects[]#applyBuff.hooks[].on=onHeal": {
     status: "default-live",
     why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「治療生效的時候⋯」——`heal` 事件（`restore.ts` 已經擋掉零治療）。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
-  },
-  "enum:abilities.effects[]#applyBuff.hooks[].on=onAllyDamaged": {
-    status: "default-live",
-    why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「隊友被打的時候⋯」——`damage` 換 `allies` scope（同 `onAllyDeath` 的形狀）。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
   },
   "enum:abilities.effects[]#applyBuff.hooks[].on=onProjectileExpire": {
     status: "default-live",
@@ -1238,10 +1276,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   "enum:abilities.effects[]#applyBuff.hooks[].on=onBoundaryTouch": {
     status: "default-live",
     why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「碰到場地邊界的時候⋯」——火圈就是這張地圖的邊界，吃 `fireRingDamage`。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
-  },
-  "enum:abilities.effects[]#applyBuff.hooks[].on=onLethalDamage": {
-    status: "default-live",
-    why: "GH#354（owner 2026-08-17 的引擎盤點）—— 「受到致命傷害的時候⋯」——⚠️ 與免死（`lethalSaved`）不同：這一則在判斷**之前**發，所以身上沒有免死標記的人也收得到。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
   },
   "enum:abilities.effects[]#applyBuff.hooks[].on=onRoundStart": {
     status: "default-live",
@@ -1618,10 +1652,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   "field:abilities.effects[]#knockback.subtractGap": {
     status: "default-live",
     why: "缺席 = true,也就是 GH#193 的「站越遠推越少」。這是全遊戲共用的擊退規則,owner 定它是為了讓擊退是近戰的工具而不是遠程的放風箏工具;寫 false 等於為某一支破例。四支出貨的擊退都遵守它 —— 描述裡的「6.0 單位 −(你們的距離)」就是這條。",
-  },
-  "field:abilities.effects[]#knockback.uncontrollable": {
-    status: "default-live",
-    why: "缺席 = true(擊退期間進 world.knockdown,不能下指令)。寫 false 是「推開但保留控制權」,四支出貨的擊退都不要那個 —— 牙突的價值有一半在那段躺平時間。",
   },
   "enum:abilities.passive.ranks[].whileForm=any": {
     status: "default-live",
@@ -2118,14 +2148,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "那是出貨行為。⭐ 機制**不在零**：同一條 `sim/combat/critStrike.ts` 管線在 `damageArea.canCrit`（1/49）" +
       "與 `damageLine.canCrit`（2/16）上都有客戶。90 支重製稿裡 11 處提到[暴擊]，逐字讀都是**普攻**暴擊（走 critStrike grant，" +
       "不走這一格），所以單體技能傷害沒有人要暴擊是誠實的。",
-  },
-  "enum:abilities.effects[]#restore.applyTo=target": {
-    status: "default-live",
-    why:
-      "⚠️ 這個成員**就是預設值本身**：`sim/effects/restore.ts` 是 `e.applyTo === \"self\" ? [ctx.caster] : ctx.targets`，" +
-      "也就是省略與寫 `\"target\"` 逐字同一條路。6 份 restore 寫的都是 `\"self\"`（那個才是需要覆寫的那一邊）" +
-      "，而「回復目標」這件事每一場都在跑 —— `godie-h02v.ex` 每秒替周圍友軍回 10% 最大魔力走的正是這一支，" +
-      "它只是沒有把預設值再抄一遍。",
   },
 
   // ── ⑥ 五個「真的還沒有人選」的成員（landing，30 天後回來看） ────────────────

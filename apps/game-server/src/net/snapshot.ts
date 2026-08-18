@@ -4,7 +4,7 @@
  * later without touching anything else.
  */
 import type { ArraySchema } from "@colyseus/schema";
-import { DuelState, ENTITY_FLAG, ENTITY_KIND, EntityState, GROWTH_TIER_STACKS, MatchState, OfferState, ROUND_OUTCOME, SEAT_COUNTER_MAX, SeatState, TeamState, formFlagsForIndex } from "@ggd/shared/protocol/schema";
+import { DuelState, ENTITY_FLAG, ENTITY_KIND, EntityState, GROWTH_TIER_STACKS, MatchState, OfferState, ROUND_OUTCOME, SEAT_COUNTER_MAX, SeatState, TeamState, formFlagsForIndex, teamOverrideFlagsFor } from "@ggd/shared/protocol/schema";
 import { forEachMark } from "@ggd/shared/sim/marks";
 import { clampMarkCount, markExpired } from "@ggd/shared/sim/markLimits";
 import { flightHoverHeight } from "@ggd/shared/sim/flight";
@@ -19,6 +19,9 @@ import { resolveAuraRadius } from "@ggd/shared/sim/aura/aura";
 import { mobModelKeyFor, mobSizeMultFor, mobVisualJson } from "@ggd/shared/sim/mobs";
 import { currentFireRingRadius, isBurnedByFireRing } from "@ggd/shared/sim/fireRing";
 import { isHidden } from "@ggd/shared/sim/stealth";
+// [EX∅ 根源]：兩個謂詞 + 一個編碼器。⛔ 空殼期間三者一律回 false/null/0。
+import { isCarried } from "@ggd/shared/sim/carry";
+import { mindControlTeamOf } from "@ggd/shared/sim/mindControl";
 import { attrBonusArray } from "@ggd/shared/sim/economy/statPath";
 import { slotAcquisition, slotRefund } from "@ggd/shared/sim/economy/shop";
 import type { ChampionId, EntityId } from "@ggd/shared/ids";
@@ -493,7 +496,21 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         // Written as an EXPLICIT positive list, not `kind !== "normal"`: a mob
         // kind added later must OPT IN to being elite, rather than inheriting a
         // health bar (and, one day, a 分紅結算) nobody designed for it.
-        es.flags = mob.kind === "special" || mob.kind === "boss" ? ENTITY_FLAG.MOB_ELITE : 0;
+        //
+        // ⭐ [EX∅ 根源]：小怪也要帶 `CARRIED` / `TEAM_OVERRIDE*`。這一行分成兩處
+        // （這裡與下面的冠軍分支）是**必要的**，不是重複：mob 分支在下面
+        // `continue`，所以冠軍那一段的組裝碰不到殭屍。
+        //
+        // ⚠️ 少了這裡那一半，「捕獲一隻殭屍王」在伺服器上完全正確、全套測試全綠，
+        // 而**玩家螢幕上那隻王從頭到尾還是敵方顏色** —— 失敗形態②，而且是這一批
+        // 唯一一個「遊戲邏輯全對、畫面全錯」的缺口。
+        //
+        // ⚠️ 沒有覆寫時**顯式寫回 0**（下面那個 `|` 的左運算元就是 0 起頭）：
+        // `EntityState` 物件是**重用**的，上一格留下的 bit 不會自己消失。
+        es.flags =
+          (mob.kind === "special" || mob.kind === "boss" ? ENTITY_FLAG.MOB_ELITE : 0) |
+          (isCarried(world, id) ? ENTITY_FLAG.CARRIED : 0) |
+          teamOverrideFlagsFor(mindControlTeamOf(world, id));
         continue;
       }
       const team = world.team.get(id);
@@ -600,6 +617,11 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
       // guardian / mob branches above all `continue` before reaching here, and
       // none of them has a `world.champion` entry to transform.
       flags |= formFlagsForIndex(championFormIndex(world, id));
+      // ⭐ [EX∅ 根源] —— 冠軍分支的那一半（mob 分支在上面已經 `continue`）。
+      // ⚠️ 缺席時 `teamOverrideFlagsFor(null)` 回 **0**，也就是顯式寫回 0：
+      // `flags` 是每一格重新算出來的區域變數，所以這裡不會殘留上一格的 bit。
+      if (isCarried(world, id)) flags |= ENTITY_FLAG.CARRIED;
+      flags |= teamOverrideFlagsFor(mindControlTeamOf(world, id));
       es.flags = flags;
     }
   }

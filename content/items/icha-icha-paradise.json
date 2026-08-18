@@ -1,0 +1,52 @@
+{
+  "schema": "item@1",
+  "cost": 0,
+  "tier": 5,
+  "craftRole": "none",
+  "id": "icha-icha-paradise",
+  "name": "親熱天堂",
+  "icon": "assets/icons/items/icha-icha-paradise.webp",
+  "description": "道具\n效能\n[爸爸專屬] 每次施放技能後，立刻回復 100%魔力\n[爸爸專屬] 同時對命中的敵人附加[魅惑]：1 秒內無法控制地朝你走來\n\n解說\n沒有人知道他在看什麼，只知道看完的人都會不由自主地走過去。",
+  "tags": [
+    "legendary",
+    "ex-origin",
+    "mana",
+    "cc"
+  ],
+  "passive": [
+    {
+      "key": "icha-mana",
+      "on": "onAbilityCast",
+      "target": "self",
+      "effects": [
+        {
+          "kind": "restore",
+          "applyTo": "self",
+          "manaPct": 1
+        }
+      ]
+    },
+    {
+      "key": "icha-charm",
+      "on": "onAbilityHit",
+      "victim": "champion",
+      "target": "event",
+      "internalCooldown": 1,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "charmed",
+          "duration": 1
+        },
+        {
+          "kind": "knockback",
+          "distance": 6,
+          "speed": 6,
+          "from": "pull",
+          "uncontrollable": true
+        }
+      ]
+    }
+  ],
+  "authoringNote": "⭐【魅惑】＝ `knockback{from:\"pull\", uncontrollable:true}` ＋ 一份 `charmed` 狀態，⛔ 不是一個新的控制種類：`from:\"pull\"` 把目標**朝施法者**拉，`uncontrollable` 讓他在位移期間交不出操作 —— owner 原文『無法控制的向你走來』逐字就是這兩格。\n⚠️ **與原文的差異**：原文是『施展技能時』附加魅惑，這裡掛在 `onAbilityHit`（技能**命中**時）—— `onAbilityCast` 沒有目標，一個沒有人被魅惑的魅惑是卡面上的空話（第一·五守則）。魔力回滿那一半仍然掛在 `onAbilityCast`，所以『魔力永遠維持 100%』對空放的技能也成立。"
+}

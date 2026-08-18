@@ -80,6 +80,7 @@ import {
   type AttrGrant,
 } from "../stats/attributes";
 import { syncItemSetSources } from "./itemSets";
+import { installMarksForItem, removeMarksForItem } from "../markInstall";
 
 /**
  * THE source id for an item sitting in a slot. Both halves matter: the ITEM so
@@ -198,6 +199,15 @@ export function attachItemSource(
   def: ItemDef,
 ): void {
   attachSource(world, holder, itemModifierSource(world, holder, itemId, slot, def));
+  // ⭐ 具名標記（GH#354，2026-08-18）—— 「擋下致命傷害並回復到 100% 生命」
+  // 這一族卡片的**唯一**正解。它裝在這裡而不是 shop.ts，理由與下面那行套裝
+  // 逐字相同：equip 有五個站點（買 / 賣的復原 / 三選一免費發 / 商店預覽 /
+  // 編輯器沙盒），而漏掉的那一個永遠是三選一 —— 一個只在抽卡拿到時才壞的寶具。
+  //
+  // ⛔ 這裡**不是**第二條安裝路：走的是 `sim/marks.ts` 的同一個 `installMark`，
+  // 與 `ability@1.marks` 共用整套（層數 / 回合重置 / 免死攔截 / `markChanged`
+  // 過網通道）。⚠️ 重複政策也跟著 `installMarksForChampion` 一樣是**先到先贏**。
+  installMarksForItem(world, holder, def);
   // 套裝 (sim/economy/itemSets.ts). Here — not in shop.ts — because the set is a
   // property of the WHOLE inventory, so it has to be re-checked on every equip,
   // and there are five equip sites across two packages. The one that would have
@@ -224,6 +234,10 @@ export function detachItemSource(
   slot: number,
 ): boolean {
   const removed = detachSource(world, holder, itemSourceId(itemId, slot));
+  // ⭐ 標記跟著走。少了這一行，賣掉 GANTZ 裝之後那三層免死**還留在身上**
+  // （`world.marks` 不認得誰授予它），而 HUD 上照樣畫著計數器 —— 一個
+  // 「賣掉還留著」的缺陷，形狀與套裝那一條逐字相同。
+  removeMarksForItem(world, holder, itemId);
   syncItemSetSources(world, holder);
   return removed;
 }

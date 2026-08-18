@@ -189,6 +189,8 @@ describe("格擋 / 暴擊的授權格 —— 四種來源同一條路", () => {
         flight: { hoverHeight: 1.2, ignoreUnits: true },
         // ⭐ 2026-08-12：穿透是第六格（LoL 四段的段③④）。同上，這一行就是維護點。
         penetration: { scope: "basic", armorPct: 1 },
+        // ⭐ 2026-08-18 (GH#355)：型別連擊免疫是第七格（史萊姆裝）。同上。
+        typeStreakImmunity: { damageTypes: ["physical"], threshold: 2 },
       }),
     ).sort();
     expect(forwarded).toEqual(Object.keys(SOURCE_GRANT_SHAPE).sort());

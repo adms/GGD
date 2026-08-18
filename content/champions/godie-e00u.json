@@ -54,6 +54,7 @@
     "Q": {
       "id": "godie-e00u.q",
       "name": "none",
+      "icon": "assets/icons/abilities/godie-e00u.q.webp",
       "slot": "Q",
       "castType": "targeted",
       "maxRank": 5,
@@ -101,6 +102,7 @@
     "W": {
       "id": "godie-e00u.w",
       "name": "none",
+      "icon": "assets/icons/abilities/godie-e00u.w.webp",
       "slot": "W",
       "castType": "targeted",
       "maxRank": 5,
@@ -148,6 +150,7 @@
     "E": {
       "id": "godie-e00u.e",
       "name": "none",
+      "icon": "assets/icons/abilities/godie-e00u.e.webp",
       "slot": "E",
       "castType": "targeted",
       "maxRank": 5,
@@ -195,6 +198,7 @@
     "R": {
       "id": "godie-e00u.r",
       "name": "none",
+      "icon": "assets/icons/abilities/godie-e00u.r.webp",
       "slot": "R",
       "castType": "targeted",
       "maxRank": 3,

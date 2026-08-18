@@ -188,6 +188,43 @@ export interface AuraDef {
    * tail). Default 0 = it drops on the tick it leaves. See DECISION 6.
    */
   lingerSec?: number;
+  /**
+   * ⭐ [靈氣人數縮放] —— 這一圈的強度隨**範圍內的人數**變化（討伐叉
+   * 「周圍每有一名隊友就更強」）。省略 = 恆定強度（＝這個檔在 2026-08-18
+   * 之前的唯一行為，所以既有的每一圈逐位元不變）。See DECISION 7.
+   */
+  scaleByNearby?: AuraCountScale;
+}
+
+/**
+ * 人數 → 層數。Mirrors `zAuraCountScale` in `content/schema/effect.ts`.
+ *
+ * DECISION 7 — 人數縮放**騎在既有的 `stacks` 上，⛔ 不是第二條乘法路徑**。
+ *   `ModifierSource.stacks` 已經是 `statPipeline` 對 `Flat` / `PercentAdd` /
+ *   `PercentMult` **三種 op 一視同仁**乘進去的那一格，而 `auraSystem` PASS 2
+ *   本來就會把 stacks 的變動寫回既有來源並標 dirty。所以「走進來一個隊友」＝
+ *   同一個來源 id 的 stacks 從 1 變 2，⛔ 不是「舊的圈離開、新的圈進來」——
+ *   後者會噴一對 auraEnd/auraApply、重置每一本 hook 帳，並讓任何看 sourceId
+ *   的東西（HUD、`hookLastFired`）以為換了一件裝備。
+ *
+ *   ⚠️ 因此它與**發射源自己的 stacks**（疊層的 buff）是**相乘**的：一個 2 層的
+ *   buff 投出的圈，在 3 名隊友旁邊是 6 層。那是唯一自洽的讀法 —— 兩者都是
+ *   「同一份 payload 重複幾次」。
+ */
+export interface AuraCountScale {
+  /**
+   * **數誰**（相對於發射者）。⛔ 與 `AuraDef.affects`（這圈**打**誰）是兩個
+   * 問題：「打敵人、但強度看我方人數」是完全合法的設計。
+   */
+  count: AuraAffects;
+  /** 數人的半徑。省略 = 同這圈的半徑（＝共用同一次 `queryOverlap`，零額外成本）。 */
+  radius?: number;
+  /** 持有者算不算一個人頭。省略 = false。⛔ 與 `AuraDef.includeSelf` 不是同一件事。 */
+  includeSelf?: boolean;
+  /** 人數低於它 ⇒ 這一圈**整份不掛**（「離開範圍則失去該增幅」）。省略 = 1。 */
+  min?: number;
+  /** 層數上限（必填）—— 一個沒有上界的線性乘數是一個結束不了的回合。 */
+  max: number;
 }
 
 /** Runtime provenance stamped on a projected source (never authored). */
@@ -229,6 +266,49 @@ function affectsTarget(
   // teamless = neutral furniture; only "all" reaches it (see AuraAffects).
   if (!a || !b) return false;
   return affects === "ally" ? a.teamId === b.teamId : a.teamId !== b.teamId;
+}
+
+/**
+ * Does `candidate` count as one head for `scale`?
+ *
+ * ⚠️ 「持有者」是 `selfId`（虛擬蝗蟲群的 host），與 membership 那一段用的是
+ * **同一個** id —— 兩邊對「自己」的定義不一樣的話，一個 carrier 投出的圈會把
+ * host 同時算成「不是自己」的隊友。
+ */
+function countsAsHead(
+  world: SimWorld,
+  emitter: EntityId,
+  selfId: EntityId,
+  candidate: EntityId,
+  scale: AuraCountScale,
+): boolean {
+  if (candidate === selfId) return scale.includeSelf ?? false;
+  return affectsTarget(world, emitter, candidate, scale.count);
+}
+
+/**
+ * 人頭數，用作者自己指定的 `scaleByNearby.radius` 再查一次。
+ * ⚠️ 只有 `radius` 有寫的時候才會走到這裡 —— 省略的那條路直接沿用圈本身那一次
+ * 查詢（見 PASS 1），因為多數用法的兩個半徑是同一個。
+ */
+function countHeads(
+  world: SimWorld,
+  emitter: EntityId,
+  selfId: EntityId,
+  centre: { x: number; z: number },
+  zone: number,
+  radius: number,
+  scale: AuraCountScale,
+): number {
+  if (!(radius > 0)) return 0;
+  let n = 0;
+  for (const c of queryOverlap(world, circle(centre, radius), { zone, aliveOnly: true })) {
+    // 只有拿得住 modifier 的身體算人頭 —— 花／守衛雕像／復活圈沒有 StatsComp，
+    // 它們在 membership 那一段也是被跳過的（兩處要用同一個「誰算一個人」）。
+    if (!world.stats.has(c)) continue;
+    if (countsAsHead(world, emitter, selfId, c, scale)) n++;
+  }
+  return n;
 }
 
 /** Every aura source currently applied to `id` (HUD / tests / debugging). */
@@ -282,7 +362,7 @@ export function auraSystem(world: SimWorld): void {
       // the identical guard `recomputeStats`/`fireHooks` use.
       if (src.expiresAtTick !== undefined && src.expiresAtTick <= world.tick) continue;
 
-      const stacks = src.stacks ?? 1;
+      const baseStacks = src.stacks ?? 1;
       for (let i = 0; i < src.auras.length; i++) {
         const def = src.auras[i]!;
         const key = def.key ?? String(i);
@@ -296,6 +376,13 @@ export function auraSystem(world: SimWorld): void {
         const lingerTicks = def.lingerSec ? Math.round(def.lingerSec / world.dt) : 0;
         const sourceId = auraSourceId(emitter, src.id, key);
 
+        // ── STEP 1 —— 誰在圈裡（＋順便數人頭）────────────────────────────
+        // ⭐ 人頭與成員走**同一次** `queryOverlap`，因為多數用法的兩個半徑是
+        //   同一個。只有作者另外寫了 `scaleByNearby.radius` 才會再查一次。
+        const scale = def.scaleByNearby;
+        const shareQuery = scale !== undefined && scale.radius === undefined;
+        const members: EntityId[] = [];
+        let heads = 0;
         for (const target of queryOverlap(world, circle(t.pos, radius), {
           // PairedDuels: an aura never crosses into another duel's zone, for
           // the same reason no ability does.
@@ -306,11 +393,37 @@ export function auraSystem(world: SimWorld): void {
           // circles have no StatsComp, so they are skipped here rather than
           // being handed a source that nothing would ever read.
           if (!world.stats.has(target)) continue;
+          if (shareQuery && countsAsHead(world, emitter, selfId, target, scale)) heads++;
           if (target === selfId) {
             const self = def.includeSelf ?? def.affects !== "enemy";
             if (!self) continue;
           } else if (!affectsTarget(world, emitter, target, def.affects)) continue;
 
+          members.push(target);
+        }
+
+        // ── STEP 2 —— 人數 → 層數，或整份不掛 ───────────────────────────
+        let stacks = baseStacks;
+        if (scale) {
+          const n = shareQuery
+            ? heads
+            : countHeads(
+                world,
+                emitter,
+                selfId,
+                t.pos,
+                t.zone,
+                resolveAuraRadius(world, scale.radius!),
+                scale,
+              );
+          // 人數不足 ⇒ 這一圈**整份**不掛（連持有者自己都沒有）。這正是
+          // 「離開範圍則失去該增幅」，⛔ 不是「掛 0 層」—— 0 層的來源仍然
+          // 是一個看得到、算得到、但什麼都不做的來源。
+          if (n < (scale.min ?? 1)) continue;
+          stacks = baseStacks * Math.min(n, scale.max);
+        }
+
+        for (const target of members) {
           let bucket = wanted.get(target);
           if (!bucket) wanted.set(target, (bucket = new Map()));
           bucket.set(sourceId, { emitter, def, key, stacks, lingerTicks });

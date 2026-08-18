@@ -12,6 +12,7 @@
     "defense"
   ],
   "selectionSlot": "generic",
+  "icon": "assets/icons/augments/grail-c-11.webp",
   "hooks": [
     {
       "on": "onStatusApplied",

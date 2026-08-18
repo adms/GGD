@@ -123,6 +123,9 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
       "blind",
       "burn",
       "burnstun",
+      // ⭐ 2026-08-18 [EX∅ 根源]：親熱天堂的【魅惑】—— 一份牽引＋交不出操作的
+      //    控制狀態（機制是 `knockback{from:"pull", uncontrollable:true}`，這裡只是身分）。
+      "charmed",
       "confusion",
       "curse",
       "fang-stun",
@@ -134,6 +137,8 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
       //    施法後掛在自己身上的待命標記（下一次普攻追加一枚投影彈）。
       //    ⛔ 它自己不改任何數值：效果整個住在標記的 `onBasicAttack` 觸發器上。
       "grail-strengthened-projection",
+      // ⭐ 2026-08-18 [EX∅ 根源] 六份新身分（機制全部住在施加它的那張卡上）。
+      "grief-seed-charge",
       // A6（#278）—— 【重創】與【禁療】。禁療**不是第二個機制**：它就是三格倍率
       // 都填 0 的一份文件，所以它與重創共用 `sim/grievousWounds.ts` 的同一支
       // `woundMult`，也一樣被淨化拔得掉。
@@ -141,6 +146,7 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
       "ingredient",
       "light-wand-banked",
       "magic-break",
+      "millennium-plot-armor",
       "moon-combo",
       "nen-banked",
       "no-heal",
@@ -166,6 +172,7 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
       // 同【麻痺】,見上面那一段。
       "paralysis",
       "rage",
+      "red-comet",
       "root",
       // ⭐ 2026-08-18（#356）：`slowLabelMatchesMultiplier` 這條守衛要求
       //    `applyStatus` 的名字等於它真的做的減速，於是內容側把 20/35/50/60 這四段
@@ -189,6 +196,9 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
       //    ⛔ 用內部冷卻冒充會在攻速改變時走鐘）。⚠️ 字母序在 trial-stun **之後**
       //    （tria < trif）。
       "triforce-courage",
+      // ⭐ 2026-08-18 [EX∅ 根源]：歐爾麥特的頭髮／魂之寶石。
+      "united-states-of-smash",
+      "witch-form",
     ]);
   });
 

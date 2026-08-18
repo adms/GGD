@@ -364,6 +364,11 @@ describe("ConditionEditor — the coupled dropdowns repair each other", () => {
       "mob",
       "summon",
       "guardian",
+      // ⭐ 2026-08-18 (GH#355)：大師球要問「這隻是不是特殊殭屍／殭屍王」，
+      // 所以 `CONDITION_ENTITY_KINDS` 多了兩個成員。這條守衛的判準沒有變 ——
+      // 下拉列的必須**恰好**是 shared 那份清單，⛔ 不多也不少。
+      "mobSpecial",
+      "mobBoss",
     ]);
   });
 

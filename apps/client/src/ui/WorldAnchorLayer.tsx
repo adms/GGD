@@ -70,6 +70,16 @@ function makeChampionNode(name: string, color: string, isLocal: boolean): HTMLDi
   return el;
 }
 
+/**
+ * `EvadeSighting.label` 是一個 **token**，不是文案 —— 這張表是它唯一的翻譯點。
+ *
+ * ⚠️ 這一層的分工是 `net/*` 自己的檔頭寫的、`net/evadeSightings.test.ts` 在守的：
+ * socket callback 不擁有任何要畫在螢幕上的字。2026-08-18 接 `immune` 的時候
+ * 那串字一度被寫在 `RoomConnection` 裡（守衛只掃另一個詞，所以它是綠的）——
+ * 這張表把它搬回來。⛔ 認不得的 token 一律當成「沒有覆寫」，走預設字。
+ */
+const EVADE_LABELS: Readonly<Record<string, string>> = { immune: "免疫" };
+
 const CAST_COLOR = "#54b0f0"; // ability channel — blue
 const WINDUP_COLOR = "#f0a840"; // basic-attack wind-up — orange
 
@@ -233,6 +243,11 @@ export function WorldAnchorLayer(): React.JSX.Element {
           worldX: ev.x,
           worldZ: ev.z,
           nowMs: ev.atMs,
+          // 缺席 = `pushEvadeText` 自己的預設字。`immune` 帶著一個 **token**
+          // 走同一條管線，文案在這一側（見 EVADE_LABELS）—— net 層不擁有 UI 文案。
+          ...(ev.label !== undefined && EVADE_LABELS[ev.label] !== undefined
+            ? { label: EVADE_LABELS[ev.label] as string }
+            : {}),
         });
       }
 

@@ -160,6 +160,16 @@ interface ItemCard {
   vision?: unknown;
   flight?: unknown;
   damageTypeOverride?: unknown;
+  penetration?: unknown;
+  /** ⭐ 2026-08-18 GH#355：型別連擊免疫（史萊姆裝）。 */
+  typeStreakImmunity?: unknown;
+  /**
+   * ⭐ 2026-08-18 GH#355：具名標記（GANTZ Suit / 千年積木的免死走這一格）。
+   * ⚠️ 這一格正是上面那段警告講的形狀：兩件寶具從 `block` + `onLethalDamage`
+   * 改寫成 `marks` + `lethal` 之後，⛔ 它們的 `modifiers`/`passive`/`auras`
+   * **全都是空的** —— 偵測器沒跟著長的話會把兩件**變好了**的寶具判成空卡。
+   */
+  marks?: unknown[];
 }
 
 let itemDocs: Map<string, ItemCard>;
@@ -201,6 +211,9 @@ function paysSomething(doc: ItemCard): boolean {
     doc.vision !== undefined ||
     doc.flight !== undefined ||
     doc.damageTypeOverride !== undefined ||
+    doc.penetration !== undefined ||
+    doc.typeStreakImmunity !== undefined ||
+    (doc.marks?.length ?? 0) > 0 ||
     (doc.modifiers ?? []).some((m) => m.value > 0)
   );
 }

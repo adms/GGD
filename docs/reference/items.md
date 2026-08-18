@@ -2,10 +2,10 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_deccd4ef6170`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
-> 資料列：**127**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-07-24T11:14:58.268286Z`）
+> 產生自 contentVersion **`cv_9691e4458a22`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 資料列：**142**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-07-24T11:14:58.268286Z`）
 
-`content/items/*.json` 共 **127** 份，依 `content/items/<id>.json` 的 **`craftRole`** 標記分類（來源：source-map triggers，見 `tools/w3x-import/extract_item_roles.py`）。實際能在商店買到的只有 **38** 件最終合成武器（`craftRole:final` 且有效果）＋ **2** 項服務；三選一 draft 抽 **6** 件任務道具，傳說寶玉抽 **69** 件傳說。其餘（16 組件、0 代幣、24 無角色、4 無 payload 的 final）是配方半成品或 w3x 殘件，不會單獨出現在任何商店或抽卡。
+`content/items/*.json` 共 **142** 份，依 `content/items/<id>.json` 的 **`craftRole`** 標記分類（來源：source-map triggers，見 `tools/w3x-import/extract_item_roles.py`）。實際能在商店買到的只有 **38** 件最終合成武器（`craftRole:final` 且有效果）＋ **2** 項服務；三選一 draft 抽 **6** 件任務道具，傳說寶玉抽 **84** 件傳說。其餘（16 組件、0 代幣、24 無角色、4 無 payload 的 final）是配方半成品或 w3x 殘件，不會單獨出現在任何商店或抽卡。
 
 > 本檔的數值是 `content/` 的**原始值**，未套用 `combat-env` 全域倍率（`content/config/combat-env.json`）。遊戲內顯示的一律是乘算後的最終值，所以畫面上的冷卻／傷害／生命與這裡不會相同 —— 那是預期行為，不是資料錯誤。
 >
@@ -92,18 +92,21 @@
 | `godie-i06j` | 獸人船長十字鎬 | 任務獎勵 quest | — | T2 | ✅ | ✅ | — | onBasicAttack→applyStatus |
 | `godie-i06n` | 老衲的棒子 | 任務獎勵 quest | — | T2 | ✅ | ✅ | — | onBasicAttack→applyStatus |
 
-## 4. 寶具池 weapon pools（三階）（69）
+## 4. 寶具池 weapon pools（三階）（84）
 
 三張表等權重抽取（`legendary-weapons` · `ex-release-weapons` · `ex-origin-weapons`）。買不到，只能從寶具三選一或 2400g 傳說寶玉取得。⭐ 一件寶具**只屬於一個池**。
 
 | id | 名稱 | craftRole | 價格 | tier | 傳說池 | 開放 | 屬性 modifiers | 被動 passive |
 |---|---|---|---|---|---|---|---|---|
+| `all-might-hair` | 歐爾麥特的頭髮 | 無角色 none | — | T5 | ✅ | — | — | onAllyDeath→applyBuff |
+| `bezoar-of-the-apothecary` | 藥師少女的牛黃 | 無角色 none | — | T5 | ✅ | — | — | onStatusApplied→dispel/restore/applyBuff |
 | `book-of-gospel` | 福音書 | 無角色 none | — | T5 | ✅ | ✅ | — | onAbilityCast→applyBuff/modifyCooldown/applyBuff/applyBuff · onAbilityCast→applyBuff/modifyCooldown/applyBuff/applyBuff · onAbilityCast→applyBuff/modifyCooldown/applyBuff/applyBuff |
 | `bulwark-charge-greaves` | 近擊的巨人鎧 | 無角色 none | — | T5 | ✅ | ✅ | 護甲 +100 · 回血 +12 | onAbilityCast→dash |
 | `cleaver-of-the-warden` | 泰坦九頭蛇 | 無角色 none | — | T5 | ✅ | ✅ | 生命 +10% | onBasicAttack→damage/damageLine |
 | `collar-of-the-deadly-soul` | 致命魂之首輪 | 無角色 none | — | T5 | ✅ | ✅ | — | onKill→applyBuff |
 | `endless-edge` | 無盡連刃 | 無角色 none | — | T5 | ✅ | ✅ | 攻速上限解鎖至 10 | onBasicAttack→applyBuff |
 | `fingerless-gloves` | 指貫手套 | 無角色 none | — | T5 | ✅ | ✅ | 攻擊力 +20% | onInterval→applyBuff/applyBuff/applyBuff/applyBuff/applyBuff/applyBuff/applyBuff/applyBuff/applyBuff/applyBuff |
+| `gantz-suit` | GANTZ Suit | 無角色 none | — | T5 | ✅ | — | — | — |
 | `godie-i000` | 丈八蛇矛 | 無角色 none | — | T3 | ✅ | ✅ | 攻擊力 +87 · 生命 +872 | onBasicAttack→damageArea |
 | `godie-i004` | 至尊魔戒 | 任務獎勵 quest | — | T1 | ✅ | ✅ | 魔力 +1000 · 技能吸血 +0.2 | — |
 | `godie-i006` | 雅典娜的驚嘆號 | 最終合成 final | — | T2 | ✅ | ✅ | 法強 +33% · 回魔 +13 · 法強 +333 | onBasicAttack→damage |
@@ -151,20 +154,32 @@
 | `godie-i06o` | 血染八月 | 無角色 none | — | T2 | ✅ | ✅ | 攻擊力 +88 | onBasicAttack→dot · onBasicAttack→applyStatus |
 | `godie-i06q` | 鍊金術之盾 | 無角色 none | — | T1 | ✅ | ✅ | — | onInterval→taunt · onDamageTaken→damage/grantGold |
 | `gravity-sword-black-rod` | 重力劍〈黑棒〉 | 無角色 none | — | T5 | ✅ | ✅ | — | onInterval→applyBuff · onBasicAttack→applyBuff · onBasicAttack→applyStatus |
+| `grief-seed` | 悲嘆之種 | 無角色 none | — | T5 | ✅ | — | — | onStatusApplied→applyStatus · onStatusApplied→applyStatus/dispel/restore/modifyCooldown/modifyCooldown/modifyCooldown/modifyCooldown/modifyCooldown |
+| `icha-icha-paradise` | 親熱天堂 | 無角色 none | — | T5 | ✅ | — | — | onAbilityCast→restore · onAbilityHit→applyStatus/knockback |
 | `lance-kongotetsu` | 神槍・金剛徹 | 無角色 none | — | T5 | ✅ | ✅ | 射程 +1 | onBasicAttack→applyBuff · onBasicAttack→applyBuff |
 | `magic-armor-type-zero` | 魔導鎧・零式 | 無角色 none | — | T5 | ✅ | ✅ | — | onAbilityCast→applyBuff · onAbilityCast→applyBuff |
+| `master-ball` | 大師球 | 無角色 none | — | T5 | ✅ | — | — | onDamageDealt→convertTeam/applyBuff/restore |
 | `meat-cleaver` | 肉切菜刀 | 無角色 none | — | T5 | ✅ | ✅ | — | onInterval→applyBuff · onBasicAttack→applyBuff · onBasicAttack→damageArea |
 | `meteor-ring` | 流星之戒 | 無角色 none | — | T5 | ✅ | ✅ | — | onUltimateCast→applyBuff/modifyCooldown/applyBuff/applyBuff/applyBuff · onAbilityCast→applyBuff/restore/modifyCooldown/applyBuff · onAbilityCast→applyBuff/restore/modifyCooldown/applyBuff · onAbilityCast→applyBuff/restore/modifyCooldown/applyBuff |
+| `millennium-puzzle` | 千年積木 | 無角色 none | — | T5 | ✅ | — | — | — |
 | `mystery-scrap-of-paper` | 謎之紙片 | 無角色 none | — | T5 | ✅ | ✅ | 單發傷害上限 +0.2 | onDamageTaken→applyBuff |
+| `nezuko-box` | 禰豆子的木箱 | 無角色 none | — | T5 | ✅ | — | — | onInterval→carry |
 | `odm-gear` | 立體機動裝置 | 無角色 none | — | T5 | ✅ | ✅ | 移速上限解鎖 +33.33% · 移速 +50% | onDashOrBlink→applyBuff |
 | `pale-moon-requiem-crown` | 蒼月葬送・千年彼方花冠 | 無角色 none | — | T5 | ✅ | ✅ | — | onOverheal→applyBuff/shield · onOverheal→applyBuff/shield |
+| `red-comet-mask` | 赤色面具 | 無角色 none | — | T5 | ✅ | — | — | onAllyDeath→applyBuff |
+| `sasumata` | 討伐叉 | 無角色 none | — | T5 | ✅ | — | — | — |
+| `scouter` | 戰鬥力探測器 | 無角色 none | — | T5 | ✅ | — | — | onDamageTaken→taunt |
+| `senzu-bean` | 仙豆 | 無角色 none | — | T5 | ✅ | — | — | onDamageTaken→restore/dispel/applyBuff · onAllyDamaged→restore/dispel/applyBuff |
 | `shining-golden-orbs` | 閃耀金玉 | 無角色 none | — | T5 | ✅ | ✅ | — | onStatCapReached→applyBuff/applyBuff |
+| `slime-suit` | 史萊姆裝 | 無角色 none | — | T5 | ✅ | — | — | — |
 | `soul-eater` | 噬魂者 | 無角色 none | — | T5 | ✅ | ✅ | — | onKill→restore · onKill→applyBuff · onKill→applyBuff |
+| `soul-gem` | 魂之寶石 | 無角色 none | — | T5 | ✅ | — | — | onDeath→applyBuff/delayed/delayed · onKill→applyBuff/restore |
 | `spear-of-lightning` | 雷槍 | 無角色 none | — | T5 | ✅ | ✅ | — | onInterval→applyBuff · onBasicAttack→damageArea · onAbilityHit→damageArea |
 | `staff-of-ainz-ooal-gown` | 安茲・烏爾・恭之杖 | 無角色 none | — | T5 | ✅ | ✅ | — | onAbilityCast→applyBuff · onAbilityCast→applyBuff · onAbilityCast→applyBuff · onAbilityCast→applyBuff · onAbilityCast→applyBuff · onAbilityCast→applyBuff · onBasicAttack→applyBuff · onAbilityCast→applyBuff |
 | `stone-mask` | 石鬼面 | 無角色 none | — | T5 | ✅ | ✅ | — | onDamageTaken→applyBuff · onDamageTaken→applyBuff · onDamageTaken→applyBuff · onDamageTaken→applyBuff · onDamageTaken→applyBuff · onDamageTaken→applyBuff |
 | `teardrop-of-rebirth` | 再誕之淚珠 | 無角色 none | — | T5 | ✅ | ✅ | — | onDeath→applyBuff/delayed |
 | `torch-master` | 火把師父 | 無角色 none | — | T5 | ✅ | ✅ | — | onBasicAttack→applyBuff · onAbilityHit→applyBuff |
+| `touyako` | 洞爺湖 | 無角色 none | — | T5 | ✅ | — | — | onCrowdControlReceived→dispel · onCrowdControlReceived→damage/applyStatus |
 | `ultimate-mod-shiranui` | 終極魔改・不知火 | 無角色 none | — | T5 | ✅ | ✅ | 攻擊力 +50% · 攻速 +50% · 暴擊傷害 +50% · 攻速上限解鎖至 10 | onBasicAttack→applyStatus/applyBuff/applyStatus/applyStatus/dot/applyStatus/applyStatus/applyStatus/applyStatus/applyStatus/applyBuff/applyStatus/applyStatus/applyBuff/applyStatus/applyStatus/applyStatus/applyStatus · onStatCapReached→applyBuff |
 | `usagizuki-twin-crescents` | 兎月【雙弦月】 | 無角色 none | — | T5 | ✅ | ✅ | — | onBasicAttack→applyBuff · onBasicAttack→applyBuff · onBasicAttack→applyBuff · onBasicAttack→applyBuff · onBasicAttack→applyBuff |
 

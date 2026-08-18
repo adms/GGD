@@ -25,6 +25,8 @@ import { berserkCastBlock, berserkCooldownFactor } from "./berserkRules";
 import { armRecovery } from "./abilityRecovery";
 import { enterToggle, exitToggle, isToggleOn } from "./toggle";
 import { breakStealth, canSee } from "../stealth";
+// [反向嘲諷] 的「中立那一格」—— `bodiesInCircle` 用它認殭屍。
+import { MONSTER_TEAM } from "../mobs";
 import {
   armFacingLock,
   facingTicks,
@@ -82,6 +84,56 @@ export function enemiesInCircle(
     // must not have to redeploy for.
     if (world.stealthRules.blocksAbilityAoe && !canSee(world, caster, h)) return false;
     return true;
+  });
+}
+
+/** 見 {@link bodiesInCircle}。 */
+export interface CircleSideFilter {
+  /** 這個圓**拉誰**。省略 = `"enemies"` = {@link enemiesInCircle} 逐位元不變。 */
+  side?: "allies" | "enemies";
+  /** 只在 `side: "allies"` 有意義：MONSTER 陣營的身體（殭屍）也算一個。 */
+  includeNeutrals?: boolean;
+}
+
+/**
+ * 圓內的**身體**，由 {@link CircleSideFilter} 決定要哪一側 —— [反向嘲諷]
+ * （戰鬥力探測器）需要的那一半。
+ *
+ * ⭐ `side` 不是 `"allies"` 的時候它**就是** {@link enemiesInCircle}（同一支
+ * 函式，不是一份抄本）。⛔ 這裡刻意不去改寫 `enemiesInCircle` 本身：那一支被
+ * 每一個技能 AoE 走著，而這次要加的是「另一側」，不是「改一側」——
+ * 出貨的鍊金術之盾必須逐位元不變，而讓它繼續呼叫同一支函式是唯一結構上保證
+ * 這件事的寫法（第二守則失敗形態⑤：被測的不是出貨的那個）。
+ *
+ * 友軍那一側走**同一個** `queryOverlap`（同一個 zone 閘、同一個 `exclude`、
+ * 同一個 `aliveOnly`）與同一道隱形閘。隱形閘對隊友是常數 true（`canSee` 對
+ * 同隊直接放行），留著是為了「中立那一格」—— 那一格裝的不是隊友。
+ */
+export function bodiesInCircle(
+  world: SimWorld,
+  caster: EntityId,
+  point: { x: number; z: number },
+  radius: number,
+  opts: CircleSideFilter = {},
+): EntityId[] {
+  if (opts.side !== "allies") return enemiesInCircle(world, caster, point, radius);
+  const t = world.transform.get(caster);
+  if (!t) return [];
+  const selfTeam = world.team.get(caster);
+  // 沒有 TeamComp 的施法者沒有「友軍」可言。⛔ 不可以退回「全部都算」——
+  // 那會讓一發反向嘲諷把整個圓（含敵人）都拉走。
+  if (!selfTeam) return [];
+  const hits = queryOverlap(world, circle(point, radius), {
+    zone: t.zone,
+    exclude: new Set([caster]),
+    aliveOnly: true,
+  });
+  return hits.filter((h) => {
+    const ht = world.team.get(h);
+    if (!ht) return false;
+    if (world.stealthRules.blocksAbilityAoe && !canSee(world, caster, h)) return false;
+    if (ht.teamId === selfTeam.teamId) return true;
+    return opts.includeNeutrals === true && ht.teamId === MONSTER_TEAM;
   });
 }
 

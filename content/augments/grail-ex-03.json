@@ -12,6 +12,7 @@
     "clutch"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-ex-03.webp",
   "hooks": [
     {
       "on": "onKill",

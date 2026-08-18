@@ -12,6 +12,7 @@
     "shield"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-a-16.webp",
   "hooks": [
     {
       "on": "onAbilityCast",

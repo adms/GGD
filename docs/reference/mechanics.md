@@ -8,18 +8,20 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_deccd4ef6170`
+contentVersion `cv_9691e4458a22`
 
 ---
 
-## 效果（effect kind） —— 37 種
+## 效果（effect kind） —— 39 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
 | `applyBuff` | 增益／減益（改屬性） | 113 | `godie-e001.passive`、`godie-e001.q`、`godie-e001.r`、`godie-e002.r`、`godie-e008.w`、`godie-e00k.ex`、`godie-e00k.r`、`godie-e00l.ex`、`godie-e00n.ex`、`godie-e00n.passive`、`godie-e00n.q`、`godie-e00n.r` …（共 113） |
 | `applyStatus` | 掛狀態 | 97 | `godie-e001.e`、`godie-e001.passive`、`godie-e007.ex`、`godie-e007.q`、`godie-e008.e`、`godie-e008.q`、`godie-e00k.passive`、`godie-e00n.e`、`godie-e00n.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00s.e` …（共 97） |
 | `blink` | 瞬移 | 2 | `godie-efur.q`、`grail-a-14` |
+| `carry` | 背負（帶著隊友移動 + 不可被選取） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `championForm` | 變身／切換形態 | 24 | `godie-e001.r`、`godie-e002.w`、`godie-e00k.ex`、`godie-e00l.w`、`godie-e00s.passive`、`godie-e00w.e`、`godie-e010.passive`、`godie-h01n.r`、`godie-h02v.q`、`godie-hgam.ex`、`godie-hjai.ex`、`godie-n003.ex` …（共 24） |
+| `convertTeam` | 陣營轉換（把一個既有單位借到自己這一隊） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `cycleBuff` | 輪替增益 | 1 | `godie-efur.passive` |
 | `damage` | 傷害 | 178 | `godie-e001.e`、`godie-e001.passive`、`godie-e002.ex`、`godie-e002.r`、`godie-e002.w`、`godie-e007.e`、`godie-e007.ex`、`godie-e007.q`、`godie-e007.r`、`godie-e008.e`、`godie-e008.q`、`godie-e00k.e` …（共 178） |
 | `damageArea` | 範圍傷害 | 28 | `godie-e002.w`、`godie-e00s.e`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00s.w`、`godie-e00w.ex`、`godie-e00w.q`、`godie-e00w.r`、`godie-e00w.w`、`godie-edem.ex`、`godie-edem.q`、`godie-edem.r` …（共 28） |
@@ -102,7 +104,7 @@ contentVersion `cv_deccd4ef6170`
 | `stat` | 屬性門檻（血量低於 X%…） | 7 | `godie-e002.w`、`godie-e00l.w`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-h00l.ex`、`godie-h02v.w`、`grail-ex-13` |
 | `status` | 身上有某狀態時 | 20 | `godie-edem.r`、`godie-efur.ex`、`godie-emns.e`、`godie-emns.r`、`godie-ewar.e`、`godie-h00l.e`、`godie-h01n.e`、`godie-h01n.w`、`godie-h01u.e`、`godie-h02k.ex`、`godie-h02k.passive`、`godie-h02k.q` …（共 20） |
 
-## 狀態標籤 —— 90 個
+## 狀態標籤 —— 98 個
 
 開放詞彙（自由字串）。條件葉 `status` 的**類別分支**查的就是它。
 
@@ -120,34 +122,38 @@ contentVersion `cv_deccd4ef6170`
 | `banked` | `light-wand-banked`、`nen-banked` |
 | `berserk` | `berserk` |
 | `blind` | `blind` |
-| `buff` | `bankai`、`berserk`、`grail-strengthened-projection`、`light-wand-banked`、`moon-combo`、`nen-banked`、`omnislash-perform`、`rage`、`triforce-courage` |
+| `buff` | `bankai`、`berserk`、`grail-strengthened-projection`、`grief-seed-charge`、`light-wand-banked`、`millennium-plot-armor`、`moon-combo`、`nen-banked`、`omnislash-perform`、`rage`、`red-comet`、`triforce-courage`、`united-states-of-smash`、`witch-form` |
 | `burn` | `burn` |
 | `burnstun` | `burnstun` |
 | `cast-denied` | `burnstun`、`fang-stun`、`ingredient`、`omnislash-lock`、`omnislash-perform`、`stun`、`trial-stun` |
-| `cc` | `blind`、`burnstun`、`confusion`、`curse`、`fang-stun`、`fear`、`ingredient`、`numbness`、`omnislash-lock`、`paralysis`、`root`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60`、`stun`、`trial-stun` |
+| `cc` | `blind`、`burnstun`、`charmed`、`confusion`、`curse`、`fang-stun`、`fear`、`ingredient`、`numbness`、`omnislash-lock`、`paralysis`、`root`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60`、`stun`、`trial-stun` |
 | `channel` | `omnislash-perform` |
+| `charmed` | `charmed` |
 | `combo` | `moon-combo` |
 | `confusion` | `confusion` |
-| `counter` | `triforce-courage` |
+| `counter` | `grief-seed-charge`、`triforce-courage` |
 | `curse` | `curse` |
 | `damage-bank` | `light-wand-banked`、`nen-banked` |
-| `debuff` | `armor-break`、`blind`、`burn`、`burnstun`、`confusion`、`curse`、`fang-stun`、`fear`、`grievous-wounds`、`ingredient`、`magic-break`、`no-heal`、`numbness`、`omnislash-lock`、`paralysis`、`root`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60`、`stun`、`trial-stun` |
+| `debuff` | `armor-break`、`blind`、`burn`、`burnstun`、`charmed`、`confusion`、`curse`、`fang-stun`、`fear`、`grievous-wounds`、`ingredient`、`magic-break`、`no-heal`、`numbness`、`omnislash-lock`、`paralysis`、`root`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60`、`stun`、`trial-stun` |
 | `disable` | `burnstun`、`fang-stun`、`fear`、`ingredient`、`numbness`、`omnislash-lock`、`omnislash-perform`、`paralysis`、`root`、`stun`、`trial-stun` |
 | `dot` | `burn` |
 | `elemental` | `burn` |
+| `empowered` | `millennium-plot-armor` |
+| `empowered-next` | `united-states-of-smash` |
 | `fang-stun` | `fang-stun` |
 | `fear` | `fear` |
 | `fire` | `burn`、`burnstun` |
 | `flee` | `fear` |
-| `form` | `bankai` |
+| `form` | `bankai`、`witch-form` |
 | `frenzy` | `rage` |
 | `friendly-fire` | `confusion` |
 | `generic` | `stun` |
 | `grail-strengthened-projection` | `grail-strengthened-projection` |
 | `grail-wish` | `grail-strengthened-projection` |
+| `grief-seed-charge` | `grief-seed-charge` |
 | `grievous-wounds` | `grievous-wounds` |
 | `hard-cc` | `burnstun`、`fang-stun`、`ingredient`、`omnislash-lock`、`stun`、`trial-stun` |
-| `haste` | `rage` |
+| `haste` | `rage`、`red-comet` |
 | `heal-block` | `no-heal` |
 | `heal-down` | `grievous-wounds`、`no-heal` |
 | `immobilize` | `root` |
@@ -161,9 +167,10 @@ contentVersion `cv_deccd4ef6170`
 | `mana-banked` | `light-wand-banked`、`nen-banked` |
 | `marker` | `burn` |
 | `mechanism-on-card` | `bankai`、`numbness`、`paralysis`、`triforce-courage` |
+| `millennium-plot-armor` | `millennium-plot-armor` |
 | `miss` | `blind`、`curse` |
 | `moon-combo` | `moon-combo` |
-| `move-denied` | `burnstun`、`fang-stun`、`ingredient`、`omnislash-lock`、`omnislash-perform`、`root`、`stun`、`trial-stun` |
+| `move-denied` | `burnstun`、`charmed`、`fang-stun`、`ingredient`、`omnislash-lock`、`omnislash-perform`、`root`、`stun`、`trial-stun` |
 | `move-speed-down` | `slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60` |
 | `named-variant` | `burnstun`、`fang-stun`、`ingredient`、`omnislash-lock`、`omnislash-perform`、`trial-stun` |
 | `nen-banked` | `nen-banked` |
@@ -176,6 +183,7 @@ contentVersion `cv_deccd4ef6170`
 | `physical` | `armor-break` |
 | `projectile` | `grail-strengthened-projection` |
 | `rage` | `rage` |
+| `red-comet` | `red-comet` |
 | `regen-down` | `grievous-wounds`、`no-heal` |
 | `resist-down` | `armor-break`、`magic-break` |
 | `root` | `root` |
@@ -193,10 +201,12 @@ contentVersion `cv_deccd4ef6170`
 | `stat-down` | `armor-break`、`magic-break`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60` |
 | `stat-up` | `rage` |
 | `stun` | `burnstun`、`fang-stun`、`ingredient`、`omnislash-lock`、`omnislash-perform`、`stun`、`trial-stun` |
-| `timed-window` | `moon-combo` |
+| `timed-window` | `moon-combo`、`witch-form` |
 | `trial-stun` | `trial-stun` |
 | `triforce-courage` | `triforce-courage` |
 | `uncontrollable` | `berserk`、`confusion`、`fear` |
+| `united-states-of-smash` | `united-states-of-smash` |
+| `witch-form` | `witch-form` |
 | `wound` | `grievous-wounds`、`no-heal` |
 
 ## 特效（vfx）—— 632 份

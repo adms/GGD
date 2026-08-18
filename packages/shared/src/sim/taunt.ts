@@ -243,7 +243,19 @@ export const TAUNT_CAP_ORDERS: readonly TauntCapOrder[] = ["nearest", "lowestHp"
  * tick，不是遞減計數器）。
  */
 export interface TauntState {
-  /** 嘲弄我的那個人 */
+  /**
+   * ⚠️ **「我被迫打的那個人」**，⛔ 不是「對我放這一發的那個人」。
+   *
+   * 這兩句話在 [反向嘲諷]（戰鬥力探測器，`effects/taunt.ts` 的 `forcedTarget`）
+   * 落地之前是同一個人，所以這個欄位原本寫著「嘲弄我的那個人」。現在一發
+   * `forcedTarget: "target"` 會把**別人**寫進來：戰鬥力探測器的持有者拉自己的
+   * 隊友去打那名攻擊者，那一筆紀錄的 `by` 是**攻擊者**，而施法者是道具持有者。
+   *
+   * ⛔ **欄位名不改。** `by` 是全 sim 對「forced target」的那一個答案
+   * （`tauntedBy` → `forcedTargetOf` → 三個消費端），而它已經被 1,284 行既有
+   * 守衛釘著；改名會是一個純粹的措辭改動散落到十幾個檔（第零守則⑨的反面）。
+   * 這一段就是那個名字的說明書。
+   */
   by: EntityId;
   /** 這一 tick（含）之後就過期了 */
   untilTick: number;
@@ -299,6 +311,10 @@ function ticksOf(world: SimWorld, sec: number): number {
 
 /**
  * 掛一發嘲弄：`victim` 在接下來 `durationSec` 秒內優先攻擊 `taunter`。
+ *
+ * ⚠️ `taunter` 的意思是**「被迫要打的那個人」**，不必然是放這一發的人 ——
+ * [反向嘲諷] 會傳進第三者（見 {@link TauntState.by}）。這一支從頭到尾只讀
+ * 這三個參數，所以它對兩種方向是同一段程式，⛔ 不需要一個 if。
  *
  * 回傳 true 代表真的寫進去了。以下情況回 false（而且**不會**動到既有紀錄）：
  *   · 規則關著；

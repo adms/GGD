@@ -84,7 +84,7 @@
  * 比沒有 importer 更糟，它會**接受**錯的東西。
  */
 import { EFFECT_HANDLERS } from "../sim/effects/effectRegistry";
-import { zHookEvent, zHookDefBase, zEffectDefUnion } from "./schema/effect";
+import { zHookEvent, zHookDefBase, zEffectDefUnion, zAuraDef } from "./schema/effect";
 import { SIM_CAPABILITIES, isExpandable } from "./templates/expand";
 import { zAbilityDef } from "./schema/ability";
 import { zConditionLeaf } from "./schema/condition";
@@ -159,6 +159,18 @@ export interface CapabilityProbeInput {
    * 純度不變：讀 Zod 物件的 shape，沒有 I/O、沒有時鐘。
    */
   readonly effectFields: ReadonlySet<string>;
+  /**
+   * 靈氣定義（`zAuraDef`）的欄位名，從出貨的 Zod 物件推導。
+   *
+   * ⚠️ 為什麼上面五格都不夠：**靈氣不在 `zEffectDefUnion` 裡**。它掛在
+   * `ability@1.passive.ranks[].auras[]` 與 `item@1.auras[]` 上，所以
+   * `aura.scale-by-nearby@1`（2026-08-18 討伐叉那一格 `scaleByNearby`）
+   * 對 `effectFields` 永遠是 false —— 沒有這一格，那一列的 probe 就只能手打
+   * 一個 `() => true`，而那正是檔頭 ③ 記過兩次的撒謊形狀。
+   *
+   * 純度不變：讀 Zod 物件的 shape，沒有 I/O、沒有時鐘。
+   */
+  readonly auraFields: ReadonlySet<string>;
 }
 export type CapabilityProbe = (f: CapabilityProbeInput) => boolean;
 
@@ -898,6 +910,130 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
       "packages/shared/src/sim/effects/lane3Kinds.test.ts（「代放的是那一支技能自己的 payload，" +
       "而且鏈一定會停」）",
   },
+
+  // ── 2026-08-18 [EX∅ 根源] 五件寶具解鎖的五個機制 ──────────────────────
+  // ⭐ 五列全部 `partial`，而且五個 caveat 都寫的是**寫卡片的人一定會撞到的邊界**，
+  // ⛔ 不是複述 key。理由與這張表其餘每一列相同：一個「supported」而沒有邊界的宣告，
+  // 會讓對方做出「schema 收得下、遊戲裡什麼都不發生」的內容（第一·五守則）。
+  {
+    key: "grant.type-streak-immunity@1",
+    plan: "[EX∅ 根源] 史萊姆裝（owner 2026-08-18：「連續受到 2 次同型別傷害後免疫該型別」）",
+    expected: "partial",
+    // 它不是一個 effect kind，是**四個授權面共用的一格**（道具／天生技 rank／
+    // 增益卡／applyBuff），所以 probe 問的是 `effectFields`（applyBuff 那一支帶著
+    // `SOURCE_GRANT_SHAPE`）。⛔ 問 `effectKinds` 的話這一列永遠是 false。
+    probe: (f) => f.effectFields.has("typeStreakImmunity"),
+    caveat:
+      "⛔ 四個邊界，寫這種卡的人一定會撞到：" +
+      "① `damageTypes` **必填**且是雙向的 —— **沒被列進去的傷害型別既不累計也不打斷連擊**。" +
+      "所以「只列 physical/magic」的卡，火圈真傷（#270）照樣燒得到你，但也不會替敵人洗掉你的物理連擊；" +
+      "② **被免疫擋掉的那一發不會被記進連擊** ⇒ 連擊**凍結在門檻上**，免疫一直持續到" +
+      "來了另一種被列進 `damageTypes` 的傷害為止 —— 那是這件寶具唯一的破解方式，⛔ 不是 bug，" +
+      "但它必須印在卡片上，否則玩家不知道自己為什麼打不動；" +
+      "③ `streakTimeoutSec` **省略 = 連擊永不逾時**，而且它**跨回合殘留**" +
+      "（`sim/clearPools.ts::clearRoundScoped` 清的是 status/shields/dot/buffs 四池，⛔ 不含連擊表）。" +
+      "面對一波純物理的殭屍，省略它就是**無限免疫** —— `zInvulnerable.durationSec` 已經寫過" +
+      "「an unbounded immunity is an unwinnable round」。填任何一個值同時修掉這兩件事；" +
+      "④ `resetMode` 省略 = `restart`（異型那一發**自己算新連擊第 1 發**），" +
+      "`zero` 才是「歸零、下一發才算」。兩者只在「剛換型別的那一發」不同，一般驗證看不出差別。",
+    evidence:
+      "packages/shared/src/sim/combat/typeStreakImmunity.ts + " +
+      "packages/shared/src/sim/combat/typeStreakImmunity.test.ts" +
+      "（五發序列 physical×2 → 第三發 hp 逐位元不變並發出 `immune`，再用 magic / physical 各一發" +
+      "證明它不是「隨便發一份 invulnerable」）+ content/items/slime-suit.json",
+  },
+  {
+    key: "effect.taunt-reverse@1",
+    plan: "[EX∅ 根源] 戰鬥力探測器（『指定我方去嘲諷指定目標』）",
+    expected: "partial",
+    probe: (f) => f.effectKinds.has("taunt") && f.effectFields.has("forcedTarget"),
+    caveat:
+      "⭐ 反向 = `side:\"allies\"` + `forcedTarget:\"target\"` 兩格一起填（各自省略時逐位元等於" +
+      "2026-08-18 之前的行為，所以出貨的鍊金術之盾 `godie-i06q` 一個字都沒變）。⛔ 三個邊界：" +
+      "① `includeNeutrals` **只在 `side:\"allies\"` 有作用** —— `enemies` 那一側的圓本來就含 " +
+      "`MONSTER_TEAM`；② 「殭屍也會一起撲上去」有條件：`forcedTargetOf` 的 mob 分支要求" +
+      "嘲弄者與那隻小怪**不同隊**，而殭屍全在同一隊 ⇒ 打你的如果是殭屍，隊友會被指過去，" +
+      "**其他殭屍不會**；③ `config.taunt@1.overridesManualOrder` **出貨 false** ⇒ 一個正在" +
+      "右鍵點名的隊友**不會**被強制轉頭（bot／召喚物／沒有手動指令的人會）。" +
+      "⚠️ 掛在 `onDamageTaken` 上時 ⛔ **不可以**寫 `hook.target:\"self\"` —— `resolveAgainst` 會把" +
+      "targets 換成持有者本人，於是 `forcedTarget:\"target\"` 指的是**自己**，全隊被指去打自己人，" +
+      "而卡片上一個字都不會變（失敗形態②）。",
+    evidence:
+      "packages/shared/src/sim/effects/taunt.ts + " +
+      "packages/shared/src/sim/tauntReverseDirection.test.ts" +
+      "（⭐ 第三條斷言是 `forcedTargetOf(敵人)===null` —— 「方向真的反了」而不是「圓變寬了」；" +
+      "第二個 it 從磁碟讀出貨的 `godie-i06q` 跑同一支 handler）+ content/items/scouter.json",
+  },
+  {
+    key: "aura.scale-by-nearby@1",
+    plan: "[EX∅ 根源] 討伐叉〈さすまた〉（『靈氣強度隨範圍內有幾個隊友變化』）",
+    expected: "partial",
+    // ⚠️ 靈氣**不在** `zEffectDefUnion` 裡（掛在 ability passive rank 與 item 上），
+    // 所以這一列是 `auraFields` 存在的理由。⛔ 問 effectKinds/effectFields 永遠 false。
+    probe: (f) => f.auraFields.has("scaleByNearby"),
+    caveat:
+      "⭐ 它做的事是把數到的人頭變成那一份投影的 `stacks`，而 `stacks` 對 Flat／PercentAdd／" +
+      "PercentMult 三種 op 是**線性乘數** —— ⚠️ 所以一條 `pctMult -0.5` 配 2 層就是 ×0 把對方屬性" +
+      "歸零，`max` 因此是**必填**。⛔ 三個邊界：" +
+      "① 「一個人」的定義是**同隊 + 活著 + 有 StatsComp 的身體** ⇒ **召喚物與被復活的隊友算人頭**，" +
+      "殭屍與中立守衛不算，倒地的隊友不算。引擎今天**沒有**「只數英雄」這根軸；" +
+      "② 人數 < `min`（省略 = 1）⇒ **這一圈整份不掛**（連持有者自己都沒有），⛔ 不是「掛 0 層」；" +
+      "③ 人數縮放與**發射源自己的 stacks 相乘**（2 層 buff 投出的圈在 3 名隊友旁邊是 6 層）。" +
+      "⚠️ `.radius` 省略時與這圈共用同一次 `queryOverlap`（零成本）；填了會多查一次，" +
+      "而**今天沒有任何出貨內容在用那條路徑**。",
+    evidence:
+      "packages/shared/src/sim/aura/aura.ts（auraSystem PASS 1 的兩步）+ " +
+      "packages/shared/src/sim/aura/aura.test.ts（0 名 → 整份不掛／1 名 → stacks 1／" +
+      "2 名 → stacks 2 **且屬性差正好是兩倍**／走出去掉回 1 **而來源 id 不變**）+ " +
+      "content/items/sasumata.json",
+  },
+  {
+    key: "effect.carry@1",
+    plan: "[EX∅ 根源] 禰豆子的木箱（『背負／附著移動 + 不可選取』）",
+    expected: "partial",
+    probe: (f) => f.effectKinds.has("carry") && f.effectFields.has("untargetable"),
+    caveat:
+      "⛔ 五個邊界：" +
+      "① `untargetable` 的四根軸逐字沿用 `sim/stealth.ts::StealthRules`，而 **`abilityAoe` 今天" +
+      "沒有消費者** —— 填 `true` 的文件在引擎裡是空的（謂詞已匯出，閘點 `enemiesInCircle` 差一行）。" +
+      "出貨的木箱填 `false`（＝今天的行為）所以卡片沒有說謊；" +
+      "② `shape:\"circle\"` **一定要有 `radius`**（`radiusTier` 是註冊時才翻譯的，載入時的 refine 讀不到它）；" +
+      "③ `side:\"allies\"` 的圓**含持有者自己而且他離圓心距離 0** ⇒ 拒載條件必須排在切 `maxTargets` " +
+      "**之前**，否則那一刀每次都正好切下持有者本人，結果是一個人都收不進來（實測踩過）；" +
+      "④ `onCarrierDeath:\"drop\"` 的引擎語意是「乘客**留在倒下的箱子裡**（位置凍住、仍不可選取）" +
+      "直到 `durationSec` 走完」—— 引擎沒有「被擊倒」這個機制，也不能讓一件道具憑空造傷害；" +
+      "⑤ **沒有任何東西在回合邊界清 `world.carried`**，它靠絕對 tick 到期自癒（上界 30 秒）。" +
+      "⚠️ `ENTITY_FLAG.CARRIED` 已經過網，但**客戶端今天沒有為它畫任何東西** ⇒ 螢幕上看不出" +
+      "那個人不能被選取。",
+    evidence:
+      "packages/shared/src/sim/carry.ts + sim/systems/CarrySystem.ts + sim/effects/carry.ts + " +
+      "packages/shared/src/sim/carry.test.ts（①同一 tick 內乘客座標 == 載具座標 ②敵人的 " +
+      "`acquireTarget` 在乘客「應該勝出」的夾具下仍回載具 ③到期後不再跟）+ content/items/nezuko-box.json",
+  },
+  {
+    key: "effect.convert-team@1",
+    plan: "[EX∅ 根源] 大師球（『陣營轉換 —— 把一個既有單位改成友軍』）",
+    expected: "partial",
+    probe: (f) => f.effectKinds.has("convertTeam") && f.effectFields.has("countsForOriginalTeam"),
+    caveat:
+      "⛔ 五個邊界：" +
+      "① **`onHitTargets` 這一格 `convertTeam` 沒有**（`carry` 才有）⇒ 掛在同一個 `effects` 陣列裡的" +
+      "回血／上鎖是**無條件**跑的，捕獲被拒絕的那一刻它們照樣發生。要「成功才給」今天寫不出來；" +
+      "② **不對稱**：被借走的殭屍**會**被其他殭屍打，但它**打不到**其他殭屍" +
+      "（`isMobTargetable` 對一隻沒被捕的普通 mob 一律回 false）。它仍然會去打敵方英雄，所以寶具是有用的；" +
+      "③ **捕獲者死掉不會歸位** —— 歸位只有三條路（被捕者死亡／`until:\"duration\"` 到期／回合開始）。" +
+      "`until` 那個 enum 沒有「載具死亡」這一格（`carry` 的 `onCarrierDeath` 才有）；" +
+      "④ `countsForOriginalTeam` **預設 `false`**（owner 2026-08-18：被捕的單位實質上就是我方單位）—— `true` 是一鍵回頭（被借走的敵方英雄在勝負" +
+      "判定上仍替原隊活著）。填 `false` 只是把原隊那一側的人頭拿掉，⛔ **不會**改算捕獲者那一隊 —— " +
+      "座位是勝負判定的軸，而借調不動座位；" +
+      "⑤ ⛔ 它**不發任何事件** —— 玩家的可見性靠 `ENTITY_FLAG.TEAM_OVERRIDE*` 三顆 bit 讓那具身體" +
+      "當場換顏色。⇒ 想掛特效的話要自己在同一份 `effects` 裡加一發 `spawnVfx`。",
+    evidence:
+      "packages/shared/src/sim/mindControl.ts + sim/effects/mindControl.ts + " +
+      "apps/game-server/src/net/mindControlWire.test.ts（⭐ 第三條斷言真的跑 `projectSnapshot` + " +
+      "Colyseus encode→decode 再把隊伍序數解回來 —— 那是「遊戲邏輯全對、螢幕全錯」的唯一防線）+ " +
+      "content/items/master-ball.json",
+  },
 ];
 
 export interface RuntimeCapabilityManifest {
@@ -920,6 +1056,11 @@ export interface RuntimeCapabilityManifest {
    * 而不是一個新 kind（`onHitTargets`），只看 `effectKinds` 會漏掉它們。
    */
   readonly effectFields: readonly string[];
+  /**
+   * 靈氣定義（`zAuraDef`）的欄位名 —— 靈氣**不在** effect union 裡，
+   * 所以「這一圈能不能隨人數變強」這種能力只有這一格看得到。
+   */
+  readonly auraFields: readonly string[];
   readonly templateFamilies: readonly string[];
   readonly simCapabilities: Readonly<Record<string, { available: boolean; caveat?: string }>>;
   readonly planned: readonly {
@@ -1094,6 +1235,20 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
   const effectFieldSet = new Set<string>();
   leafFieldsOf(zEffectDefUnion, effectFieldSet);
   const effectFields = [...effectFieldSet].sort();
+  // 靈氣不在 effect union 裡（見 `CapabilityProbeInput.auraFields`）。
+  // ⚠️ `zAuraDef` 是 `z.object(…).superRefine(…)` ⇒ ZodEffects，`.shape` 拿不到，
+  //    要先剝一層 `.innerType()`。⛔ 它只剝**一層** —— 哪天有人在 `zAuraDef` 上再加
+  //    一層 refine，這裡會回一個空集合而**不會報錯**（`schema/item.ts` 的
+  //    `zItemAuraDef` 是同一個坑，2026-08-18 已經踩過一次）。所以下面顯式檢查空集合。
+  const auraFieldSet = new Set<string>(Object.keys(zAuraDef.innerType().shape));
+  if (auraFieldSet.size === 0) {
+    throw new Error(
+      "⛔ `zAuraDef` 的欄位推導回了空集合 —— 幾乎一定是有人在它上面多包了一層 " +
+        "ZodEffects（`.innerType()` 只剝一層）。修 editorCapabilities.ts 的這一行，" +
+        "⛔ 不要讓 `auraFields` 靜靜地變成空的：那會讓每一列靈氣 capability 自動宣告「引擎沒有」。",
+    );
+  }
+  const auraFields = [...auraFieldSet].sort();
   const simCapabilities: Record<string, { available: boolean; caveat?: string }> = {};
   for (const key of Object.keys(SIM_CAPABILITIES).sort()) {
     const c = SIM_CAPABILITIES[key]!;
@@ -1115,6 +1270,7 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
     conditionLeafFields: conditionFieldSet,
     hookFields: new Set(hookFields),
     effectFields: effectFieldSet,
+    auraFields: auraFieldSet,
   };
 
   const planned = PLANNED_CAPABILITIES.map((e) => ({
@@ -1143,6 +1299,9 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
       // 同一個理由：`onHitTargets` 這種「既有 kind 多一格」的 capability 不會改動
       // 任何一個 kind 名，指紋不含它的話對方 pin 的 base 會在契約真的變了的那天不動。
       ...effectFields,
+      // 同一個理由：`scaleByNearby` 這種「靈氣多一格」的 capability 不改動任何一個
+      // kind 名，指紋不含它的話對方 pin 的 base 會在契約真的變了的那天不動。
+      ...auraFields,
       ...templateFamilies,
       ...PLANNED_CAPABILITIES.map((e) => `${e.key}=${e.expected}`),
       // 已知壞掉的清單也折進指紋：一筆進來或修好離開，對方 pin 的 base 就該換。
@@ -1154,6 +1313,7 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
     conditionLeafFields,
     hookFields,
     effectFields,
+    auraFields,
     templateFamilies,
     simCapabilities,
     planned,
@@ -1197,5 +1357,6 @@ export function probeCapability(e: CapabilityEntry): boolean {
     conditionLeafFields: new Set(m.conditionLeafFields),
     hookFields: new Set(m.hookFields),
     effectFields: new Set(m.effectFields),
+    auraFields: new Set(m.auraFields),
   });
 }

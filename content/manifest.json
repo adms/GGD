@@ -1,23 +1,23 @@
 {
-  "contentVersion": "cv_deccd4ef6170",
+  "contentVersion": "cv_9691e4458a22",
   "collections": {
     "champions": {
-      "hash": "819899091d3a",
+      "hash": "4cc9f144cf2b",
       "count": 78,
       "path": "champions/_index.json"
     },
     "abilities": {
-      "hash": "1c98aa900c7c",
+      "hash": "92d74ea6ee05",
       "count": 461,
       "path": "abilities/_index.json"
     },
     "items": {
-      "hash": "4fc647e3f0bc",
-      "count": 127,
+      "hash": "968fdff2abab",
+      "count": 142,
       "path": "items/_index.json"
     },
     "augments": {
-      "hash": "3fac6ff2c5ef",
+      "hash": "d329dfa22d67",
       "count": 91,
       "path": "augments/_index.json"
     },
@@ -27,12 +27,12 @@
       "path": "projectiles/_index.json"
     },
     "status-effects": {
-      "hash": "e9936d7778a9",
-      "count": 34,
+      "hash": "87725c810a97",
+      "count": 40,
       "path": "status-effects/_index.json"
     },
     "loot-tables": {
-      "hash": "0e120c98676e",
+      "hash": "c60acff50868",
       "count": 3,
       "path": "loot-tables/_index.json"
     },

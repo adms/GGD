@@ -1,0 +1,35 @@
+{
+  "schema": "item@1",
+  "cost": 0,
+  "tier": 5,
+  "craftRole": "none",
+  "id": "scouter",
+  "name": "戰鬥力探測器",
+  "icon": "assets/icons/items/scouter.webp",
+  "description": "道具\n效能\n[戰鬥力測定] 受到攻擊時，探測器鎖定那名攻擊者\n[戰鬥力測定] 周圍的隊友立刻優先攻擊被鎖定的那個人，持續 3 秒\n[戰鬥力測定] 被鎖定的是敵方英雄時，附近的殭屍也會一起撲上去\n[戰鬥力測定] 冷卻時間 8 秒\n\n解說\n「戰鬥力……只有五。」\n數字念出來的那一刻，全場都知道要打誰了 —— 包括不該聽見的那些。",
+  "tags": [
+    "legendary",
+    "ex-origin",
+    "taunt",
+    "reversal"
+  ],
+  "passive": [
+    {
+      "key": "scouter-scan",
+      "on": "onDamageTaken",
+      "internalCooldown": 8,
+      "effects": [
+        {
+          "kind": "taunt",
+          "durationSec": 3,
+          "radius": 12,
+          "maxTargets": 6,
+          "side": "allies",
+          "forcedTarget": "target",
+          "includeNeutrals": true
+        }
+      ]
+    }
+  ],
+  "authoringNote": "⭐【戰鬥力測定】＝ **反向嘲諷**：一發 `taunt` 的兩根軸各翻一格 —— `side: \"allies\"`（這個圓拉**隊友**，不是敵人）＋ `forcedTarget: \"target\"`（被拉的人被迫打**這個效果解析出來的目標**，不是施法者）。⛔ 引擎裡沒有一個叫「集火指令」的機制，它就是既有的嘲弄機制換兩個參數（第〇·五守則）。\n\n⚠️ 為什麼掛 `onDamageTaken` 而不是別的：那條 hook 的**事件實體是攻擊者**（`combat/damage.ts` 的 `fireHooks(world, pkt.target, \"onDamageTaken\", pkt.source)`，與鍊金術之盾 godie-i06q 的 `condition.subject: \"target\"` 同一個判例），所以 `forcedTarget: \"target\"` 拿到的正是「剛剛打我的那個人」。⛔ 這一格**刻意不寫 `target: \"self\"`** —— 那會讓 `effects/hooks.ts` 把 `resolveAgainst` 改成 `[owner]`，於是全隊被指去打**持有者自己**，而卡片上的字一個都不會變（失敗形態②）。\n\n⚠️ **與 owner 原文哪裡不一樣**：這一輪的 repo 裡找得到的 owner 原文，只有 `content/loot-tables/ex-origin-weapons.json` 那一行缺口說明 ——「戰鬥力探測器 —— 需要『指定我方去嘲諷指定目標』（今天的 taunt 是把敵人拉向施法者）」。⭐ **完整的『根源寶具 · 簡單逆轉條件 · 逆轉效果』那一列不在 repo 裡**，所以「逆轉條件」（這裡選了『受到攻擊』）與三個數字（3 秒／半徑 12／冷卻 8 秒）是**我挑的**，⛔ 不是 owner 給的。要對回原文的話，改的只會是這四個數字與 `on` 那一格，機制本身不用動。\n\n⚠️ **卡面沒寫、但真的存在的三件事**（寫在這裡而不是假裝沒有）：\n（1）「優先攻擊」的精確語意是**自動索敵**被接管。後台 `config.taunt@1` 的 `overridesManualOrder` 出貨 **false**（方向盤預設留在玩家手上），所以一個正在右鍵點名別人的隊友**不會**被強制轉頭；bot、召喚物、以及所有沒有手動指令的人會。這是既有的全域決策，不是這張卡的。\n（2）半徑 12 會再乘 `combatEnv.abilityRange`（出貨 **0.8**）→ 場上實際 **9.6**；冷卻 8 秒會再乘 `itemCooldown`（出貨 **1.0**）→ 場上實際 **8 秒**。卡面只寫秒數不寫半徑，與鍊金術之盾同一個判例（「周圍」四個字沒有否定半徑，要不要印出來是 owner 的決定）。\n（3）`maxTargets` 6：一發最多拉 6 具身體，由近到遠切（`tauntRules.capOrder` 出貨 `nearest`）。它同時被 `tauntRules.maxTargetsCap`（出貨 20）夾一次。\n\n⚠️ 「殭屍也會一起撲上去」那一句**帶著條件**是刻意的：`forcedTargetOf` 的小怪分支要求嘲弄者與小怪**不同隊**，而殭屍全部在 `MONSTER_TEAM`。所以打我的如果是一隻殭屍，隊友照樣會被指去打牠，但**其他殭屍不會**（同隊）。卡面那一句寫「被鎖定的是敵方英雄時」就是這件事，⛔ 不是修辭。另外它還吃 `tauntRules.appliesToMobs`（出貨 true）。\n\n⭐ `includeNeutrals: true` 只在 `side: \"allies\"` 有意義（`enemies` 那一側本來就含 MONSTER 陣營），schema 的 `.describe()` 逐字寫著同一句。"
+}

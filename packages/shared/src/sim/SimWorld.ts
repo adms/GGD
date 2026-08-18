@@ -79,6 +79,8 @@ import type { GateSchedule } from "./map/gates";
 import { TICK_MS } from "../constants";
 import { orderSystem } from "./systems/OrderSystem";
 import { movementSystem } from "./systems/MovementSystem";
+import { carrySystem } from "./systems/CarrySystem";
+import { mindControlExpirySystem } from "./mindControl";
 import { leapSystem } from "./systems/LeapSystem";
 import { statRecomputeSystem, buffExpirySystem } from "./stats/statPipeline";
 import { resourceStatSystem } from "./stats/resourceStats";
@@ -1096,6 +1098,46 @@ export class SimWorld {
    */
   readonly taunt = new Map<EntityId, import("./taunt").TauntState>();
 
+  // ═══════════════════════════════════════════════════════════════════════
+  // [EX∅ 根源] 三張表（2026-08-18）—— 由詞彙包一次宣告，lane 只填內容。
+  //
+  // ⚠️ 三張在**這一版全部是空的**（三支模組的謂詞一律回 false，見它們的
+  // ZERO GUARANTEE 檔頭），所以既有 replay 與 digest 逐位元不變。它們現在就
+  // 註冊在這裡、而且現在就進 `destroy()`，走的是上面每一張表都遵守的同一條
+  // 防禦契約：**一個被回收的 entityId 絕不可以繼承上一條命的狀態**，而
+  // 「這張表今天永遠是空的」正是那個在 lane 合併的那一刻停止成立的假設。
+  // ═══════════════════════════════════════════════════════════════════════
+
+  /**
+   * 同型連擊 —— `受害者 → 他現在連續挨的型別與發數`（史萊姆裝）。
+   * 形狀與推導在 `combat/typeStreakImmunity.ts`。
+   */
+  readonly damageStreak = new Map<
+    EntityId,
+    import("./combat/typeStreakImmunity").DamageStreakState
+  >();
+
+  /**
+   * 陣營轉換 —— `被借走的那具身體 → 這次捕獲的狀態`（大師球）。
+   * 形狀與三個非顯而易見的點在 `mindControl.ts`。
+   */
+  readonly mindControl = new Map<EntityId, import("./mindControl").MindControlState>();
+
+  /**
+   * 這一回合**已經被捕過**的受害者（`oncePerRoundPerVictim` 的記帳）。
+   *
+   * ⚠️ 它由 `MatchController.enterCombat()` 清空，⛔ 不是 `enterIntermission()`
+   * —— 理由與同一段的 `resetMarksForRound` 逐字相同：intermission 可以被
+   * `skipPhase` 跳過，而一個「有時候會被清、有時候不會」的計數器比沒有更糟。
+   */
+  readonly capturedThisRound = new Set<EntityId>();
+
+  /**
+   * 背負 —— `乘客 → 他的載具與四根不可選取軸`（禰豆子的木箱）。
+   * 形狀在 `carry.ts`。
+   */
+  readonly carried = new Map<EntityId, import("./carry").CarriedState>();
+
   /**
    * 嘲弄暫時搶走的**玩家手選目標** —— `受害者 → 他原本點名的那個人`。
    *
@@ -1363,6 +1405,19 @@ export class SimWorld {
     // sim/taunt.ts::forgetTauntsBy.
     this.taunt.delete(id);
     forgetTauntsBy(this, id);
+    // [EX∅ 根源] 的三張表：同一條防禦契約。一個繼承了連擊紀錄的新身體會**開場
+    // 就免疫**、一個繼承了 `carried` 的會**生下來就點不到**、一個繼承了
+    // `mindControl` 的會**替錯的隊伍活著**——三個都不會報錯，而且三個都會在
+    // 那一 tick 被別的系統讀到。
+    // ⚠️ `capturedThisRound` 一開始被寫成「由 `enterCombat()` 整份清掉就好」，
+    // 而 `destroyClearsEntityStores` 當場指名了它 —— 那條守衛是對的：這張表的鍵
+    // **就是 EntityId**，所以一個被回收的 id 會讓一隻**全新的**殭屍生下來就帶著
+    // 「這回合已經被收服過」的標記，於是大師球對它靜靜地失效。回合整份清是
+    // **另一件事**（跨回合），⛔ 不是這一件（同一回合內的 id 回收）。
+    this.damageStreak.delete(id);
+    this.mindControl.delete(id);
+    this.carried.delete(id);
+    this.capturedThisRound.delete(id);
     // …and the manual order the taunt suspended, in BOTH directions for exactly
     // the same reason: the map is keyed by the VICTIM and VALUED by the target
     // he clicked, so a recycled id would "restore" him onto a body he never
@@ -1485,6 +1540,13 @@ export class SimWorld {
     //                             three answers computed at three different
     //                             points of the frame.
     statusExpirySystem(this); // 2. expire statuses (slows/roots/stuns)
+    mindControlExpirySystem(this); // 2′. ⭐ [陣營轉換]（[EX∅ 根源]）—— 把到期的
+    //                             借調身體還回原隊。⛔ 不能學嘲弄做成「讀取時
+    //                             才判定過期」：這條機制改的是真的 `TeamComp`，
+    //                             一筆過期的紀錄不是惰性垃圾，是一隻還在替你打
+    //                             的殭屍王。放在這裡（一切索敵之前）是為了讓
+    //                             歸位在同一 tick 內就被每一個消費者看到。
+    //                             `world.mindControl` 空表時是 early return。
     recoveryDecaySystem(this); // 2a. age the post-resolve RECOVERY commitment.
     //                             BEFORE castResolve so nothing armed this tick
     //                             is aged this tick -> a recovery of N ticks
@@ -1498,6 +1560,11 @@ export class SimWorld {
     //                             before movementSystem, which then sees the
     //                             `leap` override and leaves the body alone.
     movementSystem(this); // 5. integrate + collide
+    carrySystem(this); //    5a. ⭐ [背負]（[EX∅ 根源]）—— 乘客的座標從載具重建。
+    //                             ⚠️ **必須在 movementSystem(5) 之後**：排在前面
+    //                             的話乘客拿到的是載具**上一 tick** 的位置，畫面上
+    //                             是一個慢半格的抖動。空殼期間 `world.carried` 永遠
+    //                             是空的，這一行是零成本的 early return。
     dashOnEndSystem(this); // 5′. ⭐ S7 衝刺結束才揮出（52-04）。
     //                             ⚠️ 位置是硬約束，兩個方向都是：
     //                             · 必須在 movementSystem(5) **之後** —— 「衝刺
@@ -1834,6 +1901,38 @@ export class SimWorld {
           mix(tr);
           mix(c);
         }
+      }
+      // [EX∅ 根源]：三張表全部是 authoritative（連擊決定誰吃不吃得到傷害、
+      // 捕獲決定誰打誰、背負決定誰選得到誰），所以要進 hash。
+      //
+      // ⭐ **條件式折入**，逐字照上面 dot / summon / invulnerable 的先例：
+      // 三張表今天都是空的，所以一份 [EX∅ 根源] 之前的錄影 hash **逐位元不變**，
+      // #191 的 disarmed-golden canary 一格都不會動。⛔ 無條件 `mix(0)` 會把
+      // 每一份既有錄影的 hash 全部改掉，而那條線斷了不會有人立刻發現。
+      const ds = this.damageStreak.get(id);
+      if (ds !== undefined) {
+        mix(id);
+        // 型別是**序數**不是字串：兩個 replica 只在「連的是物理還是魔法」上
+        // 分家時，count 與 lastTick 完全相同，少了這一行 hash 會說它們一致。
+        mix(ds.type === "physical" ? 1 : ds.type === "magic" ? 2 : 3);
+        mix(ds.count);
+        mix(ds.lastTick);
+      }
+      const mc = this.mindControl.get(id);
+      if (mc !== undefined) {
+        mix(id);
+        mix(mc.captor);
+        mix(mc.toTeam);
+        mix(mc.originalTeam);
+        mix(
+          mc.expiresAtTick === Number.POSITIVE_INFINITY ? -1 : mc.expiresAtTick,
+        );
+      }
+      const car = this.carried.get(id);
+      if (car !== undefined) {
+        mix(id);
+        mix(car.carrier);
+        mix(car.expiresAtTick);
       }
     }
     // match scoreboard is authoritative world state — a desync here (a counter

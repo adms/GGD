@@ -425,6 +425,25 @@ export function clearMarks(world: SimWorld, id: EntityId): void {
 }
 
 /**
+ * 拿掉**一個**標記 —— 給「授予它的那件道具被賣掉了」用（2026-08-18）。
+ *
+ * ⚠️ 它發 `markChanged {count: 0}`：那是客戶端計數器條的唯一更新訊號，
+ * 少了它玩家的 HUD 上會留著一個已經不存在的「×3」，而遊戲裡按它會什麼都不發生
+ * （失敗形態②的鏡像 —— 畫著一個沒有的東西）。
+ *
+ * ⛔ 它**不還原** `perStackLost` 累積的永久加成。那與 `resetOn` 三種政策的
+ * 既有語意逐字相同（「那是照文案的『永久』」），⛔ 不要在這裡開第二種語意。
+ */
+export function removeMark(world: SimWorld, id: EntityId, markId: MarkId): boolean {
+  const bag = world.marks.get(id);
+  if (bag === undefined || !bag.has(markId)) return false;
+  bag.delete(markId);
+  if (bag.size === 0) world.marks.delete(id);
+  world.emit("markChanged", { id, markId, count: 0 });
+  return true;
+}
+
+/**
  * 排序後的持有者列表。
  *
  * ⚠️ **每一個**會 emit 事件或改狀態的迴圈都要走這裡。Map 插入序在兩個 replica

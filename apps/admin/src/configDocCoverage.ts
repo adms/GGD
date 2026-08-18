@@ -123,7 +123,7 @@ export const CONFIG_DOC_EXEMPTIONS: readonly ConfigDocExemption[] = [
     docIdConstant: ARENA_RULES_DOC_ID,
     why: "三頁共同編輯這一份：殭屍波系統（mobWaves 區塊）、傳說武器三選一（itemDraft + retiredLootTables）、對戰設定（draft.offerCount 唯讀 + draft.tierSchedule 曲線）。",
     expiresWhen:
-      "⚠️ 這是**文件層**豁免，欄位層仍有破洞：rounds / overflow / flowers / reviveCircles / guardianTower / goldDrop / nightPact / ultUnlockRound / exUnlockRound **加上 2026-08-17 新增的 weaponTiers / disadvantageWeights** 十一個頂層區塊全部只走 preserved「原封不動帶著走」，一格都調不到。⚠️ 後兩者特別值得記一筆：`weaponTiers` 是 [EX解放] / [EX∅ 根源] 的出現窗口與劣勢加權，`disadvantageWeights` 是「誰算劣勢方」的 50/30/20 —— 兩者都是 owner 明說要能調的旋鈕，而且 `disadvantageWeights` 是**固定形狀的三格純量**，通用引擎本來就走得動（GH#355）。⛔ 這一列不涵蓋它們。",
+      "⚠️ 這是**文件層**豁免，欄位層仍有破洞：rounds / overflow / flowers / reviveCircles / guardianTower / goldDrop / nightPact / ultUnlockRound / exUnlockRound 九個頂層區塊只走 preserved「原封不動帶著走」，一格都調不到。⭐ **`weaponTiers` / `augmentTiers` / `disadvantageWeights` 已經在 2026-08-18 補上了**（GH#355）：前兩張走通用引擎的**第四種**非純量形狀（物件陣列，`configRows.ts` —— 欄位結構由出貨 Zod 推導，⛔ 沒有第二份界），第三塊是三格純量，全部在 傳說武器三選一 那一頁。⛔ 這一列**不涵蓋**上面那剩下的九個。",
   },
   {
     docId: "base-bonus",

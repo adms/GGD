@@ -464,3 +464,62 @@ JSON 裡已改成正確版本，長度比原句短 6 字，⛔ 沒有刪掉任�
    （`CritDamage` 就是這樣從 5 抬到 50 的）。
 
 ⛔ **2/3/4 都是 owner 的平衡決定，2026-08-18 這一輪一條都沒做。**
+
+---
+
+## 禰豆子的木箱 ([EX∅ 根源], L4) — `content/items/nezuko-box.json`
+
+> JSON 的 `authoringNote` 只留摘要 + 這個指標（2000 字上限）。逐句對照的全文在下面。
+
+### 這件寶具的來歷
+
+owner 2026-08-18 那份 **15 件 [EX∅ 根源]** 清單的第 3 件。它與另外 4 件一起被擋在池外，
+理由逐字寫在 `content/loot-tables/ex-origin-weapons.json` 的 `note`：
+「禰豆子的木箱 —— 需要『背負／附著移動 + 不可選取』」。
+這一版把那個機制做出來了（`sim/carry.ts` + `sim/systems/CarrySystem.ts` +
+`sim/effects/carry.ts` + `sim/systems/MovementSystem.ts` 的四個豁免點），
+所以這件寶具第一次有內容。
+
+### 逐句對照（卡面 4 句 ↔ JSON，兩個方向都讀過）
+
+| 卡面 | JSON | 備註 |
+|---|---|---|
+| 「每 12 秒」 | `passive[0].on = "onInterval"` + `internalCooldown: 12` | ⚠️ `onInterval` **只在 `combatActive` 時發射**，所以商店／回合之間不會偷跑。⚠️ 道具來源的 ICD 還會再乘後台 combat-env 的 `itemCooldown`（全 repo 一致的既有行為，不是這件的特例） |
+| 「身邊」 | `shape:"circle"` + `radiusTier:"中"` | ⭐ 卡面**不寫半徑數字**（owner 2026-08-11「原則上不寫範圍數字」）。`radius: 4.5` 填的就是「中」級距**自己的出貨數字**，⛔ 不是我另外挑的 —— 級距在註冊時會贏過它（`content/aoeTiers.ts::resolveRadiusTier`），寫它只是為了通過 `refineDispelShape`（circle 一定要有 radius，否則執行期 `radius ?? 0` 直接 return ＝ 動畫演完什麼都沒發生）。⚠️ 半徑再乘 combat-env 的 `abilityRange` |
+| 「生命低於 25% 的 1 名隊友」 | `victimCondition`（hp percent `<` 0.25）+ `maxTargets: 1` + `side:"allies"` | ⭐ 名額的刀在**過濾之後**才下（`selectVictims` 的 `qualified` 語意）⇒ 這句話讀作「殘血的隊友裡最近的那一個」，⛔ 不是「最近的那一個如果剛好殘血」 |
+| 「收進箱子 6 秒」 | `durationSec: 6` | 絕對 tick 到期，上界 `CARRY_MAX_SEC` = 30 |
+| 「跟著你走」 | `CarrySystem` 每 tick 把乘客座標從載具重建 | 排在 `movementSystem`(5) **之後**（排前面就是慢半格的抖動） |
+| 「自動索敵、殭屍仇恨、右鍵點名都選不到他」 | `untargetable` 的前三根軸 | 閘下在 `sim/targeting.ts` 的 `targetClassOf` / `isMobTargetable` / `isManuallyTargetable` **三個謂詞**上 —— 那是該檔驗屍報告要求的位置（一個謂詞、每個 picker 都走它），⛔ 不是各 picker 各寫一份 |
+| 「範圍技能仍然打得到箱子裡的人」 | `abilityAoe: false` | ⚠️ **這一句是刻意寫上卡面的**：不寫的話玩家會把「不可選取」讀成「無敵」，而那正是第一·五守則要防的反向謊話 |
+| 「回復他 25%最大生命」 | `onHitTargets` 的 `restore{healthPct:0.25}` | 收到的目標是**真的上車的那群人**（`runOnHitChain`），⛔ 不是上游交下來的震央。⚠️ 回復量再乘 combat-env 的 `healing` |
+
+反向也讀過：JSON 裡**沒有**任何一條效果是卡面沒講的。
+
+### ⚠️ 與 owner 原文哪裡不一樣、為什麼
+
+1. **原文的逐字內容這一輪拿不到。** L4 這條 lane 手上只有 loot-table `note` 那一句
+   機制摘要。⇒ 上面**四個數字（12 秒／25% 門檻／6 秒／25% 回復）與「中」級距是我提的
+   初值，不是 owner 裁決過的**。它們全部是後台可調的資料（hook 的 ICD、條件葉的
+   `value`、`durationSec`、`healthPct`、AoE 級距），⛔ 改它們不需要動任何程式。
+   **請 owner 過目這四個數字。**
+2. **「附著移動」做成了「複製座標」。** 乘客每 tick 被寫成載具的位置，⛔ 沒有做成一個
+   掛在骨骼上的附著點（那是渲染層的事，sim 沒有骨骼）。畫面上的差別是乘客與載具
+   **完全重疊**而不是背在背上；要真的背在背上需要客戶端一條 attach 通道，
+   ⛔ 不是這張卡自己給得起的。
+3. **`onCarrierDeath` 走預設 `release`**（載具一倒，乘客立刻下車、立刻恢復可選取）。
+   另一個成員 `drop` 在引擎裡的語意是「留在倒下的箱子裡直到時間走完」——
+   ⚠️ 那是「跟著倒」在**沒有『被擊倒』這個機制**的引擎裡最接近的一件事，
+   ⛔ 它不會讓乘客受傷或死亡。這件寶具沒有用到它，依第〇·六守則那條路**不測**。
+4. **沒有 icon。** `content/assets/icons/items/nezuko-box.webp` 還不存在，而 `icon` 是
+   選填欄位 —— ⛔ 我沒有指一個不存在的檔（那會在商店卡上變成一張破圖，
+   也就是另一種「說了但不會發生」）。上架前補一張圖，然後把 `icon` 加回來。
+5. **這件還沒進 `ex-origin-weapons` 的 `entries`。** 那張表由收尾那一位一次補 5 件
+   （5 條 lane 各改一次＝逐字衝突）。⇒ 在那之前它抽不到，⛔ 這是刻意的分工不是漏做。
+
+### ⛔ 引擎側這一輪**沒有**接上的一根軸
+
+`untargetable.abilityAoe: true` **今天不會生效**。唯一的閘點是
+`sim/abilities/abilitySystem.ts::enemiesInCircle`，而那個檔這一輪由 L1（反向嘲諷）
+獨佔。謂詞 `carryBlocksAbilityAoe` 已經在 `sim/carry.ts` 匯出，接上只要一行。
+⚠️ 出貨的這張卡填的是 `false`（＝今天的行為），所以**卡面沒有說謊**；
+但一份把它填成 `true` 的 JSON 現在是一格空欄位。

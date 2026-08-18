@@ -12,6 +12,7 @@
     "reality-marble"
   ],
   "selectionSlot": "generic",
+  "icon": "assets/icons/augments/grail-ex-02.webp",
   "hooks": [
     {
       "on": "onInterval",

@@ -13,6 +13,7 @@ import { fireHooks } from "../effects/hooks";
 import type { HookDef } from "../stats/modifiers";
 import { recordDamage } from "../stats/matchStats";
 import { refusesDamage } from "../effects/invulnerable";
+import { noteDamageStreak, refusesByTypeStreak } from "./typeStreakImmunity";
 import { rollEvadeAbility } from "./evasion";
 import { blockCutFor } from "./block";
 import { manaBarrierCutFor } from "../effects/manaBarrier";
@@ -846,6 +847,30 @@ export function combatResolveSystem(world: SimWorld): void {
         continue;
       }
 
+      // ---- 型別連擊免疫 (史萊姆裝, [EX∅ 根源] L3) ---------------------------
+      // 「連續受到 2 次同型別傷害後免疫該型別」。它是一台讀**歷史**的狀態機,
+      // 不是無敵的第二種寫法 —— 完整推導在 `combat/typeStreakImmunity.ts`。
+      //
+      // ⭐ 借上面那一段的整條出口而不是自己發明一條:同樣 `continue`(被拒的封包
+      // 不可以走護盾池、不可以發 `damage`)、同樣記成 BLOCKED 進計分板、同樣發
+      // `immune` —— 那是客戶端唯一看得到「這一發被免掉了」的頻道。
+      //
+      // ⚠️ 位置在無敵**之後**是刻意的:無敵已經把這一發拒掉時,這裡再問一次
+      // 只會多寫一次計分板、多發一個事件。`refusesByTypeStreak` 自己也帶
+      // ZERO GUARANTEE(沒有連擊紀錄時只有一次 Map lookup),所以這一行對每一份
+      // 既有內容是位元等價的。
+      if (refusesByTypeStreak(world, pkt.target, pkt.type)) {
+        recordDamage(world, pkt.source, pkt.target, 0, 0, pkt.amount, pkt.origin);
+        world.emit("immune", {
+          target: pkt.target,
+          source: pkt.source,
+          amount: pkt.amount,
+          dmgType: pkt.type,
+          origin: pkt.origin,
+        });
+        continue;
+      }
+
       // ---- 閃避 · ABILITY channel (GH#289 lane P5) --------------------------
       // ⚠️ RECONSTRUCTED 2026-07-30 — same incident as the shield block above.
       //
@@ -865,6 +890,19 @@ export function combatResolveSystem(world: SimWorld): void {
       ) {
         continue;
       }
+
+      // ---- 型別連擊記帳 (史萊姆裝, [EX∅ 根源] L3) ---------------------------
+      // 「連續受到 N 次」數的是**真的挨到**的那幾發,所以這一行在免疫與閃避
+      // 兩道閘之後 —— 一發被閃掉的攻擊沒有打到任何人,它不可以把連擊往前推。
+      //
+      // ⚠️ 而且在 `postGate` 型別轉換**之前**,與上面那道閘讀的是同一個
+      // `pkt.type`:一發被 惡夢魔王碎片 轉成真傷的法術,對這台狀態機仍然是
+      // 「魔法」。兩邊必須讀同一個型別,否則會出現「用魔法累積、用真傷免疫」
+      // 這種沒有人寫過的組合(而且兩邊各自看起來都是對的)。
+      //
+      // ZERO GUARANTEE:沒有任何來源授予 `typeStreakImmunity` 時整段直接返回,
+      // 一個 Map 都不寫 ⇒ `digest()` 的條件式折入不動,既有錄影 hash 逐位元不變。
+      noteDamageStreak(world, pkt.target, pkt.type);
 
       // ---- 傷害型別轉換 · "afterGates" 相位 —— 出貨的那一個 -----------------
       // 霸王破甲槍 / 死之王的長槍 (`scope: "basic"`) 與 惡夢魔王碎片

@@ -177,8 +177,16 @@ export function mobSystem(world: SimWorld): void {
       target = taunter;
       bestD2 = forcedD2;
     } else {
+    // ⭐ [陣營轉換]（[EX∅ 根源]）—— 這一隻小怪**自己**現在算哪一隊。
+    //
+    // 沒有捕獲時它就是 `MONSTER_TEAM`，於是下面那一行與 `MONSTER_TEAM` 的常數
+    // 版本**逐位元相同**（每一場既有比賽零改變）。被借走之後它是捕獲者那一隊，
+    // 而那正是這一行必須是變數的理由：常數版本會讓被捕的殭屍王把**捕獲它的
+    // 主人**也算成敵人（同隊，但閘只擋 `MONSTER_TEAM`），也就是玩家花了一件
+    // 寶具換來一隻立刻回頭打自己的王。
+    const myTeam = world.team.get(mobId)?.teamId ?? MONSTER_TEAM;
     for (const [cid, cteam] of world.team) {
-      if (cteam.teamId === MONSTER_TEAM) continue; // never target another mob
+      if (cteam.teamId === myTeam) continue; // never target its own side
       // 英雄 + 召喚物。`isMobTargetable` (sim/targeting.ts) is THE predicate —
       // the bare `world.champion.has(cid)` that used to stand here is exactly
       // how 召喚物 ended up unhittable by the whole PvE side: a summon carries

@@ -2,26 +2,66 @@
   "id": "ex-origin-weapons",
   "schema": "loot-table@1",
   "name": "[EX∅ 根源] 寶具池",
-  "note": "⭐ owner 2026-08-18 交來的上架寶具清單為**唯一真相**：「舊時代上架傳說武器道具全部捏平成 EX寶具，只有五件我們特別拎出來寫 EX解放，再加上新一批的 EX／EX解放／EX根源，組成全部上架的隨機三選一寶具」。⚠️「任務道具」是舊時代 DOTA 玩法的標籤，**競技場新玩法完全不考慮它** —— 所以四魂之玉／天堂之劍／獸人船長十字鎬／老衲的棒子／至尊魔戒／仙后座 都是正規寶具，⛔ 不是任務殘留。\n⛔ 一件寶具**只屬於一個池**（在此之前有 5 件同時掛在兩個池上，會被抽兩次）。\n⭐ **這 5 件是 Claude 的提案，⛔ 不是 owner 指定的** —— owner 2026-08-18 問「哪些寶具其實太強力扭轉戰局 建議移過來呢？」。\n判準取自這一階**自己的參數**：`limitScope:\"team\" · limitCount:1 · 第 10–12 回合 · 8%`—— 每隊限一件是為「兩件在同一隊會壓死人」設計的，minRound 10 表示它只在後期出現。⇒ 收「**推翻勝負條件**」那一族：它們不是數值更大，是改變你會不會輸。\n  · 天生牙 —— 殺死任一敵方英雄即**復活我方全部英雄**（全套最誇張的一件）\n  · 再誕之淚珠 —— 每回合一次自復活，100% 血魔 + 6 秒強化\n  · 死之王的意志 —— 斬殺 3% 以下 ＋ 周圍敵方移速減半光環\n  · 晨曦之光 —— 30% 機率擋掉致命一擊\n  · 殺豬刀 —— 30% 擋致命 ＋ 7% 變食材禁動\n⛔ 覺得哪一件不該在這裡，把它那一列搬回去即可，⛔ 不用改任何程式。",
+  "note": "⭐ owner 2026-08-18 交來的 **15 件 [EX∅ 根源]** 清單為唯一真相（『根源寶具 · 簡單逆轉條件 · 逆轉效果』那一張表）。\n**15 件全部落地**（2026-08-18 第二輪）—— 上一版卡住的 5 件，各自缺的那個**機制**已經做進引擎，⛔ 不是寫成 5 個 if（第〇·五守則：技能＝JSON 模板組合）：\n  · 討伐叉〈さすまた〉 → `zAuraDef.scaleByNearby`（靈氣強度隨範圍內人數線性縮放）\n  · 史萊姆裝 → `typeStreakImmunity` 授權面（連續同型計數 + 依傷害類型免疫）\n  · 禰豆子的木箱 → `effect.kind:\"carry\"` + `ENTITY_FLAG.CARRIED`（背負移動 + 四根不可選取軸）\n  · 大師球 → `effect.kind:\"convertTeam\"` + `ENTITY_FLAG.TEAM_OVERRIDE*`（陣營轉換，過網會換顏色）\n  · 戰鬥力探測器 → `taunt.side` / `forcedTarget` / `includeNeutrals`（指定我方去嘲諷指定目標）\n⚠️ **這 5 件的『逆轉條件』與大部分數值是 Claude 提的初值，⛔ 不是 owner 裁決過的** —— owner 那張 15 列原表（『簡單逆轉條件 · 逆轉效果』三欄）**不在這個 repo 裡**，五條 lane 各自 grep 過都找不到。每一件的『與 owner 原文哪裡不一樣、為什麼』逐句寫在那份 item JSON 的 `authoringNote`，**請 owner 逐件覆核**；改的全部是資料，⛔ 不必動程式。\n⚠️ 這 5 件**沒有圖示**（`content/assets/icons/items/` 缺檔），`icon` 一律留空而不是指向不存在的路徑 —— 走 #72/#178 的圖示產線補。\n⛔ 一件寶具只屬於一個池。上一版那 5 件（晨曦之光／天生牙／死之王的意志／殺豬刀／再誕之淚珠）是 Claude 的**提案**，owner 交來真清單後已經搬回 `ex-release-weapons`。",
   "entries": [
     {
-      "itemId": "godie-i016",
+      "itemId": "soul-gem",
       "weight": 1
     },
     {
-      "itemId": "godie-i031",
+      "itemId": "bezoar-of-the-apothecary",
       "weight": 1
     },
     {
-      "itemId": "godie-i060",
+      "itemId": "all-might-hair",
       "weight": 1
     },
     {
-      "itemId": "godie-i06g",
+      "itemId": "gantz-suit",
       "weight": 1
     },
     {
-      "itemId": "teardrop-of-rebirth",
+      "itemId": "icha-icha-paradise",
+      "weight": 1
+    },
+    {
+      "itemId": "red-comet-mask",
+      "weight": 1
+    },
+    {
+      "itemId": "touyako",
+      "weight": 1
+    },
+    {
+      "itemId": "senzu-bean",
+      "weight": 1
+    },
+    {
+      "itemId": "millennium-puzzle",
+      "weight": 1
+    },
+    {
+      "itemId": "grief-seed",
+      "weight": 1
+    },
+    {
+      "itemId": "sasumata",
+      "weight": 1
+    },
+    {
+      "itemId": "slime-suit",
+      "weight": 1
+    },
+    {
+      "itemId": "nezuko-box",
+      "weight": 1
+    },
+    {
+      "itemId": "master-ball",
+      "weight": 1
+    },
+    {
+      "itemId": "scouter",
       "weight": 1
     }
   ]

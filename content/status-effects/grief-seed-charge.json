@@ -1,0 +1,12 @@
+{
+  "id": "grief-seed-charge",
+  "schema": "status-effect@1",
+  "name": "悲嘆",
+  "description": "收集到的絕望。它自己不做任何事，滿三份的時候才一起還你。",
+  "polarity": "buff",
+  "tags": [
+    "grief-seed-charge",
+    "counter",
+    "buff"
+  ]
+}

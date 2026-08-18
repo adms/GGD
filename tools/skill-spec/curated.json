@@ -17,7 +17,9 @@
     "applyBuff": "增益／減益（改屬性）",
     "applyStatus": "掛狀態",
     "blink": "瞬移",
+    "carry": "背負（帶著隊友移動 + 不可被選取）",
     "championForm": "變身／切換形態",
+    "convertTeam": "陣營轉換（把一個既有單位借到自己這一隊）",
     "cycleBuff": "輪替增益",
     "damage": "傷害",
     "damageArea": "範圍傷害",
@@ -194,20 +196,26 @@
       ]
     },
     {
-      "title": "⛔ `ENTITY_FLAG` 的 16 顆 bit 已經用光 —— 「別人也看得到的狀態」今天沒有頻道",
+      "title": "⭐ `ENTITY_FLAG` 已加寬成 uint32 —— 「別人也看得到的狀態」現在有頻道，但額度是**有限**的",
       "assert": {
         "file": "packages/shared/src/protocol/schema.ts",
-        "present": "ENTITY_FLAG_FREE_BITS = [] as const",
-        "reason": "還有空位 bit 的話這一段就過期了 —— 而 formFlags.test.ts 也有一條在守同一件事"
+        "absent": "ENTITY_FLAG_FREE_BITS = [] as const",
+        "reason": "自由 bit 又被用光的話這一段就過期了（那時候唯一的出路是再加寬一次或另開頻道）—— 而 formFlags.test.ts 也有一條在守同一件事"
       },
       "body": [
-        "- **好消息**：`statusIds` + `statusRemainTicks` 兩條平行陣列已經在線上，**逐座位只送自己的**",
-        "  → 任何新的 status 文件會自動出現在**自己的** HUD 上帶名字與倒數、**零接線**。",
-        "- **壞消息**：任何「**別人也看得到**」的狀態（敵人身上的破甲光環、隊友的冰凍外觀、",
-        "  頭上的標記）今天**沒有頻道**。",
+        "⭐ **2026-08-18：`EntityState.flags` 從 uint16 加寬成 uint32**（owner：「ENTITY_FLAG expand!」）。",
+        "在那之前 16 顆 bit 全部用完；[EX∅ 根源] 那一批同時需要「不可選取」、「暫時換陣營」兩種",
+        "**玩家看得見**的狀態，所以走加寬而不是各開一條事件頻道。",
         "",
-        "⚠️ `defineTypes` 是 APPEND-ONLY，加錯回不去 —— 所以要上線的欄位得**合併成一次追加**。",
-        "⛔ 也不要「重用」看起來閒置的 bit：16 顆全都有意義，重用會讓線上的舊客戶端 desync，",
+        "- **逐座位的狀態**：`statusIds` + `statusRemainTicks` 兩條平行陣列，**只送自己的**",
+        "  → 任何新的 status 文件會自動出現在**自己的** HUD 上帶名字與倒數、**零接線**。",
+        "- **別人也看得到的狀態**：走 `ENTITY_FLAG` 一顆 bit（先例：`INVISIBLE`、`CARRIED`、",
+        "  `TEAM_OVERRIDE*`）。⚠️ 額度是 **20 用 / 11 free / 1 保留**，見 schema.ts 的 BIT BUDGET —— ",
+        "  以那份為準，⛔ 不要抄這裡的數字。",
+        "",
+        "⚠️ `defineTypes` 是 APPEND-ONLY，而**改型別不是 append**：加寬那一次的代價是「部署當下",
+        "已經開著舊分頁的玩家」整份實體狀態錯位。⇒ 這一批**不再**加寬。",
+        "⛔ 也不要「重用」看起來閒置的 bit：每一顆都有意義，重用會讓線上的舊客戶端 desync，",
         "而且**任何一處都不會報錯**。"
       ]
     },

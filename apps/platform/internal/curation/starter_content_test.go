@@ -60,6 +60,12 @@ type itemDoc struct {
 	CraftRole string          `json:"craftRole"`
 	Modifiers []itemModifier  `json:"modifiers"`
 	Passive   json.RawMessage `json:"passive"`
+	// ⭐ 2026-08-18 (GH#355) [EX∅ 根源] 的三條新酬勞軸。每一條都**單獨**構成
+	// 一件寶具的全部效果，所以 hasEffect 少讀一條就會把一件做好了的寶具
+	// 判成空卡，而 L2 的結論會是「它不該在池子裡」—— 100% 反向。
+	Auras              json.RawMessage `json:"auras"`
+	Marks              json.RawMessage `json:"marks"`
+	TypeStreakImmunity json.RawMessage `json:"typeStreakImmunity"`
 }
 
 type itemModifier struct {
@@ -77,8 +83,17 @@ func (d itemDoc) hasEffect() bool {
 	if len(d.Modifiers) > 0 {
 		return true
 	}
-	p := strings.TrimSpace(string(d.Passive))
-	return p != "" && p != "null"
+	// ⚠️ 這一串是**必須跟著 item@1 的酬勞欄位一起長**的清單，漏一條是靜默的：
+	// 討伐叉整張卡就是一圈 auras、GANTZ Suit / 千年積木的免死是 marks + lethal、
+	// 史萊姆裝只有 typeStreakImmunity 一格 —— 三件在 2026-08-18 都是
+	// modifiers/passive 兩格全空而**確實會生效**的寶具。
+	for _, raw := range []json.RawMessage{d.Passive, d.Auras, d.Marks, d.TypeStreakImmunity} {
+		p := strings.TrimSpace(string(raw))
+		if p != "" && p != "null" && p != "[]" {
+			return true
+		}
+	}
+	return false
 }
 
 // insaneModifiers is gate S4: values that can only be an import/unit bug.

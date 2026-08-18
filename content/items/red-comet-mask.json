@@ -1,0 +1,52 @@
+{
+  "schema": "item@1",
+  "cost": 0,
+  "tier": 5,
+  "craftRole": "none",
+  "id": "red-comet-mask",
+  "name": "赤色面具",
+  "icon": "assets/icons/items/red-comet-mask.webp",
+  "description": "道具\n效能\n[赤色彗星] 隊友陣亡時，攻擊速度 ×3、移動速度 ×3、生命回復速度 ×3，持續 10 秒\n\n解說\n「夏亞幫我撐 10 秒。」十秒之後的事，十秒之後再說。",
+  "tags": [
+    "legendary",
+    "ex-origin",
+    "buff"
+  ],
+  "passive": [
+    {
+      "key": "red-comet",
+      "on": "onAllyDeath",
+      "target": "self",
+      "internalCooldown": 5,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "duration": 10,
+          "statusId": "red-comet",
+          "stackKey": "red-comet",
+          "maxStacks": 1,
+          "polarity": "buff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctMult",
+              "value": 2
+            },
+            {
+              "stat": "ms",
+              "op": "pctMult",
+              "value": 2
+            },
+            {
+              "stat": "healthRegen",
+              "op": "pctMult",
+              "value": 2
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "authoringNote": "⭐ `pctMult` 的語意是**加成**不是倍率本身，所以『×3』寫 `2`（×(1+2)）。⛔ 寫 3 會變成 ×4。\n⚠️ 攻速有上限（`config/stat-caps.json`）—— ×3 之後撞到上限的英雄拿不到全部的增益，而那是**刻意的**（上限是那份設定的工作，不是這張卡的）。"
+}

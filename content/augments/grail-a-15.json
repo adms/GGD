@@ -12,6 +12,7 @@
     "invulnerable"
   ],
   "selectionSlot": "generic",
+  "icon": "assets/icons/augments/grail-a-15.webp",
   "hooks": [
     {
       "on": "onStatusApplied",

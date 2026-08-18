@@ -9,6 +9,7 @@ import { fireHooks } from "../effects/hooks";
 import { creditKillCombo } from "../combat/killCombo";
 import { recordChampionDeath, recordFlowerEaten } from "../stats/matchStats";
 import { cancelLeap } from "../movement/leap";
+import { releaseUnit } from "../mindControl";
 
 export function deathSystem(world: SimWorld): void {
   // last damage source per target this tick (events are ordered)
@@ -40,6 +41,15 @@ export function deathSystem(world: SimWorld): void {
     // (LeapSystem re-checks this next tick too; doing it here removes the
     // one-tick corpse-hanging-in-the-air window.)
     cancelLeap(world, id);
+    // ⭐ [陣營轉換]（[EX∅ 根源]）—— 歸位，而且**一定要在 `emit("death")` 之前**。
+    //
+    // 下游有兩個消費者讀死者的 `TeamComp.teamId`：復活圈用它決定圈開在哪一隊
+    // （`ReviveSystem`），結算用它算誰還活著。先發事件再歸位＝一個被借走的
+    // 隊友死掉時，復活圈開在**借他的那一隊**那邊 —— 而且畫面上完全正常，
+    // 只是他的隊友按不到那個圈。
+    //
+    // 對沒有被借走的身體是零成本的 no-op（`world.mindControl` 空表時直接 miss）。
+    releaseUnit(world, id);
     const killer = killingBlowSource.get(id) ?? lastDamager.get(id) ?? null;
     world.emit("death", { id, killer });
 

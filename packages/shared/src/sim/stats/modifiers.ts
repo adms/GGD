@@ -1073,6 +1073,23 @@ export interface ModifierSource {
    * 共用的 `NO_PENETRATION`,而 `resistAfterPenetration` 對它是恆等式）。
    */
   penetration?: import("../combat/penetration").PenetrationGrant;
+  /**
+   * [型別連擊免疫] —— 這個來源授予的「連續 N 發同型別之後免疫該型別」
+   *（史萊姆裝）。完整推導在 `combat/typeStreakImmunity.ts` 的檔頭。
+   *
+   * ⛔ **不做成 Stat、也不做成 ModOp**：`block`(上面) 與 `critStrike` 已經把
+   * 同一個論證寫過兩次 —— 型別過濾與**門檻**在「加總成一個數字」的那一刻就沒了。
+   * 一個 `Stat.TypeStreakImmunity` 記不住「哪幾型算連擊」，也記不住「這一條的
+   * 門檻是 2 而那一條是 5」。
+   *
+   * 讀它的**只有** `combat/typeStreakImmunity.ts` 的兩支解析器（從
+   * `combat/damage.ts` 的佇列抽乾迴圈呼叫）。統計管線一個字都不讀，所以它不動
+   * 任何屬性數字、不動面板、不動商店預覽。
+   *
+   * ABSENT on every source in the catalogue today —— 掛上這個欄位對其餘所有內容
+   * 是**嚴格的 no-op**（那兩支解析器的 ZERO GUARANTEE），既有 replay 逐位元不變。
+   */
+  typeStreakImmunity?: import("../combat/typeStreakImmunity").TypeStreakImmunityGrant;
 }
 
 /**

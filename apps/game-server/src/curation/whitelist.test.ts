@@ -560,8 +560,23 @@ describe("demo starter set is playable (wl-starter-playable)", () => {
     for (const id of starterLegendaryItems) {
       const def = Items.get(id as ItemId);
       expect(def.cost, `${id} (${def.name}) is directly purchasable — legendaries are draft-only`).toBe(0);
+      // ⚠️ RE-AIMED 2026-08-18 (GH#355)：`auras` / `marks` / `typeStreakImmunity`
+      // 是 [EX∅ 根源] 那一批帶進來的三條**各自獨立**的酬勞路徑（討伐叉整張卡就是
+      // 一圈靈氣；GANTZ Suit 與千年積木的免死改寫成具名標記；史萊姆裝只有免疫那一格）。
+      // 只讀 modifiers/passive 會把三件做好了的寶具判成「發下去什麼都沒有」。
+      const payout = def as {
+        modifiers?: unknown[];
+        passive?: unknown;
+        auras?: unknown[];
+        marks?: unknown[];
+        typeStreakImmunity?: unknown;
+      };
       expect(
-        (def.modifiers?.length ?? 0) > 0 || def.passive !== undefined,
+        (payout.modifiers?.length ?? 0) > 0 ||
+          payout.passive !== undefined ||
+          (payout.auras?.length ?? 0) > 0 ||
+          (payout.marks?.length ?? 0) > 0 ||
+          payout.typeStreakImmunity !== undefined,
         `${id} (${def.name}) would grant NOTHING when drafted`,
       ).toBe(true);
       expect(starterShopItems, `${id} is on both the shop and legendary surfaces`).not.toContain(id);

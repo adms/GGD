@@ -305,10 +305,15 @@ def _write_marker(icon_path: str) -> None:
 
 def set_icon_field(family: str, doc_id: str, rel_path: str) -> bool:
     """Set the doc's top-level `icon` field (after `name`), preserving 2-space /
-    ensure_ascii formatting + trailing newline. Augments are NEVER written — the
-    augment@1 schema is .strict() with no icon field and is a do-not-touch file."""
-    if family == "augments":
-        return False
+    ensure_ascii formatting + trailing newline.
+
+    ⭐ 2026-08-18: augments ARE written now. This function used to `return False`
+    for them, because `augment@1` was `.strict()` with **no `icon` field** — a
+    write would have made every augment doc fail Zod. owner ("補完其他沒有圖示的
+    寶具跟固有能力") authorised adding the field, so the refusal is gone.
+    ⛔ Do not put it back without also removing `zAugmentDef.icon`; a half-wired
+    pipeline is what left 91 docs field-less while the PNGs sat on disk.
+    """
     path = os.path.join(CONTENT, FAMILY_DIR[family], f"{doc_id}.json")
     with open(path, encoding="utf-8") as fh:
         doc = json.load(fh, object_pairs_hook=OrderedDict)

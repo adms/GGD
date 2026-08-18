@@ -91,11 +91,13 @@ COLLECTION_FAMILY = {
     "augments": "augments",
 }
 
-# `augment@1` is `.strict()` and has NO icon field — its art is resolved by
-# CONVENTION from assets/icons/augments/<id>.webp. So for this one family we
-# write the file and nothing else. batch.set_icon_field enforces the same rule
-# from its side; this constant is here so the daemon can SAY so in the job.
-FIELDLESS_FAMILIES = {"augments"}
+# ⭐ 2026-08-18: EMPTY. `augments` used to be the one family here — `augment@1`
+# was `.strict()` with NO icon field, so the daemon wrote the file and nothing
+# else. owner authorised the field, so every family now gets one.
+# ⛔ Kept (rather than deleted) as the SINGLE declaration point for "this family
+# gets the file only": the next产物-shaped collection declares itself here, not
+# with a third copy of the same `if` somewhere else.
+FIELDLESS_FAMILIES: set[str] = set()
 
 RECENT_CAP = 40
 

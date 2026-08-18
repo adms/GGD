@@ -75,7 +75,15 @@ const ITEMS = blockItems();
 
 describe("[格擋] authoringNote ⇔ 出貨資料", () => {
   it("池子裡真的有格擋道具 —— 一個掃不到東西的掃描器會永遠是綠的", () => {
-    // 失敗形態 ③:整個檔可以在內容被搬走之後繼續全綠。四支是今天的數字。
+    // 失敗形態 ③:整個檔可以在內容被搬走之後繼續全綠。
+    //
+    // ⚠️ 2026-08-18 **稍晚**回到四支：GANTZ Suit 與 千年積木 的 `block` 被**拿掉**了。
+    // 那不是「把守衛改綠」，是規格真的變了 —— 那兩件寶具的
+    // `block(fraction:1, lethalOnly:true)` + `onLethalDamage` hook 組合在這個引擎上
+    // **後半段永遠不觸發**（`combat/damage.ts` 的 `blockCut` 先把 dmg 削成 0，而
+    // `emit("lethalDamage")` 關在 `if (dmg > 0)` 裡面），所以兩張卡改走
+    // `marks` + `MarkLethalRule`（逐條理由在它們各自的 `authoringNote`）。
+    // ⇒ 它們**不再**是格擋道具，這張表因此回到 2026-08-18 之前的四支。
     expect(ITEMS.map((i) => i.id)).toEqual([
       "godie-i00j", // 奇門盾甲
       "godie-i00s", // 黃金聖鬥衣

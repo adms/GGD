@@ -2244,6 +2244,34 @@ type EffectVariant =
       radius?: number;
       /** 一次最多拉幾個人 (nearest first). Absent = `TAUNT_MAX_TARGETS` (sim/taunt.ts). */
       maxTargets?: number;
+      /**
+       * ⭐ [反向嘲諷]（戰鬥力探測器）—— 這個圓**拉誰**。ABSENT = `"enemies"`,
+       * i.e. the one `enemiesInCircle` line this handler has always run, so the
+       * shipped 鍊金術之盾 is byte-identical. Only read in the CIRCLE branch:
+       * without `radius` the subjects are this effect's own resolved targets and
+       * there is no circle to filter.
+       */
+      side?: "allies" | "enemies";
+      /**
+       * ⭐ 被拉的人**被迫打誰**。ABSENT = `"caster"` — the slot that used to be
+       * hardcoded as `applyTaunt(world, s, ctx.caster, …)`.
+       * `"target"` = this effect's FIRST resolved target, which is what makes
+       * 「指定我方去嘲諷指定目標」 expressible at all.
+       *
+       * ⛔ NOT foldable into {@link side} (「拉隊友去打敵人」 and 「拉敵人來打我」
+       * are two independent axes) and ⛔ not named `applyTo` (that name already
+       * means 「效果落在誰身上」 everywhere else in this union).
+       */
+      forcedTarget?: "caster" | "target";
+      /**
+       * 附近的中立單位（殭屍）也一起拉。ABSENT = `false`.
+       *
+       * ⚠️ Only meaningful with `side: "allies"`: the `enemies` side already
+       * contains `MONSTER_TEAM`, so this is a strict no-op there. ⛔ Do not
+       * "generalise" it to both sides — that would take the zombies away from
+       * 鍊金術之盾, i.e. its entire value in PvE.
+       */
+      includeNeutrals?: boolean;
     }
   /**
    * grantGold — 發放金幣. Pays the caster (or each target) gold, optionally
@@ -2413,6 +2441,64 @@ type EffectVariant =
        * 走 `castAbility`，兩個事件本來就會發，所以這一格對它們沒有作用。
        */
       emitCastEvents?: boolean;
+    }
+  | {
+      /**
+       * 【背負】（禰豆子的木箱，[EX∅ 根源]）—— 把一名隊友收進箱子：身體跟著
+       * 載具走、期間不可被選取、到期放下。機制與四根「不可選取」軸的推導在
+       * `sim/carry.ts`；每 tick 的座標重建在 `sim/systems/CarrySystem.ts`。
+       */
+      kind: "carry";
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
+      shape: "single" | "circle";
+      radius?: number;
+      radiusTier?: string;
+      /** 誰躲得進箱子。省略 = `"allies"`。 */
+      side?: "allies" | "enemies";
+      /** 一次背幾個。省略 = 1。 */
+      maxTargets?: number;
+      /** 背多久（秒）。**必填** —— 沒有期限的背負是一名整回合消失的英雄。 */
+      durationSec: number;
+      /**
+       * 「不可選取」的四根軸。省略整格 = `autoAcquire/mobAggro/manualTarget`
+       * 為 true、`abilityAoe` 為 **false**（不可選取 ≠ 免疫）。
+       */
+      untargetable?: {
+        autoAcquire?: boolean;
+        mobAggro?: boolean;
+        manualTarget?: boolean;
+        abilityAoe?: boolean;
+      };
+      /** 圈內逐一過濾（「只有生命低於 15% 的隊友躲得進來」）。 */
+      victimCondition?: EffectCondition;
+      /** 交給**真的上車的那群人**的效果。⛔ 不是新機制。 */
+      onHitTargets?: EffectDef[];
+      /** 載具死了乘客放下還是跟著倒。省略 = `"release"`。 */
+      onCarrierDeath?: "release" | "drop";
+    }
+  | {
+      /**
+       * 【陣營轉換】（大師球，[EX∅ 根源]）—— 把一隻單位暫時借到自己這一隊。
+       * 三顆 flag bit 的編解碼在 `protocol/schema.ts`，狀態在 `sim/mindControl.ts`。
+       */
+      kind: "convertTeam";
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
+      shape: "single" | "circle";
+      radius?: number;
+      radiusTier?: string;
+      /** 什麼時候歸位。省略 = `"death"`。 */
+      until?: "death" | "duration" | "roundEnd";
+      /** 借多久（秒）。只有 `until:"duration"` 讀得到。 */
+      durationSec?: number;
+      /** 同時能控幾隻。省略 = 2。 */
+      maxHeld?: number;
+      /** 同一個受害者一回合能不能被重捕。省略 = `true`（不能）。 */
+      oncePerRoundPerVictim?: boolean;
+      /**
+       * ⚠️ 勝負語意的開關（拿給 owner 的那一格）。省略 = `true` = 今天的行為。
+       * 完整推導在 `content/schema/effect.ts` 的同名欄位。
+       */
+      countsForOriginalTeam?: boolean;
     };
 
 /**

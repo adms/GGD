@@ -670,6 +670,19 @@ export interface AugmentDef extends SourceGrantFields {
   id: AugmentId;
   name: string;
   description: string;
+  /**
+   * ⭐ 2026-08-18（owner「順便補完其他沒有圖示的寶具跟固有能力」）—— 三選一卡片的圖。
+   *
+   * ⚠️ 在這一天之前 `augment@1` 沒有這一格，於是 91 張固有能力的圖示**畫好了躺在磁碟上
+   * 卻沒有任何文件指得到它**（`tools/icon-gen/local/batch.py::set_icon_field` 當時對
+   * augments 直接 `return False`，而那個拒寫閘的理由就是「schema 收不下」）。
+   * 卡片畫得出來是因為 `ui/panels/resolveChoice.ts` **按 id 組路徑**繞過去了 ——
+   * 那條慣例現在退居備援，欄位是主來源。
+   *
+   * 形狀與 `AbilityDef.icon` / `ItemDef.icon` 逐字相同（相對 `content/` 的 `assets/…`），
+   * ⛔ 不發明第二種：三者走同一支渲染器與同一條靜態路由。
+   */
+  icon?: string;
   tier: AugmentTier;
   weight: number;
   modifiers?: StatModifier[];

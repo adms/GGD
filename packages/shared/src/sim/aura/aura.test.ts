@@ -754,3 +754,56 @@ describe("the shape a content doc will use", () => {
     expect(auraIds(world, foe)).toHaveLength(1);
   });
 });
+
+// ────────────────────── 8. 人數縮放 (scaleByNearby) —— 討伐叉〈さすまた〉
+
+describe("scaleByNearby — 這一圈的強度隨範圍內的人數變化", () => {
+  it("一個人時整份不掛；每多一名隊友多一層，走開就掉回去（同一個來源在改層數）", () => {
+    const world = new SimWorld(SKELETON_ARENA, 7);
+    const holder = spawn(world, 0, P(0));
+    const mateA = spawn(world, 0, P(15)); // 圈外
+    const mateB = spawn(world, 0, P(-15)); // 圈外
+    idle(world);
+    const base = world.stats.get(holder)!.final[Stat.AttackDamage];
+
+    // ⛔ 門檻與層數上限由**夾具自己給** —— 討伐叉哪天調數字都不該讓這條紅。
+    attachSource(world, holder, {
+      id: "item:fixture-encirclement",
+      kind: "item",
+      auras: [
+        {
+          key: "encirclement",
+          radius: 9.17,
+          affects: "ally",
+          scaleByNearby: { count: "ally", max: 3 },
+          modifiers: [{ stat: Stat.AttackDamage, op: ModOp.Flat, value: 10 }],
+        },
+      ],
+    });
+    idle(world);
+    // ① 身邊沒有隊友 ⇒ 這一圈整份不掛（連持有者自己都沒有）
+    expect(activeAuraSources(world, holder)).toEqual([]);
+    expect(world.stats.get(holder)!.final[Stat.AttackDamage]).toBeCloseTo(base, 9);
+
+    // ② 一名隊友走進來 ⇒ 一層
+    place(world, mateA, LINE_X, Z0.center.z + 5);
+    idle(world);
+    const one = activeAuraSources(world, holder)[0]!;
+    expect(one.stacks ?? 1).toBe(1);
+    const step = world.stats.get(holder)!.final[Stat.AttackDamage] - base;
+    expect(step).toBeGreaterThan(0);
+
+    // ③ 第二名走進來 ⇒ 兩層，而且**正好是兩倍**（比例，⛔ 不比出貨數字）
+    place(world, mateB, LINE_X, Z0.center.z - 5);
+    idle(world);
+    expect(activeAuraSources(world, holder)[0]!.stacks ?? 1).toBe(2);
+    expect(world.stats.get(holder)!.final[Stat.AttackDamage] - base).toBeCloseTo(step * 2, 9);
+
+    // ④ 走出去掉回一層，而且是**同一個來源** —— ⛔ 不是離開再進來一次
+    place(world, mateB, LINE_X, Z0.center.z - 15);
+    idle(world);
+    const back = activeAuraSources(world, holder)[0]!;
+    expect(back.stacks ?? 1).toBe(1);
+    expect(back.id).toBe(one.id);
+  });
+});

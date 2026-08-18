@@ -12,6 +12,7 @@
     "shield"
   ],
   "selectionSlot": "generic",
+  "icon": "assets/icons/augments/grail-c-17.webp",
   "hooks": [
     {
       "on": "onDamageTaken",

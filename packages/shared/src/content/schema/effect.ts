@@ -40,6 +40,14 @@ import {
   HOOK_MAX_TRIGGERS,
   PROXY_MAX_CHAIN_DEPTH,
   STAT_CEILING_MAX,
+  // [EX∅ 根源]（2026-08-18）—— 同一張表，⛔ 不抄字面值。
+  AURA_COUNT_MAX,
+  CARRY_MAX_PASSENGERS,
+  CARRY_MAX_SEC,
+  CONVERT_TEAM_MAX_HELD,
+  CONVERT_TEAM_MAX_SEC,
+  TYPE_STREAK_MAX_THRESHOLD,
+  TYPE_STREAK_MAX_TIMEOUT_SEC,
 } from "../../sim/effects/kindLimits";
 import {
   SPREAD_MAX_FALLOFF,
@@ -460,7 +468,11 @@ function refineDispelShape(
         // Lane 3（2026-08-10）：`delayed` / `proxyCast` 用**同一組**幾何欄位，
         // 所以走同一份檢查。⛔ 各寫一份的那一天它們會分岔，而每一份看起來都對。
         | "delayed"
-        | "proxyCast";
+        | "proxyCast"
+        // [EX∅ 根源]（2026-08-18）：`carry` / `convertTeam` 用**同一組**幾何
+        // 欄位（shape + radius + radiusTier），所以走同一份檢查。
+        | "carry"
+        | "convertTeam";
     }
   >,
   ctx: z.RefinementCtx,
@@ -474,8 +486,14 @@ function refineDispelShape(
     });
   }
   // 反向：單體卻寫了圓的欄位 = 作者以為自己設定了範圍，而那三格沒有人讀。
+  // ⚠️ 透過 index signature 讀，⛔ 不是 `e[k]`：這一族現在包含
+  // `convertTeam`，而它**沒有** `side` / `maxTargets`（它的名額軸是 `maxHeld`）。
+  // 直接索引一個聯集會讓 TS 要求**每一個**成員都有那三格 —— 而為了讓型別過
+  // 就去補兩個沒有人讀的欄位，正是「畫得出來、引擎讀不到」那個失敗形態。
+  // 缺席的鍵讀出 `undefined`，也就是「作者沒填」，語意逐字不變。
+  const bag = e as unknown as Record<string, unknown>;
   for (const k of ["radius", "side", "maxTargets"] as const) {
-    if (e.shape === "single" && e[k] !== undefined) {
+    if (e.shape === "single" && bag[k] !== undefined) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: [k],
@@ -906,7 +924,16 @@ function refineEffectDef(e: EffectDef, ctx: z.RefinementCtx): void {
   }
   // 【淨化】/【破盾】/【瞬移】共用同一組形狀檢查 —— 兩份會分岔，一份不會。
   // ⚠️ `devour` 已經在上面走 `refineDevour`（它多一條 `onDevourPer` 的規則）。
-  if (e.kind === "dispel" || e.kind === "shieldBreak" || e.kind === "blink")
+  if (
+    e.kind === "dispel" ||
+    e.kind === "shieldBreak" ||
+    e.kind === "blink" ||
+    // [EX∅ 根源]：同一組幾何欄位 → 同一份檢查。少了這兩行，一份
+    // `{kind:"carry", shape:"circle"}` 沒寫 radius 的文件會在執行期
+    // `radius ?? 0` → 直接 return：動畫演完、什麼都沒發生（失敗形態②）。
+    e.kind === "carry" ||
+    e.kind === "convertTeam"
+  )
     return refineDispelShape(e, ctx);
   if (e.kind === "knockback") return refineKnockbackTier(e, ctx);
   if (e.kind !== "grantAttribute") return;
@@ -1008,6 +1035,60 @@ export const zBlockGrant = z
       .describe(
         "內部冷卻(秒):這個來源擋中一次之後,要隔多久才能再擋一次。留空 / 0 = 沒有冷卻," +
           "每一發合格的傷害都各抽一次。抽輸不會進冷卻,只有真的擋中才會。",
+      ),
+  })
+  .strict();
+
+/**
+ * 型別連擊免疫（史萊姆裝「連續受到 2 次同型別傷害後免疫該型別」）——
+ * mirrors `TypeStreakImmunityGrant` in `sim/combat/typeStreakImmunity.ts`。
+ *
+ * ⚠️ 它住在**這一支**而不是 `schema/item.ts`，理由與 {@link zBlockGrant} 逐字
+ * 相同：授予它的不只有道具（`SOURCE_GRANT_SHAPE` 展開它，所以天生技 rank /
+ * 三選一增益卡 / `applyBuff` 的限時來源同時拿得到）。`zItemTypeStreakImmunity`
+ * 是這一個常數的**別名**，⛔ 不是第二份。
+ *
+ * ⚠️ 每一個上下界都擋一種真的會發生的誤植：
+ *   · `damageTypes` **必填**且 `.min(1)` —— 沿用 `zBlockGrant.damageTypes` 的
+ *     判例：「真傷算不算連擊」是這個陣列的**內容**，不是程式裡的一行 `if`。
+ *     一個預設值會把這張卡唯一講清楚的事變成要去翻別的檔案的問題。
+ *   · `threshold` 上界 {@link TYPE_STREAK_MAX_THRESHOLD} —— 見那裡。
+ *   · `streakTimeoutSec` —— **安全閥**。免疫本身沒有到期 tick，面對一波純物理
+ *     的殭屍就是無限免疫，而 `zInvulnerable.durationSec` 已經寫過
+ *     「an unbounded immunity is an unwinnable round」。缺席 = 永不逾時，
+ *     出貨要不要填數字是 owner 的平衡決定。
+ */
+export const zTypeStreakImmunityGrant = z
+  .object({
+    damageTypes: z
+      .array(zDamageType)
+      .min(1)
+      .max(3)
+      .describe(
+        "哪幾種傷害會被計進連擊、並在達標後被免疫。想表達「真實傷害不列入」就**不要**把 true 列進來 —— " +
+          "算不算真傷是這個欄位的內容,不是寫死的規則。",
+      ),
+    threshold: z
+      .number()
+      .int()
+      .min(1)
+      .max(TYPE_STREAK_MAX_THRESHOLD)
+      .describe("連續受到幾發**同一型別**的傷害之後開始免疫該型別。卡片上的「連續 2 次」= 2。"),
+    resetMode: z
+      .enum(["restart", "zero"])
+      .optional()
+      .describe(
+        "來了**不同型別**的一發時,那一發自己算不算新連擊的第 1 發:" +
+          "restart(預設,內文的自然讀法)= 算,連擊立刻變成「新型別 ×1」;" +
+          "zero = 不算,連擊歸零,要下一發才開始數。",
+      ),
+    streakTimeoutSec: z
+      .number()
+      .positive()
+      .max(TYPE_STREAK_MAX_TIMEOUT_SEC)
+      .optional()
+      .describe(
+        "連擊多久沒被續上就歸零(秒)。留空 = 永不逾時 —— 面對一波純物理的殭屍那就是無限免疫,所以這一格是安全閥。",
       ),
   })
   .strict();
@@ -1227,6 +1308,14 @@ export const SOURCE_GRANT_SHAPE = {
    * `sim/combat/penetration.ts` import（⛔ 不抄字面值）。
    */
   penetration: zPenetrationGrant.optional(),
+  /**
+   * ⭐ 2026-08-18 —— [型別連擊免疫]（史萊姆裝）。**又是同一個授權格**：
+   * `combat/typeStreakImmunity.ts` 走 `StatsComp.sources` 而**不問 `kind`**，
+   * 所以「這張三選一卡讓你連吃兩發物理後免疫物理」「這支大招期間對魔法連擊
+   * 免疫」擋住它的只有這一格 schema 與 `sourceGrants()` 的轉發。
+   * ⛔ 少了後者 = schema 畫得出來、引擎永遠讀不到（失敗形態②）。
+   */
+  typeStreakImmunity: zTypeStreakImmunityGrant.optional(),
 } as const;
 
 /**
@@ -2844,6 +2933,31 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       radiusTier: zAoeTier.optional(),
       /** 一次最多拉幾個人 (由近到遠)。省略 = TAUNT_MAX_TARGETS */
       maxTargets: z.number().int().min(1).max(TAUNT_MAX_TARGETS).optional(),
+      /**
+       * ⭐ [反向嘲諷]（戰鬥力探測器）—— 這個圓**拉誰**。
+       *
+       * 省略 = `enemies` = 今天那一行 `enemiesInCircle`（`sim/effects/taunt.ts`），
+       * 所以出貨的鍊金術之盾（`content/items/godie-i06q.json`）**逐位元不變**。
+       */
+      side: z.enum(["allies", "enemies"]).optional(),
+      /**
+       * ⭐ 被拉的人**被迫打誰**。省略 = `caster`（施法者自己），也就是
+       * `applyTaunt(world, s, ctx.caster, …)` 今天寫死的那一格。
+       *
+       * ⛔ 不可以和 {@link side} 合成一格（「拉隊友去打敵人」與「拉敵人來打我」
+       * 是兩根獨立的軸），⛔ 也不可以叫 `applyTo` —— `zApplyToSelfOrTarget`
+       * 已經把 `applyTo` 定義成「效果落在誰身上」。
+       */
+      forcedTarget: z.enum(["caster", "target"]).optional(),
+      /**
+       * 附近的中立單位（殭屍）也一起拉。省略 = `false`。
+       *
+       * ⚠️ **只在 `side:"allies"` 有作用**：`enemies` 那一側本來就含
+       * `MONSTER_TEAM`（`sim/mobs.ts` 的 255），所以這一格對它是嚴格的 no-op。
+       * ⛔ 不要把它實作成雙向 —— 那會改掉出貨行為（鍊金術之盾不再拉殭屍，
+       * 而那是它在 PvE 唯一的價值）。
+       */
+      includeNeutrals: z.boolean().optional(),
     })
     .strict(),
   /**
@@ -3496,6 +3610,98 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       maxRemainingSec: z.number().positive().max(EXTEND_BUFF_MAX_REMAINING_SEC),
     })
     .strict(),
+  /**
+   * carry — 【背負】(禰豆子的木箱)。把一名隊友收進箱子:身體跟著載具走、
+   * 期間**不可被選取**,到期放下。mirrors the `carry` member of `EffectDef`。
+   *
+   * ⛔ 「不可選取」**不是**無敵:四根軸逐字沿用 `sim/stealth.ts::StealthRules`
+   * 已經命名的那四根,⛔ 不發明第二套詞彙。`abilityAoe` 預設 **false** ——
+   * 一發打在腳下的 AoE 照樣打得到箱子裡的人。
+   */
+  z
+    .object({
+      kind: z.literal("carry"),
+      ...EFFECT_COMMON_SHAPE,
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
+      shape: z.enum(["single", "circle"]),
+      radius: z.number().positive().max(40).optional(),
+      radiusTier: zAoeTier.optional(),
+      /** 誰躲得進箱子。省略 = `allies`。 */
+      side: z.enum(["allies", "enemies"]).optional(),
+      /** 一次背幾個。省略 = 1。 */
+      maxTargets: z.number().int().min(1).max(CARRY_MAX_PASSENGERS).optional(),
+      /**
+       * 背多久（秒）。**必填**：一個沒有期限的背負 = 一名英雄整回合退出戰鬥
+       * 而且不可選取，而那在畫面上跟「這個人卡住了」一模一樣。
+       */
+      durationSec: z.number().min(0.1).max(CARRY_MAX_SEC),
+      /**
+       * 「不可選取」的四根軸。省略整格 = `{autoAcquire:true, mobAggro:true,
+       * manualTarget:true, abilityAoe:false}`。
+       */
+      untargetable: z
+        .object({
+          autoAcquire: z.boolean().optional(),
+          mobAggro: z.boolean().optional(),
+          manualTarget: z.boolean().optional(),
+          abilityAoe: z.boolean().optional(),
+        })
+        .strict()
+        .optional(),
+      /**
+       * 「只有生命低於 15% 的隊友躲得進來」這一類的**逐一過濾**。
+       *
+       * ⛔ 只能寫在這裡：`onInterval` 的 hook 不帶 target，hook 層的
+       * `subject:"target"` 葉子一律讀 FALSE。
+       */
+      victimCondition: zVictimCondition,
+      /** 交給**真的上車的那群人**的效果（回血、冷卻鎖）。⛔ 不是新機制。 */
+      onHitTargets: z.array(zEffectDef).optional(),
+      /** 載具死了乘客怎麼辦。省略 = `release`（放下、恢復可選取）。 */
+      onCarrierDeath: z.enum(["release", "drop"]).optional(),
+    })
+    .strict(),
+  /**
+   * convertTeam — 【陣營轉換】(大師球)。把一隻單位**暫時**借到自己這一隊。
+   * mirrors the `convertTeam` member of `EffectDef`。
+   *
+   * ⛔ 這一版**沒有** `toTeam`（`"neutral"` 那個成員）與 `killCredit`：
+   * flag 只編 0..3，多一個成員就是「下拉裡有、引擎不發」；而
+   * `summon.killCredit:"owner"` 至今被 handler 拒絕，⛔ 不要一個只有單一
+   * 合法成員的 enum。
+   */
+  z
+    .object({
+      kind: z.literal("convertTeam"),
+      ...EFFECT_COMMON_SHAPE,
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
+      shape: z.enum(["single", "circle"]),
+      radius: z.number().positive().max(40).optional(),
+      radiusTier: zAoeTier.optional(),
+      /** 什麼時候歸位。省略 = `death`（打死才還）。 */
+      until: z.enum(["death", "duration", "roundEnd"]).optional(),
+      /** 借多久（秒）。只有 `until:"duration"` 讀得到它。 */
+      durationSec: z.number().positive().max(CONVERT_TEAM_MAX_SEC).optional(),
+      /** 同時能控幾隻。省略 = 2。 */
+      maxHeld: z.number().int().min(1).max(CONVERT_TEAM_MAX_HELD).optional(),
+      /** 同一個受害者一回合能不能被重捕。省略 = `true`（不能）。 */
+      oncePerRoundPerVictim: z.boolean().optional(),
+      /**
+       * ⚠️ **勝負語意的開關**（拿給 owner 的那一格）。
+       *
+       * `MatchController.teamAliveCount` 讀 `seat.teamId`（捕獲不動它），而
+       * `sim/revive.ts::teamAliveInZone` 讀 `world.team`（捕獲會動）——
+       * 被我方捕獲的**敵方英雄**，在勝負判定上算不算還替敵隊活著。
+       *
+       * ⭐ **省略 = `false`** —— owner 2026-08-18 逐字：「物理意義上，我們比較像是**複製一個敵方隊友短暫在這一回合加入我方**，所以**實質上這個單位就是我方單位**，就算他造成任何傷害或者戰績都是算在我方而非那個敵方單位上」
+       *
+       * ⚠️ 這**推翻**了盤點時的建議（維持 `true`＝仍替敵隊活著）。第〇·六守則：
+       * 高層級（owner 的新裁決）贏，而且**預設啟動**；`true` 留著是為了一鍵回頭，
+       * ⛔ 不替它寫第二條測試。
+       */
+      countsForOriginalTeam: z.boolean().optional(),
+    })
+    .strict(),
 ]);
 
 /**
@@ -4058,6 +4264,46 @@ export function refineUnrankedHookPerRank(
 }
 
 /**
+ * 靈氣的**人數縮放** —— mirrors `AuraCountScale` in `sim/aura/aura.ts`。
+ *
+ * ⚠️ 它是一個 plain `.strict()` ZodObject，⛔ **刻意不掛 `.superRefine`**：
+ * `schema/item.ts` 的 `zItemAuraDef` 走 `zAuraDef.innerType().extend()`，
+ * 而 `.innerType()` 會**靜默丟掉** `zAuraDef` 上的 refine。跨欄位規則
+ *（min ≤ max）因此寫在 `zAuraDef` 的 refine 鏈上，並且在 item.ts **再寫一次**
+ * —— 兩處都有，才不會出現「道具版的圈沒有被檢查」這個安靜的洞。
+ */
+export const zAuraCountScale = z
+  .object({
+    /**
+     * **數誰**。⛔ 不給預設，也 ⛔ 不與 `zAuraDef.affects`（這圈打誰）共用：
+     * 「打敵人、但強度看我方人數」是一個完全合法的設計，共用一格就寫不出來。
+     */
+    count: z.enum(["ally", "enemy", "all"]),
+    /**
+     * 數人的半徑。省略 = **同這圈的半徑**（＝直接沿用 auraSystem 已經跑完的
+     * 那一次 `queryOverlap`，零額外成本）。
+     */
+    radius: z.number().positive().max(40).optional(),
+    /**
+     * 持有者算不算一個人頭。省略 = `false`。
+     *
+     * ⚠️ 與 `zAuraDef.includeSelf`（持有者**吃不吃得到**這圈）是**兩件事**，
+     * ⛔ 不可共用一格。
+     */
+    includeSelf: z.boolean().optional(),
+    /** 人數低於它 ⇒ 這一圈整份不掛（「離開範圍則失去該增幅」）。省略 = 1。 */
+    min: z.number().int().min(1).max(AURA_COUNT_MAX).optional(),
+    /**
+     * ⭐ **承重、必填**：`stacks` 是**線性**乘數
+     *（`stats/statPipeline.ts` 的 `pctMult *= 1 + m.value * stacks`），
+     * 所以一條 `pctMult -0.5` 配 stacks 2 就是把對方那條屬性歸零。
+     * 一個沒有上界的人數縮放不是平衡問題，是一個回合結束不了的問題。
+     */
+    max: z.number().int().min(1).max(AURA_COUNT_MAX),
+  })
+  .strict();
+
+/**
  * One AURA (靈氣) projected by a passive — mirrors `AuraDef` in
  * sim/aura/aura.ts. The 「範圍 R 內的敵人/隊友」 half of the WC3 aura family;
  * `modifiers` above only ever reach the unit carrying the passive.
@@ -4107,10 +4353,36 @@ export const zAuraDef = z
      * choice (or the anti-flicker knob), never a fidelity restoration.
      */
     lingerSec: z.number().min(0).max(10).optional(),
+    /**
+     * ⭐ [靈氣人數縮放]（討伐叉「周圍每有一名隊友就更強」）——
+     * 這一圈的強度隨**範圍內的人數**變化。
+     *
+     * ⛔ 掛在**圈**上，不掛在 `zStatModifier` 上：後者會同時開放給四個沒有
+     * 「範圍」概念的授權面（道具本體 / 天生技 rank / 增益卡 / applyBuff），
+     * 而那四個地方填了它什麼都不會發生（失敗形態②）。
+     */
+    scaleByNearby: zAuraCountScale.optional(),
   })
   .strict()
-  .refine((a) => (a.modifiers?.length ?? 0) + (a.hooks?.length ?? 0) > 0, {
-    message: "aura must carry at least one modifier or hook",
+  // ⚠️ **一層 refine，⛔ 不是兩層**：`schema/item.ts` 的 `zItemAuraDef` 走
+  // `zAuraDef.innerType().extend()`，而 `.innerType()` 只剝**一層** ZodEffects
+  // —— 鏈成兩個 `.refine` 的那一刻 `.innerType()` 回的是另一個 ZodEffects，
+  // 而 `ZodEffects` 沒有 `.extend`，於是整個 `schema/index.ts` 在 import 時
+  // **當場 TypeError**（實測，2026-08-18）。兩條規則因此合在同一個 refine 裡。
+  .superRefine((a, ctx) => {
+    if ((a.modifiers?.length ?? 0) + (a.hooks?.length ?? 0) === 0) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "aura must carry at least one modifier or hook",
+      });
+    }
+    if (a.scaleByNearby !== undefined && (a.scaleByNearby.min ?? 1) > a.scaleByNearby.max) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["scaleByNearby", "min"],
+        message: "scaleByNearby.min 不可以大於 max —— 那是一個永遠掛不上去的靈氣",
+      });
+    }
   });
 
 /**

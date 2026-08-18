@@ -79,6 +79,34 @@ import {
   patchGrailDraft,
 } from "../grailDraft";
 import type { GrailDraftRules } from "@ggd/shared/sim/economy/grailVocabulary";
+// GH#355 —— 通用引擎的**第四種**非純量形狀（物件陣列）。規則在 ../configRows，
+// 這一頁只排版；欄位結構全部由那支從出貨 Zod 推導，⛔ 這裡沒有第二份界。
+import {
+  addRow,
+  moveRow,
+  patchRows,
+  removeRow,
+  rowColumns,
+  rowsFrom,
+  setCell,
+  validateRows,
+  type ConfigRowsSpec,
+  type RowDraft,
+} from "../configRows";
+import {
+  AUGMENT_TIERS_SPEC,
+  DISADVANTAGE_FIELD_ORDER,
+  DISADVANTAGE_LABELS,
+  SHIPPED_AUGMENT_TIERS,
+  SHIPPED_DISADVANTAGE_WEIGHTS,
+  SHIPPED_WEAPON_TIERS,
+  WEAPON_TIERS_SPEC,
+  disadvantageSummary,
+  patchDisadvantageWeights,
+  readDisadvantageWeights,
+  validateDisadvantage,
+} from "../tierRows";
+import type { DisadvantageWeights } from "@ggd/shared/content/schema/config";
 
 function errText(err: unknown): string {
   return err instanceof Error ? err.message : String(err);
@@ -96,6 +124,14 @@ export function ItemDraftPage(): JSX.Element {
   const [shelf, setShelf] = useState<LegendaryShelfConfig>({ ...SHIPPED_LEGENDARY_SHELF });
   /** 🏆 聖杯顯現 —— arena-rules 的 `grailDraft` 區塊（見 ../grailDraft.ts）。 */
   const [grail, setGrail] = useState<GrailDraftRules>({ ...SHIPPED_GRAIL_DRAFT });
+  /** ⭐ GH#355 —— 兩張階級升級表與劣勢權重，全部是 arena-rules 的頂層欄位。 */
+  const [weaponRows, setWeaponRows] = useState<RowDraft[]>(() =>
+    rowsFrom({ weaponTiers: SHIPPED_WEAPON_TIERS }, WEAPON_TIERS_SPEC),
+  );
+  const [augmentRows, setAugmentRows] = useState<RowDraft[]>(() =>
+    rowsFrom({ augmentTiers: SHIPPED_AUGMENT_TIERS }, AUGMENT_TIERS_SPEC),
+  );
+  const [disadv, setDisadv] = useState<DisadvantageWeights>({ ...SHIPPED_DISADVANTAGE_WEIGHTS });
   const [busy, setBusy] = useState(false);
   const [apiErr, setApiErr] = useState<string | null>(null);
   const [flash, setFlash] = useState<string | null>(null);
@@ -121,6 +157,15 @@ export function ItemDraftPage(): JSX.Element {
         setConflict(readDraftConflict(full));
         setShelf(readLegendaryShelf(full));
         setGrail(extractGrailDraft(full));
+        // ⚠️ 這份文件**沒有**這兩個鍵時要退回出貨值，⛔ 不是畫成空表 —— 引擎那一側
+        // 走的是 `?? DEFAULT_*`，畫成空表會讓後台說一件遊戲裡沒有在做的事。
+        const wt = rowsFrom(full, WEAPON_TIERS_SPEC);
+        setWeaponRows(wt.length > 0 ? wt : rowsFrom({ weaponTiers: SHIPPED_WEAPON_TIERS }, WEAPON_TIERS_SPEC));
+        const at = rowsFrom(full, AUGMENT_TIERS_SPEC);
+        setAugmentRows(
+          at.length > 0 ? at : rowsFrom({ augmentTiers: SHIPPED_AUGMENT_TIERS }, AUGMENT_TIERS_SPEC),
+        );
+        setDisadv(readDisadvantageWeights(full));
         const cfg = extractItemDraft(full);
         if (cfg) setForm(formFromConfig(cfg));
       } catch (err) {
@@ -142,20 +187,37 @@ export function ItemDraftPage(): JSX.Element {
   );
   const retiredIds = parseRetiredTables(retiredText);
   const shelfErr = useMemo(() => validateLegendaryShelf(shelf), [shelf]);
+  const weaponVerdict = useMemo(() => validateRows(weaponRows, WEAPON_TIERS_SPEC), [weaponRows]);
+  const augmentVerdict = useMemo(() => validateRows(augmentRows, AUGMENT_TIERS_SPEC), [augmentRows]);
+  const disadvErrs = useMemo(() => validateDisadvantage(disadv), [disadv]);
+  const tiersOk =
+    weaponVerdict.value !== null &&
+    augmentVerdict.value !== null &&
+    Object.keys(disadvErrs).length === 0;
 
   const save = async (): Promise<void> => {
     if (!preview || !baseDoc || retiredErr || shelfErr) return;
+    if (weaponVerdict.value === null || augmentVerdict.value === null) return;
+    if (Object.keys(disadvErrs).length > 0) return;
     setBusy(true);
     setApiErr(null);
     try {
       // 每個 patch 疊在**同一份基底文件**上，一次 PUT。分次寫的話，後一次會
       // 用前一次之前的基底覆蓋回去 —— 那正是覆蓋層存整份文件的那個陷阱。
-      const next = patchLegendaryShelf(
+      const withBlocks = patchLegendaryShelf(
         patchDraftConflict(
           patchGrailDraft(patchRetiredTables(patchItemDraft(baseDoc, preview), retiredIds), grail),
           conflict,
         ),
         shelf,
+      );
+      const next = patchDisadvantageWeights(
+        patchRows(
+          patchRows(withBlocks, WEAPON_TIERS_SPEC, weaponVerdict.value),
+          AUGMENT_TIERS_SPEC,
+          augmentVerdict.value,
+        ),
+        disadv,
       );
       const head = await putOverlayDoc(ARENA_RULES_COLLECTION, ARENA_RULES_DOC_ID, next);
       setBaseDoc(next);
@@ -174,6 +236,9 @@ export function ItemDraftPage(): JSX.Element {
     setConflict(SHIPPED_DRAFT_CONFLICT);
     setShelf({ ...SHIPPED_LEGENDARY_SHELF });
     setGrail({ ...SHIPPED_GRAIL_DRAFT });
+    setWeaponRows(rowsFrom({ weaponTiers: SHIPPED_WEAPON_TIERS }, WEAPON_TIERS_SPEC));
+    setAugmentRows(rowsFrom({ augmentTiers: SHIPPED_AUGMENT_TIERS }, AUGMENT_TIERS_SPEC));
+    setDisadv({ ...SHIPPED_DISADVANTAGE_WEIGHTS });
     setFlash(null);
   };
 
@@ -648,10 +713,71 @@ export function ItemDraftPage(): JSX.Element {
         <div style={{ color: GOLD, fontSize: 12, marginTop: 6 }}>{grailDraftSummary(grail)}</div>
       </div>
 
+      {/* ⭐ GH#355 —— 兩張階級升級表 + 劣勢權重。三者是**同一個機制**（見 ../tierRows.ts） */}
+      <RowsTable
+        spec={WEAPON_TIERS_SPEC}
+        rows={weaponRows}
+        errors={weaponVerdict.rows}
+        tableErr={weaponVerdict.table}
+        onChange={setWeaponRows}
+      />
+      <RowsTable
+        spec={AUGMENT_TIERS_SPEC}
+        rows={augmentRows}
+        errors={augmentVerdict.rows}
+        tableErr={augmentVerdict.table}
+        onChange={setAugmentRows}
+      />
+
+      <div style={{ marginTop: 14 }}>
+        <div style={{ color: ACCENT, fontSize: 12, marginBottom: 6 }}>誰算劣勢方（劣勢值 D）</div>
+        <p style={{ color: TEXT_DIM, fontSize: 12, lineHeight: 1.7, margin: "0 0 8px" }}>
+          上面兩張表的每一列都乘這個 <b style={{ color: TEXT_MAIN }}>D</b>。owner 2026-08-17 逐字給的公式是
+          三個訊號加權：<b style={{ color: GOLD }}>回合／生命 50 · 裝備 30 · 近況 20</b>。
+        </p>
+        {DISADVANTAGE_FIELD_ORDER.map((field) => (
+          <div key={field} style={rowStyle}>
+            <span style={{ color: TEXT_MAIN, minWidth: 150 }}>{DISADVANTAGE_LABELS[field].zh}</span>
+            <code style={{ color: TEXT_DIM, fontSize: 11, minWidth: 150 }}>
+              disadvantageWeights.{field}
+            </code>
+            <div style={{ flex: 1 }}>
+              <input
+                type="number"
+                step={5}
+                min={0}
+                max={100}
+                aria-label={DISADVANTAGE_LABELS[field].zh}
+                data-field={field}
+                value={disadv[field]}
+                onChange={(e) => setDisadv({ ...disadv, [field]: Number(e.target.value) })}
+                style={{
+                  width: 90,
+                  background: "#0b0e17",
+                  color: TEXT_MAIN,
+                  border: `1px solid ${PANEL_BORDER}`,
+                  borderRadius: 3,
+                  padding: "4px 6px",
+                }}
+              />
+              <div style={{ color: TEXT_DIM, fontSize: 11, marginTop: 4, lineHeight: 1.6 }}>
+                {DISADVANTAGE_LABELS[field].note}
+              </div>
+              {disadvErrs[field] && (
+                <div style={{ color: DANGER, fontSize: 12, marginTop: 4 }}>{disadvErrs[field]}</div>
+              )}
+            </div>
+          </div>
+        ))}
+        <div style={{ color: GOLD, fontSize: 12, marginTop: 6 }}>{disadvantageSummary(disadv)}</div>
+      </div>
+
       <div style={{ display: "flex", gap: 8, marginTop: 16 }}>
         <Btn
           onClick={() => void save()}
-          disabled={busy || !preview || !baseDoc || retiredErr !== null || shelfErr !== null}
+          disabled={
+            busy || !preview || !baseDoc || retiredErr !== null || shelfErr !== null || !tiersOk
+          }
         >
           {busy ? "儲存中…" : "儲存"}
         </Btn>
@@ -664,5 +790,127 @@ export function ItemDraftPage(): JSX.Element {
         規則在 tick 0 之前定格進 <code>MatchController</code>，所以已經開打的那一場不會變。
       </p>
     </Panel>
+  );
+}
+
+/**
+ * 一張「物件陣列」表（GH#355）。
+ *
+ * ⛔ **這裡沒有任何一格欄位定義** —— 欄名、型別、界、enum 選項全部來自
+ * `rowColumns(spec)`，而那支從**出貨 Zod** 走出來。schema 加一欄，這張表當場多一欄。
+ */
+function RowsTable(props: {
+  spec: ConfigRowsSpec;
+  rows: RowDraft[];
+  errors: Record<string, string>[];
+  tableErr: string | null;
+  onChange: (rows: RowDraft[]) => void;
+}): JSX.Element {
+  const { spec, rows, errors, tableErr, onChange } = props;
+  const cols = useMemo(() => rowColumns(spec), [spec]);
+  const cell: React.CSSProperties = {
+    background: "#0b0e17",
+    color: TEXT_MAIN,
+    border: `1px solid ${PANEL_BORDER}`,
+    borderRadius: 3,
+    padding: "3px 5px",
+    fontSize: 12,
+  };
+  return (
+    <div style={{ marginTop: 16 }}>
+      <div style={{ color: ACCENT, fontSize: 12, marginBottom: 6 }}>{spec.title}</div>
+      {spec.intro.map((line, i) => (
+        <p key={i} style={{ color: TEXT_DIM, fontSize: 12, lineHeight: 1.7, margin: "0 0 6px" }}>
+          {line}
+        </p>
+      ))}
+      <div style={{ overflowX: "auto" }}>
+        <table style={{ borderCollapse: "collapse", fontSize: 12 }}>
+          <thead>
+            <tr>
+              {cols.map((c) => (
+                <th
+                  key={c.key}
+                  title={c.note}
+                  style={{
+                    color: TEXT_DIM,
+                    textAlign: "left",
+                    padding: "4px 6px",
+                    borderBottom: PANEL_BORDER,
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {c.zh}
+                  {c.optional && <span style={{ color: TEXT_DIM }}>（可留白）</span>}
+                </th>
+              ))}
+              <th style={{ borderBottom: PANEL_BORDER }} />
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row, i) => (
+              <tr key={i}>
+                {cols.map((c) => (
+                  <td key={c.key} style={{ padding: "3px 6px", verticalAlign: "top" }}>
+                    {c.kind === "enum" ? (
+                      <select
+                        aria-label={`${spec.title} 第 ${i + 1} 列 ${c.zh}`}
+                        data-field={`${spec.path}.${i}.${c.key}`}
+                        value={row[c.key] ?? ""}
+                        onChange={(e) => onChange(setCell(rows, i, c.key, e.target.value))}
+                        style={{ ...cell, width: c.width }}
+                      >
+                        {c.optional && <option value="">（不設）</option>}
+                        {c.options.map((o) => (
+                          <option key={o} value={o}>
+                            {spec.columns[c.key]?.optionZh?.[o] ?? o}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      <input
+                        type={c.kind === "number" ? "number" : "text"}
+                        step={c.int ? 1 : 0.1}
+                        min={c.min}
+                        max={c.max}
+                        aria-label={`${spec.title} 第 ${i + 1} 列 ${c.zh}`}
+                        data-field={`${spec.path}.${i}.${c.key}`}
+                        value={row[c.key] ?? ""}
+                        onChange={(e) => onChange(setCell(rows, i, c.key, e.target.value))}
+                        style={{ ...cell, width: c.width }}
+                      />
+                    )}
+                    {errors[i]?.[c.key] && (
+                      <div style={{ color: DANGER, fontSize: 11, marginTop: 2, maxWidth: 160 }}>
+                        {errors[i]?.[c.key]}
+                      </div>
+                    )}
+                  </td>
+                ))}
+                <td style={{ padding: "3px 6px", whiteSpace: "nowrap", verticalAlign: "top" }}>
+                  {spec.ordered && (
+                    <>
+                      <Btn onClick={() => onChange(moveRow(rows, i, -1))}>↑</Btn>{" "}
+                      <Btn onClick={() => onChange(moveRow(rows, i, 1))}>↓</Btn>{" "}
+                    </>
+                  )}
+                  <Btn onClick={() => onChange(removeRow(rows, i))}>刪除</Btn>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div style={{ marginTop: 6 }}>
+        <Btn onClick={() => onChange(addRow(rows, spec))} disabled={rows.length >= spec.maxRows}>
+          ＋ 新增一階
+        </Btn>
+        <span style={{ color: TEXT_DIM, fontSize: 11, marginLeft: 8 }}>
+          {rows.length} / {spec.maxRows} 階
+          {spec.ordered && " · 順序有意義：引擎由上到下逐階問，第一個中的就用它"}
+        </span>
+      </div>
+      {tableErr && <div style={{ color: DANGER, fontSize: 12, marginTop: 4 }}>{tableErr}</div>}
+    </div>
   );
 }

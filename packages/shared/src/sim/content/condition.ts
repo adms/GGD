@@ -213,12 +213,33 @@ export const COMPARE_OPS: readonly CompareOp[] = [">=", "<=", ">", "<", "==", "!
  * coin, a bare test entity) matches none — the same honest reading `HookDef.victim`
  * takes, and the reason there is no `"other"` member to invert against.
  */
-export type ConditionEntityKind = "champion" | "mob" | "summon" | "guardian";
+export type ConditionEntityKind =
+  | "champion"
+  | "mob"
+  | "summon"
+  | "guardian"
+  /**
+   * ⭐ [EX∅ 根源]（2026-08-18）—— 「特殊殭屍」與「殭屍王」各自一格。
+   *
+   * ⚠️ 它們是 `"mob"` 的**子集**，⛔ 不是它的兄弟：一隻殭屍王同時滿足
+   * `mob` 與 `mobBoss`。分開是因為卡片真的要分得開 —— 大師球的逆轉條件是
+   * 「收服**殭屍王或特殊殭屍**」，而寫成 `mob` 的話那張卡在第一波雜兵身上
+   * 就被用掉了（做得到、但不是卡面說的那件事）。
+   *
+   * ⛔ 不要用 `mobCountsAsChampion` 那兩格後台開關代替：那兩格回答的是
+   * 「這隻算不算英雄單位」（一個**平衡**問題，操作者隨時會翻），這兩格問的是
+   * 「牠是哪一種身體」（一個**事實**）。共用一格會讓後台一個勾把大師球的
+   * 逆轉條件靜默改掉。
+   */
+  | "mobSpecial"
+  | "mobBoss";
 export const CONDITION_ENTITY_KINDS: readonly ConditionEntityKind[] = [
   "champion",
   "mob",
   "summon",
   "guardian",
+  "mobSpecial",
+  "mobBoss",
 ];
 
 /**
@@ -705,6 +726,13 @@ export function entityIsKind(world: SimWorld, id: EntityId, is: ConditionEntityK
       return mobCountsAsChampion(world, id);
     case "mob":
       return world.mob.has(id);
+    // ⭐ [EX∅ 根源]：`MobComp.kind` 是 spawn 時寫死、之後**永不變動**的那一格
+    //（`sim/components.ts`），所以這兩顆葉子在一場比賽裡對同一具身體永遠是
+    // 同一個答案 —— ⛔ 這不是缺點，是它們能當「逆轉條件」的原因。
+    case "mobSpecial":
+      return world.mob.get(id)?.kind === "special";
+    case "mobBoss":
+      return world.mob.get(id)?.kind === "boss";
     case "summon":
       return world.summon.has(id);
     case "guardian":
@@ -1302,6 +1330,8 @@ const KIND_LABEL: Record<ConditionEntityKind, string> = {
   mob: "小兵",
   summon: "召喚物",
   guardian: "守護者",
+  mobSpecial: "特殊殭屍",
+  mobBoss: "殭屍王",
 };
 
 /** Trim a ratio to a percent without trailing zeros: 0.35 → "35%", 0.125 → "12.5%". */

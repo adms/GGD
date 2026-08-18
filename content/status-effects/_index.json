@@ -1,6 +1,6 @@
 {
   "collection": "status-effects",
-  "hash": "e9936d7778a9",
+  "hash": "87725c810a97",
   "entries": [
     {
       "id": "armor-break",
@@ -39,6 +39,12 @@
       "size": 340
     },
     {
+      "id": "charmed",
+      "path": "status-effects/charmed.json",
+      "hash": "17d18b833b84",
+      "size": 285
+    },
+    {
       "id": "confusion",
       "path": "status-effects/confusion.json",
       "hash": "314d149a1787",
@@ -69,6 +75,12 @@
       "size": 588
     },
     {
+      "id": "grief-seed-charge",
+      "path": "status-effects/grief-seed-charge.json",
+      "hash": "f2caed76aa3f",
+      "size": 278
+    },
+    {
       "id": "grievous-wounds",
       "path": "status-effects/grievous-wounds.json",
       "hash": "afe1998cf669",
@@ -91,6 +103,12 @@
       "path": "status-effects/magic-break.json",
       "hash": "b7315d34c3dd",
       "size": 568
+    },
+    {
+      "id": "millennium-plot-armor",
+      "path": "status-effects/millennium-plot-armor.json",
+      "hash": "ee418f39dce6",
+      "size": 285
     },
     {
       "id": "moon-combo",
@@ -139,6 +157,12 @@
       "path": "status-effects/rage.json",
       "hash": "96167a4c7f4b",
       "size": 535
+    },
+    {
+      "id": "red-comet",
+      "path": "status-effects/red-comet.json",
+      "hash": "3d8c7341d275",
+      "size": 239
     },
     {
       "id": "root",
@@ -205,6 +229,18 @@
       "path": "status-effects/triforce-courage.json",
       "hash": "f865a67099ee",
       "size": 907
+    },
+    {
+      "id": "united-states-of-smash",
+      "path": "status-effects/united-states-of-smash.json",
+      "hash": "6a578c80000b",
+      "size": 292
+    },
+    {
+      "id": "witch-form",
+      "path": "status-effects/witch-form.json",
+      "hash": "2a1033994032",
+      "size": 489
     }
   ]
 }

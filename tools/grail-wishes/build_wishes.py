@@ -37,6 +37,8 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 CSV = pathlib.Path(__file__).with_name("ggd_sacred_grail_wishes_v1.csv")
 OUT = ROOT / "content" / "augments"
+# 圖示存在性檢查的根（`icon` 是相對 content/ 的路徑）。
+CONTENT_ROOT = ROOT / "content"
 
 # `config/displacement-tiers.json` 的 push 梯「小」。⛔ 不是憑感覺挑的數字。
 PUSH_TIER_SMALL = {"distance": 2, "speed": 16}
@@ -272,6 +274,16 @@ def build() -> tuple[dict[str, dict], list[str]]:
             "tags": a["tags"],
             "selectionSlot": row["selection_slot"],
         }
+        # ⭐ 2026-08-18（owner「順便補完其他沒有圖示的寶具跟固有能力」）——
+        # `augment@1` 這一天才長出 `icon` 欄位。⛔ 它**不從 CSV 來**（母本沒有這一欄，
+        # 加一欄等於要 owner 手填 91 個路徑），而是**從磁碟推導**：圖示由
+        # `tools/icon-gen/local/batch.py` 產出，檔名完全由 id 決定。
+        # ⚠️ 只有檔案**真的存在**時才寫 —— 寫一個指向空氣的路徑會讓 `icons.test.ts`
+        # 紅，而且卡片上是一張破圖而不是乾淨的 fallback。
+        # ⚠️ 位置在 selectionSlot 之後，與出貨的 60 份逐格同序（`--check` 是逐位元比對）。
+        icon_rel = f"assets/icons/augments/{a['id']}.webp"
+        if (CONTENT_ROOT / icon_rel).exists():
+            doc["icon"] = icon_rel
         elig = translate_eligibility(row)
         if elig:
             doc["eligibility"] = elig

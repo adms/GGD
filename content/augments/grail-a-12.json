@@ -12,6 +12,7 @@
     "physical"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-a-12.webp",
   "damageTypeOverride": {
     "scope": "ability",
     "becomes": "physical",

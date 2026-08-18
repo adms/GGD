@@ -12,6 +12,7 @@
     "magic"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-c-07.webp",
   "damageTypeOverride": {
     "scope": "basic",
     "becomes": "magic",

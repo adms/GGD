@@ -121,6 +121,24 @@ export const zAugmentDef = z
     eligibility: zGrailEligibility.optional(),
     /** ⭐ §16 顯現位置偏好 —— 缺席時開牌視同 `generic`。 */
     selectionSlot: zAugmentSelectionSlot.optional(),
+    /**
+     * ⭐ **圖示**（owner 2026-08-18：「順便補完其他沒有圖示的寶具跟固有能力」）。
+     *
+     * ⚠️ 這一格的缺席**不是設計，是一個接了一半的管線**：
+     * `tools/icon-gen/local/batch.py` 的檔頭自己記著「augment PNG 有畫出來，
+     * 但 `augment@1` 是 `.strict()` 而且**沒有 icon 欄位**，所以 doc 欄位沒有被寫」
+     * —— 於是 91 張固有能力卡在三選一畫面上**全部沒有圖**，而
+     * `content:build` 綠、schema 綠、測試綠（失敗形態②：畫出來了但沒人接得到）。
+     *
+     * 形狀逐字抄 `item@1.icon`（`^assets/` 前綴 + `.optional()`），⛔ 不發明第二種：
+     * 兩個集合的圖示走同一支渲染器、同一個靜態路由，兩份規則就是兩份會分岔的規則。
+     * `.optional()` 讓 91 份還沒畫的文件照常載入 —— 這一格是**加法**，
+     * ⛔ 不是一次會讓整棵內容樹被 Zod 退回的必填欄（2026-08-02 事故的形狀）。
+     */
+    icon: z
+      .string()
+      .regex(/^assets\//, "icon must be relative to content/ and start with assets/")
+      .optional(),
   })
   .strict();
 

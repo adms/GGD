@@ -90,6 +90,14 @@ describe("迴避 sightings (ct-e05)", () => {
     expect(SRC).not.toMatch(/from\s+"\.\.\/ui\//);
     expect(SRC).not.toMatch(/from\s+"\.\.\/frameBus"/);
     expect(SRC).not.toContain("閃避");
+    // ⭐ 2026-08-18：`immune` 接上來的時候「免疫」兩個字一度以 `recordEvade(…, "免疫")`
+    // 的樣子住在這個檔裡，而這條守衛是綠的 —— 它只掃了**一個**詞。文案搬到
+    // `ui/WorldAnchorLayer.EVADE_LABELS` 之後，把第二個詞也關起來。
+    // ⚠️ 與上面那條一樣是**整個檔的純文字掃描**，連註解都算 —— 這是刻意的，
+    // 而且是既有 `閃避` 那條就在做的事：一個「只有字串字面量不准」的版本要嘛
+    // 需要一個真的 tokenizer，要嘛（實測過）會被 `can't` 的那一撇騙過去。
+    // 代價是這個檔的註解要用英文講「immunity」，而那個代價很小。
+    expect(SRC).not.toContain("免疫");
     expect(SRC).not.toContain("pushCombatText");
   });
 });

@@ -12,6 +12,7 @@
     "aoe"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-c-19.webp",
   "hooks": [
     {
       "on": "onInterval",

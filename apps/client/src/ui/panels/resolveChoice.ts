@@ -50,26 +50,29 @@ export function resolveChoice(choice: string): ResolvedChoice {
     return { name: attr.label, desc: attrFeedsLabel(attr.attr) };
   }
 
-  // Augments carry no w3x art (they are our own pool, not imported), and the
-  // `augment@1` schema is `.strict()` with NO `icon` field — so unlike abilities
-  // and items their art can NOT be announced by a doc field, and
-  // `tools/icon-gen/local/batch.py::set_icon_field` deliberately refuses to write
-  // one. That guard is correct; do not remove it.
+  // Augments carry no w3x art (they are our own pool, not imported); the icon
+  // pipeline draws `assets/icons/augments/<id>.webp` for each one.
   //
-  // The art still exists: the icon pipeline generates `assets/icons/augments/
-  // <id>.webp` for all 21, and the filename is fully determined by the id. So we
-  // resolve it BY CONVENTION here instead. Without this the draft cards render as
-  // GlyphTile letter tiles (「鐵」「疾」「B」) forever, which is exactly what a
-  // playtest caught — #110 makes the card icon mandatory.
+  // ⭐ 2026-08-18 —— **the doc field is now the primary source.** Until then
+  // `augment@1` was `.strict()` with NO `icon` field, so 91 docs could not carry
+  // their own art and this line resolved it BY CONVENTION instead. owner
+  // authorised the field ("補完其他沒有圖示的寶具跟固有能力"), the 91 PNGs that
+  // were already on disk got wired, and `set_icon_field` no longer refuses.
   //
-  // A missing file is safe: GlyphTile draws its deterministic glyph underneath and
-  // <IconImg> simply never paints over it.
+  // ⚠️ The convention fallback STAYS, and deliberately so: it is what kept the
+  // cards from rendering as GlyphTile letter tiles (「鐵」「疾」「B」) for the
+  // whole time the field was missing — the exact defect a playtest caught, and
+  // #110 makes the card icon mandatory. A doc authored without `icon` (the field
+  // is `.optional()`) still gets its art. Field first, convention second.
+  //
+  // A missing file is safe either way: GlyphTile draws its deterministic glyph
+  // underneath and <IconImg> simply never paints over it.
   const aug = Augments.tryGet(choice as AugmentId);
   if (aug) {
     return {
       name: aug.name,
       desc: aug.description ?? "",
-      icon: `assets/icons/augments/${aug.id}.webp`,
+      icon: aug.icon ?? `assets/icons/augments/${aug.id}.webp`,
     };
   }
 

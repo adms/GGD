@@ -12,6 +12,7 @@
     "lightning"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-ex-20.webp",
   "hooks": [
     {
       "on": "onBasicAttack",

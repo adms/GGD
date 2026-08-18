@@ -1,0 +1,57 @@
+{
+  "schema": "item@1",
+  "cost": 0,
+  "tier": 5,
+  "craftRole": "none",
+  "id": "millennium-puzzle",
+  "name": "千年積木",
+  "icon": "assets/icons/items/millennium-puzzle.webp",
+  "description": "道具\n效能\n[我不能輸，因為劇情需要] 擋下致命傷害\n[我不能輸，因為劇情需要] 回復 20%生命，並在 15 秒內 AP ×10\n[我不能輸，因為劇情需要] 冷卻時間 15 秒\n\n解說\n輸不起的人不會輸，這不是實力問題，是版面問題。",
+  "tags": [
+    "legendary",
+    "ex-origin",
+    "cheat-death",
+    "burst"
+  ],
+  "marks": [
+    {
+      "markId": "millennium-plot-armor",
+      "initial": 12,
+      "max": 12,
+      "durationSec": -1,
+      "resetOn": "round",
+      "lethal": {
+        "consume": 1,
+        "surviveHpPct": 0.2,
+        "restoreMode": "restore",
+        "damageTypes": [
+          "physical",
+          "magic",
+          "true"
+        ],
+        "internalCooldown": 15,
+        "selfEffects": [
+          {
+            "kind": "applyBuff",
+            "applyTo": "self",
+            "duration": 15,
+            "statusId": "millennium-plot-armor",
+            "stackKey": "millennium-plot-armor",
+            "maxStacks": 1,
+            "polarity": "buff",
+            "modifiers": [
+              {
+                "stat": "ap",
+                "op": "pctMult",
+                "value": 9
+              }
+            ]
+          }
+        ],
+        "aoeEffects": [],
+        "aoeRadius": 0
+      }
+    }
+  ],
+  "authoringNote": "⛔ **2026-08-18 改寫：`block` + `onLethalDamage` 那條路在這個引擎上是死的**（逐字同 `gantz-suit`：`combat/damage.ts` 的 `blockCut` 先把 `dmg` 削成 0，而 `emit(\"lethalDamage\")` 關在 `if (dmg > 0)` 裡面 ⇒ 舊的 `puzzle-plot-armor` 一次都不會觸發，卡面上「回復 20%生命」與「AP ×10」兩行都是空的）。正解是 `marks` + `lethal`，⛔ 不是給 `BlockGrant` 加次數（第〇·五守則）。\n⭐ owner 2026-08-18 裁決兩件事：**冷卻 60 → 15 秒**，AP ×10 的**時限 15 秒且不疊**（`maxStacks:1`）。⚠️ 兩個 15 相等是**刻意**的：擋一次 → 15 秒 AP ×10 → 剛好接上下一次可擋，所以持續挨致命傷的人會維持在 ×10 —— 那正是「劇情需要」這張卡要的樣子，⛔ 不是我算錯。\n⚠️ **`initial`/`max` 的 12 不是一個設計數值** —— 這張卡的限制是**冷卻**（卡面只寫「冷卻時間 15 秒」，沒有寫次數），而 `MarkLethalRule` 一定要消耗層數。12 是「一個回合約 180 秒 ÷ 15 秒冷卻」推出來的上界，⇒ 在一個回合內層數**永遠不會先見底**，真正生效的限制器是 `internalCooldown:15`，卡面因此是真的。`resetOn:\"round\"` 每回合補回去。\n⚠️ **這一格與計畫書寫的不同**（計畫寫 `count 1` + `resetOn:\"never\"`）：照計畫做的話這張卡是**整場一次**，而卡面寫著 15 秒冷卻 —— 那是把同一個謊換一種寫法。要改成「一回合一次」請改 `initial/max` 為 1 並**同時**改卡面文案。\n`surviveHpPct:0.2` + `restoreMode:\"restore\"` ＝「擋下致命傷害、回復 20%生命」。⚠️ `restore` 是 owner 2026-08-09 講死的那一句（「是到生命 0 以下，**再回到** 20%，不是停在 20%」）。\n`damageTypes` 三種全收（物理／魔法／真傷）。⚠️ 原文是「被**敵方英雄**造成致命傷害」，而免死這一層分不出兇手是英雄、殭屍還是火圈 ⇒ 任何致命傷害都擋。火圈燒傷擋不擋由後台 `match.fireRing.lethalSaveApplies` 決定（出貨**關**＝火圈無視免死）。\n⭐ `pctMult` 的語意是**加成**：×10 寫 `9`。\n⭐ `markId` 借的是既有的 `status-effects/millennium-plot-armor` 文件（`zMarkSpec` 檔頭①：標記的身分可以來自技能編號**或** buff/debuff 狀態），所以 HUD 上的計數器有名字。"
+}

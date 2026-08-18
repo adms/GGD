@@ -514,14 +514,31 @@ function poolEntries(): { itemId: string }[] {
 }
 
 describe("寶具三階的底線", () => {
-  it("★ 沒有任何一支是 modifiers/passive/auras 三個都空的空卡", () => {
+  // ⚠️ RE-AIMED 2026-08-18 (GH#355)：原本只看 `modifiers`/`passive`/`auras` 三格。
+  // 那三格是「一件寶具能付出的東西」在 2026-08-18 之前的**全部**；那天之後不是：
+  //   · `marks`（GANTZ Suit / 千年積木）—— 免死從 `block` + `onLethalDamage` 改寫成
+  //     具名標記 + `lethal` 規則之後，那兩件的三格是空的，而它們**變強了**；
+  //   · `typeStreakImmunity`（史萊姆裝）—— 整張卡就是這一格。
+  // ⇒ 舊斷言會把三件**做好了**的寶具報成空卡（100% 反向的結論）。
+  // 判準沒有變：**這一支發到玩家手上會不會什麼都沒有**。⛔ 不是「三格裡有沒有東西」。
+  it("★ 沒有任何一支是「發到手上什麼都沒有」的空卡", () => {
     const table = { entries: poolEntries() };
     const empty = table.entries
       .map((e) => e.itemId)
       .filter((id) => {
-        const d = Items.get(id as ItemId);
+        const d = Items.get(id as ItemId) as {
+          modifiers?: unknown[];
+          passive?: unknown[];
+          auras?: unknown[];
+          marks?: unknown[];
+          typeStreakImmunity?: unknown;
+        };
         return (
-          (d.modifiers?.length ?? 0) + (d.passive?.length ?? 0) + (d.auras?.length ?? 0) === 0
+          (d.modifiers?.length ?? 0) +
+            (d.passive?.length ?? 0) +
+            (d.auras?.length ?? 0) +
+            (d.marks?.length ?? 0) ===
+            0 && d.typeStreakImmunity === undefined
         );
       });
     expect(empty).toEqual([]);

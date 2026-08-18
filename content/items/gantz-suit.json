@@ -1,0 +1,57 @@
+{
+  "schema": "item@1",
+  "cost": 0,
+  "tier": 5,
+  "craftRole": "none",
+  "id": "gantz-suit",
+  "name": "GANTZ Suit",
+  "icon": "assets/icons/items/gantz-suit.webp",
+  "description": "道具\n效能\n[愉快的一天又來臨了] 擋下致命傷害並回復到 100%生命\n[愉快的一天又來臨了] 每擋一次，AD+100%（每回合最多 3 次，回合結束重置）\n[愉快的一天又來臨了] 觸發間隔 3 秒\n\n解說\n穿上它的人都說：今天真是愉快的一天啊。然後就沒有然後了。",
+  "tags": [
+    "legendary",
+    "ex-origin",
+    "cheat-death",
+    "scaling"
+  ],
+  "marks": [
+    {
+      "markId": "gantz-suit",
+      "initial": 3,
+      "max": 3,
+      "durationSec": -1,
+      "resetOn": "round",
+      "lethal": {
+        "consume": 1,
+        "surviveHpPct": 1,
+        "restoreMode": "restore",
+        "damageTypes": [
+          "physical",
+          "magic",
+          "true"
+        ],
+        "internalCooldown": 3,
+        "selfEffects": [
+          {
+            "kind": "applyBuff",
+            "applyTo": "self",
+            "permanent": true,
+            "permanentScope": "round",
+            "stackKey": "gantz-ad",
+            "maxStacks": 3,
+            "stackVisual": true,
+            "modifiers": [
+              {
+                "stat": "ad",
+                "op": "pctAdd",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "aoeEffects": [],
+        "aoeRadius": 0
+      }
+    }
+  ],
+  "authoringNote": "⛔ **2026-08-18 改寫：`block` + `onLethalDamage` 那條路在這個引擎上是死的。**\n已驗證：`sim/combat/damage.ts` 的 `blockCut` 先把 `dmg` 削掉（`fraction:1` ⇒ 削成 0），而 `world.emit(\"lethalDamage\")` 關在下面 `if (dmg > 0)` 的裡面。⇒ 擋成功的那一發**不會**發 `lethalDamage` ⇒ `WorldHookSystem` 的 `lethalDamage → onLethalDamage` 轉發不跑 ⇒ 舊的 `gantz-charge`（回 100% 血 + AD 疊層）**一次都不會觸發**。卡面兩行字，遊戲裡只有第一行發生（第一·五守則），而 `content:build` 全綠、全套測試全綠 —— 每一個零件都是對的，只有它們的組合是空的。\n⭐ **正解是 `marks` + `lethal`，⛔ 不是給 `BlockGrant` 加 `maxUses`**（第〇·五守則：引擎已經有一整套「有次數的免死」，做第二套是越線，而且第二套做不到層數過網那一半）。\n── 逐欄對照卡面 ──\n`initial/max` **3** + `resetOn:\"round\"` ＝「每回合最多 3 次，回合結束重置」，而且這次是**真的 3 次**（舊版的 `maxTriggers:3` 只管住增幅那一半，`block` 沒有次數上限，第 4 次致命傷害仍然會被擋下來、只是不再回血）。\n`surviveHpPct:1` + `restoreMode:\"restore\"` ＝「擋下致命傷害並回復到 100%生命」。⚠️ `restoreMode` **必填**：不填的話（預設 `clamp`）被磨到 5% 血的人會「被救活在 5% 血」，那正是 GH#306 修掉的那個謊。\n`internalCooldown:3` ＝「觸發間隔 3 秒」。⚠️ 不可以是 0：一次 AoE 在同一 tick 打出多發封包是常態，0 會讓三層在一次爆炸裡全部蒸發。\n`damageTypes` 三種全收（物理／魔法／真傷）—— 擋不擋真傷是這個陣列的內容，不是程式裡的一行 if。\n`selfEffects` 的 `applyBuff` ＝「每擋一次 AD+100%」，`permanentScope:\"round\"` 讓疊層在下一回合開打前被 `clearRoundScoped` 拔掉，`maxStacks:3` 與層數對齊。\n⚠️ `markId` 借的是**這件道具自己的 id**（沒有對應的 ability / status-effect 文件），所以 HUD 上的計數器名稱會是原始 id。`zMarkSpec` 的 `markId` 只驗格式不驗存在（它的檔頭①逐字說明理由），機制不依賴那份文件、只有顯示依賴。要好看的名字就補一份 `status-effects/` 文件，⛔ 不必動這裡的機制。"
+}

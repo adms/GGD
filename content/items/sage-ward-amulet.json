@@ -5,6 +5,7 @@
   "craftRole": "none",
   "id": "sage-ward-amulet",
   "name": "賢者的護身符",
+  "icon": "assets/icons/items/sage-ward-amulet.webp",
   "description": "傳說\n效能\n法術強度+35\n魔力+220\n[限智力] 受到傷害時獲得 180 + 法術強度×1.2 的護盾，持續 4 秒（冷卻 12 秒）\n主屬性不是智力的英雄，護盾量與持續時間都只有 40%\n\n解說\n護符認得出誰真的在唸咒，誰只是把它掛在脖子上。",
   "tags": [
     "legendary",

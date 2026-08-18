@@ -1,0 +1,135 @@
+{
+  "schema": "item@1",
+  "cost": 0,
+  "tier": 5,
+  "craftRole": "none",
+  "id": "soul-gem",
+  "name": "魂之寶石",
+  "icon": "assets/icons/items/soul-gem.webp",
+  "description": "道具\n效能\n[魔女結界] 死亡時立即以 15%生命、100%魔力重新站起，8 秒內繼續戰鬥（每回合一次）\n[魔女結界] 這 8 秒內擊殺敵方英雄 → 解除魔女化並回復到 30%生命\n[魔女結界] 沒有擊殺 → 8 秒後正式死亡\n\n解說\n死亡不是結束，是最後八秒的談判時間。談不成就真的走。",
+  "tags": [
+    "legendary",
+    "ex-origin",
+    "revive",
+    "reversal"
+  ],
+  "passive": [
+    {
+      "key": "soul-gem-witch",
+      "on": "onDeath",
+      "target": "self",
+      "condition": {
+        "not": {
+          "kind": "status",
+          "subject": "self",
+          "statusId": "soul-gem-spent"
+        }
+      },
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "permanentScope": "round",
+          "stackKey": "soul-gem-spent",
+          "maxStacks": 1,
+          "statusId": "soul-gem-spent",
+          "modifiers": []
+        },
+        {
+          "kind": "delayed",
+          "shape": "single",
+          "delaySec": 0.1,
+          "dropDeadTargets": false,
+          "stopOnCasterDeath": false,
+          "effects": [
+            {
+              "kind": "revive",
+              "hpPct": 0.15,
+              "manaPct": 1,
+              "side": "ally",
+              "teamCharge": "ignore"
+            },
+            {
+              "kind": "applyBuff",
+              "applyTo": "self",
+              "duration": 8,
+              "statusId": "witch-form",
+              "stackKey": "witch-form",
+              "maxStacks": 1,
+              "polarity": "buff",
+              "dispellable": false,
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctMult",
+                  "value": 0.2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "delayed",
+          "shape": "single",
+          "delaySec": 8.1,
+          "count": 4,
+          "intervalSec": 0.2,
+          "dropDeadTargets": false,
+          "stopOnCasterDeath": false,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "true",
+              "amount": {
+                "flat": 0
+              },
+              "hpPct": {
+                "basis": "max",
+                "perRank": [
+                  0.35
+                ]
+              },
+              "condition": {
+                "not": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "witch-saved"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "soul-gem-save",
+      "on": "onKill",
+      "victim": "champion",
+      "target": "self",
+      "condition": {
+        "kind": "status",
+        "subject": "self",
+        "statusId": "witch-form"
+      },
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "permanentScope": "round",
+          "stackKey": "witch-saved",
+          "maxStacks": 1,
+          "statusId": "witch-saved",
+          "modifiers": []
+        },
+        {
+          "kind": "restore",
+          "applyTo": "self",
+          "healthPct": 0.3
+        }
+      ]
+    }
+  ],
+  "authoringNote": "⭐【魔女結界】的「死了但還在打」是**組合**出來的，⛔ 引擎裡沒有一個叫『假死』的機制（第〇·五守則）：onDeath → 0.1 秒後 revive 15% ＋ 掛 8 秒 `witch-form` ⇒ 玩家從沒有失去操作，畫面上就是『倒下又站起來』。8.1 秒後 4 連發 35%最大生命真傷把他打死，而那四發全部帶 `not status witch-saved` —— 期間擊殺敵方英雄的 onKill 掛上 `witch-saved` ＋ 回 30% 血，於是那四發一發都不會落地。⚠️ 4 發是必要的：`damage.hpPct` 單發上界 0.35（防 mis-parse），一發打不死一個滿血的人。\n⚠️ **與 owner 原文的兩處差異（刻意，且都是引擎缺口）**：① 原文『死者立即化為魔女（模組變純黑）』—— 純黑模型要 `championForm` 的第二形態或一條 tint 通道，兩者都不是這張卡自己給得起的，所以今天只有一個 `witch-form` 狀態（有名字、看得到），⛔ 沒有換模。② 原文『我方第一名英雄死亡』—— 引擎沒有『全隊第幾個死』這個讀數，這裡是**持有者自己死亡**時觸發、每回合一次。兩者在只有一件的情況下多數場次同義，但**不是同一句話**。"
+}

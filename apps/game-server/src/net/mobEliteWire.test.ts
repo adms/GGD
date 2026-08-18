@@ -211,10 +211,19 @@ describe("精英小怪位元真的上線 (owner 2026-08-03 特殊殭屍血條)",
     expect(champions).toBeGreaterThan(0); // 沒有英雄的話上面整個迴圈是空跑
   });
 
-  it("預算真的用完了 —— 32768 已經名花有主", () => {
+  // ⚠️ RE-AIMED 2026-08-18：這一條原本寫的是「uint16 的 16 格全部用完了」
+  //（`ENTITY_FLAG_FREE_BITS.length === 0`）。owner 那天把 `EntityState.flags`
+  // 加寬成 uint32，於是那句話變成假的 —— ⛔ 而它本來就不是這條守衛要保護的東西：
+  // 「還剩幾格」是 `packages/shared/src/protocol/formFlags.test.ts` 的工作
+  //（它同時對帳 CLAUDE.md 那一行）。這裡要釘的是**這一格的身分**：32768 是線上
+  // 舊客戶端解碼「精英殭屍」用的那一顆 bit，換掉它 = 血條靜靜地畫錯，而且不報錯。
+  it("MOB_ELITE 永遠是 32768，而且沒有人把它當成空位重新發出去", () => {
     cover("mob-special-visible");
     expect(ENTITY_FLAG.MOB_ELITE).toBe(32768);
-    // uint16 的 16 格全部用掉了。下一個功能不能再拿 bit。
-    expect(ENTITY_FLAG_FREE_BITS.length).toBe(0);
+    // 「自由額度」與「已經有主的 bit」必須不相交 —— 一顆被重新發出去的 bit
+    // 會讓線上的舊分頁把別的狀態讀成精英殭屍，而任何一處都不會報錯。
+    expect(ENTITY_FLAG_FREE_BITS as readonly number[]).not.toContain(ENTITY_FLAG.MOB_ELITE);
+    const assigned = new Set(Object.values(ENTITY_FLAG) as number[]);
+    expect((ENTITY_FLAG_FREE_BITS as readonly number[]).filter((b) => assigned.has(b))).toEqual([]);
   });
 });

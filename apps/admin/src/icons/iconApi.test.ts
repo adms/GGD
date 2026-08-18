@@ -204,18 +204,23 @@ describe("every failure mode says something", () => {
 // ------------------------------------------------------- the two doc shapes --
 
 describe("the two schema shapes", () => {
-  it("augments get the file only; everything else also gets the icon FIELD", () => {
+  it("EVERY iconable collection gets the icon FIELD — the augments exemption is gone", () => {
     cover("adminui-icon-autogen");
-    expect(api.writesIconField("augments")).toBe(false);
-    for (const c of ["champions", "abilities", "items"] as const) {
+    // ⭐ 2026-08-18 —— 這一條**翻面**了，而那是規格變了不是把守衛改綠：
+    // `augment@1` 在這一天長出 `icon` 欄位（owner 授權），於是「只出圖不寫欄位」
+    // 這個唯一的例外消失了。⚠️ 在那之前 91 張固有能力的圖示畫好了卻沒有任何文件
+    // 指得到它 —— 那正是這一條原本在**保護**的狀態。
+    for (const c of ["augments", "champions", "abilities", "items"] as const) {
       expect(api.writesIconField(c)).toBe(true);
     }
     expect(api.isIconable("loot-tables")).toBe(false);
-    // the daemon enforces the same split, and batch.set_icon_field refuses
-    // augments from its own side — two layers, one rule
-    expect(DAEMON_SRC).toMatch(/FIELDLESS_FAMILIES = \{"augments"\}/);
+    // ⛔ 三層仍然要同一句話 —— 只是那句話從「augments 例外」變成「沒有例外」。
+    // 常數留著（下一個只出圖的集合在那裡宣告），但它現在必須是**空的**。
+    expect(DAEMON_SRC).toMatch(/FIELDLESS_FAMILIES: set\[str\] = set\(\)/);
     expect(DAEMON_SRC).toMatch(/if family not in FIELDLESS_FAMILIES:/);
-    expect(BATCH_SRC).toMatch(/if family == "augments":\s*\n\s*return False/);
+    expect(BATCH_SRC).not.toMatch(/if family == "augments":\s*\n\s*return False/);
+    // ⭐ 而且 batch 那一側要**留下為什麼**，否則下一個人會把拒寫閘加回去
+    expect(BATCH_SRC).toMatch(/augments ARE written now/);
   });
 });
 

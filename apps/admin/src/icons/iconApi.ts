@@ -79,13 +79,20 @@ export function isIconable(collection: string): collection is IconCollection {
 }
 
 /**
- * `augment@1` is `.strict()` and carries NO `icon` field — its art is resolved
- * by CONVENTION from `assets/icons/augments/<id>.webp`. Exported so the UI can
- * say which of the two shapes a given save produced instead of implying every
- * collection gets a field written.
+ * ⭐ 2026-08-18 起**每一個集合都寫 `icon` 欄位** —— owner 授權替 `augment@1` 補上
+ * 那一格（「順便補完其他沒有圖示的寶具跟固有能力」）。
+ *
+ * ⚠️ 在那之前 augments 是唯一的例外：schema 是 `.strict()` 且沒有 `icon`，於是
+ * 91 張固有能力的圖示**畫好了卻沒有任何文件指得到它**，卡片是靠
+ * `ui/panels/resolveChoice.ts` **按 id 組路徑**才畫得出來的。那條慣例還在（退居備援，
+ * 因為欄位是 `.optional()`），但**主來源是欄位**。
+ *
+ * ⛔ 這個函式現在恆為 true，而它**留著不刪**：UI 用它說「這一次存檔產生了什麼形狀」，
+ * 而下一個真的需要「只出圖不寫欄位」的集合（例如產物型的集合）會在這裡宣告，
+ * ⛔ 不是在三個地方各寫一次 if。
  */
-export function writesIconField(collection: IconCollection): boolean {
-  return collection !== "augments";
+export function writesIconField(_collection: IconCollection): boolean {
+  return true;
 }
 
 // ---------------------------------------------------------------- transport --

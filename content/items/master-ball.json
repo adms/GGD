@@ -1,0 +1,81 @@
+{
+  "schema": "item@1",
+  "cost": 0,
+  "tier": 5,
+  "craftRole": "none",
+  "id": "master-ball",
+  "name": "大師球",
+  "icon": "assets/icons/items/master-ball.webp",
+  "description": "道具\n效能\n[收服] 你打中生命值低於 25%的特殊殭屍或殭屍王時，牠改為替你作戰\n[收服] 收服的同時立刻回復牠 50%生命\n[收服] 直到牠陣亡、或這一回合結束為止；每回合一次\n\n解說\n丟出去之前它只是一顆球。丟出去之後，那隻怪就是你的問題了。",
+  "tags": [
+    "legendary",
+    "ex-origin",
+    "convert",
+    "reversal"
+  ],
+  "passive": [
+    {
+      "key": "master-ball-catch",
+      "on": "onDamageDealt",
+      "target": "event",
+      "condition": {
+        "all": [
+          {
+            "not": {
+              "kind": "status",
+              "subject": "self",
+              "statusId": "master-ball-spent"
+            }
+          },
+          {
+            "kind": "stat",
+            "subject": "target",
+            "stat": "hp",
+            "mode": "percent",
+            "op": "<=",
+            "value": 0.25
+          },
+          {
+            "any": [
+              {
+                "kind": "kind",
+                "subject": "target",
+                "is": "mobBoss"
+              },
+              {
+                "kind": "kind",
+                "subject": "target",
+                "is": "mobSpecial"
+              }
+            ]
+          }
+        ]
+      },
+      "effects": [
+        {
+          "kind": "convertTeam",
+          "shape": "single",
+          "until": "death",
+          "maxHeld": 1,
+          "oncePerRoundPerVictim": true
+        },
+        {
+          "kind": "applyBuff",
+          "applyTo": "self",
+          "permanent": true,
+          "permanentScope": "round",
+          "stackKey": "master-ball-spent",
+          "maxStacks": 1,
+          "statusId": "master-ball-spent",
+          "modifiers": []
+        },
+        {
+          "kind": "restore",
+          "applyTo": "target",
+          "healthPct": 0.5
+        }
+      ]
+    }
+  ],
+  "authoringNote": "⭐【收服】＝ 一格 `convertTeam`（引擎機制，`sim/mindControl.ts`）＋ 一格 `restore{healthPct:0.5}`，⛔ 沒有為這張卡寫任何一行程式（第〇·五守則）。捕獲把被收服者的 `TeamComp.teamId` 真的改成持有者那一隊 —— 所以索敵、殭屍 aggro、友傷閘、AoE 隊伍濾**十幾個讀端同時**變成對的；牠身上的 `ENTITY_FLAG.TEAM_OVERRIDE` 讓玩家螢幕上當場換色。歸位有三條路：陣亡（`DeathSystem`，插在 `emit(\"death\")` 之前，否則復活圈會開錯邊）、回合開始（`MatchController.enterCombat()`）、到期（`until:\"duration\"` 才有，這張卡沒用）。\n\n⚠️ **與 owner 原文的關係（誠實版）**：這一輪的工作區裡**找不到** owner 2026-08-18 那份 15 件清單的大師球原文 —— repo 裡只留下兩個片段：`content/loot-tables/ex-origin-weapons.json` 的 note（『需要陣營轉換（把一個既有單位改成友軍）』）與規劃書記下的『回復 50% 生命』。這張卡的**機制骨架**（轉友軍 + 回 50% 生命）照那兩句寫，其餘三個數字是**我挑的**，⛔ 不是 owner 的：\n  ① 逆轉條件『生命值低於 25%』—— 精靈球要打殘了才收得到，這是題材本身的邏輯，數字待 owner 裁。\n  ② 只吃『特殊殭屍 / 殭屍王』（新的兩顆條件葉 `mobBoss` / `mobSpecial`）—— 寫成一般 `mob` 的話這張卡會在第一波雜兵身上被用掉，那不是逆轉。\n  ③ 『每回合一次』＝ `master-ball-spent` 自鎖 ＋ `maxHeld:1`。\n⇒ 三個都是**平衡資料**，owner 一句話就可以改（改 JSON，不動引擎）。\n\n⚠️ **一個已知的殘留（⛔ 不是可以無視的）**：`convertTeam` 沒有 `onHitTargets` 那一格（`carry` 有），所以下游的 `restore` 是**無條件**跑的 —— 捕獲被拒絕的那一刻，那 50% 生命會回在**敵人**身上。在這張卡的設定下它幾乎不可達（自鎖讓一回合只發一次、發的那一刻手上一定是 0 隻、目標又必須還沒被別人收服過），唯一的路徑是**同一回合另一名玩家的大師球先收服了同一隻王**。要真的關掉它，正解是替 `convertTeam` 開一格 `onHitTargets`（照 `carry` 的形狀），⛔ 不是把回血搬進 handler。\n\n⚠️ `convertTeam.countsForOriginalTeam`（勝負語意的那格開關，出貨預設 `true`）在這張卡上**用不到**：勝負判定數的是**座位**，而殭屍沒有座位。它是替『收服敵方英雄』那一天準備的，需要 owner 先拍板。"
+}

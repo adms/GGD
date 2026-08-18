@@ -12,6 +12,7 @@
     "secret-sword"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-ex-16.webp",
   "hooks": [
     {
       "on": "onBasicAttack",

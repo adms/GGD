@@ -31,7 +31,7 @@ import type { AbilityId, ChampionId, ItemId, ProjectileId } from "@ggd/shared/id
 import type { AbilitySlot, CastableSlot } from "@ggd/shared/sim/intents";
 import type { Room } from "colyseus.js";
 import type { MatchState } from "@ggd/shared/protocol/schema";
-import { ENTITY_FLAG } from "@ggd/shared/protocol/schema";
+import { ENTITY_FLAG, teamOverrideFromFlags } from "@ggd/shared/protocol/schema";
 import { stealthVisualFor } from "./render/stealthVisual";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 import {
@@ -1956,7 +1956,16 @@ export class GameApp {
       e.kind = es.kind;
       e.seatId = es.seatId;
       e.key = es.key;
-      e.teamId = this.teamBySeat.get(es.seatId) ?? 0;
+      // ⭐ [陣營轉換]（[EX∅ 根源]）—— **全客戶端 `teamId` 的唯一擴散點**。
+      // 隊伍色、小地圖圖示、#85 死亡觀戰的去飽和三個都是從這裡分出去的，所以
+      // 覆寫下在這一行就是三個地方一起對；下在任何一個消費端都會漏掉另外兩個。
+      //
+      // ⛔ 覆寫**贏過** `teamBySeat`：`seatId` 刻意不變（英雄名字/血條/技能欄
+      // 全靠它），所以座位表回答的是「他原本屬於誰」，而畫面要畫的是「他現在
+      // 替誰打」。⚠️ 小怪的 `seatId` 是 -1，`teamBySeat` 對它一律回 undefined
+      // → 0，這一行是它們**唯一**拿得到隊伍色的途徑。
+      const teamOverride = teamOverrideFromFlags(es.flags);
+      e.teamId = teamOverride ?? this.teamBySeat.get(es.seatId) ?? 0;
       e.x = es.x;
       e.z = es.z;
       e.fx = es.fx;
@@ -1971,8 +1980,13 @@ export class GameApp {
       // render/** is walled off from (client-08). Champions only; a projectile
       // or a coin has no team to share, and a stale `true` on a pooled slot
       // reused by another kind would leave an enemy's hidden body半透明可見.
+      // ⚠️ 同一個覆寫要**同時**用在這裡：一具被我方捕獲的身體既然畫成我方顏色，
+      // 隱形/去飽和那一族的「同隊嗎」就必須給同一個答案，⛔ 否則畫面上會出現
+      // 「我方顏色但被當成敵人淡出」這種沒有人能歸因的組合。
       e.friendly =
-        es.kind === 0 && localTeam !== null && (this.teamBySeat.get(es.seatId) ?? -1) === localTeam;
+        es.kind === 0 &&
+        localTeam !== null &&
+        (teamOverride ?? this.teamBySeat.get(es.seatId) ?? -1) === localTeam;
       // #244 — the authoritative flags word, forwarded verbatim. The registry
       // reads only the two GROWTH bits from it; everything else in this file
       // keeps reading `es.flags` directly, so nothing else changed.
@@ -2287,7 +2301,10 @@ export class GameApp {
       }
       return;
     }
-    if (ev.type === "evade") {
+    // ⭐ `immune`（無敵 / 型別連擊免疫）走**同一個分支**：從玩家的角度這兩件事
+    // 一模一樣（「那一發沒有讓我掉血」），而語音與「這算戰鬥活動」的判定也一樣。
+    // ⛔ 不要為它另開一段 —— 兩段會分岔，而分岔的那一天只有其中一種會發聲。
+    if (ev.type === "evade" || ev.type === "immune") {
       // dodge — a total miss on YOUR champion. The `evade` event rides the same
       // queuedEvents drain as damage (RoomConnection.bind pushes it to both the
       // frame queue and the WorldAnchorLayer sighting buffer), so this is the

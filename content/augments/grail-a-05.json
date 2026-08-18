@@ -12,6 +12,7 @@
     "snowball"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-a-05.webp",
   "hooks": [
     {
       "on": "onKill",

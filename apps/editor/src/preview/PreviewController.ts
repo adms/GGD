@@ -685,6 +685,38 @@ function effectLines(
         });
         break;
       }
+      // ── [EX∅ 根源]（2026-08-18）—— 詞彙包先落地，引擎 handler 是 L4 / L5。
+      //    ⚠️ 兩條 summary 都**明說**「引擎側尚未實作」，形狀抄上面 Lane 3 那兩條：
+      //    一個看起來能用、放出去什麼都不發生的預覽比空白更糟（失敗形態②）。
+      //    ⛔ 這兩個 case 不是裝飾 —— 下面那個 `never` 會拒絕編譯，直到它們在這裡
+      //    被處理過（那正是這個 tripwire 存在的理由）。
+      case "carry": {
+        out.push({
+          depth,
+          kind: e.kind,
+          summary:
+            `背負${e.shape === "circle" ? `半徑 ${e.radius ?? "?"} 內` : ""}` +
+            `${e.side === "enemies" ? "敵人" : "隊友"} ${e.maxTargets ?? 1} 名，${e.durationSec}s` +
+            `${e.untargetable?.abilityAoe ? " · 連 AoE 都打不到" : " · 不可被選取（但 AoE 仍打得到）"}` +
+            `${e.onCarrierDeath === "drop" ? " · 載具死了乘客跟著倒" : " · 載具死了就放下"}` +
+            " · ⚠️ 引擎側尚未實作（[EX∅ 根源] L4），現在放出來什麼都不會發生",
+        });
+        effectLines(e.onHitTargets ?? [], finalStats, attrs, maxRank, depth + 1, out);
+        break;
+      }
+      case "convertTeam": {
+        out.push({
+          depth,
+          kind: e.kind,
+          summary:
+            `暫時奪取${e.shape === "circle" ? `半徑 ${e.radius ?? "?"} 內` : ""}單位的陣營` +
+            `（同時最多 ${e.maxHeld ?? 2} 隻）` +
+            `${e.until === "duration" ? ` · ${e.durationSec ?? "?"}s 後歸位` : e.until === "roundEnd" ? " · 回合結束歸位" : " · 打死才歸位"}` +
+            `${e.oncePerRoundPerVictim === false ? " · 同一隻可重複捕捉" : " · 同一隻一回合只能捕一次"}` +
+            " · ⚠️ 引擎側尚未實作（[EX∅ 根源] L5），現在放出來什麼都不會發生",
+        });
+        break;
+      }
       default: {
         // EXHAUSTIVENESS TRIPWIRE (task #247 follow-up). This switch used to
         // fall through silently, which is how `restore`, `spawnVfx` and then

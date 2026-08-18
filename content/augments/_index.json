@@ -1,552 +1,552 @@
 {
   "collection": "augments",
-  "hash": "3fac6ff2c5ef",
+  "hash": "d329dfa22d67",
   "entries": [
     {
       "id": "aegis-surge",
       "path": "augments/aegis-surge.json",
-      "hash": "842218751bbc",
-      "size": 611
+      "hash": "7f37260c0f7b",
+      "size": 663
     },
     {
       "id": "arcane-focus",
       "path": "augments/arcane-focus.json",
-      "hash": "7637d23d09df",
-      "size": 380
+      "hash": "70dc6671287a",
+      "size": 433
     },
     {
       "id": "arcane-haste",
       "path": "augments/arcane-haste.json",
-      "hash": "9a189d83ee0c",
-      "size": 701
+      "hash": "9c053fb091ba",
+      "size": 754
     },
     {
       "id": "arcane-overload",
       "path": "augments/arcane-overload.json",
-      "hash": "7a1ee12a0481",
-      "size": 666
+      "hash": "8264c37f0140",
+      "size": 722
     },
     {
       "id": "berserkers-fury",
       "path": "augments/berserkers-fury.json",
-      "hash": "2184a9fbcc9f",
-      "size": 395
+      "hash": "2d9721d04c7d",
+      "size": 451
     },
     {
       "id": "blood-tyrant",
       "path": "augments/blood-tyrant.json",
-      "hash": "72ba16649f6c",
-      "size": 498
+      "hash": "ad97d97ba4a7",
+      "size": 551
     },
     {
       "id": "bloodlet-ward",
       "path": "augments/bloodlet-ward.json",
-      "hash": "d038c81dc979",
-      "size": 637
+      "hash": "fd4912e03c55",
+      "size": 691
     },
     {
       "id": "bloodlust",
       "path": "augments/bloodlust.json",
-      "hash": "440c55381ac5",
-      "size": 384
+      "hash": "20c2263d9065",
+      "size": 434
     },
     {
       "id": "bone-splitter",
       "path": "augments/bone-splitter.json",
-      "hash": "60affe1a017b",
-      "size": 585
+      "hash": "5161ad87af54",
+      "size": 639
     },
     {
       "id": "chill-touch",
       "path": "augments/chill-touch.json",
-      "hash": "1ae68e6d7e65",
-      "size": 459
+      "hash": "ef57d10cba1c",
+      "size": 511
     },
     {
       "id": "conqueror",
       "path": "augments/conqueror.json",
-      "hash": "bbbf8d220358",
-      "size": 818
+      "hash": "3a85f7a10c4f",
+      "size": 868
     },
     {
       "id": "executioner-edge",
       "path": "augments/executioner-edge.json",
-      "hash": "ea22b7b85de4",
-      "size": 416
+      "hash": "f2e3e6e9ef46",
+      "size": 473
     },
     {
       "id": "frost-shatter",
       "path": "augments/frost-shatter.json",
-      "hash": "14f2eed5bd8e",
-      "size": 450
+      "hash": "88f1115b59f5",
+      "size": 504
     },
     {
       "id": "grail-a-01",
       "path": "augments/grail-a-01.json",
-      "hash": "0332f4a33f83",
-      "size": 1683
+      "hash": "4fa5b7e0b9d2",
+      "size": 1734
     },
     {
       "id": "grail-a-02",
       "path": "augments/grail-a-02.json",
-      "hash": "d2629bd9020b",
-      "size": 1067
+      "hash": "6c42f4d7ed24",
+      "size": 1118
     },
     {
       "id": "grail-a-03",
       "path": "augments/grail-a-03.json",
-      "hash": "12665f178c77",
-      "size": 550
+      "hash": "8c9f9de42649",
+      "size": 601
     },
     {
       "id": "grail-a-04",
       "path": "augments/grail-a-04.json",
-      "hash": "b3b08199bfe9",
-      "size": 453
+      "hash": "bd4ce95d8e72",
+      "size": 504
     },
     {
       "id": "grail-a-05",
       "path": "augments/grail-a-05.json",
-      "hash": "0a750b63def6",
-      "size": 1162
+      "hash": "a1204fb42956",
+      "size": 1213
     },
     {
       "id": "grail-a-06",
       "path": "augments/grail-a-06.json",
-      "hash": "1e0c818a9354",
-      "size": 1229
+      "hash": "fd058c52f525",
+      "size": 1280
     },
     {
       "id": "grail-a-07",
       "path": "augments/grail-a-07.json",
-      "hash": "23e874ca1dbc",
-      "size": 1499
+      "hash": "f83c5d4e811f",
+      "size": 1550
     },
     {
       "id": "grail-a-08",
       "path": "augments/grail-a-08.json",
-      "hash": "43cd0bd67029",
-      "size": 3595
+      "hash": "48323f9b86a1",
+      "size": 3646
     },
     {
       "id": "grail-a-09",
       "path": "augments/grail-a-09.json",
-      "hash": "d15fa9a20652",
-      "size": 592
+      "hash": "1889ae648f27",
+      "size": 643
     },
     {
       "id": "grail-a-10",
       "path": "augments/grail-a-10.json",
-      "hash": "a81c99d071fd",
-      "size": 800
+      "hash": "b38a5f13ca11",
+      "size": 851
     },
     {
       "id": "grail-a-11",
       "path": "augments/grail-a-11.json",
-      "hash": "f70dcfa08ce8",
-      "size": 512
+      "hash": "996dc5e5db59",
+      "size": 563
     },
     {
       "id": "grail-a-12",
       "path": "augments/grail-a-12.json",
-      "hash": "b7800aa71680",
-      "size": 502
+      "hash": "50485cc84b7e",
+      "size": 553
     },
     {
       "id": "grail-a-13",
       "path": "augments/grail-a-13.json",
-      "hash": "6bcc5f99443a",
-      "size": 890
+      "hash": "de3ecdb082d1",
+      "size": 941
     },
     {
       "id": "grail-a-14",
       "path": "augments/grail-a-14.json",
-      "hash": "d7f5d4ae6139",
-      "size": 771
+      "hash": "ef5c868aed80",
+      "size": 822
     },
     {
       "id": "grail-a-15",
       "path": "augments/grail-a-15.json",
-      "hash": "1725309fc371",
-      "size": 1147
+      "hash": "375f5a08221a",
+      "size": 1198
     },
     {
       "id": "grail-a-16",
       "path": "augments/grail-a-16.json",
-      "hash": "6b99b5e27252",
-      "size": 750
+      "hash": "64732264af6f",
+      "size": 801
     },
     {
       "id": "grail-a-17",
       "path": "augments/grail-a-17.json",
-      "hash": "d358ed58048a",
-      "size": 1093
+      "hash": "b58061177992",
+      "size": 1144
     },
     {
       "id": "grail-a-18",
       "path": "augments/grail-a-18.json",
-      "hash": "7fec542bf9d4",
-      "size": 1213
+      "hash": "3598ea2f5040",
+      "size": 1264
     },
     {
       "id": "grail-a-19",
       "path": "augments/grail-a-19.json",
-      "hash": "fe598b310880",
-      "size": 999
+      "hash": "9bd42b55eb02",
+      "size": 1050
     },
     {
       "id": "grail-a-20",
       "path": "augments/grail-a-20.json",
-      "hash": "5b9f81fdd775",
-      "size": 1062
+      "hash": "1373425197f9",
+      "size": 1113
     },
     {
       "id": "grail-c-01",
       "path": "augments/grail-c-01.json",
-      "hash": "8c0a81c10545",
-      "size": 910
+      "hash": "aadb8bed0536",
+      "size": 961
     },
     {
       "id": "grail-c-02",
       "path": "augments/grail-c-02.json",
-      "hash": "873b6cc4d370",
-      "size": 1101
+      "hash": "b5a9157fb4bb",
+      "size": 1152
     },
     {
       "id": "grail-c-03",
       "path": "augments/grail-c-03.json",
-      "hash": "d1fc2ed99aa7",
-      "size": 898
+      "hash": "fa32683deb6e",
+      "size": 949
     },
     {
       "id": "grail-c-04",
       "path": "augments/grail-c-04.json",
-      "hash": "521a99d1168d",
-      "size": 784
+      "hash": "4d5ec97c3909",
+      "size": 835
     },
     {
       "id": "grail-c-05",
       "path": "augments/grail-c-05.json",
-      "hash": "26aa5038d3d3",
-      "size": 515
+      "hash": "6510f7c9e711",
+      "size": 566
     },
     {
       "id": "grail-c-06",
       "path": "augments/grail-c-06.json",
-      "hash": "a68626ff719e",
-      "size": 478
+      "hash": "37aef0e00561",
+      "size": 529
     },
     {
       "id": "grail-c-07",
       "path": "augments/grail-c-07.json",
-      "hash": "1bdd1fff2b1b",
-      "size": 486
+      "hash": "d2d919a9006f",
+      "size": 537
     },
     {
       "id": "grail-c-08",
       "path": "augments/grail-c-08.json",
-      "hash": "f1ed3069ca89",
-      "size": 925
+      "hash": "6ebfba78d7ef",
+      "size": 976
     },
     {
       "id": "grail-c-09",
       "path": "augments/grail-c-09.json",
-      "hash": "af41cdfaa045",
-      "size": 745
+      "hash": "23f9081321c9",
+      "size": 796
     },
     {
       "id": "grail-c-10",
       "path": "augments/grail-c-10.json",
-      "hash": "671025080d7d",
-      "size": 1201
+      "hash": "acacff3fc84c",
+      "size": 1252
     },
     {
       "id": "grail-c-11",
       "path": "augments/grail-c-11.json",
-      "hash": "b670fa3690be",
-      "size": 1092
+      "hash": "4981647576ce",
+      "size": 1143
     },
     {
       "id": "grail-c-12",
       "path": "augments/grail-c-12.json",
-      "hash": "43694903e5e4",
-      "size": 816
+      "hash": "62c5751838c4",
+      "size": 867
     },
     {
       "id": "grail-c-13",
       "path": "augments/grail-c-13.json",
-      "hash": "89c8e2cdf91f",
-      "size": 661
+      "hash": "14d64c4e826a",
+      "size": 712
     },
     {
       "id": "grail-c-14",
       "path": "augments/grail-c-14.json",
-      "hash": "a44857c6911b",
-      "size": 1115
+      "hash": "54c86c3677d5",
+      "size": 1166
     },
     {
       "id": "grail-c-15",
       "path": "augments/grail-c-15.json",
-      "hash": "5e55adeef48f",
-      "size": 987
+      "hash": "bcfc5309d331",
+      "size": 1038
     },
     {
       "id": "grail-c-16",
       "path": "augments/grail-c-16.json",
-      "hash": "ca55bef20978",
-      "size": 1136
+      "hash": "9416d298d456",
+      "size": 1187
     },
     {
       "id": "grail-c-17",
       "path": "augments/grail-c-17.json",
-      "hash": "16be87d515a8",
-      "size": 846
+      "hash": "7fb12dcc32a8",
+      "size": 897
     },
     {
       "id": "grail-c-18",
       "path": "augments/grail-c-18.json",
-      "hash": "09bd1753fbb5",
-      "size": 810
+      "hash": "a07e875a2c04",
+      "size": 861
     },
     {
       "id": "grail-c-19",
       "path": "augments/grail-c-19.json",
-      "hash": "d3d73cb0dd3d",
-      "size": 1211
+      "hash": "a09aa5c89797",
+      "size": 1262
     },
     {
       "id": "grail-c-20",
       "path": "augments/grail-c-20.json",
-      "hash": "5c4a273a3cbc",
-      "size": 1906
+      "hash": "dbcff9d64bf4",
+      "size": 1957
     },
     {
       "id": "grail-ex-01",
       "path": "augments/grail-ex-01.json",
-      "hash": "c46ebb6b4694",
-      "size": 603
+      "hash": "c2e8ac393d74",
+      "size": 655
     },
     {
       "id": "grail-ex-02",
       "path": "augments/grail-ex-02.json",
-      "hash": "9eec016c6162",
-      "size": 1131
+      "hash": "ded52b6d7ebf",
+      "size": 1183
     },
     {
       "id": "grail-ex-03",
       "path": "augments/grail-ex-03.json",
-      "hash": "6b2d2f9bf242",
-      "size": 1335
+      "hash": "1ad66cf6da99",
+      "size": 1387
     },
     {
       "id": "grail-ex-04",
       "path": "augments/grail-ex-04.json",
-      "hash": "50375f29b786",
-      "size": 1627
+      "hash": "3408bbbf78e2",
+      "size": 1679
     },
     {
       "id": "grail-ex-05",
       "path": "augments/grail-ex-05.json",
-      "hash": "9d3eba87cd22",
-      "size": 1193
+      "hash": "6a5719417baf",
+      "size": 1245
     },
     {
       "id": "grail-ex-06",
       "path": "augments/grail-ex-06.json",
-      "hash": "8bf9cce0ea36",
-      "size": 583
+      "hash": "fd66717e1a52",
+      "size": 635
     },
     {
       "id": "grail-ex-07",
       "path": "augments/grail-ex-07.json",
-      "hash": "749ebe627e37",
-      "size": 577
+      "hash": "44e3498b20a8",
+      "size": 629
     },
     {
       "id": "grail-ex-08",
       "path": "augments/grail-ex-08.json",
-      "hash": "743d0edb229a",
-      "size": 4318
+      "hash": "be1d76d57fb2",
+      "size": 4370
     },
     {
       "id": "grail-ex-09",
       "path": "augments/grail-ex-09.json",
-      "hash": "ad9dfdc4cb0d",
-      "size": 1506
+      "hash": "9e16ac5892f2",
+      "size": 1558
     },
     {
       "id": "grail-ex-10",
       "path": "augments/grail-ex-10.json",
-      "hash": "30cf61bbad1f",
-      "size": 709
+      "hash": "24b5270cdb1e",
+      "size": 761
     },
     {
       "id": "grail-ex-11",
       "path": "augments/grail-ex-11.json",
-      "hash": "866f2cd0e12b",
-      "size": 1667
+      "hash": "bf9af40facd9",
+      "size": 1719
     },
     {
       "id": "grail-ex-12",
       "path": "augments/grail-ex-12.json",
-      "hash": "99dcb3149f1d",
-      "size": 912
+      "hash": "cc1741f0dbbf",
+      "size": 964
     },
     {
       "id": "grail-ex-13",
       "path": "augments/grail-ex-13.json",
-      "hash": "f9b7a4462293",
-      "size": 1109
+      "hash": "d110882d7b89",
+      "size": 1161
     },
     {
       "id": "grail-ex-14",
       "path": "augments/grail-ex-14.json",
-      "hash": "098223fbb654",
-      "size": 1141
+      "hash": "34bc1f57ebda",
+      "size": 1193
     },
     {
       "id": "grail-ex-15",
       "path": "augments/grail-ex-15.json",
-      "hash": "46dd251e2440",
-      "size": 2643
+      "hash": "1e27b9e3fdff",
+      "size": 2695
     },
     {
       "id": "grail-ex-16",
       "path": "augments/grail-ex-16.json",
-      "hash": "1ee7f2bd99b1",
-      "size": 1197
+      "hash": "8c60f3f8fe36",
+      "size": 1249
     },
     {
       "id": "grail-ex-17",
       "path": "augments/grail-ex-17.json",
-      "hash": "76e8fc210aa3",
-      "size": 1404
+      "hash": "8c833b3ed110",
+      "size": 1456
     },
     {
       "id": "grail-ex-18",
       "path": "augments/grail-ex-18.json",
-      "hash": "63b5080454fe",
-      "size": 913
+      "hash": "338bd749d06c",
+      "size": 965
     },
     {
       "id": "grail-ex-19",
       "path": "augments/grail-ex-19.json",
-      "hash": "21bfa911945b",
-      "size": 1008
+      "hash": "45dee01a69cd",
+      "size": 1060
     },
     {
       "id": "grail-ex-20",
       "path": "augments/grail-ex-20.json",
-      "hash": "814146e6cd13",
-      "size": 837
+      "hash": "831fe9b7080d",
+      "size": 889
     },
     {
       "id": "guardian-ward",
       "path": "augments/guardian-ward.json",
-      "hash": "19cb16eea1ec",
-      "size": 641
+      "hash": "e833b626eca4",
+      "size": 695
     },
     {
       "id": "hunters-instinct",
       "path": "augments/hunters-instinct.json",
-      "hash": "f2c4bc359d45",
-      "size": 391
+      "hash": "177487f84465",
+      "size": 448
     },
     {
       "id": "immortal-bulwark",
       "path": "augments/immortal-bulwark.json",
-      "hash": "cbdccf535073",
-      "size": 472
+      "hash": "be5ec6a9d9b0",
+      "size": 529
     },
     {
       "id": "iron-bulwark",
       "path": "augments/iron-bulwark.json",
-      "hash": "52865becb3d5",
-      "size": 377
+      "hash": "74a7b53de94f",
+      "size": 430
     },
     {
       "id": "last-stand",
       "path": "augments/last-stand.json",
-      "hash": "8e4a7a3ab262",
-      "size": 676
+      "hash": "08f43c51fda4",
+      "size": 727
     },
     {
       "id": "limit-breaker",
       "path": "augments/limit-breaker.json",
-      "hash": "d63b6df1c2f6",
-      "size": 449
+      "hash": "f22c7374ed37",
+      "size": 503
     },
     {
       "id": "momentum-core",
       "path": "augments/momentum-core.json",
-      "hash": "074f67f6feed",
-      "size": 756
+      "hash": "b11381bdc91e",
+      "size": 810
     },
     {
       "id": "overdrive-engine",
       "path": "augments/overdrive-engine.json",
-      "hash": "0345ad2c239e",
-      "size": 489
+      "hash": "4f871bf4e7e3",
+      "size": 546
     },
     {
       "id": "phantom-step",
       "path": "augments/phantom-step.json",
-      "hash": "7770019e9197",
-      "size": 484
+      "hash": "f1894146a3f3",
+      "size": 537
     },
     {
       "id": "second-wind",
       "path": "augments/second-wind.json",
-      "hash": "7536d8e14c90",
-      "size": 505
+      "hash": "47f5d95e5ec5",
+      "size": 557
     },
     {
       "id": "siege-breaker",
       "path": "augments/siege-breaker.json",
-      "hash": "aa87bc99b4ac",
-      "size": 482
+      "hash": "7437a3d405f4",
+      "size": 536
     },
     {
       "id": "soul-reaver",
       "path": "augments/soul-reaver.json",
-      "hash": "027f6828c7ad",
-      "size": 381
+      "hash": "90867f03022c",
+      "size": 433
     },
     {
       "id": "spell-blade",
       "path": "augments/spell-blade.json",
-      "hash": "787482c7bb24",
-      "size": 760
+      "hash": "f151858922b3",
+      "size": 812
     },
     {
       "id": "storm-arrow",
       "path": "augments/storm-arrow.json",
-      "hash": "f73f1c66759c",
-      "size": 916
+      "hash": "379e14363f91",
+      "size": 968
     },
     {
       "id": "swift-strikes",
       "path": "augments/swift-strikes.json",
-      "hash": "374eb68b3a45",
-      "size": 398
+      "hash": "e84f50809a0c",
+      "size": 452
     },
     {
       "id": "titan-heart",
       "path": "augments/titan-heart.json",
-      "hash": "52084faf7ad7",
-      "size": 508
+      "hash": "05c6f8fc4a8b",
+      "size": 560
     },
     {
       "id": "vital-surge",
       "path": "augments/vital-surge.json",
-      "hash": "17f13db6692b",
-      "size": 408
+      "hash": "cf89e86420e8",
+      "size": 460
     },
     {
       "id": "void-hunger",
       "path": "augments/void-hunger.json",
-      "hash": "ee344114dea0",
-      "size": 488
+      "hash": "8d89a4618177",
+      "size": 540
     }
   ]
 }

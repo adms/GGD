@@ -39,6 +39,22 @@
  * budget would be the one exception nobody remembers.
  *
  * ─────────────────────────────────────────────────────────────────────────────
+ * ⭐ [反向嘲諷]（戰鬥力探測器）—— 兩根**獨立**的軸，⛔ 不是一個「模式」
+ *
+ * 一發嘲弄有兩個問題，而它們在這一支之前是同一個答案（「敵人」「打我」）：
+ *
+ *   `side`         = 這個圓**拉誰**        → `bodiesInCircle`
+ *   `forcedTarget` = 被拉的人**被迫打誰**  → `applyTaunt` 的第三個參數
+ *
+ * 合成一格（例如一個 `mode: "normal" | "reverse"` 的 enum）會少掉兩個真的組合：
+ * 「拉敵人去打我的隊友」（護衛）與「拉隊友來打我」（挑釁）。兩格是四種，
+ * 一格是兩種，而多出來的那兩種一行程式都不用寫。
+ *
+ * ⚠️ 兩格都**缺席**時這一支逐字等於它落地那天的樣子，所以出貨的鍊金術之盾
+ * （`content/items/godie-i06q.json`）逐位元不變 —— 那是 `bodiesInCircle` 在
+ * `side !== "allies"` 時直接回 `enemiesInCircle(...)` 的結構性保證。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
  * DETERMINISM
  *
  * Draws nothing from `world.rng` — there is no roll to make. `enemiesInCircle`
@@ -51,7 +67,7 @@
 import type { EntityId } from "../../ids";
 import type { EffectKindSpec } from "./effectKind";
 import { applyTaunt, type TauntCapOrder } from "../taunt";
-import { enemiesInCircle, resolveAbilityRadius } from "../abilities/abilitySystem";
+import { bodiesInCircle, resolveAbilityRadius } from "../abilities/abilitySystem";
 import { distSq } from "../math/vec2";
 
 /**
@@ -108,8 +124,25 @@ export const tauntEffect: EffectKindSpec<"taunt"> = {
     // on every shield holder in the match.
     if (!world.tauntRules.enabled) return;
 
+    // ⭐ [反向嘲諷] —— 「被拉的人被迫打誰」。ABSENT = 施法者自己，也就是
+    // `applyTaunt(world, s, ctx.caster, …)` 這一格從第一天起寫死的那個答案，
+    // 所以出貨的鍊金術之盾走的是逐字相同的一條路。
+    //
+    // ⛔ 這裡**不**檢查 focus 打不打得到、是不是敵人、活不活著 —— 合法性是
+    // `targeting.forcedTargetOf` 每一 tick 重問的問題（這個檔的檔頭與
+    // sim/taunt.ts 的 `applyTaunt` 都寫著同一句）。寫入時檢查一次的代價是
+    // 「一個 tick 之後才修好」的那種缺陷。
+    const focus: EntityId | undefined =
+      e.forcedTarget === "target" ? ctx.targets[0] : ctx.caster;
+    // 指名了「打目標」卻一個目標都沒解析出來 = 沒有人可以被指向。⛔ 不要退回
+    // 施法者：那會把一發反向嘲諷靜默變成一發正向嘲諷（失敗形態②的反面 ——
+    // 卡片說「去打他」，場上是「都來打我」，而沒有任何東西會說出來）。
+    if (focus === undefined) return;
+
     let subjects: readonly EntityId[];
     if (e.radius === undefined) {
+      // 單體：`side` / `includeNeutrals` 在這一支沒有圓可以濾，所以不讀 ——
+      // 主體就是這個效果自己解析出來的目標。
       subjects = ctx.targets;
     } else {
       const t = world.transform.get(ctx.caster);
@@ -117,7 +150,10 @@ export const tauntEffect: EffectKindSpec<"taunt"> = {
       const radius = resolveAbilityRadius(world, e.radius);
       if (!(radius > 0)) return;
       const found: Candidate[] = [];
-      for (const id of enemiesInCircle(world, ctx.caster, t.pos, radius)) {
+      for (const id of bodiesInCircle(world, ctx.caster, t.pos, radius, {
+        ...(e.side !== undefined ? { side: e.side } : {}),
+        ...(e.includeNeutrals !== undefined ? { includeNeutrals: e.includeNeutrals } : {}),
+      })) {
         const vt = world.transform.get(id);
         if (!vt) continue;
         found.push({ id, d2: distSq(t.pos, vt.pos), hp: world.health.get(id)?.hp ?? 0 });
@@ -133,7 +169,10 @@ export const tauntEffect: EffectKindSpec<"taunt"> = {
 
     let pulled = 0;
     for (const s of subjects) {
-      if (applyTaunt(world, s, ctx.caster, e.durationSec)) pulled++;
+      // ⭐ 第三個參數是 `focus`，⛔ 不是 `ctx.caster` —— 這一行**就是**反向嘲諷。
+      // `applyTaunt` 自己擋掉 `s === focus`（自己嘲弄自己），所以 focus 剛好也在
+      // 圓裡的時候不會生出一筆自我指向的紀錄。
+      if (applyTaunt(world, s, focus, e.durationSec)) pulled++;
     }
     // ② THE PLAYER MUST BE ABLE TO SEE IT. A taunt has no health bar, no stat
     // panel row and no floating number — without an event the only evidence it
@@ -142,6 +181,10 @@ export const tauntEffect: EffectKindSpec<"taunt"> = {
     // Only when somebody was actually pulled.
     if (pulled > 0) {
       world.emit("taunt", {
+        // ⚠️ 反向嘲諷底下 `source` 仍然是**施法者**，⛔ 不是 focus。這個欄位的
+        // 意思是「哪一具身體上要冒出那一圈特效」（VfxSystem 的 `taunt` case），
+        // 而卡片講的是「我的探測器發出了指令」—— 特效長在持有者身上是對的。
+        // 換成 focus 會讓一個**敵人**身上冒出我方道具的特效。
         source: ctx.caster,
         count: pulled,
         durationSec: e.durationSec,

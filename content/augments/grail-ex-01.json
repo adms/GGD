@@ -12,6 +12,7 @@
     "rule-rewrite"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-ex-01.webp",
   "eligibility": {
     "requiresSelfMechanic": [
       "abilityDamage"

@@ -86,6 +86,9 @@ import { summonEffect } from "./summon"; // P2 召喚物 — lifecycle half in .
 import { evasionEffect } from "./evasion";
 // ── 契約層 2026-08-09 (GH#301-2) — 真瞬移。⛔ 保留槽位，`apply` 目前 THROW。
 import { blinkEffect } from "./blink";
+// ── [EX∅ 根源] 2026-08-18 —— 兩個空殼槽位（見下面註冊處的說明）。
+import { carryEffect } from "./carry";
+import { mindControlEffect } from "./mindControl";
 
 // ── 嘲弄 / 煉金術 (鍊金術之盾 godie-i06q) ────────────────────────────────────
 import { tauntEffect } from "./taunt"; // 強制索敵 — model + config in ../taunt.ts
@@ -216,5 +219,13 @@ export const EFFECT_HANDLERS: EffectRegistry = {
 
   // ── reserved: replace the stub module's `apply`, nothing here changes ─────
   evasion: evasionEffect, //           lane P5 — 閃避   (uses the existing Stat.Evasion)
+
+  // ── [EX∅ 根源]（2026-08-18）：詞彙包先落地兩個槽位 ────────────────────────
+  // ⚠️ 兩支 handler 目前是**空殼**（`apply` 什麼都不做，⛔ 也不 throw ——
+  // 一個會丟例外的保留槽會讓一份合法的 JSON 在真的比賽裡炸掉伺服器）。
+  // 它們在這裡是因為 `EffectHandlers` 是 mapped type：**少一列是 compile error**，
+  // 而那正是我們要的 —— 「schema 收得下、註冊表沒有它」在這個 repo 裡不可能發生。
+  carry: carryEffect, //         L4 —— 【背負】(禰豆子的木箱)
+  convertTeam: mindControlEffect, // L5 —— 【陣營轉換】(大師球)
   // lane P6 — 護盾傷害類型過濾 is NOT a kind: it is `shield.absorbs`, see shield.ts
 };

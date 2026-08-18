@@ -714,6 +714,12 @@ export function pushEvadeText(input: {
   worldX: number;
   worldZ: number;
   nowMs: number;
+  /**
+   * 覆蓋要畫的字。缺席 = 「閃避」。⭐ `immune`（無敵 / 型別連擊免疫）走這一格 ——
+   * 入場政策、同 tick 合併、每體上限、優先 admission 全部免費繼承，
+   * ⛔ 不是第二條浮動文字管線。
+   */
+  label?: string;
 }): void {
   pushCombatText({
     kind: "evade",
@@ -727,6 +733,7 @@ export function pushEvadeText(input: {
     worldX: input.worldX,
     worldZ: input.worldZ,
     nowMs: input.nowMs,
+    ...(input.label !== undefined ? { label: input.label } : {}),
   });
 }
 

@@ -1,7 +1,19 @@
 {
   "collection": "items",
-  "hash": "4fc647e3f0bc",
+  "hash": "968fdff2abab",
   "entries": [
+    {
+      "id": "all-might-hair",
+      "path": "items/all-might-hair.json",
+      "hash": "1c6e82d4f030",
+      "size": 3363
+    },
+    {
+      "id": "bezoar-of-the-apothecary",
+      "path": "items/bezoar-of-the-apothecary.json",
+      "hash": "217d72ccc436",
+      "size": 2425
+    },
     {
       "id": "book-of-gospel",
       "path": "items/book-of-gospel.json",
@@ -11,14 +23,14 @@
     {
       "id": "bulwark-charge-greaves",
       "path": "items/bulwark-charge-greaves.json",
-      "hash": "16239588594c",
-      "size": 3112
+      "hash": "aacc547975e5",
+      "size": 3172
     },
     {
       "id": "cleaver-of-the-warden",
       "path": "items/cleaver-of-the-warden.json",
-      "hash": "46cefac9cccd",
-      "size": 3404
+      "hash": "c4c259f49c2f",
+      "size": 3463
     },
     {
       "id": "collar-of-the-deadly-soul",
@@ -37,6 +49,12 @@
       "path": "items/fingerless-gloves.json",
       "hash": "5e3d8754c99d",
       "size": 8137
+    },
+    {
+      "id": "gantz-suit",
+      "path": "items/gantz-suit.json",
+      "hash": "c4d161f9738f",
+      "size": 3890
     },
     {
       "id": "godie-i000",
@@ -645,6 +663,18 @@
       "size": 4989
     },
     {
+      "id": "grief-seed",
+      "path": "items/grief-seed.json",
+      "hash": "1715f7141a94",
+      "size": 3449
+    },
+    {
+      "id": "icha-icha-paradise",
+      "path": "items/icha-icha-paradise.json",
+      "hash": "4909409aa64c",
+      "size": 1933
+    },
+    {
       "id": "lance-kongotetsu",
       "path": "items/lance-kongotetsu.json",
       "hash": "6f8f4956f7e1",
@@ -663,6 +693,12 @@
       "size": 5439
     },
     {
+      "id": "master-ball",
+      "path": "items/master-ball.json",
+      "hash": "754924c2b7a1",
+      "size": 4676
+    },
+    {
       "id": "meat-cleaver",
       "path": "items/meat-cleaver.json",
       "hash": "b683618d124a",
@@ -675,10 +711,22 @@
       "size": 10808
     },
     {
+      "id": "millennium-puzzle",
+      "path": "items/millennium-puzzle.json",
+      "hash": "15c178998926",
+      "size": 3926
+    },
+    {
       "id": "mystery-scrap-of-paper",
       "path": "items/mystery-scrap-of-paper.json",
       "hash": "5af688d9f681",
       "size": 4003
+    },
+    {
+      "id": "nezuko-box",
+      "path": "items/nezuko-box.json",
+      "hash": "99af534abd27",
+      "size": 4450
     },
     {
       "id": "odm-gear",
@@ -695,14 +743,38 @@
     {
       "id": "piercer-crossbow",
       "path": "items/piercer-crossbow.json",
-      "hash": "6cd09657b3bc",
-      "size": 4134
+      "hash": "915b5c9f3835",
+      "size": 4188
+    },
+    {
+      "id": "red-comet-mask",
+      "path": "items/red-comet-mask.json",
+      "hash": "83e7fa868e01",
+      "size": 1596
     },
     {
       "id": "sage-ward-amulet",
       "path": "items/sage-ward-amulet.json",
-      "hash": "d9c30ea65d1b",
-      "size": 2631
+      "hash": "037bc90ec9a4",
+      "size": 2685
+    },
+    {
+      "id": "sasumata",
+      "path": "items/sasumata.json",
+      "hash": "a620cade4c62",
+      "size": 4234
+    },
+    {
+      "id": "scouter",
+      "path": "items/scouter.json",
+      "hash": "febc03a8dcd7",
+      "size": 4373
+    },
+    {
+      "id": "senzu-bean",
+      "path": "items/senzu-bean.json",
+      "hash": "ef2be07a20ae",
+      "size": 4029
     },
     {
       "id": "shining-golden-orbs",
@@ -711,10 +783,22 @@
       "size": 8596
     },
     {
+      "id": "slime-suit",
+      "path": "items/slime-suit.json",
+      "hash": "3d3f9962ecf3",
+      "size": 3984
+    },
+    {
       "id": "soul-eater",
       "path": "items/soul-eater.json",
       "hash": "bb8c59dea76e",
       "size": 6088
+    },
+    {
+      "id": "soul-gem",
+      "path": "items/soul-gem.json",
+      "hash": "0e97475c5bd7",
+      "size": 4753
     },
     {
       "id": "spear-of-lightning",
@@ -751,6 +835,12 @@
       "path": "items/torch-master.json",
       "hash": "f4c448064d74",
       "size": 4495
+    },
+    {
+      "id": "touyako",
+      "path": "items/touyako.json",
+      "hash": "09865135a4e4",
+      "size": 2214
     },
     {
       "id": "ultimate-mod-shiranui",

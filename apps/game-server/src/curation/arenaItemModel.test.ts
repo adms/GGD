@@ -107,7 +107,19 @@ function factsOf(id: string): ItemFacts {
     name: def.name,
     cost: def.cost,
     role: (def as { craftRole?: string }).craftRole ?? "none",
-    effective: mods.length > 0 || def.passive !== undefined,
+    // ⚠️ RE-AIMED 2026-08-18 (GH#355)：`modifiers` + `passive` 不再是「這件裝備會不會
+    // 給你東西」的全部。[EX∅ 根源] 那一批之後還有三條路，而三條都**只**走它們自己那一格：
+    //   · `auras`（討伐叉：一整圈屬性）
+    //   · `marks`（GANTZ Suit / 千年積木：具名標記 + 免死規則）
+    //   · `typeStreakImmunity`（史萊姆裝：連續同型傷害免疫）
+    // 舊判準會把這幾件**做好了**的寶具報成「空卡」，然後結論是「它不該在池子裡」——
+    // 一個 100% 反向的結論。判準沒變：**裝上去之後有沒有任何事情發生**。
+    effective:
+      mods.length > 0 ||
+      def.passive !== undefined ||
+      ((def as { auras?: unknown[] }).auras?.length ?? 0) > 0 ||
+      ((def as { marks?: unknown[] }).marks?.length ?? 0) > 0 ||
+      (def as { typeStreakImmunity?: unknown }).typeStreakImmunity !== undefined,
     insane,
   };
 }

@@ -5,6 +5,7 @@
   "craftRole": "none",
   "id": "piercer-crossbow",
   "name": "穿甲弩",
+  "icon": "assets/icons/items/piercer-crossbow.webp",
   "description": "傳說\n效能\n攻擊力+38\n攻擊速度+45%\n[限遠程] 遠程英雄的普攻額外造成攻擊力 35% 的真實傷害（無視護甲與魔抗）；近戰英雄拿不到這一條\n\n解說\n弩箭不管對面穿了幾層鐵；它只認得距離。",
   "tags": [
     "legendary",

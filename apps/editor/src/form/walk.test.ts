@@ -121,7 +121,14 @@ describe("discriminated EffectDef union (editor-02)", () => {
         // 那個 `never` 分支在我把它加進 union 的當下就先把編譯打紅了，
         // 所以「補一個 tag」在這一支從來不是一個選項。
         "blink",
+        // ── 2026-08-18 [EX∅ 根源] 的兩個新 kind (GH#355) ──────────────────
+        // `carry`（禰豆子的木箱：背著隊友走 + 不可被選取）與 `convertTeam`
+        // （大師球：把一隻既有單位借到自己這一隊）。⛔ 補 tag **不是**修好它：
+        // `PreviewController.effectLines` 的窮盡性 `never` 分支在這兩個 kind
+        // 進 union 的當下就先把編譯打紅了，兩個 case 是同一輪補上的。
+        "carry",
         "championForm", // task #249 — the w3x Eme1/Emeu body swap
+        "convertTeam",
         // ── 2026-07-31 技能批次的四個新 kind ────────────────────────────
         // 這四個是**同一天**進來的，而這條釘子沒有跟上 —— 也就是說有四張卡
         // 在編輯器裡是新的，而「編輯器不能落後 sim」這條保證有四天是假的。

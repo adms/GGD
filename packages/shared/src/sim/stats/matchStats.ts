@@ -128,6 +128,29 @@ export function getMatchStats(world: SimWorld, id: EntityId): PlayerMatchStats {
  * shield-absorbed. Only champion↔champion counts; the enemy attacker is logged
  * for assist attribution.
  */
+/**
+ * ⭐ **戰績要記在誰頭上** —— owner 2026-08-18 對 [陣營轉換]（大師球）的裁決：
+ *
+ *   「物理意義上，我們比較像是**複製一個敵方隊友短暫在這一回合加入我方**，
+ *    所以**實質上這個單位就是我方單位**，就算他造成任何傷害或者戰績
+ *    都是算在我方而非那個敵方單位上」
+ *
+ * ⚠️ 這一格是必要的，而理由是量到的：`world.matchStats` 以 **entityId** 為鍵，
+ * 而結算是走 `seat.entityId` 讀出來的（`MatchController` 四處）—— 所以在這一行
+ * 出現之前，被我方捕獲的敵方英雄打出來的傷害會記在**他自己那一列**，也就是
+ * **敵方玩家的計分板**上。玩家會看到「我被抓走的那段時間幫對面刷了輸出」。
+ *
+ * ⛔ 為什麼是一個轉址而不是給每個 `record*` 各加一個 if：`recordDamage` /
+ * `recordCc` / `recordHealing` … 是同一個問題的七個入口，七份 if 保證有一天只改到六份
+ * （第零守則⑨）。⭐ 也⛔ 不是改 `world.team` —— 那個已經換隊了（敵我判定因此本來就對），
+ * 動它會連「他原本是誰」都丟掉，而歸位需要那個。
+ *
+ * 沒有被捕的單位（幾乎全部）逐位元回自己 —— 這是一個嚴格的 no-op 路徑。
+ */
+function creditedTo(world: SimWorld, source: EntityId): EntityId {
+  return world.mindControl.get(source)?.captor ?? source;
+}
+
 export function recordDamage(
   world: SimWorld,
   source: EntityId,
@@ -214,7 +237,7 @@ export function recordDamage(
   if (!tgtChamp) return; // damage to flowers / neutrals never scores
 
   if (srcChamp && source !== target) {
-    const src = world.matchStats.get(source);
+    const src = world.matchStats.get(creditedTo(world, source));
     if (src) {
       src.damageDealt += output;
       if (output > src.largestSingleHit) src.largestSingleHit = output;
@@ -243,7 +266,7 @@ export function recordDamage(
 /** Record HP healed by `healer` (heal effect or lifesteal). */
 export function recordHealing(world: SimWorld, healer: EntityId, amount: number): void {
   if (amount <= 0) return;
-  const s = world.matchStats.get(healer);
+  const s = world.matchStats.get(creditedTo(world, healer));
   if (s && world.champion.has(healer)) s.healingDone += amount;
 }
 
@@ -254,7 +277,7 @@ export function recordCc(world: SimWorld, caster: EntityId, target: EntityId, ti
   const ct = world.team.get(caster);
   const tt = world.team.get(target);
   if (ct && tt && ct.teamId === tt.teamId) return; // no credit for self/ally CC
-  const s = world.matchStats.get(caster);
+  const s = world.matchStats.get(creditedTo(world, caster));
   if (s) s.ccAppliedTicks += ticks;
 }
 

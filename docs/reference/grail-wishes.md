@@ -7,7 +7,7 @@
 > 設計母規則：[`docs/聖杯願望三選一-設計規則.md`](../聖杯願望三選一-設計規則.md)。
 > 每個效果的參數與上下界：[`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 
-contentVersion `cv_deccd4ef6170`
+contentVersion `cv_9691e4458a22`
 
 ---
 
@@ -58,6 +58,7 @@ contentVersion `cv_deccd4ef6170`
     "defense"
   ],
   "selectionSlot": "generic",
+  "icon": "assets/icons/augments/grail-c-01.webp",
   "hooks": [
     {
       "on": "onStatusApplied",
@@ -127,6 +128,7 @@ contentVersion `cv_deccd4ef6170`
     "counter"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-c-02.webp",
   "eligibility": {
     "requiresSelfMechanic": [
       "evasion",
@@ -207,6 +209,7 @@ contentVersion `cv_deccd4ef6170`
     "sustain"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-c-03.webp",
   "eligibility": {
     "requiresSelfMechanic": [
       "evasion",
@@ -281,6 +284,7 @@ contentVersion `cv_deccd4ef6170`
     "conversion"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-c-04.webp",
   "eligibility": {
     "requiresMana": true
   },
@@ -344,6 +348,7 @@ contentVersion `cv_deccd4ef6170`
     "stat-conversion"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-c-05.webp",
   "eligibility": {
     "requiresMana": true
   },
@@ -397,6 +402,7 @@ contentVersion `cv_deccd4ef6170`
     "stat-conversion"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-c-06.webp",
   "modifiers": [
     {
       "stat": "cdr",
@@ -447,6 +453,7 @@ contentVersion `cv_deccd4ef6170`
     "magic"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-c-07.webp",
   "damageTypeOverride": {
     "scope": "basic",
     "becomes": "magic",
@@ -495,6 +502,7 @@ contentVersion `cv_deccd4ef6170`
     "anti-buff"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-c-08.webp",
   "eligibility": {
     "requiresSelfMechanic": [
       "abilityDamage"
@@ -565,6 +573,7 @@ contentVersion `cv_deccd4ef6170`
     "anti-shield"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-c-09.webp",
   "eligibility": {
     "requiresEnemyMechanic": [
       "shield"
@@ -628,6 +637,7 @@ contentVersion `cv_deccd4ef6170`
     "attributes"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-c-10.webp",
   "eligibility": {
     "requiresModeFeature": [
       "mobs"
@@ -711,6 +721,7 @@ contentVersion `cv_deccd4ef6170`
     "defense"
   ],
   "selectionSlot": "generic",
+  "icon": "assets/icons/augments/grail-c-11.webp",
   "hooks": [
     {
       "on": "onStatusApplied",
@@ -788,6 +799,7 @@ contentVersion `cv_deccd4ef6170`
     "defense"
   ],
   "selectionSlot": "generic",
+  "icon": "assets/icons/augments/grail-c-12.webp",
   "eligibility": {
     "requiresAnyAbilitySlot": [
       "Q",
@@ -855,6 +867,7 @@ contentVersion `cv_deccd4ef6170`
     "cooldown-reset"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-c-13.webp",
   "eligibility": {
     "requiresModeFeature": [
       "boss"
@@ -917,6 +930,7 @@ contentVersion `cv_deccd4ef6170`
     "cooldown-reset"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-c-14.webp",
   "eligibility": {
     "requiresModeFeature": [
       "neutralObjects"
@@ -995,6 +1009,7 @@ contentVersion `cv_deccd4ef6170`
     "clutch"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-c-15.webp",
   "eligibility": {
     "requiresModeFeature": [
       "team"
@@ -1066,6 +1081,7 @@ contentVersion `cv_deccd4ef6170`
     "magic"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-c-16.webp",
   "eligibility": {
     "requiresSelfMechanic": [
       "abilityDamage"
@@ -1143,6 +1159,7 @@ contentVersion `cv_deccd4ef6170`
     "shield"
   ],
   "selectionSlot": "generic",
+  "icon": "assets/icons/augments/grail-c-17.webp",
   "hooks": [
     {
       "on": "onDamageTaken",
@@ -1209,6 +1226,7 @@ contentVersion `cv_deccd4ef6170`
     "elemental"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-c-18.webp",
   "eligibility": {
     "requiresSelfMechanic": [
       "abilityDamage"
@@ -1274,6 +1292,7 @@ contentVersion `cv_deccd4ef6170`
     "aoe"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-c-19.webp",
   "hooks": [
     {
       "on": "onInterval",
@@ -1354,6 +1373,7 @@ contentVersion `cv_deccd4ef6170`
     "projectile"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-c-20.webp",
   "eligibility": {
     "requiresAnyAbilitySlot": [
       "Q",
@@ -1458,6 +1478,7 @@ contentVersion `cv_deccd4ef6170`
     "physical"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-a-01.webp",
   "eligibility": {
     "requiresSelfMechanic": [
       "evasion",
@@ -1564,6 +1585,7 @@ contentVersion `cv_deccd4ef6170`
     "counter"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-a-02.webp",
   "eligibility": {
     "requiresSelfMechanic": [
       "evasion",
@@ -1642,6 +1664,7 @@ contentVersion `cv_deccd4ef6170`
     "survival"
   ],
   "selectionSlot": "generic",
+  "icon": "assets/icons/augments/grail-a-03.webp",
   "block": {
     "damageTypes": [
       "physical",
@@ -1695,6 +1718,7 @@ contentVersion `cv_deccd4ef6170`
     "stat-conversion"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-a-04.webp",
   "modifiers": [
     {
       "stat": "cdr",
@@ -1745,6 +1769,7 @@ contentVersion `cv_deccd4ef6170`
     "snowball"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-a-05.webp",
   "hooks": [
     {
       "on": "onKill",
@@ -1825,6 +1850,7 @@ contentVersion `cv_deccd4ef6170`
     "cleanse"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-a-06.webp",
   "eligibility": {
     "requiresModeFeature": [
       "team"
@@ -1907,6 +1933,7 @@ contentVersion `cv_deccd4ef6170`
     "invulnerable"
   ],
   "selectionSlot": "generic",
+  "icon": "assets/icons/augments/grail-a-07.webp",
   "eligibility": {
     "requiresModeFeature": [
       "revive"
@@ -2003,6 +2030,7 @@ contentVersion `cv_deccd4ef6170`
     "echo"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-a-08.webp",
   "eligibility": {
     "requiresAbilitySlots": [
       "Q",
@@ -2175,6 +2203,7 @@ contentVersion `cv_deccd4ef6170`
     "defense-sacrifice"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-a-09.webp",
   "modifiers": [
     {
       "stat": "armor",
@@ -2234,6 +2263,7 @@ contentVersion `cv_deccd4ef6170`
     "damage-dealt"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-a-10.webp",
   "eligibility": {
     "requiresMana": true
   },
@@ -2301,6 +2331,7 @@ contentVersion `cv_deccd4ef6170`
     "stat-conversion"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-a-11.webp",
   "eligibility": {
     "requiresMana": true
   },
@@ -2354,6 +2385,7 @@ contentVersion `cv_deccd4ef6170`
     "physical"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-a-12.webp",
   "damageTypeOverride": {
     "scope": "ability",
     "becomes": "physical",
@@ -2402,6 +2434,7 @@ contentVersion `cv_deccd4ef6170`
     "max-health"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-a-13.webp",
   "modifiers": [
     {
       "stat": "ad",
@@ -2473,6 +2506,7 @@ contentVersion `cv_deccd4ef6170`
     "engage"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-a-14.webp",
   "eligibility": {
     "requiresSelfMechanic": [
       "evasion",
@@ -2538,6 +2572,7 @@ contentVersion `cv_deccd4ef6170`
     "invulnerable"
   ],
   "selectionSlot": "generic",
+  "icon": "assets/icons/augments/grail-a-15.webp",
   "hooks": [
     {
       "on": "onStatusApplied",
@@ -2615,6 +2650,7 @@ contentVersion `cv_deccd4ef6170`
     "shield"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-a-16.webp",
   "hooks": [
     {
       "on": "onAbilityCast",
@@ -2679,6 +2715,7 @@ contentVersion `cv_deccd4ef6170`
     "hybrid"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-a-17.webp",
   "eligibility": {
     "prefersSelfMechanic": [
       "abilityDamage"
@@ -2757,6 +2794,7 @@ contentVersion `cv_deccd4ef6170`
     "cooldown-reset"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-a-18.webp",
   "eligibility": {
     "requiresSelfMechanic": [
       "burn"
@@ -2840,6 +2878,7 @@ contentVersion `cv_deccd4ef6170`
     "ap"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-a-19.webp",
   "eligibility": {
     "requiresSelfMechanic": [
       "abilityDamage"
@@ -2913,6 +2952,7 @@ contentVersion `cv_deccd4ef6170`
     "magic"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-a-20.webp",
   "eligibility": {
     "prefersSelfMechanic": [
       "abilityDamage"
@@ -2993,6 +3033,7 @@ contentVersion `cv_deccd4ef6170`
     "rule-rewrite"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-ex-01.webp",
   "eligibility": {
     "requiresSelfMechanic": [
       "abilityDamage"
@@ -3046,6 +3087,7 @@ contentVersion `cv_deccd4ef6170`
     "reality-marble"
   ],
   "selectionSlot": "generic",
+  "icon": "assets/icons/augments/grail-ex-02.webp",
   "hooks": [
     {
       "on": "onInterval",
@@ -3125,6 +3167,7 @@ contentVersion `cv_deccd4ef6170`
     "clutch"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-ex-03.webp",
   "hooks": [
     {
       "on": "onKill",
@@ -3212,6 +3255,7 @@ contentVersion `cv_deccd4ef6170`
     "command-spell"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-ex-04.webp",
   "eligibility": {
     "requiresAbilitySlots": [
       "Q",
@@ -3308,6 +3352,7 @@ contentVersion `cv_deccd4ef6170`
     "noble-phantasm"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-ex-05.webp",
   "eligibility": {
     "requiresAbilitySlots": [
       "R"
@@ -3386,6 +3431,7 @@ contentVersion `cv_deccd4ef6170`
     "class-skill"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-ex-06.webp",
   "eligibility": {
     "excludeSelfMechanic": [
       "flight"
@@ -3439,6 +3485,7 @@ contentVersion `cv_deccd4ef6170`
     "survival"
   ],
   "selectionSlot": "generic",
+  "icon": "assets/icons/augments/grail-ex-07.webp",
   "block": {
     "damageTypes": [
       "physical",
@@ -3493,6 +3540,7 @@ contentVersion `cv_deccd4ef6170`
     "counter"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-ex-08.webp",
   "eligibility": {
     "requiresSelfMechanic": [
       "evasion",
@@ -3678,6 +3726,7 @@ contentVersion `cv_deccd4ef6170`
     "clutch"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-ex-09.webp",
   "eligibility": {
     "requiresModeFeature": [
       "fireRing"
@@ -3770,6 +3819,7 @@ contentVersion `cv_deccd4ef6170`
     "contract"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-ex-10.webp",
   "eligibility": {
     "requiresModeFeature": [
       "team"
@@ -3833,6 +3883,7 @@ contentVersion `cv_deccd4ef6170`
     "invulnerable"
   ],
   "selectionSlot": "generic",
+  "icon": "assets/icons/augments/grail-ex-11.webp",
   "eligibility": {
     "requiresModeFeature": [
       "revive"
@@ -3936,6 +3987,7 @@ contentVersion `cv_deccd4ef6170`
     "reality-marble"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-ex-12.webp",
   "eligibility": {
     "requiresMana": true
   },
@@ -4006,6 +4058,7 @@ contentVersion `cv_deccd4ef6170`
     "noble-phantasm"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-ex-13.webp",
   "eligibility": {
     "requiresSelfMechanic": [
       "abilityDamage"
@@ -4085,6 +4138,7 @@ contentVersion `cv_deccd4ef6170`
     "shield-break"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-ex-14.webp",
   "eligibility": {
     "requiresSelfMechanic": [
       "abilityDamage"
@@ -4165,6 +4219,7 @@ contentVersion `cv_deccd4ef6170`
     "magic-craft"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-ex-15.webp",
   "eligibility": {
     "requiresAbilitySlots": [
       "Q",
@@ -4301,6 +4356,7 @@ contentVersion `cv_deccd4ef6170`
     "secret-sword"
   ],
   "selectionSlot": "synergy",
+  "icon": "assets/icons/augments/grail-ex-16.webp",
   "hooks": [
     {
       "on": "onBasicAttack",
@@ -4378,6 +4434,7 @@ contentVersion `cv_deccd4ef6170`
     "cooldown-reset"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-ex-17.webp",
   "eligibility": {
     "onlyAttackType": "ranged"
   },
@@ -4468,6 +4525,7 @@ contentVersion `cv_deccd4ef6170`
     "magic-crest"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-ex-18.webp",
   "eligibility": {
     "requiresMana": true
   },
@@ -4538,6 +4596,7 @@ contentVersion `cv_deccd4ef6170`
     "ap"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-ex-19.webp",
   "eligibility": {
     "requiresSelfMechanic": [
       "abilityDamage"
@@ -4610,6 +4669,7 @@ contentVersion `cv_deccd4ef6170`
     "lightning"
   ],
   "selectionSlot": "pivot",
+  "icon": "assets/icons/augments/grail-ex-20.webp",
   "hooks": [
     {
       "on": "onBasicAttack",
