@@ -6,7 +6,7 @@
  * node. The server hard-gates the channel to dev mode regardless of this.
  */
 import type { Cheat } from "@ggd/shared/protocol/messages";
-import type { AbilitySlot } from "@ggd/shared/sim/intents";
+import type { AbilitySlot, CastableSlot } from "@ggd/shared/sim/intents";
 import { classifyEnvTier } from "@ggd/shared/envTier";
 import { filterChampions, type RosterChampion } from "./panels/champSelectFilter";
 
@@ -78,6 +78,37 @@ export function isCheatToggleKey(key: string): boolean {
   return key === CHEAT_TOGGLE_KEY;
 }
 
+/**
+ * 這一場比賽的**哪幾格**決定了測試面板的存在與可見性。
+ *
+ * ⭐ GH#365 —— 為什麼多這一層而不是直接呼叫上面兩支：**因為上面兩支的第二個參數
+ * 被漏掉過，而漏掉不會有任何東西紅。** `cheatsAvailable(mode, practice)` 在 GH#343
+ * 長出第二個參數時，簽章、`cheatButtonVisible`、`CheatConsole` 內部三處都接上了，
+ * 只有 `AppRoot` 那個**決定元件存不存在**的呼叫點還是一個參數 —— 於是練習房在
+ * 正式站上連掛都沒掛（連 backtick 的 handler 都沒被註冊）。
+ *
+ * ⭐ 修法不是「記得補上第二個參數」（判準），是**讓那個參數不可能被漏掉**（閘）：
+ * 傳的是**整個 match 物件**，所以再多一格條件（第三種房型…）時，呼叫點一個字都
+ * 不用改，也就沒有東西可以忘記改。⛔ 這正是元規則「把判準換成一個會擋下你的東西」。
+ */
+export interface CheatPanelMatch {
+  mode?: "platform" | "offline" | null;
+  practice?: boolean;
+}
+
+/** 測試面板**存不存在**（AppRoot 的掛載閘）。 */
+export function cheatPanelMounts(match: CheatPanelMatch | null | undefined): boolean {
+  return cheatsAvailable(match?.mode, match?.practice);
+}
+
+/** 🐞 按鈕**看不看得見**（面板存在之後的第二個、不同的問題）。 */
+export function cheatPanelButtonVisible(
+  match: CheatPanelMatch | null | undefined,
+  hostname: string | undefined,
+): boolean {
+  return cheatButtonVisible(match?.mode, hostname, match?.practice);
+}
+
 /** A searchable registry row (champion or item). */
 export interface CheatListEntry extends RosterChampion {
   id: string;
@@ -118,6 +149,22 @@ export const cheat = {
     what,
     ...(count === undefined ? {} : { count }),
   }),
+  // ── 練習面板（GH#365）的六個機制 —— 形狀的說明在 protocol/messages.ts ──────
+  grantXp: (amount: number): Cheat => ({ kind: "grantXp", amount }),
+  setStat: (stat: string, value: number): Cheat => ({ kind: "setStat", stat, value }),
+  infiniteMana: (enabled: boolean): Cheat => ({ kind: "infiniteMana", enabled }),
+  castAbility: (slot: CastableSlot): Cheat => ({ kind: "castAbility", slot }),
+  /**
+   * ⚠️ `durationSec` 省略時**不送這一格**（同 `spawnMob.count` 的理由）：預設秒數
+   * 住在伺服器，⛔ 客戶端不留第二份。`on:false` 時伺服器忽略它。
+   */
+  setStatus: (statusId: string, on: boolean, durationSec?: number): Cheat => ({
+    kind: "setStatus",
+    statusId,
+    on,
+    ...(durationSec === undefined ? {} : { durationSec }),
+  }),
+  setWave: (wave: number): Cheat => ({ kind: "setWave", wave }),
 } as const;
 
 /**

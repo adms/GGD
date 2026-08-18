@@ -10,7 +10,6 @@ import { readFileSync } from "node:fs";
 import { DEFAULT_CAMERA } from "@ggd/shared/content";
 import { join } from "node:path";
 import {
-  GAMEPAD_ZOOM_HOME_DELTA,
   GAMEPAD_ZOOM_NOTCHES,
   GAMEPAD_ZOOM_STEP,
   PadCameraControl,
@@ -37,28 +36,39 @@ import {
 const DOLLY_MIN = DEFAULT_CAMERA.minDolly;
 const DOLLY_MAX = DEFAULT_CAMERA.maxDolly;
 const DOLLY_MAX_DEAD = DEFAULT_CAMERA.maxDollyDead;
-const DOLLY_DEFAULT = DOLLY_MIN;
+/** ⭐ GH#361：預設是它**自己的一格**，⛔ 不再是 `minDolly` 的別名。 */
+const DOLLY_DEFAULT = DEFAULT_CAMERA.defaultDolly;
 const WHEEL_SCALE = DEFAULT_CAMERA.wheelStep;
+/** 一節往「離預設遠」的方向走：出貨預設在最遠端 ⇒ 往內（負）。 */
+const AWAY_SIGN = DOLLY_DEFAULT >= DOLLY_MAX ? -1 : 1;
 
-it("the rig reads its clamps from config.camera, and 歸位 uses the same floor", () => {
+it("the rig reads its clamps AND its default from config.camera", () => {
   const src = readFileSync(join(__dirname, "..", "render", "CameraRig.ts"), "utf8");
   // 接線：滾輪要乘**設定裡的**步進，⛔ 不是一個寫死的 0.02。
   expect(src).toContain("wheelDeltaY * c.wheelStep");
   // 夾限的兩端都要來自設定（`cameraLimits()`），⛔ 不是模組層級的常數。
   expect(src).toContain("Math.max(c.minDolly");
   expect(src).toContain("this.dead ? c.maxDollyDead : c.maxDolly");
-  expect(src).toContain("DOLLY_DEFAULT = DOLLY_MIN");
+  // ⭐ 開局距離也一樣走設定（GH#361）。⛔ 不是模組載入時凍結的 DOLLY_DEFAULT。
+  expect(src).toContain("this.dolly = cameraLimits().defaultDolly");
   // ⭐ 出貨的最遠視野**比最近遠**——這是唯一會讓滾輪整個失效的組合。
   expect(DOLLY_MAX).toBeGreaterThan(DOLLY_MIN);
   expect(DOLLY_MAX_DEAD).toBeGreaterThanOrEqual(DOLLY_MAX);
+  // ⭐ 預設必須落在區間裡，否則一進場就會被夾走。
+  expect(DOLLY_DEFAULT).toBeGreaterThanOrEqual(DOLLY_MIN);
+  expect(DOLLY_DEFAULT).toBeLessThanOrEqual(DOLLY_MAX);
 });
 
 function fakeRig(): PadCameraRig & { dolly: number } {
   return {
     dolly: DOLLY_DEFAULT,
     followLock: true,
+    zoomAwaySign: AWAY_SIGN,
     zoomBy(wheelDeltaY: number) {
       this.dolly = Math.min(DOLLY_MAX, Math.max(DOLLY_MIN, this.dolly + wheelDeltaY * WHEEL_SCALE));
+    },
+    homeZoom() {
+      this.dolly = DOLLY_DEFAULT; // 絕對賦值，跟真的 rig 一樣
     },
     toggleFollow() {
       this.followLock = !this.followLock;
@@ -66,8 +76,13 @@ function fakeRig(): PadCameraRig & { dolly: number } {
   };
 }
 
+/** 「離預設更遠」在**目前設定下**是哪個方向 —— 出貨是往內，#31a 是往外。 */
+function movedAway(dolly: number): boolean {
+  return AWAY_SIGN < 0 ? dolly < DOLLY_DEFAULT : dolly > DOLLY_DEFAULT;
+}
+
 describe("R3 — 鏡頭歸位 / 縮放", () => {
-  it("each press steps the camera further out", () => {
+  it("each press steps the camera one notch AWAY from the default", () => {
     const rig = fakeRig();
     const pad = new PadCameraControl();
     const seen: number[] = [];
@@ -75,10 +90,11 @@ describe("R3 — 鏡頭歸位 / 縮放", () => {
       pad.apply(rig, { zoomCycle: true });
       seen.push(rig.dolly);
     }
-    expect(seen).toEqual([...seen].sort((a, b) => a - b)); // monotonically out
-    expect(rig.dolly).toBeGreaterThan(DOLLY_DEFAULT);
+    // monotonically AWAY from the default (out under #31a, in since GH#361)
+    expect(seen).toEqual([...seen].sort((a, b) => (a - b) * AWAY_SIGN));
+    expect(movedAway(rig.dolly)).toBe(true);
     expect(rig.dolly).toBeCloseTo(
-      DOLLY_DEFAULT + GAMEPAD_ZOOM_NOTCHES * GAMEPAD_ZOOM_STEP * WHEEL_SCALE,
+      DOLLY_DEFAULT + AWAY_SIGN * GAMEPAD_ZOOM_NOTCHES * GAMEPAD_ZOOM_STEP * WHEEL_SCALE,
     );
   });
 
@@ -94,12 +110,14 @@ describe("R3 — 鏡頭歸位 / 縮放", () => {
     expect(rig.followLock).toBe(true); // …and following again
   });
 
-  it("the home delta really reaches the clamp from the WIDEST zoom-out", () => {
-    // the spectator clamp (DOLLY_MAX_DEAD = 90) is the worst case the constant
-    // has to cover; a delta that lands short would leave the camera stranded.
+  it("歸位從**任何**距離都一下到位（含觀戰被拉到最遠的那一端）", () => {
+    // ⚠️ 以前這是一個「夠大的相對量」(-8000)，而它只在「預設＝最近」時是對的：
+    //    撞牆會停在 minDolly。GH#361 之後預設不在端點上，所以歸位必須是
+    //    **絕對賦值**（rig.homeZoom）。這一條就是釘那個差別。
     const rig = fakeRig();
-    rig.dolly = DOLLY_MAX_DEAD;
-    rig.zoomBy(GAMEPAD_ZOOM_HOME_DELTA);
+    const pad = new PadCameraControl();
+    rig.dolly = DOLLY_MAX_DEAD; // 陣亡觀戰時被拉到最遠
+    for (let i = 0; i < GAMEPAD_ZOOM_NOTCHES + 1; i++) pad.apply(rig, { zoomCycle: true });
     expect(rig.dolly).toBe(DOLLY_DEFAULT);
   });
 
@@ -109,7 +127,7 @@ describe("R3 — 鏡頭歸位 / 縮放", () => {
     for (let i = 0; i < GAMEPAD_ZOOM_NOTCHES + 1; i++) pad.apply(rig, { zoomCycle: true });
     expect(rig.dolly).toBe(DOLLY_DEFAULT);
     pad.apply(rig, { zoomCycle: true });
-    expect(rig.dolly).toBeGreaterThan(DOLLY_DEFAULT); // lap 2 starts stepping out
+    expect(movedAway(rig.dolly)).toBe(true); // lap 2 starts stepping away again
   });
 });
 
@@ -131,7 +149,7 @@ describe("L3 — 鏡頭跟隨開關", () => {
     pad.apply(rig, { toggleFollow: true }); // off
     pad.apply(rig, { toggleFollow: true }); // back on → fresh lap
     pad.apply(rig, { zoomCycle: true });
-    expect(rig.dolly).toBeGreaterThan(DOLLY_DEFAULT); // stepped out, did NOT home
+    expect(movedAway(rig.dolly)).toBe(true); // stepped away, did NOT home
   });
 
   it("an empty intent does nothing at all", () => {

@@ -56,6 +56,20 @@ describe("minimap danger rim tracks fireRingRadius (firering-shrink)", () => {
     expect(dangerRimSpecFor({ ...base, fireRingRadius: 0 })).toBeNull();
   });
 
+  it("⭐ 矩形分區給的是**矩形**（等比內縮），⛔ 不是圓 —— GH#364", () => {
+    cover("firering-shrink");
+    const zoneRect = { halfW: 24, halfD: 18 };
+    // 圓盤分區維持既有形狀：沒有 rect 那一格。
+    expect(dangerRimSpecFor({ ...base, fireRingRadius: 12 })!.rect).toBeUndefined();
+    const spec = dangerRimSpecFor({ ...base, zoneRadius: 30, fireRingRadius: 12, zoneRect })!;
+    // 收縮比 = radius / halfW（`insideShrunkBounds` 用的同一個），所以長軸就是
+    // radius 本身，短軸按分區自己的長寬比縮 —— ⛔ 沒有出貨數字住在這裡。
+    expect(spec.rect!.halfW).toBeCloseTo(12, 6);
+    expect(spec.rect!.halfD).toBeCloseTo(12 * (zoneRect.halfD / zoneRect.halfW), 6);
+    // 而畫成圓會在短軸上多給 33% —— 那是真的會燒死人的地方。
+    expect(spec.rect!.halfD).toBeLessThan(spec.radius);
+  });
+
   it("the false comment is GONE from Minimap.tsx, and the clock no longer drives it", () => {
     cover("firering-shrink");
     const src = readFileSync(join(__dirname, "Minimap.tsx"), "utf8");

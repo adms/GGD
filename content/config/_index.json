@@ -1,12 +1,12 @@
 {
   "collection": "config",
-  "hash": "2cdf1faa23b7",
+  "hash": "705e03be96e4",
   "entries": [
     {
       "id": "ambient-vfx",
       "path": "config/ambient-vfx.json",
-      "hash": "25a98ae7c9a6",
-      "size": 1596
+      "hash": "d511fd75c1ff",
+      "size": 1690
     },
     {
       "id": "aoe-tiers",
@@ -83,8 +83,8 @@
     {
       "id": "camera",
       "path": "config/camera.json",
-      "hash": "7aa52c1b3a1b",
-      "size": 801
+      "hash": "16038f879da4",
+      "size": 1577
     },
     {
       "id": "cast-time",
@@ -107,8 +107,8 @@
     {
       "id": "combat-feel",
       "path": "config/combat-feel.json",
-      "hash": "679b5e7fe759",
-      "size": 619
+      "hash": "1342aeaf6452",
+      "size": 829
     },
     {
       "id": "config.match",

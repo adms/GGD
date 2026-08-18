@@ -1664,13 +1664,28 @@ def form_buff(mods, hooks=None, perRank=None):
 
 
 # ── 15 涅吉 ──────────────────────────────────────────────────────────────────
+#: GH#369 —— owner 2026-08-18 逐字：「改成**生命回復 2%，魔力消耗 1%，只有在生命
+#: 低於 50% 以下才會觸發**」。⇒ 第〇·六守則第 1 層（owner 的新版技能說明），
+#: 贏過 2026-08-12 那一版的 5%/5% 常駐。被取代的兩份（w3x 的 A0UG 天生法術書、
+#: 08-12 的 5%/5% 無條件）另存在 `docs/legacy/_w3x-fidelity-superseded.md` §6。
+#: ⭐ 門檻是**掛在 hook 上的既有條件葉**（`condition.stat` / hp / percent），
+#:   ⛔ 不是為這一支寫一個 if —— 同一顆葉子 59-00 / 60-002 / 92-00 都在用。
+#:   `sim/effects/hooks.ts:484` 在 `hookLastFired` **之前**求值，所以血量高於門檻
+#:   的那幾秒連 ICD 都不會被吃掉（＝門檻一掉下來就立刻跳第一次，不用再等一秒）。
+#: ⚠️ `restore.healthPct` 的分母是 **maxHp**（`sim/effects/restore.ts:28`
+#:   `hp.maxHp * healthPct`），不是「已失去的生命」——「生命回復 2%」照卡片上
+#:   原本就寫著的「%[最大生命]」讀，兩邊語意一致。
+HP_LOW_50 = {"kind": "stat", "subject": "self", "stat": "hp",
+             "mode": "percent", "op": "<=", "value": 0.5}
+
 A("15-00", "15-00 真·不死不滅", "self", [0], [0], 0,
-  "[被動][週期][回復][燒魔]\n\n「為了拯救我的學生，以及打噴嚏」\n每秒[回復] 5%[最大生命]，但每秒也[燒魔]魔力 5%。",
+  "[被動][週期][屬性門檻][回復][燒魔]\n\n「為了拯救我的學生，以及打噴嚏」\n自身生命低於 50% 時才會發動：每秒[回復] 2%[最大生命]，但每秒也[燒魔]魔力 1%。",
   innate="passive",
   passive={"name": "15-00 真·不死不滅", "ranks": [{"hooks": [
       {"on": "onInterval", "internalCooldown": 1.0, "target": "self",
-       "effects": [{"kind": "restore", "healthPct": 0.05, "applyTo": "self"},
-                   {"kind": "spendMana", "amount": amt(flat=0), "pctMaxMana": 0.05,
+       "condition": HP_LOW_50,
+       "effects": [{"kind": "restore", "healthPct": 0.02, "applyTo": "self"},
+                   {"kind": "spendMana", "amount": amt(flat=0), "pctMaxMana": 0.01,
                     "applyTo": "self"}]}]}]})
 
 A("15-01", "15-01 雷神槍「巨神殺手」", "ground", [30, 30, 30, 30], [175, 275, 375, 475], 6.42,
@@ -1897,8 +1912,8 @@ A("12-02", "12-02 仙氣．採藥", "self", [60, 60, 60, 60], [50, 100, 150, 200
   #    （失敗形態②：算出來了但玩家拿不到）。規格逐字是 5/7/9/11%。
   # ⭐ `count` **刻意整格省略** —— 規格那句「除去身上任何附加法術狀態」要的就是「全部」。
   #    `sim/effects/dispel.ts` 是 `Math.min(e.count ?? cap, cap)` ⇒ 省略 = 逐位元等於後台
-  #    `content/config/dispel.json` 的 `maxCountCap`（owner 2026-08-18 裁決：3 → **1000**，
-  #    「理論上淨化就是解掉所有負面狀態阿⋯所以提高到 1000 都沒關係」）。
+  #    `content/config/dispel.json` 的 `maxCountCap`（owner 2026-08-18 裁決：3 → **50**，
+  #    「一律統一到 50 我覺得是可以的」；上界另外抬到 **60** 讓後台調得動，GH#360）。
   #    ⛔ 不要填一個大數字：填死的值不會跟著 owner 之後調那一格而動，而且不會有任何東西提醒你。
   #    ⚠️ 這一段先前寫著「count 是 3⋯owner 明說不動上限」—— **那句話在裁決當天就變成假的**
   #    （第三守則），而卡面的「任何」在 cap=3 時是一句空話（第一·五守則）。

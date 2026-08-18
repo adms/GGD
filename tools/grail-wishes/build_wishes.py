@@ -33,9 +33,9 @@ CSV 的 10 份參數修正（⛔ 全部是**形狀**錯，不是設計錯 ——
      所以 owner 之後怎麼調，這 3 份與它們的卡面**自動跟上**；夾成一個數字則會凍結在
      產生的 JSON 裡，而且不會有任何東西提醒你它過期了。
      ⚠️ 這一段先前寫的是「夾成上限，而且卡面文案跟著改成那個數字」，
-     那是 owner 2026-08-18 裁決（`maxCountCap` 3 → **1000**：「理論上淨化就是解掉所有
-     負面狀態阿⋯所以提高到 1000 都沒關係」）**之前**的做法 —— 照舊會把 CSV 的
-     「淨化所有負面狀態」改寫成「淨化最新的 1000 個」，那是一句沒有人想讀的話。
+     那是 owner 2026-08-18 裁決（`maxCountCap` 3 → **50**：「一律統一到 50 我覺得是可以的」，
+     上界另外抬到 60 讓後台調得動）**之前**的做法 —— 照舊會把 CSV 的
+     「淨化所有負面狀態」改寫成「淨化最新的 50 個」，那是一句沒有人想讀的話。
      ⇒ 卡面**保留 CSV 的「所有／全部」**（它現在逐字為真）。
      閘：`packages/shared/src/content/noOpModifierClaims.test.ts` 的
      「沒有任何 `dispel.count` 大於出貨的 `maxCountCap`」。
@@ -59,7 +59,7 @@ PUSH_TIER_SMALL = {"distance": 2, "speed": 16}
 
 # 【淨化】的全域上限 —— ⭐ **從出貨 config 讀**，⛔ 不寫死（第一守則：那是一格後台欄位）。
 # `sim/dispelRules.ts::DEFAULT_DISPEL_RULES.maxCountCap` 是缺檔時的同一個退路。
-DISPEL_CAP_FALLBACK = 1000  # = `sim/dispelRules.ts::DEFAULT_DISPEL_RULES.maxCountCap`
+DISPEL_CAP_FALLBACK = 50  # = `sim/dispelRules.ts::DEFAULT_DISPEL_RULES.maxCountCap`（⛔ 不是上界 60）
 
 
 def dispel_cap() -> int:
@@ -113,7 +113,7 @@ MIRROR_EVADE_SUBSTITUTE = {
 
 # ⭐ CSV 的哪幾份用一個大數字（50）表達「**全部**」—— 這幾份的 `dispel.count` 整格省略。
 # ⛔ 這是一張**意圖**表，不是一條「大於某個值就算」的判斷式：CSV 的哨兵是 50，而全域上限
-#    （`config/dispel.json` 的 `maxCountCap`）在 owner 2026-08-18 之後是 **1000** ——
+#    （`config/dispel.json` 的 `maxCountCap`）在 owner 2026-08-18 之後是 **50**（上界 60）——
 #    任何拿兩者比大小的規則從那一天起就再也不會觸發，而卡面上的「所有／全部」會靜靜變成謊話。
 # ⚠️ 對照組：grail-c-01 / grail-c-08 的 `count: 1` 是作者**刻意**的弱淨化（卡面寫「最新一個」），
 #    它們**不在**這張表裡，也不該被省略。
@@ -131,7 +131,7 @@ REWRITTEN_DESCRIPTION = {
     "grail-c-01": "[負面狀態][淨化] 被掛上負面狀態時，立即移除最新一個負面狀態。25秒冷卻。",
     "grail-c-11": "[負面狀態][技能重置] 被掛上負面狀態時，立即完成Q／W／E冷卻。25秒冷卻。",
     # ⚠️ a-15 留在這裡的理由**只剩觸發器改寫**（onStunned → onStatusApplied，owner 2026-08-17），
-    #    ⛔ 不再是數量詞：「淨化所有負面狀態」在 `maxCountCap` = 1000 之後逐字為真。
+    #    ⛔ 不再是數量詞：「淨化所有負面狀態」在 `maxCountCap` = 50 之後逐字為真。
     "grail-a-15": "[負面狀態][淨化][無敵] 被掛上負面狀態時，淨化所有負面狀態並獲得0.75秒無敵。20秒冷卻。",
     # ⛔ grail-a-06 / grail-ex-14 **不再列在這裡** —— 它們當初只為了把「所有／全部」改寫成
     #    一個數字而存在，而那個改寫已被 owner 2026-08-18 的裁決推翻。CSV 的原文就是出貨文案。

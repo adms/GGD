@@ -115,6 +115,10 @@ export const zAbilityVfxLayerOverride = zVfxAbilityFamilyBinding.pick({
   flyHeight: true,
   alpha: true,
   timeScale: true,
+  // #366 —— 方位的兩半。和上面五格同一條規則:pick 的是**同一個 Zod 定義**,
+  // 所以家族綁定表與層堆疊表的上下界不可能漂開。
+  facingDeg: true,
+  pitchDeg: true,
 });
 export type AbilityVfxLayerOverride = z.infer<typeof zAbilityVfxLayerOverride>;
 

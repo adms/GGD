@@ -39,10 +39,10 @@
  * WHAT IT DELIBERATELY DOES NOT GATE
  * ---------------------------------------------------------------------------
  * The contract is "the leaper YOU ARE WATCHING stays on screen" — follow-lock
- * on the flying body, which is the shipped default (#31a) and the case the
+ * on the flying body, which is the shipped behaviour and the case the
  * verifier measured. A leap by someone the camera is not following can be
  * anywhere on or off screen for reasons that have nothing to do with its apex:
- * at DOLLY_DEFAULT the visible ground reaches only ~5.5 u past the camera
+ * at the CLOSEST zoom the visible ground reaches only ~5.5 u past the camera
  * target, so a takeoff 14 u away (蒼月潮's range) is off-screen at ground level
  * before it leaves the floor. Gating that would be gating the zoom level, not
  * the leap. Same reason the EX cinematic punch-in (dolly 5) is out of scope: it
@@ -189,12 +189,16 @@ function specFor(leap: ContentLeap, heading: { x: number; z: number }): LeapArcS
 /**
  * Fly `samples` past a live rig and report the three verdicts.
  *
- * `dolly` defaults to the shipped default. The rig is settled on the takeoff
+ * `dolly` defaults to `DOLLY_MIN` — the CLOSEST zoom, which is the worst case
+ * for a leap flying past the camera (GH#361 moved the shipped default to the
+ * far end, so "default" and "worst case" are no longer the same distance).
+ * The rig is settled on the takeoff
  * point first so the follow-lerp starts where a standing champion would leave
  * it, then advanced one sub-tick per sample — the lag is real, not modelled.
  */
-function flyPastCamera(samples: readonly LeapArcSample[], dolly = DOLLY_DEFAULT) {
+function flyPastCamera(samples: readonly LeapArcSample[], dolly = DOLLY_MIN) {
   const rig = new CameraRig(scene, { x: samples[0]!.x, z: samples[0]!.z });
+  // ⚠️ 起始距離是**設定裡的預設**（GH#361 之後 ≠ DOLLY_MIN），所以位移要從它算起。
   if (dolly !== DOLLY_DEFAULT) rig.zoomBy((dolly - DOLLY_DEFAULT) / 0.02);
   const step = (localPos: { x: number; z: number }, dtMs: number): void => {
     rig.update({ dtMs, localPos, cursor: null, panKeys: null, viewportWidth: W, viewportHeight: H });
@@ -240,8 +244,8 @@ describe("#247b leap framing — every leap in content stays on screen", () => {
     // per-ability cases re-measure automatically. This case exists so the
     // CHANGE is visible in the diff rather than silent.
     expect(CAMERA_PITCH_RAD).toBeCloseTo((68 * Math.PI) / 180, 12);
-    expect(DOLLY_DEFAULT).toBe(DOLLY_MIN);
-    expect(DOLLY_DEFAULT).toBe(10);
+    expect(DOLLY_MIN).toBe(10); // the closest zoom = what this suite gates on
+    expect(DOLLY_DEFAULT).toBeGreaterThanOrEqual(DOLLY_MIN); // #361: default moved out
     const rig = new CameraRig(scene, { x: 0, z: 0 });
     expect(rig.camera.fov).toBeCloseTo(0.8, 12); // Babylon default, never overridden in combat
     expect(rig.camera.minZ).toBe(0.5);
@@ -317,6 +321,9 @@ describe("#247b leap framing — every leap in content stays on screen", () => {
     // Bisect the rig for the exact height at which a champion's body first
     // enters the near plane, then show the shipped apexes are nowhere near it.
     const rig = new CameraRig(scene, { x: 0, z: 0 });
+    // ⚠️ 量的是**最貼地**的那個鏡頭，⛔ 不是開局預設 —— GH#361 之後預設坐在最遠端，
+    //    而近平面牆在鏡頭越高時越高。用預設去量會得到一個比保證寬鬆的天花板。
+    rig.zoomBy((DOLLY_MIN - DOLLY_DEFAULT) / 0.02);
     rig.update({ dtMs: 16, localPos: { x: 0, z: 0 }, cursor: null, panKeys: null, viewportWidth: W, viewportHeight: H });
     scene.render();
     const clipped = (h: number): boolean =>
@@ -355,15 +362,15 @@ describe("#247b leap framing — every leap in content stays on screen", () => {
     expect(r.outsideFraction).toBeGreaterThan(0.5);
   });
 
-  it("the default dolly IS the worst case — zooming out only ever helps", () => {
+  it("the CLOSEST dolly IS the worst case — zooming out only ever helps", () => {
     cover("leap-framing-dolly");
-    // Justifies gating at DOLLY_DEFAULT alone instead of sweeping the clamp.
+    // Justifies gating at DOLLY_MIN alone instead of sweeping the clamp.
     const samples = sampleLeapArc(
       { apexHeight: 4.0, ticks: leapTicks(0.84), from: { x: 0, z: 0 }, to: { x: 0, z: 0 } },
       SUB,
     );
-    const near = flyPastCamera(samples, DOLLY_DEFAULT);
-    const far = flyPastCamera(samples, 25);
+    const near = flyPastCamera(samples, DOLLY_MIN);
+    const far = flyPastCamera(samples, DOLLY_DEFAULT); // 出貨預設坐在最遠端 (#361)
     expect(far.outsideFraction).toBeLessThanOrEqual(near.outsideFraction);
     expect(far.croppedFraction).toBeLessThanOrEqual(near.croppedFraction);
     expect(far.nearPlane).toBeLessThanOrEqual(near.nearPlane);

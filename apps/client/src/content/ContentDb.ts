@@ -28,6 +28,7 @@ import type {
   AmbientVfxBinding,
   ArenaFire,
   ArenaBackdropPolicy,
+  ArenaSceneryPolicy,
 } from "@ggd/shared/content";
 import {
   Arenas,
@@ -37,10 +38,12 @@ import {
   VfxDefs,
   resolveArenaFire,
   resolveArenaBackdrop,
+  resolveArenaScenery,
   resolveFormVisual,
 } from "@ggd/shared/content";
 import { VOXEL_SKINS_SCHEMA, type VoxelSkinOverride } from "@ggd/shared/content/voxelSkin";
 import { applyGoreDoc } from "../vfx/goreConfig";
+import { applyPredictionHoldDoc } from "../predict/predictionHold";
 // 隱形原語 —— 同一條縫、同一個理由:沒有這一行,`content/config/stealth.json` 就是
 // 一份沒人讀的檔案,後台改了兩個不透明度/血條開關,場上完全不會變(第②號故障)。
 // 傳 null(檔案不存在或 schema 不合)= 用 `DEFAULT_STEALTH_RULES`,不是「關掉」。
@@ -268,6 +271,17 @@ export class ContentDb {
     // overrides into the vfx layer. A missing doc leaves the shipped default
     // (blood @ 0.85) — the player's own setting still wins over both.
     applyGoreDoc(this.configDoc<ConfigGoreDoc>("gore", "config.gore@1"));
+    // ⭐ GH#370 —— 預測影子的扣留旗標。⛔ 少了這一行，`content/config/combat-feel.json`
+    // 的 `predictionHold` 就是一份沒人讀的設定：後台把某一顆關掉，場上完全不會變
+    // （失敗形態②）。⚠️ 這正是同一份文件的 `facing.localMode` 今天的處境 ——
+    // 文件與 Zod 都接好了、客戶端還在讀 DEFAULT 常數（見上面 audio-mix 那一段的註解）。
+    // 傳 null（檔案不存在／schema 不合）= 出貨預設（六顆全開），不是「不扣留」。
+    applyPredictionHoldDoc(
+      this.configDoc<{ schema: string; predictionHold?: unknown }>(
+        "combat-feel",
+        "config.combat-feel@1",
+      ),
+    );
     applyStealthDoc(this.configDoc<ConfigStealthDoc>("stealth", "config.stealth@1"));
     applyDamageColorsDoc(
       this.configDoc<ConfigDamageColorsDoc>("damage-colors", "config.damage-colors@1"),
@@ -543,6 +557,15 @@ export class ContentDb {
    */
   arenaBackdrop(): ArenaBackdropPolicy {
     return resolveArenaBackdrop(this.ambientVfx);
+  }
+
+  /**
+   * 場景特色（配色／會動的打光／裝飾散佈）的政策（GH#362）。文件缺席／沒有這個
+   * 區塊時回傳 `DEFAULT_ARENA_SCENERY_POLICY`（`enabled: true`）—— 同背景、
+   * 同理由：回退值要落在 owner 要的那一邊，而他明說要更多場景特色。
+   */
+  arenaScenery(): ArenaSceneryPolicy {
+    return resolveArenaScenery(this.ambientVfx);
   }
 
   get arena(): ArenaDoc | null {

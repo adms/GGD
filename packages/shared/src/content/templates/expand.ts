@@ -68,7 +68,7 @@ export const toLen = (wc3: number): number => round2(wc3 * GGD_PER_WC3);
  * What went wrong. #247 ported the ten `SetUnitFlyHeightBJ` apexes through the
  * PLANAR scale (A=600 → 11.00 u) on the assumption that one map has one scale.
  * Measured through the game's real CameraRig at the shipped default
- * (DOLLY_DEFAULT = DOLLY_MIN = 10, pitch 68°, fov 0.8 rad), 蒼月潮's 07-03 was
+ * (closest zoom DOLLY_MIN = 10, pitch 68°, fov 0.8 rad), 蒼月潮's 07-03 was
  * off-screen for 73% of its 44 ticks and spent part of the arc FULLY BEHIND THE
  * NEAR PLANE — the model turns inside-out and vanishes. That is #93 again: a
  * spectacle nobody can see. The rule this project recorded from #93 is

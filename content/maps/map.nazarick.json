@@ -4,6 +4,59 @@
   "name": "納薩力克大墳墓",
   "template": "CROSS_RING",
   "groundStyle": "obsidian",
+  "scenery": {
+    "palette": {
+      "floor": "#8f7a4a",
+      "wall": "#4a3f22",
+      "sky": "#9fffc4",
+      "ground": "#0e1a12",
+      "void": "#030604"
+    },
+    "lighting": {
+      "keyColor": "#b8ffd0",
+      "keyIntensity": 0.6,
+      "keyYawDeg": 325,
+      "keyPitchDeg": 66,
+      "fillIntensity": 0.45,
+      "wave": "flicker",
+      "periodSec": 4.2,
+      "intensityAmp": 0.22,
+      "yawSweepDeg": 0,
+      "peakColor": "#eaffe0"
+    },
+    "props": [
+      {
+        "model": "assets/models/props/pillar.glb",
+        "count": 16,
+        "bandFrom": 0.93,
+        "bandTo": 0.98,
+        "scaleMin": 1.6,
+        "scaleMax": 2.0,
+        "facing": "faceIn",
+        "seed": 2
+      },
+      {
+        "model": "assets/models/props/torch.glb",
+        "count": 12,
+        "bandFrom": 0.965,
+        "bandTo": 0.99,
+        "scaleMin": 1.5,
+        "scaleMax": 1.8,
+        "facing": "faceIn",
+        "seed": 34
+      },
+      {
+        "model": "assets/models/props/chest.glb",
+        "count": 4,
+        "bandFrom": 0.86,
+        "bandTo": 0.92,
+        "scaleMin": 1.2,
+        "scaleMax": 1.2,
+        "facing": "faceIn",
+        "seed": 71
+      }
+    ]
+  },
   "grid": {
     "cols": 24,
     "rows": 20,

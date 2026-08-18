@@ -205,7 +205,18 @@ describe("GameApp.applyArena hands the shadow the same arena it renders", () => 
       arenaHandles: {},
       assets: {},
       renderer: { scene: {} },
-      contentDb: { loadArena: () => Promise.resolve(doc) },
+      lighting: { applyScenery: () => {}, animate: () => {} },
+      // ⚠️ `applyArena` 會把 ContentDb 上的**每一個政策讀取器**都叫一次，而它們
+      // 全都在同一個 `.then()` 裡 —— 少一個就是拋例外、整條 promise 靜默死掉、
+      // 這張場地從頭到尾沒套上（`arenaId` 停在 null）。2026-08-18 GH#362 加
+      // `arenaScenery()` 時就是這樣紅的，⛔ 而在此之前那個 `.catch` 連一行 log 都沒有。
+      // ⇒ 這個假物件**必須**跟得上真的介面；它紅了代表真的呼叫端也可能少東西。
+      contentDb: {
+        loadArena: () => Promise.resolve(doc),
+        arenaScenery: () => ({ enabled: false, maxPropsPerZone: 0, animateLights: false }),
+        arenaFire: () => ({}),
+        arenaBackdrop: () => ({}),
+      },
       prediction: { setArena: (a: ArenaDef) => seen.push(a) },
     };
 

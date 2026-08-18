@@ -43,5 +43,48 @@
     { "model": "assets/models/props/pillar.glb", "x": -14, "z": 14, "rotQuarter": 2, "scale": 2.2 },
     { "model": "assets/models/props/pillar.glb", "x": -14, "z": -14, "rotQuarter": 3, "scale": 2.2 }
   ],
-  "groundStyle": "stone"
+  "groundStyle": "stone",
+  "scenery": {
+    "palette": {
+      "floor": "#9aa0b8",
+      "wall": "#6f7490",
+      "sky": "#b9c6ff",
+      "ground": "#1c1e2e",
+      "void": "#05060d"
+    },
+    "lighting": {
+      "keyColor": "#cfe0ff",
+      "keyIntensity": 0.8,
+      "keyYawDeg": 300,
+      "keyPitchDeg": 58,
+      "fillIntensity": 0.62,
+      "wave": "storm",
+      "periodSec": 9.5,
+      "intensityAmp": 0.35,
+      "yawSweepDeg": 10,
+      "peakColor": "#ffffff"
+    },
+    "props": [
+      {
+        "model": "assets/models/props/pillar.glb",
+        "count": 12,
+        "bandFrom": 0.94,
+        "bandTo": 0.985,
+        "scaleMin": 1.6,
+        "scaleMax": 2.2,
+        "facing": "faceIn",
+        "seed": 13
+      },
+      {
+        "model": "assets/models/props/torch.glb",
+        "count": 8,
+        "bandFrom": 0.9,
+        "bandTo": 0.93,
+        "scaleMin": 1.5,
+        "scaleMax": 1.8,
+        "facing": "faceIn",
+        "seed": 44
+      }
+    ]
+  }
 }

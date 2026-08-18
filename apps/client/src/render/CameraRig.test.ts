@@ -8,6 +8,7 @@ import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
+import { Configs, CAMERA_DOC_ID, DEFAULT_CAMERA } from "@ggd/shared/content";
 import { CameraRig, DOLLY_DEFAULT, DOLLY_MIN, CAMERA_PITCH_RAD } from "./CameraRig";
 
 let engine: NullEngine;
@@ -131,23 +132,52 @@ describe("combat camera pitch (camera-pitch-topdown)", () => {
   });
 });
 
-describe("default zoom (camera-default-closest)", () => {
-  it("defaults to the closest allowed zoom-in; zooming in further is a no-op, zooming out still works", () => {
-    cover("camera-default-closest");
-    // the default is DERIVED from the limit — they can never drift apart
-    expect(DOLLY_DEFAULT).toBe(DOLLY_MIN);
+describe("開局預設鏡頭 = 區間的最遠端 (camera-default-closest / GH#361)", () => {
+  // ⚠️ `cover` 的 token 是 `docs/todo/restart-cheats.md` rc-19 的 **join key**。
+  //    #361 把行為整個翻面（#31a 的「預設＝最近」→「預設＝最遠」），但 ⛔ token
+  //    不改名 —— 改名等於對 todo-check 宣稱「那一列沒有測試」。
+  afterEach(() => Configs.clear());
 
+  it("一進場就在最遠端（離地板最高），玩家只能往內拉近", () => {
+    cover("camera-default-closest");
     const rig = new CameraRig(scene, { x: 0, z: 0 });
     applyFrame(rig);
-    const defaultY = rig.camera.position.y;
+    const startY = rig.camera.position.y;
 
-    rig.zoomBy(-1e6); // try to zoom in past the clamp
+    rig.zoomBy(1e6); // 已經在最遠端 → 再往外滾一動都不動
     applyFrame(rig);
-    expect(rig.camera.position.y).toBeCloseTo(defaultY, 6); // already at the closest limit
+    expect(rig.camera.position.y).toBeCloseTo(startY, 6);
 
-    rig.zoomBy(1e6); // zoom range unchanged — player can still zoom out
+    rig.zoomBy(-1e6); // 往內拉近 → 真的更貼地，而且停在 minDolly
     applyFrame(rig);
-    expect(rig.camera.position.y).toBeGreaterThan(defaultY);
+    expect(rig.camera.position.y).toBeLessThan(startY);
+    expect(rig.camera.position.y).toBeCloseTo(DOLLY_MIN * Math.sin(CAMERA_PITCH_RAD), 5);
+  });
+
+  it("那個距離是**後台的一格**，⛔ 不是常數 —— 填成最近視野就一鍵 rollback 回 #31a", () => {
+    cover("camera-default-closest");
+    Configs.register({
+      id: CAMERA_DOC_ID,
+      schema: "config.camera@1",
+      zoom: { ...DEFAULT_CAMERA, defaultDolly: DEFAULT_CAMERA.minDolly },
+    });
+    const rolledBack = new CameraRig(scene, { x: 0, z: 0 });
+    applyFrame(rolledBack);
+    expect(rolledBack.camera.position.y).toBeCloseTo(DOLLY_MIN * Math.sin(CAMERA_PITCH_RAD), 5);
+    // …而手把 R3 的縮放圈跟著換邊，⛔ 不會變成三下 no-op
+    expect(rolledBack.zoomAwaySign).toBe(1);
+  });
+
+  it("歸位是絕對回到設定的預設，⛔ 不是「往內推到撞牆」", () => {
+    cover("camera-default-closest");
+    const rig = new CameraRig(scene, { x: 0, z: 0 });
+    applyFrame(rig);
+    const startY = rig.camera.position.y;
+    rig.zoomBy(-1e6); // 玩家自己拉到最貼地
+    rig.homeZoom();
+    applyFrame(rig);
+    expect(rig.camera.position.y).toBeCloseTo(startY, 6);
+    expect(rig.zoomAwaySign).toBe(-1); // 出貨預設在最遠端 → R3 一節一節往內
   });
 });
 

@@ -76,18 +76,21 @@ describe("the pose is pure and deterministic", () => {
 describe("THE GATE: you can actually see it, at the shipped combat camera", () => {
   it("the rig the gate models is the rig the game ships", () => {
     expect(CAMERA_PITCH_RAD).toBeCloseTo((68 * Math.PI) / 180, 9);
-    expect(DOLLY_DEFAULT).toBe(DOLLY_MIN);
-    expect(DOLLY_MIN).toBe(10);
+    expect(DOLLY_MIN).toBe(10); // 最貼地 = 這個 gate 的最好情況
+    // ⚠️ GH#361：出貨預設**不再等於** DOLLY_MIN，它搬到了區間的最遠端。
+    //    所以 gate 現在量的是「玩家一進場真的看到的那個距離」。
+    expect(DOLLY_DEFAULT).toBeGreaterThanOrEqual(DOLLY_MIN);
     expect(DEFAULT_FOV_RAD).toBe(0.8);
   });
 
-  it("passes at DOLLY_DEFAULT: framed, and moving far more than the minimum", () => {
+  it("passes at the SHIPPED DEFAULT zoom: framed, and moving far more than the minimum", () => {
     const r = checkDanceFraming({ energy: 1, dolly: DOLLY_DEFAULT });
     expect(r.ok).toBe(true);
     expect(r.reason).toBeUndefined();
-    // measured: 18.8% of viewport height, ~200 px on a 1080p window
-    expect(r.screenTravel).toBeGreaterThan(0.18);
-    expect(r.screenTravel).toBeGreaterThan(MIN_SCREEN_TRAVEL * 3);
+    // ⚠️ screen travel 與鏡頭距離成**反比**，而 GH#361 把出貨預設從最近端搬到了
+    //    最遠端 —— 所以這個百分比整個變小了。⛔ 不是回歸，是玩家看到的鏡頭換了。
+    //    釘的是「還有明顯餘裕」，⛔ 不是某一個量到的百分比（第二守則：驗機制不驗數字）。
+    expect(r.screenTravel).toBeGreaterThan(MIN_SCREEN_TRAVEL * 1.8);
     // and it does so with the whole body comfortably inside the safe frustum
     expect(r.worstVertical).toBeLessThan(0.4);
     expect(r.worstHorizontal).toBeLessThan(0.4);
@@ -143,12 +146,13 @@ describe("the gate can fail — which is the only reason to trust it when it pas
 });
 
 describe("MEASURED LIMITS, recorded rather than hidden", () => {
-  it("at maximum zoom-out (dolly 40) the dance falls just under the threshold", () => {
-    // Honest limit: DOLLY_DEFAULT is DOLLY_MIN and that is what ships, but a
-    // player who wheels all the way out sees a champion who is himself only a
-    // few percent of the frame. 4.1% travel is still a visible wiggle; it is
-    // below the 5% bar this gate holds the DEFAULT zoom to. Pinned as a ratchet
-    // so a future change that makes the far zoom worse is caught.
+  it("at dolly 40 — beyond the shipped clamp — the dance falls just under the threshold", () => {
+    // Honest limit, kept as an OVER-RANGE probe: 40 was the original maxDolly,
+    // then 36 (owner 2026-08-15), and is now 18 (GH#361). At 40 the champion is
+    // himself only a few percent of the frame; 4.1% travel is still a visible
+    // wiggle but below the 5% bar this gate holds the shipped zooms to. Pinned
+    // as a ratchet so a future change that makes the far zoom worse is caught —
+    // and, since the clamp came down, the whole SHIPPED range now clears the bar.
     const r = checkDanceFraming({ energy: 1, dolly: 40 });
     expect(r.screenTravel).toBeGreaterThan(0.04);
     expect(r.screenTravel).toBeLessThan(MIN_SCREEN_TRAVEL);

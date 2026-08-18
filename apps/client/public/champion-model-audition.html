@@ -31,6 +31,7 @@
   <h1>英雄模型確認台 · 真鏡頭 / 真預覽</h1>
   <p>
     <code>?model=imported.goku</code> ·
+    <code>&amp;champion=godie-n00b</code>（GH#368：走 overlay + 尺寸倍率，＝玩家看到的那一具）·
     <code>&amp;cam=combat</code>（真 <code>CameraRig</code>：68°、dolly 10、fov 0.8、真地板）
     或 <code>&amp;cam=select</code>（真 <code>StorePreview</code>，就是選角側欄與商店掛的那一顆）·
     <code>&amp;clip=idle</code> · <code>&amp;step=600</code> · <code>&amp;hud=0</code>
@@ -58,6 +59,10 @@
     const { startChampionModelAudition } = await import("/src/render/championModelAudition.ts");
     const handle = startChampionModelAudition(canvas, {
       modelKey: q.get("model") ?? "imported.goku",
+      // GH#368 —— 帶上 `&champion=godie-n00b` 才是玩家真的看到的那一具：
+      // overlay 會把共用替身換成他自己的 WC3 模型，_standin-overrides 的尺寸
+      // 倍率也才會生效。少了它，40 位替身英雄看到的是「別人的身體 @ 1.0×」。
+      championId: q.get("champion"),
       cam: q.get("cam") === "select" ? "select" : "combat",
       clip: q.get("clip") ?? "idle",
       offsetZ: num("offsetZ", 0),

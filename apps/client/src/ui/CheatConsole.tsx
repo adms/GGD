@@ -1,34 +1,28 @@
 /**
- * CheatConsole — offline single-player testing aid. Toggle with the backtick
- * key (`) or the 🐞 button. Every control sends a MSG.CHEAT for the LOCAL
- * player's champion via hudActions.sendCheat; the server applies them ONLY in
- * dev mode (hard-gated) so this is inert against a real platform match. Only
- * mounted when the session is offline (AppRoot gates on match.mode).
+ * 練習／測試面板的 **chrome** —— 槽位、🐞 按鈕、backtick 開關、要不要出現。
+ * 六個分頁的**內容**在 `./practice/PracticePanel.tsx`（GH#365）。
  *
- * It owns the LAST slot of the top-right corner stack (ui/hud/hudLayout) — the
- * old hard-coded `top: 46` collided with the settings gear at `top: 44`.
+ * 分成兩個檔是因為它們是兩個問題，而且會各自被改：
+ * 「這顆按鈕該不該出現在這台機器的畫面上」是一個**環境**問題，
+ * 「按下去有哪些東西可以調」是一個**內容**問題。
  *
- * THE 🐞 BUTTON IS LOOPBACK-ONLY (playtest P9). It used to sit permanently on
- * the live screen of every offline session, including the family build — the
- * most inviting thing on screen for someone who has never played before. It is
- * now buried behind task #127's environment tier: shown on the dev's own
- * machine, hidden on the LAN box and on the deployed host. The BACKTICK still
- * opens the console anywhere the console mounts, so nothing was taken away.
+ * 每一顆控制項都送 `hudActions.sendCheat` → `MSG.CHEAT`，套用在**送出者自己的
+ * 座位**上。⛔ 這裡沒有任何安全性：伺服器自己 hard-gate（`match/cheatGate.ts`），
+ * 而它從不相信客戶端說自己是離線／練習房。
+ *
+ * 它擁有右上角堆疊的**最後**一格（ui/hud/hudLayout）—— 舊的寫死 `top: 46`
+ * 會撞到 `top: 44` 的設定齒輪。
+ *
+ * THE 🐞 BUTTON IS LOOPBACK-ONLY (playtest P9)，⭐ **練習房豁免**（GH#343）：
+ * 一般離線場只在開發者自己的機器上顯示按鈕，藏在 LAN 機與正式站上；
+ * 練習房裡沒有比賽可以被破壞，而 owner 要的正是「進去就能用測試碼」——
+ * 藏起來等於這個功能在 ggd.adms.ai 上完全找不到（那台是 "public" 級）。
+ * BACKTICK 在面板掛載的每一個地方都還在，所以什麼都沒有被拿走。
  */
-import { useEffect, useMemo, useState } from "react";
-import { Champions, Items } from "@ggd/shared/sim/content/registry";
-import type { AbilitySlot } from "@ggd/shared/sim/intents";
-import { hudActions } from "./actions";
+import { useEffect, useState } from "react";
 import { useApp } from "./platform/store";
-import {
-  cheat,
-  cheatButtonVisible,
-  clampLevel,
-  filterEntries,
-  isCheatToggleKey,
-  parseSpawnCount,
-  type CheatListEntry,
-} from "./cheats";
+import { cheatPanelButtonVisible, isCheatToggleKey } from "./cheats";
+import { PracticePanel } from "./practice/PracticePanel";
 import { SfxButton } from "./SfxButton";
 import { hudTouch } from "./hud/HudSlot";
 import { HUD_EDGE, HUD_Z, hudSlotHeight, hudSlotOffset, hudSlotStyle } from "./hud/hudLayout";
@@ -49,101 +43,10 @@ const btn: React.CSSProperties = {
   color: TEXT_MAIN,
   fontSize: 12,
 };
-const btnOn: React.CSSProperties = { ...btn, background: "#2c5f3f", border: "1px solid #57c98a" };
-const label: React.CSSProperties = { fontSize: 11, color: TEXT_DIM, margin: "10px 0 4px" };
-const searchInput: React.CSSProperties = {
-  width: "100%",
-  minHeight: 34,
-  padding: "6px 10px",
-  fontSize: 16, // 16px avoids iOS focus zoom
-  borderRadius: 7,
-  background: "#0f1420",
-  border: "1px solid #2c3448",
-  color: TEXT_MAIN,
-  boxSizing: "border-box",
-};
-
-function Section({ title, children }: { title: string; children: React.ReactNode }): React.JSX.Element {
-  return (
-    <div>
-      <div style={label}>{title}</div>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>{children}</div>
-    </div>
-  );
-}
-
-/** Searchable registry picker (champions / items) → onPick(id). */
-function SearchList({
-  entries,
-  placeholder,
-  onPick,
-}: {
-  entries: readonly CheatListEntry[];
-  placeholder: string;
-  onPick: (id: string) => void;
-}): React.JSX.Element {
-  const [q, setQ] = useState("");
-  const shown = useMemo(() => filterEntries(entries, q).slice(0, 200), [entries, q]);
-  return (
-    <div>
-      <input
-        value={q}
-        onChange={(e) => setQ(e.target.value)}
-        placeholder={placeholder}
-        aria-label={placeholder}
-        style={searchInput}
-      />
-      <div
-        style={{
-          maxHeight: 150,
-          overflowY: "auto",
-          marginTop: 6,
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: 4,
-        }}
-      >
-        {shown.map((c) => (
-          <SfxButton key={c.id} onClick={() => onPick(c.id)} style={{ ...btn, textAlign: "left" }} title={c.id}>
-            {c.name}
-          </SfxButton>
-        ))}
-        {shown.length === 0 && (
-          <div style={{ gridColumn: "1 / -1", fontSize: 11, color: TEXT_DIM, padding: 6 }}>無符合項目</div>
-        )}
-      </div>
-      <div style={{ fontSize: 10, color: TEXT_DIM, marginTop: 3 }}>
-        {shown.length} / {entries.length}
-      </div>
-    </div>
-  );
-}
 
 export function CheatConsole(): React.JSX.Element | null {
   const [open, setOpen] = useState(false);
   const touch = hudTouch();
-  const [level, setLevel] = useState(18);
-  const [gold, setGold] = useState(1000);
-  const [god, setGod] = useState(false);
-  const [zeroCd, setZeroCd] = useState(false);
-  /**
-   * 生怪數量。**字串**而不是數字，因為「空白」是一個有意義的狀態：
-   * 空白 ⇒ `count` 省略 ⇒ 伺服器用 `config.practice@1` 的預設。
-   * ⛔ 用 `number` 存的話，清空會變成 0 或 NaN，兩個都會被誤讀成「使用者要 0 隻」。
-   */
-  const [mobCount, setMobCount] = useState("");
-  const parsedMobCount = parseSpawnCount(mobCount);
-
-  // registries are static after boot — snapshot once
-  const champions = useMemo<CheatListEntry[]>(
-    () => Champions.all().map((c) => ({ id: c.id, name: c.name, role: c.role, tags: c.tags })),
-    [],
-  );
-  const items = useMemo<CheatListEntry[]>(
-    () => Items.all().map((i) => ({ id: i.id, name: i.name, tags: i.tags })),
-    [],
-  );
-
   // backtick toggles the console (ignored while typing in a field)
   useEffect(() => {
     const onKey = (e: KeyboardEvent): void => {
@@ -164,27 +67,15 @@ export function CheatConsole(): React.JSX.Element | null {
   // P9 — does the button get to ADVERTISE itself? Only on the dev's own machine
   // (env tier "loopback", task #127's classifier). Read from the same store key
   // AppRoot gates the mount on, so the two decisions cannot drift apart.
-  const mode = useApp((s) => s.match?.mode);
+  // ⭐ GH#365 —— 讀**整個 match 物件**（`cheatPanelButtonVisible`），⛔ 不是逐格
+  // 挑幾個欄位傳進去：挑欄位正是 AppRoot 那個「漏掉 practice」缺陷的形狀。
   // 練習房（GH#343）豁免環境分級：那間房裡沒有比賽可以被破壞，而 owner 要的正是
   // 「進去就能用測試碼」—— 藏起來等於這個功能在 ggd.adms.ai 上完全找不到。
-  const practice = useApp((s) => s.match?.practice === true);
-  const buttonVisible = cheatButtonVisible(
-    mode,
+  const match = useApp((s) => s.match);
+  const buttonVisible = cheatPanelButtonVisible(
+    match,
     typeof window === "undefined" ? undefined : window.location.hostname,
-    practice,
   );
-
-  const send = hudActions.sendCheat;
-  const toggleGod = (): void => {
-    const next = !god;
-    setGod(next);
-    send(cheat.godMode(next));
-  };
-  const toggleZeroCd = (): void => {
-    const next = !zeroCd;
-    setZeroCd(next);
-    send(cheat.zeroCooldown(next));
-  };
 
   if (hidden) return null;
 
@@ -197,7 +88,7 @@ export function CheatConsole(): React.JSX.Element | null {
     return (
       <SfxButton
         onClick={() => setOpen(true)}
-        title="cheats (`)"
+        title="練習／測試面板 (`)"
         data-hud-slot="cheats"
         style={{
           ...hudSlotStyle("cheats", touch),
@@ -207,7 +98,7 @@ export function CheatConsole(): React.JSX.Element | null {
           opacity: 0.85,
         }}
       >
-        🐞 cheats
+        🐞 練習面板
       </SfxButton>
     );
   }
@@ -217,7 +108,8 @@ export function CheatConsole(): React.JSX.Element | null {
       data-hud-slot="cheats"
       style={{
         ...hudSlotStyle("cheats", touch, HUD_Z.expanded),
-        width: 320,
+        // 六個分頁的清單（屬性 23 條、狀態 40 種）需要比舊的單欄清單寬一點。
+        width: 360,
         maxWidth: "94vw",
         // stay inside the HUD layer (100% = #hud-root, safe-area counted once)
         maxHeight: `calc(100% - ${hudSlotOffset("cheats", touch) + HUD_EDGE}px)`,
@@ -232,141 +124,18 @@ export function CheatConsole(): React.JSX.Element | null {
       }}
     >
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <div style={{ fontWeight: "bold", fontSize: 14 }}>🐞 Cheats (offline)</div>
+        <div style={{ fontWeight: "bold", fontSize: 14 }}>🐞 練習／測試面板</div>
         <SfxButton onClick={() => setOpen(false)} style={btn} title="close (`)">
           ✕
         </SfxButton>
       </div>
 
-      <Section title="等級 Level">
-        <input
-          type="range"
-          min={1}
-          max={18}
-          value={level}
-          onChange={(e) => setLevel(clampLevel(Number(e.target.value)))}
-          style={{ flex: 1, minWidth: 120 }}
-          aria-label="level"
-        />
-        <span style={{ fontSize: 12, width: 24, textAlign: "center" }}>{level}</span>
-        <SfxButton onClick={() => send(cheat.setLevel(level))} style={btn}>
-          Set Lv {level}
-        </SfxButton>
-      </Section>
-
-      <Section title="經濟 Economy">
-        <SfxButton onClick={() => send(cheat.grantGold(1000))} style={btn}>
-          +1000 金
-        </SfxButton>
-        <input
-          type="number"
-          value={gold}
-          onChange={(e) => setGold(Number(e.target.value))}
-          style={{ ...searchInput, width: 80, minHeight: 30 }}
-          aria-label="custom gold"
-        />
-        <SfxButton onClick={() => send(cheat.grantGold(gold))} style={btn}>
-          +金
-        </SfxButton>
-        <SfxButton onClick={() => send(cheat.grantMCoin(1000))} style={btn} title="offline has no wallet — no-op">
-          +M 幣*
-        </SfxButton>
-      </Section>
-
-      <Section title="技能 Abilities">
-        <SfxButton onClick={() => send(cheat.maxAbilities())} style={btn}>
-          Max 全部
-        </SfxButton>
-        {(["Q", "W", "E", "R"] as AbilitySlot[]).map((slot) => (
-          <SfxButton key={slot} onClick={() => send(cheat.rankAbility(slot))} style={btn}>
-            +{slot}
-          </SfxButton>
-        ))}
-        <SfxButton onClick={() => send(cheat.resetCooldowns())} style={btn}>
-          冷卻歸零
-        </SfxButton>
-      </Section>
-
-      <Section title="狀態 State">
-        <SfxButton onClick={() => send(cheat.fullHeal())} style={btn}>
-          補滿血魔
-        </SfxButton>
-        <SfxButton onClick={toggleGod} style={god ? btnOn : btn}>
-          {god ? "🛡 無敵 ON" : "🛡 無敵"}
-        </SfxButton>
-        <SfxButton onClick={toggleZeroCd} style={zeroCd ? btnOn : btn} title="abilities never on cooldown">
-          {zeroCd ? "⚡ 0 CD ON" : "⚡ 0 CD 釋放"}
-        </SfxButton>
-      </Section>
-
-      <Section title="回合 Round">
-        <SfxButton onClick={() => send(cheat.killEnemies())} style={btn}>
-          清場 (殺敵)
-        </SfxButton>
-        <SfxButton onClick={() => send(cheat.skipPhase())} style={btn}>
-          跳過階段
-        </SfxButton>
-        <SfxButton onClick={() => send(cheat.rerollOffers())} style={btn}>
-          重抽 offer
-        </SfxButton>
-        <SfxButton onClick={() => send(cheat.spawnFlower())} style={btn} title="戰鬥階段生成治療花朵">
-          生成花朵
-        </SfxButton>
-      </Section>
-
-      {/* 即時生成殭屍 (GH#343)。
-          ⭐ 2026-08-18 owner：「也沒辦法一鍵呼喚 **N 個**特定殭屍」——補上數量框。
-          ⚠️ 這**不是**第四個住處：空白時 `count` 整個省略，伺服器就走
-          `config.practice@1` 的「生怪指令的預設數量」。填了數字才覆寫，而那是
-          「這一次點擊」的臨時輸入，⛔ 不是一個出貨值。預設值仍然只住在後台那一格。
-          ⚠️ 上限一律由伺服器夾（小怪波的每區同時存活上限）——填 999 也不會把沙盒撐爆。 */}
-      <Section title="生怪 Spawn">
-        <input
-          type="number"
-          min={1}
-          max={99}
-          value={mobCount}
-          onChange={(e) => setMobCount(e.target.value)}
-          placeholder="N（空白＝後台預設）"
-          style={{ ...searchInput, width: 150, minHeight: 30 }}
-          aria-label="spawn count"
-          title="要生幾隻。空白 = 用後台『生怪指令的預設數量』。伺服器一律吃每區存活上限。"
-        />
-        <SfxButton
-          onClick={() => send(cheat.spawnMob("normal", parsedMobCount))}
-          style={btn}
-          title="在自己所在的區域生一批一般殭屍（吃每區存活上限）"
-        >
-          一般殭屍{parsedMobCount === undefined ? "" : ` ×${parsedMobCount}`}
-        </SfxButton>
-        <SfxButton
-          onClick={() => send(cheat.spawnMob("special", parsedMobCount))}
-          style={btn}
-          title="特殊殭屍（精英），規則同上"
-        >
-          特殊殭屍{parsedMobCount === undefined ? "" : ` ×${parsedMobCount}`}
-        </SfxButton>
-        <SfxButton
-          onClick={() => send(cheat.spawnMob("boss", parsedMobCount))}
-          style={btn}
-          title="召喚殭屍王"
-        >
-          殭屍王{parsedMobCount === undefined ? "" : ` ×${parsedMobCount}`}
-        </SfxButton>
-      </Section>
-
-      <div style={label}>給予道具 Give item</div>
-      <SearchList entries={items} placeholder="搜尋道具 search items…" onPick={(id) => send(cheat.giveItem(id))} />
-
-      <div style={label}>切換英雄 Swap champion</div>
-      <SearchList
-        entries={champions}
-        placeholder="搜尋英雄 search champions…"
-        onPick={(id) => send(cheat.swapChampion(id))}
-      />
+      <PracticePanel />
 
       <div style={{ fontSize: 10, color: TEXT_DIM, marginTop: 10 }}>
-        * M 幣離線無錢包 — 無效果。伺服器僅在 dev 模式套用作弊。
+        {/* ⚠️ 這一行在 GH#343 之前寫「伺服器僅在 dev 模式套用作弊」，而那從那天起
+            就是假的（第三守則）：練習房是第二道門，而且是正式站上唯一走得通的那一道。 */}
+        伺服器只在 dev 模式或練習房套用（match/cheatGate.ts）。正式對局送過去一律被丟掉。
       </div>
     </div>
   );

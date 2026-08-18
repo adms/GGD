@@ -30,5 +30,16 @@
   },
   "aimAssist": {
     "mobPenalty": 6
+  },
+  "predictionHold": {
+    "enabled": true,
+    "flags": {
+      "casting": true,
+      "channelling": true,
+      "dashing": true,
+      "airborne": true,
+      "rooted": true,
+      "stunned": true
+    }
   }
 }

@@ -145,6 +145,23 @@ function ctx(at: { x: number; z: number }): VfxContext {
 }
 
 /** 一個家族挑一支**出貨的**技能當代表（表的順序是穩定的，所以這是決定性的）。 */
+/**
+ * 這一支技能**作者手寫**的 `vfxLayers` 會生出哪些發射器名字。
+ *
+ * ⚠️ 為什麼要把它們挑掉：`familyCastHeightY()` 回答的是「**w3x 家族美術**應該畫多高」
+ * （來源是 `resolveFamilyArt().heightY`）。而 `vfxLayers` 是**另一個機制**
+ * （#152 / #79 的疊層），高度由它自己的 `flyHeight` 決定 —— 兩者本來就不必相等。
+ * `isAbilityArt` 只看 `vfx-` 前綴，所以它同時抓到兩種；一支代表技能只要被作者
+ * 疊了一層，下面那條斷言就會拿家族的高度去質問一個不歸它管的發射器。
+ * ⭐ 2026-08-18 #366 給 59-04 野戰型陽電子砲疊上橫放光柱時就真的撞到了。
+ * ⛔ 這**不是**放寬斷言 —— 排除的集合是從**這一支技能自己的文件**算出來的，
+ * 精確到名字；家族美術一個都沒有被放過。
+ */
+function authoredLayerEmitterNames(abilityId: string): Set<string> {
+  const def = Abilities.get(abilityId as AbilityId) as { vfxLayers?: { vfxKey: string }[] } | undefined;
+  return new Set((def?.vfxLayers ?? []).map((l) => `vfx-${l.vfxKey}`));
+}
+
 function oneAbilityPerFamily(): Map<string, string> {
   const out = new Map<string, string>();
   for (const [id, row] of Object.entries(W3X_FAMILY_ART)) {
@@ -316,8 +333,10 @@ describe("#230 家族施法特效真的到得了畫面 (family-cast-on-screen)",
     for (const [family, abilityId] of oneAbilityPerFamily()) {
       const declared = familyCastHeightY(w3xArtFor(abilityId));
       expect(Number.isFinite(declared), `${family} 宣稱的高度不是有限數`).toBe(true);
+      const authored = authoredLayerEmitterNames(abilityId);
       for (const d of cast(abilityId)) {
         if (!d.world || !isAbilityArt(d.name)) continue; // 合成器有自己的規則，見上
+        if (authored.has(d.name)) continue; // 作者疊的層有自己的高度規則，見上
         checked += 1;
         if (Math.abs(d.world.y - declared) > 1e-6) {
           bad.push(`${family}/${d.name} 宣稱 y=${declared}，Babylon 拿到 y=${d.world.y}`);

@@ -67,5 +67,11 @@
     "flashMs": 132,
     "camKick": 0.33
   },
-  "castTimeSec": 1
+  "castTimeSec": 1,
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.holy.beam-flat",
+      "attachTo": "point"
+    }
+  ]
 }

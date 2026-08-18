@@ -154,6 +154,7 @@ function drawDangerRim(
       fireRingTicks: hud.fireRingTicks,
       fireRingRadius: hud.fireRingRadius,
       zoneRadius: z.r,
+      ...(z.rect ? { zoneRect: z.rect } : {}),
     });
     if (!spec) return;
     const pulse = 0.35 + 0.45 * spec.urgency * (0.6 + 0.4 * Math.sin(nowMs / 220));
@@ -161,7 +162,25 @@ function drawDangerRim(
     ctx.lineWidth = 2 + 2 * spec.urgency;
     const c = worldToMap(z.x, z.z, bounds, sizePx, yaw);
     ctx.beginPath();
-    ctx.arc(c.x, c.y, spec.radius * s, 0, Math.PI * 2);
+    if (spec.rect) {
+      // ⭐ GH#364 —— 矩形分區的火圈是矩形。四個角各自過 `worldToMap`，
+      // ⛔ 不是畫一個軸對齊的方框：小地圖會跟著相機 yaw 轉。
+      const { halfW, halfD } = spec.rect;
+      const corners: readonly (readonly [number, number])[] = [
+        [-halfW, -halfD],
+        [halfW, -halfD],
+        [halfW, halfD],
+        [-halfW, halfD],
+      ];
+      corners.forEach(([dx, dz], k) => {
+        const p = worldToMap(z.x + dx, z.z + dz, bounds, sizePx, yaw);
+        if (k === 0) ctx.moveTo(p.x, p.y);
+        else ctx.lineTo(p.x, p.y);
+      });
+      ctx.closePath();
+    } else {
+      ctx.arc(c.x, c.y, spec.radius * s, 0, Math.PI * 2);
+    }
     ctx.stroke();
   });
   ctx.restore();

@@ -55,6 +55,11 @@ function artParamsOf(o: AbilityVfxLayerOverride): ArtParams {
   if (o.timeScale !== undefined) p.timeScale = o.timeScale;
   if (o.tint !== undefined) p.tint = [o.tint[0] / 255, o.tint[1] / 255, o.tint[2] / 255];
   if (o.flyHeight !== undefined) p.heightY = o.flyHeight / WC3_UNITS_PER_WORLD_UNIT;
+  // #366 方位。⚠️ 這兩格**改 doc**(折進 `orient`),不像 `flyHeight` 只是空間參數 ——
+  // 所以它們會走 `applyVfxOverrides` 的換 pool key 那條路,兩支朝不同方向的同一招
+  // 才不會借到對方那個已經建好的 ParticleSystem(故障 ③)。
+  if (o.facingDeg !== undefined) p.facingDeg = o.facingDeg;
+  if (o.pitchDeg !== undefined) p.pitchDeg = o.pitchDeg;
   return p;
 }
 

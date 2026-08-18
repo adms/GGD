@@ -83,5 +83,11 @@
     ]
   },
   "icon": "assets/icons/abilities/godie-e002.ex.webp",
-  "vfxKey": "fx.prim.holy.beam-lg"
+  "vfxKey": "fx.prim.holy.beam-lg",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.holy.beam-flat",
+      "attachTo": "point"
+    }
+  ]
 }

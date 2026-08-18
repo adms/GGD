@@ -47,7 +47,9 @@ import { AssetManager } from "./AssetManager";
 import { ClipAnimator } from "./ClipAnimator";
 import { StorePreview } from "./StorePreview";
 import { glbYawOffset } from "./views/glbFacing";
-import { TARGET_HEIGHT } from "./views/ChampionView";
+import { normalizedModelScale } from "./views/modelSizing";
+import { blizzardOverlayModels } from "./views/blizzardOverlay";
+import { standinSizes } from "./views/standinSizes";
 import type { AnimState } from "./anim/AnimationStateMachine";
 
 const ANIM_STATES: readonly AnimState[] = ["idle", "run", "attack", "cast", "hurt", "death"];
@@ -57,6 +59,16 @@ const asAnimState = (s: string | undefined): AnimState =>
 export interface ChampionModelAuditionOptions {
   /** content model key, e.g. "imported.goku" */
   modelKey: string;
+  /**
+   * GH#368 — WHO is wearing this model. Supplying it makes the page resolve the
+   * doc through the SAME two sidecars the shipping scenes use: the Blizzard
+   * overlay (a stand-in `modelKey` becomes the champion's real WC3 mesh) and
+   * `_standin-overrides.json` (the per-champion size multiplier). Without it the
+   * page shows the shared stand-in at 1.0× — which is a real screen too, but it
+   * is NOT what a player sees for the 40 champions that ride the overlay, and
+   * 小叮噹 is one of them.
+   */
+  championId?: string | null;
   cam?: "combat" | "select";
   /** clip to hold (combat only); the champ-select preview always plays idle */
   clip?: string;
@@ -74,10 +86,22 @@ export interface ChampionModelAuditionHandle {
 /** joints whose name marks where the head belongs, in any of the rigs' spellings */
 const HEAD_JOINT = /(^|[^a-z])(head|helmet)([^a-z]|$)/i;
 
-async function fetchModelDoc(modelKey: string): Promise<ModelDoc> {
+/**
+ * The doc + size multiplier the shipping scenes would resolve — same order as
+ * `StorePreviewCanvas.fetchModelDoc` (GH#31 overlay first, then GH#368 sizes).
+ */
+async function fetchModelDoc(
+  modelKey: string,
+  championId?: string | null,
+): Promise<{ doc: ModelDoc; relativeScale: number }> {
   const res = await fetch(`/content/models/${encodeURIComponent(modelKey)}.json`);
   if (!res.ok) throw new Error(`no model doc for ${modelKey} (${res.status})`);
-  return (await res.json()) as ModelDoc;
+  const shipped = (await res.json()) as ModelDoc;
+  if (!championId) return { doc: shipped, relativeScale: 1 };
+  await blizzardOverlayModels.load();
+  await standinSizes.load();
+  const doc = blizzardOverlayModels.resolve(shipped, championId) ?? shipped;
+  return { doc, relativeScale: standinSizes.relativeScaleFor(championId, doc.glbPath) };
 }
 
 export function startChampionModelAudition(
@@ -104,9 +128,9 @@ export function startChampionModelAudition(
     const preview = new StorePreview(selScene);
     preview.camera.useAutoRotationBehavior = false;
     let frames = 0;
-    void fetchModelDoc(opts.modelKey)
-      .then(async (doc) => {
-        await preview.show(doc);
+    void fetchModelDoc(opts.modelKey, opts.championId)
+      .then(async ({ doc, relativeScale }) => {
+        await preview.show(doc, { championId: opts.championId ?? null, relativeScale });
         const root = preview.modelNode;
         if (!root) throw new Error("StorePreview showed nothing (empty glb?)");
         root.computeWorldMatrix(true);
@@ -166,8 +190,8 @@ export function startChampionModelAudition(
 
   const assets = new AssetManager(scene);
   let animator: ClipAnimator | null = null;
-  void fetchModelDoc(opts.modelKey)
-    .then(async (doc) => {
+  void fetchModelDoc(opts.modelKey, opts.championId)
+    .then(async ({ doc, relativeScale }) => {
       const container = await assets.load(doc.glbPath);
       if (!container) throw new Error(`glb did not load: ${doc.glbPath}`);
       const inst = container.instantiateModelsToScene((n) => `aud-${n}`, false, {
@@ -181,8 +205,7 @@ export function startChampionModelAudition(
       root.position.z = opts.offsetZ ?? 0;
       root.computeWorldMatrix(true);
       const native = root.getHierarchyBoundingVectors(true);
-      const nativeH = native.max.y - native.min.y;
-      root.scaling.setAll(nativeH > 0.05 ? TARGET_HEIGHT / nativeH : doc.scale);
+      root.scaling.setAll(normalizedModelScale(native.max.y - native.min.y, doc.scale, relativeScale));
       root.computeWorldMatrix(true);
       const { min } = root.getHierarchyBoundingVectors(true);
       if (Number.isFinite(min.y)) root.position.y = -min.y;

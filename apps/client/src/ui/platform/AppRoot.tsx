@@ -24,7 +24,7 @@ import { PauseMenu } from "../PauseMenu";
 import { LeaveSettlementOverlay } from "../panels/LeaveSettlementOverlay";
 import { useRequestLeave } from "../leaveFlow";
 import { CheatConsole } from "../CheatConsole";
-import { cheatsAvailable } from "../cheats";
+import { cheatPanelMounts } from "../cheats";
 import { CodexRoute } from "../codex/CodexRoute";
 import { AssetConsoleRoute } from "../assets/AssetConsoleRoute";
 import { CreditsRoute } from "./CreditsRoute";
@@ -50,7 +50,7 @@ const OVERLAY_LABELS: HudBoundaryLabels = new Map<unknown, string>([
   [SettingsCorner, "設定"],
   [PauseMenu, "選單"],
   [LeaveSettlementOverlay, "離場結算"],
-  [CheatConsole, "作弊主控台"],
+  [CheatConsole, "練習面板"],
   // 裸 <div data-hud-slot="leave"> —— 用槽位字串當 key（見 hudBoundaryLabel）。
   ["leave", "離開按鈕"],
 ]);
@@ -62,7 +62,24 @@ function MatchOverlay(): React.JSX.Element {
   // lobby directly (the old behaviour). One shared callback, so the top-right
   // chip and the pause menu can never diverge.
   const requestLeave = useRequestLeave();
-  const showCheats = useApp((s) => cheatsAvailable(s.match?.mode));
+  /**
+   * ⭐ GH#365 —— **這一行就是「練習模式的作弊碼選單一樣沒有看到」的原因。**
+   *
+   * `cheatsAvailable(mode, practice)` 的第二個參數在 GH#343 加進來時，簽章、
+   * `cheatButtonVisible`、`CheatConsole` 內部三個地方都接上了 —— 只有**決定這個
+   * 元件存不存在**的這一個呼叫點漏了它，而它是唯一真正管事的那一個。
+   *
+   * 後果不是「按鈕被藏起來」而是「整個元件從來沒有掛載」：練習房走的是
+   * `playBotMatch(…, practice=true)`，那是一間**平台**房（`mode === "platform"`），
+   * 於是 `cheatsAvailable("platform", undefined)` 回 false ⇒ `<CheatConsole>` 不掛
+   * ⇒ 連 backtick 的 keydown handler 都沒有被註冊過（它住在元件裡面）。
+   * ⛔ 所以「按 ` 也沒反應」不是第二個缺陷，是同一個。
+   *
+   * ⚠️ 失敗形態③的教科書例子：三個測試各自驗 `cheatsAvailable` 與
+   * `cheatButtonVisible` 的第二個參數，全綠 —— 因為沒有一條測試讀**呼叫點**。
+   * 守衛：`apps/client/src/ui/practiceMount.test.ts`。
+   */
+  const showCheats = useApp((s) => cheatPanelMounts(s.match));
   // remount the cheat console on each Restart so its toggle state (god / 0-CD)
   // resets to match the fresh match/world rather than lingering from the old one
   const matchEpoch = useApp((s) => s.matchEpoch);

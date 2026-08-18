@@ -2,7 +2,7 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_debe453d4558`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 產生自 contentVersion **`cv_0fee9994f9ea`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
 > 資料列：**461**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-07-24T11:14:58.268286Z`）
 
 `content/abilities/*.json` 共 **461** 份，每個英雄每個 slot 一份：天生 PASSIVE 75　·　Q 78　·　W 79　·　E 78　·　R 78　·　EX 73。
@@ -116,7 +116,7 @@
 | `godie-efur.e` | 13-03 龍頭戲畫。布陣 | E | 主動 | 13-03 | `godie-efur` 揍敵客桀諾 | — | [主動][範圍][AP加成] |
 | `godie-efur.r` | 13-04 龍星群 | R | 主動 | 13-04 | `godie-efur` 揍敵客桀諾 | — | [主動][範圍][週期][AP加成] |
 | `godie-efur.ex` | 13-002 絕。暗殺奧義 | EX | 被動 | 13-002 | `godie-efur` 揍敵客桀諾 | — | [被動][技能命中時][身上有某狀態時][機率] |
-| `godie-emfr.passive` | 15-00 真·不死不滅 | PASSIVE | 天生·被動 | 15-00 | `godie-emfr` 涅吉。史普林。菲爾德 | — | [被動][週期][回復][燒魔] |
+| `godie-emfr.passive` | 15-00 真·不死不滅 | PASSIVE | 天生·被動 | 15-00 | `godie-emfr` 涅吉。史普林。菲爾德 | — | [被動][週期][屬性門檻][回復][燒魔] |
 | `godie-emfr.q` | 15-01 雷神槍「巨神殺手」 | Q | 主動 | 15-01 | `godie-emfr` 涅吉。史普林。菲爾德 | ✅ | [主動][指向][範圍][AP加成] |
 | `godie-emfr.w` | 15-02 疾風迅雷 | W | 主動 | 15-02 | `godie-emfr` 涅吉。史普林。菲爾德 | ✅ | [主動][輔助][變身][普攻時][AP加成] |
 | `godie-emfr.e` | 15-03 獄炎煉我 | E | 主動 | 15-03 | `godie-emfr` 涅吉。史普林。菲爾德 | ✅ | [主動][變身][普攻時][範圍][AP加成] |

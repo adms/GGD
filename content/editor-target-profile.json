@@ -1,17 +1,17 @@
 {
   "schema": "ggd-editor-target-profile@1",
-  "generatedAt": "2026-08-18T11:14:06.273Z",
+  "generatedAt": "2026-08-18T12:49:08.224Z",
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_debe453d4558",
+    "contentVersion": "cv_0fee9994f9ea",
     "collections": {
       "champions": {
-        "hash": "b53b676784dc",
+        "hash": "ea872906f006",
         "count": 78
       },
       "abilities": {
-        "hash": "dfc5590107b0",
+        "hash": "747383e0787a",
         "count": 461
       },
       "items": {
@@ -35,15 +35,15 @@
         "count": 3
       },
       "arenas": {
-        "hash": "87ba7aa4c2e9",
+        "hash": "127a74943be5",
         "count": 13
       },
       "maps": {
-        "hash": "9b189babcd8a",
+        "hash": "58b963f7a695",
         "count": 7
       },
       "config": {
-        "hash": "2cdf1faa23b7",
+        "hash": "705e03be96e4",
         "count": 62
       },
       "models": {
@@ -51,8 +51,8 @@
         "count": 124
       },
       "vfx": {
-        "hash": "9241144175d6",
-        "count": 632
+        "hash": "2e39d382ea96",
+        "count": 634
       },
       "skins": {
         "hash": "3d1095f3da83",
@@ -1980,7 +1980,7 @@
       "effectKindsSource": "runtimeCapabilities.effectKinds（⛔ 不在這裡重複一份）"
     },
     "vfx": {
-      "docCount": 632,
+      "docCount": 634,
       "keys": [
         "fx.barkskin",
         "fx.bramble-burst",
@@ -2908,5 +2908,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "1e55a3dbd6c2"
+  "profileDigest": "382ece65c3c1"
 }

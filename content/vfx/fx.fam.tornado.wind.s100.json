@@ -90,5 +90,8 @@
   },
   "texture": "assets/textures/particles/smoke_03.png",
   "stretched": true,
-  "tailLength": 2
+  "tailLength": 2,
+  "orient": {
+    "swirlDegPerSec": 540
+  }
 }

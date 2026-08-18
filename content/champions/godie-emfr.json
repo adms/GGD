@@ -108,7 +108,14 @@
       ],
       "icon": "assets/icons/abilities/godie-emfr.q.webp",
       "vfxKey": "fx.prim.wind.tornado",
-      "castTimeSec": 0.467
+      "castTimeSec": 0.467,
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.lightning.bolt",
+          "attachTo": "point",
+          "pitchDeg": 0
+        }
+      ]
     },
     "W": {
       "id": "godie-emfr.w",

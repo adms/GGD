@@ -638,5 +638,47 @@
       "scale": 1.4
     }
   ],
-  "groundStyle": "grass"
+  "groundStyle": "grass",
+  "scenery": {
+    "palette": {
+      "floor": "#d9ecc6",
+      "wall": "#9fae8a",
+      "sky": "#dff0ff",
+      "ground": "#24301c",
+      "void": "#0a1408"
+    },
+    "lighting": {
+      "keyColor": "#fff8e6",
+      "keyIntensity": 1.0,
+      "keyYawDeg": 320,
+      "keyPitchDeg": 66,
+      "fillIntensity": 0.8,
+      "wave": "sweep",
+      "periodSec": 30,
+      "intensityAmp": 0.12,
+      "yawSweepDeg": 14
+    },
+    "props": [
+      {
+        "model": "assets/models/hex/trees_medium.glb",
+        "count": 12,
+        "bandFrom": 0.9,
+        "bandTo": 0.99,
+        "scaleMin": 1.2,
+        "scaleMax": 1.4,
+        "facing": "random",
+        "seed": 5
+      },
+      {
+        "model": "assets/models/hex/rock.glb",
+        "count": 8,
+        "bandFrom": 0.84,
+        "bandTo": 0.95,
+        "scaleMin": 1.2,
+        "scaleMax": 1.4,
+        "facing": "random",
+        "seed": 31
+      }
+    ]
+  }
 }

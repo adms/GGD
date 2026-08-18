@@ -4,6 +4,49 @@
   "name": "大聖杯洞窟",
   "template": "CENTRAL_RING",
   "groundStyle": "stone",
+  "scenery": {
+    "palette": {
+      "floor": "#b9a86a",
+      "wall": "#7c6f42",
+      "sky": "#d8ffe0",
+      "ground": "#1a2418",
+      "void": "#04080a"
+    },
+    "lighting": {
+      "keyColor": "#ffe9a8",
+      "keyIntensity": 0.65,
+      "keyYawDeg": 315,
+      "keyPitchDeg": 60,
+      "fillIntensity": 0.5,
+      "wave": "breathe",
+      "periodSec": 6.5,
+      "intensityAmp": 0.28,
+      "yawSweepDeg": 0,
+      "peakColor": "#b8ffcf"
+    },
+    "props": [
+      {
+        "model": "assets/models/hex/rock.glb",
+        "count": 16,
+        "bandFrom": 0.84,
+        "bandTo": 0.99,
+        "scaleMin": 1.2,
+        "scaleMax": 1.4,
+        "facing": "random",
+        "seed": 17
+      },
+      {
+        "model": "assets/models/props/torch.glb",
+        "count": 8,
+        "bandFrom": 0.94,
+        "bandTo": 0.97,
+        "scaleMin": 1.5,
+        "scaleMax": 1.8,
+        "facing": "faceIn",
+        "seed": 61
+      }
+    ]
+  },
   "grid": {
     "cols": 24,
     "rows": 18,

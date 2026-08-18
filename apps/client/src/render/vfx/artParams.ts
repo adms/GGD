@@ -13,6 +13,7 @@
  */
 import type { VfxDoc } from "@ggd/shared/content";
 import type { Rgb } from "./primitives";
+import { DEFAULT_PITCH_DEG } from "../../vfx/orient";
 
 export interface ArtParams {
   /** multiply every size + the emitter radius */
@@ -27,8 +28,24 @@ export interface ArtParams {
   timeScale?: number;
   /** world-y the effect spawns at (torso ~1.0, ground ~0.1) — spatial */
   heightY?: number;
-  /** facing in degrees for directed primitives (beam/slash) — spatial */
+  /**
+   * 方位角,度 (#366)。0 = +X。
+   *
+   * ⚠️ **這一格在 2026-08-18 之前是死的。** 檔頭原本寫它是「spatial,surfaced
+   * for the invocation site」,而 `resolveSpatial()` 在整個 repo 裡**沒有任何
+   * production 呼叫者** —— 宣告了、驗了、沒有人讀(故障 ②)。後果是
+   * `beam`/`slash`/`bolt`/`dash`/`tornado` 這 111 支有方向的技能,每一次施法都朝
+   * 同一個方向噴。
+   *
+   * 現在它**折進 `doc.orient.yawDeg`**,也就是走 `scale`/`tint`/`alpha` 那條
+   * 已經有池、有 id 簽章、有守衛的路,⛔ 不是另開一條平行的空間管線 ——
+   * `flyHeight` 當年就是走平行管線,在 `familyRow()` 一行之內蒸發掉的。
+   */
   facingDeg?: number;
+  /** 仰角,度 (#366)。90 = 直立(預設),0 = 橫放 —— 「橫放的柱狀砲」就是這一格 */
+  pitchDeg?: number;
+  /** 繞自身軸的切線角速度,度/秒 (#366)。龍捲風的「旋轉」 */
+  swirlDegPerSec?: number;
 }
 
 function clamp01(v: number): number {
@@ -48,7 +65,13 @@ function isDocIdentity(p: ArtParams): boolean {
     p.tint === undefined &&
     (p.alpha === undefined || p.alpha === 1) &&
     p.count === undefined &&
-    (p.timeScale === undefined || p.timeScale === 1)
+    (p.timeScale === undefined || p.timeScale === 1) &&
+    // #366 —— 方位現在是 doc 表達得出來的東西,所以它必須參與這個判斷。
+    // ⚠️ 用的是**效果**不是「有沒有這個 key」:`facingDeg: 0` / `pitchDeg: 90`
+    // 是恆等,不該憑空多開一格粒子池。
+    (p.facingDeg === undefined || p.facingDeg === 0) &&
+    (p.pitchDeg === undefined || p.pitchDeg === DEFAULT_PITCH_DEG) &&
+    (p.swirlDegPerSec === undefined || p.swirlDegPerSec === 0)
   );
 }
 
@@ -102,6 +125,22 @@ export function applyArtParams(doc: VfxDoc, p: ArtParams): VfxDoc {
   }
 
   if (p.count !== undefined) out.burstCount = Math.max(1, Math.round(p.count));
+
+  // #366 方位 —— 疊在文件自己的 `orient` 上(ABSENT ≠ ZERO:沒給的那一半保留
+  // 文件的值,所以「一支會旋轉的龍捲風」被轉個方向之後仍然在旋轉)。
+  if (p.facingDeg !== undefined || p.pitchDeg !== undefined || p.swirlDegPerSec !== undefined) {
+    const base = doc.orient ?? {};
+    const merged = {
+      yawDeg: p.facingDeg ?? base.yawDeg,
+      pitchDeg: p.pitchDeg ?? base.pitchDeg,
+      swirlDegPerSec: p.swirlDegPerSec ?? base.swirlDegPerSec,
+    };
+    const orient: NonNullable<VfxDoc["orient"]> = {};
+    if (merged.yawDeg !== undefined) orient.yawDeg = round(merged.yawDeg);
+    if (merged.pitchDeg !== undefined) orient.pitchDeg = round(merged.pitchDeg);
+    if (merged.swirlDegPerSec !== undefined) orient.swirlDegPerSec = round(merged.swirlDegPerSec);
+    out.orient = orient;
+  }
 
   return out;
 }

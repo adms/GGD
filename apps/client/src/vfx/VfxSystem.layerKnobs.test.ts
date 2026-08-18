@@ -335,6 +335,11 @@ describe("schema 宣告的每一個覆寫格，後台都真的存得下去", () 
     alpha: { alpha: "0.5" },
     timeScale: { timeScale: "0.5" },
     tint: { tintR: "255", tintG: "40", tintB: "40" },
+    // 方位 (GH#366)。⚠️ 樣本值刻意**不是** 0：`facingDeg: 0` 與 `pitchDeg: 90`
+    // 都是恆等變換（`orientIsIdentity`），存進去之後這條守衛看到的
+    // 「有值」與「被丟掉」長得一樣，於是它會對整條路徑撒謊。
+    facingDeg: { facingDeg: "45" },
+    pitchDeg: { pitchDeg: "0" },
   };
 
   it("每一格填了都會出現在文件的那一層上（少一格 = 畫面上有格子、存下去沒東西）", () => {

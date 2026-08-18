@@ -854,5 +854,57 @@
       "scale": 1
     }
   ],
-  "groundStyle": "sand"
+  "groundStyle": "sand",
+  "scenery": {
+    "palette": {
+      "floor": "#ffe6bd",
+      "wall": "#d8c096",
+      "sky": "#fff2d6",
+      "ground": "#4a3a24",
+      "void": "#1a1206"
+    },
+    "lighting": {
+      "keyColor": "#fff3d2",
+      "keyIntensity": 1.15,
+      "keyYawDeg": 335,
+      "keyPitchDeg": 72,
+      "fillIntensity": 0.85,
+      "wave": "sweep",
+      "periodSec": 46,
+      "intensityAmp": 0.08,
+      "yawSweepDeg": 22
+    },
+    "props": [
+      {
+        "model": "assets/models/props/pillar.glb",
+        "count": 18,
+        "bandFrom": 0.945,
+        "bandTo": 0.99,
+        "scaleMin": 1.6,
+        "scaleMax": 2.2,
+        "facing": "faceIn",
+        "seed": 3
+      },
+      {
+        "model": "assets/models/props/banner_shield_yellow.glb",
+        "count": 8,
+        "bandFrom": 0.985,
+        "bandTo": 1.0,
+        "scaleMin": 1.6,
+        "scaleMax": 1.8,
+        "facing": "faceIn",
+        "seed": 21
+      },
+      {
+        "model": "assets/models/props/barrel_small.glb",
+        "count": 5,
+        "bandFrom": 0.87,
+        "bandTo": 0.94,
+        "scaleMin": 1.1,
+        "scaleMax": 1.2,
+        "facing": "random",
+        "seed": 57
+      }
+    ]
+  }
 }

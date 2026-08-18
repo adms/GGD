@@ -3065,8 +3065,12 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
        * 文件裡，owner 哪天調那一格，省略的自動跟上、填死的不會。
        * ⚠️ 這一批量到 7 份文件寫了 50 而當時上限是 3 —— 它們全部被靜默夾掉，
        * 卡面卻印著「全部」。那是這一格最容易出的錯，⛔ 不要再寫數字。
+       *
+       * ⚠️ 這裡的 `.max` 是 `DISPEL_MAX_COUNT_BOUNDS` 的**上界**（60，GH#360），
+       * ⛔ 不是出貨值（50）—— 它擋的是「文件寫了一個連後台都調不到的數字」。
+       * 三個住處分歧的守衛：`sim/dispelRules.test.ts`。
        */
-      count: z.number().int().positive().max(50).optional(),
+      count: z.number().int().positive().max(60).optional(),
       /** 拔不完時先拔哪一邊。省略 = 後台的 `defaultOrder`。 */
       order: z.enum(["newest", "oldest"]).optional(),
     })

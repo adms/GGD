@@ -7,6 +7,8 @@
  *   Q/W/E/R keydown    quick-cast per the champion ability's castType
  *   F                  the per-hero EX skill (5th slot)
  *   D                  the 天生技 innate (6th slot) — see SLOT_BY_CODE
+ *   …and HOLDING any of those six paints the 技能範圍指引 on the floor via the
+ *   shared `ui/abilityHold` seam (GH#367); keyup / blur retracts it.
  *   S stop · B recall · Space camera follow toggle · wheel zoom
  * The pure mapping helpers are exported for unit tests (client-05); the class
  * only wires DOM events onto them. NO @babylonjs imports here — the ray comes
@@ -17,6 +19,7 @@ import type { CastableSlot, Command, Order } from "@ggd/shared/sim/intents";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 import { setCursorVariant } from "../cursor";
 import { abilityActivationCue } from "../ui/abilityCue";
+import { clearHeldAbility, setHeldAbility } from "../ui/abilityHold";
 import { buildCastCommand, type AimAbility } from "./AimResolver";
 
 /** Right-click: attack the hovered enemy, otherwise move to the point. */
@@ -129,6 +132,13 @@ export class InputCapture {
   readonly panKeys: PanKeys = { up: false, down: false, left: false, right: false };
   private attackMoveArmed = false;
   private disposers: (() => void)[] = [];
+  /**
+   * The ability key currently held down (GH#367) — our stake in the GLOBAL
+   * `ui/abilityHold` store, which the mouse tiles, the touch bar and the pad all
+   * write to as well. Kept so `blur`/`dispose` can retract exactly what THIS
+   * keyboard put there and nothing else (same rule as `PadDescribeHold`).
+   */
+  private heldKeySlot: CastableSlot | null = null;
 
   /**
    * Arm/disarm the attack-move AND mirror it onto the mouse cursor: while A is
@@ -195,9 +205,17 @@ export class InputCapture {
     }, { passive: false });
 
     on(window, "keydown", (ev: KeyboardEvent) => this.onKeyDown(ev));
-    on(window, "keyup", (ev: KeyboardEvent) => this.setPanKey(ev.code, false));
+    on(window, "keyup", (ev: KeyboardEvent) => {
+      this.setPanKey(ev.code, false);
+      // 放開技能鍵 → 收掉範圍指引 (GH#367)
+      const slot = SLOT_BY_CODE[ev.code];
+      if (slot) this.releaseHeldKey(slot);
+    });
     on(window, "blur", () => {
       this.panKeys.up = this.panKeys.down = this.panKeys.left = this.panKeys.right = false;
+      // Alt-tabbing away eats the keyup, so without this the range guide would
+      // stay painted on the floor for the rest of the match.
+      if (this.heldKeySlot) this.releaseHeldKey(this.heldKeySlot);
     });
   }
 
@@ -207,6 +225,14 @@ export class InputCapture {
     // leaving a match with A still armed must not strand the reticle on the
     // lobby screens, where there is no canvas and no order to place
     this.setAttackArmed(false);
+    // …and the same for a key still held at the moment the match tears down.
+    if (this.heldKeySlot) this.releaseHeldKey(this.heldKeySlot);
+  }
+
+  /** Retract our stake in the shared held-ability store — never anyone else's. */
+  private releaseHeldKey(slot: CastableSlot): void {
+    if (this.heldKeySlot === slot) this.heldKeySlot = null;
+    clearHeldAbility(slot);
   }
 
   private onKeyDown(ev: KeyboardEvent): void {
@@ -236,6 +262,17 @@ export class InputCapture {
       // when the slot isn't a learned/available ability. Sound only — no visual
       // (the key has no on-screen face); haptic is a mobile no-op on desktop.
       abilityActivationCue(slot, { denied: !ability });
+      // 技能範圍指引 (GH#367). The SAME seam the touch bar, the mouse tiles and
+      // the pad already write — ⛔ NOT a second preview path. Everything
+      // downstream (`GameApp.resolveHoldPreview` → post-`envFactor("abilityRange")`
+      // radius → `AimIndicator`) is reached by setting this one slot.
+      //
+      // ⚠️ Unconditional, NOT gated on `ability`: this line is what makes the
+      // guide a TEACHING tool (owner cited LoL's 新手模式). `resolveHoldPreview`
+      // already answers an unlearned slot with null and draws nothing, so a
+      // second gate here would only be a copy of that rule, free to drift.
+      this.heldKeySlot = slot;
+      setHeldAbility(slot);
     }
 
     switch (ev.code) {

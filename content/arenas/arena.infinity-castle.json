@@ -7468,6 +7468,68 @@
       }
     ]
   },
+  "scenery": {
+    "palette": {
+      "floor": "#c9b0e8",
+      "wall": "#6e4a86",
+      "sky": "#b39ce8",
+      "ground": "#241436",
+      "void": "#0b0716"
+    },
+    "lighting": {
+      "keyColor": "#d8c6ff",
+      "keyIntensity": 0.75,
+      "keyYawDeg": 310,
+      "keyPitchDeg": 68,
+      "fillIntensity": 0.55,
+      "wave": "storm",
+      "periodSec": 7.4,
+      "intensityAmp": 0.34,
+      "yawSweepDeg": 18,
+      "peakColor": "#ffd0d0"
+    },
+    "props": [
+      {
+        "model": "assets/models/props/torch.glb",
+        "count": 12,
+        "bandFrom": 0.955,
+        "bandTo": 0.985,
+        "arcFromDeg": 0,
+        "arcSpanDeg": 360,
+        "scaleMin": 1.5,
+        "scaleMax": 1.8,
+        "facing": "faceIn",
+        "rotQuarter": 0,
+        "seed": 29
+      },
+      {
+        "model": "assets/models/imported/japanesecherry.glb",
+        "count": 8,
+        "bandFrom": 0.88,
+        "bandTo": 0.98,
+        "arcFromDeg": 0,
+        "arcSpanDeg": 360,
+        "scaleMin": 0.09,
+        "scaleMax": 0.12,
+        "facing": "random",
+        "rotQuarter": 0,
+        "seed": 4
+      },
+      {
+        "model": "assets/models/props/pillar.glb",
+        "count": 8,
+        "bandFrom": 0.93,
+        "bandTo": 0.96,
+        "arcFromDeg": 0,
+        "arcSpanDeg": 360,
+        "scaleMin": 1.4,
+        "scaleMax": 1.7,
+        "facing": "faceIn",
+        "rotQuarter": 0,
+        "seed": 63
+      }
+    ]
+  },
   "decor": [
     {
       "model": "assets/models/props/torch.glb",

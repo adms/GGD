@@ -39,6 +39,7 @@ import {
   facingModeSnapsFromAuthority,
 } from "@ggd/shared/sim/facingLock";
 import { localFacingMode } from "./predict/localFacingMode";
+import { predictionHoldFlagMask } from "./predict/predictionHold";
 import { localRenderPose } from "./predict/localRenderPose";
 
 import type { RoomConnection } from "./net/RoomConnection";
@@ -100,6 +101,7 @@ import {
 import { blizzardOverlayModels } from "./render/views/blizzardOverlay";
 import { championBodyHooks, type ChampionBodyHooks } from "./render/views/championBody";
 import { formAttachmentSpecFor } from "./render/views/formVisual";
+import { bodyRelativeScale } from "./render/views/modelSizing";
 import { entityTintFor } from "./render/views/mobTint";
 import { mobRingDiameterFor } from "./render/views/mobGroundRing";
 import {
@@ -1166,6 +1168,43 @@ export class GameApp {
    * decor. Deduped/superseding: a stale in-flight build is dropped if a newer
    * map is requested. A missing/broken doc falls back to the skeleton geometry.
    */
+  /**
+   * 伺服器現在握著**本機英雄**這具身體嗎？(GH#370)
+   *
+   * ⭐ 這是一個 method 而不是 frame 裡的一段閉包，理由是**可測**：
+   * `predictionHoldWiring.test.ts` 用 `GameApp.prototype` 直接呼叫它
+   * （同 `predictionArenaParity.test.ts` 的判例）。第一版把邏輯抄進測試裡，
+   * 突變驗證**沒有紅** —— 那條守衛是空的（失敗形態⑤：被測的不是出貨的那個）。
+   */
+  private predictionHeldByServer(state: MatchState | null | undefined): boolean {
+    const mask = predictionHoldFlagMask();
+    if (mask === 0) return false;
+    const lid = hudStore.getState().localEntityId;
+    if (lid === null || !state?.entities) return false;
+    const es = state.entities.get(String(lid));
+    // ⚠️ `!== 0` 不是 `> 0` —— flags 是 uint32，高半部 `&` 出來是負數。
+    return es !== undefined && (es.flags & mask) !== 0;
+  }
+
+  /**
+   * 固定步長推進預測影子。`held` = 這一幀**不要**推進。
+   *
+   * ⭐ 兩個來源共用同一條路：結算凍結 (`outcomeDecided`) 與伺服器扣留 (GH#370)。
+   * `reconcile` 仍然照跑，所以身體會對齊權威 —— 沒有爬出去，就沒有東西要被拉回來，
+   * 也就沒有 owner 看到的那個「放完技能之後原地小步來回」。
+   */
+  private advancePrediction(dtMs: number, held: boolean): void {
+    if (held) {
+      this.predAccumMs = 0;
+      return;
+    }
+    this.predAccumMs += dtMs;
+    while (this.predAccumMs >= TICK_MS) {
+      this.prediction.stepTick();
+      this.predAccumMs -= TICK_MS;
+    }
+  }
+
   private applyArena(mapId: string): void {
     if (this.disposed || !mapId) return;
     if (mapId === this.appliedMapId || mapId === this.applyingMapId) return;
@@ -1193,8 +1232,17 @@ export class GameApp {
         // ⭐ GH#337 —— 這一趟建出來的 handles 也留一份在區域變數裡。下面
         // `dressArena` 的 staleness 判準要比對的正是**這一顆物件**跟
         // `this.arenaHandles` 現在是不是同一顆。
-        const handles = buildArena(this.renderer.scene, def, doc?.groundStyle);
+        // ⭐ GH#362 —— 第 4 個參數是這張場地的視覺身分（配色）。少了它，13 張圖
+        // 又回到共用同一組灰石板＋同一顆不會動的太陽，而後台的 scenery 政策
+        // 一格都調不到（第②號故障：後台存了，場上一輩子讀不到）。
+        const sceneryPolicy = this.contentDb.arenaScenery();
+        const scenery = sceneryPolicy.enabled ? doc?.scenery : undefined;
+        const handles = buildArena(this.renderer.scene, def, doc?.groundStyle, scenery);
         this.arenaHandles = handles;
+        // 燈是**場景層級**的（整個 scene 兩盞），所以它不住在 arenaHandles 裡，
+        // 而是換場地時重新套用一次。⚠️ 政策關掉動畫時仍然套用顏色與角度 ——
+        // 「不要閃」跟「不要有場景特色」是兩件事。
+        this.lighting.applyScenery(scenery, sceneryPolicy.animateLights);
         // The minimap projects AND bakes its terrain background from the ACTIVE
         // map's collision truth — the same ArenaDef the server collides against,
         // so the picture the player reads can never disagree with the walls they
@@ -1248,9 +1296,19 @@ export class GameApp {
             // `disposeArena` 拆掉了。比對的是 `handles` **物件同一性**，
             // ⛔ 不是 mapId 字串 —— 隨機輪替連續抽到同一張圖時字串會相等。
             () => this.disposed || this.arenaHandles !== handles,
+            // ⭐ 第 9 個是 GH#362 的場景特色政策。同一條縫、同一個理由：少了它，
+            // 後台的「總開關 / 每區最多幾件」永遠調不動（第②號故障）。
+            sceneryPolicy,
           );
       })
-      .catch(() => {
+      .catch((err: unknown) => {
+        // ⚠️ 這裡本來是**完全靜默**的 —— 而這一整段 `.then()` 裡任何一個
+        // `this.contentDb.xxx()` 拋例外（例如新增了一個方法而某個呼叫端的
+        // ContentDb 還沒有它），結果就是**整張場地沒套上**：沒有地形、
+        // 小地圖空的、預測影子還鎖在上一張圖的圓 —— 而畫面上跟正常一模一樣。
+        // 2026-08-18 GH#362 加 `arenaScenery()` 時就真的踩到了，⛔ 而在此之前
+        // 它連一行 log 都沒有。第二守則：fail-open 沒錯，**靜默**才是缺陷。
+        console.error(`[client] applyArena("${mapId}") 失敗 —— 這張場地沒有套上`, err);
         if (this.applyingMapId === mapId) this.applyingMapId = null;
       });
   }
@@ -1409,6 +1467,12 @@ export class GameApp {
     // hero idle for the settlement front-view. Mirror it client-side so local
     // prediction + input don't fight the freeze (see step 3 + step 5 below).
     const frozen = state?.outcomeDecided === true;
+    // ⭐ GH#370 —— 伺服器正握著這具身體時，**別讓影子往前爬**。
+    // 根因不在 sim（伺服器座標 180 tick 反轉 0 次）：`LocalPrediction` 的影子世界
+    // 沒有 `abilities` 元件 ⇒ `movementHold` 看不到施法鎖 ⇒ 影子在那 26 個 tick
+    // 爬到領先權威 2.14 單位，然後每 50 ms 被 reconcile 拉回 —— 66 次微幅前後
+    // 就是那個抽搐，而且**只有施法的那個玩家看得到**。
+    const heldByServer = this.predictionHeldByServer(state);
 
     // 2) advance the interpolation clock (delay is a live network setting)
     const renderTick = this.timeSync.ready
@@ -1448,17 +1512,7 @@ export class GameApp {
     this.prediction.setCombatFacingTarget(
       facingModePredictsLocally(facingMode) ? this.combatFacingTargetPos(state, renderTick) : null,
     );
-    if (frozen) {
-      // settlement freeze: hold the prediction shadow (the server pins the hero);
-      // reconcile above still snaps it to the idle authority so it stays put.
-      this.predAccumMs = 0;
-    } else {
-      this.predAccumMs += dtMs;
-      while (this.predAccumMs >= TICK_MS) {
-        this.prediction.stepTick();
-        this.predAccumMs -= TICK_MS;
-      }
-    }
+    this.advancePrediction(dtMs, frozen || heldByServer);
     // RENDER ALPHA (task #43). The fixed-step loop leaves predAccumMs in
     // [0, TICK_MS): how far the render clock has advanced INTO the tick that
     // has not run yet. That leftover IS the blend factor between the previous
@@ -1468,7 +1522,10 @@ export class GameApp {
     // per-frame speed ratio ≈ 13.5 device px of judder every other frame).
     // During the settlement freeze predAccumMs is pinned to 0, so use alpha = 1
     // to hold the hero exactly on the authoritative pose instead of a tick behind.
-    const renderAlpha = frozen ? 1 : Math.min(1, Math.max(0, this.predAccumMs / TICK_MS));
+    // ⚠️ `heldByServer` 也走 alpha = 1：`predAccumMs` 被釘在 0，用它算出來的 alpha 會是 0，
+    // 那等於把渲染姿勢固定在**上一個** tick，扣留一結束就跳一格。
+    const renderAlpha =
+      frozen || heldByServer ? 1 : Math.min(1, Math.max(0, this.predAccumMs / TICK_MS));
     // (Pad/touch polling + the intent flush happened in `pumpInput`, BEFORE the
     // fps gate — task #282. `touchFrame` below is therefore this frame's.)
     // Ground aim/preview telegraph, both platforms (task #152): a live touch
@@ -1671,6 +1728,12 @@ export class GameApp {
     // 5c) decor auto-fade — ghost tall landmark props (audit #29 "fade") that
     // block any camera→hero sightline; no-op on arenas without fade props.
     this.updateDecorFade(dtMs, state !== null);
+
+    // 5d) ⭐ GH#362 —— 會動的場地打光。owner 2026-08-18：「不是靜態不會變動的光」。
+    // ⚠️ 吃的是**絕對秒數**不是 delta：波形是 t 的純函式，所以掉幀 / 分頁切走
+    // 回來都不會讓相位漂掉（遞減計數器會，見 sim 的絕對 tick 慣例）。
+    // 波形是 `none` 或後台關掉動畫時它自己第一行就 return。
+    this.lighting.animate(nowMs / 1000);
 
     // 6) vfx (one-shots + the ambient lives-with-entity channel + combat post-fx)
     this.vfx.update(nowMs);
@@ -2790,7 +2853,13 @@ export class GameApp {
    * confirms or while the content DB is still loading — the market then simply
    * shows no hero rather than a placeholder.
    */
-  private localChampionModel(): { glbPath: string; scale: number; yawOffsetDeg?: number } | null {
+  private localChampionModel(): {
+    glbPath: string;
+    scale: number;
+    yawOffsetDeg?: number;
+    relativeScale?: number;
+    hiddenPrimitives?: readonly number[];
+  } | null {
     const hud = hudStore.getState();
     const seat = hud.seats.find((s) => s.seatId === hud.localSeatId);
     if (!seat?.championId) return null;
@@ -2798,7 +2867,21 @@ export class GameApp {
     if (!def) return null;
     const doc = this.modelDocFor(def.modelKey, seat.seatId);
     if (!doc) return null;
-    return { glbPath: doc.glbPath, scale: doc.scale, yawOffsetDeg: doc.yawOffsetDeg };
+    // GH#368 —— 尺寸倍率跟著模型一起送出去。市場攤位以前只拿到 glbPath + doc.scale，
+    // 而 doc.scale **不是尺寸**（overlay 文件一律是 1），所以「跟你並肩作戰的那一隻」
+    // 走進補給站就換了一個大小。⚠️ 讀 `seat.championId` 而不是形態感知的那條縫是
+    // 刻意的：補給站是回合之間的畫面，下一回合一律以基本型重生，而且 `bodyChampionIdFor`
+    // 需要一個 EntityViewState —— 這裡沒有 entity，只有座位。
+    const override = this.contentDb.modelOverrideFor(seat.championId);
+    return {
+      glbPath: doc.glbPath,
+      scale: doc.scale,
+      yawOffsetDeg: doc.yawOffsetDeg,
+      relativeScale: bodyRelativeScale(doc.glbPath, override),
+      // GH#368 —— 血泥宣告也一起送。攤位讀不到它的話，16 隻 overlay 英雄會拖著
+      // 一片屍體站在櫃台前（而且那片屍體會把他墊高）。
+      hiddenPrimitives: doc.hiddenPrimitives,
+    };
   }
 
   /** ChampionId picked by the local seat (null until champ-select confirms). */
@@ -2899,6 +2982,10 @@ export class GameApp {
         state.round,
         (id) => this.roundWinnerModelDoc(id, hud.seats),
         { duels: hud.duels, zone },
+        undefined,
+        // GH#368 —— 卡片上的大小＝剛剛場上的大小。少了這一行，小叮噹在頒獎台上
+        // 跟初號機一樣高（兩者都被正規化到 1.8u，而刻意的例外整張表都消失）。
+        (id) => bodyRelativeScale(this.roundWinnerModelDoc(id, hud.seats)?.glbPath, this.contentDb.modelOverrideFor(id)),
       );
       if (plan) {
         this.roundWinner.showTeam(plan.members, plan.ctx);
@@ -2978,7 +3065,10 @@ export class GameApp {
     const es = localId !== null ? state.entities.get(String(localId)) : undefined;
     const zones = frameBus.arenaZones;
     const z = es && zones ? zones[es.zone] : undefined;
-    f.zone = z ? { x: z.x, z: z.z, r: z.r } : null;
+    // ⭐ GH#364 —— 矩形分區把半寬半深一起帶下去。sim 對 rect 分區判的是
+    // **矩形**火圈（`fireRingSafeAt`），這裡少帶這一格，畫面就會在短軸上
+    // 多畫 `halfW/halfD` 倍的假安全區（出貨 24×18 ⇒ 多 33%）。
+    f.zone = z ? { x: z.x, z: z.z, r: z.r, ...(z.rect ? { rect: z.rect } : {}) } : null;
     return f;
   }
 

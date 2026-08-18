@@ -17,7 +17,7 @@
  *
  * WHERE THE NUMBERS COME FROM. Nothing here is a magic constant: the eye height
  * and standoff are derived from CameraRig's pitch and its CLOSEST dolly (the
- * worst case, and also the default since #31a), and the prop extents are read
+ * worst case; ⚠️ GH#361 moved the default out to the far clamp), and the prop extents are read
  * out of the .glb accessor bounds rather than transcribed — a hand-copied
  * bounding box is exactly the kind of thing that silently rots.
  *

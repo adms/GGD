@@ -199,6 +199,10 @@ export function compileMap(doc: MapDoc, spec: Spec, duelZones = DUEL_ZONES_PER_M
     // ⭐ 圓盤外的 2D 景深背景逐字帶過去。⛔ 它只落在 `ArenaDoc`，
     // 而 `arenaDefFromDoc()` 不看這一格 ⇒ sim 永遠拿不到它（見 `zBackdrop` 檔頭）。
     ...(doc.backdrop === undefined ? {} : { backdrop: doc.backdrop }),
+    // ⭐ GH#362 —— 場景特色（配色／打光／裝飾散佈）同樣逐字帶過去，同樣只落在
+    // `ArenaDoc` ⇒ sim 拿不到。⛔ 不在這裡加工：加工過的顏色會讓「地圖裡寫的」
+    // 與「畫面上的」變成兩個不同的東西，而那正是查不出來的那一類。
+    ...(doc.scenery === undefined ? {} : { scenery: doc.scenery }),
     // landmark 層帶 blocks:false 的道具走視覺；blocks:true 的已經在 tiles 裡了。
     // ⛔ background 層**永遠不**編譯成 decor 以外的東西。
     decor: [...doc.landmarkProps, ...doc.backgroundProps].map((p) => ({

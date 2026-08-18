@@ -20,6 +20,7 @@
  */
 import { useEffect, useRef, useState } from "react";
 import { blizzardOverlayModels } from "../../render/views/blizzardOverlay";
+import { standinSizes } from "../../render/views/standinSizes";
 import { StorePreview } from "../../render/StorePreview";
 import type { ModelDoc } from "@ggd/shared/content";
 import { TEXT_DIM } from "../theme";
@@ -75,6 +76,11 @@ async function fetchModelDoc(
     // `load()` is a cached single-flight, so awaiting it here costs one fetch
     // for the whole session and is a no-op once the arena has already primed it.
     await blizzardOverlayModels.load();
+    // GH#368 — the per-champion SIZE sidecar, on the same single-flight terms.
+    // The lobby has no ContentDb, so this is the only route by which 小叮噹's
+    // authored 0.65 reaches the stage; without it `StorePreview` normalizes
+    // every champion to the identical height and the exceptions vanish.
+    await standinSizes.load();
     return blizzardOverlayModels.resolve(shipped, championId);
   } catch {
     return null;
@@ -145,7 +151,13 @@ export function StorePreviewCanvas(props: {
         statusRef.current?.("failed");
         return;
       }
-      await preview.show(doc, { championId });
+      // GH#368 — the size exception rides the RESOLVED doc's glbPath, because
+      // which body actually loaded decides which of the sidecar's two numbers
+      // applies (see standinSizes.relativeScaleFor).
+      await preview.show(doc, {
+        championId,
+        relativeScale: standinSizes.relativeScaleFor(championId, doc.glbPath),
+      });
       if (cancelled) return;
       // `show()` never throws: a glb that 404s or fails to parse simply leaves
       // no model node. That is the honest signal — report it rather than

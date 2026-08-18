@@ -6,8 +6,9 @@
  *
  * The point of it is that it is not a mock-up. It calls the REAL
  * `buildZoneGround`, the REAL `setupLighting`, the shipped zone radius and the
- * shipped camera geometry (CameraRig's 55° pitch at DOLLY_MIN, which is also
- * the default zoom since #31a), so what shows up here is what shows up in a
+ * shipped camera geometry (CameraRig's pitch at DOLLY_MIN — the CLOSEST zoom;
+ * ⚠️ GH#361 moved the shipped default out to the far clamp), so what shows up
+ * here is what shows up in a
  * match. A prettier stand-in scene would be worse than useless — it could
  * approve a floor the game never renders.
  *

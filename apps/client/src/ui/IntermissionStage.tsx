@@ -180,7 +180,16 @@ export function IntermissionStage(): React.JSX.Element | null {
     // The third argument is the DOC's own `yawOffsetDeg`; it used to be a
     // modelKey, which is how the shop and the arena came to key the facing
     // exception off two different things for the same mesh.
-    void sceneRef.current?.setChampion(model.glbPath, model.scale, model.yawOffsetDeg, championId);
+    // GH#368: `relativeScale` last — without it the stall height-normalizes every
+    // hero to the identical 1.8u and 小叮噹 stands eye-to-eye with the merchant.
+    void sceneRef.current?.setChampion(
+      model.glbPath,
+      model.scale,
+      model.yawOffsetDeg,
+      championId,
+      model.relativeScale,
+      model.hiddenPrimitives,
+    );
   }, [championId]);
 
   // ---- a completed purchase: merchant hands it over, YOUR hero RESPONDS -----

@@ -43,6 +43,8 @@ import {
 import { FLASH_ALPHA, FLASH_MS, hitstopShiver } from "../combatFeedback";
 import { dissolveFrame } from "../deathDissolve";
 import { glbYawOffset } from "./glbFacing";
+import { TARGET_HEIGHT, normalizedModelScale } from "./modelSizing";
+import { ENABLED_ONLY, applyHiddenPrimitives } from "./hiddenPrimitives";
 import { isStandinBodyGlb } from "@ggd/shared/content/standinScale";
 import { castFollowThroughMs, castStrikeFractionFor } from "../anim/castStrike";
 import { ARCHETYPE_BY_MODEL_KEY, fallbackAccentFor, type VoxelLook } from "./voxelLook";
@@ -168,20 +170,14 @@ export interface ChampionViewOptions {
 }
 
 /**
- * HEIGHT-NORMALIZATION target (task #150). Every loaded champion .glb is scaled
- * so its full silhouette stands ≈ this many world units tall, REGARDLESS of the
- * glb's native mesh height — which varies wildly per champion (measured 1.70u to
- * 2.32u rendered across the roster; the four shared CC0 stand-in meshes are the
- * oversized group, champ.sela renders 2.32u, while imported.heroshana renders
- * 1.70u and reads small next to them). Before #150 the render scale was the model
- * doc's raw `scale` applied as an ABSOLUTE — so consistency depended on every
- * doc.scale being hand-tuned per glb (fragile: any new/un-tuned import renders
- * wrong). Normalizing here makes size CONSISTENT by construction. A per-champion
- * RELATIVE multiplier (see tryUpgradeToGlb's `relativeScale`, from
- * content/models/_standin-overrides.json) then intentionally shrinks lore-small
- * creatures / enlarges giants. ~1.8u ≈ a standing human (夏娜 = the normal case).
+ * HEIGHT-NORMALIZATION target (task #150) — re-exported so the ~12 modules that
+ * already import it from here keep working. ⚠️ The DEFINITION moved to
+ * `./modelSizing` (GH#368) together with the normalization arithmetic, because
+ * the arena was one of FOUR scenes that mount a champion mesh and the only one
+ * doing the sum. Read that file's header for why an `if` in StorePreview was
+ * the wrong shape of fix.
  */
-export const TARGET_HEIGHT = 1.8;
+export { TARGET_HEIGHT };
 
 /**
  * #249 GH#288 — 變身球體掛件,解析成渲染層看得懂的樣子。
@@ -198,15 +194,6 @@ export interface FormAttachmentSpec {
   readonly scale: number;
   readonly offsetY: number;
 }
-
-/**
- * A glb whose measured native height is below this (world units at scale 1) is
- * treated as unmeasurable — a degenerate / geometry-less rig — and falls back to
- * the model doc's declared `scale` rather than producing an absurd normalization
- * factor (dividing the target by a near-zero height). Real champions measure
- * >1u; this only trips on broken geometry.
- */
-const MIN_NATIVE_HEIGHT = 0.05;
 
 /**
  * One skeleton `instantiateModelsToScene` cloned for THIS view.
@@ -256,43 +243,6 @@ interface InstanceSkeleton {
  * `mesh.material`（見 modelTint.ts 的 MATERIAL OWNERSHIP 段），所以只能在閃光的
  * 那一刻現查，不能在 push 進 `flashMeshes` 的時候先算好。
  */
-/**
- * `getHierarchyBoundingVectors` predicate that skips meshes we turned OFF.
- *
- * Babylon's own implementation filters on "has boundingInfo && has vertices" —
- * it does NOT consult `isEnabled`. So without this, a `hiddenPrimitives` entry
- * would stop DRAWING the gore and still let it drive #150's height
- * normalization and #61's ground offset. `isEnabled(false)` deliberately checks
- * only the mesh's own flag: the ancestors (glbRoot → root) are mid-construction
- * here and their state is not what this question is about.
- */
-const ENABLED_ONLY = (m: AbstractMesh): boolean => m.isEnabled(false);
-
-/**
- * The glTF `mesh.primitives[i]` index a Babylon mesh came from, or -1.
- *
- * Babylon's glTF 2.0 loader gives a multi-primitive mesh one child per
- * primitive, named `${nodeName}_primitive${i}` (`GLTFLoader._loadMeshAsync`);
- * `ChampionView` then re-prefixes every cloned node with `${entityId}-`, which
- * leaves that suffix at the END of the string. A single-primitive mesh keeps
- * the plain node name and returns -1 — hiding a model's only primitive would be
- * "render nothing", which `hiddenPrimitives` is not for.
- *
- * This reads the name because the name is what Babylon actually produces; the
- * guard (`hiddenPrimitives.test.ts`) loads the REAL .glb through the REAL
- * loader rather than trusting this comment (CLAUDE.md 第三守則).
- */
-function gltfPrimitiveIndexOf(name: string): number {
-  const m = /_primitive(\d+)$/.exec(name);
-  return m ? Number(m[1]) : -1;
-}
-
-/** Declared hidden primitive indices as a lookup. Absent/empty ⇒ hide nothing. */
-function hiddenPrimitiveIndexSet(list: readonly number[] | undefined): ReadonlySet<number> {
-  return list && list.length > 0 ? new Set(list) : EMPTY_HIDDEN;
-}
-const EMPTY_HIDDEN: ReadonlySet<number> = new Set<number>();
-
 function drawnOpacityOf(mesh: AbstractMesh): number {
   const mat = mesh.material as { alpha?: number } | null;
   const matAlpha = typeof mat?.alpha === "number" ? mat.alpha : 1;
@@ -1743,21 +1693,17 @@ export class ChampionView {
         // 把 geoset 可見度動畫整個丟掉 —— 於是它變成永遠畫得出來的一片圖元。
         // 這裡不重寫 glb(那棵樹是 gitignore 的執行期資產,改一次要重抽+重推
         // 84MB),而是照文件宣告把那幾片關掉。
-        const hidden = hiddenPrimitiveIndexSet(doc.hiddenPrimitives);
-        for (const mesh of glbMeshes) {
-          mesh.isPickable = false;
-          if (hidden.size > 0 && hidden.has(gltfPrimitiveIndexOf(mesh.name))) {
-            mesh.setEnabled(false);
-            // ⚠️ 而且**不推進 `flashMeshes`**。受擊閃光走 Babylon 的
-            // OutlineRenderer,顏色與不透明度只讀 mesh 上的 `overlayColor`/
-            // `overlayAlpha`,材質的 alpha 與 mesh 的 visibility 一個都不看
-            // (見上面 `drawnOpacityOf` 的檔內註解 / GH#226 GH#227)。一片被
-            // `setEnabled(false)` 的網格如果留在 flashMeshes 裡,
-            // `applyDeathFade`/`applyVanish` 那幾條會直接寫 `m.visibility`,
-            // 把它重新變成一個「可見度 1 但 enabled=false」的曖昧狀態,而
-            // #220 的復活路徑會把整棵樹 setEnabled(true) —— 屍體就回來了。
-            continue;
-          }
+        //
+        // ⚠️ 被藏起來的那幾片**不推進 `flashMeshes`**,所以這裡讀的是
+        // `applyHiddenPrimitives` 回傳的「還畫得出來」那一份。受擊閃光走 Babylon 的
+        // OutlineRenderer,顏色與不透明度只讀 mesh 上的 `overlayColor`/`overlayAlpha`,
+        // 材質的 alpha 與 mesh 的 visibility 一個都不看(見 `drawnOpacityOf` 的檔內
+        // 註解 / GH#226 GH#227)。一片被 `setEnabled(false)` 的網格如果留在
+        // flashMeshes 裡,`applyDeathFade`/`applyVanish` 那幾條會直接寫
+        // `m.visibility`,把它變成「可見度 1 但 enabled=false」的曖昧狀態,而 #220
+        // 的復活路徑會把整棵樹 setEnabled(true) —— 屍體就回來了。
+        for (const mesh of glbMeshes) mesh.isPickable = false;
+        for (const mesh of applyHiddenPrimitives(glbMeshes, doc.hiddenPrimitives)) {
           this.flashMeshes.push(mesh); // .glb meshes flash via per-mesh overlay
         }
         // HEIGHT-NORMALIZE (task #150): scale the glb so its full silhouette
@@ -1783,11 +1729,9 @@ export class ChampionView {
         // 不同 —— 方塊人的輪廓就是身體(乘 usca),WC3 模型不是(乘身高比 ×
         // usca)。判斷讀的是真的送進 assets.load() 的那條路徑。
         const rel = isStandinBodyGlb(doc.glbPath) ? standin : relativeScale > 0 ? relativeScale : 1;
-        const baseScale =
-          Number.isFinite(nativeH) && nativeH > MIN_NATIVE_HEIGHT
-            ? TARGET_HEIGHT / nativeH
-            : doc.scale;
-        const finalScale = baseScale * rel;
+        // GH#368 —— the arithmetic moved to `./modelSizing` so 商店/英靈殿/選人/
+        // 補給站 compute the SAME number instead of four hand-copies of it.
+        const finalScale = normalizedModelScale(nativeH, doc.scale, rel);
         glbRoot.scaling.setAll(finalScale);
         // GROUND (task #61 "flying"/"sinking" fix): lift the model so its lowest
         // vertex sits on the arena floor (y=0). Imported rigs bake their feet at

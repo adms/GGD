@@ -152,15 +152,34 @@ export function emptyLayerDraft(vfxKey = ""): LayerDraft {
   return d;
 }
 
+/**
+ * 純數字的覆寫格 —— **推導**的，⛔ 不是手寫清單。
+ *
+ * ⚠️ 這裡本來是**兩份**逐字手打的名單（`layerDraftFrom` 一份、`layerToDoc` 一份），
+ * 而 2026-08-18 #366 加了 `facingDeg` / `pitchDeg` 之後兩份都沒被更新 ⇒
+ * schema 開著、`LAYER_FIELDS` 是推導的所以**後台真的畫得出那兩格**、操作者填了、
+ * 按存檔 —— 然後 `layerToDoc` 靜默把它丟掉。⛔ 沒有任何東西會紅
+ * （抓到它的是 `VfxSystem.layerKnobs.test.ts` 那條「schema 宣告的每一格都存得下去」）。
+ *
+ * ⭐ 這是 `batch1.py` 檔頭記過的**同一個**病：allowlist 會漂移。
+ *    所以現在它從 `LAYER_PARAM_FIELDS`（＝ schema）算出來，
+ *    下一個新欄位不必改這個檔。
+ * ⚠️ `tint` 例外：它在草稿裡是 `tintR`/`tintG`/`tintB` 三格，合成一個陣列，
+ *    所以下面單獨處理。
+ */
+const TINT_DRAFT_FIELDS = ["tintR", "tintG", "tintB"] as const;
+export const NUMERIC_LAYER_FIELDS: readonly string[] = [
+  "delayMs",
+  ...LAYER_PARAM_FIELDS.filter((f) => !(TINT_DRAFT_FIELDS as readonly string[]).includes(f)),
+];
+
 export function layerDraftFrom(layer: AbilityVfxLayer): LayerDraft {
   const d = emptyLayerDraft(layer.vfxKey);
   d["enabled"] = layer.enabled === undefined ? "" : layer.enabled ? "1" : "0";
   d["attachTo"] = layer.attachTo ?? "";
-  d["delayMs"] = numText(layer.delayMs);
-  d["w3xScale"] = numText(layer.w3xScale);
-  d["flyHeight"] = numText(layer.flyHeight);
-  d["alpha"] = numText(layer.alpha);
-  d["timeScale"] = numText(layer.timeScale);
+  for (const f of NUMERIC_LAYER_FIELDS) {
+    d[f] = numText((layer as unknown as Record<string, number | undefined>)[f]);
+  }
   d["tintR"] = numText(layer.tint?.[0]);
   d["tintG"] = numText(layer.tint?.[1]);
   d["tintB"] = numText(layer.tint?.[2]);
@@ -241,7 +260,7 @@ export function layerFromDraft(d: LayerDraft): AbilityVfxLayer | null {
     const t = (d[f] ?? "").trim();
     return t === "" ? undefined : Number(t);
   };
-  for (const f of ["delayMs", "w3xScale", "flyHeight", "alpha", "timeScale"]) {
+  for (const f of NUMERIC_LAYER_FIELDS) {
     const v = num(f);
     if (v !== undefined) out[f] = v;
   }

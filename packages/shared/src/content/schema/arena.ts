@@ -2,6 +2,7 @@
 import { z } from "zod";
 import { zId, zVec2 } from "./common";
 import { GROUND_STYLE_IDS, DEFAULT_GROUND_STYLE } from "./groundStyle";
+import { zArenaScenery } from "./arenaScenery";
 
 /**
  * ⚠️ GH#324 —— 這個 union 多了兩樣東西，兩樣都**向後相容**（既有 6 張場地照樣 parse）：
@@ -389,6 +390,13 @@ export const zArenaDoc = zArenaDef
      * 缺席 = 沒有背景（圓盤外維持 `Renderer` 的 clearColor 深藍黑）。
      */
     backdrop: zBackdrop.optional(),
+    /**
+     * ⭐ GH#362 —— 這張場地的**視覺身分**：配色 · 打光（會動的）· 裝飾散佈。
+     * 同樣**只在 Doc 上**、同樣的理由（`arenaDefFromDoc()` 不看它 ⇒ 顏色與燈
+     * 在型別上不可能變成碰撞）。缺席 = 出貨前那一組寫死的燈與顏色，
+     * 逐像素不變（見 `arenaScenery.ts` 的 `DEFAULT_SCENERY_*`）。
+     */
+    scenery: zArenaScenery.optional(),
   })
   .strict();
 

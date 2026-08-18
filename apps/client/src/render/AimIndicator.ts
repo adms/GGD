@@ -3,50 +3,71 @@
  *
  *   • DRAG-AIM (touch): a thin ground line for skillshots/dashes (and targeted
  *     hints) or a disc at the drag-projected point for ground casts.
- *   • HOLD-PREVIEW (task #152; touch finger-hold OR desktop mouse-hold): a dashed
- *     cast-RANGE ring plus a dashed AoE disc centred on the caster, so a player
+ *   • HOLD-PREVIEW (task #152; touch finger-hold, desktop mouse-hold/HOVER, a
+ *     held Q/W/E/R/F/D key, or a pad face button — GH#367): the 技能範圍指引.
+ *     A cast-RANGE circle plus an AoE circle centred on the caster, so a player
  *     holding a button sees exactly how far it reaches and how big it lands.
+ *
+ * ⭐ THE HOLD-PREVIEW LOOK IS OWNER-SPECIFIED (GH#367, 2026-08-18):
+ * > 「**特殊顏色框框 + 顏色半透明填滿**」
+ * ⇒ each circle is TWO meshes: a translucent filled disc + a solid coloured rim
+ * torus. It used to be a dashed outline and nothing else — an outline alone
+ * reads as "a line on the floor", and the thing the player actually has to
+ * judge is the AREA (am I inside it?), which only a fill answers at a glance.
+ * ⛔ Every alpha / colour / thickness here comes from `ui/abilityRangeGuide`,
+ * NOT from literals in this file (第一守則: they are 決策點, one 住處).
  *
  * Driven once per frame by the GameApp from a plain `AimIndicatorState` (the
  * touch `touchFrame.indicator`, else a held-slot preview it resolves). Meshes are
  * created lazily and simply toggled/transformed, never re-allocated per frame —
- * the dashed rings rebuild ONLY when the previewed radius actually changes (a new
- * ability), so a steady hold allocates nothing.
+ * the FILL is a unit disc that only ever gets scaled, and the rim torus rebuilds
+ * ONLY when the previewed radius actually changes (a new ability), so a steady
+ * hold allocates nothing.
  */
 import type { Scene } from "@babylonjs/core/scene";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import type { Mesh } from "@babylonjs/core/Meshes/mesh";
-import { CreateDashedLines } from "@babylonjs/core/Meshes/Builders/linesBuilder";
-import type { LinesMesh } from "@babylonjs/core/Meshes/linesMesh";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
-import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import type { AimIndicatorState } from "../input/TouchInput";
+import { ABILITY_RANGE_GUIDE, type Rgb01 } from "../ui/abilityRangeGuide";
 import { createGroundQuad, placeGroundQuad } from "./groundShapes";
 
 const LINE_WIDTH = 0.4;
 const Y = 0.07; // just above the ground plane (telegraphs sit at 0.05/0.06)
-/** world-space dash pitch — one dash+gap cell every ~this many units */
-const DASH_PITCH = 0.7;
-const RANGE_COLOR = new Color3(0.45, 0.75, 1.0); // blue — cast reach
-const AOE_COLOR = new Color3(1.0, 0.62, 0.23); // amber — where it lands
+/**
+ * Stacking order inside the preview, all within 2 cm so nothing ever floats:
+ * range fill → range rim → AoE fill → AoE rim. The AoE is drawn ON TOP because
+ * it is the smaller circle and the one being aimed; painting the wide range
+ * fill over it would wash the amber out to nothing.
+ */
+const Y_RANGE_FILL = Y;
+const Y_RANGE_RIM = Y + 0.005;
+const Y_AOE_FILL = Y + 0.01;
+const Y_AOE_RIM = Y + 0.015;
+
+/** One circle of the guide: a scaled unit disc + a rim rebuilt on radius change. */
+interface GuideCircle {
+  fill: Mesh | null;
+  rim: Mesh | null;
+  /** radius the current rim mesh was BUILT at (-1 = none yet) */
+  rimR: number;
+}
+
+const emptyCircle = (): GuideCircle => ({ fill: null, rim: null, rimR: -1 });
 
 export class AimIndicator {
   private line: Mesh | null = null;
   private disc: Mesh | null = null;
-  // hold-preview dashed rings (task #152); cached radius so a steady hold on one
-  // ability never rebuilds geometry — only a change of previewed size does.
-  private ring: LinesMesh | null = null;
-  private ringR = -1;
-  private aoe: LinesMesh | null = null;
-  private aoeR = -1;
+  // hold-preview circles (task #152 / GH#367)
+  private readonly rangeCircle: GuideCircle = emptyCircle();
+  private readonly aoeCircle: GuideCircle = emptyCircle();
 
   constructor(private readonly scene: Scene) {}
 
   update(state: AimIndicatorState): void {
     const isLine = state?.kind === "line";
     const isDisc = state?.kind === "disc";
-    const isRange = state?.kind === "range";
 
     if (state?.kind === "line") {
       const line = (this.line ??= this.makeLine());
@@ -66,43 +87,47 @@ export class AimIndicator {
       this.disc.setEnabled(isDisc);
     }
 
-    // hold-preview: dashed cast-range ring + dashed AoE disc, both centred on the
-    // caster. `range`/`radius` arrive already scaled by the combat-env factor.
-    if (isRange && state.range > 0.1) {
-      this.ring = this.dashedRing(this.ring, this.ringR, state.range, RANGE_COLOR, "aim-range");
-      this.ringR = state.range;
-      this.ring.setEnabled(true);
-      this.ring.position.set(state.x, Y, state.z);
-    } else if (this.ring) {
-      this.ring.setEnabled(false);
-    }
+    // 技能範圍指引 (GH#367): filled + rimmed cast-range circle and AoE circle,
+    // both centred on the caster. `range`/`radius` arrive ALREADY scaled by the
+    // live combat-env `abilityRange` factor (GameApp.resolveHoldPreview, #125/#136)
+    // — ⛔ this class must never re-derive a reach of its own.
+    const guide = state?.kind === "range" ? state : null;
+    const at = { x: guide?.x ?? 0, z: guide?.z ?? 0 };
+    const rangeR = guide && guide.range > 0.1 ? guide.range : null;
+    const aoeR = guide && guide.radius !== null && guide.radius > 0.1 ? guide.radius : null;
 
-    if (isRange && state.radius !== null && state.radius > 0.1) {
-      this.aoe = this.dashedRing(this.aoe, this.aoeR, state.radius, AOE_COLOR, "aim-aoe");
-      this.aoeR = state.radius;
-      this.aoe.setEnabled(true);
-      this.aoe.position.set(state.x, Y, state.z);
-    } else if (this.aoe) {
-      this.aoe.setEnabled(false);
-    }
+    this.paintCircle(this.rangeCircle, "aim-range", rangeR, at, {
+      rgb: ABILITY_RANGE_GUIDE.rangeRgb,
+      fillAlpha: ABILITY_RANGE_GUIDE.rangeFillAlpha,
+      yFill: Y_RANGE_FILL,
+      yRim: Y_RANGE_RIM,
+    });
+    this.paintCircle(this.aoeCircle, "aim-aoe", aoeR, at, {
+      rgb: ABILITY_RANGE_GUIDE.aoeRgb,
+      fillAlpha: ABILITY_RANGE_GUIDE.aoeFillAlpha,
+      yFill: Y_AOE_FILL,
+      yRim: Y_AOE_RIM,
+    });
   }
 
   dispose(): void {
     this.line?.dispose(false, true);
     this.disc?.dispose(false, true);
-    this.ring?.dispose(false, true);
-    this.aoe?.dispose(false, true);
     this.line = null;
     this.disc = null;
-    this.ring = null;
-    this.aoe = null;
-    this.ringR = -1;
-    this.aoeR = -1;
+    for (const c of [this.rangeCircle, this.aoeCircle]) {
+      c.fill?.dispose(false, true);
+      c.rim?.dispose(false, true);
+      c.fill = null;
+      c.rim = null;
+      c.rimR = -1;
+    }
   }
 
+  /** Drag-aim (touch) line/disc — same blue as the range guide, on purpose. */
   private material(name: string): StandardMaterial {
     const mat = new StandardMaterial(name, this.scene);
-    mat.emissiveColor = new Color3(0.45, 0.75, 1.0);
+    mat.emissiveColor = new Color3(...ABILITY_RANGE_GUIDE.rangeRgb);
     mat.disableLighting = true;
     mat.alpha = 0.45;
     return mat;
@@ -125,31 +150,76 @@ export class AimIndicator {
   }
 
   /**
-   * A flat dashed circle at `radius` (world units, in the XZ plane). Reuses the
-   * existing mesh when the radius is unchanged; rebuilds it (disposing the old)
-   * only when a different-sized ability is previewed, so a steady hold is
-   * allocation-free. Dash count tracks the circumference → constant dash density.
+   * Draw (or hide) one circle of the guide — 「顏色半透明填滿」 + 「特殊顏色框框」.
+   * `radius === null` hides it; anything else places both meshes at (x, z).
+   *
+   * The FILL is a unit disc that is only ever re-SCALED, so changing ability
+   * costs nothing. The RIM is rebuilt when the radius changes because its
+   * thickness is an ABSOLUTE world width: scaling one torus would make a
+   * long-range skill's border as fat as a small skill's whole AoE.
    */
-  private dashedRing(
-    existing: LinesMesh | null,
-    cachedR: number,
-    radius: number,
-    color: Color3,
+  private paintCircle(
+    c: GuideCircle,
     name: string,
-  ): LinesMesh {
-    if (existing && Math.abs(cachedR - radius) < 0.05) return existing;
-    existing?.dispose(false, true);
-    const seg = 96;
-    const pts: Vector3[] = [];
-    for (let i = 0; i <= seg; i++) {
-      const a = (i / seg) * Math.PI * 2;
-      pts.push(new Vector3(Math.cos(a) * radius, 0, Math.sin(a) * radius));
+    radius: number | null,
+    at: { x: number; z: number },
+    look: { rgb: Rgb01; fillAlpha: number; yFill: number; yRim: number },
+  ): void {
+    if (radius === null) {
+      c.fill?.setEnabled(false);
+      c.rim?.setEnabled(false);
+      return;
     }
-    const dashNb = Math.max(24, Math.round((2 * Math.PI * radius) / DASH_PITCH));
-    const mesh = CreateDashedLines(name, { points: pts, dashSize: 1, gapSize: 1, dashNb }, this.scene);
-    mesh.color = color;
-    mesh.alpha = 0.85;
+    const fill = (c.fill ??= this.makeGuideFill(`${name}-fill`, look.rgb, look.fillAlpha));
+    fill.setEnabled(true);
+    fill.scaling.set(radius, radius, 1);
+    fill.position.set(at.x, look.yFill, at.z);
+
+    if (!c.rim || Math.abs(c.rimR - radius) >= 0.05) {
+      c.rim?.dispose(false, true);
+      c.rim = this.makeGuideRim(`${name}-rim`, radius, look.rgb);
+      c.rimR = radius;
+    }
+    c.rim.setEnabled(true);
+    c.rim.position.set(at.x, look.yRim, at.z);
+  }
+
+  /** Unit disc lying flat in XZ — the 半透明填滿, scaled to the live radius. */
+  private makeGuideFill(name: string, rgb: Rgb01, alpha: number): Mesh {
+    const mesh = MeshBuilder.CreateDisc(name, { radius: 1, tessellation: 64 }, this.scene);
+    mesh.rotation.x = Math.PI / 2;
     mesh.isPickable = false;
+    const mat = new StandardMaterial(`${name}-mat`, this.scene);
+    mat.diffuseColor = new Color3(0, 0, 0);
+    mat.specularColor = new Color3(0, 0, 0);
+    mat.emissiveColor = new Color3(...rgb);
+    mat.disableLighting = true;
+    mat.backFaceCulling = false;
+    mat.alpha = alpha;
+    mesh.material = mat;
+    return mesh;
+  }
+
+  /** Flat torus on XZ — the 「特殊顏色框框」 at constant world thickness. */
+  private makeGuideRim(name: string, radius: number, rgb: Rgb01): Mesh {
+    const mesh = MeshBuilder.CreateTorus(
+      name,
+      {
+        diameter: radius * 2,
+        thickness: ABILITY_RANGE_GUIDE.rimThickness,
+        tessellation: 64,
+      },
+      this.scene,
+    );
+    mesh.isPickable = false;
+    const mat = new StandardMaterial(`${name}-mat`, this.scene);
+    mat.diffuseColor = new Color3(0, 0, 0);
+    mat.specularColor = new Color3(0, 0, 0);
+    mat.emissiveColor = new Color3(...rgb);
+    mat.disableLighting = true;
+    mat.backFaceCulling = false;
+    mat.alpha = ABILITY_RANGE_GUIDE.rimAlpha;
+    mesh.material = mat;
     return mesh;
   }
 }

@@ -5,7 +5,7 @@
  * green if the sign is inverted, if the width is 100× too small to hear, or if
  * the whole field is anchored to the wrong entity. Every assertion below pins a
  * SIGN and a MAGNITUDE against a hand-computed number from the real camera
- * geometry (CAMERA_PITCH_RAD = 68°, yaw ≡ 0, DOLLY_DEFAULT = DOLLY_MIN = 10,
+ * geometry (CAMERA_PITCH_RAD = 68°, yaw ≡ 0, closest zoom DOLLY_MIN = 10,
  * arena zones at x = ±40 with boundaryRadius 24).
  */
 import { describe, it, expect } from "vitest";

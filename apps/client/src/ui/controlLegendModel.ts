@@ -387,6 +387,13 @@ export const KEYBOARD_ORDER_BINDINGS: readonly DeclaredBinding[] = [
   { id: "KeyY", control: "Y", label: "鏡頭跟隨鎖定/解除", source: 'case "KeyY"' },
   { id: "Space", control: "空白鍵", label: "同上（舊鍵位保留）", source: 'case "Space"' },
   { id: "Arrows", control: "方向鍵", label: "平移鏡頭", source: '"ArrowUp"' },
+  // 技能範圍指引 (GH#367). ⚠️ 這一列存在的理由跟 KeyG 那一列一樣：**按住**是一個
+  // 沒有任何畫面提示的手勢。觸控那一份 legend 從 #152 起就列著「長按技能鈕」，
+  // 而鍵盤玩家在 #367 之前根本沒有這個功能 —— 現在有了，就不可以只有觸控看得到。
+  // ⛔ 滑鼠 hover 那一半刻意不在這裡：它接在 `AbilityBar.tsx` 上，而這張表的
+  // `source` 是拿去掃 InputCapture.ts 的（見 KEYBOARD_SOURCE）；何況 hover 是
+  // 玩家自己會撞到的手勢，不是需要被告知的鍵位。
+  { id: "hold-skill", control: "按住技能鍵", label: "顯示施法範圍指引", source: "setHeldAbility" },
 ];
 
 /** Mouse bindings, proved by the listener InputCapture registers. */

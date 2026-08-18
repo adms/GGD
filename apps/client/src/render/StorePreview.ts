@@ -43,6 +43,8 @@ import { ClipAnimator, type ClipState } from "./ClipAnimator";
 import { FramePacer, menuFpsCap } from "./frameCap";
 import { isTouchDevice, readTouchEnv } from "../input/mobileDetect";
 import { glbYawOffset } from "./views/glbFacing";
+import { TARGET_HEIGHT, normalizedModelScale } from "./views/modelSizing";
+import { ENABLED_ONLY, applyHiddenPrimitives } from "./views/hiddenPrimitives";
 import { championTintForId } from "./views/championTint";
 import { applyModelTint, releaseModelTint } from "./views/modelTint";
 
@@ -65,15 +67,27 @@ export interface PreviewFraming {
  * Frame a model from its world-space bounding box: ground it (feet → y=0) and
  * pick an orbit radius that fits its largest on-screen extent in the camera's
  * vertical FOV, with headroom. Pure so it is unit-testable without an Engine.
+ *
+ * ⚠️ `reference` (GH#368) IS THE HALF THAT MAKES SIZE VISIBLE. Framing purely
+ * to the model's own extent is a second, camera-side normalization: it makes
+ * every champion fill the box identically, so 小叮噹 at 1.17u and 初號機 at
+ * 2.79u come out the same on screen and the whole `relativeScale` table becomes
+ * invisible in three of the four scenes. Framing to `max(extent, reference)`
+ * instead means a champion SMALLER than the common height reads smaller (which
+ * is the owner's actual complaint), while one that is bigger still gets the
+ * camera pulled back rather than cropped — a cropped head is the #129 bug
+ * coming back, and that trade is why this is a floor and not a fixed radius.
  */
 export function computePreviewFraming(
   min: { x: number; y: number; z: number },
   max: { x: number; y: number; z: number },
   fov: number,
+  reference: number = TARGET_HEIGHT,
 ): PreviewFraming {
   const height = Math.max(max.y - min.y, 0);
   const width = Math.max(max.x - min.x, max.z - min.z, 0);
-  const extent = Math.max(height, width, 0.5);
+  const ref = Number.isFinite(reference) && reference > 0 ? reference : TARGET_HEIGHT;
+  const extent = Math.max(height, width, ref);
   // fit the extent in the vertical FOV; 1.5 = breathing room around the figure
   const safeFov = fov > 0.05 ? fov : 0.8;
   const radius = (extent * 0.5) / Math.tan(safeFov / 2) * 1.5;
@@ -239,10 +253,17 @@ export class StorePreview {
    *   animation (owner 2026-08-03「回合勝利出現的 3d model 是勝利角色 但現在不是」).
    *   A champion whose .glb has no matching clip falls back to idle AND warns
    *   once from `ClipAnimator.start` — loudly, never silently.
+   * @param opts.relativeScale the champion's INTENTIONAL size multiplier from
+   *   `content/models/_standin-overrides.json` (GH#368). Default 1 = the common
+   *   normalized height. ⚠️ The doc's raw `scale` is NOT this number and never
+   *   was: for an overlay doc it is the hard-coded `OVERLAY_MODEL_SCALE = 1`,
+   *   and the six .glbs that escaped the importer's hero-height guard are baked
+   *   at 6.67u–21.83u native. Feeding it into `scaling` (which this method did
+   *   until GH#368) is what put a 5.7× 小叮噹 on the shop podium.
    */
   async show(
     doc: ModelDoc,
-    opts: { championId?: string | null; clip?: ClipState } = {},
+    opts: { championId?: string | null; clip?: ClipState; relativeScale?: number } = {},
   ): Promise<void> {
     const token = ++this.showToken;
     this.clearModel();
@@ -250,9 +271,24 @@ export class StorePreview {
     if (!container || this.disposed || token !== this.showToken) return;
     const inst = container.instantiateModelsToScene((n) => `store-${n}`, false, { doNotInstantiate: true });
     const root = new TransformNode("store-model", this.scene);
-    root.scaling.setAll(doc.scale);
+    // Measure at the NATIVE scale first, exactly as ChampionView does: the
+    // normalization needs the glb's own height before any scaling is applied.
+    // Yaw is about Y, so applying it here does not disturb the vertical measure.
+    root.scaling.setAll(1);
     root.rotation.y = glbYawOffset(doc);
     for (const node of inst.rootNodes) node.parent = root;
+    // 屍體/血泥幾何 —— `model@1.hiddenPrimitives` (owner 2026-08-02「初號機跟拳
+    // 四郎一樣 3d model 連著屍體一起」). ⚠️ GH#368: the arena hid these and this
+    // stage did not, so 16 overlay champions showed a corpse sheet lying at
+    // their feet — AND that sheet went into the bounding box below, which both
+    // floated them off the podium and normalized the WRONG height. Every
+    // measurement from here down therefore uses `ENABLED_ONLY`.
+    applyHiddenPrimitives(root.getChildMeshes(false), doc.hiddenPrimitives);
+    root.computeWorldMatrix(true);
+    const native = root.getHierarchyBoundingVectors(true, ENABLED_ONLY);
+    root.scaling.setAll(
+      normalizedModelScale(native.max.y - native.min.y, doc.scale, opts.relativeScale),
+    );
     this.modelRoot = root;
     this.frameToModel(root);
     // AFTER the meshes are parented (applyModelTint walks `root`'s children)
@@ -277,7 +313,9 @@ export class StorePreview {
    */
   private frameToModel(root: TransformNode): void {
     root.computeWorldMatrix(true);
-    const { min, max } = root.getHierarchyBoundingVectors(true);
+    // GH#368 —— ENABLED_ONLY, so a hidden gore sheet cannot decide where the
+    // feet are (Babylon's bounding walk ignores `isEnabled` on its own).
+    const { min, max } = root.getHierarchyBoundingVectors(true, ENABLED_ONLY);
     // no meshes (bone-only dummy) → nothing to frame; leave the default camera
     if (!Number.isFinite(min.x) || !Number.isFinite(max.x) || max.x < min.x) return;
 

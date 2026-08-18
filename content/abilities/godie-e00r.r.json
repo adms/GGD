@@ -45,5 +45,11 @@
   "icon": "assets/icons/abilities/godie-e00r.r.webp",
   "vfxKey": "fx.prim.ki.beam-lg",
   "sfxKey": "wc3.markofchaos",
-  "castTimeSec": 3
+  "castTimeSec": 3,
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.lightning.beam-flat",
+      "attachTo": "point"
+    }
+  ]
 }

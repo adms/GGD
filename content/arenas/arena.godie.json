@@ -876,5 +876,49 @@
       "scale": 0.111
     }
   ],
-  "groundStyle": "dirt"
+  "groundStyle": "dirt",
+  "scenery": {
+    "palette": {
+      "floor": "#e8c9b4",
+      "wall": "#b08f8f",
+      "sky": "#ffd8e6",
+      "ground": "#3a2622",
+      "void": "#150a10"
+    },
+    "lighting": {
+      "keyColor": "#ffd0b0",
+      "keyIntensity": 0.85,
+      "keyYawDeg": 290,
+      "keyPitchDeg": 40,
+      "fillIntensity": 0.7,
+      "wave": "breathe",
+      "periodSec": 18,
+      "intensityAmp": 0.14,
+      "yawSweepDeg": 8,
+      "peakColor": "#ffe2c6"
+    },
+    "props": [
+      {
+        "model": "assets/models/imported/japanesecherry.glb",
+        "count": 14,
+        "bandFrom": 0.9,
+        "bandTo": 0.99,
+        "scaleMin": 0.102,
+        "scaleMax": 0.128,
+        "facing": "fixed",
+        "rotQuarter": 3,
+        "seed": 7
+      },
+      {
+        "model": "assets/models/hex/rock.glb",
+        "count": 6,
+        "bandFrom": 0.85,
+        "bandTo": 0.94,
+        "scaleMin": 1.2,
+        "scaleMax": 1.4,
+        "facing": "random",
+        "seed": 29
+      }
+    ]
+  }
 }

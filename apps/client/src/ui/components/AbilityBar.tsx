@@ -60,6 +60,7 @@ import { useHud } from "../../net/RoomStore";
 import { frameBus } from "../../frameBus";
 import { hudActions } from "../actions";
 import { setHeldAbility } from "../abilityHold";
+import { hoverGuideEnter, hoverGuideLeave, pressGuide } from "../abilityRangeGuide";
 import { abilityActivationCue } from "../abilityCue";
 import { prefersReducedMotion } from "../buttonSfx";
 import { exSlotView } from "../exSlot";
@@ -110,6 +111,14 @@ function pressVisualClear(el: HTMLElement): void {
  * onto the ui/abilityHold seam; release / leaving the tile clears it. Covers
  * mouse via pointer events; the touch bar wires the same seam with touch events.
  *
+ * GH#367 adds the HOVER half the owner asked for by name (「按著技能按鈕或
+ * hover 時」). Hover is a **"aim"-intent** hold: the floor range guide appears,
+ * the top-of-screen description banner does NOT (the tile's own anchored
+ * Tooltip is already showing that text — see `HoldIntent`). A press upgrades to
+ * "full"; the release goes back DOWN to "aim" rather than to null, because the
+ * cursor is by definition still on the tile at pointer-up and yanking the guide
+ * on mouse-up would make the button feel like it broke.
+ *
  * The press ALSO gives button feedback the sim cast never did on desktop: a
  * click cue (abilityCue — de-duped so it can't double with the keyboard
  * shortcut) plus a scale/flash press animation. The cue options tune the sound:
@@ -123,7 +132,11 @@ function holdProps(
   pressable = true,
 ): React.DOMAttributes<HTMLDivElement> {
   return {
+    onPointerEnter: () => hoverGuideEnter(slot),
     onPointerDown: (e) => {
+      // a real press outranks the pending hover timer — drop it so it cannot
+      // fire later and DOWNGRADE this full hold back to an aim-only one
+      pressGuide(slot);
       setHeldAbility(slot);
       abilityActivationCue(slot, cue);
       // ⭐ owner 2026-08-13：「**被動技的按鈕應該不能被按下**」。
@@ -132,15 +145,16 @@ function holdProps(
       if (pressable) pressVisualDown(e.currentTarget);
     },
     onPointerUp: (e) => {
-      setHeldAbility(null);
+      // still hovering → keep the RANGE guide, close the description banner
+      setHeldAbility(slot, "aim");
       pressVisualClear(e.currentTarget);
     },
     onPointerLeave: (e) => {
-      setHeldAbility(null);
+      hoverGuideLeave(slot);
       pressVisualClear(e.currentTarget);
     },
     onPointerCancel: (e) => {
-      setHeldAbility(null);
+      hoverGuideLeave(slot);
       pressVisualClear(e.currentTarget);
     },
   };

@@ -4,6 +4,58 @@
   "name": "希干希納",
   "template": "DOUBLE_LOOP",
   "groundStyle": "dirt",
+  "scenery": {
+    "palette": {
+      "floor": "#c9b79a",
+      "wall": "#8f8272",
+      "sky": "#cdd6e0",
+      "ground": "#2e2820",
+      "void": "#0d1014"
+    },
+    "lighting": {
+      "keyColor": "#e8e4d8",
+      "keyIntensity": 0.78,
+      "keyYawDeg": 300,
+      "keyPitchDeg": 52,
+      "fillIntensity": 0.72,
+      "wave": "sweep",
+      "periodSec": 26,
+      "intensityAmp": 0.14,
+      "yawSweepDeg": 18
+    },
+    "props": [
+      {
+        "model": "assets/models/props/crates_stacked.glb",
+        "count": 10,
+        "bandFrom": 0.88,
+        "bandTo": 0.97,
+        "scaleMin": 1.0,
+        "scaleMax": 1.1,
+        "facing": "random",
+        "seed": 6
+      },
+      {
+        "model": "assets/models/props/barrel_small.glb",
+        "count": 8,
+        "bandFrom": 0.9,
+        "bandTo": 0.98,
+        "scaleMin": 1.1,
+        "scaleMax": 1.2,
+        "facing": "random",
+        "seed": 37
+      },
+      {
+        "model": "assets/models/hex/rock.glb",
+        "count": 6,
+        "bandFrom": 0.85,
+        "bandTo": 0.95,
+        "scaleMin": 1.2,
+        "scaleMax": 1.4,
+        "facing": "random",
+        "seed": 55
+      }
+    ]
+  },
   "grid": {
     "cols": 24,
     "rows": 18,

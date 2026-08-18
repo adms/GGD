@@ -150,7 +150,7 @@ export interface WinnerPreview {
    */
   show(
     doc: ModelDoc,
-    opts?: { championId?: string | null; clip?: ClipState },
+    opts?: { championId?: string | null; clip?: ClipState; relativeScale?: number },
   ): Promise<void> | void;
   dispose(): void;
 }
@@ -181,6 +181,12 @@ export interface WinnerEntry {
   doc: ModelDoc;
   /** carries the w3x vertex tint through to the previewer (task #263) */
   championId?: string;
+  /**
+   * GH#368 — this champion's INTENTIONAL size multiplier on top of height
+   * normalization. Absent ⇒ 1, the common height. It rides the entry rather
+   * than being looked up in the stage because this class reads no content.
+   */
+  relativeScale?: number;
   /**
    * 這一位的存活名次(1-based)與皇冠階級 (GH#257)。
    *
@@ -530,6 +536,7 @@ export class RoundWinnerStage {
       void this.previews[i]?.show(m.doc, {
         championId: m.championId ?? null,
         clip: m.clip ?? "idle",
+        relativeScale: m.relativeScale,
       });
       this.paintCrown(this.crowns[i] ?? null, m);
     });
@@ -787,6 +794,12 @@ export function planRoundWinnerShow(
   docFor: (championId: string) => ModelDoc | null,
   authority: RoundWinnerAuthority,
   cfg: VictoryPodiumPolicy = victoryPodiumPolicy(),
+  /**
+   * GH#368 — the per-champion size multiplier, so the card shows the size the
+   * player just fought at. Optional and defaulting to 1 (= the common
+   * normalized height), which is exactly what every caller got before.
+   */
+  relFor: (championId: string) => number = () => 1,
 ): RoundWinnerShowPlan | null {
   // GH#265 —— 先把伺服器的逐區答案壓進這一份投影,再交給既有的選擇器。
   // 底下三個呼叫(`roundVictoryPodium` / `roundWinnerTeamChampions` /
@@ -805,6 +818,7 @@ export function planRoundWinnerShow(
         place: p.place,
         medal: p.medal,
         clip: podiumClipFor(p.medal, cfg),
+        relativeScale: relFor(p.championId),
       });
     }
   }
@@ -812,7 +826,7 @@ export function planRoundWinnerShow(
     const doc = docFor(id);
     // 退回路徑沒有名次,所以沒有冠、也沒有慶祝 —— 給第一位 `celebrate` 會是在
     // 一個「大家平手」的排序上宣稱誰贏了。
-    if (doc) members.push({ doc, championId: id, clip: "idle" });
+    if (doc) members.push({ doc, championId: id, clip: "idle", relativeScale: relFor(id) });
   }
   if (members.length === 0) return null;
 

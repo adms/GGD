@@ -23,6 +23,7 @@
 import { z } from "zod";
 import { zId } from "./common";
 import { zBackdrop } from "./arena";
+import { zArenaScenery } from "./arenaScenery";
 import { GROUND_STYLE_IDS, GROUND_STYLE_LABELS, DEFAULT_GROUND_STYLE } from "./groundStyle";
 import {
   GIMMICKS_PER_MAP_MAX,
@@ -247,6 +248,18 @@ const zMapBase = z
      * ⚠️ 它**不吃 tile 座標**：背景是繞著整個場地的環，跟格線無關。
      */
     backdrop: zBackdrop.optional(),
+
+    /**
+     * ⭐ GH#362 —— 這張圖的**視覺身分**：配色 · 會動的打光 · 裝飾散佈規則。
+     *
+     * ⚠️ 它和 `backgroundProps` 是**兩件事**：那個是逐格手擺的地標（作者知道
+     * 「這一格要放一座塔」），這個是**規則**（「沿著 0.9R 擺 18 根柱子」）。
+     * 出貨的 `arena.godie` 有 50 列逐字重複的櫻花樹，那正是這一格要取代的東西。
+     *
+     * ⛔ 省略 = 出貨前那一組寫死的燈與顏色（`arenaScenery.ts` 的 `DEFAULT_SCENERY_*`），
+     * 舊圖逐像素不變。`compileMap()` 逐字帶過去，⛔ 不加工。
+     */
+    scenery: zArenaScenery.optional(),
   })
   .strict();
 

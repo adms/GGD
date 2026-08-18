@@ -40,8 +40,7 @@
  */
 import type { SimWorld } from "../SimWorld";
 import type { EntityId } from "../../ids";
-import { distSq } from "../math/vec2";
-import { fireRingIsSafe, fireRingRadius, fireRingRatePerSec } from "../fireRing";
+import { fireRingSafeAt, fireRingRadius, fireRingRatePerSec } from "../fireRing";
 import { summonBurnsInFireRing } from "../summonRules";
 import { applyEnvironmentalBurn } from "../combat/environmentalBurn";
 
@@ -96,7 +95,14 @@ export function fireRingSystem(world: SimWorld): void {
     const radius = fireRingRadius(rules, ticksSinceStart, zoneDef.boundaryRadius);
     // WHOLE BODY inside = safe. At the closed radius `radius - t.radius < 0`,
     // so this is false for every champion at every position.
-    if (fireRingIsSafe(radius, t.radius, distSq(t.pos, zoneDef.center))) return;
+    //
+    // ⭐ GH#364 —— 這一行以前是圓盤專用的 `fireRingIsSafe`。GH#324 的
+    // 「矩形場地的火圈內縮成矩形」只落在 `fireRingBurnMobs`（殭屍）身上，
+    // 所以 8 張 rect 出貨場地上**玩家**還在被一個外接圓判死：房間的四個角
+    // 距中心正好等於 `boundaryRadius`，而點燃那一刻的安全半徑是
+    // `boundaryRadius − 0.6` ⇒ 站在角落的人第一格就開始燒，身旁的殭屍卻沒事。
+    // `fireRingSafeAt` 是**唯一**那份幾何（圓盤那一支逐位元不變）。
+    if (fireRingSafeAt(zoneDef, t.pos, t.radius, radius)) return;
     const dmg = hp.maxHp * ratePerSec * dt;
     if (dmg <= 0) return;
     // GH#287 —— ⛔ NOT `hp.hp -= dmg` any more. That bare write bypassed EVERY

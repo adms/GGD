@@ -91,5 +91,10 @@
     "enabled": true,
     "maxLayers": 4,
     "alphaScale": 1
+  },
+  "scenery": {
+    "enabled": true,
+    "maxPropsPerZone": 40,
+    "animateLights": true
   }
 }

@@ -208,6 +208,32 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why: "GH#355 [EX∅ 根源] 討伐叉把「這一圈的強度隨範圍內人數變化」做成 `zAuraDef` 的一格，而 `zAuraDef` **同時**被 `item@1.auras[]` 與 `ability@1.passive.ranks[].auras[]` 用 —— ⛔ 掛在圈上不掛在 `zStatModifier` 上是刻意的（後者會同時開放給沒有「範圍」概念的四個授權面）。道具那一面已經有採用者（sasumata），天生技靈氣那一面還沒有。⛔ 這不是機制沒接線：`auraSystem` PASS 1 不分來源，兩面走同一段程式。**到期**：任何一支「隊友越多光環越強」的天生技填了它。",
   },
 
+  // ── 特效方位（GH#366 / #377）───────────────────────────────────────────
+  // ⭐ 這一族**只豁免一半**，而那一半是刻意的。`orient` 三格裡：
+  //    · `swirlDegPerSec` → 7 份 tornado 文件在用（龍捲風的旋轉）
+  //    · `pitchDeg`       → `fx.prim.{holy,lightning}.beam-flat` 在用
+  //                         （owner 2026-08-18 點名的「橫放的柱狀砲」），
+  //                         layer 那一面則是 15-01 雷神槍 / 45-03 千鳥
+  //    · `yawDeg`         → 下面這兩列。⛔ 它**不能**被靜態填。
+  "field:vfx#vfx@1.orient.yawDeg": {
+    status: "landing",
+    since: "2026-08-18",
+    why:
+      "⛔ 這一格今天填不得，而那**不是**機制沒接線 —— `apps/client/src/vfx/orient.ts` 的約定是 `R = Ry(yawDeg) · Rx(90° − pitchDeg)`，其中 **`yawDeg` 是世界座標方位角**，⛔ 不是相對施法者朝向。所以靜態寫一個值，意思是「這一招**永遠**朝世界的那個方向噴，不管玩家瞄哪裡」—— 那不是把功能做完，是做出一個**會發生但發生錯方向**的效果（第一·五守則的鏡像）。真正缺的是**每次施法的動態瞄準**（caster→target 折進 `artParams`），GH#377，盤點排第 1、擋住 129 支（beam 47 / slash 41 / bolt 11 / dash 6 / tornado 6）。**到期**：#377 落地，這一列會被 STALE 那半邊叫，刪掉即可。⛔ 三十天後若仍是 0，正確處置是做 #377，不是延長豁免。",
+  },
+  "field:abilities.vfxLayers[].facingDeg": {
+    status: "landing",
+    since: "2026-08-18",
+    why:
+      "同上（技能圖層那一面，`artParams` 把它折進 `doc.orient.yawDeg` 走同一條路）。⚠️ 對照組就在隔壁：**同一批**加進來的 `abilities.vfxLayers[].pitchDeg` **沒有**豁免，因為仰角是一個真的靜態性質（「這一招的柱子是橫躺的」），15-01 雷神槍與 45-03 千鳥兩支已經在用。兩格一起加、只有一格能填 —— 那個差別本身就是這條豁免的理由。",
+  },
+
+  // ── 場地場景特色（GH#362）─────────────────────────────────────────────
+  "enum:arenas.scenery.lighting.wave=none": {
+    status: "default-live",
+    why: "「光不會動」是**程式預設**（`DEFAULT_SCENERY_LIGHTING.wave === \"none\"`），而且它是每一張**沒有宣告 `scenery`** 的場地實際跑的那一條路 —— 出貨前 13 張全部走它。owner 2026-08-18 明說「不是靜態不會變動的光」，所以 13 張出貨場地**刻意**一張都不填 `none`：這一格的零採用正是這條需求被滿足的證據。⛔ 不要為了讓這一列消失而把某張圖改成 `none`。**到期**：`none` 不再是 schema 預設的那一天（那時它就變成一個真的沒人用的選項）。",
+  },
+
   // ── 具名標記（marks）家族裡沒被用到的那幾格 ─────────────────────────────
   // ⚠️ 這兩列**不是**這一批造成的：2026-08-18 之前 `abilities.marks[]` 唯一的採用者
   //    是 `godie-hapm.passive`（十二道試煉），它填 `resetOn:"match"` 且沒有 `roundDelta`

@@ -59,6 +59,45 @@ export const zSpriteSheet = z
   })
   .strict();
 
+/**
+ * 方位 (#366) —— owner 的四個參數裡唯一一個引擎完全沒有的那個。
+ *
+ * 大小 → `applyArtParams.scale`、顏色 → `tint`、透明度 → `alpha` 三個都早就落地了；
+ * **方位在 `artParams.ts` 只有一個 `facingDeg?: number` 的型別欄位、一個沒有任何
+ * production 呼叫者的 `resolveSpatial()`,以及一條測試** —— 也就是七種故障的第 ②
+ * 種:算出來了但從來沒有人消費。後果是具體的:`beam` / `bolt` / `dash` / `slash`
+ * 這些**有方向的形狀,每一次施法都朝同一個方向噴**,跟誰打誰完全無關。
+ *
+ * 這一格把方位變成**發射器的一組基底**,而不是某支技能的一個 if:
+ *
+ * | 欄位 | 意思 | 預設 |
+ * |---|---|---|
+ * | `yawDeg` | 繞世界 Y 軸的方位角,0 = +X | 0 |
+ * | `pitchDeg` | 仰角。**90 = 直立**(柱狀往上),**0 = 完全橫放** | 90 |
+ * | `swirlDegPerSec` | 繞自身軸的**切線角速度**。龍捲風的「旋轉」就是這一格 | 0 |
+ *
+ * ⭐ 預設值 `yaw 0 / pitch 90 / swirl 0` 是**恆等變換** —— 沒有寫 `orient` 的
+ * 633 份出貨文件走的是一位元不差的舊路徑(`orientIsIdentity()` 的快速路徑)。
+ *
+ * ⭐ 而「**橫放的柱狀砲**」(owner 點名的第二個優先項)在這個形狀下**不是新程式**,
+ * 是 `column` 這支既有 primitive 加一格 `pitchDeg: 0`。這正是第〇·五守則要的
+ * 兩層:引擎給機制,JSON 給技能。
+ */
+export const zVfxOrient = z
+  .object({
+    /** 繞世界 Y 軸的方位角,度。0 = +X。省略 = 0 */
+    yawDeg: z.number().min(-360).max(360).optional(),
+    /** 仰角,度。90 = 直立(現況), 0 = 橫放。省略 = 90 */
+    pitchDeg: z.number().min(-180).max(180).optional(),
+    /**
+     * 繞自身軸的切線角速度,度/秒。省略 = 0(不旋轉)。
+     * 上界 2880 = 每秒 8 圈;再快在 60fps 下一幀就轉過半圈,只會變成閃爍的雜訊。
+     */
+    swirlDegPerSec: z.number().min(-2880).max(2880).optional(),
+  })
+  .strict();
+export type VfxOrient = z.infer<typeof zVfxOrient>;
+
 const zVfxDocBase = z
   .object({
     id: zId,
@@ -98,6 +137,8 @@ const zVfxDocBase = z
     anchorBone: z.string().min(1).optional(),
     /** true = lives while the entity lives (ambient channel, not a one-shot) */
     ambient: z.boolean().optional(),
+    /** 發射器的方位/旋轉基底 (#366)。省略 = 直立、不旋轉 = 升級前的行為 */
+    orient: zVfxOrient.optional(),
   })
   .strict();
 
@@ -524,6 +565,22 @@ export const zVfxAbilityFamilyBinding = z
     alpha: z.number().min(0.05).max(1).optional(),
     /** direct lifetime stretch override, after the family default */
     timeScale: z.number().min(0.2).max(4).optional(),
+    /**
+     * 方位角 (#366) —— 這一招朝哪個方向噴,度,0 = +X。
+     *
+     * 它是 owner 點名的「方位」,也是四個參數裡唯一一個在這之前**完全不存在**的。
+     * 走的是 `zVfxOrient.yawDeg` 那條路(`artParams` 把它折進 `doc.orient`),
+     * 所以它和 `alpha`/`timeScale` 一樣會進 doc、一樣會換 pool key,⛔ 不是
+     * 另開一條平行的空間參數管線 —— `flyHeight` 當年就是因為走了平行管線,
+     * 在 `familyRow()` 一行之內蒸發掉。
+     */
+    facingDeg: z.number().min(-360).max(360).optional(),
+    /**
+     * 仰角 (#366),度。**90 = 直立**(現況),**0 = 完全橫放**。
+     * owner 點名的「**橫放的柱狀砲**」就是 `column` primitive + 這一格填 0 ——
+     * ⛔ 不是一支新技能的新程式。
+     */
+    pitchDeg: z.number().min(-180).max(180).optional(),
     /** WC3 attachment string, verbatim ("chest", "origin", "right,hand") */
     anchor: z.string().min(1).max(32).optional(),
   })

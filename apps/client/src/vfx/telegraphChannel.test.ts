@@ -8,14 +8,18 @@
  * `AOE_COLOR [1.0,0.62,0.23]` — both amber, both a ring, both on the floor.
  * Nothing failed, because nothing checked; the only detector was a playtest,
  * and the playtest said 「不明顯」. These assertions read the real constants out
- * of BOTH modules (comment-stripped, so a prose mention cannot satisfy them) so
- * the collision cannot come back by accident.
+ * of BOTH modules so the collision cannot come back by accident.
+ *
+ * ⭐ GH#367: the preview half used to be recovered by REGEXing `AimIndicator.ts`
+ * for `RANGE_COLOR = new Color3(…)` — a source scan (失敗形態⑥) that broke the
+ * moment those two colours moved to their proper 住處. They now live in
+ * `ui/abilityRangeGuide`, are EXPORTED, and are imported here like any value:
+ * the assertion compares the numbers the renderer actually paints with, and it
+ * survives the next refactor instead of throwing about a missing literal.
  */
 import { describe, it, expect } from "vitest";
-import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
+import { ABILITY_RANGE_GUIDE } from "../ui/abilityRangeGuide";
 import {
   ALLY_PALETTE,
   ENEMY_PALETTE,
@@ -30,23 +34,9 @@ import {
   type TelegraphRelation,
 } from "./telegraphChannel";
 
-const HERE = dirname(fileURLToPath(import.meta.url));
-const aimIndicatorSrc = readFileSync(join(HERE, "..", "render", "AimIndicator.ts"), "utf8")
-  .replace(/\/\*[\s\S]*?\*\//g, "")
-  .replace(/(^|[^:])\/\/[^\n]*/g, "$1");
-
 /** Perceptual-ish distance between two linear RGB tints. */
 function tintDistance(a: readonly number[], b: readonly number[]): number {
   return Math.hypot(a[0]! - b[0]!, a[1]! - b[1]!, a[2]! - b[2]!);
-}
-
-/** Pull a `new Color3(r, g, b)` literal out of AimIndicator by constant name. */
-function aimColor(name: string): [number, number, number] {
-  const m = aimIndicatorSrc.match(
-    new RegExp(`${name}\\s*=\\s*new Color3\\(\\s*([\\d.]+)\\s*,\\s*([\\d.]+)\\s*,\\s*([\\d.]+)`),
-  );
-  if (!m) throw new Error(`AimIndicator no longer declares ${name} as a Color3 literal`);
-  return [Number(m[1]), Number(m[2]), Number(m[3])];
 }
 
 describe("the three telegraph channels are actually distinguishable", () => {
@@ -65,7 +55,11 @@ describe("the three telegraph channels are actually distinguishable", () => {
     // three separators here, and the other two do the real work — they also
     // survive #85's spectator desaturation, which flattens hue and nothing else.
     expect(tintDistance(ENEMY_PALETTE.ring, SELF_PALETTE.ring)).toBeGreaterThan(0.35);
-    expect(SELF_PALETTE.dashed).toBe(true); // "I am aiming" — the #152 language
+    // dashed = "this one is MINE". ⚠️ GH#367 made the hold-preview solid +
+    // filled (owner: 「彩色框框 + 半透明填滿」), so dashes are no longer a shared
+    // 「我在瞄」 vocabulary with it — they are now purely the self-vs-incoming
+    // separator on THIS layer, and the hue continuity below carries the rest.
+    expect(SELF_PALETTE.dashed).toBe(true);
     expect(ENEMY_PALETTE.dashed).toBe(false); // solid — "this is incoming"
     expect(ENEMY_PALETTE.alpha - SELF_PALETTE.alpha).toBeGreaterThan(0.25);
     // …and only the incoming one ever moves
@@ -78,8 +72,8 @@ describe("the three telegraph channels are actually distinguishable", () => {
     cover("telegraph-channels");
     // THE ORIGINAL BUG: the enemy ring and the local player's hold-preview AoE
     // ring were both amber, so an incoming lethal AoE looked like your own aim.
-    const previewRange = aimColor("RANGE_COLOR");
-    const previewAoe = aimColor("AOE_COLOR");
+    const previewRange = ABILITY_RANGE_GUIDE.rangeRgb;
+    const previewAoe = ABILITY_RANGE_GUIDE.aoeRgb;
     expect(tintDistance(ENEMY_PALETTE.ring, previewAoe)).toBeGreaterThan(0.4);
     expect(tintDistance(ENEMY_PALETTE.ring, previewRange)).toBeGreaterThan(0.4);
     // …while YOUR OWN cast deliberately stays continuous with your preview

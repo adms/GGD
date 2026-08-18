@@ -3593,6 +3593,38 @@ export const zConfigCombatFeelDoc = z
      * 客戶端預測沒有任何 config 通道,把瞄準沿用窗口做成可調會讓預測與權威用
      * 不同的窗口,自己的角色面向會和伺服器長期不同意。
      */
+    /**
+     * ⭐ 預測影子的**扣留**旗標 (GH#370)。語意、量到的數字（影子最大領先
+     * 2.14 單位 / 66 次 reconcile）與出貨預設全部寫在 `sim/predictionHold.ts`。
+     *
+     * ⚠️ 它修的是「放完技能之後原地小步來回」——⛔ 那**不是** sim 的問題
+     * （伺服器座標 180 tick 反轉 0 次），是客戶端影子看不到施法鎖。
+     * ABSENT ⇒ `DEFAULT_PREDICTION_HOLD`（六顆全開）。
+     */
+    predictionHold: z
+      .object({
+        /** 止血閥；false = 回到這條缺陷被修之前的行為。 */
+        enabled: z.boolean(),
+        flags: z
+          .object({
+            /** 施法鎖 —— 隕石擊那 26 個 tick 就是這一顆 */
+            casting: z.boolean(),
+            /** 引導 */
+            channelling: z.boolean(),
+            /** 位移中（leap / dash），路徑由伺服器算 */
+            dashing: z.boolean(),
+            /** 滯空（擊飛），落點由伺服器算 */
+            airborne: z.boolean(),
+            /** 定身：能轉身能出手但不能移動 */
+            rooted: z.boolean(),
+            /** 暈眩 */
+            stunned: z.boolean(),
+          })
+          .strict()
+          .optional(),
+      })
+      .strict()
+      .optional(),
     facing: z
       .object({
         /** 出手後的收招餘韻 tick 數 (30 tick = 1 秒) */
@@ -3752,6 +3784,35 @@ export const zArenaBackdrop = z
   })
   .strict();
 
+/**
+ * 場景特色（配色／會動的打光／裝飾散佈）的**全域政策**（GH#362，owner 2026-08-18）。
+ *
+ * ⚠️ 這裡**沒有任何顏色**。「這張圖長什麼樣」是**內容**，住在 `arena@1` 的
+ * `scenery`（由 `content/maps/*.json` 編譯出來）。這一格只有三個**決策點**：
+ * 要不要開、每個分區最多長幾件裝飾、燈要不要真的動。
+ *
+ * ⭐ 為什麼要有這三格（第一守則）：
+ * ① `enabled` 是 **owner 的一鍵 rollback** —— 13 張圖一次換皮，不喜歡就關掉，
+ *    ⛔ 不必回滾一次部署。
+ * ② `maxPropsPerZone` 是**效能旋鈕**：散佈規則展開出來的每一件都是一次
+ *    instantiate + 一塊接觸陰影，手機掉幀時這一格比關掉整個功能溫和。
+ * ③ `animateLights` 單獨切掉**動畫**那一半（顏色與角度照樣是這張圖的）——
+ *    會動的光是每幀寫兩盞燈，暈車 / 光敏感的玩家要的正是「留下配色、拿掉閃爍」。
+ */
+export const zArenaSceneryPolicy = z
+  .object({
+    /** 總開關。false = 配色、打光、散佈裝飾全部退回出貨前那一組寫死的值。 */
+    enabled: z.boolean(),
+    /**
+     * 每個對戰分區最多長幾件散佈裝飾。⚠️ 砍的是**規則順序的後面**，所以作者要把
+     * 最能代表這張圖的規則寫在前面。上限 96 擋掉把 24 打成 240。
+     */
+    maxPropsPerZone: z.number().int().min(0).max(96),
+    /** 燈要不要真的動。false = 用這張圖的顏色與角度，但停在波形的起點（靜止）。 */
+    animateLights: z.boolean(),
+  })
+  .strict();
+
 export const zConfigAmbientVfxDoc = z
   .object({
     id: zId,
@@ -3762,6 +3823,8 @@ export const zConfigAmbientVfxDoc = z
     arenaFire: zArenaFire.optional(),
     /** 圓盤外的 2D 景深背景政策（GH#324）。缺席 = 用 `DEFAULT_ARENA_BACKDROP`。 */
     backdrop: zArenaBackdrop.optional(),
+    /** 場景特色（配色／打光／裝飾散佈）政策（GH#362）。缺席 = 用 `DEFAULT_ARENA_SCENERY_POLICY`。 */
+    scenery: zArenaSceneryPolicy.optional(),
   })
   .strict();
 
@@ -5208,16 +5271,21 @@ export const zConfigDispelDoc = z
      * 一發淨化每一池最多拔幾層的**全域上限**：文件沒寫 `count` 時用它，
      * **寫了也夾不過它**（一句話管到底，避免出現兩個會分歧的上限）。
      *
-     * 兩端都有界（#277）。⭐ 出貨 **1000**＝實務上「全部」，上界同為 1000
-     * （owner 2026-08-18 定案「一律統一到 50」；他中途提過 1000，但那不必要）。
-     * ⚠️ **50 不是效能上限** —— 一個單位身上能帶幾個狀態沒有任何上限
+     * 兩端都有界（#277）。⭐ 出貨 **50**＝實務上「全部」（owner 2026-08-18 定案
+     * 「一律統一到 50 我覺得是可以的」），**上界 60**（同一則的追加：
+     * 「上限改成 60, 後台可調」，GH#360）—— ⚠️ 出貨值與上界是兩件事，
+     * 抬上界不改變任何一場比賽，只是讓後台那一格調得動。
+     * ⚠️ **這個數字不是效能上限** —— 一個單位身上能帶幾個狀態沒有任何上限
      * （`applyStatus` 那一行就是 push），這一格只管「一發淨化拔幾個」。
      * ⛔ 這個上界也不是「26 種可淨化減益 + 邊際」——
      * `applyStatus` 的合併鍵是 status id + 來源，所以一波 30 隻殭屍各給一次
      * 減速就是 30 筆，**筆數沒有種類數的上限**。完整理由在
      * `packages/shared/src/sim/dispelRules.ts` 的 `DISPEL_MAX_COUNT_BOUNDS`。
+     * ⚠️ 後台「淨化規則」那一頁的上界是**從這一行的 `.max` 走出來**的
+     * （`configForms.ts::readSchema`），所以改這裡就等於改後台 —— 兩處要一起動的
+     * 是 `DISPEL_MAX_COUNT_BOUNDS` 與 `dispel.count`，守衛在 `sim/dispelRules.test.ts`。
      */
-    maxCountCap: z.number().int().min(1).max(50),
+    maxCountCap: z.number().int().min(1).max(60),
     /**
      * `count` 砍不完時**留下哪幾個**。
      *
@@ -6381,14 +6449,33 @@ export type ConfigContentLoadDoc = z.infer<typeof zConfigContentLoadDoc>;
 
 // ---------------------------------------------------------------- #329 ----
 /**
- * ⭐【`config.camera@1`】—— 戰鬥鏡頭的**滾輪縮放界線**。
+ * ⭐【`config.camera@1`】—— 戰鬥鏡頭的**滾輪縮放界線 + 開局預設鏡頭**。
  *
  * owner 2026-08-15：
  * > 「**最大視野減少兩節**(滑鼠滾輪)」
  *
+ * owner 2026-08-18（GH#361，**推翻 #31a**）：
+ * > 「目前**預設視角是偏低離地板太近**（預設應該是**離地板最高**，可縮放離地板更近），
+ * >  但**可以縮放最高的視角太高了，至少要砍低一半高度**」
+ *
+ * ⇒ 兩件事，⛔ 不可以只做一半：
+ * ① **預設不再等於最近** —— 它變成自己的一格 {@link CAMERA_DOC_ID} 欄位
+ *    `zoom.defaultDolly`，出貨值 = 區間的**最遠端**；
+ * ② **最遠端本身砍一半** —— `maxDolly` 36 → 18（眼高 `dolly·sin68°`
+ *    33.4u → 16.7u，正好是 owner 要的「砍低一半高度」的下限）。
+ *
+ * ⚠️ #31a 當時**唯一記下來的理由**是「讓角色在畫面上盡可能大」
+ * （`CameraRig` 原註解：「so the champion starts as large as the clamp permits」；
+ * `docs/todo/restart-cheats.md` rc-19 那一列沒有再寫別的）。⛔ 沒有任何地方寫過
+ * 它與體素替身有關 —— 不要替它補一個沒人寫過的理由。owner 2026-08-18 的判斷是
+ * 那個取捨換來的「離地板太近」比大角色更難忍受。
+ * ⇒ 這不是修 bug，是**設計改版**；舊行為留在一格欄位裡（把 `defaultDolly`
+ * 填成 `minDolly` 就是 #31a），一鍵 rollback。
+ *
  * ── 為什麼是一份文件而不是改一個常數 ─────────────────────────────────
- * 這個數字 owner 已經動過三次（#31 預設拉到最近、#161 俯角 55°→68°、現在最大視野），
- * 而它一直住在 `CameraRig.ts` 的 `const DOLLY_MAX = 40`。
+ * 這一族數字 owner 已經動過**四次**（#31a 預設拉到最近、#161 俯角 55°→68°、
+ * 2026-08-15 最大視野減兩節、GH#361 預設換端點 + 最遠端再砍一半），
+ * 而它們原本一直住在 `CameraRig.ts` 的 `const DOLLY_MAX = 40`。
  * ⇒ 每動一次 = 一次 client rebuild + 一次完整部署。第一守則的原話：
  * **「改一個寫死的數字 = 一次完整部署」**。
  *
@@ -6414,7 +6501,10 @@ export const CAMERA_WHEEL_STEP_MIN = 0.002;
 export const CAMERA_WHEEL_STEP_MAX = 0.2;
 /**
  * `minDolly` 的界。下界 4：再近就穿進角色身體裡（EX 演出用的 5 已經是刻意的特寫）。
- * 上界 40：等於出貨的最大視野，⛔ 再高就會出現「最近比最遠還遠」的空區間。
+ * 上界 40：這是**這一格自己的天花板**，⛔ 不是「出貨最大視野」的複本 ——
+ * GH#361 之後出貨的 `maxDolly` 是 18，所以填 40 會被 `superRefine` 的
+ *「最近比最遠還遠」那一條擋下來。⚠️ 那條跨欄位規則才是真正的閘；
+ * 這個 40 只是防手滑打成 400。
  */
 export const CAMERA_MIN_DOLLY_MIN = 4;
 export const CAMERA_MIN_DOLLY_MAX = 40;
@@ -6445,10 +6535,25 @@ export const zConfigCameraDoc = z
      */
     zoom: z
       .object({
-        /** 滾輪能推到的**最近**距離。也是開局的預設鏡頭（#31a：預設＝最近）。 */
+        /** 滾輪能推到的**最近**距離（＝離地板最低）。⛔ 2026-08-18 起它**不再**是開局預設。 */
         minDolly: z.number().min(CAMERA_MIN_DOLLY_MIN).max(CAMERA_MIN_DOLLY_MAX),
-        /** 滾輪能拉到的**最遠**距離 —— owner 2026-08-15 要減兩節的就是這一格。 */
+        /** 滾輪能拉到的**最遠**距離 —— owner 2026-08-15 減兩節、2026-08-18(#361) 再砍一半的就是這一格。 */
         maxDolly: z.number().min(CAMERA_MAX_DOLLY_MIN).max(CAMERA_MAX_DOLLY_MAX),
+        /**
+         * ⭐ **開局的預設鏡頭**（GH#361）。出貨值 = `maxDolly`，也就是
+         * owner 要的「預設離地板最高，玩家再自己縮放拉近」。
+         *
+         * ⚠️ **刻意是 optional**：這一格是加在一份**已經可能被後台存過 override**
+         * 的文件上（`data/` 覆蓋層會蓋掉 `content/`）。做成必填的話，任何一份
+         * 舊的四鍵 override 都會在 `.strict()` 下解析失敗 → 內容整份載入失敗 →
+         * fail-open 退回骨架 —— 那正是 2026-08-02 生產故障的形狀。
+         * 沒填時走 {@link resolveCamera} 的出貨值 + 夾限，⛔ 不會壞。
+         *
+         * ⭐ **一鍵 rollback**：填 `minDolly` 的數字 = 回到 #31a 的舊行為
+         *（預設＝最近）。⚠️ 這一格與 `minDolly` 相等時，手把 R3 的縮放圈會自動
+         * 反向（見 `CameraRig.zoomAwaySign`）—— 因為「離預設遠的那一端」換邊了。
+         */
+        defaultDolly: z.number().min(CAMERA_MIN_DOLLY_MIN).max(CAMERA_MAX_DOLLY_MAX).optional(),
         /**
          * **陣亡觀戰**時的最遠距離。刻意比 `maxDolly` 寬很多 ——
          * 死了以後看的是「整場打成怎樣」，不是自己的操作。
@@ -6474,6 +6579,16 @@ export const zConfigCameraDoc = z
             message: "觀戰視野不可以比活著的時候還窄",
           });
         }
+        // 預設鏡頭必須落在縮放區間**裡面**。⛔ 各自的上下界抓不到這個組合：
+        // 4…120 對 `defaultDolly` 是合法的，但落在 [minDolly, maxDolly] 外面時
+        // 玩家一進場就被夾到區間端點 —— 後台會顯示一個「存了但不是那個值」的數字。
+        if (v.defaultDolly !== undefined && (v.defaultDolly < v.minDolly || v.defaultDolly > v.maxDolly)) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["defaultDolly"],
+            message: "開局預設鏡頭必須介於最近視野與最遠視野之間",
+          });
+        }
       }),
   })
   .strict();
@@ -6481,12 +6596,20 @@ export const zConfigCameraDoc = z
 /**
  * 出貨值。
  *
- * ⭐ `maxDolly: 36` = 原本的 40 **減兩節**（owner 2026-08-15），
- * 一節 = 一次滾輪 `deltaY≈100` × `wheelStep` 0.02 ≈ 2.0 dolly。
+ * ⭐ `maxDolly` 的三代：**40**（原始）→ **36**（owner 2026-08-15「減兩節」，
+ * 一節 = 一次滾輪 `deltaY≈100` × `wheelStep` 0.02 ≈ 2.0 dolly）
+ * → **18**（owner 2026-08-18 / GH#361「至少要砍低一半高度」）。
+ * 眼高 = `dolly·sin(68°)`，所以 36→18 就是 33.4u→16.7u，**正好一半** ——
+ * 那是 owner 要求的**下限**，他嫌還高的話這一格直接往下調即可（後台存檔就生效）。
+ *
+ * ⭐ `defaultDolly` = `maxDolly` ⇒「預設就是離地板最高」（GH#361 第①條）。
+ * ⛔ 它**不是**寫成 `maxDolly` 的別名：owner 之後很可能想要「預設比最遠再近一點」，
+ * 那要是一格獨立的數字，不是一條推導。
  */
 export const DEFAULT_CAMERA = {
   minDolly: 10,
-  maxDolly: 36,
+  defaultDolly: 18,
+  maxDolly: 18,
   maxDollyDead: 90,
   wheelStep: 0.02,
 } as const;
@@ -6499,17 +6622,29 @@ export const DEFAULT_CAMERA_DOC = {
 
 export type ConfigCameraDoc = z.infer<typeof zConfigCameraDoc>;
 
-/** 生效中的鏡頭界線 —— 後台 overlay ?? `content/config/camera.json` ?? 出貨預設。 */
+/**
+ * 生效中的鏡頭界線 —— 後台 overlay ?? `content/config/camera.json` ?? 出貨預設。
+ *
+ * ⚠️ `defaultDolly` 在這裡就被**夾進 [minDolly, maxDolly]**，⛔ 不是留給每一個
+ * 呼叫端各自夾一次。理由：它是 optional（見 schema），所以一份**只存了四鍵的舊
+ * override** 會拿到出貨的 18 配上它自己存的 `minDolly/maxDolly` —— 兩個各自合法、
+ * 組合起來可能出界。夾在唯一的解析點，下游就沒有「預設在區間外」這個狀態存在。
+ */
 export function resolveCamera(doc: Partial<ConfigCameraDoc> | null | undefined): {
   minDolly: number;
+  defaultDolly: number;
   maxDolly: number;
   maxDollyDead: number;
   wheelStep: number;
 } {
   const z0 = doc?.zoom;
+  const minDolly = z0?.minDolly ?? DEFAULT_CAMERA.minDolly;
+  const maxDolly = z0?.maxDolly ?? DEFAULT_CAMERA.maxDolly;
+  const wanted = z0?.defaultDolly ?? DEFAULT_CAMERA.defaultDolly;
   return {
-    minDolly: z0?.minDolly ?? DEFAULT_CAMERA.minDolly,
-    maxDolly: z0?.maxDolly ?? DEFAULT_CAMERA.maxDolly,
+    minDolly,
+    defaultDolly: Math.min(Math.max(wanted, minDolly), maxDolly),
+    maxDolly,
     maxDollyDead: z0?.maxDollyDead ?? DEFAULT_CAMERA.maxDollyDead,
     wheelStep: z0?.wheelStep ?? DEFAULT_CAMERA.wheelStep,
   };
@@ -6725,6 +6860,7 @@ export type ConfigCombatEnvDoc = z.infer<typeof zConfigCombatEnvDoc>;
 export type AmbientVfxBinding = z.infer<typeof zAmbientVfxBinding>;
 export type ArenaFire = z.infer<typeof zArenaFire>;
 export type ArenaBackdropPolicy = z.infer<typeof zArenaBackdrop>;
+export type ArenaSceneryPolicy = z.infer<typeof zArenaSceneryPolicy>;
 export type ConfigAmbientVfxDoc = z.infer<typeof zConfigAmbientVfxDoc>;
 export type AudioBgmTrack = z.infer<typeof zAudioBgmTrack>;
 export type AudioSfxEntry = z.infer<typeof zAudioSfxEntry>;
@@ -6936,6 +7072,33 @@ export function resolveArenaBackdrop(
   doc: ConfigAmbientVfxDoc | null | undefined,
 ): ArenaBackdropPolicy {
   return doc?.backdrop ?? DEFAULT_ARENA_BACKDROP;
+}
+
+/**
+ * 出貨預設 —— 場景特色政策（GH#362）。
+ *
+ * ⚠️ **回退值是「開的」**，理由與 `DEFAULT_ARENA_BACKDROP` 同一條：
+ * **回退到 owner 要的那一邊**。owner 2026-08-18 明說要「更多特色裝飾 · 會變動的光 ·
+ * 該場景的地板與牆壁顏色」⇒ 讀不到設定時要給他那個，⛔ 不是退回他抱怨的那個樣子。
+ *
+ * `maxPropsPerZone: 40` 是出貨場地實際用量的上緣（最多的一張 colosseum 每區
+ * 32 件手擺 decor），所以出貨內容一件都不會被砍；它存在是為了擋「作者一次填
+ * 8 條 count 64 的規則」那種 1,024 件的情況。
+ *
+ * ⚠️ 每一格都要和 `content/config/ambient-vfx.json` 的 `scenery` 一字不差 ——
+ * drift 斷言在 `apps/client/src/render/arenaScenery.test.ts`。
+ */
+export const DEFAULT_ARENA_SCENERY_POLICY: ArenaSceneryPolicy = {
+  enabled: true,
+  maxPropsPerZone: 40,
+  animateLights: true,
+};
+
+/** 讀出場景特色政策。文件缺席 / 沒有 `scenery` 區塊時回退到 `DEFAULT_ARENA_SCENERY_POLICY`。 */
+export function resolveArenaScenery(
+  doc: ConfigAmbientVfxDoc | null | undefined,
+): ArenaSceneryPolicy {
+  return doc?.scenery ?? DEFAULT_ARENA_SCENERY_POLICY;
 }
 
 /**

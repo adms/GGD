@@ -15,7 +15,7 @@
  * the owner asked for, and both of them are measurements, not opinions:
  *
  * 1. THE BEAM IS MOSTLY OFF-SCREEN. Under the shipped combat camera
- *    (CAMERA_PITCH_RAD 68°, DOLLY_DEFAULT = DOLLY_MIN = 10, fov 0.8) the
+ *    (CAMERA_PITCH_RAD 68°, closest zoom DOLLY_MIN = 10, fov 0.8) the
  *    VERTICAL BUDGET above a champion is only ~5.2 u at the centre of the
  *    frame, ~8.5 u at the bottom edge and ~0.8 u at the top edge — and the
  *    visible ground patch is barely 8 u deep. Measured over the framed ground

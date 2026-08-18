@@ -10,7 +10,7 @@ import {
   TEAM_SIZE,
   TICK_HZ,
 } from "@ggd/shared/constants";
-import { asSeatId, asTeamId, type AugmentId, type ChampionId, type EntityId, type ItemId, type SeatId, type TeamId } from "@ggd/shared/ids";
+import { asSeatId, asTeamId, type AugmentId, type ChampionId, type EntityId, type ItemId, type SeatId, type StatusId, type TeamId } from "@ggd/shared/ids";
 import { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
 import {
@@ -118,7 +118,7 @@ import {
   type ArenaDef,
 } from "@ggd/shared/sim/world/ArenaDef";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
-import { Champions, Abilities, LootTables, Items } from "@ggd/shared/sim/content/registry";
+import { Champions, Abilities, LootTables, Items, Statuses } from "@ggd/shared/sim/content/registry";
 import { Configs, Models } from "@ggd/shared/content";
 import { spawnChampion } from "@ggd/shared/sim/spawnChampion";
 import { createMatchStats, type PlayerMatchStats } from "@ggd/shared/sim/stats/matchStats";
@@ -194,7 +194,7 @@ import {
   type PracticeRules,
 } from "@ggd/shared/content";
 import { DEFAULT_FLOWER_CONFIG, type FireRingConfig } from "@ggd/shared/content";
-import type { IntentFrame, AbilitySlot } from "@ggd/shared/sim/intents";
+import type { IntentFrame, AbilitySlot, CastableSlot } from "@ggd/shared/sim/intents";
 import type { Cheat } from "@ggd/shared/protocol/messages";
 import {
   offerAugments,
@@ -212,7 +212,15 @@ import { releaseOrbSlot } from "@ggd/shared/sim/economy/legendaryOrb";
 import { DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES } from "@ggd/shared/sim/economy/offerEligibility";
 import { applyAttrPick, rollAttrChoices, ATTR_OFFER_TIER } from "@ggd/shared/sim/economy/attrDraft";
 import type { AugmentTier } from "@ggd/shared/sim/content/defs";
-import { rankUpAbility, learnEx } from "@ggd/shared/sim/abilities/abilitySystem";
+import { rankUpAbility, learnEx, castAbility } from "@ggd/shared/sim/abilities/abilitySystem";
+// ── 練習面板（GH#365）的屬性 / 狀態分頁 ──────────────────────────────────────
+import { attachSource } from "@ggd/shared/sim/stats/statPipeline";
+import { ATTR_KEYS, type AttrKey } from "@ggd/shared/sim/stats/attributes";
+import { liveAttribute } from "@ggd/shared/sim/stats/attrSources";
+import { ModOp } from "@ggd/shared/sim/stats/modifiers";
+import { Stat } from "@ggd/shared/sim/stats/statTypes";
+import { cheatStatusFlags } from "@ggd/shared/sim/cheatStatusFlags";
+import { STATUS_MAX_DURATION_SEC } from "@ggd/shared/content/schema/effect";
 import {
   grantGold,
   grantLevels,
@@ -454,6 +462,40 @@ export function settlementCardOnHealthSpentFromDoc(doc: unknown): boolean {
 const PRACTICE_TEAM: TeamId = asTeamId(0);
 const PRACTICE_ZONE = 0;
 
+// ── 練習面板（GH#365）的常數 ─────────────────────────────────────────────────
+
+/**
+ * 屬性作弊的**單一**來源 id。⭐ 一格，⛔ 不是每按一次一格 —— 見 `cheatSetStat`。
+ * `cheat:` 前綴讓它在 `sc.sources` 的傾印裡一眼分得出「這不是道具給的」。
+ */
+const CHEAT_STAT_SOURCE = "cheat:stats";
+
+/**
+ * 可以被「直接改」的屬性清單 —— **從 {@link Stat} enum 推導**。
+ *
+ * ⛔ 不手寫。owner 逐字要的是「AD/AP/HP/MP/攻速…」那個「…」，而引擎每加一條新
+ * 屬性（2026-08-17 才剛加了三條輸出倍率），手寫的名單就少一條而且不會有東西紅
+ * （第〇·五守則）。面板那一側讀同一個 enum，所以兩邊不可能對不上。
+ */
+const CHEAT_STAT_IDS: readonly string[] = Object.freeze(Object.values(Stat) as string[]);
+
+/** 作弊掛上的狀態的來源 id —— 讓「解除」與「重複掛」都認得出自己那一筆。 */
+const CHEAT_STATUS_SOURCE = "cheat:status";
+
+/**
+ * 沒指定秒數時掛多久。上界**借用 `effect@1` 的 `STATUS_MAX_DURATION_SEC`**，
+ * ⛔ 不另外挑一個數字：一支技能掛得上的最長秒數與作弊掛得上的最長秒數如果不同，
+ * 練習房測到的就不是遊戲裡做得到的事。
+ */
+const CHEAT_STATUS_DEFAULT_SEC = 10;
+
+/**
+ * 「指定波次」的上界 —— 防手滑打太多位數（同 `PRACTICE_SPAWN_BATCH_MAX` 的口徑，
+ * ⛔ 不是平衡意見）。真正決定「這一波幾隻」的仍然是 `mobsPerWaveCap` 與
+ * `maxAlivePerZone`，所以跳到第 999 波不會把練習房淹掉。
+ */
+const CHEAT_WAVE_MAX = 999;
+
 export class MatchController {
   readonly world: SimWorld;
   readonly seats = new Map<SeatId, Seat>();
@@ -665,6 +707,12 @@ export class MatchController {
    */
   private readonly godModeSeats = new Set<SeatId>();
   private readonly zeroCdSeats = new Set<SeatId>();
+  /**
+   * 無限魔力（GH#365 技能分頁）。⛔ 刻意**不**併進 `zeroCdSeats` —— 那一格順手
+   * 補魔是為了讓連放不斷魔，而這一格要能**單獨**打開：「冷卻照跑但魔力不會空」
+   * 正是拿來看一支耗魔技能真實節奏的那個組合。兩個開關合成一個 = 那個組合消失。
+   */
+  private readonly infManaSeats = new Set<SeatId>();
 
   /**
    * Replay recorder, or null when this match is not being recorded (unit tests,
@@ -3841,7 +3889,9 @@ export class MatchController {
 
     // 4b) sustain dev cheats AFTER the sim step (god mode / 0-CD). Dev-only and
     //     off by default, so this branch is dead weight in normal play.
-    if (this.godModeSeats.size > 0 || this.zeroCdSeats.size > 0) this.sustainCheats();
+    if (this.godModeSeats.size > 0 || this.zeroCdSeats.size > 0 || this.infManaSeats.size > 0) {
+      this.sustainCheats();
+    }
     // 4c) 練習房的自動復活 (GH#343)。同一個窗口、同一個理由（見 sustainPractice）。
     if (this.practice?.autoRevive) this.sustainPractice();
   }
@@ -4113,6 +4163,13 @@ export class MatchController {
       const hp = this.world.health.get(seat.entityId);
       if (hp) hp.mana = hp.maxMana; // spammable casts shouldn't starve on mana
     }
+    // 無限魔力（GH#365）—— 冷卻**不動**。見 `infManaSeats` 的說明。
+    for (const seatId of this.infManaSeats) {
+      const seat = this.seats.get(seatId);
+      if (!seat || seat.entityId === null) continue;
+      const hp = this.world.health.get(seat.entityId);
+      if (hp) hp.mana = hp.maxMana;
+    }
   }
 
   /**
@@ -4174,6 +4231,9 @@ export class MatchController {
     } else if (cheat.kind === "zeroCooldown") {
       if (cheat.enabled) this.zeroCdSeats.add(seatId);
       else this.zeroCdSeats.delete(seatId);
+    } else if (cheat.kind === "infiniteMana") {
+      if (cheat.enabled) this.infManaSeats.add(seatId);
+      else this.infManaSeats.delete(seatId);
     }
     // grantMCoin is a platform-wallet concept with no in-sim representation —
     // accepted (so the client flow stays uniform) but a graceful no-op.
@@ -4188,6 +4248,7 @@ export class MatchController {
       }
       case "godMode":
       case "zeroCooldown":
+      case "infiniteMana":
         // toggle handled above; also seed the effect immediately when entity ready
         if (entity !== null && cheat.kind === "godMode" && cheat.enabled) {
           const hp = this.world.health.get(entity);
@@ -4264,8 +4325,135 @@ export class MatchController {
         return this.cheatSkipPhase();
       case "rerollOffers":
         return this.cheatRerollOffers(seatId, entity);
+      // ── 練習面板（GH#365）的六個機制 ────────────────────────────────────
+      case "grantXp":
+        grantXp(this.world, entity, Math.max(0, Math.floor(cheat.amount)));
+        return true;
+      case "setStat":
+        return this.cheatSetStat(entity, cheat.stat, cheat.value);
+      case "castAbility":
+        return this.cheatCastAbility(entity, cheat.slot);
+      case "setStatus":
+        return this.cheatSetStatus(entity, cheat.statusId, cheat.on, cheat.durationSec);
+      case "setWave":
+        return this.cheatSetWave(cheat.wave);
     }
     return false;
+  }
+
+  /**
+   * 屬性分頁（GH#365）—— 把**一條**屬性直接設成 `value`。
+   *
+   * ⭐ 一格來源（`cheat:stats`），⛔ 不是每按一次疊一格：疊起來的話「設成 100」
+   * 按兩次會變成 200，而畫面上看不出多了一份。找得到就改，找不到才建。
+   *
+   * 兩條路是引擎本來就有的兩套東西（見 `Cheat.setStat` 的說明）：
+   *   · 三圍 → `attributes` 的**差額**（一點力量餵三條線，⛔ 沒有 override 語意）
+   *   · {@link Stat} → `ModOp.Override`，那就是「直接改」在管線裡的名字
+   */
+  private cheatSetStat(entity: EntityId, stat: string, value: number): boolean {
+    const sc = this.world.stats.get(entity);
+    if (!sc) return this.refuseCheat("no-stats");
+    if (!Number.isFinite(value)) return this.refuseCheat("bad-value");
+    let src = sc.sources.find((s) => s.id === CHEAT_STAT_SOURCE);
+    if (!src) {
+      src = { id: CHEAT_STAT_SOURCE, kind: "buff" };
+      attachSource(this.world, entity, src);
+    }
+    if ((ATTR_KEYS as readonly string[]).includes(stat)) {
+      const attr = stat as AttrKey;
+      // 「設成 N」= 現在是多少、差多少。`liveAttribute` 已經把這格來源算進去了，
+      // 所以要先扣掉自己上一次寫的那一份，⛔ 否則連按兩次會愈墊愈高。
+      const live = liveAttribute(this.world, entity, attr, "total") ?? 0;
+      const mine = src.attributes?.[attr] ?? 0;
+      const next = { ...(src.attributes ?? {}), [attr]: mine + (value - live) };
+      src.attributes = next;
+      sc.dirty = true;
+      return true;
+    }
+    if (!(CHEAT_STAT_IDS as readonly string[]).includes(stat)) return this.refuseCheat("unknown-stat");
+    const mods = src.modifiers ?? (src.modifiers = []);
+    const at = mods.findIndex((m) => m.stat === (stat as Stat) && m.op === ModOp.Override);
+    if (at >= 0) mods[at]!.value = value;
+    else mods.push({ stat: stat as Stat, op: ModOp.Override, value });
+    sc.dirty = true;
+    return true;
+  }
+
+  /**
+   * 技能分頁（GH#365）—— 指定施放。走**出貨的** `castAbility`，所以冷卻/魔力/
+   * 沉默/射程每一道閘都照跑。⛔ 不繞過：繞過的話練習房測到的就不是真的技能。
+   * 施放目標一律是「自己面前」（`dir`），因為練習面板沒有滑鼠指標可以問。
+   */
+  private cheatCastAbility(entity: EntityId, slot: CastableSlot): boolean {
+    const t = this.world.transform.get(entity);
+    if (!t) return this.refuseCheat("no-transform");
+    const res = castAbility(this.world, entity, slot, { type: "dir", dir: t.facing });
+    // ⭐ 失敗的理由**原樣**回給客戶端（"cooldown" / "not-learned" / "mana" …）。
+    // ⛔ 不要翻成一句通用的「施放失敗」—— 「還在冷卻」與「這支技能你還沒學」
+    // 是使用者接下來會做不同事的兩件事。
+    return res === "ok" ? true : this.refuseCheat(`cast-${res}`);
+  }
+
+  /**
+   * 狀態分頁（GH#365）—— 掛上／解除一種狀態。
+   *
+   * ⚠️ 機制旗標從那份文件的 tags 推導（`sim/cheatStatusFlags.ts`），⛔ 不由
+   * 客戶端指定。查不到那份文件 = 拒絕，⛔ 不是掛一個空殼上去：一個什麼都不做
+   * 的 HUD 圖示比「按了說不行」更難查（第一·五守則）。
+   */
+  private cheatSetStatus(
+    entity: EntityId,
+    statusId: string,
+    on: boolean,
+    durationSec: number | undefined,
+  ): boolean {
+    const st = this.world.status.get(entity);
+    if (!st) return this.refuseCheat("no-status-comp");
+    if (!on) {
+      const before = st.effects.length;
+      // 解除拔掉**每一個來源**掛的同名狀態，⛔ 不只拔自己掛的那一筆：使用者按的
+      // 是「把這個狀態弄掉」，而他不在乎那是誰給的。
+      for (let i = st.effects.length - 1; i >= 0; i--) {
+        if (st.effects[i]!.statusId === statusId) st.effects.splice(i, 1);
+      }
+      return st.effects.length !== before ? true : this.refuseCheat("status-not-present");
+    }
+    const meta = Statuses.tryGet(statusId);
+    if (!meta) return this.refuseCheat("unknown-status");
+    const secs = Math.max(1, Math.min(STATUS_MAX_DURATION_SEC, Math.floor(durationSec ?? CHEAT_STATUS_DEFAULT_SEC)));
+    const expiresAtTick = this.world.tick + Math.round(secs / this.world.dt);
+    const flags = cheatStatusFlags(statusId, meta.tags);
+    const existing = st.effects.find((s) => s.statusId === statusId && s.sourceId === CHEAT_STATUS_SOURCE);
+    if (existing) {
+      existing.expiresAtTick = expiresAtTick;
+      return true;
+    }
+    st.effects.push({
+      statusId: statusId as StatusId,
+      sourceId: CHEAT_STATUS_SOURCE,
+      expiresAtTick,
+      polarity: meta.polarity,
+      ...flags,
+    });
+    return true;
+  }
+
+  /**
+   * 殭屍分頁（GH#365）—— **指定波次**：把波次時鐘搬到「下一 tick 就是第 k 波」。
+   *
+   * `MobSystem` 每 tick 先 `mobTicks++` 再問 `(mt - first) % interval === 0`，
+   * 所以要讓下一 tick 命中第 k 波，這一格就得停在它的**前一格**。
+   * ⛔ 不要自己重算波次公式的第二份 —— 兩個地方會漂。
+   */
+  private cheatSetWave(wave: number): boolean {
+    const rules = this.world.mobRules;
+    if (!rules) return this.refuseCheat("no-mob-rules");
+    // 小怪時鐘沒開 = 這一回合還沒進戰鬥（或這一場沒有小怪系統）。
+    if (this.world.mobTicks < 0) return this.refuseCheat("mob-clock-off");
+    const k = Math.max(1, Math.min(CHEAT_WAVE_MAX, Math.floor(wave)));
+    this.world.mobTicks = rules.firstWaveTicks + (k - 1) * rules.waveIntervalTicks - 1;
+    return true;
   }
 
   /** Rank one slot for a seat, bypassing the point cost and the R round-gate. */

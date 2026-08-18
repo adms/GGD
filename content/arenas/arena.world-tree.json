@@ -7396,6 +7396,68 @@
       }
     ]
   },
+  "scenery": {
+    "palette": {
+      "floor": "#cfe8b0",
+      "wall": "#7f9a68",
+      "sky": "#e0ffd8",
+      "ground": "#1e2c14",
+      "void": "#050c06"
+    },
+    "lighting": {
+      "keyColor": "#fff2c0",
+      "keyIntensity": 0.95,
+      "keyYawDeg": 318,
+      "keyPitchDeg": 71,
+      "fillIntensity": 0.78,
+      "wave": "sweep",
+      "periodSec": 16,
+      "intensityAmp": 0.18,
+      "yawSweepDeg": 26,
+      "peakColor": "#eaffd0"
+    },
+    "props": [
+      {
+        "model": "assets/models/hex/trees_large.glb",
+        "count": 6,
+        "bandFrom": 0.93,
+        "bandTo": 0.99,
+        "arcFromDeg": 0,
+        "arcSpanDeg": 360,
+        "scaleMin": 1,
+        "scaleMax": 1.3,
+        "facing": "random",
+        "rotQuarter": 0,
+        "seed": 8
+      },
+      {
+        "model": "assets/models/hex/trees_medium.glb",
+        "count": 10,
+        "bandFrom": 0.87,
+        "bandTo": 0.97,
+        "arcFromDeg": 0,
+        "arcSpanDeg": 360,
+        "scaleMin": 1.2,
+        "scaleMax": 1.4,
+        "facing": "random",
+        "rotQuarter": 0,
+        "seed": 26
+      },
+      {
+        "model": "assets/models/hex/rock.glb",
+        "count": 8,
+        "bandFrom": 0.84,
+        "bandTo": 0.94,
+        "arcFromDeg": 0,
+        "arcSpanDeg": 360,
+        "scaleMin": 1.2,
+        "scaleMax": 1.4,
+        "facing": "random",
+        "rotQuarter": 0,
+        "seed": 47
+      }
+    ]
+  },
   "decor": [
     {
       "model": "assets/models/hex/hex_grass.glb",

@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "15-00 真·不死不滅",
   "provenance": "owner-spec",
-  "description": "[被動][週期][回復][燒魔]\n\n「為了拯救我的學生，以及打噴嚏」\n每秒[回復] 5%[最大生命]，但每秒也[燒魔]魔力 5%。",
+  "description": "[被動][週期][屬性門檻][回復][燒魔]\n\n「為了拯救我的學生，以及打噴嚏」\n自身生命低於 50% 時才會發動：每秒[回復] 2%[最大生命]，但每秒也[燒魔]魔力 1%。",
   "slot": "PASSIVE",
   "castType": "self",
   "maxRank": 1,
@@ -27,7 +27,7 @@
             "effects": [
               {
                 "kind": "restore",
-                "healthPct": 0.05,
+                "healthPct": 0.02,
                 "applyTo": "self"
               },
               {
@@ -35,11 +35,19 @@
                 "amount": {
                   "flat": 0.0
                 },
-                "pctMaxMana": 0.05,
+                "pctMaxMana": 0.01,
                 "applyTo": "self"
               }
             ],
             "internalCooldown": 1.0,
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "hp",
+              "mode": "percent",
+              "op": "<=",
+              "value": 0.5
+            },
             "target": "self"
           }
         ]

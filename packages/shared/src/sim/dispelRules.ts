@@ -44,7 +44,9 @@ export interface DispelRules {
    * 寫了也夾不過它。一句話管到底（照抄 `tauntRules.maxTargetsCap` 的語意），
    * 避免出現「兩個地方各有一個上限，而它們分歧」。
    *
-   * ⭐ 出貨 **50**＝實務上「全部」（owner 2026-08-18）。⚠️ 它**不是**效能上限 —— 見下面 DISPEL_MAX_COUNT_BOUNDS 的長註解。要做一發「只解一層」的
+   * ⭐ 出貨 **50**＝實務上「全部」（owner 2026-08-18），後台可調到 **60**
+   * （上界，見下面 DISPEL_MAX_COUNT_BOUNDS）。⚠️ 它**不是**效能上限 ——
+   * 見下面 DISPEL_MAX_COUNT_BOUNDS 的長註解。要做一發「只解一層」的
    * 弱淨化，是在**那一份文件**寫 `count: 1`，⛔ 不是把這個全域上限調低。
    */
   maxCountCap: number;
@@ -81,8 +83,14 @@ export const DEFAULT_DISPEL_RULES: DispelRules = Object.freeze({
 /**
  * `maxCountCap` 的界，兩端都閉。
  *
- * ⭐ 2026-08-18 —— 出貨值從 **3 → 50**（owner 定案：「一律統一到 50 我覺得是可以的」）。
- * 上界維持 **50** 不動。
+ * ⭐ 2026-08-18 —— 出貨值從 **3 → 50**（owner 定案：「一律統一到 50 我覺得是可以的」），
+ * 而**上界另外抬到 60**（同一則的追加：「上限改成 60, 後台可調」，GH#360）。
+ *
+ * ⚠️ 出貨值（50）與上界（60）是**兩件事**，刻意留了 10 的空間：出貨值住在
+ * `content/config/dispel.json`（線上真正生效的那一份住在後台「淨化規則」那一頁的
+ * 耐久覆蓋層），上界住在這裡與 `schema/config.ts` 的 Zod —— 上界的用途是
+ * **讓後台調得動**，⛔ 不是「建議值」。抬上界不改變任何一場比賽，
+ * 真的改變平衡的是那一頁存下去的那個數字。
  *
  * ⇒ 【淨化】的字面意思就是「全部」（owner：「理論上淨化就是解掉所有負面狀態阿，
  * 這是所有遊戲的 common sense」），而在 3 的時候有**七份**文件寫著 `count: 50`、
@@ -102,11 +110,18 @@ export const DEFAULT_DISPEL_RULES: DispelRules = Object.freeze({
  * 上限**。50 的意思是：單挑與小規模團戰（1–5 筆）根本碰不到，只有殭屍海那種極端
  * 情況才摸得到，而那時候「一發拔 50 個」也已經是壓倒性的了。
  *
- * ⭐ 50 同時保住了它原本那個角色：**防手滑**（5 打成 50 擋不住，50 打成 500 擋得住）。
+ * ⭐ 上界 60 同時保住了它原本那個角色：**防手滑**（5 打成 50 擋不住 —— 那還在界內，
+ * 但 50 打成 500 擋得住，而那才是會讓一個平衡值靜靜爆表的那種手滑）。
  * 中途曾經提議過 1000，owner 否決 —— 留下這一段是因為「為什麼不是 1000」
  * 與「為什麼不是 3」一樣值得下一個人讀到。
+ *
+ * ⚠️ 這個上界有**三個住處**（`DISPEL_MAX_COUNT_BOUNDS` · `zConfigDispelDoc.maxCountCap`
+ * 的 Zod `.max` · `dispel.count` 的 Zod `.max`），後台那一格的上界是**從 Zod 走出來**的
+ * （`apps/admin/src/configForms.ts::readSchema` 讀 `node.max`），所以它自動跟著第二個住處
+ * 走 —— ⛔ 不要在標籤表補一個手寫的 `max`，那會變成第四個住處。
+ * 三者分歧的守衛：`dispelRules.test.ts`。
  */
-export const DISPEL_MAX_COUNT_BOUNDS: readonly [number, number] = [1, 50];
+export const DISPEL_MAX_COUNT_BOUNDS: readonly [number, number] = [1, 60];
 
 function bool(v: unknown, fallback: boolean): boolean {
   return typeof v === "boolean" ? v : fallback;

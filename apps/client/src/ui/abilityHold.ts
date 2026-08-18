@@ -1,7 +1,8 @@
 /**
  * abilityHold — the "which ability button is PRESSED-AND-HELD right now" seam
- * (task #152). A HOLD (mouse-down on a desktop ability tile, or a finger down on
- * a touch ability button) drives two previews at once:
+ * (task #152). A HOLD — mouse-down on a desktop ability tile, a finger down on a
+ * touch ability button, a pad face button, a **held Q/W/E/R/F/D key**, or a
+ * **mouse HOVER** over a desktop tile (both GH#367) — drives two previews at once:
  *   • ui/AbilityDescriptionOverlay — the full name + description panel across the
  *     TOP of the screen, and
  *   • render/AimIndicator — the dashed cast-RANGE ring + AoE disc on the floor
@@ -43,6 +44,23 @@ import { abilityConditionLabels } from "@ggd/shared/sim/content/condition";
 let held: ChampionAbilitySlot | null = null;
 const listeners = new Set<() => void>();
 
+/**
+ * HOW LOUD a hold is (GH#367). Two callers ask for the same slot and want
+ * DIFFERENT amounts of screen:
+ *
+ *   • "full" — a PRESS (mouse-down / touch finger / pad face) or a KEY held.
+ *     The player committed a button, so both surfaces open: the floor range
+ *     guide AND the top-of-screen description banner.
+ *   • "aim"  — a mere HOVER of the desktop tile. The floor guide only.
+ *     ⚠️ 這不是潔癖：`AbilityBar` 的每一格**本來就有** anchored `Tooltip`
+ *     （同一份 `docDescription` + 同一排 meta chips）。hover 再開一次橫跨螢幕
+ *     頂端的橫幅 = 同一段文字在畫面上出現兩次,而游標掃過六格就閃六次。
+ *     owner 要的是「顯示可施展的**範圍**」,⛔ 不是再來一份說明。
+ */
+export type HoldIntent = "full" | "aim";
+
+let heldIntent: HoldIntent = "full";
+
 /** The slot whose button is held right now (null = nothing held). */
 export function getHeldAbility(): ChampionAbilitySlot | null {
   return held;
@@ -62,11 +80,27 @@ export function getHeldAimSlot(): CastableSlot | null {
   return held;
 }
 
-/** Press → slot, release → null. No-op when unchanged (skips a needless notify). */
-export function setHeldAbility(slot: ChampionAbilitySlot | null): void {
-  if (held === slot) return;
+/**
+ * Press → slot, release → null. No-op when unchanged (skips a needless notify).
+ * `intent` defaults to "full" so every pre-#367 caller (touch bar, mouse press,
+ * pad) keeps its exact behaviour; only the hover path passes "aim".
+ */
+export function setHeldAbility(slot: ChampionAbilitySlot | null, intent: HoldIntent = "full"): void {
+  const next: HoldIntent = slot === null ? "full" : intent;
+  if (held === slot && heldIntent === next) return;
   held = slot;
+  heldIntent = next;
   for (const cb of listeners) cb();
+}
+
+/**
+ * Release that may ONLY clear what IT set (GH#367) — the same rule
+ * `GamepadInput.PadDescribeHold` already follows, now that keyboard and hover
+ * are two more writers to this one global. A keyup for Q that blindly wrote
+ * `null` would rip a mouse-held W preview off the floor mid-hold.
+ */
+export function clearHeldAbility(slot: ChampionAbilitySlot): void {
+  if (held === slot) setHeldAbility(null);
 }
 
 export function subscribeHeldAbility(cb: () => void): () => void {
@@ -76,9 +110,18 @@ export function subscribeHeldAbility(cb: () => void): () => void {
   };
 }
 
-/** React binding — re-renders a component only when the held slot changes. */
+/**
+ * The slot the DESCRIPTION BANNER should render — a "full" hold only. A hover
+ * resolves to null here while `getHeldAimSlot()` still returns the slot, which
+ * is the entire point of `HoldIntent` (see it for why).
+ */
+export function getDescribedAbility(): ChampionAbilitySlot | null {
+  return heldIntent === "full" ? held : null;
+}
+
+/** React binding — re-renders a component only when the described slot changes. */
 export function useHeldAbility(): ChampionAbilitySlot | null {
-  return useSyncExternalStore(subscribeHeldAbility, getHeldAbility, getHeldAbility);
+  return useSyncExternalStore(subscribeHeldAbility, getDescribedAbility, getDescribedAbility);
 }
 
 // ---------------------------------------------------------------------------

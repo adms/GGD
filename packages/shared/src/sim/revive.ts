@@ -352,6 +352,23 @@ export function reviveChampionAt(
         z: zoneDef.center.z + (body.pos.z - zoneDef.center.z) * s,
       };
     }
+    // ⭐ GH#364 —— 矩形分區的火圈**是矩形**（`fireRingSafeAt`）。上面那一段是
+    // 徑向拉回，對矩形來說**拉得不夠**：一個在圓內但在收縮矩形外的點，正是
+    // 這一段自己說要避免的「a champion may not come back OUTSIDE the fire ring
+    // — that is an instant burn they never chose」。⇒ 矩形再逐軸夾一次。
+    // ⚠️ 圓形分區走不到這裡（`bounds` 缺席），既有行為與錄影逐位元不變。
+    if (zoneDef.bounds?.kind === "rect") {
+      const ring = inner + t.radius; // 還原成「圈的半徑」，逐軸夾用的是它
+      const k = Math.max(0, Math.min(1, ring / zoneDef.bounds.halfW));
+      const hw = Math.max(0, zoneDef.bounds.halfW * k - t.radius - 0.1);
+      const hd = Math.max(0, zoneDef.bounds.halfD * k - t.radius - 0.1);
+      const dx = body.pos.x - zoneDef.center.x;
+      const dz = body.pos.z - zoneDef.center.z;
+      body.pos = {
+        x: zoneDef.center.x + Math.min(hw, Math.max(-hw, dx)),
+        z: zoneDef.center.z + Math.min(hd, Math.max(-hd, dz)),
+      };
+    }
   }
 
   t.pos = body.pos;

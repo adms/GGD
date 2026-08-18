@@ -255,8 +255,27 @@ const GROUND_BASE: Record<string, Color3> = {
 };
 
 /** The kerb is built masonry, not more field: darker and flatter than the floor
- *  it borders, so the boundary reads as a made edge in every arena. */
+ *  it borders, so the boundary reads as a made edge in every arena.
+ *  ⭐ GH#362 —— 這是**沒宣告 `scenery.palette` 時**的值；宣告了就用 `palette.wall`
+ *  （出貨預設 `#9e99a1` 逐字等於這裡的 0.62/0.6/0.63）。 */
 const KERB_TINT = new Color3(0.62, 0.6, 0.63);
+
+/**
+ * ⭐ GH#362 —— 一張場地的地板／牆壁染色。
+ *
+ * owner 2026-08-18：「**地板與牆壁顏色**等應該都要有該場景特色」。
+ *
+ * ⚠️ 它是**乘在 albedo 上的染色**，⛔ 不是換一張貼圖：貼圖組由 `groundStyle`
+ * 決定（7 組，各自 4 張 PNG），而同一組 `stone` 染成冷灰藍 / 血紅 / 金綠就是
+ * 三個地方 —— **沒有多下載一個位元組**。
+ * `undefined` = 出貨前的樣子（地板不染、牆用 `KERB_TINT`）。
+ */
+export interface GroundPalette {
+  /** 0..1 rgb，乘在地板 albedo 上 */
+  floor: { r: number; g: number; b: number };
+  /** 0..1 rgb，乘在牆／裙邊 albedo 上（取代 `KERB_TINT`） */
+  wall: { r: number; g: number; b: number };
+}
 
 /**
  * Load one texture from the generated set.
@@ -346,9 +365,15 @@ function createFloorMaterial(
   name: string,
   tex: GroundTextures | null,
   fallback: Color3,
+  palette?: GroundPalette,
 ): PBRMaterial {
   const mat = baseGroundMaterial(name, scene, tex);
-  mat.albedoColor = tex ? Color3.White() : fallback;
+  // ⚠️ 斷言要讀**這一顆最終物件**：染色是乘進 `albedoColor` 的，⛔ 不是換掉貼圖 ——
+  //    對 `albedoTexture` 寫的斷言不管有沒有染色都會過（`views/mobTint.test.ts` 檔頭）。
+  const base = tex ? Color3.White() : fallback;
+  mat.albedoColor = palette
+    ? base.multiply(new Color3(palette.floor.r, palette.floor.g, palette.floor.b))
+    : base;
   if (tex) {
     mat.detailMap.texture = tex.macro;
     mat.detailMap.diffuseBlendLevel = GROUND_BLEND_LEVELS.diffuse;
@@ -371,9 +396,13 @@ function createRimMaterial(
   name: string,
   tex: GroundTextures | null,
   fallback: Color3,
+  palette?: GroundPalette,
 ): PBRMaterial {
   const mat = baseGroundMaterial(name, scene, tex);
-  mat.albedoColor = (tex ? Color3.White() : fallback).multiply(KERB_TINT);
+  const wall = palette
+    ? new Color3(palette.wall.r, palette.wall.g, palette.wall.b)
+    : KERB_TINT;
+  mat.albedoColor = (tex ? Color3.White() : fallback).multiply(wall);
   mat.roughness = 0.95;
   return mat;
 }
@@ -530,6 +559,7 @@ function buildRectGround(
   bounds: { halfW: number; halfD: number },
   zoneIndex: number,
   groundStyle: string | undefined,
+  palette: GroundPalette | undefined,
 ): ZoneGround {
   const tex = groundStyle
     ? loadGroundTextures(scene, groundTextureSet(groundStyle), Math.max(bounds.halfW, bounds.halfD))
@@ -550,12 +580,12 @@ function buildRectGround(
   };
 
   const floor = quad(`zone-${zoneIndex}-floor`, bounds.halfW, bounds.halfD);
-  floor.material = createFloorMaterial(scene, `zone-${zoneIndex}-floor-mat`, tex, fallback);
+  floor.material = createFloorMaterial(scene, `zone-${zoneIndex}-floor-mat`, tex, fallback, palette);
 
   // 裙邊：比可玩範圍大一圈的暗色平面，讓邊界看起來有厚度而不是憑空切斷。
   const APRON = 3;
   const rim = quad(`zone-${zoneIndex}-rim`, bounds.halfW + APRON, bounds.halfD + APRON);
-  rim.material = createRimMaterial(scene, `zone-${zoneIndex}-rim-mat`, tex, fallback);
+  rim.material = createRimMaterial(scene, `zone-${zoneIndex}-rim-mat`, tex, fallback, palette);
 
   for (const [mesh, y] of [
     [rim, -0.02],
@@ -579,6 +609,8 @@ export function buildZoneGround(
   },
   zoneIndex: number,
   groundStyle: string | undefined,
+  /** ⭐ GH#362 —— 這張場地的地板／牆壁染色。省略 = 出貨前的樣子（逐像素不變）。 */
+  palette?: GroundPalette,
 ): ZoneGround {
   // ⭐ GH#324 —— **矩形場地要畫矩形地板。**
   //
@@ -587,16 +619,16 @@ export function buildZoneGround(
   // 走不到的地板，然後以為自己被卡住。這正是「畫面說的和碰撞說的不一樣」那一類。
   const rectBounds = zone.bounds !== undefined && zone.bounds.kind === "rect" ? zone.bounds : null;
   if (rectBounds !== null) {
-    return buildRectGround(scene, parent, zone.center, rectBounds, zoneIndex, groundStyle);
+    return buildRectGround(scene, parent, zone.center, rectBounds, zoneIndex, groundStyle, palette);
   }
   const r = zone.boundaryRadius;
   const tex = groundStyle ? loadGroundTextures(scene, groundTextureSet(groundStyle), r) : null;
   const fallback = GROUND_BASE[groundStyle ?? "stone"] ?? GROUND_BASE.stone!;
 
   const floor = buildFloorMesh(scene, `zone-${zoneIndex}-floor`, r);
-  floor.material = createFloorMaterial(scene, `zone-${zoneIndex}-floor-mat`, tex, fallback);
+  floor.material = createFloorMaterial(scene, `zone-${zoneIndex}-floor-mat`, tex, fallback, palette);
   const rim = buildRimMesh(scene, `zone-${zoneIndex}-rim`, r, zoneIndex + 1);
-  rim.material = createRimMaterial(scene, `zone-${zoneIndex}-rim-mat`, tex, fallback);
+  rim.material = createRimMaterial(scene, `zone-${zoneIndex}-rim-mat`, tex, fallback, palette);
 
   for (const mesh of [floor, rim]) {
     mesh.position.set(zone.center.x, 0, zone.center.z);

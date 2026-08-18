@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "9241144175d6",
+  "hash": "2e39d382ea96",
   "entries": [
     {
       "id": "fx.barkskin",
@@ -491,26 +491,26 @@
     {
       "id": "fx.fam.tornado.w3x-9696ff.s135",
       "path": "vfx/fx.fam.tornado.w3x-9696ff.s135.json",
-      "hash": "17f33d2bdce0",
-      "size": 1158
+      "hash": "88bae77993c6",
+      "size": 1203
     },
     {
       "id": "fx.fam.tornado.w3x-c86464.s170",
       "path": "vfx/fx.fam.tornado.w3x-c86464.s170.json",
-      "hash": "451d9561558f",
-      "size": 1180
+      "hash": "a2a06bfabbfe",
+      "size": 1225
     },
     {
       "id": "fx.fam.tornado.wind.s100",
       "path": "vfx/fx.fam.tornado.wind.s100.json",
-      "hash": "0759e7f33951",
-      "size": 1160
+      "hash": "3a15e2def0de",
+      "size": 1205
     },
     {
       "id": "fx.fam.tornado.wind.s150",
       "path": "vfx/fx.fam.tornado.wind.s150.json",
-      "hash": "69b91a6154cc",
-      "size": 1161
+      "hash": "b9b58ffbd297",
+      "size": 1206
     },
     {
       "id": "fx.firestorm",
@@ -741,6 +741,12 @@
       "size": 1124
     },
     {
+      "id": "fx.prim.holy.beam-flat",
+      "path": "vfx/fx.prim.holy.beam-flat.json",
+      "hash": "435d71aaa6ba",
+      "size": 1166
+    },
+    {
       "id": "fx.prim.holy.beam-lg",
       "path": "vfx/fx.prim.holy.beam-lg.json",
       "hash": "eda4bf681c38",
@@ -809,8 +815,8 @@
     {
       "id": "fx.prim.holy.tornado-lg",
       "path": "vfx/fx.prim.holy.tornado-lg.json",
-      "hash": "e6a5980ecf75",
-      "size": 1133
+      "hash": "1bfda85c238b",
+      "size": 1178
     },
     {
       "id": "fx.prim.ice.beam",
@@ -937,6 +943,12 @@
       "path": "vfx/fx.prim.lightning.beam.json",
       "hash": "0b407e8d29d9",
       "size": 1124
+    },
+    {
+      "id": "fx.prim.lightning.beam-flat",
+      "path": "vfx/fx.prim.lightning.beam-flat.json",
+      "hash": "7067698c5603",
+      "size": 1166
     },
     {
       "id": "fx.prim.lightning.beam-lg",
@@ -1355,14 +1367,14 @@
     {
       "id": "fx.prim.wind.tornado",
       "path": "vfx/fx.prim.wind.tornado.json",
-      "hash": "784e1e69a863",
-      "size": 1147
+      "hash": "49d1f8bb904c",
+      "size": 1192
     },
     {
       "id": "fx.prim.wind.tornado-lg",
       "path": "vfx/fx.prim.wind.tornado-lg.json",
-      "hash": "98962b7c5199",
-      "size": 1151
+      "hash": "b85563e337ac",
+      "size": 1196
     },
     {
       "id": "fx.ribbon-slash",

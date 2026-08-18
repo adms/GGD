@@ -258,5 +258,37 @@
       "scale": 1.6
     }
   ],
-  "groundStyle": "stone"
+  "groundStyle": "stone",
+  "scenery": {
+    "palette": {
+      "floor": "#d3d7e0",
+      "wall": "#b9bcc6",
+      "sky": "#dfe8ff",
+      "ground": "#33323d",
+      "void": "#0b0e14"
+    },
+    "lighting": {
+      "keyColor": "#fff6e2",
+      "keyIntensity": 0.95,
+      "keyYawDeg": 311,
+      "keyPitchDeg": 64,
+      "fillIntensity": 0.8,
+      "wave": "breathe",
+      "periodSec": 24,
+      "intensityAmp": 0.1,
+      "yawSweepDeg": 6
+    },
+    "props": [
+      {
+        "model": "assets/models/props/pillar.glb",
+        "count": 10,
+        "bandFrom": 0.93,
+        "bandTo": 0.975,
+        "scaleMin": 1.5,
+        "scaleMax": 1.8,
+        "facing": "faceIn",
+        "seed": 11
+      }
+    ]
+  }
 }

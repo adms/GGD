@@ -82,6 +82,7 @@ export * from "./projectile";
 export * from "./statusEffect";
 export * from "./lootTable";
 export * from "./arena";
+export * from "./arenaScenery";
 // GH#324 —— 地圖版面與它的規格文件。⚠️ 一定要從這個 barrel 出去：
 // 編輯器與後台只吃 `@ggd/shared/content`，漏掉這兩行的話它們就只能繞路
 // 深進 `schema/*`（而那條路沒有守衛在看，遲早會指到搬走的檔案）。

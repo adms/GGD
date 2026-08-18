@@ -41,7 +41,8 @@
  * ---------------------------------------------------------------------------
  * This project has shipped three features nobody could see. So "is the dance
  * visible" is answered here with arithmetic, through the REAL combat rig
- * (`CAMERA_PITCH_RAD` = 68°, `DOLLY_DEFAULT` = `DOLLY_MIN` = 10, Babylon's
+ * (`CAMERA_PITCH_RAD` = 68°, `DOLLY_MIN` = 10 — the CLOSEST zoom and the
+ * worst case; ⚠️ GH#361 moved the shipped DEFAULT out to the far clamp, Babylon's
  * default fov 0.8), and `beatDance.test.ts` runs it as a gate:
  *
  *   • every tracked body point stays inside the safe frustum, AND
@@ -210,7 +211,7 @@ export function dancePose(input: DanceInput): DancePose {
 // ---------------------------------------------------------------------------
 
 export interface DanceFramingOptions {
-  /** camera distance to its ground target; default DOLLY_MIN (the shipped default AND the worst case) */
+  /** camera distance to its ground target; defaults to DOLLY_MIN — the CLOSEST zoom (⚠️ since GH#361 that is no longer the shipped default) */
   dolly?: number;
   fovRad?: number;
   aspect?: number;

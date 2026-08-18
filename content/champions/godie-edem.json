@@ -248,7 +248,14 @@
       ],
       "icon": "assets/icons/abilities/godie-edem.e.webp",
       "vfxKey": "fx.prim.lightning.beam",
-      "castTimeSec": 2
+      "castTimeSec": 2,
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.lightning.bolt",
+          "attachTo": "point",
+          "pitchDeg": 0
+        }
+      ]
     },
     "R": {
       "id": "godie-edem.r",

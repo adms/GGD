@@ -16,7 +16,13 @@ describe("applyArtParams (ability-vfx-artparams)", () => {
     cover("ability-vfx-artparams");
     expect(applyArtParams(doc, {})).toBe(doc);
     expect(applyArtParams(doc, { scale: 1, alpha: 1, timeScale: 1 })).toBe(doc);
-    expect(applyArtParams(doc, { heightY: 3, facingDeg: 90 })).toBe(doc); // spatial only
+    // ⚠️ 這一行原本是 `{ heightY: 3, facingDeg: 90 }` → identity,也就是它**把
+    // 缺陷釘住了**:`facingDeg` 當時被 `applyArtParams` 丟掉,而這條斷言說那是對的
+    // (故障 ④,斷言方向跟缺陷無關)。#366 之後方位是 doc 表達得出來的東西,
+    // 只有 `heightY` 還是純空間參數。
+    expect(applyArtParams(doc, { heightY: 3 })).toBe(doc); // spatial only
+    // 恆等的方位仍然是 identity —— `facingDeg: 0` 不該憑空多開一格粒子池。
+    expect(applyArtParams(doc, { facingDeg: 0, pitchDeg: 90 })).toBe(doc);
   });
 
   it("scale multiplies every size + the emitter radius, and stays schema-valid", () => {

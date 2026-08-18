@@ -47,6 +47,11 @@
  * 這是刻意的(王就該站得住),不是漏算。要讓王會被推就把 `minPct` 調小。
  */
 
+import {
+  DEFAULT_PREDICTION_HOLD,
+  normalizePredictionHold,
+  type PredictionHoldRules,
+} from "./predictionHold";
 import { dot, lenSq, normalize, sub, type Vec2 } from "./math/vec2";
 
 /** 擊退規則(全部後台可調)。 */
@@ -425,6 +430,12 @@ export interface CombatFeelRules {
    * 面向鎖會永遠不過期,而且完全無聲。
    */
   facing?: FacingRules;
+  /**
+   * ⭐ 預測影子的扣留旗標（GH#370）。選用的理由與 `facing` 逐字相同。
+   * 語意與量到的數字全部在 `sim/predictionHold.ts`；客戶端讀的是
+   * `apps/client/src/predict/predictionHold.ts` 的現值（算好的遮罩）。
+   */
+  predictionHold?: PredictionHoldRules;
 }
 
 /**
@@ -572,6 +583,7 @@ export const DEFAULT_COMBAT_FEEL: CombatFeelRules = Object.freeze({
   knockback: DEFAULT_KNOCKBACK,
   standstill: DEFAULT_STANDSTILL,
   facing: DEFAULT_FACING,
+  predictionHold: DEFAULT_PREDICTION_HOLD,
   autoEngage: DEFAULT_AUTO_ENGAGE,
   manualOrder: DEFAULT_MANUAL_ORDER,
   aimAssist: DEFAULT_AIM_ASSIST,
@@ -710,6 +722,7 @@ export function combatFeelFromDoc(doc: unknown): CombatFeelRules {
     autoEngage?: unknown;
     manualOrder?: unknown;
     aimAssist?: unknown;
+    predictionHold?: unknown;
   };
   if (d.schema !== COMBAT_FEEL_SCHEMA) return DEFAULT_COMBAT_FEEL;
   return Object.freeze({
@@ -719,6 +732,7 @@ export function combatFeelFromDoc(doc: unknown): CombatFeelRules {
     autoEngage: normalizeAutoEngageRules(d.autoEngage),
     manualOrder: normalizeManualOrderRules(d.manualOrder),
     aimAssist: normalizeAimAssistRules(d.aimAssist),
+    predictionHold: normalizePredictionHold(d.predictionHold),
   });
 }
 

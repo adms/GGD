@@ -51,7 +51,8 @@ on the hp≤0 crossing; a missed event fails safe (no greyscale) rather than sti
 | --- | --- | --- | --- | --- |
 | rc-01 | GameApp/MultiSession teardown: dispose leaves every room + drops input sinks, idempotent; RoomConnection.leave clears queue/nulls room | restart-teardown | unit | done |
 | rc-02 | Restart decision: offline recreates (matchEpoch bump), online returns to lobby; store stays in-match / no-op outside a match | restart-decision | unit | done |
-| rc-03 | Cheat console available ONLY offline (hidden online / logged-in) | cheat-panel-gating | unit | done |
+| rc-03 | 測試面板在**離線場或練習房**掛載（GH#365 推翻 #31a 的「只有離線」）；⚠️ 真正的缺陷是 `AppRoot` 的掛載閘漏了 practice 參數 ⇒ 練習房裡元件從未掛載。修法是把呼叫點換成收整個 match 物件的 `cheatPanelMounts(match)`，⛔ 不是「記得補參數」。test_id 刻意沿用當 join key | cheat-panel-gating | unit | done |
+| rc-31 | 練習面板六個分頁（成長／寶具／屬性／技能／狀態／殭屍）—— 六個 `Cheat.kind` 帶不同參數，清單全部從出貨註冊表推導；伺服器端閘（`MatchRoom` 的 `cheatsAllowed`）在正式對局裡讓 MSG.CHEAT 連 `applyCheat` 都碰不到 | cheat-dev-gate | security | done |
 | rc-04 | Backtick (`) toggles the cheat console; other keys don't | cheat-toggle-key | unit | done |
 | rc-05 | Cheat searchable filter over items/champions (name/id/tag, CJK substring) | cheat-filter | unit | done |
 | rc-06 | Cheat → MSG.CHEAT payload shapes + routing to the primary connection only | cheat-payload | unit | done |
@@ -67,7 +68,7 @@ on the hp≤0 crossing; a missed event fails safe (no greyscale) rather than sti
 | rc-16 | applyCheat skipPhase forces the phase forward; rerollOffers replaces open offers | cheat-skip-phase | unit | done |
 | rc-17 | Cheat hard gate: rejected in prod (shared secret) / when GGD_DEV_CHEATS=0 | cheat-dev-gate | security | done |
 | rc-18 | Cheat ignored for a foreign / unknown seat (no gold leak) | cheat-foreign-seat | security | done |
-| rc-19 | Default in-match zoom is the closest allowed dolly (DOLLY_DEFAULT derived from DOLLY_MIN); zoom-out range unchanged | camera-default-closest | unit | done |
+| rc-19 | Default in-match zoom is the FARTHEST allowed dolly — highest above the floor (GH#361 overturned #31a's "closest"); it is a config field (`config.camera@1` `zoom.defaultDolly`), zoom-IN range unchanged, and 歸位 is an absolute reset to it. ⚠️ test_id kept as the join key on purpose | camera-default-closest | unit | done |
 | rc-20 | Death-focus arms ONLY on a combat `death` event for this viewport's own champion, and survives the event landing before the snapshot flips `alive` | death-focus-arm | unit | done |
 | rc-21 | Death-focus reverts to EXACTLY zero on every path (revive, resolution, intermission, champSelect, matchEnd, outcomeDecided, seat lost its champion, re-seated, entity gone) | death-focus-revert | regression | done |
 | rc-22 | Death-focus colour sources: living teammates + the player's OWN revive circle only; nearest-first, capped, rFade > rFull, rendered position preferred | death-focus-sources | unit | done |

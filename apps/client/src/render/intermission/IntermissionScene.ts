@@ -59,6 +59,8 @@ import "@babylonjs/core/Rendering/depthRendererSceneComponent";
 
 import { AssetManager } from "../AssetManager";
 import { glbYawOffset } from "../views/glbFacing";
+import { normalizedModelScale } from "../views/modelSizing";
+import { ENABLED_ONLY, applyHiddenPrimitives } from "../views/hiddenPrimitives";
 import { championTintForId } from "../views/championTint";
 import { applyModelTint, releaseModelTint } from "../views/modelTint";
 import { pickReactionClip } from "./reactionClip";
@@ -145,7 +147,13 @@ export interface IntermissionSceneOptions {
    * normalises it to 1.7 u (the same pair the arena's ChampionView uses). Absent
    * = no hero in frame, which is what champ-select-less dev boots get.
    */
-  champion?: { glbPath: string; scale: number; yawOffsetDeg?: number } | null;
+  champion?: {
+    glbPath: string;
+    scale: number;
+    yawOffsetDeg?: number;
+    relativeScale?: number;
+    hiddenPrimitives?: readonly number[];
+  } | null;
   /**
    * Inject the model loader (task #263 test seam, mirroring StorePreview's own
    * `assets` ctor arg). Headless runs cannot fetch a .glb — a relative URL has
@@ -505,7 +513,15 @@ export class IntermissionScene {
    * null on any failure, so a missing model leaves a hole in the dressing
    * rather than an empty screen or a thrown boot.
    */
-  private async buildProps(champion: { glbPath: string; scale: number; yawOffsetDeg?: number } | null): Promise<void> {
+  private async buildProps(
+    champion: {
+      glbPath: string;
+      scale: number;
+      yawOffsetDeg?: number;
+      relativeScale?: number;
+      hiddenPrimitives?: readonly number[];
+    } | null,
+  ): Promise<void> {
     const placements: Placement[] = [STALL, CART, ...TORCHES, ...DRESSING, ...silhouettes()];
     const paths = new Set(placements.map((p) => p.model));
     paths.add(MERCHANT.model);
@@ -549,7 +565,14 @@ export class IntermissionScene {
 
     this.setTeam(this.teamId);
     if (champion)
-      await this.setChampion(champion.glbPath, champion.scale, champion.yawOffsetDeg);
+      await this.setChampion(
+        champion.glbPath,
+        champion.scale,
+        champion.yawOffsetDeg,
+        null,
+        champion.relativeScale,
+        champion.hiddenPrimitives,
+      );
     this.built = true;
   }
 
@@ -816,6 +839,8 @@ export class IntermissionScene {
     scale: number,
     yawOffsetDeg?: number,
     championId?: string | null,
+    relativeScale?: number,
+    hiddenPrimitives?: readonly number[],
   ): Promise<void> {
     if (this.disposed) return;
     const token = ++this.championToken;
@@ -828,9 +853,13 @@ export class IntermissionScene {
     // a new hero inherits none of the previous one's reaction bookkeeping
     this.championReaction = null;
     this.championPulse = null;
+    // GH#368 — mount at NATIVE scale so the height can be measured, exactly as
+    // ChampionView and StorePreview do. `scale` (the model doc's) is only the
+    // degenerate fallback now; using it as an absolute is what stood a 6.67u
+    // 小叮噹 at the counter beside a 1.7u merchant.
     const { root, groups } = this.place(
       container,
-      { model: glbPath, x: CHAMPION_STAND.x, z: CHAMPION_STAND.z, yaw: CHAMPION_YAW, scale },
+      { model: glbPath, x: CHAMPION_STAND.x, z: CHAMPION_STAND.z, yaw: CHAMPION_YAW, scale: 1 },
       { cast: true, name: "im-champion" },
     );
     // the model's own baked-forward offset rides a child node, exactly as the
@@ -839,6 +868,14 @@ export class IntermissionScene {
     for (const child of root.getChildren()) {
       if (child instanceof TransformNode) child.rotation.y += offset;
     }
+    // 屍體/血泥幾何 —— GH#368。攤位跟商店犯的是同一個錯：`hiddenPrimitives` 只有
+    // 競技場在讀，所以 16 隻 overlay 英雄拖著一片血泥站在櫃台前，而且那片血泥還
+    // 進了下面的包圍盒 —— 於是英雄被墊高、身高又被正規化成血泥的高度。
+    applyHiddenPrimitives(root.getChildMeshes(false), hiddenPrimitives);
+    root.computeWorldMatrix(true);
+    const native = root.getHierarchyBoundingVectors(true, ENABLED_ONLY);
+    const finalScale = normalizedModelScale(native.max.y - native.min.y, scale, relativeScale);
+    root.scaling.setAll(finalScale);
     // GROUND the hero (task #111): measure the placed model and lift its feet
     // onto the paving, exactly as StorePreview does (#129). Without this an
     // imported rig whose bind box dips below the origin (皮卡丘 spans
@@ -862,7 +899,10 @@ export class IntermissionScene {
     this.championRoot = root;
     this.championGroups = groups;
     this.championIdle = idle ?? null;
-    this.championBaseScale = scale;
+    // GH#368 — the RENDERED scale, not the doc's. `championPulse` springs the
+    // hero back to this value every frame, so leaving the doc's raw number here
+    // would undo the normalization on the first purchase reaction.
+    this.championBaseScale = finalScale;
     // …and start the idle ROTATION for this hero: which of its clips are worth
     // showing at a market stall, and when the first one is due.
     this.performPool = buildPerformPool(
@@ -882,7 +922,9 @@ export class IntermissionScene {
    */
   private groundChampion(root: TransformNode): void {
     root.computeWorldMatrix(true);
-    const { min, max } = root.getHierarchyBoundingVectors(true);
+    // GH#368 —— ENABLED_ONLY: a hidden gore sheet must not decide where the
+    // feet are (Babylon's bounding walk does not consult `isEnabled`).
+    const { min, max } = root.getHierarchyBoundingVectors(true, ENABLED_ONLY);
     root.position.y += groundShiftY(min, max);
     // remember where "standing on the paving" IS for this rig, so every pulse
     // springs back to it instead of to a hard-coded 0 (see championBaseY)

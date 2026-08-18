@@ -144,8 +144,9 @@
  */
 import type { SimWorld } from "./SimWorld";
 import { insideShrunkBounds } from "./map/bounds";
+import type { ZoneDef } from "./world/ArenaDef";
 import type { EntityId } from "../ids";
-import { distSq } from "./math/vec2";
+import { distSq, type Vec2 } from "./math/vec2";
 import { applyEnvironmentalBurn } from "./combat/environmentalBurn";
 
 /** Fire-ring rules in TICKS (converted from the config doc's seconds). */
@@ -1025,6 +1026,47 @@ export function fireRingIsSafe(
 }
 
 /**
+ * ⭐ THE safety predicate for a body standing in a ZONE —— **一個問題一個答案**
+ * （GH#364）。
+ *
+ * ⚠️ 這一支存在的理由是它**已經漂移過一次，而且沒有任何東西紅**。GH#324 的
+ * owner 裁決是「矩形場地的火圈**一樣要有**，而且內縮成矩形」，但那句話只落在
+ * {@link fireRingBurnMobs}（殭屍）身上；**champions 與 `ENTITY_FLAG.BURNING`
+ * 兩條路都留在圓盤上**。於是 8 張 rect 出貨場地上：
+ *
+ *   · 矩形的四個角距分區中心 `hypot(halfW, halfD)` = `boundaryRadius`，
+ *     而圓盤法在點燃那一刻的安全半徑是 `boundaryRadius − 0.6`
+ *     ⇒ **站在角落的玩家在火圈點燃的第一格就開始燒**，旁邊的殭屍卻沒事；
+ *   · 矩形法把 `k = radius / halfW` 夾在 1，所以點燃那一刻整個房間都是安全的
+ *     —— 那才是 owner 要的「圈**開始收**才咬人」。
+ *
+ * ⛔ 所以三個消費端（champion 傷害 / mob 傷害 / 上 wire 的 BURNING 旗標）
+ * 現在全部走這一支。⛔ 不要再在任何一端寫第二份幾何。
+ *
+ * 圓形分區走**原本那一支**（{@link fireRingIsSafe}），逐位元不變 ⇒
+ * 既有 6 張圓盤場地與每一份既有錄影的 digest 一個位元都沒動。
+ *
+ * ⚠️ 全收攏之後（`minRadius: 0` ⇒ `k = 0`）矩形那一支的
+ * `insideShrunkBounds` 會退化成「距中心 1e-6 內算安全」—— 一個 measure-zero
+ * 的洞。圓那一支的 `inner > 0` 早就把同一個洞關掉了（檔頭那段
+ * 「'dist exactly 0' would be a measure-zero safe spot」講的就是它），
+ * 所以這裡對矩形補上同一條：收到 0 就是**沒有生存空間**，⛔ 不留一格。
+ */
+export function fireRingSafeAt(
+  zone: ZoneDef,
+  pos: Vec2,
+  bodyRadius: number,
+  radius: number,
+): boolean {
+  if (zone.bounds?.kind !== "rect") {
+    return fireRingIsSafe(radius, bodyRadius, distSq(pos, zone.center));
+  }
+  // 「沒有生存空間」—— 同 `fireRingIsSafe` 的 `inner > 0`，⛔ 不留 measure-zero 的一點。
+  if (radius - bodyRadius <= 0) return false;
+  return insideShrunkBounds(zone, pos, radius, bodyRadius);
+}
+
+/**
  * The per-SECOND burn rate (fraction of a victim's maxHealth) at
  * `ticksSinceStart` ticks past ignition — for anything OUTSIDE the ring.
  *
@@ -1152,7 +1194,12 @@ export function isBurnedByFireRing(world: SimWorld, id: EntityId): boolean {
     world.fireRingTicks - rules.startTicks,
     zoneDef.boundaryRadius,
   );
-  return !fireRingIsSafe(radius, t.radius, distSq(t.pos, zoneDef.center));
+  // ⭐ GH#364 —— 與 `FireRingSystem` / `fireRingBurnMobs` 走**同一支**幾何
+  // ({@link fireRingSafeAt})。這一行以前是圓盤專用的 `fireRingIsSafe`，
+  // 而 8 張 rect 場地的傷害側早就（部分）改成矩形了 —— 這個檔頭自己寫著
+  // 「so the snapshot's `ENTITY_FLAG.BURNING` … can never drift from the damage
+  // that justifies it」，而它已經漂移了（第三守則）。
+  return !fireRingSafeAt(zoneDef, t.pos, t.radius, radius);
 }
 
 /**
@@ -1228,11 +1275,9 @@ export function fireRingBurnMobs(world: SimWorld): void {
     // ⭐ GH#324 —— 矩形場地的火圈**內縮成矩形**（owner「一樣要有」）。
     // ⛔ 不是用內接圓：那會讓火圈提早咬到牆外的角落，玩家會在看起來安全的地方被燒。
     // ⚠️ 圓形場地走**原本那一支**（`fireRingIsSafe`），既有行為與所有錄影不變。
-    const safe =
-      zoneDef.bounds?.kind === "rect"
-        ? insideShrunkBounds(zoneDef, t.pos, radius, t.radius)
-        : fireRingIsSafe(radius, t.radius, distSq(t.pos, zoneDef.center));
-    if (safe) continue;
+    // ⭐ GH#364 —— 這個 fork 搬進 {@link fireRingSafeAt}，因為它**只落在殭屍身上**，
+    //    champion 與 BURNING 旗標兩條路留在圓盤上漂移了整整一版。
+    if (fireRingSafeAt(zoneDef, t.pos, t.radius, radius)) continue;
     const dmg = hp.maxHp * ratePerSec * dt;
     if (dmg <= 0) continue;
     // GH#287 —— same gate as the champion loop, through the same one function.

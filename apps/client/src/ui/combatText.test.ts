@@ -326,7 +326,7 @@ describe("combat text palette (ct-c02)", () => {
 
   it("even the LARGEST possible number clears the health bar above it", () => {
     cover("combat-text-palette");
-    // closest zoom (task #31a DOLLY_MIN = 10), pitch 55 deg, Babylon fov 0.8,
+    // closest zoom = the worst case (DOLLY_MIN = 10), Babylon fov 0.8,
     // 1080p: a VERTICAL world offset projects at 1080 / (2*10*tan(0.4)) px/u.
     const PX_PER_UNIT = 1080 / (2 * 10 * Math.tan(0.8 / 2));
     const BAR_ANCHOR_Y = 2.45; // render/overheadAnchors.anchorHeightFor(champion)

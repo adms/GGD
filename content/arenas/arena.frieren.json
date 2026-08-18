@@ -6850,6 +6850,68 @@
       }
     ]
   },
+  "scenery": {
+    "palette": {
+      "floor": "#a8c0d8",
+      "wall": "#7d8fa8",
+      "sky": "#bcd6ff",
+      "ground": "#16202e",
+      "void": "#060a12"
+    },
+    "lighting": {
+      "keyColor": "#cfe4ff",
+      "keyIntensity": 0.7,
+      "keyYawDeg": 330,
+      "keyPitchDeg": 70,
+      "fillIntensity": 0.55,
+      "wave": "breathe",
+      "periodSec": 14,
+      "intensityAmp": 0.16,
+      "yawSweepDeg": 0,
+      "peakColor": "#e8f4ff"
+    },
+    "props": [
+      {
+        "model": "assets/models/props/pillar.glb",
+        "count": 14,
+        "bandFrom": 0.92,
+        "bandTo": 0.98,
+        "arcFromDeg": 0,
+        "arcSpanDeg": 360,
+        "scaleMin": 1.4,
+        "scaleMax": 2,
+        "facing": "faceIn",
+        "rotQuarter": 0,
+        "seed": 9
+      },
+      {
+        "model": "assets/models/hex/rock.glb",
+        "count": 8,
+        "bandFrom": 0.86,
+        "bandTo": 0.96,
+        "arcFromDeg": 0,
+        "arcSpanDeg": 360,
+        "scaleMin": 1.2,
+        "scaleMax": 1.4,
+        "facing": "random",
+        "rotQuarter": 0,
+        "seed": 23
+      },
+      {
+        "model": "assets/models/props/torch_mounted.glb",
+        "count": 6,
+        "bandFrom": 0.985,
+        "bandTo": 1,
+        "arcFromDeg": 0,
+        "arcSpanDeg": 360,
+        "scaleMin": 1.4,
+        "scaleMax": 1.4,
+        "facing": "faceIn",
+        "rotQuarter": 0,
+        "seed": 51
+      }
+    ]
+  },
   "decor": [
     {
       "model": "assets/models/props/torch.glb",

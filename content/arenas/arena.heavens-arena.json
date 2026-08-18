@@ -8118,6 +8118,67 @@
       }
     ]
   },
+  "scenery": {
+    "palette": {
+      "floor": "#f0dcc0",
+      "wall": "#c9a97e",
+      "sky": "#eaf0ff",
+      "ground": "#3a2c1c",
+      "void": "#0a0e16"
+    },
+    "lighting": {
+      "keyColor": "#ffffff",
+      "keyIntensity": 1.05,
+      "keyYawDeg": 305,
+      "keyPitchDeg": 74,
+      "fillIntensity": 0.9,
+      "wave": "sweep",
+      "periodSec": 12,
+      "intensityAmp": 0.14,
+      "yawSweepDeg": 30
+    },
+    "props": [
+      {
+        "model": "assets/models/props/banner_shield_blue.glb",
+        "count": 6,
+        "bandFrom": 0.97,
+        "bandTo": 1,
+        "arcFromDeg": 200,
+        "arcSpanDeg": 140,
+        "scaleMin": 1.6,
+        "scaleMax": 1.8,
+        "facing": "faceIn",
+        "rotQuarter": 0,
+        "seed": 15
+      },
+      {
+        "model": "assets/models/props/banner_shield_red.glb",
+        "count": 6,
+        "bandFrom": 0.97,
+        "bandTo": 1,
+        "arcFromDeg": 20,
+        "arcSpanDeg": 140,
+        "scaleMin": 1.6,
+        "scaleMax": 1.8,
+        "facing": "faceIn",
+        "rotQuarter": 0,
+        "seed": 27
+      },
+      {
+        "model": "assets/models/props/crates_stacked.glb",
+        "count": 6,
+        "bandFrom": 0.88,
+        "bandTo": 0.95,
+        "arcFromDeg": 0,
+        "arcSpanDeg": 360,
+        "scaleMin": 1,
+        "scaleMax": 1.1,
+        "facing": "random",
+        "rotQuarter": 0,
+        "seed": 39
+      }
+    ]
+  },
   "decor": [
     {
       "model": "assets/models/props/torch_mounted.glb",

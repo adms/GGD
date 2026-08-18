@@ -40,7 +40,7 @@
  *   COMBAT   `CameraRig` — a TargetCamera looking at a ground point (y = 0),
  *            eye `dolly` away along a ray of pitch `CAMERA_PITCH_RAD` (68°).
  *            The worst case for vertical framing is the closest zoom
- *            (`DOLLY_MIN` = `DOLLY_DEFAULT` = 10), which is also the default
+ *            (`DOLLY_MIN` = 10; ⚠️ GH#361: no longer the default
  *            the player starts at, so that is the default here.
  *   SETTLEMENT `settlementCameraPose` — the match-end hero shot: a LOW camera
  *            (y = 1.15) tilted slightly UP at the champion's chest. Its

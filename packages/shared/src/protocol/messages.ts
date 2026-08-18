@@ -1,5 +1,5 @@
 /** Client<->server message names + payloads (Colyseus onMessage channel). */
-import type { Order, Command, AbilitySlot } from "../sim/intents";
+import type { Order, Command, AbilitySlot, CastableSlot } from "../sim/intents";
 import type { Vec2 } from "../sim/math/vec2";
 import type { PlayerMatchStats } from "../sim/stats/matchStats";
 import type { Grade } from "../sim/stats/rating";
@@ -59,7 +59,57 @@ export type Cheat =
    * 伺服器一律吃小怪波設定的**每區同時存活上限**，撞到就停：練習房不可以被自己
    * 生出來的怪打死（那會讓沙盒變成一個沒得練的地方）。
    */
-  | { kind: "spawnMob"; what: "normal" | "special" | "boss"; count?: number };
+  | { kind: "spawnMob"; what: "normal" | "special" | "boss"; count?: number }
+  /**
+   * ── 練習面板（GH#365）的六個分頁需要的六個機制 ────────────────────────────
+   *
+   * owner 2026-08-18：「請你修正到練習模式可以開出各種**經驗值、等級、寶具、
+   * 屬性、技能、狀態開關、殭屍生成**等調整介面出來」。
+   *
+   * ⭐ 六個 kind，⛔ 不是六十個。每一格 UI 按鈕都是這六個之一**帶不同參數** ——
+   * 40 種狀態是 `setStatus` 的 40 個 `statusId`，23 條屬性是 `setStat` 的 23 個
+   * `stat`，⛔ 不是 63 個 cheat kind（第零守則⑨：N 個同型 = K 個模板 + 一張表）。
+   * 那張「表」不在這裡也不在 UI 裡 —— 它**從出貨註冊表推導**（`StatusEffects` /
+   * `Stat` enum / `Items`），所以新增一份 status 文件，面板隔天自己就多一格。
+   */
+  /** 成長分頁 —— 直接灌經驗值（`setLevel` 是另一半：直接設等級）。 */
+  | { kind: "grantXp"; amount: number }
+  /**
+   * 屬性分頁 —— 把**一條**屬性直接設成 `value`。
+   *
+   * `stat` 同時吃兩個身分空間，而它們在引擎裡本來就是兩套東西：
+   *   · 三圍（`"str" | "agi" | "int"`）→ 走 `ModifierSource.attributes`，
+   *     因為一點力量會餵進生命/回復/攻擊三條線（`stats/attributes.ts`）；
+   *   · {@link Stat} 的成員（`"ad"` / `"as"` / `"maxHealth"` …）→ 走
+   *     `ModOp.Override`，那正是「直接改」在管線裡的名字。
+   * ⛔ 不拆成兩個 kind：對使用者而言這一格就是「把某條數字設成 N」，
+   * 拆開只會讓 UI 必須先知道哪一格是三圍（一份會過期的名單）。
+   */
+  | { kind: "setStat"; stat: string; value: number }
+  /** 技能分頁 —— 無限魔力（每 tick 補滿）。`zeroCooldown` 是它的冷卻孿生兄弟。 */
+  | { kind: "infiniteMana"; enabled: boolean }
+  /**
+   * 技能分頁 —— **指定施放**。伺服器對自己的實體呼叫出貨的 `castAbility`，
+   * 所以射程/魔力/冷卻/沉默每一道閘都照跑，⛔ 不繞過它們（繞過的話練習房測到的
+   * 就不是真的技能了）。要無視冷卻就先開「0 CD」那一格 —— 兩個機制各自獨立。
+   */
+  | { kind: "castAbility"; slot: CastableSlot }
+  /**
+   * 狀態分頁 —— 掛上／解除**一種**狀態。`on:false` 時 `durationSec` 被忽略。
+   *
+   * ⚠️ 機制旗標（暈眩/定身/恐懼/減速…）**從那份 `status-effect@1` 文件的 tags
+   * 推導**（`sim/cheatStatusFlags.ts`），⛔ 不由客戶端指定：讓 UI 送旗標等於
+   * 讓面板自己發明一個「暈眩是什麼」的第二份定義。
+   */
+  | { kind: "setStatus"; statusId: string; on: boolean; durationSec?: number }
+  /**
+   * 殭屍分頁 —— **指定波次**：把小怪波的時鐘搬到「下一 tick 就是第 k 波」。
+   *
+   * ⚠️ 它動的是 `world.mobTicks`（波次時鐘），⛔ 不是憑空生一批怪 —— 那是
+   * `spawnMob` 的工作。分開的理由是它們回答不同的問題：「我要看第 30 波長什麼
+   * 樣子」vs「我要 5 隻特殊殭屍站在這裡」。
+   */
+  | { kind: "setWave"; wave: number };
 
 export interface CheatMessage {
   cheat: Cheat;

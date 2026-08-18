@@ -280,6 +280,9 @@ export const ABILITY_BOUNDS: Readonly<Record<string, ForgeBound>> = {
   tintR: { min: 0, max: 255, int: true },
   tintG: { min: 0, max: 255, int: true },
   tintB: { min: 0, max: 255, int: true },
+  // #366 方位 —— owner 的四個參數裡唯一一個以前後台碰不到的
+  facingDeg: { min: -360, max: 360 },
+  pitchDeg: { min: -180, max: 180 },
 };
 
 export const GLOBAL_FIELDS = [
@@ -340,6 +343,8 @@ export const ABILITY_FIELDS = [
   "flyHeight",
   "alpha",
   "timeScale",
+  "facingDeg",
+  "pitchDeg",
   "anchor",
 ] as const;
 export type AbilityField = (typeof ABILITY_FIELDS)[number];
@@ -367,6 +372,8 @@ export const FIELD_LABEL: Readonly<Record<string, string>> = {
   tintG: "綠",
   tintB: "藍",
   flyHeight: "原圖飛行高度",
+  facingDeg: "方位角",
+  pitchDeg: "仰角",
   anchor: "錨點",
 };
 
@@ -427,6 +434,13 @@ export const FIELD_HINT: Readonly<Record<string, string>> = {
     "原圖的 SetUnitFlyHeight，WC3 單位（128 單位 = 1 世界單位）。留白 = 用家族高度；" +
     "填了會疊在家族基準高度上（負值代表原圖把替身藏在地形底下，會被夾在地板之上）。" +
     "⚠️ 和「家族基準高度」共用同一個開關：上面「施法特效高度」選「全部固定在胸口」時整格不生效",
+  facingDeg:
+    "這一招的特效朝哪個方向噴，度，0 = +X、90 = +Z。留白 = 0。" +
+    "⚠️ 只有**有方向的形狀**看得出來（beam / bolt / dash / slash / breath / missile）；" +
+    "球狀的 nova / pulse 轉了也長一樣",
+  pitchDeg:
+    "特效的仰角，度。**90 = 直立**（出貨，柱狀往上長），**0 = 完全橫放**。" +
+    "「橫放的柱狀砲」就是把 column 那一族填 0。留白 = 90，也就是升級前的行為",
   // ⚠️ alpha / timeScale 兩個名字在「家族」和「單支技能」兩張表都出現。這裡**只能
   // 有一份**（重複的 key 會被 JS 靜默吃掉最後一個，tsc 才抓得到），所以文案要同時
   // 說得通兩邊：家族那格是基準，技能那格是覆寫。
@@ -573,6 +587,8 @@ export function abilityDraftFrom(b: VfxAbilityFamilyBinding | null): AbilityDraf
     flyHeight: numText(b?.flyHeight),
     alpha: numText(b?.alpha),
     timeScale: numText(b?.timeScale),
+    facingDeg: numText(b?.facingDeg),
+    pitchDeg: numText(b?.pitchDeg),
     anchor: b?.anchor ?? "",
   };
 }
@@ -726,6 +742,10 @@ export function abilityBindingFromDraft(d: AbilityDraft): VfxAbilityFamilyBindin
   if (alpha !== undefined) out["alpha"] = alpha;
   const timeScale = num("timeScale");
   if (timeScale !== undefined) out["timeScale"] = timeScale;
+  const facingDeg = num("facingDeg");
+  if (facingDeg !== undefined) out["facingDeg"] = facingDeg;
+  const pitchDeg = num("pitchDeg");
+  if (pitchDeg !== undefined) out["pitchDeg"] = pitchDeg;
   const tr = num("tintR");
   const tg = num("tintG");
   const tb = num("tintB");

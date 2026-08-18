@@ -425,6 +425,12 @@ export interface DangerRimInput {
   fireRingRadius: number;
   /** the zone's own boundaryRadius (the ring's starting size) */
   zoneRadius: number;
+  /**
+   * ⭐ GH#364 —— 矩形分區的半寬半深。有值時火圈是一個**等比內縮的矩形**
+   * （`sim/fireRing.ts` 的 `fireRingSafeAt`），⛔ 不是半徑 `fireRingRadius` 的圓：
+   * 出貨的 24×18 分區畫成圓，短軸上會有 33% 的「安全區」其實會燒死人。
+   */
+  zoneRect?: { halfW: number; halfD: number };
 }
 
 /** Where to draw the rim and how hard to pulse it. */
@@ -433,6 +439,11 @@ export interface DangerRimSpec {
   radius: number;
   /** 0 the instant it starts closing → 1 when fully closed */
   urgency: number;
+  /**
+   * 有值 ⇒ 畫一個**以分區中心為中心**的矩形（這是它現在的半寬半深，已經內縮過），
+   * ⛔ 不要再畫 `radius` 那個圓。缺席 = 圓盤分區，既有行為。
+   */
+  rect?: { halfW: number; halfD: number };
 }
 
 /**
@@ -456,5 +467,16 @@ export function dangerRimSpecFor(i: DangerRimInput): DangerRimSpec | null {
   if (!(i.zoneRadius > 0)) return null;
   const r = i.fireRingRadius;
   if (!(r > 0) || !(r < i.zoneRadius)) return null;
-  return { radius: r, urgency: Math.max(0, Math.min(1, 1 - r / i.zoneRadius)) };
+  const urgency = Math.max(0, Math.min(1, 1 - r / i.zoneRadius));
+  // ⭐ GH#364 —— 矩形分區：`k = radius / halfW` 是 sim 用的同一個收縮比
+  // （`sim/map/bounds.ts` 的 `insideShrunkBounds`）。⛔ 不要另外算一份。
+  if (i.zoneRect !== undefined && i.zoneRect.halfW > 0) {
+    const k = Math.max(0, Math.min(1, r / i.zoneRect.halfW));
+    return {
+      radius: r,
+      urgency,
+      rect: { halfW: i.zoneRect.halfW * k, halfD: i.zoneRect.halfD * k },
+    };
+  }
+  return { radius: r, urgency };
 }

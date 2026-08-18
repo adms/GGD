@@ -681,6 +681,15 @@ hosted 頁面**可以累積成歷史紀錄**，同一份計畫改版時重發同
   根因是 CLAUDE.md 以前只記了「同一天只 bump 第三段」——**跨天那一半沒寫**。
   守衛：`packages/shared/src/ops/releaseScript.test.ts`。
 - 不要 `git add -A`。暫存/探測檔寫 `/private/tmp`，不要留在 repo。
+- ⛔ **`git checkout <檔>` / `git restore <檔>` 是不可逆的刪除，不是「還原一個小改動」。**
+  它把整個檔案退回索引/HEAD，**連同這個檔案上所有還沒 commit 的東西一起**。
+  2026-08-18：突變驗證做完想把一行改回去，打了 `git checkout apps/client/src/GameApp.ts`
+  —— 一次洗掉**三條 lane**（#362 場景特色、#364 矩形火圈、#368 模型尺寸）加上我自己
+  在同一個檔的所有改動。⚠️ 那三條 lane 的成果**沒有任何備份**，工作樹是唯一的副本。
+  · 突變驗證要**還原**時：用 `Edit` 把那一行改回去，⛔ 不是 checkout 整個檔。
+  · 真的手滑了：`git fsck --unreachable` 找 dangling blob（`git cat-file -p <sha>`
+    逐個比對關鍵字），這次就是這樣救回來的 —— **但那是運氣**（有人剛好做過 stash）。
+  ⭐ 判準跟 `git add -A` 一樣：**一個動詞影響到我沒有逐一看過的檔案，就是越線。**
 
 ---
 

@@ -27,7 +27,10 @@
  *   · a 3-stop size ramp pops in large inside the first ~15% then shrinks to
  *     nothing (never the old grows-over-life mush).
  */
-import type { VfxDoc, VfxBlendMode } from "@ggd/shared/content";
+import type { VfxDoc, VfxBlendMode, VfxOrient } from "@ggd/shared/content";
+// 純數學,沒有 @babylonjs import —— 上面那條「generator 要能在 tsx 下跑」的約束
+// 仍然成立(`orient.ts` 只 import 一個型別)。
+import { orientIsIdentity } from "../../vfx/orient";
 
 export type Rgb = readonly [number, number, number];
 export type Rgba = readonly [number, number, number, number];
@@ -80,6 +83,12 @@ export interface PrimitiveParams {
   coreAlpha?: number;
   /** gravityY override (world-units/s²; negative = down) */
   gravityY?: number;
+  /**
+   * 方位/旋轉 (#366)。`{ pitchDeg: 0 }` 把任何柱狀 primitive 放倒成橫向,
+   * `{ swirlDegPerSec }` 讓它繞自己的軸轉。⭐ **這一格就是「第二支只差參數」的
+   * 那個參數** —— 龍捲風與橫放的柱狀砲共用同一段程式。
+   */
+  orient?: VfxOrient;
 }
 
 const PARTICLE_BASE = "assets/textures/particles/";
@@ -137,6 +146,8 @@ interface Shape {
   stretched?: boolean;
   tailLength?: number;
   peakT?: number;
+  /** 這個形狀天生的方位/旋轉 (#366)。省略 = 直立不轉 = 升級前的行為 */
+  orient?: VfxOrient;
 }
 
 /** Assemble a VfxDoc from a resolved shape + the caller's params. */
@@ -178,6 +189,11 @@ function build(kind: PrimitiveKind, p: PrimitiveParams, base: Shape): VfxDoc {
     doc.stretched = true;
     if (base.tailLength !== undefined) doc.tailLength = base.tailLength;
   }
+  // #366 —— 呼叫端的 `orient` 蓋過形狀自己的。⚠️ 恆等時**不寫這個 key**,否則
+  // 633 份沒有方位的出貨文件會全部多出一個 `orient: {}`,而 `fx.fam.*` 那 78 份
+  // 是被逐位元組釘住的(`familyArtCoverage.test.ts`)。
+  const orient = p.orient ?? base.orient;
+  if (orient && !orientIsIdentity(orient)) doc.orient = { ...orient };
   // `kind` kept for callers/tests that want to assert which primitive built a doc
   void kind;
   return doc;
@@ -238,7 +254,20 @@ export function shockwave(p: PrimitiveParams): VfxDoc {
   });
 }
 
-/** TORNADO — a rising swirling column. Wind gusts, gales, whirlwinds. */
+/**
+ * TORNADO — a rising SWIRLING column. Wind gusts, gales, whirlwinds.
+ *
+ * ⚠️ 「swirling」這個字在 2026-08-18 之前是**謊話**(第一·五守則的形狀:卡片上
+ * 說了但不會發生)。這支 primitive 只是一個往上噴的錐 —— `w3xArtFamilies.tornado`
+ * 的 note 寫著「**旋轉**上升的柱狀氣流」,而整條管線裡**沒有任何東西會轉**:
+ * `vfx@1` 沒有方位欄位、`particleFactory` 零個 rotation 呼叫、`facingDeg` 是死的。
+ *
+ * 現在旋轉是 `orient.swirlDegPerSec`,而它是**引擎機制**不是這支技能的特例:
+ * 同一個欄位讓 `column` 加一格 `pitchDeg: 0` 就變成 owner 點名的「橫放的柱狀砲」。
+ * 540°/s = 每秒一圈半,在 0.3–0.72 秒的粒子壽命裡剛好轉到看得出是螺旋、又不會
+ * 快到變成一圈糊掉的環。⭐ 它是**出貨預設**,不是硬編碼:後台
+ * `config.vfx-families@1` 與每一層 `vfxLayers` 都蓋得掉。
+ */
 export function tornado(p: PrimitiveParams): VfxDoc {
   return build("tornado", p, {
     emitter: { shape: "cone", radius: 0.28, angleDeg: 34 },
@@ -252,6 +281,7 @@ export function tornado(p: PrimitiveParams): VfxDoc {
     stretched: true,
     tailLength: 2,
     peakT: 0.1,
+    orient: { swirlDegPerSec: 540 },
   });
 }
 

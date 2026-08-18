@@ -40,36 +40,53 @@ export const CAMERA_PITCH_RAD = (68 * Math.PI) / 180;
 const EX_PUNCH_MIN_DOLLY = 5;
 
 /**
- * ⭐ 縮放界線是**四格後台欄位**（`config.camera@1`，GH#332），⛔ 不是四個常數。
+ * ⭐ 縮放界線與開局預設是**五格後台欄位**（`config.camera@1`，GH#332 + GH#361），
+ * ⛔ 不是五個常數。
  *
- * owner 2026-08-15：「最大視野減少兩節(滑鼠滾輪)」—— 這是這個數字的**第三次**
- * 改動（#31 預設拉到最近、#161 俯角、現在最大視野）。前兩次各花掉一次
- * client rebuild + 一次完整部署，因為它一直寫死在這裡。
+ * owner 2026-08-15：「最大視野減少兩節(滑鼠滾輪)」；owner 2026-08-18（GH#361）：
+ * 「預設應該是離地板最高⋯可以縮放最高的視角太高了，至少要砍低一半高度」——
+ * 這已經是這一族數字的**第四次**改動（#31 預設拉到最近、#161 俯角、最大視野、
+ * 現在預設端點 + 再砍一半）。頭兩次各花掉一次 client rebuild + 一次完整部署，
+ * 因為它一直寫死在這裡。
  *
  * ⚠️ 每一次讀都走 `Configs`（開機時灌進去的那一份），⛔ 不快取成模組層級的
  * `const` —— 快取回來的值會讓後台存檔在**下一次重整之前**都不生效，
  * 而那正是「存了沒反應」這種最難查的壞法（同 #278）。
  * 這是滾輪事件與 setDead，不是每幀熱路徑，一次物件查表不值得優化。
  */
-function cameraLimits(): { minDolly: number; maxDolly: number; maxDollyDead: number; wheelStep: number } {
+function cameraLimits(): ReturnType<typeof resolveCamera> {
   return resolveCamera(Configs.tryGet(CAMERA_DOC_ID) as Parameters<typeof resolveCamera>[0]);
 }
 
 /**
- * 開局的預設鏡頭 = 允許的**最近**（#31a：預設就是最大）。
+ * 滾輪能推到的**最近**距離（＝離地板最低）。
  *
  * ⚠️ 這一格是 `export const` 而不是函式，因為它被當成模組層級的初始值用；
- * 讀不到設定時（測試、開機最早期）它就是出貨的 10。真正的執行期夾限走
+ * 讀不到設定時（測試、開機最早期）它就是出貨值。真正的執行期夾限走
  * {@link cameraLimits}，所以後台把 `minDolly` 調開之後滾輪立刻吃得到。
+ *
+ * ⭐ 它同時是**遮擋安全與特效取景的最壞情況**（`ArenaScene.SIGHTLINE_*`、
+ * `effectFraming`、`beatDance`）—— 那些地方要的是「鏡頭最貼地時還看得到嗎」，
+ * 所以它們讀的永遠是這一格，⛔ 不是 {@link DOLLY_DEFAULT}。
  */
 // ⚠️ 顯式 `: number`。`DEFAULT_CAMERA` 是 `as const`，不標的話這一格的型別是
 //    字面量 `10`，於是每一個「把 dolly 設回預設」的賦值都會被 tsc 擋下來。
 export const DOLLY_MIN: number = DEFAULT_CAMERA.minDolly;
 /**
- * Default zoom — the CLOSEST allowed dolly, so the champion starts as large as
- * the clamp permits (#31a). Derived from DOLLY_MIN so the two can never drift.
+ * 開局的預設鏡頭 —— ⭐ **出貨值 = 區間的最遠端**（GH#361）。
+ *
+ * owner 2026-08-18：「預設應該是**離地板最高**，可縮放離地板更近」。
+ * ⛔ 這**推翻了 #31a**（「預設＝最近」）。#31a 記下來的理由只有一句「讓角色在
+ * 畫面上盡可能大」，⛔ 沒有別的 —— owner 2026-08-18 判定那個取捨換來的
+ * 「離地板太近」更難忍受。
+ *
+ * ⚠️ 它**不再**由 `DOLLY_MIN` 推導，而是 `config.camera@1` 自己的一格
+ * （`zoom.defaultDolly`）—— 因為「預設在區間的哪一端」是一個**決策點**，
+ * 而 owner 已經改過它一次。填成 `minDolly` 就是一鍵 rollback 回 #31a。
+ * ⚠️ 這一格只是模組層級的初始值（測試 / 開機最早期）；真正開一場用的是
+ * 建構子裡讀的 {@link cameraLimits}，所以後台存檔重整就生效。
  */
-export const DOLLY_DEFAULT = DOLLY_MIN;
+export const DOLLY_DEFAULT: number = DEFAULT_CAMERA.defaultDolly;
 const PAN_SPEED = 26; // units/sec
 const EDGE_PX = 24;
 const FOLLOW_LERP_HALFLIFE_MS = 90;
@@ -199,6 +216,10 @@ export class CameraRig {
     private readonly scene: Scene,
     initialTarget: Vec2,
   ) {
+    // ⭐ 開局鏡頭讀的是**執行期**設定，⛔ 不是模組層級的 DOLLY_DEFAULT ——
+    //    後者在模組載入時就凍結了，於是後台存的預設要等到下一次 client rebuild
+    //    才生效（＝「存了沒反應」，同 #278）。resolveCamera 已經把它夾進區間。
+    this.dolly = cameraLimits().defaultDolly;
     this.target = { x: initialTarget.x, z: initialTarget.z };
     this.camera = new TargetCamera("rig", Vector3.Zero(), scene);
     this.camera.minZ = 0.5;
@@ -227,7 +248,8 @@ export class CameraRig {
    *
    * `apply()` writes the SHAKEN eye into both the camera transform and
    * `recordSightline`, so `groundView().yawRad` is `atan2(-shakeX, back - shakeZ)`.
-   * At the default dolly of 10 the standoff is only 3.75 u, so a SHAKE_SUM_MAX
+   * At the CLOSEST dolly (`DOLLY_MIN` = 10 — the worst case, and what #31a used
+   * to also ship as the default) the standoff is only 3.75 u, so a SHAKE_SUM_MAX
    * impulse swings that reported yaw by 25.7°. A minimap box rotating 25° for
    * 200 ms is invisible; a soundfield swinging 25° on every heavy hit is audible
    * smearing, arriving exactly when legibility matters most. The target itself
@@ -250,6 +272,31 @@ export class CameraRig {
     const c = cameraLimits();
     const max = this.dead ? c.maxDollyDead : c.maxDolly;
     this.dolly = Math.min(max, Math.max(c.minDolly, this.dolly + wheelDeltaY * c.wheelStep));
+  }
+
+  /**
+   * 鏡頭**歸位** —— 回到後台設定的開局預設距離（手把 R3 那一圈的最後一下）。
+   *
+   * ⛔ 以前這件事是 `zoomBy(-8000)`（「往內推到撞牆」），而那在 GH#361 之後是
+   * **錯的**：預設不再等於最近，撞牆會停在 `minDolly`，不是玩家要的「回到我一開始
+   * 看到的那個視野」。⇒ 歸位必須是一次**絕對賦值**，⛔ 不是一個夠大的相對量。
+   */
+  homeZoom(): void {
+    this.dolly = cameraLimits().defaultDolly;
+  }
+
+  /**
+   * 「離開預設」的滾輪方向：預設在**最遠端**時是 −1（往內推），預設在**最近端**
+   * 時是 +1（往外拉）。手把 R3 的縮放圈用它決定要往哪邊走一節。
+   *
+   * ⚠️ 這一格存在的理由：GH#361 把預設從最近端搬到最遠端，而 R3 的圈是寫死
+   * 「往外一節、往外一節、往外一節、歸位」—— 預設已經在最遠端時那三下**全部是
+   * no-op**，整個控制靜默死掉（失敗形態：做了但玩家拿不到）。從設定推方向，
+   * 後台把 `defaultDolly` 調回 `minDolly` 時它自己就換回來，⛔ 不必改程式。
+   */
+  get zoomAwaySign(): number {
+    const c = cameraLimits();
+    return c.defaultDolly >= c.maxDolly ? -1 : 1;
   }
 
   /**

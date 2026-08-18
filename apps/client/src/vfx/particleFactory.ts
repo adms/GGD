@@ -15,9 +15,49 @@ import { Texture } from "@babylonjs/core/Materials/Textures/texture";
 import type { BaseTexture } from "@babylonjs/core/Materials/Textures/baseTexture";
 import { Color4 } from "@babylonjs/core/Maths/math.color";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
-import type { VfxDoc, VfxBlendMode } from "@ggd/shared/content";
+import type { VfxDoc, VfxBlendMode, VfxOrient } from "@ggd/shared/content";
+import { addSwirl, orientAxis, orientDirection, orientIsIdentity } from "./orient";
 
 const CONTENT_BASE = "/content/";
+
+/**
+ * 把方位/旋轉裝到一個已經建好的 ParticleSystem 上 (#366)。
+ *
+ * Babylon 的 emitter type 決定每顆粒子的**初始方向**,而它永遠是繞著局部 +Y 的
+ * (cone / sphere / point 都是)。所以方位不是改一個屬性,是**包住那支函式**:
+ * 先讓原本的 emitter 算出它的方向(錐角的隨機散開要留著),再把結果轉進世界基底、
+ * 加上切線速度。
+ *
+ * ⚠️ 用的是 system 層的 `ps.startDirectionFunction` —— Babylon 的
+ * `thinParticleSystem` 有它就**不呼叫** emitter type 的那支(見該檔 :1178),
+ * 所以我們必須自己轉呼叫一次,⛔ 不可以只加不減。
+ *
+ * ⚠️ 位置先於方向:同一支函式裡 `particle.position` 已經被 `startPositionFunction`
+ * 填好了(thinParticleSystem.js :1170-1183),所以切線算得到半徑。順序反過來的話
+ * 旋轉會靜靜地變成 0 —— 而畫面上看起來只是「這支龍捲風不太轉」。
+ */
+function applyOrient(ps: ParticleSystem, orient: VfxOrient): void {
+  const type = ps.particleEmitterType;
+  const swirl = orient.swirlDegPerSec ?? 0;
+  const axis = orientAxis(orient);
+  const radial = { x: 0, y: 0, z: 0 };
+  const local = { x: 0, y: 0, z: 0 };
+  ps.startDirectionFunction = (worldMatrix, direction, particle, isLocal): void => {
+    type.startDirectionFunction(worldMatrix, direction, particle, isLocal, worldMatrix);
+    local.x = direction.x;
+    local.y = direction.y;
+    local.z = direction.z;
+    orientDirection(local, orient);
+    if (swirl !== 0) {
+      const e = ps.emitter as Vector3 | null;
+      radial.x = particle.position.x - (e?.x ?? 0);
+      radial.y = particle.position.y - (e?.y ?? 0);
+      radial.z = particle.position.z - (e?.z ?? 0);
+      addSwirl(local, radial, axis, swirl);
+    }
+    direction.set(local.x, local.y, local.z);
+  };
+}
 
 /** Assumed sheet-cell pixels until the real texture size is known (async). */
 const FALLBACK_CELL_PX = 64;
@@ -229,8 +269,16 @@ export function toParticleSystem(
   ps.maxEmitPower = doc.speed?.max ?? 3.2;
   ps.updateSpeed = 0.016;
 
-  // WC3 gravity (negative = downward)
-  ps.gravity = doc.gravityY !== undefined ? new Vector3(0, doc.gravityY, 0) : Vector3.Zero();
+  // WC3 gravity (negative = downward) — 方位 (#366) 也轉這一條:一支柱狀特效
+  // 「往哪邊長」靠的就是重力,所以 `pitchDeg: 0` 一格就把直立的光柱放倒成橫向的
+  // 柱狀砲,⛔ 不需要第二支 primitive。
+  const g = doc.gravityY !== undefined ? { x: 0, y: doc.gravityY, z: 0 } : { x: 0, y: 0, z: 0 };
+  if (!orientIsIdentity(doc.orient)) orientDirection(g, doc.orient);
+  ps.gravity = new Vector3(g.x, g.y, g.z);
+
+  // 方位/旋轉 (#366)。恆等時**完全不裝這個 hook**,所以沒有寫 `orient` 的 633
+  // 份出貨文件走的是升級前一模一樣的那條路(連一次多餘的函式呼叫都沒有)。
+  if (!orientIsIdentity(doc.orient)) applyOrient(ps, doc.orient!);
 
   // WC3 tail particles: stretch along the velocity vector
   if (doc.stretched) {

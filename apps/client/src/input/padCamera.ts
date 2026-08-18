@@ -9,12 +9,19 @@
  * ════════════════════════════════════════════════════════════════════════════
  * The retired modifier layer spent TWO buttons on zoom (RB+LT out, RB+RT in).
  * The new map spends one: a stick click, which is a single discrete event and
- * cannot mean "out" and "in" at the same time. So R3 walks the camera OUT one
- * notch per press and, once it has reached the last notch, HOMES — back to the
- * default distance and back onto the champion. That is both halves of 「歸位 /
- * 縮放」 on one button, and it means a lost player is never more than a few
- * presses from a known-good view, which is the thing a couch player actually
- * needs (nobody on a sofa is fine-tuning a dolly).
+ * cannot mean "out" and "in" at the same time. So R3 walks the camera one notch
+ * AWAY FROM THE DEFAULT per press and, once it has reached the last notch,
+ * HOMES — back to the default distance and back onto the champion. That is both
+ * halves of 「歸位 / 縮放」 on one button, and it means a lost player is never
+ * more than a few presses from a known-good view, which is the thing a couch
+ * player actually needs (nobody on a sofa is fine-tuning a dolly).
+ *
+ * ⚠️ "AWAY FROM THE DEFAULT" used to be spelled "OUT", because #31a shipped the
+ * default AT the near clamp so away could only mean out. GH#361 moved the
+ * shipped default to the FAR clamp, at which point three "out" presses became
+ * three no-ops and the button did nothing at all. The direction is now derived
+ * (`rig.zoomAwaySign`) so the control survives the next time owner moves the
+ * default — including rolling it all the way back to #31a.
  *
  * The counter lives here rather than being read back off the rig because the
  * rig's dolly is also moved by the mouse wheel, the death-spectator transition
@@ -35,24 +42,27 @@ export interface PadCameraRig {
   followLock: boolean;
   /** wheel-equivalent dolly delta; positive = out, negative = in. */
   zoomBy(wheelDeltaY: number): void;
+  /** absolute reset to the configured default distance (`zoom.defaultDolly`). */
+  homeZoom(): void;
+  /** which way a notch has to go to LEAVE the default: −1 = in, +1 = out. */
+  readonly zoomAwaySign: number;
   toggleFollow(): void;
 }
 
-/** Wheel-equivalent dolly delta per R3 notch (see CameraRig.zoomBy). */
+/**
+ * Wheel-equivalent dolly delta per R3 notch, as a MAGNITUDE (see
+ * `CameraRig.zoomBy`). The direction comes from `rig.zoomAwaySign`.
+ *
+ * ⚠️ GH#361: it used to be a signed `+120` ("one notch further OUT"), which was
+ * only correct while the default zoom was the CLOSEST (#31a). Now that the
+ * shipped default is the FARTHEST, stepping out is a no-op three times in a row
+ * and the whole R3 control dies silently. The cycle is "step AWAY from the
+ * default, then home", and which way that is falls out of the config.
+ */
 export const GAMEPAD_ZOOM_STEP = 120;
 
-/** How many notches out before the next press homes the camera. */
+/** How many notches away from the default before the next press homes the camera. */
 export const GAMEPAD_ZOOM_NOTCHES = 3;
-
-/**
- * A zoom delta that ALWAYS reaches the near clamp, whatever the dolly is now.
- * `CameraRig.zoomBy` clamps to `[DOLLY_MIN, dollyMax]` and scales the wheel
- * delta by 0.02, and the widest clamp in the rig is the dead-spectator
- * `DOLLY_MAX_DEAD` (90) against `DOLLY_MIN` (10): (90-10)/0.02 = 4000. Doubled
- * for headroom, so "home" is an absolute reset to `DOLLY_DEFAULT` and not a
- * relative step that could land short.
- */
-export const GAMEPAD_ZOOM_HOME_DELTA = -8000;
 
 /**
  * One local player's pad camera state. Per player: in couch play each seat has
@@ -76,11 +86,11 @@ export class PadCameraControl {
     }
     if (cam.zoomCycle) {
       if (this.notch >= GAMEPAD_ZOOM_NOTCHES) {
-        rig.zoomBy(GAMEPAD_ZOOM_HOME_DELTA); // 歸位: back to DOLLY_DEFAULT
+        rig.homeZoom(); // 歸位: absolute reset to the configured default distance
         rig.followLock = true; // …and back onto the champion
         this.notch = 0;
       } else {
-        rig.zoomBy(GAMEPAD_ZOOM_STEP); // 縮放: one notch further out
+        rig.zoomBy(GAMEPAD_ZOOM_STEP * rig.zoomAwaySign); // 縮放: one notch away from the default
         this.notch += 1;
       }
     }

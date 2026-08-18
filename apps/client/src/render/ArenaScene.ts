@@ -41,8 +41,21 @@ import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { ParticleSystem } from "@babylonjs/core/Particles/particleSystem";
 import type { AssetContainer } from "@babylonjs/core/assetContainer";
 import type { ArenaDef } from "@ggd/shared/sim/world/ArenaDef";
-import type { ArenaBackdropPolicy, ArenaDoc, ArenaFire } from "@ggd/shared/content";
-import { DEFAULT_ARENA_BACKDROP, DEFAULT_ARENA_FIRE, decorModelBurns } from "@ggd/shared/content";
+import type {
+  ArenaBackdropPolicy,
+  ArenaDoc,
+  ArenaFire,
+  ArenaScenery,
+  ArenaSceneryPolicy,
+} from "@ggd/shared/content";
+import {
+  DEFAULT_ARENA_BACKDROP,
+  DEFAULT_ARENA_FIRE,
+  DEFAULT_ARENA_SCENERY_POLICY,
+  decorModelBurns,
+  expandSceneryProps,
+  hexToRgb01,
+} from "@ggd/shared/content";
 import { buildBackdrop } from "./ArenaBackdrop";
 import type { AssetManager } from "./AssetManager";
 import { CAMERA_PITCH_RAD, DOLLY_MIN } from "./CameraRig";
@@ -52,8 +65,19 @@ import {
   buildZoneGround,
   CONTACT_SPREAD,
   type ContactShadow,
+  type GroundPalette,
   type ZoneGround,
 } from "./ArenaGround";
+
+/**
+ * ⭐ GH#362 —— `scenery.palette` 的地板／牆兩格 → 渲染層要的 0..1 rgb。
+ * `undefined` 進、`undefined` 出：沒宣告 palette 的場地走的是 `ArenaGround` 裡
+ * 那條原本的路（不染色 + `KERB_TINT`），逐像素不變。
+ */
+export function groundPaletteOf(scenery: ArenaScenery | undefined): GroundPalette | undefined {
+  const p = scenery?.palette;
+  return p === undefined ? undefined : { floor: hexToRgb01(p.floor), wall: hexToRgb01(p.wall) };
+}
 
 /** Decor rotation is authored in quarter-turns (0-3) — pure, unit-tested. */
 export function rotQuarterToRadians(rotQuarter: number): number {
@@ -71,7 +95,7 @@ export function rotQuarterToRadians(rotQuarter: number): number {
 //   reach(H) = (H − h) · standoff / (eyeHeight − H)
 // north of its silhouette, and UNBOUNDEDLY once H reaches the camera eye.
 // The worst case inside the dolly clamp is the CLOSEST zoom — DOLLY_MIN = 10,
-// which is also the default (#31a): eye ≈ 9.27u, standoff ≈ 3.75u. Capping
+// (⚠️ GH#361: no longer also the default): eye ≈ 9.27u, standoff ≈ 3.75u. Capping
 // visual tops at 2.4u keeps the full-hide band for a 1.7u hero under
 //   (2.4 − 1.7) · 3.75 / (9.27 − 2.4) ≈ 0.38u
 // — a body-contact band, never a vanished hero.
@@ -203,7 +227,18 @@ export interface ArenaHandles {
  * fallback colour and fetches NO texture set — otherwise every boot would
  * download a stone set that the real map is about to throw away.
  */
-export function buildArena(scene: Scene, arena: ArenaDef, groundStyle?: string): ArenaHandles {
+export function buildArena(
+  scene: Scene,
+  arena: ArenaDef,
+  groundStyle?: string,
+  /**
+   * ⭐ GH#362 —— 這張場地的視覺身分。這裡只用得到 `palette`（地板／牆壁染色），
+   * 因為它必須在**建材質的當下**就決定；燈走 `Lighting.applyScenery()`、
+   * 散佈裝飾走 `dressArena()`。省略 = 出貨前的顏色。
+   */
+  scenery?: ArenaScenery,
+): ArenaHandles {
+  const palette = groundPaletteOf(scenery);
   const root = new TransformNode(`arena-root-${arena.id}`, scene);
   const handles: ArenaHandles = {
     root,
@@ -214,7 +249,7 @@ export function buildArena(scene: Scene, arena: ArenaDef, groundStyle?: string):
   };
 
   arena.zones.forEach((zone, zi) => {
-    handles.grounds.push(buildZoneGround(scene, root, zone, zi, groundStyle));
+    handles.grounds.push(buildZoneGround(scene, root, zone, zi, groundStyle, palette));
 
     const obstacleMat = new StandardMaterial(`zone-${zi}-obstacle-mat`, scene);
     obstacleMat.diffuseColor = new Color3(0.42, 0.4, 0.45);
@@ -484,6 +519,12 @@ export async function dressArena(
    * 那時字串相等但 root 是新的一顆。
    */
   isStale: () => boolean = () => handles.root.isDisposed(),
+  /**
+   * ⭐ GH#362 —— 場景特色政策（`config/ambient-vfx@1` 的 `scenery`）。
+   * 省略 = `DEFAULT_ARENA_SCENERY_POLICY`（**開的**）—— 呼叫端忘了接線時的結果是
+   * 「有特色裝飾」而不是「沒有」，因為 owner 明說要更多場景裝飾。
+   */
+  sceneryPolicy: ArenaSceneryPolicy = DEFAULT_ARENA_SCENERY_POLICY,
 ): Promise<void> {
   // ---- 圓盤外的 2D 景深背景（GH#324 第三層）----
   // ⚠️ 先建，⛔ 不要在 await 之後 —— 道具 GLB 可能要好幾秒，而「圓盤外一片黑」
@@ -493,7 +534,17 @@ export async function dressArena(
   }
 
   // ---- decor props ----
-  const uniquePaths = [...new Set(doc.decor.map((d) => d.model))];
+  // ⭐ GH#362 —— 散佈規則在這裡**展開成逐件的 decor**，然後就走原本那條路。
+  // ⚠️ 這是刻意的：展開結果逐字是 `DecorDef`，所以視線壓扁、接觸陰影、火焰掛載、
+  //    LOD、淡出全部原封不動吃到它 —— ⛔ 這條規則是 decor 的產生器，不是第二條
+  //    渲染路徑。第二條路徑會在半年後長出自己那一套（漏掉的）遮擋規則。
+  const decor = sceneryPolicy.enabled
+    ? [
+        ...doc.decor,
+        ...expandSceneryProps(doc.scenery, arena.zones, sceneryPolicy.maxPropsPerZone),
+      ]
+    : doc.decor;
+  const uniquePaths = [...new Set(decor.map((d) => d.model))];
   const containers = new Map<string, AssetContainer | null>();
   await Promise.all(
     uniquePaths.map(async (p) => {
@@ -506,7 +557,7 @@ export async function dressArena(
   if (isStale()) return;
 
   const contacts: ContactShadow[] = [];
-  for (const d of doc.decor) {
+  for (const d of decor) {
     // 每一件道具之前再問一次。今天這個迴圈從上面那個 await 之後是**同步**的，
     // 所以它只有在有人日後把 await 搬進迴圈（分批載入）時才會真的擋下東西 ——
     // 留著的理由是那一天不會有人回頭重新推導這個不變量，而代價是一次布林呼叫。
