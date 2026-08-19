@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# 升級問題給 owner **之前**先跑這個 —— 他可能已經答過了。
+#
+# owner 2026-08-20：
+#   「你**重複問我也重複回答三次以上**了，你一定是**沒更新上去做記錄**，
+#    我說了⋯**先做好 GH issue 記錄不要再重複問我了**」
+#
+# ⚠️ 這條規則失效的形狀很特別：答案**就在我自己寫的帳本裡**
+# （`docs/_daily/2026-08-19.md:116` 逐字記著「跟主動一樣就好」），
+# 而我升級決策時沒有回頭讀那張表。⇒ 判準治不了，因為「要記得查」正是被忘掉的那件事。
+#
+#   bash scripts/asked-before.sh 吞噬 冷卻
+#   bash scripts/asked-before.sh 樹精
+set -uo pipefail
+cd "$(dirname "$0")/.."
+[ $# -eq 0 ] && { echo "用法: $0 <關鍵字> [關鍵字…]" >&2; exit 2; }
+
+PROJ="$HOME/.claude/projects/-Users-Takuro-GGD"
+HITS=0
+for kw in "$@"; do
+  echo "════ 「$kw」 ════"
+  # ① 我自己的日期帳本（最便宜、命中率最高）
+  if out=$(grep -rn --color=never "$kw" docs/_daily/*.md 2>/dev/null | head -12) && [ -n "$out" ]; then
+    echo "── docs/_daily（我記過的裁決）──"; echo "$out"; HITS=1
+  fi
+  # ② 已經開的票（含留言）
+  if command -v gh >/dev/null 2>&1; then
+    if out=$(gh issue list --state all --limit 300 --search "$kw" \
+             --json number,title,state \
+             --jq '.[]|"  #\(.number) \(.state|ascii_downcase) — \(.title)"' 2>/dev/null | head -8) \
+       && [ -n "$out" ]; then
+      echo "── 相關票 ──"; echo "$out"; HITS=1
+    fi
+  fi
+  # ③ transcript 撈出來的 owner 原話（若已產生）
+  for f in /private/tmp/ggd-msgs-since-v0181.md docs/_daily/ledger-source_temp_*.md; do
+    [ -f "$f" ] || continue
+    if out=$(grep -n --color=never "$kw" "$f" 2>/dev/null | head -8) && [ -n "$out" ]; then
+      echo "── owner 原話（$(basename "$f")）──"; echo "$out"; HITS=1
+      break
+    fi
+  done
+  echo
+done
+if [ "$HITS" -eq 1 ]; then
+  echo "⚠️ **有命中** —— 先把上面讀完再決定要不要問。"
+  echo "   如果他已經答過：⛔ 不要再問，把答案**逐字寫進那張票**（他要的是記錄，不是再問一次）。"
+else
+  echo "✓ 沒有命中 —— 這題看起來是新的，可以升級給 owner。"
+fi

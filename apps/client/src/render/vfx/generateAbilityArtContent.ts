@@ -4,7 +4,7 @@
  *   pnpm exec tsx apps/client/src/render/vfx/generateAbilityArtContent.ts
  *   pnpm exec tsx apps/client/src/render/vfx/generateAbilityArtContent.ts --check
  *
- * ⭐ **它只擁有一格。** 這一份文件有三格，而三格的來源不一樣 ——
+ * ⭐ **它只擁有一格。** 這一份文件有四格，而四格的來源不一樣 ——
  * 把三格都重寫是 `generateFamilyContent.ts` 在 GH#378 踩過的坑
  * （「整份重寫」把六個後台旋鈕整格刪掉，而 `content:build` 是綠的）。
  *
@@ -12,7 +12,12 @@
  * |---|---|---|
  * | `family` | `MODEL_USAGE.json` + `VFX_BINDINGS.json` **推導得出來** | ⭐ **重寫**（`deriveW3xFamilyArt`） |
  * | `prim` | 人讀技能中文名分出來的**分類**，沒有上游 | 逐位保留 |
+ * | `owner` | ⭐ **owner 的設計覆寫**（GH#431），沒有上游 | 逐位保留 |
  * | `promoted` | 人挑的晉升清單（可渲染性閘），沒有上游 | 逐位保留 |
+ *
+ * ⚠️ `owner` 那一格被**同一條「保留是預設」的規則**接住，⛔ 不需要為它加一段程式 ——
+ * 這正是 GH#378／GH#427 的教訓寫進來之後拿到的利息。而它必須是**另一格**，
+ * ⛔ 不可以直接改 `family`：`family` 每一次產生都會被推導整格換掉。
  *
  * ⚠️ **保留是預設而不是白名單**：這份文件之後多一格（例如後台加一種綁定），
  * 不必回來改這裡，它自動活下來。⛔ 反過來寫（列出要保留的 key）就是 GH#378。
@@ -54,7 +59,7 @@ function readDoc(contentDir: string): AbilityArtDoc {
 /**
  * 磁碟上那一份 + 重新推導的 `family` 格。
  *
- * ⭐ 每一列的 key 順序固定成 `prim` → `family` → `promoted`，key 本身排序，
+ * ⭐ 每一列的 key 順序固定成 `prim` → `family` → `owner` → `promoted`，key 本身排序，
  * 所以同樣的輸入永遠產出同樣的位元組。
  */
 export function nextDoc(contentDir: string = CONTENT_DIR): AbilityArtDoc {
@@ -77,7 +82,9 @@ export function nextDoc(contentDir: string = CONTENT_DIR): AbilityArtDoc {
   for (const id of Object.keys(rows).sort()) {
     const r = rows[id]!;
     const ordered: Record<string, unknown> = {};
-    for (const k of ["prim", "family", "promoted"]) if (r[k] !== undefined) ordered[k] = r[k];
+    // ⭐ `owner` 緊跟在 `family` 後面（GH#431）—— 讀檔的人看到的是
+    // 「原作證明了什麼」再「owner 推翻成什麼」，兩格相鄰，⛔ 不必翻兩個地方。
+    for (const k of ["prim", "family", "owner", "promoted"]) if (r[k] !== undefined) ordered[k] = r[k];
     for (const k of Object.keys(r).sort()) if (ordered[k] === undefined) ordered[k] = r[k];
     if (Object.keys(ordered).length > 0) out[id] = ordered;
   }

@@ -203,7 +203,8 @@ WAIVERS = {
 BLOCKED_WAIVERS = {
     ("godie-e002.w", "魔力耗盡"): "manifest 標 blocked。20-01「MP 不足自動關閉」今天用 "
                                   "condition{stat:mp} 近似；真正的自動關閉要 "
-                                  "toggle.upkeepCadence=perAttack（見那一列的量測前提）",
+                                  "toggle.upkeepCadence=perAttack"
+                                  "（見那一列的量測前提，`heroes/godie-e002.py`）",
 }
 
 

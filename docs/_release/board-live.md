@@ -53,7 +53,37 @@
 | **參考錨點改 30/50/99**（不是 L18） | 08-19 19:30 | 已回寫 #446 #447 |
 | **9 支技能的級距直接裁決**（鬼眼→極大⋯式神炸裂→中） | 08-19 22:30 | 已回寫 #433，⛔ 一支都還沒落地 |
 | **FATE 圖示全量重產**（「backup all icons then re-gen」） | 08-19 19:05 | 備份完成 2168 檔，⛔ **重產未做** |
-| **檔案拆分策略**（讓大量改技能時的平行化不卡住） | 08-20 01:2x | 🔨 設計中 |
+| **檔案拆分策略**（讓大量改技能時的平行化不卡住） | 08-20 01:2x | ✅ **#467 已落地**（見下） |
+
+### ✅ #467 拆檔案（owner：**優先做因為關鍵**）—— 四個單一寫入者已全部拆掉
+
+| 檔 | 原本 | 誰被擋住 | 現在 |
+|---|---:|---|---|
+| `tools/skill-remake/batch1.py` | **3,354 行**，擁有 20 個 id / 113 份 JSON | 任何改到那 20 位英雄的 lane | 393 行殼 + `common.py` + **`heroes/<英雄 id>.py` × 15** |
+| `packages/shared/src/content/schema/effect.ts` | **4,754 行 / 40 個 kind** 在一個 union | 任何**新機制** | 299 行門面 + **`schema/effects/<kind>.ts` × 40** |
+| `packages/shared/src/sim/effects/effect.ts` | **2,751 行**（同一個 TS union） | 同上 | 430 行 + **`sim/effects/variants/<kind>.ts` × 40** |
+| `descriptionClaims.baseline.ts`（181）· `abilityCodeParity.baseline.ts`（342） | 全域棘輪 | 每一條修卡面的 lane | 兩支只剩 loader（50 / 48 行）+ **60 / 22 份逐英雄 JSON** |
+| ✅ `content/abilities/` | **462 檔，一技能一檔** | — | ⭐ 本來就切好了 —— 瓶頸**不在內容** |
+
+**分片軸**：內容按**英雄**（正規化+說明校正+實作+該支驗證要一起做）·
+引擎按**機制**（一個 effect kind 解鎖 N 支）· 全域檢查**收一次**。
+⇒ 三條軸的併行上限從 **1** 變成 **15 / 40 / 60**。
+
+**安全網**：`tools/shard/snapshot_generated.py`
+—— 基準取自**凍結的 commit**（⛔ 不是會被別的 lane 編輯的工作樹），
+分片後產出必須**逐位元組相同**。收工時 `--compare` 只有一筆漂移
+（`godie-e010.r.json`，W6 的**內容修正**，與分片無關）＝ **新漂移 0**。
+它在啟用當下就抓到那一筆，證明它會紅；分片途中另外抓到**兩次真的行為漂移**
+（refiner 派發表漏 12 處 → 7 條負向探針從「拒絕」變「通過」；`zEffectDef` 從
+`ZodLazy` 變 `ZodEffects` → 三個 walker 分岔而不報錯），兩處都已還原。
+
+**三條會紅的閘**（⛔ 不是三條要記得的判準）：`batch1.py::load_heroes()` 的雙向註冊表閘 ·
+`schema/effects/effectShardWiring.test.ts` 的四向閘 · `baselineShards.ts` loader
+（檔名↔內容錯位 / `[]` 空殼 / 跨檔重複 / 孤兒檔）。三條都做過突變驗證。
+
+**對外落點已寫**：README §9「大量改技能時的檔案分片」· Codex 契約 §3 覆蓋表（**產生的**）·
+`docs/技能標記機制與效果規則.md` §5 每個 kind 的「定義檔」行（**產生的**）·
+`v0.21.5-draft.md` 的 #467 一節。⛔ `package.json` 與後台設定不需要改，理由寫在 release note。
 
 ### ⚠️ 併行時會咬人的四件事
 

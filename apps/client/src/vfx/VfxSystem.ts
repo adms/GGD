@@ -45,6 +45,7 @@
  * the oldest on screen).
  */
 import type { Scene } from "@babylonjs/core/scene";
+import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import type { ParticleSystem } from "@babylonjs/core/Particles/particleSystem";
 import type { EventMessage } from "@ggd/shared/protocol/messages";
@@ -838,6 +839,27 @@ export class VfxSystem {
    * An ability with NO promotion is untouched: rung 1–4 do not apply and it
    * plays its one primitive exactly as before.
    */
+  /**
+   * GH#392 —— 這一次施法要掛在誰的哪一根骨頭上，或 null。
+   *
+   * ⭐ 節點是從 **scene 自己**查的（`champ-<entityId>`，`ChampionView` 的
+   * 建構子就是這樣命名的），⛔ 不必新增一條 `VfxContext` 回呼 ——
+   * 多一條可選回呼就等於多一個「上游忘了接就靜靜地什麼都不發生」的洞
+   * （失敗形態②），而這一條路的證據（掛點字串）本來就已經在 `art` 上了。
+   *
+   * ⚠️ 查不到節點（體素替身、模型還在載、觀戰視角）→ null → 走世界座標，
+   * 也就是這一版之前一位元不差的行為。⛔ 不丟例外、⛔ 不吞掉這一次施法。
+   */
+  private castAnchor(
+    art: { anchor?: string } | undefined,
+    casterId: number | undefined,
+  ): { root: TransformNode; attach: string } | null {
+    const attach = art?.anchor;
+    if (!attach || casterId === undefined) return null;
+    const root = this.scene.getTransformNodeByName(`champ-${casterId}`);
+    return root ? { root, attach } : null;
+  }
+
   private playCastVfx(
     abilityId: string | undefined,
     doc: VfxDoc | null,
@@ -853,6 +875,12 @@ export class VfxSystem {
      * 宣告 `orient.yawFrom: "aim"` 的文件才會被動到,其餘一位元不變。
      */
     aimYawDeg?: number | null,
+    /**
+     * GH#392 —— 誰在施法。⭐ 它**只**用來找那名英雄的模型節點
+     * （`champ-<id>`，`ChampionView` 建的），好讓帶掛點的技能把特效掛在
+     * 胸口／手／武器的骨骼上並跟著動。undefined = 走世界座標。
+     */
+    casterId?: number,
   ): void {
     // ---- RUNG 0: 技能自己寫了 `vfxLayers` (#205) ---------------------------
     // 一份 doc 寫了層堆疊,那就是作者對「這一招施法時畫什麼」的完整陳述 ——
@@ -911,7 +939,10 @@ export class VfxSystem {
       if (d) set.push(tune(d));
     }
     // 1
-    if (this.w3xCast.play(art.family, set, pos.x, castY, pos.z, nowMs)) return;
+    // GH#392 —— 這一招宣告了掛點就把整個效果掛到施法者身上（附著＋跟隨＋
+    // 特效自己的動畫軌），⛔ 沒宣告就一位元不差地走世界座標那條路。
+    if (this.w3xCast.play(art.family, set, pos.x, castY, pos.z, nowMs, this.castAnchor(art, casterId)))
+      return;
     // 2
     if (set.length > 0) {
       for (const d of set) this.play(d, pos.x, pos.z, nowMs, castY, boost);
@@ -1278,7 +1309,18 @@ export class VfxSystem {
         const layers = isLegacySingleVfx(def as AbilityVfxSource | undefined)
           ? null
           : castLayersFor(def as AbilityVfxSource | undefined, maxAbilityVfxLayers());
-        this.playCastVfx(def?.id, doc, pos, nowMs, isEx ? EX_BURST_BOOST : 1, layers, point, aimYawDeg);
+        this.playCastVfx(
+          def?.id,
+          doc,
+          pos,
+          nowMs,
+          isEx ? EX_BURST_BOOST : 1,
+          layers,
+          point,
+          aimYawDeg,
+          // GH#392 —— 施法者。帶掛點的技能靠它找到 `champ-<id>` 節點。
+          typeof caster === "number" ? caster : undefined,
+        );
         // GROUND SCORCH (task #147): stamp a fading dark mark where the ability
         // lands (its ground `point` when it targets the floor) or, failing that,
         // under the caster — so a cast scars the arena instead of leaving it

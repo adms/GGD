@@ -10,172 +10,41 @@
  * （owner 2026-08-19：「只要做有開放的角色技能及隨機三選一就好」），
  * 數量由 `descriptionClaims.test.ts` 一起印出來，⛔ 不是藏起來讓數字變好看。
  *
- * 產生方式（⛔ 不要手打）：
+ * ── ⭐ 這份名單**按英雄分片**（GH#467 ③）─────────────────────────────────────
+ * 真正的資料在 `descriptionClaims.baseline/<英雄>.json`，一位一個檔。
+ * 這裡只負責讀整個目錄。⛔ 不要把鍵搬回這支 `.ts`：全域單檔會讓每一條
+ * 「修卡面說謊」的 lane 在同一個檔上排隊（理由寫在 `baselineShards.ts` 檔頭）。
+ *
+ *   · 修好一位英雄的**一筆** → 從那個檔刪掉那一行
+ *   · 修好一位英雄的**全部** → ⭐ **刪掉那個檔**（留下 `[]` 會被 loader 擋下來）
+ *   · 孤兒檔（檔名不對應任何一位開放英雄／固有能力）→ `descriptionClaims.test.ts`
+ *     的孤兒閘會紅 —— 那種檔＝一批**永久關掉**的豁免
+ *
+ * 整份重新產生（⛔ 不要手打）：
  *   GGD_DESC_CLAIMS_DUMP=1 npx vitest run packages/shared/src/content/descriptionClaims.test.ts
- *   → $TMPDIR/ggd-desc-claims-open.tsv 的第一欄
+ *   rm -rf packages/shared/src/content/descriptionClaims.baseline
+ *   cp -R "${TMPDIR:-/tmp}/ggd-desc-claims-baseline" packages/shared/src/content/descriptionClaims.baseline
  */
-export const KNOWN_MISMATCHES: readonly string[] = [
-  "godie-e001.ex|cooldown-mismatch",
-  "godie-e001.ex|damage-absent",
-  "godie-e001.q|damage-absent",
-  "godie-e002.w|damage-absent",
-  "godie-e008.q|damage-absent",
-  "godie-e008.r|duration-absent",
-  "godie-e00l.ex|cooldown-mismatch",
-  "godie-e00n.ex|cooldown-mismatch",
-  "godie-e00n.ex|damage-absent",
-  "godie-e00n.q|damage-absent",
-  "godie-e00n.q|duration-absent",
-  "godie-e00n.w|cooldown-mismatch",
-  "godie-e00r.ex|hp-pct-absent",
-  "godie-e00x.ex|duration-absent",
-  "godie-e00x.e|duration-absent",
-  "godie-e00x.e|tag-no-mechanism",
-  "godie-e00x.w|cooldown-mismatch",
-  "godie-e00x.w|damage-absent",
-  "godie-e010.w|cooldown-mismatch",
-  "godie-efur.ex|hp-pct-absent",
-  "godie-efur.w|hp-pct-absent",
-  "godie-etyr.e|mana-restore-absent",
-  "godie-etyr.passive|duration-absent",
-  "godie-etyr.r|cooldown-mismatch",
-  "godie-etyr.r|duration-absent",
-  "godie-h00l.passive|hp-pct-absent",
-  "godie-h01o.ex|duration-absent",
-  "godie-h01o.r|duration-absent",
-  "godie-h020.ex|duration-absent",
-  "godie-h020.w|duration-absent",
-  "godie-h02r.ex|duration-absent",
-  "godie-h02r.passive|duration-absent",
-  "godie-h02r.q|duration-absent",
-  "godie-h02r.w|duration-absent",
-  "godie-h02u.ex|cooldown-mismatch",
-  "godie-h02u.q|duration-absent",
-  "godie-h02u.r|duration-absent",
-  "godie-h02u.r|tag-no-mechanism",
-  "godie-h02u.w|duration-absent",
-  "godie-h02v.ex|duration-absent",
-  "godie-h02v.ex|hp-pct-absent",
-  "godie-hapm.ex|hp-pct-absent",
-  "godie-hapm.r|hp-pct-absent",
-  "godie-hart.ex|cooldown-mismatch",
-  "godie-hgam.passive|duration-absent",
-  "godie-hgam.q|duration-absent",
-  "godie-hgam.w|duration-absent",
-  "godie-hjai.w|duration-absent",
-  "godie-hpb1.ex|cooldown-mismatch",
-  "godie-huth.e|duration-absent",
-  "godie-hvsh.ex|cooldown-mismatch",
-  "godie-hvsh.ex|damage-absent",
-  "godie-hvsh.w|cooldown-mismatch",
-  "godie-hvwd.ex|cooldown-mismatch",
-  "godie-hvwd.ex|damage-absent",
-  "godie-hvwd.q|cooldown-mismatch",
-  "godie-hvwd.w|cooldown-mismatch",
-  "godie-n003.passive|cooldown-mismatch",
-  "godie-n00b.w|duration-absent",
-  "godie-n00p.ex|cooldown-mismatch",
-  "godie-n00p.ex|hp-pct-absent",
-  "godie-n00p.e|duration-absent",
-  "godie-n00p.e|tag-no-mechanism",
-  "godie-n00p.q|duration-absent",
-  "godie-n00p.r|duration-absent",
-  "godie-n00p.w|damage-absent",
-  "godie-n00p.w|duration-absent",
-  "godie-n01c.q|duration-absent",
-  "godie-n01g.ex|duration-absent",
-  "godie-n01g.passive|cooldown-mismatch",
-  "godie-nbbc.q|duration-absent",
-  "godie-nsjs.ex|cooldown-mismatch",
-  "godie-nsjs.ex|hp-pct-absent",
-  "godie-nsjs.q|duration-absent",
-  "godie-nsjs.r|duration-absent",
-  "godie-nsjs.w|damage-absent",
-  "godie-nsjs.w|duration-absent",
-  "godie-o00k.ex|cooldown-mismatch",
-  "godie-o00l.ex|cooldown-mismatch",
-  "godie-o00x.ex|cooldown-mismatch",
-  "godie-o00x.e|duration-absent",
-  "godie-o00x.e|tag-no-mechanism",
-  "godie-o00x.q|duration-absent",
-  "godie-o02l.ex|damage-absent",
-  "godie-o02l.r|duration-absent",
-  "godie-o02l.r|tag-no-mechanism",
-  "godie-o02l.w|cooldown-mismatch",
-  "godie-o02p.ex|duration-absent",
-  "godie-o02p.r|duration-absent",
-  "godie-o030.ex|cooldown-mismatch",
-  "godie-o030.e|duration-absent",
-  "godie-o030.w|duration-absent",
-  "godie-ofar.ex|damage-absent",
-  "godie-ogld.ex|damage-absent",
-  "godie-ogld.ex|duration-absent",
-  "godie-ogld.e|duration-absent",
-  "godie-ogld.q|duration-absent",
-  "godie-ogld.w|duration-absent",
-  "godie-ogrh.ex|cooldown-mismatch",
-  "godie-ogrh.q|duration-absent",
-  "godie-orkn.ex|cooldown-mismatch",
-  "godie-orkn.e|duration-absent",
-  "godie-orkn.w|duration-absent",
-  "godie-osam.ex|cooldown-mismatch",
-  "godie-osam.e|cooldown-mismatch",
-  "godie-osam.e|damage-absent",
-  "godie-osam.q|cooldown-mismatch",
-  "godie-osam.w|cooldown-mismatch",
-  "godie-u00h.ex|cooldown-mismatch",
-  "godie-u00h.q|cooldown-mismatch",
-  "godie-u00h.q|damage-absent",
-  "godie-u00j.ex|cooldown-mismatch",
-  "godie-u00j.r|cooldown-mismatch",
-  "godie-u00j.r|damage-absent",
-  "godie-u00k.ex|cooldown-mismatch",
-  "godie-u00k.ex|duration-absent",
-  "godie-u00k.w|cooldown-mismatch",
-  "godie-u00l.ex|cooldown-mismatch",
-  "godie-u00l.ex|damage-absent",
-  "godie-u00l.passive|damage-absent",
-  "godie-u00l.r|duration-absent",
-  "godie-u00l.w|cooldown-mismatch",
-  "godie-u00n.ex|damage-absent",
-  "godie-u00n.q|damage-absent",
-  "godie-u00o.ex|damage-absent",
-  "godie-u00o.e|damage-absent",
-  "godie-u00o.q|damage-absent",
-  "godie-u00v.ex|cooldown-mismatch",
-  "godie-u00v.q|cooldown-mismatch",
-  "godie-u010.ex|cooldown-mismatch",
-  "godie-u010.ex|damage-absent",
-  "godie-u010.r|mana-mismatch",
-  "godie-u01u.q|cooldown-mismatch",
-  "godie-u034.ex|cooldown-mismatch",
-  "godie-u034.ex|duration-absent",
-  "godie-u034.e|cooldown-mismatch",
-  "godie-u034.q|cooldown-mismatch",
-  "godie-u034.q|damage-absent",
-  "godie-u034.r|duration-absent",
-  "godie-u034.r|tag-no-mechanism",
-  "godie-u034.w|cooldown-mismatch",
-  "godie-u034.w|damage-absent",
-  "godie-ubal.ex|damage-absent",
-  "godie-ubal.r|duration-absent",
-  "godie-ubal.w|duration-absent",
-  "godie-ucrl.ex|cooldown-mismatch",
-  "godie-ucrl.ex|duration-absent",
-  "godie-ucrl.e|cooldown-mismatch",
-  "godie-ucrl.q|cooldown-mismatch",
-  "godie-ucrl.q|damage-absent",
-  "godie-ucrl.w|cooldown-mismatch",
-  "godie-ucrl.w|damage-absent",
-  "godie-udea.ex|cooldown-mismatch",
-  "godie-udre.q|cooldown-mismatch",
-  "godie-umal.ex|cooldown-mismatch",
-  "godie-umal.ex|damage-absent",
-  "godie-umal.passive|damage-absent",
-  "godie-umal.w|cooldown-mismatch",
-  "godie-uvng.ex|cooldown-mismatch",
-  "godie-uvng.ex|damage-absent",
-  "godie-uvng.r|mana-mismatch",
-  "grail-ex-13|hp-pct-absent",
-  "grail-ex-18|hp-pct-absent",
-];
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { loadShardedBaseline } from "./baselineShards";
+
+/** 分片目錄。`descriptionClaims.test.ts` 的重新產生流程也指這裡。 */
+export const CLAIMS_BASELINE_DIR = join(
+  dirname(fileURLToPath(import.meta.url)),
+  "descriptionClaims.baseline",
+);
+
+/**
+ * 這一筆屬於誰 —— `godie-e001.ex|damage-absent` → `godie-e001`。
+ * ⭐ 對**技能 id**（`godie-e001.ex`）與**棘輪鍵**都成立，孤兒閘兩邊都用它。
+ * 固有能力（`grail-ex-13`）沒有 `.`，所以就是它自己。
+ */
+export const claimOwner = (idOrKey: string): string => idOrKey.split("|")[0]!.split(".")[0]!;
+
+const shards = loadShardedBaseline(CLAIMS_BASELINE_DIR, claimOwner);
+
+export const KNOWN_MISMATCHES: readonly string[] = shards.keys;
+
+/** 檔名（英雄／固有能力）→ 該檔列的鍵。孤兒閘用。 */
+export const KNOWN_MISMATCHES_BY_OWNER = shards.byOwner;

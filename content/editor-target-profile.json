@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_fb420c6403f0",
+    "contentVersion": "cv_b90f1ea08315",
     "collections": {
       "champions": {
         "hash": "d1f1852b3667",
@@ -42,8 +42,8 @@
         "count": 7
       },
       "config": {
-        "hash": "3cf56dfdc9cb",
-        "count": 65
+        "hash": "79485c0a9f2a",
+        "count": 66
       },
       "models": {
         "hash": "38d96d54f6e6",
@@ -3227,6 +3227,44 @@
           "normalization": "config.stat-normalization@1"
         }
       },
+      "newHeroChecks": [
+        {
+          "rule": "empty-column",
+          "zh": "六欄留白",
+          "note": "說明／施展距離／範圍／傷害／冷卻／耗魔 這一格該有而是空的或 0。⚠️ 不適用的組合（self 技的施展距離）不算。",
+          "enabled": true
+        },
+        {
+          "rule": "out-of-bounds",
+          "zh": "超出 Zod 上下界",
+          "note": "界線**從出貨 schema 讀**，⛔ 不抄字面值 —— 界改了這一條自動跟著改。這一類寫進去伺服器會 422。",
+          "enabled": true
+        },
+        {
+          "rule": "principle-band",
+          "zh": "冷卻不在原則區間",
+          "note": "`config.authoring-rules@1` 的單體／範圍冷卻區間。⚠️ owner 說的是「原則上」—— 只警告，保留刻意破例的空間。",
+          "enabled": true
+        },
+        {
+          "rule": "claim-mismatch",
+          "zh": "說明的數字對不上 JSON",
+          "note": "卡面寫 25 秒冷卻而 `cooldown` 是 60。⛔ 模板技整條不判（它的 effects 在磁碟上本來就是空的）。",
+          "enabled": true
+        },
+        {
+          "rule": "no-op-effect",
+          "zh": "說了但不會發生",
+          "note": "整棵效果樹一個數字都動不到（第一·五守則）。⛔ 模板技整條不判。",
+          "enabled": true
+        },
+        {
+          "rule": "dialogue-claim",
+          "zh": "機制數字寫進了台詞",
+          "note": "⭐「」裡是**角色對白不是效果**（第〇·六守則②）。寫在裡面的冷卻／耗魔／傷害／持續**引擎一格都不讀**。",
+          "enabled": true
+        }
+      ],
       "derivedFrom": [
         "config.cast-time@1",
         "config.cooldown-rules@1",
@@ -3234,7 +3272,8 @@
         "config.stat-caps@1",
         "config.authoring-rules@1",
         "config.combat-env@1",
-        "config.stat-normalization@1"
+        "config.stat-normalization@1",
+        "config.new-hero-checks@1"
       ]
     },
     "normative": [
@@ -3264,5 +3303,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "15c7fda2e579"
+  "profileDigest": "79509cbb385c"
 }

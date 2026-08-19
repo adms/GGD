@@ -21,16 +21,16 @@
 ## 總計
 
 - **格數**：64 英雄 × 7 槽 = **448**
-- **✅ PASS：378 / 448**（84.4%）　🟣 PASSIVE：65　🟡 只有特效：0　❌ FAIL：0　— 無此格：5
-- 把「正確的永久被動」算進可接受行為：**443 / 448**（98.9%）如預期運作，真正的缺口是 **0** 格（❌ 0 ＋ 🟡 0），另有 **0** 格 🔵 本次未量測（形態閘）。
+- **✅ PASS：359 / 448**（80.1%）　🟣 PASSIVE：63　🟡 只有特效：0　❌ FAIL：21　— 無此格：5
+- 把「正確的永久被動」算進可接受行為：**422 / 448**（94.2%）如預期運作，真正的缺口是 **21** 格（❌ 21 ＋ 🟡 0），另有 **0** 格 🔵 本次未量測（形態閘）。
 - **閘 3 在看的那個數字**（只算版控首發名單那 49 人、扣掉「無此格」）：**342 / 342 = 100.00%**（棘輪下限 100.00%）。
-- 英雄生成失敗：**0**（無）
+- 英雄生成失敗：**3**（godie-e00k, godie-hpal, godie-nplh）
 
 ## 近戰 vs 遠程（attackType 維度）
 
 - 名單：**近戰 47**、**遠程 17**。
-- **普攻形態**：遠程英雄中 **17/17** 的普攻確實射出投射物（`projectileSpawn`、事件 `ranged:true`）；近戰英雄中 **47/47** 的普攻是貼身直接傷害（無投射物、`ranged:false`）。這正是遠程與近戰在普攻上的行為差異，兩邊都被本次量到。
-- **技能投射（skillshot castType）**：本名單中 skillshot 技能格 遠程 6 格、近戰 18 格；skillshot 一律用施法方向生成投射物，與施法者是遠程或近戰無關（castType 獨立於 attackType）。
+- **普攻形態**：遠程英雄中 **17/17** 的普攻確實射出投射物（`projectileSpawn`、事件 `ranged:true`）；近戰英雄中 **44/47** 的普攻是貼身直接傷害（無投射物、`ranged:false`）。這正是遠程與近戰在普攻上的行為差異，兩邊都被本次量到。
+- **技能投射（skillshot castType）**：本名單中 skillshot 技能格 遠程 6 格、近戰 16 格；skillshot 一律用施法方向生成投射物，與施法者是遠程或近戰無關（castType 獨立於 attackType）。
 
 ## PASS 觸發頻道分佈（驗證非橡皮圖章）
 
@@ -38,8 +38,8 @@
 
 | 頻道 | PASS 格數 |
 | --- | --: |
-| damage | 237 |
-| buff | 86 |
+| damage | 223 |
+| buff | 81 |
 | projectile | 17 |
 | heal | 10 |
 | status | 9 |
@@ -105,14 +105,14 @@
 | 邪眼師 - 飛影 | `godie-uvng` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 聖杯黑泥醬 - 喪標麥可 | `godie-zombiex` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | 龍之子 - 天地志狼 | `godie-e007` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
-| 戰國刺客Azumi - 安云 | `godie-e00k` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
+| godie-e00k | `godie-e00k` | 近 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 | 黑魔導士 - 莉娜因巴斯 | `godie-h020` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | 種子神奇寶貝 - 妙蛙花 | `godie-h02r` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 看似憂鬱的神獸 - 草泥馬 | `godie-h02u` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
-| 不死之身-無 - 藤井八雲 | `godie-hpal` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| godie-hpal | `godie-hpal` | 近 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 | 妖狐藏馬 - 南野秀一 | `godie-n00p` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | 傳說的龍騎士 - 勇者小呆 | `godie-n01c` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
-| 通靈人 - 麻倉葉 | `godie-nplh` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
+| godie-nplh | `godie-nplh` | 近 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 | 超級賽亞人 - 悟空 | `godie-o00x` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | 北斗之鼠 - 拳四郎 | `godie-u00l` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 邪眼師 - 飛影 | `godie-u010` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
@@ -122,7 +122,29 @@
 
 ## FAIL 清單（英雄 + 槽 + 原因，交給技能保真／VFX 負責人）
 
-（無 — 全部 ✅/🟣）
+| 英雄 | ID | 槽 | castType | 型 | 原因 |
+| --- | --- | --- | --- | --- | --- |
+| godie-e00k | `godie-e00k` | Q | — | 近 | champion failed to spawn |
+| godie-e00k | `godie-e00k` | W | — | 近 | champion failed to spawn |
+| godie-e00k | `godie-e00k` | E | — | 近 | champion failed to spawn |
+| godie-e00k | `godie-e00k` | R | — | 近 | champion failed to spawn |
+| godie-e00k | `godie-e00k` | EX | — | 近 | champion failed to spawn |
+| godie-e00k | `godie-e00k` | PASSIVE | — | 近 | champion failed to spawn |
+| godie-e00k | `godie-e00k` | basic | — | 近 | champion failed to spawn |
+| godie-hpal | `godie-hpal` | Q | — | 近 | champion failed to spawn |
+| godie-hpal | `godie-hpal` | W | — | 近 | champion failed to spawn |
+| godie-hpal | `godie-hpal` | E | — | 近 | champion failed to spawn |
+| godie-hpal | `godie-hpal` | R | — | 近 | champion failed to spawn |
+| godie-hpal | `godie-hpal` | EX | — | 近 | champion failed to spawn |
+| godie-hpal | `godie-hpal` | PASSIVE | — | 近 | champion failed to spawn |
+| godie-hpal | `godie-hpal` | basic | — | 近 | champion failed to spawn |
+| godie-nplh | `godie-nplh` | Q | — | 近 | champion failed to spawn |
+| godie-nplh | `godie-nplh` | W | — | 近 | champion failed to spawn |
+| godie-nplh | `godie-nplh` | E | — | 近 | champion failed to spawn |
+| godie-nplh | `godie-nplh` | R | — | 近 | champion failed to spawn |
+| godie-nplh | `godie-nplh` | EX | — | 近 | champion failed to spawn |
+| godie-nplh | `godie-nplh` | PASSIVE | — | 近 | champion failed to spawn |
+| godie-nplh | `godie-nplh` | basic | — | 近 | champion failed to spawn |
 
 ## 🟡 只有特效清單（放得出去、但場上一個數字都沒動）
 
@@ -209,12 +231,10 @@
 | 至尊學長 - 飛鼠先生 | `godie-udea` | PASSIVE | passive:modifiers |
 | 聖杯黑泥醬 - 喪標麥可 | `godie-zombiex` | PASSIVE | passive:hooks |
 | 龍之子 - 天地志狼 | `godie-e007` | PASSIVE | passive:modifiers |
-| 戰國刺客Azumi - 安云 | `godie-e00k` | PASSIVE | passive:hooks |
 | 黑魔導士 - 莉娜因巴斯 | `godie-h020` | PASSIVE | passive:hooks |
 | 看似憂鬱的神獸 - 草泥馬 | `godie-h02u` | PASSIVE | passive:modifiers |
 | 妖狐藏馬 - 南野秀一 | `godie-n00p` | PASSIVE | passive:hooks |
 | 傳說的龍騎士 - 勇者小呆 | `godie-n01c` | PASSIVE | passive:hooks |
-| 通靈人 - 麻倉葉 | `godie-nplh` | PASSIVE | passive:hooks |
 | 超級賽亞人 - 悟空 | `godie-o00x` | PASSIVE | passive:hooks |
 
 ## 方法與抽樣說明

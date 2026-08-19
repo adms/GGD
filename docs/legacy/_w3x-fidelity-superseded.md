@@ -465,3 +465,27 @@ owner 的裁決把「12 次移動特效」讀成**逐段結算**，這比原作�
 79-02 斬擊…）。那些**不是**打架：`0` 那一份的 `castType` 是 `self`，
 一支自身施放的技能本來就沒有施法距離。⇒ 守衛只比對**兩邊都非零**的情況，
 ⛔ 不把「沒有這個量」當成「另一個值」。
+
+---
+
+## 特效家族：owner 的設計覆寫（GH#431，2026-08-20）
+
+⚠️ 這一節與上面每一節**同一條規矩**（第〇·六守則）：被取代的原作值要另存 ——
+**測試可以跟著設計走，知識不可以無聲消失**。
+
+⭐ 但它的存放方式比上面那些更緊：覆寫寫在 `content/config/vfx-ability-art.json`
+的 **`bindings.<id>.owner`**，而被取代的原作證據**原封留在隔壁的 `bindings.<id>.family`**。
+⇒ 兩個值永遠在同一列相鄰的兩格，⛔ 沒有任何一半只存在於這份文件裡；
+反捏造守衛（`w3xFamilyArt.test.ts`，從 `MODEL_USAGE.json` 重新推導）因此**一格都沒有放寬**。
+
+| 技能 | 原作證據（第 5 層，仍在 `family` 格） | owner 的設計（第 1 層，`owner` 格） | 依據 |
+|---|---|---|---|
+| **65-04 天譴**（飛鼠）`godie-udea.r` | `shockwaveRing` · `thunderclapcaster` · `A04C` · `w3a-override/ability.casterArt` · tint `[0,255,255]` | `lightColumn`（tint 沿用證據的青色） | owner 2026-08-19：「立起來的光柱也有其他技能會用到 **例如飛鼠天譴**」 |
+
+**落地的差別**：`fx.fam.shockwave-ring.w3x-00ffff.s150`（貼地衝擊環）→
+`fx.fam.light-column.w3x-00ffff.s150`（`column` primitive，`gravityY +7.5` 往上長，
+⛔ 不在 `DIRECTIONAL_PRIMITIVES` 裡 ⇒ 永遠直立）。
+`shockwaveRing` 仍有 **90** 支技能在用，所以舊那一份文件不是孤兒。
+
+⚠️ **一格 `owner` 覆寫必填 `why`**（schema 硬性）—— 一格沒有理由的覆寫，
+半年後沒有人分得出是設計還是手滑，於是它會被「修回原作」。

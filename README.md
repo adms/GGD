@@ -429,7 +429,7 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 | `arena.skeleton` | 新手競技場 | 🔁 | 24 | 2 | 4 | 12 | `stone` | — | 24+20 | — |
 | `arena.world-tree` | 世界樹核心 | 🔁 | 30 | 2 | 24 | 12 | `grass` | ✅ | 29+36 | 區域×10、互動×16、機關門 |
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_e6d94d24d342` 產生。 輪替 12 / 全 13 張。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_b90f1ea08315` 產生。 輪替 12 / 全 13 張。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:arenas -->
 
 ### 設定陷阱（改了不會生效）
@@ -737,13 +737,13 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 以下三段是機器產生的**開放名單**：開放英雄＋技能、商店貨架＋抽卡池。全 78／461／239 的完整表在各段結尾連到 `docs/reference/*.md`。
 
 <!-- BEGIN GENERATED:roster -->
-#### 開放名單 OPEN roster（49 名）— 角色 + 六個技能 slot
+#### 開放名單 OPEN roster（46 名）— 角色 + 六個技能 slot
 
 > 選角畫面看得到、bot 也會抽到的就是這些。這是**營運策展狀態**，不是程式常數：真相在 `data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` 提供、game-server 在建房時執行。來源：`data/curation/whitelist.json`（updatedAt `2026-07-24T11:14:58.268286Z`）
 >
 > 每名英雄一格：**`id` 全名**（稱號 · 職業 · 攻擊）— 一句話說明，底下**六條**是**天生技（等級 1 就有）＋ Q/W/E/R/EX** 的**技能名稱＋一行效果**。天生技那條會標 `天生·被動`（光環／機率觸發／回復類）或 `天生·主動`（有冷卻、原本掛在 D 鍵的）。效果截斷到 34 字、說明截斷到 40 字，結尾的 `…` 是產生器加的。完整逐字內容在 [`docs/reference/abilities.md`](./docs/reference/abilities.md) 或 <http://localhost:39527/#codex>。
 
-> ℹ️ 其中 **黑人牙膏**（`godie-ogld`）只有五條 —— 沒有 `NN-00` 天生技，**這是還原出來的事實，不是漏掉**（全 78 名裡共 3 名，逐一原因見 [`docs/reference/roster.md`](./docs/reference/roster.md)）。
+> ℹ️ 其中 **黑人牙膏**（`godie-ogld`）只有五條 —— 沒有 `NN-00` 天生技，**這是還原出來的事實，不是漏掉**（全 71 名裡共 3 名，逐一原因見 [`docs/reference/roster.md`](./docs/reference/roster.md)）。
 
 **`godie-e001` 龍宮禮奈**（蟬在叫人壞掉 · fighter · 近戰） — 來自雛見澤的小女孩，喜歡把"好可愛"的東西帶回家。
 
@@ -780,15 +780,6 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 - **E** 21-03 赤焰爆發：赤焰爆發可以攻擊一直線敵人，將其打到空中給予400點損害，落地後暈…
 - **R** 21-04 討滅封絕：開啟封絕的結界，範圍1800敵方移動速度下降30%、攻擊速度下降1…
 - **EX** 21-002 天破壤碎：以燃燒火霧戰士的心臟為祭品，讓身為紅世「天罰神」的阿拉斯托爾得以直…
-
-**`godie-e00k` 安云**（戰國刺客Azumi · fighter · 近戰） — 少女殺手安云，是身手敏捷、拔刀神速，號稱百人斬的殺手刺客。在完成使命恢復自由之…
-
-- **天生·被動** 19-00 閃擊：安云靈敏的身手可以讓她在攻擊的瞬間有15%機會繞到對手的背後，擊暈…
-- **Q** 19-01 斷末：安云從小就被訓練一擊就能斬殺敵人不留活口，因此斬殺時有8%的機率，…
-- **W** 19-02 迴切：安云能在各種角度流利的旋轉刀身砍殺敵人，並能感知敵意抵擋負性指定法…
-- **E** 19-03 瞬切百殺：當安云開始殺戮時，刀子動的比反射神經還快，將會對附近的敵人進行斬殺…
-- **R** 19-04 幻影暗殺：當安云站在敵方背後攻擊的時候，能發揮刺客暗殺的實力，給予額外(敏捷…
-- **EX** 19-002 紫色披風：當安云穿上上紫色披風的時候，代表捨棄一切慈悲心大開殺戒，使得他殺手…
 
 **`godie-e00r` 初號機**（最終泛用人型決戰兵器 · fighter · 近戰） — 『汎用人型決戰兵器』EVANGELION初號機，採用半生物機械的製造，因此雖然…
 
@@ -925,15 +916,6 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 - **R** 01-04 超究武神霸斬：克勞德的奧義招式，連斬七次的超必殺攻擊，每一次斬擊皆造成極大傷害，…
 - **EX** 01-002 究極魔劍：只有在使用究極魔劍時，克勞德才能發揮出他100%的力量。凶斬及超究…
 
-**`godie-hpal` 藤井八雲**（不死之身-無 · fighter · 近戰） — 身為三隻眼的僕人，擁有不死之身的藤井八雲，雖然可以招喚威力強大的魔獸，卻要付出…
-
-- **天生·主動** 35-00 召喚佩：召喚佩，只要佩在八雲身邊，每秒可以回復八雲1%的生命點數，並且依照…
-- **Q** 35-01 土爪：召喚爪魔獸在地下爬出，劃破地面進行兩次攻擊，每次造成100點傷害，…
-- **W** 35-02 石絲：使生物短時間內不能活動，使敵身體硬化0.75秒，每秒承受50點傷害。
-- **E** 35-03 鏡蠱：召喚蜘蛛獸，吐絲作繩索，為目標單位抵擋住1000點的法術傷害，持續…
-- **R** 35-04 光牙：召喚光龍魔獸衝擊敵人，造成攻擊線地面部隊600點傷害。但是召喚魔獸…
-- **EX** 35-002 出來吧!全部的魔獸：在佩死掉的三秒內如果施展光牙將會變成招喚出所有魔獸，額外出現八道魔…
-
 **`godie-hpb1` 蒼月潮**（獸矛傳承使 · fighter · 近戰） — 無意間破除光霸明宗所設的密室結界， 並意外成為獸矛這一世的傳承者。充滿熱血正義…
 
 - **天生·被動** 07-00 獸化心靈：獸矛不挑食：小兵、殭屍、英雄，數量到了就給糖。
@@ -1005,15 +987,6 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 - **E** 08-03 龍鬥氣砲咒文：龍騎士的得意技之一，發動龍紋章之力使出咒文迫擊砲，造成攻擊線地面部…
 - **R** 08-04 阿邦快速劍X：小呆獨自思考和特訓中，所創出的新阿邦式快速劍，將A式(Arrow)…
 - **EX** 08-002 龍魔人：[變身] 冷卻 60 秒 · 花費 390 法力 · 持續 20 秒
-
-**`godie-nplh` 麻倉葉**（通靈人 · fighter · 近戰） — 為了修練來到愛與和平，擁有安娜授予《超．占事略決》，得到了新的超越靈魂──阿隬…
-
-- **天生·被動** 16-00 通靈能力：因為它是陰陽兩界的通靈人，同時因為他是個好人所以他看的到隱藏在世界…
-- **Q** 16-03 無無明亦無：使對方瑪那無效化的招式，可以燒掉對方部隊350點瑪那。並在消耗瑪那…
-- **W** 16-01 超．占事略決：內隱藏著許多失傳的法術。
-- **E** 16-04 劍之精靈：召喚肉肉的阿彌陀丸來幫助麻倉葉，附身合體可暫時增加麻倉葉10點全能…
-- **R** 16-02 阿彌陀流真空佛陀斬：阿彌陀流真空佛陀斬會以高超的拔刀術攻擊對方造成200點傷害並癱瘓行…
-- **EX** 16-002 布都御魂：麻倉家世世代代流傳的通靈之劍，可以增加靈體強韌度與等級。點選使用二…
 
 **`godie-o00k` 皮卡娘**（傲嬌電氣老鼠 · marksman · 遠程） — 相當傲嬌的皮卡丘，從小就展現出超出一般水準的戰鬥能力，是個斗S，喜歡身為M的主…
 
@@ -1185,25 +1158,25 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 - **R** 100-04 百式・哈基米：聖杯的黑泥從體內爆發，對周圍造成大範圍魔法傷害並重減速。
 - **EX** 100-002 此世全部之咖哩・バタンキュー：倒地詐死再猛然起身，黑泥狂化，短時間大幅提升攻擊力。マイ・キョー・…
 
-> 📖 **完整 78 名英雄**（含 29 名未開放）與逐欄資料（開放旗標、技能 id、攻擊類型…）在 [`docs/reference/roster.md`](./docs/reference/roster.md)。
+> 📖 **完整 71 名英雄**（含 25 名未開放）與逐欄資料（開放旗標、技能 id、攻擊類型…）在 [`docs/reference/roster.md`](./docs/reference/roster.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_e6d94d24d342` 產生。 開放 49 / 全 78 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_b90f1ea08315` 產生。 開放 46 / 全 71 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:roster -->
 
 <!-- BEGIN GENERATED:abilities -->
-#### 技能 abilities（全 461 個；開放英雄的 293 個）
+#### 技能 abilities（全 420 個；開放英雄的 275 個）
 
 > **開放英雄的每一個技能，都已經印在上面的開放名冊裡**（每名英雄六條：天生 ＋ Q/W/E/R/EX，含名稱與一行效果）。這裡不再重印一次，只放全表的統計與連結，讓 README 保持精簡。
 >
-> 每個英雄每個 slot 一份：天生 PASSIVE 75 · Q 78 · W 79 · E 78 · R 78 · EX 73。**`slot` 有六種**，`PASSIVE`（天生技，w3x 的 `NN-00`）跟 Q/W/E/R/EX 一樣是一個 slot，而且**等級 1 就擁有**；共 75 份（39 純被動 ＋ 36 有冷卻的天生主動），由 champion doc 的 `passiveAbility` 指到 `<championId>.passive`。
+> 每個英雄每個 slot 一份：天生 PASSIVE 68 · Q 71 · W 71 · E 71 · R 71 · EX 68。**`slot` 有六種**，`PASSIVE`（天生技，w3x 的 `NN-00`）跟 Q/W/E/R/EX 一樣是一個 slot，而且**等級 1 就擁有**；共 68 份（35 純被動 ＋ 33 有冷卻的天生主動），由 champion doc 的 `passiveAbility` 指到 `<championId>.passive`。
 >
 > ⚠️ 別跟舊的 `champion.passive` 區塊混為一談：那是掛在某個 QWER 技能上的被動型效果（`型態` 欄標「被動」的那些），跟天生技 slot 是兩回事。
 >
 > 數值是 `content/` 的**原始值**，未套用 `combat-env` 全域倍率 —— 遊戲內顯示的一律是乘算後的最終值，所以畫面上的冷卻／傷害跟表格不會相同。那是預期行為。
 
-> 📖 **全 461 個技能的逐欄表**（id、名稱、slot、型態、編號、擁有英雄、開放旗標、完整短效果）在 [`docs/reference/abilities.md`](./docs/reference/abilities.md)；互動版在 <http://localhost:39527/#codex>。
+> 📖 **全 420 個技能的逐欄表**（id、名稱、slot、型態、編號、擁有英雄、開放旗標、完整短效果）在 [`docs/reference/abilities.md`](./docs/reference/abilities.md)；互動版在 <http://localhost:39527/#codex>。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_e6d94d24d342` 產生。 開放英雄技能 293 / 全 461 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_b90f1ea08315` 產生。 開放英雄技能 275 / 全 420 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:abilities -->
 
 <!-- BEGIN GENERATED:items -->
@@ -1379,7 +1352,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 > 📖 **全 142 件道具依 craftRole 的完整分類表**（component 16 / token 0 / none 24 …）在 [`docs/reference/items.md`](./docs/reference/items.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_e6d94d24d342` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_b90f1ea08315` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:items -->
 
 <!-- BEGIN GENERATED:grail -->
@@ -1468,7 +1441,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 逐張的完整 JSON（每一格參數、每一個 hook、每一條條件）在 [`docs/reference/grail-wishes.md`](docs/reference/grail-wishes.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_e6d94d24d342` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_b90f1ea08315` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:grail -->
 
 ### ⭐ 2026-08-17／18 這一批新加的機制（GH#354）
@@ -1523,18 +1496,18 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 | 效果 | 用它的內容 | 效果 | 用它的內容 | 效果 | 用它的內容 |
 |---|--:|---|--:|---|--:|
-| `applyBuff` | 118 | `applyStatus` | 99 | `blink` | 17 |
-| `carry` | 0 | `chainLightning` | 2 | `championForm` | 24 |
-| `convertTeam` | 0 | `cycleBuff` | 1 | `damage` | 177 |
-| `damageArea` | 31 | `damageLine` | 10 | `dash` | 8 |
+| `applyBuff` | 108 | `applyStatus` | 93 | `blink` | 15 |
+| `carry` | 0 | `chainLightning` | 2 | `championForm` | 23 |
+| `convertTeam` | 0 | `cycleBuff` | 1 | `damage` | 157 |
+| `damageArea` | 31 | `damageLine` | 10 | `dash` | 7 |
 | `delayed` | 8 | `devour` | 3 | `dispel` | 8 |
 | `dot` | 4 | `evasion` | 0 | `eventValueConversion` | 5 |
 | `extendBuff` | 1 | `grantAttribute` | 5 | `grantGold` | 1 |
-| `heal` | 10 | `invulnerable` | 18 | `knockback` | 11 |
+| `heal` | 10 | `invulnerable` | 16 | `knockback` | 11 |
 | `leap` | 7 | `manaBarrier` | 1 | `modifyCooldown` | 13 |
 | `proxyCast` | 6 | `randomArea` | 5 | `restore` | 17 |
-| `revive` | 1 | `shield` | 11 | `shieldBreak` | 2 |
-| `spawnProjectile` | 28 | `spawnVfx` | 19 | `spendMana` | 4 |
+| `revive` | 1 | `shield` | 10 | `shieldBreak` | 2 |
+| `spawnProjectile` | 26 | `spawnVfx` | 19 | `spendMana` | 4 |
 | `summon` | 0 | `swapResource` | 1 | `taunt` | 2 |
 | `weightedBranch` | 5 |  |  |  |  |
 
@@ -1546,7 +1519,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 | `onAbilityHit` | 技能命中時 | 19 |
 | `onAllyDamaged` | 隊友受傷時 | 0 |
 | `onAllyDeath` | 隊友陣亡時 | 3 |
-| `onBasicAttack` | 普攻時 | 71 |
+| `onBasicAttack` | 普攻時 | 69 |
 | `onBossSpawn` | 殭屍王出現時 | 1 |
 | `onBoundaryTouch` | 碰到場地邊界時（＝踏進火圈） | 0 |
 | `onCrowdControlApplied` | 對別人施加控場時 | 0 |
@@ -1606,7 +1579,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 完整的參數與上下界（每個效果每一格能填什麼）在 [`docs/技能標記機制與效果規則.md`](docs/技能標記機制與效果規則.md)，同樣是產生的。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_e6d94d24d342` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_b90f1ea08315` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:mechanics -->
 
 

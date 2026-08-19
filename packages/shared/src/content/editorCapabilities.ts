@@ -349,7 +349,7 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
     plan: "§2.1.1（配合 condition.target-status@1）",
     expected: "supported",
     probe: hook("onAbilityHit"),
-    evidence: "content/schema/effect.ts 的 zHookEvent",
+    evidence: "content/schema/effects/_hook.ts 的 zHookEvent",
   },
 
   // ── 計畫點名但引擎沒有的 ─────────────────────────────────────────────
@@ -381,7 +381,7 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
     // （檔頭 ③ 的第二個案例）。probe 改成問**出貨的那個名字**。
     probe: has("devour"),
     nearestExisting:
-      "`devour`（`sim/effects/devour.ts` + `content/schema/effect.ts` 的 `devour` 分支）—— " +
+      "`devour`（`sim/effects/devour.ts` + `content/schema/effects/devour.ts`）—— " +
       "它**就是**這個 capability 的實作，不是「相近的東西」。59-01 吞噬走的就是它。",
     caveat:
       "計畫 §160 的最低契約有五項，`devour` 拿到三項：" +
@@ -566,7 +566,7 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
       "⚠️ `consumeOn` 今天刻意只有 `\"fire\"` 一個值：`\"hit\"`（下游真的打到人才算）" +
       "需要把扣帳搬到傷害落地那條路，那是第二條接線，⛔ 不先開一個接不到的選項。",
     evidence:
-      "packages/shared/src/content/schema/effect.ts（zHookDefBase）+ " +
+      "packages/shared/src/content/schema/effects/_hook.ts（zHookDefBase）+ " +
       "packages/shared/src/sim/effects/hooks.ts（額度閘 + consumeTrigger + detachSource）+ " +
       "packages/shared/src/sim/effects/lane3Kinds.test.ts",
   },
@@ -908,7 +908,7 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
       "所以第七刀用的是施法時的 `comboBonus`，不是落地當下的。",
     evidence:
       "packages/shared/src/sim/effects/delayed.ts（`delayedEffect` + `delayedSystem`）+ " +
-      "packages/shared/src/content/schema/effect.ts 的 `delayed` 分支 + " +
+      "packages/shared/src/content/schema/effects/delayed.ts + " +
       "packages/shared/src/sim/effects/lane3Kinds.test.ts（「名單在施放那一刻凍住，" +
       "而且分散在不同的 tick 上落下」）",
   },
@@ -942,7 +942,7 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
     evidence:
       "packages/shared/src/sim/effects/proxyCast.ts（雙載體深度：`EffectContext.proxyDepth` " +
       "＋呼叫堆疊上的 `proxyStackDepth`，閘門讀兩者最大值，所以混著走的鏈也停得下來）+ " +
-      "packages/shared/src/content/schema/effect.ts 的 `proxyCast` 分支 + " +
+      "packages/shared/src/content/schema/effects/proxyCast.ts + " +
       "packages/shared/src/sim/effects/lane3Kinds.test.ts（「代放的是那一支技能自己的 payload，" +
       "而且鏈一定會停」）",
   },

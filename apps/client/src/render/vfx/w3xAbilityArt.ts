@@ -68,6 +68,8 @@ import {
   resolveFamilyArt,
   type ResolvedFamilyArt,
 } from "./familyTuning";
+// GH#439 —— 家族原型自己宣告的原作模型（`models`），就是 stock emitter 的來源。
+import { W3X_ART_FAMILIES, type W3xArtFamily } from "./w3xArtFamilies";
 
 /** One ability's promoted w3x effect. */
 export interface W3xAbilityArt {
@@ -128,6 +130,24 @@ export interface W3xAbilityArt {
    * 痕跡」這個答案）②操作者沒碰過那個家族。
    */
   readonly groundDecal?: VfxGroundDecal;
+  /**
+   * GH#392 —— 這一招的特效**掛在施法者模型的哪一個掛點**（WC3 的
+   * `Art - Target Attachment Point`：`chest` / `hand,left` / `weapon` / …），
+   * 或 undefined ＝ 播在世界座標（＝這一版之前每一支技能的行為）。
+   *
+   * ⚠️ 量到的缺口（2026-08-20）：`resolveFamilyArt()` 從 2026-07-30 起就解得出
+   * 這一格 —— **出貨的 62 支家族列每一支都有** —— 而它在 `familyRow()` 那一行
+   * 蒸發，於是後台的「掛點」欄位是一格存得起來、驗得過、下游沒有人讀的死旋鈕。
+   * 這是 α / 時間倍率（#205）、`heightY`（#251）、`groundDecal`（GH#439）
+   * **第四次**同一個第②號故障。
+   *
+   * ⭐ 掛上去之後 (a) 附著 (b) **每幀跟著骨骼走** (c) 特效自己的 KP2E/KP2V
+   * 動畫軌照播 —— 三件事都是 `W3xEmitterRig` 早就做完的（`em.mesh.parent =
+   * anchor`＋`sampleTrack`），⛔ 這裡沒有新增第二條附著實作。缺的一直只是
+   * 「戰鬥路徑從來沒有把**節點**交給它」：`W3xCastFx.play()` 一律
+   * `atPosition(x,y,z)`，所以骨骼附著只在兩個試聽頁活著（失敗形態③）。
+   */
+  readonly anchor?: string;
 }
 
 /**
@@ -180,6 +200,42 @@ let promotedCache: Readonly<Record<string, W3xAbilityArt>> | null = null;
  * The family row carries NO `extra`: a prototype is one emitter by
  * construction, unlike a real WC3 effect which is a set.
  */
+/**
+ * GH#439 —— 一個家族原型的**原作 emitter** 文件 id。
+ *
+ * 每個原型早就宣告了它的證據模型（`W3X_ART_FAMILIES[f].models`，例如
+ * `shockwaveRing` = `["warstompcaster", "thunderclapcaster"]`）。
+ * `tools/w3x-import/extract_stock_vfx.py` 把那些**零售 MPQ**模型的 PRE2 參數
+ * 抽成 `fx.w3x.stock.<模型>.p<NN>` 文件（純數字 + CC0 替代貼圖，⛔ 沒有一個
+ * Blizzard 位元組），這裡就是把兩邊接起來的那一條**規則**。
+ *
+ * ⭐ 它是規則不是表：**21 個家族共用同一句話**「這一族播它自己宣告的原作
+ * 模型的 emitter」。⛔ 沒有一張逐 id 或逐家族的白名單，所以哪一天抽取器
+ * （`--min-refs`）多收一個模型，那一族自動拿到它的原作藝術，⛔ 不必改程式。
+ *
+ * ⚠️ 這裡**不查內容庫**（這個模組是純資料，不能讀 `ContentDb`），所以它產出
+ * 的是**候選** id。真正播放的 `VfxSystem.playCastVfx` 對每一個 id 做
+ * `this.doc(id)`，查不到就跳過 —— 也就是說沒被抽取的模型逐位元不影響行為。
+ * 上界 3 = 目前任何一個原作模型抽出來的最多 emitter 數（stampedemissiledeath）；
+ * 抽取器印出的 doc 數超過它時，多的那幾個不會被播 —— ⛔ 這是刻意的上界，
+ * 不是「剛好夠」：一次施法多幾十個粒子系統是 `emitterBudget` 在擋的東西。
+ */
+const MAX_STOCK_EMITTERS_PER_MODEL = 3;
+
+function stockEmitterIds(family: W3xArtFamily): readonly string[] {
+  const cached = stockIdCache.get(family);
+  if (cached) return cached;
+  const out: string[] = [];
+  for (const model of W3X_ART_FAMILIES[family]?.models ?? []) {
+    for (let i = 0; i < MAX_STOCK_EMITTERS_PER_MODEL; i++) {
+      out.push(`fx.w3x.stock.${model}.p${String(i).padStart(2, "0")}`);
+    }
+  }
+  stockIdCache.set(family, out);
+  return out;
+}
+const stockIdCache = new Map<string, readonly string[]>();
+
 let familyRowCache: Map<string, W3xAbilityArt> | null = null;
 
 // ⭐ 內容換了就兩個快取一起作廢。⛔ 只清一個 = 晉升表換了而家族列還是舊的，
@@ -201,7 +257,11 @@ function familyRow(abilityId: string): W3xAbilityArt | undefined {
     provenance: familyProvenance(resolved.evidence?.provenance),
     via: resolved.evidence ? `family:${resolved.evidence.via}` : "family:console",
     primary: playableFamilyKey(resolved),
-    extra: [],
+    // GH#439 —— 這一族宣告的原作模型的 emitter。⚠️ 這一行以前是 `extra: []`，
+    // 註解寫著「a prototype is one emitter by construction」—— 那句話對**原型**
+    // 是真的，但它讓 66 支動地跺永遠拿不到 `WarStompCaster` 本人的脈衝，
+    // 而那顆模型是全 repo 引用第一名（150 個引用點）。
+    extra: stockEmitterIds(resolved.family),
     // #205 —— 這兩行以前不存在,所以 `resolveFamilyArt` 算好的 per-ability
     // α / 時間倍率在這一行蒸發。ABSENT ≠ 1:沒設就不寫,下游走 identity。
     ...(resolved.alpha !== undefined ? { alpha: resolved.alpha } : {}),
@@ -213,6 +273,11 @@ function familyRow(abilityId: string): W3xAbilityArt | undefined {
     // GH#439 —— 地面痕跡那一格。少了它,`resolveFamilyArt` 讀出來的 `groundDecal`
     // 會在這一行蒸發 —— 和 α / 時間倍率 / heightY **同一個**第②號故障。
     ...(resolved.groundDecal !== undefined ? { groundDecal: resolved.groundDecal } : {}),
+    // GH#392 —— 掛點那一格。同一行、**第四次**同一個第②號故障：少了它，
+    // `resolveFamilyArt` 對 62 支解出來的 `anchor`（原圖自己的
+    // `Casterattach*`／後台覆寫）在這裡蒸發，於是那 62 支的特效永遠播在
+    // 腳底的世界座標，⛔ 不會跟著胸口／手／武器動。
+    ...(resolved.anchor !== undefined ? { anchor: resolved.anchor } : {}),
   };
   familyRowCache.set(abilityId, row);
   return row;

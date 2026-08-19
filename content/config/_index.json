@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "3cf56dfdc9cb",
+  "hash": "79485c0a9f2a",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -217,6 +217,12 @@
       "path": "config/model-lod.json",
       "hash": "f62fe1b47808",
       "size": 459
+    },
+    {
+      "id": "new-hero-checks",
+      "path": "config/new-hero-checks.json",
+      "hash": "cf9bcbd295a9",
+      "size": 868
     },
     {
       "id": "origin-routes",

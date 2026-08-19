@@ -142,8 +142,17 @@ describe("70-04 千年練成 · 紮根形態 (e010-r-treant-burst)", () => {
     let prev = hp();
     const hurtTicks: number[] = [];
     const everHurt = new Set<number>();
+    /** 引擎自己排的落點（施法那一刻一次抽完），⛔ 不是這裡算的。 */
+    let scheduled: Array<{ x: number; z: number }> = [];
+    /** 引擎排的**到期 tick**（④ 的斷言看這個,⛔ 不看「誰剛好被打到」）。 */
+    let scheduledTicks: number[] = [];
     for (let t = 0; t < 90; t++) {
       world.step(NO_INTENTS());
+      const wave = world.randomArea.find((w) => w.caster === caster);
+      if (wave && scheduled.length === 0) {
+        scheduled = wave.impacts.map((i) => ({ ...i.pos }));
+        scheduledTicks = wave.impacts.map((i) => i.atTick);
+      }
       const now = hp();
       let any = false;
       now.forEach((v, i) => {
@@ -156,13 +165,31 @@ describe("70-04 千年練成 · 紮根形態 (e010-r-treant-burst)", () => {
       prev = now;
     }
 
+    // ③ 傷害真的落地（⛔ 不是「排得出來但沒接線」= 失敗形態②）。
+    expect(everHurt.size, "整波打完沒有任何人掉血 —— 這一招在場上什麼都不會發生").toBeGreaterThan(
+      0,
+    );
+    // ④ 是一**串**，不是一發 —— ⭐ 斷言看的是**排程**，⛔ 不是「有幾個 tick 有人掉血」。
+    //
+    // ⚠️ 2026-08-20 這一條原本寫成 `hurtTicks.length > 1`，而它**是靠運氣綠的**：
+    // 落點是 `scatterRadius 6` 的**隨機**點、傷害半徑只有 3，所以四發裡打到幾個人
+    // 取決於那一次抽點。產生器後來給這支技能補上 `castTimeSec 1.233`（`deriveCastTimes`
+    // 後處理），rng 流位移一格，四發只剩一發打中人 —— 測試就紅了，而**機制完全沒壞**。
+    // 那正是 GH#334 記的同一種缺陷：斷言的方向跟它要守的機制無關。
+    //
+    // ⇒ 改成問引擎排了什麼：`impacts` 的 `atTick` 至少要落在**兩個不同的 tick** 上。
+    // 這一格壞掉（例如有人把 intervalSec 當成 0、或把整串塞回同一個 tick）才會紅，
+    // ⛔ 而「這次剛好只打到一個人」不會。
+    const impactTicks = new Set(scheduledTicks);
     expect(
-      hurtTicks.length,
-      "整波只在一個 tick 落地 —— 這就是重製前那一發單體傷害的形狀（或 randomAreaSystem 沒接線）",
+      impactTicks.size,
+      "整波只排在一個 tick —— 這就是重製前那一發單體傷害的形狀",
     ).toBeGreaterThan(1);
-    expect(
-      everHurt.size,
-      "只有一個假人掉血 —— 落點沒有散開，或每一發沒有範圍（卡面寫的是[範圍]傷害）",
-    ).toBeGreaterThan(1);
+    // ⑤ 落點是**散開的**，不是同一個點放四次（卡面：「在[周圍][範圍]隨機竄出」）。
+    const distinct = new Set(scheduled.map((p) => `${p.x.toFixed(3)},${p.z.toFixed(3)}`));
+    expect(scheduled.length, "引擎一個落點都沒排 —— randomArea 根本沒被跑到").toBeGreaterThan(1);
+    expect(distinct.size, "四個落點全部重疊 —— 這不是「隨機竄出」，是同一點放四次").toBeGreaterThan(
+      1,
+    );
   });
 });

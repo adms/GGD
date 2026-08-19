@@ -144,7 +144,10 @@ describe("family tuning: the knob must never delete the effect", () => {
     expect(db.ready).toBe(true);
     expect(db.vfxFor("fx.ember-bolt-cast")).not.toBeNull();
     expect(RING_IDS.length).toBeGreaterThan(70);
-    expect(ON_DISK.size).toBe(78);
+    // ⛔ 不抄出貨數字（那會是第四個住處）—— 這裡要證明的是「磁碟上那一堆**就是**
+    // 解析器要的那一堆」，而那是一個**關係**，⛔ 不是一個常數。
+    // （GH#431 讓它從 78 變 79，而一個常數只會用錯誤的訊息紅。）
+    expect(ON_DISK).toEqual(new Set(resolveAllFamilyArt(null).map((r) => r.vfxKey)));
   });
 
   it("WITNESS: bumping the ring scale really does compute keys that no file backs", () => {

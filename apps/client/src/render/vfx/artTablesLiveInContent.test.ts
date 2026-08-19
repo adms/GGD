@@ -23,8 +23,14 @@ import ts from "typescript";
 
 const HERE = new URL(".", import.meta.url).pathname;
 
-/** 這三個檔在 GH#384 之前一共放了 617 筆逐 id 綁定。 */
-const GUARDED = ["bindings.ts", "w3xFamilyArt.ts", "w3xAbilityArt.ts"] as const;
+/**
+ * 這三個檔在 GH#384 之前一共放了 617 筆逐 id 綁定。
+ *
+ * ⭐ 第四個是 `ownerFamilyArt.ts`（GH#431）—— 它**沒有前科**，它在名單上是因為
+ * #431 原本的提案就是「產生器加一張 `OWNER_FAMILY_OVERRIDES` 表」，而那張表寫在
+ * TS 裡逐位元組就是 GH#384 的**第四張常數表**。⛔ 覆寫是內容，不是程式。
+ */
+const GUARDED = ["bindings.ts", "w3xFamilyArt.ts", "w3xAbilityArt.ts", "ownerFamilyArt.ts"] as const;
 
 /** 技能文件 id 的形狀：`godie-<rawcode>.<slot>`（`.passive` / `.ex` 也算）。 */
 const ABILITY_ID = /^godie-[a-z0-9]+\.[a-z0-9]+$/;

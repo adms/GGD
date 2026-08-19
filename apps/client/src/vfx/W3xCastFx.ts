@@ -103,6 +103,7 @@
  * moves where they are played, not how big they are.
  */
 import type { Scene } from "@babylonjs/core/scene";
+import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { VfxDoc } from "@ggd/shared/content";
 import { particleBudgetScale } from "../render/RenderConfig";
 import { qualityController } from "../render/QualityController";
@@ -240,6 +241,25 @@ export class W3xCastFx {
     y: number,
     z: number,
     nowMs: number,
+    /**
+     * GH#392 —— 把這一次施法**掛在施法者模型的某一個掛點上**，而不是釘在
+     * 世界座標。`root` 是那名英雄的 `champ-<id>` 節點，`attach` 是 WC3 的
+     * 掛點字串（`chest` / `hand,left` / `weapon` / …）。
+     *
+     * ⚠️ 三件事一次到位，而且**全部是 `W3xEmitterRig` 早就做完的**：
+     *   (a) 附著 —— `resolveAttachment()` 用正規化 token 比對 glb 的關節名
+     *   (b) **跟隨** —— `em.mesh.parent = anchor`，Babylon 的父子關係就是
+     *       每幀跟著骨骼的世界矩陣走，⛔ 不是生成當下取一次座標
+     *   (c) 自己播動畫 —— emitter 的 KP2E/KP2V 軌照跑（`sampleTrack`）
+     *
+     * ⛔ 這裡沒有第二條附著實作。缺的一直是這個參數：在此之前 `play()`
+     * **無條件** `atPosition(x,y,z)`，所以 62 支帶掛點的技能特效全部躺在
+     * 腳底不動，而骨骼附著只在兩個試聽頁活著（失敗形態③：整條路可以刪掉
+     * 而戰鬥完全沒感覺）。
+     *
+     * 省略 / 解析不到節點 → 走 `atPosition`，也就是這一版之前一位元不差的行為。
+     */
+    anchorTo?: { root: TransformNode; attach: string } | null,
   ): boolean {
     if (this.disposed || docs.length === 0) return false;
     if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(z)) return false;
@@ -281,13 +301,18 @@ export class W3xCastFx {
       }
     }
 
+    // GH#392 —— 有掛點就把整個效果交給那個節點（rig 會在它底下解析關節並
+    // parent 上去）；沒有就走世界座標。⛔ 這是**同一條** rig 路徑的兩個
+    // target，不是兩份播放實作。
+    const anchored = anchorTo?.root && !anchorTo.root.isDisposed();
     const handle = rig.play(
       {
         id: effectId,
         emitters: docs.map((doc) => ({ doc })),
         durationSec: W3X_CAST_EMIT_SEC,
+        ...(anchored ? { attach: anchorTo!.attach } : {}),
       },
-      atPosition(x, y, z),
+      anchored ? { kind: "node", root: anchorTo!.root } : atPosition(x, y, z),
     );
     // The rig hands back a DEAD handle when it refused the play (disposed, no
     // emitters, non-finite target). Treat that exactly like "no art".

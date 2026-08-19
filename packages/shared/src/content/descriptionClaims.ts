@@ -251,6 +251,13 @@ export function abilityNumbers(def: AbilityDef): Numbers {
       if ((MANA_GAIN_KINDS as readonly string[]).includes(String(node.kind))) hasManaGain = true;
       // 掛在 `maxHealth` 上的 modifier 也是一種最大生命百分比的表達面。
       if (node.stat === "maxHealth") hasMaxHpPct = true;
+      // ⭐ `resourcePct` 是**結構化**的表達面 —— 它自己說「哪一種資源、以哪個基準」，
+      // 所以 ⛔ 不能只把 "resourcePct" 加進 MAX_HP_PCT_KEYS（那會讓「目標**當前魔力** X%」
+      // 也被算成最大生命百分比）。消費端 `sim/effects/dynamicTerms.ts:233 resourcePctAmount()`：
+      // `basis === "max"` → 讀 max ⇒ 只有 health × max 這一格才算數。
+      // ⚠️ GH#468：漏掉它讓**已經修好**的寫法必然誤報，然後被塞進 baseline ＝ 把守衛關掉。
+      const rp = (node as { resourcePct?: { resource?: unknown; basis?: unknown } }).resourcePct;
+      if (rp && rp.resource === "health" && rp.basis === "max") hasMaxHpPct = true;
       if (typeof node.stat === "string") faces.add(`stat:${node.stat}`);
       if (typeof node.on === "string") faces.add(`on:${node.on}`);
       if (node.exclusiveGroup !== undefined) faces.add("field:exclusiveGroup");

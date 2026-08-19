@@ -1,0 +1,37 @@
+{
+  "schema": "ggd-stock-vfx@1",
+  "task": "GH#439",
+  "generatedBy": "tools/w3x-import/extract_stock_vfx.py",
+  "minRefs": 100,
+  "textureSubstitutions": {
+    "Textures\\Zap1_Red.blp": "spark_07"
+  },
+  "models": [
+    {
+      "stem": "warstompcaster",
+      "family": "shockwaveRing",
+      "wc3Path": "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl",
+      "archive": "war3.mpq",
+      "refCount": 150,
+      "mdxBytes": 11053,
+      "docs": [
+        "fx.w3x.stock.warstompcaster.p00"
+      ]
+    },
+    {
+      "stem": "thunderclapcaster",
+      "family": "shockwaveRing",
+      "wc3Path": "Abilities\\Spells\\Human\\ThunderClap\\ThunderClapCaster.mdl",
+      "archive": "war3.mpq",
+      "refCount": 123,
+      "mdxBytes": 40937,
+      "docs": [
+        "fx.w3x.stock.thunderclapcaster.p00"
+      ]
+    }
+  ],
+  "notes": [
+    "fx.w3x.stock.warstompcaster.p00: emissionRate 0, used KP2E peak 109.2",
+    "fx.w3x.stock.thunderclapcaster.p00: emissionRate 0, used KP2E peak 109.2"
+  ]
+}

@@ -33,42 +33,6 @@
    "pitchDeg": 64,
    "attackClipPitchDeg": 64
   },
-  "godie-e00k.passive": {
-   "champion": "godie-e00k",
-   "championName": "戰國刺客Azumi - 安云",
-   "ability": "19-00 閃擊",
-   "modelKey": "imported.herokunoichi",
-   "clip": "Spell",
-   "blade": "Weapon Ref←Bone_Hand_R",
-   "sweptDeg": 195.4,
-   "planarity": 0.919,
-   "pitchDeg": 53,
-   "attackClipPitchDeg": 64
-  },
-  "godie-e00k.q": {
-   "champion": "godie-e00k",
-   "championName": "戰國刺客Azumi - 安云",
-   "ability": "19-01 斷末",
-   "modelKey": "imported.herokunoichi",
-   "clip": "Spell",
-   "blade": "Weapon Ref←Bone_Hand_R",
-   "sweptDeg": 195.4,
-   "planarity": 0.919,
-   "pitchDeg": 53,
-   "attackClipPitchDeg": 64
-  },
-  "godie-e00k.w": {
-   "champion": "godie-e00k",
-   "championName": "戰國刺客Azumi - 安云",
-   "ability": "19-02 迴切",
-   "modelKey": "imported.herokunoichi",
-   "clip": "Spell",
-   "blade": "Weapon Ref←Bone_Hand_R",
-   "sweptDeg": 195.4,
-   "planarity": 0.919,
-   "pitchDeg": 53,
-   "attackClipPitchDeg": 64
-  },
   "godie-e00r.w": {
    "champion": "godie-e00r",
    "championName": "最終泛用人型決戰兵器 - 初號機",
@@ -104,42 +68,6 @@
    "planarity": 0.993,
    "pitchDeg": 80,
    "attackClipPitchDeg": 68
-  },
-  "godie-e00z.e": {
-   "champion": "godie-e00z",
-   "championName": "戰國刺客Azumi - 安云",
-   "ability": "19-03 瞬切百殺",
-   "modelKey": "imported.herokunoichi",
-   "clip": "Spell",
-   "blade": "Weapon Ref←Bone_Hand_R",
-   "sweptDeg": 195.4,
-   "planarity": 0.919,
-   "pitchDeg": 53,
-   "attackClipPitchDeg": 64
-  },
-  "godie-e00z.passive": {
-   "champion": "godie-e00z",
-   "championName": "戰國刺客Azumi - 安云",
-   "ability": "19-00 閃擊",
-   "modelKey": "imported.herokunoichi",
-   "clip": "Spell",
-   "blade": "Weapon Ref←Bone_Hand_R",
-   "sweptDeg": 195.4,
-   "planarity": 0.919,
-   "pitchDeg": 53,
-   "attackClipPitchDeg": 64
-  },
-  "godie-e00z.w": {
-   "champion": "godie-e00z",
-   "championName": "戰國刺客Azumi - 安云",
-   "ability": "19-02 迴切",
-   "modelKey": "imported.herokunoichi",
-   "clip": "Spell",
-   "blade": "Weapon Ref←Bone_Hand_R",
-   "sweptDeg": 195.4,
-   "planarity": 0.919,
-   "pitchDeg": 53,
-   "attackClipPitchDeg": 64
   },
   "godie-efur.w": {
    "champion": "godie-efur",
@@ -296,18 +224,6 @@
    "planarity": 0.987,
    "pitchDeg": 75,
    "attackClipPitchDeg": 23
-  },
-  "godie-nplh.r": {
-   "champion": "godie-nplh",
-   "championName": "通靈人 - 麻倉葉",
-   "ability": "16-02 阿彌陀流真空佛陀斬",
-   "modelKey": "imported.ye-wuqi1",
-   "clip": "spell",
-   "blade": "Hand Right Ref←Chest Ref",
-   "sweptDeg": 109.7,
-   "planarity": 0.918,
-   "pitchDeg": 44,
-   "attackClipPitchDeg": null
   },
   "godie-ogrh.q": {
    "champion": "godie-ogrh",

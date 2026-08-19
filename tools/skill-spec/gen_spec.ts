@@ -77,6 +77,7 @@ import {
   zVfxPrimBinding,
   zVfxFamilyBinding,
   zVfxPromotedBinding,
+  zVfxOwnerBinding,
   // GH#392 —— 穿在骨頭上的模型（§13.8）。
   zAttachmentDoc,
 } from "../../packages/shared/src/content/schema/vfx";
@@ -100,6 +101,29 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = resolve(HERE, "../..");
 
 export const DEFAULT_OUT = join(REPO, "docs/技能標記機制與效果規則.md");
+
+/**
+ * ⭐ GH#467 —— 一個 effect kind 現在住在哪個檔。
+ *
+ * 分片之前這一格答不出來（40 個 kind 擠在 `schema/effect.ts` 的一個 union 裡，
+ * 4,754 行），所以「改 `chainLightning` 的 `decay` 上界」這種事只能靠搜字串。
+ *
+ * ⛔ 這一行**去磁碟上找**，找不到就不印 —— 它必須是量到的，不是一句照慣例寫死的
+ * 宣稱。⚠️ 慣例本身（檔名 == kind，兩個目錄都有）由
+ * `packages/shared/src/content/schema/effects/effectShardWiring.test.ts` 守著，
+ * 它把四個方向互相釘住；這裡只是把結果寫給讀文件的人看。
+ */
+const KIND_SHARD_DIRS: readonly [label: string, dir: string][] = [
+  ["欄位與上下界", "packages/shared/src/content/schema/effects"],
+  ["TS 型別", "packages/shared/src/sim/effects/variants"],
+];
+
+function kindShardFiles(kind: string): string | null {
+  const hits = KIND_SHARD_DIRS.filter(([, d]) => existsSync(join(REPO, d, `${kind}.ts`))).map(
+    ([label, d]) => `\`${d}/${kind}.ts\`（${label}）`,
+  );
+  return hits.length ? hits.join(" · ") : null;
+}
 
 // ---------------------------------------------------------------------------
 // 手寫的那一半 —— `curated.json`，以及把它與引擎對帳的兩個方向
@@ -977,10 +1001,17 @@ export function buildSpecMarkdown(): string {
   p();
   p("`condition` 這一格每一種都有，語意一樣（見第 4 節），所以逐節不重複列。");
   p();
+  p("⭐ **每一節多了一行「定義檔」**（GH#467）—— 一個 kind 一個檔，檔名恆等於 kind。");
+  p("要改一個 kind 的欄位或上下界，只要動那一個檔，⛔ 不必再擠進一份 4,754 行的 union。");
+  p("那一行是**去磁碟上找出來的**（找不到就不印），⛔ 不是一句照著慣例寫死的宣稱。");
+  p();
   for (const kind of [...effects.keys()].sort()) {
     const arm = effects.get(kind)!;
     p(`### \`${kind}\` —— ${zh(cur.effectKinds, kind)}`);
     p();
+    const where = kindShardFiles(kind);
+    if (where) p(`**定義檔**：${where}`);
+    if (where) p();
     p(`**出貨內容用量**：${usageCell(usage.effectKinds.get(kind))}`);
     p();
     p(...fieldTable(fieldsOf(arm, ["kind", "condition"])));
@@ -1364,6 +1395,10 @@ export function buildSpecMarkdown(): string {
     p("| `config.vfx-ability-art@1.bindings.prim` | 讀技能中文名分出來的**元素 + 形狀**，`fx.prim.*` 的來源 | 每一支（基準線） |");
     p("| `config.vfx-ability-art@1.bindings.family` | 原作**證明**的家族原型 + 那個呼叫點自己的數值 | 258 支 |");
     p("| `config.vfx-ability-art@1.bindings.promoted` | 原作藝術真的出貨成 emitter 文件的那些，直接指名 doc | 34 支 |");
+    // ⚠️ 這張表與下面那幾個 fieldTable 是**手抄的四格**。加第五格時兩處都要補,
+    // ⛔ 漏掉的話 `vfxSurfaceInContract.test.ts` 會紅 —— 那正是 2026-08-20 抓到
+    // `bindings.owner` 沒進對外契約的方式（外部編輯器看不到的格子）。
+    p("| `config.vfx-ability-art@1.bindings.owner` | ⭐ **owner 的設計覆寫** —— 贏過原作證據,但輸給後台 live。`why` 必填 | 逐支指定 |");
     p();
     p("⚠️ **ABSENT ≠ 1.0**：`scale` / `tint` / `flyHeight` 缺席的意思是「原作沒有為");
     p("這個呼叫點寫過一個值」，⛔ 不是「原作寫了 1.0」—— 前者走家族預設，後者會把家族");
@@ -1394,6 +1429,13 @@ export function buildSpecMarkdown(): string {
       ...fieldTableWithUsage(
         withDocs(fieldsOf(zVfxPromotedBinding), promoBindDocs),
         "config.vfx-ability-art@1.bindings.promoted.",
+        usage.vfxSurface,
+      ),
+    );
+    p(
+      ...fieldTableWithUsage(
+        fieldsOf(zVfxOwnerBinding),
+        "config.vfx-ability-art@1.bindings.owner.",
         usage.vfxSurface,
       ),
     );

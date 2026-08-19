@@ -249,7 +249,10 @@ describe("the honest coverage numbers (pins — a silent regression moves them)"
     const orphan = [...onDisk].filter((k) => !wanted.has(k)).sort();
     expect(missing, "generator not run / content:build stale").toEqual([]);
     expect(orphan, "dead fx.fam docs left behind").toEqual([]);
-    expect(wanted.size).toBe(78);
+    // 78 → 79（GH#431）：天譴 `godie-udea.r` 的 owner 覆寫把它從 shockwaveRing
+    // 搬到 lightColumn，於是多要一份 `fx.fam.light-column.w3x-00ffff.s150`。
+    // 舊的 shockwave 那一份沒有變孤兒 —— 另外 90 支還在用它。
+    expect(wanted.size).toBe(79);
   });
 
   /**
@@ -284,7 +287,9 @@ describe("the honest coverage numbers (pins — a silent regression moves them)"
     // off units and triggers. Their prototypes exist and are console-bindable.
     expect(empty).toEqual(["blood", "starfall"]);
     expect(Object.values(cov).reduce((a, b) => a + b, 0)).toBe(Object.keys(w3xFamilyArtRows()).length);
-    expect(cov.shockwaveRing).toBe(91); // the big one, by a factor of 2.7
+    // 91 → 90：天譴被 owner 覆寫搬走一支（GH#431）。⚠️ 這裡數的是**解析後**的
+    // 家族，而證據那張表仍然說 shockwaveRing —— 兩者不一樣正是覆寫層在做事。
+    expect(cov.shockwaveRing).toBe(90); // the big one, by a factor of 2.7
   });
 
   it("every family key the resolver emits is an fx.fam key of a REAL family", () => {

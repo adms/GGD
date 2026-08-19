@@ -34,7 +34,8 @@ import { Arenas, Configs, Models, StatusEffects, VfxDefs, registerAll } from "./
 import { Abilities, Augments, Champions, Items, LootTables, Projectiles } from "../sim/content/registry";
 import type { AbilityDef, AugmentDef } from "../sim/content/defs";
 import { scanAbility, mismatchKey, type Mismatch } from "./descriptionClaims";
-import { KNOWN_MISMATCHES } from "./descriptionClaims.baseline";
+import { claimOwner, KNOWN_MISMATCHES, KNOWN_MISMATCHES_BY_OWNER } from "./descriptionClaims.baseline";
+import { writeShardedBaseline } from "./baselineShards";
 
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
 
@@ -113,6 +114,9 @@ describe("描述↔JSON 一致性（開放範圍棘輪）", () => {
         ([k, { s, m }]) => `${k}\t${s.label}\t${m.claim.replace(/\s+/g, " ")}\t${m.why}`,
       );
       writeFileSync(join(tmpdir(), "ggd-desc-claims-open.tsv"), rows.sort().join("\n"));
+      // ⭐ 基準線是**按英雄分片**的，所以 dump 直接吐出整個目錄的形狀 ——
+      // ⛔ 不要叫人拿第一欄手工切成 60 個檔（`descriptionClaims.baseline.ts` 檔頭有 cp 指令）。
+      writeShardedBaseline(join(tmpdir(), "ggd-desc-claims-baseline"), [...found.keys()].sort(), claimOwner);
       const per: Record<string, number> = {};
       for (const { m } of found.values()) per[m.rule] = (per[m.rule] ?? 0) + 1;
       console.log(
@@ -138,7 +142,27 @@ describe("描述↔JSON 一致性（開放範圍棘輪）", () => {
     const stale = KNOWN_MISMATCHES.filter((k) => !found.has(k));
     expect(
       stale.join("\n"),
-      `⭐ 這幾處已經修好了 —— 把它們從 descriptionClaims.baseline.ts 刪掉（棘輪只准降）：\n${stale.join("\n")}`,
+      `⭐ 這幾處已經修好了 —— 把它們從 descriptionClaims.baseline/<英雄>.json 刪掉（棘輪只准降）：\n${stale.join(
+        "\n",
+      )}`,
+    ).toBe("");
+  });
+
+  /**
+   * ⭐ 分片之後多出來的腐爛形態：**孤兒檔**。
+   * 一個檔名不對應任何開放英雄／固有能力的分片留在目錄裡 ⇒ 它列的每一筆都被
+   * **永久豁免**，而上面那條棘輪**不會叫**（它只看得到鍵，看不到鍵來自哪個檔）。
+   * ⚠️ 英雄退場、id 改名、變身態跟著本體下架都會製造孤兒檔。
+   */
+  it("⭐ 分片目錄裡不可以有孤兒檔（＝一批永久關掉的豁免）", () => {
+    const owners = new Set(open.map((s) => claimOwner(s.id)));
+    const orphans = [...KNOWN_MISMATCHES_BY_OWNER.keys()].filter((o) => !owners.has(o));
+    expect(
+      orphans.join("\n"),
+      `⛔ descriptionClaims.baseline/ 裡這幾個檔不對應任何**開放**英雄或固有能力 —— ` +
+        `它們豁免的每一筆都永遠不會被棘輪追回來。⭐ 刪掉那些檔：\n${orphans
+          .map((o) => `  ${o}.json（${KNOWN_MISMATCHES_BY_OWNER.get(o)!.length} 筆）`)
+          .join("\n")}`,
     ).toBe("");
   });
 });

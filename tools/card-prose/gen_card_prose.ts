@@ -328,7 +328,7 @@ async function main(): Promise<void> {
     "| 4 | `content/champions/*.json` 的 embedded 副本 | 描述是**鏡像**的（`packages/shared/src/content/abilityMirror.test.ts`）⇒ 套用是 standalone + embedded 一起動，只改一邊那條守衛會紅 |",
   );
   p(
-    "| 5 | `packages/shared/src/content/descriptionClaims.baseline.ts` | 那是一條**兩個方向都會紅**的棘輪（「名單上的鍵已經修好 → 也紅」）。冷卻／耗魔整批移出文案之後，所有 `cooldown-mismatch` / `mana-mismatch` 鍵會**一次消失** ⇒ 套用的同一個 commit 要重新產生基準線，⛔ 不是事後補 |",
+    "| 5 | `packages/shared/src/content/descriptionClaims.baseline/`（⭐ #467 之後是**一位英雄一個 JSON**，⛔ 不再是一支 `.ts`） | 那是一條**兩個方向都會紅**的棘輪（「名單上的鍵已經修好 → 也紅」）。冷卻／耗魔整批移出文案之後，所有 `cooldown-mismatch` / `mana-mismatch` 鍵會**一次消失** ⇒ 套用的同一個 commit 要重新產生基準線，⛔ 不是事後補。重新產生＝ `GGD_DESC_CLAIMS_DUMP=1` 跑 `descriptionClaims.test.ts`，再把 `$TMPDIR/ggd-desc-claims-baseline` **整個目錄** `rm -rf` + `cp -R` 蓋回去（指令在 `descriptionClaims.baseline.ts` 檔頭）；⛔ 不要拿 TSV 第一欄手切 |",
   );
   p();
   p("⭐ 另外：本表標記 **產生的** 的那些，改的是 `tools/skill-remake/batch1.py` 的規格字串，");

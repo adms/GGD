@@ -1,18 +1,30 @@
 /**
  * EVIDENCE + TUNING → the doc key an ability actually plays.
  *
- * Three layers, resolved here and nowhere else:
+ * FOUR layers, resolved here and nowhere else:
  *   1. `w3xFamilyArt.ts`  — what the ORIGINAL MAP proves (family, and the map's
  *                           own scale/tint/flyHeight/anchor for that call site)
  *   2. `bindings.ts`      — the ability's element, classified from its Chinese
  *                           NAME. The colour half of the look, and the ONLY
  *                           layer for the ~390 abilities the import proves
  *                           nothing about. It stays; it is the fallback.
- *   3. `config.vfx-families@1` — the console's live overrides on top of both.
+ *   3. `ownerFamilyArt.ts` — ⭐ GH#431, owner 的**設計覆寫**（出貨預設）
+ *   4. `config.vfx-families@1` — the console's live overrides on top of all.
  *
  * PRECEDENCE, stated once: the map's own tint beats the name-classified
  * element; the console beats the map. That order is deliberate — the map is
  * evidence and the name is a guess, but the owner is the owner.
+ *
+ * ⭐ **GH#431 把第 3 層插在證據與後台之間**，逐欄套用（`?? ?? ??` 那三行）：
+ * **後台 > owner 設計 > 證據 > 家族預設**。為什麼設計層贏過證據 —— 第〇·六守則：
+ * owner 的新版說明是第 1 層，w3a 原始設定是第 5 層，⛔ GGD 是重製不是移植。
+ * 為什麼後台仍然贏過設計層 —— 那也是 owner，只是他**當下**的手；設計層是
+ * **出貨預設**，而那正是 #431 說「後台 overlay 活得下來，但不會變成出貨預設」
+ * 的那半個洞。
+ *
+ * ⛔ 覆寫**沒有**改寫 `w3xFamilyArtRows()`：證據那張表逐位不動，所以
+ * `w3xFamilyArt.test.ts` 的反捏造守衛與 `generateFamilyContent` 寫進
+ * `config.vfx-families@1.abilities[]` 的鏡像**都不必放寬**。
  *
  * WHAT COMES OUT is a `fx.fam.*` doc key plus the SPATIAL bits a `VfxDoc`
  * cannot carry (`heightY`, `anchor`). The key resolves through
@@ -42,6 +54,7 @@ import {
   type W3xFamilyPrototype,
 } from "./w3xArtFamilies";
 import { w3xFamilyArtRows, type W3xFamilyArtRow } from "./w3xFamilyArt";
+import { ownerFamilyArtFor, ownerFamilyArtRows, type VfxOwnerBinding } from "./ownerFamilyArt";
 import { abilityVfxKeys, rosterBindings, SIZE_SCALE, type Size } from "./bindings";
 import { elementFromVfxKey, type Element } from "./elements";
 import type { VfxDoc } from "@ggd/shared/content";
@@ -121,6 +134,13 @@ export interface ResolvedFamilyArt {
   readonly groundDecal?: VfxGroundDecal;
   /** the evidence row this came from (absent when the console invented it) */
   readonly evidence?: W3xFamilyArtRow;
+  /**
+   * GH#431 —— owner 的設計覆寫，如果這一支有的話。
+   *
+   * ⭐ 它與 `evidence` **同時**出現才是常態（覆寫蓋在證據上，證據原封保留），
+   * 所以報表看得到「本來是什麼、現在是什麼、為什麼」三件事。
+   */
+  readonly design?: VfxOwnerBinding;
 }
 
 /** memoized `abilityVfxKeys()` — the name classification, built once. */
@@ -175,8 +195,10 @@ export function resolveFamilyArt(
 ): ResolvedFamilyArt | undefined {
   if (!abilityId) return undefined;
   const evidence: W3xFamilyArtRow | undefined = w3xFamilyArtRows()[abilityId];
+  // ⭐ GH#431 —— owner 的設計覆寫，蓋在證據上、被後台蓋。⛔ 它不改寫證據。
+  const design = ownerFamilyArtFor(abilityId);
   const override = doc?.abilities?.[abilityId];
-  const family = (override?.family ?? evidence?.family) as W3xArtFamily | undefined;
+  const family = (override?.family ?? design?.family ?? evidence?.family) as W3xArtFamily | undefined;
   if (!family || !W3X_ART_FAMILIES[family]) return undefined;
   if (isDisabled(abilityId, family, doc)) return undefined;
 
@@ -187,19 +209,19 @@ export function resolveFamilyArt(
   // map never stated one, so the family default stands alone (NOT 1.0 × the
   // family default — those are the same number here, but the distinction is
   // why `w3xScale` is optional rather than defaulted to 1 in the table).
-  const w3xScale = override?.w3xScale ?? evidence?.scale;
+  const w3xScale = override?.w3xScale ?? design?.scale ?? evidence?.scale;
   const docScale =
     proto.scale *
     (w3xScale === undefined ? SIZE_SCALE[classifiedSize(abilityId) ?? "md"] : w3xScaleToDoc(w3xScale, mapping));
   const scale = quantizeScale(docScale);
 
   // COLOUR. Map tint > name-classified element > family default.
-  const tint = override?.tint ?? evidence?.tint;
+  const tint = override?.tint ?? design?.tint ?? evidence?.tint;
   const colour: FamilyColour = tint
     ? { kind: "w3x", rgb255: [tint[0], tint[1], tint[2]] }
     : { kind: "element", element: classifiedElement(abilityId) ?? proto.element };
 
-  const flyHeight = override?.flyHeight ?? evidence?.flyHeight;
+  const flyHeight = override?.flyHeight ?? design?.flyHeight ?? evidence?.flyHeight;
   const heightY = familyHeightY(family, flyHeight) + (proto.heightY - W3X_ART_FAMILIES[family].heightY);
 
   return {
@@ -214,13 +236,16 @@ export function resolveFamilyArt(
     // here too would apply it twice.
     ...(override?.alpha !== undefined ? { alpha: override.alpha } : {}),
     ...(override?.timeScale !== undefined ? { timeScale: override.timeScale } : {}),
-    ...(override?.anchor ?? evidence?.anchor ? { anchor: override?.anchor ?? evidence?.anchor } : {}),
+    ...(override?.anchor ?? design?.anchor ?? evidence?.anchor
+      ? { anchor: override?.anchor ?? design?.anchor ?? evidence?.anchor }
+      : {}),
     // GH#439 —— 家族層的地面痕跡。⛔ 沒設就不寫（ABSENT ≠ "scorch"：兩者今天
     // 畫出來一樣，但只有 ABSENT 表示「操作者沒碰過」，而那是 dirty 判斷的依據）。
     ...(doc?.families?.[family]?.groundDecal !== undefined
       ? { groundDecal: doc.families[family].groundDecal }
       : {}),
     ...(evidence ? { evidence } : {}),
+    ...(design ? { design } : {}),
   };
 }
 
@@ -232,6 +257,10 @@ export function resolveFamilyArt(
  */
 export function resolveAllFamilyArt(doc: FamilyTuningDoc): ResolvedFamilyArt[] {
   const ids = new Set<string>(Object.keys(w3xFamilyArtRows()));
+  // GH#431 —— owner 可以把一支**原作證明不了任何東西**的技能綁上家族原型。
+  // ⛔ 少了這一行，那種列就不會出現在「哪些 fx.fam 文件必須存在」裡 ⇒ 產生器
+  // 不會烘它、`familyArtCoverage` 不會要求它，而它在遊戲裡靜靜地掉回替身（故障②）。
+  for (const id of Object.keys(ownerFamilyArtRows())) ids.add(id);
   for (const id of Object.keys(doc?.abilities ?? {})) ids.add(id);
   const out: ResolvedFamilyArt[] = [];
   for (const id of [...ids].sort()) {
@@ -380,6 +409,12 @@ export function familyCoverage(doc: FamilyTuningDoc): Record<W3xArtFamily, numbe
 /** Human-readable one-liner for the console/report rows. */
 export function describeResolved(r: ResolvedFamilyArt): string {
   const proto = W3X_ART_FAMILIES[r.family];
-  const src = r.evidence ? `${r.evidence.provenance}/${r.evidence.via}` : "console";
+  // GH#431 —— 設計覆寫要在報表上**看得出來**，否則「這一支為什麼跟原作不一樣」
+  // 只剩下人的記憶。⛔ 覆寫在時它排在證據前面，因為它才是真正決定的那一層。
+  const src = r.design
+    ? `owner-design(${r.design.why.slice(0, 24)})`
+    : r.evidence
+      ? `${r.evidence.provenance}/${r.evidence.via}`
+      : "console";
   return `${proto.label} · ${colourSlug(r.colour)} · ×${r.docScale} ← ${src}`;
 }
