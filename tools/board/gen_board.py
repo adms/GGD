@@ -100,15 +100,25 @@ def md_to_html(md: str) -> str:
     return "\n".join(out)
 
 
-def live() -> str:
-    head = sh("git", "log", "--oneline", "-1")
-    unpushed = sh("git", "rev-list", "--count", "origin/main..HEAD") or "?"
-    st = sh("git", "status", "--short").split("\n")
-    tracked = sum(1 for l in st if l and not l.startswith("??"))
-    untracked = sum(1 for l in st if l.startswith("??"))
-    return (f'<div class="meta"><span>HEAD <b>{html.escape(head.split()[0] if head else "?")}</b></span>'
-            f'<span>未 push <b>{unpushed}</b></span>'
-            f'<span>工作區 <b>{tracked}</b> 改動 · <b>{untracked}</b> 未追蹤</span></div>')
+def meta(body: str, dailies: list) -> str:
+    """⛔ **這一格刻意不放 git 狀態**（owner 2026-08-20：「fix all, fix gen_board.py」）。
+
+    它以前寫的是 HEAD hash · 未 push 數 · 工作區改動數 —— 那三個都是**時鐘欄位**：
+    每 commit 一次產物就變，於是逐位元組 `--check` **不可能**綠。結果是這支產生器
+    ⛔ **沒有 npm script 也沒有任何測試** —— 全 repo 唯一完全無閘的產生器，
+    而它的產物 `docs/_release/ggd-board.html` 是版控的。
+
+    ⚠️ 而檔頭第 22 行當時**自己宣稱**「⛔ 沒有時鐘欄位，所以比得起來」—— 那是第三守則
+    說的那種謊：一句被散文保護的假話活得比它的有效期久，**而且沒有任何東西會紅**。
+
+    現在這一格只放**從來源文件推導**的東西：帳本份數與被點名的票號數。
+    它只在來源真的變了的時候變 ⇒ `--check` 從此比得起來，這支產生器才能接進
+    `pnpm skills:check`（`board:check`）。
+    """
+    tickets = sorted({int(n) for n in re.findall(r"#(\d{2,4})\b", body)})
+    return (f'<div class="meta"><span>帳本 <b>{len(dailies)}</b> 份</span>'
+            f'<span>點名票號 <b>{len(tickets)}</b> 張</span>'
+            f'<span>區塊 <b>{body.count("<section>")}</b> 節</span></div>')
 
 
 CSS = (ROOT / "tools/board/board.css").read_text(encoding="utf-8")
@@ -139,8 +149,8 @@ def build() -> str:
     )
     return (f"<title>GGD 作戰板</title>\n<style>{CSS}</style>\n"
             f'<div class="wrap"><header><p class="eyebrow">v0.21.4 → v0.21.5 · 開發中</p>'
-            f"<h1>GGD 作戰板</h1>{live()}</header>\n{body}\n"
-            f'<footer>由 <code>tools/board/gen_board.py</code> 從 docs/_daily · docs/_release · git 產生 —— '
+            f"<h1>GGD 作戰板</h1>{meta(body, dailies)}</header>\n{body}\n"
+            f'<footer>由 <code>tools/board/gen_board.py</code> 從 docs/_daily · docs/_release 產生（⛔ 不含 git 狀態:那是時鐘欄位） —— '
             f'⛔ 不要手改這份 HTML</footer></div>\n')
 
 
