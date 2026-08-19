@@ -62,6 +62,18 @@ COPY packages/shared/ packages/shared/
 COPY apps/client/ apps/client/
 COPY apps/editor/ apps/editor/
 COPY apps/admin/ apps/admin/
+# ---- ⛔ 唯一一份被 **build 進來** 的 content/ 檔（GH#437）--------------------
+# `content/` 是 live bind-mount，⛔ 刻意不進映像 —— 上面四行只 COPY 程式碼。
+# 但 `blizzardVfxCredits.ts` 是**靜態 import** 這一份出處帳本的（設計如此：
+# 「THE ROWS ARE IMPORTED, NEVER TRANSCRIBED」，這樣 clip 不可能沒有它的列），
+# 而靜態 import 發生在 **build 時**，於是它非在建置脈絡裡不可。
+#
+# ⚠️ 這一行與 `apps/client/src/**` 的跨界 import **必須成對**，否則 build 死在
+# rollup 的 "Could not resolve" —— 而那個紅燈**只在正式建置時**出現：
+# 本機 `vite build` 看得到整棵樹，所以本機永遠是綠的（2026-08-19 就是這樣上線失敗的）。
+# 閘：`packages/shared/src/ops/clientContentImports.test.ts` 逐一比對兩邊。
+# ⛔ 想再加一份之前先問：它是不是該用 `contentAssetUrl` 在**執行期**抓？
+COPY content/assets/audio/wc3/PROVENANCE.json content/assets/audio/wc3/
 # ---- THE FULL-ASSET BUILD FLAG (task #176) ---------------------------------
 # apps/client/src/config/fullAssets.ts reads VITE_GGD_FULL_ASSETS and falls back
 # to import.meta.env.DEV, which is constant-folded to `false` in every
