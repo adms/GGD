@@ -101,7 +101,7 @@
       "sfxKey": "wc3.peondeath",
       "targetsEnemies": true,
       "castTimeSec": 0.2,
-      "rangeTier": "小",
+      "rangeTier": "極小",
       "range": 3
     },
     "W": {
@@ -201,7 +201,7 @@
       "targetsEnemies": true,
       "radius": 6.0,
       "castTimeSec": 1.5,
-      "rangeTier": "小",
+      "rangeTier": "極小",
       "range": 3
     },
     "R": {

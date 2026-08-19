@@ -18,7 +18,7 @@
     600.0
   ],
   "range": 0.0,
-  "radiusTier": "大",
+  "radiusTier": "中",
   "targetsEnemies": true,
   "effects": [
     {
@@ -56,7 +56,7 @@
             ]
           },
           "radius": 3.0,
-          "radiusTier": "小",
+          "radiusTier": "極小",
           "includeOrigin": true
         },
         {
@@ -76,7 +76,7 @@
             ]
           },
           "radius": 3.0,
-          "radiusTier": "小",
+          "radiusTier": "極小",
           "includeOrigin": true,
           "victimCondition": {
             "kind": "status",

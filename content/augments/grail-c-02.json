@@ -25,7 +25,7 @@
       "effects": [
         {
           "kind": "knockback",
-          "distanceTier": "小",
+          "distanceTier": "極小",
           "from": "caster",
           "applyTo": "target",
           "distance": 2,
@@ -40,7 +40,7 @@
       "effects": [
         {
           "kind": "knockback",
-          "distanceTier": "小",
+          "distanceTier": "極小",
           "from": "caster",
           "applyTo": "target",
           "distance": 2,

@@ -59,7 +59,7 @@
                   "flat": 1.0
                 },
                 "radius": 4.5,
-                "radiusTier": "中",
+                "radiusTier": "小",
                 "onHitTargets": [
                   {
                     "kind": "applyStatus",

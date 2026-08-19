@@ -7,7 +7,7 @@
 > 設計母規則：[`docs/聖杯願望三選一-設計規則.md`](../聖杯願望三選一-設計規則.md)。
 > 每個效果的參數與上下界：[`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 
-contentVersion `cv_009ce64575c2`
+contentVersion `cv_7ed50f24c2f2`
 
 ---
 
@@ -140,7 +140,7 @@ contentVersion `cv_009ce64575c2`
       "effects": [
         {
           "kind": "knockback",
-          "distanceTier": "小",
+          "distanceTier": "極小",
           "from": "caster",
           "applyTo": "target",
           "distance": 2,
@@ -155,7 +155,7 @@ contentVersion `cv_009ce64575c2`
       "effects": [
         {
           "kind": "knockback",
-          "distanceTier": "小",
+          "distanceTier": "極小",
           "from": "caster",
           "applyTo": "target",
           "distance": 2,
@@ -1502,7 +1502,7 @@ contentVersion `cv_009ce64575c2`
         },
         {
           "kind": "knockback",
-          "distanceTier": "小",
+          "distanceTier": "極小",
           "from": "caster",
           "applyTo": "target",
           "distance": 2,
@@ -1530,7 +1530,7 @@ contentVersion `cv_009ce64575c2`
         },
         {
           "kind": "knockback",
-          "distanceTier": "小",
+          "distanceTier": "極小",
           "from": "caster",
           "applyTo": "target",
           "distance": 2,

@@ -106,7 +106,7 @@
         }
       ],
       "recoverySec": 0.25,
-      "rangeTier": "中"
+      "rangeTier": "小"
     },
     "W": {
       "id": "godie-efur.w",
@@ -196,7 +196,7 @@
         300.0
       ],
       "range": 0.0,
-      "radiusTier": "中",
+      "radiusTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
@@ -217,7 +217,7 @@
             ]
           },
           "radius": 4.5,
-          "radiusTier": "中",
+          "radiusTier": "小",
           "includeOrigin": true
         }
       ],
@@ -258,7 +258,7 @@
         250.0
       ],
       "range": 0.0,
-      "radiusTier": "小",
+      "radiusTier": "極小",
       "targetsEnemies": true,
       "effects": [
         {
@@ -289,7 +289,7 @@
                 ]
               },
               "radius": 3.0,
-              "radiusTier": "小",
+              "radiusTier": "極小",
               "includeOrigin": true
             }
           ]

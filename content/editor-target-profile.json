@@ -3,22 +3,22 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_009ce64575c2",
+    "contentVersion": "cv_7ed50f24c2f2",
     "collections": {
       "champions": {
-        "hash": "8d9660c22d7d",
+        "hash": "0d92a71d690b",
         "count": 78
       },
       "abilities": {
-        "hash": "ec1c1368410f",
+        "hash": "88c4714e5abb",
         "count": 461
       },
       "items": {
-        "hash": "e238c638b491",
+        "hash": "c56630639f8b",
         "count": 142
       },
       "augments": {
-        "hash": "a75ef623eb73",
+        "hash": "b6f3f4733fee",
         "count": 91
       },
       "projectiles": {
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "99d92e7219b6",
+        "hash": "1d491e1f06c1",
         "count": 65
       },
       "models": {
@@ -2715,7 +2715,7 @@
         {
           "id": "aoe.max-radius",
           "field": "radius",
-          "max": 8,
+          "max": 12,
           "unit": "unit",
           "note": "AoE 半徑上限 = 最大的那一級距。⛔ 超過決鬥區半徑的範圍技等於「打全場」,而畫面上看不出來它比場地還大。",
           "source": "admin-config",
@@ -3251,5 +3251,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "7c0cbf1ac8ce"
+  "profileDigest": "0fb4550ceb70"
 }

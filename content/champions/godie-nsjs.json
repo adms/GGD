@@ -141,7 +141,7 @@
       ],
       "vfxKey": "fx.prim.nature.bolt",
       "castTimeSec": 0.467,
-      "rangeTier": "超大",
+      "rangeTier": "大",
       "range": 8
     },
     "E": {
@@ -220,7 +220,7 @@
       "vfxKey": "fx.prim.nature.nova-lg",
       "targetsEnemies": true,
       "castTimeSec": 1.633,
-      "rangeTier": "大",
+      "rangeTier": "中",
       "range": 6
     }
   },

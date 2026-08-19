@@ -41,18 +41,25 @@ METHOD_VERSION = "twopass-v3"  # written into each PNG; bump to force regenerati
 # 下面兩個常數**留著當 fail-open 的退路**（讀不到 JSON 時仍然畫得出圖），
 # ⛔ 但它們不再是出貨值 —— 出貨值在 content/config/icon-style.json。
 ANIME_STYLE = (
-    "Japanese 2D RPG game illustration, hand-painted JRPG menu art, clean "
-    "confident ink outline, soft cel shading in two tone steps, restrained "
-    "limited palette of about four colours, muted natural tones, matte painted "
-    "finish, single subject centred, plain dark background, calm even lighting"
+    "Fate Type-Moon anime illustration in the ufotable style, hand-painted "
+    "digital art, confident brush strokes with visible paint texture, clean "
+    "ink outline, cel shading in two tone steps, warm gold key light from the "
+    "upper left with a cool azure rim light down the lower right, restrained "
+    "palette of burnished gold and deep indigo over muted steel and leather "
+    "lifted by one crimson accent, a few drifting blue-white magical motes, "
+    "plain near-black background, bold readable silhouette, high local "
+    "contrast, chunky forms"
 )
 ANIME_NEGATIVE = (
-    "text, letters, words, watermark, signature, logo, border, frame, ui panel, "
-    "multiple views, collage, split image, grid, blurry, lowres, deformed, "
-    "extra limbs, extra fingers, mutated, photorealistic, 3d render, "
-    "western cartoon, sketch, monochrome, neon, oversaturated, rainbow gradient, "
-    "garish clashing colours, glitter, excessive glow, lens flare, "
-    "chromatic aberration, busy cluttered detail"
+    "gilded lace, baroque scrollwork, fine ornamental linework, runes, "
+    "inscribed symbols, stained-glass tracery, neon, oversaturated, garish "
+    "clashing colours, rainbow gradient, glitter, excessive glow, lens flare, "
+    "chromatic aberration, busy cluttered detail, kaleidoscope, mandala, "
+    "emblem, logo, photorealistic, photograph, 3d render, glossy plastic, "
+    "chrome, specular highlight, depth of field, text, letters, watermark, "
+    "signature, border, frame, ui panel, multiple views, collage, grid, "
+    "blurry, lowres, deformed, extra limbs, extra fingers, mutated, western "
+    "cartoon, sketch, monochrome"
 )
 
 _HERE = os.path.dirname(os.path.abspath(__file__))

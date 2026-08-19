@@ -44,7 +44,7 @@
                       ]
                     },
                     "radius": 8.0,
-                    "radiusTier": "超大",
+                    "radiusTier": "大",
                     "resourcePct": {
                       "subject": "target",
                       "resource": "health",
@@ -57,7 +57,7 @@
                   {
                     "kind": "weightedBranch",
                     "shape": "circle",
-                    "radiusTier": "超大",
+                    "radiusTier": "大",
                     "radius": 8.0,
                     "side": "allies",
                     "maxTargets": 24,

@@ -99,7 +99,7 @@
       "vfxKey": "fx.prim.physical.nova",
       "targetsEnemies": true,
       "castTimeSec": 0.3,
-      "rangeTier": "大",
+      "rangeTier": "中",
       "range": 6
     },
     "W": {
@@ -152,7 +152,7 @@
       "vfxKey": "fx.firestorm",
       "targetsEnemies": true,
       "castTimeSec": 0.633,
-      "rangeTier": "大",
+      "rangeTier": "中",
       "range": 6
     },
     "E": {
@@ -199,7 +199,7 @@
       "vfxKey": "fx.prim.arcane.bolt",
       "sfxKey": "wc3.demonhuntermissilehit3",
       "castTimeSec": 1.5,
-      "rangeTier": "超大",
+      "rangeTier": "大",
       "range": 8
     },
     "R": {

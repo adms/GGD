@@ -139,26 +139,53 @@ export type ConfigIconStyleDoc = z.infer<typeof zConfigIconStyleDoc>;
 export const DEFAULT_ICON_STYLE: ConfigIconStyleDoc = {
   id: "icon-style",
   schema: "config.icon-style@1",
-  // ⛔⛔ 兩段都必須塞得進 SD1.5 的 CLIP **77 token** 上限。超過的部分會被
-  // **靜默截斷**，日誌只有一行不起眼的 warning。
-  // 2026-08-17 的第一版 negativePrompt 是 **117 token**，於是排在最後的 13 個詞
-  // ——`neon` / `oversaturated` / `rainbow gradient` / `garish clashing colours` /
-  // `glitter` / `excessive glow` / `lens flare` / `chromatic aberration` /
-  // `busy cluttered detail`——**一個都沒有送進模型**。那正好是 owner 明說的
-  // 「不要過度花俏複雜的顏色」那一整組，而 91 張產出看起來只是「畫風不對」。
-  // ⇒ 現在的順序是**刻意的**：owner 要的顏色克制排最前面，通用品質詞墊底
-  //   （真的又超了的話，被丟掉的會是最不痛的那些）。
-  // 守衛：`tools/icon-gen/local/test_icon_style_fits.py`（真的用 CLIP tokenizer 數）。
+  // ⭐ owner 2026-08-19：「請你幫我生成圖示得部分加註**包含 prompt 都要 FATE 風格**」
+  //
+  // ⚠️ FATE（型月／ufotable）的視覺語言與「**64px 讀得懂**」直接衝突，而解法
+  //    ⛔ 不是在兩者之間折衷，是分清楚 FATE 的**哪一半撐得過縮圖**：
+  //
+  //      撐得過（→ stylePrompt）        撐不過（→ negativePrompt）
+  //      ─────────────────────         ─────────────────────────
+  //      三色調：金 × 靛藍 × 緋紅       鎏金蕾絲 / 巴洛克捲飾
+  //      魔力光點（藍白微塵）           細碎裝飾線
+  //      ufotable 的高對比邊光          **符文** / 銘刻符號
+  //      厚塗筆觸與可見顏料質地         彩繪玻璃分割
+  //
+  // ⚠️ `runes` 是**兩用**的：符文在 40px 是一團泥，而且圖像模型會把它當成
+  //    「可以畫文字」的邀請 —— 負向本來就有 `text`，但實測風格詞會壓過它。
+  //
+  // ⭐ **順序是刻意的**：FATE 撐不過縮圖的那一組排最前面，通用品質詞墊底。
+  //    （這一條保留自 2026-08-17 —— 當時的理由是 CLIP 77 token 截斷，
+  //    ⛔ 而那個理由後來被推翻了：`pipeline._encode_long()` 會切成 75-token 窗格
+  //    逐段編碼再串接，**沒有東西被截斷**。順序留著是因為它本來就是對的優先序，
+  //    ⛔ 不是因為那個已經不成立的理由。）
+  //
+  // ⛔ 這裡曾經寫著「守衛：`tools/icon-gen/local/test_icon_style_fits.py`」——
+  //    **那個檔案從來不存在**（第三守則：註解會說謊），而且它宣稱要守的那件事
+  //    （CLIP 77 token）本身也是誤診。
+  //    2026-08-19 量到的真相是：這段字串有 **三個住處**，而**零個守衛** ——
+  //      ① content/config/icon-style.json（出貨值，產圖器真的讀的那一份）
+  //      ② 這裡的 DEFAULT_ICON_STYLE（**零個 import**，純文件）
+  //      ③ tools/icon-gen/local/keywords.py 的 _ICON_STYLE_FALLBACK（fail-open 退路）
+  //    ⇒ ①②在 2026-08-19 之前就已經漂移（negativePrompt 不同），而**沒有任何東西紅**。
+  //    現在的守衛是 `iconStylePromptHomes.test.ts`（三份逐字比對）。
   stylePrompt:
-    "Japanese 2D RPG game illustration, hand-painted JRPG menu art, flat matte " +
-    "colours, clean ink outline, soft cel shading, limited palette of about four " +
-    "muted natural colours, single subject centred, plain dark background, " +
-    "even lighting",
+    "Fate Type-Moon anime illustration in the ufotable style, hand-painted " +
+    "digital art, confident brush strokes with visible paint texture, clean ink " +
+    "outline, cel shading in two tone steps, warm gold key light from the upper " +
+    "left with a cool azure rim light down the lower right, restrained palette of " +
+    "burnished gold and deep indigo over muted steel and leather lifted by one " +
+    "crimson accent, a few drifting blue-white magical motes, plain near-black " +
+    "background, bold readable silhouette, high local contrast, chunky forms",
   negativePrompt:
-    "neon, oversaturated, garish clashing colours, rainbow gradient, glitter, " +
-    "excessive glow, lens flare, busy cluttered detail, kaleidoscope, mandala, " +
-    "photorealistic, 3d render, glossy plastic, chrome, specular highlight, " +
-    "text, watermark, logo, frame, blurry, lowres, deformed, collage",
+    "gilded lace, baroque scrollwork, fine ornamental linework, runes, inscribed " +
+    "symbols, stained-glass tracery, neon, oversaturated, garish clashing colours, " +
+    "rainbow gradient, glitter, excessive glow, lens flare, chromatic aberration, " +
+    "busy cluttered detail, kaleidoscope, mandala, emblem, logo, photorealistic, " +
+    "photograph, 3d render, glossy plastic, chrome, specular highlight, depth of " +
+    "field, text, letters, watermark, signature, border, frame, ui panel, multiple " +
+    "views, collage, grid, blurry, lowres, deformed, extra limbs, extra fingers, " +
+    "mutated, western cartoon, sketch, monochrome",
   strength: 0.58,
   pass1Steps: 26,
   pass1Guidance: 7.5,

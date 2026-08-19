@@ -95,7 +95,7 @@
       "vfxKey": "fx.prim.wind.beam",
       "castTimeSec": 0.867,
       "targetsEnemies": true,
-      "rangeTier": "超大",
+      "rangeTier": "大",
       "range": 8
     },
     "W": {
@@ -228,7 +228,7 @@
       "vfxKey": "fx.prim.wind.tornado-lg",
       "targetsEnemies": true,
       "castTimeSec": 1,
-      "rangeTier": "大",
+      "rangeTier": "中",
       "range": 6
     }
   },

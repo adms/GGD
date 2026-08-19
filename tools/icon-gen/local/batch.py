@@ -105,6 +105,32 @@ def _marker_path(icon_path: str) -> str:
     return icon_path + ".method"
 
 
+def _method_stamp() -> str:
+    """「這張圖是用什麼畫出來的」—— 寫進 sidecar、用來判斷要不要重畫。
+
+    ⭐ 它是 **METHOD_VERSION + 風格提示詞的 digest**，⛔ 不只是 METHOD_VERSION。
+
+    為什麼（2026-08-19 量到的缺陷）：風格在 2026-08-17 從 Python 常數搬進了
+    `content/config/icon-style.json`（第一守則，可調）。但 `_is_done()` 比對的
+    仍然只有 `METHOD_VERSION` —— 一個**程式**常數。
+    ⇒ owner 在後台改一個字、或整份風格從「日本 2D RPG」換成「FATE」，
+      **沒有任何 sidecar 會失效**，下一次 batch.py 會把 1010 張全部 skip 掉，
+      而畫面上什麼都沒變。操作者只會以為「我明明改了」。
+
+    ⚠️ 這正是 CLAUDE.md 那條元規則的形狀：**判準要靠人記得，閘不用。**
+    把風格併進戳記之後，「改了風格 ⇒ 要重畫」從一句要背的話變成一個算式。
+
+    ⛔ digest 只吃**真的會改變畫面**的兩格（stylePrompt / negativePrompt），
+    ⛔ 不吃 strength / steps / guidance —— 那幾格改了確實會讓圖不同，但它們是
+    操作者**試火候**時每天在動的旋鈕，併進去會讓每一次試參數都全量重畫 1010 張。
+    要因為火候重畫，用 `--force`。
+    """
+    style = keywords.load_icon_style()
+    raw = "%s\n%s" % (style.get("stylePrompt", ""), style.get("negativePrompt", ""))
+    digest = hashlib.sha256(raw.encode("utf-8")).hexdigest()[:12]
+    return "%s+style:%s" % (keywords.METHOD_VERSION, digest)
+
+
 def _stable_seed(doc_id: str) -> int:
     return int(hashlib.sha256(doc_id.encode()).hexdigest(), 16) % (2 ** 31)
 
@@ -273,22 +299,31 @@ def gap_only(work: list[dict]) -> list[dict]:
 
 
 def _is_done(path: str) -> bool:
-    """True iff an icon produced by the CURRENT method is already on disk."""
+    """True iff an icon produced by the CURRENT method AND STYLE is on disk.
+
+    ⚠️ 「AND STYLE」是 2026-08-19 補的 —— 見 {@link _method_stamp}。
+    在此之前只比對 METHOD_VERSION，於是改了 `content/config/icon-style.json`
+    一個字都不會讓任何一張失效。
+    """
     if not os.path.exists(path):
         return False
+    stamp = _method_stamp()
     marker = _marker_path(path)
     if os.path.exists(marker):
         try:
             with open(marker, encoding="utf-8") as fh:
-                return fh.read().strip() == keywords.METHOD_VERSION
+                return fh.read().strip() == stamp
         except Exception:
             return False
     # Back-compat: icons written before the sidecar switch carry the marker in a
     # PNG tEXt chunk. Read it and adopt the sidecar so this runs once per file.
+    # ⛔ 那個 chunk 裡只有 METHOD_VERSION（沒有風格 digest），所以它**永遠**
+    #    比不上今天的 stamp ⇒ 這條路現在一律回 False（＝重畫）。刻意的：
+    #    那些是史前檔案，用今天的風格重畫正是我們要的。
     try:
         from PIL import Image
         with Image.open(path) as im:
-            done = im.info.get(MARKER_KEY) == keywords.METHOD_VERSION
+            done = im.info.get(MARKER_KEY) == stamp
     except Exception:
         return False
     if done:
@@ -298,7 +333,7 @@ def _is_done(path: str) -> bool:
 
 def _write_marker(icon_path: str) -> None:
     with open(_marker_path(icon_path), "w", encoding="utf-8") as fh:
-        fh.write(keywords.METHOD_VERSION + "\n")
+        fh.write(_method_stamp() + "\n")
 
 
 # --------------------------------------------------------------- doc edit ----

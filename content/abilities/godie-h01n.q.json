@@ -35,7 +35,7 @@
         "flat": 1.0
       },
       "radius": 3.0,
-      "radiusTier": "小",
+      "radiusTier": "極小",
       "includeOrigin": true,
       "onHitTargets": [
         {
@@ -66,7 +66,7 @@
   ],
   "icon": "assets/icons/abilities/godie-h01n.q.webp",
   "vfxKey": "fx.prim.void.pulse-sm",
-  "rangeTier": "超大",
-  "radiusTier": "小",
+  "rangeTier": "大",
+  "radiusTier": "極小",
   "castTimeSec": 0.067
 }

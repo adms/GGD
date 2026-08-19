@@ -77,15 +77,43 @@ TEMPLATE_VERSION = "icon-gen/1"
 
 # ---------------------------------------------------------------- pinned ----
 
+# ⭐ owner 2026-08-19：「請你幫我生成圖示得部分加註包含 prompt 都要 **FATE 風格**」
+#    「我們擴充地圖物件跟生成圖片、貼圖也盡量 FATE 相關風格」
+#
+# ⚠️ FATE（型月／ufotable）的視覺語言與這份 PREFIX 的**可讀性條款直接衝突**，
+#    而那些條款每一條都是為了擋一個量到的失敗（見上面的清單）：
+#
+#      FATE 想要                    64px 的現實
+#      ─────────────────────       ─────────────────────────────────────
+#      鎏金蕾絲、繁複雕花          → 26–52px 的技能列上是一團泥
+#      魔法陣的細密符文            → 同上，而且會被模型當成「文字」
+#      彩繪玻璃的細分割            → 同上
+#
+# ⇒ 解法**不是**在兩者之間妥協，是分清楚 FATE 的哪一半**撐得過縮圖**：
+#
+#      撐得過（＝寫進 PREFIX）      撐不過（＝寫進 NEGATIVE）
+#      ─────────────────────       ─────────────────────────
+#      三色調：金 × 靛藍 × 緋紅     鎏金蕾絲 / 細密符文 / 玻璃分割
+#      魔力光點（藍白微塵上飄）     細碎裝飾線
+#      令咒那種特定的朱紅          寫實質感
+#      剪影層級的魔法陣光環        （光環只做輪廓，⛔ 不做符文）
+#      ufotable 的高對比邊光       —
+#
+# ⛔ 所以「chunky forms, no fine filigree / legible at 64 pixels」**不可以拿掉** ——
+#    它們是這一組圖示還讀得懂的原因，⛔ 不是風格偏好。
 PREFIX = (
-    "Dark-fantasy anime game icon, hand-painted digital illustration, thick "
-    "confident brush strokes with visible paint texture. "
+    "Fate-style anime game icon in the Type-Moon / ufotable visual language: "
+    "hand-painted digital illustration, thick confident brush strokes with "
+    "visible paint texture, heroic-spirit fantasy. "
     "ONE subject, centred, filling about 80% of a square frame, nothing cropped. "
-    "Fixed lighting: warm key light from the upper left at 45 degrees, cool cyan "
-    "rim light down the lower-right edge, shadow pooling bottom-right. "
+    "Fixed lighting: warm gold key light from the upper left at 45 degrees, cool "
+    "azure rim light down the lower-right edge, shadow pooling bottom-right. "
     "Background is a flat near-black void #0B0E16 with a single soft radial glow "
-    "behind the subject and darkened corners. "
-    "Muted steel, leather and bone base, lifted by exactly ONE saturated accent hue. "
+    "behind the subject, a faint concentric magic-circle halo read only as "
+    "SILHOUETTE, and darkened corners. "
+    "A few drifting blue-white prana motes rising from the lower edge. "
+    "Palette: burnished gold and deep indigo base with muted steel and leather, "
+    "lifted by exactly ONE saturated accent hue. "
     "Bold readable silhouette, high local contrast, chunky forms, no fine filigree. "
     "Painted to stay legible at 64 pixels."
 )
@@ -96,7 +124,13 @@ NEGATIVE = (
     "no white or light background, no paper, no page drop-shadow; "
     "no collage, no multiple objects, no grid, no side-by-side variants; "
     "no photorealism, no 3D render, no studio product shot; "
-    "no real-world brand or logo, no recognisable copyrighted character."
+    "no real-world brand or logo, no recognisable copyrighted character; "
+    # ⭐ FATE 那一半撐不過縮圖的東西，逐條擋掉（見 PREFIX 上面的對照表）。
+    # ⚠️ 「no runes / no inscribed symbols」同時擋掉兩件事：符文在 40px 是泥，
+    #    而且圖像模型會把符文當成 text 的邀請 —— 上面已經有 no text 了，
+    #    但實測「magic circle」這個詞會壓過它，所以要在這裡再擋一次。
+    "no gilded lace, no baroque scrollwork, no fine ornamental linework; "
+    "no runes, no inscribed symbols, no stained-glass tracery."
 )
 
 # ---------------------------------------------------------------- lexicon ---

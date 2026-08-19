@@ -127,7 +127,7 @@
       ],
       "vfxKey": "fx.prim.lightning.dash",
       "castTimeSec": 0.067,
-      "rangeTier": "超大",
+      "rangeTier": "大",
       "range": 8
     },
     "E": {
@@ -212,7 +212,7 @@
       "vfxKey": "fx.prim.lightning.nova-lg",
       "targetsEnemies": true,
       "castTimeSec": 1,
-      "rangeTier": "超大",
+      "rangeTier": "大",
       "range": 8
     }
   },

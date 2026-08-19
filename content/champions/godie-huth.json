@@ -98,7 +98,7 @@
       "vfxKey": "fx.prim.arcane.pulse-sm",
       "targetsEnemies": true,
       "castTimeSec": 0.167,
-      "rangeTier": "小",
+      "rangeTier": "極小",
       "range": 3
     },
     "W": {
@@ -254,7 +254,7 @@
       "vfxKey": "fx.prim.void.explosion-lg",
       "targetsEnemies": true,
       "castTimeSec": 1.5,
-      "rangeTier": "超大",
+      "rangeTier": "大",
       "range": 8
     }
   },

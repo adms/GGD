@@ -355,10 +355,13 @@ def dmg(dtype="magic", **kw):
 
 # 四級距的出貨值。⚠️ 這裡填 `radius` 只是為了滿足型別（`damageArea.radius` 必填）；
 # **真正生效的是 `radiusTier`** —— 註冊時由 `config.aoe-tiers@1` 覆蓋回來。
-TIER_R = {"小": 3.0, "中": 4.5, "大": 6.0, "超大": 8.0}
+# ⭐ 鍵名 = `SKILL_TIER_NAMES`（GH#463 把 owner 2026-08-11 的舊詞彙換成他 08-19
+#    的新版：極小/小/中/大/極大）。⚠️ **值一個都沒動** —— 只有名字整體左移一格。
+#    ⛔ 這裡少一格「極大」(12.0) 是刻意的：出貨沒有一支 area() 用到它。
+TIER_R = {"極小": 3.0, "小": 4.5, "中": 6.0, "大": 8.0}
 
 
-def area(dtype="magic", tier="中", maxt=None, onhit=None, **kw):
+def area(dtype="magic", tier="小", maxt=None, onhit=None, **kw):
     """⭐ B1-I（2026-08-12）：`maxt` 的預設從 **6** 改成 **None**（＝不輸出）。
 
     以前的預設值 6 是**寫死在簽章裡的決策**，而 28 個 `area()` 呼叫點**沒有一個**
@@ -1150,7 +1153,7 @@ A("20-01", "20-01 風王結界", "self", [60, 60, 60, 60], [50, 100, 150, 200], 
       # ⭐ 「關閉時，凝聚的風能一次釋放『風王鐵槌』，造成前方圓形[範圍] 120+30% [AP]」
       #    —— `exitToggle` 是全專案唯一跑 `onExit` 的地方，所以它就是這一句的家。
       "onExit": [{"kind": "championForm", "to": "toggle"},
-                 area("magic", tier="中", flat=120, ap=0.3)],
+                 area("magic", tier="小", flat=120, ap=0.3)],
   },
   passive={"name": "20-01 風王結界 · 法球", "ranks": [
       {"whileForm": "alternate",
@@ -1246,11 +1249,25 @@ A("59-00", "59-00 暴走", "self", [150], [0], 0,
                    status("berserk", 6.0, berserk=True, applyTo="self")]}]}]})
 
 A("59-01", "59-01 吞噬", "targeted", [60, 60, 60, 60], [50, 80, 110, 140], 11,
-  "[主動][指定][處決][吸血][吞噬][屬性門檻]\n60秒冷卻\n消耗MP50/80/110/140\n施法距離11\n\n「有一種餓是阿嬤覺得你餓」\n可以直接[吞噬]生命剩餘3/5/7/9%的敵方英雄，使其[立即死亡]，並[回復]等同其剩餘生命的生命值。",
+  "[主動][指定][處決][吸血][吞噬][屬性門檻]\n60秒冷卻\n消耗MP50/80/110/140\n施法距離11\n\n「有一種餓是阿嬤覺得你餓」\n可以直接[吞噬]生命剩餘3/5/7/9%的**任何敵方單位**（含殭屍與殭屍王），使其[立即死亡]，並[回復]等同其剩餘生命的生命值。",
   # ⚠️ 鍵序 = Zod 宣告序（healPct 在 victim 之前），理由見 area() 的註解。
+  #
+  # ⭐ owner 2026-08-19（GH#408 裁決）：
+  #    「he can kill enemy below 3% hp left, **including zombies. boss**」
+  #
+  # ⇒ `victim` 從 `"champion"` 改成 `"any"`。這是**回答一個平衡疑慮的方式**，
+  #    ⛔ 不是放寬：我問的是「rank1 的處決線只有 3%，是不是幾乎沒作用」，
+  #    而 owner 的答案不是「把 3% 調高」，是「**目標池本來就該更大**」——
+  #    一場有 60 隻殭屍（`maxAlivePerZone: 30` × 2 zone）加一隻殭屍王，
+  #    3% 在那個池子裡每回合都會觸發好幾次，rank1 於是真的有用。
+  #    ⭐ 這比調數字好：數字是平衡旋鈕，會再被改；目標池是**設計**。
+  #
+  # ⚠️ 卡面同步改成「任何敵方單位（含殭屍與殭屍王）」——
+  #    ⛔ 只改 JSON 不改文案 = 卡片繼續說「敵方英雄」，那就是第一·五守則的
+  #    「說了但不會發生」的鏡像（做得到卻不說），一樣是在對玩家說謊。
   effects=[{"kind": "devour", "shape": "single",
             "thresholdPctOfMax": [0.03, 0.05, 0.07, 0.09], "healPct": 1.0,
-            "victim": "champion", "throughShields": True}])
+            "victim": "any", "throughShields": True}])
 
 A("59-02", "59-02 高週波短刀", "self", [0], [0], 0,
   "[被動][普攻時][機率][真傷]\n\n「高級的美工刀，只要動得夠快也能切斷鑽石呢」\n高週波短刀[每次普攻]有10/15/20/25%[機率]將該次攻擊轉為[真實傷害]。",
@@ -1360,28 +1377,28 @@ A("70-00", "70-00 紮根", "self", [15], [0], 0,
 
 A("70-01", "70-01 伸卡球", "ground", [60, 60, 60, 60], [250, 300, 350, 400], 11,
   "[主動][指向][範圍]\n60秒冷卻\n消耗[MP] 250/300/350/400\n施法距離11\n\n「我餵人人，人人餵我」\n造成[範圍]敵人150/300/450/600+[力量]*3傷害。",
-  radiusTier="中",
+  radiusTier="小",
   # GH#375 —— `imported.wave.arcane` 是純視覺（傷害在 damageArea 上）。
   #           ⚠️ 「伸卡球」聽起來該是一顆**真的會飛的球**，但那是設計變更
   #           （傷害改成命中才結算）⇒ 要換就填 projectile="deliver"，是 owner 的決定。
   cosmetic_projectile="imported.wave.arcane",
-  effects=[area("physical", tier="中", per=[150, 300, 450, 600], ad=1.0)])
+  effects=[area("physical", tier="小", per=[150, 300, 450, 600], ad=1.0)])
 
 A("70-02", "70-02 大怒石", "self", [0], [0], 0,
   "[被動][普攻時][範圍]\n\n「咖啡只是一種豆漿、海洋只是一種蔬菜湯、所以大怒石只是我的尿結石，對吧?」\n[每次普通攻擊]皆能造成[小範圍] 30/40/50/60% [擴散]傷害。",
   innate="passive", maxRank=4,
   passive={"name": "70-02 大怒石", "ranks": [
       {"hooks": [{"on": "onBasicAttack", "target": "event",
-                  "effects": [area("physical", tier="小", flat=30, ad=v)]}]}
+                  "effects": [area("physical", tier="極小", flat=30, ad=v)]}]}
       for v in (0.3, 0.4, 0.5, 0.6)]})
 
 A("70-03", "70-03 木束縛之術", "self", [45, 45, 45, 45], [100, 150, 150, 250], 0,
   "[主動][範圍][定身]\n45秒冷卻\n消耗MP100/150/150/250\n\n「這個好像叫做...資本主義的豬？」\n讓白木[周圍][範圍]的敵方都受到木靈束縛綑綁，持續0.6/1.2/1.8/2.4秒。(敵方仍可施展技能與攻擊，僅不能移動)",
-  radiusTier="中",
+  radiusTier="小",
   # ⭐ 逐階定身 0.6/1.2/1.8/2.4 —— `applyStatus.duration` 是 zRankScalar，填陣列＝一階一格。
   #    ⚠️ 出貨到今天四階全是 0.6：升階的玩家看到的是「點了沒有變強」。
   #    ⚠️ root 是硬控，上界 20 秒，2.4 遠低於它。
-  effects=[area("magic", tier="中", flat=1),
+  effects=[area("magic", tier="小", flat=1),
            status("root", [0.6, 1.2, 1.8, 2.4], root=True)])
 
 # ⭐ GH#405 —— castType `ground` → `self`。CLAUDE.md 第〇·六守則細則①**逐字點名這一支**：
@@ -1411,7 +1428,7 @@ A("70-03", "70-03 木束縛之術", "self", [45, 45, 45, 45], [100, 150, 150, 25
 #      今天是 **0** —— 這是走出路②在此刻可接受的理由，⛔ 不是它變成正解的理由。
 A("70-04", "70-04 千年練成", "self", [90, 90, 90], [240, 420, 600], 0,
   "[主動][AP加成][範圍]\n90秒冷卻\n消耗[MP] 240/420/600\n\n「想到以前某個夜晚一隻大貓跟兩個蘿莉一直要我下面長大呢」\n在[周圍][範圍]隨機竄出樹精，練成千年的魔力爆發，總共4/6/8棵樹精，每棵樹精在誕生的瞬間造成 250/350/450 + 30% [AP] [範圍]傷害，若是被[定身]的狀態，則傷害加倍。（樹精只在誕生那一瞬間現身，不會留下來作戰）",
-  maxRank=3, radiusTier="大",
+  maxRank=3, radiusTier="中",
   effects=[{"kind": "randomArea", "who": "self", "count": [4, 6, 8], "intervalSec": 0.25,
             "scatterRadius": 6.0, "firstAtCast": True, "stopOnCasterDeath": True,
             # ⭐「隨機[招喚]樹精⋯總共 4/6/8 棵」的**看得見**那一半（2026-08-13）。
@@ -1427,14 +1444,14 @@ A("70-04", "70-04 千年練成", "self", [90, 90, 90], [240, 420, 600], 0,
             #    `_PAYLOAD_KINDS` 裡，兩道保險）。
             "effects": [{"kind": "spawnVfx", "vfxId": "fx.prim.nature.explosion-lg",
                          "at": "point"},
-                        area("magic", tier="小", per=[250, 350, 450], ap=0.3),
+                        area("magic", tier="極小", per=[250, 350, 450], ap=0.3),
                         # ⭐「傷害加倍」= 同量再打一次，但**只打被定身的人**。
                         #    victimCondition 是圈**內**逐一過濾，這正是它唯一正確的用途。
                         # ⛔ victimCondition 不可以當 kw 傳進 area()：會被 amt() 的
                         #    o.update(kw) 倒進 amount，zScaling 是 .strict() ⇒ 整份拒收。
                         # ⚠️ 代價：兩發同量而不是一發乘二 ⇒ 兩個跳字、on-hit 各觸發兩次。
                         #    引擎詞彙裡沒有「條件式傷害倍率」這一格（engine-gap）。
-                        dict(area("magic", tier="小", per=[250, 350, 450], ap=0.3),
+                        dict(area("magic", tier="極小", per=[250, 350, 450], ap=0.3),
                              victimCondition={"kind": "status", "subject": "target",
                                               "tag": "root"})]}])
 
@@ -1456,7 +1473,7 @@ A("70-002", "70-002 樹海降臨", "self", [0], [0], 0,
        #    ⚠️ 標籤閘看不到這一格（[治療] 已經被 restore 滿足），是讀規格抓出來的。
        #    ⚠️ shape:"circle" 的 radius 必填（見 92-002 那一列的註解）。
        "effects": [{"kind": "weightedBranch", "shape": "circle",
-                    "radiusTier": "大", "radius": TIER_R["大"],
+                    "radiusTier": "中", "radius": TIER_R["中"],
                     "side": "allies", "maxTargets": 24,
                     "branches": [{"weight": 1, "effects": [
                         {"kind": "restore", "healthPct": 0.1}]}]}]}]}]})
@@ -1473,8 +1490,8 @@ A("77-00", "77-00 浮雲-旋一閃", "self", [30], [0], 0,
 
 A("77-01", "77-01 百烈櫻華斬", "self", [40, 40, 40, 40], [75, 110, 145, 180], 0,
   "[主動][範圍][擊退][AD加成]\n40秒冷卻\n消耗MP75/110/145/180\n有效半徑6\n\n「我的劍，成為了守護之風」\n用劍捲起一陣由內往外的旋風，給予[周圍]敵人200/300/400/500+50% [AD]點傷害，並[擊退]一段距離。",
-  radiusTier="大",
-  effects=[area("physical", tier="大", per=[200, 300, 400, 500], ad=0.5),
+  radiusTier="中",
+  effects=[area("physical", tier="中", per=[200, 300, 400, 500], ad=0.5),
            {"kind": "knockback", "distance": 3.0, "speed": 15.0, "from": "caster"}])
 
 A("77-02", "77-02 雷鳴劍", "self", [0], [0], 0,
@@ -1486,7 +1503,7 @@ A("77-02", "77-02 雷鳴劍", "self", [0], [0], 0,
       "critStrike": {"chance": 0.10, "damageMult": 1.5, "lifestealFraction": 0.0},
       "hooks": [
       {"on": "onBasicAttack", "chance": 0.10, "target": "event",
-       "effects": [area("magic", tier="小", ap=0.1)]}]}]})
+       "effects": [area("magic", tier="極小", ap=0.1)]}]}]})
 
 A("77-03", "77-03 GLADIARIA ALAT", "self", [120, 120, 120, 120], [90, 180, 270, 360], 0,
   "[主動][變身][加速][飛行]\n120秒冷卻\n消耗MP90/180/270/360\n\n「GLADIARIA  ALAT 。翼之劍士」\n[加速][攻擊速度]60/90/120/150% ，並可以變換為[飛行]狀態無視碰撞，持續6/9/12/15秒。",
@@ -1505,8 +1522,8 @@ A("77-03", "77-03 GLADIARIA ALAT", "self", [120, 120, 120, 120], [90, 180, 270, 
 
 A("77-04", "77-04 真-雷光劍", "ground", [70, 70, 70], [150, 225, 300], 11,
   "[主動][範圍][AD加成]\n70秒冷卻，施展時間2秒\n消耗MP150/225/300\n施法距離11\n\n「神鳴。雷光」\n神鳴流決戰奧義，聚集大量雷電於劍上予以斬擊，給予[小範圍]敵人600/800/1000+60% [AD]傷害。",
-  maxRank=3, cast_time=2.0, radiusTier="小",
-  effects=[area("physical", tier="小", per=[600, 800, 1000], ad=0.6)])
+  maxRank=3, cast_time=2.0, radiusTier="極小",
+  effects=[area("physical", tier="極小", per=[600, 800, 1000], ad=0.6)])
 
 A("77-002", "77-002 御雷劍", "self", [0], [0], 0,
   "[被動][機率]\n\n「御雷劍。飛行」\n使用從者道具「御雷劍」的剎那，其雷鳴劍發動[機率]上升至50%，[GLADIARIA ALAT] 持續時間增加至30秒。",
@@ -1546,7 +1563,7 @@ A("77-002", "77-002 御雷劍", "self", [0], [0], 0,
   #    owner 2026-08-13 的裁決取代**（御雷劍就是這支 EX 自己），⛔ 不要再補回去。
   passive={"name": "77-002 御雷劍", "ranks": [{"hooks": [
       {"on": "onBasicAttack", "chance": 0.4, "target": "event",
-       "effects": [area("magic", tier="小", ap=0.1)]}]}]})
+       "effects": [area("magic", tier="極小", ap=0.1)]}]}]})
 
 # ── 45 宇智波（火遁/千鳥）──────────────────────────────────────────────────
 A("45-00", "45-00 寫輪眼", "self", [0], [0], 0,
@@ -1564,8 +1581,8 @@ A("45-00", "45-00 寫輪眼", "self", [0], [0], 0,
 
 A("45-01", "45-01 火遁-豪火龍之術", "ground", [45, 45, 45, 45], [150, 190, 230, 240], 14.67,
   "[主動][指定][範圍][燃燒][週期]\n45秒冷卻\n消耗MP150/190/230/240\n施法距離14.67\n有效半徑6.05\n\n「接招吧！我的復仇之火」\n將吐出的火焰化為龍形，對[指定範圍]內敵人造250/350/450/550傷害，並附加[燃燒]標記，使其每秒受到當下[現存生命]1%的傷害，持續3秒。",
-  radiusTier="大",
-  effects=[area("magic", tier="大", per=[250, 350, 450, 550]),
+  radiusTier="中",
+  effects=[area("magic", tier="中", per=[250, 350, 450, 550]),
            status("burn", 3.0),
            # ⭐【每秒受到**當下**現存生命 1%】（2026-08-13 落地）—— `resourcePctPhase: "onTick"`。
            #    在此之前 `dot.ts` 在**施加的那一刻**就把 `resourcePct` 解算成純量凍住
@@ -1592,12 +1609,12 @@ A("45-01", "45-01 火遁-豪火龍之術", "ground", [45, 45, 45, 45], [150, 190
 
 A("45-02", "45-02 千鳥流", "self", [45, 45, 45, 45], [70, 120, 170, 220], 0,
   "[主動][範圍][減速][AP加成]\n45秒冷卻\n消耗[MP] 70/120/170/220\n有效半徑7.79\n\n「千鳥流。奔流」\n讓全身充滿千鳥的雷電，對[周圍][大範圍]敵人造成75/150/225/300+20% [AP]點傷害，並使其[攻擊與移動速度][降低]50%，持續3秒。",
-  radiusTier="大",
+  radiusTier="中",
   # ⭐「[攻擊與移動速度][降低]50%」的**攻速**那一半：applyStatus 沒有攻速格，
   #    唯一落點是 applyBuff 的 modifier（同 79-00 靈壓）。
   # ⛔ 不可以寫成兄弟節點：`_fold_onhit` 只折 applyStatus/knockback/dot，
   #    applyBuff 會留在原地讀 ctx.targets ＝ **施法者自己**（castType 是 self）。
-  effects=[area("magic", tier="大", per=[75, 150, 225, 300], ap=0.2,
+  effects=[area("magic", tier="中", per=[75, 150, 225, 300], ap=0.2,
                 onhit=[buff([M("as", "pctAdd", -0.5)], 3.0,
                             polarity="debuff", dispellable=True)]),
            status("slow50", 3.0, moveSpeedMult=0.5)])
@@ -1610,7 +1627,7 @@ A("45-03", "45-03 千鳥", "ground", [45, 45, 45, 45], [120, 185, 250, 315], 12.
   #    ⇒ `def.radius` 退回 1 ⇒ 落點圈 0.8 ⇒ `onAbilityHit` 幾乎不發 ⇒ 45-04【哥哥】
   #    的麒麟連帶失效（它掛在 `abilitySlot: "E"` 的 `onAbilityHit` 上）。
   #    ⛔ 這一行不是裝飾 —— 拿掉會**靜默弄壞另一支技能**。
-  radiusTier="大",
+  radiusTier="中",
   # ⭐「對**沿途**[周圍]敵人造成…」——【衝刺】的傷害形狀是**線**，不是圓。
   # ⚠️ 原本 `damageArea` 與 `dash` 是**兄弟節點**：effects 在 CastResolveSystem（step 2b/3）
   #    就跑完，位移要到 MovementSystem（step 5）之後好幾個 tick 才發生 ⇒ `areaCentre()`
@@ -1638,7 +1655,7 @@ A("45-04", "45-04 哥哥", "self", [0], [0], 0,
   passive={"name": "45-04 哥哥", "ranks": [
       {"hooks": [{"on": "onAbilityHit", "abilitySlot": "E", "target": "event",
                   "condition": {"kind": "status", "subject": "target", "tag": "burn"},
-                  "effects": [dict(area("magic", tier="小", flat=v, ap=3.0),
+                  "effects": [dict(area("magic", tier="極小", flat=v, ap=3.0),
                                    # ⭐「引發忍術『麒麟』雷電大爆炸，對**目標**[周圍]
                                    #    [小範圍]敵人造成…」—— 中了[燃燒]的那個目標**自己**
                                    #    就是這一發的主要受害者，⛔ 不是被排除的那一個。
@@ -1659,10 +1676,10 @@ A("45-04", "45-04 哥哥", "self", [0], [0], 0,
 
 A("45-002", "45-002 天照", "self", [120], [650], 0,
   "[主動][範圍][燃燒][沉默][虛弱][週期]\n120秒冷卻\n消耗MP650\n有效半徑7.79\n\n「寫輪眼。天照」\n發動天照，使[周圍][大範圍]敵人每秒受到400點[燃燒]傷害並附加[燃燒]標記，同時[沉默]且[攻擊力降低]40%，持續10秒。",
-  radiusTier="大",
+  radiusTier="中",
   # ⭐「同時[沉默]且[攻擊力降低]40%」—— 沉默有了，AD −40% **整段沒寫**。
   #    ⛔ 兄弟節點會落在施法者自己身上（理由同 45-02），所以走 area 的 onhit=。
-  effects=[area("magic", tier="大", flat=1,
+  effects=[area("magic", tier="中", flat=1,
                 onhit=[buff([M("ad", "pctAdd", -0.4)], 10.0,
                             polarity="debuff", dispellable=True)]),
            status("burn", 10.0),
@@ -1699,8 +1716,8 @@ A("13-02", "13-02 龍頭戲畫。牙突", "targeted", [45, 45, 45, 45], [60, 90,
 
 A("13-03", "13-03 龍頭戲畫。布陣", "self", [60, 60, 60, 60], [120, 180, 240, 300], 0,
   "[主動][範圍][AP加成]\n60秒冷卻\n消耗[MP] 120/180/240/300\n\n「其實還可以衝刺，但老了」\n將念形成龍形衝擊波包裹全身，造成[範圍]敵人 150/250/350/450 + 60% [AP] 傷害。",
-  radiusTier="中",
-  effects=[area("magic", tier="中", per=[150, 250, 350, 450], ap=0.6)])
+  radiusTier="小",
+  effects=[area("magic", tier="小", per=[150, 250, 350, 450], ap=0.6)])
 
 # ⭐ GH#405 —— castType `ground` → `self`（第〇·六守則細則①：**內文 > 標籤**）。
 #    規格內文逐字是「**自身**[周圍]每0.2秒[隨機]地點落下一顆流星」⇒ 語意是 self，
@@ -1711,16 +1728,16 @@ A("13-03", "13-03 龍頭戲畫。布陣", "self", [60, 60, 60, 60], [120, 180, 2
 #    卡片說「指定地點」、遊戲做「自己周圍」= 第一·五守則那條紅線。
 # ⛔ 反方向（讓落點跟著 `ctx.point` 走）需要在 `who` 上開第三個值 `"point"`，
 #    那是**引擎機制**（第〇·五守則）—— 而它解鎖的技能數是 **0**（內文兩支都寫「自身周圍」）。
-# ⚠️ `radiusTier="小"` 從**借**改成**明填**：`_ground_radius()` 只在 `castType=="ground"`
+# ⚠️ `radiusTier="極小"` 從**借**改成**明填**：`_ground_radius()` 只在 `castType=="ground"`
 #    時借，改成 self 之後那條借道關閉 ⇒ 頂層 `radiusTier` 會整格消失、
 #    `targetsEnemies` 也跟著翻成 false（`e["cast"] != "self" or bool(radiusTier)`）。
 #    明填 = 出貨那一份逐位元不變，⛔ 不是新的平衡值。
 A("13-04", "13-04 龍星群", "self", [120, 120, 120], [150, 200, 250], 0,
   "[主動][範圍][週期][AP加成]\n120秒冷卻，吟唱0.6秒\n消耗MP150/200/250\n\n「生。意。星。龍」\n自身[周圍]每0.2秒[隨機]地點落下一顆流星，共10顆；每顆造成[小範圍] 150/200/250 + 40% [AP] [魔法傷害]。",
-  maxRank=3, cast_time=0.6, radiusTier="小",
+  maxRank=3, cast_time=0.6, radiusTier="極小",
   effects=[{"kind": "randomArea", "who": "self", "count": [10], "intervalSec": 0.2,
             "scatterRadius": 8.0, "firstAtCast": True, "stopOnCasterDeath": True,
-            "effects": [area("magic", tier="小", per=[150, 200, 250], ap=0.4)]}])
+            "effects": [area("magic", tier="極小", per=[150, 200, 250], ap=0.4)]}])
 
 A("13-002", "13-002 絕。暗殺奧義", "self", [0], [0], 0,
   "[被動][技能命中時][身上有某狀態時][機率]\n\n對於[致盲]狀態的敵人施展 [龍頭戲畫。牙突] 時，有20%機會摘除心臟，造成額外40%目標[最大生命]傷害。",
@@ -1865,7 +1882,7 @@ A("15-03", "15-03 獄炎煉我", "self", [55, 55, 55, 55], [180, 260, 340, 420],
                             #    逐字的「每次」（第一守則：決策留在欄位，不在註解裡辯護）。
                             {"on": "onDamageDealt", "target": "event",
                              "damageSource": "ability",
-                             "effects": [area("magic", tier="中",
+                             "effects": [area("magic", tier="小",
                                               per=[100, 150, 200, 250], ap=0.6),
                                          status("burn", 3.0)]}])])
 
@@ -1976,7 +1993,7 @@ A("44-02", "44-02 死神的規則", "self", [0], [0], 0,
 #    套上去會把規格點名要吃傷害的「周圍部隊」全部濾掉，範圍技降成單體技。
 A("44-03", "44-03 火車輾過", "targeted", [60, 50, 40, 30], [150, 250, 350, 450], 12,
   "[主動][範圍][AP加成]\n60/50/40/30秒冷卻\n消耗MP150/250/350/450\n有效半徑6\n\n「我就是正義！」\n使敵方 [詛咒]標記的 [周圍]的敵方部隊受到650/750/850/950+ 60% [AP]點的劇烈傷害。",
-  radiusTier="大",
+  radiusTier="中",
   # ⭐ 「使敵方 [詛咒]標記的 …」是一個**前提**，而它在此之前一個落點都沒有 ——
   #    44-01 死神之眼有沒有先掛上【詛咒】完全不影響這一發（失敗形態②：
   #    連招的前提消失，而畫面上跟正常一模一樣）。
@@ -1988,7 +2005,7 @@ A("44-03", "44-03 火車輾過", "targeted", [60, 50, 40, 30], [150, 250, 350, 4
   #    **基礎**傷害，套上去會把規格點名要吃傷害的「周圍部隊」全部濾掉。
   # ⚠️ 要用 `dict(area(...), condition=...)` 包 —— 直接當 kw 傳進 area() 會被
   #    `amt()` 的 `o.update(kw)` 倒進 amount，而 zScaling 是 .strict()（同 52-04）。
-  effects=[dict(area("magic", tier="大", per=[650, 750, 850, 950], ap=0.6),
+  effects=[dict(area("magic", tier="中", per=[650, 750, 850, 950], ap=0.6),
                 condition={"kind": "status", "subject": "target", "statusId": "curse"})])
 
 A("44-04", "44-04 心臟麻痺", "targeted", [35, 35, 35], [150, 250, 350], 12,
@@ -2052,8 +2069,8 @@ A("12-03", "12-03 破凰之心。空破山", "self", [0], [0], 0,
 
 A("12-04", "12-04 龍氣爆發", "self", [60, 60, 60], [250, 350, 450], 0,
   "[主動][範圍][淨化][AP加成]\n60秒冷卻，吟唱2秒\n消耗MP250/350/450\n\n「使命創造命運」\n凝聚體內的龍氣造成[周圍][大範圍]敵方單位 550/750/950 + 200% [AP] 傷害，附帶[淨化]效果。",
-  maxRank=3, cast_time=2.0, radiusTier="大",
-  effects=[area("magic", tier="大", per=[550, 750, 950], ap=2.0),
+  maxRank=3, cast_time=2.0, radiusTier="中",
+  effects=[area("magic", tier="中", per=[550, 750, 950], ap=2.0),
            # ⭐ 這一圈淨化打的是**敵人**。⛔ 省略 `side` 走的是 `shapeTargets.ts:54` 的
            #    else 分支 = `alliedChampions` ⇒ 規格寫「敵方單位…附帶[淨化]」，出貨卻是
            #    把**自己與隊友**身上的正面狀態清掉 2 層（卍解/暴走/狂怒），而傷害正常，
@@ -2087,8 +2104,8 @@ A("60-00", "60-00 大師之劍", "self", [0], [0], 0,
 
 A("60-01", "60-01 旋風斬", "self", [30, 30, 30, 30], [100, 150, 200, 250], 0,
   "[主動][範圍][AD加成][擊退]\n30秒冷卻\n消耗MP100/150/200/250\n\n「看我先暈倒還是你先被我砍死」\n造成[周圍][範圍] 150/250/350/450+50% [AD]點傷害，並且[擊退]敵人。",
-  radiusTier="中",
-  effects=[area("physical", tier="中", per=[150, 250, 350, 450], ad=0.5),
+  radiusTier="小",
+  effects=[area("physical", tier="小", per=[150, 250, 350, 450], ad=0.5),
            {"kind": "knockback", "distance": 3.0, "speed": 15.0, "from": "caster"}])
 
 # ⭐ castType `ground` → `targeted`：內文逐字是「勾住**一個單位**」，標籤列也是
@@ -2155,7 +2172,7 @@ A("60-04", "60-04 完美盾反", "self", [60, 60, 60], [120, 150, 180], 0,
       #    flat=1 不是 0：damageArea 無條件 push 封包，0 會在畫面上打出一排「0」。
       {"on": "onReflectSuccess", "target": "self",
        "reflectedDamageSource": "ability", "reflectedDamageType": "magic",
-       "effects": [area("magic", tier="大", flat=1,
+       "effects": [area("magic", tier="中", flat=1,
                         onhit=[{"kind": "knockback", "distance": 4.0,
                                 "speed": 16.0, "from": "caster"}])]}]}]})
 
@@ -2224,7 +2241,7 @@ A("79-01", "79-01 瞬步", "ground", [30, 30, 30, 30], [60, 80, 100, 120], 9.17,
   # GH#375 —— `imported.bolt.void` 是純視覺（酬載在 dash + damageArea 上）。
   cosmetic_projectile="imported.bolt.void",
   effects=[{"kind": "dash", "mode": "toPoint", "speed": 16, "maxDistance": 9.17},
-           area("magic", tier="小", flat=1),
+           area("magic", tier="極小", flat=1),
            # ⭐【破魔】的**數字**（2026-08-13）：`status-effect@1` 的 schema 只有
            #    name/description/iconKey/polarity/tags —— **沒有 modifiers**，
            #    所以「魔抗減半」必須是施加它的那張卡上的一顆 buff。
@@ -2358,7 +2375,7 @@ A("80-01", "80-01 天下無雙", "self", [0], [0], 0,
 
 A("80-02", "80-02 弒鬼神", "self", [60, 60, 60, 60], [90, 180, 270, 360], 0,
   "[主動][範圍]\n60秒冷卻\n消耗MP90/180/270/360\n\n「鬼神都殺了，剩下的只是血條」\n造成[周圍][範圍]敵方部隊 120/220/320/420 傷害，並 [擊退]及造成敵人 [破甲]，持續1秒。",
-  radiusTier="中",
+  radiusTier="小",
   # GH#375 —— 規格是「造成[**周圍**][範圍]敵方部隊」＝ 一個 360° 的圓，
   #           而沿用回來的 `imported.wave.physical` 是往 `t.facing` 直線飛出去的
   #           （castType self ⇒ 沒有落點）。改掛 spawnVfx{at:"self"}。
@@ -2373,7 +2390,7 @@ A("80-02", "80-02 弒鬼神", "self", [60, 60, 60, 60], [90, 180, 270, 360], 0,
   #    `_PAYLOAD_KINDS`，`_fold_onhit` 折不到它，而 80-02 是 castType:"self"
   #    ⇒ ctx.targets 是**呂布自己**，破甲會扣在施法者身上。knockback 與
   #    applyStatus 本來會被折進來，這裡一併寫明：同一個容器、同一群受害者。
-  effects=[area("physical", tier="中", per=[120, 220, 320, 420],
+  effects=[area("physical", tier="小", per=[120, 220, 320, 420],
                 onhit=[{"kind": "knockback", "distance": 2.5, "speed": 15.0,
                         "from": "caster"},
                        # ⛔ 標記留在 applyStatus：快照的 statusIds 只讀
@@ -2399,7 +2416,7 @@ A("80-03", "80-03 鬼神烈戟", "ground", [60, 60, 60, 60], [150, 200, 250, 300
   #    幫不上忙 —— 它只從效果樹第一顆自發 damageArea 借，而 80-03 是**線**
   #    （它自己的註解就寫著「線與跳躍本來就沒有圓」）。
   # ⚠️ #152 的地板虛線預告與技能面板讀的也是這一格，缺席時畫出來的圈是錯的。
-  radiusTier="大",
+  radiusTier="中",
   effects=[{"kind": "dash", "mode": "toPoint", "speed": 16, "maxDistance": 10.0},
            # ⭐ B3-C1 —— 「(若對方在 [破甲] 狀態，則額外造成 100% [AP] 傷害)」
            #    住在**這條線自己的 onHitTargets** 上，⛔ 不是 onAbilityHit hook。
@@ -2531,7 +2548,7 @@ A("89-02", "89-02 憤怒的菊花", "self", [0], [0], 0,
       # ⭐ statusId 從 "stun" 改成 "paralysis"：content/status-effects/paralysis.json
       #    的描述**逐字點名這一支**（「89-02 憤怒的菊花 反彈時對周圍敵人灑的就是它」）。
       {"on": "onReflectSuccess", "target": "self",
-       "effects": [area("magic", tier="中", flat=1,
+       "effects": [area("magic", tier="小", flat=1,
                         onhit=[status("paralysis", 1.0, stun=True),
                                status("curse", 5.0, missChance=0.5),
                                status("confusion", 10.0, berserk=True, targetsAllies=True,
@@ -2739,8 +2756,8 @@ A("92-03", "92-03 狂草泥馬", "self", [0], [0], 0,
 
 A("92-04", "92-04 馬勒戈壁", "self", [90, 90, 90], [300, 420, 540], 0,
   "[主動][範圍][AP加成]\n90秒冷卻\n消耗MP300/420/540\n\n「將自己的心靈內景具現化並覆蓋現實世界的強力魔術」\n將[周圍] [範圍] 敵人附加 [緩慢] 及 [致盲]，持續6秒。\n(攻擊身上有 [致盲] 標記的敵人將額外附加 100/200/300% [AP] 傷害)",
-  maxRank=3, radiusTier="超大",
-  effects=[area("magic", tier="超大", flat=1),
+  maxRank=3, radiusTier="大",   # GH#463：級距名整體左移一格（舊「超大」＝新「大」，值 8.0 不變）
+  effects=[area("magic", tier="大", flat=1),
            status("slow50", 6.0, moveSpeedMult=0.5),
            status("blind", 6.0, missChance=0.5)],
   # ⭐ 逐階 100/200/300% AP。`ratios.coeff` 是**純量**，所以逐階的唯一落點是
@@ -2756,7 +2773,7 @@ A("92-002", "92-002 最終戈壁", "self", [0], [0], 0,
   passive={"name": "92-002 最終戈壁", "ranks": [{"hooks": [
       {"on": "onAbilityCast", "abilitySlot": "R", "target": "self",
        "effects": [{"kind": "delayed", "shape": "single", "delaySec": 1.0, "count": 6, "intervalSec": 1.0,
-                    "effects": [area("magic", tier="超大", ap=1.0,
+                    "effects": [area("magic", tier="大", ap=1.0,
                                      res_pct={"subject": "target", "resource": "health",
                                               "basis": "max", "perRank": [0.02]}),
                                 # ⭐ 規格的「每秒對周圍友方回復 10% 最大魔力」那一半。
@@ -2767,7 +2784,7 @@ A("92-002", "92-002 最終戈壁", "self", [0], [0], 0,
                                 #    refine 逐字說「沒有半徑的圓在執行期直接 return」），
                                 #    真正生效的仍是 radiusTier —— 同 area() 的做法。
                                 {"kind": "weightedBranch", "shape": "circle",
-                                 "radiusTier": "超大", "radius": TIER_R["超大"],
+                                 "radiusTier": "大", "radius": TIER_R["大"],
                                  "side": "allies", "maxTargets": 24,
                                  "branches": [{"weight": 1, "effects": [
                                      {"kind": "restore", "manaPct": 0.1}]}]}]}]}]}]})
@@ -2867,7 +2884,7 @@ A("52-03", "52-03 無銘斧劍", "self", [0], [0], 0,
 
 A("52-04", "52-04 巨神一擊", "self", [120, 120, 120], [400, 600, 800], 0,
   "[主動][衝刺][範圍]\n120秒冷卻，吟唱2秒\n消耗[MP] 400/600/800\n\n「體型差不是霸凌，是傷害公式」\n向前[衝刺]一小段距離後揮出致命的一擊，對[周圍][範圍] 敵人造成600/1000/1400 傷害。\n(若敵人具有[恐懼]狀態，則額外追加 自身[最大生命]25%傷害)",
-  maxRank=3, cast_time=2.0, radiusTier="大",
+  maxRank=3, cast_time=2.0, radiusTier="中",
   # ⚠️ GH#442 —— `mode` 是 **forward** 不是 toPoint。兩個理由，方向一致：
   #  ① 規格內文逐字寫「向**前**[衝刺]一小段距離」（第〇·六守則第 1 層）
   #  ② `castType:"self"` **結構上拿不到 `ctx.point`** —— 伺服器的 case "self" 不設 point、
@@ -2875,10 +2892,10 @@ A("52-04", "52-04 巨神一擊", "self", [120, 120, 120], [400, 600, 800], 0,
   #     的 fallback。寫 toPoint 是一句「說了但不會發生」的話（第一·五守則）。
   #     閘：packages/shared/src/content/blinkNotDash.test.ts
   effects=[{"kind": "dash", "mode": "forward", "speed": 16, "maxDistance": 5.0},
-           area("physical", tier="大", per=[600, 1000, 1400]),
+           area("physical", tier="中", per=[600, 1000, 1400]),
            # ⚠️ victimCondition ⛔ 不可以當 kw 傳進 area()：會被 amt() 的 o.update(kw)
            #    倒進 amount，而 zScaling 是 .strict() ⇒ 整份文件被拒收。
-           dict(area("physical", tier="大", flat=0,
+           dict(area("physical", tier="中", flat=0,
                      res_pct={"subject": "self", "resource": "health",
                               "basis": "max", "perRank": [0.25]}),
                 victimCondition={"kind": "status", "subject": "target", "tag": "fear"})])

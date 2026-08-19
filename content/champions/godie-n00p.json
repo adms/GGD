@@ -139,7 +139,7 @@
       "vfxKey": "fx.prim.nature.swarm",
       "sfxKey": "wc3.spiritofvengeanceyes3",
       "castTimeSec": 0.467,
-      "rangeTier": "超大",
+      "rangeTier": "大",
       "range": 8
     },
     "E": {
@@ -231,7 +231,7 @@
       "vfxKey": "fx.prim.nature.shockwave-lg",
       "targetsEnemies": true,
       "castTimeSec": 1.633,
-      "rangeTier": "大",
+      "rangeTier": "中",
       "range": 6
     }
   },

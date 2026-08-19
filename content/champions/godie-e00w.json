@@ -71,7 +71,7 @@
         180.0
       ],
       "range": 0.0,
-      "radiusTier": "大",
+      "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
         {
@@ -92,7 +92,7 @@
             ]
           },
           "radius": 6.0,
-          "radiusTier": "大",
+          "radiusTier": "中",
           "includeOrigin": true,
           "onHitTargets": [
             {
@@ -157,7 +157,7 @@
                       ]
                     },
                     "radius": 3.0,
-                    "radiusTier": "小"
+                    "radiusTier": "極小"
                   }
                 ],
                 "chance": 0.1,
@@ -286,7 +286,7 @@
         300.0
       ],
       "range": 11.0,
-      "radiusTier": "小",
+      "radiusTier": "極小",
       "targetsEnemies": true,
       "effects": [
         {
@@ -306,7 +306,7 @@
             ]
           },
           "radius": 3.0,
-          "radiusTier": "小",
+          "radiusTier": "極小",
           "includeOrigin": true
         }
       ],

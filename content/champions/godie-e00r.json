@@ -55,7 +55,7 @@
       "id": "godie-e00r.q",
       "name": "59-01 吞噬",
       "provenance": "owner-spec",
-      "description": "[主動][指定][處決][吸血][吞噬][屬性門檻]\n60秒冷卻\n消耗MP50/80/110/140\n施法距離11\n\n「有一種餓是阿嬤覺得你餓」\n可以直接[吞噬]生命剩餘3/5/7/9%的敵方英雄，使其[立即死亡]，並[回復]等同其剩餘生命的生命值。",
+      "description": "[主動][指定][處決][吸血][吞噬][屬性門檻]\n60秒冷卻\n消耗MP50/80/110/140\n施法距離11\n\n「有一種餓是阿嬤覺得你餓」\n可以直接[吞噬]生命剩餘3/5/7/9%的**任何敵方單位**（含殭屍與殭屍王），使其[立即死亡]，並[回復]等同其剩餘生命的生命值。",
       "slot": "Q",
       "castType": "targeted",
       "maxRank": 4,
@@ -84,7 +84,7 @@
             0.09
           ],
           "healPct": 1.0,
-          "victim": "champion",
+          "victim": "any",
           "throughShields": true
         }
       ],
@@ -381,7 +381,7 @@
           "attachTo": "point"
         }
       ],
-      "rangeTier": "超大",
+      "rangeTier": "大",
       "castTimeSec": 3
     }
   },

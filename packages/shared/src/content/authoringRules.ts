@@ -38,6 +38,7 @@ import {
   type ConfigAuthoringRulesDoc,
 } from "./schema/config";
 import { DEFAULT_STAT_CAPS, statCapsFromDoc } from "../sim/statCaps";
+import { SKILL_TIER_NAMES } from "./skillTiers";
 import { COMBAT_ENV_DEFAULTS } from "../sim/combatEnv";
 import {
   BAND_MEANING,
@@ -236,7 +237,12 @@ export function buildAuthoringRules(read: ConfigReader): AuthoringRulesManifest 
     {
       id: "aoe.max-radius",
       field: "radius",
-      max: aoe.radius["超大"],
+      // ⛔ 這裡曾經寫死 `aoe.radius["超大"]`，而註解說的是「**最大的**那一級距」——
+      //    「超大」是**第 4 格**，最大的是第 5 格。⇒ 上限一直比它自己宣稱的少一級
+      //    （8 而不是 12）。GH#463 的改名讓 TypeScript 指著這一行才被抓到。
+      // ⭐ 現在從 `SKILL_TIER_NAMES` 的**最後一個**取，⛔ 不抄字面值：
+      //    級距名再改一次（或未來加一格），這一行自動跟上，⛔ 不會再說謊。
+      max: aoe.radius[SKILL_TIER_NAMES[SKILL_TIER_NAMES.length - 1]!],
       unit: "unit",
       note:
         "AoE 半徑上限 = 最大的那一級距。⛔ 超過決鬥區半徑的範圍技等於「打全場」," +

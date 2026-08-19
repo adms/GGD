@@ -694,7 +694,7 @@
         540.0
       ],
       "range": 0.0,
-      "radiusTier": "超大",
+      "radiusTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
@@ -704,7 +704,7 @@
             "flat": 1.0
           },
           "radius": 8.0,
-          "radiusTier": "超大",
+          "radiusTier": "大",
           "includeOrigin": true,
           "onHitTargets": [
             {

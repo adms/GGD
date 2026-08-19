@@ -18,7 +18,7 @@
     250.0
   ],
   "range": 0.0,
-  "radiusTier": "小",
+  "radiusTier": "極小",
   "targetsEnemies": true,
   "effects": [
     {
@@ -49,7 +49,7 @@
             ]
           },
           "radius": 3.0,
-          "radiusTier": "小",
+          "radiusTier": "極小",
           "includeOrigin": true
         }
       ]

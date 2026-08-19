@@ -94,7 +94,7 @@
       "targetsEnemies": true,
       "icon": "assets/icons/abilities/godie-ubal.q.png",
       "castTimeSec": 0.367,
-      "rangeTier": "大",
+      "rangeTier": "中",
       "range": 6
     },
     "W": {
@@ -144,7 +144,7 @@
       "sfxKey": "wc3.trollbatriderpissed2",
       "targetsEnemies": true,
       "castTimeSec": 0.767,
-      "rangeTier": "超大",
+      "rangeTier": "大",
       "range": 8
     },
     "E": {
@@ -192,7 +192,7 @@
       "vfxKey": "fx.prim.void.explosion",
       "targetsEnemies": true,
       "castTimeSec": 0.133,
-      "rangeTier": "超大",
+      "rangeTier": "大",
       "range": 8
     },
     "R": {

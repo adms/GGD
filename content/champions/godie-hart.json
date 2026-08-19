@@ -110,7 +110,7 @@
       "vfxKey": "fx.prim.physical.slash",
       "targetsEnemies": true,
       "castTimeSec": 0.633,
-      "rangeTier": "超大",
+      "rangeTier": "大",
       "range": 8
     },
     "W": {
@@ -177,7 +177,7 @@
       "targetsEnemies": true,
       "radius": 4.58,
       "castTimeSec": 0.867,
-      "rangeTier": "超大",
+      "rangeTier": "大",
       "range": 8
     },
     "E": {
@@ -278,7 +278,7 @@
       "targetsEnemies": true,
       "radius": 6.42,
       "castTimeSec": 1.133,
-      "rangeTier": "小",
+      "rangeTier": "極小",
       "range": 3
     },
     "R": {
@@ -370,7 +370,7 @@
         "flashMs": 211,
         "camKick": 0.526
       },
-      "rangeTier": "超大",
+      "rangeTier": "大",
       "range": 8
     }
   },

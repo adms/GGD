@@ -128,7 +128,7 @@
         360.0
       ],
       "range": 0.0,
-      "radiusTier": "中",
+      "radiusTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
@@ -143,7 +143,7 @@
             ]
           },
           "radius": 4.5,
-          "radiusTier": "中",
+          "radiusTier": "小",
           "includeOrigin": true,
           "onHitTargets": [
             {
@@ -204,7 +204,7 @@
         300.0
       ],
       "range": 10.0,
-      "radiusTier": "大",
+      "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
         {
@@ -258,7 +258,7 @@
       ],
       "icon": "assets/icons/abilities/godie-h01u.e.webp",
       "vfxKey": "fx.prim.physical.beam",
-      "rangeTier": "超大",
+      "rangeTier": "大",
       "castTimeSec": 0.067
     },
     "R": {

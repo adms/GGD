@@ -101,7 +101,7 @@
       "vfxKey": "fx.prim.void.nova",
       "targetsEnemies": true,
       "castTimeSec": 0.2,
-      "rangeTier": "大",
+      "rangeTier": "中",
       "range": 6
     },
     "W": {
@@ -151,7 +151,7 @@
       ],
       "vfxKey": "fx.prim.void.dash",
       "castTimeSec": 0.067,
-      "rangeTier": "大",
+      "rangeTier": "中",
       "range": 6
     },
     "E": {
@@ -204,7 +204,7 @@
       "vfxKey": "fx.prim.void.shockwave",
       "targetsEnemies": true,
       "castTimeSec": 0.267,
-      "rangeTier": "超大",
+      "rangeTier": "大",
       "range": 8
     },
     "R": {

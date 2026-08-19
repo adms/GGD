@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "99d92e7219b6",
+  "hash": "1d491e1f06c1",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -11,7 +11,7 @@
     {
       "id": "aoe-tiers",
       "path": "config/aoe-tiers.json",
-      "hash": "bc80dbbf4dd9",
+      "hash": "e458b5fbd9df",
       "size": 843
     },
     {
@@ -155,7 +155,7 @@
     {
       "id": "displacement-tiers",
       "path": "config/displacement-tiers.json",
-      "hash": "0c3abfcc34b6",
+      "hash": "6cb6c0f896ef",
       "size": 1895
     },
     {
@@ -179,8 +179,8 @@
     {
       "id": "icon-style",
       "path": "config/icon-style.json",
-      "hash": "f0c19636a3cc",
-      "size": 2527
+      "hash": "47a5f182e96c",
+      "size": 3145
     },
     {
       "id": "item-card",
@@ -245,7 +245,7 @@
     {
       "id": "range-tiers",
       "path": "config/range-tiers.json",
-      "hash": "8e2307fcb00e",
+      "hash": "d87cdbcfecf4",
       "size": 789
     },
     {

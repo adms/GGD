@@ -2,17 +2,17 @@
  "schema": "icon-console/style-spec@1",
  "generatedBy": "tools/icon-console/emit_style_spec.py",
  "templateVersion": "icon-gen/1",
- "contentDigest": "f916838c976cb445",
+ "contentDigest": "c9d30b0f28f17f52",
  "sources": [
   {
    "path": "tools/icon-gen/src/prompt.py",
-   "sha256": "4cd3baf4ad8f5a559bc71f184786cd6ef5218bdb41bacc36a0a85f40ed08e2b6",
-   "bytes": 21211
+   "sha256": "6cc83257fc372b06ffa8965cbcb5cda6d96c46fe616c678db7b0fe2717e202a6",
+   "bytes": 23742
   },
   {
    "path": "tools/icon-gen/src/plan.py",
-   "sha256": "a349d3d76c69279c360cf2645582f89bc70f5e58b956805676296c93afca6298",
-   "bytes": 15711
+   "sha256": "04ac9900f7689aacb07550419fdec4142afe72ef0fa480d439ef47ad7f78dfef",
+   "bytes": 15995
   },
   {
    "path": "tools/icon-gen/src/pricing.json",
@@ -21,10 +21,10 @@
   }
  ],
  "template": {
-  "prefix": "Dark-fantasy anime game icon, hand-painted digital illustration, thick confident brush strokes with visible paint texture. ONE subject, centred, filling about 80% of a square frame, nothing cropped. Fixed lighting: warm key light from the upper left at 45 degrees, cool cyan rim light down the lower-right edge, shadow pooling bottom-right. Background is a flat near-black void #0B0E16 with a single soft radial glow behind the subject and darkened corners. Muted steel, leather and bone base, lifted by exactly ONE saturated accent hue. Bold readable silhouette, high local contrast, chunky forms, no fine filigree. Painted to stay legible at 64 pixels.",
-  "negative": "Negative: no text, no letters, no numbers, no watermark, no signature; no border, no frame, no button bevel, no UI panel; no white or light background, no paper, no page drop-shadow; no collage, no multiple objects, no grid, no side-by-side variants; no photorealism, no 3D render, no studio product shot; no real-world brand or logo, no recognisable copyrighted character.",
+  "prefix": "Fate-style anime game icon in the Type-Moon / ufotable visual language: hand-painted digital illustration, thick confident brush strokes with visible paint texture, heroic-spirit fantasy. ONE subject, centred, filling about 80% of a square frame, nothing cropped. Fixed lighting: warm gold key light from the upper left at 45 degrees, cool azure rim light down the lower-right edge, shadow pooling bottom-right. Background is a flat near-black void #0B0E16 with a single soft radial glow behind the subject, a faint concentric magic-circle halo read only as SILHOUETTE, and darkened corners. A few drifting blue-white prana motes rising from the lower edge. Palette: burnished gold and deep indigo base with muted steel and leather, lifted by exactly ONE saturated accent hue. Bold readable silhouette, high local contrast, chunky forms, no fine filigree. Painted to stay legible at 64 pixels.",
+  "negative": "Negative: no text, no letters, no numbers, no watermark, no signature; no border, no frame, no button bevel, no UI panel; no white or light background, no paper, no page drop-shadow; no collage, no multiple objects, no grid, no side-by-side variants; no photorealism, no 3D render, no studio product shot; no real-world brand or logo, no recognisable copyrighted character; no gilded lace, no baroque scrollwork, no fine ornamental linework; no runes, no inscribed symbols, no stained-glass tracery.",
   "shape": "PREFIX + \" SUBJECT: \" + subject + \". \" + NEGATIVE",
-  "example": "Dark-fantasy anime game icon, hand-painted digital illustration, thick confident brush strokes with visible paint texture. ONE subject, centred, filling about 80% of a square frame, nothing cropped. Fixed lighting: warm key light from the upper left at 45 degrees, cool cyan rim light down the lower-right edge, shadow pooling bottom-right. Background is a flat near-black void #0B0E16 with a single soft radial glow behind the subject and darkened corners. Muted steel, leather and bone base, lifted by exactly ONE saturated accent hue. Bold readable silhouette, high local contrast, chunky forms, no fine filigree. Painted to stay legible at 64 pixels. SUBJECT: «SUBJECT». Negative: no text, no letters, no numbers, no watermark, no signature; no border, no frame, no button bevel, no UI panel; no white or light background, no paper, no page drop-shadow; no collage, no multiple objects, no grid, no side-by-side variants; no photorealism, no 3D render, no studio product shot; no real-world brand or logo, no recognisable copyrighted character."
+  "example": "Fate-style anime game icon in the Type-Moon / ufotable visual language: hand-painted digital illustration, thick confident brush strokes with visible paint texture, heroic-spirit fantasy. ONE subject, centred, filling about 80% of a square frame, nothing cropped. Fixed lighting: warm gold key light from the upper left at 45 degrees, cool azure rim light down the lower-right edge, shadow pooling bottom-right. Background is a flat near-black void #0B0E16 with a single soft radial glow behind the subject, a faint concentric magic-circle halo read only as SILHOUETTE, and darkened corners. A few drifting blue-white prana motes rising from the lower edge. Palette: burnished gold and deep indigo base with muted steel and leather, lifted by exactly ONE saturated accent hue. Bold readable silhouette, high local contrast, chunky forms, no fine filigree. Painted to stay legible at 64 pixels. SUBJECT: «SUBJECT». Negative: no text, no letters, no numbers, no watermark, no signature; no border, no frame, no button bevel, no UI panel; no white or light background, no paper, no page drop-shadow; no collage, no multiple objects, no grid, no side-by-side variants; no photorealism, no 3D render, no studio product shot; no real-world brand or logo, no recognisable copyrighted character; no gilded lace, no baroque scrollwork, no fine ornamental linework; no runes, no inscribed symbols, no stained-glass tracery."
  },
  "textMode": {
   "field": "icon subject line",
@@ -854,226 +854,82 @@
    {
     "probe": "vague-description",
     "why": "說明過短或完全沒有可視覺化的名詞：詞庫沒命中，主體是 [tag] 的預設值。這格是用來檢查『最差的提示詞』畫出來還能不能看。",
-    "found": true,
-    "id": "sela.e",
-    "family": "abilities",
-    "name": "Scorch Ring",
-    "description": "",
-    "descriptionChars": 0,
-    "signal": "tag-default",
-    "confidence": "low",
-    "subject": "a burst of focused energy, composed as a bold centred emblem of the effect; the single accent hue is cyan; this is the martial-arts technique known as 「Scorch Ring」",
-    "prompt": "Dark-fantasy anime game icon, hand-painted digital illustration, thick confident brush strokes with visible paint texture. ONE subject, centred, filling about 80% of a square frame, nothing cropped. Fixed lighting: warm key light from the upper left at 45 degrees, cool cyan rim light down the lower-right edge, shadow pooling bottom-right. Background is a flat near-black void #0B0E16 with a single soft radial glow behind the subject and darkened corners. Muted steel, leather and bone base, lifted by exactly ONE saturated accent hue. Bold readable silhouette, high local contrast, chunky forms, no fine filigree. Painted to stay legible at 64 pixels. SUBJECT: a burst of focused energy, composed as a bold centred emblem of the effect; the single accent hue is cyan; this is the martial-arts technique known as 「Scorch Ring」. Negative: no text, no letters, no numbers, no watermark, no signature; no border, no frame, no button bevel, no UI panel; no white or light background, no paper, no page drop-shadow; no collage, no multiple objects, no grid, no side-by-side variants; no photorealism, no 3D render, no studio product shot; no real-world brand or logo, no recognisable copyrighted character."
+    "found": false
    },
    {
     "probe": "vague-description-2",
     "why": "同上，第二個低信心樣本——兩格如果畫出幾乎一樣的東西，代表 fallback 太籠統。",
-    "found": true,
-    "id": "sela.q",
-    "family": "abilities",
-    "name": "Ember Bolt",
-    "description": "",
-    "descriptionChars": 0,
-    "signal": "tag-default",
-    "confidence": "low",
-    "subject": "a burst of focused energy, composed as a bold centred emblem of the effect; the single accent hue is cyan; this is the martial-arts technique known as 「Ember Bolt」",
-    "prompt": "Dark-fantasy anime game icon, hand-painted digital illustration, thick confident brush strokes with visible paint texture. ONE subject, centred, filling about 80% of a square frame, nothing cropped. Fixed lighting: warm key light from the upper left at 45 degrees, cool cyan rim light down the lower-right edge, shadow pooling bottom-right. Background is a flat near-black void #0B0E16 with a single soft radial glow behind the subject and darkened corners. Muted steel, leather and bone base, lifted by exactly ONE saturated accent hue. Bold readable silhouette, high local contrast, chunky forms, no fine filigree. Painted to stay legible at 64 pixels. SUBJECT: a burst of focused energy, composed as a bold centred emblem of the effect; the single accent hue is cyan; this is the martial-arts technique known as 「Ember Bolt」. Negative: no text, no letters, no numbers, no watermark, no signature; no border, no frame, no button bevel, no UI panel; no white or light background, no paper, no page drop-shadow; no collage, no multiple objects, no grid, no side-by-side variants; no photorealism, no 3D render, no studio product shot; no real-world brand or logo, no recognisable copyrighted character."
+    "found": false
    },
    {
     "probe": "longest-description",
     "why": "全計畫中說明最長的一筆。clean_body() 要把數值與制式用語全部剝掉、只留下可畫的意象；這格檢查長文會不會把主體稀釋成一團模糊。",
-    "found": true,
-    "id": "godie-i03f",
-    "family": "items",
-    "name": "甘豆腐之袍",
-    "description": "傳說\n施展需求魔力：200點\n技能冷卻時間：75秒\n效能\n治癒術\n魔力增幅\n魔力回復速度+150%\n生命+400\n裝甲+8\n\n解說\n傳說中的賢者甘豆腐所穿的衣服，看起來好像破破舊舊的，但是實際上蘊含著強大的魔力，每殺死一名英雄可以額外獲得10點智慧，最多累積7次，達最高層額外獲得40點智慧，死亡時將會降低2次累積，並可施展治癒術治療自身1000點生命。",
-    "descriptionChars": 177,
-    "signal": "category",
-    "confidence": "medium",
-    "subject": "a legendary relic wreathed in power named 「甘豆腐之袍」; warm and vital; the single accent hue is verdant green",
-    "prompt": "Dark-fantasy anime game icon, hand-painted digital illustration, thick confident brush strokes with visible paint texture. ONE subject, centred, filling about 80% of a square frame, nothing cropped. Fixed lighting: warm key light from the upper left at 45 degrees, cool cyan rim light down the lower-right edge, shadow pooling bottom-right. Background is a flat near-black void #0B0E16 with a single soft radial glow behind the subject and darkened corners. Muted steel, leather and bone base, lifted by exactly ONE saturated accent hue. Bold readable silhouette, high local contrast, chunky forms, no fine filigree. Painted to stay legible at 64 pixels. SUBJECT: a legendary relic wreathed in power named 「甘豆腐之袍」; warm and vital; the single accent hue is verdant green. Negative: no text, no letters, no numbers, no watermark, no signature; no border, no frame, no button bevel, no UI panel; no white or light background, no paper, no page drop-shadow; no collage, no multiple objects, no grid, no side-by-side variants; no photorealism, no 3D render, no studio product shot; no real-world brand or logo, no recognisable copyrighted character."
+    "found": false
    },
    {
     "probe": "siblings-same-kit-a",
     "why": "同一位英雄的技能組（第一格）。這兩格必須看起來像同一個角色的招式——共用的重點色與筆觸是 PREFIX 的責任，如果兩格像來自兩款遊戲，風格前綴就沒生效。",
-    "found": true,
-    "id": "godie-e001.e",
-    "family": "abilities",
-    "name": "22-03 五吋釘",
-    "description": "[主動攻擊]\n25秒冷卻時間\n\n將一枚充滿詛咒的五吋釘射向敵方目標，造成瞬間350點傷害，並減緩60%移動速度5秒。",
-    "descriptionChars": 58,
-    "signal": "tag-default",
-    "confidence": "low",
-    "subject": "a burst of focused energy, composed as the instant of the strike, energy bursting toward the viewer; the single accent hue is cyan; this is the martial-arts technique known as 「五吋釘」",
-    "prompt": "Dark-fantasy anime game icon, hand-painted digital illustration, thick confident brush strokes with visible paint texture. ONE subject, centred, filling about 80% of a square frame, nothing cropped. Fixed lighting: warm key light from the upper left at 45 degrees, cool cyan rim light down the lower-right edge, shadow pooling bottom-right. Background is a flat near-black void #0B0E16 with a single soft radial glow behind the subject and darkened corners. Muted steel, leather and bone base, lifted by exactly ONE saturated accent hue. Bold readable silhouette, high local contrast, chunky forms, no fine filigree. Painted to stay legible at 64 pixels. SUBJECT: a burst of focused energy, composed as the instant of the strike, energy bursting toward the viewer; the single accent hue is cyan; this is the martial-arts technique known as 「五吋釘」. Negative: no text, no letters, no numbers, no watermark, no signature; no border, no frame, no button bevel, no UI panel; no white or light background, no paper, no page drop-shadow; no collage, no multiple objects, no grid, no side-by-side variants; no photorealism, no 3D render, no studio product shot; no real-world brand or logo, no recognisable copyrighted character."
+    "found": false
    },
    {
     "probe": "siblings-same-kit-b",
     "why": "同一位英雄的技能組（第二格）。與上一格成對判讀。",
-    "found": true,
-    "id": "godie-e001.ex",
-    "family": "abilities",
-    "name": "22-002 月光下的決鬥者",
-    "description": "[被動]\n0秒冷卻時間\n\n在夜晚的時刻決鬥能讓禮奈異常興奮，被敵人攻擊的時候有20%機率，引起嗚鎖打的快速打擊狀態，狀態內亦可連續引發嗚鎖打，並且讓雛見澤症候群L5的狀態下每次攻擊有10%機率造成0.3秒暈眩158點傷害。",
-    "descriptionChars": 111,
-    "signal": "name",
-    "confidence": "high",
-    "subject": "a lance of white light, composed as a still heraldic emblem glowing faintly from within; the single accent hue is radiant white-gold; this is the martial-arts technique known as 「月光下的決鬥者」",
-    "prompt": "Dark-fantasy anime game icon, hand-painted digital illustration, thick confident brush strokes with visible paint texture. ONE subject, centred, filling about 80% of a square frame, nothing cropped. Fixed lighting: warm key light from the upper left at 45 degrees, cool cyan rim light down the lower-right edge, shadow pooling bottom-right. Background is a flat near-black void #0B0E16 with a single soft radial glow behind the subject and darkened corners. Muted steel, leather and bone base, lifted by exactly ONE saturated accent hue. Bold readable silhouette, high local contrast, chunky forms, no fine filigree. Painted to stay legible at 64 pixels. SUBJECT: a lance of white light, composed as a still heraldic emblem glowing faintly from within; the single accent hue is radiant white-gold; this is the martial-arts technique known as 「月光下的決鬥者」. Negative: no text, no letters, no numbers, no watermark, no signature; no border, no frame, no button bevel, no UI panel; no white or light background, no paper, no page drop-shadow; no collage, no multiple objects, no grid, no side-by-side variants; no photorealism, no 3D render, no studio product shot; no real-world brand or logo, no recognisable copyrighted character."
+    "found": false
    },
    {
     "probe": "identical-subject-a",
     "why": "警告格：這一筆與下一筆推導出的 SUBJECT 逐字相同，所以幾乎一定會畫出同一張圖，但它們是不同的內容。prompt.py 自己的註解已經點名這個風險——這是全張表最尖銳的一格。",
-    "found": true,
-    "id": "godie-e002.e",
-    "family": "abilities",
-    "name": "20-03 約束與勝利之劍",
-    "description": "[主動攻擊]\n60秒冷卻時間\n\n集結了人們的意念而形成的星星的結晶。是一把精鍊的神造兵裝，被譽為「最強的幻想(Last Phantasm)」。\n在聖劍這個分類上位於最頂端的位置。它會將所有者的魔力轉換成光之後收束並加速以增加其動能，可以讓所有者使用出神靈等級的魔法。\n其斬擊看似是放出了一道光帶，但是能讓前方直線敵人受到魔力*0.4+350點傷害。",
-    "descriptionChars": 174,
-    "signal": "name",
-    "confidence": "high",
-    "subject": "a straight sword, composed as the instant of the strike, energy bursting toward the viewer; the single accent hue is radiant white-gold; this is the martial-arts technique known as 「約束與勝利之劍」",
-    "prompt": "Dark-fantasy anime game icon, hand-painted digital illustration, thick confident brush strokes with visible paint texture. ONE subject, centred, filling about 80% of a square frame, nothing cropped. Fixed lighting: warm key light from the upper left at 45 degrees, cool cyan rim light down the lower-right edge, shadow pooling bottom-right. Background is a flat near-black void #0B0E16 with a single soft radial glow behind the subject and darkened corners. Muted steel, leather and bone base, lifted by exactly ONE saturated accent hue. Bold readable silhouette, high local contrast, chunky forms, no fine filigree. Painted to stay legible at 64 pixels. SUBJECT: a straight sword, composed as the instant of the strike, energy bursting toward the viewer; the single accent hue is radiant white-gold; this is the martial-arts technique known as 「約束與勝利之劍」. Negative: no text, no letters, no numbers, no watermark, no signature; no border, no frame, no button bevel, no UI panel; no white or light background, no paper, no page drop-shadow; no collage, no multiple objects, no grid, no side-by-side variants; no photorealism, no 3D render, no studio product shot; no real-world brand or logo, no recognisable copyrighted character."
+    "found": false
    },
    {
     "probe": "identical-subject-b",
     "why": "警告格（第二半）。若兩格果然相同，就證明需要 --subject=text 或加寬詞庫，而不是直接付錢跑完 660 張。",
-    "found": true,
-    "id": "godie-e00l.e",
-    "family": "abilities",
-    "name": "20-03 約束與勝利之劍",
-    "description": "[主動攻擊]\n60秒冷卻時間\n\n集結了人們的意念而形成的星星的結晶。是一把精鍊的神造兵裝，被譽為「最強的幻想(Last Phantasm)」。\n在聖劍這個分類上位於最頂端的位置。它會將所有者的魔力轉換成光之後收束並加速以增加其動能，可以讓所有者使用出神靈等級的魔法。\n其斬擊看似是放出了一道光帶，但是能讓前方直線敵人受到魔力*0.4+350點傷害。",
-    "descriptionChars": 174,
-    "signal": "name",
-    "confidence": "high",
-    "subject": "a straight sword, composed as the instant of the strike, energy bursting toward the viewer; the single accent hue is radiant white-gold; this is the martial-arts technique known as 「約束與勝利之劍」",
-    "prompt": "Dark-fantasy anime game icon, hand-painted digital illustration, thick confident brush strokes with visible paint texture. ONE subject, centred, filling about 80% of a square frame, nothing cropped. Fixed lighting: warm key light from the upper left at 45 degrees, cool cyan rim light down the lower-right edge, shadow pooling bottom-right. Background is a flat near-black void #0B0E16 with a single soft radial glow behind the subject and darkened corners. Muted steel, leather and bone base, lifted by exactly ONE saturated accent hue. Bold readable silhouette, high local contrast, chunky forms, no fine filigree. Painted to stay legible at 64 pixels. SUBJECT: a straight sword, composed as the instant of the strike, energy bursting toward the viewer; the single accent hue is radiant white-gold; this is the martial-arts technique known as 「約束與勝利之劍」. Negative: no text, no letters, no numbers, no watermark, no signature; no border, no frame, no button bevel, no UI panel; no white or light background, no paper, no page drop-shadow; no collage, no multiple objects, no grid, no side-by-side variants; no photorealism, no 3D render, no studio product shot; no real-world brand or logo, no recognisable copyrighted character."
+    "found": false
    },
    {
     "probe": "tier1-champion",
     "why": "上線面向（tier 1）的英雄。角色肖像的推導路徑與技能/道具完全不同，必須各驗一格。",
-    "found": true,
-    "id": "sela",
-    "family": "champions",
-    "name": "Sela, the Ember Sage",
-    "description": "",
-    "descriptionChars": 0,
-    "signal": "name",
-    "confidence": "medium",
-    "subject": "an original mage character portrait, head and shoulders, three-quarter view; a smouldering ember as their motif; the single accent hue is molten orange",
-    "prompt": "Dark-fantasy anime game icon, hand-painted digital illustration, thick confident brush strokes with visible paint texture. ONE subject, centred, filling about 80% of a square frame, nothing cropped. Fixed lighting: warm key light from the upper left at 45 degrees, cool cyan rim light down the lower-right edge, shadow pooling bottom-right. Background is a flat near-black void #0B0E16 with a single soft radial glow behind the subject and darkened corners. Muted steel, leather and bone base, lifted by exactly ONE saturated accent hue. Bold readable silhouette, high local contrast, chunky forms, no fine filigree. Painted to stay legible at 64 pixels. SUBJECT: an original mage character portrait, head and shoulders, three-quarter view; a smouldering ember as their motif; the single accent hue is molten orange. Negative: no text, no letters, no numbers, no watermark, no signature; no border, no frame, no button bevel, no UI panel; no white or light background, no paper, no page drop-shadow; no collage, no multiple objects, no grid, no side-by-side variants; no photorealism, no 3D render, no studio product shot; no real-world brand or logo, no recognisable copyrighted character."
+    "found": false
    },
    {
     "probe": "tier1-item-en",
     "why": "手寫英文的 tier 1 道具：走的是 NAME_NOUN_EN／ELEMENT_HUE_EN 這條分支，中文詞庫一格都不會命中。",
-    "found": true,
-    "id": "ember-rod",
-    "family": "items",
-    "name": "Ember Rod",
-    "description": "",
-    "descriptionChars": 0,
-    "signal": "name",
-    "confidence": "high",
-    "subject": "a smouldering ember, an adventuring relic named 「Ember Rod」; lean and keen; the single accent hue is molten orange",
-    "prompt": "Dark-fantasy anime game icon, hand-painted digital illustration, thick confident brush strokes with visible paint texture. ONE subject, centred, filling about 80% of a square frame, nothing cropped. Fixed lighting: warm key light from the upper left at 45 degrees, cool cyan rim light down the lower-right edge, shadow pooling bottom-right. Background is a flat near-black void #0B0E16 with a single soft radial glow behind the subject and darkened corners. Muted steel, leather and bone base, lifted by exactly ONE saturated accent hue. Bold readable silhouette, high local contrast, chunky forms, no fine filigree. Painted to stay legible at 64 pixels. SUBJECT: a smouldering ember, an adventuring relic named 「Ember Rod」; lean and keen; the single accent hue is molten orange. Negative: no text, no letters, no numbers, no watermark, no signature; no border, no frame, no button bevel, no UI panel; no white or light background, no paper, no page drop-shadow; no collage, no multiple objects, no grid, no side-by-side variants; no photorealism, no 3D render, no studio product shot; no real-world brand or logo, no recognisable copyrighted character."
+    "found": false
    },
    {
     "probe": "tier1-ability",
     "why": "上線面向（tier 1）的技能——玩家最常盯著看的圖示。",
-    "found": true,
-    "id": "godie-e001.q",
-    "family": "abilities",
-    "name": "22-01 鬼隱之擊",
-    "description": "[輔助]\n30秒冷卻時間\n\n隱形並在一定的時間內提昇50%速度以暗殺目標，當攻擊時隱形術即告失效，但是會造成額外100點的背刺傷害，持續12秒。",
-    "descriptionChars": 72,
-    "signal": "name",
-    "confidence": "high",
-    "subject": "a horned oni mask, composed as a calm concentric aura or ward glyph; the single accent hue is violet-black; this is the martial-arts technique known as 「鬼隱之擊」",
-    "prompt": "Dark-fantasy anime game icon, hand-painted digital illustration, thick confident brush strokes with visible paint texture. ONE subject, centred, filling about 80% of a square frame, nothing cropped. Fixed lighting: warm key light from the upper left at 45 degrees, cool cyan rim light down the lower-right edge, shadow pooling bottom-right. Background is a flat near-black void #0B0E16 with a single soft radial glow behind the subject and darkened corners. Muted steel, leather and bone base, lifted by exactly ONE saturated accent hue. Bold readable silhouette, high local contrast, chunky forms, no fine filigree. Painted to stay legible at 64 pixels. SUBJECT: a horned oni mask, composed as a calm concentric aura or ward glyph; the single accent hue is violet-black; this is the martial-arts technique known as 「鬼隱之擊」. Negative: no text, no letters, no numbers, no watermark, no signature; no border, no frame, no button bevel, no UI panel; no white or light background, no paper, no page drop-shadow; no collage, no multiple objects, no grid, no side-by-side variants; no photorealism, no 3D render, no studio product shot; no real-world brand or logo, no recognisable copyrighted character."
+    "found": false
    },
    {
     "probe": "ability-name-signal",
     "why": "名稱命中詞庫的高信心技能。這是最好的情況，用來當作整組的品質上限。",
-    "found": true,
-    "id": "godie-e001.w",
-    "family": "abilities",
-    "name": "22-02 染血的柴刀",
-    "description": "[被動]\n0秒冷卻時間\n\n攻擊時有18%的機率可以使出會心一擊造成1.25倍的傷害。",
-    "descriptionChars": 42,
-    "signal": "name",
-    "confidence": "high",
-    "subject": "a spatter of dark blood, composed as a still heraldic emblem glowing faintly from within; the single accent hue is deep crimson; this is the martial-arts technique known as 「染血的柴刀」",
-    "prompt": "Dark-fantasy anime game icon, hand-painted digital illustration, thick confident brush strokes with visible paint texture. ONE subject, centred, filling about 80% of a square frame, nothing cropped. Fixed lighting: warm key light from the upper left at 45 degrees, cool cyan rim light down the lower-right edge, shadow pooling bottom-right. Background is a flat near-black void #0B0E16 with a single soft radial glow behind the subject and darkened corners. Muted steel, leather and bone base, lifted by exactly ONE saturated accent hue. Bold readable silhouette, high local contrast, chunky forms, no fine filigree. Painted to stay legible at 64 pixels. SUBJECT: a spatter of dark blood, composed as a still heraldic emblem glowing faintly from within; the single accent hue is deep crimson; this is the martial-arts technique known as 「染血的柴刀」. Negative: no text, no letters, no numbers, no watermark, no signature; no border, no frame, no button bevel, no UI panel; no white or light background, no paper, no page drop-shadow; no collage, no multiple objects, no grid, no side-by-side variants; no photorealism, no 3D render, no studio product shot; no real-world brand or logo, no recognisable copyrighted character."
+    "found": false
    },
    {
     "probe": "ability-body-signal",
     "why": "名稱沒命中、改由說明命中的中信心技能。prompt.py 的註解記著這條路曾把「妖狐變化」誤判成一隻拳頭，所以這條分支必須被看見。",
-    "found": true,
-    "id": "godie-e001.r",
-    "family": "abilities",
-    "name": "22-04 雛見澤症候群L5",
-    "description": "[輔助]\n60秒冷卻時間\n\n注射藥物使自己短暫激發到L5的病狀，此狀態將會強化攻擊55點和移動速度，並暫時減少生命最大值150點，持續7秒。",
-    "descriptionChars": 70,
-    "signal": "body",
-    "confidence": "medium",
-    "subject": "a stoppered potion, composed as a calm concentric aura or ward glyph; the single accent hue is cyan; this is the martial-arts technique known as 「雛見澤症候群L5」",
-    "prompt": "Dark-fantasy anime game icon, hand-painted digital illustration, thick confident brush strokes with visible paint texture. ONE subject, centred, filling about 80% of a square frame, nothing cropped. Fixed lighting: warm key light from the upper left at 45 degrees, cool cyan rim light down the lower-right edge, shadow pooling bottom-right. Background is a flat near-black void #0B0E16 with a single soft radial glow behind the subject and darkened corners. Muted steel, leather and bone base, lifted by exactly ONE saturated accent hue. Bold readable silhouette, high local contrast, chunky forms, no fine filigree. Painted to stay legible at 64 pixels. SUBJECT: a stoppered potion, composed as a calm concentric aura or ward glyph; the single accent hue is cyan; this is the martial-arts technique known as 「雛見澤症候群L5」. Negative: no text, no letters, no numbers, no watermark, no signature; no border, no frame, no button bevel, no UI panel; no white or light background, no paper, no page drop-shadow; no collage, no multiple objects, no grid, no side-by-side variants; no photorealism, no 3D render, no studio product shot; no real-world brand or logo, no recognisable copyrighted character."
+    "found": false
    },
    {
     "probe": "ability-passive-composition",
     "why": "被動技能：構圖應該是靜態的紋章，而不是出招的瞬間。這格驗 ABILITY_COMP 的分流。",
-    "found": true,
-    "id": "godie-e008.w",
-    "family": "abilities",
-    "name": "21-01 火羽",
-    "description": "[傷害加成]\n30秒冷卻時間\n\n召喚火焰般的羽毛幫助周圍單位加速移動1.5倍，持續6秒。",
-    "descriptionChars": 44,
-    "signal": "name",
-    "confidence": "high",
-    "subject": "a gout of flame, composed as a still heraldic emblem glowing faintly from within; the single accent hue is molten orange; this is the martial-arts technique known as 「火羽」",
-    "prompt": "Dark-fantasy anime game icon, hand-painted digital illustration, thick confident brush strokes with visible paint texture. ONE subject, centred, filling about 80% of a square frame, nothing cropped. Fixed lighting: warm key light from the upper left at 45 degrees, cool cyan rim light down the lower-right edge, shadow pooling bottom-right. Background is a flat near-black void #0B0E16 with a single soft radial glow behind the subject and darkened corners. Muted steel, leather and bone base, lifted by exactly ONE saturated accent hue. Bold readable silhouette, high local contrast, chunky forms, no fine filigree. Painted to stay legible at 64 pixels. SUBJECT: a gout of flame, composed as a still heraldic emblem glowing faintly from within; the single accent hue is molten orange; this is the martial-arts technique known as 「火羽」. Negative: no text, no letters, no numbers, no watermark, no signature; no border, no frame, no button bevel, no UI panel; no white or light background, no paper, no page drop-shadow; no collage, no multiple objects, no grid, no side-by-side variants; no photorealism, no 3D render, no studio product shot; no real-world brand or logo, no recognisable copyrighted character."
+    "found": false
    },
    {
     "probe": "ability-active-composition",
     "why": "主動技能：構圖應該是命中的瞬間、能量朝觀者爆開。與上一格對照才看得出分流有沒有效。",
-    "found": true,
-    "id": "godie-e008.e",
-    "family": "abilities",
-    "name": "21-03 赤焰爆發",
-    "description": "[主動攻擊]\n45秒冷卻時間\n\n赤焰爆發可以攻擊一直線敵人，將其打到空中給予400點損害，落地後暈眩1秒。",
-    "descriptionChars": 53,
-    "signal": "name",
-    "confidence": "high",
-    "subject": "a gout of flame, composed as the instant of the strike, energy bursting toward the viewer; the single accent hue is molten orange; this is the martial-arts technique known as 「赤焰爆發」",
-    "prompt": "Dark-fantasy anime game icon, hand-painted digital illustration, thick confident brush strokes with visible paint texture. ONE subject, centred, filling about 80% of a square frame, nothing cropped. Fixed lighting: warm key light from the upper left at 45 degrees, cool cyan rim light down the lower-right edge, shadow pooling bottom-right. Background is a flat near-black void #0B0E16 with a single soft radial glow behind the subject and darkened corners. Muted steel, leather and bone base, lifted by exactly ONE saturated accent hue. Bold readable silhouette, high local contrast, chunky forms, no fine filigree. Painted to stay legible at 64 pixels. SUBJECT: a gout of flame, composed as the instant of the strike, energy bursting toward the viewer; the single accent hue is molten orange; this is the martial-arts technique known as 「赤焰爆發」. Negative: no text, no letters, no numbers, no watermark, no signature; no border, no frame, no button bevel, no UI panel; no white or light background, no paper, no page drop-shadow; no collage, no multiple objects, no grid, no side-by-side variants; no photorealism, no 3D render, no studio product shot; no real-world brand or logo, no recognisable copyrighted character."
+    "found": false
    },
    {
     "probe": "item-category-only",
     "why": "只靠分類命中的道具（名稱沒有可畫的名詞）。主體會是「一件武器」這種泛稱，檢查泛稱能不能撐起一張可辨識的圖。",
-    "found": true,
-    "id": "godie-i006",
-    "family": "items",
-    "name": "雅典娜的驚嘆號",
-    "description": "神器\n施展需求魔力：260點\n技能冷卻時間：60秒\n\n效能\n雅典娜驚嘆號, 連鎖閃電傷害400\n智慧+24\n魔力回復速度+100%\n\n解說\n雅典娜的驚嘆號是三位聖鬥士的小宇宙燃燒到極致所鍛造的武器，可使用雅典娜的驚嘆攻擊三個敵人造成極大傷害，主目標額外造成智慧*3點傷害。",
-    "descriptionChars": 136,
-    "signal": "category",
-    "confidence": "medium",
-    "subject": "an ornate divine relic named 「雅典娜的驚嘆號」; arcane and weightless; the single accent hue is violet",
-    "prompt": "Dark-fantasy anime game icon, hand-painted digital illustration, thick confident brush strokes with visible paint texture. ONE subject, centred, filling about 80% of a square frame, nothing cropped. Fixed lighting: warm key light from the upper left at 45 degrees, cool cyan rim light down the lower-right edge, shadow pooling bottom-right. Background is a flat near-black void #0B0E16 with a single soft radial glow behind the subject and darkened corners. Muted steel, leather and bone base, lifted by exactly ONE saturated accent hue. Bold readable silhouette, high local contrast, chunky forms, no fine filigree. Painted to stay legible at 64 pixels. SUBJECT: an ornate divine relic named 「雅典娜的驚嘆號」; arcane and weightless; the single accent hue is violet. Negative: no text, no letters, no numbers, no watermark, no signature; no border, no frame, no button bevel, no UI panel; no white or light background, no paper, no page drop-shadow; no collage, no multiple objects, no grid, no side-by-side variants; no photorealism, no 3D render, no studio product shot; no real-world brand or logo, no recognisable copyrighted character."
+    "found": false
    },
    {
     "probe": "item-fallback",
     "why": "連分類都沒命中的道具，落到「an adventuring relic」。這是道具端的最差情況。",
-    "found": true,
-    "id": "godie-i008",
-    "family": "items",
-    "name": "初級傳送捲軸",
-    "description": "技能冷卻時間：45秒\n效能\n傳送到同盟\n全能力+6\n\n解說\n由於這是限量票卡，請珍惜使用。",
-    "descriptionChars": 45,
-    "signal": "fallback",
-    "confidence": "low",
-    "subject": "an adventuring relic named 「初級傳送捲軸」; lean and keen; the single accent hue is cyan",
-    "prompt": "Dark-fantasy anime game icon, hand-painted digital illustration, thick confident brush strokes with visible paint texture. ONE subject, centred, filling about 80% of a square frame, nothing cropped. Fixed lighting: warm key light from the upper left at 45 degrees, cool cyan rim light down the lower-right edge, shadow pooling bottom-right. Background is a flat near-black void #0B0E16 with a single soft radial glow behind the subject and darkened corners. Muted steel, leather and bone base, lifted by exactly ONE saturated accent hue. Bold readable silhouette, high local contrast, chunky forms, no fine filigree. Painted to stay legible at 64 pixels. SUBJECT: an adventuring relic named 「初級傳送捲軸」; lean and keen; the single accent hue is cyan. Negative: no text, no letters, no numbers, no watermark, no signature; no border, no frame, no button bevel, no UI panel; no white or light background, no paper, no page drop-shadow; no collage, no multiple objects, no grid, no side-by-side variants; no photorealism, no 3D render, no studio product shot; no real-world brand or logo, no recognisable copyrighted character."
+    "found": false
    }
   ]
  },

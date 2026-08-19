@@ -6,19 +6,19 @@
   "clampSpeed": true,
   "safetyFactor": 0.9,
   "travel": {
-    "小": {
+    "極小": {
       "distance": 5.5,
       "speed": 16
     },
-    "中": {
+    "小": {
       "distance": 8.25,
       "speed": 16
     },
-    "大": {
+    "中": {
       "distance": 11,
       "speed": 16
     },
-    "超大": {
+    "大": {
       "distance": 14.67,
       "speed": 16
     },
@@ -28,19 +28,19 @@
     }
   },
   "push": {
-    "小": {
+    "極小": {
       "distance": 2,
       "speed": 16
     },
-    "中": {
+    "小": {
       "distance": 3,
       "speed": 16
     },
-    "大": {
+    "中": {
       "distance": 4.5,
       "speed": 16
     },
-    "超大": {
+    "大": {
       "distance": 6,
       "speed": 16
     },
