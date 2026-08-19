@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">v0.21.4 → v0.21.5 · 開發中</p><h1>GGD 作戰板</h1><div class="meta"><span>帳本 <b>2</b> 份</span><span>點名票號 <b>91</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">v0.21.4 → v0.21.5 · 開發中</p><h1>GGD 作戰板</h1><div class="meta"><span>帳本 <b>2</b> 份</span><span>點名票號 <b>94</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -178,6 +178,22 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>「優化機制與結果要寫到 <b>github readme, release note, codex編輯器契約與相關說明文件、相關 script、JSON 及後台設定機制</b>」</td><td>#467</td><td>✅ 六個落點逐一處理（兩個「不需要改」有寫理由，⛔ 不是漏掉）</td></tr>
 <tr><td>「你是否能<b>盤點現在 0.21.4 107 所有票</b>盡量獨立不同工作流加速」</td><td>—</td><td>✅ 107 張逐張讀完，切成 5 條新工作流</td></tr>
 <tr><td>「更新 <b>GGD作戰版</b>跟 release note，包括你工作流分工的方式跟群組現況、注意事項」</td><td>—</td><td>✅ 作戰板原地更新 + 本節</td></tr>
+</table></div>
+<div class="scroll"><table><tr><th>時間</th><th>owner 說的</th><th>票</th><th>狀態</th></tr>
+<tr><td>16:03</td><td>「每次 context 要滿的時候先開一個 <code>memory_temp_{timestamp}.md</code>」</td><td>CLAUDE.md 第零守則</td><td>✅ <code>scripts/memory-temp.sh</code> + 95%/98% 界線</td></tr>
+<tr><td>16:31</td><td>連鎖閃電層級衝突 ⇒「<b>DECAY 0.9</b>…重點在於<b>隨機選擇單位遞減時間差的閃電特效與傷害</b>…<b>有其特殊性與純範圍直接給傷害區別很大</b>」</td><td>#451</td><td>✅ 獨立 <code>chainLightning</code> kind（<code>jumpIntervalSec</code> 讓整條鏈不在同一 tick 結算）</td></tr>
+<tr><td>16:58</td><td><code>RANKED_MIN_APEX_LADDER</code>「<b>看不懂，請你說明的更簡單易懂</b>」</td><td>#4xx</td><td>✅ 已重寫說明</td></tr>
+<tr><td>17:05</td><td>「<b>先留 0</b>。理由是這是家人小圈子」</td><td>同上</td><td>✅ 出貨值 0</td></tr>
+<tr><td>17:32</td><td>「備份規則都是 <b><code>{用途}_temp_{timestamp}.md</code></b>…方便被認出是否已經過時要放到 legacy」</td><td>CLAUDE.md</td><td>✅ <code>scripts/temp-sweep.sh</code>（⛔ 只搬不刪）</td></tr>
+<tr><td>17:40</td><td>「我說過你要做<b>取代</b>這種事情以前都要<b>備份</b>…<b>這一定要放到開發守則嚴守</b>」</td><td>CLAUDE.md</td><td>✅ <b>PreToolUse hook</b> <code>preserve-before-overwrite.py</code>（⛔ 永不擋工具）</td></tr>
+<tr><td>17:43</td><td>「<b>如何拆檔案</b> 讓獨立平行化不會那麼容易卡住…<b>建議你優先做因為關鍵</b>」</td><td><b>#467</b></td><td>✅ 四個瓶頸拆掉（4,754→299 · 2,751→430 · 3,354→393 · 兩支 baseline→79 份 JSON）</td></tr>
+<tr><td>17:53</td><td>「回溯到 v0.18.1…<b>訊息開票對應，沒開票要補開票，票已完成要去註記現況後關閉</b>」</td><td>reconcile lane</td><td>✅ 關 29 張 · 補開 9 張（#469–#477）</td></tr>
+<tr><td>20:13</td><td>「<b>fix all, fix gen_board.py</b>」</td><td>—</td><td>✅ 拿掉三格時鐘欄位 + <code>board:check</code> 進聚合閘</td></tr>
+<tr><td>20:13</td><td>「<b>創建新英雄</b> 十一種屬性、技能說明、施展距離、範圍、傷害、冷卻、耗魔的<b>生成代入與檢查跳警示</b>…特別是 <b>script 程式自動化跟警示</b>」</td><td><b>#480</b></td><td>✅ 六欄從 420 支語料取中位數 + 六條警示 + <code>newhero:check</code></td></tr>
+<tr><td>20:13</td><td>「優化機制與結果要寫到 <b>github readme, release note, codex編輯器契約與相關說明文件、相關 script、JSON 及後台設定機制</b>」</td><td>#467 擴散</td><td>✅ README §9 · 契約第 15 章 + 第 10 節 · 8 支產生器補 npm script</td></tr>
+<tr><td>（多則）</td><td>「注意有時候你會<b>改錯有變身檔的英雄技能，只改了其中一個</b>…<b>godie-e00u Sakuya…要移到 legacy 不要再被掃到</b>…<b>請你想個一勞永逸的方法</b>」</td><td><b>#479</b></td><td>✅ 26 組對子雙向對帳 + 7 位英雄進 <code>_legacy</code> ⇒ 編號碰撞 2→0</td></tr>
+<tr><td>（多則）</td><td>「<b>每次我回答你以後，就馬上去更新 github issue</b>…避免我要重複講」</td><td>CLAUDE.md</td><td>✅ <code>scripts/ruling.sh</code> + <code>scripts/asked-before.sh</code></td></tr>
+<tr><td>15:37</td><td>「<b>只要做有開放的角色技能及隨機三選一就好，沒開放的別浪費 token</b>」</td><td>#472</td><td>✅ 範圍收斂；退場物進 <code>_legacy</code> 後自動不被掃到</td></tr>
 </table></div></section>
 <section><p class="eyebrow">的每一句話在哪張票上</p><h2>🧾 逐則對票 · owner 的每一句話在哪張票上</h2><h3>08-18</h3>
 <div class="scroll"><table><tr><th>#</th><th>時間</th><th>owner 說了什麼</th><th>落到哪</th><th>狀態</th></tr>
