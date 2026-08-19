@@ -79,7 +79,7 @@ describe("Codex 合約散文裡的數字", () => {
     }
   });
 
-  it("⛔ 六個標記區塊都還在 —— 有人把它們刪掉就等於把表變回手打的", () => {
+  it("⛔ 七個標記區塊都還在 —— 有人把它們刪掉就等於把表變回手打的", () => {
     cover("codex-contract-numbers");
     // ⚠️ 少了這一條，「刪掉標記 + 手打一張表」會讓上面那條**永遠綠**：
     //   `splice()` 找不到標記時是把區塊**附加在檔尾**，而 --check 只比對
@@ -89,7 +89,10 @@ describe("Codex 合約散文裡的數字", () => {
     // ⭐ `contract-effects`（GH#380）：那一段的小標從 2026-08 起寫著「37 個 effect kind」
     //    而引擎是 39，⛔ 而它不在任何產生區塊裡，所以沒有東西會紅。手改成 39 只會把
     //    過期往後推一次 —— 現在標題裡的數字與清單都由 `V.effect_kinds()` 產生。
-    for (const name of ["contract-caps", "contract-env", "contract-range", "contract-bands", "contract-effects"]) {
+    // ⭐ `contract-sharding`（GH#467）：分片之後「一件事一份檔」這條規矩要**寫給對面看**，
+    //    而且那張表的份數是現場 `readdir` 數的 —— 區塊被刪掉就退回一段沒人對帳的散文。
+    for (const name of ["contract-caps", "contract-env", "contract-range", "contract-bands", "contract-effects",
+                        "contract-sharding"]) {
       expect(`${name}:${doc.includes(`<!-- BEGIN GENERATED:${name} -->`)}`).toBe(`${name}:true`);
     }
     // ⭐ GH#381 —— 同一支產生器現在也管退役告示牌上那一句「實測引擎現在有 N 個」。

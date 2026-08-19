@@ -57,7 +57,8 @@ DOC = REPO / "docs" / "技能編輯器引擎須知 20260811.md"
 VOCAB_DOC = REPO / "docs" / "效果標籤詞彙表v2.md"
 CMD = "pnpm contract:numbers"
 
-BLOCKS = ("contract-caps", "contract-env", "contract-range", "contract-bands", "contract-effects")
+BLOCKS = ("contract-caps", "contract-env", "contract-range", "contract-bands", "contract-effects",
+          "contract-sharding")
 VOCAB_BLOCKS = ("vocab-kind-count",)
 
 # 哪一份文件裡有哪些產生區塊。⛔ 不要把它攤平成一份清單 —— `splice()` 的每一個
@@ -337,6 +338,108 @@ def vocab_kind_count():
     return f"實測引擎現在有 **{len(V.effect_kinds())} 個**。"
 
 
+# ⭐ GH#467 —— 「一件事一份檔」的**分片盤點**。
+#
+# ⚠️ 這一節在 2026-08-20 之前不存在，而少的不是規矩是**吞吐**：40 個 effect 種類住在
+#   同一個 4,754 行的 `schema/effect.ts`、90 支技能住在同一支 3,345 行的產生器，
+#   於是任何兩件同時進行的工作都在排同一個隊（GH#451 加一個種類就把另外三條擋在外面）。
+#
+# ⛔ 每一格數字都**現場數目錄**，⛔ 不手打：一個「一件事一份檔」的宣稱如果自己是手寫的，
+#   它就會在第一次有人往舊檔塞東西的時候變成假的，而且沒有任何東西會紅。
+#   ⚠️ 分子分母對不上的那一刻，`effectShardWiring.test.ts` 會同時紅（它把
+#   兩個分片目錄 × 種類清單 × 處理器註冊表四個方向互相釘住）。
+# ⚠️ 第四欄 = 「要不要印數字」。⛔ `content/` 那兩列刻意**不數**：那是每一條內容工作
+#   都在動的東西，數它會讓這一段在**別人**加一支技能時過期，於是這條閘紅的原因與它
+#   要守的事（分片有沒有做完）無關 —— 一條會因為無關的事紅的閘，下一步就是被放寬。
+#   ⭐ 要證明的是**分片完整**（40 == 40），⛔ 不是「今天有幾支技能」。
+SHARD_ROWS = [
+    ("一個 effect 種類的**欄位與上下界**", "packages/shared/src/content/schema/effects", "*.ts", True),
+    ("一個 effect 種類的**型別**", "packages/shared/src/sim/effects/variants", "*.ts", True),
+    ("一位英雄的**技能表**（產生器側）", "tools/skill-remake/heroes", "*.py", True),
+    ("一位英雄的**卡面說明棘輪**", "packages/shared/src/content/descriptionClaims.baseline", "*.json", True),
+    ("一位英雄的**編號對照棘輪**", "packages/shared/src/content/abilityCodeParity.baseline", "*.json", True),
+    ("一支**技能**", "content/abilities", "*.json", False),
+    ("一位**英雄卡**", "content/champions", "*.json", False),
+]
+
+# ⛔ 這三份是**推導值**，第二個寫入者不會報錯 —— 它只會讓兩份產物開始分岔，
+#   而分岔的那一天沒有任何東西會紅（GH#467 第四條：一個產物只能有一個產生器寫）。
+DERIVED_ARTIFACTS = ["content/**/_index.json", "content/bundle.json", "content/manifest.json"]
+
+
+# ⛔ 這三種**不是分片**，算進去會讓「一件事一份檔」的分母虛胖，而虛胖的分母正好
+#   會掩蓋「有一個種類還沒分出去」（第一版真的量到 41 vs 40，差的就是 `index.ts`）：
+#   · `_` 開頭 —— `_index.json` / `_shared.ts` / `_hook.ts` 是地基
+#   · `.test.` —— 守衛
+#   · `index.ts` —— 匯總點（barrel），它是把分片組起來的那一支
+NOT_A_SHARD = ("index.ts", "index.py")
+
+
+def _shard_count(rel, pattern):
+    d = REPO / rel
+    if not d.is_dir():
+        return None
+    return sum(1 for p in sorted(d.glob(pattern))
+               if not p.name.startswith("_") and ".test." not in p.name
+               and p.name not in NOT_A_SHARD)
+
+
+def table_sharding():
+    out = [
+        "## 十五、⭐ 平行產出 —— 一次交很多支的時候，怎麼寫才不會互相蓋掉（#467）",
+        "",
+        "### 15.1 一件事一份檔 —— ⛔ 不要往既有的大檔裡插一段",
+        "",
+        "| 你要產出／修改的東西 | 一份住在哪 | 分片現況 |",
+        "|---|---|---:|",
+    ]
+    for label, rel, pattern, counted in SHARD_ROWS:
+        if not counted:
+            out.append(f"| {label} | `{rel}/<名字>{pattern[1:]}` | 一支一份 |")
+            continue
+        n = _shard_count(rel, pattern)
+        # ⛔ 目錄不存在**要印出來**，不可以靜默跳過 —— 那正是「分片做了一半」的樣子，
+        #   而靜默跳過會讓這張表看起來完全正常（失敗形態②）。
+        out.append(f"| {label} | `{rel}/<名字>{pattern[1:]}` | "
+                   f"{'**' + str(n) + '** 份' if n is not None else '⛔ 這個目錄不存在'} |")
+    out += [
+        "",
+        "⭐ 判準只有一句：**你新增的東西應該是一個新檔案。**",
+        "如果你發現自己要「打開某個既有的大檔，在中間插一段」，那就是撞車的形狀。",
+        "",
+        "### 15.2 ⛔ 這三份你一個字都不要寫",
+        "",
+        "　" + " · ".join(f"`{p}`" for p in DERIVED_ARTIFACTS),
+        "",
+        "它們是**推導值**，由 `pnpm content:build` **一支**程式產生。",
+        "⭐ 規則是「**一個產物只能有一個產生器寫**」—— 第二個寫入者不會報錯，",
+        "它只會讓兩份產物開始分岔，而分岔的那一天沒有任何東西會紅。",
+        "⇒ 你只要交出**來源文件**（一支技能一份 `content/abilities/<id>.json`），索引這邊重生成。",
+        "",
+        "### 15.3 缺機制的時候：要一個**新檔**，⛔ 不是要我們改那個大檔",
+        "",
+        "第十一章的回報方式現在有一個具體的形狀。一個新的 effect 種類 = **兩個新檔**：",
+        "",
+        f"　`{SHARD_ROWS[0][1]}/<種類>.ts`（欄位與上下界）　`{SHARD_ROWS[1][1]}/<種類>.ts`（型別）",
+        "",
+        "⇒ 回報時請寫：**種類名 · 它解鎖哪 N 支 · 每支要填哪幾格**。",
+        "⛔ 不要寫「請在 `schema/effect.ts` 裡加一個分支」—— 那一支已經不裝種類了，",
+        "它只剩 hook / 靈氣 / 天生技那一半與對外 re-export（**import 路徑一個字都沒變**）。",
+        "",
+        "### 15.4 分片的軸：內容按**英雄**，引擎按**機制**",
+        "",
+        "| 軸 | 用在哪 | 為什麼 |",
+        "|---|---|---|",
+        "| ⭐ 按**英雄／技能** | 內容側：正規化 · 說明校正 · 實作 · 該支的驗證 | 一支技能的這四件事**本來就要一起做** |",
+        "| ⭐ 按**機制** | 引擎側：effect 種類 · 條件葉 · hook 事件 | 一個機制解鎖 N 支（第〇章的第一條） |",
+        "| 全域**一次** | 型別檢查 · 新鮮度閘 · 卡面說謊閘 · `content:build` | 各跑一遍＝同一件事做很多遍 |",
+        "",
+        "⛔ **不可以按工序分**（正規化 / 說明校正 / 驗證 / 實作各一條）——",
+        "那四件事會同時碰到**同一支技能的同一份 JSON**，於是四條路一起在等同一個檔。",
+    ]
+    return "\n".join(out)
+
+
 # 一行印幾個 kind。⛔ 不是「看起來剛好」——它決定這一段會不會在 GitHub 的
 # 程式碼區塊裡橫向捲動，而那正是外部作者第一眼會看到的東西。
 COLS = 5
@@ -347,6 +450,7 @@ BODIES = {
     "contract-range": table_range,
     "contract-bands": table_bands,
     "contract-effects": table_effects,
+    "contract-sharding": table_sharding,
     "vocab-kind-count": vocab_kind_count,
 }
 
@@ -356,9 +460,13 @@ DEFAULT_SOURCE = "`content/config/`"
 # ⚠️ `contract-effects` **不蓋版號**：它一格 `content/` 都沒讀，蓋上去會讓它在每一次
 #    內容改動時被重寫一遍，而那個版號說的是一件與這一段無關的事。
 ENGINE_REGISTRY_SOURCE = "`packages/shared/src/sim/effects/effectRegistry.ts`（引擎註冊表）"
+SHARD_SOURCE = "**分片目錄本身**（現場 `readdir`，⛔ 不是手打的宣稱）"
 SOURCES = {
     "contract-effects": (ENGINE_REGISTRY_SOURCE, False),
     "vocab-kind-count": (ENGINE_REGISTRY_SOURCE, False),
+    # ⚠️ **不蓋內容版號**（同 `contract-effects` 的理由）：它一格 `content/` 都沒數，
+    #    蓋上去會讓它在每一次內容改動時被重寫一遍，而那個版號說的是一件與分片無關的事。
+    "contract-sharding": (SHARD_SOURCE, False),
 }
 
 

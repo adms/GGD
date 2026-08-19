@@ -41,7 +41,7 @@
  *   npx tsx tools/capability-export/export.ts --check    # 過期就回非零（CI 閘）
  *   npx tsx tools/capability-export/export.ts --out-dir <dir>   # 改輸出位置（測試用）
  */
-import { mkdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
+import { mkdirSync, readFileSync, readdirSync, writeFileSync, existsSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -100,6 +100,97 @@ const STATE_LABEL: Record<string, string> = {
   unsupported: "⛔ 不支援",
 };
 
+/**
+ * ⭐ #467 —— 「一個 effect 種類現在住在哪個檔」。
+ *
+ * 為什麼要寫進交付物：對面回報「`chainLightning` 的 `decay` 收不到 0.9」時，
+ * 以前只能回「在那個 4,754 行的 union 裡」；現在指得到一個檔名。
+ *
+ * ⛔ 這一節**不是**一句被散文護著的宣稱 —— 兩個覆蓋率數字是**每次匯出時
+ * 真的去數目錄**得到的。有人加了一個種類卻沒開檔，這裡的分母分子會自己分家，
+ * 而 `effectShardWiring.test.ts` 同時會紅（它把四個方向互相釘住：
+ * 兩個目錄 × 種類清單 × 處理器註冊表）。
+ */
+const SHARD_DIRS = {
+  欄位與上下界: "packages/shared/src/content/schema/effects",
+  型別: "packages/shared/src/sim/effects/variants",
+} as const;
+
+export function effectKindLayoutSection(kinds: readonly string[]): string[] {
+  const rows = Object.entries(SHARD_DIRS).map(([half, dir]) => {
+    const have = new Set(
+      existsSync(join(REPO, dir))
+        ? readdirSync(join(REPO, dir))
+            .filter((f) => f.endsWith(".ts") && !f.includes(".test.") && !f.startsWith("_"))
+            .map((f) => f.slice(0, -3))
+        : [],
+    );
+    const covered = kinds.filter((k) => have.has(k)).length;
+    return `| ${half} | \`${dir}/<種類>.ts\` | ${covered} / ${kinds.length} 個種類有自己的檔 |`;
+  });
+  return [
+    "⭐ **一個種類一個檔**（#467）—— 檔名恆等於上面那張清單裡的種類名：",
+    "",
+    "| 種類的哪一半 | 檔案 | 覆蓋 |",
+    "|---|---|---|",
+    ...rows,
+    "",
+    "⚠️ 右欄兩個數字是**每次匯出時數出來的**，⛔ 不是寫死的宣稱。分母是這一節上方那張",
+    "清單的長度；分子是那個目錄裡真的存在的檔。兩者不相等就代表有種類還沒分出去。",
+    "",
+  ];
+}
+
+/**
+ * ⭐ #467 —— 「一次產出很多支」的交件形狀。
+ *
+ * ⚠️ 上面那一節回答的是「一個種類住在哪個檔」，這一節回答**對面自己**要怎麼交件。
+ * 少了它，對面唯一合理的推論是「把這一輪的東西寫成一份大檔交過來」，而那正是
+ * 我們這邊剛拆掉的形狀：兩份同時進行的產出互相蓋掉，⛔ 而且沒有任何錯誤訊息。
+ *
+ * ⛔ 這一節刻意**不數** `content/` 的檔案數：那會讓這份交付物在每一次有人新增一支
+ * 技能時被重寫，而它的價值來自「指紋沒變＝引擎事實沒變」。規則是結構，不是數字。
+ */
+export function parallelOutputSection(): string[] {
+  return [
+    "## 10. ⭐ 一次產出很多支的時候 —— 一件事一份檔",
+    "",
+    "⚠️ **這一節在 2026-08-20 之前不存在**，而它少的不是規矩是**吞吐**：" +
+      "在此之前引擎的 40 個 effect 種類住在**同一個 4,754 行的檔**，於是任何一個新機制" +
+      "都要碰那一個檔，兩件同時進行的工作就在排同一個隊。第 3 節那張表就是拆完的結果。",
+    "",
+    "### 10.1 你交出來的每一份東西都應該是一個**新檔案**",
+    "",
+    "| 你要產出／修改的東西 | 一份寫在哪 |",
+    "|---|---|",
+    "| 一支技能 | `content/abilities/<技能 id>.json` |",
+    "| 一位英雄 | `content/champions/<英雄 id>.json` |",
+    "| 一件道具 | `content/items/<道具 id>.json` |",
+    "| 一個 effect 種類（引擎側，要我們做） | 第 3 節那兩個目錄**各一個新檔** |",
+    "",
+    "⭐ 判準只有一句：**你新增的東西應該是一個新檔案。**" +
+      "如果你發現自己要「打開某個既有的大檔，在中間插一段」，那就是撞車的形狀 —— " +
+      "兩份同時進行的產出會互相蓋掉，而**被蓋掉的那一份不會有任何錯誤訊息**。",
+    "",
+    "### 10.2 ⛔ 三種檔案你一個字都不要寫",
+    "",
+    "　`_index.json` · `bundle.json` · `manifest.json`",
+    "",
+    "它們是**推導值**，由遊戲端的一支打包程式產生。規則是" +
+      "「**一個產物只能有一個產生器寫**」—— 第二個寫入者不會報錯，" +
+      "它只會讓兩份產物開始分岔，而分岔的那一天沒有任何東西會紅。" +
+      "⇒ 你只要交出**來源文件**，索引由我們這邊重新生成。",
+    "",
+    "### 10.3 需要一個引擎還沒有的機制時，怎麼講",
+    "",
+    "⛔ 不要說「請在那個聯集裡加一個分支」—— 那一支已經不裝種類了。" +
+      "✅ 請寫：**種類名 · 它解鎖哪 N 支技能 · 每支要填哪幾格**。" +
+      "一個新種類對我們是**兩個新檔**（第 3 節那兩個目錄各一個），" +
+      "所以「它解鎖幾支」就是這件事值不值得做的全部依據。",
+    "",
+  ];
+}
+
 /** 人看的交付物。⭐ 必須自足 —— 對方沒有這個 repo。 */
 export function renderMarkdown(m: RuntimeCapabilityManifest): string {
   const L: string[] = [];
@@ -154,6 +245,7 @@ export function renderMarkdown(m: RuntimeCapabilityManifest): string {
   L.push("");
   L.push(m.effectKinds.map((k) => `\`${k}\``).join(" · "));
   L.push("");
+  L.push(...effectKindLayoutSection(m.effectKinds));
   L.push("## 4. 可以掛的 hook 事件");
   L.push("");
   L.push(m.hookEvents.map((k) => `\`${k}\``).join(" · "));
@@ -263,6 +355,7 @@ export function renderMarkdown(m: RuntimeCapabilityManifest): string {
     L.push(f.names.map((k) => `\`${k}\``).join(" · "));
     L.push("");
   }
+  L.push(...parallelOutputSection());
   L.push("---");
   L.push("");
   L.push(

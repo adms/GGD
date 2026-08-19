@@ -20,6 +20,7 @@
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../testkit/cover";
@@ -36,10 +37,34 @@ const EXEMPT: Record<string, string> = {
   "scenery:check": "競技場**道具散佈** —— 讀 arena 幾何，不讀技能",
   "todo:check": "掃原始碼裡的 TODO 註解，與內容無關",
   "docs:status:test": "這是那支產生器**自己的單元測試**，不是新鮮度閘",
+  "iconstyle:check": "圖示的**美術指導**快照 —— 讀 icon-gen 的提示詞常數，不讀 abilities/vfx/級距",
+  "legacyindex:check": "掃 legacy 資料夾裡**有哪些檔** —— 檔案搬家才會變，技能改動不會",
+  "scenerycc0:check": "把 CC0 資產的 bbox 最低點推到 y=0 —— 讀 GLB 位元組，不讀技能",
+  "map:check": "競技場**幾何**產生器 —— 讀地圖模板與圖論規則，不讀 abilities/vfx/級距",
+  "budget:check": "模型多邊形**預算**閘 —— 它不是新鮮度閘（超標才紅，不是過期才紅）",
 };
 
+/**
+ * ⭐ #467 —— **root 以外的 package.json 也要掃**。
+ *
+ * ⚠️ 這一支在 2026-08-20 之前只讀 root，於是一支藏在子專案裡的 `*:check`
+ * （`tools/anime-arena-map` 的 `map:check`）對這條閘是**不存在的** —— 而
+ * 「產生器對聚合指令不可見」正是 `tools/w3x-import` 那兩支能互相打架三個月的機制。
+ * ⛔ 一個只看得到一半的閘，紅不起來的那一半才是它要防的東西。
+ *
+ * ⚠️ 鍵名相同時以 root 為準（`caps:check` 兩邊都有，聚合指令引用的是 root 那一支）。
+ */
 function scripts(): Record<string, string> {
-  return JSON.parse(readFileSync(join(REPO, "package.json"), "utf8")).scripts;
+  const read = (p: string) => (JSON.parse(readFileSync(p, "utf8")).scripts ?? {}) as Record<string, string>;
+  const paths = execFileSync("git", ["ls-files", "package.json", "**/package.json"], {
+    cwd: REPO,
+    encoding: "utf8",
+  })
+    .split("\n")
+    .filter((p) => p && !p.includes("node_modules"));
+  const all: Record<string, string> = {};
+  for (const p of paths.filter((p) => p !== "package.json")) Object.assign(all, read(join(REPO, p)));
+  return { ...all, ...read(join(REPO, "package.json")) };
 }
 
 describe("skills:sync / skills:check 涵蓋所有產生器", () => {

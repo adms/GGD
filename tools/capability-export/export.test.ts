@@ -67,6 +67,15 @@ describe("能力清單匯出 (capability-export)", () => {
     expect(r.code, `${r.out}\n→ 跑 npx tsx tools/capability-export/export.ts 並 commit 產物`).toBe(0);
   });
 
+  it("⭐ #467 交件形狀那一節不可以被刪掉 —— --check 對「整節消失」是綠的", async () => {
+    // ⚠️ `--check` 只問「產出 == 磁碟」。把 `parallelOutputSection()` 的呼叫拿掉，
+    //    重新匯出之後兩者仍然一致 ⇒ 整節無聲消失而所有測試全綠（失敗形態③）。
+    //    ⛔ 所以這裡釘的是**那句規則本身**，不是「有沒有第 10 節」。
+    const { renderMarkdown } = await import("./export");
+    const { buildCapabilityManifest } = await import("../../packages/shared/src/content/editorCapabilities");
+    expect(renderMarkdown(buildCapabilityManifest())).toContain("一個產物只能有一個產生器寫");
+  });
+
   it("內部字串外洩會被擋下 —— 對方讀不懂我們的交接文件與部署主機", async () => {
     const { assertNoInternalLeaks } = await import("./export");
     expect(assertNoInternalLeaks("見 docs/_execution-batches.md", "x")).toHaveLength(1);
