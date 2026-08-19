@@ -20,6 +20,34 @@
  * The sim-constant claims are additionally PINNED against the real sim source
  * by a comment-stripped scan, so a future balance edit to `?? 1` or to the body
  * radius cannot silently make the drawn shape lie.
+ *
+ * ---------------------------------------------------------------------------
+ * ⚠️ WHERE THE GROUND `?? 1` WENT — GH#481, 2026-08-20. READ THIS BEFORE
+ *    "FIXING" THE PIN BELOW BY DELETING IT.
+ * ---------------------------------------------------------------------------
+ * The ground PIN used to read the literal `def.radius ?? 1` out of BOTH
+ * `abilities/abilitySystem.ts` (cast-begin) and `systems/CastResolveSystem.ts`
+ * (the re-query when a wind-up elapses), because until today those two really
+ * were two copies of the same expression.
+ *
+ * `87061c8c` (v0.21.5, the GH#458 fix) DELETED the second copy:
+ *
+ *     - enemiesInCircle(world, id, cast.point!, resolveAbilityRadius(world, def.radius ?? 1))
+ *     + groundAoeTargets(world, id, def, cast.point!)
+ *
+ * The default did not change and it did not disappear — it MOVED, into the one
+ * `groundAoeTargets()` both call sites now share (abilitySystem.ts). So the
+ * old PIN went red while the drawn telegraph was still exactly right: a
+ * source-string PIN cannot tell "the rule changed" from "the code moved"
+ * (CLAUDE.md 失敗形態⑥ — the same trap already annotated on the skillshot PIN
+ * below, which GH#289 sprang once before).
+ *
+ * ⭐ The PIN is therefore re-aimed at what the telegraph actually depends on,
+ * which is a RELATIONSHIP rather than a literal: the ground default has ONE
+ * home, and the resolve-time re-query REACHES that home instead of inventing
+ * its own. That is strictly stronger than the old pair of literals — those two
+ * would both have passed while silently drifting apart, which is precisely the
+ * divergence GH#458 shipped (破法對咒 shielding the enemy team).
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
@@ -71,11 +99,19 @@ describe("telegraph geometry is derived from content, at the SIM's own size", ()
 
   it("a ground ability with NO radius uses the sim's own `?? 1`, never an invented 1.2", () => {
     cover("telegraph-shape-derivation");
-    // PIN: the sim really does default to 1 in both the cast-begin query and
-    // the re-query at resolve time.
+    // PIN, half 1 — the default has exactly ONE home: `groundAoeTargets`.
     expect(simSource("abilities/abilitySystem.ts")).toContain("def.radius ?? 1)");
-    expect(simSource("systems/CastResolveSystem.ts")).toContain("def.radius ?? 1");
     expect(SIM_GROUND_DEFAULT_RADIUS).toBe(1);
+    // PIN, half 2 — the re-query at the END of a wind-up REACHES that home
+    // instead of deriving its own radius. Both halves matter: a telegraph is
+    // drawn at cast-BEGIN and the hit set is recomputed at cast-END, so the
+    // instant these two stop sharing one function the picture the player
+    // dodged and the circle that actually hit them are different circles.
+    // Asserted as "calls it AND owns no radius of its own" so re-inlining the
+    // query goes red even if the re-inlined copy happens to say `?? 1` today.
+    const castResolve = simSource("systems/CastResolveSystem.ts");
+    expect(castResolve).toContain("groundAoeTargets(");
+    expect(castResolve).not.toMatch(/radius/);
 
     const g = deriveTelegraphGeometry(ability({ castType: "ground" }), env());
     expect(g?.kind === "circle" ? g.radius : null).toBeCloseTo(1 * MULT, 6);

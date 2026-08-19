@@ -148,21 +148,61 @@ func truncate(s string, n int) string {
 	return s[:n] + "…"
 }
 
+// options carries the optional wiring shared by NewRepo and New.
+type options struct{ contentDir string }
+
+// Option configures a curation Repo/Service.
+type Option func(*options)
+
+// WithContentDir hands the content tree to the whitelist's LEGACY GATE, so an
+// id whose document lives under content/_legacy/ can neither be served nor
+// stored (see legacyevict.go). Without it the gate is inert and logs that it
+// is — the platform wires cfg.ContentDir in internal/server/server.go.
+func WithContentDir(dir string) Option { return func(o *options) { o.contentDir = dir } }
+
+func resolve(opts []Option) options {
+	var o options
+	for _, fn := range opts {
+		fn(&o)
+	}
+	return o
+}
+
 // Repo is the durable store of the whitelist document: JSON truth via
 // jsonstore, best-effort Redis mirror.
 type Repo struct {
 	store *jsonstore.Store
 	rdb   *redisx.Client
+	// legacy evicts retired ids on BOTH sides of the funnel — see Load/Save.
+	legacy LegacyArchive
 }
 
 // NewRepo builds the repository. rdb may be nil (no mirror).
-func NewRepo(store *jsonstore.Store, rdb *redisx.Client) *Repo {
-	return &Repo{store: store, rdb: rdb}
+func NewRepo(store *jsonstore.Store, rdb *redisx.Client, opts ...Option) *Repo {
+	return &Repo{store: store, rdb: rdb, legacy: LoadLegacyArchive(resolve(opts).contentDir)}
 }
 
-// Load reads the JSON truth. A missing file is NOT an error — it is the
-// default-empty state, reported via the second return value.
+// Load reads the JSON truth, with retired content already evicted. A missing
+// file is NOT an error — it is the default-empty state, reported via the
+// second return value.
 func (r *Repo) Load() (Doc, bool, error) {
+	d, existed, _, err := r.load()
+	return d, existed, err
+}
+
+// load is Load plus WHAT THE LEGACY GATE DROPPED. Only Service.Get wants the
+// third value — it is the one caller that can durably self-heal the stored
+// document and tell a human about it (see Service.Get).
+func (r *Repo) load() (Doc, bool, []string, error) {
+	d, existed, err := r.loadRaw()
+	if err != nil {
+		return d, existed, nil, err
+	}
+	d, removed := r.legacy.Evict(d)
+	return d, existed, removed, nil
+}
+
+func (r *Repo) loadRaw() (Doc, bool, error) {
 	var d Doc
 	err := r.store.Get(Collection, DocID, &d)
 	if errors.Is(err, jsonstore.ErrNotFound) {
@@ -190,12 +230,34 @@ func (r *Repo) Load() (Doc, bool, error) {
 
 // Save writes the JSON truth atomically, then mirrors into Redis. A mirror
 // failure is logged, never fatal: Redis is rebuildable, the file is the truth.
+//
+// ⭐ The LEGACY GATE runs here as well as in Load, and that is the half that
+// makes a retired id UNSTORABLE rather than merely unserved: an admin PUT/bulk
+// (or a restore from an old ops bundle) that names one is dropped on the way to
+// disk, so it cannot come back the next time the gate happens to be inert.
 func (r *Repo) Save(ctx context.Context, d Doc) error {
+	_, err := r.save(ctx, d)
+	return err
+}
+
+// save is Save returning THE DOCUMENT THAT WAS ACTUALLY STORED.
+//
+// ⚠️ Every mutation must answer with this rather than with its own input: the
+// gate below rewrites the document on its way to disk, so returning the input
+// would make the admin console (and the HTTP response it renders) show ids that
+// are not on disk and will not be served — a whitelist that reads back
+// differently from what it stored is worse than one that refuses the write.
+func (r *Repo) save(ctx context.Context, d Doc) (Doc, error) {
+	d, removed := r.legacy.Evict(d)
+	if len(removed) > 0 {
+		slog.Warn("curation: refused to store whitelist entries whose documents are archived under content/_legacy/",
+			"count", len(removed), "removed", removed)
+	}
 	if err := r.store.Put(Collection, DocID, d); err != nil {
-		return err
+		return d, err
 	}
 	r.mirror(ctx, d)
-	return nil
+	return d, nil
 }
 
 func (r *Repo) mirror(ctx context.Context, d Doc) {
@@ -237,9 +299,12 @@ type Service struct {
 	starter func() Doc
 }
 
-// New builds the service. rdb may be nil (mirror disabled).
-func New(store *jsonstore.Store, rdb *redisx.Client) *Service {
-	return &Service{repo: NewRepo(store, rdb), store: store, now: time.Now, starter: StarterSet}
+// New builds the service. rdb may be nil (mirror disabled). Pass
+// WithContentDir to arm the legacy gate (see legacyevict.go).
+func New(store *jsonstore.Store, rdb *redisx.Client, opts ...Option) *Service {
+	repo := NewRepo(store, rdb, opts...)
+	repo.legacy.LogBootSummary()
+	return &Service{repo: repo, store: store, now: time.Now, starter: StarterSet}
 }
 
 // SetNow overrides the clock seam (tests inject a fixed clock so updatedAt is
@@ -249,19 +314,40 @@ func (s *Service) SetNow(fn func() time.Time) { s.now = fn }
 // Get returns the current whitelist. On a fresh install the file does not
 // exist yet: the empty document is created LAZILY (so operators can see and
 // hand-edit it) and returned — nothing is ever seeded into it.
+//
+// ⭐ IT ALSO SELF-HEALS THE STORED DOCUMENT. A whitelist written before a
+// champion/item/ability was archived keeps pointing at content/_legacy/ — the
+// three ids GH#479 left checked on this box are exactly that. Load already
+// strips them from the ANSWER, but a document that gets re-cleaned on every
+// read is a permanent lie on disk that the next `opstate export` copies to the
+// next machine. So when the gate actually drops something, the cleaned document
+// is written back ONCE and the drop is recorded as an ADMIN AUDIT ENTRY —
+// visible on the console's 稽核 page, the same channel every other whitelist
+// mutation uses, ⛔ not a log line nobody reads (CLAUDE.md「fail-open 沒錯,
+// 靜默才是缺陷」). After that first write the gate finds nothing and says
+// nothing, so this cannot become per-request noise.
 func (s *Service) Get(ctx context.Context) (Doc, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	doc, existed, err := s.repo.Load()
+	doc, existed, evicted, err := s.repo.load()
 	if err != nil {
 		return EmptyDoc(), err
 	}
-	if !existed {
+	if !existed || len(evicted) > 0 {
 		doc.UpdatedAt = s.now().UTC()
 		if err := s.repo.Save(ctx, doc); err != nil {
-			// A read must not fail because the lazy create failed; the empty
-			// document is still the correct answer.
-			slog.Warn("curation: lazy create of the empty whitelist failed", "err", err)
+			// A read must not fail because the lazy create / self-heal failed;
+			// the cleaned document is still the correct answer.
+			slog.Warn("curation: could not persist the whitelist", "evicted", len(evicted), "err", err)
+		} else if len(evicted) > 0 {
+			slog.Warn("curation: dropped whitelist entries archived under content/_legacy/",
+				"count", len(evicted), "removed", evicted)
+			s.Audit("system", "curation.legacy-evict", map[string]any{
+				"removed": evicted,
+				"count":   len(evicted),
+				"why": "these ids' documents live under content/_legacy/ and can no longer load, " +
+					"so keeping them checked only shrank champ-select / the shop / the EX hotkey silently",
+			})
 		}
 	}
 	return doc, nil
@@ -293,10 +379,11 @@ func (s *Service) Replace(ctx context.Context, in Doc) (Doc, error) {
 		Items:     items,
 		Abilities: abilities,
 	}
-	if err := s.repo.Save(ctx, doc); err != nil {
+	stored, err := s.repo.save(ctx, doc)
+	if err != nil {
 		return EmptyDoc(), err
 	}
-	return doc, nil
+	return stored, nil
 }
 
 // Bulk enables and/or disables ids of ONE kind, leaving the other kinds
@@ -347,10 +434,11 @@ func (s *Service) Bulk(ctx context.Context, kind string, enable, disable []strin
 	*target = merged
 	doc.Version = SchemaVersion
 	doc.UpdatedAt = s.now().UTC()
-	if err := s.repo.Save(ctx, doc); err != nil {
+	stored, err := s.repo.save(ctx, doc)
+	if err != nil {
 		return EmptyDoc(), err
 	}
-	return doc, nil
+	return stored, nil
 }
 
 // ApplyStarterSet unions the built-in starter set into the whitelist (never
@@ -369,10 +457,11 @@ func (s *Service) ApplyStarterSet(ctx context.Context) (Doc, error) {
 	doc.Abilities = union(doc.Abilities, starter.Abilities)
 	doc.Version = SchemaVersion
 	doc.UpdatedAt = s.now().UTC()
-	if err := s.repo.Save(ctx, doc); err != nil {
+	stored, err := s.repo.save(ctx, doc)
+	if err != nil {
 		return EmptyDoc(), err
 	}
-	return doc, nil
+	return stored, nil
 }
 
 // ApplyStarterSetIfEmpty is the AUTOMATED door (cmd/seed -starter, K8s

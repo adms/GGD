@@ -3286,10 +3286,10 @@
     ]
   },
   "curation": {
-    "championDigest": "d165b9ca5d21",
-    "itemDigest": "7cc9fbfd9eff",
-    "championCount": 49,
-    "itemCount": 110,
+    "championDigest": "f2cffa9161ae",
+    "itemDigest": "9943a99f7205",
+    "championCount": 46,
+    "itemCount": 101,
     "liveEndpoint": "/api/v1/curation/whitelist"
   },
   "assetManifestDigest": "22ed7dc7fca0",
@@ -3303,5 +3303,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "79509cbb385c"
+  "profileDigest": "8c170f24311c"
 }

@@ -1,11 +1,11 @@
 # 技能 in-game 可施放覆蓋矩陣 — Task #128
 
 > 生成於 `packages/shared/src/sim/castabilitySweep.test.ts`（每次跑測試即重算）。
-> 這是**診斷**：把 64 位英雄每一格 天生技/Q/W/E/R/EX + 普攻在真的 SimWorld 裡按下去，量測有沒有真的產生效果（傷害／投射物／狀態／護盾／補血／補魔／位移／變身），不修任何技能。⛔ **純特效（只有 spawnVfx）不算有效果**，它自成一類 🟡，⛔ 既不算 ✅ 也不併進 ❌ —— 見下方方法說明（GH#374）。
+> 這是**診斷**：把 61 位英雄每一格 天生技/Q/W/E/R/EX + 普攻在真的 SimWorld 裡按下去，量測有沒有真的產生效果（傷害／投射物／狀態／護盾／補血／補魔／位移／變身），不修任何技能。⛔ **純特效（只有 spawnVfx）不算有效果**，它自成一類 🟡，⛔ 既不算 ✅ 也不併進 ❌ —— 見下方方法說明（GH#374）。
 
-> **名單來源**：apps/platform/internal/curation/starter.go（49）＋ 版控內其餘可選英雄（2，扣掉變身態與已下架）＋ data/curation/whitelist.json 額外啟用（13）。
+> **名單來源**：apps/platform/internal/curation/starter.go（49）＋ 版控內其餘可選英雄（2，扣掉變身態與已下架）＋ data/curation/whitelist.json 額外啟用（10）。
 > 名單取自**版控內**的 `starterChampions`（新安裝套用的首發開放名單，Go 端 `TestFirstOpenRoster` 逐一釘死），所以任何 clone／worktree／CI 都掃同一份 49 人；營運白名單 `data/curation/whitelist.json` 是 gitignore 的機器狀態，存在時只**加掃**它額外開放的英雄，且不列入下方釘死的計數。
-> 本機額外加掃（僅營運白名單開放、不在首發名單）：`godie-e007`、`godie-e00k`、`godie-h020`、`godie-h02r`、`godie-h02u`、`godie-hpal`、`godie-n00p`、`godie-n01c`、`godie-nplh`、`godie-o00x`、`godie-u00l`、`godie-u010`、`godie-u01u`、`sela`、`thorne`。
+> 本機額外加掃（僅營運白名單開放、不在首發名單）：`godie-e007`、`godie-h020`、`godie-h02r`、`godie-h02u`、`godie-n00p`、`godie-n01c`、`godie-o00x`、`godie-u00l`、`godie-u010`、`godie-u01u`、`sela`、`thorne`。
 
 ## 判定圖例
 
@@ -20,16 +20,16 @@
 
 ## 總計
 
-- **格數**：64 英雄 × 7 槽 = **448**
-- **✅ PASS：359 / 448**（80.1%）　🟣 PASSIVE：63　🟡 只有特效：0　❌ FAIL：21　— 無此格：5
-- 把「正確的永久被動」算進可接受行為：**422 / 448**（94.2%）如預期運作，真正的缺口是 **21** 格（❌ 21 ＋ 🟡 0），另有 **0** 格 🔵 本次未量測（形態閘）。
+- **格數**：61 英雄 × 7 槽 = **427**
+- **✅ PASS：359 / 427**（84.1%）　🟣 PASSIVE：63　🟡 只有特效：0　❌ FAIL：0　— 無此格：5
+- 把「正確的永久被動」算進可接受行為：**422 / 427**（98.8%）如預期運作，真正的缺口是 **0** 格（❌ 0 ＋ 🟡 0），另有 **0** 格 🔵 本次未量測（形態閘）。
 - **閘 3 在看的那個數字**（只算版控首發名單那 49 人、扣掉「無此格」）：**342 / 342 = 100.00%**（棘輪下限 100.00%）。
-- 英雄生成失敗：**3**（godie-e00k, godie-hpal, godie-nplh）
+- 英雄生成失敗：**0**（無）
 
 ## 近戰 vs 遠程（attackType 維度）
 
-- 名單：**近戰 47**、**遠程 17**。
-- **普攻形態**：遠程英雄中 **17/17** 的普攻確實射出投射物（`projectileSpawn`、事件 `ranged:true`）；近戰英雄中 **44/47** 的普攻是貼身直接傷害（無投射物、`ranged:false`）。這正是遠程與近戰在普攻上的行為差異，兩邊都被本次量到。
+- 名單：**近戰 44**、**遠程 17**。
+- **普攻形態**：遠程英雄中 **17/17** 的普攻確實射出投射物（`projectileSpawn`、事件 `ranged:true`）；近戰英雄中 **44/44** 的普攻是貼身直接傷害（無投射物、`ranged:false`）。這正是遠程與近戰在普攻上的行為差異，兩邊都被本次量到。
 - **技能投射（skillshot castType）**：本名單中 skillshot 技能格 遠程 6 格、近戰 16 格；skillshot 一律用施法方向生成投射物，與施法者是遠程或近戰無關（castType 獨立於 attackType）。
 
 ## PASS 觸發頻道分佈（驗證非橡皮圖章）
@@ -105,14 +105,11 @@
 | 邪眼師 - 飛影 | `godie-uvng` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 聖杯黑泥醬 - 喪標麥可 | `godie-zombiex` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | 龍之子 - 天地志狼 | `godie-e007` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
-| godie-e00k | `godie-e00k` | 近 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 | 黑魔導士 - 莉娜因巴斯 | `godie-h020` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | 種子神奇寶貝 - 妙蛙花 | `godie-h02r` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 看似憂鬱的神獸 - 草泥馬 | `godie-h02u` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
-| godie-hpal | `godie-hpal` | 近 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 | 妖狐藏馬 - 南野秀一 | `godie-n00p` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | 傳說的龍騎士 - 勇者小呆 | `godie-n01c` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
-| godie-nplh | `godie-nplh` | 近 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 | 超級賽亞人 - 悟空 | `godie-o00x` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | 北斗之鼠 - 拳四郎 | `godie-u00l` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 邪眼師 - 飛影 | `godie-u010` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
@@ -122,29 +119,7 @@
 
 ## FAIL 清單（英雄 + 槽 + 原因，交給技能保真／VFX 負責人）
 
-| 英雄 | ID | 槽 | castType | 型 | 原因 |
-| --- | --- | --- | --- | --- | --- |
-| godie-e00k | `godie-e00k` | Q | — | 近 | champion failed to spawn |
-| godie-e00k | `godie-e00k` | W | — | 近 | champion failed to spawn |
-| godie-e00k | `godie-e00k` | E | — | 近 | champion failed to spawn |
-| godie-e00k | `godie-e00k` | R | — | 近 | champion failed to spawn |
-| godie-e00k | `godie-e00k` | EX | — | 近 | champion failed to spawn |
-| godie-e00k | `godie-e00k` | PASSIVE | — | 近 | champion failed to spawn |
-| godie-e00k | `godie-e00k` | basic | — | 近 | champion failed to spawn |
-| godie-hpal | `godie-hpal` | Q | — | 近 | champion failed to spawn |
-| godie-hpal | `godie-hpal` | W | — | 近 | champion failed to spawn |
-| godie-hpal | `godie-hpal` | E | — | 近 | champion failed to spawn |
-| godie-hpal | `godie-hpal` | R | — | 近 | champion failed to spawn |
-| godie-hpal | `godie-hpal` | EX | — | 近 | champion failed to spawn |
-| godie-hpal | `godie-hpal` | PASSIVE | — | 近 | champion failed to spawn |
-| godie-hpal | `godie-hpal` | basic | — | 近 | champion failed to spawn |
-| godie-nplh | `godie-nplh` | Q | — | 近 | champion failed to spawn |
-| godie-nplh | `godie-nplh` | W | — | 近 | champion failed to spawn |
-| godie-nplh | `godie-nplh` | E | — | 近 | champion failed to spawn |
-| godie-nplh | `godie-nplh` | R | — | 近 | champion failed to spawn |
-| godie-nplh | `godie-nplh` | EX | — | 近 | champion failed to spawn |
-| godie-nplh | `godie-nplh` | PASSIVE | — | 近 | champion failed to spawn |
-| godie-nplh | `godie-nplh` | basic | — | 近 | champion failed to spawn |
+（無 — 全部 ✅/🟣）
 
 ## 🟡 只有特效清單（放得出去、但場上一個數字都沒動）
 
@@ -244,5 +219,5 @@
 - 「有效果」= 下列任一頻道被觸發且無例外：`damage`／`heal`／`manaRestore`／`projectileSpawn`／`knockdown`／`championForm`／`resourceSwap` 事件，或全場護盾／狀態／buff 來源／投射物／【嘲弄】數量上升，或**金幣總額上升**（GH#407），或施法者位移（dash）。⛔ 金幣走的是**狀態差**不是 `goldGrant` 事件 —— 那個事件在付了 0 元時照樣發，收它會造出新的假 ✅。⛔ **`vfxSpawn` 不在名單上**（2026-08-18 / GH#374）：它唯一保證的是畫面上有東西，而一支只有畫面的技能改不動任何一個數字；在此之前它算 ✅，於是 GH#373 那 5 支「整棵樹只有 spawnVfx」的主動天生技在全綠的測試底下上架。回血／回魔前先把目標降到半血半魔，確保有回復空間；施法者法力設為剛好夠付，使自我回魔也量得到。被動回血（RegenSystem）不發 `heal` 事件，故不會誤判。
 - 每次施放後步進 **26 tick**（涵蓋 0.8s=24 tick 以內的施法前搖）讓有前搖的技能結算；普攻給 **40 tick** 讓第一次揮擊落地。
 - ⚠️ **已知量測盲點**：全樹最長前搖是 `godie-u00n.r`／`godie-u00o.r` 的 **0.9s = 27 tick**，比本觀測窗多 1 tick，所以下方唯一那格 ❌ 很可能是「觀測太早收手」而非技能真的沒效果。改 WINDOW 會改變量測定義，歸 #128／#198 處理，本次不動。
-- **完整跑遍全 64 英雄 × 7 槽 = 448 格，無抽樣**。
+- **完整跑遍全 61 英雄 × 7 槽 = 427 格，無抽樣**。
 - **會變紅的七道閘**（都只看版控名單那 49 人，營運額外開放的英雄不影響）：(1) 掃描必須跑完 49×7；(2) 49 位英雄全部要能生成；(3) 可用格數（✅+🟣）佔比不得低於 **100.00%**（棘輪下限，比例不是絕對值 —— 名單長度會變）；(4) **逐格釘死的缺口名單**（`KNOWN_GAPS`）：冒出名單外的新缺口會紅、名單上的缺口修好了沒劃掉會紅、同一格從 ❌ 變 🟡（或反過來）也會紅 —— 替一支空技能補個特效不是修好它；(5) **形態閘名單**（`FORM_GATED_CELLS`，三個方向，GH#412）；(6) **seed 依賴名單**（`SEED_DEPENDENT_CELLS`，三個方向，GH#407）；(7) **跨 seed 量測儀器本身要活著** —— 一格都沒被跨 seed 量過就是偵測器壞了，那會讓 (6) 結構上永遠綠。個別既知 no-op 不會使測試變紅（它們是要回報的發現，列在上方兩張表），但既有可用的格子被改壞會。

@@ -739,7 +739,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 <!-- BEGIN GENERATED:roster -->
 #### 開放名單 OPEN roster（46 名）— 角色 + 六個技能 slot
 
-> 選角畫面看得到、bot 也會抽到的就是這些。這是**營運策展狀態**，不是程式常數：真相在 `data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` 提供、game-server 在建房時執行。來源：`data/curation/whitelist.json`（updatedAt `2026-07-24T11:14:58.268286Z`）
+> 選角畫面看得到、bot 也會抽到的就是這些。這是**營運策展狀態**，不是程式常數：真相在 `data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` 提供、game-server 在建房時執行。來源：`data/curation/whitelist.json`（updatedAt `2026-08-19T20:57:12.386323Z`）
 >
 > 每名英雄一格：**`id` 全名**（稱號 · 職業 · 攻擊）— 一句話說明，底下**六條**是**天生技（等級 1 就有）＋ Q/W/E/R/EX** 的**技能名稱＋一行效果**。天生技那條會標 `天生·被動`（光環／機率觸發／回復類）或 `天生·主動`（有冷卻、原本掛在 D 鍵的）。效果截斷到 34 字、說明截斷到 40 字，結尾的 `…` 是產生器加的。完整逐字內容在 [`docs/reference/abilities.md`](./docs/reference/abilities.md) 或 <http://localhost:39527/#codex>。
 

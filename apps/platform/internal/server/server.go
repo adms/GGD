@@ -309,7 +309,12 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 	rooms.SetOwnership(walletSvc)
 
 	adminSvc := admin.New(accounts, walletSvc, rank, friends, store, rdb, cfg.AdminBootstrapUsername)
-	curationSvc := curation.New(store, rdb)
+	// CONTENT_DIR arms the whitelist's LEGACY GATE: an id whose document has
+	// been archived under content/_legacy/ can neither be served nor stored,
+	// and a stored one is self-healed + audited on the first read
+	// (curation/legacyevict.go, GH#479/#481). Read-only; it never writes under
+	// content/.
+	curationSvc := curation.New(store, rdb, curation.WithContentDir(cfg.ContentDir))
 	// #189 durable content overlay: the data/ store that lets an admin content
 	// edit survive a git pull on the host (content/ there is a :ro mount).
 	//
