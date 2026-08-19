@@ -187,7 +187,7 @@ describe("#248 attr-02 — the three layers are separable", () => {
 
   it("doubling a coefficient doubles ONLY the attribute term", () => {
     cover("attr-248-layers-separable");
-    const c = champs.find((x) => x.id === "godie-hpal")!;
+    const c = champs.find((x) => x.id === "godie-hart")!;
     const stat = Stat.MaxHealth;
     const { base, growth } = raw(c, stat);
     const key = ATTR_STAT_SOURCE[stat]!.key;
@@ -204,7 +204,7 @@ describe("#248 attr-02 — the three layers are separable", () => {
 
   it("a doc with NO attributes block reduces to the pre-#248 law exactly", () => {
     cover("attr-248-layers-separable");
-    const c = champs.find((x) => x.id === "godie-hpal")!;
+    const c = champs.find((x) => x.id === "godie-hart")!;
     const { attributes: _dropped, ...without } = c;
     for (const stat of ALL_STATS) {
       const { base, growth } = raw(c, stat);

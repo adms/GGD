@@ -236,8 +236,13 @@ describe("operator whitelist vs bindings (ability-vfx-bindings)", () => {
 
       const bound = new Set(rosterBindings().map((b) => b.abilityId));
       const PLAYER_SLOTS = ["q", "w", "e", "r", "ex"];
+      // ⭐ GH#479（2026-08-20）：**已下架**的英雄即使還勾在 operator 白名單上也進不了
+      // 選人畫面（下架刻意住在白名單之外，手動與隨機兩條路都擋），而他們的技能檔已隨
+      // 退場批次進了 `content/_legacy/` ⇒ 對他們斷言「有出貨的 vfx」是在量一個
+      // 玩家永遠看不到的東西。⛔ 清單從 roster.json 推導，⛔ 不手寫 id。
+      const retiredNow = new Set(retiredChampionIds());
 
-      for (const champ of champions) {
+      for (const champ of champions.filter((c) => !retiredNow.has(c))) {
         const enabled = abilities.filter((a) => a.startsWith(`${champ}.`));
         expect(enabled.length, `${champ} is whitelisted but no ability of it is enabled`).toBeGreaterThan(0);
 

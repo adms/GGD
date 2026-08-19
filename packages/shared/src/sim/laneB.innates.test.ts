@@ -88,7 +88,10 @@ const BAKKA_TWIN = "godie-n01c" as ChampionId;
  * 天生技 is a `vision` grant, which touches no stat, no status and no collision
  * exemption — so it can never contribute to any number measured below.
  */
-const DUMMY = "godie-nplh" as ChampionId;
+// ⭐ 2026-08-20（GH#479）：原本是麻倉葉 godie-nplh，他隨退場批次進了 `_legacy`。
+// 換成 21-00 灼眼 —— 同樣是一支只給 `vision` 的天生技（無 modifiers／hooks／marks），
+// 所以這具身體照樣不會污染量測。
+const DUMMY = "godie-e008" as ChampionId;
 
 /** Docs BY PATH, so the suite is green both before and after `content:build`. */
 function docs(collection: string): Record<string, unknown>[] {

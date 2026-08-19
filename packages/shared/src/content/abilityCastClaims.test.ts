@@ -31,15 +31,15 @@ const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../conte
  * 已知缺口，一列一個。⛔ 不是「這樣寫沒關係」的清單，是「今天壞的、修它不歸這一輪」
  * 的帳（第零守則⑧）。修好必須刪列，否則 stale 斷言會紅（名單只能變短）。
  */
-const KNOWN: readonly { key: string; why: string }[] = [
-  {
-    key: "godie-nplh.e|summon-tag-no-body",
-    why:
-      "16-04 劍之精靈 —— #404 的同型第二例，來自 w3x-import 那一側。描述寫「召喚阿彌陀丸⋯" +
-      "增加10點全能力」，展開的卻是 tpl-single-strike（一發物理傷害）。走召喚還是自我強化" +
-      "要 owner 決定 ⇒ 回報給他排序，⛔ 不當場修。",
-  },
-];
+/**
+ * ⭐ 2026-08-20（GH#479）**名單清空了**，而清空它的不是「修好了」，是
+ * `godie-nplh`（通靈人 - 麻倉葉，2026-08-16 下架）連同技能檔搬進了
+ * `content/_legacy/` —— 唯一一列 `godie-nplh.e|summon-tag-no-body`
+ * （16-04 劍之精靈：標籤寫[召喚]、展開的卻是 tpl-single-strike）因此不再出貨。
+ * ⚠️ 那個缺陷**沒有被修好**，只是不再有玩家碰得到；哪天麻倉葉重新上架，
+ * 下面的掃描會立刻把它報回來（⛔ 到時候不要重新加進這張表，去修它）。
+ */
+const KNOWN: readonly { key: string; why: string }[] = [];
 
 /** 效果樹裡所有節點（含巢狀 onHit / branches / onEnd …）。 */
 function* walk(n: unknown): Generator<Record<string, unknown>> {
@@ -112,6 +112,14 @@ describe("GH#405 / GH#404 — 技能不可以要一個沒人讀的輸入，或�
     expect(defs.length).toBeGreaterThan(Champions.ids().length * 4);
     expect(defs.filter((d) => [...walk(d.effects ?? [])].some((n) => n.kind === "randomArea")).length)
       .toBeGreaterThan(0);
-    expect(defs.filter((d) => promisesSummon(d.description)).length).toBeGreaterThan(0);
+    // ⭐ 2026-08-20（GH#479）：這一行本來要求「出貨樹裡至少有一支 [召喚]」。
+    // 麻倉葉 godie-nplh 搬進 `_legacy` 之後那個數字**合法地**變成 0（僅存的五支
+    // [召喚] 全在封存區），於是它擋的東西從「掃描器壞了」變成「內容剛好沒有」。
+    // ⛔ 反貧化不可以就這樣刪掉 —— 改成驗**謂詞本身**還活著：它認得 [召喚]／[招喚]，
+    // 而且⛔ 只讀第一行（內文的 `[召喚]` 是強調不是機制承諾）。
+    // 哪天有人做了一支 [召喚] 技能，上面那條真掃描立刻接手。
+    expect(promisesSummon("[召喚][AP加成] 叫出一具身體")).toBe(true);
+    expect(promisesSummon("[招喚] 舊字")).toBe(true);
+    expect(promisesSummon("[物理] 一發傷害\n然後 [召喚] 一具身體")).toBe(false);
   });
 });

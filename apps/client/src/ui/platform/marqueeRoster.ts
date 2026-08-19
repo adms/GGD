@@ -152,7 +152,9 @@ export const SHARED_PORTRAIT_GROUPS: readonly (readonly string[])[] = [
   ["godie-e001", "godie-e00n"],
   ["godie-e002", "godie-e00l"],
   ["godie-e007", "godie-ewar"],
-  ["godie-e00k", "godie-e00z"],
+  // ⭐ GH#479（2026-08-20）—— 同一個形狀又發生一次：19 安云那一組
+  //    `["godie-e00k","godie-e00z"]` 隨退場批次整對進了 `content/_legacy/`，
+  //    磁碟上因此少一組。⛔ 不要改測試，刪掉那一列（這就是刪掉的樣子）。
   ["godie-e00s", "godie-e010"],
   ["godie-e00w", "godie-e00x"],
   ["godie-h01n", "godie-h01o"],

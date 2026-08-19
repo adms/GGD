@@ -150,6 +150,27 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "this exemption must be deleted, which is what the stale-exemption guard below enforces.",
     owner: "#261",
   },
+  // ⭐ GH#479（2026-08-20）—— 三位**已下架**的英雄隨退場批次進了 `content/_legacy/`，
+  // 而**這台機器**的 operator 白名單還留著他們的勾。這不是內容壞了，是後台狀態沒跟上：
+  //   · 他們早已在 `content/config/roster.json` 的 `retiredChampions` 裡 ⇒ 手動選與隨機抽
+  //     兩條路本來就都被擋（下架刻意住在白名單**之外**，見 championRetirement.ts 檔頭），
+  //     所以玩家看到的名單一位都沒有變。
+  //   · 白名單是 `.gitignore` 的 operator 狀態，⛔ 這條測試不可以去改它 —— 正確的動作是
+  //     owner 在後台「英雄上下架」那一頁把這三格取消勾選，這三筆豁免就會被下面的
+  //     stale-exemption 守衛逼著刪掉。
+  ...Object.fromEntries(
+    ["godie-e00k", "godie-hpal", "godie-nplh"].map((id) => [
+      `champion.${id}.exists`,
+      {
+        reason:
+          `${id} 已在 content/config/roster.json 的 retiredChampions 上（owner 2026-08-16 下架），` +
+          "2026-08-20 隨 GH#479 把「不可選英雄」整批搬進 content/_legacy/ 時連同技能檔一起歸檔。" +
+          "本機的 data/curation/whitelist.json 還勾著他 —— 那是 operator 狀態，" +
+          "後台取消勾選即可，⛔ 不是內容缺檔。下架名單已經把手動與隨機兩條路都擋住了。",
+        owner: "#479",
+      },
+    ]),
+  ),
   // ⚠️ RETIRED 2026-08-17 — "shop.inventory-fill" 被刪掉，⛔ 不是失效了沒人管。
   // owner:「寶具(傳說武器) 可以上架直接販售了」⇒ 49 把寶具現在真的在架上，
   // 買得到的武器數 0 → 49，遠超過 6 格背包，所以那條 finding 不再發生。

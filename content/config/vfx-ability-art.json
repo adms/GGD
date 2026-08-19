@@ -4753,6 +4753,10 @@
           255
         ],
         "paramSource": "model"
+      },
+      "owner": {
+        "family": "lightColumn",
+        "why": "owner 2026-08-19：「立起來的光柱也有其他技能會用到 例如飛鼠天譴」。65-04 天譴＝立起來的光柱，⛔ 不是貼地衝擊環。第〇·六守則：新版說明(第1層) > w3a 原始設定(第5層)。被取代的原作值原封留在隔壁的 family 格（shockwaveRing / thunderclapcaster / A04C），另存 docs/legacy/_w3x-fidelity-superseded.md。青色 tint [0,255,255] 沿用證據，⛔ 沒有另外指定。"
       }
     },
     "godie-udea.w": {

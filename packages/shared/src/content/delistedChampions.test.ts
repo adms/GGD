@@ -89,20 +89,28 @@ describe("下架名單 —— godie-e00u / godie-u01f stay off every shipped ros
     }
   });
 
-  it("下架 ≠ 刪除: every delisted doc is STILL on disk and STILL in the index", () => {
+  /**
+   * ⭐ 2026-08-20（GH#479）: 「還在 content/champions/」放寬成「**還在磁碟上的某一棵樹**」。
+   * owner 這一天把退場英雄整批搬進 `content/_legacy/`（「不要再被掃到」），而 `_legacy`
+   * 正是「下架 ≠ 刪除」的**實作**：文件一個位元組都沒動，只是離開 `COLLECTION_NAMES`。
+   * ⛔ 這不是把界線放寬 —— 下面第二條把它收回來：歸檔的 id **必須**同時離開索引，
+   * 否則就是「bundle 有、來源不在出貨樹」那個 2026-08-02 的事故形狀。
+   */
+  it("下架 ≠ 刪除: every delisted doc is STILL on disk (content/ 或 _legacy/)", () => {
     cover("champion-delist-guard");
     const idx = JSON.parse(readFileSync(join(CONTENT, "champions", "_index.json"), "utf8")) as {
       entries: { id: string }[];
     };
     const indexed = new Set(idx.entries.map((e) => e.id));
     for (const id of DELISTED_CHAMPION_IDS) {
-      const path = join(CONTENT, "champions", `${id}.json`);
+      const live = existsSync(join(CONTENT, "champions", `${id}.json`));
+      const archived = existsSync(join(CONTENT, "_legacy", "champions", `${id}.json`));
       expect(
-        existsSync(path),
+        live || archived,
         `${id}.json was DELETED. 下架 is a curation state, not a deletion — the owner ` +
           "has reversed curation calls before, and a deleted doc costs a re-import to recover.",
       ).toBe(true);
-      expect(indexed, `${id} fell out of champions/_index.json`).toContain(id);
+      expect(indexed.has(id), `${id} 在索引裡的狀態要跟它住的那棵樹一致`).toBe(live);
     }
   });
 

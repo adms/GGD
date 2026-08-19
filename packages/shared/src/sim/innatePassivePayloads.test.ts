@@ -179,7 +179,16 @@ function docs(collection: string): Record<string, unknown>[] {
  * note in the header). ⛔ 逐位點名, ⛔ 不是整個封存區 —— 其餘 38 位沒有守衛在等
  * 他們, 全載進來只會讓這個 store 跟營運母體不一樣。
  */
-const ARCHIVED_SUBJECTS = ["godie-n01b", "godie-nman", "godie-naka"] as const;
+// ⭐ 2026-08-20（GH#479）多兩位：麻倉葉 godie-nplh（16-00 通靈能力）與黑化張飛
+// godie-u01f（同一支天生技的第二個持有者）隨退場批次進了 `_legacy`。受測的仍然是
+// 出貨當時那一份文件，斷言一個字都沒改。
+const ARCHIVED_SUBJECTS = [
+  "godie-n01b",
+  "godie-nman",
+  "godie-naka",
+  "godie-nplh",
+  "godie-u01f",
+] as const;
 const ARCHIVE_DIR = join(CONTENT_DIR, "_legacy");
 
 /** Put one archived champion + its ability docs into `store`, never shadowing live. */

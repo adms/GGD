@@ -81,12 +81,15 @@ const RETIRED = {
 /**
  * 對照組用的中立身體。
  *
- * 麻倉葉的天生技只給 `vision.trueSightRadius` —— 沒有 `modifiers`、沒有 `hooks`、
+ * ⭐ 2026-08-20（GH#479）：本來是麻倉葉 `godie-nplh`，他隨退場批次進了 `_legacy`。
+ * 換成同樣只給 `vision.trueSightRadius` 的 21-00 灼眼 `godie-e008` —— 對照組要的是
+ * 「乾淨的身體」，⛔ 不是某一位特定英雄。
+ * 這支天生技只給 `vision.trueSightRadius` —— 沒有 `modifiers`、沒有 `hooks`、
  * 沒有 `marks`,所以它不可能貢獻底下量到的任何一個數字。
  * ⚠️ 也因為它沒有 payload,它**不屬於** `LANE_A`(那個 map 有一條「不是空殼」的
  * 守衛)—— 「受測的天生技」和「乾淨的對照身體」是兩件事,不要混在同一個清單。
  */
-const CONTROL = "godie-nplh" as ChampionId;
+const CONTROL = "godie-e008" as ChampionId;
 
 /**
  * 出貨文件上「暴走」給的某一格 modifier —— 從 registry 讀,不抄字面值。

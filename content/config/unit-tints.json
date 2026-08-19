@@ -46,17 +46,6 @@
       "source": "w3u-static",
       "evidence": "war3map.w3u custom entry U034 (base Ucrl, model HeroBigGon.mdl): uclr=uclg=uclb=100."
     },
-    "U01F": {
-      "championId": "godie-u01f",
-      "name": "萬夫莫敵",
-      "tint": [
-        0.3922,
-        0.2745,
-        0.2745
-      ],
-      "source": "w3u-static",
-      "evidence": "war3map.w3u custom entry U01F (base Utic, model units\\orc\\Grunt\\Grunt.mdl): uclr=100 uclg=70 uclb=70 - dark red. Champion 「萬夫莫敵 - 黑化張飛」; blizzard-overlay unit."
-    },
     "Umal": {
       "championId": "godie-umal",
       "name": "北斗神拳掌門人",

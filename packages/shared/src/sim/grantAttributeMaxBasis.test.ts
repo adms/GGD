@@ -118,7 +118,9 @@ const USHIO = "godie-hpb1" as ChampionId;
 /** 四魂之玉 —— 「力敏智+30」, the equipment half of the base/total split. */
 const SHIKON = "godie-i00z" as ItemId;
 /** A neutral body to kill. 麻倉葉's 天生技 is a `vision` grant: no stat, no CC. */
-const DUMMY = "godie-nplh" as ChampionId;
+// ⭐ 2026-08-20（GH#479）：原本是麻倉葉 godie-nplh，他隨退場批次進了 `_legacy`。
+// 21-00 灼眼的天生技同樣只給 `vision`，不碰任何一格屬性。
+const DUMMY = "godie-e008" as ChampionId;
 /** The doc's own hidden ceiling —— war3map.j:14163 `GetHeroStatBJ(AGI) < 120`. */
 const CAP = 120;
 

@@ -3,15 +3,15 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_01e23b92c319",
+    "contentVersion": "cv_fb420c6403f0",
     "collections": {
       "champions": {
-        "hash": "e19c20a4f4e7",
-        "count": 78
+        "hash": "d1f1852b3667",
+        "count": 71
       },
       "abilities": {
-        "hash": "5d504d7e515f",
-        "count": 461
+        "hash": "9d86856a9d40",
+        "count": 420
       },
       "items": {
         "hash": "c56630639f8b",
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "daf92be477a7",
+        "hash": "3cf56dfdc9cb",
         "count": 65
       },
       "models": {
@@ -50,8 +50,8 @@
         "count": 124
       },
       "vfx": {
-        "hash": "e0c0fe267f0f",
-        "count": 634
+        "hash": "4084d91f3871",
+        "count": 637
       },
       "skins": {
         "hash": "3d1095f3da83",
@@ -89,7 +89,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "a4e2d982",
+    "fingerprint": "317be1b7",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -589,6 +589,14 @@
         "via",
         "w3aId"
       ],
+      "config.vfx-ability-art@1.bindings.owner": [
+        "anchor",
+        "family",
+        "flyHeight",
+        "scale",
+        "tint",
+        "why"
+      ],
       "config.vfx-ability-art@1.bindings.promoted": [
         "extra",
         "family",
@@ -834,7 +842,7 @@
         "key": "hook.on-ability-hit@1",
         "plan": "§2.1.1（配合 condition.target-status@1）",
         "state": "supported",
-        "evidence": "content/schema/effect.ts 的 zHookEvent"
+        "evidence": "content/schema/effects/_hook.ts 的 zHookEvent"
       },
       {
         "key": "effect.modify-cooldown@1",
@@ -848,7 +856,7 @@
         "state": "partial",
         "caveat": "計畫 §160 的最低契約有五項，`devour` 拿到三項：① **typed threshold** ✅ `thresholdPctOfMax` 是逐階陣列（3/5/7/9% 就是四格）；② **hero-only** ✅ `victim: \"champion\" | \"any\"` 是欄位；③ **kill credit** ✅ 它不寫 `hp = 0`，而是推一發 `type:\"true\"` 進 `world.damageQueue`，所以擊殺賞金 / `onKill` / 掉金幣 / 擊殺語音 / MVP 統計全部走出貨的那一條路。⛔ 缺的兩項，寫技能的人一定會撞到：④ **回復 basis 不是欄位** —— 固定讀施法瞬間的 `hp.hp`（cast-commit 快照），而計畫 §16.13 要問的「讀 cast commit 前還是實際 hpLost」今天只有一個答案且寫死；`healPct` 只是**倍率**，不是 basis。⑤ **invulnerable interaction 沒有欄位** —— 因為走傷害佇列，`refusesDamage` 會讓無敵目標**靜默吞不掉**（既沒有 `pierceInvulnerable`，也沒有「被擋下了」的回饋）。⚠️ 另外它是**吞噬風味**的處決不是中性 primitive：`healPct` 省略 = 1，要純處決得明寫 `healPct: 0`。",
         "evidence": "packages/shared/src/sim/effects/devour.ts + devour.test.ts（護盾那條驗過 `throughShields`：致死量含當下吃得到的護盾，否則「即死」會被護盾靜默擋掉）",
-        "nearestExisting": "`devour`（`sim/effects/devour.ts` + `content/schema/effect.ts` 的 `devour` 分支）—— 它**就是**這個 capability 的實作，不是「相近的東西」。59-01 吞噬走的就是它。"
+        "nearestExisting": "`devour`（`sim/effects/devour.ts` + `content/schema/effects/devour.ts`）—— 它**就是**這個 capability 的實作，不是「相近的東西」。59-01 吞噬走的就是它。"
       },
       {
         "key": "effect.weighted-branch@1",
@@ -904,7 +912,7 @@
         "plan": "§2.1.1.2（雷天大壯「施放技能後的下一次普攻」）· §12 G4",
         "state": "partial",
         "caveat": "⭐ **執行面已經落地**（2026-08-10 Lane 3 / S6，這一句前一版寫的是「只有欄位，引擎還沒讀」而那已經不成立 —— 第三守則）。`sim/effects/hooks.ts` 的額度閘坐在**內部冷卻閘與機率骰之前**（與 `victim` / `damageSource` 同一族的 rng-FREE 過濾），所以一條額度用完的 hook **不燒 ICD、不動 seed**。扣帳走 `ModifierSource.hookFireCount` / `hookFireCountByTarget`（依 `hooks[hi]` 位置索引）。⚠️ 仍然是 `partial`，剩下的限制只有一個：`consumeOn` 只有 `\"fire\"`（見下）。⛔ **不可以**改用 `internalCooldown` 近似成「每 N 秒一次」：攻速快的英雄會**多觸發**、慢的會**漏觸發**，而兩種錯法在畫面上都看不出來（只是偶爾多打或少打一下）—— 那是**時間**界，這一族要的是**次數**界。⚠️ `consumeOn` 今天刻意只有 `\"fire\"` 一個值：`\"hit\"`（下游真的打到人才算）需要把扣帳搬到傷害落地那條路，那是第二條接線，⛔ 不先開一個接不到的選項。",
-        "evidence": "packages/shared/src/content/schema/effect.ts（zHookDefBase）+ packages/shared/src/sim/effects/hooks.ts（額度閘 + consumeTrigger + detachSource）+ packages/shared/src/sim/effects/lane3Kinds.test.ts"
+        "evidence": "packages/shared/src/content/schema/effects/_hook.ts（zHookDefBase）+ packages/shared/src/sim/effects/hooks.ts（額度閘 + consumeTrigger + detachSource）+ packages/shared/src/sim/effects/lane3Kinds.test.ts"
       },
       {
         "key": "hook.on-reflect-success@1",
@@ -995,7 +1003,7 @@
         "plan": "計畫未點名（Lane 3 / G12：20-002 連續七次斬擊 · 52-002 連續 100 下）",
         "state": "partial",
         "caveat": "✅ 機制已出貨並接線（`SimWorld.step()` 的 7e′，排在 `combatResolveSystem` 之前，所以這一 tick 落下的一刀在**同一個 tick** 被減傷、被護盾吃、被記分、被結算）。⭐ 它**完全不碰 rng**（沒有落點要抽），所以一次施放推進亂數流 0 步 —— ⛔ 不必像 `scheduler.random-area@1` 那樣去算 draw 預算。排程是**絕對 tick**。⛔ 四個邊界，寫技能的人一定會撞到：① **發數有硬上界**（`sim/effects/kindLimits.ts::DELAYED_MAX_COUNT`，今天是 32）——52-002 的「連續 100 下」**寫不到 100**，schema 在載入時就拒絕，⛔ 不要靠疊兩發 `delayed` 去湊，那會變成兩串各自獨立的排程（`finalEffects` 也會跑兩次）；② **間隔被夾成至少 1 tick** —— 0.001 秒與一個 tick 在 30Hz 下是同一件事，所以「瞬間 32 連擊」拿不到，那是刻意的（整波塞進同一 tick 正是這個 kind 要修的症狀）；③ `finalEffects` 是**追加**不是取代（省略 = 最後一發與其餘完全相同，⛔ 不是「最後一發不跑」）；④ 三個會讓整串**提前停掉**的情境是欄位或規則，不是 bug：目標死亡（`dropDeadTargets`，預設跳過）、施法者死亡（`stopOnCasterDeath`，**預設繼續**）、以及該分區的決鬥已經結束（`settledZones`，⛔ 不可調 —— 回合結束後還在扣血是玩家看得見的缺陷）。⚠️ payload 在**施法那一刻烘焙**（同 `randomArea.effects` / `leap.onLand`），所以第七刀用的是施法時的 `comboBonus`，不是落地當下的。",
-        "evidence": "packages/shared/src/sim/effects/delayed.ts（`delayedEffect` + `delayedSystem`）+ packages/shared/src/content/schema/effect.ts 的 `delayed` 分支 + packages/shared/src/sim/effects/lane3Kinds.test.ts（「名單在施放那一刻凍住，而且分散在不同的 tick 上落下」）",
+        "evidence": "packages/shared/src/sim/effects/delayed.ts（`delayedEffect` + `delayedSystem`）+ packages/shared/src/content/schema/effects/delayed.ts + packages/shared/src/sim/effects/lane3Kinds.test.ts（「名單在施放那一刻凍住，而且分散在不同的 tick 上落下」）",
         "nearestExisting": "`randomArea`（同樣是排在未來 tick 的一串）—— ⛔ 但它到期時用**圓心重解**目標，所以目標走開就打空；`delayed` 到期時用**施放那一刻凍住的名單**。兩者長得像，混用會安靜地做錯（兩支檔頭都寫了這一句）。`targetMode:\"reresolve\"` 就是把這一格切回 `randomArea` 的語意，那是設計偏好不是缺陷。"
       },
       {
@@ -1003,7 +1011,7 @@
         "plan": "計畫未點名（Lane 3 / S5：80-04 赤兔咆哮「攻擊時有 20% 機率使出弒鬼神」）",
         "state": "partial",
         "caveat": "✅ 代放走的是**目標技能自己的 payload**，所以改 80-02 就等於改 80-04 觸發的那一發。`payCosts`（`none` 預設 / `mana` / `manaAndCooldown`）決定要不要付代價，後兩者走 `castAbility` 的**同一排閘**（魔力／沉默／暈眩／擊倒／暴走／學過沒有／已在吟唱），⛔ 不是在這裡重寫一次那些 if。⛔ 四個邊界，寫技能的人一定會撞到：① **鏈深上界**（`sim/effects/kindLimits.ts::PROXY_MAX_CHAIN_DEPTH`，今天是 3），而 `maxDepth` **省略時是 0** —— 被代放的技能自己的代放直接被擋，那是終止性不是 bug；② `abilityId` 是**軟參照**（代放一支還沒上架的技能不會讓內容載入失敗），代價是**打錯的 id 不會在載入時被擋**，它只是永遠什麼都不發生 —— ⛔ 不要假裝它會紅；③ 三個預設值是**刻意**的，改之前先想一遍：不付冷卻（`payCosts:\"none\"`）、不看那一格的冷卻（`respectCooldown` 省略 = 冷卻中照樣代放）、要求已學會（`requireLearned` 省略 = 沒點那一招時什麼都不發生）。⚠️ 一個每次普攻都可能觸發的 proc 若改成 `manaAndCooldown`，那支大招就會**自己把自己鎖住**，而畫面上只看得到「W 一直是灰的」；④ `slot` 與 `abilityId` **恰好填一個**（superRefine 擋，不是由求值端替作者挑）；代放的主詞永遠是**施法者自己**，⛔ 不會去掃 registry 找「誰有這支」。",
-        "evidence": "packages/shared/src/sim/effects/proxyCast.ts（雙載體深度：`EffectContext.proxyDepth` ＋呼叫堆疊上的 `proxyStackDepth`，閘門讀兩者最大值，所以混著走的鏈也停得下來）+ packages/shared/src/content/schema/effect.ts 的 `proxyCast` 分支 + packages/shared/src/sim/effects/lane3Kinds.test.ts（「代放的是那一支技能自己的 payload，而且鏈一定會停」）",
+        "evidence": "packages/shared/src/sim/effects/proxyCast.ts（雙載體深度：`EffectContext.proxyDepth` ＋呼叫堆疊上的 `proxyStackDepth`，閘門讀兩者最大值，所以混著走的鏈也停得下來）+ packages/shared/src/content/schema/effects/proxyCast.ts + packages/shared/src/sim/effects/lane3Kinds.test.ts（「代放的是那一支技能自己的 payload，而且鏈一定會停」）",
         "nearestExisting": "⛔ **不是** `content/templates/expand.ts` 的 `\"proxy-cast\"` 模板家族 —— 同一個字已經指過兩件事（那個家族自己的檔頭寫著「這裡不召喚任何東西」，展開結果只有 `damage` ＋選配 `applyStatus`）。在此之前這一族只能**手抄一份 payload**：80-04 帶著自己的 `spawnProjectile` + damage 陣列，而 80-02 弒鬼神本人是另一份 —— 兩份會各自腐爛，而畫面上看不出是哪一份在跑。"
       },
       {
@@ -1074,8 +1082,8 @@
   "contentVocabulary": {
     "note": "出貨內容**實際用了**哪些值。⚠️ 與 runtimeCapabilities 不同：那一份說引擎做得到什麼，這一份說內容裡有哪些合法的 id。⛔ 填一個不在這裡的 vfxKey，技能照放但畫面上什麼都不會出現。",
     "ability": {
-      "count": 461,
-      "fromTemplate": 104,
+      "count": 420,
+      "fromTemplate": 95,
       "templates": [
         {
           "id": "tpl-barrier-domain",
@@ -2332,7 +2340,7 @@
       "effectKindsSource": "runtimeCapabilities.effectKinds（⛔ 不在這裡重複一份）"
     },
     "vfx": {
-      "docCount": 634,
+      "docCount": 637,
       "keys": [
         "fx.barkskin",
         "fx.bramble-burst",
@@ -2359,7 +2367,6 @@
         "fx.prim.blood.pulse-lg",
         "fx.prim.blood.pulse-sm",
         "fx.prim.blood.slash",
-        "fx.prim.earth.beam",
         "fx.prim.earth.nova-lg",
         "fx.prim.earth.pulse-sm",
         "fx.prim.earth.shockwave",
@@ -2402,7 +2409,6 @@
         "fx.prim.lightning.dash",
         "fx.prim.lightning.explosion-lg",
         "fx.prim.lightning.nova",
-        "fx.prim.lightning.nova-lg",
         "fx.prim.lightning.pulse",
         "fx.prim.lightning.pulse-lg",
         "fx.prim.lightning.pulse-sm",
@@ -2424,7 +2430,6 @@
         "fx.prim.physical.beam",
         "fx.prim.physical.explosion-lg",
         "fx.prim.physical.nova",
-        "fx.prim.physical.nova-lg",
         "fx.prim.physical.pulse",
         "fx.prim.physical.pulse-lg",
         "fx.prim.physical.pulse-sm",
@@ -2448,7 +2453,6 @@
         "fx.prim.void.pulse-sm",
         "fx.prim.void.shockwave",
         "fx.prim.void.slash",
-        "fx.prim.void.summon",
         "fx.prim.void.swarm",
         "fx.prim.void.swarm-lg",
         "fx.prim.wind.beam",
@@ -2519,7 +2523,7 @@
         "wc3.trollwoodworkswhat1",
         "wc3.waygatewhat1"
       ],
-      "boundAbilities": 423,
+      "boundAbilities": 384,
       "danglingKeys": []
     },
     "item": {
@@ -2661,12 +2665,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "a4e2d982",
+    "engineFingerprint": "317be1b7",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 a4e2d982 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 317be1b7 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -3260,5 +3264,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "d0e89933ec44"
+  "profileDigest": "15c7fda2e579"
 }

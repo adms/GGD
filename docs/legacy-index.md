@@ -23,19 +23,19 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 437 個檔案**，分佈在 2 個隔離區。
+**目前共 511 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
-| [`docs/legacy/`](legacy-index.md#docslegacy) | 45 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
-| [`content/_legacy/`](legacy-index.md#contentlegacy) | 392 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
+| [`docs/legacy/`](legacy-index.md#docslegacy) | 71 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
+| [`content/_legacy/`](legacy-index.md#contentlegacy) | 440 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
 要用它之前先問「現行的那一份說什麼」—— 衝突時**現行的贏**（第〇·六守則）。
 
 ---
 
-## `docs/legacy/` —— 45 檔
+## `docs/legacy/` —— 71 檔
 
 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）
 
@@ -75,6 +75,31 @@ owner 2026-08-13：
 | `新英雄範本-完整範例.md` | 新英雄填空表（帶範例） | 建議帶母體是 n=111，是 stat-normalization 上線**前**的原始分佈 |
 | `新英雄範本.md` | 新英雄填空表（最早，07-25 12:22） | 寫「英雄編號 100 ← 目前最大 099」，而 100 已被佔用。編號是 JASS 對照的 join key，填錯是綁死的東西出錯 |
 | `英雄屬性正規化提案.md` | 屬性正規化**提案**（初版） | 自己把權威讓出去：「三個整包方案在計畫書第二·五節，**先讀那一份**」。`config.stat-normalization@1` 已出貨 |
+| `_overwrites/_ledger.tsv` | （.tsv 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/20260820-012418/CLAUDE.md` | GGD — 開發守則 —— 這一份是**規則**，不是說明書。架構與現況看 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/20260820-012959/docs/_release/board-live.md` | ⭐ 瓶頸已解除：鎖是 `bundle.json`，不是 `content/` 目錄 —— 切分依據是**檔案領域互斥**，⛔ 不是主題相近 —— 兩條 lane 只要會編到同一個檔就不能併行。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260820-014449/content/abilities/godie-e010.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260820-020339/packages/shared/src/content/descriptionClaims.baseline/godie-zzzz.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260820-020813/tools/skill-remake/heroes/godie-e002.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260820-021833/packages/shared/tsconfig.tsbuildinfo` | （.tsbuildinfo 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260820-021858/packages/shared/src/content/schema/effect.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260820-021858/packages/shared/src/sim/effects/effect.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260820-021858/packages/shared/src/sim/effects/effectRegistry.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260820-021940/packages/shared/src/content/schema/effect.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260820-021940/packages/shared/src/sim/effects/effect.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260820-021940/packages/shared/src/sim/effects/effectRegistry.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260820-022147/packages/shared/src/content/schema/effect.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260820-022147/packages/shared/src/sim/effects/effect.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260820-022147/packages/shared/src/sim/effects/effectRegistry.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260820-024335/tools/skill-remake/heroes/godie-e002.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260820-024343/tools/skill-remake/heroes/godie-zzzz.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260820-024422/tools/skill-remake/heroes/godie-e002.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260820-024503/packages/shared/src/content/schema/effects/zzprobe.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260820-024516/packages/shared/src/content/descriptionClaims.baseline/godie-zzzz.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260820-024616/tools/skill-remake/heroes/godie-e002.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260820-024616/tools/skill-remake/heroes/godie-h02k.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260820-035824/content/abilities/godie-e00u.passive.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260820-040528/packages/shared/src/content/abilityCodeParity.baseline/19.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `code/apps/game-server/src/match/__autoattack_probe.test.ts` | 自動攻擊調查用的探測檔（同上） | 180 行、唯一的 expect 是夾具健檢。接班守衛 `autoAcquireWhileMoving.test.ts`（25 個 expect）已經很厚 |
 | `code/apps/game-server/src/match/__mana_probe.test.ts` | 魔力倍率調查用的探測檔（原 `apps/game-server/src/match/`） | 267 行、`expect(` **0 次**、`console.log` 8 次 —— 永遠不會紅，卻把「跑一場真比賽」掛在每次 pnpm test 上 |
 | `code/apps/game-server/src/match/__pacing_probe.test.ts` | 回合節奏 TTK 傾印（同上） | 39 行、`expect(` **0 次**。結論已寫進 docs，回合節奏改由 config 驅動 |
@@ -86,10 +111,11 @@ owner 2026-08-13：
 | `code/tools/w3x-import/mesh_audit.mjs.map` | 上一項的 sourcemap | 決定性證據：第一行 `"sources":["mesh_audit.mts"]` |
 | `code/tools/w3x-import/validate_glb.mjs` | `validate_glb.mts` 的 tsc 編譯產物（同上） | ⛔ **`.mts` 是活的出貨工具**（`package.json` 的 `validate:glb` 真的在跑它），這裡歸檔的只有編譯殘留 |
 | `code/tools/w3x-import/validate_glb.mjs.map` | 上一項的 sourcemap | 同上 |
+| `shard-baseline_temp/baseline.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 
 ---
 
-## `content/_legacy/` —— 392 檔
+## `content/_legacy/` —— 440 檔
 
 **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡
 
@@ -97,7 +123,7 @@ owner 2026-08-13：
 
 ⭐ **目錄位置本身就是宣告**（owner 2026-08-18：「不應該再出現在現有任何文件上或讓任何 script 浪費算力處理」）。`content/_legacy/` 不在 `COLLECTION_NAMES` 裡，所以 `pnpm content:build`、`bundle.json`、每一支 `content/<collection>/` 逐檔掃描的產生器（`gen_overview.ts` / `gen_spec.ts` / `gen_reference.py` / `gen_readme_lists.py`）與後台的道具清單**全部自動看不到它們** —— ⛔ 沒有任何一份「要跳過哪些 id」的硬編名單，那會是第四個住處，必然過期。
 
-### `abilities/` （235 檔）
+### `abilities/` （276 檔）
 
 | 檔案 | 是什麼 |
 |---|---|
@@ -107,6 +133,12 @@ owner 2026-08-13：
 | `godie-e00j.q.json` | 技能「95-01 謝謝指教」，槽位 Q |
 | `godie-e00j.r.json` | 技能「95-04 藍色戰氣一百重天」，槽位 R |
 | `godie-e00j.w.json` | 技能「95-02 大和戰氣」，槽位 W |
+| `godie-e00k.e.json` | 技能「19-03 瞬切百殺」，槽位 E |
+| `godie-e00k.ex.json` | 技能「19-002 紫色披風」，槽位 EX |
+| `godie-e00k.passive.json` | 技能「19-00 閃擊」，槽位 PASSIVE |
+| `godie-e00k.q.json` | 技能「19-01 斷末」，槽位 Q |
+| `godie-e00k.r.json` | 技能「19-04 幻影暗殺」，槽位 R |
+| `godie-e00k.w.json` | 技能「19-02 迴切」，槽位 W |
 | `godie-e00q.e.json` | 技能「69-03 約束與勝利之劍」，槽位 E |
 | `godie-e00q.ex.json` | 技能「69-002 固有結界-黑洞」，槽位 EX |
 | `godie-e00q.passive.json` | 技能「69-001 黑化之力」，槽位 PASSIVE |
@@ -119,12 +151,23 @@ owner 2026-08-13：
 | `godie-e00t.q.json` | 技能「66-01 靈體化」，槽位 Q |
 | `godie-e00t.r.json` | 技能「66-04  靈壓震撼」，槽位 R |
 | `godie-e00t.w.json` | 技能「66-02 驚駭」，槽位 W |
+| `godie-e00u.e.json` | 技能「none」，槽位 E |
+| `godie-e00u.passive.json` | 技能「44-00 機警」，槽位 PASSIVE |
+| `godie-e00u.q.json` | 技能「none」，槽位 Q |
+| `godie-e00u.r.json` | 技能「none」，槽位 R |
+| `godie-e00u.w.json` | 技能「none」，槽位 W |
 | `godie-e00v.e.json` | 技能「84-03 蜜汁」，槽位 E |
 | `godie-e00v.ex.json` | 技能「84-002 我只想確定你在這裡」，槽位 EX |
 | `godie-e00v.passive.json` | 技能「84-00 熊巴巴」，槽位 PASSIVE |
 | `godie-e00v.q.json` | 技能「84-01 冷笑話」，槽位 Q |
 | `godie-e00v.r.json` | 技能「84-04 給我蜂蜜」，槽位 R |
 | `godie-e00v.w.json` | 技能「84-02 保齡球」，槽位 W |
+| `godie-e00z.e.json` | 技能「19-03 瞬切百殺」，槽位 E |
+| `godie-e00z.ex.json` | 技能「19-002 紫色披風」，槽位 EX |
+| `godie-e00z.passive.json` | 技能「19-00 閃擊」，槽位 PASSIVE |
+| `godie-e00z.q.json` | 技能「19-01 斷末」，槽位 Q |
+| `godie-e00z.r.json` | 技能「19-04 幻影暗殺」，槽位 R |
+| `godie-e00z.w.json` | 技能「19-02 迴切」，槽位 W |
 | `godie-e012.e.json` | 技能「47-03 九頭龍閃」，槽位 E |
 | `godie-e012.passive.json` | 技能「47-00 龍搥閃」，槽位 PASSIVE |
 | `godie-e012.q.json` | 技能「47-01 飛龍閃」，槽位 Q |
@@ -205,12 +248,24 @@ owner 2026-08-13：
 | `godie-harf.q.json` | 技能「26-01 腳底按摩」，槽位 Q |
 | `godie-harf.r.json` | 技能「26-04 開天闢地‧洨者聖臨」，槽位 R |
 | `godie-harf.w.json` | 技能「26-02 亂入」，槽位 W |
+| `godie-hblm.e.json` | 技能「05-03 及喀爾度」，槽位 E |
+| `godie-hblm.ex.json` | 技能「05-002 金色巨龍」，槽位 EX |
+| `godie-hblm.passive.json` | 技能「05-00 啦嗚薩喀爾」，槽位 PASSIVE |
+| `godie-hblm.q.json` | 技能「05-01 薩喀爾」，槽位 Q |
+| `godie-hblm.r.json` | 技能「05-04 巴歐．薩喀爾嘎」，槽位 R |
+| `godie-hblm.w.json` | 技能「05-02 薩喀爾嘎」，槽位 W |
 | `godie-hlgr.e.json` | 技能「03-03 鯨式電漿光束炮」，槽位 E |
 | `godie-hlgr.ex.json` | 技能「03-001 龍騎兵」，槽位 EX |
 | `godie-hlgr.passive.json` | 技能「03-00 相轉移裝甲」，槽位 PASSIVE |
 | `godie-hlgr.q.json` | 技能「03-02 詭雷」，槽位 Q |
 | `godie-hlgr.r.json` | 技能「03-04 全彈發射」，槽位 R |
 | `godie-hlgr.w.json` | 技能「03-01 磁軌砲」，槽位 W |
+| `godie-hpal.e.json` | 技能「35-03 鏡蠱」，槽位 E |
+| `godie-hpal.ex.json` | 技能「35-002 出來吧!全部的魔獸」，槽位 EX |
+| `godie-hpal.passive.json` | 技能「35-00 召喚佩」，槽位 PASSIVE |
+| `godie-hpal.q.json` | 技能「35-01 土爪」，槽位 Q |
+| `godie-hpal.r.json` | 技能「35-04 光牙」，槽位 R |
+| `godie-hpal.w.json` | 技能「35-02 石絲」，槽位 W |
 | `godie-n01b.e.json` | 技能「40-03 萬解-貓王胖虎」，槽位 E |
 | `godie-n01b.ex.json` | 技能「40-002 環繞音響」，槽位 EX |
 | `godie-n01b.passive.json` | 技能「40-00 我~是~孩~子~王~」，槽位 PASSIVE |
@@ -241,6 +296,12 @@ owner 2026-08-13：
 | `godie-nman.q.json` | 技能「40-01 威脅之拳」，槽位 Q |
 | `godie-nman.r.json` | 技能「40-04 地獄搖滾」，槽位 R |
 | `godie-nman.w.json` | 技能「40-02 必殺！爆熱神音！」，槽位 W |
+| `godie-nplh.e.json` | 技能「16-04 劍之精靈」，槽位 E |
+| `godie-nplh.ex.json` | 技能「16-002 布都御魂」，槽位 EX |
+| `godie-nplh.passive.json` | 技能「16-00 通靈能力」，槽位 PASSIVE |
+| `godie-nplh.q.json` | 技能「16-03 無無明亦無」，槽位 Q |
+| `godie-nplh.r.json` | 技能「16-02 阿彌陀流真空佛陀斬」，槽位 R |
+| `godie-nplh.w.json` | 技能「16-01 超．占事略決」，槽位 W |
 | `godie-ntin.e.json` | 技能「23-03 雷牙一閃˙雷牙烈霸」，槽位 E |
 | `godie-ntin.ex.json` | 技能「23-002 雙刀模式」，槽位 EX |
 | `godie-ntin.passive.json` | 技能「23-00 雷光枷鎖」，槽位 PASSIVE |
@@ -321,6 +382,11 @@ owner 2026-08-13：
 | `godie-u012.q.json` | 技能「61-01惡魔球」，槽位 Q |
 | `godie-u012.r.json` | 技能「61-04 瘋狂怪物」，槽位 R |
 | `godie-u012.w.json` | 技能「61-02 霸獸盔甲」，槽位 W |
+| `godie-u01f.e.json` | 技能「none」，槽位 E |
+| `godie-u01f.passive.json` | 技能「16-00 通靈能力」，槽位 PASSIVE |
+| `godie-u01f.q.json` | 技能「none」，槽位 Q |
+| `godie-u01f.r.json` | 技能「none」，槽位 R |
+| `godie-u01f.w.json` | 技能「none」，槽位 W |
 | `godie-u01q.e.json` | 技能「none」，槽位 E |
 | `godie-u01q.q.json` | 技能「none」，槽位 Q |
 | `godie-u01q.r.json` | 技能「none」，槽位 R |
@@ -336,15 +402,19 @@ owner 2026-08-13：
 | `godie-uwar.passive.json` | 技能「43-00 觀音大士的守護」，槽位 PASSIVE |
 | `godie-uwar.q.json` | 技能「43-01 得罪了方丈還想走」，槽位 Q |
 | `godie-uwar.r.json` | 技能「43-03 少林絕學-火雲掌」，槽位 R |
+| `godie-uwar.w.json` | 技能「43-02 打狗鏟」，槽位 W |
 
-### `champions/` （41 檔）
+### `champions/` （48 檔）
 
 | 檔案 | 是什麼 |
 |---|---|
 | `godie-e00j.json` | 英雄「皇者 - 騜」，4 格技能 |
+| `godie-e00k.json` | 英雄「戰國刺客Azumi - 安云」，4 格技能 |
 | `godie-e00q.json` | 英雄「英靈-亞瑟王 - 黑化Saber」，4 格技能 |
 | `godie-e00t.json` | 英雄「七夜怪談 - 貞子」，4 格技能 |
+| `godie-e00u.json` | 英雄「完全而瀟灑的女僕 - 十六夜Sakuya」，4 格技能 |
 | `godie-e00v.json` | 英雄「百畝森林的霸主 - 維尼」，4 格技能 |
+| `godie-e00z.json` | 英雄「戰國刺客Azumi - 安云」，4 格技能 |
 | `godie-e012.json` | 英雄「殺人劍客 - 佐佐木小次郎」，4 格技能 |
 | `godie-e015.json` | 英雄「夜市人生 - 金居福」，4 格技能 |
 | `godie-ecen.json` | 英雄「姜窩肯 - 約翰走路」，4 格技能 |
@@ -359,12 +429,15 @@ owner 2026-08-13：
 | `godie-h02y.json` | 英雄「幕末復仇狂者 - 志志雄真實」，4 格技能 |
 | `godie-h02z.json` | 英雄「不良少年」，4 格技能 |
 | `godie-harf.json` | 英雄「豪洨天王 - 鄭先生」，4 格技能 |
+| `godie-hblm.json` | 英雄「慈悲的王者 - 賈修貝爾」，4 格技能 |
 | `godie-hlgr.json` | 英雄「鋼彈 - 煌」，4 格技能 |
+| `godie-hpal.json` | 英雄「不死之身-無 - 藤井八雲」，4 格技能 |
 | `godie-n01b.json` | 英雄「地獄歌神 - 憤怒的胖虎」，4 格技能 |
 | `godie-n01l.json` | 英雄「學姊 - 小派」，4 格技能 |
 | `godie-naka.json` | 英雄「猿飛佐助 - 風魔小次郎」，4 格技能 |
 | `godie-nbst.json` | 英雄「變態正義 - 瘋狂假面」，4 格技能 |
 | `godie-nman.json` | 英雄「地獄歌神 - 憤怒的胖虎」，4 格技能 |
+| `godie-nplh.json` | 英雄「通靈人 - 麻倉葉」，4 格技能 |
 | `godie-ntin.json` | 英雄「時空管理局執務官 - 菲特·泰斯塔羅沙」，4 格技能 |
 | `godie-o01z.json` | 英雄「魔砲少女 - 高町奈葉」，4 格技能 |
 | `godie-o02n.json` | 英雄「曹操孟德 - 阿瞞大人」，4 格技能 |
@@ -379,6 +452,7 @@ owner 2026-08-13：
 | `godie-u00b.json` | 英雄「最M的魔法Jizz - 清蒸 飛鼠先生」，4 格技能 |
 | `godie-u011.json` | 英雄「死亡老二 - 克勞薩先生」，4 格技能 |
 | `godie-u012.json` | 英雄「重金屬樂團的怪物 - 克勞薩II世」，4 格技能 |
+| `godie-u01f.json` | 英雄「萬夫莫敵 - 黑化張飛」，4 格技能 |
 | `godie-u01q.json` | 英雄「測試英雄 - 索隆」，4 格技能 |
 | `godie-usyl.json` | 英雄「殺戮之牙 - 異形」，4 格技能 |
 | `godie-uwar.json` | 英雄「食神 - 撒尿牛丸」，4 格技能 |

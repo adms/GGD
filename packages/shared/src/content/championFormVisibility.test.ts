@@ -91,7 +91,6 @@ function docs(collection: string): Doc[] {
 const ART_DEBT: ReadonlySet<string> = new Set([
   "godie-e010", // 70 白木卡迪那 紮根 — PRE-EXISTING, shipped invisible before this pass
   "godie-e00n", // 22 龍宮禮奈
-  "godie-e00z", // 19 安云
   "godie-e00x", // 77 櫻綻剎那
   // owner 2026-08-12 裁決：「是的，我刻意減少變身的技能，減少額外設定開銷」——
   // 舊行為 12 天地志狼 的 12-03 破凰之心 是一支 Metamorphosis，變身成 godie-e007，
@@ -131,6 +130,10 @@ const ARCHIVED_ART_DEBT: ReadonlySet<string> = new Set([
   "godie-n01b", // 40 憤怒的胖虎 萬解
   "godie-o02v", // 81 高町奈葉 白色惡魔
   "godie-o02o", // 87 阿瞞大人
+  // ⭐ 2026-08-20（GH#479）：19 安云 godie-e00k 在 2026-08-16 被下架，這一版連同
+  // 它的變身態 godie-e00z 一起搬進 `content/_legacy/`（對子要整組動）⇒ 那筆美術債
+  // 沒有人看得到了。⚠️ 哪天安云重新上架，下面「still operational」那一條會點名它。
+  "godie-e00z", // 19 安云 變身態
 ]);
 
 interface Reachable {

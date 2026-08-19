@@ -102,18 +102,17 @@ const EXPECTED: Readonly<Record<string, readonly string[]>> = {
   // godie-o030 (30 變態紳士, mirrors godie-orkn). A transform that changed rig
   // would read as a different character, not the same one changed — see
   // ALTERNATE_FORM_IDS in standinRoster.test.ts. 兩對都整對留在營運名冊上。
+  // ⭐ 2026-08-20（GH#479）：godie-e00u / godie-hblm / godie-u01f 三位隨退場批次
+  // 進了 `_legacy`，所以他們離開這份**營運**普查（檔案沒有消失，見檔頭）。
   "champ.sela": [
     "godie-e00s",
-    "godie-e00u",
     "godie-e010",
     "godie-efur",
-    "godie-hblm",
     "godie-n00b",
     "godie-o030",
     "godie-ogld",
     "godie-orkn",
     "godie-u00k",
-    "godie-u01f",
     "sela",
   ],
   // blocky-knight.glb
@@ -121,7 +120,8 @@ const EXPECTED: Readonly<Record<string, readonly string[]>> = {
   // blocky-barbarian.glb. godie-umal 拳四郎 is here: the #249 base-form swap
   // moved him onto a shared mesh, a downgrade the owner already knows about,
   // and #231's per-champion skin is what makes it survivable.
-  "champ.skin.barbarian": ["godie-h02k", "godie-hpal", "godie-ubal", "godie-umal"],
+  // ⭐ 2026-08-20（GH#479）：godie-hpal 隨退場批次進了 `_legacy`。
+  "champ.skin.barbarian": ["godie-h02k", "godie-ubal", "godie-umal"],
   // blocky-rogue.glb. 2026-08-13 的搬遷把這一格從 8 位削到 1 位：godie-nman /
   // godie-n01b（萬解那一對）、godie-n01l、godie-nbst、godie-obla、以及曹操
   // godie-o02n/godie-o02o 那一對都進了 `_legacy`。**成對的一起走**，所以沒有任何

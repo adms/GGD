@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "daf92be477a7",
+  "hash": "3cf56dfdc9cb",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -323,8 +323,8 @@
     {
       "id": "unit-tints",
       "path": "config/unit-tints.json",
-      "hash": "b3eff0f38a1d",
-      "size": 11593
+      "hash": "e4773bf9eb11",
+      "size": 11203
     },
     {
       "id": "valhalla-sandbox",
@@ -335,8 +335,8 @@
     {
       "id": "vfx-ability-art",
       "path": "config/vfx-ability-art.json",
-      "hash": "5eb70ae140da",
-      "size": 115098
+      "hash": "1fd0c9954c1a",
+      "size": 115618
     },
     {
       "id": "vfx-cleanup",

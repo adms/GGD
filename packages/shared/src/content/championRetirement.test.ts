@@ -12,7 +12,7 @@
  * 下架就靜默失效，而所有其他斷言照樣全綠。
  */
 import { describe, expect, it } from "vitest";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { zConfigRosterDoc } from "./schema/config";
@@ -49,17 +49,22 @@ describe("① 出貨的 roster.json 本身合法", () => {
 });
 
 describe("② 清單裡的 id 真的指到 registry 裡的英雄（不是打錯的死字串）", () => {
-  it("★ 每一個下架 id 都有對應的 content/champions/*.json", () => {
+  /**
+   * ⭐ 2026-08-20（GH#479）：找的是**兩棵樹**，⛔ 不只是 `content/champions/`。
+   * owner 這一天把退場英雄搬進 `content/_legacy/`（「不要再被掃到」），所以
+   * 「下架 id 指到一份真的存在的文件」這個性質的答案在兩棵樹的聯集上。
+   * ⚠️ 這一條驗的仍然是**打錯字**（下架靜默失效），⛔ 不是「它住在哪」——
+   * 「住在哪」由 `legacyIsolation.test.ts` 的四條關係管。
+   */
+  it("★ 每一個下架 id 都指到一份真的存在的英雄文件（content/ 或 _legacy/）", () => {
     const retired = [...retiredChampionIdsFromDoc(shippedRosterDoc())];
     expect(retired.length, "清單是空的 —— 這條守衛已經變成真空").toBeGreaterThan(0);
-    const missing = retired.filter((id) => {
-      try {
-        readFileSync(join(REPO, "content/champions", `${id}.json`), "utf8");
-        return false;
-      } catch {
-        return true;
-      }
-    });
+    const missing = retired.filter(
+      (id) =>
+        !["content/champions", "content/_legacy/champions"].some((dir) =>
+          existsSync(join(REPO, dir, `${id}.json`)),
+        ),
+    );
     expect(
       missing,
       `下架清單指到不存在的英雄：${missing.join(", ")}。\n` +
@@ -73,9 +78,14 @@ describe("② 清單裡的 id 真的指到 registry 裡的英雄（不是打錯�
     for (const id of ["godie-e00u", "godie-u01f"]) {
       const slots = ["q", "w", "e", "r"];
       const names = slots.map((s) => {
-        const doc = JSON.parse(
-          readFileSync(join(REPO, "content/abilities", `${id}.${s}.json`), "utf8"),
-        ) as { name?: string };
+        // GH#479：這兩隻的技能檔已經搬進 `_legacy/`，理由本身一個字都沒變。
+        const dir = ["content/abilities", "content/_legacy/abilities"].find((d) =>
+          existsSync(join(REPO, d, `${id}.${s}.json`)),
+        );
+        expect(dir, `${id}.${s} 兩棵樹都找不到 —— 下架 ≠ 刪除`).toBeDefined();
+        const doc = JSON.parse(readFileSync(join(REPO, dir!, `${id}.${s}.json`), "utf8")) as {
+          name?: string;
+        };
         return doc.name;
       });
       expect(
