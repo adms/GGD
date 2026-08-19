@@ -197,6 +197,37 @@ export interface MyChampionsResp {
   champions: MyChampionRow[];
 }
 
+/**
+ * One row of GET /ranking/me/nemesis — 宿敵排行榜 (GH#454), always stated with
+ * the CALLER as the subject: `wins` is 「我贏他幾場」.
+ *
+ * `username` is empty when the opponent's account no longer exists; the row
+ * still ships, because the matches really happened — the panel falls back to
+ * the id rather than dropping a rival off the board.
+ */
+export interface NemesisRow {
+  accountId: string;
+  username: string;
+  played: number;
+  wins: number;
+  losses: number;
+  /** the CALLER's win rate against this rival, 0..1 */
+  winRate: number;
+  /** 恩怨值 = 2 × min(wins, losses) — 10:0 是 0、5:5 是 10、9:8 是 16 */
+  rivalry: number;
+  /** RFC3339 timestamp of the last meeting; absent when never (cannot happen on a shipped row) */
+  lastAt?: string;
+}
+
+/** Envelope for GET /ranking/me/nemesis — `{sort,limit,rivals}`. */
+export interface NemesisResp {
+  /** the sort the SERVER actually used (an unknown one falls back, and says so) */
+  sort: string;
+  /** the limit the SERVER actually applied (clamped, and says so) */
+  limit: number;
+  rivals: NemesisRow[];
+}
+
 // -------------------------------------------------------- wallet/store ----
 
 export interface Wallet {

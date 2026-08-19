@@ -89,6 +89,13 @@ export interface QueuedSfx {
    * （第一·五守則的形狀：欄位存在、後台存得起來、而它什麼都不做）。
    */
   gain: number;
+  /**
+   * ⭐ GH#403 —— 強制這一發**不要**走真 loop（`undefined` = 照 `sfxLoopPolicy`）。
+   * 只有一種呼叫端會用：特效自帶的 `soundLoop`（GH#390），它借用的
+   * `fireRingLoop` / `arenaAmbience` 同時是**真的**環境底噪的 key。
+   * 見 `AudioSystem.SfxPlayOptions.loop` 的那段「同一個 key 有兩個主人」。
+   */
+  loop?: boolean;
 }
 
 /**
@@ -108,9 +115,9 @@ export class SpatialSfxQueue {
    * The decision to drop belongs to `spatialMix` (out of range / cross-zone) and
    * is taken at flush, when the listener is known.
    */
-  push(key: string, source: SpatialSource | null, gain = 1): void {
+  push(key: string, source: SpatialSource | null, gain = 1, loop?: boolean): void {
     if (!key) return;
-    const item: QueuedSfx = { key, source, centredPriority: CENTRED_PRIORITY, gain };
+    const item: QueuedSfx = { key, source, centredPriority: CENTRED_PRIORITY, gain, ...(loop === undefined ? {} : { loop }) };
     if (this.items.length < QUEUE_MAX) {
       this.items.push(item);
       return;
@@ -145,7 +152,10 @@ export class SpatialSfxQueue {
         // it competed in before this feature existed.
         resolved.push({
           key: item.key,
-          opts: item.gain === 1 ? undefined : { volume: item.gain },
+          opts:
+            item.gain === 1 && item.loop === undefined
+              ? undefined
+              : { ...(item.gain === 1 ? {} : { volume: item.gain }), ...(item.loop === undefined ? {} : { loop: item.loop }) },
           priority: item.centredPriority,
         });
         continue;
@@ -167,6 +177,7 @@ export class SpatialSfxQueue {
           // player's cooldown slots. See spatial.gateKeyFor for the measurement
           // that made this necessary.
           gateKey: gateKeyFor(item.key, item.source.relation),
+          ...(item.loop === undefined ? {} : { loop: item.loop }),
         },
         priority: mix.priority,
       });

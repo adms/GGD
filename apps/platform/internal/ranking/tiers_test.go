@@ -214,6 +214,48 @@ func TestApexFractionsConfigurable(t *testing.T) {
 	require.Zero(t, challenger)
 }
 
+// TestApexGatesAreConfigurable is GH#352's guard: the two thresholds that decide
+// whether a nearly-empty board may crown 菁英/宗師 are CONFIGURATION, not
+// constants buried in Go.
+//
+// ⛔ 沒有一條斷言抄出貨的門檻值（第二守則：守衛驗機制不驗數字）。每一個門檻都是
+// 從**這個夾具自己的榜**推出來的，所以 owner 之後把哪一格調到哪裡，這條都不會紅。
+func TestApexGatesAreConfigurable(t *testing.T) {
+	testkit.Cover(t, "rank-apex-gates")
+	rows := board(6, 100) // 場數遠超 MinApexGames：這條測的不是那個閘
+	total := len(rows)
+
+	// ① 最低分數閘：把門檻拉到「第二名的分數 + 1」，第二名就掉出 apex，
+	//    位置往下傳。⛔ 這裡不寫死分數，用榜上的數字算。
+	c := ranking.DefaultLadderConfig()
+	c.MinApexPoints = rows[1].Points + 1
+	apex := c.AssignApex(rows, total)
+	require.Equal(t, ranking.TierChallenger, apex[rows[0].AccountID], "分數夠的第一名照樣是菁英")
+	require.Empty(t, apex[rows[1].AccountID], "分數不到門檻就不進 apex")
+
+	// ⭐ 而這一格只能**收緊**：owner 2026-08-17「沒分數不應該有位階，這是底線」。
+	//    把它調成 0（或負的）不可以把 0 分放回 apex。
+	c = ranking.DefaultLadderConfig()
+	c.MinApexPoints = 0
+	zeroed := board(2, 100)
+	for i := range zeroed {
+		zeroed[i].Points = 0
+	}
+	require.Empty(t, c.AssignApex(zeroed, len(zeroed)), "0 分的榜一個 apex 都不發，⛔ 不管門檻被調成什麼")
+
+	// ② 最少人數閘：榜比門檻小 → 一個位置都不發（連掃都不用掃）。
+	c = ranking.DefaultLadderConfig()
+	c.MinApexLadder = total + 1
+	challenger, grandmaster := c.ApexCounts(total)
+	require.Zero(t, challenger)
+	require.Zero(t, grandmaster)
+	require.Empty(t, c.AssignApex(rows, total), "人數不到門檻的榜不發 apex")
+
+	// 榜長到門檻上，同一張榜就恢復原本的分配 —— 證明擋住它的是人數，不是別的。
+	c.MinApexLadder = total
+	require.Equal(t, ranking.TierChallenger, c.AssignApex(rows, total)[rows[0].AccountID])
+}
+
 // TestPointsFloor: scores never go negative; a below-zero input reads as Iron IV.
 func TestPointsFloor(t *testing.T) {
 	testkit.Cover(t, "rank-points-floor")

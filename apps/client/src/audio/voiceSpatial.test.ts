@@ -57,7 +57,7 @@ const AT_ORIGIN: SpatialListener = { levelX: 0, levelZ: 0, dirX: 0, dirZ: 0 };
 const ALL: VoiceAudience[] = ["self", "engaged", "enemy", "ally", "third"];
 
 function mixAt(audience: VoiceAudience, x: number, z = 0, l: SpatialListener = AT_ORIGIN) {
-  return voiceSpatialMix(l, { audience, pos: { x, z } });
+  return voiceSpatialMix(l, { category: "hurt", audience, pos: { x, z } });
 }
 
 // ---------------------------------------------------------------------------
@@ -98,10 +98,10 @@ describe("SELF is full playback — the owner's rule, as a branch (voice-spatial
 
   it("does not even need a listener or a position to be full", () => {
     cover("voice-spatial-self");
-    expect(voiceSpatialMix(null, { audience: "self", pos: null })).toEqual(SELF_VOICE_MIX);
-    expect(voiceSpatialMix(AT_ORIGIN, { audience: "self", pos: null })).toEqual(SELF_VOICE_MIX);
+    expect(voiceSpatialMix(null, { category: "hurt", audience: "self", pos: null })).toEqual(SELF_VOICE_MIX);
+    expect(voiceSpatialMix(AT_ORIGIN, { category: "hurt", audience: "self", pos: null })).toEqual(SELF_VOICE_MIX);
     // NaN can never reach an AudioParam through this branch either
-    expect(voiceSpatialMix(AT_ORIGIN, { audience: "self", pos: { x: NaN, z: 0 } })).toEqual(
+    expect(voiceSpatialMix(AT_ORIGIN, { category: "hurt", audience: "self", pos: { x: NaN, z: 0 } })).toEqual(
       SELF_VOICE_MIX,
     );
   });
@@ -232,7 +232,7 @@ describe("direction and depth come from the SAME laws as the SFX (voice-spatial-
     // camera panned 10 u right of the body — a speaker ON the body must still be
     // at full distance-gain (level anchor) while reading LEFT (direction anchor).
     const split: SpatialListener = { levelX: 0, levelZ: 0, dirX: 10, dirZ: 0 };
-    const m = voiceSpatialMix(split, { audience: "enemy", pos: { x: 0, z: 0 } })!;
+    const m = voiceSpatialMix(split, { category: "hurt", audience: "enemy", pos: { x: 0, z: 0 } })!;
     expect(m.volume).toBeCloseTo(RELATION_GAIN.enemy, 9); // distance 0 from the BODY
     expect(m.pan).toBeCloseTo(panForOffset(-10), 9); // 10 u left of the FRAME
   });
@@ -278,7 +278,7 @@ describe("the far cutoff is the cross-zone rule (voice-spatial-cutoff)", () => {
 describe("degraded inputs stay audible, never louder (voice-spatial-degraded)", () => {
   it("an unresolvable position plays CENTRED rather than not at all", () => {
     cover("voice-spatial-degraded");
-    const m = voiceSpatialMix(AT_ORIGIN, { audience: "enemy", pos: null })!;
+    const m = voiceSpatialMix(AT_ORIGIN, { category: "hurt", audience: "enemy", pos: null })!;
     expect(m).not.toBeNull();
     expect(m.volume).toBe(RELATION_GAIN.enemy);
     expect(m.pan).toBe(0);
@@ -288,7 +288,7 @@ describe("degraded inputs stay audible, never louder (voice-spatial-degraded)", 
   it("a non-finite coordinate can never reach an AudioParam", () => {
     cover("voice-spatial-degraded");
     for (const bad of [NaN, Infinity, -Infinity]) {
-      const m = voiceSpatialMix(AT_ORIGIN, { audience: "enemy", pos: { x: bad, z: 0 } })!;
+      const m = voiceSpatialMix(AT_ORIGIN, { category: "hurt", audience: "enemy", pos: { x: bad, z: 0 } })!;
       expect(Number.isFinite(m.volume)).toBe(true);
       expect(Number.isFinite(m.pan)).toBe(true);
       expect(m.lowpassHz).toBeNull();
@@ -300,9 +300,8 @@ describe("degraded inputs stay audible, never louder (voice-spatial-degraded)", 
     // with no body of your own, voiceAudienceOf demotes EVERY speaker to third,
     // so keeping the 0.45 duck would mute the whole arena at the one moment the
     // player has nothing to do but listen to it.
-    const alive = voiceSpatialMix(AT_ORIGIN, { audience: "third", pos: { x: 8, z: 0 } })!;
-    const dead = voiceSpatialMix(AT_ORIGIN, {
-      audience: "third",
+    const alive = voiceSpatialMix(AT_ORIGIN, { category: "hurt", audience: "third", pos: { x: 8, z: 0 } })!;
+    const dead = voiceSpatialMix(AT_ORIGIN, { category: "hurt", audience: "third",
       pos: { x: 8, z: 0 },
       spectating: true,
     })!;

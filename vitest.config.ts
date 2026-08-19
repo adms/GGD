@@ -2,11 +2,37 @@ import { configDefaults, defineConfig } from "vitest/config";
 import { RESOLVE_TS_FIRST } from "./vitest.shared";
 
 /**
- * Root config — governs ad-hoc `npx vitest run <path>` from the repo root.
+ * Root config — governs ad-hoc `npx vitest run <path>` from the repo root,
+ * AND every workspace package that has no config file of its own.
  *
- * Per-package runs (`pnpm -r test`) do NOT read this file: each package's
- * vitest resolves its config from its own directory, so this only shapes the
- * whole-tree scan you get when invoking vitest at the root.
+ * ⚠️ GH#428 — THIS HEADER USED TO SAY THE OPPOSITE, AND IT WAS A LIE:
+ *
+ *   「Per-package runs (`pnpm -r test`) do NOT read this file: each package's
+ *     vitest resolves its config from its own directory」
+ *
+ * It resolves it with **findUp**, not "from its own directory". The shipping
+ * code, `createVitest()` in node_modules/vitest/dist/chunks/cli-api.*.js:
+ *
+ *     const root = slash(resolve(options.root || process.cwd()));
+ *     const configPath = … : await findUp(configFiles, { cwd: root });
+ *                                ^^^^^^ walks UP until it hits one
+ *
+ * So `root` stops at the package, but the CONFIG keeps climbing to here. A
+ * package with no config of its own therefore runs on this file — with its
+ * `root` set to the package dir, which means every RELATIVE path written here
+ * is resolved against THAT package. Measured (GH#428, lane Q): adding
+ * `setupFiles: ["./apps/client/src/testSetup.vfxContent.ts"]` to this file
+ * turned 29 files red inside packages/shared with
+ * `Failed to load url …/packages/shared/apps/client/src/testSetup…`.
+ *
+ * ⇒ Anything you add below (setupFiles / environment / globals / coverage
+ * thresholds) lands on those packages too. `packages/shared` — 415 test files,
+ * by far the biggest inheritor — was cut loose in GH#428 and now has
+ * `packages/shared/vitest.config.ts`. The ones still inheriting are enumerated
+ * and pinned by `packages/shared/src/ops/rootVitestConfigScope.test.ts`, which
+ * goes red BOTH ways: a new package quietly starts inheriting, or one stops.
+ * That test is the reason this paragraph cannot rot the way the old one did
+ * (CLAUDE.md 第三守則 / 元規則:「把判準換成一個會擋下你的東西」).
  *
  * BACKUP TREES — background tasks drop whole-tree snapshots inside the repo
  * (tools/bgm-gen/.backup-*, .backups/, build/backup-*). Those copies contain

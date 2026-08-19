@@ -63,6 +63,48 @@ export const zConfigIconStyleDoc = z
           "(寫 `fire` 會讓所有火焰技能的圖示一起沒有火)。",
       ),
 
+    /**
+     * ⭐ GH#457 —— owner 2026-08-19：「我們應該要**能支援 LoRA 跟 SDXL 等更新版本**才對」。
+     *
+     * ⚠️ **`.optional()` 是強制的**（見下面 `DEFAULT_ICON_STYLE` 的警告）：線上已經
+     * 存過的耐久 override 沒有這一格，少了 optional 會讓整份 config 被 Zod 拒絕。
+     *
+     * ⛔ 路徑**相對於 `tools/icon-gen/models/`**，⛔ 不放絕對路徑 —— 這份 JSON 是
+     * 會被 commit、被部署的內容，而 LoRA 檔本身是 gitignore 的機器本機檔。一個
+     * `/Users/xxx/...` 進了 content，就是把某一台機器的路徑塞進共用資料。
+     */
+    loras: z
+      .array(
+        z
+          .object({
+            path: z
+              .string()
+              .min(1)
+              .max(300)
+              .describe(
+                "LoRA 的 .safetensors 路徑,相對於 `tools/icon-gen/models/`。" +
+                  "⚠️ 架構(SD1.5 / SDXL)是從**檔頭**讀出來的,⛔ 不看檔名 —— " +
+                  "跟 checkpoint 對不起來時產圖器會**當場停下來**,⛔ 不會靜默略過。",
+              ),
+            weight: z
+              .number()
+              .min(0)
+              .max(2)
+              .describe(
+                "這顆 LoRA 的強度。1.0 = 作者訓練時的強度;0 = 等於沒掛。" +
+                  "上界 2 是誤讀保險絲 —— 再高只會把畫面燒成色塊,⛔ 不會更像。",
+              ),
+          })
+          .strict(),
+      )
+      .max(8)
+      .optional()
+      .describe(
+        "掛在產圖模型上的 LoRA 清單。⛔ 空陣列(出貨值)= 不掛任何 LoRA。" +
+          "⚠️ 改這一格會讓**全部既有圖示失效並在下一次 batch.py 重畫** —— " +
+          "它跟兩段提示詞一樣進了 sidecar 的新鮮度戳記,因為它一樣會改變畫面。",
+      ),
+
     strength: z
       .number()
       .min(0.1)
@@ -186,6 +228,10 @@ export const DEFAULT_ICON_STYLE: ConfigIconStyleDoc = {
     "field, text, letters, watermark, signature, border, frame, ui panel, multiple " +
     "views, collage, grid, blurry, lowres, deformed, extra limbs, extra fingers, " +
     "mutated, western cartoon, sketch, monochrome",
+  // ⭐ GH#457：出貨**空的**。⛔ 不是「還沒做」——「掛哪一顆 LoRA」是 owner 看過圖
+  //    才決定的取捨，而 LoRA 檔本身是 gitignore 的本機檔（`tools/icon-gen/models/`）。
+  //    出貨一個路徑等於出貨一個在別人機器上不存在的檔，而產圖器對此是 fail-LOUD 的。
+  loras: [],
   strength: 0.58,
   pass1Steps: 26,
   pass1Guidance: 7.5,

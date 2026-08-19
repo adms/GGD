@@ -219,7 +219,7 @@ async function speak(
   pos: { x: number; z: number } | null,
   category = "hurt",
 ): Promise<boolean> {
-  const mix = voiceSpatialMix(AT_ORIGIN, { audience, pos });
+  const mix = voiceSpatialMix(AT_ORIGIN, { category: "hurt", audience, pos });
   if (!mix) return false;
   const ok = h.voice.playContextual(champId, category, voicePlayOptions(mix));
   await settle();

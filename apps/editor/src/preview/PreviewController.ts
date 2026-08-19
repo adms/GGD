@@ -717,6 +717,24 @@ function effectLines(
         });
         break;
       }
+      case "chainLightning": {
+        out.push({
+          depth,
+          kind: e.kind,
+          summary:
+            `連鎖閃電：${
+              e.shape === "circle"
+                ? `半徑 ${e.radius ?? "?"} 內**每一個**敵人各觸發一條`
+                : "從指定目標起一條"
+            }` +
+            ` · 每條最多 ${e.jumps} 跳（跳躍距離 ${e.jumpRange}）` +
+            ` · 每跳傷害 ×${e.decay}` +
+            `${e.revisit === true ? " · 同一條可重複跳到同一人" : ""}` +
+            ` · 這次施放總跳數上限 ${e.maxTotalJumps ?? "（未設，吃引擎硬上限）"}`,
+        });
+        effectLines(e.onHitTargets ?? [], finalStats, attrs, maxRank, depth + 1, out);
+        break;
+      }
       default: {
         // EXHAUSTIVENESS TRIPWIRE (task #247 follow-up). This switch used to
         // fall through silently, which is how `restore`, `spawnVfx` and then

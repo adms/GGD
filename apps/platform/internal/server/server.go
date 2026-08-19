@@ -231,6 +231,19 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 	if cfg.MinApexGames > 0 {
 		ladder.MinApexGames = cfg.MinApexGames
 	}
+	if cfg.MinApexPoints > 0 {
+		ladder.MinApexPoints = cfg.MinApexPoints
+	}
+	if cfg.MinApexLadder > 0 {
+		ladder.MinApexLadder = cfg.MinApexLadder
+		// GH#352's ladder-size gate ships OFF, so it can only be on because an
+		// operator turned it on — and its whole effect is an ABSENCE (nobody is
+		// 菁英/宗師), which is indistinguishable from 「nobody qualifies yet」 on
+		// every screen that shows the board. Say it once at boot so the empty
+		// apex band has a stated cause.
+		slog.Info("ranking: apex is gated by ladder size — a board smaller than this crowns nobody",
+			"minApexLadder", ladder.MinApexLadder, "knob", "RANKED_MIN_APEX_LADDER")
+	}
 	rank := ranking.New(rdb, store, accounts, cfg.Season, ladder)
 
 	// Store catalog from the read-only content tree. Missing content is
@@ -580,6 +593,9 @@ func (s *Server) buildRouter(templates *room.Templates) {
 				// case of a rejected account with a still-valid token
 				// walking past plain token auth. See internal/friend/online.go.
 				friend.NewHandlers(s.Friends, s.Accounts, s.Presence).MountPlayable(rr)
+				// GET /ranking/me/nemesis — 宿敵榜 (GH#454). Same reasoning as
+				// the roster above: it hands the caller other players' names.
+				ranking.NewHandlers(s.Ranking).MountPlayable(rr)
 			})
 			ranking.NewHandlers(s.Ranking).MountAuthed(pr)
 			wallet.NewHandlers(s.Wallet).Mount(pr)

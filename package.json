@@ -55,7 +55,12 @@
     "atlas:check": "tsx tools/engine-atlas/atlas.ts --check",
     "roster:check": "tsx tools/roster-guard/check.ts",
     "treasure:csv": "python3 tools/economy/gen_treasure_csv.py",
-    "treasure:csv:check": "python3 tools/economy/gen_treasure_csv.py --check"
+    "treasure:csv:check": "python3 tools/economy/gen_treasure_csv.py --check",
+    "atlas:build": "tsx tools/engine-atlas/atlas.ts",
+    "skillremake:docs": "python3 tools/skill-remake/refresh_docs.py",
+    "skillremake:docs:check": "python3 tools/skill-remake/refresh_docs.py --check",
+    "skills:sync": "pnpm content:build && pnpm caps:export && pnpm skillremake:docs && pnpm contract:numbers && pnpm atlas:build && pnpm treasure:csv && pnpm docs:readme && pnpm docs:status",
+    "skills:check": "pnpm spec:check && pnpm overview:check && pnpm tiers:check && pnpm caps:check && pnpm skillremake:docs:check && pnpm contract:numbers:check && pnpm atlas:check && pnpm treasure:csv:check && pnpm docs:readme:check && pnpm docs:status:check && pnpm roster:check"
   },
   "devDependencies": {
     "@eslint/js": "^10",

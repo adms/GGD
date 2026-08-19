@@ -44,7 +44,7 @@ import {
   berserkRulesFromDoc,
   type BerserkRules,
 } from "@ggd/shared/sim/abilities/berserkRules";
-import { clearForFreshBody, clearRoundScoped } from "@ggd/shared/sim/clearPools";
+import { clearRoundScoped, restoreForNextRound } from "@ggd/shared/sim/clearPools";
 import { resetMarksForRound } from "@ggd/shared/sim/marks";
 import {
   mindControlCountsForOriginalTeam,
@@ -262,6 +262,7 @@ import {
   type ArenaRules,
 } from "./arenaRules";
 import { resolveRoyaleArena } from "./arenaSelect";
+import { lobbySpawnAt } from "./lobbySpawn";
 
 /**
  * Strip the FIGHTING half of a produced intent while combat is not live, so a
@@ -1106,6 +1107,13 @@ export class MatchController {
     // 每一次購買讀 `world.legendaryShelf.open` 時炸掉；落到出貨預設**正是**那些
     // 場次當時真的跑的東西（當時 sim 讀的就是 `SimWorld` 的預設值）。
     this.world.legendaryShelf = this.rules.legendaryShelf ?? DEFAULT_ARENA_RULES.legendaryShelf;
+    // ⭐ GH#350 —— #261 下架的那 70 把普通武器的貨架，同一個窗口、同一條路。
+    // ⚠️ 在此之前 `grep world.weaponShelfOpen` 在 production 程式是**空的**：
+    // 只有測試在寫它，所以那一格從 #261 當天起就是一個「改一次要 rebuild」的
+    // 程式常數（`shopShelf.ts` 的檔頭 2026-08-17 已經誠實地更正過這件事）。
+    // ⚠️ `??` 同上一行：舊錄影的表頭沒有這一格 → undefined → 落到出貨常數，
+    // 那正是那些場次當時真的跑的東西。
+    this.world.weaponShelfOpen = this.rules.weaponShelfOpen ?? DEFAULT_ARENA_RULES.weaponShelfOpen;
     this.world.cooldownRules = cooldownRules;
     this.world.castTimeRules = castTimeRules;
     this.world.woundRules = woundRules;
@@ -1374,11 +1382,12 @@ export class MatchController {
         const drawPool = eligible.length > 0 ? eligible : pool;
         seat.championId = drawPool[this.world.rng.int(drawPool.length)]!;
       }
-      // spawn at team's eventual side; positions are reset at each combat entry
-      const zone = 0;
-      const side = seat.teamId % 2;
-      const slot = seatId % TEAM_SIZE;
-      const spawn = this.arena.zones[zone]!.spawns[side as 0 | 1]![slot]!;
+      // 開場擺位（GH#422）：⛔ 不是 `zone = 0 · side = teamId % 2` —— 那把四隊
+      // 折成兩側、兩個分區只用一個，於是 12 個座位落在 6 個點上（seat 0 與
+      // seat 6 逐位元同一格）。位置一律由 {@link lobbySpawnAt} 從**場地自己宣告
+      // 的出生點**攤平取，⛔ 不在這裡重算一次幾何。開戰時 `enterCombat` 仍會依
+      // 當回合的配對重排。
+      const { zone, at: spawn } = lobbySpawnAt(this.arena, seatId, seat.teamId);
       seat.entityId = spawnChampion(this.world, {
         championId: seat.championId as ChampionId,
         seatId,
@@ -1583,6 +1592,23 @@ export class MatchController {
     this.world.combatActive = false; // scoreboard time-alive pauses between rounds
     // 結算窗口結束 —— 中場對所有人開放，不再需要「只有陣亡者」那條規則。
     this.world.roundResolving = false;
+    // ⭐ GH#455 —— **回商店的那一刻就把身體還原**（owner：「回到商店時玩家角色
+    // 生命並沒有跟著還原，這個也是漏掉的一個部分」）。
+    //
+    // 在這之前，這四行只長在 `enterCombat` 的三條擺位路徑上，也就是**下一回合
+    // 開打的那一刻** —— 整段中場玩家帶著上一回合打完的殘血站在商店裡。那不是
+    // 顯示瑕疵：中場的功能就是**看著自己的數字做採買決策**，而 GH#106 的即時
+    // 屬性預覽刻意做成「不可以說謊」的東西。
+    //
+    // ⚠️ 位置在 `roundResolving = false` **之後**是刻意的：結算窗口那一段
+    // （`resolution` 相位）就是回合勝負／MVP 的呈現時間，而 `recordRoundHistory`
+    // 與 `recordLedgerRound` 兩份帳都在 `concludeCombat` 就把 `hpRatio` 拍完了。
+    // 早一格還原不會動到任何一份帳，但會把畫面上那一格「誰剩多少血」抹掉。
+    //
+    // ⚠️ 掃的是**每一個席位**，⛔ 不是「這一回合被排進對戰的那些」—— 理由與
+    // `enterCombat` 裡 `clearRoundScoped` 那一段逐字相同：輪空的隊伍不進
+    // pairing 迴圈，漏掉他們就等於「輪空 = 帶著殘血逛商店」。
+    for (const [, , entity] of this.activeSeats()) restoreForNextRound(this.world, entity);
     for (const seat of this.seats.values()) seat.ready = false;
     const round = this.phase.round;
     // Project the deterministic round into the sim so the stat-path capstone
@@ -1968,9 +1994,10 @@ export class MatchController {
     //  1) 中場商店看到的是**真實剩餘層數**。玩家在商店做的決策（買什麼、要不要
     //     留錢）建立在「我這回合燒掉了幾層」上；提早補滿會把那段資訊抹掉，
     //     跟 `resetRoundTallies` 刻意不在 concludeCombat 清 K/D 是同一個理由。
-    //  2) 與 hp/mana 同一個生命週期 —— 兩個 placement 迴圈也是在 enterCombat
-    //     才 `hp.hp = hp.maxHp`。標記是「新身體」的一部分,跟著 `clearForFreshBody`
-    //     走（同一個相位）語意才一致。
+    //  2) ⚠️ **這一條在 GH#455 之後已經反過來了，留著是為了說明「為什麼不跟」**：
+    //     hp/mana 現在在 `enterIntermission` 就還原（`restoreForNextRound`），
+    //     因為商店要看真實的身體。標記**刻意不跟著搬** —— 它要的正好相反：
+    //     商店要看到「我這回合燒掉了幾層」。兩者同一個相位只是巧合，不是理由。
     //  3) ⛔ `enterIntermission` **是可以被跳過的**（skipPhase 作弊 / fault
     //     failsafe 直接推進到 enterCombat,見上面 roundResolving 那段保險）。
     //     重置放在中場 = 那些路徑會讓玩家帶著上一回合花掉的層數開打。
@@ -2091,13 +2118,11 @@ export class MatchController {
           t.pos = { x: spawn.x, z: spawn.z };
           t.zone = pairing.zone;
           t.facing = { x: side === 0 ? 1 : -1, z: 0 };
-          const hp = this.world.health.get(seat.entityId)!;
-          hp.alive = true;
-          hp.hp = hp.maxHp;
-          hp.mana = hp.maxMana;
-          // A4(#278) —— 見 `sim/clearPools.ts`。這一段以前漏掉 `world.dot`,
-          // 所以上一回合的燃燒會燒進新回合的開場。
-          clearForFreshBody(this.world, seat.entityId);
+          // A4(#278) + GH#455 —— 見 `sim/clearPools.ts`。這一段以前手寫「滿血滿魔
+          // 站起來」再呼叫清池,而那份手寫的複本在**四條擺位路徑**上各有一份。
+          // ⚠️ 這裡仍然呼叫（冪等）：`enterIntermission` 可以被 skipPhase /
+          // fault failsafe 跳過,而中場買到的 `maxHp` 也要在開打前再頂一次。
+          restoreForNextRound(this.world, seat.entityId);
           fighters.push(seat.entityId);
           slot++;
         }
@@ -2275,7 +2300,7 @@ export class MatchController {
    * （沒有 pairing），所以練習席由這裡放進 {@link PRACTICE_ZONE}。
    *
    * 逐字沿用決鬥那一段的四個步驟（位置 / 分區 / 面向 / 新身體），⛔ 不是另一套
-   * 出生流程：`clearForFreshBody` 少呼叫一次，上一回合的燃燒就會燒進這一場練習。
+   * 出生流程：`restoreForNextRound` 少呼叫一次，上一回合的殘血與燃燒就會帶進這一場練習。
    * `fighters` 一樣要 push —— 陣亡投幣讀的是它，而不是 `this.seats`。
    */
   private placePractice(fighters: EntityId[]): void {
@@ -2288,11 +2313,7 @@ export class MatchController {
       t.pos = { x: spawn.x, z: spawn.z };
       t.zone = PRACTICE_ZONE;
       t.facing = { x: 1, z: 0 };
-      const hp = this.world.health.get(seat.entityId)!;
-      hp.alive = true;
-      hp.hp = hp.maxHp;
-      hp.mana = hp.maxMana;
-      clearForFreshBody(this.world, seat.entityId);
+      restoreForNextRound(this.world, seat.entityId);
       fighters.push(seat.entityId);
       slot++;
     }
@@ -2312,11 +2333,9 @@ export class MatchController {
       if (seat.entityId === null) continue;
       const hp = this.world.health.get(seat.entityId);
       if (!hp || hp.alive) continue;
-      hp.alive = true;
-      hp.hp = hp.maxHp;
-      hp.mana = hp.maxMana;
-      // 和入場同一支：不清乾淨的話，殺死他的那一份延燒會在復活的下一 tick 再殺一次。
-      clearForFreshBody(this.world, seat.entityId);
+      // 和入場**同一支**：不清乾淨的話，殺死他的那一份延燒會在復活的下一 tick
+      // 再殺一次。
+      restoreForNextRound(this.world, seat.entityId);
     }
   }
 
@@ -2413,14 +2432,10 @@ export class MatchController {
         const dz = zoneDef.center.z - spawn.z;
         const len = Math.sqrt(dx * dx + dz * dz);
         t.facing = len > 0 ? { x: dx / len, z: dz / len } : { x: 1, z: 0 };
-        const hp = this.world.health.get(seat.entityId)!;
-        hp.alive = true;
-        hp.hp = hp.maxHp;
-        hp.mana = hp.maxMana;
-        // A4(#278) —— 大亂鬥那一條路。⚠️ **兩個 enterCombat 站點都要改** ——
-        // 只改決鬥那一條會讓大亂鬥回合的殘留活下來,而決鬥回合是乾淨的,
+        // A4(#278) + GH#455 —— 大亂鬥那一條路。⚠️ **每一條擺位路徑都要走同一支**
+        // —— 只改決鬥那一條會讓大亂鬥回合的殘留活下來,而決鬥回合是乾淨的,
         // 測起來像隨機故障。
-        clearForFreshBody(this.world, seat.entityId);
+        restoreForNextRound(this.world, seat.entityId);
         fighters.push(seat.entityId);
         slot++;
       }

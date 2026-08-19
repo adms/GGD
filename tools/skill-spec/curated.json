@@ -12,12 +12,12 @@
     "",
     "取代：docs/效果標籤詞彙表v2.md · docs/_status-effect-tag-vocabulary.md 的詞彙部分。"
   ],
-
   "effectKinds": {
     "applyBuff": "增益／減益（改屬性）",
     "applyStatus": "掛狀態",
     "blink": "瞬移",
     "carry": "背負（帶著隊友移動 + 不可被選取）",
+    "chainLightning": "連鎖閃電",
     "championForm": "變身／切換形態",
     "convertTeam": "陣營轉換（把一個既有單位借到自己這一隊）",
     "cycleBuff": "輪替增益",
@@ -54,7 +54,6 @@
     "taunt": "嘲諷",
     "weightedBranch": "加權分支（隨機挑一段）"
   },
-
   "hookEvents": {
     "onAbilityCast": "施法時",
     "onAbilityHit": "技能命中時",
@@ -90,7 +89,6 @@
     "onUltimateCast": "大招（R）施放時",
     "onUltimateHit": "大招（R）命中時"
   },
-
   "conditionLeaves": {
     "chance": "機率",
     "equipment": "裝備了某道具時",
@@ -98,7 +96,6 @@
     "stat": "屬性門檻（血量低於 X%…）",
     "status": "身上有某狀態時"
   },
-
   "statusAxes": {
     "stun": "暈眩 —— 走不動也打不了，施法當場被打斷",
     "root": "定身 —— 腳黏原地，還能普攻與施法。⚠️ 擋不住位移技（dash／knockback 明文 ignores root）",
@@ -106,7 +103,6 @@
     "missChance": "詛咒（失手）—— ⚠️ 讀的是**攻擊者**身上的狀態，方向與 evasion 相反；多來源取 MAX 不相加",
     "berserk": "暴走 —— 失去操控權自己亂衝亂打。⚠️ 刻意**不**被免控擋"
   },
-
   "retiredTokens": [
     {
       "token": "onLevelUp",
@@ -149,7 +145,6 @@
       "why": "貼那一半寫得出來；⛔ **讀**不行 —— comboBonus／bankedBonus 兩個讀取器都寫死讀 caster"
     }
   ],
-
   "structuralFacts": [
     {
       "title": "殭屍身上吃不到 `applyBuff` / `grantAttribute`（`applyStatus` 可以）",

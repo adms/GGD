@@ -125,7 +125,11 @@ describe("特效自帶的音效（GH#390）", () => {
     // 才跑得起來，所以這裡跟 `sfxReachability.test.ts` 用同一招：釘住呼叫點還在。
     const src = readFileSync(join(REPO, "apps/client/src/GameApp.ts"), "utf8");
     expect(src).toContain("this.pushVfxSound(ev, localId, nowMs)");
-    expect(src).toContain("vfxSoundLayer.update(nowMs)");
+    // GH#440 —— 兩條路現在都經過 `audio/vfxSound` 的政策閘（`vfxSoundCues` /
+    // `vfxLoopPushes`），⛔ 不再是 GameApp 自己 push。真正的行為守衛在
+    // `sfxPolicyGate.test.ts`（它跑出貨設定，⛔ 不是手寫的 source 夾具）。
+    expect(src).toContain("vfxSoundCues(");
+    expect(src).toContain("vfxLoopPushes(vfxSoundLayer, nowMs");
     expect(src).toContain("vfxSoundLayer.reset()");
   });
 });

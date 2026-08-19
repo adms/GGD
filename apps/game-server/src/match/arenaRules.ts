@@ -26,7 +26,7 @@ import {
   DEFAULT_DISADVANTAGE_WEIGHTS,
 } from "@ggd/shared/content";
 import type { WeaponTierRule } from "@ggd/shared/sim/economy/weaponTiers";
-import { DEFAULT_SELL_REFUND_PCT } from "@ggd/shared/sim/economy/shopShelf";
+import { DEFAULT_SELL_REFUND_PCT, WEAPON_SHELF_OPEN } from "@ggd/shared/sim/economy/shopShelf";
 import type { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { MAX_ROUNDS_UNLIMITED } from "@ggd/shared/roomSettings";
 import type {
@@ -110,6 +110,17 @@ export interface ArenaRules {
    * 時這裡跟著 tsc 紅，而不是靜靜地只送舊的兩格。
    */
   legendaryShelf: LegendaryShelfRules;
+  /**
+   * ⭐ **#261 下架的 70 把普通武器能不能買**（GH#350，後台 `weaponShelfOpen`）。
+   *
+   * ⚠️ 在 2026-08-20 之前這是 `sim/economy/shopShelf.ts` 的一個 export 布林常數，
+   * 而 `grep world.weaponShelfOpen` 在 production 程式是**空的** —— 改一次要
+   * rebuild + 重啟容器。現在它走與 `legendaryShelf` 一模一樣的那條路。
+   *
+   * ⚠️ 舊錄影的表頭沒有這一格（`rebuildRules` 直接 spread），所以消費端
+   * （`MatchController`）用 `??` 落到 `WEAPON_SHELF_OPEN`。
+   */
+  weaponShelfOpen: boolean;
   /**
    * ⭐ 同一回合**同時**排了聖杯願望（`augmentTier`）與寶具（`weaponLootTable`）
    * 時要發哪一個（owner 2026-08-17「兩者衝突不顯示寶具三選一」，#340）。
@@ -209,6 +220,9 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
   // ⭐ 出貨的寶具貨架（owner 2026-08-17）。引用 shared 的那一份，⛔ 不重打 ——
   // 重打一份就是第四個住處，而它沒有 drift 測試在守。
   legendaryShelf: legendaryShelfRules(DEFAULT_LEGENDARY_SHELF),
+  // ⭐ #261 的普通武器貨架（GH#350）。引用 sim 的那一份常數，⛔ 不重打 ——
+  // 那是「今天的行為」的唯一定義，重打一份就是第二個會漂走的住處。
+  weaponShelfOpen: WEAPON_SHELF_OPEN,
   // ⚠️ 這一格**不是**「保留舊行為」的那個值。第〇·六守則：優先權大的更新
   // 預設啟動，所以連骨架/單元測試的預設也走 owner 的裁決。DEFAULT_ARENA_RULES
   // 本身一個回合都沒排寶具，所以它在這裡沒有可見後果 —— 但它讓「新建構點忘了
@@ -300,6 +314,10 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
     // ⚠️ `??` 同下面 `draftConflict` 那一條：線上耐久覆蓋層那份文件是這一區塊
     // 存在之前存的，缺席拿到的是**出貨預設**。
     legendaryShelf: legendaryShelfRules(doc.legendaryShelf ?? DEFAULT_LEGENDARY_SHELF),
+    // ⭐ GH#350 —— #261 那 70 把普通武器的貨架，從這裡進比賽。
+    // ⚠️ `??` 同上：線上耐久覆蓋層那份文件是這一格存在之前存的，缺席拿到的是
+    // **出貨常數**（false ＝ 今天的行為），⛔ 不是靜靜地把商店整批打開。
+    weaponShelfOpen: doc.weaponShelfOpen ?? WEAPON_SHELF_OPEN,
     // ⚠️ `??` 不是防禦性寫法，它是**線上耐久覆蓋層**的那條路：那份文件是這一格
     // 存在之前存的，少了它。缺席要拿到的是新的出貨預設（owner 的裁決），
     // ⛔ 不是 `both`（＝靜靜地維持他剛剛抱怨的那個行為）。

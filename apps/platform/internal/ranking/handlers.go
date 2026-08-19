@@ -32,6 +32,16 @@ func (h *Handlers) MountAuthed(r chi.Router) {
 	r.Get("/ranking/me/champions", h.myChampions) // caller's per-champion standings
 }
 
+// MountPlayable registers routes that need auth AND the playable gate.
+//
+// ⭐ 宿敵榜住在這裡而不是 MountAuthed,理由跟 `/lobby/online` 一模一樣(#210):
+// 它會**把別人的名字交出去**。範圍窄得多(只有呼叫者真的同場打過的人),但被封鎖
+// 或還沒核准的帳號手上仍可能有一張沒過期的 token —— 那正是 #210 記錄下來的那次。
+// ⛔ 不要為了少一個 Group 把它搬回上面。
+func (h *Handlers) MountPlayable(r chi.Router) {
+	r.Get("/ranking/me/nemesis", h.myNemesis) // caller's 宿敵排行榜 (GH#454)
+}
+
 func qint(r *http.Request, key string, def int) int {
 	if v := r.URL.Query().Get(key); v != "" {
 		if n, err := strconv.Atoi(v); err == nil {
@@ -153,5 +163,36 @@ func (h *Handlers) myChampions(w http.ResponseWriter, r *http.Request) {
 	}
 	httpx.WriteJSON(w, http.StatusOK, map[string]any{
 		"season": h.svc.Season(), "champions": rows,
+	})
+}
+
+// myNemesis: GET /ranking/me/nemesis?sort=&limit= — 大廳「宿敵排行榜」(GH#454)。
+//
+// ⭐ 它只回**呼叫者自己**的宿敵，帳號 id 來自 token 而不是查詢字串：一個人的對戰
+// 紀錄是他跟誰打過的清單,⛔ 不該讓任何人拿別人的 id 換到。要看別人的那條路是
+// 後台的 `/admin/accounts/{id}/headtohead`,而那條在 AdminOnly 後面。
+//
+// `sort` / `limit` 回寫進回應是刻意的:兩者都會被伺服器夾（見 ParseNemesisSort /
+// NemesisBoard），而**被夾掉卻不說**正是 #279 的形狀。
+func (h *Handlers) myNemesis(w http.ResponseWriter, r *http.Request) {
+	id := auth.MustIdentity(r.Context())
+	sortBy := ParseNemesisSort(r.URL.Query().Get("sort"))
+	limit := qint(r, "limit", DefaultNemesisLimit)
+	rows, err := h.svc.NemesisBoard(r.Context(), id.AccountID, sortBy, limit)
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	if rows == nil {
+		rows = []NemesisRow{}
+	}
+	if limit <= 0 {
+		limit = DefaultNemesisLimit
+	}
+	if limit > MaxNemesisLimit {
+		limit = MaxNemesisLimit
+	}
+	httpx.WriteJSON(w, http.StatusOK, map[string]any{
+		"sort": string(sortBy), "limit": limit, "rivals": rows,
 	})
 }

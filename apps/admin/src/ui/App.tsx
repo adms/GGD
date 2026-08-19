@@ -245,6 +245,11 @@ export const NAV: NavItem[] = [
   // 對戰設定 — 一場對戰的**時鐘**(階段秒數、起始隊伍生命、火圈),和上面四頁的
   // 「英雄在場上多強」是不同的軸。⚠️ 這份文件有 19 格沒有消費端,頁面上是唯讀的。
   { page: "matchConfig", label: "對戰設定", emoji: "⏱️", section: SEC_COMBAT },
+  // 競技場規則 (GH#410) —— 緊接在 對戰設定 後面，因為兩頁編的是**同一份**
+  // `config/arena-rules.json`：那一頁管一場的時鐘，這一頁管場上的東西
+  // （治療花／復活圈／守護塔／掉金／大絕與 EX 解鎖回合／普通武器上不上架）。
+  // ⚠️ 這八個區塊在 2026-08-20 之前一格都調不到，改一個數字要完整部署。
+  { page: "arenaTuning", label: "競技場規則", emoji: "🏟️", section: SEC_COMBAT },
   // 體型與射程 (GH#252 · owner 2026-08-01「身體放大倍數 會影響攻擊距離延長倍數」)
   // —— 這一頁只管普攻;技能距離在 戰鬥系統 的 abilityRange 那一格。
   { page: "bodyScale", label: "體型與射程", emoji: "📏", section: SEC_COMBAT },

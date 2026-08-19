@@ -72,6 +72,11 @@ ICON_STYLE_PATH = os.path.abspath(
 _ICON_STYLE_FALLBACK = {
     "stylePrompt": ANIME_STYLE,
     "negativePrompt": ANIME_NEGATIVE,
+    # ⭐ GH#457：LoRA 清單（`[{path, weight}]`）。⛔ 退路是**空的**，⛔ 不是某一顆
+    #    LoRA —— 讀不到設定就畫沒有 LoRA 的圖，而 `pipeline._lora_specs()` 讀的
+    #    是這一格。⚠️ 路徑相對於 `tools/icon-gen/models/`（那個目錄是 gitignore
+    #    的），所以這份 JSON 裡⛔ 不會出現某一台機器的絕對路徑。
+    "loras": [],
     "strength": 0.58,
     "pass1Steps": 26,
     "pass1Guidance": 7.5,
@@ -1325,15 +1330,55 @@ def _one_of(subject: str) -> str:
     return subject
 
 
+# ─────────────────────────────────────────────────────── PASS 1 構圖 ──────
+# ⭐ owner 2026-08-19（GH#457）：「圖示應該是類似**剪影、局部動作、特效、符咒或
+#    物件**的呈現，⛔ **不應該直接畫出角色**」。
+#
+# ⚠️ 這一條**只管 champions 以外的家族**。英雄頭像本來就該是一個角色 ——
+#    把「不要畫角色」套到它身上，那 113 張會全部變成抽象光團。
+#    所以構圖規則跟著**家族**走，而 champions 是它明著的例外。
+#
+# ⚠️ 為什麼寫在 PASS 1 而⛔ 不是 `content/config/icon-style.json` 的負向：
+#    那一段是**全家族共用**的（PASS 2 不知道自己在畫哪一家），寫進去會把英雄頭像
+#    一起殺掉。構圖是「畫什麼」= PASS 1 的職責，風格才是 PASS 2 的。
+#
+# ⭐ 這四段字串是**常數不是字面值**，因為 `batch._method_stamp()` 要 digest 它們：
+#    ⛔ 沒有這一步的話，改構圖 = 一張圖都不會重畫（＝2026-08-19 之前風格那一格
+#    踩過的同一個坑，見 `_method_stamp` 的說明）。
+_NO_CHARACTER = (
+    "shown WITHOUT a character: as a bold silhouette, a partial action (only "
+    "the hands, blade, claw or footfall at the instant it lands), a burst of "
+    "the effect itself, a talisman or sigil, or the bare object"
+)
+
+PASS1_FRAME: dict[str, str] = {
+    # 英雄 —— **這條是例外**：它就是要畫一個角色。
+    "champions": ("anime character, {subject}, {hue} colour scheme, upper body "
+                  "portrait, front view, centred, single character, simple plain "
+                  "background, clear detailed face, full subject in frame"),
+    "abilities": ("{subject}, glowing magical skill effect, {hue} colour scheme, "
+                  "{nochar}, centred, one single subject, plain dark background, "
+                  "clear sharp silhouette, full subject in frame"),
+    "augments": ("{one_of}, {hue} colour scheme, {nochar}, centred, one single "
+                 "subject, plain background, clear sharp silhouette, "
+                 "full subject in frame"),
+    "items": ("{one_of}, {hue} colour scheme, {nochar}, centred, one object, "
+              "studio product shot, plain background, clear sharp silhouette, "
+              "full object in frame"),
+}
+
+# 負向也跟著家族走 —— ⛔ 一樣不可以套到 champions 上。
+PASS1_NEG_BASE = ("blurry, lowres, deformed, cropped, multiple objects, collage, "
+                  "text, watermark, frame, border, extra limbs, bad anatomy")
+PASS1_NEG_NO_CHARACTER = ("full character, whole person, human figure, face, "
+                          "portrait, standing pose, anime girl, anime boy")
+
+
 def pass1_prompt(family: str, doc: dict) -> tuple[str, str, str]:
     """The PASS-1 (subject) positive prompt + its negative + signal. Minimal
     style so the subject renders CLEARLY and recognisably."""
     subject, hue, signal = DERIVERS[family](doc)
-    if family == "champions":
-        pos = (f"anime character, {subject}, {hue} colour scheme, upper body "
-               f"portrait, front view, centred, single character, simple plain "
-               f"background, clear detailed face, full subject in frame")
-    elif family == "abilities":
+    if family == "abilities":
         # ── TRIED AND REJECTED: a distinct "emblem" read for true passives ────
         # A passive is always on and never cast, so drawing it as a still crest
         # rather than an action shot is an appealing idea (it would echo #166,
@@ -1355,9 +1400,7 @@ def pass1_prompt(family: str, doc: dict) -> tuple[str, str, str]:
         #
         # An ability is an EFFECT, not a product on a table — same PASS-1 rules
         # (one clear centred subject, plain background), different framing.
-        pos = (f"{subject}, glowing magical skill effect, {hue} colour scheme, "
-               f"centred, one single subject, plain dark background, clear sharp "
-               f"silhouette, full subject in frame")
+        pass
     elif family == "augments":
         # ⭐ 2026-08-17（聖杯願望 60 張）—— augments **不可以**走下面那條
         # `studio product shot`。那是一個**風格詞長在特徵階段**，而且方向剛好跟
@@ -1368,15 +1411,13 @@ def pass1_prompt(family: str, doc: dict) -> tuple[str, str, str]:
         # ⛔ 沒有直接改下面 items 那一條：那 700 多張道具圖已經出貨，換掉它的框架
         # 等於讓「重跑一次就變另一種畫風」，blast radius 遠超這一批。
         # 願望是**祝福/效果**不是桌上的商品，所以它跟 abilities 同一種框架。
-        pos = (f"{_one_of(subject)}, {hue} colour scheme, centred, one single "
-               f"subject, plain background, clear sharp silhouette, "
-               f"full subject in frame")
-    else:
-        pos = (f"{_one_of(subject)}, {hue} colour scheme, centred, one object, "
-               f"studio product shot, plain background, clear sharp silhouette, "
-               f"full object in frame")
-    neg = ("blurry, lowres, deformed, cropped, multiple objects, collage, text, "
-           "watermark, frame, border, extra limbs, bad anatomy")
+        pass
+    frame = PASS1_FRAME.get(family, PASS1_FRAME["items"])
+    pos = frame.format(subject=subject, one_of=_one_of(subject), hue=hue,
+                       nochar=_NO_CHARACTER)
+    neg = PASS1_NEG_BASE
+    if family != "champions":
+        neg = f"{neg}, {PASS1_NEG_NO_CHARACTER}"
     return pos, neg, signal
 
 

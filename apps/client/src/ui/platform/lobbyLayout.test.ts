@@ -5,15 +5,17 @@
  * 線上玩家 panel wedged between them, and GH#258 (單人 vs BOT 變成 create room
  * 底下預設的一個房間).
  *
- * ---- 2026-08-03: THE COLUMN WENT FROM TWO SLOTS TO THREE --------------------
- * owner:「大廳 FRIEND 跟排位榜 中間，多出一個區域顯示所有大廳正在線上的玩家列表」.
+ * ---- THE COLUMN KEEPS GAINING SLOTS (2 → 3 → 4) -----------------------------
+ * owner 2026-08-03:「大廳 FRIEND 跟排位榜 中間，多出一個區域顯示所有大廳正在線上的
+ * 玩家列表」. owner 2026-08-19 (GH#454):「把最多輸贏的宿敵列在朋友列表跟積分排行榜
+ * 之間」.
  * The 「各半」 assertions below USED to read `f.flexGrow === l.flexGrow`, which
  * is the right guard for two equal halves and exactly the wrong one for three
  * unequal thirds — it would have gone green on a column that dropped the middle
- * panel entirely. They now parse all three slots' declared shares off the DOM
- * and check the set: three slots, in the owner's order, summing to 100%.
- * (Mutation-verified: deleting the `online` slot from LobbyScreen.tsx fails
- * both 「三段」 tests.)
+ * panel entirely. They now parse EVERY slot's declared share off the DOM and
+ * check the set against `ALL_SLOTS` + the policy, so the next panel added does
+ * not need this file retyped. (Mutation-verified: deleting a slot's line from
+ * LobbyScreen.tsx fails both structural tests.)
  *
  * ---- WHY THIS FILE MOUNTS THE REAL SCREEN ----------------------------------
  * Both requirements are about WHERE something is and WHAT PRESSING IT DOES, and
@@ -126,11 +128,13 @@ const {
   DEFAULT_LOBBY_LAYOUT,
   LOBBY_LAYOUT_BOUNDS,
   leftColumnSlots,
+  ALL_SLOTS,
   leftColumnSlotStyle,
   lobbyLayoutProblems,
+  slotShare,
   resolveLeftColumnMode,
 } = await import("./lobbyLayout");
-type Slot = "friends" | "online" | "leaderboard";
+type Slot = (typeof ALL_SLOTS)[number];
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
 
@@ -243,15 +247,15 @@ afterEach(async () => {
   container.remove();
 });
 
-describe("lobby left column — 朋友列表 / 線上玩家 / 排位榜, three segments", () => {
-  it("puts ALL THREE panels in the left column, in the owner's order", () => {
+describe("lobby left column — 朋友列表 / 線上玩家 / 宿敵榜 / 排位榜", () => {
+  it("puts EVERY panel in the left column, in the owner's order", () => {
     cover("lobby-left-column-split");
     const left = container.querySelector<HTMLElement>("[data-ggd-lobby-left]");
     expect(left).not.toBeNull();
 
     // Containment read off the real tree: each panel is a descendant of the
     // LEFT column. Moving the ladder back to a column of its own fails here.
-    for (const name of ["friends", "online", "leaderboard"] as const) {
+    for (const name of ALL_SLOTS) {
       expect(left!.contains(slot(name))).toBe(true);
     }
 
@@ -261,20 +265,26 @@ describe("lobby left column — 朋友列表 / 線上玩家 / 排位榜, three s
     expect(slot("leaderboard").textContent ?? "").toContain("排位榜");
     expect(slot("friends").textContent ?? "").toContain("Friends");
     expect(slot("online").textContent ?? "").toContain("線上玩家");
+    expect(slot("nemesis").textContent ?? "").toContain("宿敵榜");
 
-    // owner:「FRIEND 跟排位榜 中間」 — 線上玩家 is BETWEEN them, in document
-    // order, not merely present somewhere in the column.
-    expect(renderedOrder()).toEqual(["friends", "online", "leaderboard"]);
+    // owner:「FRIEND 跟排位榜 中間」(2026-08-03, 線上玩家) and 「朋友列表跟積分
+    // 排行榜之間」(2026-08-19 GH#454, 宿敵榜) — BOTH are between them, in
+    // document order, not merely present somewhere in the column.
+    const order = renderedOrder();
+    expect(order[0]).toBe("friends");
+    expect(order[order.length - 1]).toBe("leaderboard");
+    expect(order.indexOf("nemesis")).toBeGreaterThan(order.indexOf("friends"));
+    expect(order.indexOf("nemesis")).toBeLessThan(order.indexOf("leaderboard"));
   });
 
-  it("divides the column into three shares that add up to 100%", () => {
+  it("divides the column into shares that add up to 100%", () => {
     cover("lobby-left-column-split");
     const shares = renderedShares();
 
     // 三段, not two and not four. The old two-panel version of this test read
     // `friends.flexGrow === leaderboard.flexGrow`, which stays green on a
     // column that lost the middle panel — this one cannot.
-    expect(shares).toHaveLength(3);
+    expect(shares).toHaveLength(ALL_SLOTS.length);
     // Every share is a real slice of the column…
     for (const s of shares) expect(s).toBeGreaterThan(0);
     // …and together they are the whole column: the numbers in the policy are
@@ -289,17 +299,15 @@ describe("lobby left column — 朋友列表 / 線上玩家 / 排位榜, three s
     // 說的是與真相無關的話。
     //
     // 真正該守的機制是「**畫面上的比例 == 政策裡的比例**」，那個由下面這一行守：
-    expect(shares).toEqual([
-      DEFAULT_LOBBY_LAYOUT.friendsShare,
-      DEFAULT_LOBBY_LAYOUT.onlineShare,
-      DEFAULT_LOBBY_LAYOUT.leaderboardShare,
-    ]);
+    expect(shares).toEqual(
+      leftColumnSlots("split", DEFAULT_LOBBY_LAYOUT).map((s) => slotShare(s, DEFAULT_LOBBY_LAYOUT)),
+    );
     // 每一段都要是「看得到的一塊」而不是被壓成一條線 —— 這是上下界在守的東西，
     // 這裡再確認一次它真的到了畫面上。
     for (const s of shares) expect(s).toBeGreaterThanOrEqual(LOBBY_LAYOUT_BOUNDS.friendsShare.min);
 
     // 各自內部捲動 + never widen the page (both halves of the original ask).
-    for (const name of ["friends", "online", "leaderboard"] as const) {
+    for (const name of ALL_SLOTS) {
       const s = slot(name).style;
       expect(s.flexBasis).toBe("0px");
       expect(s.overflowY).toBe("auto");
@@ -329,7 +337,7 @@ describe("lobby left column — 朋友列表 / 線上玩家 / 排位榜, three s
     // originally chosen for. The policy stacks instead and gives each panel a
     // floor.
     await setViewport(844, 390);
-    for (const name of ["friends", "online", "leaderboard"] as const) {
+    for (const name of ALL_SLOTS) {
       const s = slot(name).style;
       expect(s.flexGrow).toBe("0");
       expect(s.minHeight).toBe(`${DEFAULT_LOBBY_LAYOUT.minSlotHeightPx}px`);
@@ -341,11 +349,9 @@ describe("lobby left column — 朋友列表 / 線上玩家 / 排位榜, three s
     // resized desktop window is not stranded in the fallback.
     await setViewport(1440, 900);
     // 同上：從政策推導，不抄字面值（owner 2026-08-04 把比例改成 3:2:5）。
-    expect(renderedShares()).toEqual([
-      DEFAULT_LOBBY_LAYOUT.friendsShare,
-      DEFAULT_LOBBY_LAYOUT.onlineShare,
-      DEFAULT_LOBBY_LAYOUT.leaderboardShare,
-    ]);
+    expect(renderedShares()).toEqual(
+      leftColumnSlots("split", DEFAULT_LOBBY_LAYOUT).map((s) => slotShare(s, DEFAULT_LOBBY_LAYOUT)),
+    );
   });
 
   it("the rendered slots are the policy's output, not hand-written literals", () => {
@@ -353,7 +359,7 @@ describe("lobby left column — 朋友列表 / 線上玩家 / 排位榜, three s
     // Ties the screen to the module: if the JSX ever stops calling the policy,
     // the phone branch above silently dies while everything still looks right
     // on a desktop (failure form ③ — deletable without turning anything red).
-    for (const name of ["friends", "online", "leaderboard"] as const) {
+    for (const name of ALL_SLOTS) {
       const expected = leftColumnSlotStyle(name, "split", DEFAULT_LOBBY_LAYOUT);
       const s = slot(name).style;
       expect(Number(s.flexGrow)).toBeCloseTo(Number(expected.flexGrow), 5);
@@ -373,17 +379,19 @@ describe("stack order is read from the policy, not from the JSX", () => {
     // watch the pure function follow it.
     const scrambled = {
       ...DEFAULT_LOBBY_LAYOUT,
-      stackOrder: ["leaderboard", "friends", "online"] as Slot[],
+      stackOrder: ["leaderboard", "nemesis", "friends", "online"] as Slot[],
     };
-    expect(leftColumnSlots("stack", scrambled)).toEqual(["leaderboard", "friends", "online"]);
-    // Split is deliberately NOT configurable — the owner placed 線上玩家
-    // between the two by name.
-    expect(leftColumnSlots("split", scrambled)).toEqual(["friends", "online", "leaderboard"]);
+    expect(leftColumnSlots("stack", scrambled)).toEqual([
+      "leaderboard", "nemesis", "friends", "online",
+    ]);
+    // …and the DESKTOP order is its own field (GH#454 put a second panel
+    // between 朋友 and 排位榜, so which of the two goes first is a choice).
+    expect(leftColumnSlots("split", scrambled)).toEqual([...DEFAULT_LOBBY_LAYOUT.splitOrder]);
 
-    // A hand-edited policy that drops a panel falls back to all three rather
+    // A hand-edited policy that drops a panel falls back to the full set rather
     // than rendering a lobby with no friends list, and says so out loud.
     const broken = { ...DEFAULT_LOBBY_LAYOUT, stackOrder: ["friends", "friends"] as Slot[] };
-    expect(leftColumnSlots("stack", broken)).toEqual(["friends", "online", "leaderboard"]);
+    expect(leftColumnSlots("stack", broken)).toEqual([...ALL_SLOTS]);
     expect(lobbyLayoutProblems(broken).join(" ")).toContain("stackOrder");
   });
 });

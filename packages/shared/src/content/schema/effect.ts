@@ -42,6 +42,15 @@ import {
   PROXY_MAX_CHAIN_DEPTH,
   STAT_CEILING_MAX,
   // [EX∅ 根源]（2026-08-18）—— 同一張表，⛔ 不抄字面值。
+  // 連鎖閃電（2026-08-19, GH#451）—— 同一張表，⛔ 不抄字面值。
+  CHAIN_MAX_DECAY,
+  CHAIN_MAX_JUMPS,
+  CHAIN_MAX_JUMP_INTERVAL_SEC,
+  CHAIN_MAX_RADIUS,
+  CHAIN_MAX_SOURCES,
+  CHAIN_MAX_TOTAL_JUMPS,
+  CHAIN_MIN_DECAY,
+  DEFAULT_CHAIN_JUMP_INTERVAL_SEC,
   AURA_COUNT_MAX,
   CARRY_MAX_PASSENGERS,
   CARRY_MAX_SEC,
@@ -473,7 +482,10 @@ function refineDispelShape(
         // [EX∅ 根源]（2026-08-18）：`carry` / `convertTeam` 用**同一組**幾何
         // 欄位（shape + radius + radiusTier），所以走同一份檢查。
         | "carry"
-        | "convertTeam";
+        | "convertTeam"
+        // 連鎖閃電（2026-08-19，GH#451）：`shape` + `radius` 是**同一組**幾何欄位，
+        // 所以走同一份檢查。⛔ 各寫一份的那一天它們會分岔，而每一份看起來都對。
+        | "chainLightning";
     }
   >,
   ctx: z.RefinementCtx,
@@ -933,7 +945,10 @@ function refineEffectDef(e: EffectDef, ctx: z.RefinementCtx): void {
     // `{kind:"carry", shape:"circle"}` 沒寫 radius 的文件會在執行期
     // `radius ?? 0` → 直接 return：動畫演完、什麼都沒發生（失敗形態②）。
     e.kind === "carry" ||
-    e.kind === "convertTeam"
+    e.kind === "convertTeam" ||
+    // GH#451：`shape:"circle"` 沒寫 radius 的連鎖閃電在執行期直接 return ——
+    // 技能放得出來、什麼都沒發生。同一份檢查，⛔ 不是第二份。
+    e.kind === "chainLightning"
   )
     return refineDispelShape(e, ctx);
   if (e.kind === "knockback") return refineKnockbackTier(e, ctx);
@@ -1732,8 +1747,20 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
        * 「敵方現存 MP 5% 傷害」都走這一個欄位。形狀、兩種 `scale` 讀法與上界
        * 見 {@link zResourcePctTerm} 與 sim/effects/dynamicTerms.ts。
        *
-       * 它與 `hpPct` 不重複:`hpPct` 只讀受害者的生命、只有比例讀法、上界 0.35,
-       * 已經出貨在 揍敵客 W 牙突 上,原封不動。
+       * 它與 `hpPct` 不重複:`hpPct` 只讀受害者的生命、只有比例讀法、上界 0.35。
+       *
+       * ⚠️ 2026-08-19 訂正（CLAUDE.md 第三守則）：這一行原本寫著 `hpPct`
+       * 「**已經出貨在 揍敵客 W 牙突 上,原封不動**」—— 而那份文件裡**一格
+       * `hpPct` 都沒有**。實測（走 `content/{abilities,items,augments,champions}`
+       * 的效果樹、依 `kind` 分類）：`damage.hpPct` 有 **6** 個用戶，
+       * **全部是道具**，`content/abilities` 是 **0**；另外 4 筆同名的 `hpPct`
+       * 是 `revive.hpPct`，跟這一格無關。
+       *
+       * 揍敵客 W（13-02 牙突）的「目標[最大生命] 6/8/10/12%」在 GH#459 走的是
+       * **`resourcePct`**（`{subject:"target", resource:"health", basis:"max"}`），
+       * 理由寫在 `tools/skill-remake/batch1.py::_split_res_pct` 的檔頭：
+       * `hpPct` 只長在 `damage` 一個 kind 上，而這一族的受害者常常是
+       * `damageArea` / `damageLine`，所以技能側統一走 `resourcePct`。
        */
       resourcePct: zResourcePctTerm.optional(),
       /**
@@ -3866,6 +3893,111 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
        * ⛔ 不替它寫第二條測試。
        */
       countsForOriginalTeam: z.boolean().optional(),
+    })
+    .strict(),
+  /**
+   * chainLightning（GH#451）—— 「範圍內的**每一個**單位各觸發一次連鎖閃電」。
+   *
+   * ⛔ 這是**一個機制**，不是兩支技能：`shape:"single"` 是一條鏈（原作那顆單獨的
+   * 鏈鎖閃電），`shape:"circle"` 是圈內每個人各一條（86-04 打雷絕招 / 65-04 天譴
+   * 那兩段 JASS）。為什麼組不出來（三個理由）與原作對照寫在
+   * `sim/effects/effect.ts` 的同名 union 成員上，⛔ 不在這裡重複一份。
+   *
+   * 界全部來自 `sim/effects/kindLimits.ts`（同一張表兩個消費端），
+   * 每一格都是**誤打守衛**不是平衡政策 —— 平衡值住在技能文件裡。
+   */
+  z
+    .object({
+      kind: z.literal("chainLightning"),
+      ...EFFECT_COMMON_SHAPE,
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape` —— 而且它在這裡是真的機制開關。 */
+      shape: z.enum(["single", "circle"]).describe(
+        "single＝只有這次的目標起一條連鎖；circle＝起始圈內**每一個**敵人各起一條" +
+          "（「聚集越多敵人威力越強」就是這個）。",
+      ),
+      radius: z
+        .number()
+        .positive()
+        .max(CHAIN_MAX_RADIUS)
+        .optional()
+        .describe("shape:\"circle\" 的起始圈半徑（GGD 單位）。圈內每個敵人各起一條連鎖。"),
+      radiusTier: zAoeTier.optional(),
+      centre: z
+        .enum(["caster", "point", "target"])
+        .optional()
+        .describe(
+          "起始圈以誰為圓心。省略＝caster（原作兩段 JASS 都是施法者位置）；" +
+            "point＝落點；target＝這次指定的目標。",
+        ),
+      maxSources: z
+        .number()
+        .int()
+        .min(1)
+        .max(CHAIN_MAX_SOURCES)
+        .optional()
+        .describe("最多幾個人各起一條連鎖（由近到遠）。留空＝上限本身。"),
+      amount: zScaling,
+      damageType: zDamageType.optional().describe(
+        "傷害型別：吃護甲(physical)、吃魔抗(magic)、什麼都不吃(true)。" +
+          "**省略 = 後台「傷害規則」頁的預設**（出貨 magic）。",
+      ),
+      jumps: z
+        .number()
+        .int()
+        .min(1)
+        .max(CHAIN_MAX_JUMPS)
+        .describe(
+          "一條連鎖總共打到幾個人（**含起點**）。原作 A04H 是 16（說明寫「傳遞16次」）。",
+        ),
+      jumpRange: z
+        .number()
+        .positive()
+        .max(CHAIN_MAX_RADIUS)
+        .describe("每一跳能跳多遠（GGD 單位）。跳不到人時這一條連鎖就結束。"),
+      decay: z
+        .number()
+        .min(CHAIN_MIN_DECAY)
+        .max(CHAIN_MAX_DECAY)
+        .describe(
+          "每跳的**傷害倍率** 0..1：0.8 = 每跳剩八成，1 = 完全不遞減。" +
+            "⛔ 必填 —— 這個效果的身分就是「逐個傷害遞減」，一個猜出來的預設會讓" +
+            "卡面上的「遞減」變成一句沒有發生的話。",
+        ),
+      jumpIntervalSec: z
+        .number()
+        .min(0)
+        .max(CHAIN_MAX_JUMP_INTERVAL_SEC)
+        .optional()
+        .describe(
+          "⭐ 兩發閃電之間的**秒數** —— 動畫與傷害都跟著它走，⛔ 不是整條鏈在同一" +
+            `瞬間結算。留空＝${DEFAULT_CHAIN_JUMP_INTERVAL_SEC} 秒（≈30Hz 的 2 tick）；` +
+            "**0 = 明寫要瞬發**（整條鏈在施放的那一 tick 跑完）。" +
+            "⚠️ 它同時是效能設計：逐跳把 O(來源數×跳數) 的尖峰攤到很多個 tick 上。",
+        ),
+      revisit: z
+        .boolean()
+        .optional()
+        .describe(
+          "同一個目標能不能在**同一條**連鎖裡被跳到第二次。留空＝不能。" +
+            "⚠️ 不同連鎖打到同一個人一律允許（那正是「越多單位越痛」）。" +
+            "⛔ 下一跳是從射程內的候選裡**隨機**抽的，不是取最近的那一個。",
+        ),
+      maxTotalJumps: z
+        .number()
+        .int()
+        .min(1)
+        .max(CHAIN_MAX_TOTAL_JUMPS)
+        .optional()
+        .describe(
+          "這一次施放的**總跳數上限**（保險絲）。留空＝上限本身。" +
+            "⚠️ 這一格擋的是 O(來源數×跳數)：60 隻殭屍的場上，20 條 × 24 跳 = 480 筆" +
+            "傷害全部落在同一個 tick。",
+        ),
+      canCrit: z.boolean().optional(),
+      /** ⭐ G1 ② —— 與 `damageArea` 同名同語意（同一個 `runOnHitChain`）。 */
+      onHitTargets: zOnHitTargets,
+      runOnEmptyHit: zRunOnEmptyHit,
+      onHitTargetsMode: zOnHitTargetsMode,
     })
     .strict(),
 ]);

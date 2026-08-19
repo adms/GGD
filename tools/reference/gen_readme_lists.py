@@ -50,6 +50,7 @@ Stdlib only, deterministic, idempotent: two runs produce byte-identical output.
 There is no timestamp — the contentVersion is the freshness stamp.
 """
 
+import json
 import os
 import sys
 
@@ -80,7 +81,7 @@ DOC_ITEMS = "docs/reference/items.md"
 DOC_GRAIL = "docs/reference/grail-wishes.md"
 DOC_MECHANICS = "docs/reference/mechanics.md"
 
-BLOCKS = ("roster", "abilities", "items", "grail", "mechanics")
+BLOCKS = ("roster", "abilities", "items", "grail", "mechanics", "arenas")
 
 
 # ---------------------------------------------------------------------------
@@ -576,8 +577,125 @@ def gen_mechanics(ctx):
     return "\n".join(out), len(kinds) + len(hooks) + len(leaves)
 
 
+# ---------------------------------------------------------------------------
+# arenas — 場地清單（GH#449）
+# ---------------------------------------------------------------------------
+
+def _num(x):
+    """`31.240998703626623` → `31.24`，`24.0` → `24`。
+
+    ⛔ 不要 round() 之後直接 str()：`24.0` 印成 `24.0` 會讓十三列裡有兩種寫法。
+    """
+    if x is None:
+        return "—"
+    v = round(float(x) + 0.0, 2)
+    return str(int(v)) if v == int(v) else str(v)
+
+
+def load_arenas():
+    """`content/arenas/arena.*.json` 逐檔讀出來，⛔ 不吃 `_index.json`。"""
+    import glob
+    out = []
+    for path in sorted(glob.glob(os.path.join(G.CONTENT, "arenas", "arena.*.json"))):
+        with open(path, encoding="utf-8") as f:
+            out.append(json.load(f))
+    return out
+
+
+def load_arena_pool():
+    """`config.arena-pool@1` —— 回合輪替池與決賽場地（GH#324 之後是後台可調的）。"""
+    path = os.path.join(G.CONTENT, "config", "arena-pool.json")
+    if not os.path.exists(path):
+        sys.exit(f"missing {path} — 輪替池是 config.arena-pool@1，⛔ 不是散文")
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def gen_arenas(ctx):
+    """README 區塊：**每一張**場地與它的幾何，從 `content/arenas/*.json` 數出來。
+
+    ⭐ 為什麼這一段必須是產生的（GH#449，owner「新的地圖場地 也記得更新到 github
+    readme」）：README 這一節以前手寫著「輪替池：五份文件…manifest 也記
+    `arenas: 5`」，而實際上有 **13 張**，而且輪替池早就不是那個寫死的 TS 陣列了
+    （GH#324 把它搬進 `config.arena-pool@1`）。一份手寫的清單就是一個**保證會
+    過期**的第二住處 —— 這個 repo 已經因為同一個形狀被咬過三次
+    （`SIM_CAPABILITIES` 兩次、`skillTiers.ts` 的「110 支」實為 29 支）。
+
+    ⛔ 這裡刻意**不驗證**幾何本身（那是 `arenaCollision.test.ts` 的工作）。
+    它只驗一件 README 自己造得出來的謊：**輪替池點名了一張不存在的場地**。
+    那是兩個名詞之間的**關係**，⛔ 分別檢查每一半永遠看不出來。
+    """
+    arenas = load_arenas()
+    pool = load_arena_pool()
+    rotation = list(pool.get("rotation") or [])
+    finale = pool.get("finale")
+    by_id = {a["id"]: a for a in arenas}
+
+    missing = [i for i in rotation + ([finale] if finale else []) if i not in by_id]
+    if missing:
+        sys.exit(
+            f"config.arena-pool@1 點名了 {len(missing)} 張不存在的場地：{', '.join(missing)}\n"
+            f"   → 補上 content/arenas/<id>.json 或把它從 arena-pool.json 拿掉，"
+            f"⛔ 不要改產生器"
+        )
+
+    radii = sorted({z["boundaryRadius"] for a in arenas for z in a["zones"]})
+    featured = [a for a in arenas if any(z.get("regions") or z.get("interactions") or z.get("gates")
+                                         for z in a["zones"])]
+
+    L = [
+        f"#### 競技場 arenas（{len(arenas)} 張 · 邊界半徑 {len(radii)} 種 · "
+        f"{len(featured)} 張帶場地特色）",
+        "",
+    ]
+    L += note([
+        f"**輪替**欄讀 `content/config/arena-pool.json`（`config.arena-pool@1`，後台可調）："
+        f"🔁 ＝在回合輪替池裡（{len(rotation)} 張）、🏁 ＝決賽場地"
+        f"（`{finale}`，刻意不在池子裡）、— ＝有文件但目前沒有人抽得到。"
+        "⚠️ 池子的**順序不是輪替順序** —— `pickRoundArena()` 用 match seed 洗一次牌。",
+        "",
+        "其餘每一欄都是從那一份 arena 文件**逐檔數**出來的："
+        "**半徑**＝各 zone 的 `boundaryRadius`（不同就全部列出）、"
+        "**zone**＝一張圖切成幾個獨立的對決區、"
+        "**障礙**＝`obstacles` 的段/圓總數（碰撞幾何，⛔ 不是佈景）、"
+        "**出生點**＝`spawns` 攤平後的座標數、"
+        "**地面**＝`groundStyle`、**背景**＝有沒有 `backdrop` 遠景層、"
+        "**佈景**＝`decor` 物件數 ＋ `scenery.props` 的實例數（⛔ 兩者都不擋路）、"
+        "**場地特色**＝`regions` 命名區域 / `interactions` 互動點 / `gates` 週期開關門。",
+    ])
+
+    L += [
+        "| id | 名稱 | 輪替 | 半徑 | zone | 障礙 | 出生點 | 地面 | 背景 | 佈景 | 場地特色 |",
+        "|---|---|:-:|--:|--:|--:|--:|---|:-:|--:|---|",
+    ]
+    for a in arenas:
+        zones = a["zones"]
+        role = "🔁" if a["id"] in rotation else ("🏁" if a["id"] == finale else "—")
+        radius = " / ".join(_num(r) for r in sorted({z["boundaryRadius"] for z in zones}))
+        obstacles = sum(len(z.get("obstacles") or []) for z in zones)
+        spawns = sum(len(team) for z in zones for team in (z.get("spawns") or []))
+        decor = len(a.get("decor") or [])
+        props = sum(int(p.get("count", 1)) for p in ((a.get("scenery") or {}).get("props") or []))
+        feats = []
+        for label, key in (("區域", "regions"), ("互動", "interactions")):
+            n = sum(len(z.get(key) or []) for z in zones)
+            if n:
+                feats.append(f"{label}×{n}")
+        if any(z.get("gates") for z in zones):
+            feats.append("機關門")
+        L.append(
+            f"| `{a['id']}` | {G.cell(a.get('name'))} | {role} | {radius} | {len(zones)} | "
+            f"{obstacles} | {spawns} | `{a.get('groundStyle') or '—'}` | "
+            f"{'✅' if a.get('backdrop') else '—'} | {decor}+{props} | "
+            f"{'、'.join(feats) or '—'} |"
+        )
+    L.append("")
+    L += provenance(ctx, f"輪替 {len(rotation)} / 全 {len(arenas)} 張。")
+    return "\n".join(L), len(arenas)
+
+
 GENERATORS = {"roster": gen_roster, "abilities": gen_abilities, "items": gen_items,
-              "grail": gen_grail, "mechanics": gen_mechanics}
+              "grail": gen_grail, "mechanics": gen_mechanics, "arenas": gen_arenas}
 
 
 def render(ctx):

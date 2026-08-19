@@ -302,7 +302,7 @@ def build_jobs(pl: dict, tiers: list[str], families: set[str] | None,
                 "subject": subject,
                 "signal": signal,
                 "confidence": conf,
-                "prompt": build_prompt(subject),
+                "prompt": build_prompt(subject, family),
                 "model": model,
                 "quality": quality,
                 "edge": edge,
@@ -454,7 +454,7 @@ def main() -> None:
                     subject_cache[job["id"]] = {"subject": subject, "signal": "text"}
                     save_subject_cache(subject_cache)
                     job["subject"] = subject
-                    job["prompt"] = build_prompt(subject)
+                    job["prompt"] = build_prompt(subject, job["family"])
                     job["hash"] = content_hash(job)
                 spent += text_rate
                 time.sleep(interval)

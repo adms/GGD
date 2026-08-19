@@ -61,16 +61,16 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        25.0,
-        25.0,
-        25.0,
-        25.0
+        25,
+        25,
+        25,
+        25
       ],
       "manaCost": [
-        50.0,
-        75.0,
-        100.0,
-        125.0
+        50,
+        75,
+        100,
+        125
       ],
       "effects": [],
       "template": {
@@ -143,11 +143,10 @@
     "E": {
       "id": "godie-hvsh.e",
       "name": "48-03 鮮血神殿",
-      "icon": "assets/icons/abilities/godie-hvsh.e.webp",
       "provenance": "w3x-import",
-      "description": "[主動攻擊]\n60秒冷卻時間\n\n召喚一個嗜血的結界，每秒可以損傷敵方部隊75生命，降低攻擊速度50%，每秒受到傷害的部隊可恢復Rider1%的生命，每殺死14個部隊則增加Rider1點全能力，可持續10秒。",
+      "description": "[主動][自身][範圍][持續傷害][減速][回復][屬性成長]\n60秒冷卻\n消耗MP120/195/270/345\n有效範圍：大\n\n以自身為中心展開一座嗜血結界，持續10秒。結界每秒對[大範圍]內的敵人造成 75/150/225/300 + 60% [AP] 傷害，並使其[攻擊速度]降低50%、[移動速度]降低50%；每有一名敵人被結界扣血，梅杜莎回復自身1%[最大生命]。結界期間每擊殺14個敵人，梅杜莎永久獲得1點全能力。",
       "slot": "E",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 4,
       "cooldown": [
         60,
@@ -161,32 +160,111 @@
         270,
         345
       ],
-      "range": 1.83,
-      "effects": [],
-      "vfxKey": "fx.prim.blood.nova",
+      "range": 0,
+      "radiusTier": "大",
       "targetsEnemies": true,
-      "castTimeSec": 0.667,
-      "template": {
-        "ref": "tpl-single-strike",
-        "params": {
-          "damage": {
-            "perRank": [
-              75,
-              150,
-              225,
-              300
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.6
-              }
-            ]
-          },
-          "damageType": "magic",
-          "castTimeSec": 0.667
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [],
+          "duration": 10,
+          "applyTo": "self",
+          "stackKey": "hvsh-blood-temple",
+          "maxStacks": 1,
+          "hooks": [
+            {
+              "on": "onInterval",
+              "effects": [
+                {
+                  "kind": "damageArea",
+                  "damageType": "magic",
+                  "amount": {
+                    "perRank": [
+                      75,
+                      150,
+                      225,
+                      300
+                    ],
+                    "ratios": [
+                      {
+                        "stat": "ap",
+                        "coeff": 0.6
+                      }
+                    ]
+                  },
+                  "radius": 8,
+                  "radiusTier": "大",
+                  "onHitTargets": [
+                    {
+                      "kind": "heal",
+                      "amount": {
+                        "ratios": [
+                          {
+                            "stat": "maxHealth",
+                            "coeff": 0.01
+                          }
+                        ]
+                      },
+                      "applyTo": "self"
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "slow50",
+                      "duration": 1.5,
+                      "moveSpeedMult": 0.5
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "modifiers": [
+                        {
+                          "stat": "as",
+                          "op": "pctMult",
+                          "value": -0.5
+                        }
+                      ],
+                      "duration": 1.5,
+                      "stackKey": "hvsh-blood-temple-aslow",
+                      "maxStacks": 1,
+                      "dispellable": true,
+                      "polarity": "debuff"
+                    }
+                  ],
+                  "onHitTargetsMode": "perTarget"
+                }
+              ],
+              "internalCooldown": 1,
+              "target": "self"
+            },
+            {
+              "on": "onKill",
+              "effects": [
+                {
+                  "kind": "grantAttribute",
+                  "attr": "str",
+                  "amount": 1,
+                  "everyNth": 14
+                },
+                {
+                  "kind": "grantAttribute",
+                  "attr": "agi",
+                  "amount": 1,
+                  "everyNth": 14
+                },
+                {
+                  "kind": "grantAttribute",
+                  "attr": "int",
+                  "amount": 1,
+                  "everyNth": 14
+                }
+              ],
+              "target": "self"
+            }
+          ]
         }
-      }
+      ],
+      "vfxKey": "fx.prim.blood.nova",
+      "castTimeSec": 1.033,
+      "icon": "assets/icons/abilities/godie-hvsh.e.webp"
     },
     "R": {
       "id": "godie-hvsh.r",
@@ -198,14 +276,14 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        230.0,
-        330.0,
-        430.0
+        230,
+        330,
+        430
       ],
       "effects": [],
       "template": {

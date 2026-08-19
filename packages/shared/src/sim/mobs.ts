@@ -49,7 +49,7 @@ import type { LastHitMode } from "./mobBoss";
 import type { FlightGrant } from "./flight";
 import type { Vec2 } from "./math/vec2";
 import { pushOutOfObstacle, clampToBoundary } from "./collision/resolve";
-import { pointOnBoundary, spotIsClear, freeEdgeSpot } from "./map/bounds";
+import { pointOnBoundary, spotIsClear, spotHasRoom, freeEdgeSpot } from "./map/bounds";
 // #L1 — 殭屍王在場 → 回合延長. The round clock rides the ring's rules (it is the
 // only per-combat clock the sim has); this module owns the one moment a king
 // enters the world, so it is the module that trips it. No cycle: fireRing.ts
@@ -2467,7 +2467,11 @@ export function mobSpawnPosAtDir(
   // ⚠️ 站得下就**原封不動回傳** ⇒ 本來就正確的生成點逐位元等於這段程式碼出現之前
   // （出貨半徑實測：900 個點裡 446 個走這一條，一個都沒移動）。這條缺陷的修法
   // 因此不動任何一個好的落點，也就不會偷偷改掉既有錄影的落位。
-  if (spotIsClear(zoneDef, body.pos, radius)) return body.pos;
+  // ⭐ GH#398 —— 「站得下」不夠，還要「離得開」。`pushOutOfObstacle` 推出來的點
+  //    在定義上就**貼著**障礙物，而 `clampToBoundary` 又把它壓在邊界上；
+  //    兩個都成立的那個交點正是**動不了**的地方（出貨量到 4 個，全部是殭屍王）。
+  if (spotIsClear(zoneDef, body.pos, radius) && spotHasRoom(zoneDef, body.pos, radius))
+    return body.pos;
   const found = freeEdgeSpot(zoneDef, t0, radius);
   // 退路 = **今天的答案**（貼著邊、在界內、逐位元等於修這個缺陷之前）。
   // ⛔ 不是場地中央：波次的意義就是「從邊緣湧入」，一個找不到落腳點的病態場地

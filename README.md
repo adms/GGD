@@ -133,6 +133,7 @@ DATA_DIR=./data REDIS_ADDR=127.0.0.1:6379 PLATFORM_ADDR=127.0.0.1:8080 JWT_SIGNI
 | `PLATFORM_INTERNAL_URL` | | `http://platform:8080`（k8s 用） |
 | `SEASON` | | `s1` |
 | `RANKED_CHALLENGER_FRAC` / `RANKED_GRANDMASTER_FRAC` / `RANKED_MIN_APEX_GAMES` | | `0.10` / `0.10` / `10` |
+| `RANKED_MIN_APEX_POINTS` / `RANKED_MIN_APEX_LADDER` | | `1` / `0`（GH#352 的兩個 apex 閘：**最低分數**與**榜上最少人數**。分數閘的 `1` 是 owner 的底線「沒分數不應該有位階」，調到 0 會被夾回 1；人數閘 `0` ＝不設閘，設成 N 之後**人數 < N 的榜一個菁英/宗師都不發**） |
 | `ADMIN_BOOTSTRAP_USERNAME` | | 空（不 bootstrap） |
 | `GGD_DEPLOY_TIER` | | 未設 ＝ **public**（版權閘的 fail-safe 方向） |
 | `GGD_REQUIRE_APPROVAL` / `GGD_REGISTER_RATE_LIMIT` | | off / `0`（`internal/server/server.go` 的 `New()`：`envEnabled("GGD_REQUIRE_APPROVAL")` / `envInt("GGD_REGISTER_RATE_LIMIT", 0)`） |
@@ -399,11 +400,37 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 
 ### 每回合換地圖
 
-輪替池：`arena.skeleton` / `arena.castle` / `arena.colosseum` / `arena.dota` / `arena.godie`（`apps/game-server/src/match/arenaSelect.ts:30-36` 的 `ARENA_ROTATION_IDS`；未載入的會被略過）。五份文件都確實存在於 `content/arenas/`，manifest 也記 `arenas: 5`。
+輪替池讀 `content/config/arena-pool.json`（`config.arena-pool@1`，後台可調 —— GH#324 之前它是寫死在 `arenaSelect.ts` 的 TS 陣列，於是七張新產出的動漫競技場上線後玩家一場都碰不到）。**哪幾張、各是什麼形狀，看下面那張產生出來的表**，⛔ 這裡不再手寫一份。
 
-選擇由 `(matchSeed, round)` 的純雜湊決定，**不動用 `world.rng`**，因此：同種子重播完全一致、**連續兩回合永不重複**、前 N 回合會走遍每張地圖。地圖在戰鬥相位一開始就選定並套用碰撞幾何。
+選擇由 `(matchSeed, round)` 決定，**不動用 `world.rng`**，因此：同種子重播完全一致、**連續兩回合永不重複**。地圖在戰鬥相位一開始就選定並套用碰撞幾何。
 
-> ⚠ 任務 **#145（每回合換地圖）** 仍標 pending。程式路徑與五份 arena 文件都在，但**沒有實際跑一場對局確認觀感**。
+> ⚠ 任務 **#145（每回合換地圖）** 仍標 pending：程式路徑與全部 arena 文件都在，但**沒有實際跑一場對局確認觀感**。
+
+<!-- BEGIN GENERATED:arenas -->
+#### 競技場 arenas（13 張 · 邊界半徑 4 種 · 7 張帶場地特色）
+
+> **輪替**欄讀 `content/config/arena-pool.json`（`config.arena-pool@1`，後台可調）：🔁 ＝在回合輪替池裡（12 張）、🏁 ＝決賽場地（`arena.royale`，刻意不在池子裡）、— ＝有文件但目前沒有人抽得到。⚠️ 池子的**順序不是輪替順序** —— `pickRoundArena()` 用 match seed 洗一次牌。
+>
+> 其餘每一欄都是從那一份 arena 文件**逐檔數**出來的：**半徑**＝各 zone 的 `boundaryRadius`（不同就全部列出）、**zone**＝一張圖切成幾個獨立的對決區、**障礙**＝`obstacles` 的段/圓總數（碰撞幾何，⛔ 不是佈景）、**出生點**＝`spawns` 攤平後的座標數、**地面**＝`groundStyle`、**背景**＝有沒有 `backdrop` 遠景層、**佈景**＝`decor` 物件數 ＋ `scenery.props` 的實例數（⛔ 兩者都不擋路）、**場地特色**＝`regions` 命名區域 / `interactions` 互動點 / `gates` 週期開關門。
+
+| id | 名稱 | 輪替 | 半徑 | zone | 障礙 | 出生點 | 地面 | 背景 | 佈景 | 場地特色 |
+|---|---|:-:|--:|--:|--:|--:|---|:-:|--:|---|
+| `arena.castle` | 城堡競技場（室內） | 🔁 | 24 | 2 | 16 | 12 | `stone` | — | 42+36 | — |
+| `arena.colosseum` | 羅馬大擂台（室外） | 🔁 | 24 | 2 | 40 | 12 | `sand` | — | 74+37 | — |
+| `arena.dota` | Dota 三路河道（迷你） | 🔁 | 24 | 2 | 24 | 12 | `grass` | — | 64+27 | — |
+| `arena.frieren` | 芙莉蓮迷宮 | 🔁 | 30 | 2 | 14 | 12 | `stone` | ✅ | 28+36 | 區域×10、互動×16、機關門 |
+| `arena.godie` | 去死團的逆襲 EX 2.2s | 🔁 | 24 | 2 | 55 | 12 | `dirt` | — | 24+23 | — |
+| `arena.heavens-arena` | 天空鬥技場 | 🔁 | 30 | 2 | 20 | 12 | `wood` | ✅ | 21+30 | 區域×10、互動×16、機關門 |
+| `arena.holy-grail` | 大聖杯洞窟 | 🔁 | 30 | 2 | 24 | 12 | `stone` | ✅ | 26+34 | 區域×10、互動×16、機關門 |
+| `arena.infinity-castle` | 無限城 | 🔁 | 30 | 2 | 32 | 12 | `tatami` | ✅ | 31+39 | 區域×10、互動×16、機關門 |
+| `arena.nazarick` | 納薩力克大墳墓 | 🔁 | 31.24 | 2 | 16 | 12 | `obsidian` | ✅ | 25+38 | 區域×10、互動×16、機關門 |
+| `arena.royale` | 終局大混戰 | 🏁 | 42 | 1 | 4 | 12 | `stone` | — | 18+38 | — |
+| `arena.shiganshina` | 希干希納 | 🔁 | 30 | 2 | 14 | 12 | `dirt` | ✅ | 25+39 | 區域×10、互動×16、機關門 |
+| `arena.skeleton` | 新手競技場 | 🔁 | 24 | 2 | 4 | 12 | `stone` | — | 24+20 | — |
+| `arena.world-tree` | 世界樹核心 | 🔁 | 30 | 2 | 24 | 12 | `grass` | ✅ | 29+36 | 區域×10、互動×16、機關門 |
+
+*由 `pnpm docs:readme` 從 contentVersion `cv_ea61889db7e9` 產生。 輪替 12 / 全 13 張。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+<!-- END GENERATED:arenas -->
 
 ### 設定陷阱（改了不會生效）
 
@@ -613,9 +640,9 @@ make lan-probe
 [`docs/英雄定位與屬性總表.md`](docs/英雄定位與屬性總表.md)，
 ⛔ 那份是 `tools/hero-archetypes/build.ts` 產生的，不要手改。
 
-### 這三份表是機器產生的
+### 這幾份表是機器產生的
 
-由 `tools/reference/gen_readme_lists.py` 寫進三對 HTML 註解標記之間 —— `BEGIN GENERATED:roster` / `END GENERATED:roster`，以及 `abilities`、`items` 兩組同型的標記（實際字樣請直接看下面三個區塊的頭尾；這裡刻意不逐字重複，因為產生器是用**字串出現次數**找標記的，散文裡多寫一次就會讓它以為標記重複而中止）。
+由 `tools/reference/gen_readme_lists.py` 寫進成對的 HTML 註解標記之間。**哪幾組標記，以那支腳本的 `BLOCKS` 為準** —— ⛔ 這裡刻意不列一份清單也不寫一個數字（那就是 GH#449 在講的第二住處；這一行以前寫「三對」，而實際上早就不只三對了）。實際字樣直接看下面每個區塊的頭尾：⛔ 散文裡多寫一次，產生器就會以為標記重複而中止（它是用**字串出現次數**找標記的）。守衛 `readmeListsFresh.test.ts` 逐一比對 `BLOCKS` 與 README 的標記對，少一組就紅。
 
 **標記之間的任何一個字都不要手改** —— 下次重新產生就沒了。要改內容請改 `content/` 底下的來源文件，然後：
 
@@ -930,7 +957,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 - **天生·主動** 48-00 石化之眼：開啟石化之眼，將Rider附近250範圍的部隊予以石化，持續4秒。
 - **Q** 48-01 魔法鎖鏈：使用鎖鏈將路線上的部隊拉回自己身旁，並受到150的傷害。
 - **W** 48-02 心眼：心眼讓梅杜莎有12%的機會閃避攻擊。
-- **E** 48-03 鮮血神殿：召喚一個嗜血的結界，每秒可以損傷敵方部隊75生命，降低攻擊速度50…
+- **E** 48-03 鮮血神殿：[主動][自身][範圍][持續傷害][減速][回復][屬性成長]
 - **R** 48-04 騎英之疆繩：招喚飛馬以超快的速度衝擊前方，對指定地點上的地面部隊造成敏捷*3+…
 - **EX** 48-002 騎英之疆繩MAX：Rider解開眼罩封印，讓必殺技騎英之疆繩轉變成騎英之疆繩MAX造…
 
@@ -994,7 +1021,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 - **Q** 86-01 十萬伏特：皮卡的得意絕招，使出電擊攻擊6個敵人，每個敵人傷害175。
 - **W** 86-02 電光一閃：讓皮卡娘以疾快的速度移動進出600的距離到指定的位置。
 - **E** 86-03 神鳴：皮卡娘大絕招之一，將雷電集中在手上，再放射出去，可造成前方一直線4…
-- **R** 86-04 打雷絕招：放出全身積蓄的電壓瘋狂電擊範圍300距離內的敵人並使之暈眩0.5秒…
+- **R** 86-04 打雷絕招：放出全身積蓄的電壓，瘋狂電擊周圍的敵人並使之暈眩0.5秒。範圍內的…
 - **EX** 86-002 雷電萌神：皮卡娘在雷電萌神狀態，閃電大決傷害將增加為兩倍。
 
 **`godie-o00l` 傑洛士**（獸神官 · marksman · 遠程） — 隸屬於獸王底下的神官，是非常高等的魔族，擁有強大的魔法破壞力，不過通常隱身在幕…
@@ -1146,7 +1173,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 - **Q** 65-01 神出鬼沒：飛鼠先生可以瞬間移動3300的距離到指定的位置。
 - **W** 65-02 寒冰破碎：飛鼠先生在劍術學院結業創造之劍術，成功融合寒冰魔法與劍擊，能給予冰…
 - **E** 65-03 魔法膨脹：施咒補充敵方部隊法力的缺陷，但是過度膨脹的法力將會使目標暈眩1秒並…
-- **R** 65-04 天譴：怒氣凝聚為閃電殺暴附近的敵人，對周圍500範圍內的所有敵人放出閃雷…
+- **R** 65-04 天譴：怒氣凝聚為閃電，向前衝鋒並把附近的敵人一起捲進來。範圍內的敵人（最…
 - **EX** 65-002 永恆的愚蠢鄉：使飛鼠先生在一定時間內受到技能攻擊時，能夠給予對手強大的反擊，威力…
 
 **`godie-zombiex` 喪標麥可**（聖杯黑泥醬 · tank · 近戰） — 黑化聖杯溢出的惡意黑泥受肉凝聚，本來在美國重生，但不小心被印度工程師當成咖喱帶…
@@ -1160,7 +1187,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **完整 78 名英雄**（含 29 名未開放）與逐欄資料（開放旗標、技能 id、攻擊類型…）在 [`docs/reference/roster.md`](./docs/reference/roster.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_7ed50f24c2f2` 產生。 開放 49 / 全 78 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_ea61889db7e9` 產生。 開放 49 / 全 78 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:roster -->
 
 <!-- BEGIN GENERATED:abilities -->
@@ -1176,7 +1203,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **全 461 個技能的逐欄表**（id、名稱、slot、型態、編號、擁有英雄、開放旗標、完整短效果）在 [`docs/reference/abilities.md`](./docs/reference/abilities.md)；互動版在 <http://localhost:39527/#codex>。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_7ed50f24c2f2` 產生。 開放英雄技能 293 / 全 461 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_ea61889db7e9` 產生。 開放英雄技能 293 / 全 461 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:abilities -->
 
 <!-- BEGIN GENERATED:items -->
@@ -1352,7 +1379,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 > 📖 **全 142 件道具依 craftRole 的完整分類表**（component 16 / token 0 / none 24 …）在 [`docs/reference/items.md`](./docs/reference/items.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_7ed50f24c2f2` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_ea61889db7e9` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:items -->
 
 <!-- BEGIN GENERATED:grail -->
@@ -1441,7 +1468,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 逐張的完整 JSON（每一格參數、每一個 hook、每一條條件）在 [`docs/reference/grail-wishes.md`](docs/reference/grail-wishes.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_7ed50f24c2f2` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_ea61889db7e9` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:grail -->
 
 ### ⭐ 2026-08-17／18 這一批新加的機制（GH#354）
@@ -1492,23 +1519,24 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 >
 > ⚠️ 一個 token 出現在這裡＝**引擎認得它**；「內容」欄是 0 ＝ 機制在但還沒有人用，⛔ 不是壞掉。
 
-### 效果（effect kind）—— 39 種
+### 效果（effect kind）—— 40 種
 
 | 效果 | 用它的內容 | 效果 | 用它的內容 | 效果 | 用它的內容 |
 |---|--:|---|--:|---|--:|
-| `applyBuff` | 117 | `applyStatus` | 97 | `blink` | 17 |
-| `carry` | 0 | `championForm` | 24 | `convertTeam` | 0 |
-| `cycleBuff` | 1 | `damage` | 178 | `damageArea` | 28 |
-| `damageLine` | 10 | `dash` | 8 | `delayed` | 8 |
-| `devour` | 3 | `dispel` | 8 | `dot` | 4 |
-| `evasion` | 0 | `eventValueConversion` | 5 | `extendBuff` | 1 |
-| `grantAttribute` | 4 | `grantGold` | 1 | `heal` | 9 |
-| `invulnerable` | 18 | `knockback` | 11 | `leap` | 7 |
-| `manaBarrier` | 1 | `modifyCooldown` | 13 | `proxyCast` | 6 |
-| `randomArea` | 4 | `restore` | 17 | `revive` | 1 |
-| `shield` | 11 | `shieldBreak` | 2 | `spawnProjectile` | 28 |
-| `spawnVfx` | 18 | `spendMana` | 3 | `summon` | 0 |
-| `swapResource` | 1 | `taunt` | 2 | `weightedBranch` | 5 |
+| `applyBuff` | 118 | `applyStatus` | 99 | `blink` | 17 |
+| `carry` | 0 | `chainLightning` | 2 | `championForm` | 24 |
+| `convertTeam` | 0 | `cycleBuff` | 1 | `damage` | 178 |
+| `damageArea` | 30 | `damageLine` | 10 | `dash` | 8 |
+| `delayed` | 8 | `devour` | 3 | `dispel` | 8 |
+| `dot` | 4 | `evasion` | 0 | `eventValueConversion` | 5 |
+| `extendBuff` | 1 | `grantAttribute` | 5 | `grantGold` | 1 |
+| `heal` | 10 | `invulnerable` | 18 | `knockback` | 11 |
+| `leap` | 7 | `manaBarrier` | 1 | `modifyCooldown` | 13 |
+| `proxyCast` | 6 | `randomArea` | 4 | `restore` | 17 |
+| `revive` | 1 | `shield` | 11 | `shieldBreak` | 2 |
+| `spawnProjectile` | 28 | `spawnVfx` | 18 | `spendMana` | 4 |
+| `summon` | 0 | `swapResource` | 1 | `taunt` | 2 |
+| `weightedBranch` | 5 |  |  |  |  |
 
 ### 觸發事件（hook event）—— 33 種
 
@@ -1531,8 +1559,8 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 | `onFireRingIgnite` | 火圈點燃時 | 1 |
 | `onGuardianDown` | 守衛塔倒下時 | 0 |
 | `onHeal` | 治療真的補到血時 | 0 |
-| `onInterval` | 週期（每 N 秒） | 7 |
-| `onKill` | 擊殺時 | 13 |
+| `onInterval` | 週期（每 N 秒） | 8 |
+| `onKill` | 擊殺時 | 14 |
 | `onLethalDamage` | 受到致命傷害時（免死有沒有生效都會發） | 0 |
 | `onOverheal` | 治療溢出時 | 0 |
 | `onProjectileExpire` | 自己的投射物消失時 | 0 |
@@ -1578,7 +1606,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 完整的參數與上下界（每個效果每一格能填什麼）在 [`docs/技能標記機制與效果規則.md`](docs/技能標記機制與效果規則.md)，同樣是產生的。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_7ed50f24c2f2` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_ea61889db7e9` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:mechanics -->
 
 

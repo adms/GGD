@@ -112,6 +112,8 @@ import { GroundDecalPool } from "./GroundDecalPool";
 import { castScorchSpec } from "./feedbackPresets";
 import { StatusAuraFx } from "./StatusAuraFx";
 import { CastPillarFx } from "./CastPillarFx";
+import { ArcBoltFx } from "./ArcBoltFx";
+import { arcBoltSpec, ARC_TINTS, type ArcBoltOptions } from "./arcBolt";
 import { pillarPalette, pillarTintFromRamp, type PillarPalette } from "./castPillar";
 import { severityForHit, sprayDirection, damageScale, type Vec2 } from "./bloodPresets";
 import { goreConfig, resolveGore } from "./goreConfig";
@@ -315,6 +317,13 @@ function impactSparkColor(dmgType: "physical" | "magic" | "true"): [number, numb
 function isFinitePos(p: { x: number; z: number } | null): p is { x: number; z: number } {
   return p !== null && Number.isFinite(p.x) && Number.isFinite(p.z);
 }
+
+/**
+ * 電弧預設的離地高度 —— 軀幹，不是腳下。#150 把每位英雄正規化到約 1.7 u 的
+ * 螢幕高度，所以「胸口」在這附近；一條爬過地板的閃電讀起來是地面特效，
+ * 而它明明打在人身上。呼叫端可以逐次覆寫（`strikeArc` 的 `from.y` / `to.y`）。
+ */
+export const ARC_BODY_Y = 0.95;
 
 // ---------------------------------------------------------------------------
 // Ground-follow layer (task #147): blob shadows + velocity-gated walking dust.
@@ -529,6 +538,13 @@ export class VfxSystem {
   /** 0.6s cast-telegraph light pillar, driven by the real castBegin window */
   private readonly pillars: CastPillarFx;
   /**
+   * ⚡ 一段一段的電弧（`ArcBoltFx`）。**一個機制，不是一支技能**：
+   * 引擎每要求一段（A→B）就長一段，一條連鎖 = 逐跳各要求一次，
+   * 跳與跳之間的**極小時間間隔**由發出要求的那一側決定 —— ⛔ 不在這裡排程。
+   * 建構它不配置任何東西：沒有人請求過弧的那一場，池子是空的。
+   */
+  private readonly arcs: ArcBoltFx;
+  /**
    * UNIVERSAL CAST TELEGRAPH (task #228): the ground shape every ability draws
    * while it winds up, derived from the ability doc and filled off the cast
    * bar's own progress. Owns the per-caster lifecycle the old ad-hoc
@@ -591,6 +607,7 @@ export class VfxSystem {
       },
       { getScale: () => this.budgetScale() },
     );
+    this.arcs = new ArcBoltFx(scene);
     this.w3xCast = new W3xCastFx(scene, { getQualityScale: () => this.budgetScale() });
     this.telegraphLayer = new TelegraphLayer(scene, {
       entityPos: (id) => this.ctx.entityPos(id),
@@ -1168,6 +1185,34 @@ export class VfxSystem {
     this.telegraphLayer.begin(caster, shape, relation, windupMs, nowMs);
   }
 
+  /**
+   * ⚡ **一段電弧：從 A 打到 B。**
+   *
+   * 這是這一族視覺**唯一**的入口，而它只認識「兩個點」—— ⛔ 不認識鏈、不認識
+   * 哪一支技能、也不排任何時序（第〇·五守則）。連鎖類技能的一條鏈是**逐跳**
+   * 各叫一次，跳與跳之間的極小間隔由發出要求的那一側掌握；同一支方法也直接
+   * 服務鎖鏈、牽引、電纜、雷擊補刀這些同型的東西。
+   *
+   * 高度預設在軀幹（`ARC_BODY_Y`）——「打在身上」比「爬過地板」讀得清楚，
+   * 而呼叫端可以逐次指定 `y`（`from.y` / `to.y`）覆寫。
+   */
+  strikeArc(
+    from: { x: number; z: number; y?: number },
+    to: { x: number; z: number; y?: number },
+    nowMs: number,
+    opts: ArcBoltOptions & { tint?: Rgb; seed?: number } = {},
+  ): number {
+    if (!isFinitePos(from) || !isFinitePos(to)) return 0; // #131：非有限座標一律不畫
+    const spec = arcBoltSpec(opts.tint ?? ARC_TINTS.lightning, opts);
+    return this.arcs.strike(
+      { x: from.x, y: from.y ?? ARC_BODY_Y, z: from.z },
+      { x: to.x, y: to.y ?? ARC_BODY_Y, z: to.z },
+      spec,
+      nowMs,
+      opts.seed,
+    );
+  }
+
   handleEvent(ev: EventMessage, nowMs: number): void {
     switch (ev.type) {
       case "abilityCast": {
@@ -1729,6 +1774,36 @@ export class VfxSystem {
         else this.sparks.push(new HitSpark(this.scene, x, z, nowMs));
         break;
       }
+
+      /**
+       * ⚡ 一段電弧的**通用**要求（和上面的 `vfxSpawn` 是同一個形狀：引擎送
+       * 世界座標，客戶端畫）。差別只有一個 —— 弧有**兩端**。
+       *
+       * 一條連鎖 = 引擎**逐跳各送一則**，跳與跳之間的極小間隔由引擎的時序
+       * 決定，⛔ 不是客戶端自己排的。所以這個 case 裡沒有「鏈」的概念，
+       * 換成鎖鏈 / 牽引 / 電纜也是同一則事件（第〇·五守則）。
+       */
+      case "vfxArc": {
+        const fx = ev.data.fromX as number | undefined;
+        const fz = ev.data.fromZ as number | undefined;
+        const tx = ev.data.toX as number | undefined;
+        const tz = ev.data.toZ as number | undefined;
+        if (fx === undefined || fz === undefined || tx === undefined || tz === undefined) break;
+        this.strikeArc(
+          { x: fx, z: fz, y: ev.data.fromY as number | undefined },
+          { x: tx, z: tz, y: ev.data.toY as number | undefined },
+          nowMs,
+          {
+            // 顏色/強度/壽命都是**逐次**可帶的（第一守則）。沒帶就是參數表的
+            // 出貨值 —— ⛔ 不是在這裡編一個。
+            tint: ev.data.tint as Rgb | undefined,
+            power: ev.data.power as number | undefined,
+            lifeMs: ev.data.lifeMs as number | undefined,
+            seed: ev.data.seed as number | undefined,
+          },
+        );
+        break;
+      }
       default:
         break;
     }
@@ -1832,6 +1907,9 @@ export class VfxSystem {
     this.syncGroundEntities(nowMs);
     this.castDecals.update(nowMs);
     this.pillars.update(nowMs);
+    // ⚡ 電弧：推進亮度,壽命到的還回 free-list。**一跳一閃**,所以絕大多數幀
+    // 這一圈走的是空陣列。
+    this.arcs.update(nowMs);
     // #205 多層特效模板:到期的延遲層。放在最後,所以一層在它被排定的那一幀
     // 之後才會播 —— delay 0 的層走的是 playLayeredCast 的立即分支,不經過這裡。
     this.drainPendingLayers(nowMs);
@@ -1913,6 +1991,7 @@ export class VfxSystem {
     this.sparks = [];
     this.telegraphLayer.clear(); // 每個施法者的地面預告圈
     this.pillars.clear(); // 向天光束（#233）
+    this.arcs.clear(); // ⚡ 上一回合最後一跳的電，⛔ 不可以跟著進商店（#216 / #259）
     this.castDecals.clear(); // 地面焦痕 —— 下一回合可能是完全不同的地圖
     this.status.clear(); // 暈/定身/緩速光環
     this.shadows.sync([]); // 腳下影子：這一刻場上沒有任何身體
@@ -1933,6 +2012,9 @@ export class VfxSystem {
     //     都還留著 72 mesh / 73 material。上限是後台可調的（第一守則）。
     const policy = vfxCleanupPolicy();
     trimTelegraphPools(this.scene, ringCapForRoundBoundary(policy));
+    // ⚡ 電弧的網格 free-list 走**同一格政策** —— 它和預告圈是同一種東西
+    // （閒置的池化網格 + 每個自帶一份材質），⛔ 不需要第二個寫死的上限。
+    this.arcs.trimTo(ringCapForRoundBoundary(policy));
     // 2c) GH#270 —— 打擊感的共用池（`vfx-preset-*`）。它掛在 per-Scene 的
     //     WeakMap 上，所以上面那一輪 `this.pool` / rig 的回收一個都沒碰到它，
     //     而 `for (const s of this.sparks) s.dispose()` 只是把**每一拳的把手**
@@ -1962,6 +2044,7 @@ export class VfxSystem {
     this.shadows.dispose();
     this.castDecals.dispose();
     this.pillars.dispose();
+    this.arcs.dispose();
     // The rig owns its own ParticleSystems and emitter meshes — its dispose()
     // walks every system it EVER built, pooled or live, so nothing can survive
     // this call by being in a state we forgot about (task #131's lesson).

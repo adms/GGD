@@ -1,5 +1,11 @@
 /**
- * ⭐【vfx 家族產生器不可以刪掉它不擁有的欄位】（GH#378）
+ * ⭐【vfx 家族產生器不可以刪掉它不擁有的欄位】（GH#378 → GH#427）
+ *
+ * ⚠️ **這條在 2026-08-20 之前只比對頂層鍵，而缺陷已經在下一層發生第二次**（GH#427）：
+ * `families` 與 `abilities` 是產生器擁有的**頂層**鍵，所以整張逐列表被換掉的時候
+ * 這條守衛是綠的 —— 它看不進 `families[<id>].soundLaunch` / `abilities[<id>].pitchDeg`。
+ * 量到的（v0.20.6，沙箱跑一次）：**53 列整列消失、122 列掉欄位、21 個家族掉音效與
+ * groundDecal**。現在它逐列逐格走到底。
  *
  * 量到的（v0.20.6）：跑一次
  *   `pnpm exec tsx apps/client/src/render/vfx/generateFamilyContent.ts`
@@ -28,7 +34,7 @@ import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { shippedFamilyConfig } from "./generateFamilyContent";
+import { abilityArtRows, familyArtRows, ownedRowFields, shippedFamilyConfig } from "./generateFamilyContent";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "../../../../..");
@@ -36,8 +42,11 @@ const SCRIPT = join(HERE, "generateFamilyContent.ts");
 const SHIPPED = join(REPO, "content/config/vfx-families.json");
 const ABILITY_ART = join(REPO, "content/config/vfx-ability-art.json");
 
-describe("vfx 家族產生器（GH#378）", () => {
-  it("🔴 真的跑一次：產生器不擁有的每一格逐位保留", () => {
+type Row = Record<string, unknown>;
+type Doc = Row & { families: Record<string, Row>; abilities: Record<string, Row> };
+
+describe("vfx 家族產生器（GH#378 / GH#427）", () => {
+  it("🔴 真的跑一次：產生器不擁有的每一格逐位保留（含 families / abilities 逐列逐格）", () => {
     // ⛔ 一律在沙箱裡跑 —— 對出貨的 content/ 跑產生器會動到別人正在編輯的樹。
     const sandbox = mkdtempSync(join(tmpdir(), "ggd-vfxfam-"));
     try {
@@ -47,9 +56,28 @@ describe("vfx 家族產生器（GH#378）", () => {
       // 空的綁定會讓它把 78 份 fx.fam 文件全部當成孤兒掃掉）。
       cpSync(ABILITY_ART, join(sandbox, "config/vfx-ability-art.json"));
 
-      const before = JSON.parse(readFileSync(SHIPPED, "utf8")) as Record<string, unknown>;
-      const owned = new Set(Object.keys(shippedFamilyConfig({})));
-      const unowned = Object.keys(before).filter((k) => !owned.has(k));
+      const before = JSON.parse(readFileSync(SHIPPED, "utf8")) as Doc;
+      // ⭐ 三層的所有權全部**推導**自產生器自己的產出，⛔ 沒有一張手抄清單：
+      //    頂層 = `shippedFamilyConfig({})` 的鍵，逐列那兩層 = 產生器算得出來的那幾格。
+      //    之後有人加一格新的後台旋鈕，它自動被這條守衛保護。
+      const ownedTop = new Set(Object.keys(shippedFamilyConfig({})));
+      const ownedFam = ownedRowFields(familyArtRows());
+      const ownedAb = ownedRowFields(abilityArtRows());
+      // ⚠️ 帶著取值函式而不是一個點分字串 —— 技能 id 自己就含點（`godie-e002.q`），
+      //    `split(".")` 會把它切成兩層然後永遠取到 undefined（＝這條守衛永遠紅）。
+      const unowned: { label: string; pick: (d: Doc) => unknown }[] = [];
+      const walk = (label: string, row: Row, at: (d: Doc) => Row | undefined, owned: ReadonlySet<string>): void => {
+        for (const k of Object.keys(row)) {
+          if (!owned.has(k)) unowned.push({ label: `${label}${k}`, pick: (d) => at(d)?.[k] });
+        }
+      };
+      walk("", before, (d) => d, ownedTop);
+      for (const [id, row] of Object.entries(before.families)) {
+        walk(`families.${id}.`, row, (d) => d.families?.[id], ownedFam);
+      }
+      for (const [id, row] of Object.entries(before.abilities)) {
+        walk(`abilities.${id}.`, row, (d) => d.abilities?.[id], ownedAb);
+      }
       // 夾具前提：出貨檔一格「產生器不擁有的欄位」都沒有的話，下面那條在測空氣。
       expect(unowned.length, "vfx-families.json 沒有任何非產生欄位 —— 這條守衛在測空氣").toBeGreaterThan(0);
 
@@ -60,10 +88,11 @@ describe("vfx 家族產生器（GH#378）", () => {
         stdio: "pipe",
       });
 
-      const after = JSON.parse(
-        readFileSync(join(sandbox, "config/vfx-families.json"), "utf8"),
-      ) as Record<string, unknown>;
-      const lost = unowned.filter((k) => JSON.stringify(after[k]) !== JSON.stringify(before[k]));
+      const after = JSON.parse(readFileSync(join(sandbox, "config/vfx-families.json"), "utf8")) as Doc;
+      // 整列消失也算在內 —— `pick` 走到那一列的時候拿到 undefined。
+      const lost = unowned
+        .filter((u) => JSON.stringify(u.pick(after)) !== JSON.stringify(u.pick(before)))
+        .map((u) => u.label);
       expect(
         lost,
         "⛔ 這幾格被產生器吃掉了 —— 它們是後台調得到的旋鈕，" +

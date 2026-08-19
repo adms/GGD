@@ -58,6 +58,53 @@ date and **nothing goes red**」。內部債可以忍，**對外契約不行** �
 宣告 unsupported 但引擎其實有 → 紅（對方白白繞路）；
 宣告 supported 但其實沒有 → 紅（對方做出上線就是死的內容）。
 
+### ⛔ 動了技能，就要讓**每一份衍生資料**跟著動 —— 一條指令，不是一串記得
+
+owner 2026-08-20：
+
+> 「**每一次更動技能相關機制或內容**，要整理所有相關技能 —— 包含**球體綁定位置**、
+>  **特效 pitch/scale/color/透明度**等調整、**特效音效綁定**、**五級距**、
+>  **說明↔實際實作 JSON** 等相關規則與內容 —— 都請整理更新到 **JSON**
+>  並讓 **script 動態更新**所有相關文件與 **codex 編輯器契約文件**、
+>  **後台設定參數與介面**更新等，也請放到開發守則裡，
+>  **避免資訊不同步造成的錯誤**」
+
+```bash
+pnpm skills:sync     # 重生成每一份會因為技能改動而過期的東西
+pnpm skills:check    # 全部驗一次（唯讀）；紅了就跑上面那行然後 git add
+```
+
+⚠️ **這條為什麼必須是指令**：`content:build` 只涵蓋 spec / overview / tiers ——
+**Codex 能力契約、90 支重製文件、契約數字、engine atlas、道具 CSV、README 清單、狀態頁
+全都在它外面**，而它們每一份都會因為改一支技能而過期。
+在此之前那是**八個要記得的指令**，而這份文件已經記錄了**五次**「要記得⋯」失效。
+
+**三層，缺一層就是 owner 說的「資訊不同步」：**
+
+| 層 | 是什麼 | ⛔ 違反的樣子 |
+|---|---|---|
+| **① 資料** | 球體綁定位置 · 特效 pitch/scale/color/alpha · 特效音效綁定 · 五級距 · 說明 —— **全部住 JSON**（`content/`） | 374 個 id-keyed 特效綁定住在 TS 常數裡（GH#384） |
+| **② 產生** | 文件 / Codex 契約 / 後台欄位表 **從 ① 推導** | 手改 `docs/技能標記機制與效果規則.md`（它是產生的） |
+| **③ 閘** | `--check` **逐位元組**比對，過期就紅 | 時鐘欄位逼得 `--check` 被放寬 ⇒ 從來沒喊過（GH#389 · #426） |
+
+⭐ **後台那一層也算在內**：新的技能參數必須同時落三個住處
+（`content/config/*.json` + Zod `DEFAULT_*` + admin `SHIPPED_*`），⛔ 不是只有前兩個。
+一格後台調不到的參數，就是 owner 下一次要改時的一次完整部署。
+
+⛔ **產生器擁有的文件一律不可手改**：`docs/技能標記機制與效果規則.md`、
+`docs/英雄技能第一批重製-90支.md`、`docs/技能編輯器引擎須知*.md`、
+`docs/editor-contract/*`。它們紅了**不要改測試** —— 跑 `pnpm skills:sync` 然後 `git add`。
+
+⭐ **聚合指令自己也會過期**，所以它也有閘：
+`packages/shared/src/ops/skillsSyncCoversGenerators.test.ts` ——
+package.json 裡**每一支 `*:check`** 都必須要嘛在 `skills:check` 裡、
+要嘛在豁免表裡**帶著一個能被反駁的理由**。加第 15 支產生器而不做選擇 → 紅。
+（突變驗過：把 `caps:check` 從聚合裡拿掉 → 紅，訊息指名它。）
+
+⚠️ **併行工作流的鎖**：`pnpm skills:sync` 會寫 `bundle.json` ——
+**同一時間只能有一條工作流跑它**。多條 lane 併行時，全部禁止跑，由主 session 最後統一跑一次。
+（`--check` 是唯讀的，隨便跑。）
+
 ---
 
 ## 🪜 第〇·六守則：衝突時的**優先序階梯**，五層，沒有例外
@@ -422,6 +469,132 @@ owner 2026-08-05：「每次改變 CLAUDE.md 與記憶 就產生一個舊的 bac
 
 守衛：`packages/shared/src/ops/backupRules.test.ts`（真的把腳本跑起來，不是掃字串）。
 
+### ⛔⛔ 覆蓋／刪除**之前**先留一份 —— 這條有 hook，不是散文
+
+owner 2026-08-20：
+
+> 「我說過你要做**取代**這種事情以前都要**備份**，就算備份到 legacy 資料夾也沒關係，
+>  請你特別要檢查**覆蓋、刪除檔案內容**指令的時候先做備份，**這一定要放到開發守則嚴守**」
+
+⚠️ 「我說過」是關鍵字 —— 這條規則**已經失效兩次**，而兩次我都「知道」它：
+
+| 何時 | 動作 | 代價 |
+|---|---|---|
+| 2026-08-18 | `git checkout apps/client/src/GameApp.ts` | 一次洗掉**三條 lane**（#362 #364 #368）+ 我自己的改動 |
+| 2026-08-20 | `cat > …/ggd-board.html` | 洗掉**整份作戰板**（唯一副本在 scratchpad，未版控）⇒ **救不回來** |
+
+⇒ 判準治不了。現在它是一個 **PreToolUse hook**，在**動作發生前**跑：
+
+```
+.claude/settings.json  →  scripts/preserve-before-overwrite.py
+```
+
+| 攔什麼 | |
+|---|---|
+| `Write` | 目標檔已存在 |
+| `Bash` | `>`（⛔ 不含 `>>`）· `rm` · `truncate` · `tee`（不含 `-a`）· `mv` · `cp` · `git checkout\|restore` |
+
+⭐ 判準是「**git 裡有沒有一份救得回來的副本**」：
+已追蹤且乾淨 → 只記帳（⛔ 不重複備份，不然 legacy 會爆）；
+**有未提交改動 / 未追蹤 / repo 外** → **留底**。
+
+落點 `docs/legacy/_overwrites/<時間戳>/…`（repo 外的檔落在 `~/.claude/…/overwrite-backups/`），
+帳本 `docs/legacy/_overwrites/_ledger.tsv`。
+
+⚠️ 這支 hook **永遠不擋工具**（exit 0）—— 一個會擋人的備份 hook 會被關掉，
+而被關掉的閘等於沒有閘。它只留副本。
+
+### 📛 暫存檔一律叫 `{用途}_temp_{時間戳}`
+
+owner 2026-08-20：
+
+> 「備份規則都是 **`{用途}_temp_{timestamp}.md`** 給你參考，並且**清理 docs 資料夾文件時，
+>  方便被認出是否已經過時要放到 legacy**」
+
+| 誰 | 名字 |
+|---|---|
+| context 快滿的快照 | `docs/_daily/memory_temp_20260820-0007.md` |
+| 覆蓋前的自動留底 | `docs/legacy/_overwrites/overwrite_temp_20260820-013245/…` |
+| 任何新的暫存產物 | `{用途}_temp_{YYYYMMDD-HHMM}.{副檔名}` |
+
+⚠️ **命名慣例本身只是「看得出來」，那是判準。** 所以配一支指令讓它變成閘：
+
+```bash
+bash scripts/temp-sweep.sh            # 列出 docs/ 底下超過 7 天的暫存檔
+bash scripts/temp-sweep.sh --days 3
+bash scripts/temp-sweep.sh --move     # 搬進 docs/legacy/_temp-retired/（⛔ 不刪除）
+```
+
+⛔ **它只搬不刪**，而且 ⛔ 不掃 `docs/legacy/`（那裡本來就是退休區）。
+
+⚠️ **什麼**不是*暫存檔*（⛔ 不要亂改名）：
+`docs/_daily/2026-08-19.md` 這種**日期帳本**是永久紀錄；
+`docs/_release/*-draft.md` 是**草稿會變成正式 note**；
+`docs/_release/board-live.md` 是產生器的**來源**。
+判準是：**它會不會過期成沒有人要讀的東西？** 會 → `_temp_`；不會 → 正常命名。
+
+⭐ **同源的第三條**：任何「唯一副本」的東西，動它之前都要先留退路 ——
+記憶目錄（`scripts/backup-rules.sh`）· 對話（`scripts/memory-temp.sh`）· 檔案（本節）。
+判準一致：**一個動詞會影響到我沒有逐一看過的位元組，就是越線。**
+
+### ⛔ context 要滿之前：先存一份 `memory_temp`
+
+owner 2026-08-20：
+
+> 「每次 **context 要滿的時候**先開一個 **`memory_temp_{timestamp}.md`** 先存進去吧
+>  **避免意外要找回**」
+
+```bash
+bash scripts/memory-temp.sh          # 寫一份快照到 docs/_daily/
+bash scripts/memory-temp.sh --check  # 只看 transcript 多大、上一份存在哪
+```
+
+⚠️ 這條**不是**「寫文件」，是**保命**。context 被壓縮的那一刻，掉的**不是**程式碼
+（程式碼在工作樹裡）—— 掉的是**只存在於對話裡的那一半**：owner 的裁決、我撤回過哪個錯誤結論、
+兩個工作流為什麼不能同時跑、哪一個數字沒有來源。⛔ **那一半掉了會讓下一輪往錯的方向做**，
+而且它看起來完全正常。
+
+**腳本只抓機械可得的那一半**（git / 工作流進度 / 今天的 issue / transcript 大小），
+另外留**三節 `（待填）`** 要我當場補：
+
+| 節 | 為什麼機器抓不到 |
+|---|---|
+| **⏸ 卡在 owner 身上的決定** | 選項與各自的後果只存在於推理裡 |
+| **🧠 owner 今天的裁決／更正**（⭐ 逐字） | compaction 最先吃掉、而且吃掉會做錯方向的東西 |
+| **➡️ 下一步** | 含**排序理由**（例：⛔ 兩個工作流不可同時 `content:build`） |
+
+⚠️ 留著 `（待填）` 的快照**等於沒存**。腳本印完路徑會再喊一次。
+
+### ⭐ 界線是 **95%**，硬上限 **98%**
+
+owner 2026-08-20：
+
+> 「你的 context 備份成檔案開發守則最好**界線在 95% 快滿的時候，最多到 98%**」
+
+| context | 做什麼 |
+|---:|---|
+| < 95% | 不用跑（除非下面的事件觸發） |
+| **≥ 95%** | **跑**。這是線 |
+| **≥ 98%** | ⛔ **硬上限 —— 立刻跑，其他事情全部先放下** |
+
+⚠️ 為什麼**不是**「感覺快滿了」：那是判準，而這份文件已經記錄了**五次**判準失效。
+95 / 98 是**數字**，抬頭看一眼就知道自己在線的哪一邊。
+
+⚠️ **腳本讀不到這個百分比** —— 它只印得出 transcript 的 MB 數（一個很粗的代理值）。
+百分比只有我在對話裡看得到，所以**這一格的觸發責任在我身上**。⛔ 不要假裝腳本會提醒你。
+
+**另外這些事件也要跑**（⛔ 與百分比無關，因為它們是「這筆資料現在最完整」的時刻）：
+
+- ⭐ **owner 每給一次裁決或更正** → 跑。這是最貴的資料，而且**當下是唯一還記得原話的時刻**
+- 派工作流之前 / 收工作流結果之後
+- commit 之前
+
+⚠️ 這一節跟**上一節（改規則前先快照）是同一個形狀**：兩者都在防「**唯一的副本被無聲蓋掉**」——
+記憶目錄在 2026-08-05 之前零版本控制，對話在 compaction 之後零副本。
+⭐ 也和 `git checkout <檔>` 那一條同源：**工作樹是唯一副本**的東西，動它之前先留下退路。
+
+守衛：`packages/shared/src/ops/memoryTempScript.test.ts`（真的把腳本跑起來，⛔ 不是掃字串）。
+
 ### 九條硬規則
 
 1. **預設不派 subagent／workflow。** 只有兩種情況可以派：
@@ -696,6 +869,36 @@ hosted 頁面**可以累積成歷史紀錄**，同一份計畫改版時重發同
 ## 🚀 部署協定（owner 2026-07-25 立，六步，缺一不可）
 
 1. code-cut → commit（要有真的說明）→ 起草 release note
+   ⭐ **release note 必須含一張「逐句對票」表**（owner 2026-08-19：
+   「這是**很好的開發守則**，避免遺漏又可以揭露足夠版本更新資訊」）——
+   **從 session transcript 撈出 owner 這一版期間的每一則訊息**，逐句對到票號與狀態。
+   ⛔ **不可以憑印象重寫**。做法：
+
+   ```bash
+   # 只留真人訊息：濾掉 toolUseResult、壓縮摘要、system-reminder
+   python3 - <<'PY'
+   import json
+   P = "~/.claude/projects/-Users-Takuro-GGD/<session>.jsonl"   # 換成當前 session
+   for line in open(P, encoding="utf-8", errors="replace"):
+       if '"type":"user"' not in line: continue
+       d = json.loads(line)
+       if d.get("toolUseResult") is not None: continue
+       c = (d.get("message") or {}).get("content")
+       t = c if isinstance(c, str) else "\n".join(
+           b.get("text","") for b in c if isinstance(b, dict) and b.get("type")=="text")
+       if t.strip() and not t.startswith(("<", "This session is being continued")):
+           print(d.get("timestamp","")[11:16], t[:2000])
+   PY
+   ```
+
+   ⚠️ **這一條是被踩出來的**：2026-08-19 我憑印象寫了一份工作進度，owner 當場抓到
+   「slash 對應模型動畫動作」整條線不在上面（後來成為 GH#456）。他的原話是
+   「我猜你**掉了超多**今天跟我討論得東西」—— 而他是對的。
+   ⭐ 撈 transcript 之後，那一版從「19 則指示」長成完整的一張表，
+   還順帶挖出第二條沒開票的（GH#455 商店生命沒還原）。
+
+   ⭐ 這張表**同時是兩件事**：對 owner 是「我沒有漏掉你說的話」的證據，
+   對下一輪（context 斷掉之後）是**唯一**還讀得到的完整需求清單。
 2. 確認沒有未修的 T0 / major bug
    ⭐ **並把「這一輪順手開的 issue」整理成一張表拿給 owner 勾選**（owner 2026-08-05：
    「deploy 新版的時候要拿出來問我檢驗是否要跟這一版修完一起上」）。

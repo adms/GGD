@@ -17,6 +17,11 @@
   "boltPitchDeg": 0,
   "dashPitchDeg": 0,
   "tornadoPitchDeg": 90,
+  "beamAngleDeg": 9,
+  "slashAngleDeg": 92,
+  "boltAngleDeg": 6,
+  "dashAngleDeg": 22,
+  "tornadoAngleDeg": 34,
   "families": {
     "shockwaveRing": {
       "enabled": true,
@@ -265,6 +270,9 @@
         100
       ]
     },
+    "godie-e001.w": {
+      "pitchDeg": 66
+    },
     "godie-e002.e": {
       "family": "burst",
       "soundLaunch": "wc3.markofchaos"
@@ -297,7 +305,7 @@
     },
     "godie-e008.q": {
       "soundLaunch": "wc3.flaretarget3",
-      "pitchDeg": 15
+      "pitchDeg": 64
     },
     "godie-e008.r": {
       "family": "flamePillar",
@@ -342,11 +350,14 @@
     "godie-e00k.passive": {
       "family": "blink",
       "anchor": "chest",
-      "pitchDeg": 90
+      "pitchDeg": 53
+    },
+    "godie-e00k.q": {
+      "pitchDeg": 53
     },
     "godie-e00k.w": {
       "family": "cloud",
-      "pitchDeg": 55
+      "pitchDeg": 53
     },
     "godie-e00l.e": {
       "family": "burst",
@@ -380,6 +391,9 @@
       "family": "groundDust",
       "soundLaunch": "wc3.markofchaos"
     },
+    "godie-e00r.w": {
+      "pitchDeg": 89
+    },
     "godie-e00s.q": {
       "family": "burst",
       "tint": [
@@ -396,7 +410,7 @@
     "godie-e00w.q": {
       "family": "shockwaveRing",
       "soundLaunch": "wc3.darksummoninglaunch1",
-      "pitchDeg": 0
+      "pitchDeg": 80
     },
     "godie-e00x.e": {
       "family": "resurrect",
@@ -405,12 +419,12 @@
     "godie-e00x.q": {
       "family": "shockwaveRing",
       "soundLaunch": "wc3.darksummoninglaunch1",
-      "pitchDeg": 0
+      "pitchDeg": 80
     },
     "godie-e00z.e": {
       "family": "shockwaveRing",
       "soundLaunch": "wc3.flaretarget2",
-      "pitchDeg": 0
+      "pitchDeg": 53
     },
     "godie-e00z.ex": {
       "family": "mark",
@@ -424,11 +438,11 @@
     "godie-e00z.passive": {
       "family": "blink",
       "anchor": "chest",
-      "pitchDeg": 90
+      "pitchDeg": 53
     },
     "godie-e00z.w": {
       "family": "cloud",
-      "pitchDeg": 55
+      "pitchDeg": 53
     },
     "godie-e012.passive": {
       "family": "levelUp"
@@ -486,7 +500,7 @@
       "w3xScale": 10
     },
     "godie-efur.w": {
-      "pitchDeg": 70
+      "pitchDeg": 89
     },
     "godie-ekee.e": {
       "family": "mark",
@@ -596,7 +610,7 @@
     },
     "godie-h00l.q": {
       "soundLaunch": "wc3.druidofthetalonmissilelaunch2",
-      "pitchDeg": 0,
+      "pitchDeg": 87,
       "soundImpact": "wc3.witchdoctorcastattack1"
     },
     "godie-h00l.r": {
@@ -636,7 +650,7 @@
         0,
         0
       ],
-      "pitchDeg": 45
+      "pitchDeg": 73
     },
     "godie-h01o.ex": {
       "family": "mark",
@@ -669,7 +683,7 @@
         0,
         0
       ],
-      "pitchDeg": 45
+      "pitchDeg": 73
     },
     "godie-h01u.e": {
       "family": "burst",
@@ -682,7 +696,7 @@
     },
     "godie-h01u.w": {
       "soundLaunch": "wc3.defendcaster",
-      "pitchDeg": 30,
+      "pitchDeg": 75,
       "soundImpact": "wc3.wandofneutralization"
     },
     "godie-h020.e": {
@@ -808,6 +822,9 @@
     "godie-h02z.ex": {
       "family": "groundDust"
     },
+    "godie-hapm.e": {
+      "pitchDeg": 89
+    },
     "godie-hapm.ex": {
       "family": "shockwaveRing",
       "tint": [
@@ -844,7 +861,7 @@
     "godie-hart.q": {
       "family": "shockwaveRing",
       "anchor": "chest",
-      "pitchDeg": 55
+      "pitchDeg": 6
     },
     "godie-hart.r": {
       "family": "shockwaveRing"
@@ -879,7 +896,7 @@
         0,
         0
       ],
-      "pitchDeg": 90
+      "pitchDeg": 89
     },
     "godie-hjai.q": {
       "family": "dissipate",
@@ -891,7 +908,7 @@
     },
     "godie-hjai.r": {
       "family": "cloud",
-      "pitchDeg": 55
+      "pitchDeg": 89
     },
     "godie-hjai.w": {
       "family": "flamePillar",
@@ -977,6 +994,9 @@
     "godie-n00p.e": {
       "soundLaunch": "wc3.altarofelderswhat1"
     },
+    "godie-n00p.q": {
+      "pitchDeg": 61
+    },
     "godie-n00p.w": {
       "family": "breath",
       "anchor": "chest",
@@ -1001,7 +1021,7 @@
     },
     "godie-n01c.r": {
       "family": "mirrorImage",
-      "pitchDeg": 0,
+      "pitchDeg": 75,
       "soundImpact": "wc3.wandofneutralization"
     },
     "godie-n01c.w": {
@@ -1064,13 +1084,13 @@
     },
     "godie-nbbc.r": {
       "family": "mirrorImage",
-      "pitchDeg": 0,
+      "pitchDeg": 75,
       "soundImpact": "wc3.wandofneutralization"
     },
     "godie-nbbc.w": {
       "family": "shockwaveRing",
       "anchor": "chest",
-      "pitchDeg": 50
+      "pitchDeg": 75
     },
     "godie-nbst.e": {
       "family": "lightColumn",
@@ -1100,7 +1120,7 @@
     "godie-nplh.r": {
       "family": "resurrect",
       "w3xScale": 0.9,
-      "pitchDeg": 70
+      "pitchDeg": 44
     },
     "godie-nplh.w": {
       "family": "resurrect",
@@ -1366,7 +1386,7 @@
         100
       ],
       "anchor": "right,hand",
-      "pitchDeg": 90
+      "pitchDeg": 29
     },
     "godie-ogrh.r": {
       "family": "burst"
@@ -1418,7 +1438,7 @@
       "family": "dissipate"
     },
     "godie-osam.q": {
-      "pitchDeg": 0
+      "pitchDeg": 56
     },
     "godie-osam.r": {
       "family": "shockwaveRing",
@@ -1428,6 +1448,9 @@
         255
       ],
       "soundLaunch": "wc3.blademasterwhirlwind"
+    },
+    "godie-osam.w": {
+      "pitchDeg": 56
     },
     "godie-oshd.r": {
       "family": "shockwaveRing",
@@ -1468,14 +1491,14 @@
       ]
     },
     "godie-u00h.q": {
-      "pitchDeg": 20
+      "pitchDeg": 87
     },
     "godie-u00h.r": {
       "family": "shockwaveRing",
       "soundLaunch": "wc3.dragonyes2"
     },
     "godie-u00h.w": {
-      "pitchDeg": 90
+      "pitchDeg": 87
     },
     "godie-u00j.e": {
       "family": "flamePillar",
@@ -1507,7 +1530,7 @@
         255
       ],
       "soundLaunch": "wc3.snapdragonmissilelaunch1",
-      "pitchDeg": 90
+      "pitchDeg": 32
     },
     "godie-u00k.e": {
       "soundLaunch": "wc3.parasite"
@@ -1668,7 +1691,7 @@
     },
     "godie-u01u.e": {
       "family": "mirrorImage",
-      "pitchDeg": 0
+      "pitchDeg": 78
     },
     "godie-u01u.ex": {
       "family": "mark",
@@ -1680,11 +1703,12 @@
       "flyHeight": 150
     },
     "godie-u01u.r": {
-      "family": "mirrorImage"
+      "family": "mirrorImage",
+      "pitchDeg": 78
     },
     "godie-u01u.w": {
       "family": "shockwaveRing",
-      "pitchDeg": 0
+      "pitchDeg": 78
     },
     "godie-u034.e": {
       "soundLaunch": "wc3.mortarteampissed9"
@@ -1769,7 +1793,7 @@
     },
     "godie-udre.e": {
       "family": "mirrorImage",
-      "pitchDeg": 0
+      "pitchDeg": 78
     },
     "godie-udre.ex": {
       "family": "mark",
@@ -1788,7 +1812,7 @@
     },
     "godie-umal.e": {
       "family": "shockwaveRing",
-      "pitchDeg": 0
+      "pitchDeg": 89
     },
     "godie-umal.ex": {
       "family": "shockwaveRing"
@@ -1797,7 +1821,7 @@
       "family": "burst",
       "w3xScale": 1.1,
       "soundLaunch": "wc3.gruntwhat2",
-      "pitchDeg": 0,
+      "pitchDeg": 89,
       "soundImpact": "wc3.peondeath"
     },
     "godie-umal.r": {

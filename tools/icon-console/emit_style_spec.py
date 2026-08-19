@@ -36,8 +36,12 @@ an `mtime`. Both are gone, and the reason is that this artefact HAS a `--check`:
 
   · `generatedAt` forced `--check` to be RELAXED ("compare everything else"),
     and a relaxed gate is not a gate — field order, indentation, even a
-    hand-edited digest all walked straight through it. It is now a WHOLE-OBJECT
-    comparison, so nothing can.
+    hand-edited digest all walked straight through it. GH#395 removed the clock
+    and tightened the comparison to the whole OBJECT; GH#426 tightened it the
+    rest of the way to the whole FILE, because an object comparison still
+    forgave every formatting decision the writer makes (key order, `indent`,
+    `ensure_ascii`, the trailing newline). `--check` and the writer now share
+    one `serialize()`, so they cannot drift apart again.
   · `mtime` was worse than useless: it is never read by any verdict
     (`assetConsole.compareFreshness` decides drift on sha256 ALONE) while
     `git checkout` / a deploy rewrites every mtime without changing a byte —
@@ -406,6 +410,45 @@ def build_spec() -> dict:
     }
 
 
+def serialize(spec: dict) -> str:
+    """The ONE definition of what this artefact looks like on disk.
+
+    ⭐ GH#426 —— `--check` and the writer share this function on purpose. When
+    they were two separate `json.dump` calls, `--check` could only compare
+    PARSED OBJECTS, and an object comparison silently forgives everything the
+    writer actually decides: key order, `indent`, `ensure_ascii`, the trailing
+    newline. A hand-reindented (or key-shuffled) file walked straight through
+    a gate whose own comment claimed it compared everything.
+    """
+    return json.dumps(spec, ensure_ascii=False, indent=1, sort_keys=False) + "\n"
+
+
+def _drift(published: dict, fresh: dict) -> list[str]:
+    """Name what moved, so a red gate is actionable rather than just red.
+
+    ⛔ Deliberately NOT a general diff: the useful answer is almost always
+    「哪一個來源檔被改了而沒重跑」, and that is one line away from the sha table.
+    """
+    lines: list[str] = []
+    was = {s["path"]: s for s in published.get("sources", [])}
+    now = {s["path"]: s for s in fresh.get("sources", [])}
+    for path in sorted(set(was) | set(now)):
+        a, b = was.get(path), now.get(path)
+        if a == b:
+            continue
+        fmt = lambda s: f"{s['sha256'][:12]} {s['bytes']}B" if s else "(absent)"
+        lines.append(f"  source drifted  {path}  {fmt(a)} → {fmt(b)}")
+    for key in ("schema", "templateVersion", "contentDigest"):
+        if published.get(key) != fresh.get(key):
+            lines.append(f"  {key}  {published.get(key)!r} → {fresh.get(key)!r}")
+    def found(spec: dict) -> str:
+        slots = spec.get("contactSheet", {}).get("slots", [])
+        return f"{sum(1 for s in slots if s.get('found'))}/{len(slots)}"
+    if found(published) != found(fresh):
+        lines.append(f"  contact sheet   {found(published)} → {found(fresh)} slots resolved")
+    return lines
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--check", action="store_true",
@@ -417,24 +460,29 @@ def main() -> None:
     if args.check:
         try:
             with open(OUT_PATH, encoding="utf-8") as fh:
-                current = json.load(fh)
+                raw = fh.read()
         except Exception:
             print("style-spec.json missing or unreadable — rerun without --check")
             sys.exit(1)
-        # ⭐ GH#395 —— **整個物件**比對，⛔ 不再豁免任何欄位。這條以前寫著
-        # 「generatedAt always differs; compare everything else」，而那個豁免
-        # 就是這個閘的洞：被豁免掉的不只是那格時間，是「已發布的那一份與新產的
-        # 那一份逐欄相等」這句話本身。
-        if current != spec:
+        # ⭐ GH#426 —— **逐位元組**比對，⛔ 不再豁免任何欄位、也不再只比物件。
+        # 這條最早寫著「generatedAt always differs; compare everything else」，
+        # 而那個豁免就是這個閘的洞：被豁免掉的不只是那格時間，是「已發布的那一份
+        # 與新產的那一份相等」這句話本身。GH#395 拿掉了時鐘、收回成物件比對；
+        # 這一步再收回成位元組比對，於是連排版與鍵序都逃不掉。
+        if raw != serialize(spec):
             print("style-spec.json is STALE — rerun: python3 tools/icon-console/emit_style_spec.py")
+            try:
+                for line in _drift(json.loads(raw), spec):
+                    print(line)
+            except Exception:
+                print("  (published file is not valid JSON — it differs at the byte level)")
             sys.exit(1)
         print("style-spec.json is current")
         return
 
     os.makedirs(OUT_DIR, exist_ok=True)
     with open(OUT_PATH, "w", encoding="utf-8") as fh:
-        json.dump(spec, fh, ensure_ascii=False, indent=1, sort_keys=False)
-        fh.write("\n")
+        fh.write(serialize(spec))
 
     found = sum(1 for s in spec["contactSheet"]["slots"] if s.get("found"))
     print(f"wrote {os.path.relpath(OUT_PATH, ROOT)}")

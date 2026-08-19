@@ -1,0 +1,258 @@
+/**
+ * ArcBoltFx —— 一段電弧的 Babylon 渲染層。池化、有硬上限、回合邊界收得回來。
+ *
+ * ---------------------------------------------------------------------------
+ * 一個單元，很多用途
+ * ---------------------------------------------------------------------------
+ * `strike(from, to, spec, nowMs)` = **畫一段從 A 到 B 的弧**，就這樣。
+ * 連鎖閃電的一條鏈是呼叫端**逐跳各叫一次**（每跳之間隔一小段時間），
+ * ⛔ 這裡沒有「鏈」的概念，也不該有（CLAUDE.md 第〇·五守則）。
+ * 分岔也走同一支 `strike` —— 一岔就是一段比較短的弧。
+ *
+ * ---------------------------------------------------------------------------
+ * 回收（#262 的前科：洩漏的粒子/mesh）
+ * ---------------------------------------------------------------------------
+ * 三條路全部關上，⛔ 不是只關 dispose 那一條：
+ *   · `update()`  —— 壽命到了就 `setEnabled(false)` 還回 free-list（⛔ 不 dispose，
+ *                    網格會被下一段弧重用；閒置的網格不花任何 frame 成本）
+ *   · `clear()`   —— 回合邊界把場上所有弧就地熄掉（上一場的電不可以跟著進商店）
+ *   · `trimTo()`  —— 回合邊界修剪 free-list 本身，上限由 `config.vfx-cleanup@1`
+ *                    決定（和預告圈網格同一格政策，⛔ 不是第二個寫死的數字）
+ *   · `dispose()` —— 網格 + 材質全部還給 Babylon
+ *
+ * ⚠️ **材質是每條 strip 一份**，因為顏色與亮度是逐弧、逐幀在變的
+ * （`GroundDecalPool` 同一個立場）。所以池子的上限同時是材質數的上限。
+ */
+import type { Scene } from "@babylonjs/core/scene";
+import { CreateRibbon } from "@babylonjs/core/Meshes/Builders/ribbonBuilder";
+import type { Mesh } from "@babylonjs/core/Meshes/mesh";
+import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
+import { Constants } from "@babylonjs/core/Engines/constants";
+import { Color3 } from "@babylonjs/core/Maths/math.color";
+import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import {
+  arcColorAt,
+  arcForks,
+  arcStripPaths,
+  buildArcPath,
+  type ArcBoltSpec,
+  type ArcEnd,
+} from "./arcBolt";
+
+/**
+ * 同時存在的弧帶上限（超過就搶最舊的那一條 —— 它已經是畫面上最暗的）。
+ *
+ * 一次連鎖 16 跳 × (1 主幹 + 2 分岔) = 48，但**一跳一閃**：每段只活
+ * `spec.lifeMs`（出貨 130ms），而 owner 要的逐跳間隔讓它們不會同時在場上。
+ * 這條線擋的是「兩個人同時放 + 有人把間隔調到 0」那種病態組合。
+ */
+export const MAX_ARC_STRIPS = 32;
+
+interface Strip {
+  mesh: Mesh | null;
+  mat: StandardMaterial;
+  /** CreateRibbon 的兩條 path（重用同一批 Vector3，⛔ 每次不重新配置） */
+  left: Vector3[];
+  right: Vector3[];
+  bornMs: number;
+  spec: ArcBoltSpec | null;
+  active: boolean;
+}
+
+export class ArcBoltFx {
+  private readonly strips: Strip[] = [];
+  private strikeCount = 0;
+
+  constructor(
+    private readonly scene: Scene,
+    private readonly opts: { maxStrips?: number } = {},
+  ) {}
+
+  /** 場上正在發光的弧帶數（測試 / 觀測接縫）。 */
+  get activeCount(): number {
+    return this.strips.reduce((n, s) => n + (s.active ? 1 : 0), 0);
+  }
+
+  /** 配置過的弧帶總數 —— 永遠不超過上限（測試接縫）。 */
+  get poolSize(): number {
+    return this.strips.length;
+  }
+
+  private get cap(): number {
+    return Math.max(1, this.opts.maxStrips ?? MAX_ARC_STRIPS);
+  }
+
+  /**
+   * ⚡ **打一段弧：A → B。**
+   *
+   * `seed` 省略時用內部計數器 —— 同一幀連打兩段不會長成同一條線，而傳同一顆
+   * seed 又能重現同一條（重播）。回傳這一次用掉的弧帶數（主幹 1 + 分岔 n），
+   * 呼叫端不需要讀它，但它是「這一行真的建出東西了嗎」的觀測點。
+   */
+  strike(from: ArcEnd, to: ArcEnd, spec: ArcBoltSpec, nowMs: number, seed?: number): number {
+    const s = seed ?? ++this.strikeCount;
+    const points = buildArcPath(from, to, spec, s);
+    let drawn = this.draw(points, spec, nowMs) ? 1 : 0;
+    for (const fork of arcForks(points, spec, s)) {
+      // ⭐ 一岔 = 另一段弧,同一個單元。分岔比主幹細、更短命(半條命),
+      // 所以它讀起來是「主幹的餘波」而不是第二條主幹。
+      const thin: ArcBoltSpec = {
+        ...spec,
+        halfWidth: spec.halfWidth * 0.5,
+        lifeMs: spec.lifeMs * 0.6,
+        forks: 0, // ⛔ 分岔不再分岔 —— 否則是一棵沒有上界的樹
+      };
+      const fp = buildArcPath(fork.from, fork.to, thin, s + 1);
+      if (this.draw(fp, thin, nowMs)) drawn++;
+    }
+    return drawn;
+  }
+
+  /** 一條折線 → 一條在場上發光的弧帶。 */
+  private draw(points: readonly [number, number, number][], spec: ArcBoltSpec, nowMs: number): boolean {
+    const strip = this.take(nowMs);
+    if (!strip) return false;
+    const n = points.length;
+    this.ensureMesh(strip, n);
+    const { left, right } = arcStripPaths(points, spec.halfWidth);
+    for (let i = 0; i < n; i++) {
+      const l = left[i]!;
+      const r = right[i]!;
+      strip.left[i]!.set(l[0], l[1], l[2]);
+      strip.right[i]!.set(r[0], r[1], r[2]);
+    }
+    const mesh = strip.mesh!;
+    CreateRibbon(mesh.name, { pathArray: [strip.left, strip.right], instance: mesh });
+    strip.spec = spec;
+    strip.bornMs = nowMs;
+    strip.active = true;
+    this.paint(strip, 0);
+    mesh.setEnabled(true);
+    return true;
+  }
+
+  /** 空的弧帶：先找閒置的，再長到上限，再搶最舊的。 */
+  private take(nowMs: number): Strip | null {
+    let idx = this.strips.findIndex((s) => !s.active);
+    if (idx < 0 && this.strips.length < this.cap) {
+      this.strips.push(this.make());
+      idx = this.strips.length - 1;
+    }
+    if (idx < 0) {
+      idx = 0;
+      for (let i = 1; i < this.strips.length; i++) {
+        if (this.strips[i]!.bornMs < this.strips[idx]!.bornMs) idx = i;
+      }
+    }
+    const s = this.strips[idx]!;
+    s.bornMs = nowMs;
+    return s;
+  }
+
+  private make(): Strip {
+    const mat = new StandardMaterial("vfx-arc-mat", this.scene);
+    mat.disableLighting = true;
+    mat.backFaceCulling = false;
+    mat.diffuseColor = new Color3(0, 0, 0);
+    mat.specularColor = new Color3(0, 0, 0);
+    mat.emissiveColor = new Color3(1, 1, 1);
+    // 加法混合:電弧是**光**,它不可以遮住底下那個正在被打的人。
+    // `ALPHA_ADD` = (SRC_ALPHA, ONE),所以 `mat.alpha` 就是亮度旋鈕。
+    mat.alphaMode = Constants.ALPHA_ADD;
+    mat.alpha = 0;
+    return { mesh: null, mat, left: [], right: [], bornMs: -Infinity, spec: null, active: false };
+  }
+
+  /**
+   * 這條 strip 的網格必須剛好有 `n` 個節點。`segments` 是可調的，所以不同
+   * spec 會要不同的節點數；`CreateRibbon(..., { instance })` 只在頂點數一致時
+   * 能就地更新，因此不一致時**換網格、留材質**（材質才是每幀在動的那個）。
+   */
+  private ensureMesh(strip: Strip, n: number): void {
+    if (strip.mesh && strip.left.length === n) return;
+    strip.mesh?.dispose(false, false);
+    strip.left = new Array<Vector3>(n);
+    strip.right = new Array<Vector3>(n);
+    for (let i = 0; i < n; i++) {
+      strip.left[i] = new Vector3(0, 0, 0);
+      strip.right[i] = new Vector3(0, 0, 0);
+    }
+    const mesh = CreateRibbon(
+      "vfx-arc",
+      { pathArray: [strip.left, strip.right], updatable: true },
+      this.scene,
+    );
+    mesh.material = strip.mat;
+    mesh.isPickable = false;
+    mesh.receiveShadows = false;
+    // instance 更新不會刷新包圍盒,留著會讓活著的弧被視錐剔除掉(RibbonTrail
+    // 踩過同一個坑)。一條弧只有十幾個三角形,不值得為它算 extents。
+    mesh.alwaysSelectAsActiveMesh = true;
+    mesh.setEnabled(false);
+    strip.mesh = mesh;
+  }
+
+  /** 把 t（0..1）的顏色與亮度寫進材質。 */
+  private paint(strip: Strip, t: number): void {
+    const spec = strip.spec;
+    if (!spec) return;
+    const { rgb, alpha } = arcColorAt(spec, t);
+    strip.mat.emissiveColor.set(rgb[0], rgb[1], rgb[2]);
+    strip.mat.alpha = alpha;
+  }
+
+  /** 每幀一次：推進亮度，壽命到了的還回 free-list。 */
+  update(nowMs: number): void {
+    for (const s of this.strips) {
+      if (!s.active || !s.spec) continue;
+      const t = (nowMs - s.bornMs) / s.spec.lifeMs;
+      if (t >= 1) {
+        s.active = false;
+        s.spec = null;
+        s.mat.alpha = 0;
+        s.mesh?.setEnabled(false);
+        continue;
+      }
+      this.paint(s, t);
+    }
+  }
+
+  /**
+   * 回合邊界：場上的弧全部熄掉（池子留著）。上一回合最後一跳的電**不可以**
+   * 跟著進商店場景 —— #216 / #259 抓到的是同一種病。
+   */
+  clear(): void {
+    for (const s of this.strips) {
+      s.active = false;
+      s.spec = null;
+      s.mat.alpha = 0;
+      s.mesh?.setEnabled(false);
+    }
+  }
+
+  /**
+   * 回合邊界：free-list 本身修剪到 `cap` 條（只丟閒置的）。回傳丟掉幾條 ——
+   * ⭐ **一個靜默的上限就是缺陷**（CLAUDE.md），所以它回報。
+   */
+  trimTo(cap: number): number {
+    if (!Number.isFinite(cap) || this.strips.length <= cap) return 0;
+    let dropped = 0;
+    for (let i = this.strips.length - 1; i >= 0 && this.strips.length - dropped > cap; i--) {
+      const s = this.strips[i]!;
+      if (s.active) continue;
+      s.mesh?.dispose(false, false);
+      s.mat.dispose();
+      this.strips.splice(i, 1);
+      dropped++;
+    }
+    return dropped;
+  }
+
+  dispose(): void {
+    for (const s of this.strips) {
+      s.mesh?.dispose(false, false);
+      s.mat.dispose();
+    }
+    this.strips.length = 0;
+  }
+}

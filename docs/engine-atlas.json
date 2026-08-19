@@ -1,12 +1,12 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "b97e9836",
+  "capabilityFingerprint": "a4e2d982",
   "counts": {
-    "effectKinds": 39,
+    "effectKinds": 40,
     "hookEvents": 33,
     "conditionLeafKinds": 5,
     "templateFamilies": 17,
-    "effectFields": 201,
+    "effectFields": 212,
     "stats": 23,
     "combatEnvKeys": 36
   },
@@ -382,7 +382,7 @@
     "rows": [
       {
         "key": "AoE 半徑樣本（技能＋道具）",
-        "value": "148 個　最小 1.5 / 中位 6 / 最大 513.5",
+        "value": "151 個　最小 1.5 / 中位 6 / 最大 513.5",
         "from": "shipped"
       },
       {
@@ -401,12 +401,12 @@
       {
         "label": "中",
         "range": "4.5 – 6.42",
-        "count": 53
+        "count": 52
       },
       {
         "label": "大",
         "range": "≥ 6.42",
-        "count": 54
+        "count": 58
       }
     ]
   },
@@ -430,6 +430,7 @@
       "distance",
       "distanceScale",
       "distanceTier",
+      "jumpRange",
       "launchDistance",
       "maxDistance",
       "moveSpeedMult",
@@ -444,6 +445,7 @@
       "durationSec",
       "getupTicks",
       "intervalSec",
+      "jumpIntervalSec",
       "maxRemainingSec",
       "respectCooldown",
       "tickOnApply"
@@ -464,6 +466,7 @@
       "applyStatus",
       "blink",
       "carry",
+      "chainLightning",
       "championForm",
       "convertTeam",
       "cycleBuff",
@@ -605,6 +608,9 @@
     "summon": {
       "available": true,
       "caveat": "召喚物的擊殺歸屬 killCredit: \"owner\" 尚未實作（施放時會擲錯），其餘欄位皆可用"
+    },
+    "travelingWave": {
+      "available": true
     }
   },
   "planned": [
@@ -838,6 +844,22 @@
       "state": "partial",
       "caveat": "⛔ 五個邊界：① **`onHitTargets` 這一格 `convertTeam` 沒有**（`carry` 才有）⇒ 掛在同一個 `effects` 陣列裡的回血／上鎖是**無條件**跑的，捕獲被拒絕的那一刻它們照樣發生。要「成功才給」今天寫不出來；② **不對稱**：被借走的殭屍**會**被其他殭屍打，但它**打不到**其他殭屍（`isMobTargetable` 對一隻沒被捕的普通 mob 一律回 false）。它仍然會去打敵方英雄，所以寶具是有用的；③ **捕獲者死掉不會歸位** —— 歸位只有三條路（被捕者死亡／`until:\"duration\"` 到期／回合開始）。`until` 那個 enum 沒有「載具死亡」這一格（`carry` 的 `onCarrierDeath` 才有）；④ `countsForOriginalTeam` **預設 `false`**（owner 2026-08-18：被捕的單位實質上就是我方單位）—— `true` 是一鍵回頭（被借走的敵方英雄在勝負判定上仍替原隊活著）。填 `false` 只是把原隊那一側的人頭拿掉，⛔ **不會**改算捕獲者那一隊 —— 座位是勝負判定的軸，而借調不動座位；⑤ ⛔ 它**不發任何事件** —— 玩家的可見性靠 `ENTITY_FLAG.TEAM_OVERRIDE*` 三顆 bit 讓那具身體當場換顏色。⇒ 想掛特效的話要自己在同一份 `effects` 裡加一發 `spawnVfx`。",
       "evidence": "packages/shared/src/sim/mindControl.ts + sim/effects/mindControl.ts + apps/game-server/src/net/mindControlWire.test.ts（⭐ 第三條斷言真的跑 `projectSnapshot` + Colyseus encode→decode 再把隊伍序數解回來 —— 那是「遊戲邏輯全對、螢幕全錯」的唯一防線）+ content/items/master-ball.json"
+    },
+    {
+      "key": "vfx.bound-sound@1",
+      "plan": "GH#390 特效自帶的音效一個都沒移植",
+      "state": "supported",
+      "caveat": "⭐ 四個時機（發射 / 命中 / 循環 / 消散）填的是 **`config.audio-map@1.sfx` 的 key**，⛔ 不是檔名也不是 URL —— 音量 / 冷卻 / 同時發聲數住在 audio-map 那一份，播放走 `AudioSystem.playSfx` ⇒ 玩家的總音量與 SFX 開關自動適用。⚠️ 兩層逐格覆寫：`abilities[<id>].soundX` 蓋 `families[<fam>].soundX`，⛔ 不是「填一格就整組換掉」。⚠️ **循環音是重播不是真 loop**：每 `soundLoopMs` 重放一次，並在 `soundLoopMaxMs` 絕對到期時自動回收並改播消散音（⛔ 沒有「一直響到有人叫停」）。⚠️ 填一個 audio-map 沒有的 key = 這個時機安靜（⛔ 不是報錯）；填 `wc3.*` 那一族要注意它們住在只有 full-asset build 才掛得上的 Blizzard overlay，正式站上會**退回家族那一格**。",
+      "evidence": "packages/shared/src/content/schema/vfx.ts（`VFX_SOUND_CUES` / `resolveVfxSound`）+ apps/client/src/audio/vfxSound.ts + apps/client/src/audio/vfxSoundWired.test.ts + content/config/vfx-families.json（21 個家族原型 + 72 支原作 JASS 音效的逐支覆寫，由 tools/w3x-import/build_vfx_sound_bindings.py 產生）",
+      "nearestExisting": "⚠️ `ability@1.sfxKey` 長得很像但**不是同一件事**：那是「這一支技能的身分音」（一顆 `abilityCast` 一發），而這一列是「這一招的**特效**自己帶的那幾發」。同一次施法兩邊都會響，這正是原作的樣子。"
+    },
+    {
+      "key": "vfx.bone-attachment@1",
+      "plan": "GH#392 穿在骨頭上的模型（WC3 `Asph` 球體）",
+      "state": "supported",
+      "caveat": "⭐ **一份 `attachment@1` 綁在 `config.ambient-vfx@1.bindings` 上**，鍵可以是 **modelKey**（所有穿這具身體的人都戴著）或 **championId**（形態感知）。⚠️ 悟空兩態共用 `imported.goku`，所以「只有超三戴」**一定要用 championId** —— 填 modelKey 的話基本型也會戴上。⚠️ `points[]` **一格掛一份拷貝**（= WC3 的 `atac`）：雙手就是 `[\"left,hand\",\"right,hand\"]`。⛔ `\"right,hand\"` 是**一個**掛點的兩個逗號 token，⛔ 不是兩個掛點。掛點名解析不出來 = 退回模型原點（那是 WC3 自己的行為，⛔ 不是缺陷）。⚠️ `anim` 填的是**掛件自己的** glb 動畫軌名（出貨的三顆都只有一條 `Stand`）；省略 = 播全部，填一個對不上的名字 = 一條都不播（⛔ 不會退回第一條）。⚠️ `follow: false` 是**世界座標快照**，掛件從此和角色無關 —— ⛔ 不是「掛在模型根上」（那還是會跟著角色走）。⚠️ 掛件的生命週期綁在那具 body 上：變身會整個重建 view，所以「變回本體 = 掛件消失」不需要任何解除步驟。",
+      "evidence": "packages/shared/src/content/schema/vfx.ts（`zAttachmentDoc`）+ packages/shared/src/content/wornAttachments.ts（兩個來源折成一個型別）+ apps/client/src/render/views/ChampionView.ts（`attachOnePart`：parent = 跟隨、`g.play()` = 播動畫）+ apps/client/src/render/boneAttachmentFollow.test.ts（NullEngine 真的移動角色再讀掛件的**世界座標**）",
+      "nearestExisting": "⚠️ `vfx@1.anchorBone` 長得很像但**不是同一件事**：那是把一組**粒子發射器**掛到關節上（`AmbientVfx` 那條路），這一列掛的是**一整個模型**（有網格、有骨架、有自己的動畫軌）。⛔ 也不要跟 #73/#255「烘進 glb 的幾何」混淆：共用 modelKey 的變身對只能走執行期，烘進去基本型也會長出來。"
     }
   ],
   "unsupported": [

@@ -337,6 +337,12 @@ describe("鑄技工坊 · 存得進去讀得回來 (adminui-vfx-forge-roundtrip)
       boltPitchDeg: -8,
       dashPitchDeg: 6,
       tornadoPitchDeg: 80,
+      // GH#456 —— 錐角五格。哨兵值刻意都 ≠ 出貨值，才驗得到「真的往返」。
+      beamAngleDeg: 14,
+      slashAngleDeg: 61,
+      boltAngleDeg: 3,
+      dashAngleDeg: 30,
+      tornadoAngleDeg: 40,
     };
     const base = BASE_DOC();
     const withSentinels = { ...base } as Record<string, unknown>;

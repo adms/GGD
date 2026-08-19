@@ -12,6 +12,9 @@ import { fireHooks } from "../effects/hooks";
 import { recordAbilityCast } from "../stats/matchStats";
 import { queryOverlap } from "../collision/queries";
 import { circle } from "../collision/shapes";
+// `groundAoeTargets` 的友方那一側用它把施法者自己收回來 —— 刻意用
+// `queryOverlap` 內部用的**同一個**身體重疊謂詞，⛔ 不自己寫一份距離比較。
+import { circleVsCircle } from "../collision/intersect";
 import { normalize, sub, distSq, clampLen, add } from "../math/vec2";
 import { isPassiveOnly, syncAbilityPassives } from "./abilityPassives";
 import { applyAugmentToEffects, collectAugmentOps } from "./abilityAugment";
@@ -135,6 +138,63 @@ export function bodiesInCircle(
     if (ht.teamId === selfTeam.teamId) return true;
     return opts.includeNeutrals === true && ht.teamId === MONSTER_TEAM;
   });
+}
+
+/**
+ * 一發**地面指定** AoE 圈進來的人 —— 唯一一份。
+ *
+ * ⛔ 這支函式存在的理由不是整潔，是 GH#458：`castType: "ground"` 從**開站起**
+ * 就寫死呼叫 `enemiesInCircle`，從來沒有讀過 `def.targetsEnemies`，而隔壁
+ * `"targeted"` 分支兩個方向都擋得很仔細。於是 53-03 破法對咒
+ *（`godie-o00l.e`，`ground` + `targetsEnemies:false` + 單顆 `shield`）
+ * 把魔法護盾**掛到敵人身上**，施法者與隊友一點都拿不到 —— 一支叫「破法」的
+ * 技能按下去是幫對面擋魔法，而所有測試全綠。
+ *
+ * ⚠️ 兩個呼叫端（`castAbility` 的 cast-BEGIN 與 `CastResolveSystem` 吟唱結束時的
+ * 重新查詢）必須逐位元同意，否則「有吟唱的」與「沒吟唱的」會分岔，測起來像
+ * 隨機故障。它們共用這一支，⛔ 不是各自照抄一次 —— 連 `radius ?? 1` 的預設與
+ * `resolveAbilityRadius` 都收在這裡，因為那也是兩邊會分歧的地方。
+ *
+ * ── 敵方那一側逐位元不變 ────────────────────────────────────────────────
+ * `targetsEnemies !== false`（省略 = true，73 支 ground 技能裡的 72 支）直接回
+ * {@link enemiesInCircle} 的結果，同一支函式、同一個順序（第二守則失敗形態⑤）。
+ *
+ * ── 友方那一側為什麼是 {@link bodiesInCircle} ───────────────────────────
+ * 同一個 `queryOverlap`、同一個 zone 閘、同一個 `aliveOnly`、同一道隱形閘 ——
+ * ⛔ 不在這裡 inline 過濾一份，那會變成第二個住處。
+ *
+ * ⭐ **中立花不必另外擋**（`"targeted"` 的友方路徑有一行 `world.flower.has(...)`）：
+ * 花是 `spawnFlower` 造的，**沒有 TeamComp**（`sim/flowers.ts` 的
+ * 「NO TeamComp/nav」），而 `bodiesInCircle` 的友方路徑第一道就是
+ * `if (!ht) return false`。⇒ 這裡再寫一次 `world.flower.has` 是一句永遠為假的
+ * 條件，而它會假裝自己是一道閘。同理殭屍（MONSTER_TEAM）也進不來，因為這裡不填
+ * `includeNeutrals`。
+ *
+ * ⭐ **施法者自己算在圈內**（只在友方那一側）。`queryOverlap` 的
+ * `exclude: new Set([caster])` 是為了「敵方 AoE 不會炸到自己」而存在的；一個
+ * 以自己為圓心展開的結界把自己排除在外，就會退化成另一種「說了但不會發生」——
+ * 53-03 的 `range` 是 **0**，落點永遠等於施法者腳下，排除他等於這支技能在沒有
+ * 隊友貼身時**一個人都罩不到**。收進來的條件是**跟其他人完全同一條**：身體與
+ * 圓真的重疊（`circleVsCircle`，即 `queryOverlap` 用的那個謂詞），所以一發丟得
+ * 很遠的友方 AoE 不會莫名其妙罩到施法者。
+ *
+ * 回傳維持 id 遞增（`queryOverlap` 的既有性質），把施法者插回正確位置而不是
+ * 接在尾巴 —— 下游的 `maxTargets` 那一刀吃順序。
+ */
+export function groundAoeTargets(
+  world: SimWorld,
+  caster: EntityId,
+  def: { targetsEnemies?: boolean; radius?: number },
+  point: { x: number; z: number },
+): EntityId[] {
+  const radius = resolveAbilityRadius(world, def.radius ?? 1);
+  if (def.targetsEnemies !== false) return enemiesInCircle(world, caster, point, radius);
+  const allies = bodiesInCircle(world, caster, point, radius, { side: "allies" });
+  const t = world.transform.get(caster);
+  if (!t) return allies;
+  const self = { kind: "circle" as const, center: t.pos, radius: t.radius };
+  if (!circleVsCircle(self, circle(point, radius)).hit) return allies;
+  return [...allies, caster].sort((a, b) => a - b);
 }
 
 export type CastResult =
@@ -315,9 +375,11 @@ export function castAbility(
       // 方向就是「自己 → 落點」，落點與自己重合時退化為 0 向量，由 armFacingLock
       // 自行忽略（原地放的 AoE 沒有有意義的朝向）。
       direction = normalize(sub(point, t.pos));
-      // ground AoE: hit enemies in radius at the point. With a cast time this
-      // set is RE-QUERIED when the wind-up elapses (CastResolveSystem).
-      targets = enemiesInCircle(world, caster, point, resolveAbilityRadius(world, def.radius ?? 1));
+      // ground AoE: 圈裡的**哪一側**由 `def.targetsEnemies` 決定（GH#458 之前
+      // 這一行寫死敵方，所以 `targetsEnemies:false` 的地面技把增益送給對面）。
+      // With a cast time this set is RE-QUERIED when the wind-up elapses
+      // (CastResolveSystem) — 走的是同一支 `groundAoeTargets`。
+      targets = groundAoeTargets(world, caster, def, point);
       break;
     }
     case "dash": {

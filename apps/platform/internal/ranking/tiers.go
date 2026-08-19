@@ -52,6 +52,28 @@ type LadderConfig struct {
 	// 菁英 on a small ladder. Ineligible accounts are skipped and the slot
 	// passes to the next eligible account down the board.
 	MinApexGames int
+	// MinApexPoints is the minimum cumulative score an account needs before it
+	// is eligible for an apex tier (RANKED_MIN_APEX_POINTS) — the 「最低分數」
+	// half of GH#352.
+	//
+	// ⭐ owner 2026-08-17:「沒分數不應該有位階，這是底線」。A 底線 is not a
+	// preference, so this knob may only ever TIGHTEN: the effective floor is
+	// apexPointsFloor(), which never returns less than 1. Setting this to 0 is
+	// therefore not a way to put a 0-point account back into the apex band.
+	MinApexPoints int
+	// MinApexLadder is how many accounts must be ON the board before ANY apex
+	// place is handed out at all (RANKED_MIN_APEX_LADDER) — the 「最少人數」
+	// half of GH#352. Apex is a population FRACTION, so on a two-person board
+	// the top player is trivially the top 10%; this gate is what says a board
+	// that small crowns nobody.
+	//
+	// ⛔ SHIPPED VALUE IS 0 (no gate) ON PURPOSE. The opposite behaviour is a
+	// recorded user directive — 「the player base is small, so the fractions
+	// round UP and apex always populates」, the reason ApexCounts floors at one
+	// place (see TestApexSmallLadder) — and GH#352 states in as many words that
+	// overriding it is the owner's decision, not this code's. The knob exists so
+	// that decision costs one environment variable instead of a deploy.
+	MinApexLadder int
 	// PlacementPoints maps a team's final placement (1..4) to the points delta
 	// its human seats earn. Scores floor at 0 (never negative).
 	PlacementPoints map[int]int
@@ -65,6 +87,10 @@ func DefaultLadderConfig() LadderConfig {
 		ChallengerFrac:  0.10,
 		GrandmasterFrac: 0.10,
 		MinApexGames:    10,
+		// GH#352 的兩個閘。分數閘的出貨值就是 owner 的底線本身（1 分＝有分數）；
+		// 人數閘出貨關著，理由寫在 MinApexLadder 的欄位說明裡。
+		MinApexPoints:   1,
+		MinApexLadder:   0,
 		PlacementPoints: map[int]int{1: 100, 2: 40, 3: -10, 4: -30},
 	}
 }
@@ -155,6 +181,13 @@ func (c LadderConfig) ApexCounts(total int) (challenger, grandmaster int) {
 	if total <= 0 {
 		return 0, 0
 	}
+	// 「最少人數」閘（GH#352）: a board this small is not a population, so a
+	// fraction of it means nothing. Returning (0,0) here — rather than filtering
+	// inside AssignApex — is deliberate: apexTiers derives its scan window from
+	// these two numbers, so a gated board also stops doing the work.
+	if total < c.MinApexLadder {
+		return 0, 0
+	}
 	challenger = fracPlaces(c.ChallengerFrac, total)
 	if challenger > total {
 		challenger = total
@@ -164,6 +197,21 @@ func (c LadderConfig) ApexCounts(total int) (challenger, grandmaster int) {
 		grandmaster = total - challenger
 	}
 	return challenger, grandmaster
+}
+
+// apexPointsFloor is the EFFECTIVE minimum score for an apex place: the
+// configured MinApexPoints, but never below 1.
+//
+// ⭐ The 1 is not a default, it is owner 2026-08-17's 底線 —— 「沒分數不應該有位階」.
+// Expressing it as a floor on the knob (rather than as a second `points <= 0`
+// check somewhere else) means there is exactly ONE place that decides whether a
+// score is apex-worthy, and no configuration reachable from the environment can
+// put a 0-point account back on the apex band.
+func (c LadderConfig) apexPointsFloor() int {
+	if c.MinApexPoints < 1 {
+		return 1
+	}
+	return c.MinApexPoints
 }
 
 // fracPlaces converts a population fraction into a whole number of places.
@@ -186,7 +234,9 @@ func fracPlaces(frac float64, total int) int {
 // the FULL board size (the population the fractions are taken from — apex is
 // ranked over the whole ranked ladder, NOT only accounts past the Master
 // floor, so a small ladder still crowns a 菁英). Accounts with fewer than
-// MinApexGames settled matches are skipped and their place passes down.
+// MinApexGames settled matches — or fewer points than apexPointsFloor() — are
+// skipped and their place passes down. A board smaller than MinApexLadder has
+// no places to hand out at all (ApexCounts returns 0,0).
 func (c LadderConfig) AssignApex(rows []ApexCandidate, total int) map[string]string {
 	challenger, grandmaster := c.ApexCounts(total)
 	out := make(map[string]string, challenger+grandmaster)
@@ -198,12 +248,12 @@ func (c LadderConfig) AssignApex(rows []ApexCandidate, total int) map[string]str
 		if r.Games < c.MinApexGames {
 			continue // not yet apex-eligible: the place passes to the next account
 		}
-		// ⛔ 沒有分數就沒有位階（owner 2026-08-17：「沒分數不應該有位階，這是底線」）。
-		// apex 是按**名次比例**發的，所以兩個人的榜上、一個 0 分的帳號照樣會被冠上
-		// 「宗師」。⚠️ 這一條在此之前是靠 MinApexGames 誤打誤撞擋住的 —— 場數夠了
-		// 就擋不住，而那正是 GH#352。同一句話也適用於**空榜**：0 分不是最低位階，
-		// 是「還沒進榜」。
-		if FloorPoints(r.Points) <= 0 {
+		// 「最低分數」閘（GH#352）。apex 是按**名次比例**發的，所以兩個人的榜上、
+		// 一個 0 分的帳號照樣會被冠上「宗師」。⚠️ 這一條在此之前是靠 MinApexGames
+		// 誤打誤撞擋住的 —— 場數夠了就擋不住，而那正是 GH#352。
+		// ⛔ 門檻不是寫死的 0，是 apexPointsFloor()：owner 的底線（>0）是它的**下限**，
+		// 後台只能往上調。同一句話也適用於**空榜**：0 分不是最低位階，是「還沒進榜」。
+		if FloorPoints(r.Points) < c.apexPointsFloor() {
 			continue
 		}
 		switch {

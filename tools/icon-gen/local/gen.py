@@ -50,6 +50,12 @@ def main() -> None:
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--doc", help="content doc as 'family/id' (subject derived via prompt.py)")
     g.add_argument("--subject", help="a subject clause; wrapped in the pinned PREFIX/NEGATIVE")
+    # GH#457: composition follows the FAMILY — only champions may draw a character.
+    # `--doc` reads the family off the doc itself; a bare `--subject` cannot, so it
+    # defaults to the no-character branch (the safe majority) unless told otherwise.
+    ap.add_argument("--family", default="", choices=["", "champions", "abilities",
+                                                     "items", "augments"],
+                    help="composition family for --subject (default: no-character)")
     g.add_argument("--prompt", help="a complete prompt string (as the platform would send)")
     ap.add_argument("--out", required=True, help="output icon path (.webp)")
     ap.add_argument("--size", type=int, default=128, help="output edge in px (default 128)")
@@ -61,10 +67,10 @@ def main() -> None:
     if args.doc:
         family, doc = load_doc(args.doc)
         subject, signal, conf = derive(doc, family)
-        full = build_prompt(subject)
+        full = build_prompt(subject, family)
         print(f"gen: doc {args.doc}  [{signal}/{conf}]\n     subject: {subject}")
     elif args.subject:
-        full = build_prompt(args.subject)
+        full = build_prompt(args.subject, args.family)
     else:
         full = args.prompt
 

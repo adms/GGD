@@ -57,6 +57,7 @@ import {
   hexToRgb01,
   isOutlineShellMaterial,
 } from "@ggd/shared/content";
+import { groundStyleWallTint } from "@ggd/shared/content/schema/groundStyle";
 import { buildBackdrop } from "./ArenaBackdrop";
 import type { AssetManager } from "./AssetManager";
 import { CAMERA_PITCH_RAD, DOLLY_MIN } from "./CameraRig";
@@ -78,6 +79,42 @@ import {
 export function groundPaletteOf(scenery: ArenaScenery | undefined): GroundPalette | undefined {
   const p = scenery?.palette;
   return p === undefined ? undefined : { floor: hexToRgb01(p.floor), wall: hexToRgb01(p.wall) };
+}
+
+/**
+ * ⭐ GH#345 —— 這張場地的**牆色**，一格資料，⛔ 不是七個 if。
+ *
+ * owner 2026-08-18：地板換了主題、牆還是水泥灰盒。牆＝場上那些 0.42u 的碰撞矮台
+ * （圓柱樁 / graybox 方牆 / 線段矮牆），它們在此之前吃的是一個寫死的
+ * `Color3(0.42, 0.4, 0.45)`，跟場地一點關係都沒有。
+ *
+ * 兩層，照第〇·六守則的階梯：
+ *   1. 場地自己宣告的 `scenery.palette.wall`（GH#362 的編輯器欄位）—— **作者的設計**
+ *   2. 沒宣告 → `groundStyleWallTint()`，地面材質配套的那一列 —— **引擎的推導**
+ *
+ * ⚠️ 回傳的是**要塗上去的顏色本身**，⛔ 不是乘數：矮台是無貼圖的純色塊，
+ * 而同一格 hex 在 `ArenaGround` 那邊是乘在裙邊貼圖的 albedo 上 —— 一格資料、
+ * 兩種用法，⛔ 不要為此再開第二格欄位。
+ */
+export function wallTintOf(
+  scenery: ArenaScenery | undefined,
+  groundStyle: string | undefined,
+): Color3 {
+  const hex = scenery?.palette?.wall ?? groundStyleWallTint(groundStyle);
+  const { r, g, b } = hexToRgb01(hex);
+  return new Color3(r, g, b);
+}
+
+/**
+ * 碰撞邊（圓形障礙的地面環）永遠比牆**亮一階**。
+ *
+ * ⚠️ 這一條是 task #218 的遺產，⛔ 不是裝飾：矮台被壓到 0.42u 之後就不再有輪廓，
+ * 「哪裡撞得到」只剩這一圈亮邊在講。所以它跟著牆色走**但保證更亮** ——
+ * ⛔ 不開第二張表（第零守則⑨：那會變成一張要跟第一張同步的表）。
+ */
+function kerbEdgeOf(wall: Color3): Color3 {
+  const k = 0.42;
+  return new Color3(wall.r + (1 - wall.r) * k, wall.g + (1 - wall.g) * k, wall.b + (1 - wall.b) * k);
 }
 
 /** Decor rotation is authored in quarter-turns (0-3) — pure, unit-tested. */
@@ -240,6 +277,8 @@ export function buildArena(
   scenery?: ArenaScenery,
 ): ArenaHandles {
   const palette = groundPaletteOf(scenery);
+  // ⭐ GH#345 —— 場上矮台（牆）的顏色，一次算好給所有 zone 用。
+  const wallTint = wallTintOf(scenery, groundStyle);
   const root = new TransformNode(`arena-root-${arena.id}`, scene);
   const handles: ArenaHandles = {
     root,
@@ -252,14 +291,17 @@ export function buildArena(
   arena.zones.forEach((zone, zi) => {
     handles.grounds.push(buildZoneGround(scene, root, zone, zi, groundStyle, palette));
 
+    // ⭐ GH#345 —— 牆色從場地讀，⛔ 不是寫死的水泥灰。見 `wallTintOf()`。
     const obstacleMat = new StandardMaterial(`zone-${zi}-obstacle-mat`, scene);
-    obstacleMat.diffuseColor = new Color3(0.42, 0.4, 0.45);
+    // ⚠️ `.clone()` —— 每個 zone 一顆材質，⛔ 不要讓 N 顆材質共用同一個 Color3
+    //    實例（任何一處就地改色會靜默改到全部）。
+    obstacleMat.diffuseColor = wallTint.clone();
     obstacleMat.specularColor = new Color3(0.05, 0.05, 0.05);
-    // brighter, slightly warm rim so the collision EDGE reads against every
-    // shipped groundStyle (stone / sand / grass / dirt) now that the marker is
-    // too low to throw a silhouette.
+    // brighter rim so the collision EDGE reads against every shipped
+    // groundStyle now that the marker is too low to throw a silhouette —
+    // derived from the wall so it follows the theme without a second table.
     const obstacleRimMat = new StandardMaterial(`zone-${zi}-obstacle-rim-mat`, scene);
-    obstacleRimMat.diffuseColor = new Color3(0.66, 0.62, 0.58);
+    obstacleRimMat.diffuseColor = kerbEdgeOf(wallTint);
     obstacleRimMat.emissiveColor = new Color3(0.12, 0.11, 0.1);
     obstacleRimMat.specularColor = new Color3(0.08, 0.08, 0.08);
 

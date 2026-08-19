@@ -176,11 +176,16 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     cover(TAG);
     // ⚠️ 改這幾個數字是一個**決定**，不是順手。加一列的人必須在這裡留下痕跡，
     // 而 code review 看得到這一行的 diff。
-    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(25);
+    // 2026-08-20 GH#410：25 → 24。`arena-rules` 那一列被**刪掉** —— 它從
+    // OWN_PAGE 走進了通用引擎（`ARENA_RULES_SPEC`）。⭐ 這是這張表最健康的
+    // 移動方向（帳單被付掉，總列數變少），而且它是**必要**的：一份文件同時
+    // 在註冊表與豁免表上會被 `verdict.duplicated` 抓到。
+    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(24);
     // 2026-08-17：13 → 14。`roster`（英雄上下架）**往下走了一格** —— 它從
     // KNOWN_GAP 變成 OWN_PAGE，因為 ui/RosterPage.tsx 做出來了。⚠️ 這是這張表
     // 唯一「健康」的移動方向：帳單被付掉，而總列數不變。
-    expect(byKind("OWN_PAGE")).toHaveLength(14);
+    // 2026-08-20：14 → 13（arena-rules 走進通用引擎，見上面那一段）。
+    expect(byKind("OWN_PAGE")).toHaveLength(13);
     expect(byKind("NOT_TUNABLE")).toHaveLength(3);
     // 2026-08-02：2 → 5。新增的三列是 lobby-layout / valhalla-sandbox /
     // victory-podium —— 三份文件與 Zod 都接完了,只差客戶端還在讀寫死的常數。

@@ -103,6 +103,16 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // replay 也一樣。這正是第②種故障（算出來但從沒送到客戶端）。
   // 帶的是線的兩端與寬度，客戶端據此畫那條鞭子。
   "damageLine",
+  // ⭐ `chainLightning`（GH#451）—— 86-04 打雷絕招 / 65-04 天譴 的那束閃電。
+  // 帶 `{ caster, chains, hits, segments[], origin }`，`segments` 是**真的跳過的
+  // 那條折線**（每跳一段 `{x,z,x2,z2}`），客戶端據此畫弧，⛔ 不是從施法者面向猜。
+  // 它必須過線的理由與上面 `damageLine` 逐字相同：這個機制的 payload 全部在 sim
+  // 裡結算，沒有它，玩家看到的只有一整排敵人同時掉血而畫面上什麼都沒發生。
+  // ⚠️ **客戶端目前還沒有這個 case**（`vfx/VfxSystem.handleEvent`）—— 見 GH#451
+  // 的 nextRound：先把資料送到，渲染是下一輪的事。⛔ 順序不可以反過來，
+  // 「事件沒過線」是第②種故障，而且是最難看出來的那一種。
+  // CADENCE：一次施放一個事件（⛔ 不是每一跳一個），所以線路成本 = 施放次數。
+  "chainLightning",
   // `attrGrant` / `attrGrantEnd` —— 07-00 獸化心靈（每殺 8 個 +1 敏，120 上限）
   // 這類「屬性被永久/暫時改寫」的成對事件。要過線是因為玩家必須知道
   // **為什麼自己突然變快了** —— 沒有它，三圍在面板上跳動而沒有任何理由，

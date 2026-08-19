@@ -11,7 +11,7 @@ import type { SimWorld } from "../SimWorld";
 import { Abilities } from "../content/registry";
 import { runEffects } from "../effects/effectRunner";
 import { fireHooks } from "../effects/hooks";
-import { enemiesInCircle, resolveAbilityRadius } from "../abilities/abilitySystem";
+import { groundAoeTargets } from "../abilities/abilitySystem";
 import { applyAugmentToEffects, collectAugmentOps } from "../abilities/abilityAugment";
 import { armRecovery } from "../abilities/abilityRecovery";
 
@@ -70,8 +70,12 @@ export function castResolveSystem(world: SimWorld): void {
     // target: those are locked at cast-begin by design.
     const groundBlast = def.castType === "ground" && cast.point;
     const targets = groundBlast
-      ? // combat-env `abilityRange` (task #136) shrinks the resolve-time AoE too
-        enemiesInCircle(world, id, cast.point!, resolveAbilityRadius(world, def.radius ?? 1))
+      ? // 走 `castAbility` cast-BEGIN 用的**同一支** `groundAoeTargets`：combat-env
+        // `abilityRange` (task #136) 的縮放、`radius ?? 1` 的預設、以及
+        // `targetsEnemies` 選哪一側 (GH#458) 全部只有一份。⛔ 不要在這裡就地
+        // 展開成 `enemiesInCircle(...)` —— 那正是 #458 的形狀：兩個呼叫端分岔，
+        // 「有吟唱的」與「沒吟唱的」行為不同，測起來像隨機故障。
+        groundAoeTargets(world, id, def, cast.point!)
       : cast.targets;
     // The AoE detonates at the point NOW that the wind-up elapsed — the discrete
     // `explosion` / 爆裂 cue for a cast-time ground ability (audio COMBAT-AUDIO;

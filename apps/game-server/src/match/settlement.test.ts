@@ -236,7 +236,13 @@ describe("per-team elimination settlement (elimination-settlement, task #193 / G
     //    ⛔ 這不是把測試調鬆 —— 我掃了 4200–4289 共 90 個 seed：
     //    13 個仍然有隊伍歸零、其中 **4 個**（4200/4208/4211/4212）冠軍本人被打光過。
     //    情境照樣可達，只是這個 seed 不再落在上面。
-    const run = runFullMatch("elim1", 4200, matchDocWithCard(false));
+    // ⚠️ GH#455 —— seed 4200 換成 **4212**（第四次換，同一個理由）：中場入口現在
+    //    會把每個人還原（`restoreForNextRound`），於是**被打倒的 bot 在商店裡是站
+    //    著的**，牠的採買與後續走位都變了，4200 那一場冠軍不再被打光過。
+    //    ⛔ 不是把測試調鬆 —— 掃 4200–4289 共 90 個 seed：**90 個全部**有隊伍歸零、
+    //    其中 12 個（4212/4221/4233/4234/4247/4256/4258/4279/4280/4282/4284/4288）
+    //    冠軍本人也被打光過。取最小的。
+    const run = runFullMatch("elim1", 4212, matchDocWithCard(false));
     // 這一條測的是 OFF 那一側 —— 而且是**經由內容文件**到達控制器的。
     expect(run.ctl.settlementCardOnHealthSpent).toBe(false);
 
@@ -263,7 +269,7 @@ describe("per-team elimination settlement (elimination-settlement, task #193 / G
   it("後台打開就退回舊行為 —— 這個功能是被關掉,不是被刪掉", () => {
     cover("elimination-settlement");
     // 同上，與 OFF 那一側用同一個 seed 才比得出「打開的代價」。
-    const run = runFullMatch("elim1", 4200, matchDocWithCard(true));
+    const run = runFullMatch("elim1", 4212, matchDocWithCard(true));
     expect(run.ctl.settlementCardOnHealthSpent).toBe(true);
 
     // 血歸零的隊伍**當場**拿到一張卡:不多不少就是那些隊伍，各一張。

@@ -29,6 +29,10 @@
  */
 import type { ConfigVfxFamiliesDoc, VfxSoundCue } from "@ggd/shared/content";
 import { resolveVfxSound, vfxSoundLoopMaxMs, vfxSoundLoopMs } from "@ggd/shared/content";
+import type { EventMessage } from "@ggd/shared/protocol/messages";
+import { abilityIdOfOrigin } from "@ggd/shared/sim/combat/damage";
+import { spatialSourceFor } from "./spatialPolicy";
+import type { SpatialSource } from "./spatial";
 import type { AudioMap } from "./types";
 
 /** overlay 專用資產的 URL 前綴 —— 正式站**刻意**不供應這個路徑（copyright gate）。 */
@@ -199,3 +203,85 @@ export class VfxSoundLayer {
  * `GameApp` 安裝。⛔ 測試要新的一個就 `new VfxSoundLayer()`，不要動這一個。
  */
 export const vfxSoundLayer = new VfxSoundLayer();
+
+// ───────────────────────────────────────────────────────────────────────────
+// GH#440 —— 特效音的**唯一出口**（在這之前 `GameApp` 直接 push 進 SpatialSfxQueue）
+// ───────────────────────────────────────────────────────────────────────────
+
+/** 一發已經**過完政策表**、可以直接進 `SpatialSfxQueue` 的特效音。 */
+export interface VfxSoundPush {
+  readonly key: string;
+  /** ⭐ 政策表批准過的位置，或 null（＝置中）。⛔ 呼叫端不可以自己再算一個。 */
+  readonly source: SpatialSource | null;
+  readonly gain: number;
+  /**
+   * 一律 `false`（GH#403）。特效自帶的循環音**借用**了 `fireRingLoop` /
+   * `arenaAmbience` —— 那兩個 key 同時是真的環境底噪，走真 loop。一發 8 秒的
+   * 龍捲風要是啟動了真 loop，`maxConcurrent: 1` 的 gate 會被它永遠佔住。
+   */
+  readonly loop: false;
+}
+
+/**
+ * ⛔ **這裡是特效音唯一離開這一層的地方。**
+ *
+ * `GameApp` 以前自己做這件事，而它是 GH#440 的現場：它把 `resolveSpatial(ev)`
+ * 的結果**無條件**當成位置。那個 source 是按**事件型別**算的，而這裡播的是
+ * **家族綁的 key** —— 於是 `fireRingLoop`（政策 flat：「火圈包住你，非方向性」）
+ * 被掛在施法者身上跟著他走，**24 支技能**，而兩張表都沒有反對過。
+ *
+ * 現在每一發都經過 {@link spatialSourceFor}：政策說 `world` 才留位置，其餘一律
+ * 置中。⛔ 政策永遠只會**拿掉**位置，不會憑空給一個。
+ */
+export function vfxSoundCues(
+  layer: VfxSoundLayer,
+  ev: EventMessage,
+  source: SpatialSource | null,
+  nowMs: number,
+): VfxSoundPush[] {
+  const out: VfxSoundPush[] = [];
+  const emit = (hit: VfxSoundHit | null): void => {
+    if (hit) out.push({ key: hit.key, source: spatialSourceFor(hit.key, source), gain: hit.gain, loop: false });
+  };
+  if (ev.type === "abilityCast") {
+    const abilityId = typeof ev.data.abilityId === "string" ? ev.data.abilityId : undefined;
+    emit(layer.cue(abilityId, "launch"));
+    // 持續型特效的底噪。掛在**施法者**身上，所以位置跟著他走、他死了就跟著回收。
+    const caster = typeof ev.data.caster === "number" ? ev.data.caster : undefined;
+    if (caster !== undefined) emit(layer.startLoop(caster, abilityId, nowMs));
+    return out;
+  }
+  // ⭐ GH#440 —— `stopLoop()` 在這之前**全 repo 零呼叫端**：註解說它是給
+  // 「技能被打斷／施法者死了」用的，而沒有任何地方在那兩件事發生時叫它，
+  // 於是一發循環只會在 8 秒自然到期才停（GH#429：燃燒床音被推進商店）。
+  if (ev.type === "castInterrupt" || ev.type === "death") {
+    const who = ev.type === "death" ? ev.data.id : ev.data.caster;
+    if (typeof who === "number") emit(layer.stopLoop(who));
+    return out;
+  }
+  if (ev.type !== "damage" && ev.type !== "projectileHit") return out;
+  // 每一條技能傷害路徑都蓋 `origin = "ability:<id>"`（instant / cast-time /
+  // projectile onHit 三條都一樣，見 sim/combat/damage.ts 的 `abilityIdOfOrigin`）。
+  // 普攻 / DoT / 道具 proc 沒有這個前綴 ⇒ 這裡直接回，⛔ 不會替它們亂編一個家族。
+  const abilityId = abilityIdOfOrigin(typeof ev.data.origin === "string" ? ev.data.origin : "");
+  if (!abilityId) return out;
+  emit(layer.cue(abilityId, "impact"));
+  return out;
+}
+
+/**
+ * 這一幀循環音的重播與到期消散 —— 同樣**過完政策表**。
+ * `sourceOf` 給的是「施法者現在在哪」，政策決定那個位置留不留得住。
+ */
+export function vfxLoopPushes(
+  layer: VfxSoundLayer,
+  nowMs: number,
+  sourceOf: (entityId: number | undefined) => SpatialSource | null,
+): VfxSoundPush[] {
+  return layer.update(nowMs).map((hit) => ({
+    key: hit.key,
+    source: spatialSourceFor(hit.key, sourceOf(hit.entityId)),
+    gain: hit.gain,
+    loop: false as const,
+  }));
+}

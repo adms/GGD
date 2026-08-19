@@ -22,6 +22,8 @@ import type { Vec2 } from "../math/vec2";
 //    `sim/**` 裡出現 Math.cos 就會紅，即使它只在模組載入時跑一次。
 //    ⛔ 不要為了繞過它而改閘：那個嚴格是對的。
 import { CIRCLE_STEPS, UNIT_CIRCLE } from "../../map/unitCircle";
+// ⚠️ `map/spec.ts` 沒有任何 import（它只放常數與界），所以這一條不會產生模組循環。
+import { SPAWN_ROOM_BODY_RADII_SHIPPED } from "../../map/spec";
 // ⚠️ 單向：`collision/resolve` 不 import 這個檔（它只認 ZoneDef / vec2 / intersect），
 //    所以沒有模組循環。
 import { overlapsObstacle } from "../collision/resolve";
@@ -156,8 +158,68 @@ export function spotIsClear(zone: ZoneDef, p: Vec2, radius: number): boolean {
   return true;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+ * 站得下 **≠** 動得了（GH#398）
+ *
+ * {@link spotIsClear} 是一個**閉集合**測試：`insideBounds` 用 `<=`＋`1e-6`、
+ * `overlapsObstacle` 也一樣，所以它連自由空間的**邊界**都說「可以」——
+ * 而邊界上的餘裕**恰好是 0**。兩條擺放路徑偏偏都瞄準那條邊界：
+ * `mobSpawnPosAtDir` 的 `pushOutOfObstacle`＋`clampToBoundary` 會把身體推到
+ * **相切**，`freeEdgeSpot` 的第 0 圈 `inset = radius` 也**正好**是那條線。
+ *
+ * ⇒ 出貨量到（2026-08-20）：900 個生成點裡有 **4 個**只剩 **0.31 個身體半徑**
+ * 的活動空間（`arena.dota` 的殭屍**王**，卡在 r=2.1 的石頭與外牆之間 0.28 單位），
+ * 其餘 896 個全部 ≥ 2.00 —— 中間**一個都沒有**。#398 說的「0.01–0.08㎡ 可走空間
+ * 碎片」就是同一件事的集合論殘影：那些「碎片」的面積逐格等於**一個取樣格**
+ * （0.1 格距量到 0.010㎡、0.05 格距量到 0.003㎡ —— 它隨格距平方縮小，
+ * 也就是**測度 0**），⛔ 不是兩張圖各自的資料缺陷。
+ *
+ * ⇒ 缺的那個運算就是這一支：**離得開嗎**。
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/** 沿幾個方向試著平移。16 ⇒ `CIRCLE_STEPS`(64) 的整數倍，查表不用內插。 */
+export const SPAWN_ROOM_DIRS = 16;
+/** 每一個身體半徑切幾段取樣。⚠️ 太粗會「跳過」窄縫而誤判成走得通。 */
+export const SPAWN_ROOM_SUBSTEPS = 8;
+
 /**
- * 從周長參數 `t0` 出發，找一個**站得下**的邊緣點；找不到回 `null`。
+ * `p` 這個身體**離得開**嗎 —— 至少有一個方向可以直線平移
+ * `bodyRadii` 個身體半徑而全程站得下。
+ *
+ * ⭐ 門檻的單位是**身體半徑**，⛔ 不是公尺 —— owner 調 `special.radiusMult`
+ * 時它自己跟著長，⛔ 不必有人記得回來改（同 `nav.headroom` 的做法）。
+ *
+ * ⚠️ 直線平移是**保守**的近似：彎曲的縫隙會被判成「離不開」。那個方向是對的 ——
+ * 誤判的代價只是換一個生成點（`freeEdgeSpot` 就在旁邊找），
+ * 而反過來誤判的代價是一隻**站著不動**的殭屍。
+ *
+ * ⛔ 決定性：只用查表的 `UNIT_CIRCLE` 與乘加，無三角函式／`**`／亂數／時鐘。
+ */
+export function spotHasRoom(
+  zone: ZoneDef,
+  p: Vec2,
+  radius: number,
+  bodyRadii = SPAWN_ROOM_BODY_RADII_SHIPPED,
+): boolean {
+  const stride = CIRCLE_STEPS / SPAWN_ROOM_DIRS;
+  const h = radius / SPAWN_ROOM_SUBSTEPS;
+  const n = Math.max(1, Math.round(bodyRadii * SPAWN_ROOM_SUBSTEPS));
+  for (let d = 0; d < SPAWN_ROOM_DIRS; d++) {
+    const v = UNIT_CIRCLE[d * stride]!;
+    let ok = true;
+    for (let s = 1; s <= n; s++) {
+      if (!spotIsClear(zone, { x: p.x + v.x * h * s, z: p.z + v.z * h * s }, radius)) {
+        ok = false;
+        break;
+      }
+    }
+    if (ok) return true;
+  }
+  return false;
+}
+
+/**
+ * 從周長參數 `t0` 出發，找一個**站得下而且離得開**的邊緣點；找不到回 `null`。
  *
  * 搜尋順序（兩層有界迴圈，⛔ 沒有 `while`、⛔ 沒有隨機重試）：
  *   外層 = 一圈一圈**往內**（先貼著邊，縮不動才往內）
@@ -181,7 +243,8 @@ export function freeEdgeSpot(zone: ZoneDef, t0: number, radius: number): Vec2 | 
       const away = (m + 1) >> 1;
       const dir = (m & 1) === 1 ? 1 : -1;
       const p = pointOnBoundary(zone, t0 + (dir * away) / EDGE_SPAWN_PERIMETER_SAMPLES, inset);
-      if (spotIsClear(zone, p, radius)) return p;
+      // ⭐ GH#398 —— 兩個條件**一起**問。分開問正是這個檔早就記過的那個缺陷形狀。
+      if (spotIsClear(zone, p, radius) && spotHasRoom(zone, p, radius)) return p;
     }
   }
   return null;

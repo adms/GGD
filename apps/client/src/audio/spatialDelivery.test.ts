@@ -401,7 +401,9 @@ describe("the queue is WIRED into the frame loop (spatial-delivery)", () => {
       .replace(/\/\*[\s\S]*?\*\//g, "")
       .replace(/\/\/[^\n]*/g, "");
     // pushed at the event drain, with the SAME position resolver the VFX uses
-    expect(src).toMatch(/this\.sfxQueue\.push\(sfxKey, resolveSpatial\(/);
+    // GH#440 —— 位置仍然來自 `resolveSpatial`，但現在**先過空間音場政策表**
+    // （`spatialSourceFor`）：入口只有一個，才不會有第二條繞過去的路。
+    expect(src).toMatch(/this\.sfxQueue\.push\(\s*sfxKey,\s*spatialSourceFor\(sfxKey, resolveSpatial\(/);
     // and flushed into the REAL mixer, not a stub. #259 hoisted the listener
     // into a local so the VOICE flush can share the exact same frame — the two
     // fields must never be computed from different camera states.

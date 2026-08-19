@@ -132,7 +132,13 @@ export const durationClaims = (t: string): NumClaim[] =>
  * 但**不跨句**（`[^。，、\n]`）—— 跨句會把下一件事的數字認成傷害。
  */
 export const damageClaims = (t: string): NumClaim[] =>
-  collect(t, [new RegExp(`造成[^。，、\\n]{0,10}?(${RANKS})\\s*(?:點|\\+)`, "g")]);
+  collect(t, [new RegExp(`造成[^。，、\\n]{0,10}?(${RANKS})\\s*(?:點|\\+)`, "g")]).filter(
+    // ⛔ 兩種**不是一發傷害量**的寫法，量到會誤報：
+    // ① `造成自身力量*3+…`／`造成敏捷*3+…` —— 那個 3 是**係數**不是點數
+    //    （25-01 北斗懺悔拳、48-04 騎英之疆繩，被讀成「卡面 3 點 vs 引擎 300」＝ 300 倍落差）
+    // ② `造成範圍內敵人減少3點護甲` —— 那是**減益**不是傷害（92-03 消化液）
+    (c) => !/[*×]/.test(c.text) && !/(減少|降低|下降)/.test(c.text),
+  );
 
 /**
  * 卡面上的**回魔**宣稱：`每位式神的犧牲都能讓木乃香獲得150點魔力`（14-02 式神炸裂）。
@@ -214,6 +220,18 @@ interface Numbers {
   readonly duration: Set<number>;
   readonly damage: Set<number>;
   readonly kinds: Set<string>;
+  /**
+   * 這棵樹上出現過的**表達面**，給 {@link TAG_NEEDS_KIND} 用。三種前綴：
+   * `stat:<屬性>`（modifier 掛在誰身上）、`on:<事件>`（掛在哪個 hook）、
+   * `field:<欄位>`（有沒有填那一格）。
+   *
+   * ⚠️ 沒有這一層的時候，`[迴避]` 這條規則對 **13 份**出貨文件誤報 —— 引擎的
+   * 迴避是 `stat: "evasion"` 的 modifier（`sim/combat/evasion.ts`），⛔ 從來
+   * 就沒有一個叫 `evasion` 的 effect kind 在被內容使用；而聖杯側的 `[迴避]`
+   * 有一半是**「迴避成功時」**（`on: "onEvade"`）。誤報會逼下一個人放寬斷言，
+   * 而一條被放寬的閘等於沒有閘。
+   */
+  readonly faces: Set<string>;
   readonly hasMaxHpPct: boolean;
   readonly hasManaGain: boolean;
 }
@@ -223,6 +241,7 @@ export function abilityNumbers(def: AbilityDef): Numbers {
   const duration = new Set<number>();
   const damage = new Set<number>();
   const kinds = new Set<string>();
+  const faces = new Set<string>();
   let hasMaxHpPct = false;
   let hasManaGain = false;
   const roots: unknown[] = [def.effects, def.passive, def.marks];
@@ -232,6 +251,9 @@ export function abilityNumbers(def: AbilityDef): Numbers {
       if ((MANA_GAIN_KINDS as readonly string[]).includes(String(node.kind))) hasManaGain = true;
       // 掛在 `maxHealth` 上的 modifier 也是一種最大生命百分比的表達面。
       if (node.stat === "maxHealth") hasMaxHpPct = true;
+      if (typeof node.stat === "string") faces.add(`stat:${node.stat}`);
+      if (typeof node.on === "string") faces.add(`on:${node.on}`);
+      if (node.exclusiveGroup !== undefined) faces.add("field:exclusiveGroup");
       for (const [k, v] of Object.entries(node)) {
         if (isDurationKey(k)) numbersUnder(v, duration);
         if ((DAMAGE_KEYS as readonly string[]).includes(k)) numbersUnder(v, damage);
@@ -246,6 +268,7 @@ export function abilityNumbers(def: AbilityDef): Numbers {
     duration,
     damage,
     kinds,
+    faces,
     hasMaxHpPct,
     hasManaGain,
   };
@@ -259,26 +282,34 @@ const anyNear = (v: number, pool: Iterable<number>): boolean => {
 const fmt = (xs: Iterable<number>): string => [...new Set([...xs])].join(" / ") || "（空）";
 
 /**
- * 標籤 ⇒ 效果樹上至少要有其中一個 kind。
+ * 標籤 ⇒ 效果樹上至少要有其中一個**表達面**。
+ * 一格可以是 effect kind、`stat:<屬性>`、`on:<hook 事件>` 或 `field:<欄位>`
+ * （見 {@link Numbers.faces}）—— 同一個機制在 GGD 常常有不只一種寫法，
+ * ⛔ 只認 kind 會對出貨內容誤報。
  *
- * ⚠️ 只收「除了這幾個 kind 之外**沒有別的表達方式**」的標籤 —— 泛用的
+ * ⚠️ 只收「除了這幾種寫法之外**沒有別的表達方式**」的標籤 —— 泛用的
  * `[主動]`／`[被動]`／`[範圍]`／`[AP加成]` 是**分類**不是機制承諾，⛔ 不進來。
  * ⛔ `[召喚]` 也不進來：`abilityCastClaims` 已經在守它，兩支一起紅＝同一件事被罰兩次。
+ * ⛔ `[破魔]` 刻意**退出**：出貨內容裡它有兩個互不相容的讀法（燒對方的魔 vs
+ * 降魔抗，例 92-02 消化液 `stat: mr`），任何單一條件都會誤判其中一半。
  */
 export const TAG_NEEDS_KIND: Readonly<Record<string, readonly string[]>> = {
   護盾: ["shield", "manaBarrier"],
   "吸收（護盾）": ["shield", "manaBarrier"],
   治療: ["heal", "restore"],
-  回復: ["heal", "restore", "applyBuff"],
+  回復: ["heal", "restore", "applyBuff", "stat:lifesteal", "stat:healthRegen", "stat:manaRegen"],
   擊退: ["knockback"],
   拉扯: ["knockback"],
   衝刺: ["dash", "leap", "blink"],
   跳躍: ["leap", "dash"],
   瞬移: ["blink", "dash"],
   淨化: ["dispel"],
-  變身: ["championForm"],
-  迴避: ["evasion"],
-  破魔: ["spendMana", "swapResource", "shieldBreak"],
+  // ⭐ 互斥組增益就是 owner 版「變身」的落地方式（state.exclusive-group@1，
+  // 例 15-02 疾風迅雷「[變身]為唯一狀態」）—— ⛔ 不是只有 championForm 算數。
+  變身: ["championForm", "field:exclusiveGroup"],
+  // ⭐ 引擎的迴避是 `stat: "evasion"`（sim/combat/evasion.ts），⛔ 沒有內容在用
+  // `kind: "evasion"`；聖杯側的 `[迴避]` 有一半是「迴避成功時」的 hook。
+  迴避: ["evasion", "stat:evasion", "on:onEvade"],
   燒魔: ["spendMana", "swapResource"],
   投影: ["summon", "proxyCast"],
 };
@@ -353,7 +384,7 @@ export function scanAbility(def: AbilityDef & { description?: string }): Mismatc
   }
   for (const tag of new Set(leadTags(desc))) {
     const need = TAG_NEEDS_KIND[tag];
-    if (need === undefined || need.some((k) => n.kinds.has(k))) continue;
+    if (need === undefined || need.some((k) => n.kinds.has(k) || n.faces.has(k))) continue;
     out.push({
       rule: "tag-no-mechanism",
       claim: `[${tag}]`,

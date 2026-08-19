@@ -285,6 +285,13 @@ export const GLOBAL_BOUNDS: Readonly<Record<string, ForgeBound>> = {
   boltPitchDeg: { min: -180, max: 180 },
   dashPitchDeg: { min: -180, max: 180 },
   tornadoPitchDeg: { min: -180, max: 180 },
+  // GH#456 —— 同五個家族的**錐角**(扇形張多寬)。上下界 1/180 和 `zEmitter` 的
+  // cone 同一條線。⚠️ 和上面五格不是同一件事:仰角 = 躺成什麼角度,錐角 = 多寬。
+  beamAngleDeg: { min: 1, max: 180 },
+  slashAngleDeg: { min: 1, max: 180 },
+  boltAngleDeg: { min: 1, max: 180 },
+  dashAngleDeg: { min: 1, max: 180 },
+  tornadoAngleDeg: { min: 1, max: 180 },
 };
 
 export const FAMILY_BOUNDS: Readonly<Record<string, ForgeBound>> = {
@@ -328,6 +335,12 @@ export const GLOBAL_FIELDS = [
   "boltPitchDeg",
   "dashPitchDeg",
   "tornadoPitchDeg",
+  // GH#456 —— 錐角,一格一個家族。緊接在仰角後面,因為操作者調的是同一件事的兩面。
+  "beamAngleDeg",
+  "slashAngleDeg",
+  "boltAngleDeg",
+  "dashAngleDeg",
+  "tornadoAngleDeg",
 ] as const;
 export type GlobalField = (typeof GLOBAL_FIELDS)[number];
 
@@ -432,6 +445,11 @@ export const FIELD_LABEL: Readonly<Record<string, string>> = {
   boltPitchDeg: "彈丸仰角",
   dashPitchDeg: "殘影仰角",
   tornadoPitchDeg: "龍捲仰角",
+  beamAngleDeg: "光束錐角",
+  slashAngleDeg: "斬擊錐角",
+  boltAngleDeg: "彈丸錐角",
+  dashAngleDeg: "殘影錐角",
+  tornadoAngleDeg: "龍捲錐角",
   enabled: "啟用",
   primitive: "形狀",
   element: "元素",
@@ -524,6 +542,21 @@ export const FIELD_HINT: Readonly<Record<string, string>> = {
     "柱子往上長靠的是它自己那份文件的重力（+4.2），放倒它等於把「往上長」變成「往旁邊飄」。" +
     "⚠️ 這一格填 90 的時候這一族不會瞄準 —— 因為對直立的發射器，轉方位是恆等變換，" +
     "宣告瞄準只會變成一句畫面上不會發生的話。想讓它瞄準就要真的把它放倒",
+  beamAngleDeg:
+    "光束這一族的發射錐**張多寬**(度,全角)。出貨 9 度 —— 一道細的直線光束。" +
+    "⚠️ 這一格和「光束仰角」是兩件事:仰角決定它躺成什麼角度,錐角決定那道扇形本身多寬",
+  slashAngleDeg:
+    "斬擊這一族刀光的**扇形張多寬**(度,全角)。出貨 92 度 —— 一道接近半圓的寬新月,也是全部裡面最寬的。" +
+    "調小 = 刀光收成一道細線(像突刺),調大 = 攤成更平的一片。" +
+    "⚠️ 這一格在 2026-08-19 之前寫死在 client 的 primitives.ts 裡,後台一格都改不到 —— " +
+    "owner 2026-08-18 問「slash 全家族的張角」問的就是它。它和「斬擊仰角」是兩件事:" +
+    "仰角 = 刀光躺成什麼角度(0 橫砍／90 直劈),錐角 = 那道扇形本身多寬",
+  boltAngleDeg:
+    "彈丸這一族的發射錐張多寬(度,全角)。出貨 6 度,是全部裡面最窄的 —— 一顆彈丸應該是一個點,不是一片",
+  dashAngleDeg:
+    "位移殘影這一族的發射錐張多寬(度,全角)。出貨 22 度 —— 沿著移動線的一道帶狀尾流",
+  tornadoAngleDeg:
+    "龍捲這一族的發射錐張多寬(度,全角)。出貨 34 度 —— 柱子往上長的同時往外開的那個坡度",
   enabled: "關掉之後這一層不再覆寫，技能回到依名字猜出來的 fx.prim.* 分類",
   primitive: "決定形狀（剪影）。同一個家族換形狀就是整批技能一起換長相",
   element: "決定顏色。技能自己沒有原圖 tint 時用這個",
@@ -669,6 +702,13 @@ export function familiesDocFor(doc: ConfigVfxFamiliesDoc): ConfigVfxFamiliesDoc 
     boltPitchDeg: doc.boltPitchDeg,
     dashPitchDeg: doc.dashPitchDeg,
     tornadoPitchDeg: doc.tornadoPitchDeg,
+    // ⚠️ GH#456 —— 錐角的同樣五行。少寫任何一行,操作者調完按存檔,頁面顯示他打的
+    // 數字而文件裡那個 key 根本沒被寫出去(和上面那五格同一個坑)。
+    beamAngleDeg: doc.beamAngleDeg,
+    slashAngleDeg: doc.slashAngleDeg,
+    boltAngleDeg: doc.boltAngleDeg,
+    dashAngleDeg: doc.dashAngleDeg,
+    tornadoAngleDeg: doc.tornadoAngleDeg,
     // ⚠️ GH#390 —— 同樣的一行。少寫它，操作者把特效音效關掉再按存檔，頁面顯示
     // 「關」而文件裡那個 key 根本沒被寫出去 —— 下一次載入才發現它又開著。
     soundEnabled: doc.soundEnabled,
@@ -794,6 +834,13 @@ export const OPTIONAL_GLOBAL_FIELDS: ReadonlySet<string> = new Set([
   "boltPitchDeg",
   "dashPitchDeg",
   "tornadoPitchDeg",
+  // GH#456 —— 同一條規則。⚠️ 錐角尤其不可以幫忙填預設:`Number("")` 是 **0**,
+  // 而 0 在 Zod 上是**界外**(cone 的下界是 1),於是存檔會被整份拒絕。
+  "beamAngleDeg",
+  "slashAngleDeg",
+  "boltAngleDeg",
+  "dashAngleDeg",
+  "tornadoAngleDeg",
 ]);
 
 export function validateGlobalField(field: GlobalField, text: string): string {

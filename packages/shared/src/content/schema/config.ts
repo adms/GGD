@@ -3057,6 +3057,31 @@ export const zConfigArenaRulesDoc = z
           "⛔ 它不會打開 #261 暫時下架的那些普通武器道具。",
       ),
     /**
+     * ⭐ **#261 下架的那 70 把普通武器能不能買**（GH#350）。
+     *
+     * ⚠️ 它與上面的 `legendaryShelf.open` 是**兩格**，而且刻意分開：owner
+     * 2026-08-17 只說「寶具可以上架」，⛔ 沒有說要把 #261「暫時下架」的普通武器
+     * 放回來。一格開了不可以順手把另一格也開掉。
+     *
+     * ⛔ 它**不管**三選一與傳說寶玉那條路 —— 那兩條從 #261 當天起就沒有被關過
+     * （`shopShelf.ts` 的 SHELF / DROP 兩道門）。這一格只關「商店列不列、買不買
+     * 得到」。
+     *
+     * 省略 = `sim/economy/shopShelf.ts` 的 `WEAPON_SHELF_OPEN`（出貨 false ＝
+     * 今天的行為）。⚠️ 必須 `.optional()`：線上已經有 `config.arena-rules@1` 的
+     * 耐久覆蓋層，多一個必填欄會讓整份 config 被 Zod 退回 → 內容載入失敗 →
+     * 骨架英雄（2026-08-02 事故的形狀）。
+     */
+    weaponShelfOpen: z
+      .boolean()
+      .optional()
+      .describe(
+        "#261 暫時下架的 70 把普通武器道具，能不能在中場商店直接用金幣買。" +
+          "出貨 false ＝ 商店只剩「能力屬性強化」與「傳說寶玉」兩項服務。" +
+          "⛔ 它不影響三選一卡與傳說寶玉抽獎（那兩條路從來沒被關過），也⛔ 不管寶具" +
+          "（寶具走 `legendaryShelf.open`）。",
+      ),
+    /**
      * ⭐ **更高階寶具**（EX解放 / EX∅ 根源）。省略 = {@link DEFAULT_WEAPON_TIERS}。
      * ⚠️ 由**高到低**排；引擎照這個順序逐階骰。
      */
@@ -5883,18 +5908,34 @@ export const zConfigLobbyLayoutDoc = z
      * 不再是百分比的瞬間。檢查在 `lobbyLayoutProblems()`,不是靠渲染器隱含。
      */
     friendsShare: z.number().min(0.15).max(0.7),
-    /** 分割模式下,**線上玩家**佔左欄高度的比例（0..1）。三段相加必須是 1。 */
+    /** 分割模式下,**線上玩家**佔左欄高度的比例（0..1）。各段相加必須是 1。 */
     onlineShare: z.number().min(0.15).max(0.7),
-    /** 分割模式下,**排位榜**佔左欄高度的比例（0..1）。三段相加必須是 1。 */
+    /** 分割模式下,**宿敵榜**佔左欄高度的比例（0..1）。各段相加必須是 1。 */
+    nemesisShare: z.number().min(0.15).max(0.7),
+    /** 分割模式下,**排位榜**佔左欄高度的比例（0..1）。各段相加必須是 1。 */
     leaderboardShare: z.number().min(0.15).max(0.7),
+    /**
+     * 宿敵榜的排序（GH#454）。owner 沒有指定,三種都成立,所以它是一格欄位:
+     * `played` 交手次數（最中性,出貨值）/ `rivalry` 恩怨值（五五開的排前面）/
+     * `bane` 苦主剋星（對你贏最多的排前面）。
+     * ⭐ 每一列都同時帶著三者需要的數字,所以換排序只換順序,不換任何資料。
+     */
+    nemesisSort: z.enum(["played", "rivalry", "bane"]),
+    /**
+     * 分割模式（桌機）下面板由上到下的順序。
+     * ⚠️ 它是欄位而不是常數,因為**兩塊**面板都被 owner 指名要放在「朋友列表跟
+     * 排位榜中間」（2026-08-03 線上玩家、2026-08-19 宿敵榜）—— 兩句話不論誰排前面
+     * 都成立,那就是一個決策點。
+     */
+    splitOrder: z.array(z.enum(["friends", "online", "nemesis", "leaderboard"])).length(4),
     /**
      * 線上玩家列表遇到**已經是朋友**的人怎麼顯示 —— 這是決策點不是數值。
      * `greyed-button` 那一列留著,按鈕變成不能按的「已加入」;
      * `hide-row` 直接把那一列拿掉。
      */
     alreadyFriendMode: z.enum(["greyed-button", "hide-row"]),
-    /** 堆疊模式（手機）下三塊面板由上到下的順序。 */
-    stackOrder: z.array(z.enum(["friends", "online", "leaderboard"])).length(3),
+    /** 堆疊模式（手機）下面板由上到下的順序。 */
+    stackOrder: z.array(z.enum(["friends", "online", "nemesis", "leaderboard"])).length(4),
     /** 堆疊模式下,每一塊面板保證拿到的高度（px）。 */
     minSlotHeightPx: z.number().int().min(80).max(600),
     /** 左欄矮於這個高度（px）就不分割、改成整欄一起捲。 */
@@ -7229,14 +7270,18 @@ export type ValhallaSandboxPolicyDoc = Omit<ConfigValhallaSandboxDoc, "id" | "sc
  */
 export const DEFAULT_LOBBY_LAYOUT_POLICY: LobbyLayoutPolicyDoc = {
   leftColumnWidthPx: 280,
-  // 30 / 20 / 50 —— owner 2026-08-04:「FRIEND, 線上玩家, 排位榜 UI 佔的高度比例
-  // 應該是 3:2:5」。（2026-08-03 插進線上玩家那一版是 40/30/30。）
-  // 三段相加必須是 1 —— flexbox 不會替你檢查，`lobbyLayoutProblems()` 會。
-  friendsShare: 0.3,
-  onlineShare: 0.2,
-  leaderboardShare: 0.5,
+  // 25 / 15 / 20 / 40 —— GH#454 把宿敵榜插進來之後的四段。前身是 owner 2026-08-04
+  // 的「3:2:5」(三段)，這一版保留他的**相對順序**（排位榜最大、線上玩家最小），
+  // 只把新的一塊從四塊裡按比例讓出來。
+  // 各段相加必須是 1 —— flexbox 不會替你檢查，`lobbyLayoutProblems()` 會。
+  friendsShare: 0.25,
+  onlineShare: 0.15,
+  nemesisShare: 0.2,
+  leaderboardShare: 0.4,
+  nemesisSort: "played",
+  splitOrder: ["friends", "online", "nemesis", "leaderboard"],
   alreadyFriendMode: "greyed-button",
-  stackOrder: ["friends", "online", "leaderboard"],
+  stackOrder: ["friends", "online", "nemesis", "leaderboard"],
   minSlotHeightPx: 168,
   splitMinHeightPx: 560,
   stackBelowWidthPx: 720,
@@ -7270,7 +7315,10 @@ export function resolveLobbyLayout(
     leftColumnWidthPx: doc.leftColumnWidthPx,
     friendsShare: doc.friendsShare,
     onlineShare: doc.onlineShare,
+    nemesisShare: doc.nemesisShare,
     leaderboardShare: doc.leaderboardShare,
+    nemesisSort: doc.nemesisSort,
+    splitOrder: doc.splitOrder,
     alreadyFriendMode: doc.alreadyFriendMode,
     stackOrder: doc.stackOrder,
     minSlotHeightPx: doc.minSlotHeightPx,

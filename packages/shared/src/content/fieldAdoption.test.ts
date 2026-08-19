@@ -767,11 +767,9 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-09",
     why: "同 damage.applyTo 的另一個 kind:一段燒在**自己**身上的持續傷害（獻祭型代價）。dot 的 handler 與 damage 走同一條 subjects 選擇,所以兩者行為對得起來,不是第二套語意。零採用同上:owner 手寫的那批技能還沒進樹。",
   },
-  "field:abilities.effects[]#heal.applyTo": {
-    status: "landing",
-    since: "2026-08-09",
-    why: "同 damage.applyTo,治療自己的那一種。89-002 今天靠 randomArea{who:\"self\"} → weightedBranch{side:\"allies\", maxTargets:1} 兩層包裝繞,那一支改寫時這一筆就該刪掉。",
-  },
+  // ⭐ GH#459（2026-08-19）：`heal.applyTo` 的 landing 豁免**刪掉了** —— 它落地了。
+  //    48-03 鮮血神殿（godie-hvsh.e）的「每有一名敵人被結界扣血，Rider 回復自身
+  //    1% 最大生命」走的就是 `damageArea.onHitTargets` 裡的 `heal{applyTo:"self"}`。
   // ⭐ 2026-08-12 B2：landing 豁免移除 —— **它落地了**（52-04 巨神一擊 + 92-002 最終戈壁）。
   //    出口在 `tools/skill-remake/batch1.py` 開了、表格填了值，採用率從 0 變成有。
   // ⭐ 2026-08-13：`damageLine.resourcePct` 也移除 —— 20-002 的收尾終於帶上規格

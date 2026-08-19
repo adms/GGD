@@ -28,6 +28,7 @@ import {
 import { SFX_REACHABILITY } from "./sfxReachability";
 import { CENTRED_EVENTS, EVENT_SPATIAL } from "./combatSfxSpatial";
 import { VOICE_PACK_MANIFEST_PATH } from "./selectVoiceLadder";
+import { PERFORM_VOICE_CATEGORIES } from "./shopPerformVoice";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "../../../.."); // src/audio → apps/client → apps → repo root
@@ -171,8 +172,12 @@ describe("every voice category is classified (spatial-policy-voice)", () => {
 
   it("every category the client actually dispatches is marked dispatched", () => {
     cover("spatial-policy-voice");
-    // source scan: a category named as a literal in GameApp / AudioDirector is
-    // live, so a row claiming `dispatched: false` for it is a stale claim.
+    // ⭐ GH#441 —— 這一條以前只讀**兩個**檔（GameApp / AudioDirector），於是
+    // `shopPerformVoice` 播的六個類別（taunt / charge / thanks / thumbs-up /
+    // watch / free-move）在表上全部寫著 `dispatched: false` —— 一份說謊的政策宣告，
+    // 而守衛是綠的。⭐ 修法不是「再加一個檔名」：`PERFORM_VOICE_CATEGORIES` 是一張
+    // **真的表**，直接讀它，⛔ 不要掃它的原始碼。
+    const dispatchTables = new Set(Object.values(PERFORM_VOICE_CATEGORIES).flat());
     const src = [
       readFileSync(join(HERE, "../GameApp.ts"), "utf8"),
       readFileSync(join(HERE, "../ui/AudioDirector.tsx"), "utf8"),
@@ -183,7 +188,7 @@ describe("every voice category is classified (spatial-policy-voice)", () => {
     const wrong: string[] = [];
     for (const [cat, row] of Object.entries(VOICE_CATEGORY_POLICY)) {
       if (row.dispatched) continue;
-      if (src.includes(`"${cat}"`)) wrong.push(cat);
+      if (dispatchTables.has(cat) || src.includes(`"${cat}"`)) wrong.push(cat);
     }
     expect(wrong, "categories marked dormant that a call site names").toEqual([]);
   });

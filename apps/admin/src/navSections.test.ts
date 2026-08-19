@@ -166,6 +166,10 @@ const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
       "camera",
       "combatFeel",
       "matchConfig",
+      // 2026-08-20 GH#410 —— 競技場規則。⚠️ 它和 matchConfig 編的是**同一份**
+      // `config/arena-rules.json`（那一頁管時鐘、這一頁管場上的東西），所以它
+      // 必須和 matchConfig 同一區，⛔ 不是自成一區。
+      "arenaTuning",
       "bodyScale",
       // 2026-08-17 —— 介面用語（Fate）。⚠️ 它不是戰鬥數值，但它調的是**抽卡與
       // 商店那幾個畫面**的文案，而那兩個畫面的其他旋鈕都在這一區；放進「系統」
@@ -218,6 +222,12 @@ describe("分類重編一頁都沒有掉", () => {
       // 地面預告通道）。⚠️ 它補的是 GH#367 誠實留下的那張帳單 —— 那六個旋鈕
       // 當時只收斂成一個具名物件，還住在程式裡。
       "rangeGuide",
+      // 2026-08-20 GH#410：競技場規則。⚠️ 它補的是一個**結構性**的洞 ——
+      // `config.arena-rules@1` 走的是 configDocCoverage 的**文件層**豁免
+      // （三頁專屬頁），而文件層豁免一旦成立，欄位層就沒有任何守衛在數，
+      // 於是八個頂層區塊（治療花／復活圈／守護塔／掉金／overflow／回合表／
+      // 大絕與 EX 解鎖回合）一格都調不到，而且沒有任何測試會紅。
+      "arenaTuning",
     ]);
     const added = [...after].filter((p) => !before.has(p) && !SINCE_BASELINE.has(p));
     expect(lost, `搬家把這些頁面弄丟了（元件還在，但左欄按不到）：${lost.join(", ")}`).toEqual([]);

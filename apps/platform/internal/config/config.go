@@ -71,6 +71,19 @@ type Config struct {
 	// MinApexGames is how many settled matches an account needs before it is
 	// eligible for an apex tier (RANKED_MIN_APEX_GAMES, default 10).
 	MinApexGames int
+	// MinApexPoints is the minimum cumulative score an apex tier requires
+	// (RANKED_MIN_APEX_POINTS). The shipped 1 IS owner's 底線 「沒分數不應該有
+	// 位階」 expressed as a number; the knob can only raise it (ranking's
+	// apexPointsFloor clamps anything lower back to 1).
+	MinApexPoints int
+	// MinApexLadder is how many accounts a board needs before ANY apex place is
+	// handed out (RANKED_MIN_APEX_LADDER, default 0 = no gate). This is the
+	// GH#352 「最少人數」 switch: apex is a population fraction, so on a
+	// two-person board the leader is trivially the top 10% and gets 宗師. It
+	// ships OFF because 「小榜也要有一個菁英」 is a recorded user directive —
+	// turning it on is the owner's call, and this knob is how he makes it
+	// without a deploy.
+	MinApexLadder int
 	// AdminBootstrapUsername names an existing account that is granted the
 	// "admin" role idempotently on boot (ADMIN_BOOTSTRAP_USERNAME, default
 	// empty = no bootstrap). Create the first admin by registering this
@@ -243,6 +256,46 @@ func getenvInt(key string, def int) int {
 		}
 	}
 	return def
+}
+
+// Ceilings on the two GH#352 apex gates. Both are MONOTONICALLY RESTRICTIVE —
+// higher means fewer people are crowned — so a mistyped extra zero does not
+// crash anything, it silently empties the apex band forever, and an empty apex
+// band looks exactly like 「nobody is good enough yet」. That is the same shape
+// as every other 靜默夾掉 in this repo, so the ceiling exists to catch the typo
+// and getenvIntClamped SAYS SO when it bites.
+//
+// The numbers are typo-catchers, not policy: 100000 points is ~28x the Master
+// floor and 10000 accounts is ~68x this deploy's whole account base, so no
+// intentional setting is anywhere near them.
+const (
+	MaxMinApexPoints = 100000
+	MaxMinApexLadder = 10000
+)
+
+// getenvIntClamped reads a whole-number knob and clamps it to [min,max],
+// warning on anything it had to reject. Same contract as getenvSeconds: a
+// mistyped bound that silently becomes something else is the failure mode being
+// prevented, so absence is quiet and a bad value is loud.
+func getenvIntClamped(key string, def, min, max int) int {
+	raw := os.Getenv(key)
+	if raw == "" {
+		return def
+	}
+	n, err := strconv.Atoi(raw)
+	if err != nil {
+		slog.Warn("config: ignoring unparseable integer", "key", key, "value", raw, "using", def)
+		return def
+	}
+	if n < min || n > max {
+		slog.Warn("config: integer out of range, clamping",
+			"key", key, "value", n, "min", min, "max", max)
+		if n < min {
+			return min
+		}
+		return max
+	}
+	return n
 }
 
 // Bounds on GGD_MATCH_LIVENESS_GRACE_SEC. The floor is not decoration: the
@@ -708,6 +761,8 @@ func Load() (Config, error) {
 		ChallengerFrac:          getenvFloat("RANKED_CHALLENGER_FRAC", 0.10),
 		GrandmasterFrac:         getenvFloat("RANKED_GRANDMASTER_FRAC", 0.10),
 		MinApexGames:            getenvInt("RANKED_MIN_APEX_GAMES", 10),
+		MinApexPoints:           getenvIntClamped("RANKED_MIN_APEX_POINTS", 1, 0, MaxMinApexPoints),
+		MinApexLadder:           getenvIntClamped("RANKED_MIN_APEX_LADDER", 0, 0, MaxMinApexLadder),
 		AdminBootstrapUsername:  os.Getenv("ADMIN_BOOTSTRAP_USERNAME"),
 		DeployTier:              normalizeDeployTier(os.Getenv("GGD_DEPLOY_TIER")),
 		FullAssets:              ServesFullAssets(normalizeDeployTier(os.Getenv("GGD_DEPLOY_TIER"))),

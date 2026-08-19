@@ -16,7 +16,7 @@ import { registerSkeletonContent, SELA } from "./content/skeleton";
 import { registerChampion } from "./content/registry";
 import { spawnChampion } from "./spawnChampion";
 import { castAbility } from "./abilities/abilitySystem";
-import { classifyCastOutcome, snapshotChannels } from "./castabilityVerdict";
+import { classifyCastOutcome, snapshotChannels, stochasticNodeKinds } from "./castabilityVerdict";
 import { asSeatId, asTeamId, type AbilityId, type ChampionId, type SeatId } from "../ids";
 import type { AbilityDef, ChampionDef } from "./content/defs";
 import type { EffectDef } from "./effects/effect";
@@ -42,9 +42,17 @@ const REAL = qDef("real", [{ kind: "damage", damageType: "magic", amount: { flat
 const SWAP = qDef("swap", [
   { kind: "swapResource", shape: "single", resource: "health", clampMin: 1 },
 ]);
+/**
+ * ⭐ 2026-08-20（GH#407）—— 金幣是**看得見的 gameplay 頻道**。
+ * 57-00 哆啦A夢的天生技是一顆 `weightedBranch`，權重最大的那一支（55/100）整支
+ * payload 就是 `grantGold` —— 少了這根指針，那一格有一半的 seed 會量出「什麼都
+ * 沒發生」，而普查會把它記成「這一格是擲骰」，真相是儀器沒在看。
+ */
+const GOLD = qDef("gold", [{ kind: "grantGold", flat: 25, to: "self" }]);
 const VFX_CHAMP = "test.castability.champ.vfx" as ChampionId;
 const REAL_CHAMP = "test.castability.champ.real" as ChampionId;
 const SWAP_CHAMP = "test.castability.champ.swap" as ChampionId;
+const GOLD_CHAMP = "test.castability.champ.gold" as ChampionId;
 
 /**
  * SELA 的骨架卡片，Q 換成受測的那一支。
@@ -61,6 +69,7 @@ beforeAll(() => {
   registerChampion(champWithQ(VFX_CHAMP, VFX_ONLY), { overrideAbilities: true });
   registerChampion(champWithQ(REAL_CHAMP, REAL), { overrideAbilities: true });
   registerChampion(champWithQ(SWAP_CHAMP, SWAP), { overrideAbilities: true });
+  registerChampion(champWithQ(GOLD_CHAMP, GOLD), { overrideAbilities: true });
 });
 
 /** 普查那條路的最小版：真的按一次 Q，再用出貨的判定看它。 */
@@ -103,5 +112,37 @@ describe("castability sweep — 只有特效的技能不算「有效果」（GH#
         "或那個事件沒有進 EFFECT_EVENTS（44-002 交換筆記本就是這樣變成假 ❌ 的）",
     ).toBe("PASS");
     expect(out.channel).toBe("resourceSwap");
+  });
+
+  it("金幣是 gameplay 頻道 —— 一支只發錢的技能是 PASS，⛔ 不是「量不到效果」（GH#407）", () => {
+    const out = probeQ(GOLD_CHAMP);
+    expect(
+      out.verdict,
+      "口袋裡的數字真的變了卻量不到 —— `snapshotChannels` 沒有金幣那根指針，" +
+        "於是 57-00 那顆 `weightedBranch` 有 55% 的 seed 會量出「什麼都沒發生」（GH#407）",
+    ).toBe("PASS");
+    expect(out.channel).toBe("gold");
+  });
+});
+
+/**
+ * GH#407 —— 「這一格要不要跨 seed 量」的判準，本身要是**一條從樹推導出來的規則**。
+ * ⛔ 不掃技能 id：下一支用 `weightedBranch` 的技能不該需要改任何一行。
+ */
+describe("castability sweep — 隨機節點偵測（GH#407）", () => {
+  it("認得三種會讓判定隨 seed 改變的節點，而且只認**真的**會分岔的那些", () => {
+    const live = stochasticNodeKinds([
+      { kind: "weightedBranch", branches: [{ weight: 3, effects: [] }, { weight: 1, effects: [] }] },
+      { kind: "damage", condition: { all: [{ kind: "chance", p: 0.3 }] } },
+      { kind: "randomArea", count: [4] },
+    ]);
+    expect([...live].sort()).toEqual(["chance", "randomArea", "weightedBranch"]);
+
+    // 控制組：**決定性**的同名節點不可以被收進來，否則整份普查會多跑 24 倍。
+    const dead = stochasticNodeKinds([
+      { kind: "weightedBranch", branches: [{ weight: 1, effects: [] }, { weight: 0, effects: [] }] },
+      { kind: "damage", condition: { kind: "chance", p: 1 } },
+    ]);
+    expect([...dead]).toEqual([]);
   });
 });

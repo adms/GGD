@@ -8,23 +8,24 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_7ed50f24c2f2`
+contentVersion `cv_ea61889db7e9`
 
 ---
 
-## 效果（effect kind） —— 39 種
+## 效果（effect kind） —— 40 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
-| `applyBuff` | 增益／減益（改屬性） | 117 | `godie-e001.passive`、`godie-e001.q`、`godie-e001.r`、`godie-e002.r`、`godie-e008.w`、`godie-e00k.ex`、`godie-e00k.r`、`godie-e00l.ex`、`godie-e00n.ex`、`godie-e00n.passive`、`godie-e00n.q`、`godie-e00n.r` …（共 117） |
-| `applyStatus` | 掛狀態 | 97 | `godie-e001.e`、`godie-e001.passive`、`godie-e007.ex`、`godie-e007.q`、`godie-e008.e`、`godie-e008.q`、`godie-e00k.passive`、`godie-e00n.e`、`godie-e00n.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00s.e` …（共 97） |
+| `applyBuff` | 增益／減益（改屬性） | 118 | `godie-e001.passive`、`godie-e001.q`、`godie-e001.r`、`godie-e002.r`、`godie-e008.w`、`godie-e00k.ex`、`godie-e00k.r`、`godie-e00l.ex`、`godie-e00n.ex`、`godie-e00n.passive`、`godie-e00n.q`、`godie-e00n.r` …（共 118） |
+| `applyStatus` | 掛狀態 | 99 | `godie-e001.e`、`godie-e001.passive`、`godie-e007.ex`、`godie-e007.q`、`godie-e008.e`、`godie-e008.q`、`godie-e00k.passive`、`godie-e00n.e`、`godie-e00n.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00s.e` …（共 99） |
 | `blink` | 瞬移 | 17 | `godie-e00k.e`、`godie-e00z.e`、`godie-efur.q`、`godie-h01o.q`、`godie-n00b.e`、`godie-n01c.r`、`godie-n01c.w`、`godie-nbbc.r`、`godie-nbbc.w`、`godie-o00k.w`、`godie-o00x.w`、`godie-o02l.passive` …（共 17） |
 | `carry` | 背負（帶著隊友移動 + 不可被選取） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `chainLightning` | 連鎖閃電 | 2 | `godie-o00k.r`、`godie-udea.r` |
 | `championForm` | 變身／切換形態 | 24 | `godie-e001.r`、`godie-e002.w`、`godie-e00k.ex`、`godie-e00l.w`、`godie-e00s.passive`、`godie-e00w.e`、`godie-e010.passive`、`godie-h01n.r`、`godie-h02v.q`、`godie-hgam.ex`、`godie-hjai.ex`、`godie-n003.ex` …（共 24） |
 | `convertTeam` | 陣營轉換（把一個既有單位借到自己這一隊） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `cycleBuff` | 輪替增益 | 1 | `godie-efur.passive` |
 | `damage` | 傷害 | 178 | `godie-e001.e`、`godie-e001.passive`、`godie-e002.ex`、`godie-e002.r`、`godie-e002.w`、`godie-e007.e`、`godie-e007.ex`、`godie-e007.q`、`godie-e007.r`、`godie-e008.e`、`godie-e008.q`、`godie-e00k.e` …（共 178） |
-| `damageArea` | 範圍傷害 | 28 | `godie-e002.w`、`godie-e00s.e`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00s.w`、`godie-e00w.ex`、`godie-e00w.q`、`godie-e00w.r`、`godie-e00w.w`、`godie-edem.ex`、`godie-edem.q`、`godie-edem.r` …（共 28） |
+| `damageArea` | 範圍傷害 | 30 | `godie-e002.w`、`godie-e00s.e`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00s.w`、`godie-e00w.ex`、`godie-e00w.q`、`godie-e00w.r`、`godie-e00w.w`、`godie-edem.ex`、`godie-edem.q`、`godie-edem.r` …（共 30） |
 | `damageLine` | 直線傷害 | 10 | `godie-e002.e`、`godie-e002.ex`、`godie-e00r.r`、`godie-edem.e`、`godie-emfr.q`、`godie-h01n.e`、`godie-h01u.e`、`godie-h02v.e`、`godie-n00p.passive`、`godie-nsjs.passive` |
 | `dash` | 衝刺（腳不離地） | 8 | `godie-edem.e`、`godie-h01n.q`、`godie-h01u.e`、`godie-hapm.r`、`godie-hblm.w`、`godie-udea.r`、`godie-zombiex.w`、`thorne.q` |
 | `delayed` | 延遲落地／排程 | 8 | `godie-e002.ex`、`godie-h02v.ex`、`godie-h02v.q`、`godie-hapm.ex`、`godie-hapm.passive`、`grail-a-08`、`grail-ex-05`、`grail-ex-16` |
@@ -34,9 +35,9 @@ contentVersion `cv_7ed50f24c2f2`
 | `evasion` | 迴避 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `eventValueConversion` | 把事件的數值換算成別的 | 5 | `godie-emfr.ex`、`grail-c-04`、`grail-a-02`、`grail-ex-12`、`grail-ex-18` |
 | `extendBuff` | 延長既有增益 | 1 | `godie-hapm.q` |
-| `grantAttribute` | 加三圍（力／敏／智） | 4 | `godie-hpb1.passive`、`godie-n01c.passive`、`godie-nbbc.passive`、`grail-c-10` |
+| `grantAttribute` | 加三圍（力／敏／智） | 5 | `godie-hpb1.passive`、`godie-hvsh.e`、`godie-n01c.passive`、`godie-nbbc.passive`、`grail-c-10` |
 | `grantGold` | 發錢 | 1 | `godie-n00b.passive` |
-| `heal` | 治療（吃係數） | 9 | `godie-e007.w`、`godie-etyr.q`、`godie-h02r.passive`、`godie-n003.w`、`godie-n01c.q`、`godie-n01g.w`、`godie-nbbc.q`、`godie-o02p.r`、`godie-o02p.w` |
+| `heal` | 治療（吃係數） | 10 | `godie-e007.w`、`godie-etyr.q`、`godie-h02r.passive`、`godie-hvsh.e`、`godie-n003.w`、`godie-n01c.q`、`godie-n01g.w`、`godie-nbbc.q`、`godie-o02p.r`、`godie-o02p.w` |
 | `invulnerable` | 免疫／魔免／免控 | 18 | `godie-e00k.e`、`godie-e00z.e`、`godie-hapm.ex`、`godie-hapm.passive`、`godie-hapm.w`、`godie-hart.r`、`godie-hpb1.w`、`godie-u00j.q`、`godie-u00n.r`、`godie-u00o.r`、`godie-u010.q`、`godie-uvng.q` …（共 18） |
 | `knockback` | 擊退／擊飛／拉扯／擊倒 | 11 | `godie-e00w.q`、`godie-efur.w`、`godie-ewar.ex`、`godie-h00l.q`、`godie-h00l.r`、`godie-h01u.w`、`godie-h02k.r`、`godie-hapm.ex`、`godie-hapm.passive`、`grail-c-02`、`grail-a-01` |
 | `leap` | 跳躍（拋物線離地） | 7 | `godie-h00l.w`、`godie-hapm.w`、`godie-hart.q`、`godie-hart.w`、`godie-hpb1.e`、`godie-u00n.r`、`godie-u00o.r` |
@@ -50,7 +51,7 @@ contentVersion `cv_7ed50f24c2f2`
 | `shieldBreak` | 破盾 | 2 | `grail-c-09`、`grail-ex-14` |
 | `spawnProjectile` | 投射物 | 28 | `godie-e008.e`、`godie-e00l.e`、`godie-e010.q`、`godie-h02r.r`、`godie-hpal.q`、`godie-n003.e`、`godie-n00p.w`、`godie-n01c.e`、`godie-n01g.e`、`godie-n01g.r`、`godie-nbbc.e`、`godie-nplh.q` …（共 28） |
 | `spawnVfx` | 純演出（特效／音效） | 18 | `godie-e002.e`、`godie-e00r.r`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00x.r`、`godie-emfr.r`、`godie-h01n.q`、`godie-h01o.e`、`godie-h01u.r`、`godie-h01u.w`、`godie-hvwd.r`、`godie-n00b.passive` …（共 18） |
-| `spendMana` | 燒魔 | 3 | `godie-e00l.w`、`godie-emfr.passive`、`godie-u00k.passive` |
+| `spendMana` | 燒魔 | 4 | `godie-e00l.w`、`godie-emfr.passive`、`godie-u00k.passive`、`godie-udea.r` |
 | `summon` | 召喚 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `swapResource` | 資源互換 | 1 | `godie-emns.ex` |
 | `taunt` | 嘲諷 | 2 | `godie-n00b.passive`、`godie-o00k.passive` |
@@ -77,8 +78,8 @@ contentVersion `cv_7ed50f24c2f2`
 | `onFireRingIgnite` | 火圈點燃時 | 1 | `grail-ex-09` |
 | `onGuardianDown` | 守衛塔倒下時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onHeal` | 治療真的補到血時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `onInterval` | 週期（每 N 秒） | 7 | `godie-e00r.e`、`godie-e00r.e`、`godie-e00r.e`、`godie-e00r.e`、`godie-emfr.passive`、`grail-c-19`、`grail-ex-02` |
-| `onKill` | 擊殺時 | 13 | `godie-h01u.passive`、`godie-hpb1.passive`、`godie-o00x.passive`、`godie-ogrh.passive`、`godie-zombiex.passive`、`godie-zombiex.passive`、`grail-c-10`、`grail-c-14`、`grail-a-05`、`grail-ex-03`、`conqueror`、`last-stand` …（共 13） |
+| `onInterval` | 週期（每 N 秒） | 8 | `godie-e00r.e`、`godie-e00r.e`、`godie-e00r.e`、`godie-e00r.e`、`godie-emfr.passive`、`godie-hvsh.e`、`grail-c-19`、`grail-ex-02` |
+| `onKill` | 擊殺時 | 14 | `godie-h01u.passive`、`godie-hpb1.passive`、`godie-hvsh.e`、`godie-o00x.passive`、`godie-ogrh.passive`、`godie-zombiex.passive`、`godie-zombiex.passive`、`grail-c-10`、`grail-c-14`、`grail-a-05`、`grail-ex-03`、`conqueror` …（共 14） |
 | `onLethalDamage` | 受到致命傷害時（免死有沒有生效都會發） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onOverheal` | 治療溢出時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onProjectileExpire` | 自己的投射物消失時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |

@@ -28,6 +28,9 @@
  *     nothing (never the old grows-over-life mush).
  */
 import type { VfxDoc, VfxBlendMode, VfxOrient } from "@ggd/shared/content";
+// GH#456 —— 有方向的五個形狀的錐角**唯一住處**在 schema(那裡才有後台欄位可以
+// 蓋)。⛔ 這裡不再寫字面值:寫死的話後台改了、產生器沒改,兩份就開始漂。
+import { DEFAULT_FAMILY_EMITTER_ANGLE_DEG } from "@ggd/shared/content/schema/vfx";
 // 純數學,沒有 @babylonjs import —— 上面那條「generator 要能在 tsx 下跑」的約束
 // 仍然成立(`orient.ts` 只 import 一個型別)。
 import { orientIsIdentity } from "../../vfx/orient";
@@ -295,7 +298,7 @@ export function shockwave(p: PrimitiveParams): VfxDoc {
  */
 export function tornado(p: PrimitiveParams): VfxDoc {
   return build("tornado", p, {
-    emitter: { shape: "cone", radius: 0.28, angleDeg: 34 },
+    emitter: { shape: "cone", radius: 0.28, angleDeg: DEFAULT_FAMILY_EMITTER_ANGLE_DEG.tornado },
     count: 44,
     lifetime: { min: 0.3, max: 0.72 },
     speed: { min: 3, max: 7 },
@@ -314,7 +317,7 @@ export function tornado(p: PrimitiveParams): VfxDoc {
  *  breath streams, thrust attacks, kamehameha. */
 export function beam(p: PrimitiveParams): VfxDoc {
   return build("beam", p, {
-    emitter: { shape: "cone", radius: 0.12, angleDeg: 9 },
+    emitter: { shape: "cone", radius: 0.12, angleDeg: DEFAULT_FAMILY_EMITTER_ANGLE_DEG.beam },
     count: 32,
     lifetime: { min: 0.14, max: 0.4 },
     speed: { min: 12, max: 20 },
@@ -335,7 +338,7 @@ export function beam(p: PrimitiveParams): VfxDoc {
  *  travelling-projectile archetype cell (task #123). */
 export function bolt(p: PrimitiveParams): VfxDoc {
   return build("bolt", p, {
-    emitter: { shape: "cone", radius: 0.14, angleDeg: 6 },
+    emitter: { shape: "cone", radius: 0.14, angleDeg: DEFAULT_FAMILY_EMITTER_ANGLE_DEG.bolt },
     count: 18,
     lifetime: { min: 0.18, max: 0.46 },
     speed: { min: 9, max: 15 },
@@ -355,7 +358,7 @@ export function bolt(p: PrimitiveParams): VfxDoc {
  *  cell (task #123); distinct from BEAM by being wider, lower, and fading fast. */
 export function dash(p: PrimitiveParams): VfxDoc {
   return build("dash", p, {
-    emitter: { shape: "cone", radius: 0.22, angleDeg: 22 },
+    emitter: { shape: "cone", radius: 0.22, angleDeg: DEFAULT_FAMILY_EMITTER_ANGLE_DEG.dash },
     count: 22,
     lifetime: { min: 0.1, max: 0.28 },
     speed: { min: 6, max: 12 },
@@ -389,7 +392,7 @@ export function locustSwarm(p: PrimitiveParams): VfxDoc {
  *  melee arcs (刀光劍影), the single most common shape in this roster. */
 export function slash(p: PrimitiveParams): VfxDoc {
   return build("slash", p, {
-    emitter: { shape: "cone", radius: 0.5, angleDeg: 92 },
+    emitter: { shape: "cone", radius: 0.5, angleDeg: DEFAULT_FAMILY_EMITTER_ANGLE_DEG.slash },
     count: 26,
     lifetime: { min: 0.12, max: 0.34 },
     speed: { min: 7, max: 13 },

@@ -232,3 +232,89 @@ button already calls the platform proxy; it just never had a live provider.
 - `--subject=text` mode still needs a text provider; the local server only does
   images. For local text, the offline `--subject=rules` mode (default) needs
   nothing. A local LLM could be added as the text provider the same way.
+
+---
+
+## 9. GH#457 — SDXL + LoRA support, and the weights ledger
+
+owner 2026-08-19：「我們應該要**能支援 LoRA 跟 SDXL 等更新版本**才對」。
+
+### 9.1 What the loader now does
+
+| | before | now |
+| --- | --- | --- |
+| architecture | `StableDiffusionPipeline` only (SD1.5) | read from the file, then SD1.5 **or** SDXL |
+| how it's decided | — | `pipeline.detect_arch()` reads the UNet **cross-attention dim** out of the safetensors header (768 → SD1.5, 2048 → SDXL) or `unet/config.json`. ⛔ **Never from the filename** |
+| LoRA | none, at all | `pipe.load_lora_weights()` + `set_adapters()`, driven by `content/config/icon-style.json` → `loras: [{path, weight}]` |
+| render size | hard-coded 512 | the loaded model's native edge (`pipeline.native_size()`: SD1.5 512, SDXL 1024) |
+| long prompts | one CLIP encoder | still one for SD1.5; **two** for SDXL (CLIP-L ⊕ OpenCLIP-bigG → 2048) plus the pooled embedding, penultimate hidden state |
+
+⛔ **Why the filename is not allowed to decide**: the three files below are the
+counter-example. `638637_pony2_rdxlPixelArt` says nothing about XL but *is* XL;
+`43820_v3.0-sd15_pixelartV3` says sd15 and is not a checkpoint at all.
+
+### 9.2 Cost — measured, ⛔ not asserted
+
+`pipeline.py` used to defend SD1.5 with the sentence "crisp 128 in a fraction of
+SDXL's time and VRAM" and **no number**. Measured 2026-08-19 on this machine
+(M5 Max / 128 GB / MPS / fp16 / DPM++ 2M), three real ability docs through the
+**shipped two-pass method** (PASS1 26 steps CFG 7.5 → PASS2 30 steps strength
+0.58 CFG 7.0), one warm-up discarded:
+
+| model | native | per icon | the three samples | model load |
+| --- | ---: | ---: | --- | ---: |
+| SD1.5 `dreamlike-anime-1.0` | 512 | **7.9 s** | 7.9 / 7.8 / 8.0 | 3.7 s |
+| SDXL `RDXL Pixel Art (Pony 2)` | 1024 | **24.4 s** | 23.5 / 25.2 / 24.5 | 4.6 s |
+
+**3.1×**, not "a fraction". Over the 1,010-icon corpus: ~2.2 h vs ~6.9 h.
+⇒ SD1.5 stays the **default**; SDXL is now a supported choice
+(`ICON_GEN_MODEL=<path to an SDXL .safetensors>`), which matters because the
+Fate/ufotable **style** LoRAs are all Pony/Illustrious (SDXL); the SD1.5 side
+only has **character** LoRAs — the exact thing the negative prompt exists to block.
+
+### 9.3 Weights ledger
+
+Every file under `tools/icon-gen/models/` (gitignored, machine-local). Identity
+is the **sha256 we computed here**, and each row was matched back to its source
+by that hash (`GET https://civitai.com/api/v1/model-versions/by-hash/<sha256>`),
+⛔ not by trusting the filename.
+
+| file | sha256 | bytes | kind | arch | source (verified by hash) | trigger word |
+| --- | --- | ---: | --- | --- | --- | --- |
+| `civitai/184199_v1.0-sd15_gbaportrait.safetensors` | `ddf667109c5c0dd91f490207bd84b48594bfaebeab84cf2d7b6e19447f285f76` | 18,996,776 | LoRA (dim 16 / α 8) | SD1.5 (768) | *Pixel Style (& GBA Fire Emblem Portraits)* v1.0 — civitai.com/models/184199?modelVersionId=206733 | `gbaportrait` |
+| `civitai/43820_v3.0-sd15_pixelartV3.safetensors` | `8a2e1ea746eaff717cd8451d9a28349ee7d1d5594e15d7b91e0ed6f9ef743fd3` | 37,881,996 | LoRA (dim 32 / α 16) | SD1.5 (768) | *Illustrious Pixel Art XL & 1.5 by creativehotia* v3.0-1.5 — civitai.com/models/43820?modelVersionId=121559 | `pixelart` |
+| `civitai/638637_pony2_rdxlPixelArt.safetensors` | `3ac4995c7476168e0bf01b8e407615fea8a1dc2a977e8e0d508c414bc6b00587` | 6,938,054,650 | checkpoint | **SDXL** (2048, `modelspec.architecture = stable-diffusion-xl-v1-base`) | *RDXL Pixel Art* "Pony 2" — civitai.com/models/638637?modelVersionId=724915 | `pixel art` |
+| `hf/…/dreamlike-anime-1.0` | (HF cache) | ~2 GB | checkpoint | SD1.5 (768) | `dreamlike-art/dreamlike-anime-1.0` — modified CreativeML OpenRAIL-M, no auth needed | — |
+
+⛔ **LICENCE STATUS: UNVERIFIED for the three Civitai files — owner decision needed.**
+The by-hash endpoint returns identity but leaves every permission flag
+(`allowCommercialUse` / `allowNoCredit` / `allowDerivatives` /
+`allowDifferentLicense`) **null**, so ⛔ this document does not claim any of them
+is cleared for shipped art. None of the three is referenced by
+`content/config/icon-style.json` (it ships `loras: []`), so nothing in the game
+depends on them today. Before any of them is used for a shipped icon batch,
+read the licence block on its Civitai page and record the verdict here.
+
+### 9.4 ⚠️ A LoRA needs its TRIGGER WORD, and that word lives in the prompt
+
+`loras` carries `path` + `weight` and ⛔ nothing else — deliberately. A LoRA is
+trained against a token (see the last column above); without it in the prompt the
+LoRA is much weaker or inert. That token belongs in
+`content/config/icon-style.json` → `stylePrompt`, which is already an editable
+field. ⛔ Do NOT add a third "trigger" field: it would be the same string in two
+homes, and the one in `stylePrompt` is the one the model actually reads.
+
+### 9.5 ⚠️ Known partial degradation: the text-encoder half of a LoRA
+
+Measured on **diffusers 0.39.0 + transformers 5.14.1**: diffusers converts a kohya
+`lora_te_*` key to `text_model.encoder.layers.N…`, then resolves it against
+`text_encoder.named_modules()`. transformers 5.x dropped the `text_model.`
+wrapper from those names, so every lookup misses, the rank dict comes back empty
+and `get_peft_kwargs` dies with a bare `IndexError: list index out of range` —
+nothing in the message mentions LoRAs.
+
+`pipeline._te_lora_supported()` probes for exactly that and, when it is missing,
+loads the **UNet half only** and prints a named warning to stderr. The UNet is
+where the look overwhelmingly lives (measured: mean |Δpixel| **61.8/255** between
+LoRA-off and LoRA-on at weight 1.0, UNet half only), so this is a real degradation
+but not a silent one. It resolves itself when the two libraries line up again.

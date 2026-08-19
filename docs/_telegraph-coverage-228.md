@@ -19,8 +19,8 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | castType | cells | shape language |
 | --- | ---: | --- |
-| `self` | 95 | self marker at the caster's feet |
-| `targeted` | 73 | lock (arc at the victim + tether to the caster) — walking does not help |
+| `self` | 96 | self marker at the caster's feet |
+| `targeted` | 72 | lock (arc at the victim + tether to the caster) — walking does not help |
 | `—` | 56 | not cast |
 | `ground` | 52 | circle — the real `enemiesInCircle` disc; you can walk out |
 | `skillshot` | 15 | line — the projectile's corridor; step sideways |
@@ -171,7 +171,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 梅杜莎 - Rider `godie-hvsh` | PASSIVE | 48-00 石化之眼 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 梅杜莎 - Rider `godie-hvsh` | Q | 48-01 魔法鎖鏈 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 梅杜莎 - Rider `godie-hvsh` | W | 48-02 心眼 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 梅杜莎 - Rider `godie-hvsh` | E | 48-03 鮮血神殿 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 梅杜莎 - Rider `godie-hvsh` | E | 48-03 鮮血神殿 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 梅杜莎 - Rider `godie-hvsh` | R | 48-04 騎英之疆繩 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 梅杜莎 - Rider `godie-hvsh` | EX | 48-002 騎英之疆繩MAX | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 除魔巫女 - 桔梗 `godie-hvwd` | PASSIVE | 02-00 淨化 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |

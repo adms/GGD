@@ -125,6 +125,24 @@ interface Result {
   windups: number;
   /** ticks on which the human held ANY attack target */
   heldTicks: number;
+  /**
+   * ⭐ GH#334 —— **這條測試名字裡的那個機制，逐 tick 的計數。**
+   *
+   * 「a continuous move order must NOT switch auto-attack off」講的是一個**合取**：
+   * 一個活著的、明確的 `move` 指令**同時**握著一個索敵來的攻擊目標。
+   * `heldTicks` 只量了後半（任何一 tick 有目標就算），所以它對「餵法哪天不再每
+   * tick 推移動指令」是**看不見的** —— 那時被測的性質整個沒被量到，而它仍然是綠的
+   * （失敗形態④的小一號版本：斷言方向與缺陷只是**碰巧**對齊）。
+   *
+   * ⛔ 這一格與 `hijackedTicks` 是**相反方向**的兩個量，兩個都要：
+   *   · 這一格 = 系統**該**做而沒做（索敵在移動指令下被關掉）→ 0 就是 #274 的回歸；
+   *   · `hijackedTicks` = 系統**不該**做卻做了（追擊改寫玩家的目的地）→ >0 是搶方向盤。
+   * ⚠️ 兩者不可能互相代替：實測 `[clickOutside]` 的 hijacked 是 1693/2117，
+   * 而同一場的 auto-held 是滿的 —— 一個滿一個空，量的顯然不是同一件事。
+   *
+   * 這個情境裡玩家**從不下攻擊指令**，所以任何 `attackTarget` 都是索敵填的。
+   */
+  autoHeldUnderMoveTicks: number;
   ticks: number;
   /** ticks the human was alive */
   aliveTicks: number;
@@ -263,6 +281,7 @@ function runMatch(feed: Feed, seed = SEED): Result {
   let hits = 0;
   let windups = 0;
   let heldTicks = 0;
+  let autoHeldUnderMoveTicks = 0;
   let ticks = 0;
   let aliveTicks = 0;
   let hijackedTicks = 0;
@@ -336,6 +355,16 @@ function runMatch(feed: Feed, seed = SEED): Result {
       const t = ctl.world.transform.get(me);
       const hp = ctl.world.health.get(me);
       if (nav?.attackTarget != null) heldTicks++;
+      // GH#334 —— **合取**：活著 + 戰鬥仍在跑 + 一個活的 `move` 指令 + 握著目標。
+      // 前兩個閘與 `hijackedTicks` 逐字相同（回合結算會把意圖改寫成 `stop`）。
+      if (
+        hp?.alive &&
+        ctl.world.combatActive &&
+        nav?.order?.kind === "move" &&
+        nav.attackTarget != null
+      ) {
+        autoHeldUnderMoveTicks++;
+      }
       if (hp?.alive) aliveTicks++;
       else if (sawMoveOrder) diedOnce = true;
       if (nav?.order?.kind === "move") sawMoveOrder = true;
@@ -400,6 +429,7 @@ function runMatch(feed: Feed, seed = SEED): Result {
     hits,
     windups,
     heldTicks,
+    autoHeldUnderMoveTicks,
     ticks,
     aliveTicks,
     botHitsAvg: vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0,
@@ -420,6 +450,7 @@ function report(r: Result): string {
     ).toFixed(0)}%) held=${r.heldTicks}/${r.ticks} (${pct}%) ` +
     `alive=${r.aliveTicks} botAvg=${r.botHitsAvg.toFixed(1)} ` +
     `orderClearedWhileAlive=${r.orderClearedWhileAlive} ` +
+    `autoHeldUnderMove=${r.autoHeldUnderMoveTicks} ` +
     `hijacked=${r.hijackedTicks}/${r.authorityTicks} trace=${tr}`
   );
 }
@@ -474,6 +505,23 @@ describe("#274 auto-acquire survives a live move order (real match, real human s
     // THE REGRESSION. Pre-#274 this was exactly 0 hits and 0 held ticks over
     // ~2000 ticks (67 s) because autoAcquirePass `continue`d on the live move
     // order every single tick.
+    //
+    // ⭐ GH#334 —— **承重的那一條是 `autoHeldUnderMoveTicks`，⛔ 不是 `hits`。**
+    //
+    // 這條測試的名字是一個合取（「移動指令**同時**在跑，而自動攻擊沒有被關掉」），
+    // 而 `hits` 只是那個合取的一個**下游後果**，中間還隔著 standstill 的例外、
+    // 撞牆的幾何、以及對手剛好站在哪裡 —— GH#333 把 60 張願望加進卡池、rng 串流
+    // 位移之後，同一份程式碼的 `hits` 就從 1 掉到 0（`hijacked` 兩邊都是 0，
+    // 也就是量到的東西跟改動完全無關）。⇒ 先斷言機制本身，再斷言後果。
+    expect(
+      r.autoHeldUnderMoveTicks,
+      "一個活的 `move` 指令底下**一 tick 都沒有**握住索敵目標 —— " +
+        "`autoAcquirePass` 又在移動指令上 `continue` 了（#274 的回歸），" +
+        "⛔ 不要用調 seed 或放寬 hits 的方式蓋過去。",
+    ).toBeGreaterThan(0);
+    // 而且要是**常態**，不是一 tick 的僥倖：搖桿是每一 tick 推一次移動指令的，
+    // 所以「握著目標」與「移動指令在跑」幾乎完全重疊才是正確的行為。
+    expect(r.autoHeldUnderMoveTicks / Math.max(1, r.heldTicks)).toBeGreaterThan(0.5);
     expect(r.hits).toBeGreaterThan(0);
     expect(r.heldTicks).toBeGreaterThan(0);
   }, 300_000);

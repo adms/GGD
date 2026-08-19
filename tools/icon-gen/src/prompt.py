@@ -133,6 +133,39 @@ NEGATIVE = (
     "no runes, no inscribed symbols, no stained-glass tracery."
 )
 
+# ─────────────────────────────────────────────────── COMPOSITION (GH#457) ──
+# ⭐ owner 2026-08-19：「圖示應該是類似**剪影、局部動作、特效、符咒或物件**的呈現，
+#    ⛔ **不應該直接畫出角色**」。
+#
+# ⚠️ 在這一行以前，PREFIX 與 NEGATIVE 是**全家族共用一段**，而且**沒有任何一句在
+#    講構圖** —— NEGATIVE 裡唯一沾到「角色」的是
+#    `no recognisable copyrighted character`，那是一條**防侵權**條款：它擋的是
+#    「畫得像某個有版權的角色」，⛔ 不是「畫一個角色」。所以一支技能的圖示畫出
+#    一整個人，這份提示詞從頭到尾沒有反對過。
+#
+# ⚠️ 而 champion 頭像**就是要畫角色**。所以構圖⛔不可以是一句加在共用段落裡的話，
+#    它必須跟著**家族**分岔 —— 這就是下面兩段存在的理由。
+#    （`local/keywords.py` 的 PASS 1 走的是同一條規則的另一半：那條是地端兩階段
+#      產圖器真正在用的路，這一條是雲端 / `local/gen.py` 單張那條路。）
+COMPOSITION_CHARACTER = (
+    "COMPOSITION: a single character, upper body, three-quarter view, "
+    "face clearly readable."
+)
+COMPOSITION_NO_CHARACTER = (
+    "COMPOSITION: do NOT draw a character. Show the subject as ONE of these — "
+    "a bold silhouette, a partial action (only the hands, blade, claw or "
+    "footfall at the instant it lands), the effect itself bursting, a talisman "
+    "or sigil, or the bare object."
+)
+NEGATIVE_NO_CHARACTER = (
+    " no full character, no whole person, no human figure, no face, "
+    "no standing pose."
+)
+
+# 只有這一格是「該畫角色」的家族。⛔ 不要靠 `family in (...)` 散在各處判斷 ——
+# 那是同一個決定的第二個住處。
+CHARACTER_FAMILIES = frozenset({"champions"})
+
 # ---------------------------------------------------------------- lexicon ---
 
 # NAME lexicon: the highest-signal mapping there is. Chinese morpheme -> a
@@ -399,9 +432,19 @@ DERIVERS = {
 }
 
 
-def build_prompt(subject: str) -> str:
-    """The complete, final string sent to the image model."""
-    return f"{PREFIX} SUBJECT: {subject.strip().rstrip('.')}. {NEGATIVE}"
+def build_prompt(subject: str, family: str = "") -> str:
+    """The complete, final string sent to the image model.
+
+    `family` picks the COMPOSITION clause (GH#457). ⚠️ The default is the
+    NO-CHARACTER branch on purpose: it covers items / abilities / augments —
+    every family but one — and getting it wrong that way costs a silhouette
+    instead of the failure owner actually named (a whole character drawn on an
+    ability icon). A caller that means "champion" has to say so."""
+    character = family in CHARACTER_FAMILIES
+    composition = COMPOSITION_CHARACTER if character else COMPOSITION_NO_CHARACTER
+    negative = NEGATIVE if character else NEGATIVE[:-1] + ";" + NEGATIVE_NO_CHARACTER
+    return (f"{PREFIX} {composition} SUBJECT: "
+            f"{subject.strip().rstrip('.')}. {negative}")
 
 
 def derive(doc: dict, family: str) -> tuple[str, str, str]:

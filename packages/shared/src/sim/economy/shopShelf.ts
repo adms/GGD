@@ -41,8 +41,11 @@ import { LEGENDARY_POOL_TABLE, isShopService } from "./itemTiers";
  * Whether NORMAL weapons/items may be listed and bought in the 中場 shop.
  *
  * `false` (today) = 「其他武器道具先全部暫時下架」: only the two SHOP SERVICES
- * (能力屬性強化 / 傳說寶玉) are purchasable. Set to `true` to restore the full
- * catalogue — that single edit is the whole re-listing.
+ * (能力屬性強化 / 傳說寶玉) are purchasable.
+ *
+ * ⭐ **GH#350：要重新上架請去後台「競技場規則」那一頁**（`config.arena-rules@1`
+ * 的 `weaponShelfOpen`），⛔ 不是改這一行 —— 改這一行要 rebuild 映像 + 重啟容器，
+ * 而那正是第一守則在講的成本。這個常數現在只是「文件沒說時落到哪」。
  *
  * ⚠️ 它管的是 **#261 下架的那 70 把普通武器**，⛔ 不管寶具 —— 見下面
  * {@link LEGENDARY_SHELF_OPEN}。owner 2026-08-17 只說寶具上架，沒有說要把普通
@@ -129,9 +132,15 @@ export function legendaryShelfIds(): ReadonlySet<string> {
  * as it mirrors the server's whitelist.
  *
  * ⚠️ CORRECTED 2026-08-17 (CLAUDE.md 第三守則). 這裡本來寫著
- * 「(same default, **host-overridable**)」，而 **repo 裡沒有任何 production 程式
- * 寫過 `world.weaponShelfOpen`** —— 只有測試在寫。#261 一直是、現在仍然是一個
- * 程式常數；真正做成後台欄位的是**寶具**那一格（`legendaryShelf`）。
+ * 「(same default, **host-overridable**)」，而當時 **repo 裡沒有任何 production
+ * 程式寫過 `world.weaponShelfOpen`** —— 只有測試在寫。#261 那時候還是一個程式
+ * 常數；當時真正做成後台欄位的只有**寶具**那一格（`legendaryShelf`）。
+ *
+ * ⭐ **UPDATED 2026-08-20 (GH#350)：現在它是後台欄位了。**
+ * `config.arena-rules@1` 的 `weaponShelfOpen` → `rulesFromDoc` →
+ * `MatchController` 在 tick 0 之前寫 `world.weaponShelfOpen`。
+ * 下面那個常數從「唯一的答案」降級成「**文件沒說時的預設值**」。
+ * 守衛：`apps/game-server/src/match/weaponShelfWiring.test.ts`。
  */
 export function shelfListable(itemId: string, open: boolean = WEAPON_SHELF_OPEN): boolean {
   return open || isShopService(itemId);

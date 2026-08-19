@@ -324,13 +324,13 @@ func (s *Service) StartMatch(ctx context.Context, rm room.Room, members []room.M
 		// 練習模式（GH#343）跟著房間走。只有 StartSolo 建的單人房會是 true
 		// （room.Create 主動清掉它），所以這條線上不需要再擋一次。
 		//
-		// ⚠️ 已知副作用，寫在這裡是因為它就發生在這條路的下游：練習房的
-		// `endlessCombat` 讓它永遠不會 finishMatch，所以結束時沒有人送結果回來，
-		// pending 記錄最後會被 `reaper.go` 的 ReapStuck 收掉 —— 而 ReapStuck
-		// ⛔ 不呼叫 Settler.Apply，它直接寫一筆 Status:"abandoned"。
-		// ⇒ 每一場練習都會在 data/matches-YYYY-MM/ 留下一筆 abandoned 記錄，
-		// 而它**不動任何貨幣、MMR、賽季積分或戰績**（那五條路全部收斂在 Apply）。
-		// 也就是說「完全沒有獎勵積分」仍然成立，多出來的只有一行歷史。
+		// ⚠️ 下游行為（GH#349，已修）：練習房的 `endlessCombat` 讓它永遠不會
+		// finishMatch，所以結束時沒有人送結果回來，pending 記錄最後一定會被
+		// `reaper.go` 的 ReapStuck 收掉。以前那一收會寫一筆 Status:"abandoned"
+		// 進 data/matches/YYYY/MM/ —— 每一場練習一筆，運維讀起來像一堆失敗的比賽。
+		// 現在 pending 記錄帶著 fieldPractice，ReapStuck 讀到就**不寫那筆記錄**
+		// （其餘的收尾照做）。⚠️ 五條獎勵路徑本來就沒跑：ReapStuck ⛔ 不呼叫
+		// Settler.Apply，所以「完全沒有獎勵積分」在此之前之後都成立。
 		Practice: rm.Practice,
 		// Forward the #288 pacing knobs wholesale — one assignment for all four,
 		// so a new knob added to room.MatchSettings cannot be left behind here.
@@ -373,6 +373,13 @@ func (s *Service) StartMatch(ctx context.Context, rm room.Room, members []room.M
 	// operator (and the reaper's logs) tie a stuck platform record to the actual
 	// room on the game server.
 	pend := map[string]any{"roomId": rm.ID, "startedAt": s.now().UnixMilli()}
+	if rm.Practice {
+		// GH#349. The reaper is the ONLY thing that ever ends a practice match,
+		// and by the time it runs the lobby room is long gone — this hash is
+		// the only place it can still learn what kind of match this was. Stamp
+		// it here, at the one moment the answer is known for certain.
+		pend[fieldPractice] = "1"
+	}
 	s.recordGameRoom(pend, mr.ColyseusRoomID)
 	if seatsJSON, err := json.Marshal(seats); err == nil {
 		pend["seats"] = string(seatsJSON)

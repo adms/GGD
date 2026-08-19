@@ -587,9 +587,25 @@ function buildRectGround(
   const rim = quad(`zone-${zoneIndex}-rim`, bounds.halfW + APRON, bounds.halfD + APRON);
   rim.material = createRimMaterial(scene, `zone-${zoneIndex}-rim-mat`, tex, fallback, palette);
 
+  // ⭐ GH#363 —— 地板頂面是 `FLOOR_TOP_Y`（−0.01），⛔ **不是 0**。
+  //
+  // ⚠️ 這不是美觀微調，是**修一個真的破圖**：`FLOOR_TOP_Y` 的存在理由就寫在它的
+  // 宣告上 ——「a hair under 0 so prop bases (authored at y = 0) never z-fight
+  // with it」。圓盤那條路一直遵守它，矩形這條路（GH#324 新寫的）把地板放在
+  // **正好 y = 0**，於是任何「頂面切在 local y = 0」的地面道具就與地板**逐位元共面**。
+  //
+  // 量到的現場：`content/arenas/arena.world-tree.json`（草地・矩形）在**場地正中央**
+  // 鋪了四片 `assets/models/hex/hex_grass.glb`（x = −3/−1/1/3, z = 1, y = 0），
+  // 而那顆模型的 POSITION 是 min.y = −1、**max.y = 0** —— 整塊埋在地板下，
+  // 只有頂面剛好貼在地板平面上。兩個共面的不透明面互爭深度緩衝 ⇒ owner 看到的
+  // 那片會閃的黃綠鋸齒條紋。⛔ 修法不是 `zOffset`／`depthBias` 蓋過去，
+  // 是把**真正重疊的那兩個面**分開，並且用圓盤那條路早就在用的同一個常數分開。
+  //
+  // 副作用（好的那種）：`CONTACT_Y = FLOOR_TOP_Y + 0.012` 的接觸陰影在矩形場地
+  // 本來只離地板 2mm，現在跟圓盤場地一樣是 12mm。
   for (const [mesh, y] of [
-    [rim, -0.02],
-    [floor, 0],
+    [rim, FLOOR_TOP_Y - 0.02],
+    [floor, FLOOR_TOP_Y],
   ] as const) {
     mesh.position.set(center.x, y, center.z);
     mesh.isPickable = false;

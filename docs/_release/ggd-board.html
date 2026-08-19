@@ -1,0 +1,335 @@
+<title>GGD 作戰板</title>
+<style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
+--ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
+--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+--sans:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans TC","PingFang TC",sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--ground:#12100e;--panel:#1a1715;--rule:#332e29;--rule-soft:#262220;
+--ink:#f0ece6;--ink-2:#b3aaa0;--ink-3:#7d746b;--accent:#f07a3c;--accent-soft:#33200f}}
+:root[data-theme="dark"]{--ground:#12100e;--panel:#1a1715;--rule:#332e29;--rule-soft:#262220;
+--ink:#f0ece6;--ink-2:#b3aaa0;--ink-3:#7d746b;--accent:#f07a3c;--accent-soft:#33200f}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--sans);line-height:1.62;margin:0;
+padding:clamp(20px,4vw,52px) clamp(14px,4vw,40px);font-size:15.5px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+h1{font-size:clamp(26px,4vw,38px);letter-spacing:-.02em;margin:0;font-weight:700;text-wrap:balance}
+h2{font-size:19px;margin:0 0 8px;letter-spacing:-.01em;font-weight:670}
+h3{font-size:14.5px;margin:20px 0 4px;color:var(--ink-2);font-weight:640}
+p{margin:0 0 9px;color:var(--ink-2)}
+p.li{margin:3px 0 3px 16px;position:relative}
+p.li::before{content:"·";position:absolute;left:-12px;color:var(--accent);font-weight:700}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+color:var(--accent);margin:0 0 5px}
+header{border-bottom:2px solid var(--ink);padding-bottom:16px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:12px;font-family:var(--mono);
+font-size:12.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.meta b{color:var(--ink);font-weight:600}
+section{border-left:3px solid var(--rule);padding-left:clamp(12px,2.2vw,20px)}
+.scroll{overflow-x:auto;margin:11px 0;border:1px solid var(--rule-soft);border-radius:7px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
+th{text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+color:var(--ink-3);font-weight:600;padding:8px 12px;border-bottom:1px solid var(--rule);white-space:nowrap;
+position:sticky;top:0;background:var(--panel)}
+td{padding:8px 12px;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+tr:last-child td{border-bottom:none}
+code{font-family:var(--mono);font-size:.88em;background:var(--rule-soft);padding:1px 5px;border-radius:4px;color:var(--ink)}
+b{color:var(--ink)}
+blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
+footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
+</style>
+<div class="wrap"><header><p class="eyebrow">v0.21.4 → v0.21.5 · 開發中</p><h1>GGD 作戰板</h1><div class="meta"><span>HEAD <b>0dbff15a</b></span><span>未 push <b>1</b></span><span>工作區 <b>147</b> 改動 · <b>59</b> 未追蹤</span></div></header>
+<section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
+<blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
+<p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
+<div class="scroll"><table><tr><th>債</th><th>量到的</th><th>為什麼它一直沒被發現</th></tr>
+<tr><td><b>①「說了但不會發生」</b></td><td>5 支天生技整棵樹只有特效 · 6 處投射物 onHit 是空的 · 千年練成一棵樹精都沒召</td><td>每個零件都是對的，只有<b>組合</b>是空的 —— 沒有守衛會紅</td></tr>
+<tr><td><b>② 做完了但沒人用</b></td><td><code>rangeTier</code> 採用率 <b>0/461</b> · 68 個原作音效零引用 · 動地跺 150 個引用點零落地</td><td>欄位存在、schema 過、測試綠 —— <b>只是沒有內容在填它</b></td></tr>
+<tr><td><b>③ 級距只做了一半</b></td><td>四軸（距離/範圍/傷害/耗魔）<b>只有範圍與位移</b>有級距表</td><td>owner 以為四軸都做了，我也以為</td></tr>
+</table></div></section>
+<section><p class="eyebrow">五條主線</p><h2>五條主線</h2><div class="scroll"><table><tr><th>#</th><th>主線</th><th>主票</th><th>這一版要到哪</th></tr>
+<tr><td><b>A</b></td><td><b>四軸五級距 + 技能模板化</b></td><td><b>#438</b> #414 #444 #445 #446 #447</td><td>標籤 → 公式 → 數值，⛔ 不再逐支填數字</td></tr>
+<tr><td><b>B</b></td><td><b>特效／音效真的還原</b></td><td><b>#450</b>（驗收標準）#439 #451 #440 #441</td><td>三支技能是 owner 親自驗收的尺</td></tr>
+<tr><td><b>C</b></td><td><b>回合清理與中場</b></td><td><b>#429</b> #455 #422 #421</td><td>中場＝清理＋檢查＋預載，⛔ 不是換個畫面</td></tr>
+<tr><td><b>D</b></td><td><b>資產與版權規則變更</b></td><td><b>#443</b> #453 #452 #386</td><td>BZ 全開 + 資產優先序 + FATE 視覺識別</td></tr>
+<tr><td><b>E</b></td><td><b>資訊統一（JSON → script）</b></td><td><b>#449</b> #372 #381 #426 #389</td><td>⛔ 不再有手寫的清單</td></tr>
+</table></div></section>
+<section><p class="eyebrow">身上</p><h2>⏸ 卡在 owner 身上</h2><blockquote>⚠️ 這張表<b>保留作為歷史</b>。owner 在 #1069 / #1070 / #1071 / #1077 已逐項裁決</blockquote>
+<blockquote>（#408→擴大到 any · #453→備份後重產 · #433→9 支直接給了級距 · #447→「let me see」三方案 ·</blockquote>
+<blockquote>#445→2–5× 是參考準則）。<b>現行清單看 <code>2026-08-20.md</code></b>。</blockquote>
+<div class="scroll"><table><tr><th>票</th><th>卡什麼</th><th>我需要的一句話</th></tr>
+<tr><td><b>#447</b> Q5</td><td>範圍 vs 單體的<b>倍數關係</b></td><td>你說「之前講過」，我沒找到 ⇒ 要我提建議嗎</td></tr>
+<tr><td><b>#447</b> Q7</td><td>198 支<b>沒有傷害</b>的技能怎麼定價</td><td>三方案已備，等你挑</td></tr>
+<tr><td><b>#447</b> Q8</td><td>66 支<b>冷卻 0 且耗魔 0</b> 怎麼表達</td><td>三方案已備，等你挑</td></tr>
+<tr><td><b>#447</b> U2</td><td>傷害中位的三方案策略</td><td>三方案已備，等你挑</td></tr>
+<tr><td><b>#433</b></td><td><b>14 支範圍離群</b>逐支建議</td><td>攝影機/裝可愛已裁，其餘 12 支</td></tr>
+<tr><td><b>#408</b></td><td>吞噬 rank1 只有 3% 處決線</td><td>是不是原本就這樣</td></tr>
+<tr><td><b>#453</b></td><td><b>已生成的圖示要不要重生成？</b></td><td>舊的 dark-fantasy vs 新的 FATE 混在一起會像兩套</td></tr>
+</table></div>
+<div class="scroll"><table><tr><th>票</th><th>卡什麼</th></tr>
+<tr><td><b>#445</b></td><td>「極小那格的 5× 要不要收掉？」—— 你反問「<b>你的建議呢 遊戲這樣合理嗎</b>」，等我給建議</td></tr>
+<tr><td><b>#447</b></td><td>Q5 / Q7 / Q8 / U2 的<b>三選一方案</b>（你說「let me see」，我還沒送出）</td></tr>
+<tr><td><b>#433</b></td><td>12 支範圍離群的<b>逐支建議</b>（9 支你已直接裁決，見上表）</td></tr>
+<tr><td><b>#460</b></td><td>「極小」正式入詞彙的<b>優缺點分析 + 建議</b></td></tr>
+</table></div></section>
+<section><p class="eyebrow">工作流分工與群組現況</p><h2>🔀 工作流分工與群組現況</h2><blockquote>切分依據是<b>檔案領域互斥</b>，⛔ 不是主題相近 —— 兩條 lane 只要會編到同一個檔就不能併行。</blockquote>
+<h3>⭐ 瓶頸已解除：鎖是 <code>bundle.json</code>，不是 <code>content/</code> 目錄</h3>
+<p>原本以為「一次只能有一條 lane 碰 content」。實際上真正的鎖是 <b><code>pnpm content:build</code> 寫出的 <code>bundle.json</code></b>。</p>
+<p>⇒ 只要<b>所有 lane 一律禁止跑 build</b>，content 的<b>來源檔</b>可以平行編（檔案互斥即可），</p>
+<p>由主 session 最後跑一次 <code>pnpm skills:sync</code>。這一改把原本卡住的 31 張全部解開。</p>
+<h3>📊 這一版的統整（2026-08-16 起）</h3>
+<div class="scroll"><table><tr><th></th><th>數</th></tr>
+<tr><td>本版開票總數</td><td><b>136</b></td></tr>
+<tr><td>已關</td><td>29</td></tr>
+<tr><td><b>仍開</b></td><td><b>107</b></td></tr>
+<tr><td>└ 已排進 9 條工作流</td><td><b>54</b></td></tr>
+<tr><td>└ <b>還沒排</b></td><td><b>53</b></td></tr>
+</table></div>
+<h3>已派出的 9 條</h3>
+<div class="scroll"><table><tr><th>run</th><th>領域</th><th>票</th><th>狀態</th></tr>
+<tr><td>batch 1</td><td>ground 護盾 · 商店回血 · 宿敵榜 · 逐階冷卻 · slash 動畫 · LoRA/SDXL · 卡面說謊 · 文案規則</td><td>458 455 454 464 456 457 459 461</td><td>✅ 13/13</td></tr>
+<tr><td>batch 2</td><td>連鎖閃電機制 · FATE 配色 · 場外背景 · 描述↔JSON 對帳</td><td>451 453 452 462</td><td>✅ 4/4</td></tr>
+<tr><td><code>wf_0e721af0</code></td><td><b>#451 連鎖閃電逐跳</b>（sim 排程 · 弧形視覺 · 內容接線 · 對抗 · 全域）</td><td>451</td><td>✅ 5/5</td></tr>
+<tr><td><code>wf_3439ab5b</code></td><td>W1 平台與後台旋鈕</td><td>349 352 350 355 360 376 410</td><td>✅</td></tr>
+<tr><td><code>wf_c93877d0</code></td><td>W2 場地幾何與出生點</td><td>364 422 421 363 345 409 398</td><td>✅</td></tr>
+<tr><td><code>wf_3c43693e</code></td><td>W3 音效與語音接線</td><td>402 436 403 440 441</td><td>✅</td></tr>
+<tr><td><code>wf_9ab443dc</code></td><td>W4 測試基建與閘</td><td>428 359 334 351 353 374 407 412</td><td>✅</td></tr>
+<tr><td><code>wf_1407b978</code></td><td>W5 文件與產生器一致性</td><td>449 389 426 381 417 335</td><td>✅</td></tr>
+<tr><td><code>wf_a12df6a3</code></td><td><b>W6 卡面說了但不會發生</b></td><td>373 375 404 424 459 369 419 420 448</td><td>⏳</td></tr>
+<tr><td><code>wf_03096cae</code></td><td><b>W7 特效家族與綁定搬進 content</b></td><td>378 427 384 431 439 425 392</td><td>⏳</td></tr>
+</table></div>
+<h3>🔀 還沒排的 53 張 → 下一批工作流（按檔案領域互斥切）</h3>
+<div class="scroll"><table><tr><th>候選</th><th>領域（互斥的檔）</th><th>票</th></tr>
+<tr><td><b>W8 四軸級距與數值</b></td><td>tier config · <code>skillTiers.ts</code> · admin · docs</td><td>414 438 444 445 446 447 460 465 433 464 430</td></tr>
+<tr><td><b>W9 EX／三選一內容</b></td><td><code>content/augments</code> · <code>content/items</code> · grail CSV</td><td>333 356 357 358 347 354</td></tr>
+<tr><td><b>W10 特效方位與形狀</b></td><td>vfx 方位 · slash · 沿線推進 · 掛件</td><td>377 379 385 400 401 432 442 450 366</td></tr>
+<tr><td><b>W11 場景與資產</b></td><td>arena 裝飾 · scenery · VRAM · 場外背景</td><td>332 362 382 386 396 397 346 452</td></tr>
+<tr><td><b>W12 HUD 與練習模式</b></td><td><code>apps/client/src/ui</code> · 練習房</td><td>343 344 361 365 367 368 370 348</td></tr>
+<tr><td><b>W13 回合清理與召喚</b></td><td>回合邊界 · 召喚生命週期</td><td>429 423</td></tr>
+<tr><td><b>W14 契約與普查</b></td><td>Codex 契約 · 全英雄普查 · 版權規則</td><td>371 372 443</td></tr>
+</table></div>
+<p>⚠️ <b>W8 是其他幾條的前置</b>（級距數值定了，卡面文案與普查才有基準），但它<b>現在被 owner 的四份三選一擋著</b>。</p>
+<h3>⛔ 尚未開票、但 owner 已經說過的</h3>
+<div class="scroll"><table><tr><th>事</th><th>出處</th><th>現況</th></tr>
+<tr><td><b>魔力每級成長曲線重算</b>（50 級連續 4~8 次範圍技能耗盡 · 0→滿魔 20 秒）</td><td>08-19 22:30</td><td>已回寫 #446，⛔ 還沒有獨立票</td></tr>
+<tr><td><b>參考錨點改 30/50/99</b>（不是 L18）</td><td>08-19 19:30</td><td>已回寫 #446 #447</td></tr>
+<tr><td><b>9 支技能的級距直接裁決</b>（鬼眼→極大⋯式神炸裂→中）</td><td>08-19 22:30</td><td>已回寫 #433，⛔ 一支都還沒落地</td></tr>
+<tr><td><b>FATE 圖示全量重產</b>（「backup all icons then re-gen」）</td><td>08-19 19:05</td><td>備份完成 2168 檔，⛔ <b>重產未做</b></td></tr>
+<tr><td><b>檔案拆分策略</b>（讓大量改技能時的平行化不卡住）</td><td>08-20 01:2x</td><td>🔨 設計中</td></tr>
+</table></div>
+<h3>⚠️ 併行時會咬人的四件事</h3>
+<p class="li">1. <b>假紅（已修）</b> —— GH#359：<code>gameAppFacingWiring</code> 每個 <code>it()</code> 裡都 <code>await import(&amp;quot;../GameApp&amp;quot;)</code>，</p>
+<p><b>2,189 ms 的模組載入被記在第一條斷言的 5,000ms 預算裡</b>。修法是把 import 搬到模組層</p>
+<p>（⛔ 不是調大逾時 —— 那是把偵測器關掉）。同負載 A/B 20 次：修前 <b>7 過 13 敗</b>、修後 <b>20 過 0 敗</b>。</p>
+<p class="li">2. <b>工作樹是唯一副本</b> —— 全部來自這個 session 的多條 lane。</p>
+<p>所有 lane 明令禁止 <code>git checkout &amp;lt;檔&amp;gt;</code> / <code>restore</code> / <code>stash</code> / <code>add -A</code>。</p>
+<p>⭐ <b>2026-08-20 新增 PreToolUse hook</b>：任何 <code>Write</code> 或 Bash 的 <code>&amp;gt;</code> <code>rm</code> <code>truncate</code> <code>tee</code> <code>mv</code> <code>cp</code></p>
+<p><code>git checkout|restore</code>，<b>動作發生前</b>自動留底到 <code>docs/legacy/_overwrites/&amp;lt;時間戳&amp;gt;/</code>。</p>
+<p class="li">3. <b><code>bundle.json</code> 是全域鎖</b> —— 同時跑 build 會產出壞掉的 bundle。</p>
+<p class="li">4. <b>subagent 紅線</b> —— ⛔ <code>gh issue create</code>、⛔ ssh/curl 正式站、⛔ <code>content:build</code>。</p>
+<h3>📌 這一版的整合待辦（主 session 做，不派工作流）</h3>
+<p class="li"><code>pnpm skills:sync</code> —— 全部 lane 落地後跑<b>一次</b></p>
+<p class="li"><code>python3 tools/icon-console/emit_style_spec.py</code> —— 等 <code>prompt.py</code> 定稿</p>
+<p class="li"><code>pnpm exec tsx tools/model-budget/emit_report.ts</code> —— <code>report.json</code> 現在就過期，而<b>沒有守衛會說</b></p>
+<p class="li"><code>eventFanout.ts:114</code> 的註解已成假話（線路成本從「施放次數」變成「跳數」）</p></section>
+<section><p class="eyebrow">這一版（08-20）</p><h2>🧾 逐句對票 · 這一版（08-20）</h2><p>owner 2026-08-19：「這是很好的開發守則，避免遺漏又可以揭露足夠版本更新資訊」</p>
+<div class="scroll"><table><tr><th>owner 說的（節錄）</th><th>票</th><th>狀態</th></tr>
+<tr><td>「明明就是 極小 小 中 大 極大 五級距⋯<b>沒有超大這種東西</b>」</td><td>#463</td><td>✅ 505 筆同批重寫</td></tr>
+<tr><td>「he can kill enemy <b>below 3% hp</b>⋯including zombies. boss」</td><td>#408</td><td>✅ <code>victim:&amp;quot;any&amp;quot;</code></td></tr>
+<tr><td>「<b>極大跟極小都是卡上下限的例外</b>而非線性規則」</td><td>#445</td><td>✅ 我的建議是錯的，已撤回；線性段 3.0/2.0/2.0，表不用改</td></tr>
+<tr><td>「同一個技能 <b>升級冷卻通常不會變化</b> 有變化就是特例 一樣要給我審查列管」</td><td>#464</td><td>⏳ W 外，24 支列管中</td></tr>
+<tr><td>「連鎖閃電⋯<b>預設是 12</b>⋯但打雷跟天譴範圍內的確<b>沒有</b>⋯上限」</td><td>#451</td><td>✅ 查到原作是 <b>16</b>；鏈數無上限</td></tr>
+<tr><td>「<b>DECAY 0.9</b>⋯重點在於<b>隨機選擇單位遞減時間差</b>的閃電特效與傷害」</td><td>#451</td><td>⏳ <code>wf_0e721af0</code> 實作中</td></tr>
+<tr><td>「<b>通道多好 因為跑才是重點</b>」</td><td>#409</td><td>⏳ 已進票，W2 執行中</td></tr>
+<tr><td>「please <b>fix all</b> even after that」</td><td>#374</td><td>⏳ 已進票；⚠️ 推翻第零守則⑧在這批的適用</td></tr>
+<tr><td>「只要做<b>有開放的角色技能及隨機三選一</b>就好，沒開放的別浪費 token」</td><td>#462</td><td>✅ 範圍限縮成 70 英雄 / 414 技能 / 91 增益</td></tr>
+<tr><td>「其他票盡量開<b>不衝突的獨立工作流</b>⋯測試不要重複做」</td><td>—</td><td>✅ 六條併行，全域檢查收成一個</td></tr>
+<tr><td>「<b>逐句對票</b>⋯要持續更新阿，並且寫到 NOTE」</td><td>—</td><td>✅ 已寫進 CLAUDE.md 部署協定第 1 步 + 本節</td></tr>
+<tr><td>「每次 <b>context 要滿</b>⋯先開一個 <code>memory_temp_{timestamp}.md</code>」</td><td>—</td><td>✅ <code>scripts/memory-temp.sh</code> + 守衛</td></tr>
+<tr><td>「界線在 <b>95%</b>⋯最多到 <b>98%</b>」</td><td>—</td><td>✅ 寫進 CLAUDE.md，數字不是判準</td></tr>
+<tr><td>「每一次更動技能相關機制或內容⋯讓 <b>script 動態更新</b>所有相關文件」</td><td>#466</td><td>✅ <code>pnpm skills:sync</code> + 聚合自己的閘</td></tr>
+<tr><td>「你是否能<b>盤點現在 0.21.4 107 所有票</b>盡量獨立不同工作流加速」</td><td>—</td><td>✅ 107 張逐張讀完，切成 5 條新工作流</td></tr>
+<tr><td>「更新 <b>GGD作戰版</b>跟 release note，包括你工作流分工的方式跟群組現況、注意事項」</td><td>—</td><td>✅ 作戰板原地更新 + 本節</td></tr>
+</table></div></section>
+<section><p class="eyebrow">的每一句話在哪張票上</p><h2>🧾 逐則對票 · owner 的每一句話在哪張票上</h2><h3>08-18</h3>
+<div class="scroll"><table><tr><th>#</th><th>時間</th><th>owner 說了什麼</th><th>落到哪</th><th>狀態</th></tr>
+<tr><td>1</td><td>03:48</td><td>魔抗百分比要實作，避免數字誤差及過期</td><td>已實作（三張卡真值回寫）</td><td>✅</td></tr>
+<tr><td>1</td><td>03:48</td><td><code>ex-origin-weapons.json</code> 沒進版控</td><td>已進版控</td><td>✅</td></tr>
+<tr><td>1</td><td>03:48</td><td>劣勢方拿根源的機率應該更高才對</td><td>已修</td><td>✅</td></tr>
+<tr><td>1</td><td>03:48</td><td><b>不需要推薦出裝</b></td><td>已移除</td><td>✅</td></tr>
+<tr><td>1</td><td>03:48</td><td><b>不需要「每隊限一件」的限制</b></td><td>已移除</td><td>✅</td></tr>
+<tr><td>8</td><td>05:02</td><td>bot 一樣花錢買隨機寶具，<b>半價</b></td><td>已實作</td><td>✅</td></tr>
+<tr><td>16</td><td>06:16</td><td><b>15 件 EX∅ 根源</b>：全部 JSON、改 script 讀取生成與設定後台</td><td>10 件上池 / 5 件缺機制 → #358</td><td>✅ 已出貨</td></tr>
+<tr><td>18</td><td>07:56</td><td><b><code>ENTITY_FLAG expand!</code></b></td><td>uint16 → <b>uint32</b>，CLAUDE.md 已改</td><td>✅</td></tr>
+<tr><td>18</td><td>07:56</td><td>機制標籤跟 JSON 切乾淨提高複用率 · 地端補圖示 · 上架 · push note deploy</td><td>v0.20.x 已出貨</td><td>✅</td></tr>
+<tr><td>21</td><td>08:53</td><td><b>被捕獲的敵方英雄算我方</b>（傷害/戰績都算我方）</td><td><code>convertTeam.countsForOriginalTeam</code></td><td>✅</td></tr>
+<tr><td>21</td><td>08:53</td><td>史萊姆裝免疫<b>不必</b>設逾時（場上一定有 AP 傷害打斷）</td><td>已落地</td><td>✅</td></tr>
+<tr><td>26</td><td>10:10</td><td>連擊<b>不應該跨回合殘留</b></td><td><code>clearRoundScoped</code> 已含</td><td>✅</td></tr>
+<tr><td>26</td><td>10:10</td><td>移動速度上限很快碰到<b>沒關係</b>（物理碰撞的已知限制）</td><td>⛔ 不補 capRaise</td><td>✅</td></tr>
+<tr><td>28</td><td>10:21</td><td><b>淨化 = 解掉所有負面狀態</b>（common sense），提高到 1000 都沒關係</td><td>cap → 1000，三張卡刪 <code>count</code></td><td>✅</td></tr>
+<tr><td>28</td><td>10:21</td><td>⭐ 但<b>正向 buff 要不要被淨化</b>（[狂戰士][暴走]）→ 做成<b>個別開關</b>（正向/負向/雙向）</td><td>極性開關已落地</td><td>✅</td></tr>
+<tr><td>29</td><td>10:25</td><td>一個單位身上的狀態數<b>統一到 50</b>（效能考量）</td><td>後續改 60</td><td>✅</td></tr>
+<tr><td>31</td><td>11:25</td><td>上限改成 <b>60</b>，後台可調</td><td><b>#360</b></td><td>✅</td></tr>
+<tr><td>31</td><td>11:25</td><td><b>視角</b>：預設太低貼地、最高縮放又太高（至少砍低一半）</td><td><b>#361</b></td><td>🔨</td></tr>
+<tr><td>31</td><td>11:25</td><td><b>每個地圖場景特色太薄</b>：裝飾物件 + <b>打光要有變化不是靜態</b> + 地板牆壁配色</td><td><b>#362</b></td><td>🔨</td></tr>
+<tr><td>31</td><td>11:25</td><td>地圖中間<b>破圖閃爍</b></td><td><b>#363</b></td><td>🔨</td></tr>
+<tr><td>31</td><td>11:25</td><td>英雄<b>出生點在邊界外</b>、疑似被<b>無限距離</b>技能打到</td><td><b>#364</b></td><td>🔨</td></tr>
+<tr><td>31</td><td>11:25</td><td><b>練習模式作弊選單</b>重新設計（經驗/等級/寶具/屬性/技能/狀態/殭屍生成）</td><td><b>#365</b></td><td>🔨</td></tr>
+<tr><td>31</td><td>11:25</td><td>特效從 JASS/蝗蟲群/球體 綁定完 + 匯入 3D model / 粒子 / 大小顏色透明度方位</td><td><b>#366</b></td><td>🔨</td></tr>
+<tr><td>31</td><td>11:25</td><td><b>技能範圍指引</b>（LoL 新手模式那種：彩框 + 半透明填滿）</td><td><b>#367</b> #376</td><td>🔨</td></tr>
+<tr><td>31</td><td>11:25</td><td>多拉A夢在商店仍是巨大支 · 英靈殿英雄<b>下半身傾斜沒站直</b></td><td><b>#368</b></td><td>🔨</td></tr>
+<tr><td>31</td><td>11:25</td><td>魔法老師【真不死不滅】改規格：回復 2% / 消耗 1% / 僅 HP&lt;50%</td><td><b>#369</b></td><td>🔨</td></tr>
+<tr><td>31</td><td>11:25</td><td>克勞德放完隕石擊<b>原地小碎步抽搐</b></td><td><b>#370</b></td><td>🔨</td></tr>
+<tr><td>31</td><td>11:25</td><td>檢查所有英雄技能能施放/開關/產生效果、且都是 JSON</td><td><b>#371</b> → #373 #374 #375 #407 #412</td><td>🔨</td></tr>
+<tr><td>31</td><td>11:25</td><td>整理最近更新會影響到的 <b>Codex 技能契約</b></td><td><b>#372</b> #380</td><td>🔨</td></tr>
+<tr><td>34</td><td>11:46</td><td>在設定裡放行 <code>ssh -A</code> 唯讀查證</td><td>已加規則</td><td>✅</td></tr>
+<tr><td>44</td><td>13:20</td><td><b>do all, fix all, and download 3d models</b>，找不到就生成</td><td>scenery-cc0 → #386</td><td>🔨</td></tr>
+<tr><td>51</td><td>15:46</td><td>download <b>先不論面數，CC-BY 也可以</b>；真找不到就拆解元素搜尋與生成</td><td>同上</td><td>🔨</td></tr>
+<tr><td>59</td><td>17:43</td><td>EX∅/解放/EX·A·C 全上架了嗎？Codex 契約/標籤/JSON/說明/圖示都補完連接完？</td><td>已回報 + #372</td><td>✅</td></tr>
+<tr><td>59</td><td>17:43</td><td>所有地圖：起始點/殭屍波位置/路徑阻擋合理？沒生在障礙/死路/圈外/牆外？</td><td>#383 #387 #388 #397 #398 #409</td><td>✅ 部分</td></tr>
+<tr><td>61</td><td>18:37</td><td><b>78-03 照舊龍捲風</b>，但<b>立起來的光柱</b>其他技能也會用（飛鼠天譴）</td><td><b>#392</b> #431</td><td>🔨</td></tr>
+<tr><td>61</td><td>18:37</td><td><b>悟空 SSJ3 球體附著雙手跟隨播放動畫</b></td><td><b>#392</b></td><td>🔨</td></tr>
+<tr><td>61</td><td>18:37</td><td><b>34-04</b> JASS 應該有<b>位置移動播放的多次特效搭配傷害</b></td><td>#393</td><td>✅</td></tr>
+<tr><td>61</td><td>18:37</td><td>⭐ <b>slash 全家族的張角 又是一個看不懂的東西</b></td><td>#391 ✅ · #400 🔨 · <b>#456 ⭐新</b></td><td>⚠️</td></tr>
+<tr><td>61</td><td>18:37</td><td><b>32 支投射物</b>接上正確特效</td><td>#394</td><td>✅</td></tr>
+<tr><td>61</td><td>18:37</td><td><b>吐息類</b>猜是粒子特效</td><td>#394</td><td>✅</td></tr>
+<tr><td>61</td><td>18:37</td><td>⭐ <b>特效本身帶的音效也要一併移植擷取</b></td><td><b>#390</b> ✅ → #402 #436 #440</td><td>⚠️</td></tr>
+<tr><td>64</td><td>18:55</td><td><b>地圖路徑缺口大一點 不要那麼小氣</b></td><td>#409</td><td>🔨</td></tr>
+<tr><td>65</td><td>18:57</td><td>#374 #375 #385 <b>快修</b>，有延伸 issue 也要開</td><td>已開 #407 #412</td><td>🔨</td></tr>
+</table></div>
+<h3>08-19</h3>
+<div class="scroll"><table><tr><th>#</th><th>時間</th><th>owner 說了什麼</th><th>落到哪</th><th>狀態</th></tr>
+<tr><td>74</td><td>04:56</td><td>1. yes, please move（音效命名空間） 2. fix 20 new issues 3. 先觀察</td><td>#402</td><td>✅</td></tr>
+<tr><td>74</td><td>04:56</td><td><b>選人畫面解鎖的英雄要跳最上排</b></td><td><b>#413</b></td><td>✅</td></tr>
+<tr><td>74</td><td>04:56</td><td>回合一開始左方出現 <b>bot5 bot4 + 施法特效</b></td><td><b>#416</b></td><td>✅</td></tr>
+<tr><td>75</td><td>05:09</td><td>⭐ <b>技能範圍轉換自 w3x 是不是有問題</b>：距離普遍超遠 · 範圍超大</td><td><b>#414</b> #418</td><td>🔨</td></tr>
+<tr><td>75</td><td>05:09</td><td>五級距規範<b>寫成 md</b> 給我參考，也是 <b>Codex 契約文件之一</b></td><td>#414 → #438</td><td>🔨</td></tr>
+<tr><td>75</td><td>05:09</td><td><b>#384 #380 #392 一起做在這批</b></td><td>#380 ✅ · #384 🔨 · #392 🔨</td><td>⚠️</td></tr>
+<tr><td>75</td><td>05:09</td><td><b>59-01 吞噬</b>改成被動，低於門檻直接吃掉</td><td><b>#419</b></td><td>🔨</td></tr>
+<tr><td>75</td><td>05:09</td><td><b>44-01 死神之眼</b>：距離「極大」、冷卻 60→30</td><td><b>#420</b></td><td>🔨</td></tr>
+<tr><td>75</td><td>05:09</td><td>⭐ 兩個 bot <b>在界外、模型沒畫但有施法特效</b>（我昨天就回報過）</td><td>#416</td><td>✅</td></tr>
+<tr><td>76</td><td>05:16</td><td>⭐ <b>技能相關設定正規化成五級距</b>，文件 JSON 編輯器 後台設定<b>都統一</b></td><td><b>#438</b> #414</td><td>🔨</td></tr>
+<tr><td>76</td><td>05:16</td><td>這次提的所有議題<b>都要開票追蹤</b></td><td>99 張</td><td>✅</td></tr>
+<tr><td>78</td><td>05:26</td><td>既有 60 個 <code>wc3.*</code> <b>move</b></td><td>已搬</td><td>✅</td></tr>
+<tr><td>78</td><td>05:26</td><td>#408 吞噬冷卻 60 秒不是本來就有的設定嗎</td><td><b>#408</b></td><td>⏸️ 待裁決</td></tr>
+<tr><td>78</td><td>05:26</td><td>⭐ <b>重點是那兩個點在牆外，不應該顯示在那邊</b></td><td>#416 + 第二道閘</td><td>✅</td></tr>
+<tr><td>81</td><td>05:45</td><td>吞噬<b>還是佔著 Q，只是變成被動</b>；改說明/JSON/編輯器契約；<b>魔力免扣</b></td><td><b>#419</b></td><td>🔨</td></tr>
+<tr><td>81</td><td>05:45</td><td>⭐⭐ <b>真正的重點在於回合結束要清理乾淨</b> —— 特效/英雄資料/狀態/座標都要檢查，中場是<b>緩衝 + 預載下一場</b>避免一進戰鬥就 LAG</td><td><b>#429</b></td><td>🔨</td></tr>
+<tr><td>81</td><td>05:45</td><td>調整散佈規則要<b>重算合法生成點跟合法行走路徑</b></td><td>#396 #398</td><td>🔨</td></tr>
+<tr><td>81</td><td>05:45</td><td><b>不要重複放檔案</b> —— 自己思考最佳解決方式</td><td>音效合併已做</td><td>✅</td></tr>
+<tr><td>85</td><td>07:20</td><td>⭐ 大量特效使用 <b>w3x 動地跺</b>（地面震裂 + 巨大撞擊音）</td><td><b>#439</b></td><td>🔨</td></tr>
+<tr><td>85</td><td>07:20</td><td><b>所有音效都要有 3D 位置音場設定</b></td><td><b>#440</b></td><td>🔨</td></tr>
+<tr><td>85</td><td>07:20</td><td>檢查<b>所有英雄語音是否都有真的被播放的時機</b></td><td><b>#441</b></td><td>🔨</td></tr>
+<tr><td>85</td><td>07:20</td><td>⭐⭐ <b>統一抽象化所有技能的設計模板</b> —— 距離/範圍/[耗魔+冷卻] 用五級距標籤自動生成數值 + 公式文件 + script + 後台 + Codex 契約</td><td><b>#438</b></td><td>🔨</td></tr>
+<tr><td>85</td><td>07:20</td><td>⭐ 一堆<b>瞬間移動變成位移技</b>，掃描修正（悟空/皮卡丘/飛鼠先生）</td><td><b>#442</b></td><td>✅ 12 支已改</td></tr>
+<tr><td>85</td><td>07:20</td><td>#419 吞噬內部冷卻 → <b>跟主動一樣就好</b></td><td>#419</td><td>🔨</td></tr>
+<tr><td>85</td><td>07:20</td><td>#421 樹精 → <b>跟殭屍一樣，只是不會移動 + 屬於施展方 + 有生命週期時限</b></td><td>#423</td><td>🔨</td></tr>
+<tr><td>85</td><td>07:20</td><td>#429 → <b>整理分析後實作</b></td><td>#429</td><td>🔨</td></tr>
+<tr><td>85</td><td>07:20</td><td>#433 → <b>列給我再判斷，逐個給我建議</b></td><td>#433</td><td>⏸️</td></tr>
+<tr><td>85</td><td>07:20</td><td>#436 → <b>配對</b></td><td>#436</td><td>🔨</td></tr>
+<tr><td>85</td><td>07:20</td><td>傷害／耗魔級距 → <b>推估 abc 三方案優缺點及原理，給我計劃審查</b></td><td>#447 #446</td><td>⏸️</td></tr>
+<tr><td>87</td><td>08:28</td><td>⭐ <b>先把已有的那軸（rangeTier）寫回去，再加三個新軸。⛔ 不然是在製造第二批沒人用的欄位。快做！</b></td><td><b>已做：205 支寫回</b></td><td>✅</td></tr>
+<tr><td>91</td><td>09:20</td><td>⭐⭐ <b>幫我改掉規則 現在都可以出貨</b>（Blizzard 全解禁）</td><td><b>#443</b></td><td>🔨</td></tr>
+<tr><td>91</td><td>09:20</td><td>⭐ <b>有就用，沒有才用外部 CC0/CC-BY，再沒有才自己生成</b></td><td><b>#443</b></td><td>🔨</td></tr>
+<tr><td>91</td><td>09:20</td><td>可渲染性閘 → <b>你的建議呢 優缺點？</b> → （後來）<b>照你建議</b>（看位元組出處）</td><td>#443</td><td>🔨</td></tr>
+<tr><td>91</td><td>09:20</td><td>⭐ <b>場地擴充了，不能再拿場地大小當比例尺</b></td><td><b>#444</b></td><td>⚠️ 錨點作廢</td></tr>
+<tr><td>91</td><td>09:20</td><td>⭐ <b>調回魔</b>：連續 4 大範圍技必等回魔 / 連續 8 次，<b>平均滿魔 ≤15 秒，最糟 ≤20 秒</b></td><td><b>#446</b></td><td>🔨</td></tr>
+<tr><td>91</td><td>09:20</td><td>⭐ <b>冷卻五級距確切數字</b>：單體 <b>6/15/30/45/60</b> · 範圍 <b>30/45/60/90/120</b> · 變身或持續增益 <b>30/45/60/90/120</b>；<b>不計入系統倍率及減 CD</b></td><td><b>#445</b></td><td>🔨</td></tr>
+<tr><td>91</td><td>09:20</td><td><b>Q1</b> 最極端單體 Q（無負面狀態、CD 6s）<b>20 次以內一定要能殺死對方</b></td><td>#447</td><td>🔨</td></tr>
+<tr><td>91</td><td>09:20</td><td><b>Q2</b> 根據一回合施放次數反算；單體 Q <b>永遠不會耗光魔</b>，只有範圍技連 8 次才等回魔 ≤20 秒</td><td>#446</td><td>🔨</td></tr>
+<tr><td>91</td><td>09:20</td><td><b>Q3</b> 傷害級距<b>可以重新設計拉高</b> —— AP 太弱勢，要到高等級才追平無風險普攻</td><td><b>#447</b></td><td>🔨</td></tr>
+<tr><td>91</td><td>09:20</td><td><b>Q4</b> 大招<b>不用</b>特別貴（已有冷卻與耗魔限制）</td><td>#447</td><td>✅ 關掉</td></tr>
+<tr><td>91</td><td>09:20</td><td><b>Q5</b> 範圍 vs 單體的<b>倍數關係之前講過，請查查看</b>，沒有的話你可以建議</td><td>#447</td><td>⏸️</td></tr>
+<tr><td>91</td><td>09:20</td><td><b>Q6</b> 冷卻級距存<b>卡面秒</b></td><td>#445</td><td>✅</td></tr>
+<tr><td>91</td><td>09:20</td><td><b>Q7</b> 198 支沒有傷害的技能怎麼定價 → <b>你建議規則阿 三方案</b></td><td>#447</td><td>⏸️</td></tr>
+<tr><td>91</td><td>09:20</td><td><b>Q8</b> 66 支「冷卻 0 且耗魔 0」怎麼表達 → <b>三方案</b></td><td>#447</td><td>⏸️</td></tr>
+<tr><td>91</td><td>09:20</td><td><b>Q9</b> rangeTier 補回 214 支 → <b>補</b></td><td>✅ 205 支已寫回</td><td>✅</td></tr>
+<tr><td>91</td><td>09:20</td><td><b>Q10</b> 寫回範圍 → <b>做成後台開關可切換的兩套系統，預設是新的</b></td><td>#438</td><td>🔨</td></tr>
+<tr><td>91</td><td>09:20</td><td><b>U1</b> 回合長度重跑 ttk-sim → <b>do it if you want</b></td><td>#447</td><td>🔨</td></tr>
+<tr><td>91</td><td>09:20</td><td><b>U2</b> 傷害中位 → <b>根據反饋思考三方案策略建議</b></td><td>#447</td><td>⏸️</td></tr>
+<tr><td>91</td><td>09:20</td><td>⭐ <b>U3 你搞錯了</b> —— 單體/範圍<b>不是看命中幾個</b>，是<b>施展的命中率難易度與傷害效率轉換</b>，一種<b>傷害效率期望值</b>；真要假設<b>以 3 人為基準</b></td><td><b>#447</b></td><td>⚠️ 已修正定義</td></tr>
+<tr><td>91</td><td>09:20</td><td>執行順序 → <b>盡量同步多個獨立工作流</b></td><td>工作方式</td><td>✅</td></tr>
+<tr><td>91</td><td>09:20</td><td>⭐ <b>30-00 攝影機</b>改成：給予<b>指定敵方英雄標記</b>，之後空放即<b>順移至敵方身邊</b>；改說明/JSON/編輯器契約/後台設定</td><td><b>#448</b></td><td>🔨</td></tr>
+<tr><td>91</td><td>09:20</td><td><b>86-00 裝可愛</b>：永久嘲諷<b>很好，是個特色</b>（皮卡丘生命低是險棋取捨）</td><td>#433</td><td>✅ 保留</td></tr>
+<tr><td>91</td><td>09:20</td><td>其他都<b>照你建議收納到範圍級距</b></td><td>#433</td><td>🔨</td></tr>
+<tr><td>91</td><td>09:20</td><td>⭐ 回合清理<b>還少了召喚物</b>以及<b>技能殘留效果（buff/debuff 狀態、技能標記）</b>，除非特別寫跨回合</td><td><b>#429</b></td><td>🔨</td></tr>
+<tr><td>92</td><td>09:51</td><td>⭐ <b>回到商店時玩家角色生命沒有還原</b></td><td><b>#455 ⭐新</b></td><td>🔨</td></tr>
+<tr><td>92</td><td>09:51</td><td>⭐⭐ <b>驗收標準三支</b>：莉娜龍破斬 · 依文世界終結 · 克勞德超究武神霸斬 —— 比照 <b>JASS 的動畫演出</b>其特效與傷害機制</td><td><b>#450</b></td><td>🔨</td></tr>
+<tr><td>92</td><td>09:51</td><td>⭐ <b>皮卡丘打雷 + 飛鼠天譴</b> = 範圍內<b>每個單位各施展一次連鎖閃電</b>（N 個單位 N 次），含傷害機制 + 閃電粒子 + 3D model</td><td><b>#451</b></td><td>🔨</td></tr>
+<tr><td>92</td><td>09:51</td><td>⭐ <b>#446 不是不調耗魔</b> —— 耗魔仍要正規化以對應傷害與範圍的合理性；<b>一回合施展幾次不是唯一甚至不是重要考量</b></td><td>#446 已改寫</td><td>✅ 已修正</td></tr>
+<tr><td>92</td><td>09:51</td><td>⭐ <b>#449 很多都過期了</b> —— 資訊盡量 <b>JSON → script 產生</b>，避免分散沒統一更新，<b>這也是重要原則</b></td><td><b>#449</b></td><td>🔨</td></tr>
+<tr><td>92</td><td>09:51</td><td><b>可渲染性閘 → 照你建議</b></td><td>#443</td><td>🔨</td></tr>
+<tr><td>92</td><td>09:51</td><td>⭐ <b>場地之外的背景</b>要生成<b>符合場景的 2D 圖</b>而不是全黑；<b>生成背景圖片可以地端</b></td><td><b>#452</b></td><td>🔨</td></tr>
+<tr><td>—</td><td>—</td><td><b>新地圖場地也要更新到 github readme</b></td><td>#449</td><td>🔨</td></tr>
+<tr><td>93</td><td>09:59</td><td>⭐ <b>生成圖示的部分含 prompt 都要 FATE 風格</b></td><td><b>#453</b></td><td>✅ 圖示已改</td></tr>
+<tr><td>93</td><td>09:59</td><td>⭐ <b>擴充地圖物件 + 生成圖片 + 貼圖也盡量 FATE 相關風格</b></td><td><b>#453</b></td><td>🔨</td></tr>
+<tr><td>94</td><td>10:2x</td><td><b>大廳新增「宿敵排行榜」</b>，最多輸贏的宿敵，版位在<b>朋友列表與積分排行榜之間</b></td><td><b>#454 ⭐新</b></td><td>🔨</td></tr>
+<tr><td>95</td><td>10:3x</td><td>產圖是<b>本機生成</b>，但<b>所有流程/程式碼/prompt 都會上 GitHub</b>，除了生成的模型</td><td>✅ 已符合（<code>.gitignore</code> 排除 <code>.venv/</code> 與 <code>models/</code>，15 支腳本 + prompt 全在版控）</td><td>✅</td></tr>
+<tr><td>96</td><td>10:4x</td><td><b>暖機</b> —— 不要遺漏今天的每一個回覆</td><td><b>這一份</b></td><td>✅</td></tr>
+</table></div>
+<p>圖例：✅ 已出貨／已裁決 · 🔨 進行中或待做 · ⏸️ <b>等 owner 裁決</b> · ⚠️ 有需要注意的轉折</p>
+<p>圖例：✅ 已落地 · 🔨 進行中／待做 · ⏸️ 等 owner · ⛔ <b>我漏掉的</b></p>
+<div class="scroll"><table><tr><th>#</th><th>本地</th><th>owner 說了什麼（逐字節錄）</th><th>落到哪</th><th>狀態</th></tr>
+<tr><td>1069</td><td>19:05</td><td>#447 Q5「<b>yes, let me see 3 ideas</b>」</td><td>#447</td><td>⛔→🔨</td></tr>
+<tr><td>1069</td><td>19:05</td><td>#447 Q7 / Q8 / U2「<b>let me see</b>」</td><td>#447</td><td>⛔→🔨</td></tr>
+<tr><td>1069</td><td>19:05</td><td>#433「<b>let me see</b>」（12 支範圍離群）</td><td>#433</td><td>⛔→🔨</td></tr>
+<tr><td>1069</td><td>19:05</td><td>#408「<b>no, he can kill enemy below 3% hp left, including zombies. boss</b>」</td><td>#408</td><td>✅ <code>victim:&amp;quot;any&amp;quot;</code></td></tr>
+<tr><td>1069</td><td>19:05</td><td>#453「<b>backup all icons then re-gen</b>」</td><td>#453</td><td>⚠️ 備份完成（2168 檔 sha256），<b>重產未做</b></td></tr>
+<tr><td>1069</td><td>19:05</td><td>「please update <b>GGD作戰表</b> including <b>all 3 ideas issues</b> and <b>12/14 range skills</b>」</td><td>作戰板</td><td>⛔→🔨</td></tr>
+<tr><td>1070</td><td>19:30</td><td>「<b>請你擴大到 any</b>」</td><td>#408</td><td>✅</td></tr>
+<tr><td>1070</td><td>19:30</td><td>⭐「#447 用的「<b>L18」可能是錯的錨 =&gt; 慣例都是三個點來看，依照參考重要是 30&gt;50&gt;99</b>」</td><td>#447</td><td>⛔ <b>錨用錯了</b></td></tr>
+<tr><td>1070</td><td>19:30</td><td>圖示：換模型或加 <b>Fate LoRA</b>（<code>ICON_GEN_MODEL</code> 是環境變數）</td><td>#457</td><td>🔨</td></tr>
+<tr><td>1071</td><td>22:30</td><td>「我說過了<b>死神之眼是極大</b>，卡面也請跟著修改」</td><td>#420</td><td>🔨 W6</td></tr>
+<tr><td>1071</td><td>22:30</td><td>⭐「理論上<b>所有卡面範圍跟距離說明都應該要跟著改五級距</b>才對（<b>傷害/冷卻/耗魔要明確數值</b>不然很難讓玩家判斷取捨）」</td><td>#461</td><td>🔨</td></tr>
+<tr><td>1071</td><td>22:30</td><td>⭐⭐ 耗魔根因：「<b>那是因為智慧跟等級增加魔力太多了</b>，因為我有增加初始魔力，<b>後續每級成長應該要調低</b>到我說的 <b>角色 50 級連續 4~8 次範圍技能就會耗盡</b>才對」</td><td>#446</td><td>⛔ <b>這就是我說「沒有來源」的那個數字</b></td></tr>
+<tr><td>1071</td><td>22:30</td><td>#445「2–5× 是你要的嗎 =&gt; <b>yes，上下限參考準則，有例外要提給我判斷</b>」</td><td>#445</td><td>⛔→✅ 已裁決</td></tr>
+<tr><td>1071</td><td>22:30</td><td>#445 極小 5× 要不要收掉 →「<b>你的建議呢 遊戲這樣合理嗎</b>」</td><td>#445</td><td>⏸️ 他反問我</td></tr>
+<tr><td>1071</td><td>22:30</td><td>#446「我的假設是<b>大部分角色 50 級時 0 到滿魔只需要 20 秒</b>，一樣有極端案例給我判斷」</td><td>#446</td><td>⛔</td></tr>
+<tr><td>1071</td><td>22:30</td><td>#447「<b>平衡 AP 技能流角色是可玩的選項之一</b>，不然普攻＋增幅道具流太無腦」</td><td>#447</td><td>⛔ 目標函數</td></tr>
+<tr><td>1071</td><td>22:30</td><td>#460「<b>分析優缺點後給我建議</b>，並且<b>全部屬性跟描述都盡量符合五級距</b>，有例外一樣給我判斷」</td><td>#460</td><td>⛔→🔨</td></tr>
+<tr><td>1071</td><td>22:30</td><td>⭐ <b>9 支逐支級距裁決</b>：<code>37-00 鬼眼→極大</code> · <code>12-002 仙氣發勁→極小</code> · <code>13-02 龍頭戲畫·牙突→極小</code> · <code>44-01 死神之眼→極大</code> · <code>79-02 月牙斬→小</code> · <code>53-03 破法對咒→大</code> · <code>74-01 獄門→中</code> · <code>48-03 鮮血神殿→大</code>（範圍持續扣血·降攻速·吸血·加全能力·緩慢）· <code>14-02 式神炸裂→中</code></td><td>#433 #461</td><td>⛔ <b>一支都沒落地</b></td></tr>
+<tr><td>1071</td><td>22:30</td><td>「我怎麼記得<b>上次技能普查 JSON 與說明一致你已經 100% 通過了</b>？」</td><td>#462</td><td>✅ 已回答：上次問的是「是不是純 JSON」，這次問「有沒有數字動」</td></tr>
+<tr><td>1071</td><td>22:30</td><td>「以上記得<b>開票 GH issues 跟放在 NOTE 裡</b>」</td><td>—</td><td>⛔→🔨</td></tr>
+<tr><td>1071</td><td>22:30</td><td>「<b>逐句對票</b>⋯⛔ 不是憑印象重寫」「要快點打開更多同步不衝突工作流⋯<b>七夕情人節</b>」</td><td>—</td><td>✅ 本檔 + 9 條工作流</td></tr>
+<tr><td>1072</td><td>22:40</td><td>「明明就是 <b>極小 小 中 大 極大</b> 五級距⋯<b>沒有超大這種東西</b>」</td><td>#463</td><td>✅ 505 筆重寫</td></tr>
+<tr><td>1072</td><td>22:40</td><td>「同一個技能 <b>升級冷卻通常不會變化</b>，有變化就是特例，一樣要給我審查列管」</td><td>#464</td><td>🔨 24 支列管</td></tr>
+<tr><td>1073</td><td>22:48</td><td>「可以先 commit，但請你<b>徹底檢查並修正你犯的錯誤</b>」</td><td>—</td><td>🔨</td></tr>
+<tr><td>1074</td><td>23:25</td><td>「<b>快點開不衝突的平行工作流最高效率完成</b>」</td><td>—</td><td>✅ 9 條</td></tr>
+<tr><td>1074</td><td>23:25</td><td>「詳細說明舉例並且<b>建議三選一方案</b>⋯你似乎忘記我說過<b>極大跟極小都是屬於卡上下限的例外而非線性規則</b>」</td><td>#445</td><td>✅ 已撤回錯誤建議</td></tr>
+<tr><td>1074</td><td>23:25</td><td>五次「（<b>github issue???</b>）」點名：宿敵榜 · FATE 地圖物件 · 場外 2D 背景 · 連鎖閃電 · 動地跺 · 技能 JSON↔說明↔五級距↔特效音效</td><td>#454 #453 #452 #451 #439 #371</td><td>✅ 全部有票</td></tr>
+<tr><td>1075</td><td>23:37</td><td>「記得<b>只要做有開放的角色技能及隨機三選一就好</b>，沒開放的別浪費 token」</td><td>#462</td><td>✅ 70 英雄/414 技能/91 增益</td></tr>
+<tr><td>1075</td><td>23:37</td><td>「<b>please fix 451</b>」</td><td>#451</td><td>✅ 逐跳已落地</td></tr>
+<tr><td>1076</td><td>23:50</td><td>「連鎖閃電通常有<b>彈跳單位數量上限，預設是 12</b>⋯但打雷跟天譴範圍內的確<b>沒有</b>⋯上限」</td><td>#451</td><td>✅ 查到原作 <b>16</b></td></tr>
+<tr><td>1077</td><td>23:57</td><td>#445「<b>的確是太小不合理</b>，要<b>綜合看傷害是不是極大或至少大的</b>」</td><td>#445</td><td>⭐ 相稱性規則 → #465</td></tr>
+<tr><td>1077</td><td>23:57</td><td>#453「<b>同意配色很重要</b>」</td><td>#453</td><td>✅ A′ 方向</td></tr>
+<tr><td>1077</td><td>23:57</td><td>逐句對票「<b>要持續更新阿，並且寫到 NOTE</b>⋯這是很好的開發守則」</td><td>—</td><td>✅ CLAUDE.md 部署協定第 1 步</td></tr>
+<tr><td>1078</td><td>00:03</td><td>「每次 <b>context 要滿</b>⋯先開一個 <code>memory_temp_{timestamp}.md</code>⋯<b>也要寫到開發守則</b>」</td><td>—</td><td>✅ <code>scripts/memory-temp.sh</code> + 守衛</td></tr>
+<tr><td>1079</td><td>00:31</td><td>「<b>DECAY 0.9</b>⋯重點在於<b>隨機選擇單位遞減時間差</b>的閃電特效與傷害」</td><td>#451</td><td>✅ 逐跳排程已落地</td></tr>
+<tr><td>1079</td><td>00:31</td><td>「這個你也有<b>開票或更新到票裡</b>了嗎」</td><td>#451</td><td>✅ 已留言</td></tr>
+<tr><td>1079</td><td>00:31</td><td>⭐「每一次更動技能相關機制或內容⋯<b>球體綁定位置、特效 pitch/scale/color/透明度、特效音效綁定、五級距、說明↔實際實作 JSON</b>⋯讓 <b>script 動態更新</b>所有相關文件與 codex 契約、<b>後台設定參數與介面</b>」</td><td><b>#466</b></td><td>✅ <code>pnpm skills:sync</code> + 聚合閘</td></tr>
+<tr><td>1079</td><td>00:31</td><td>「更新 <b>GGD作戰版跟 release note</b>，包括<b>工作流分工的方式跟群組現況、注意事項</b>」</td><td>—</td><td>⚠️ 做了但<b>覆蓋掉原內容</b>（見下）</td></tr>
+<tr><td>1080</td><td>00:58</td><td>「看不懂，請你說明的<b>更簡單易懂、舉例清晰</b>」</td><td>—</td><td>✅</td></tr>
+<tr><td>1080</td><td>00:58</td><td><code>Settler.Apply</code> 練習房閘 →「<b>do it</b>」</td><td>—</td><td>✅ fail-loud 閘 + 突變驗過</td></tr>
+<tr><td>1081</td><td>01:05</td><td>「<b>先留 0</b>⋯這是家人小圈子⋯also「4 人榜也要有一個菁英」」</td><td>#352</td><td>✅ 出貨值 0</td></tr>
+<tr><td>1082</td><td>01:16</td><td><code>/goal</code>「把作戰區裡的項目都改完再 push+note+deploy⋯<b>每次項目完成時檢討瓶頸是否解除</b>⋯七夕」</td><td>—</td><td>✅ 瓶頸已解（見下）</td></tr>
+<tr><td>1083</td><td>01:2x</td><td>「如何<b>拆檔案</b>讓獨立平行化不會那麼容易卡住，特別是<b>大量改技能</b>時（正規化、說明校正、驗證及實作）」</td><td>—</td><td>🔨 設計中</td></tr>
+<tr><td>1083</td><td>01:2x</td><td>⭐「<b>你要做取代這種事情以前都要備份</b>⋯特別要檢查<b>覆蓋、刪除檔案內容</b>指令的時候先做備份，<b>這一定要放到開發守則嚴守</b>」</td><td>—</td><td>✅ <b>PreToolUse hook</b>（見下）</td></tr>
+<tr><td>1084</td><td>01:3x</td><td>「這個版本也太舊了⋯<b>最重要的是對話記錄對應開票追蹤</b>，請你<b>一筆筆檢查重新建立回來</b>，我發現你後來的<b>有漏</b>」</td><td>—</td><td>✅ <b>本檔</b></td></tr>
+</table></div></section>
+<section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
+<p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>
+<p>⭐ <b>新錨點候選</b>：「移動一秒的距離」—— 現有級距換算出來剛好是</p>
+<p>0.50 / 0.75 / 1.00 / 1.33 / 2.00 秒（五格裡四格誤差 +0.4%），</p>
+<p>唯一不合的那一格正好是從死掉的舊錨點推的。</p>
+<p class="li">2. <b>#447 U3 定義被更正</b> —— 單體/範圍<b>不是</b>命中人數，是<b>傷害效率期望值</b>。</p>
+<p>⇒ 我原本要新開的 <code>costShape</code> 欄位語意整個換掉，226 支 self 技能<b>不需要人工複核</b>。</p>
+<p class="li">3. <b>#456 slash</b> —— #391/#400 都在讀<b>資料表</b>，而 owner 看的是<b>那一刀</b>。</p>
+<p>⇒ 正確來源是<b>模型動畫裡武器骨的軌跡</b>。</p></section>
+<section><p class="eyebrow">規則變更</p><h2>📏 規則變更</h2><div class="scroll"><table><tr><th>規則</th><th>來源</th><th>狀態</th></tr>
+<tr><td><b>Blizzard 資產全面解禁</b></td><td>08-19「現在都可以出貨」</td><td>#443 待落地</td></tr>
+<tr><td><b>資產優先序：原作 → CC0/CC-BY → 自己生成</b></td><td>08-19</td><td>#443</td></tr>
+<tr><td><b>FATE 視覺識別</b>（圖示/貼圖/地圖物件/背景）</td><td>08-19</td><td>#453，圖示已改</td></tr>
+<tr><td><b>資訊一律 JSON → script 產生</b></td><td>08-19「這也是重要原則」</td><td>#449</td></tr>
+<tr><td><b><code>ENTITY_FLAG</code> uint16 → uint32</b></td><td>08-18</td><td>✅ CLAUDE.md 已改</td></tr>
+<tr><td><b>產圖本機跑，但流程/程式/prompt 全進 GitHub</b>（模型權重除外）</td><td>08-19</td><td>✅ 已符合</td></tr>
+</table></div></section>
+<footer>由 <code>tools/board/gen_board.py</code> 從 docs/_daily · docs/_release · git 產生 —— ⛔ 不要手改這份 HTML</footer></div>

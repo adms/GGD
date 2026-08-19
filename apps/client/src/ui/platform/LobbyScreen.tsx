@@ -44,6 +44,7 @@ import { ChangePasswordDialog } from "./ChangePasswordDialog";
 import { FriendsPanel } from "./FriendsPanel";
 import { LobbyAnnouncement } from "./LobbyAnnouncement";
 import { LeaderboardPanel } from "./LeaderboardPanel";
+import { NemesisPanel } from "./NemesisPanel";
 import { OnlinePlayersPanel } from "./OnlinePlayersPanel";
 import { RoomListPanel } from "./RoomListPanel";
 import { RoomView } from "./RoomView";
@@ -546,11 +547,13 @@ export function LobbyScreen(): React.JSX.Element {
         // into the left one; the stylesheet rule is per-column, so neither that
         // change nor the 線上玩家 panel added inside the left column touched it.)
         <div className="ggd-lobby-body" style={{ display: "flex", gap: 12, flex: 1, minHeight: 0 }}>
-          {/* LEFT COLUMN, IN THREE (GH#255 + owner 2026-08-03) — 朋友列表 /
-              線上玩家 / 排位榜. Every slot's ORDER and SIZE comes from
-              ./lobbyLayout, so the shares are one set of policy numbers
-              (40/30/30) and the phone stacking order is a policy value rather
-              than the order somebody happened to type here. Each slot scrolls
+          {/* LEFT COLUMN (GH#255 + owner 2026-08-03 + GH#454) — 朋友列表 /
+              線上玩家 / 宿敵榜 / 排位榜. Every slot's ORDER and SIZE comes from
+              ./lobbyLayout, so the shares are one set of policy numbers and
+              BOTH the desktop order and the phone stacking order are policy
+              values rather than the order somebody happened to type here
+              (two panels now claim 「between 朋友 and 排位榜」 — see that
+              module's header). Each slot scrolls
               inside itself and clips horizontally, which is what keeps a long
               name or a wide ladder row from widening the whole page. */}
           <div
@@ -574,6 +577,7 @@ export function LobbyScreen(): React.JSX.Element {
                   </>
                 )}
                 {slot === "online" && <OnlinePlayersPanel policy={DEFAULT_LOBBY_LAYOUT} />}
+                {slot === "nemesis" && <NemesisPanel policy={DEFAULT_LOBBY_LAYOUT} />}
                 {slot === "leaderboard" && <LeaderboardPanel />}
               </div>
             ))}

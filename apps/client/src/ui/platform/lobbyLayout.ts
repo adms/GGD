@@ -5,11 +5,18 @@
  * owner 2026-08-02:「原本排行榜移到朋友列表下半部，各佔左邊排的上下各半」
  * owner 2026-08-03:「大廳 FRIEND 跟排位榜 中間，多出一個區域顯示所有大廳正在線上
  * 的玩家列表，並且名字旁邊有按鈕可以一鍵加入朋友」
+ * owner 2026-08-19 (GH#454):「大廳新增 **宿敵排行榜**，把**最多輸贏的宿敵**列在
+ * **朋友列表跟積分排行榜之間**」
  *
- * So the column now carries THREE panels — 朋友列表 / 線上玩家 / 排位榜, in that
- * order — instead of two halves. The shares are 40 / 30 / 30: 朋友 is the one
- * the owner uses most, so it keeps the largest slice, and the two others split
- * what is left evenly.
+ * So the column now carries FOUR panels — 朋友列表 / 線上玩家 / 宿敵榜 / 排位榜,
+ * in that order — instead of two halves.
+ *
+ * ⚠️ TWO panels now claim 「between 朋友 and 排位榜」 (線上玩家 in 2026-08-03,
+ * 宿敵榜 in 2026-08-19). Both instructions stay true whichever of the two sits
+ * first, so their relative order is a genuine A-or-B and it is a POLICY VALUE
+ * (`splitOrder`) rather than the order somebody happened to type into the JSX.
+ * Shipped: 宿敵榜 directly above the ladder, because the two boards read as one
+ * block (「我跟誰打」 then 「大家排到哪」) while 線上玩家 belongs next to 朋友.
  *
  * ---- WHY THIS IS A MODULE AND NOT NINE INLINE NUMBERS IN THE JSX ------------
  * "各佔上下各半" was a straight instruction on a desktop. On a phone it is a
@@ -20,11 +27,14 @@
  * belongs in a named policy with a default, not in a comment defending
  * whichever branch got written first.
  *
- * Adding the third panel added three MORE decisions, and all three are fields
- * here rather than literals in the panel:
+ * Every panel added since has added decisions, and each one is a field here
+ * rather than a literal in the panel:
  *
- *  · `friendsShare` / `onlineShare` / `leaderboardShare` — how the column is
- *    divided. Shipped 0.4 / 0.3 / 0.3 (朋友最常用給最大).
+ *  · `friendsShare` / `onlineShare` / `nemesisShare` / `leaderboardShare` — how
+ *    the column is divided. The numbers themselves are owner tuning; what this
+ *    module guarantees is that they are PERCENTAGES (they sum to 1) and that
+ *    what renders equals what the policy says.
+ *  · `splitOrder` / `nemesisSort` — the two GH#454 decisions (see above).
  *  · `alreadyFriendMode` — what an ALREADY-FRIEND row looks like in 線上玩家.
  *    Shipped `"greyed-button"`: the row stays, the button goes inert and reads
  *    「已加入」. The alternative (`"hide-row"`) is genuinely tempting and
@@ -32,20 +42,23 @@
  *    online list reads as "he went offline", which is a lie the UI tells with
  *    a straight face. It is a field and not a verdict because a player with
  *    forty friends may well want the other behaviour.
- *  · `stackOrder` — the order the three panels take when the column stacks on
- *    a phone. Shipped 朋友 → 線上 → 排行榜, i.e. the same order as the desktop
+ *  · `stackOrder` — the order the panels take when the column stacks on
+ *    a phone. Shipped the same order as the desktop
  *    split, but it is a separate value because "what I want at the top of a
  *    phone screen" is not forced to equal "what I want at the top of a 900px
  *    column".
  *
- * ⚠️ THESE ARE NOT YET ADMIN FIELDS. A real 後台 field has to land in three
- * places at once (content/config/lobby-layout.json + the Zod in
- * packages/shared/src/content/schema/config.ts + apps/admin), and NONE of those
- * three files belong to this lane. Shipping the new keys into the content doc
- * alone would be worse than waiting: `pnpm content:build` runs a STRICT Zod
- * load before it writes anything, so an unknown key there fails the mandated
- * build command for every other lane in the repo, not just this one. The exact
- * patch (bounds included) is {@link LOBBY_LAYOUT_BOUNDS} plus the lane report.
+ * ⚠️ THE CONTENT MIRROR EXISTS, THE RUNTIME CONSUMER DOES NOT. Every field here
+ * is also `content/config/lobby-layout.json` + `config.lobby-layout@1` in
+ * packages/shared/src/content/schema/config.ts, and apps/admin's
+ * laneConfigDocs.test.ts compares the three cell by cell — so adding a field
+ * means adding it in ALL of them or that test goes red. What is still missing
+ * is a consumer: LobbyScreen.tsx reads DEFAULT_LOBBY_LAYOUT, not the document,
+ * so editing the document today changes nothing on screen. That gap is tracked
+ * in apps/admin/src/configDocCoverage.ts (`lobby-layout`, DEFERRED) with a
+ * machine-checked expiry, ⛔ not by this comment.
+ * (An earlier version of this paragraph said the three files did not exist yet.
+ * They do — 第三守則:註解會說謊。)
  *
  * ---- SAFE-AREA CONTRACT (#107) ---------------------------------------------
  * Every value here is flow layout — flex grow/basis/min-height. Nothing in this
@@ -55,11 +68,24 @@
 import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
 
-/** Which of the three left-column panels a slot holds. */
-export type LeftColumnSlot = "friends" | "online" | "leaderboard";
+/** Which of the four left-column panels a slot holds. */
+export type LeftColumnSlot = "friends" | "online" | "nemesis" | "leaderboard";
 
 /**
- * `split` — the three panels divide the column's height by their shares.
+ * How the 宿敵榜 orders its rows. owner did not pick one, and all three are
+ * defensible, so it is a field with a default rather than an `if` in the panel:
+ *
+ *  · `played`  交手次數 —— 最中性：跟誰打得最多（出貨值）
+ *  · `rivalry` 恩怨值   —— 最有戲：勝負接近五五開的排前面
+ *  · `bane`    苦主/剋星 —— 最刺激也最傷人：對你贏最多的排前面
+ *
+ * EVERY row carries the numbers all three need (W-L、勝率、恩怨值), so changing
+ * this reorders the list and changes nothing else.
+ */
+export type NemesisSortMode = "played" | "rivalry" | "bane";
+
+/**
+ * `split` — the panels divide the column's height by their shares.
  * `stack` — each panel keeps a readable minimum and the column scrolls as one.
  */
 export type LeftColumnMode = "split" | "stack";
@@ -83,17 +109,23 @@ export interface LobbyLayoutPolicy {
   friendsShare: number;
   /** 線上玩家's share of the column height in `split` mode, 0..1. */
   onlineShare: number;
+  /** 宿敵榜's share of the column height in `split` mode, 0..1. */
+  nemesisShare: number;
   /** 排位榜's share of the column height in `split` mode, 0..1. */
   leaderboardShare: number;
+  /** How the 宿敵榜 orders its rows (GH#454). */
+  nemesisSort: NemesisSortMode;
+  /** Top-to-bottom order of the panels in `split` mode (desktop). */
+  splitOrder: LeftColumnSlot[];
   /** How 線上玩家 renders somebody who is already a friend. */
   alreadyFriendMode: AlreadyFriendMode;
-  /** Top-to-bottom order of the three panels in `stack` mode (phone). */
+  /** Top-to-bottom order of the panels in `stack` mode (phone). */
   stackOrder: LeftColumnSlot[];
   /** In `stack` mode, the height each panel is guaranteed, in px. */
   minSlotHeightPx: number;
   /**
    * Below this column height, `split` stops being readable and we stack.
-   * 560px ⇒ three ~185px slices at the floor — already tight, which is why the
+   * 560px ⇒ four ~140px slices at the floor — already tight, which is why the
    * threshold is a field the owner can raise rather than a constant.
    */
   splitMinHeightPx: number;
@@ -113,18 +145,20 @@ export interface LobbyLayoutPolicy {
 }
 
 /**
- * Shipped values. 0.4 / 0.3 / 0.3 is the owner's 「朋友最常用給最大」; the three
- * shares are expressed independently (rather than "friends + the rest") so the
- * document reads as three percentages, and their sum is a checked contract —
- * see {@link lobbyLayoutProblems}.
+ * Shipped values. The shares are expressed independently (rather than "friends
+ * + the rest") so the document reads as four percentages, and their sum is a
+ * checked contract — see {@link lobbyLayoutProblems}.
  */
 export const DEFAULT_LOBBY_LAYOUT: LobbyLayoutPolicy = {
   leftColumnWidthPx: 280,
-  friendsShare: 0.3,
-  onlineShare: 0.2,
-  leaderboardShare: 0.5,
+  friendsShare: 0.25,
+  onlineShare: 0.15,
+  nemesisShare: 0.2,
+  leaderboardShare: 0.4,
+  nemesisSort: "played",
+  splitOrder: ["friends", "online", "nemesis", "leaderboard"],
   alreadyFriendMode: "greyed-button",
-  stackOrder: ["friends", "online", "leaderboard"],
+  stackOrder: ["friends", "online", "nemesis", "leaderboard"],
   minSlotHeightPx: 168,
   splitMinHeightPx: 560,
   stackBelowWidthPx: 720,
@@ -144,16 +178,23 @@ export const LOBBY_LAYOUT_BOUNDS = {
   /** Each share alone: below 0.15 a panel is a heading with no rows. */
   friendsShare: { min: 0.15, max: 0.7, int: false },
   onlineShare: { min: 0.15, max: 0.7, int: false },
+  nemesisShare: { min: 0.15, max: 0.7, int: false },
   leaderboardShare: { min: 0.15, max: 0.7, int: false },
   minSlotHeightPx: { min: 80, max: 600, int: true },
   splitMinHeightPx: { min: 320, max: 1200, int: true },
   stackBelowWidthPx: { min: 320, max: 1600, int: true },
 } as const;
 
-/** The desktop (split) order — owner: 線上玩家 sits BETWEEN 朋友 and 排位榜. */
-const SPLIT_ORDER: readonly LeftColumnSlot[] = ["friends", "online", "leaderboard"];
+/**
+ * The FALLBACK desktop order. owner placed both 線上玩家 and 宿敵榜 「between
+ * 朋友 and 排位榜」, so the desktop order is now `policy.splitOrder`; this array
+ * is what a hand-edited policy that lost a panel falls back to, and it is also
+ * the shipped value.
+ */
+const SPLIT_ORDER: readonly LeftColumnSlot[] = ["friends", "online", "nemesis", "leaderboard"];
 
-const ALL_SLOTS: readonly LeftColumnSlot[] = ["friends", "online", "leaderboard"];
+/** Every panel the column must contain, exactly once, in either mode. */
+export const ALL_SLOTS: readonly LeftColumnSlot[] = ["friends", "online", "nemesis", "leaderboard"];
 
 /**
  * Everything wrong with a policy, as human sentences — empty means valid.
@@ -167,9 +208,9 @@ const ALL_SLOTS: readonly LeftColumnSlot[] = ["friends", "online", "leaderboard"
  */
 export function lobbyLayoutProblems(policy: LobbyLayoutPolicy): string[] {
   const out: string[] = [];
-  const sum = policy.friendsShare + policy.onlineShare + policy.leaderboardShare;
+  const sum = ALL_SLOTS.reduce((acc, slot) => acc + slotShare(slot, policy), 0);
   if (Math.abs(sum - 1) > 1e-6) {
-    out.push(`三段的比例加起來必須是 1（100%），現在是 ${sum}`);
+    out.push(`${ALL_SLOTS.length} 段的比例加起來必須是 1（100%），現在是 ${sum}`);
   }
   for (const [key, b] of Object.entries(LOBBY_LAYOUT_BOUNDS)) {
     const v = policy[key as keyof LobbyLayoutPolicy] as number;
@@ -177,11 +218,14 @@ export function lobbyLayoutProblems(policy: LobbyLayoutPolicy): string[] {
     else if (v < b.min || v > b.max) out.push(`${key}=${v} 超出 ${b.min}..${b.max}`);
     else if (b.int && !Number.isInteger(v)) out.push(`${key}=${v} 必須是整數`);
   }
-  const seen = new Set(policy.stackOrder);
-  if (policy.stackOrder.length !== ALL_SLOTS.length || seen.size !== ALL_SLOTS.length) {
-    out.push(`stackOrder 必須剛好列出三塊面板一次，現在是 ${JSON.stringify(policy.stackOrder)}`);
-  } else {
-    for (const s of ALL_SLOTS) if (!seen.has(s)) out.push(`stackOrder 少了 ${s}`);
+  for (const key of ["stackOrder", "splitOrder"] as const) {
+    const order = policy[key];
+    const seen = new Set(order);
+    if (order.length !== ALL_SLOTS.length || seen.size !== ALL_SLOTS.length) {
+      out.push(`${key} 必須剛好列出 ${ALL_SLOTS.length} 塊面板各一次，現在是 ${JSON.stringify(order)}`);
+    } else {
+      for (const s of ALL_SLOTS) if (!seen.has(s)) out.push(`${key} 少了 ${s}`);
+    }
   }
   return out;
 }
@@ -209,29 +253,31 @@ export function resolveLeftColumnMode(
 }
 
 /**
- * Top-to-bottom order of the three panels for a mode.
+ * Top-to-bottom order of the panels for a mode: `policy.splitOrder` on a
+ * desktop, `policy.stackOrder` on a phone. They are separate values because
+ * "what I want at the top of a phone screen" is not forced to equal "what I
+ * want at the top of a 900px column".
  *
- * Split is FIXED (the owner placed 線上玩家 between 朋友 and 排位榜 explicitly);
- * stack reads `policy.stackOrder`, because the phone order is its own choice.
- * Unknown/duplicate entries in a hand-edited policy fall back to the split
- * order rather than dropping a panel off the screen — a missing friends list is
- * worse than an ignored preference, and `lobbyLayoutProblems` says so out loud.
+ * Unknown/duplicate entries in a hand-edited policy fall back to SPLIT_ORDER
+ * rather than dropping a panel off the screen — a missing friends list is worse
+ * than an ignored preference, and `lobbyLayoutProblems` says so out loud.
  */
 export function leftColumnSlots(
   mode: LeftColumnMode,
   policy: LobbyLayoutPolicy = DEFAULT_LOBBY_LAYOUT,
 ): LeftColumnSlot[] {
-  if (mode !== "stack") return [...SPLIT_ORDER];
-  const seen = new Set(policy.stackOrder);
-  const usable = policy.stackOrder.length === ALL_SLOTS.length && seen.size === ALL_SLOTS.length &&
+  const order = mode === "stack" ? policy.stackOrder : policy.splitOrder;
+  const seen = new Set(order ?? []);
+  const usable = !!order && order.length === ALL_SLOTS.length && seen.size === ALL_SLOTS.length &&
     ALL_SLOTS.every((s) => seen.has(s));
-  return usable ? [...policy.stackOrder] : [...SPLIT_ORDER];
+  return usable ? [...order] : [...SPLIT_ORDER];
 }
 
 /** One slot's declared share of the column height. */
 export function slotShare(slot: LeftColumnSlot, policy: LobbyLayoutPolicy = DEFAULT_LOBBY_LAYOUT): number {
   if (slot === "friends") return policy.friendsShare;
   if (slot === "online") return policy.onlineShare;
+  if (slot === "nemesis") return policy.nemesisShare;
   return policy.leaderboardShare;
 }
 
@@ -252,11 +298,11 @@ export function leftColumnStyle(policy: LobbyLayoutPolicy = DEFAULT_LOBBY_LAYOUT
 }
 
 /**
- * The style for one of the column's three slots.
+ * The style for one of the column's slots.
  *
  * In `split` every slot gets `flexBasis: 0` and a grow equal to its share, so
- * three shares of 0.4/0.3/0.3 are exactly 40%/30%/30% of whatever height the
- * column has — the proportions the guard reads back off the DOM.
+ * the shares are exactly that percentage of whatever height the column has —
+ * the proportions the guard reads back off the DOM.
  * `overflowY: "auto"` is the 「各自內部捲動」 half of the ask and
  * `overflowX: "hidden"` is the 「不可以橫向溢出」 half; `minWidth: 0` lets the
  * panel inside actually shrink instead of forcing the column wider (a flex

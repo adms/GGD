@@ -26,9 +26,9 @@ afterEach(() => resetVoiceMixPolicy());
 describe("GH#339 其他角色的語音走一格後台倍率", () => {
   it("倍率真的乘進 volume,而且只乘 volume", () => {
     applyAudioMixDoc(null); // 文件缺席 = 出貨倍率
-    const base = voiceSpatialMix(AT_ORIGIN, { audience: "engaged", pos: POS })!;
+    const base = voiceSpatialMix(AT_ORIGIN, { category: "hurt", audience: "engaged", pos: POS })!;
     applyAudioMixDoc(doc(TUNED));
-    const tuned = voiceSpatialMix(AT_ORIGIN, { audience: "engaged", pos: POS })!;
+    const tuned = voiceSpatialMix(AT_ORIGIN, { category: "hurt", audience: "engaged", pos: POS })!;
 
     // 同一個 listener、同一個座標,唯一的差別是那一格
     expect(tuned.volume).toBeCloseTo(base.volume * (TUNED / SHIPPED), 9);
@@ -40,21 +40,20 @@ describe("GH#339 其他角色的語音走一格後台倍率", () => {
 
   it("自己的語音兩種政策下都是滿的 —— 這一格是「相對於自己」的定義", () => {
     applyAudioMixDoc(null);
-    expect(voiceSpatialMix(AT_ORIGIN, { audience: "self", pos: POS })!.volume).toBe(1);
+    expect(voiceSpatialMix(AT_ORIGIN, { category: "hurt", audience: "self", pos: POS })!.volume).toBe(1);
     applyAudioMixDoc(doc(TUNED));
-    expect(voiceSpatialMix(AT_ORIGIN, { audience: "self", pos: POS })!.volume).toBe(1);
+    expect(voiceSpatialMix(AT_ORIGIN, { category: "hurt", audience: "self", pos: POS })!.volume).toBe(1);
     // 連座標都不看(檔頭那條「跳躍/衝刺/傳送那一幀」的理由)
-    expect(voiceSpatialMix(AT_ORIGIN, { audience: "self", pos: null })!.volume).toBe(1);
+    expect(voiceSpatialMix(AT_ORIGIN, { category: "hurt", audience: "self", pos: null })!.volume).toBe(1);
   });
 
   it("觀戰時不套用 —— 全場都是「別人」,壓下去等於關掉唯一能聽的東西", () => {
     applyAudioMixDoc(doc(TUNED));
-    const watching = voiceSpatialMix(AT_ORIGIN, {
-      audience: "third",
+    const watching = voiceSpatialMix(AT_ORIGIN, { category: "hurt", audience: "third",
       pos: POS,
       spectating: true,
     })!;
-    const playing = voiceSpatialMix(AT_ORIGIN, { audience: "third", pos: POS })!;
+    const playing = voiceSpatialMix(AT_ORIGIN, { category: "hurt", audience: "third", pos: POS })!;
     expect(watching.volume).toBeGreaterThan(playing.volume);
   });
 });

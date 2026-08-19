@@ -88,7 +88,13 @@ import { leapTicks } from "./movement/leap";
 import { TICK_HZ } from "../constants";
 import type { EffectDef } from "./effects/effect";
 import { runEffects } from "./effects/effectRunner";
-import { classifyCastOutcome, passiveFormGate, snapshotChannels } from "./castabilityVerdict";
+import {
+  classifyCastOutcome,
+  passiveFormGate,
+  snapshotChannels,
+  stochasticNodeKinds,
+} from "./castabilityVerdict";
+import { applyChampionForm, championFormIndex } from "./systems/ChampionFormSystem";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "../../../.."); // packages/shared/src/sim -> repo root
@@ -222,14 +228,31 @@ const KNOWN_GAPS: readonly { key: string; verdict: "FAIL" | "VFX_ONLY"; why: str
  * 這一本同樣**三個方向都會紅**：冒出名單外的新 🔵（有人替一格加了形態閘）、
  * 名單上的某一格不再是 🔵（普查終於量得到它了，就把這一列刪掉）。
  */
-const FORM_GATED_CELLS: readonly { key: string; why: string }[] = [
-  {
-    key: "godie-h01n|EX",
-    why:
-      "黑崎一護 EX 79-002 虛化：`passive.ranks[0].whileForm:\"alternate\"` —— 那份格擋**只在卍解狀態下**掛上來源，" +
-      "而普查在本體形態量它。⇒ 這是量測範圍，⛔ 不是內容缺陷（它在 2026-08-19 之前被記成 ❌ FAIL，佔了一列沒有人修得動的帳）。",
-  },
-];
+/**
+ * ⭐ 2026-08-20（GH#412）—— 這一本帳**清空了**，而且它現在幾乎不可能再有一列。
+ *
+ * 🔵 從此只剩下**唯一**一種成因：一份 rank 區塊寫著 `whileForm:"alternate"`，
+ * 而這位英雄**根本沒有替身身體**（`transform.counterpartId` 缺失／指向未註冊的
+ * doc）—— 那時普查連換都換不過去，說它「量過了」就是說謊。
+ * ⛔ 「有替身但被動沒掛上」不再是 🔵，那是 ❌：普查現在真的走
+ * `ChampionFormSystem.applyChampionForm` 換到替身身體再量一次（見 {@link testSlot}）。
+ */
+const FORM_GATED_CELLS: readonly { key: string; why: string }[] = [];
+
+/**
+ * ⭐ 2026-08-20（GH#407）—— **判定會隨 seed 改變**的格子，一格一列。
+ *
+ * ⛔ 這一本帳與 {@link KNOWN_GAPS} 又是分開的，理由和形態閘那一本一樣：
+ * 那一本記「缺陷」，這一本記「**這一格的判定是擲骰，不是量測**」。合在一起的話，
+ * 一支「55% 什麼都不發生」的技能會依這一次的 seed 隨機落進 ✅ 或 ❌ 兩本帳，
+ * 而兩本都會說一個確定的謊。
+ *
+ * 判準住在 `castabilityVerdict.ts::stochasticNodeKinds`（`weightedBranch` /
+ * `chance` 條件葉 / `randomArea`），普查對這些格子跨 {@link STOCHASTIC_SEEDS}
+ * 顆 seed 各量一次；**全部一致才算量到**，只要有一顆不同就落進這一本。
+ * 同樣三個方向都會紅。
+ */
+const SEED_DEPENDENT_CELLS: readonly { key: string; why: string }[] = [];
 // 2026-08-13：300 → 312，量出來的（`docs/_castability-128.md` 首發 53 人 312/318）。
 // ⚠️ 這一次的棘輪**不是**內容變好，是 {@link castWindow} 讓觀察者看得夠久 ——
 //    同一天 owner 把吟唱改成 0.06~4.00 秒，141 支技能吃到 ≥1 秒的前搖，
@@ -361,7 +384,23 @@ interface Cell {
   channel?: string; // what fired (for PASS/PASSIVE); absent on FAIL
   castType?: CastType;
   reason?: string; // why it failed / extra note
+  /** GH#407 —— 這一格的效果樹裡有哪幾種「換 seed 就走不同路」的節點。 */
+  stochastic?: readonly string[];
+  /** GH#407 —— 跨 seed 量到的分佈（只有跨過 seed 的格子才有）。 */
+  seedTally?: string;
+  /** GH#407 —— 判定隨 seed 改變（＝這一格今天是擲骰，不是量測）。 */
+  seedDependent?: boolean;
 }
+
+/**
+ * ⭐ GH#407 —— 帶隨機節點的格子要跨幾顆 seed 量。
+ *
+ * 24 是**沿用 GH#374 收尾那一次的樣本數**，所以這一批量到的分佈與那一次
+ * （13-04 中 12/24、70-04 中 16/24）可以直接對照，⛔ 不是隨手挑的數字。
+ * 成本量過：整份普查 448 格跑完 ~0.5 秒，帶隨機節點的只有個位數格，
+ * ⇒ ×24 之後仍在同一個數量級。
+ */
+const STOCHASTIC_SEEDS = 24;
 interface ChampResult {
   id: string;
   name: string;
@@ -660,9 +699,9 @@ function targetFor(
 /**
  * Run one (champion, slot) cast in a fresh world and decide PASS/FAIL/PASSIVE.
  */
-function testSlot(championId: string, slot: CastableSlot): Cell {
+function testSlot(championId: string, slot: CastableSlot, seed: number): Cell {
   try {
-    const world = new SimWorld(SKELETON_ARENA, 4242 + SLOTS.indexOf(slot));
+    const world = new SimWorld(SKELETON_ARENA, seed);
     world.ultGateOverride = true;
     const caster = spawn(world, championId, 0, 0);
     const foe = spawn(world, DUMMY as unknown as string, 1, ADJ);
@@ -714,16 +753,66 @@ function testSlot(championId: string, slot: CastableSlot): Cell {
           reason: rej === "passive" ? undefined : `cast returned "${rej}" (expected "passive")`,
         };
       }
-      // ⭐ 形態閘（2026-08-19）—— 在判 ❌ **之前**問一次「這一階是不是只在
-      // 另一個身體裡生效」。⛔ 順序是承重的：反過來寫的話 79-002 虛化仍然
-      // 會先被記成 FAIL。判準住在 `castabilityVerdict.ts`（普查與守衛讀同一份）。
+      // ⭐ 形態閘 —— 在判 ❌ **之前**問一次「這一階是不是只在另一個身體裡生效」。
+      // ⛔ 順序是承重的：反過來寫的話 79-002 虛化仍然會先被記成 FAIL。
+      // 判準住在 `castabilityVerdict.ts`（普查與守衛讀同一份）。
+      //
+      // ⭐ 2026-08-20（GH#412）—— 這裡從「**宣告未量測**」升級成「**真的去量**」。
+      //
+      // 2026-08-19 的版本到此為止就回 🔵 FORM_GATED，而那句誠實的分類換來的是
+      // 「79-002 虛化的格擋**從來沒有被自動驗證過** —— 它可能是好的，也可能上架
+      // 起就是死的，我們不知道」。⛔ 一格永遠不會被量的格子，跟一格假 ✅ 一樣
+      // 是儀器在說「這裡不用看」。
+      //
+      // 修法是走**出貨的那一條變身路徑**（`ChampionFormSystem.applyChampionForm`
+      // → `setBody` → `syncAbilityPassives`），⛔ 不是手動改 `world.championForm`
+      // 再自己呼叫一次 sync：後者是失敗形態⑤（被測的不是出貨的那個），而形態閘
+      // 的兩個讀端（`rankBlock` 讀 `world.championForm`、`setBody` 寫它）正好就是
+      // 那條路上一前一後的兩行。
+      //
+      // ⛔ 它不可能把一支真的 inert 的被動變綠：換過去之後問的仍然是同一個問題
+      // ——「有沒有一份 ModifierSource／標記掛上來」。
       if (passiveFormGate(def, 1) === "alternate") {
+        const swapped = applyChampionForm(world, caster, "alternate", undefined, {
+          slot,
+          origin: "castability-form-probe",
+        });
+        if (!swapped || championFormIndex(world, caster) !== 1) {
+          // 唯一還剩下的 🔵：**換不過去**（沒有 `transform.counterpartId`／
+          // 對手的 doc 沒註冊）。這時說「量過了」就是說謊。
+          return {
+            verdict: "FORM_GATED",
+            castType: def.castType,
+            reason:
+              "這一階被動帶 `whileForm:\"alternate\"`，而這位英雄**沒有可解析的替身身體**" +
+              "（`transform.counterpartId` 缺失或指向未註冊的 doc）—— 普查換不過去。⇒ 本次未量測。",
+          };
+        }
+        world.step(NO_INTENTS); // 讓 setBody 之後的統計重算落地
+        const altSrc = world.stats
+          .get(caster)!
+          .sources.find((s) => s.id === abilityPassiveSourceId(def.id));
+        const altMarked = (world.marks.get(caster)?.size ?? 0) > 0;
+        if (altSrc || altMarked) {
+          return {
+            verdict: "PASSIVE",
+            castType: def.castType,
+            channel: altSrc
+              ? altSrc.modifiers?.length
+                ? "passive:modifiers@alternate"
+                : "passive:hooks@alternate"
+              : "passive:marks@alternate",
+            reason:
+              "在**替身形態**下量到的（走出貨的 `applyChampionForm` → `setBody` → " +
+              "`syncAbilityPassives`）—— GH#412 之前這一格永遠是 🔵「本次未量測」。",
+          };
+        }
         return {
-          verdict: "FORM_GATED",
+          verdict: "FAIL",
           castType: def.castType,
           reason:
-            "這一階被動帶 `whileForm:\"alternate\"` —— 它只在變身後才掛上來源，" +
-            "而普查是在本體形態量的。⇒ 本次未量測，⛔ 不是壞掉。",
+            "`whileForm:\"alternate\"` 的被動：**真的換到替身身體之後**，來源仍然沒有掛上（inert）。" +
+            "⛔ 這不是形態閘的問題 —— 普查已經在正確的身體裡量了（GH#412）。",
         };
       }
       return {
@@ -798,10 +887,77 @@ function testSlot(championId: string, slot: CastableSlot): Cell {
       moved,
       effectsAuthored: def.effects.length,
     });
-    return { verdict: out.verdict, castType: def.castType, channel: out.channel, reason: out.reason };
+    // GH#407 —— 這一格要不要跨 seed 量，由**樹**回答，⛔ 不由一張技能名單回答。
+    const stochastic = [...stochasticNodeKinds(def.effects)].sort();
+    return {
+      verdict: out.verdict,
+      castType: def.castType,
+      channel: out.channel,
+      reason: out.reason,
+      ...(stochastic.length ? { stochastic } : {}),
+    };
   } catch (err) {
     return { verdict: "FAIL", reason: `threw: ${(err as Error).message}` };
   }
+}
+
+/** 判定的「壞」序 —— 跨 seed 不一致時取最壞的那一個。 */
+const VERDICT_RANK: Record<Verdict, number> = {
+  FAIL: 0,
+  VFX_ONLY: 1,
+  FORM_GATED: 2,
+  NONE: 3,
+  PASSIVE: 4,
+  PASS: 5,
+};
+
+/**
+ * ⭐ GH#407 —— **一格量幾次，由這一格自己的效果樹決定**。
+ *
+ * 沒有隨機節點 → 一顆 seed 就是量測（今天的行為，逐位元不變）。
+ * 有隨機節點 → 跑 {@link STOCHASTIC_SEEDS} 顆，**全部一致才算量到**：
+ *   · 全部同一個判定 → 就是那個判定，並在報表記下「N/N 顆一致」；
+ *   · 有分歧 → 取**最壞**的那一個當判定，並標記 `seedDependent`。
+ *
+ * ⛔ 為什麼取最壞而不是最好：這條 gate 問的是「按下去會不會什麼都不發生」，
+ * 而「有時候什麼都不發生」的答案就是**會**。取最好等於用一顆挑過的 seed
+ * 替內容背書 —— 那正是 GH#374 收尾時 13-04（12/24）與 70-04（16/24）之所以
+ * 曾經在 {@link KNOWN_GAPS} 上被記成內容缺陷的原因，只是方向相反。
+ * ⛔ 也不可以「重骰到過為止」（best-of-N）：那不是量測，那是挑答案。
+ */
+function measureSlot(championId: string, slot: CastableSlot): Cell {
+  const base = 4242 + SLOTS.indexOf(slot);
+  const first = testSlot(championId, slot, base);
+  if (!first.stochastic?.length) return first;
+
+  const tally = new Map<Verdict, number>([[first.verdict, 1]]);
+  for (let i = 1; i < STOCHASTIC_SEEDS; i++) {
+    // ⚠️ 步長取質數，免得 `base + i` 與槽位偏移撞成同一串 seed。
+    const v = testSlot(championId, slot, base + i * 7919).verdict;
+    tally.set(v, (tally.get(v) ?? 0) + 1);
+  }
+  const seen = [...tally.entries()].sort((a, b) => VERDICT_RANK[a[0]] - VERDICT_RANK[b[0]]);
+  const seedTally = seen.map(([v, n]) => `${v} ${n}/${STOCHASTIC_SEEDS}`).join("、");
+  const worst = seen[0]![0];
+  if (seen.length === 1) {
+    return {
+      ...first,
+      verdict: worst,
+      seedTally,
+      reason:
+        (first.reason ? `${first.reason}　` : "") +
+        `隨機節點 [${first.stochastic.join(", ")}]，${STOCHASTIC_SEEDS} 顆 seed 判定一致。`,
+    };
+  }
+  return {
+    ...first,
+    verdict: worst,
+    seedTally,
+    seedDependent: true,
+    reason:
+      `⚠️ **判定隨 seed 改變**（隨機節點 [${first.stochastic.join(", ")}]）：${seedTally}。` +
+      "⇒ 這一格今天是**擲骰**不是量測；照最壞的那一個記，理由見 SEED_DEPENDENT_CELLS。",
+  };
 }
 
 /** Swing the basic attack at an adjacent enemy and confirm it lands / fires. */
@@ -900,7 +1056,7 @@ describe("task #128 — in-game castability coverage sweep", () => {
       let basicRangedFlag: boolean | undefined;
 
       if (spawnOk) {
-        for (const slot of SLOTS) cells[slot] = testSlot(id, slot);
+        for (const slot of SLOTS) cells[slot] = measureSlot(id, slot);
         const b = testBasic(id);
         cells.basic = b.cell;
         basicProjectile = b.projectile;
@@ -1009,6 +1165,43 @@ describe("task #128 — in-game castability coverage sweep", () => {
       FORM_GATED_CELLS.filter((k) => !gated.has(k.key)).map((k) => `${k.key}（${k.why}）`),
       "FORM_GATED_CELLS 上的某一格不再是 🔵 —— 普查量得到它了，把那一列刪掉。",
     ).toEqual([]);
+
+    // ---- gate 6: 隨機類技能的判定必須是**量測**，不是抽樣（GH#407）----
+    // ⛔ 這一條與比例棘輪、KNOWN_GAPS 都不重疊：一格「12/24 顆 seed 有效果」的
+    // 技能在**任何一次**單 seed 的跑法底下都會給出一個確定的 ✅ 或 ❌，而那個
+    // 確定的答案有一半的機率是假的。訊息會說「這一格壞了」，真相是 seed ——
+    // 用錯誤的訊息紅比不紅還糟（CLAUDE.md：`bossRoundExtension.test.ts` 那一次）。
+    const wobbly = new Map<string, string>();
+    for (const r of trackedResults) {
+      for (const slot of COLS) {
+        const c = r.cells[slot];
+        if (c.seedDependent) wobbly.set(`${r.id}|${slot}`, c.seedTally ?? "");
+      }
+    }
+    const wobblyKnown = new Set(SEED_DEPENDENT_CELLS.map((k) => k.key));
+    expect(
+      [...wobbly].filter(([k]) => !wobblyKnown.has(k)).map(([k, t]) => `${k}（${t}）`).sort(),
+      `冒出**名單外**的 seed 依賴格 —— 這一格換一顆 seed 就換一個判定，` +
+        "所以它今天既不是 ✅ 也不是 ❌，是**擲骰**。⛔ 先確認是內容真的有一條「什麼都不做」的分支，" +
+        "還是普查缺一根指針（就像 GH#407 之前缺的那根金幣指針），再決定要不要寫進 SEED_DEPENDENT_CELLS。",
+    ).toEqual([]);
+    expect(
+      SEED_DEPENDENT_CELLS.filter((k) => !wobbly.has(k.key)).map((k) => `${k.key}（${k.why}）`),
+      "SEED_DEPENDENT_CELLS 上的某一格不再隨 seed 改變 —— 它現在是真的量測了，把那一列刪掉。",
+    ).toEqual([]);
+
+    // ---- gate 7: 儀器本身要**真的**在跨 seed 量（GH#407 的反向閘）----
+    // ⛔ 少了它，`stochasticNodeKinds` 哪天回空集合（改壞了、或 kind 改名了）
+    // 上面那條閘會**永遠是綠的**，而它守的東西整個消失 —— 失敗形態③。
+    const measuredAcrossSeeds = results.reduce(
+      (n, r) => n + COLS.filter((s) => r.cells[s].seedTally !== undefined).length,
+      0,
+    );
+    expect(
+      measuredAcrossSeeds,
+      "沒有任何一格被跨 seed 量過 —— `stochasticNodeKinds` 從效果樹裡認不出任何隨機節點了，" +
+        "於是 gate 6 結構上永遠綠（出貨內容裡確實有 `weightedBranch` 與 `randomArea`）。",
+    ).toBeGreaterThan(0);
   });
 });
 
@@ -1132,8 +1325,9 @@ function writeReport(): void {
   );
   L.push("| — 無此格 | 這位英雄根本沒有這一格（原作就沒有 NN-00 天生技／骨架示範英雄沒有 EX）；不計入下方比例的分子與分母 |");
   L.push(
-    "| 🔵 形態閘 | 這一階被動寫著 `whileForm:\"alternate\"` —— 它**只在變身後**掛上來源，而普查永遠在本體形態量。" +
-      "⇒ **本次未量測**，⛔ 不是壞掉（79-002 虛化的格擋在卍解狀態下真的會生效）；同 — 一樣不計入分子與分母 |",
+    "| 🔵 形態閘 | 這一階被動寫著 `whileForm:\"alternate\"`，**而這位英雄換不過去**" +
+      "（`transform.counterpartId` 缺失／指向未註冊的 doc）⇒ **本次未量測**；同 — 一樣不計入分子與分母。" +
+      "⭐ GH#412 之後「有替身身體」的那一種**不再是 🔵** —— 普查會真的走 `applyChampionForm` 換到替身身體再量一次 |",
   );
   L.push("");
   L.push("## 總計");
@@ -1236,9 +1430,10 @@ function writeReport(): void {
   L.push("## 🔵 形態閘清單（本次未量測，⛔ 不是缺陷）");
   L.push("");
   L.push(
-    "> 這些格子的 rank 區塊帶 `whileForm:\"alternate\"`：它們**只在變身後**才掛上來源，" +
-      "而這份普查永遠在本體形態開世界。⛔ 它們既不算 ✅（普查沒有驗證過）也不算 ❌（內容是對的）。" +
-      "⭐ 要把它們變綠，普查得先學會**在正確的形態下**量 —— 那是 #128 的下一步，不是內容側的事。",
+    "> ⭐ GH#412 之後這一張表只剩**唯一**一種成因：rank 區塊帶 `whileForm:\"alternate\"`，" +
+      "**而這位英雄沒有可解析的替身身體**，所以普查連換都換不過去。" +
+      "有替身身體的那一種現在會被真的量到 —— 普查走出貨的 `applyChampionForm` → `setBody` → `syncAbilityPassives` " +
+      "換到替身形態再問一次「來源有沒有掛上」，量到就是 🟣，掛不上就是 ❌（⛔ 不再是「不知道」）。",
   );
   L.push("");
   if (formGatedCells.length === 0) {
@@ -1248,6 +1443,33 @@ function writeReport(): void {
     L.push("| --- | --- | --- | --- |");
     for (const f of formGatedCells) {
       L.push(`| ${f.name} | \`${f.id}\` | ${f.slot} | ${f.cell.reason ?? "—"} |`);
+    }
+  }
+  L.push("");
+  L.push(`## 🎲 隨機節點的跨 seed 量測（GH#407，每格 ${STOCHASTIC_SEEDS} 顆）`);
+  L.push("");
+  L.push(
+    "> 一支帶 `weightedBranch` / `chance` 條件葉 / `randomArea` 的技能，用**一顆** seed 量出來的 ✅／❌ 是一次**擲骰**：" +
+      "GH#374 收尾時實測 13-04 龍星群 **12/24** 顆 seed 命中、70-04 千年練成 **16/24** —— 同一支技能，換一顆 seed 就從 PASS 變 FAIL，" +
+      "而這是一條會擋 CI 的 gate。⇒ 這些格子改成跨 seed **全部量一遍**，⛔ 不是重骰到過為止（那是挑答案，不是量測）。" +
+      "名單由 `castabilityVerdict.ts::stochasticNodeKinds` 從效果樹**推導**，⛔ 不是一張會過期的技能清單。",
+  );
+  L.push("");
+  const stochRows = results.flatMap((r) =>
+    cols
+      .filter((s) => r.cells[s].seedTally !== undefined)
+      .map((s) => ({ r, s, c: r.cells[s] })),
+  );
+  if (stochRows.length === 0) {
+    L.push("（無 —— ⚠️ 出貨內容裡確實有 `weightedBranch` 與 `randomArea`，這一欄空掉代表偵測器壞了）");
+  } else {
+    L.push("| 英雄 | ID | 槽 | 隨機節點 | 跨 seed 判定分佈 | 穩定？ |");
+    L.push("| --- | --- | --- | --- | --- | :-: |");
+    for (const { r, s, c } of stochRows) {
+      L.push(
+        `| ${r.name} | \`${r.id}\` | ${s} | ${(c.stochastic ?? []).join(", ")} | ${c.seedTally} | ` +
+          `${c.seedDependent ? "⚠️ 否（擲骰）" : "✅ 是"} |`,
+      );
     }
   }
   L.push("");
@@ -1278,8 +1500,9 @@ function writeReport(): void {
     "- 依 castType 擺位：targeted→貼身敵人（友軍向技能→貼身友軍）、ground→敵人所在點、skillshot／dash→朝敵人、self→自己。",
   );
   L.push(
-    "- 「有效果」= 下列任一頻道被觸發且無例外：`damage`／`heal`／`manaRestore`／`projectileSpawn`／`knockdown`／`championForm` 事件，" +
-      "或全場護盾／狀態／buff 來源／投射物數量上升，或施法者位移（dash）。" +
+    "- 「有效果」= 下列任一頻道被觸發且無例外：`damage`／`heal`／`manaRestore`／`projectileSpawn`／`knockdown`／`championForm`／`resourceSwap` 事件，" +
+      "或全場護盾／狀態／buff 來源／投射物／【嘲弄】數量上升，或**金幣總額上升**（GH#407），或施法者位移（dash）。" +
+      "⛔ 金幣走的是**狀態差**不是 `goldGrant` 事件 —— 那個事件在付了 0 元時照樣發，收它會造出新的假 ✅。" +
       "⛔ **`vfxSpawn` 不在名單上**（2026-08-18 / GH#374）：它唯一保證的是畫面上有東西，而一支只有畫面的技能改不動任何一個數字；" +
       "在此之前它算 ✅，於是 GH#373 那 5 支「整棵樹只有 spawnVfx」的主動天生技在全綠的測試底下上架。" +
       "回血／回魔前先把目標降到半血半魔，確保有回復空間；" +
@@ -1294,11 +1517,14 @@ function writeReport(): void {
     `- **完整跑遍全 ${results.length} 英雄 × ${cols.length} 槽 = ${totalCells} 格，無抽樣**。`,
   );
   L.push(
-    `- **會變紅的四道閘**（都只看版控名單那 ${ROSTER_SIZE} 人，營運額外開放的英雄不影響）：` +
+    `- **會變紅的七道閘**（都只看版控名單那 ${ROSTER_SIZE} 人，營運額外開放的英雄不影響）：` +
       `(1) 掃描必須跑完 ${ROSTER_SIZE}×${cols.length}；(2) ${ROSTER_SIZE} 位英雄全部要能生成；` +
       `(3) 可用格數（✅+🟣）佔比不得低於 **${(WORKING_CELL_RATIO_FLOOR * 100).toFixed(2)}%**（棘輪下限，比例不是絕對值 —— 名單長度會變）；` +
       "(4) **逐格釘死的缺口名單**（`KNOWN_GAPS`）：冒出名單外的新缺口會紅、名單上的缺口修好了沒劃掉會紅、" +
-      "同一格從 ❌ 變 🟡（或反過來）也會紅 —— 替一支空技能補個特效不是修好它。" +
+      "同一格從 ❌ 變 🟡（或反過來）也會紅 —— 替一支空技能補個特效不是修好它；" +
+      "(5) **形態閘名單**（`FORM_GATED_CELLS`，三個方向，GH#412）；" +
+      "(6) **seed 依賴名單**（`SEED_DEPENDENT_CELLS`，三個方向，GH#407）；" +
+      "(7) **跨 seed 量測儀器本身要活著** —— 一格都沒被跨 seed 量過就是偵測器壞了，那會讓 (6) 結構上永遠綠。" +
       "個別既知 no-op 不會使測試變紅（它們是要回報的發現，列在上方兩張表），但既有可用的格子被改壞會。",
   );
   L.push("");

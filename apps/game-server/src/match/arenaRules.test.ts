@@ -447,7 +447,13 @@ describe("同一回合撞卡：聖杯願望贏、寶具讓路 (#340, arena-02, a
     expect(grant?.augmentTier && grant?.weaponLootTable, `round ${round} 不是撞卡回合`).toBeTruthy();
     expect(ARENA.draftConflict, "出貨文件的裁決漂走了").toBe(DEFAULT_DRAFT_CONFLICT);
 
-    const ctl = makeArenaMatch(555);
+    // ⚠️ GH#422 —— seed 555 換成 **557**。出貨的 `draftConflict` 是 `round-roll`
+    //    （＝撞卡回合擲一顆骰決定誰讓路），所以「聖杯贏」這一場是**這顆種子的**
+    //    結果，⛔ 不是一條恆真的規則。開場擺位改成四隊分開站（12 個座位不再疊在
+    //    6 個點上）之後，bot 的第一段軌跡變了 ⇒ `world.rng` 的流跟著位移 ⇒ 555
+    //    那一場改成寶具贏。⛔ 不是把斷言放寬（那會留下一條對缺陷不敏感的綠燈）——
+    //    照這個檔案已經做過兩次的辦法重掃 555–604，取最小的 557。
+    const ctl = makeArenaMatch(557);
     runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === round);
     let checked = 0;
     for (const seat of ctl.seats.values()) {
@@ -564,7 +570,16 @@ describe("every-round augment 3-choose-1 restored (arena-08, #157)", () => {
     //    **沒有任何座位拿到 augment offer**，於是 `checked` 是 0、這條測試變成空轉。
     //    ⛔ 不是把 `toBeGreaterThan(0)` 拿掉（那會留下一條對缺陷不敏感的綠燈，
     //    失敗形態④）—— 掃了 1200–1399，1200/1201/1203/1204 都重現。
-    const ctl = makeArenaMatch(1200);
+    // ⚠️ GH#455 —— seed 1200 換成 **1201**（同一個理由，第二次換）：中場入口現在
+    //    會把每個人還原（`restoreForNextRound`），⇒ **被打倒的 bot 在商店裡是站著
+    //    的**（`Tier0Brain.replan` 對 `!alive` 直接早退，所以牠以前整個中場不點技能
+    //    也不買東西），整場的資源曲線與 rng 流因此改變，1200 那一場第 2 回合又變成
+    //    沒有人拿到 offer。⛔ 不是把 `toBeGreaterThan(0)` 拿掉 —— 重掃 1200–1399，
+    //    1201/1203/1204/1205/1206/1207 都重現，取最小的。
+    // ⚠️ GH#422 —— seed 1201 換成 **1202**（同一個理由，第三次換）：開場擺位
+    //    改成四隊分開站之後 bot 的軌跡與 rng 流位移，1201 那一場第 2 回合又變成
+    //    沒有人拿到 offer。重掃 1201–1259，取最小的。
+    const ctl = makeArenaMatch(1202);
     // Round 2 is silver again: its fresh 3 choices must EXCLUDE whatever the seat
     // already owns from round 1. The round-1 draft is auto-resolved on the timer,
     // and task #207 makes that a DETERMINISTIC RANDOM one of the three (not the

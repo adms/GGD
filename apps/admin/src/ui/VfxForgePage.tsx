@@ -201,6 +201,14 @@ export function VfxForgePage(): React.JSX.Element {
           dashPitchDeg: parsed.dashPitchDeg === undefined ? "" : String(parsed.dashPitchDeg),
           tornadoPitchDeg:
             parsed.tornadoPitchDeg === undefined ? "" : String(parsed.tornadoPitchDeg),
+          // GH#456 —— 五格家族錐角，同一條 optional 規則。⚠️ 留白尤其不能變成 0:
+          // cone 的 Zod 下界是 1，0 會讓整份 config **存檔被拒**。
+          beamAngleDeg: parsed.beamAngleDeg === undefined ? "" : String(parsed.beamAngleDeg),
+          slashAngleDeg: parsed.slashAngleDeg === undefined ? "" : String(parsed.slashAngleDeg),
+          boltAngleDeg: parsed.boltAngleDeg === undefined ? "" : String(parsed.boltAngleDeg),
+          dashAngleDeg: parsed.dashAngleDeg === undefined ? "" : String(parsed.dashAngleDeg),
+          tornadoAngleDeg:
+            parsed.tornadoAngleDeg === undefined ? "" : String(parsed.tornadoAngleDeg),
         });
         setCastHeight(parsed.castHeightSource ?? "");
         setProjArt(
@@ -315,6 +323,12 @@ export function VfxForgePage(): React.JSX.Element {
       boltPitchDeg: (globals["boltPitchDeg"] ?? "").trim(),
       dashPitchDeg: (globals["dashPitchDeg"] ?? "").trim(),
       tornadoPitchDeg: (globals["tornadoPitchDeg"] ?? "").trim(),
+      // GH#456 —— 錐角走**同一條**留白路徑,⛔ 不是第二份實作。
+      beamAngleDeg: (globals["beamAngleDeg"] ?? "").trim(),
+      slashAngleDeg: (globals["slashAngleDeg"] ?? "").trim(),
+      boltAngleDeg: (globals["boltAngleDeg"] ?? "").trim(),
+      dashAngleDeg: (globals["dashAngleDeg"] ?? "").trim(),
+      tornadoAngleDeg: (globals["tornadoAngleDeg"] ?? "").trim(),
     };
     const pitchPatch = Object.fromEntries(
       Object.entries(pitchText)
@@ -335,6 +349,11 @@ export function VfxForgePage(): React.JSX.Element {
       boltPitchDeg: _droppedBolt,
       dashPitchDeg: _droppedDash,
       tornadoPitchDeg: _droppedTornado,
+      beamAngleDeg: _droppedBeamA,
+      slashAngleDeg: _droppedSlashA,
+      boltAngleDeg: _droppedBoltA,
+      dashAngleDeg: _droppedDashA,
+      tornadoAngleDeg: _droppedTornadoA,
       ...docBase
     } = doc;
     let next: ConfigVfxFamiliesDoc = {

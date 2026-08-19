@@ -41,6 +41,7 @@ import {
   DEFAULT_FAMILY_PITCH_DEFAULTS_ENABLED,
   DIRECTIONAL_PRIMITIVES,
   UPRIGHT_PITCH_DEG,
+  familyEmitterAngleDeg,
   familyPitchDeg,
   type ConfigVfxFamiliesDoc,
   type DirectionalPrimitive,
@@ -55,6 +56,15 @@ const PITCH_FIELD: Readonly<Record<DirectionalPrimitive, keyof ConfigVfxFamilies
   bolt: "boltPitchDeg",
   dash: "dashPitchDeg",
   tornado: "tornadoPitchDeg",
+};
+
+/** 家族 → 後台**錐角**那一格的欄位名 (GH#456)。同一張表的第二欄,⛔ 不是五個 `if`。 */
+const ANGLE_FIELD: Readonly<Record<DirectionalPrimitive, keyof ConfigVfxFamiliesDoc>> = {
+  beam: "beamAngleDeg",
+  slash: "slashAngleDeg",
+  bolt: "boltAngleDeg",
+  dash: "dashAngleDeg",
+  tornado: "tornadoAngleDeg",
 };
 
 const DIRECTIONAL: ReadonlySet<string> = new Set(DIRECTIONAL_PRIMITIVES);
@@ -124,6 +134,7 @@ function directionalFamilyOfFamilyVfxId(id: string): DirectionalPrimitive | null
 interface ActiveTuning {
   readonly enabled: boolean;
   readonly pitch: Readonly<Record<DirectionalPrimitive, number>>;
+  readonly angle: Readonly<Record<DirectionalPrimitive, number>>;
 }
 
 let active: ActiveTuning | undefined;
@@ -149,13 +160,17 @@ let generation = 0;
  */
 export function setFamilyPitchDefaults(doc: ConfigVfxFamiliesDoc | null | undefined): void {
   const pitch = {} as Record<DirectionalPrimitive, number>;
+  const angle = {} as Record<DirectionalPrimitive, number>;
   for (const f of DIRECTIONAL_PRIMITIVES) {
     const raw = doc?.[PITCH_FIELD[f]];
     pitch[f] = familyPitchDeg(f, typeof raw === "number" ? raw : undefined);
+    const rawAngle = doc?.[ANGLE_FIELD[f]];
+    angle[f] = familyEmitterAngleDeg(f, typeof rawAngle === "number" ? rawAngle : undefined);
   }
   active = {
     enabled: doc?.familyPitchDefaults ?? DEFAULT_FAMILY_PITCH_DEFAULTS_ENABLED,
     pitch,
+    angle,
   };
   generation += 1;
 }
@@ -163,6 +178,11 @@ export function setFamilyPitchDefaults(doc: ConfigVfxFamiliesDoc | null | undefi
 /** 現在生效的家族仰角(後台的值,沒設過就是出貨值)。 */
 export function familyPitchOf(family: DirectionalPrimitive): number {
   return active?.pitch[family] ?? familyPitchDeg(family, undefined);
+}
+
+/** 現在生效的家族**錐角**(後台的值,沒設過就是出貨值) (GH#456)。 */
+export function familyAngleOf(family: DirectionalPrimitive): number {
+  return active?.angle[family] ?? familyEmitterAngleDeg(family, undefined);
 }
 
 /** 總開關現在是開的嗎。 */
@@ -185,15 +205,27 @@ export function applyFamilyOrient<T extends VfxDoc | null | undefined>(doc: T): 
   const cached = memo.get(doc);
   if (cached && cached.gen === generation) return cached.doc as T;
 
-  const own: VfxOrient | undefined = doc.orient;
+  // ① 錐角 (GH#456)。⚠️ **一定要在仰角的提早返回之前**:`tornado` 的仰角是 90
+  // (恆等)所以下面那一行會 `return doc`,把錐角那一格變成一顆永遠不動的死旋鈕
+  // —— 那正是第一·五守則點名的「說了但不會發生」(後台有欄位、存得起來、
+  // 畫面一位元都沒變)。
+  const angleDeg = familyAngleOf(family);
+  const base: VfxDoc =
+    doc.emitter.shape === "cone" && doc.emitter.angleDeg !== angleDeg
+      ? { ...doc, emitter: { ...doc.emitter, angleDeg } }
+      : doc;
+
+  // ② 仰角。
+  const own: VfxOrient | undefined = base.orient;
   const pitchDeg = own?.pitchDeg ?? familyPitchOf(family);
   // ⭐ 直立 = 恆等 ⇒ 什麼都不寫。這一行就是「⛔ 不製造空宣稱」的那道閘:
   // 一個 90° 的家族永遠拿不到 `yawFrom: "aim"`。
-  if (pitchDeg === UPRIGHT_PITCH_DEG) return doc;
   const yawFrom = own?.yawFrom ?? "aim";
-  if (own?.pitchDeg === pitchDeg && own.yawFrom === yawFrom) return doc;
-
-  const out: VfxDoc = { ...doc, orient: { ...own, pitchDeg, yawFrom } };
+  const out: VfxDoc =
+    pitchDeg === UPRIGHT_PITCH_DEG || (own?.pitchDeg === pitchDeg && own.yawFrom === yawFrom)
+      ? base
+      : { ...base, orient: { ...own, pitchDeg, yawFrom } };
+  if (out === doc) return doc;
   memo.set(doc, { gen: generation, doc: out });
   return out as T;
 }

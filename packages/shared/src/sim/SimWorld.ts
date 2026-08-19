@@ -102,6 +102,7 @@ import { dotTickSystem } from "./effects/dotTick";
 import { intervalHookSystem } from "./systems/IntervalHookSystem";
 import { randomAreaSystem } from "./effects/randomArea";
 import { delayedSystem } from "./effects/delayed";
+import { chainLightningSystem } from "./effects/chainLightning";
 import { dashOnEndSystem } from "./effects/dashOnEnd";
 import { deathSystem } from "./systems/DeathSystem";
 import { fireRingSystem } from "./systems/FireRingSystem";
@@ -617,6 +618,14 @@ export class SimWorld {
    * 「隨機三選一仍然可以隨機到」 — and economy/shopShelf.test.ts pins that split.
    * Host CONFIG assigned before tick 0, never mutated by a system, so it
    * perturbs no rng stream and replays identically.
+   *
+   * ⭐ **GH#350（2026-08-20）：它現在真的有 production 寫入端了。**
+   * 後台欄位是 `config.arena-rules@1` 的 `weaponShelfOpen`（競技場規則那一頁），
+   * `arenaRules.rulesFromDoc` 讀它，`MatchController` 在 tick 0 之前指派這一格。
+   * ⚠️ 在此之前這段註解說得像已經接好，而 `grep world.weaponShelfOpen` 在
+   * production 程式是空的 —— 只有測試在寫（`shopShelf.ts` 2026-08-17 更正過
+   * 那句話，第三守則）。守衛：`match/weaponShelfWiring.test.ts`，它驗的是
+   * **配對關係**（config 打開 → 商店真的收得到錢），⛔ 不是「欄位有值」。
    */
   weaponShelfOpen: boolean = WEAPON_SHELF_OPEN;
 
@@ -977,6 +986,15 @@ export class SimWorld {
    * 到期不重解。整段論證在 `effects/delayed.ts` 檔頭①。
    */
   readonly delayed: import("./effects/delayed").DelayedWave[] = [];
+
+  /**
+   * ⭐ 連鎖閃電**還在飛**的那幾條（GH#451，owner 2026-08-20 的逐跳時間差）。
+   * 與 {@link delayed} / {@link randomArea} **同一個形狀、同一個理由**是陣列不是
+   * Map（同一位施法者可以有兩次施放同時在飛），⛔ 但目標的來源第三種都不一樣：
+   * 這裡是「到期時從**上一個受害者**身上重新**隨機**抽一個」。
+   * 整段論證在 `effects/chainLightning.ts` 檔頭①③。
+   */
+  readonly chainLightning: import("./effects/chainLightning").ChainLightningCast[] = [];
 
   /**
    * ⭐ S7【衝刺結束才揮出】的待付回呼（52-04「向前衝刺 400 距離後揮出」）。
@@ -1621,6 +1639,11 @@ export class SimWorld {
     //                             排在 drain 之前，第七刀才會在**這一 tick** 被
     //                             減傷、記分、結算。差別只在目標從哪裡來 ——
     //                             這裡是施放時凍住的名單（effects/delayed.ts①）。
+    chainLightningSystem(this); // 7e″. ⭐ 連鎖閃電的逐跳時間差（owner 2026-08-20）：
+    //                             付掉這一 tick 到期的那幾發閃電。位置與上下兩支是
+    //                             **同一個硬約束**（排在排空之前）。差別只在目標從
+    //                             哪裡來 —— 這裡是「從上一個受害者身上隨機再抽一個」
+    //                             （effects/chainLightning.ts 檔頭①③）。
     randomAreaSystem(this); // 7e. 隨機落點排程：付掉這一 tick 到期的落點。
     //                             ⚠️ 位置是硬約束，理由與 `dotTick` 逐字相同：
     //                             排在排空之前，一顆這一 tick 該落的流星才會在

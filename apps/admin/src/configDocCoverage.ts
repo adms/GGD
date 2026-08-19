@@ -39,7 +39,6 @@ import { CONFIG_DOC_SPECS } from "./configForms";
 import { BONUS_DOC_ID } from "./baseBonus";
 import { COMBAT_FEEL_DOC_ID } from "./combatFeel";
 import { FORM_VISUALS_DOC_ID } from "./formVisuals";
-import { ARENA_RULES_DOC_ID } from "./itemDraft";
 import { MATCH_DOC_ID } from "./matchConfig";
 import { ROSTER_DOC_ID } from "./roster";
 import { CAPS_DOC_ID } from "./statCaps";
@@ -122,15 +121,14 @@ export const CONFIG_DOC_EXEMPTIONS: readonly ConfigDocExemption[] = [
     expiresWhen: "⚠️ 通用引擎長出「record 型欄位」支援（新增/刪除鍵 + 每個鍵一組子欄位）的那一天，這一列就該退場 —— ⭐ `per-level-bonus` 與 `config.stat-caps@1` 的 `caps` 是同一個形狀，三份會一起解鎖。⛔ 在那之前也不要拿 🎨 特效鑄造所（vfxForge）那一頁充數：那一頁編的是 `config.vfx-families@1` 的**覆寫層**，這一份是**證據層**，把兩者混成一頁會讓「清空一格」再也回不到原作的值。",
   },
   // ── ① OWN_PAGE：有專屬頁。會腐爛，所以每一列都被機器驗兩件事 ────────────
-  {
-    docId: "arena-rules",
-    kind: "OWN_PAGE",
-    page: "mobWaves",
-    docIdConstant: ARENA_RULES_DOC_ID,
-    why: "三頁共同編輯這一份：殭屍波系統（mobWaves 區塊）、傳說武器三選一（itemDraft + retiredLootTables）、對戰設定（draft.offerCount 唯讀 + draft.tierSchedule 曲線）。",
-    expiresWhen:
-      "⚠️ 這是**文件層**豁免，欄位層仍有破洞：rounds / overflow / flowers / reviveCircles / guardianTower / goldDrop / ultUnlockRound / exUnlockRound 八個頂層區塊只走 preserved「原封不動帶著走」，一格都調不到。⭐ **`weaponTiers` / `augmentTiers` / `disadvantageWeights` 已經在 2026-08-18 補上了**（GH#355）：前兩張走通用引擎的**第四種**非純量形狀（物件陣列，`configRows.ts` —— 欄位結構由出貨 Zod 推導，⛔ 沒有第二份界），第三塊是三格純量，全部在 傳說武器三選一 那一頁。⛔ 這一列**不涵蓋**上面那剩下的八個。",
-  },
+  // ── ⭐ arena-rules 的豁免在 2026-08-20 被**刪掉**了（GH#410）。
+  //    它以前是 OWN_PAGE（三頁專屬頁各編一塊），而那正是這張表最危險的一種列：
+  //    **文件層**的豁免一旦成立，欄位層就再也沒有任何守衛在數 —— 於是 rounds /
+  //    overflow / flowers / reviveCircles / guardianTower / goldDrop /
+  //    ultUnlockRound / exUnlockRound 八個頂層區塊一格都調不到，而 3,500+ 條
+  //    測試全綠。現在它走通用引擎（`ARENA_RULES_SPEC`），已經有專屬頁的區塊逐列
+  //    宣告在 `ConfigDocSpec.elsewhere`，於是「每一個葉節點都有標籤」開始管它。
+  //    ⚠️ 這是這張表**最健康**的移動方向：帳單被付掉，而且總列數少一列。
   {
     docId: "base-bonus",
     kind: "OWN_PAGE",

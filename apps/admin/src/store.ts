@@ -172,6 +172,15 @@ export type Page =
    */
   | "rangeGuide"
   /**
+   * 競技場規則 (`config/arena-rules.json` 的八個一直調不到的區塊, GH#410):
+   * 治療花 · 復活圈 · 守護塔 · 陣亡投幣 · 大絕／EX 解鎖回合 · 最後一回合 ·
+   * bot 的商店行為 · #261 普通武器上不上架（GH#350）。
+   * ⚠️ 同一份文件另外有三頁在編別的區塊（殭屍波系統 / 傳說武器三選一 /
+   * 對戰設定），所以這一頁刻意**一格都不重複**它們 —— 兩個輸入框改同一個數字，
+   * 哪一個會贏是操作者猜不出來的（宣告在 `ConfigDocSpec.elsewhere`）。
+   */
+  | "arenaTuning"
+  /**
    * 護盾規則 (`config/shield.json`): 一個人身上同時有兩道盾時,一發傷害先花掉
    * 哪一道。自己一頁而不是併進 戰鬥手感,因為手感那一頁的欄位是
    * `deriveFields(zConfigCombatFeelDoc)` 推導出來的而那支推導器只認得
@@ -574,6 +583,8 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "damageColors",
   // 範圍指引與預告 (GH#376): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "rangeGuide",
+  // 競技場規則 (GH#410): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  "arenaTuning",
   // 護盾規則: 第四頁,同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`,所以
   // 同一條規則。
   "shieldRules",

@@ -118,6 +118,9 @@ import { extendBuffEffect } from "./extendBuff";
 import { delayedEffect } from "./delayed"; // 排程器半在 ./delayed.ts::delayedSystem
 import { proxyCastEffect } from "./proxyCast"; // 終止性證明在該檔檔頭①
 
+// ── 連鎖閃電 (2026-08-19, GH#451) —— 界共用 ./kindLimits.ts ────────────────
+import { chainLightningEffect } from "./chainLightning";
+
 /**
  * kind → handler. The mapped type demands EVERY member of the `EffectDef`
  * union, so growing the union without landing a handler stops the build.
@@ -227,5 +230,7 @@ export const EFFECT_HANDLERS: EffectRegistry = {
   // 而那正是我們要的 —— 「schema 收得下、註冊表沒有它」在這個 repo 裡不可能發生。
   carry: carryEffect, //         L4 —— 【背負】(禰豆子的木箱)
   convertTeam: mindControlEffect, // L5 —— 【陣營轉換】(大師球)
+  // GH#451 —— 「範圍內每一個單位各觸發一次連鎖」。⛔ 一個機制，不是兩支技能。
+  chainLightning: chainLightningEffect,
   // lane P6 — 護盾傷害類型過濾 is NOT a kind: it is `shield.absorbs`, see shield.ts
 };

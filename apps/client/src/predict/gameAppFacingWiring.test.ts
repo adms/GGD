@@ -27,7 +27,34 @@
  */
 import { describe, expect, it } from "vitest";
 
-import type { GameApp } from "../GameApp";
+/**
+ * ⏱ GH#359 —— 這一行是 **module-level import**，⛔ 不是 `it()` 裡的
+ * `await import("../GameApp")`。那個寫法是這支測試隨機紅燈的**唯一**原因。
+ *
+ * 量到的（2026-08-20，本機 18 核）：
+ *   · `await import("../GameApp")` 本身 = **2,189 ms**（GameApp 拖進整棵 client
+ *     模組圖，`transform` 就吃掉 1.70 s）
+ *   · 那條 `it()` 的**斷言本體** = **0 ms**（純內插數學，就是它該有的樣子）
+ *   · 第一條 `it()` 報 2,341 ms，其餘五條各 ~0 ms —— 差額就是模組快取
+ *
+ * ⇒ 載入成本被記在**第一條斷言**的 5,000 ms 預算上，只剩 34% 餘裕。
+ * `pnpm test` 是 16 個 package 平行跑，transform 一旦搶不到 CPU 就撞線，
+ * 於是一條純數學的斷言變成擲骰子 —— 而**一條會隨機紅的閘等於沒有閘**：
+ * 下一個人的反應是「再跑一次」。
+ *
+ * ⛔ 修法不是把逾時調到 15 s／30 s（issue 的選項 1、3）—— 那是把偵測能力
+ * 一起關掉：真的變慢 5 倍也不會有人知道。模組載入**本來就不屬於**任何一條
+ * `it()`，它屬於 collect 階段，而 collect 不受 `testTimeout` 管。
+ * 搬到這裡之後，5,000 ms 量的是斷言、而且只有斷言。
+ *
+ * ⭐ 這也是這個 repo 既有的寫法：`markBar` / `mobBoss` / `killCombo` /
+ * `anchorBounds` / `predictionHoldWiring` 五支測試都 module-level import
+ * `GameApp`，五支都沒有 flake 過。真正的例外是「在 `it()` 裡 import」。
+ * ⚠️ `predictionArenaParity.test.ts:190` 仍是舊寫法（同一個形狀，未修）。
+ *
+ * 型別也照樣拿得到 —— 檔尾的 `_AssertMethodExists` 用的就是這個 binding。
+ */
+import { GameApp } from "../GameApp";
 
 type Vec2 = { x: number; z: number };
 type FacingHost = { combatFacingTargetPos: (state: unknown, renderTick: number) => Vec2 | null };
@@ -38,8 +65,7 @@ function stateWith(entries: Record<string, { x: number; z: number; alive: boolea
 }
 
 describe("GameApp.combatFacingTargetPos —— 出貨路徑（GH#281 接線 2）", () => {
-  it("回傳的是**內插後**的座標，不是快照的原始座標", async () => {
-    const { GameApp } = await import("../GameApp");
+  it("回傳的是**內插後**的座標，不是快照的原始座標", () => {
     const self = {
       attackOrderTargetId: 7,
       // 快照說目標在 (100, 100)；內插器說它現在畫在 (10, 20)。
@@ -58,8 +84,7 @@ describe("GameApp.combatFacingTargetPos —— 出貨路徑（GH#281 接線 2）
     expect(got, "取樣得到內插座標時不可以退回快照座標").toEqual({ x: 10, z: 20 });
   });
 
-  it("內插器取樣不到才退回快照座標", async () => {
-    const { GameApp } = await import("../GameApp");
+  it("內插器取樣不到才退回快照座標", () => {
     const self = { attackOrderTargetId: 7, interp: { sample: () => null } };
 
     const got = (GameApp.prototype as unknown as FacingHost).combatFacingTargetPos.call(
@@ -71,8 +96,7 @@ describe("GameApp.combatFacingTargetPos —— 出貨路徑（GH#281 接線 2）
     expect(got, "取樣不到就該退回快照，而不是整個放棄面向").toEqual({ x: 100, z: 100 });
   });
 
-  it("目標死了 → 回 null **而且**把記憶中的 id 一起清掉", async () => {
-    const { GameApp } = await import("../GameApp");
+  it("目標死了 → 回 null **而且**把記憶中的 id 一起清掉", () => {
     const self = {
       attackOrderTargetId: 7,
       interp: { sample: () => ({ x: 10, z: 20 }) },
@@ -90,8 +114,7 @@ describe("GameApp.combatFacingTargetPos —— 出貨路徑（GH#281 接線 2）
     expect(self.attackOrderTargetId, "死掉的目標必須連 id 一起忘掉").toBeNull();
   });
 
-  it("目標整個離開快照（離線／被移除）也算失效", async () => {
-    const { GameApp } = await import("../GameApp");
+  it("目標整個離開快照（離線／被移除）也算失效", () => {
     const self = { attackOrderTargetId: 7, interp: { sample: () => ({ x: 10, z: 20 }) } };
 
     const got = (GameApp.prototype as unknown as FacingHost).combatFacingTargetPos.call(
@@ -104,8 +127,7 @@ describe("GameApp.combatFacingTargetPos —— 出貨路徑（GH#281 接線 2）
     expect(self.attackOrderTargetId).toBeNull();
   });
 
-  it("沒有交戰對象 / 沒有 state → null（不可以丟例外）", async () => {
-    const { GameApp } = await import("../GameApp");
+  it("沒有交戰對象 / 沒有 state → null（不可以丟例外）", () => {
     const proto = GameApp.prototype as unknown as FacingHost;
 
     expect(proto.combatFacingTargetPos.call({ attackOrderTargetId: null }, stateWith({}), 1)).toBeNull();

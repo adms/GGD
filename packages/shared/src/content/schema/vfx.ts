@@ -658,6 +658,41 @@ export function familyPitchDeg(
   return clampTo(override, -180, 180, DEFAULT_FAMILY_PITCH_DEG[family]);
 }
 
+// ---------------------------------------------------------------------------
+// 有方向的形狀的**家族錐角**(GH#456) —— 「扇形張多寬」那一格
+// ---------------------------------------------------------------------------
+
+/**
+ * 每個有方向的家族的發射錐**張多寬**(度,全角)。
+ *
+ * ⚠️ 這是 `slashPitchDeg`(**傾斜**)之外的**另一件事**:仰角決定刀光躺成什麼角度,
+ * 錐角決定那道扇形本身多寬。owner 2026-08-18 講的「slash 全家族的張角」把兩者
+ * 混在一起問,是因為**只有前者是後台欄位** —— 後者在 2026-08-19 之前寫死在
+ * `apps/client/src/render/vfx/primitives.ts` 的 `SHAPES` 裡,操作者一格都改不到。
+ *
+ * ⭐ 這五個數字**就是** `primitives.ts` 出貨的那五個(`slash` 92 / `beam` 9 /
+ * `bolt` 6 / `dash` 22 / `tornado` 34)—— 那支檔案現在**從這裡讀**,所以出貨的
+ * `content/vfx/fx.prim.*.json` 一位元都沒變,⛔ 也不會有第二個住處慢慢漂掉。
+ *
+ * ⛔ `column` 的 8° 不在這張表裡:它不在 `DIRECTIONAL_PRIMITIVES` 內,做一格
+ * 永遠不會被套用的欄位就是第一·五守則點名的空宣稱。
+ */
+export const DEFAULT_FAMILY_EMITTER_ANGLE_DEG: Readonly<Record<DirectionalPrimitive, number>> = {
+  beam: 9,
+  slash: 92,
+  bolt: 6,
+  dash: 22,
+  tornado: 34,
+};
+
+/** 一個家族的生效錐角:後台的值(界外夾回)→ 出貨預設。上下界同 `zEmitter.cone`。 */
+export function familyEmitterAngleDeg(
+  family: DirectionalPrimitive,
+  override: number | undefined,
+): number {
+  return clampTo(override, 1, 180, DEFAULT_FAMILY_EMITTER_ANGLE_DEG[family]);
+}
+
 /**
  * `hitRadius` → 畫面上的體積倍率。純函式,沒有 Babylon,所以模擬器/後台/測試
  * 三邊看到的是同一條公式。
@@ -1023,6 +1058,19 @@ export const zConfigVfxFamiliesDoc = z
     dashPitchDeg: z.number().min(-180).max(180).optional(),
     tornadoPitchDeg: z.number().min(-180).max(180).optional(),
     /**
+     * GH#456 —— 五個有方向的家族各自的**錐角**(度,全角):扇形張多寬。
+     * 省略 = `DEFAULT_FAMILY_EMITTER_ANGLE_DEG` 的那一格。上下界 1/180 與
+     * `zEmitter` 的 cone 同一條線(Zod 的 min/max 要字面值,所以這裡是抄的)。
+     *
+     * ⚠️ 和上面五格**不是同一件事**:仰角 = 刀光躺成什麼角度,錐角 = 扇形多寬。
+     * 這五格在 2026-08-19 之前寫死在 `primitives.ts`,後台一格都改不到。
+     */
+    beamAngleDeg: z.number().min(1).max(180).optional(),
+    slashAngleDeg: z.number().min(1).max(180).optional(),
+    boltAngleDeg: z.number().min(1).max(180).optional(),
+    dashAngleDeg: z.number().min(1).max(180).optional(),
+    tornadoAngleDeg: z.number().min(1).max(180).optional(),
+    /**
      * GH#390 —— 特效自帶音效的**總開關**。省略 = `DEFAULT_VFX_SOUND_ENABLED`（true）。
      * false = 一發都不播 = 這一版落地之前的行為（一鍵 rollback）。
      *
@@ -1250,10 +1298,63 @@ export const zVfxPromotedBinding = z
   .strict();
 export type VfxPromotedBinding = z.infer<typeof zVfxPromotedBinding>;
 
+/**
+ * ⭐ **owner 的設計覆寫**（GH#431）—— 第〇·六守則的**第 1 層**，寫成一格。
+ *
+ * ⚠️ 這一格補的洞是**結構性的**，⛔ 不是「少一個欄位」：`family` 那一格整條鏈
+ * （`MODEL_USAGE.json` → `deriveW3xFamilyArt` → 反捏造守衛）的設計前提是
+ * **「原作說什麼就是什麼」**，所以它**沒有預留 owner 的設計決定要住哪**。量到的
+ * 後果就是 owner 2026-08-19 點名的那一支：
+ *
+ *   「立起來的光柱也有其他技能會用到 **例如飛鼠天譴**」
+ *
+ * 飛鼠天譴（`godie-udea.r`，65-04 天譴）的證據是 `shockwaveRing` ——
+ * 玩家看到的是**貼地衝擊環**。而三個可寫的點沒有一個承載得了這個決定：
+ * 改 `family` 那一格會被反捏造守衛紅、改 `config.vfx-families@1.abilities[]`
+ * 會被產生器洗掉、改 `prim` 那一格是**死改動**（family 贏 prim）。
+ *
+ * ⭐ 所以覆寫是**同一列的第四格**，⛔ 不是改寫證據那一格：
+ * 被取代的原作值**原封留在隔壁的 `family` 格**（測試可以跟著設計走，
+ * 知識不可以無聲消失），反捏造守衛因此**一格都不必放寬**。
+ * 逐支的清單另存在 `docs/legacy/_w3x-fidelity-superseded.md`。
+ *
+ * 優先序（`familyTuning.resolveFamilyArt` 逐欄套用）：
+ * **後台 live 覆寫 > 這一格 > 證據 > 家族預設**。後台仍然贏，因為那也是 owner，
+ * 只是他當下的手；這一格是**出貨預設**，⛔ 這正是 GH#431 說後台 overlay 補不了的那半。
+ */
+export const zVfxOwnerBinding = z
+  .object({
+    /** 改用哪一個家族原型（天譴：`shockwaveRing` → `lightColumn`） */
+    family: zW3xFamilyId.optional(),
+    /** 覆寫縮放，與證據的 `scale` 同一個 w3x 空間 */
+    scale: z.number().min(0.05).max(20).optional(),
+    /** 覆寫染色，0..255 */
+    tint: zW3xTint255.optional(),
+    /** 覆寫飛行高度，WC3 單位 */
+    flyHeight: z.number().min(-2000).max(2000).optional(),
+    /** 覆寫掛點字串（`chest`／`origin`／`right,hand`） */
+    anchor: z.string().min(1).max(32).optional(),
+    /**
+     * **為什麼**要推翻原作 —— owner 的原話或裁決日期。⛔ 必填。
+     *
+     * ⚠️ 它不是註解：一格沒有理由的覆寫，半年後沒有人分得出是設計還是手滑，
+     * 於是它會被「修回原作」。第〇·六守則要的是**知道自己在推翻第 5 層**。
+     */
+    why: z.string().min(8).max(400),
+  })
+  .strict()
+  .refine(
+    (r) => !!(r.family ?? r.scale ?? r.tint ?? r.flyHeight ?? r.anchor),
+    "⛔ 只寫 `why` 的覆寫逐位元等於不存在（第一·五守則）—— 至少要覆寫 family／scale／tint／flyHeight／anchor 其中一格",
+  );
+export type VfxOwnerBinding = z.infer<typeof zVfxOwnerBinding>;
+
 const zVfxAbilityArtRow = z
   .object({
     prim: zVfxPrimBinding.optional(),
     family: zVfxFamilyBinding.optional(),
+    /** GH#431 —— owner 的設計覆寫，蓋在 `family` 那一格上面（證據原封保留） */
+    owner: zVfxOwnerBinding.optional(),
     promoted: zVfxPromotedBinding.optional(),
   })
   .strict();
@@ -1264,12 +1365,17 @@ export const zConfigVfxAbilityArtDoc = z
     id: zId,
     schema: z.literal("config.vfx-ability-art@1"),
     /**
-     * 技能文件 id → 這一支的三層綁定。
+     * 技能文件 id → 這一支的四層綁定。
      *
-     * ⚠️ 一列三格全空是沒有意義的，所以至少要有一格；空的那一列會讓這支技能
+     * ⚠️ 一列四格全空是沒有意義的，所以至少要有一格；空的那一列會讓這支技能
      * **完全沒有特效**，而那正是這份文件要消滅的那種安靜失敗。
      */
-    bindings: z.record(zVfxAbilityArtRow.refine((r) => !!(r.prim ?? r.family ?? r.promoted), "一列至少要有 prim / family / promoted 其中一格")),
+    bindings: z.record(
+      zVfxAbilityArtRow.refine(
+        (r) => !!(r.prim ?? r.family ?? r.owner ?? r.promoted),
+        "一列至少要有 prim / family / owner / promoted 其中一格",
+      ),
+    ),
   })
   .strict();
 export type ConfigVfxAbilityArtDoc = z.infer<typeof zConfigVfxAbilityArtDoc>;

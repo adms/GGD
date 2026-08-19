@@ -28,6 +28,7 @@ import {
   boundsFor,
   displayValue,
   docIfMatches,
+  elsewhereCovers,
   fieldRows,
   getAt,
   parseFieldInput,
@@ -49,11 +50,46 @@ describe("設定文件標籤表 (adminui-config-forms-labels)", () => {
     cover("adminui-config-forms-labels");
     for (const spec of CONFIG_DOC_SPECS) {
       const { leaves } = readSchema(spec.zod);
-      const schemaPaths = leaves.map((l) => l.path).sort();
+      // ⚠️ GH#410：`elsewhere` 是**唯一**合法的第二個去向（那一格由別頁編輯，
+      // 或整塊缺席所以刻意不畫）。它和 `preserved` 同一個形狀 —— 一列一個看得見
+      // 的決定 + 一行說得出「那它在哪裡編」，⛔ 不是一個「這一頁只畫我列的那些」
+      // 的旗標（那會讓漏接重新變成靜默的）。
+      const schemaPaths = leaves
+        .map((l) => l.path)
+        .filter((p) => !elsewhereCovers(spec, p))
+        .sort();
       const labelPaths = spec.fields.map((f) => f.path).sort();
       // 兩個方向都要：少寫 = 操作者少一個旋鈕而且不會知道；
       // 多寫 = 標籤表指著一個不存在的欄位，儲存時才會炸。
       expect(labelPaths, `${spec.docId} 的標籤表與 schema 對不上`).toEqual(schemaPaths);
+    }
+  });
+
+  it("`elsewhere` 的每一列都涵蓋到真的葉節點，而且寫得出「那它在哪裡編」", () => {
+    cover("adminui-config-forms-labels");
+    // ⚠️ 沒有這一條的話 `elsewhere` 就是一個許願池：打錯一個路徑（`mobWave`）
+    // 不會有任何反應，而它涵蓋不到的那 150 格會**同時**從標籤表與畫面上消失，
+    // 上面那條斷言照樣綠 —— 那正是這個逃生口最可能腐爛的方式。
+    for (const spec of CONFIG_DOC_SPECS) {
+      const { leaves } = readSchema(spec.zod);
+      for (const e of spec.elsewhere ?? []) {
+        expect(
+          leaves.some((l) => l.path === e.path || l.path.startsWith(`${e.path}.`)),
+          `${spec.docId}.elsewhere 的 "${e.path}" 在 schema 裡涵蓋不到任何葉節點`,
+        ).toBe(true);
+        expect(
+          e.why.length,
+          `${spec.docId}.elsewhere 的 "${e.path}" 沒說它在哪一頁編`,
+        ).toBeGreaterThan(30);
+        expect(HAS_CJK.test(e.why)).toBe(true);
+      }
+      // 一格不可以「既畫在這裡、又宣告在別頁」——那是兩個輸入框改同一個數字。
+      for (const f of spec.fields) {
+        expect(
+          elsewhereCovers(spec, f.path),
+          `${spec.docId}.${f.path} 同時有標籤又被 elsewhere 涵蓋`,
+        ).toBe(false);
+      }
     }
   });
 
@@ -136,6 +172,8 @@ describe("設定文件標籤表 (adminui-config-forms-labels)", () => {
       const { leaves } = readSchema(spec.zod);
       for (const leaf of leaves) {
         if (leaf.kind !== "number") continue;
+        // 別頁在編的那幾格不畫在這裡，界由那一頁自己負責（GH#410）。
+        if (elsewhereCovers(spec, leaf.path)) continue;
         const label = spec.fields.find((f) => f.path === leaf.path)!;
         const bounds = boundsFor(leaf, label);
         expect(
@@ -171,6 +209,7 @@ describe("設定文件標籤表 (adminui-config-forms-labels)", () => {
       const { leaves } = readSchema(spec.zod);
       for (const leaf of leaves) {
         if (leaf.kind !== "enum") continue;
+        if (elsewhereCovers(spec, leaf.path)) continue;
         const label = spec.fields.find((f) => f.path === leaf.path)!;
         for (const opt of leaf.options) {
           expect(

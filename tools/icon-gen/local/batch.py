@@ -120,13 +120,30 @@ def _method_stamp() -> str:
     ⚠️ 這正是 CLAUDE.md 那條元規則的形狀：**判準要靠人記得，閘不用。**
     把風格併進戳記之後，「改了風格 ⇒ 要重畫」從一句要背的話變成一個算式。
 
-    ⛔ digest 只吃**真的會改變畫面**的兩格（stylePrompt / negativePrompt），
+    ⛔ digest 只吃**真的會改變畫面**的三格（stylePrompt / negativePrompt / loras），
     ⛔ 不吃 strength / steps / guidance —— 那幾格改了確實會讓圖不同，但它們是
     操作者**試火候**時每天在動的旋鈕，併進去會讓每一次試參數都全量重畫 1010 張。
     要因為火候重畫，用 `--force`。
+
+    ⭐ `loras` 是 2026-08-19（GH#457）加進來的，理由跟風格那兩格**逐字相同**：
+    掛上一顆 LoRA 是「換一個畫風」而不是「調一格火候」，少了它，owner 掛了 LoRA
+    之後 batch.py 會把 1,010 張全部 skip 掉，畫面上什麼都沒變。
+
+    ⭐ 同一天一起補上的還有 **PASS 1 的構圖框架**（`keywords.PASS1_FRAME` /
+    `PASS1_NEG_*`）。⛔ 在此之前戳記只看 PASS 2 的風格 —— 於是 owner 的
+    「圖示⛔不應該直接畫出角色」改在 PASS 1，而**一張圖都不會重畫**。
+    ⚠️ digest 吃的是**框架**（那四段釘死的模板字），⛔ 不是逐份文件算出來的完整
+    提示詞：後者會讓每改一條詞條就重畫那一張，而框架才是「art direction」。
     """
     style = keywords.load_icon_style()
-    raw = "%s\n%s" % (style.get("stylePrompt", ""), style.get("negativePrompt", ""))
+    raw = "%s\n%s\n%s\n%s\n%s\n%s" % (
+        style.get("stylePrompt", ""),
+        style.get("negativePrompt", ""),
+        json.dumps(style.get("loras") or [], sort_keys=True, ensure_ascii=False),
+        json.dumps(keywords.PASS1_FRAME, sort_keys=True, ensure_ascii=False),
+        keywords.PASS1_NEG_BASE,
+        keywords.PASS1_NEG_NO_CHARACTER,
+    )
     digest = hashlib.sha256(raw.encode("utf-8")).hexdigest()[:12]
     return "%s+style:%s" % (keywords.METHOD_VERSION, digest)
 
@@ -387,7 +404,10 @@ def render_two_pass(item: dict, args):
     p1_pos, p1_neg, signal = keywords.pass1_prompt(fam, doc)
     p2_pos, p2_neg = keywords.pass2_prompt(fam, doc)
     seed = args.seed if args.seed is not None else _stable_seed(item["id"])
-    base = pipeline.generate(p1_pos, p1_neg, size=pipeline.NATIVE,
+    # ⛔ size=None（＝「不要縮」），⛔ 不是 pipeline.NATIVE：NATIVE 是 SD1.5 的 512，
+    # 而 PASS 2 會把 init 圖拉回**載入的那個模型**的原生邊長。寫死 512 的話，SDXL
+    # 這條路會 1024→512→1024 來回兩次，白白多花時間又把細節磨掉一輪。
+    base = pipeline.generate(p1_pos, p1_neg, size=None,
                              steps=args.pass1_steps, guidance=args.pass1_guidance,
                              seed=seed)
     styled = pipeline.stylize(base, p2_pos, p2_neg, strength=args.strength,
@@ -401,7 +421,17 @@ def run_batch(work: list[dict], args) -> dict:
     made = skipped = failed = fields = capped = 0
     render_cap = args.limit
     t_start = time.time()
-    print(f"batch: model {os.environ.get('ICON_GEN_MODEL', pipeline.DEFAULT_MODEL)}")
+    model = os.environ.get("ICON_GEN_MODEL", pipeline.DEFAULT_MODEL)
+    # ⭐ 架構印出來是**從檔案讀的**，⛔ 不是從檔名猜的 —— 操作者換了 checkpoint
+    #    卻沒換到架構（例如把一個 SDXL 檔命名成 …sd15…）時，這一行是唯一看得出來
+    #    的地方。⚠️ 包 try：hub repo id 這條路要讀一次遠端 config，而 `--dry-run`
+    #    本來就不該因為沒網路而死。
+    try:
+        detected = pipeline.detect_arch(model)
+        where = f"{detected}, native {pipeline.NATIVE_BY_ARCH[detected]}px"
+    except Exception as exc:                      # noqa: BLE001 — 只是印一行
+        where = f"architecture unread: {exc}"
+    print(f"batch: model {model} ({where})")
     print(f"batch: two-pass, {total} in worklist, size {args.size}px, "
           f"img2img strength {args.strength}"
           + (f", render cap {render_cap}" if render_cap is not None else ""))

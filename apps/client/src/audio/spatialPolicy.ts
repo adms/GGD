@@ -33,6 +33,8 @@
  * you) is centred no matter where its coordinate says it happened.
  */
 import { CENTRED_EVENTS, EVENT_SPATIAL } from "./combatSfxSpatial";
+import { SFX_REACH_BY_KEY } from "./sfxReachability";
+import type { SpatialSource } from "./spatial";
 
 /**
  * Where a sound is allowed to be placed.
@@ -182,21 +184,21 @@ export const VOICE_CATEGORY_POLICY: Readonly<Record<string, VoicePolicyRow>> = {
   "unstoppable": { policy: "self", reason: "your streak", dispatched: true },
 
   // ── dormant: no dispatch site yet; the decision is pre-made ──────────────
-  "knockdown": { policy: "world", reason: "would be spoken by the floored champion", dispatched: false },
-  "taunt": { policy: "world", reason: "would be spoken by a champion standing somewhere", dispatched: false },
-  "charge": { policy: "world", reason: "would be a champion's own charge-up", dispatched: false },
-  "jump": { policy: "world", reason: "#247 leapStart has no sound at all yet; it belongs to a body", dispatched: false },
+  "knockdown": { policy: "world", reason: "GH#441 —— 由 `knockdown` 事件的受害者說（GameApp.dispatchContextualVoice）", dispatched: true },
+  "taunt": { policy: "world", reason: "GH#441 —— shopPerformVoice 早就在播它（celebrate/spell/attack 三種表演）；商店場景沒有 world listener ⇒ 那條路置中，戰鬥若接上仍走 world", dispatched: true },
+  "charge": { policy: "world", reason: "GH#441 —— shopPerformVoice 的 spell/attack 表演已在播；商店無 world listener ⇒ 置中，戰鬥若接上仍走 world", dispatched: true },
+  "jump": { policy: "world", reason: "GH#441 —— 由 ENTITY_FLAG.AIRBORNE 的上升緣說（#247 的 leap 在飛）；它屬於一具身體", dispatched: true },
   "poison": { policy: "world", reason: "status line — same family as stun/slow/bind", dispatched: false },
   "blind": { policy: "world", reason: "status line", dispatched: false },
   "paralyzed": { policy: "world", reason: "status line", dispatched: false },
   "confused": { policy: "world", reason: "status line", dispatched: false },
   "retreat": { policy: "self", reason: "a call YOU make", dispatched: false },
-  "free-move": { policy: "self", reason: "your own movement barks", dispatched: false },
+  "free-move": { policy: "self", reason: "GH#441 —— shopPerformVoice 的 pose 表演已在播；你自己的英雄，置中", dispatched: true },
   "love": { policy: "self", reason: "emote — yours", dispatched: false },
   "puzzled": { policy: "self", reason: "emote — yours", dispatched: false },
-  "thanks": { policy: "self", reason: "emote — yours", dispatched: false },
-  "thumbs-up": { policy: "self", reason: "emote — yours", dispatched: false },
-  "watch": { policy: "self", reason: "emote — yours", dispatched: false },
+  "thanks": { policy: "self", reason: "GH#441 —— shopPerformVoice 的 talk/nod 表演已在播；你自己的英雄，置中", dispatched: true },
+  "thumbs-up": { policy: "self", reason: "GH#441 —— shopPerformVoice 的 celebrate 表演已在播；你自己的英雄，置中", dispatched: true },
+  "watch": { policy: "self", reason: "GH#441 —— shopPerformVoice 的 pose 表演已在播；你自己的英雄，置中", dispatched: true },
   "respond.ok": { policy: "self", reason: "ping response — yours", dispatched: false },
   "respond.no": { policy: "self", reason: "ping response — yours", dispatched: false },
 };
@@ -220,4 +222,55 @@ export function combatEventPolicy(eventType: string): SpatialPolicy | null {
   if (EVENT_SPATIAL[eventType]) return "world";
   if (CENTRED_EVENTS[eventType]) return "flat";
   return null;
+}
+
+// ───────────────────────────────────────────────────────────────────────────
+// GH#440 —— 政策表的**單一入口**（在這之前它一個出貨呼叫端都沒有，見 GH#441）
+// ───────────────────────────────────────────────────────────────────────────
+
+/**
+ * 一個 SFX **key** 的空間政策，⛔ 不是「觸發它的那顆事件」的政策。
+ *
+ * ⚠️ 這個區別就是 GH#440 的整個缺陷。`combatSfxSpatial` 是按 **`ev.type`** 分類的
+ * （一顆事件一發聲音的世界裡那是對的），而 GH#390 的特效自帶音效打破了那個假設：
+ * 同一顆 `abilityCast` 現在會播**別的 key**（家族的 `soundLaunch` / `soundLoop`）。
+ * 於是 `fireRingLoop`（政策 flat，理由「火圈包住你，非方向性」）被 tornado /
+ * flamePillar / breath 當成循環音掛在施法者身上 —— **被 pan 掉，而兩張表都沒有反對過**，
+ * 因為沒有人問過 key 自己的政策。
+ *
+ * ⭐ 推導，⛔ 不是第四張手寫表（第一守則：一個事實一個住處）：
+ *   • client 播的 key → {@link CLIENT_SFX_POLICY} 那一列（explicit）
+ *   • combat 播的 key → 它**自己那一列**登記的事件，經 {@link combatEventPolicy}
+ *     （任何一顆事件是刻意置中的 ⇒ 整個 key 置中，⛔ 保守那一邊）
+ *   • 兩邊都沒有 → **null**。呼叫端一律置中（fail-safe：沒宣告過的東西不准被 pan），
+ *     而 `sfxPolicyGate.test.ts` 會**紅**，⛔ 不是靜默吃掉。
+ */
+export function sfxKeyPolicy(key: string): SpatialPolicy | null {
+  const client = CLIENT_SFX_POLICY[key];
+  if (client) return client.policy;
+  const row = SFX_REACH_BY_KEY.get(key);
+  const events = row?.kind === "combat" ? (row.events ?? []) : [];
+  if (events.length === 0) return null;
+  let sawWorld = false;
+  for (const ev of events) {
+    const p = combatEventPolicy(ev);
+    if (p === null) return null; // 事件本身沒分類 ⇒ 這個 key 也沒有
+    if (p !== "world") return "flat"; // 保守：任何一顆刻意置中 ⇒ 整個 key 置中
+    sawWorld = true;
+  }
+  return sawWorld ? "world" : null;
+}
+
+/**
+ * ⭐ **每一發送進 `SpatialSfxQueue` 的聲音都要先經過這裡。**
+ *
+ * 回傳呼叫端提出的那個位置，或 **null**（＝置中播放，⛔ 不是不播）。null 有三個
+ * 來源，呼叫端**不需要**分辨：政策說 flat／政策說 self／這個 key 根本沒有政策。
+ * 三種的正解都一樣 —— 置中。
+ *
+ * ⛔ 它不會把 null 變成一個位置：政策只會**拿掉**位置，永遠不會憑空給一個。
+ */
+export function spatialSourceFor(key: string, source: SpatialSource | null): SpatialSource | null {
+  if (!source) return null;
+  return sfxKeyPolicy(key) === "world" ? source : null;
 }

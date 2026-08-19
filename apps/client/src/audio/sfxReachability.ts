@@ -180,11 +180,15 @@ export const SFX_REACHABILITY: readonly SfxReachRow[] = [
   { key: "wc3.moongo", kind: "combat", site: COMBAT_SFX_SITE, events: ["abilityCast"], payload: { abilityCast: ["sfxKey"] } },
   { key: "wc3.moonjump", kind: "combat", site: COMBAT_SFX_SITE, events: ["abilityCast"], payload: { abilityCast: ["sfxKey"] } },
   { key: "wc3.nocute", kind: "combat", site: COMBAT_SFX_SITE, events: ["abilityCast"], payload: { abilityCast: ["sfxKey"] } },
-  // The stock-MPQ wave of the same surface (combatSfx.WC3_OVERLAY_ABILITY_SFX).
-  // Same ride, one extra gate: the clips are Blizzard-owned and live in the
-  // dev-only assets/blizzard-local/ mount, so combatSfx.wc3CastKey answers these
-  // keys only on full-asset builds (config/fullAssets) — a public bundle routes
-  // the cast to the element/generic voice instead of a URL prod never serves.
+  // The stock-MPQ wave of the same surface — SAME ride, SAME gate, no extra one.
+  // ⚠️ 這裡曾經寫著「這 49 個住在 dev-only 的 assets/blizzard-local/ mount，所以
+  // combatSfx.wc3CastKey 只在 full-asset build 上回答它們」。**那句話現在是假的**
+  // （第三守則）：owner 2026-08-19 把位元組搬進 content/assets/audio/wc3/（進版控、
+  // 正式站供應，出處帳本 PROVENANCE.md），GH#402 隨之拆掉 WC3_OVERLAY_ABILITY_SFX
+  // 與 config/fullAssets 那道閘 —— combatSfx 現在只有**一個**宣告集合。
+  // sfxManifest.ts 同一天更正了同一句話，這一份漏掉了，而這一份正是 credits 頁
+  // 「已啟用／收錄未啟用」徽章的依據。真相由 combatSfx.test.ts **讀 audio-map**
+  // 守著（⛔ 不抄名單）：哪天真的又有 clip 只在 overlay 裡，它會紅並要求把閘做回來。
   { key: "wc3.akamapissed8", kind: "combat", site: COMBAT_SFX_SITE, events: ["abilityCast"], payload: { abilityCast: ["sfxKey"] } },
   { key: "wc3.altarofelderswhat1", kind: "combat", site: COMBAT_SFX_SITE, events: ["abilityCast"], payload: { abilityCast: ["sfxKey"] } },
   { key: "wc3.axemissilelaunch1", kind: "combat", site: COMBAT_SFX_SITE, events: ["abilityCast"], payload: { abilityCast: ["sfxKey"] } },
@@ -375,22 +379,43 @@ export const SFX_REACHABILITY: readonly SfxReachRow[] = [
     reason:
       "Shadowed on purpose. `damage` owns the single hit voice, so sounding basicAttackHit too would double-thud; the case returns arrowPierce for a tracked arrow, otherwise silence.",
   },
-  // #3-ERA ORPHANS: authored for a hit-weight model that was replaced by the
-  // damage-driven hit voice. No caller anywhere in the client.
+  // ⭐ GH#440 —— 這三個**不再是** #3 時代的孤兒。它們曾經是（權重分級的 hit 模型
+  // 被 dmgType 驅動的 hit / hitMagic / hitTrue 取代之後就沒有呼叫端了），而 GH#390
+  // 把它們接回來了：`vfx-families.json` 的 `soundImpact` 綁著它們
+  // （burst / boltStrike / flamePillar → hit-heavy，tornado / lightColumn →
+  //  hit-medium，breath → hit-light），一共 **73 支技能**。
+  //
+  // ⚠️ 留著 `unreachable` 的代價**不是**「版權頁少算一格」，而是
+  // `spatialPolicy.test.ts` 的兩條窮盡性測試都寫 `if (row.kind !== …) continue;`
+  // —— 一個被標成 unreachable 的 key 會**從兩張表的守備範圍消失**，於是它零宣告
+  // 就被空間化。這三列改回 combat 之後，它們的政策由自己所騎的事件推導
+  // （damage / projectileHit 都是 EVENT_SPATIAL ⇒ world），⛔ 不再是「沒有人反對過」。
   {
     key: "hit-light",
-    kind: "unreachable",
-    reason: "#3-era orphan: the weight-tiered hit model was replaced by the dmgType-driven hit / hitMagic / hitTrue voice. No caller.",
+    kind: "combat",
+    site: VFX_SOUND_SITE,
+    events: ["damage", "projectileHit"],
+    payload: { damage: ["origin"], projectileHit: ["origin"] },
+    note: "families.breath.soundImpact — 4 支。",
   },
   {
     key: "hit-medium",
-    kind: "unreachable",
-    reason: "#3-era orphan: superseded by the dmgType-driven hit voice. No caller.",
+    kind: "combat",
+    site: VFX_SOUND_SITE,
+    events: ["damage", "projectileHit"],
+    payload: { damage: ["origin"], projectileHit: ["origin"] },
+    note: "families.tornado / lightColumn 的 soundImpact — 14 支。",
   },
   {
     key: "hit-heavy",
-    kind: "unreachable",
-    reason: "#3-era orphan: superseded by the dmgType-driven hit voice. No caller.",
+    kind: "combat",
+    site: VFX_SOUND_SITE,
+    events: ["damage", "projectileHit"],
+    payload: { damage: ["origin"], projectileHit: ["origin"] },
+    // ⚠️ `families.blood.soundLaunch` 也填著這個 key，但**沒有任何技能的 family 是
+    // `blood`**（同型空綁定，見 GH#440）—— 所以這一列刻意**不**宣稱它騎 abilityCast：
+    // 那會是一個沒有乘客的宣稱。blood 真的被綁上技能的那天要回來補 abilityCast。
+    note: "families.burst / boltStrike / flamePillar 的 soundImpact — 55 支。",
   },
   {
     key: "hit-crit",

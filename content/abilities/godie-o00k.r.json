@@ -3,7 +3,7 @@
   "name": "86-04 打雷絕招",
   "icon": "assets/icons/abilities/godie-o00k.r.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n60秒冷卻時間\n\n放出全身積蓄的電壓瘋狂電擊範圍300距離內的敵人並使之暈眩0.5秒，每個敵人將會受到雷擊造成150點傷害並向旁邊的單位傳遞，共傳遞16次，聚集越多敵人則造成的傷害會越大。",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n放出全身積蓄的電壓，瘋狂電擊周圍的敵人並使之暈眩0.5秒。範圍內的敵人（最多20名）各自引爆一條獨立的連鎖閃電：第一發造成150點傷害，之後每隔0.05秒隨機跳向附近還沒被這條鏈打到過的敵人，一條鏈最多打到16個敵人（含起點），每跳一次傷害只剩前一次的九成。聚集越多敵人，同時飛的閃電就越多。",
   "slot": "R",
   "castType": "ground",
   "maxRank": 3,
@@ -18,25 +18,33 @@
     350
   ],
   "range": 0,
-  "effects": [],
-  "template": {
-    "ref": "tpl-proxy-cast",
-    "params": {
-      "anchor": "point",
-      "radius": 300,
-      "damage": {
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "statusId": "burnstun",
+      "duration": 0.5,
+      "stun": true
+    },
+    {
+      "kind": "chainLightning",
+      "shape": "circle",
+      "centre": "point",
+      "radius": 5.5,
+      "maxSources": 20,
+      "damageType": "magic",
+      "amount": {
         "perRank": [
-          150,
-          200,
-          250
+          150.0,
+          200.0,
+          250.0
         ]
       },
-      "damageType": "magic",
-      "castTimeSec": 0.5,
-      "statusId": "burnstun",
-      "statusDurationSec": 0.5
+      "jumps": 16,
+      "jumpRange": 24.0,
+      "decay": 0.9,
+      "jumpIntervalSec": 0.05
     }
-  },
+  ],
   "vfxKey": "fx.prim.lightning.beam-lg",
   "targetsEnemies": true,
   "radius": 5.5,

@@ -27,6 +27,9 @@ import {
   SPAWN_CLEARANCE_BODY_RADII_MIN,
   NAV_HEADROOM_MAX,
   NAV_HEADROOM_MIN,
+  SPAWN_ROOM_BODY_RADII_MAX,
+  SPAWN_ROOM_BODY_RADII_MIN,
+  SPAWN_ROOM_BODY_RADII_SHIPPED,
   SPAWN_POCKET_PATH_FACTOR_MAX,
   SPAWN_POCKET_PATH_FACTOR_MIN,
   TILE_SIZE_MAX,
@@ -244,6 +247,16 @@ export const zConfigMapSpecDoc = z
               "⭐ 最大身體半徑從出貨的 mobWaves 推導，⛔ 不是寫死的公尺數 —— " +
               "調胖殭屍時門檻自己跟著長。1 = 剛好塞得下（等於關掉這把尺）。",
           ),
+        minSpawnRoomBodyRadii: z
+          .number()
+          .min(SPAWN_ROOM_BODY_RADII_MIN)
+          .max(SPAWN_ROOM_BODY_RADII_MAX)
+          .describe(
+            "剛生出來的身體，至少要能往某個方向直線移動**幾個身體半徑**。" +
+              "⚠️ 與上面那一格是**兩件事**：那個問「這條路夠不夠寬」，" +
+              "這個問「這一個落點離不離得開」。",
+          )
+          .optional(),
       })
       .strict()
       .optional(),
@@ -341,8 +354,15 @@ export const DEFAULT_MAP_SPAWN: MapSpawnSpec = {
   maxPocketPathFactor: 0.8,
 };
 
-/** 通道淨空的餘裕倍率。⚠️ 具名而且非選填，理由同 {@link MapIntroSpec}。 */
-export type MapNavSpec = NonNullable<ConfigMapSpecDoc["nav"]>;
+/**
+ * 通道淨空的兩把尺。⚠️ 具名而且非選填，理由同 {@link MapIntroSpec}。
+ *
+ * ⚠️ `Required<>` 是**刻意**的：`minSpawnRoomBodyRadii` 在 schema 上是 `.optional()`
+ * （⛔ 不可以改成必填 —— 已經部署出去的 bundle 裡那份文件沒有這一格，必填會讓
+ *  **整份內容載入失敗**然後 fail-open 退回 2 隻骨架，那正是 2026-08-02 事故的形狀），
+ * 但**解析之後**它一定有值。
+ */
+export type MapNavSpec = Required<NonNullable<ConfigMapSpecDoc["nav"]>>;
 
 /**
  * ⭐ 出貨值 **1.5**（owner 2026-08-19：「地圖路徑缺口大一點 **不要那麼小氣**
@@ -354,8 +374,15 @@ export type MapNavSpec = NonNullable<ConfigMapSpecDoc["nav"]>;
  * ⚠️ 選 1.5 而不是「剛好過」（1.0）的理由是**成本**，不是手感：GH#387/#388 的餘裕
  * 分別只有 0.92 與 0.43 單位，而 owner 每週在調 `radiusMult` —— 一次微調就要再走一次
  * 「量→改→重測」。1.5 讓那一格可以動到 **1.5 倍**才需要有人回頭看。
+ *
+ * ⭐ `minSpawnRoomBodyRadii` 出貨 **1**（GH#398）——「至少動得了自己一個半徑」。
+ * ⛔ 這個數字**沒有第二個住處**：它就是 `map/spec.ts::SPAWN_ROOM_BODY_RADII_SHIPPED`，
+ * runtime（`spotHasRoom` 的預設值）與這一格讀的是**同一個常數**，所以不可能漂移。
  */
-export const DEFAULT_MAP_NAV: MapNavSpec = { headroom: 1.5 };
+export const DEFAULT_MAP_NAV: MapNavSpec = {
+  headroom: 1.5,
+  minSpawnRoomBodyRadii: SPAWN_ROOM_BODY_RADII_SHIPPED,
+};
 
 /** 常駐角落地名的三格。⚠️ 具名而且非選填，理由同 {@link MapIntroSpec}。 */
 export type MapCornerLabelSpec = NonNullable<ConfigMapSpecDoc["cornerLabel"]>;
@@ -411,7 +438,14 @@ export function resolveMapSpec(doc?: Partial<ConfigMapSpecDoc> | null): typeof D
     topology: { ...DEFAULT_MAP_SPEC.topology, ...(doc.topology ?? {}) },
     interactions: { ...DEFAULT_MAP_SPEC.interactions, ...(doc.interactions ?? {}) },
     spawn: { ...DEFAULT_MAP_SPAWN, ...(doc.spawn ?? {}) },
-    nav: { ...DEFAULT_MAP_NAV, ...(doc.nav ?? {}) },
+    // ⚠️ ⛔ 不可以寫成 `{ ...DEFAULT_MAP_NAV, ...doc.nav }`：`minSpawnRoomBodyRadii`
+    //    在 schema 上是 optional，spread 之後型別會變成 `number | undefined`
+    //    （同 {@link MapIntroSpec} 檔頭記的那個 tsc 陷阱）。
+    nav: {
+      headroom: doc.nav?.headroom ?? DEFAULT_MAP_NAV.headroom,
+      minSpawnRoomBodyRadii:
+        doc.nav?.minSpawnRoomBodyRadii ?? DEFAULT_MAP_NAV.minSpawnRoomBodyRadii,
+    },
     severity: { ...DEFAULT_MAP_SPEC.severity, ...(doc.severity ?? {}) },
     intro: { ...DEFAULT_MAP_INTRO, ...(doc.intro ?? {}) },
     cornerLabel: { ...DEFAULT_MAP_CORNER_LABEL, ...(doc.cornerLabel ?? {}) },

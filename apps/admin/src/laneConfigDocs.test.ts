@@ -60,7 +60,7 @@ import { DEFAULT_VICTORY_PODIUM } from "@ggd/shared/content/schema/victoryPodium
 // 出貨值。抄一份數字進來比對等於製造第三份會 drift 的知識。
 // 兩個模組都是葉節點（valhallaSandboxRules 零 import、lobbyLayout 只 import react），
 // 所以在 node 環境的 vitest 裡拉得動,不會把 Babylon 拖進來。
-import { lobbyLayoutProblems, DEFAULT_LOBBY_LAYOUT } from "../../client/src/ui/platform/lobbyLayout";
+import { lobbyLayoutProblems, DEFAULT_LOBBY_LAYOUT, ALL_SLOTS } from "../../client/src/ui/platform/lobbyLayout";
 import {
   DEFAULT_VALHALLA_SANDBOX,
   VALHALLA_SANDBOX_BOUNDS,
@@ -134,10 +134,15 @@ describe("三份新 config 文件真的被接進出貨路徑 (adminui-lane-confi
       lobbyLayoutProblems(DEFAULT_LOBBY_LAYOUT),
       "出貨的大廳排版政策自己就不合法",
     ).toEqual([]);
-    // 三塊都在(owner 要的是**三個**區域,不是兩個) —— 這是 owner 明說的那一件事。
-    expect(new Set(DEFAULT_LOBBY_LAYOUT.stackOrder)).toEqual(
-      new Set(["friends", "online", "leaderboard"]),
-    );
+    // 每一塊都在,兩種模式都不會掉 —— owner 逐次點名過的區域(2026-08-03 線上玩家、
+    // 2026-08-19 GH#454 宿敵榜),⛔ 不是「有幾塊」這個數字。
+    for (const order of [DEFAULT_LOBBY_LAYOUT.stackOrder, DEFAULT_LOBBY_LAYOUT.splitOrder]) {
+      expect(new Set(order)).toEqual(new Set(ALL_SLOTS));
+    }
+    // 而且 owner 的那句「列在朋友列表跟積分排行榜之間」在桌機順序上真的成立。
+    const split = DEFAULT_LOBBY_LAYOUT.splitOrder;
+    expect(split.indexOf("nemesis")).toBeGreaterThan(split.indexOf("friends"));
+    expect(split.indexOf("nemesis")).toBeLessThan(split.indexOf("leaderboard"));
     // ④ resolver 真的把文件的值搬出來（不是永遠回預設）
     const parsed = zConfigLobbyLayoutDoc.parse({ ...doc, friendsShare: 0.7 });
     expect(resolveLobbyLayout(parsed).friendsShare).toBe(0.7);

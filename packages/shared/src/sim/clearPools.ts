@@ -282,8 +282,9 @@ export function clearPools(
 /**
  * 「這一局對這個身體結束了」—— 復活與回合重置共用的那一組。
  *
- * 三個站點（`revive.ts`、`MatchController` 的兩個 `enterCombat`）**全部**走它，
- * 所以「復活清什麼」與「開新回合清什麼」在結構上不可能再分岔。
+ * `revive.ts` 直接走它；回合邊界那一族改走 {@link restoreForNextRound}（它把
+ * 「滿血滿魔站起來」也包進來，見下面）。所以「復活清什麼」與「開新回合清什麼」
+ * 在結構上不可能再分岔。
  *
  * ⚠️ `requireDispellable: false` 是刻意的：這不是淨化，是重置。一個標了
  * 不可驅散的減速也不可以跨過墳墓／回合活下來。
@@ -294,6 +295,41 @@ export function clearForFreshBody(world: SimWorld, id: EntityId): ClearPoolsResu
     polarity: "any",
     requireDispellable: false,
   });
+}
+
+/**
+ * ⭐ GH#455 —— 「這具身體準備好打下一回合了」：站起來、滿血、滿魔，**而且**
+ * 上一回合的池子（狀態／護盾／延燒）已經清乾淨。
+ *
+ * ── 它為什麼存在 ─────────────────────────────────────────────────────────
+ * 這四行以前**逐字散在 `MatchController` 的四條路徑上**（決鬥擺位 / 大亂鬥
+ * 擺位 / 練習入場 / 練習自動復活），而那四處**全部**在 `enterCombat` ——
+ * 也就是**下一回合開打的那一刻**。於是中場（商店）整段期間，玩家身上帶的是
+ * 上一回合打完的殘血，而中場的功能正好就是**看著自己的數字做採買決策**
+ * （GH#106 的即時屬性預覽刻意做成「不可以說謊」的東西 —— 它在說謊）。
+ *
+ * ⛔ **修法不是把那幾行再抄一份到 `enterIntermission`**：那是第五個住處，
+ * 下一次有人加一格（充能、某個回合資源）就會漏掉其中一站 —— 而漏掉的那一站
+ * 只在某一種擺位路徑上發作，測起來像隨機故障（`placeRoyale` 的註解自己就
+ * 為了同一件事寫過警告）。⇒ 一支函式，五個站點全走它。
+ *
+ * ⚠️ **回滿與清池必須綁在一起**，這是把還原搬早之後才成立的約束：只回滿而
+ * 不清池的話，上一回合那份延燒會在中場繼續扣，而且是扣在**剛剛被補滿**的
+ * 血條上 —— 比原本的殘血更難看懂。
+ *
+ * ⚠️ **冪等是承重的**：中場呼叫過之後 `enterCombat` 仍然照呼叫一次，因為
+ * `enterIntermission` **是可以被跳過的**（`skipPhase` 作弊與 fault failsafe
+ * 都會直接推進到 `enterCombat`；理由與 `resetMarksForRound` 那一段第 3 點
+ * 逐字相同）。而且中場期間玩家會買東西 → `maxHp` 變大 → 開打前要再頂一次。
+ */
+export function restoreForNextRound(world: SimWorld, id: EntityId): ClearPoolsResult {
+  const hp = world.health.get(id);
+  if (hp) {
+    hp.alive = true;
+    hp.hp = hp.maxHp;
+    hp.mana = hp.maxMana;
+  }
+  return clearForFreshBody(world, id);
 }
 
 /**

@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_7ed50f24c2f2",
+    "contentVersion": "cv_01e23b92c319",
     "collections": {
       "champions": {
-        "hash": "0d92a71d690b",
+        "hash": "e19c20a4f4e7",
         "count": 78
       },
       "abilities": {
-        "hash": "88c4714e5abb",
+        "hash": "5d504d7e515f",
         "count": 461
       },
       "items": {
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "1d491e1f06c1",
+        "hash": "daf92be477a7",
         "count": 65
       },
       "models": {
@@ -89,12 +89,13 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "672a2cac",
+    "fingerprint": "a4e2d982",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
       "blink",
       "carry",
+      "chainLightning",
       "championForm",
       "convertTeam",
       "cycleBuff",
@@ -242,6 +243,7 @@
       "burnsInFireRing",
       "canCrit",
       "capScope",
+      "centre",
       "championId",
       "chance",
       "clampMin",
@@ -256,6 +258,7 @@
       "damageTypeOverride",
       "damageTypes",
       "deathWard",
+      "decay",
       "delaySec",
       "disarmed",
       "dispellable",
@@ -301,6 +304,9 @@
       "includeOrigin",
       "incomingPct",
       "intervalSec",
+      "jumpIntervalSec",
+      "jumpRange",
+      "jumps",
       "killCredit",
       "kind",
       "landRadius",
@@ -319,10 +325,12 @@
       "maxHeld",
       "maxRemainingSec",
       "maxSourceTotal",
+      "maxSources",
       "maxStacks",
       "maxStat",
       "maxTargets",
       "maxTargetsCounts",
+      "maxTotalJumps",
       "minManaReserve",
       "missChance",
       "mobLevelSource",
@@ -374,6 +382,7 @@
       "resourcePct",
       "resourcePctPhase",
       "respectCooldown",
+      "revisit",
       "root",
       "runOnEmptyHit",
       "scatterRadius",
@@ -1066,7 +1075,7 @@
     "note": "出貨內容**實際用了**哪些值。⚠️ 與 runtimeCapabilities 不同：那一份說引擎做得到什麼，這一份說內容裡有哪些合法的 id。⛔ 填一個不在這裡的 vfxKey，技能照放但畫面上什麼都不會出現。",
     "ability": {
       "count": 461,
-      "fromTemplate": 106,
+      "fromTemplate": 104,
       "templates": [
         {
           "id": "tpl-barrier-domain",
@@ -2652,12 +2661,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "672a2cac",
+    "engineFingerprint": "a4e2d982",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 672a2cac —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 a4e2d982 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -3251,5 +3260,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "0fb4550ceb70"
+  "profileDigest": "d0e89933ec44"
 }

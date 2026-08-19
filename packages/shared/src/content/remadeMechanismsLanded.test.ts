@@ -62,8 +62,11 @@ const LANDED: [file: string, key: string, who: string][] = [
   ["godie-emns.w.json", "attributes", "44-02 死神的規則「智慧 7-22 點」"],
   ["godie-e00w.e.json", "flight", "77-03「變換為[飛行]狀態無視碰撞」"],
   ["godie-emns.r.json", "resourcePct", "44-04 心臟麻痺「[現存生命] 30/40/50%」"],
-  // ⛔ 13-02 牙突的「目標[最大生命] 6-12%」**不在這裡** —— owner 2026-08-12 明確拿掉，
-  //    守衛是 sim/efurKit.test.ts 的 efur-w-hppct（反方向：它長回來就紅）。
+  // ⭐ GH#459（2026-08-19）—— 13-02 牙突的「目標[最大生命] 6-12%」**進來了**。
+  //    ⚠️ 這一列在 08-12 → 08-19 之間寫著「不在這裡（owner 明確拿掉）」，而
+  //    `description` 從頭到尾都印著那一句 ⇒ 卡片說謊（第一·五守則）。owner 的裁決是
+  //    補機制，不是刪那句話；行為守衛是 sim/efurKit.test.ts 的 efur-w-hppct（已翻面）。
+  ["godie-efur.w.json", "resourcePct", "GH#459 13-02 牙突「目標[最大生命] 6/8/10/12%」"],
   ["godie-hapm.r.json", "victimCondition", "52-04「若敵人具有[恐懼]則額外追加」"],
   ["godie-h01n.ex.json", "whileForm", "79-002 的格擋只在卍解狀態"],
   ["godie-e00s.e.json", "onHitTargets", "B1-B 兄弟酬載折疊（70-03）"],

@@ -29,6 +29,7 @@ import {
   DEFAULT_VFX_GROUND_DECAL,
   type VfxGroundDecal,
 } from "@ggd/shared/content/schema/vfx";
+import { fateInk } from "@ggd/shared/art/fatePalette";
 
 // ---------------------------------------------------------------------------
 // Muzzle flash
@@ -194,12 +195,27 @@ export function walkDustRecipe(): BurstSpec {
 // Cast-ground scorch (task #147) — a fading mark where an ability lands/casts
 // ---------------------------------------------------------------------------
 
-/** Dark scorched-earth tint for an ability's ground mark. */
-export const SCORCH_TINT: Rgb = [0.16, 0.12, 0.1];
-/** 裂縫的顏色 —— 縫隙裡的**陰影**，不是燒黑的地，所以比焦痕冷一點、深一點。 */
-export const CRACK_TINT: Rgb = [0.1, 0.09, 0.09];
-/** 揚起的土 —— 帶一點暖色的塵，不是黑印子。 */
-export const DIRT_TINT: Rgb = [0.3, 0.24, 0.17];
+/**
+ * ⭐ GH#453 —— 三種痕跡的顏色**全部從 FATE token 推導**，⛔ 這裡不寫 hex。
+ *
+ * owner 2026-08-19：「我們**擴充地圖物件跟生成圖片、貼圖也盡量 FATE 相關風格**」
+ *
+ * ⚠️ 顏色住在**這裡**而不是貼圖裡，是量到的不是慣例：`GroundDecalPool.make()`
+ * （`GroundDecalPool.ts:88-94`）開 `disableLighting` + `diffuseColor = (0,0,0)`
+ * + `emissiveColor = spec.tint` ⇒ **貼圖的 RGB 一位元都不會被看到**。
+ * ⇒ 在 `gen-decals.ts` 的像素裡寫顏色會是第一·五守則的形狀（檔案裡有、畫面上
+ *   永遠不會發生）；FATE 要落在這三行。
+ *
+ * `fateInk()` 的第二個參數是**峰值通道**，⛔ 不是亮度 —— 三個數字逐一等於它們
+ * 換色相之前最強的那一個通道（0.16／0.10／0.30），所以這一次改動**只換色相、
+ * 不改深淺**。
+ */
+/** 焦痕 —— 燒過的**緋紅**（FATE 唯一那個飽和重音），不是中性的褐黑。 */
+export const SCORCH_TINT: Rgb = fateInk("crimson", 0.16);
+/** 裂縫 —— 縫隙裡的**陰影**，而 FATE 的陰影是**靛藍**的，⛔ 不是灰的。 */
+export const CRACK_TINT: Rgb = fateInk("indigo", 0.1);
+/** 揚起的土 —— 被暖金主光照到的塵，不是黑印子。 */
+export const DIRT_TINT: Rgb = fateInk("gold", 0.3);
 /** Cast scorch lingers a touch longer than a blood pool — an ability scars. */
 export const SCORCH_LIFE_MS = 2600;
 
@@ -218,14 +234,14 @@ export const GROUND_DECAL_ART: Readonly<
   Record<VfxGroundDecal, { texture: string; tint: Rgb; alpha: number } | null>
 > = {
   /** 焦痕 —— 出貨預設，也就是 GH#439 落地之前每一支技能的樣子。 */
-  scorch: { texture: "assets/textures/particles/scorch_01.png", tint: SCORCH_TINT, alpha: 0.5 },
+  scorch: { texture: "assets/textures/decals/scorch_01.png", tint: SCORCH_TINT, alpha: 0.5 },
   /**
    * 地面震裂 —— 原作 WarStomp 那一族（衝擊波／跺地／落石）。
    * 比焦痕**淺一點也淡一點**：裂縫是縫隙的陰影，不是燒黑的地。
    */
   crack: { texture: "assets/textures/decals/crack_01.png", tint: CRACK_TINT, alpha: 0.62 },
   /** 揚起的土 —— 衝鋒／落地／位移那一族。 */
-  dirt: { texture: "assets/textures/particles/dirt_02.png", tint: DIRT_TINT, alpha: 0.34 },
+  dirt: { texture: "assets/textures/decals/kickup_01.png", tint: DIRT_TINT, alpha: 0.34 },
   /** 這一族不留痕跡。`null` = ⛔ 連 decal 都不 spawn（不是「蓋一張全透明的」）。 */
   none: null,
 };

@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log/slog"
 	"time"
 
 	"github.com/ggd/platform/internal/account"
@@ -121,6 +122,28 @@ func (s *Settler) Apply(ctx context.Context, st Settlement) error {
 	if st.EndedAt.IsZero() {
 		st.EndedAt = time.Now()
 	}
+	// 0. 練習房**絕對不可以**在這裡被結算（GH#349 後續，owner 2026-08-20「do it」）。
+	//
+	// 今天它一次都不會發生：game server 的 `MatchRoom.settleToPlatform` 對練習房
+	// 整條 return，連結算回呼都不發。
+	// ⛔ 但「今天不會發生」不是一道閘 —— 它是**另一個 repo 的另一個檔案裡的一行
+	// early return**。`endlessCombat` 一旦被關掉、或練習房長出任何結束條件，
+	// 這條路就會開始發水晶／M 幣／MMR／賽季積分／對戰紀錄，而且**沒有任何東西會說**。
+	//
+	// ⭐ 這道閘刻意是 **fail-LOUD** 的。本檔原本有一句「⛔ 不要在這裡再放一道
+	// 『假的』練習房閘 —— 那會讓人以為這條路擋得住」，那個顧慮是對的，但它針對的是
+	// **靜默**的閘。走到這裡代表上游的不變式已經破了，所以它用 error 級別喊出來，
+	// ⛔ 而不是安靜地 return nil 假裝一切正常。
+	//
+	// ⚠️ 讀不到 Redis 也拒絕：不知道就不付錢。一次沒發到的練習房結算等於零損失，
+	// 一次錯發的貨幣是**不可逆**的（水晶與 M 幣沒有回收路徑）。
+	if practice, known := s.isPracticeMatch(ctx, st.MatchID); practice || !known {
+		slog.Error("settlement arrived for a match that must not pay out — refusing",
+			"matchId", st.MatchID, "roomId", st.RoomID,
+			"practice", practice, "pendingReadable", known,
+			"why", "practice rooms never reach Settler.Apply; an upstream invariant broke")
+		return s.finishPending(ctx, st)
+	}
 	// 1. Match record is the durable truth.
 	if err := s.store.Put(MatchCollection(st.EndedAt), st.MatchID, st); err != nil {
 		return err
@@ -196,24 +219,55 @@ func (s *Settler) Apply(ctx context.Context, st Settlement) error {
 	// RecordHeadToHead 用每一列記著的最近 matchId 去重。會走第二次的是開機 WAL
 	// 重播(data/boot),而那條路一定帶同一個 matchId。
 	//
-	// ⚠️ 練習房不會到這裡:game server 的 MatchRoom.settleToPlatform 對練習房整條
-	// return,連結算回呼都不發。⛔ 不要在這裡再放一道「假的」練習房閘 —— 那會讓人
-	// 以為這條路擋得住,而真正的閘在另一個 repo 的另一個檔案。
+	// ⚠️ 練習房不會到這裡 —— 兩層:game server 的 MatchRoom.settleToPlatform 對練習
+	// 房整條 return(另一個 repo),而且 Apply 開頭第 0 步現在有一道 **fail-loud** 的閘。
+	// ⛔ 不要在這裡再放第三道:重複的閘只會讓人不確定哪一道在生效。
 	if err := s.recordHeadToHead(ctx, st, placeOf); err != nil {
 		return err
 	}
-	// 5. Pending-match cleanup.
+	// 5..6. Pending-match cleanup + room disposal.
+	return s.finishPending(ctx, st)
+}
+
+// finishPending clears the pending-match bookkeeping and disposes the room.
+//
+// It is shared by the normal settlement path and the practice-room refusal
+// above ON PURPOSE: refusing to PAY a match must never mean refusing to CLEAN
+// UP after it. A practice room that is denied payout but left in the pending
+// ZSET would be re-reaped forever, and its room would never be disposed.
+func (s *Settler) finishPending(ctx context.Context, st Settlement) error {
 	pipe := s.rdb.R.TxPipeline()
 	pipe.ZRem(ctx, redisx.KeyMatchesPending(), st.MatchID)
 	pipe.Del(ctx, redisx.KeyMatchPending(st.MatchID))
 	if _, err := pipe.Exec(ctx); err != nil {
 		return err
 	}
-	// 6. Room disposal (members are back in the lobby).
 	if st.RoomID != "" && s.rooms != nil {
 		_ = s.rooms.Dispose(ctx, st.RoomID)
 	}
 	return nil
+}
+
+// isPracticeMatch reads the practice flag StartMatch stamped on the pending
+// hash (see fieldPractice in reaper.go).
+//
+// ⚠️ It reads Redis, and Redis being down must NOT turn into "pay out a
+// practice match": a read error means we do not KNOW, and the safe answer for
+// an unknown is the one that cannot mint currency. So an error reads as
+// practice=false only when the hash genuinely exists without the flag; a
+// failed read is reported to the caller, which refuses.
+func (s *Settler) isPracticeMatch(ctx context.Context, matchID string) (practice bool, known bool) {
+	pend, err := s.rdb.R.HGetAll(ctx, redisx.KeyMatchPending(matchID)).Result()
+	if err != nil {
+		return false, false
+	}
+	if len(pend) == 0 {
+		// No pending hash at all: this is a WAL replay or a duplicate
+		// callback of an already-cleaned match. Those are the idempotent
+		// paths every step below is built for, so let them through.
+		return false, true
+	}
+	return pend[fieldPractice] == "1", true
 }
 
 // recordHeadToHead 把這一場每一對**敵對且都有帳號**的真人記進對戰紀錄。

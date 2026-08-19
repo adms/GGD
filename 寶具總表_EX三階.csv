@@ -76,34 +76,57 @@ EX,godie-i00s,黃金聖鬥衣,1,2 / 5,—,—,"[格擋] 50%機率抵擋 100% AP�
 魔力+1200
 攻擊速度+120%
 總移動速度*1.2",0｜數值型,flat pctAdd pctMult,wc3-import,,
-EX∅ 根源,soul-gem,魂之寶石,1,10–10,8%,champion 限 1,"[魔女結界] 死亡時立即以 15%生命重新站起，8 秒內繼續戰鬥（每回合一次）
-[魔女結界] 這 8 秒內擊殺敵方英雄 → 解除魔女化並回復到 30%生命
-[魔女結界] 沒有擊殺 → 8 秒後正式死亡",4｜復活·真傷,applyBuff damage delayed restore revive status onDeath onKill pctMult,"legendary,ex-origin,revive,reversal",,
+EX∅ 根源,soul-gem,魂之寶石,1,10–10,8%,champion 限 1,"[魔女結界] 死亡時立即以 15%生命、100%魔力重新站起，8 秒內繼續戰鬥（每回合一次）
+[魔女結界] 這 8 秒內擊殺敵方英雄 → 取消 8 秒後的死亡結算，並回復 30%最大生命（魔女化本身仍走完 8 秒）
+[魔女結界] 沒有擊殺 → 8 秒後正式死亡
+[魔女結界] ⚠️ 兩種情況站不起來（額度照樣用掉）：你是自己這一隊最後一個倒下的人（該分區當場結算），或火圈已經完全閉合",4｜復活·真傷,applyBuff damage delayed restore revive status onDeath onKill pctMult,"legendary,ex-origin,revive,reversal",,
 EX∅ 根源,all-might-hair,歐爾麥特的頭髮,1,10–10,8%,champion 限 1,"[One For All・強制繼承] 隊友陣亡時，你的下一次普攻附帶巨大衝擊波
-[One For All・強制繼承] 衝擊波造成 200%AD 物理傷害並把命中的敵人擊退 20 碼
-[One For All・強制繼承] 若這一擊參與擊殺，立刻以 30%生命復活一名陣亡隊友",3｜復活,applyBuff damageArea knockback revive stat onAllyDeath onBasicAttack <=,"legendary,ex-origin,knockback,revive",,
+[One For All・強制繼承] 衝擊波造成 200%AD 物理傷害，並把**你打中的那名敵人**擊退 20 碼
+[One For All・強制繼承] 這 20 秒內你**擊殺敵方英雄**時，立刻以 30%生命復活陣亡的隊友",3｜復活,applyBuff damageArea knockback revive onAllyDeath onBasicAttack onKill,"legendary,ex-origin,knockback,revive",,
+EX∅ 根源,sasumata,討伐叉,1,10–10,8%,champion 限 1,"[合力制伏] 周圍每有一名活著的隊友（最多計 2 名），你與範圍內的隊友 攻擊力+12、護甲+3
+[合力制伏] 身邊一名隊友都沒有時，這個增幅整份消失（不是變弱，是完全沒有）
+[合力制伏] 隊友走出範圍就少一份，走回來立刻補上",2｜團隊光環,flat,"legendary,ex-origin,aura,teamplay",,
+EX∅ 根源,touyako,洞爺湖,1,10–10,8%,champion 限 1,"[吐槽式強制淨化] 你被控制時（暈眩、定身、減速、致盲、詛咒都算），立刻淨化掉身上全部可淨化的減益
+[吐槽式強制淨化] 並對兇手造成 100%AP 魔法傷害、附加 1 秒暈眩
+[吐槽式強制淨化] 觸發間隔 1 秒",1｜硬控,applyStatus damage dispel onCrowdControlReceived,"legendary,ex-origin,cleanse,counter",,
 EX∅ 根源,gantz-suit,GANTZ Suit,1,10–10,8%,champion 限 1,"[愉快的一天又來臨了] 擋下致命傷害並回復到 100%生命
 [愉快的一天又來臨了] 每擋一次，AD+100%（每回合最多 3 次，回合結束重置）
-[愉快的一天又來臨了] 觸發間隔 3 秒",0｜數值型,applyBuff restore onLethalDamage pctAdd,"legendary,ex-origin,cheat-death,scaling",,
-EX∅ 根源,senzu-bean,仙豆,1,10–10,8%,champion 限 1,"[只剩最後一顆！] 你的生命低於 15%時，立刻回滿生命與魔力
-[只剩最後一顆！] 並淨化掉身上全部可淨化的減益
-[只剩最後一顆！] 冷卻時間 120 秒",0｜數值型,dispel restore stat onDamageTaken <,"legendary,ex-origin,heal,cleanse",,
-EX∅ 根源,millennium-puzzle,千年積木,1,10–10,8%,champion 限 1,"[我不能輸，因為劇情需要] 擋下敵方英雄造成的致命傷害
+[愉快的一天又來臨了] 觸發間隔 3 秒",0｜數值型,applyBuff pctAdd,"legendary,ex-origin,cheat-death,scaling",,
+EX∅ 根源,senzu-bean,仙豆,1,10–10,8%,champion 限 1,"[只剩最後一顆！] 隊友受傷的那一刻，隊上生命低於 15%的人（**包含你自己**）立刻回復 100%生命與 100%魔力
+[只剩最後一顆！] 並淨化他身上全部可淨化的減益
+[只剩最後一顆！] 你自己受傷時同樣觸發（那一發只救你自己 · 冷卻時間 120 秒）
+[只剩最後一顆！] **每人每回合各一顆**：吃過的人這一回合不會再吃到第二顆",0｜數值型,applyBuff dispel restore stat status onAllyDamaged onDamageTaken < >,"legendary,ex-origin,heal,cleanse",,
+EX∅ 根源,millennium-puzzle,千年積木,1,10–10,8%,champion 限 1,"[我不能輸，因為劇情需要] 擋下致命傷害
 [我不能輸，因為劇情需要] 回復 20%生命，並在 15 秒內 AP ×10
-[我不能輸，因為劇情需要] 冷卻時間 60 秒",0｜數值型,applyBuff restore onLethalDamage pctMult,"legendary,ex-origin,cheat-death,burst",,
-EX∅ 根源,grief-seed,悲嘆之種,1,10–10,8%,champion 限 1,"[魔女孵化場] 每被掛上一個減益就累積 1 層
-[魔女孵化場] 第 3 層時：淨化全隊、魔力回滿、所有技能冷卻立刻重置
+[我不能輸，因為劇情需要] 冷卻時間 15 秒",0｜數值型,applyBuff pctMult,"legendary,ex-origin,cheat-death,burst",,
+EX∅ 根源,slime-suit,史萊姆裝,1,10–10,8%,champion 限 1,"[黏性體質] 連續受到 2 次同一種傷害後，免疫該種傷害
+[黏性體質] 分開計算的是「物理」與「魔法」兩種
+[黏性體質] 受到另一種傷害時連擊重算，免疫立刻解除
+[黏性體質] 真實傷害不列入連擊，也擋不下來",0｜數值型,,"legendary,ex-origin,survivability,reversal",,
+EX∅ 根源,master-ball,大師球,1,10–10,8%,champion 限 1,"[收服] 你打中生命值低於 25%的特殊殭屍或殭屍王時，牠改為替你作戰
+[收服] 收服的同時立刻回復牠 50%生命
+[收服] 直到牠陣亡、或這一回合結束為止；每回合一次",0｜數值型,applyBuff convertTeam kind restore stat status onDamageDealt <=,"legendary,ex-origin,convert,reversal",,
+EX∅ 根源,grief-seed,悲嘆之種,1,10–10,8%,champion 限 1,"[魔女孵化場] 身上帶著減益時，每有一份狀態掛到你身上就累積 1 層
+[魔女孵化場] 第 3 層時：以你為圓心，淨化周圍隊友（含你自己）身上全部可淨化的減益
+[魔女孵化場] 同時你自己回復 100%魔力、所有技能冷卻立刻重置
 [魔女孵化場] 引爆後層數歸零，重新累積",0｜數值型,applyStatus dispel modifyCooldown restore status onStatusApplied,"legendary,ex-origin,cleanse,reversal",,
-EX∅ 根源,touyako,洞爺湖,1,10–10,8%,champion 限 1,"[吐槽式強制淨化] 你被硬控時，立刻淨化掉身上全部可淨化的減益
-[吐槽式強制淨化] 並對兇手造成 100%AP 魔法傷害、附加 1 秒暈眩
-[吐槽式強制淨化] 觸發間隔 1 秒",0｜數值型,applyStatus damage dispel onCrowdControlReceived,"legendary,ex-origin,cleanse,counter",,
+EX∅ 根源,scouter,戰鬥力探測器,1,10–10,8%,champion 限 1,"[戰鬥力測定] 受到攻擊時，探測器鎖定那名攻擊者
+[戰鬥力測定] 周圍最多 6 個單位改為攻擊被鎖定的那個人，持續 3 秒（隊友與殭屍共用這 6 個名額，由近到遠）
+[戰鬥力測定] 正在手動下令的隊友不會被拉走；殭屍只在被鎖定的是敵方英雄時才會撲上去
+[戰鬥力測定] 冷卻時間 8 秒",0｜數值型,taunt onDamageTaken,"legendary,ex-origin,taunt,reversal",,
+EX∅ 根源,nezuko-box,禰豆子的木箱,1,10–10,8%,champion 限 1,"[竹箱庇護] 每 12 秒，把身邊生命低於 25% 的 1 名隊友收進箱子 6 秒
+[竹箱庇護] 箱子裡的人跟著你走，敵人的自動索敵、殭屍仇恨、右鍵點名都選不到他
+[竹箱庇護] 收進去的當下回復他 25%最大生命
+[竹箱庇護] 範圍技能仍然打得到箱子裡的人 —— 選不到不等於無敵",0｜數值型,carry restore stat onInterval <,"legendary,ex-origin,protect,reversal",,
 EX∅ 根源,bezoar-of-the-apothecary,藥師少女的牛黃,1,10–10,8%,champion 限 1,"[貓貓試毒] 身上被掛上減益的瞬間，立刻淨化掉身上全部可淨化的減益
 [貓貓試毒] 同時回復 10%最大魔力
-[貓貓試毒] 並且永久 AP+1（整場累積，上限 300）
+[貓貓試毒] 並且永久 AP+1（整場累積，這件道具最多累積到 +300）
 [貓貓試毒] 觸發間隔 1 秒",0｜數值型,applyBuff dispel restore status onStatusApplied flat,"legendary,ex-origin,cleanse,scaling",,
-EX∅ 根源,icha-icha-paradise,親熱天堂,1,10–10,8%,champion 限 1,"[爸爸專屬] 每次施放技能後，魔力立刻回滿
-[爸爸專屬] 同時對命中的敵人附加[魅惑]：1 秒內無法控制地朝你走來",0｜數值型,applyStatus knockback restore onAbilityCast onAbilityHit,"legendary,ex-origin,mana,cc",,
-EX∅ 根源,red-comet-mask,赤色面具,1,10–10,8%,champion 限 1,[赤色彗星] 隊友陣亡時，攻擊速度 ×3、移動速度 ×3、生命回復速度 ×3，持續 10 秒,0｜數值型,applyBuff onAllyDeath pctMult,"legendary,ex-origin,buff",,
+EX∅ 根源,icha-icha-paradise,親熱天堂,1,10–10,8%,champion 限 1,"[爸爸專屬] 每次施放技能後，立刻回復 100%魔力
+[爸爸專屬] 技能命中時，對其中一名敵人（英雄或殭屍）附加[魅惑]：被強拉向你，這 1 秒交不出操作
+[爸爸專屬] 觸發間隔 1 秒",0｜數值型,applyStatus knockback restore onAbilityCast onAbilityHit,"legendary,ex-origin,mana,cc",,
+EX∅ 根源,red-comet-mask,赤色面具,1,10–10,8%,champion 限 1,"[赤色彗星] 隊友陣亡時，攻擊速度 ×3、移動速度 ×3、生命回復速度 ×3，持續 10 秒
+[赤色彗星] 攻擊速度與移動速度**都有全域上限**，超出上限的那一段不會生效 —— 本來就跑得快的英雄拿不到完整的 ×3",0｜數值型,applyBuff onAllyDeath pctMult,"legendary,ex-origin,buff",,
 EX解放,godie-i060,死之王的意志,1,1+,15%,champion 限 1,"AP+174
 [斬殺] 可直接斬殺生命低於 3%的敵方單位
 [緩慢] 周圍敵方 總移動速度 減半

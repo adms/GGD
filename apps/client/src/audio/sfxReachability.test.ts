@@ -171,11 +171,18 @@ describe("sfxReachability (credits-data)", () => {
 
   it("still reports the known-silent keys as silent (regression pin)", () => {
     cover("credits-data");
-    // The #3-era hit-weight orphans and the two shadowed event-name keys. If one
+    // The remaining #3-era orphans and the two shadowed event-name keys. If one
     // of these ever becomes reachable that is a real change — update the row and
     // this list together, deliberately.
-    for (const key of ["hit-light", "hit-medium", "hit-heavy", "hit-crit", "block-hit", "damage", "basicAttackHit"]) {
+    for (const key of ["hit-crit", "block-hit", "damage", "basicAttackHit"]) {
       expect(isPlayableSfxKey(key), `${key} unexpectedly became playable`).toBe(false);
+    }
+    // ⭐ GH#440 —— hit-light / hit-medium / hit-heavy 是**故意**離開這張名單的:
+    // GH#390 把它們接回來了（`vfx-families.json` 的 soundImpact，73 支技能）。
+    // 留著 `unreachable` 的代價不是版權頁少算一格，而是 `spatialPolicy.test.ts`
+    // 的窮盡性測試會跳過它們 —— 於是它們零宣告就被空間化。
+    for (const key of ["hit-light", "hit-medium", "hit-heavy"]) {
+      expect(isPlayableSfxKey(key), `${key} 又變回不可達了 —— 特效綁定被拿掉了嗎？`).toBe(true);
     }
     // The three archery/魔法陣 clips the trigger lane wired: these HAVE to be
     // playable now, or the credits page is understating again.

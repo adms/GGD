@@ -92,6 +92,8 @@ export interface ChannelSnapshot {
   buffs: number;
   projectiles: number;
   taunts: number;
+  /** 場上所有英雄的金幣總和 —— `grantGold` 是唯一會在這個世界裡動它的東西。 */
+  gold: number;
 }
 
 export function snapshotChannels(world: SimWorld): ChannelSnapshot {
@@ -101,13 +103,77 @@ export function snapshotChannels(world: SimWorld): ChannelSnapshot {
   for (const st of world.status.values()) statuses += st.effects.length;
   let buffs = 0;
   for (const sc of world.stats.values()) buffs += sc.sources.filter((s) => s.kind === "buff").length;
+  // ⭐ 2026-08-20（GH#407）—— 金幣是**第六個**看得見的頻道。
+  //
+  // ⚠️ 它在此之前是量測盲點，而且盲得**剛好**：`goldGrant` 事件在 `paid === 0`
+  // 時照樣發（`effects/grantGold.ts` 的 emit 沒有門檻），所以把事件收進
+  // {@link EFFECT_EVENTS} 會反過來造出「說了但沒發生」的假 ✅ —— 只有**錢真的
+  // 進了口袋**這個狀態差才是可觀測的改變。
+  // 為什麼現在要它：57-00 哆啦A夢的天生技是一顆 `weightedBranch`，權重最大的
+  // 那一支（55/100）整支 payload 就是 `grantGold` —— 少了這一格，一支完整實作
+  // 的技能會有一半的 seed 量出「什麼都沒發生」，而真相是儀器沒有那根指針（GH#407）。
+  // ⛔ 它不可能被回血／移動偽造：這個世界裡沒有擊殺賞金、沒有掉落金幣、
+  // 沒有商店，`grantGold` 是唯一的寫入者。
+  let gold = 0;
+  for (const champ of world.champion.values()) gold += champ.gold;
   // ⭐ 2026-08-18 —— 【嘲弄】是**第五個**看得見的頻道。
   //
   // ⚠️ 它在此之前是量測盲點：`taunt` 既不發事件、也不是護盾／狀態／buff／投射物
   // —— 它寫的是 `world.taunt`（受害者 → 被迫打誰、到哪一絕對 tick）。於是 86-00
   // 裝可愛接上真的嘲弄之後，普查照樣回報「只有特效」。
   // ⛔ 它不可能被回血／移動偽造：唯一的寫入者是 `sim/taunt.ts::applyTaunt`。
-  return { shields, statuses, buffs, projectiles: world.projectile.size, taunts: world.taunt.size };
+  return {
+    shields,
+    statuses,
+    buffs,
+    projectiles: world.projectile.size,
+    taunts: world.taunt.size,
+    gold,
+  };
+}
+
+/**
+ * ⭐ GH#407 —— 這棵效果樹裡「**換一顆 seed 就可能走不同路**」的節點。
+ *
+ * ⚠️ 這不是一個缺陷判準，是一個**量測方法**的判準。普查對每一格開一個
+ * 固定 seed 的世界，於是一支帶隨機分支的技能，它的 ✅／❌ 是**一次擲骰**：
+ * 實測（GH#374 收尾時）13-04 龍星群 12/24 顆 seed 命中、70-04 千年練成 16/24。
+ * ⛔ 一條會擋 CI 的 gate 不可以是抽樣 —— 它紅的時候訊息會說「這一格壞了」，
+ * 而真相是 seed。
+ *
+ * ⇒ 普查用這一支**推導**出哪些格子要跨多顆 seed 量，⛔ 不是列一張技能白名單
+ * （那是第四個住處，一定會過期）。下一支用 `weightedBranch` / `chance` 的技能
+ * 不必再改這裡一個字（第〇·五守則）。
+ *
+ * 收哪三種，各自的理由：
+ *   · `weightedBranch` —— 一次 draw 選一支，不同支的 payload 完全不同；
+ *     只有**兩支以上**權重為正才算隨機（單支＝決定性，`weight:0` 選不到）。
+ *   · `chance` 條件葉 —— `0 < p < 1` 才算；`p:1` / `p:0` 是決定性的。
+ *   · `randomArea` —— 落點隨機。⭐ 它**已經**被 `nextScatterPoint` 釘成決定性，
+ *     收進來不是因為它壞了，而是為了讓那份釘法**每一批都被重新證明一次**
+ *     （拿掉它 → 這些格子立刻變成 seed 依賴 → 閘紅）。
+ */
+export function stochasticNodeKinds(node: unknown, out: Set<string> = new Set()): Set<string> {
+  if (node === null || typeof node !== "object") return out;
+  if (Array.isArray(node)) {
+    for (const v of node) stochasticNodeKinds(v, out);
+    return out;
+  }
+  const rec = node as Record<string, unknown>;
+  if (rec.kind === "weightedBranch" && Array.isArray(rec.branches)) {
+    let live = 0;
+    for (const b of rec.branches) {
+      const w = (b as { weight?: unknown } | null)?.weight;
+      if (typeof w === "number" && w > 0) live++;
+    }
+    if (live >= 2) out.add("weightedBranch");
+  }
+  if (rec.kind === "chance" && typeof rec.p === "number" && rec.p > 0 && rec.p < 1) {
+    out.add("chance");
+  }
+  if (rec.kind === "randomArea") out.add("randomArea");
+  for (const v of Object.values(rec)) stochasticNodeKinds(v, out);
+  return out;
 }
 
 /**
@@ -159,6 +225,9 @@ export function classifyCastOutcome(o: CastObservation): CastOutcome {
   else if (after.statuses > before.statuses) channel = "status";
   else if (after.buffs > before.buffs) channel = "buff";
   else if (after.taunts > before.taunts) channel = "taunt";
+  // 金幣與 `dash` / `championForm` 同一列、同一個理由：它是 gameplay 頻道
+  // （口袋裡的數字真的變了），⛔ 不是裝飾，所以排在 `vfx` 上面。
+  else if (after.gold > before.gold) channel = "gold";
   else if (moved) channel = "dash";
   // 變身 (#249) sits ABOVE `vfx` for the same reason `dash` does: it is a
   // gameplay channel (the body's whole stat sheet is replaced), and the report's
@@ -177,6 +246,7 @@ export function classifyCastOutcome(o: CastObservation): CastOutcome {
     after.buffs > before.buffs ||
     after.projectiles > before.projectiles ||
     after.taunts > before.taunts ||
+    after.gold > before.gold ||
     moved;
 
   if (anyEvent || anyState) return { verdict: "PASS", channel };

@@ -14,10 +14,23 @@ import (
 	"github.com/ggd/platform/internal/presence"
 )
 
+// fieldPractice is the pending-hash column StartMatch stamps on a practice
+// match (GH#343). It is written in client.go and read here, and nowhere else.
+//
+// It exists because a practice room can only ever END here: `endlessCombat`
+// means the game-server never calls finishMatch, so no result callback arrives
+// and the reaper is what closes the match out. Everything else about a practice
+// match is already free of consequences (ReapStuck never calls Settler.Apply,
+// so no currency / MMR / season points / history is touched) — the ONE thing
+// that leaked was the settlement FILE, one 「abandoned」 row per practice
+// session in data/matches/YYYY/MM/ (GH#349).
+const fieldPractice = "practice"
+
 // ReapStuck marks every pending match whose deadline passed as abandoned:
 // a done-marker is set (so a late result callback is ignored), an abandoned
-// match record is written, humans return to the lobby and the room is
-// disposed. Returns the reaped match ids.
+// match record is written (EXCEPT for practice matches — see fieldPractice),
+// humans return to the lobby and the room is disposed. Returns the reaped
+// match ids.
 //
 // REAPING A LIVE MATCH IS DATA LOSS — an abandoned result on a real player's
 // record, everyone yanked back to the lobby mid-fight — so this function is
@@ -123,13 +136,23 @@ func (s *Service) ReapStuck(ctx context.Context, now time.Time) ([]string, error
 				MatchID: mid, RoomID: pend["roomId"], Mode: "PairedDuels",
 				Status: "abandoned", Seats: resultSeats, EndedAt: now,
 			}
-			if err := s.settle.store.Put(MatchCollection(now), mid, st); err != nil {
-				return reaped, err
+			// GH#349: a practice session leaves NO row in the match store.
+			//
+			// ⭐ 修在**來源**，⛔ 不是在查詢端過濾：這筆記錄一旦寫下去，每一個
+			// 讀 data/matches/ 的東西（運維、稽核、匯出、未來的統計）都要各自
+			// 記得濾掉它，而漏掉的那一個不會報錯，只會多算。不寫，就沒有人需要
+			// 記得。⚠️ 其餘的收尾一項都不能省 —— 玩家要回大廳、房間要拆、
+			// pending 鍵要清、而且它仍然算一次 reap（下面的 reaped）。
+			practice := pend[fieldPractice] == "1"
+			if !practice {
+				if err := s.settle.store.Put(MatchCollection(now), mid, st); err != nil {
+					return reaped, err
+				}
 			}
 			if st.RoomID != "" && s.settle.rooms != nil {
 				_ = s.settle.rooms.Dispose(ctx, st.RoomID)
 			}
-			s.logReap(mid, pend, now, beats, lastBeat, tracked, humans)
+			s.logReap(mid, pend, now, beats, lastBeat, tracked, humans, practice)
 			reaped = append(reaped, mid)
 		}
 		pipe := s.rdb.R.TxPipeline()
@@ -173,10 +196,23 @@ func (s *Service) spareLiveMatch(ctx context.Context, mid string, pend map[strin
 // results onto live family matches — so it is an error even when it happens to
 // be right.
 func (s *Service) logReap(mid string, pend map[string]string, now time.Time,
-	beats int, lastBeat time.Time, tracked bool, humans int) {
+	beats int, lastBeat time.Time, tracked bool, humans int, practice bool) {
 	age := ""
 	if ms, err := strconv.ParseInt(pend["startedAt"], 10, 64); err == nil && ms > 0 {
 		age = now.Sub(time.UnixMilli(ms)).Round(time.Second).String()
+	}
+	if practice {
+		// A practice room is SUPPOSED to end this way — it never finishes on its
+		// own — so this is neither of the two verdicts below. It is logged at
+		// INFO and it names the absence, because "no match record was written"
+		// must have a stated cause rather than being something an operator
+		// discovers by finding nothing.
+		slog.Info("reaped a PRACTICE match — no settlement record written",
+			"matchId", mid, "roomId", pend["roomId"], "gameRoomId", pend[fieldGameID],
+			"ranFor", age, "humanSeats", humans,
+			"why", "practice rooms run endlessCombat and never finishMatch, so the reaper is their normal exit",
+			"effect", "presence returned to lobby and the room disposed; data/matches/ is untouched (GH#349)")
+		return
 	}
 	if tracked {
 		slog.Warn("reaped a match whose game-server stopped reporting",

@@ -101,6 +101,7 @@ import {
   zVfxFamilyTuning,
   zVfxPrimBinding,
   zVfxFamilyBinding,
+  zVfxOwnerBinding,
   zVfxPromotedBinding,
 } from "./schema/vfx";
 import { zAbilityVfxLayer } from "./schema/abilityVfx";
@@ -1395,6 +1396,13 @@ const VFX_SURFACE_SHAPES: readonly SurfaceShape[] = [
    */
   { key: "config.vfx-ability-art@1.bindings.prim", schema: zVfxPrimBinding },
   { key: "config.vfx-ability-art@1.bindings.family", schema: zVfxFamilyBinding },
+  /**
+   * ⭐ GH#431 —— **owner 的設計覆寫**那一格。它必須在合約裡，理由和 `family`
+   * 那一格**不一樣**：`family` 是外部編輯器「讀得到證據」，這一格是它
+   * **唯一寫得下設計決定的地方** —— 少了它，編輯器只能去改證據那一格，
+   * 而那會被反捏造守衛擋掉，⛔ 而且它不會知道自己為什麼被擋。
+   */
+  { key: "config.vfx-ability-art@1.bindings.owner", schema: zVfxOwnerBinding },
   { key: "config.vfx-ability-art@1.bindings.promoted", schema: zVfxPromotedBinding },
 ];
 

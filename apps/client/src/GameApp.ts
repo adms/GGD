@@ -8,8 +8,6 @@
  * Babylon lives behind render/* and vfx/*.
  */
 import { TICK_MS } from "@ggd/shared/constants";
-import { hasLineOfSight } from "@ggd/shared/sim/map/lineOfSight";
-import { activeObstacles } from "@ggd/shared/sim/map/gates";
 import { SKELETON_ARENA, arenaDefFromDoc, type ArenaDef } from "@ggd/shared/sim/world/ArenaDef";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import {
@@ -125,6 +123,7 @@ import {
   KIND_NIGHT_FLAG,
 } from "./render/overheadAnchors";
 import { anchorDrawable } from "./render/anchorBounds";
+import { occludeArgsFor } from "./render/occlusionZone";
 import { qualityController, type RenderParams } from "./render/QualityController";
 import { driveFrame, FrameDelta, type FrameWork } from "./render/frameCap";
 import { FrameRateMeter } from "./render/fpsMeter";
@@ -184,7 +183,8 @@ import {
 import { voicePlayOptions, voiceSpatialMix } from "./audio/voiceSpatial";
 import { combatSfxKey } from "./audio/combatSfx";
 import { resolveSpatial } from "./audio/combatSfxSpatial";
-import { vfxSoundLayer } from "./audio/vfxSound";
+import { vfxLoopPushes, vfxSoundCues, vfxSoundLayer } from "./audio/vfxSound";
+import { spatialSourceFor } from "./audio/spatialPolicy";
 import type { SpatialSource } from "./audio/spatial";
 import { abilityIdOfOrigin } from "@ggd/shared/sim/combat/damage";
 import { fullAssetsEnabled } from "./config/fullAssets";
@@ -1627,11 +1627,13 @@ export class GameApp {
           center && drawDist < DRAW_DISTANCE_MAX
             ? { cx: center.x, cz: center.z, maxDistance: drawDist }
             : undefined,
-        // ⭐ GH#324 —— 視野遮蔽。⚠️ 只在這張場地**真的有牆**時才啟用：
+        // ⭐ GH#324 —— 視野遮蔽。⚠️ 只在**觀看者自己那一區**真的有牆時才啟用：
         // 既有 6 張圓形場地只有幾根柱子，遮蔽會讓人在柱子後面閃來閃去而不是
         // 「躲起來」—— 那是雜訊不是機制。⇒ 用 `bounds.kind === "rect"` 當判準
         // （產生器出來的圖才有），⛔ 不是寫死地圖 id。
-        occlude: this.occludeArgs(center),
+        // ⚠️ GH#421 —— 第二個參數是**這雙眼睛在哪一區**。⛔ 不可以省略成
+        // 「第一個矩形 zone」：那是 zone 1 半場遮蔽整個失效的那一行。
+        occlude: this.occludeArgs(center, this.ownZoneOf(0, state)),
       });
 
       // 4·五 「四拍令咒」 (#257). AFTER sync, deliberately: the dance is an
@@ -1767,8 +1769,8 @@ export class GameApp {
     // 兩個都是等冪賦值,⛔ 沒有 per-frame 配置。
     vfxSoundLayer.setAudioMap(audioSystem.sfxMap);
     vfxSoundLayer.overlayEnabled = fullAssetsEnabled();
-    for (const hit of vfxSoundLayer.update(nowMs)) {
-      this.sfxQueue.push(hit.key, this.vfxSoundSource(hit.entityId, localId), hit.gain);
+    for (const p of vfxLoopPushes(vfxSoundLayer, nowMs, (id) => this.vfxSoundSource(id, localId))) {
+      this.sfxQueue.push(p.key, p.source, p.gain, p.loop);
     }
     this.sfxQueue.flush(listener, (key, opts) => audioSystem.playSfx(key, opts));
     // 5b-ii) AND THE VOICES, through the SAME listener frame (#259).
@@ -1904,7 +1906,12 @@ export class GameApp {
     // that something is out of range and must not play at all.
     const sfxKey = combatSfxKey(ev);
     if (sfxKey) {
-      this.sfxQueue.push(sfxKey, resolveSpatial(ev, this.audioEntityPos, localId, this.audioTeamOf));
+      // GH#440 —— 連這一條也走政策表。這裡它幾乎總是恆等式（combatSfxKey 的 key
+      // 與事件是一對一的），⛔ 但「幾乎」不是守衛：入口只有一個，才不會有第二條路。
+      this.sfxQueue.push(
+        sfxKey,
+        spatialSourceFor(sfxKey, resolveSpatial(ev, this.audioEntityPos, localId, this.audioTeamOf)),
+      );
     }
     // GH#390 —— **特效自帶的音效**。四個時機裡的兩個由事件驅動(發射 / 命中),
     // 另外兩個(循環 / 消散)由 `vfxSoundLayer` 自己的登記表在 5b 收掉。
@@ -2268,32 +2275,18 @@ export class GameApp {
    * 登記表在 `renderFrame` 的 5b 收掉（含回收，見 #259）。
    */
   private pushVfxSound(ev: EventMessage, localId: number | null, nowMs: number): void {
-    if (ev.type === "abilityCast") {
-      const abilityId = typeof ev.data.abilityId === "string" ? ev.data.abilityId : undefined;
-      const source = resolveSpatial(ev, this.audioEntityPos, localId, this.audioTeamOf);
-      const launch = vfxSoundLayer.cue(abilityId, "launch");
-      if (launch) this.sfxQueue.push(launch.key, source, launch.gain);
-      // 持續型特效的底噪。掛在**施法者**身上,所以位置跟著他走、他死了就跟著回收。
-      const caster = typeof ev.data.caster === "number" ? ev.data.caster : undefined;
-      if (caster !== undefined) {
-        const loop = vfxSoundLayer.startLoop(caster, abilityId, nowMs);
-        if (loop) this.sfxQueue.push(loop.key, source, loop.gain);
-      }
-      return;
-    }
-    if (ev.type !== "damage" && ev.type !== "projectileHit") return;
-    // 每一條技能傷害路徑都蓋 `origin = "ability:<id>"`（instant / cast-time /
-    // projectile onHit 三條都一樣，見 sim/combat/damage.ts 的 `abilityIdOfOrigin`）。
-    // 普攻 / DoT / 道具 proc 沒有這個前綴 ⇒ 這裡直接回，⛔ 不會替它們亂編一個家族。
-    const abilityId = abilityIdOfOrigin(typeof ev.data.origin === "string" ? ev.data.origin : "");
-    if (!abilityId) return;
-    const hit = vfxSoundLayer.cue(abilityId, "impact");
-    if (!hit) return;
-    this.sfxQueue.push(
-      hit.key,
+    // ⭐ GH#440 —— 決定「播什麼 / 放在哪」的是 `audio/vfxSound.vfxSoundCues`，
+    // ⛔ 不是這裡。那一支會把每一發交給**空間音場政策表**（`spatialSourceFor`），
+    // 而這一段以前是把 `resolveSpatial(ev)`（按**事件型別**算的位置）無條件當成
+    // 特效音的位置 —— 於是 `fireRingLoop` 這種宣告過 flat 的 key 被跟著施法者 pan。
+    for (const p of vfxSoundCues(
+      vfxSoundLayer,
+      ev,
       resolveSpatial(ev, this.audioEntityPos, localId, this.audioTeamOf),
-      hit.gain,
-    );
+      nowMs,
+    )) {
+      this.sfxQueue.push(p.key, p.source, p.gain, p.loop);
+    }
   }
 
   /** 循環音的空間來源 —— 施法者的**渲染位置**，拿不到就置中（⛔ 不是丟掉）。 */
@@ -2498,6 +2491,27 @@ export class GameApp {
       }
       return;
     }
+    // ⭐ GH#441 —— `knockdown` 的觸發點。語音包 51 位英雄都有這一格，而在這之前
+    // **沒有任何地方叫它**（政策表自己寫著 `dispatched: false`）。事件本來就在線上
+    // （`EVENT_SPATIAL.knockdown` + `FANNED_OUT_EVENT_TYPES`），說話的是**被放倒的
+    // 那一個**，⛔ 不是把他放倒的人。
+    if (ev.type === "knockdown") {
+      const floored = Number(d.target);
+      if (Number.isFinite(floored)) {
+        this.queueVoiceCandidate(
+          plainVoiceCandidate({
+            champId: this.championIdForEntity(floored),
+            category: "knockdown",
+            speaker: floored,
+            counterpart: typeof d.source === "number" ? d.source : null,
+            localId,
+            teamOf: this.audioTeamOf,
+            ...this.voiceWhere(floored),
+          }),
+        );
+      }
+      return;
+    }
     if (ev.type === "death") {
       // #223 — ANY champion's death cries out (the same id deathFocus.noteDeath
       // consumes). `killer` is what makes "the enemy YOU just killed" its own
@@ -2544,6 +2558,9 @@ export class GameApp {
       // layer's own out-of-range instruction: do not play at all, so a fight in
       // the other duel zone cannot spend the arena-wide 1.2 s voice slot.
       const mix = voiceSpatialMix(listener, {
+        // GH#441 —— 類別交給政策表（`VOICE_CATEGORY_POLICY`）。少了它，那份表
+        // 全 repo 沒有任何出貨呼叫端（失敗形態③）。
+        category: c.category,
         audience: c.audience,
         pos: c.pos,
         spectating,
@@ -2638,6 +2655,9 @@ export class GameApp {
       else cc("stun");
     }
     if (rose & ENTITY_FLAG.SLOWED) cc("slow");
+    // ⭐ GH#441 —— `jump` 的觸發點。#247 的 leap 在飛的那一刻就是 AIRBORNE 的上升緣，
+    // 而這一格語音在這之前**沒有任何地方叫它**。它屬於一具身體 ⇒ 政策 world。
+    if (rose & ENTITY_FLAG.AIRBORNE) cc("jump");
     if (rose & ENTITY_FLAG.ROOTED) {
       if (isLocal && Math.random() < 0.5) cc("curse");
       else cc("bind");
@@ -3554,26 +3574,23 @@ export class GameApp {
   }
 
   /**
-   * ⭐ GH#324 —— 視野遮蔽的參數。回 undefined = 這張場地不做遮蔽。
+   * ⭐ GH#324 視野遮蔽的參數 —— 規則本身在 `render/occlusionZone.ts`，這裡只是接線。
    *
-   * ⚠️ 只對**產生器出來的矩形場地**啟用（`bounds.kind === "rect"`）：
-   * 既有 6 張圓形場地只有柱子，遮蔽會讓敵人在柱子後面閃爍 —— 雜訊不是機制。
-   * ⛔ 判準是資料（有沒有矩形範圍），不是寫死的地圖 id。
+   * ⚠️ GH#421：這裡以前是 `zones.find((z) => z.bounds?.kind === "rect")`，
+   * ⇒ **永遠回 zone 0**，而 zone 1 的場地整個平移在 x＝+72
+   * ⇒ 那半場玩家的視線是拿 48 單位外的牆算的（＝遮蔽在 zone 1 等於不存在，
+   * 而且是**單向**的資訊優勢）。改成拿**觀看者自己那一區**，
+   * 與伺服器 `BasicAttackSystem.seesTarget` 的取牆規則逐字相同。
+   *
+   * `viewerZone` 讀的是玩家英雄自己的實體 zone（`ownZoneOf`，#67 小地圖同一個來源），
+   * 與 `center` 是**同一個英雄** —— 兩者不可以各自算，否則又會出現「牆在 A 區、
+   * 眼睛在 B 區」的同型缺陷。
    */
   private occludeArgs(
     center: { x: number; z: number } | null,
+    viewerZone: number | null,
   ): { cx: number; cz: number; blocked: (x: number, z: number) => boolean } | undefined {
-    if (!center) return undefined;
-    const zone = this.arenaDef.zones.find(
-      (z) => z.bounds !== undefined && z.bounds.kind === "rect",
-    );
-    if (zone === undefined) return undefined;
-    const live = activeObstacles(zone.obstacles, undefined, 0);
-    return {
-      cx: center.x,
-      cz: center.z,
-      blocked: (x: number, z: number): boolean => !hasLineOfSight(center, { x, z }, live),
-    };
+    return occludeArgsFor(this.arenaDef.zones, viewerZone, center);
   }
 
   private updateFrameBus(state: MatchState, nowMs: number): void {

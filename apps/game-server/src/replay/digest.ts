@@ -27,6 +27,15 @@
  * first means the sim itself diverged (content or a sim code change);
  * hostDigest first means the sim agreed and the ORCHESTRATOR disagreed (a
  * phase-timing, offer or scoring change).
+ *
+ * ⚠️ BOTH DIGESTS ARE HAND-WRITTEN LISTS OF `mix(...)` CALLS, so adding a field
+ * to the sim and hashing it are two unrelated acts — which is exactly how
+ * `ChampionComp.itemAcq` shipped invisible to replay (GH#351 / GH#353), along
+ * with five of its neighbours. The link is now a guard:
+ * `digestCoverage.ts` + `digestCoverage.test.ts` census EVERY SimWorld field and
+ * EVERY ChampionComp field and go red on anything neither hashed nor explicitly
+ * classified. ⛔ Adding a field here without going through that guard puts the
+ * next silent blind spot back.
  */
 import { currentFireRingRadius } from "@ggd/shared/sim/fireRing";
 import type { MatchController } from "../match/MatchController";
@@ -78,11 +87,71 @@ export function hostDigest(ctl: MatchController): number {
     m.num(c.xp);
     m.num(c.gold);
     for (const it of c.items) m.str(it ?? "-");
+    // GH#351 / GH#353 —— 逐格取得紀錄。`items` 說得出「哪一格有東西」，⛔ 說不出
+    // 「它花了多少」與「是不是隨機拿到的」，而那兩件事直接決定賣出金額（賣價 =
+    // 實付 × 退款率），並且是 owner 點名的 [EX理外] 系列會讀的謂詞。少了這一行，
+    // 一個 `itemAcq` 分岔的 replica 要等到玩家賣掉那一格才在 `gold` 上說話。
+    // `undefined`（前置文件時代的夾具）與「六格都是 null」是**不同的狀態**，
+    // 所以前者不折任何東西、後者折六組哨兵 —— 這是刻意的。
+    for (const a of c.itemAcq ?? []) {
+      m.num(a ? a.paid : -1);
+      m.num(a ? (a.random ? 1 : 0) : -1);
+    }
     for (const a of c.augments) m.str(a);
     m.num(c.statStacks);
+    // 三圍 bought this match (#260)。⚠️ 這一格是**戰力**：`championStatBase` 把它
+    // 當成天生三圍加進去，所以一個分岔的 attrBonus = 兩個不同強度的英雄，而
+    // `w.stats` 是每 tick 重算的推導值、不進任何 digest —— 少了這三行，這個分岔
+    // 在兩支 digest 上都是隱形的，只會表現成「傷害數字對不上」。
+    m.num(c.attrBonus.str);
+    m.num(c.attrBonus.agi);
+    m.num(c.attrBonus.int);
     m.num(c.statCapstonePct);
     m.num(c.pendingOrbSlots);
+    // 售價倍率（bot 半價）。`undefined` 與 `1` 折成同一個值是刻意的 ——
+    // `shopChargeFor` 就是這樣讀的，兩者確實是同一個狀態。
+    m.num(c.shopPriceMult ?? 1);
+    // ⚠️ 這裡原本只有 `undoStack.length`，而 undo 的契約是「精確反轉」：長度相同
+    // 但 `goldDelta`／`acq` 不同的兩個堆疊，下一次 undo 就會退回不同的金額。
+    // 長度是「有幾筆」，⛔ 不是「退多少」。
     m.num(c.undoStack.length);
+    for (const t of c.undoStack) {
+      m.str(t.kind);
+      m.str(t.itemId);
+      m.num(t.slot);
+      m.num(t.goldDelta);
+      m.num(t.statStacksBefore);
+      m.num(t.acq ? t.acq.paid : -1);
+      m.num(t.acq ? (t.acq.random ? 1 : 0) : -1);
+    }
+    // 「每 N 次才給一次」的計數（effects/grantAttribute.ts）。它決定下一發到底
+    // 給不給屬性，所以分岔的後果是 `attrBonus` 差一格 —— 而那要等到給出去的那
+    // 一刻才看得見。KEY 先排序：Record 的迭代順序是插入順序，那是 host 的
+    // 施法順序，⛔ 不可以染到 digest（與 SimWorld.digest() 的 marks/dot 同一條規矩）。
+    const progress = c.attrGrantProgress;
+    if (progress !== undefined) {
+      for (const k of Object.keys(progress).sort()) {
+        m.str(k);
+        m.num(progress[k] ?? 0);
+      }
+    }
+    // 限時三圍（08-00 龍紋記憶）。加成本身已經在 `attrBonus` 裡，這張表只記
+    // 「怎麼還回去」—— 一個到期 tick 分岔的 replica 會在**還原**的那一 tick 才
+    // 分家。同樣先排序再 hash（`dot` 的先例）。
+    const timed = c.attrGrantTimed;
+    if (timed !== undefined) {
+      for (const g of [...timed].sort(
+        (a, b) =>
+          a.expiresAtTick - b.expiresAtTick ||
+          (a.origin < b.origin ? -1 : a.origin > b.origin ? 1 : 0) ||
+          (a.attr < b.attr ? -1 : a.attr > b.attr ? 1 : 0),
+      )) {
+        m.str(g.attr);
+        m.num(g.amount);
+        m.num(g.expiresAtTick);
+        m.str(g.origin);
+      }
+    }
   }
   for (const [id, ab] of w.abilities) {
     m.num(id);

@@ -23,6 +23,7 @@
  * because Babylon reads albedo PNGs as gamma-space.
  */
 import type { GroundStyleId } from "@ggd/shared/content/schema/groundStyle";
+import { fateSplitTone } from "@ggd/shared/art/fatePalette";
 import { clamp01, fbm, fbmAniso, hash1, ridged, smoothstep, worley } from "./noise";
 
 /** World units covered by one repeat of the detail set. */
@@ -77,6 +78,21 @@ export interface GroundStyle {
   macroReliefWorld: number;
   /** cavity-AO strength */
   ao: number;
+  /**
+   * ⭐ GH#453 —— FATE 分離調色的強度（0 = 原樣，逐位元組不變）。
+   *
+   * owner 2026-08-19：「我們**擴充地圖物件跟生成圖片、貼圖也盡量 FATE 相關風格**」
+   *
+   * 色相從 `@ggd/shared/art/fatePalette` 的**同一份 token** 來 —— ⛔ 這裡不可以
+   * 出現 hex。`fateSplitTone()` 只轉色相、把亮度除回去（見那支的檔頭），所以
+   * 對比／起伏／AO／粗糙度**一位元都沒動** ⇒ 既有的地面手感留著，只是光變成
+   * 暖金 + 冷靛。
+   *
+   * ⚠️ 逐 style 不同是**刻意**的，⛔ 不是懶得統一：`obsidian` 本來就是黑底描金
+   * （FATE 的正中央）吃得下很多；`grass` 的草如果被推成金色就不是草了。
+   * 這是一格「之後應該搬進後台」的數字 —— 現在住在這裡，見 GH#453 的 nextRound。
+   */
+  fateTone: number;
   paint(u: number, v: number): Texel;
   macro(u: number, v: number): MacroTexel;
 }
@@ -111,6 +127,8 @@ const stone: GroundStyle = {
   reliefWorld: 0.05,
   macroReliefWorld: 0.16,
   ao: 0.8,
+  /** 冷花崗岩 → 靛藍陰影＋金色受光面，變化最明顯 */
+  fateTone: 0.3,
   paint(u, v) {
     // warp the cell field so slab borders meander instead of running straight
     const wu = u + 0.03 * (fbm(u, v, 6, 3, 101) - 0.5);
@@ -178,6 +196,8 @@ const dirt: GroundStyle = {
   reliefWorld: 0.045,
   macroReliefWorld: 0.18,
   ao: 0.72,
+  /** 泥土的暖色可以再暖一點 */
+  fateTone: 0.16,
   paint(u, v) {
     // Earth gets structure at EVERY scale rather than one readable motif. The
     // first cut layered a ridged "dry crazing" net over the lumps; ridged noise
@@ -251,6 +271,8 @@ const grass: GroundStyle = {
   reliefWorld: 0.035,
   macroReliefWorld: 0.17,
   ao: 0.75,
+  /** ⭐ 全套最低：草的綠是它的身分 */
+  fateTone: 0.1,
   paint(u, v) {
     const ang = fbm(u, v, 5, 3, 301) * Math.PI * 2;
     const wu = u + Math.cos(ang) * 0.045;
@@ -306,6 +328,8 @@ const sand: GroundStyle = {
   reliefWorld: 0.030,
   macroReliefWorld: 0.15,
   ao: 0.6,
+  /** 沙是中性暖色，金／靛分得最開 */
+  fateTone: 0.2,
   paint(u, v) {
     // Ripples are STRETCHED NOISE, not sin(). The first cut of this style used
     // two sine trains at integer frequencies crossing at an angle; it tiled
@@ -382,6 +406,8 @@ const wood: GroundStyle = {
   reliefWorld: 0.022,
   macroReliefWorld: 0.1,
   ao: 0.62,
+  /** 檜木本來就偏暖，往金推一點剛好 */
+  fateTone: 0.16,
   paint(u, v) {
     const pf = u * PLANKS;
     const pi = Math.floor(pf);
@@ -470,6 +496,8 @@ const tatami: GroundStyle = {
   reliefWorld: 0.02,
   macroReliefWorld: 0.09,
   ao: 0.55,
+  /** 藺草是綠的，推太多就不是榻榻米了 */
+  fateTone: 0.12,
   paint(u, v) {
     const bx = u * 2;
     const by = v * 2;
@@ -551,6 +579,8 @@ const obsidian: GroundStyle = {
   reliefWorld: 0.028,
   macroReliefWorld: 0.11,
   ao: 0.55,
+  /** 黑底描金＝FATE 的正中央，吃得下最多 */
+  fateTone: 0.45,
   paint(u, v) {
     const wu = u + 0.012 * (fbm(u, v, 5, 3, 701) - 0.5);
     const wv = v + 0.012 * (fbm(u, v, 5, 3, 702) - 0.5);
@@ -604,4 +634,68 @@ const obsidian: GroundStyle = {
  * id with no painter ships a floor that silently falls back to flat colour.
  * `groundMaterials.test.ts` holds both directions.
  */
-export const GROUND_STYLES: GroundStyle[] = [stone, dirt, grass, sand, wood, tatami, obsidian];
+/**
+ * ⭐ GH#453 —— 把 FATE 分離調色**包在 painter 外面**，⛔ 不是在七支 painter 裡各
+ * 貼一段。第零守則⑨：第二支跟第一支只差一個參數（`fateTone`）⇒ 抽一次包裝。
+ *
+ * ⚠️ 包在**這裡**（而不是 `gen-ground.ts` 的寫檔迴圈）是刻意的：`GROUND_STYLES`
+ * 是產生器唯一讀到的東西，所以守衛只要拿 `GROUND_STYLES[i].paint()` 就等於拿到
+ * **出貨的那條路徑**（失敗形態⑤：被測的不是出貨的那個）。`gen-ground.ts` 是一支
+ * top-level 就寫檔的腳本，測試 import 不進去。
+ */
+function fateGraded(style: GroundStyle): GroundStyle {
+  if (style.fateTone <= 0) return style;
+  const paint = style.paint.bind(style);
+  const [lo, hi] = toneRangeOf(paint);
+  return {
+    ...style,
+    paint(u, v) {
+      const t = paint(u, v);
+      const [r, g, b] = fateSplitTone([t.r, t.g, t.b], style.fateTone, lo, hi);
+      return { ...t, r, g, b };
+    },
+  };
+}
+
+/**
+ * 這支 painter **自己的**亮度區間（sRGB 0..1 的 5%／95% 分位數）——
+ * `fateSplitTone` 的 `lo`/`hi`。
+ *
+ * ⭐ 量出來的，⛔ 不是每支 style 手填兩個數字（那會是第 N 個住處，而且畫家一改
+ * 顏色它就過期）。64² 是固定網格取樣 ⇒ 完全決定性；4,096 次呼叫對一次
+ * 512² = 262,144 次的產生來說是 1.6% 的成本。
+ *
+ * ⚠️ 取**分位數**不是 min/max：一顆最亮的鵝卵石或一條最黑的縫就會把區間撐開，
+ * 於是其餘 99.9% 又被擠回中間 —— 那就是第二版「方向對但看不見」的病。
+ */
+function toneRangeOf(paint: (u: number, v: number) => Texel): [number, number] {
+  const N = 64;
+  const vals: number[] = [];
+  for (let y = 0; y < N; y++) {
+    for (let x = 0; x < N; x++) {
+      const t = paint((x + 0.5) / N, (y + 0.5) / N);
+      const l = Math.max(0, 0.2126 * t.r + 0.7152 * t.g + 0.0722 * t.b);
+      vals.push(l <= 0.0031308 ? l * 12.92 : 1.055 * l ** (1 / 2.4) - 0.055);
+    }
+  }
+  vals.sort((a, b) => a - b);
+  const at = (q: number): number => vals[Math.min(vals.length - 1, Math.floor(q * vals.length))]!;
+  return [at(0.05), at(0.95)];
+}
+
+/**
+ * ⭐ **還沒**上 FATE 調色的畫家。⛔ 產生器不讀這一份 —— 它存在是為了讓守衛
+ * 拿得到「同一支 painter 的 before」，於是「`.map(fateGraded)` 被拿掉」這件事
+ * 有一條會紅的線（⛔ 不是靠斷言一個湊出來的比值）。
+ */
+export const RAW_GROUND_STYLES: readonly GroundStyle[] = [
+  stone,
+  dirt,
+  grass,
+  sand,
+  wood,
+  tatami,
+  obsidian,
+];
+
+export const GROUND_STYLES: GroundStyle[] = RAW_GROUND_STYLES.map(fateGraded);

@@ -34,7 +34,8 @@
     "maxPocketPathFactor": 0.8
   },
   "nav": {
-    "headroom": 1.5
+    "headroom": 1.5,
+    "minSpawnRoomBodyRadii": 1
   },
   "severity": {
     "deadEnds": "warn",

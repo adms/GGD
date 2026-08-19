@@ -42,6 +42,7 @@ import { audioSettings, type AudioSettingsStore } from "./audioSettings";
 import { BgmRotationStore, ACTIVE_BGM_VARIANTS, type BgmVariantMap } from "./bgmVariants";
 import { loopResumeOffsetSec } from "./scene";
 import { SFX_CORE, SFX_LOOPABLE, isLoopableSfx, sfxEventsForScene } from "./sfxManifest";
+import { trueLoopFor } from "./sfxLoopPolicy";
 import {
   DEFAULT_SFX_PRELOAD_POLICY,
   SFX_PRELOAD_POLICY_PATH,
@@ -231,6 +232,16 @@ export interface SfxPlayOptions {
    * taking the incumbent's slots.
    */
   gateKey?: string;
+  /**
+   * ⭐ GH#403 —— 強制這一發**走／不走**真 loop，蓋掉 `sfxLoopPolicy` 的預設。
+   *
+   * ⚠️ 存在的理由是**同一個 key 有兩個主人**：`fireRingLoop` 既是火圈自己那條
+   * 環境底噪（要真 loop，燒多久響多久），也是 tornado / flamePillar / breath 的
+   * `soundLoop`（GH#390 的特效自帶音效）。特效那條路**必須** `loop: false` ——
+   * 一發 8 秒的龍捲風要是啟動了真 loop，`maxConcurrent: 1` 會讓那個 voice 永遠
+   * 佔著 gate，於是龍捲風變成一條持續到回合結束的噪音、而真的火圈**再也響不了**。
+   */
+  loop?: boolean;
   /**
    * Fired exactly once when this clip's playback is DONE — the natural end
    * (`src.onended`), a load/decode failure (404, undecodable buffer), or a
@@ -985,6 +996,23 @@ export class AudioSystem {
         chain = this.makeSpatialChain(ctx, pan, lowpassHz);
         const src = ctx.createBufferSource();
         src.buffer = buffer;
+        // ⭐ GH#403 —— **真 loop**（`AudioBufferSourceNode.loop`），不是定時重播。
+        // 這一行之前整個 codebase 沒有任何一發真 loop，而 `SFX_LOOPABLE` 的檔頭
+        // 聲稱它的成員會走這條路（第三守則）。呼叫端可以用 `opts.loop` 覆寫
+        // （見 `SfxPlayOptions.loop`：特效自帶的 `soundLoop` 必須 false）。
+        const seam = trueLoopFor(event);
+        if (opts?.loop ?? (seam !== null)) {
+          src.loop = true;
+          // 接縫夾在 buffer 內 —— 一個超過長度的 `loopEnd` 會讓某些瀏覽器静默地
+          // 不循環，而那看起來跟「素材本來就這麼長」一模一樣。
+          const dur = buffer.duration;
+          const st = Math.min(Math.max(seam?.loopStartSec ?? 0, 0), dur);
+          const en = Math.min(Math.max(seam?.loopEndSec ?? dur, st), dur);
+          if (en > st) {
+            src.loopStart = st;
+            src.loopEnd = en;
+          }
+        }
         src.connect(gain);
         if (chain) {
           gain.connect(chain.head);

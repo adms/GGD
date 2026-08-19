@@ -53,6 +53,7 @@ import {
 } from "./spatial";
 import { isNearAudience, type VoiceAudience } from "./voiceAudience";
 import { othersVoiceGain } from "./voiceMixPolicy";
+import { isWorldVoice } from "./spatialPolicy";
 
 /**
  * `VoiceAudience` → `SfxRelation`, written out rather than cast.
@@ -110,6 +111,18 @@ export const SELF_VOICE_MIX: Readonly<SpatialMix> = Object.freeze({
 });
 
 export interface VoiceSpatialInput {
+  /**
+   * ⭐ GH#441 —— 這一句的**類別**（`hurt` / `skill-name.q` / `quote` …）。
+   *
+   * 在這之前 `audio/spatialPolicy.VOICE_CATEGORY_POLICY` 是一份**沒有任何出貨程式碼
+   * 讀過的政策宣告**（唯一的引用者是它自己的測試，＝失敗形態③）。它現在是一道閘：
+   * 政策說 `self` 的類別（block / dodge / quote / kill-N …）**永遠不會被 pan**，
+   * 就算哪天有人把它接到一具遠處的身體上也一樣。
+   *
+   * ⚠️ 它只拿掉 pan 與 depth，⛔ **不動音量與 priority** —— 那兩個是 #223 的
+   * audience 模型算出來的，這一格沒有資格覆寫它們。
+   */
+  category: string;
   /** the band `voiceAudience.voiceAudienceOf` scored this line into. */
   audience: VoiceAudience;
   /** the SPEAKER's world position, or null when it was not resolvable. */
@@ -179,7 +192,10 @@ export function voiceSpatialMix(
   if (!m) return null;
 
   const g = inp.spectating === true ? 1 : othersVoiceGain();
-  return { ...m, volume: Math.min(1, Math.max(0, m.volume * g)) };
+  const mixed = { ...m, volume: Math.min(1, Math.max(0, m.volume * g)) };
+  // ⭐ GH#441 —— 政策閘。`world` 才准帶方向；其餘（`self` 那一族）保留 #223 算出來的
+  // 音量與 priority，但**拿掉 pan 與 depth**。⛔ 不是「靜音」也不是「全音量」。
+  return isWorldVoice(inp.category) ? mixed : { ...mixed, pan: 0, lowpassHz: null };
 }
 
 /**
