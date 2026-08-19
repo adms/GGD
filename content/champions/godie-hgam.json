@@ -169,22 +169,18 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        125,
-        200,
-        275,
-        350
+        125.0,
+        200.0,
+        275.0,
+        350.0
       ],
-      "range": 9.17,
       "effects": [],
-      "vfxKey": "fx.root-snare",
-      "targetsEnemies": true,
-      "castTimeSec": 1.133,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -205,7 +201,12 @@
           "damageType": "magic",
           "castTimeSec": 1.133
         }
-      }
+      },
+      "vfxKey": "fx.root-snare",
+      "targetsEnemies": true,
+      "castTimeSec": 1.133,
+      "rangeTier": "超大",
+      "range": 8
     },
     "R": {
       "id": "godie-hgam.r",
@@ -226,24 +227,7 @@
         300,
         400
       ],
-      "range": 14,
       "effects": [],
-      "vfxKey": "fx.w3x.particle.supershinythingy.p00",
-      "castTimeSec": 1.5,
-      "hitFeel": {
-        "hitstopTicks": 4,
-        "hitstunTicks": 7,
-        "shakeMag": 0.52,
-        "shakeStyle": "omni",
-        "sparkKind": "magic",
-        "flashColor": [
-          1,
-          0.92,
-          0.6
-        ],
-        "flashMs": 178,
-        "camKick": 0.446
-      },
       "template": {
         "ref": "tpl-line-sweep",
         "params": {
@@ -261,7 +245,25 @@
           "castTimeSec": 1.5
         }
       },
-      "targetsEnemies": true
+      "vfxKey": "fx.w3x.particle.supershinythingy.p00",
+      "castTimeSec": 1.5,
+      "hitFeel": {
+        "hitstopTicks": 4,
+        "hitstunTicks": 7,
+        "shakeMag": 0.52,
+        "shakeStyle": "omni",
+        "sparkKind": "magic",
+        "flashColor": [
+          1,
+          0.92,
+          0.6
+        ],
+        "flashMs": 178,
+        "camKick": 0.446
+      },
+      "targetsEnemies": true,
+      "rangeTier": "極大",
+      "range": 12
     }
   },
   "skillOrder": [

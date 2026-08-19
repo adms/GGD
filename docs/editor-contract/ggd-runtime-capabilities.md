@@ -1,6 +1,6 @@
 # GGD 遊戲端執行期能力清單（`ggd-runtime-capabilities@1`）
 
-**指紋 `fba3ddd8`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
+**指紋 `672a2cac`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
 
 ## 這份文件是什麼
 
@@ -114,7 +114,7 @@
 | `attachment@1` | `anim` · `animLoop` · `follow` · `id` · `modelKey` · `note` · `offsetY` · `points` · `scale` · `schema` |
 | `ability@1.vfxLayers[]` | `alpha` · `attachTo` · `delayMs` · `enabled` · `facingDeg` · `flyHeight` · `pitchDeg` · `timeScale` · `tint` · `vfxKey` · `w3xScale` |
 | `config.vfx-families@1.abilities[]` | `alpha` · `anchor` · `enabled` · `facingDeg` · `family` · `flyHeight` · `pitchDeg` · `soundDissipate` · `soundGain` · `soundImpact` · `soundLaunch` · `soundLoop` · `timeScale` · `tint` · `w3xScale` |
-| `config.vfx-families@1.families[]` | `alpha` · `element` · `enabled` · `heightY` · `primitive` · `scale` · `soundDissipate` · `soundGain` · `soundImpact` · `soundLaunch` · `soundLoop` · `soundLoopMaxMs` · `soundLoopMs` · `timeScale` |
+| `config.vfx-families@1.families[]` | `alpha` · `element` · `enabled` · `groundDecal` · `heightY` · `primitive` · `scale` · `soundDissipate` · `soundGain` · `soundImpact` · `soundLaunch` · `soundLoop` · `soundLoopMaxMs` · `soundLoopMs` · `timeScale` |
 | `config.vfx-ability-art@1.bindings.prim` | `element` · `primitive` · `size` |
 | `config.vfx-ability-art@1.bindings.family` | `anchor` · `family` · `flyHeight` · `model` · `paramSource` · `provenance` · `scale` · `tint` · `via` · `w3aId` |
 | `config.vfx-ability-art@1.bindings.promoted` | `extra` · `family` · `primary` · `provenance` · `via` · `w3aId` |

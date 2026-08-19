@@ -21,7 +21,6 @@
     325.0,
     85.0
   ],
-  "range": 2.75,
   "effects": [
     {
       "kind": "damage",
@@ -47,5 +46,7 @@
   "sfxKey": "wc3.peondeath",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.2
+  "castTimeSec": 0.2,
+  "rangeTier": "小",
+  "range": 3
 }

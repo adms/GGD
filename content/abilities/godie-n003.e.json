@@ -19,7 +19,6 @@
     400.0,
     520.0
   ],
-  "range": 10.08,
   "effects": [
     {
       "kind": "spawnProjectile",
@@ -42,5 +41,7 @@
   ],
   "vfxKey": "fx.prim.ice.nova",
   "schema": "ability@1",
-  "castTimeSec": 1.133
+  "castTimeSec": 1.133,
+  "rangeTier": "極大",
+  "range": 12
 }

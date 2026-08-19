@@ -61,31 +61,30 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        25,
-        25,
-        25,
-        25,
-        25
+        25.0,
+        25.0,
+        25.0,
+        25.0,
+        25.0
       ],
       "manaCost": [
-        35,
-        55,
-        55,
-        95,
-        95
+        35.0,
+        55.0,
+        55.0,
+        95.0,
+        95.0
       ],
-      "range": 9.17,
       "effects": [
         {
           "kind": "damage",
           "damageType": "physical",
           "amount": {
             "perRank": [
-              75,
-              175,
-              250,
-              325,
-              325
+              75.0,
+              175.0,
+              250.0,
+              325.0,
+              325.0
             ],
             "ratios": [
               {
@@ -98,13 +97,15 @@
         {
           "kind": "applyStatus",
           "statusId": "slow40",
-          "duration": 1,
+          "duration": 1.0,
           "moveSpeedMult": 0.6
         }
       ],
       "vfxKey": "fx.prim.wind.slash",
       "targetsEnemies": true,
-      "castTimeSec": 0.633
+      "castTimeSec": 0.633,
+      "rangeTier": "超大",
+      "range": 8
     },
     "W": {
       "id": "godie-u00h.w",
@@ -115,24 +116,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        50,
-        50,
-        50,
-        50
+        50.0,
+        50.0,
+        50.0,
+        50.0
       ],
       "manaCost": [
-        50,
-        80,
-        110,
-        140
+        50.0,
+        80.0,
+        110.0,
+        140.0
       ],
-      "range": 9.17,
       "effects": [],
-      "vfxKey": "fx.prim.fire.slash",
-      "targetsEnemies": true,
-      "radius": 3.67,
-      "icon": "assets/icons/abilities/godie-u00h.w.png",
-      "castTimeSec": 1.267,
       "template": {
         "ref": "tpl-instant-blast",
         "params": {
@@ -154,7 +149,14 @@
           "damageType": "physical",
           "castTimeSec": 1.267
         }
-      }
+      },
+      "vfxKey": "fx.prim.fire.slash",
+      "targetsEnemies": true,
+      "radius": 3.67,
+      "icon": "assets/icons/abilities/godie-u00h.w.png",
+      "castTimeSec": 1.267,
+      "rangeTier": "超大",
+      "range": 8
     },
     "E": {
       "id": "godie-u00h.e",
@@ -166,18 +168,17 @@
       "castType": "skillshot",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        215,
-        245,
-        275,
-        305
+        215.0,
+        245.0,
+        275.0,
+        305.0
       ],
-      "range": 14,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -188,10 +189,10 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  350,
-                  450,
-                  550,
-                  650
+                  350.0,
+                  450.0,
+                  550.0,
+                  650.0
                 ]
               }
             },
@@ -206,7 +207,9 @@
       ],
       "vfxKey": "fx.prim.ice.beam",
       "sfxKey": "wc3.flaretarget2",
-      "castTimeSec": 1.133
+      "castTimeSec": 1.133,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-u00h.r",

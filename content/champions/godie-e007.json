@@ -73,7 +73,6 @@
         90.0,
         90.0
       ],
-      "range": 4.0,
       "effects": [
         {
           "kind": "damage",
@@ -103,7 +102,9 @@
       ],
       "vfxKey": "fx.prim.ki.pulse-sm",
       "targetsEnemies": true,
-      "castTimeSec": 0.3
+      "castTimeSec": 0.3,
+      "rangeTier": "中",
+      "range": 4.5
     },
     "W": {
       "id": "godie-e007.w",
@@ -126,7 +127,6 @@
         150.0,
         200.0
       ],
-      "range": 11.0,
       "effects": [
         {
           "kind": "heal",
@@ -148,7 +148,9 @@
       ],
       "vfxKey": "fx.prim.nature.pulse",
       "targetsEnemies": false,
-      "castTimeSec": 0.067
+      "castTimeSec": 0.067,
+      "rangeTier": "極大",
+      "range": 12
     },
     "E": {
       "id": "godie-e007.e",
@@ -170,7 +172,6 @@
         300.0,
         375.0
       ],
-      "range": 11.0,
       "effects": [
         {
           "kind": "damage",
@@ -194,7 +195,9 @@
       "vfxKey": "fx.prim.ki.shockwave",
       "targetsEnemies": true,
       "icon": "assets/icons/abilities/godie-e007.e.png",
-      "castTimeSec": 0.467
+      "castTimeSec": 0.467,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-e007.r",
@@ -214,7 +217,6 @@
         280.0,
         345.0
       ],
-      "range": 11.0,
       "effects": [
         {
           "kind": "damage",
@@ -251,7 +253,9 @@
         ],
         "flashMs": 178,
         "camKick": 0.446
-      }
+      },
+      "rangeTier": "極大",
+      "range": 12
     }
   },
   "skillOrder": [

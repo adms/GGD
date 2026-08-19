@@ -245,14 +245,11 @@
         0.5
       ],
       "manaCost": [
-        150,
-        225,
-        300
+        150.0,
+        225.0,
+        300.0
       ],
-      "range": 8.25,
       "effects": [],
-      "vfxKey": "fx.prim.holy.nova-lg",
-      "targetsEnemies": true,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -271,7 +268,11 @@
           },
           "damageType": "magic"
         }
-      }
+      },
+      "vfxKey": "fx.prim.holy.nova-lg",
+      "targetsEnemies": true,
+      "rangeTier": "超大",
+      "range": 8
     }
   },
   "skillOrder": [

@@ -62,20 +62,16 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        130,
-        195,
-        260
+        130.0,
+        195.0,
+        260.0
       ],
-      "range": 11,
       "effects": [],
-      "vfxKey": "fx.prim.wind.nova",
-      "targetsEnemies": true,
-      "castTimeSec": 0.267,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -95,7 +91,12 @@
           "damageType": "magic",
           "castTimeSec": 0.267
         }
-      }
+      },
+      "vfxKey": "fx.prim.wind.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.267,
+      "rangeTier": "極大",
+      "range": 12
     },
     "W": {
       "id": "godie-nsjs.w",
@@ -107,18 +108,17 @@
       "castType": "skillshot",
       "maxRank": 4,
       "cooldown": [
-        30,
-        30,
-        30,
-        30
+        30.0,
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
-        80,
-        105,
-        130,
-        155
+        80.0,
+        105.0,
+        130.0,
+        155.0
       ],
-      "range": 7.33,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -129,10 +129,10 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  75,
-                  75,
-                  75,
-                  75
+                  75.0,
+                  75.0,
+                  75.0,
+                  75.0
                 ]
               }
             }
@@ -140,7 +140,9 @@
         }
       ],
       "vfxKey": "fx.prim.nature.bolt",
-      "castTimeSec": 0.467
+      "castTimeSec": 0.467,
+      "rangeTier": "超大",
+      "range": 8
     },
     "E": {
       "id": "godie-nsjs.e",
@@ -185,20 +187,16 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        75,
-        75,
-        75
+        75.0,
+        75.0,
+        75.0
       ],
       "manaCost": [
-        200,
-        375,
-        550
+        200.0,
+        375.0,
+        550.0
       ],
-      "range": 6.42,
       "effects": [],
-      "vfxKey": "fx.prim.nature.nova-lg",
-      "targetsEnemies": true,
-      "castTimeSec": 1.633,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -218,7 +216,12 @@
           "damageType": "magic",
           "castTimeSec": 1.633
         }
-      }
+      },
+      "vfxKey": "fx.prim.nature.nova-lg",
+      "targetsEnemies": true,
+      "castTimeSec": 1.633,
+      "rangeTier": "大",
+      "range": 6
     }
   },
   "skillOrder": [

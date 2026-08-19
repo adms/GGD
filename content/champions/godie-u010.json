@@ -73,7 +73,6 @@
         275.0,
         275.0
       ],
-      "range": 11.92,
       "effects": [
         {
           "kind": "invulnerable",
@@ -106,7 +105,9 @@
       "vfxKey": "fx.w3x.particle.flamessmoke.p01",
       "sfxKey": "wc3.darksummoninglaunch1",
       "targetsEnemies": true,
-      "castTimeSec": 1.033
+      "castTimeSec": 1.033,
+      "rangeTier": "極大",
+      "range": 12
     },
     "W": {
       "id": "godie-u010.w",
@@ -131,7 +132,6 @@
         175.0,
         175.0
       ],
-      "range": 8.25,
       "effects": [
         {
           "kind": "damage",
@@ -177,7 +177,9 @@
         ],
         "flashMs": 131,
         "camKick": 0.328
-      }
+      },
+      "rangeTier": "超大",
+      "range": 8
     },
     "E": {
       "id": "godie-u010.e",
@@ -200,7 +202,6 @@
         385.0,
         470.0
       ],
-      "range": 11.0,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -243,7 +244,9 @@
         ],
         "flashMs": 144,
         "camKick": 0.36
-      }
+      },
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-u010.r",

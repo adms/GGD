@@ -59,31 +59,32 @@
       "provenance": "w3x-import",
       "description": "[輔助]\n25秒冷卻時間\n\n飛鼠先生可以瞬間移動3300的距離到指定的位置。",
       "slot": "Q",
-      "castType": "dash",
+      "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        25,
-        25,
-        25,
-        25
+        25.0,
+        25.0,
+        25.0,
+        25.0
       ],
       "manaCost": [
-        150,
-        250,
-        350,
-        450
+        150.0,
+        250.0,
+        350.0,
+        450.0
       ],
-      "range": 11,
       "effects": [
         {
-          "kind": "dash",
-          "mode": "toPoint",
-          "speed": 16,
-          "maxDistance": 11
+          "kind": "blink",
+          "shape": "single",
+          "to": "point",
+          "applyTo": "self"
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
-      "castTimeSec": 0.067
+      "castTimeSec": 0.467,
+      "rangeTier": "極大",
+      "range": 12
     },
     "W": {
       "id": "godie-udea.w",
@@ -95,24 +96,20 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        30,
-        30,
-        30,
-        30,
-        30
+        30.0,
+        30.0,
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
-        150,
-        215,
-        280,
-        280,
-        280
+        150.0,
+        215.0,
+        280.0,
+        280.0,
+        280.0
       ],
-      "range": 11,
       "effects": [],
-      "vfxKey": "fx.prim.ice.nova",
-      "targetsEnemies": true,
-      "castTimeSec": 0.767,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -134,7 +131,12 @@
           "damageType": "magic",
           "castTimeSec": 0.767
         }
-      }
+      },
+      "vfxKey": "fx.prim.ice.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.767,
+      "rangeTier": "極大",
+      "range": 12
     },
     "E": {
       "id": "godie-udea.e",
@@ -146,20 +148,19 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        25,
-        25,
-        25,
-        25,
-        25
+        25.0,
+        25.0,
+        25.0,
+        25.0,
+        25.0
       ],
       "manaCost": [
-        60,
-        150,
-        225,
-        300,
-        300
+        60.0,
+        150.0,
+        225.0,
+        300.0,
+        300.0
       ],
-      "range": 10.08,
       "effects": [
         {
           "kind": "damage",
@@ -183,14 +184,16 @@
         {
           "kind": "applyStatus",
           "statusId": "slow40",
-          "duration": 1,
+          "duration": 1.0,
           "moveSpeedMult": 0.6
         }
       ],
       "vfxKey": "fx.prim.arcane.explosion",
       "sfxKey": "wc3.taunt",
       "targetsEnemies": true,
-      "castTimeSec": 0.633
+      "castTimeSec": 0.633,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-udea.r",
@@ -202,26 +205,27 @@
       "castType": "dash",
       "maxRank": 3,
       "cooldown": [
-        90,
-        60,
-        30
+        90.0,
+        60.0,
+        30.0
       ],
       "manaCost": [
-        250,
-        350,
-        450
+        250.0,
+        350.0,
+        450.0
       ],
-      "range": 8.25,
       "effects": [
         {
           "kind": "dash",
-          "mode": "toPoint",
+          "mode": "forward",
           "speed": 16,
           "maxDistance": 8.25
         }
       ],
       "vfxKey": "fx.prim.holy.nova-lg",
-      "castTimeSec": 0.067
+      "castTimeSec": 0.067,
+      "rangeTier": "超大",
+      "range": 8
     }
   },
   "skillOrder": [

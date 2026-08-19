@@ -19,7 +19,6 @@
     110.0,
     140.0
   ],
-  "range": 11.0,
   "effects": [
     {
       "kind": "heal",
@@ -42,5 +41,7 @@
   "vfxKey": "fx.prim.arcane.pulse-sm",
   "targetsEnemies": false,
   "schema": "ability@1",
-  "castTimeSec": 0.067
+  "castTimeSec": 0.067,
+  "rangeTier": "極大",
+  "range": 12
 }

@@ -17,7 +17,6 @@
     330.0,
     430.0
   ],
-  "range": 14.0,
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
@@ -42,5 +41,7 @@
   "vfxKey": "fx.prim.arcane.beam-lg",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 1.5
+  "castTimeSec": 1.5,
+  "rangeTier": "極大",
+  "range": 12
 }

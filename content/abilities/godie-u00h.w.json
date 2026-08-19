@@ -18,7 +18,6 @@
     110.0,
     140.0
   ],
-  "range": 9.17,
   "effects": [],
   "template": {
     "ref": "tpl-instant-blast",
@@ -47,5 +46,7 @@
   "radius": 3.67,
   "schema": "ability@1",
   "icon": "assets/icons/abilities/godie-u00h.w.png",
-  "castTimeSec": 1.267
+  "castTimeSec": 1.267,
+  "rangeTier": "超大",
+  "range": 8
 }

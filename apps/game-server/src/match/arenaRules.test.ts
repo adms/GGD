@@ -559,7 +559,12 @@ describe("every-round augment 3-choose-1 restored (arena-08, #157)", () => {
 
   it("a picked augment is excluded from the next round's silver re-offer", () => {
     cover("arena-config-parse");
-    const ctl = makeArenaMatch(1234);
+    // ⚠️ GH#414/#442 —— seed 1234 換成 **1200**。這一版把 12 支瞬移改成真 blink、
+    //    205 支技能的射程收進級距 ⇒ bot 的戰鬥軌跡改變，1234 那一場第 2 回合
+    //    **沒有任何座位拿到 augment offer**，於是 `checked` 是 0、這條測試變成空轉。
+    //    ⛔ 不是把 `toBeGreaterThan(0)` 拿掉（那會留下一條對缺陷不敏感的綠燈，
+    //    失敗形態④）—— 掃了 1200–1399，1200/1201/1203/1204 都重現。
+    const ctl = makeArenaMatch(1200);
     // Round 2 is silver again: its fresh 3 choices must EXCLUDE whatever the seat
     // already owns from round 1. The round-1 draft is auto-resolved on the timer,
     // and task #207 makes that a DETERMINISTIC RANDOM one of the three (not the

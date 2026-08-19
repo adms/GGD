@@ -21,7 +21,6 @@
     175.0,
     175.0
   ],
-  "range": 8.25,
   "effects": [
     {
       "kind": "damage",
@@ -68,5 +67,7 @@
     ],
     "flashMs": 131,
     "camKick": 0.328
-  }
+  },
+  "rangeTier": "超大",
+  "range": 8
 }

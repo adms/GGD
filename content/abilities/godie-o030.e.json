@@ -19,7 +19,6 @@
     200.0,
     225.0
   ],
-  "range": 11.0,
   "effects": [
     {
       "kind": "damage",
@@ -43,5 +42,7 @@
   "vfxKey": "fx.prim.fire.explosion",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.267
+  "castTimeSec": 0.267,
+  "rangeTier": "極大",
+  "range": 12
 }

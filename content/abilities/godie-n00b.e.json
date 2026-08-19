@@ -6,7 +6,7 @@
   "provenance": "w3x-import",
   "description": "[輔助]\n80秒冷卻時間\n\n使用任意門可以傳送到地圖探索過的任何一點，準備時間為3秒。",
   "slot": "E",
-  "castType": "dash",
+  "castType": "ground",
   "maxRank": 5,
   "cooldown": [
     80.0,
@@ -22,15 +22,16 @@
     100.0,
     100.0
   ],
-  "range": 11.0,
   "effects": [
     {
-      "kind": "dash",
-      "mode": "toPoint",
-      "speed": 16,
-      "maxDistance": 11.0
+      "kind": "blink",
+      "shape": "single",
+      "to": "point",
+      "applyTo": "self"
     }
   ],
   "vfxKey": "fx.prim.arcane.pulse-sm",
-  "castTimeSec": 0.067
+  "castTimeSec": 0.4,
+  "rangeTier": "極大",
+  "range": 12
 }

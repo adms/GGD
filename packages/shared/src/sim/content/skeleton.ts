@@ -103,7 +103,11 @@ export const SELA: ChampionDef = {
       maxRank: 5,
       cooldown: [6, 5.5, 5, 4.5, 4],
       manaCost: [50, 55, 60, 65, 70],
-      range: 14,
+      // ⚠️ GH#414：`AbilityDef` 是**註冊後**的執行期型別，`rangeTier` 在
+      //    `resolveRangeTier` 那一步就已經被翻成數字了 ⇒ 骨架只帶數字。
+      //    這三個值要跟 content/abilities/{sela.q,sela.r,thorne.e}.json 的
+      //    級距解出來的結果一致，`loader.test.ts` 是那條 drift 守衛。
+      range: 12,
       effects: [
         {
           kind: "spawnProjectile",
@@ -176,7 +180,7 @@ export const SELA: ChampionDef = {
       maxRank: 3,
       cooldown: [110, 95, 80],
       manaCost: [100, 100, 100],
-      range: 10,
+      range: 8,
       radius: 5,
       targetsEnemies: true,
       castTimeSec: 0.5,
@@ -316,7 +320,7 @@ export const THORNE: ChampionDef = {
       maxRank: 5,
       cooldown: [13, 12, 11, 10, 9],
       manaCost: [60, 65, 70, 75, 80],
-      range: 10,
+      range: 8,
       effects: [
         {
           kind: "spawnProjectile",

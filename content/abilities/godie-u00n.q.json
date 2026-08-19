@@ -19,7 +19,6 @@
     140.0,
     170.0
   ],
-  "range": 5.5,
   "effects": [
     {
       "kind": "damage",
@@ -49,5 +48,7 @@
   "vfxKey": "fx.prim.physical.shockwave",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.3
+  "castTimeSec": 0.3,
+  "rangeTier": "大",
+  "range": 6
 }

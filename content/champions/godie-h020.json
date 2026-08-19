@@ -71,7 +71,6 @@
         55.0,
         65.0
       ],
-      "range": 11.92,
       "effects": [
         {
           "kind": "damage",
@@ -100,7 +99,9 @@
       ],
       "vfxKey": "fx.prim.fire.explosion",
       "targetsEnemies": true,
-      "castTimeSec": 0.467
+      "castTimeSec": 0.467,
+      "rangeTier": "極大",
+      "range": 12
     },
     "W": {
       "id": "godie-h020.w",
@@ -123,7 +124,6 @@
         115.0,
         145.0
       ],
-      "range": 11.0,
       "effects": [
         {
           "kind": "damage",
@@ -147,7 +147,9 @@
       "vfxKey": "fx.prim.fire.explosion",
       "targetsEnemies": true,
       "radius": 5.5,
-      "castTimeSec": 0.633
+      "castTimeSec": 0.633,
+      "rangeTier": "極大",
+      "range": 12
     },
     "E": {
       "id": "godie-h020.e",
@@ -170,7 +172,6 @@
         560.0,
         725.0
       ],
-      "range": 14.0,
       "effects": [
         {
           "kind": "damage",
@@ -200,7 +201,9 @@
       "vfxKey": "fx.prim.fire.beam",
       "targetsEnemies": true,
       "radius": 8.25,
-      "castTimeSec": 1.5
+      "castTimeSec": 1.5,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-h020.r",
@@ -221,7 +224,6 @@
         250.0,
         350.0
       ],
-      "range": 5.04,
       "effects": [
         {
           "kind": "damage",
@@ -249,7 +251,9 @@
       ],
       "vfxKey": "fx.prim.void.explosion-lg",
       "targetsEnemies": true,
-      "castTimeSec": 1.5
+      "castTimeSec": 1.5,
+      "rangeTier": "中",
+      "range": 4.5
     }
   },
   "skillOrder": [

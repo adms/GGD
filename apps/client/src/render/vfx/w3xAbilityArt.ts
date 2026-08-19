@@ -58,6 +58,7 @@
  * reason a family knob does anything at all.
  */
 import { VfxDefs, type ConfigVfxFamiliesDoc } from "@ggd/shared/content";
+import type { VfxGroundDecal } from "@ggd/shared/content/schema/vfx";
 import { abilityVfxKeys } from "./bindings";
 import { abilityArtRows, onAbilityArtBindingsChanged } from "./abilityArtContent";
 import {
@@ -115,6 +116,18 @@ export interface W3xAbilityArt {
    * `anchor` 仍然是死的 —— 見 `DEAD_FAMILY_KNOBS`。
    */
   readonly heightY?: number;
+  /**
+   * GH#439 —— 這一招在地上留下哪一種痕跡，或 undefined。
+   *
+   * ⚠️ 量到的缺口：`VfxSystem` 對**每一顆** `abilityCast` 都蓋一張 decal，而
+   * `castScorchSpec()` 不分技能回同一張焦痕 —— 91 支地面衝擊波和其餘 570 支的
+   * 印子逐位元組相同，「地面震裂」在畫面上因此不存在。
+   *
+   * ABSENT 的兩種來源都走出貨焦痕（＝這一版之前一位元不差的行為）：
+   * ①`w3xAbilityArtRows()` 那 34 支晉升（沒有家族原型，也就沒有「這一族留什麼
+   * 痕跡」這個答案）②操作者沒碰過那個家族。
+   */
+  readonly groundDecal?: VfxGroundDecal;
 }
 
 /**
@@ -197,6 +210,9 @@ function familyRow(abilityId: string): W3xAbilityArt | undefined {
     // 每一支都算出來的 `heightY` 在這裡蒸發,91 支貼地的衝擊波環全部浮在
     // y=1.0。**要不要採用**是 `familyCastHeightY` 讀 config 決定的,不是這裡。
     heightY: resolved.heightY,
+    // GH#439 —— 地面痕跡那一格。少了它,`resolveFamilyArt` 讀出來的 `groundDecal`
+    // 會在這一行蒸發 —— 和 α / 時間倍率 / heightY **同一個**第②號故障。
+    ...(resolved.groundDecal !== undefined ? { groundDecal: resolved.groundDecal } : {}),
   };
   familyRowCache.set(abilityId, row);
   return row;

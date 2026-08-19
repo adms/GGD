@@ -18,7 +18,6 @@
     500.0,
     700.0
   ],
-  "range": 6.42,
   "effects": [
     {
       "kind": "damage",
@@ -46,5 +45,7 @@
   ],
   "vfxKey": "fx.prim.wind.tornado-lg",
   "targetsEnemies": true,
-  "castTimeSec": 1
+  "castTimeSec": 1,
+  "rangeTier": "大",
+  "range": 6
 }

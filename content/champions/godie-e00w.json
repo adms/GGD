@@ -312,6 +312,7 @@
       ],
       "icon": "assets/icons/abilities/godie-e00w.r.webp",
       "vfxKey": "fx.prim.lightning.beam-lg",
+      "rangeTier": "極大",
       "castTimeSec": 2
     }
   },

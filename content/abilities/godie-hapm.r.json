@@ -23,7 +23,7 @@
   "effects": [
     {
       "kind": "dash",
-      "mode": "toPoint",
+      "mode": "forward",
       "speed": 16,
       "maxDistance": 5.0
     },

@@ -71,7 +71,6 @@
         40,
         40
       ],
-      "range": 6,
       "effects": [
         {
           "kind": "dash",
@@ -82,7 +81,9 @@
       ],
       "vfxKey": "fx.thorn-lash",
       "castTimeSec": 0.067,
-      "provenance": "w3x-import"
+      "provenance": "w3x-import",
+      "rangeTier": "大",
+      "range": 6
     },
     "W": {
       "id": "thorne.w",
@@ -164,7 +165,6 @@
         75,
         80
       ],
-      "range": 10,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -201,7 +201,9 @@
       ],
       "vfxKey": "fx.root-snare",
       "castTimeSec": 0.233,
-      "provenance": "w3x-import"
+      "provenance": "w3x-import",
+      "rangeTier": "超大",
+      "range": 8
     },
     "R": {
       "id": "thorne.r",

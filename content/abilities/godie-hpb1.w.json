@@ -21,7 +21,6 @@
     275.0,
     275.0
   ],
-  "range": 14.0,
   "effects": [
     {
       "kind": "invulnerable",
@@ -61,5 +60,7 @@
   "sfxKey": "wc3.moongo",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.467
+  "castTimeSec": 0.467,
+  "rangeTier": "極大",
+  "range": 12
 }

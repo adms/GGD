@@ -19,7 +19,6 @@
     275.0,
     350.0
   ],
-  "range": 9.17,
   "effects": [
     {
       "kind": "damage",
@@ -43,5 +42,7 @@
   "vfxKey": "fx.prim.nature.beam",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 1.133
+  "castTimeSec": 1.133,
+  "rangeTier": "超大",
+  "range": 8
 }

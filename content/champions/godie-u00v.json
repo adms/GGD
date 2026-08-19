@@ -102,18 +102,17 @@
       "castType": "skillshot",
       "maxRank": 4,
       "cooldown": [
-        55,
-        55,
-        55,
-        55
+        55.0,
+        55.0,
+        55.0,
+        55.0
       ],
       "manaCost": [
-        75,
-        105,
-        135,
-        165
+        75.0,
+        105.0,
+        135.0,
+        165.0
       ],
-      "range": 11,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -124,10 +123,10 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  200,
-                  300,
-                  400,
-                  500
+                  200.0,
+                  300.0,
+                  400.0,
+                  500.0
                 ]
               }
             }
@@ -136,7 +135,9 @@
       ],
       "vfxKey": "fx.prim.earth.shockwave",
       "sfxKey": "wc3.gluescreenmeteorhit1",
-      "castTimeSec": 1.033
+      "castTimeSec": 1.033,
+      "rangeTier": "極大",
+      "range": 12
     },
     "E": {
       "id": "godie-u00v.e",
@@ -202,44 +203,52 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        50,
-        50,
-        50
+        50.0,
+        50.0,
+        50.0
       ],
       "manaCost": [
-        110,
-        160,
-        210
+        110.0,
+        160.0,
+        210.0
       ],
-      "range": 10.08,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "perRank": [
-              450,
-              700,
-              950
-            ],
-            "ratios": [
-              {
-                "stat": "ad",
-                "coeff": 0.6
+          "kind": "blink",
+          "shape": "single",
+          "to": "targetUnit",
+          "applyTo": "self",
+          "stopShortUnits": 1.8,
+          "onArrive": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "perRank": [
+                  450.0,
+                  700.0,
+                  950.0
+                ],
+                "ratios": [
+                  {
+                    "stat": "ad",
+                    "coeff": 0.6
+                  }
+                ]
               }
-            ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "burnstun",
-          "duration": 1,
-          "stun": true
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "burnstun",
+              "duration": 1.0,
+              "stun": true
+            }
+          ]
         }
       ],
       "vfxKey": "fx.w3x.locust.boomnl.p01",
       "targetsEnemies": true,
-      "castTimeSec": 1,
+      "castTimeSec": 0.667,
       "hitFeel": {
         "hitstopTicks": 5,
         "hitstunTicks": 8,
@@ -247,13 +256,15 @@
         "shakeStyle": "omni",
         "sparkKind": "heavy",
         "flashColor": [
-          1,
+          1.0,
           0.72,
           0.34
         ],
         "flashMs": 202,
         "camKick": 0.506
-      }
+      },
+      "rangeTier": "極大",
+      "range": 12
     }
   },
   "skillOrder": [

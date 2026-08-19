@@ -167,7 +167,6 @@
         250.0,
         300.0
       ],
-      "range": 11.0,
       "effects": [
         {
           "kind": "damage",
@@ -212,7 +211,9 @@
       ],
       "vfxKey": "fx.prim.nature.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.667
+      "castTimeSec": 0.667,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-h02u.r",

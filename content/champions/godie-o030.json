@@ -107,7 +107,6 @@
         110.0,
         140.0
       ],
-      "range": 11.0,
       "effects": [
         {
           "kind": "damage",
@@ -130,7 +129,9 @@
       ],
       "vfxKey": "fx.prim.nature.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.467
+      "castTimeSec": 0.467,
+      "rangeTier": "極大",
+      "range": 12
     },
     "E": {
       "id": "godie-o030.e",
@@ -153,7 +154,6 @@
         200.0,
         225.0
       ],
-      "range": 11.0,
       "effects": [
         {
           "kind": "damage",
@@ -176,7 +176,9 @@
       ],
       "vfxKey": "fx.prim.fire.explosion",
       "targetsEnemies": true,
-      "castTimeSec": 0.267
+      "castTimeSec": 0.267,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-o030.r",
@@ -197,7 +199,6 @@
         210.0,
         270.0
       ],
-      "range": 11.0,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -224,7 +225,9 @@
         }
       ],
       "vfxKey": "fx.prim.physical.shockwave-lg",
-      "castTimeSec": 0.767
+      "castTimeSec": 0.767,
+      "rangeTier": "極大",
+      "range": 12
     }
   },
   "skillOrder": [

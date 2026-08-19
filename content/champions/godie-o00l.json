@@ -61,18 +61,17 @@
       "castType": "skillshot",
       "maxRank": 4,
       "cooldown": [
-        35,
-        35,
-        35,
-        35
+        35.0,
+        35.0,
+        35.0,
+        35.0
       ],
       "manaCost": [
-        180,
-        210,
-        240,
-        270
+        180.0,
+        210.0,
+        240.0,
+        270.0
       ],
-      "range": 11,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -83,10 +82,10 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  250,
-                  350,
-                  450,
-                  550
+                  250.0,
+                  350.0,
+                  450.0,
+                  550.0
                 ]
               }
             }
@@ -94,7 +93,9 @@
         }
       ],
       "vfxKey": "fx.prim.void.beam",
-      "castTimeSec": 0.867
+      "castTimeSec": 0.867,
+      "rangeTier": "極大",
+      "range": 12
     },
     "W": {
       "id": "godie-o00l.w",
@@ -106,23 +107,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        35,
-        35,
-        35,
-        35
+        35.0,
+        35.0,
+        35.0,
+        35.0
       ],
       "manaCost": [
-        50,
-        100,
-        150,
-        200
+        50.0,
+        100.0,
+        150.0,
+        200.0
       ],
-      "range": 11.92,
       "effects": [],
-      "vfxKey": "fx.prim.fire.explosion",
-      "targetsEnemies": true,
-      "radius": 3.69,
-      "castTimeSec": 0.867,
       "template": {
         "ref": "tpl-instant-blast",
         "params": {
@@ -144,7 +140,13 @@
           "damageType": "magic",
           "castTimeSec": 0.867
         }
-      }
+      },
+      "vfxKey": "fx.prim.fire.explosion",
+      "targetsEnemies": true,
+      "radius": 3.69,
+      "castTimeSec": 0.867,
+      "rangeTier": "極大",
+      "range": 12
     },
     "E": {
       "id": "godie-o00l.e",
@@ -205,21 +207,16 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        300,
-        420,
-        540
+        300.0,
+        420.0,
+        540.0
       ],
-      "range": 11,
       "effects": [],
-      "vfxKey": "fx.prim.fire.explosion-lg",
-      "sfxKey": "wc3.taunt",
-      "targetsEnemies": true,
-      "castTimeSec": 1.033,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -239,7 +236,13 @@
           "damageType": "magic",
           "castTimeSec": 1.033
         }
-      }
+      },
+      "vfxKey": "fx.prim.fire.explosion-lg",
+      "sfxKey": "wc3.taunt",
+      "targetsEnemies": true,
+      "castTimeSec": 1.033,
+      "rangeTier": "極大",
+      "range": 12
     }
   },
   "skillOrder": [

@@ -7,7 +7,7 @@
   "description": "[輔助]\n35秒冷卻時間\n\n皮卡丘的得意技能之一，可以瞬間移動到800距離內的任何地方，幫助他瞬間烙跑或偷襲。",
   "slot": "PASSIVE",
   "innateKind": "active",
-  "castType": "dash",
+  "castType": "ground",
   "maxRank": 1,
   "cooldown": [
     35.0
@@ -15,15 +15,16 @@
   "manaCost": [
     150.0
   ],
-  "range": 14.67,
   "effects": [
     {
-      "kind": "dash",
-      "mode": "toPoint",
-      "speed": 16,
-      "maxDistance": 14.67
+      "kind": "blink",
+      "shape": "single",
+      "to": "point",
+      "applyTo": "self"
     }
   ],
   "vfxKey": "fx.prim.lightning.dash",
-  "castTimeSec": 0.067
+  "castTimeSec": 0.467,
+  "rangeTier": "極大",
+  "range": 12
 }

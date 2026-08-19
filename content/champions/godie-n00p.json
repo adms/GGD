@@ -70,7 +70,6 @@
         195.0,
         260.0
       ],
-      "range": 11.0,
       "effects": [
         {
           "kind": "damage",
@@ -92,7 +91,9 @@
       ],
       "vfxKey": "fx.prim.nature.slash",
       "targetsEnemies": true,
-      "castTimeSec": 0.267
+      "castTimeSec": 0.267,
+      "rangeTier": "極大",
+      "range": 12
     },
     "W": {
       "id": "godie-n00p.w",
@@ -115,7 +116,6 @@
         130.0,
         155.0
       ],
-      "range": 7.33,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -138,7 +138,9 @@
       ],
       "vfxKey": "fx.prim.nature.swarm",
       "sfxKey": "wc3.spiritofvengeanceyes3",
-      "castTimeSec": 0.467
+      "castTimeSec": 0.467,
+      "rangeTier": "超大",
+      "range": 8
     },
     "E": {
       "id": "godie-n00p.e",
@@ -161,7 +163,6 @@
         400.0,
         500.0
       ],
-      "range": 11.0,
       "effects": [
         {
           "kind": "damage",
@@ -185,7 +186,9 @@
       "vfxKey": "fx.prim.nature.pulse",
       "sfxKey": "wc3.altarofelderswhat1",
       "targetsEnemies": true,
-      "castTimeSec": 0.467
+      "castTimeSec": 0.467,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-n00p.r",
@@ -206,7 +209,6 @@
         375.0,
         550.0
       ],
-      "range": 6.42,
       "effects": [
         {
           "kind": "damage",
@@ -228,7 +230,9 @@
       ],
       "vfxKey": "fx.prim.nature.shockwave-lg",
       "targetsEnemies": true,
-      "castTimeSec": 1.633
+      "castTimeSec": 1.633,
+      "rangeTier": "大",
+      "range": 6
     }
   },
   "skillOrder": [

@@ -1204,6 +1204,9 @@ export class VfxSystem {
           (caster !== undefined ? (this.aim.get(caster) ?? null) : null);
         const aimYawDeg = aim ? yawDegToward(aim.x, aim.z) : null;
         const doc = this.doc(def?.vfxKey);
+        // 這一招的家族列 —— 高度（#251）與地面痕跡（GH#439）都從這裡讀，
+        // ⛔ 不是各自再查一次（兩次查詢 = 兩個會漂開的答案）。
+        const art = w3xArtFor(def?.id);
         // EX = the fight-defining cast: scale the doc's burst up AND layer the
         // max-intensity pop (core flash + streaks + smoke + ground shockwave),
         // tinted from the ability's own color so its identity is preserved.
@@ -1220,7 +1223,7 @@ export class VfxSystem {
             nowMs,
             "ex",
             doc ? tintOfDoc(doc) : EX_DEFAULT_TINT,
-            familyCastHeightY(w3xArtFor(def?.id)),
+            familyCastHeightY(art),
           );
         }
         // #205 多層特效模板。`isLegacySingleVfx` 為真 = 這份 doc 只有舊的單值
@@ -1235,9 +1238,14 @@ export class VfxSystem {
         // lands (its ground `point` when it targets the floor) or, failing that,
         // under the caster — so a cast scars the arena instead of leaving it
         // pristine. Pooled + hard-capped like the blood splats.
+        //
+        // GH#439 —— **哪一種**痕跡由這一招所屬的家族說了算（`groundDecal`）。
+        // 在此之前這一行對 661 支技能回同一張焦痕，所以「地面震裂」在畫面上
+        // 不存在,而且⛔ 沒有任何一格後台改得到它。`null` = 這一族說了不留痕跡。
         const markX = point && isFinitePos(point) ? point.x : pos.x;
         const markZ = point && isFinitePos(point) ? point.z : pos.z;
-        this.castDecals.spawn(markX, markZ, castScorchSpec(def?.radius ?? CAST_SCORCH_RADIUS), nowMs);
+        const decal = castScorchSpec(def?.radius ?? CAST_SCORCH_RADIUS, art?.groundDecal);
+        if (decal) this.castDecals.spawn(markX, markZ, decal, nowMs);
         break;
       }
       // ---- CAST TELEGRAPH: the 0.6 s light pillar ------------------------

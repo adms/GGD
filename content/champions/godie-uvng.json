@@ -61,20 +61,19 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        45,
-        45,
-        45,
-        50,
-        50
+        45.0,
+        45.0,
+        45.0,
+        50.0,
+        50.0
       ],
       "manaCost": [
-        85,
-        115,
-        145,
-        275,
-        275
+        85.0,
+        115.0,
+        145.0,
+        275.0,
+        275.0
       ],
-      "range": 11.92,
       "effects": [
         {
           "kind": "invulnerable",
@@ -89,11 +88,11 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              250,
-              350,
-              450,
-              550,
-              650
+              250.0,
+              350.0,
+              450.0,
+              550.0,
+              650.0
             ],
             "ratios": [
               {
@@ -107,7 +106,9 @@
       "vfxKey": "fx.w3x.particle.flamessmoke.p01",
       "sfxKey": "wc3.darksummoninglaunch1",
       "targetsEnemies": true,
-      "castTimeSec": 1.033
+      "castTimeSec": 1.033,
+      "rangeTier": "極大",
+      "range": 12
     },
     "W": {
       "id": "godie-uvng.w",
@@ -119,20 +120,19 @@
       "castType": "ground",
       "maxRank": 5,
       "cooldown": [
-        25,
-        25,
-        25,
-        25,
-        25
+        25.0,
+        25.0,
+        25.0,
+        25.0,
+        25.0
       ],
       "manaCost": [
-        75,
-        125,
-        175,
-        175,
-        175
+        75.0,
+        125.0,
+        175.0,
+        175.0,
+        175.0
       ],
-      "range": 8.25,
       "effects": [
         {
           "kind": "damage",
@@ -163,7 +163,7 @@
       "vfxKey": "godie-fireblast-p3",
       "sfxKey": "wc3.hcancelbuilding",
       "targetsEnemies": true,
-      "radius": 6,
+      "radius": 6.0,
       "castTimeSec": 0.633,
       "hitFeel": {
         "hitstopTicks": 3,
@@ -172,13 +172,15 @@
         "shakeStyle": "omni",
         "sparkKind": "heavy",
         "flashColor": [
-          1,
+          1.0,
           0.66,
           0.3
         ],
         "flashMs": 131,
         "camKick": 0.328
-      }
+      },
+      "rangeTier": "超大",
+      "range": 8
     },
     "E": {
       "id": "godie-uvng.e",
@@ -201,25 +203,7 @@
         385,
         470
       ],
-      "range": 11,
       "effects": [],
-      "vfxKey": "godie-tectonicfury-p0",
-      "sfxKey": "wc3.dragonyes2",
-      "castTimeSec": 1.5,
-      "hitFeel": {
-        "hitstopTicks": 4,
-        "hitstunTicks": 6,
-        "shakeMag": 0.42,
-        "shakeStyle": "omni",
-        "sparkKind": "heavy",
-        "flashColor": [
-          0.9,
-          0.72,
-          0.48
-        ],
-        "flashMs": 144,
-        "camKick": 0.36
-      },
       "template": {
         "ref": "tpl-line-sweep",
         "params": {
@@ -238,7 +222,26 @@
           "castTimeSec": 1.5
         }
       },
-      "targetsEnemies": true
+      "vfxKey": "godie-tectonicfury-p0",
+      "sfxKey": "wc3.dragonyes2",
+      "castTimeSec": 1.5,
+      "hitFeel": {
+        "hitstopTicks": 4,
+        "hitstunTicks": 6,
+        "shakeMag": 0.42,
+        "shakeStyle": "omni",
+        "sparkKind": "heavy",
+        "flashColor": [
+          0.9,
+          0.72,
+          0.48
+        ],
+        "flashMs": 144,
+        "camKick": 0.36
+      },
+      "targetsEnemies": true,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-uvng.r",

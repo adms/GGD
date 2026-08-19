@@ -17,7 +17,6 @@
     300.0,
     400.0
   ],
-  "range": 14.7,
   "effects": [],
   "template": {
     "ref": "tpl-traveling-wave",
@@ -46,5 +45,7 @@
   "vfxKey": "fx.prim.ki.beam-lg",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.833
+  "castTimeSec": 0.833,
+  "rangeTier": "極大",
+  "range": 12
 }

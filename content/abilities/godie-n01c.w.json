@@ -19,29 +19,39 @@
     110.0,
     140.0
   ],
-  "range": 6.42,
   "effects": [
     {
-      "kind": "damage",
-      "damageType": "physical",
-      "amount": {
-        "perRank": [
-          150.0,
-          250.0,
-          350.0,
-          450.0
-        ],
-        "ratios": [
-          {
-            "stat": "ad",
-            "coeff": 0.5
+      "kind": "blink",
+      "shape": "single",
+      "to": "targetUnit",
+      "applyTo": "self",
+      "stopShortUnits": 1.8,
+      "onArrive": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "perRank": [
+              150.0,
+              250.0,
+              350.0,
+              450.0
+            ],
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
           }
-        ]
-      }
+        }
+      ]
     }
   ],
   "vfxKey": "fx.prim.lightning.beam",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.767
+  "castTimeSec": 0.267,
+  "rangeTier": "大",
+  "range": 6
 }

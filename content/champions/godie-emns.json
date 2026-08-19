@@ -88,6 +88,7 @@
       "icon": "assets/icons/abilities/godie-emns.q.webp",
       "vfxKey": "fx.prim.void.pulse-sm",
       "sfxKey": "wc3.gruntyesattack1",
+      "rangeTier": "極大",
       "castTimeSec": 2
     },
     "W": {
@@ -195,6 +196,7 @@
       "icon": "assets/icons/abilities/godie-emns.e.webp",
       "vfxKey": "fx.prim.physical.shockwave",
       "sfxKey": "wc3.rokhanwhat2",
+      "rangeTier": "極大",
       "castTimeSec": 0.767
     },
     "R": {
@@ -260,6 +262,7 @@
       "icon": "assets/icons/abilities/godie-emns.r.webp",
       "vfxKey": "fx.prim.void.nova-lg",
       "sfxKey": "wc3.gruntyesattack3",
+      "rangeTier": "極大",
       "castTimeSec": 0.867
     }
   },

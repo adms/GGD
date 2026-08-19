@@ -17,7 +17,6 @@
     730,
     960
   ],
-  "range": 8.25,
   "effects": [],
   "template": {
     "ref": "tpl-line-sweep",
@@ -53,5 +52,7 @@
     "flashMs": 186,
     "camKick": 0.466
   },
-  "targetsEnemies": true
+  "targetsEnemies": true,
+  "rangeTier": "超大",
+  "range": 8
 }

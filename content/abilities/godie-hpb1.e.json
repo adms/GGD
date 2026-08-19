@@ -19,7 +19,6 @@
     280.0,
     310.0
   ],
-  "range": 14.0,
   "radius": 6.05,
   "effects": [
     {
@@ -66,5 +65,7 @@
   "sfxKey": "wc3.moonjump",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 1.633
+  "castTimeSec": 1.633,
+  "rangeTier": "極大",
+  "range": 12
 }

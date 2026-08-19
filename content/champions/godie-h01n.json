@@ -118,6 +118,7 @@
       ],
       "icon": "assets/icons/abilities/godie-h01n.q.webp",
       "vfxKey": "fx.prim.void.pulse-sm",
+      "rangeTier": "超大",
       "radiusTier": "小",
       "castTimeSec": 0.067
     },
@@ -303,6 +304,7 @@
       ],
       "icon": "assets/icons/abilities/godie-h01n.e.webp",
       "vfxKey": "fx.prim.void.beam",
+      "rangeTier": "極大",
       "castTimeSec": 0.467
     },
     "R": {

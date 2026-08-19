@@ -21,7 +21,6 @@
     280.0,
     340.0
   ],
-  "range": 11.0,
   "effects": [
     {
       "kind": "damage",
@@ -53,5 +52,7 @@
   "sfxKey": "wc3.eggsackdeath1",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.3
+  "castTimeSec": 0.3,
+  "rangeTier": "極大",
+  "range": 12
 }

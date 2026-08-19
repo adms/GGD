@@ -19,8 +19,15 @@
     110.0,
     140.0
   ],
-  "range": 6.42,
-  "effects": [],
+  "effects": [
+    {
+      "kind": "blink",
+      "shape": "single",
+      "to": "targetUnit",
+      "applyTo": "self",
+      "stopShortUnits": 1.8
+    }
+  ],
   "template": {
     "ref": "tpl-single-strike",
     "params": {
@@ -45,5 +52,7 @@
   "vfxKey": "fx.prim.lightning.slash",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.767
+  "castTimeSec": 0.767,
+  "rangeTier": "大",
+  "range": 6
 }

@@ -21,7 +21,6 @@
     275.0,
     275.0
   ],
-  "range": 11.92,
   "effects": [
     {
       "kind": "invulnerable",
@@ -55,5 +54,7 @@
   "sfxKey": "wc3.darksummoninglaunch1",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 1.033
+  "castTimeSec": 1.033,
+  "rangeTier": "極大",
+  "range": 12
 }

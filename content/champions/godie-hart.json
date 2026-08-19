@@ -60,31 +60,30 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        25,
-        25,
-        25,
-        25,
-        25
+        25.0,
+        25.0,
+        25.0,
+        25.0,
+        25.0
       ],
       "manaCost": [
-        60,
-        80,
-        100,
-        120,
-        120
+        60.0,
+        80.0,
+        100.0,
+        120.0,
+        120.0
       ],
-      "range": 8.25,
       "effects": [
         {
           "kind": "damage",
           "damageType": "physical",
           "amount": {
             "perRank": [
-              150,
-              220,
-              290,
-              360,
-              360
+              150.0,
+              220.0,
+              290.0,
+              360.0,
+              360.0
             ],
             "ratios": [
               {
@@ -97,7 +96,7 @@
         {
           "kind": "applyStatus",
           "statusId": "slow40",
-          "duration": 1,
+          "duration": 1.0,
           "moveSpeedMult": 0.6
         },
         {
@@ -110,7 +109,9 @@
       ],
       "vfxKey": "fx.prim.physical.slash",
       "targetsEnemies": true,
-      "castTimeSec": 0.633
+      "castTimeSec": 0.633,
+      "rangeTier": "超大",
+      "range": 8
     },
     "W": {
       "id": "godie-hart.w",
@@ -122,20 +123,19 @@
       "castType": "ground",
       "maxRank": 5,
       "cooldown": [
-        35,
-        35,
-        35,
-        35,
-        35
+        35.0,
+        35.0,
+        35.0,
+        35.0,
+        35.0
       ],
       "manaCost": [
-        75,
-        145,
-        215,
-        215,
-        215
+        75.0,
+        145.0,
+        215.0,
+        215.0,
+        215.0
       ],
-      "range": 8.25,
       "effects": [
         {
           "kind": "leap",
@@ -176,7 +176,9 @@
       "vfxKey": "fx.prim.fire.explosion",
       "targetsEnemies": true,
       "radius": 4.58,
-      "castTimeSec": 0.867
+      "castTimeSec": 0.867,
+      "rangeTier": "超大",
+      "range": 8
     },
     "E": {
       "id": "godie-hart.e",
@@ -188,28 +190,27 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        120,
-        180,
-        240,
-        300
+        120.0,
+        180.0,
+        240.0,
+        300.0
       ],
-      "range": 3.67,
       "effects": [
         {
           "kind": "damage",
           "damageType": "physical",
           "amount": {
             "perRank": [
-              450,
-              600,
-              750,
-              900
+              450.0,
+              600.0,
+              750.0,
+              900.0
             ],
             "ratios": [
               {
@@ -228,7 +229,7 @@
               "value": -3
             }
           ],
-          "duration": 5,
+          "duration": 5.0,
           "perRank": [
             {
               "modifiers": [
@@ -238,7 +239,7 @@
                   "value": -3
                 }
               ],
-              "duration": 5
+              "duration": 5.0
             },
             {
               "modifiers": [
@@ -248,7 +249,7 @@
                   "value": -6
                 }
               ],
-              "duration": 5
+              "duration": 5.0
             },
             {
               "modifiers": [
@@ -258,7 +259,7 @@
                   "value": -9
                 }
               ],
-              "duration": 5
+              "duration": 5.0
             },
             {
               "modifiers": [
@@ -268,7 +269,7 @@
                   "value": -12
                 }
               ],
-              "duration": 5
+              "duration": 5.0
             }
           ]
         }
@@ -276,7 +277,9 @@
       "vfxKey": "fx.prim.physical.beam",
       "targetsEnemies": true,
       "radius": 6.42,
-      "castTimeSec": 1.133
+      "castTimeSec": 1.133,
+      "rangeTier": "小",
+      "range": 3
     },
     "R": {
       "id": "godie-hart.r",
@@ -288,16 +291,15 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        170,
-        260,
-        350
+        170.0,
+        260.0,
+        350.0
       ],
-      "range": 8.25,
       "effects": [
         {
           "kind": "applyStatus",
@@ -325,9 +327,9 @@
           "damageType": "physical",
           "amountPerTick": {
             "perRank": [
-              99,
-              149,
-              199
+              99.0,
+              149.0,
+              199.0
             ]
           },
           "intervalSec": 0.5,
@@ -363,11 +365,13 @@
         "flashColor": [
           0.85,
           0.92,
-          1
+          1.0
         ],
         "flashMs": 211,
         "camKick": 0.526
-      }
+      },
+      "rangeTier": "超大",
+      "range": 8
     }
   },
   "skillOrder": [

@@ -17,16 +17,17 @@
     350.0,
     450.0
   ],
-  "range": 8.25,
   "effects": [
     {
       "kind": "dash",
-      "mode": "toPoint",
+      "mode": "forward",
       "speed": 16,
       "maxDistance": 8.25
     }
   ],
   "vfxKey": "fx.prim.holy.nova-lg",
   "schema": "ability@1",
-  "castTimeSec": 0.067
+  "castTimeSec": 0.067,
+  "rangeTier": "超大",
+  "range": 8
 }

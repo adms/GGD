@@ -15,7 +15,6 @@
   "manaCost": [
     75.0
   ],
-  "range": 11.0,
   "targetsEnemies": true,
   "effects": [
     {
@@ -26,5 +25,7 @@
     }
   ],
   "vfxKey": "fx.prim.holy.pulse",
-  "castTimeSec": 0.833
+  "castTimeSec": 0.833,
+  "rangeTier": "極大",
+  "range": 12
 }

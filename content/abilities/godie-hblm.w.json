@@ -19,16 +19,17 @@
     70.0,
     90.0
   ],
-  "range": 7.33,
   "effects": [
     {
       "kind": "dash",
-      "mode": "toPoint",
+      "mode": "forward",
       "speed": 16,
       "maxDistance": 7.33
     }
   ],
   "vfxKey": "fx.prim.lightning.dash",
   "schema": "ability@1",
-  "castTimeSec": 0.067
+  "castTimeSec": 0.067,
+  "rangeTier": "超大",
+  "range": 8
 }

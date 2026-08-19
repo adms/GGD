@@ -19,7 +19,6 @@
     170.0,
     220.0
   ],
-  "range": 11.0,
   "effects": [
     {
       "kind": "damage",
@@ -49,5 +48,7 @@
   "vfxKey": "fx.prim.arcane.nova",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.5
+  "castTimeSec": 0.5,
+  "rangeTier": "極大",
+  "range": 12
 }

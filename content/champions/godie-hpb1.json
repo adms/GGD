@@ -98,20 +98,19 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        50,
-        50,
-        50,
-        50,
-        50
+        50.0,
+        50.0,
+        50.0,
+        50.0,
+        50.0
       ],
       "manaCost": [
-        110,
-        140,
-        170,
-        275,
-        275
+        110.0,
+        140.0,
+        170.0,
+        275.0,
+        275.0
       ],
-      "range": 14,
       "effects": [
         {
           "kind": "invulnerable",
@@ -126,11 +125,11 @@
           "damageType": "physical",
           "amount": {
             "perRank": [
-              225,
-              225,
-              225,
-              225,
-              225
+              225.0,
+              225.0,
+              225.0,
+              225.0,
+              225.0
             ],
             "ratios": [
               {
@@ -143,14 +142,16 @@
         {
           "kind": "applyStatus",
           "statusId": "moon-combo",
-          "duration": 1,
+          "duration": 1.0,
           "applyTo": "self"
         }
       ],
       "vfxKey": "fx.prim.physical.pulse-sm",
       "sfxKey": "wc3.moongo",
       "targetsEnemies": true,
-      "castTimeSec": 0.467
+      "castTimeSec": 0.467,
+      "rangeTier": "極大",
+      "range": 12
     },
     "E": {
       "id": "godie-hpb1.e",
@@ -162,18 +163,17 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        65,
-        65,
-        65,
-        65
+        65.0,
+        65.0,
+        65.0,
+        65.0
       ],
       "manaCost": [
-        220,
-        250,
-        280,
-        310
+        220.0,
+        250.0,
+        280.0,
+        310.0
       ],
-      "range": 14,
       "radius": 6.05,
       "effects": [
         {
@@ -189,10 +189,10 @@
               "damageType": "physical",
               "amount": {
                 "perRank": [
-                  450,
-                  550,
-                  650,
-                  750
+                  450.0,
+                  550.0,
+                  650.0,
+                  750.0
                 ],
                 "ratios": [
                   {
@@ -219,7 +219,9 @@
       "vfxKey": "fx.prim.physical.beam",
       "sfxKey": "wc3.moonjump",
       "targetsEnemies": true,
-      "castTimeSec": 1.633
+      "castTimeSec": 1.633,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-hpb1.r",

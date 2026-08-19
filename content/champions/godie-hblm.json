@@ -69,11 +69,7 @@
         95.0,
         130.0
       ],
-      "range": 11.0,
       "effects": [],
-      "vfxKey": "fx.prim.lightning.nova",
-      "targetsEnemies": true,
-      "castTimeSec": 0.633,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -93,7 +89,12 @@
           "damageType": "magic",
           "castTimeSec": 0.633
         }
-      }
+      },
+      "vfxKey": "fx.prim.lightning.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.633,
+      "rangeTier": "極大",
+      "range": 12
     },
     "W": {
       "id": "godie-hblm.w",
@@ -116,17 +117,18 @@
         70.0,
         90.0
       ],
-      "range": 7.33,
       "effects": [
         {
           "kind": "dash",
-          "mode": "toPoint",
+          "mode": "forward",
           "speed": 16,
           "maxDistance": 7.33
         }
       ],
       "vfxKey": "fx.prim.lightning.dash",
-      "castTimeSec": 0.067
+      "castTimeSec": 0.067,
+      "rangeTier": "超大",
+      "range": 8
     },
     "E": {
       "id": "godie-hblm.e",
@@ -182,7 +184,6 @@
         230.0,
         320.0
       ],
-      "range": 8.25,
       "effects": [
         {
           "kind": "damage",
@@ -210,7 +211,9 @@
       ],
       "vfxKey": "fx.prim.lightning.nova-lg",
       "targetsEnemies": true,
-      "castTimeSec": 1
+      "castTimeSec": 1,
+      "rangeTier": "超大",
+      "range": 8
     }
   },
   "skillOrder": [

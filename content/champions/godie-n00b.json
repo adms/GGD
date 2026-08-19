@@ -73,10 +73,7 @@
         125,
         155
       ],
-      "range": 9.17,
       "effects": [],
-      "vfxKey": "fx.prim.wind.beam",
-      "castTimeSec": 0.867,
       "template": {
         "ref": "tpl-line-sweep",
         "params": {
@@ -95,7 +92,11 @@
           "castTimeSec": 0.867
         }
       },
-      "targetsEnemies": true
+      "vfxKey": "fx.prim.wind.beam",
+      "castTimeSec": 0.867,
+      "targetsEnemies": true,
+      "rangeTier": "超大",
+      "range": 8
     },
     "W": {
       "id": "godie-n00b.w",
@@ -107,21 +108,16 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        75,
-        75,
-        75
+        75.0,
+        75.0,
+        75.0
       ],
       "manaCost": [
-        200,
-        300,
-        400
+        200.0,
+        300.0,
+        400.0
       ],
-      "range": 11,
       "effects": [],
-      "vfxKey": "fx.prim.arcane.pulse",
-      "sfxKey": "wc3.spellbreakerpissed4",
-      "targetsEnemies": true,
-      "castTimeSec": 0.467,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -141,7 +137,13 @@
           "damageType": "magic",
           "castTimeSec": 0.467
         }
-      }
+      },
+      "vfxKey": "fx.prim.arcane.pulse",
+      "sfxKey": "wc3.spellbreakerpissed4",
+      "targetsEnemies": true,
+      "castTimeSec": 0.467,
+      "rangeTier": "極大",
+      "range": 12
     },
     "E": {
       "id": "godie-n00b.e",
@@ -150,33 +152,34 @@
       "provenance": "w3x-import",
       "description": "[輔助]\n80秒冷卻時間\n\n使用任意門可以傳送到地圖探索過的任何一點，準備時間為3秒。",
       "slot": "E",
-      "castType": "dash",
+      "castType": "ground",
       "maxRank": 5,
       "cooldown": [
-        80,
-        60,
-        40,
-        16,
-        16
+        80.0,
+        60.0,
+        40.0,
+        16.0,
+        16.0
       ],
       "manaCost": [
-        225,
-        225,
-        225,
-        100,
-        100
+        225.0,
+        225.0,
+        225.0,
+        100.0,
+        100.0
       ],
-      "range": 11,
       "effects": [
         {
-          "kind": "dash",
-          "mode": "toPoint",
-          "speed": 16,
-          "maxDistance": 11
+          "kind": "blink",
+          "shape": "single",
+          "to": "point",
+          "applyTo": "self"
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
-      "castTimeSec": 0.067
+      "castTimeSec": 0.4,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-n00b.r",
@@ -188,25 +191,24 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        55,
-        55,
-        55
+        55.0,
+        55.0,
+        55.0
       ],
       "manaCost": [
-        300,
-        500,
-        700
+        300.0,
+        500.0,
+        700.0
       ],
-      "range": 6.42,
       "effects": [
         {
           "kind": "damage",
           "damageType": "magic",
           "amount": {
             "perRank": [
-              150,
-              275,
-              400
+              150.0,
+              275.0,
+              400.0
             ],
             "ratios": [
               {
@@ -219,13 +221,15 @@
         {
           "kind": "applyStatus",
           "statusId": "root",
-          "duration": 1,
+          "duration": 1.0,
           "root": true
         }
       ],
       "vfxKey": "fx.prim.wind.tornado-lg",
       "targetsEnemies": true,
-      "castTimeSec": 1
+      "castTimeSec": 1,
+      "rangeTier": "大",
+      "range": 6
     }
   },
   "skillOrder": [

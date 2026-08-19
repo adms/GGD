@@ -21,7 +21,6 @@
     90.0,
     110.0
   ],
-  "range": 3.67,
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
@@ -47,5 +46,7 @@
   "vfxKey": "fx.prim.arcane.pulse-sm",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.167
+  "castTimeSec": 0.167,
+  "rangeTier": "小",
+  "range": 3
 }

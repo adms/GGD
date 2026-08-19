@@ -70,7 +70,6 @@
         140.0,
         170.0
       ],
-      "range": 5.5,
       "effects": [
         {
           "kind": "damage",
@@ -99,7 +98,9 @@
       ],
       "vfxKey": "fx.prim.physical.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.3
+      "castTimeSec": 0.3,
+      "rangeTier": "大",
+      "range": 6
     },
     "W": {
       "id": "godie-u00o.w",
@@ -122,7 +123,6 @@
         125.0,
         155.0
       ],
-      "range": 6.42,
       "effects": [
         {
           "kind": "damage",
@@ -151,7 +151,9 @@
       ],
       "vfxKey": "fx.firestorm",
       "targetsEnemies": true,
-      "castTimeSec": 0.633
+      "castTimeSec": 0.633,
+      "rangeTier": "大",
+      "range": 6
     },
     "E": {
       "id": "godie-u00o.e",
@@ -174,7 +176,6 @@
         190.0,
         220.0
       ],
-      "range": 7.33,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -197,7 +198,9 @@
       ],
       "vfxKey": "fx.prim.arcane.bolt",
       "sfxKey": "wc3.demonhuntermissilehit3",
-      "castTimeSec": 1.5
+      "castTimeSec": 1.5,
+      "rangeTier": "超大",
+      "range": 8
     },
     "R": {
       "id": "godie-u00o.r",

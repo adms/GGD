@@ -17,7 +17,6 @@
     80.0,
     110.0
   ],
-  "range": 14.0,
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
@@ -42,5 +41,7 @@
   "vfxKey": "fx.prim.void.swarm",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.267
+  "castTimeSec": 0.267,
+  "rangeTier": "極大",
+  "range": 12
 }

@@ -19,7 +19,6 @@
     135.0,
     165.0
   ],
-  "range": 11.0,
   "effects": [
     {
       "kind": "spawnProjectile",
@@ -43,5 +42,7 @@
   "vfxKey": "fx.prim.earth.shockwave",
   "sfxKey": "wc3.gluescreenmeteorhit1",
   "schema": "ability@1",
-  "castTimeSec": 1.033
+  "castTimeSec": 1.033,
+  "rangeTier": "極大",
+  "range": 12
 }

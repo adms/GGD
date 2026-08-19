@@ -72,7 +72,6 @@
         270.0,
         270.0
       ],
-      "range": 11.0,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -96,7 +95,9 @@
       ],
       "vfxKey": "fx.prim.arcane.bolt",
       "sfxKey": "wc3.treantready1",
-      "castTimeSec": 0.867
+      "castTimeSec": 0.867,
+      "rangeTier": "極大",
+      "range": 12
     },
     "W": {
       "id": "godie-e010.w",
@@ -157,7 +158,6 @@
         150.0,
         250.0
       ],
-      "range": 11.0,
       "effects": [
         {
           "kind": "applyStatus",
@@ -168,7 +168,9 @@
       ],
       "vfxKey": "fx.prim.nature.pulse-sm",
       "targetsEnemies": true,
-      "castTimeSec": 0.833
+      "castTimeSec": 0.833,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-e010.r",
@@ -189,7 +191,6 @@
         420.0,
         600.0
       ],
-      "range": 14.0,
       "effects": [
         {
           "kind": "damage",
@@ -211,7 +212,9 @@
       ],
       "vfxKey": "fx.prim.arcane.nova-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.833
+      "castTimeSec": 0.833,
+      "rangeTier": "極大",
+      "range": 12
     }
   },
   "skillOrder": [

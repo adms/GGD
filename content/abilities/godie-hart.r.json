@@ -17,7 +17,6 @@
     260.0,
     350.0
   ],
-  "range": 8.25,
   "effects": [
     {
       "kind": "applyStatus",
@@ -88,5 +87,7 @@
     ],
     "flashMs": 211,
     "camKick": 0.526
-  }
+  },
+  "rangeTier": "超大",
+  "range": 8
 }

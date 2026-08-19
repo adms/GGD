@@ -20,7 +20,6 @@
     85,
     90
   ],
-  "range": 12,
   "radius": 3,
   "targetsEnemies": true,
   "effects": [
@@ -53,5 +52,7 @@
   ],
   "vfxKey": "fx.scorch-ring",
   "castTimeSec": 0.2,
-  "provenance": "w3x-import"
+  "provenance": "w3x-import",
+  "rangeTier": "極大",
+  "range": 12
 }

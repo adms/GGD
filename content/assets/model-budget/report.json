@@ -1,6 +1,6 @@
 {
  "schema": "model-budget@1",
- "sourcesDigest": "64328182d268a09b",
+ "sourcesDigest": "30a9bbb01dad1cc8",
  "generatedBy": "tools/model-budget/emit_report.ts (task #99)",
  "sources": [
   {
@@ -15,8 +15,8 @@
   },
   {
    "path": "content/champions/_index.json",
-   "sha256": "cb9539a58523b1ba",
-   "bytes": 10293
+   "sha256": "829e81e8c8a8894d",
+   "bytes": 10294
   },
   {
    "path": "apps/client/src/render/ArenaGround.ts",

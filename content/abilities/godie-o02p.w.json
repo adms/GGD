@@ -19,7 +19,6 @@
     180.0,
     220.0
   ],
-  "range": 11.0,
   "effects": [
     {
       "kind": "heal",
@@ -42,5 +41,7 @@
   "vfxKey": "fx.prim.sound.pulse",
   "targetsEnemies": false,
   "schema": "ability@1",
-  "castTimeSec": 0.067
+  "castTimeSec": 0.067,
+  "rangeTier": "極大",
+  "range": 12
 }

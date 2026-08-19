@@ -18,7 +18,6 @@
     250.0,
     315.0
   ],
-  "range": 11.0,
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
@@ -56,5 +55,7 @@
   "targetsEnemies": true,
   "schema": "ability@1",
   "icon": "assets/icons/abilities/godie-hvwd.e.png",
-  "castTimeSec": 1.433
+  "castTimeSec": 1.433,
+  "rangeTier": "極大",
+  "range": 12
 }

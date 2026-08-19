@@ -27,7 +27,8 @@
       "timeScale": 1,
       "heightY": 0.15,
       "soundLaunch": "guardianSlam",
-      "soundImpact": "knockdown"
+      "soundImpact": "wc3.warstomp",
+      "groundDecal": "crack"
     },
     "blink": {
       "enabled": true,

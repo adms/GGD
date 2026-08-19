@@ -43,7 +43,8 @@ describe("walkDustRecipe (vfx-walk-dust)", () => {
 describe("castScorchSpec (vfx-cast-decal)", () => {
   it("is a dark, fading ground decal with a sane radius", () => {
     cover("vfx-cast-decal");
-    const s = castScorchSpec(1.2);
+    // GH#439 —— 回傳型別現在是 `DecalSpec | null`（`none` 那一族不留痕跡）。
+    const s = castScorchSpec(1.2)!;
     expect(s.radius).toBeCloseTo(1.2);
     expect(s.lifeMs).toBe(SCORCH_LIFE_MS);
     expect(s.alpha).toBeGreaterThan(0);
@@ -51,7 +52,7 @@ describe("castScorchSpec (vfx-cast-decal)", () => {
     // scorch is DARK earth, never a bright halo
     expect(Math.max(...s.tint)).toBeLessThan(0.3);
     // an exotic footprint is clamped into a sane band
-    expect(castScorchSpec(99).radius).toBeLessThanOrEqual(3);
-    expect(castScorchSpec(0).radius).toBeGreaterThanOrEqual(0.4);
+    expect(castScorchSpec(99)!.radius).toBeLessThanOrEqual(3);
+    expect(castScorchSpec(0)!.radius).toBeGreaterThanOrEqual(0.4);
   });
 });

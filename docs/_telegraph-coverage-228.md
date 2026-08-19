@@ -8,8 +8,8 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | verdict | cells | meaning |
 | --- | ---: | --- |
-| ✅ OK | 225 | shape derived from the ability's own authored data |
-| 🟡 AMBIGUOUS | 12 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
+| ✅ OK | 220 | shape derived from the ability's own authored data |
+| 🟡 AMBIGUOUS | 17 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
 | ❌ MISSING | 0 | no derivable shape — **fails the test** |
 | 🟣 PASSIVE | 56 | permanent WC3 passive, never cast, nothing to warn about |
 
@@ -22,9 +22,9 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | `self` | 95 | self marker at the caster's feet |
 | `targeted` | 73 | lock (arc at the victim + tether to the caster) — walking does not help |
 | `—` | 56 | not cast |
-| `ground` | 47 | circle — the real `enemiesInCircle` disc; you can walk out |
+| `ground` | 52 | circle — the real `enemiesInCircle` disc; you can walk out |
 | `skillshot` | 15 | line — the projectile's corridor; step sideways |
-| `dash` | 7 | line — the sweep of the dash body |
+| `dash` | 2 | line — the sweep of the dash body |
 
 ## Per-ability matrix
 
@@ -189,7 +189,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 小叮噹 - 哆拉A夢 `godie-n00b` | PASSIVE | 57-00 四次元口袋 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 小叮噹 - 哆拉A夢 `godie-n00b` | Q | 57-01 空氣砲 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |
 | 小叮噹 - 哆拉A夢 `godie-n00b` | W | 57-03 複製鏡 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 小叮噹 - 哆拉A夢 `godie-n00b` | E | 57-02 任意門 | `dash` | line 11.00×1.20u | ✅ OK | dash maxDistance 11 (sim applies no abilityRange), body width 1.2 — movement only, no damage |
+| 小叮噹 - 哆拉A夢 `godie-n00b` | E | 57-02 任意門 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
 | 小叮噹 - 哆拉A夢 `godie-n00b` | R | 57-04 竹蜻蜓 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 小叮噹 - 哆拉A夢 `godie-n00b` | EX | 57-002 時光機 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 傳說的龍騎士 - 勇者小呆 `godie-nbbc` | PASSIVE | 08-00 龍紋記憶 | `—` | — | 🟣 PASSIVE | never cast |
@@ -206,7 +206,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 妖狐藏馬 - 南野秀一 `godie-nsjs` | EX | 18-002 魔界吸血植物 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 傲嬌電氣老鼠 - 皮卡娘 `godie-o00k` | PASSIVE | 86-00 裝可愛 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 傲嬌電氣老鼠 - 皮卡娘 `godie-o00k` | Q | 86-01 十萬伏特 | `ground` | circle r=5.14u | ✅ OK | radius 6.42 × abilityRange 0.8 |
-| 傲嬌電氣老鼠 - 皮卡娘 `godie-o00k` | W | 86-02 電光一閃 | `dash` | line 11.00×1.20u | ✅ OK | dash maxDistance 11 (sim applies no abilityRange), body width 1.2 — movement only, no damage |
+| 傲嬌電氣老鼠 - 皮卡娘 `godie-o00k` | W | 86-02 電光一閃 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
 | 傲嬌電氣老鼠 - 皮卡娘 `godie-o00k` | E | 86-03 神鳴 | `ground` | circle r=7.34u | ✅ OK | radius 9.17 × abilityRange 0.8 |
 | 傲嬌電氣老鼠 - 皮卡娘 `godie-o00k` | R | 86-04 打雷絕招 | `ground` | circle r=4.40u | ✅ OK | radius 5.5 × abilityRange 0.8 |
 | 傲嬌電氣老鼠 - 皮卡娘 `godie-o00k` | EX | 86-002 雷電萌神 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
@@ -222,7 +222,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 夢幻之星 - 初音 `godie-o02p` | E | 99-03 初音未來的消失 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 夢幻之星 - 初音 `godie-o02p` | R | 99-04 世界第一的公主殿下 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 夢幻之星 - 初音 `godie-o02p` | EX | 99-002 把你給MikuMiku掉 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 神奇寶貝兒 - 皮卡丘 `godie-ofar` | PASSIVE | 58-00 電光一閃 | `dash` | line 14.67×1.20u | ✅ OK | dash maxDistance 14.67 (sim applies no abilityRange), body width 1.2 — movement only, no damage |
+| 神奇寶貝兒 - 皮卡丘 `godie-ofar` | PASSIVE | 58-00 電光一閃 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
 | 神奇寶貝兒 - 皮卡丘 `godie-ofar` | Q | 58-01 十萬伏特 | `ground` | circle r=5.14u | ✅ OK | radius 6.42 × abilityRange 0.8 |
 | 神奇寶貝兒 - 皮卡丘 `godie-ofar` | W | 58-02 鋼鐵尾巴 | `—` | — | 🟣 PASSIVE | never cast |
 | 神奇寶貝兒 - 皮卡丘 `godie-ofar` | E | 58-03 就決定是你了!小智 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
@@ -235,7 +235,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 美白大法師 - 黑人牙膏 `godie-ogld` | EX | 72-002 億萬衛星殞落 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 賽亞人 - 悟空 `godie-ogrh` | PASSIVE | 09-00 賽亞人的血脈 | `—` | — | 🟣 PASSIVE | never cast |
 | 賽亞人 - 悟空 `godie-ogrh` | Q | 09-01 界王拳 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 賽亞人 - 悟空 `godie-ogrh` | W | 09-02 瞬間移動 | `dash` | line 11.00×1.20u | ✅ OK | dash maxDistance 11 (sim applies no abilityRange), body width 1.2 — movement only, no damage |
+| 賽亞人 - 悟空 `godie-ogrh` | W | 09-02 瞬間移動 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
 | 賽亞人 - 悟空 `godie-ogrh` | E | 09-03 超級賽亞人 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 賽亞人 - 悟空 `godie-ogrh` | R | 09-04 龜派氣功 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave.ki maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |
 | 賽亞人 - 悟空 `godie-ogrh` | EX | 09-002 十倍龜派氣功 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
@@ -294,7 +294,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 職業獵人 - 傑 富力士 `godie-ucrl` | R | 06-04 傑桑變化 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 職業獵人 - 傑 富力士 `godie-ucrl` | EX | 06-002 殺意 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 至尊學長 - 飛鼠先生 `godie-udea` | PASSIVE | 65-00 古老智慧 | `—` | — | 🟣 PASSIVE | never cast |
-| 至尊學長 - 飛鼠先生 `godie-udea` | Q | 65-01 神出鬼沒 | `dash` | line 11.00×1.20u | ✅ OK | dash maxDistance 11 (sim applies no abilityRange), body width 1.2 — movement only, no damage |
+| 至尊學長 - 飛鼠先生 `godie-udea` | Q | 65-01 神出鬼沒 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
 | 至尊學長 - 飛鼠先生 `godie-udea` | W | 65-02 寒冰破碎 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 至尊學長 - 飛鼠先生 `godie-udea` | E | 65-03 魔法膨脹 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 至尊學長 - 飛鼠先生 `godie-udea` | R | 65-04 天譴 | `dash` | line 8.25×1.20u | ✅ OK | dash maxDistance 8.25 (sim applies no abilityRange), body width 1.2 — movement only, no damage |

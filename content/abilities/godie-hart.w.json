@@ -21,7 +21,6 @@
     215.0,
     215.0
   ],
-  "range": 8.25,
   "effects": [
     {
       "kind": "leap",
@@ -63,5 +62,7 @@
   "targetsEnemies": true,
   "radius": 4.58,
   "schema": "ability@1",
-  "castTimeSec": 0.867
+  "castTimeSec": 0.867,
+  "rangeTier": "超大",
+  "range": 8
 }

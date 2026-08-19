@@ -71,7 +71,6 @@
         160.0,
         190.0
       ],
-      "range": 10.08,
       "effects": [
         {
           "kind": "damage",
@@ -101,7 +100,9 @@
       "vfxKey": "fx.prim.ice.nova",
       "targetsEnemies": true,
       "radius": 5.5,
-      "castTimeSec": 0.633
+      "castTimeSec": 0.633,
+      "rangeTier": "極大",
+      "range": 12
     },
     "W": {
       "id": "godie-n01g.w",
@@ -168,7 +169,6 @@
         400.0,
         520.0
       ],
-      "range": 10.08,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -190,7 +190,9 @@
         }
       ],
       "vfxKey": "fx.prim.ice.bolt",
-      "castTimeSec": 1.133
+      "castTimeSec": 1.133,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-n01g.r",
@@ -211,7 +213,6 @@
         730.0,
         960.0
       ],
-      "range": 8.25,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -246,7 +247,9 @@
         ],
         "flashMs": 186,
         "camKick": 0.466
-      }
+      },
+      "rangeTier": "超大",
+      "range": 8
     }
   },
   "skillOrder": [

@@ -16,7 +16,6 @@
     105.0,
     135.0
   ],
-  "range": 6.42,
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
@@ -42,5 +41,7 @@
   "targetsEnemies": true,
   "schema": "ability@1",
   "icon": "assets/icons/abilities/godie-ubal.q.png",
-  "castTimeSec": 0.367
+  "castTimeSec": 0.367,
+  "rangeTier": "大",
+  "range": 6
 }

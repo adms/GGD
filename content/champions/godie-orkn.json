@@ -96,22 +96,18 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        30,
-        30,
-        30,
-        30
+        30.0,
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
-        50,
-        80,
-        110,
-        140
+        50.0,
+        80.0,
+        110.0,
+        140.0
       ],
-      "range": 11,
       "effects": [],
-      "vfxKey": "fx.prim.nature.nova",
-      "targetsEnemies": true,
-      "castTimeSec": 0.467,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -132,7 +128,12 @@
           "damageType": "magic",
           "castTimeSec": 0.467
         }
-      }
+      },
+      "vfxKey": "fx.prim.nature.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.467,
+      "rangeTier": "極大",
+      "range": 12
     },
     "E": {
       "id": "godie-orkn.e",
@@ -144,22 +145,18 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        30,
-        30,
-        30,
-        30
+        30.0,
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
-        150,
-        175,
-        200,
-        225
+        150.0,
+        175.0,
+        200.0,
+        225.0
       ],
-      "range": 11,
       "effects": [],
-      "vfxKey": "fx.prim.fire.explosion",
-      "targetsEnemies": true,
-      "castTimeSec": 0.267,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -180,7 +177,12 @@
           "damageType": "magic",
           "castTimeSec": 0.267
         }
-      }
+      },
+      "vfxKey": "fx.prim.fire.explosion",
+      "targetsEnemies": true,
+      "castTimeSec": 0.267,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-orkn.r",
@@ -192,16 +194,15 @@
       "castType": "skillshot",
       "maxRank": 3,
       "cooldown": [
-        30,
-        30,
-        30
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
-        150,
-        210,
-        270
+        150.0,
+        210.0,
+        270.0
       ],
-      "range": 11,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -212,9 +213,9 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  550,
-                  900,
-                  1250
+                  550.0,
+                  900.0,
+                  1250.0
                 ]
               }
             },
@@ -228,7 +229,9 @@
         }
       ],
       "vfxKey": "fx.prim.physical.shockwave-lg",
-      "castTimeSec": 0.767
+      "castTimeSec": 0.767,
+      "rangeTier": "極大",
+      "range": 12
     }
   },
   "skillOrder": [

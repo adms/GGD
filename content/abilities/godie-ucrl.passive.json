@@ -15,7 +15,6 @@
   "manaCost": [
     140.0
   ],
-  "range": 4.58,
   "targetsEnemies": true,
   "effects": [
     {
@@ -36,5 +35,7 @@
   ],
   "vfxKey": "fx.prim.earth.pulse-sm",
   "sfxKey": "wc3.mortarteampissed9",
-  "castTimeSec": 0.667
+  "castTimeSec": 0.667,
+  "rangeTier": "中",
+  "range": 4.5
 }

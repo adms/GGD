@@ -19,7 +19,6 @@
     180.0,
     215.0
   ],
-  "range": 11.0,
   "effects": [
     {
       "kind": "damage",
@@ -49,5 +48,7 @@
   "vfxKey": "fx.prim.earth.beam",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.633
+  "castTimeSec": 0.633,
+  "rangeTier": "極大",
+  "range": 12
 }

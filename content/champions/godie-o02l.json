@@ -72,7 +72,6 @@
         115.0,
         115.0
       ],
-      "range": 11.0,
       "effects": [
         {
           "kind": "damage",
@@ -96,7 +95,9 @@
       ],
       "vfxKey": "fx.prim.lightning.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.667
+      "castTimeSec": 0.667,
+      "rangeTier": "極大",
+      "range": 12
     },
     "W": {
       "id": "godie-o02l.w",
@@ -159,7 +160,6 @@
         170.0,
         220.0
       ],
-      "range": 11.0,
       "effects": [
         {
           "kind": "damage",
@@ -188,7 +188,9 @@
       ],
       "vfxKey": "fx.prim.arcane.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.5
+      "castTimeSec": 0.5,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-o02l.r",
@@ -209,7 +211,6 @@
         180.0,
         270.0
       ],
-      "range": 11.0,
       "effects": [
         {
           "kind": "damage",
@@ -231,7 +232,9 @@
       ],
       "vfxKey": "fx.prim.arcane.pulse-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.833
+      "castTimeSec": 0.833,
+      "rangeTier": "極大",
+      "range": 12
     }
   },
   "skillOrder": [

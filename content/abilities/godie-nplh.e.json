@@ -17,7 +17,6 @@
     200.0,
     300.0
   ],
-  "range": 11.0,
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
@@ -42,5 +41,7 @@
   "vfxKey": "fx.prim.holy.beam",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.467
+  "castTimeSec": 0.467,
+  "rangeTier": "極大",
+  "range": 12
 }

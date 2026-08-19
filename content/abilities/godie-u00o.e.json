@@ -19,7 +19,6 @@
     190.0,
     220.0
   ],
-  "range": 7.33,
   "effects": [
     {
       "kind": "spawnProjectile",
@@ -43,5 +42,7 @@
   "vfxKey": "fx.prim.arcane.bolt",
   "sfxKey": "wc3.demonhuntermissilehit3",
   "schema": "ability@1",
-  "castTimeSec": 1.5
+  "castTimeSec": 1.5,
+  "rangeTier": "超大",
+  "range": 8
 }

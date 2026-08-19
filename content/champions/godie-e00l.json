@@ -208,7 +208,6 @@
         350.0,
         450.0
       ],
-      "range": 14.0,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -244,7 +243,9 @@
         ],
         "flashMs": 132,
         "camKick": 0.33
-      }
+      },
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-e00l.r",

@@ -66,6 +66,7 @@
   ],
   "icon": "assets/icons/abilities/godie-h01n.q.webp",
   "vfxKey": "fx.prim.void.pulse-sm",
+  "rangeTier": "超大",
   "radiusTier": "小",
   "castTimeSec": 0.067
 }

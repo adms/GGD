@@ -16,7 +16,6 @@
     60.0,
     60.0
   ],
-  "range": 11.0,
   "effects": [
     {
       "kind": "damage",
@@ -39,5 +38,7 @@
   "vfxKey": "fx.prim.physical.nova-lg",
   "targetsEnemies": true,
   "castTimeSec": 0.3,
-  "provenance": "w3x-import"
+  "provenance": "w3x-import",
+  "rangeTier": "極大",
+  "range": 12
 }

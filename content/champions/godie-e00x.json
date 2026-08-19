@@ -162,7 +162,6 @@
         270.0,
         360.0
       ],
-      "range": 11.0,
       "effects": [
         {
           "kind": "damage",
@@ -185,7 +184,9 @@
       ],
       "vfxKey": "fx.prim.physical.pulse-sm",
       "targetsEnemies": true,
-      "castTimeSec": 0.467
+      "castTimeSec": 0.467,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-e00x.r",
@@ -206,7 +207,6 @@
         225.0,
         300.0
       ],
-      "range": 11.0,
       "effects": [
         {
           "kind": "damage",
@@ -233,7 +233,9 @@
       ],
       "vfxKey": "fx.prim.lightning.beam-lg",
       "targetsEnemies": true,
-      "castTimeSec": 1.767
+      "castTimeSec": 1.767,
+      "rangeTier": "極大",
+      "range": 12
     }
   },
   "skillOrder": [

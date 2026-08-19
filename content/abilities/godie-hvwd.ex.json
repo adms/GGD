@@ -13,7 +13,6 @@
   "manaCost": [
     315.0
   ],
-  "range": 5.29,
   "effects": [
     {
       "kind": "damage",
@@ -38,5 +37,7 @@
   "vfxKey": "fx.prim.holy.pulse-lg",
   "schema": "ability@1",
   "targetsEnemies": true,
-  "castTimeSec": 1.5
+  "castTimeSec": 1.5,
+  "rangeTier": "大",
+  "range": 6
 }

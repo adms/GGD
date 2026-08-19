@@ -19,7 +19,6 @@
     160.0,
     190.0
   ],
-  "range": 10.08,
   "effects": [
     {
       "kind": "damage",
@@ -50,5 +49,7 @@
   "targetsEnemies": true,
   "radius": 5.5,
   "schema": "ability@1",
-  "castTimeSec": 0.633
+  "castTimeSec": 0.633,
+  "rangeTier": "極大",
+  "range": 12
 }

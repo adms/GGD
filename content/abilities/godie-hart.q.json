@@ -21,7 +21,6 @@
     120.0,
     120.0
   ],
-  "range": 8.25,
   "effects": [
     {
       "kind": "damage",
@@ -59,5 +58,7 @@
   "vfxKey": "fx.prim.physical.slash",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.633
+  "castTimeSec": 0.633,
+  "rangeTier": "超大",
+  "range": 8
 }

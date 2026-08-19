@@ -20,7 +20,6 @@
     65,
     70
   ],
-  "range": 14,
   "effects": [
     {
       "kind": "spawnProjectile",
@@ -51,5 +50,7 @@
   ],
   "vfxKey": "fx.ember-bolt-cast",
   "castTimeSec": 0.1,
-  "provenance": "w3x-import"
+  "provenance": "w3x-import",
+  "rangeTier": "極大",
+  "range": 12
 }

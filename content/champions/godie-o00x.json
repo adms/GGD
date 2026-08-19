@@ -83,7 +83,6 @@
         125.0,
         175.0
       ],
-      "range": 11.0,
       "effects": [
         {
           "kind": "damage",
@@ -107,7 +106,9 @@
       ],
       "vfxKey": "fx.prim.ki.pulse",
       "targetsEnemies": true,
-      "castTimeSec": 0.467
+      "castTimeSec": 0.467,
+      "rangeTier": "極大",
+      "range": 12
     },
     "W": {
       "id": "godie-o00x.w",
@@ -116,7 +117,7 @@
       "provenance": "w3x-import",
       "description": "[輔助]\n18秒冷卻時間\n\n悟空跟佛利沙大戰之後，在宇宙漂流到了亞德拉特星，跟那邊的人習得了瞬間移動，以傳送的方式移動850的距離到指定的位置。",
       "slot": "W",
-      "castType": "dash",
+      "castType": "ground",
       "maxRank": 4,
       "cooldown": [
         18.0,
@@ -130,17 +131,18 @@
         100.0,
         100.0
       ],
-      "range": 11.0,
       "effects": [
         {
-          "kind": "dash",
-          "mode": "toPoint",
-          "speed": 16,
-          "maxDistance": 11.0
+          "kind": "blink",
+          "shape": "single",
+          "to": "point",
+          "applyTo": "self"
         }
       ],
       "vfxKey": "fx.prim.ki.pulse-sm",
-      "castTimeSec": 0.067
+      "castTimeSec": 0.467,
+      "rangeTier": "極大",
+      "range": 12
     },
     "E": {
       "id": "godie-o00x.e",
@@ -163,7 +165,6 @@
         320.0,
         400.0
       ],
-      "range": 11.0,
       "effects": [
         {
           "kind": "damage",
@@ -186,7 +187,9 @@
       ],
       "vfxKey": "fx.prim.ki.pulse",
       "targetsEnemies": true,
-      "castTimeSec": 0.467
+      "castTimeSec": 0.467,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-o00x.r",
@@ -207,7 +210,6 @@
         310.0,
         410.0
       ],
-      "range": 14.0,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -228,7 +230,9 @@
         }
       ],
       "vfxKey": "fx.prim.ki.beam-lg",
-      "castTimeSec": 1.5
+      "castTimeSec": 1.5,
+      "rangeTier": "極大",
+      "range": 12
     }
   },
   "skillOrder": [

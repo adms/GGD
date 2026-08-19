@@ -19,7 +19,6 @@
     275.0,
     305.0
   ],
-  "range": 14.0,
   "effects": [
     {
       "kind": "spawnProjectile",
@@ -49,5 +48,7 @@
   "vfxKey": "fx.prim.ice.beam",
   "sfxKey": "wc3.flaretarget2",
   "schema": "ability@1",
-  "castTimeSec": 1.133
+  "castTimeSec": 1.133,
+  "rangeTier": "極大",
+  "range": 12
 }

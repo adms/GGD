@@ -61,23 +61,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        25,
-        25,
-        25,
-        25
+        25.0,
+        25.0,
+        25.0,
+        25.0
       ],
       "manaCost": [
-        75,
-        105,
-        135,
-        165
+        75.0,
+        105.0,
+        135.0,
+        165.0
       ],
-      "range": 10.08,
       "effects": [],
-      "vfxKey": "fx.prim.sound.nova",
-      "targetsEnemies": true,
-      "radius": 7.33,
-      "castTimeSec": 0.633,
       "template": {
         "ref": "tpl-instant-blast",
         "params": {
@@ -99,7 +94,13 @@
           "damageType": "magic",
           "castTimeSec": 0.633
         }
-      }
+      },
+      "vfxKey": "fx.prim.sound.nova",
+      "targetsEnemies": true,
+      "radius": 7.33,
+      "castTimeSec": 0.633,
+      "rangeTier": "極大",
+      "range": 12
     },
     "W": {
       "id": "godie-o02p.w",
@@ -111,32 +112,31 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        15,
-        15,
-        15,
-        15
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "manaCost": [
-        100,
-        140,
-        180,
-        220
+        100.0,
+        140.0,
+        180.0,
+        220.0
       ],
-      "range": 11,
       "effects": [
         {
           "kind": "heal",
           "amount": {
             "perRank": [
-              200,
-              275,
-              350,
-              425
+              200.0,
+              275.0,
+              350.0,
+              425.0
             ],
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1
+                "coeff": 1.0
               }
             ]
           }
@@ -144,7 +144,9 @@
       ],
       "vfxKey": "fx.prim.sound.pulse",
       "targetsEnemies": false,
-      "castTimeSec": 0.067
+      "castTimeSec": 0.067,
+      "rangeTier": "極大",
+      "range": 12
     },
     "E": {
       "id": "godie-o02p.e",

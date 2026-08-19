@@ -24,6 +24,7 @@
  * PURE. No content reads, no `@babylonjs/*`; the tuning doc is handed in.
  */
 import type { ConfigVfxFamiliesDoc, VfxFamilyTuning } from "@ggd/shared/content";
+import type { VfxGroundDecal } from "@ggd/shared/content/schema/vfx";
 import {
   DEFAULT_SCALE_MAPPING,
   W3X_ART_FAMILIES,
@@ -109,6 +110,15 @@ export interface ResolvedFamilyArt {
   readonly timeScale?: number;
   /** WC3 attachment string, or undefined */
   readonly anchor?: string;
+  /**
+   * GH#439 —— 這一族在地上留下哪一種痕跡，或 undefined（＝操作者沒設 ⇒ 下游
+   * 走 `DEFAULT_VFX_GROUND_DECAL`，也就是這一版落地之前每一支技能的焦痕）。
+   *
+   * ⚠️ 它讀的是 **`doc.families[family]`**，⛔ 不是 `resolvePrototype()` ——
+   * 那一支把後台的覆寫折進 `W3X_ART_FAMILIES` 的內建原型，而內建原型表沒有這
+   * 一格（21 列都要補一個預設才有），而這裡 ABSENT 本來就有意義。
+   */
+  readonly groundDecal?: VfxGroundDecal;
   /** the evidence row this came from (absent when the console invented it) */
   readonly evidence?: W3xFamilyArtRow;
 }
@@ -205,6 +215,11 @@ export function resolveFamilyArt(
     ...(override?.alpha !== undefined ? { alpha: override.alpha } : {}),
     ...(override?.timeScale !== undefined ? { timeScale: override.timeScale } : {}),
     ...(override?.anchor ?? evidence?.anchor ? { anchor: override?.anchor ?? evidence?.anchor } : {}),
+    // GH#439 —— 家族層的地面痕跡。⛔ 沒設就不寫（ABSENT ≠ "scorch"：兩者今天
+    // 畫出來一樣，但只有 ABSENT 表示「操作者沒碰過」，而那是 dirty 判斷的依據）。
+    ...(doc?.families?.[family]?.groundDecal !== undefined
+      ? { groundDecal: doc.families[family].groundDecal }
+      : {}),
     ...(evidence ? { evidence } : {}),
   };
 }

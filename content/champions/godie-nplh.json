@@ -71,7 +71,6 @@
         215.0,
         265.0
       ],
-      "range": 11.0,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -93,7 +92,9 @@
         }
       ],
       "vfxKey": "fx.prim.holy.pulse-sm",
-      "castTimeSec": 1
+      "castTimeSec": 1,
+      "rangeTier": "極大",
+      "range": 12
     },
     "W": {
       "id": "godie-nplh.w",
@@ -116,11 +117,7 @@
         60.0,
         60.0
       ],
-      "range": 11.0,
       "effects": [],
-      "vfxKey": "fx.prim.holy.nova",
-      "targetsEnemies": true,
-      "castTimeSec": 0.3,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -141,7 +138,12 @@
           "damageType": "physical",
           "castTimeSec": 0.3
         }
-      }
+      },
+      "vfxKey": "fx.prim.holy.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.3,
+      "rangeTier": "極大",
+      "range": 12
     },
     "E": {
       "id": "godie-nplh.e",
@@ -162,11 +164,7 @@
         200.0,
         300.0
       ],
-      "range": 11.0,
       "effects": [],
-      "vfxKey": "fx.prim.holy.beam",
-      "targetsEnemies": true,
-      "castTimeSec": 0.467,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -186,7 +184,12 @@
           "damageType": "physical",
           "castTimeSec": 0.467
         }
-      }
+      },
+      "vfxKey": "fx.prim.holy.beam",
+      "targetsEnemies": true,
+      "castTimeSec": 0.467,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-nplh.r",
@@ -207,7 +210,6 @@
         60.0,
         80.0
       ],
-      "range": 6.42,
       "effects": [
         {
           "kind": "damage",
@@ -235,7 +237,9 @@
       ],
       "vfxKey": "fx.prim.holy.slash-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.767
+      "castTimeSec": 0.767,
+      "rangeTier": "大",
+      "range": 6
     }
   },
   "skillOrder": [

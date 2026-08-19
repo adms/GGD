@@ -145,22 +145,18 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        12,
-        12,
-        12,
-        12
+        12.0,
+        12.0,
+        12.0,
+        12.0
       ],
       "manaCost": [
-        60,
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
-      "range": 11,
       "effects": [],
-      "vfxKey": "fx.prim.void.explosion",
-      "targetsEnemies": true,
-      "castTimeSec": 0.267,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -181,7 +177,12 @@
           "damageType": "magic",
           "castTimeSec": 0.267
         }
-      }
+      },
+      "vfxKey": "fx.prim.void.explosion",
+      "targetsEnemies": true,
+      "castTimeSec": 0.267,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-osam.r",
@@ -202,11 +203,7 @@
         300.0,
         400.0
       ],
-      "range": 14.7,
       "effects": [],
-      "vfxKey": "fx.prim.ki.beam-lg",
-      "targetsEnemies": true,
-      "castTimeSec": 0.833,
       "template": {
         "ref": "tpl-traveling-wave",
         "params": {
@@ -230,7 +227,12 @@
           },
           "damageType": "magic"
         }
-      }
+      },
+      "vfxKey": "fx.prim.ki.beam-lg",
+      "targetsEnemies": true,
+      "castTimeSec": 0.833,
+      "rangeTier": "極大",
+      "range": 12
     }
   },
   "skillOrder": [

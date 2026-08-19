@@ -176,25 +176,20 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        12,
-        12,
-        12,
-        12,
-        12
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0
       ],
       "manaCost": [
-        60,
-        60,
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
-      "range": 11,
       "effects": [],
-      "vfxKey": "fx.prim.earth.pulse-sm",
-      "sfxKey": "wc3.mortarteampissed9",
-      "targetsEnemies": true,
-      "castTimeSec": 0.3,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -216,7 +211,13 @@
           "damageType": "physical",
           "castTimeSec": 0.3
         }
-      }
+      },
+      "vfxKey": "fx.prim.earth.pulse-sm",
+      "sfxKey": "wc3.mortarteampissed9",
+      "targetsEnemies": true,
+      "castTimeSec": 0.3,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-ucrl.r",

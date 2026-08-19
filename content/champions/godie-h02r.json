@@ -174,7 +174,6 @@
         275.0,
         350.0
       ],
-      "range": 9.17,
       "effects": [
         {
           "kind": "damage",
@@ -197,7 +196,9 @@
       ],
       "vfxKey": "fx.prim.nature.beam",
       "targetsEnemies": true,
-      "castTimeSec": 1.133
+      "castTimeSec": 1.133,
+      "rangeTier": "超大",
+      "range": 8
     },
     "R": {
       "id": "godie-h02r.r",
@@ -218,7 +219,6 @@
         300.0,
         400.0
       ],
-      "range": 14.0,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -253,7 +253,9 @@
         ],
         "flashMs": 178,
         "camKick": 0.446
-      }
+      },
+      "rangeTier": "極大",
+      "range": 12
     }
   },
   "skillOrder": [

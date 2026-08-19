@@ -19,7 +19,6 @@
     250.0,
     300.0
   ],
-  "range": 13.75,
   "effects": [
     {
       "kind": "spawnProjectile",
@@ -43,5 +42,7 @@
   "vfxKey": "fx.prim.fire.beam",
   "sfxKey": "wc3.thunderclapcaster",
   "schema": "ability@1",
-  "castTimeSec": 1.433
+  "castTimeSec": 1.433,
+  "rangeTier": "極大",
+  "range": 12
 }

@@ -5,7 +5,7 @@
   "provenance": "w3x-import",
   "description": "[主動攻擊]\n35秒冷卻時間\n\n以急快的速度移動至對方身旁並給予兩段式傷害，共計200點傷害。\n\n於斬擊蓄力狀態有額外力量*2點傷害加成",
   "slot": "Q",
-  "castType": "skillshot",
+  "castType": "targeted",
   "maxRank": 4,
   "cooldown": [
     35.0,
@@ -19,12 +19,35 @@
     125.0,
     155.0
   ],
-  "range": 9.17,
   "effects": [
     {
-      "kind": "spawnProjectile",
-      "projectileId": "imported.bolt.arcane",
-      "onHit": [
+      "kind": "blink",
+      "shape": "single",
+      "to": "targetUnit",
+      "applyTo": "self",
+      "stopShortUnits": 1.8,
+      "onArrive": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              200.0,
+              300.0,
+              400.0,
+              500.0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "kind": "blink",
+      "shape": "single",
+      "to": "targetUnit",
+      "applyTo": "self",
+      "stopShortUnits": 1.8,
+      "onArrive": [
         {
           "kind": "damage",
           "damageType": "magic",
@@ -42,5 +65,7 @@
   ],
   "vfxKey": "fx.prim.arcane.bolt",
   "schema": "ability@1",
-  "castTimeSec": 0.867
+  "castTimeSec": 0.267,
+  "rangeTier": "超大",
+  "range": 8
 }

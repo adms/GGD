@@ -25,6 +25,10 @@ import {
   type Rgb,
 } from "./vfxPresets";
 import type { DecalSpec } from "./bloodPresets";
+import {
+  DEFAULT_VFX_GROUND_DECAL,
+  type VfxGroundDecal,
+} from "@ggd/shared/content/schema/vfx";
 
 // ---------------------------------------------------------------------------
 // Muzzle flash
@@ -192,22 +196,59 @@ export function walkDustRecipe(): BurstSpec {
 
 /** Dark scorched-earth tint for an ability's ground mark. */
 export const SCORCH_TINT: Rgb = [0.16, 0.12, 0.1];
+/** 裂縫的顏色 —— 縫隙裡的**陰影**，不是燒黑的地，所以比焦痕冷一點、深一點。 */
+export const CRACK_TINT: Rgb = [0.1, 0.09, 0.09];
+/** 揚起的土 —— 帶一點暖色的塵，不是黑印子。 */
+export const DIRT_TINT: Rgb = [0.3, 0.24, 0.17];
 /** Cast scorch lingers a touch longer than a blood pool — an ability scars. */
 export const SCORCH_LIFE_MS = 2600;
+
+/**
+ * GH#439 —— 每一種痕跡的**長相**：貼圖 · 顏色 · 峰值不透明度。
+ *
+ * ⭐ 這張表是**機制**那一半：引擎認得幾種痕跡就長這樣，⛔ 哪個家族用哪一種
+ * 不在這裡（那是 `config.vfx-families@1.families.<家族>.groundDecal`，資料）。
+ * 判準見第〇·五守則 —— 這裡出現一個 `if (abilityId === …)` 就是越線了。
+ *
+ * ⚠️ `texture` 的每一條路徑都必須是 repo 裡真的存在的檔案，否則
+ * `GroundDecalPool.textureFor()` 靜靜地拿不到圖，而畫面上看起來只是「這一族
+ * 沒有痕跡」（第一·五守則）。`render/vfx/groundDecal.test.ts` 逐張讀 disk 守這件事。
+ */
+export const GROUND_DECAL_ART: Readonly<
+  Record<VfxGroundDecal, { texture: string; tint: Rgb; alpha: number } | null>
+> = {
+  /** 焦痕 —— 出貨預設，也就是 GH#439 落地之前每一支技能的樣子。 */
+  scorch: { texture: "assets/textures/particles/scorch_01.png", tint: SCORCH_TINT, alpha: 0.5 },
+  /**
+   * 地面震裂 —— 原作 WarStomp 那一族（衝擊波／跺地／落石）。
+   * 比焦痕**淺一點也淡一點**：裂縫是縫隙的陰影，不是燒黑的地。
+   */
+  crack: { texture: "assets/textures/decals/crack_01.png", tint: CRACK_TINT, alpha: 0.62 },
+  /** 揚起的土 —— 衝鋒／落地／位移那一族。 */
+  dirt: { texture: "assets/textures/particles/dirt_02.png", tint: DIRT_TINT, alpha: 0.34 },
+  /** 這一族不留痕跡。`null` = ⛔ 連 decal 都不 spawn（不是「蓋一張全透明的」）。 */
+  none: null,
+};
 
 /**
  * The fading ground decal an ability stamps at its cast/land point (scorched /
  * cracked earth). Reuses the pooled `GroundDecalPool` (same hard cap + fade as
  * the blood splats). `radius` is the ability footprint; the mark sits a little
  * under it so it reads as ground damage, not a halo.
+ *
+ * GH#439 —— `decal` 是**這一次施法所屬家族**的痕跡種類（`undefined` = 家族沒
+ * 設，或這一招根本沒有家族原型 ⇒ 出貨的焦痕，一位元不差的舊行為）。
+ * 回 `null` = 這一族說了不留痕跡，呼叫端**不要 spawn**。
  */
-export function castScorchSpec(radius: number): DecalSpec {
+export function castScorchSpec(radius: number, decal?: VfxGroundDecal): DecalSpec | null {
+  const art = GROUND_DECAL_ART[decal ?? DEFAULT_VFX_GROUND_DECAL];
+  if (!art) return null;
   return {
     radius: Math.min(3, Math.max(0.4, radius)),
     lifeMs: SCORCH_LIFE_MS,
-    alpha: 0.5,
-    tint: SCORCH_TINT,
-    texture: "assets/textures/particles/scorch_01.png",
+    alpha: art.alpha,
+    tint: art.tint,
+    texture: art.texture,
   };
 }
 

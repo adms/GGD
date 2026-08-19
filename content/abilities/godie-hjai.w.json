@@ -19,7 +19,6 @@
     115.0,
     145.0
   ],
-  "range": 11.0,
   "effects": [],
   "template": {
     "ref": "tpl-instant-blast",
@@ -47,5 +46,7 @@
   "targetsEnemies": true,
   "radius": 5.5,
   "schema": "ability@1",
-  "castTimeSec": 0.633
+  "castTimeSec": 0.633,
+  "rangeTier": "極大",
+  "range": 12
 }

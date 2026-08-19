@@ -72,11 +72,8 @@
         70,
         85
       ],
-      "range": 7,
       "radius": 3,
       "effects": [],
-      "vfxKey": "fx.prim.void.nova",
-      "targetsEnemies": true,
       "template": {
         "ref": "tpl-proxy-cast",
         "params": {
@@ -101,7 +98,11 @@
           "statusDurationSec": 1.5
         }
       },
-      "castTimeSec": 0.2
+      "vfxKey": "fx.prim.void.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.2,
+      "rangeTier": "大",
+      "range": 6
     },
     "W": {
       "id": "godie-zombiex.w",
@@ -113,24 +114,23 @@
       "castType": "dash",
       "maxRank": 4,
       "cooldown": [
-        16,
-        15,
-        14,
-        13
+        16.0,
+        15.0,
+        14.0,
+        13.0
       ],
       "manaCost": [
-        30,
-        50,
-        70,
-        90
+        30.0,
+        50.0,
+        70.0,
+        90.0
       ],
-      "range": 6,
       "effects": [
         {
           "kind": "dash",
-          "mode": "toPoint",
+          "mode": "forward",
           "speed": 16,
-          "maxDistance": 6
+          "maxDistance": 6.0
         },
         {
           "kind": "applyBuff",
@@ -138,19 +138,21 @@
             {
               "stat": "armor",
               "op": "flat",
-              "value": 35
+              "value": 35.0
             },
             {
               "stat": "mr",
               "op": "flat",
-              "value": 35
+              "value": 35.0
             }
           ],
-          "duration": 4
+          "duration": 4.0
         }
       ],
       "vfxKey": "fx.prim.void.dash",
-      "castTimeSec": 0.067
+      "castTimeSec": 0.067,
+      "rangeTier": "大",
+      "range": 6
     },
     "E": {
       "id": "godie-zombiex.e",
@@ -173,11 +175,8 @@
         120,
         145
       ],
-      "range": 8,
       "radius": 3.5,
       "effects": [],
-      "vfxKey": "fx.prim.void.shockwave",
-      "targetsEnemies": true,
       "template": {
         "ref": "tpl-proxy-cast",
         "params": {
@@ -202,7 +201,11 @@
           "statusDurationSec": 1
         }
       },
-      "castTimeSec": 0.267
+      "vfxKey": "fx.prim.void.shockwave",
+      "targetsEnemies": true,
+      "castTimeSec": 0.267,
+      "rangeTier": "超大",
+      "range": 8
     },
     "R": {
       "id": "godie-zombiex.r",

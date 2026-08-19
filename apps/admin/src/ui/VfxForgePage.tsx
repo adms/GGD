@@ -27,6 +27,8 @@ import {
   APPLY_NOTE,
   DEAD_KNOB_NOTE,
   ELEMENT_IDS,
+  GROUND_DECAL_IDS,
+  GROUND_DECAL_LABEL_ZH,
   ELEMENT_LABEL_ZH,
   FAMILY_BOUNDS,
   FAMILY_FIELDS,
@@ -605,7 +607,7 @@ export function VfxForgePage(): React.JSX.Element {
                               {FIELD_LABEL[f]}
                               {FAMILY_BOUNDS[f] ? `（${FAMILY_BOUNDS[f]?.min}–${FAMILY_BOUNDS[f]?.max}）` : ""}
                             </span>
-                            {f === "enabled" || f === "primitive" || f === "element" ? (
+                            {f === "enabled" || f === "primitive" || f === "element" || f === "groundDecal" ? (
                               <Select
                                 field={`fam.${f}`}
                                 value={draft[f]}
@@ -620,10 +622,21 @@ export function VfxForgePage(): React.JSX.Element {
                                       ]
                                     : f === "primitive"
                                       ? PRIMITIVE_KINDS.map((p) => ({ value: p, label: p }))
-                                      : ELEMENT_IDS.map((e) => ({
-                                          value: e,
-                                          label: ELEMENT_LABEL_ZH[e] ?? e,
-                                        }))
+                                      : f === "element"
+                                        ? ELEMENT_IDS.map((e) => ({
+                                            value: e,
+                                            label: ELEMENT_LABEL_ZH[e] ?? e,
+                                          }))
+                                        : // GH#439 —— 地面痕跡。⭐ 第一格是**留白**：
+                                          // optional 欄位的「沒設過」要選得回去，
+                                          // ⛔ 否則打開一次就再也回不到出貨行為。
+                                          [
+                                            { value: "", label: "（沿用預設：焦痕）" },
+                                            ...GROUND_DECAL_IDS.map((g) => ({
+                                              value: g,
+                                              label: GROUND_DECAL_LABEL_ZH[g] ?? g,
+                                            })),
+                                          ]
                                 }
                                 onChange={(v) => setFamField(fam, f, v, draft)}
                               />

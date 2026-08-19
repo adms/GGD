@@ -99,6 +99,21 @@ export const FAMILY_IDS: readonly W3xFamilyId[] = enumOptions(
 
 export const PRIMITIVE_KINDS: readonly string[] = enumOptions(zVfxFamilyTuning.shape.primitive);
 export const ELEMENT_IDS: readonly string[] = enumOptions(zVfxFamilyTuning.shape.element);
+/**
+ * GH#439 —— 引擎認得的地面痕跡種類。⭐ **執行期從 Zod 讀出來**（和上面兩格同一條路），
+ * ⛔ 不是手抄一份 —— 手抄的那一份會在 shared 加一種痕跡的那天靜靜地少一個選項。
+ */
+export const GROUND_DECAL_IDS: readonly string[] = enumOptions(
+  (zVfxFamilyTuning.shape.groundDecal as unknown as { unwrap: () => unknown }).unwrap(),
+);
+
+/** 地面痕跡的中文標籤 —— ⛔ 空字串（留白 = 沿用預設）不在這裡，那是畫面自己的第一格。 */
+export const GROUND_DECAL_LABEL_ZH: Readonly<Record<string, string>> = {
+  scorch: "焦痕（出貨預設）",
+  crack: "地面震裂",
+  dirt: "揚土",
+  none: "不留痕跡",
+};
 
 /** owner 面向的中文家族名 —— 和普查報告上的名字一樣。 */
 export const FAMILY_LABEL_ZH: Readonly<Record<string, string>> = {
@@ -374,6 +389,8 @@ export const FAMILY_FIELDS = [
   "soundGain",
   "soundLoopMs",
   "soundLoopMaxMs",
+  // GH#439 —— 地面痕跡。同樣在**家族原型**上：填一次 21 個原型就覆蓋 258 支技能。
+  "groundDecal",
 ] as const;
 export type FamilyField = (typeof FAMILY_FIELDS)[number];
 
@@ -422,6 +439,7 @@ export const FIELD_LABEL: Readonly<Record<string, string>> = {
   alpha: "家族基準透明度",
   timeScale: "家族基準時間倍率",
   heightY: "家族基準高度",
+  groundDecal: "地面痕跡",
   family: "家族原型",
   w3xScale: "原圖縮放",
   tintR: "紅",
@@ -515,6 +533,11 @@ export const FIELD_HINT: Readonly<Record<string, string>> = {
     "⚠️ 這一格要不要生效，看上面「施法特效高度」那一個下拉：" +
     "出貨的「貼地家族回到地板」只採用比 1.0 低的值（往上的仍然固定在 1.0），" +
     "選「每個家族都用自己的高度」才會連往上那一半也照做，選「全部固定在胸口」則整格不生效",
+  groundDecal:
+    "這一族施法時在地上留下哪一種痕跡。留白 = 焦痕（出貨預設）。" +
+    "衝擊波／跺地／落石那一族選「地面震裂」，衝鋒與位移選「揚土」，" +
+    "純空中或純增益的技能可以選「不留痕跡」。" +
+    "⚠️ 這一格在此之前根本不存在，661 支技能蓋的是逐位元組相同的同一張焦痕",
   family: "這一招要播哪一個家族原型。留白 = 沿用出貨的綁定",
   w3xScale:
     "原圖給這個呼叫點的 usca / SetUnitScalePercent。留白 = 原圖沒說，用家族基準；填了才會走上面的壓縮曲線",
@@ -705,6 +728,9 @@ export function familyDraftFrom(t: VfxFamilyTuning): FamilyDraft {
     soundGain: numText(t.soundGain),
     soundLoopMs: numText(t.soundLoopMs),
     soundLoopMaxMs: numText(t.soundLoopMaxMs),
+    // GH#439 —— optional，⛔ 沒有就留白（同 OPTIONAL_GLOBAL_FIELDS 那個坑：
+    // 幫它填一個預設會讓「打開來看一眼」變成 dirty）。
+    groundDecal: t.groundDecal ?? "",
   };
 }
 
@@ -813,6 +839,11 @@ export function validateFamilyField(field: FamilyField, text: string): string {
   if (field === "primitive") return PRIMITIVE_KINDS.includes(t) ? "" : "必填：請選一個形狀";
   if (field === "element") return ELEMENT_IDS.includes(t) ? "" : "必填：請選一個元素";
   if (SOUND_KEY_FIELDS.has(field)) return checkSoundKey(t);
+  // GH#439 —— 留白 = 沿用引擎預設（焦痕），⛔ 不是一個擋住存檔的錯。
+  if (field === "groundDecal") {
+    if (t === "") return "";
+    return GROUND_DECAL_IDS.includes(t) ? "" : "不是一種引擎認得的地面痕跡";
+  }
   const b = FAMILY_BOUNDS[field];
   // ⚠️ 音效那三個數字是 optional（留白 = 用引擎預設），其餘家族欄位都是必填 ——
   // 混在一起用 `false` 會讓「沒填循環間隔」變成一個擋住存檔的錯。
@@ -882,6 +913,10 @@ function soundPatch(d: Record<string, string>): Record<string, unknown> {
     const t = (d[f] ?? "").trim();
     if (t !== "") out[f] = Number(t);
   }
+  // GH#439 —— 同一個規則：**留白的格子整個不寫進去**（ABSENT ≠ 空字串，
+  // `groundDecal: ""` 會被 z.enum 拒絕 → 整份 tuning 回 null）。
+  const gd = (d.groundDecal ?? "").trim();
+  if (gd !== "") out.groundDecal = gd;
   return out;
 }
 

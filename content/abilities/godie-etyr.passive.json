@@ -15,7 +15,6 @@
   "manaCost": [
     150.0
   ],
-  "range": 8.25,
   "radius": 6.42,
   "targetsEnemies": true,
   "effects": [
@@ -36,5 +35,7 @@
     }
   ],
   "vfxKey": "fx.prim.arcane.summon",
-  "castTimeSec": 0.133
+  "castTimeSec": 0.133,
+  "rangeTier": "超大",
+  "range": 8
 }

@@ -17,7 +17,6 @@
     310.0,
     410.0
   ],
-  "range": 14.0,
   "effects": [
     {
       "kind": "spawnProjectile",
@@ -39,5 +38,7 @@
   ],
   "vfxKey": "fx.prim.ki.beam-lg",
   "schema": "ability@1",
-  "castTimeSec": 1.5
+  "castTimeSec": 1.5,
+  "rangeTier": "極大",
+  "range": 12
 }

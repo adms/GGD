@@ -19,7 +19,6 @@
     270.0,
     360.0
   ],
-  "range": 11.0,
   "effects": [
     {
       "kind": "damage",
@@ -43,5 +42,7 @@
   "vfxKey": "fx.prim.physical.pulse-sm",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.467
+  "castTimeSec": 0.467,
+  "rangeTier": "極大",
+  "range": 12
 }

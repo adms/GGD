@@ -13,7 +13,6 @@
   "manaCost": [
     800.0
   ],
-  "range": 9.41,
   "effects": [],
   "template": {
     "ref": "tpl-instant-blast",
@@ -36,5 +35,7 @@
   "schema": "ability@1",
   "radius": 4.71,
   "targetsEnemies": true,
-  "castTimeSec": 1.633
+  "castTimeSec": 1.633,
+  "rangeTier": "超大",
+  "range": 8
 }

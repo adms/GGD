@@ -5,7 +5,7 @@
   "provenance": "w3x-import",
   "description": "[輔助]\n25秒冷卻時間\n\n讓皮卡娘以疾快的速度移動進出600的距離到指定的位置。",
   "slot": "W",
-  "castType": "dash",
+  "castType": "ground",
   "maxRank": 5,
   "cooldown": [
     25.0,
@@ -21,16 +21,17 @@
     150.0,
     150.0
   ],
-  "range": 11.0,
   "effects": [
     {
-      "kind": "dash",
-      "mode": "toPoint",
-      "speed": 16,
-      "maxDistance": 11.0
+      "kind": "blink",
+      "shape": "single",
+      "to": "point",
+      "applyTo": "self"
     }
   ],
   "vfxKey": "fx.prim.lightning.beam",
   "schema": "ability@1",
-  "castTimeSec": 0.067
+  "castTimeSec": 0.367,
+  "rangeTier": "極大",
+  "range": 12
 }

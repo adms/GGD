@@ -18,7 +18,6 @@
     250.0,
     350.0
   ],
-  "range": 11.0,
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
@@ -43,5 +42,7 @@
   "vfxKey": "fx.prim.void.nova-lg",
   "sfxKey": "wc3.taunt",
   "targetsEnemies": true,
-  "castTimeSec": 1.233
+  "castTimeSec": 1.233,
+  "rangeTier": "極大",
+  "range": 12
 }

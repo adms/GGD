@@ -72,12 +72,7 @@
         160,
         190
       ],
-      "range": 10.08,
       "effects": [],
-      "vfxKey": "fx.prim.ice.shockwave",
-      "targetsEnemies": true,
-      "radius": 5.5,
-      "castTimeSec": 0.633,
       "template": {
         "ref": "tpl-proxy-cast",
         "params": {
@@ -102,7 +97,13 @@
           "statusId": "slow40",
           "statusDurationSec": 1.5
         }
-      }
+      },
+      "vfxKey": "fx.prim.ice.shockwave",
+      "targetsEnemies": true,
+      "radius": 5.5,
+      "castTimeSec": 0.633,
+      "rangeTier": "極大",
+      "range": 12
     },
     "W": {
       "id": "godie-n003.w",
@@ -158,18 +159,17 @@
       "castType": "skillshot",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        160,
-        280,
-        400,
-        520
+        160.0,
+        280.0,
+        400.0,
+        520.0
       ],
-      "range": 10.08,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -180,10 +180,10 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  500,
-                  850,
-                  1200,
-                  1550
+                  500.0,
+                  850.0,
+                  1200.0,
+                  1550.0
                 ]
               }
             }
@@ -191,7 +191,9 @@
         }
       ],
       "vfxKey": "fx.prim.ice.nova",
-      "castTimeSec": 1.133
+      "castTimeSec": 1.133,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-n003.r",
@@ -212,24 +214,7 @@
         730,
         960
       ],
-      "range": 8.25,
       "effects": [],
-      "vfxKey": "fx.w3x.locust.frostnova.p01",
-      "castTimeSec": 1.233,
-      "hitFeel": {
-        "hitstopTicks": 5,
-        "hitstunTicks": 8,
-        "shakeMag": 0.543,
-        "shakeStyle": "omni",
-        "sparkKind": "ice",
-        "flashColor": [
-          0.6,
-          0.82,
-          1
-        ],
-        "flashMs": 186,
-        "camKick": 0.466
-      },
       "template": {
         "ref": "tpl-line-sweep",
         "params": {
@@ -247,7 +232,25 @@
           "castTimeSec": 1.233
         }
       },
-      "targetsEnemies": true
+      "vfxKey": "fx.w3x.locust.frostnova.p01",
+      "castTimeSec": 1.233,
+      "hitFeel": {
+        "hitstopTicks": 5,
+        "hitstunTicks": 8,
+        "shakeMag": 0.543,
+        "shakeStyle": "omni",
+        "sparkKind": "ice",
+        "flashColor": [
+          0.6,
+          0.82,
+          1
+        ],
+        "flashMs": 186,
+        "camKick": 0.466
+      },
+      "targetsEnemies": true,
+      "rangeTier": "超大",
+      "range": 8
     }
   },
   "skillOrder": [

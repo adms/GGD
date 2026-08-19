@@ -61,21 +61,16 @@
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        85,
-        135,
-        185
+        85.0,
+        135.0,
+        185.0
       ],
-      "range": 11,
       "effects": [],
-      "vfxKey": "fx.prim.void.explosion",
-      "targetsEnemies": true,
-      "radius": 5.5,
-      "castTimeSec": 1.133,
       "template": {
         "ref": "tpl-instant-blast",
         "params": {
@@ -96,7 +91,13 @@
           "damageType": "magic",
           "castTimeSec": 1.133
         }
-      }
+      },
+      "vfxKey": "fx.prim.void.explosion",
+      "targetsEnemies": true,
+      "radius": 5.5,
+      "castTimeSec": 1.133,
+      "rangeTier": "極大",
+      "range": 12
     },
     "W": {
       "id": "godie-u00k.w",
@@ -108,22 +109,18 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        12,
-        12,
-        12,
-        12
+        12.0,
+        12.0,
+        12.0,
+        12.0
       ],
       "manaCost": [
-        60,
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
-      "range": 11,
       "effects": [],
-      "vfxKey": "fx.prim.void.beam",
-      "targetsEnemies": true,
-      "castTimeSec": 0.3,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -144,7 +141,12 @@
           "damageType": "magic",
           "castTimeSec": 0.3
         }
-      }
+      },
+      "vfxKey": "fx.prim.void.beam",
+      "targetsEnemies": true,
+      "castTimeSec": 0.3,
+      "rangeTier": "極大",
+      "range": 12
     },
     "E": {
       "id": "godie-u00k.e",
@@ -156,23 +158,18 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        60,
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        160,
-        320,
-        480,
-        640
+        160.0,
+        320.0,
+        480.0,
+        640.0
       ],
-      "range": 11,
       "effects": [],
-      "vfxKey": "fx.prim.void.swarm",
-      "sfxKey": "wc3.parasite",
-      "targetsEnemies": true,
-      "castTimeSec": 0.667,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -193,7 +190,13 @@
           "damageType": "magic",
           "castTimeSec": 0.667
         }
-      }
+      },
+      "vfxKey": "fx.prim.void.swarm",
+      "sfxKey": "wc3.parasite",
+      "targetsEnemies": true,
+      "castTimeSec": 0.667,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-u00k.r",
@@ -205,21 +208,16 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        150,
-        250,
-        350
+        150.0,
+        250.0,
+        350.0
       ],
-      "range": 11,
       "effects": [],
-      "vfxKey": "fx.prim.void.nova-lg",
-      "sfxKey": "wc3.taunt",
-      "targetsEnemies": true,
-      "castTimeSec": 1.233,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -239,7 +237,13 @@
           "damageType": "magic",
           "castTimeSec": 1.233
         }
-      }
+      },
+      "vfxKey": "fx.prim.void.nova-lg",
+      "sfxKey": "wc3.taunt",
+      "targetsEnemies": true,
+      "castTimeSec": 1.233,
+      "rangeTier": "極大",
+      "range": 12
     }
   },
   "skillOrder": [

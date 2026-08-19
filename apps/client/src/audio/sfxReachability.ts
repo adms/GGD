@@ -452,6 +452,10 @@ export const SFX_REACHABILITY: readonly SfxReachRow[] = [
   { key: "wc3.wandofneutralization", kind: "combat", site: VFX_SOUND_SITE, events: ["damage", "projectileHit"], payload: { damage: ["origin"], projectileHit: ["origin"] } },
   { key: "wc3.waterelementalmissile3", kind: "combat", site: VFX_SOUND_SITE, events: ["damage", "projectileHit"], payload: { damage: ["origin"], projectileHit: ["origin"] } },
   { key: "wc3.witchdoctorcastattack1", kind: "combat", site: VFX_SOUND_SITE, events: ["damage", "projectileHit"], payload: { damage: ["origin"], projectileHit: ["origin"] } },
+  // GH#439 —— `shockwaveRing` 家族的**落地那一下**（原作 `Units\Orc\Tauren\Warstomp.wav`）。
+  // ⭐ 綁在 `families[]` 上,所以它替**整個家族**出聲(出貨 91 筆綁定,其中 66 筆原本
+  // 指向 `warstompcaster`),⛔ 不是逐支技能各填一次。
+  { key: "wc3.warstomp", kind: "combat", site: VFX_SOUND_SITE, events: ["damage", "projectileHit"], payload: { damage: ["origin"], projectileHit: ["origin"] } },
 
   // ⚠️ **收錄了但沒有人引用**的 68 個。owner 2026-08-19 把 133 個原作音效搬進版控
   // （出處帳本 `content/assets/audio/wc3/PROVENANCE.md`），其中 mdx `SNDx` 事件軌
@@ -524,7 +528,6 @@ export const SFX_REACHABILITY: readonly SfxReachRow[] = [
   { key: "wc3.villagermaledeath1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
   { key: "wc3.wardenattackeffort1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
   { key: "wc3.wardendeath1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
-  { key: "wc3.warstomp", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
 ];
 
 /** Rows by key — the lookup the derivations and the test both use. */

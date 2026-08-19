@@ -19,7 +19,6 @@
     550.0,
     650.0
   ],
-  "range": 9.17,
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
@@ -46,5 +45,7 @@
   "sfxKey": "wc3.trollbatriderpissed2",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.767
+  "castTimeSec": 0.767,
+  "rangeTier": "超大",
+  "range": 8
 }

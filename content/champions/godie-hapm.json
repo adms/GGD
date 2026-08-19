@@ -258,6 +258,7 @@
       ],
       "icon": "assets/icons/abilities/godie-hapm.w.webp",
       "vfxKey": "fx.prim.physical.shockwave",
+      "rangeTier": "極大",
       "castTimeSec": 1
     },
     "E": {
@@ -455,7 +456,7 @@
       "effects": [
         {
           "kind": "dash",
-          "mode": "toPoint",
+          "mode": "forward",
           "speed": 16,
           "maxDistance": 5.0
         },

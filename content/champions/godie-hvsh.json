@@ -61,22 +61,18 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        25,
-        25,
-        25,
-        25
+        25.0,
+        25.0,
+        25.0,
+        25.0
       ],
       "manaCost": [
-        50,
-        75,
-        100,
-        125
+        50.0,
+        75.0,
+        100.0,
+        125.0
       ],
-      "range": 14,
       "effects": [],
-      "vfxKey": "fx.prim.arcane.beam",
-      "targetsEnemies": true,
-      "castTimeSec": 0.633,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -97,7 +93,12 @@
           "damageType": "magic",
           "castTimeSec": 0.633
         }
-      }
+      },
+      "vfxKey": "fx.prim.arcane.beam",
+      "targetsEnemies": true,
+      "castTimeSec": 0.633,
+      "rangeTier": "極大",
+      "range": 12
     },
     "W": {
       "id": "godie-hvsh.w",
@@ -197,20 +198,16 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        230,
-        330,
-        430
+        230.0,
+        330.0,
+        430.0
       ],
-      "range": 14,
       "effects": [],
-      "vfxKey": "fx.prim.arcane.beam-lg",
-      "targetsEnemies": true,
-      "castTimeSec": 1.5,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -230,7 +227,12 @@
           "damageType": "magic",
           "castTimeSec": 1.5
         }
-      }
+      },
+      "vfxKey": "fx.prim.arcane.beam-lg",
+      "targetsEnemies": true,
+      "castTimeSec": 1.5,
+      "rangeTier": "極大",
+      "range": 12
     }
   },
   "skillOrder": [

@@ -2868,7 +2868,13 @@ A("52-03", "52-03 無銘斧劍", "self", [0], [0], 0,
 A("52-04", "52-04 巨神一擊", "self", [120, 120, 120], [400, 600, 800], 0,
   "[主動][衝刺][範圍]\n120秒冷卻，吟唱2秒\n消耗[MP] 400/600/800\n\n「體型差不是霸凌，是傷害公式」\n向前[衝刺]一小段距離後揮出致命的一擊，對[周圍][範圍] 敵人造成600/1000/1400 傷害。\n(若敵人具有[恐懼]狀態，則額外追加 自身[最大生命]25%傷害)",
   maxRank=3, cast_time=2.0, radiusTier="大",
-  effects=[{"kind": "dash", "mode": "toPoint", "speed": 16, "maxDistance": 5.0},
+  # ⚠️ GH#442 —— `mode` 是 **forward** 不是 toPoint。兩個理由，方向一致：
+  #  ① 規格內文逐字寫「向**前**[衝刺]一小段距離」（第〇·六守則第 1 層）
+  #  ② `castType:"self"` **結構上拿不到 `ctx.point`** —— 伺服器的 case "self" 不設 point、
+  #     客戶端 AimResolver 回 {type:"self"} ⇒ `dash.ts` 永遠走 `ctx.direction ?? t.facing`
+  #     的 fallback。寫 toPoint 是一句「說了但不會發生」的話（第一·五守則）。
+  #     閘：packages/shared/src/content/blinkNotDash.test.ts
+  effects=[{"kind": "dash", "mode": "forward", "speed": 16, "maxDistance": 5.0},
            area("physical", tier="大", per=[600, 1000, 1400]),
            # ⚠️ victimCondition ⛔ 不可以當 kw 傳進 area()：會被 amt() 的 o.update(kw)
            #    倒進 amount，而 zScaling 是 .strict() ⇒ 整份文件被拒收。

@@ -187,7 +187,6 @@
         60.0,
         60.0
       ],
-      "range": 11.0,
       "effects": [
         {
           "kind": "damage",
@@ -212,7 +211,9 @@
       "vfxKey": "fx.prim.earth.pulse-sm",
       "sfxKey": "wc3.mortarteampissed9",
       "targetsEnemies": true,
-      "castTimeSec": 0.3
+      "castTimeSec": 0.3,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-u034.r",

@@ -17,7 +17,6 @@
     420.0,
     540.0
   ],
-  "range": 11.0,
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
@@ -43,5 +42,7 @@
   "sfxKey": "wc3.taunt",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 1.033
+  "castTimeSec": 1.033,
+  "rangeTier": "極大",
+  "range": 12
 }

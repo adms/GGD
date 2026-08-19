@@ -17,7 +17,6 @@
     180.0,
     270.0
   ],
-  "range": 11.0,
   "effects": [
     {
       "kind": "damage",
@@ -40,5 +39,7 @@
   "vfxKey": "fx.prim.arcane.pulse-lg",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.833
+  "castTimeSec": 0.833,
+  "rangeTier": "極大",
+  "range": 12
 }

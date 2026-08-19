@@ -17,7 +17,6 @@
     330.0,
     440.0
   ],
-  "range": 11.0,
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
@@ -42,5 +41,7 @@
   "vfxKey": "fx.prim.void.explosion-lg",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.833
+  "castTimeSec": 0.833,
+  "rangeTier": "極大",
+  "range": 12
 }

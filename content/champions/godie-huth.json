@@ -60,23 +60,20 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        35,
-        28,
-        21,
-        14,
-        7
+        35.0,
+        28.0,
+        21.0,
+        14.0,
+        7.0
       ],
       "manaCost": [
-        30,
-        50,
-        70,
-        90,
-        110
+        30.0,
+        50.0,
+        70.0,
+        90.0,
+        110.0
       ],
-      "range": 3.67,
       "effects": [],
-      "vfxKey": "fx.prim.arcane.pulse-sm",
-      "targetsEnemies": true,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -98,7 +95,11 @@
           "damageType": "magic"
         }
       },
-      "castTimeSec": 0.167
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "targetsEnemies": true,
+      "castTimeSec": 0.167,
+      "rangeTier": "小",
+      "range": 3
     },
     "W": {
       "id": "godie-huth.w",
@@ -110,31 +111,30 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        60,
-        50,
-        40,
-        30,
-        20
+        60.0,
+        50.0,
+        40.0,
+        30.0,
+        20.0
       ],
       "manaCost": [
-        100,
-        160,
-        220,
-        280,
-        340
+        100.0,
+        160.0,
+        220.0,
+        280.0,
+        340.0
       ],
-      "range": 11,
       "effects": [
         {
           "kind": "damage",
           "damageType": "magic",
           "amount": {
             "perRank": [
-              250,
-              350,
-              450,
-              550,
-              650
+              250.0,
+              350.0,
+              450.0,
+              550.0,
+              650.0
             ],
             "ratios": [
               {
@@ -154,7 +154,9 @@
       "vfxKey": "fx.prim.arcane.pulse",
       "sfxKey": "wc3.eggsackdeath1",
       "targetsEnemies": true,
-      "castTimeSec": 0.3
+      "castTimeSec": 0.3,
+      "rangeTier": "極大",
+      "range": 12
     },
     "E": {
       "id": "godie-huth.e",
@@ -166,31 +168,27 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        60,
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        120,
-        180,
-        240,
-        300
+        120.0,
+        180.0,
+        240.0,
+        300.0
       ],
-      "range": 11,
       "effects": [],
-      "vfxKey": "fx.prim.arcane.swarm",
-      "targetsEnemies": true,
-      "castTimeSec": 0.267,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
             "perRank": [
-              2,
-              3,
-              4,
-              5
+              2.0,
+              3.0,
+              4.0,
+              5.0
             ],
             "ratios": [
               {
@@ -202,7 +200,12 @@
           "damageType": "magic",
           "castTimeSec": 0.267
         }
-      }
+      },
+      "vfxKey": "fx.prim.arcane.swarm",
+      "targetsEnemies": true,
+      "castTimeSec": 0.267,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-huth.r",
@@ -214,25 +217,24 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        280,
-        430,
-        580
+        280.0,
+        430.0,
+        580.0
       ],
-      "range": 8.25,
       "effects": [
         {
           "kind": "damage",
           "damageType": "magic",
           "amount": {
             "perRank": [
-              300,
-              400,
-              500
+              300.0,
+              400.0,
+              500.0
             ],
             "ratios": [
               {
@@ -245,13 +247,15 @@
         {
           "kind": "applyStatus",
           "statusId": "slow35",
-          "duration": 5,
+          "duration": 5.0,
           "moveSpeedMult": 0.65
         }
       ],
       "vfxKey": "fx.prim.void.explosion-lg",
       "targetsEnemies": true,
-      "castTimeSec": 1.5
+      "castTimeSec": 1.5,
+      "rangeTier": "超大",
+      "range": 8
     }
   },
   "skillOrder": [

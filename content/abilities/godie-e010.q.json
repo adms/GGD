@@ -22,7 +22,6 @@
     270.0,
     270.0
   ],
-  "range": 11.0,
   "effects": [
     {
       "kind": "spawnProjectile",
@@ -46,5 +45,7 @@
   ],
   "vfxKey": "fx.prim.arcane.bolt",
   "sfxKey": "wc3.treantready1",
-  "castTimeSec": 0.867
+  "castTimeSec": 0.867,
+  "rangeTier": "極大",
+  "range": 12
 }

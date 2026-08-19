@@ -1160,7 +1160,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **完整 78 名英雄**（含 29 名未開放）與逐欄資料（開放旗標、技能 id、攻擊類型…）在 [`docs/reference/roster.md`](./docs/reference/roster.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_8085b22421cb` 產生。 開放 49 / 全 78 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_009ce64575c2` 產生。 開放 49 / 全 78 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:roster -->
 
 <!-- BEGIN GENERATED:abilities -->
@@ -1176,7 +1176,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **全 461 個技能的逐欄表**（id、名稱、slot、型態、編號、擁有英雄、開放旗標、完整短效果）在 [`docs/reference/abilities.md`](./docs/reference/abilities.md)；互動版在 <http://localhost:39527/#codex>。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_8085b22421cb` 產生。 開放英雄技能 293 / 全 461 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_009ce64575c2` 產生。 開放英雄技能 293 / 全 461 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:abilities -->
 
 <!-- BEGIN GENERATED:items -->
@@ -1352,7 +1352,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 > 📖 **全 142 件道具依 craftRole 的完整分類表**（component 16 / token 0 / none 24 …）在 [`docs/reference/items.md`](./docs/reference/items.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_8085b22421cb` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_009ce64575c2` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:items -->
 
 <!-- BEGIN GENERATED:grail -->
@@ -1441,7 +1441,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 逐張的完整 JSON（每一格參數、每一個 hook、每一條條件）在 [`docs/reference/grail-wishes.md`](docs/reference/grail-wishes.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_8085b22421cb` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_009ce64575c2` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:grail -->
 
 ### ⭐ 2026-08-17／18 這一批新加的機制（GH#354）
@@ -1496,17 +1496,17 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 | 效果 | 用它的內容 | 效果 | 用它的內容 | 效果 | 用它的內容 |
 |---|--:|---|--:|---|--:|
-| `applyBuff` | 117 | `applyStatus` | 97 | `blink` | 2 |
+| `applyBuff` | 117 | `applyStatus` | 97 | `blink` | 17 |
 | `carry` | 0 | `championForm` | 24 | `convertTeam` | 0 |
 | `cycleBuff` | 1 | `damage` | 178 | `damageArea` | 28 |
-| `damageLine` | 10 | `dash` | 15 | `delayed` | 8 |
+| `damageLine` | 10 | `dash` | 8 | `delayed` | 8 |
 | `devour` | 3 | `dispel` | 8 | `dot` | 4 |
 | `evasion` | 0 | `eventValueConversion` | 5 | `extendBuff` | 1 |
 | `grantAttribute` | 4 | `grantGold` | 1 | `heal` | 9 |
 | `invulnerable` | 18 | `knockback` | 11 | `leap` | 7 |
 | `manaBarrier` | 1 | `modifyCooldown` | 13 | `proxyCast` | 6 |
 | `randomArea` | 4 | `restore` | 17 | `revive` | 1 |
-| `shield` | 11 | `shieldBreak` | 2 | `spawnProjectile` | 29 |
+| `shield` | 11 | `shieldBreak` | 2 | `spawnProjectile` | 28 |
 | `spawnVfx` | 18 | `spendMana` | 3 | `summon` | 0 |
 | `swapResource` | 1 | `taunt` | 2 | `weightedBranch` | 5 |
 
@@ -1578,7 +1578,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 完整的參數與上下界（每個效果每一格能填什麼）在 [`docs/技能標記機制與效果規則.md`](docs/技能標記機制與效果規則.md)，同樣是產生的。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_8085b22421cb` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_009ce64575c2` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:mechanics -->
 
 

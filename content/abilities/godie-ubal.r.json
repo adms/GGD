@@ -17,7 +17,6 @@
     300.0,
     450.0
   ],
-  "range": 11.0,
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
@@ -43,5 +42,7 @@
   "sfxKey": "wc3.shadowhunterready1",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.833
+  "castTimeSec": 0.833,
+  "rangeTier": "極大",
+  "range": 12
 }

@@ -71,7 +71,6 @@
         65,
         70
       ],
-      "range": 14,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -102,7 +101,9 @@
       ],
       "vfxKey": "fx.ember-bolt-cast",
       "castTimeSec": 0.1,
-      "provenance": "w3x-import"
+      "provenance": "w3x-import",
+      "rangeTier": "極大",
+      "range": 12
     },
     "W": {
       "id": "sela.w",
@@ -184,7 +185,6 @@
         85,
         90
       ],
-      "range": 12,
       "radius": 3,
       "targetsEnemies": true,
       "effects": [
@@ -217,7 +217,9 @@
       ],
       "vfxKey": "fx.scorch-ring",
       "castTimeSec": 0.2,
-      "provenance": "w3x-import"
+      "provenance": "w3x-import",
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "sela.r",
@@ -236,10 +238,8 @@
         100,
         100
       ],
-      "range": 10,
       "radius": 5,
       "targetsEnemies": true,
-      "castTimeSec": 0.767,
       "effects": [
         {
           "kind": "damage",
@@ -266,7 +266,10 @@
         }
       ],
       "vfxKey": "fx.firestorm",
-      "provenance": "w3x-import"
+      "castTimeSec": 0.767,
+      "provenance": "w3x-import",
+      "rangeTier": "超大",
+      "range": 8
     }
   },
   "passive": {

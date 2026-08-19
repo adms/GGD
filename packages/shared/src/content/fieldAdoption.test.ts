@@ -346,11 +346,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-17",
     why: "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
   },
-  "enum:abilities.effects[]#blink.to=point": {
-    status: "landing",
-    since: "2026-08-17",
-    why: "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-  },
   "enum:abilities.effects[]#dispel.order=oldest": {
     status: "landing",
     since: "2026-08-17",
@@ -2429,19 +2424,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // （中位數 11、最大 29.33），而落差大的 13 支已經列進
   // `docs/editor-contract/ggd-skill-tiers.md` 第四章等 owner 過目。
   // ⛔ 不要為了讓這兩列變綠就把技能批次改成級距詞 —— 第〇·六守則：可以停就停。
-  "field:abilities.rangeTier": {
-    status: "landing",
-    since: "2026-08-19",
-    why:
-      "GH#414 施法距離五級距。機制是完整的（`resolveRangeTier` 接在 `registries.ts` 的 " +
-      "`withTiers`，守衛 `skillTierLadder.test.ts` 第④條真的重跑 registerAll 驗過），" +
-      "缺的是**內容側的批次改寫**，而那是一次要 owner 勾的平衡變更，⛔ 不是我可以順手做的。",
-  },
-  "field:champions.abilities.*.rangeTier": {
-    status: "landing",
-    since: "2026-08-19",
-    why: "同 `field:abilities.rangeTier` —— 英雄卡內嵌鏡像走同一條註冊路徑、同一張表。",
-  },
 };
 
 let census: Census;

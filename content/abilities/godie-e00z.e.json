@@ -19,7 +19,6 @@
     225.0,
     300.0
   ],
-  "range": 8.25,
   "effects": [
     {
       "kind": "invulnerable",
@@ -30,22 +29,30 @@
       "blocksControl": true
     },
     {
-      "kind": "damage",
-      "damageType": "physical",
-      "amount": {
-        "perRank": [
-          40.0,
-          90.0,
-          140.0,
-          190.0
-        ],
-        "ratios": [
-          {
-            "stat": "ad",
-            "coeff": 0.5
+      "kind": "blink",
+      "shape": "single",
+      "to": "point",
+      "applyTo": "self",
+      "onArrive": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "perRank": [
+              40.0,
+              90.0,
+              140.0,
+              190.0
+            ],
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
           }
-        ]
-      }
+        }
+      ]
     }
   ],
   "vfxKey": "fx.prim.holy.slash",
@@ -53,5 +60,7 @@
   "targetsEnemies": true,
   "radius": 6.0,
   "schema": "ability@1",
-  "castTimeSec": 1.233
+  "castTimeSec": 1.033,
+  "rangeTier": "超大",
+  "range": 8
 }

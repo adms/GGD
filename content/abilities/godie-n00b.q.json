@@ -20,7 +20,6 @@
     125,
     155
   ],
-  "range": 9.17,
   "effects": [],
   "template": {
     "ref": "tpl-line-sweep",
@@ -42,5 +41,7 @@
   },
   "vfxKey": "fx.prim.wind.beam",
   "castTimeSec": 0.867,
-  "targetsEnemies": true
+  "targetsEnemies": true,
+  "rangeTier": "超大",
+  "range": 8
 }

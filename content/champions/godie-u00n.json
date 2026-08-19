@@ -61,28 +61,27 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        80,
-        110,
-        140,
-        170
+        80.0,
+        110.0,
+        140.0,
+        170.0
       ],
-      "range": 5.5,
       "effects": [
         {
           "kind": "damage",
           "damageType": "physical",
           "amount": {
             "perRank": [
-              250,
-              375,
-              500,
-              625
+              250.0,
+              375.0,
+              500.0,
+              625.0
             ],
             "ratios": [
               {
@@ -101,7 +100,9 @@
       ],
       "vfxKey": "fx.prim.physical.shockwave",
       "targetsEnemies": true,
-      "castTimeSec": 0.3
+      "castTimeSec": 0.3,
+      "rangeTier": "大",
+      "range": 6
     },
     "W": {
       "id": "godie-u00n.w",
@@ -113,28 +114,27 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        25,
-        25,
-        25,
-        25
+        25.0,
+        25.0,
+        25.0,
+        25.0
       ],
       "manaCost": [
-        65,
-        95,
-        125,
-        155
+        65.0,
+        95.0,
+        125.0,
+        155.0
       ],
-      "range": 6.42,
       "effects": [
         {
           "kind": "damage",
           "damageType": "physical",
           "amount": {
             "perRank": [
-              200,
-              300,
-              400,
-              500
+              200.0,
+              300.0,
+              400.0,
+              500.0
             ],
             "ratios": [
               {
@@ -147,13 +147,15 @@
         {
           "kind": "applyStatus",
           "statusId": "burnstun",
-          "duration": 1,
+          "duration": 1.0,
           "stun": true
         }
       ],
       "vfxKey": "fx.prim.physical.beam",
       "targetsEnemies": true,
-      "castTimeSec": 0.633
+      "castTimeSec": 0.633,
+      "rangeTier": "大",
+      "range": 6
     },
     "E": {
       "id": "godie-u00n.e",
@@ -165,18 +167,17 @@
       "castType": "skillshot",
       "maxRank": 4,
       "cooldown": [
-        60,
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        130,
-        160,
-        190,
-        220
+        130.0,
+        160.0,
+        190.0,
+        220.0
       ],
-      "range": 7.33,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -195,7 +196,7 @@
                 "ratios": [
                   {
                     "stat": "ap",
-                    "coeff": 1
+                    "coeff": 1.0
                   }
                 ]
               }
@@ -205,7 +206,9 @@
       ],
       "vfxKey": "fx.prim.physical.swarm",
       "sfxKey": "wc3.demonhuntermissilehit3",
-      "castTimeSec": 1.5
+      "castTimeSec": 1.5,
+      "rangeTier": "超大",
+      "range": 8
     },
     "R": {
       "id": "godie-u00n.r",

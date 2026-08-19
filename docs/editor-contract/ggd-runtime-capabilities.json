@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "fba3ddd8",
+  "fingerprint": "672a2cac",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -461,6 +461,7 @@
       "alpha",
       "element",
       "enabled",
+      "groundDecal",
       "heightY",
       "primitive",
       "scale",

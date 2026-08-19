@@ -15,7 +15,6 @@
   "manaCost": [
     100.0
   ],
-  "range": 8.25,
   "targetsEnemies": true,
   "effects": [
     {
@@ -35,5 +34,7 @@
     }
   ],
   "vfxKey": "fx.prim.nature.bolt",
-  "castTimeSec": 0.267
+  "castTimeSec": 0.267,
+  "rangeTier": "超大",
+  "range": 8
 }

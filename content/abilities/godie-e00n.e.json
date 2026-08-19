@@ -19,7 +19,6 @@
     180.0,
     220.0
   ],
-  "range": 8.25,
   "effects": [
     {
       "kind": "damage",
@@ -49,5 +48,7 @@
   "vfxKey": "fx.prim.void.nova",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.633
+  "castTimeSec": 0.633,
+  "rangeTier": "超大",
+  "range": 8
 }

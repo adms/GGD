@@ -62,24 +62,20 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        25,
-        25,
-        25,
-        25,
-        8
+        25.0,
+        25.0,
+        25.0,
+        25.0,
+        8.0
       ],
       "manaCost": [
-        90,
-        120,
-        150,
-        325,
-        85
+        90.0,
+        120.0,
+        150.0,
+        325.0,
+        85.0
       ],
-      "range": 2.75,
       "effects": [],
-      "vfxKey": "fx.prim.physical.slash",
-      "sfxKey": "wc3.peondeath",
-      "targetsEnemies": true,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -101,7 +97,12 @@
           "damageType": "magic"
         }
       },
-      "castTimeSec": 0.2
+      "vfxKey": "fx.prim.physical.slash",
+      "sfxKey": "wc3.peondeath",
+      "targetsEnemies": true,
+      "castTimeSec": 0.2,
+      "rangeTier": "小",
+      "range": 3
     },
     "W": {
       "id": "godie-umal.w",
@@ -113,22 +114,18 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        12,
-        12,
-        12,
-        12
+        12.0,
+        12.0,
+        12.0,
+        12.0
       ],
       "manaCost": [
-        60,
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
-      "range": 11,
       "effects": [],
-      "vfxKey": "fx.prim.holy.pulse-sm",
-      "targetsEnemies": true,
-      "castTimeSec": 0.267,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -149,7 +146,12 @@
           "damageType": "physical",
           "castTimeSec": 0.267
         }
-      }
+      },
+      "vfxKey": "fx.prim.holy.pulse-sm",
+      "targetsEnemies": true,
+      "castTimeSec": 0.267,
+      "rangeTier": "極大",
+      "range": 12
     },
     "E": {
       "id": "godie-umal.e",
@@ -161,23 +163,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        60,
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        165,
-        240,
-        315,
-        390
+        165.0,
+        240.0,
+        315.0,
+        390.0
       ],
-      "range": 2.75,
       "effects": [],
-      "vfxKey": "fx.prim.physical.slash",
-      "targetsEnemies": true,
-      "radius": 6,
-      "castTimeSec": 1.5,
       "template": {
         "ref": "tpl-instant-blast",
         "params": {
@@ -199,7 +196,13 @@
           "damageType": "physical",
           "castTimeSec": 1.5
         }
-      }
+      },
+      "vfxKey": "fx.prim.physical.slash",
+      "targetsEnemies": true,
+      "radius": 6.0,
+      "castTimeSec": 1.5,
+      "rangeTier": "小",
+      "range": 3
     },
     "R": {
       "id": "godie-umal.r",

@@ -17,7 +17,6 @@
     300.0,
     400.0
   ],
-  "range": 14.0,
   "effects": [
     {
       "kind": "spawnProjectile",
@@ -53,5 +52,7 @@
     ],
     "flashMs": 178,
     "camKick": 0.446
-  }
+  },
+  "rangeTier": "極大",
+  "range": 12
 }

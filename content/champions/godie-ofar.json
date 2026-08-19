@@ -62,25 +62,20 @@
       "castType": "ground",
       "maxRank": 5,
       "cooldown": [
-        35,
-        35,
-        35,
-        35,
-        35
+        35.0,
+        35.0,
+        35.0,
+        35.0,
+        35.0
       ],
       "manaCost": [
-        55,
-        85,
-        115,
-        115,
-        115
+        55.0,
+        85.0,
+        115.0,
+        115.0,
+        115.0
       ],
-      "range": 11,
       "effects": [],
-      "vfxKey": "fx.prim.lightning.nova",
-      "targetsEnemies": true,
-      "radius": 6.42,
-      "castTimeSec": 0.867,
       "template": {
         "ref": "tpl-instant-blast",
         "params": {
@@ -103,7 +98,13 @@
           "damageType": "magic",
           "castTimeSec": 0.867
         }
-      }
+      },
+      "vfxKey": "fx.prim.lightning.nova",
+      "targetsEnemies": true,
+      "radius": 6.42,
+      "castTimeSec": 0.867,
+      "rangeTier": "極大",
+      "range": 12
     },
     "W": {
       "id": "godie-ofar.w",
@@ -262,28 +263,27 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        60,
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        70,
-        120,
-        170,
-        220
+        70.0,
+        120.0,
+        170.0,
+        220.0
       ],
-      "range": 11,
       "effects": [
         {
           "kind": "damage",
           "damageType": "magic",
           "amount": {
             "perRank": [
-              350,
-              500,
-              650,
-              800
+              350.0,
+              500.0,
+              650.0,
+              800.0
             ],
             "ratios": [
               {
@@ -302,7 +302,9 @@
       ],
       "vfxKey": "fx.prim.lightning.pulse",
       "targetsEnemies": true,
-      "castTimeSec": 0.5
+      "castTimeSec": 0.5,
+      "rangeTier": "極大",
+      "range": 12
     },
     "R": {
       "id": "godie-ofar.r",

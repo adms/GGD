@@ -105,7 +105,8 @@
           "alpha": 0.8
         }
       ],
-      "recoverySec": 0.25
+      "recoverySec": 0.25,
+      "rangeTier": "中"
     },
     "W": {
       "id": "godie-efur.w",

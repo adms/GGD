@@ -17,7 +17,6 @@
     210.0,
     270.0
   ],
-  "range": 11.0,
   "effects": [
     {
       "kind": "spawnProjectile",
@@ -45,5 +44,7 @@
   ],
   "vfxKey": "fx.prim.physical.shockwave-lg",
   "schema": "ability@1",
-  "castTimeSec": 0.767
+  "castTimeSec": 0.767,
+  "rangeTier": "極大",
+  "range": 12
 }

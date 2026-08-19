@@ -20,11 +20,10 @@
     70.0,
     90.0
   ],
-  "range": 6.0,
   "effects": [
     {
       "kind": "dash",
-      "mode": "toPoint",
+      "mode": "forward",
       "speed": 16,
       "maxDistance": 6.0
     },
@@ -46,5 +45,7 @@
     }
   ],
   "vfxKey": "fx.prim.void.dash",
-  "castTimeSec": 0.067
+  "castTimeSec": 0.067,
+  "rangeTier": "大",
+  "range": 6
 }

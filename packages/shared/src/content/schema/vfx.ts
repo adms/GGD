@@ -816,6 +816,41 @@ export const MAX_VFX_SOUND_GAIN = 2;
  */
 export const DEFAULT_VFX_SOUND_ENABLED = true;
 
+/* ──────────────────────────────────────────────────────────────────────────
+ * 地面痕跡（GH#439）
+ * ────────────────────────────────────────────────────────────────────────── */
+
+/**
+ * 一次施法在地上留下的痕跡**種類**。
+ *
+ * ⚠️ 量到的缺口（2026-08-19）：`VfxSystem` 每一顆 `abilityCast` 都會蓋一張
+ * decal，而 `castScorchSpec()` 對**每一支技能**回同一張焦痕 ——
+ * 91 支地面衝擊波和其餘 570 支蓋的是逐位元組相同的印子。「地面震裂」因此
+ * 在畫面上不存在，而且⛔ 沒有任何一格後台可以改到它（第一守則）。
+ *
+ * ⭐ 這是一份**機制清單**，⛔ 不是一格自由填的貼圖路徑：路徑自由填 = 打錯字
+ * 的那一格會靜靜地載不到圖，而畫面上看起來只是「這一招沒有痕跡」
+ * （第一·五守則的形狀）。引擎認得幾種就只有幾種，每一種都對應到一張
+ * **repo 裡真的存在**的貼圖（`apps/client/src/render/vfx/groundDecal.test.ts` 逐張讀 disk）。
+ *
+ *   · `scorch` —— 焦痕（出貨預設，火／魔法／爆炸）
+ *   · `crack`  —— 地面震裂（原作 WarStomp 那一族：衝擊波、跺地、落石）
+ *   · `dirt`   —— 揚起的土（衝鋒、落地、位移）
+ *   · `none`   —— 這一族不留痕跡
+ */
+export const VFX_GROUND_DECALS = ["scorch", "crack", "dirt", "none"] as const;
+export type VfxGroundDecal = (typeof VFX_GROUND_DECALS)[number];
+
+/** 沒有填的家族走這個 —— 也就是 GH#439 落地之前**每一支技能**的行為。 */
+export const DEFAULT_VFX_GROUND_DECAL: VfxGroundDecal = "scorch";
+
+/** 認得就回它，不認得（舊 overlay／打錯字）就回出貨預設。⛔ 不丟例外。 */
+export function resolveVfxGroundDecal(v: string | undefined): VfxGroundDecal {
+  return (VFX_GROUND_DECALS as readonly string[]).includes(v ?? "")
+    ? (v as VfxGroundDecal)
+    : DEFAULT_VFX_GROUND_DECAL;
+}
+
 export const zVfxFamilyTuning = z
   .object({
     /** false = this family stops overriding; its abilities keep `fx.prim.*` */
@@ -840,6 +875,17 @@ export const zVfxFamilyTuning = z
     soundLoopMs: z.number().int().min(200).max(20000).optional(),
     /** 循環音最長活多久，毫秒 —— 回收的硬上界（省略 = `DEFAULT_VFX_SOUND_LOOP_MAX_MS`） */
     soundLoopMaxMs: z.number().int().min(200).max(60000).optional(),
+    /**
+     * GH#439 —— 這個家族在地上留下哪一種痕跡（省略 = `DEFAULT_VFX_GROUND_DECAL`）。
+     *
+     * ⭐ 它在**家族原型**上，所以填一次 21 個原型就覆蓋 258 支技能
+     * （第零守則⑨：K 個模板 + 一張表）。⛔ 這不是「替衝擊波寫一個 if」——
+     * 引擎只認得 `VFX_GROUND_DECALS` 這幾種痕跡，哪個家族用哪一種是**資料**。
+     *
+     * OPTIONAL 的理由和上面那幾格一模一樣：已經存過的 durable overlay 沒有這個
+     * key，設成必填會讓那些 overlay 整份 `safeParse` 失敗 → 整個家族層一起消失。
+     */
+    groundDecal: z.enum(VFX_GROUND_DECALS).optional(),
   })
   .strict();
 export type VfxFamilyTuning = z.infer<typeof zVfxFamilyTuning>;

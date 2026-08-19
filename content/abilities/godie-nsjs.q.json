@@ -17,7 +17,6 @@
     195.0,
     260.0
   ],
-  "range": 11.0,
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
@@ -42,5 +41,7 @@
   "vfxKey": "fx.prim.wind.nova",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.267
+  "castTimeSec": 0.267,
+  "rangeTier": "極大",
+  "range": 12
 }
