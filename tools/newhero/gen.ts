@@ -126,14 +126,21 @@ function pairingFailures(all: readonly Row[]): string[] {
   return bad;
 }
 
-function payload(docs: readonly AbilityCorpusDoc[], all: readonly Row[]): unknown {
+function payload(all: readonly Row[]): unknown {
   return {
     schema: SCHEMA,
     note:
       "創建新英雄時六欄（說明·施展距離·範圍·傷害·冷卻·耗魔）的預設代入值。" +
       "由 `pnpm newhero:build` 從 content/abilities 的中位數推導 —— ⛔ 不可以手改。",
     minSample: DEFAULT_MIN_SAMPLE,
-    corpusAbilities: docs.length,
+    // ⛔ **語料的份數刻意不寫進產物**（2026-08-20）。它是一個會因為**無關**的內容
+    //   改動而變的欄位（一小時內量到 421→420，因為另一條 lane 把幾位英雄搬進
+    //   `_legacy`），而那會讓逐位元組的 `--check` 在 30 組預設值一個位元都沒變的
+    //   情況下紅 —— 與時鐘欄位是同一種病（GH#389 · #426）：紅得沒有意義的閘，
+    //   下一個人就會把它放寬，而放寬過的閘等於沒有閘。
+    //   ⭐ 出處**沒有消失**：每一格自己帶著 `sample`（那一桶真的用了幾支）與
+    //   `basis`（退到哪一層），而那兩格只在**這一格的預設值真的換了來源**時才變。
+    //   份數仍然印在 stdout（見 main()），⛔ 只是不進交付物。
     columns: NEW_HERO_ABILITY_COLUMNS,
     rules: NEW_HERO_WARN_RULES,
     defaults: all.map((r) => ({
@@ -153,7 +160,7 @@ function main(): void {
   const check = process.argv.includes("--check");
   const docs = corpus();
   const all = rows(docs);
-  const text = `${JSON.stringify(payload(docs, all), null, 2)}\n`;
+  const text = `${JSON.stringify(payload(all), null, 2)}\n`;
 
   const failures = pairingFailures(all);
   if (failures.length > 0) {
@@ -178,7 +185,9 @@ function main(): void {
       console.error(`⛔ ${OUT} 過期了 —— 跑 \`pnpm newhero:build\` 然後 git add。`);
       process.exit(1);
     }
-    console.log(`✅ ${OUT} 是最新的；${all.length} 組預設值全部通過自己的警示。`);
+    console.log(
+      `✅ ${OUT} 是最新的；${all.length} 組預設值全部通過自己的警示（語料 ${docs.length} 支技能）。`,
+    );
     return;
   }
 

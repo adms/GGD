@@ -176,6 +176,10 @@ export const NAV: NavItem[] = [
   // GH#327 —— 外部編輯器建包時的原則界。⚠️ 放營運:它管的是「別人送進來的東西」
   // 該被怎麼看待,跟 Audit log / 內容載入政策 同一類。
   { page: "authoringRules", label: "編輯器創作規則", emoji: "📐", section: SEC_OPS },
+  // GH#480 —— 建立新英雄時「存檔當下」要跳哪幾條警示。⚠️ 緊接在 編輯器創作規則
+  // 後面是刻意的：那一頁是規則的**內容**（冷卻該落在哪個區間），這一頁是規則的
+  // **開關**（那一條要不要跳）。分開兩頁而相鄰，操作者才分得出自己在改哪一層。
+  { page: "newHeroChecks", label: "新英雄檢查警示", emoji: "🚨", section: SEC_OPS },
   // 內容·素材管理 — the dev content routes + 角色語音生成 splice in AFTER audit and
   // BEFORE this always-present member, so the whole section reads contiguously.
   { page: "curation", label: "內容白名單", emoji: "✅", section: SEC_CONTENT },

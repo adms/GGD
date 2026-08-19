@@ -13,17 +13,20 @@
  * them (validate-all-then-write), then POSTs abilities-BEFORE-champion so the
  * champion's refs already resolve. Every write rides the SAME contentApi gate.
  */
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { ContentEditApi, EditIssue } from "../contentApi";
 import { createContentEditApi } from "../contentApi";
 import {
   CAST_TYPES,
   blankHeroForm,
   buildHeroDocs,
+  emptyNewHeroContext,
   heroDocWarnings,
+  loadNewHeroContext,
   type AbilityRow,
   type CastType,
   type HeroTemplateForm,
+  type NewHeroContext,
 } from "../heroTemplate";
 import type { CoreSlot } from "@ggd/shared/content/editModel";
 import { Btn, ErrorBanner, Panel, TextInput } from "./widgets";
@@ -65,10 +68,28 @@ export function NewHeroPage({ api, onNavigate }: NewHeroPageProps): React.JSX.El
   const [status, setStatus] = useState<{ text: string; tone: Tone } | null>(null);
   const [issues, setIssues] = useState<readonly { where: string; issue: EditIssue }[]>([]);
   /**
+   * ⭐【GH#480】六欄的**生成代入**所需的語料與開關。
+   * ⚠️ 讀不到就是 `corpus: []`，而那一刻六欄**一格都不代入**（見 heroTemplate
+   * 的註解：⛔ 不可以拿沒有出處的保守值假裝成量出來的中位數），
+   * 錯誤逐條印在下面 —— fail-open 沒錯，靜默才是缺陷。
+   */
+  const [ctx, setCtx] = useState<NewHeroContext>(emptyNewHeroContext);
+  useEffect(() => {
+    let alive = true;
+    void loadNewHeroContext().then((c) => {
+      if (alive) setCtx(c);
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
+  const docs = useMemo(() => buildHeroDocs(form, ctx), [form, ctx]);
+  /**
    * ⭐【GH#480】六欄／十一項屬性的警示 —— **按下建立的那一刻**算，⛔ 不等 content:build。
    * ⛔ 它不擋（owner：「只是個警告標記，並不會擋」），所以建立照樣往下走。
+   * ⭐ 走 `ctx.checks`＝後台「新英雄檢查警示」那一頁存的開關，⛔ 不是寫死的出貨值。
    */
-  const warnings = useMemo(() => heroDocWarnings(buildHeroDocs(form)), [form]);
+  const warnings = useMemo(() => heroDocWarnings(docs, ctx.checks), [docs, ctx.checks]);
 
   const set = <K extends keyof HeroTemplateForm>(key: K, value: HeroTemplateForm[K]): void =>
     setForm((f) => ({ ...f, [key]: value }));
@@ -111,7 +132,8 @@ export function NewHeroPage({ api, onNavigate }: NewHeroPageProps): React.JSX.El
     setStatus(null);
     setIssues([]);
     void (async () => {
-      const docs = buildHeroDocs(form);
+      // ⭐ 送出去的就是畫面上被檢查過的那一批（含六欄代入），⛔ 不重建一份 ——
+      //   重建一份 = 「被驗的不是出貨的那個」（失敗形態⑤）。
       // 1. validate-all-then-write: every doc through the schema dry-run first.
       const found: { where: string; issue: EditIssue }[] = [];
       let transport: string | null = null;
@@ -246,6 +268,39 @@ export function NewHeroPage({ api, onNavigate }: NewHeroPageProps): React.JSX.El
           onToggle={(on) => toggleOptional("passive", on)}
           onChange={(patch) => setRow("passive", patch)}
         />
+      </Panel>
+
+      {/*
+        ⭐【GH#480】六欄代入的**預覽**。
+        ⚠️ 它讀的是 `docs` —— 也就是按下建立時真的會被寫出去的那一批文件，
+        ⛔ 不是另外算一次。表單上那幾格 0 不是最後的值，少了這一塊，操作者會
+        以為他建出來的技能六欄全是 0（而那正是這一票在修的東西）。
+      */}
+      <Panel title="六欄生成代入（說明 · 施展距離 · 範圍 · 傷害 · 冷卻 · 耗魔）">
+        <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 8, lineHeight: 1.7 }}>
+          {ctx.corpus.length === 0
+            ? "⛔ 還沒讀到技能語料 —— 六欄不會自動代入，留白的格子會照原樣（0／空）寫出去。⚠️ 這裡刻意不拿一組保守值頂替：一個沒有出處的數字和量出來的中位數在畫面上長得一模一樣。"
+            : `✅ 語料 ${ctx.corpus.length} 支出貨技能。空著的格子會用「同槽位＋同施放型態」的中位數代入（樣本不足就往上退到同槽位／全語料）；作者填過的一格都不動。${ctx.checks.autofillDescription ? "說明由同一組數字生成，所以它與 JSON 依構造一致。" : "⚠️ 後台把「自動代入技能說明」關掉了，所以【說明】那一欄會留白。"}`}
+        </div>
+        {ctx.errors.map((e, n) => (
+          <div key={`ctxerr-${n}`} style={{ fontSize: 12, color: DANGER }}>
+            {e}
+          </div>
+        ))}
+        <div style={{ display: "grid", gap: 4 }}>
+          {docs
+            .filter((d) => d.collection === "abilities")
+            .map((d) => (
+              <div key={d.id} style={{ fontSize: 11, color: TEXT_DIM }}>
+                <code style={{ color: GOLD }}>{String(d.doc["slot"] ?? "")}</code>{" "}
+                冷卻 {String((d.doc["cooldown"] as number[] | undefined)?.[0] ?? 0)} 秒 · 耗魔{" "}
+                {String((d.doc["manaCost"] as number[] | undefined)?.[0] ?? 0)} · 施展距離{" "}
+                {String(d.doc["range"] ?? 0)} · 範圍 {String(d.doc["radius"] ?? "—")} · 傷害效果{" "}
+                {String((d.doc["effects"] as unknown[] | undefined)?.length ?? 0)} 個
+                {typeof d.doc["description"] === "string" && d.doc["description"] !== "" ? " · 說明✅" : " · 說明⛔"}
+              </div>
+            ))}
+        </div>
       </Panel>
 
       {warnings.length > 0 && (

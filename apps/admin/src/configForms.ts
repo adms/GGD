@@ -103,6 +103,13 @@ import { SKILL_TIER_NAMES } from "@ggd/shared/content/skillTiers";
 // 一次，所以這裡走 package.json 的 `"./*"` 子路徑。`laneConfigDocs.test.ts` 走的是
 // 同一條。
 import { zConfigVictoryPodiumDoc } from "@ggd/shared/content/schema/victoryPodium";
+// 創建新英雄的警示開關（GH#480）—— 深路徑：這一份的 Zod 與**規則清單本體**住同一個
+// 檔（schema 的 `rules` 物件是從 `NEW_HERO_WARN_RULES` 推導的），⛔ 拆開就會 drift。
+import {
+  NEW_HERO_CHECKS_DOC_ID,
+  NEW_HERO_CHECKS_SCHEMA,
+  zConfigNewHeroChecksDoc,
+} from "@ggd/shared/content/newHeroChecks";
 // 重用 `/editor` 的 Zod 走訪器而不是在後台再寫一支。理由和第一守則同源：兩支走訪器
 // 就是兩份會 drift 的「Zod 長什麼樣」的知識，而它們的分歧會以「後台少了一個欄位」
 // 的形態出現 —— 那正是這張單要修的東西。
@@ -803,6 +810,76 @@ const AUTHORING_RULES_SPEC: ConfigDocSpec = {
       note: "出貨 **120 秒**。⭐ 只有下限沒有上限是刻意的:這一類技能的價值來自「一場只有幾次」,冷卻太短會讓變身變成常態 —— 那等於直接改了那位英雄的基礎形態。",
     },
   ],
+  preserved: [],
+};
+
+/**
+ * 創建新英雄的**警示開關**（GH#480）。
+ *
+ * ⚠️ 這一頁與 編輯器創作規則 是**兩層不同的東西**，刻意分開：那一頁調的是
+ * 「一支技能的冷卻該落在哪個區間」（規則的**內容**），這一頁調的是
+ * 「哪幾條規則要在作者存檔的那一刻跳出來」（規則的**開關**）。
+ */
+const NEW_HERO_CHECKS_SPEC: ConfigDocSpec = {
+  page: "newHeroChecks",
+  collection: "config",
+  docId: NEW_HERO_CHECKS_DOC_ID,
+  schemaTag: NEW_HERO_CHECKS_SCHEMA,
+  zod: zConfigNewHeroChecksDoc,
+  title: "新英雄檢查警示",
+  intro: [
+    "建立一位新英雄時，**按下建立的那一刻**要跳哪幾條警示。owner 2026-08-20：「⋯**生成代入與檢查跳警示**都要記得更新，特別是 **script 程式自動化跟警示**的部分」。",
+    "⭐ 六條**全部只警告、一條都不擋**（owner 2026-08-12：「只是個警告標記，並不會擋」）。唯一標成 block 的是「超出 Zod 上下界」，而那是**事實陳述** —— 伺服器真的會 422，⛔ 不是這一頁決定要擋。",
+    "⚠️ 關掉一條的代價是**它變回靜默**：那個問題仍然存在，只是要等到 `content:build`（或更晚，等到玩家撞上）才會被發現。⛔ 關掉之前先想清楚「那誰會告訴作者？」",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/new-hero-checks.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "packages/shared/src/content/newHeroChecks.ts 的 newHeroChecksFromDoc()（唯一知道這幾格怎麼作用的地方）← apps/admin 的 heroForgePage.ts（鑄英雄工坊的目錄載入）與 heroTemplate.ts（新英雄模板頁），以及 authoringRules.ts 把同一份開關送給外部編輯器",
+  effect:
+    "**後台這兩頁下一次重新載入時生效**（它們開頁時抓一次這份文件）；外部編輯器則是下一次讀 `/authoring-rules` 端點就變。",
+  fields: [
+    {
+      path: "rules.empty-column",
+      zh: "六欄留白",
+      note: "說明／施展距離／範圍／傷害／冷卻／耗魔 這一格該有而是空的或 0 時跳。⚠️ 不適用的組合不算（self 技沒有施展距離）。關掉它，一位六欄全空的新英雄可以一路存進內容庫而 `content:build` 全綠。",
+    },
+    {
+      path: "rules.out-of-bounds",
+      zh: "超出 Zod 上下界",
+      note: "界線**從出貨 schema 讀**，⛔ 不抄字面值。這一類寫進去伺服器會 422，所以關掉它不會讓那份草稿存得進去 —— 只會讓作者填完整張表才在儲存時吃到一串英文錯誤。",
+    },
+    {
+      path: "rules.principle-band",
+      zh: "冷卻不在原則區間",
+      note: "冷卻落在「編輯器創作規則」那一頁的單體／範圍區間外時跳。⚠️ owner 說的是「原則上」，所以它保留刻意破例的空間 —— 如果你的這一批英雄就是要破例，關掉它比讓作者習慣忽略警告好。",
+    },
+    {
+      path: "rules.claim-mismatch",
+      zh: "說明的數字對不上 JSON",
+      note: "卡面寫「25 秒冷卻」而 `cooldown` 是 60 時跳（冷卻／耗魔／持續／傷害四類）。⛔ 模板技整條不判 —— 它的 effects 在磁碟上本來就是空的，判下去 100% 誤報，而一條會誤報的警示會被下一個人整條關掉。",
+    },
+    {
+      path: "rules.no-op-effect",
+      zh: "說了但不會發生",
+      note: "整棵效果樹一個數字都動不到時跳（第一·五守則：卡片上不可以有「說了但不會發生」的字）。關掉它，一張印著效果、遊戲裡什麼都不發生的技能卡會完全靜默地上線。",
+    },
+    {
+      path: "rules.dialogue-claim",
+      zh: "機制數字寫進了台詞",
+      note: "⭐「」裡是**角色對白不是效果** —— 寫在裡面的冷卻／耗魔／傷害／持續引擎一格都不讀。這是六條裡唯一沒有前例的一條：既有的每一支都只做到「剝掉台詞」，於是作者永遠不知道他剛剛寫了一句不會生效的話。",
+    },
+    {
+      path: "minSample",
+      zh: "中位數的最小樣本數",
+      note: "六欄預設值從出貨技能語料取中位數時，同一桶（同槽位＋同施放型態）少於這個數就往上一層退（槽位 → 全語料 → 保守值）。調小＝更貼那一格的同型技能但更容易被三五支離群值帶偏；調大＝更穩但多數格子會退到全語料中位數。⚠️ 上界 200：出貨語料才 420 支，填 800 等於每一格都退到最後的保守值，而畫面上看起來完全正常。",
+    },
+    {
+      path: "autofillDescription",
+      zh: "自動代入技能說明",
+      note: "新技能出生時要不要用**同一組數字**生一段機制說明（「指定單一敵人，施法距離 9.5，造成 160 點傷害。冷卻 32.5 秒，消耗[MP] 60。」）。⭐ 開著的價值是「說明↔JSON 一致」依構造成立；關掉之後那一格是空的，而空說明在卡片上就是一片空白。",
+    },
+  ],
+  // 兩格純量 + 一個固定形狀的 rules 物件，沒有不編輯的分支要原封帶走。
   preserved: [],
 };
 
@@ -3454,6 +3531,11 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   DISPEL_SPEC,
   CONTENT_LOAD_SPEC,
   AUTHORING_RULES_SPEC,
+  // 新英雄檢查警示（GH#480）。⚠️ 這一列要跟三件事一起才到得了操作者手上：
+  // store.ts 的 `Page` union + `SESSION_REQUIRED_PAGES`、App.tsx 的導覽列一列、
+  // 以及 `content/config/new-hero-checks.json` 出貨檔（少了它 configForms.test.ts
+  // 直接紅 —— 它對每一個 spec 都 readFileSync 那份 JSON）。
+  NEW_HERO_CHECKS_SPEC,
   COOLDOWN_RULES_SPEC,
   CAST_TIME_SPEC,
   AOE_TIERS_SPEC,

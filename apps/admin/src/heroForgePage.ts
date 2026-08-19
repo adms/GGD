@@ -49,13 +49,13 @@ import { embeddedForm } from "@ggd/shared/content/editModel";
 import {
   deriveAbilityDefaults,
   applyAbilityDefaults,
-  DEFAULT_MIN_SAMPLE,
   type AbilityCorpusDoc,
   type AbilityDefaults,
 } from "@ggd/shared/content/newHeroDefaults";
 import {
   checkNewHeroDocs,
   DEFAULT_NEW_HERO_CHECKS,
+  newHeroChecksFromDoc,
   type NewHeroChecksConfig,
 } from "@ggd/shared/content/newHeroChecks";
 import { abilityIdFor, type HeroDoc } from "./heroTemplate";
@@ -235,12 +235,24 @@ export interface HeroForgeCatalog {
   /** 每個定位的中位數；算不出來（樣本太少）就沒有那一格，`forgeChampion` 會警告。 */
   readonly medians: Readonly<Partial<Record<Archetype, StatMedians>>>;
   readonly routes: OriginRoutes;
+  /**
+   * ⭐ GH#480 —— 六條警示的開關（`config.new-hero-checks@1`，第一守則的第三個住處）。
+   * ⚠️ 讀不到就是出貨值（全部 on），⛔ 不是「一條都不跳」：一個讀檔失敗不可以
+   * 靜靜地把整組警示關掉，那正是這一票要修的那種靜默。
+   */
+  readonly checks: NewHeroChecksConfig;
   /** 讀不到的東西 —— ⛔ 不要靜默降級（fail-open 必須有人說出來）。 */
   readonly errors: readonly string[];
 }
 
 export function emptyCatalog(): HeroForgeCatalog {
-  return { abilities: [], medians: {}, routes: DEFAULT_ORIGIN_ROUTES, errors: [] };
+  return {
+    abilities: [],
+    medians: {},
+    routes: DEFAULT_ORIGIN_ROUTES,
+    checks: DEFAULT_NEW_HERO_CHECKS,
+    errors: [],
+  };
 }
 
 const MEDIAN_STATS = ["maxHealth", "maxMana", "ad", "ap", "as", "healthRegen", "manaRegen", "range"] as const;
@@ -374,10 +386,13 @@ export async function loadHeroForgeCatalog(
     }
   };
 
-  const [abilityIdx, championIdx, routesDoc] = await Promise.all([
+  const [abilityIdx, championIdx, routesDoc, checksDoc] = await Promise.all([
     safe("技能索引", () => getJson(fetchFn, `${base}/abilities/_index.json`), null as unknown),
     safe("英雄索引", () => getJson(fetchFn, `${base}/champions/_index.json`), null as unknown),
     safe("出身×路線文案", () => getJson(fetchFn, `${base}/config/origin-routes.json`), null as unknown),
+    // ⭐ GH#480 —— 六條警示的開關。⛔ 這一行就是「這份文件真的有人讀」的證據：
+    //    少了它，後台那一頁會變成「操作者存了值、重整讀得回來、警示照舊」的謊言。
+    safe("新英雄檢查警示開關", () => getJson(fetchFn, `${base}/config/new-hero-checks.json`), null as unknown),
   ]);
 
   const abilityEntries = parseIndex(abilityIdx);
@@ -396,6 +411,8 @@ export async function loadHeroForgeCatalog(
     abilities,
     medians: mediansByArchetype(champions),
     routes: routesDoc === null ? DEFAULT_ORIGIN_ROUTES : originRoutesFromDoc(routesDoc),
+    // ⚠️ `newHeroChecksFromDoc` 自己就是逐格 fallback，⛔ 不要在這裡再判一次 null。
+    checks: newHeroChecksFromDoc(checksDoc),
     errors,
   };
 }
@@ -533,7 +550,9 @@ export function pageWarnings(
   form: HeroForgeForm,
   result: ForgeResult,
   catalog: HeroForgeCatalog,
-  checksConfig: NewHeroChecksConfig = DEFAULT_NEW_HERO_CHECKS,
+  // ⭐ 預設**從目錄拿**（＝後台那一頁存的值），⛔ 不是出貨常數：寫死 DEFAULT_* 的話
+  //   這一頁永遠讀不到 owner 關掉的那一條，而畫面上完全看不出來（第一守則的形狀）。
+  checksConfig: NewHeroChecksConfig = catalog.checks,
 ): ForgeWarning[] {
   const out: ForgeWarning[] = [...result.warnings];
   const warn = (field: string, message: string): void => {
@@ -661,7 +680,11 @@ export function abilityCorpus(catalog: HeroForgeCatalog): AbilityCorpusDoc[] {
  * ⚠️ 佔位技的施放型態沿用原本的 `self`（⛔ 換掉它是另一個決策，不在這一票裡）。
  */
 export function slotDefaults(catalog: HeroForgeCatalog, slot: HeroForgeSlot): AbilityDefaults {
-  return deriveAbilityDefaults(abilityCorpus(catalog), slot, "self", { minSample: DEFAULT_MIN_SAMPLE });
+  // ⚠️ 樣本門檻走**後台那一格**（`config.new-hero-checks@1.minSample`），
+  //   ⛔ 不是寫死的 `DEFAULT_MIN_SAMPLE` —— 那個常數現在只是它的出貨值。
+  return deriveAbilityDefaults(abilityCorpus(catalog), slot, "self", {
+    minSample: catalog.checks.minSample,
+  });
 }
 
 /**

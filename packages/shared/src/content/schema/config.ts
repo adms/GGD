@@ -100,6 +100,12 @@ import { zConfigIconStyleDoc } from "./iconStyleDoc";
 import { zConfigMapSpecDoc } from "./mapSpecDoc";
 import { zConfigMapReportDoc } from "./mapReportDoc";
 import { zConfigArenaPoolDoc } from "./arenaPoolDoc";
+// 創建新英雄的警示開關（GH#480）—— ⛔ 它的 Zod 住在 `../newHeroChecks`，因為那個檔
+// 同時擁有規則清單（`NEW_HERO_WARN_RULES`）與檢查本體，而 schema 的 `rules` 物件
+// 就是從那份清單推導的。抄一份鍵名進 schema/ 就是第二個住處，⛔ 而且它會 drift。
+// ⚠️ `newHeroChecks` 只 import `./schema/{ability,champion}` 與幾支純函式，
+//    ⛔ 不 import 這個檔 —— 所以這條 import 不會造成循環。
+import { zConfigNewHeroChecksDoc } from "../newHeroChecks";
 // The eleven barcode slots, in ANATOMICAL ORDER. Imported (not restated) so the
 // stored doc's keys can never drift from the model — see zConfigVoxelBarcodesDoc.
 // `voxelSkin/types` is a leaf: zero imports of its own, no zod, no sim.
@@ -6935,6 +6941,12 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   //    range-guide.json 進了 content/ 之後整份內容驗證失敗 → 骨架英雄
   //    （2026-08-02 線上壞掉四小時的形狀）。
   zConfigRangeGuideDoc,
+  // ⭐ 創建新英雄的六條警示開關（GH#480，owner 2026-08-20「生成代入與檢查跳警示
+  //    都要記得更新」）。⚠️ 漏掉這一行 = 一份 new-hero-checks.json 進了 content/
+  //    之後整份內容驗證失敗 → 骨架英雄（2026-08-02 線上壞掉四小時的形狀）。
+  //    ⛔ 它的 Zod 刻意住在 `../newHeroChecks`（規則清單、預設值、檢查本體同一個
+  //    檔），這裡只負責把它掛進 union —— 掛不掛得上才是那份文件上不上得了線的關鍵。
+  zConfigNewHeroChecksDoc,
 ]);
 
 /** ConfigDoc keeps naming the canonical match config (existing consumers). */

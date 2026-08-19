@@ -150,6 +150,14 @@ export type Page =
    * 的**原則界**(單體/範圍/變身冷卻區間)。⚠️ 違反只警告不擋。
    */
   | "authoringRules"
+  /**
+   * 新英雄檢查警示 (`config/new-hero-checks.json`, GH#480): 建立一位新英雄時，
+   * **按下建立的那一刻**要跳哪幾條警示（六欄留白／超出 Zod 界／冷卻不在原則區間／
+   * 說明對不上 JSON／說了但不會發生／⭐ 機制數字寫進了「」台詞），加上六欄中位數
+   * 代入的最小樣本數與「要不要自動生說明」。⚠️ 與 `authoringRules` 是**兩層**：
+   * 那一頁調規則的**內容**（冷卻該落在哪個區間），這一頁調規則的**開關**。
+   */
+  | "newHeroChecks"
   /** 畫質分級 (`config/model-lod.json`): 四個畫質 preset 各自抓哪一階 .glb。 */
   | "modelLod"
   /** 特效回收 (`config/vfx-cleanup.json`): 回合邊界把共用特效池回收到什麼程度。 */
@@ -576,6 +584,8 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // 內容載入政策 (GH#326): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "contentLoad",
   "authoringRules",
+  // 新英雄檢查警示 (GH#480): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  "newHeroChecks",
   "modelLod",
   "vfxCleanup",
   "gore",

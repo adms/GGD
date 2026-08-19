@@ -175,10 +175,19 @@ export const zConfigNewHeroChecksDoc = z
 /**
  * 讀後台文件；讀不到／形狀不對就回出貨值。
  *
- * ⚠️ **`content/config/new-hero-checks.json` 目前不存在，而且⛔ 現在還不可以放上去** ——
- * `config.new-hero-checks@1` 還沒有被登記進 `schema/config.ts` 的
- * `zConfigDoc` 判別聯集。一份聯集不認得的 config 文件會讓**整份內容載入失敗**
- * （2026-08-02 的生產故障就是這個形狀）。順序是：先登記聯集 + 後台頁，**再**放 JSON。
+ * ⭐ 三個住處在 2026-08-20 補齊了（第一守則），而且是**同一個 commit**：
+ *   ① `content/config/new-hero-checks.json`（出貨值）
+ *   ② 這個檔的 {@link zConfigNewHeroChecksDoc} + {@link DEFAULT_NEW_HERO_CHECKS}
+ *   ③ `schema/config.ts` 的 `zConfigDoc` 判別聯集 + `apps/admin` 的
+ *      `NEW_HERO_CHECKS_SPEC`（後台那一頁）
+ *
+ * ⚠️ **順序不是風格問題**：只放 ① 而聯集不認得那個 schema tag ⇒ 內容載入**整份**
+ * 失敗 ⇒ fail-open 退回 2 隻骨架英雄，而網站看起來完全正常（2026-08-02 的生產故障）。
+ *
+ * 呼叫端（＝這份文件真的有人讀的證據，⛔ 不是一頁存了不生效的後台）：
+ *   · `apps/admin/src/heroForgePage.ts` 的 `loadHeroForgeCatalog()` → `catalog.checks`
+ *   · `apps/admin/src/heroTemplate.ts` 的 `loadNewHeroContext()`
+ *   · `packages/shared/src/content/authoringRules.ts` → 外部編輯器的 `newHeroChecks`
  */
 export function newHeroChecksFromDoc(raw: unknown): NewHeroChecksConfig {
   const parsed = zConfigNewHeroChecksDoc.safeParse(raw);

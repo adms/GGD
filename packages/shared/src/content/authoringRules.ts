@@ -48,6 +48,9 @@ import {
   statNormalizationFromDoc,
 } from "./statNormalization";
 import { Stat } from "../sim/stats/statTypes";
+// GH#480 —— 「創建新英雄」的六條警示。⛔ 清單與開關都不在這裡重打一次：
+// 規則本身是 `NEW_HERO_WARN_RULES`，開不開是 `config.new-hero-checks@1`。
+import { NEW_HERO_WARN_RULES, newHeroChecksFromDoc } from "./newHeroChecks";
 
 
 export const AUTHORING_RULES_SCHEMA = "ggd-authoring-rules@1";
@@ -106,8 +109,33 @@ export interface AuthoringRulesManifest {
    *   · 文件    → `pnpm contract:numbers` 產生的標記區塊（引用同一份 JSON）
    */
   readonly statTuning: StatTuning;
+  /**
+   * ⭐ **創建新英雄時該跳的警示**（GH#480，owner 2026-08-20：「⋯**生成代入與檢查
+   * 跳警示**都要記得更新，特別是 **script 程式自動化跟警示**的部分」）。
+   *
+   * ⚠️ 為什麼這一格屬於**契約**而不是我們內部的事：外部編輯器也在「創建新英雄」，
+   * 而它手上沒有這六條判斷。⛔ 少了這一格，同一份草稿在 GGD 後台會亮六條警示、
+   * 在對面**一條都不亮** —— 而對面不會收到任何錯誤，它只是不知道有這些檢查。
+   *
+   * ⭐ `enabled` 跟著 `config.new-hero-checks@1` 走：owner 在後台關掉一條，
+   * 這個端點下一秒就變 false，對面也跟著不再警告。⛔ 不是一份寫死的清單。
+   *
+   * ⚠️ 每一條都是**警告不是擋** —— 只有 `out-of-bounds` 那一條寫進去伺服器真的會
+   * 422，而那是 Zod 界（已經逐條列在 {@link AuthoringRulesManifest.hard}）在擋，
+   * ⛔ 不是這份清單在擋。
+   */
+  readonly newHeroChecks: readonly NewHeroCheckRule[];
   /** 每一條規則現在的實際值都從這裡算出來,所以它跟著後台走。 */
   readonly derivedFrom: readonly string[];
+}
+
+/** 一條「創建新英雄」警示對外的樣子。⛔ 名稱與說明從 `NEW_HERO_WARN_RULES` 抄，不重寫。 */
+export interface NewHeroCheckRule {
+  readonly rule: string;
+  readonly zh: string;
+  readonly note: string;
+  /** 這一條現在開著嗎（`config.new-hero-checks@1` 的一格開關）。 */
+  readonly enabled: boolean;
 }
 
 export interface StatTuning {
@@ -311,12 +339,23 @@ export function buildAuthoringRules(read: ConfigReader): AuthoringRulesManifest 
     },
   ];
 
+  // ⭐ GH#480 —— 六條警示 × 它們現在的開關。⛔ 讀不到文件就是出貨值（全部 on），
+  //    ⛔ 不是「一條都不跳」：對外的預設要往「多說一句」倒，不是往靜默倒。
+  const checks = newHeroChecksFromDoc(read("new-hero-checks"));
+  const newHeroChecks: NewHeroCheckRule[] = NEW_HERO_WARN_RULES.map((r) => ({
+    rule: r.rule,
+    zh: r.zh,
+    note: r.note,
+    enabled: checks.rules[r.rule],
+  }));
+
   return {
     schema: AUTHORING_RULES_SCHEMA,
     hard,
     principle,
     manaIsDerived: true,
     statTuning: buildStatTuning(read),
+    newHeroChecks,
     derivedFrom: [
       "config.cast-time@1",
       "config.cooldown-rules@1",
@@ -325,6 +364,8 @@ export function buildAuthoringRules(read: ConfigReader): AuthoringRulesManifest 
       "config.authoring-rules@1",
       "config.combat-env@1",
       "config.stat-normalization@1",
+      // GH#480 —— 六條「創建新英雄」警示的開關。
+      "config.new-hero-checks@1",
     ],
   };
 }

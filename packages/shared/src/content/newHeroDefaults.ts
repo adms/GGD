@@ -356,9 +356,19 @@ function seedDamageEffect(damage: number): Record<string, unknown> {
  * `cooldown: [0]` 是 `blankAbilityRow()` 留下的痕跡，不是作者的設計。
  * 真的要 0 冷卻的技能，作者改完之後這裡不會再動它（代入只在建立當下跑一次）。
  */
+export interface ApplyOptions {
+  /**
+   * 要不要把生成的說明代進去（`config.new-hero-checks@1.autofillDescription`）。
+   * ⛔ 這是**一格後台開關**（第一守則），⛔ 不是呼叫端各自的偏好 ——
+   * 兩個入口（新英雄模板 / 鑄英雄工坊）必須對同一個問題給同一個答案。
+   */
+  readonly description?: boolean;
+}
+
 export function applyAbilityDefaults(
   doc: Readonly<Record<string, unknown>>,
   d: AbilityDefaults,
+  opts: ApplyOptions = {},
 ): Record<string, unknown> {
   const out: Record<string, unknown> = { ...doc };
   const emptyRanks = (v: unknown): boolean =>
@@ -387,7 +397,13 @@ export function applyAbilityDefaults(
   ) {
     out["effects"] = [seedDamageEffect(d.damage.value)];
   }
-  if (typeof out["description"] !== "string" || out["description"].trim() === "") {
+  // ⚠️ 關掉「自動代入說明」時這一格**維持原樣**（多半是不存在），⛔ 不是寫一個
+  //   空字串進去 —— 一個空的 `description` 在卡片上與「沒有這一格」長得一樣，
+  //   但它會讓下一支讀說明的程式以為作者寫過而且寫了空的。
+  if (
+    (opts.description ?? true) &&
+    (typeof out["description"] !== "string" || out["description"].trim() === "")
+  ) {
     out["description"] = d.description;
   }
   return out;

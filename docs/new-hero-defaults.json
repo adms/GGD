@@ -2,7 +2,6 @@
   "schema": "ggd-new-hero-defaults@1",
   "note": "創建新英雄時六欄（說明·施展距離·範圍·傷害·冷卻·耗魔）的預設代入值。由 `pnpm newhero:build` 從 content/abilities 的中位數推導 —— ⛔ 不可以手改。",
   "minSample": 8,
-  "corpusAbilities": 420,
   "columns": [
     {
       "key": "description",

@@ -26,7 +26,18 @@
  * through the same contentApi gate every other write rides.
  */
 import { CORE_SLOTS, embeddedForm, type CoreSlot } from "@ggd/shared/content/editModel";
-import { checkNewHeroDocs, type NewHeroWarning } from "@ggd/shared/content/newHeroChecks";
+import {
+  checkNewHeroDocs,
+  newHeroChecksFromDoc,
+  DEFAULT_NEW_HERO_CHECKS,
+  type NewHeroChecksConfig,
+  type NewHeroWarning,
+} from "@ggd/shared/content/newHeroChecks";
+import {
+  applyAbilityDefaults,
+  deriveAbilityDefaults,
+  type AbilityCorpusDoc,
+} from "@ggd/shared/content/newHeroDefaults";
 
 export type CastType = "targeted" | "skillshot" | "ground" | "self" | "dash";
 export const CAST_TYPES: readonly CastType[] = ["targeted", "skillshot", "ground", "self", "dash"];
@@ -127,19 +138,103 @@ function abilityDoc(
   };
 }
 
+// ---------------------------------------------------------------------------
+// ⭐【GH#480】六欄的**生成代入** —— 語料是抓回來的，⛔ 不是寫死的數字
+// ---------------------------------------------------------------------------
+
+/**
+ * 這一頁做「生成代入」需要的兩樣東西。
+ *
+ * ⚠️ `corpus` 空的時候**一格都不代入**（⛔ 不是退回一組保守值）：
+ * `deriveAbilityDefaults` 讀不到語料時會回 `basis: "fallback"` 的數字，而那組數字
+ * 與「量出來的中位數」在畫面上長得一模一樣 —— 悄悄用它就是把一次讀檔失敗變成
+ * 六個沒有出處的數字。讀不到就讓 `empty-column` 警示照舊亮，那是**大聲**的那一邊。
+ */
+export interface NewHeroContext {
+  readonly corpus: readonly AbilityCorpusDoc[];
+  /** `config.new-hero-checks@1` —— 六條開關 + 樣本門檻 + 要不要自動生說明。 */
+  readonly checks: NewHeroChecksConfig;
+  /** 讀不到的東西。⛔ 不要靜默降級（fail-open 必須有人說出來）。 */
+  readonly errors: readonly string[];
+}
+
+export function emptyNewHeroContext(): NewHeroContext {
+  return { corpus: [], checks: DEFAULT_NEW_HERO_CHECKS, errors: [] };
+}
+
+/**
+ * 抓語料與開關。
+ *
+ * ⭐ 語料走 **`/content/bundle.json` 一個 GET**，⛔ 不是逐份抓 420 支技能
+ * （鑄英雄工坊那一頁走索引 + 400 多次 fetch，那正是這一頁一直沒有代入的原因）。
+ * bundle 已經把每一份文件內嵌在裡面，所以一次請求就拿得到整份語料，
+ * ⛔ 而且它**不會過期** —— 它就是客戶端載入的那一份，不是另外產一份會 drift 的表。
+ */
+export async function loadNewHeroContext(
+  opts: { fetchFn?: typeof fetch; base?: string } = {},
+): Promise<NewHeroContext> {
+  const fetchFn = opts.fetchFn ?? ((...args: Parameters<typeof fetch>) => fetch(...args));
+  const base = opts.base ?? "/content";
+  const errors: string[] = [];
+  const getJson = async (url: string): Promise<unknown> => {
+    const res = await fetchFn(url);
+    if (!res.ok) throw new Error(`${url} → HTTP ${res.status}`);
+    return (await res.json()) as unknown;
+  };
+  const safe = async (what: string, url: string): Promise<unknown> => {
+    try {
+      return await getJson(url);
+    } catch (err) {
+      errors.push(`${what}：${err instanceof Error ? err.message : String(err)}`);
+      return null;
+    }
+  };
+
+  const [bundle, checksDoc] = await Promise.all([
+    safe("技能語料（bundle）", `${base}/bundle.json`),
+    safe("新英雄檢查警示開關", `${base}/config/new-hero-checks.json`),
+  ]);
+  const corpus = abilityCorpusFromBundle(bundle);
+  if (bundle !== null && corpus.length === 0) {
+    errors.push("bundle 讀到了，但一支技能都取不出來 —— 六欄不會代入（讀取器壞了，⛔ 不是內容空了）。");
+  }
+  return { corpus, checks: newHeroChecksFromDoc(checksDoc), errors };
+}
+
+/** `bundle.json` → 技能語料。形狀對不上就回空陣列（呼叫端會把它變成一句錯誤）。 */
+export function abilityCorpusFromBundle(bundle: unknown): AbilityCorpusDoc[] {
+  const collections = (bundle as { collections?: unknown } | null)?.collections;
+  if (!collections || typeof collections !== "object") return [];
+  const entries = (collections as Record<string, { entries?: unknown }>)["abilities"]?.entries;
+  if (!Array.isArray(entries)) return [];
+  return entries
+    .map((e) => (e as { doc?: unknown } | null)?.doc)
+    .filter((d): d is AbilityCorpusDoc => !!d && typeof d === "object");
+}
+
 /**
  * Build the full document bundle. Order: the four core abilities, then EX and
  * PASSIVE if present, then the champion LAST — which is exactly the create
  * order (abilities-before-champion) so the champion's refs already resolve.
+ *
+ * ⭐【GH#480】每一支技能出生時六欄由 {@link NewHeroContext} 的中位數**代入**。
+ * ⚠️ 代入必須發生在 `embeddedForm()` **之前** —— champion@1 內嵌的那一份才是 sim
+ * 真的讀的（鏡像規則）。順序反過來的話，獨立文件有預設值而內嵌那份是空的，
+ * 而兩份都通過 schema、兩份都不會有任何東西紅。
  */
-export function buildHeroDocs(form: HeroTemplateForm): HeroDoc[] {
+export function buildHeroDocs(
+  form: HeroTemplateForm,
+  ctx: NewHeroContext = emptyNewHeroContext(),
+): HeroDoc[] {
   const id = form.id.trim();
   const rows: Record<CoreSlot, AbilityRow> = { Q: form.q, W: form.w, E: form.e, R: form.r };
+  const filled = (doc: Record<string, unknown>): Record<string, unknown> =>
+    applyDefaultsTo(doc, ctx);
 
   const out: HeroDoc[] = [];
   const embeddedAbilities: Record<string, Record<string, unknown>> = {};
   for (const slot of CORE_SLOTS) {
-    const doc = abilityDoc(id, slot, rows[slot]);
+    const doc = filled(abilityDoc(id, slot, rows[slot]));
     out.push({ collection: "abilities", id: doc["id"] as string, doc });
     embeddedAbilities[slot] = embeddedForm(doc);
   }
@@ -161,8 +256,9 @@ export function buildHeroDocs(form: HeroTemplateForm): HeroDoc[] {
   if (form.icon !== undefined && form.icon.trim() !== "") champion["icon"] = form.icon.trim();
 
   if (form.ex) {
-    const ex = abilityDoc(id, "ex", form.ex);
-    ex["slot"] = "EX";
+    const raw = abilityDoc(id, "ex", form.ex);
+    raw["slot"] = "EX";
+    const ex = filled(raw);
     out.push({ collection: "abilities", id: ex["id"] as string, doc: ex });
     champion["exAbility"] = ex["id"];
   }
@@ -170,8 +266,12 @@ export function buildHeroDocs(form: HeroTemplateForm): HeroDoc[] {
   if (form.passive) {
     // slot PASSIVE requires innateKind; passive-only ⇒ effects stay [] and
     // innateKind must be "passive" (an "active" innate would need effects).
-    const passive = abilityDoc(id, "passive", form.passive, { innateKind: "passive" });
-    passive["slot"] = "PASSIVE";
+    const raw = abilityDoc(id, "passive", form.passive, { innateKind: "passive" });
+    raw["slot"] = "PASSIVE";
+    // ⚠️ 天生技的 `effects` **必須留空**（`zAbilityDoc` 只讓 innateKind:"active"
+    //   帶效果），所以【傷害】那一欄對它是「不適用」—— `columnApplies` 已經知道
+    //   這件事，代入時一格都不會塞。
+    const passive = filled(raw);
     out.push({ collection: "abilities", id: passive["id"] as string, doc: passive });
     champion["passiveAbility"] = passive["id"];
   }
@@ -181,16 +281,42 @@ export function buildHeroDocs(form: HeroTemplateForm): HeroDoc[] {
 }
 
 /**
+ * 一支技能草稿 → 補上六欄。⛔ 只填空的格子，作者填過的一格都不動。
+ *
+ * ⛔ 語料是空的就**原樣回傳** —— 見 {@link NewHeroContext} 的註解。
+ */
+function applyDefaultsTo(
+  doc: Record<string, unknown>,
+  ctx: NewHeroContext,
+): Record<string, unknown> {
+  if (ctx.corpus.length === 0) return doc;
+  const slot = String(doc["slot"] ?? "");
+  const castType = String(doc["castType"] ?? "self") as CastType;
+  const defaults = deriveAbilityDefaults(ctx.corpus, slot, castType, {
+    minSample: ctx.checks.minSample,
+  });
+  return applyAbilityDefaults(doc, defaults, { description: ctx.checks.autofillDescription });
+}
+
+/**
  * ⭐【GH#480】這一批草稿的**存檔當下**警示。
  *
  * ⚠️ 這一頁與「新英雄轉生設計」是兩個入口，但它們**共用同一組判斷**
  * （`@ggd/shared/content/newHeroChecks`）—— ⛔ 兩份判斷會分岔，而分岔的那一天
  * 同一份草稿在兩頁會得到相反的結論，兩邊各自都是綠的。
  *
- * ⛔ 這一頁**沒有**六欄的生成代入：它不抓技能語料（那要 400+ 次 fetch），
- * 所以中位數量不出來。缺口寫在 GH#480 的回報裡 —— 一份可以被前端 GET 的
- * 預設表（`config/new-hero-defaults`）落地之後，這裡接上去就是一行。
+ * ⭐ 六欄的生成代入在 2026-08-20 補上了（{@link buildHeroDocs} 吃
+ * {@link NewHeroContext}）—— 語料走 `bundle.json` **一個 GET**，⛔ 不是 400+ 次。
+ *
+ * ⭐ `checks` 預設是出貨值；呼叫端把 {@link NewHeroContext.checks} 傳進來，
+ * 於是後台「新英雄檢查警示」那一頁關掉的規則在這裡真的不會跳。
  */
-export function heroDocWarnings(docs: readonly HeroDoc[]): NewHeroWarning[] {
-  return checkNewHeroDocs(docs.map((d) => ({ collection: d.collection, id: d.id, doc: d.doc })));
+export function heroDocWarnings(
+  docs: readonly HeroDoc[],
+  checks: NewHeroChecksConfig = DEFAULT_NEW_HERO_CHECKS,
+): NewHeroWarning[] {
+  return checkNewHeroDocs(
+    docs.map((d) => ({ collection: d.collection, id: d.id, doc: d.doc })),
+    { config: checks },
+  );
 }

@@ -1,0 +1,15 @@
+{
+  "id": "new-hero-checks",
+  "schema": "config.new-hero-checks@1",
+  "note": "GH#480 — 創建新英雄時「存檔當下」跳的六條警示（owner 2026-08-20：『生成代入與檢查跳警示都要記得更新，特別是 script 程式自動化跟警示的部分』）。⚠️ 六條全部只警告不擋（owner 2026-08-12：「只是個警告標記，並不會擋」），唯一例外是 out-of-bounds —— 那一條標 block 是**事實陳述**（伺服器的 Zod 真的會 422），⛔ 不是這裡決定要擋。⛔ 規則清單與檢查本體住在 packages/shared/src/content/newHeroChecks.ts，這裡只有開關。",
+  "rules": {
+    "empty-column": true,
+    "out-of-bounds": true,
+    "principle-band": true,
+    "claim-mismatch": true,
+    "no-op-effect": true,
+    "dialogue-claim": true
+  },
+  "minSample": 8,
+  "autofillDescription": true
+}

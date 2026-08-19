@@ -71,6 +71,9 @@ const BASELINE_PAGES: readonly Page[] = [
   "contentLoad",
   // 編輯器創作規則 (GH#327) —— 同一個 `ConfigDocPage` 元件,同在「營運」。
   "authoringRules",
+  // 新英雄檢查警示 (GH#480) —— 同一個 `ConfigDocPage` 元件，同在「營運」，
+  // 緊接在 編輯器創作規則 後面（那一頁是規則的內容，這一頁是規則的開關）。
+  "newHeroChecks",
   "modelLod",
   "vfxCleanup",
   "gore",
