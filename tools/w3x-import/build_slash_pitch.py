@@ -640,7 +640,7 @@ def main() -> int:
             print(f"\n⛔ 帳本不存在: {LEDGER}", file=sys.stderr)
             return 1
         if load_json(LEDGER) != ledger:
-            print(f"\n⛔ 帳本過期。跑 `python3 tools/w3x-import/build_slash_pitch.py` 再 git add。", file=sys.stderr)
+            print(f"\n⛔ 帳本過期。跑 `python3 tools/w3x-import/build_pitch.py` 再 git add。", file=sys.stderr)
             return 1
         doc, changes = apply_to_content(ledger)
         if changes:
@@ -656,14 +656,16 @@ def main() -> int:
     if args.measure:
         return 0
 
-    doc, changes = apply_to_content(ledger)
-    with open(VFX_FAMILIES, "w", encoding="utf-8") as fh:
-        json.dump(doc, fh, ensure_ascii=False, indent=2)
-        fh.write("\n")
-    print(f"寫入 content/config/vfx-families.json —— {len(changes)} 支改變:")
-    for c in changes:
-        print("   " + c)
-    return 0
+    # ⛔ GH#456 —— 這支腳本**不再寫 content**（owner 2026-08-20 選 C）。
+    # `pitchDeg` 的唯一寫入者是 `tools/w3x-import/build_pitch.py`,它 import 這裡的
+    # 量測函式再與另一個資料源合併。⚠️ 把這一段拿掉 = 退回「兩支各寫各的、後跑的贏」,
+    # 而那個狀態下**兩條守衛互為對方的紅燈**,誰贏取決於指令順序（沒有東西在守）。
+    print(
+        "⛔ 這支腳本只量測,不寫 content。\n"
+        "   要更新 pitchDeg 請跑：python3 tools/w3x-import/build_pitch.py",
+        file=sys.stderr,
+    )
+    return 2
 
 
 if __name__ == "__main__":

@@ -493,17 +493,21 @@ def main(argv: list[str]) -> int:
         print(
             "⛔ content/config/vfx-families.json 的 pitchDeg 與 w3x 推導不一致。\n"
             f"   不一致的技能:{', '.join(diff[:12])}{' …' if len(diff) > 12 else ''}\n"
-            "   ⛔ 不要改測試 —— 跑 `python3 tools/w3x-import/build_vfx_orient.py` 然後 git add content/",
+            "   ⛔ 不要改測試 —— 跑 `python3 tools/w3x-import/build_pitch.py` 然後 git add content/",
             file=sys.stderr,
         )
         return 1
 
-    _write_json(FAMILIES_CFG, want)
+    # ⛔ GH#456 —— 這支腳本**不再寫 content**（owner 2026-08-20 選 C）。
+    # `pitchDeg` 的唯一寫入者是 `tools/w3x-import/build_pitch.py`,它 import 這裡的
+    # 量測函式再與另一個資料源合併。⚠️ 把這一段拿掉 = 退回「兩支各寫各的、後跑的贏」,
+    # 而那個狀態下**兩條守衛互為對方的紅燈**,誰贏取決於指令順序（沒有東西在守）。
     print(
-        f"{'(無變更) ' if same else ''}{len(rows)} 支寫進 content/config/vfx-families.json"
-        f"(量不到 {len(unmeasured)} 支,落回家族預設)"
+        "⛔ 這支腳本只量測,不寫 content。\n"
+        "   要更新 pitchDeg 請跑：python3 tools/w3x-import/build_pitch.py",
+        file=sys.stderr,
     )
-    return 0
+    return 2
 
 
 if __name__ == "__main__":

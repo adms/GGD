@@ -100,6 +100,27 @@ function amountEffects(c: ChampionDoc) {
  */
 const hasProportional = (a: Scaling) =>
   (a.ratios?.length ?? 0) > 0 || (a.attrRatios?.length ?? 0) > 0;
+/**
+ * 順序無關的深比較。⛔ 不用 `JSON.stringify` —— 那是鍵序敏感的,
+ * 而兩份鏡像副本的鍵序取決於誰最後被序列化,不帶任何語意（見 fx-19 的註解）。
+ */
+function deepEqual(a: unknown, b: unknown): boolean {
+  if (a === b) return true;
+  if (typeof a !== "object" || typeof b !== "object" || a === null || b === null) return false;
+  if (Array.isArray(a) !== Array.isArray(b)) return false;
+  if (Array.isArray(a) && Array.isArray(b)) {
+    return a.length === b.length && a.every((x, i) => deepEqual(x, b[i]));
+  }
+  const ka = Object.keys(a as object);
+  const kb = Object.keys(b as object);
+  if (ka.length !== kb.length) return false;
+  return ka.every(
+    (k) =>
+      Object.prototype.hasOwnProperty.call(b, k) &&
+      deepEqual((a as Record<string, unknown>)[k], (b as Record<string, unknown>)[k]),
+  );
+}
+
 const baseOf = (a: Scaling) =>
   hasProportional(a)
     ? Number.POSITIVE_INFINITY
@@ -353,7 +374,13 @@ describe("imported ability stat scaling", () => {
           if (!["damage", "heal", "shield"].includes(e["kind"] as unknown as string)) continue;
           if (baseOf(amount) < MIN_SCALABLE_BASE) inert.push(`${ab.id}(standalone):${e["kind"]}`);
         }
-        if (JSON.stringify(standalone["effects"]) !== JSON.stringify(ab.effects)) {
+        // ⚠️ ⛔ 不可以用 `JSON.stringify` 比 —— 它是**鍵序敏感**的,而鍵序不帶任何語意。
+        // 2026-08-20：`godie-o00k.r` / `godie-udea.r` 被判「兩份副本不一致」,實測
+        // **逐欄位零差異、值完全相等**,只有鍵的順序不同（一邊剛被 `skills:sync`
+        // 重新序列化過）。那是「比字串代替比值」的誤報,而它會逼下一個人去
+        // 「修」一個沒有壞的東西 —— 或者更糟,去改這條測試。
+        // ⇒ 改成順序無關的深比較。真的漂移（多一個 effect、數值不同）照樣紅。
+        if (!deepEqual(standalone["effects"], ab.effects)) {
           desynced.push(ab.id);
         }
       }

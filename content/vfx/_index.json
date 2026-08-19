@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "e0c0fe267f0f",
+  "hash": "13ca25891cb8",
   "entries": [
     {
       "id": "fx.barkskin",
@@ -283,6 +283,12 @@
       "path": "vfx/fx.fam.light-column.ice.s100.json",
       "hash": "1a691f2b4530",
       "size": 1139
+    },
+    {
+      "id": "fx.fam.light-column.w3x-00ffff.s150",
+      "path": "vfx/fx.fam.light-column.w3x-00ffff.s150.json",
+      "hash": "ea0f8425e49d",
+      "size": 1111
     },
     {
       "id": "fx.fam.light-column.w3x-ff00ff.s205",
@@ -2113,6 +2119,60 @@
       "path": "vfx/fx.w3x.particle.supershinythingy.p02.json",
       "hash": "fef0e9e36a6b",
       "size": 1017
+    },
+    {
+      "id": "fx.w3x.stock.blinktarget.p00",
+      "path": "vfx/fx.w3x.stock.blinktarget.p00.json",
+      "hash": "d480b63bea44",
+      "size": 1114
+    },
+    {
+      "id": "fx.w3x.stock.blinktarget.p01",
+      "path": "vfx/fx.w3x.stock.blinktarget.p01.json",
+      "hash": "df4b57ed3b51",
+      "size": 1053
+    },
+    {
+      "id": "fx.w3x.stock.monsoonbolttarget.p00",
+      "path": "vfx/fx.w3x.stock.monsoonbolttarget.p00.json",
+      "hash": "c3837966c856",
+      "size": 972
+    },
+    {
+      "id": "fx.w3x.stock.monsoonbolttarget.p01",
+      "path": "vfx/fx.w3x.stock.monsoonbolttarget.p01.json",
+      "hash": "a89291cf9dbf",
+      "size": 1003
+    },
+    {
+      "id": "fx.w3x.stock.stampedemissiledeath.p00",
+      "path": "vfx/fx.w3x.stock.stampedemissiledeath.p00.json",
+      "hash": "ac22aee40331",
+      "size": 1044
+    },
+    {
+      "id": "fx.w3x.stock.stampedemissiledeath.p01",
+      "path": "vfx/fx.w3x.stock.stampedemissiledeath.p01.json",
+      "hash": "7530ad56c969",
+      "size": 1009
+    },
+    {
+      "id": "fx.w3x.stock.stampedemissiledeath.p02",
+      "path": "vfx/fx.w3x.stock.stampedemissiledeath.p02.json",
+      "hash": "9da976eb9c77",
+      "size": 1009
+    },
+    {
+      "id": "fx.w3x.stock.thunderclapcaster.p00",
+      "path": "vfx/fx.w3x.stock.thunderclapcaster.p00.json",
+      "hash": "d46bb1f6af03",
+      "size": 1009
+    },
+    {
+      "id": "fx.w3x.stock.warstompcaster.p00",
+      "path": "vfx/fx.w3x.stock.warstompcaster.p00.json",
+      "hash": "4c7688f1d0e7",
+      "size": 1046
     },
     {
       "id": "godie-1hswd-01-p0",

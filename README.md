@@ -429,7 +429,7 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 | `arena.skeleton` | 新手競技場 | 🔁 | 24 | 2 | 4 | 12 | `stone` | — | 24+20 | — |
 | `arena.world-tree` | 世界樹核心 | 🔁 | 30 | 2 | 24 | 12 | `grass` | ✅ | 29+36 | 區域×10、互動×16、機關門 |
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_ea61889db7e9` 產生。 輪替 12 / 全 13 張。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_e6d94d24d342` 產生。 輪替 12 / 全 13 張。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:arenas -->
 
 ### 設定陷阱（改了不會生效）
@@ -1173,7 +1173,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 - **Q** 65-01 神出鬼沒：飛鼠先生可以瞬間移動3300的距離到指定的位置。
 - **W** 65-02 寒冰破碎：飛鼠先生在劍術學院結業創造之劍術，成功融合寒冰魔法與劍擊，能給予冰…
 - **E** 65-03 魔法膨脹：施咒補充敵方部隊法力的缺陷，但是過度膨脹的法力將會使目標暈眩1秒並…
-- **R** 65-04 天譴：怒氣凝聚為閃電，向前衝鋒並把附近的敵人一起捲進來。範圍內的敵人（最…
+- **R** 65-04 天譴：怒氣凝聚為閃電，向前衝鋒，同時朝周圍的敵人放電。範圍內的敵人（最多…
 - **EX** 65-002 永恆的愚蠢鄉：使飛鼠先生在一定時間內受到技能攻擊時，能夠給予對手強大的反擊，威力…
 
 **`godie-zombiex` 喪標麥可**（聖杯黑泥醬 · tank · 近戰） — 黑化聖杯溢出的惡意黑泥受肉凝聚，本來在美國重生，但不小心被印度工程師當成咖喱帶…
@@ -1187,7 +1187,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **完整 78 名英雄**（含 29 名未開放）與逐欄資料（開放旗標、技能 id、攻擊類型…）在 [`docs/reference/roster.md`](./docs/reference/roster.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_ea61889db7e9` 產生。 開放 49 / 全 78 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_e6d94d24d342` 產生。 開放 49 / 全 78 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:roster -->
 
 <!-- BEGIN GENERATED:abilities -->
@@ -1203,7 +1203,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **全 461 個技能的逐欄表**（id、名稱、slot、型態、編號、擁有英雄、開放旗標、完整短效果）在 [`docs/reference/abilities.md`](./docs/reference/abilities.md)；互動版在 <http://localhost:39527/#codex>。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_ea61889db7e9` 產生。 開放英雄技能 293 / 全 461 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_e6d94d24d342` 產生。 開放英雄技能 293 / 全 461 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:abilities -->
 
 <!-- BEGIN GENERATED:items -->
@@ -1379,7 +1379,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 > 📖 **全 142 件道具依 craftRole 的完整分類表**（component 16 / token 0 / none 24 …）在 [`docs/reference/items.md`](./docs/reference/items.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_ea61889db7e9` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_e6d94d24d342` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:items -->
 
 <!-- BEGIN GENERATED:grail -->
@@ -1468,7 +1468,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 逐張的完整 JSON（每一格參數、每一個 hook、每一條條件）在 [`docs/reference/grail-wishes.md`](docs/reference/grail-wishes.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_ea61889db7e9` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_e6d94d24d342` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:grail -->
 
 ### ⭐ 2026-08-17／18 這一批新加的機制（GH#354）
@@ -1525,16 +1525,16 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 |---|--:|---|--:|---|--:|
 | `applyBuff` | 118 | `applyStatus` | 99 | `blink` | 17 |
 | `carry` | 0 | `chainLightning` | 2 | `championForm` | 24 |
-| `convertTeam` | 0 | `cycleBuff` | 1 | `damage` | 178 |
-| `damageArea` | 30 | `damageLine` | 10 | `dash` | 8 |
+| `convertTeam` | 0 | `cycleBuff` | 1 | `damage` | 177 |
+| `damageArea` | 31 | `damageLine` | 10 | `dash` | 8 |
 | `delayed` | 8 | `devour` | 3 | `dispel` | 8 |
 | `dot` | 4 | `evasion` | 0 | `eventValueConversion` | 5 |
 | `extendBuff` | 1 | `grantAttribute` | 5 | `grantGold` | 1 |
 | `heal` | 10 | `invulnerable` | 18 | `knockback` | 11 |
 | `leap` | 7 | `manaBarrier` | 1 | `modifyCooldown` | 13 |
-| `proxyCast` | 6 | `randomArea` | 4 | `restore` | 17 |
+| `proxyCast` | 6 | `randomArea` | 5 | `restore` | 17 |
 | `revive` | 1 | `shield` | 11 | `shieldBreak` | 2 |
-| `spawnProjectile` | 28 | `spawnVfx` | 18 | `spendMana` | 4 |
+| `spawnProjectile` | 28 | `spawnVfx` | 19 | `spendMana` | 4 |
 | `summon` | 0 | `swapResource` | 1 | `taunt` | 2 |
 | `weightedBranch` | 5 |  |  |  |  |
 
@@ -1592,7 +1592,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 `accuracy-down`×2 `ai-override`×3 `antiheal`×2 `armor-break`×1 `armor-down`×1 `attack-debuff`×2 `attack-denied`×8 `auto-target`×1 `bankai`×1 `banked`×2 `berserk`×1 `blind`×1 `buff`×14 `burn`×1 `burnstun`×1 `cast-denied`×7 `cc`×21 `channel`×1 `charmed`×1 `combo`×1 `confusion`×1 `counter`×2 `curse`×1 `damage-bank`×2 `debuff`×26 `disable`×11 `dot`×1 `elemental`×1 `empowered`×1 `empowered-next`×1 `fang-stun`×1 `fear`×1 `fire`×2 `flee`×1 `form`×2 `frenzy`×1 `friendly-fire`×1 `generic`×1 `grail-strengthened-projection`×1 `grail-wish`×1 `grief-seed-charge`×1 `grievous-wounds`×1 `hard-cc`×6 `haste`×2 `heal-block`×1 `heal-down`×2 `immobilize`×1 `ingredient`×1 `lifesteal-down`×2 `lifesteal-up`×1 `light-wand-banked`×1 `magic-break`×1 `magic-resist-down`×1 `magical`×1 `mana-banked`×2 `marker`×1 `mechanism-on-card`×4 `millennium-plot-armor`×1 `miss`×2 `moon-combo`×1 `move-denied`×9 `move-speed-down`×7 `named-variant`×6 `nen-banked`×1 `next-attack`×1 `no-heal`×1 `numbness`×1 `omnislash-lock`×1 `omnislash-perform`×1 `paralysis`×1 `physical`×1 `projectile`×1 `rage`×1 `red-comet`×1 `regen-down`×2 `resist-down`×2 `root`×1 `self-lock`×1 `shred`×2 `slow`×7 `slow20`×1 `slow25`×1 `slow30`×1 `slow35`×1 `slow40`×1 `slow50`×1 `slow60`×1 `soft-cc`×9 `stat-down`×9 `stat-up`×1 `stun`×7 `timed-window`×2 `trial-stun`×1 `triforce-courage`×1 `uncontrollable`×3 `united-states-of-smash`×1 `witch-form`×1 `wound`×2
 
-### 特效（vfx）—— 634 份
+### 特效（vfx）—— 637 份
 
 `content/vfx/*.json`，由 `spawnVfx.vfxId` 與技能的 `vfxKey` 引用。逐份清單在 [`docs/reference/mechanics.md`](docs/reference/mechanics.md)。
 
@@ -1606,7 +1606,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 完整的參數與上下界（每個效果每一格能填什麼）在 [`docs/技能標記機制與效果規則.md`](docs/技能標記機制與效果規則.md)，同樣是產生的。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_ea61889db7e9` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_e6d94d24d342` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:mechanics -->
 
 
@@ -1844,10 +1844,64 @@ pnpm docs:reference     # 只重寫 docs/reference/*.md 那三個完整檔（doc
 
 `pnpm docs:readme:check` 只檢查不寫入，README **或** docs/reference/*.md 過期就 exit 1 —— 適合掛在 pre-commit 或 CI。改完 `content/**` 之後重跑 `docs:readme` 就會把兩處一起更新（§7 有完整說明）。
 
+### ⭐ 大量改技能時的檔案分片（GH#467）
+
+一次要動幾十支技能的時候，瓶頸不是想法，是**同一個檔只能有一個人在寫**。
+2026-08-20 量到四個這樣的「單一寫入者」，全部拆掉了：
+
+| 原本 | 現在 | 一個檔的範圍 |
+| --- | --- | --- |
+| `tools/skill-remake/batch1.py` 3,354 行 | `batch1.py` 393 行（`HERO` 註冊表 + 收尾）<br>`common.py`（模板／級距／各道閘）<br>**`tools/skill-remake/heroes/<英雄 id>.py` × 15** | **一位英雄** |
+| `packages/shared/src/content/schema/effect.ts` 4,754 行 / 40 個 kind 一個 union | `effect.ts` 299 行（門面 + re-export）<br>**`schema/effects/<kind>.ts` × 40** + `_shared.ts` / `_hook.ts` / `index.ts` | **一個 effect kind** |
+| `packages/shared/src/sim/effects/effect.ts` 2,751 行 | `effect.ts` 430 行<br>**`sim/effects/variants/<kind>.ts` × 40** | **一個 effect kind** |
+| `descriptionClaims.baseline.ts`（181）<br>`abilityCodeParity.baseline.ts`（342） | 兩支 `.ts` 只剩 loader（50 / 48 行）<br>**`descriptionClaims.baseline/<英雄>.json` × 60**<br>**`abilityCodeParity.baseline/<英雄編號>.json` × 22** | **一位英雄** |
+
+`content/abilities/` 本來就是一技能一檔（462 份），所以內容那一側不是瓶頸。
+
+**三條規則（分片只有這三條要記）：**
+
+1. **加一位英雄／一個 kind＝加一個檔**，⛔ 不是往既有檔裡塞。
+   檔名就是 id：`heroes/<champion-id>.py`、`effects/<kind>.ts`、`variants/<kind>.ts`。
+2. **兩個方向都要接上**，而且兩邊都有閘會紅：`batch1.py::load_heroes()` 逐檔對 `HERO`
+   註冊表雙向比對；`schema/effects/effectShardWiring.test.ts` 把
+   **兩個目錄 × `zEffectDefUnion.options` × `EFFECT_HANDLERS`** 四個方向互相釘住。
+3. **分片是搬家，⛔ 不是改行為** —— 產出必須逐位元組相同。
+   安全網：`python3 tools/shard/snapshot_generated.py --save` 先從**凍結的 commit**
+   存基準（⛔ 不是會被別條 lane 編輯的工作樹），改完 `--compare`。
+
+⚠️ 共用的東西要**抽進 `common.py` / `_shared.ts`**，⛔ 不可以複製進兩個分片檔 ——
+複製出來的第二份會各自腐爛，那正是分片要解決的問題的反面。
+
+**4. 一個產物只能有一個產生器寫。** 分片解決「一個檔多個人寫」，這一條解決
+**「一個欄位多支腳本寫」** —— 同一個病的另一半。
+前例（GH#456，2026-08-20）：`content/config/vfx-families.json` 的 `pitchDeg`
+被 `build_vfx_orient.py`（w3a 表，40 支）與 `build_slash_pitch.py`（模型動畫，37 支）
+**同時**在寫，而 37 支**完全被 40 支包住** ⇒ 兩條守衛**互為對方的紅燈**，
+誰贏取決於指令順序，而順序沒有任何東西在守。
+現在唯一寫入者是 `tools/w3x-import/build_pitch.py`（優先序**內建**：動畫 > w3a），
+兩支舊腳本降級成只量測，守衛 `ops/pitchDerived.test.ts` 真的跑它們並斷言
+**config 一個位元組都沒動**。
+
+```bash
+pnpm skills:sync    # 唯一入口:重跑全部產生器（含 pitch:build）
+pnpm skills:check   # 唯一入口:全部 --check 閘（含 pitch:check）
+```
+
+⚠️ 新增一支產生器時**一定要同時加 `xxx:build` / `xxx:check` 兩個 npm script**：
+`ops/skillsSyncCoversGenerators.test.ts` 只看得到有 npm script 的產生器 ——
+上面那兩支之所以能打架三個月，正是因為**它們連 npm script 都沒有**，守衛看不到它們。
+
+**⏭ 下一步（owner 2026-08-20 裁決）：`JSON 為唯一真相`。**
+`batch1.py` 將降級成**一次性 migration**（跑完退場），那 15 位英雄的 90 支技能
+之後與其餘 63 位一樣直接編 `content/abilities/*.json`。
+⇒ 「大量改技能」從此**完全無鎖**，這是分片的終局。
+
 ### tools/
 
 | 工具 | 做什麼 |
 | --- | --- |
+| `skill-remake` | 90 支重製技能的**產生器**（第〇·五守則：技能是 JSON，不是程式）。`batch1.py` = 註冊表 + 收尾、`common.py` = 模板與閘、`heroes/<id>.py` = 一位英雄一檔。`--check` 只驗不寫；`refresh_docs.py` 重新產出兩份文件。⛔ **不帶參數跑它會寫 90 份 JSON 並接著跑 `content:build`** |
+| `shard` | `snapshot_generated.py` —— 分片前後「產生器的產出逐位元組相同」的安全網（GH#467） |
 | `w3x-import` | 解 MPQ（含保護圖的 name-mining，不需 `(listfile)`）、MDX → glTF、物件資料 → 內容草稿。用法：`python3 tools/w3x-import/import_w3x.py <map>.w3x`，收尾一定是 `content:build && content:validate` |
 | `bgm-gen` | 確定性 score → 音訊：全部由 numpy 合成，無取樣素材、無 soundfont、無生成模型；唯一外部程式是 ffmpeg。同 score 同 seed ⇒ byte-identical mp3 |
 | `tts-gen` | macOS `say` + ffmpeg 產 MP3，EBU R128 loudness 對齊；會 probe-render 驗證語音真的存在（`say` 對未下載的語音會靜靜退回預設） |

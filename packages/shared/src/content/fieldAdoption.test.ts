@@ -180,6 +180,81 @@ interface Exemption {
  * Sorted by key, matching the census output order.
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
+
+  // ═══ GH#451 連鎖閃電 2026-08-20 ═══════════════════════════════════════════
+  // ⚠️ 先讀這一段再讀下面十二列,否則你會以為 `damage` 的三格被弄丟了。
+  //
+  // ⭐ **`#chainLightning.amount.*` 這個前綴會騙人 —— 它不是 chainLightning 專屬的。**
+  //    `amount` 是**共用的** `zScaling`(schema/common.ts),`damage`・`dot`・
+  //    `damageArea`… 全部指向同一棵子樹。普查給共用子樹的命名是「**字母序第一個
+  //    宣告它的 effect kind**」,而 `chainLightning` 今天排到了 `damage` 前面
+  //    → 整棵 `amount.*` 換了前綴。分母 `3/342` 就是證據:342 是**整個 union**
+  //    的 amount 站點數,⛔ 不是四份 chainLightning。
+  //    ⇒ 下面三列與被它們取代的 `#damage.amount.attrRatios[].*` **是同一件事**,
+  //      `why` 逐字保留(⛔ 只有前綴改了);STALE 那半邊要求舊鍵消失,所以是**搬家**
+  //      不是刪除 —— 知識不可以無聲消失。
+  //    ⚠️ 下一次有人加一個字母序更前面的 effect kind,這三列會**再搬一次家**。
+  //      那不是缺陷,照樣改前綴即可。
+"enum:abilities.effects[]#chainLightning.amount.attrRatios[].attr=agi": {
+    status: "debt",
+    why: "**移植覆蓋率的缺口,不是壞掉的程式**。`resolveScaling` 對 agi 與對 str 走同一行,所以寫上去就會生效;零的原因是目前只有兩支技能用 `attrRatios`,而它們的 JASS 都讀 `bj_HEROSTAT_STR`(龍神槍 godie-i018「傷害 = 總力量」、01-04 超究武神霸斬「+STR×等級」)。原作裡確實有讀 AGI 的招式(例如 蒼月潮 07-00 的敏捷門檻),只是還沒有一支被改寫成「傷害隨敏捷成長」。記成 debt 而不是 default-live,是因為零在這裡**不是**因為有一個更好的預設值 —— 它單純代表「還沒移植到」,而那是一件要做的事。",
+  },
+"enum:abilities.effects[]#chainLightning.amount.attrRatios[].attr=int": {
+    status: "debt",
+    why: "同 `attr=agi`:程式路徑共用、寫上去就生效,零的原因是兩支用 `attrRatios` 的技能在 JASS 裡讀的都是力量。智力在 GGD 走的是 `ratios[{stat:\"ap\"}]`(combat-env `intToAbilityPower` 把智力折進 AP),所以「智力係數」今天有兩種寫法而只有一種被用;哪一種才是對的要看被移植那一支的 JASS 讀的是 `bj_HEROSTAT_INT` 還是法術傷害欄位 —— 在有第一支這樣的技能之前不要替它決定。",
+  },
+"enum:abilities.effects[]#chainLightning.amount.attrRatios[].basis=base": {
+    status: "default-live",
+    why: "缺席 = \"total\"(`sim/effects/effect.ts` 的 `resolveScaling`:`attrs(r.attr, r.basis ?? \"total\")`),對應 Blizzard 的 `GetHeroStatBJ(…, true)` = 含裝備。兩份寫了 `attrRatios` 的出貨文件(龍神槍 godie-i018 的 on-hit 閃電、GH#250 的 01-04 超究武神霸斬 終結段)在 JASS 裡讀的都是 `true`,所以兩份都明寫 \"total\"。\"base\" 對應 `GetHeroStatBJ(…, false)`,原作**確實用過**(蒼月潮 07-00 獸化心靈 的 120 敏上限),只是那一支走的是 `grantAttribute.maxAttributeBasis` 而不是 `attrRatios`。所以這一格的零是「沒有一支用 attrRatios 的技能需要不含裝備的讀法」,不是機制沒接上。",
+  },
+
+  // ── 以下九列才是真的 chainLightning 自己的欄位 ──────────────────────────
+  // 出貨兩支(86-04 打雷絕招 godie-o00k.r / 65-04 天譴 godie-udea.r,各含 champion
+  // 鏡像共四份)都是 `shape:"circle"`,而 owner 2026-08-20 的裁決把這支技能的身分
+  // 定在「**隨機選擇單位、遞減、逐發有時間差**」上(`decay` 0.9 + `jumpIntervalSec`
+  // 0.05),所以下面這些格子的零全部是**兩支技能不需要**,⛔ 不是機制沒接線 ——
+  // `sim/effects/variants/chainLightning.ts` 每一格都真的讀。
+  "enum:abilities.effects[]#chainLightning.shape=single": {
+    status: "landing",
+    since: "2026-08-20",
+    why: "`single` = 原作那顆**單獨**的鏈鎖閃電(A04H,說明「傳遞16次」),`circle` = 圈內每個敵人各起一條。出貨那兩支的 JASS 都是後者(所以 owner 說「聚集越多敵人威力越強」),⛔ 這不是預設值在服務它 —— `shape` 是**必填**,寫 `single` 與寫 `circle` 一樣容易。零純粹代表**還沒有一支被移植成單體鏈**。**到期**:任何一支單體連鎖(原作 A04H 直接移植)填了它。",
+  },
+  "enum:abilities.effects[]#chainLightning.centre=target": {
+    status: "landing",
+    since: "2026-08-20",
+    why: "起始圈的圓心。出貨兩支分別用 `caster`(天譴,JASS 讀施法者位置)與 `point`(打雷,落點),`target` 要等一支「**指定某個單位**、以他為圓心炸開連鎖」的技能。⛔ 三個成員走同一行(`variants/chainLightning.ts` 的圓心解析),寫上去就生效。**到期**:第一支指定型連鎖。",
+  },
+  "field:abilities.effects[]#chainLightning.radiusTier": {
+    status: "landing",
+    since: "2026-08-20",
+    why: "⚠️ 這一格**短期內不會自然變綠**,而理由是內容事實不是缺陷 —— 逐字沿用 `taunt.radiusTier` 的判例:`config.aoe-tiers@1` 的四級距是 3/4.5/6/8,而這兩支的起始圈是 **9.17**(天譴,JASS 350 距離換算)與 **5.5**(打雷),兩個都不落在級距上,所以照 owner 的規則走的是 `radius` 那一格。**到期**:級距表多一級,或某一支連鎖的起始圈剛好落進 3/4.5/6/8。",
+  },
+  "field:abilities.effects[]#chainLightning.maxTotalJumps": {
+    status: "default-live",
+    why: "**保險絲,不是平衡旋鈕**。留空 = `DEFAULT_CHAIN_MAX_TOTAL_JUMPS` = `CHAIN_MAX_TOTAL_JUMPS`(480 = 20 來源 × 24 跳 = 兩個上界都拉滿),⭐ 它**刻意不咬人**:出貨兩支是 20 × 16 = 320,本來就在下面。⇒ 明寫它今天是位元級的 no-op。⛔ 這不是「沒有上限」—— 缺席時的上限是有限的 480,而那正是它存在的目的(擋 O(來源數×跳數) 落在同一 tick)。**到期**:某一支需要比 480 更緊的保險絲。",
+  },
+  "field:abilities.effects[]#chainLightning.revisit": {
+    status: "default-live",
+    why: "留空 = 同一條連鎖裡**不能**跳回同一個人 —— 那正是原作 A04H 的行為,也是出貨兩支要的。⚠️ 不同連鎖打到同一個人一律允許(那才是「越多單位越痛」),所以這一格與 owner 那句裁決無關。⭐ 機制不在零:`variants/chainLightning.ts` 的終止性證明明寫「`revisit: true` 也停得下來」(jumps 與 maxTotalJumps 兩個都嚴格遞增)。",
+  },
+  "field:abilities.effects[]#chainLightning.canCrit": {
+    status: "default-live",
+    why: "逐字沿用 `damage.canCrit` 的判例:省略 = 不暴擊 = 出貨行為,而同一條 `sim/combat/critStrike.ts` 管線在 `damageArea.canCrit`・`damageLine.canCrit` 上都有客戶 ⇒ **機制不在零**。90 支重製稿裡 11 處[暴擊]逐字讀都是**普攻**暴擊(走 critStrike grant)。",
+  },
+  "field:abilities.effects[]#chainLightning.condition": {
+    status: "default-live",
+    why: "`EFFECT_COMMON_SHAPE` 的共用條件葉 —— 省略 = 無條件觸發。出貨兩支是絕招,按下去就放。⭐ 機制**遠遠不在零**:同一顆條件葉在 `applyBuff`・`damage` 等處都有客戶(第〇·五守則的那個條件葉)。",
+  },
+  "field:abilities.effects[]#chainLightning.onHitTargetsMode": {
+    status: "landing",
+    since: "2026-08-20",
+    why: "逐字沿用 `damageLine.onHitTargetsMode`:batch(預設,下一段收到整群人一次)還是 perTarget。⛔ 三個 kind 在這一族上必須同名同語意。出貨只有天譴帶 `onHitTargets`(spendMana),而它要的正是 batch。⭐ 圓形那一半(`damageArea`)已於 2026-08-18 落地並拿掉豁免。**到期**:某一支連鎖要「每跳各自結算一次下游」。",
+  },
+  "field:abilities.effects[]#chainLightning.runOnEmptyHit": {
+    status: "landing",
+    since: "2026-08-20",
+    why: "逐字沿用 `damageArea.runOnEmptyHit`:一個人都沒打到時要不要照樣跑下游。省略 = false = 今天什麼都不會發生的那個語意。",
+  },
   // ── GH#373 / GH#374 2026-08-18：5 支主動天生技接上真的機制之後浮出來的三格 ──
   // ⭐ 三格都是**同一個形狀**：一個機制在某個授權面上第一次有內容用它，於是
   //    「整族零採用」被級聯規則藏起來的那幾格單獨浮出來（同 GH#333 的判例）。
@@ -1023,7 +1098,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why: "三選一增益卡授予三圍。⚠️ 與 #260 的「能力屬性強化」**不是**同一條路：那張卡走 `ChampionComp.attrBonus`（永久累加），這一格騎在 source 上（卡片被移除就跟著消失），兩者由 `sourceAttrGrants` 折在同一個地方，下游分不出來。",
   },
 
-
   "field:champions.abilities.*.marks": {
     status: "landing",
     since: "2026-08-08",
@@ -1568,7 +1642,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why: "同上。相等比較在整數軸(level / 層數)才有意義,而條件目前唯一被授權的整數軸是 level,還沒有卡用它。",
   },
 
-
   // ── 觸發條件的屬性軸 ───────────────────────────────────────────────────
   // 出貨的兩張條件卡都讀 `hp`。下面十個成員是同一個下拉選單的其他選項。
   // 它們共用一條 why:機制是同一條 `evaluateCondition` 的 `stat` 分支,
@@ -1700,19 +1773,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "default-live",
     why: "缺席 = \"refresh\"(`sim/effects/dot.ts` 的 `stacking = e.stacking ?? \"refresh\"`),而出貨的四份 DoT 只需要兩種語意:同一支技能重複點燃就延長期限(refresh,揍敵客 R 龍星群 + 兩件武器),或每一次施放各自獨立計時(independent,GH#250 的 01-04 超究武神霸斬 —— 七連斬的基礎段與終結段是同一個 origin 的兩條線,必須互不合併)。stack 是第三種語意「疊層數、傷害相乘」,而原作沒有任何一支被移植過來的燒傷是這樣算的 —— 它的存在是給未來的疊毒用的,不是壞掉。⚠️ 不要為了讓這一列變綠而把某一支改成 stack:那會直接改變玩家吃到的總傷害。",
   },
-  "enum:abilities.effects[]#damage.amount.attrRatios[].basis=base": {
-    status: "default-live",
-    why: "缺席 = \"total\"(`sim/effects/effect.ts` 的 `resolveScaling`:`attrs(r.attr, r.basis ?? \"total\")`),對應 Blizzard 的 `GetHeroStatBJ(…, true)` = 含裝備。兩份寫了 `attrRatios` 的出貨文件(龍神槍 godie-i018 的 on-hit 閃電、GH#250 的 01-04 超究武神霸斬 終結段)在 JASS 裡讀的都是 `true`,所以兩份都明寫 \"total\"。\"base\" 對應 `GetHeroStatBJ(…, false)`,原作**確實用過**(蒼月潮 07-00 獸化心靈 的 120 敏上限),只是那一支走的是 `grantAttribute.maxAttributeBasis` 而不是 `attrRatios`。所以這一格的零是「沒有一支用 attrRatios 的技能需要不含裝備的讀法」,不是機制沒接上。",
-  },
-  "enum:abilities.effects[]#damage.amount.attrRatios[].attr=agi": {
-    status: "debt",
-    why: "**移植覆蓋率的缺口,不是壞掉的程式**。`resolveScaling` 對 agi 與對 str 走同一行,所以寫上去就會生效;零的原因是目前只有兩支技能用 `attrRatios`,而它們的 JASS 都讀 `bj_HEROSTAT_STR`(龍神槍 godie-i018「傷害 = 總力量」、01-04 超究武神霸斬「+STR×等級」)。原作裡確實有讀 AGI 的招式(例如 蒼月潮 07-00 的敏捷門檻),只是還沒有一支被改寫成「傷害隨敏捷成長」。記成 debt 而不是 default-live,是因為零在這裡**不是**因為有一個更好的預設值 —— 它單純代表「還沒移植到」,而那是一件要做的事。",
-  },
-  "enum:abilities.effects[]#damage.amount.attrRatios[].attr=int": {
-    status: "debt",
-    why: "同 `attr=agi`:程式路徑共用、寫上去就生效,零的原因是兩支用 `attrRatios` 的技能在 JASS 裡讀的都是力量。智力在 GGD 走的是 `ratios[{stat:\"ap\"}]`(combat-env `intToAbilityPower` 把智力折進 AP),所以「智力係數」今天有兩種寫法而只有一種被用;哪一種才是對的要看被移植那一支的 JASS 讀的是 `bj_HEROSTAT_INT` 還是法術傷害欄位 —— 在有第一支這樣的技能之前不要替它決定。",
-  },
-  "field:abilities.effects[]#dot.tickOnApply": {
+        "field:abilities.effects[]#dot.tickOnApply": {
     status: "default-live",
     why: "缺席 = false = 「等一個 interval 才第一次結算」(`dot.ts` 的 `firstTick`)。寫 true 是**多加**一次結算,而四份出貨 DoT 的數字都是照『總量 ÷ 次數』寫的:血染八月「88流血傷害,持續3秒」= 29.33×3、妖物碎殺牙「255傷害,持續3秒」= 85×3、揍敵客 R「持續 2 秒、每 0.2 秒」= 10 跳。任何一支打開它,玩家吃到的總量就會比 owner 文案上的數字多一跳。所以這一格空著不只是預設,是**文案正確性的條件**。",
   },
@@ -1824,8 +1885,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // 以及 `applyBuff.statusId` / `hooks[].key` / `hooks[].consumeOn`。
   // ⚠️ 它們留下的**帳**寫在檔尾 2026-08-12 那一段：父容器一被採用，它們沒填的
   // optional 子欄位就第一次跨過 MIN_REACH 而變得可回報（THE CASCADE RULE）。
-
-
 
   "field:abilities.effects[]#dispel.maxTargets": {
     status: "default-live",
