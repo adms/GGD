@@ -12,6 +12,7 @@ import type {
   ModelDoc,
   VfxDoc,
   RibbonDoc,
+  AttachmentDoc,
   ArenaDoc,
   ConfigAmbientVfxDoc,
   ConfigGoreDoc,
@@ -20,6 +21,7 @@ import type {
   ConfigDamageColorsDoc,
   ConfigItemCardDoc,
   ConfigVfxFamiliesDoc,
+  ConfigVfxAbilityArtDoc,
   ConfigVoxelBodiesDoc,
   ConfigFormVisualsDoc,
   ConfigVictoryFxDoc,
@@ -35,6 +37,7 @@ import {
   Arenas,
   Configs,
   Models,
+  AttachmentDefs,
   RibbonDefs,
   VfxDefs,
   resolveArenaFire,
@@ -72,6 +75,8 @@ import { applyAudioMixDoc } from "../audio/voiceMixPolicy";
 // GH#230 L2 —— w3x 特效家族的後台旋鈕。跟 applyGoreDoc 同一條縫、同一個理由:
 // render/** 不能自己讀 content mount,所以由這裡把 config doc 推進去。
 import { setFamilyTuning } from "../render/vfx/w3xAbilityArt";
+// GH#384 —— 617 筆逐技能特效綁定（分類／證據／晉升）。同一條縫、同一個理由。
+import { setAbilityArtBindings } from "../render/vfx/abilityArtContent";
 import { vfxSoundLayer } from "../audio/vfxSound";
 import { resolveFamilyArt } from "../render/vfx/familyTuning";
 import { setMaxAbilityVfxLayers } from "../render/vfx/abilityLayers";
@@ -190,6 +195,8 @@ export class ContentDb {
   private models = new Map<string, ModelDoc>();
   private vfx = new Map<string, VfxDoc>();
   private ribbons = new Map<string, RibbonDoc>();
+  /** GH#392 —— attachment@1（穿在骨頭上的模型），同一個 vfx 集合的第三種文件 */
+  private attachments = new Map<string, AttachmentDoc>();
   private fetchedConfigs = new Map<string, { schema?: string }>();
   private ambientVfx: ConfigAmbientVfxDoc | null = null;
   private arenaDoc: ArenaDoc | null = null;
@@ -330,6 +337,14 @@ export class ContentDb {
     // 沒有這一行,`content/config/vfx-families.json` 就是一份沒人讀的檔案:
     // 後台改了大小/顏色/開關,場上完全不會變(第②號故障:算出來但從沒送到)。
     // 傳 null(檔案不存在或 schema 不合)= 用 code 內的出貨預設,不是「關掉」。
+    // ⭐ GH#384 —— **這一行要在 `setFamilyTuning` 之前**。逐技能的綁定（哪一支畫
+    // 哪一組特效）以前是三張 TypeScript 常數表，現在是內容；`setFamilyTuning` 會
+    // 立刻拿它去鑄造 `fx.fam.*` 文件，順序反了就會鑄出一份空的。
+    // ⛔ 少了這一行，**每一支技能都掉回通用替身** —— 而那看起來跟「特效還沒做」
+    // 一模一樣（失敗形態②）。`setAbilityArtBindings` 收到空的會吼一行到 console。
+    setAbilityArtBindings(
+      this.configDoc<ConfigVfxAbilityArtDoc>("vfx-ability-art", "config.vfx-ability-art@1"),
+    );
     const vfxFamiliesDoc = this.configDoc<ConfigVfxFamiliesDoc>(
       "vfx-families",
       "config.vfx-families@1",
@@ -417,7 +432,7 @@ export class ContentDb {
     const [models, vfxDocs, ambient, gore, arena] = await Promise.all([
       fetchCollection<ModelDoc>("models"),
       // the vfx collection mixes vfx@1 particle docs and ribbon@1 trail docs
-      fetchCollection<VfxDoc | RibbonDoc>("vfx"),
+      fetchCollection<VfxDoc | RibbonDoc | AttachmentDoc>("vfx"),
       // fetched by direct path (works even before content:build re-indexes it)
       fetchJson<ConfigAmbientVfxDoc>("config/ambient-vfx.json"),
       fetchJson<ConfigGoreDoc>("config/gore.json"),
@@ -426,8 +441,10 @@ export class ContentDb {
     this.models = models;
     this.vfx = new Map();
     this.ribbons = new Map();
+    this.attachments = new Map();
     for (const doc of vfxDocs.values()) {
       if (doc.schema === "ribbon@1") this.ribbons.set(doc.id, doc);
+      else if (doc.schema === "attachment@1") this.attachments.set(doc.id, doc);
       else this.vfx.set(doc.id, doc);
     }
     this.fetchedConfigs.clear();
@@ -556,6 +573,12 @@ export class ContentDb {
   ribbonFor(ribbonKey: string): RibbonDoc | null {
     if (this.fromRegistries) return RibbonDefs.tryGet(ribbonKey) ?? null;
     return this.ribbons.get(ribbonKey) ?? null;
+  }
+
+  /** GH#392 —— `attachment@1`（穿在骨頭上的模型）。null = 這個 id 不是掛件。 */
+  attachmentFor(id: string): AttachmentDoc | null {
+    if (this.fromRegistries) return AttachmentDefs.tryGet(id) ?? null;
+    return this.attachments.get(id) ?? null;
   }
 
   /** Ambient attachment bindings for a modelKey ([] when none authored). */

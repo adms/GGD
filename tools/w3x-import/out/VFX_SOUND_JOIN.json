@@ -1403,18 +1403,7 @@
  "abilityDeclaredSounds": {
   "abilitiesWithJassSound": 98,
   "keyMissingFromAudioMap": [
-   "wc3.bloodlusttarget",
-   "wc3.farmwhat1",
-   "wc3.flaretarget1",
-   "wc3.flashback1second",
-   "wc3.fountainoflifewhat1",
-   "wc3.gluescreenmeteorhit2",
-   "wc3.gruntwhat2",
-   "wc3.peonwhat2",
-   "wc3.sawch",
-   "wc3.shimmeringportaldeath",
-   "wc3.waterelementalmissile3",
-   "wc3.witchdoctorcastattack1"
+   "wc3.sawch"
   ],
   "notAnAbilityDoc": [
    "godie-e00q.ex",
@@ -1443,6 +1432,17 @@
    "godie-usyl.e"
   ],
   "bound": 72
+ },
+ "modelSoundsetPort": {
+  "clips": 132,
+  "bytes": 12427528,
+  "gaps": 7,
+  "docsTouched": 0,
+  "cuesFilled": 0,
+  "docsCreated": 0,
+  "cuesLeftAlone": 30,
+  "clipsBound": 54,
+  "staleCuesPurged": 0
  },
  "familyPrototypes": {
   "families": 21,

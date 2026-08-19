@@ -1,0 +1,416 @@
+#!/usr/bin/env tsx
+/**
+ * 技能級距規範 —— **產生器**（GH#414）。
+ *
+ * owner 2026-08-19：
+ * > 「請你將**詳細規範及對應自 w3x 的關係**詳細寫成一個 md 檔給我參考，
+ * >  並且這也應該是**給 codex 技能編輯器的參考契約及文件之一**」
+ *
+ * ⛔ 為什麼它必須是程式而不是一份手寫的 md：`docs/技能標記機制與效果規則.md`
+ * 的判例已經寫死了（CLAUDE.md）——「⛔ 不可以手改（它是產生的）」，理由是一份
+ * 手寫的對照表會過期而**沒有任何東西會紅**。這一份的每一個數字都有來源：
+ *
+ *   `shipped`  出貨的 `content/config/*-tiers.json`（＝後台在改的那一份）
+ *   `derived`  出貨的 Zod / 梯子常數（`skillTiers.ts`）+ `Arenas` 的決鬥區半徑
+ *   `engine`   真的跑 `ContentLoader.load()` + `registerAll()` 之後的註冊表
+ *   `w3x`      `tools/w3x-import/out/GoDieEX22s-src/` 的 JASS 與 w3a
+ *
+ * ⭐ **取值優先序照 CLAUDE.md 第〇·六守則**（owner 2026-08-19：「JASS 的部分
+ * 優先權大於 w3x 技能設定，因為真正影響造成傷害的可能在 JASS」）：
+ *
+ *     第 3 層 JASS 實際效果   ← 有就用這個
+ *     第 5 層 w3a 欄位值      ← JASS 沒寫才退回這裡
+ *
+ * 每一列都標出它走的是哪一層，⛔ 不把兩層混成一個數字。兩層打架的那些**單獨列一張表**
+ * 拿給 owner —— ⛔ 產生器不替他選一個。
+ *
+ * ⛔ 刻意沒有產生日期（同 `caps:export` / `spec:build`）：任何隨時鐘變動的欄位都會讓
+ * 逐位元組比對永遠不相等，於是 `--check` 只能被放寬成模糊比對 —— 一條被放寬的閘等於沒有閘。
+ *
+ * 用法：
+ *   pnpm tiers:build     # 寫出 docs/editor-contract/ggd-skill-tiers.md
+ *   pnpm tiers:check     # 過期就回非零
+ */
+import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+import { ContentLoader } from "../../packages/shared/src/content/loader";
+import { FsContentSource } from "../../packages/shared/src/content/node/FsContentSource";
+import { registerAll, Arenas, Configs } from "../../packages/shared/src/content/registries";
+import { Abilities } from "../../packages/shared/src/sim/content/registry";
+import {
+  DUEL_ZONE_RADIUS_REF,
+  LADDER_FRACTIONS,
+  SKILL_TIER_NAMES,
+  TRAVEL_SCALE,
+  snapGap,
+  snapToTier,
+  type SkillTierName,
+} from "../../packages/shared/src/content/skillTiers";
+import { aoeTiersFromDoc } from "../../packages/shared/src/content/aoeTiers";
+import { rangeTiersFromDoc } from "../../packages/shared/src/content/rangeTiers";
+import {
+  displacementTiersFromDoc,
+  minBodyRadiusFromConfigs,
+} from "../../packages/shared/src/content/displacementTiers";
+import { GGD_PER_WC3 } from "../../packages/shared/src/content/templates/expand";
+
+const REPO = join(dirname(fileURLToPath(import.meta.url)), "../..");
+const CONTENT = join(REPO, "content");
+const W3X = join(REPO, "tools/w3x-import/out/GoDieEX22s-src");
+const DOC = join(REPO, "docs/editor-contract/ggd-skill-tiers.md");
+const CMD = "pnpm tiers:build";
+
+/** 落差超過這一格就不自動收，列給 owner。⚠️ 相對級距值，⛔ 不是絕對距離。 */
+const GAP_ALERT = 0.25;
+
+const num = (x: number): string => (Number.isInteger(x) ? String(x) : String(Math.round(x * 100) / 100));
+const abilityNumber = (s: string | undefined): string | undefined =>
+  (s ?? "").match(/^(\d\d-\d{2,3})/)?.[1];
+
+// ---------------------------------------------------------------------------
+// w3x 側：JASS（第 3 層）與 w3a（第 5 層）
+// ---------------------------------------------------------------------------
+
+interface Original {
+  /** 原作半徑（WC3 單位），來源層已經決定過 */
+  readonly area?: number;
+  readonly range?: number;
+  readonly layer: "JASS" | "w3a" | "—";
+  /** 兩層都有值而且不一樣時，另一層說什麼（⛔ 不合併，拿給 owner） */
+  readonly conflict?: { readonly jass: number; readonly w3a: number; readonly field: "area" };
+}
+
+function loadOriginals(): Map<string, Original> {
+  const out = new Map<string, Original>();
+  const objPath = join(W3X, "OBJECTS.json");
+  const jassPath = join(W3X, "JASS_BEHAVIOR.json");
+  if (!existsSync(objPath)) return out;
+
+  // 第 5 層：w3a 欄位。⚠️ `area` / `cast_range` 是逐等級的 map，取第 1 級
+  //   —— 級距是一支技能一格，⛔ 不是逐等級各一格。
+  const w3a = new Map<string, { area?: number; range?: number }>();
+  const objects = JSON.parse(readFileSync(objPath, "utf8")) as { abilities: Record<string, Record<string, unknown>> };
+  for (const a of Object.values(objects.abilities)) {
+    const n = abilityNumber(a["name"] as string | undefined);
+    if (n === undefined || w3a.has(n)) continue;
+    const lvl1 = (m: unknown): number | undefined => {
+      const v = (m as Record<string, unknown> | undefined)?.["1"];
+      return typeof v === "number" && v > 0 ? v : undefined;
+    };
+    w3a.set(n, { area: lvl1(a["area"]), range: lvl1(a["cast_range"]) });
+  }
+
+  // 第 3 層：JASS。`geometry` 是自由文字（人寫的稽核欄），所以只認**明確**的
+  // 「AoE <數字>」，⛔ 不做模糊猜測 —— 猜錯會產出一個看起來有來源的假數字。
+  const jass = new Map<string, number>();
+  if (existsSync(jassPath)) {
+    const skills = (JSON.parse(readFileSync(jassPath, "utf8")) as { skills: Record<string, unknown>[] }).skills;
+    for (const s of skills) {
+      const n = abilityNumber(s["skill_name"] as string | undefined);
+      if (n === undefined || jass.has(n)) continue;
+      const m = String(s["geometry"] ?? "").match(/AoE\s*([0-9]+(?:\.[0-9]+)?)/);
+      if (m) jass.set(n, Number(m[1]));
+    }
+  }
+
+  for (const n of new Set([...w3a.keys(), ...jass.keys()])) {
+    const f = w3a.get(n);
+    const j = jass.get(n);
+    if (j !== undefined) {
+      const conflict =
+        f?.area !== undefined && Math.abs(f.area - j) > 0.5
+          ? ({ jass: j, w3a: f.area, field: "area" } as const)
+          : undefined;
+      out.set(n, { area: j, range: f?.range, layer: "JASS", ...(conflict ? { conflict } : {}) });
+    } else if (f && (f.area !== undefined || f.range !== undefined)) {
+      out.set(n, { area: f.area, range: f.range, layer: "w3a" });
+    }
+  }
+  return out;
+}
+
+// ---------------------------------------------------------------------------
+// 產生
+// ---------------------------------------------------------------------------
+
+interface Row {
+  readonly id: string;
+  readonly name: string;
+  readonly num: string;
+  readonly layer: Original["layer"];
+  readonly wcArea?: number;
+  readonly wcRange?: number;
+  readonly radius?: number;
+  readonly range?: number;
+  readonly radiusTier?: SkillTierName;
+  readonly rangeTier?: SkillTierName;
+  readonly radiusGap: number;
+  readonly rangeGap: number;
+}
+
+async function build(): Promise<string> {
+  const loaded = await new ContentLoader(new FsContentSource(CONTENT)).load();
+  registerAll(loaded.store);
+
+  const cfgs = Configs.all() as unknown as { schema?: string }[];
+  const aoe = aoeTiersFromDoc(cfgs.find((c) => c.schema === "config.aoe-tiers@1"));
+  const rng = rangeTiersFromDoc(cfgs.find((c) => c.schema === "config.range-tiers@1"));
+  const disp = displacementTiersFromDoc(
+    cfgs.find((c) => c.schema === "config.displacement-tiers@1"),
+    minBodyRadiusFromConfigs(cfgs as never),
+  );
+  // ⭐ 錨從 `Arenas` **推導**，⛔ 不抄字面值 24（第二守則：出貨數值不住在文件裡）。
+  const zoneRadius = Math.min(...Arenas.all().flatMap((a) => a.zones.map((z) => z.boundaryRadius)));
+  const originals = loadOriginals();
+
+  const rows: Row[] = [];
+  for (const d of Abilities.all()) {
+    const a = d as unknown as { id: string; name?: string; radius?: number; range?: number };
+    const hasR = typeof a.radius === "number" && a.radius > 0;
+    const hasG = typeof a.range === "number" && a.range > 0;
+    if (!hasR && !hasG) continue;
+    const n = abilityNumber(a.name) ?? "";
+    const o = originals.get(n);
+    rows.push({
+      id: a.id,
+      name: a.name ?? a.id,
+      num: n,
+      layer: o?.layer ?? "—",
+      wcArea: o?.area,
+      wcRange: o?.range,
+      radius: hasR ? a.radius : undefined,
+      range: hasG ? a.range : undefined,
+      radiusTier: hasR ? snapToTier(a.radius!, aoe.radius) : undefined,
+      rangeTier: hasG ? snapToTier(a.range!, rng.range) : undefined,
+      radiusGap: hasR ? snapGap(a.radius!, aoe.radius) : 0,
+      rangeGap: hasG ? snapGap(a.range!, rng.range) : 0,
+    });
+  }
+  rows.sort((x, y) => x.id.localeCompare(y.id));
+
+  const L: string[] = [];
+  const p = (s = "") => L.push(s);
+
+  p("# GGD 技能級距規範（施法距離 · 施法範圍 · 位移）");
+  p();
+  p("> ⚙️ 這一份是**產生的**。⛔ 不要手改 —— 跑 `" + CMD + "` 重新產生。");
+  p("> 守衛：`packages/shared/src/ops/skillTiersDocFresh.test.ts`（真的用 `--check` 跑這支）。");
+  p();
+  p("owner 2026-08-19：");
+  p();
+  p("> 「你的技能範圍轉換自 w3x 是不是有問題阿？");
+  p("> 1. **可施展技能的距離普遍超遠** 2. **施法範圍也超大**」");
+  p();
+  p("> 「總之請你將**技能相關設定正規化成五級距**，並且將相關**文件 JSON 編輯器 後台設定 都統一**」");
+  p();
+  p("---");
+  p();
+  p("## 〇 · 一句話結論");
+  p();
+  p("**換算係數是對的，缺的是級距表。**");
+  p();
+  p("`GGD_PER_WC3 = 11/600 = " + GGD_PER_WC3.toFixed(7) + "`（`templates/expand.ts`）通過 owner 自己的校準點：");
+  p("04-02 炸彈陣 w3a 300 → 5.5 落「大」，04-03 龍破斬 w3a 450 → 8.25 落「超大」——");
+  p("**剛好高一級**，正是 owner 說的「龍破斬應該高一級」。⇒ 係數不動。");
+  p();
+  p("真正缺的是**施法距離這一軸從來沒有表**：量到 " + rows.filter((r) => r.range !== undefined).length +
+    " 支帶施法距離的技能，各自帶一個從 w3a 換算來的自由數字，最大 " +
+    num(Math.max(...rows.filter((r) => r.range !== undefined).map((r) => r.range!))) +
+    "，而決鬥區半徑只有 " + num(zoneRadius) + "。");
+  p();
+  p("---");
+  p();
+  p("## 一 · 五級距表（出貨值）");
+  p();
+  p("⭐ **一條梯子，四個視窗。** 五個級距名全專案只有一份（`packages/shared/src/content/skillTiers.ts`");
+  p("的 `SKILL_TIER_NAMES`），⛔ 沒有任何一軸可以自己再宣告一組。");
+  p();
+  p("| 軸 | " + SKILL_TIER_NAMES.join(" | ") + " | 出處 |");
+  p("|---|" + SKILL_TIER_NAMES.map(() => "---:").join("|") + "|---|");
+  p("| **施法距離** `rangeTier` | " + SKILL_TIER_NAMES.map((t) => num(rng.range[t])).join(" | ") + " | `config/range-tiers.json` |");
+  p("| **施法範圍 (AoE)** `radiusTier` | " + SKILL_TIER_NAMES.map((t) => num(aoe.radius[t])).join(" | ") + " | `config/aoe-tiers.json` |");
+  p("| **位移 · 衝刺** `distanceTier` | " + SKILL_TIER_NAMES.map((t) => num(disp.travel[t].distance)).join(" | ") + " | `config/displacement-tiers.json` |");
+  p("| **位移 · 擊退** `distanceTier` | " + SKILL_TIER_NAMES.map((t) => num(disp.push[t].distance)).join(" | ") + " | `config/displacement-tiers.json` |");
+  p();
+  p("⚠️ 這些是**卡面值**。玩家實際吃到的是它再乘「戰鬥系統」頁的 `abilityRange`（出貨 0.8）。");
+  p();
+  p("### 傷害與耗魔：⛔ 還沒有表，這是 owner 的決定");
+  p();
+  p("GH#414 點名四軸，但**傷害與耗魔沒有幾何錨** —— 上面三軸的每一個數字都是");
+  p("「決鬥區半徑的幾分之幾」，而傷害沒有對應的東西可以除。⛔ 依第一·五守則第 3 條");
+  p("（需要改平衡資料時不要自己挑數字），這兩軸留給 owner 指定，⛔ 產生器不編一組出來。");
+  p();
+  p("---");
+  p();
+  p("## 二 · 每一級是怎麼推導出來的");
+  p();
+  p("錨是 owner 自己給 AoE 的那一句（`aoe-tiers.json` 的原始 note）：");
+  p();
+  p("> 「決鬥區半徑 " + num(zoneRadius) + "：**大 = 1/4、超大 = 1/3**」");
+  p();
+  p("把它讀成**分母**再往兩邊延伸，得到六根橫木：");
+  p();
+  p("| 橫木 | 分數 | 分母 | × 決鬥區半徑 " + num(zoneRadius) + " |");
+  p("|---:|---|---:|---:|");
+  LADDER_FRACTIONS.forEach((f, i) => {
+    const denom = 1 / f;
+    const mark = f === 1 / 4 || f === 1 / 3 ? "  ← owner 指定" : "";
+    p("| " + i + " | " + ["1/12", "1/8", "3/16", "1/4", "1/3", "1/2"][i] + " | " +
+      num(Math.round(denom * 100) / 100) + " | **" + num(Math.round(zoneRadius * f * 100) / 100) + "**" + mark + " |");
+  });
+  p();
+  p("⭐ **這條梯子逐位元重現了改制前出貨的全部 12 個數字**，一個都沒有動到：");
+  p();
+  p("```");
+  p("AoE      3 / 4.5 / 6 / 8           = 橫木 [1..4]");
+  p("擊退      2 / 3 / 4.5 / 6           = 橫木 [0..3]");
+  p("衝刺      5.5 / 8.25 / 11 / 14.67   = 橫木 [1..4] × " + TRAVEL_SCALE.toFixed(4) + " (= 11/6)");
+  p("```");
+  p();
+  p("⇒ **五級 = 每個視窗往上再取一根橫木。既有的四個數字一格不動。**");
+  p("那是這個做法唯一重要的性質：110 支填了 `radiusTier` 的技能，一支都不會因為");
+  p("「從四級變五級」而改變手感。");
+  p();
+  p("⚠️ 比值刻意不是等比也不是等差：**1.5 / 1.333 / 1.333 / 1.5**（對稱）。");
+  p("等比會把 owner 指定的 1/4 與 1/3 之中至少一個擠掉，而那兩格是規格。");
+  p();
+  p("### ⚠️ 兩套詞彙的合併（2026-08-19）");
+  p();
+  p("改制前 AoE 的第四格叫「超大」、位移的第四格叫「極大」—— **同一個位置兩個名字**。");
+  p("合併方向是**量出來的**：出貨內容裡「超大」有 6 支技能在用，位移的「極大」**0 支**。");
+  p("⇒ 第四格統一叫「超大」，沒人用的「極大」讓給新的第五格。");
+  p("**沒有任何一支既有技能的級距詞改變意思。**");
+  p();
+  p("---");
+  p();
+  p("## 三 · w3x → GGD 的換算關係");
+  p();
+  p("```");
+  p("GGD 長度 = WC3 長度 × 11/600 = WC3 × " + GGD_PER_WC3.toFixed(7));
+  p("```");
+  p();
+  p("⚠️ ⛔ 專案裡另外幾處寫的「約 54.5 倍」是**同一個係數的倒數的近似值**（600/11 = 54.5454…）。");
+  p("要算的時候用 11/600，⛔ 不要用 54.5 —— 那會讓 450 算成 8.257 而不是 8.25。");
+  p();
+  p("### ⭐ 取值優先序：JASS > w3a（CLAUDE.md 第〇·六守則第 3 層 vs 第 5 層）");
+  p();
+  p("owner 2026-08-19：「**JASS 的部分優先權大於 w3x 技能設定**，因為**真正影響造成傷害的可能在 JASS**」。");
+  p();
+  p("⇒ 下面的逐支對照，每一列都標出它的原作值走的是哪一層：");
+  p();
+  const byLayer = { JASS: 0, w3a: 0, "—": 0 } as Record<string, number>;
+  for (const r of rows) byLayer[r.layer] = (byLayer[r.layer] ?? 0) + 1;
+  p("| 來源層 | 幾支 | 意思 |");
+  p("|---|---:|---|");
+  p("| **JASS**（第 3 層） | " + byLayer["JASS"] + " | JASS 明確寫了 `AoE <數字>`，用它 |");
+  p("| **w3a**（第 5 層） | " + byLayer["w3a"] + " | JASS 沒寫幾何，退回 w3a 的 `area` / `cast_range` 欄位 |");
+  p("| — | " + byLayer["—"] + " | 對不到原作（GGD 原創、EX、或編號不在 w3x 裡） |");
+  p();
+  p("⚠️ 「w3a」那一列**不代表已經驗證過** —— 它代表**沒有人去 JASS 確認過**。");
+  p("`JASS_BEHAVIOR.json` 的 `geometry` 是稽核欄，只有 35 支寫了明確的 AoE 數字。");
+
+  // JASS vs w3a 打架
+  const conflicts: { num: string; name: string; jass: number; w3a: number }[] = [];
+  for (const [n, o] of originals) if (o.conflict) {
+    // ⚠️ 名字優先取**出貨內容**的（`JASS_BEHAVIOR` 的 skill_name 有些只有編號）。
+    const r = rows.find((x) => x.num === n);
+    const name = r?.name && r.name !== n ? r.name : n;
+    conflicts.push({ num: n, name, jass: o.conflict.jass, w3a: o.conflict.w3a });
+  }
+  conflicts.sort((a, b) => a.num.localeCompare(b.num));
+  p();
+  p("### ⚠️ JASS 與 w3a 打架的技能（⛔ 產生器不替 owner 選一個）");
+  p();
+  if (conflicts.length === 0) {
+    p("（目前 0 支：凡是 JASS 寫了明確 AoE 的，都與 w3a 的 `area` 欄位一致。）");
+  } else {
+    p("| 編號 | 技能 | JASS 說（第 3 層） | w3a 說（第 5 層） | 差 | w3a 這一格是半徑嗎 |");
+    p("|---|---|---:|---:|---:|---|");
+    for (const c of conflicts) {
+      // ⚠️ WC3 的 DataA–F 欄位是**共用的**，同一格在不同技能上意思完全不同。
+      //    落在 [50, 1200] 之外的「半徑」不是資料錯誤，是**那一格根本不是半徑** ——
+      //    ⛔ 標出來而不是丟掉：丟掉會讓 owner 以為那幾支沒有分歧。
+      const plausible = c.w3a >= 50 && c.w3a <= 1200;
+      p("| " + c.num + " | " + c.name + " | **" + num(c.jass) + "** | " + num(c.w3a) + " | " +
+        num(Math.round((c.jass / c.w3a - 1) * 1000) / 10) + "% | " +
+        (plausible ? "✅ 是（真的分歧）" : "⛔ **不是** —— 那一格是別的意思") + " |");
+    }
+    p();
+    p("⭐ 照階梯 JASS 贏。⚠️ 最後一欄是**分歧的種類**，兩種要分開讀：");
+    p("· ✅ 那幾支是**真的兩層打架**，請 owner 看一眼 —— 差距本身就是資訊。");
+    p("· ⛔ 那幾支不是打架，是 w3a 的 `Area` 欄在那支技能上**根本不是半徑**");
+    p("  （WC3 的 DataA–F 是共用欄位）。這正是「只讀 w3a 會得到錯的機制模型」的實證。");
+  }
+
+  // 落差大的
+  const gaps = rows
+    .filter((r) => r.radiusGap > GAP_ALERT || r.rangeGap > GAP_ALERT)
+    .sort((a, b) => Math.max(b.radiusGap, b.rangeGap) - Math.max(a.radiusGap, a.rangeGap));
+  p();
+  p("---");
+  p();
+  p("## 四 · ⚠️ 落差大的技能 —— **收進級距會改變手感**，請 owner 過目");
+  p();
+  p("判準：現在的引擎值離**最近的那一級**超過 " + Math.round(GAP_ALERT * 100) + "%（相對級距值）。");
+  p("⛔ 這些**沒有**被自動收掉（第〇·六守則：不要四捨五入掉再假裝它一直都是那一級）。");
+  p();
+  if (gaps.length === 0) {
+    p("（目前 0 支。）");
+  } else {
+    p("共 **" + gaps.length + "** 支。");
+    p();
+    p("| 技能 | 引擎 AoE | → 級 | 落差 | 引擎施法距離 | → 級 | 落差 |");
+    p("|---|---:|---|---:|---:|---|---:|");
+    for (const r of gaps) {
+      const g = (v: number) => (v > GAP_ALERT ? "**" + Math.round(v * 100) + "%**" : v > 0 ? Math.round(v * 100) + "%" : "—");
+      p("| " + r.name + " `" + r.id + "` | " + (r.radius !== undefined ? num(r.radius) : "—") + " | " +
+        (r.radiusTier ?? "—") + " | " + (r.radius !== undefined ? g(r.radiusGap) : "—") + " | " +
+        (r.range !== undefined ? num(r.range) : "—") + " | " + (r.rangeTier ?? "—") + " | " +
+        (r.range !== undefined ? g(r.rangeGap) : "—") + " |");
+    }
+  }
+
+  p();
+  p("---");
+  p();
+  p("## 五 · 逐支對照（全部 " + rows.length + " 支）");
+  p();
+  p("`原作` = 依上面的優先序取到的 WC3 值。`引擎` = 真的跑過 `registerAll()` 之後註冊表裡的數字。");
+  p("`→級` = 用出貨級距表就近收之後會落在哪一級（⛔ 尚未寫回技能 JSON）。");
+  p();
+  p("| 技能 | id | 層 | 原作 AoE | 引擎 AoE | →級 | 原作距離 | 引擎距離 | →級 |");
+  p("|---|---|---|---:|---:|---|---:|---:|---|");
+  for (const r of rows) {
+    p("| " + r.name + " | `" + r.id + "` | " + r.layer + " | " +
+      (r.wcArea !== undefined ? num(r.wcArea) : "—") + " | " +
+      (r.radius !== undefined ? num(r.radius) : "—") + " | " + (r.radiusTier ?? "—") + " | " +
+      (r.wcRange !== undefined ? num(r.wcRange) : "—") + " | " +
+      (r.range !== undefined ? num(r.range) : "—") + " | " + (r.rangeTier ?? "—") + " |");
+  }
+  p();
+  p("<sub>⚙️ 由 `" + CMD + "` 從出貨 config + 出貨註冊表 + `tools/w3x-import/out/` 產生 · ⛔ 不要手改</sub>");
+  p();
+  return L.join("\n");
+}
+
+// ⚠️ 包成 `main()` 而不是 top-level await —— `tools/` 走 cjs 輸出，
+//    top-level await 在那個格式下 esbuild 直接拒絕轉譯。
+async function main(): Promise<void> {
+  const text = await build();
+  const check = process.argv.includes("--check");
+  const current = existsSync(DOC) ? readFileSync(DOC, "utf8") : "";
+  if (check) {
+    if (current !== text) {
+      console.error(`❌ ${DOC} 過期。跑 \`${CMD}\` 然後 git add docs/。`);
+      process.exit(1);
+    }
+    console.log("✅ 技能級距文件是最新的");
+  } else {
+    writeFileSync(DOC, text);
+    console.log(`✅ 寫出 ${DOC}（${text.split("\n").length} 行）`);
+  }
+}
+
+void main();

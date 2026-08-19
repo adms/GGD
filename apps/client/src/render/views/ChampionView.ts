@@ -43,6 +43,9 @@ import {
 import { FLASH_ALPHA, FLASH_MS, hitstopShiver } from "../combatFeedback";
 import { dissolveFrame } from "../deathDissolve";
 import { glbYawOffset } from "./glbFacing";
+// GH#392 —— WC3 掛點字串 → glb 關節名。⛔ 純函式(沒有 Babylon),而且它是從
+// 337 份出貨 glb 的普查推出來的六種命名慣例的**唯一**解析處。
+import { resolveAttachment } from "../vfx/attachment";
 import { TARGET_HEIGHT, normalizedModelScale } from "./modelSizing";
 import { ENABLED_ONLY, applyHiddenPrimitives } from "./hiddenPrimitives";
 import { isStandinBodyGlb } from "@ggd/shared/content/standinScale";
@@ -193,6 +196,21 @@ export interface FormAttachmentSpec {
   readonly bone: string;
   readonly scale: number;
   readonly offsetY: number;
+  /**
+   * GH#392 —— `true`(省略 = true)= 掛在關節底下,**每幀跟著那根骨頭的世界矩陣走**。
+   * `false` = 生成當下取一次骨頭的世界座標,之後留在原地。
+   *
+   * ⚠️ 這一格不是裝飾:「只做到附著、沒做到跟隨」的畫面**第一幀完全正確**,
+   * 角色走一步才看得出球留在原地(失敗形態②)。
+   */
+  readonly follow?: boolean;
+  /**
+   * GH#392 —— 要播掛件**自己**的哪一條動畫軌(glb `AnimationGroup` 的名字)。
+   * `null`/省略 = 播它全部的軌(出貨的三顆掛件各只有一條 `Stand`)。
+   */
+  readonly anim?: string | null;
+  /** 動畫循環。省略 = true。 */
+  readonly animLoop?: boolean;
 }
 
 /**
@@ -206,6 +224,35 @@ export interface FormAttachmentSpec {
 interface InstanceSkeleton {
   bones: { name: string }[];
   dispose?(): void;
+}
+
+/**
+ * GH#392 —— 掛件自己的動畫軌(`instantiateModelsToScene` 複製出來的
+ * `AnimationGroup`)。鴨子型別的理由和 {@link InstanceSkeleton} 一樣:守衛用的
+ * stub 不必是真的 Babylon 物件。⚠️ `play` 是 optional **只**為了 stub ——
+ * 每一個真的 `AnimationGroup` 都有。
+ */
+interface AttachmentAnimGroup {
+  name: string;
+  play?(loop?: boolean): void;
+  dispose(): void;
+}
+
+/**
+ * GH#392 —— 從複製出來的動畫軌裡挑出名字叫 `want` 的那幾條。
+ *
+ * 先逐字、再字尾 —— 和 `findBoneNode`/`formAttachHost` **同一個慣例**，理由也一樣：
+ * Babylon 的 `instantiateModelsToScene` 會把每一條軌重新命名成
+ * `<entityId>-form-<原名>`，所以逐字比對永遠 0 命中。
+ * ⛔ 一條都對不上就回空陣列 —— **不退回第一條**：猜一條播出來的東西，
+ * 和「這份內容填錯了」在畫面上分不出來。
+ */
+function pickByName(
+  groups: readonly AttachmentAnimGroup[],
+  want: string,
+): AttachmentAnimGroup[] {
+  const exact = groups.filter((g) => g.name === want);
+  return exact.length > 0 ? exact : groups.filter((g) => g.name.endsWith(want));
 }
 
 /**
@@ -290,6 +337,14 @@ export class ChampionView {
    * 所以「變回本體 = 掛件消失」是靠 `dispose()`,不需要任何解除邏輯。
    */
   private formAttachRoot: TransformNode | null = null;
+  /**
+   * GH#392 —— **每一份**掛件的根(`points[]` 一格一份;owner 的「雙手」= 兩份)。
+   *
+   * ⚠️ `formAttachRoot` 只記第一份,而它有既有的讀者(冪等閂)。這一張清單才是
+   * 釋放用的:`follow: false` 的那一份 **parent 是 null**,所以
+   * `this.root.dispose()` 一輩子碰不到它 —— 少了這一行就是每次變身漏一棵樹。
+   */
+  private formAttachParts: TransformNode[] = [];
   /** 掛件複製出來的 AnimationGroup —— 它們不是節點,`root.dispose()` 碰不到。 */
   private formAttachGroups: { dispose(): void }[] = [];
   /**
@@ -1789,25 +1844,54 @@ export class ChampionView {
   }
 
   /**
-   * 掛上變身態的球體掛件(#249 GH#288)。冪等,而且**只有 alternate 那一半**
-   * 會被呼叫到 —— 決定權在 `resolveFormVisual`,不在這裡。
+   * 掛上球體掛件(#249 GH#288;**N 份 + 跟隨 + 播動畫** = GH#392)。冪等。
    *
    * 執行順序上它必須排在 `.glb` 落地之後:掛點是本體 glb 的原生座標系,本體還沒
-   * 到就沒有東西可以掛。所以 `spec` 為 null 或 `glbRoot` 還沒有時**不點閂**,
+   * 到就沒有東西可以掛。所以清單為空或 `glbRoot` 還沒有時**不點閂**,
    * registry 下一幀會再問一次 —— 這和 `tryUpgradeToGlb` 對 `doc === null`
    * 的處理是同一個模式(「還不行」≠「不要」)。
    *
-   * @param spec null = 這一態沒有掛件(或後台把掛件關掉了) → 什麼都不做。
+   * ---------------------------------------------------------------------------
+   * GH#392 —— 這裡是 owner 那句話的三個能力真的落地的地方
+   * ---------------------------------------------------------------------------
+   * 「悟空超級賽亞人3還會**球體附著跟隨雙手上播放動畫**」拆開是三件事:
+   *
+   *   (a) 附著 —— `formAttachHost(spec.bone)` 解出關節。**本來就有**。
+   *   (b) 跟隨 —— `attachRoot.parent = host`。parent 就是每幀跟著世界矩陣走,
+   *       所以 (b) 也**本來就有** …… 只要 `follow` 沒被關掉。
+   *   (c) 播動畫 —— ⛔ **本來沒有**。這個方法一直把 `inst.animationGroups`
+   *       收進 `formAttachGroups`,而那個欄位**唯一的讀者是 `dispose()`**。
+   *       出貨的三顆掛件(`goku3head` / `awing` / `war3mapimported-poweraura`)
+   *       各有一條叫 `Stand` 的軌,所以悟空的超三頭從 #249 上架起就是**定格**的。
+   *       沒有任何守衛會紅 —— 每一個零件都是對的(第一·五守則的形狀)。
+   *
+   * ⚠️ `follow: false` 走的是**世界座標快照**:掛件不 parent 到關節,而是留在
+   * 生成當下那個位置。⛔ 不可以用「parent 到 glbRoot」代替 —— 那還是會跟著
+   * 角色走,只是不跟著手走,而畫面上兩者在原地不動時一模一樣。
+   *
+   * @param specs 空陣列 = 這具身體沒有掛件(或後台把掛件關掉了) → 什麼都不做。
    */
-  setFormAttachment(assets: AssetManager, spec: FormAttachmentSpec | null): void {
+  setFormAttachment(
+    assets: AssetManager,
+    specs: FormAttachmentSpec | readonly FormAttachmentSpec[] | null,
+  ): void {
     if (this.disposed || this.formAttachStarted) return;
-    if (!spec || !this.glbRoot) return; // 「還不行」——不點閂,下一幀再來
+    const list = specs === null ? [] : Array.isArray(specs) ? specs : [specs as FormAttachmentSpec];
+    if (list.length === 0 || !this.glbRoot) return; // 「還不行」——不點閂,下一幀再來
     this.formAttachStarted = true;
-    const bodyRoot = this.glbRoot;
+    for (const spec of list) this.attachOnePart(assets, spec, this.glbRoot);
+  }
+
+  /** 一份掛件。`setFormAttachment` 對清單裡的每一格呼叫一次。 */
+  private attachOnePart(
+    assets: AssetManager,
+    spec: FormAttachmentSpec,
+    bodyRoot: TransformNode,
+  ): void {
     void assets
       .load(spec.glbPath)
       .then((container) => {
-        if (!container || this.disposed || this.formAttachRoot) return;
+        if (!container || this.disposed) return;
         const inst = container.instantiateModelsToScene(
           (n) => `${this.entityId}-form-${n}`,
           false,
@@ -1818,7 +1902,15 @@ export class ChampionView {
           `champ-${this.entityId}-formpart`,
           this.root.getScene(),
         );
-        attachRoot.parent = host;
+        // (b) 跟隨。`follow !== false` 是預設 —— 省略這一格的既有內容一位元不變。
+        if (spec.follow === false) {
+          // 世界座標快照:掛件從此和角色無關(施法留在原地的殼)。
+          attachRoot.parent = null;
+          host.computeWorldMatrix(true);
+          attachRoot.position.copyFrom(host.getAbsolutePosition());
+        } else {
+          attachRoot.parent = host;
+        }
         for (const node of inst.rootNodes) node.parent = attachRoot;
         const meshes = attachRoot.getChildMeshes(false);
         if (meshes.length === 0) {
@@ -1834,12 +1926,24 @@ export class ChampionView {
           this.flashMeshes.push(mesh);
         }
         attachRoot.scaling.setAll(spec.scale > 0 ? spec.scale : 1);
-        attachRoot.position.y = spec.offsetY;
-        this.formAttachRoot = attachRoot;
-        this.formAttachGroups = inst.animationGroups as unknown as { dispose(): void }[];
+        attachRoot.position.y += spec.offsetY;
+        this.formAttachRoot ??= attachRoot;
+        this.formAttachParts.push(attachRoot);
+        // (c) 播動畫 —— ⭐ **這三行就是 GH#392 補上的那一半**。
+        //     `anim` 指名一條軌;省略 = 全部(WC3 對附著模型做的事)。
+        //     ⛔ 名字對不上就一條都不播 —— 不猜一條給它。
+        const groups = inst.animationGroups as unknown as AttachmentAnimGroup[];
+        // ⚠️ `instantiateModelsToScene` 把軌名**前綴**成 `<entityId>-form-Stand`
+        // （和節點名同一個慣例），所以逐字比對 `"Stand"` 一條都不會中 ——
+        // 那會是「填了 anim、畫面上沒動、沒有任何錯誤」的失敗形態②。
+        const wanted = spec.anim
+          ? pickByName(groups, spec.anim)
+          : groups;
+        for (const g of wanted) g.play?.(spec.animLoop !== false);
+        this.formAttachGroups.push(...(groups as unknown as { dispose(): void }[]));
         // #223 —— 掛件也會複製一具 Skeleton 進 `scene.skeletons`(悟空的超三頭
         // 是有骨架的),和上面的 AnimationGroup 一樣不會被 `root.dispose()` 收掉。
-        this.formAttachSkeletons = inst.skeletons as unknown as InstanceSkeleton[];
+        this.formAttachSkeletons.push(...(inst.skeletons as unknown as InstanceSkeleton[]));
         // 本體已經死透了才載完 —— 跟著隱藏,不要憑空冒出一顆頭。
         if (this.vanishedFlag) attachRoot.setEnabled(false);
       })
@@ -1857,10 +1961,26 @@ export class ChampionView {
    */
   private formAttachHost(bone: string): TransformNode | null {
     if (!bone || bone === "origin" || !this.glbRoot) return null;
-    const want = bone.toLowerCase();
+    const nodes: TransformNode[] = [this.glbRoot];
     for (const node of this.glbRoot.getDescendants(false)) {
       const n = node as TransformNode;
-      if (typeof n.name === "string" && n.name.toLowerCase().endsWith(want)) return n;
+      if (typeof n.name === "string") nodes.push(n);
+    }
+    // ⭐ GH#392 —— **WC3 掛點字串**先過那支普查推出來的解析器,再退回字尾比對。
+    // `"right,hand"` 是**一個**掛點寫成兩個逗號 token,直接拿去做 `endsWith`
+    // 一個節點都不會中,於是掛件靜靜掉回模型原點(失敗形態②)。
+    // `resolveAttachment` 認得六種命名慣例(`Hand Right Ref` / `hand.r` /
+    // `Bone_Hand_R` / `handright` …),而且**它就是 WC3 自己的退回規則**:
+    // 找不到就給 origin,那不是防禦性程式,是原作行為。
+    const resolved = resolveAttachment(bone, nodes.map((n) => n.name));
+    if (resolved.node !== null) {
+      const hit = nodes.find((n) => n.name === resolved.node);
+      // `origin` 解到本體根 = 「沒有骨頭」,交給呼叫端的 `?? bodyRoot`。
+      if (hit && hit !== this.glbRoot) return hit;
+    }
+    const want = bone.toLowerCase();
+    for (const n of nodes) {
+      if (n !== this.glbRoot && n.name.toLowerCase().endsWith(want)) return n;
     }
     return null;
   }
@@ -1901,6 +2021,12 @@ export class ChampionView {
     this.glbSkeletons = [];
     for (const s of this.formAttachSkeletons) s.dispose?.();
     this.formAttachSkeletons = [];
+    // GH#392 —— `follow: false` 的掛件 **parent 是 null**,所以下面那行
+    // `this.root.dispose()` 走不到它。⛔ 少了這個迴圈 = 每一次變身/死亡漏一棵樹,
+    // 而畫面上看不出來(它就停在那裡,看起來像場景的一部分)。跟隨的那幾份重複
+    // dispose 是安全的(Babylon 的 dispose 冪等)。
+    for (const p of this.formAttachParts) p.dispose(false, false);
+    this.formAttachParts = [];
     this.formAttachRoot = null;
     const scene = this.root.getScene();
     this.root.dispose(false, false);

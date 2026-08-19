@@ -8,8 +8,8 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | verdict | cells | meaning |
 | --- | ---: | --- |
-| ✅ OK | 223 | shape derived from the ability's own authored data |
-| 🟡 AMBIGUOUS | 14 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
+| ✅ OK | 225 | shape derived from the ability's own authored data |
+| 🟡 AMBIGUOUS | 12 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
 | ❌ MISSING | 0 | no derivable shape — **fails the test** |
 | 🟣 PASSIVE | 56 | permanent WC3 passive, never cast, nothing to warn about |
 
@@ -19,10 +19,10 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | castType | cells | shape language |
 | --- | ---: | --- |
-| `self` | 93 | self marker at the caster's feet |
+| `self` | 95 | self marker at the caster's feet |
 | `targeted` | 73 | lock (arc at the victim + tether to the caster) — walking does not help |
 | `—` | 56 | not cast |
-| `ground` | 49 | circle — the real `enemiesInCircle` disc; you can walk out |
+| `ground` | 47 | circle — the real `enemiesInCircle` disc; you can walk out |
 | `skillshot` | 15 | line — the projectile's corridor; step sideways |
 | `dash` | 7 | line — the sweep of the dash body |
 
@@ -58,7 +58,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 白木老樹精 - 白木卡迪那 `godie-e00s` | Q | 70-01 伸卡球 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
 | 白木老樹精 - 白木卡迪那 `godie-e00s` | W | 70-02 大怒石 | `—` | — | 🟣 PASSIVE | never cast |
 | 白木老樹精 - 白木卡迪那 `godie-e00s` | E | 70-03 木束縛之術 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 白木老樹精 - 白木卡迪那 `godie-e00s` | R | 70-04 千年練成 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 白木老樹精 - 白木卡迪那 `godie-e00s` | R | 70-04 千年練成 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 白木老樹精 - 白木卡迪那 `godie-e00s` | EX | 70-002 樹海降臨 | `—` | — | 🟣 PASSIVE | never cast |
 | 神鳴流劍士 - 櫻綻剎那 `godie-e00w` | PASSIVE | 77-00 浮雲-旋一閃 | `—` | — | 🟣 PASSIVE | never cast |
 | 神鳴流劍士 - 櫻綻剎那 `godie-e00w` | Q | 77-01 百烈櫻華斬 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
@@ -76,7 +76,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | Q | 13-01 暗步。極限之圓 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | W | 13-02 龍頭戲畫。牙突 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | E | 13-03 龍頭戲畫。布陣 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | R | 13-04 龍星群 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | R | 13-04 龍星群 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | EX | 13-002 絕。暗殺奧義 | `—` | — | 🟣 PASSIVE | never cast |
 | 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | PASSIVE | 15-00 真·不死不滅 | `—` | — | 🟣 PASSIVE | never cast |
 | 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | Q | 15-01 雷神槍「巨神殺手」 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
@@ -153,7 +153,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 黑魔導士 - 莉娜因巴斯 `godie-hjai` | PASSIVE | 04-00 翔封界 | `—` | — | 🟣 PASSIVE | never cast |
 | 黑魔導士 - 莉娜因巴斯 `godie-hjai` | Q | 04-01 火球術 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 黑魔導士 - 莉娜因巴斯 `godie-hjai` | W | 04-02 炸彈陣 | `ground` | circle r=4.40u | ✅ OK | radius 5.5 × abilityRange 0.8 |
-| 黑魔導士 - 莉娜因巴斯 `godie-hjai` | E | 04-03 龍破斬 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
+| 黑魔導士 - 莉娜因巴斯 `godie-hjai` | E | 04-03 龍破斬 | `ground` | circle r=6.60u | ✅ OK | radius 8.25 × abilityRange 0.8 |
 | 黑魔導士 - 莉娜因巴斯 `godie-hjai` | R | 04-04 神滅斬 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 黑魔導士 - 莉娜因巴斯 `godie-hjai` | EX | 04-002 惡夢魔王的碎片 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 獸矛傳承使 - 蒼月潮 `godie-hpb1` | PASSIVE | 07-00 獸化心靈 | `—` | — | 🟣 PASSIVE | never cast |

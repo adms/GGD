@@ -528,5 +528,8 @@ export default defineConfig({
   test: {
     environment: "node",
     include: ["src/**/*.test.ts"],
+    // GH#384 —— 逐技能特效綁定住在 `content/`，所以測試也要有人把它交進來
+    //（線上交它的是 `ContentDb.load()`）。理由寫在那支檔頭。
+    setupFiles: ["./src/testSetup.vfxContent.ts"],
   },
 });

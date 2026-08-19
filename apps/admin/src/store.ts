@@ -202,6 +202,10 @@ export type Page =
   // 元件、同一條 `putOverlayDoc`。刻意排在 冷卻規則 旁邊 —— 兩者都是「技能的
   // 尺」，操作者會一起找。
   | "aoeTiers"
+  // 施法距離五級距 (GH#414, owner「可施展技能的距離普遍超遠」): 同一個
+  // `ConfigDocPage` 元件、同一條 `putOverlayDoc`。刻意緊鄰 aoeTiers —— 兩者是
+  // 同一條梯子的兩個視窗，操作者一定會一起找。
+  | "rangeTiers"
   | "uiLexicon"
   /**
    * 混音 (`config/audio-mix.json`, owner 2026-08-17「其他角色語音應該是自己的一半」)
@@ -583,6 +587,8 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "castTime",
   // AoE 四級距: 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "aoeTiers",
+  // 施法距離五級距 (GH#414): 同上。
+  "rangeTiers",
   "uiLexicon",
   // 混音 (owner 2026-08-17): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "audioMix",

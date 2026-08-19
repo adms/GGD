@@ -264,6 +264,19 @@ const VFX_GROUPS: readonly FieldGroup[] = [
       { path: "uvScrollPerSec", label: "UV 捲動/秒", kind: "number" },
     ],
   },
+  // GH#392 —— `attachment@1`（穿在骨頭上的模型）也共用這個集合。三格對應
+  // owner 說的三件事：附著（掛點）· 跟隨 · 播動畫。`points` 是陣列，走原始 JSON。
+  {
+    title: "骨頭掛件 (attachment@1)",
+    fields: [
+      { path: "modelKey", label: "掛件模型", kind: "text", hint: "models/ 的文件 id，例 imported.goku3head" },
+      { path: "follow", label: "跟隨骨頭", kind: "boolean", hint: "空/開 = 每幀跟著那根骨頭走；關 = 生成當下取一次座標就不動" },
+      { path: "anim", label: "播哪條動畫", kind: "text", hint: "掛件自己的動畫軌名（多數是 Stand）；空 = 播全部" },
+      { path: "animLoop", label: "動畫循環", kind: "boolean", hint: "空 = 循環。關掉 = 只播一次就停在最後一格" },
+      { path: "scale", label: "掛件縮放", kind: "number", hint: "兩份 glb 的轉檔倍率常常不同，1 未必對（悟空超三頭是 0.3221）" },
+      { path: "offsetY", label: "掛件高度", kind: "number", hint: "沿 Y 微調；0 = 用 mdx 自己烘的高度" },
+    ],
+  },
 ];
 
 /**

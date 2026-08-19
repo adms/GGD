@@ -15,6 +15,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { cover } from "../../packages/shared/testkit/cover";
+import { expandSceneryProps } from "../../packages/shared/src/content/schema/arenaScenery";
+import { DEFAULT_ARENA_SCENERY_POLICY } from "../../packages/shared/src/content/schema/config";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "../..");
@@ -159,10 +161,43 @@ describe("WHERE IT IS USED is traced, not guessed", () => {
       expect(champUse.detail.length).toBeGreaterThan(0);
     }
   });
-  it("japanesecherry is traced to godie at 50 instances", () => {
-    const m = report.models.find((x: any) => x.path.endsWith("japanesecherry.glb"));
-    const use = m.usedBy.find((u: any) => u.kind === "COMBAT:arena.godie");
-    expect(use.count).toBe(50);
+  /**
+   * ⭐ GH#396 —— 報告算出來的**實例數** = 場景真的會生出來的**實例數**。
+   *
+   * ⚠️ 這是**兩個名詞的關係**，⛔ 不是「godie 有 50 棵櫻花」那種單一名詞
+   * （這條以前就是那樣寫的，而它對一個少算 66 件的報告是**綠的** ——
+   * `doc.decor` 有 50 棵是真的，缺的是 GH#362 散佈規則展開出來的另外 28 棵）。
+   *
+   * ⛔ 右邊刻意呼叫**出貨的那一支** `expandSceneryProps`，⛔ 不是在這裡重算
+   * `min(Σcount, maxPerZone)`：抄一份算術出來，兩邊只會一起錯。
+   */
+  it("每座競技場的擺設實例數 = decor + 散佈規則真的展開出來的件數", () => {
+    const policy = {
+      ...DEFAULT_ARENA_SCENERY_POLICY,
+      ...(JSON.parse(fs.readFileSync(path.join(ROOT, "content/config/ambient-vfx.json"), "utf8"))
+        .scenery ?? {}),
+    };
+    const dir = path.join(ROOT, "content/arenas");
+    const arenas = fs
+      .readdirSync(dir)
+      .filter((f) => f.endsWith(".json") && f !== "_index.json")
+      .map((f) => JSON.parse(fs.readFileSync(path.join(dir, f), "utf8")));
+    expect(arenas.length, "一張競技場都沒讀到 —— 這條會空轉成綠的").toBeGreaterThan(5);
+    let sawScatter = 0;
+    for (const a of arenas) {
+      const expected =
+        (a.decor ?? []).length +
+        (policy.enabled ? expandSceneryProps(a.scenery, a.zones ?? [], policy.maxPropsPerZone).length : 0);
+      if ((a.scenery?.props ?? []).length > 0) sawScatter++;
+      const counted = report.models
+        .flatMap((m: any) => m.usedBy ?? [])
+        .filter((u: any) => u.kind === `COMBAT:${a.id}`)
+        .reduce((n: number, u: any) => n + u.count, 0);
+      expect(counted, `${a.id} 的帳上少算了散佈規則展開出來的道具（GH#396）`).toBe(expected);
+    }
+    // ⛔ 而且真的有圖在用散佈規則：全部改成手擺的那一天，上面每一條都會
+    // 空轉成綠的，而這條守衛存在的理由就消失了。
+    expect(sawScatter, "沒有任何一張圖有 scenery.props —— 這條守衛在空轉").toBeGreaterThan(5);
   });
   it("procedural ground is carried on the scene, not on any glb", () => {
     const godie = report.screens.find((s: any) => s.id === "combat-godie");

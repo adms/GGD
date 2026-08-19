@@ -90,6 +90,7 @@ const BASELINE_PAGES: readonly Page[] = [
   // AoE 範圍四級距 —— owner 2026-08-11「原則上不寫範圍數字」。與 冷卻規則 相鄰：
   // 兩者都是「技能的尺」，操作者會一起找。
   "aoeTiers",
+  "rangeTiers",
   // 英雄屬性正規化 —— owner 2026-08-12「只有小中大才是真正的分佈」。
   // 與 AoE 級距、屬性上限 相鄰：三者都是「英雄與技能的尺」。
   "statNormalization",
@@ -153,6 +154,7 @@ const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
       "statCaps",
       "cooldownRules",
       "aoeTiers",
+  "rangeTiers",
       "statNormalization",
       "castTime",
       "mitigation",

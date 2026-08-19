@@ -16,6 +16,8 @@
  * page cannot silently diverge from what the game plays.
  */
 import { describe, it, expect } from "vitest";
+// GH#384 —— 逐技能特效綁定住在 content/；⛔ 少了這一行從 repo 根跑單檔會看到空的綁定。
+import "../../render/vfx/shippedAbilityArt.testkit";
 import { readFileSync, existsSync, readdirSync } from "node:fs";
 import { isShipped } from "../../testkit/contentFixtures";
 import { fileURLToPath } from "node:url";
@@ -31,7 +33,7 @@ import {
   type FamilyManifest,
   type ProvenanceFile,
 } from "./vfxCensus";
-import { W3X_ABILITY_ART } from "../../render/vfx/w3xAbilityArt";
+import { w3xAbilityArtRows } from "../../render/vfx/w3xAbilityArt";
 
 const root = (p: string): string => fileURLToPath(new URL(`../../../../../${p}`, import.meta.url));
 
@@ -181,7 +183,7 @@ describe("the ledger counts a doc as USED when it plays as an EXTRA", () => {
 
   it("a layer that is nobody's vfxKey but IS a promoted extra is not 'unused'", () => {
     // pick a real promotion so the extras come from the shipped table
-    const real = W3X_ABILITY_ART["godie-n003.r"]!;
+    const real = w3xAbilityArtRows()["godie-n003.r"]!;
     const m: FamilyManifest = {
       effects: [
         {
@@ -266,7 +268,7 @@ describe("the shipped census artefacts agree with the shipped content", () => {
     if (!provenance) return;
     const rows = buildCensusRows(abilities, [], provenance, vfxDocIds);
     const byId = new Map(rows.map((r) => [r.abilityId, r]));
-    for (const id of Object.keys(W3X_ABILITY_ART)) {
+    for (const id of Object.keys(w3xAbilityArtRows())) {
       // GH#323 —— 普查只涵蓋**出貨**的技能，退場的自然不在 rows 裡。
       if (!isShipped("abilities", id)) continue;
       const row = byId.get(id);

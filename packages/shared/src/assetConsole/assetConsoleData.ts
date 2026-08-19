@@ -197,11 +197,19 @@ export function canGenerateImages(probe: ProviderProbe): boolean {
 
 // ------------------------------------------------------------ style spec ---
 
+/**
+ * One input file the published snapshot was derived from.
+ *
+ * ⛔ **沒有 mtime**（GH#395）。它以前有，而它從來沒有被任何判斷讀過 ——
+ * {@link compareFreshness} 只比 sha256 —— 卻讓 `emit_style_spec.py --check`
+ * 在**一個位元組都沒變**的 checkout 之後回報 STALE。⭐ 這是 {@link StampEntry}
+ * 與這一支的差別：live stamp 的 mtime 是給人看的「上次動它是什麼時候」，
+ * 而**進版控的快照**裡的 mtime 是純噪音。
+ */
 export interface SpecSource {
   readonly path: string;
   readonly sha256: string;
   readonly bytes: number;
-  readonly mtime: string;
 }
 
 export interface ContactSlot {
@@ -220,7 +228,12 @@ export interface ContactSlot {
 }
 
 export interface StyleSpec {
-  readonly generatedAt: string;
+  /**
+   * ⛔ **沒有 `generatedAt`**（GH#395）。這份快照有 `--check`，而那格時間讓它
+   * 只能做**放寬過**的比對 —— 而一條被放寬的閘等於沒有閘（GH#389 的判例）。
+   * 「這份快照還準不準」由 `contentDigest` + `sources[].sha256` 回答，
+   * 而那正是頁面該顯示的東西。
+   */
   readonly templateVersion: string;
   readonly contentDigest: string;
   readonly sources: readonly SpecSource[];
@@ -306,7 +319,6 @@ export function parseStyleSpec(raw: unknown): StyleSpec | null {
     }
   }
   return {
-    generatedAt: str(d["generatedAt"]),
     templateVersion: str(d["templateVersion"]),
     contentDigest: str(d["contentDigest"]),
     sources: Array.isArray(d["sources"])
@@ -316,7 +328,6 @@ export function parseStyleSpec(raw: unknown): StyleSpec | null {
             path: str(e["path"]),
             sha256: str(e["sha256"]),
             bytes: num(e["bytes"]),
-            mtime: str(e["mtime"]),
           };
         })
       : [],

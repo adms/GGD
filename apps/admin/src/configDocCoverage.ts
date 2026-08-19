@@ -115,6 +115,12 @@ export const CONFIG_DOC_EXEMPTIONS: readonly ConfigDocExemption[] = [
     why: "⚠️ 這份文件的 `perLevel` 是一個 **`z.record`**（鍵是屬性名，不是固定欄位），而通用表單引擎只走得動**固定形狀的葉節點** —— 它列不出「有哪些鍵」，於是頁面會是空的。做一個空頁比沒有頁更糟：操作者點進去看到什麼都沒有，會以為壞了。",
     expiresWhen: "⚠️ 通用引擎長出「record 型欄位」的支援（新增/刪除鍵 + 每個鍵一組子欄位）的那一天，這一列就該退場，改成一頁真的能編的表。⭐ `config.stat-caps@1` 的 `caps` 是同一個形狀，兩份會一起解鎖。",
   },
+  {
+    docId: "vfx-ability-art",
+    kind: "KNOWN_GAP",
+    why: "⚠️ GH#384 把 617 筆「這支技能畫哪一組特效」從三張 TypeScript 常數表搬進 `content/`，所以它**現在才第一次有可能被後台編到** —— 在那之前連缺口都談不上（改一格要重建 client 映像）。它的 `bindings` 是一個 **`z.record`**（鍵是技能 doc id），而且每一列底下還有三個各自形狀不同的子物件（`prim` / `family` / `promoted`），通用表單引擎只走得動固定形狀的純量葉，畫出來會是一頁空的 —— 和 `per-level-bonus` 同一個引擎缺口。⭐ 它**確實有真的消費端**（`ContentDb.load()` → `setAbilityArtBindings`），所以⛔ 不是 DEFERRED（那一族的判準是「今天掛上去就是自我一致的謊言」），它是一張帳單。",
+    expiresWhen: "⚠️ 通用引擎長出「record 型欄位」支援（新增/刪除鍵 + 每個鍵一組子欄位）的那一天，這一列就該退場 —— ⭐ `per-level-bonus` 與 `config.stat-caps@1` 的 `caps` 是同一個形狀，三份會一起解鎖。⛔ 在那之前也不要拿 🎨 特效鑄造所（vfxForge）那一頁充數：那一頁編的是 `config.vfx-families@1` 的**覆寫層**，這一份是**證據層**，把兩者混成一頁會讓「清空一格」再也回不到原作的值。",
+  },
   // ── ① OWN_PAGE：有專屬頁。會腐爛，所以每一列都被機器驗兩件事 ────────────
   {
     docId: "arena-rules",

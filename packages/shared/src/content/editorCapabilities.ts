@@ -88,7 +88,21 @@ import { zHookEvent, zHookDefBase, zEffectDefUnion, zAuraDef } from "./schema/ef
 import { SIM_CAPABILITIES, isExpandable } from "./templates/expand";
 import { zAbilityDef } from "./schema/ability";
 import { zConditionLeaf } from "./schema/condition";
-import { zVfxDoc, zVfxOrient, zRibbonDoc, zVfxAbilityFamilyBinding, zVfxFamilyTuning } from "./schema/vfx";
+import {
+  zVfxDoc,
+  zVfxOrient,
+  zRibbonDoc,
+  // GH#392（lane 並行）—— `attachment@1`。⚠️ 這一行在 2026-08-19 掉過一次：
+  // GH#384 把單行 import 改成多行的同一刻，另一條 lane 正在往單行那一版加它，
+  // 於是它的**用處**進了 `VFX_SURFACE_SHAPES` 而**宣告**沒進來 ——
+  // `ReferenceError: zAttachmentDoc is not defined`，整個 shared 套件 18 個檔一起紅。
+  zAttachmentDoc,
+  zVfxAbilityFamilyBinding,
+  zVfxFamilyTuning,
+  zVfxPrimBinding,
+  zVfxFamilyBinding,
+  zVfxPromotedBinding,
+} from "./schema/vfx";
 import { zAbilityVfxLayer } from "./schema/abilityVfx";
 // ⭐ 文件授權面（GH#380）—— 這五份 Zod 是「一支技能／一件道具／一個狀態長什麼樣」
 //    的出貨定義本身。⛔ 不是為了這份契約另外抄的一張表。
@@ -1091,6 +1105,42 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
       "（一顆 `abilityCast` 一發），而這一列是「這一招的**特效**自己帶的那幾發」。" +
       "同一次施法兩邊都會響，這正是原作的樣子。",
   },
+  // ── 2026-08-19 GH#392：球體附著 · 跟隨 · 播動畫 ──────────────────────────
+  {
+    key: "vfx.bone-attachment@1",
+    plan: "GH#392 穿在骨頭上的模型（WC3 `Asph` 球體）",
+    expected: "supported",
+    // ⛔ 不問 effectKinds —— 掛件不是一個 effect，它是**一份文件**。三格分別對
+    //    應 owner 那句話的三件事，⭐ 三格都要在：只驗 `points` 的話，一個
+    //    「附著了但不跟隨、不播動畫」的引擎照樣宣稱 supported（失敗形態②）。
+    probe: (f) =>
+      f.vfxFields.has("points") && f.vfxFields.has("follow") && f.vfxFields.has("anim"),
+    caveat:
+      "⭐ **一份 `attachment@1` 綁在 `config.ambient-vfx@1.bindings` 上**，鍵可以是 " +
+      "**modelKey**（所有穿這具身體的人都戴著）或 **championId**（形態感知）。" +
+      "⚠️ 悟空兩態共用 `imported.goku`，所以「只有超三戴」**一定要用 championId** —— " +
+      "填 modelKey 的話基本型也會戴上。" +
+      "⚠️ `points[]` **一格掛一份拷貝**（= WC3 的 `atac`）：雙手就是 " +
+      '`["left,hand","right,hand"]`。⛔ `"right,hand"` 是**一個**掛點的兩個逗號 token，' +
+      "⛔ 不是兩個掛點。掛點名解析不出來 = 退回模型原點（那是 WC3 自己的行為，⛔ 不是缺陷）。" +
+      "⚠️ `anim` 填的是**掛件自己的** glb 動畫軌名（出貨的三顆都只有一條 `Stand`）；" +
+      "省略 = 播全部，填一個對不上的名字 = 一條都不播（⛔ 不會退回第一條）。" +
+      "⚠️ `follow: false` 是**世界座標快照**，掛件從此和角色無關 —— " +
+      "⛔ 不是「掛在模型根上」（那還是會跟著角色走）。" +
+      "⚠️ 掛件的生命週期綁在那具 body 上：變身會整個重建 view，所以「變回本體 = 掛件消失」" +
+      "不需要任何解除步驟。",
+    evidence:
+      "packages/shared/src/content/schema/vfx.ts（`zAttachmentDoc`）+ " +
+      "packages/shared/src/content/wornAttachments.ts（兩個來源折成一個型別）+ " +
+      "apps/client/src/render/views/ChampionView.ts（`attachOnePart`：parent = 跟隨、" +
+      "`g.play()` = 播動畫）+ apps/client/src/render/boneAttachmentFollow.test.ts" +
+      "（NullEngine 真的移動角色再讀掛件的**世界座標**）",
+    nearestExisting:
+      "⚠️ `vfx@1.anchorBone` 長得很像但**不是同一件事**：那是把一組**粒子發射器**掛到關節上" +
+      "（`AmbientVfx` 那條路），這一列掛的是**一整個模型**（有網格、有骨架、有自己的動畫軌）。" +
+      "⛔ 也不要跟 #73/#255「烘進 glb 的幾何」混淆：共用 modelKey 的變身對只能走執行期，" +
+      "烘進去基本型也會長出來。",
+  },
 ];
 
 export interface RuntimeCapabilityManifest {
@@ -1319,6 +1369,13 @@ const VFX_SURFACE_SHAPES: readonly SurfaceShape[] = [
   { key: "vfx@1", schema: zVfxDoc },
   { key: "vfx@1.orient", schema: zVfxOrient },
   { key: "ribbon@1", schema: zRibbonDoc },
+  /**
+   * ⭐ GH#392 —— 「**穿在骨頭上的模型**」。owner 2026-08-19 點名的那三件事
+   * （附著 · 跟隨 · 播動畫）在合約上的位置。⛔ 它**不是** `vfx@1` 的一格：
+   * 一份掛件沒有 emitter、沒有 lifetimeSec，硬塞進粒子文件會讓外部編輯器
+   * 產出一份執行期只會靜靜跳過的東西。
+   */
+  { key: "attachment@1", schema: zAttachmentDoc },
   { key: "ability@1.vfxLayers[]", schema: zAbilityVfxLayer },
   { key: "config.vfx-families@1.abilities[]", schema: zVfxAbilityFamilyBinding },
   /**
@@ -1328,6 +1385,17 @@ const VFX_SURFACE_SHAPES: readonly SurfaceShape[] = [
    * 看不到被覆寫的那個東西。
    */
   { key: "config.vfx-families@1.families[]", schema: zVfxFamilyTuning },
+  /**
+   * ⭐ GH#384 —— **哪一支技能畫哪一組特效**。這是三張 TypeScript 常數表（617 筆
+   * 逐 id 綁定）搬進 `content/` 之後長出來的授權面：在它之前，外部編輯器連
+   * 「這一招用哪個家族原型／哪一個 `fx.prim` 顏色形狀」都問不到 —— 那些字面上
+   * 不在任何一份 JSON 裡，⛔ 而它不會收到任何錯誤。
+   *
+   * ⚠️ 鍵刻意**沒有 `[]`**：`bindings` 是一張以技能 doc id 為鍵的**表**，不是陣列。
+   */
+  { key: "config.vfx-ability-art@1.bindings.prim", schema: zVfxPrimBinding },
+  { key: "config.vfx-ability-art@1.bindings.family", schema: zVfxFamilyBinding },
+  { key: "config.vfx-ability-art@1.bindings.promoted", schema: zVfxPromotedBinding },
 ];
 
 /**

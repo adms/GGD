@@ -1,0 +1,10 @@
+{
+  "id": "imported.thrust.arcane",
+  "schema": "projectile@1",
+  "speed": 18,
+  "maxRange": 12,
+  "hitRadius": 0.9,
+  "pierce": true,
+  "vfxKey": "fx.prim.arcane.bolt",
+  "meshShape": "bolt"
+}

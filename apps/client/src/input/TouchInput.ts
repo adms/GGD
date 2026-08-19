@@ -210,11 +210,27 @@ export interface TouchAimFrame {
 export type AimIndicatorState =
   | { kind: "line"; fromX: number; fromZ: number; dirX: number; dirZ: number; length: number }
   | { kind: "disc"; x: number; z: number; radius: number }
-  // hold-to-preview (task #152): a dashed cast-RANGE ring + AoE disc centred on
-  // the caster while an ability button is PRESSED-AND-HELD (touch finger or
-  // desktop mouse). `range`/`radius` are already post-#136 `abilityRange`; a null
-  // `radius` = the ability has no AoE, so the disc is skipped.
-  | { kind: "range"; x: number; z: number; range: number; radius: number | null }
+  // hold-to-preview (task #152): a cast-RANGE ring centred on the CASTER plus an
+  // AoE disc centred on WHERE THE SHOT LANDS, while an ability button is
+  // PRESSED-AND-HELD (touch finger or desktop mouse). `range`/`radius` are
+  // already post-#136 `abilityRange`; a null `radius` = no AoE, disc skipped.
+  //
+  // ⭐ GH#415 —— `aoeX`/`aoeZ` are a SEPARATE centre from `x`/`z` on purpose.
+  // owner 2026-08-19:「技能**範圍指示**應該是在**我的滑鼠上**，⛔ 不是以英雄
+  // 自身座標為圓心（**施法距離**才是）」。Before this they were one point, so a
+  // `ground` cast drew its blast circle under the caster's feet while the shot
+  // landed at the cursor — a circle in the WRONG PLACE, which players stand by.
+  // ⚠️ `aoeX`/`aoeZ` come from `resolveAoeCenter`, i.e. already clamped to range;
+  // null = don't draw the AoE circle at all (skillshot corridor, or no target).
+  | {
+      kind: "range";
+      x: number;
+      z: number;
+      range: number;
+      radius: number | null;
+      aoeX: number | null;
+      aoeZ: number | null;
+    }
   | null;
 
 export interface TouchFrame {

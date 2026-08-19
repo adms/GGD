@@ -5,7 +5,12 @@
  * tally-owned events (death/levelUp) and timing-only events map to silence.
  */
 import { describe, it, expect, afterEach } from "vitest";
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
+
+const HERE = dirname(fileURLToPath(import.meta.url));
 import type { EventMessage } from "@ggd/shared/protocol/messages";
 import { WEAPON_TAGS } from "@ggd/shared/sim/systems/BasicAttackSystem";
 import {
@@ -13,6 +18,7 @@ import {
   weaponAttackKey,
   castElementKey,
   wc3CastKey,
+  WC3_ABILITY_SFX,
   guardianRewardKey,
   setCombatSfxSeat,
   combatSfxSeat,
@@ -207,28 +213,33 @@ describe("combat SFX key selection (juice-sfx-key)", () => {
       expect(wc3CastKey(7)).toBeNull();
     });
 
-    it("honours a stock-MPQ overlay cue only when the full-asset overlay is on", () => {
+    it("每一個宣告的 cue 都真的由**正式 bundle** 供應 —— ⛔ 不是抄一份名單", () => {
       cover("juice-sfx-key");
-      // The stock wave (task #78 remainder) lives in the dev-only
-      // assets/blizzard-local mount, so the key passes on an overlay build…
-      expect(wc3CastKey("wc3.flaretarget3", true)).toBe("wc3.flaretarget3");
-      expect(wc3CastKey("wc3.peondeath", true)).toBe("wc3.peondeath");
-      expect(wc3CastKey("wc3.taunt", true)).toBe("wc3.taunt");
-      // …and answers null on a public bundle — the cast must fall back to the
-      // element/generic voice, never resolve to a URL prod does not serve.
-      expect(wc3CastKey("wc3.flaretarget3", false)).toBeNull();
-      expect(wc3CastKey("wc3.peondeath", false)).toBeNull();
-      // the committed map-author imports are honoured on EVERY tier
-      expect(wc3CastKey("wc3.nocute", false)).toBe("wc3.nocute");
-      // junk stays junk regardless of tier
-      expect(wc3CastKey("wc3.not-shipped", true)).toBeNull();
+      // ⭐ GH#402 —— 這一條取代了舊的「overlay 專用 cue 只在 fullAssets build 上
+      // honour」。owner 把 133 個原作音效搬進版控之後，那個閘的唯一效果變成
+      // **正式站上 49 支技能的施法音靜音**，而檔案就在那裡（失敗形態②）。
+      //
+      // ⚠️ 它問的是**兩個名詞的關係**：宣告集合 × audio-map 供不供應那個路徑。
+      // ⛔ 不是「key 長什麼樣」。哪天真的又有一個 clip 只住在 overlay 裡，
+      // 這一條會紅，而修法是**把閘做回來**，⛔ 不是把 key 從集合裡刪掉。
+      const map = JSON.parse(
+        readFileSync(join(HERE, "../../../../content/config/audio-map.json"), "utf8"),
+      ) as { sfx: Record<string, { files?: string[] }> };
+      const unserved = [...WC3_ABILITY_SFX].filter((k) => {
+        const files = map.sfx[k]?.files;
+        return !files?.length || files.every((f) => f.startsWith("assets/blizzard-local/"));
+      });
+      expect(
+        unserved,
+        "這些 cue 被宣告成「會播」，但正式 bundle 不供應它們的檔案 —— " +
+          "casts 會靜靜退回通用音:\n  " + unserved.join("\n  "),
+      ).toEqual([]);
+      expect(WC3_ABILITY_SFX.size).toBeGreaterThan(40);
     });
 
-    it("routes a full ability cast through an overlay cue (vitest = dev build)", () => {
+    it("routes a full ability cast through a stock-MPQ cue", () => {
       cover("juice-sfx-key");
-      // vitest runs under vite's dev env, so the default overlayEnabled arm is
-      // the full-asset one — the stock cue outranks the element whoosh exactly
-      // like the committed three do.
+      // 原作那一發 outrank 元素風聲，跟地圖作者自己 import 的三發一模一樣。
       expect(
         combatSfxKey(ev("abilityCast", { sfxKey: "wc3.soulgem", vfxKey: "fx.prim.fire.nova" })),
       ).toBe("wc3.soulgem");

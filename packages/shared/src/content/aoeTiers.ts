@@ -38,12 +38,25 @@
  * ⛔ 專案裡另外三處寫的係數**都是錯的**（第三守則），不要引用它們。
  */
 
+import {
+  DUEL_ZONE_RADIUS_REF,
+  SKILL_TIER_NAMES,
+  ladderWindow,
+  type SkillTierName,
+} from "./skillTiers";
+
 /** `content/config/aoe-tiers.json` 的文件 id。 */
 export const AOE_TIERS_DOC_ID = "aoe-tiers";
 
-/** 四個級別。⛔ 順序就是由小到大，後台下拉選單與文件共用這一份。 */
-export const AOE_TIER_NAMES = ["小", "中", "大", "超大"] as const;
-export type AoeTierName = (typeof AOE_TIER_NAMES)[number];
+/**
+ * 五個級別。⛔ 順序就是由小到大，後台下拉選單與文件共用這一份。
+ *
+ * ⭐ 2026-08-19（GH#414）起這**不是自己的一份陣列** —— 四軸共用
+ * `skillTiers.ts` 的 {@link SKILL_TIER_NAMES}（owner：「正規化成五級距⋯
+ * 文件 JSON 編輯器 後台設定 都統一」）。留這個別名是為了不動 30 幾處呼叫端。
+ */
+export const AOE_TIER_NAMES = SKILL_TIER_NAMES;
+export type AoeTierName = SkillTierName;
 
 export interface AoeTiers {
   /**
@@ -53,17 +66,21 @@ export interface AoeTiers {
    * 這一格只管「級別要不要被翻譯成半徑」。
    */
   enabled: boolean;
-  /** 級別 → 半徑（GGD 單位）。四格都要有值。 */
+  /** 級別 → 半徑（GGD 單位）。五格都要有值。 */
   radius: Readonly<Record<AoeTierName, number>>;
 }
 
 /**
- * 出貨值。⚠️ 這四個數字與 `content/config/aoe-tiers.json` 必須一致，
+ * 出貨值。⚠️ 這五個數字與 `content/config/aoe-tiers.json` 必須一致，
  * `configDrift.test.ts` 那一族在守（第一守則的三個住處）。
+ *
+ * ⭐ **從梯子推導，⛔ 不抄字面值**（GH#414）：AoE 取橫木 [1..5]，
+ * 於是 3 / 4.5 / 6 / 8 逐位元等於改制前的出貨值，第五格「極大」= R/2 = 12。
+ * ⇒ 110 支填了 `radiusTier` 的技能**一支都沒有改變手感**。
  */
 export const DEFAULT_AOE_TIERS: AoeTiers = Object.freeze({
   enabled: true,
-  radius: Object.freeze({ 小: 3, 中: 4.5, 大: 6, 超大: 8 }),
+  radius: ladderWindow(DUEL_ZONE_RADIUS_REF, 1),
 });
 
 /**

@@ -247,6 +247,11 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-19",
     why: "同上（地標道具那一族）。⚠️ 這一族**比背景道具更可能先變綠**：地標本來就常是「架在台座／柱頂上」的東西，而那正是缺 y 時唯一表達不出來的形狀。",
   },
+  "variant:vfx#attachment@1": {
+    status: "landing",
+    since: "2026-08-19",
+    why: "GH#392 —— `attachment@1` 是 `content/vfx/` 的**第三種** schema（穿在骨頭上的模型）。⭐ **零內容是刻意的，而且機制已經在出貨的路徑上跑**：既有的變身外觀表（悟空超三頭）與這一族折成同一個 `WornAttachment` 型別，所以引擎那一半今天就活著 —— 它修好的正是「掛件的動畫軌從上架起沒有人播」（`formAttachGroups` 唯一的讀者是 `dispose()`）。⛔ 缺的不是接線，是**兩個數字與一份美術**：櫻綻剎那的翅膀與索隆的武裝霸王氣場卡在 `scale`（悟空的 0.3221 是兩份 glb 轉檔倍率的比值，這兩份推不出等價的比值，而預設 1 會讓翅膀有角色的 4.6 倍大 —— 見 GH#432）；悟空的雙手球體卡在「球體用哪個模型」（w3x 只記了一顆在 origin）。**到期**：GH#432 拿到那兩個 scale，第一份內容就會出現。",
+  },
   "field:abilities.passive.ranks[].auras[].scaleByNearby": {
     status: "landing",
     since: "2026-08-18",
@@ -2388,12 +2393,54 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "同「中」—— 四個刻度共用同一段查表的第三格，引擎那一側與已落地的「小」逐字是同一條路。" +
       "零採用講的是內容排序（沒有一支長距離位移需要改用級別），⛔ 不是機制缺口。",
   },
+  "enum:abilities.effects[]#dash.distanceTier=超大": {
+    status: "landing",
+    since: "2026-08-19",
+    why:
+      "同「中」—— 共用同一段查表的第四格。⚠️ 這一格 2026-08-19 之前叫「極大」（GH#414 " +
+      "把 AoE 的「超大」與位移的「極大」合併成一套五級距）；改名時它的採用數是 **0**，" +
+      "所以沒有任何一支技能的級距詞改變了意思。零採用講的是內容排序，⛔ 不是機制缺口。",
+  },
   "enum:abilities.effects[]#dash.distanceTier=極大": {
     status: "landing",
-    since: "2026-08-18",
+    since: "2026-08-19",
     why:
-      "同「中」—— 四個刻度共用同一段查表的第四格，引擎那一側與已落地的「小」逐字是同一條路。" +
-      "零採用講的是內容排序（沒有一支超長距離位移需要改用級別），⛔ 不是機制缺口。",
+      "GH#414 的**第五格**（位移 22 / 擊退 8）。與前四格共用同一段查表，引擎那一側逐字" +
+      "是同一條路。⛔ 不要為了讓它變綠去把既有技能改成「極大」—— 那是把距離拉長，" +
+      "而 owner 2026-08-19 抱怨的正是「距離普遍超遠」。",
+  },
+  "enum:abilities.effects[]#blink.radiusTier=極大": {
+    status: "landing",
+    since: "2026-08-19",
+    why:
+      "GH#414 五級距的第五格（半徑 12 = 決鬥區半徑的一半）。五格共用 `resolveRadiusTier` " +
+      "同一段查表，已落地的「小/中/大/超大」逐字是同一條路。零採用 = 內容還沒有一支需要" +
+      "半場範圍的 blink，⛔ 不是機制缺口。",
+  },
+  "enum:abilities.radiusTier=極大": {
+    status: "landing",
+    since: "2026-08-19",
+    why:
+      "同上（技能頂層的那一格）。⭐ 第五格是**加在頂端**的，所以既有 110 支填了級別的技能" +
+      "一格都沒有動 —— 這一列是零採用**的原因**，不是它的缺陷。",
+  },
+  // ⭐ GH#414 —— 施法距離級距。owner 2026-08-19:「可施展技能的距離普遍超遠」。
+  // ⚠️ 這兩列的零採用是**刻意**的：把 216 支的施法距離收進級距是一次真的平衡變更
+  // （中位數 11、最大 29.33），而落差大的 13 支已經列進
+  // `docs/editor-contract/ggd-skill-tiers.md` 第四章等 owner 過目。
+  // ⛔ 不要為了讓這兩列變綠就把技能批次改成級距詞 —— 第〇·六守則：可以停就停。
+  "field:abilities.rangeTier": {
+    status: "landing",
+    since: "2026-08-19",
+    why:
+      "GH#414 施法距離五級距。機制是完整的（`resolveRangeTier` 接在 `registries.ts` 的 " +
+      "`withTiers`，守衛 `skillTierLadder.test.ts` 第④條真的重跑 registerAll 驗過），" +
+      "缺的是**內容側的批次改寫**，而那是一次要 owner 勾的平衡變更，⛔ 不是我可以順手做的。",
+  },
+  "field:champions.abilities.*.rangeTier": {
+    status: "landing",
+    since: "2026-08-19",
+    why: "同 `field:abilities.rangeTier` —— 英雄卡內嵌鏡像走同一條註冊路徑、同一張表。",
   },
 };
 

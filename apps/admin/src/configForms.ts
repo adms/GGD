@@ -59,6 +59,7 @@ import {
   zConfigContentLoadDoc,
   zConfigAuthoringRulesDoc,
   zConfigAoeTiersDoc,
+  zConfigRangeTiersDoc,
   zConfigStatNormalizationDoc,
   zConfigWoundsDoc,
   zConfigWeaknessDoc,
@@ -92,6 +93,8 @@ import { zConfigMitigationDoc } from "@ggd/shared/content/schema/mitigationDoc";
 import { zConfigMapSpecDoc } from "@ggd/shared/content/schema/mapSpecDoc";
 import { zConfigCameraDoc } from "@ggd/shared/content/schema/config";
 import { zConfigDisplacementTiersDoc } from "@ggd/shared/content/schema/displacementDoc";
+// ⛔ 級距名只有一份（GH#414）—— 後台不重打一組字串。
+import { SKILL_TIER_NAMES } from "@ggd/shared/content/skillTiers";
 // ⚠️ 深路徑 import：`config.victory-podium@1` 的 Zod 住在自己的檔案裡（欄位的理由
 // 很長，而且客戶端 render/** 直接吃它），`content/schema/index.ts` **沒有**再匯出
 // 一次，所以這裡走 package.json 的 `"./*"` 子路徑。`laneConfigDocs.test.ts` 走的是
@@ -845,11 +848,13 @@ const AOE_TIERS_SPEC: ConfigDocSpec = {
   docId: "aoe-tiers",
   schemaTag: "config.aoe-tiers@1",
   zod: zConfigAoeTiersDoc,
-  title: "AoE 範圍四級距",
+  title: "AoE 範圍五級距",
   intro: [
     "技能的範圍**寫級別不寫數字**。owner 2026-08-11：「重新對應範圍只有 小／中／大／超大，**原則上不寫範圍數字**」。技能 JSON 填 `radiusTier: \"中\"`，這一頁決定「中」是多少半徑。",
     "⭐ 這一頁存在的理由就是**單一住處**：把數字寫在每支技能上等於 115 個住處，想把「中」從 4.5 調成 5.0 要改 115 個檔案。填了級別的技能，改這一格全部一起動。",
-    "四個級別的意思：小 ≈ 同時打到 5 人 ／ 中 ≈ 10 人（預設）／ 大 ≈ 1/4 競技場 ／ 超大 ≈ 1/3 競技場。",
+    "⭐ owner 2026-08-19（GH#414）：「正規化成**五級距**」。第五格「極大」是新加的，前四格**一個數字都沒有動** —— 所以 110 支填了級別的技能手感完全不變。",
+    "五個級別的意思：小 ≈ 同時打到 5 人 ／ 中 ≈ 10 人（預設）／ 大 ≈ 1/4 競技場 ／ 超大 ≈ 1/3 競技場 ／ 極大 ≈ 1/2 競技場。",
+    "⭐ 這五個數字**不是挑的**：它們是「決鬥區半徑 24 的 1/8 · 3/16 · 1/4 · 1/3 · 1/2」。其中 1/4 與 1/3 是 owner 自己指定的錨，其餘由同一條分母數列延伸。同一條梯子也產出位移級距與施法距離級距（`packages/shared/src/content/skillTiers.ts`）。",
     "⚠️ 這四個數字是**卡面值**。玩家實際吃到的是它再乘「戰鬥系統」頁的 `abilityRange`（出貨 0.8）—— 所以「大 = 6」畫在地上是 4.8，也就是決鬥區半徑 24 的 **1/5**，不是 1/4。要讓比例在畫面上成立，這四格要各自除以 0.8。",
     "⚠️ AoE 命中是身體碰撞（英雄碰撞半徑 0.6），所以半徑 r 實際會掃到**圓心距離 r + 0.6** 的人。",
     "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/aoe-tiers.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
@@ -882,10 +887,51 @@ const AOE_TIERS_SPEC: ConfigDocSpec = {
     {
       path: "radius.超大",
       zh: "超大 — 半徑",
-      note: "1/3 競技場（卡面座標：24 ÷ 3）。原 WC3 500 以上。⚠️ 上界 24 ＝ 決鬥區半徑：大於它就是全場命中，那要走不設 radius 的寫法，不是把這格填爆。",
+      note: "1/3 競技場（卡面座標：24 ÷ 3）。原 WC3 500 以上。出貨有 6 支技能填這一級。",
+    },
+    {
+      path: "radius.極大",
+      zh: "極大 — 半徑",
+      note: "1/2 競技場（卡面座標：24 ÷ 2）。⭐ GH#414 新加的第五格 —— 加在**頂端**是刻意的：加在底端會讓既有的「小」變成「中」，那是 110 支技能的無聲手感變更。⚠️ 上界 24 ＝ 決鬥區半徑：大於它就是全場命中，那要走不設 radius 的寫法，不是把這格填爆。",
     },
   ],
-  // 四格純量 + 一個開關，沒有不編輯的分支要原封帶走。
+  // 五格純量 + 一個開關，沒有不編輯的分支要原封帶走。
+  preserved: [],
+};
+
+// ───────────────────────────── 施法距離級距 (config/range-tiers) ─
+
+const RANGE_TIERS_SPEC: ConfigDocSpec = {
+  page: "rangeTiers",
+  collection: "config",
+  docId: "range-tiers",
+  schemaTag: "config.range-tiers@1",
+  zod: zConfigRangeTiersDoc,
+  title: "施法距離五級距",
+  intro: [
+    "owner 2026-08-19：「**可施展技能的距離普遍超遠**」。技能的施法距離**寫級別不寫數字**，技能 JSON 填 `rangeTier: \"中\"`，這一頁決定「中」是多遠。",
+    "⚠️ 「超遠」的根因**不是換算係數錯**。係數（`GGD_PER_WC3 = 11/600`）經 owner 自己的校準點驗證過是對的。根因是**這一軸在 GH#414 之前完全沒有表** —— 量到 404 筆施法距離，中位數 11、**最大 29.33**，而決鬥區半徑只有 24：有技能打得比整個決鬥區還遠。",
+    "⭐ 梯級與 AoE **完全同一條**（決鬥區半徑 24 的 1/8 · 3/16 · 1/4 · 1/3 · 1/2）。同一個字在兩軸上指向同一個絕對值 —— 一支「大」的技能打得到 6，炸開也是 6。那是 owner 說的「統一」最強的讀法。",
+    "⚠️ 這五個是**卡面值**。玩家實際吃到的是它再乘「戰鬥系統」頁的 `abilityRange`（出貨 0.8），與 AoE 完全同一個形態。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/range-tiers.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "packages/shared/src/content/rangeTiers.ts 的 resolveRangeTier（全專案唯一的查表處）← content/registries.ts 的 registerAll，在技能註冊時把 rangeTier 翻成 range；standalone 與 champion-embedded 兩條路共用同一個答案",
+  effect:
+    "**要重啟 game-server shard 才生效**（內容在註冊時就解析完）。客戶端要重新載入 bundle。和 AoE 級距同一個形態(#278)。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "級距總開關",
+      note: "關掉之後 `rangeTier` 不解析（填了也不生效），技能只剩手寫的 `range`。⚠️ 關掉**不會**讓技能失去射程 —— 手寫值一直都在。",
+    },
+    ...SKILL_TIER_NAMES.map((tier) => ({
+      path: `range.${tier}`,
+      zh: `${tier} — 施法距離`,
+      note: `填 \`rangeTier: "${tier}"\` 的技能打得到多遠（卡面值）。⚠️ 改這一格，樹上每一支標成「${tier}」的技能同時跟著變。`,
+    })),
+  ],
+  // 五格純量 + 一個開關，沒有不編輯的分支要原封帶走。
   preserved: [],
 };
 
@@ -2665,7 +2711,8 @@ const DISPLACEMENT_TIERS_SPEC: ConfigDocSpec = {
   zod: zConfigDisplacementTiersDoc,
   title: "位移級距",
   intro: [
-    "位移距離走**四級距**（小/中/大/極大），⛔ 技能不再寫死距離數字 —— 和 AoE 級距、冷卻規則同一個形態。",
+    "位移距離走**五級距**（小/中/大/超大/極大），⛔ 技能不再寫死距離數字 —— 和 AoE 級距、施法距離級距、冷卻規則同一個形態。",
+    "⭐ owner 2026-08-19：「將技能相關設定**正規化成五級距**，並且將相關**文件 JSON 編輯器 後台設定 都統一**」。這一頁的第四格以前叫「極大」而 AoE 那一頁叫「超大」—— **同一個位置兩個名字**。統一之後第四格改叫「超大」，「極大」讓給新的第五格。⚠️ 出貨內容裡 0 支技能用過舊的「極大」，所以這次改名**沒有任何一支技能改變手感**。",
     "⭐ **兩條梯子**：`travel` = 自己動（衝刺），`push` = 別人被推（擊退）。出貨分佈幾乎不重疊（衝刺 5.0–14.67、擊退 2.0–6.0），硬塞成一條會讓 14 支擊退全部擠進「小」。要合成一條就把兩張表填成一樣的數字。",
     "⚠️ **速度那一欄是安全欄位不是手感欄位**（GH#318）：穿牆的門檻是「每 tick 位移 > 身體半徑」，所以上限 = ⌊30 × 最小身體半徑 × 安全係數⌋。**關掉「夾住速度」穿牆就會回來**。",
     "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/displacement-tiers.json`**。",
@@ -2676,7 +2723,9 @@ const DISPLACEMENT_TIERS_SPEC: ConfigDocSpec = {
     { path: "enabled", zh: "級距總開關", note: "關掉之後技能照自己文件裡寫的距離走，等於這套級距沒有存在過。⚠️ 它**不會**連帶關掉速度夾限（那是下面獨立的一格）。" },
     { path: "clampSpeed", zh: "夾住位移速度（穿牆修復本體）", note: "⛔ **這一格才是 GH#318 的修復本體**，而且它**無條件套用**（跟有沒有填級別無關）。關掉它，出貨 35 個位移效果裡有 29 個會穿牆。" },
     { path: "safetyFactor", zh: "速度上限的安全係數", note: "速度上限 = ⌊30 × 最小身體半徑 × 這一格⌋。1.0 = 剛好貼著穿牆門檻，出貨 0.9 留一成餘裕。⚠️ 調高會讓位移更快但逼近穿牆。" },
-    ...(["小", "中", "大", "極大"] as const).flatMap((tier) => [
+    // ⛔ 級距名從 `SKILL_TIER_NAMES` 來，⛔ 不在這裡重打一組 —— 重打就是第二個
+    //    住處，而它會在下一次改級距數的時候安靜地漏掉一格。
+    ...SKILL_TIER_NAMES.flatMap((tier) => [
       { path: `travel.${tier}.distance`, zh: `衝刺 · ${tier} · 距離`, note: `自己位移（衝刺類）在「${tier}」這一格走多遠。⚠️ 改它會同時影響**每一支**填了這個級別的技能。` },
       { path: `travel.${tier}.speed`, zh: `衝刺 · ${tier} · 速度`, note: `每秒幾單位。⚠️ 這是安全欄位：超過上限會被「夾住位移速度」那一格截掉，⛔ 不是拿來調手感的。` },
       { path: `push.${tier}.distance`, zh: `擊退 · ${tier} · 距離`, note: `被別人推（擊退類）在「${tier}」這一格推多遠。⚠️ 與衝刺是**兩條獨立的梯子**，改這裡不影響衝刺。` },
@@ -2956,6 +3005,7 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   COOLDOWN_RULES_SPEC,
   CAST_TIME_SPEC,
   AOE_TIERS_SPEC,
+  RANGE_TIERS_SPEC,
   UI_LEXICON_SPEC,
   STAT_NORMALIZATION_SPEC,
   WOUNDS_SPEC,

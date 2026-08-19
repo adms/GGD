@@ -1,0 +1,3353 @@
+{
+ "authorisation": "owner 2026-08-19：「請幫我註記取消這個規則，現在的線上已經是雙重審查只給認識的親友玩了，請直接上架但註記來源就好 不要ignore」（GH#402）",
+ "boundNote": "`bound` 是**推導**的（掃 vfx-families.json 有沒有人指到這個 key），⛔ 不是宣告的 —— 判例同 sfxLabCredits.ts 的『使用中 vs 收錄未啟用』。bound=false ⛔ 不是死位元組：它是**鑄技工坊下拉選單裡的一格**，owner 在後台把任何一支技能指過來就會響（第一守則）。",
+ "clips": {
+  "wc3.akamapissed8": {
+   "abilityDocs": [
+    "godie-emfr.w"
+   ],
+   "archive": "War3xLocal.mpq",
+   "bound": true,
+   "bytes": 153222,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/akamapissed8.wav",
+   "ggSnd": [
+    "gg_snd_AkamaPissed8"
+   ],
+   "key": "wc3.akamapissed8",
+   "models": [],
+   "sha256": "978636f2113a8e8b644c5f1c628ca83bdea434f7bf02f9470f849a170b58c143",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "AkamaPissed8.wav",
+   "wc3Path": "Units\\Other\\DranaiAkama\\AkamaPissed8.wav"
+  },
+  "wc3.altarofelderswhat1": {
+   "abilityDocs": [
+    "godie-n00p.e",
+    "godie-nsjs.e"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 154296,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/altarofelderswhat1.wav",
+   "ggSnd": [
+    "gg_snd_AltarOfEldersWhat1"
+   ],
+   "key": "wc3.altarofelderswhat1",
+   "models": [],
+   "sha256": "d409ae5d63eb1deac49b983ab14284c5914938a9432041336e0063abee1288c0",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "AltarOfEldersWhat1.wav",
+   "wc3Path": "Buildings\\NightElf\\AltarOfElders\\AltarOfEldersWhat1.wav"
+  },
+  "wc3.ancestralspirit": {
+   "abilityDocs": [],
+   "archive": "War3x.mpq",
+   "bound": false,
+   "bytes": 135346,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXAAST"
+   ],
+   "file": "assets/audio/wc3/ancestralspirit.wav",
+   "ggSnd": [],
+   "key": "wc3.ancestralspirit",
+   "models": [
+    "goku"
+   ],
+   "sha256": "c1aa786499684f1b36b52fb1e036d91dee42c1a7e8e1effa651b4d292a75d2d6",
+   "soundLabel": "AncestralSpirit",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "AncestralSpirit.wav",
+   "wc3Path": "Abilities\\Spells\\Orc\\AncestralSpirit\\AncestralSpirit.wav"
+  },
+  "wc3.archerdeath1": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 160584,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXDRAN"
+   ],
+   "file": "assets/audio/wc3/archerdeath1.wav",
+   "ggSnd": [],
+   "key": "wc3.archerdeath1",
+   "models": [
+    "herogirl",
+    "herokunoichi",
+    "herolingtong",
+    "herorider",
+    "heroshana"
+   ],
+   "sha256": "53cc13fadf88c9997cb3b0d7dbb4271c203677e5f6cbf93668a8c73953a3c56c",
+   "soundLabel": "ArcherDeath",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "ArcherDeath1.wav",
+   "wc3Path": "Units\\NightElf\\Archer\\ArcherDeath1.wav"
+  },
+  "wc3.axemissilelaunch1": {
+   "abilityDocs": [
+    "godie-h00l.r"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 27258,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/axemissilelaunch1.wav",
+   "ggSnd": [
+    "gg_snd_AxeMissileLaunch1"
+   ],
+   "key": "wc3.axemissilelaunch1",
+   "models": [],
+   "sha256": "c206e1ecb258845273d4886eb728eaaed11b2a6e5b7ef7a2ae0d3e10ebcf379d",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "AxeMissileLaunch1.wav",
+   "wc3Path": "Abilities\\Weapons\\Axe\\AxeMissileLaunch1.wav"
+  },
+  "wc3.banditdeath1": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 78454,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXDBNT"
+   ],
+   "file": "assets/audio/wc3/banditdeath1.wav",
+   "ggSnd": [],
+   "key": "wc3.banditdeath1",
+   "models": [
+    "billy",
+    "linkstik"
+   ],
+   "sha256": "2eb4b0a979009b2ff086fac0fdcec3fdaddc5f7bf5f8e692906016308688fab1",
+   "soundLabel": "BanditDeath",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "BanditDeath1.wav",
+   "wc3Path": "Units\\Creeps\\Bandit\\BanditDeath1.wav"
+  },
+  "wc3.blademasterwhirlwind": {
+   "abilityDocs": [
+    "godie-h00l.r",
+    "godie-h02r.q",
+    "godie-hgam.q",
+    "godie-o00k.e",
+    "godie-osam.r"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 37432,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXAOWW"
+   ],
+   "file": "assets/audio/wc3/blademasterwhirlwind.wav",
+   "ggSnd": [],
+   "key": "wc3.blademasterwhirlwind",
+   "models": [
+    "bladestorm-swordeffect",
+    "earthtornado2",
+    "herohehi",
+    "herohimurakenshin",
+    "heromusashimiyamoto",
+    "lightningtornado",
+    "picacugy"
+   ],
+   "sha256": "e9149cafa4e2101c1b51152d7d7b48f0aa0c6f8a7c08a7b6ab197a6d01eabf80",
+   "soundLabel": "Whirlwind",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "BladeMasterWhirlwind.wav",
+   "wc3Path": "Units\\Orc\\HeroBladeMaster\\BladeMasterWhirlwind.wav"
+  },
+  "wc3.blinkbirth1": {
+   "abilityDocs": [
+    "godie-hlgr.e"
+   ],
+   "archive": "War3x.mpq",
+   "bound": true,
+   "bytes": 20216,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXAEBL"
+   ],
+   "file": "assets/audio/wc3/blinkbirth1.wav",
+   "ggSnd": [],
+   "key": "wc3.blinkbirth1",
+   "models": [
+    "flash"
+   ],
+   "sha256": "86da67b768bd021b5f9a9d4ade63f2a19504b018e5c30fc8c4d5c66ce39f5e49",
+   "soundLabel": "BlinkCaster",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "BlinkBirth1.wav",
+   "wc3Path": "Abilities\\Spells\\NightElf\\Blink\\BlinkBirth1.wav"
+  },
+  "wc3.bloodelfsorcerordeath": {
+   "abilityDocs": [],
+   "archive": "War3xLocal.mpq",
+   "bound": false,
+   "bytes": 145718,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXDBES"
+   ],
+   "file": "assets/audio/wc3/bloodelfsorcerordeath.wav",
+   "ggSnd": [],
+   "key": "wc3.bloodelfsorcerordeath",
+   "models": [
+    "herolight",
+    "sesshomaru"
+   ],
+   "sha256": "8728a841920f6b3d5a971028ea6c0db4996c6c11e5aa6f093f33f03044de5794",
+   "soundLabel": "HeroBloodElfDeath",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "BloodElfSorcerorDeath.wav",
+   "wc3Path": "Units\\Human\\HeroBloodElf\\BloodElfSorcerorDeath.wav"
+  },
+  "wc3.bloodlusttarget": {
+   "abilityDocs": [
+    "godie-nman.w"
+   ],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 114042,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/bloodlusttarget.wav",
+   "ggSnd": [
+    "gg_snd_BloodlustTarget"
+   ],
+   "key": "wc3.bloodlusttarget",
+   "models": [],
+   "sha256": "6193bdfae7774dc4aae99c4404dbd915b74258909c39c622f29e92998bed9179",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "BloodlustTarget.wav",
+   "wc3Path": "Abilities\\Spells\\Orc\\Bloodlust\\BloodlustTarget.wav"
+  },
+  "wc3.brewmasterdeath1": {
+   "abilityDocs": [],
+   "archive": "War3xLocal.mpq",
+   "bound": false,
+   "bytes": 119112,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXDPMB"
+   ],
+   "file": "assets/audio/wc3/brewmasterdeath1.wav",
+   "ggSnd": [],
+   "key": "wc3.brewmasterdeath1",
+   "models": [
+    "picacugy"
+   ],
+   "sha256": "9282496c33fc7086e45476cdc8f9ef2782ad1baee968e946af63238d970e1048",
+   "soundLabel": "PandarenBrewmasterDeath",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "BrewMasterDeath1.wav",
+   "wc3Path": "Units\\Creeps\\PandarenBrewmaster\\BrewMasterDeath1.wav"
+  },
+  "wc3.buildingdeathlargehuman": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 152620,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXDHLB"
+   ],
+   "file": "assets/audio/wc3/buildingdeathlargehuman.wav",
+   "ggSnd": [],
+   "key": "wc3.buildingdeathlargehuman",
+   "models": [
+    "sephboom"
+   ],
+   "sha256": "9c8e2892a87c7ec41c3eda7ec570e02d6f720f7b1c4566fce85ef39d577d1ed6",
+   "soundLabel": "DeathHumanLargeBuilding",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "BuildingDeathLargeHuman.wav",
+   "wc3Path": "Sound\\Buildings\\Death\\BuildingDeathLargeHuman.wav"
+  },
+  "wc3.catapultmissile1": {
+   "abilityDocs": [
+    "godie-u010.e",
+    "godie-uvng.e"
+   ],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 56748,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXMCAT"
+   ],
+   "file": "assets/audio/wc3/catapultmissile1.wav",
+   "ggSnd": [],
+   "key": "wc3.catapultmissile1",
+   "models": [
+    "tectonicfury"
+   ],
+   "sha256": "3844e06fdf4c3c640714739583cae15b6c238f37446190fa52937354d2eae396",
+   "soundLabel": "Catapult",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "CatapultMissile1.wav",
+   "wc3Path": "Abilities\\Weapons\\Catapult\\CatapultMissile1.wav"
+  },
+  "wc3.catapultmissile2": {
+   "abilityDocs": [
+    "godie-u010.e",
+    "godie-uvng.e"
+   ],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 55340,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXMCAT"
+   ],
+   "file": "assets/audio/wc3/catapultmissile2.wav",
+   "ggSnd": [],
+   "key": "wc3.catapultmissile2",
+   "models": [
+    "tectonicfury"
+   ],
+   "sha256": "510e62613e351d5670d281e062367fca007b089666e2b52a525633cece01ef73",
+   "soundLabel": "Catapult",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "CatapultMissile2.wav",
+   "wc3Path": "Abilities\\Weapons\\Catapult\\CatapultMissile2.wav"
+  },
+  "wc3.catapultmissile3": {
+   "abilityDocs": [
+    "godie-u010.e",
+    "godie-uvng.e"
+   ],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 53550,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXMCAT"
+   ],
+   "file": "assets/audio/wc3/catapultmissile3.wav",
+   "ggSnd": [],
+   "key": "wc3.catapultmissile3",
+   "models": [
+    "tectonicfury"
+   ],
+   "sha256": "e8ce8f5c21f02d5ff2119618a1cf29884179cf2da693a7a182dd613caa9a3939",
+   "soundLabel": "Catapult",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "CatapultMissile3.wav",
+   "wc3Path": "Abilities\\Weapons\\Catapult\\CatapultMissile3.wav"
+  },
+  "wc3.catapultmissile4": {
+   "abilityDocs": [
+    "godie-u010.e",
+    "godie-uvng.e"
+   ],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 53678,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXMCAT"
+   ],
+   "file": "assets/audio/wc3/catapultmissile4.wav",
+   "ggSnd": [],
+   "key": "wc3.catapultmissile4",
+   "models": [
+    "tectonicfury"
+   ],
+   "sha256": "3a4d400b8740cf9497950cd51c09d545d67efc23b8b12c71ccb31cbe37e0a3da",
+   "soundLabel": "Catapult",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "CatapultMissile4.wav",
+   "wc3Path": "Abilities\\Weapons\\Catapult\\CatapultMissile4.wav"
+  },
+  "wc3.chickenwhat1": {
+   "abilityDocs": [
+    "godie-obla.q"
+   ],
+   "archive": "War3Patch.mpq",
+   "bound": false,
+   "bytes": 39544,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/chickenwhat1.wav",
+   "ggSnd": [
+    "gg_snd_ChickenWhat1"
+   ],
+   "key": "wc3.chickenwhat1",
+   "models": [],
+   "sha256": "f63017a5f9e312bd10d41e299f1ff85d022be39b2f01f59bb3b0641781a90299",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "ChickenWhat1.wav",
+   "wc3Path": "Units\\Critters\\EasterChicken\\ChickenWhat1.wav"
+  },
+  "wc3.coldarrow1": {
+   "abilityDocs": [
+    "godie-ntin.e",
+    "godie-ntin.q"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 83194,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXMCDA"
+   ],
+   "file": "assets/audio/wc3/coldarrow1.wav",
+   "ggSnd": [],
+   "key": "wc3.coldarrow1",
+   "models": [
+    "gx",
+    "gxhuge"
+   ],
+   "sha256": "9da7e5ca7b41644e97b82fe8117dc8c423fdeb5101c37f787a743ebeba8857a1",
+   "soundLabel": "ColdArrow",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "ColdArrow1.wav",
+   "wc3Path": "Abilities\\Weapons\\ColdArrow\\ColdArrow1.wav"
+  },
+  "wc3.coldarrow2": {
+   "abilityDocs": [
+    "godie-ntin.e",
+    "godie-ntin.q"
+   ],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 65390,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXMCDA"
+   ],
+   "file": "assets/audio/wc3/coldarrow2.wav",
+   "ggSnd": [],
+   "key": "wc3.coldarrow2",
+   "models": [
+    "gx",
+    "gxhuge"
+   ],
+   "sha256": "bc2275d9523745079563d3d1fde74c8440f2961edaaa206c494ace1ea459cb40",
+   "soundLabel": "ColdArrow",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "ColdArrow2.wav",
+   "wc3Path": "Abilities\\Weapons\\ColdArrow\\ColdArrow2.wav"
+  },
+  "wc3.coldarrow3": {
+   "abilityDocs": [
+    "godie-ntin.e",
+    "godie-ntin.q"
+   ],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 76412,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXMCDA"
+   ],
+   "file": "assets/audio/wc3/coldarrow3.wav",
+   "ggSnd": [],
+   "key": "wc3.coldarrow3",
+   "models": [
+    "gx",
+    "gxhuge"
+   ],
+   "sha256": "8dc6a487101fc2ecac20e102200aa3e56069fde08c2ee4870fa194d488e74bf7",
+   "soundLabel": "ColdArrow",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "ColdArrow3.wav",
+   "wc3Path": "Abilities\\Weapons\\ColdArrow\\ColdArrow3.wav"
+  },
+  "wc3.criticalstrike": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 86646,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXAOCR"
+   ],
+   "file": "assets/audio/wc3/criticalstrike.wav",
+   "ggSnd": [],
+   "key": "wc3.criticalstrike",
+   "models": [
+    "cloud",
+    "herofate",
+    "herohanzouhattori",
+    "herohehi",
+    "herohimurakenshin",
+    "herokyo",
+    "heromusashimiyamoto",
+    "herosaber",
+    "herosamanosukeakechi",
+    "herosephiroth",
+    "heroshana",
+    "herotoshiiemaeda",
+    "lubu",
+    "niya",
+    "renaryugu2",
+    "sesshomaru",
+    "ye-wuqi1"
+   ],
+   "sha256": "3f0877c437890ea5148def4a5664b0ae2d4623d664ba55b293d90985004288d1",
+   "soundLabel": "CriticalStrike",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "CriticalStrike.wav",
+   "wc3Path": "Units\\Orc\\HeroBladeMaster\\CriticalStrike.wav"
+  },
+  "wc3.crushingwavecaster1": {
+   "abilityDocs": [],
+   "archive": "War3x.mpq",
+   "bound": false,
+   "bytes": 87942,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXACCV"
+   ],
+   "file": "assets/audio/wc3/crushingwavecaster1.wav",
+   "ggSnd": [],
+   "key": "wc3.crushingwavecaster1",
+   "models": [
+    "deathwave",
+    "windmissle"
+   ],
+   "sha256": "a2a3f986442dbab5c7009522a511745eb302af78d570ba929ef7c52649efc929",
+   "soundLabel": "CrushingWave",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "CrushingWaveCaster1.wav",
+   "wc3Path": "Abilities\\Spells\\Other\\CrushingWave\\CrushingWaveCaster1.wav"
+  },
+  "wc3.darksummoninglaunch1": {
+   "abilityDocs": [
+    "godie-e00w.q",
+    "godie-e00x.q",
+    "godie-hpb1.w",
+    "godie-u010.q",
+    "godie-uvng.q"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 115756,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/darksummoninglaunch1.wav",
+   "ggSnd": [
+    "gg_snd_DarkSummoningLaunch1"
+   ],
+   "key": "wc3.darksummoninglaunch1",
+   "models": [],
+   "sha256": "6c5b90e5de88f8a75ad107444b434ea09e13f0e42412ae65ca90c4df3bb0ca4a",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "DarkSummoningLaunch1.wav",
+   "wc3Path": "Abilities\\Spells\\Undead\\DarkSummoning\\DarkSummoningLaunch1.wav"
+  },
+  "wc3.deathcoilmissilelaunch1": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 27180,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXMDCL"
+   ],
+   "file": "assets/audio/wc3/deathcoilmissilelaunch1.wav",
+   "ggSnd": [],
+   "key": "wc3.deathcoilmissilelaunch1",
+   "models": [
+    "darkraor"
+   ],
+   "sha256": "01c4f23f1d12dbef835fe6bdcc1f6ec775198d35f6fa2f4f16910db0fef99fee",
+   "soundLabel": "DeathCoilMissile",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "DeathCoilMissileLaunch1.wav",
+   "wc3Path": "Abilities\\Spells\\Undead\\DeathCoil\\DeathCoilMissileLaunch1.wav"
+  },
+  "wc3.defendcaster": {
+   "abilityDocs": [
+    "godie-h01u.r",
+    "godie-h01u.w",
+    "godie-o01z.q",
+    "godie-o01z.w",
+    "godie-o02v.q",
+    "godie-o02v.w"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 51594,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/defendcaster.wav",
+   "ggSnd": [
+    "gg_snd_DefendCaster"
+   ],
+   "key": "wc3.defendcaster",
+   "models": [],
+   "sha256": "ffa8b0f086740eeb4d2b16b0f608aff09c0deedb891678837d43bf98cf46aae0",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "DefendCaster.wav",
+   "wc3Path": "Abilities\\Spells\\Human\\Defend\\DefendCaster.wav"
+  },
+  "wc3.demonhuntermissilehit3": {
+   "abilityDocs": [
+    "godie-u00n.e",
+    "godie-u00o.e"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 37972,
+   "cue": "soundImpact",
+   "events": [],
+   "file": "assets/audio/wc3/demonhuntermissilehit3.wav",
+   "ggSnd": [
+    "gg_snd_DemonHunterMissileHit3"
+   ],
+   "key": "wc3.demonhuntermissilehit3",
+   "models": [],
+   "sha256": "1c539036fa385b0ba2352961b9e90ba514f018a85590c20f42ae937271c35250",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "DemonHunterMissileHit3.wav",
+   "wc3Path": "Abilities\\Weapons\\DemonHunterMissile\\DemonHunterMissileHit3.wav"
+  },
+  "wc3.dispelmagictarget": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 86202,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXADIS"
+   ],
+   "file": "assets/audio/wc3/dispelmagictarget.wav",
+   "ggSnd": [],
+   "key": "wc3.dispelmagictarget",
+   "models": [
+    "luffe"
+   ],
+   "sha256": "7e49973388d8489ad1d9c18834b4b8ae06a4a13ea6c5b1359f37572248dc399f",
+   "soundLabel": "DispelMagic",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "DispelMagicTarget.wav",
+   "wc3Path": "Abilities\\Spells\\Human\\DispelMagic\\DispelMagicTarget.wav"
+  },
+  "wc3.dragonroostwhat1": {
+   "abilityDocs": [
+    "godie-u010.r",
+    "godie-uvng.r"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 136326,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/dragonroostwhat1.wav",
+   "ggSnd": [
+    "gg_snd_DragonRoostWhat1"
+   ],
+   "key": "wc3.dragonroostwhat1",
+   "models": [],
+   "sha256": "ae7db2ab35a04c0b8f1aabca88f8ad11176929b0ec2e44ee9d962fcba56e3972",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "DragonRoostWhat1.wav",
+   "wc3Path": "Buildings\\Other\\DragonRoost\\DragonRoostWhat1.wav"
+  },
+  "wc3.dragonyes2": {
+   "abilityDocs": [
+    "godie-u00h.r",
+    "godie-u00v.e",
+    "godie-u010.e",
+    "godie-uvng.e"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 67372,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/dragonyes2.wav",
+   "ggSnd": [
+    "gg_snd_DragonYes2"
+   ],
+   "key": "wc3.dragonyes2",
+   "models": [],
+   "sha256": "d9b92a007615d459ed3de09472b405104e106bc7cf67e691867f05e96604283f",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "DragonYes2.wav",
+   "wc3Path": "Units\\Creeps\\AzureDragon\\DragonYes2.wav"
+  },
+  "wc3.druidofthetalonmissilelaunch2": {
+   "abilityDocs": [
+    "godie-h00l.q"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 39036,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/druidofthetalonmissilelaunch2.wav",
+   "ggSnd": [
+    "gg_snd_DruidOfTheTalonMissileLaunch2"
+   ],
+   "key": "wc3.druidofthetalonmissilelaunch2",
+   "models": [],
+   "sha256": "45ef058ffcea68c139447bccce7cf5c9ed001052f75d8180aef485562afe078b",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "DruidOfTheTalonMissileLaunch2.wav",
+   "wc3Path": "Abilities\\Weapons\\DruidoftheTalonMissile\\DruidOfTheTalonMissileLaunch2.wav"
+  },
+  "wc3.eggsackdeath1": {
+   "abilityDocs": [
+    "godie-huth.w"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 92602,
+   "cue": "soundImpact",
+   "events": [],
+   "file": "assets/audio/wc3/eggsackdeath1.wav",
+   "ggSnd": [
+    "gg_snd_EggSackDeath1"
+   ],
+   "key": "wc3.eggsackdeath1",
+   "models": [],
+   "sha256": "b42c8ad4c5198989a752f4603ba783df1a36ebc8fccd0478e887aad41409a60d",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "EggSackDeath1.wav",
+   "wc3Path": "Doodads\\Dungeon\\Terrain\\EggSack\\EggSackDeath1.wav"
+  },
+  "wc3.fanofknives": {
+   "abilityDocs": [],
+   "archive": "War3xLocal.mpq",
+   "bound": false,
+   "bytes": 103800,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXAEFK"
+   ],
+   "file": "assets/audio/wc3/fanofknives.wav",
+   "ggSnd": [],
+   "key": "wc3.fanofknives",
+   "models": [
+    "fox",
+    "fox2",
+    "herogirl",
+    "herokunoichi",
+    "herolingtong"
+   ],
+   "sha256": "0aca5b9edcd1c72620d3d2e5aff8c4847ff5d29ab419b6a4ec6829812d8988f1",
+   "soundLabel": "FanOfKnives",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "FanOfKnives.wav",
+   "wc3Path": "Units\\NightElf\\HeroWarden\\FanOfKnives.wav"
+  },
+  "wc3.farmwhat1": {
+   "abilityDocs": [
+    "godie-obla.r"
+   ],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 151084,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/farmwhat1.wav",
+   "ggSnd": [
+    "gg_snd_FarmWhat1"
+   ],
+   "key": "wc3.farmwhat1",
+   "models": [],
+   "sha256": "22879efd8084547e526835cf4e8bf5c50864ad9dd95a663131c31986409ea5ee",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "FarmWhat1.wav",
+   "wc3Path": "Buildings\\Human\\Farm\\FarmWhat1.wav"
+  },
+  "wc3.farseermissile": {
+   "abilityDocs": [
+    "godie-ntin.e",
+    "godie-ntin.q"
+   ],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 50296,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXMFAR"
+   ],
+   "file": "assets/audio/wc3/farseermissile.wav",
+   "ggSnd": [],
+   "key": "wc3.farseermissile",
+   "models": [
+    "gx",
+    "gxhuge"
+   ],
+   "sha256": "d2b6d71401ba8d633320899cf55a9f113a9b68128c5506ff103ad9344fd156b0",
+   "soundLabel": "FarseerMissile",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "FarseerMissile.wav",
+   "wc3Path": "Abilities\\Weapons\\FarseerMissile\\FarseerMissile.wav"
+  },
+  "wc3.feralspirittarget1": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 107462,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXAOSF"
+   ],
+   "file": "assets/audio/wc3/feralspirittarget1.wav",
+   "ggSnd": [],
+   "key": "wc3.feralspirittarget1",
+   "models": [
+    "musiccast"
+   ],
+   "sha256": "701a482feca926661ef2943883aaf437af6910a6825467d4cc414e8e90dea7e6",
+   "soundLabel": "FeralSpiritTarget",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "FeralSpiritTarget1.wav",
+   "wc3Path": "Abilities\\Spells\\Orc\\FeralSpirit\\FeralSpiritTarget1.wav"
+  },
+  "wc3.fireballmissilelaunch1": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 28780,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXMFRL"
+   ],
+   "file": "assets/audio/wc3/fireballmissilelaunch1.wav",
+   "ggSnd": [],
+   "key": "wc3.fireballmissilelaunch1",
+   "models": [
+    "herolight",
+    "heroshana"
+   ],
+   "sha256": "7528485c4201cf0de680591aca2a3f94ef9eb975df8dc50d03f74e43d7863e85",
+   "soundLabel": "FireballLaunch",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "FireBallMissileLaunch1.wav",
+   "wc3Path": "Abilities\\Weapons\\FireBallMissile\\FireBallMissileLaunch1.wav"
+  },
+  "wc3.fireballmissilelaunch2": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 26734,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXMFRL"
+   ],
+   "file": "assets/audio/wc3/fireballmissilelaunch2.wav",
+   "ggSnd": [],
+   "key": "wc3.fireballmissilelaunch2",
+   "models": [
+    "herolight",
+    "heroshana"
+   ],
+   "sha256": "8ed812dba28c6219b21a0bd5d749a6c873bff3be61aa8c499a1ff82e7c76ca37",
+   "soundLabel": "FireballLaunch",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "FireBallMissileLaunch2.wav",
+   "wc3Path": "Abilities\\Weapons\\FireBallMissile\\FireBallMissileLaunch2.wav"
+  },
+  "wc3.fireballmissilelaunch3": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 35156,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXMFRL"
+   ],
+   "file": "assets/audio/wc3/fireballmissilelaunch3.wav",
+   "ggSnd": [],
+   "key": "wc3.fireballmissilelaunch3",
+   "models": [
+    "herolight",
+    "heroshana"
+   ],
+   "sha256": "bcc4438484badc6c8862da0c9637ea69c084e75128ceffaf43ca9048ed2579d1",
+   "soundLabel": "FireballLaunch",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "FireBallMissileLaunch3.wav",
+   "wc3Path": "Abilities\\Weapons\\FireBallMissile\\FireBallMissileLaunch3.wav"
+  },
+  "wc3.flamestrikebirth1": {
+   "abilityDocs": [],
+   "archive": "War3x.mpq",
+   "bound": false,
+   "bytes": 229930,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXAHFS"
+   ],
+   "file": "assets/audio/wc3/flamestrikebirth1.wav",
+   "ggSnd": [],
+   "key": "wc3.flamestrikebirth1",
+   "models": [
+    "netherstrike"
+   ],
+   "sha256": "ea780cb9abf8e51a2470e8f0c21759f6880ef257996605374f75aa6729759c0b",
+   "soundLabel": "FlameStrike",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "FlameStrikeBirth1.wav",
+   "wc3Path": "Abilities\\Spells\\Human\\FlameStrike\\FlameStrikeBirth1.wav"
+  },
+  "wc3.flaretarget1": {
+   "abilityDocs": [
+    "godie-e008.r"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 158180,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/flaretarget1.wav",
+   "ggSnd": [
+    "gg_snd_FlareTarget1"
+   ],
+   "key": "wc3.flaretarget1",
+   "models": [],
+   "sha256": "b3346d3609b664975b851d8ba3311d39d63c52348fe2413fdda5f2a5fb5ec08a",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "FlareTarget1.wav",
+   "wc3Path": "Abilities\\Spells\\Human\\Flare\\FlareTarget1.wav"
+  },
+  "wc3.flaretarget2": {
+   "abilityDocs": [
+    "godie-e00k.e",
+    "godie-e00z.e",
+    "godie-u00h.e"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 59386,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/flaretarget2.wav",
+   "ggSnd": [
+    "gg_snd_FlareTarget2"
+   ],
+   "key": "wc3.flaretarget2",
+   "models": [],
+   "sha256": "1f3ae221f4310b4e348ff3571ade416c601f044fc2e25070f77109edccf25a85",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "FlareTarget2.wav",
+   "wc3Path": "Abilities\\Spells\\Human\\Flare\\FlareTarget2.wav"
+  },
+  "wc3.flaretarget3": {
+   "abilityDocs": [
+    "godie-e008.q",
+    "godie-o01z.q",
+    "godie-o01z.w",
+    "godie-o02v.q",
+    "godie-o02v.w"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 41904,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/flaretarget3.wav",
+   "ggSnd": [
+    "gg_snd_FlareTarget3"
+   ],
+   "key": "wc3.flaretarget3",
+   "models": [],
+   "sha256": "35c2fad2176417f9db8b02925937e01e226dab5188abd18cde6b0061b6d1c670",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "FlareTarget3.wav",
+   "wc3Path": "Abilities\\Spells\\Human\\Flare\\FlareTarget3.wav"
+  },
+  "wc3.flashback1second": {
+   "abilityDocs": [
+    "godie-u010.r",
+    "godie-uvng.r"
+   ],
+   "archive": "War3x.mpq",
+   "bound": true,
+   "bytes": 192156,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/flashback1second.wav",
+   "ggSnd": [
+    "gg_snd_FlashBack1Second"
+   ],
+   "key": "wc3.flashback1second",
+   "models": [],
+   "sha256": "39f800ca8d5ebbb5c11a923365c8b388edbb01cb8cb1440284fedac9d57821ae",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "FlashBack1Second.wav",
+   "wc3Path": "Sound\\Ambient\\DoodadEffects\\FlashBack1Second.wav"
+  },
+  "wc3.footmandeath": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 54954,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXDFOO"
+   ],
+   "file": "assets/audio/wc3/footmandeath.wav",
+   "ggSnd": [],
+   "key": "wc3.footmandeath",
+   "models": [
+    "herobiggon"
+   ],
+   "sha256": "2ce1831933748b54d911f6fd8dfb35d29a2bd7cf20591790dd7ae387f296955e",
+   "soundLabel": "FootmanDeath",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "FootmanDeath.wav",
+   "wc3Path": "Units\\Human\\Footman\\FootmanDeath.wav"
+  },
+  "wc3.fountainoflifewhat1": {
+   "abilityDocs": [
+    "godie-emns.q"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 131190,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/fountainoflifewhat1.wav",
+   "ggSnd": [
+    "gg_snd_FountainOfLifeWhat1"
+   ],
+   "key": "wc3.fountainoflifewhat1",
+   "models": [],
+   "sha256": "13e9e85282c1a05c74015ff113404e861362efcab25977dbd4f2a7bd6ce8d6d4",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "FountainOfLifeWhat1.wav",
+   "wc3Path": "Buildings\\Other\\FountainOfLife\\FountainOfLifeWhat1.wav"
+  },
+  "wc3.furbolgdeath1": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 123436,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXDFUR"
+   ],
+   "file": "assets/audio/wc3/furbolgdeath1.wav",
+   "ggSnd": [],
+   "key": "wc3.furbolgdeath1",
+   "models": [
+    "hero-turtle"
+   ],
+   "sha256": "6dc532d199d22e113a3bb2eaa1f2d10c6ad6182ed7b42e746ba266c7cebaf735",
+   "soundLabel": "FurbolgDeath",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "FurbolgDeath1.wav",
+   "wc3Path": "Units\\Creeps\\Furbolg\\FurbolgDeath1.wav"
+  },
+  "wc3.gluescreenmeteorhit1": {
+   "abilityDocs": [
+    "godie-obla.e",
+    "godie-u00v.w"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 66194,
+   "cue": "soundImpact",
+   "events": [],
+   "file": "assets/audio/wc3/gluescreenmeteorhit1.wav",
+   "ggSnd": [
+    "gg_snd_GlueScreenMeteorHit1"
+   ],
+   "key": "wc3.gluescreenmeteorhit1",
+   "models": [],
+   "sha256": "f62828c511aba5d4855e9be5bee9eeb7744689a736a52af81476a036d335f51e",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "GlueScreenMeteorHit1.wav",
+   "wc3Path": "Sound\\Interface\\GlueScreenMeteorHit1.wav"
+  },
+  "wc3.gluescreenmeteorhit2": {
+   "abilityDocs": [
+    "godie-obla.e",
+    "godie-u00v.w"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 66326,
+   "cue": "soundImpact",
+   "events": [],
+   "file": "assets/audio/wc3/gluescreenmeteorhit2.wav",
+   "ggSnd": [
+    "gg_snd_GlueScreenMeteorHit2"
+   ],
+   "key": "wc3.gluescreenmeteorhit2",
+   "models": [],
+   "sha256": "e59514fcdcfcc92e4221f1983856ec4dcdce0a759964f55da144c2c40944da37",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "GlueScreenMeteorHit2.wav",
+   "wc3Path": "Sound\\Interface\\GlueScreenMeteorHit2.wav"
+  },
+  "wc3.gruntpissed3": {
+   "abilityDocs": [
+    "godie-u011.e",
+    "godie-u012.e"
+   ],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 104382,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/gruntpissed3.wav",
+   "ggSnd": [
+    "gg_snd_GruntPissed3"
+   ],
+   "key": "wc3.gruntpissed3",
+   "models": [],
+   "sha256": "7f8ecaf0d95e18868684dc7dd33dc698c07d1314806f684fd3cd2b5a8ee1def1",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "GruntPissed3.wav",
+   "wc3Path": "Units\\Orc\\Grunt\\GruntPissed3.wav"
+  },
+  "wc3.gruntwhat2": {
+   "abilityDocs": [
+    "godie-u00l.q",
+    "godie-umal.q"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 17718,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/gruntwhat2.wav",
+   "ggSnd": [
+    "gg_snd_GruntWhat2"
+   ],
+   "key": "wc3.gruntwhat2",
+   "models": [],
+   "sha256": "374f0373592233bba697668b14d864f6021866d50913c83e00202d02d88b9461",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "GruntWhat2.wav",
+   "wc3Path": "Units\\Orc\\Grunt\\GruntWhat2.wav"
+  },
+  "wc3.gruntyesattack1": {
+   "abilityDocs": [
+    "godie-emns.q"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 55206,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/gruntyesattack1.wav",
+   "ggSnd": [
+    "gg_snd_GruntYesAttack1"
+   ],
+   "key": "wc3.gruntyesattack1",
+   "models": [],
+   "sha256": "2bc29c2804d03eade2761919fac3d973c84c2e00d4a8c118dbe758b55756b4eb",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "GruntYesAttack1.wav",
+   "wc3Path": "Units\\Orc\\Grunt\\GruntYesAttack1.wav"
+  },
+  "wc3.gruntyesattack3": {
+   "abilityDocs": [
+    "godie-emns.r"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 74218,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/gruntyesattack3.wav",
+   "ggSnd": [
+    "gg_snd_GruntYesAttack3"
+   ],
+   "key": "wc3.gruntyesattack3",
+   "models": [],
+   "sha256": "7d3756e69c3c9c21b50e5c5e5490bfccd11dbc7678d179f8138bcace5365dcad",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "GruntYesAttack3.wav",
+   "wc3Path": "Units\\Orc\\Grunt\\GruntYesAttack3.wav"
+  },
+  "wc3.hcancelbuilding": {
+   "abilityDocs": [
+    "godie-u010.w",
+    "godie-ubal.w",
+    "godie-uvng.w"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 124502,
+   "cue": "soundDissipate",
+   "events": [],
+   "file": "assets/audio/wc3/hcancelbuilding.wav",
+   "ggSnd": [
+    "gg_snd_HCancelBuilding"
+   ],
+   "key": "wc3.hcancelbuilding",
+   "models": [],
+   "sha256": "8f9d259bf52c8b568515cbbeaa17f70207f4b43c8f00221553bd285378225751",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "HCancelBuilding.wav",
+   "wc3Path": "Sound\\Buildings\\Death\\HCancelBuilding.wav"
+  },
+  "wc3.headhunteryes4": {
+   "abilityDocs": [
+    "godie-h00l.w",
+    "godie-h02s.q",
+    "godie-h02z.q",
+    "godie-orkn.q"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 100394,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/headhunteryes4.wav",
+   "ggSnd": [
+    "gg_snd_HeadHunterYes4"
+   ],
+   "key": "wc3.headhunteryes4",
+   "models": [],
+   "sha256": "35e7e123372a975d060ff6a0824991e5ed4a05cae407320c905d1898ac3f38ff",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "HeadHunterYes4.wav",
+   "wc3Path": "Units\\Orc\\HeadHunter\\HeadHunterYes4.wav"
+  },
+  "wc3.healtarget": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 61738,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXAHEA"
+   ],
+   "file": "assets/audio/wc3/healtarget.wav",
+   "ggSnd": [],
+   "key": "wc3.healtarget",
+   "models": [
+    "herobuu"
+   ],
+   "sha256": "5bc3cb4aa847820cac1ac934e1568700197ca988cdda424858b635aff8af670d",
+   "soundLabel": "Heal",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "HealTarget.wav",
+   "wc3Path": "Abilities\\Spells\\Human\\Heal\\HealTarget.wav"
+  },
+  "wc3.heroblademasterattack1": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 53038,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXKBM1"
+   ],
+   "file": "assets/audio/wc3/heroblademasterattack1.wav",
+   "ggSnd": [],
+   "key": "wc3.heroblademasterattack1",
+   "models": [
+    "herofate",
+    "herogirl",
+    "herohanzouhattori",
+    "herohehi",
+    "herohimurakenshin",
+    "herokunoichi",
+    "herokyo",
+    "herolingtong",
+    "heromusashimiyamoto",
+    "herosaber",
+    "herosamanosukeakechi",
+    "herosephiroth",
+    "heroshana",
+    "herotoshiiemaeda",
+    "lubu",
+    "mfls",
+    "niya",
+    "renaryugu2",
+    "sesshomaru",
+    "ye-wuqi1"
+   ],
+   "sha256": "bfeb8fd53fc18a90ab504ac4f73740fbb3f232f79a0f1ff9f1af05f544e245a4",
+   "soundLabel": "HeroBladeMasterAttack1",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "HeroBladeMasterAttack1.wav",
+   "wc3Path": "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack1.wav"
+  },
+  "wc3.heroblademasterattack2": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 41334,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXKBM2"
+   ],
+   "file": "assets/audio/wc3/heroblademasterattack2.wav",
+   "ggSnd": [],
+   "key": "wc3.heroblademasterattack2",
+   "models": [
+    "herofate",
+    "herogirl",
+    "herohanzouhattori",
+    "herohehi",
+    "herohimurakenshin",
+    "herokunoichi",
+    "herokyo",
+    "herolingtong",
+    "heromusashimiyamoto",
+    "herosaber",
+    "herosamanosukeakechi",
+    "herosephiroth",
+    "heroshana",
+    "herotoshiiemaeda",
+    "lubu",
+    "niya",
+    "renaryugu2",
+    "sesshomaru",
+    "ye-wuqi1"
+   ],
+   "sha256": "eb58265fc1b0c155800426539792884f4065e6ed1082e25bd3281c1de4c6cb5c",
+   "soundLabel": "HeroBladeMasterAttack2",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "HeroBladeMasterAttack2.wav",
+   "wc3Path": "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterAttack2.wav"
+  },
+  "wc3.heroblademasterdeath": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 103738,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXDBLA"
+   ],
+   "file": "assets/audio/wc3/heroblademasterdeath.wav",
+   "ggSnd": [],
+   "key": "wc3.heroblademasterdeath",
+   "models": [
+    "herohanzouhattori",
+    "herohimurakenshin"
+   ],
+   "sha256": "879c78e716d55c0359490c0dd7fd7943bae0c9c36181e833361ef1f0b2f397a4",
+   "soundLabel": "HeroBladeMasterDeath",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "HeroBladeMasterDeath.wav",
+   "wc3Path": "Units\\Orc\\HeroBladeMaster\\HeroBladeMasterDeath.wav"
+  },
+  "wc3.herodeathknightattack1": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 62326,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXKDK1"
+   ],
+   "file": "assets/audio/wc3/herodeathknightattack1.wav",
+   "ggSnd": [],
+   "key": "wc3.herodeathknightattack1",
+   "models": [
+    "lubu"
+   ],
+   "sha256": "16bdac8febfa27ea6eac1980cf7ce9e7d7b48fe54a7795c43b44e0645104a606",
+   "soundLabel": "HeroDeathKnightAttack1",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "HeroDeathKnightAttack1.wav",
+   "wc3Path": "Units\\Undead\\HeroDeathKnight\\HeroDeathKnightAttack1.wav"
+  },
+  "wc3.herodeathknightdeath": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 102518,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXDDKN"
+   ],
+   "file": "assets/audio/wc3/herodeathknightdeath.wav",
+   "ggSnd": [],
+   "key": "wc3.herodeathknightdeath",
+   "models": [
+    "ye-wuqi1"
+   ],
+   "sha256": "6efa132e33b756780443d099efd368dcc831f9433efc205d5b92f6de89ee004e",
+   "soundLabel": "HeroDeathKnightDeath",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "HeroDeathKnightDeath.wav",
+   "wc3Path": "Units\\Undead\\HeroDeathKnight\\HeroDeathKnightDeath.wav"
+  },
+  "wc3.herodemonhunterdeath1": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 182398,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXDDEM"
+   ],
+   "file": "assets/audio/wc3/herodemonhunterdeath1.wav",
+   "ggSnd": [],
+   "key": "wc3.herodemonhunterdeath1",
+   "models": [
+    "cloud",
+    "goku"
+   ],
+   "sha256": "2da4b23f03b966c1331dbcbdf4dca2afb6527d9684421af2a29b3ee838feb0a5",
+   "soundLabel": "HeroDemonHunterDeath",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "HeroDemonHunterDeath1.wav",
+   "wc3Path": "Units\\NightElf\\HeroDemonHunter\\HeroDemonHunterDeath1.wav"
+  },
+  "wc3.heropaladindeath": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 73846,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXDPAL"
+   ],
+   "file": "assets/audio/wc3/heropaladindeath.wav",
+   "ggSnd": [],
+   "key": "wc3.heropaladindeath",
+   "models": [
+    "herohehi",
+    "herokyo",
+    "heromusashimiyamoto",
+    "herosamanosukeakechi",
+    "herosephiroth",
+    "herotoshiiemaeda",
+    "lubu",
+    "ma"
+   ],
+   "sha256": "8e49a3f8114a670b52b9a2a158edc54c6db62a42aa48590ed802d048a571c40b",
+   "soundLabel": "HeroPaladinDeath",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "HeroPaladinDeath.wav",
+   "wc3Path": "Units\\Human\\HeroPaladin\\HeroPaladinDeath.wav"
+  },
+  "wc3.holybolt": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 70264,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXAHHB"
+   ],
+   "file": "assets/audio/wc3/holybolt.wav",
+   "ggSnd": [],
+   "key": "wc3.holybolt",
+   "models": [
+    "billy"
+   ],
+   "sha256": "77365c2aa31375f76bc606ad9dc9749f8383f81dc9e2ffe119fe10a0417c4bbe",
+   "soundLabel": "HolyBolt",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "HolyBolt.wav",
+   "wc3Path": "Abilities\\Spells\\Human\\HolyBolt\\HolyBolt.wav"
+  },
+  "wc3.humandissipate1": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 100140,
+   "cue": "soundDissipate",
+   "events": [
+    "SNDXDDSH",
+    "SNDXDNDS"
+   ],
+   "file": "assets/audio/wc3/humandissipate1.wav",
+   "ggSnd": [],
+   "key": "wc3.humandissipate1",
+   "models": [
+    "billy",
+    "herobiggon",
+    "luffe",
+    "ma",
+    "negi",
+    "sesshomaru"
+   ],
+   "sha256": "073644b8398dd1cfd25a2bbdfbb228078675a48027df0652c8819e25720d3c2f",
+   "soundLabel": "HumanDissipate",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "HumanDissipate1.wav",
+   "wc3Path": "Sound\\Units\\Human\\HumanDissipate1.wav"
+  },
+  "wc3.infernalbirth1": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 110294,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXAINB"
+   ],
+   "file": "assets/audio/wc3/infernalbirth1.wav",
+   "ggSnd": [],
+   "key": "wc3.infernalbirth1",
+   "models": [
+    "meteor"
+   ],
+   "sha256": "d826c70f9a4836ae7ac8d83bcfa06c0225f636f3ed026e74a636a814f1d4cf64",
+   "soundLabel": "InfernalBirth",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "InfernalBirth1.wav",
+   "wc3Path": "Units\\Demon\\Infernal\\InfernalBirth1.wav"
+  },
+  "wc3.invisibilitytarget": {
+   "abilityDocs": [
+    "godie-e007.r",
+    "godie-ewar.r",
+    "godie-h02r.r",
+    "godie-hgam.r"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 180346,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXAIVS"
+   ],
+   "file": "assets/audio/wc3/invisibilitytarget.wav",
+   "ggSnd": [],
+   "key": "wc3.invisibilitytarget",
+   "models": [
+    "supershinythingy"
+   ],
+   "sha256": "c3181367c07e6bc4a9cf8bc370cd113b7e8e39282a1b6b5f3ef70891ef5afbe4",
+   "soundLabel": "Invisibility",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "InvisibilityTarget.wav",
+   "wc3Path": "Abilities\\Spells\\Human\\Invisibility\\InvisibilityTarget.wav"
+  },
+  "wc3.irongolemattack1": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 95646,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXKIRG"
+   ],
+   "file": "assets/audio/wc3/irongolemattack1.wav",
+   "ggSnd": [],
+   "key": "wc3.irongolemattack1",
+   "models": [
+    "gumdam",
+    "herobuu"
+   ],
+   "sha256": "06d47b53c5ebd5612558565a3990da7abe7e144f15e02af6a8176b1a88821334",
+   "soundLabel": "IronGolemAttack1",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "IronGolemAttack1.wav",
+   "wc3Path": "Units\\Creeps\\IronGolem\\IronGolemAttack1.wav"
+  },
+  "wc3.irongolemdeath1": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 176112,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXDIRG"
+   ],
+   "file": "assets/audio/wc3/irongolemdeath1.wav",
+   "ggSnd": [],
+   "key": "wc3.irongolemdeath1",
+   "models": [
+    "gumdam"
+   ],
+   "sha256": "eb45c7ede06c88174b741fcf71008178dff715ea6bf2d120c4f1e5774236e5f8",
+   "soundLabel": "IronGolemDeath",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "IronGolemDeath1.wav",
+   "wc3Path": "Units\\Creeps\\IronGolem\\IronGolemDeath1.wav"
+  },
+  "wc3.jainaonfootdeath1": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 138870,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXDJAN"
+   ],
+   "file": "assets/audio/wc3/jainaonfootdeath1.wav",
+   "ggSnd": [],
+   "key": "wc3.jainaonfootdeath1",
+   "models": [
+    "herofate",
+    "herosaber",
+    "kikyou",
+    "linainvers",
+    "niya",
+    "renaryugu2"
+   ],
+   "sha256": "93bda57253945d6b57b25253fb5b9a5af4eff65d11e6b189a533a4cf208a52d6",
+   "soundLabel": "JainaDeath",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "JainaOnFootDeath1.wav",
+   "wc3Path": "Units\\Human\\Jaina\\JainaOnFootDeath1.wav"
+  },
+  "wc3.kaelyesattack3": {
+   "abilityDocs": [
+    "godie-emns.ex"
+   ],
+   "archive": "War3xLocal.mpq",
+   "bound": true,
+   "bytes": 72198,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/kaelyesattack3.wav",
+   "ggSnd": [
+    "gg_snd_KaelYesAttack3"
+   ],
+   "key": "wc3.kaelyesattack3",
+   "models": [],
+   "sha256": "67230c8cd35ee4965fd4fbcd486b005d7ea11fc04a09cef43441ac8f270f534a",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "KaelYesAttack3.wav",
+   "wc3Path": "Units\\Human\\Kael\\KaelYesAttack3.wav"
+  },
+  "wc3.keeperofthegrovemissilehit1": {
+   "abilityDocs": [
+    "godie-u010.w",
+    "godie-uvng.w"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 35358,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXMKGH"
+   ],
+   "file": "assets/audio/wc3/keeperofthegrovemissilehit1.wav",
+   "ggSnd": [],
+   "key": "wc3.keeperofthegrovemissilehit1",
+   "models": [
+    "fireblast"
+   ],
+   "sha256": "eb76e3df0dbf90ce17262d3ce38b9d631a27a1c0dc903f7bf117e6aa19321c07",
+   "soundLabel": "KeeperOfTheGroveMissileHit",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "KeeperOfTheGroveMissileHit1.wav",
+   "wc3Path": "Abilities\\Weapons\\KeeperGroveMissile\\KeeperOfTheGroveMissileHit1.wav"
+  },
+  "wc3.keeperofthegrovemissilehit2": {
+   "abilityDocs": [
+    "godie-u010.w",
+    "godie-uvng.w"
+   ],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 35448,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXMKGH"
+   ],
+   "file": "assets/audio/wc3/keeperofthegrovemissilehit2.wav",
+   "ggSnd": [],
+   "key": "wc3.keeperofthegrovemissilehit2",
+   "models": [
+    "fireblast"
+   ],
+   "sha256": "b379ca862ba7f04111bd9d219498380ac293bf00b2c826723b54bc7e81343244",
+   "soundLabel": "KeeperOfTheGroveMissileHit",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "KeeperOfTheGroveMissileHit2.wav",
+   "wc3Path": "Abilities\\Weapons\\KeeperGroveMissile\\KeeperOfTheGroveMissileHit2.wav"
+  },
+  "wc3.keeperofthegrovemissilehit3": {
+   "abilityDocs": [
+    "godie-u010.w",
+    "godie-uvng.w"
+   ],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 35448,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXMKGH"
+   ],
+   "file": "assets/audio/wc3/keeperofthegrovemissilehit3.wav",
+   "ggSnd": [],
+   "key": "wc3.keeperofthegrovemissilehit3",
+   "models": [
+    "fireblast"
+   ],
+   "sha256": "25b320e8eb9ce8fa55adae3160f2b6c1a1a3cebf0bf126505e9fe7198400bac9",
+   "soundLabel": "KeeperOfTheGroveMissileHit",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "KeeperOfTheGroveMissileHit3.wav",
+   "wc3Path": "Abilities\\Weapons\\KeeperGroveMissile\\KeeperOfTheGroveMissileHit3.wav"
+  },
+  "wc3.keeperofthegrovemissilelaunch1": {
+   "abilityDocs": [
+    "godie-u010.w",
+    "godie-uvng.w"
+   ],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 39542,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXMKGL"
+   ],
+   "file": "assets/audio/wc3/keeperofthegrovemissilelaunch1.wav",
+   "ggSnd": [],
+   "key": "wc3.keeperofthegrovemissilelaunch1",
+   "models": [
+    "fireblast"
+   ],
+   "sha256": "1714a65db86389ef8cc5bfb82da2820ee0fd7d655b761b79908a61fe7d155628",
+   "soundLabel": "KeeperOfTheGroveMissileLaunch",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "KeeperOfTheGroveMissileLaunch1.wav",
+   "wc3Path": "Abilities\\Weapons\\KeeperGroveMissile\\KeeperOfTheGroveMissileLaunch1.wav"
+  },
+  "wc3.keeperofthegrovemissilelaunch2": {
+   "abilityDocs": [
+    "godie-u010.w",
+    "godie-uvng.w"
+   ],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 39632,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXMKGL"
+   ],
+   "file": "assets/audio/wc3/keeperofthegrovemissilelaunch2.wav",
+   "ggSnd": [],
+   "key": "wc3.keeperofthegrovemissilelaunch2",
+   "models": [
+    "fireblast"
+   ],
+   "sha256": "fb1ef7ac54528d8a3d51458d302b5318ea9ef8260655557a08047a77a58b09a4",
+   "soundLabel": "KeeperOfTheGroveMissileLaunch",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "KeeperOfTheGroveMissileLaunch2.wav",
+   "wc3Path": "Abilities\\Weapons\\KeeperGroveMissile\\KeeperOfTheGroveMissileLaunch2.wav"
+  },
+  "wc3.keeperofthegrovemissilelaunch3": {
+   "abilityDocs": [
+    "godie-u010.w",
+    "godie-uvng.w"
+   ],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 38966,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXMKGL"
+   ],
+   "file": "assets/audio/wc3/keeperofthegrovemissilelaunch3.wav",
+   "ggSnd": [],
+   "key": "wc3.keeperofthegrovemissilelaunch3",
+   "models": [
+    "fireblast"
+   ],
+   "sha256": "d15cab940974e59b7dce28a60fbd891a5ad1bb1312c40ac708a12df062b9d2f2",
+   "soundLabel": "KeeperOfTheGroveMissileLaunch",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "KeeperOfTheGroveMissileLaunch3.wav",
+   "wc3Path": "Abilities\\Weapons\\KeeperGroveMissile\\KeeperOfTheGroveMissileLaunch3.wav"
+  },
+  "wc3.knightnoriderdeath1": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 126048,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXDHOR"
+   ],
+   "file": "assets/audio/wc3/knightnoriderdeath1.wav",
+   "ggSnd": [],
+   "key": "wc3.knightnoriderdeath1",
+   "models": [
+    "horse"
+   ],
+   "sha256": "15c5a2617caadfe45dbb28f62ef1f796958174a0b0be73c159480cd8cc4c3e0a",
+   "soundLabel": "HorseDeath",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "KnightNoRiderDeath1.wav",
+   "wc3Path": "Units\\Human\\KnightNoRider\\KnightNoRiderDeath1.wav"
+  },
+  "wc3.markofchaos": {
+   "abilityDocs": [
+    "godie-e002.e",
+    "godie-e002.q",
+    "godie-e002.w",
+    "godie-e00l.e",
+    "godie-e00l.q",
+    "godie-e00l.w",
+    "godie-e00q.e",
+    "godie-e00r.r",
+    "godie-o01z.e",
+    "godie-o02v.e"
+   ],
+   "archive": "War3x.mpq",
+   "bound": true,
+   "bytes": 176698,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXAHMC"
+   ],
+   "file": "assets/audio/wc3/markofchaos.wav",
+   "ggSnd": [
+    "gg_snd_MarkOfChaos"
+   ],
+   "key": "wc3.markofchaos",
+   "models": [
+    "holyawakening"
+   ],
+   "sha256": "5e58c8a136160881a2019bbc3864dc68f509fc9ac566674f0a5e52988177bea7",
+   "soundLabel": "MarkOfChaos",
+   "sources": [
+    "model-soundset",
+    "ability-declared"
+   ],
+   "wc3File": "MarkOfChaos.wav",
+   "wc3Path": "Abilities\\Spells\\Human\\MarkOfChaos\\MarkOfChaos.wav"
+  },
+  "wc3.meatwagonmissilehit1": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 66168,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXMMEA"
+   ],
+   "file": "assets/audio/wc3/meatwagonmissilehit1.wav",
+   "ggSnd": [],
+   "key": "wc3.meatwagonmissilehit1",
+   "models": [
+    "darkraor"
+   ],
+   "sha256": "ef7b004c8a08601b569cfa8de50ac84f1d0a207975918ad4d3077e16b7c8aa3d",
+   "soundLabel": "MeatWagonMissileHit",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "MeatwagonMissileHit1.wav",
+   "wc3Path": "Abilities\\Weapons\\MeatwagonMissile\\MeatwagonMissileHit1.wav"
+  },
+  "wc3.mercenarywhat1": {
+   "abilityDocs": [
+    "godie-usyl.e"
+   ],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 159096,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/mercenarywhat1.wav",
+   "ggSnd": [
+    "gg_snd_MercenaryWhat1"
+   ],
+   "key": "wc3.mercenarywhat1",
+   "models": [],
+   "sha256": "871463aef00080b25a113126729d8e9b666c2f7fa39b6ca32406b63e9377d790",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "MercenaryWhat1.wav",
+   "wc3Path": "Buildings\\Other\\Mercenary\\MercenaryWhat1.wav"
+  },
+  "wc3.mortarimpact": {
+   "abilityDocs": [
+    "godie-h02k.ex"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 83338,
+   "cue": "soundImpact",
+   "events": [],
+   "file": "assets/audio/wc3/mortarimpact.wav",
+   "ggSnd": [
+    "gg_snd_MortarImpact"
+   ],
+   "key": "wc3.mortarimpact",
+   "models": [],
+   "sha256": "6155f8167c48f4eca457d3b9b4c5cb582b85b8a67f93ed4fdd3577438542700d",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "MortarImpact.wav",
+   "wc3Path": "Abilities\\Weapons\\Mortar\\MortarImpact.wav"
+  },
+  "wc3.mortarteampissed9": {
+   "abilityDocs": [
+    "godie-u034.e",
+    "godie-u034.passive",
+    "godie-u034.q",
+    "godie-u034.w",
+    "godie-ucrl.e",
+    "godie-ucrl.passive",
+    "godie-ucrl.q",
+    "godie-ucrl.w"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 128630,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/mortarteampissed9.wav",
+   "ggSnd": [
+    "gg_snd_MortarTeamPissed9"
+   ],
+   "key": "wc3.mortarteampissed9",
+   "models": [],
+   "sha256": "643754fbf656acdf30294ff284f792bb03b7865654e76bdcdc7c31e5ec55cf87",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "MortarTeamPissed9.wav",
+   "wc3Path": "Units\\Human\\MortarTeam\\MortarTeamPissed9.wav"
+  },
+  "wc3.nagabuildingcancel": {
+   "abilityDocs": [],
+   "archive": "War3x.mpq",
+   "bound": false,
+   "bytes": 91526,
+   "cue": "soundDissipate",
+   "events": [
+    "SNDXDNBL"
+   ],
+   "file": "assets/audio/wc3/nagabuildingcancel.wav",
+   "ggSnd": [],
+   "key": "wc3.nagabuildingcancel",
+   "models": [
+    "aquaspikeversion2"
+   ],
+   "sha256": "8eebec5fe39335b57bdd90daedb1e1bb2cef390e5572306456b8eba2771d8b10",
+   "soundLabel": "NagaBuildingDeath",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "NagaBuildingCancel.wav",
+   "wc3Path": "Sound\\Buildings\\Naga\\NagaBuildingCancel.wav"
+  },
+  "wc3.nazgrelyes2": {
+   "abilityDocs": [
+    "godie-opgh.e"
+   ],
+   "archive": "War3xLocal.mpq",
+   "bound": false,
+   "bytes": 27528,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/nazgrelyes2.wav",
+   "ggSnd": [
+    "gg_snd_NazgrelYes2"
+   ],
+   "key": "wc3.nazgrelyes2",
+   "models": [],
+   "sha256": "a4a67defe29f339b103f75a1c84890d179d98cdfaba20f3973499832ca651cea",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "NazgrelYes2.wav",
+   "wc3Path": "Units\\Other\\Nazgrel\\NazgrelYes2.wav"
+  },
+  "wc3.necropolisupgrade2": {
+   "abilityDocs": [
+    "godie-e00t.w"
+   ],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 257988,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/necropolisupgrade2.wav",
+   "ggSnd": [
+    "gg_snd_NecropolisUpgrade2"
+   ],
+   "key": "wc3.necropolisupgrade2",
+   "models": [],
+   "sha256": "0a9b7775d5216451864187ffa1ff1c28148ab91d3fac70fa875c297b16417f8d",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "NecropolisUpgrade2.wav",
+   "wc3Path": "Buildings\\Undead\\Necropolis\\NecropolisUpgrade2.wav"
+  },
+  "wc3.nightelfdissipate1": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 100140,
+   "cue": "soundDissipate",
+   "events": [
+    "SNDXDDSN"
+   ],
+   "file": "assets/audio/wc3/nightelfdissipate1.wav",
+   "ggSnd": [],
+   "key": "wc3.nightelfdissipate1",
+   "models": [
+    "fox",
+    "fox2",
+    "heromiku",
+    "heroshana",
+    "pika"
+   ],
+   "sha256": "073644b8398dd1cfd25a2bbdfbb228078675a48027df0652c8819e25720d3c2f",
+   "soundLabel": "NightElfDissipate",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "NightElfDissipate1.wav",
+   "wc3Path": "Sound\\Units\\NightElf\\NightElfDissipate1.wav"
+  },
+  "wc3.orcdissipate1": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 100140,
+   "cue": "soundDissipate",
+   "events": [
+    "SNDXDDSO"
+   ],
+   "file": "assets/audio/wc3/orcdissipate1.wav",
+   "ggSnd": [],
+   "key": "wc3.orcdissipate1",
+   "models": [
+    "herofate",
+    "herohehi",
+    "herohimurakenshin",
+    "herokyo",
+    "heromusashimiyamoto",
+    "herosaber",
+    "herosamanosukeakechi",
+    "herosephiroth",
+    "herotoshiiemaeda",
+    "lubu",
+    "niya",
+    "renaryugu2"
+   ],
+   "sha256": "073644b8398dd1cfd25a2bbdfbb228078675a48027df0652c8819e25720d3c2f",
+   "soundLabel": "OrcDissipate",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "OrcDissipate1.wav",
+   "wc3Path": "Sound\\Units\\Orc\\OrcDissipate1.wav"
+  },
+  "wc3.pandarenbrewmasterpissed8": {
+   "abilityDocs": [
+    "godie-h02k.w"
+   ],
+   "archive": "War3xLocal.mpq",
+   "bound": true,
+   "bytes": 72974,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/pandarenbrewmasterpissed8.wav",
+   "ggSnd": [
+    "gg_snd_PandarenBrewmasterPissed8"
+   ],
+   "key": "wc3.pandarenbrewmasterpissed8",
+   "models": [],
+   "sha256": "55f00ed67c7132a8c3fb1324068a82baec2495bcd9a685f5de10ac4054cbde03",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "PandarenBrewmasterPissed8.wav",
+   "wc3Path": "Units\\Creeps\\PandarenBrewmaster\\PandarenBrewmasterPissed8.wav"
+  },
+  "wc3.pandarenbrewmasterwarcry1": {
+   "abilityDocs": [
+    "godie-h02k.e"
+   ],
+   "archive": "War3xLocal.mpq",
+   "bound": true,
+   "bytes": 112526,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/pandarenbrewmasterwarcry1.wav",
+   "ggSnd": [
+    "gg_snd_PandarenBrewmasterWarcry1"
+   ],
+   "key": "wc3.pandarenbrewmasterwarcry1",
+   "models": [],
+   "sha256": "67f753273a6704b3facd1c1aefc6fbf7afb662808cb35ded15314fd8a1eb16a9",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "PandarenBrewmasterWarcry1.wav",
+   "wc3Path": "Units\\Creeps\\PandarenBrewmaster\\PandarenBrewmasterWarcry1.wav"
+  },
+  "wc3.pandarenbrewmasteryes1": {
+   "abilityDocs": [
+    "godie-h02k.r"
+   ],
+   "archive": "War3xLocal.mpq",
+   "bound": true,
+   "bytes": 70798,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/pandarenbrewmasteryes1.wav",
+   "ggSnd": [
+    "gg_snd_PandarenBrewmasterYes1"
+   ],
+   "key": "wc3.pandarenbrewmasteryes1",
+   "models": [],
+   "sha256": "911fcb040a89f5a9e94d59a47d2f99efca5f58d98edf0f2c77c217358ef583b1",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "PandarenBrewmasterYes1.wav",
+   "wc3Path": "Units\\Creeps\\PandarenBrewmaster\\PandarenBrewmasterYes1.wav"
+  },
+  "wc3.parasite": {
+   "abilityDocs": [
+    "godie-e00q.ex",
+    "godie-u00k.e"
+   ],
+   "archive": "War3x.mpq",
+   "bound": true,
+   "bytes": 87930,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/parasite.wav",
+   "ggSnd": [
+    "gg_snd_Parasite"
+   ],
+   "key": "wc3.parasite",
+   "models": [],
+   "sha256": "61c55f0bace9b29c42da8cd2dcbd301410d294962a32f690dabbd95e403a8828",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "Parasite.wav",
+   "wc3Path": "Abilities\\Spells\\Other\\Parasite\\Parasite.wav"
+  },
+  "wc3.peasantdeath": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 160886,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXDPES"
+   ],
+   "file": "assets/audio/wc3/peasantdeath.wav",
+   "ggSnd": [],
+   "key": "wc3.peasantdeath",
+   "models": [
+    "rabbit"
+   ],
+   "sha256": "aff3bfb6260ca4d5febf28905af00bf562b2ee16168017e2fa8d6fe7c687c953",
+   "soundLabel": "PeasantDeath",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "PeasantDeath.wav",
+   "wc3Path": "Units\\Human\\Peasant\\PeasantDeath.wav"
+  },
+  "wc3.peasantpissed3": {
+   "abilityDocs": [
+    "godie-nbst.ex"
+   ],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 114806,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/peasantpissed3.wav",
+   "ggSnd": [
+    "gg_snd_PeasantPissed3"
+   ],
+   "key": "wc3.peasantpissed3",
+   "models": [],
+   "sha256": "95aad252de84c153b4ea5fc8014ff3c5265590c45dbd70b7116849501fea0d53",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "PeasantPissed3.wav",
+   "wc3Path": "Units\\Human\\Peasant\\PeasantPissed3.wav"
+  },
+  "wc3.peondeath": {
+   "abilityDocs": [
+    "godie-e015.q",
+    "godie-u00l.q",
+    "godie-umal.q"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 81530,
+   "cue": "soundImpact",
+   "events": [],
+   "file": "assets/audio/wc3/peondeath.wav",
+   "ggSnd": [
+    "gg_snd_PeonDeath"
+   ],
+   "key": "wc3.peondeath",
+   "models": [],
+   "sha256": "c46dd952a4dca36cc3e71b5594d6b102ad8366380ca411190e38290090d258c8",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "PeonDeath.wav",
+   "wc3Path": "Units\\Orc\\Peon\\PeonDeath.wav"
+  },
+  "wc3.peonwhat2": {
+   "abilityDocs": [
+    "godie-u00l.q",
+    "godie-umal.q"
+   ],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 22762,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/peonwhat2.wav",
+   "ggSnd": [
+    "gg_snd_PeonWhat2"
+   ],
+   "key": "wc3.peonwhat2",
+   "models": [],
+   "sha256": "51d3de60bbb1973f291b7059dc1a8c0d44ff7f524d31881c4ab790c5a2922ef2",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "PeonWhat2.wav",
+   "wc3Path": "Units\\Orc\\Peon\\PeonWhat2.wav"
+  },
+  "wc3.priestdeath": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 95052,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXDPRS"
+   ],
+   "file": "assets/audio/wc3/priestdeath.wav",
+   "ggSnd": [],
+   "key": "wc3.priestdeath",
+   "models": [
+    "luffe"
+   ],
+   "sha256": "4bf7130aa5bac74f533a93ccfe1f00d5e5378c24ed9dca805a441fc1472a3e5a",
+   "soundLabel": "PriestDeath",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "PriestDeath.wav",
+   "wc3Path": "Units\\Human\\Priest\\PriestDeath.wav"
+  },
+  "wc3.reincarnation": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 120362,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXAORE"
+   ],
+   "file": "assets/audio/wc3/reincarnation.wav",
+   "ggSnd": [],
+   "key": "wc3.reincarnation",
+   "models": [
+    "musiccast"
+   ],
+   "sha256": "4230a41c146b140611b212972114479f07d6600e8dcec52e270df0380855c0f1",
+   "soundLabel": "Reincarnation",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "Reincarnation.wav",
+   "wc3Path": "Abilities\\Spells\\Orc\\Reincarnation\\Reincarnation.wav"
+  },
+  "wc3.rokhanwhat2": {
+   "abilityDocs": [
+    "godie-emns.e"
+   ],
+   "archive": "War3xLocal.mpq",
+   "bound": true,
+   "bytes": 95880,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/rokhanwhat2.wav",
+   "ggSnd": [
+    "gg_snd_RokhanWhat2"
+   ],
+   "key": "wc3.rokhanwhat2",
+   "models": [],
+   "sha256": "6811170e0fc180a859b1510e98607f99fd9e5787f877f65cb004172a12368824",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "RokhanWhat2.wav",
+   "wc3Path": "Units\\Other\\Rokhan\\RokhanWhat2.wav"
+  },
+  "wc3.sealwhat2": {
+   "abilityDocs": [
+    "godie-obla.r"
+   ],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 79696,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/sealwhat2.wav",
+   "ggSnd": [
+    "gg_snd_SealWhat2"
+   ],
+   "key": "wc3.sealwhat2",
+   "models": [],
+   "sha256": "ca7b6edef02b87a37790dc5a4853afcfa63143c866e5ad98b0c2f64415fb9b29",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "SealWhat2.wav",
+   "wc3Path": "Units\\Critters\\Seal\\SealWhat2.wav"
+  },
+  "wc3.shadowhunterready1": {
+   "abilityDocs": [
+    "godie-ubal.r"
+   ],
+   "archive": "War3xLocal.mpq",
+   "bound": true,
+   "bytes": 132052,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/shadowhunterready1.wav",
+   "ggSnd": [
+    "gg_snd_ShadowHunterReady1"
+   ],
+   "key": "wc3.shadowhunterready1",
+   "models": [],
+   "sha256": "dcb4b594e02c4f14bdd5f769f22ee512b436d98defebed9ab074bb581f50513e",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "ShadowHunterReady1.wav",
+   "wc3Path": "Units\\Orc\\HeroShadowHunter\\ShadowHunterReady1.wav"
+  },
+  "wc3.shamanready1": {
+   "abilityDocs": [
+    "godie-nman.r"
+   ],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 232822,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/shamanready1.wav",
+   "ggSnd": [
+    "gg_snd_ShamanReady1"
+   ],
+   "key": "wc3.shamanready1",
+   "models": [],
+   "sha256": "8e879a03d8dd81e61d6af1742e010dc58bd3290c2f88ab41877928c73165d46b",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "ShamanReady1.wav",
+   "wc3Path": "Units\\Orc\\Shaman\\ShamanReady1.wav"
+  },
+  "wc3.shimmeringportaldeath": {
+   "abilityDocs": [
+    "godie-u010.e",
+    "godie-uvng.e"
+   ],
+   "archive": "War3x.mpq",
+   "bound": true,
+   "bytes": 210988,
+   "cue": "soundImpact",
+   "events": [],
+   "file": "assets/audio/wc3/shimmeringportaldeath.wav",
+   "ggSnd": [
+    "gg_snd_ShimmeringPortalDeath"
+   ],
+   "key": "wc3.shimmeringportaldeath",
+   "models": [],
+   "sha256": "bb552ba21845bdbedbaff598a1adfd050800bc91b8522c8ce392843c3bf47b69",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "ShimmeringPortalDeath.wav",
+   "wc3Path": "Sound\\Ambient\\DoodadEffects\\ShimmeringPortalDeath.wav"
+  },
+  "wc3.shockwave": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 125700,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXAOSH"
+   ],
+   "file": "assets/audio/wc3/shockwave.wav",
+   "ggSnd": [],
+   "key": "wc3.shockwave",
+   "models": [
+    "herobuu"
+   ],
+   "sha256": "97e804a2b3099489c082b606381bc233db772b1252d269c0be1271655386bed6",
+   "soundLabel": "ShockWave",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "Shockwave.wav",
+   "wc3Path": "Abilities\\Spells\\Orc\\Shockwave\\Shockwave.wav"
+  },
+  "wc3.snapdragonmissilelaunch1": {
+   "abilityDocs": [
+    "godie-o01z.e",
+    "godie-o01z.r",
+    "godie-o02v.e",
+    "godie-o02v.r",
+    "godie-u00j.w"
+   ],
+   "archive": "War3x.mpq",
+   "bound": true,
+   "bytes": 52856,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/snapdragonmissilelaunch1.wav",
+   "ggSnd": [
+    "gg_snd_SnapDragonMissileLaunch1"
+   ],
+   "key": "wc3.snapdragonmissilelaunch1",
+   "models": [],
+   "sha256": "5557a2989c7b40c5cdcfd98b7e6bc565164858a49d23ce249ba594baf21bcd30",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "SnapDragonMissileLaunch1.wav",
+   "wc3Path": "Abilities\\Weapons\\snapMissile\\SnapDragonMissileLaunch1.wav"
+  },
+  "wc3.soulgem": {
+   "abilityDocs": [
+    "godie-o01z.e",
+    "godie-o01z.r",
+    "godie-o02v.e",
+    "godie-o02v.r"
+   ],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 197660,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/soulgem.wav",
+   "ggSnd": [
+    "gg_snd_SoulGem"
+   ],
+   "key": "wc3.soulgem",
+   "models": [],
+   "sha256": "c73b95b740d225f7a57064f5cc069a79fd363863c61910496141c863b5e20fe2",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "SoulGem.wav",
+   "wc3Path": "Abilities\\Spells\\Items\\AIso\\SoulGem.wav"
+  },
+  "wc3.soulpreservation": {
+   "abilityDocs": [
+    "godie-e008.r"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 159360,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/soulpreservation.wav",
+   "ggSnd": [
+    "gg_snd_SoulPreservation"
+   ],
+   "key": "wc3.soulpreservation",
+   "models": [],
+   "sha256": "b266e99ec97ed80bfc0585e73a845d2aa56d3fd3318e258a89468801b8312bab",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "SoulPreservation.wav",
+   "wc3Path": "Abilities\\Spells\\Demon\\SoulPreservation\\SoulPreservation.wav"
+  },
+  "wc3.spellbreakerpissed4": {
+   "abilityDocs": [
+    "godie-n00b.w"
+   ],
+   "archive": "War3xLocal.mpq",
+   "bound": true,
+   "bytes": 109966,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/spellbreakerpissed4.wav",
+   "ggSnd": [
+    "gg_snd_SpellbreakerPissed4"
+   ],
+   "key": "wc3.spellbreakerpissed4",
+   "models": [],
+   "sha256": "8e6adeec90a03aa0e385bb64220808ec285f96f5c12a5669719bc7b3a1f43053",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "SpellbreakerPissed4.wav",
+   "wc3Path": "Units\\Human\\BloodElfSpellThief\\SpellbreakerPissed4.wav"
+  },
+  "wc3.spiritofvengeanceyes3": {
+   "abilityDocs": [
+    "godie-n00p.w"
+   ],
+   "archive": "War3xLocal.mpq",
+   "bound": true,
+   "bytes": 115576,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/spiritofvengeanceyes3.wav",
+   "ggSnd": [
+    "gg_snd_SpiritOfVengeanceYes3"
+   ],
+   "key": "wc3.spiritofvengeanceyes3",
+   "models": [],
+   "sha256": "611022c8eb623c292fc958437efe3490062c78f9b63b588bbe66fd6874d9fe51",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "SpiritOfVengeanceYes3.wav",
+   "wc3Path": "Units\\NightElf\\SpiritOfVengeance\\SpiritOfVengeanceYes3.wav"
+  },
+  "wc3.stampedecaster1": {
+   "abilityDocs": [
+    "godie-nman.w"
+   ],
+   "archive": "War3x.mpq",
+   "bound": false,
+   "bytes": 117802,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/stampedecaster1.wav",
+   "ggSnd": [
+    "gg_snd_StampedeCaster1"
+   ],
+   "key": "wc3.stampedecaster1",
+   "models": [],
+   "sha256": "bb70540d7f7d427724a9fc8b4b62dbcb3375bc9fef20f01467cb3e1e5625f436",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "StampedeCaster1.wav",
+   "wc3Path": "Abilities\\Spells\\Other\\Stampede\\StampedeCaster1.wav"
+  },
+  "wc3.stasistotem": {
+   "abilityDocs": [
+    "godie-h022.e",
+    "godie-ntin.r"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 82148,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXASTS"
+   ],
+   "file": "assets/audio/wc3/stasistotem.wav",
+   "ggSnd": [],
+   "key": "wc3.stasistotem",
+   "models": [
+    "lightningnova"
+   ],
+   "sha256": "84cf15326dd7f0f0f8a57335c9ec69de22f1124c78edae722e4a6d47a178752a",
+   "soundLabel": "StasisTotemDeath",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "StasisTotem.wav",
+   "wc3Path": "Units\\Orc\\StasisTotem\\StasisTotem.wav"
+  },
+  "wc3.step1": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 44624,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXFDFL",
+    "SNDXFDFR"
+   ],
+   "file": "assets/audio/wc3/step1.wav",
+   "ggSnd": [],
+   "key": "wc3.step1",
+   "models": [
+    "gumdam"
+   ],
+   "sha256": "a8d63432eeda9fabba322f0abf613eab8decd040518fe3ab0e1f6d56ab481418",
+   "soundLabel": "DeepFootstep",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "Step1.wav",
+   "wc3Path": "Sound\\Units\\Footsteps\\Step1.wav"
+  },
+  "wc3.step2": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 43862,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXFDFL",
+    "SNDXFDFR"
+   ],
+   "file": "assets/audio/wc3/step2.wav",
+   "ggSnd": [],
+   "key": "wc3.step2",
+   "models": [
+    "gumdam"
+   ],
+   "sha256": "547fe25c7dd5be594e0e32c95f1152fd26019246c5056a5b10922dd406f8cb17",
+   "soundLabel": "DeepFootstep",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "Step2.wav",
+   "wc3Path": "Sound\\Units\\Footsteps\\Step2.wav"
+  },
+  "wc3.step3": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 42750,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXFDFL",
+    "SNDXFDFR"
+   ],
+   "file": "assets/audio/wc3/step3.wav",
+   "ggSnd": [],
+   "key": "wc3.step3",
+   "models": [
+    "gumdam"
+   ],
+   "sha256": "e655e53c077166034342ee9c7678238683cca4bbf4cc26480043100f0023a752",
+   "soundLabel": "DeepFootstep",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "Step3.wav",
+   "wc3Path": "Sound\\Units\\Footsteps\\Step3.wav"
+  },
+  "wc3.step4": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 42256,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXFDFL",
+    "SNDXFDFR"
+   ],
+   "file": "assets/audio/wc3/step4.wav",
+   "ggSnd": [],
+   "key": "wc3.step4",
+   "models": [
+    "gumdam"
+   ],
+   "sha256": "3c3466644bb9f00b86ce490ee8261c2a6abd43131888f34442035b50fe8a8ee8",
+   "soundLabel": "DeepFootstep",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "Step4.wav",
+   "wc3Path": "Sound\\Units\\Footsteps\\Step4.wav"
+  },
+  "wc3.succubusdeath1": {
+   "abilityDocs": [],
+   "archive": "War3xLocal.mpq",
+   "bound": false,
+   "bytes": 80974,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXDDMN"
+   ],
+   "file": "assets/audio/wc3/succubusdeath1.wav",
+   "ggSnd": [],
+   "key": "wc3.succubusdeath1",
+   "models": [
+    "herooichi"
+   ],
+   "sha256": "8f8ea065e0fc5e8aa0842d24c0d224879d6729e948d5e16a599700e35e4cab07",
+   "soundLabel": "DemonessDeath",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "SuccubusDeath1.wav",
+   "wc3Path": "Units\\Demon\\Demoness\\SuccubusDeath1.wav"
+  },
+  "wc3.taunt": {
+   "abilityDocs": [
+    "godie-h02u.w",
+    "godie-h02v.w",
+    "godie-o00l.r",
+    "godie-u00k.r",
+    "godie-udea.e"
+   ],
+   "archive": "War3x.mpq",
+   "bound": true,
+   "bytes": 124282,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/taunt.wav",
+   "ggSnd": [
+    "gg_snd_Taunt"
+   ],
+   "key": "wc3.taunt",
+   "models": [],
+   "sha256": "d8b100d8f6413bdc7a175cb78ce9abe780e46507a77c848c9415b5a53a5e4058",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "Taunt.wav",
+   "wc3Path": "Abilities\\Spells\\NightElf\\Taunt\\Taunt.wav"
+  },
+  "wc3.thunderboltmissiledeath": {
+   "abilityDocs": [
+    "godie-edem.r"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 98632,
+   "cue": "soundImpact",
+   "events": [],
+   "file": "assets/audio/wc3/thunderboltmissiledeath.wav",
+   "ggSnd": [
+    "gg_snd_ThunderBoltMissileDeath"
+   ],
+   "key": "wc3.thunderboltmissiledeath",
+   "models": [],
+   "sha256": "bc66dbf49a467e5b1a075b2c7553ac53b18508500b8a8a052039ec97bee1d709",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "ThunderBoltMissileDeath.wav",
+   "wc3Path": "Abilities\\Spells\\Human\\StormBolt\\ThunderBoltMissileDeath.wav"
+  },
+  "wc3.thunderclapcaster": {
+   "abilityDocs": [
+    "godie-n01c.e",
+    "godie-nbbc.e"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 152306,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/thunderclapcaster.wav",
+   "ggSnd": [
+    "gg_snd_ThunderClapCaster"
+   ],
+   "key": "wc3.thunderclapcaster",
+   "models": [],
+   "sha256": "4b05dc7887580a225cf0b23e13fbf29ec7d652840d22d4c7657ba2ce2312c02a",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "ThunderClapCaster.wav",
+   "wc3Path": "Abilities\\Spells\\Human\\ThunderClap\\ThunderClapCaster.wav"
+  },
+  "wc3.treantready1": {
+   "abilityDocs": [
+    "godie-e00s.q",
+    "godie-ubal.r"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 108002,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/treantready1.wav",
+   "ggSnd": [
+    "gg_snd_TreantReady1"
+   ],
+   "key": "wc3.treantready1",
+   "models": [],
+   "sha256": "8c7188d75fae3cd60f15140b7dcdd1ff61c5f32f42a482a6136d832f254e8465",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "TreantReady1.wav",
+   "wc3Path": "Buildings\\NightElf\\AncientProtector\\TreantReady1.wav"
+  },
+  "wc3.trollbatriderpissed2": {
+   "abilityDocs": [
+    "godie-ubal.w"
+   ],
+   "archive": "War3xLocal.mpq",
+   "bound": true,
+   "bytes": 138638,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/trollbatriderpissed2.wav",
+   "ggSnd": [
+    "gg_snd_TrollbatriderPissed2"
+   ],
+   "key": "wc3.trollbatriderpissed2",
+   "models": [],
+   "sha256": "67bcfce73261cf48abfe0757821c7724d40501415734207528e775d7c633db74",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "TrollbatriderPissed2.wav",
+   "wc3Path": "Units\\Orc\\BatTroll\\TrollbatriderPissed2.wav"
+  },
+  "wc3.trollwoodworkswhat1": {
+   "abilityDocs": [
+    "godie-u00n.passive",
+    "godie-u00o.passive"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 132476,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/trollwoodworkswhat1.wav",
+   "ggSnd": [
+    "gg_snd_TrollWoodWorksWhat1"
+   ],
+   "key": "wc3.trollwoodworkswhat1",
+   "models": [],
+   "sha256": "98ea13e7248ffe1e08ad1966b1e3aeb8adc2ba0ab2e3510397b78006bf78707b",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "TrollWoodWorksWhat1.wav",
+   "wc3Path": "Buildings\\Orc\\WarMill\\TrollWoodWorksWhat1.wav"
+  },
+  "wc3.tuskarrdeath1": {
+   "abilityDocs": [],
+   "archive": "War3xLocal.mpq",
+   "bound": false,
+   "bytes": 99392,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXDTUS"
+   ],
+   "file": "assets/audio/wc3/tuskarrdeath1.wav",
+   "ggSnd": [],
+   "key": "wc3.tuskarrdeath1",
+   "models": [
+    "herobuu"
+   ],
+   "sha256": "c9a3389d0b5a4b7b6a47355a9f79873a17648b3bfbf6d24c517c29354c6f4add",
+   "soundLabel": "TuskarrDeath",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "TuskarrDeath1.wav",
+   "wc3Path": "Units\\Creeps\\tuskar\\TuskarrDeath1.wav"
+  },
+  "wc3.undeaddissipate2": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 159450,
+   "cue": "soundDissipate",
+   "events": [
+    "SNDXDUDS"
+   ],
+   "file": "assets/audio/wc3/undeaddissipate2.wav",
+   "ggSnd": [],
+   "key": "wc3.undeaddissipate2",
+   "models": [
+    "herolight"
+   ],
+   "sha256": "c2dd04c317aa287392f9df448402326638da1009bd1b9356a5dd1acf6d2af39c",
+   "soundLabel": "UndeadDissipate",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "UndeadDissipate2.wav",
+   "wc3Path": "Sound\\Units\\Undead\\Dissipate\\UndeadDissipate2.wav"
+  },
+  "wc3.villagerchilddeath1": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 58742,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXDVLC"
+   ],
+   "file": "assets/audio/wc3/villagerchilddeath1.wav",
+   "ggSnd": [],
+   "key": "wc3.villagerchilddeath1",
+   "models": [
+    "babyface",
+    "negi"
+   ],
+   "sha256": "fca4d12bb44a62b0b50657d60cd2e351814d6e15d347575f2afc17584c7ee850",
+   "soundLabel": "VillagerChildDeath",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "VillagerChildDeath1.wav",
+   "wc3Path": "Units\\Critters\\VillagerKid\\VillagerChildDeath1.wav"
+  },
+  "wc3.villagermaledeath1": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 70262,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXDVLM"
+   ],
+   "file": "assets/audio/wc3/villagermaledeath1.wav",
+   "ggSnd": [],
+   "key": "wc3.villagermaledeath1",
+   "models": [
+    "heroxelloss"
+   ],
+   "sha256": "f0d38fb2a7e309cfe51097f0887d6f95101c436c99cc74652bd7e4f247eb8656",
+   "soundLabel": "VillagerManDeath",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "VillagerMaleDeath1.wav",
+   "wc3Path": "Units\\Critters\\VillagerMan\\VillagerMaleDeath1.wav"
+  },
+  "wc3.wandofneutralization": {
+   "abilityDocs": [
+    "godie-h01u.w",
+    "godie-n01c.r",
+    "godie-nbbc.r"
+   ],
+   "archive": "War3x.mpq",
+   "bound": true,
+   "bytes": 42598,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXAIDC"
+   ],
+   "file": "assets/audio/wc3/wandofneutralization.wav",
+   "ggSnd": [],
+   "key": "wc3.wandofneutralization",
+   "models": [
+    "crescent"
+   ],
+   "sha256": "36725f64c37259d6c40beaf0f981d8273cb9fd3a3afce8d2b3fd4f5779442610",
+   "soundLabel": "NeutralizationWandHit",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "WandOfNeutralization.wav",
+   "wc3Path": "Abilities\\Spells\\Items\\WandOfNeutralization\\WandOfNeutralization.wav"
+  },
+  "wc3.wardenattackeffort1": {
+   "abilityDocs": [],
+   "archive": "War3xLocal.mpq",
+   "bound": false,
+   "bytes": 60026,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXKWAR"
+   ],
+   "file": "assets/audio/wc3/wardenattackeffort1.wav",
+   "ggSnd": [],
+   "key": "wc3.wardenattackeffort1",
+   "models": [
+    "fox",
+    "fox2"
+   ],
+   "sha256": "a9087b61576af1682cf5ce907af60cb90ebd371082fe8e30a6ee17719968bbda",
+   "soundLabel": "WardenAttack",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "WardenAttackEffort1.wav",
+   "wc3Path": "Units\\NightElf\\HeroWarden\\WardenAttackEffort1.wav"
+  },
+  "wc3.wardendeath1": {
+   "abilityDocs": [],
+   "archive": "War3xLocal.mpq",
+   "bound": false,
+   "bytes": 61098,
+   "cue": "soundImpact",
+   "events": [
+    "SNDXDWRD"
+   ],
+   "file": "assets/audio/wc3/wardendeath1.wav",
+   "ggSnd": [],
+   "key": "wc3.wardendeath1",
+   "models": [
+    "fox",
+    "fox2",
+    "pika"
+   ],
+   "sha256": "858b6837424e404d09f43faa921010b357f6508491c4b42f485e9a2de6104fdd",
+   "soundLabel": "HeroWardenDeath",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "WardenDeath1.wav",
+   "wc3Path": "Units\\NightElf\\HeroWarden\\WardenDeath1.wav"
+  },
+  "wc3.warstomp": {
+   "abilityDocs": [],
+   "archive": "war3.mpq",
+   "bound": false,
+   "bytes": 95598,
+   "cue": "soundLaunch",
+   "events": [
+    "SNDXAWRS"
+   ],
+   "file": "assets/audio/wc3/warstomp.wav",
+   "ggSnd": [],
+   "key": "wc3.warstomp",
+   "models": [
+    "hero-turtle"
+   ],
+   "sha256": "c21dc389b19ce79cbda3df2f910ed03c488f874ff4daafa07bdef972611c9ac5",
+   "soundLabel": "Pulverize",
+   "sources": [
+    "model-soundset"
+   ],
+   "wc3File": "Warstomp.wav",
+   "wc3Path": "Units\\Orc\\Tauren\\Warstomp.wav"
+  },
+  "wc3.waterelementalmissile3": {
+   "abilityDocs": [
+    "godie-u00n.e",
+    "godie-u00o.e"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 66686,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/waterelementalmissile3.wav",
+   "ggSnd": [
+    "gg_snd_WaterElementalMissile3"
+   ],
+   "key": "wc3.waterelementalmissile3",
+   "models": [],
+   "sha256": "803d6cdf70867eea4668613b95595df3cc46504012c352c406cd1bf9decfb013",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "WaterElementalMissile3.wav",
+   "wc3Path": "Abilities\\Weapons\\WaterElementalMissile\\WaterElementalMissile3.wav"
+  },
+  "wc3.waygatewhat1": {
+   "abilityDocs": [
+    "godie-o00l.e",
+    "godie-o02s.r"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 111642,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/waygatewhat1.wav",
+   "ggSnd": [
+    "gg_snd_WayGateWhat1"
+   ],
+   "key": "wc3.waygatewhat1",
+   "models": [],
+   "sha256": "7a6f3f6146f6620c21c03267d1a9c7c9014c31bda268b9d11c4c02d17f5b15e8",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "WayGateWhat1.wav",
+   "wc3Path": "Buildings\\Other\\Waygate\\WayGateWhat1.wav"
+  },
+  "wc3.witchdoctorcastattack1": {
+   "abilityDocs": [
+    "godie-h00l.q"
+   ],
+   "archive": "war3.mpq",
+   "bound": true,
+   "bytes": 60428,
+   "cue": "soundLaunch",
+   "events": [],
+   "file": "assets/audio/wc3/witchdoctorcastattack1.wav",
+   "ggSnd": [
+    "gg_snd_WitchDoctorCastAttack1"
+   ],
+   "key": "wc3.witchdoctorcastattack1",
+   "models": [],
+   "sha256": "c0ad98d38d7d685faf316ade2c29dd0d3013dac9192668e534a171ec8fc5fa11",
+   "soundLabel": "",
+   "sources": [
+    "ability-declared"
+   ],
+   "wc3File": "WitchDoctorCastAttack1.wav",
+   "wc3Path": "Abilities\\Weapons\\WitchDoctorMissile\\WitchDoctorCastAttack1.wav"
+  }
+ },
+ "condition": "每一個位元組都要有出處：來源 MPQ · 原始路徑 · 原始檔名 · sha256",
+ "gaps": [
+  {
+   "event": "SNDXAAMS",
+   "kind": "labelWithoutFiles",
+   "model": "goku",
+   "soundLabel": "AntiMagicshell",
+   "why": "AnimSounds.slk 有這一列但 FileNames 是空的"
+  },
+  {
+   "event": "SNDXAAMS",
+   "kind": "labelWithoutFiles",
+   "model": "herobuu",
+   "soundLabel": "AntiMagicshell",
+   "why": "AnimSounds.slk 有這一列但 FileNames 是空的"
+  },
+  {
+   "event": "SNDXAAMS",
+   "kind": "labelWithoutFiles",
+   "model": "luffe",
+   "soundLabel": "AntiMagicshell",
+   "why": "AnimSounds.slk 有這一列但 FileNames 是空的"
+  },
+  {
+   "kind": "notInAnyArchive",
+   "models": [
+    "mfls"
+   ],
+   "wc3Path": "Units\\Critters\\VillagerWoman\\VillagerFemaleDeath1.wav",
+   "why": "四個零售 MPQ 都沒有這個路徑 → 這一顆事件沒有聲音"
+  },
+  {
+   "kind": "notInAnyArchive",
+   "models": [],
+   "wc3Path": "war3mapImported\\sawch.mp3",
+   "why": "四個零售 MPQ 都沒有這個路徑 → 這一顆事件沒有聲音"
+  },
+  {
+   "event": "SNDXAEFL",
+   "kind": "unresolvedEventCode",
+   "model": "crescent",
+   "why": "AnimLookups.slk 沒有這個 4 碼事件碼 → 翻不出 sound label"
+  },
+  {
+   "event": "SNDXKPES",
+   "kind": "unresolvedEventCode",
+   "model": "rabbit",
+   "why": "AnimLookups.slk 沒有這個 4 碼事件碼 → 翻不出 sound label"
+  }
+ ],
+ "generator": "tools/w3x-import/build_vfx_sound_bindings.py",
+ "rightsHolder": "Blizzard Entertainment",
+ "schema": "ggd-wc3-vfx-sound-provenance@1",
+ "scope": "132 個 clip，全部是**模型自帶的特效音**（技能／武器／消散／死亡）。⚠️ 這一批**不是** data/blizzard-overlay/sounds/ 那 511 個角色語音台詞的子集 —— 那 511 個是 #10 的 soundset 抽取產物，這 73 個是照 VFX_SOUND_JOIN 的清單**另外從 MPQ 抽的**（其中 5 個剛好與 overlay 既有檔重疊，68 個是新抽的）。⛔ 那 511 個角色語音、60 個 wc3.* 技能宣告音、40 個模型都不在這一輪。",
+ "totalBytes": 12427528
+}

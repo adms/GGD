@@ -42,8 +42,9 @@ import {
   W3X_ART_FAMILY_IDS,
   type W3xArtFamily,
 } from "./w3xArtFamilies";
-import { W3X_FAMILY_ART } from "./w3xFamilyArt";
+import { w3xFamilyArtRows } from "./w3xFamilyArt";
 import { requiredFamilyDocs } from "./familyTuning";
+import { loadAbilityArtFromDisk } from "./loadAbilityArtFromDisk";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 /**
@@ -102,7 +103,7 @@ export function shippedFamilyConfig(
   // console can still see and retarget it — an empty object would read as
   // "unbound" in the UI when it is in fact bound with no overrides.
   const abilities: ConfigVfxFamiliesDoc["abilities"] = {};
-  for (const [abilityId, row] of Object.entries(W3X_FAMILY_ART).sort(([a], [b]) => a.localeCompare(b))) {
+  for (const [abilityId, row] of Object.entries(w3xFamilyArtRows()).sort(([a], [b]) => a.localeCompare(b))) {
     abilities[abilityId] = {
       family: row.family as W3xArtFamily,
       ...(row.scale !== undefined ? { w3xScale: row.scale } : {}),
@@ -141,6 +142,15 @@ function stable(v: unknown): string {
 }
 
 function main(): void {
+  // ⭐ GH#384 —— 258 筆家族證據住在 `content/config/vfx-ability-art.json`。
+  // ⛔ 少了這一行，`requiredFamilyDocs(null)` 會回一個空的 Map，於是這支腳本會
+  //    **把 78 份 fx.fam 文件全部當成孤兒掃掉** —— 而它會 EXIT 0。
+  const bound = loadAbilityArtFromDisk(CONTENT_DIR);
+  if (bound === 0) {
+    throw new Error(
+      "⛔ content/config/vfx-ability-art.json 是空的或不存在 —— ⛔ 不要在這種狀態下重建 fx.fam 文件。",
+    );
+  }
   const docs = requiredFamilyDocs(null);
   const vfxDir = join(CONTENT_DIR, "vfx");
   mkdirSync(vfxDir, { recursive: true });
@@ -164,10 +174,10 @@ function main(): void {
   //    而它們漂開的那一天，保留邏輯會安靜地退化成「整份重寫」（＝ GH#378 本人）。
   writeFileSync(join(CONTENT_DIR, FAMILY_CONFIG_REL), stable(shippedFamilyConfig()));
   const perFamily: Record<string, number> = {};
-  for (const row of Object.values(W3X_FAMILY_ART)) perFamily[row.family] = (perFamily[row.family] ?? 0) + 1;
+  for (const row of Object.values(w3xFamilyArtRows())) perFamily[row.family] = (perFamily[row.family] ?? 0) + 1;
   process.stdout.write(
     `wrote ${docs.size} fx.fam docs (removed ${removed} orphan) + config/vfx-families.json ` +
-      `for ${Object.keys(W3X_FAMILY_ART).length} abilities\n` +
+      `for ${Object.keys(w3xFamilyArtRows()).length} abilities\n` +
       `${Object.entries(perFamily)
         .sort((a, b) => b[1] - a[1])
         .map(([f, n]) => `  ${f}: ${n}`)

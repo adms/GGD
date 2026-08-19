@@ -73,7 +73,7 @@ import { MultiGamepadSystem, BTN, type GamepadCameraIntent } from "./input/Gamep
 import { PadCameraControl } from "./input/padCamera";
 import { aimAssistMobPenalty } from "./ui/displayAimAssist";
 import { pickUnit, pickNearestUnit, type PickableUnit } from "./input/Picking";
-import type { AimAbility } from "./input/AimResolver";
+import { resolveAoeCenter, type AimAbility } from "./input/AimResolver";
 import { isTouchDevice, readTouchEnv } from "./input/mobileDetect";
 import {
   TouchController,
@@ -100,7 +100,11 @@ import {
 } from "./render/EntityViewRegistry";
 import { blizzardOverlayModels } from "./render/views/blizzardOverlay";
 import { championBodyHooks, type ChampionBodyHooks } from "./render/views/championBody";
-import { formAttachmentSpecFor } from "./render/views/formVisual";
+import { formAttachmentSpecFor, wornAttachmentSpec } from "./render/views/formVisual";
+// GH#392 —— `attachment@1`(穿在骨頭上的模型)的解析層。純函式,住在 shared,
+// 所以後台預覽/守衛/客戶端讀到的是同一條規則。
+import { wornFromAttachmentDoc } from "@ggd/shared/content";
+import type { FormAttachmentSpec } from "./render/views/ChampionView";
 import { bodyRelativeScale } from "./render/views/modelSizing";
 import { entityTintFor } from "./render/views/mobTint";
 import { mobRingDiameterFor } from "./render/views/mobGroundRing";
@@ -120,6 +124,7 @@ import {
   KIND_REVIVE_CIRCLE,
   KIND_NIGHT_FLAG,
 } from "./render/overheadAnchors";
+import { anchorDrawable } from "./render/anchorBounds";
 import { qualityController, type RenderParams } from "./render/QualityController";
 import { driveFrame, FrameDelta, type FrameWork } from "./render/frameCap";
 import { FrameRateMeter } from "./render/fpsMeter";
@@ -715,10 +720,37 @@ export class GameApp {
       groundRingDiameterFor: (e) => mobRingDiameterFor(e, this.mobVisual),
       // #249 GH#288 —— 變身球體掛件(悟空的超三頭)。同一條 entity → championId
       // 縫,經由 championBody 的 `formVisualFor`(它自己就是形態感知的)。
-      formAttachmentFor: (e) =>
-        formAttachmentSpecFor(this.championBody.formVisualFor(e), (modelKey) =>
-          this.contentDb.modelFor(modelKey)?.glbPath ?? null,
-        ),
+      // #249 GH#288 變身球體掛件 + ⭐ GH#392 **內容驅動的骨頭掛件**。
+      //
+      // 兩個來源合成一張清單,而它們在 shared 就折成同一個型別了
+      // (`WornAttachment`),所以這裡沒有第二份 follow/anim 規則:
+      //   ① `config.form-visuals@1` —— 變身態的球體(悟空的超三頭)
+      //   ② `attachment@1` 文件,綁在 `config.ambient-vfx@1.bindings`
+      //
+      // ⚠️ ② 的鍵**查兩次**,而那不是保險是必要的:`godie-ogrh` 與 `godie-o00x`
+      // 共用 `imported.goku`,所以 modelKey **分不出超三**。只有 championId
+      // (形態感知,`bodyChampionIdFor`)分得出來。反過來,一張綁在 modelKey 上的
+      // 掛件對「所有穿這具身體的人」都成立(替身/小怪也算),那也是要的。
+      formAttachmentFor: (e) => {
+        const glbPathOf = (modelKey: string): string | null =>
+          this.contentDb.modelFor(modelKey)?.glbPath ?? null;
+        const out: FormAttachmentSpec[] = [];
+        const fromForm = formAttachmentSpecFor(this.championBody.formVisualFor(e), glbPathOf);
+        if (fromForm) out.push(fromForm);
+        const keys = [this.resolveModelKey(e.key, e.seatId), this.championBody.bodyChampionIdFor(e)];
+        for (const key of keys) {
+          if (!key) continue;
+          for (const binding of this.contentDb.ambientBindingsFor(key)) {
+            const doc = this.contentDb.attachmentFor(binding.vfx);
+            if (!doc) continue; // 粒子/緞帶綁定 —— AmbientVfx 那一條路在管
+            for (const worn of wornFromAttachmentDoc(doc)) {
+              const spec = wornAttachmentSpec(worn, glbPathOf);
+              if (spec) out.push(spec);
+            }
+          }
+        }
+        return out;
+      },
     });
     // ⭐ GH#337 —— 場景型 FX 只有**一個組裝點**（render/roundFxRegistry）。
     //    這裡以前是五段各自 new 的程式碼，而回合邊界只認得其中一個（`this.vfx`），
@@ -726,7 +758,16 @@ export class GameApp {
     //    裡並註冊，否則 `GameApp.roundFxWiring.test.ts` 會紅。
     const roundFx = createRoundFx(this.renderer.scene, {
       vfx: {
-        entityPos: (id) => this.views.posOf(id) ?? this.schemaPos(id),
+        // ⭐ 出口的閘（owner 2026-08-19）——「特效定位」那一半。⚠️ 這是
+        // **唯一**的接縫：`VfxSystem` 每一條路都是先 `entityPos()` 再
+        // `isFinitePos()`，null 就什麼都不生（它自己的 FIX #131 已經如此），
+        // 所以在這裡回 null 就等於「界外的施法特效不播」，⛔ 不必動 vfx/**，
+        // 也⛔ 不會延後任何一個界內的特效。
+        entityPos: (id) => {
+          const p = this.views.posOf(id) ?? this.schemaPos(id);
+          if (p && !anchorDrawable(frameBus.arenaZones, p.x, p.z, `vfx #${id}`)) return null;
+          return p;
+        },
         vfxDoc: (key) => this.contentDb.vfxFor(key),
         // floating combat text (task #92) is coloured by RELATIONSHIP to the
         // local player, so the vfx layer needs the same seat→team table the
@@ -2754,7 +2795,46 @@ export class GameApp {
     const rawRadius = (ability as { radius?: number }).radius ?? 0;
     const radius = rawRadius > 0 ? rawRadius * mult : null;
     if (range <= 0.1 && radius === null) return null;
-    return { kind: "range", x: self.x, z: self.z, range, radius };
+
+    // ⭐ GH#415 —— AoE 圈的圓心是**落點**，⛔ 不是施法者。
+    // owner 2026-08-19:「技能範圍指示應該是在我的滑鼠上，⛔ 不是以英雄自身座標
+    // 為圓心（施法距離才是）」。
+    //
+    // ⚠️ 圓心走 `resolveAoeCenter`，而那支是從 `resolveCastTarget` 推導的 ——
+    // 也就是**跟送出去的指令用同一個夾取**。⛔ 不在這裡自己寫一次
+    // `clampLen(..., range)`：兩份夾取遲早會分岔，而分岔的樣子是「指示圈畫在 A、
+    // 技能落在 B」，兩邊看起來都對（失敗形態⑤）。
+    //
+    // ⚠️ 餵給它的 `range` 是**乘過 `abilityRange` 的**那一個，因為畫在地上的圈
+    // 就是玩家真的打得到的距離；餵卡面值會讓夾取比實際射程寬 25%。
+    const cursor = this.input.cursor;
+    const ground = cursor.inside ? this.cameraRig.screenToGround(cursor.x, cursor.y) : null;
+    const cursorGround = ground ?? self;
+    const aoeAt = resolveAoeCenter(
+      { castType: ability.castType, range },
+      { selfPos: self, cursorGround, hoveredEntityId: this.pickEnemyAt(cursorGround) },
+      (id) => this.entityPos(id),
+    );
+    return {
+      kind: "range",
+      x: self.x,
+      z: self.z,
+      range,
+      radius,
+      aoeX: aoeAt?.x ?? null,
+      aoeZ: aoeAt?.z ?? null,
+    };
+  }
+
+  /**
+   * 一個實體現在在哪（`targeted` 的 AoE 圓心用）。
+   * ⚠️ 查不到 → null，⛔ 不退回施法者腳下 —— 那正是 GH#415 在修的那個謊。
+   * ⭐ 讀的是**權威狀態**（同 `pickSelfAt`），⛔ 不是渲染插值：圓心要對得上
+   *   伺服器會拿來結算的那個位置。
+   */
+  private entityPos(id: number): Vec2 | null {
+    const e = this.conn.room?.state.entities.get(String(id));
+    return e ? { x: e.x, z: e.z } : null;
   }
 
   private abilityForSeat(seatId: number | null, slot: CastableSlot): AimAbility | null {
@@ -3536,6 +3616,9 @@ export class GameApp {
         // 螢幕上的),而波峰時一區 50 隻,少跑一次 `project()` 是真的省。
         if (!this.visibleZones.has(es.zone)) return;
         const mp = this.views.posOf(es.id) ?? { x: es.x, z: es.z };
+        // ⭐ 出口的閘（owner 2026-08-19「在牆外也不應該是顯示在那邊」）。見
+        // `render/anchorBounds.ts`：⛔ 不夾回界內，不畫，而且會被數到。
+        if (!anchorDrawable(frameBus.arenaZones, mp.x, mp.z, `mob bar #${es.id}`)) return;
         // ⚠️ `es.mana` 是體型倍率(GH#192),不是法力 —— 一般殭屍 0.68 / 特殊 2 /
         // 王 5。不餵它的話 `yOffset` 就是一個寫了沒人讀的欄位,而王的血條會掛在
         // 牠膝蓋上(失敗形態 ①)。
@@ -3561,13 +3644,24 @@ export class GameApp {
         !stealthVisualFor((es.flags & ENTITY_FLAG.INVISIBLE) !== 0, isFriendlyEntity(es.seatId)).healthBar
       )
         return;
+      // ⭐ GH#324 視野遮蔽的**另一半**：牆後的敵人身體不畫，那條血條就不可以留著。
+      // 理由與上面那一段隱形的逐字相同 —— 一條浮在牆後、底下沒有身體的血條是一份
+      // 完美的位置讀數，也就是遮蔽這條機制本來要藏的那個東西。⛔ 繪製距離剔除
+      // **不**走這條（那是畫質設定，遠處的血條照樣要看得到）。
+      // 跟隱形那一條一樣寫在 `seen.add` **之前**：已經在畫的錨點會被下面的掃描
+      // 真的刪掉，而不是凍在原地。
+      if (es.kind === KIND_CHAMPION && this.views.isOccluded(es.id)) return;
       // L3 ZONE CULL —— 別區的血條沒有任何消費者：`WorldAnchorLayer` 只畫
       // 螢幕內的錨點，而 #67 的小地圖本來就只畫一個 zone。省掉的是每個實體
       // 每幀一次的 `project()` 3D→2D 投影 + 一個 DOM 節點的更新。
       if (!this.visibleZones.has(es.zone)) return;
       const isNeutral = es.kind === KIND_FLOWER || es.kind === KIND_GUARDIAN;
-      seen.add(es.id);
       const pos = this.views.posOf(es.id) ?? { x: es.x, z: es.z };
+      // ⭐ 出口的閘（owner 2026-08-19）。⚠️ 寫在 `seen.add` **之前**：已經在畫的
+      // 錨點要被下面的掃描真的**刪掉**，⛔ 不是凍在最後那個界外座標上 ——
+      // 凍住正是 owner 看到的那個畫面。同 `stealthVisualFor` 那一條的擺法。
+      if (!anchorDrawable(frameBus.arenaZones, pos.x, pos.z, `bar #${es.id}`)) return;
+      seen.add(es.id);
       let anchor = frameBus.champions.get(es.id);
       if (!anchor) {
         anchor = {
@@ -3673,7 +3767,14 @@ export class GameApp {
     // worse than no number — and the split heights are also what keeps 補血 and
     // 補魔 apart when a flower burst fires both on the same body in one tick.
     for (const e of frameBus.combatText) {
-      if (e.active) e.pose = project(e.worldX, e.anchorY, e.worldZ);
+      if (!e.active) continue;
+      // ⭐ 出口的閘（owner 2026-08-19）—— 飄字與血條同一條規則。⛔ 不夾回界內：
+      // `pose.visible = false` 就是「不畫」，而 `WorldAnchorLayer` 已經在讀它。
+      if (!anchorDrawable(frameBus.arenaZones, e.worldX, e.worldZ, "combat text")) {
+        e.pose = { sx: 0, sy: 0, visible: false };
+        continue;
+      }
+      e.pose = project(e.worldX, e.anchorY, e.worldZ);
     }
   }
 }

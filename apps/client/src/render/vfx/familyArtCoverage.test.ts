@@ -17,7 +17,7 @@
  * numbers move and this file goes red.
  *
  * MUTATION LOG for this file (run before landing):
- *   · `w3xArtFor` → `return W3X_ABILITY_ART[abilityId]` (drop the family
+ *   · `w3xArtFor` → `return w3xAbilityArtRows()[abilityId]` (drop the family
  *     fall-through) → "reaches the screen" + the 34→270 pin both fail
  *   · delete `applyArtParams(...)` in `buildFamilyDocWith` → "two abilities on
  *     ONE prototype resolve to docs with different size AND colour" fails
@@ -25,6 +25,8 @@
  *     assertion fails
  */
 import { describe, it, expect, beforeAll, afterAll, vi } from "vitest";
+// GH#384 —— 逐技能特效綁定住在 content/；⛔ 少了這一行從 repo 根跑單檔會看到空的綁定。
+import "./shippedAbilityArt.testkit";
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -32,8 +34,8 @@ import { HttpContentSource, Arenas, Configs, Models, VfxDefs } from "@ggd/shared
 import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
 import { ContentDb } from "../../content/ContentDb";
 import { ensureContentLoaded, __resetContentBoot } from "../../content/bootContent";
-import { W3X_ABILITY_ART, w3xArtFor, primitiveFallbackFor } from "./w3xAbilityArt";
-import { W3X_FAMILY_ART } from "./w3xFamilyArt";
+import { w3xAbilityArtRows, w3xArtFor, primitiveFallbackFor } from "./w3xAbilityArt";
+import { w3xFamilyArtRows } from "./w3xFamilyArt";
 import {
   resolveFamilyArt,
   resolveAllFamilyArt,
@@ -92,7 +94,7 @@ describe("family art reaches the screen", () => {
 
   it("EVERY family-bound ability resolves to a real doc through vfxFor", () => {
     const dead: string[] = [];
-    for (const abilityId of Object.keys(W3X_FAMILY_ART)) {
+    for (const abilityId of Object.keys(w3xFamilyArtRows())) {
       const art = w3xArtFor(abilityId);
       if (!art) {
         dead.push(`${abilityId}: w3xArtFor answered nothing`);
@@ -121,7 +123,7 @@ describe("family art reaches the screen", () => {
   });
 
   it("the map's own vertex tint really lands on the doc (not the name-classified element)", () => {
-    const withTint = Object.entries(W3X_FAMILY_ART).filter(([, r]) => r.tint);
+    const withTint = Object.entries(w3xFamilyArtRows()).filter(([, r]) => r.tint);
     expect(withTint.length).toBeGreaterThan(50);
     const mismatched: string[] = [];
     for (const [abilityId, row] of withTint) {
@@ -155,7 +157,7 @@ describe("family art reaches the screen", () => {
     // lightColumn 4.0/5.0); the search is generic so the test does not rot when
     // the evidence moves.
     const byFamily = new Map<string, { scale: number; size: number }[]>();
-    for (const [abilityId, row] of Object.entries(W3X_FAMILY_ART)) {
+    for (const [abilityId, row] of Object.entries(w3xFamilyArtRows())) {
       if (row.scale === undefined) continue;
       const doc = docFor(abilityId);
       if (!doc) continue;
@@ -179,7 +181,7 @@ describe("family art reaches the screen", () => {
 
   it("rung 3 still exists: every family row has an fx.prim.* fallback or is off-roster", () => {
     let withFallback = 0;
-    for (const abilityId of Object.keys(W3X_FAMILY_ART)) {
+    for (const abilityId of Object.keys(w3xFamilyArtRows())) {
       const fb = primitiveFallbackFor(abilityId);
       if (fb) {
         expect(fb.startsWith("fx.prim."), `${abilityId}: fallback ${fb} is not a primitive`).toBe(true);
@@ -193,8 +195,8 @@ describe("family art reaches the screen", () => {
 
   it("bindings.ts is UNTOUCHED as the fallback — an unproven ability still gets its primitive", () => {
     const unproven = "godie-e001.q"; // no evidence row, no promotion
-    expect(W3X_FAMILY_ART[unproven]).toBeUndefined();
-    expect(W3X_ABILITY_ART[unproven]).toBeUndefined();
+    expect(w3xFamilyArtRows()[unproven]).toBeUndefined();
+    expect(w3xAbilityArtRows()[unproven]).toBeUndefined();
     expect(w3xArtFor(unproven)).toBeUndefined();
     const doc = JSON.parse(readFileSync(join(CONTENT, "abilities", `${unproven}.json`), "utf8")) as {
       vfxKey: string;
@@ -207,7 +209,7 @@ describe("family art reaches the screen", () => {
 describe("the honest coverage numbers (pins — a silent regression moves them)", () => {
   /**
    * THE HEADLINE. Before this lane: 34 abilities drew what the original map
-   * really drew (`W3X_ABILITY_ART`, real extracted emitters). After: those 34
+   * really drew (`w3xAbilityArtRows()`, real extracted emitters). After: those 34
    * plus every ability the import PROVES onto one of the 21 prioritised
    * families. The two sets overlap — an ability with shipped emitter art can
    * also have priority-family evidence — and the promotion wins, so the union
@@ -218,14 +220,14 @@ describe("the honest coverage numbers (pins — a silent regression moves them)"
    * gaining evidence is the point.
    */
   it("34 → 270: promoted + evidence-family, counted through w3xArtFor", () => {
-    expect(Object.keys(W3X_ABILITY_ART)).toHaveLength(34);
-    expect(Object.keys(W3X_FAMILY_ART)).toHaveLength(258);
+    expect(Object.keys(w3xAbilityArtRows())).toHaveLength(34);
+    expect(Object.keys(w3xFamilyArtRows())).toHaveLength(258);
     // 22 abilities are in BOTH — they have shipped emitter art AND priority-
     // family evidence. `w3xArtFor` gives the promotion precedence (real
     // extracted art beats a prototype), so the union, not the sum, is the
     // honest headline: 34 + 258 - 22 = 270.
-    const union = new Set([...Object.keys(W3X_ABILITY_ART), ...Object.keys(W3X_FAMILY_ART)]);
-    const overlap = Object.keys(W3X_ABILITY_ART).filter((id) => W3X_FAMILY_ART[id]);
+    const union = new Set([...Object.keys(w3xAbilityArtRows()), ...Object.keys(w3xFamilyArtRows())]);
+    const overlap = Object.keys(w3xAbilityArtRows()).filter((id) => w3xFamilyArtRows()[id]);
     expect(overlap).toHaveLength(22);
     expect(union.size).toBe(270);
     // and every one of them actually answers
@@ -233,7 +235,7 @@ describe("the honest coverage numbers (pins — a silent regression moves them)"
     expect(answering).toHaveLength(270);
     // the promotion really does win on the overlap (a prototype would be a
     // DOWNGRADE for these 22 — they have the map's own emitters)
-    for (const id of overlap) expect(w3xArtFor(id)!.primary).toBe(W3X_ABILITY_ART[id]!.primary);
+    for (const id of overlap) expect(w3xArtFor(id)!.primary).toBe(w3xAbilityArtRows()[id]!.primary);
   });
 
   it("the shipped fx.fam.* doc set is exactly what the resolver asks for", () => {
@@ -281,7 +283,7 @@ describe("the honest coverage numbers (pins — a silent regression moves them)"
     // map (9 refs each) but never through a CONFIRMED ability link — they hang
     // off units and triggers. Their prototypes exist and are console-bindable.
     expect(empty).toEqual(["blood", "starfall"]);
-    expect(Object.values(cov).reduce((a, b) => a + b, 0)).toBe(Object.keys(W3X_FAMILY_ART).length);
+    expect(Object.values(cov).reduce((a, b) => a + b, 0)).toBe(Object.keys(w3xFamilyArtRows()).length);
     expect(cov.shockwaveRing).toBe(91); // the big one, by a factor of 2.7
   });
 

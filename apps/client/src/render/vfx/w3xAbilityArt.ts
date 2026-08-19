@@ -59,6 +59,7 @@
  */
 import { VfxDefs, type ConfigVfxFamiliesDoc } from "@ggd/shared/content";
 import { abilityVfxKeys } from "./bindings";
+import { abilityArtRows, onAbilityArtBindingsChanged } from "./abilityArtContent";
 import {
   bakedFamilyKeys,
   nearestBakedFamilyKey,
@@ -91,7 +92,7 @@ export interface W3xAbilityArt {
    * `config.vfx-families@1.abilities.<id>.alpha` / `.timeScale` were dead knobs
    * — validated by the console, stored in the overlay, read by nobody.
    *
-   * Absent on every `W3X_ABILITY_ART` row (the 34 hard-table promotions) and on
+   * Absent on every `w3xAbilityArtRows()` row (the 34 promotions) and on
    * any family row the operator has not touched, and an absent value plays the
    * doc UNCHANGED (`applyVfxOverrides` returns the same object), so shipped
    * content is bit-identical to before.
@@ -108,7 +109,7 @@ export interface W3xAbilityArt {
    * 91 支 `shockwaveRing` → 105 個 emitter）世界 Y 的直方圖是單獨一格 `{1.0}`，
    * 而 config 要的是 0.15：**貼地的環全部浮在胸口**。
    *
-   * `W3X_ABILITY_ART` 那 34 支硬表晉升沒有這一格（它們沒有家族原型，也就沒有
+   * `w3xAbilityArtRows()` 那 34 支晉升沒有這一格（它們沒有家族原型，也就沒有
    * 「應該多高」這個答案），`familyCastHeightY` 對 absent 一律回平面高度。
    *
    * `anchor` 仍然是死的 —— 見 `DEAD_FAMILY_KNOBS`。
@@ -116,330 +117,40 @@ export interface W3xAbilityArt {
   readonly heightY?: number;
 }
 
-export const W3X_ABILITY_ART: Readonly<Record<string, W3xAbilityArt>> = {
-  // 亞瑟王 - Saber — 20-03 約束與勝利之劍  [roster]
-  "godie-e002.e": {
-    family: "holyawakening",
-    w3aId: "A0D5",
-    provenance: "w3a-override",
-    via: "art:caster",
-    primary: "fx.w3x.particle.holyawakening.p04",
-    extra: ["fx.w3x.particle.holyawakening.p00", "fx.w3x.particle.holyawakening.p01", "fx.w3x.particle.holyawakening.p02", "fx.w3x.particle.holyawakening.p03", "fx.w3x.particle.holyawakening.p05"],
-  },
-  // 龍之子 - 天地志狼 — 12-04 龍氣爆發  [roster]
-  "godie-e007.r": {
-    family: "supershinythingy",
-    w3aId: "A04X",
-    provenance: "w3a-override",
-    via: "art:caster",
-    primary: "fx.w3x.particle.supershinythingy.p00",
-    extra: ["fx.w3x.particle.supershinythingy.p01", "fx.w3x.particle.supershinythingy.p02"],
-  },
-  // 最終泛用人型決戰兵器 - 初號機 — 59-03 AT力場  [roster]
-  "godie-e00r.e": {
-    family: "heroeva01s2",
-    w3aId: "A0GH",
-    provenance: "w3a-override",
-    via: "art:special",
-    primary: "fx.w3x.particle.heroeva01s2.p01",
-    extra: ["fx.w3x.particle.heroeva01s2.p00"],
-  },
-  // 時空勇者 - 林克 — 60-04 迴旋斬  [roster]
-  "godie-h00l.r": {
-    family: "bladestorm-swordeffect",
-    w3aId: "A0BR",
-    provenance: "w3a-override",
-    via: "art:caster",
-    primary: "godie-bladestorm-swordeffect-p0",
-    extra: [],
-  },
-  // 種子神奇寶貝 - 妙蛙花 — 90-04 陽光烈焰  [roster]
-  "godie-h02r.r": {
-    family: "supershinythingy",
-    w3aId: "A0R4",
-    provenance: "w3a-override",
-    via: "art:caster",
-    primary: "fx.w3x.particle.supershinythingy.p00",
-    extra: ["fx.w3x.particle.supershinythingy.p01", "fx.w3x.particle.supershinythingy.p02"],
-  },
-  // 最終幻想 - 克勞德 — 01-04 超究武神霸斬  [roster]
-  "godie-hart.r": {
-    family: "herocloudkfksword",
-    w3aId: "A077",
-    provenance: "jass-literal",
-    via: "jass:effectTargetUnit",
-    primary: "fx.w3x.orb.herocloudkfksword.p00",
-    extra: [],
-  },
-  // 黑暗福音 - 依文潔琳 — 42-04 世界終結  [roster]
-  "godie-n003.r": {
-    family: "frostnova",
-    w3aId: "A05D",
-    provenance: "jass-literal",
-    via: "jass:effectLoc",
-    primary: "fx.w3x.locust.frostnova.p01",
-    extra: ["fx.w3x.locust.frostnova.p00", "fx.w3x.locust.frostnova.p02", "fx.w3x.locust.frostnova.p03"],
-  },
-  // 神性的流失 - 賽菲洛斯 — 74-01 獄門  [roster]
-  "godie-u00j.q": {
-    family: "herocloudkfksword",
-    w3aId: "A0S4",
-    provenance: "w3a-override",
-    via: "art:caster",
-    primary: "fx.w3x.orb.herocloudkfksword.p00",
-    extra: [],
-  },
-  // 黑手黨老大 - 基廉列克 — 78-04 死亡噴射肘擊  [roster]
-  "godie-u00v.r": {
-    family: "boomnl",
-    w3aId: "A0L6",
-    provenance: "jass-literal",
-    via: "jass:effectLoc",
-    primary: "fx.w3x.locust.boomnl.p01",
-    extra: ["fx.w3x.locust.boomnl.p00", "fx.w3x.locust.boomnl.p02", "fx.w3x.locust.boomnl.p03", "fx.w3x.locust.boomnl.p04"],
-  },
-  // 邪眼師 - 飛影 — 38-03 邪王炎殺黑龍波  [roster]
-  "godie-u010.e": {
-    family: "tectonicfury",
-    w3aId: "A09I",
-    provenance: "w3a-override",
-    via: "art:missile",
-    primary: "godie-tectonicfury-p0",
-    extra: ["godie-tectonicfury-p1"],
-  },
-  // 邪眼師 - 飛影 — 38-01 邪王炎殺劍  [roster]  (#230)
-  // A0OG sets BOTH casterArt AND effectArt to `flamessmoke.mdx` — two channels
-  // agreeing, author-set on both. p01 is the family's tall plume (pivot z=+254.7
-  // against p00/p02/p03 at −62.6/+20.9/−2.1), so it is the visible body of the
-  // effect, and it is already 38-04's proven primary on the same model — one
-  // dominant emitter for the whole family.
-  "godie-u010.q": {
-    family: "flamessmoke",
-    w3aId: "A0OG",
-    provenance: "w3a-override",
-    via: "art:caster+art:effect",
-    primary: "fx.w3x.particle.flamessmoke.p01",
-    extra: ["fx.w3x.particle.flamessmoke.p00", "fx.w3x.particle.flamessmoke.p02", "fx.w3x.particle.flamessmoke.p03"],
-  },
-  // 邪眼師 - 飛影 — 38-04 黑龍波吸收  [roster]
-  "godie-u010.r": {
-    family: "flamessmoke",
-    w3aId: "A09K",
-    provenance: "w3a-override",
-    via: "art:caster",
-    primary: "fx.w3x.particle.flamessmoke.p01",
-    extra: ["fx.w3x.particle.flamessmoke.p00", "fx.w3x.particle.flamessmoke.p02", "fx.w3x.particle.flamessmoke.p03"],
-  },
-  // 龍之子 - 天地志狼 — 12-002 仙氣發勁  [roster]  (#230)
-  // The A0SQ handler literal-names `SuperShinyThingy.mdx` — the strongest
-  // provenance there is. Every other art channel on this ability is Blizzard
-  // stock (MirrorImageCaster / NagaDeath) and cannot ship (#81/#116). Emitter
-  // choice is positionally NEUTRAL here: all three emitters share one identical
-  // pivot (1.0, −0.7, −17.6), so p00 is picked because it is index 0 and is
-  // already the established primary for 12-04 and 90-04 on the same model.
-  "godie-e007.ex": {
-    family: "supershinythingy",
-    w3aId: "A0SQ",
-    provenance: "jass-literal",
-    via: "jass:effectTargetUnit",
-    primary: "fx.w3x.particle.supershinythingy.p00",
-    extra: ["fx.w3x.particle.supershinythingy.p01", "fx.w3x.particle.supershinythingy.p02"],
-  },
-  // 邪眼師 - 飛影 — 38-02 邪王炎殺煉獄焦  [roster]
-  "godie-u010.w": {
-    family: "fireblast",
-    w3aId: "A09H",
-    provenance: "w3a-override",
-    via: "art:missile",
-    primary: "godie-fireblast-p3",
-    extra: ["godie-fireblast-p0", "godie-fireblast-p1", "godie-fireblast-p2"],
-  },
-  // 三刀流劍士 - 索隆 — 11-01 燒鬼斬  [roster]
-  "godie-u01u.q": {
-    family: "lavabreathdamage",
-    w3aId: "A0BC",
-    provenance: "w3a-override",
-    via: "art:target",
-    primary: "fx.w3x.particle.lavabreathdamage.p00",
-    extra: [],
-  },
-  // 亞瑟王 - Saber — 20-03 約束與勝利之劍  [off-roster]
-  "godie-e00l.e": {
-    family: "holyawakening",
-    w3aId: "A0D5",
-    provenance: "w3a-override",
-    via: "art:caster",
-    primary: "fx.w3x.particle.holyawakening.p04",
-    extra: ["fx.w3x.particle.holyawakening.p00", "fx.w3x.particle.holyawakening.p01", "fx.w3x.particle.holyawakening.p02", "fx.w3x.particle.holyawakening.p03", "fx.w3x.particle.holyawakening.p05"],
-  },
-  // 英靈-亞瑟王 - 黑化Saber — 69-03 約束與勝利之劍  [off-roster]
-  "godie-e00q.e": {
-    family: "holyawakening",
-    w3aId: "A0D5",
-    provenance: "w3a-override",
-    via: "art:caster",
-    primary: "fx.w3x.particle.holyawakening.p04",
-    extra: ["fx.w3x.particle.holyawakening.p00", "fx.w3x.particle.holyawakening.p01", "fx.w3x.particle.holyawakening.p02", "fx.w3x.particle.holyawakening.p03", "fx.w3x.particle.holyawakening.p05"],
-  },
-  // 會叫的野獸 - 傳說中的大刀 — 93-01 期末報告  [off-roster]
-  "godie-ekee.q": {
-    family: "darkbreathdamage",
-    w3aId: "Abof",
-    provenance: "w3h-override",
-    via: "buff:Bbof/target",
-    primary: "fx.w3x.orb.darkbreathdamage.p00",
-    extra: [],
-  },
-  // 龍之子 - 天地志狼 — 12-04 龍氣爆發  [off-roster]
-  "godie-ewar.r": {
-    family: "supershinythingy",
-    w3aId: "A04X",
-    provenance: "w3a-override",
-    via: "art:caster",
-    primary: "fx.w3x.particle.supershinythingy.p00",
-    extra: ["fx.w3x.particle.supershinythingy.p01", "fx.w3x.particle.supershinythingy.p02"],
-  },
-  // 白色之翼 - 涅吉。史普林。菲爾德 — 82-03 雷之投擲  [off-roster]
-  "godie-h022.e": {
-    family: "lightningnova",
-    w3aId: "A0Q5",
-    provenance: "w3a-override",
-    via: "art:caster",
-    primary: "fx.w3x.orb.lightningnova.p00",
-    extra: ["fx.w3x.orb.lightningnova.p01"],
-  },
-  // 白色之翼 - 涅吉。史普林。菲爾德 — 82-04 闇之魔法  [off-roster]
-  "godie-h022.r": {
-    family: "boomnl",
-    w3aId: "A0Q6",
-    provenance: "w3a-override",
-    via: "art:caster",
-    primary: "fx.w3x.locust.boomnl.p01",
-    extra: ["fx.w3x.locust.boomnl.p00", "fx.w3x.locust.boomnl.p02", "fx.w3x.locust.boomnl.p03", "fx.w3x.locust.boomnl.p04"],
-  },
-  // 種子神奇寶貝 - 妙蛙種子 — 90-04 陽光烈焰  [off-roster]
-  "godie-hgam.r": {
-    family: "supershinythingy",
-    w3aId: "A0R4",
-    provenance: "w3a-override",
-    via: "art:caster",
-    primary: "fx.w3x.particle.supershinythingy.p00",
-    extra: ["fx.w3x.particle.supershinythingy.p01", "fx.w3x.particle.supershinythingy.p02"],
-  },
-  // 黑暗福音 - 依文潔琳 — 42-04 世界終結  [off-roster]
-  "godie-n01g.r": {
-    family: "frostnova",
-    w3aId: "A05D",
-    provenance: "jass-literal",
-    via: "jass:effectLoc",
-    primary: "fx.w3x.locust.frostnova.p01",
-    extra: ["fx.w3x.locust.frostnova.p00", "fx.w3x.locust.frostnova.p02", "fx.w3x.locust.frostnova.p03"],
-  },
-  // 時空管理局執務官 - 菲特·泰斯塔羅沙 — 23-03 雷牙一閃˙雷牙烈霸  [off-roster]
-  "godie-ntin.e": {
-    family: "gxhuge",
-    w3aId: "A0SY",
-    provenance: "w3a-override",
-    via: "art:missile",
-    primary: "fx.w3x.particle.gxhuge.p00",
-    extra: [],
-  },
-  // 時空管理局執務官 - 菲特·泰斯塔羅沙 — 23-01 電離光槍 - 繁星飛躍  [off-roster]
-  "godie-ntin.q": {
-    family: "gx",
-    w3aId: "A0NA",
-    provenance: "w3a-override",
-    via: "art:missile",
-    primary: "fx.w3x.particle.gx.p00",
-    extra: [],
-  },
-  // 時空管理局執務官 - 菲特·泰斯塔羅沙 — 23-04 雷焰聖劍  [off-roster]
-  "godie-ntin.r": {
-    family: "lightningnova",
-    w3aId: "A0OD",
-    provenance: "w3a-override",
-    via: "art:special",
-    primary: "fx.w3x.orb.lightningnova.p00",
-    extra: ["fx.w3x.orb.lightningnova.p01"],
-  },
-  // 職業獵人 - 傑 富力士 — 06-04 傑桑變化  [off-roster]
-  "godie-u034.r": {
-    family: "boomnl",
-    w3aId: "A0Y1",
-    provenance: "w3h-override",
-    via: "buff:B04R/target",
-    primary: "fx.w3x.locust.boomnl.p01",
-    extra: ["fx.w3x.locust.boomnl.p00", "fx.w3x.locust.boomnl.p02", "fx.w3x.locust.boomnl.p03", "fx.w3x.locust.boomnl.p04"],
-  },
-  // 職業獵人 - 傑 富力士 — 06-04 傑桑變化  [off-roster]
-  "godie-ucrl.r": {
-    family: "boomnl",
-    w3aId: "A0Y1",
-    provenance: "w3h-override",
-    via: "buff:B04R/target",
-    primary: "fx.w3x.locust.boomnl.p01",
-    extra: ["fx.w3x.locust.boomnl.p00", "fx.w3x.locust.boomnl.p02", "fx.w3x.locust.boomnl.p03", "fx.w3x.locust.boomnl.p04"],
-  },
-  // 三刀流劍士 - 索隆 — 11-01 燒鬼斬  [off-roster]
-  "godie-udre.q": {
-    family: "lavabreathdamage",
-    w3aId: "A0BC",
-    provenance: "w3a-override",
-    via: "art:target",
-    primary: "fx.w3x.particle.lavabreathdamage.p00",
-    extra: [],
-  },
-  // 邪眼師 - 飛影 — 38-03 邪王炎殺黑龍波  [off-roster]
-  "godie-uvng.e": {
-    family: "tectonicfury",
-    w3aId: "A09I",
-    provenance: "w3a-override",
-    via: "art:missile",
-    primary: "godie-tectonicfury-p0",
-    extra: ["godie-tectonicfury-p1"],
-  },
-  // 龍之子 - 天地志狼 — 12-002 仙氣發勁  [off-roster]  (#230)
-  "godie-ewar.ex": {
-    family: "supershinythingy",
-    w3aId: "A0SQ",
-    provenance: "jass-literal",
-    via: "jass:effectTargetUnit",
-    primary: "fx.w3x.particle.supershinythingy.p00",
-    extra: ["fx.w3x.particle.supershinythingy.p01", "fx.w3x.particle.supershinythingy.p02"],
-  },
-  // 邪眼師 - 飛影 — 38-01 邪王炎殺劍  [off-roster]  (#230)
-  "godie-uvng.q": {
-    family: "flamessmoke",
-    w3aId: "A0OG",
-    provenance: "w3a-override",
-    via: "art:caster+art:effect",
-    primary: "fx.w3x.particle.flamessmoke.p01",
-    extra: ["fx.w3x.particle.flamessmoke.p00", "fx.w3x.particle.flamessmoke.p02", "fx.w3x.particle.flamessmoke.p03"],
-  },
-  // 邪眼師 - 飛影 — 38-04 黑龍波吸收  [off-roster]
-  "godie-uvng.r": {
-    family: "flamessmoke",
-    w3aId: "A09K",
-    provenance: "w3a-override",
-    via: "art:caster",
-    primary: "fx.w3x.particle.flamessmoke.p01",
-    extra: ["fx.w3x.particle.flamessmoke.p00", "fx.w3x.particle.flamessmoke.p02", "fx.w3x.particle.flamessmoke.p03"],
-  },
-  // 邪眼師 - 飛影 — 38-02 邪王炎殺煉獄焦  [off-roster]
-  "godie-uvng.w": {
-    family: "fireblast",
-    w3aId: "A09H",
-    provenance: "w3a-override",
-    via: "art:missile",
-    primary: "godie-fireblast-p3",
-    extra: ["godie-fireblast-p0", "godie-fireblast-p1", "godie-fireblast-p2"],
-  },
-};
+/**
+ * 晉升表 —— **資料在 `content/config/vfx-ability-art.json` 的
+ * `bindings.<id>.promoted`**（GH#384），這裡只做讀取。
+ *
+ * ⚠️ 這 34 列是**人挑的**（可渲染性閘的三道過濾，見上面），沒有上游可以重新推導 ——
+ * 所以 `content/` 就是它們的家，⛔ 不是一份「產生器的快取」。搬家前的逐列註記
+ * （每一支為什麼被晉升、`extra` 為什麼是那幾個 emitter）另存在
+ * `docs/legacy/_vfx-ability-art-authoring-notes.md`。
+ */
+export function w3xAbilityArtRows(): Readonly<Record<string, W3xAbilityArt>> {
+  if (promotedCache) return promotedCache;
+  const out: Record<string, W3xAbilityArt> = {};
+  for (const [abilityId, row] of Object.entries(abilityArtRows())) {
+    const p = row.promoted;
+    if (!p) continue;
+    out[abilityId] = {
+      family: p.family,
+      w3aId: p.w3aId,
+      provenance: p.provenance,
+      via: p.via,
+      primary: p.primary,
+      extra: p.extra,
+    };
+  }
+  promotedCache = out;
+  return out;
+}
+
+let promotedCache: Readonly<Record<string, W3xAbilityArt>> | null = null;
 
 /**
  * THE SECOND SOURCE — evidence-bound FAMILY PROTOTYPES (`w3xFamilyArt.ts`).
  *
- * `W3X_ABILITY_ART` above can only promote an ability whose art SHIPPED as
+ * `w3xAbilityArtRows()` above can only promote an ability whose art SHIPPED as
  * emitter docs, which is 34 of 668. The other proven abilities point at
  * Blizzard stock models this repo does not have, so they get the family
  * PROTOTYPE the owner asked for — the same shape, rescaled/recoloured with the
@@ -457,6 +168,13 @@ export const W3X_ABILITY_ART: Readonly<Record<string, W3xAbilityArt>> = {
  * construction, unlike a real WC3 effect which is a set.
  */
 let familyRowCache: Map<string, W3xAbilityArt> | null = null;
+
+// ⭐ 內容換了就兩個快取一起作廢。⛔ 只清一個 = 晉升表換了而家族列還是舊的，
+// 而那種漂移在畫面上看起來完全正常（失敗形態⑤）。
+onAbilityArtBindingsChanged(() => {
+  promotedCache = null;
+  familyRowCache = null;
+});
 
 function familyRow(abilityId: string): W3xAbilityArt | undefined {
   familyRowCache ??= new Map();
@@ -493,7 +211,7 @@ function familyRow(abilityId: string): W3xAbilityArt | undefined {
  * nothing weaker.
  *
  * ⚠️ That narrowing LOSES information, so nothing may report provenance off
- * this field. The unnarrowed truth is `W3X_FAMILY_ART[id].provenance` and that
+ * this field. The unnarrowed truth is `w3xFamilyArtRows()[id].provenance` and that
  * is what `w3xFamilyArt.test.ts` and any report must read. This function exists
  * solely so the old struct still type-checks.
  */
@@ -626,7 +344,7 @@ export function setFamilyTuning(doc: ConfigVfxFamiliesDoc | null): void {
 /** The promoted effect for an ability, or undefined when it keeps its primitive. */
 export function w3xArtFor(abilityId: string | undefined): W3xAbilityArt | undefined {
   if (!abilityId) return undefined;
-  return W3X_ABILITY_ART[abilityId] ?? familyRow(abilityId);
+  return w3xAbilityArtRows()[abilityId] ?? familyRow(abilityId);
 }
 
 /**

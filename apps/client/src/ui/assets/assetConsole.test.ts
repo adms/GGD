@@ -132,15 +132,16 @@ describe("provider readiness", () => {
 
 describe("freshness", () => {
   const sources: SpecSource[] = [
-    { path: "a.py", sha256: "aaa", bytes: 1, mtime: "t" },
-    { path: "b.py", sha256: "bbb", bytes: 2, mtime: "t" },
+    { path: "a.py", sha256: "aaa", bytes: 1 },
+    { path: "b.py", sha256: "bbb", bytes: 2 },
   ];
   const stamp = (over: Partial<StampEntry>[] = []): StampEntry[] =>
     sources.map((s, i) => ({
       path: s.path,
       sha256: s.sha256,
       bytes: s.bytes,
-      mtime: s.mtime,
+      // ⭐ GH#395 —— mtime 只活在 LIVE stamp 上；已發布的快照不再帶它。
+      mtime: "t",
       exists: true,
       ...(over[i] ?? {}),
     }));

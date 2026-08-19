@@ -526,6 +526,55 @@
   ],
   "decor": [
     {
+      "model": "assets/models/scenery-cc0/lunar-year__MainAltar.glb",
+      "x": -40,
+      "z": 17.76,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/lunar-year__Bell.glb",
+      "x": -40,
+      "z": -19.2,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/lunar-year__MainAltar.glb",
+      "x": 40,
+      "z": 17.76,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/scenery-cc0/lunar-year__Bell.glb",
+      "x": 40,
+      "z": -19.2,
+      "rotQuarter": 0,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "x": -42.5,
+      "z": -3.2,
+      "rotQuarter": 3,
+      "scale": 0.12
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "x": -59.1,
+      "z": -4.7,
+      "rotQuarter": 3,
+      "scale": 0.109
+    },
+    {
+      "model": "assets/models/imported/japanesecherry.glb",
+      "x": -51.2,
+      "z": -16.9,
+      "rotQuarter": 3,
+      "scale": 0.108
+    },
+    {
       "model": "assets/models/imported/japanesecherry.glb",
       "x": -47.6,
       "z": -16.9,
@@ -541,57 +590,8 @@
     },
     {
       "model": "assets/models/imported/japanesecherry.glb",
-      "x": -46.1,
-      "z": -16.9,
-      "rotQuarter": 3,
-      "scale": 0.118
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": -42.5,
-      "z": -3.2,
-      "rotQuarter": 3,
-      "scale": 0.12
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": -51.2,
-      "z": -16.9,
-      "rotQuarter": 3,
-      "scale": 0.108
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": -46.1,
-      "z": 6.8,
-      "rotQuarter": 3,
-      "scale": 0.115
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": -50.4,
-      "z": -18.4,
-      "rotQuarter": 3,
-      "scale": 0.108
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
       "x": -47.6,
       "z": -18.4,
-      "rotQuarter": 3,
-      "scale": 0.105
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": -44.7,
-      "z": -16.9,
-      "rotQuarter": 3,
-      "scale": 0.107
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": -59.1,
-      "z": -7.6,
       "rotQuarter": 3,
       "scale": 0.105
     },
@@ -601,76 +601,6 @@
       "z": -19.8,
       "rotQuarter": 3,
       "scale": 0.115
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": -43.2,
-      "z": 6.8,
-      "rotQuarter": 3,
-      "scale": 0.107
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": -49.7,
-      "z": -16.9,
-      "rotQuarter": 3,
-      "scale": 0.115
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": -46.1,
-      "z": -19.8,
-      "rotQuarter": 3,
-      "scale": 0.102
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": -59.1,
-      "z": -4.7,
-      "rotQuarter": 3,
-      "scale": 0.109
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": -44.7,
-      "z": -18.4,
-      "rotQuarter": 3,
-      "scale": 0.118
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": -44.7,
-      "z": 6.8,
-      "rotQuarter": 3,
-      "scale": 0.102
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": -47.6,
-      "z": 6.8,
-      "rotQuarter": 3,
-      "scale": 0.119
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": -60.5,
-      "z": -4.7,
-      "rotQuarter": 3,
-      "scale": 0.102
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": -57.6,
-      "z": -9,
-      "rotQuarter": 3,
-      "scale": 0.109
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": -43.2,
-      "z": -20.5,
-      "rotQuarter": 3,
-      "scale": 0.103
     },
     {
       "model": "assets/models/imported/japanesecherry.glb",
@@ -681,13 +611,6 @@
     },
     {
       "model": "assets/models/imported/japanesecherry.glb",
-      "x": -43.2,
-      "z": -17.6,
-      "rotQuarter": 3,
-      "scale": 0.11
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
       "x": -41.8,
       "z": -20.5,
       "rotQuarter": 3,
@@ -695,43 +618,15 @@
     },
     {
       "model": "assets/models/imported/japanesecherry.glb",
-      "x": -41.8,
-      "z": -19.1,
+      "x": 54.4,
+      "z": -15.3,
       "rotQuarter": 3,
-      "scale": 0.106
+      "scale": 0.11
     },
     {
       "model": "assets/models/imported/japanesecherry.glb",
-      "x": 43.9,
-      "z": 1.3,
-      "rotQuarter": 3,
-      "scale": 0.111
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": 44.1,
-      "z": -11.8,
-      "rotQuarter": 2,
-      "scale": 0.111
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": 30.1,
-      "z": 17.7,
-      "rotQuarter": 3,
-      "scale": 0.111
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": 38.7,
-      "z": 14.3,
-      "rotQuarter": 3,
-      "scale": 0.111
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": 31.8,
-      "z": 8.2,
+      "x": 37.8,
+      "z": -7.3,
       "rotQuarter": 3,
       "scale": 0.111
     },
@@ -744,16 +639,9 @@
     },
     {
       "model": "assets/models/imported/japanesecherry.glb",
-      "x": 52.5,
-      "z": 5.6,
+      "x": 43.9,
+      "z": 1.3,
       "rotQuarter": 3,
-      "scale": 0.117
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": 41.3,
-      "z": -10.3,
-      "rotQuarter": 2,
       "scale": 0.111
     },
     {
@@ -765,16 +653,9 @@
     },
     {
       "model": "assets/models/imported/japanesecherry.glb",
-      "x": 37,
-      "z": 14.3,
+      "x": 31.8,
+      "z": 6.5,
       "rotQuarter": 3,
-      "scale": 0.111
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": 22.4,
-      "z": 11.1,
-      "rotQuarter": 2,
       "scale": 0.111
     },
     {
@@ -783,27 +664,6 @@
       "z": 10.8,
       "rotQuarter": 3,
       "scale": 0.111
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": 54.4,
-      "z": -15.3,
-      "rotQuarter": 3,
-      "scale": 0.11
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": 52.5,
-      "z": -16.8,
-      "rotQuarter": 3,
-      "scale": 0.106
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": 50.8,
-      "z": 2.2,
-      "rotQuarter": 1,
-      "scale": 0.122
     },
     {
       "model": "assets/models/imported/japanesecherry.glb",
@@ -821,87 +681,17 @@
     },
     {
       "model": "assets/models/imported/japanesecherry.glb",
-      "x": 42.2,
-      "z": 18.6,
-      "rotQuarter": 3,
-      "scale": 0.122
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": 37.8,
-      "z": -7.3,
-      "rotQuarter": 3,
-      "scale": 0.111
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": 45.6,
-      "z": 0.4,
-      "rotQuarter": 3,
-      "scale": 0.108
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": 44.8,
-      "z": 3,
-      "rotQuarter": 3,
-      "scale": 0.111
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
       "x": 30.1,
-      "z": 16,
+      "z": 17.7,
       "rotQuarter": 3,
       "scale": 0.111
     },
     {
       "model": "assets/models/imported/japanesecherry.glb",
-      "x": 40.1,
-      "z": -6.1,
-      "rotQuarter": 2,
-      "scale": 0.111
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": 47.3,
-      "z": 0.4,
+      "x": -44.7,
+      "z": 6.8,
       "rotQuarter": 3,
-      "scale": 0.11
-    },
-    {
-      "model": "assets/models/imported/japanesecherry.glb",
-      "x": 31.8,
-      "z": 6.5,
-      "rotQuarter": 3,
-      "scale": 0.111
-    },
-    {
-      "model": "assets/models/scenery-cc0/lunar-year__MainAltar.glb",
-      "x": -40,
-      "z": 17.76,
-      "rotQuarter": 0,
-      "scale": 1
-    },
-    {
-      "model": "assets/models/scenery-cc0/lunar-year__Bell.glb",
-      "x": -40,
-      "z": -19.2,
-      "rotQuarter": 0,
-      "scale": 1
-    },
-    {
-      "model": "assets/models/scenery-cc0/lunar-year__MainAltar.glb",
-      "x": 40,
-      "z": 17.76,
-      "rotQuarter": 0,
-      "scale": 1
-    },
-    {
-      "model": "assets/models/scenery-cc0/lunar-year__Bell.glb",
-      "x": 40,
-      "z": -19.2,
-      "rotQuarter": 0,
-      "scale": 1
+      "scale": 0.102
     }
   ],
   "groundStyle": "dirt",
@@ -958,7 +748,7 @@
       },
       {
         "model": "assets/models/imported/japanesecherry.glb",
-        "count": 14,
+        "count": 4,
         "bandFrom": 0.9,
         "bandTo": 0.99,
         "scaleMin": 0.102,

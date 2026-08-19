@@ -45,6 +45,8 @@
  * by 「bakedFamilyKeys() IS the real directory listing」.
  */
 import { describe, it, expect, beforeAll, afterAll, afterEach, vi } from "vitest";
+// GH#384 —— 逐技能特效綁定住在 content/；⛔ 少了這一行從 repo 根跑單檔會看到空的綁定。
+import "./shippedAbilityArt.testkit";
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -60,7 +62,7 @@ import {
 import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
 import { ContentDb } from "../../content/ContentDb";
 import { ensureContentLoaded, __resetContentBoot } from "../../content/bootContent";
-import { W3X_ABILITY_ART, w3xArtFor, setFamilyTuning, mintTunedFamilyDocs } from "./w3xAbilityArt";
+import { w3xAbilityArtRows, w3xArtFor, setFamilyTuning, mintTunedFamilyDocs } from "./w3xAbilityArt";
 import { bakedFamilyKeys, resolveAllFamilyArt, resolveFamilyArt } from "./familyTuning";
 
 const CONTENT = fileURLToPath(new URL("../../../../../content/", import.meta.url));
@@ -99,11 +101,11 @@ function withRingScale(scale: number): ConfigVfxFamiliesDoc {
 }
 
 /**
- * The 91 shockwaveRing abilities MINUS the ones `W3X_ABILITY_ART` promotes to
+ * The 91 shockwaveRing abilities MINUS the ones `w3xAbilityArtRows()` promotes to
  * their own extracted emitters — those legitimately never reach the family row.
  */
 const RING_IDS = resolveAllFamilyArt(null)
-  .filter((r) => r.family === "shockwaveRing" && !W3X_ABILITY_ART[r.abilityId])
+  .filter((r) => r.family === "shockwaveRing" && !w3xAbilityArtRows()[r.abilityId])
   .map((r) => r.abilityId);
 
 const peak = (d: VfxDoc): number =>

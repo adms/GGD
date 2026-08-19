@@ -72,10 +72,12 @@ TAG_SHAPES = {
     "飛行": [{"flight": ANY}],                                             # FlightGrant（SOURCE_GRANT_SHAPE）
     "變身": [{"kind": "championForm", "to": "alternate"}],
     "切換": [{"kind": "championForm", "to": "toggle"}],
-    # ⚠️ `randomArea` 也算：70-04 千年練成的「隨機招喚樹精」今天是
-    #    `randomArea` 排程 N 顆落點（每一顆就是一棵樹精的傷害）。⛔ 那是**近似**，
-    #    真正的召喚實體仍在 backlog —— 但它不是「什麼都沒做」，所以標籤有落點。
-    "召喚": [{"kind": "summon"}, {"kind": "randomArea"}],
+    # ⛔ GH#404 —— `randomArea` **不再算**。它曾經算，理由寫的是「那是近似，真正的
+    #    召喚實體仍在 backlog」——而那正是這條閘應該擋下來的東西：卡片上印著
+    #    「招喚樹精，總共 4/6/8 棵」，場上一具身體都沒有，而閘是綠的（第一·五守則）。
+    #    ⚠️ 90 支現在**沒有任何一支**帶 `[召喚]`（70-04 / 70-002 兩支都在 GH#404 拿掉了），
+    #    所以這一列今天是空跑的 —— 留著是為了下一支真的召喚：它只認得 `summon`。
+    "召喚": [{"kind": "summon"}],
     "護盾": [{"kind": "shield"}, {"kind": "manaBarrier"}],
     "吸收(護盾)": [{"kind": "shield"}, {"kind": "manaBarrier"}],
     "治療": [{"kind": "heal"}, {"kind": "restore"}],
@@ -180,9 +182,9 @@ for _t, (_apply, _sid) in STATUS_TAGS.items():
 #    92-02 消化液 = godie-h02v.**e**、92-03 狂草泥馬 = godie-h02v.**w**。
 WAIVERS = {
     # ── A-1 落地後仍然缺的那一半（A-1 的規則只補身體交換，不補傷害）──
-    # ── owner 未裁決 / 其他 lane ──
-    ("godie-e00s.ex", "召喚"):
-        "同上（70-002 只是引用 R 的樹精）",
+    # ⛔ ("godie-e00s.ex", "召喚") 在 GH#404 一起刪掉了 —— 70-002 的 `[召喚]` 標籤
+    #    退場（內文一個字都沒提召喚），豁免跟著失去對象。留著會被 `stale` 抓到，
+    #    那是這個閘的第二個方向。
     # ── 這一輪發現、要開 GH issue、⛔ 不當場修（第零守則⑧）──
     ("godie-e00w.passive", "旋轉"):
         "演出動詞（雙腿抓住對手旋轉拋摔），不是 tpl-orbit-array 那種環繞衛星",

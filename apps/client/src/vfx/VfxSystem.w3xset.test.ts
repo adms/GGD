@@ -14,6 +14,8 @@
  * particle layer. Four emitters in the source ⇒ four systems on screen.
  */
 import { describe, it, expect, beforeAll, afterAll, vi } from "vitest";
+// GH#384 —— 逐技能特效綁定住在 content/；⛔ 少了這一行從 repo 根跑單檔會看到空的綁定。
+import "../render/vfx/shippedAbilityArt.testkit";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
@@ -27,7 +29,7 @@ import { Abilities } from "@ggd/shared/sim/content/registry";
 import type { AbilityId } from "@ggd/shared/ids";
 import type { VfxDoc } from "@ggd/shared/content";
 import { VfxSystem, type VfxContext } from "./VfxSystem";
-import { W3X_ABILITY_ART } from "../render/vfx/w3xAbilityArt";
+import { w3xAbilityArtRows } from "../render/vfx/w3xAbilityArt";
 
 const root = (p: string): string => fileURLToPath(new URL(`../../../../${p}`, import.meta.url));
 const loadVfx = (id: string): VfxDoc =>
@@ -79,7 +81,7 @@ const castEvent = (): EventMessage =>
 
 describe("w3x effect set plays whole (vfx-w3x-effect-set)", () => {
   it("世界終結 fires ALL FOUR frostnova emitters, not 1 of 4", () => {
-    const art = W3X_ABILITY_ART[ABILITY]!;
+    const art = w3xAbilityArtRows()[ABILITY]!;
     const { sys, played } = harness();
     sys.handleEvent(castEvent(), 1000);
 

@@ -203,7 +203,7 @@
       ],
       "vfxKey": "fx.prim.void.slash",
       "targetsEnemies": true,
-      "radius": 6,
+      "radius": 8.25,
       "castTimeSec": 1.5
     },
     "R": {

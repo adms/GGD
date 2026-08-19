@@ -24,13 +24,14 @@ import type { ContentStore } from "./store";
 import type { ArenaDoc } from "./schema/arena";
 import type { ConfigDoc } from "./schema/config";
 import type { ModelDoc } from "./schema/model";
-import type { AnyVfxDoc, RibbonDoc, VfxDoc } from "./schema/vfx";
+import type { AnyVfxDoc, AttachmentDoc, RibbonDoc, VfxDoc } from "./schema/vfx";
 import type { StatusEffectDoc } from "./schema/statusEffect";
 import type { SkinDoc } from "./schema/skin";
 import type { TemplateDoc } from "./schema/template";
 import { zAbilityDef, zAbilityDoc } from "./schema/ability";
 // AoE 四級距 → 半徑。全專案唯一的查表處，理由寫在那支檔案。
 import { aoeTiersFromDoc, resolveRadiusTier } from "./aoeTiers";
+import { rangeTiersFromDoc, resolveRangeTier } from "./rangeTiers";
 // 位移四級距 + **無條件的速度天花板**（GH#318）。同上，唯一的查表處。
 import {
   displacementTiersFromDoc,
@@ -91,6 +92,14 @@ export const Models = new ContentRegistry<ModelDoc>();
 export const VfxDefs = new ContentRegistry<VfxDoc>();
 /** ribbon@1 docs (same `vfx` collection, split out at registration). */
 export const RibbonDefs = new ContentRegistry<RibbonDoc>();
+/**
+ * attachment@1 docs (same `vfx` collection, split out at registration, GH#392).
+ *
+ * ⚠️ 這一行漏掉的話它們會掉進 `VfxDefs` —— 一份**沒有 emitter 也沒有 lifetimeSec**
+ * 的東西被當粒子文件發出去，而 `vfxFor()` 的呼叫端讀 `doc.emitter` 會拿到
+ * undefined。⛔ 不會丟例外，只會什麼都不畫（失敗形態②）。
+ */
+export const AttachmentDefs = new ContentRegistry<AttachmentDoc>();
 export const StatusEffects = new ContentRegistry<StatusEffectDoc>();
 export const Skins = new ContentRegistry<SkinDoc>();
 
@@ -235,8 +244,16 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
    * 與每一件道具都要走這裡，⛔ 不是只有模板技 —— 見下面 `mapChampionAbilities`
    * 的說明，AoE 那條內嵌路徑到今天為止一次都沒真的跑過。
    */
+  // 施法距離級距（GH#414）—— owner 2026-08-19「可施展技能的距離普遍超遠」。
+  // ⚠️ 這一軸在此之前**沒有表**，216 支各帶一個從 w3a 換算來的自由數字。
+  const rangeTiers = rangeTiersFromDoc(
+    configDocs.find((c) => c.schema === "config.range-tiers@1"),
+  );
   const withTiers = <T extends object>(d: T): T =>
-    resolveDisplacementTier(resolveRadiusTier(d as never, aoeTiers) as never, displacementTiers);
+    resolveDisplacementTier(
+      resolveRangeTier(resolveRadiusTier(d as never, aoeTiers) as never, rangeTiers) as never,
+      displacementTiers,
+    );
 
   // 英雄屬性正規化：同樣要在**英雄註冊之前**讀（`Configs.register` 那一圈在後面）。
   // ⭐ 一個 seam，接在 registerChampion 的正上方 —— 商店預覽 / 選人畫面 / 後台
@@ -271,6 +288,7 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   for (const d of store.all<ModelDoc>("models")) Models.register(d);
   for (const d of store.all<AnyVfxDoc>("vfx")) {
     if (d.schema === "ribbon@1") RibbonDefs.register(d);
+    else if (d.schema === "attachment@1") AttachmentDefs.register(d);
     else VfxDefs.register(d);
   }
   for (const d of store.all<StatusEffectDoc>("status-effects")) StatusEffects.register(d);

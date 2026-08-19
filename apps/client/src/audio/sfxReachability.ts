@@ -103,6 +103,8 @@ export interface SfxReachRow {
 }
 
 const COMBAT_SFX_SITE = "apps/client/src/audio/combatSfx.ts";
+/** 特效自帶音效的**決定點是 config**，⛔ 不是某一支 .ts —— 見下面那一批。 */
+const VFX_SOUND_SITE = "content/config/vfx-families.json";
 const AUDIO_DIRECTOR = "apps/client/src/ui/AudioDirector.tsx";
 const SHOP_FEEDBACK = "apps/client/src/ui/panels/shopFeedback.ts";
 const BUTTON_SFX = "apps/client/src/ui/buttonSfx.ts";
@@ -246,7 +248,16 @@ export const SFX_REACHABILITY: readonly SfxReachRow[] = [
   { key: "flowerSpawn", kind: "combat", site: COMBAT_SFX_SITE, events: ["flowerSpawn"] },
   { key: "flowerBurst", kind: "combat", site: COMBAT_SFX_SITE, events: ["flowerBurst"] },
   { key: "heal", kind: "combat", site: COMBAT_SFX_SITE, events: ["heal"] },
-  { key: "buffApply", kind: "combat", site: COMBAT_SFX_SITE, events: ["buffApply"] },
+  {
+    key: "buffApply",
+    kind: "combat",
+    site: COMBAT_SFX_SITE,
+    // ⭐ GH#406 —— 第二個乘客：44-002 交換筆記本的 `resourceSwap`。這一列必須
+    // 記下來，因為 `events` 是這份登錄表唯一在證明的東西（每一個名字都得在
+    // `FANNED_OUT_EVENT_TYPES` 裡），而一個沒有列出來的乘客等於一個沒有被驗過的
+    // 「這顆事件真的過得了線」宣稱。
+    events: ["buffApply", "resourceSwap"],
+  },
   { key: "explosion", kind: "combat", site: COMBAT_SFX_SITE, events: ["explosion"] },
   { key: "reviveChannel", kind: "combat", site: COMBAT_SFX_SITE, events: ["reviveChannel"] },
   { key: "reviveComplete", kind: "combat", site: COMBAT_SFX_SITE, events: ["reviveComplete"] },
@@ -419,6 +430,101 @@ export const SFX_REACHABILITY: readonly SfxReachRow[] = [
     kind: "unreachable",
     reason: "Opt-in 地圖原聲 pool (#40): same settings toggle as mapFlavorIntro. Not fired.",
   },
+
+  // ── GH#390/#402 —— **特效自帶**的音效 ─────────────────────────────────────
+  // ⚠️ 這一批走的是**另一條路**，⛔ 不是 combatSfx 的 `sfxKey`：
+  // `families[].soundLaunch / soundImpact` → `vfxSoundLayer.cue()` →
+  // `GameApp.pushVfxSound()`。同一顆 abilityCast 兩條路都會出聲，那是原作的樣子。
+  // 決定它的檔案是 **config**（⛔ 不是某一支 .ts），所以 site 指向那份 config ——
+  // 後台把綁定拿掉，這一列就會紅。
+  { key: "wc3.blademasterwhirlwind", kind: "combat", site: VFX_SOUND_SITE, events: ["abilityCast"], payload: { abilityCast: ["abilityId", "caster"] } },
+  { key: "wc3.blinkbirth1", kind: "combat", site: VFX_SOUND_SITE, events: ["abilityCast"], payload: { abilityCast: ["abilityId", "caster"] } },
+  { key: "wc3.coldarrow1", kind: "combat", site: VFX_SOUND_SITE, events: ["abilityCast"], payload: { abilityCast: ["abilityId", "caster"] } },
+  { key: "wc3.flaretarget1", kind: "combat", site: VFX_SOUND_SITE, events: ["abilityCast"], payload: { abilityCast: ["abilityId", "caster"] } },
+  { key: "wc3.flashback1second", kind: "combat", site: VFX_SOUND_SITE, events: ["damage", "projectileHit"], payload: { damage: ["origin"], projectileHit: ["origin"] } },
+  { key: "wc3.fountainoflifewhat1", kind: "combat", site: VFX_SOUND_SITE, events: ["abilityCast"], payload: { abilityCast: ["abilityId", "caster"] } },
+  { key: "wc3.gluescreenmeteorhit2", kind: "combat", site: VFX_SOUND_SITE, events: ["damage", "projectileHit"], payload: { damage: ["origin"], projectileHit: ["origin"] } },
+  { key: "wc3.gruntwhat2", kind: "combat", site: VFX_SOUND_SITE, events: ["abilityCast"], payload: { abilityCast: ["abilityId", "caster"] } },
+  { key: "wc3.invisibilitytarget", kind: "combat", site: VFX_SOUND_SITE, events: ["abilityCast"], payload: { abilityCast: ["abilityId", "caster"] } },
+  { key: "wc3.keeperofthegrovemissilehit1", kind: "combat", site: VFX_SOUND_SITE, events: ["damage", "projectileHit"], payload: { damage: ["origin"], projectileHit: ["origin"] } },
+  { key: "wc3.shimmeringportaldeath", kind: "combat", site: VFX_SOUND_SITE, events: ["damage", "projectileHit"], payload: { damage: ["origin"], projectileHit: ["origin"] } },
+  { key: "wc3.stasistotem", kind: "combat", site: VFX_SOUND_SITE, events: ["damage", "projectileHit"], payload: { damage: ["origin"], projectileHit: ["origin"] } },
+  { key: "wc3.wandofneutralization", kind: "combat", site: VFX_SOUND_SITE, events: ["damage", "projectileHit"], payload: { damage: ["origin"], projectileHit: ["origin"] } },
+  { key: "wc3.waterelementalmissile3", kind: "combat", site: VFX_SOUND_SITE, events: ["damage", "projectileHit"], payload: { damage: ["origin"], projectileHit: ["origin"] } },
+  { key: "wc3.witchdoctorcastattack1", kind: "combat", site: VFX_SOUND_SITE, events: ["damage", "projectileHit"], payload: { damage: ["origin"], projectileHit: ["origin"] } },
+
+  // ⚠️ **收錄了但沒有人引用**的 68 個。owner 2026-08-19 把 133 個原作音效搬進版控
+  // （出處帳本 `content/assets/audio/wc3/PROVENANCE.md`），其中 mdx `SNDx` 事件軌
+  // 那一批只有一部分被 `vfx-families.json` 綁上去。⛔ 這裡**不可以**寫成 combat ——
+  // 那會讓 credits 頁替一個永遠不響的 clip 掛上「已啟用」。GH#436 追這件事。
+  { key: "wc3.ancestralspirit", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.archerdeath1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.banditdeath1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.bloodelfsorcerordeath", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.bloodlusttarget", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.brewmasterdeath1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.buildingdeathlargehuman", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.catapultmissile1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.catapultmissile2", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.catapultmissile3", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.catapultmissile4", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.coldarrow2", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.coldarrow3", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.criticalstrike", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.crushingwavecaster1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.deathcoilmissilelaunch1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.dispelmagictarget", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.fanofknives", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.farmwhat1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.farseermissile", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.feralspirittarget1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.fireballmissilelaunch1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.fireballmissilelaunch2", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.fireballmissilelaunch3", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.flamestrikebirth1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.footmandeath", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.furbolgdeath1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.healtarget", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.heroblademasterattack1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.heroblademasterattack2", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.heroblademasterdeath", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.herodeathknightattack1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.herodeathknightdeath", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.herodemonhunterdeath1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.heropaladindeath", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.holybolt", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.humandissipate1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.infernalbirth1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.irongolemattack1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.irongolemdeath1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.jainaonfootdeath1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.keeperofthegrovemissilehit2", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.keeperofthegrovemissilehit3", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.keeperofthegrovemissilelaunch1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.keeperofthegrovemissilelaunch2", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.keeperofthegrovemissilelaunch3", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.knightnoriderdeath1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.meatwagonmissilehit1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.nagabuildingcancel", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.nightelfdissipate1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.orcdissipate1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.peasantdeath", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.peonwhat2", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.priestdeath", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.reincarnation", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.shockwave", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.step1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.step2", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.step3", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.step4", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.succubusdeath1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.tuskarrdeath1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.undeaddissipate2", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.villagerchilddeath1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.villagermaledeath1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.wardenattackeffort1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.wardendeath1", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
+  { key: "wc3.warstomp", kind: "unreachable", reason: "收錄在 audio-map 與出處帳本裡，但 content/ 沒有任何一支技能或特效家族綁到它（GH#436）" },
 ];
 
 /** Rows by key — the lookup the derivations and the test both use. */

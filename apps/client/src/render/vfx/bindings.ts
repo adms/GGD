@@ -1,48 +1,52 @@
 /**
- * ROSTER VFX BINDINGS (task #79).
+ * ROSTER VFX BINDINGS (task #79) —— **讀取端**。逐 id 的分類在 `content/`。
  *
  * The 48 whitelisted champions (data/curation/whitelist.json) had 92% of their
  * abilities pointing at ONE generic fire placeholder (`fx.ember-bolt-cast`) —
  * 依文潔琳's ice spells rendered as fire, every sword arc looked identical.
- * This table maps each of the 240 roster abilities to `(element, primitive)`:
- * the primitive (from `primitives.ts`) gives the SHAPE, the element (from
- * `elements.ts`) gives the COLOUR. The slot decides SIZE (ultimate R / EX are
- * scaled up), so one primitive serves many abilities with different looks
- * (task #50).
+ * The fix maps each roster ability to `(element, primitive)`: the primitive
+ * (from `primitives.ts`) gives the SHAPE, the element (from `elements.ts`)
+ * gives the COLOUR. The slot decides SIZE (ultimate R / EX are scaled up), so
+ * one primitive serves many abilities with different looks (task #50).
  *
- * The classification below is read off each ability's Chinese name + the
- * champion's archetype (fire 火/焰/爆, ice 冰/凍/霜/吹雪, lightning 雷/電/伏特,
- * wind 風/氣, earth 土/石/地, holy 光/聖/神, void 闇/暗/黑/死/靈/冥, blade 斬/
- * 刀/劍/拳/爪/戟, nature 草/葉/藤/種, water/blood/arcane/ki as fits).
+ * ⭐ **GH#384：那 325 格分類搬進 `content/config/vfx-ability-art.json` 了。**
+ * 它們是內容 —— 一格顏色分錯，以前要重建 client 映像才改得掉（client 是 build
+ * 時烘進去的），而 `content/` 是 live bind-mount，存檔就生效；而且外部編輯器
+ * **看不到 TypeScript 常數，也不會知道自己漏了**（第〇·五守則的對外契約紅線）。
+ * 留在這裡的是**機制**：槽位→尺寸的規則、`fx.prim.*` 的命名、以及把分類烘成
+ * vfx 文件的那條路。搬家前的逐列作者註記另存在
+ * `docs/legacy/_vfx-ability-art-authoring-notes.md`（知識不可以無聲消失）。
  *
- * `curatedDocs()` turns this table into the `content/vfx/fx.prim.*.json` docs
- * the runtime resolves through `ContentDb.vfxFor` — so binding an ability is
- * "set its vfxKey to `vfxKeyFor(binding)`", with ZERO change to VfxSystem.
+ * 分類本身是讀每一支技能的中文名 + 英雄原型分出來的（fire 火/焰/爆、
+ * ice 冰/凍/霜/吹雪、lightning 雷/電/伏特、wind 風/氣、earth 土/石/地、
+ * holy 光/聖/神、void 闇/暗/黑/死/靈/冥、blade 斬/刀/劍/拳/爪/戟、
+ * nature 草/葉/藤/種，water/blood/arcane/ki 視情況）。
  *
- * THIS TABLE IS THE BASELINE, NOT THE LAST WORD. The classification below is
- * read off each ability's NAME — good enough to give every ability a legible
- * element+shape, but it is not evidence of what the original map drew. Where
- * the w3x import PROVES an ability's art (`w3a-override` / `w3h-override` /
- * `jass-literal`) and that art survives as shippable emitters, the ability is
- * promoted to it in `./w3xAbilityArt` and its content `vfxKey` names a
- * `fx.w3x.*` / `godie-*` doc instead of the `fx.prim.*` key computed here.
- * 30 abilities are promoted; the other ~615 keep this baseline. So for those
- * 30, `abilityVfxKeys()` no longer matches the shipped content doc BY DESIGN —
+ * `curatedDocs()` turns the classification into the `content/vfx/fx.prim.*.json`
+ * docs the runtime resolves through `ContentDb.vfxFor` — so binding an ability
+ * is "set its vfxKey to `vfxKeyFor(binding)`", with ZERO change to VfxSystem.
+ *
+ * THIS IS THE BASELINE, NOT THE LAST WORD. The classification is read off each
+ * ability's NAME — good enough to give every ability a legible element+shape,
+ * but it is not evidence of what the original map drew. Where the w3x import
+ * PROVES an ability's art (`w3a-override` / `w3h-override` / `jass-literal`)
+ * and that art survives as shippable emitters, the ability is promoted to it in
+ * `./w3xAbilityArt` and its content `vfxKey` names a `fx.w3x.*` / `godie-*` doc
+ * instead of the `fx.prim.*` key computed here. So for those rows,
+ * `abilityVfxKeys()` no longer matches the shipped content doc BY DESIGN —
  * it is the fallback classification, and `w3xAbilityArt` is the override.
  */
 import type { VfxDoc } from "@ggd/shared/content";
 import { PRIMITIVES, type PrimitiveKind } from "./primitives";
 import { elementStyle, type Element } from "./elements";
 import { applyArtParams } from "./artParams";
+import { abilityArtRows, onAbilityArtBindingsChanged } from "./abilityArtContent";
 
 export type Slot = "q" | "w" | "e" | "r" | "ex";
 export type Size = "sm" | "md" | "lg";
 
 /** SIZE → overall scale. Ultimates read bigger; quick utility reads smaller. */
 export const SIZE_SCALE: Record<Size, number> = { sm: 0.72, md: 1, lg: 1.5 };
-
-/** A per-slot binding: element + primitive, optional explicit size override. */
-type Bind = readonly [Element, PrimitiveKind, Size?];
 
 export interface Binding {
   abilityId: string;
@@ -57,181 +61,21 @@ function sizeForSlot(slot: Slot, override?: Size): Size {
   return slot === "r" || slot === "ex" ? "lg" : "md";
 }
 
-/**
- * Per-champion, per-slot classification. Missing slots simply keep the old
- * placeholder (none are missing for the current roster). Read each row as
- * "this ability's element + the primitive shape that reads it".
- */
-const ROSTER: Record<string, Partial<Record<Slot, Bind>>> = {
-  // 龍宮禮奈 — blood-cleaver assassin (Higurashi)
-  "godie-e001": { q: ["void", "pulse", "sm"], w: ["blood", "slash"], e: ["physical", "beam"], r: ["blood", "nova"], ex: ["blood", "pulse"] },
-  // 亞瑟王 Saber — holy sword + wind barrier
-  "godie-e002": { q: ["holy", "pulse", "sm"], w: ["wind", "tornado"], e: ["holy", "beam"], r: ["holy", "nova"], ex: ["holy", "beam"] },
-  // 天地志狼 — martial ki
-  "godie-e007": { q: ["ki", "pulse", "sm"], w: ["nature", "pulse"], e: ["ki", "shockwave"], r: ["ki", "explosion"], ex: ["ki", "pulse"] },
-  // 12 天地志狼 本體 — same 編號, same five ability docs as its 變身 form above (#249)
-  "godie-ewar": { q: ["ki", "pulse", "sm"], w: ["nature", "pulse"], e: ["ki", "shockwave"], r: ["ki", "explosion"], ex: ["ki", "pulse"] },
-  // 夏娜 — fire
-  "godie-e008": { q: ["fire", "slash"], w: ["fire", "nova"], e: ["fire", "explosion"], r: ["fire", "explosion"], ex: ["fire", "explosion"] },
-  // 安云 Azumi — blade assassin
-  "godie-e00k": { q: ["physical", "slash"], w: ["physical", "slash"], e: ["physical", "beam"], r: ["void", "swarm"], ex: ["void", "pulse"] },
-  // 初號機 EVA-01 — mech / energy
-  "godie-e00r": { q: ["void", "explosion"], w: ["physical", "slash"], e: ["ki", "nova"], r: ["ki", "beam"], ex: ["void", "explosion"] },
-  // 櫻綻剎那 — lightning swordsman
-  "godie-e00w": { q: ["physical", "slash"], w: ["lightning", "beam"], e: ["lightning", "nova"], r: ["lightning", "beam"], ex: ["lightning", "beam"] },
-  // 宇智波佐助 Sasuke — fire + lightning + amaterasu
-  "godie-edem": { q: ["fire", "explosion"], w: ["lightning", "beam"], e: ["lightning", "beam"], r: ["void", "pulse"], ex: ["void", "explosion"] },
-  // 涅吉 Negi — wind + lightning mage
-  "godie-emfr": { q: ["wind", "tornado"], w: ["wind", "pulse"], e: ["lightning", "nova"], r: ["lightning", "beam"], ex: ["wind", "tornado"] },
-  // 夜神月 Light — death-note / psychic
-  "godie-emns": { q: ["void", "pulse", "sm"], w: ["void", "pulse"], e: ["physical", "shockwave"], r: ["void", "nova"], ex: ["void", "pulse"] },
-  // 木乃香 — holy healer
-  "godie-etyr": { q: ["wind", "nova"], w: ["holy", "pulse"], e: ["holy", "explosion"], r: ["holy", "nova"], ex: ["holy", "pulse"] },
-  // 林克 Link — sword / boomerang, holy light slash
-  "godie-h00l": { q: ["wind", "slash"], w: ["physical", "beam"], e: ["holy", "pulse"], r: ["physical", "nova"], ex: ["holy", "beam"] },
-  // 黑崎一護 Ichigo — spirit (getsuga)
-  "godie-h01n": { q: ["void", "pulse", "sm"], w: ["physical", "slash"], e: ["void", "beam"], r: ["void", "pulse"], ex: ["void", "explosion"] },
-  // 呂布 Lu Bu — physical halberd
-  "godie-h01u": { q: ["physical", "shockwave"], w: ["physical", "slash"], e: ["physical", "beam"], r: ["physical", "shockwave"], ex: ["physical", "pulse"] },
-  // 莉娜因巴斯 Lina — fire / dragon-slave / giga-slave
-  "godie-h020": { q: ["fire", "explosion"], w: ["fire", "explosion"], e: ["fire", "beam"], r: ["void", "explosion"], ex: ["void", "nova"] },
-  // 04 莉娜因巴斯 本體 — same 編號, same five ability docs as its 變身 form above (#249)
-  "godie-hjai": { q: ["fire", "explosion"], w: ["fire", "explosion"], e: ["fire", "beam"], r: ["void", "explosion"], ex: ["void", "nova"] },
-  // 熊貓 Panda — comedic physical
-  "godie-h02k": { q: ["physical", "shockwave"], w: ["nature", "explosion"], e: ["physical", "swarm"], r: ["physical", "shockwave"], ex: ["fire", "explosion"] },
-  // 妙蛙花 Venusaur — grass
-  "godie-h02r": { q: ["nature", "slash"], w: ["nature", "swarm"], e: ["nature", "beam"], r: ["nature", "beam"], ex: ["nature", "pulse"] },
-  // 90 妙蛙種子 本體 — same 編號, same five ability docs as its 變身 form above (#249)
-  "godie-hgam": { q: ["nature", "slash"], w: ["nature", "swarm"], e: ["nature", "beam"], r: ["nature", "beam"], ex: ["nature", "pulse"] },
-  // 草泥馬 — comedic nature
-  "godie-h02u": { q: ["physical", "shockwave"], w: ["physical", "shockwave"], e: ["nature", "nova"], r: ["nature", "explosion"], ex: ["nature", "explosion"] },
-  // 92 草泥馬 本體 — same 編號, same five ability docs as its 變身 form above (#249)
-  "godie-h02v": { q: ["physical", "shockwave"], w: ["physical", "shockwave"], e: ["nature", "nova"], r: ["nature", "explosion"], ex: ["nature", "explosion"] },
-  // Berserker Hercules — physical rage
-  "godie-hapm": { q: ["physical", "pulse"], w: ["physical", "shockwave"], e: ["physical", "slash"], r: ["physical", "shockwave"], ex: ["fire", "explosion"] },
-  // 克勞德 Cloud — buster sword + meteor
-  "godie-hart": { q: ["physical", "slash"], w: ["fire", "explosion"], e: ["physical", "beam"], r: ["physical", "slash"], ex: ["holy", "beam"] },
-  // 藤井八雲 — earth / beast summon
-  "godie-hpal": { q: ["earth", "shockwave"], w: ["earth", "beam"], e: ["void", "swarm"], r: ["holy", "beam"], ex: ["void", "swarm"] },
-  // 蒼月潮 — spear / holy barrier / beast
-  "godie-hpb1": { q: ["physical", "pulse", "sm"], w: ["physical", "pulse", "sm"], e: ["physical", "beam"], r: ["holy", "nova"], ex: ["physical", "explosion"] },
-  // 魔人普烏 Buu — arcane / destruction ball
-  "godie-huth": { q: ["arcane", "pulse", "sm"], w: ["arcane", "pulse"], e: ["arcane", "swarm"], r: ["void", "explosion"], ex: ["void", "explosion"] },
-  // Rider Medusa — arcane chains / blood temple
-  "godie-hvsh": { q: ["arcane", "beam"], w: ["arcane", "pulse"], e: ["blood", "nova"], r: ["arcane", "beam"], ex: ["arcane", "beam"] },
-  // 桔梗 Kikyo — miko / purify arrow / night parade
-  "godie-hvwd": { q: ["holy", "beam"], w: ["holy", "pulse"], e: ["void", "nova"], r: ["void", "swarm"], ex: ["holy", "pulse"] },
-  // 依文潔琳 — ICE (the flagship fix); W is a blood/drain sacrifice
-  "godie-n003": { q: ["ice", "shockwave"], w: ["blood", "nova"], e: ["ice", "nova"], r: ["ice", "explosion"], ex: ["ice", "pulse"] },
-  // 哆拉A夢 Doraemon — gadget / air cannon / bamboo-copter
-  "godie-n00b": { q: ["wind", "beam"], w: ["arcane", "pulse"], e: ["arcane", "pulse", "sm"], r: ["wind", "tornado"], ex: ["arcane", "nova"] },
-  // 藏馬 Kurama — plant / rose whip
-  "godie-n00p": { q: ["nature", "slash"], w: ["nature", "swarm"], e: ["nature", "pulse"], r: ["nature", "shockwave"], ex: ["nature", "swarm"] },
-  // 18 南野秀一 本體 — same 編號, same five ability docs as its 變身 form above (#249)
-  "godie-nsjs": { q: ["nature", "slash"], w: ["nature", "swarm"], e: ["nature", "pulse"], r: ["nature", "shockwave"], ex: ["nature", "swarm"] },
-  // 勇者小呆 Dai — dragon knight (fire + raiden lightning)
-  "godie-n01c": { q: ["fire", "pulse"], w: ["lightning", "beam"], e: ["fire", "beam"], r: ["physical", "slash"], ex: ["fire", "explosion"] },
-  // 08 勇者小呆 本體 — same 編號, same five ability docs as its 變身 form above (#249)
-  "godie-nbbc": { q: ["fire", "pulse"], w: ["lightning", "beam"], e: ["fire", "beam"], r: ["physical", "slash"], ex: ["fire", "explosion"] },
-  // 麻倉葉 Yoh — spirit sword / buddha slash
-  "godie-nplh": { q: ["holy", "pulse", "sm"], w: ["holy", "nova"], e: ["holy", "beam"], r: ["holy", "slash"], ex: ["holy", "beam"] },
-  // 皮卡娘 Pikachu-girl — lightning
-  "godie-o00k": { q: ["lightning", "nova"], w: ["lightning", "beam"], e: ["lightning", "nova"], r: ["lightning", "beam"], ex: ["lightning", "explosion"] },
-  // 傑洛士 Xellos — dark priest / explosion
-  "godie-o00l": { q: ["void", "beam"], w: ["fire", "explosion"], e: ["arcane", "pulse"], r: ["fire", "explosion"], ex: ["void", "nova"] },
-  // 悟空 Goku — ki / kamehameha
-  "godie-o00x": { q: ["ki", "pulse"], w: ["ki", "pulse", "sm"], e: ["ki", "pulse"], r: ["ki", "beam"], ex: ["ki", "beam"] },
-  // 09 悟空 本體 — same 編號, same five ability docs as its 變身 form above (#249)
-  "godie-ogrh": { q: ["ki", "pulse"], w: ["ki", "pulse", "sm"], e: ["ki", "pulse"], r: ["ki", "beam"], ex: ["ki", "beam"] },
-  // 初音 Miku — idol / sound (teal)
-  "godie-o02p": { q: ["sound", "nova"], w: ["sound", "pulse"], e: ["sound", "explosion"], r: ["holy", "nova"], ex: ["sound", "swarm"] },
-  // 皮卡丘 Pikachu — lightning + steel tail
-  "godie-ofar": { q: ["lightning", "nova"], w: ["physical", "slash"], e: ["lightning", "pulse"], r: ["lightning", "explosion"], ex: ["lightning", "beam"] },
-  // 黑人牙膏 — comedic light/white + dark
-  "godie-ogld": { q: ["holy", "pulse"], w: ["void", "swarm"], e: ["holy", "nova"], r: ["void", "explosion"], ex: ["holy", "swarm"] },
-  // 臭作 — creepy (dark + pervert flame + train impact)
-  "godie-orkn": { q: ["void", "pulse", "sm"], w: ["nature", "nova"], e: ["fire", "explosion"], r: ["physical", "shockwave"], ex: ["void", "pulse"] },
-  // 殺生丸 Sesshomaru — wind claw / blue dragon / meido
-  "godie-osam": { q: ["wind", "slash"], w: ["wind", "slash"], e: ["void", "explosion"], r: ["ki", "beam"], ex: ["void", "nova"] },
-  // 鬼畜狂刀KYO — four-gods blade (white tiger 風 / vermilion 火 / dragon 水 / golden 神)
-  "godie-u00h": { q: ["wind", "slash"], w: ["fire", "slash"], e: ["ice", "beam"], r: ["holy", "tornado"], ex: ["fire", "explosion"] },
-  // 賽菲洛斯 Sephiroth — dark masamune / supernova
-  "godie-u00j": { q: ["void", "pulse", "sm"], w: ["physical", "slash"], e: ["void", "pulse"], r: ["void", "explosion"], ex: ["void", "explosion"] },
-  // 死之王 — death / dark souls
-  "godie-u00k": { q: ["void", "explosion"], w: ["void", "beam"], e: ["void", "swarm"], r: ["void", "nova"], ex: ["void", "explosion"] },
-  // 拳四郎 Kenshiro — hokuto fist / hundred fists
-  "godie-u00l": { q: ["physical", "beam"], w: ["physical", "pulse", "sm"], e: ["physical", "swarm"], r: ["physical", "pulse"], ex: ["physical", "shockwave"] },
-  // 25 拳四郎 本體 — same 編號, same five ability docs as its 變身 form above (#249)
-  "godie-umal": { q: ["physical", "beam"], w: ["physical", "pulse", "sm"], e: ["physical", "swarm"], r: ["physical", "pulse"], ex: ["physical", "shockwave"] },
-  // 魯夫 Luffy — rubber / gear / haki
-  "godie-u00n": { q: ["physical", "shockwave"], w: ["physical", "beam"], e: ["physical", "swarm"], r: ["physical", "shockwave"], ex: ["void", "nova"] },
-  // 基廉列克 — mafia fist (steel / earth / rising dragon / elbow)
-  "godie-u00v": { q: ["physical", "beam"], w: ["earth", "shockwave"], e: ["ki", "beam"], r: ["physical", "beam"], ex: ["physical", "pulse"] },
-  // 飛影 Hiei — dark flame / black dragon wave
-  "godie-u010": { q: ["fire", "slash"], w: ["fire", "explosion"], e: ["void", "beam"], r: ["void", "pulse"], ex: ["void", "explosion"] },
-  // 38 飛影 本體 — same 編號, same five ability docs as its 變身 form above (#249)
-  "godie-uvng": { q: ["fire", "slash"], w: ["fire", "explosion"], e: ["void", "beam"], r: ["void", "pulse"], ex: ["void", "explosion"] },
-  // 索隆 Zoro — three-sword style
-  "godie-u01u": { q: ["fire", "slash"], w: ["physical", "slash"], e: ["void", "slash"], r: ["physical", "slash"], ex: ["void", "pulse"] },
-  // 11 索隆 本體 — same 編號, same five ability docs as its 變身 form above (#249)
-  "godie-udre": { q: ["fire", "slash"], w: ["physical", "slash"], e: ["void", "slash"], r: ["physical", "slash"], ex: ["void", "pulse"] },
-  // 100 喪標麥可 — 聖杯的黑泥。GH#29 把他放上開放名單,所以這五列不再是可選的。
-  // ⚠️ 綁 void/blood 而不是 holy:文件寫的是「黑泥」,不是聖杯的金光。內容檔原本
-  // 把 W 與 R 指到 fx.prim.holy.*,那是「聖杯」二字被字面採信的結果 —— 玩家看到
-  // 的會是金色聖光,而描述說的是從體內爆開的黑泥。這裡以描述為準。
-  "godie-zombiex": {
-    q: ["void", "nova"],        // 噴出一灘黑泥 — 範圍魔傷 + 減速
-    w: ["void", "dash"],        // 衝撞;黑泥硬化成殼 —— 同一種黑泥,不是聖光
-    e: ["void", "shockwave"],   // 地面攤開黑泥沼 — 踩到定身
-    r: ["void", "nova"],        // 黑泥從體內爆發 — 大範圍(R 自動吃大尺寸)
-    ex: ["blood", "pulse"],     // 詐死起身、黑泥狂化 — 攻擊力暴漲
-  },
-  // 巴恩大魔王 Vearn — dark lord / black core
-  "godie-ubal": { q: ["void", "beam"], w: ["void", "shockwave"], e: ["void", "explosion"], r: ["void", "pulse"], ex: ["void", "explosion"] },
-  // 飛鼠先生 — arcane senior / ice shatter / judgment
-  "godie-udea": { q: ["arcane", "pulse", "sm"], w: ["ice", "nova"], e: ["arcane", "explosion"], r: ["holy", "nova"], ex: ["arcane", "pulse"] },
-  // ---- task #212: opened by starter.go in v0.5.16, so they owe rows here ----
-  // 賈修貝爾 Zatch — lightning spellcaster (薩喀爾 / 巴歐．薩喀爾嘎), 及喀爾度
-  // is the magnet-orb utility (holy) and the EX 金色巨龍 devour reads void.
-  // These reproduce the vfxKey each ability doc already ships, so the client
-  // art table and content agree instead of drifting.
-  "godie-hblm": { q: ["lightning", "nova"], w: ["lightning", "dash"], e: ["holy", "nova"], r: ["lightning", "nova"], ex: ["void", "pulse"] },
-  // 揍敵客桀諾 Zeno — 念 assassin: 龍頭戲畫 is a coiling 氣 dragon that roots
-  // (氣 → wind per the header convention; content overrides Q to the shared
-  // `fx.root-snare` doc, so this row is the fallback classification), 快步 is
-  // the blink, 龍星群 the descending dragon-arrow ultimate.
-  "godie-efur": { q: ["wind", "tornado"], w: ["ki", "pulse", "sm"], e: ["arcane", "dash"], r: ["void", "pulse"], ex: ["arcane", "pulse"] },
-  // ---- owner 2026-07-30: starter.go opened two more, so they owe rows here ----
-  // Same discipline as the #212 block above: each cell REPRODUCES the vfxKey the
-  // ability doc already ships, so the fallback table and the content tree agree
-  // instead of drifting. Both halves of each 變身 pair are listed, because a pair
-  // shares one kit and #119's morph puts a player in the alternate body.
-  //
-  // 70 白木老樹精 白木卡迪那 (base `godie-e00s` / 紮根態 `godie-e010`) — 伸卡球 is a
-  // thrown bolt, 大怒石 the stone-throw self-buff, 木束縛之術 the root, 千年練成 the
-  // summoned-treant nova. Content ships arcane.bolt / earth.pulse-sm /
-  // nature.pulse-sm / arcane.nova-lg / blood.pulse-lg.
-  "godie-e00s": { q: ["arcane", "bolt"], w: ["earth", "pulse", "sm"], e: ["nature", "pulse", "sm"], r: ["arcane", "nova"], ex: ["blood", "pulse"] },
-  "godie-e010": { q: ["arcane", "bolt"], w: ["earth", "pulse", "sm"], e: ["nature", "pulse", "sm"], r: ["arcane", "nova"], ex: ["blood", "pulse"] },
-  // 06 職業獵人 傑富力士 (base `godie-ucrl` / 傑桑態 `godie-u034`) — 山形修煉 放/變/強
-  // is the 念 (ki) three-stance kit, 殺意 the EX.
-  //
-  // ⚠️ R 傑桑變化 is `fire`, NOT ki, and that is deliberate. This ability has a
-  // `W3X_FAMILY_ART` evidence row (the imported `boomnl` model, family
-  // `uncategorised` / slug `kaboom`) with NO map tint, so `familyTuning`
-  // colours it by `classifiedElement(abilityId)` — i.e. by THIS cell — and only
-  // falls back to the family default when the cell is absent. Writing `ki` here
-  // makes it ask for `fx.fam.kaboom.ki.s115`, and the only baked doc in
-  // `content/vfx` is `fx.fam.kaboom.fire.s115.json`: the cast would resolve to a
-  // document that does not exist. (familyArtCoverage.test.ts +
-  // familyTuningDegrade.test.ts catch exactly that, and did.) `fire` names the
-  // art the player actually sees. Re-colour it only together with a generator
-  // run that bakes the matching fx.fam doc.
-  "godie-ucrl": { q: ["ki", "pulse", "sm"], w: ["ki", "pulse", "sm"], e: ["earth", "pulse", "sm"], r: ["fire", "explosion"], ex: ["blood", "pulse"] },
-  "godie-u034": { q: ["ki", "pulse", "sm"], w: ["ki", "pulse", "sm"], e: ["earth", "pulse", "sm"], r: ["fire", "explosion"], ex: ["blood", "pulse"] },
-};
-
+/** The five slots an ability id can end in. Anything else has no `prim` cell. */
 const SLOTS: Slot[] = ["q", "w", "e", "r", "ex"];
+const SLOT_SET = new Set<string>(SLOTS);
+
+/** `godie-e001.q` → `"q"`, `godie-e001.passive` → undefined. */
+function slotOf(abilityId: string): Slot | undefined {
+  const tail = abilityId.slice(abilityId.lastIndexOf(".") + 1);
+  return SLOT_SET.has(tail) ? (tail as Slot) : undefined;
+}
+
+/** memoised flatten — invalidated whenever the content doc is (re)loaded. */
+let flattened: Binding[] | null = null;
+onAbilityArtBindingsChanged(() => {
+  flattened = null;
+});
 
 /** The vfx doc id a binding resolves to (also the content filename stem). */
 export function vfxKeyFor(b: { element: Element; primitive: PrimitiveKind; size: Size }): string {
@@ -239,17 +83,31 @@ export function vfxKeyFor(b: { element: Element; primitive: PrimitiveKind; size:
   return `fx.prim.${b.element}.${b.primitive}${suffix}`;
 }
 
-/** Flatten the roster table into one Binding per ability (240 rows). */
+/**
+ * One `Binding` per classified ability, read off `config.vfx-ability-art@1`.
+ *
+ * ⭐ The SLOT RULE stays in code (`sizeForSlot`) and the PARAMETERS live in the
+ * JSON — that is the two-layer shape 第〇·五守則 asks for. A row states `size`
+ * only when the author is overruling the slot default, so a cell that says
+ * nothing keeps meaning "let the slot decide", not "medium".
+ */
 export function rosterBindings(): Binding[] {
+  if (flattened) return flattened;
   const out: Binding[] = [];
-  for (const [champ, slots] of Object.entries(ROSTER)) {
-    for (const slot of SLOTS) {
-      const bind = slots[slot];
-      if (!bind) continue;
-      const [element, primitive, sizeOverride] = bind;
-      out.push({ abilityId: `${champ}.${slot}`, element, primitive, size: sizeForSlot(slot, sizeOverride) });
-    }
+  for (const [abilityId, row] of Object.entries(abilityArtRows())) {
+    const prim = row.prim;
+    if (!prim) continue;
+    const slot = slotOf(abilityId);
+    if (!slot) continue;
+    out.push({
+      abilityId,
+      element: prim.element,
+      primitive: prim.primitive,
+      size: sizeForSlot(slot, prim.size),
+    });
   }
+  out.sort((a, b) => a.abilityId.localeCompare(b.abilityId));
+  flattened = out;
   return out;
 }
 

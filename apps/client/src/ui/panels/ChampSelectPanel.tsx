@@ -63,7 +63,7 @@ import {
 } from "./champselect/previewGate";
 import {
   useWalletMeta,
-  sortFavouritesFirst,
+  sortRosterByAccess,
   rosterDisplayAndSelectable,
 } from "./champselect/walletMeta";
 import {
@@ -164,10 +164,13 @@ export function ChampSelectPanel(): React.JSX.Element {
   const shown = useMemo(() => filterChampions(available, query), [available, query]);
   const rosterEmpty = whitelist.enforced && available.length === 0;
 
-  // Favourited champions float to the TOP of the roster (order otherwise intact).
+  // 喜愛且已解鎖 → 已解鎖 → 鎖住的（GH#413 疊在 #118 的喜愛置頂上，同一個桶）。
+  // ⚠️ 不再由 `meta.available` 決定要不要排：`selectableIds` 是 null 時
+  // `sortRosterByAccess` 自己就退回「大家都算解鎖」= #413 之前的順序，
+  // 所以離線那條路一格都沒變，而在線那條路不必再多一個分支。
   const ordered = useMemo(
-    () => (meta.available ? sortFavouritesFirst(shown, meta.favourites) : shown),
-    [shown, meta.available, meta.favourites],
+    () => sortRosterByAccess(shown, meta.favourites, selectableIds),
+    [shown, meta.favourites, selectableIds],
   );
 
   // The rules briefing: self-calibrating gate (survives a remount within the

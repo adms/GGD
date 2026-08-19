@@ -80,7 +80,6 @@
  *     double the sound.
  */
 import type { EventMessage } from "@ggd/shared/protocol/messages";
-import { fullAssetsEnabled } from "../config/fullAssets";
 import { hudStore, localDuelZone as storeLocalDuelZone } from "../net/RoomStore";
 import { noteFireRingIgnition } from "./fireRingWindow";
 import { COMBAT_PHASE, gateCombatBed } from "./combatBedGate";
@@ -182,29 +181,11 @@ const ELEMENT_SFX: Readonly<Record<string, string>> = {
  * committed under content/assets/audio/sfx/, so they are honoured on every
  * build tier. The stock-MPQ wave lives in {@link WC3_OVERLAY_ABILITY_SFX}.
  */
-const WC3_ABILITY_SFX: ReadonlySet<string> = new Set([
+export const WC3_ABILITY_SFX: ReadonlySet<string> = new Set([
   "wc3.moongo", // godie-hpb1.w 者、皆、陣
   "wc3.moonjump", // godie-hpb1.e 列、在、前
   "wc3.nocute", // godie-o00k.passive 裝可愛, godie-u00l.r / godie-umal.r ChangeDNA
-]);
-
-/**
- * The STOCK-MPQ per-ability cast cues (the remaining 123 sound refs of the
- * task-#78 音效 port). Same declared-set contract as {@link WC3_ABILITY_SFX},
- * with one difference: the clips are Blizzard-owned and NOT redistributable, so
- * they live in the git-ignored data/blizzard-overlay/ability-sfx/ store (pulled
- * by tools/w3x-import/extract_stock_sfx.py) and their audio-map entries point
- * into the dev-only `assets/blizzard-local/` mount — see
- * content/assets/blizzard-local/README.md, the copyright gate.
- *
- * That is why {@link wc3CastKey} honours this set only when the build asks for
- * the full local asset overlay (config/fullAssets — same switch the Blizzard
- * model/voice overlays gate on). On a public bundle the key resolves to null
- * and the cast falls back to the element whoosh / generic clip it always
- * played; it must NEVER resolve to the map key, because playSfx would fetch a
- * URL prod deliberately does not serve and the cast would be silent instead.
- */
-const WC3_OVERLAY_ABILITY_SFX: ReadonlySet<string> = new Set([
+  // ↓ GH#402 之前住在 WC3_OVERLAY_ABILITY_SFX，現在同樣出貨。
   "wc3.akamapissed8", // godie-emfr.w 沉睡之霧
   "wc3.altarofelderswhat1", // godie-n00p.e / godie-nsjs.e 妖狐變化
   "wc3.axemissilelaunch1", // godie-h00l.r 迴旋斬
@@ -257,22 +238,36 @@ const WC3_OVERLAY_ABILITY_SFX: ReadonlySet<string> = new Set([
 ]);
 
 /**
+ * The STOCK-MPQ per-ability cast cues (the remaining 49 sound refs of the
+ * task-#78 音效 port). ⭐ GH#402 —— 它們**曾經**是一個獨立的、被
+ * `config/fullAssets` 擋住的集合，理由是 Blizzard 的位元組不進版控；
+ * owner 2026-08-19 推翻了那條規則（「直接上架但註記來源就好 不要ignore」
+ * ＋「既有 60 個 wc3.* 沒一起搬 => move」），133 個 clip 現在住在
+ * `content/assets/audio/wc3/`，出處帳本是 `PROVENANCE.md`。
+ *
+ * ⚠️ **搬檔案的那一手沒有把這個閘一起拆掉**，於是這 49 支技能的原作施法音在
+ * 正式站上被 `fullAssetsEnabled()` 判成「拿不到」→ 靜靜退回通用音，
+ * 而檔案其實**就在那裡**（失敗形態②：算出來了但從沒送到玩家耳朵）。
+ * ⛔ 沒有任何測試會紅，因為每一半都是對的，只有它們的組合是空的。
+ *
+ * 現在只有**一個**宣告集合。守衛 `combatSfx.test.ts` 的
+ * 「每一個宣告的 cue 都由正式 bundle 供應」**讀 audio-map**（⛔ 不抄名單）：
+ * 哪天真的又有一個 clip 只在 overlay 裡，它會紅並要求把閘做回來。
+ */
+
+/**
  * The WC3 source-map cast voice for an ability cast, or null to fall through to
  * the element/generic route. Total on junk: only a declared cue key passes.
  *
- * `overlayEnabled` is injectable for tests; production callers take the default
- * — the fullAssets build switch that decides whether this bundle ever asks for
- * the Blizzard overlay (see {@link WC3_OVERLAY_ABILITY_SFX} for why a public
- * bundle must answer null rather than a key whose file is never served).
+ * ⭐ GH#402 之後**沒有 build 開關**：全部 52 個 cue 的檔案都由正式 bundle 供應
+ * （`content/assets/audio/{sfx,wc3}/`）。⛔ 曾經有一個 `overlayEnabled` 參數把其中
+ * 49 個擋在 `config/fullAssets` 後面，而檔案搬進版控之後它就變成「正式站靜音」
+ * 的唯一原因 —— 兩個名詞（宣告集合 × bundle 供不供應）之間的關係由
+ * `combatSfx.test.ts` **讀 audio-map** 守著，⛔ 不是再抄一份名單。
  */
-export function wc3CastKey(
-  sfxKey: unknown,
-  overlayEnabled: boolean = fullAssetsEnabled(),
-): string | null {
+export function wc3CastKey(sfxKey: unknown): string | null {
   if (typeof sfxKey !== "string") return null;
-  if (WC3_ABILITY_SFX.has(sfxKey)) return sfxKey;
-  if (overlayEnabled && WC3_OVERLAY_ABILITY_SFX.has(sfxKey)) return sfxKey;
-  return null;
+  return WC3_ABILITY_SFX.has(sfxKey) ? sfxKey : null;
 }
 
 /**
@@ -648,6 +643,18 @@ function combatSfxKeyUngated(ev: EventMessage, seatId: number | null, phase: str
     case "coinPickedUp":
       // …and the collector's own LOUD reward jingle, seat-gated (coinRewardKey).
       return coinRewardKey(ev, seatId);
+    // ⭐ GH#406 —— 交換筆記本（44-002）落地的那一刻。
+    //
+    // ⚠️ 它**借用**既有的 `buffApply` 剪輯，⛔ 不是新開一個 key，而理由是
+    // `sfxReachability` 的合約：這份登錄表的列必須與 `content/config/audio-map.json`
+    // 的 key 集合**完全相等**，所以一個新 key 等於一支新音檔 + 一列版權聲明 ——
+    // 那是內容側的工作，不是這條接線的。`buffApply`（增益/狀態提升）是既有剪輯裡
+    // 語意最近的一個：「一個非傷害的魔法效果剛剛落在某人身上」。
+    //
+    // ⛔ 刻意**不**用 `heal`：交換不是治療（sim/effects/swapResource.ts 檔頭），
+    // 而聲音跟浮動文字必須講同一件事。
+    case "resourceSwap":
+      return "buffApply";
     case "coinDropRejected":
       // The refusal rides the wire so the HUD can SAY why (P7), but it is a UI
       // beat, not a combat one: `ui/castFeedback` already owns the 拒絕 cue and

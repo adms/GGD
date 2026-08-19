@@ -1,5 +1,40 @@
 # blizzard-local — Blizzard-owned assets, NOT in git, openly served where mounted
 
+> **⛔ 這條規則被取消了一部分 —— 2026-08-19（GH#402），owner 親自裁決，分兩次。**
+>
+> > ①「請幫我**註記取消這個規則**，現在的線上已經是**雙重審查只給認識的親友玩了**，
+> >   請**直接上架但註記來源就好 不要ignore**」
+> >
+> > ②「**既有 60 個 wc3.* 沒一起搬 => move**」
+>
+> 底下那句「do not commit them, do not bake them into an image」對**一組指名的檔案
+> 不再適用**：**132 個原作技能／武器／特效音**已經搬進
+> [`content/assets/audio/wc3/`](../audio/wc3/PROVENANCE.md) ——
+> **進版控、正式站正常供應**，audio-map 的 key 是 `wc3.*`。
+>
+> ⚠️ **`ability-sfx/` 那 60 個已經不在這裡了。** 它們是裁決②搬走的那一批；
+> 底下「Where the files actually live」那張圖裡的 `ability-sfx/` 一列**已經過期**。
+> `wc3.*` 這些 key **名字一個字都沒改**，只有指到的路徑換了。
+>
+> ⭐ **授權是有條件的：「註記來源」。** 逐 clip 的來源封存檔 / 原始路徑 / sha256 記在
+> 同目錄的 `PROVENANCE.md` 與 `PROVENANCE.json`，而且那是一條**會紅的閘**
+> （`apps/client/src/render/views/blizzardOverlayGate.test.ts` 兩個方向都驗：
+> 有檔沒列 → 紅，有列沒檔 → 紅，sha256 對不上 → 紅）。
+>
+> ### ⛔ 豁免的界線 —— 放行的是**音效**，⛔ 不是這個目錄
+>
+> owner 兩次點名的都是**技能／武器／特效音效**。⛔ **角色語音台詞不在裡面。**
+>
+> | 還在 `data/blizzard-overlay/` | 數量 | 狀態 |
+> |---|---:|---|
+> | `sounds/` **角色語音台詞** | **511** | ⛔ 維持原狀（#10 / #81 的範圍） |
+> | `models/` 每單位 glb | 40 | ⛔ 維持原狀 |
+> | 地圖作者自己 import 的 mp3（`kind: imported`） | — | ⛔ 維持原狀（出處不明） |
+>
+> ⛔ **不要把「owner 開放了音效」讀成「owner 開放了 `data/blizzard-overlay/`」。**
+> 上表這些仍然是 git-ignored、不進映像、只靠 runtime mount，
+> 下面整份文件描述的就是**它們**，逐字有效。
+
 > **STATUS, 2026-07-26.** This file used to open with "COPYRIGHT GATE (LOCAL DEV
 > ONLY)" and to say the assets must never be deployed. **Both halves of that are
 > now out of date, and the honest statement is:**

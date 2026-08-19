@@ -86,10 +86,22 @@ export const swapResourceEffect: EffectKindSpec<"swapResource"> = {
        * ⚠️ `world.events` 是**每 tick 清空的呈現層記錄**（`SimWorld.ts` 檔內
        * 那段註解），⛔ 不進 digest ⇒ 既有 replay 逐位元不變。
        */
+      /**
+       * ⭐ GH#406 —— `fromCaster` / `fromTarget` 是**呈現層要的那一半**。
+       *
+       * `toCaster`/`toTarget` 是交換後的**新值**，而浮動文字畫的是**變化量**
+       * （血條本身已經在快照裡了，新值再說一次不會多告訴玩家任何事）。
+       * 舊值只有這裡知道 —— 下一 tick 的快照送出去時它已經被覆蓋掉了 ——
+       * 所以差值必須在這裡就把兩端都帶上，⛔ 不是讓客戶端自己記上一幀。
+       * ⚠️ `a`/`b` 是**這一輪迭代開始前**的讀數：`mine` 會被上一個目標改過，
+       * 所以多目標交換時每一則事件各自對得起自己那一次。
+       */
       world.emit("resourceSwap", {
         caster: ctx.caster,
         target: id,
         resource: isMana ? "mana" : "health",
+        fromCaster: a,
+        fromTarget: b,
         toCaster: toMe,
         toTarget: toThem,
       });

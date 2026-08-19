@@ -18,6 +18,7 @@ import type { ProjectileDoc } from "./schema/projectile";
 import type { LootTableDoc } from "./schema/lootTable";
 import type { SkinDoc } from "./schema/skin";
 import type { AnyConfigDoc } from "./schema/config";
+import type { VfxDoc, RibbonDoc, AttachmentDoc } from "./schema/vfx";
 
 export interface RefEdge {
   /** dot path of the referencing field inside the doc */
@@ -151,6 +152,13 @@ export const REFERENCES: Partial<Record<CollectionName, (doc: never) => RefEdge[
     { field: "championId", targetCollection: "champions", targetId: doc.championId },
     { field: "modelKey", targetCollection: "models", targetId: doc.modelKey },
   ],
+  // GH#392 —— `attachment@1` 穿的那個模型是 **HARD** ref。理由和 champions.modelKey
+  // 同一條：打錯一個字 = 那顆球體**永遠載不到**，而畫面上跟「這隻本來就沒有掛件」
+  // 長得一模一樣（失敗形態 ②）。vfx@1 / ribbon@1 沒有跨集合參照。
+  vfx: (doc: VfxDoc | RibbonDoc | AttachmentDoc): RefEdge[] =>
+    doc.schema === "attachment@1"
+      ? [{ field: "modelKey", targetCollection: "models", targetId: doc.modelKey }]
+      : [],
   // config docs are mostly parameter tables; only the w3x tint ledger names
   // other documents, and its champion ids must resolve (task #49).
   config: (doc: AnyConfigDoc): RefEdge[] => {

@@ -176,7 +176,7 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     cover(TAG);
     // ⚠️ 改這幾個數字是一個**決定**，不是順手。加一列的人必須在這裡留下痕跡，
     // 而 code review 看得到這一行的 diff。
-    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(24);
+    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(25);
     // 2026-08-17：13 → 14。`roster`（英雄上下架）**往下走了一格** —— 它從
     // KNOWN_GAP 變成 OWN_PAGE，因為 ui/RosterPage.tsx 做出來了。⚠️ 這是這張表
     // 唯一「健康」的移動方向：帳單被付掉，而總列數不變。
@@ -199,8 +199,13 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // 2026-08-13：3 → 4。per-level-bonus 的 `perLevel` 是 `z.record`（鍵不固定），
     // 通用引擎走不動 —— 它列不出「有哪些鍵」，畫出來會是一頁空的。這是引擎的
     // 缺口不是這份文件的特權，⛔ 所以它記在帳單裡而不是 NOT_TUNABLE。
+    // 2026-08-19：4 → 5。vfx-ability-art 是 GH#384 把 617 筆逐技能特效綁定從
+    // TypeScript 常數表搬進 content/ 之後**新出現**的一份 —— 它的 `bindings` 是
+    // `z.record`（鍵是技能 doc id），底下還有三個形狀不同的子物件，同樣是引擎的
+    // record 缺口。⛔ 它不是 DEFERRED：ContentDb 真的讀它。
     expect(byKind("KNOWN_GAP").map((e) => e.docId)).toEqual([
       "per-level-bonus",
+      "vfx-ability-art",
       "audio-map",
       "origin-routes",
     ]);

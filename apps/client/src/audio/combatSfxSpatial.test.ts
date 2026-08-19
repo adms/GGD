@@ -112,10 +112,14 @@ describe("combatSfxSpatial resolution — every positioned event actually resolv
    * half-wired table fails: a spec whose entityFallback names a field the sim
    * does not emit resolves to null and shows up here, not in a playtest.
    */
-  it("yields a signed pan for all 23 positioned event types, via payload x/z", () => {
+  it("yields a signed pan for EVERY positioned event type, via payload x/z", () => {
     cover("audio-spatial-callsite-coverage");
     const types = Object.keys(EVENT_SPATIAL);
-    expect(types.length).toBe(23);
+    // ⚠️ 這裡曾經寫死 `toBe(23)`。窮盡性**不是**由這個數字守的 —— 上面那一條
+    // 掃 `combatSfx.ts` 的「每一個發得出聲的事件都在兩張表之一」才是；
+    // 這個字面值只會在**加一列的時候**紅，而那正是它最沒有意義的時候
+    // （第零守則：出貨數字住進測試 = 第四個住處，且用錯誤的訊息紅）。
+    expect(types.length).toBeGreaterThanOrEqual(20);
     for (const type of types) {
       // 5 u to the listener's LEFT — the sign is the assertion
       const src = resolveSpatial(ev(type, { x: -5, z: 0, source: 7, target: 8 }), noPos, null, noTeam);

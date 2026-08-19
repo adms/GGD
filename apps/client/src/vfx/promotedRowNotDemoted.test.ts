@@ -8,10 +8,10 @@
  *
  *   rung 0  `vfxLayers`(#205)   → `playLayeredCast` → 池化 `play()`,每份文件
  *                                  被 `frontLoadDoc` 壓成**一次爆發**
- *   rung 1  `W3X_ABILITY_ART`    → `W3xEmitterRig`,播的是文件**作者寫的發射流**
+ *   rung 1  `w3xAbilityArtRows()`    → `W3xEmitterRig`,播的是文件**作者寫的發射流**
  *
  * rung 0 **蓋過** rung 1(那是 S1 刻意的:doc 寫了層堆疊就是作者的完整陳述)。
- * 所以對 `W3X_ABILITY_ART` 那 34 支硬表技能來說,「順手補一列 `vfxLayers`」
+ * 所以對 `w3xAbilityArtRows()` 那 34 支硬表技能來說,「順手補一列 `vfxLayers`」
  * 是一次**看不見的降級** —— 畫面上還是有東西,測試也不會紅,只是原本的發射流
  * 被壓成單幀爆發。這正是第③號故障的形狀(功能被撤銷,測試全綠)。
  *
@@ -27,6 +27,8 @@
  * (`if (layers && layers.length > 0)`)刪掉 → 「加層之後 rig 不再接手」紅。
  */
 import { describe, it, expect, beforeAll, afterAll, vi } from "vitest";
+// GH#384 —— 逐技能特效綁定住在 content/；⛔ 少了這一行從 repo 根跑單檔會看到空的綁定。
+import "../render/vfx/shippedAbilityArt.testkit";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
@@ -40,7 +42,7 @@ import { Abilities } from "@ggd/shared/sim/content/registry";
 import type { AbilityId } from "@ggd/shared/ids";
 import type { VfxDoc } from "@ggd/shared/content";
 import { zAbilityDoc } from "@ggd/shared/content/schema/ability";
-import { W3X_ABILITY_ART, extraVfxDocIds } from "../render/vfx/w3xAbilityArt";
+import { w3xAbilityArtRows, extraVfxDocIds } from "../render/vfx/w3xAbilityArt";
 import { VfxSystem, type VfxContext } from "./VfxSystem";
 
 const root = (p: string): string => fileURLToPath(new URL(`../../../../${p}`, import.meta.url));
@@ -72,7 +74,7 @@ beforeAll(() => {
   const shipped = readJson<Record<string, unknown>>(`content/abilities/${PROMOTED}.json`);
   asShipped = parseAs(shipped);
   // 「順手補一列」的樣子:同一支技能,把硬表那一組發射器原封不動寫成層。
-  const art = W3X_ABILITY_ART[PROMOTED]!;
+  const art = w3xAbilityArtRows()[PROMOTED]!;
   withLayers = parseAs({
     ...shipped,
     vfxLayers: [art.primary, ...extraVfxDocIds(PROMOTED)].slice(0, 5).map((vfxKey) => ({ vfxKey })),
@@ -108,11 +110,11 @@ function fire(def: unknown): { rigEffects: number; pooled: number } {
 
 describe("B6 · rung 0 會把已晉升的技能踢出 rig", () => {
   it("前提:godie-u010.r 真的在硬表上,而且出貨文件沒有 vfxLayers", () => {
-    expect(W3X_ABILITY_ART[PROMOTED]).toBeDefined();
+    expect(w3xAbilityArtRows()[PROMOTED]).toBeDefined();
     const shipped = readJson<Record<string, unknown>>(`content/abilities/${PROMOTED}.json`);
     expect(shipped["vfxLayers"]).toBeUndefined();
     // 硬表宣稱的那一組文件真的都在 content/ 裡,否則下面量到的 0 是別的原因。
-    for (const id of [W3X_ABILITY_ART[PROMOTED]!.primary, ...extraVfxDocIds(PROMOTED)]) {
+    for (const id of [w3xAbilityArtRows()[PROMOTED]!.primary, ...extraVfxDocIds(PROMOTED)]) {
       expect(() => loadVfx(id)).not.toThrow();
     }
   });

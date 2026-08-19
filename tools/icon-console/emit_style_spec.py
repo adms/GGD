@@ -22,12 +22,32 @@ publishing stale art direction.
 
 AND THE STALENESS IS DETECTABLE FROM THE PAGE
 ---------------------------------------------
-This is still a snapshot, so it records `sources[]`: the sha256, size and mtime
-of every file it derived from. The console fetches that alongside a LIVE digest
+This is still a snapshot, so it records `sources[]`: the sha256 and size of
+every file it derived from. The console fetches that alongside a LIVE digest
 of the same files (the dev server recomputes it per request — see
 apps/client/dev/iconConsoleStamp.ts) and shows a loud STALE banner naming the
 exact command to rerun when they disagree. A number the user cannot re-check is
 worth nothing; a number that hides its own staleness is worse than none.
+
+⛔ NO CLOCK IN THE PUBLISHED SNAPSHOT (GH#395 / the GH#389 precedent)
+--------------------------------------------------------------------
+This file used to stamp `generatedAt`, and every `sources[]` row used to carry
+an `mtime`. Both are gone, and the reason is that this artefact HAS a `--check`:
+
+  · `generatedAt` forced `--check` to be RELAXED ("compare everything else"),
+    and a relaxed gate is not a gate — field order, indentation, even a
+    hand-edited digest all walked straight through it. It is now a WHOLE-OBJECT
+    comparison, so nothing can.
+  · `mtime` was worse than useless: it is never read by any verdict
+    (`assetConsole.compareFreshness` decides drift on sha256 ALONE) while
+    `git checkout` / a deploy rewrites every mtime without changing a byte —
+    so it made `--check` report STALE about a file that had not changed, and
+    made the checked-in artefact dirty on every clone.
+
+⭐ The snapshot's identity comes from its INPUTS: `contentDigest` plus the
+per-source sha256. That is what the page shows and what `--check` compares.
+「這份快照是什麼時候產的」 was never the question anyone had — 「它還準不準」 was,
+and only the digests answer that.
 
 OWNERSHIP: this reads #72's files and writes ONLY
 `content/assets/icon-console/style-spec.json`. It does not modify anything under
@@ -46,7 +66,6 @@ import hashlib
 import json
 import os
 import sys
-from datetime import datetime, timezone
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
@@ -80,14 +99,11 @@ def digest_file(rel: str) -> dict:
     path = os.path.join(ROOT, rel)
     with open(path, "rb") as fh:
         raw = fh.read()
-    st = os.stat(path)
+    # ⛔ 沒有 mtime（GH#395）—— 見檔頭「NO CLOCK IN THE PUBLISHED SNAPSHOT」。
     return {
         "path": rel,
         "sha256": hashlib.sha256(raw).hexdigest(),
         "bytes": len(raw),
-        "mtime": datetime.fromtimestamp(st.st_mtime, timezone.utc)
-        .isoformat(timespec="seconds")
-        .replace("+00:00", "Z"),
     }
 
 
@@ -323,9 +339,7 @@ def build_spec() -> dict:
 
     return {
         "schema": SPEC_VERSION,
-        "generatedAt": datetime.now(timezone.utc)
-        .isoformat(timespec="seconds")
-        .replace("+00:00", "Z"),
+        # ⛔ 沒有 generatedAt（GH#395）—— 見檔頭。身分由 contentDigest + sources[].sha256 給。
         "generatedBy": "tools/icon-console/emit_style_spec.py",
         # Ties this snapshot to the plan it was derived from. The console
         # re-fetches icon-plan.json live and warns if the digests diverge.
@@ -407,10 +421,11 @@ def main() -> None:
         except Exception:
             print("style-spec.json missing or unreadable — rerun without --check")
             sys.exit(1)
-        # generatedAt always differs; compare everything else.
-        a = {k: v for k, v in current.items() if k != "generatedAt"}
-        b = {k: v for k, v in spec.items() if k != "generatedAt"}
-        if a != b:
+        # ⭐ GH#395 —— **整個物件**比對，⛔ 不再豁免任何欄位。這條以前寫著
+        # 「generatedAt always differs; compare everything else」，而那個豁免
+        # 就是這個閘的洞：被豁免掉的不只是那格時間，是「已發布的那一份與新產的
+        # 那一份逐欄相等」這句話本身。
+        if current != spec:
             print("style-spec.json is STALE — rerun: python3 tools/icon-console/emit_style_spec.py")
             sys.exit(1)
         print("style-spec.json is current")
@@ -426,7 +441,7 @@ def main() -> None:
     print(f"  template   {spec['templateVersion']}  content digest {spec['contentDigest']}")
     print(f"  sheet      {found}/{SHEET_SIZE} slots resolved to a real document")
     for s in spec["sources"]:
-        print(f"  source     {s['path']}  {s['sha256'][:12]}  {s['mtime']}")
+        print(f"  source     {s['path']}  {s['sha256'][:12]}  {s['bytes']}B")
 
 
 if __name__ == "__main__":

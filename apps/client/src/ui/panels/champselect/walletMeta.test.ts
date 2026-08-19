@@ -17,7 +17,7 @@ import {
   rosterDisplayAndSelectable,
   selectableByOwnership,
   selectableIdsByOwnership,
-  sortFavouritesFirst,
+  sortRosterByAccess,
   type MetaData,
   type MetaWallet,
   type WalletMetaDeps,
@@ -48,21 +48,59 @@ describe("champ-select meta: favourite sort (meta-client-favourite-sort)", () =>
 
   it("floats favourited champions to the top, preserving relative order", () => {
     cover("meta-client-favourite-sort");
-    const out = sortFavouritesFirst(roster, new Set(["vex", "sela"]));
+    const out = sortRosterByAccess(roster, new Set(["vex", "sela"]), null);
     // favourites first in their ORIGINAL order (sela before vex), then the rest
     expect(out.map((c) => c.id)).toEqual(["sela", "vex", "thorne", "kai"]);
   });
 
   it("is a no-op ordering when nothing is favourited", () => {
     cover("meta-client-favourite-sort");
-    expect(sortFavouritesFirst(roster, new Set()).map((c) => c.id)).toEqual(["sela", "thorne", "vex", "kai"]);
+    expect(sortRosterByAccess(roster, new Set(), null).map((c) => c.id)).toEqual([
+      "sela",
+      "thorne",
+      "vex",
+      "kai",
+    ]);
   });
 
   it("does not mutate the input list", () => {
     cover("meta-client-favourite-sort");
     const input = [...roster];
-    sortFavouritesFirst(input, new Set(["kai"]));
+    sortRosterByAccess(input, new Set(["kai"]), null);
     expect(input.map((c) => c.id)).toEqual(["sela", "thorne", "vex", "kai"]);
+  });
+});
+
+describe("champ-select 排序：解鎖的排最上排 (GH#413)", () => {
+  // 鎖住的是 thorne 與 kai；解鎖的是 sela 與 vex，其中 vex 被喜愛。
+  const roster = [{ id: "sela" }, { id: "thorne" }, { id: "vex" }, { id: "kai" }];
+  const unlocked = new Set(["sela", "vex"]);
+
+  it("喜愛且已解鎖 → 已解鎖 → 鎖住的（鎖住的維持原順序）", () => {
+    cover("meta-client-favourite-sort");
+    const out = sortRosterByAccess(roster, new Set(["vex"]), unlocked).map((c) => c.id);
+    expect(out).toEqual(["vex", "sela", "thorne", "kai"]);
+    // 承重的那一句，⛔ 不是上面那個字面陣列：**每一個**已解鎖的都排在
+    // **每一個**鎖住的前面。桶子的定義改壞（例如把 `!has` 寫成 `has`）這裡就紅。
+    const lastUnlocked = out.reduce((acc, id, i) => (unlocked.has(id) ? i : acc), -1);
+    const firstLocked = out.findIndex((id) => !unlocked.has(id));
+    expect(lastUnlocked).toBeLessThan(firstLocked);
+  });
+
+  it("⛔ 排序不改變誰選得到 —— 鎖住的仍然在名單裡，只是排在後面 (#201 不被抵銷)", () => {
+    cover("meta-client-favourite-sort");
+    const out = sortRosterByAccess(roster, new Set(["vex"]), unlocked);
+    expect(out.map((c) => c.id).sort()).toEqual(["kai", "sela", "thorne", "vex"]);
+  });
+
+  it("⚠️ 喜愛但**鎖住**的不上浮 —— 它選不了，浮上去只會把選得到的擠下去", () => {
+    cover("meta-client-favourite-sort");
+    expect(sortRosterByAccess(roster, new Set(["kai"]), unlocked).map((c) => c.id)).toEqual([
+      "sela",
+      "vex",
+      "thorne",
+      "kai",
+    ]);
   });
 });
 

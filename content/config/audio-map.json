@@ -285,7 +285,7 @@
     },
     "wc3.akamapissed8": {
       "files": [
-        "assets/blizzard-local/ability-sfx/akamapissed8.wav"
+        "assets/audio/wc3/akamapissed8.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -293,7 +293,7 @@
     },
     "wc3.altarofelderswhat1": {
       "files": [
-        "assets/blizzard-local/ability-sfx/altarofelderswhat1.wav"
+        "assets/audio/wc3/altarofelderswhat1.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -301,7 +301,7 @@
     },
     "wc3.axemissilelaunch1": {
       "files": [
-        "assets/blizzard-local/ability-sfx/axemissilelaunch1.wav"
+        "assets/audio/wc3/axemissilelaunch1.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -309,7 +309,7 @@
     },
     "wc3.chickenwhat1": {
       "files": [
-        "assets/blizzard-local/ability-sfx/chickenwhat1.wav"
+        "assets/audio/wc3/chickenwhat1.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -317,7 +317,7 @@
     },
     "wc3.darksummoninglaunch1": {
       "files": [
-        "assets/blizzard-local/ability-sfx/darksummoninglaunch1.wav"
+        "assets/audio/wc3/darksummoninglaunch1.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -325,7 +325,7 @@
     },
     "wc3.defendcaster": {
       "files": [
-        "assets/blizzard-local/ability-sfx/defendcaster.wav"
+        "assets/audio/wc3/defendcaster.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -333,7 +333,7 @@
     },
     "wc3.demonhuntermissilehit3": {
       "files": [
-        "assets/blizzard-local/ability-sfx/demonhuntermissilehit3.wav"
+        "assets/audio/wc3/demonhuntermissilehit3.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -341,7 +341,7 @@
     },
     "wc3.dragonroostwhat1": {
       "files": [
-        "assets/blizzard-local/ability-sfx/dragonroostwhat1.wav"
+        "assets/audio/wc3/dragonroostwhat1.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -349,7 +349,7 @@
     },
     "wc3.dragonyes2": {
       "files": [
-        "assets/blizzard-local/ability-sfx/dragonyes2.wav"
+        "assets/audio/wc3/dragonyes2.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -357,7 +357,7 @@
     },
     "wc3.druidofthetalonmissilelaunch2": {
       "files": [
-        "assets/blizzard-local/ability-sfx/druidofthetalonmissilelaunch2.wav"
+        "assets/audio/wc3/druidofthetalonmissilelaunch2.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -365,7 +365,7 @@
     },
     "wc3.eggsackdeath1": {
       "files": [
-        "assets/blizzard-local/ability-sfx/eggsackdeath1.wav"
+        "assets/audio/wc3/eggsackdeath1.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -373,7 +373,7 @@
     },
     "wc3.flaretarget2": {
       "files": [
-        "assets/blizzard-local/ability-sfx/flaretarget2.wav"
+        "assets/audio/wc3/flaretarget2.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -381,7 +381,7 @@
     },
     "wc3.flaretarget3": {
       "files": [
-        "assets/blizzard-local/ability-sfx/flaretarget3.wav"
+        "assets/audio/wc3/flaretarget3.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -389,7 +389,7 @@
     },
     "wc3.gluescreenmeteorhit1": {
       "files": [
-        "assets/blizzard-local/ability-sfx/gluescreenmeteorhit1.wav"
+        "assets/audio/wc3/gluescreenmeteorhit1.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -397,7 +397,7 @@
     },
     "wc3.gruntpissed3": {
       "files": [
-        "assets/blizzard-local/ability-sfx/gruntpissed3.wav"
+        "assets/audio/wc3/gruntpissed3.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -405,7 +405,7 @@
     },
     "wc3.gruntyesattack1": {
       "files": [
-        "assets/blizzard-local/ability-sfx/gruntyesattack1.wav"
+        "assets/audio/wc3/gruntyesattack1.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -413,7 +413,7 @@
     },
     "wc3.gruntyesattack3": {
       "files": [
-        "assets/blizzard-local/ability-sfx/gruntyesattack3.wav"
+        "assets/audio/wc3/gruntyesattack3.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -421,7 +421,7 @@
     },
     "wc3.hcancelbuilding": {
       "files": [
-        "assets/blizzard-local/ability-sfx/hcancelbuilding.wav"
+        "assets/audio/wc3/hcancelbuilding.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -429,7 +429,7 @@
     },
     "wc3.headhunteryes4": {
       "files": [
-        "assets/blizzard-local/ability-sfx/headhunteryes4.wav"
+        "assets/audio/wc3/headhunteryes4.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -437,7 +437,7 @@
     },
     "wc3.kaelyesattack3": {
       "files": [
-        "assets/blizzard-local/ability-sfx/kaelyesattack3.wav"
+        "assets/audio/wc3/kaelyesattack3.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -445,7 +445,7 @@
     },
     "wc3.markofchaos": {
       "files": [
-        "assets/blizzard-local/ability-sfx/markofchaos.wav"
+        "assets/audio/wc3/markofchaos.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -453,7 +453,7 @@
     },
     "wc3.mercenarywhat1": {
       "files": [
-        "assets/blizzard-local/ability-sfx/mercenarywhat1.wav"
+        "assets/audio/wc3/mercenarywhat1.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -461,7 +461,7 @@
     },
     "wc3.mortarimpact": {
       "files": [
-        "assets/blizzard-local/ability-sfx/mortarimpact.wav"
+        "assets/audio/wc3/mortarimpact.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -469,7 +469,7 @@
     },
     "wc3.mortarteampissed9": {
       "files": [
-        "assets/blizzard-local/ability-sfx/mortarteampissed9.wav"
+        "assets/audio/wc3/mortarteampissed9.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -477,7 +477,7 @@
     },
     "wc3.nazgrelyes2": {
       "files": [
-        "assets/blizzard-local/ability-sfx/nazgrelyes2.wav"
+        "assets/audio/wc3/nazgrelyes2.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -485,7 +485,7 @@
     },
     "wc3.necropolisupgrade2": {
       "files": [
-        "assets/blizzard-local/ability-sfx/necropolisupgrade2.wav"
+        "assets/audio/wc3/necropolisupgrade2.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -493,7 +493,7 @@
     },
     "wc3.pandarenbrewmasterpissed8": {
       "files": [
-        "assets/blizzard-local/ability-sfx/pandarenbrewmasterpissed8.wav"
+        "assets/audio/wc3/pandarenbrewmasterpissed8.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -501,7 +501,7 @@
     },
     "wc3.pandarenbrewmasterwarcry1": {
       "files": [
-        "assets/blizzard-local/ability-sfx/pandarenbrewmasterwarcry1.wav"
+        "assets/audio/wc3/pandarenbrewmasterwarcry1.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -509,7 +509,7 @@
     },
     "wc3.pandarenbrewmasteryes1": {
       "files": [
-        "assets/blizzard-local/ability-sfx/pandarenbrewmasteryes1.wav"
+        "assets/audio/wc3/pandarenbrewmasteryes1.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -517,7 +517,7 @@
     },
     "wc3.parasite": {
       "files": [
-        "assets/blizzard-local/ability-sfx/parasite.wav"
+        "assets/audio/wc3/parasite.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -525,7 +525,7 @@
     },
     "wc3.peasantpissed3": {
       "files": [
-        "assets/blizzard-local/ability-sfx/peasantpissed3.wav"
+        "assets/audio/wc3/peasantpissed3.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -533,7 +533,7 @@
     },
     "wc3.peondeath": {
       "files": [
-        "assets/blizzard-local/ability-sfx/peondeath.wav"
+        "assets/audio/wc3/peondeath.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -541,7 +541,7 @@
     },
     "wc3.rokhanwhat2": {
       "files": [
-        "assets/blizzard-local/ability-sfx/rokhanwhat2.wav"
+        "assets/audio/wc3/rokhanwhat2.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -549,7 +549,7 @@
     },
     "wc3.sealwhat2": {
       "files": [
-        "assets/blizzard-local/ability-sfx/sealwhat2.wav"
+        "assets/audio/wc3/sealwhat2.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -557,7 +557,7 @@
     },
     "wc3.shadowhunterready1": {
       "files": [
-        "assets/blizzard-local/ability-sfx/shadowhunterready1.wav"
+        "assets/audio/wc3/shadowhunterready1.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -565,7 +565,7 @@
     },
     "wc3.shamanready1": {
       "files": [
-        "assets/blizzard-local/ability-sfx/shamanready1.wav"
+        "assets/audio/wc3/shamanready1.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -573,7 +573,7 @@
     },
     "wc3.snapdragonmissilelaunch1": {
       "files": [
-        "assets/blizzard-local/ability-sfx/snapdragonmissilelaunch1.wav"
+        "assets/audio/wc3/snapdragonmissilelaunch1.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -581,7 +581,7 @@
     },
     "wc3.soulgem": {
       "files": [
-        "assets/blizzard-local/ability-sfx/soulgem.wav"
+        "assets/audio/wc3/soulgem.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -589,7 +589,7 @@
     },
     "wc3.soulpreservation": {
       "files": [
-        "assets/blizzard-local/ability-sfx/soulpreservation.wav"
+        "assets/audio/wc3/soulpreservation.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -597,7 +597,7 @@
     },
     "wc3.spellbreakerpissed4": {
       "files": [
-        "assets/blizzard-local/ability-sfx/spellbreakerpissed4.wav"
+        "assets/audio/wc3/spellbreakerpissed4.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -605,7 +605,7 @@
     },
     "wc3.spiritofvengeanceyes3": {
       "files": [
-        "assets/blizzard-local/ability-sfx/spiritofvengeanceyes3.wav"
+        "assets/audio/wc3/spiritofvengeanceyes3.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -613,7 +613,7 @@
     },
     "wc3.stampedecaster1": {
       "files": [
-        "assets/blizzard-local/ability-sfx/stampedecaster1.wav"
+        "assets/audio/wc3/stampedecaster1.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -621,7 +621,7 @@
     },
     "wc3.taunt": {
       "files": [
-        "assets/blizzard-local/ability-sfx/taunt.wav"
+        "assets/audio/wc3/taunt.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -629,7 +629,7 @@
     },
     "wc3.thunderboltmissiledeath": {
       "files": [
-        "assets/blizzard-local/ability-sfx/thunderboltmissiledeath.wav"
+        "assets/audio/wc3/thunderboltmissiledeath.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -637,7 +637,7 @@
     },
     "wc3.thunderclapcaster": {
       "files": [
-        "assets/blizzard-local/ability-sfx/thunderclapcaster.wav"
+        "assets/audio/wc3/thunderclapcaster.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -645,7 +645,7 @@
     },
     "wc3.treantready1": {
       "files": [
-        "assets/blizzard-local/ability-sfx/treantready1.wav"
+        "assets/audio/wc3/treantready1.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -653,7 +653,7 @@
     },
     "wc3.trollbatriderpissed2": {
       "files": [
-        "assets/blizzard-local/ability-sfx/trollbatriderpissed2.wav"
+        "assets/audio/wc3/trollbatriderpissed2.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -661,7 +661,7 @@
     },
     "wc3.trollwoodworkswhat1": {
       "files": [
-        "assets/blizzard-local/ability-sfx/trollwoodworkswhat1.wav"
+        "assets/audio/wc3/trollwoodworkswhat1.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -669,7 +669,7 @@
     },
     "wc3.waygatewhat1": {
       "files": [
-        "assets/blizzard-local/ability-sfx/waygatewhat1.wav"
+        "assets/audio/wc3/waygatewhat1.wav"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -1259,6 +1259,670 @@
       ],
       "gain": 0.95,
       "cooldownMs": 4000,
+      "maxConcurrent": 1
+    },
+    "wc3.ancestralspirit": {
+      "files": [
+        "assets/audio/wc3/ancestralspirit.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.archerdeath1": {
+      "files": [
+        "assets/audio/wc3/archerdeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.banditdeath1": {
+      "files": [
+        "assets/audio/wc3/banditdeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.blademasterwhirlwind": {
+      "files": [
+        "assets/audio/wc3/blademasterwhirlwind.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.blinkbirth1": {
+      "files": [
+        "assets/audio/wc3/blinkbirth1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.bloodelfsorcerordeath": {
+      "files": [
+        "assets/audio/wc3/bloodelfsorcerordeath.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.bloodlusttarget": {
+      "files": [
+        "assets/audio/wc3/bloodlusttarget.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.brewmasterdeath1": {
+      "files": [
+        "assets/audio/wc3/brewmasterdeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.buildingdeathlargehuman": {
+      "files": [
+        "assets/audio/wc3/buildingdeathlargehuman.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.catapultmissile1": {
+      "files": [
+        "assets/audio/wc3/catapultmissile1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.catapultmissile2": {
+      "files": [
+        "assets/audio/wc3/catapultmissile2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.catapultmissile3": {
+      "files": [
+        "assets/audio/wc3/catapultmissile3.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.catapultmissile4": {
+      "files": [
+        "assets/audio/wc3/catapultmissile4.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.coldarrow1": {
+      "files": [
+        "assets/audio/wc3/coldarrow1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.coldarrow2": {
+      "files": [
+        "assets/audio/wc3/coldarrow2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.coldarrow3": {
+      "files": [
+        "assets/audio/wc3/coldarrow3.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.criticalstrike": {
+      "files": [
+        "assets/audio/wc3/criticalstrike.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.crushingwavecaster1": {
+      "files": [
+        "assets/audio/wc3/crushingwavecaster1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.deathcoilmissilelaunch1": {
+      "files": [
+        "assets/audio/wc3/deathcoilmissilelaunch1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.dispelmagictarget": {
+      "files": [
+        "assets/audio/wc3/dispelmagictarget.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.fanofknives": {
+      "files": [
+        "assets/audio/wc3/fanofknives.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.farmwhat1": {
+      "files": [
+        "assets/audio/wc3/farmwhat1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.farseermissile": {
+      "files": [
+        "assets/audio/wc3/farseermissile.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.feralspirittarget1": {
+      "files": [
+        "assets/audio/wc3/feralspirittarget1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.fireballmissilelaunch1": {
+      "files": [
+        "assets/audio/wc3/fireballmissilelaunch1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.fireballmissilelaunch2": {
+      "files": [
+        "assets/audio/wc3/fireballmissilelaunch2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.fireballmissilelaunch3": {
+      "files": [
+        "assets/audio/wc3/fireballmissilelaunch3.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.flamestrikebirth1": {
+      "files": [
+        "assets/audio/wc3/flamestrikebirth1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.flaretarget1": {
+      "files": [
+        "assets/audio/wc3/flaretarget1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.flashback1second": {
+      "files": [
+        "assets/audio/wc3/flashback1second.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.footmandeath": {
+      "files": [
+        "assets/audio/wc3/footmandeath.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.fountainoflifewhat1": {
+      "files": [
+        "assets/audio/wc3/fountainoflifewhat1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.furbolgdeath1": {
+      "files": [
+        "assets/audio/wc3/furbolgdeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.gluescreenmeteorhit2": {
+      "files": [
+        "assets/audio/wc3/gluescreenmeteorhit2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.gruntwhat2": {
+      "files": [
+        "assets/audio/wc3/gruntwhat2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.healtarget": {
+      "files": [
+        "assets/audio/wc3/healtarget.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.heroblademasterattack1": {
+      "files": [
+        "assets/audio/wc3/heroblademasterattack1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.heroblademasterattack2": {
+      "files": [
+        "assets/audio/wc3/heroblademasterattack2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.heroblademasterdeath": {
+      "files": [
+        "assets/audio/wc3/heroblademasterdeath.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.herodeathknightattack1": {
+      "files": [
+        "assets/audio/wc3/herodeathknightattack1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.herodeathknightdeath": {
+      "files": [
+        "assets/audio/wc3/herodeathknightdeath.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.herodemonhunterdeath1": {
+      "files": [
+        "assets/audio/wc3/herodemonhunterdeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.heropaladindeath": {
+      "files": [
+        "assets/audio/wc3/heropaladindeath.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.holybolt": {
+      "files": [
+        "assets/audio/wc3/holybolt.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.humandissipate1": {
+      "files": [
+        "assets/audio/wc3/humandissipate1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.infernalbirth1": {
+      "files": [
+        "assets/audio/wc3/infernalbirth1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.invisibilitytarget": {
+      "files": [
+        "assets/audio/wc3/invisibilitytarget.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.irongolemattack1": {
+      "files": [
+        "assets/audio/wc3/irongolemattack1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.irongolemdeath1": {
+      "files": [
+        "assets/audio/wc3/irongolemdeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.jainaonfootdeath1": {
+      "files": [
+        "assets/audio/wc3/jainaonfootdeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.keeperofthegrovemissilehit1": {
+      "files": [
+        "assets/audio/wc3/keeperofthegrovemissilehit1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.keeperofthegrovemissilehit2": {
+      "files": [
+        "assets/audio/wc3/keeperofthegrovemissilehit2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.keeperofthegrovemissilehit3": {
+      "files": [
+        "assets/audio/wc3/keeperofthegrovemissilehit3.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.keeperofthegrovemissilelaunch1": {
+      "files": [
+        "assets/audio/wc3/keeperofthegrovemissilelaunch1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.keeperofthegrovemissilelaunch2": {
+      "files": [
+        "assets/audio/wc3/keeperofthegrovemissilelaunch2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.keeperofthegrovemissilelaunch3": {
+      "files": [
+        "assets/audio/wc3/keeperofthegrovemissilelaunch3.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.knightnoriderdeath1": {
+      "files": [
+        "assets/audio/wc3/knightnoriderdeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.meatwagonmissilehit1": {
+      "files": [
+        "assets/audio/wc3/meatwagonmissilehit1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.nagabuildingcancel": {
+      "files": [
+        "assets/audio/wc3/nagabuildingcancel.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.nightelfdissipate1": {
+      "files": [
+        "assets/audio/wc3/nightelfdissipate1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.orcdissipate1": {
+      "files": [
+        "assets/audio/wc3/orcdissipate1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.peasantdeath": {
+      "files": [
+        "assets/audio/wc3/peasantdeath.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.peonwhat2": {
+      "files": [
+        "assets/audio/wc3/peonwhat2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.priestdeath": {
+      "files": [
+        "assets/audio/wc3/priestdeath.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.reincarnation": {
+      "files": [
+        "assets/audio/wc3/reincarnation.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.shimmeringportaldeath": {
+      "files": [
+        "assets/audio/wc3/shimmeringportaldeath.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.shockwave": {
+      "files": [
+        "assets/audio/wc3/shockwave.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.stasistotem": {
+      "files": [
+        "assets/audio/wc3/stasistotem.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.step1": {
+      "files": [
+        "assets/audio/wc3/step1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.step2": {
+      "files": [
+        "assets/audio/wc3/step2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.step3": {
+      "files": [
+        "assets/audio/wc3/step3.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.step4": {
+      "files": [
+        "assets/audio/wc3/step4.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.succubusdeath1": {
+      "files": [
+        "assets/audio/wc3/succubusdeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.tuskarrdeath1": {
+      "files": [
+        "assets/audio/wc3/tuskarrdeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.undeaddissipate2": {
+      "files": [
+        "assets/audio/wc3/undeaddissipate2.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.villagerchilddeath1": {
+      "files": [
+        "assets/audio/wc3/villagerchilddeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.villagermaledeath1": {
+      "files": [
+        "assets/audio/wc3/villagermaledeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.wandofneutralization": {
+      "files": [
+        "assets/audio/wc3/wandofneutralization.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.wardenattackeffort1": {
+      "files": [
+        "assets/audio/wc3/wardenattackeffort1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.wardendeath1": {
+      "files": [
+        "assets/audio/wc3/wardendeath1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.warstomp": {
+      "files": [
+        "assets/audio/wc3/warstomp.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.waterelementalmissile3": {
+      "files": [
+        "assets/audio/wc3/waterelementalmissile3.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.witchdoctorcastattack1": {
+      "files": [
+        "assets/audio/wc3/witchdoctorcastattack1.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
       "maxConcurrent": 1
     }
   }

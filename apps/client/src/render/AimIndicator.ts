@@ -5,8 +5,9 @@
  *     hints) or a disc at the drag-projected point for ground casts.
  *   • HOLD-PREVIEW (task #152; touch finger-hold, desktop mouse-hold/HOVER, a
  *     held Q/W/E/R/F/D key, or a pad face button — GH#367): the 技能範圍指引.
- *     A cast-RANGE circle plus an AoE circle centred on the caster, so a player
- *     holding a button sees exactly how far it reaches and how big it lands.
+ *     A cast-RANGE circle centred on the CASTER plus an AoE circle centred on
+ *     WHERE THE SHOT LANDS (GH#415), so a player holding a button sees both how
+ *     far it reaches and where the blast will actually be.
  *
  * ⭐ THE HOLD-PREVIEW LOOK IS OWNER-SPECIFIED (GH#367, 2026-08-18):
  * > 「**特殊顏色框框 + 顏色半透明填滿**」
@@ -87,14 +88,25 @@ export class AimIndicator {
       this.disc.setEnabled(isDisc);
     }
 
-    // 技能範圍指引 (GH#367): filled + rimmed cast-range circle and AoE circle,
-    // both centred on the caster. `range`/`radius` arrive ALREADY scaled by the
-    // live combat-env `abilityRange` factor (GameApp.resolveHoldPreview, #125/#136)
-    // — ⛔ this class must never re-derive a reach of its own.
+    // 技能範圍指引 (GH#367): filled + rimmed cast-range circle and AoE circle.
+    // `range`/`radius` arrive ALREADY scaled by the live combat-env `abilityRange`
+    // factor (GameApp.resolveHoldPreview, #125/#136) — ⛔ this class must never
+    // re-derive a reach of its own.
+    //
+    // ⭐ GH#415 —— TWO CENTRES, not one:
+    //   · cast-RANGE circle → the CASTER (`x`/`z`). That circle answers「我能打多遠」.
+    //   · AoE circle        → THE LANDING POINT (`aoeX`/`aoeZ`, already clamped to
+    //     range by `resolveAoeCenter`). That circle answers「這一發會炸到哪」.
+    // ⛔ Painting the AoE at the caster (what this did until 2026-08-19) draws a
+    // circle in a place nothing will happen, and players position themselves by it.
     const guide = state?.kind === "range" ? state : null;
     const at = { x: guide?.x ?? 0, z: guide?.z ?? 0 };
     const rangeR = guide && guide.range > 0.1 ? guide.range : null;
-    const aoeR = guide && guide.radius !== null && guide.radius > 0.1 ? guide.radius : null;
+    // ⚠️ no landing point (skillshot corridor / no valid target) = NO AoE circle.
+    //    ⛔ Do not fall back to the caster — that is the exact lie being fixed.
+    const hasAoeAt = guide?.aoeX !== null && guide?.aoeX !== undefined && guide.aoeZ !== null;
+    const aoeR = guide && hasAoeAt && guide.radius !== null && guide.radius > 0.1 ? guide.radius : null;
+    const aoeAt = { x: guide?.aoeX ?? 0, z: guide?.aoeZ ?? 0 };
 
     this.paintCircle(this.rangeCircle, "aim-range", rangeR, at, {
       rgb: ABILITY_RANGE_GUIDE.rangeRgb,
@@ -102,7 +114,7 @@ export class AimIndicator {
       yFill: Y_RANGE_FILL,
       yRim: Y_RANGE_RIM,
     });
-    this.paintCircle(this.aoeCircle, "aim-aoe", aoeR, at, {
+    this.paintCircle(this.aoeCircle, "aim-aoe", aoeR, aoeAt, {
       rgb: ABILITY_RANGE_GUIDE.aoeRgb,
       fillAlpha: ABILITY_RANGE_GUIDE.aoeFillAlpha,
       yFill: Y_AOE_FILL,

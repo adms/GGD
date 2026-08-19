@@ -179,12 +179,21 @@ const COMBAT_SFX: readonly string[] = [
   // the AudioSystem dedupes buffers per file — so they ride combat for free.
   //
   // The stock-MPQ wave (combatSfx.WC3_OVERLAY_ABILITY_SFX, ~49 keys) is
-  // deliberately NOT here, for BOTH standing reasons at once: it IS the
-  // per-weapon rule for real (each clip is a fresh 22 kHz WAV only one or two
-  // champions ever fire — warming all ~6 MB on combat entry would re-inflate
-  // the exact boot cost #63 removed), and the files live in the dev-only
-  // assets/blizzard-local/ mount, so a public bundle warming them would fetch
-  // ~49 guaranteed 404s per session. They lazy-load on the first cast.
+  // deliberately NOT here. It used to be kept out for TWO reasons; GH#402
+  // (2026-08-19) killed the second one, and the first alone still decides it:
+  //
+  //   ✓ STILL TRUE — it IS the per-weapon rule for real: each clip is a fresh
+  //     22 kHz WAV only one or two champions ever fire, so warming all ~12 MB
+  //     on combat entry would re-inflate the exact boot cost #63 removed.
+  //   ✗ NO LONGER TRUE — "the files live in the dev-only assets/blizzard-local/
+  //     mount, so a public bundle would fetch ~49 guaranteed 404s". The owner
+  //     moved those bytes into content/assets/audio/wc3/ and they are committed
+  //     and prod-served now. A public bundle warming them would succeed — it
+  //     would just be wasting ~12 MB of bandwidth on clips most matches never
+  //     play, which is precisely what the first reason forbids.
+  //
+  // They lazy-load on the first cast, which is what makes the 12 MB a
+  // pay-per-use cost rather than a boot cost.
   "wc3.moongo",
   "wc3.moonjump",
   "wc3.nocute",

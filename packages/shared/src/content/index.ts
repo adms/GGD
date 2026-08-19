@@ -83,6 +83,8 @@ export {
   Models,
   VfxDefs,
   RibbonDefs,
+  // GH#392 —— attachment@1（穿在骨頭上的模型）的登錄表。
+  AttachmentDefs,
   StatusEffects,
   registerAll,
   auditAbilityMirrorDrift,
@@ -153,6 +155,13 @@ export {
   type FormVisual,
   type FormAttachment,
 } from "./championFormVisuals";
+// GH#392 —— 「穿在骨頭上的模型」。兩個來源（變身外觀表 / `attachment@1` 文件）
+// 折成一個型別，所以渲染層只有一條接線。(c) 播動畫就是在這裡長出來的。
+export {
+  wornFromAttachmentDoc,
+  wornFromFormAttachment,
+  type WornAttachment,
+} from "./wornAttachments";
 // 「變身前/後共用就好」 (owner 2026-07-26): a base and its alternate are ONE
 // character, so one generated voice pack serves both halves of a w3x form pair.
 export {

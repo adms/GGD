@@ -73,6 +73,12 @@ import {
   zRibbonDoc,
   zVfxAbilityFamilyBinding,
   zVfxFamilyTuning,
+  // GH#384 —— 逐技能特效綁定的三格（§13.7）。
+  zVfxPrimBinding,
+  zVfxFamilyBinding,
+  zVfxPromotedBinding,
+  // GH#392 —— 穿在骨頭上的模型（§13.8）。
+  zAttachmentDoc,
 } from "../../packages/shared/src/content/schema/vfx";
 import {
   zAbilityVfxLayer,
@@ -623,6 +629,26 @@ function scanContent(): Usage {
             bump(u.vfxSurface, `config.vfx-families@1.abilities[].${k}`, abilityId, collection, {
               [abilityId]: bind,
             });
+          }
+        }
+      }
+      // GH#384 —— 逐技能特效綁定（分類／證據／晉升）三格各自的用量。
+      // ⛔ 少了這一段，§13.7 每一列的「幾份文件在用」會整欄是 0，而
+      //「這一格沒有人用」與「我沒有去數」在那張表上長得一模一樣。
+      if (
+        doc["schema"] === "config.vfx-ability-art@1" &&
+        doc["bindings"] !== null &&
+        typeof doc["bindings"] === "object"
+      ) {
+        for (const [abilityId, row] of Object.entries(doc["bindings"] as Record<string, unknown>)) {
+          if (!row || typeof row !== "object") continue;
+          for (const [cell, body] of Object.entries(row as Record<string, unknown>)) {
+            if (!body || typeof body !== "object") continue;
+            for (const k of Object.keys(body as Record<string, unknown>)) {
+              bump(u.vfxSurface, `config.vfx-ability-art@1.bindings.${cell}.${k}`, abilityId, collection, {
+                [abilityId]: row,
+              });
+            }
           }
         }
       }
@@ -1191,6 +1217,22 @@ export function buildSpecMarkdown(): string {
       "export const zAbilityVfxLayer = z",
       "export type AbilityVfxLayer",
     );
+    // GH#384 —— 逐技能綁定那三格的 TSDoc（同一支抽取器，第三／四／五張表）。
+    const primBindDocs = tsdocFields(
+      "packages/shared/src/content/schema/vfx.ts",
+      "export const zVfxPrimBinding = z",
+      "export type VfxPrimBinding",
+    );
+    const famBindDocs = tsdocFields(
+      "packages/shared/src/content/schema/vfx.ts",
+      "export const zVfxFamilyBinding = z",
+      "export type VfxFamilyBinding",
+    );
+    const promoBindDocs = tsdocFields(
+      "packages/shared/src/content/schema/vfx.ts",
+      "export const zVfxPromotedBinding = z",
+      "export type VfxPromotedBinding",
+    );
 
     p("### 13.1 `vfx@1` —— 一份粒子模板");
     p();
@@ -1303,6 +1345,88 @@ export function buildSpecMarkdown(): string {
       ...exampleBlock(
         usage.vfxSurface.get("config.vfx-families@1.families[].soundLaunch"),
         "content/config/vfx-families.json → families",
+      ),
+    );
+
+    p("### 13.7 `config.vfx-ability-art@1.bindings` —— **哪一支技能畫哪一組特效**");
+    p();
+    p("⚠️ **這一整面在 2026-08-19 之前不在任何一份 JSON 裡**（GH#384）：617 筆");
+    p("「技能 id → 特效參數」住在 `apps/client/src/render/vfx/` 的三張 TypeScript");
+    p("常數表。⛔ 外部編輯器看不到 TypeScript，**而且不會知道自己漏了** ——");
+    p("它產得出效果、產得出粒子模板，卻永遠決定不了「這一招用哪一個」。");
+    p();
+    p("住在 `content/config/vfx-ability-art.json`，鍵是**技能 doc 的 id**（`godie-e001.q`）。");
+    p("一列有三格，⛔ 它們不是三選一而是三個層級 —— 解析順序是");
+    p("**晉升 > 家族證據 > 名字分類**，後台 `config.vfx-families@1.abilities[]`（13.5）再蓋在最上面：");
+    p();
+    p("| 授權位置 | 是什麼 | 誰有 |");
+    p("|---|---|---|");
+    p("| `config.vfx-ability-art@1.bindings.prim` | 讀技能中文名分出來的**元素 + 形狀**，`fx.prim.*` 的來源 | 每一支（基準線） |");
+    p("| `config.vfx-ability-art@1.bindings.family` | 原作**證明**的家族原型 + 那個呼叫點自己的數值 | 258 支 |");
+    p("| `config.vfx-ability-art@1.bindings.promoted` | 原作藝術真的出貨成 emitter 文件的那些，直接指名 doc | 34 支 |");
+    p();
+    p("⚠️ **ABSENT ≠ 1.0**：`scale` / `tint` / `flyHeight` 缺席的意思是「原作沒有為");
+    p("這個呼叫點寫過一個值」，⛔ 不是「原作寫了 1.0」—— 前者走家族預設，後者會把家族");
+    p("預設乘掉。`paramSource` 就是為了讓這個區別看得見才存在的（`ref` = 這個呼叫點自己");
+    p("寫的、`model` = 這個模型在全部引用裡只有唯一一個值）。");
+    p();
+    p("⭐ `family` 那一格是**推導出來的**，⛔ 不要手改：");
+    p("`pnpm exec tsx apps/client/src/render/vfx/generateAbilityArtContent.ts`");
+    p("從 `tools/w3x-import` 的兩份普查產物重新算，而 `w3xFamilyArt.test.ts` 逐欄比對。");
+    p("`prim` 與 `promoted` 沒有上游（一個是人讀名字分的、一個是人挑的），所以那兩格");
+    p("**這份 JSON 就是它們的家**，產生器逐位保留。");
+    p();
+    p(
+      ...fieldTableWithUsage(
+        withDocs(fieldsOf(zVfxPrimBinding), primBindDocs),
+        "config.vfx-ability-art@1.bindings.prim.",
+        usage.vfxSurface,
+      ),
+    );
+    p(
+      ...fieldTableWithUsage(
+        withDocs(fieldsOf(zVfxFamilyBinding), famBindDocs),
+        "config.vfx-ability-art@1.bindings.family.",
+        usage.vfxSurface,
+      ),
+    );
+    p(
+      ...fieldTableWithUsage(
+        withDocs(fieldsOf(zVfxPromotedBinding), promoBindDocs),
+        "config.vfx-ability-art@1.bindings.promoted.",
+        usage.vfxSurface,
+      ),
+    );
+    p(
+      ...exampleBlock(
+        usage.vfxSurface.get("config.vfx-ability-art@1.bindings.family.paramSource"),
+        "content/config/vfx-ability-art.json → bindings",
+      ),
+    );
+  }
+
+  // ── 13.8 骨頭掛件（GH#392）──────────────────────────────────────────
+  {
+    p("### 13.8 `attachment@1` —— **穿在骨頭上的模型**（WC3 的 `Asph` 球體）");
+    p();
+    p("⚠️ 這是 `content/vfx/` 的**第三種** schema（另外兩種是 `vfx@1` 粒子與 `ribbon@1` 緞帶），");
+    p("⛔ **它不走 `vfxLayers`** —— 那條路解析的是 `VfxDefs`，一個 `attachment@1` 的 id");
+    p("填進 `vfxLayers[].vfxKey` 執行期會被靜靜跳過。掛件綁在");
+    p("`config.ambient-vfx@1.bindings` 上，鍵是 **modelKey 或 championId**（形態感知 ——");
+    p("悟空兩態共用同一個 modelKey，只有 championId 分得出超三）。");
+    p();
+    p("⭐ 它比「附著」多做兩件事，而那兩件正是 2026-08-19 之前缺的：");
+    p("**跟隨**（`follow`，每幀跟著骨頭的世界矩陣走，⛔ 不是生成當下取一次座標）與");
+    p("**自己播動畫**（`anim`／`animLoop`）—— 後者缺席時，悟空的超三頭從上架起就是**定格**的。");
+    p();
+    p("⚠️ `points` 一格掛一份拷貝（= WC3 的 `atac`），所以「雙手各一顆球」是");
+    p("`points: [\"left,hand\", \"right,hand\"]`，⛔ 不是兩份文件。");
+    p();
+    p(
+      ...fieldTableWithUsage(
+        fieldsOf(zAttachmentDoc),
+        "attachment@1.",
+        usage.vfxSurface,
       ),
     );
   }

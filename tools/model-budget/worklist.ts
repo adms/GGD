@@ -31,6 +31,22 @@
  * the 1024² champion textures that sit at warn — the real VRAM win — are
  * queued. `--over-only` restricts to hard-limit breaches.
  *
+ * ─ ⭐ 為什麼這一份**留著** `generatedAt`（GH#395）────────────────────────────
+ * GH#389 把 `report.json` 的時鐘換成了 `sourcesDigest`，而這一份**刻意不跟進**。
+ * 判準是「它的 `--check` 需不需要逐位元組？」——它沒有 `--check`，而且不該有：
+ *
+ *   · report.json 是**推導出來的量測**（同樣的輸入必然給同樣的輸出），所以它的
+ *     身分只能是輸入的摘要，而任何時鐘都會讓那條新鮮度閘退化成模糊比對;
+ *   · 這一份是**操作員的收據** —— 「我在這個時候，照這個門檻，排了這一批」。
+ *     它由 `pnpm budget:worklist`（或後台那一頁）**按下去才產生**，⛔ 沒有任何
+ *     build / CI / deploy 步驟會重跑它 ⇒ 它不會製造 `git status` 噪音。
+ *     同一份報告用 `--over-only` 排兩次是**兩張不同的工單**，而分辨它們的正是
+ *     那格時間。⛔ 拿掉它會讓兩份工單長得一模一樣。
+ *
+ * ⚠️ 它仍然**不可以**被拿來比大小判新舊（`source.mtime > report.generatedAt`
+ * 那種寫法在 GH#389 被拆掉過一次，理由寫在 `roles.ts`）。它是給人讀的日期，
+ * ⛔ 不是一個判斷的輸入。`sourcesDigest` 才是「這批工單對應哪一份報告」的答案。
+ *
  * ─ THE WORKLIST IS AN INPUT, NOT AN ACTION ───────────────────────────────────
  * Writing the worklist changes nothing shipping. `--optimize` invokes optimize.ts
  * on the queued .glb paths, and even that defaults to a DRY RUN — the optimiser

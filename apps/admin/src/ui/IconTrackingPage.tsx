@@ -485,7 +485,9 @@ export function IconTrackingPage(): React.JSX.Element {
         title="釘住的美術方向（樣式規格）"
         right={
           <span style={{ fontSize: 11, color: TEXT_DIM }}>
-            {spec.spec ? `${spec.spec.templateVersion} · ${spec.spec.generatedAt}` : "未發布"}
+            {/* GH#395 —— 第二格以前是 generatedAt。快照的身分現在由內容摘要給，
+                ⛔ 不是由時鐘給（見 assetConsoleData.StyleSpec）。 */}
+            {spec.spec ? `${spec.spec.templateVersion} · ${spec.spec.contentDigest}` : "未發布"}
           </span>
         }
       >

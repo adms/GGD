@@ -19,6 +19,8 @@
  *     asserted against the real `content/vfx` docs, not a synthetic doc.
  */
 import { describe, it, expect, beforeEach, afterEach, beforeAll, vi } from "vitest";
+// GH#384 —— 逐技能特效綁定住在 content/；⛔ 少了這一行從 repo 根跑單檔會看到空的綁定。
+import "../render/vfx/shippedAbilityArt.testkit";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
@@ -37,7 +39,7 @@ import {
   SCREEN_PARTICLE_BUDGET,
   SCREEN_SYSTEM_BUDGET,
 } from "../render/vfx/emitterBudget";
-import { W3X_ABILITY_ART, primitiveFallbackFor } from "../render/vfx/w3xAbilityArt";
+import { w3xAbilityArtRows, primitiveFallbackFor } from "../render/vfx/w3xAbilityArt";
 import { VfxSystem, type VfxContext } from "./VfxSystem";
 import { MAX_LIVE_W3X_EFFECTS, W3X_CAST_MAX_SEC, W3xCastFx } from "./W3xCastFx";
 
@@ -73,7 +75,7 @@ afterEach(() => {
 
 /** The real content docs of one promoted family, in play order. */
 function familyDocs(abilityId: string): VfxDoc[] {
-  const art = W3X_ABILITY_ART[abilityId]!;
+  const art = w3xAbilityArtRows()[abilityId]!;
   return [art.primary, ...art.extra].map(loadVfx);
 }
 

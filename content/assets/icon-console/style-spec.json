@@ -1,6 +1,5 @@
 {
  "schema": "icon-console/style-spec@1",
- "generatedAt": "2026-07-22T09:24:22Z",
  "generatedBy": "tools/icon-console/emit_style_spec.py",
  "templateVersion": "icon-gen/1",
  "contentDigest": "f916838c976cb445",
@@ -8,20 +7,17 @@
   {
    "path": "tools/icon-gen/src/prompt.py",
    "sha256": "4cd3baf4ad8f5a559bc71f184786cd6ef5218bdb41bacc36a0a85f40ed08e2b6",
-   "bytes": 21211,
-   "mtime": "2026-07-22T09:24:14Z"
+   "bytes": 21211
   },
   {
    "path": "tools/icon-gen/src/plan.py",
    "sha256": "a349d3d76c69279c360cf2645582f89bc70f5e58b956805676296c93afca6298",
-   "bytes": 15711,
-   "mtime": "2026-07-22T08:36:32Z"
+   "bytes": 15711
   },
   {
    "path": "tools/icon-gen/src/pricing.json",
    "sha256": "b8bbe916d424ea077e7407931b9079a952de351f47eb3444c2d93facf604afd3",
-   "bytes": 1157,
-   "mtime": "2026-07-22T08:37:31Z"
+   "bytes": 1157
   }
  ],
  "template": {

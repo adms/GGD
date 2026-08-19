@@ -2,7 +2,7 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_317ac4b1a253`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 產生自 contentVersion **`cv_8085b22421cb`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
 > 資料列：**461**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-07-24T11:14:58.268286Z`）
 
 `content/abilities/*.json` 共 **461** 份，每個英雄每個 slot 一份：天生 PASSIVE 75　·　Q 78　·　W 79　·　E 78　·　R 78　·　EX 73。
@@ -74,8 +74,8 @@
 | `godie-e00s.q` | 70-01 伸卡球 | Q | 主動 | 70-01 | `godie-e00s` 白木卡迪那 | — | [主動][指向][範圍] |
 | `godie-e00s.w` | 70-02 大怒石 | W | 被動 | 70-02 | `godie-e00s` 白木卡迪那 | — | [被動][普攻時][範圍] |
 | `godie-e00s.e` | 70-03 木束縛之術 | E | 主動 | 70-03 | `godie-e00s` 白木卡迪那 | — | [主動][範圍][定身] |
-| `godie-e00s.r` | 70-04 千年練成 | R | 主動 | 70-04 | `godie-e00s` 白木卡迪那 | — | [主動][AP加成][指定][範圍][召喚] |
-| `godie-e00s.ex` | 70-002 樹海降臨 | EX | 被動 | 70-002 | `godie-e00s` 白木卡迪那 | — | [被動][召喚][範圍][治療][AP加成] |
+| `godie-e00s.r` | 70-04 千年練成 | R | 主動 | 70-04 | `godie-e00s` 白木卡迪那 | — | [主動][AP加成][範圍] |
+| `godie-e00s.ex` | 70-002 樹海降臨 | EX | 被動 | 70-002 | `godie-e00s` 白木卡迪那 | — | [被動][範圍][治療][AP加成] |
 | `godie-e00u.passive` | 44-00 機警 | PASSIVE | 天生·主動 | 44-00 | `godie-e00u` 十六夜Sakuya | — | 夜神月的機警，將智慧具現化成魔力護盾，以魔力做為代價，可抵擋90%傷害。每點魔力可以抵免1.5點傷害。 |
 | `godie-e00u.q` | none | Q | 主動 | — | `godie-e00u` 十六夜Sakuya | — | effects: damage |
 | `godie-e00u.w` | none | W | 主動 | — | `godie-e00u` 十六夜Sakuya | — | effects: damage |

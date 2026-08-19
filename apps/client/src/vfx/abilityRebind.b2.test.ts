@@ -45,6 +45,8 @@
  *   · 三層都拿掉 `attachTo` → 「擺在目標身上」紅
  */
 import { describe, it, expect, beforeAll, afterAll, vi } from "vitest";
+// GH#384 —— 逐技能特效綁定住在 content/；⛔ 少了這一行從 repo 根跑單檔會看到空的綁定。
+import "../render/vfx/shippedAbilityArt.testkit";
 import { readFileSync, readdirSync } from "node:fs";
 import { isShipped, readContentJson } from "../testkit/contentFixtures";
 import { fileURLToPath } from "node:url";
@@ -61,8 +63,8 @@ import type { AbilityId } from "@ggd/shared/ids";
 import type { VfxDoc } from "@ggd/shared/content";
 import { zAbilityDoc } from "@ggd/shared/content/schema/ability";
 import { VfxSystem, type VfxContext } from "./VfxSystem";
-import { W3X_FAMILY_ART } from "../render/vfx/w3xFamilyArt";
-import { W3X_ABILITY_ART } from "../render/vfx/w3xAbilityArt";
+import { w3xFamilyArtRows } from "../render/vfx/w3xFamilyArt";
+import { w3xAbilityArtRows } from "../render/vfx/w3xAbilityArt";
 
 const root = (p: string): string => fileURLToPath(new URL(`../../../../${p}`, import.meta.url));
 const loadVfx = (id: string): VfxDoc =>
@@ -241,14 +243,14 @@ describe("家族原型不可以蓋掉一份真的出貨資產(#230 的系統性�
         .map((f) => f.slice(0, -5)),
     );
     const out: string[] = [];
-    for (const [abilityId, row] of Object.entries(W3X_FAMILY_ART)) {
-      // GH#323 —— 綁定表（`W3X_FAMILY_ART`）記的是「這支技能該用哪個原作特效」，
+    for (const [abilityId, row] of Object.entries(w3xFamilyArtRows())) {
+      // GH#323 —— 綁定表（`w3xFamilyArtRows()`）記的是「這支技能該用哪個原作特效」，
       // 而 2026-08-13 有 235 支技能隨著英雄退場搬進 `content/_legacy/`。表上留著
       // 它們沒有錯（哪天復活就用得上），⛔ 錯的是拿**已退場的**技能去斷言。
       if (!isShipped("abilities", abilityId)) continue;
       const docs = (census.models[row.model]?.layerDocIds ?? []).filter((d) => shipped.has(d));
       if (docs.length === 0) continue;
-      if (W3X_ABILITY_ART[abilityId]) continue; // 硬表已經接上真資產
+      if (w3xAbilityArtRows()[abilityId]) continue; // 硬表已經接上真資產
       const doc = JSON.parse(
         readFileSync(root(`content/abilities/${abilityId}.json`), "utf8"),
       ) as { vfxLayers?: { vfxKey: string }[] };

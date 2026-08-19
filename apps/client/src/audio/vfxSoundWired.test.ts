@@ -35,7 +35,8 @@ const audioMap = read("content/config/audio-map.json") as AudioMap;
 const LISTENER: SpatialListener = { levelX: 0, levelZ: 0, dirX: 0, dirZ: 1 };
 
 /** 出貨表上第一支「家族帶發射音」的技能 —— ⛔ 不寫死一個 id（內容會變）。 */
-function anAbilityWithFamilySound(): { abilityId: string; family: string } {
+type FamilyKey = keyof typeof doc.families;
+function anAbilityWithFamilySound(): { abilityId: string; family: FamilyKey } {
   for (const [abilityId, bind] of Object.entries(doc.abilities)) {
     const family = bind.family;
     if (family && doc.families[family]?.soundLaunch) return { abilityId, family };
@@ -91,21 +92,31 @@ describe("特效自帶的音效（GH#390）", () => {
     expect(layer.update(20_000_000)).toEqual([]);
   });
 
-  it("overlay 專用的 clip 在正式站上退回家族那一格，⛔ 不是退回安靜", () => {
+  it("取不到的 clip 在正式站上退回家族那一格，⛔ 不是退回安靜", () => {
+    // ⭐ GH#402 —— 這一條**曾經**在出貨表上找一支綁到 overlay-only clip 的技能。
+    // owner 把 133 個原作音效搬進版控之後，出貨表上**一支都沒有**了（那是好事：
+    // 正式站聽得到原作那一發），於是那個前提死了 —— ⛔ 但 `serveable()` 的退路
+    // 本身還在，而它一旦壞掉就是「這一格靜音」，玩家分不出來。
+    //
+    // ⇒ 前提換成**這一層自己的夾具**：一個 audio-map 供不起的 key 覆寫在技能上。
+    // 驗的仍然是同一個機制（逐支覆寫取不到 → 退回家族，⛔ 不是退回 null），
+    // ⛔ 不是「出貨內容今天長什麼樣」。
+    const { abilityId, family } = anAbilityWithFamilySound();
+    const famKey = doc.families[family]!.soundLaunch!;
+    const UNSERVED = "wc3.__not-in-the-audio-map__";
+    const patched = {
+      ...doc,
+      abilities: { ...doc.abilities, [abilityId]: { ...doc.abilities[abilityId]!, soundLaunch: UNSERVED } },
+    };
     const layer = layerFor(); // overlayEnabled 預設 false ＝ 正式站
-    // 出貨表上第一支覆寫成 overlay-only key 的技能。
-    const entry = Object.entries(doc.abilities).find(([, b]) => {
-      const files = b.soundLaunch ? audioMap.sfx[b.soundLaunch]?.files : undefined;
-      return Boolean(files?.every((f) => f.startsWith("assets/blizzard-local/"))) && Boolean(b.family);
-    });
-    expect(entry, "出貨表上沒有任何一支綁到 overlay clip 的技能").toBeTruthy();
-    const [abilityId, bind] = entry!;
-    const raw = resolveVfxSound(doc, bind.family, abilityId, "launch");
-    expect(raw?.key).toBe(bind.soundLaunch); // 純解析層照樣給 overlay 那一個
-    const hit = layer.cue(abilityId, "launch"); // 客戶端層退回家族
-    expect(hit).not.toBeNull();
-    expect(hit!.key).not.toBe(bind.soundLaunch);
-    expect(hit!.key).toBe(doc.families[bind.family!]?.soundLaunch);
+    layer.setFamiliesDoc(patched);
+    layer.setFamilyResolver(() => family);
+    // 純解析層照樣給覆寫的那一個 —— 內容說什麼它就說什麼
+    expect(resolveVfxSound(patched, family, abilityId, "launch")?.key).toBe(UNSERVED);
+    // 客戶端層知道那個檔案端不出來 ⇒ 退回家族那一格，⛔ 不是 null
+    const hit = layer.cue(abilityId, "launch");
+    expect(hit, "取不到的 clip 讓這一格整個靜音了").not.toBeNull();
+    expect(hit!.key).toBe(famKey);
   });
 
   it("GameApp 的事件排水真的呼叫了這一層（⛔ 不是一段可以整段刪掉的死程式）", () => {

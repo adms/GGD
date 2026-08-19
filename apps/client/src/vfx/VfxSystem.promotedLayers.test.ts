@@ -39,13 +39,13 @@
  * ---------------------------------------------------------------------------
  * 為什麼這樣寫才算行為守衛
  * ---------------------------------------------------------------------------
- * 「W3X_ABILITY_ART 有 34 列」是屬性。這裡讀的是**引擎手上的 Babylon
+ * 「w3xAbilityArtRows() 有 34 列」是屬性。這裡讀的是**引擎手上的 Babylon
  * `ParticleSystem`**:它們的貼圖 / blend mode / 壽命 / 發射率,以及
  * `ps.emitter` 的世界座標。技能文件走真的 `zAbilityDoc.parse`(第⑤號故障),
  * 事件走真的 `VfxSystem.handleEvent`(和 GameApp 同一個 method)。
  *
  * 突變驗證(session 內實跑):
- *   1. 把 `W3X_ABILITY_ART["godie-u010.q"].extra` 清成 `[]`
+ *   1. 把 `w3xAbilityArtRows()["godie-u010.q"].extra` 清成 `[]`
  *      → 「四顆都到得了粒子層」與「四組參數互不相同」兩條紅。
  *   2. 把 `W3xCastFx.play` 的 `atPosition(x, y, z)` 的 y 改成 `y + 1`
  *      → 「四顆全部落在寫死的 y = 1.0」紅。
@@ -57,6 +57,8 @@
  * 那一類,pivot 遺失不能推給「形狀本來就活在節點樹裡」。
  */
 import { describe, it, expect, beforeAll, afterAll, vi } from "vitest";
+// GH#384 —— 逐技能特效綁定住在 content/；⛔ 少了這一行從 repo 根跑單檔會看到空的綁定。
+import "../render/vfx/shippedAbilityArt.testkit";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
@@ -71,7 +73,7 @@ import type { AbilityId } from "@ggd/shared/ids";
 import type { VfxDoc } from "@ggd/shared/content";
 import { zAbilityDoc } from "@ggd/shared/content/schema/ability";
 import { VfxSystem, type VfxContext } from "./VfxSystem";
-import { W3X_ABILITY_ART } from "../render/vfx/w3xAbilityArt";
+import { w3xAbilityArtRows } from "../render/vfx/w3xAbilityArt";
 
 const root = (p: string): string => fileURLToPath(new URL(`../../../../${p}`, import.meta.url));
 const loadVfx = (id: string): VfxDoc =>
@@ -159,8 +161,8 @@ function emitterYs(before: number): number[] {
 
 describe("promoted cast keeps the map's art but loses its pivots (vfx-promoted-pivots)", () => {
   it("晉升那一支施法時,原作模型的四顆發射器都到得了粒子層", () => {
-    const art = W3X_ABILITY_ART[ABILITY];
-    expect(art, `${ABILITY} 不在 W3X_ABILITY_ART 裡,這條守衛的前提沒了`).toBeDefined();
+    const art = w3xAbilityArtRows()[ABILITY];
+    expect(art, `${ABILITY} 不在 w3xAbilityArtRows() 裡,這條守衛的前提沒了`).toBeDefined();
     const expected = [art!.primary, ...art!.extra];
     // flamessmoke 在普查裡是 emitterTotal 4 / rootAnchored 4
     expect(expected).toHaveLength(4);

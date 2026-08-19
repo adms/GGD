@@ -165,6 +165,53 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // carry. Emitted only for DISCRETE restores, so no steady-state regen spam.
   "heal",
   "manaRestore",
+  // ⭐ GH#411 —— `manaSpend`，`manaRestore` 的**鏡像**，而它缺席的代價是量到的：
+  // 71-00 暗夜契約的靈氣讓敵人施法時 12% 機率**現存法力歸零**，整條藍條在一個
+  // tick 內清空而畫面上**沒有任何東西說出來**（`sim/effects/spendMana.ts` 的
+  // VISIBILITY 段）。⚠️ 這個洞比【魔力全失】被拆成純 JSON **更早**就存在：
+  // 被它取代的 `nightPactBurn` 在整個 apps/client 樹裡是**零個消費端**。
+  //
+  // CLIENT CONSUMER: `vfx/VfxSystem.handleEvent` 的 `manaSpend` case —— 掛在
+  // **付錢的那具**身上的藍色浮動數字，與 `manaRestore` 共用同一條
+  // `pushCombatText` 管線（同 kind `mana`，只是字前面是減號）。
+  //
+  // ⭐ 它是**通用**事件，⛔ 不是一支技能的專屬名：每一個 `spendMana` 的作者一起
+  // 受惠 —— 20-01 風王結界的每擊扣 30 魔、熾天使之弓削目標現存 3%、光之杖的存款。
+  //
+  // PAYLOAD `{ target, source, amount, remaining, origin }`。⚠️ `target` 是
+  // **付錢的那個**（`applyTo:"target"` 的燒魔由受害者付），⛔ 不是施法者;
+  // `amount` 是**實扣量**不是請求量，所以它永遠等於藍條真的少掉的那一段。
+  //
+  // CADENCE: 由作者掛的 hook 決定，⛔ 不是 per-tick。出貨內容最密的一筆是
+  // `godie-emfr.passive` 的 `onInterval` × `internalCooldown 1`（≤1/s/持有者），
+  // 其餘都是 `onBasicAttack` / `onAbilityCast`。與 `taunt` 同一個量級與同一個
+  // `onInterval` 但書：沒有 `internalCooldown` 的 hook 是**內容的**形狀問題，
+  // 修的是那格欄位，⛔ 不是在這裡開特例。
+  //
+  // NO DOUBLE-FIRE: `audio/sfxEdges.ts` 只 diff kill/death/levelUp/exUnlock，
+  // 沒有任何東西從快照推導「法力剛剛被扣」。
+  "manaSpend",
+  // ⭐ GH#406 —— `resourceSwap`（44-002 交換筆記本）。**從 SERVER_ONLY 搬過來的**：
+  // v0.21.1 把它暫時列在那邊，理由是「今天真的沒有客戶端消費者」，並在那裡寫下
+  // 「接上呈現的那一版要搬回這裡」。這就是那一版。
+  //
+  // ⛔ 它為什麼不能靠既有的事件：`swapResource` 刻意繞開 `damageQueue` 與
+  // `healTarget`（護甲、護盾、【重創】、onDamageTaken 都不該因為「交換」而醒），
+  // 而那兩條路正好是所有飄字／音效的來源。⇒ 兩條血條同時被改寫上百點，畫面上
+  // 只有血條**突然對調**，跟一次掉包或一個 bug 長得一模一樣（失敗形態②的鏡像）。
+  //
+  // CLIENT CONSUMER: `vfx/VfxSystem.handleEvent` 的 `resourceSwap` case ——
+  // **兩具身上各一個**浮動數字（拿到的那邊走 heal/mana kind，付出去的那邊走
+  // damage kind，兩邊都帶「交換」字樣的 label），外加 `audio/combatSfx` 的
+  // `buffApply` 音效。⚠️ 數字是**變化量**，所以 payload 必須同時帶交換前與交換後
+  // 的值 —— 舊值下一 tick 就被快照覆蓋了，客戶端自己補不回來。
+  //
+  // PAYLOAD `{ caster, target, resource, fromCaster, fromTarget, toCaster,
+  // toTarget }`。`resource` 是 `"health" | "mana"`，決定那兩個數字的顏色。
+  //
+  // CADENCE: 一次施放一則（多目標交換則一個目標一則），由施放次數 bound ——
+  // 出貨的 44-002 是單體、25 秒冷卻，⛔ 不是 per-tick。
+  "resourceSwap",
   // GROUND-AOE DETONATION → the 爆裂 cue + blast VFX (audio COMBAT-AUDIO). Two
   // emit sites for the ONE moment, and they are mutually exclusive per cast: an
   // instant ground ability blasts in `abilitySystem` the tick it is cast, one
@@ -457,16 +504,11 @@ export const SERVER_ONLY_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   "abilityHit",
   "displace",
   "lethalDamage",
-  // ── GH#374（2026-08-19）—— `resourceSwap`（44-002 交換筆記本）────────────
-  // ⚠️ 它**不是**「沒人想到」，是**今天真的沒有客戶端消費者**：`swapResource` 刻意
-  // 繞開傷害／治療佇列（護甲、護盾、【重創】都不該因為「交換」而醒），所以既有的
-  // 飄字／音效／特效路徑一條都不會接住它。把一則沒有人畫的事件外送出去，只是
-  // 白佔頻寬（同上面那四則的理由）。
-  // ⛔ 這是**暫時**的分類，⛔ 不是設計終點：玩家按下交換筆記本，畫面上現在毫無
-  // 回饋，只有血條突然對調 —— 那是 GH#406 要修的東西。接上呈現的那一版，
-  // 這一列要**搬到 `FANNED_OUT_EVENT_TYPES`**，並在那裡註明客戶端消費者是誰。
-  "resourceSwap",
-  // ⭐ G19（同一批）—— `statCapReached`「某條屬性首次到頂」。同樣只餵 hook：
+  // ⚠️ `resourceSwap` **不在這張表上了**（GH#406，2026-08-19）：v0.21.1 把它
+  // 暫時列在這裡並註明「接上呈現的那一版要搬回 FANNED_OUT」，而那一版已經到了 ——
+  // 它現在在上面那張表，客戶端消費者寫在那裡。⛔ 不要把它搬回來。
+  //
+  // ⭐ G19 —— `statCapReached`「某條屬性首次到頂」。同樣只餵 hook：
   // 客戶端從**已經複製過去的** `MatchState` 屬性欄自己看得到那個數字到頂了，
   // 而這一則的意義是「這是**第一次**」——一個只有伺服器的閂知道的事。
   // ⚠️ 它是**每 tick 的屬性管線**發的，外送等於在買裝備那一刻多灌一批訊息，

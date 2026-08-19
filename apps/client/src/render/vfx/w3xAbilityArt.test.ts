@@ -12,11 +12,13 @@
  *      and the tornadoes must stay on their primitives.
  */
 import { describe, it, expect } from "vitest";
+// GH#384 —— 逐技能特效綁定住在 content/；⛔ 少了這一行從 repo 根跑單檔會看到空的綁定。
+import "./shippedAbilityArt.testkit";
 import { readFileSync, existsSync } from "node:fs";
 import { isShipped } from "../../testkit/contentFixtures";
 import { fileURLToPath } from "node:url";
 import { zVfxDoc } from "@ggd/shared/content";
-import { W3X_ABILITY_ART, w3xArtFor, extraVfxDocIds } from "./w3xAbilityArt";
+import { w3xAbilityArtRows, w3xArtFor, extraVfxDocIds } from "./w3xAbilityArt";
 
 const root = (p: string): string => fileURLToPath(new URL(`../../../../../${p}`, import.meta.url));
 const BINDINGS = root("tools/w3x-import/out/vfx-bindings/VFX_BINDINGS.json");
@@ -32,7 +34,7 @@ const bindings: Bindings | null = existsSync(BINDINGS)
   ? (JSON.parse(readFileSync(BINDINGS, "utf8")) as Bindings)
   : null;
 
-const rows = Object.entries(W3X_ABILITY_ART);
+const rows = Object.entries(w3xAbilityArtRows());
 
 describe("w3x ability art promotions", () => {
   it("promotes a non-empty set, and every doc it names exists and is schema-valid", () => {

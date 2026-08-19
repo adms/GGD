@@ -223,7 +223,9 @@ export const NAV: NavItem[] = [
   // 這一頁 = 天花板(以及技能能把天花板抬到哪)。相鄰就是警告。
   { page: "statCaps", label: "屬性上限", emoji: "⛰️", section: SEC_COMBAT },
   { page: "cooldownRules", label: "冷卻規則", emoji: "⏱", section: SEC_COMBAT },
-  { page: "aoeTiers", label: "AoE 範圍四級距", emoji: "◎", section: SEC_COMBAT },
+  { page: "aoeTiers", label: "AoE 範圍五級距", emoji: "◎", section: SEC_COMBAT },
+  // 施法距離五級距 (GH#414)。緊鄰 AoE —— 同一條梯子的兩個視窗。
+  { page: "rangeTiers", label: "施法距離五級距", emoji: "➶", section: SEC_COMBAT },
   { page: "uiLexicon", label: "介面用語（Fate）", emoji: "🏆", section: SEC_COMBAT },
   { page: "statNormalization", label: "英雄屬性正規化", emoji: "📐", section: SEC_COMBAT },
   // GH#322 —— 這四頁的 spec 早就寫好了，但導覽列沒有那一列 ⇒ 操作者點不到。

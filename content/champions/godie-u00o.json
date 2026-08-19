@@ -178,7 +178,7 @@
       "effects": [
         {
           "kind": "spawnProjectile",
-          "projectileId": "imported.wave.arcane",
+          "projectileId": "imported.thrust.arcane",
           "onHit": [
             {
               "kind": "damage",

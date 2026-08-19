@@ -37,6 +37,8 @@
  * five-slot hero.
  */
 import { describe, it, expect } from "vitest";
+// GH#384 —— 逐技能特效綁定住在 content/；⛔ 少了這一行從 repo 根跑單檔會看到空的綁定。
+import "./shippedAbilityArt.testkit";
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";

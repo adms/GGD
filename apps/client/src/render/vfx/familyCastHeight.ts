@@ -6,7 +6,7 @@
  * 動手前量到的東西（不是讀註解，是跑真的渲染器）
  * ---------------------------------------------------------------------------
  * 2026-08-01，把出貨的 `content/config/vfx-families.json` 餵給真的
- * `VfxSystem.handleEvent`，對 `W3X_FAMILY_ART` 裡**全部 91 支 `shockwaveRing`**
+ * `VfxSystem.handleEvent`，對 `w3xFamilyArtRows()` 裡**全部 91 支 `shockwaveRing`**
  * 各發一次施法事件，從 Babylon 讀回每一個 `ParticleSystem` 的 emitter 世界座標：
  *
  *   · 91 支畫出 105 個 `ParticleSystem`
@@ -95,7 +95,7 @@ export function castHeightSource(): CastHeightSource {
 /**
  * 這一次施法要播在哪個世界高度。
  *
- * `art` 沒有 `heightY`（`W3X_ABILITY_ART` 那 34 支硬表晉升、或根本沒晉升的技能）
+ * `art` 沒有 `heightY`（`w3xAbilityArtRows()` 那 34 支晉升、或根本沒晉升的技能）
  * 一律走平面高度 —— 那些列沒有家族原型，也就沒有「這一招應該多高」這個答案。
  */
 export function familyCastHeightY(art: W3xAbilityArt | undefined): number {

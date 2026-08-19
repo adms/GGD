@@ -16,7 +16,8 @@
  * 「seat 表還沒填好,下一幀再問」;把它折成 `null` 會讓變身態的英雄永遠停在
  * 未上色的狀態,而且看起來像「解析完成:沒有顏色」。
  */
-import type { FormVisual } from "@ggd/shared/content";
+import type { FormVisual, WornAttachment } from "@ggd/shared/content";
+import { wornFromFormAttachment } from "@ggd/shared/content";
 import { counterpartFormId } from "@ggd/shared/content";
 import type { ModelTint } from "./modelTint";
 import { isIdentityTint } from "./modelTint";
@@ -113,7 +114,28 @@ export function formAttachmentSpecFor(
 ): FormAttachmentSpec | null {
   const a = form?.attachment;
   if (!a) return null;
-  const glbPath = glbPathOf(a.modelKey);
+  return wornAttachmentSpec(wornFromFormAttachment(a), glbPathOf);
+}
+
+/**
+ * GH#392 —— 一份**已解析的掛件**(`WornAttachment`)→ 渲染層的 spec。
+ *
+ * 兩個來源(變身外觀表 / `attachment@1` 文件)在 shared 就折成同一個型別了,
+ * 所以這裡只剩「modelKey → glbPath」這一步 —— ⛔ 沒有第二份 follow/anim 的規則。
+ */
+export function wornAttachmentSpec(
+  worn: WornAttachment,
+  glbPathOf: (modelKey: string) => string | null,
+): FormAttachmentSpec | null {
+  const glbPath = glbPathOf(worn.modelKey);
   if (!glbPath) return null;
-  return { glbPath, bone: a.bone, scale: a.scale, offsetY: a.offsetY };
+  return {
+    glbPath,
+    bone: worn.bone,
+    scale: worn.scale,
+    offsetY: worn.offsetY,
+    follow: worn.follow,
+    anim: worn.anim,
+    animLoop: worn.animLoop,
+  };
 }

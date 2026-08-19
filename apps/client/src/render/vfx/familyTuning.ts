@@ -40,7 +40,7 @@ import {
   type W3xArtFamily,
   type W3xFamilyPrototype,
 } from "./w3xArtFamilies";
-import { W3X_FAMILY_ART, type W3xFamilyArtRow } from "./w3xFamilyArt";
+import { w3xFamilyArtRows, type W3xFamilyArtRow } from "./w3xFamilyArt";
 import { abilityVfxKeys, rosterBindings, SIZE_SCALE, type Size } from "./bindings";
 import { elementFromVfxKey, type Element } from "./elements";
 import type { VfxDoc } from "@ggd/shared/content";
@@ -164,7 +164,7 @@ export function resolveFamilyArt(
   doc: FamilyTuningDoc,
 ): ResolvedFamilyArt | undefined {
   if (!abilityId) return undefined;
-  const evidence: W3xFamilyArtRow | undefined = W3X_FAMILY_ART[abilityId];
+  const evidence: W3xFamilyArtRow | undefined = w3xFamilyArtRows()[abilityId];
   const override = doc?.abilities?.[abilityId];
   const family = (override?.family ?? evidence?.family) as W3xArtFamily | undefined;
   if (!family || !W3X_ART_FAMILIES[family]) return undefined;
@@ -216,7 +216,7 @@ export function resolveFamilyArt(
  * function rather than from two lists that can drift.
  */
 export function resolveAllFamilyArt(doc: FamilyTuningDoc): ResolvedFamilyArt[] {
-  const ids = new Set<string>(Object.keys(W3X_FAMILY_ART));
+  const ids = new Set<string>(Object.keys(w3xFamilyArtRows()));
   for (const id of Object.keys(doc?.abilities ?? {})) ids.add(id);
   const out: ResolvedFamilyArt[] = [];
   for (const id of [...ids].sort()) {

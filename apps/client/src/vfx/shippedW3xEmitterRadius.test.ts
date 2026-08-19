@@ -35,11 +35,13 @@
  * `normalize(position)`），受半徑影響的只有「發射面多大」。這正是 #110 要修的量，
  * 也正是這裡量的量：取樣 4000 顆的 XZ 徑向最大值 ≈ doc 的 radius。
  *
- * ⚠️ 名單是從出貨的 `W3X_ABILITY_ART` **推導**出來的，不是抄一份常數：
+ * ⚠️ 名單是從出貨的 `w3xAbilityArtRows()` **推導**出來的，不是抄一份常數：
  * 哪天有人把某支技能改綁別的 doc，這條守衛跟著換目標，不會變成一條在守
  * 已經沒人用的 id 的空殼（第⑥種故障）。
  */
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
+// GH#384 —— 逐技能特效綁定住在 content/；⛔ 少了這一行從 repo 根跑單檔會看到空的綁定。
+import "../render/vfx/shippedAbilityArt.testkit";
 import { readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
@@ -50,7 +52,7 @@ import type { Particle } from "@babylonjs/core/Particles/particle";
 import type { VfxDoc } from "@ggd/shared/content";
 import { zVfxDoc } from "@ggd/shared/content";
 import { toParticleSystem } from "./particleFactory";
-import { W3X_ABILITY_ART } from "../render/vfx/w3xAbilityArt";
+import { w3xAbilityArtRows } from "../render/vfx/w3xAbilityArt";
 
 const contentPath = (rel: string): string =>
   fileURLToPath(new URL(`../../../../content/${rel}`, import.meta.url));
@@ -58,7 +60,7 @@ const contentPath = (rel: string): string =>
 /** 出貨的綁定表裡，真的會上畫面的 `godie-*-p*` doc id（推導，不是抄）。 */
 function boundGodieParticleDocIds(): string[] {
   const out = new Set<string>();
-  for (const art of Object.values(W3X_ABILITY_ART)) {
+  for (const art of Object.values(w3xAbilityArtRows())) {
     for (const id of [art.primary, ...(art.extra ?? [])]) {
       if (typeof id === "string" && /^godie-.+-p\d+$/.test(id)) out.add(id);
     }

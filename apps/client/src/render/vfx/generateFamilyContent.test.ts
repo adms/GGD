@@ -34,6 +34,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "../../../../..");
 const SCRIPT = join(HERE, "generateFamilyContent.ts");
 const SHIPPED = join(REPO, "content/config/vfx-families.json");
+const ABILITY_ART = join(REPO, "content/config/vfx-ability-art.json");
 
 describe("vfx 家族產生器（GH#378）", () => {
   it("🔴 真的跑一次：產生器不擁有的每一格逐位保留", () => {
@@ -42,6 +43,9 @@ describe("vfx 家族產生器（GH#378）", () => {
     try {
       mkdirSync(join(sandbox, "config"), { recursive: true });
       cpSync(SHIPPED, join(sandbox, "config/vfx-families.json"));
+      // GH#384 —— 258 筆家族證據住在這一份；產生器少了它會拒絕跑（刻意的：
+      // 空的綁定會讓它把 78 份 fx.fam 文件全部當成孤兒掃掉）。
+      cpSync(ABILITY_ART, join(sandbox, "config/vfx-ability-art.json"));
 
       const before = JSON.parse(readFileSync(SHIPPED, "utf8")) as Record<string, unknown>;
       const owned = new Set(Object.keys(shippedFamilyConfig({})));

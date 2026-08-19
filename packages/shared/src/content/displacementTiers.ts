@@ -52,17 +52,31 @@
  */
 import { TICK_HZ } from "../constants";
 import { KB_MAX_DISTANCE } from "../sim/effects/knockbackLimits";
+import {
+  DUEL_ZONE_RADIUS_REF,
+  SKILL_TIER_NAMES,
+  TRAVEL_SCALE,
+  ladderWindow,
+  type SkillTierName,
+} from "./skillTiers";
 
 /** `content/config/displacement-tiers.json` 的文件 id。 */
 export const DISPLACEMENT_TIERS_DOC_ID = "displacement-tiers";
 
 /**
- * 四個級別。⛔ 順序就是由小到大，後台下拉、schema enum 與文件共用這一份。
- * ⚠️ 用 owner 的「極大」，⛔ 不是 AoE 那份的「超大」—— 兩套詞彙的合併走 issue
- * （純機械 rename，不在這一批）。
+ * 五個級別。⛔ 順序就是由小到大，後台下拉、schema enum 與文件共用這一份。
+ *
+ * ⭐ **兩套詞彙的合併在 2026-08-19 做完了**（GH#414，owner：「正規化成五級距⋯
+ * 都統一」）。這一行以前寫著「用 owner 的『極大』，⛔ 不是 AoE 那份的『超大』
+ * —— 兩套詞彙的合併走 issue」，也就是它**知道自己不一致卻只有散文守著**。
+ *
+ * ⚠️ 合併的方向是量出來的，⛔ 不是挑的：舊的第四格「極大」在出貨內容裡
+ * **0 支技能在用**（`distanceTier` 只出現過「小」），而 AoE 的「超大」有 6 支。
+ * ⇒ 第四格改叫「超大」對齊 AoE，沒人用的那個字讓給新的第五格「極大」。
+ * **沒有任何一支既有技能的級距詞改變意思。**
  */
-export const DISPLACEMENT_TIER_NAMES = ["小", "中", "大", "極大"] as const;
-export type DisplacementTierName = (typeof DISPLACEMENT_TIER_NAMES)[number];
+export const DISPLACEMENT_TIER_NAMES = SKILL_TIER_NAMES;
+export type DisplacementTierName = SkillTierName;
 
 /** 兩條梯子：`travel` = 自己動（dash）、`push` = 別人被推（knockback）。 */
 export const DISPLACEMENT_LADDERS = ["travel", "push"] as const;
@@ -146,10 +160,14 @@ const SHIPPED_TIER_SPEED = maxSpeedFor(CHAMPION_BODY_RADIUS, DEFAULT_DISPLACEMEN
  * 出貨值。⚠️ 這些數字與 `content/config/displacement-tiers.json` 必須一致
  * （第一守則的三個住處：content/ · 這裡 · 後台）。
  *
- * `travel` 的四格落在既有的 WC3 刻度上（300/450/600/800 × 11/600），
+ * `travel` 的前四格落在既有的 WC3 刻度上（300/450/600/800 × 11/600），
  * 所以 15 支 dash 裡 8 支距離一格都不動；`push` 的 3 / 4.5 / 6 正好是
  * `aoe-tiers.json` 的小/中/大 ——「一個『大』的擊退 = 把人推出一個『中』的
  * AoE 半徑」，兩套級距互相讀得出來。
+ *
+ * ⭐ GH#414 把那句「正好是」變成**程式**：三張表其實是 `skillTiers.ts` 那條
+ * 梯子的三個視窗 —— `push` 取橫木 [0..4]、`travel` 取 [1..5] 再 × 11/6。
+ * ⛔ 所以這裡不再抄字面值。出貨的 8 個舊數字由梯子逐位元重現，第五格是新的。
  */
 export const DEFAULT_DISPLACEMENT_TIERS: DisplacementTiers = Object.freeze({
   enabled: true,
@@ -157,19 +175,20 @@ export const DEFAULT_DISPLACEMENT_TIERS: DisplacementTiers = Object.freeze({
   safetyFactor: DEFAULT_DISPLACEMENT_SAFETY_FACTOR,
   minBodyRadius: CHAMPION_BODY_RADIUS,
   maxSpeed: SHIPPED_TIER_SPEED,
-  travel: Object.freeze({
-    小: Object.freeze({ distance: 5.5, speed: SHIPPED_TIER_SPEED }),
-    中: Object.freeze({ distance: 8.25, speed: SHIPPED_TIER_SPEED }),
-    大: Object.freeze({ distance: 11, speed: SHIPPED_TIER_SPEED }),
-    極大: Object.freeze({ distance: 14.67, speed: SHIPPED_TIER_SPEED }),
-  }),
-  push: Object.freeze({
-    小: Object.freeze({ distance: 2, speed: SHIPPED_TIER_SPEED }),
-    中: Object.freeze({ distance: 3, speed: SHIPPED_TIER_SPEED }),
-    大: Object.freeze({ distance: 4.5, speed: SHIPPED_TIER_SPEED }),
-    極大: Object.freeze({ distance: 6, speed: SHIPPED_TIER_SPEED }),
-  }),
+  travel: ladderRows(ladderWindow(DUEL_ZONE_RADIUS_REF, 1, TRAVEL_SCALE)),
+  push: ladderRows(ladderWindow(DUEL_ZONE_RADIUS_REF, 0)),
 });
+
+/** 一條距離梯子 → 一條 `{distance, speed}` 梯子。速度五格同值（見上面的說明）。 */
+function ladderRows(
+  distances: Readonly<Record<SkillTierName, number>>,
+): Readonly<Record<DisplacementTierName, DisplacementTierRow>> {
+  const out = {} as Record<DisplacementTierName, DisplacementTierRow>;
+  for (const n of DISPLACEMENT_TIER_NAMES) {
+    out[n] = Object.freeze({ distance: distances[n], speed: SHIPPED_TIER_SPEED });
+  }
+  return Object.freeze(out);
+}
 
 /**
  * 出貨 config 裡**最小**的身體半徑 —— `maxSpeed` 的推導輸入。

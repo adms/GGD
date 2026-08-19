@@ -68,3 +68,70 @@ describe("進版控的產物不可以蓋時鐘", () => {
     expect(JSON.parse(first).models.length).toBeGreaterThan(0);
   }, 60_000);
 });
+
+/**
+ * ⭐ GH#395 —— 其餘四份進版控的產物，**逐份宣告**它的時鐘政策。
+ *
+ * ⚠️ 上面那兩條「跑兩次」是最強的檢查，但它**跑不動**這四份：style-spec 要
+ * `tools/icon-gen` 的 python、`_lod.json` 要 Blender、ROSTER 要 GPU 語音管線。
+ * 一條跑不動的守衛等於沒有守衛 ⇒ 這裡改驗**已出貨的那一份檔案本身**，
+ * 而判準是 owner 的那一句：「這份檔案的 `--check` 需不需要逐位元組？」
+ *   · 需要 ⇒ `clock: "none"`，出貨檔案裡不可以出現任何一格時間;
+ *   · 不需要（它是**收據**，時間本身就是資料）⇒ `clock: "receipt"`，
+ *     而 `why` 必須指到那份**真的寫著理由**的產生器檔頭。
+ * ⛔ 沒有第三格。一份既沒拿掉也沒說明的產物，就是下一個 GH#389。
+ */
+interface ClockPolicy {
+  readonly file: string;
+  readonly clock: "none" | "receipt";
+  /** `none`：這些欄位名一個都不可以出現在出貨的那份檔案裡。 */
+  readonly banned: readonly string[];
+  /** `receipt`：那份**寫著理由**的產生器（守衛真的去讀它，⛔ 不是這裡再寫一次）。 */
+  readonly reasonIn: string;
+}
+
+const ARTIFACTS: readonly ClockPolicy[] = [
+  {
+    file: "content/assets/icon-console/style-spec.json",
+    clock: "none",
+    banned: ["generatedAt", "mtime"],
+    reasonIn: "tools/icon-console/emit_style_spec.py",
+  },
+  {
+    file: "content/assets/models/_lod.json",
+    clock: "none",
+    banned: ["generatedAt"],
+    reasonIn: "tools/lod-gen/gen_lod.py",
+  },
+  {
+    file: "content/assets/model-budget/optimize-worklist.json",
+    clock: "receipt",
+    banned: [],
+    reasonIn: "tools/model-budget/worklist.ts",
+  },
+  {
+    file: "content/assets/audio/voices/lines/ROSTER.json",
+    clock: "receipt",
+    banned: [],
+    reasonIn: "tools/voice-gen/src/serve.mjs",
+  },
+];
+
+describe("GH#395 —— 四份產物的時鐘政策是宣告的，不是碰巧的", () => {
+  for (const a of ARTIFACTS) {
+    it(`${a.file} → ${a.clock}`, () => {
+      const raw = readFileSync(join(REPO, a.file), "utf8");
+      expect(raw.length, "產物不見了或是空的").toBeGreaterThan(2);
+      for (const f of a.banned) {
+        expect(raw.includes(`"${f}"`), `${a.file} 又長出了 "${f}"，理由見 ${a.reasonIn}`).toBe(false);
+      }
+      // 收據的另一半：它得**真的**帶著時間（不然它就該被宣告成 none）。
+      if (a.clock === "receipt") {
+        expect(raw.includes('"generatedAt"'), `${a.file} 宣告是收據卻沒有時間`).toBe(true);
+      }
+      // ⛔ 兩種宣告都要求那份產生器**真的寫下了為什麼** —— 一個沒有理由的政策
+      // 就是下一次有人「順手」把時鐘加回去（或拿掉）的入口。
+      expect(readFileSync(join(REPO, a.reasonIn), "utf8"), `${a.reasonIn} 沒有寫下 GH#395 的判定`).toContain("GH#395");
+    });
+  }
+});

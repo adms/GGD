@@ -35,16 +35,31 @@
  * authored `condition` is what makes that case unreachable for cards that care.
  *
  * ---------------------------------------------------------------------------
- * VISIBILITY (失敗形態 ②)
+ * VISIBILITY (失敗形態 ②) —— ⭐ GH#411：那個「後續」到了
  * ---------------------------------------------------------------------------
- * No new event is emitted, and that is not an omission: `Health.mana` is
- * projected every tick (`es.mana = hp.mana`, apps/game-server/src/net/
- * snapshot.ts), so the bar the player watches IS the read-back of this write —
- * the same channel `AbilityDef.manaCost` has always used, which likewise emits
- * nothing. A dedicated floating-number cue would be a `manaSpend` event next to
- * `manaRestore`; it is a presentation follow-up, not a correctness gap.
+ * 這一段以前寫著「不發事件不是疏漏，法力條每 tick 都投影過去了」，而那句話
+ * 只對**自己付錢**的那一半成立。71-00 暗夜契約的靈氣讓**敵人**施法時有 12%
+ * 機率現存法力歸零（`auras[] → hooks[onAbilityCast] → spendMana`），於是
+ * 一整條藍條在一個 tick 內被清空，**而世界上沒有任何人說發生過什麼** ——
+ * 玩家看到的是自己的法力莫名其妙不見了，跟一次掉包、一個 bug、或是自己記錯
+ * 完全無法區分。⚠️ 那個洞在【魔力全失】被拆成純 JSON **之前就存在**：
+ * 舊的 `nightPactBurn` 事件在整個 `apps/client` 樹裡是零個消費端。
+ *
+ * ⇒ 這裡發一則**通用**的 `manaSpend`，⛔ 不是一支技能專屬的事件名 ——
+ * 它是 `manaRestore` 的鏡像，而**每一個** `spendMana` 的作者一起受惠
+ * （20-01 風王結界的每擊扣魔、熾天使之弓削目標的 3%、光之杖的存款）。
+ * 客戶端消費端與外送理由見 `apps/game-server/src/net/eventFanout.ts`。
+ *
+ * CADENCE：由作者掛的 hook 決定，⛔ 不是每 tick。出貨內容最密的一筆是
+ * `godie-emfr.passive` 的 `onInterval` + `internalCooldown 1`（≤1/s/持有者），
+ * 其餘全是 `onBasicAttack` / `onAbilityCast`（由攻速與施法次數 bound）。
+ *
+ * ⚠️ 發的是**實扣量**（`before - hp.mana`），⛔ 不是 `want`：付不出全額的時候
+ * 螢幕上那個數字必須等於血條真的少掉的量，否則兩個來源會當著玩家的面打架。
+ * 扣到 0 的那一次不發（`spent > 0` 才發），所以空魔的英雄不會每一刀噴一個 0。
  *
  * PURITY: two float writes on an existing component. No rng, no clock, no trig.
+ * `world.events` 是每 tick 清空的呈現層記錄，⛔ 不進 digest ⇒ replay 逐位元不變。
  */
 import type { EffectKindSpec } from "./effectKind";
 import { resolveScaling } from "./effect";
@@ -85,6 +100,18 @@ export const spendManaEffect: EffectKindSpec<"spendMana"> = {
       // never more than is there.
       const before = hp.mana;
       hp.mana = Math.max(0, hp.mana - want);
+      // ⭐ GH#411 —— 「這條藍條剛剛少了多少」的唯一通道（檔頭 VISIBILITY）。
+      // `target` 是**付錢的那個**（不一定是施法者:`applyTo:"target"` 的燒魔
+      // 由受害者付），所以浮動文字掛在它身上;`source` 才是做這件事的人。
+      if (before > hp.mana) {
+        world.emit("manaSpend", {
+          target: payer,
+          source: ctx.caster,
+          amount: before - hp.mana,
+          remaining: hp.mana,
+          origin: ctx.origin,
+        });
+      }
       // 存款 (`bankAs`) —— 記下**實扣量**,不是 `want`。付不出全額的時候玩家
       // 只付了 `before`,而他買到的傷害必須對應他真的付出去的東西;寫 `want`
       // 會讓一個空魔的英雄按下 EX 就領到滿額加成。

@@ -78,6 +78,11 @@ export const EVENT_SPATIAL: Readonly<Record<string, EventSpatialSpec>> = {
   heal: { cls: "focus", entityFallback: ["target", "source"], actorField: "source", victimField: "target" },
   // buffApply carries NO position at all — { source, target, origin }
   buffApply: { cls: "texture", entityFallback: ["target", "source"], actorField: "source", victimField: "target" },
+  // ⭐ GH#406 —— 交換筆記本落地。它**借用** buffApply 的剪輯（combatSfx.ts 講了
+  // 為什麼），但**位置必須自己講**：payload 是 { caster, target, resource, from*, to* },
+  // ⛔ 一個 x/z 都沒有，所以只能靠 entity fallback。⭐ 主體是 **target** ——
+  // 交換發生在「被交換的那個人」身上，⛔ 不是施術者身上。
+  resourceSwap: { cls: "texture", entityFallback: ["target", "caster"], actorField: "caster", victimField: "target" },
 
   // --- basic attacks --------------------------------------------------------
   basicAttack: { cls: "texture", entityFallback: ["source", "target"], actorField: "source", victimField: "target" },

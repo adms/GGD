@@ -35,6 +35,8 @@
  *     → 「EX 的打擊感火花和技能美術同一個高度」紅（1 vs 0.15）。
  */
 import { describe, it, expect, beforeAll, afterAll, afterEach, vi } from "vitest";
+// GH#384 —— 逐技能特效綁定住在 content/；⛔ 少了這一行從 repo 根跑單檔會看到空的綁定。
+import "./shippedAbilityArt.testkit";
 import { readFileSync, existsSync } from "node:fs";
 import { isShipped } from "../../testkit/contentFixtures";
 import { fileURLToPath } from "node:url";
@@ -52,8 +54,8 @@ import type { AbilityId } from "@ggd/shared/ids";
 import { VfxDefs, type VfxDoc } from "@ggd/shared/content";
 import { zConfigVfxFamiliesDoc } from "@ggd/shared/content/schema/vfx";
 import { zAbilityDoc } from "@ggd/shared/content/schema/ability";
-import { setFamilyTuning, w3xArtFor, W3X_ABILITY_ART } from "./w3xAbilityArt";
-import { W3X_FAMILY_ART } from "./w3xFamilyArt";
+import { setFamilyTuning, w3xArtFor, w3xAbilityArtRows } from "./w3xAbilityArt";
+import { w3xFamilyArtRows } from "./w3xFamilyArt";
 import {
   familyCastHeightY,
   setCastHeightSource,
@@ -149,8 +151,8 @@ function cast(abilityId: string, into: Scene = scene): { art: Drawn[]; impact: D
 /**
  * 這張表裡真的走**家族原型**那條路的技能 id。
  *
- * ⚠️ `W3X_ABILITY_ART` 的硬表晉升會蓋過家族（`w3xArtFor` 是
- * `W3X_ABILITY_ART[id] ?? familyRow(id)`），而那些列播的是原圖**真的抽出來的
+ * ⚠️ `w3xAbilityArtRows()` 的硬表晉升會蓋過家族（`w3xArtFor` 是
+ * `w3xAbilityArtRows()[id] ?? familyRow(id)`），而那些列播的是原圖**真的抽出來的
  * 發射器組**、不是家族原型，所以它們沒有家族高度可用，一律留在平面高度。
  * 這個交集不是我猜的：第一版沒有排除它，測試就指名紅給我看
  * （`godie-uvng.e → w3xfx-godie-tectonicfury-p0 @ y=1`）。
@@ -160,8 +162,8 @@ function cast(abilityId: string, into: Scene = scene): { art: Drawn[]; impact: D
 // 而綁定表留著它們是刻意的。⛔ 拿退場的技能當分母，這條就會用「58 不到 83」這種
 // 跟「施法高度有沒有送到 Babylon」完全無關的訊息紅。
 const idsOfFamily = (family: string): string[] =>
-  Object.entries(W3X_FAMILY_ART)
-    .filter(([id, r]) => r.family === family && !W3X_ABILITY_ART[id] && isShipped("abilities", id))
+  Object.entries(w3xFamilyArtRows())
+    .filter(([id, r]) => r.family === family && !w3xAbilityArtRows()[id] && isShipped("abilities", id))
     .map(([id]) => id);
 
 describe("#251 施法高度真的送到 Babylon (cast-height-applied)", () => {
@@ -263,7 +265,7 @@ describe("#251 施法高度真的送到 Babylon (cast-height-applied)", () => {
   });
 
   it("`familyCastHeightY` 對沒有家族的技能一律回平面高度（硬表晉升那 34 支）", () => {
-    // `W3X_ABILITY_ART` 的列沒有 `heightY`（它們沒有家族原型），absent 必須
+    // `w3xAbilityArtRows()` 的列沒有 `heightY`（它們沒有家族原型），absent 必須
     // 讀成「用平面高度」而不是 0 —— 0 = 埋進地板，第①號故障。
     setCastHeightSource("family");
     const art = w3xArtFor("godie-e002.e");

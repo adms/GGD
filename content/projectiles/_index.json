@@ -1,6 +1,6 @@
 {
   "collection": "projectiles",
-  "hash": "8f4c13e53770",
+  "hash": "8a2430672afe",
   "entries": [
     {
       "id": "basic-attack",
@@ -55,6 +55,12 @@
       "path": "projectiles/imported.bolt.void.json",
       "hash": "e86e542fd0cd",
       "size": 170
+    },
+    {
+      "id": "imported.thrust.arcane",
+      "path": "projectiles/imported.thrust.arcane.json",
+      "hash": "ec4851848df1",
+      "size": 194
     },
     {
       "id": "imported.wave",

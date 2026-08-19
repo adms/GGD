@@ -263,6 +263,23 @@ function countsFor(id, schema) {
   return counts;
 }
 
+/**
+ * ⭐ GH#395 —— 這份產物**刻意留著時鐘**，而理由要寫在這裡而不是被人再問一次。
+ *
+ * 判準是「這份檔案的 `--check` 需不需要逐位元組？」——`ROSTER.json` **沒有**
+ * `--check`，也**不可能**有：它不是從版控裡的輸入推導出來的，它是一個跑著的
+ * 服務（本檔的 daemon）在**產生語音**之後publish 的一份快照。沒有任何 build、
+ * CI 或 deploy 步驟會重跑它 ⇒ 它不會製造 `git status` 噪音，也沒有一條閘會被
+ * 一格時間放寬掉。
+ *
+ * 而時間**就是資料**：管理後台那一頁的整個用途是「上次發布的 ROSTER.json」
+ * （`voiceApi.NO_DAEMON_MESSAGE` 逐字這樣寫），`updatedAt` 回答的是「這一位
+ * 英雄的語音狀態上次被寫是什麼時候」。
+ *
+ * ⚠️ 誠實的那一半：`updatedAt` 是 `mtimeMs`，正是 GH#389 點名的那種東西。
+ * 差別在於它**只餵顯示，不餵任何判斷** —— ⛔ 這裡不可以出現「mtime 比較大
+ * 所以比較新」的邏輯（那正是 GH#389 在 `model-budget/roles.ts` 拆掉的那一條）。
+ */
 function rosterRollup(heroes, schema) {
   const lineCount = expandLines(schema).length;
   return {

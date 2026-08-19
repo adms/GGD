@@ -65,7 +65,17 @@ describe("config.range-guide@1 的值到得了畫面 (GH#376)", () => {
 
   it("存進去的顏色/濃度/粗細真的畫在那個圈上", () => {
     applyRangeGuideDoc(EDITED);
-    new AimIndicator(scene).update({ kind: "range", x: 0, z: 0, range: 8, radius: 3 });
+    // ⚠️ GH#415 起 AoE 圈有**自己的圓心**（落點），所以要餵 `aoeX`/`aoeZ` ——
+    //    給 null 的話那個圈根本不會被畫，這條斷言就會在測空氣。
+    new AimIndicator(scene).update({
+      kind: "range",
+      x: 0,
+      z: 0,
+      range: 8,
+      radius: 3,
+      aoeX: 5,
+      aoeZ: 0,
+    });
     expect(matOf("aim-aoe-fill").alpha).toBeCloseTo(0.77, 6);
     expect(matOf("aim-aoe-fill").emissiveColor.asArray()).toEqual([0, 1, 0]);
     expect(matOf("aim-aoe-rim").alpha).toBeCloseTo(SHIPPED_RANGE_GUIDE.rimAlpha, 6);

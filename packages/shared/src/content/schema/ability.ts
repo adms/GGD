@@ -10,6 +10,7 @@ import { zAbilityVfxLayers } from "./abilityVfx";
 // 四個級別名（小/中/大/超大）。⛔ 不要在這裡重打一份字串陣列 —— 後台下拉、
 // 級距表、文件都讀同一個常數，抄第二份就是 drift 的起點。
 import { AOE_TIER_NAMES } from "../aoeTiers";
+import { RANGE_TIER_NAMES } from "../rangeTiers";
 
 export const zCastType = z.enum(["targeted", "skillshot", "ground", "self", "dash"]);
 
@@ -605,9 +606,22 @@ export const zAbilityDef = z
      * 兩格都填 → **級別贏**（理由寫在那支檔案：讓手寫值蓋過去等於這個機制
      * 對那支技能靜默失效）。要留特例就不要填級別。
      *
-     * 小 ≈ 5 人 ／ 中 ≈ 10 人（預設）／ 大 ≈ 1/4 競技場 ／ 超大 ≈ 1/3 競技場。
+     * 小 ≈ 5 人 ／ 中 ≈ 10 人（預設）／ 大 ≈ 1/4 競技場 ／ 超大 ≈ 1/3 競技場
+     * ／ 極大 ≈ 1/2 競技場。
      */
     radiusTier: z.enum(AOE_TIER_NAMES).optional(),
+    /**
+     * ⭐ 施法距離級別（GH#414，owner 2026-08-19：「可施展技能的距離普遍超遠」）。
+     *
+     * 與 `radiusTier` 完全同一個形態：填了這一格就**不要**填 `range` ——
+     * 註冊時由 `config.range-tiers@1` 翻成距離（`content/rangeTiers.ts` 的
+     * `resolveRangeTier`，全專案唯一的查表處）。兩格都填 → **級別贏**。
+     *
+     * ⚠️ 級距值與 AoE **同一條梯子**（決鬥區半徑 24 的 1/8…1/2）：
+     * 小 3 ／ 中 4.5 ／ 大 6 ／ 超大 8 ／ 極大 12。
+     * 一支「大」的技能打得到 6，炸開也是 6 —— 那是 owner 的「統一」。
+     */
+    rangeTier: z.enum(RANGE_TIER_NAMES).optional(),
     targetsEnemies: z.boolean().optional(),
     effects: z.array(zEffectDef),
     /**

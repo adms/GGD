@@ -99,6 +99,25 @@ export const CREDITS: readonly CreditEntry[] = [
       "且不得提供逐一試聽／下載的音效展示頁（該行為屬再配布）。",
   },
   {
+    // GH#402. NOT `mandatory` — that flag means a LICENCE compels the display,
+    // and Blizzard's compels nothing (it grants nothing either). The obligation
+    // is to the OWNER's own condition on shipping these bytes, quoted below;
+    // removing this entry removes the basis for the files being in the repo.
+    // Per-clip detail: blizzardVfxCredits.ts (imported from the generated
+    // ledger, so a clip cannot exist without its row).
+    what: "音效（原作擷取）",
+    title: "Warcraft III 原作音效（技能／武器／特效）",
+    author: "Blizzard Entertainment",
+    license: "權利人保留；非授權散布",
+    sourceUrl: "https://battle.net/",
+    mandatory: false,
+    terms:
+      "自使用者本機安裝的 Warcraft III 資料檔擷取，未經轉檔或加工。本專案未取得散布授權；" +
+      "隨本站提供係基於站方（本專案作者，亦為原始地圖作者）對其私人站台的決定 —— " +
+      "線上為雙重審查、僅限親友的遊玩環境。逐檔出處見下方清單與 " +
+      "content/assets/audio/wc3/PROVENANCE.md。",
+  },
+  {
     what: "背景音樂",
     title: "GGD 自製配樂（11 首）",
     author: "本專案 tools/bgm-gen 程式生成",

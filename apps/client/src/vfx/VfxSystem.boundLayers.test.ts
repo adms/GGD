@@ -13,7 +13,7 @@
  * 那種測試,它綠著而玩家一直看到替身。斷言全部指向「引擎輸出的參數真的不同」。
  *
  * ⚠️ 「綁定前」必須用**同一個 ability id** 註冊,不能用 `<id>.unbound` 這種
- * 複製品:`W3X_FAMILY_ART` 是**用 id 當 key** 的,換了 id 就掉出家族推導,對照組
+ * 複製品:`w3xFamilyArtRows()` 是**用 id 當 key** 的,換了 id 就掉出家族推導,對照組
  * 會退回 `fx.prim.*`,於是「綁定後比綁定前多」變成一句廢話(第④號故障:斷言
  * 方向跟缺陷無關)。第一版就是這樣寫的,量到才發現 —— 對照組播的是
  * `fx.prim.void.explosion-lg` 而不是 `fx.fam.burst.w3x-ff0000.s150`。
@@ -41,6 +41,8 @@
  * 讓內容檔和推導安靜地漂開。
  */
 import { describe, it, expect, beforeAll, afterAll, beforeEach, vi } from "vitest";
+// GH#384 —— 逐技能特效綁定住在 content/；⛔ 少了這一行從 repo 根跑單檔會看到空的綁定。
+import "../render/vfx/shippedAbilityArt.testkit";
 import { readFileSync } from "node:fs";
 import { readContentJson } from "../testkit/contentFixtures";
 import { fileURLToPath } from "node:url";
@@ -261,7 +263,7 @@ describe("B3 綁定:出貨技能的多層特效在引擎上真的是多組發射
    * 對這兩支技能而言影響有界 —— 家族原型**照定義只有一個發射器**
    * (`familyRow` 的 `extra` 是空陣列),所以 rig 「把一整組 emitter 當串流播」
    * 的那個優勢在這裡沒有東西可發揮。但這件事對 B1–B6 其他桶**不成立**:
-   * `W3X_ABILITY_ART` 那 34 支帶著 `extra`(例如 frostnova 是 4 個),對那些
+   * `w3xAbilityArtRows()` 那 34 支帶著 `extra`(例如 frostnova 是 4 個),對那些
    * 技能寫 `vfxLayers` 會把整組 emitter 換成一次性 burst。
    *
    * 這條測試存在的意義是:哪天有人把層搬到階梯的其他位置、或讓層也走 rig,

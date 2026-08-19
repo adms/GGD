@@ -30,18 +30,25 @@ const CONTENT = join(REPO, "content");
 const AUDIO = join(CONTENT, "assets", "audio");
 
 /**
- * THE COPYRIGHT-GATE CARVE-OUT (content/assets/blizzard-local/README.md).
- * The per-ability stock-MPQ cast clips (`wc3.*` keys of the task-#78 音效 port)
- * are Blizzard-owned and NOT redistributable, so their files deliberately do
- * NOT exist under content/ — they live in the git-ignored
- * data/blizzard-overlay/ability-sfx/ store (tools/w3x-import/
- * extract_stock_sfx.py) and the audio map references them through the dev-only
- * `assets/blizzard-local/` mount, which prod never serves BY CONSTRUCTION.
- * The on-disk checks below therefore resolve these refs against the overlay
- * store when a machine has staged it, and only shape-check them when it has
- * not (CI has neither the MPQs nor the store). The client never fetches them
- * outside a full-asset build (combatSfx.WC3_OVERLAY_ABILITY_SFX gates on
- * config/fullAssets), so a shipped bundle cannot be pointed at the mount.
+ * THE COPYRIGHT-GATE CARVE-OUT — RETIRED 2026-08-19 (GH#402).
+ *
+ * This block used to explain why the `wc3.*` keys deliberately pointed OUTSIDE
+ * content/: the clips were Blizzard-owned and lived in the git-ignored
+ * data/blizzard-overlay/ability-sfx/ store, reachable only through the dev-only
+ * `assets/blizzard-local/` mount that prod never served.
+ *
+ * The owner retired that rule for these files by explicit decision — first for
+ * the model soundsets, then「既有 60 個 wc3.* 沒一起搬 => move」for these. All
+ * of them now live in content/assets/audio/wc3/, are committed, and are served
+ * by the ordinary prod content route. So the `wc3.*` refs are no longer special
+ * to this file at all: they are ordinary content-relative paths and the generic
+ * on-disk existence check below covers them like every other clip.
+ *
+ * The overlay-resolving helpers are KEPT rather than deleted because the store
+ * still exists and still holds what the rulings did NOT cover (511 character
+ * voice lines, 40 models). If any audio-map ref ever points back into
+ * `assets/blizzard-local/` again, this machinery is what keeps it honest.
+ * Provenance for the moved bytes: content/assets/audio/wc3/PROVENANCE.md.
  */
 const OVERLAY_PREFIX = "assets/blizzard-local/";
 const OVERLAY_STORE = join(REPO, "data", "blizzard-overlay");

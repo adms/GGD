@@ -63,7 +63,7 @@ const SPEC_DOC = {
   schema: "icon-console/style-spec@1",
   templateVersion: "icon-gen/1",
   contentDigest: "deadbeef",
-  sources: [{ path: "tools/icon-gen/src/prompt.py", sha256: "aa", bytes: 1, mtime: "" }],
+  sources: [{ path: "tools/icon-gen/src/prompt.py", sha256: "aa", bytes: 1 }],
   template: { prefix: "P", negative: "N", shape: "S", example: "E" },
   textMode: { field: "", instruction: "", note: "" },
   lexicon: {},

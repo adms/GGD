@@ -150,7 +150,8 @@ export const LAYER_FIELD_LABEL: Readonly<Record<string, string>> = {
 export const LAYER_FIELD_HINT: Readonly<Record<string, string>> = {
   vfxKey:
     "這一層要播 content/vfx/ 裡的哪一份文件。只列得出 vfx@1（粒子）——" +
-    "ribbon@1（緞帶）走的是另一條 registry，填進來執行期會被靜靜跳過",
+    "ribbon@1（緞帶）與 attachment@1（骨頭掛件）走的是另外兩條 registry，" +
+    "填進來執行期會被靜靜跳過。掛件要綁在 config/ambient-vfx.json 的 bindings 上（GH#392）",
   enabled: "關掉 = 這一層暫時不播，但設定留著（不用刪掉再重建）",
   attachTo:
     "caster = 施法者當下的位置（單一 vfxKey 時代唯一的行為）；point = 技能的落點。" +

@@ -9,6 +9,34 @@
  * a tunnel must see what he sees on localhost rather than 40 of 113 champions
  * replaced by generic KayKit stand-ins with no voice.
  *
+ * REWRITTEN AGAIN, 2026-08-19 (GH#402), by explicit owner decision:
+ *
+ *   > 「請幫我**註記取消這個規則**，現在的線上已經是**雙重審查只給認識的親友玩了**，
+ *   >  請**直接上架但註記來源就好 不要ignore**」
+ *
+ * That retires clause 3's "no Blizzard bytes may live in content/" FOR ONE
+ * NAMED SET, widened the same day by a second ruling ("既有 60 個 wc3.* 沒一起搬
+ * => move"): the model-soundset clips AND task #78's ability-declared ones now
+ * share content/assets/audio/wc3/, committed and served from the ordinary prod
+ * content route. What stayed behind is the 511 CHARACTER VOICE LINES — neither
+ * ruling mentioned them, and "he opened the SFX" must not be read as "he opened
+ * data/blizzard-overlay/".
+ * It is the same posture as #239 (the retired per-peer copyright gate): the
+ * deploy is a double-screened family site, and the owner is the map's author.
+ *
+ * ⚠️ THE GATE WAS NOT DELETED — IT WAS TURNED AROUND. Deleting it would swap a
+ * gate for nothing, and the owner's permission came WITH A CONDITION attached
+ * ("註記來源"). So the question this file asks changed from
+ *
+ *     "does content/ contain Blizzard bytes?"        (now: yes, deliberately)
+ * to  "does every Blizzard byte in content/ carry its provenance?"
+ *
+ * A byte with no ledger row is the violation now, and it fails BOTH ways: an
+ * unlisted file is red, and a ledger row with no file is red. What did NOT
+ * change: data/blizzard-overlay/ (the other 437 voice clips + 60 ability SFX +
+ * 40 models) is still git-ignored, still never baked into an image, and this
+ * permission does not reach it.
+ *
  * So the rule this file pins is no longer "never". It is:
  *
  *   1. DEFAULT OFF. Nothing about a normal build, image, chart or compose stack
@@ -25,8 +53,10 @@
  *      overlay file that must be named on the command line, and it flips FOUR
  *      coordinated switches at once (declared tier, client build flag, nginx
  *      tier mount, byte mount). Forgetting any one fails safe.
- *   3. THE BYTES STILL NEVER TRAVEL WITH GIT. The overlay is git-ignored and no
- *      image bakes it in; it arrives only as an explicit runtime mount.
+ *   3. THE OVERLAY STORE'S BYTES STILL NEVER TRAVEL WITH GIT.
+ *      data/blizzard-overlay/ is git-ignored and no image bakes it in; it
+ *      arrives only as an explicit runtime mount. The GH#402 clips are a
+ *      SEPARATE, NAMED set that lives in content/ and must carry provenance.
  *   4. A HALF-CONFIGURED OPT-IN FAILS LOUDLY AT BOOT rather than quietly serving
  *      stand-ins. That silence is the single most dangerous thing about this
  *      feature and the boot assertion exists to remove it.
@@ -41,6 +71,7 @@
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync, readdirSync, existsSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { resolveFullAssets } from "../../config/fullAssets";
@@ -98,6 +129,58 @@ describe("overlay gate: content/ ships no Blizzard binaries", () => {
 
   it("the overlay store is git-ignored wholesale (never committed)", () => {
     expect(read(".gitignore")).toContain("/data/**");
+  });
+});
+
+// ===========================================================================
+// GH#402 — THE CONDITION ON THE PERMISSION.
+//
+// The owner allowed these 73 clips into content/ "但註記來源就好". This is that
+// condition as a gate: every committed Blizzard byte carries its origin, and
+// the ledger describes exactly what is on disk — no ghosts in either direction.
+//
+// Derived, never a hand-kept list: the file set comes from readdirSync and the
+// rows from the generated ledger, so adding a clip without regenerating is red.
+// ===========================================================================
+
+describe("overlay gate: every committed Blizzard byte carries its provenance", () => {
+  const CLIP_DIR = "content/assets/audio/wc3";
+  const ledger = JSON.parse(read(`${CLIP_DIR}/PROVENANCE.json`)) as {
+    clips: Record<string, { wc3Path: string; archive: string; sha256: string; file: string }>;
+    gaps: unknown[];
+  };
+  const onDisk = readdirSync(join(REPO, CLIP_DIR))
+    .filter((f) => f.endsWith(".wav"))
+    .sort();
+
+  it("the clip files and the ledger rows are the SAME set (no undocumented byte, no ghost row)", () => {
+    const fromLedger = Object.values(ledger.clips)
+      .map((c) => c.file.replace(/^.*\//, ""))
+      .sort();
+    expect(onDisk).toEqual(fromLedger);
+    expect(onDisk.length).toBeGreaterThan(0);
+  });
+
+  it("every row names its source archive + original path and PINS the bytes by sha256", () => {
+    for (const [key, c] of Object.entries(ledger.clips)) {
+      expect(c.archive, `${key}: no source archive`).toMatch(/\S/);
+      expect(c.wc3Path, `${key}: no original MPQ path`).toMatch(/\\/);
+      // The hash is the part that cannot be faked by editing prose: recompute it.
+      const bytes = readFileSync(join(REPO, "content", c.file));
+      expect(createHash("sha256").update(bytes).digest("hex"), `${key}: sha256 drift`).toBe(
+        c.sha256,
+      );
+    }
+  });
+
+  it("the permission does NOT reach the overlay store — it is still ignored and unbaked", () => {
+    // The owner named TWO sets across two rulings (the model soundsets, then
+    // "既有 60 個 wc3.* 沒一起搬 => move"). Both are technical SFX and both now
+    // live in CLIP_DIR. The 511 CHARACTER VOICE LINES in data/blizzard-overlay/
+    // sounds/ were in NEITHER ruling (#10 / #81 territory) and keep the old
+    // posture, as do the 40 models.
+    expect(read(".gitignore")).toContain("/data/**");
+    expect(existsSync(join(REPO, CLIP_DIR, "PROVENANCE.md"))).toBe(true);
   });
 
   it("no Dockerfile bakes the overlay bytes into an image", () => {

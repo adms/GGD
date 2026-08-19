@@ -26,7 +26,7 @@
  *
  *   MUTABLE (read live, every time the page opens)
  *     the ability docs' CURRENT `vfxKey`, which vfx docs exist in `content/vfx`,
- *     and `W3X_ABILITY_ART` — the renderer's own promotion table. Change any of
+ *     and `w3xAbilityArtRows()` — the renderer's own promotion table. Change any of
  *     those and the page changes with no regeneration step at all.
  *
  * The status of every row is derived from the join, never stored. That is what
@@ -41,7 +41,7 @@
  *
  * PURE: no React, no Babylon, no fetch. Everything is a function of its inputs.
  */
-import { W3X_ABILITY_ART, extraVfxDocIds } from "../../render/vfx/w3xAbilityArt";
+import { w3xAbilityArtRows, extraVfxDocIds } from "../../render/vfx/w3xAbilityArt";
 
 // ---------------------------------------------------------------- inputs ---
 
@@ -379,7 +379,7 @@ export function extractionLedger(
   if (!manifest) return [];
   const primaries = new Set(abilities.map((a) => a.vfxKey).filter((k): k is string => !!k));
   const extras = new Set<string>();
-  for (const id of Object.keys(W3X_ABILITY_ART)) for (const d of extraVfxDocIds(id)) extras.add(d);
+  for (const id of Object.keys(w3xAbilityArtRows())) for (const d of extraVfxDocIds(id)) extras.add(d);
 
   const out: LedgerEntry[] = [];
   for (const eff of manifest.effects) {

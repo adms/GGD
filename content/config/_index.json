@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "16f1cfec2a06",
+  "hash": "71b1bea09e51",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -11,8 +11,8 @@
     {
       "id": "aoe-tiers",
       "path": "config/aoe-tiers.json",
-      "hash": "036362729220",
-      "size": 374
+      "hash": "bc80dbbf4dd9",
+      "size": 843
     },
     {
       "id": "arena-pool",
@@ -29,8 +29,8 @@
     {
       "id": "audio-map",
       "path": "config/audio-map.json",
-      "hash": "a36465eb3e58",
-      "size": 28438
+      "hash": "7246e7843f60",
+      "size": 42678
     },
     {
       "id": "audio-mix",
@@ -155,8 +155,8 @@
     {
       "id": "displacement-tiers",
       "path": "config/displacement-tiers.json",
-      "hash": "383fc50f816d",
-      "size": 1231
+      "hash": "0c3abfcc34b6",
+      "size": 1895
     },
     {
       "id": "form-visuals",
@@ -243,6 +243,12 @@
       "size": 1421
     },
     {
+      "id": "range-tiers",
+      "path": "config/range-tiers.json",
+      "hash": "8e2307fcb00e",
+      "size": 789
+    },
+    {
       "id": "ranking",
       "path": "config/ranking.json",
       "hash": "601d5eb9e578",
@@ -327,6 +333,12 @@
       "size": 1374
     },
     {
+      "id": "vfx-ability-art",
+      "path": "config/vfx-ability-art.json",
+      "hash": "5eb70ae140da",
+      "size": 115098
+    },
+    {
       "id": "vfx-cleanup",
       "path": "config/vfx-cleanup.json",
       "hash": "bae13330de93",
@@ -335,8 +347,8 @@
     {
       "id": "vfx-families",
       "path": "config/vfx-families.json",
-      "hash": "9ea376888c51",
-      "size": 34745
+      "hash": "8576a88b73fc",
+      "size": 36593
     },
     {
       "id": "victory-fx",

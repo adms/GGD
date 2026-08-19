@@ -37,7 +37,6 @@ import json
 import os
 import re
 import sys
-import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -359,9 +358,18 @@ def main() -> int:
         manifest_models[rel] = entry
 
     if not args.dry_run:
+        # ⛔ 沒有 `generatedAt`（GH#395，判例 GH#389）。
+        #
+        # 這份 manifest 是**進版控的產物**，而且客戶端每一場都真的抓它
+        # （`/content/assets/models/_lod.json`）。一格時鐘在這裡買不到任何東西：
+        #   · 沒有人讀它 —— `render/modelLod.ts` 只讀 `tiers` 與 `models`;
+        #   · 它讓「這份 manifest 有沒有過期」永遠不可能做成**逐位元組**的閘，
+        #     而這支產生器要 Blender，跑一次很貴 ⇒ 逐位元組是唯一負擔得起的檢查;
+        #   · 每重跑一次就髒一次，稀釋 `git status` 這個訊號（2026-08-02 那次
+        #     「未追蹤來源被烘進產物」的生產事故，靠的就是這個訊號被人看見）。
+        # ⭐ 身分由**內容**給：`models` 逐檔帶著 sha/bytes/tris，那才是可以比對的東西。
         manifest = {
             "schema": "lod@1",
-            "generatedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "generatedBy": "tools/lod-gen/gen_lod.py",
             "tiers": ["mid", "small"],
             "models": dict(sorted(manifest_models.items())),

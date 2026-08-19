@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_317ac4b1a253",
+    "contentVersion": "cv_8085b22421cb",
     "collections": {
       "champions": {
-        "hash": "63307b3d40b4",
+        "hash": "67e663a9b5ad",
         "count": 78
       },
       "abilities": {
-        "hash": "b8c7aa9ead74",
+        "hash": "0ea097759ab4",
         "count": 461
       },
       "items": {
@@ -22,8 +22,8 @@
         "count": 91
       },
       "projectiles": {
-        "hash": "8f4c13e53770",
-        "count": 20
+        "hash": "8a2430672afe",
+        "count": 21
       },
       "status-effects": {
         "hash": "2d700fbb946c",
@@ -34,7 +34,7 @@
         "count": 3
       },
       "arenas": {
-        "hash": "3889132997ec",
+        "hash": "5633a330eb83",
         "count": 13
       },
       "maps": {
@@ -42,8 +42,8 @@
         "count": 7
       },
       "config": {
-        "hash": "16f1cfec2a06",
-        "count": 63
+        "hash": "71b1bea09e51",
+        "count": 65
       },
       "models": {
         "hash": "38d96d54f6e6",
@@ -89,7 +89,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "fcf0c9a1",
+    "fingerprint": "fba3ddd8",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -450,6 +450,7 @@
       "radius",
       "radiusTier",
       "range",
+      "rangeTier",
       "recoveryRoots",
       "recoverySec",
       "rootWhileCasting",
@@ -503,6 +504,18 @@
         "widthAbove",
         "widthBelow"
       ],
+      "attachment@1": [
+        "anim",
+        "animLoop",
+        "follow",
+        "id",
+        "modelKey",
+        "note",
+        "offsetY",
+        "points",
+        "scale",
+        "schema"
+      ],
       "ability@1.vfxLayers[]": [
         "alpha",
         "attachTo",
@@ -548,6 +561,31 @@
         "soundLoopMaxMs",
         "soundLoopMs",
         "timeScale"
+      ],
+      "config.vfx-ability-art@1.bindings.prim": [
+        "element",
+        "primitive",
+        "size"
+      ],
+      "config.vfx-ability-art@1.bindings.family": [
+        "anchor",
+        "family",
+        "flyHeight",
+        "model",
+        "paramSource",
+        "provenance",
+        "scale",
+        "tint",
+        "via",
+        "w3aId"
+      ],
+      "config.vfx-ability-art@1.bindings.promoted": [
+        "extra",
+        "family",
+        "primary",
+        "provenance",
+        "via",
+        "w3aId"
       ]
     },
     "docSurface": {
@@ -574,6 +612,7 @@
         "radius",
         "radiusTier",
         "range",
+        "rangeTier",
         "recoveryRoots",
         "recoverySec",
         "rootWhileCasting",
@@ -999,6 +1038,14 @@
         "caveat": "⭐ 四個時機（發射 / 命中 / 循環 / 消散）填的是 **`config.audio-map@1.sfx` 的 key**，⛔ 不是檔名也不是 URL —— 音量 / 冷卻 / 同時發聲數住在 audio-map 那一份，播放走 `AudioSystem.playSfx` ⇒ 玩家的總音量與 SFX 開關自動適用。⚠️ 兩層逐格覆寫：`abilities[<id>].soundX` 蓋 `families[<fam>].soundX`，⛔ 不是「填一格就整組換掉」。⚠️ **循環音是重播不是真 loop**：每 `soundLoopMs` 重放一次，並在 `soundLoopMaxMs` 絕對到期時自動回收並改播消散音（⛔ 沒有「一直響到有人叫停」）。⚠️ 填一個 audio-map 沒有的 key = 這個時機安靜（⛔ 不是報錯）；填 `wc3.*` 那一族要注意它們住在只有 full-asset build 才掛得上的 Blizzard overlay，正式站上會**退回家族那一格**。",
         "evidence": "packages/shared/src/content/schema/vfx.ts（`VFX_SOUND_CUES` / `resolveVfxSound`）+ apps/client/src/audio/vfxSound.ts + apps/client/src/audio/vfxSoundWired.test.ts + content/config/vfx-families.json（21 個家族原型 + 72 支原作 JASS 音效的逐支覆寫，由 tools/w3x-import/build_vfx_sound_bindings.py 產生）",
         "nearestExisting": "⚠️ `ability@1.sfxKey` 長得很像但**不是同一件事**：那是「這一支技能的身分音」（一顆 `abilityCast` 一發），而這一列是「這一招的**特效**自己帶的那幾發」。同一次施法兩邊都會響，這正是原作的樣子。"
+      },
+      {
+        "key": "vfx.bone-attachment@1",
+        "plan": "GH#392 穿在骨頭上的模型（WC3 `Asph` 球體）",
+        "state": "supported",
+        "caveat": "⭐ **一份 `attachment@1` 綁在 `config.ambient-vfx@1.bindings` 上**，鍵可以是 **modelKey**（所有穿這具身體的人都戴著）或 **championId**（形態感知）。⚠️ 悟空兩態共用 `imported.goku`，所以「只有超三戴」**一定要用 championId** —— 填 modelKey 的話基本型也會戴上。⚠️ `points[]` **一格掛一份拷貝**（= WC3 的 `atac`）：雙手就是 `[\"left,hand\",\"right,hand\"]`。⛔ `\"right,hand\"` 是**一個**掛點的兩個逗號 token，⛔ 不是兩個掛點。掛點名解析不出來 = 退回模型原點（那是 WC3 自己的行為，⛔ 不是缺陷）。⚠️ `anim` 填的是**掛件自己的** glb 動畫軌名（出貨的三顆都只有一條 `Stand`）；省略 = 播全部，填一個對不上的名字 = 一條都不播（⛔ 不會退回第一條）。⚠️ `follow: false` 是**世界座標快照**，掛件從此和角色無關 —— ⛔ 不是「掛在模型根上」（那還是會跟著角色走）。⚠️ 掛件的生命週期綁在那具 body 上：變身會整個重建 view，所以「變回本體 = 掛件消失」不需要任何解除步驟。",
+        "evidence": "packages/shared/src/content/schema/vfx.ts（`zAttachmentDoc`）+ packages/shared/src/content/wornAttachments.ts（兩個來源折成一個型別）+ apps/client/src/render/views/ChampionView.ts（`attachOnePart`：parent = 跟隨、`g.play()` = 播動畫）+ apps/client/src/render/boneAttachmentFollow.test.ts（NullEngine 真的移動角色再讀掛件的**世界座標**）",
+        "nearestExisting": "⚠️ `vfx@1.anchorBone` 長得很像但**不是同一件事**：那是把一組**粒子發射器**掛到關節上（`AmbientVfx` 那條路），這一列掛的是**一整個模型**（有網格、有骨架、有自己的動畫軌）。⛔ 也不要跟 #73/#255「烘進 glb 的幾何」混淆：共用 modelKey 的變身對只能走執行期，烘進去基本型也會長出來。"
       }
     ],
     "unsupported": [
@@ -2604,12 +2651,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "fcf0c9a1",
+    "engineFingerprint": "fba3ddd8",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 fcf0c9a1 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 fba3ddd8 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -3192,7 +3239,7 @@
     "itemCount": 110,
     "liveEndpoint": "/api/v1/curation/whitelist"
   },
-  "assetManifestDigest": "7fbde8f54414",
+  "assetManifestDigest": "22ed7dc7fca0",
   "deltaExportAllowed": false,
   "supportedModes": [
     "bootstrap"
@@ -3203,5 +3250,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "51126a997068"
+  "profileDigest": "5f108e7f59ca"
 }

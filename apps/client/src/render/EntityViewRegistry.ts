@@ -249,8 +249,13 @@ export interface ViewContentHooks {
    * `null` = 這個 body 沒有掛件。**基本型永遠是 null**,因為
    * `resolveFormVisual` 的第一道關卡是 `isAlternateForm` —— 「基本型悟空不可以
    * 長出超三的頭」在資料層就成立,不是靠這裡記得判斷。
+   *
+   * ⭐ GH#392 —— 回傳值是**一份或一串**。`attachment@1` 的 `points[]` 一格一份
+   * (owner 的「雙手」= 兩份),而變身外觀表那一份仍然可以直接回單一物件。
    */
-  formAttachmentFor?(e: EntityViewState): FormAttachmentSpec | null | undefined;
+  formAttachmentFor?(
+    e: EntityViewState,
+  ): FormAttachmentSpec | readonly FormAttachmentSpec[] | null | undefined;
 
   /**
    * #247 —— 這具身體腳下的圈圈要畫多大 (GGD units, diameter). `null`/absent =
@@ -457,6 +462,15 @@ export class EntityViewRegistry {
   private readonly speedEma = new Map<number, number>();
   /** last-applied cull visibility per champion (avoid redundant setEnabled). */
   private readonly culled = new Map<number, boolean>();
+  /**
+   * 這一幀被 **GH#324 視野遮蔽**藏起來的英雄（⛔ 不含被繪製距離剔除的）。
+   *
+   * ⭐ 兩者分開記是刻意的：繪製距離是一格**畫質設定**（遠處的敵人血條照樣要看得到），
+   * 視野遮蔽是一條**遊戲機制**（「牆後的敵人不畫」）—— 而一條浮在牆後、底下沒有身體
+   * 的血條，正是那條機制要藏的東西的完美位置讀數。同一個判斷這個檔案對「隱形」
+   * 已經下過一次（見 `setStealthAlpha` 上面那段），這裡只是把它補給遮蔽。
+   */
+  private readonly occludedIds = new Set<number>();
   /** w3x vertex tint state per champion (task #49); see `applyTint`. */
   private readonly tinted = new Map<number, TintState>();
   /**
@@ -510,6 +524,17 @@ export class EntityViewRegistry {
   posOf(entityId: number): { x: number; z: number } | null {
     const p = this.lastPos.get(entityId);
     return p ? { x: p.x, z: p.z } : null;
+  }
+
+  /**
+   * 這具身體這一幀被 **GH#324 視野遮蔽**藏起來了嗎？（⛔ 繪製距離剔除不算）
+   *
+   * 消費者是 `GameApp.updateFrameBus`：藏起來的身體**不掛血條**。少了這一格，
+   * 牆後的敵人會留下一條浮在半空、底下沒有東西的血條 —— 那就是 owner
+   * 2026-08-19「模型都沒畫出來但[血條]在」的那一半。
+   */
+  isOccluded(entityId: number): boolean {
+    return this.occludedIds.has(entityId);
   }
 
   /** Event fanout → animation pulses on the affected views. */
@@ -726,6 +751,7 @@ export class EntityViewRegistry {
     this.lastPos.delete(id);
     this.speedEma.delete(id);
     this.culled.delete(id);
+    this.occludedIds.delete(id);
     this.tinted.delete(id);
     this.builtForm.delete(id);
   }
@@ -962,6 +988,23 @@ export class EntityViewRegistry {
       // landing ticks, where h is exactly 0, still count as in-flight.
       view.setPose(pose.x, pose.z, pose.fx, pose.fz, pose.h ?? e.h ?? 0, e.airborne === true);
 
+      // ⭐ `lastPos` 是 {@link posOf} **唯一**的答案，而 `posOf()` 正是血條錨點、
+      // 施法特效（`VfxSystem` 的 `entityPos`）、狀態光環、遠端腳步與空間音訊
+      // 讀位置的地方。所以它必須為**每一個同步到的實體**寫下去，
+      // ⛔ 不可以留在下面那個 `if (hidden) continue` 的後面。
+      //
+      // ⚠️ 留在後面的後果 owner 2026-08-19 逐字描述過：「兩個 bot **在界外**並且
+      // **模型都沒畫出來但有施法特效**⋯**過了一陣子才突然出現在場內**」。
+      // 大聖杯洞窟開場那一刻，從我方出生點 (-19,1) 看過去，牆剛好擋住敵方的
+      // (19,-3) 與 (19,5) 兩個座位 ⇒ 那兩具身體被遮蔽剔除 ⇒ 這一行不跑 ⇒
+      // 血條與施法特效被釘在**上一次看得到他們的位置**，而回合交界時那個位置
+      // 屬於**上一張場地**（中場是 arena.skeleton 的 x=-24），於是它落在
+      // 大聖杯洞窟地板外面的虛空上。走出牆後才「突然出現在場內」。
+      //
+      // ⚠️ `last` 必須在覆寫**之前**取，否則位移永遠是 0，跑步動畫整個消失。
+      const last = this.lastPos.get(e.id);
+      this.lastPos.set(e.id, { x: pose.x, z: pose.z });
+
       // draw-distance cull: hide champions beyond the configured radius
       // ⭐ GH#324 —— 牆後的敵人不畫。⛔ 只遮敵方（`friendly !== true` 且不是自己），
       // 而且是**純視覺**：伺服器照樣送位置，這裡只是不畫。
@@ -970,6 +1013,8 @@ export class EntityViewRegistry {
         e.friendly !== true &&
         e.isLocal !== true &&
         args.occlude.blocked(pose.x, pose.z);
+      if (occluded) this.occludedIds.add(e.id);
+      else this.occludedIds.delete(e.id);
       if (args.cull || occluded) {
         const dx = pose.x - (args.cull?.cx ?? pose.x);
         const dz = pose.z - (args.cull?.cz ?? pose.z);
@@ -987,8 +1032,8 @@ export class EntityViewRegistry {
         this.culled.set(e.id, false);
       }
 
-      // authoritative anim inputs: alive flag + observed movement
-      const last = this.lastPos.get(e.id);
+      // authoritative anim inputs: alive flag + observed movement (`last` was
+      // read above, BEFORE this frame's position overwrote it)
       const distSq = last
         ? (pose.x - last.x) * (pose.x - last.x) + (pose.z - last.z) * (pose.z - last.z)
         : 0;
@@ -1010,7 +1055,6 @@ export class EntityViewRegistry {
       const prevSpeed = this.speedEma.get(e.id) ?? instSpeed;
       const speed = prevSpeed + (instSpeed - prevSpeed) * SPEED_SMOOTH;
       this.speedEma.set(e.id, speed);
-      this.lastPos.set(e.id, { x: pose.x, z: pose.z });
       const state = view.anim.update({ alive: e.alive, moving }, args.nowMs);
       // #220 revive exemption, re-evaluated EVERY frame (never latched): the
       // `death` event and the snapshot patch carrying the circle can land in

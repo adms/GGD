@@ -994,6 +994,57 @@ export class VfxSystem {
     return mine === theirs ? "ally" : "enemy";
   }
 
+  /**
+   * 一具身體上的一個【交換】變化量（GH#406）。
+   *
+   * ⚠️ **kind 由「方向」決定，⛔ 不是由 resource 決定**，而理由不是美觀：
+   * `combatTextCategory` 對 `heal`/`mana` 在**敵人**身上分別回 `other` / `null`，
+   * 而 `other` 不在出貨預設 scope（`team`）裡 —— 也就是說走 heal 的那一格在
+   * 敵人身上**畫不出來**。付出去的那一邊改走 `damage`，於是（我是施法者時）
+   * 它落在 `dealt`、（我是被交換的那個時）落在 `taken`，兩個都在預設 scope 裡。
+   *
+   * ⚠️ 兩邊都覆蓋 `label`（「交換 +107」），因為交換**既不是治療也不是傷害** ——
+   * 卡片上寫的是交換，而 sim 那一側正是為了這個理由拒絕發 `damage`/`heal`
+   * （sim/effects/swapResource.ts 檔頭第二段）。少了這行字，畫面會宣稱剛剛
+   * 發生了一次治療加一次傷害，而那句話是假的。
+   *
+   * ⚠️ **已知限制（誠實寫下來）**：我是施法者、而**對方拿到**的那一格
+   * （＝我原本比較健康）走 heal → 在敵人身上是 `other` → 預設 scope 不畫。
+   * 那與既有政策一致（別人回血不是你能反應的資訊），⛔ 但它是一個選擇不是疏漏；
+   * 要改的話是給「交換」自己一個 category，不是在這裡繞過去。
+   */
+  private pushSwapDelta(
+    id: unknown,
+    from: unknown,
+    to: unknown,
+    isMana: boolean,
+    caster: unknown,
+    nowMs: number,
+  ): void {
+    if (typeof id !== "number" || typeof from !== "number" || typeof to !== "number") return;
+    const delta = to - from;
+    const amount = Math.abs(delta);
+    // 一個四捨五入後是 0 的交換沒有可畫的東西（夾在上限上的那一邊會這樣）。
+    if (Math.round(amount) < 1) return;
+    const pos = this.ctx.entityPos(id);
+    if (!isFinitePos(pos)) return;
+    const gained = delta > 0;
+    pushCombatText({
+      kind: gained ? (isMana ? "mana" : "heal") : "damage",
+      amount,
+      label: `交換 ${gained ? "+" : "-"}${Math.round(amount)}`,
+      sourceRel: this.relationOf(typeof caster === "number" ? caster : undefined),
+      targetRel: this.relationOf(id),
+      crit: false,
+      blocked: false,
+      killingBlow: false,
+      targetId: id,
+      worldX: pos.x,
+      worldZ: pos.z,
+      nowMs,
+    });
+  }
+
   /** Fire the pooled layered impact kit (flash + sparks + smoke [+ ring]). */
   private layeredPop(
     x: number,
@@ -1324,6 +1375,43 @@ export class VfxSystem {
           worldZ: pos.z,
           nowMs,
         });
+        break;
+      }
+      // ⭐ GH#411 —— 扣魔。`manaRestore` 的**鏡像**，共用同一條 `pushCombatText`
+      // 管線與同一個 `mana` category，差別只有一格 `label`：那個 category 的字首
+      // 寫死是 `+`，而少掉的東西必須讀起來像少掉。沒有這一段，71-00 暗夜契約的
+      // 【魔力全失】就是一整條藍條在一個 tick 內無聲清空（sim/effects/spendMana.ts
+      // 的 VISIBILITY 段），而風王結界的每擊扣魔同樣一個字都沒有。
+      case "manaSpend": {
+        const target = ev.data.target as number | undefined;
+        const amount = ev.data.amount as number | undefined;
+        if (target === undefined || amount === undefined || !(amount > 0)) break;
+        const pos = this.posFromEvent(ev, target);
+        if (!pos) break;
+        pushCombatText({
+          kind: "mana",
+          amount,
+          label: `-${Math.round(amount)}`,
+          sourceRel: this.relationOf(ev.data.source as number | undefined),
+          targetRel: this.relationOf(target),
+          crit: false,
+          blocked: false,
+          killingBlow: false,
+          targetId: target,
+          worldX: pos.x,
+          worldZ: pos.z,
+          nowMs,
+        });
+        break;
+      }
+      // ⭐ GH#406 —— 交換筆記本（44-002）：**兩具身上各一個變化量**。
+      // `swapResource` 刻意繞開傷害／治療佇列，所以既有的飄字一個都不會出現 ——
+      // 玩家看到的只有兩條血條突然對調，跟一次掉包或一個 bug 無法區分。
+      case "resourceSwap": {
+        const isMana = ev.data.resource === "mana";
+        const caster = ev.data.caster;
+        this.pushSwapDelta(caster, ev.data.fromCaster, ev.data.toCaster, isMana, caster, nowMs);
+        this.pushSwapDelta(ev.data.target, ev.data.fromTarget, ev.data.toTarget, isMana, caster, nowMs);
         break;
       }
       // IMPACT PARTICLES by dmgType (fires alongside `damage` on any landed hit;

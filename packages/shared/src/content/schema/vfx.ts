@@ -300,11 +300,90 @@ export const zRibbonDoc = z
 export type RibbonDoc = z.infer<typeof zRibbonDoc>;
 
 /**
- * The `vfx` collection accepts particle docs AND ribbon docs (discriminated
- * on `schema`). The union carries the same vfx@1 sanity refinements.
+ * attachment@1 —— **穿在骨頭上的一個模型**（GH#392）。WC3 的 `Asph` 球體技能
+ * （`Art - Target Attachment Point` + `atac`）在 GGD 這一邊的樣子。
+ *
+ * owner 2026-08-19：
+ * > 「悟空超級賽亞人3還會**球體附著跟隨雙手上播放動畫** 看起來很威猛」
+ *
+ * 那句話裡有**三個不同的能力**，很容易只做到第一個就以為做完了：
+ *
+ * | | 能力 | 這份文件的哪一格 | GH#392 之前 |
+ * |---|---|---|---|
+ * | a | **附著到骨頭**（手／頭／武器／胸） | `points[]` | ✅ 三處都有（`W3xEmitterRig` / `AmbientVfx` / `ChampionView.setFormAttachment`） |
+ * | b | **跟隨**（每幀跟著骨頭的世界矩陣） | `follow` | ✅ 有（掛上去就是 parent，parent 就是跟隨） |
+ * | c | **掛件自己播動畫** | `anim` / `animLoop` | ⛔ **沒有** |
+ *
+ * ⚠️ (c) 的缺法是最安靜的一種：`ChampionView.setFormAttachment` 一直有把
+ * `instantiateModelsToScene` 複製出來的 `animationGroups` 收進一個欄位 ——
+ * **只為了 dispose 它們**，從來沒有人 `play()`。而出貨的三顆掛件
+ * （`goku3head.glb` / `awing.glb` / `war3mapimported-poweraura.glb`）
+ * 各有**一條**叫 `Stand` 的動畫軌，所以悟空的超三頭一直是**定格**的。
+ * 沒有任何守衛會紅，因為每一個零件都是對的（第一·五守則的形狀）。
+ *
+ * ⛔ **這不是 #73 / #255 那件事。** 那兩張處理的是**烘進 glb 的幾何**；
+ * 這一份是**執行期附著** —— 兩者的判準相反：一個共用 modelKey 的變身對
+ * （悟空兩態都是 `imported.goku`）**只能**走執行期，烘進去基本型就會長出超三的頭。
+ *
+ * 綁定住在 `config.ambient-vfx@1.bindings`（既有的那張表，⛔ 不是第二張）：
+ * 鍵可以是 **modelKey**（這具身體永遠戴著）或 **championId**（形態感知 ——
+ * 悟空兩態共用 modelKey，所以只有 championId 分得出超三）。
+ */
+export const zAttachmentDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("attachment@1"),
+    /** 這一格是怎麼來的（w3x 事實 or 美術決定），寫給下一個人看 */
+    note: z.string().max(400).optional(),
+    /** `models/` 的文件 id，例：`imported.goku3head`。硬參照（打錯 = 內容驗證紅） */
+    modelKey: zId,
+    /**
+     * WC3 掛點字串，**逐字**（`"right,hand"` / `"chest"` / `"origin"`）。
+     * ⚠️ `"right,hand"` 是**一個**掛點寫成兩個逗號 token，⛔ 不是兩個掛點 ——
+     * 解析在 `apps/client/src/render/vfx/attachment.ts`（它從 337 份 glb 的普查
+     * 推出六種命名慣例的正規化比對）。
+     *
+     * ⭐ 陣列 = WC3 的 `atac`：**每一格掛一份拷貝**。owner 說的「雙手」就是
+     * `["left,hand", "right,hand"]` —— 兩份拷貝，⛔ 不是一支寫死的雙手程式。
+     */
+    points: z.array(z.string().min(1).max(32)).min(1).max(4),
+    /**
+     * `true`（省略 = true）= **每幀跟著那根骨頭走**（掛在關節底下）。
+     * `false` = 生成當下取一次骨頭的**世界座標**就停在那裡（施法殘留在原地的殼）。
+     *
+     * ⚠️ 這一格存在是因為 (a) 與 (b) 是**兩件事**：只做 (a) 而沒有 (b)，
+     * 球會卡在角色生成時手的位置，角色一走就留在原地 —— 而畫面上第一幀
+     * 看起來完全正確。
+     */
+    follow: z.boolean().optional(),
+    /**
+     * 要播掛件自己的哪一條動畫軌（glb `AnimationGroup` 的名字，例 `"Stand"`）。
+     * **省略 = 播它全部的動畫軌**（出貨的三顆掛件各只有一條 `Stand`，
+     * 這也是 WC3 對一個附著模型做的事）。名字對不上 = 一條都不播（⛔ 不猜）。
+     */
+    anim: z.string().min(1).max(64).optional(),
+    /** 動畫要不要循環。省略 = true（附著物的 `Stand` 是常駐的） */
+    animLoop: z.boolean().optional(),
+    /**
+     * 掛件在**掛點的 local frame**（= 本體 glb 的原生座標系）裡的縮放。
+     * 省略 = 1。⚠️ 兩份 glb 常常是用不同的轉檔倍率烘出來的，所以 1 未必是對的
+     * ——悟空的超三頭是 0.3221 = 0.008946 / 0.027778。
+     */
+    scale: z.number().min(0.01).max(10).optional(),
+    /** 沿 Y 的微調，單位是掛點 local frame。省略 = 0 = 用 mdx 自己烘的高度。 */
+    offsetY: z.number().min(-5).max(5).optional(),
+  })
+  .strict();
+
+export type AttachmentDoc = z.infer<typeof zAttachmentDoc>;
+
+/**
+ * The `vfx` collection accepts particle docs, ribbon docs AND worn-model
+ * attachments (discriminated on `schema`). The union carries the same vfx@1
+ * sanity refinements.
  */
 export const zVfxCollectionDoc = z
-  .discriminatedUnion("schema", [zVfxDocBase, zRibbonDoc])
+  .discriminatedUnion("schema", [zVfxDocBase, zRibbonDoc, zAttachmentDoc])
   .superRefine((doc, ctx) => {
     if (doc.schema === "vfx@1") vfxRefinements(doc, ctx);
   });
@@ -591,7 +670,7 @@ export function projectileSizeMultiplier(hitRadius: number | undefined, gain: nu
   return Math.min(MAX_PROJECTILE_SIZE_MULT, Math.max(MIN_PROJECTILE_SIZE_MULT, raw));
 }
 
-const zW3xFamilyId = z.enum([
+export const zW3xFamilyId = z.enum([
   "shockwaveRing",
   "blink",
   "burst",
@@ -617,7 +696,7 @@ const zW3xFamilyId = z.enum([
 export type W3xFamilyId = z.infer<typeof zW3xFamilyId>;
 
 /** The 13 silhouettes `render/vfx/primitives.ts` ships. */
-const zVfxPrimitiveKind = z.enum([
+export const zVfxPrimitiveKind = z.enum([
   "nova",
   "explosion",
   "shockwave",
@@ -634,7 +713,7 @@ const zVfxPrimitiveKind = z.enum([
 ]);
 
 /** The 13 colours `render/vfx/elements.ts` ships. */
-const zVfxElement = z.enum([
+export const zVfxElement = z.enum([
   "fire",
   "ice",
   "lightning",
@@ -1016,3 +1095,135 @@ export function vfxSoundKeysUsed(doc: ConfigVfxFamiliesDoc | null | undefined): 
   for (const k of Object.keys(doc.abilities).sort()) take(doc.abilities[k]);
   return [...out].sort();
 }
+
+// ---------------------------------------------------------------------------
+// config.vfx-ability-art@1 — 逐技能的特效綁定（GH#384）
+// ---------------------------------------------------------------------------
+
+/**
+ * `content/config/vfx-ability-art.json` —— **哪一支技能畫哪一組特效**。
+ *
+ * ⚠️ 這一份補的不是一個新欄位，是**整份資料的住址**。GH#384 量到的：617 筆
+ * 「技能 id → 特效參數」住在 `apps/client/src/render/vfx/` 的三張 TypeScript
+ * 常數表裡（`bindings.ts` 的 325 筆分類、`w3xFamilyArt.ts` 的 258 筆證據、
+ * `w3xAbilityArt.ts` 的 34 筆晉升）。那是**內容**，而它的後果是量得到的：
+ *
+ *   · 改一支技能的特效 = 一次完整部署（client 是 build 時烘進映像的），
+ *     而 `content/` 是 live bind-mount —— 一格後台欄位存檔就生效
+ *   · ⛔ **外部編輯器看不到它們，而且不會知道自己漏了** —— 第〇·五守則點名的
+ *     那條對外契約紅線（`unsupported` 至少會被拒絕，這個連拒絕都沒有）
+ *
+ * ⭐ **三張表收斂成一個形狀**（第零守則⑨：N 個同型 = K 個模板 + 一張表）。
+ * 三者問的是同一個問題的三個層級，所以它們是同一列的三格，⛔ 不是三份文件：
+ *
+ *   | 格 | 誰在用 | 是什麼 |
+ *   |---|---|---|
+ *   | `prim` | 每一支（基準線） | 名字分類出來的**元素 + 形狀**，`fx.prim.*` 的來源 |
+ *   | `family` | 258 支 | 原作**證明**的家族原型 + 那個呼叫點自己的數值 |
+ *   | `promoted` | 34 支 | 原作藝術真的出貨成 emitter 文件的那些，指名 doc |
+ *
+ * ⛔ **這一份與 `config.vfx-families@1.abilities` 不是同一層，兩者都要在。**
+ * 這一份是**證據**（原作真的怎麼畫），那一份是**後台覆寫**（owner 想怎麼改）。
+ * `familyTuning.resolveFamilyArt` 的優先序沒有變：覆寫 > 證據 > 家族預設。
+ * 合成一份的話，操作者清空一格就再也回不到原作的值。
+ */
+const zVfxArtProvenance = z.enum([
+  "w3a-override",
+  "jass-literal",
+  "jass-spawn",
+  "w3h-override",
+  "stock-inherited",
+]);
+
+/** 名字分類出來的基準線 —— 元素給顏色、形狀給輪廓、尺寸給大小。 */
+export const zVfxPrimBinding = z
+  .object({
+    /** 顏色 */
+    element: zVfxElement,
+    /** 輪廓 */
+    primitive: zVfxPrimitiveKind,
+    /**
+     * 尺寸覆寫。**省略 = 讓槽位決定**（R／EX 讀大、其餘中等）——
+     * ⛔ 不是「中等」。槽位規則是引擎的機制（`bindings.ts::sizeForSlot`），
+     * 這一格只在作者要推翻它時才寫。
+     */
+    size: z.enum(["sm", "md", "lg"]).optional(),
+  })
+  .strict();
+export type VfxPrimBinding = z.infer<typeof zVfxPrimBinding>;
+
+/**
+ * 原作**證明**的家族原型 + 這個呼叫點自己的數值。
+ *
+ * ⚠️ ABSENT ≠ 1.0。`scale` / `tint` / `flyHeight` 缺席的意思是「原作沒有為這個
+ * 呼叫點寫過一個值」，⛔ 不是「原作寫了 1.0」—— 前者走家族預設，後者會把家族
+ * 預設乘掉。`paramSource` 就是為了讓這個區別看得見才存在的。
+ */
+export const zVfxFamilyBinding = z
+  .object({
+    family: zW3xFamilyId,
+    /** 證據指名的暴雪內建模型 stem（`warstompcaster`／`blinktarget`…） */
+    model: z.string().min(1).max(64),
+    /** 證據掛在哪一顆原作 rawcode 上（只收 CONFIRMED 的連結） */
+    w3aId: z.string().regex(/^[A-Za-z0-9]{4}$/),
+    provenance: zVfxArtProvenance,
+    /** 走的是哪一條通道：w3a 藝術欄位、buff 記錄，或一支 JASS 呼叫 */
+    via: z.string().min(1).max(64),
+    /** WC3 掛點字串，逐字（`chest`／`origin`／`right,hand`） */
+    anchor: z.string().min(1).max(32).optional(),
+    /** 原作對**這個呼叫點**寫的縮放（`usca`／`SetUnitScalePercent`） */
+    scale: z.number().min(0.05).max(20).optional(),
+    /** 原作對這個呼叫點寫的頂點染色，0..255 */
+    tint: zW3xTint255.optional(),
+    /** 原作對這個呼叫點寫的飛行高度，WC3 單位 */
+    flyHeight: z.number().min(-2000).max(2000).optional(),
+    /**
+     * 上面三個數字是**從哪裡讀到的**。`ref` = 這個呼叫點自己寫的；
+     * `model` = 這個模型在全部 3682 筆引用裡只有唯一一個值，所以不歧義。
+     * ⛔ 有一個以上候選值的一律缺席，**不平均**。
+     */
+    paramSource: z.enum(["ref", "model"]).optional(),
+  })
+  .strict();
+export type VfxFamilyBinding = z.infer<typeof zVfxFamilyBinding>;
+
+/** 原作藝術真的出貨成 emitter 文件的那些 —— 直接指名 doc id。 */
+export const zVfxPromotedBinding = z
+  .object({
+    /** 原作模型 stem，例 `frostnova` */
+    family: z.string().min(1).max(64),
+    w3aId: z.string().regex(/^[A-Za-z0-9]{4}$/),
+    /** 晉升只收作者自己設的來源，⛔ 從不收暴雪內建繼承 */
+    provenance: z.enum(["w3a-override", "w3h-override", "jass-literal"]),
+    via: z.string().min(1).max(64),
+    /** 主 emitter —— 這一支技能的 `vfxKey` 就是它 */
+    primary: z.string().min(1).max(96),
+    /** 家族剩下的 emitter，跟著主的一起放 */
+    extra: z.array(z.string().min(1).max(96)).max(32),
+  })
+  .strict();
+export type VfxPromotedBinding = z.infer<typeof zVfxPromotedBinding>;
+
+const zVfxAbilityArtRow = z
+  .object({
+    prim: zVfxPrimBinding.optional(),
+    family: zVfxFamilyBinding.optional(),
+    promoted: zVfxPromotedBinding.optional(),
+  })
+  .strict();
+export type VfxAbilityArtRow = z.infer<typeof zVfxAbilityArtRow>;
+
+export const zConfigVfxAbilityArtDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.vfx-ability-art@1"),
+    /**
+     * 技能文件 id → 這一支的三層綁定。
+     *
+     * ⚠️ 一列三格全空是沒有意義的，所以至少要有一格；空的那一列會讓這支技能
+     * **完全沒有特效**，而那正是這份文件要消滅的那種安靜失敗。
+     */
+    bindings: z.record(zVfxAbilityArtRow.refine((r) => !!(r.prim ?? r.family ?? r.promoted), "一列至少要有 prim / family / promoted 其中一格")),
+  })
+  .strict();
+export type ConfigVfxAbilityArtDoc = z.infer<typeof zConfigVfxAbilityArtDoc>;

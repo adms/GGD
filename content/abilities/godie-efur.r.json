@@ -3,9 +3,9 @@
   "schema": "ability@1",
   "name": "13-04 龍星群",
   "provenance": "owner-spec",
-  "description": "[主動][範圍][週期][AP加成]\n120秒冷卻，吟唱0.6秒\n消耗MP150/200/250\n施法距離12\n\n「生。意。星。龍」\n自身[周圍]每0.2秒[隨機]地點落下一顆流星，共10顆；每顆造成[小範圍] 150/200/250 + 40% [AP] [魔法傷害]。",
+  "description": "[主動][範圍][週期][AP加成]\n120秒冷卻，吟唱0.6秒\n消耗MP150/200/250\n\n「生。意。星。龍」\n自身[周圍]每0.2秒[隨機]地點落下一顆流星，共10顆；每顆造成[小範圍] 150/200/250 + 40% [AP] [魔法傷害]。",
   "slot": "R",
-  "castType": "ground",
+  "castType": "self",
   "maxRank": 3,
   "cooldown": [
     120.0,
@@ -17,7 +17,8 @@
     200.0,
     250.0
   ],
-  "range": 12.0,
+  "range": 0.0,
+  "radiusTier": "小",
   "targetsEnemies": true,
   "effects": [
     {
@@ -78,6 +79,5 @@
   ],
   "interruptOn": "damage",
   "recoverySec": 0.8,
-  "radiusTier": "小",
   "castTimeSec": 0.6
 }

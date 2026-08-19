@@ -210,20 +210,55 @@ export function rosterDisplayAndSelectable<T extends { id: string }>(
 }
 
 /**
- * Stable sort that floats favourited champions to the TOP while preserving the
- * original relative order within each group. Non-mutating.
+ * Stable roster ordering for the champ-select grid. Non-mutating; the original
+ * relative order is preserved INSIDE every bucket.
+ *
+ * owner 2026-08-19 (GH#413):「選人畫面**解鎖可選的英雄應該優先跳到最上排**才對」
+ *
+ *   1. 喜愛且已解鎖   — the pinned ones you can actually lock in
+ *   2. 已解鎖         — everything else you can pick right now
+ *   3. 鎖住的         — priced + un-unlocked, in their ORIGINAL order
+ *
+ * ⭐ ONE function, not two passes. The favourite pin (#118) and the unlock tier
+ * (#413) are the SAME ordering decision, so they are computed from one bucket
+ * key — running two independent sorts is how the two rules would start fighting
+ * (a favourite would out-rank the unlock tier or vice versa, depending on which
+ * ran last, and neither rule's test would notice).
+ *
+ * ⚠️ BUCKET 3 IS DELIBERATELY NOT SPLIT BY FAVOURITE. owner:「鎖住的**維持原順序**，
+ * ⛔ 不要打亂，玩家會記位置」 — a locked champion cannot be locked in anyway, so
+ * floating a favourited-but-locked one upward would only push a *pickable*
+ * champion down.
+ *
+ * ⚠️ THIS DOES NOT CHANGE WHAT IS SELECTABLE (#201) — it only changes WHERE a
+ * card sits. `selectableIds` is read here, never written; the click gate and the
+ * server's `MatchController.selectChampion` are untouched.
+ *
+ * `selectableIds === null` = ownership unknown (offline / platform unreachable /
+ * anonymous seat). Everyone then counts as unlocked, so this degenerates to
+ * EXACTLY the pre-#413 favourites-first order — an outage must not reshuffle the
+ * grid on a player who is looking at it.
+ *
+ * ⛔ Hard-coded rather than a 後台欄位 (第一守則 「寫死才需要理由」): the reason is
+ * that all three buckets come from state this client already holds, owner stated
+ * the order verbatim, and champ-select reads no content config for presentation
+ * order today — a field here would be a fourth home for one sentence.
  */
-export function sortFavouritesFirst<T extends { id: string }>(
+export function sortRosterByAccess<T extends { id: string }>(
   list: readonly T[],
   favourites: ReadonlySet<string>,
+  selectableIds: ReadonlySet<string> | null,
 ): T[] {
-  const fav: T[] = [];
-  const rest: T[] = [];
+  const favUnlocked: T[] = [];
+  const unlocked: T[] = [];
+  const locked: T[] = [];
   for (const item of list) {
-    if (favourites.has(item.id)) fav.push(item);
-    else rest.push(item);
+    // null = ownership unknown ⇒ nobody is known-locked (see the doc comment).
+    if (selectableIds !== null && !selectableIds.has(item.id)) locked.push(item);
+    else if (favourites.has(item.id)) favUnlocked.push(item);
+    else unlocked.push(item);
   }
-  return [...fav, ...rest];
+  return [...favUnlocked, ...unlocked, ...locked];
 }
 
 /** The resolved meta state the hook exposes to the view. */

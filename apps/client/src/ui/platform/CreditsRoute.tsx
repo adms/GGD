@@ -14,6 +14,12 @@
 import { useEffect, useState } from "react";
 import { CREDITS, COPYRIGHT_LINE } from "./creditsData";
 import { SFX_LAB_BOUND_COUNT, SFX_LAB_CLIPS, SFX_LAB_GROUPS } from "./sfxLabCredits";
+import {
+  BLIZZARD_VFX_BOUND_COUNT,
+  BLIZZARD_VFX_CLIPS,
+  BLIZZARD_VFX_TERMS,
+  BLIZZARD_VFX_TOTAL_MB,
+} from "./blizzardVfxCredits";
 import { GOLD, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 import { SfxButton } from "../SfxButton";
 
@@ -179,6 +185,104 @@ function SfxLabList(): React.JSX.Element {
   );
 }
 
+/**
+ * The GH#402 Blizzard listing. Same shape as {@link SfxLabList} on purpose —
+ * but note the two are there for OPPOSITE reasons: 効果音ラボ's rows are a
+ * courtesy under a licence that waives attribution, while these rows ARE the
+ * condition the owner attached to shipping the bytes. So this section is not
+ * collapsible-by-default-and-forgettable: it opens closed like the other, but
+ * its summary line always states the rights holder.
+ */
+function BlizzardVfxList(): React.JSX.Element {
+  const [open, setOpen] = useState(false);
+  return (
+    <section
+      style={{
+        marginBottom: 14,
+        padding: "12px 14px",
+        borderRadius: 9,
+        background: PANEL_BG,
+        border: PANEL_BORDER,
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
+        <span style={{ fontSize: 12, color: TEXT_DIM }}>原作音效逐檔出處</span>
+        <SfxButton
+          kind="ghost"
+          onClick={() => setOpen((v) => !v)}
+          style={{
+            marginLeft: "auto",
+            padding: "2px 10px",
+            borderRadius: 6,
+            border: PANEL_BORDER,
+            background: "transparent",
+            color: TEXT_DIM,
+            fontSize: 12,
+          }}
+        >
+          {open ? "收合" : "展開"}
+        </SfxButton>
+      </div>
+      <div style={{ fontSize: 15, fontWeight: "bold", marginTop: 3 }}>
+        Warcraft III 原作音效（共 {BLIZZARD_VFX_CLIPS.length} 個，
+        {BLIZZARD_VFX_BOUND_COUNT} 個已在遊戲中使用，合計 {BLIZZARD_VFX_TOTAL_MB.toFixed(2)} MB）
+      </div>
+      <div style={{ fontSize: 12, color: TEXT_DIM, marginTop: 6, lineHeight: 1.7 }}>
+        {BLIZZARD_VFX_TERMS}
+      </div>
+      {open && (
+        <div
+          style={{
+            marginTop: 10,
+            maxHeight: "46vh",
+            overflowY: "auto",
+            overflowX: "hidden",
+            borderTop: PANEL_BORDER,
+            paddingTop: 8,
+            overscrollBehavior: "contain",
+          }}
+        >
+          {BLIZZARD_VFX_CLIPS.map((c) => (
+            <div
+              key={c.key}
+              style={{
+                padding: "6px 0",
+                borderBottom: "1px solid rgba(255,255,255,0.06)",
+                fontSize: 12,
+                lineHeight: 1.6,
+                overflowWrap: "anywhere",
+              }}
+            >
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "baseline" }}>
+                <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MAIN }}>
+                  {c.soundLabel || c.key}
+                </span>
+                <span
+                  style={{
+                    fontSize: 10,
+                    padding: "1px 6px",
+                    borderRadius: 999,
+                    color: c.bound ? "#8ee6b0" : TEXT_DIM,
+                    border: `1px solid ${c.bound ? "rgba(142,230,176,0.45)" : "rgba(255,255,255,0.18)"}`,
+                  }}
+                >
+                  {c.bound ? "使用中" : "收錄未啟用"}
+                </span>
+              </div>
+              <div style={{ color: "#c3cbdd" }}>{c.key}</div>
+              <div style={{ color: TEXT_DIM }}>
+                {c.archive} · {c.wc3Path}
+                {c.ggSnd.length > 0 ? ` · ${c.ggSnd.join(", ")}` : ""}
+                {c.abilityDocs.length > 0 ? ` · ${c.abilityDocs.join(", ")}` : ""}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
 export function CreditsPage(props: { onClose: () => void }): React.JSX.Element {
   // THE "關閉不掉" BUG: the ✕ button was un-clickable. The AudioToggle is
   // portaled to <body> at z-index 2147483000 (see AudioToggle.tsx Z_TOP), so
@@ -292,6 +396,7 @@ export function CreditsPage(props: { onClose: () => void }): React.JSX.Element {
         ))}
 
         <SfxLabList />
+        <BlizzardVfxList />
       </div>
     </div>
   );

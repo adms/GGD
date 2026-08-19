@@ -49,6 +49,12 @@ import { fileURLToPath } from "node:url";
 
 import { RIM_PROFILE, floorRingRadii, ringSegments } from "../../apps/client/src/render/ArenaGround";
 import * as ILayout from "../../apps/client/src/render/intermission/layout";
+// ⭐ GH#396 —— 散佈規則（GH#362）展開成逐件道具的**出貨那一支函式**。
+// ⛔ 這裡刻意 import 而不是在報告裡重算一次 `min(Σcount, maxPerZone)`：
+// 那個上限是**按規則順序**砍的，重算一份必然會在某一次改動之後與畫面分岔，
+// 而分岔的方向永遠是報告比較小（＝場景悄悄超支）。同 ILayout 的理由。
+import { expandSceneryProps } from "../../packages/shared/src/content/schema/arenaScenery";
+import { DEFAULT_ARENA_SCENERY_POLICY } from "../../packages/shared/src/content/schema/config";
 import {
   C_CHAN_MS,
   C_MESH_MS,
@@ -471,11 +477,37 @@ function main(): void {
   }
 
   // arena decor
+  //
+  // ⭐ GH#396 —— **`doc.decor` 只是一半。** GH#362 之後每張圖還有一個 `scenery.props`
+  // 散佈規則區塊，`ArenaScene.buildArena` 把它展開成逐件的 `DecorDef` **再併進
+  // 同一個 decor 陣列**（那條路上的註解逐字寫著「這條規則是 decor 的產生器，
+  // 不是第二條渲染路徑」）。這支報告只讀 `doc.decor`，於是每一張圖都少算了
+  // 「每區的散佈件數 × 分區數」—— godie 少了 66 件，而它當時報 232 draws / 上限 240。
+  //
+  // ⛔ 修法是呼叫**同一支** `expandSceneryProps`，⛔ 不是在這裡重算
+  // `min(Σcount, maxPerZone)`：那個上限按規則順序砍，一份抄出來的算術遲早會與
+  // 畫面分岔，而分岔的方向永遠是報告比較小。
+  //
+  // ⚠️ 政策讀**出貨的那一份** `content/config/ambient-vfx.json`（`enabled` 關掉時
+  // 客戶端一件都不長，報告也就不該算），讀不到才退回 `DEFAULT_ARENA_SCENERY_POLICY`
+  // —— 跟 `buildArena` 的預設參數同一個值、同一個方向。
+  const scenery = ((): typeof DEFAULT_ARENA_SCENERY_POLICY => {
+    try {
+      const doc = readJson(path.join(CONTENT, "config/ambient-vfx.json"));
+      return { ...DEFAULT_ARENA_SCENERY_POLICY, ...(doc?.scenery ?? {}) };
+    } catch {
+      return DEFAULT_ARENA_SCENERY_POLICY;
+    }
+  })();
   const arenas = listDocs("arenas");
   const arenaDecor = new Map<string, Map<string, number>>();
   for (const a of arenas) {
     const per = new Map<string, number>();
     for (const d of a.decor ?? []) per.set(d.model, (per.get(d.model) ?? 0) + 1);
+    const scattered = scenery.enabled
+      ? expandSceneryProps(a.scenery, a.zones ?? [], scenery.maxPropsPerZone)
+      : [];
+    for (const d of scattered) per.set(d.model, (per.get(d.model) ?? 0) + 1);
     arenaDecor.set(a.id, per);
     for (const [m, n] of per) addUse(m, { scene: `COMBAT:${a.id}`, label: `競技場擺設 · ${a.name}`, count: n });
   }
@@ -658,7 +690,11 @@ function main(): void {
   for (const a of arenas) {
     const per = arenaDecor.get(a.id)!;
     const decorCount = [...per.values()].reduce((n, v) => n + v, 0);
-    const hasPillar = [...per.keys()].some((m) => m.includes("pillar"));
+    // ⚠️ GH#396 —— 這一格刻意**只看手擺的 `doc.decor`**，⛔ 不看散佈出來的那些。
+    // 它問的是「這張圖有沒有用 pillar 擺設代替程序柱」，是一個**作者的意圖**，
+    // 而不是「場上有沒有任何一個檔名含 pillar 的東西」。把散佈算進來的話，
+    // 一條隨手擺柱子的裝飾規則會讓報告**少算**整組程序柱 —— 錯的方向。
+    const hasPillar = (a.decor ?? []).some((d: { model: string }) => d.model.includes("pillar"));
     const decor = [...per].map(([p, count]) => ({ path: p, count }));
     scenes.push({
       id: `combat-${a.id.replace("arena.", "")}`,

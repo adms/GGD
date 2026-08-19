@@ -455,7 +455,12 @@ function StyleSpecSection({ specState }: { specState: ReturnType<typeof useStyle
             <span>
               內容摘要 <b style={{ color: TEXT_MAIN, fontFamily: MONO }}>{spec.contentDigest}</b>
             </span>
-            <span>快照產生於 {spec.generatedAt}</span>
+            {/* ⛔ 這裡以前是「快照產生於 <時間>」（GH#395 拿掉了那格時鐘）。
+                左邊的「內容摘要」＋上面的 FreshnessBanner 才是這一列真正要回答的
+                問題（「它還準不準」），而時間回答的是沒有人問過的那一題。 */}
+            <span>
+              來源檔 <b style={{ color: TEXT_MAIN, fontFamily: MONO }}>{spec.sources.length}</b> 份已比對
+            </span>
           </div>
 
           <div>
