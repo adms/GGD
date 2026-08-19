@@ -1,18 +1,18 @@
 {
   "collection": "config",
-  "hash": "79485c0a9f2a",
+  "hash": "d87c86978561",
   "entries": [
     {
       "id": "ambient-vfx",
       "path": "config/ambient-vfx.json",
-      "hash": "d511fd75c1ff",
-      "size": 1690
+      "hash": "fe0f504c17cc",
+      "size": 1862
     },
     {
       "id": "aoe-tiers",
       "path": "config/aoe-tiers.json",
-      "hash": "e458b5fbd9df",
-      "size": 843
+      "hash": "5f4b138cc6e9",
+      "size": 1142
     },
     {
       "id": "arena-pool",
@@ -155,8 +155,8 @@
     {
       "id": "displacement-tiers",
       "path": "config/displacement-tiers.json",
-      "hash": "6cb6c0f896ef",
-      "size": 1895
+      "hash": "97272936c725",
+      "size": 1917
     },
     {
       "id": "form-visuals",

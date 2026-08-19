@@ -1,6 +1,6 @@
 {
   "collection": "loot-tables",
-  "hash": "c60acff50868",
+  "hash": "50b52195cd4a",
   "entries": [
     {
       "id": "ex-origin-weapons",
@@ -11,14 +11,14 @@
     {
       "id": "ex-release-weapons",
       "path": "loot-tables/ex-release-weapons.json",
-      "hash": "d1058e682200",
-      "size": 3471
+      "hash": "520969c67bfd",
+      "size": 3410
     },
     {
       "id": "legendary-weapons",
       "path": "loot-tables/legendary-weapons.json",
-      "hash": "cdebb25853e3",
-      "size": 2623
+      "hash": "9bb6885aa606",
+      "size": 2951
     }
   ]
 }

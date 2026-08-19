@@ -2,6 +2,16 @@
   "id": "ambient-vfx",
   "schema": "config.ambient-vfx@1",
   "bindings": {
+    "godie-e00x": [
+      {
+        "vfx": "attach.godie-e00x.awing"
+      }
+    ],
+    "godie-u01u": [
+      {
+        "vfx": "attach.godie-u01u.poweraura"
+      }
+    ],
     "imported.gumdam": [
       {
         "vfx": "godie-gumdam-p0"

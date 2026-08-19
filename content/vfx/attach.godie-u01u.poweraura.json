@@ -1,0 +1,8 @@
+{
+  "id": "attach.godie-u01u.poweraura",
+  "schema": "attachment@1",
+  "note": "索隆 godie-u01u 的球體(武裝霸王) = w3a A10O，掛點 origin 與份數 1 都是 w3x 自己記的（SPHERE_ATTACHMENTS.json）。scale 0.4204 = 0.01168 / 0.02778 —— models_report.json 記的兩份轉檔倍率之比（HeroMusashiMiyamoto.mdx / war3mapImported__poweraura.MDX），⛔ 不是挑的（GH#432）。",
+  "modelKey": "imported.war3mapimported-poweraura",
+  "points": ["origin"],
+  "scale": 0.4204
+}

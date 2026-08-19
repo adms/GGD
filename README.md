@@ -429,7 +429,7 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 | `arena.skeleton` | 新手競技場 | 🔁 | 24 | 2 | 4 | 12 | `stone` | — | 24+20 | — |
 | `arena.world-tree` | 世界樹核心 | 🔁 | 30 | 2 | 24 | 12 | `grass` | ✅ | 29+36 | 區域×10、互動×16、機關門 |
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_b90f1ea08315` 產生。 輪替 12 / 全 13 張。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_fcec9c967306` 產生。 輪替 12 / 全 13 張。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:arenas -->
 
 ### 設定陷阱（改了不會生效）
@@ -1160,7 +1160,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **完整 71 名英雄**（含 25 名未開放）與逐欄資料（開放旗標、技能 id、攻擊類型…）在 [`docs/reference/roster.md`](./docs/reference/roster.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_b90f1ea08315` 產生。 開放 46 / 全 71 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_fcec9c967306` 產生。 開放 46 / 全 71 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:roster -->
 
 <!-- BEGIN GENERATED:abilities -->
@@ -1176,7 +1176,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **全 420 個技能的逐欄表**（id、名稱、slot、型態、編號、擁有英雄、開放旗標、完整短效果）在 [`docs/reference/abilities.md`](./docs/reference/abilities.md)；互動版在 <http://localhost:39527/#codex>。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_b90f1ea08315` 產生。 開放英雄技能 275 / 全 420 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_fcec9c967306` 產生。 開放英雄技能 275 / 全 420 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:abilities -->
 
 <!-- BEGIN GENERATED:items -->
@@ -1352,7 +1352,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 > 📖 **全 142 件道具依 craftRole 的完整分類表**（component 16 / token 0 / none 24 …）在 [`docs/reference/items.md`](./docs/reference/items.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_b90f1ea08315` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_fcec9c967306` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:items -->
 
 <!-- BEGIN GENERATED:grail -->
@@ -1441,7 +1441,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 逐張的完整 JSON（每一格參數、每一個 hook、每一條條件）在 [`docs/reference/grail-wishes.md`](docs/reference/grail-wishes.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_b90f1ea08315` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_fcec9c967306` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:grail -->
 
 ### ⭐ 2026-08-17／18 這一批新加的機制（GH#354）
@@ -1565,7 +1565,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 `accuracy-down`×2 `ai-override`×3 `antiheal`×2 `armor-break`×1 `armor-down`×1 `attack-debuff`×2 `attack-denied`×8 `auto-target`×1 `bankai`×1 `banked`×2 `berserk`×1 `blind`×1 `buff`×14 `burn`×1 `burnstun`×1 `cast-denied`×7 `cc`×21 `channel`×1 `charmed`×1 `combo`×1 `confusion`×1 `counter`×2 `curse`×1 `damage-bank`×2 `debuff`×26 `disable`×11 `dot`×1 `elemental`×1 `empowered`×1 `empowered-next`×1 `fang-stun`×1 `fear`×1 `fire`×2 `flee`×1 `form`×2 `frenzy`×1 `friendly-fire`×1 `generic`×1 `grail-strengthened-projection`×1 `grail-wish`×1 `grief-seed-charge`×1 `grievous-wounds`×1 `hard-cc`×6 `haste`×2 `heal-block`×1 `heal-down`×2 `immobilize`×1 `ingredient`×1 `lifesteal-down`×2 `lifesteal-up`×1 `light-wand-banked`×1 `magic-break`×1 `magic-resist-down`×1 `magical`×1 `mana-banked`×2 `marker`×1 `mechanism-on-card`×4 `millennium-plot-armor`×1 `miss`×2 `moon-combo`×1 `move-denied`×9 `move-speed-down`×7 `named-variant`×6 `nen-banked`×1 `next-attack`×1 `no-heal`×1 `numbness`×1 `omnislash-lock`×1 `omnislash-perform`×1 `paralysis`×1 `physical`×1 `projectile`×1 `rage`×1 `red-comet`×1 `regen-down`×2 `resist-down`×2 `root`×1 `self-lock`×1 `shred`×2 `slow`×7 `slow20`×1 `slow25`×1 `slow30`×1 `slow35`×1 `slow40`×1 `slow50`×1 `slow60`×1 `soft-cc`×9 `stat-down`×9 `stat-up`×1 `stun`×7 `timed-window`×2 `trial-stun`×1 `triforce-courage`×1 `uncontrollable`×3 `united-states-of-smash`×1 `witch-form`×1 `wound`×2
 
-### 特效（vfx）—— 637 份
+### 特效（vfx）—— 639 份
 
 `content/vfx/*.json`，由 `spawnVfx.vfxId` 與技能的 `vfxKey` 引用。逐份清單在 [`docs/reference/mechanics.md`](docs/reference/mechanics.md)。
 
@@ -1579,7 +1579,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 完整的參數與上下界（每個效果每一格能填什麼）在 [`docs/技能標記機制與效果規則.md`](docs/技能標記機制與效果規則.md)，同樣是產生的。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_b90f1ea08315` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_fcec9c967306` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:mechanics -->
 
 

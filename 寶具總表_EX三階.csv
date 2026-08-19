@@ -40,6 +40,11 @@ EX,godie-i039,幻之匕首,1,2 / 5,—,—,"[普通攻擊時] 3%機率造成敵�
 EX,godie-i06d,斬龍刀,1,2 / 5,—,—,"攻擊力+128
 防禦+12
 [暴擊] 20%機率造成 2倍傷害",0｜數值型,flat,wc3-import,,
+EX,godie-i016,晨曦之光,1,2 / 5,—,—,"[看穿] 看穿隱形
+[格擋] 30%機率 抵擋致命一擊(超過現存生命的傷害)
+每秒回魔+8
+冷卻縮減+30%
+[重創] 敵方攻擊時吸血效果降低50%吸血回復量",0｜數值型,applyBuff onDamageTaken flat pctMult,wc3-import,,
 EX,godie-i06e,月牙魔杖,1,2 / 5,—,—,"[流星] 流星每秒造成 100% AP 範圍傷害（距離越遠流星傷害越低）
 AP+369
 魔抗+66.7%",0｜數值型,damageArea onInterval flat,wc3-import,,
@@ -194,11 +199,6 @@ EX解放,godie-i067,惡夢魔王碎片,1,1+,15%,champion 限 1,"魔力 + 2200
 [真實傷害] 所有裝備者技能傷害都轉為真實傷害",0｜數值型,flat pctAdd,wc3-import,,
 EX解放,fingerless-gloves,指貫手套,1,1+,15%,champion 限 1,"[計算式解放] 攻擊力 +20%
 [計算式解放] 攻擊力每跨過一道門檻（120／140／160／180／200／220／240／260／280／300），最終攻擊力再 ×1.03，最多 10 段乘算",0｜數值型,applyBuff stat onInterval >= pctAdd pctMult,"legendary,ad,stat-path",,
-EX解放,godie-i016,晨曦之光,1,1+,15%,champion 限 1,"[看穿] 看穿隱形
-[格擋] 30%機率 抵擋致命一擊(超過現存生命的傷害)
-每秒回魔+8
-冷卻縮減+30%
-[重創] 敵方攻擊時吸血效果降低50%吸血回復量",0｜數值型,applyBuff onDamageTaken flat pctMult,wc3-import,,
 EX解放,godie-i01d,死之王的長槍,1,1+,15%,champion 限 1,"攻擊力額外增加 17%
 [無視] 普通攻擊無視防禦給予傷害
 [普通攻擊時] 普攻附加敵方現存 MP 10%傷害，並且回復敵方最大 MP 10%

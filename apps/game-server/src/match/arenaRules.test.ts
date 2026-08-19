@@ -579,7 +579,16 @@ describe("every-round augment 3-choose-1 restored (arena-08, #157)", () => {
     // ⚠️ GH#422 —— seed 1201 換成 **1202**（同一個理由，第三次換）：開場擺位
     //    改成四隊分開站之後 bot 的軌跡與 rng 流位移，1201 那一場第 2 回合又變成
     //    沒有人拿到 offer。重掃 1201–1259，取最小的。
-    const ctl = makeArenaMatch(1202);
+    // ⚠️ GH#470 —— seed 1202 換回 **1201**（同一個理由，第四次換）：晨曦之光
+    //    `godie-i016` 從 `ex-release-weapons` 歸位到 `legendary-weapons`（owner 的
+    //    階級表是第 1 層），兩張池的成員數因此各動一格 ⇒ 每一回合的寶具抽取消耗的
+    //    rng draw 數改變、整場的流位移，1202 那一場第 2 回合又變成沒有人拿到 offer。
+    //    重掃 1200–1279：1201/1203/1204/1210/1211/1216/1217/1222 都重現，取最小的。
+    // ⭐ **四次都不是這條斷言壞掉**，是「用一個寫死的 seed 去撞一個機率事件」這個
+    //    寫法本身 —— 它對**任何**改動 rng 流的東西都會紅，而那些改動全部是對的。
+    //    ⛔ 修法仍然不是拿掉 `toBeGreaterThan(0)`（那會留下一條對缺陷不敏感的綠燈，
+    //    失敗形態④）。要根治就是掃一段 seed 取第一個有 offer 的，⛔ 不是釘死一個。
+    const ctl = makeArenaMatch(1201);
     // Round 2 is silver again: its fresh 3 choices must EXCLUDE whatever the seat
     // already owns from round 1. The round-1 draft is auto-resolved on the timer,
     // and task #207 makes that a DETERMINISTIC RANDOM one of the three (not the

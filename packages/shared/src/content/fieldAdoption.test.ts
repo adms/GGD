@@ -322,11 +322,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-19",
     why: "同上（地標道具那一族）。⚠️ 這一族**比背景道具更可能先變綠**：地標本來就常是「架在台座／柱頂上」的東西，而那正是缺 y 時唯一表達不出來的形狀。",
   },
-  "variant:vfx#attachment@1": {
-    status: "landing",
-    since: "2026-08-19",
-    why: "GH#392 —— `attachment@1` 是 `content/vfx/` 的**第三種** schema（穿在骨頭上的模型）。⭐ **零內容是刻意的，而且機制已經在出貨的路徑上跑**：既有的變身外觀表（悟空超三頭）與這一族折成同一個 `WornAttachment` 型別，所以引擎那一半今天就活著 —— 它修好的正是「掛件的動畫軌從上架起沒有人播」（`formAttachGroups` 唯一的讀者是 `dispose()`）。⛔ 缺的不是接線，是**兩個數字與一份美術**：櫻綻剎那的翅膀與索隆的武裝霸王氣場卡在 `scale`（悟空的 0.3221 是兩份 glb 轉檔倍率的比值，這兩份推不出等價的比值，而預設 1 會讓翅膀有角色的 4.6 倍大 —— 見 GH#432）；悟空的雙手球體卡在「球體用哪個模型」（w3x 只記了一顆在 origin）。**到期**：GH#432 拿到那兩個 scale，第一份內容就會出現。",
-  },
   "field:abilities.passive.ranks[].auras[].scaleByNearby": {
     status: "landing",
     since: "2026-08-18",

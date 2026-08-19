@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_b90f1ea08315",
+    "contentVersion": "cv_fcec9c967306",
     "collections": {
       "champions": {
         "hash": "d1f1852b3667",
@@ -30,7 +30,7 @@
         "count": 40
       },
       "loot-tables": {
-        "hash": "c60acff50868",
+        "hash": "50b52195cd4a",
         "count": 3
       },
       "arenas": {
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "79485c0a9f2a",
+        "hash": "d87c86978561",
         "count": 66
       },
       "models": {
@@ -50,8 +50,8 @@
         "count": 124
       },
       "vfx": {
-        "hash": "4084d91f3871",
-        "count": 637
+        "hash": "606af78050aa",
+        "count": 639
       },
       "skins": {
         "hash": "3d1095f3da83",
@@ -2340,7 +2340,7 @@
       "effectKindsSource": "runtimeCapabilities.effectKinds（⛔ 不在這裡重複一份）"
     },
     "vfx": {
-      "docCount": 637,
+      "docCount": 639,
       "keys": [
         "fx.barkskin",
         "fx.bramble-burst",
@@ -2616,7 +2616,7 @@
       ]
     },
     "legendaryWeapons": {
-      "poolSize": 29,
+      "poolSize": 30,
       "itemIds": [
         "cleaver-of-the-warden",
         "godie-i000",
@@ -2628,6 +2628,7 @@
         "godie-i00z",
         "godie-i012",
         "godie-i013",
+        "godie-i016",
         "godie-i018",
         "godie-i01g",
         "godie-i01i",
@@ -3303,5 +3304,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "8c170f24311c"
+  "profileDigest": "4db1cdf1addc"
 }

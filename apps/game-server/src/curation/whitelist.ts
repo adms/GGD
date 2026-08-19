@@ -21,11 +21,47 @@
  */
 import { isRetiredChampionId } from "@ggd/shared/content/championRetirement";
 import { isTransformedBody } from "@ggd/shared/content/championForms";
+import { Abilities, Champions, Items } from "@ggd/shared/sim/content/registry";
 import type { ItemId } from "@ggd/shared/ids";
 import { PLATFORM_URL, warnOnce, clearDegradation, BOOT_PROBE_KEY } from "../config/platformUrl";
 
 /** Degradation-registry keys this module can raise (see config/platformUrl.ts). */
 const DEGRADE_KEYS = ["whitelist-status", "whitelist-malformed", "whitelist-unreachable"];
+
+/**
+ * ⭐ GH#471 —— 白名單指到**已經不存在的內容**時的那一聲。
+ *
+ * owner 2026-08-18：「本機 whitelist.json 仍列著 17 個已退場 id > which 17? **fix!**」
+ *
+ * ⚠️ 這條**不在** {@link DEGRADE_KEYS} 裡，那是刻意的：那三個是「平台答不出來」，
+ * 一次成功的抓取就該把它們收回；這一條是「平台答出來了，但它指的東西這個映像裡
+ * 沒有」—— 它要在**下一份乾淨的白名單**送到時才收回，⛔ 不是在下一次成功抓取時。
+ */
+const STALE_IDS_KEY = "whitelist-stale-ids";
+
+/**
+ * 白名單裡指不到出貨註冊表的 id。
+ *
+ * ⛔ **為什麼不是「手刪那幾個 id」**：每一次把內容搬進 `content/` 的 `_legacy` 都會
+ * 再長出一批（2026-08-20 量到 9 筆，其中 4 筆是那一週才搬的），而 `data/` 在
+ * `.gitignore` 裡 —— 手刪只清掉這一台，線上那一份照舊。要的是一道**會喊**的閘。
+ *
+ * ⚠️ 它**不會**改變任何過濾行為（白名單只收窄，指不到的 id 本來就是 no-op），
+ * 所以這是純粹的 fail-loud：CLAUDE.md「fail-open 沒錯，**靜默**才是缺陷」。
+ *
+ * ⚠️ 註冊表是空的（內容還沒載入 / 單元測試）就**整條跳過** —— 那時候「每一個 id
+ * 都指不到」是真的但毫無資訊，而一則假警報會讓真的那一則失去意義。
+ */
+function danglingWhitelistIds(doc: WhitelistDoc): string[] {
+  if (Champions.ids().length === 0 || Items.ids().length === 0) return [];
+  const out: string[] = [];
+  for (const id of doc.champions) {
+    if (!Champions.tryGet(id as never)) out.push(`champion:${id}`);
+  }
+  for (const id of doc.items) if (!Items.tryGet(id as never)) out.push(`item:${id}`);
+  for (const id of doc.abilities) if (!Abilities.tryGet(id as never)) out.push(`ability:${id}`);
+  return out;
+}
 
 // Re-exported for existing importers (combat-env, MatchController); the actual
 // env resolution + localhost dev fallback lives in config/platformUrl.ts.
@@ -237,6 +273,20 @@ export async function fetchWhitelistResult(
     // degradation so /healthz stops reporting an outage that has ended (and so
     // a LATER outage warns loudly again instead of being deduped away).
     clearDegradation(...DEGRADE_KEYS, BOOT_PROBE_KEY);
+    // ⭐ GH#471 —— 這一份白名單指到的東西，這個映像裡還在不在。
+    const dangling = danglingWhitelistIds(doc);
+    if (dangling.length > 0) {
+      warnOnce(
+        STALE_IDS_KEY,
+        `[whitelist] ${dangling.length} whitelisted id(s) resolve to NOTHING in this image's ` +
+          `content registry — they are silently inert (the whitelist only narrows). ` +
+          `Almost always content that moved into _legacy without the curation list following it. ` +
+          `Fix via the admin curation page / the #243 export-import, NOT by editing the repo ` +
+          `(data/ is gitignored, so the live copy is a different file). Stale: ${dangling.join(", ")}`,
+      );
+    } else {
+      clearDegradation(STALE_IDS_KEY);
+    }
     return { whitelist: new Whitelist(doc, false), ok: true, updatedAt: doc.updatedAt };
   } catch (err) {
     warnOnce(

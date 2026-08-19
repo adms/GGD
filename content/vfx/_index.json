@@ -1,7 +1,19 @@
 {
   "collection": "vfx",
-  "hash": "4084d91f3871",
+  "hash": "606af78050aa",
   "entries": [
+    {
+      "id": "attach.godie-e00x.awing",
+      "path": "vfx/attach.godie-e00x.awing.json",
+      "hash": "ff3467bdbea9",
+      "size": 489
+    },
+    {
+      "id": "attach.godie-u01u.poweraura",
+      "path": "vfx/attach.godie-u01u.poweraura.json",
+      "hash": "3733ddecd305",
+      "size": 500
+    },
     {
       "id": "fx.barkskin",
       "path": "vfx/fx.barkskin.json",

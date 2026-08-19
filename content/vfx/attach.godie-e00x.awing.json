@@ -1,0 +1,8 @@
+{
+  "id": "attach.godie-e00x.awing",
+  "schema": "attachment@1",
+  "note": "櫻綻剎那 godie-e00x 的球體(翅膀) = w3a A0FI，掛點 chest 與份數 1 都是 w3x 自己記的（SPHERE_ATTACHMENTS.json）。scale 0.4291 = 0.01192 / 0.02778 —— models_report.json 記的兩份轉檔倍率之比（mfls.mdx / AWING.mdx），⛔ 不是挑的；⛔ 預設 1 會讓翅膀有角色的 4.6 倍大（GH#432）。",
+  "modelKey": "imported.awing",
+  "points": ["chest"],
+  "scale": 0.4291
+}
