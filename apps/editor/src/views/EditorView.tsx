@@ -7,6 +7,7 @@ import { collectionEntry } from "../collections";
 import { FormRenderer } from "../form/FormRenderer";
 import { walkZod } from "../form/walk";
 import { issuesToErrorMap, useEditorStore, type ErrorMap } from "../store";
+import { authorWarnings } from "../authorWarnings";
 import { PreviewPanel } from "../preview/PreviewPanel";
 import { AiFillProvider } from "../ai/AiFillContext";
 // NOTE: the AI icon panel (../ai/AiIconPanel) is deliberately NOT rendered here.
@@ -38,6 +39,12 @@ export function EditorView() {
     const res = entry.schema.safeParse(draft);
     return res.success ? {} : issuesToErrorMap(zodIssues(res.error) as FieldIssue[]);
   }, [entry, draft]);
+
+  /**
+   * ⭐ GH#480 —— Zod 收得下但遊戲裡不會發生的那一族（說明↔JSON、空效果、台詞裡的機制數字）。
+   * ⛔ 它**不**進 `errorCount`，所以 save 照樣按得下去（owner：「只是個警告標記，並不會擋」）。
+   */
+  const warnings = useMemo(() => authorWarnings(collection, docId, draft), [collection, docId, draft]);
 
   if (!collection || !docId || !entry || !ui || draft === null) {
     return <main className="editor-empty">Pick a document.</main>;
@@ -87,6 +94,15 @@ export function EditorView() {
           </div>
         </header>
         {errorCount > 0 ? <p className="error">⚠ {errorCount} field(s) invalid</p> : null}
+        {warnings.length > 0 ? (
+          <ul className="author-warnings" data-testid="author-warnings">
+            {warnings.map((w, i) => (
+              <li key={`${w.rule}:${w.field}:${i}`}>
+                <code>{w.field}</code> <em>[{w.rule}]</em> {w.message}
+              </li>
+            ))}
+          </ul>
+        ) : null}
         <AiFillProvider>
           <FormRenderer node={ui} value={draft} dataPath="" errors={errors} onChange={update} />
         </AiFillProvider>

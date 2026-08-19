@@ -46,6 +46,18 @@ import {
   type RouteInfo,
 } from "@ggd/shared/content/originRoutes";
 import { embeddedForm } from "@ggd/shared/content/editModel";
+import {
+  deriveAbilityDefaults,
+  applyAbilityDefaults,
+  DEFAULT_MIN_SAMPLE,
+  type AbilityCorpusDoc,
+  type AbilityDefaults,
+} from "@ggd/shared/content/newHeroDefaults";
+import {
+  checkNewHeroDocs,
+  DEFAULT_NEW_HERO_CHECKS,
+  type NewHeroChecksConfig,
+} from "@ggd/shared/content/newHeroChecks";
 import { abilityIdFor, type HeroDoc } from "./heroTemplate";
 
 // ---------------------------------------------------------------------------
@@ -517,7 +529,12 @@ const ID_RE = /^[a-z0-9][a-z0-9._-]*$/;
  * 「只是個警告標記，並不會擋」。所以這個函式回傳的東西只餵給畫面，
  * ⛔ 不會有任何呼叫端拿它來 disable 儲存鈕。
  */
-export function pageWarnings(form: HeroForgeForm, result: ForgeResult, catalog: HeroForgeCatalog): ForgeWarning[] {
+export function pageWarnings(
+  form: HeroForgeForm,
+  result: ForgeResult,
+  catalog: HeroForgeCatalog,
+  checksConfig: NewHeroChecksConfig = DEFAULT_NEW_HERO_CHECKS,
+): ForgeWarning[] {
   const out: ForgeWarning[] = [...result.warnings];
   const warn = (field: string, message: string): void => {
     out.push({ level: "warn", field, message });
@@ -571,7 +588,39 @@ export function pageWarnings(form: HeroForgeForm, result: ForgeResult, catalog: 
       warn("picks", `「${pickedId}」被放進 ${slots.map((s) => SLOT_LABEL[s]).join(" / ")} —— 同一支技能會被複製成好幾支。`);
   }
   if (catalog.errors.length > 0) warn("catalog", `鑄技工坊目錄沒有完整載入：${catalog.errors.join("；")}`);
+
+  // ⭐ GH#480 —— 六欄與十一項屬性的**存檔當下**警示。
+  //   ⛔ 拿掉這一段，整組警示就消失了，而這一頁看起來完全正常（接線類的形態）。
+  out.push(...draftWarnings(form, result, catalog, checksConfig));
   return out;
+}
+
+/**
+ * ⭐【GH#480】把 owner 點名的那組檢查接進這一頁。
+ *
+ * ⚠️ 它跑在**草稿文件**上（`heroForgeDocs` 的產出），⛔ 不是跑在表單上 ——
+ * 表單與文件之間還隔著一層轉換（佔位技、槽位改寫、內嵌鏡射），而玩家拿到的是
+ * **文件**。驗表單＝失敗形態⑤「被測的不是出貨的那個」。
+ *
+ * ⛔ 全部降級成 `warn`：這一頁的每一條警示都不擋（owner 2026-08-12
+ * 「只是個警告標記，並不會擋」）。`block` 那一級只是在說「伺服器會 422」，
+ * 它照樣只是一行字。
+ */
+export function draftWarnings(
+  form: HeroForgeForm,
+  result: ForgeResult,
+  catalog: HeroForgeCatalog,
+  config: NewHeroChecksConfig = DEFAULT_NEW_HERO_CHECKS,
+): ForgeWarning[] {
+  const docs = heroForgeDocs(form, result, catalog);
+  return checkNewHeroDocs(
+    docs.map((d) => ({ collection: d.collection, id: d.id, doc: d.doc })),
+    { config },
+  ).map((w) => ({
+    level: "warn" as const,
+    field: `${w.doc}·${w.field}`,
+    message: `${w.level === "block" ? "⛔ 存不進去：" : ""}${w.message}`,
+  }));
 }
 
 /**
@@ -602,8 +651,32 @@ export function reslotAbilityDoc(
   return out;
 }
 
-/** 還沒挑技能的那一格放的東西 —— 一支 schema 收得下的**空白**技，而且名字說出它是空的。 */
-function placeholderAbility(championId: string, slot: HeroForgeSlot): Record<string, unknown> {
+/** 語料 = 鑄技工坊目錄裡那 400+ 支技能的**原始文件**（中位數就從這裡量）。 */
+export function abilityCorpus(catalog: HeroForgeCatalog): AbilityCorpusDoc[] {
+  return catalog.abilities.map((a) => a.doc as AbilityCorpusDoc);
+}
+
+/**
+ * ⭐ 這一格的六欄預設值（GH#480）—— 從**出貨語料**的中位數量出來，⛔ 不是寫死的數字。
+ * ⚠️ 佔位技的施放型態沿用原本的 `self`（⛔ 換掉它是另一個決策，不在這一票裡）。
+ */
+export function slotDefaults(catalog: HeroForgeCatalog, slot: HeroForgeSlot): AbilityDefaults {
+  return deriveAbilityDefaults(abilityCorpus(catalog), slot, "self", { minSample: DEFAULT_MIN_SAMPLE });
+}
+
+/**
+ * 還沒挑技能的那一格放的東西。
+ *
+ * ⭐ GH#480：它以前是**六欄全 0 + 沒有說明**的空殼（`cooldown:[0] manaCost:[0] range:0`），
+ * 而 Zod 全部收得下（那幾格的界是 `.min(0)`）—— 也就是「生成完成」的新英雄可以六欄
+ * 一格都沒填而 `content:build` 全綠。現在六欄由 {@link slotDefaults} 代入。
+ * ⛔ 拿掉 `applyAbilityDefaults` 這一行，整個「生成代入」就消失了，而畫面上看不出來。
+ */
+function placeholderAbility(
+  championId: string,
+  slot: HeroForgeSlot,
+  catalog: HeroForgeCatalog,
+): Record<string, unknown> {
   const doc: Record<string, unknown> = {
     id: abilityIdFor(championId, slot),
     schema: "ability@1",
@@ -611,13 +684,12 @@ function placeholderAbility(championId: string, slot: HeroForgeSlot): Record<str
     slot,
     castType: "self",
     maxRank: 1,
-    cooldown: [0],
-    manaCost: [0],
-    range: 0,
+    cooldown: [],
+    manaCost: [],
     effects: [],
   };
   if (slot === "PASSIVE") doc["innateKind"] = "passive";
-  return doc;
+  return applyAbilityDefaults(doc, slotDefaults(catalog, slot));
 }
 
 /**
@@ -641,7 +713,7 @@ export function heroForgeDocs(
     const card = byId.get(form.picks[slot]);
     const doc =
       card === undefined
-        ? placeholderAbility(championId, slot)
+        ? placeholderAbility(championId, slot, catalog)
         : reslotAbilityDoc(card.doc, slot, abilityIdFor(championId, slot));
     out.push({ collection: "abilities", id: doc["id"] as string, doc });
     return doc;

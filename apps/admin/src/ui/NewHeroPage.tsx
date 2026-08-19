@@ -20,6 +20,7 @@ import {
   CAST_TYPES,
   blankHeroForm,
   buildHeroDocs,
+  heroDocWarnings,
   type AbilityRow,
   type CastType,
   type HeroTemplateForm,
@@ -63,6 +64,11 @@ export function NewHeroPage({ api, onNavigate }: NewHeroPageProps): React.JSX.El
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState<{ text: string; tone: Tone } | null>(null);
   const [issues, setIssues] = useState<readonly { where: string; issue: EditIssue }[]>([]);
+  /**
+   * ⭐【GH#480】六欄／十一項屬性的警示 —— **按下建立的那一刻**算，⛔ 不等 content:build。
+   * ⛔ 它不擋（owner：「只是個警告標記，並不會擋」），所以建立照樣往下走。
+   */
+  const warnings = useMemo(() => heroDocWarnings(buildHeroDocs(form)), [form]);
 
   const set = <K extends keyof HeroTemplateForm>(key: K, value: HeroTemplateForm[K]): void =>
     setForm((f) => ({ ...f, [key]: value }));
@@ -241,6 +247,19 @@ export function NewHeroPage({ api, onNavigate }: NewHeroPageProps): React.JSX.El
           onChange={(patch) => setRow("passive", patch)}
         />
       </Panel>
+
+      {warnings.length > 0 && (
+        <Panel title={`⚠️ 六欄與十一項屬性檢查（${warnings.length} 條 · 只警告不擋）`}>
+          <div style={{ display: "grid", gap: 6 }}>
+            {warnings.map((w, n) => (
+              <div key={`${w.doc}:${w.rule}:${w.field}:${n}`} style={{ fontSize: 12, color: w.level === "block" ? DANGER : GOLD }}>
+                <code style={{ color: GOLD }}>{w.doc}</code> <code>{w.field}</code>{" "}
+                <span style={{ color: TEXT_DIM }}>[{w.rule}]</span> — {w.message}
+              </div>
+            ))}
+          </div>
+        </Panel>
+      )}
 
       {issues.length > 0 && (
         <Panel title="Schema 驗證問題（尚未建立任何檔案）">

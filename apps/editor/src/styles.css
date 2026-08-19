@@ -303,3 +303,8 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .forge-diff .after  { color: #8ad9a0; }
 .forge-signoff { display: flex; gap: 8px; align-items: center; margin: 14px 0 0; font-size: 12px; color: #e8bc6a; }
 .forge-modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; }
+
+/* ⭐ GH#480 —— 存檔當下的語意警示（⛔ 不擋存檔，所以刻意不是 --error 紅） */
+.author-warnings { list-style: none; margin: 6px 0; padding: 8px 10px; border-left: 3px solid #d9a441; background: rgba(217, 164, 65, 0.08); font-size: 12px; }
+.author-warnings li { margin: 3px 0; }
+.author-warnings em { opacity: 0.7; font-style: normal; }

@@ -26,6 +26,7 @@
  * through the same contentApi gate every other write rides.
  */
 import { CORE_SLOTS, embeddedForm, type CoreSlot } from "@ggd/shared/content/editModel";
+import { checkNewHeroDocs, type NewHeroWarning } from "@ggd/shared/content/newHeroChecks";
 
 export type CastType = "targeted" | "skillshot" | "ground" | "self" | "dash";
 export const CAST_TYPES: readonly CastType[] = ["targeted", "skillshot", "ground", "self", "dash"];
@@ -177,4 +178,19 @@ export function buildHeroDocs(form: HeroTemplateForm): HeroDoc[] {
 
   out.push({ collection: "champions", id, doc: champion });
   return out;
+}
+
+/**
+ * ⭐【GH#480】這一批草稿的**存檔當下**警示。
+ *
+ * ⚠️ 這一頁與「新英雄轉生設計」是兩個入口，但它們**共用同一組判斷**
+ * （`@ggd/shared/content/newHeroChecks`）—— ⛔ 兩份判斷會分岔，而分岔的那一天
+ * 同一份草稿在兩頁會得到相反的結論，兩邊各自都是綠的。
+ *
+ * ⛔ 這一頁**沒有**六欄的生成代入：它不抓技能語料（那要 400+ 次 fetch），
+ * 所以中位數量不出來。缺口寫在 GH#480 的回報裡 —— 一份可以被前端 GET 的
+ * 預設表（`config/new-hero-defaults`）落地之後，這裡接上去就是一行。
+ */
+export function heroDocWarnings(docs: readonly HeroDoc[]): NewHeroWarning[] {
+  return checkNewHeroDocs(docs.map((d) => ({ collection: d.collection, id: d.id, doc: d.doc })));
 }
