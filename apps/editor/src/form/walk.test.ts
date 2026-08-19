@@ -128,6 +128,15 @@ describe("discriminated EffectDef union (editor-02)", () => {
         // 進 union 的當下就先把編譯打紅了，兩個 case 是同一輪補上的。
         "carry",
         "championForm", // task #249 — the w3x Eme1/Emeu body swap
+        // ── 2026-08-20 GH#451 連鎖閃電 ──────────────────────────────────────
+        // ⭐ owner 2026-08-20 裁決：「**DECAY 0.9**，但這個技能的重點在於**隨機選擇
+        // 單位遞減時間差的閃電特效與傷害**（每個閃電有極小的時間間隔播放閃電動畫
+        // 與傷害才到下一個…）**有其特殊性與純範圍直接給傷害區別很大**」
+        // ⇒ 它**不是** damageArea 的一個參數，是一個獨立 kind：`jumpIntervalSec`
+        // 讓整條鏈**不在同一 tick 結算**，那正是 owner 說的那個「區別很大」。
+        // ⛔ 這張清單是刻意寫死的（同 navSections 的 BASELINE_PAGES）——
+        // 它的用意就是**逼加新 kind 的人在這裡留下痕跡**，⛔ 不要改成從 union 推導。
+        "chainLightning",
         "convertTeam",
         // ── 2026-07-31 技能批次的四個新 kind ────────────────────────────
         // 這四個是**同一天**進來的，而這條釘子沒有跟上 —— 也就是說有四張卡
