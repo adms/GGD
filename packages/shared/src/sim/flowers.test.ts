@@ -7,6 +7,7 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import { cover } from "../../testkit/cover";
 import { SimWorld } from "./SimWorld";
+import { DEFAULT_MANA_ECONOMY } from "./manaEconomy";
 import { SKELETON_ARENA } from "./world/ArenaDef";
 import { registerSkeletonContent } from "./content/skeleton";
 import { spawnChampion } from "./spawnChampion";
@@ -156,6 +157,9 @@ describe("burst restore (flw-04)", () => {
     cover("flower-burst");
     const w = new SimWorld(SKELETON_ARENA, 11);
     w.flowerRules = RULES;
+    // ⚠️ GH#446 的**回魔地板**（15 秒回滿）會淹掉這一支自己要量的東西 ——
+    //    ⛔ 這裡測的不是回魔，所以把那個全域關掉才量得到自己的機制。
+    w.manaEconomy = { ...DEFAULT_MANA_ECONOMY, enabled: false };
     const cx = SKELETON_ARENA.zones[0]!.center.x;
     const fx = cx + 12; // flower position, clear of the center pillar
 

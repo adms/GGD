@@ -11,6 +11,7 @@ import { zAbilityVfxLayers } from "./abilityVfx";
 // 後台下拉、級距表、文件都讀同一個常數，抄第二份就是 drift 的起點。
 import { AOE_TIER_NAMES } from "../aoeTiers";
 import { RANGE_TIER_NAMES } from "../rangeTiers";
+import { COOLDOWN_SHAPES, COOLDOWN_TIER_NAMES } from "../cooldownTiers";
 
 export const zCastType = z.enum(["targeted", "skillshot", "ground", "self", "dash"]);
 
@@ -623,6 +624,29 @@ export const zAbilityDef = z
      * 一支「中」的技能打得到 6，炸開也是 6 —— 那是 owner 的「統一」。
      */
     rangeTier: z.enum(RANGE_TIER_NAMES).optional(),
+    /**
+     * ⭐ 冷卻級別（GH#445，owner 2026-08-19 親自給了三張表）。
+     *
+     * 與 `radiusTier` / `rangeTier` 完全同一個形態：填了這一格就**不要**填
+     * `cooldown` —— 註冊時由 `config.cooldown-tiers@1` 翻成秒數
+     * （`content/cooldownTiers.ts` 的 `resolveCooldownTier`，全專案唯一的查表處）。
+     * 兩格都填 → **級別贏**，而且**每一階都寫同一個值**（級距是一支技能一格）。
+     * 要做「升階冷卻下降」就**不要**填級別，手寫陣列一直都合法。
+     *
+     * ⚠️ 秒數取決於 {@link cooldownShape}：單體 6/15/30/45/60，
+     * 範圍與變身 30/45/60/90/120。⚠️ 這些是**卡面秒**，實際等待要再乘
+     * `combatEnv.cooldown`（出貨 0.2）—— 單體·極小 6 卡面秒 = 1.2 實際秒。
+     */
+    cooldownTier: z.enum(COOLDOWN_TIER_NAMES).optional(),
+    /**
+     * 這支技能查冷卻表的哪一張。**留空 = 從技能內容推**
+     * （`championForm` → 變身；`radius`/`radiusTier` → 範圍；其餘 → 單體），
+     * 那是 `config.cooldown-tiers@1` 的 `autoShape` 出貨開著的原因。
+     *
+     * ⭐ 只有**推錯**的時候才填它 —— 例如一支沒有 `radius` 卻是範圍定位的技能
+     * （靠投射物碰撞打到很多人），或一支帶 AoE 但定位是單體的技能。
+     */
+    cooldownShape: z.enum(COOLDOWN_SHAPES).optional(),
     targetsEnemies: z.boolean().optional(),
     effects: z.array(zEffectDef),
     /**

@@ -1,0 +1,168 @@
+/**
+ * 冷卻五級距（GH#445）· 傷害五級距（GH#447）· 相稱性（GH#465）的守衛。
+ *
+ * ⭐ 驗的是**機制會不會發生**，⛔ 不是「數字是多少」——
+ * 三張冷卻表與五格傷害都從 `DEFAULT_*` 推導，⛔ 沒有一個出貨值住在這個檔案裡
+ *（第二守則：測試裡抄一份就是第四個住處，而它沒有守衛）。
+ *
+ * 最承重的那一條線是**接縫**：`registerAll` 的 `withTiers` 少了
+ * `resolveCooldownTier`，整個冷卻級距系統就靜默消失 —— 技能保留手寫的 `cooldown`，
+ * schema 過、`content:build` 過、卡片正常（失敗形態②）。
+ */
+import { describe, it, expect } from "vitest";
+import { readFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import { registerAll } from "./registries";
+import type { ContentStore } from "./store";
+import { Abilities, Champions, Items } from "../sim/content/registry";
+import { DEFAULT_COOLDOWN_TIERS, cooldownShapeOf } from "./cooldownTiers";
+import { DEFAULT_DAMAGE_TIERS } from "./damageTiers";
+import { buildAuthoringRules } from "./authoringRules";
+import { DEFAULT_AUTHORING_PRINCIPLES } from "./schema/config";
+
+const REPO = resolve(dirname(fileURLToPath(import.meta.url)), "../../../..");
+const shipped = (id: string): unknown =>
+  JSON.parse(readFileSync(join(REPO, "content/config", `${id}.json`), "utf8"));
+
+const ability = (id: string, extra: Record<string, unknown>): unknown => ({
+  id,
+  schema: "ability@1",
+  name: id,
+  slot: "Q",
+  castType: "ground",
+  maxRank: 3,
+  // ⚠️ 三階都不同，這樣「級距把每一階寫成同一個值」才驗得出來。
+  cooldown: [111, 222, 333],
+  manaCost: [10, 10, 10],
+  range: 5,
+  effects: [],
+  ...extra,
+});
+const storeOf = (docs: Record<string, unknown[]>): ContentStore =>
+  ({ all: (c: string) => docs[c] ?? [] }) as unknown as ContentStore;
+
+const cdOf = (d: unknown): number[] => (d as { cooldown: number[] } | undefined)?.cooldown ?? [];
+
+describe("冷卻五級距 (GH#445)", () => {
+  it("⭐ 三條註冊路徑都翻得到，而且形狀自動判斷挑對了表", () => {
+    Abilities.clear();
+    Champions.clear();
+    Items.clear();
+    // 同一個級距、兩種形狀：單體沒有 radius，範圍有。⇒ 秒數必須不同。
+    const solo = ability("t.solo", { cooldownTier: "中" });
+    const area = ability("t.area", { cooldownTier: "中", radius: 4 });
+    registerAll(
+      storeOf({
+        abilities: [solo, area],
+        champions: [
+          {
+            id: "t.champ",
+            schema: "champion@1",
+            name: "夾夾",
+            abilities: {
+              // 帶變身效果 ⇒ 自動判斷要挑「變身」那張表（⛔ 不是單體）。
+              Q: ability("t.emb", {
+                cooldownTier: "極大",
+                effects: [{ kind: "championForm", formId: "t.form" }],
+              }),
+              W: ability("t.emb.w", {}),
+              E: ability("t.emb.e", {}),
+              R: ability("t.emb.r", {}),
+            },
+          },
+        ],
+      }),
+    );
+    const s = DEFAULT_COOLDOWN_TIERS.seconds;
+    // 每一階都被寫成同一個值（級距是一支技能一格），⛔ 不是只改第一階。
+    expect(cdOf(Abilities.tryGet("t.solo" as never))).toEqual([s.單體.中, s.單體.中, s.單體.中]);
+    expect(cdOf(Abilities.tryGet("t.area" as never))).toEqual([s.範圍.中, s.範圍.中, s.範圍.中]);
+    expect(cdOf(Champions.tryGet("t.champ" as never)?.abilities.Q)).toEqual([
+      s.變身.極大,
+      s.變身.極大,
+      s.變身.極大,
+    ]);
+    // 反向：沒填級距的那三支一格都沒被動到，⛔ 這個機制不會憑空長出冷卻。
+    expect(cdOf(Champions.tryGet("t.champ" as never)?.abilities.W)).toEqual([111, 222, 333]);
+    // 對照組：兩種形狀真的查到不同的表，否則上面兩條對「永遠查單體」也會過。
+    expect(s.單體.中).not.toBe(s.範圍.中);
+  });
+
+  it("手填的形狀贏過自動判斷 —— 否則「推錯了」就沒有出路", () => {
+    const areaish = { radius: 4 } as Record<string, unknown>;
+    expect(cooldownShapeOf(areaish, DEFAULT_COOLDOWN_TIERS)).toBe("範圍");
+    expect(cooldownShapeOf({ ...areaish, cooldownShape: "單體" }, DEFAULT_COOLDOWN_TIERS)).toBe(
+      "單體",
+    );
+    // 關掉自動判斷 = 沒填的一律當單體（這一格的代價寫在後台那一頁）。
+    expect(cooldownShapeOf(areaish, { ...DEFAULT_COOLDOWN_TIERS, autoShape: false })).toBe("單體");
+  });
+});
+
+describe("傷害五級距 (GH#447)", () => {
+  it("⭐ 級距**取代** flat 與 perRank，而 ratios（成長）不動", () => {
+    Abilities.clear();
+    registerAll(
+      storeOf({
+        abilities: [
+          ability("t.dmg", {
+            effects: [
+              {
+                kind: "damage",
+                amount: {
+                  damageTier: "大",
+                  flat: 7,
+                  perRank: [1, 2, 3],
+                  ratios: [{ stat: "ap", coeff: 0.5 }],
+                },
+              },
+            ],
+          }),
+        ],
+      }),
+    );
+    const amount = (
+      Abilities.tryGet("t.dmg" as never)?.effects as unknown as {
+        amount: Record<string, unknown>;
+      }[]
+    )[0]?.amount;
+    expect(amount?.["flat"]).toBe(DEFAULT_DAMAGE_TIERS.damage.大);
+    expect(amount?.["perRank"]).toBeUndefined();
+    expect(amount?.["ratios"]).toEqual([{ stat: "ap", coeff: 0.5 }]);
+  });
+});
+
+describe("三個住處對得上 —— 出貨 JSON ↔ DEFAULT_*", () => {
+  it("冷卻／傷害兩份出貨文件逐格等於推導出來的表", () => {
+    expect((shipped("cooldown-tiers") as { seconds: unknown }).seconds).toEqual(
+      DEFAULT_COOLDOWN_TIERS.seconds,
+    );
+    expect((shipped("damage-tiers") as { damage: unknown }).damage).toEqual(
+      DEFAULT_DAMAGE_TIERS.damage,
+    );
+  });
+});
+
+describe("相稱性 (GH#465)", () => {
+  it("⭐ 只發出 owner 真的裁決過的那一格，⛔ 不發十四條「至少極小」的雜訊", () => {
+    const read = (id: string): unknown => (id === "authoring-rules" ? shipped(id) : undefined);
+    const ids = buildAuthoringRules(read)
+      .principle.filter((r) => r.id.startsWith("principle.proportionality."))
+      .map((r) => r.id);
+    expect(ids).toEqual(["principle.proportionality.範圍.極小"]);
+  });
+
+  it("關掉總開關 = 這一族完全不出現在對外契約裡", () => {
+    const off = {
+      ...DEFAULT_AUTHORING_PRINCIPLES,
+      proportionality: { ...DEFAULT_AUTHORING_PRINCIPLES.proportionality, enabled: false },
+    };
+    const read = (id: string): unknown => (id === "authoring-rules" ? off : undefined);
+    expect(
+      buildAuthoringRules(read).principle.filter((r) =>
+        r.id.startsWith("principle.proportionality."),
+      ),
+    ).toEqual([]);
+  });
+});

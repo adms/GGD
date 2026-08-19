@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "317be1b7",
+  "fingerprint": "44b119b4",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -352,6 +352,8 @@
     "castTimeSec",
     "castType",
     "cooldown",
+    "cooldownShape",
+    "cooldownTier",
     "description",
     "descriptionRoles",
     "effects",
@@ -523,6 +525,8 @@
       "castTimeSec",
       "castType",
       "cooldown",
+      "cooldownShape",
+      "cooldownTier",
       "description",
       "descriptionRoles",
       "effects",

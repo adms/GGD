@@ -158,6 +158,10 @@ const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
       "cooldownRules",
       "aoeTiers",
   "rangeTiers",
+      // GH#445 / #447 / #446 —— 四軸的第三、第四軸與它們反算出來的回魔地板。
+      "cooldownTiers",
+      "damageTiers",
+      "manaEconomy",
       "statNormalization",
       "castTime",
       "mitigation",
@@ -231,6 +235,13 @@ describe("分類重編一頁都沒有掉", () => {
       // 於是八個頂層區塊（治療花／復活圈／守護塔／掉金／overflow／回合表／
       // 大絕與 EX 解鎖回合）一格都調不到，而且沒有任何測試會紅。
       "arenaTuning",
+      // 2026-08-20 GH#445 / #447 / #446：冷卻五級距、傷害五級距、回魔地板。
+      // ⚠️ 三頁一起加是刻意的 —— owner 2026-08-19 的那三張單是**同一次反算**
+      // 出來的（單體極小 6 卡面秒 = 1.2 實際秒 → 20 次殺死 → 傷害下限 →
+      // 耗魔與回魔），⛔ 分開調任何一格都會讓另外兩格的推導失效。
+      "cooldownTiers",
+      "damageTiers",
+      "manaEconomy",
     ]);
     const added = [...after].filter((p) => !before.has(p) && !SINCE_BASELINE.has(p));
     expect(lost, `搬家把這些頁面弄丟了（元件還在，但左欄按不到）：${lost.join(", ")}`).toEqual([]);

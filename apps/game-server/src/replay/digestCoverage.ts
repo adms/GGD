@@ -100,6 +100,9 @@ export const SIM_WORLD_DIGEST_EXEMPT: Readonly<Record<string, string>> = {
   statCaps: CONFIG,
   bodyScaleRules: CONFIG,
   regenRules: CONFIG,
+  // 回魔地板（GH#446）—— 和 `regenRules` 完全同一條路：`MatchController` 在
+  // tick 0 之前定格，比賽中途不會變，所以每個 replica 讀到的是同一份。
+  manaEconomy: CONFIG,
   combatFeel: CONFIG,
   shieldRules: CONFIG,
   blockRules: CONFIG,

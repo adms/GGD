@@ -181,6 +181,43 @@ interface Exemption {
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
 
+  // ═══ GH#445 冷卻五級距 · GH#447 傷害五級距 2026-08-20 ═════════════════════
+  // ⭐ **機制先落地，內容改寫是分開的一批**（而且是一批**平衡改動**）。
+  //    冷卻：出貨 358 支有冷卻的技能裡，單體 38% / 範圍 49% 落在 owner 給的
+  //    格點之外，中位 55 秒；傷害：中位 532，而級距的「中」是 2500。
+  //    ⇒ 把 461 支一次收進級距**會改變每一場比賽**，那是 owner 要勾的事
+  //    （第零守則⑧：排序是 owner 的權力），⛔ 不是這一批順手做掉。
+  // ⚠️ 用 `landing` 而不是 `default-live` 是刻意的：30 天後它會**再紅一次**，
+  //    而那正是我們要的 —— 這一批不做完，這條線不可以安靜地消失。
+  "field:abilities.cooldownTier": {
+    status: "landing",
+    since: "2026-08-20",
+    why: "GH#445：owner 2026-08-19 給滿三張冷卻表，機制（`config.cooldown-tiers@1` + `resolveCooldownTier` + 後台頁 + 契約）這一批落地。內容改寫是**下一批**，因為它會動到每一支技能的實際冷卻（出貨中位 55 秒，單體 38% / 範圍 49% 不在格點上），而那是一次要 owner 勾的平衡改動。",
+  },
+  "field:abilities.cooldownShape": {
+    status: "landing",
+    since: "2026-08-20",
+    why: "同 `cooldownTier`。⚠️ 而且這一格**本來就預期是稀疏的**：出貨 `autoShape` 開著，只有自動判斷推錯的技能才需要手填 —— 內容改寫之後它的採用率仍然會遠低於 `cooldownTier`，屆時要改判成 `default-live`。",
+  },
+  "field:champions.abilities.*.cooldownTier": {
+    status: "landing",
+    since: "2026-08-20",
+    why: "同 `abilities.cooldownTier`（英雄內嵌的那一條路，走同一個 `withTiers` 接縫）。",
+  },
+  "field:champions.abilities.*.cooldownShape": {
+    status: "landing",
+    since: "2026-08-20",
+    why: "同 `abilities.cooldownShape` —— 英雄內嵌的那一條路走同一個 `withTiers` 接縫，所以它與 standalone 那一格是同一件事的兩個落點。⚠️ 這一格本來就預期稀疏：`autoShape` 出貨開著，只有自動判斷推錯的技能才需要手填。",
+  },
+  // ⚠️ 前綴 `#chainLightning.amount.*` 會騙人 —— `amount` 是共用的 `zScaling`，
+  //    普查給共用子樹的命名是「字母序第一個宣告它的 effect kind」。理由完整
+  //    寫在下面 GH#451 那一段，⛔ 不要以為這只影響連鎖閃電。
+  "field:abilities.effects[]#chainLightning.amount.damageTier": {
+    status: "landing",
+    since: "2026-08-20",
+    why: "GH#447：傷害五級距的機制這一批落地（`config.damage-tiers@1` + `resolveDamageTier` + 後台頁 + 契約）。內容改寫是**下一批** —— 出貨技能的中位傷害是 532（血條 5.9%），而級距的「中」是 2500，收進去就是 owner 說的「拉高」本身，而那要他勾。",
+  },
+
   // ═══ GH#451 連鎖閃電 2026-08-20 ═══════════════════════════════════════════
   // ⚠️ 先讀這一段再讀下面十二列,否則你會以為 `damage` 的三格被弄丟了。
   //

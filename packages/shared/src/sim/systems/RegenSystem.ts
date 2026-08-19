@@ -23,6 +23,7 @@ import type { SimWorld } from "../SimWorld";
 import { Stat } from "../stats/statTypes";
 import { Champions } from "../content/registry";
 import { applyHealthDrain, healthDrainPerSec, healthRegenPerSec } from "../regenRules";
+import { manaRegenPerSec } from "../manaEconomy";
 import { woundMult } from "../grievousWounds";
 
 export function regenSystem(world: SimWorld): void {
@@ -74,6 +75,14 @@ export function regenSystem(world: SimWorld): void {
       hp.hp = applyHealthDrain(hp.hp, hp.maxHp, drainPerSec * world.dt, world.regenRules);
     }
 
-    hp.mana = Math.min(hp.maxMana, hp.mana + sc.final[Stat.ManaRegen] * world.dt);
+    // 回魔的**地板**（GH#446，`config.mana-economy@1`）—— owner 2026-08-19
+    // 「平均回魔不超過 15 秒就可以滿魔再一輪」。語意只有一份：`sim/manaEconomy.ts`
+    // 的 `manaRegenPerSec`，這裡只負責乘 dt。⛔ 關掉那一格就逐位元回到
+    // `sc.final[Stat.ManaRegen]`（今天的行為），⛔ 不是「回到一個接近的值」。
+    const manaPerSec = manaRegenPerSec(
+      { flatPerSec: sc.final[Stat.ManaRegen], maxMana: hp.maxMana, isChampion },
+      world.manaEconomy,
+    );
+    hp.mana = Math.min(hp.maxMana, hp.mana + manaPerSec * world.dt);
   }
 }

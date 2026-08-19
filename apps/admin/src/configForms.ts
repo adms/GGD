@@ -60,6 +60,11 @@ import {
   zConfigAuthoringRulesDoc,
   zConfigAoeTiersDoc,
   zConfigRangeTiersDoc,
+  // 冷卻五級距（GH#445）／傷害五級距（GH#447）／回魔地板（GH#446）—— 走 barrel，
+  // 同上面那一族。⚠️ 三份都是新的 schema tag，union 漏一行就是 2026-08-02 的形狀。
+  zConfigCooldownTiersDoc,
+  zConfigDamageTiersDoc,
+  zConfigManaEconomyDoc,
   zConfigStatNormalizationDoc,
   zConfigWoundsDoc,
   zConfigWeaknessDoc,
@@ -98,6 +103,10 @@ import { zConfigCameraDoc } from "@ggd/shared/content/schema/config";
 import { zConfigDisplacementTiersDoc } from "@ggd/shared/content/schema/displacementDoc";
 // ⛔ 級距名只有一份（GH#414）—— 後台不重打一組字串。
 import { SKILL_TIER_NAMES } from "@ggd/shared/content/skillTiers";
+// ⛔ 形狀名（單體／範圍／變身）也只有一份 —— 後台不重打一組字串（同上一行）。
+import { COOLDOWN_SHAPES } from "@ggd/shared/content/cooldownTiers";
+// ⛔ 傷害級距的五個數字也只有一份 —— 相稱性下拉的選項說明從它推導。
+import { DEFAULT_DAMAGE_TIERS } from "@ggd/shared/content/damageTiers";
 // ⚠️ 深路徑 import：`config.victory-podium@1` 的 Zod 住在自己的檔案裡（欄位的理由
 // 很長，而且客戶端 render/** 直接吃它），`content/schema/index.ts` **沒有**再匯出
 // 一次，所以這裡走 package.json 的 `"./*"` 子路徑。`laneConfigDocs.test.ts` 走的是
@@ -809,6 +818,30 @@ const AUTHORING_RULES_SPEC: ConfigDocSpec = {
       zh: "變身／長持續冷卻下限",
       note: "出貨 **120 秒**。⭐ 只有下限沒有上限是刻意的:這一類技能的價值來自「一場只有幾次」,冷卻太短會讓變身變成常態 —— 那等於直接改了那位英雄的基礎形態。",
     },
+    // ⭐ GH#465 —— 相稱性。⛔ 十五格不是手打的（第零守則⑨：N 個同型 = K 個模板
+    //    + 一張表）；形狀名與級距名都從 shared 的常數來，⛔ 後台不另立一組字串。
+    {
+      path: "proportionality.enabled",
+      zh: "相稱性檢查總開關",
+      note: "關掉之後，「付得多、打得少、傷害又低」的組合**完全不會**出現在編輯器的警告清單裡。⚠️ 關掉不會讓那些技能上不了線 —— 這一整族本來就只警告不擋。",
+    },
+    ...COOLDOWN_SHAPES.flatMap((shape) =>
+      SKILL_TIER_NAMES.map((tier) => ({
+        path: `proportionality.minDamageTier.${shape}.${tier}`,
+        zh: `${shape}・冷卻 ${tier} → 傷害至少`,
+        // ⛔ 五個選項的說明從 `DEFAULT_DAMAGE_TIERS` 推導，⛔ 不抄字面值
+        //    （第二守則：測試／後台裡抄一份出貨值就是第四個住處）。
+        optionLabels: Object.fromEntries(
+          SKILL_TIER_NAMES.map((t) => [t, `${t}（${DEFAULT_DAMAGE_TIERS.damage[t]} 傷害）`]),
+        ),
+        note:
+          `一支「${shape}」形狀、冷卻級距填「${tier}」的技能，傷害級距至少要到哪一格才算相稱。` +
+          "填「極小」＝**不構成限制**（那是傷害軸的第一格）。⚠️ 違反只**警告不擋**。" +
+          "⭐ 出貨十五格裡只有 **範圍・冷卻極小 → 大** 有限制，因為 owner 2026-08-19 只裁決了那一格" +
+          "（「的確是太小不合理，要綜合看傷害是不是極大或至少大的」）—— 其餘十四格**刻意留空**，" +
+          "⛔ 沒有被填成看起來合理的值。",
+      })),
+    ),
   ],
   preserved: [],
 };
@@ -1055,6 +1088,155 @@ const RANGE_TIERS_SPEC: ConfigDocSpec = {
     })),
   ],
   // 五格純量 + 一個開關，沒有不編輯的分支要原封帶走。
+  preserved: [],
+};
+
+// ───────────────────────────── 冷卻級距 (config/cooldown-tiers) ─
+
+const COOLDOWN_SHAPE_WHY: Record<string, string> = {
+  單體: "打一個人的技能。⭐ 極小那一格 **6 秒**是 owner 的 Q1 反算出來的：卡面 6 秒 ＝ **1.2 實際秒**，連續 20 次 ＝ 24 秒內要能殺死對方。",
+  範圍: "打一片的技能。整張表比單體貴 **2–5 倍**，那就是「打到很多人」的代價 —— 也是傷害級距只需要**一張**表的原因（同一個懲罰不收兩次）。",
+  變身: "變身／長持續增益。⚠️ 與範圍**同一組數字**是 owner 給的，⛔ 不是我複製貼上：這一類的價值來自「一場只有幾次」。",
+};
+
+const COOLDOWN_TIER_WHY = [
+  "**下限例外**（owner 2026-08-19：「極大跟極小都是屬於卡上下限的例外而非線性規則」）。單體這一格是整套系統的錨 —— 傷害級距的極小也是從它反算的。",
+  "線性段的第一格。",
+  "線性段的中間。⚠️ 出貨 358 支有冷卻的技能，中位是 **55 秒** —— 也就是說大部分技能今天落在「大」附近，而傷害只有中位 532。那個落差就是 GH#447 說的「AP 太弱勢」。",
+  "線性段的最後一格。",
+  "**上限例外**（同極小）。⚠️ 這一格 × 範圍表 ＝ 120 卡面秒 ＝ 24 實際秒，一回合放得出兩次左右。",
+];
+
+const COOLDOWN_TIERS_SPEC: ConfigDocSpec = {
+  page: "cooldownTiers",
+  collection: "config",
+  docId: "cooldown-tiers",
+  schemaTag: "config.cooldown-tiers@1",
+  zod: zConfigCooldownTiersDoc,
+  title: "冷卻五級距",
+  intro: [
+    "owner 2026-08-19 逐字：「冷卻的階段只會分幾種 一樣是**極小小中大極大** ／ **單體 6/15/30/45/60** ／ **範圍 30/45/60/90/120** ／ **變身或持續增益狀態 30/45/60/90/120** ／ **不計入系統倍率及減少 CD 等效果**」。技能 JSON 填 `cooldownTier: \"中\"`，這一頁決定「中」是幾秒。",
+    "⭐ 這十五格是 owner **直接給滿的規格**，所以它們是**照抄**的 —— ⛔ 沒有像 AoE／施法距離／位移那樣套一條推導梯子。再推一次就是拿「編輯器產生的 JSON」去蓋「owner 的新版說明」，那違反優先序階梯。",
+    "⚠️ 這裡的秒數是**卡面秒**（owner：「不計入系統倍率」）。玩家實際等到的 ＝ 這一格 × 「戰鬥系統」頁的 `cooldown`（出貨 **0.2**）× 暴走倍率，再被「冷卻規則」頁的秒數地板夾一次。⇒ 單體·極小 6 卡面秒 ＝ **1.2 實際秒**。",
+    "⚠️ 「6 為什麼不在 15 的整除格點上」不是算術副作用。owner 2026-08-19：「**極大跟極小都是屬於卡上下限的例外而非線性規則**」—— 線性段（小／中／大）的範圍÷單體 ＝ 3.0／2.0／2.0，全部落在他給的「2–5× 上下限參考準則」內。",
+    "⚠️ 級距是**一支技能一格**，⛔ 不是逐等級各一格：解析時整條冷卻陣列的每一階都被寫成同一個值。想做「升階冷卻下降」的技能就**不要**填級別，手寫陣列一直都合法。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/cooldown-tiers.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "packages/shared/src/content/cooldownTiers.ts 的 resolveCooldownTier（全專案唯一的查表處）← content/registries.ts 的 registerAll，在技能與道具註冊時把 cooldownTier 翻成 cooldown；standalone 與 champion-embedded 兩條路共用同一個答案",
+  effect:
+    "**要重啟 game-server shard 才生效**（內容在註冊時就解析完）。客戶端要重新載入 bundle。和 AoE／施法距離級距同一個形態(#278)。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "級距總開關",
+      note: "關掉之後 `cooldownTier` 不解析（填了也不生效），技能只剩手寫的 `cooldown` 陣列 —— ⭐ 那就是**一鍵回到舊的那一套秒數**。⚠️ 關掉**不會**讓技能失去冷卻。",
+    },
+    {
+      path: "autoShape",
+      zh: "沒填形狀時自動判斷",
+      note: "技能沒填 `cooldownShape` 時，要不要從它自己的內容推（有變身 → 變身；有範圍 → 範圍；其餘 → 單體）。⚠️ 關掉的代價是**沒填的一律當單體**，也就是範圍大絕會靜默拿到便宜的那張表（30 秒而不是 60 秒），而卡片、schema、測試全部正常。",
+    },
+    ...COOLDOWN_SHAPES.flatMap((shape) =>
+      SKILL_TIER_NAMES.map((tier, i) => ({
+        path: `seconds.${shape}.${tier}`,
+        zh: `${shape}・${tier} — 卡面秒`,
+        note:
+          `填 \`cooldownTier: "${tier}"\` 且形狀是「${shape}」的技能要等幾**卡面**秒（實際 ×0.2）。` +
+          `改這一格，樹上每一支落在這一格的技能同時跟著變。${COOLDOWN_SHAPE_WHY[shape]}${COOLDOWN_TIER_WHY[i]}`,
+      })),
+    ),
+  ],
+  // 十五格純量 + 兩個開關，沒有不編輯的分支要原封帶走。
+  preserved: [],
+};
+
+// ───────────────────────────── 傷害級距 (config/damage-tiers) ─
+
+const DAMAGE_TIER_WHY = [
+  "⭐ **這一格是整張表的錨**，而且它是**算出來的**：量到的 Lv18 中位有效血量 **9,048**（HP 8,093 ÷ 魔法減傷 0.894）÷ owner 要的 **20 次** ＝ 452.4，**進位**到 50 的整數倍。⚠️ 一定要進位 —— 450×20 ＝ 9,000 < 9,048，會差 0.5% 違反 owner 的 Q1 而且沒有任何東西會紅。",
+  "＝ 錨 × (15 ÷ 6)。",
+  "＝ 錨 × (30 ÷ 6)。⚠️ 對照：今天出貨技能的**中位**傷害是 **532**，也就是血條的 5.9%，要 17 發才殺得死一個人。",
+  "＝ 錨 × (45 ÷ 6)。",
+  "＝ 錨 × (60 ÷ 6)。約中位有效血量的 **55%** —— 一發砍掉對方一半血。⚠️ 上界 9,048 ＝ 中位有效血量：超過它的一發就是**一發秒殺**，那不是傷害級距而是另一種設計。",
+];
+
+const DAMAGE_TIERS_SPEC: ConfigDocSpec = {
+  page: "damageTiers",
+  collection: "config",
+  docId: "damage-tiers",
+  schemaTag: "config.damage-tiers@1",
+  zod: zConfigDamageTiersDoc,
+  title: "傷害五級距",
+  intro: [
+    "owner 2026-08-19：「**可以重新設計拉高**，畢竟之前檢討過 **AP 太弱勢**，我們幾乎要拉到高等級才能開始追平普通攻擊無風險的傷害」。技能在 `amount` 裡填 `damageTier: \"中\"`，這一頁決定「中」是多少基礎傷害。",
+    "⭐ 五個數字**不是挑的**，是從**冷卻表**推導的：錨 ＝ 有效血量 ÷ owner 的 20 次（進位到 50 的倍數）＝ 500，其餘 ＝ 500 × 單體冷卻 ÷ 6。這正是 owner Q4 的意思 ——「**已經有傷害相應的冷卻跟耗魔做限制**」，貴的技能貴在它落在冷卻表的哪一格，⛔ 不是靠一條沒有錨的超線性曲線。",
+    "⭐ 只有**一張**表，⛔ 沒有「單體一張、範圍一張」：形狀的代價整個住在冷卻軸上（範圍表比單體貴 2–5 倍），再在傷害軸打一次折就是同一個懲罰收兩次。驗算：單體·極大 5000÷60 ＝ 83／卡面秒 ×1 人；範圍·極大 5000÷120 ＝ 42／卡面秒 ×1.85 人 ＝ 77 —— 兩者幾乎相等。",
+    "⚠️ 「範圍·極小」是這個讀法唯一壞掉的一格（500÷30×1.33 ＝ 22，只有單體極小的 1/3.8）。owner 的答案是「**那一格要求傷害是大／極大**」，而它住在「編輯器創作規則」頁的相稱性表，⛔ 不是把這張表拆成兩張。",
+    "⚠️ 填了 `damageTier` 的那一格，`flat` 與 `perRank` 會被級距**取代**（⛔ 不是相加）；`ratios` / `attrRatios` 不受影響 —— 那兩條是**成長**，不是基礎值。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/damage-tiers.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "packages/shared/src/content/damageTiers.ts 的 resolveDamageTier（全專案唯一的查表處）← content/registries.ts 的 registerAll，在技能與道具註冊時把 amount.damageTier 翻成 amount.flat",
+  effect:
+    "**要重啟 game-server shard 才生效**（內容在註冊時就解析完）。客戶端要重新載入 bundle。和 冷卻五級距 同一個形態(#278)。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "級距總開關",
+      note: "關掉之後 `damageTier` 不解析，技能回到自己手寫的 `flat` / `perRank` —— ⭐ 那就是**一鍵回到今天的那一套傷害**（中位 532）。⚠️ 關掉**不會**讓技能不再造成傷害。",
+    },
+    ...SKILL_TIER_NAMES.map((tier, i) => ({
+      path: `damage.${tier}`,
+      zh: `${tier} — 基礎傷害`,
+      note:
+        `填 \`damageTier: "${tier}"\` 的那一格實際打多少（卡面值，上場還要乘「戰鬥系統」頁的 \`damageDealt\` 與對方的減免）。` +
+        `改這一格，樹上每一處標成「${tier}」的傷害同時跟著變。${DAMAGE_TIER_WHY[i]}`,
+    })),
+  ],
+  // 五格純量 + 一個開關，沒有不編輯的分支要原封帶走。
+  preserved: [],
+};
+
+// ───────────────────────────── 魔力經濟 (config/mana-economy) ─
+
+const MANA_ECONOMY_SPEC: ConfigDocSpec = {
+  page: "manaEconomy",
+  collection: "config",
+  docId: "mana-economy",
+  schemaTag: "config.mana-economy@1",
+  zod: zConfigManaEconomyDoc,
+  title: "魔力經濟（回魔地板）",
+  intro: [
+    "owner 2026-08-19 逐字：「應該是去**調整回魔**，找到一個平衡⋯**平均回魔不超過 15 秒就可以滿魔再一輪，最糟的情形也不超過 20 秒**」。",
+    "⭐ 調的是**回魔**不是耗魔 —— 那是 owner 親自轉的向。拉高耗魔要動 342 支技能的卡面數字（342 個住處），調回魔只動這一頁，而玩家感受到的是同一件事（「放完要等」）。",
+    "⭐ 規則寫在**時間**上而不是倍率上：`每秒回魔 ≥ 魔力池 ÷ 滿魔秒數`。一個倍率會對每位英雄乘出**不同的**滿魔時間（高智力本來就快，乘完更快），而 owner 給的是一個**時間**保證。",
+    "量到的現況（Lv18 中位）：魔力池 **1,746** ・ 回魔 **36.6/s** ⇒ 滿魔要 **47.7 秒**，是 15 秒的 **3.2 倍**。出貨值把中位英雄的地板拉到 1,746 ÷ 15 ＝ **116/s**。",
+    "⚠️ 它解掉的是 owner 的三條約束（單體 Q 每 1.2 實際秒回 140 點 > 單體耗魔中位 120 ⇒ 永遠不耗光；平均 ≤15 秒；最糟 ≤20 秒）。⛔ 它**解不了**「範圍技連續 8 次才需要等」與「連續四個大範圍技能後一定要等」—— 那兩條要動的是每支技能的耗魔，也就是 owner 這一則否決掉的方向。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/mana-economy.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "packages/shared/src/sim/manaEconomy.ts 的 manaRegenPerSec（全專案唯一知道這條地板怎麼算的地方）← sim/systems/RegenSystem.ts 每一 tick，經由 MatchController 在 tick 0 之前定格到 world.manaEconomy",
+  effect:
+    "**從下一場比賽開始生效**（`Configs` 是 boot 時載入的，所以後台存檔之後要重啟 game-server shard）。比賽中途不會變 —— 規則在 tick 0 之前就定格了。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "回魔地板總開關",
+      note: "關掉之後回魔**逐位元**回到今天的樣子（只有屬性管線算出來的 `manaRegen`，中位滿魔 47.7 秒）—— ⭐ 那就是一鍵 rollback。",
+    },
+    {
+      path: "refillSeconds",
+      zh: "從空到滿最多幾秒",
+      note: "地板 ＝ 魔力池 ÷ 這個數。出貨 **15**（owner：「平均回魔不超過 15 秒就可以滿魔再一輪」）⇒ 中位英雄的地板是 1,746 ÷ 15 ＝ 116/s。⚠️ 上界 **20** 是 owner 自己給的數字（「最糟的情形也不超過 20 秒」），⛔ 不是防手滑的柵欄 —— 今天的 47.7 填不進來。⚠️ 這是**地板不是取代**：本來就回得比它快的英雄一格都不會被動到，否則這條規則會反過來削弱高智力英雄。",
+    },
+    {
+      path: "championsOnly",
+      zh: "只套在英雄身上",
+      note: "出貨 **開**。關掉之後殭屍與守衛塔身上帶魔力的那些也吃這條地板 —— ⚠️ 一條為英雄節奏設計的地板套到怪物身上會讓它們變成另一種東西，而沒有人要求過。",
+    },
+  ],
+  // 三格純量，沒有不編輯的分支要原封帶走。
   preserved: [],
 };
 
@@ -3540,6 +3722,9 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   CAST_TIME_SPEC,
   AOE_TIERS_SPEC,
   RANGE_TIERS_SPEC,
+  COOLDOWN_TIERS_SPEC,
+  DAMAGE_TIERS_SPEC,
+  MANA_ECONOMY_SPEC,
   UI_LEXICON_SPEC,
   STAT_NORMALIZATION_SPEC,
   WOUNDS_SPEC,

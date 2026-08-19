@@ -209,6 +209,43 @@ const pick = <T>(read: ConfigReader, id: string, fallback: T): T =>
  * ⚠️ **每次呼叫都重算** —— ⛔ 不要 memo:後台改一格之後這個端點必須下一秒就變,
  * 那正是它取代散文的理由。成本是幾個 map 查詢。
  */
+/**
+ * GH#465 的相稱性 → 一組 `principle` 規則。
+ *
+ * ⭐ 一個模板 + 一張表（第零守則⑨），⛔ 不是十五條手寫規則。
+ * ⛔ 只發出**真的構成限制**的那幾格 —— 「最低傷害級距 = 極小」是傷害軸的第一格，
+ * 它不排除任何東西，發出去只會讓對方的警告清單多十四條沒有內容的字。
+ *
+ * `min`/`max` 刻意留空：這一條約束的是**級距名**不是數字，而 `AuthoringRule`
+ * 的兩格界是數字。⇒ 用 `field` 指名它管哪一格，語意寫在 `note` 裡。
+ */
+function proportionalityRules(
+  table: Readonly<Record<string, Readonly<Record<string, string>>>>,
+): AuthoringRule[] {
+  const floor = SKILL_TIER_NAMES[0];
+  const out: AuthoringRule[] = [];
+  for (const shape of Object.keys(table).sort()) {
+    const row = table[shape]!;
+    for (const tier of SKILL_TIER_NAMES) {
+      const need = row[tier];
+      if (typeof need !== "string" || need === floor) continue;
+      out.push({
+        id: `principle.proportionality.${shape}.${tier}`,
+        field: "damageTier",
+        unit: "none",
+        note:
+          `冷卻級距「${tier}」的**${shape}**技能，傷害級距至少要「${need}」。` +
+          "owner 2026-08-19：「的確是太小不合理，要綜合看傷害是不是極大或至少大的」" +
+          " —— 付得多、打得少、傷害又低的那些格子沒有人會選，而一個死格比不存在更糟：" +
+          "它佔著一個標籤，作者會填它，然後那些技能上線就是弱的。⚠️ 違反只**警告**。",
+        source: "admin-config",
+        configDoc: "config.authoring-rules@1",
+      });
+    }
+  }
+  return out;
+}
+
 export function buildAuthoringRules(read: ConfigReader): AuthoringRulesManifest {
   const castTime = pick(read, "cast-time", DEFAULT_CAST_TIME_DOC as never) as typeof DEFAULT_CAST_TIME_DOC;
   const cooldown = pick(read, "cooldown-rules", DEFAULT_COOLDOWN_RULES_DOC as never) as typeof DEFAULT_COOLDOWN_RULES_DOC;
@@ -337,6 +374,15 @@ export function buildAuthoringRules(read: ConfigReader): AuthoringRulesManifest 
       source: "admin-config",
       configDoc: "config.authoring-rules@1",
     },
+    // ⭐ GH#465 —— **相稱性**：成本軸反過來對回報軸的要求。
+    //    owner 2026-08-19：「的確是太小不合理，要**綜合看傷害是不是極大或至少大的**」。
+    //
+    // ⛔ 只發出**真的構成限制**的那幾格（最低傷害級距 > 第一格）。十五格全發
+    //    等於在對外契約裡塞十四條「傷害至少要極小」的廢話，而編輯器沒有辦法
+    //    分辨哪一條是 owner 真的裁決過的 —— 那是把一格資料變成十五格雜訊。
+    ...(principles.proportionality.enabled
+      ? proportionalityRules(principles.proportionality.minDamageTier)
+      : []),
   ];
 
   // ⭐ GH#480 —— 六條警示 × 它們現在的開關。⛔ 讀不到文件就是出貨值（全部 on），

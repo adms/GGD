@@ -25,6 +25,7 @@ import { FsContentSource } from "../../content/node/FsContentSource";
 import { Arenas, Configs, Models, StatusEffects, VfxDefs, registerAll } from "../../content/registries";
 import { Abilities, Augments, Champions, Items, LootTables, Projectiles } from "../content/registry";
 import { SimWorld } from "../SimWorld";
+import { DEFAULT_MANA_ECONOMY } from "../manaEconomy";
 import { SKELETON_ARENA } from "../world/ArenaDef";
 import { spawnChampion } from "../spawnChampion";
 import { asSeatId, asTeamId, type ChampionId, type SeatId } from "../../ids";
@@ -48,6 +49,9 @@ beforeAll(async () => {
  */
 function run(hpFrac: number, seconds: number): { dHp: number; dMana: number } {
   const world = new SimWorld(SKELETON_ARENA, 4242);
+  // ⚠️ GH#446 的**回魔地板**（15 秒回滿）會淹掉這一支自己要量的東西 ——
+  //    ⛔ 這裡測的不是回魔，所以把那個全域關掉才量得到自己的機制。
+  world.manaEconomy = { ...DEFAULT_MANA_ECONOMY, enabled: false };
   world.combatActive = true; // `onInterval` 的閘
   const id = spawnChampion(world, {
     championId: NEGI,

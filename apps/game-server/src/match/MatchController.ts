@@ -111,6 +111,11 @@ import {
   type RegenRules,
 } from "@ggd/shared/sim/regenRules";
 import {
+  MANA_ECONOMY_DOC_ID,
+  manaEconomyFromDoc,
+  type ManaEconomy,
+} from "@ggd/shared/sim/manaEconomy";
+import {
   SKELETON_ARENA,
   ROYALE_ARENA,
   pickRoundArena,
@@ -1036,6 +1041,14 @@ export class MatchController {
      */
     regenRules: RegenRules = regenRulesFromDoc(Configs.tryGet(REGEN_DOC_ID)),
     /**
+     * 回魔的**地板** (`config.mana-economy@1`, GH#446) —— owner 2026-08-19
+     * 「平均回魔不超過 15 秒就可以滿魔再一輪」。
+     * 和 `regenRules` 完全同一條路(含同一個已知限制:重啟 shard 才生效)。
+     * ⚠️ **出貨值會改變平衡**:量到的滿魔時間是 47.7 秒,出貨把它夾到 15 秒 ——
+     * 那是 owner 要的新行為,⛔ 不是「維持原狀」。
+     */
+    manaEconomy: ManaEconomy = manaEconomyFromDoc(Configs.tryGet(MANA_ECONOMY_DOC_ID)),
+    /**
      * GH#264 —— 血耗光的隊伍要不要**當場**收到 #193 的中途結算卡
      * (`config.match@1` 的 `match.settlementCardOnHealthSpent`)。
      * 完整的理由寫在 {@link DEFAULT_SETTLEMENT_CARD_ON_HEALTH_SPENT} 的檔頭。
@@ -1145,6 +1158,9 @@ export class MatchController {
     this.world.bodyScaleRules = bodyScaleRules;
     // 百分比回血 (`config.regen@1`, GH#253) —— tick 0 之前定格。
     this.world.regenRules = regenRules;
+    // 回魔地板 (`config.mana-economy@1`, GH#446) —— 同上,tick 0 之前定格。
+    // ⛔ 漏掉這一行,那一格就永遠是出貨預設,後台改了場上沒反應（失敗形態②）。
+    this.world.manaEconomy = manaEconomy;
     // Project the operator whitelist into the sim as a pure predicate. The
     // 傳說寶玉 rolls its 3-choose-1 inside the sim (so the roll rides world.rng
     // and replays identically) and must filter the pool BEFORE rolling — the

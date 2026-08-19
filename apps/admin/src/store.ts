@@ -223,6 +223,13 @@ export type Page =
   // `ConfigDocPage` 元件、同一條 `putOverlayDoc`。刻意緊鄰 aoeTiers —— 兩者是
   // 同一條梯子的兩個視窗，操作者一定會一起找。
   | "rangeTiers"
+  // 冷卻五級距 (GH#445, owner 2026-08-19 親自給滿三張表) / 傷害五級距 (GH#447) /
+  // 回魔地板 (GH#446): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  // 刻意緊鄰 aoeTiers / rangeTiers —— 四軸（範圍・距離・冷卻・傷害）是一組尺，
+  // 而 owner 調其中一格的時候一定會看另外三格。
+  | "cooldownTiers"
+  | "damageTiers"
+  | "manaEconomy"
   | "uiLexicon"
   /**
    * 混音 (`config/audio-mix.json`, owner 2026-08-17「其他角色語音應該是自己的一半」)
@@ -610,6 +617,11 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "aoeTiers",
   // 施法距離五級距 (GH#414): 同上。
   "rangeTiers",
+  // 冷卻五級距 (GH#445) / 傷害五級距 (GH#447) / 回魔地板 (GH#446): 同上。
+  // ⛔ 漏掉 gate 的後果在這三頁特別重: 它們決定的是全部技能的冷卻、傷害與回魔。
+  "cooldownTiers",
+  "damageTiers",
+  "manaEconomy",
   "uiLexicon",
   // 混音 (owner 2026-08-17): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "audioMix",

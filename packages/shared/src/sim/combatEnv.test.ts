@@ -7,6 +7,7 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import { cover } from "../../testkit/cover";
 import { SimWorld } from "./SimWorld";
+import { DEFAULT_MANA_ECONOMY } from "./manaEconomy";
 import { SKELETON_ARENA } from "./world/ArenaDef";
 import { registerSkeletonContent } from "./content/skeleton";
 import { spawnChampion } from "./spawnChampion";
@@ -53,6 +54,9 @@ const env = (o: Partial<Record<CombatEnvKey, number>>): CombatEnvMultipliers =>
 
 function makeWorld(seed = 42, table?: CombatEnvMultipliers): SimWorld {
   const w = new SimWorld(SKELETON_ARENA, seed);
+  // ⚠️ GH#446 的**回魔地板**（15 秒回滿）會淹掉這一支自己要量的東西 ——
+  //    ⛔ 這裡測的不是回魔，所以把那個全域關掉才量得到自己的機制。
+  w.manaEconomy = { ...DEFAULT_MANA_ECONOMY, enabled: false };
   if (table) w.combatEnv = table; // host seam: assigned BEFORE tick 0
   return w;
 }

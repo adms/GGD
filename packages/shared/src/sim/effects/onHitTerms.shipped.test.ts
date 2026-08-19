@@ -32,6 +32,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../../testkit/cover";
 import { SimWorld } from "../SimWorld";
+import { DEFAULT_MANA_ECONOMY } from "../manaEconomy";
 import { SKELETON_ARENA } from "../world/ArenaDef";
 import { zeroStats, Stat } from "../stats/statTypes";
 import { attachSource, recomputeStats } from "../stats/statPipeline";
@@ -220,6 +221,9 @@ function rig(
   } = {},
 ): Rig {
   const world = new SimWorld(SKELETON_ARENA, opts.seed ?? 4242);
+  // ⚠️ GH#446 的**回魔地板**（15 秒回滿）會淹掉這一支自己要量的東西 ——
+  //    ⛔ 這裡測的不是回魔，所以把那個全域關掉才量得到自己的機制。
+  world.manaEconomy = { ...DEFAULT_MANA_ECONOMY, enabled: false };
   // 全域傷害倍率固定成 1,讓每一條斷言的算術可讀。§2D 另外測倍率不會把
   // 折返算成兩次。
   world.combatEnv = { ...world.combatEnv, damageDealt: 1, healing: 1 };

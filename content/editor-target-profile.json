@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_fcec9c967306",
+    "contentVersion": "cv_e48809fe1c4a",
     "collections": {
       "champions": {
         "hash": "d1f1852b3667",
@@ -42,8 +42,8 @@
         "count": 7
       },
       "config": {
-        "hash": "d87c86978561",
-        "count": 66
+        "hash": "8a20ae77e9d4",
+        "count": 69
       },
       "models": {
         "hash": "38d96d54f6e6",
@@ -89,7 +89,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "317be1b7",
+    "fingerprint": "44b119b4",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -441,6 +441,8 @@
       "castTimeSec",
       "castType",
       "cooldown",
+      "cooldownShape",
+      "cooldownTier",
       "description",
       "descriptionRoles",
       "effects",
@@ -612,6 +614,8 @@
         "castTimeSec",
         "castType",
         "cooldown",
+        "cooldownShape",
+        "cooldownTier",
         "description",
         "descriptionRoles",
         "effects",
@@ -2666,12 +2670,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "317be1b7",
+    "engineFingerprint": "44b119b4",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 317be1b7 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 44b119b4 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -2786,6 +2790,14 @@
           "min": 120,
           "unit": "sec",
           "note": "變身／長持續技能的冷卻下限 —— 它們的價值來自「一場只有幾次」。",
+          "source": "admin-config",
+          "configDoc": "config.authoring-rules@1"
+        },
+        {
+          "id": "principle.proportionality.範圍.極小",
+          "field": "damageTier",
+          "unit": "none",
+          "note": "冷卻級距「極小」的**範圍**技能，傷害級距至少要「大」。owner 2026-08-19：「的確是太小不合理，要綜合看傷害是不是極大或至少大的」 —— 付得多、打得少、傷害又低的那些格子沒有人會選，而一個死格比不存在更糟：它佔著一個標籤，作者會填它，然後那些技能上線就是弱的。⚠️ 違反只**警告**。",
           "source": "admin-config",
           "configDoc": "config.authoring-rules@1"
         }
@@ -3304,5 +3316,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "4db1cdf1addc"
+  "profileDigest": "47b7c1fe58a1"
 }

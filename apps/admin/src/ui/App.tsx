@@ -230,6 +230,12 @@ export const NAV: NavItem[] = [
   { page: "aoeTiers", label: "AoE 範圍五級距", emoji: "◎", section: SEC_COMBAT },
   // 施法距離五級距 (GH#414)。緊鄰 AoE —— 同一條梯子的兩個視窗。
   { page: "rangeTiers", label: "施法距離五級距", emoji: "➶", section: SEC_COMBAT },
+  // 冷卻 (GH#445) 與傷害 (GH#447) 五級距。緊鄰 AoE／施法距離 —— 四軸是一組尺，
+  // 而 GH#465 的相稱性規則把「成本兩軸」與「回報一軸」綁在一起，⛔ 不可以分開調。
+  { page: "cooldownTiers", label: "冷卻五級距", emoji: "⏲", section: SEC_COMBAT },
+  { page: "damageTiers", label: "傷害五級距", emoji: "💥", section: SEC_COMBAT },
+  // 回魔地板 (GH#446)。緊鄰上面兩頁：owner 那三張單是同一次反算出來的。
+  { page: "manaEconomy", label: "魔力經濟（回魔地板）", emoji: "🔵", section: SEC_COMBAT },
   { page: "uiLexicon", label: "介面用語（Fate）", emoji: "🏆", section: SEC_COMBAT },
   { page: "statNormalization", label: "英雄屬性正規化", emoji: "📐", section: SEC_COMBAT },
   // GH#322 —— 這四頁的 spec 早就寫好了，但導覽列沒有那一列 ⇒ 操作者點不到。

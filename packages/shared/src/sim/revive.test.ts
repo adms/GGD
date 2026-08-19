@@ -7,6 +7,7 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import { cover } from "../../testkit/cover";
 import { SimWorld } from "./SimWorld";
+import { DEFAULT_MANA_ECONOMY } from "./manaEconomy";
 import { SKELETON_ARENA } from "./world/ArenaDef";
 import { registerSkeletonContent } from "./content/skeleton";
 import { spawnChampion } from "./spawnChampion";
@@ -89,6 +90,9 @@ function duelWorld(rules: ReviveRules = FAST): {
   enemy: EntityId;
 } {
   const w = new SimWorld(SKELETON_ARENA, 7);
+  // ⚠️ GH#446 的**回魔地板**（15 秒回滿）會淹掉這一支自己要量的東西 ——
+  //    ⛔ 這裡測的不是回魔，所以把那個全域關掉才量得到自己的機制。
+  w.manaEconomy = { ...DEFAULT_MANA_ECONOMY, enabled: false };
   const c = SKELETON_ARENA.zones[0]!.center;
   const victim = champAt(w, 0, 0, c.x, c.z);
   const ally = champAt(w, 1, 0, c.x + 8, c.z);

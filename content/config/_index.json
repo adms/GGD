@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "d87c86978561",
+  "hash": "8a20ae77e9d4",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -47,8 +47,8 @@
     {
       "id": "authoring-rules",
       "path": "config/authoring-rules.json",
-      "hash": "129ef935a81b",
-      "size": 567
+      "hash": "32f1735e9c8a",
+      "size": 1436
     },
     {
       "id": "base-bonus",
@@ -129,6 +129,12 @@
       "size": 746
     },
     {
+      "id": "cooldown-tiers",
+      "path": "config/cooldown-tiers.json",
+      "hash": "efbff5761e8a",
+      "size": 1556
+    },
+    {
       "id": "crit",
       "path": "config/crit.json",
       "hash": "3345634f03ec",
@@ -145,6 +151,12 @@
       "path": "config/damage-rules.json",
       "hash": "0a4975f8e3f5",
       "size": 651
+    },
+    {
+      "id": "damage-tiers",
+      "path": "config/damage-tiers.json",
+      "hash": "3d556a595252",
+      "size": 1585
     },
     {
       "id": "dispel",
@@ -193,6 +205,12 @@
       "path": "config/lobby-layout.json",
       "hash": "bee90198878d",
       "size": 2038
+    },
+    {
+      "id": "mana-economy",
+      "path": "config/mana-economy.json",
+      "hash": "7bd963b01c2a",
+      "size": 1606
     },
     {
       "id": "map-report",

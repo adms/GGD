@@ -32,6 +32,9 @@ import { zAbilityDef, zAbilityDoc } from "./schema/ability";
 // AoE 四級距 → 半徑。全專案唯一的查表處，理由寫在那支檔案。
 import { aoeTiersFromDoc, resolveRadiusTier } from "./aoeTiers";
 import { rangeTiersFromDoc, resolveRangeTier } from "./rangeTiers";
+// 冷卻五級距 → 秒數（GH#445）／傷害五級距 → 基礎值（GH#447）。同上，唯一的查表處。
+import { cooldownTiersFromDoc, resolveCooldownTier } from "./cooldownTiers";
+import { damageTiersFromDoc, resolveDamageTier } from "./damageTiers";
 // 位移四級距 + **無條件的速度天花板**（GH#318）。同上，唯一的查表處。
 import {
   displacementTiersFromDoc,
@@ -249,11 +252,29 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   const rangeTiers = rangeTiersFromDoc(
     configDocs.find((c) => c.schema === "config.range-tiers@1"),
   );
+  // 冷卻五級距（GH#445）與傷害五級距（GH#447）—— 成本軸的第三條與**唯一**的
+  // 回報軸。⚠️ 兩者都掛在**同一個** `withTiers` 接縫上，理由同上面那一段：
+  // standalone / 內嵌 / 模板展開後 / 道具，四條路只能有一個答案。
+  const cooldownTiers = cooldownTiersFromDoc(
+    configDocs.find((c) => c.schema === "config.cooldown-tiers@1"),
+  );
+  const damageTiers = damageTiersFromDoc(
+    configDocs.find((c) => c.schema === "config.damage-tiers@1"),
+  );
   const withTiers = <T extends object>(d: T): T =>
-    resolveDisplacementTier(
-      resolveRangeTier(resolveRadiusTier(d as never, aoeTiers) as never, rangeTiers) as never,
-      displacementTiers,
-    );
+    // ⚠️ 冷卻在最外層是刻意的：`cooldownShapeOf` 的自動推形狀會去看
+    // `radius`/`radiusTier`，而 `resolveRadiusTier` 只**加**欄位不刪 ——
+    // 先跑幾何再跑冷卻，兩種寫法（填數字／填級距）看到的形狀才會一樣。
+    resolveCooldownTier(
+      resolveDamageTier(
+        resolveDisplacementTier(
+          resolveRangeTier(resolveRadiusTier(d as never, aoeTiers) as never, rangeTiers) as never,
+          displacementTiers,
+        ),
+        damageTiers,
+      ) as never,
+      cooldownTiers,
+    ) as T;
 
   // 英雄屬性正規化：同樣要在**英雄註冊之前**讀（`Configs.register` 那一圈在後面）。
   // ⭐ 一個 seam，接在 registerChampion 的正上方 —— 商店預覽 / 選人畫面 / 後台

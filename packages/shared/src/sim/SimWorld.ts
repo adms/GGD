@@ -34,6 +34,7 @@ import {
 import { DEFAULT_STAT_CAPS, type StatCapTable } from "./statCaps";
 import { DEFAULT_BODY_SCALE_RULES, type BodyScaleRules } from "./bodyScale";
 import { DEFAULT_REGEN_RULES, type RegenRules } from "./regenRules";
+import { DEFAULT_MANA_ECONOMY, type ManaEconomy } from "./manaEconomy";
 import { DEFAULT_COMBAT_FEEL, type CombatFeelRules } from "./combatFeel";
 import { DEFAULT_SHIELD_RULES, type ShieldRules } from "./shieldRules";
 import { DEFAULT_BLOCK_RULES, type BlockRules } from "./blockRules";
@@ -776,6 +777,14 @@ export class SimWorld {
    * owner 2026-08-02「每秒損失 1%生命, 直到生命不足1%」)。
    */
   regenRules: RegenRules = DEFAULT_REGEN_RULES;
+
+  /**
+   * 回魔的**地板** (see manaEconomy.ts, `config.mana-economy@1`, GH#446)。
+   * 和 `regenRules` 同一條規矩:開賽前指派一次,之後不再動。
+   * owner 2026-08-19「**平均回魔不超過 15 秒就可以滿魔再一輪**」——
+   * 出貨值把每一位英雄的滿魔時間夾在 15 秒內(今天量到的是 47.7 秒)。
+   */
+  manaEconomy: ManaEconomy = DEFAULT_MANA_ECONOMY;
 
   /**
    * 戰鬥手感規則 (see combatFeel.ts) —— 擊退法則 (GH#193) + 打就站定開關。

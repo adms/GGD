@@ -58,6 +58,7 @@ import {
   registerChampion,
 } from "../content/registry";
 import { SimWorld } from "../SimWorld";
+import { DEFAULT_MANA_ECONOMY } from "../manaEconomy";
 import { SKELETON_ARENA } from "../world/ArenaDef";
 import { SELA, THORNE } from "../content/skeleton";
 import { spawnChampion } from "../spawnChampion";
@@ -167,6 +168,9 @@ function solo(championId: ChampionId, seed = 4242) {
   seatCounter = 0;
   const world = new SimWorld(SKELETON_ARENA, seed);
   const id = spawn(world, championId, 0);
+  // ⚠️ GH#446 的**回魔地板**（15 秒回滿）會淹掉這一支自己要量的東西 ——
+  //    ⛔ 這裡測的不是回魔，所以把那個全域關掉才量得到自己的機制。
+  world.manaEconomy = { ...DEFAULT_MANA_ECONOMY, enabled: false };
   return { world, id, ab: world.abilities.get(id)!, seat: asSeatId(0) };
 }
 

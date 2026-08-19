@@ -10,6 +10,8 @@
 import { z } from "zod";
 import { Stat } from "../../sim/stats/statTypes";
 import { ModOp } from "../../sim/stats/modifiers";
+// 傷害五級距（GH#447）。⛔ 不要在這裡重打一份級距名 —— 五個字全專案只有一份。
+import { DAMAGE_TIER_NAMES } from "../damageTiers";
 
 /** filename stem == id; dots allowed for namespaced ids like "sela.q". */
 export const ID_RE = /^[a-z0-9][a-z0-9._-]*$/;
@@ -473,6 +475,20 @@ export const ATTR_RATIO_COEFF_MAX = 20;
 
 export const zScaling = z
   .object({
+    /**
+     * ⭐ 傷害級別（GH#447，owner 2026-08-19「**可以重新設計拉高**，
+     * 之前檢討過 **AP 太弱勢**」）。
+     *
+     * 與 `radiusTier` / `rangeTier` / `cooldownTier` 同一個形態：填了這一格就
+     * **不要**填 `flat` 或 `perRank` —— 註冊時由 `config.damage-tiers@1` 翻成數字
+     * （`content/damageTiers.ts` 的 `resolveDamageTier`，全專案唯一的查表處），
+     * 而級距會**取代**那兩格（⛔ 不是相加）。
+     *
+     * ⚠️ `ratios` / `attrRatios` **不受影響** —— 那兩條是**成長**，不是基礎值。
+     * ⭐ 它住在 `Scaling` 上而不是 damage/damageArea/damageLine/dot/chainLightning
+     * 各一份：一個機制服務全部（第零守則⑨）。
+     */
+    damageTier: z.enum(DAMAGE_TIER_NAMES).optional(),
     flat: z.number().optional(),
     perRank: z.array(z.number()).optional(),
     ratios: z.array(z.object({ stat: zStat, coeff: z.number() }).strict()).optional(),

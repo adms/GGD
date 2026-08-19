@@ -62,6 +62,32 @@ import {
   RANGE_TIERS_DOC_ID,
   DEFAULT_RANGE_TIERS,
 } from "../rangeTiers";
+// 冷卻五級距（GH#445）—— 三張表（單體／範圍／變身）的來歷與「為什麼照抄
+// owner 的數字而不是推導」寫在 content/cooldownTiers.ts。
+import {
+  COOLDOWN_SHAPES,
+  COOLDOWN_TIER_MAX,
+  COOLDOWN_TIER_MIN,
+  COOLDOWN_TIER_NAMES,
+  COOLDOWN_TIERS_DOC_ID,
+  DEFAULT_COOLDOWN_TIERS,
+} from "../cooldownTiers";
+// 傷害五級距（GH#447）—— 唯一的**回報**軸。五個數字從冷卻表推導，
+// 推導式與 owner 的兩條輸入寫在 content/damageTiers.ts。
+import {
+  DAMAGE_TIER_MAX,
+  DAMAGE_TIER_MIN,
+  DAMAGE_TIER_NAMES,
+  DAMAGE_TIERS_DOC_ID,
+  DEFAULT_DAMAGE_TIERS,
+} from "../damageTiers";
+// 魔力經濟（GH#446）—— 回魔的地板。⚠️ 它住 `sim/`（每 tick 都跑的純函式）。
+import {
+  DEFAULT_MANA_ECONOMY,
+  MANA_ECONOMY_DOC_ID,
+  REFILL_SECONDS_MAX,
+  REFILL_SECONDS_MIN,
+} from "../../sim/manaEconomy";
 // 英雄屬性正規化（owner 2026-08-12）—— 同一條規矩：數字與語意定在
 // content/statNormalization.ts，schema 只是把它搬上 Zod。
 import {
@@ -5063,6 +5089,130 @@ export const DEFAULT_RANGE_TIERS_DOC = {
   range: DEFAULT_RANGE_TIERS.range,
 } as const;
 
+/**
+ * config.cooldown-tiers@1 — 冷卻**五級距**（GH#445）。
+ *
+ * owner 2026-08-19：「冷卻的階段只會分幾種 一樣是**極小小中大極大** /
+ * **單體 6/15/30/45/60** / **範圍 30/45/60/90/120** /
+ * **變身或持續增益狀態 30/45/60/90/120** / **不計入系統倍率及減少 CD 等效果**」。
+ *
+ * ⚠️ 十五格是**卡面秒**。實際等待 = 這裡的值 × `combatEnv.cooldown`（出貨 0.2）
+ * ⇒ 單體·極小 6 卡面秒 = **1.2 實際秒**。語意與「為什麼照抄不推導」寫在
+ * `content/cooldownTiers.ts`。
+ */
+/** 一張表的五格（卡面秒）。⛔ 抽成函式是為了讓 `Object.fromEntries` 的轉型對得上型別。 */
+const zCooldownSecondsRow = () =>
+  z
+    .object(
+      Object.fromEntries(
+        COOLDOWN_TIER_NAMES.map((n) => [
+          n,
+          z.number().min(COOLDOWN_TIER_MIN).max(COOLDOWN_TIER_MAX),
+        ]),
+      ) as Record<(typeof COOLDOWN_TIER_NAMES)[number], z.ZodNumber>,
+    )
+    .strict();
+
+export const zConfigCooldownTiersDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.cooldown-tiers@1"),
+    note: z.string().optional(),
+    /** 止血閥。false = `cooldownTier` 不解析（＝回到技能手寫的 `cooldown`）。 */
+    enabled: z.boolean(),
+    /** 沒填 `cooldownShape` 時要不要從技能內容推形狀（見 `cooldownShapeOf`）。 */
+    autoShape: z.boolean(),
+    /** 形狀 → 級別 → 卡面秒。三張表十五格都必填，缺一格就不是一把完整的尺。 */
+    seconds: z
+      .object(
+        Object.fromEntries(COOLDOWN_SHAPES.map((s) => [s, zCooldownSecondsRow()])) as Record<
+          (typeof COOLDOWN_SHAPES)[number],
+          ReturnType<typeof zCooldownSecondsRow>
+        >,
+      )
+      .strict(),
+  })
+  .strict();
+
+export const DEFAULT_COOLDOWN_TIERS_DOC = {
+  id: COOLDOWN_TIERS_DOC_ID,
+  schema: "config.cooldown-tiers@1",
+  enabled: DEFAULT_COOLDOWN_TIERS.enabled,
+  autoShape: DEFAULT_COOLDOWN_TIERS.autoShape,
+  seconds: DEFAULT_COOLDOWN_TIERS.seconds,
+} as const;
+
+/**
+ * config.damage-tiers@1 — 傷害**五級距**（GH#447）。
+ *
+ * owner 2026-08-19：「**可以重新設計拉高**，畢竟之前檢討過 **AP 太弱勢**」+
+ * Q1「單體 Q 冷卻 6 秒⋯**20 次以內一定要能殺死對方**」+
+ * Q4「**不用**（γ 超線性）已經有**傷害相應的冷卻**做限制」。
+ *
+ * ⭐ 五個數字**從冷卻表推導**（`500 × 單體冷卻 ÷ 6`），⛔ 不是挑的 ——
+ * 推導式與那兩條輸入寫在 `content/damageTiers.ts`。
+ * ⚠️ 上界 = 中位有效血量：超過它的一發就是一發秒殺，那不是一個傷害級距。
+ */
+export const zConfigDamageTiersDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.damage-tiers@1"),
+    note: z.string().optional(),
+    /** 止血閥兼一鍵 rollback。false = `damageTier` 不解析（＝今天的那一套數字）。 */
+    enabled: z.boolean(),
+    /** 級別 → 卡面基礎傷害。五格都必填。 */
+    damage: z
+      .object(
+        Object.fromEntries(
+          DAMAGE_TIER_NAMES.map((n) => [
+            n,
+            z.number().min(DAMAGE_TIER_MIN).max(DAMAGE_TIER_MAX),
+          ]),
+        ) as Record<(typeof DAMAGE_TIER_NAMES)[number], z.ZodNumber>,
+      )
+      .strict(),
+  })
+  .strict();
+
+export const DEFAULT_DAMAGE_TIERS_DOC = {
+  id: DAMAGE_TIERS_DOC_ID,
+  schema: "config.damage-tiers@1",
+  enabled: DEFAULT_DAMAGE_TIERS.enabled,
+  damage: DEFAULT_DAMAGE_TIERS.damage,
+} as const;
+
+/**
+ * config.mana-economy@1 — 回魔的**地板**（GH#446）。
+ *
+ * owner 2026-08-19：「應該是去**調整回魔**⋯**平均回魔不超過 15 秒就可以滿魔再一輪，
+ * 最糟的情形也不超過 20 秒**」。
+ *
+ * ⭐ 規則寫在**時間**上而不是倍率上（`每秒回魔 ≥ 魔力池 ÷ refillSeconds`），
+ * 因為 owner 給的保證是一個時間。⚠️ 上界 20 秒是**他自己給的數字**，
+ * ⛔ 不是防手滑的柵欄 —— 今天的 47.7 秒填不進來。語意寫在 `sim/manaEconomy.ts`。
+ */
+export const zConfigManaEconomyDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.mana-economy@1"),
+    note: z.string().optional(),
+    /** 總開關兼一鍵 rollback。false = 回魔完全回到今天的樣子。 */
+    enabled: z.boolean(),
+    /** 從空到滿最多幾秒。地板 = 魔力池 ÷ 這個數。 */
+    refillSeconds: z.number().min(REFILL_SECONDS_MIN).max(REFILL_SECONDS_MAX),
+    /** 只套在英雄身上（出貨 true）。 */
+    championsOnly: z.boolean(),
+  })
+  .strict();
+
+export const DEFAULT_MANA_ECONOMY_DOC = {
+  id: MANA_ECONOMY_DOC_ID,
+  schema: "config.mana-economy@1",
+  enabled: DEFAULT_MANA_ECONOMY.enabled,
+  refillSeconds: DEFAULT_MANA_ECONOMY.refillSeconds,
+  championsOnly: DEFAULT_MANA_ECONOMY.championsOnly,
+} as const;
+
 /** 三格的數值（小/中/大）。⛔ 極小/極大不在這裡 —— 它們是硬上下限，住 stat-caps。 */
 const zBandName = () => z.enum(["極小", "小", "中", "大", "極大"] as const);
 
@@ -6698,12 +6848,83 @@ const zCooldownBand = z
   })
   .strict();
 
+/**
+ * ⭐【GH#465】**相稱性** —— 成本軸（冷卻 × 形狀）反過來對回報軸（傷害）的要求。
+ *
+ * owner 2026-08-19，被問到「範圍·極小 30 秒打 1.33 人、每點輸出付 3.76 倍，
+ * 這一格是可行選擇還是刻意勸退？」：
+ * > 「**的確是太小不合理，要綜合看傷害是不是極大或至少大的**」
+ *
+ * ⇒ 他的答案不是「把 30 秒調小」，也不是「承認它是勸退」，而是**第三種**：
+ * 那一格合不合理**取決於另一個軸**。合起來與他的 Q4（「傷害相應的冷卻跟耗魔
+ * 做限制」）是**同一條雙向規則** —— 傷害決定成本，成本反過來要求傷害。
+ *
+ * ⚠️ 這張表是**十五格**，而 owner 只裁決了**一格**（範圍·極小 → 大）。
+ * ⛔ 其餘十四格**沒有**被我填成「看起來合理」的值 —— 它們全是「極小」＝
+ * **不構成限制**。理由是第一守則：把選擇權做成欄位，⛔ 不要替他挑數字。
+ * 他哪天想收緊哪一格，那是一格下拉選單，不是一次部署。
+ *
+ * ⚠️ 而且它**推導不出來** —— 試過三條路（每卡面秒輸出下限、期望命中數加權、
+ * 冷卻倍數的級距位移），沒有一條同時重現「單體·極小 → 極小」與
+ * 「範圍·極小 → 大」。那代表 owner 的那一格帶著「瞄準風險」這個**表上沒有的**
+ * 輸入，所以它是**資料**不是公式。
+ *
+ * ⚠️ 違反只**警告不擋**（和這一份文件的其餘欄位同一層）：owner 說的是
+ * 「不合理」不是「不准」，而刻意的例外要留空間。
+ */
+/** 傷害級距名的下拉。⛔ 抽成函式的理由同 `zCooldownSecondsRow`（轉型要對得上）。 */
+const zDamageTierEnum = () => z.enum(DAMAGE_TIER_NAMES);
+
+/** 一個形狀的五格「最低傷害級距」。 */
+const zMinDamageTierRow = () =>
+  z
+    .object(
+      Object.fromEntries(COOLDOWN_TIER_NAMES.map((n) => [n, zDamageTierEnum()])) as Record<
+        (typeof COOLDOWN_TIER_NAMES)[number],
+        ReturnType<typeof zDamageTierEnum>
+      >,
+    )
+    .strict();
+
+const zProportionality = z
+  .object({
+    /** 關掉 = 這條相稱性檢查完全不出現在編輯器的警告清單裡。 */
+    enabled: z.boolean(),
+    /**
+     * 形狀 → 冷卻級距 → **最低**傷害級距。
+     * 「極小」＝ 不構成限制（那是傷害軸的最低一格）。
+     */
+    minDamageTier: z
+      .object(
+        Object.fromEntries(COOLDOWN_SHAPES.map((s) => [s, zMinDamageTierRow()])) as Record<
+          (typeof COOLDOWN_SHAPES)[number],
+          ReturnType<typeof zMinDamageTierRow>
+        >,
+      )
+      .strict(),
+  })
+  .strict();
+
+/** 十五格的出貨值：只有 owner 親口裁決的那一格有限制，其餘不構成限制。 */
+const shippedMinDamageTier = (): Record<string, Record<string, string>> => {
+  const out: Record<string, Record<string, string>> = {};
+  for (const s of COOLDOWN_SHAPES) {
+    const row: Record<string, string> = {};
+    for (const n of COOLDOWN_TIER_NAMES) row[n] = DAMAGE_TIER_NAMES[0];
+    out[s] = row;
+  }
+  // owner 2026-08-19：「的確是太小不合理，要綜合看傷害是不是極大或**至少大**的」
+  out["範圍"]!["極小"] = "大";
+  return out;
+};
+
 export const DEFAULT_AUTHORING_PRINCIPLES = {
   id: AUTHORING_RULES_DOC_ID,
   schema: "config.authoring-rules@1",
   singleTargetCooldown: { min: 5, max: 30 },
   aoeCooldown: { min: 30, max: 120 },
   transformCooldownMin: 120,
+  proportionality: { enabled: true, minDamageTier: shippedMinDamageTier() },
 } as const;
 
 export const zConfigAuthoringRulesDoc = z
@@ -6727,6 +6948,11 @@ export const zConfigAuthoringRulesDoc = z
      * 冷卻太短會讓變身變成常態,而那等於直接改了那位英雄的基礎形態。
      */
     transformCooldownMin: z.number().min(0).max(600),
+    /**
+     * ⭐ GH#465 —— **相稱性**：成本軸反過來對傷害軸的要求。理由與「為什麼十四格
+     * 是空的」寫在 {@link zProportionality} 的檔頭。
+     */
+    proportionality: zProportionality,
   })
   .strict();
 
@@ -6879,6 +7105,13 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   // 施法距離五級距（GH#414）。⚠️ 同上 —— 漏掉這一行，range-tiers.json 就會讓
   // 內容**整份**載入失敗（2026-08-02 事故的形狀），而不是只有這一份被忽略。
   zConfigRangeTiersDoc,
+  // 冷卻五級距（GH#445，owner 2026-08-19 給滿三張表）。⚠️ 同上 —— 漏掉這一行，
+  // cooldown-tiers.json 會讓內容**整份**載入失敗 → 骨架英雄，而網站看起來正常。
+  zConfigCooldownTiersDoc,
+  // 傷害五級距（GH#447）。⚠️ 同上。
+  zConfigDamageTiersDoc,
+  // 回魔地板（GH#446）。⚠️ 同上。
+  zConfigManaEconomyDoc,
   // 英雄屬性正規化（owner 2026-08-12）。⚠️ 漏掉這一行 = 一份 stat-normalization.json
   // 進了 content/ 之後整份內容驗證失敗 → 骨架英雄。
   zConfigStatNormalizationDoc,
