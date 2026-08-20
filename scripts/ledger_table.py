@@ -1,0 +1,134 @@
+#!/usr/bin/env python3
+"""「逐則對票」表格的**唯一寫入者** —— 新列插進**表格裡**，⛔ 不是檔尾。
+
+owner 2026-08-20：
+
+    「🧾 逐則對票 · owner 的每一句話在哪張票上 => **你要持續更新吧**」
+
+⚠️ 這支存在的理由是一個**量到的**缺陷，不是潔癖。`scripts/ruling.sh` 原本用
+`grep -q '^## 逐則對票'` 確認「表格存在」，然後把新列 `>>` **附加到檔尾**。
+於是 2026-08-20 那天七則裁決落在兩個錯的地方：
+
+    docs/_daily/2026-08-20.md:84-86   ← 併進 `## ⏸️ 真正還卡在你身上的` 那張**兩欄**表
+    docs/_daily/2026-08-20.md:131-134 ← 檔尾一段**沒有表頭**的孤兒表格
+
+兩處都在 `## 逐則對票` 區段**外面**，所以 `tools/board/gen_board.py` 的
+`section(daily, "逐則對票")`（抓標題到下一個同級標題）**一列都讀不到** ——
+作戰板上那一區缺了七則，而寫入端每一次都回報「✓ 已寫入」。
+⭐ 又一次「壞掉跟正常長得一模一樣」。
+
+⇒ `ruling.sh`（裁決）與 `message-ledger.sh`（每一則訊息）**共用這一支**，
+⛔ 不各寫一份會各自腐爛的插入邏輯（第零守則⑨：第二個只差參數就先抽模板）。
+
+    python3 scripts/ledger_table.py <帳本.md> <HH:MM> <票號>   # 逐字原話走 stdin
+"""
+from __future__ import annotations
+
+import re
+import sys
+from pathlib import Path
+
+#: 這張表的正規形狀。⛔ 欄位改了要連 `gen_board.py` 的呈現一起想。
+CANON_HEAD = ["時間", "owner 說了什麼（逐字）", "票"]
+UNMAPPED = "⏸ 未對票"
+
+#: 找不到表格時新建的那一節。⚠️ 標題**含「逐則對票」**是硬需求 ——
+#: `gen_board.py` 用 `.*逐則對票.*` 抓區段，改字會讓作戰板靜默少一區。
+SECTION_TITLE = "## 逐則對票 · 每一則訊息（`scripts/message-ledger.sh` 維護）"
+SECTION_NOTE = (
+    "> ⭐ 這張表由 `scripts/message-ledger.sh` 從 session transcript **逐則**撈出來對帳，\n"
+    "> `scripts/ruling.sh` 收到裁決時也寫進同一張表。\n"
+    "> 表格那一格是**截斷**過的；⛔ 全文沒有被壓縮取代，它在 `ledger-source_temp_*.md`。\n"
+    f"> 票號那一格 ⛔ 不可以留空：對不到票就寫 `{UNMAPPED}`，`--check` 會紅。\n"
+)
+
+
+def cells(line: str) -> list[str]:
+    return [c.strip() for c in line.strip().strip("|").split("|")]
+
+
+def cell(text: str, limit: int = 0) -> str:
+    """把一段可能跨行的原話壓成一格 Markdown 儲存格。"""
+    s = re.sub(r"\s+", " ", text).strip()
+    if limit and len(s) > limit:
+        s = s[:limit].rstrip() + "…"
+    return s.replace("|", r"\|")
+
+
+def _table_end(lines: list[str]) -> int | None:
+    """回傳「正規表格最後一列的下一行」的索引；找不到回 None。
+
+    ⚠️ 標題**可能帶後綴**（今天那份就是 `## 逐則對票 —— #1069–#1084（…）`），
+    所以比對是 `startswith`，⛔ 不是相等。
+    ⚠️ 取**最後**一個符合的區段：同一份帳本可以有「補登的歷史區塊」與
+    「腳本維護的正規表格」兩張，寫入端只碰後者。
+    """
+    found = None
+    for i, ln in enumerate(lines):
+        if not re.match(r"^#{2,3} .*逐則對票", ln):
+            continue
+        j = i + 1
+        while j < len(lines) and not re.match(r"^#{2} ", lines[j]):
+            if lines[j].startswith("|") and cells(lines[j])[:1] == CANON_HEAD[:1]:
+                k = j
+                while k + 1 < len(lines) and lines[k + 1].startswith("|"):
+                    k += 1
+                found = k + 1
+                break
+            j += 1
+    return found
+
+
+def ensure(path: Path) -> list[str]:
+    """把帳本讀成行陣列，必要時補上檔頭與正規表格。"""
+    if not path.exists():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(f"# {path.stem}\n", encoding="utf-8")
+    lines = path.read_text(encoding="utf-8").split("\n")
+    if _table_end(lines) is None:
+        while lines and not lines[-1].strip():
+            lines.pop()
+        lines += [
+            "",
+            SECTION_TITLE,
+            "",
+            SECTION_NOTE.rstrip("\n"),
+            "",
+            "| " + " | ".join(CANON_HEAD) + " |",
+            "|" + "---|" * len(CANON_HEAD),
+        ]
+    return lines
+
+
+def insert(path: Path, rows: list[tuple[str, str, str]]) -> int:
+    """把 rows 插進正規表格**最後一列之後**。回傳實際插入的列數。"""
+    if not rows:
+        return 0
+    lines = ensure(path)
+    at = _table_end(lines)
+    assert at is not None  # ensure() 保證有表格
+    lines[at:at] = ["| " + " | ".join(r) + " |" for r in rows]
+    path.write_text("\n".join(lines).rstrip("\n") + "\n", encoding="utf-8")
+    return len(rows)
+
+
+def canonical_rows(path: Path) -> list[tuple[int, list[str]]]:
+    """帳本裡由腳本維護的那些列（第一格是 HH:MM）。給 `--check` 用。"""
+    if not path.exists():
+        return []
+    out = []
+    for n, ln in enumerate(path.read_text(encoding="utf-8").split("\n"), 1):
+        if ln.startswith("|"):
+            c = cells(ln)
+            if len(c) >= 3 and re.fullmatch(r"\d{1,2}:\d{2}", c[0]):
+                out.append((n, c))
+    return out
+
+
+if __name__ == "__main__":
+    if len(sys.argv) < 4:
+        sys.exit(f"用法: {sys.argv[0]} <帳本.md> <HH:MM> <票號>  # 原話走 stdin")
+    day, when, tickets = Path(sys.argv[1]), sys.argv[2], sys.argv[3]
+    body = cell(sys.stdin.read(), limit=int(sys.argv[4]) if len(sys.argv) > 4 else 0)
+    insert(day, [(when, body, tickets or UNMAPPED)])
+    print(f"  ✓ {day}（插進「逐則對票」表格，⛔ 不是檔尾）")

@@ -43,14 +43,13 @@ for n in "${NS[@]}"; do
 done
 
 # ② 同一則也進當日帳本(context 斷掉之後唯一還讀得到的地方)
-if [ ! -f "$DAY" ]; then
-  printf '# %s\n\n## 逐則對票\n\n| 時間 | owner 說了什麼（逐字） | 票 |\n|---|---|---|\n' \
-    "$(date '+%Y-%m-%d')" > "$DAY"
-elif ! grep -q '^## 逐則對票' "$DAY"; then
-  printf '\n## 逐則對票\n\n| 時間 | owner 說了什麼（逐字） | 票 |\n|---|---|---|\n' >> "$DAY"
-fi
-ONE_LINE="$(printf '%s' "$TEXT" | tr '\n' ' ' | sed 's/|/\\|/g')"
-printf '| %s | %s | %s |\n' "$(date '+%H:%M')" "$ONE_LINE" "$(echo "$ISSUES" | sed 's/[0-9]\+/#&/g')" >> "$DAY"
-echo "  ✓ $DAY"
+#
+# ⛔ **這裡以前是 `>> "$DAY"`,而那是一個 bug**:它用 `grep -q '^## 逐則對票'`
+# 確認表格存在,然後把新列附加到**檔尾** —— 於是 2026-08-20 的七則裁決落在
+# `## ⏸️ 真正還卡在你身上的` 那張兩欄表底下與檔尾一段沒有表頭的孤兒表格,
+# 兩處都在 `## 逐則對票` 區段外面,`gen_board.py` 的 `section()` 一列都讀不到。
+# ⇒ 插入位置交給 `scripts/ledger_table.py`(與 message-ledger.sh 共用同一份邏輯)。
+printf '%s' "$TEXT" | python3 scripts/ledger_table.py \
+  "$DAY" "$(date '+%H:%M')" "$(echo "$ISSUES" | sed 's/[0-9]\+/#&/g')"
 echo
 echo "⭐ 兩處都寫了。⛔ 這一點以後不要再問 owner —— 要查就跑 scripts/asked-before.sh"
