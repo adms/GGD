@@ -36,6 +36,10 @@ const REPO = join(__dirname, "../../../..");
 const SOURCES = [
   "packages/shared/src/content/damageTiers.ts",
   "packages/shared/src/sim/statCaps.ts",
+  // ⭐ 2026-08-20 —— 錨點搬家了，閘要跟著搬。那 7 條上限的**推導規則**
+  //   （錨點等級 + 倍率 + 哪幾條）現在住這裡；⛔ 不加進來的話，這道閘的盲點
+  //   正好就是它唯一該看的那個檔。
+  "packages/shared/src/sim/statCapDerivation.ts",
   "packages/shared/src/sim/manaEconomy.ts",
   "packages/shared/src/sim/statCapsAreFences.test.ts",
   "tools/mana-audit/gen_mana_audit.ts",
@@ -49,8 +53,10 @@ const SOURCES = [
  * 重算完之後這一筆會變成過期項目而紅，⛔ 不會靜靜留著。
  */
 const LEGACY_ANCHORS: Readonly<Record<string, string>> = Object.freeze({
-  "packages/shared/src/sim/statCaps.ts:STAT_CAP_ANCHOR_LEVEL":
-    "13 條硬上限裡有 7 條是「L18 母體中位 × 200」烘死的**字面值**；重算會動到出貨平衡 ⇒ 那是 owner 的決定，⛔ 不由程式順手做",
+  // ⭐ 2026-08-20 清空 —— owner 裁決「use LV30/50/99 rules」之後，
+  //   `STAT_CAP_ANCHOR_LEVEL` 改成 `HARD_ANCHOR_LEVEL`（不再是字面值），
+  //   那 7 條上限也改成 `pnpm statcaps:build` 產生的。⛔ 不要在這裡加新的一筆
+  //   來繞過閘 —— 每一筆都要帶著一個能被反駁的理由，而且下面有反向斷言在守。
 });
 
 /** 塗掉註解與字串（含跨行 block 與樣板字面），保留行號。 */

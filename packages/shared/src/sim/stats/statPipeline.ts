@@ -23,7 +23,7 @@ import { ModOp, type ModifierSource } from "./modifiers";
 // ⭐ G5 —— 百分比式解鎖要讀「這條屬性的一般上限」。⛔ 一份讀取器，不是在這裡
 // 重新推導：`capFor` 已經處理了「表裡沒有這條 → 退回 STAT_CLAMPS 的上界，
 // 而且不可解鎖」那一段，抄第二份就會在某一條沒列進表的屬性上分岔。
-import { capFor } from "../statCaps";
+import { capCeiling, capFor } from "../statCaps";
 import { Champions } from "../content/registry";
 
 /**
@@ -284,9 +284,15 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
    * ⭐ G19（GH#354）—— 「**首次**達到一般上限」。
    * #61 閃耀金玉「每當自身任一屬性首次達到一般上限時，獲得 1 層『金玉』」。
    *
-   * ⚠️ 門檻是 `capFor(...).base`（**一般**上限），⛔ 不是 `effectiveCap`
-   *（解鎖後的高度）—— 後者會讓一件「到頂就解鎖 +25%」的寶具**永遠追不到自己**：
-   * 每解鎖一次門檻就跟著抬高一次。
+   * ⚠️ 門檻是**一般**上限（`capRaise: 0`），⛔ 不是解鎖後的高度 ——
+   * 後者會讓一件「到頂就解鎖 +25%」的寶具**永遠追不到自己**：每解鎖一次門檻
+   * 就跟著抬高一次。
+   *
+   * ⭐ 但它必須走 `capCeiling`（⛔ 不是 `capFor(...).base`）：`next[stat]` 是
+   * **最終空間**的值，而推導出來的那 7 條天花板寫的是**基礎空間**的數字。
+   * 直接比大小 = owner 2026-08-20 抓到的那個單位錯配（見 sim/statCapDerivation.ts）——
+   * 量到的後果是 `mr` 那一條**永遠不會**觸發（門檻 12,560 vs 實際天花板 2,512），
+   * 而 `ad` 會晚於它該觸發的時候。⛔ 一個永遠不觸發的事件不會紅。
    *
    * ⚠️ 走 `ALL_STATS`（陣列、宣告序），⛔ 不走 Set/Map 的迭代順序 ——
    * 同一 tick 有兩條屬性同時到頂時，事件的先後必須是決定性的（purity）。
@@ -298,7 +304,7 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
     if (sc.capReached?.has(stat) === true) continue;
     const v = next[stat];
     if (!(v > 0)) continue;
-    const { base } = capFor(world.statCaps, stat);
+    const base = capCeiling(world.statCaps, stat, 0, world.combatEnv, envSubject);
     if (!Number.isFinite(base) || v < base) continue;
     (sc.capReached ??= new Set()).add(stat);
     world.emit("statCapReached", { entity: id, stat });

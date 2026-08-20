@@ -228,6 +228,18 @@ export function StatCapsPage(): JSX.Element {
               >
                 {r.effect}
               </div>
+              {/*
+                ⭐ 「這一格是基礎值，場上實際夾在 N」—— ⛔ 少了這一行，操作者看到的
+                天花板與引擎夾的天花板差一個戰鬥系統倍率，而畫面上完全看不出來。
+              */}
+              {r.spaceNote !== "" && (
+                <div
+                  data-testid={`cap-space-${r.stat}`}
+                  style={{ color: TEXT_DIM, fontSize: 11, marginTop: 3, lineHeight: 1.6 }}
+                >
+                  {r.spaceNote}
+                </div>
+              )}
               {!ok && (
                 <div style={{ color: DANGER, fontSize: 11, marginTop: 4 }}>{rowIssue(r)}</div>
               )}

@@ -41,26 +41,29 @@
  * 錯誤訊息會提到這件事。這是這個檔案最容易犯的錯,所以它有自己的守衛。
  */
 import { STAT_CLAMPS, Stat } from "./stats/statTypes";
+import {
+  STAT_ENV_CHAIN,
+  statEnvFactor,
+  type CombatEnvMultipliers,
+  type StatEnvSubject,
+} from "./combatEnv";
+import { DERIVED_STAT_CAPS, DERIVED_CAP_PROVENANCE } from "./statCapsDerived";
+import {
+  DERIVED_CAP_STATS,
+  STAT_CAP_ANCHOR_LEVEL,
+  STAT_CAP_MULTIPLE,
+  capSpaceFor,
+  type CapSpace,
+} from "./statCapDerivation";
 
-/**
- * ⛔ **這不是一個平衡錨點** —— 它是下面 7 條硬上限被算出來時用的那個等級。
- *
- * owner 2026-08-20（逐字，對 #447 的更正）：
- * > 「我的錨點有講過是 **LV 30/50/99 三個**，至少要滿足 **30(hard limit)**，
- * >  能 **50 比較好(soft limit)**, **99 是極限**」
- *
- * ⇒ 錨點住在 `content/balanceAnchors.ts` 的 `BALANCE_ANCHOR_LEVELS`，而這一格是
- * **18** —— 2026-08-12 那一批 `中位數 × 200` 是在 L18 量的，⛔ 還沒有被重算。
- *
- * ⭐ 它為什麼要存在：在此之前「18」只活在**一段註解**和**一條守衛的呼叫參數**裡
- *（`statCapsAreFences.test.ts` 的 `championStatBase(d, stat, 18)`）—— 也就是說
- * 一條**綠燈的守衛正在替一個過期的錨點背書**，而沒有任何東西看得到它。
- * 具名之後 `content/balanceAnchors.test.ts` 那道閘才問得到它。
- *
- * ⚠️ ⛔ **改這一格不會重算任何上限** —— 那 7 個數字是烘死的字面值。
- * 重算是一個**平衡決定**（會動到出貨數值），⛔ 不由程式順手做，要 owner 點頭。
- */
-export const STAT_CAP_ANCHOR_LEVEL = 18;
+export {
+  DERIVED_CAP_STATS,
+  STAT_CAP_ANCHOR_LEVEL,
+  STAT_CAP_MULTIPLE,
+  capSpaceFor,
+  DERIVED_CAP_PROVENANCE,
+};
+export type { CapSpace };
 
 /** 一條屬性的兩個天花板。`unlocked >= base` 由建構端保證。 */
 export interface StatCap {
@@ -127,20 +130,20 @@ export const AP_CAP_OPEN = 500000;
  */
 export const DEFAULT_STAT_CAPS: StatCapTable = Object.freeze({
   [Stat.AttackSpeed]: Object.freeze({ base: 4.0, unlocked: 10.0 }),
-  // 🔴 **AP 是 200× 通則唯一撞牆的地方，所以它留在「開到頂」。**
+  // 🔴 **AP 是 200× 通則唯一撞牆的地方，所以它留在「開到頂」** —— owner 2026-08-01
+  //   的裁決是「所以要有這個欄位，但**先不要夾**」，⛔ 而那條裁決沒有被推翻。
   //
-  //   owner 2026-08-12 定「硬上限 = 母體中位數 × 200」。AP 的 L18 卡面中位是
-  //   **47.2**，× 200 = **9,440**。看起來很寬 —— 但 `statCapsApOpen.test.ts`
-  //   在真的 SimWorld 裡量到的**最強 AP 組合是 8,937.8**（等級 99、三圍 +40、
-  //   六格塞滿 ×% AP 道具）。9,440 只高出它 **5.6%**。
+  //   ⭐ 那個 189× 是**這條規則自己的校準點**，也是 2026-08-20 那個迴圈的來源：
+  //     「最強 AP 組合 8,937.8（**等級 99**、滿裝）÷ **L18** 卡面中位 47.2 = 189×」——
+  //     ⇒ owner 的 200 裡面**已經含了 L18→L99 的等級成長**。所以錨點換到 L99 之後
+  //     再乘同一個 200，等於把等級因子數兩次（maxHealth 因此變成 163 萬）。
+  //     修法見 `statCapDerivation.ts` 的檔頭；⛔ 這裡不再抄任何一個量到的數字。
   //
-  //   ⇒ 套上去等於「**從現在開始夾**」，而且下一件 AP 道具就會把玩家推過去。
-  //     那是一個平衡決定，不是一條保險絲，所以 ⛔ 我不替 owner 做。
-  //
-  //   ⭐ 順帶一提：8,937.8 / 47.2 = **189×** —— owner 的 200× 幾乎正好落在
-  //     「現有最強組合」上。那個倍率不是憑感覺挑的，它量得出來。
-  //
-  //   要夾就把這一格改成 9440（後台一個欄位，存檔生效）。
+  //   ⚠️ 套用 200× 到 AP 等於「**從現在開始夾**」：`statCapsApOpen.test.ts` 要求
+  //     天花板至少是實測最強組合的 **10 倍**，而 200× 給的數字達不到。
+  //     那是一個平衡決定不是一條保險絲，所以 ⛔ 我不替 owner 做。
+  //     三個錨點各會給多少，逐格印在 `docs/屬性上限推導.md`（產生的）——
+  //     要夾就把那一格填進後台，存檔生效。
   [Stat.AbilityPower]: Object.freeze({ base: AP_CAP_OPEN, unlocked: AP_CAP_OPEN }),
   // ⭐ 2026-08-12 owner：「**吸血可以超過 100%**，上限為 **20x**，傷害 100 回復 2000」
   //   → `unlocked` 從 1.0 提到 **20**。`base` 留 0.8（沒有解鎖來源時的一般上限，
@@ -153,38 +156,27 @@ export const DEFAULT_STAT_CAPS: StatCapTable = Object.freeze({
   // 必須同時存在,capUnlockContent.test.ts 比對的就是兩者相等。
   [Stat.CooldownReduction]: Object.freeze({ base: 0.99, unlocked: 0.99 }),
 
-  // ---- 2026-08-12 · 硬上限 = **中位數 × 200**（owner 直接給的倍率）---------------
+  // ---- 硬上限 = **錨點中位數 × 200**（owner 直接給的倍率）------------------------
   //
   // owner：「至於**硬上限 場中最終值（卡片 × 道具 × buff × 增幅）的天花板則是 200x**」
   //
-  // ⭐ 所以這一批不再是我挑的整數，而是一條**算式**：
-  //      base = unlocked = round(該屬性在 `STAT_CAP_ANCHOR_LEVEL`（**18**）的母體中位數 × 200)
-  //    ⛔ 那個 18 **不是** owner 的錨點（LV 30/50/99，`content/balanceAnchors.ts`）——
-  //    見 `STAT_CAP_ANCHOR_LEVEL` 的檔頭。要重算的是 `MEDIAN_X200_CAPPED_STATS` 那 7 條。
-  //    中位數量自 73 位可達英雄（`docs/hero-archetypes.json`，`championStatBase`）。
+  // ⛔ **這 7 個數字一個都不在這個檔案裡** —— 它們是產生的
+  //   （`statCapsDerived.ts` ← `pnpm statcaps:build`），規則住在 `statCapDerivation.ts`。
+  //    在 2026-08-20 之前它們是烘死的字面值，而那正是 owner 抓到的迴圈的一半：
+  //    ⛔ 一個手打的柵欄不會因為 `combat-env` 被調過而自己回正
+  //    （量到的漂移：manaRegen 926 vs 重算 3,271 · ad 21,200 vs 20,948 · mr 15,344 vs 12,560）。
   //
-  // ⚠️ 為什麼是「場中最終值」而不是卡面：卡面 × 道具 × buff × 增幅 疊起來差很多級。
-  //    實測最強 AP 組合是 **4,125.7**（`statCapsApOpen.test.ts` 在真的 SimWorld 裡跑），
-  //    而 AP 的卡面 L18 中位只有 47.2 —— **88 倍**。這就是為什麼卡面規範（1.6~20×）
-  //    與這一格（200×）是**兩把不同的尺**，見 `tools/hero-archetypes/build.ts`。
+  // ⚠️ 它們是**基礎空間**的數字（⛔ 不含 `combat-env` 的 ×factor）——
+  //    `capCeiling()` 在讀取時乘 env 鏈，而且**只乘一次**。見 `statCapDerivation.ts`
+  //    的檔頭：那裡逐條記著量到的誤差因子（maxHealth ×4.35 … mr ×0.20）。
   //
   // ⚠️ 單層（base === unlocked）是刻意的：owner 只給了**一個**數字。多加一層
   //    `unlocked` 等於替他發明第二個決定。要開解鎖語意，後台把 unlocked 調高就成立
   //    （見 `effectiveCap`），一行程式都不用改。
   //
-  // 🔴 只有一位英雄被這條規則夾到：**莉娜因巴斯的每秒回魔 1,014.5**，
-  //    而母體中位是 4.63 —— **219 倍**，遠在 200× 之外。夾到 926 之後仍然等於無限魔力
-  //    （中位的 200 倍），所以實質沒有變化；但那張卡本身值得看一眼。
-  //
   // ⛔ 不碰 as / cdr / critChance / evasion —— 前兩者 owner 已經裁決過，
   //    後兩者的 1.0 是**語意邊界**（每刀必暴 / 打不到），200× 對它們沒有意義。
-  [Stat.MaxHealth]: Object.freeze({ base: 375960, unlocked: 375960 }),
-  [Stat.MaxMana]: Object.freeze({ base: 232150, unlocked: 232150 }),
-  [Stat.HealthRegen]: Object.freeze({ base: 744, unlocked: 744 }),
-  [Stat.ManaRegen]: Object.freeze({ base: 926, unlocked: 926 }),
-  [Stat.AttackDamage]: Object.freeze({ base: 21200, unlocked: 21200 }),
-  [Stat.Armor]: Object.freeze({ base: 5078, unlocked: 5078 }),
-  [Stat.MagicResist]: Object.freeze({ base: 15344, unlocked: 15344 }),
+  ...DERIVED_STAT_CAPS,
   // owner 2026-08-12：「這個其實我已經有給過**上限是黑人牙膏 12** 了，
   //                      但**可以延伸到 16**」
   // 🔴 12 是**卡面**上限，16 是**最終值**上限，中間差的是體型：`finalizeStat` 對射程
@@ -226,13 +218,14 @@ export const DEFAULT_STAT_CAPS: StatCapTable = Object.freeze({
 });
 
 /**
- * ⭐ **這 7 條是 `STAT_CAP_ANCHOR_LEVEL` 的中位數 × 200 烘出來的**，其餘 6 條不是
- *（as / ap / lifesteal / cdr 是 owner 直接給的數字；attackRange 是「卡面 12 延伸到
- * 16」；moveSpeed 是穿牆平手線）。
+ * ⭐ **這 7 條是 `STAT_CAP_ANCHOR_LEVEL` 的中位數 × `STAT_CAP_MULTIPLE` 推導的**，
+ * 其餘 6 條不是（as / ap / lifesteal / cdr 是 owner 直接給的數字；attackRange 是
+ *「卡面 12 延伸到 16」；moveSpeed 是穿牆平手線）。
  *
- * ⛔ 這張清單存在的理由不是好看，是**回答「重算要動哪幾格」** ——
- * 錨點從 18 換成 30/50/99 的那一天，要重算的正好是這 7 格，⛔ 不是整張表。
- * 沒有它的話，那個範圍只寫在一段散文裡，而散文不會紅。
+ * ⛔ 這張清單存在的理由不是好看，它同時回答**兩個**問題：
+ *「重算要動哪幾格」與「哪幾格是**基礎空間**、要在讀取時乘一次 env 鏈」。
+ * 真正的定義在 `statCapDerivation.ts::DERIVED_CAP_STATS` / `capSpaceFor()`；
+ * 這裡只是那份清單的舊名字，⛔ 不是第二份。
  *
  * ⚠️ 兩件事由 `content/balanceAnchors.test.ts` 守著：
  * ① 每一條都真的在 `DEFAULT_STAT_CAPS` 裡且 `base === unlocked`（單層＝只有一個
@@ -240,15 +233,40 @@ export const DEFAULT_STAT_CAPS: StatCapTable = Object.freeze({
  * ② 反向 —— 名單以外的那幾條**不可以**混進來（混進來就是「它其實也錨在 18」，
  *    而重算時會被漏掉）。
  */
-export const MEDIAN_X200_CAPPED_STATS: readonly Stat[] = Object.freeze([
-  Stat.MaxHealth,
-  Stat.MaxMana,
-  Stat.HealthRegen,
-  Stat.ManaRegen,
-  Stat.AttackDamage,
-  Stat.Armor,
-  Stat.MagicResist,
-]);
+export const MEDIAN_X200_CAPPED_STATS: readonly Stat[] = DERIVED_CAP_STATS;
+
+/**
+ * 這個單位、這條屬性，**在最終空間**的天花板 —— `finalizeStat` 夾的就是它。
+ *
+ * ⭐ 這一支是 owner 2026-08-20「echo and loop back the formula」那個迴圈的修法本體。
+ *
+ * 在此之前 `finalizeStat` 直接拿 `effectiveCap()` 去夾一個**已經乘過 env 鏈**的值，
+ * 而那 7 條天花板是在**基礎空間**被算出來的 —— 兩個不同的單位互相比大小，
+ * ⛔ 而且沒有任何一行字說。量到的誤差因子就是那條鏈本身：
+ * maxHealth ×4.35 · manaRegen ×8.88 · ad ×0.60 · mr ×0.20 ⇒ 宣稱的「200×」
+ * 在這 7 條裡**一條都不成立**（實際 9.2× ~ 1,585×）。
+ *
+ * ⚠️ **只乘一次，而且只乘在該乘的那幾條上**：`capSpaceFor()` 說 `final` 的那幾條
+ * （as / ap / lifesteal / cdr / range / ms）是 owner 直接給的最終值，⛔ 一律不乘 ——
+ * 乘了會把 `ms` 18 靜默變成 14.4（近戰）/ 10.8（遠程）、`range` 16 變成 9.6。
+ *
+ * ⚠️ 無限大的天花板（表裡沒有這條屬性）**不乘** —— `Infinity × 0` 是 NaN，
+ * 而 `Math.min(NaN, x)` 是 NaN：一個操作者把 `magicResistMult` 填 0 就會讓每一位
+ * 英雄的魔抗變成 NaN，而畫面上只會看到空白。
+ */
+export function capCeiling(
+  table: StatCapTable | undefined,
+  stat: Stat,
+  raised: number,
+  env: CombatEnvMultipliers | undefined,
+  subject?: StatEnvSubject,
+): number {
+  const cap = effectiveCap(table, stat, raised);
+  if (env === undefined || !Number.isFinite(cap) || capSpaceFor(stat) === "final") return cap;
+  let k = 1;
+  for (const link of STAT_ENV_CHAIN[stat] ?? []) k *= statEnvFactor(link, env, subject);
+  return cap * k;
+}
 
 // ------------------------------------------------------------- bounds ------
 /**

@@ -33,7 +33,7 @@ import {
   type CombatEnvMultipliers,
   type StatEnvSubject,
 } from "./combatEnv";
-import { DEFAULT_STAT_CAPS, effectiveCap, type StatCapTable } from "./statCaps";
+import { DEFAULT_STAT_CAPS, capCeiling, type StatCapTable } from "./statCaps";
 
 /** championId-independent, stat-keyed flat grants. Missing key = 0. */
 export type BaseBonusTable = Readonly<Partial<Record<Stat, number>>>;
@@ -372,9 +372,13 @@ export function finalizeStat(
   );
   // 上界來自 cap 表 + 這個單位的解鎖量;下界永遠是 STAT_CLAMPS 的(cap 表只描述
   // 天花板,`CapRaise` 沒有「解鎖下限」的語意)。
+  // ⭐ `capCeiling`(⛔ 不是 `effectiveCap`) —— 推導出來的那 7 條天花板寫的是**基礎
+  //    空間**的數字,而 `out` 這裡已經乘過 env 鏈了。把 env 鏈**同樣乘一次**到天花板
+  //    上,兩邊才是同一個單位。⛔ 直接拿 `effectiveCap` 去夾就是 owner 2026-08-20
+  //    抓到的那個迴圈(「echo and loop back the formula」),見 sim/statCapDerivation.ts。
   const clamp = STAT_CLAMPS[stat];
   const lo = clamp ? clamp[0] : Number.NEGATIVE_INFINITY;
-  const hi = effectiveCap(opts.caps ?? DEFAULT_STAT_CAPS, stat, opts.capRaise ?? 0);
+  const hi = capCeiling(opts.caps ?? DEFAULT_STAT_CAPS, stat, opts.capRaise ?? 0, env, opts.subject);
   return Math.max(lo, Math.min(hi, out));
 }
 

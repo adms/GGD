@@ -55,6 +55,9 @@ BASE_BONUS_TS = os.path.join(REPO, "packages", "shared", "src", "sim", "baseBonu
 EFFECT_REGISTRY_TS = os.path.join(REPO, "packages", "shared", "src", "sim", "effects", "effectRegistry.ts")
 CURATED_JSON = os.path.join(REPO, "tools", "skill-spec", "curated.json")
 STAT_CAPS_JSON = os.path.join(REPO, "content", "config", "stat-caps.json")
+STAT_CAP_DERIVATION_TS = os.path.join(
+    REPO, "packages", "shared", "src", "sim", "statCapDerivation.ts"
+)
 
 
 class VocabError(RuntimeError):
@@ -293,6 +296,41 @@ def stat_caps() -> dict:
             % (len(unknown), "、".join(unknown))
         )
     return caps
+
+
+@functools.lru_cache(maxsize=None)
+def derived_cap_stats() -> tuple:
+    """哪幾條上限是**推導**出來的、因此寫的是**基礎空間**的數字。
+
+    ⛔ 不是一份手抄的清單 —— 解析 `sim/statCapDerivation.ts` 的 `DERIVED_CAP_STATS`，
+    也就是引擎自己那一份。⚠️ 少了它，對外契約會把基礎值當成最終值印給 Codex，
+    而外部編輯器沒有辦法發現我們在說謊（第〇·五守則的那條紅線）。
+    """
+    src = _strip_comments(_read(STAT_CAP_DERIVATION_TS))
+    i = src.find("export const DERIVED_CAP_STATS")
+    if i < 0:
+        raise VocabError("statCapDerivation.ts 裡找不到 `DERIVED_CAP_STATS` —— 它被改名了嗎？")
+    # ⚠️ 它是 `Object.freeze([...])`（方括號），⛔ 不能用 `_block`（那支數的是大括號，
+    #   會一路吃到下面某個函式的 body 而且**不會報錯**）。
+    # ⚠️ 也 ⛔ 不能抓第一個 `[` —— 那是型別註記 `readonly Stat[]` 的，
+    #   而它後面緊接著 `]`，於是切出一個空字串（靜默地）。
+    start = src.index("[", src.index("Object.freeze(", i))
+    body = src[start:src.index("]", start)]
+    members = stat_members()
+    out = tuple(members[m] for m in re.findall(r"Stat\.(\w+)", body) if m in members)
+    if not out:
+        raise VocabError("statCapDerivation.ts 的 `DERIVED_CAP_STATS` 解析出 0 條 —— 解析器與程式碼分家了")
+    return out
+
+
+@functools.lru_cache(maxsize=None)
+def stat_cap_multiple() -> str:
+    """owner 的那個倍率（`STAT_CAP_MULTIPLE`），從引擎讀，⛔ 不抄。"""
+    src = _strip_comments(_read(STAT_CAP_DERIVATION_TS))
+    m = re.search(r"STAT_CAP_MULTIPLE\s*=\s*([0-9.]+)", src)
+    if not m:
+        raise VocabError("statCapDerivation.ts 讀不到 `STAT_CAP_MULTIPLE`")
+    return m.group(1)
 
 
 # ---------------------------------------------------------------------------

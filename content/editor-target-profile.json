@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_4918fa15b029",
+    "contentVersion": "cv_7ba9ed3c5990",
     "collections": {
       "champions": {
         "hash": "cac1768f3af6",
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "a2fe8300c9fe",
+        "hash": "4cba8bb0cc99",
         "count": 69
       },
       "models": {
@@ -3154,32 +3154,32 @@
             "unlocked": 500000
           },
           "maxHealth": {
-            "base": 375960,
-            "unlocked": 375960
+            "base": 561720,
+            "unlocked": 561720
           },
           "maxMana": {
-            "base": 232150,
-            "unlocked": 232150
+            "base": 348050,
+            "unlocked": 348050
           },
           "healthRegen": {
-            "base": 744,
-            "unlocked": 744
+            "base": 1134,
+            "unlocked": 1134
           },
           "manaRegen": {
-            "base": 926,
-            "unlocked": 926
+            "base": 3276,
+            "unlocked": 3276
           },
           "ad": {
-            "base": 21200,
-            "unlocked": 21200
+            "base": 20948,
+            "unlocked": 20948
           },
           "armor": {
-            "base": 5078,
-            "unlocked": 5078
+            "base": 8160,
+            "unlocked": 8160
           },
           "mr": {
-            "base": 15344,
-            "unlocked": 15344
+            "base": 12560,
+            "unlocked": 12560
           },
           "range": {
             "base": 16,
@@ -3412,5 +3412,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "d793ce16fbb3"
+  "profileDigest": "c830d3145add"
 }

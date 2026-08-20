@@ -23,12 +23,17 @@ import { STAT_LABEL_ZH } from "@ggd/shared/sim/baseBonus";
 import {
   CAPPABLE_STATS,
   DEFAULT_STAT_CAPS,
+  DERIVED_CAP_PROVENANCE,
+  capCeiling,
   capFor,
+  capSpaceFor,
   normalizeStatCaps,
-  statCapBounds,
+  type CapSpace,
   type StatCap,
   type StatCapTable,
+  statCapBounds,
 } from "@ggd/shared/sim/statCaps";
+import { COMBAT_ENV_DEFAULTS, type CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
 
 /**
  * 每一列在說「這個天花板會夾到**什麼**」,不是重複一次欄位名。
@@ -121,6 +126,34 @@ export interface CapRow {
   floor: number | null;
   /** 這一列兩個輸入框的合法區間 `[min, max]`,**兩端都有** */
   bounds: readonly [number, number];
+  /**
+   * ⭐ 這一格填的是**哪個空間**的數字（2026-08-20）。
+   *
+   * ⚠️ 這一頁在此之前對操作者說了一句沒有明說的謊：那 7 條推導出來的天花板寫的是
+   * **基礎空間**的數字，而引擎夾的是**乘過 `combat-env` 之後**的最終值 ——
+   * 所以「生命上限 561720」在場上其實是 **2,246,880**（×4.0）。
+   * 兩個數字都對，但畫面上只印一個而且沒說是哪一個。
+   * ⇒ `space` + `spaceNote` 把它變成畫面上看得到的一句話，⛔ 不是一段註解。
+   */
+  space: CapSpace;
+  /** 上面那件事的人話版本；`final` 的那幾列是空字串（沒有第二個數字要解釋）。 */
+  spaceNote: string;
+}
+
+/**
+ * 這一列的「基礎 ×N = 最終」那句話。⛔ 從 `capSpaceFor` + env 鏈**推導**，
+ * ⛔ 不是逐條手寫 —— 手寫的那一份會在 owner 下一次動 `combat-env` 時變成謊話。
+ */
+export function capSpaceNote(stat: Stat, cap: StatCap, env: CombatEnvMultipliers): string {
+  if (capSpaceFor(stat) === "final") return "";
+  const shownFinal = capCeiling({ [stat]: cap }, stat, 0, env);
+  const k = cap.base === 0 ? 1 : shownFinal / cap.base;
+  return (
+    `⚠️ 這一格是**基礎值**（⛔ 不含戰鬥系統倍率）。場上實際夾在 **${Number(shownFinal.toFixed(2))}**` +
+    `（×${Number(k.toFixed(4))}，戰鬥系統那一頁調它就跟著動）。` +
+    `⭐ 出貨值是「母體在 LV${DERIVED_CAP_PROVENANCE.anchorLevel} 的中位 ×${DERIVED_CAP_PROVENANCE.multiple}」` +
+    `推導的（${DERIVED_CAP_PROVENANCE.population} 張卡），⛔ 不是手填的 —— 見 docs/屬性上限推導.md。`
+  );
 }
 
 /**
@@ -158,7 +191,15 @@ export function capRowIssue(stat: Stat, base: string, unlocked: string): string 
  * 兩者差的是「一支技能能不能把攻速推到 10」,而畫面上兩種狀態長得一模一樣 ——
  * 所以差別寫在這裡一次,不散在畫面上。
  */
-export function capRows(caps: Record<string, StatCap> | null): CapRow[] {
+export function capRows(
+  caps: Record<string, StatCap> | null,
+  /**
+   * 操作者現在生效的戰鬥系統表。⚠️ 缺 = 程式預設（每個 ×factor 都是 1.0），
+   * 那會讓「基礎 → 最終」那句話印出 ×1 —— fail-safe（少說一句話），
+   * ⛔ 不是猜一個倍率。
+   */
+  env: CombatEnvMultipliers = COMBAT_ENV_DEFAULTS,
+): CapRow[] {
   const table: StatCapTable | null = caps === null ? null : normalizeStatCaps(caps);
   return CAPPABLE_STATS.map((stat) => {
     const clamp = STAT_CLAMPS[stat];
@@ -171,15 +212,18 @@ export function capRows(caps: Record<string, StatCap> | null): CapRow[] {
       Number.isFinite(raw.unlocked)
         ? { base: raw.base, unlocked: raw.unlocked }
         : null;
+    const effective = capFor(table ?? DEFAULT_STAT_CAPS, stat);
     return {
       stat,
       label: STAT_LABEL_ZH[stat],
       effect: CAP_EFFECT_ZH[stat],
       operator,
       shipped: capFor(DEFAULT_STAT_CAPS, stat),
-      effective: capFor(table ?? DEFAULT_STAT_CAPS, stat),
+      effective,
       floor: clamp ? clamp[0] : null,
       bounds: statCapBounds(stat),
+      space: capSpaceFor(stat),
+      spaceNote: capSpaceNote(stat, effective, env),
     };
   });
 }

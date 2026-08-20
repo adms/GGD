@@ -163,15 +163,34 @@ def table_caps():
     if unknown:
         sys.exit(f"CAP_NOTES 有 {len(unknown)} 條引擎不認得的屬性：{'、'.join(unknown)}")
 
-    out = ["| 屬性 | 一般上限 | 解鎖上限 | 備註 |", "|---|---:|---:|---|"]
+    # ⭐ 2026-08-20 —— 這張表**混了兩個空間**，而在此之前它一個字都沒說。
+    #   推導出來的那幾條寫的是**基礎空間**的數字（引擎讀取時才乘 combat-env 的
+    #   ×factor），其餘是 owner 直接給的**最終值**。
+    #   ⛔ 不說的話，外部編輯器會拿基礎值當最終值用 —— 而它看不到我們的 registry，
+    #   沒有辦法發現我們在說謊（第〇·五守則的那條紅線）。
+    #   ⚠️ 名單從 `sim/statCapDerivation.ts` 解析，⛔ 不是這裡抄一份。
+    derived = set(V.derived_cap_stats())
+    out = ["| 屬性 | 一般上限 | 解鎖上限 | 空間 | 備註 |", "|---|---:|---:|:--:|---|"]
     for key in V.stats():
         c = caps.get(key)
         if c is None:
             continue  # 這一條沒有後台上限 —— 它會出現在下面那一行，⛔ 不是靜默消失
         base, unlocked = num(c["base"]), num(c["unlocked"])
+        space = "基礎 ⚠️" if key in derived else "最終"
         # 兩者相同時解鎖欄印 `—`：印同一個數字會讓人以為「解鎖」是一條真的路
         out.append(f"| {zh[key]} `{key}` | **{base}** | "
-                   f"{'—' if base == unlocked else '**' + unlocked + '**'} | {CAP_NOTES.get(key, '')} |")
+                   f"{'—' if base == unlocked else '**' + unlocked + '**'} | {space} | "
+                   f"{CAP_NOTES.get(key, '')} |")
+    out += [
+        "",
+        f"⚠️ **「空間」那一欄不是註解，是換算規則。** 標 `基礎 ⚠️` 的 {len(derived)} 條寫的是"
+        "**乘上 `combat-env` 倍率之前**的數字 —— 場上實際的天花板是"
+        "`表上的值 × 該屬性的 combat-env 鏈`（例：`maxHealth` 要再乘 `maxHealth` 那一格）。",
+        "",
+        f"⭐ 它們是**推導**出來的，⛔ 不是手填：`母體在錨點等級的基礎中位數 × {V.stat_cap_multiple()}`"
+        "（owner 2026-08-12 的倍率），錨點見 `content/balanceAnchors.ts` 的 `BALANCE_ANCHOR_LEVELS`。"
+        "逐格的三個錨點對照表在 `docs/屬性上限推導.md`（`pnpm statcaps:build` 產生）。",
+    ]
 
     # ⭐ 沒有上限的那幾條要**寫出來**。舊版對它們是 `continue`，於是「這條沒有上限」
     #    與「這條被漏掉了」在文件上長得一模一樣（＝ critChance/spellVamp 那兩列）。

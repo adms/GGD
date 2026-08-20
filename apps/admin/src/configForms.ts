@@ -97,6 +97,7 @@ import {
 } from "@ggd/shared/content";
 // ⚠️ 同上的深路徑理由：這兩份 Zod 住自己的檔案（欄位理由長、且 sim 直接吃）。
 import { DEFAULT_STAT_NORMALIZATION } from "@ggd/shared/content/statNormalization";
+import { BALANCE_ANCHOR_LEVELS, HARD_ANCHOR_LEVEL } from "@ggd/shared/content/balanceAnchors";
 import { zConfigMitigationDoc } from "@ggd/shared/content/schema/mitigationDoc";
 import { zConfigMapSpecDoc } from "@ggd/shared/content/schema/mapSpecDoc";
 import { zConfigCameraDoc } from "@ggd/shared/content/schema/config";
@@ -1522,7 +1523,21 @@ const NORM_HAND_WRITTEN: ConfigFieldLabel[] = [
     { optionLabels: { baseStats: "初始值", growth: "每級成長" }, path: "channel.ms", zh: "移速寫進哪個通道", note: "⛔ 出貨「初始值」，而這**不是偏好，是量出來的機制限制**：成長只能往上推不能往下拉，而移速沒有三圍來源可以在反解時被減掉。實測改成「每級成長」會讓坦克 15/16 位、法師 18/18 位被夾在 0，排序變成坦克第二。" },
     { optionLabels: { baseStats: "初始值", growth: "每級成長" }, path: "channel.mr", zh: "魔抗寫進哪個通道", note: "出貨「每級成長」。owner：「**初始的屬性是用來補正角色個性化差異，成長是定位導向**」。⚠️ 走成長的代價是**等級 1 看不出差別** —— 選人畫面上四個定位的魔抗會一樣。" },
     { optionLabels: { baseStats: "初始值", growth: "每級成長" }, path: "channel.armor", zh: "裝甲寫進哪個通道", note: "出貨「每級成長」，理由同魔抗：初始值留給角色個性，定位差異由成長拉開。⚠️ 裝甲改走成長之後，坦克的硬度要到中後期才浮出來，等級 1 的選人畫面上四個定位是一樣的。" },
-    { path: "referenceLevel", zh: "成長通道的基準等級", note: "級距那三個數字是「**這一級**的最終總值」。出貨 18。⚠️ 改它會讓三格的數字整組換一個意思 —— 基準拉到 30，同樣填 26.2 就變成「30 級時是 26.2」，於是每一級的成長變小。" },
+    {
+      path: "referenceLevel",
+      zh: "成長通道的基準等級",
+      // ⛔ 出貨值**不可以打在這句話裡**。它在 2026-08-20 之前寫著「出貨 18」，
+      //   而實際出貨的是 **99**（owner 2026-08-13「我不要用等級 18 作為終值假設，
+      //   我要等級 99」）—— 一句綠燈的說明正在對操作者說謊，而沒有任何東西會紅。
+      //   ⇒ 從 `DEFAULT_STAT_NORMALIZATION` 推導，⛔ 不抄。
+      note:
+        `級距那三個數字是「**這一級**的最終總值」。出貨 **${DEFAULT_STAT_NORMALIZATION.referenceLevel}**。` +
+        `⚠️ 改它會讓三格的數字整組換一個意思 —— 基準從 ${DEFAULT_STAT_NORMALIZATION.referenceLevel} 拉到別的等級，` +
+        `同樣填 26.2 就變成「那一級時是 26.2」，於是每一級的成長跟著換算。` +
+        `⭐ owner 的平衡錨點是 **LV ${BALANCE_ANCHOR_LEVELS.join(" / ")}**` +
+        `（${HARD_ANCHOR_LEVEL} = 一定要滿足），⛔ 這一格與「屬性上限」那一頁的錨點是**兩把不同的尺**：` +
+        `這裡量的是**卡面設計**，那裡量的是**場中最終值的柵欄**。`,
+    },
     { path: "allowNegativeGrowth", zh: "允許反解出負成長", note: "出貨**關著**（負的夾成 0）。⚠️ 關著的代價是**目標可能達不到**：一位初始值已經高過目標的英雄，成長填 0 也降不下來。打開它會讓那條屬性**隨等級下降** —— 那在數學上成立，但在遊戲裡幾乎一定看起來像 bug。" },
     {
       path: "transformBandShift",

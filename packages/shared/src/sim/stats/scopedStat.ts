@@ -34,7 +34,7 @@ import type { SimWorld } from "../SimWorld";
 import type { CastableSlot } from "../intents";
 import { ModOp, type StatModifier } from "./modifiers";
 import { STAT_CLAMPS, Stat } from "./statTypes";
-import { effectiveCap } from "../statCaps";
+import { capCeiling } from "../statCaps";
 
 /** 「這一次求值是在問哪一支技能」。兩格都省略 = 只有全域加成算數。 */
 export interface StatScope {
@@ -124,7 +124,11 @@ export function scopedStat(world: SimWorld, id: EntityId, stat: Stat, scope: Sta
   const clamp = STAT_CLAMPS[stat];
   const lo = clamp ? clamp[0] : Number.NEGATIVE_INFINITY;
   // `capRaise: 0` —— 解鎖上限是全域語意，scope 拿不到（schema 也擋著）。
-  const hi = effectiveCap(world.statCaps, stat, 0);
+  // ⭐ `capCeiling`(⛔ 不是 `effectiveCap`)：`global` 是**最終空間**的值（它從
+  //    `sc.final` 來），而推導出來的那 7 條天花板寫的是**基礎空間**的數字 ——
+  //    ⛔ 直接比大小就是 owner 2026-08-20 抓到的那個單位錯配（見 statCapDerivation.ts），
+  //    而 clamp 是靜默的：範圍限定加成會被剃掉一個 env 倍率而畫面上看不出來。
+  const hi = capCeiling(world.statCaps, stat, 0, world.combatEnv);
   return Math.max(lo, Math.min(hi, out));
 }
 
