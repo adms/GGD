@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "8a20ae77e9d4",
+  "hash": "7036fde6aa28",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -155,8 +155,8 @@
     {
       "id": "damage-tiers",
       "path": "config/damage-tiers.json",
-      "hash": "3d556a595252",
-      "size": 1585
+      "hash": "7a87b0b56f2b",
+      "size": 2571
     },
     {
       "id": "dispel",
@@ -209,8 +209,8 @@
     {
       "id": "mana-economy",
       "path": "config/mana-economy.json",
-      "hash": "7bd963b01c2a",
-      "size": 1606
+      "hash": "d97c5d1df70c",
+      "size": 2193
     },
     {
       "id": "map-report",

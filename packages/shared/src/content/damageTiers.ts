@@ -9,26 +9,63 @@
  * > Q4「**不用**（γ 超線性）已經有**傷害相應的冷卻跟耗魔**做限制」
  *
  * ─────────────────────────────────────────────────────────────────────────────
+ * ⛔ 2026-08-20：這張表原本錨在 **Lv18**，而那是**錯的錨**
+ *
+ * owner 2026-08-20（逐字，對 #447 的更正）：
+ * > 「我的錨點有講過是 **LV 30/50/99 三個**，至少要滿足 **30(hard limit)**，
+ * >  能 **50 比較好(soft limit)**, **99 是極限**」
+ *
+ * 舊的五個數字（500/1250/2500/3750/5000）是拿 Lv18 的中位有效血量 9048 算的。
+ * ⚠️ 它們不是「有點保守」——**血量比傷害長得快**（Lv18→LV99 中位有效血量 ×5.19，
+ * 而中位滿階傷害只 ×2.14），所以一個錨在 Lv18 的表在 LV30 就已經**開始失效**。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
  * ⭐ 這張表是**推導**出來的，⛔ 一個數字都不是挑的
  *
- * 兩個輸入，兩個都是 owner 給的或量到的：
+ * 三個輸入，三個都是 owner 給的或量到的：
  *
- *     KILL_CASTS_REF     = 20      ← owner Q1「20 次以內一定要能殺死對方」
- *     EFFECTIVE_HP_REF   = 9048    ← 量到的 Lv18 中位有效血量
- *                                    (HP 8093 ÷ 魔法減傷 0.894，GH#447)
+ *     KILL_CASTS_REF        = 20                    ← owner Q1「20 次以內一定要能殺死對方」
+ *     MEDIAN_EFFECTIVE_HP   = {30:13927, 50:22437, 99:47008}
+ *                                                   ← 量到的三個錨點中位有效血量
+ *                                                     （`balanceAnchors.ts`，魔法側，裸裝，71 隻）
+ *     DEFAULT_COOLDOWN_TIERS.seconds.單體 = [6,15,30,45,60]   ← owner 2026-08-19 給的冷卻表
  *
- * ① **下限（極小）**：`9048 ÷ 20 = 452.4`。進位到 50 的整數倍 ⇒ **500**。
- *    ⚠️ 一定要**進位**：450 × 20 = 9000 < 9048，那會**差 0.5% 違反 owner 的 Q1**，
- *    而且沒有任何東西會紅。
+ * ① **一個錨點要求的下限（極小）**：`該級中位有效血量 ÷ 20`，
+ *    **進位**到 50 的整數倍（`anchorFloor()`）。
+ *    ⚠️ 一定要**進位**：捨去會差幾個 % 違反 owner 的 Q1，而且沒有任何東西會紅。
+ *    ⇒ LV30 需要 **700** · LV50 需要 **1150** · LV99 需要 **2400**。
  *
- * ② **其餘四格**：`500 × 單體冷卻 ÷ 6`，也就是**與冷卻表嚴格成正比**。
- *    ⭐ 這正是 owner Q4 的意思 ——「已經有傷害相應的冷卻做限制」＝
- *    貴的技能貴在它落在冷卻表的哪一格，⛔ 不是靠一條沒有錨的 γ 超線性曲線。
- *    ⇒ **500 / 1250 / 2500 / 3750 / 5000**（＝ 500 × 1 / 2.5 / 5 / 7.5 / 10）。
+ * ② **其餘四格**：`極小 × 單體冷卻 ÷ 6`，也就是**與冷卻表嚴格成正比**
+ *    （`tiersFromAnchor()`）。⭐ 這正是 owner Q4 的意思 ——「已經有傷害相應的冷卻
+ *    做限制」＝貴的技能貴在它落在冷卻表的哪一格，⛔ 不是靠一條沒有錨的 γ 超線性曲線。
+ *    ⇒ 五格 = 極小 × 1 / 2.5 / 5 / 7.5 / 10。
  *
- * ⚠️ 極大 5000 ≈ 中位有效血量的 **55%**。那是刻意的：owner 說 AP 太弱勢，
- * 而量到的現況是**一發中位技能只有血條的 5.9%**（532 / 9048），
- * 要 17 發才打得死一個人 —— 同時普攻是**無風險**的 69 DPS。
+ * ③ **哪一個錨點出貨**：⭐ **滿足得了的最高那一個**（`pickAnchor()`）——
+ *    這就是 owner 的 hard > soft > 極限 落地的樣子，⛔ 不是我在三個裡挑一個折衷。
+ *    「滿足得了」的判準只有一條，而且它本來就寫在這個檔裡：
+ *
+ *        極大 ≤ DAMAGE_TIER_MAX（＝ hard limit 那一級的中位有效血量）
+ *
+ *    也就是**一發不可以秒殺 LV30 的中位英雄**。驗算：
+ *
+ *      | 錨 | 極小 | 極大 | ≤ 13927？ |
+ *      |---|---:|---:|---|
+ *      | LV30 | 700  | 7000  | ✅ |
+ *      | LV50 | 1150 | 11500 | ✅ |
+ *      | LV99 | 2400 | 24000 | ⛔ 是 LV30 中位血量的 **1.72 倍** —— 每一發極大都是即死 |
+ *
+ *    ⇒ 出貨錨 = **LV50**，五格 = **1150 / 2875 / 5750 / 8625 / 11500**。
+ *    **hard ✅ · soft ✅ · 極限 ❌**（LV99 要 2400，被上面那條天花板擋在 1392 以下）。
+ *
+ * ⭐ 三個錨點各自的達成率（`castsToKill()`，⛔ 不要手抄 —— 它是算出來的）：
+ *
+ *     LV30  13927 ÷ 1150 = **12.1 發** ≤ 20  ✅ hard limit
+ *     LV50  22437 ÷ 1150 = **19.5 發** ≤ 20  ✅ soft limit
+ *     LV99  47008 ÷ 1150 = **40.9 發** > 20  ❌ 極限（差 2.04 倍）
+ *
+ * ⚠️ 極大 11500 ＝ LV30 中位有效血量的 **83%** / LV50 的 **51%** / LV99 的 **24%**。
+ * LV30 那一格是刻意的：owner 說 AP 太弱勢，而量到的現況是**一發中位技能在 LV30
+ * 只有血條的 5.3%**，要 **19 發**才打得死一個人 —— 同時普攻是**無風險**的。
  *
  * ─────────────────────────────────────────────────────────────────────────────
  * ⭐ 只有**一張**表，⛔ 沒有「單體一張、範圍一張」
@@ -55,6 +92,12 @@
  * 「填了級距卻比表大」變成一個沒有人發現得了的靜默偏差。
  * `ratios` / `attrRatios` **不動**：那兩條是**成長**，不是基礎值。
  */
+import {
+  BALANCE_ANCHOR_LEVELS,
+  HARD_ANCHOR_LEVEL,
+  MEDIAN_EFFECTIVE_HP,
+  type BalanceAnchorLevel,
+} from "./balanceAnchors";
 import { DEFAULT_COOLDOWN_TIERS } from "./cooldownTiers";
 import { SKILL_TIER_NAMES, type SkillTierName } from "./skillTiers";
 
@@ -71,13 +114,6 @@ export type DamageTierName = SkillTierName;
  */
 export const KILL_CASTS_REF = 20;
 
-/**
- * 量到的 Lv18 **中位有效血量**（GH#447）：HP 8093 ÷ 魔法減傷 0.894。
- * ⚠️ 參考值，用來算 `DEFAULT_*`。真值隨英雄與裝備變動 —— 它在這裡的角色是
- * 「一發最少要多大」的錨，⛔ 不是一條上線後會被讀的規則。
- */
-export const EFFECTIVE_HP_REF = 9048;
-
 /** 進位的粒度 —— 讓下限落在 50 的整數倍上，⛔ 不是無條件捨去（見檔頭 ①）。 */
 const ROUND_UP_TO = 50;
 
@@ -91,35 +127,74 @@ export interface DamageTiers {
   damage: Readonly<Record<DamageTierName, number>>;
 }
 
-/** 極小那一格：`有效血量 ÷ 擊殺次數`，**進位**到 50 的整數倍。 */
-function anchorDamage(): number {
-  return Math.ceil(EFFECTIVE_HP_REF / KILL_CASTS_REF / ROUND_UP_TO) * ROUND_UP_TO;
+/**
+ * 單一格的上下界。
+ * 下界 **1**：0 傷害的「傷害級距」是一個空宣稱（第一·五守則）。
+ * 上界 = **hard limit 那一級（LV30）的中位有效血量**：超過它的一發就是**一發秒殺**，
+ * 而那不是一個傷害級距，是另一種設計 —— 要做的話走專門的機制，⛔ 不是把這一格填爆。
+ *
+ * ⭐ 為什麼取 **LV30** 而不是 LV50/LV99：一發要不要算「秒殺」，看的是**最早**
+ * 會遇到它的那一級。錨在更高的等級 = 在 LV30 開一扇「這一發合法但它就是即死」的門。
+ * ⇒ 這一條同時是 `pickAnchor()` 的天花板（見檔頭 ③）。
+ */
+export const DAMAGE_TIER_MIN = 1;
+export const DAMAGE_TIER_MAX = MEDIAN_EFFECTIVE_HP[HARD_ANCHOR_LEVEL];
+
+/** 某一個錨點**要求**的極小值：`該級中位有效血量 ÷ 擊殺次數`，**進位**到 50 的整數倍。 */
+export function anchorFloor(level: BalanceAnchorLevel): number {
+  return Math.ceil(MEDIAN_EFFECTIVE_HP[level] / KILL_CASTS_REF / ROUND_UP_TO) * ROUND_UP_TO;
 }
 
 /**
- * 出貨值。⭐ 從**冷卻表**推導（owner Q4「傷害相應的冷卻」），⛔ 不抄字面值。
+ * 一個極小值展開成五格 —— **與單體冷卻表嚴格成正比**（owner Q4）。
+ * ⭐ 全專案唯一知道「五格之間的比例」的地方。
+ */
+export function tiersFromAnchor(smallest: number): Readonly<Record<DamageTierName, number>> {
+  const cd = DEFAULT_COOLDOWN_TIERS.seconds["單體"];
+  const base = cd[SKILL_TIER_NAMES[0]];
+  const out = {} as Record<DamageTierName, number>;
+  for (const n of DAMAGE_TIER_NAMES) out[n] = Math.round((smallest * cd[n]) / base);
+  return Object.freeze(out);
+}
+
+/** 這個錨點**滿足得了嗎** —— 展開之後極大有沒有撞破「一發不可以秒殺」的天花板。 */
+export function anchorIsSatisfiable(level: BalanceAnchorLevel): boolean {
+  const t = tiersFromAnchor(anchorFloor(level));
+  return t[DAMAGE_TIER_NAMES[DAMAGE_TIER_NAMES.length - 1]!] <= DAMAGE_TIER_MAX;
+}
+
+/**
+ * 出貨要用哪一個錨點 —— ⭐ **滿足得了的最高那一個**。
+ *
+ * 這就是 owner 的 **hard > soft > 極限** 落地的樣子：hard limit 是**下限**
+ *（就算它自己也撞天花板也照出貨，因為它「一定要滿足」），其餘每爬高一級都是白賺的。
+ * ⛔ 不在三個裡挑一個折衷 —— 那是把排序權從 owner 手上拿走。
+ */
+export function pickAnchor(): BalanceAnchorLevel {
+  let picked: BalanceAnchorLevel = HARD_ANCHOR_LEVEL;
+  for (const level of BALANCE_ANCHOR_LEVELS) if (anchorIsSatisfiable(level)) picked = level;
+  return picked;
+}
+
+/** 出貨表落在哪一個錨點上（報告與後台說明從這裡讀，⛔ 不各自手寫）。 */
+export const SHIPPED_ANCHOR_LEVEL: BalanceAnchorLevel = pickAnchor();
+
+/**
+ * 用出貨表打死某一個錨點的中位英雄要**幾發極小**。
+ * ⭐ 達成率表的唯一算式 —— `≤ KILL_CASTS_REF` 就是達成。
+ */
+export function castsToKill(level: BalanceAnchorLevel, smallest: number): number {
+  return MEDIAN_EFFECTIVE_HP[level] / smallest;
+}
+
+/**
+ * 出貨值。⭐ 從**三個錨點 + 冷卻表**推導（owner Q4「傷害相應的冷卻」），⛔ 不抄字面值。
  * 三個住處：`content/config/damage-tiers.json` · 這裡 · `apps/admin` 的 `SHIPPED_*`。
  */
 export const DEFAULT_DAMAGE_TIERS: DamageTiers = Object.freeze({
   enabled: true,
-  damage: (() => {
-    const cd = DEFAULT_COOLDOWN_TIERS.seconds["單體"];
-    const anchor = anchorDamage();
-    const base = cd[SKILL_TIER_NAMES[0]];
-    const out = {} as Record<DamageTierName, number>;
-    for (const n of DAMAGE_TIER_NAMES) out[n] = Math.round((anchor * cd[n]) / base);
-    return Object.freeze(out);
-  })(),
+  damage: tiersFromAnchor(anchorFloor(SHIPPED_ANCHOR_LEVEL)),
 });
-
-/**
- * 單一格的上下界。
- * 下界 **1**：0 傷害的「傷害級距」是一個空宣稱（第一·五守則）。
- * 上界 = **中位有效血量**：超過它的一發就是**一發秒殺**，而那不是一個傷害級距，
- * 是另一種設計 —— 要做的話走專門的機制，⛔ 不是把這一格填爆。
- */
-export const DAMAGE_TIER_MIN = 1;
-export const DAMAGE_TIER_MAX = EFFECTIVE_HP_REF;
 
 function clampDamage(v: unknown, fallback: number): number {
   if (typeof v !== "number" || !Number.isFinite(v)) return fallback;

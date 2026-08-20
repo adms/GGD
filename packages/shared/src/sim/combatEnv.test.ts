@@ -54,8 +54,10 @@ const env = (o: Partial<Record<CombatEnvKey, number>>): CombatEnvMultipliers =>
 
 function makeWorld(seed = 42, table?: CombatEnvMultipliers): SimWorld {
   const w = new SimWorld(SKELETON_ARENA, seed);
-  // ⚠️ GH#446 的**回魔地板**（15 秒回滿）會淹掉這一支自己要量的東西 ——
-  //    ⛔ 這裡測的不是回魔，所以把那個全域關掉才量得到自己的機制。
+  // ⚠️ GH#446 的回魔地板會淹掉這一支自己要量的東西。⭐ owner 2026-08-20 之後
+  //    它**預設就是關的**（`enforceFloor: false`，「時間是建議原則」），所以
+  //    這一行今天是多餘的 —— 留著是因為它釘的是**這一支要什麼**，⛔ 不是
+  //    「出貨預設剛好是什麼」：預設哪天翻回去，這一支也不該跟著變。
   w.manaEconomy = { ...DEFAULT_MANA_ECONOMY, enabled: false };
   if (table) w.combatEnv = table; // host seam: assigned BEFORE tick 0
   return w;

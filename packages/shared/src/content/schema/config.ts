@@ -80,7 +80,12 @@ import {
   DAMAGE_TIER_NAMES,
   DAMAGE_TIERS_DOC_ID,
   DEFAULT_DAMAGE_TIERS,
+  KILL_CASTS_REF,
+  SHIPPED_ANCHOR_LEVEL,
+  anchorFloor,
+  castsToKill,
 } from "../damageTiers";
+import { MEDIAN_EFFECTIVE_HP } from "../balanceAnchors";
 // 魔力經濟（GH#446）—— 回魔的地板。⚠️ 它住 `sim/`（每 tick 都跑的純函式）。
 import {
   DEFAULT_MANA_ECONOMY,
@@ -5149,9 +5154,16 @@ export const DEFAULT_COOLDOWN_TIERS_DOC = {
  * Q1「單體 Q 冷卻 6 秒⋯**20 次以內一定要能殺死對方**」+
  * Q4「**不用**（γ 超線性）已經有**傷害相應的冷卻**做限制」。
  *
- * ⭐ 五個數字**從冷卻表推導**（`500 × 單體冷卻 ÷ 6`），⛔ 不是挑的 ——
- * 推導式與那兩條輸入寫在 `content/damageTiers.ts`。
- * ⚠️ 上界 = 中位有效血量：超過它的一發就是一發秒殺，那不是一個傷害級距。
+ * ⭐ owner 2026-08-20 的更正：錨點是 **LV30(hard) / LV50(soft) / LV99(極限)**，
+ * ⛔ 不是 Lv18。五個數字**從三個錨點 + 冷卻表推導**（`極小 × 單體冷卻 ÷ 6`），
+ * ⛔ 不是挑的 —— 推導式寫在 `content/damageTiers.ts`，量到的血量寫在 `balanceAnchors.ts`。
+ *
+ * 出貨錨 = **滿足得了的最高那一個 = LV50** ⇒ **1150 / 2875 / 5750 / 8625 / 11500**。
+ * 達成率：**LV30 12.1 發 ✅ · LV50 19.5 發 ✅ · LV99 40.9 發 ❌**（門檻 20 發）。
+ * LV99 要極小 2400 ⇒ 極大 24000，是 LV30 中位有效血量 13927 的 1.72 倍 ＝ 每發即死。
+ *
+ * ⚠️ 上界 = **LV30（hard limit）的中位有效血量 13927**：超過它的一發就是一發秒殺，
+ * 那不是一個傷害級距。取最早會遇到它的那一級，⛔ 不是 LV50/LV99。
  */
 export const zConfigDamageTiersDoc = z
   .object({
@@ -5159,14 +5171,30 @@ export const zConfigDamageTiersDoc = z
     schema: z.literal("config.damage-tiers@1"),
     note: z.string().optional(),
     /** 止血閥兼一鍵 rollback。false = `damageTier` 不解析（＝今天的那一套數字）。 */
-    enabled: z.boolean(),
+    enabled: z
+      .boolean()
+      .describe("關掉之後 `damageTier` 不解析，技能回到自己手寫的 flat / perRank ——一鍵 rollback。"),
     /** 級別 → 卡面基礎傷害。五格都必填。 */
     damage: z
       .object(
         Object.fromEntries(
           DAMAGE_TIER_NAMES.map((n) => [
             n,
-            z.number().min(DAMAGE_TIER_MIN).max(DAMAGE_TIER_MAX),
+            z
+              .number()
+              .min(DAMAGE_TIER_MIN)
+              .max(DAMAGE_TIER_MAX)
+              .describe(
+                `「${n}」的卡面基礎傷害。整張表錨在 owner 的三個錨點上（LV30 hard / LV50 soft / LV99 極限）：` +
+                  `量到的中位有效血量 ${MEDIAN_EFFECTIVE_HP[30]} / ${MEDIAN_EFFECTIVE_HP[50]} / ${MEDIAN_EFFECTIVE_HP[99]}，` +
+                  `每一級要求的極小 = 該血量 ÷ ${KILL_CASTS_REF} 進位到 50 的倍數 ⇒ ${anchorFloor(30)} / ${anchorFloor(50)} / ${anchorFloor(99)}。` +
+                  `出貨走**滿足得了的最高**那一個（LV${SHIPPED_ANCHOR_LEVEL}）⇒ 五格 ` +
+                  `${DAMAGE_TIER_NAMES.map((k) => `${k} ${DEFAULT_DAMAGE_TIERS.damage[k]}`).join(" / ")}。` +
+                  `達成率 LV30 ${castsToKill(30, DEFAULT_DAMAGE_TIERS.damage[DAMAGE_TIER_NAMES[0]]).toFixed(1)} 發 ✅ · ` +
+                  `LV50 ${castsToKill(50, DEFAULT_DAMAGE_TIERS.damage[DAMAGE_TIER_NAMES[0]]).toFixed(1)} 發 ✅ · ` +
+                  `LV99 ${castsToKill(99, DEFAULT_DAMAGE_TIERS.damage[DAMAGE_TIER_NAMES[0]]).toFixed(1)} 發 ❌（門檻 ${KILL_CASTS_REF}）。` +
+                  `上界 ${DAMAGE_TIER_MAX} = LV30 中位有效血量：超過它的一發就是一發秒殺。`,
+              ),
           ]),
         ) as Record<(typeof DAMAGE_TIER_NAMES)[number], z.ZodNumber>,
       )
@@ -5187,9 +5215,13 @@ export const DEFAULT_DAMAGE_TIERS_DOC = {
  * owner 2026-08-19：「應該是去**調整回魔**⋯**平均回魔不超過 15 秒就可以滿魔再一輪，
  * 最糟的情形也不超過 20 秒**」。
  *
- * ⭐ 規則寫在**時間**上而不是倍率上（`每秒回魔 ≥ 魔力池 ÷ refillSeconds`），
- * 因為 owner 給的保證是一個時間。⚠️ 上界 20 秒是**他自己給的數字**，
- * ⛔ 不是防手滑的柵欄 —— 今天的 47.7 秒填不進來。語意寫在 `sim/manaEconomy.ts`。
+ * ⭐ **owner 2026-08-20 把它降級了**：「refillSeconds:15 => **時間是建議原則
+ * 不是死程式邏輯**，你要**量給我以後給我例外清單判斷**，一樣錨點」
+ * ⇒ `refillSeconds` 現在是**建議目標**，要不要真的拉住 `enforceFloor`（出貨 **false**）。
+ * 例外清單 = `pnpm mana:audit` → `docs/魔力回復例外清單.md`（LV30/50/99 三個錨點）。
+ *
+ * ⚠️ 上界 20 秒是**他自己給的數字**（「最糟的情形也不超過 20 秒」），
+ * ⛔ 不是防手滑的柵欄。語意與量到的後果寫在 `sim/manaEconomy.ts`。
  */
 export const zConfigManaEconomyDoc = z
   .object({
@@ -5197,11 +5229,32 @@ export const zConfigManaEconomyDoc = z
     schema: z.literal("config.mana-economy@1"),
     note: z.string().optional(),
     /** 總開關兼一鍵 rollback。false = 回魔完全回到今天的樣子。 */
-    enabled: z.boolean(),
-    /** 從空到滿最多幾秒。地板 = 魔力池 ÷ 這個數。 */
-    refillSeconds: z.number().min(REFILL_SECONDS_MIN).max(REFILL_SECONDS_MAX),
+    enabled: z
+      .boolean()
+      .describe("關掉之後這一整條規則不存在（連稽核的語意都沒有）——一鍵 rollback。"),
+    /** 從空到滿的**建議**秒數。⚠️ 出貨之下它不改變任何一場比賽（見 enforceFloor）。 */
+    refillSeconds: z
+      .number()
+      .min(REFILL_SECONDS_MIN)
+      .max(REFILL_SECONDS_MAX)
+      .describe(
+        "從空到滿的**建議**秒數（owner 2026-08-20:「時間是建議原則 不是死程式邏輯」）。" +
+          "只有兩個讀者:enforceFloor 開著時的地板算式(池 ÷ 這個數),以及 `pnpm mana:audit` 的超標門檻。" +
+          `上界 ${REFILL_SECONDS_MAX} 是 owner 的「最糟也不超過 20 秒」。`,
+      ),
+    /** ⭐ 超標時要不要真的拉。出貨 **false**（建議原則，⛔ 不是死程式邏輯）。 */
+    enforceFloor: z
+      .boolean()
+      .describe(
+        "超標時要不要**真的**把回魔拉到建議值。出貨 **false** ——" +
+          "owner 說那是建議原則,所以預設什麼都不做,只把超標的列進例外清單。" +
+          "打開 = 回到 2026-08-19 的硬地板 Math.max(回魔, 池 ÷ 建議秒數)。" +
+          "量到的現況(71 隻,裸裝):LV30/LV50/LV99 各有 70 隻滿魔超過 20 秒。",
+      ),
     /** 只套在英雄身上（出貨 true）。 */
-    championsOnly: z.boolean(),
+    championsOnly: z
+      .boolean()
+      .describe("地板只套在英雄身上。關掉之後帶魔力的殭屍與守衛塔也吃這條——沒有人要求過。"),
   })
   .strict();
 
@@ -5210,6 +5263,7 @@ export const DEFAULT_MANA_ECONOMY_DOC = {
   schema: "config.mana-economy@1",
   enabled: DEFAULT_MANA_ECONOMY.enabled,
   refillSeconds: DEFAULT_MANA_ECONOMY.refillSeconds,
+  enforceFloor: DEFAULT_MANA_ECONOMY.enforceFloor,
   championsOnly: DEFAULT_MANA_ECONOMY.championsOnly,
 } as const;
 

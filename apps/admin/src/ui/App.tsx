@@ -235,7 +235,7 @@ export const NAV: NavItem[] = [
   { page: "cooldownTiers", label: "冷卻五級距", emoji: "⏲", section: SEC_COMBAT },
   { page: "damageTiers", label: "傷害五級距", emoji: "💥", section: SEC_COMBAT },
   // 回魔地板 (GH#446)。緊鄰上面兩頁：owner 那三張單是同一次反算出來的。
-  { page: "manaEconomy", label: "魔力經濟（回魔地板）", emoji: "🔵", section: SEC_COMBAT },
+  { page: "manaEconomy", label: "魔力經濟（建議滿魔時間）", emoji: "🔵", section: SEC_COMBAT },
   { page: "uiLexicon", label: "介面用語（Fate）", emoji: "🏆", section: SEC_COMBAT },
   { page: "statNormalization", label: "英雄屬性正規化", emoji: "📐", section: SEC_COMBAT },
   // GH#322 —— 這四頁的 spec 早就寫好了，但導覽列沒有那一列 ⇒ 操作者點不到。

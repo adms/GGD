@@ -1,5 +1,30 @@
 /**
- * 魔力經濟（`config.mana-economy@1`，GH#446）—— **回魔**的地板。
+ * 魔力經濟（`config.mana-economy@1`，GH#446）—— 回魔的**建議滿魔時間**。
+ *
+ * ⛔ ⭐ **2026-08-20：它從「硬地板」降級成「建議原則」。** owner 逐字：
+ * > 「refillSeconds:15 => **時間是建議原則 不是死程式邏輯**，
+ * >  你要**量給我以後給我例外清單判斷**，一樣錨點」
+ *
+ * ⇒ 三件事變了，⛔ 三件都不是可以只做一半的：
+ *
+ * | | 之前 | 現在 |
+ * |---|---|---|
+ * | `refillSeconds` 的語意 | **保證**（程式硬拉到這個速度） | **建議目標**（一個要被稽核的原則） |
+ * | 超標時 | 靜默 `Math.max` 拉上去 | ⭐ **預設什麼都不做**（`enforceFloor: false`） |
+ * | 誰知道有幾隻超標 | 沒有人 | `pnpm mana:audit` → `docs/魔力回復例外清單.md` |
+ *
+ * ⚠️ **出貨預設 `enforceFloor: false` 是刻意的**，理由是 owner 的話本身：
+ * 一個「建議原則」如果程式照樣硬拉，那它就是死程式邏輯，只是換了個名字。
+ * 開關存在是為了**能回頭**（第〇·六守則），⛔ 不是為了觀望 ——
+ * 而這一次高優先權的裁決（建議 > 硬地板）落在 **off** 這一邊。
+ *
+ * ⚠️ ⇒ 出貨行為 = **今天沒有任何英雄被拉**。量到的後果（三個錨點，71 隻，裸裝）：
+ * **LV30 / LV50 / LV99 各有 70 隻滿魔超過 20 秒**，唯一的例外是
+ * `godie-h020` 莉娜（9.5 / 10.5 / 12.9 秒，她本來就比建議值快）。
+ * ⭐ 那張逐隻的表就是 owner 要的「例外清單」，⛔ 不要在這裡替他決定要不要拉。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * 以下是這條規則**原本**的來歷（`enforceFloor: true` 時仍然逐字適用）：
  *
  * owner 2026-08-19（逐字）：
  * > 「應該是去**調整回魔**，找到一個平衡，原則上極端情形是
@@ -61,10 +86,24 @@ export interface ManaEconomy {
    */
   enabled: boolean;
   /**
-   * 從空到滿**最多**幾秒。地板 = `魔力池 ÷ 這個數`。
+   * 從空到滿的**建議**秒數（owner 2026-08-20：「時間是**建議原則**不是死程式邏輯」）。
    * 出貨 **15**（owner：「平均回魔不超過 15 秒就可以滿魔再一輪」）。
+   *
+   * ⚠️ 它**只有兩個讀者**：① `enforceFloor` 開著時的地板算式（`魔力池 ÷ 這個數`）
+   * ② `pnpm mana:audit` 的超標門檻。⛔ 預設之下**它不改變任何一場比賽**。
    */
   refillSeconds: number;
+  /**
+   * ⭐ **超標時要不要真的把回魔拉上去。** 出貨 **false**。
+   *
+   * `false`（出貨）= `refillSeconds` 純粹是一條**被稽核的建議**，
+   * 回魔逐位元等於屬性管線算出來的 `Stat.ManaRegen`。
+   * `true` = 回到 2026-08-19 的硬地板（`Math.max(回魔, 池 ÷ refillSeconds)`）。
+   *
+   * ⚠️ ⛔ 這一格與 `enabled` **不是**同一件事：`enabled: false` 連稽核的語意都關掉；
+   * 這一格只決定「知道超標之後動不動手」。
+   */
+  enforceFloor: boolean;
   /**
    * 只套在英雄身上。⚠️ 出貨 **true**：殭屍與守衛塔的回魔不該被一條為英雄
    * 節奏設計的地板拉高 —— 那會讓帶魔力的怪物變成另一種東西，而沒有人要求過。
@@ -79,6 +118,8 @@ export interface ManaEconomy {
 export const DEFAULT_MANA_ECONOMY: ManaEconomy = Object.freeze({
   enabled: true,
   refillSeconds: 15,
+  // ⭐ owner 2026-08-20：「時間是**建議原則** 不是死程式邏輯」⇒ 預設**不拉**。
+  enforceFloor: false,
   championsOnly: true,
 });
 
@@ -94,7 +135,13 @@ export const REFILL_SECONDS_MAX = 20;
 /** 把一份 `config.mana-economy@1` 文件正規化。認不得 → 出貨值。 */
 export function manaEconomyFromDoc(doc: unknown): ManaEconomy {
   const d = doc as
-    | { schema?: string; enabled?: unknown; refillSeconds?: unknown; championsOnly?: unknown }
+    | {
+        schema?: string;
+        enabled?: unknown;
+        refillSeconds?: unknown;
+        enforceFloor?: unknown;
+        championsOnly?: unknown;
+      }
     | undefined;
   if (!d || d.schema !== "config.mana-economy@1") return DEFAULT_MANA_ECONOMY;
   const s = d.refillSeconds;
@@ -105,6 +152,10 @@ export function manaEconomyFromDoc(doc: unknown): ManaEconomy {
   return {
     enabled: typeof d.enabled === "boolean" ? d.enabled : DEFAULT_MANA_ECONOMY.enabled,
     refillSeconds,
+    enforceFloor:
+      typeof d.enforceFloor === "boolean"
+        ? d.enforceFloor
+        : DEFAULT_MANA_ECONOMY.enforceFloor,
     championsOnly:
       typeof d.championsOnly === "boolean"
         ? d.championsOnly
@@ -123,11 +174,14 @@ export interface ManaRegenInput {
 /**
  * 這一 tick 該用的每秒回魔。**地板，不是取代**（見檔頭）。
  *
- * ⛔ 關掉／不是英雄／魔力池是 0 → 原樣返回 `flatPerSec`，
- * 一個 byte 都不動今天的行為。
+ * ⛔ 關掉／**沒開 `enforceFloor`（＝出貨預設）**／不是英雄／魔力池是 0
+ * → 原樣返回 `flatPerSec`，一個 byte 都不動屬性管線算出來的回魔。
  */
 export function manaRegenPerSec(inp: ManaRegenInput, rules: ManaEconomy): number {
   if (!rules.enabled) return inp.flatPerSec;
+  // ⭐ owner 2026-08-20：`refillSeconds` 是**建議原則**。⛔ 沒有這一行，
+  //    「建議」就會變回死程式邏輯 —— 而且完全看不出來。
+  if (!rules.enforceFloor) return inp.flatPerSec;
   if (rules.championsOnly && !inp.isChampion) return inp.flatPerSec;
   if (!(inp.maxMana > 0) || !(rules.refillSeconds > 0)) return inp.flatPerSec;
   return Math.max(inp.flatPerSec, inp.maxMana / rules.refillSeconds);

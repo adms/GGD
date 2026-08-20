@@ -17,7 +17,16 @@ import { registerAll } from "./registries";
 import type { ContentStore } from "./store";
 import { Abilities, Champions, Items } from "../sim/content/registry";
 import { DEFAULT_COOLDOWN_TIERS, cooldownShapeOf } from "./cooldownTiers";
-import { DEFAULT_DAMAGE_TIERS } from "./damageTiers";
+import {
+  DAMAGE_TIER_MAX,
+  DAMAGE_TIER_NAMES,
+  DEFAULT_DAMAGE_TIERS,
+  KILL_CASTS_REF,
+  SHIPPED_ANCHOR_LEVEL,
+  anchorIsSatisfiable,
+  castsToKill,
+} from "./damageTiers";
+import { BALANCE_ANCHOR_LEVELS, HARD_ANCHOR_LEVEL } from "./balanceAnchors";
 import { buildAuthoringRules } from "./authoringRules";
 import { DEFAULT_AUTHORING_PRINCIPLES } from "./schema/config";
 
@@ -130,6 +139,29 @@ describe("傷害五級距 (GH#447)", () => {
     expect(amount?.["flat"]).toBe(DEFAULT_DAMAGE_TIERS.damage.大);
     expect(amount?.["perRank"]).toBeUndefined();
     expect(amount?.["ratios"]).toEqual([{ stat: "ap", coeff: 0.5 }]);
+  });
+});
+
+describe("傷害級距錨在 owner 的三個錨點上 (GH#447, owner 2026-08-20)", () => {
+  // ⭐ 驗的是**落地規則會不會發生**（hard 一定滿足、走得到的最高錨點就要走），
+  // ⛔ 不驗「1150 是不是對的數字」—— 那一格已經有三個住處與上面那條 drift 測試在守。
+  const smallest = DEFAULT_DAMAGE_TIERS.damage[DAMAGE_TIER_NAMES[0]!];
+
+  it("⭐ hard limit（LV30）一定滿足，而且出貨走的是**滿足得了的最高**那一個錨點", () => {
+    // ① hard limit 是門檻，⛔ 不是「盡量」。
+    expect(castsToKill(HARD_ANCHOR_LEVEL, smallest)).toBeLessThanOrEqual(KILL_CASTS_REF);
+    // ② 出貨錨點本身滿足得了。
+    expect(anchorIsSatisfiable(SHIPPED_ANCHOR_LEVEL)).toBe(true);
+    // ③ ⭐ 承重的那一條：比它更高的每一個錨點都**滿足不了** ——
+    //    否則「照 hard > soft > 極限 落地」就退化成「挑了最低的那個」，而且看不出來。
+    for (const level of BALANCE_ANCHOR_LEVELS.filter((l) => l > SHIPPED_ANCHOR_LEVEL)) {
+      expect(anchorIsSatisfiable(level)).toBe(false);
+    }
+  });
+
+  it("⛔ 最貴的那一格不可以是一發秒殺（＝上面那條「滿足得了」的天花板）", () => {
+    expect(DEFAULT_DAMAGE_TIERS.damage[DAMAGE_TIER_NAMES[DAMAGE_TIER_NAMES.length - 1]!])
+      .toBeLessThanOrEqual(DAMAGE_TIER_MAX);
   });
 });
 
