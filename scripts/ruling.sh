@@ -81,6 +81,6 @@ done
 # 兩處都在 `## 逐則對票` 區段外面,`gen_board.py` 的 `section()` 一列都讀不到。
 # ⇒ 插入位置交給 `scripts/ledger_table.py`(與 message-ledger.sh 共用同一份邏輯)。
 printf '%s' "$TEXT" | python3 scripts/ledger_table.py \
-  "$DAY" "$(date '+%H:%M')" "$(echo "$ISSUES" | sed 's/[0-9]\+/#&/g')"
+  "$DAY" "$(date '+%H:%M')" "$(echo "$ISSUES" | tr ',' ' ' | sed 's/\([0-9]\+\)/#\1/g')"
 echo
 echo "⭐ 兩處都寫了。⛔ 這一點以後不要再問 owner —— 要查就跑 scripts/asked-before.sh"
