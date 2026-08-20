@@ -100,6 +100,22 @@ def md_to_html(md: str) -> str:
     return "\n".join(out)
 
 
+def shipped_version() -> str:
+    """⭐ **推導**目前線上版號，⛔ 不是寫死。
+
+    在 2026-08-20 之前這一行是字面值 `v0.21.4 → v0.21.5 · 開發中` ——
+    而 repo 那時已經在 **v0.22.4**。又一個「被散文保護的假話活得比有效期久，
+    而且沒有任何東西會紅」（第三守則）。owner 一眼就看出來了。
+
+    ⚠️ 這是 git 狀態，但它與被拿掉的 HEAD hash / 未 push 數**不同類**：
+    tag 只在**真的發版**時才變（一天一次），⛔ 不是每 commit 一次。
+    所以 `--check` 在發版後到重生之間會紅一次 —— 那是**對的**：
+    板本來就該跟著新版重生，而 `board:build` 就在 `skills:sync` 裡。
+    """
+    v = sh("git", "describe", "--tags", "--abbrev=0")
+    return v or "（未打 tag）"
+
+
 def data_asof(dailies: list) -> str:
     """⭐ 標題上的 GMT+8 時間戳（owner 2026-08-20：「標題請一定要加上 GMT8 時間戳記」）。
 
@@ -168,7 +184,7 @@ def build() -> str:
         for t, md in blocks if md.strip()
     )
     return (f"<title>GGD 作戰板 · {data_asof(dailies)}</title>\n<style>{CSS}</style>\n"
-            f'<div class="wrap"><header><p class="eyebrow">v0.21.4 → v0.21.5 · 開發中</p>'
+            f'<div class="wrap"><header><p class="eyebrow">線上 {html.escape(shipped_version())} · 資料截至 {html.escape(data_asof(dailies))}</p>'
             f"<h1>GGD 作戰板 · {html.escape(data_asof(dailies))}</h1>{meta(body, dailies)}</header>\n{body}\n"
             f'<footer>由 <code>tools/board/gen_board.py</code> 從 docs/_daily · docs/_release 產生（⛔ 不含 git 狀態:那是時鐘欄位） —— '
             f'⛔ 不要手改這份 HTML</footer></div>\n')
