@@ -330,3 +330,11 @@ LV30 中位「有效血量」	13,927	71 隻裸裝走出貨管線量的（pnpm ma
 
 
 以上也請重新更新 平衡數值決策建議，別忘了後台設定及說明、JSON 及 script、創建英雄出身模板推導、codex編輯器契約與說明文件等 都要一起更新喔 (全部都是推導動態即時產生)
+
+## 22:56
+
+3. use LV30/50/99 rules, but I think you echo and loop back the formula, so HP going crazy 163萬
+
+## 23:17
+
+你更新 GGD作戰版 對話開票 跟 平衡數值決策建議了嗎？還有 NOTE
