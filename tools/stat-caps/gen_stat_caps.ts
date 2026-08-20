@@ -32,9 +32,13 @@
  * 欄位都會讓逐位元組比對永遠不相等，於是 `--check` 只能被放寬 —— 而一條被放寬的
  * 閘等於沒有閘。
  */
-import { readFileSync, writeFileSync, readdirSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  BALANCE_POPULATION_PROVENANCE,
+  balancePopulationIds,
+} from "../../packages/shared/testkit/balancePopulation";
 import { Stat } from "../../packages/shared/src/sim/stats/statTypes";
 import { championStatBase } from "../../packages/shared/src/sim/stats/attributes";
 import { STAT_CAP_MAX, DEFAULT_STAT_CAPS } from "../../packages/shared/src/sim/statCaps";
@@ -72,22 +76,25 @@ function shippedEnv(): CombatEnvMultipliers {
 }
 
 /**
- * 母體 = **註冊表服務得出來的每一張英雄卡**（含變身態、含已下架）。
+ * 母體 = **對戰可選本體**（`balancePopulationIds`），⛔ 不是 `readdirSync(content/champions)`。
  *
- * ⚠️ 這與 `tools/hero-archetypes` 的母體**刻意不同**，兩把尺量的是不同的東西：
- *   · 那一把是**卡面設計規範**（這張卡設計得合不合群）→ 只算本體、只算已上架。
- *   · 這一把是**柵欄**（不可以夾到任何引擎生得出來的單位）→ 一張都不能少，
- *     ⛔ 少算一張的代價正是「那一位被靜默夾住而畫面上看不出來」。
+ * ⚠️ 這一段在 2026-08-21 之前寫著「母體 = 註冊表服務得出來的每一張英雄卡（含變身態、
+ * 含已下架），⛔ 少算一張的代價正是那一位被靜默夾住」。owner 2026-08-21 逐字推翻：
+ *
+ * > 「①**上架不能包含變身態 我們討論過了 之前就是這樣才沒改到正確的英雄技能**」
+ * > 「②並且我們**查所有屬性級距等 都是不考慮變身態的**」
+ *
+ * ⭐ 「一張都不能少」那個顧慮**沒有消失，只是不靠母體解決**：上限是
+ * `錨點中位 × STAT_CAP_MULTIPLE`（出貨 200×），而變身態是本體的第二張卡 ——
+ * 它與本體的差距遠在兩個數量級之內，⛔ 200× 的柵欄不可能夾到它。
+ * 用它去拉中位數換來的不是安全，是**重複計數**。
  */
 function population(): { id: string; doc: Record<string, unknown> }[] {
   const dir = join(REPO, "content/champions");
-  return readdirSync(dir)
-    .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
-    .sort()
-    .map((f) => ({
-      id: f.replace(/\.json$/, ""),
-      doc: JSON.parse(readFileSync(join(dir, f), "utf-8")) as Record<string, unknown>,
-    }));
+  return balancePopulationIds(REPO).map((id) => ({
+    id,
+    doc: JSON.parse(readFileSync(join(dir, `${id}.json`), "utf-8")) as Record<string, unknown>,
+  }));
 }
 
 const median = (xs: number[]): number => {
@@ -222,7 +229,7 @@ export interface DerivedCapProvenance {
   readonly anchorLevel: number;
   /** owner 的倍率（= \`STAT_CAP_MULTIPLE\`） */
   readonly multiple: number;
-  /** 母體大小 —— content/champions 底下每一張卡 */
+  /** 母體大小 —— **對戰可選本體**（⛔ 不含變身態／骨架／退場） */
   readonly population: number;
   /** 每條屬性在錨點的**基礎空間**中位數 */
   readonly medians: Readonly<Partial<Record<Stat, number>>>;
@@ -260,7 +267,7 @@ function docMd(): string {
   const head = `# 屬性上限（stat-caps）—— 三個錨點的對照表
 
 > ⛔ **產生的文件 —— 不要手改。** \`pnpm statcaps:build\`
-> 來源：\`content/champions/*.json\`（${pop.length} 張卡）× \`content/config/combat-env.json\`
+> 來源：**${pop.length} 位對戰可選英雄**（${BALANCE_POPULATION_PROVENANCE}）× \`content/config/combat-env.json\`
 > × \`packages/shared/src/sim/statCapDerivation.ts\`（規則）。
 
 ## 規則

@@ -23,7 +23,7 @@ export interface DerivedCapProvenance {
   readonly anchorLevel: number;
   /** owner 的倍率（= `STAT_CAP_MULTIPLE`） */
   readonly multiple: number;
-  /** 母體大小 —— content/champions 底下每一張卡 */
+  /** 母體大小 —— **對戰可選本體**（⛔ 不含變身態／骨架／退場） */
   readonly population: number;
   /** 每條屬性在錨點的**基礎空間**中位數 */
   readonly medians: Readonly<Partial<Record<Stat, number>>>;
@@ -32,24 +32,24 @@ export interface DerivedCapProvenance {
 export const DERIVED_CAP_PROVENANCE: DerivedCapProvenance = Object.freeze({
   anchorLevel: 30,
   multiple: 200,
-  population: 71,
+  population: 49,
   medians: Object.freeze({
   "maxHealth": 2808.6,
-  "maxMana": 1740.25,
+  "maxMana": 1725.25,
   "healthRegen": 5.668,
-  "manaRegen": 16.3785,
+  "manaRegen": 16.3575,
   "ad": 104.74,
-  "armor": 40.8,
+  "armor": 39.695,
   "mr": 62.8,
   }),
 });
 
 export const DERIVED_STAT_CAPS: Readonly<Partial<Record<Stat, DerivedStatCap>>> = Object.freeze({
   "maxHealth": Object.freeze({ base: 561720, unlocked: 561720 }),
-  "maxMana": Object.freeze({ base: 348050, unlocked: 348050 }),
+  "maxMana": Object.freeze({ base: 345050, unlocked: 345050 }),
   "healthRegen": Object.freeze({ base: 1134, unlocked: 1134 }),
-  "manaRegen": Object.freeze({ base: 3276, unlocked: 3276 }),
+  "manaRegen": Object.freeze({ base: 3271, unlocked: 3271 }),
   "ad": Object.freeze({ base: 20948, unlocked: 20948 }),
-  "armor": Object.freeze({ base: 8160, unlocked: 8160 }),
+  "armor": Object.freeze({ base: 7939, unlocked: 7939 }),
   "mr": Object.freeze({ base: 12560, unlocked: 12560 }),
 });

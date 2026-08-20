@@ -75,21 +75,21 @@
     {
       "slot": "PASSIVE",
       "castType": "targeted",
-      "description": "指定單一敵人，施法距離 12，（效果待填）。冷卻 45 秒，消耗[MP] 140。",
+      "description": "指定單一敵人，施法距離 {{range}}，（效果待填）。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
       "cooldown": {
         "value": 45,
-        "sample": 35,
+        "sample": 23,
         "basis": "slot"
       },
       "manaCost": {
         "value": 140,
-        "sample": 26,
+        "sample": 17,
         "basis": "slot"
       },
       "range": {
         "value": 12,
-        "sample": 11,
-        "basis": "slot"
+        "sample": 128,
+        "basis": "corpus"
       },
       "radius": {
         "value": 0,
@@ -105,27 +105,27 @@
     {
       "slot": "PASSIVE",
       "castType": "skillshot",
-      "description": "朝指定方向發射，施法距離 12，範圍 8.71，（效果待填）。冷卻 60 秒，消耗[MP] 140。",
+      "description": "朝指定方向發射，施法距離 {{range}}，範圍 {{radius}}，（效果待填）。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
       "cooldown": {
         "value": 60,
-        "sample": 35,
+        "sample": 23,
         "basis": "slot",
         "liftedFromMedian": 45
       },
       "manaCost": {
         "value": 140,
-        "sample": 26,
+        "sample": 17,
         "basis": "slot"
       },
       "range": {
         "value": 12,
-        "sample": 11,
-        "basis": "slot"
+        "sample": 128,
+        "basis": "corpus"
       },
       "radius": {
-        "value": 8.71,
-        "sample": 10,
-        "basis": "slot"
+        "value": 6,
+        "sample": 40,
+        "basis": "corpus"
       },
       "damage": {
         "value": 0,
@@ -136,27 +136,27 @@
     {
       "slot": "PASSIVE",
       "castType": "ground",
-      "description": "在指定地點，施法距離 12，範圍 8.71，（效果待填）。冷卻 60 秒，消耗[MP] 140。",
+      "description": "在指定地點，施法距離 {{range}}，範圍 {{radius}}，（效果待填）。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
       "cooldown": {
         "value": 60,
-        "sample": 35,
+        "sample": 23,
         "basis": "slot",
         "liftedFromMedian": 45
       },
       "manaCost": {
         "value": 140,
-        "sample": 26,
+        "sample": 17,
         "basis": "slot"
       },
       "range": {
         "value": 12,
-        "sample": 11,
-        "basis": "slot"
+        "sample": 128,
+        "basis": "corpus"
       },
       "radius": {
-        "value": 8.71,
-        "sample": 10,
-        "basis": "slot"
+        "value": 6,
+        "sample": 40,
+        "basis": "corpus"
       },
       "damage": {
         "value": 0,
@@ -167,10 +167,434 @@
     {
       "slot": "PASSIVE",
       "castType": "self",
-      "description": "對自身，（效果待填）。冷卻 40 秒，消耗[MP] 150。",
+      "description": "對自身，（效果待填）。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
       "cooldown": {
-        "value": 40,
-        "sample": 24,
+        "value": 37.5,
+        "sample": 16,
+        "basis": "slot+castType"
+      },
+      "manaCost": {
+        "value": 120,
+        "sample": 10,
+        "basis": "slot+castType"
+      },
+      "range": {
+        "value": 0,
+        "sample": 0,
+        "basis": "fallback"
+      },
+      "radius": {
+        "value": 0,
+        "sample": 0,
+        "basis": "fallback"
+      },
+      "damage": {
+        "value": 0,
+        "sample": 0,
+        "basis": "fallback"
+      }
+    },
+    {
+      "slot": "PASSIVE",
+      "castType": "dash",
+      "description": "朝指定方向突進，施法距離 {{range}}，（效果待填）。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
+        "value": 45,
+        "sample": 23,
+        "basis": "slot"
+      },
+      "manaCost": {
+        "value": 140,
+        "sample": 17,
+        "basis": "slot"
+      },
+      "range": {
+        "value": 12,
+        "sample": 128,
+        "basis": "corpus"
+      },
+      "radius": {
+        "value": 0,
+        "sample": 0,
+        "basis": "fallback"
+      },
+      "damage": {
+        "value": 0,
+        "sample": 0,
+        "basis": "fallback"
+      }
+    },
+    {
+      "slot": "Q",
+      "castType": "targeted",
+      "description": "指定單一敵人，施法距離 {{range}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
+        "value": 25,
+        "sample": 18,
+        "basis": "slot+castType"
+      },
+      "manaCost": {
+        "value": 60,
+        "sample": 17,
+        "basis": "slot+castType"
+      },
+      "range": {
+        "value": 8,
+        "sample": 18,
+        "basis": "slot+castType"
+      },
+      "radius": {
+        "value": 0,
+        "sample": 0,
+        "basis": "fallback"
+      },
+      "damage": {
+        "value": 160,
+        "sample": 8,
+        "basis": "slot+castType"
+      }
+    },
+    {
+      "slot": "Q",
+      "castType": "skillshot",
+      "description": "朝指定方向發射，施法距離 {{range}}，範圍 {{radius}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
+        "value": 60,
+        "sample": 46,
+        "basis": "slot",
+        "liftedFromMedian": 30
+      },
+      "manaCost": {
+        "value": 70,
+        "sample": 45,
+        "basis": "slot"
+      },
+      "range": {
+        "value": 11,
+        "sample": 31,
+        "basis": "slot"
+      },
+      "radius": {
+        "value": 5.5,
+        "sample": 8,
+        "basis": "slot"
+      },
+      "damage": {
+        "value": 185,
+        "sample": 18,
+        "basis": "slot"
+      }
+    },
+    {
+      "slot": "Q",
+      "castType": "ground",
+      "description": "在指定地點，施法距離 {{range}}，範圍 {{radius}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
+        "value": 60,
+        "sample": 13,
+        "basis": "slot+castType",
+        "liftedFromMedian": 30
+      },
+      "manaCost": {
+        "value": 85,
+        "sample": 13,
+        "basis": "slot+castType"
+      },
+      "range": {
+        "value": 12,
+        "sample": 11,
+        "basis": "slot+castType"
+      },
+      "radius": {
+        "value": 5.5,
+        "sample": 8,
+        "basis": "slot+castType"
+      },
+      "damage": {
+        "value": 185,
+        "sample": 18,
+        "basis": "slot"
+      }
+    },
+    {
+      "slot": "Q",
+      "castType": "self",
+      "description": "對自身，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
+        "value": 25,
+        "sample": 13,
+        "basis": "slot+castType"
+      },
+      "manaCost": {
+        "value": 60,
+        "sample": 13,
+        "basis": "slot+castType"
+      },
+      "range": {
+        "value": 0,
+        "sample": 0,
+        "basis": "fallback"
+      },
+      "radius": {
+        "value": 0,
+        "sample": 0,
+        "basis": "fallback"
+      },
+      "damage": {
+        "value": 185,
+        "sample": 18,
+        "basis": "slot"
+      }
+    },
+    {
+      "slot": "Q",
+      "castType": "dash",
+      "description": "朝指定方向突進，施法距離 {{range}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
+        "value": 30,
+        "sample": 46,
+        "basis": "slot"
+      },
+      "manaCost": {
+        "value": 70,
+        "sample": 45,
+        "basis": "slot"
+      },
+      "range": {
+        "value": 11,
+        "sample": 31,
+        "basis": "slot"
+      },
+      "radius": {
+        "value": 0,
+        "sample": 0,
+        "basis": "fallback"
+      },
+      "damage": {
+        "value": 185,
+        "sample": 18,
+        "basis": "slot"
+      }
+    },
+    {
+      "slot": "W",
+      "castType": "targeted",
+      "description": "指定單一敵人，施法距離 {{range}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
+        "value": 30,
+        "sample": 16,
+        "basis": "slot+castType"
+      },
+      "manaCost": {
+        "value": 72.5,
+        "sample": 16,
+        "basis": "slot+castType"
+      },
+      "range": {
+        "value": 12,
+        "sample": 16,
+        "basis": "slot+castType"
+      },
+      "radius": {
+        "value": 0,
+        "sample": 0,
+        "basis": "fallback"
+      },
+      "damage": {
+        "value": 200,
+        "sample": 17,
+        "basis": "slot"
+      }
+    },
+    {
+      "slot": "W",
+      "castType": "skillshot",
+      "description": "朝指定方向發射，施法距離 {{range}}，範圍 {{radius}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
+        "value": 60,
+        "sample": 40,
+        "basis": "slot",
+        "liftedFromMedian": 30
+      },
+      "manaCost": {
+        "value": 60,
+        "sample": 39,
+        "basis": "slot"
+      },
+      "range": {
+        "value": 12,
+        "sample": 27,
+        "basis": "slot"
+      },
+      "radius": {
+        "value": 6,
+        "sample": 40,
+        "basis": "corpus"
+      },
+      "damage": {
+        "value": 200,
+        "sample": 17,
+        "basis": "slot"
+      }
+    },
+    {
+      "slot": "W",
+      "castType": "ground",
+      "description": "在指定地點，施法距離 {{range}}，範圍 {{radius}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
+        "value": 60,
+        "sample": 10,
+        "basis": "slot+castType",
+        "liftedFromMedian": 30
+      },
+      "manaCost": {
+        "value": 62.5,
+        "sample": 10,
+        "basis": "slot+castType"
+      },
+      "range": {
+        "value": 11.5,
+        "sample": 8,
+        "basis": "slot+castType"
+      },
+      "radius": {
+        "value": 6,
+        "sample": 40,
+        "basis": "corpus"
+      },
+      "damage": {
+        "value": 200,
+        "sample": 17,
+        "basis": "slot"
+      }
+    },
+    {
+      "slot": "W",
+      "castType": "self",
+      "description": "對自身，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
+        "value": 45,
+        "sample": 11,
+        "basis": "slot+castType"
+      },
+      "manaCost": {
+        "value": 60,
+        "sample": 10,
+        "basis": "slot+castType"
+      },
+      "range": {
+        "value": 0,
+        "sample": 0,
+        "basis": "fallback"
+      },
+      "radius": {
+        "value": 0,
+        "sample": 0,
+        "basis": "fallback"
+      },
+      "damage": {
+        "value": 200,
+        "sample": 17,
+        "basis": "slot"
+      }
+    },
+    {
+      "slot": "W",
+      "castType": "dash",
+      "description": "朝指定方向突進，施法距離 {{range}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
+        "value": 30,
+        "sample": 40,
+        "basis": "slot"
+      },
+      "manaCost": {
+        "value": 60,
+        "sample": 39,
+        "basis": "slot"
+      },
+      "range": {
+        "value": 12,
+        "sample": 27,
+        "basis": "slot"
+      },
+      "radius": {
+        "value": 0,
+        "sample": 0,
+        "basis": "fallback"
+      },
+      "damage": {
+        "value": 200,
+        "sample": 17,
+        "basis": "slot"
+      }
+    },
+    {
+      "slot": "E",
+      "castType": "targeted",
+      "description": "指定單一敵人，施法距離 {{range}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
+        "value": 45,
+        "sample": 14,
+        "basis": "slot+castType"
+      },
+      "manaCost": {
+        "value": 100,
+        "sample": 14,
+        "basis": "slot+castType"
+      },
+      "range": {
+        "value": 12,
+        "sample": 14,
+        "basis": "slot+castType"
+      },
+      "radius": {
+        "value": 0,
+        "sample": 0,
+        "basis": "fallback"
+      },
+      "damage": {
+        "value": 375,
+        "sample": 22,
+        "basis": "slot"
+      }
+    },
+    {
+      "slot": "E",
+      "castType": "skillshot",
+      "description": "朝指定方向發射，施法距離 {{range}}，範圍 {{radius}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
+        "value": 55,
+        "sample": 43,
+        "basis": "slot"
+      },
+      "manaCost": {
+        "value": 150,
+        "sample": 43,
+        "basis": "slot"
+      },
+      "range": {
+        "value": 12,
+        "sample": 32,
+        "basis": "slot"
+      },
+      "radius": {
+        "value": 6,
+        "sample": 10,
+        "basis": "slot"
+      },
+      "damage": {
+        "value": 375,
+        "sample": 22,
+        "basis": "slot"
+      }
+    },
+    {
+      "slot": "E",
+      "castType": "ground",
+      "description": "在指定地點，施法距離 {{range}}，範圍 {{radius}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
+        "value": 60,
+        "sample": 15,
         "basis": "slot+castType"
       },
       "manaCost": {
@@ -179,155 +603,33 @@
         "basis": "slot+castType"
       },
       "range": {
-        "value": 0,
-        "sample": 0,
-        "basis": "fallback"
-      },
-      "radius": {
-        "value": 0,
-        "sample": 0,
-        "basis": "fallback"
-      },
-      "damage": {
-        "value": 0,
-        "sample": 0,
-        "basis": "fallback"
-      }
-    },
-    {
-      "slot": "PASSIVE",
-      "castType": "dash",
-      "description": "朝指定方向突進，施法距離 12，（效果待填）。冷卻 45 秒，消耗[MP] 140。",
-      "cooldown": {
-        "value": 45,
-        "sample": 35,
-        "basis": "slot"
-      },
-      "manaCost": {
-        "value": 140,
-        "sample": 26,
-        "basis": "slot"
-      },
-      "range": {
-        "value": 12,
-        "sample": 11,
-        "basis": "slot"
-      },
-      "radius": {
-        "value": 0,
-        "sample": 0,
-        "basis": "fallback"
-      },
-      "damage": {
-        "value": 0,
-        "sample": 0,
-        "basis": "fallback"
-      }
-    },
-    {
-      "slot": "Q",
-      "castType": "targeted",
-      "description": "指定單一敵人，施法距離 9.5，造成 160 點傷害。冷卻 32.5 秒，消耗[MP] 60。",
-      "cooldown": {
-        "value": 32.5,
-        "sample": 28,
-        "basis": "slot+castType"
-      },
-      "manaCost": {
-        "value": 60,
-        "sample": 27,
-        "basis": "slot+castType"
-      },
-      "range": {
-        "value": 9.5,
-        "sample": 28,
-        "basis": "slot+castType"
-      },
-      "radius": {
-        "value": 0,
-        "sample": 0,
-        "basis": "fallback"
-      },
-      "damage": {
-        "value": 160,
-        "sample": 18,
-        "basis": "slot+castType"
-      }
-    },
-    {
-      "slot": "Q",
-      "castType": "skillshot",
-      "description": "朝指定方向發射，施法距離 12，範圍 5.5，造成 160 點傷害。冷卻 60 秒，消耗[MP] 65。",
-      "cooldown": {
-        "value": 60,
-        "sample": 67,
-        "basis": "slot",
-        "liftedFromMedian": 30
-      },
-      "manaCost": {
-        "value": 65,
-        "sample": 66,
-        "basis": "slot"
-      },
-      "range": {
-        "value": 12,
-        "sample": 45,
-        "basis": "slot"
-      },
-      "radius": {
-        "value": 5.5,
-        "sample": 11,
-        "basis": "slot"
-      },
-      "damage": {
-        "value": 160,
-        "sample": 34,
-        "basis": "slot"
-      }
-    },
-    {
-      "slot": "Q",
-      "castType": "ground",
-      "description": "在指定地點，施法距離 12，範圍 5.5，造成 175 點傷害。冷卻 60 秒，消耗[MP] 80。",
-      "cooldown": {
-        "value": 60,
-        "sample": 16,
-        "basis": "slot+castType",
-        "liftedFromMedian": 30
-      },
-      "manaCost": {
-        "value": 80,
-        "sample": 16,
-        "basis": "slot+castType"
-      },
-      "range": {
-        "value": 12,
+        "value": 10.5,
         "sample": 12,
         "basis": "slot+castType"
       },
       "radius": {
-        "value": 5.5,
-        "sample": 11,
+        "value": 6,
+        "sample": 10,
         "basis": "slot+castType"
       },
       "damage": {
-        "value": 175,
+        "value": 450,
         "sample": 8,
         "basis": "slot+castType"
       }
     },
     {
-      "slot": "Q",
+      "slot": "E",
       "castType": "self",
-      "description": "對自身，造成 160 點傷害。冷卻 20 秒，消耗[MP] 60。",
+      "description": "對自身，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
       "cooldown": {
-        "value": 20,
-        "sample": 18,
+        "value": 60,
+        "sample": 8,
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 60,
-        "sample": 18,
+        "value": 140,
+        "sample": 8,
         "basis": "slot+castType"
       },
       "range": {
@@ -341,144 +643,142 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 160,
-        "sample": 34,
-        "basis": "slot"
-      }
-    },
-    {
-      "slot": "Q",
-      "castType": "dash",
-      "description": "朝指定方向突進，施法距離 12，造成 160 點傷害。冷卻 30 秒，消耗[MP] 65。",
-      "cooldown": {
-        "value": 30,
-        "sample": 67,
-        "basis": "slot"
-      },
-      "manaCost": {
-        "value": 65,
-        "sample": 66,
-        "basis": "slot"
-      },
-      "range": {
-        "value": 12,
-        "sample": 45,
-        "basis": "slot"
-      },
-      "radius": {
-        "value": 0,
-        "sample": 0,
-        "basis": "fallback"
-      },
-      "damage": {
-        "value": 160,
-        "sample": 34,
-        "basis": "slot"
-      }
-    },
-    {
-      "slot": "W",
-      "castType": "targeted",
-      "description": "指定單一敵人，施法距離 12，造成 200 點傷害。冷卻 30 秒，消耗[MP] 60。",
-      "cooldown": {
-        "value": 30,
-        "sample": 21,
-        "basis": "slot+castType"
-      },
-      "manaCost": {
-        "value": 60,
-        "sample": 21,
-        "basis": "slot+castType"
-      },
-      "range": {
-        "value": 12,
-        "sample": 21,
-        "basis": "slot+castType"
-      },
-      "radius": {
-        "value": 0,
-        "sample": 0,
-        "basis": "fallback"
-      },
-      "damage": {
-        "value": 200,
-        "sample": 12,
-        "basis": "slot+castType"
-      }
-    },
-    {
-      "slot": "W",
-      "castType": "skillshot",
-      "description": "朝指定方向發射，施法距離 12，範圍 5.5，造成 200 點傷害。冷卻 60 秒，消耗[MP] 60。",
-      "cooldown": {
-        "value": 60,
-        "sample": 62,
-        "basis": "slot",
-        "liftedFromMedian": 30
-      },
-      "manaCost": {
-        "value": 60,
-        "sample": 59,
-        "basis": "slot"
-      },
-      "range": {
-        "value": 12,
-        "sample": 36,
-        "basis": "slot"
-      },
-      "radius": {
-        "value": 5.5,
-        "sample": 11,
-        "basis": "slot"
-      },
-      "damage": {
-        "value": 200,
-        "sample": 32,
-        "basis": "slot"
-      }
-    },
-    {
-      "slot": "W",
-      "castType": "ground",
-      "description": "在指定地點，施法距離 12，範圍 5.5，造成 200 點傷害。冷卻 60 秒，消耗[MP] 70。",
-      "cooldown": {
-        "value": 60,
-        "sample": 15,
-        "basis": "slot+castType",
-        "liftedFromMedian": 25
-      },
-      "manaCost": {
-        "value": 70,
-        "sample": 15,
-        "basis": "slot+castType"
-      },
-      "range": {
-        "value": 12,
-        "sample": 11,
-        "basis": "slot+castType"
-      },
-      "radius": {
-        "value": 5.5,
-        "sample": 11,
-        "basis": "slot+castType"
-      },
-      "damage": {
-        "value": 200,
-        "sample": 32,
-        "basis": "slot"
-      }
-    },
-    {
-      "slot": "W",
-      "castType": "self",
-      "description": "對自身，造成 120 點傷害。冷卻 15 秒，消耗[MP] 60。",
-      "cooldown": {
-        "value": 15,
+        "value": 375,
         "sample": 22,
+        "basis": "slot"
+      }
+    },
+    {
+      "slot": "E",
+      "castType": "dash",
+      "description": "朝指定方向突進，施法距離 {{range}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
+        "value": 55,
+        "sample": 43,
+        "basis": "slot"
+      },
+      "manaCost": {
+        "value": 150,
+        "sample": 43,
+        "basis": "slot"
+      },
+      "range": {
+        "value": 12,
+        "sample": 32,
+        "basis": "slot"
+      },
+      "radius": {
+        "value": 0,
+        "sample": 0,
+        "basis": "fallback"
+      },
+      "damage": {
+        "value": 375,
+        "sample": 22,
+        "basis": "slot"
+      }
+    },
+    {
+      "slot": "R",
+      "castType": "targeted",
+      "description": "指定單一敵人，施法距離 {{range}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
+        "value": 60,
+        "sample": 15,
         "basis": "slot+castType"
       },
       "manaCost": {
+        "value": 170,
+        "sample": 15,
+        "basis": "slot+castType"
+      },
+      "range": {
+        "value": 12,
+        "sample": 15,
+        "basis": "slot+castType"
+      },
+      "radius": {
+        "value": 0,
+        "sample": 0,
+        "basis": "fallback"
+      },
+      "damage": {
+        "value": 300,
+        "sample": 19,
+        "basis": "slot"
+      }
+    },
+    {
+      "slot": "R",
+      "castType": "skillshot",
+      "description": "朝指定方向發射，施法距離 {{range}}，範圍 {{radius}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
         "value": 60,
+        "sample": 47,
+        "basis": "slot"
+      },
+      "manaCost": {
+        "value": 200,
+        "sample": 47,
+        "basis": "slot"
+      },
+      "range": {
+        "value": 12,
+        "sample": 23,
+        "basis": "slot"
+      },
+      "radius": {
+        "value": 6,
+        "sample": 40,
+        "basis": "corpus"
+      },
+      "damage": {
+        "value": 300,
+        "sample": 19,
+        "basis": "slot"
+      }
+    },
+    {
+      "slot": "R",
+      "castType": "ground",
+      "description": "在指定地點，施法距離 {{range}}，範圍 {{radius}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
+        "value": 60,
+        "sample": 47,
+        "basis": "slot"
+      },
+      "manaCost": {
+        "value": 200,
+        "sample": 47,
+        "basis": "slot"
+      },
+      "range": {
+        "value": 12,
+        "sample": 23,
+        "basis": "slot"
+      },
+      "radius": {
+        "value": 6,
+        "sample": 40,
+        "basis": "corpus"
+      },
+      "damage": {
+        "value": 300,
+        "sample": 19,
+        "basis": "slot"
+      }
+    },
+    {
+      "slot": "R",
+      "castType": "self",
+      "description": "對自身，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
+        "value": 60,
+        "sample": 19,
+        "basis": "slot+castType"
+      },
+      "manaCost": {
+        "value": 150,
         "sample": 19,
         "basis": "slot+castType"
       },
@@ -493,28 +793,28 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 120,
-        "sample": 11,
-        "basis": "slot+castType"
+        "value": 300,
+        "sample": 19,
+        "basis": "slot"
       }
     },
     {
-      "slot": "W",
+      "slot": "R",
       "castType": "dash",
-      "description": "朝指定方向突進，施法距離 12，造成 200 點傷害。冷卻 30 秒，消耗[MP] 60。",
+      "description": "朝指定方向突進，施法距離 {{range}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
       "cooldown": {
-        "value": 30,
-        "sample": 62,
+        "value": 60,
+        "sample": 47,
         "basis": "slot"
       },
       "manaCost": {
-        "value": 60,
-        "sample": 59,
+        "value": 200,
+        "sample": 47,
         "basis": "slot"
       },
       "range": {
         "value": 12,
-        "sample": 36,
+        "sample": 23,
         "basis": "slot"
       },
       "radius": {
@@ -523,413 +823,113 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 200,
+        "value": 300,
+        "sample": 19,
+        "basis": "slot"
+      }
+    },
+    {
+      "slot": "EX",
+      "castType": "targeted",
+      "description": "指定單一敵人，施法距離 {{range}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
+        "value": 60,
+        "sample": 41,
+        "basis": "slot"
+      },
+      "manaCost": {
+        "value": 185,
+        "sample": 38,
+        "basis": "slot"
+      },
+      "range": {
+        "value": 5.65,
+        "sample": 8,
+        "basis": "slot"
+      },
+      "radius": {
+        "value": 0,
+        "sample": 0,
+        "basis": "fallback"
+      },
+      "damage": {
+        "value": 250,
+        "sample": 83,
+        "basis": "corpus"
+      }
+    },
+    {
+      "slot": "EX",
+      "castType": "skillshot",
+      "description": "朝指定方向發射，施法距離 {{range}}，範圍 {{radius}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
+        "value": 60,
+        "sample": 41,
+        "basis": "slot"
+      },
+      "manaCost": {
+        "value": 185,
+        "sample": 38,
+        "basis": "slot"
+      },
+      "range": {
+        "value": 5.65,
+        "sample": 8,
+        "basis": "slot"
+      },
+      "radius": {
+        "value": 6,
+        "sample": 40,
+        "basis": "corpus"
+      },
+      "damage": {
+        "value": 250,
+        "sample": 83,
+        "basis": "corpus"
+      }
+    },
+    {
+      "slot": "EX",
+      "castType": "ground",
+      "description": "在指定地點，施法距離 {{range}}，範圍 {{radius}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
+        "value": 60,
+        "sample": 41,
+        "basis": "slot"
+      },
+      "manaCost": {
+        "value": 185,
+        "sample": 38,
+        "basis": "slot"
+      },
+      "range": {
+        "value": 5.65,
+        "sample": 8,
+        "basis": "slot"
+      },
+      "radius": {
+        "value": 6,
+        "sample": 40,
+        "basis": "corpus"
+      },
+      "damage": {
+        "value": 250,
+        "sample": 83,
+        "basis": "corpus"
+      }
+    },
+    {
+      "slot": "EX",
+      "castType": "self",
+      "description": "對自身，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
+      "cooldown": {
+        "value": 60,
         "sample": 32,
-        "basis": "slot"
-      }
-    },
-    {
-      "slot": "E",
-      "castType": "targeted",
-      "description": "指定單一敵人，施法距離 12，造成 300 點傷害。冷卻 45 秒，消耗[MP] 100。",
-      "cooldown": {
-        "value": 45,
-        "sample": 27,
-        "basis": "slot+castType"
-      },
-      "manaCost": {
-        "value": 100,
-        "sample": 27,
-        "basis": "slot+castType"
-      },
-      "range": {
-        "value": 12,
-        "sample": 27,
-        "basis": "slot+castType"
-      },
-      "radius": {
-        "value": 0,
-        "sample": 0,
-        "basis": "fallback"
-      },
-      "damage": {
-        "value": 300,
-        "sample": 17,
-        "basis": "slot+castType"
-      }
-    },
-    {
-      "slot": "E",
-      "castType": "skillshot",
-      "description": "朝指定方向發射，施法距離 12，範圍 6，造成 450 點傷害。冷卻 60 秒，消耗[MP] 155。",
-      "cooldown": {
-        "value": 60,
-        "sample": 12,
-        "basis": "slot+castType"
-      },
-      "manaCost": {
-        "value": 155,
-        "sample": 12,
-        "basis": "slot+castType"
-      },
-      "range": {
-        "value": 12,
-        "sample": 12,
-        "basis": "slot+castType"
-      },
-      "radius": {
-        "value": 6,
-        "sample": 13,
-        "basis": "slot"
-      },
-      "damage": {
-        "value": 450,
-        "sample": 11,
-        "basis": "slot+castType"
-      }
-    },
-    {
-      "slot": "E",
-      "castType": "ground",
-      "description": "在指定地點，施法距離 11，範圍 6，造成 450 點傷害。冷卻 60 秒，消耗[MP] 157.5。",
-      "cooldown": {
-        "value": 60,
-        "sample": 18,
-        "basis": "slot+castType"
-      },
-      "manaCost": {
-        "value": 157.5,
-        "sample": 18,
-        "basis": "slot+castType"
-      },
-      "range": {
-        "value": 11,
-        "sample": 15,
-        "basis": "slot+castType"
-      },
-      "radius": {
-        "value": 6,
-        "sample": 13,
-        "basis": "slot+castType"
-      },
-      "damage": {
-        "value": 450,
-        "sample": 11,
-        "basis": "slot+castType"
-      }
-    },
-    {
-      "slot": "E",
-      "castType": "self",
-      "description": "對自身，造成 350 點傷害。冷卻 60 秒，消耗[MP] 140。",
-      "cooldown": {
-        "value": 60,
-        "sample": 8,
-        "basis": "slot+castType"
-      },
-      "manaCost": {
-        "value": 140,
-        "sample": 8,
-        "basis": "slot+castType"
-      },
-      "range": {
-        "value": 0,
-        "sample": 0,
-        "basis": "fallback"
-      },
-      "radius": {
-        "value": 0,
-        "sample": 0,
-        "basis": "fallback"
-      },
-      "damage": {
-        "value": 350,
-        "sample": 43,
-        "basis": "slot"
-      }
-    },
-    {
-      "slot": "E",
-      "castType": "dash",
-      "description": "朝指定方向突進，施法距離 12，造成 350 點傷害。冷卻 55 秒，消耗[MP] 150。",
-      "cooldown": {
-        "value": 55,
-        "sample": 65,
-        "basis": "slot"
-      },
-      "manaCost": {
-        "value": 150,
-        "sample": 65,
-        "basis": "slot"
-      },
-      "range": {
-        "value": 12,
-        "sample": 54,
-        "basis": "slot"
-      },
-      "radius": {
-        "value": 0,
-        "sample": 0,
-        "basis": "fallback"
-      },
-      "damage": {
-        "value": 350,
-        "sample": 43,
-        "basis": "slot"
-      }
-    },
-    {
-      "slot": "R",
-      "castType": "targeted",
-      "description": "指定單一敵人，施法距離 12，造成 375 點傷害。冷卻 60 秒，消耗[MP] 160。",
-      "cooldown": {
-        "value": 60,
-        "sample": 22,
-        "basis": "slot+castType"
-      },
-      "manaCost": {
-        "value": 160,
-        "sample": 22,
-        "basis": "slot+castType"
-      },
-      "range": {
-        "value": 12,
-        "sample": 22,
-        "basis": "slot+castType"
-      },
-      "radius": {
-        "value": 0,
-        "sample": 0,
-        "basis": "fallback"
-      },
-      "damage": {
-        "value": 375,
-        "sample": 12,
-        "basis": "slot+castType"
-      }
-    },
-    {
-      "slot": "R",
-      "castType": "skillshot",
-      "description": "朝指定方向發射，施法距離 12，範圍 5，造成 300 點傷害。冷卻 60 秒，消耗[MP] 200。",
-      "cooldown": {
-        "value": 60,
-        "sample": 9,
-        "basis": "slot+castType"
-      },
-      "manaCost": {
-        "value": 200,
-        "sample": 9,
-        "basis": "slot+castType"
-      },
-      "range": {
-        "value": 12,
-        "sample": 9,
-        "basis": "slot+castType"
-      },
-      "radius": {
-        "value": 5,
-        "sample": 9,
-        "basis": "slot"
-      },
-      "damage": {
-        "value": 300,
-        "sample": 36,
-        "basis": "slot"
-      }
-    },
-    {
-      "slot": "R",
-      "castType": "ground",
-      "description": "在指定地點，施法距離 12，範圍 5，造成 425 點傷害。冷卻 70 秒，消耗[MP] 150。",
-      "cooldown": {
-        "value": 70,
-        "sample": 11,
-        "basis": "slot+castType"
-      },
-      "manaCost": {
-        "value": 150,
-        "sample": 11,
-        "basis": "slot+castType"
-      },
-      "range": {
-        "value": 12,
-        "sample": 36,
-        "basis": "slot"
-      },
-      "radius": {
-        "value": 5,
-        "sample": 9,
-        "basis": "slot+castType"
-      },
-      "damage": {
-        "value": 425,
-        "sample": 8,
-        "basis": "slot+castType"
-      }
-    },
-    {
-      "slot": "R",
-      "castType": "self",
-      "description": "對自身，造成 180 點傷害。冷卻 60 秒，消耗[MP] 150。",
-      "cooldown": {
-        "value": 60,
-        "sample": 26,
-        "basis": "slot+castType"
-      },
-      "manaCost": {
-        "value": 150,
-        "sample": 26,
-        "basis": "slot+castType"
-      },
-      "range": {
-        "value": 0,
-        "sample": 0,
-        "basis": "fallback"
-      },
-      "radius": {
-        "value": 0,
-        "sample": 0,
-        "basis": "fallback"
-      },
-      "damage": {
-        "value": 180,
-        "sample": 9,
-        "basis": "slot+castType"
-      }
-    },
-    {
-      "slot": "R",
-      "castType": "dash",
-      "description": "朝指定方向突進，施法距離 12，造成 300 點傷害。冷卻 60 秒，消耗[MP] 175。",
-      "cooldown": {
-        "value": 60,
-        "sample": 69,
-        "basis": "slot"
-      },
-      "manaCost": {
-        "value": 175,
-        "sample": 69,
-        "basis": "slot"
-      },
-      "range": {
-        "value": 12,
-        "sample": 36,
-        "basis": "slot"
-      },
-      "radius": {
-        "value": 0,
-        "sample": 0,
-        "basis": "fallback"
-      },
-      "damage": {
-        "value": 300,
-        "sample": 36,
-        "basis": "slot"
-      }
-    },
-    {
-      "slot": "EX",
-      "castType": "targeted",
-      "description": "指定單一敵人，施法距離 5.29，造成 200 點傷害。冷卻 60 秒，消耗[MP] 250。",
-      "cooldown": {
-        "value": 60,
-        "sample": 60,
-        "basis": "slot"
-      },
-      "manaCost": {
-        "value": 250,
-        "sample": 57,
-        "basis": "slot"
-      },
-      "range": {
-        "value": 5.29,
-        "sample": 9,
-        "basis": "slot"
-      },
-      "radius": {
-        "value": 0,
-        "sample": 0,
-        "basis": "fallback"
-      },
-      "damage": {
-        "value": 200,
-        "sample": 158,
-        "basis": "corpus"
-      }
-    },
-    {
-      "slot": "EX",
-      "castType": "skillshot",
-      "description": "朝指定方向發射，施法距離 5.29，範圍 6，造成 200 點傷害。冷卻 60 秒，消耗[MP] 250。",
-      "cooldown": {
-        "value": 60,
-        "sample": 60,
-        "basis": "slot"
-      },
-      "manaCost": {
-        "value": 250,
-        "sample": 57,
-        "basis": "slot"
-      },
-      "range": {
-        "value": 5.29,
-        "sample": 9,
-        "basis": "slot"
-      },
-      "radius": {
-        "value": 6,
-        "sample": 58,
-        "basis": "corpus"
-      },
-      "damage": {
-        "value": 200,
-        "sample": 158,
-        "basis": "corpus"
-      }
-    },
-    {
-      "slot": "EX",
-      "castType": "ground",
-      "description": "在指定地點，施法距離 5.29，範圍 6，造成 200 點傷害。冷卻 60 秒，消耗[MP] 250。",
-      "cooldown": {
-        "value": 60,
-        "sample": 60,
-        "basis": "slot"
-      },
-      "manaCost": {
-        "value": 250,
-        "sample": 57,
-        "basis": "slot"
-      },
-      "range": {
-        "value": 5.29,
-        "sample": 9,
-        "basis": "slot"
-      },
-      "radius": {
-        "value": 6,
-        "sample": 58,
-        "basis": "corpus"
-      },
-      "damage": {
-        "value": 200,
-        "sample": 158,
-        "basis": "corpus"
-      }
-    },
-    {
-      "slot": "EX",
-      "castType": "self",
-      "description": "對自身，造成 200 點傷害。冷卻 60 秒，消耗[MP] 120。",
-      "cooldown": {
-        "value": 60,
-        "sample": 49,
         "basis": "slot+castType"
       },
       "manaCost": {
         "value": 120,
-        "sample": 46,
+        "sample": 29,
         "basis": "slot+castType"
       },
       "range": {
@@ -943,28 +943,28 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 200,
-        "sample": 158,
+        "value": 250,
+        "sample": 83,
         "basis": "corpus"
       }
     },
     {
       "slot": "EX",
       "castType": "dash",
-      "description": "朝指定方向突進，施法距離 5.29，造成 200 點傷害。冷卻 60 秒，消耗[MP] 250。",
+      "description": "朝指定方向突進，施法距離 {{range}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
       "cooldown": {
         "value": 60,
-        "sample": 60,
+        "sample": 41,
         "basis": "slot"
       },
       "manaCost": {
-        "value": 250,
-        "sample": 57,
+        "value": 185,
+        "sample": 38,
         "basis": "slot"
       },
       "range": {
-        "value": 5.29,
-        "sample": 9,
+        "value": 5.65,
+        "sample": 8,
         "basis": "slot"
       },
       "radius": {
@@ -973,8 +973,8 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 200,
-        "sample": 158,
+        "value": 250,
+        "sample": 83,
         "basis": "corpus"
       }
     }

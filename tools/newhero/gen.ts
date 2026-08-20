@@ -35,6 +35,7 @@
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { balanceAbilityOwners } from "../../packages/shared/testkit/balancePopulation";
 import {
   NEW_HERO_ABILITY_COLUMNS,
   DEFAULT_MIN_SAMPLE,
@@ -58,11 +59,21 @@ const SCHEMA = "ggd-new-hero-defaults@1";
 const SLOTS = ["PASSIVE", "Q", "W", "E", "R", "EX"] as const;
 const CAST_TYPES: readonly CastType[] = ["targeted", "skillshot", "ground", "self", "dash"];
 
+/**
+ * 語料 = **母體英雄的技能**（`balanceAbilityOwners`），⛔ 不是整個 `content/abilities`。
+ *
+ * ⛔ 變身態的技能出局（owner 2026-08-21：「查所有屬性級距等 都是不考慮變身態的」）——
+ * 它們是本體那一支的第二份（同一個 `NN-XX` 編號），算兩次會把「新英雄的預設值」
+ * 往有變身的那些人拉。fail-open 骨架（`sela`/`thorne`）與退場英雄同理出局。
+ */
 function corpus(): AbilityCorpusDoc[] {
   const dir = join(ROOT, "content/abilities");
+  const owners = balanceAbilityOwners(ROOT);
   const out: AbilityCorpusDoc[] = [];
   for (const f of readdirSync(dir)) {
     if (!f.endsWith(".json") || f.startsWith("_")) continue;
+    // 檔名慣例（task #11）：`<championId>.<slot>.json`。
+    if (!owners.has(f.replace(/\.(q|w|e|r|ex|passive|innate)\.json$/, ""))) continue;
     out.push(JSON.parse(readFileSync(join(dir, f), "utf8")) as AbilityCorpusDoc);
   }
   // ⚠️ 空語料 = 讀壞了，⛔ 不是「內容是空的」。同 roster-guard 的那一條。

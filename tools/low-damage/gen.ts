@@ -25,6 +25,7 @@
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { balanceAbilityOwners } from "../../packages/shared/testkit/balancePopulation";
 import {
   ANCHOR_SHAPE,
   ANCHOR_TIER,
@@ -50,11 +51,27 @@ const SEC = DEFAULT_COOLDOWN_TIERS.seconds;
 const DMG = DEFAULT_DAMAGE_TIERS.damage;
 const HITS = DEFAULT_EXPECTED_HITS;
 
+/**
+ * 語料 = **母體英雄的技能**，⛔ 不是 `content/abilities` 底下的每一份。
+ *
+ * ⚠️ 2026-08-21 以前這裡讀整個目錄，於是 `sela`/`thorne` 這兩張 fail-open 骨架佔位的
+ * 8 支技能也被拿去對照五級距 —— owner 2026-08-21：「**錯誤的母體資料**」。
+ *
+ * ⛔ 語料**不含變身態的技能**（owner 2026-08-21：「查所有屬性級距等 都是不考慮變身態的」）。
+ * ⚠️ 變身態的技能是本體那一支的**第二份**（同一個 `NN-XX` 編號，例 `godie-e001.passive`
+ * 與 `godie-e00n.passive` 都是「22-00 嗚鎖打!」）—— 兩份都算就是把同一支技能數兩次，
+ * 於是這份清單會列出兩列一模一樣的東西，而 owner 要照著它改的是**一支**技能。
+ */
 function corpus(): AbilityCellDoc[] {
   const dir = join(ROOT, "content/abilities");
+  const owners = balanceAbilityOwners(ROOT);
   const out: AbilityCellDoc[] = [];
   for (const f of readdirSync(dir)) {
     if (!f.endsWith(".json") || f.startsWith("_")) continue;
+    // 檔名慣例（task #11）：`<championId>.<slot>.json`。⛔ 用檔名切，不用 doc.id ——
+    // 兩者相等時結果一樣，不相等時檔名才是 `_index.json` 收錄的那一份。
+    const owner = f.replace(/\.(q|w|e|r|ex|passive|innate)\.json$/, "");
+    if (!owners.has(owner)) continue;
     out.push(JSON.parse(readFileSync(join(dir, f), "utf8")) as AbilityCellDoc);
   }
   // ⚠️ 空語料 = 讀壞了，⛔ 不是「內容是空的」。同 roster-guard 的那一條。

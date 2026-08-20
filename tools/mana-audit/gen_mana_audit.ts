@@ -36,6 +36,11 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import {
+  BALANCE_POPULATION_PROVENANCE,
+  balancePopulationIds,
+} from "../../packages/shared/testkit/balancePopulation";
+
 import { ContentLoader } from "../../packages/shared/src/content/loader";
 import { FsContentSource } from "../../packages/shared/src/content/node/FsContentSource";
 import { registerAll, Configs } from "../../packages/shared/src/content/registries";
@@ -127,8 +132,14 @@ async function build(): Promise<string> {
     });
   };
 
+  // ⭐ 母體 = **對戰可選名單**，⛔ 不是 `Champions.all()`（註冊表 71 張卡，含 20 個變身態
+  //    ＋ 2 張 fail-open 骨架佔位）。owner 2026-08-21：「**錯誤的母體資料**」。
+  //    ⚠️ 註冊表少了誰是**內容樹**的事，母體是**名單**的事 —— 兩者從 2026-08-13 的
+  //    legacy 搬遷起就不再相等，而讀註冊表永遠「成功」，所以錯了不會有人知道。
+  const POPULATION = new Set(balancePopulationIds(REPO));
   const rows: Row[] = Champions.all()
     .slice()
+    .filter((c) => POPULATION.has(c.id))
     .sort((a, b) => a.id.localeCompare(b.id))
     .map((c) => {
       const at: Record<number, { pool: number; regen: number; refill: number }> = {};
@@ -188,7 +199,13 @@ async function build(): Promise<string> {
   p("```");
   p();
   p(
-    `母體 = 註冊表裡的 **${rows.length} 隻**英雄，**裸裝**（無道具、無三選一三圍、無增益卡）。`,
+    `母體 = **${rows.length} 位對戰可選英雄**，**裸裝**（無道具、無三選一三圍、無增益卡）。`,
+  );
+  p();
+  p(`> 來源：\`${BALANCE_POPULATION_PROVENANCE}\`。`);
+  p(
+    "> ⛔ **不是** `Champions.all()`（註冊表 71 張卡）—— 那含變身態（同一位英雄的第二張卡，" +
+      "⇒ 重複計數）與 fail-open 骨架佔位。owner 2026-08-21：「**錯誤的母體資料**」。",
   );
   p(
     "⚠️ 有裝備／三選一／增益卡之後的真值**量不到** —— 那是玩家在那一場的選擇，不是出貨資料。",

@@ -9,7 +9,12 @@
  *   ① content/config/stat-normalization.json  —— 出身 × 屬性的級距表（引擎載入）
  *   ② content/champions/*.json                —— 每位英雄自己的卡（含可選的 archetype 覆寫）
  * 這份是從 ①② **推導**出來的快照，給 owner 審查與外部工具讀。
- * 守衛 tools/hero-archetypes/build.test.ts 會重跑這支腳本並比對，過期就紅。
+ *
+ * ⚠️ 這裡在 2026-08-21 之前寫著「守衛 tools/hero-archetypes/build.test.ts 會重跑這支
+ * 腳本並比對，過期就紅」——**那個檔案不存在**（第三守則：註解會說謊，去驗證）。
+ * ⇒ 實際上這份 JSON 從 2026-08-11 起**沒有任何新鮮度閘**。現在有兩個：
+ *   · `pnpm archetypes:build` 進了 `skills:sync`（改一支技能／一位英雄就重生成）
+ *   · `pnpm roster:check` 的「產出文件的母體 ↔ 名單長度」會讀這份 JSON 裡印的母體
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -20,6 +25,10 @@ import {
   archetypeOf, ARCHETYPE_LABEL_ZH, DEFAULT_STAT_NORMALIZATION,
 } from "../../packages/shared/src/content/statNormalization";
 import { DEFAULT_ORIGIN_ROUTES } from "../../packages/shared/src/content/originRoutes";
+import {
+  BALANCE_POPULATION_PROVENANCE,
+  balancePopulationIds,
+} from "../../packages/shared/testkit/balancePopulation";
 
 const ROOT = join(__dirname, "../..");
 const T = JSON.parse(readFileSync(join(ROOT, "docs/hero-stat-tiers.json"), "utf-8")) as {
@@ -69,8 +78,33 @@ const STATS = [
  *   · **正規化的套用對象** → 仍然**包含**變身態（`skipTransformedBodies: false`），
  *     它照自己的出身正規化，跟本體用同一把尺。
  */
+/**
+ * ⭐ 母體 = **對戰可選名單** —— ⛔ 不是「快照減一減」。
+ *
+ * ⚠️ 上面那兩條篩選（`!RETIRED.has` + `group !== "transform"`）在 2026-08-21 之前是
+ * **兩條各自的減法**，而它們**碰巧**等於名單。碰巧不是關係：快照是 2026-08-11 的，
+ * 名單之後動過三次，任何一次「加一位新英雄」都會讓這份文件少一位而
+ * ⛔ **沒有任何東西會紅**（它照樣產得出來、照樣逐位元組相等）。
+ * ⇒ 現在它直接讀名單，而少了誰會 throw。owner 2026-08-21：「**錯誤的母體資料**」。
+ */
+const POPULATION = balancePopulationIds(ROOT);
+{
+  const inSnapshot = new Set(T.population.rows.map((r) => r.id));
+  const absent = POPULATION.filter((id) => !inSnapshot.has(id));
+  if (absent.length > 0) {
+    throw new Error(
+      `docs/hero-stat-tiers.json 的快照裡沒有這幾位對戰可選英雄：${absent.join(", ")}\n` +
+        "→ 快照過期了（它是 2026-08-11 的）。重跑產生快照的那一支，⛔ 不要把他們從母體剔除。",
+    );
+  }
+  // ⚠️ 留著這一行是為了讓「退場」這件事仍然說得出口 —— 名單本身已經擋掉退場的人，
+  //    但 RETIRED 若哪天與名單不一致，`roster:check` 的第 ① 條會指名它。
+  void RETIRED;
+}
+const POPULATION_SET = new Set(POPULATION);
+
 const rows = T.population.rows
-  .filter((r) => !RETIRED.has(r.id) && r.group !== "transform")
+  .filter((r) => POPULATION_SET.has(r.id))
   .map((r) => {
   const d = JSON.parse(readFileSync(join(ROOT, `content/champions/${r.id}.json`), "utf-8")) as Record<string, never>;
   // ⚠️ 攻擊型態以**英雄卡**為準，⛔ 不用快照 —— 2026-08-12 owner 把妖狐藏馬本體
@@ -136,16 +170,13 @@ const out = {
   generatedBy: "tools/hero-archetypes/build.ts",
   generatedFrom: {
     population:
-      // ⛔ 這一行在 2026-08-21 之前寫死「74 = 可選本體 53 + 可達變身 21」,而產生器輸出的
-      //    名單是 **49** —— 兩個數字**都是真的,只是在講不同的事**:53 是「濾掉變身之後」,
-      //    49 是「再扣掉退場英雄之後」。散文只講了前半,而 roster 閘把它讀成後半 ⇒ 紅,
-      //    ⭐ 而且它擋住 `pnpm content:build`。⛔ 修法不是換個數字（那只是把過期往後推一輪),
-      //    是把三個數字**全部推導**並各自標明它在講什麼。
-      `docs/hero-stat-tiers.json → population.rows（${T.population.rows.length} = 本體·可選 ` +
-      `${T.population.rows.filter((r) => r.group !== "transform").length} + 可達變身 ` +
-      `${T.population.rows.filter((r) => r.group === "transform").length}）` +
-      ` → 扣掉 ${T.population.rows.filter((r) => r.group !== "transform" && RETIRED.has(r.id)).length} 位退場` +
-      ` → 本產生器的母體 ${rows.length} 位`,
+      // ⛔ 這一行在 2026-08-21 之前是「快照 74 → 濾掉變身 → 扣掉退場 → 49」——
+      //    每一個數字都是真的,而整句話講錯了**誰**在決定母體:決定的是**名單**,
+      //    快照只是屬性的來源。owner 2026-08-21:「**錯誤的母體資料**」。
+      `${BALANCE_POPULATION_PROVENANCE} → 母體 **${rows.length} 位對戰可選英雄**；` +
+      `屬性欄位取自 docs/hero-stat-tiers.json 的 population.rows（${T.population.rows.length} 筆快照，` +
+      `其中 ${T.population.rows.filter((r) => r.group === "transform").length} 筆是變身態 —— ` +
+      `⛔ 變身態是同一位英雄的第二張卡,進母體就是重複計數）`,
     statFunction: "championStatBase(def, stat, L) —— 出貨的那一支，⛔ 沒有抄公式",
     initial: "L1 的最終值", perLevel: "L2 − L1（含三圍成長那一項）",
   },

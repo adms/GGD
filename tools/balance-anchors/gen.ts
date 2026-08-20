@@ -41,9 +41,13 @@
  * 任何隨時鐘變動的欄位都會讓逐位元組比對永遠不相等，於是 `--check` 只能被放寬 ——
  * 而一條被放寬的閘等於沒有閘（GH#389 · #426）。
  */
-import { readFileSync, readdirSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  BALANCE_POPULATION_PROVENANCE,
+  balancePopulationDocs,
+} from "../../packages/shared/testkit/balancePopulation";
 import { Stat } from "../../packages/shared/src/sim/stats/statTypes";
 import { championStatBase } from "../../packages/shared/src/sim/stats/attributes";
 import {
@@ -96,19 +100,19 @@ function shippedBaseBonus(): Readonly<Record<string, number>> {
 }
 
 /**
- * 母體 = `content/champions` 的每一張卡（含變身態、含已下架）。
- * ⚠️ 與 `tools/stat-caps` **同一個**母體：兩把尺量的是同一群英雄，
- * 分岔的話「錨點」與「柵欄」就會各自漂。
+ * 母體 = **對戰可選名單**（`balancePopulationIds`），⛔ 不是 `readdirSync(content/champions)`。
+ *
+ * ⚠️ 2026-08-21 以前這裡讀目錄 ⇒ 71 張卡，其中 **22 張是雜訊**（20 個變身態＝同一位
+ * 英雄的第二張卡、`sela`/`thorne`＝fail-open 骨架佔位）。owner：「**錯誤的母體資料**」。
+ * ⚠️ 這一行在 2026-08-21 之前寫著「與 `tools/stat-caps` **同一個**母體」——
+ * 那句話現在是假的，而且**刻意**是假的（第三守則：註解會說謊，所以改它）。
+ * 兩把尺量的是不同的東西：
+ *   · **錨點**（這一支）＝「一位**玩家會選到**的英雄有多少血」→ 只算對戰可選本體。
+ *   · **柵欄**（`tools/stat-caps`）＝「上限不可以夾到**引擎生得出來**的任何單位」
+ *     → 一張都不能少，含變身態、含骨架。少算一張的代價是那一位被靜默夾住。
  */
 function population(): Record<string, unknown>[] {
-  const dir = join(REPO, "content/champions");
-  const out = readdirSync(dir)
-    .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
-    .sort()
-    .map((f) => JSON.parse(readFileSync(join(dir, f), "utf-8")) as Record<string, unknown>);
-  // ⚠️ 空語料 = 讀壞了，⛔ 不是「內容是空的」。
-  if (out.length === 0) throw new Error("content/champions 讀出 0 張卡 —— 讀取器壞了");
-  return out;
+  return balancePopulationDocs(REPO);
 }
 
 const median = (xs: number[]): number => {
@@ -165,8 +169,11 @@ function derivedTs(): string {
  * ⚙️ **產生檔 —— ⛔ 不要手改。** \`pnpm anchors:build\` 重量，\`pnpm anchors:check\` 逐位元組驗。
  *
  * 三個錨點（LV${BALANCE_ANCHOR_LEVELS.join(" / LV")}）在**兩個空間**的中位數，母體＝
- * \`content/champions\` 的每一張卡，量法走出貨管線
+ * **${pop.length} 位對戰可選英雄**（${BALANCE_POPULATION_PROVENANCE}），量法走出貨管線
  * （\`championStatBase(卡, 屬性, 等級, 出貨 combat-env)\`）。
+ * ⛔ 母體**不是** \`readdirSync(content/champions)\` —— 那是 71 張卡，含 20 個變身態
+ * （同一位英雄的第二張卡 ⇒ 重複計數）與 2 張 fail-open 骨架佔位（owner 2026-08-21
+ * 「**錯誤的母體資料**」）。
  *
  * ⛔ **魔抗減傷不在這裡，也不在任何下游推導裡**（owner 2026-08-20：
  * 「不要計算 HP 系統倍率以及魔抗減傷 **會讓我誤判**」）。它只對魔法傷害成立，
@@ -224,6 +231,8 @@ function damageTiersJson(): string {
     `⛔ **2026-08-20 第二次重錨**：owner 逐字更正兩件事 ——「**🅲 保留倍率，但把它從錨點推導裡剝掉**」與「**我的建議是拿 30 級的當標準就好**」，` +
     `外加「**不要計算 HP 系統倍率以及魔抗減傷 會讓我誤判**」。⇒ ① 錨點空間從「中位**有效**血量」（含魔抗）換成「中位**純基礎**血量」，魔抗那一層**整層退場**；` +
     `② 出貨錨**就是 hard limit LV${SHIPPED_ANCHOR_LEVEL}**，⛔ 不再是「滿足得了的最高那一個」（那條規則會挑到 LV50）。` +
+    `⭐ **2026-08-21 第三次重錨（母體）**：owner 逐字「**錯誤的母體資料**」⇒ 中位數的母體從 \`readdirSync(content/champions)\`（71 張卡，含 20 個變身態＋2 張 fail-open 骨架佔位）` +
+    `換成 **${pop.length} 位對戰可選英雄**（${BALANCE_POPULATION_PROVENANCE}）。變身態是同一位英雄的第二張卡，放進去就是重複計數。` +
     `⭐ 推導鏈（四個輸入全部在別處，這裡一個字面值都沒有）：\`純基礎中位 ${baseHp[SHIPPED_ANCHOR_LEVEL]} ÷ ${KILL_CASTS_REF} 發 × HP 倍率 ${HP_MULT} ＋ 初始加成 ${HP_BONUS} ÷ ${KILL_CASTS_REF} 發\` ` +
     `= ${(((baseHp[SHIPPED_ANCHOR_LEVEL]! / KILL_CASTS_REF) * HP_MULT + HP_BONUS / KILL_CASTS_REF)).toFixed(1)} → 進位到 ${tierStep()}（「使五格皆整數的最小單位」${minTierStep()} 的整數倍）⇒ **${SMALLEST}**。` +
     `⚠️ **初始加成不參與倍率**（owner #273）—— 算式是 \`base × ${HP_MULT} + ${HP_BONUS}\`，⛔ **不是** \`(base + ${HP_BONUS}) × ${HP_MULT}\`；上一版把它折進「基礎」再回乘，差 **+16.5%**，那不是量測誤差是算術錯誤。` +
@@ -281,7 +290,11 @@ function docMd(): string {
   L.push("");
   L.push("---");
   L.push("");
-  L.push("## 量到的（母體＝`content/champions` 全部的卡，裸裝）");
+  L.push(`## 量到的（母體＝**${pop.length} 位對戰可選英雄**，裸裝）`);
+  L.push("");
+  L.push(`> 母體來源：\`${BALANCE_POPULATION_PROVENANCE}\`。`);
+  L.push("> ⛔ **不是** `content/champions` 的檔案數 —— 那含變身態（同一位英雄的第二張卡）");
+  L.push("> 與 fail-open 骨架佔位，會把中位數往有變身的人拉（owner 2026-08-21「錯誤的母體資料」）。");
   L.push("");
   L.push("| 錨點 | 身分 | 純基礎 HP | 引擎最終 HP | 純基礎 MP | 引擎最終 MP |");
   L.push("|---|---|---:|---:|---:|---:|");

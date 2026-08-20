@@ -2,7 +2,7 @@
   "schema": "ggd-hero-archetypes@1",
   "generatedBy": "tools/hero-archetypes/build.ts",
   "generatedFrom": {
-    "population": "docs/hero-stat-tiers.json → population.rows（74 = 本體·可選 53 + 可達變身 21） → 扣掉 4 位退場 → 本產生器的母體 49 位",
+    "population": "apps/platform/internal/curation/starter.go 的 starterChampions（對戰可選名單）− content/config/roster.json 的 retiredChampions − 變身態（英雄卡的 transform.role === \"alternate\"） → 母體 **49 位對戰可選英雄**；屬性欄位取自 docs/hero-stat-tiers.json 的 population.rows（74 筆快照，其中 21 筆是變身態 —— ⛔ 變身態是同一位英雄的第二張卡,進母體就是重複計數）",
     "statFunction": "championStatBase(def, stat, L) —— 出貨的那一支，⛔ 沒有抄公式",
     "initial": "L1 的最終值",
     "perLevel": "L2 − L1（含三圍成長那一項）"

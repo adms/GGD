@@ -2,8 +2,11 @@
  * ⚙️ **產生檔 —— ⛔ 不要手改。** `pnpm anchors:build` 重量，`pnpm anchors:check` 逐位元組驗。
  *
  * 三個錨點（LV30 / LV50 / LV99）在**兩個空間**的中位數，母體＝
- * `content/champions` 的每一張卡，量法走出貨管線
+ * **49 位對戰可選英雄**（apps/platform/internal/curation/starter.go 的 starterChampions（對戰可選名單）− content/config/roster.json 的 retiredChampions − 變身態（英雄卡的 transform.role === "alternate"）），量法走出貨管線
  * （`championStatBase(卡, 屬性, 等級, 出貨 combat-env)`）。
+ * ⛔ 母體**不是** `readdirSync(content/champions)` —— 那是 71 張卡，含 20 個變身態
+ * （同一位英雄的第二張卡 ⇒ 重複計數）與 2 張 fail-open 骨架佔位（owner 2026-08-21
+ * 「**錯誤的母體資料**」）。
  *
  * ⛔ **魔抗減傷不在這裡，也不在任何下游推導裡**（owner 2026-08-20：
  * 「不要計算 HP 系統倍率以及魔抗減傷 **會讓我誤判**」）。它只對魔法傷害成立，
@@ -23,7 +26,7 @@ export const MEDIAN_BASE_HP: Readonly<Record<number, number>> = Object.freeze({
 
 /** 純基礎空間的中位**最大魔力** —— 同上三個⛔。 */
 export const MEDIAN_BASE_MANA: Readonly<Record<number, number>> = Object.freeze({
-  30: 1740.3,
+  30: 1725.3,
   50: 2662.8,
   99: 4940.5,
 });

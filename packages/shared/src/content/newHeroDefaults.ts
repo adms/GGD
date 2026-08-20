@@ -388,20 +388,31 @@ const CAST_ZH: Readonly<Record<CastType, string>> = Object.freeze({
  * ⭐ 從**同一組數字**生一段機制說明。
  *
  * ⛔ 不含 `「…」`（第〇·六守則②：台詞不是效果，混進來下一支讀說明的程式就會誤讀）。
- * 每一個數字都與同一份 JSON 逐字相同 ⇒ `newHeroChecks` 的 `claim-mismatch`
- * 在出生的那一刻是零。作者改了 JSON 而忘了改說明 → 那一條就會亮。
+ *
+ * ── ⭐ GH#485：這一段一個手打數字都沒有 ────────────────────────────────────
+ *
+ * 六欄的值**不寫進字裡**，寫進去的是佔位符（`{{cd}}` / `{{mp}}` / `{{dmg}}` /
+ * `{{range}}` / `{{radius}}`，見 `abilityProse.ts`）。差別不是排版：
+ *
+ * · 舊寫法「冷卻 12 秒」是一段**靜態文字** —— 作者接著把 `cooldown` 改成 30，
+ *   說明就地變成謊話，而 `claim-mismatch` 要**下一次掃描**才叫得出來。
+ * · 新寫法「冷卻 {{cd}} 秒」**沒有自己的值** —— 它就是 `cooldown[]`。
+ *   ⇒ 這一族的不一致從此在結構上寫不出來，⛔ 不需要一條事後追認的規則。
+ *
+ * ⚠️ 幾何兩格算繪成**級距詞**（owner 2026-08-19「所有卡面範圍跟距離說明都應該要
+ * 跟著改五級距」），其餘三格是明確數字（同一則裁決的另一半）。
  */
 export function describeAbilityDefaults(d: AbilityDefaults): string {
   const parts: string[] = [`${CAST_ZH[d.castType]}`];
   if (columnApplies("range", d.castType, d.slot) && d.range.value > 0) {
-    parts.push(`施法距離 ${d.range.value}`);
+    parts.push("施法距離 {{range}}");
   }
   if (columnApplies("radius", d.castType, d.slot) && d.radius.value > 0) {
-    parts.push(`範圍 ${d.radius.value}`);
+    parts.push("範圍 {{radius}}");
   }
   const head = parts.join("，");
-  const body = d.damage.value > 0 ? `造成 ${d.damage.value} 點傷害。` : "（效果待填）。";
-  return `${head}，${body}冷卻 ${d.cooldown.value} 秒，消耗[MP] ${d.manaCost.value}。`;
+  const body = d.damage.value > 0 ? "造成 {{dmg}} 點傷害。" : "（效果待填）。";
+  return `${head}，${body}冷卻 {{cd}} 秒，消耗[MP] {{mp}}。`;
 }
 
 /** 一發最小的傷害效果 —— 剛出生的技能**至少會做一件事**，⛔ 不是一個空殼。 */
