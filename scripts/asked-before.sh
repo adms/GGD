@@ -24,12 +24,25 @@ for kw in "$@"; do
     echo "── docs/_daily（我記過的裁決）──"; echo "$out"; HITS=1
   fi
   # ② 已經開的票（含留言）
+  #
+  # ⛔ 這裡以前**只印票號與標題** —— 而票號不是答案。就算命中 #447,畫面上也不會出現
+  # 「30/50/99」那組真的數字,於是我照樣去問 owner 第四次。⇒（閘 D）命中就把
+  # **那段文字本身**撈出來印:`gh issue view N --comments` 讀 body **加**留言
+  #（`gh issue view` 不加 `--comments` 只印 body —— 而更正常常只活在留言裡）。
   if command -v gh >/dev/null 2>&1; then
     if out=$(gh issue list --state all --limit 300 --search "$kw" \
              --json number,title,state \
              --jq '.[]|"  #\(.number) \(.state|ascii_downcase) — \(.title)"' 2>/dev/null | head -8) \
        && [ -n "$out" ]; then
       echo "── 相關票 ──"; echo "$out"; HITS=1
+      for n in $(printf '%s\n' "$out" | sed -n 's/.*#\([0-9][0-9]*\).*/\1/p' | head -3); do
+        snip=$(gh issue view "$n" --comments 2>/dev/null \
+               | grep -C2 --color=never -- "$kw" 2>/dev/null | head -12)
+        [ -n "$snip" ] || continue
+        echo "   ┌ #$n 命中的原文（⭐ 這才是答案,⛔ 票號不是）"
+        printf '%s\n' "$snip" | sed 's/^/   │ /'
+        echo "   └────"
+      done
     fi
   fi
   # ③ transcript 撈出來的 owner 原話（若已產生）
