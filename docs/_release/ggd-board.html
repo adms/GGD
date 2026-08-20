@@ -1,4 +1,4 @@
-<title>GGD 作戰板 · 2026-08-20 23:17 (GMT+8)</title>
+<title>GGD 作戰板 · 2026-08-20 23:56 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.22.4 · 資料截至 2026-08-20 23:17 (GMT+8)</p><h1>GGD 作戰板 · 2026-08-20 23:17 (GMT+8)</h1><div class="meta"><span>帳本 <b>2</b> 份</span><span>點名票號 <b>100</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.22.4 · 資料截至 2026-08-20 23:56 (GMT+8)</p><h1>GGD 作戰板 · 2026-08-20 23:56 (GMT+8)</h1><div class="meta"><span>帳本 <b>2</b> 份</span><span>點名票號 <b>100</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -386,6 +386,9 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>20:10</td><td>#447 傷害級距（你說「看不懂」） 技能傷害要從「一發打掉血條 3%」拉到「一發打掉 25%」。你 19:03 已裁決用 LV30 錨 = 700 =&gt; 這也太扯了 這樣變成四次技能就死了, 你說錯了吧</td><td>#447</td></tr>
 <tr><td>22:57</td><td>owner 2026-08-20（⭐ 選 3，但指出公式有回授迴圈）： &gt; 「<b>3. use LV30/50/99 rules</b>，but I think you <b>echo and loop back the formula</b>， &gt; so <b>HP going crazy 163萬</b>」 ⇒ ① 屬性上限<b>改用 LV30/50/99 重算</b>（選項 3） ⇒ ② ⛔ <b>但先修那個回授迴圈</b> —— 163 萬是荒謬的「防打錯柵欄」 ## ⭐ 迴圈的形狀（與 🅲 同一個病） 上限 = 「量到的中位屬性 × 200」，而<b>量到的中位本身已經含了系統倍率</b> （maxHealth ×4.0 等）⇒ 倍率被<b>乘進去兩次</b>：一次在量測、一次在引擎讀取。 換錨點（18→99）只是把這個已經放大的數字再放大 4.3 倍 ⇒ 163 萬。 ## ⇒ 正解（與 🅲 完全一致） 在<b>基礎空間</b>（⛔ 不含任何系統倍率）算 ×200 柵欄， 引擎讀取時<b>才</b>乘倍率 —— 乘且<b>只乘一次</b>。 ⇒ 換錨點不會再引爆，改倍率也不會讓柵欄脫節。</td><td>#447</td></tr>
 <tr><td>23:17</td><td>你更新 GGD作戰版 對話開票 跟 平衡數值決策建議了嗎？還有 NOTE</td><td>— 進度詢問,不需開票</td></tr>
+<tr><td>23:29</td><td>owner 2026-08-20： &gt; 「3. use LV30/50/99 rules, but I think you <b>echo and loop back the formula</b>, so <b>HP going crazy 163萬</b>」 ## ⛔ 我的假說錯了（要更正，⛔ 不要沿用） 我猜「系統倍率被乘了兩次」。<b>實測：倍率只乘一次</b> （<code>championStatBase</code> <b>0 次</b> · <code>finalizeStat</code> <b>1 次</b>；L18 實測 final/base = 4.352 = ×4.0 + 650 平坦贈與）。 ## ⭐ 真正的兩個迴圈（量到的） <b>① 單位不對盤</b>：7 條柵欄在<b>基礎空間</b>推導，卻在<b>最終空間</b>執行。 誤差 = env 鏈，逐屬性量到：maxHealth ×4.35 · maxMana ×1.52 · manaRegen ×8.88 · ad ×0.60 · mr ×0.20 ⇒ <b>號稱的「200×」對七條沒有一條成立</b>， 實際倍數從 <b>9.2×（manaRegen）</b> 到 <b>1,585×（mr）</b>。 ⭐ 莉娜因巴斯之所以在 <code>KNOWN_OVER</code>，不是她是離群卡，是<b>柵欄算錯了</b>。 <b>② 等級因子被算兩次</b>：200 當初的校準是 「最強組合 8,937.8（<b>等級 99</b>）÷ <b>L18</b> 卡面中位 47.2 = 189×」 ⇒ <b>200 裡面已經含了 L18→L99 的成長</b>（實測 maxHealth 中位 1,848.8 → 8,149.2 = <b>4.41×</b>）。 把中位換錨到 L99 又保留 ×200 = 再乘一次 ⇒ <code>375,960 × 4.34 = 1,629,840</code> ＝ <b>owner 說的 163 萬，由產生器逐位元重現。</b> ## 修法 一個空間、一次倍率、一個錨點：柵欄留在基礎空間，<code>capCeiling()</code> 在<b>讀取時</b>乘一次 env 鏈。 ⇒ 改 <code>maxHealth 4.0→3.0</code> 柵欄會跟著動。三個讀取點統一（其中兩個原本各自帶著同一個潛伏缺陷）。 ## 出貨錨點 = <b>LV30</b>，而且是閘不是偏好 ① LV50/LV99 會撐爆既有的 Zod 保險絲（armor 12,960/24,680 &gt; 10,000；maxHealth 163 萬 &gt; 100 萬）， 而<b>放寬防打錯的保險絲去容納更大的柵欄，等於兩個都失效</b>。產生器<b>回非零並指名那一格</b>。 ② LV30 已經一個合法內容都沒夾到：最終空間裡柵欄離最強裸裝 LV99 英雄還有 <b>3.0×–55×</b>。 ⭐ <code>KNOWN_OVER</code> 與 <code>LEGACY_ANCHORS</code> 現在<b>都是空的</b>。 ⚠️ 最緊的是 manaRegen 只有 <b>3.0×</b> 餘裕，值得盯。</td><td>447</td></tr>
+<tr><td>23:48</td><td>owner 2026-08-20： &gt; 「極小從 700 改成 591 =&gt; <b>請你盡量抓整數 ex.600</b>」 &gt; 「平衡數值決策建議 產生時間：19:35 … =&gt; <b>兩個 MD update</b>」（決策文件 + GGD作戰板） ⇒ 五級距取整：<b>600 / 1500 / 3000 / 4500 / 6000</b> （600 × 冷卻比 1 : 2.5 : 5 : 7.5 : 10，五格<b>全部是整數</b>，⛔ 不需要各別湊） ⇒ 驗算：11,820 ÷ 600 = <b>19.7 發</b> ≈ owner 的 20 發錨（591 是 20.0 發，差 1.5%） ⇒ ⭐ <b>取整規則要寫進推導</b>，⛔ 不是這一次手動湊： 「算出來之後進位到最接近的整百（或使五格皆整數的最小單位）」</td><td>447</td></tr>
+<tr><td>23:56</td><td>owner 2026-08-20： &gt; 「<b>請全部實作</b>，並且記得檢查<b>沒有 loop feedback, double multiple … 等互相參照、多重參照的問題</b>」 ⇒ ① 420 支全部轉五級距（冷卻 · 耗魔 · 傷害 · 距離 · 範圍） 量到的起點：cooldownTier <b>0/420</b> · manaCostTier <b>0/420</b> · damageTier <b>0/420</b> · rangeTier 183/420(43.6%) · radiusTier 31/420(7.4%)；420 支全部仍帶原始數值 ⇒ ② <b>407 份說明改成從 JSON 推導</b>（今天 0 份有動態佔位符、407 份含手打數字） + 一條「⛔ 說明裡不准出現手打數字」的閘 ⇒ ③ ⭐ <b>專門稽核回授迴圈／重複相乘／循環參照</b> （今天已經踩到兩次：屬性上限 163 萬＝等級因子算兩次 + 單位不對盤； 錨點 3,442＝加成不參與倍率卻被當成參與）</td><td>447 445 446</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

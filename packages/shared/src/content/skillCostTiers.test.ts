@@ -28,6 +28,10 @@ import {
 import { SKILL_TIER_NAMES } from "./skillTiers";
 import {
   DAMAGE_TIER_MAX,
+  anchorFloorFrom,
+  minTierStep,
+  tierRatios,
+  tierStep,
   DAMAGE_TIER_NAMES,
   DEFAULT_DAMAGE_TIERS,
   KILL_CASTS_REF,
@@ -35,7 +39,12 @@ import {
   anchorIsSatisfiable,
   castsToKill,
 } from "./damageTiers";
-import { BALANCE_ANCHOR_LEVELS, HARD_ANCHOR_LEVEL } from "./balanceAnchors";
+import {
+  HARD_ANCHOR_LEVEL,
+  HP_BASE_BONUS,
+  HP_ENV_MULT,
+  medianBaseHp,
+} from "./balanceAnchors";
 import { buildAuthoringRules } from "./authoringRules";
 import { DEFAULT_AUTHORING_PRINCIPLES } from "./schema/config";
 
@@ -152,19 +161,36 @@ describe("傷害五級距 (GH#447)", () => {
 });
 
 describe("傷害級距錨在 owner 的三個錨點上 (GH#447, owner 2026-08-20)", () => {
-  // ⭐ 驗的是**落地規則會不會發生**（hard 一定滿足、走得到的最高錨點就要走），
-  // ⛔ 不驗「1150 是不是對的數字」—— 那一格已經有三個住處與上面那條 drift 測試在守。
+  // ⭐ 驗的是**落地規則會不會發生**，⛔ 不驗「600 是不是對的數字」——
+  //    那一格已經有三個住處與上面那條 drift 測試在守。
   const smallest = DEFAULT_DAMAGE_TIERS.damage[DAMAGE_TIER_NAMES[0]!];
 
-  it("⭐ hard limit（LV30）一定滿足，而且出貨走的是**滿足得了的最高**那一個錨點", () => {
-    // ① hard limit 是門檻，⛔ 不是「盡量」。
+  it("⭐ 出貨錨＝hard limit，而且它滿足得了 owner 的擊殺次數", () => {
+    // ① owner 2026-08-20：「**我的建議是拿 30 級的當標準就好**」——
+    //    ⛔ 不再是「滿足得了的最高那一個」（那條規則會挑到更高的錨點）。
+    expect(SHIPPED_ANCHOR_LEVEL).toBe(HARD_ANCHOR_LEVEL);
+    // ② hard limit 是門檻，⛔ 不是「盡量」。
     expect(castsToKill(HARD_ANCHOR_LEVEL, smallest)).toBeLessThanOrEqual(KILL_CASTS_REF);
-    // ② 出貨錨點本身滿足得了。
+    // ③ 出貨錨點本身撞不破「一發不可以秒殺」那條天花板。
     expect(anchorIsSatisfiable(SHIPPED_ANCHOR_LEVEL)).toBe(true);
-    // ③ ⭐ 承重的那一條：比它更高的每一個錨點都**滿足不了** ——
-    //    否則「照 hard > soft > 極限 落地」就退化成「挑了最低的那個」，而且看不出來。
-    for (const level of BALANCE_ANCHOR_LEVELS.filter((l) => l > SHIPPED_ANCHOR_LEVEL)) {
-      expect(anchorIsSatisfiable(level)).toBe(false);
+  });
+
+  it("⭐ 推導鏈：加成在倍率之外，而且進位讓五格全部是整數", () => {
+    // ① 承重的那一行 —— `anchorFloorFrom` 把加成折進倍率的話這一條就紅
+    //    （量到的差距是 +16.5%，而上一版正是那樣錯的）。
+    const step = tierStep();
+    const raw =
+      (medianBaseHp(HARD_ANCHOR_LEVEL) / KILL_CASTS_REF) * HP_ENV_MULT +
+      HP_BASE_BONUS / KILL_CASTS_REF;
+    expect(anchorFloorFrom(medianBaseHp(HARD_ANCHOR_LEVEL), HP_ENV_MULT, HP_BASE_BONUS)).toBe(
+      Math.ceil(raw / step) * step,
+    );
+    // ② 「使五格皆整數的最小單位」是推導出來的，而出貨粒度是它的整數倍。
+    expect(step % minTierStep()).toBe(0);
+    for (const n of DAMAGE_TIER_NAMES) {
+      expect(Number.isInteger(DEFAULT_DAMAGE_TIERS.damage[n])).toBe(true);
+      // ③ 五格與單體冷卻表**嚴格成正比**（owner Q4）。
+      expect(DEFAULT_DAMAGE_TIERS.damage[n]).toBe(smallest * tierRatios()[n]);
     }
   });
 

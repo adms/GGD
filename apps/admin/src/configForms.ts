@@ -97,7 +97,15 @@ import {
 } from "@ggd/shared/content";
 // ⚠️ 同上的深路徑理由：這兩份 Zod 住自己的檔案（欄位理由長、且 sim 直接吃）。
 import { DEFAULT_STAT_NORMALIZATION } from "@ggd/shared/content/statNormalization";
-import { BALANCE_ANCHOR_LEVELS, HARD_ANCHOR_LEVEL } from "@ggd/shared/content/balanceAnchors";
+import {
+  ANCHOR_ROLE,
+  BALANCE_ANCHOR_LEVELS,
+  HARD_ANCHOR_LEVEL,
+  HP_BASE_BONUS,
+  HP_ENV_MULT,
+  medianBaseHp,
+  medianFinalHp,
+} from "@ggd/shared/content/balanceAnchors";
 import { zConfigMitigationDoc } from "@ggd/shared/content/schema/mitigationDoc";
 import { zConfigMapSpecDoc } from "@ggd/shared/content/schema/mapSpecDoc";
 import { zConfigCameraDoc } from "@ggd/shared/content/schema/config";
@@ -107,7 +115,17 @@ import { SKILL_TIER_NAMES } from "@ggd/shared/content/skillTiers";
 // ⛔ 形狀名（單體／範圍／變身）也只有一份 —— 後台不重打一組字串（同上一行）。
 import { COOLDOWN_SHAPES, DEFAULT_COOLDOWN_TIERS } from "@ggd/shared/content/cooldownTiers";
 // ⛔ 傷害級距的五個數字也只有一份 —— 相稱性下拉的選項說明從它推導。
-import { DEFAULT_DAMAGE_TIERS } from "@ggd/shared/content/damageTiers";
+import {
+  DAMAGE_TIER_MAX,
+  DEFAULT_DAMAGE_TIERS,
+  KILL_CASTS_REF,
+  SHIPPED_ANCHOR_LEVEL,
+  anchorFloor,
+  castsToKill,
+  minTierStep,
+  tierRatios,
+  tierStep,
+} from "@ggd/shared/content/damageTiers";
 // ⭐ GH#445 —— 「傷害相對冷卻偏低」那一條警示的說明是**現算**的（哪幾格、低幾 %、
 //    要跳到哪一級），⛔ 不是後台手寫的一段會過期的散文。
 import { describeLowDamageCells } from "@ggd/shared/content/lowDamageCells";
@@ -1247,13 +1265,44 @@ const COOLDOWN_TIERS_SPEC: ConfigDocSpec = {
 
 // ───────────────────────────── 傷害級距 (config/damage-tiers) ─
 
-const DAMAGE_TIER_WHY = [
-  "⭐ **這一格是整張表的錨**，而且它是**算出來的**：三個錨點各自要求「該級中位有效血量 ÷ owner 的 20 次，進位到 50 的倍數」⇒ **LV30 要 700 · LV50 要 1,150 · LV99 要 2,400**（量到的中位有效血量 13,927 / 22,437 / 47,008）。出貨走**滿足得了的最高**那一個 ＝ **LV50 的 1,150**。⚠️ 一定要**進位** —— 捨去會差幾個 % 違反 owner 的 Q1，而且沒有任何東西會紅。",
-  "＝ 錨 × (15 ÷ 6)。",
-  "＝ 錨 × (30 ÷ 6)。⚠️ 對照：今天出貨技能在 LV30 的**中位**滿階傷害是 **735**，也就是血條的 5.3%，要 **19 發**才殺得死一個人。",
-  "＝ 錨 × (45 ÷ 6)。",
-  "＝ 錨 × (60 ÷ 6)。＝ LV30 中位有效血量的 **83%** / LV50 的 **51%** / LV99 的 **24%**。⚠️ 上界 **13,927** ＝ **LV30（hard limit）**的中位有效血量：超過它的一發就是**一發秒殺**，那不是傷害級距而是另一種設計。⭐ 取最早會遇到它的那一級，⛔ 不是 LV50/LV99 —— 這一條同時是「哪一個錨點出貨」的天花板（LV99 要的極大是 24,000，1.72 倍，直接出局）。",
-];
+/**
+ * 每一格的「它是怎麼算出來的」—— ⭐ **全部從推導鏈長出來**，⛔ 一個字面值都沒有。
+ *
+ * ⚠️ 這一段在 2026-08-20 之前是手抄的（700 / 1,150 / 2,400 / 13,927 / 83%⋯），
+ * 而錨點換了之後它整段變成謊話，`content:build` 與全套測試都是綠的。
+ */
+const RATIOS = tierRatios();
+const SMALLEST_NAME = SKILL_TIER_NAMES[0];
+const DAMAGE_TIER_WHY = SKILL_TIER_NAMES.map((tier, i) => {
+  const dmg = DEFAULT_DAMAGE_TIERS.damage[tier];
+  const share = ((dmg / DAMAGE_TIER_MAX) * 100).toFixed(0);
+  if (i === 0) {
+    const raw =
+      (medianBaseHp(SHIPPED_ANCHOR_LEVEL) / KILL_CASTS_REF) * HP_ENV_MULT +
+      HP_BASE_BONUS / KILL_CASTS_REF;
+    return (
+      `⭐ **這一格是整張表的錨**，而且它是**算出來的**：` +
+      `LV${SHIPPED_ANCHOR_LEVEL} 的**純基礎**中位血量 ${medianBaseHp(SHIPPED_ANCHOR_LEVEL)}` +
+      `（⛔ 無系統倍率、⛔ 無初始加成、⛔ 無魔抗 —— owner 2026-08-20：「不要計算 HP 系統倍率以及魔抗減傷 **會讓我誤判**」）` +
+      ` ÷ owner 的 ${KILL_CASTS_REF} 次 × HP 倍率 ${HP_ENV_MULT} ＋ 初始加成 ${HP_BASE_BONUS} ÷ ${KILL_CASTS_REF} 次 ＝ ${raw.toFixed(1)}` +
+      `，進位到 ${tierStep()}（「使五格皆整數的最小單位」是 ${minTierStep()}，粒度取它的整數倍）⇒ **${dmg}**。` +
+      `⚠️ **初始加成不參與倍率**（owner #273）—— 算式是 \`base × ${HP_ENV_MULT} + ${HP_BASE_BONUS}\`，⛔ **不是** \`(base + ${HP_BASE_BONUS}) × ${HP_ENV_MULT}\`。` +
+      `⚠️ 一定要**進位** —— 捨去會差幾個 % 違反 owner 的 Q1，而且沒有任何東西會紅。`
+    );
+  }
+  const line =
+    `＝ 錨 × ${RATIOS[tier]}（單體冷卻 ${DEFAULT_COOLDOWN_TIERS.seconds["單體"][tier]} 秒 ÷ ` +
+    `${DEFAULT_COOLDOWN_TIERS.seconds["單體"][SMALLEST_NAME]} 秒）。`;
+  if (i < SKILL_TIER_NAMES.length - 1) return line;
+  return (
+    line +
+    `＝ LV${HARD_ANCHOR_LEVEL} **引擎最終**中位血量的 **${share}%**` +
+    `（${BALANCE_ANCHOR_LEVELS.map((lv) => `LV${lv} ${((dmg / medianFinalHp(lv)) * 100).toFixed(0)}%`).join(" / ")}）。` +
+    `⚠️ 上界 **${DAMAGE_TIER_MAX}** ＝ **LV${HARD_ANCHOR_LEVEL}（hard limit）**的引擎最終中位血量：` +
+    `超過它的一發就是**一發秒殺**，那不是傷害級距而是另一種設計。` +
+    `⭐ 取最早會遇到它的那一級，⛔ 不是更高的錨點。`
+  );
+});
 
 const DAMAGE_TIERS_SPEC: ConfigDocSpec = {
   page: "damageTiers",
@@ -1264,14 +1313,17 @@ const DAMAGE_TIERS_SPEC: ConfigDocSpec = {
   title: "傷害五級距",
   intro: [
     "owner 2026-08-19：「**可以重新設計拉高**，畢竟之前檢討過 **AP 太弱勢**，我們幾乎要拉到高等級才能開始追平普通攻擊無風險的傷害」。技能在 `amount` 裡填 `damageTier: \"中\"`，這一頁決定「中」是多少基礎傷害。",
-    "⛔ **2026-08-20 重錨**：舊的 500／1250／2500／3750／5000 是拿 **Lv18** 算的。owner 2026-08-20 更正：「我的錨點有講過是 **LV 30/50/99 三個**，至少要滿足 **30(hard limit)**，能 **50 比較好(soft limit)**, **99 是極限**」。",
-    "⭐ 五個數字**不是挑的**，是從**三個錨點 + 冷卻表**推導的：每一級要求的錨 ＝ 該級中位有效血量 ÷ owner 的 20 次（進位到 50 的倍數）⇒ LV30 要 700・LV50 要 1,150・LV99 要 2,400；出貨走**滿足得了的最高**那一個 ＝ **LV50 ⇒ 1,150**，其餘 ＝ 1,150 × 單體冷卻 ÷ 6。這正是 owner Q4 的意思 ——「**已經有傷害相應的冷卻跟耗魔做限制**」，貴的技能貴在它落在冷卻表的哪一格，⛔ 不是靠一條沒有錨的超線性曲線。",
-    "⭐ **三個錨點的達成率**（打死該級中位英雄要幾發「極小」，門檻 20 發）：**LV30 12.1 發 ✅ hard limit**・**LV50 19.5 發 ✅ soft limit**・**LV99 40.9 發 ❌ 極限**（差 2.04 倍）。LV99 要把錨拉到 2,400，那會讓「極大」變成 24,000 ＝ LV30 中位血量的 1.72 倍，**每一發極大都是即死** —— 所以它出局的理由是一條寫在程式裡的天花板，⛔ 不是我挑的。",
-    "⚠️ LV99 的缺口**不是這五格調得掉的**：血量比傷害長得快（Lv18→LV99 中位有效血量 ×5.19，中位滿階傷害只 ×2.14）。要補它得動成長曲線，⛔ 不是把這一頁填爆。",
-    "⭐ 只有**一張**表，⛔ 沒有「單體一張、範圍一張」：形狀的代價整個住在冷卻軸上（範圍表比單體貴 2–5 倍），再在傷害軸打一次折就是同一個懲罰收兩次。驗算：單體·極大 5000÷60 ＝ 83／卡面秒 ×1 人；範圍·極大 5000÷120 ＝ 42／卡面秒 ×1.85 人 ＝ 77 —— 兩者幾乎相等。",
-    "⚠️ 「範圍·極小」是這個讀法唯一壞掉的一格（500÷30×1.33 ＝ 22，只有單體極小的 1/3.8）。owner 的答案是「**那一格要求傷害是大／極大**」，而它住在「編輯器創作規則」頁的相稱性表，⛔ 不是把這張表拆成兩張。",
+    "⛔ **2026-08-20 第二次重錨**（owner 逐字兩則）：「**🅲 保留倍率，但把它從錨點推導裡剝掉**」與「**我的建議是拿 30 級的當標準就好**，因為技能通常還有 AP 加成那塊沒算到」，外加「**不要計算 HP 系統倍率以及魔抗減傷 會讓我誤判**」。⇒ ① 錨點空間從「中位**有效**血量」（含魔抗）換成「中位**純基礎**血量」，魔抗那一層**整層退場**；② 出貨錨**就是 hard limit**，⛔ 不再是「滿足得了的最高那一個」。",
+    `⭐ 五個數字**不是挑的**，是**算出來的**：純基礎中位 ${medianBaseHp(SHIPPED_ANCHOR_LEVEL)} ÷ ${KILL_CASTS_REF} 發 × HP 倍率 ${HP_ENV_MULT} ＋ 初始加成 ${HP_BASE_BONUS} ÷ ${KILL_CASTS_REF} 發 → 進位到 ${tierStep()} ⇒ 極小 **${DEFAULT_DAMAGE_TIERS.damage[SKILL_TIER_NAMES[0]]}**；其餘四格 ＝ 極小 × 單體冷卻比 **${SKILL_TIER_NAMES.map((t) => RATIOS[t]).join(" : ")}**。這正是 owner Q4 的意思 ——「**已經有傷害相應的冷卻跟耗魔做限制**」，貴的技能貴在它落在冷卻表的哪一格，⛔ 不是靠一條沒有錨的超線性曲線。`,
+    `⭐ **三個錨點的達成率**（打死該級中位英雄要幾發「${SKILL_TIER_NAMES[0]}」，門檻 ${KILL_CASTS_REF} 發，分母是**引擎最終**血量）：${BALANCE_ANCHOR_LEVELS.map((lv) => {
+      const n = castsToKill(lv, DEFAULT_DAMAGE_TIERS.damage[SKILL_TIER_NAMES[0]]);
+      return `**LV${lv} ${n.toFixed(1)} 發 ${n <= KILL_CASTS_REF ? "✅" : "❌"} ${ANCHOR_ROLE[lv]}**`;
+    }).join("・")}。每一級**自己**要求的錨是 ${BALANCE_ANCHOR_LEVELS.map((lv) => `LV${lv} ${anchorFloor(lv)}`).join(" / ")}。`,
+    "⚠️ 高等級的缺口**不是這五格調得掉的**：血量比傷害長得快。要補它得動成長曲線，⛔ 不是把這一頁填爆。",
+    "⭐ 只有**一張**表，⛔ 沒有「單體一張、範圍一張」：形狀的代價整個住在冷卻軸上（範圍表比單體貴 2–5 倍），再在傷害軸打一次折就是同一個懲罰收兩次。",
+    "⚠️ 「範圍·極小」是這個讀法唯一壞掉的一格。owner 的答案是「**那一格要求傷害是大／極大**」，而它住在「編輯器創作規則」頁的相稱性表，⛔ 不是把這張表拆成兩張。",
     "⚠️ 填了 `damageTier` 的那一格，`flat` 與 `perRank` 會被級距**取代**（⛔ 不是相加）；`ratios` / `attrRatios` 不受影響 —— 那兩條是**成長**，不是基礎值。",
-    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/damage-tiers.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+    "⭐ **五個數字由 `pnpm anchors:build` 寫進 `content/config/damage-tiers.json`**，`anchors:check` 逐位元組守著。這一頁改的是**線上覆蓋層**（data/），⚠️ **覆蓋層會蓋掉那個檔案** —— 線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
   ],
   consumer:
     "packages/shared/src/content/damageTiers.ts 的 resolveDamageTier（全專案唯一的查表處）← content/registries.ts 的 registerAll，在技能與道具註冊時把 amount.damageTier 翻成 amount.flat",
@@ -1281,7 +1333,7 @@ const DAMAGE_TIERS_SPEC: ConfigDocSpec = {
     {
       path: "enabled",
       zh: "級距總開關",
-      note: "關掉之後 `damageTier` 不解析，技能回到自己手寫的 `flat` / `perRank` —— ⭐ 那就是**一鍵回到今天的那一套傷害**（中位 532）。⚠️ 關掉**不會**讓技能不再造成傷害。",
+      note: "關掉之後 `damageTier` 不解析，技能回到自己手寫的 `flat` / `perRank` —— ⭐ 那就是**一鍵回到重錨之前的那一套傷害**。⚠️ 關掉**不會**讓技能不再造成傷害。",
     },
     ...SKILL_TIER_NAMES.map((tier, i) => ({
       path: `damage.${tier}`,

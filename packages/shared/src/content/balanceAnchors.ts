@@ -10,28 +10,37 @@
  *（「到處改改改」），而且下一次重量的時候一定會有一半沒跟上。
  *
  * ─────────────────────────────────────────────────────────────────────────────
- * ⚠️ 這一組數字是**量到的**，⛔ 不是挑的
+ * ⛔ 2026-08-20：**魔抗那一層整層退場**，而且量測搬進了產生器
  *
- * 量法（2026-08-20，唯讀，全部走**出貨那條管線**，⛔ 沒有自己重算公式）：
+ * owner 2026-08-20（逐字）：
+ * > 「**不要計算 HP 系統倍率以及魔抗減傷 會讓我誤判**」
  *
- *   `ContentLoader.load()` + `registerAll()`
- *     → `sim/stats/attributes.ts::championStatBase(def, stat, level, env, NO_ATTR_BONUS)`
- *     → `sim/baseBonus.ts::finalizeStat(...)`（env 鏈 → baseBonus → perLevelBonus → clamp）
- *     → `sim/combat/penetration.ts::mitigationMult(魔抗, ceiling)`
- *   有效血量 = `HP ÷ mitigationMult`，母體 = 註冊表裡的 **71 隻**英雄，**裸裝**
- *  （無道具、無三選一三圍、無增益卡）。
+ * 在此之前這裡住著**一個**手寫的 `MEDIAN_EFFECTIVE_HP`，而它把三層混在一起
+ *（成長曲線 × 系統倍率 × 魔抗減傷）。代價是量到的：`3,442` 被當成「基礎空間」
+ * 回乘之後差 **+16.5%**，因為它其實是**混合量** —— 而整條級距推導鏈都用它。
  *
- * ⭐ **自我驗證**：同一支腳本在 Lv18 重現了 v0.22.3 的每一個參考數字
- *（HP 8093、有效血量 9048、魔力池 1746、回魔 36.6/s、滿魔 47.7s）——
- * 所以下面這三個數字與那一組**是同一把尺**。
+ * ⇒ 現在是**兩個乾淨的空間**，而且都由 `pnpm anchors:build` 量出來寫進
+ * `balanceAnchorsDerived.ts`（⛔ 不是手寫的常數）：
  *
- * ⚠️ 取的是**魔法**側的有效血量（與 v0.22.3 的 9048 同一欄）。物理側因為
- * `magicResistMult = 0.2` 而**更高**，而且差距隨等級擴大
- *（LV30 1.17× → LV50 1.29× → LV99 1.51×）—— 換欄會平移下面每一個推導。
+ *   | 空間 | 是什麼 | 誰在用 |
+ *   |---|---|---|
+ *   | **純基礎** `MEDIAN_BASE_HP` | 英雄卡的成長曲線本身 | ⭐ owner 判斷用 |
+ *   | **引擎最終** `medianFinalHp()` | 純基礎 × env 鏈 ＋ 初始加成 | 引擎真的在打的血條 |
+ *
+ * ⚠️ **初始加成不參與倍率**（owner #273）⇒ `base × mult + bonus`，
+ * ⛔ **不是** `(base + bonus) × mult`。這一行就是上面那個 +16.5% 的來源。
  *
  * ⚠️ 有裝備／三選一／增益卡之後的真值**量不到**（那是玩家在那一場的選擇，
- * 不是出貨資料）。這三個數字的角色是**錨**，⛔ 不是一條上線後會被讀的規則。
+ * 不是出貨資料）。這幾個數字的角色是**錨**，⛔ 不是一條上線後會被讀的規則。
  */
+import {
+  HP_BASE_BONUS,
+  HP_ENV_MULT,
+  MANA_BASE_BONUS,
+  MANA_ENV_MULT,
+  MEDIAN_BASE_HP,
+  MEDIAN_BASE_MANA,
+} from "./balanceAnchorsDerived";
 
 /** 三個錨點的等級。⭐ owner 給的，⛔ 不是我挑的。 */
 export const BALANCE_ANCHOR_LEVELS = [30, 50, 99] as const;
@@ -52,13 +61,39 @@ export const ANCHOR_ROLE: Readonly<Record<BalanceAnchorLevel, string>> = Object.
 });
 
 /**
- * 量到的**中位有效血量**（魔法側，裸裝，71 隻）。見檔頭的量法。
+ * ⭐ 兩個空間的中位數 —— **量到的**，住在 `balanceAnchorsDerived.ts`
+ *（`pnpm anchors:build` 寫，`anchors:check` 逐位元組守）。
  *
- * ⚠️ 重量之後要改的是**這一格**，⛔ 不是下游那些推導出來的數字 ——
- * 級距表、`DAMAGE_TIER_MAX`、後台說明、魔力稽核的門檻全部從這裡長出來。
+ * ⚠️ 重量之後不用改任何一行程式：級距表、`DAMAGE_TIER_MAX`、後台說明、
+ * 魔力稽核的門檻全部從這兩支函式長出來。
  */
-export const MEDIAN_EFFECTIVE_HP: Readonly<Record<BalanceAnchorLevel, number>> = Object.freeze({
-  30: 13927,
-  50: 22437,
-  99: 47008,
-});
+export { MEDIAN_BASE_HP, MEDIAN_BASE_MANA, HP_ENV_MULT, HP_BASE_BONUS };
+
+/**
+ * **純基礎**空間的中位血量 —— ⛔ 無系統倍率、⛔ 無初始加成、⛔ 無魔抗。
+ * ⭐ owner 判斷用的就是這一欄（2026-08-20：「不要計算⋯會讓我誤判」）。
+ */
+export function medianBaseHp(level: BalanceAnchorLevel): number {
+  return MEDIAN_BASE_HP[level] ?? 0;
+}
+
+/** 同上，魔力那一條。 */
+export function medianBaseMana(level: BalanceAnchorLevel): number {
+  return MEDIAN_BASE_MANA[level] ?? 0;
+}
+
+/**
+ * **引擎最終**空間的中位血量 —— 引擎真的在打的那條血條。
+ *
+ * ⚠️ 初始加成**在倍率之外**（owner #273「初始HP⋯不參與倍率計算」）：
+ * `base × mult + bonus`，⛔ 不是 `(base + bonus) × mult`。
+ * ⛔ 魔抗減傷**不在裡面** —— 它只對魔法傷害成立（owner 2026-08-20）。
+ */
+export function medianFinalHp(level: BalanceAnchorLevel): number {
+  return (MEDIAN_BASE_HP[level] ?? 0) * HP_ENV_MULT + HP_BASE_BONUS;
+}
+
+/** 同上，魔力池那一條 —— 耗魔級距的唯一輸入。 */
+export function medianFinalMana(level: BalanceAnchorLevel): number {
+  return (MEDIAN_BASE_MANA[level] ?? 0) * MANA_ENV_MULT + MANA_BASE_BONUS;
+}

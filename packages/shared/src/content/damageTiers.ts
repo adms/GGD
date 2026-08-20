@@ -20,52 +20,61 @@
  * 而中位滿階傷害只 ×2.14），所以一個錨在 Lv18 的表在 LV30 就已經**開始失效**。
  *
  * ─────────────────────────────────────────────────────────────────────────────
+ * ⛔ 2026-08-20 第二次重錨：**錨點空間**與**錨點等級**兩個都被 owner 更正了
+ *
+ * owner 2026-08-20（兩則，逐字）：
+ * > 「**🅲 保留倍率，但把它從錨點推導裡剝掉** => OK」
+ * > 「**我的建議是拿 30 級的當標準就好**，因為技能通常還有 AP 加成那塊沒算到」
+ * > 「**不要計算 HP 系統倍率以及魔抗減傷 會讓我誤判**」
+ *
+ * ⇒ 兩件事一起改：
+ *   · **空間**：錨點從「中位**有效**血量」（含魔抗）改成「中位**純基礎**血量」，
+ *     系統倍率在推導式裡**顯式**乘一次，魔抗那一層**整層退場**。
+ *   · **等級**：出貨錨**就是 hard limit**（LV30），⛔ 不再是「滿足得了的最高那一個」——
+ *     那條規則會挑到 LV50，而 owner 明說要 LV30（第〇·六守則第 1 層）。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
  * ⭐ 這張表是**推導**出來的，⛔ 一個數字都不是挑的
  *
- * 三個輸入，三個都是 owner 給的或量到的：
+ * 四個輸入，四個都是 owner 給的或量到的（⛔ 沒有一個住在這個檔裡）：
  *
- *     KILL_CASTS_REF        = 20                    ← owner Q1「20 次以內一定要能殺死對方」
- *     MEDIAN_EFFECTIVE_HP   = {30:13927, 50:22437, 99:47008}
- *                                                   ← 量到的三個錨點中位有效血量
- *                                                     （`balanceAnchors.ts`，魔法側，裸裝，71 隻）
- *     DEFAULT_COOLDOWN_TIERS.seconds.單體 = [6,15,30,45,60]   ← owner 2026-08-19 給的冷卻表
+ *     KILL_CASTS_REF   = 20                       ← owner Q1「20 次以內一定要能殺死對方」
+ *     MEDIAN_BASE_HP   純基礎中位血量（三個錨點）   ← `pnpm anchors:build` 量到的
+ *     HP_ENV_MULT      combat-env 的最大生命倍率    ← 出貨 config 的快照
+ *     HP_BASE_BONUS    base-bonus 的初始生命加成    ← 出貨 config 的快照
+ *     DEFAULT_COOLDOWN_TIERS.seconds.單體          ← owner 2026-08-19 給的冷卻表
  *
- * ① **一個錨點要求的下限（極小）**：`該級中位有效血量 ÷ 20`，
- *    **進位**到 50 的整數倍（`anchorFloor()`）。
+ * ① **一個錨點要求的下限（極小）** —— `anchorFloor()`：
+ *
+ * ```
+ *   純基礎中位 ÷ 20 發 × HP 倍率  +  初始加成 ÷ 20 發   →  進位到級距粒度
+ * ```
+ *
+ *    ⚠️ **初始加成除以 20 之後才加，而且⛔ 不參與倍率**（owner #273
+ *    「初始HP/MP/AP⋯不參與倍率計算」）。上一版把它折進「基礎」再回乘，
+ *    差 **+16.5%** —— 那不是量測誤差，是一個算術錯誤。
  *    ⚠️ 一定要**進位**：捨去會差幾個 % 違反 owner 的 Q1，而且沒有任何東西會紅。
- *    ⇒ LV30 需要 **700** · LV50 需要 **1150** · LV99 需要 **2400**。
  *
- * ② **其餘四格**：`極小 × 單體冷卻 ÷ 6`，也就是**與冷卻表嚴格成正比**
+ * ② **其餘四格**：`極小 × 單體冷卻 ÷ 極小那一格的冷卻`，也就是**與冷卻表嚴格成正比**
  *    （`tiersFromAnchor()`）。⭐ 這正是 owner Q4 的意思 ——「已經有傷害相應的冷卻
  *    做限制」＝貴的技能貴在它落在冷卻表的哪一格，⛔ 不是靠一條沒有錨的 γ 超線性曲線。
  *    ⇒ 五格 = 極小 × 1 / 2.5 / 5 / 7.5 / 10。
  *
- * ③ **哪一個錨點出貨**：⭐ **滿足得了的最高那一個**（`pickAnchor()`）——
- *    這就是 owner 的 hard > soft > 極限 落地的樣子，⛔ 不是我在三個裡挑一個折衷。
- *    「滿足得了」的判準只有一條，而且它本來就寫在這個檔裡：
+ * ③ **進位粒度**（`TIER_ROUND_UP_TO`）：⭐ 它有一條**推導出來的下界**
+ *    `MIN_TIER_STEP` —— 讓**五格全部落在整數上**的最小單位（比例 2.5 與 7.5 的
+ *    分母 LCM）。粒度不是那個下界的倍數 = 級距表會長出 `1477.5` 這種卡面數字，
+ *    而那不是「有點醜」，是**每一個消費端各自四捨五入到不同的答案**。
  *
- *        極大 ≤ DAMAGE_TIER_MAX（＝ hard limit 那一級的中位有效血量）
+ * ④ **哪一個錨點出貨**：⭐ **hard limit 那一個**（owner 2026-08-20 明說 LV30）。
+ *    `anchorIsSatisfiable()` / `pickAnchor()` 留著是為了**報告**（差多少要看得到），
+ *    ⛔ 不再決定出貨值。天花板仍然在守：
  *
- *    也就是**一發不可以秒殺 LV30 的中位英雄**。驗算：
+ *        極大 ≤ DAMAGE_TIER_MAX（＝ hard limit 那一級的**引擎最終**中位血量）
  *
- *      | 錨 | 極小 | 極大 | ≤ 13927？ |
- *      |---|---:|---:|---|
- *      | LV30 | 700  | 7000  | ✅ |
- *      | LV50 | 1150 | 11500 | ✅ |
- *      | LV99 | 2400 | 24000 | ⛔ 是 LV30 中位血量的 **1.72 倍** —— 每一發極大都是即死 |
- *
- *    ⇒ 出貨錨 = **LV50**，五格 = **1150 / 2875 / 5750 / 8625 / 11500**。
- *    **hard ✅ · soft ✅ · 極限 ❌**（LV99 要 2400，被上面那條天花板擋在 1392 以下）。
+ *    也就是**一發不可以秒殺 LV30 的中位英雄**。
  *
  * ⭐ 三個錨點各自的達成率（`castsToKill()`，⛔ 不要手抄 —— 它是算出來的）：
- *
- *     LV30  13927 ÷ 1150 = **12.1 發** ≤ 20  ✅ hard limit
- *     LV50  22437 ÷ 1150 = **19.5 發** ≤ 20  ✅ soft limit
- *     LV99  47008 ÷ 1150 = **40.9 發** > 20  ❌ 極限（差 2.04 倍）
- *
- * ⚠️ 極大 11500 ＝ LV30 中位有效血量的 **83%** / LV50 的 **51%** / LV99 的 **24%**。
- * LV30 那一格是刻意的：owner 說 AP 太弱勢，而量到的現況是**一發中位技能在 LV30
- * 只有血條的 5.3%**，要 **19 發**才打得死一個人 —— 同時普攻是**無風險**的。
+ *    分母是**引擎最終**血量（引擎真的在打的那條），⛔ 不是純基礎。
  *
  * ─────────────────────────────────────────────────────────────────────────────
  * ⭐ 只有**一張**表，⛔ 沒有「單體一張、範圍一張」
@@ -95,7 +104,10 @@
 import {
   BALANCE_ANCHOR_LEVELS,
   HARD_ANCHOR_LEVEL,
-  MEDIAN_EFFECTIVE_HP,
+  HP_BASE_BONUS,
+  HP_ENV_MULT,
+  medianBaseHp,
+  medianFinalHp,
   type BalanceAnchorLevel,
 } from "./balanceAnchors";
 import { DEFAULT_COOLDOWN_TIERS } from "./cooldownTiers";
@@ -114,8 +126,63 @@ export type DamageTierName = SkillTierName;
  */
 export const KILL_CASTS_REF = 20;
 
-/** 進位的粒度 —— 讓下限落在 50 的整數倍上，⛔ 不是無條件捨去（見檔頭 ①）。 */
-const ROUND_UP_TO = 50;
+/**
+ * 五格之間的比例 —— **從冷卻表推導**（`單體` 那一列 ÷ 它自己的極小）。
+ * ⭐ 全專案唯一知道「五格之間差幾倍」的地方，⛔ 不要在別處再寫一次 1/2.5/5/7.5/10。
+ */
+export function tierRatios(
+  cd: Readonly<Record<DamageTierName, number>> = DEFAULT_COOLDOWN_TIERS.seconds["單體"],
+): Readonly<Record<DamageTierName, number>> {
+  const base = cd[DAMAGE_TIER_NAMES[0]];
+  const out = {} as Record<DamageTierName, number>;
+  for (const n of DAMAGE_TIER_NAMES) out[n] = base > 0 ? cd[n] / base : 1;
+  return Object.freeze(out);
+}
+
+const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
+
+/**
+ * ⭐ 讓**五格全部落在整數上**的最小單位 —— 從 `tierRatios()` 推導，⛔ 不是挑的。
+ *
+ * 出貨比例是 1 / 2.5 / 5 / 7.5 / 10 ⇒ 分母的 LCM 是 **2** ⇒ 極小必須是偶數。
+ * ⚠️ 這不是潔癖：`591 × 2.5 = 1477.5`，而卡面、後台、Codex 契約、報告四個消費端
+ * 各自 `Math.round` 一次就會得到**四個不同的答案**，而且沒有任何東西會紅。
+ *
+ * ⚠️ 只認到千分位（`DENOM_LIMIT`）—— 冷卻表被填成無理比例時退回 1，
+ * ⛔ 不是無窮迴圈。
+ */
+const DENOM_LIMIT = 1000;
+export function minTierStep(
+  ratios: Readonly<Record<DamageTierName, number>> = tierRatios(),
+): number {
+  let lcm = 1;
+  for (const n of DAMAGE_TIER_NAMES) {
+    const r = ratios[n];
+    if (!Number.isFinite(r) || r <= 0) continue;
+    // r 的最簡分母：r × d 是整數的最小 d。
+    let d = 1;
+    while (d <= DENOM_LIMIT && Math.abs(r * d - Math.round(r * d)) > 1e-9) d++;
+    if (d > DENOM_LIMIT) return 1;
+    lcm = (lcm * d) / gcd(lcm, d);
+  }
+  return lcm;
+}
+
+/**
+ * 進位的粒度 —— **卡面數字的可讀性單位**，⛔ 不是一個平衡旋鈕。
+ *
+ * ⚠️ 它必須是 `minTierStep()` 的整數倍（`tierStep()` 會把它抬上去），
+ * 否則「五格全整數」那條性質會被一個看起來無害的編輯打破。
+ * ⭐ 想改**級距的大小**時改的是 `KILL_CASTS_REF`（owner 的 20 發）或冷卻表，
+ * ⛔ 不是這一格 —— 這一格只決定「進位到多細」。
+ */
+const TIER_ROUND_UP_TO = 50;
+
+/** 實際用的進位粒度：可讀性單位**抬到**「五格全整數」那條下界上。 */
+export function tierStep(): number {
+  const min = minTierStep();
+  return Math.max(min, Math.ceil(TIER_ROUND_UP_TO / min) * min);
+}
 
 export interface DamageTiers {
   /**
@@ -138,11 +205,31 @@ export interface DamageTiers {
  * ⇒ 這一條同時是 `pickAnchor()` 的天花板（見檔頭 ③）。
  */
 export const DAMAGE_TIER_MIN = 1;
-export const DAMAGE_TIER_MAX = MEDIAN_EFFECTIVE_HP[HARD_ANCHOR_LEVEL];
+export const DAMAGE_TIER_MAX = Math.floor(medianFinalHp(HARD_ANCHOR_LEVEL));
 
-/** 某一個錨點**要求**的極小值：`該級中位有效血量 ÷ 擊殺次數`，**進位**到 50 的整數倍。 */
+/**
+ * 某一個錨點**要求**的極小值 —— 檔頭 ① 那一條式子，逐項對得起來：
+ *
+ * ```
+ *   純基礎中位 ÷ 擊殺次數 × HP 倍率   +   初始加成 ÷ 擊殺次數   →  進位到 tierStep()
+ * ```
+ *
+ * ⚠️ 加成那一項**在倍率之外**（owner #273）—— 兩項分開寫是刻意的，
+ * ⛔ 不可以「化簡」成 `(純基礎 + 加成) × 倍率 ÷ 次數`，那正是上一版 +16.5% 的錯。
+ */
+export function anchorFloorFrom(baseHp: number, mult: number, bonus: number): number {
+  const step = tierStep();
+  const raw = (baseHp / KILL_CASTS_REF) * mult + bonus / KILL_CASTS_REF;
+  return Math.ceil(raw / step) * step;
+}
+
+/**
+ * 同上，輸入取**已經量好的**那一份（`balanceAnchorsDerived.ts`）。
+ * ⚠️ 產生器要用**這一輪剛量到的**數字時走 `anchorFloorFrom()`，⛔ 不是這一支 ——
+ * 不然會拿上一輪的量測算出這一輪的表（差一拍，而且 `--check` 要跑兩次才綠）。
+ */
 export function anchorFloor(level: BalanceAnchorLevel): number {
-  return Math.ceil(MEDIAN_EFFECTIVE_HP[level] / KILL_CASTS_REF / ROUND_UP_TO) * ROUND_UP_TO;
+  return anchorFloorFrom(medianBaseHp(level), HP_ENV_MULT, HP_BASE_BONUS);
 }
 
 /**
@@ -150,10 +237,11 @@ export function anchorFloor(level: BalanceAnchorLevel): number {
  * ⭐ 全專案唯一知道「五格之間的比例」的地方。
  */
 export function tiersFromAnchor(smallest: number): Readonly<Record<DamageTierName, number>> {
-  const cd = DEFAULT_COOLDOWN_TIERS.seconds["單體"];
-  const base = cd[SKILL_TIER_NAMES[0]];
+  const ratios = tierRatios();
   const out = {} as Record<DamageTierName, number>;
-  for (const n of DAMAGE_TIER_NAMES) out[n] = Math.round((smallest * cd[n]) / base);
+  // ⚠️ `Math.round` 在 `tierStep()` 成立時是恆等的 —— 它在這裡是**保險絲**，
+  //    ⛔ 不是四捨五入策略（有人把冷卻表改成非整除比例時，至少不會漏出小數）。
+  for (const n of DAMAGE_TIER_NAMES) out[n] = Math.round(smallest * ratios[n]);
   return Object.freeze(out);
 }
 
@@ -164,11 +252,10 @@ export function anchorIsSatisfiable(level: BalanceAnchorLevel): boolean {
 }
 
 /**
- * 出貨要用哪一個錨點 —— ⭐ **滿足得了的最高那一個**。
+ * 「滿足得了的最高那一個」—— ⛔ **2026-08-20 起它不再決定出貨值**。
  *
- * 這就是 owner 的 **hard > soft > 極限** 落地的樣子：hard limit 是**下限**
- *（就算它自己也撞天花板也照出貨，因為它「一定要滿足」），其餘每爬高一級都是白賺的。
- * ⛔ 不在三個裡挑一個折衷 —— 那是把排序權從 owner 手上拿走。
+ * owner 明說「**拿 30 級的當標準就好**」（第〇·六守則第 1 層：設計贏過推導）。
+ * 這一支留著是因為**報告要印「另外兩個錨差多少」**，⛔ 不是因為還有人拿它挑錨點。
  */
 export function pickAnchor(): BalanceAnchorLevel {
   let picked: BalanceAnchorLevel = HARD_ANCHOR_LEVEL;
@@ -176,15 +263,21 @@ export function pickAnchor(): BalanceAnchorLevel {
   return picked;
 }
 
-/** 出貨表落在哪一個錨點上（報告與後台說明從這裡讀，⛔ 不各自手寫）。 */
-export const SHIPPED_ANCHOR_LEVEL: BalanceAnchorLevel = pickAnchor();
+/**
+ * 出貨表落在哪一個錨點上 —— ⭐ **hard limit 那一個**（owner 2026-08-20 逐字裁決）。
+ * 報告與後台說明從這裡讀，⛔ 不各自手寫。
+ */
+export const SHIPPED_ANCHOR_LEVEL: BalanceAnchorLevel = HARD_ANCHOR_LEVEL;
 
 /**
  * 用出貨表打死某一個錨點的中位英雄要**幾發極小**。
  * ⭐ 達成率表的唯一算式 —— `≤ KILL_CASTS_REF` 就是達成。
+ *
+ * ⚠️ 分母是**引擎最終**血量（引擎真的在打的那條），⛔ 不是純基礎、
+ * 也⛔ 不含魔抗（owner 2026-08-20「不要計算⋯魔抗減傷 會讓我誤判」）。
  */
 export function castsToKill(level: BalanceAnchorLevel, smallest: number): number {
-  return MEDIAN_EFFECTIVE_HP[level] / smallest;
+  return medianFinalHp(level) / smallest;
 }
 
 /**

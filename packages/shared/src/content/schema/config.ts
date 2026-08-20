@@ -85,7 +85,14 @@ import {
   anchorFloor,
   castsToKill,
 } from "../damageTiers";
-import { MEDIAN_EFFECTIVE_HP } from "../balanceAnchors";
+import {
+  BALANCE_ANCHOR_LEVELS,
+  HARD_ANCHOR_LEVEL,
+  HP_BASE_BONUS,
+  HP_ENV_MULT,
+  MEDIAN_BASE_HP,
+  medianFinalHp,
+} from "../balanceAnchors";
 // ⭐ GH#465 相稱性 —— 公式與 owner 的係數住在 content/proportionality.ts，
 //    schema 這一層只是把它搬上 Zod（⛔ 不在這裡再算一次）。
 import {
@@ -5205,15 +5212,19 @@ export const zConfigDamageTiersDoc = z
               .min(DAMAGE_TIER_MIN)
               .max(DAMAGE_TIER_MAX)
               .describe(
-                `「${n}」的卡面基礎傷害。整張表錨在 owner 的三個錨點上（LV30 hard / LV50 soft / LV99 極限）：` +
-                  `量到的中位有效血量 ${MEDIAN_EFFECTIVE_HP[30]} / ${MEDIAN_EFFECTIVE_HP[50]} / ${MEDIAN_EFFECTIVE_HP[99]}，` +
-                  `每一級要求的極小 = 該血量 ÷ ${KILL_CASTS_REF} 進位到 50 的倍數 ⇒ ${anchorFloor(30)} / ${anchorFloor(50)} / ${anchorFloor(99)}。` +
-                  `出貨走**滿足得了的最高**那一個（LV${SHIPPED_ANCHOR_LEVEL}）⇒ 五格 ` +
+                `「${n}」的卡面基礎傷害。⭐ 五格由 \`pnpm anchors:build\` 推導，⛔ 不要手打 ——` +
+                  `純基礎中位血量 ${MEDIAN_BASE_HP[HARD_ANCHOR_LEVEL]}（LV${HARD_ANCHOR_LEVEL}，⛔ 無倍率⛔ 無加成⛔ 無魔抗）` +
+                  ` ÷ ${KILL_CASTS_REF} 發 × HP 倍率 ${HP_ENV_MULT} ＋ 初始加成 ${HP_BASE_BONUS} ÷ ${KILL_CASTS_REF} 發` +
+                  `（加成⛔ 不參與倍率，owner #273）→ 進位到「使五格皆整數」的粒度 ⇒ 極小 ${anchorFloor(HARD_ANCHOR_LEVEL)}。` +
+                  `其餘四格與單體冷卻表嚴格成正比 ⇒ ` +
                   `${DAMAGE_TIER_NAMES.map((k) => `${k} ${DEFAULT_DAMAGE_TIERS.damage[k]}`).join(" / ")}。` +
-                  `達成率 LV30 ${castsToKill(30, DEFAULT_DAMAGE_TIERS.damage[DAMAGE_TIER_NAMES[0]]).toFixed(1)} 發 ✅ · ` +
-                  `LV50 ${castsToKill(50, DEFAULT_DAMAGE_TIERS.damage[DAMAGE_TIER_NAMES[0]]).toFixed(1)} 發 ✅ · ` +
-                  `LV99 ${castsToKill(99, DEFAULT_DAMAGE_TIERS.damage[DAMAGE_TIER_NAMES[0]]).toFixed(1)} 發 ❌（門檻 ${KILL_CASTS_REF}）。` +
-                  `上界 ${DAMAGE_TIER_MAX} = LV30 中位有效血量：超過它的一發就是一發秒殺。`,
+                  `出貨錨＝hard limit LV${SHIPPED_ANCHOR_LEVEL}（owner 2026-08-20「拿 30 級的當標準就好」）。` +
+                  `達成率（分母＝引擎最終血量，門檻 ${KILL_CASTS_REF} 發）：` +
+                  `${BALANCE_ANCHOR_LEVELS.map((lv) => {
+                    const n2 = castsToKill(lv, DEFAULT_DAMAGE_TIERS.damage[DAMAGE_TIER_NAMES[0]]);
+                    return `LV${lv} ${n2.toFixed(1)} 發 ${n2 <= KILL_CASTS_REF ? "✅" : "❌"}`;
+                  }).join(" · ")}。` +
+                  `上界 ${DAMAGE_TIER_MAX} = LV${HARD_ANCHOR_LEVEL} 的**引擎最終**中位血量 ${medianFinalHp(HARD_ANCHOR_LEVEL)}：超過它的一發就是一發秒殺。`,
               ),
           ]),
         ) as Record<(typeof DAMAGE_TIER_NAMES)[number], z.ZodNumber>,
