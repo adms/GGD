@@ -14,8 +14,8 @@
   ],
   "manaCost": [
     150.0,
-    200.0,
-    250.0
+    150.0,
+    150.0
   ],
   "range": 0.0,
   "radiusTier": "極小",
@@ -36,11 +36,8 @@
           "kind": "damageArea",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              150.0,
-              200.0,
-              250.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -79,5 +76,6 @@
   ],
   "interruptOn": "damage",
   "recoverySec": 0.8,
+  "cooldownTier": "極大",
   "castTimeSec": 0.6
 }

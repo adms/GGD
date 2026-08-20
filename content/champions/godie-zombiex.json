@@ -61,16 +61,16 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        8,
-        8,
-        8,
-        8
+        30.0,
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
-        40,
-        55,
-        70,
-        85
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "radius": 3,
       "effects": [],
@@ -80,12 +80,8 @@
           "anchor": "point",
           "radius": 163.5,
           "damage": {
-            "perRank": [
-              80,
-              140,
-              200,
-              260
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -100,9 +96,10 @@
       },
       "vfxKey": "fx.prim.void.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.2,
+      "castTimeSec": 0.767,
       "rangeTier": "中",
-      "range": 6
+      "range": 6,
+      "cooldownTier": "極小"
     },
     "W": {
       "id": "godie-zombiex.w",
@@ -114,16 +111,16 @@
       "castType": "dash",
       "maxRank": 4,
       "cooldown": [
-        16.0,
-        15.0,
-        14.0,
-        13.0
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
-        30.0,
-        50.0,
-        70.0,
-        90.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "effects": [
         {
@@ -152,7 +149,8 @@
       "vfxKey": "fx.prim.void.dash",
       "castTimeSec": 0.067,
       "rangeTier": "中",
-      "range": 6
+      "range": 6,
+      "cooldownTier": "極小"
     },
     "E": {
       "id": "godie-zombiex.e",
@@ -164,16 +162,16 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        14,
-        13,
-        12,
-        11
+        30.0,
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
-        70,
-        95,
-        120,
-        145
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "radius": 3.5,
       "effects": [],
@@ -183,12 +181,8 @@
           "anchor": "point",
           "radius": 191,
           "damage": {
-            "perRank": [
-              60,
-              110,
-              160,
-              210
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -203,9 +197,10 @@
       },
       "vfxKey": "fx.prim.void.shockwave",
       "targetsEnemies": true,
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.767,
       "rangeTier": "大",
-      "range": 8
+      "range": 8,
+      "cooldownTier": "極小"
     },
     "R": {
       "id": "godie-zombiex.r",
@@ -217,14 +212,14 @@
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        90,
-        80,
-        70
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        100,
-        150,
-        200
+        100.0,
+        100.0,
+        100.0
       ],
       "range": 0,
       "radius": 4,
@@ -238,11 +233,8 @@
           "anchor": "point",
           "radius": 218,
           "damage": {
-            "perRank": [
-              300,
-              500,
-              700
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -255,7 +247,8 @@
           "statusId": "slow40",
           "statusDurationSec": 1.5
         }
-      }
+      },
+      "cooldownTier": "中"
     }
   },
   "skillOrder": [

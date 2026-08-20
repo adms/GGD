@@ -55,9 +55,9 @@
       "name": "30-01 綁架",
       "icon": "assets/icons/abilities/godie-o030.q.webp",
       "provenance": "w3x-import",
-      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n因為想非常想要肛人而起了綁架人的念頭，導致不分敵我的胡亂綁架來肛，綑綁範圍300。",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n因為想非常想要肛人而起了綁架人的念頭，導致不分敵我的胡亂綁架來肛，綑綁範圍{{range}}。",
       "slot": "Q",
-      "castType": "self",
+      "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
         15.0,
@@ -67,13 +67,13 @@
         15.0
       ],
       "manaCost": [
-        30.0,
-        50.0,
-        70.0,
-        90.0,
-        110.0
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 6.0,
       "effects": [
         {
           "kind": "applyStatus",
@@ -84,7 +84,10 @@
       ],
       "vfxKey": "fx.prim.void.pulse-sm",
       "sfxKey": "wc3.headhunteryes4",
-      "castTimeSec": 0.367
+      "castTimeSec": 0.367,
+      "cooldownTier": "小",
+      "rangeTier": "中",
+      "targetsEnemies": true
     },
     "W": {
       "id": "godie-o030.w",
@@ -102,22 +105,18 @@
         30.0
       ],
       "manaCost": [
-        50.0,
-        80.0,
-        110.0,
-        140.0
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [
         {
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              80,
-              120,
-              160,
-              200
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -131,7 +130,8 @@
       "targetsEnemies": true,
       "castTimeSec": 0.467,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "中"
     },
     "E": {
       "id": "godie-o030.e",
@@ -150,21 +150,17 @@
       ],
       "manaCost": [
         150.0,
-        175.0,
-        200.0,
-        225.0
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [
         {
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              16.0,
-              32.0,
-              48.0,
-              64.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -176,9 +172,10 @@
       ],
       "vfxKey": "fx.prim.fire.explosion",
       "targetsEnemies": true,
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.467,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "中"
     },
     "R": {
       "id": "godie-o030.r",
@@ -196,8 +193,8 @@
       ],
       "manaCost": [
         150.0,
-        210.0,
-        270.0
+        150.0,
+        150.0
       ],
       "effects": [
         {
@@ -208,11 +205,8 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "perRank": [
-                  550.0,
-                  900.0,
-                  1250.0
-                ]
+                "damageTier": "小",
+                "flat": 1500.0
               }
             },
             {
@@ -227,7 +221,8 @@
       "vfxKey": "fx.prim.physical.shockwave-lg",
       "castTimeSec": 0.767,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "中"
     }
   },
   "skillOrder": [

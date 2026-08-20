@@ -10,10 +10,11 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    10.0
+    6.0
   ],
+  "cooldownTier": "極小",
   "manaCost": [
-    200.0
+    0.0
   ],
   "range": 0,
   "effects": [
@@ -33,5 +34,5 @@
       }
     }
   ],
-  "castTimeSec": 0.267
+  "castTimeSec": 0.167
 }

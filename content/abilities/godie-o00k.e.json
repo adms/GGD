@@ -13,11 +13,12 @@
     60.0,
     60.0
   ],
+  "cooldownTier": "中",
   "manaCost": [
     135.0,
-    220.0,
-    305.0,
-    390.0
+    135.0,
+    135.0,
+    135.0
   ],
   "effects": [],
   "template": {
@@ -25,12 +26,8 @@
     "params": {
       "radius": 500,
       "damage": {
-        "perRank": [
-          400,
-          650,
-          900,
-          1150
-        ],
+        "damageTier": "小",
+        "flat": 1500.0,
         "ratios": [
           {
             "stat": "ap",

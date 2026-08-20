@@ -3,9 +3,9 @@
   "name": "30-01 綁架",
   "icon": "assets/icons/abilities/godie-orkn.q.webp",
   "provenance": "w3x-import",
-  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n因為想非常想要肛人而起了綁架人的念頭，導致不分敵我的胡亂綁架來肛，綑綁範圍300。",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n因為想非常想要肛人而起了綁架人的念頭，導致不分敵我的胡亂綁架來肛，綑綁範圍{{range}}。",
   "slot": "Q",
-  "castType": "self",
+  "castType": "targeted",
   "maxRank": 5,
   "cooldown": [
     15.0,
@@ -14,14 +14,17 @@
     15.0,
     15.0
   ],
+  "cooldownTier": "小",
   "manaCost": [
-    30.0,
-    50.0,
-    70.0,
-    90.0,
-    110.0
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "range": 0,
+  "range": 6.0,
+  "rangeTier": "中",
+  "targetsEnemies": true,
   "effects": [
     {
       "kind": "applyStatus",

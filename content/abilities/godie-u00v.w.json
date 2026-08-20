@@ -8,16 +8,17 @@
   "castType": "skillshot",
   "maxRank": 4,
   "cooldown": [
-    55.0,
-    55.0,
-    55.0,
-    55.0
+    45.0,
+    45.0,
+    45.0,
+    45.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
     75.0,
-    105.0,
-    135.0,
-    165.0
+    75.0,
+    75.0,
+    75.0
   ],
   "effects": [
     {
@@ -28,12 +29,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              200.0,
-              300.0,
-              400.0,
-              500.0
-            ]
+            "damageTier": "極小",
+            "flat": 600.0
           }
         }
       ]
@@ -42,7 +39,7 @@
   "vfxKey": "fx.prim.earth.shockwave",
   "sfxKey": "wc3.gluescreenmeteorhit1",
   "schema": "ability@1",
-  "castTimeSec": 1.033,
+  "castTimeSec": 0.467,
   "rangeTier": "極大",
   "range": 12
 }

@@ -8,16 +8,17 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    22.0,
-    22.0,
-    22.0,
-    22.0
+    15.0,
+    15.0,
+    15.0,
+    15.0
   ],
+  "cooldownTier": "小",
   "manaCost": [
-    60.0,
-    80.0,
-    100.0,
-    120.0
+    73.0,
+    73.0,
+    73.0,
+    73.0
   ],
   "range": 0,
   "effects": [
@@ -36,12 +37,8 @@
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "perRank": [
-          100.0,
-          150.0,
-          200.0,
-          250.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -53,5 +50,5 @@
   ],
   "vfxKey": "fx.prim.arcane.slash",
   "schema": "ability@1",
-  "castTimeSec": 0.467
+  "castTimeSec": 0.367
 }

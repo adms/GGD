@@ -11,21 +11,19 @@
     15.0,
     15.0
   ],
+  "cooldownTier": "小",
   "manaCost": [
     75.0,
-    105.0,
-    135.0
+    75.0,
+    75.0
   ],
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
     "params": {
       "damage": {
-        "perRank": [
-          220,
-          340,
-          460
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",

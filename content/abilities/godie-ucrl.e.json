@@ -8,31 +8,27 @@
   "castType": "targeted",
   "maxRank": 5,
   "cooldown": [
-    12.0,
-    12.0,
-    12.0,
-    12.0,
-    12.0
+    6.0,
+    6.0,
+    6.0,
+    6.0,
+    6.0
   ],
+  "cooldownTier": "極小",
   "manaCost": [
-    60.0,
-    60.0,
-    60.0,
-    60.0,
-    60.0
+    73.0,
+    73.0,
+    73.0,
+    73.0,
+    73.0
   ],
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
     "params": {
       "damage": {
-        "perRank": [
-          80,
-          120,
-          160,
-          200,
-          240
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ad",
@@ -41,14 +37,14 @@
         ]
       },
       "damageType": "physical",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.167
     }
   },
   "vfxKey": "fx.prim.earth.pulse-sm",
   "sfxKey": "wc3.mortarteampissed9",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.3,
+  "castTimeSec": 0.167,
   "rangeTier": "極大",
   "range": 12
 }

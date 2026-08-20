@@ -14,8 +14,8 @@
   ],
   "manaCost": [
     240.0,
-    420.0,
-    600.0
+    240.0,
+    240.0
   ],
   "range": 0.0,
   "radiusTier": "中",
@@ -43,11 +43,8 @@
           "kind": "damageArea",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              250.0,
-              350.0,
-              450.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -89,5 +86,6 @@
   ],
   "icon": "assets/icons/abilities/godie-e00s.r.webp",
   "vfxKey": "fx.prim.arcane.nova-lg",
+  "cooldownTier": "大",
   "castTimeSec": 1.233
 }

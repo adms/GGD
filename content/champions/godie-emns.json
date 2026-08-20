@@ -65,12 +65,12 @@
         30.0
       ],
       "manaCost": [
-        150.0,
-        200.0,
-        250.0,
-        300.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 2.0,
+      "range": 12.0,
       "targetsEnemies": true,
       "effects": [
         {
@@ -89,6 +89,7 @@
       "vfxKey": "fx.prim.void.pulse-sm",
       "sfxKey": "wc3.gruntyesattack1",
       "rangeTier": "極大",
+      "cooldownTier": "中",
       "castTimeSec": 2
     },
     "W": {
@@ -151,16 +152,16 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        50.0,
-        40.0,
+        30.0,
+        30.0,
+        30.0,
         30.0
       ],
       "manaCost": [
         150.0,
-        250.0,
-        350.0,
-        450.0
+        150.0,
+        150.0,
+        150.0
       ],
       "range": 12.0,
       "radiusTier": "中",
@@ -175,12 +176,8 @@
           },
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              650.0,
-              750.0,
-              850.0,
-              950.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -197,6 +194,7 @@
       "vfxKey": "fx.prim.physical.shockwave",
       "sfxKey": "wc3.rokhanwhat2",
       "rangeTier": "極大",
+      "cooldownTier": "極小",
       "castTimeSec": 0.767
     },
     "R": {
@@ -208,14 +206,14 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        35.0,
-        35.0,
-        35.0
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
         150.0,
-        250.0,
-        350.0
+        150.0,
+        150.0
       ],
       "range": 12.0,
       "targetsEnemies": true,
@@ -263,7 +261,8 @@
       "vfxKey": "fx.prim.void.nova-lg",
       "sfxKey": "wc3.gruntyesattack3",
       "rangeTier": "極大",
-      "castTimeSec": 0.867
+      "cooldownTier": "中",
+      "castTimeSec": 0.767
     }
   },
   "skillOrder": [

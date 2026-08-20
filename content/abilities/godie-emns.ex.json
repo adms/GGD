@@ -8,12 +8,12 @@
   "castType": "targeted",
   "maxRank": 1,
   "cooldown": [
-    120.0
+    60.0
   ],
   "manaCost": [
-    450.0
+    0.0
   ],
-  "range": 5.29,
+  "range": 6.0,
   "targetsEnemies": true,
   "effects": [
     {
@@ -27,5 +27,6 @@
   "vfxKey": "fx.prim.void.pulse-lg",
   "sfxKey": "wc3.kaelyesattack3",
   "rangeTier": "中",
+  "cooldownTier": "極大",
   "castTimeSec": 2
 }

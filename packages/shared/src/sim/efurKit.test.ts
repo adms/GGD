@@ -314,8 +314,14 @@ describe("13-02 龍頭戲畫。牙突 (efur-w-hppct / efur-w-knock)", () => {
     cover("efur-w-hppct");
     // 同一座隔離夾具：同階、同施法者、同減傷，**只有 `maxHp` 不一樣**，所以
     // 兩者掉血的差**就是**「目標最大生命百分比」那一項，其他項全部相消。
-    const small = castW(1000);
-    const big = castW(4000);
+    // ⚠️ 2026-08-21 夾具加大 20 倍：owner ①「B 全轉」把這一支的基礎傷害從
+    //    perRank[40..100] 換成級距「極小」(600)，而舊夾具的 1000 / 4000 血
+    //    在新數字下**會被打死** ⇒ `lost` 被血量夾住，兩者的差就不再是
+    //    「最大生命百分比」那一項（失敗形態④：斷言方向與缺陷無關）。
+    //    ⛔ 這裡刻意不抄新的傷害值 —— 只要夾具遠大於任何一發，這條測試就
+    //    永遠在量它該量的那一項。
+    const small = castW(20_000);
+    const big = castW(80_000);
     expect(
       big.lost - small.lost,
       "牙突的『目標[最大生命] 6/8/10/12%』又不見了 —— 卡面寫著它、場上沒有（GH#459）",
@@ -325,15 +331,20 @@ describe("13-02 龍頭戲畫。牙突 (efur-w-hppct / efur-w-knock)", () => {
     //    整個 `damage` 被刪掉（差一樣會是 0，但這裡會是 0 傷害），
     //    以及 `amount.perRank` 那一欄沒有被讀。
     expect(small.lost, "牙突根本沒造成傷害").toBeGreaterThan(0);
+    // ⚠️ 2026-08-21 —— 這一條原本驗的是 `amount.perRank`，而 owner ①
+    //    「**接受升階只剩 ratios 成長**」把基礎值那一欄交給了級距。
+    //    ⭐ 但逐階成長**沒有整條消失**：`resourcePct.perRank`（6/8/10/12%
+    //    目標最大生命）仍然是逐階的，而那正是這一支卡面的招牌。
+    //    ⇒ 斷言改成驗**那一欄**，⛔ 不是刪掉這條測試。
     expect(
-      castW(4000, 4).lost,
-      "四階跟一階打一樣多 —— `amount.perRank` 那一欄沒有被讀",
-    ).toBeGreaterThan(castW(4000, 1).lost);
+      castW(80_000, 4).lost,
+      "四階跟一階打一樣多 —— `resourcePct.perRank`（6/8/10/12% 最大生命）那一欄沒有被讀",
+    ).toBeGreaterThan(castW(80_000, 1).lost);
   });
 
   it("把目標推開，而且**不再**暈眩", () => {
     cover("efur-w-knock");
-    const out = castW(4000);
+    const out = castW(80_000);
     // 6.0 at gap 0 minus the 2.0 gap (GH#193) = 4.0, and the body slides there
     // over several ticks. A loose floor of 2.0 keeps this about "it really got
     // shoved" rather than about the gap arithmetic knockback.test.ts owns.

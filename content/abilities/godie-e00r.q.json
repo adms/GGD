@@ -14,12 +14,12 @@
     60.0
   ],
   "manaCost": [
-    50.0,
-    80.0,
-    110.0,
-    140.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "range": 11.0,
+  "range": 12.0,
   "targetsEnemies": true,
   "effects": [
     {
@@ -39,5 +39,6 @@
   "icon": "assets/icons/abilities/godie-e00r.q.webp",
   "vfxKey": "fx.prim.void.explosion",
   "rangeTier": "極大",
+  "cooldownTier": "極大",
   "castTimeSec": 0.267
 }

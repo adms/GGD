@@ -14,10 +14,10 @@
     60.0
   ],
   "manaCost": [
-    160.0,
-    220.0,
-    280.0,
-    340.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
   "range": 0.0,
   "targetsEnemies": false,
@@ -109,5 +109,6 @@
   ],
   "icon": "assets/icons/abilities/godie-h02v.q.webp",
   "vfxKey": "fx.prim.nature.pulse-sm",
+  "cooldownTier": "中",
   "castTimeSec": 0.833
 }

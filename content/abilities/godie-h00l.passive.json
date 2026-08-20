@@ -39,7 +39,13 @@
                     0.03
                   ]
                 }
-              },
+              }
+            ],
+            "target": "event"
+          },
+          {
+            "on": "onBasicAttack",
+            "effects": [
               {
                 "kind": "dispel",
                 "shape": "single",
@@ -49,6 +55,7 @@
                 "count": 1
               }
             ],
+            "internalCooldown": 1.2,
             "target": "event"
           }
         ]

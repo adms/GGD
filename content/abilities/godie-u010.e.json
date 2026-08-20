@@ -13,11 +13,12 @@
     60.0,
     60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
     215.0,
-    300.0,
-    385.0,
-    470.0
+    215.0,
+    215.0,
+    215.0
   ],
   "effects": [
     {
@@ -28,12 +29,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              650,
-              900,
-              1150,
-              1400
-            ],
+            "damageTier": "小",
+            "flat": 1500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -48,7 +45,7 @@
   "vfxKey": "godie-tectonicfury-p0",
   "sfxKey": "wc3.dragonyes2",
   "schema": "ability@1",
-  "castTimeSec": 1.5,
+  "castTimeSec": 0.833,
   "hitFeel": {
     "hitstopTicks": 4,
     "hitstunTicks": 6,

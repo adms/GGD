@@ -66,5 +66,6 @@
   ],
   "icon": "assets/icons/abilities/godie-edem.ex.webp",
   "vfxKey": "fx.prim.void.explosion-lg",
+  "cooldownTier": "極大",
   "castTimeSec": 1.633
 }

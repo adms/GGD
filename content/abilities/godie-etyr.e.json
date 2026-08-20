@@ -8,16 +8,17 @@
   "castType": "ground",
   "maxRank": 4,
   "cooldown": [
-    35.0,
-    35.0,
-    35.0,
-    35.0
+    30.0,
+    30.0,
+    30.0,
+    30.0
   ],
+  "cooldownTier": "極小",
   "manaCost": [
     150.0,
-    180.0,
-    210.0,
-    240.0
+    150.0,
+    150.0,
+    150.0
   ],
   "range": 0.0,
   "effects": [],
@@ -28,12 +29,8 @@
       "reach": 82,
       "aim": "inward",
       "damage": {
-        "perRank": [
-          250,
-          400,
-          550,
-          700
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -42,12 +39,12 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.867
+      "castTimeSec": 0.767
     }
   },
   "vfxKey": "fx.prim.holy.explosion",
   "targetsEnemies": true,
   "radius": 1.5,
   "schema": "ability@1",
-  "castTimeSec": 0.867
+  "castTimeSec": 0.767
 }

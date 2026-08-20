@@ -8,7 +8,7 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    150.0
+    60.0
   ],
   "manaCost": [
     0.0
@@ -74,5 +74,6 @@
     ]
   },
   "icon": "assets/icons/abilities/godie-e00r.ex.webp",
-  "vfxKey": "fx.prim.void.explosion-lg"
+  "vfxKey": "fx.prim.void.explosion-lg",
+  "cooldownTier": "極大"
 }

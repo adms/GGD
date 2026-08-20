@@ -61,16 +61,16 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        25,
-        25,
-        25,
-        25
+        30.0,
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
-        100,
-        130,
-        160,
-        190
+        100.0,
+        100.0,
+        100.0,
+        100.0
       ],
       "effects": [],
       "template": {
@@ -79,12 +79,8 @@
           "anchor": "point",
           "radius": 300,
           "damage": {
-            "perRank": [
-              150,
-              200,
-              250,
-              300
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -93,7 +89,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.633,
+          "castTimeSec": 0.767,
           "statusId": "slow40",
           "statusDurationSec": 1.5
         }
@@ -101,9 +97,10 @@
       "vfxKey": "fx.prim.ice.shockwave",
       "targetsEnemies": true,
       "radius": 5.5,
-      "castTimeSec": 0.633,
+      "castTimeSec": 0.767,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極小"
     },
     "W": {
       "id": "godie-n003.w",
@@ -115,16 +112,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        60,
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0,
       "effects": [
@@ -132,22 +129,23 @@
           "kind": "heal",
           "amount": {
             "perRank": [
-              200,
-              360,
-              520,
-              680
+              200.0,
+              360.0,
+              520.0,
+              680.0
             ],
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1
+                "coeff": 1.0
               }
             ]
           }
         }
       ],
       "vfxKey": "fx.prim.blood.nova",
-      "castTimeSec": 0.067
+      "castTimeSec": 0.067,
+      "cooldownTier": "極大"
     },
     "E": {
       "id": "godie-n003.e",
@@ -166,9 +164,9 @@
       ],
       "manaCost": [
         160.0,
-        280.0,
-        400.0,
-        520.0
+        160.0,
+        160.0,
+        160.0
       ],
       "effects": [
         {
@@ -179,21 +177,18 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "perRank": [
-                  500.0,
-                  850.0,
-                  1200.0,
-                  1550.0
-                ]
+                "damageTier": "小",
+                "flat": 1500.0
               }
             }
           ]
         }
       ],
       "vfxKey": "fx.prim.ice.nova",
-      "castTimeSec": 1.133,
+      "castTimeSec": 0.833,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "大"
     },
     "R": {
       "id": "godie-n003.r",
@@ -205,14 +200,14 @@
       "castType": "skillshot",
       "maxRank": 3,
       "cooldown": [
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        500,
-        730,
-        960
+        500.0,
+        500.0,
+        500.0
       ],
       "effects": [],
       "template": {
@@ -222,18 +217,15 @@
           "stepSize": 200,
           "segmentAoe": 400,
           "damage": {
-            "perRank": [
-              150,
-              250,
-              350
-            ]
+            "damageTier": "極小",
+            "flat": 600.0
           },
           "damageType": "magic",
-          "castTimeSec": 1.233
+          "castTimeSec": 1.033
         }
       },
       "vfxKey": "fx.w3x.locust.frostnova.p01",
-      "castTimeSec": 1.233,
+      "castTimeSec": 1.033,
       "hitFeel": {
         "hitstopTicks": 5,
         "hitstunTicks": 8,
@@ -250,7 +242,8 @@
       },
       "targetsEnemies": true,
       "rangeTier": "大",
-      "range": 8
+      "range": 8,
+      "cooldownTier": "極大"
     }
   },
   "skillOrder": [

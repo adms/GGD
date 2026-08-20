@@ -12,23 +12,20 @@
     60.0,
     60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
     120.0,
-    185.0,
-    250.0,
-    315.0
+    120.0,
+    120.0,
+    120.0
   ],
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
     "params": {
       "damage": {
-        "perRank": [
-          350,
-          550,
-          750,
-          950
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -37,7 +34,7 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 1.433
+      "castTimeSec": 0.467
     }
   },
   "vfxKey": "fx.w3x.particle.heronarutos4effect.p00",
@@ -55,7 +52,7 @@
   "targetsEnemies": true,
   "schema": "ability@1",
   "icon": "assets/icons/abilities/godie-hvwd.e.png",
-  "castTimeSec": 1.433,
+  "castTimeSec": 0.467,
   "rangeTier": "極大",
   "range": 12
 }

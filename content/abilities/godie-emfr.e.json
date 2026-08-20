@@ -8,16 +8,16 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    55.0,
-    55.0,
-    55.0,
-    55.0
+    45.0,
+    45.0,
+    45.0,
+    45.0
   ],
   "manaCost": [
     180.0,
-    260.0,
-    340.0,
-    420.0
+    180.0,
+    180.0,
+    180.0
   ],
   "range": 0.0,
   "targetsEnemies": false,
@@ -65,12 +65,8 @@
               "kind": "damageArea",
               "damageType": "magic",
               "amount": {
-                "perRank": [
-                  100.0,
-                  150.0,
-                  200.0,
-                  250.0
-                ],
+                "damageTier": "極小",
+                "flat": 600.0,
                 "ratios": [
                   {
                     "stat": "ap",
@@ -95,5 +91,6 @@
   ],
   "vfxKey": "fx.prim.fire.nova",
   "icon": "assets/icons/abilities/godie-emfr.e.webp",
+  "cooldownTier": "小",
   "castTimeSec": 0.267
 }

@@ -123,9 +123,9 @@
       ],
       "manaCost": [
         90.0,
-        180.0,
-        270.0,
-        360.0
+        90.0,
+        90.0,
+        90.0
       ],
       "range": 0.0,
       "radiusTier": "小",
@@ -135,12 +135,8 @@
           "kind": "damageArea",
           "damageType": "physical",
           "amount": {
-            "perRank": [
-              120.0,
-              220.0,
-              320.0,
-              420.0
-            ]
+            "damageTier": "極小",
+            "flat": 600.0
           },
           "radius": 4.5,
           "radiusTier": "小",
@@ -181,6 +177,7 @@
       "icon": "assets/icons/abilities/godie-h01u.w.webp",
       "vfxKey": "fx.prim.physical.slash",
       "sfxKey": "wc3.defendcaster",
+      "cooldownTier": "中",
       "castTimeSec": 0.667
     },
     "E": {
@@ -199,11 +196,11 @@
       ],
       "manaCost": [
         150.0,
-        200.0,
-        250.0,
-        300.0
+        150.0,
+        150.0,
+        150.0
       ],
-      "range": 10.0,
+      "range": 8.0,
       "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
@@ -217,12 +214,8 @@
           "kind": "damageLine",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              150.0,
-              200.0,
-              250.0,
-              300.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -259,6 +252,7 @@
       "icon": "assets/icons/abilities/godie-h01u.e.webp",
       "vfxKey": "fx.prim.physical.beam",
       "rangeTier": "大",
+      "cooldownTier": "中",
       "castTimeSec": 0.067
     },
     "R": {
@@ -270,14 +264,14 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        90.0,
-        90.0,
-        90.0
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        250.0,
-        400.0,
-        550.0
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0.0,
       "targetsEnemies": false,
@@ -386,6 +380,7 @@
       "icon": "assets/icons/abilities/godie-h01u.r.webp",
       "vfxKey": "fx.prim.physical.shockwave-lg",
       "sfxKey": "wc3.defendcaster",
+      "cooldownTier": "極大",
       "castTimeSec": 0.667
     }
   },

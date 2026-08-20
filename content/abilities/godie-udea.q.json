@@ -8,16 +8,17 @@
   "castType": "ground",
   "maxRank": 4,
   "cooldown": [
-    25.0,
-    25.0,
-    25.0,
-    25.0
+    15.0,
+    15.0,
+    15.0,
+    15.0
   ],
+  "cooldownTier": "小",
   "manaCost": [
-    150.0,
-    250.0,
-    350.0,
-    450.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
   "effects": [
     {
@@ -29,7 +30,7 @@
   ],
   "vfxKey": "fx.prim.arcane.pulse-sm",
   "schema": "ability@1",
-  "castTimeSec": 0.467,
+  "castTimeSec": 0.367,
   "rangeTier": "極大",
   "range": 12
 }

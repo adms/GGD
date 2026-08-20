@@ -13,11 +13,12 @@
     30.0,
     30.0
   ],
+  "cooldownTier": "中",
   "manaCost": [
     80.0,
-    105.0,
-    130.0,
-    155.0
+    80.0,
+    80.0,
+    80.0
   ],
   "effects": [
     {
@@ -28,12 +29,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              75.0,
-              75.0,
-              75.0,
-              75.0
-            ]
+            "damageTier": "極小",
+            "flat": 600.0
           }
         }
       ]

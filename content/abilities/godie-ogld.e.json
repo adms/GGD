@@ -12,21 +12,19 @@
     45.0,
     45.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
     75.0,
-    150.0,
-    225.0
+    75.0,
+    75.0
   ],
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
     "params": {
       "damage": {
-        "perRank": [
-          6,
-          12,
-          18
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -35,13 +33,13 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.267
+      "castTimeSec": 0.467
     }
   },
   "vfxKey": "fx.prim.holy.nova",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.267,
+  "castTimeSec": 0.467,
   "rangeTier": "極大",
   "range": 12
 }

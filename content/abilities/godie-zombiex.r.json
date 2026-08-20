@@ -9,14 +9,15 @@
   "castType": "ground",
   "maxRank": 3,
   "cooldown": [
-    90,
-    80,
-    70
+    60.0,
+    60.0,
+    60.0
   ],
+  "cooldownTier": "中",
   "manaCost": [
-    100,
-    150,
-    200
+    100.0,
+    100.0,
+    100.0
   ],
   "range": 0,
   "radius": 4,
@@ -27,11 +28,8 @@
       "anchor": "point",
       "radius": 218,
       "damage": {
-        "perRank": [
-          300,
-          500,
-          700
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",

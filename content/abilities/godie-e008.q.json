@@ -8,25 +8,23 @@
   "castType": "targeted",
   "maxRank": 3,
   "cooldown": [
-    25.0,
-    25.0,
-    25.0
+    15.0,
+    15.0,
+    15.0
   ],
+  "cooldownTier": "小",
   "manaCost": [
     75.0,
-    125.0,
-    175.0
+    75.0,
+    75.0
   ],
   "effects": [
     {
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "perRank": [
-          300.0,
-          400.0,
-          500.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -56,7 +54,7 @@
   "sfxKey": "wc3.flaretarget3",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.5,
+  "castTimeSec": 0.367,
   "rangeTier": "小",
   "range": 4.5
 }

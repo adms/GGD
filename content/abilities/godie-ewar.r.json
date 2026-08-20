@@ -14,8 +14,8 @@
   ],
   "manaCost": [
     250.0,
-    350.0,
-    450.0
+    250.0,
+    250.0
   ],
   "range": 0.0,
   "radiusTier": "中",
@@ -25,11 +25,8 @@
       "kind": "damageArea",
       "damageType": "magic",
       "amount": {
-        "perRank": [
-          550.0,
-          750.0,
-          950.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -44,7 +41,7 @@
     {
       "kind": "dispel",
       "shape": "circle",
-      "radius": 6.0,
+      "radius": 8.0,
       "radiusTier": "大",
       "side": "enemies",
       "pools": {
@@ -71,5 +68,6 @@
     "flashMs": 178,
     "camKick": 0.446
   },
+  "cooldownTier": "中",
   "castTimeSec": 2
 }

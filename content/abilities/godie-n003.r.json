@@ -8,14 +8,15 @@
   "castType": "skillshot",
   "maxRank": 3,
   "cooldown": [
-    60,
-    60,
-    60
+    60.0,
+    60.0,
+    60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
-    500,
-    730,
-    960
+    500.0,
+    500.0,
+    500.0
   ],
   "effects": [],
   "template": {
@@ -25,19 +26,16 @@
       "stepSize": 200,
       "segmentAoe": 400,
       "damage": {
-        "perRank": [
-          150,
-          250,
-          350
-        ]
+        "damageTier": "極小",
+        "flat": 600.0
       },
       "damageType": "magic",
-      "castTimeSec": 1.233
+      "castTimeSec": 1.033
     }
   },
   "vfxKey": "fx.w3x.locust.frostnova.p01",
   "schema": "ability@1",
-  "castTimeSec": 1.233,
+  "castTimeSec": 1.033,
   "hitFeel": {
     "hitstopTicks": 5,
     "hitstunTicks": 8,

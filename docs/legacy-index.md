@@ -23,11 +23,11 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 524 個檔案**，分佈在 2 個隔離區。
+**目前共 541 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
-| [`docs/legacy/`](legacy-index.md#docslegacy) | 84 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
+| [`docs/legacy/`](legacy-index.md#docslegacy) | 101 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
 | [`content/_legacy/`](legacy-index.md#contentlegacy) | 440 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
@@ -35,7 +35,7 @@ owner 2026-08-13：
 
 ---
 
-## `docs/legacy/` —— 84 檔
+## `docs/legacy/` —— 101 檔
 
 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）
 
@@ -46,6 +46,7 @@ owner 2026-08-13：
 | `_ability-fidelity-ledger.json` | 同上的 JSON 版（編輯器吃這一份，不要 parse md） | 同上 |
 | `_ability-fidelity-ledger.md` | 696 支技能的三欄帳本（描述 vs 實作 vs w3x） | 第三欄的權威是 w3x。⚠️ 產生器 `docs/tools/ability_ledger.py` 的輸出路徑已改指這裡 |
 | `_ability-ledger-editor-spec.md` | 保真度編輯器規格 | 第三欄權威是 w3x；它操作的帳本本體早就在 legacy，規格卻留在第一層 |
+| `_ability-prose-residual-claims_temp_20260821-0110.tsv` | （.tsv 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bot-build-priority-retired-20260820.md` | 退場：12 位英雄的「推薦出裝」梯子（`champion@1.buildPriority`） —— owner 2026-08-18：「66 位英雄的推薦出裝變成空的 => **不需要推薦出裝**」 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_champion-attack-range-20260731.md` | 07-31 的英雄攻擊距離快照 | 自陳「這是一份時間點快照」，而「過期了就補一行指向新檔」那一行從沒補上 |
 | `_champion-dedup-113.md` | #113 英雄去重的**舊**接手檔 | 它的接班檔自己寫「本檔取代…那份的結論方向對、**理由是錯的**」。正確版是 `docs/_audit-113-duplicate-pairs.md` |
@@ -71,15 +72,23 @@ owner 2026-08-13：
 | `_w3x-fidelity-superseded.md` | 被 owner 新版設計取代的原作數值 | 定義上就是「已被取代」。留著是因為知識不可以無聲消失 |
 | `abilities_vfx_editor_readme.md` | 外部編輯器交接（2026-08-03 版） | 新版 `_codex-handoff.md`（08-12）的「必給三份」裡沒有它。照它交付的編輯器不知道五層階梯、不知道 `GET /capabilities` 才是權威 |
 | `tiering-proposal.md` | 英雄分級**提案**（08-11） | 自陳「本文件沒有動過任何 content/ 檔案」，而隔天裁決就落地了。把已決事項當待辦重開 |
+| `五級距全轉_原始數值_20260821.tsv` | （.tsv 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `平衡數值決策建議-465改版前_temp_20260820-2034.md` | 平衡數值決策建議 —— 產生時間：2026-08-20 19:35（GMT+8） · `{用途}_temp_{timestamp}` 暫存檔，決策勾完就可以退休到 `docs/legacy/` | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `平衡數值決策建議-600落地前_temp_20260821-0020.md` | 平衡數值決策建議 —— 初版 2026-08-20 19:35 · **改版 2026-08-20 23:30**（GMT+8） · `{用途}_temp_{timestamp}` 暫存檔，勾完就退休到 `docs/legacy/` | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `平衡數值決策建議-錨點裁決前_temp_20260820-2319.md` | 平衡數值決策建議 —— 產生時間：2026-08-20 19:35（GMT+8） · `{用途}_temp_{timestamp}` 暫存檔，決策勾完就可以退休到 `docs/legacy/` | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `平衡數值決策建議_temp_20260820-1935_superseded-20260821.md` | 平衡數值決策建議 —— 最後更新 2026-08-21 00:20（GMT+8）** · 初版 2026-08-20 19:35 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `改進延遲.md` | 延遲改進計畫**第一版** | 第 1 行逐字「⛔⛔ 已廢棄 —— 不要參考這份文件 ⛔⛔」。現行版是 `docs/_延遲改進計畫.md`（雙向指認一致） |
 | `效果標籤詞彙表.md` | 效果標籤詞彙表 **v1** | 已被 `docs/效果標籤詞彙表v2.md` 取代（v2 的檔頭自己就這樣寫） |
 | `新英雄範本-Saber填入.md` | 新英雄填空表（Saber 填好的樣本） | 把 `godie-e002` 標成「與 `godie-e00l` 完全重複（#113 去重對象）」—— 而 #113 的裁決是 14 對**全部是本體↔變身態，一個都不能 dedup** |
 | `新英雄範本-完整範例.md` | 新英雄填空表（帶範例） | 建議帶母體是 n=111，是 stat-normalization 上線**前**的原始分佈 |
 | `新英雄範本.md` | 新英雄填空表（最早，07-25 12:22） | 寫「英雄編號 100 ← 目前最大 099」，而 100 已被佔用。編號是 JASS 對照的 join key，填錯是綁死的東西出錯 |
 | `英雄屬性正規化提案.md` | 屬性正規化**提案**（初版） | 自己把權威讓出去：「三個整包方案在計畫書第二·五節，**先讀那一份**」。`config.stat-normalization@1` 已出貨 |
+| `_ability-prose-before-placeholders_temp_2026082016403/README.md` | 技能說明改成佔位符 —— 轉檔前的原文（說明推導（票號待開）） —— · 改寫 **326** 支技能、**393** 個 JSON、**67** 處產生器規格字串。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026082016403/descriptions.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026082016462/README.md` | 技能說明改成佔位符 —— 轉檔前的原文（說明推導（票號待開）） —— · 改寫 **327** 支技能、**394** 個 JSON、**67** 處產生器規格字串。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026082016462/descriptions.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026082017032/README.md` | 技能說明改成佔位符 —— 轉檔前的原文（說明推導（票號待開）） —— · 改寫 **18** 支技能、**33** 個 JSON、**2** 處產生器規格字串。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026082017032/descriptions.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/_ledger.tsv` | （.tsv 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/20260820-012418/CLAUDE.md` | GGD — 開發守則 —— 這一份是**規則**，不是說明書。架構與現況看 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/20260820-012959/docs/_release/board-live.md` | ⭐ 瓶頸已解除：鎖是 `bundle.json`，不是 `content/` 目錄 —— 切分依據是**檔案領域互斥**，⛔ 不是主題相近 —— 兩條 lane 只要會編到同一個檔就不能併行。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
@@ -112,6 +121,14 @@ owner 2026-08-13：
 | `_overwrites/overwrite_temp_20260821-001036/packages/shared/src/content/tierSnap.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260821-001053/packages/shared/src/content/tierSnap.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260821-001123/packages/shared/src/content/manaCostTiers.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260821-003749/tools/card-prose/apply_placeholders.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260821-023129/packages/shared/src/content/renderAbilityText.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260821-023330/packages/shared/src/content/renderAbilityText.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260821-023507/packages/shared/src/ops/supersededTierNumbers.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260821-023707/docs/legacy-index.md` | GGD · legacy 記憶索引 —— ⚙️ **這一份是產生出來的，⛔ 不要手改。** | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260821-025704/content/champions/sela.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260821-025704/content/champions/thorne.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260821-025726/packages/shared/src/content/descriptionClaims.baseline/godie-udea.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/tiersnap-lane-collision_temp_20260821-0011/tier-snap-gen.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `code/apps/game-server/src/match/__autoattack_probe.test.ts` | 自動攻擊調查用的探測檔（同上） | 180 行、唯一的 expect 是夾具健檢。接班守衛 `autoAcquireWhileMoving.test.ts`（25 個 expect）已經很厚 |
 | `code/apps/game-server/src/match/__mana_probe.test.ts` | 魔力倍率調查用的探測檔（原 `apps/game-server/src/match/`） | 267 行、`expect(` **0 次**、`console.log` 8 次 —— 永遠不會紅，卻把「跑一場真比賽」掛在每次 pnpm test 上 |

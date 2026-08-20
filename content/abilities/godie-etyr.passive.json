@@ -10,8 +10,9 @@
   "castType": "ground",
   "maxRank": 1,
   "cooldown": [
-    5.0
+    30.0
   ],
+  "cooldownTier": "極小",
   "manaCost": [
     150.0
   ],
@@ -22,9 +23,8 @@
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "perRank": [
-          95.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -35,7 +35,7 @@
     }
   ],
   "vfxKey": "fx.prim.arcane.summon",
-  "castTimeSec": 0.133,
+  "castTimeSec": 0.767,
   "rangeTier": "大",
   "range": 8
 }

@@ -11,21 +11,19 @@
     60.0,
     60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
     215.0,
-    280.0,
-    345.0
+    215.0,
+    215.0
   ],
   "effects": [
     {
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "perRank": [
-          650.0,
-          950.0,
-          1250.0
-        ],
+        "damageTier": "小",
+        "flat": 1500.0,
         "ratios": [
           {
             "stat": "ap",
@@ -39,7 +37,7 @@
   "targetsEnemies": true,
   "schema": "ability@1",
   "icon": "assets/icons/abilities/godie-e007.r.png",
-  "castTimeSec": 1.5,
+  "castTimeSec": 1.233,
   "hitFeel": {
     "hitstopTicks": 4,
     "hitstunTicks": 7,

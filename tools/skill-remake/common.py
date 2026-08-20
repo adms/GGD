@@ -21,6 +21,9 @@ import os
 import re
 import subprocess
 
+# ⭐ 五級距全轉的**唯一**實作 —— 這 90 支與其餘 330 支共用它（見那一份的檔頭）。
+from tierize import Grids as tierize_grids, hook_icd, tierize  # noqa: F401
+
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 AB = os.path.join(ROOT, "content", "abilities")
 CH = os.path.join(ROOT, "content", "champions")
@@ -221,6 +224,18 @@ RETIRED = frozenset({
 
 #: aid → {被刻意丟掉的欄位: 舊值}。main() 收工前印出來（第二守則：靜默才是缺陷）。
 DROP_LOG = {}
+
+#: aid → `tierize()` 動過的每一格。⭐ 收工前印出來 —— 一次改 90 支的傷害／冷卻／
+#: 耗魔如果**安靜地**發生，那就是第二守則失敗形態②的教科書樣本。
+TIERIZE_LOG = {}
+_GRIDS_CACHE = []
+
+
+def _TIER_GRIDS():
+    """四張出貨表讀一次就好（`Grids()` 每次都開四個檔）。"""
+    if not _GRIDS_CACHE:
+        _GRIDS_CACHE.append(tierize_grids())
+    return _GRIDS_CACHE[0]
 
 
 def amt(per=None, flat=None, ap=None, ad=None, **kw):
@@ -1264,6 +1279,13 @@ def build(e):
     # ── B1-M：時序容器的三條閘（只喊，不猜）──────────────────────────────────
     _timing_gates(doc, e, num)
     _set_semantics_gate(doc, e, num)
+    # ── ①②③④⑦（owner 2026-08-21）：收進五級距 ──────────────────────────────
+    # ⭐ 這 90 支與其餘 330 支走**同一支** `tierize()`（`tools/skill-remake/tierize.py`）。
+    # ⛔ 不要在這裡再寫一份規則：兩份會各自腐爛，而它們的分歧長得跟正常一模一樣
+    #    （出貨 90 支收了、330 支沒收，或者反過來，而沒有任何東西會紅）。
+    # ⚠️ 位置在 `_canonical_order` **之前**是硬性的：`tierize` 會把
+    #    `amount` 換成 `{damageTier, flat, …}`，那一步之後才輪到鍵序統一。
+    tierize(doc, _TIER_GRIDS(), TIERIZE_LOG.setdefault(aid, []))
     # ── B2：鍵序統一照 Zod 宣告序重排（⛔ 一定要在所有會動 effects 的步驟之後）──
     doc["effects"] = _canonical_order(doc["effects"])
     if doc.get("passive"):

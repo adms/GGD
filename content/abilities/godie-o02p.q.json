@@ -8,16 +8,17 @@
   "castType": "ground",
   "maxRank": 4,
   "cooldown": [
-    25.0,
-    25.0,
-    25.0,
-    25.0
+    30.0,
+    30.0,
+    30.0,
+    30.0
   ],
+  "cooldownTier": "極小",
   "manaCost": [
     75.0,
-    105.0,
-    135.0,
-    165.0
+    75.0,
+    75.0,
+    75.0
   ],
   "effects": [],
   "template": {
@@ -25,12 +26,8 @@
     "params": {
       "radius": 400,
       "damage": {
-        "perRank": [
-          200,
-          275,
-          350,
-          425
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -39,14 +36,14 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.633
+      "castTimeSec": 0.767
     }
   },
   "vfxKey": "fx.prim.sound.nova",
   "targetsEnemies": true,
   "schema": "ability@1",
   "radius": 7.33,
-  "castTimeSec": 0.633,
+  "castTimeSec": 0.767,
   "rangeTier": "極大",
   "range": 12
 }

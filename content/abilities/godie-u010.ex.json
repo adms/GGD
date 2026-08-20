@@ -10,6 +10,7 @@
   "cooldown": [
     60.0
   ],
+  "cooldownTier": "中",
   "manaCost": [
     120.0
   ],
@@ -19,7 +20,8 @@
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "flat": 900,
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",

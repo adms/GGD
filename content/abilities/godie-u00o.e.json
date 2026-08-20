@@ -13,11 +13,12 @@
     60.0,
     60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
     130.0,
-    160.0,
-    190.0,
-    220.0
+    130.0,
+    130.0,
+    130.0
   ],
   "effects": [
     {
@@ -28,12 +29,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              400.0,
-              600.0,
-              800.0,
-              1000.0
-            ]
+            "damageTier": "極小",
+            "flat": 600.0
           }
         }
       ]
@@ -42,7 +39,7 @@
   "vfxKey": "fx.prim.arcane.bolt",
   "sfxKey": "wc3.demonhuntermissilehit3",
   "schema": "ability@1",
-  "castTimeSec": 1.5,
+  "castTimeSec": 0.467,
   "rangeTier": "大",
   "range": 8
 }

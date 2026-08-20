@@ -67,19 +67,16 @@
       ],
       "manaCost": [
         130.0,
-        195.0,
-        260.0
+        130.0,
+        130.0
       ],
       "effects": [
         {
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              10.0,
-              15.0,
-              15.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -91,9 +88,10 @@
       ],
       "vfxKey": "fx.prim.nature.slash",
       "targetsEnemies": true,
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.467,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "大"
     },
     "W": {
       "id": "godie-n00p.w",
@@ -112,9 +110,9 @@
       ],
       "manaCost": [
         80.0,
-        105.0,
-        130.0,
-        155.0
+        80.0,
+        80.0,
+        80.0
       ],
       "effects": [
         {
@@ -125,12 +123,8 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "perRank": [
-                  75.0,
-                  75.0,
-                  75.0,
-                  75.0
-                ]
+                "damageTier": "極小",
+                "flat": 600.0
               }
             }
           ]
@@ -140,7 +134,8 @@
       "sfxKey": "wc3.spiritofvengeanceyes3",
       "castTimeSec": 0.467,
       "rangeTier": "大",
-      "range": 8
+      "range": 8,
+      "cooldownTier": "中"
     },
     "E": {
       "id": "godie-n00p.e",
@@ -159,21 +154,17 @@
       ],
       "manaCost": [
         200.0,
-        300.0,
-        400.0,
-        500.0
+        200.0,
+        200.0,
+        200.0
       ],
       "effects": [
         {
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              80,
-              120,
-              160,
-              200
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -188,7 +179,8 @@
       "targetsEnemies": true,
       "castTimeSec": 0.467,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極大"
     },
     "R": {
       "id": "godie-n00p.r",
@@ -200,25 +192,22 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        75.0,
-        75.0,
-        75.0
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
         200.0,
-        375.0,
-        550.0
+        200.0,
+        200.0
       ],
       "effects": [
         {
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              300.0,
-              500.0,
-              700.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -230,9 +219,10 @@
       ],
       "vfxKey": "fx.prim.nature.shockwave-lg",
       "targetsEnemies": true,
-      "castTimeSec": 1.633,
+      "castTimeSec": 0.833,
       "rangeTier": "中",
-      "range": 6
+      "range": 6,
+      "cooldownTier": "極大"
     }
   },
   "skillOrder": [

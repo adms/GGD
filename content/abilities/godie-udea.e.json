@@ -8,31 +8,27 @@
   "castType": "targeted",
   "maxRank": 5,
   "cooldown": [
-    25.0,
-    25.0,
-    25.0,
-    25.0,
-    25.0
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0
   ],
+  "cooldownTier": "小",
   "manaCost": [
-    60.0,
-    150.0,
-    225.0,
-    300.0,
-    300.0
+    73.0,
+    73.0,
+    73.0,
+    73.0,
+    73.0
   ],
   "effects": [
     {
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "perRank": [
-          200,
-          400,
-          600,
-          800,
-          800
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -52,7 +48,7 @@
   "sfxKey": "wc3.taunt",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.633,
+  "castTimeSec": 0.367,
   "rangeTier": "極大",
   "range": 12
 }

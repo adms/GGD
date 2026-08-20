@@ -61,16 +61,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        40.0,
-        40.0,
-        20.0,
-        20.0
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "manaCost": [
-        160.0,
-        160.0,
-        160.0,
-        160.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0,
       "effects": [
@@ -87,16 +87,17 @@
         }
       ],
       "vfxKey": "fx.prim.physical.shockwave",
-      "castTimeSec": 0.067
+      "castTimeSec": 0.067,
+      "cooldownTier": "小"
     },
     "W": {
       "id": "godie-h02u.w",
       "name": "92-02 狂草泥馬",
       "icon": "assets/icons/abilities/godie-h02u.w.webp",
       "provenance": "w3x-import",
-      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n草泥馬中最上等的一隻，是草泥馬中的馬王，要朝尼族騎術最好的人才能獲得，對500範圍內敵人造成(現有金錢*0.1)點傷害，最大傷害不超過400點，並增加攻速50%，增加跑速10%，持續12秒。",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n草泥馬中最上等的一隻，是草泥馬中的馬王，要朝尼族騎術最好的人才能獲得，對施法距離{{range}}內的敵人造成(現有金錢*0.1)點傷害，最大傷害不超過400點，並增加攻速50%，增加跑速10%，持續12秒。",
       "slot": "W",
-      "castType": "self",
+      "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
         60.0,
@@ -106,22 +107,18 @@
       ],
       "manaCost": [
         90.0,
-        120.0,
-        150.0,
-        180.0
+        90.0,
+        90.0,
+        90.0
       ],
-      "range": 0,
+      "range": 8.0,
       "effects": [
         {
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              400.0,
-              800.0,
-              1200.0,
-              1600.0
-            ],
+            "damageTier": "小",
+            "flat": 1500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -144,7 +141,10 @@
       ],
       "vfxKey": "fx.prim.physical.shockwave",
       "sfxKey": "wc3.taunt",
-      "castTimeSec": 1.5
+      "castTimeSec": 0.667,
+      "cooldownTier": "極大",
+      "rangeTier": "大",
+      "targetsEnemies": true
     },
     "E": {
       "id": "godie-h02u.e",
@@ -156,28 +156,24 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        40.0,
-        40.0,
-        40.0,
-        40.0
+        30.0,
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
         150.0,
-        200.0,
-        250.0,
-        300.0
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [
         {
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              20.0,
-              30.0,
-              40.0,
-              50.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -213,7 +209,8 @@
       "targetsEnemies": true,
       "castTimeSec": 0.667,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "中"
     },
     "R": {
       "id": "godie-h02u.r",
@@ -225,14 +222,14 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        75.0,
-        75.0,
-        75.0
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
         300.0,
-        420.0,
-        540.0
+        300.0,
+        300.0
       ],
       "range": 0,
       "effects": [
@@ -240,11 +237,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              100.0,
-              200.0,
-              300.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -266,7 +260,8 @@
         }
       ],
       "vfxKey": "fx.prim.nature.explosion-lg",
-      "castTimeSec": 1.033
+      "castTimeSec": 0.833,
+      "cooldownTier": "極大"
     }
   },
   "skillOrder": [

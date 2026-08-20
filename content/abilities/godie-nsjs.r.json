@@ -8,25 +8,23 @@
   "castType": "targeted",
   "maxRank": 3,
   "cooldown": [
-    75.0,
-    75.0,
-    75.0
+    60.0,
+    60.0,
+    60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
     200.0,
-    375.0,
-    550.0
+    200.0,
+    200.0
   ],
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
     "params": {
       "damage": {
-        "perRank": [
-          300,
-          500,
-          700
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -35,13 +33,13 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 1.633
+      "castTimeSec": 0.833
     }
   },
   "vfxKey": "fx.prim.nature.nova-lg",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 1.633,
+  "castTimeSec": 0.833,
   "rangeTier": "中",
   "range": 6
 }

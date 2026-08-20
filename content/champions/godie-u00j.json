@@ -61,18 +61,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        120,
-        155,
-        190,
-        225
+        120.0,
+        120.0,
+        120.0,
+        120.0
       ],
-      "range": 0,
+      "range": 0.0,
       "effects": [
         {
           "kind": "invulnerable",
@@ -86,12 +86,8 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "perRank": [
-              350,
-              450,
-              550,
-              650
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -124,7 +120,8 @@
         ],
         "flashMs": 140,
         "camKick": 0.351
-      }
+      },
+      "cooldownTier": "小"
     },
     "W": {
       "id": "godie-u00j.w",
@@ -136,31 +133,26 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        30.0,
-        30.0,
-        30.0,
-        50.0,
-        50.0
+        45.0,
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
         150.0,
-        180.0,
-        210.0,
-        275.0,
-        275.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [],
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "perRank": [
-              150,
-              250,
-              350,
-              450,
-              550
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -169,15 +161,16 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 0.767
+          "castTimeSec": 0.467
         }
       },
       "vfxKey": "fx.prim.physical.slash",
       "sfxKey": "wc3.snapdragonmissilelaunch1",
       "targetsEnemies": true,
-      "castTimeSec": 0.767,
+      "castTimeSec": 0.467,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "大"
     },
     "E": {
       "id": "godie-u00j.e",
@@ -196,9 +189,9 @@
       ],
       "manaCost": [
         200.0,
-        275.0,
-        350.0,
-        425.0
+        200.0,
+        200.0,
+        200.0
       ],
       "effects": [],
       "template": {
@@ -206,12 +199,8 @@
         "params": {
           "radius": 327,
           "damage": {
-            "perRank": [
-              150,
-              250,
-              350,
-              450
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -220,15 +209,16 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 1.5
+          "castTimeSec": 1.233
         }
       },
       "vfxKey": "fx.prim.void.pulse",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 1.5,
+      "castTimeSec": 1.233,
       "rangeTier": "中",
-      "range": 6
+      "range": 6,
+      "cooldownTier": "中"
     },
     "R": {
       "id": "godie-u00j.r",
@@ -246,19 +236,16 @@
       ],
       "manaCost": [
         220.0,
-        330.0,
-        440.0
+        220.0,
+        220.0
       ],
       "effects": [],
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "perRank": [
-              75,
-              75,
-              75
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -274,7 +261,8 @@
       "targetsEnemies": true,
       "castTimeSec": 0.833,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極大"
     }
   },
   "skillOrder": [

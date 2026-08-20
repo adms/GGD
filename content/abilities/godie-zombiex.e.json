@@ -9,16 +9,17 @@
   "castType": "ground",
   "maxRank": 4,
   "cooldown": [
-    14,
-    13,
-    12,
-    11
+    30.0,
+    30.0,
+    30.0,
+    30.0
   ],
+  "cooldownTier": "極小",
   "manaCost": [
-    70,
-    95,
-    120,
-    145
+    73.0,
+    73.0,
+    73.0,
+    73.0
   ],
   "radius": 3.5,
   "effects": [],
@@ -28,12 +29,8 @@
       "anchor": "point",
       "radius": 191,
       "damage": {
-        "perRank": [
-          60,
-          110,
-          160,
-          210
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -48,7 +45,7 @@
   },
   "vfxKey": "fx.prim.void.shockwave",
   "targetsEnemies": true,
-  "castTimeSec": 0.267,
+  "castTimeSec": 0.767,
   "rangeTier": "大",
   "range": 8
 }

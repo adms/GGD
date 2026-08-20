@@ -8,16 +8,16 @@
   "castType": "ground",
   "maxRank": 3,
   "cooldown": [
-    70.0,
-    70.0,
-    70.0
+    60.0,
+    60.0,
+    60.0
   ],
   "manaCost": [
     150.0,
-    225.0,
-    300.0
+    150.0,
+    150.0
   ],
-  "range": 11.0,
+  "range": 12.0,
   "radiusTier": "極小",
   "targetsEnemies": true,
   "effects": [
@@ -25,11 +25,8 @@
       "kind": "damageArea",
       "damageType": "physical",
       "amount": {
-        "perRank": [
-          600.0,
-          800.0,
-          1000.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ad",
@@ -45,5 +42,6 @@
   "icon": "assets/icons/abilities/godie-e00w.r.webp",
   "vfxKey": "fx.prim.lightning.beam-lg",
   "rangeTier": "極大",
+  "cooldownTier": "中",
   "castTimeSec": 2
 }

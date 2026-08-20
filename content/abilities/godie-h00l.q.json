@@ -15,9 +15,9 @@
   ],
   "manaCost": [
     100.0,
-    150.0,
-    200.0,
-    250.0
+    100.0,
+    100.0,
+    100.0
   ],
   "range": 0.0,
   "radiusTier": "小",
@@ -27,12 +27,8 @@
       "kind": "damageArea",
       "damageType": "physical",
       "amount": {
-        "perRank": [
-          150.0,
-          250.0,
-          350.0,
-          450.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ad",
@@ -56,5 +52,6 @@
   "icon": "assets/icons/abilities/godie-h00l.q.webp",
   "vfxKey": "fx.prim.wind.slash",
   "sfxKey": "wc3.druidofthetalonmissilelaunch2",
+  "cooldownTier": "極小",
   "castTimeSec": 0.667
 }

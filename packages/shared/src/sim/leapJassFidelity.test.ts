@@ -25,6 +25,7 @@
  */
 import { describe, it, expect } from "vitest";
 import { cover } from "../../testkit/cover";
+import { DAMAGE_TIER_NAMES, DEFAULT_DAMAGE_TIERS } from "../content/damageTiers";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { readFileSync } from "node:fs";
@@ -164,13 +165,30 @@ describe("#247 fidelity — godie-u00n.r / godie-u00o.r (A0RZ 巨人迴旋彈)",
     const fromJass = [1, 2, 3].map((lv) => 300 + 300 * lv);
     expect(fromJass).toEqual([600, 900, 1200]);
 
+    // ⭐ 2026-08-21 —— owner ①「**B 全轉，接受升階只剩 ratios 成長**」之後
+    //    `perRank` 已經交給 `damageTier`（級距**取代** flat 與 perRank，
+    //    見 `damageTiers.ts`）。⇒ 這一條改成驗**那個 JASS 公式落在哪一格**，
+    //    而不是逐階抄回去 —— JASS 本身仍然被上面兩行 `pinJass` 釘著，
+    //    知識沒有消失（`docs/legacy/_w3x-fidelity-superseded.md` 也記了一列）。
+    // ⛔ 級距值從 `DEFAULT_DAMAGE_TIERS` 推導，⛔ 不抄 1500。
+    const grid = DAMAGE_TIER_NAMES.map((n) => DEFAULT_DAMAGE_TIERS.damage[n]);
+    const peak = Math.max(...fromJass);
+    const want = DAMAGE_TIER_NAMES.reduce((best, n, i) =>
+      Math.abs(grid[i]! - peak) < Math.abs(DEFAULT_DAMAGE_TIERS.damage[best]! - peak) ? n : best,
+    DAMAGE_TIER_NAMES[0]!);
+
     for (const file of ["abilities/godie-u00n.r.json", "abilities/godie-u00o.r.json"]) {
       const leap = leapEffect(readDoc(file));
       const dmg = (leap["onLand"] as Json[]).find((e) => e["kind"] === "damage")!;
+      const amount = dmg["amount"] as Json;
       expect(
-        (dmg["amount"] as Json)["perRank"],
-        "war3map.j:36719 executes 300+300×level — the j:36779 comment does not run",
-      ).toEqual(fromJass);
+        amount["damageTier"],
+        "war3map.j:36719 執行的是 300+300×level ⇒ 滿階 1200，收進最近的那一格",
+      ).toBe(want);
+      expect(amount["flat"], "級別與原始值必須說同一句話（tierRawParity）").toBe(
+        DEFAULT_DAMAGE_TIERS.damage[want],
+      );
+      expect(amount["perRank"], "級距**取代** perRank，⛔ 不是相加").toBeUndefined();
     }
   });
 });
@@ -377,7 +395,13 @@ describe("#247 combo timing — the JASS bakes at CAST and pays the baked number
       "a `comboBonus` still riding the arc would be re-asked at landing — the defect",
     ).toBeUndefined();
     // and the resolved amount travelled with it, folded into `flat`
-    expect(dmg!.kind === "damage" ? dmg!.amount.flat : undefined).toBeCloseTo(COMBO_BONUS, 6);
+    // ⚠️ 2026-08-21 —— 基礎值現在**本來就住在 `flat`**（owner ①「B 全轉」把它
+    //    從 `perRank` 換成 `damageTier` ⇒ `resolveDamageTier` 寫 `flat`），
+    //    所以起飛時折進去的那一格是「基礎 + 連段」，⛔ 不再是「只有連段」。
+    expect(dmg!.kind === "damage" ? dmg!.amount.flat : undefined).toBeCloseTo(
+      BASE_FLAT + COMBO_BONUS,
+      6,
+    );
   });
 
   it("CLASS GUARD: every deferred payload carrier bakes, not just leap", () => {
@@ -566,8 +590,20 @@ const E_LEAP = leapEffect(readDoc("abilities/godie-hpb1.e.json")) as unknown as 
 
 /** ad on the test caster; the only stat either formula reads. */
 const TEST_AD = 40;
-/** perRank[0] 450 + ad×0.5 — the unconditional half (j:34211). */
-const BASE_DAMAGE = 450 + TEST_AD * 0.5;
+/**
+ * 基礎那一半 + ad×0.5（j:34211）。
+ *
+ * ⭐ 2026-08-21 —— 基礎值**從出貨文件讀**，⛔ 不再是字面值 450。
+ * owner ①「**B 全轉，接受升階只剩 ratios 成長**」把每一支技能的基礎傷害交給
+ * `damageTier`，所以 450 在這一天變成一個會過期的抄本（第二守則：出貨數值住進
+ * 測試就是第四個住處，而它沒有守衛）。原作的 450 記在
+ * `docs/legacy/_w3x-fidelity-superseded.md`。
+ */
+const BASE_FLAT = (() => {
+  const dmg = ((E_LEAP as unknown as Json)["onLand"] as Json[]).find((e) => e["kind"] === "damage")!;
+  return ((dmg["amount"] as Json)["flat"] as number) ?? 0;
+})();
+const BASE_DAMAGE = BASE_FLAT + TEST_AD * 0.5;
 /** ad×1.25 — the combo half (j:34214, at this doc's own 0.25/point rate). */
 const COMBO_BONUS = TEST_AD * 1.25;
 

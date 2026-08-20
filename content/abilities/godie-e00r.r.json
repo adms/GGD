@@ -8,27 +8,24 @@
   "castType": "ground",
   "maxRank": 3,
   "cooldown": [
-    90.0,
-    90.0,
-    90.0
+    60.0,
+    60.0,
+    60.0
   ],
   "manaCost": [
     350.0,
-    500.0,
-    650.0
+    350.0,
+    350.0
   ],
-  "range": 8.25,
+  "range": 8.0,
   "targetsEnemies": true,
   "effects": [
     {
       "kind": "damageLine",
       "damageType": "true",
       "amount": {
-        "perRank": [
-          750.0,
-          1200.0,
-          1650.0
-        ]
+        "damageTier": "小",
+        "flat": 1500.0
       },
       "length": 8.25,
       "width": 2.2,
@@ -52,5 +49,6 @@
     }
   ],
   "rangeTier": "大",
+  "cooldownTier": "極大",
   "castTimeSec": 3
 }

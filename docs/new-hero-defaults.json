@@ -82,13 +82,13 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 140,
-        "sample": 17,
-        "basis": "slot"
+        "value": 120,
+        "sample": 139,
+        "basis": "corpus"
       },
       "range": {
         "value": 12,
-        "sample": 128,
+        "sample": 129,
         "basis": "corpus"
       },
       "radius": {
@@ -113,13 +113,13 @@
         "liftedFromMedian": 45
       },
       "manaCost": {
-        "value": 140,
-        "sample": 17,
-        "basis": "slot"
+        "value": 120,
+        "sample": 139,
+        "basis": "corpus"
       },
       "range": {
         "value": 12,
-        "sample": 128,
+        "sample": 129,
         "basis": "corpus"
       },
       "radius": {
@@ -144,13 +144,13 @@
         "liftedFromMedian": 45
       },
       "manaCost": {
-        "value": 140,
-        "sample": 17,
-        "basis": "slot"
+        "value": 120,
+        "sample": 139,
+        "basis": "corpus"
       },
       "range": {
         "value": 12,
-        "sample": 128,
+        "sample": 129,
         "basis": "corpus"
       },
       "radius": {
@@ -169,14 +169,14 @@
       "castType": "self",
       "description": "對自身，（效果待填）。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
       "cooldown": {
-        "value": 37.5,
+        "value": 30,
         "sample": 16,
         "basis": "slot+castType"
       },
       "manaCost": {
         "value": 120,
-        "sample": 10,
-        "basis": "slot+castType"
+        "sample": 139,
+        "basis": "corpus"
       },
       "range": {
         "value": 0,
@@ -204,13 +204,13 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 140,
-        "sample": 17,
-        "basis": "slot"
+        "value": 120,
+        "sample": 139,
+        "basis": "corpus"
       },
       "range": {
         "value": 12,
-        "sample": 128,
+        "sample": 129,
         "basis": "corpus"
       },
       "radius": {
@@ -229,18 +229,18 @@
       "castType": "targeted",
       "description": "指定單一敵人，施法距離 {{range}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
       "cooldown": {
-        "value": 25,
-        "sample": 18,
+        "value": 15,
+        "sample": 19,
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 60,
-        "sample": 17,
+        "value": 74,
+        "sample": 14,
         "basis": "slot+castType"
       },
       "range": {
         "value": 8,
-        "sample": 18,
+        "sample": 19,
         "basis": "slot+castType"
       },
       "radius": {
@@ -249,7 +249,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 160,
+        "value": 600,
         "sample": 8,
         "basis": "slot+castType"
       }
@@ -265,13 +265,13 @@
         "liftedFromMedian": 30
       },
       "manaCost": {
-        "value": 70,
-        "sample": 45,
+        "value": 75,
+        "sample": 30,
         "basis": "slot"
       },
       "range": {
-        "value": 11,
-        "sample": 31,
+        "value": 12,
+        "sample": 32,
         "basis": "slot"
       },
       "radius": {
@@ -280,7 +280,7 @@
         "basis": "slot"
       },
       "damage": {
-        "value": 185,
+        "value": 600,
         "sample": 18,
         "basis": "slot"
       }
@@ -297,7 +297,7 @@
       },
       "manaCost": {
         "value": 85,
-        "sample": 13,
+        "sample": 11,
         "basis": "slot+castType"
       },
       "range": {
@@ -311,7 +311,7 @@
         "basis": "slot+castType"
       },
       "damage": {
-        "value": 185,
+        "value": 600,
         "sample": 18,
         "basis": "slot"
       }
@@ -321,14 +321,14 @@
       "castType": "self",
       "description": "對自身，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
       "cooldown": {
-        "value": 25,
-        "sample": 13,
+        "value": 22.5,
+        "sample": 12,
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 60,
-        "sample": 13,
-        "basis": "slot+castType"
+        "value": 75,
+        "sample": 30,
+        "basis": "slot"
       },
       "range": {
         "value": 0,
@@ -341,7 +341,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 185,
+        "value": 600,
         "sample": 18,
         "basis": "slot"
       }
@@ -356,13 +356,13 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 70,
-        "sample": 45,
+        "value": 75,
+        "sample": 30,
         "basis": "slot"
       },
       "range": {
-        "value": 11,
-        "sample": 31,
+        "value": 12,
+        "sample": 32,
         "basis": "slot"
       },
       "radius": {
@@ -371,7 +371,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 185,
+        "value": 600,
         "sample": 18,
         "basis": "slot"
       }
@@ -386,8 +386,8 @@
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 72.5,
-        "sample": 16,
+        "value": 73,
+        "sample": 15,
         "basis": "slot+castType"
       },
       "range": {
@@ -401,7 +401,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 200,
+        "value": 600,
         "sample": 17,
         "basis": "slot"
       }
@@ -417,8 +417,8 @@
         "liftedFromMedian": 30
       },
       "manaCost": {
-        "value": 60,
-        "sample": 39,
+        "value": 74,
+        "sample": 28,
         "basis": "slot"
       },
       "range": {
@@ -432,7 +432,7 @@
         "basis": "corpus"
       },
       "damage": {
-        "value": 200,
+        "value": 600,
         "sample": 17,
         "basis": "slot"
       }
@@ -448,12 +448,12 @@
         "liftedFromMedian": 30
       },
       "manaCost": {
-        "value": 62.5,
-        "sample": 10,
-        "basis": "slot+castType"
+        "value": 74,
+        "sample": 28,
+        "basis": "slot"
       },
       "range": {
-        "value": 11.5,
+        "value": 12,
         "sample": 8,
         "basis": "slot+castType"
       },
@@ -463,7 +463,7 @@
         "basis": "corpus"
       },
       "damage": {
-        "value": 200,
+        "value": 600,
         "sample": 17,
         "basis": "slot"
       }
@@ -478,9 +478,9 @@
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 60,
-        "sample": 10,
-        "basis": "slot+castType"
+        "value": 74,
+        "sample": 28,
+        "basis": "slot"
       },
       "range": {
         "value": 0,
@@ -493,7 +493,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 200,
+        "value": 600,
         "sample": 17,
         "basis": "slot"
       }
@@ -508,8 +508,8 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 60,
-        "sample": 39,
+        "value": 74,
+        "sample": 28,
         "basis": "slot"
       },
       "range": {
@@ -523,7 +523,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 200,
+        "value": 600,
         "sample": 17,
         "basis": "slot"
       }
@@ -533,7 +533,7 @@
       "castType": "targeted",
       "description": "指定單一敵人，施法距離 {{range}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
       "cooldown": {
-        "value": 45,
+        "value": 37.5,
         "sample": 14,
         "basis": "slot+castType"
       },
@@ -553,7 +553,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 375,
+        "value": 600,
         "sample": 22,
         "basis": "slot"
       }
@@ -563,13 +563,14 @@
       "castType": "skillshot",
       "description": "朝指定方向發射，施法距離 {{range}}，範圍 {{radius}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
       "cooldown": {
-        "value": 55,
+        "value": 60,
         "sample": 43,
-        "basis": "slot"
+        "basis": "slot",
+        "liftedFromMedian": 45
       },
       "manaCost": {
-        "value": 150,
-        "sample": 43,
+        "value": 142.5,
+        "sample": 36,
         "basis": "slot"
       },
       "range": {
@@ -583,7 +584,7 @@
         "basis": "slot"
       },
       "damage": {
-        "value": 375,
+        "value": 600,
         "sample": 22,
         "basis": "slot"
       }
@@ -595,15 +596,16 @@
       "cooldown": {
         "value": 60,
         "sample": 15,
-        "basis": "slot+castType"
+        "basis": "slot+castType",
+        "liftedFromMedian": 45
       },
       "manaCost": {
         "value": 150,
-        "sample": 15,
+        "sample": 13,
         "basis": "slot+castType"
       },
       "range": {
-        "value": 10.5,
+        "value": 10,
         "sample": 12,
         "basis": "slot+castType"
       },
@@ -613,7 +615,7 @@
         "basis": "slot+castType"
       },
       "damage": {
-        "value": 450,
+        "value": 600,
         "sample": 8,
         "basis": "slot+castType"
       }
@@ -628,9 +630,9 @@
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 140,
-        "sample": 8,
-        "basis": "slot+castType"
+        "value": 142.5,
+        "sample": 36,
+        "basis": "slot"
       },
       "range": {
         "value": 0,
@@ -643,7 +645,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 375,
+        "value": 600,
         "sample": 22,
         "basis": "slot"
       }
@@ -653,13 +655,13 @@
       "castType": "dash",
       "description": "朝指定方向突進，施法距離 {{range}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
       "cooldown": {
-        "value": 55,
+        "value": 45,
         "sample": 43,
         "basis": "slot"
       },
       "manaCost": {
-        "value": 150,
-        "sample": 43,
+        "value": 142.5,
+        "sample": 36,
         "basis": "slot"
       },
       "range": {
@@ -673,7 +675,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 375,
+        "value": 600,
         "sample": 22,
         "basis": "slot"
       }
@@ -703,7 +705,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 300,
+        "value": 600,
         "sample": 19,
         "basis": "slot"
       }
@@ -719,7 +721,7 @@
       },
       "manaCost": {
         "value": 200,
-        "sample": 47,
+        "sample": 34,
         "basis": "slot"
       },
       "range": {
@@ -733,7 +735,7 @@
         "basis": "corpus"
       },
       "damage": {
-        "value": 300,
+        "value": 600,
         "sample": 19,
         "basis": "slot"
       }
@@ -749,7 +751,7 @@
       },
       "manaCost": {
         "value": 200,
-        "sample": 47,
+        "sample": 34,
         "basis": "slot"
       },
       "range": {
@@ -763,7 +765,7 @@
         "basis": "corpus"
       },
       "damage": {
-        "value": 300,
+        "value": 600,
         "sample": 19,
         "basis": "slot"
       }
@@ -778,9 +780,9 @@
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 150,
-        "sample": 19,
-        "basis": "slot+castType"
+        "value": 200,
+        "sample": 34,
+        "basis": "slot"
       },
       "range": {
         "value": 0,
@@ -793,7 +795,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 300,
+        "value": 600,
         "sample": 19,
         "basis": "slot"
       }
@@ -809,7 +811,7 @@
       },
       "manaCost": {
         "value": 200,
-        "sample": 47,
+        "sample": 34,
         "basis": "slot"
       },
       "range": {
@@ -823,7 +825,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 300,
+        "value": 600,
         "sample": 19,
         "basis": "slot"
       }
@@ -838,12 +840,12 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 185,
-        "sample": 38,
-        "basis": "slot"
+        "value": 120,
+        "sample": 139,
+        "basis": "corpus"
       },
       "range": {
-        "value": 5.65,
+        "value": 6,
         "sample": 8,
         "basis": "slot"
       },
@@ -853,7 +855,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 250,
+        "value": 600,
         "sample": 83,
         "basis": "corpus"
       }
@@ -868,12 +870,12 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 185,
-        "sample": 38,
-        "basis": "slot"
+        "value": 120,
+        "sample": 139,
+        "basis": "corpus"
       },
       "range": {
-        "value": 5.65,
+        "value": 6,
         "sample": 8,
         "basis": "slot"
       },
@@ -883,7 +885,7 @@
         "basis": "corpus"
       },
       "damage": {
-        "value": 250,
+        "value": 600,
         "sample": 83,
         "basis": "corpus"
       }
@@ -898,12 +900,12 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 185,
-        "sample": 38,
-        "basis": "slot"
+        "value": 120,
+        "sample": 139,
+        "basis": "corpus"
       },
       "range": {
-        "value": 5.65,
+        "value": 6,
         "sample": 8,
         "basis": "slot"
       },
@@ -913,7 +915,7 @@
         "basis": "corpus"
       },
       "damage": {
-        "value": 250,
+        "value": 600,
         "sample": 83,
         "basis": "corpus"
       }
@@ -929,8 +931,8 @@
       },
       "manaCost": {
         "value": 120,
-        "sample": 29,
-        "basis": "slot+castType"
+        "sample": 139,
+        "basis": "corpus"
       },
       "range": {
         "value": 0,
@@ -943,7 +945,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 250,
+        "value": 600,
         "sample": 83,
         "basis": "corpus"
       }
@@ -958,12 +960,12 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 185,
-        "sample": 38,
-        "basis": "slot"
+        "value": 120,
+        "sample": 139,
+        "basis": "corpus"
       },
       "range": {
-        "value": 5.65,
+        "value": 6,
         "sample": 8,
         "basis": "slot"
       },
@@ -973,7 +975,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 250,
+        "value": 600,
         "sample": 83,
         "basis": "corpus"
       }

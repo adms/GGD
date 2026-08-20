@@ -12,21 +12,19 @@
     45.0,
     45.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
     130.0,
-    195.0,
-    260.0
+    130.0,
+    130.0
   ],
   "effects": [
     {
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "perRank": [
-          10.0,
-          15.0,
-          15.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -39,7 +37,7 @@
   "vfxKey": "fx.prim.nature.slash",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.267,
+  "castTimeSec": 0.467,
   "rangeTier": "極大",
   "range": 12
 }

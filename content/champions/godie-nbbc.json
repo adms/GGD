@@ -61,16 +61,16 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        12.0,
+        60.0,
         60.0,
         60.0,
         60.0
       ],
       "manaCost": [
-        50.0,
-        80.0,
-        110.0,
-        140.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "effects": [
         {
@@ -95,7 +95,8 @@
       "targetsEnemies": false,
       "castTimeSec": 0.067,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極大"
     },
     "W": {
       "id": "godie-nbbc.w",
@@ -113,10 +114,10 @@
         30.0
       ],
       "manaCost": [
-        50.0,
-        80.0,
-        110.0,
-        140.0
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [
         {
@@ -131,12 +132,8 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "perRank": [
-              150,
-              250,
-              350,
-              450
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -145,14 +142,15 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 0.767
+          "castTimeSec": 0.467
         }
       },
       "vfxKey": "fx.prim.lightning.slash",
       "targetsEnemies": true,
-      "castTimeSec": 0.767,
+      "castTimeSec": 0.467,
       "rangeTier": "中",
-      "range": 6
+      "range": 6,
+      "cooldownTier": "中"
     },
     "E": {
       "id": "godie-nbbc.e",
@@ -171,9 +169,9 @@
       ],
       "manaCost": [
         150.0,
-        200.0,
-        250.0,
-        300.0
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [
         {
@@ -184,12 +182,8 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "perRank": [
-                  450.0,
-                  600.0,
-                  750.0,
-                  900.0
-                ]
+                "damageTier": "極小",
+                "flat": 600.0
               }
             }
           ]
@@ -197,9 +191,10 @@
       ],
       "vfxKey": "fx.prim.ki.bolt",
       "sfxKey": "wc3.thunderclapcaster",
-      "castTimeSec": 1.433,
+      "castTimeSec": 0.467,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極大"
     },
     "R": {
       "id": "godie-nbbc.r",
@@ -217,8 +212,8 @@
       ],
       "manaCost": [
         250.0,
-        315.0,
-        380.0
+        250.0,
+        250.0
       ],
       "effects": [
         {
@@ -233,11 +228,8 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "perRank": [
-              450,
-              650,
-              850
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -246,14 +238,15 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 1.5
+          "castTimeSec": 0.833
         }
       },
       "vfxKey": "fx.prim.nature.slash-lg",
       "targetsEnemies": true,
-      "castTimeSec": 1.5,
+      "castTimeSec": 0.833,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極大"
     }
   },
   "skillOrder": [

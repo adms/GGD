@@ -8,16 +8,17 @@
   "castType": "ground",
   "maxRank": 4,
   "cooldown": [
-    25,
-    25,
-    25,
-    25
+    30.0,
+    30.0,
+    30.0,
+    30.0
   ],
+  "cooldownTier": "極小",
   "manaCost": [
-    100,
-    130,
-    160,
-    190
+    100.0,
+    100.0,
+    100.0,
+    100.0
   ],
   "effects": [],
   "template": {
@@ -26,12 +27,8 @@
       "anchor": "point",
       "radius": 300,
       "damage": {
-        "perRank": [
-          150,
-          200,
-          250,
-          300
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -40,7 +37,7 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.633,
+      "castTimeSec": 0.767,
       "statusId": "slow40",
       "statusDurationSec": 1.5
     }
@@ -49,7 +46,7 @@
   "targetsEnemies": true,
   "radius": 5.5,
   "schema": "ability@1",
-  "castTimeSec": 0.633,
+  "castTimeSec": 0.767,
   "rangeTier": "極大",
   "range": 12
 }

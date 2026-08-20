@@ -13,9 +13,9 @@
     60.0
   ],
   "manaCost": [
-    120.0,
-    150.0,
-    180.0
+    0.0,
+    0.0,
+    0.0
   ],
   "range": 0.0,
   "targetsEnemies": false,
@@ -115,5 +115,6 @@
     "flashMs": 186,
     "camKick": 0.466
   },
+  "cooldownTier": "中",
   "castTimeSec": 2
 }

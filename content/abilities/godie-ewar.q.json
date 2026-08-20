@@ -8,30 +8,26 @@
   "castType": "targeted",
   "maxRank": 4,
   "cooldown": [
-    12.0,
-    12.0,
-    12.0,
-    12.0
+    6.0,
+    6.0,
+    6.0,
+    6.0
   ],
   "manaCost": [
-    30.0,
-    57.0,
-    83.0,
-    90.0
+    73.0,
+    73.0,
+    73.0,
+    73.0
   ],
-  "range": 4.0,
+  "range": 4.5,
   "targetsEnemies": true,
   "effects": [
     {
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "perRank": [
-          150.0,
-          283.0,
-          350.0,
-          350.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -51,5 +47,6 @@
   "icon": "assets/icons/abilities/godie-ewar.q.webp",
   "vfxKey": "fx.prim.ki.nova",
   "rangeTier": "小",
-  "castTimeSec": 0.3
+  "cooldownTier": "極小",
+  "castTimeSec": 0.167
 }

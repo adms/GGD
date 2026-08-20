@@ -67,8 +67,8 @@
       ],
       "manaCost": [
         85.0,
-        135.0,
-        185.0
+        85.0,
+        85.0
       ],
       "effects": [],
       "template": {
@@ -76,11 +76,8 @@
         "params": {
           "radius": 300,
           "damage": {
-            "perRank": [
-              250,
-              400,
-              550
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -89,15 +86,16 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.133
+          "castTimeSec": 1.033
         }
       },
       "vfxKey": "fx.prim.void.explosion",
       "targetsEnemies": true,
       "radius": 5.5,
-      "castTimeSec": 1.133,
+      "castTimeSec": 1.033,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "小"
     },
     "W": {
       "id": "godie-u00k.w",
@@ -109,28 +107,24 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [],
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "perRank": [
-              80,
-              120,
-              160,
-              200
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -139,14 +133,15 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.3
+          "castTimeSec": 0.167
         }
       },
       "vfxKey": "fx.prim.void.beam",
       "targetsEnemies": true,
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.167,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極小"
     },
     "E": {
       "id": "godie-u00k.e",
@@ -165,21 +160,17 @@
       ],
       "manaCost": [
         160.0,
-        320.0,
-        480.0,
-        640.0
+        160.0,
+        160.0,
+        160.0
       ],
       "effects": [],
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "perRank": [
-              80,
-              160,
-              240,
-              320
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -188,15 +179,16 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.667
+          "castTimeSec": 0.467
         }
       },
       "vfxKey": "fx.prim.void.swarm",
       "sfxKey": "wc3.parasite",
       "targetsEnemies": true,
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.467,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極大"
     },
     "R": {
       "id": "godie-u00k.r",
@@ -214,19 +206,16 @@
       ],
       "manaCost": [
         150.0,
-        250.0,
-        350.0
+        150.0,
+        150.0
       ],
       "effects": [],
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "perRank": [
-              150,
-              300,
-              450
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -235,15 +224,16 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.233
+          "castTimeSec": 0.833
         }
       },
       "vfxKey": "fx.prim.void.nova-lg",
       "sfxKey": "wc3.taunt",
       "targetsEnemies": true,
-      "castTimeSec": 1.233,
+      "castTimeSec": 0.833,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極大"
     }
   },
   "skillOrder": [

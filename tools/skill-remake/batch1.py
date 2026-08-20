@@ -273,6 +273,14 @@ def main():
         print(f"── A-6 明示退場的欄位：{len(DROP_LOG)} 份文件 ──")
         for aid in sorted(DROP_LOG):
             print(f"  {aid}: " + "、".join(sorted(DROP_LOG[aid])))
+    # ⭐ 五級距全轉（owner 2026-08-21 ①②③④⑦）—— ⛔ 這一段不可以安靜：
+    #    一次改 90 支的傷害／冷卻／耗魔如果沒有印出來，它就是失敗形態②。
+    hits = {a: v for a, v in common.TIERIZE_LOG.items() if v}
+    if hits:
+        n = sum(len(v) for v in hits.values())
+        print(f"── 五級距全轉：{n} 格 / {len(hits)} 支 ──")
+        for aid in sorted(hits):
+            print(f"  {aid}: " + "；".join(f"{r[0]} {r[1]}→{r[2]}（{r[3]}）" for r in hits[aid]))
     if COSMETIC_LOG:
         print(f"── GH#375 純視覺彈道 → spawnVfx：{len(COSMETIC_LOG)} 支 ──")
         for aid in sorted(COSMETIC_LOG):

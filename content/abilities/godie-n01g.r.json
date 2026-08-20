@@ -12,10 +12,11 @@
     60.0,
     60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
     500.0,
-    730.0,
-    960.0
+    500.0,
+    500.0
   ],
   "effects": [
     {
@@ -26,11 +27,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              150.0,
-              250.0,
-              350.0
-            ]
+            "damageTier": "極小",
+            "flat": 600.0
           }
         }
       ]
@@ -38,7 +36,7 @@
   ],
   "vfxKey": "fx.w3x.locust.frostnova.p01",
   "schema": "ability@1",
-  "castTimeSec": 1.233,
+  "castTimeSec": 1.033,
   "hitFeel": {
     "hitstopTicks": 5,
     "hitstunTicks": 8,

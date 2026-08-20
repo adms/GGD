@@ -13,23 +13,20 @@
     60.0,
     60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
     120.0,
-    180.0,
-    240.0,
-    300.0
+    120.0,
+    120.0,
+    120.0
   ],
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
     "params": {
       "damage": {
-        "perRank": [
-          2.0,
-          3.0,
-          4.0,
-          5.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -38,13 +35,13 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.267
+      "castTimeSec": 0.467
     }
   },
   "vfxKey": "fx.prim.arcane.swarm",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.267,
+  "castTimeSec": 0.467,
   "rangeTier": "極大",
   "range": 12
 }

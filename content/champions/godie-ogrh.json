@@ -65,27 +65,22 @@
         45.0,
         45.0,
         45.0,
-        57.0
+        45.0
       ],
       "manaCost": [
-        60.0,
-        75.0,
-        100.0,
-        125.0,
-        175.0
+        73.0,
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [],
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "perRank": [
-              55,
-              90,
-              125,
-              160,
-              200
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -101,7 +96,8 @@
       "targetsEnemies": true,
       "castTimeSec": 0.467,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "大"
     },
     "W": {
       "id": "godie-ogrh.w",
@@ -113,16 +109,16 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        18.0,
-        18.0,
-        18.0,
-        18.0
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "manaCost": [
-        100.0,
-        100.0,
-        100.0,
-        100.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "effects": [
         {
@@ -133,9 +129,10 @@
         }
       ],
       "vfxKey": "fx.prim.arcane.dash",
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.367,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "小"
     },
     "E": {
       "id": "godie-ogrh.e",
@@ -147,16 +144,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        60,
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        160,
-        240,
-        320,
-        400
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0,
       "effects": [
@@ -180,7 +177,8 @@
         }
       ],
       "vfxKey": "fx.prim.ki.pulse-sm",
-      "castTimeSec": 0.267
+      "castTimeSec": 0.267,
+      "cooldownTier": "中"
     },
     "R": {
       "id": "godie-ogrh.r",
@@ -198,8 +196,8 @@
       ],
       "manaCost": [
         210.0,
-        310.0,
-        410.0
+        210.0,
+        210.0
       ],
       "effects": [
         {
@@ -210,20 +208,18 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "perRank": [
-                  450.0,
-                  750.0,
-                  1050.0
-                ]
+                "damageTier": "極小",
+                "flat": 600.0
               }
             }
           ]
         }
       ],
       "vfxKey": "fx.prim.ki.beam-lg",
-      "castTimeSec": 1.5,
+      "castTimeSec": 1.033,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極大"
     }
   },
   "skillOrder": [

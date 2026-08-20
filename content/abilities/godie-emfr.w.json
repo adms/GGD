@@ -15,9 +15,9 @@
   ],
   "manaCost": [
     120.0,
-    180.0,
-    240.0,
-    300.0
+    120.0,
+    120.0,
+    120.0
   ],
   "range": 0.0,
   "targetsEnemies": false,
@@ -108,12 +108,8 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "perRank": [
-                  30.0,
-                  45.0,
-                  60.0,
-                  75.0
-                ],
+                "damageTier": "極小",
+                "flat": 600.0,
                 "ratios": [
                   {
                     "stat": "ap",
@@ -131,5 +127,6 @@
   "icon": "assets/icons/abilities/godie-emfr.w.webp",
   "vfxKey": "fx.prim.wind.pulse",
   "sfxKey": "wc3.akamapissed8",
+  "cooldownTier": "極大",
   "castTimeSec": 0.267
 }

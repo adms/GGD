@@ -60,14 +60,14 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        65,
-        55,
-        45
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        60,
-        60,
-        60
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0,
       "effects": [],
@@ -86,7 +86,8 @@
           ],
           "castTimeSec": 0.067
         }
-      }
+      },
+      "cooldownTier": "大"
     },
     "W": {
       "id": "godie-hpb1.w",
@@ -98,18 +99,18 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        50.0,
-        50.0,
-        50.0,
-        50.0,
-        50.0
+        45.0,
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
         110.0,
-        140.0,
-        170.0,
-        275.0,
-        275.0
+        110.0,
+        110.0,
+        110.0,
+        110.0
       ],
       "effects": [
         {
@@ -124,13 +125,8 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "perRank": [
-              225.0,
-              225.0,
-              225.0,
-              225.0,
-              225.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -151,7 +147,8 @@
       "targetsEnemies": true,
       "castTimeSec": 0.467,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "大"
     },
     "E": {
       "id": "godie-hpb1.e",
@@ -163,16 +160,16 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        65.0,
-        65.0,
-        65.0,
-        65.0
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
         220.0,
-        250.0,
-        280.0,
-        310.0
+        220.0,
+        220.0,
+        220.0
       ],
       "radius": 6.05,
       "effects": [
@@ -188,12 +185,8 @@
               "kind": "damage",
               "damageType": "physical",
               "amount": {
-                "perRank": [
-                  450.0,
-                  550.0,
-                  650.0,
-                  750.0
-                ],
+                "damageTier": "極小",
+                "flat": 600.0,
                 "ratios": [
                   {
                     "stat": "ad",
@@ -219,9 +212,10 @@
       "vfxKey": "fx.prim.physical.beam",
       "sfxKey": "wc3.moonjump",
       "targetsEnemies": true,
-      "castTimeSec": 1.633,
+      "castTimeSec": 1.233,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "中"
     },
     "R": {
       "id": "godie-hpb1.r",
@@ -233,14 +227,14 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        150,
-        300,
-        450
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0,
       "effects": [
@@ -253,7 +247,7 @@
               "value": 25
             }
           ],
-          "duration": 8,
+          "duration": 8.0,
           "perRank": [
             {
               "modifiers": [
@@ -263,7 +257,7 @@
                   "value": 25
                 }
               ],
-              "duration": 8
+              "duration": 8.0
             },
             {
               "modifiers": [
@@ -273,7 +267,7 @@
                   "value": 25
                 }
               ],
-              "duration": 12
+              "duration": 12.0
             },
             {
               "modifiers": [
@@ -283,13 +277,14 @@
                   "value": 25
                 }
               ],
-              "duration": 16
+              "duration": 16.0
             }
           ]
         }
       ],
       "vfxKey": "fx.prim.holy.nova-lg",
-      "castTimeSec": 0.667
+      "castTimeSec": 0.667,
+      "cooldownTier": "大"
     }
   },
   "skillOrder": [

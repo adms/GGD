@@ -14,10 +14,10 @@
     120.0
   ],
   "manaCost": [
-    90.0,
-    180.0,
-    270.0,
-    360.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
   "range": 0.0,
   "targetsEnemies": false,
@@ -94,5 +94,6 @@
   ],
   "icon": "assets/icons/abilities/godie-e00w.e.webp",
   "vfxKey": "fx.prim.lightning.nova",
+  "cooldownTier": "極大",
   "castTimeSec": 0.267
 }

@@ -8,14 +8,15 @@
   "castType": "ground",
   "maxRank": 3,
   "cooldown": [
-    60,
-    60,
-    60
+    60.0,
+    60.0,
+    60.0
   ],
+  "cooldownTier": "中",
   "manaCost": [
-    150,
-    250,
-    350
+    150.0,
+    150.0,
+    150.0
   ],
   "range": 0,
   "effects": [
@@ -33,11 +34,8 @@
       "maxSources": 20,
       "damageType": "magic",
       "amount": {
-        "perRank": [
-          150.0,
-          200.0,
-          250.0
-        ]
+        "damageTier": "極小",
+        "flat": 600.0
       },
       "jumps": 16,
       "jumpRange": 24.0,

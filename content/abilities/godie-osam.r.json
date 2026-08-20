@@ -12,10 +12,11 @@
     45.0,
     45.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
     200.0,
-    300.0,
-    400.0
+    200.0,
+    200.0
   ],
   "effects": [],
   "template": {
@@ -27,11 +28,8 @@
       "aoePerStep": 350,
       "stepVfx": "fx.fam.bolt-strike.lightning.s115",
       "damage": {
-        "perRank": [
-          600,
-          900,
-          1200
-        ],
+        "damageTier": "小",
+        "flat": 1500.0,
         "ratios": [
           {
             "stat": "ap",

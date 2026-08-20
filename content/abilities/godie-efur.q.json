@@ -8,10 +8,10 @@
   "castType": "targeted",
   "maxRank": 4,
   "cooldown": [
-    4.0,
-    3.0,
-    2.0,
-    1.0
+    6.0,
+    6.0,
+    6.0,
+    6.0
   ],
   "manaCost": [
     0.0,
@@ -19,7 +19,7 @@
     0.0,
     0.0
   ],
-  "range": 4.0,
+  "range": 4.5,
   "targetsEnemies": true,
   "effects": [
     {
@@ -54,5 +54,7 @@
     }
   ],
   "recoverySec": 0.25,
-  "rangeTier": "小"
+  "rangeTier": "小",
+  "cooldownTier": "極小",
+  "castTimeSec": 0.167
 }

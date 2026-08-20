@@ -63,15 +63,15 @@
         45.0,
         45.0,
         45.0,
-        50.0,
-        50.0
+        45.0,
+        45.0
       ],
       "manaCost": [
         85.0,
-        115.0,
-        145.0,
-        275.0,
-        275.0
+        85.0,
+        85.0,
+        85.0,
+        85.0
       ],
       "effects": [
         {
@@ -86,13 +86,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              250,
-              350,
-              450,
-              550,
-              650
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -105,9 +100,10 @@
       "vfxKey": "fx.w3x.particle.flamessmoke.p01",
       "sfxKey": "wc3.darksummoninglaunch1",
       "targetsEnemies": true,
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.467,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "大"
     },
     "W": {
       "id": "godie-u010.w",
@@ -119,31 +115,26 @@
       "castType": "ground",
       "maxRank": 5,
       "cooldown": [
-        25.0,
-        25.0,
-        25.0,
-        25.0,
-        25.0
+        30.0,
+        30.0,
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
         75.0,
-        125.0,
-        175.0,
-        175.0,
-        175.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [
         {
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              250,
-              400,
-              550,
-              700,
-              850
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -163,7 +154,7 @@
       "sfxKey": "wc3.hcancelbuilding",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 0.633,
+      "castTimeSec": 0.767,
       "hitFeel": {
         "hitstopTicks": 3,
         "hitstunTicks": 5,
@@ -179,7 +170,8 @@
         "camKick": 0.328
       },
       "rangeTier": "大",
-      "range": 8
+      "range": 8,
+      "cooldownTier": "極小"
     },
     "E": {
       "id": "godie-u010.e",
@@ -198,9 +190,9 @@
       ],
       "manaCost": [
         215.0,
-        300.0,
-        385.0,
-        470.0
+        215.0,
+        215.0,
+        215.0
       ],
       "effects": [
         {
@@ -211,12 +203,8 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "perRank": [
-                  650,
-                  900,
-                  1150,
-                  1400
-                ],
+                "damageTier": "小",
+                "flat": 1500.0,
                 "ratios": [
                   {
                     "stat": "ap",
@@ -230,7 +218,7 @@
       ],
       "vfxKey": "godie-tectonicfury-p0",
       "sfxKey": "wc3.dragonyes2",
-      "castTimeSec": 1.5,
+      "castTimeSec": 0.833,
       "hitFeel": {
         "hitstopTicks": 4,
         "hitstunTicks": 6,
@@ -246,7 +234,8 @@
         "camKick": 0.36
       },
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極大"
     },
     "R": {
       "id": "godie-u010.r",
@@ -263,9 +252,9 @@
         60.0
       ],
       "manaCost": [
-        100.0,
-        200.0,
-        300.0
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0,
       "effects": [
@@ -302,7 +291,8 @@
         ],
         "flashMs": 162,
         "camKick": 0.405
-      }
+      },
+      "cooldownTier": "極大"
     }
   },
   "skillOrder": [

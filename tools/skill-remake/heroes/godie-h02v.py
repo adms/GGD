@@ -5,7 +5,7 @@
 ⛔ 這一份只有**這一位英雄的資料**。共用的機制（`amt` / `dmg` / `area` /
    `buff` / 級距 / 各種閘）在 `common.py`；匯總與產生在 `batch1.py`。
 """
-from common import A, M, TIER_R, amt, area, buff, dmg, line, status
+from common import A, M, TIER_R, amt, area, buff, dmg, hook_icd, line, status
 
 
 A("92-00", "92-00 憂鬱的眼神", "self", [0], [0], 0,
@@ -62,7 +62,16 @@ A("92-03", "92-03 狂草泥馬", "self", [0], [0], 0,
   "[被動][屬性門檻][普攻時][吞噬][層數累積]\n\n「平常吃草，發瘋時吃人」\n當草泥馬生命降低到 30%時，普通 [攻擊時] 附加 [吞噬] 生命低於 3/4/5/6% 的敵方單位，並且永久增加1點 [AP]。",
   innate="passive", maxRank=4,
   passive={"name": "92-03 狂草泥馬", "ranks": [
+      # ⭐ owner 2026-08-21 ⑤：「**不對 有些被動是有冷卻的 例如初號機吞噬**」——
+      #    他點名的就是 `devour` 這個機制。這一支是它的**被動版**，而它出貨到今天
+      #    唯一的門是「自己殘血」：攻速上限 4 ⇒ **每秒 4 次處決判定**，命中即
+      #    無視護甲護盾秒殺，順帶永久 +1 AP（到 200 為止，一個回合就吃滿）。
+      # ⚠️ `zDevour` schema 自己**沒有**任何內建冷卻，而 `ability.cooldown` 是 [0]
+      #    ⇒ 節流只能寫在 hook 上。
+      # ⚠️ 數字用 `hook_icd()` 從 owner 的冷卻表推導（單體·極小 6 卡面秒 × 0.2）——
+      #    ⛔ 不手打，理由見 `tierize.hook_icd` 的「兩把不同的尺」。
       {"hooks": [{"on": "onBasicAttack", "target": "event",
+                  "internalCooldown": hook_icd(),
                   "condition": {"kind": "stat", "subject": "self", "stat": "hp",
                                 "mode": "percent", "op": "<=", "value": 0.3},
                   "effects": [{"kind": "devour", "shape": "single", "thresholdPctOfMax": [t],

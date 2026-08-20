@@ -8,18 +8,19 @@
   "castType": "targeted",
   "maxRank": 5,
   "cooldown": [
-    50.0,
-    50.0,
-    50.0,
-    50.0,
-    50.0
+    45.0,
+    45.0,
+    45.0,
+    45.0,
+    45.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
     110.0,
-    140.0,
-    170.0,
-    275.0,
-    275.0
+    110.0,
+    110.0,
+    110.0,
+    110.0
   ],
   "effects": [
     {
@@ -34,13 +35,8 @@
       "kind": "damage",
       "damageType": "physical",
       "amount": {
-        "perRank": [
-          225.0,
-          225.0,
-          225.0,
-          225.0,
-          225.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ad",

@@ -14,10 +14,10 @@
     45.0
   ],
   "manaCost": [
-    70.0,
-    120.0,
-    170.0,
-    220.0
+    73.0,
+    73.0,
+    73.0,
+    73.0
   ],
   "range": 0.0,
   "radiusTier": "中",
@@ -27,12 +27,8 @@
       "kind": "damageArea",
       "damageType": "magic",
       "amount": {
-        "perRank": [
-          75.0,
-          150.0,
-          225.0,
-          300.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -68,5 +64,6 @@
   ],
   "icon": "assets/icons/abilities/godie-edem.w.webp",
   "vfxKey": "fx.prim.lightning.beam",
+  "cooldownTier": "小",
   "castTimeSec": 0.833
 }

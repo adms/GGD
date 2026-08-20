@@ -13,10 +13,11 @@
     45.0,
     45.0
   ],
+  "cooldownTier": "小",
   "manaCost": [
     85.0,
-    135.0,
-    185.0
+    85.0,
+    85.0
   ],
   "effects": [],
   "template": {
@@ -24,11 +25,8 @@
     "params": {
       "radius": 300,
       "damage": {
-        "perRank": [
-          250,
-          400,
-          550
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -37,13 +35,13 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 1.133
+      "castTimeSec": 1.033
     }
   },
   "vfxKey": "fx.prim.void.explosion",
   "targetsEnemies": true,
   "radius": 5.5,
-  "castTimeSec": 1.133,
+  "castTimeSec": 1.033,
   "rangeTier": "極大",
   "range": 12
 }

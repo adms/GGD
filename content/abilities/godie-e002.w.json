@@ -14,10 +14,10 @@
     60.0
   ],
   "manaCost": [
-    50.0,
-    100.0,
-    150.0,
-    200.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
   "range": 0.0,
   "targetsEnemies": false,
@@ -240,5 +240,6 @@
   },
   "icon": "assets/icons/abilities/godie-e002.w.webp",
   "vfxKey": "fx.prim.wind.tornado",
+  "cooldownTier": "中",
   "castTimeSec": 0.267
 }

@@ -14,10 +14,10 @@
     60.0
   ],
   "manaCost": [
-    100.0,
-    140.0,
-    180.0,
-    220.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
   "range": 0.0,
   "targetsEnemies": false,
@@ -128,5 +128,6 @@
   },
   "icon": "assets/icons/abilities/godie-hapm.q.webp",
   "vfxKey": "fx.prim.physical.pulse",
+  "cooldownTier": "極大",
   "castTimeSec": 0.067
 }

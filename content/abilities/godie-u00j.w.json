@@ -8,31 +8,27 @@
   "castType": "targeted",
   "maxRank": 5,
   "cooldown": [
-    30.0,
-    30.0,
-    30.0,
-    50.0,
-    50.0
+    45.0,
+    45.0,
+    45.0,
+    45.0,
+    45.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
     150.0,
-    180.0,
-    210.0,
-    275.0,
-    275.0
+    150.0,
+    150.0,
+    150.0,
+    150.0
   ],
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
     "params": {
       "damage": {
-        "perRank": [
-          150,
-          250,
-          350,
-          450,
-          550
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ad",
@@ -41,14 +37,14 @@
         ]
       },
       "damageType": "physical",
-      "castTimeSec": 0.767
+      "castTimeSec": 0.467
     }
   },
   "vfxKey": "fx.prim.physical.slash",
   "sfxKey": "wc3.snapdragonmissilelaunch1",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.767,
+  "castTimeSec": 0.467,
   "rangeTier": "極大",
   "range": 12
 }

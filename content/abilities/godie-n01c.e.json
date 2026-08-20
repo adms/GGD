@@ -13,11 +13,12 @@
     60.0,
     60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
     150.0,
-    200.0,
-    250.0,
-    300.0
+    150.0,
+    150.0,
+    150.0
   ],
   "effects": [
     {
@@ -28,12 +29,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              450.0,
-              600.0,
-              750.0,
-              900.0
-            ]
+            "damageTier": "極小",
+            "flat": 600.0
           }
         }
       ]
@@ -42,7 +39,7 @@
   "vfxKey": "fx.prim.fire.beam",
   "sfxKey": "wc3.thunderclapcaster",
   "schema": "ability@1",
-  "castTimeSec": 1.433,
+  "castTimeSec": 0.467,
   "rangeTier": "極大",
   "range": 12
 }

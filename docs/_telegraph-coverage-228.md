@@ -19,8 +19,8 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | castType | cells | shape language |
 | --- | ---: | --- |
-| `self` | 96 | self marker at the caster's feet |
-| `targeted` | 72 | lock (arc at the victim + tether to the caster) — walking does not help |
+| `self` | 95 | self marker at the caster's feet |
+| `targeted` | 73 | lock (arc at the victim + tether to the caster) — walking does not help |
 | `—` | 56 | not cast |
 | `ground` | 52 | circle — the real `enemiesInCircle` disc; you can walk out |
 | `skillshot` | 15 | line — the projectile's corridor; step sideways |
@@ -240,7 +240,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 賽亞人 - 悟空 `godie-ogrh` | R | 09-04 龜派氣功 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave.ki maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |
 | 賽亞人 - 悟空 `godie-ogrh` | EX | 09-002 十倍龜派氣功 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 電車癡漢 - 臭作 `godie-orkn` | PASSIVE | 30-00 攝影機 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
-| 電車癡漢 - 臭作 `godie-orkn` | Q | 30-01 綁架 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 電車癡漢 - 臭作 `godie-orkn` | Q | 30-01 綁架 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 電車癡漢 - 臭作 `godie-orkn` | W | 30-02 酒精灌腸 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 電車癡漢 - 臭作 `godie-orkn` | E | 30-03 痴漢火焰 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 電車癡漢 - 臭作 `godie-orkn` | R | 30-04 電車之狼衝擊 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave.physical maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |

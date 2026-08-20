@@ -8,25 +8,23 @@
   "castType": "targeted",
   "maxRank": 3,
   "cooldown": [
-    70.0,
-    70.0,
-    70.0
+    60.0,
+    60.0,
+    60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
     150.0,
-    225.0,
-    300.0
+    150.0,
+    150.0
   ],
   "effects": [
     {
       "kind": "damage",
       "damageType": "physical",
       "amount": {
-        "perRank": [
-          600.0,
-          800.0,
-          1000.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ad",
@@ -44,7 +42,7 @@
   "vfxKey": "fx.prim.lightning.beam-lg",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 1.767,
+  "castTimeSec": 0.833,
   "rangeTier": "極大",
   "range": 12
 }

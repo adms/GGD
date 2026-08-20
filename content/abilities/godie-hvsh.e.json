@@ -7,16 +7,17 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    60,
-    60,
-    60,
-    60
+    60.0,
+    60.0,
+    60.0,
+    60.0
   ],
+  "cooldownTier": "中",
   "manaCost": [
-    120,
-    195,
-    270,
-    345
+    120.0,
+    120.0,
+    120.0,
+    120.0
   ],
   "range": 0,
   "radiusTier": "大",
@@ -37,12 +38,8 @@
               "kind": "damageArea",
               "damageType": "magic",
               "amount": {
-                "perRank": [
-                  75,
-                  150,
-                  225,
-                  300
-                ],
+                "damageTier": "極小",
+                "flat": 600.0,
                 "ratios": [
                   {
                     "stat": "ap",

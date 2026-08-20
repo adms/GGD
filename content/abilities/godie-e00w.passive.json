@@ -60,5 +60,6 @@
     ]
   },
   "icon": "assets/icons/abilities/godie-e00w.passive.webp",
-  "vfxKey": "fx.prim.wind.tornado"
+  "vfxKey": "fx.prim.wind.tornado",
+  "cooldownTier": "中"
 }

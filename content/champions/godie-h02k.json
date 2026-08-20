@@ -624,6 +624,7 @@
                     "stun": true
                   }
                 ],
+                "internalCooldown": 1.2,
                 "target": "event"
               },
               {
@@ -696,6 +697,7 @@
                     "stun": true
                   }
                 ],
+                "internalCooldown": 1.2,
                 "target": "event"
               },
               {
@@ -768,6 +770,7 @@
                     "stun": true
                   }
                 ],
+                "internalCooldown": 1.2,
                 "target": "event"
               },
               {

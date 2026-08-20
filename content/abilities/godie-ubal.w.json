@@ -8,28 +8,25 @@
   "castType": "targeted",
   "maxRank": 4,
   "cooldown": [
-    60.0,
-    50.0,
-    40.0,
+    30.0,
+    30.0,
+    30.0,
     30.0
   ],
+  "cooldownTier": "中",
   "manaCost": [
     350.0,
-    450.0,
-    550.0,
-    650.0
+    350.0,
+    350.0,
+    350.0
   ],
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
     "params": {
       "damage": {
-        "perRank": [
-          450,
-          450,
-          450,
-          450
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -38,14 +35,14 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.767
+      "castTimeSec": 0.467
     }
   },
   "vfxKey": "fx.prim.void.shockwave",
   "sfxKey": "wc3.trollbatriderpissed2",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.767,
+  "castTimeSec": 0.467,
   "rangeTier": "大",
   "range": 8
 }

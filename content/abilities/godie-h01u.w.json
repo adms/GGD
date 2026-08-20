@@ -15,9 +15,9 @@
   ],
   "manaCost": [
     90.0,
-    180.0,
-    270.0,
-    360.0
+    90.0,
+    90.0,
+    90.0
   ],
   "range": 0.0,
   "radiusTier": "小",
@@ -27,12 +27,8 @@
       "kind": "damageArea",
       "damageType": "physical",
       "amount": {
-        "perRank": [
-          120.0,
-          220.0,
-          320.0,
-          420.0
-        ]
+        "damageTier": "極小",
+        "flat": 600.0
       },
       "radius": 4.5,
       "radiusTier": "小",
@@ -73,5 +69,6 @@
   "icon": "assets/icons/abilities/godie-h01u.w.webp",
   "vfxKey": "fx.prim.physical.slash",
   "sfxKey": "wc3.defendcaster",
+  "cooldownTier": "中",
   "castTimeSec": 0.667
 }

@@ -5,18 +5,31 @@
 ⛔ 這一份只有**這一位英雄的資料**。共用的機制（`amt` / `dmg` / `area` /
    `buff` / 級距 / 各種閘）在 `common.py`；匯總與產生在 `batch1.py`。
 """
-from common import A, amt, area, buff, dmg, status
+from common import A, amt, area, buff, dmg, hook_icd, status
 
 
 A("60-00", "60-00 大師之劍", "self", [0], [0], 0,
   "[被動][淨化][普攻時]\n\n「真正的大師，都是買分的」\n[普通攻擊時]造成額外 3%[最大生命]傷害。並且造成 [淨化] 效果。",
   innate="passive",
+  # ⭐ owner 2026-08-21 ⑤：「**不對 有些被動是有冷卻的 例如初號機吞噬**」
+  #    ⇒ 這一支是「觸發式被動、零節流」那 9 支之一，而它**兩半的處置不一樣**：
+  #      · 3% 最大生命的魔傷 —— 規格本體（「[普通攻擊時]造成額外 3%[最大生命]傷害」），
+  #        ⛔ 不設限。
+  #      · [淨化] —— 攻速上限 4 ⇒ **每秒 4 次 dispel**，對手放的任何增益平均活不過
+  #        0.25 秒。那不是「大師之劍很強」，是**沒有人替它裝門**。
+  #    ⇒ 拆成兩條 hook，只有淨化那一格帶內部冷卻。
+  # ⚠️ `hook.internalCooldown` 是**實際秒**（`sim/effects/hookIcd.ts::hookIcdTicks`
+  #    ⛔ 不吃 `combatEnv.cooldown`），而 `ability.cooldown[]` 是**卡面秒**。
+  #    ⇒ 數字由 `hook_icd()` 從 owner 的冷卻表推導，⛔ 不手打 ——
+  #    同一個數字寫在兩個欄位裡差 5 倍，而 59-00 暴走已經因此差了 5 倍。
   passive={"name": "60-00 大師之劍", "ranks": [{"hooks": [
       {"on": "onBasicAttack", "target": "event",
        "effects": [dmg("magic", flat=0,
                        res_pct={"subject": "target", "resource": "health",
-                                "basis": "max", "perRank": [0.03]}),
-                   {"kind": "dispel", "shape": "single", "pools": {"status": True}, "count": 1}]}]}]})
+                                "basis": "max", "perRank": [0.03]})]},
+      {"on": "onBasicAttack", "target": "event", "internalCooldown": hook_icd(),
+       "effects": [{"kind": "dispel", "shape": "single",
+                    "pools": {"status": True}, "count": 1}]}]}]})
 
 A("60-01", "60-01 旋風斬", "self", [30, 30, 30, 30], [100, 150, 200, 250], 0,
   "[主動][範圍][AD加成][擊退]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n\n「看我先暈倒還是你先被我砍死」\n造成[周圍][範圍] {{dmg}}+50% [AD]點傷害，並且[擊退]敵人。",

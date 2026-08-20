@@ -61,24 +61,24 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        25,
-        25,
-        25
+        15.0,
+        15.0,
+        15.0
       ],
       "manaCost": [
-        120,
-        170,
-        220
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "effects": [
         {
           "kind": "heal",
           "amount": {
             "perRank": [
-              150,
-              150,
-              150
+              150.0,
+              150.0,
+              150.0
             ],
             "ratios": [
               {
@@ -90,7 +90,8 @@
         }
       ],
       "vfxKey": "fx.prim.wind.nova",
-      "castTimeSec": 0.067
+      "castTimeSec": 0.067,
+      "cooldownTier": "小"
     },
     "W": {
       "id": "godie-etyr.w",
@@ -102,16 +103,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0,
       "effects": [],
@@ -188,23 +189,23 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        35,
-        35,
-        35,
-        35
+        30.0,
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
-        150,
-        180,
-        210,
-        240
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "range": 0,
+      "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.holy.explosion",
       "targetsEnemies": true,
       "radius": 1.5,
-      "castTimeSec": 0.867,
+      "castTimeSec": 0.767,
       "template": {
         "ref": "tpl-orbit-array",
         "params": {
@@ -212,12 +213,8 @@
           "reach": 82,
           "aim": "inward",
           "damage": {
-            "perRank": [
-              250,
-              400,
-              550,
-              700
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -226,9 +223,10 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.867
+          "castTimeSec": 0.767
         }
-      }
+      },
+      "cooldownTier": "極小"
     },
     "R": {
       "id": "godie-etyr.r",
@@ -240,25 +238,22 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        0.5,
-        0.5,
-        0.5
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
         150.0,
-        225.0,
-        300.0
+        150.0,
+        150.0
       ],
       "effects": [],
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "perRank": [
-              200,
-              400,
-              600
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -272,7 +267,9 @@
       "vfxKey": "fx.prim.holy.nova-lg",
       "targetsEnemies": true,
       "rangeTier": "大",
-      "range": 8
+      "range": 8,
+      "cooldownTier": "極小",
+      "castTimeSec": 0.167
     }
   },
   "skillOrder": [

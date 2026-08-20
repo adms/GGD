@@ -61,28 +61,24 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        18.0,
-        18.0,
-        18.0,
-        18.0
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "manaCost": [
-        35.0,
-        45.0,
-        55.0,
-        65.0
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [
         {
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              170,
-              220,
-              270,
-              320
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -100,9 +96,10 @@
       ],
       "vfxKey": "fx.firestorm",
       "targetsEnemies": true,
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.367,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "小"
     },
     "W": {
       "id": "godie-hjai.w",
@@ -114,16 +111,16 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        25.0,
-        25.0,
-        25.0,
-        25.0
+        30.0,
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
-        55.0,
-        85.0,
-        115.0,
-        145.0
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [],
       "template": {
@@ -131,12 +128,8 @@
         "params": {
           "radius": 300,
           "damage": {
-            "perRank": [
-              275,
-              425,
-              575,
-              725
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -145,15 +138,16 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.633
+          "castTimeSec": 0.767
         }
       },
       "vfxKey": "fx.prim.fire.bolt",
       "targetsEnemies": true,
       "radius": 5.5,
-      "castTimeSec": 0.633,
+      "castTimeSec": 0.767,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極小"
     },
     "E": {
       "id": "godie-hjai.e",
@@ -172,21 +166,17 @@
       ],
       "manaCost": [
         230.0,
-        395.0,
-        560.0,
-        725.0
+        230.0,
+        230.0,
+        230.0
       ],
       "effects": [
         {
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              700.0,
-              1200.0,
-              1700.0,
-              2200.0
-            ],
+            "damageTier": "小",
+            "flat": 1500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -207,7 +197,8 @@
       "radius": 8.25,
       "castTimeSec": 1.5,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "中"
     },
     "R": {
       "id": "godie-hjai.r",
@@ -225,19 +216,16 @@
       ],
       "manaCost": [
         150.0,
-        250.0,
-        350.0
+        150.0,
+        150.0
       ],
       "effects": [
         {
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              600.0,
-              1100.0,
-              1600.0
-            ],
+            "damageTier": "小",
+            "flat": 1500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -255,9 +243,10 @@
       ],
       "vfxKey": "fx.prim.holy.slash-lg",
       "targetsEnemies": true,
-      "castTimeSec": 1.5,
+      "castTimeSec": 1.433,
       "rangeTier": "小",
-      "range": 4.5
+      "range": 4.5,
+      "cooldownTier": "極大"
     }
   },
   "skillOrder": [

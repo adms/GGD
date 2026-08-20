@@ -8,30 +8,26 @@
   "castType": "ground",
   "maxRank": 4,
   "cooldown": [
-    55.0,
-    55.0,
-    55.0,
-    55.0
+    45.0,
+    45.0,
+    45.0,
+    45.0
   ],
   "manaCost": [
     250.0,
-    350.0,
-    450.0,
-    550.0
+    250.0,
+    250.0,
+    250.0
   ],
-  "range": 11.0,
+  "range": 12.0,
   "targetsEnemies": true,
   "effects": [
     {
       "kind": "damageLine",
       "damageType": "magic",
       "amount": {
-        "perRank": [
-          450.0,
-          600.0,
-          750.0,
-          900.0
-        ]
+        "damageTier": "極小",
+        "flat": 600.0
       },
       "length": 11,
       "width": 2.0,
@@ -79,5 +75,6 @@
   "icon": "assets/icons/abilities/godie-h01n.e.webp",
   "vfxKey": "fx.prim.void.beam",
   "rangeTier": "極大",
+  "cooldownTier": "大",
   "castTimeSec": 0.467
 }

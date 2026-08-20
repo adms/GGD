@@ -8,16 +8,17 @@
   "castType": "ground",
   "maxRank": 4,
   "cooldown": [
-    65.0,
-    65.0,
-    65.0,
-    65.0
+    60.0,
+    60.0,
+    60.0,
+    60.0
   ],
+  "cooldownTier": "中",
   "manaCost": [
     220.0,
-    250.0,
-    280.0,
-    310.0
+    220.0,
+    220.0,
+    220.0
   ],
   "radius": 6.05,
   "effects": [
@@ -33,12 +34,8 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "perRank": [
-              450.0,
-              550.0,
-              650.0,
-              750.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -65,7 +62,7 @@
   "sfxKey": "wc3.moonjump",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 1.633,
+  "castTimeSec": 1.233,
   "rangeTier": "極大",
   "range": 12
 }

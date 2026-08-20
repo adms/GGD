@@ -8,31 +8,27 @@
   "castType": "targeted",
   "maxRank": 5,
   "cooldown": [
-    35.0,
-    35.0,
-    35.0,
-    35.0,
-    35.0
+    30.0,
+    30.0,
+    30.0,
+    30.0,
+    30.0
   ],
+  "cooldownTier": "中",
   "manaCost": [
     100.0,
-    200.0,
-    300.0,
-    300.0,
-    300.0
+    100.0,
+    100.0,
+    100.0,
+    100.0
   ],
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
     "params": {
       "damage": {
-        "perRank": [
-          150,
-          300,
-          450,
-          450,
-          450
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -41,13 +37,13 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.833
+      "castTimeSec": 0.467
     }
   },
   "vfxKey": "fx.prim.holy.pulse",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.833,
+  "castTimeSec": 0.467,
   "rangeTier": "極大",
   "range": 12
 }

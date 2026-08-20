@@ -10,10 +10,11 @@
   "castType": "ground",
   "maxRank": 1,
   "cooldown": [
-    35.0
+    30.0
   ],
+  "cooldownTier": "中",
   "manaCost": [
-    150.0
+    0.0
   ],
   "effects": [
     {

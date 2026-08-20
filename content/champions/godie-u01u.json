@@ -60,16 +60,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        12,
-        12,
-        12,
-        12
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
-        60,
-        60,
-        60,
-        60
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0,
       "effects": [
@@ -82,7 +82,7 @@
               "value": 0.25
             }
           ],
-          "duration": 3
+          "duration": 3.0
         }
       ],
       "vfxKey": "fx.w3x.particle.lavabreathdamage.p00",
@@ -100,7 +100,8 @@
         ],
         "flashMs": 108,
         "camKick": 0.27
-      }
+      },
+      "cooldownTier": "極小"
     },
     "W": {
       "id": "godie-u01u.w",
@@ -112,29 +113,25 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        75,
-        100,
-        125,
-        150
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "range": 0,
+      "range": 0.0,
       "effects": [
         {
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "perRank": [
-              250,
-              325,
-              400,
-              475
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -153,7 +150,8 @@
       "vfxKey": "fx.prim.physical.slash",
       "targetsEnemies": true,
       "radius": 3.67,
-      "castTimeSec": 0.8
+      "castTimeSec": 0.8,
+      "cooldownTier": "小"
     },
     "E": {
       "id": "godie-u01u.e",
@@ -172,21 +170,17 @@
       ],
       "manaCost": [
         100.0,
-        130.0,
-        160.0,
-        190.0
+        100.0,
+        100.0,
+        100.0
       ],
       "effects": [
         {
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "perRank": [
-              300,
-              450,
-              600,
-              750
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -206,7 +200,8 @@
       "targetsEnemies": true,
       "castTimeSec": 1,
       "rangeTier": "大",
-      "range": 8
+      "range": 8,
+      "cooldownTier": "大"
     },
     "R": {
       "id": "godie-u01u.r",
@@ -218,14 +213,14 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        111,
-        222,
-        333
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0,
       "effects": [
@@ -238,11 +233,12 @@
               "value": 0.4
             }
           ],
-          "duration": 3
+          "duration": 3.0
         }
       ],
       "vfxKey": "fx.prim.physical.slash-lg",
-      "castTimeSec": 0.667
+      "castTimeSec": 0.667,
+      "cooldownTier": "極大"
     }
   },
   "skillOrder": [

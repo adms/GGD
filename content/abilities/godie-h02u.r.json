@@ -8,14 +8,15 @@
   "castType": "self",
   "maxRank": 3,
   "cooldown": [
-    75.0,
-    75.0,
-    75.0
+    60.0,
+    60.0,
+    60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
     300.0,
-    420.0,
-    540.0
+    300.0,
+    300.0
   ],
   "range": 0,
   "effects": [
@@ -23,11 +24,8 @@
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "perRank": [
-          100.0,
-          200.0,
-          300.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -50,5 +48,5 @@
   ],
   "vfxKey": "fx.prim.nature.explosion-lg",
   "schema": "ability@1",
-  "castTimeSec": 1.033
+  "castTimeSec": 0.833
 }

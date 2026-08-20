@@ -13,23 +13,20 @@
     45.0,
     45.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
     125.0,
-    200.0,
-    275.0,
-    350.0
+    125.0,
+    125.0,
+    125.0
   ],
   "effects": [
     {
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "perRank": [
-          350,
-          500,
-          650,
-          800
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -42,7 +39,7 @@
   "vfxKey": "fx.prim.nature.beam",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 1.133,
+  "castTimeSec": 0.467,
   "rangeTier": "大",
   "range": 8
 }

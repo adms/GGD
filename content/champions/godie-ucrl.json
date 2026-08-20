@@ -62,16 +62,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        12,
-        12,
-        12,
-        12
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
-        60,
-        60,
-        60,
-        60
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "range": 0,
       "effects": [
@@ -79,12 +79,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              300,
-              375,
-              450,
-              525
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -102,12 +98,13 @@
               "value": 25
             }
           ],
-          "duration": 6
+          "duration": 6.0
         }
       ],
       "vfxKey": "fx.prim.ki.pulse-sm",
       "sfxKey": "wc3.mortarteampissed9",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.167,
+      "cooldownTier": "極小"
     },
     "W": {
       "id": "godie-ucrl.w",
@@ -119,16 +116,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        12,
-        12,
-        12,
-        12
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
-        60,
-        60,
-        60,
-        60
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "range": 0,
       "effects": [
@@ -136,16 +133,12 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              350,
-              450,
-              550,
-              650
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1
+                "coeff": 1.0
               }
             ]
           }
@@ -159,12 +152,13 @@
               "value": 0.25
             }
           ],
-          "duration": 3
+          "duration": 3.0
         }
       ],
       "vfxKey": "fx.prim.ki.pulse-sm",
       "sfxKey": "wc3.mortarteampissed9",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.167,
+      "cooldownTier": "極小"
     },
     "E": {
       "id": "godie-ucrl.e",
@@ -176,31 +170,26 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        6.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        73.0,
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [],
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "perRank": [
-              80,
-              120,
-              160,
-              200,
-              240
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -209,15 +198,16 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 0.3
+          "castTimeSec": 0.167
         }
       },
       "vfxKey": "fx.prim.earth.pulse-sm",
       "sfxKey": "wc3.mortarteampissed9",
       "targetsEnemies": true,
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.167,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極小"
     },
     "R": {
       "id": "godie-ucrl.r",
@@ -228,21 +218,21 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        200,
-        300,
-        400
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0,
       "effects": [
         {
           "kind": "championForm",
           "to": "alternate",
-          "durationSec": 7
+          "durationSec": 7.0
         }
       ],
       "vfxKey": "fx.w3x.locust.boomnl.p01",
@@ -261,7 +251,8 @@
         ],
         "flashMs": 202,
         "camKick": 0.506
-      }
+      },
+      "cooldownTier": "中"
     }
   },
   "skillOrder": [

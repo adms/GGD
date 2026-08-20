@@ -8,16 +8,17 @@
   "castType": "ground",
   "maxRank": 4,
   "cooldown": [
-    18.0,
-    18.0,
-    18.0,
-    18.0
+    15.0,
+    15.0,
+    15.0,
+    15.0
   ],
+  "cooldownTier": "小",
   "manaCost": [
-    100.0,
-    100.0,
-    100.0,
-    100.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
   "effects": [
     {
@@ -29,7 +30,7 @@
   ],
   "vfxKey": "fx.prim.arcane.dash",
   "schema": "ability@1",
-  "castTimeSec": 0.467,
+  "castTimeSec": 0.367,
   "rangeTier": "極大",
   "range": 12
 }

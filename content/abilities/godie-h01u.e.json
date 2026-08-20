@@ -15,11 +15,11 @@
   ],
   "manaCost": [
     150.0,
-    200.0,
-    250.0,
-    300.0
+    150.0,
+    150.0,
+    150.0
   ],
-  "range": 10.0,
+  "range": 8.0,
   "radiusTier": "中",
   "targetsEnemies": true,
   "effects": [
@@ -33,12 +33,8 @@
       "kind": "damageLine",
       "damageType": "magic",
       "amount": {
-        "perRank": [
-          150.0,
-          200.0,
-          250.0,
-          300.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -75,5 +71,6 @@
   "icon": "assets/icons/abilities/godie-h01u.e.webp",
   "vfxKey": "fx.prim.physical.beam",
   "rangeTier": "大",
+  "cooldownTier": "中",
   "castTimeSec": 0.067
 }

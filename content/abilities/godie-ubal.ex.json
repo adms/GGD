@@ -8,8 +8,9 @@
   "castType": "ground",
   "maxRank": 1,
   "cooldown": [
-    20.0
+    30.0
   ],
+  "cooldownTier": "極小",
   "manaCost": [
     600.0
   ],
@@ -19,7 +20,8 @@
     "params": {
       "radius": 513.5,
       "damage": {
-        "flat": 300,
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -28,14 +30,14 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.5
+      "castTimeSec": 0.767
     }
   },
   "vfxKey": "fx.prim.void.explosion-lg",
   "schema": "ability@1",
   "radius": 9.41,
   "targetsEnemies": true,
-  "castTimeSec": 0.5,
+  "castTimeSec": 0.767,
   "rangeTier": "大",
   "range": 8
 }

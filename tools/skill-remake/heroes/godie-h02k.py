@@ -5,7 +5,7 @@
 ⛔ 這一份只有**這一位英雄的資料**。共用的機制（`amt` / `dmg` / `area` /
    `buff` / 級距 / 各種閘）在 `common.py`；匯總與產生在 `batch1.py`。
 """
-from common import A, M, area, buff, dmg, status
+from common import A, M, area, buff, dmg, hook_icd, status
 
 
 A("89-00", "89-00 憤怒的門牙", "self", [0], [0], 0,
@@ -129,7 +129,11 @@ A("89-04", "89-04 憤怒的簡諧運動", "self", [0], [0], 0,
                         # ⭐ [拉扯]「將對方抓取過來」= knockback.from="pull"（全 repo 第一個）
                         {"kind": "knockback", "distance": 3.0, "speed": 16.0,
                          "from": "pull"}]},
-           {"on": "onEvade", "target": "event",
+           # ⭐ owner 2026-08-21 ⑤：「有些被動是有冷卻的」。這一條是「觸發式被動、
+           #    零節流」裡**唯一掛著硬控**的那一支：迴避 8–16%，被一群殭屍圍毆時
+           #    每秒觸發數次 ⇒ 一個近乎常駐的 1 秒暈眩來源，而且沒有遞減。
+           #    ⚠️ 同一位英雄的 89-02 / 89-03 出貨就帶著 ICD —— 一位英雄不該有兩把尺。
+           {"on": "onEvade", "target": "event", "internalCooldown": hook_icd(),
             "effects": [{"kind": "knockback", "distance": 2.0, "speed": 14.0,
                          "from": "caster"},
                         status("stun", 1.0, stun=True)]},

@@ -14,8 +14,8 @@
   ],
   "manaCost": [
     150.0,
-    250.0,
-    350.0
+    150.0,
+    150.0
   ],
   "range": 0.0,
   "targetsEnemies": false,
@@ -58,5 +58,6 @@
   ],
   "icon": "assets/icons/abilities/godie-e002.r.webp",
   "vfxKey": "fx.prim.holy.nova-lg",
+  "cooldownTier": "極大",
   "castTimeSec": 0.667
 }

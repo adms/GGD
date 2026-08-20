@@ -8,12 +8,12 @@
   "castType": "targeted",
   "maxRank": 1,
   "cooldown": [
-    10.0
+    6.0
   ],
   "manaCost": [
-    666.0
+    0.0
   ],
-  "range": 5.29,
+  "range": 6.0,
   "targetsEnemies": true,
   "effects": [
     {
@@ -247,5 +247,6 @@
   "vfxKey": "fx.prim.fire.explosion-lg",
   "sfxKey": "wc3.mortarimpact",
   "rangeTier": "中",
-  "castTimeSec": 0.267
+  "cooldownTier": "極小",
+  "castTimeSec": 0.167
 }

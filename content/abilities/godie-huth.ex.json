@@ -6,10 +6,11 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    60
+    60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
-    120
+    0.0
   ],
   "range": 0,
   "effects": [],

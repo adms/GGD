@@ -12,10 +12,11 @@
     60.0,
     60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
     250.0,
-    315.0,
-    380.0
+    250.0,
+    250.0
   ],
   "effects": [
     {
@@ -30,11 +31,8 @@
     "ref": "tpl-single-strike",
     "params": {
       "damage": {
-        "perRank": [
-          450,
-          650,
-          850
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ad",
@@ -43,13 +41,13 @@
         ]
       },
       "damageType": "physical",
-      "castTimeSec": 1.5
+      "castTimeSec": 0.833
     }
   },
   "vfxKey": "fx.prim.nature.slash-lg",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 1.5,
+  "castTimeSec": 0.833,
   "rangeTier": "極大",
   "range": 12
 }

@@ -12,10 +12,11 @@
     60.0,
     60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
     200.0,
-    300.0,
-    400.0
+    200.0,
+    200.0
   ],
   "effects": [
     {
@@ -26,11 +27,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              600.0,
-              900.0,
-              1200.0
-            ]
+            "damageTier": "小",
+            "flat": 1500.0
           }
         }
       ]
@@ -38,7 +36,7 @@
   ],
   "vfxKey": "fx.w3x.particle.supershinythingy.p00",
   "schema": "ability@1",
-  "castTimeSec": 1.5,
+  "castTimeSec": 1.233,
   "hitFeel": {
     "hitstopTicks": 4,
     "hitstunTicks": 7,

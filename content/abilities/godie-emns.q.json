@@ -14,12 +14,12 @@
     30.0
   ],
   "manaCost": [
-    150.0,
-    200.0,
-    250.0,
-    300.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "range": 2.0,
+  "range": 12.0,
   "targetsEnemies": true,
   "effects": [
     {
@@ -38,5 +38,6 @@
   "vfxKey": "fx.prim.void.pulse-sm",
   "sfxKey": "wc3.gruntyesattack1",
   "rangeTier": "極大",
+  "cooldownTier": "中",
   "castTimeSec": 2
 }

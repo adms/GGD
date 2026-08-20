@@ -67,10 +67,10 @@
         60.0
       ],
       "manaCost": [
-        160.0,
-        220.0,
-        280.0,
-        340.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0.0,
       "targetsEnemies": false,
@@ -162,6 +162,7 @@
       ],
       "icon": "assets/icons/abilities/godie-h02v.q.webp",
       "vfxKey": "fx.prim.nature.pulse-sm",
+      "cooldownTier": "中",
       "castTimeSec": 0.833
     },
     "W": {
@@ -225,6 +226,7 @@
                     ]
                   }
                 ],
+                "internalCooldown": 1.2,
                 "condition": {
                   "kind": "stat",
                   "subject": "self",
@@ -272,6 +274,7 @@
                     ]
                   }
                 ],
+                "internalCooldown": 1.2,
                 "condition": {
                   "kind": "stat",
                   "subject": "self",
@@ -319,6 +322,7 @@
                     ]
                   }
                 ],
+                "internalCooldown": 1.2,
                 "condition": {
                   "kind": "stat",
                   "subject": "self",
@@ -366,6 +370,7 @@
                     ]
                   }
                 ],
+                "internalCooldown": 1.2,
                 "condition": {
                   "kind": "stat",
                   "subject": "self",
@@ -689,9 +694,9 @@
         90.0
       ],
       "manaCost": [
-        300.0,
-        420.0,
-        540.0
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0.0,
       "radiusTier": "大",
@@ -810,6 +815,7 @@
       },
       "icon": "assets/icons/abilities/godie-h02v.r.webp",
       "vfxKey": "fx.prim.nature.pulse-lg",
+      "cooldownTier": "大",
       "castTimeSec": 1.433
     }
   },

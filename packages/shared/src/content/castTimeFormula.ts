@@ -42,6 +42,7 @@
  * 0.35 s values did NOT have this property (10.5 ticks -> 11 -> 0.367 s).
  */
 import { DEFAULT_CAST_TIME_RULES } from "../sim/castTimeRules";
+import { DAMAGE_TIER_NAMES, DEFAULT_DAMAGE_TIERS } from "./damageTiers";
 import type { AbilityDef } from "../sim/content/defs";
 import { rankScalarMax } from "../sim/perRank";
 import type { EffectDef } from "../sim/effects/effect";
@@ -97,6 +98,28 @@ export const CD_CEILING_FRACTION = 0.125;
  * it, which is exactly the population the owner reserved 0.9 s for.
  */
 export const SCORE_AT_CAP = 0.75;
+
+/**
+ * ⭐ 傷害那一項的**飽和點** —— 「多痛才算得上最兇的一發」。
+ *
+ * ⛔ 2026-08-21 之前這裡是字面值 **1400**，而它的註解自己寫明來歷：
+ * 「real distribution of the 309 damaging abilities: p25 190, med 300,
+ *  p75 700, p90 1000, max 2200 —— 1400 是 ~p97」。
+ * ⚠️ 也就是說它是**一份量測的快照**，而 owner 2026-08-21 ①「**B 全轉**」把
+ * 每一支傷害技的基礎值搬到五級距上，那份快照當天就過期了 ——
+ * 而它過期的方式最壞：`castTimeSec` 是**推導**的，所以 128 支技能的吟唱秒數
+ * 會集體變長，而**沒有任何東西會紅**（`castTimeCoverage` 只驗「內容 == 公式」，
+ * 兩邊一起漂移就是一起綠）。實測 13-002 絕。暗殺奧義因此**整支變成死內容**：
+ * 牙突的吟唱漲到 1.033 秒，而它要配合的 13-01 [致盲] 只有 owner 給的 1.0 秒
+ * ⇒ 那 20% 摘心一輩子觸發不了（第一·五守則：卡面說了、場上不會發生）。
+ *
+ * ⭐ 現在它從**傷害五級距的頂端**推導：`config.damage-tiers@1` 的「極大」
+ * 就是這個遊戲對「最兇的一發」的定義（`damageTiers.ts`：極大 = hard limit
+ * LV30 中位血量的一半，「一發不可以秒殺中位英雄」）。
+ * ⇒ owner 重錨傷害表，這條曲線自己跟著動，⛔ 不必有人記得回來改一個常數。
+ */
+export const DAMAGE_SATURATION = DEFAULT_DAMAGE_TIERS.damage[DAMAGE_TIER_NAMES[4]!];
+
 
 /**
  * combat-env `cooldown`. The cast-time ceiling has to be computed against the
@@ -282,9 +305,8 @@ export function castTimeFeatures(def: AbilityDef): CastTimeFeatures {
  * the observed distribution of the real 545 castable abilities, so the curve
  * describes THIS game's content and not a generic MOBA.
  *
- *   damage   .35  raw max-rank damage / 1400 (real distribution of the 309
- *                 damaging abilities: p25 190, med 300, p75 700, p90 1000,
- *                 max 2200 — 1400 is ~p97, so only true nukes saturate)
+ *   damage   .35  raw max-rank damage / {@link DAMAGE_SATURATION}
+ *                 —— ⭐ 2026-08-21 起這一格是**推導**的，⛔ 不是 1400 那個字面值
  *   hard CC  .20  stun 1.0 / root 0.6 / slow 0.25 — being unable to walk out is
  *                 what makes an ability punishing, so it is the second input
  *   AoE      .15  radius / 8 (real radii: median 5.88, max 9.72) — area beats
@@ -299,7 +321,7 @@ export function castTimeFeatures(def: AbilityDef): CastTimeFeatures {
  * the MEDIAN at the 0.4 the owner asked for.
  */
 export function punishScore(def: AbilityDef, f: CastTimeFeatures): number {
-  const dmgTerm = Math.min(1, f.damage / 1400);
+  const dmgTerm = Math.min(1, f.damage / DAMAGE_SATURATION);
   // CC WEIGHTED BY HOW LONG IT ACTUALLY LASTS. A 0.1 s "stun" is a hit flinch,
   // not crowd control, and must not buy the same 0.20 of score as a 2 s lockup —
   // that is precisely how godie-e015.e (125 dmg + a 0.1 s stun) earned a 0.6 s

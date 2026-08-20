@@ -8,10 +8,11 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    75.0
+    60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
-    255.0
+    0.0
   ],
   "range": 0,
   "effects": [

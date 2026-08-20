@@ -61,18 +61,18 @@
       "castType": "self",
       "maxRank": 5,
       "cooldown": [
-        12,
-        12,
-        12,
-        12,
-        12
+        6.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
-        60,
-        60,
-        60,
-        60,
-        60
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0,
       "effects": [],
@@ -91,7 +91,8 @@
           ],
           "castTimeSec": 0.067
         }
-      }
+      },
+      "cooldownTier": "極小"
     },
     "W": {
       "id": "godie-osam.w",
@@ -103,23 +104,23 @@
       "castType": "self",
       "maxRank": 5,
       "cooldown": [
-        12,
-        12,
-        12,
-        12,
-        12
+        6.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
-        60,
-        60,
-        60,
-        60,
-        60
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.wind.slash",
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.167,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
@@ -131,9 +132,10 @@
               "value": 0.25
             }
           ],
-          "castTimeSec": 0.267
+          "castTimeSec": 0.167
         }
-      }
+      },
+      "cooldownTier": "極小"
     },
     "E": {
       "id": "godie-osam.e",
@@ -145,28 +147,24 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [],
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "perRank": [
-              15,
-              15,
-              15,
-              15
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -175,14 +173,15 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.267
+          "castTimeSec": 0.167
         }
       },
       "vfxKey": "fx.prim.void.explosion",
       "targetsEnemies": true,
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.167,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極小"
     },
     "R": {
       "id": "godie-osam.r",
@@ -200,8 +199,8 @@
       ],
       "manaCost": [
         200.0,
-        300.0,
-        400.0
+        200.0,
+        200.0
       ],
       "effects": [],
       "template": {
@@ -213,11 +212,8 @@
           "aoePerStep": 350,
           "stepVfx": "fx.fam.bolt-strike.lightning.s115",
           "damage": {
-            "perRank": [
-              600,
-              900,
-              1200
-            ],
+            "damageTier": "小",
+            "flat": 1500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -232,7 +228,8 @@
       "targetsEnemies": true,
       "castTimeSec": 0.833,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "大"
     }
   },
   "skillOrder": [

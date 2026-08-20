@@ -8,14 +8,15 @@
   "castType": "ground",
   "maxRank": 3,
   "cooldown": [
-    25.0,
-    25.0,
-    25.0
+    30.0,
+    30.0,
+    30.0
   ],
+  "cooldownTier": "極小",
   "manaCost": [
-    70.0,
-    120.0,
-    170.0
+    73.0,
+    73.0,
+    73.0
   ],
   "range": 0.0,
   "effects": [
@@ -23,11 +24,8 @@
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "perRank": [
-          100.0,
-          200.0,
-          300.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -66,5 +64,5 @@
   "targetsEnemies": true,
   "radius": 4.12,
   "schema": "ability@1",
-  "castTimeSec": 0.633
+  "castTimeSec": 0.767
 }

@@ -14,10 +14,10 @@
     60.0
   ],
   "manaCost": [
-    50.0,
-    100.0,
-    150.0,
-    200.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
   "range": 0.0,
   "targetsEnemies": false,
@@ -44,5 +44,6 @@
   ],
   "icon": "assets/icons/abilities/godie-ewar.w.webp",
   "vfxKey": "fx.prim.ki.pulse-sm",
+  "cooldownTier": "極大",
   "castTimeSec": 3
 }

@@ -14,10 +14,10 @@
     45.0
   ],
   "manaCost": [
-    100.0,
-    150.0,
-    150.0,
-    250.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
   "range": 0.0,
   "radiusTier": "小",
@@ -49,5 +49,6 @@
   ],
   "icon": "assets/icons/abilities/godie-e00s.e.webp",
   "vfxKey": "fx.prim.nature.pulse-sm",
+  "cooldownTier": "小",
   "castTimeSec": 0.667
 }

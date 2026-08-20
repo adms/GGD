@@ -10,8 +10,9 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    15.0
+    30.0
   ],
+  "cooldownTier": "極小",
   "manaCost": [
     150.0
   ],
@@ -23,9 +24,8 @@
       "kind": "damage",
       "damageType": "physical",
       "amount": {
-        "perRank": [
-          250.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ad",
@@ -36,5 +36,5 @@
     }
   ],
   "vfxKey": "fx.prim.physical.shockwave",
-  "castTimeSec": 0.367
+  "castTimeSec": 0.667
 }

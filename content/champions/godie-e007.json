@@ -60,31 +60,26 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        6.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
-        30.0,
-        50.0,
-        70.0,
-        90.0,
-        90.0
+        73.0,
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [
         {
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              150.0,
-              250.0,
-              350.0,
-              350.0,
-              350.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -102,9 +97,10 @@
       ],
       "vfxKey": "fx.prim.ki.pulse-sm",
       "targetsEnemies": true,
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.167,
       "rangeTier": "小",
-      "range": 4.5
+      "range": 4.5,
+      "cooldownTier": "極小"
     },
     "W": {
       "id": "godie-e007.w",
@@ -122,10 +118,10 @@
         60.0
       ],
       "manaCost": [
-        50.0,
-        100.0,
-        150.0,
-        200.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "effects": [
         {
@@ -150,7 +146,8 @@
       "targetsEnemies": false,
       "castTimeSec": 0.067,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極大"
     },
     "E": {
       "id": "godie-e007.e",
@@ -167,22 +164,18 @@
         45.0
       ],
       "manaCost": [
-        60.0,
-        225.0,
-        300.0,
-        375.0
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [
         {
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              80,
-              120,
-              160,
-              200
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -197,7 +190,8 @@
       "icon": "assets/icons/abilities/godie-e007.e.png",
       "castTimeSec": 0.467,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "大"
     },
     "R": {
       "id": "godie-e007.r",
@@ -214,19 +208,16 @@
       ],
       "manaCost": [
         215.0,
-        280.0,
-        345.0
+        215.0,
+        215.0
       ],
       "effects": [
         {
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              650.0,
-              950.0,
-              1250.0
-            ],
+            "damageTier": "小",
+            "flat": 1500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -239,7 +230,7 @@
       "vfxKey": "fx.w3x.particle.supershinythingy.p00",
       "targetsEnemies": true,
       "icon": "assets/icons/abilities/godie-e007.r.png",
-      "castTimeSec": 1.5,
+      "castTimeSec": 1.233,
       "hitFeel": {
         "hitstopTicks": 4,
         "hitstunTicks": 7,
@@ -255,7 +246,8 @@
         "camKick": 0.446
       },
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極大"
     }
   },
   "skillOrder": [

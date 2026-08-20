@@ -12,6 +12,7 @@
   "cooldown": [
     45.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
     140.0
   ],
@@ -21,9 +22,8 @@
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "perRank": [
-          350.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -35,7 +35,7 @@
   ],
   "vfxKey": "fx.prim.earth.pulse-sm",
   "sfxKey": "wc3.mortarteampissed9",
-  "castTimeSec": 0.667,
+  "castTimeSec": 0.467,
   "rangeTier": "小",
   "range": 4.5
 }

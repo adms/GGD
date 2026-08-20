@@ -8,16 +8,17 @@
   "castType": "skillshot",
   "maxRank": 4,
   "cooldown": [
-    60,
-    60,
-    60,
-    60
+    60.0,
+    60.0,
+    60.0,
+    60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
-    215,
-    300,
-    385,
-    470
+    215.0,
+    215.0,
+    215.0,
+    215.0
   ],
   "effects": [],
   "template": {
@@ -27,21 +28,17 @@
       "stepSize": 200,
       "segmentAoe": 400,
       "damage": {
-        "perRank": [
-          650,
-          900,
-          1150,
-          1400
-        ]
+        "damageTier": "小",
+        "flat": 1500.0
       },
       "damageType": "magic",
-      "castTimeSec": 1.5
+      "castTimeSec": 0.833
     }
   },
   "vfxKey": "godie-tectonicfury-p0",
   "sfxKey": "wc3.dragonyes2",
   "schema": "ability@1",
-  "castTimeSec": 1.5,
+  "castTimeSec": 0.833,
   "hitFeel": {
     "hitstopTicks": 4,
     "hitstunTicks": 6,

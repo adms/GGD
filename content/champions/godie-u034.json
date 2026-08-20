@@ -60,16 +60,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "range": 0,
       "effects": [
@@ -77,12 +77,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              300.0,
-              375.0,
-              450.0,
-              525.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -105,7 +101,8 @@
       ],
       "vfxKey": "fx.prim.ki.pulse-sm",
       "sfxKey": "wc3.mortarteampissed9",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.167,
+      "cooldownTier": "極小"
     },
     "W": {
       "id": "godie-u034.w",
@@ -117,16 +114,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "range": 0,
       "effects": [
@@ -134,12 +131,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              350.0,
-              450.0,
-              550.0,
-              650.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -162,7 +155,8 @@
       ],
       "vfxKey": "fx.prim.ki.pulse-sm",
       "sfxKey": "wc3.mortarteampissed9",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.167,
+      "cooldownTier": "極小"
     },
     "E": {
       "id": "godie-u034.e",
@@ -174,31 +168,26 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        6.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        73.0,
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [
         {
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "perRank": [
-              80,
-              120,
-              160,
-              200,
-              240
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -211,9 +200,10 @@
       "vfxKey": "fx.prim.earth.pulse-sm",
       "sfxKey": "wc3.mortarteampissed9",
       "targetsEnemies": true,
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.167,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極小"
     },
     "R": {
       "id": "godie-u034.r",
@@ -229,9 +219,9 @@
         60.0
       ],
       "manaCost": [
-        200.0,
-        300.0,
-        400.0
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0,
       "effects": [
@@ -263,7 +253,8 @@
         ],
         "flashMs": 202,
         "camKick": 0.506
-      }
+      },
+      "cooldownTier": "極大"
     }
   },
   "skillOrder": [

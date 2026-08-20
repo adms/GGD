@@ -66,11 +66,11 @@
       ],
       "manaCost": [
         150.0,
-        190.0,
-        230.0,
-        240.0
+        150.0,
+        150.0,
+        150.0
       ],
-      "range": 14.67,
+      "range": 12.0,
       "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
@@ -78,12 +78,8 @@
           "kind": "damageArea",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              250.0,
-              350.0,
-              450.0,
-              550.0
-            ]
+            "damageTier": "極小",
+            "flat": 600.0
           },
           "radius": 6.0,
           "radiusTier": "中",
@@ -120,6 +116,7 @@
       "icon": "assets/icons/abilities/godie-edem.q.webp",
       "vfxKey": "fx.prim.fire.explosion",
       "rangeTier": "極大",
+      "cooldownTier": "小",
       "castTimeSec": 1.033
     },
     "W": {
@@ -137,10 +134,10 @@
         45.0
       ],
       "manaCost": [
-        70.0,
-        120.0,
-        170.0,
-        220.0
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "range": 0.0,
       "radiusTier": "中",
@@ -150,12 +147,8 @@
           "kind": "damageArea",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              75.0,
-              150.0,
-              225.0,
-              300.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -191,6 +184,7 @@
       ],
       "icon": "assets/icons/abilities/godie-edem.w.webp",
       "vfxKey": "fx.prim.lightning.beam",
+      "cooldownTier": "小",
       "castTimeSec": 0.833
     },
     "E": {
@@ -209,11 +203,11 @@
       ],
       "manaCost": [
         120.0,
-        185.0,
-        250.0,
-        315.0
+        120.0,
+        120.0,
+        120.0
       ],
-      "range": 12.83,
+      "range": 12.0,
       "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
@@ -227,12 +221,8 @@
           "kind": "damageLine",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              400.0,
-              500.0,
-              600.0,
-              700.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -257,6 +247,7 @@
         }
       ],
       "rangeTier": "極大",
+      "cooldownTier": "小",
       "castTimeSec": 2
     },
     "R": {

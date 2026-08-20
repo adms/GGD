@@ -10,6 +10,7 @@
   "cooldown": [
     60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
     315.0
   ],
@@ -18,7 +19,8 @@
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "flat": 300,
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -37,7 +39,7 @@
   "vfxKey": "fx.prim.holy.pulse-lg",
   "schema": "ability@1",
   "targetsEnemies": true,
-  "castTimeSec": 1.5,
+  "castTimeSec": 1.433,
   "rangeTier": "中",
   "range": 6
 }

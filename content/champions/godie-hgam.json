@@ -62,16 +62,16 @@
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        25,
-        25,
-        25
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
-        70,
-        120,
-        170
+        73.0,
+        73.0,
+        73.0
       ],
-      "range": 0,
+      "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.nature.slash",
       "vfxLayers": [
@@ -101,17 +101,14 @@
       ],
       "targetsEnemies": true,
       "radius": 4.12,
-      "castTimeSec": 0.633,
+      "castTimeSec": 0.767,
       "template": {
         "ref": "tpl-ground-nova",
         "params": {
           "radius": 224.5,
           "damage": {
-            "perRank": [
-              100,
-              200,
-              300
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -120,9 +117,10 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.633
+          "castTimeSec": 0.767
         }
-      }
+      },
+      "cooldownTier": "極小"
     },
     "W": {
       "id": "godie-hgam.w",
@@ -134,30 +132,31 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        25,
-        25,
-        25,
-        25
+        30.0,
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
-        20,
-        50,
-        80,
-        110
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "effects": [
         {
           "kind": "applyStatus",
           "statusId": "slow60",
-          "duration": 4,
+          "duration": 4.0,
           "moveSpeedMult": 0.4
         }
       ],
       "vfxKey": "fx.prim.arcane.nova",
       "targetsEnemies": true,
       "radius": 6,
-      "castTimeSec": 0.633
+      "castTimeSec": 0.767,
+      "cooldownTier": "極小"
     },
     "E": {
       "id": "godie-hgam.e",
@@ -176,21 +175,17 @@
       ],
       "manaCost": [
         125.0,
-        200.0,
-        275.0,
-        350.0
+        125.0,
+        125.0,
+        125.0
       ],
       "effects": [],
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "perRank": [
-              350,
-              500,
-              650,
-              800
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -199,14 +194,15 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.133
+          "castTimeSec": 0.467
         }
       },
       "vfxKey": "fx.root-snare",
       "targetsEnemies": true,
-      "castTimeSec": 1.133,
+      "castTimeSec": 0.467,
       "rangeTier": "大",
-      "range": 8
+      "range": 8,
+      "cooldownTier": "大"
     },
     "R": {
       "id": "godie-hgam.r",
@@ -218,14 +214,14 @@
       "castType": "skillshot",
       "maxRank": 3,
       "cooldown": [
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        200,
-        300,
-        400
+        200.0,
+        200.0,
+        200.0
       ],
       "effects": [],
       "template": {
@@ -235,18 +231,15 @@
           "stepSize": 200,
           "segmentAoe": 400,
           "damage": {
-            "perRank": [
-              600,
-              900,
-              1200
-            ]
+            "damageTier": "小",
+            "flat": 1500.0
           },
           "damageType": "magic",
-          "castTimeSec": 1.5
+          "castTimeSec": 1.233
         }
       },
       "vfxKey": "fx.w3x.particle.supershinythingy.p00",
-      "castTimeSec": 1.5,
+      "castTimeSec": 1.233,
       "hitFeel": {
         "hitstopTicks": 4,
         "hitstunTicks": 7,
@@ -263,7 +256,8 @@
       },
       "targetsEnemies": true,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極大"
     }
   },
   "skillOrder": [

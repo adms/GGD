@@ -67,9 +67,9 @@
       ],
       "manaCost": [
         100.0,
-        150.0,
-        200.0,
-        250.0
+        100.0,
+        100.0,
+        100.0
       ],
       "range": 0.0,
       "radiusTier": "小",
@@ -79,12 +79,8 @@
           "kind": "damageArea",
           "damageType": "physical",
           "amount": {
-            "perRank": [
-              150.0,
-              250.0,
-              350.0,
-              450.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -108,6 +104,7 @@
       "icon": "assets/icons/abilities/godie-h00l.q.webp",
       "vfxKey": "fx.prim.wind.slash",
       "sfxKey": "wc3.druidofthetalonmissilelaunch2",
+      "cooldownTier": "極小",
       "castTimeSec": 0.667
     },
     "W": {
@@ -125,12 +122,12 @@
         45.0
       ],
       "manaCost": [
-        50.0,
-        75.0,
-        100.0,
-        125.0
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
-      "range": 11.0,
+      "range": 12.0,
       "targetsEnemies": true,
       "effects": [
         {
@@ -146,12 +143,8 @@
               "kind": "damage",
               "damageType": "physical",
               "amount": {
-                "perRank": [
-                  150.0,
-                  250.0,
-                  350.0,
-                  450.0
-                ]
+                "damageTier": "極小",
+                "flat": 600.0
               }
             }
           ]
@@ -161,7 +154,8 @@
       "vfxKey": "fx.prim.physical.beam",
       "sfxKey": "wc3.headhunteryes4",
       "rangeTier": "極大",
-      "castTimeSec": 0.833
+      "cooldownTier": "大",
+      "castTimeSec": 0.467
     },
     "E": {
       "id": "godie-h00l.e",
@@ -420,9 +414,9 @@
         60.0
       ],
       "manaCost": [
-        120.0,
-        150.0,
-        180.0
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0.0,
       "targetsEnemies": false,
@@ -522,6 +516,7 @@
         "flashMs": 186,
         "camKick": 0.466
       },
+      "cooldownTier": "中",
       "castTimeSec": 2
     }
   },

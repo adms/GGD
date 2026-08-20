@@ -8,31 +8,27 @@
   "castType": "targeted",
   "maxRank": 5,
   "cooldown": [
-    25.0,
-    25.0,
-    25.0,
-    25.0,
-    25.0
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0
   ],
+  "cooldownTier": "小",
   "manaCost": [
-    60.0,
-    80.0,
-    100.0,
-    120.0,
-    120.0
+    73.0,
+    73.0,
+    73.0,
+    73.0,
+    73.0
   ],
   "effects": [
     {
       "kind": "damage",
       "damageType": "physical",
       "amount": {
-        "perRank": [
-          150.0,
-          220.0,
-          290.0,
-          360.0,
-          360.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ad",
@@ -58,7 +54,7 @@
   "vfxKey": "fx.prim.physical.slash",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.633,
+  "castTimeSec": 0.367,
   "rangeTier": "大",
   "range": 8
 }

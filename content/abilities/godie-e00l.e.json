@@ -13,11 +13,12 @@
     60.0,
     60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
     150.0,
-    250.0,
-    350.0,
-    450.0
+    150.0,
+    150.0,
+    150.0
   ],
   "effects": [
     {
@@ -28,12 +29,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              250.0,
-              400.0,
-              550.0,
-              700.0
-            ]
+            "damageTier": "極小",
+            "flat": 600.0
           }
         }
       ]
@@ -41,7 +38,7 @@
   ],
   "vfxKey": "fx.w3x.particle.holyawakening.p04",
   "schema": "ability@1",
-  "castTimeSec": 1.233,
+  "castTimeSec": 0.467,
   "hitFeel": {
     "hitstopTicks": 3,
     "hitstunTicks": 6,

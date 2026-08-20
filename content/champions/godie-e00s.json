@@ -68,11 +68,11 @@
       ],
       "manaCost": [
         250.0,
-        300.0,
-        350.0,
-        400.0
+        250.0,
+        250.0,
+        250.0
       ],
-      "range": 11.0,
+      "range": 12.0,
       "radiusTier": "小",
       "targetsEnemies": true,
       "effects": [
@@ -80,12 +80,8 @@
           "kind": "damageArea",
           "damageType": "physical",
           "amount": {
-            "perRank": [
-              150.0,
-              300.0,
-              450.0,
-              600.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -107,6 +103,7 @@
       "vfxKey": "fx.prim.arcane.bolt",
       "sfxKey": "wc3.treantready1",
       "rangeTier": "極大",
+      "cooldownTier": "中",
       "castTimeSec": 0.833
     },
     "W": {
@@ -255,10 +252,10 @@
         45.0
       ],
       "manaCost": [
-        100.0,
-        150.0,
-        150.0,
-        250.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0.0,
       "radiusTier": "小",
@@ -290,6 +287,7 @@
       ],
       "icon": "assets/icons/abilities/godie-e00s.e.webp",
       "vfxKey": "fx.prim.nature.pulse-sm",
+      "cooldownTier": "小",
       "castTimeSec": 0.667
     },
     "R": {
@@ -307,8 +305,8 @@
       ],
       "manaCost": [
         240.0,
-        420.0,
-        600.0
+        240.0,
+        240.0
       ],
       "range": 0.0,
       "radiusTier": "中",
@@ -336,11 +334,8 @@
               "kind": "damageArea",
               "damageType": "magic",
               "amount": {
-                "perRank": [
-                  250.0,
-                  350.0,
-                  450.0
-                ],
+                "damageTier": "極小",
+                "flat": 600.0,
                 "ratios": [
                   {
                     "stat": "ap",
@@ -382,6 +377,7 @@
       ],
       "icon": "assets/icons/abilities/godie-e00s.r.webp",
       "vfxKey": "fx.prim.arcane.nova-lg",
+      "cooldownTier": "大",
       "castTimeSec": 1.233
     }
   },

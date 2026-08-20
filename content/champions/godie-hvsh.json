@@ -61,28 +61,24 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        25,
-        25,
-        25,
-        25
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "manaCost": [
-        50,
-        75,
-        100,
-        125
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [],
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "perRank": [
-              150,
-              250,
-              350,
-              450
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -91,14 +87,15 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.633
+          "castTimeSec": 0.367
         }
       },
       "vfxKey": "fx.prim.arcane.beam",
       "targetsEnemies": true,
-      "castTimeSec": 0.633,
+      "castTimeSec": 0.367,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "小"
     },
     "W": {
       "id": "godie-hvsh.w",
@@ -110,21 +107,21 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        12,
-        12,
-        12,
-        12
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
-        60,
-        60,
-        60,
-        60
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.arcane.pulse",
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.167,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
@@ -136,9 +133,10 @@
               "value": 25
             }
           ],
-          "castTimeSec": 0.267
+          "castTimeSec": 0.167
         }
-      }
+      },
+      "cooldownTier": "極小"
     },
     "E": {
       "id": "godie-hvsh.e",
@@ -149,16 +147,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        60,
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        120,
-        195,
-        270,
-        345
+        120.0,
+        120.0,
+        120.0,
+        120.0
       ],
       "range": 0,
       "radiusTier": "大",
@@ -179,12 +177,8 @@
                   "kind": "damageArea",
                   "damageType": "magic",
                   "amount": {
-                    "perRank": [
-                      75,
-                      150,
-                      225,
-                      300
-                    ],
+                    "damageTier": "極小",
+                    "flat": 600.0,
                     "ratios": [
                       {
                         "stat": "ap",
@@ -264,7 +258,8 @@
       ],
       "vfxKey": "fx.prim.blood.nova",
       "castTimeSec": 1.033,
-      "icon": "assets/icons/abilities/godie-hvsh.e.webp"
+      "icon": "assets/icons/abilities/godie-hvsh.e.webp",
+      "cooldownTier": "中"
     },
     "R": {
       "id": "godie-hvsh.r",
@@ -276,25 +271,22 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        230,
-        330,
-        430
+        230.0,
+        230.0,
+        230.0
       ],
       "effects": [],
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "perRank": [
-              300,
-              600,
-              900
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -303,14 +295,15 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.5
+          "castTimeSec": 0.833
         }
       },
       "vfxKey": "fx.prim.arcane.beam-lg",
       "targetsEnemies": true,
-      "castTimeSec": 1.5,
+      "castTimeSec": 0.833,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極大"
     }
   },
   "skillOrder": [

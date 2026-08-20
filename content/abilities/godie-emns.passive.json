@@ -33,5 +33,6 @@
   ],
   "icon": "assets/icons/abilities/godie-emns.passive.webp",
   "vfxKey": "fx.prim.void.pulse",
+  "cooldownTier": "小",
   "castTimeSec": 0.267
 }

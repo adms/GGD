@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_4d39c7f795f2`
+contentVersion `cv_f752cb348be5`
 
 ---
 
@@ -65,7 +65,7 @@ contentVersion `cv_4d39c7f795f2`
 | `onAbilityHit` | 技能命中時 | 19 | `godie-edem.r`、`godie-edem.r`、`godie-edem.r`、`godie-efur.ex`、`godie-h01n.w`、`godie-h01n.w`、`grail-c-08`、`grail-c-09`、`grail-c-16`、`grail-c-18`、`grail-a-19`、`grail-a-20` …（共 19） |
 | `onAllyDamaged` | 隊友受傷時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onAllyDeath` | 隊友陣亡時 | 3 | `grail-c-15`、`grail-a-06`、`grail-ex-10` |
-| `onBasicAttack` | 普攻時 | 69 | `godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e00l.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00s.w`、`godie-e00s.w`、`godie-e00s.w` …（共 69） |
+| `onBasicAttack` | 普攻時 | 70 | `godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e00l.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00s.w`、`godie-e00s.w`、`godie-e00s.w` …（共 70） |
 | `onBossSpawn` | 殭屍王出現時 | 1 | `grail-c-13` |
 | `onBoundaryTouch` | 碰到場地邊界時（＝踏進火圈） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onCrowdControlApplied` | 對別人施加控場時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |

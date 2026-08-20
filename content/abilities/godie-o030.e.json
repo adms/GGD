@@ -13,23 +13,20 @@
     30.0,
     30.0
   ],
+  "cooldownTier": "中",
   "manaCost": [
     150.0,
-    175.0,
-    200.0,
-    225.0
+    150.0,
+    150.0,
+    150.0
   ],
   "effects": [
     {
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "perRank": [
-          16.0,
-          32.0,
-          48.0,
-          64.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -42,7 +39,7 @@
   "vfxKey": "fx.prim.fire.explosion",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.267,
+  "castTimeSec": 0.467,
   "rangeTier": "極大",
   "range": 12
 }

@@ -9,25 +9,23 @@
   "castType": "targeted",
   "maxRank": 3,
   "cooldown": [
-    55.0,
-    55.0,
-    55.0
+    45.0,
+    45.0,
+    45.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
     300.0,
-    500.0,
-    700.0
+    300.0,
+    300.0
   ],
   "effects": [
     {
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "perRank": [
-          150.0,
-          275.0,
-          400.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",

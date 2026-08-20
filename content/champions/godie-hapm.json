@@ -67,10 +67,10 @@
         60.0
       ],
       "manaCost": [
-        100.0,
-        140.0,
-        180.0,
-        220.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0.0,
       "targetsEnemies": false,
@@ -181,6 +181,7 @@
       },
       "icon": "assets/icons/abilities/godie-hapm.q.webp",
       "vfxKey": "fx.prim.physical.pulse",
+      "cooldownTier": "極大",
       "castTimeSec": 0.067
     },
     "W": {
@@ -198,12 +199,12 @@
         45.0
       ],
       "manaCost": [
-        70.0,
-        95.0,
-        120.0,
-        145.0
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
-      "range": 11.0,
+      "range": 12.0,
       "targetsEnemies": true,
       "effects": [
         {
@@ -228,12 +229,8 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "perRank": [
-                  350.0,
-                  450.0,
-                  550.0,
-                  650.0
-                ],
+                "damageTier": "極小",
+                "flat": 600.0,
                 "ratios": [
                   {
                     "stat": "ap",
@@ -259,6 +256,7 @@
       "icon": "assets/icons/abilities/godie-hapm.w.webp",
       "vfxKey": "fx.prim.physical.shockwave",
       "rangeTier": "極大",
+      "cooldownTier": "大",
       "castTimeSec": 1
     },
     "E": {
@@ -447,8 +445,8 @@
       ],
       "manaCost": [
         400.0,
-        600.0,
-        800.0
+        400.0,
+        400.0
       ],
       "range": 0.0,
       "radiusTier": "中",
@@ -464,11 +462,8 @@
           "kind": "damageArea",
           "damageType": "physical",
           "amount": {
-            "perRank": [
-              600.0,
-              1000.0,
-              1400.0
-            ]
+            "damageTier": "小",
+            "flat": 1500.0
           },
           "radius": 6.0,
           "radiusTier": "中",
@@ -500,6 +495,7 @@
       ],
       "icon": "assets/icons/abilities/godie-hapm.r.webp",
       "vfxKey": "fx.prim.physical.shockwave-lg",
+      "cooldownTier": "極大",
       "castTimeSec": 2
     }
   },

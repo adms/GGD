@@ -59,30 +59,26 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
-        30.0,
-        57.0,
-        83.0,
-        90.0
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
-      "range": 4.0,
+      "range": 4.5,
       "targetsEnemies": true,
       "effects": [
         {
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              150.0,
-              283.0,
-              350.0,
-              350.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -102,7 +98,8 @@
       "icon": "assets/icons/abilities/godie-ewar.q.webp",
       "vfxKey": "fx.prim.ki.nova",
       "rangeTier": "小",
-      "castTimeSec": 0.3
+      "cooldownTier": "極小",
+      "castTimeSec": 0.167
     },
     "W": {
       "id": "godie-ewar.w",
@@ -119,10 +116,10 @@
         60.0
       ],
       "manaCost": [
-        50.0,
-        100.0,
-        150.0,
-        200.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0.0,
       "targetsEnemies": false,
@@ -149,6 +146,7 @@
       ],
       "icon": "assets/icons/abilities/godie-ewar.w.webp",
       "vfxKey": "fx.prim.ki.pulse-sm",
+      "cooldownTier": "極大",
       "castTimeSec": 3
     },
     "E": {
@@ -353,8 +351,8 @@
       ],
       "manaCost": [
         250.0,
-        350.0,
-        450.0
+        250.0,
+        250.0
       ],
       "range": 0.0,
       "radiusTier": "中",
@@ -364,11 +362,8 @@
           "kind": "damageArea",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              550.0,
-              750.0,
-              950.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -383,7 +378,7 @@
         {
           "kind": "dispel",
           "shape": "circle",
-          "radius": 6.0,
+          "radius": 8.0,
           "radiusTier": "大",
           "side": "enemies",
           "pools": {
@@ -410,6 +405,7 @@
         "flashMs": 178,
         "camKick": 0.446
       },
+      "cooldownTier": "中",
       "castTimeSec": 2
     }
   },

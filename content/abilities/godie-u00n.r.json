@@ -12,10 +12,11 @@
     60.0,
     60.0
   ],
+  "cooldownTier": "中",
   "manaCost": [
     200.0,
-    310.0,
-    420.0
+    200.0,
+    200.0
   ],
   "range": 0.0,
   "effects": [
@@ -39,11 +40,8 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "perRank": [
-              600.0,
-              900.0,
-              1200.0
-            ],
+            "damageTier": "小",
+            "flat": 1500.0,
             "ratios": [
               {
                 "stat": "ad",

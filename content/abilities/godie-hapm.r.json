@@ -14,8 +14,8 @@
   ],
   "manaCost": [
     400.0,
-    600.0,
-    800.0
+    400.0,
+    400.0
   ],
   "range": 0.0,
   "radiusTier": "中",
@@ -31,11 +31,8 @@
       "kind": "damageArea",
       "damageType": "physical",
       "amount": {
-        "perRank": [
-          600.0,
-          1000.0,
-          1400.0
-        ]
+        "damageTier": "小",
+        "flat": 1500.0
       },
       "radius": 6.0,
       "radiusTier": "中",
@@ -67,5 +64,6 @@
   ],
   "icon": "assets/icons/abilities/godie-hapm.r.webp",
   "vfxKey": "fx.prim.physical.shockwave-lg",
+  "cooldownTier": "極大",
   "castTimeSec": 2
 }

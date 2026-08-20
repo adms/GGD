@@ -66,19 +66,16 @@
       ],
       "manaCost": [
         75.0,
-        105.0,
-        135.0
+        75.0,
+        75.0
       ],
       "effects": [],
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "perRank": [
-              220,
-              340,
-              460
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -95,7 +92,8 @@
       "icon": "assets/icons/abilities/godie-ubal.q.png",
       "castTimeSec": 0.367,
       "rangeTier": "中",
-      "range": 6
+      "range": 6,
+      "cooldownTier": "小"
     },
     "W": {
       "id": "godie-ubal.w",
@@ -107,28 +105,24 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        50.0,
-        40.0,
+        30.0,
+        30.0,
+        30.0,
         30.0
       ],
       "manaCost": [
         350.0,
-        450.0,
-        550.0,
-        650.0
+        350.0,
+        350.0,
+        350.0
       ],
       "effects": [],
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "perRank": [
-              450,
-              450,
-              450,
-              450
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -137,15 +131,16 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.767
+          "castTimeSec": 0.467
         }
       },
       "vfxKey": "fx.prim.void.shockwave",
       "sfxKey": "wc3.trollbatriderpissed2",
       "targetsEnemies": true,
-      "castTimeSec": 0.767,
+      "castTimeSec": 0.467,
       "rangeTier": "大",
-      "range": 8
+      "range": 8,
+      "cooldownTier": "中"
     },
     "E": {
       "id": "godie-ubal.e",
@@ -157,28 +152,24 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        5.0,
-        5.0,
-        5.0,
-        5.0
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
         100.0,
-        150.0,
-        200.0,
-        250.0
+        100.0,
+        100.0,
+        100.0
       ],
       "effects": [],
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "perRank": [
-              300,
-              450,
-              600,
-              750
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -191,9 +182,10 @@
       },
       "vfxKey": "fx.prim.void.explosion",
       "targetsEnemies": true,
-      "castTimeSec": 0.133,
+      "castTimeSec": 0.167,
       "rangeTier": "大",
-      "range": 8
+      "range": 8,
+      "cooldownTier": "極小"
     },
     "R": {
       "id": "godie-ubal.r",
@@ -205,25 +197,22 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        90.0,
-        90.0,
-        90.0
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        60.0,
-        300.0,
-        450.0
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [],
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "perRank": [
-              80,
-              120,
-              160
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -240,7 +229,8 @@
       "targetsEnemies": true,
       "castTimeSec": 0.833,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極大"
     }
   },
   "skillOrder": [

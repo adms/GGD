@@ -60,31 +60,26 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        25.0,
-        25.0,
-        25.0,
-        25.0,
-        25.0
+        15.0,
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "manaCost": [
-        60.0,
-        80.0,
-        100.0,
-        120.0,
-        120.0
+        73.0,
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [
         {
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "perRank": [
-              150.0,
-              220.0,
-              290.0,
-              360.0,
-              360.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -109,9 +104,10 @@
       ],
       "vfxKey": "fx.prim.physical.slash",
       "targetsEnemies": true,
-      "castTimeSec": 0.633,
+      "castTimeSec": 0.367,
       "rangeTier": "大",
-      "range": 8
+      "range": 8,
+      "cooldownTier": "小"
     },
     "W": {
       "id": "godie-hart.w",
@@ -123,18 +119,18 @@
       "castType": "ground",
       "maxRank": 5,
       "cooldown": [
-        35.0,
-        35.0,
-        35.0,
-        35.0,
-        35.0
+        30.0,
+        30.0,
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
         75.0,
-        145.0,
-        215.0,
-        215.0,
-        215.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [
         {
@@ -149,13 +145,8 @@
               "kind": "damage",
               "damageType": "physical",
               "amount": {
-                "perRank": [
-                  200,
-                  400,
-                  600,
-                  800,
-                  1000
-                ],
+                "damageTier": "極小",
+                "flat": 600.0,
                 "ratios": [
                   {
                     "stat": "ad",
@@ -176,9 +167,10 @@
       "vfxKey": "fx.prim.fire.explosion",
       "targetsEnemies": true,
       "radius": 4.58,
-      "castTimeSec": 0.867,
+      "castTimeSec": 0.767,
       "rangeTier": "大",
-      "range": 8
+      "range": 8,
+      "cooldownTier": "極小"
     },
     "E": {
       "id": "godie-hart.e",
@@ -197,21 +189,17 @@
       ],
       "manaCost": [
         120.0,
-        180.0,
-        240.0,
-        300.0
+        120.0,
+        120.0,
+        120.0
       ],
       "effects": [
         {
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "perRank": [
-              450.0,
-              600.0,
-              750.0,
-              900.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -279,7 +267,8 @@
       "radius": 6.42,
       "castTimeSec": 1.133,
       "rangeTier": "極小",
-      "range": 3
+      "range": 3,
+      "cooldownTier": "小"
     },
     "R": {
       "id": "godie-hart.r",
@@ -297,8 +286,8 @@
       ],
       "manaCost": [
         170.0,
-        260.0,
-        350.0
+        170.0,
+        170.0
       ],
       "effects": [
         {
@@ -371,7 +360,8 @@
         "camKick": 0.526
       },
       "rangeTier": "大",
-      "range": 8
+      "range": 8,
+      "cooldownTier": "極大"
     }
   },
   "skillOrder": [

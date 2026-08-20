@@ -8,14 +8,14 @@
   "castType": "self",
   "maxRank": 3,
   "cooldown": [
-    90.0,
-    90.0,
-    90.0
+    60.0,
+    60.0,
+    60.0
   ],
   "manaCost": [
-    250.0,
-    400.0,
-    550.0
+    0.0,
+    0.0,
+    0.0
   ],
   "range": 0.0,
   "targetsEnemies": false,
@@ -124,5 +124,6 @@
   "icon": "assets/icons/abilities/godie-h01u.r.webp",
   "vfxKey": "fx.prim.physical.shockwave-lg",
   "sfxKey": "wc3.defendcaster",
+  "cooldownTier": "極大",
   "castTimeSec": 0.667
 }

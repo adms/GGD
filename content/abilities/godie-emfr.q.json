@@ -15,23 +15,19 @@
   ],
   "manaCost": [
     175.0,
-    275.0,
-    375.0,
-    475.0
+    175.0,
+    175.0,
+    175.0
   ],
-  "range": 6.42,
+  "range": 6.0,
   "targetsEnemies": true,
   "effects": [
     {
       "kind": "damageLine",
       "damageType": "magic",
       "amount": {
-        "perRank": [
-          250.0,
-          350.0,
-          450.0,
-          550.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -64,5 +60,6 @@
     }
   ],
   "rangeTier": "中",
+  "cooldownTier": "中",
   "castTimeSec": 0.467
 }

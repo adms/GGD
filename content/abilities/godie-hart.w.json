@@ -8,18 +8,19 @@
   "castType": "ground",
   "maxRank": 5,
   "cooldown": [
-    35.0,
-    35.0,
-    35.0,
-    35.0,
-    35.0
+    30.0,
+    30.0,
+    30.0,
+    30.0,
+    30.0
   ],
+  "cooldownTier": "極小",
   "manaCost": [
     75.0,
-    145.0,
-    215.0,
-    215.0,
-    215.0
+    75.0,
+    75.0,
+    75.0,
+    75.0
   ],
   "effects": [
     {
@@ -34,13 +35,8 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "perRank": [
-              200,
-              400,
-              600,
-              800,
-              1000
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -62,7 +58,7 @@
   "targetsEnemies": true,
   "radius": 4.58,
   "schema": "ability@1",
-  "castTimeSec": 0.867,
+  "castTimeSec": 0.767,
   "rangeTier": "大",
   "range": 8
 }

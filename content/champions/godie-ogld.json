@@ -61,31 +61,26 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        35.0,
-        35.0,
-        35.0,
-        35.0,
-        35.0
+        30.0,
+        30.0,
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
         100.0,
-        200.0,
-        300.0,
-        300.0,
-        300.0
+        100.0,
+        100.0,
+        100.0,
+        100.0
       ],
       "effects": [],
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "perRank": [
-              150,
-              300,
-              450,
-              450,
-              450
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -94,14 +89,15 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.833
+          "castTimeSec": 0.467
         }
       },
       "vfxKey": "fx.prim.holy.pulse",
       "targetsEnemies": true,
-      "castTimeSec": 0.833,
+      "castTimeSec": 0.467,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "中"
     },
     "W": {
       "id": "godie-ogld.w",
@@ -118,20 +114,17 @@
         15.0
       ],
       "manaCost": [
-        60.0,
-        80.0,
-        110.0
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [],
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "perRank": [
-              20,
-              30,
-              40
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -140,14 +133,15 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.267
+          "castTimeSec": 0.367
         }
       },
       "vfxKey": "fx.prim.void.swarm",
       "targetsEnemies": true,
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.367,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "小"
     },
     "E": {
       "id": "godie-ogld.e",
@@ -165,19 +159,16 @@
       ],
       "manaCost": [
         75.0,
-        150.0,
-        225.0
+        75.0,
+        75.0
       ],
       "effects": [],
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "perRank": [
-              6,
-              12,
-              18
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -186,14 +177,15 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.267
+          "castTimeSec": 0.467
         }
       },
       "vfxKey": "fx.prim.holy.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.467,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "大"
     },
     "R": {
       "id": "godie-ogld.r",
@@ -205,14 +197,14 @@
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        90,
-        90,
-        90
+        90.0,
+        90.0,
+        90.0
       ],
       "manaCost": [
-        250,
-        350,
-        450
+        250.0,
+        250.0,
+        250.0
       ],
       "range": 0,
       "effects": [],
@@ -226,11 +218,8 @@
           "anchor": "point",
           "radius": 200,
           "damage": {
-            "perRank": [
-              180,
-              360,
-              540
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -243,7 +232,8 @@
           "statusId": "burnstun",
           "statusDurationSec": 0.8
         }
-      }
+      },
+      "cooldownTier": "大"
     }
   },
   "skillOrder": [

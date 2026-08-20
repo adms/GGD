@@ -12,21 +12,19 @@
     60.0,
     60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
     300.0,
-    420.0,
-    540.0
+    300.0,
+    300.0
   ],
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
     "params": {
       "damage": {
-        "perRank": [
-          200,
-          200,
-          200
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -35,14 +33,14 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 1.033
+      "castTimeSec": 0.833
     }
   },
   "vfxKey": "fx.prim.fire.explosion-lg",
   "sfxKey": "wc3.taunt",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 1.033,
+  "castTimeSec": 0.833,
   "rangeTier": "極大",
   "range": 12
 }

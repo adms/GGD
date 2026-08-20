@@ -8,8 +8,9 @@
   "castType": "ground",
   "maxRank": 1,
   "cooldown": [
-    65.0
+    60.0
   ],
+  "cooldownTier": "中",
   "manaCost": [
     800.0
   ],
@@ -19,7 +20,8 @@
     "params": {
       "radius": 257,
       "damage": {
-        "flat": 300,
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -28,14 +30,14 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 1.633
+      "castTimeSec": 1.5
     }
   },
   "vfxKey": "fx.prim.void.nova-lg",
   "schema": "ability@1",
   "radius": 4.71,
   "targetsEnemies": true,
-  "castTimeSec": 1.633,
+  "castTimeSec": 1.5,
   "rangeTier": "大",
   "range": 8
 }

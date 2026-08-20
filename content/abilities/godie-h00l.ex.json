@@ -8,7 +8,7 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    120.0
+    60.0
   ],
   "manaCost": [
     0.0
@@ -69,5 +69,6 @@
     ]
   },
   "icon": "assets/icons/abilities/godie-h00l.ex.webp",
-  "vfxKey": "fx.prim.holy.beam-lg"
+  "vfxKey": "fx.prim.holy.beam-lg",
+  "cooldownTier": "極大"
 }

@@ -13,23 +13,20 @@
     60.0,
     60.0
   ],
+  "cooldownTier": "中",
   "manaCost": [
     165.0,
-    240.0,
-    315.0,
-    390.0
+    165.0,
+    165.0,
+    165.0
   ],
   "effects": [
     {
       "kind": "damage",
       "damageType": "physical",
       "amount": {
-        "perRank": [
-          300.0,
-          550.0,
-          800.0,
-          1050.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ad",
@@ -43,7 +40,7 @@
   "targetsEnemies": true,
   "radius": 6.0,
   "schema": "ability@1",
-  "castTimeSec": 1.5,
+  "castTimeSec": 1.233,
   "rangeTier": "極小",
   "range": 3
 }

@@ -20,7 +20,8 @@
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "flat": 1800.0,
+        "damageTier": "小",
+        "flat": 1500.0,
         "ratios": [
           {
             "stat": "ap",
@@ -38,5 +39,6 @@
   ],
   "icon": "assets/icons/abilities/godie-ewar.ex.webp",
   "vfxKey": "fx.w3x.particle.supershinythingy.p00",
+  "cooldownTier": "中",
   "castTimeSec": 2
 }

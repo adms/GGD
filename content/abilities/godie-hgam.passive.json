@@ -12,6 +12,7 @@
   "cooldown": [
     45.0
   ],
+  "cooldownTier": "大",
   "manaCost": [
     100.0
   ],
@@ -21,9 +22,8 @@
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "perRank": [
-          50.0
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -34,7 +34,7 @@
     }
   ],
   "vfxKey": "fx.prim.nature.bolt",
-  "castTimeSec": 0.267,
+  "castTimeSec": 0.467,
   "rangeTier": "大",
   "range": 8
 }

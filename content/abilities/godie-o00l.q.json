@@ -8,16 +8,17 @@
   "castType": "skillshot",
   "maxRank": 4,
   "cooldown": [
-    35.0,
-    35.0,
-    35.0,
-    35.0
+    30.0,
+    30.0,
+    30.0,
+    30.0
   ],
+  "cooldownTier": "中",
   "manaCost": [
     180.0,
-    210.0,
-    240.0,
-    270.0
+    180.0,
+    180.0,
+    180.0
   ],
   "effects": [
     {
@@ -28,12 +29,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              250.0,
-              350.0,
-              450.0,
-              550.0
-            ]
+            "damageTier": "極小",
+            "flat": 600.0
           }
         }
       ]
@@ -41,7 +38,7 @@
   ],
   "vfxKey": "fx.prim.void.beam",
   "schema": "ability@1",
-  "castTimeSec": 0.867,
+  "castTimeSec": 0.467,
   "rangeTier": "極大",
   "range": 12
 }

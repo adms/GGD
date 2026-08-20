@@ -66,12 +66,12 @@
         60.0
       ],
       "manaCost": [
-        50.0,
-        80.0,
-        110.0,
-        140.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 11.0,
+      "range": 12.0,
       "targetsEnemies": true,
       "effects": [
         {
@@ -91,6 +91,7 @@
       "icon": "assets/icons/abilities/godie-e00r.q.webp",
       "vfxKey": "fx.prim.void.explosion",
       "rangeTier": "極大",
+      "cooldownTier": "極大",
       "castTimeSec": 0.267
     },
     "W": {
@@ -338,27 +339,24 @@
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        90.0,
-        90.0,
-        90.0
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
         350.0,
-        500.0,
-        650.0
+        350.0,
+        350.0
       ],
-      "range": 8.25,
+      "range": 8.0,
       "targetsEnemies": true,
       "effects": [
         {
           "kind": "damageLine",
           "damageType": "true",
           "amount": {
-            "perRank": [
-              750.0,
-              1200.0,
-              1650.0
-            ]
+            "damageTier": "小",
+            "flat": 1500.0
           },
           "length": 8.25,
           "width": 2.2,
@@ -382,6 +380,7 @@
         }
       ],
       "rangeTier": "大",
+      "cooldownTier": "極大",
       "castTimeSec": 3
     }
   },

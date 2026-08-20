@@ -12,10 +12,11 @@
     60.0,
     60.0
   ],
+  "cooldownTier": "極大",
   "manaCost": [
     210.0,
-    310.0,
-    410.0
+    210.0,
+    210.0
   ],
   "effects": [
     {
@@ -26,11 +27,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              450.0,
-              750.0,
-              1050.0
-            ]
+            "damageTier": "極小",
+            "flat": 600.0
           }
         }
       ]
@@ -38,7 +36,7 @@
   ],
   "vfxKey": "fx.prim.ki.beam-lg",
   "schema": "ability@1",
-  "castTimeSec": 1.5,
+  "castTimeSec": 1.033,
   "rangeTier": "極大",
   "range": 12
 }

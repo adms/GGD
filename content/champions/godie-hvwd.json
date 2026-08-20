@@ -60,16 +60,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        12,
-        12,
-        12,
-        12
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
-        60,
-        60,
-        60,
-        60
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0,
       "effects": [],
@@ -88,7 +88,8 @@
           ],
           "castTimeSec": 0.067
         }
-      }
+      },
+      "cooldownTier": "極小"
     },
     "W": {
       "id": "godie-hvwd.w",
@@ -100,21 +101,21 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        12,
-        12,
-        12,
-        12
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
-        60,
-        60,
-        60,
-        60
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.holy.pulse",
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.167,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
@@ -126,9 +127,10 @@
               "value": 0.07
             }
           ],
-          "castTimeSec": 0.267
+          "castTimeSec": 0.167
         }
-      }
+      },
+      "cooldownTier": "極小"
     },
     "E": {
       "id": "godie-hvwd.e",
@@ -146,21 +148,17 @@
       ],
       "manaCost": [
         120.0,
-        185.0,
-        250.0,
-        315.0
+        120.0,
+        120.0,
+        120.0
       ],
       "effects": [],
       "template": {
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "perRank": [
-              350,
-              550,
-              750,
-              950
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -169,7 +167,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.433
+          "castTimeSec": 0.467
         }
       },
       "vfxKey": "fx.w3x.particle.heronarutos4effect.p00",
@@ -186,9 +184,10 @@
       ],
       "targetsEnemies": true,
       "icon": "assets/icons/abilities/godie-hvwd.e.png",
-      "castTimeSec": 1.433,
+      "castTimeSec": 0.467,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極大"
     },
     "R": {
       "id": "godie-hvwd.r",
@@ -206,19 +205,16 @@
       ],
       "manaCost": [
         120.0,
-        210.0,
-        300.0
+        120.0,
+        120.0
       ],
       "effects": [
         {
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              6.0,
-              12.0,
-              18.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -235,9 +231,10 @@
       ],
       "vfxKey": "fx.prim.void.swarm-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.833,
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極大"
     }
   },
   "skillOrder": [

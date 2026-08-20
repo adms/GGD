@@ -14,25 +14,21 @@
     30.0,
     30.0
   ],
+  "cooldownTier": "中",
   "manaCost": [
     150.0,
-    215.0,
-    280.0,
-    280.0,
-    280.0
+    150.0,
+    150.0,
+    150.0,
+    150.0
   ],
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
     "params": {
       "damage": {
-        "perRank": [
-          150,
-          350,
-          550,
-          550,
-          550
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -41,13 +37,13 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.767
+      "castTimeSec": 0.467
     }
   },
   "vfxKey": "fx.prim.ice.nova",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.767,
+  "castTimeSec": 0.467,
   "rangeTier": "極大",
   "range": 12
 }

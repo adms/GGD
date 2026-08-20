@@ -124,9 +124,9 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
         0.0,
@@ -185,7 +185,8 @@
         ]
       },
       "vfxKey": "fx.prim.wind.nova",
-      "castTimeSec": 0.267
+      "castTimeSec": 0.267,
+      "cooldownTier": "極小"
     },
     "E": {
       "id": "godie-e00l.e",
@@ -204,9 +205,9 @@
       ],
       "manaCost": [
         150.0,
-        250.0,
-        350.0,
-        450.0
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [
         {
@@ -217,19 +218,15 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "perRank": [
-                  250.0,
-                  400.0,
-                  550.0,
-                  700.0
-                ]
+                "damageTier": "極小",
+                "flat": 600.0
               }
             }
           ]
         }
       ],
       "vfxKey": "fx.w3x.particle.holyawakening.p04",
-      "castTimeSec": 1.233,
+      "castTimeSec": 0.467,
       "hitFeel": {
         "hitstopTicks": 3,
         "hitstunTicks": 6,
@@ -245,7 +242,8 @@
         "camKick": 0.33
       },
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "cooldownTier": "極大"
     },
     "R": {
       "id": "godie-e00l.r",
@@ -257,14 +255,14 @@
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        12.0,
+        60.0,
         60.0,
         60.0
       ],
       "manaCost": [
         150.0,
-        250.0,
-        350.0
+        150.0,
+        150.0
       ],
       "range": 0.0,
       "effects": [
@@ -272,11 +270,8 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "perRank": [
-              250.0,
-              500.0,
-              750.0
-            ],
+            "damageTier": "極小",
+            "flat": 600.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -289,7 +284,8 @@
       "vfxKey": "fx.prim.earth.nova-lg",
       "targetsEnemies": true,
       "radius": 3.67,
-      "castTimeSec": 0.3
+      "castTimeSec": 1.433,
+      "cooldownTier": "中"
     }
   },
   "skillOrder": [

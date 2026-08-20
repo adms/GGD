@@ -59,6 +59,8 @@ import { ContentStore } from "../content/store";
 import { registerAll } from "../content/registries";
 import { Abilities, Champions } from "./content/registry";
 import { SimWorld } from "./SimWorld";
+import { DEFAULT_COOLDOWN_TIERS } from "../content/cooldownTiers";
+import { SKILL_TIER_NAMES } from "../content/skillTiers";
 import { SKELETON_ARENA } from "./world/ArenaDef";
 import { spawnChampion } from "./spawnChampion";
 import { castAbility } from "./abilities/abilitySystem";
@@ -76,8 +78,21 @@ const Z0 = SKELETON_ARENA.zones[0]!;
 const BASE = "godie-e00s" as ChampionId;
 const ROOTED = "godie-e010" as ChampionId;
 const INNATE = "godie-e00s.passive";
-/** w3a `A0O6` `Cool1`. The description prints it, so the doc must carry it. */
-const COOLDOWN_SEC = 15;
+/**
+ * ⭐ 2026-08-21 —— 這一格從 **w3a 的 15 秒**換成**級距表算出來的秒數**。
+ *
+ * owner 2026-08-21 ③（逐字）：「**[v] A 都夾**」——「低於級距下限的冷卻一律夾到
+ * 下限」。70-00 紮根帶 `championForm` ⇒ 走**變身**那一張表，而它的下限是 30 卡面秒；
+ * w3a 的 15 在梯子下面 ⇒ 夾到 30。
+ *
+ * ⚠️ 照第〇·六守則的階梯，這是**第 1 層（owner 的裁決）覆蓋第 5 層（w3x 原始設定）**。
+ * 被取代的原作值 15 另存在 `docs/legacy/_w3x-fidelity-superseded.md`
+ *（⭐「分開」不是「丟掉」—— 測試可以跟著設計走，知識不可以無聲消失）。
+ *
+ * ⛔ 這裡刻意**不寫 30**：出貨數值住進測試就是第四個住處，而它沒有守衛
+ *（第二守則）。從 `DEFAULT_COOLDOWN_TIERS` 推導 ⇒ owner 改表，這一條自己跟著動。
+ */
+const COOLDOWN_SEC = DEFAULT_COOLDOWN_TIERS.seconds["變身"][SKILL_TIER_NAMES[0]!];
 
 /**
  * Docs BY PATH, not through `ContentLoader` — the same choice icons.test.ts and

@@ -8,28 +8,25 @@
   "castType": "targeted",
   "maxRank": 4,
   "cooldown": [
-    5.0,
-    5.0,
-    5.0,
-    5.0
+    6.0,
+    6.0,
+    6.0,
+    6.0
   ],
+  "cooldownTier": "極小",
   "manaCost": [
     100.0,
-    150.0,
-    200.0,
-    250.0
+    100.0,
+    100.0,
+    100.0
   ],
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",
     "params": {
       "damage": {
-        "perRank": [
-          300,
-          450,
-          600,
-          750
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ap",
@@ -43,7 +40,7 @@
   "vfxKey": "fx.prim.void.explosion",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.133,
+  "castTimeSec": 0.167,
   "rangeTier": "大",
   "range": 8
 }

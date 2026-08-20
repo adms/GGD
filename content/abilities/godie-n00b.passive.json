@@ -10,10 +10,11 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    20.0
+    30.0
   ],
+  "cooldownTier": "極小",
   "manaCost": [
-    75.0
+    0.0
   ],
   "range": 0,
   "radius": 14.67,
@@ -80,5 +81,5 @@
     }
   ],
   "vfxKey": "fx.prim.arcane.summon",
-  "castTimeSec": 0.5
+  "castTimeSec": 0.767
 }

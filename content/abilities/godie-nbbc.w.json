@@ -13,11 +13,12 @@
     30.0,
     30.0
   ],
+  "cooldownTier": "中",
   "manaCost": [
-    50.0,
-    80.0,
-    110.0,
-    140.0
+    73.0,
+    73.0,
+    73.0,
+    73.0
   ],
   "effects": [
     {
@@ -32,12 +33,8 @@
     "ref": "tpl-single-strike",
     "params": {
       "damage": {
-        "perRank": [
-          150,
-          250,
-          350,
-          450
-        ],
+        "damageTier": "極小",
+        "flat": 600.0,
         "ratios": [
           {
             "stat": "ad",
@@ -46,13 +43,13 @@
         ]
       },
       "damageType": "physical",
-      "castTimeSec": 0.767
+      "castTimeSec": 0.467
     }
   },
   "vfxKey": "fx.prim.lightning.slash",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.767,
+  "castTimeSec": 0.467,
   "rangeTier": "中",
   "range": 6
 }

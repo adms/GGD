@@ -189,20 +189,10 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   //    （第零守則⑧：排序是 owner 的權力），⛔ 不是這一批順手做掉。
   // ⚠️ 用 `landing` 而不是 `default-live` 是刻意的：30 天後它會**再紅一次**，
   //    而那正是我們要的 —— 這一批不做完，這條線不可以安靜地消失。
-  "field:abilities.cooldownTier": {
-    status: "landing",
-    since: "2026-08-20",
-    why: "GH#445：owner 2026-08-19 給滿三張冷卻表，機制（`config.cooldown-tiers@1` + `resolveCooldownTier` + 後台頁 + 契約）這一批落地。內容改寫是**下一批**，因為它會動到每一支技能的實際冷卻（出貨中位 55 秒，單體 38% / 範圍 49% 不在格點上），而那是一次要 owner 勾的平衡改動。",
-  },
   "field:abilities.cooldownShape": {
     status: "landing",
     since: "2026-08-20",
     why: "同 `cooldownTier`。⚠️ 而且這一格**本來就預期是稀疏的**：出貨 `autoShape` 開著，只有自動判斷推錯的技能才需要手填 —— 內容改寫之後它的採用率仍然會遠低於 `cooldownTier`，屆時要改判成 `default-live`。",
-  },
-  "field:champions.abilities.*.cooldownTier": {
-    status: "landing",
-    since: "2026-08-20",
-    why: "同 `abilities.cooldownTier`（英雄內嵌的那一條路，走同一個 `withTiers` 接縫）。",
   },
   "field:champions.abilities.*.cooldownShape": {
     status: "landing",
@@ -212,10 +202,34 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // ⚠️ 前綴 `#chainLightning.amount.*` 會騙人 —— `amount` 是共用的 `zScaling`，
   //    普查給共用子樹的命名是「字母序第一個宣告它的 effect kind」。理由完整
   //    寫在下面 GH#451 那一段，⛔ 不要以為這只影響連鎖閃電。
-  "field:abilities.effects[]#chainLightning.amount.damageTier": {
+
+  // ═══ 五級距全轉 2026-08-21（owner ①「B 全轉」）══════════════════════════
+  // ⭐ 上面那三筆 `landing` 豁免在這一批**兌現了**（cooldownTier 358 支、
+  //    damageTier 203 支、英雄內嵌 70 份）—— 所以它們被刪掉，⛔ 不是留著。
+  //
+  // ⚠️ 但**梯子的上半截仍然是零**，而那不是漏掉，是量到的事實：
+  //    出貨語料的滿階招牌傷害中位數落在 600 這一格附近，snap 之後
+  //    **極小 181 / 小 33 / 中 0 / 大 0 / 極大 0**。要有一支技能填「中」(3000)，
+  //    它現在的卡面基礎傷害得在 2250 以上 —— 全庫最高的一支是 1800。
+  // ⇒ 零在這裡代表「**這一級還沒有任何一支技能夠格**」，那是 owner 的平衡題
+  //    （他要不要把某幾支拉上去），⛔ 不是一個沒接好的機制：同一個
+  //    `resolveDamageTier` 已經有 203 份文件在走，路是通的。
+  // ⚠️ 用 `landing` 而不是 `default-live`：30 天後再紅一次，逼我們回來問
+  //    「owner 到底要不要有 3000 以上的技能」。⛔ 不可以安靜地消失。
+  "enum:abilities.effects[]#chainLightning.amount.damageTier=中": {
     status: "landing",
-    since: "2026-08-20",
-    why: "GH#447：傷害五級距的機制這一批落地（`config.damage-tiers@1` + `resolveDamageTier` + 後台頁 + 契約）。內容改寫是**下一批** —— 出貨技能的中位傷害是 532（血條 5.9%），而級距的「中」是 2500，收進去就是 owner 說的「拉高」本身，而那要他勾。",
+    since: "2026-08-21",
+    why: "五級距全轉之後 202 個 amount 站點的分佈是 極小 181 / 小 33 / 中 0 —— 要填「中」(3000) 需要卡面基礎 ≥2250，而全庫最高只有 1800。零代表**還沒有一支技能夠格**，那是 owner 的平衡題，⛔ 不是機制沒接（`resolveDamageTier` 已有 203 份文件在走）。",
+  },
+  "enum:abilities.effects[]#chainLightning.amount.damageTier=大": {
+    status: "landing",
+    since: "2026-08-21",
+    why: "同「中」那一列：五級距全轉之後 202 個 amount 站點的分佈是 極小 181 / 小 33 / 中 0 / 大 0。要填「大」(4500) 需要卡面基礎 ≥3750，而全庫最高的一支是 1800（12-002 仙氣發勁）。零代表**還沒有一支技能夠格**，⛔ 不是機制沒接 —— 同一個 `resolveDamageTier` 已經有 203 份文件在走。要不要有這一級的技能是 owner 的平衡題。",
+  },
+  "enum:abilities.effects[]#chainLightning.amount.damageTier=極大": {
+    status: "landing",
+    since: "2026-08-21",
+    why: "同「中」，門檻最高（6000，＝ hard limit LV30 中位血量的一半）。⚠️ `damageTiers.ts` 的天花板本來就是「一發不可以秒殺 LV30 的中位英雄」，所以這一格出貨為零是**設計上預期**的稀有度。",
   },
 
   // ═══ GH#451 連鎖閃電 2026-08-20 ═══════════════════════════════════════════
