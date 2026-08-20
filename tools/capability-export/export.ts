@@ -191,6 +191,78 @@ export function parallelOutputSection(): string[] {
   ];
 }
 
+/**
+ * ⭐ 級距欄位 —— 「你讀到的 JSON 欄位不一定是引擎跑的值」。
+ *
+ * ⚠️ 這一節在 2026-08-21 之前不存在，而少的不是一個名字，是**一條會讓對面算錯的規則**：
+ * 對面沒有我們的註冊表，它只讀得到磁碟上那份 JSON。而出貨內容裡有一整批技能同時填了
+ * 「級別」與「原始值」，兩者**不相等** —— 引擎用級別，檔案上寫的是另一個數字。
+ * ⛔ 照著原始欄位設計，做出來的技能會是完全不同的量級，而且**沒有任何一步會報錯**。
+ *
+ * ⭐ 名單是**掃出貨 schema** 得到的，⛔ 不是手寫：只要有人新增一格 `*Tier`，
+ * 這一節下一次匯出就會多一個名字（而 `--check` 會先紅一次要求重新匯出）。
+ * ⛔ 這一節刻意**不印數字** —— 五格各是多少、乘哪一個全域倍率，是另一份文件的工作
+ * （同第 7、8 節的分工）。這裡只回答「哪些名字是級別欄位、它們的優先序是什麼」。
+ */
+const SCHEMA_ROOT = "packages/shared/src/content/schema";
+/**
+ * ⛔ 只掃**內容作者寫得到**的那一面。`config.ts` 刻意不在裡面 —— 它也有 `*Tier`
+ * 欄位（增益卡稀有度、相稱性警告門檻），但那些是**後台欄位**，把它們算進來
+ * 等於叫對面去填兩格它根本碰不到的東西（＝ 宣稱一個不存在的能力）。
+ */
+const AUTHORING_SCHEMA_FILES = ["ability.ts", "common.ts"] as const;
+
+export function tierFieldNames(): string[] {
+  const files = AUTHORING_SCHEMA_FILES.map((f) => join(REPO, SCHEMA_ROOT, f));
+  const effects = join(REPO, SCHEMA_ROOT, "effects");
+  if (existsSync(effects)) {
+    for (const f of readdirSync(effects)) {
+      if (f.endsWith(".ts") && !f.includes(".test.")) files.push(join(effects, f));
+    }
+  }
+  const names = new Set<string>();
+  for (const p of files) {
+    if (!existsSync(p)) continue;
+    for (const m of readFileSync(p, "utf8").matchAll(/^\s{2,}(\w+Tier)\s*:\s*z/gm)) {
+      names.add(m[1]!);
+    }
+  }
+  return [...names].sort();
+}
+
+export function tierRewriteSection(): string[] {
+  const names = tierFieldNames();
+  return [
+    "## 11. 🔴 你讀到的 JSON 欄位**不一定是引擎跑的值**",
+    "",
+    "下面這些欄位是**級別欄位**（五格：由後台的級距表把一個級別翻成一個數字）：",
+    "",
+    "　" + names.map((n) => `\`${n}\``).join(" · "),
+    "",
+    "每一格級別欄位旁邊都有一格**原始值**（例如 `rangeTier` 旁邊是 `range`）。規則只有一句：",
+    "",
+    "| 一份文件裡寫了 | 引擎跑什麼 |",
+    "|---|---|",
+    "| 只有級別 | 級距表查出來的值 |",
+    "| 只有原始值 | 文件上那個值（⭐ 這是**留特例**的唯一寫法） |",
+    "| **兩個都寫** | **級別贏**。原始值被整格取代 —— ⛔ 不是相加、⛔ 不是取大 |",
+    "",
+    "⛔ **所以「讀原始欄位」不是一個安全的近似。** 出貨內容裡真的有技能的 `range` 與" +
+      "它的 `rangeTier` 差到數倍：檔案上寫著一個很小的數字，引擎跑的是級距表上那個大的。" +
+      "把原始值當成事實去設計、去排序、去算 DPS，得到的結論會是錯的，" +
+      "而**沒有任何一步會報錯**。",
+    "",
+    "⭐ 還有第二道你在文件裡也看不到的改寫：級距表查出來的是**卡面值**，" +
+      "場上還要再乘一組全域倍率（冷卻、技能距離與 AoE 半徑、傷害各有一格）。" +
+      "⇒ 一支技能的「檔案上的字 → 場上真的發生的事」中間有**兩道**，" +
+      "兩道都不在你讀的那份 JSON 裡。",
+    "",
+    "**⇒ 交件建議：能填級別就填級別，⛔ 不要兩格都填。**" +
+      "兩格都填不會報錯，只會讓那份文件從此對讀它的人說謊（包括你自己下一次讀它）。",
+    "",
+  ];
+}
+
 /** 人看的交付物。⭐ 必須自足 —— 對方沒有這個 repo。 */
 export function renderMarkdown(m: RuntimeCapabilityManifest): string {
   const L: string[] = [];
@@ -356,6 +428,7 @@ export function renderMarkdown(m: RuntimeCapabilityManifest): string {
     L.push("");
   }
   L.push(...parallelOutputSection());
+  L.push(...tierRewriteSection());
   L.push("---");
   L.push("");
   L.push(

@@ -76,6 +76,21 @@ describe("能力清單匯出 (capability-export)", () => {
     expect(renderMarkdown(buildCapabilityManifest())).toContain("一個產物只能有一個產生器寫");
   });
 
+  it("⭐ 級距改寫那一節不可以被刪掉,而且名單是掃 schema 掃出來的", async () => {
+    // ⚠️ 同上一條的理由（失敗形態③）：把 `tierRewriteSection()` 的呼叫拿掉、重新匯出，
+    //    `--check` 仍然全綠 —— 而對面從此不知道「它讀到的 range 可能不是引擎跑的值」。
+    // ⛔ 這裡一個級距數字都不釘：五格是多少住在 `content/config/`，是 owner 在改的東西。
+    const { renderMarkdown, tierFieldNames } = await import("./export");
+    const { buildCapabilityManifest } = await import("../../packages/shared/src/content/editorCapabilities");
+    const md = renderMarkdown(buildCapabilityManifest());
+    expect(md).toContain("兩個都寫");
+    expect(md).toContain("級別贏");
+    // 名單是掃出貨 schema 得到的 ⇒ 引擎多一格 `*Tier`,這一節下一次匯出就會多一個名字。
+    const names = tierFieldNames();
+    expect(names.length).toBeGreaterThan(0);
+    for (const n of names) expect(`${n}:${md.includes(`\`${n}\``)}`).toBe(`${n}:true`);
+  });
+
   it("內部字串外洩會被擋下 —— 對方讀不懂我們的交接文件與部署主機", async () => {
     const { assertNoInternalLeaks } = await import("./export");
     expect(assertNoInternalLeaks("見 docs/_execution-batches.md", "x")).toHaveLength(1);

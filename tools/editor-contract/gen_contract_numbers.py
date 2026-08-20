@@ -40,6 +40,7 @@
 `--check` 跑起來，⛔ 不是掃字串）。
 """
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -57,8 +58,8 @@ DOC = REPO / "docs" / "技能編輯器引擎須知 20260811.md"
 VOCAB_DOC = REPO / "docs" / "效果標籤詞彙表v2.md"
 CMD = "pnpm contract:numbers"
 
-BLOCKS = ("contract-caps", "contract-env", "contract-range", "contract-bands", "contract-effects",
-          "contract-sharding")
+BLOCKS = ("contract-caps", "contract-env", "contract-range", "contract-bands", "contract-tiers",
+          "contract-effects", "contract-sharding")
 VOCAB_BLOCKS = ("vocab-kind-count",)
 
 # 哪一份文件裡有哪些產生區塊。⛔ 不要把它攤平成一份清單 —— `splice()` 的每一個
@@ -459,6 +460,260 @@ def table_sharding():
     return "\n".join(out)
 
 
+# ---------------------------------------------------------------------------
+# ⭐ 五級距（GH#414 · #445 · #447 · #463）—— 在 2026-08-21 之前這一段是**散文**
+# ---------------------------------------------------------------------------
+#
+# ⚠️ 而那段散文被量到**四處在說謊**，四處都不會有任何東西紅：
+#
+#   | 文件寫著 | 出貨其實是 |
+#   |---|---|
+#   | 檔頭「傷害五級距 1150/2875/5750/8625/11500」 | 重錨過**兩次**，早就不是這五個數字 |
+#   | 第六節「小 3.0 ／ 中 4.5 ／ 大 6.0 ／ 超大 8.0」 | 名字整體左移一格，而且**多一格** |
+#   | 第六節「**中**（預設）」的半徑 | 「中」已經不是那個數字 |
+#   | 第十章「`radiusTier`：小/中/大/超大」 | ⛔ `超大` **不是合法值**，填了會被 Zod 拒絕 |
+#
+# ⛔ 最後兩條特別貴：`超大` 在出貨枚舉裡**不存在**，外部編輯器照著抄，產出的每一支
+#   技能都會在載入時被拒絕；而一個過期的「中 = ⋯」會讓它做出小一號的技能而**沒有錯誤**。
+#
+# ⭐ 所以整段改成推導，而且**兩個方向都關**（同 `editorCapabilities` 的規矩）：
+#   · 這裡宣稱一軸而 schema 沒有那一格          → 中止（對方會做出引擎不認得的 JSON）
+#   · schema 有一格 `*Tier` 而這裡沒宣稱        → 中止（對方永遠不會知道它存在）
+#   · 宣稱的解析器不在 `registries.ts` 的接縫上 → 中止（欄位在、但沒有人把它翻成數字）
+#
+# ⚠️ 任務書把「耗魔」也列成一軸（`manaCostTier`）。**出貨 schema 裡沒有那一格**，
+#   所以這裡不宣稱它 —— 宣稱一個不存在的欄位正是第〇·五守則那條紅線的另一半。
+#   哪一天它真的長出來，下面的「schema 有而這裡沒宣稱」那道閘會指名它。
+
+SCHEMA_DIR = REPO / "packages" / "shared" / "src" / "content" / "schema"
+# ⛔ 只掃**內容作者寫得到**的那一面。`config.ts` 刻意不在裡面：`augmentTier`
+#   （增益卡稀有度）與 `minDamageTier`（相稱性警告門檻）是**後台欄位**，把它們算進來
+#   會讓這張表宣稱兩個作者根本填不到的軸。
+REGISTRIES_TS = REPO / "packages" / "shared" / "src" / "content" / "registries.ts"
+TIER_FIELD_RE = re.compile(r"^\s{2,}(\w+Tier)\s*:\s*z", re.M)
+
+
+def _authoring_schema_files():
+    files = [SCHEMA_DIR / "ability.ts", SCHEMA_DIR / "common.ts"]
+    files += sorted(p for p in (SCHEMA_DIR / "effects").glob("*.ts") if ".test." not in p.name)
+    return files
+
+
+def _schema_tier_fields():
+    """出貨 schema 的**技能作者面**上，所有叫 `*Tier` 的欄位。"""
+    found = set()
+    for p in _authoring_schema_files():
+        found |= set(TIER_FIELD_RE.findall(p.read_text(encoding="utf-8")))
+    if not found:
+        sys.exit("schema 裡解析出 0 個 `*Tier` 欄位 —— 解析器與程式碼分家了")
+    return found
+
+
+# 一軸 = 一格級別欄位。⭐ 每一格數字都從 `cfg` 讀，⛔ 這裡只有「哪幾軸」與備註。
+#   `raw`  —— 填了級別之後**被取代**的那幾格（也是下面現場比對用的鍵）
+#   `env`  —— 卡面值再乘哪一格 `combat-env` 倍率（None = 這一軸不吃全域倍率）
+#   `rows` —— 從 config 文件取出「級別 → 數字」，一軸可以有多張（冷卻三種形狀）
+TIER_AXES = (
+    {
+        "field": "radiusTier", "raw": ("radius",), "resolver": "resolveRadiusTier",
+        "cfg": "aoe-tiers", "schema": "config.aoe-tiers@1", "env": "abilityRange",
+        "where": "`ability@1` 頂層 · 每一個帶 AoE 的 effect",
+        "rows": lambda c: [("有效半徑", c["radius"])],
+        "note": "owner 2026-08-11：「**原則上不寫範圍數字**」",
+    },
+    {
+        "field": "rangeTier", "raw": ("range",), "resolver": "resolveRangeTier",
+        "cfg": "range-tiers", "schema": "config.range-tiers@1", "env": "abilityRange",
+        "where": "`ability@1` 頂層",
+        "rows": lambda c: [("施法距離", c["range"])],
+        "note": "⭐ 與 AoE **同一條梯子** —— 同一個字在兩軸上指向同一個絕對值",
+    },
+    {
+        "field": "cooldownTier", "raw": ("cooldown",), "resolver": "resolveCooldownTier",
+        "cfg": "cooldown-tiers", "schema": "config.cooldown-tiers@1", "env": "cooldown",
+        "where": "`ability@1` 頂層（配 `cooldownShape`；留空 = 從技能內容推形狀）",
+        "rows": lambda c: list(c["seconds"].items()),
+        "note": "填了級別 = **每一階同一個值**。要做「升階冷卻下降」就⛔ 不要填級別",
+    },
+    {
+        "field": "damageTier", "raw": ("flat", "perRank"), "resolver": "resolveDamageTier",
+        "cfg": "damage-tiers", "schema": "config.damage-tiers@1", "env": "damageDealt",
+        "where": "任何一個 `amount`（`Scaling`）—— damage / damageArea / damageLine / dot / chainLightning 共用",
+        "rows": lambda c: [("基礎傷害", c["damage"])],
+        "note": "⚠️ `ratios` / `attrRatios` **不受影響**（那兩條是成長，不是基礎值）",
+    },
+    {
+        "field": "distanceTier", "raw": ("distance",), "resolver": "resolveDisplacementTier",
+        "cfg": "displacement-tiers", "schema": "config.displacement-tiers@1", "env": None,
+        "where": "`dash` / `leap` / `blink` / `knockback`",
+        "rows": lambda c: [
+            ("位移（dash · leap · blink）", {k: v["distance"] for k, v in c["travel"].items()}),
+            ("擊退（knockback）", {k: v["distance"] for k, v in c["push"].items()}),
+        ],
+        "note": "填了級別**連速度一起給** —— ⛔ 不要再填 `speed`",
+    },
+)
+
+
+def tier_axes():
+    """⭐ 出貨真的成立的那幾軸。⛔ 任何一個方向對不上就中止，不產出半真的契約。"""
+    declared = {a["field"] for a in TIER_AXES}
+    found = _schema_tier_fields()
+    if declared - found:
+        sys.exit(f"這裡宣稱了 schema 沒有的級別欄位：{'、'.join(sorted(declared - found))}")
+    if found - declared:
+        sys.exit(
+            f"schema 多了 {len(found - declared)} 格級別欄位而契約沒宣稱："
+            f"{'、'.join(sorted(found - declared))} —— 外部編輯器永遠不會知道它存在，"
+            "請把它加進 `TIER_AXES`"
+        )
+    seam = REGISTRIES_TS.read_text(encoding="utf-8")
+    out, names = [], None
+    for a in TIER_AXES:
+        if a["resolver"] not in seam:
+            sys.exit(f"`{a['resolver']}` 不在 registries.ts 的解析接縫上 —— `{a['field']}` 沒有人翻譯它")
+        c = cfg(a["cfg"])
+        if c.get("schema") != a["schema"]:
+            sys.exit(f"{a['cfg']}.json 的 schema 是 {c.get('schema')}，契約寫 {a['schema']}")
+        rows = a["rows"](c)
+        for _, r in rows:
+            if names is None:
+                names = list(r)
+            elif list(r) != names:
+                sys.exit(f"{a['cfg']}.json 的級別名與其它軸不一致：{list(r)} vs {names}")
+        out.append({**a, "cfg_doc": c, "rows": rows})
+    return out, (names or BANDS)
+
+
+def _cooldown_example(axes, names, env):
+    """⭐ 卡面秒 ↔ 實際秒 的那一句。⛔ 形狀名與秒數都從 config 取，不寫死。"""
+    a = next(x for x in axes if x["field"] == "cooldownTier")
+    shape, row = a["rows"][0]
+    card, mult = row[names[0]], env[a["env"]]
+    return (
+        f"⭐ 冷卻那一格最容易踩：級距表寫的是**卡面秒**，實際等待是它 × "
+        f"`{a['env']}` **{num(mult)}**（再被冷卻規則的秒數地板夾一次）—— "
+        f"所以一支「{names[0]}·{shape}」的技能卡面 {num(card)} 秒，"
+        f"場上只等 {num(round(card * mult, 4))} 秒。⛔ 不要拿卡面秒去算 DPS。"
+    )
+
+
+def table_tiers():
+    axes, names = tier_axes()
+    env = cfg("combat-env")["multipliers"]
+    off = [a for a in axes if not a["cfg_doc"].get("enabled", True)]
+
+    out = [
+        "## 六之二、⭐ 五級距 —— 填**級別**不填數字"
+        "（⚠️ 而且 JSON 裡那個數字**不一定是引擎跑的值**）",
+        "",
+        f"⛔ **這一節整段是產生的。** 在它之前這些數字散在四段散文裡，其中 **`超大`** 這個"
+        "級別名甚至已經不存在於出貨枚舉 —— 照著抄產出的技能會在載入時被整份拒絕。",
+        "",
+        "### 6.2.1 有級別欄位的是這幾格，⛔ 沒有別的",
+        "",
+        "| 級別欄位 | 寫在哪一層 | 填了它就**不要**填 | 級距表（後台一頁） | 出貨開著？ |",
+        "|---|---|---|---|:-:|",
+    ]
+    for a in axes:
+        raw = " / ".join(f"`{k}`" for k in a["raw"])
+        on = "✅" if a["cfg_doc"].get("enabled", True) else "⛔ **關**"
+        out.append(f"| `{a['field']}` | {a['where']} | {raw} | `{a['schema']}` | {on} |")
+    out += [
+        "",
+        f"　五格的名字是這五個字，⛔ 沒有第六個：**{' · '.join(names)}**"
+        "（五軸共用同一組名字，對不上這支產生器就中止）。",
+        "",
+    ]
+    if "manaCostTier" not in {a["field"] for a in axes}:
+        out += [
+            "⛔ **這張表上沒有 `manaCostTier`** —— 耗魔**沒有**級別欄位，"
+            "你在技能 JSON 裡填不到它（填了會被 Zod 拒絕）。耗魔看第九章。",
+            "",
+        ]
+    if off:
+        out += [
+            "⚠️ 標 ⛔ 的那幾軸**現在是關的**：級別欄位照樣存得下去，但註冊時**不會**被翻成數字，"
+            f"技能拿到的是它自己手寫的值（{'、'.join('`' + a['field'] + '`' for a in off)}）。",
+            "",
+        ]
+
+    out += ["### 6.2.2 每一軸的五格 —— 這些是**卡面值**", ""]
+    for a in axes:
+        for label, row in a["rows"]:
+            out.append(f"| `{a['field']}` ／ {label} | " + " | ".join(names) + " |")
+            out.append("|---|" + "--:|" * len(names))
+            out.append("| 卡面 | " + " | ".join(num(row[b]) for b in names) + " |")
+            if a["env"]:
+                m = env[a["env"]]
+                out.append(f"| 場上（× `{a['env']}` {num(m)}） | "
+                           + " | ".join(num(round(row[b] * m, 4)) for b in names) + " |")
+            out.append("")
+        out.append(f"　{a['note']}")
+        out.append("")
+        if a["field"] == "cooldownTier":
+            span = "、".join(
+                f"**{shape}** {num(min(row.values()))}–{num(max(row.values()))} 秒"
+                for shape, row in a["rows"]
+            )
+            out += [
+                f"　⚠️ **這張表比第九章那組冷卻區間新**（owner 2026-08-19 vs 08-11，"
+                "優先序階梯第 1 層裡比較新的那一份贏）。照級距填，卡面秒的實際範圍是："
+                f"{span}。⛔ 兩邊打架時以這裡為準。",
+                "",
+            ]
+
+    out += [
+        "### 6.2.3 ⚠️ 兩格都填 → **級別贏**，原始值只是退路",
+        "",
+        "| 你寫了 | 引擎跑什麼 |",
+        "|---|---|",
+        "| 只有級別 | 級距表查出來的值 |",
+        "| 只有原始值 | 你寫的那個值（⭐ 這是**留特例**的唯一寫法） |",
+        "| **兩個都寫** | **級別**。原始值被整格取代，⛔ 不是相加、⛔ 不是取大 |",
+        "",
+        "⭐ schema 的原話是「**要留特例就不要填級別**」。反過來寫（填級別再用原始值蓋掉它）"
+        "等於這個機制對那支技能**靜默失效** —— 後台改一格級距表，全庫跟著動，只有它不動。",
+        "",
+        "### 6.2.4 🔴 你在 JSON 裡讀到的數字，中間還有**兩道改寫**",
+        "",
+        "⚠️ **這一條是給讀 JSON 原始欄位的工具看的**（外部編輯器沒有我們的註冊表，"
+        "它只讀得到磁碟上那份 JSON）。從「檔案裡的字」到「場上真的發生的事」中間有兩道：",
+        "",
+        "```",
+        "JSON 欄位 ──①級距解析（註冊時，上面那張表）──► 卡面值 ──②全域倍率──► 場上實際值",
+        "```",
+        "",
+        "| 你在 JSON 裡讀到的欄位 | ① 註冊時被誰整格取代 | ② 卡面值再乘哪一格倍率 |",
+        "|---|---|---|",
+    ]
+    for a in axes:
+        e = f"`{a['env']}` **{num(env[a['env']])}**" if a["env"] else "—（這一軸不吃全域倍率）"
+        out.append(f"| {' / '.join('`' + k + '`' for k in a['raw'])} | `{a['field']}` | {e} |")
+    out += [
+        "",
+        _cooldown_example(axes, names, env),
+        "",
+        "### 6.2.5 ⭐ 這不是理論 —— 2026-08-21 量到的一支",
+        "",
+        "| 技能 | 欄位 | 檔案裡寫著 | 級別欄位 | 引擎真的用 |",
+        "|---|---|---:|:-:|---:|",
+        "| `godie-emns.q`（44-01 死神之眼） | `range` | 2 | `rangeTier` = 極大 | **12** |",
+        "",
+        "**六倍。** 一個只讀 `range` 的工具會把這支當成貼身技能，"
+        "而它其實打得到半個決鬥區 —— ⛔ 而且沒有任何一步會報錯。",
+        "",
+        "⚠️ 這一列是**那一天的量測**，⛔ 不是一份會自己更新的清單：出貨內容每天都在動，"
+        "把一份現場普查印在契約裡，只會讓這一節在**別人**改一支技能時過期，"
+        "而它紅的原因與它要守的事（契約有沒有把換算講清楚）無關。"
+        "⭐ 要**現在**的名單就自己跑一次比對 —— 規則在 6.2.3，它一天都沒變過。",
+        "",
+        "⛔ **不要「修正」這種原始值** —— 它們是退路，引擎一格都沒讀。"
+        "要改就改級別，或**拿掉級別**把它變成真的特例。",
+    ]
+    return "\n".join(out)
+
+
 # 一行印幾個 kind。⛔ 不是「看起來剛好」——它決定這一段會不會在 GitHub 的
 # 程式碼區塊裡橫向捲動，而那正是外部作者第一眼會看到的東西。
 COLS = 5
@@ -468,6 +723,7 @@ BODIES = {
     "contract-env": table_env,
     "contract-range": table_range,
     "contract-bands": table_bands,
+    "contract-tiers": table_tiers,
     "contract-effects": table_effects,
     "contract-sharding": table_sharding,
     "vocab-kind-count": vocab_kind_count,
@@ -480,7 +736,15 @@ DEFAULT_SOURCE = "`content/config/`"
 #    內容改動時被重寫一遍，而那個版號說的是一件與這一段無關的事。
 ENGINE_REGISTRY_SOURCE = "`packages/shared/src/sim/effects/effectRegistry.ts`（引擎註冊表）"
 SHARD_SOURCE = "**分片目錄本身**（現場 `readdir`，⛔ 不是手打的宣稱）"
+# ⭐ 五級距那一段讀三種東西，出處要三個都講：級距表（後台）· 出貨 schema（哪幾格存在）·
+#   `content/abilities/`（現場數出來的「級別與原始值對不上」那幾支）。
+TIER_SOURCE = "`content/config/*-tiers.json`（級距表）＋ 出貨 Zod schema（哪幾格存在）"
 SOURCES = {
+    # ⚠️ **不蓋內容版號**（同 `contract-sharding` 的理由）：這一段讀的是**級距表與 schema**，
+    #    ⛔ 沒有一格取決於「今天新增了幾支技能」。蓋上去會讓它在每一次內容改動時被重寫，
+    #    而那個版號說的是一件與級距無關的事 —— 一條會因為無關的事紅的閘，下一步就是被放寬。
+    #    ⛔ 這也是這一節**不印現場普查**的理由（見 6.2.5 的那句 ⚠️）。
+    "contract-tiers": (TIER_SOURCE, False),
     "contract-effects": (ENGINE_REGISTRY_SOURCE, False),
     "vocab-kind-count": (ENGINE_REGISTRY_SOURCE, False),
     # ⚠️ **不蓋內容版號**（同 `contract-effects` 的理由）：它一格 `content/` 都沒數，

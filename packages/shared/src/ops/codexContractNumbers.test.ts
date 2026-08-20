@@ -91,8 +91,11 @@ describe("Codex 合約散文裡的數字", () => {
     //    過期往後推一次 —— 現在標題裡的數字與清單都由 `V.effect_kinds()` 產生。
     // ⭐ `contract-sharding`（GH#467）：分片之後「一件事一份檔」這條規矩要**寫給對面看**，
     //    而且那張表的份數是現場 `readdir` 數的 —— 區塊被刪掉就退回一段沒人對帳的散文。
-    for (const name of ["contract-caps", "contract-env", "contract-range", "contract-bands", "contract-effects",
-                        "contract-sharding"]) {
+    // ⭐ `contract-tiers`（2026-08-21）：五級距那一整節。它在此之前是**四段散文**，
+    //    而四段全部過期 —— 其中一段甚至印著一個已經不存在的級別名（`超大`），
+    //    照著抄產出的技能會在載入時被整份拒絕，而沒有任何東西會紅。
+    for (const name of ["contract-caps", "contract-env", "contract-range", "contract-bands", "contract-tiers",
+                        "contract-effects", "contract-sharding"]) {
       expect(`${name}:${doc.includes(`<!-- BEGIN GENERATED:${name} -->`)}`).toBe(`${name}:true`);
     }
     // ⭐ GH#381 —— 同一支產生器現在也管退役告示牌上那一句「實測引擎現在有 N 個」。
@@ -102,5 +105,28 @@ describe("Codex 合約散文裡的數字", () => {
     expect(`vocab-kind-count:${vocab.includes("<!-- BEGIN GENERATED:vocab-kind-count -->")}`).toBe(
       "vocab-kind-count:true",
     );
+  });
+
+  it("⭐ 五級距那一節有講**級別贏**與**卡面↔實際**換算 —— `--check` 對「整節被抽掉」是綠的", () => {
+    cover("codex-contract-numbers");
+    // ⚠️ 這一條在補失敗形態③：把 `table_tiers()` 裡任何一段拿掉再重新產生一次，
+    //    「產出 == 磁碟」仍然成立 ⇒ `--check` 全綠而契約少講了一件會讓對面算錯的事。
+    //    ⛔ 所以這裡釘的是**那幾句規則本身**，不是「有沒有第六之二節」。
+    // ⛔ 一個出貨數字都不釘（第零守則）—— 級距值住在 `content/config/*-tiers.json`，
+    //    它是 owner 每週在改的東西；這裡只問「契約有沒有把換算關係講出來」。
+    const doc = readFileSync(DOC, "utf8");
+    const body = doc.slice(
+      doc.indexOf("<!-- BEGIN GENERATED:contract-tiers -->"),
+      doc.indexOf("<!-- END GENERATED:contract-tiers -->"),
+    );
+    for (const [what, phrase] of [
+      ["兩格都填誰贏", "級別贏"],
+      ["原始值只是退路", "留特例"],
+      ["讀 JSON 原始欄位會讀到假的值", "不一定是引擎跑的值"],
+      ["卡面值", "卡面"],
+      ["卡面 → 場上的那一乘", "全域倍率"],
+    ] as const) {
+      expect(`${what}:${body.includes(phrase)}`).toBe(`${what}:true`);
+    }
   });
 });
