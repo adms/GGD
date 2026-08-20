@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "704dae1da69d",
+  "hash": "12ea131f0b55",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -213,6 +213,12 @@
       "size": 2365
     },
     {
+      "id": "mana-tiers",
+      "path": "config/mana-tiers.json",
+      "hash": "a6a054cb4369",
+      "size": 956
+    },
+    {
       "id": "map-report",
       "path": "config/map-report.json",
       "hash": "095f60e73b3b",
@@ -307,6 +313,12 @@
       "path": "config/shield.json",
       "hash": "e8bc79807503",
       "size": 648
+    },
+    {
+      "id": "skill-normalize",
+      "path": "config/skill-normalize.json",
+      "hash": "790f4a7be6f1",
+      "size": 1038
     },
     {
       "id": "stat-caps",

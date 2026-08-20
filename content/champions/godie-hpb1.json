@@ -106,11 +106,11 @@
         45.0
       ],
       "manaCost": [
-        110.0,
-        110.0,
-        110.0,
-        110.0,
-        110.0
+        146.0,
+        146.0,
+        146.0,
+        146.0,
+        146.0
       ],
       "effects": [
         {
@@ -148,7 +148,8 @@
       "castTimeSec": 0.467,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "大"
+      "cooldownTier": "大",
+      "manaCostTier": "小"
     },
     "E": {
       "id": "godie-hpb1.e",
@@ -166,10 +167,10 @@
         60.0
       ],
       "manaCost": [
-        220.0,
-        220.0,
-        220.0,
-        220.0
+        292.0,
+        292.0,
+        292.0,
+        292.0
       ],
       "radius": 6.05,
       "effects": [
@@ -215,7 +216,8 @@
       "castTimeSec": 1.233,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "中"
+      "cooldownTier": "中",
+      "manaCostTier": "中"
     },
     "R": {
       "id": "godie-hpb1.r",

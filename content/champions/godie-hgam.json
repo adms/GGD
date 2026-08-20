@@ -100,7 +100,7 @@
         }
       ],
       "targetsEnemies": true,
-      "radius": 4.12,
+      "radius": 4.5,
       "castTimeSec": 0.767,
       "template": {
         "ref": "tpl-ground-nova",
@@ -120,7 +120,9 @@
           "castTimeSec": 0.767
         }
       },
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "manaCostTier": "極小",
+      "radiusTier": "小"
     },
     "W": {
       "id": "godie-hgam.w",
@@ -154,9 +156,10 @@
       ],
       "vfxKey": "fx.prim.arcane.nova",
       "targetsEnemies": true,
-      "radius": 6,
+      "radius": 6.0,
       "castTimeSec": 0.767,
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "radiusTier": "中"
     },
     "E": {
       "id": "godie-hgam.e",
@@ -174,10 +177,10 @@
         45.0
       ],
       "manaCost": [
-        125.0,
-        125.0,
-        125.0,
-        125.0
+        146.0,
+        146.0,
+        146.0,
+        146.0
       ],
       "effects": [],
       "template": {
@@ -202,7 +205,8 @@
       "castTimeSec": 0.467,
       "rangeTier": "大",
       "range": 8,
-      "cooldownTier": "大"
+      "cooldownTier": "大",
+      "manaCostTier": "小"
     },
     "R": {
       "id": "godie-hgam.r",
@@ -219,9 +223,9 @@
         60.0
       ],
       "manaCost": [
-        200.0,
-        200.0,
-        200.0
+        146.0,
+        146.0,
+        146.0
       ],
       "effects": [],
       "template": {
@@ -257,7 +261,8 @@
       "targetsEnemies": true,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "極大"
+      "cooldownTier": "極大",
+      "manaCostTier": "小"
     }
   },
   "skillOrder": [

@@ -14,10 +14,10 @@
     60.0
   ],
   "manaCost": [
-    120.0,
-    120.0,
-    120.0,
-    120.0
+    146.0,
+    146.0,
+    146.0,
+    146.0
   ],
   "range": 0.0,
   "targetsEnemies": false,
@@ -128,5 +128,6 @@
   "vfxKey": "fx.prim.wind.pulse",
   "sfxKey": "wc3.akamapissed8",
   "cooldownTier": "極大",
+  "manaCostTier": "小",
   "castTimeSec": 0.267
 }

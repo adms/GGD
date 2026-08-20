@@ -93,7 +93,8 @@
       "castTimeSec": 0.467,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "中"
+      "cooldownTier": "中",
+      "manaCostTier": "極小"
     },
     "W": {
       "id": "godie-o02l.w",
@@ -184,7 +185,8 @@
       "castTimeSec": 0.5,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "極大"
+      "cooldownTier": "極大",
+      "manaCostTier": "極小"
     },
     "R": {
       "id": "godie-o02l.r",
@@ -201,9 +203,9 @@
         60.0
       ],
       "manaCost": [
-        90.0,
-        90.0,
-        90.0
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [
         {
@@ -226,7 +228,8 @@
       "castTimeSec": 0.833,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "極大"
+      "cooldownTier": "極大",
+      "manaCostTier": "極小"
     }
   },
   "skillOrder": [

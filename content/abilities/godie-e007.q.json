@@ -3,7 +3,7 @@
   "name": "12-01 鬥仙術",
   "icon": "assets/icons/abilities/godie-e007.q.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n20秒冷卻時間\n\n將武道融入仙道而創出來所謂的不敗的武術，以念體攻擊敵人，造成{{dmg}}傷害的同時可以迷惑目標1秒。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n將武道融入仙道而創出來所謂的不敗的武術，以念體攻擊敵人，造成{{dmg}}傷害的同時可以迷惑目標1秒。",
   "slot": "Q",
   "castType": "targeted",
   "maxRank": 5,
@@ -22,6 +22,7 @@
     73.0,
     73.0
   ],
+  "manaCostTier": "極小",
   "effects": [
     {
       "kind": "damage",

@@ -122,10 +122,10 @@
         60.0
       ],
       "manaCost": [
-        90.0,
-        90.0,
-        90.0,
-        90.0
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "range": 0.0,
       "radiusTier": "小",
@@ -178,6 +178,7 @@
       "vfxKey": "fx.prim.physical.slash",
       "sfxKey": "wc3.defendcaster",
       "cooldownTier": "中",
+      "manaCostTier": "極小",
       "castTimeSec": 0.667
     },
     "E": {
@@ -195,10 +196,10 @@
         60.0
       ],
       "manaCost": [
-        150.0,
-        150.0,
-        150.0,
-        150.0
+        146.0,
+        146.0,
+        146.0,
+        146.0
       ],
       "range": 8.0,
       "radiusTier": "中",
@@ -253,6 +254,7 @@
       "vfxKey": "fx.prim.physical.beam",
       "rangeTier": "大",
       "cooldownTier": "中",
+      "manaCostTier": "小",
       "castTimeSec": 0.067
     },
     "R": {

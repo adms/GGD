@@ -17,7 +17,7 @@
     0.0
   ],
   "range": 0,
-  "radius": 4.58,
+  "radius": 4.5,
   "targetsEnemies": true,
   "effects": [
     {
@@ -28,5 +28,6 @@
     }
   ],
   "vfxKey": "fx.prim.earth.nova-lg",
-  "castTimeSec": 1.133
+  "castTimeSec": 1.133,
+  "radiusTier": "小"
 }

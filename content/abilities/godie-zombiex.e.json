@@ -21,7 +21,8 @@
     73.0,
     73.0
   ],
-  "radius": 3.5,
+  "manaCostTier": "極小",
+  "radius": 3.0,
   "effects": [],
   "template": {
     "ref": "tpl-proxy-cast",
@@ -47,5 +48,6 @@
   "targetsEnemies": true,
   "castTimeSec": 0.767,
   "rangeTier": "大",
-  "range": 8
+  "range": 8,
+  "radiusTier": "極小"
 }

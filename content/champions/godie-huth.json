@@ -95,7 +95,8 @@
       "castTimeSec": 0.167,
       "rangeTier": "極小",
       "range": 3,
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "manaCostTier": "極小"
     },
     "W": {
       "id": "godie-huth.w",
@@ -114,11 +115,11 @@
         15.0
       ],
       "manaCost": [
-        100.0,
-        100.0,
-        100.0,
-        100.0,
-        100.0
+        73.0,
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [
         {
@@ -148,7 +149,8 @@
       "castTimeSec": 0.3,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "小"
+      "cooldownTier": "小",
+      "manaCostTier": "極小"
     },
     "E": {
       "id": "godie-huth.e",
@@ -166,10 +168,10 @@
         60.0
       ],
       "manaCost": [
-        120.0,
-        120.0,
-        120.0,
-        120.0
+        146.0,
+        146.0,
+        146.0,
+        146.0
       ],
       "effects": [],
       "template": {
@@ -194,7 +196,8 @@
       "castTimeSec": 0.467,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "極大"
+      "cooldownTier": "極大",
+      "manaCostTier": "小"
     },
     "R": {
       "id": "godie-huth.r",
@@ -211,9 +214,9 @@
         60.0
       ],
       "manaCost": [
-        280.0,
-        280.0,
-        280.0
+        292.0,
+        292.0,
+        292.0
       ],
       "effects": [
         {
@@ -242,7 +245,8 @@
       "castTimeSec": 1.033,
       "rangeTier": "大",
       "range": 8,
-      "cooldownTier": "極大"
+      "cooldownTier": "極大",
+      "manaCostTier": "中"
     }
   },
   "skillOrder": [

@@ -11,9 +11,9 @@
     30.0
   ],
   "manaCost": [
-    600.0
+    584.0
   ],
-  "range": 2.0,
+  "range": 3.0,
   "targetsEnemies": true,
   "effects": [
     {
@@ -40,5 +40,7 @@
   "icon": "assets/icons/abilities/godie-ewar.ex.webp",
   "vfxKey": "fx.w3x.particle.supershinythingy.p00",
   "cooldownTier": "中",
+  "rangeTier": "極小",
+  "manaCostTier": "大",
   "castTimeSec": 2
 }

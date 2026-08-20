@@ -99,6 +99,7 @@
       "vfxKey": "fx.prim.ki.nova",
       "rangeTier": "小",
       "cooldownTier": "極小",
+      "manaCostTier": "極小",
       "castTimeSec": 0.167
     },
     "W": {
@@ -350,9 +351,9 @@
         60.0
       ],
       "manaCost": [
-        250.0,
-        250.0,
-        250.0
+        292.0,
+        292.0,
+        292.0
       ],
       "range": 0.0,
       "radiusTier": "中",
@@ -406,6 +407,7 @@
         "camKick": 0.446
       },
       "cooldownTier": "中",
+      "manaCostTier": "中",
       "castTimeSec": 2
     }
   },

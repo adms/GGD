@@ -67,10 +67,10 @@
         30.0
       ],
       "manaCost": [
-        100.0,
-        100.0,
-        100.0,
-        100.0
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [],
       "template": {
@@ -96,11 +96,13 @@
       },
       "vfxKey": "fx.prim.ice.shockwave",
       "targetsEnemies": true,
-      "radius": 5.5,
+      "radius": 6.0,
       "castTimeSec": 0.767,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "manaCostTier": "極小",
+      "radiusTier": "中"
     },
     "W": {
       "id": "godie-n003.w",
@@ -163,10 +165,10 @@
         45.0
       ],
       "manaCost": [
-        160.0,
-        160.0,
-        160.0,
-        160.0
+        146.0,
+        146.0,
+        146.0,
+        146.0
       ],
       "effects": [
         {
@@ -188,7 +190,8 @@
       "castTimeSec": 0.833,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "大"
+      "cooldownTier": "大",
+      "manaCostTier": "小"
     },
     "R": {
       "id": "godie-n003.r",
@@ -205,9 +208,9 @@
         60.0
       ],
       "manaCost": [
-        500.0,
-        500.0,
-        500.0
+        584.0,
+        584.0,
+        584.0
       ],
       "effects": [],
       "template": {
@@ -243,7 +246,8 @@
       "targetsEnemies": true,
       "rangeTier": "大",
       "range": 8,
-      "cooldownTier": "極大"
+      "cooldownTier": "極大",
+      "manaCostTier": "大"
     }
   },
   "skillOrder": [

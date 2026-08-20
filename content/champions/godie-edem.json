@@ -65,10 +65,10 @@
         45.0
       ],
       "manaCost": [
-        150.0,
-        150.0,
-        150.0,
-        150.0
+        146.0,
+        146.0,
+        146.0,
+        146.0
       ],
       "range": 12.0,
       "radiusTier": "中",
@@ -117,6 +117,7 @@
       "vfxKey": "fx.prim.fire.explosion",
       "rangeTier": "極大",
       "cooldownTier": "小",
+      "manaCostTier": "小",
       "castTimeSec": 1.033
     },
     "W": {
@@ -185,6 +186,7 @@
       "icon": "assets/icons/abilities/godie-edem.w.webp",
       "vfxKey": "fx.prim.lightning.beam",
       "cooldownTier": "小",
+      "manaCostTier": "極小",
       "castTimeSec": 0.833
     },
     "E": {
@@ -202,10 +204,10 @@
         45.0
       ],
       "manaCost": [
-        120.0,
-        120.0,
-        120.0,
-        120.0
+        146.0,
+        146.0,
+        146.0,
+        146.0
       ],
       "range": 12.0,
       "radiusTier": "中",
@@ -248,6 +250,7 @@
       ],
       "rangeTier": "極大",
       "cooldownTier": "小",
+      "manaCostTier": "小",
       "castTimeSec": 2
     },
     "R": {

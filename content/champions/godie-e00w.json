@@ -65,10 +65,10 @@
         30.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "range": 0.0,
       "radiusTier": "中",
@@ -104,6 +104,7 @@
       "vfxKey": "fx.prim.physical.slash",
       "sfxKey": "wc3.darksummoninglaunch1",
       "cooldownTier": "極小",
+      "manaCostTier": "極小",
       "castTimeSec": 0.667
     },
     "W": {
@@ -279,9 +280,9 @@
         60.0
       ],
       "manaCost": [
-        150.0,
-        150.0,
-        150.0
+        146.0,
+        146.0,
+        146.0
       ],
       "range": 12.0,
       "radiusTier": "極小",
@@ -309,6 +310,7 @@
       "vfxKey": "fx.prim.lightning.beam-lg",
       "rangeTier": "極大",
       "cooldownTier": "中",
+      "manaCostTier": "小",
       "castTimeSec": 2
     }
   },

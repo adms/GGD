@@ -67,10 +67,10 @@
         60.0
       ],
       "manaCost": [
-        250.0,
-        250.0,
-        250.0,
-        250.0
+        292.0,
+        292.0,
+        292.0,
+        292.0
       ],
       "range": 12.0,
       "radiusTier": "小",
@@ -104,6 +104,7 @@
       "sfxKey": "wc3.treantready1",
       "rangeTier": "極大",
       "cooldownTier": "中",
+      "manaCostTier": "中",
       "castTimeSec": 0.833
     },
     "W": {
@@ -304,9 +305,9 @@
         90.0
       ],
       "manaCost": [
-        240.0,
-        240.0,
-        240.0
+        292.0,
+        292.0,
+        292.0
       ],
       "range": 0.0,
       "radiusTier": "中",
@@ -378,6 +379,7 @@
       "icon": "assets/icons/abilities/godie-e00s.r.webp",
       "vfxKey": "fx.prim.arcane.nova-lg",
       "cooldownTier": "大",
+      "manaCostTier": "中",
       "castTimeSec": 1.233
     }
   },

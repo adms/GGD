@@ -65,5 +65,6 @@
   "icon": "assets/icons/abilities/godie-edem.w.webp",
   "vfxKey": "fx.prim.lightning.beam",
   "cooldownTier": "小",
+  "manaCostTier": "極小",
   "castTimeSec": 0.833
 }

@@ -85,6 +85,28 @@ import {
   anchorFloor,
   castsToKill,
 } from "../damageTiers";
+// 耗魔五級距（2026-08-21）—— 五軸的最後一軸。五格從魔力池與 owner 的兩個錨
+// 推導，推導式寫在 content/manaTiers.ts。
+import {
+  DEFAULT_MANA_TIERS,
+  MANA_TIERS_DOC_ID,
+  MANA_TIER_MAX,
+  MANA_TIER_MIN,
+  MANA_TIER_NAMES,
+  describeManaTiers,
+} from "../manaTiers";
+// 技能正規化的九個決策點（owner 2026-08-21「決策點一律做成後台開關」）——
+// 每一格的預設值與 rollback 理由寫在 content/skillNormalize.ts 的欄位註解上。
+import {
+  CARRIER_BASE_MAX_CEILING,
+  DAMAGE_COLUMN_BASES,
+  DAMAGE_LEAF_SCOPES,
+  DEFAULT_SKILL_NORMALIZE,
+  GAP_ALERT_MAX,
+  RADIUS_COLUMN_BASES,
+  SKILL_NORMALIZE_DOC_ID,
+} from "../skillNormalize";
+import { SNAP_POLICIES } from "../skillTiers";
 import {
   BALANCE_ANCHOR_LEVELS,
   HARD_ANCHOR_LEVEL,
@@ -5243,6 +5265,131 @@ export const DEFAULT_DAMAGE_TIERS_DOC = {
 } as const;
 
 /**
+ * config.mana-tiers@1 — 耗魔**五級距**（2026-08-21）。
+ *
+ * ⭐ 這是五軸裡**最後補上**的一軸。在它之前 `ability@1` 上根本沒有 `manaCostTier`
+ * 一格 ⇒ 冷卻 350 支填了級別、施法距離 186 支、AoE 96 支、傷害 199 支，而耗魔是
+ * **0 支** —— 那不是「大家忘了填」，是**機制沒做**。
+ *
+ * ⛔ 這裡刻意**不抄五個數字**：它們由 `content/manaTiers.ts` 從魔力池與 owner 的
+ * 兩個錨現算（「範圍技連續八次」＝中÷8、「四個大範圍」＝大÷4）。抄一份到這個
+ * 檔頭就是第二個住處，而它會在下一次重錨時無聲過期。
+ */
+export const zConfigManaTiersDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.mana-tiers@1"),
+    note: z.string().optional(),
+    /** 止血閥兼一鍵 rollback。false = `manaCostTier` 不解析（回到手寫 `manaCost`）。 */
+    enabled: z
+      .boolean()
+      .describe(
+        "關掉之後 `manaCostTier` 不解析，技能回到自己手寫的 `manaCost[]` ——一鍵 rollback。⚠️ 關掉**不會**讓技能變免費。",
+      ),
+    /** 級別 → 耗魔點數。五格都必填，缺一格就不是一把完整的尺。 */
+    manaCost: z
+      .object(
+        Object.fromEntries(
+          MANA_TIER_NAMES.map((n) => [
+            n,
+            z
+              .number()
+              .min(MANA_TIER_MIN)
+              .max(MANA_TIER_MAX)
+              .describe(
+                `「${n}」的耗魔點數。⭐ 五格從**魔力池**推導，⛔ 不要手打 —— ${describeManaTiers()}` +
+                  `⚠️ 上界 ${MANA_TIER_MAX} ＝ LV${HARD_ANCHOR_LEVEL} 的中位魔力池：一發花光整條魔條已經是極端，` +
+                  `超過它的技能一輩子放不出來。⚠️ 下界 ${MANA_TIER_MIN} —— 0 是「免費技」，` +
+                  `那要走**不填級別而且 manaCost 全 0** 的寫法，⛔ 不是把這一格填成 0。`,
+              ),
+          ]),
+        ) as Record<(typeof MANA_TIER_NAMES)[number], z.ZodNumber>,
+      )
+      .strict(),
+  })
+  .strict();
+
+export const DEFAULT_MANA_TIERS_DOC = {
+  id: MANA_TIERS_DOC_ID,
+  schema: "config.mana-tiers@1",
+  enabled: DEFAULT_MANA_TIERS.enabled,
+  manaCost: DEFAULT_MANA_TIERS.manaCost,
+} as const;
+
+/**
+ * config.skill-normalize@1 — 技能正規化的**九個決策點**（owner 2026-08-21）。
+ *
+ * > 「決策點一律做成**後台開關**，預設 = 你的建議」
+ *
+ * ⭐ 每一格的「預設為什麼選這個 · 後悔時怎麼一鍵 rollback」逐格寫在
+ * `content/skillNormalize.ts` 的欄位註解上（後台那一頁讀同一份字）——
+ * ⛔ 這裡不重寫第二份，那會在下一次改預設時無聲過期。
+ *
+ * ⚠️ 這一份**不改任何技能**：它決定閘怎麼問，⛔ 不決定誰填哪一格。
+ */
+export const zConfigSkillNormalizeDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.skill-normalize@1"),
+    note: z.string().optional(),
+    enabled: z
+      .boolean()
+      .describe("關掉之後整條正規化規則不跑（閘不叫、報告不產）——一鍵 rollback。⚠️ 關掉不會改變任何技能的行為。"),
+    carrierBaseMax: z
+      .number()
+      .min(0)
+      .max(CARRIER_BASE_MAX_CEILING)
+      .describe(
+        "**載體節點**的門檻：小於等於它的傷害葉不算傷害。一顆 `damageArea{amount:{flat:1}, onHitTargets:[…]}` 的工作是送狀態，" +
+          "那 1 點只是為了讓圈成立 —— 收進級距會讓一支純控場技變成 600 傷害的核彈（實測命中 70-03／79-01／92-04／45-002）。填 0 = 載體節點全部回來當傷害技。",
+      ),
+    damageLeafScope: z
+      .enum(DAMAGE_LEAF_SCOPES)
+      .describe(
+        "「傷害葉」算哪些。`cast-amount` = 只有施放路徑上掛在 `amount` 鍵的（＝ tierize.py 的寫入口徑）。" +
+          "⚠️ `all-leaves` 會把 `passive.hooks` 與 `dot.amountPerTick` 也收進級距 —— 級距是**取代**基礎值的，92-02 消化液每跳 20→600 是 **12 倍**。⛔ 那是平衡改動不是正規化。",
+      ),
+    damageColumnBasis: z
+      .enum(DAMAGE_COLUMN_BASES)
+      .describe(
+        "傷害欄用哪個口徑對「已填的級別」。`leaf` = 對它自己那一葉。" +
+          "⚠️ `total`（owner 裁決 A 的總計）拿來對 `amount.damageTier` 會把 34-04 蒼龍破的**每一段**推到極大（12×6000），一次 4 倍的買 —— 裁決 A 的總計改為驅動**相稱性**，那才是它要回答的問題。",
+      ),
+    radiusColumnBasis: z
+      .enum(RADIUS_COLUMN_BASES)
+      .describe(
+        "範圍欄用哪個節點。`authored-node` = 填了級別的那一顆。" +
+          "⚠️ `max-coverage` 會把 13-04 龍星群的散佈半徑 8 對到**每一發**的圈（現在是 3），一次 2.7 倍的買。",
+      ),
+    snapPolicy: z
+      .enum(SNAP_POLICIES)
+      .describe("自由數字往哪一格收。`nearest` 最忠實，⛔ 不夾帶一次無聲的平衡改動；owner 抱怨「普遍超遠／超大」時要的是 `down`。"),
+    riskAllowance: z
+      .boolean()
+      .describe(
+        "有**條件上檔**的技能允不允許超出級距上限。owner 2026-08-21 對 65-04 天譴：「他要有**足夠多敵人在範圍內**才有連鎖加成效果，算是有**額外條件風險**」⛔ 不調數值。" +
+          "⭐ 判準從結構推導（ceiling > guaranteed 且有風險因子），⛔ 不是一張豁免名單 —— 12 段打同一目標的蒼龍破沒有上檔，它照全額被管。",
+      ),
+    proportionalityExemptNoDamage: z
+      .boolean()
+      .describe(
+        "沒有傷害葉的控制／位移技要不要豁免相稱性。相稱性規則的分母是**傷害**，一支不造成傷害的定身技拿去對它得到的是一句必然為假的宣稱。⭐ 理由是推導的（效果樹上一片傷害葉都沒有）。",
+      ),
+    gapAlert: z
+      .number()
+      .min(0)
+      .max(GAP_ALERT_MAX)
+      .describe("離最近一級多遠才叫「收進去會改變手感」（相對級距值）。⭐ 與 `pnpm tiers:build` 同一個數字，⛔ 不另立一個。"),
+  })
+  .strict();
+
+export const DEFAULT_SKILL_NORMALIZE_DOC = {
+  id: SKILL_NORMALIZE_DOC_ID,
+  schema: "config.skill-normalize@1",
+  ...DEFAULT_SKILL_NORMALIZE,
+} as const;
+
+/**
  * config.mana-economy@1 — 回魔的**地板**（GH#446）。
  *
  * owner 2026-08-19：「應該是去**調整回魔**⋯**平均回魔不超過 15 秒就可以滿魔再一輪，
@@ -7283,6 +7430,11 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigCooldownTiersDoc,
   // 傷害五級距（GH#447）。⚠️ 同上。
   zConfigDamageTiersDoc,
+  // 耗魔五級距（2026-08-21，五軸的最後一軸）。⚠️ 同上 —— 漏掉這一行，
+  // mana-tiers.json 會讓內容**整份**載入失敗 → 骨架英雄，而網站看起來正常。
+  zConfigManaTiersDoc,
+  // 技能正規化的九個決策點（2026-08-21）。⚠️ 同上。
+  zConfigSkillNormalizeDoc,
   // 回魔地板（GH#446）。⚠️ 同上。
   zConfigManaEconomyDoc,
   // 英雄屬性正規化（owner 2026-08-12）。⚠️ 漏掉這一行 = 一份 stat-normalization.json

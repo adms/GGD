@@ -15,11 +15,12 @@
   ],
   "cooldownTier": "小",
   "manaCost": [
-    75.0,
-    75.0,
-    75.0,
-    75.0
+    73.0,
+    73.0,
+    73.0,
+    73.0
   ],
+  "manaCostTier": "極小",
   "range": 0,
   "effects": [],
   "template": {
@@ -45,7 +46,8 @@
   },
   "vfxKey": "fx.prim.physical.nova",
   "targetsEnemies": true,
-  "radius": 3.67,
+  "radius": 3.0,
   "schema": "ability@1",
-  "castTimeSec": 0.8
+  "castTimeSec": 0.8,
+  "radiusTier": "極小"
 }

@@ -15,11 +15,12 @@
   ],
   "cooldownTier": "小",
   "manaCost": [
-    120.0,
-    120.0,
-    120.0,
-    120.0
+    146.0,
+    146.0,
+    146.0,
+    146.0
   ],
+  "manaCostTier": "小",
   "range": 0.0,
   "effects": [
     {
@@ -53,7 +54,7 @@
   ],
   "vfxKey": "fx.w3x.orb.herocloudkfksword.p00",
   "targetsEnemies": true,
-  "radius": 1.5,
+  "radius": 3.0,
   "schema": "ability@1",
   "castTimeSec": 0.8,
   "hitFeel": {
@@ -69,5 +70,6 @@
     ],
     "flashMs": 140,
     "camKick": 0.351
-  }
+  },
+  "radiusTier": "極小"
 }

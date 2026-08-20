@@ -138,12 +138,12 @@
         60.0
       ],
       "manaCost": [
-        80.0,
-        80.0,
-        80.0,
-        80.0
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
-      "range": 2.0,
+      "range": 3.0,
       "targetsEnemies": true,
       "effects": [
         {
@@ -221,6 +221,8 @@
       "icon": "assets/icons/abilities/godie-h01n.w.webp",
       "vfxKey": "fx.prim.physical.slash",
       "cooldownTier": "極大",
+      "rangeTier": "極小",
+      "manaCostTier": "極小",
       "castTimeSec": 0.467
     },
     "E": {
@@ -238,10 +240,10 @@
         45.0
       ],
       "manaCost": [
-        250.0,
-        250.0,
-        250.0,
-        250.0
+        292.0,
+        292.0,
+        292.0,
+        292.0
       ],
       "range": 12.0,
       "targetsEnemies": true,
@@ -300,6 +302,7 @@
       "vfxKey": "fx.prim.void.beam",
       "rangeTier": "極大",
       "cooldownTier": "大",
+      "manaCostTier": "中",
       "castTimeSec": 0.467
     },
     "R": {

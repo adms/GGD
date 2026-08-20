@@ -19,6 +19,7 @@
     73.0,
     73.0
   ],
+  "manaCostTier": "極小",
   "effects": [],
   "template": {
     "ref": "tpl-instant-blast",
@@ -35,15 +36,16 @@
         ]
       },
       "damageType": "physical",
-      "castTimeSec": 1.033
+      "castTimeSec": 0.833
     }
   },
   "vfxKey": "fx.prim.fire.slash",
   "targetsEnemies": true,
-  "radius": 3.67,
+  "radius": 3.0,
   "schema": "ability@1",
   "icon": "assets/icons/abilities/godie-u00h.w.png",
-  "castTimeSec": 1.033,
+  "castTimeSec": 0.833,
   "rangeTier": "大",
-  "range": 8
+  "range": 8,
+  "radiusTier": "極小"
 }

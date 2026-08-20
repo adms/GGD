@@ -104,11 +104,11 @@
         30.0
       ],
       "manaCost": [
-        150.0,
-        150.0,
-        150.0,
-        150.0,
-        150.0
+        146.0,
+        146.0,
+        146.0,
+        146.0,
+        146.0
       ],
       "effects": [],
       "template": {
@@ -133,7 +133,8 @@
       "castTimeSec": 0.467,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "中"
+      "cooldownTier": "中",
+      "manaCostTier": "小"
     },
     "E": {
       "id": "godie-udea.e",
@@ -186,7 +187,8 @@
       "castTimeSec": 0.367,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "小"
+      "cooldownTier": "小",
+      "manaCostTier": "極小"
     },
     "R": {
       "id": "godie-udea.r",
@@ -203,9 +205,9 @@
         30.0
       ],
       "manaCost": [
-        250.0,
-        250.0,
-        250.0
+        292.0,
+        292.0,
+        292.0
       ],
       "effects": [
         {
@@ -218,7 +220,7 @@
           "kind": "chainLightning",
           "shape": "circle",
           "centre": "caster",
-          "radius": 9.17,
+          "radius": 8.0,
           "maxSources": 20,
           "damageType": "magic",
           "amount": {
@@ -244,7 +246,8 @@
                 ]
               }
             }
-          ]
+          ],
+          "radiusTier": "大"
         },
         {
           "kind": "damageArea",
@@ -253,15 +256,17 @@
             "damageTier": "小",
             "flat": 1500.0
           },
-          "radius": 8.25,
-          "maxTargets": 1
+          "radius": 8.0,
+          "maxTargets": 1,
+          "radiusTier": "大"
         }
       ],
       "vfxKey": "fx.prim.holy.nova-lg",
       "castTimeSec": 0.067,
       "rangeTier": "大",
       "range": 8,
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "manaCostTier": "中"
     }
   },
   "skillOrder": [

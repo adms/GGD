@@ -21,6 +21,7 @@
     73.0,
     73.0
   ],
+  "manaCostTier": "極小",
   "radius": 3,
   "effects": [],
   "template": {
@@ -47,5 +48,6 @@
   "targetsEnemies": true,
   "castTimeSec": 0.767,
   "rangeTier": "中",
-  "range": 6
+  "range": 6,
+  "radiusTier": "極小"
 }

@@ -102,7 +102,8 @@
       "vfxKey": "fx.prim.ki.pulse-sm",
       "sfxKey": "wc3.mortarteampissed9",
       "castTimeSec": 0.167,
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "manaCostTier": "極小"
     },
     "W": {
       "id": "godie-u034.w",
@@ -156,7 +157,8 @@
       "vfxKey": "fx.prim.ki.pulse-sm",
       "sfxKey": "wc3.mortarteampissed9",
       "castTimeSec": 0.167,
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "manaCostTier": "極小"
     },
     "E": {
       "id": "godie-u034.e",
@@ -203,7 +205,8 @@
       "castTimeSec": 0.167,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "manaCostTier": "極小"
     },
     "R": {
       "id": "godie-u034.r",

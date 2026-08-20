@@ -16,7 +16,7 @@
   "manaCost": [
     0.0
   ],
-  "range": 29.33,
+  "range": 12.0,
   "effects": [
     {
       "kind": "spawnVfx",
@@ -33,5 +33,6 @@
       }
     }
   ],
-  "castTimeSec": 0.467
+  "castTimeSec": 0.467,
+  "rangeTier": "極大"
 }

@@ -15,11 +15,12 @@
   ],
   "cooldownTier": "小",
   "manaCost": [
-    120.0,
-    120.0,
-    120.0,
-    120.0
+    146.0,
+    146.0,
+    146.0,
+    146.0
   ],
+  "manaCostTier": "小",
   "effects": [
     {
       "kind": "damage",
@@ -92,8 +93,9 @@
   "vfxKey": "fx.prim.physical.beam",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "radius": 6.42,
+  "radius": 6.0,
   "castTimeSec": 1.133,
   "rangeTier": "極小",
-  "range": 3
+  "range": 3,
+  "radiusTier": "中"
 }

@@ -122,16 +122,16 @@
         45.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.physical.nova",
       "targetsEnemies": true,
-      "radius": 3.67,
+      "radius": 3.0,
       "castTimeSec": 0.8,
       "template": {
         "ref": "tpl-proxy-cast",
@@ -154,7 +154,9 @@
           "statusDurationSec": 0.8
         }
       },
-      "cooldownTier": "小"
+      "cooldownTier": "小",
+      "manaCostTier": "極小",
+      "radiusTier": "極小"
     },
     "E": {
       "id": "godie-udre.e",
@@ -172,10 +174,10 @@
         45.0
       ],
       "manaCost": [
-        100.0,
-        100.0,
-        100.0,
-        100.0
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [
         {
@@ -204,7 +206,8 @@
       "castTimeSec": 1,
       "rangeTier": "大",
       "range": 8,
-      "cooldownTier": "大"
+      "cooldownTier": "大",
+      "manaCostTier": "極小"
     },
     "R": {
       "id": "godie-udre.r",

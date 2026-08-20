@@ -161,6 +161,8 @@ const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
       // GH#445 / #447 / #446 —— 四軸的第三、第四軸與它們反算出來的回魔地板。
       "cooldownTiers",
       "damageTiers",
+      "manaTiers",
+      "skillNormalize",
       "manaEconomy",
       // 2026-08-21 owner「後台設定及說明⋯全部都是推導動態即時產生」——
       // ⭐ 五級距總覽（唯讀，卡面→實際）。它必須和上面四張級距頁同一區：
@@ -246,6 +248,15 @@ describe("分類重編一頁都沒有掉", () => {
       "cooldownTiers",
       "damageTiers",
       "manaEconomy",
+      // 2026-08-21：耗魔五級距 —— 五軸的**最後一軸**。⚠️ 它補的洞與上面三頁
+      // 同型但更徹底：`ability@1` 上根本沒有 `manaCostTier` 一格，所以另外四軸
+      // 各有 96–350 支填了級別，而這一軸是 **0 支**。
+      "manaTiers",
+      // 2026-08-21：技能正規化決策點 —— owner「決策點一律做成後台開關，
+      // 預設 = 你的建議」。⚠️ 它是這一區裡唯一一頁 **authoring-time** 的設定
+      // （決定閘怎麼問），但它必須和五張級距頁同一區：九格裡有一格直接決定
+      // 「哪些傷害葉會被收進級距」，改它等於改上面那張傷害表的作用範圍。
+      "skillNormalize",
       // 2026-08-21：五級距總覽。⚠️ 它和上面三頁不同 —— 它**不編輯任何文件**，
       // 所以它也不在 SESSION_REQUIRED_PAGES 裡（唯讀主控台，同 hub / modelBudget）。
       "tierOverview",

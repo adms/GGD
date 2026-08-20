@@ -11,7 +11,7 @@
     60.0
   ],
   "manaCost": [
-    400.0
+    292.0
   ],
   "range": 6.0,
   "targetsEnemies": true,
@@ -72,5 +72,6 @@
   "vfxKey": "fx.prim.fire.explosion-lg",
   "rangeTier": "中",
   "cooldownTier": "極大",
+  "manaCostTier": "中",
   "castTimeSec": 2
 }

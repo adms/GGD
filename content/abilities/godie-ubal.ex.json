@@ -12,8 +12,9 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    600.0
+    584.0
   ],
+  "manaCostTier": "大",
   "effects": [],
   "template": {
     "ref": "tpl-instant-blast",
@@ -35,9 +36,10 @@
   },
   "vfxKey": "fx.prim.void.explosion-lg",
   "schema": "ability@1",
-  "radius": 9.41,
+  "radius": 8.0,
   "targetsEnemies": true,
   "castTimeSec": 0.767,
   "rangeTier": "大",
-  "range": 8
+  "range": 8,
+  "radiusTier": "大"
 }

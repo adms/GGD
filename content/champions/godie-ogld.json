@@ -68,11 +68,11 @@
         30.0
       ],
       "manaCost": [
-        100.0,
-        100.0,
-        100.0,
-        100.0,
-        100.0
+        73.0,
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [],
       "template": {
@@ -97,7 +97,8 @@
       "castTimeSec": 0.467,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "中"
+      "cooldownTier": "中",
+      "manaCostTier": "極小"
     },
     "W": {
       "id": "godie-ogld.w",
@@ -141,7 +142,8 @@
       "castTimeSec": 0.367,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "小"
+      "cooldownTier": "小",
+      "manaCostTier": "極小"
     },
     "E": {
       "id": "godie-ogld.e",
@@ -158,9 +160,9 @@
         45.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [],
       "template": {
@@ -185,7 +187,8 @@
       "castTimeSec": 0.467,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "大"
+      "cooldownTier": "大",
+      "manaCostTier": "極小"
     },
     "R": {
       "id": "godie-ogld.r",
@@ -202,15 +205,15 @@
         90.0
       ],
       "manaCost": [
-        250.0,
-        250.0,
-        250.0
+        292.0,
+        292.0,
+        292.0
       ],
       "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.void.explosion-lg",
       "targetsEnemies": true,
-      "radius": 3.67,
+      "radius": 3.0,
       "castTimeSec": 0.8,
       "template": {
         "ref": "tpl-proxy-cast",
@@ -233,7 +236,9 @@
           "statusDurationSec": 0.8
         }
       },
-      "cooldownTier": "大"
+      "cooldownTier": "大",
+      "manaCostTier": "中",
+      "radiusTier": "極小"
     }
   },
   "skillOrder": [

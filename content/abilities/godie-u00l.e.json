@@ -15,11 +15,12 @@
   ],
   "cooldownTier": "中",
   "manaCost": [
-    165.0,
-    165.0,
-    165.0,
-    165.0
+    146.0,
+    146.0,
+    146.0,
+    146.0
   ],
+  "manaCostTier": "小",
   "effects": [
     {
       "kind": "damage",
@@ -42,5 +43,6 @@
   "schema": "ability@1",
   "castTimeSec": 1.233,
   "rangeTier": "極小",
-  "range": 3
+  "range": 3,
+  "radiusTier": "中"
 }

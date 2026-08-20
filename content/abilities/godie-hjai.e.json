@@ -15,11 +15,12 @@
   ],
   "cooldownTier": "中",
   "manaCost": [
-    230.0,
-    230.0,
-    230.0,
-    230.0
+    292.0,
+    292.0,
+    292.0,
+    292.0
   ],
+  "manaCostTier": "中",
   "effects": [
     {
       "kind": "damage",
@@ -44,9 +45,10 @@
   ],
   "vfxKey": "fx.prim.void.slash",
   "targetsEnemies": true,
-  "radius": 8.25,
+  "radius": 8.0,
   "schema": "ability@1",
   "castTimeSec": 1.5,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "radiusTier": "大"
 }

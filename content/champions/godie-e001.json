@@ -245,10 +245,10 @@
         15.0
       ],
       "manaCost": [
-        100.0,
-        100.0,
-        100.0,
-        100.0
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [
         {
@@ -277,7 +277,8 @@
       "castTimeSec": 0.367,
       "rangeTier": "大",
       "range": 8,
-      "cooldownTier": "小"
+      "cooldownTier": "小",
+      "manaCostTier": "極小"
     },
     "R": {
       "id": "godie-e001.r",

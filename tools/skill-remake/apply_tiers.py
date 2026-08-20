@@ -46,6 +46,15 @@ MIRRORED = (
     "cooldown",
     "cooldownTier",
     "manaCost",
+    # ⭐ 2026-08-21 —— 五軸的最後一軸。⚠️ 少了這一列，英雄卡內嵌版會停在
+    #    「有 manaCost 沒有 manaCostTier」，於是**同一支技能**在 standalone 與
+    #    內嵌兩條註冊路徑上算出兩個不同的耗魔，⛔ 而且沒有任何東西會紅。
+    "manaCostTier",
+    # ⭐ 2026-08-21 —— `radius` 在此之前**不在這張表上**，而 `radiusTier` 在。
+    #    ⚠️ 那個組合的後果：級距把 standalone 的 radius 從 4.58 收成 4.5，
+    #    英雄卡內嵌版卻還是 4.58 ⇒ `abilityMirror.test.ts` 判「兩份副本互相矛盾」
+    #    （2026-08-21 實測 30 筆）。⛔ 級別與它的原始值必須一起鏡射。
+    "radius",
     "range",
     "rangeTier",
     "radiusTier",
@@ -89,6 +98,9 @@ def run(write, report):
         if "cooldownTier" in doc:
             t = doc.pop("cooldownTier")
             _insert_after(doc, "cooldownTier", "cooldown", t)
+        if "manaCostTier" in doc:
+            t = doc.pop("manaCostTier")
+            _insert_after(doc, "manaCostTier", "manaCost", t)
         after = json.dumps(doc, ensure_ascii=False, indent=2) + "\n"
         if after != before:
             changed.append(name)

@@ -35,6 +35,7 @@ import { rangeTiersFromDoc, resolveRangeTier } from "./rangeTiers";
 // 冷卻五級距 → 秒數（GH#445）／傷害五級距 → 基礎值（GH#447）。同上，唯一的查表處。
 import { cooldownTiersFromDoc, resolveCooldownTier } from "./cooldownTiers";
 import { damageTiersFromDoc, resolveDamageTier } from "./damageTiers";
+import { manaTiersFromDoc, resolveManaCostTier } from "./manaTiers";
 // ⭐ 說明推導（票號待開） —— 技能說明的佔位符在 `withProse` 被代入（見下面那一格的說明）。
 import { type ProseTables } from "./abilityProse";
 // ⭐ 唯一入口（抽量 → 算實際值 → 代入）。⛔ 不要退回自己組那三步，見 `withProse`。
@@ -267,19 +268,28 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   const damageTiers = damageTiersFromDoc(
     configDocs.find((c) => c.schema === "config.damage-tiers@1"),
   );
+  // 耗魔五級距（2026-08-21）—— 五軸的最後一軸。⚠️ 在它之前 `ability@1` 上根本
+  // 沒有 `manaCostTier` 一格，所以 212 支要花魔力的技能各自帶一個自由數字：
+  // 級距表一改它們一動都不會動，⛔ 而且沒有任何東西會紅。
+  const manaTiers = manaTiersFromDoc(configDocs.find((c) => c.schema === "config.mana-tiers@1"));
   const withTiers = <T extends object>(d: T): T =>
-    // ⚠️ 冷卻在最外層是刻意的：`cooldownShapeOf` 的自動推形狀會去看
+    // ⚠️ 冷卻在**幾何之外**是刻意的：`cooldownShapeOf` 的自動推形狀會去看
     // `radius`/`radiusTier`，而 `resolveRadiusTier` 只**加**欄位不刪 ——
     // 先跑幾何再跑冷卻，兩種寫法（填數字／填級距）看到的形狀才會一樣。
-    resolveCooldownTier(
-      resolveDamageTier(
-        resolveDisplacementTier(
-          resolveRangeTier(resolveRadiusTier(d as never, aoeTiers) as never, rangeTiers) as never,
-          displacementTiers,
-        ),
-        damageTiers,
+    // ⭐ 耗魔包在最外層只是**順序無關**（它只讀頂層 `manaCostTier`／`manaCost`，
+    // ⛔ 不看幾何也不看傷害），⛔ 不要因此以為它有優先權。
+    resolveManaCostTier(
+      resolveCooldownTier(
+        resolveDamageTier(
+          resolveDisplacementTier(
+            resolveRangeTier(resolveRadiusTier(d as never, aoeTiers) as never, rangeTiers) as never,
+            displacementTiers,
+          ),
+          damageTiers,
+        ) as never,
+        cooldownTiers,
       ) as never,
-      cooldownTiers,
+      manaTiers,
     ) as T;
 
   /**

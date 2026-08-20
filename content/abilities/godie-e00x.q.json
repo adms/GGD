@@ -15,11 +15,12 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    75.0,
-    75.0,
-    75.0,
-    75.0
+    73.0,
+    73.0,
+    73.0,
+    73.0
   ],
+  "manaCostTier": "極小",
   "range": 0.0,
   "effects": [
     {
@@ -48,5 +49,6 @@
   "targetsEnemies": true,
   "radius": 6.0,
   "schema": "ability@1",
-  "castTimeSec": 0.767
+  "castTimeSec": 0.767,
+  "radiusTier": "中"
 }

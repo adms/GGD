@@ -2,7 +2,7 @@
   "id": "godie-e007.e",
   "name": "12-03 破凰之心-徒手空破山",
   "provenance": "w3x-import",
-  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n使用破凰之力的志狼，在每次攻擊皆能施展空破山，劃出大氣之刃，造成100%的擴散傷害，持續12秒。",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n使用破凰之力的志狼徒手空破山，劃出大氣之刃，對目標造成{{dmg}}點傷害。",
   "slot": "E",
   "castType": "targeted",
   "maxRank": 4,
@@ -19,6 +19,7 @@
     73.0,
     73.0
   ],
+  "manaCostTier": "極小",
   "effects": [
     {
       "kind": "damage",

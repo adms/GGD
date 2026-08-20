@@ -15,11 +15,12 @@
   ],
   "cooldownTier": "中",
   "manaCost": [
-    150.0,
-    150.0,
-    150.0,
-    150.0
+    146.0,
+    146.0,
+    146.0,
+    146.0
   ],
+  "manaCostTier": "小",
   "effects": [
     {
       "kind": "damage",

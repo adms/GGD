@@ -543,6 +543,18 @@ TIER_AXES = (
         "note": "⚠️ `ratios` / `attrRatios` **不受影響**（那兩條是成長，不是基礎值）",
     },
     {
+        "field": "manaCostTier", "raw": ("manaCost",), "resolver": "resolveManaCostTier",
+        "cfg": "mana-tiers", "schema": "config.mana-tiers@1", "env": None,
+        "where": "`ability@1` 頂層",
+        "rows": lambda c: [("耗魔", c["manaCost"])],
+        "note": (
+            "⭐ 五格從**魔力池**推導（owner 2026-08-19 的兩個錨：範圍技連續八次／"
+            "四個大範圍技能）。填了級別 = **每一階同一個值** —— owner 2026-08-21 ①"
+            "「除了冷卻以外 傷害跟耗魔是一起變動的」＋「B 全轉」的直接推論。"
+            "⛔ 免費技（`manaCost` 全 0）**不要**填它：下界是 1"
+        ),
+    },
+    {
         "field": "distanceTier", "raw": ("distance",), "resolver": "resolveDisplacementTier",
         "cfg": "displacement-tiers", "schema": "config.displacement-tiers@1", "env": None,
         "where": "`dash` / `leap` / `blink` / `knockback`",

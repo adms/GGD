@@ -96,11 +96,13 @@
       },
       "vfxKey": "fx.prim.lightning.nova",
       "targetsEnemies": true,
-      "radius": 6.42,
+      "radius": 6.0,
       "castTimeSec": 0.767,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "manaCostTier": "極小",
+      "radiusTier": "中"
     },
     "W": {
       "id": "godie-ofar.w",
@@ -297,7 +299,8 @@
       "castTimeSec": 0.5,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "極大"
+      "cooldownTier": "極大",
+      "manaCostTier": "極小"
     },
     "R": {
       "id": "godie-ofar.r",

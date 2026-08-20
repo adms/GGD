@@ -14,10 +14,10 @@
     45.0
   ],
   "manaCost": [
-    120.0,
-    120.0,
-    120.0,
-    120.0
+    146.0,
+    146.0,
+    146.0,
+    146.0
   ],
   "range": 12.0,
   "radiusTier": "中",
@@ -60,5 +60,6 @@
   ],
   "rangeTier": "極大",
   "cooldownTier": "小",
+  "manaCostTier": "小",
   "castTimeSec": 2
 }

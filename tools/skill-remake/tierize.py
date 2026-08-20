@@ -117,7 +117,14 @@ class Grids:
         self.damage = _load("damage-tiers")["damage"]
         self.range = _load("range-tiers")["range"]
         self.radius = _load("aoe-tiers")["radius"]
-        self.mana_min, self.mana_max = _mana_band()
+        #: ⭐ 耗魔五格改**讀出貨 config**（`config.mana-tiers@1`，2026-08-21）——
+        #: 在它之前這裡是拿正則去挖 `balanceAnchorsDerived.ts`，那是**第三個住處**
+        #: 而且沒有任何東西在守它。現在三個住處（content/config · Zod DEFAULT_*
+        #: · admin SHIPPED_*）之間本來就有 drift 測試。
+        self.mana = _load("mana-tiers")["manaCost"]
+
+    def mana_row(self):
+        return [float(self.mana[t]) for t in TIER_NAMES]
 
     def cd_row(self, shape):
         return [float(self.cooldown[shape][t]) for t in TIER_NAMES]
@@ -126,28 +133,10 @@ class Grids:
         return [float(self.damage[t]) for t in TIER_NAMES]
 
 
-def _mana_band():
-    """耗魔的**兩端** —— owner 2026-08-21 00:32「C 上下限」，⛔ 不建第三張表。
-
-    兩個錨是 owner 2026-08-19 給的，⛔ 不是我編的：
-      「範圍技**連續八次**施展完等回魔」　「連續**四個大範圍**技能施展完一定要等回魔」
-    ⇒ 中 = 池÷8、大 = 池÷4，相鄰一格比值 2 ⇒ 梯子 `池 ÷ {32,16,8,4,2}`，
-      兩端就是 `池÷32`（極小）與 `池÷2`（極大）。
-
-    ⭐ 池的三個輸入從 `balanceAnchorsDerived.ts` **讀**出來（那一份是
-    `pnpm anchors:build` 量的，母體＝49 位可選本體），⛔ 不抄數字 ——
-    owner 重錨之後這兩端自己跟著動。
-    """
-    src = os.path.join(ROOT, "packages/shared/src/content/balanceAnchorsDerived.ts")
-    with open(src, encoding="utf-8") as f:
-        txt = f.read()
-    import re
-
-    base = float(re.search(r"MEDIAN_BASE_MANA[^}]*?\b30:\s*([\d.]+)", txt, re.S).group(1))
-    mult = float(re.search(r"MANA_ENV_MULT\s*=\s*([\d.]+)", txt).group(1))
-    bonus = float(re.search(r"MANA_BASE_BONUS\s*=\s*([\d.]+)", txt).group(1))
-    pool = base * mult + bonus
-    return float(round(pool / 32)), float(round(pool / 2))
+#: ⛔ `_mana_band()` 已經退場（2026-08-21）—— 它拿正則去挖
+#: `balanceAnchorsDerived.ts` 反算兩端，那是耗魔數字的**第三個住處**，
+#: 而且沒有任何東西在守它。現在直接讀 `content/config/mana-tiers.json`
+#: （Zod `DEFAULT_MANA_TIERS` 與 admin `SHIPPED_*` 之間本來就有 drift 測試）。
 
 
 def hook_icd(tier="極小", shape="單體"):
@@ -178,7 +167,11 @@ def hook_icd(tier="極小", shape="單體"):
 #: 那個 1 點傷害只是為了讓圈成立。把它當成「基礎傷害」收進級距 ⇒ 一支純控場技
 #: 變成 600 傷害的核彈（實測命中 70-03 木束縛之術 / 79-01 瞬步 / 92-04 馬勒戈壁 /
 #: 45-002 天照）。owner 2026-08-21 的帳本本來就把它排除在「可換算的基礎傷害葉」外。
-CARRIER_BASE_MAX = 1.0
+#: ⭐ 2026-08-21 起它是**後台一格**（`config.skill-normalize@1.carrierBaseMax`）——
+#: ⛔ 這裡不再寫死 1.0。三個住處：content/config · Zod `DEFAULT_SKILL_NORMALIZE`
+#: · admin `SHIPPED_*`，而 `skillNormalize.ts::axisVerdicts` 讀同一格 ——
+#: 兩邊分岔的後果是「閘要求填級別、寫入器判它是載體不填」的死迴圈。
+CARRIER_BASE_MAX = float(_load("skill-normalize")["carrierBaseMax"])
 
 
 def _scaling_base(amount):
@@ -355,6 +348,102 @@ def _rewrite_scaling(amount, tier, value):
     amount.update(rest)
 
 
+def preview_mirror_radius(doc):
+    """頂層 `radius` 是不是效果樹上**另一個幾何鍵的預覽鏡像**。
+
+    ⚠️ 這一格是踩出來的（2026-08-21）：01-02 隕石擊的爆炸半徑住在
+    `leap.landRadius`（4.58 ＝ war3map.j:33722 的 250 wc3），而技能的頂層
+    `radius` 只是**畫給玩家看的那個圈**，逐位元組等於它。
+    把頂層那一格獨立收進級距（4.58 → 4.5）之後，⛔ **預覽圈與真正的爆炸圈
+    說了兩句話** —— 76-04 巨人迴旋彈更誇張：6.97 → 6，預覽圈小了 14%。
+    ⚠️ 這**不是保真度問題**（那是階梯第 3 層，設計贏得了它），是**內部一致性**
+    問題：兩個欄位描述同一個圓，⛔ 不可以只動一個。
+
+    ⇒ 判準是**結構推導**的：頂層 `radius` 的值等於效果樹上任何一個
+    `*Radius`（⛔ 不含 `radius` 本身）⇒ 它是鏡像，這一軸**不收級距**
+    （`landRadius` 那一軸今天還沒有級距表 —— 有了再一起收）。
+    ⛔ 不是一張「這四支例外」的名單：明天多一支 leap 技能自動拿到同樣的判斷。
+    """
+    r = doc.get("radius")
+    if not isinstance(r, (int, float)):
+        return None
+    found = []
+
+    def walk(n):
+        if isinstance(n, list):
+            for x in n:
+                walk(x)
+            return
+        if not isinstance(n, dict):
+            return
+        for k, v in n.items():
+            if k != "radius" and k.endswith("Radius") and isinstance(v, (int, float)):
+                found.append((k, float(v)))
+            walk(v)
+
+    walk(doc.get("effects"))
+    for k, v in found:
+        if abs(v - float(r)) < 1e-9:
+            return k
+    return None
+
+
+def _assign_geometry_tiers(doc, grids, log):
+    """②b【沒有級別的幾何，**從現值長出一格級別**】—— 五級距全轉的最後一哩。
+
+    ⚠️ 這一段補的是一個**看不見**的洞：`_apply_geometry` 只做「級別 → 值」，
+    所以一支從來沒填過級別的技能，它那個從 w3a 換算來的自由數字**永遠不會**被
+    級距表碰到 —— 級距表怎麼改它都一動不動，⛔ 而且沒有任何東西會紅。
+    量到的（2026-08-21）：`radiusTier` 96 支適用只有 31 支填了、`rangeTier` 194
+    支適用只有 186 支填了。
+
+    ⭐ 哪些節點可以掛 `radiusTier` 是**推導**的，⛔ 不是一張名單：
+      · 技能**頂層**（`ability@1` 有這一格）
+      · 任何 **effect 節點**（有 `kind`）—— 實測 `schema/effects/` 裡每一份帶
+        `radius:` 的檔案**都**帶 `radiusTier`，所以「有 kind + 有 radius」等價於
+        「Zod 收得下」。
+    ⛔ **不碰** `template.params.radius`：那一格的單位是 **wc3u**
+      （`tpl-ground-nova` 的 `params.radius.unit == "wc3u"`，出貨值 224.5），
+      而級距表的單位是場地單位（決鬥區半徑 24）。填進去 = 圈從 224.5 wc3u 變成
+      8 場地單位，⛔ 而兩邊都不會有任何東西紅。
+    ⛔ 也不碰 `auras[]` / `deathWard`：它們不是 effect，Zod 上沒有這一格。
+    """
+    rng = doc.get("range")
+    if doc.get("rangeTier") is None and isinstance(rng, (int, float)) and rng > 0:
+        grid = [float(grids.range[t]) for t in TIER_NAMES]
+        i = nearest_index(float(rng), grid)
+        doc["rangeTier"] = TIER_NAMES[i]
+        log.append(("range-tier", rng, grid[i], TIER_NAMES[i]))
+
+    grid_r = [float(grids.radius[t]) for t in TIER_NAMES]
+
+    def assign(node):
+        r = node.get("radius")
+        if node.get("radiusTier") is None and isinstance(r, (int, float)) and r > 0:
+            i = nearest_index(float(r), grid_r)
+            node["radiusTier"] = TIER_NAMES[i]
+            log.append(("radius-tier", r, grid_r[i], TIER_NAMES[i]))
+
+    # 頂層 —— ⛔ 除非它只是另一個幾何鍵的**預覽鏡像**（見 `preview_mirror_radius`）
+    if preview_mirror_radius(doc) is None:
+        assign(doc)
+
+    def walk(node, under_template):
+        if isinstance(node, list):
+            for x in node:
+                walk(x, under_template)
+            return
+        if not isinstance(node, dict):
+            return
+        if not under_template and isinstance(node.get("kind"), str):
+            assign(node)
+        for k, v in node.items():
+            walk(v, under_template or k == "template")
+
+    for k, v in doc.items():
+        walk(v, k == "template")
+
+
 def _apply_geometry(doc, grids, log):
     """②【以級距為準，改 JSON】—— owner 2026-08-21「[v] A 以級距為準，改 JSON」。
 
@@ -409,7 +498,10 @@ def tierize(doc, grids=None, log=None):
     if str(doc.get("id", "")).partition(".")[0] in SKELETON_CHAMPIONS:
         return doc
 
-    # ── ②：級別 → 原始值 ────────────────────────────────────────────────────
+    # ── ②：幾何。先「值 → 級別」（補上從來沒填過的那些），再「級別 → 值」。
+    #    ⚠️ 順序不可以顛倒：反過來的話新填的級別當天不會被寫回原始值，
+    #    於是 `tierRawParity.test.ts` 當場紅。
+    _assign_geometry_tiers(doc, grids, log)
     _apply_geometry(doc, grids, log)
 
     # ── ①：傷害。級距取代基礎值，`ratios` 不動（那是 owner 接受的那一半成長）──
@@ -449,25 +541,38 @@ def tierize(doc, grids=None, log=None):
     mp = doc.get("manaCost")
     if isinstance(mp, list) and mp:
         if all(not x for x in mp):
-            pass  # ④ owner：「那就不要調耗魔阿」—— 78 支免費技一格都不動
+            # ④ owner：「那就不要調耗魔阿」—— 78 支免費技一格都不動。
+            # ⛔ 但級別要拔掉（理由同下面那一支：下界是 1）。
+            doc.pop("manaCostTier", None)
         elif not (is_active(doc) and is_damage(doc)):
             # ⑦ owner：「若不是主動傷害技能 就免魔力吧 乾脆點」
             if any(mp):
                 log.append(("mana-free", list(mp), 0.0, "非主動傷害技⇒免魔"))
             doc["manaCost"] = [0.0] * len(mp)
+            # ⛔ 免費技不可以留著一格級別：`manaCostTier` 的下界是 1，
+            #    留著它 = 註冊時 `resolveManaCostTier` 把 0 換成 73，
+            #    而卡片、schema、測試全部正常（失敗形態②）。
+            doc.pop("manaCostTier", None)
         else:
-            # ① 耗魔跟著傷害走：逐階那一維**交出去**，量級保留（⛔ 沒有第三張表），
-            #    只夾兩端。
-            # ⭐ 參照階取**首階**（最便宜的那一格），⛔ 不是滿階 —— 這一格是
-            #    owner ① 的直接推論：升階已經不再給傷害回報了，那它就**不可以繼續
-            #    漲價**。取滿階等於「升一階只多花錢、不多傷害」，那正是他說的
+            # ① 耗魔跟著傷害走：逐階那一維**交出去**（量級保留），而且從
+            #    2026-08-21 起它**收進五級距**並寫下 `manaCostTier`。
+            #
+            # ⚠️ 在此之前這裡只做「取首階 + 夾兩端」，於是 212 支要花魔力的技能
+            #    各自停在一個自由數字上 —— `config.mana-tiers@1` 怎麼改它們都
+            #    一動不動，⛔ 而且沒有任何東西會紅（`ability@1` 上根本沒有
+            #    `manaCostTier` 一格，所以連「漏填」都無從說起）。
+            #
+            # ⭐ 參照階仍取**首階**（最便宜的那一格），⛔ 不是滿階 —— 這一格是
+            #    owner ① 的直接推論：升階已經不再給傷害回報了，那它就**不可以
+            #    繼續漲價**。取滿階等於「升一階只多花錢、不多傷害」，那正是他說的
             #    「傷害跟耗魔是一起變動的」被弄反的樣子。
             # ⚠️ 而且它有一道硬閘在守：`abilityAffordableAtUnlock.test.ts`
-            #    （「首階 MP 超過持有者當時的魔力池 = 那顆鈕永遠按不下去」）——
-            #    取滿階實測讓它紅，取首階不會。
-            v = float(mp[0])
-            v = min(max(v, grids.mana_min), grids.mana_max)
-            if mp != [v] * len(mp):
-                log.append(("mana", list(mp), v, "跟著傷害壓平（首階參照）+夾兩端"))
+            #    （「首階 MP 超過持有者當時的魔力池 = 那顆鈕永遠按不下去」）。
+            grid = grids.mana_row()
+            mi = nearest_index(float(mp[0]), grid)
+            v = grid[mi]
+            if doc.get("manaCostTier") != TIER_NAMES[mi] or mp != [v] * len(mp):
+                log.append(("mana", list(mp), v, f"收進耗魔級距 {TIER_NAMES[mi]}（首階參照）"))
+            doc["manaCostTier"] = TIER_NAMES[mi]
             doc["manaCost"] = [v] * len(mp)
     return doc

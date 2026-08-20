@@ -99,7 +99,9 @@
       "castTimeSec": 0.767,
       "rangeTier": "中",
       "range": 6,
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "manaCostTier": "極小",
+      "radiusTier": "極小"
     },
     "W": {
       "id": "godie-zombiex.w",
@@ -173,7 +175,7 @@
         73.0,
         73.0
       ],
-      "radius": 3.5,
+      "radius": 3.0,
       "effects": [],
       "template": {
         "ref": "tpl-proxy-cast",
@@ -200,7 +202,9 @@
       "castTimeSec": 0.767,
       "rangeTier": "大",
       "range": 8,
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "manaCostTier": "極小",
+      "radiusTier": "極小"
     },
     "R": {
       "id": "godie-zombiex.r",
@@ -217,12 +221,12 @@
         60.0
       ],
       "manaCost": [
-        100.0,
-        100.0,
-        100.0
+        73.0,
+        73.0,
+        73.0
       ],
       "range": 0,
-      "radius": 4,
+      "radius": 4.5,
       "effects": [],
       "vfxKey": "fx.prim.void.nova-lg",
       "targetsEnemies": true,
@@ -248,7 +252,9 @@
           "statusDurationSec": 1.5
         }
       },
-      "cooldownTier": "中"
+      "cooldownTier": "中",
+      "manaCostTier": "極小",
+      "radiusTier": "小"
     }
   },
   "skillOrder": [

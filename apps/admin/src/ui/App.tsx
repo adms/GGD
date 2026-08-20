@@ -235,6 +235,8 @@ export const NAV: NavItem[] = [
   // 而 GH#465 的相稱性規則把「成本兩軸」與「回報一軸」綁在一起，⛔ 不可以分開調。
   { page: "cooldownTiers", label: "冷卻五級距", emoji: "⏲", section: SEC_COMBAT },
   { page: "damageTiers", label: "傷害五級距", emoji: "💥", section: SEC_COMBAT },
+  { page: "manaTiers", label: "耗魔五級距", emoji: "🔷", section: SEC_COMBAT },
+  { page: "skillNormalize", label: "技能正規化決策點", emoji: "🧮", section: SEC_COMBAT },
   // 回魔地板 (GH#446)。緊鄰上面兩頁：owner 那三張單是同一次反算出來的。
   { page: "manaEconomy", label: "魔力經濟（建議滿魔時間）", emoji: "🔵", section: SEC_COMBAT },
   // 五級距總覽 (owner 2026-08-21「後台設定及說明⋯全部都是推導動態即時產生」)。

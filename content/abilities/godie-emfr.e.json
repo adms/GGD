@@ -14,10 +14,10 @@
     45.0
   ],
   "manaCost": [
-    180.0,
-    180.0,
-    180.0,
-    180.0
+    146.0,
+    146.0,
+    146.0,
+    146.0
   ],
   "range": 0.0,
   "targetsEnemies": false,
@@ -92,5 +92,6 @@
   "vfxKey": "fx.prim.fire.nova",
   "icon": "assets/icons/abilities/godie-emfr.e.webp",
   "cooldownTier": "小",
+  "manaCostTier": "小",
   "castTimeSec": 0.267
 }

@@ -82,7 +82,7 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 120,
+        "value": 146,
         "sample": 139,
         "basis": "corpus"
       },
@@ -113,7 +113,7 @@
         "liftedFromMedian": 45
       },
       "manaCost": {
-        "value": 120,
+        "value": 146,
         "sample": 139,
         "basis": "corpus"
       },
@@ -144,7 +144,7 @@
         "liftedFromMedian": 45
       },
       "manaCost": {
-        "value": 120,
+        "value": 146,
         "sample": 139,
         "basis": "corpus"
       },
@@ -174,7 +174,7 @@
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 120,
+        "value": 146,
         "sample": 139,
         "basis": "corpus"
       },
@@ -204,7 +204,7 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 120,
+        "value": 146,
         "sample": 139,
         "basis": "corpus"
       },
@@ -234,7 +234,7 @@
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 74,
+        "value": 73,
         "sample": 14,
         "basis": "slot+castType"
       },
@@ -265,7 +265,7 @@
         "liftedFromMedian": 30
       },
       "manaCost": {
-        "value": 75,
+        "value": 73,
         "sample": 30,
         "basis": "slot"
       },
@@ -275,7 +275,7 @@
         "basis": "slot"
       },
       "radius": {
-        "value": 5.5,
+        "value": 6,
         "sample": 8,
         "basis": "slot"
       },
@@ -296,7 +296,7 @@
         "liftedFromMedian": 30
       },
       "manaCost": {
-        "value": 85,
+        "value": 73,
         "sample": 11,
         "basis": "slot+castType"
       },
@@ -306,7 +306,7 @@
         "basis": "slot+castType"
       },
       "radius": {
-        "value": 5.5,
+        "value": 6,
         "sample": 8,
         "basis": "slot+castType"
       },
@@ -326,7 +326,7 @@
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 75,
+        "value": 73,
         "sample": 30,
         "basis": "slot"
       },
@@ -356,7 +356,7 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 75,
+        "value": 73,
         "sample": 30,
         "basis": "slot"
       },
@@ -417,7 +417,7 @@
         "liftedFromMedian": 30
       },
       "manaCost": {
-        "value": 74,
+        "value": 73,
         "sample": 28,
         "basis": "slot"
       },
@@ -448,7 +448,7 @@
         "liftedFromMedian": 30
       },
       "manaCost": {
-        "value": 74,
+        "value": 73,
         "sample": 28,
         "basis": "slot"
       },
@@ -478,7 +478,7 @@
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 74,
+        "value": 73,
         "sample": 28,
         "basis": "slot"
       },
@@ -508,7 +508,7 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 74,
+        "value": 73,
         "sample": 28,
         "basis": "slot"
       },
@@ -538,7 +538,7 @@
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 100,
+        "value": 73,
         "sample": 14,
         "basis": "slot+castType"
       },
@@ -569,7 +569,7 @@
         "liftedFromMedian": 45
       },
       "manaCost": {
-        "value": 142.5,
+        "value": 146,
         "sample": 36,
         "basis": "slot"
       },
@@ -600,7 +600,7 @@
         "liftedFromMedian": 45
       },
       "manaCost": {
-        "value": 150,
+        "value": 146,
         "sample": 13,
         "basis": "slot+castType"
       },
@@ -630,7 +630,7 @@
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 142.5,
+        "value": 146,
         "sample": 36,
         "basis": "slot"
       },
@@ -660,7 +660,7 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 142.5,
+        "value": 146,
         "sample": 36,
         "basis": "slot"
       },
@@ -690,7 +690,7 @@
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 170,
+        "value": 146,
         "sample": 15,
         "basis": "slot+castType"
       },
@@ -720,7 +720,7 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 200,
+        "value": 146,
         "sample": 34,
         "basis": "slot"
       },
@@ -750,7 +750,7 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 200,
+        "value": 146,
         "sample": 34,
         "basis": "slot"
       },
@@ -780,7 +780,7 @@
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 200,
+        "value": 146,
         "sample": 34,
         "basis": "slot"
       },
@@ -810,7 +810,7 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 200,
+        "value": 146,
         "sample": 34,
         "basis": "slot"
       },
@@ -840,7 +840,7 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 120,
+        "value": 146,
         "sample": 139,
         "basis": "corpus"
       },
@@ -870,7 +870,7 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 120,
+        "value": 146,
         "sample": 139,
         "basis": "corpus"
       },
@@ -900,7 +900,7 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 120,
+        "value": 146,
         "sample": 139,
         "basis": "corpus"
       },
@@ -930,7 +930,7 @@
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 120,
+        "value": 146,
         "sample": 139,
         "basis": "corpus"
       },
@@ -960,7 +960,7 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 120,
+        "value": 146,
         "sample": 139,
         "basis": "corpus"
       },

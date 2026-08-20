@@ -376,10 +376,10 @@
         60.0
       ],
       "manaCost": [
-        250.0,
-        250.0,
-        250.0,
-        250.0
+        292.0,
+        292.0,
+        292.0,
+        292.0
       ],
       "range": 12.0,
       "targetsEnemies": true,
@@ -433,6 +433,7 @@
       ],
       "rangeTier": "極大",
       "cooldownTier": "極大",
+      "manaCostTier": "中",
       "castTimeSec": 1
     },
     "R": {
@@ -449,9 +450,9 @@
         60.0
       ],
       "manaCost": [
-        150.0,
-        150.0,
-        150.0
+        146.0,
+        146.0,
+        146.0
       ],
       "range": 0.0,
       "targetsEnemies": false,
@@ -495,6 +496,7 @@
       "icon": "assets/icons/abilities/godie-e002.r.webp",
       "vfxKey": "fx.prim.holy.nova-lg",
       "cooldownTier": "極大",
+      "manaCostTier": "小",
       "castTimeSec": 0.667
     }
   },

@@ -106,10 +106,10 @@
         60.0
       ],
       "manaCost": [
-        90.0,
-        90.0,
-        90.0,
-        90.0
+        73.0,
+        73.0,
+        73.0,
+        73.0
       ],
       "range": 8.0,
       "effects": [
@@ -144,7 +144,8 @@
       "castTimeSec": 0.667,
       "cooldownTier": "極大",
       "rangeTier": "大",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "manaCostTier": "極小"
     },
     "E": {
       "id": "godie-h02u.e",
@@ -162,10 +163,10 @@
         30.0
       ],
       "manaCost": [
-        150.0,
-        150.0,
-        150.0,
-        150.0
+        146.0,
+        146.0,
+        146.0,
+        146.0
       ],
       "effects": [
         {
@@ -210,7 +211,8 @@
       "castTimeSec": 0.667,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "中"
+      "cooldownTier": "中",
+      "manaCostTier": "小"
     },
     "R": {
       "id": "godie-h02u.r",
@@ -227,9 +229,9 @@
         60.0
       ],
       "manaCost": [
-        300.0,
-        300.0,
-        300.0
+        292.0,
+        292.0,
+        292.0
       ],
       "range": 0,
       "effects": [
@@ -261,7 +263,8 @@
       ],
       "vfxKey": "fx.prim.nature.explosion-lg",
       "castTimeSec": 0.833,
-      "cooldownTier": "極大"
+      "cooldownTier": "極大",
+      "manaCostTier": "中"
     }
   },
   "skillOrder": [

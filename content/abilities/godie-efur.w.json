@@ -19,7 +19,7 @@
     73.0,
     73.0
   ],
-  "range": 2.0,
+  "range": 3.0,
   "targetsEnemies": true,
   "effects": [
     {
@@ -72,5 +72,7 @@
     }
   ],
   "cooldownTier": "大",
+  "rangeTier": "極小",
+  "manaCostTier": "極小",
   "castTimeSec": 0.467
 }

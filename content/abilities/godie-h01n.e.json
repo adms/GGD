@@ -14,10 +14,10 @@
     45.0
   ],
   "manaCost": [
-    250.0,
-    250.0,
-    250.0,
-    250.0
+    292.0,
+    292.0,
+    292.0,
+    292.0
   ],
   "range": 12.0,
   "targetsEnemies": true,
@@ -76,5 +76,6 @@
   "vfxKey": "fx.prim.void.beam",
   "rangeTier": "極大",
   "cooldownTier": "大",
+  "manaCostTier": "中",
   "castTimeSec": 0.467
 }

@@ -14,8 +14,9 @@
   ],
   "cooldownTier": "大",
   "manaCost": [
-    140.0
+    146.0
   ],
+  "manaCostTier": "小",
   "targetsEnemies": true,
   "effects": [
     {

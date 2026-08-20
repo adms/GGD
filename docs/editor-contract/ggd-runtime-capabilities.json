@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "44b119b4",
+  "fingerprint": "deab0bce",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -364,6 +364,7 @@
     "innateKind",
     "interruptOn",
     "manaCost",
+    "manaCostTier",
     "marks",
     "maxRank",
     "name",
@@ -537,6 +538,7 @@
       "innateKind",
       "interruptOn",
       "manaCost",
+      "manaCostTier",
       "marks",
       "maxRank",
       "name",

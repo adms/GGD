@@ -16,7 +16,7 @@
     0.0
   ],
   "range": 0,
-  "radius": 11.0,
+  "radius": 12.0,
   "targetsEnemies": true,
   "effects": [],
   "passive": {
@@ -44,5 +44,6 @@
         ]
       }
     ]
-  }
+  },
+  "radiusTier": "極大"
 }

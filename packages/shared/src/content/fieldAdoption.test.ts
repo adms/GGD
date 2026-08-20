@@ -275,11 +275,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-20",
     why: "起始圈的圓心。出貨兩支分別用 `caster`(天譴,JASS 讀施法者位置)與 `point`(打雷,落點),`target` 要等一支「**指定某個單位**、以他為圓心炸開連鎖」的技能。⛔ 三個成員走同一行(`variants/chainLightning.ts` 的圓心解析),寫上去就生效。**到期**:第一支指定型連鎖。",
   },
-  "field:abilities.effects[]#chainLightning.radiusTier": {
-    status: "landing",
-    since: "2026-08-20",
-    why: "⚠️ 這一格**短期內不會自然變綠**,而理由是內容事實不是缺陷 —— 逐字沿用 `taunt.radiusTier` 的判例:`config.aoe-tiers@1` 的四級距是 3/4.5/6/8,而這兩支的起始圈是 **9.17**(天譴,JASS 350 距離換算)與 **5.5**(打雷),兩個都不落在級距上,所以照 owner 的規則走的是 `radius` 那一格。**到期**:級距表多一級,或某一支連鎖的起始圈剛好落進 3/4.5/6/8。",
-  },
   "field:abilities.effects[]#chainLightning.maxTotalJumps": {
     status: "default-live",
     why: "**保險絲,不是平衡旋鈕**。留空 = `DEFAULT_CHAIN_MAX_TOTAL_JUMPS` = `CHAIN_MAX_TOTAL_JUMPS`(480 = 20 來源 × 24 跳 = 兩個上界都拉滿),⭐ 它**刻意不咬人**:出貨兩支是 20 × 16 = 320,本來就在下面。⇒ 明寫它今天是位元級的 no-op。⛔ 這不是「沒有上限」—— 缺席時的上限是有限的 480,而那正是它存在的目的(擋 O(來源數×跳數) 落在同一 tick)。**到期**:某一支需要比 480 更緊的保險絲。",
@@ -314,11 +309,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "landing",
     since: "2026-08-18",
     why: "GH#373 —— 86-00 裝可愛與 57-00 四次元口袋是**技能側第一次**用 `taunt`（在此之前只有道具：鍊金術之盾／戰鬥力探測器）。於是同一族裡沒被用到的那幾格從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 處理器與 schema 都在（`sim/effects/taunt.ts`），是還沒有一支技能需要「只有在某個條件成立時才嘲弄」。**到期**：任何一支帶條件的嘲弄填了它，這一列會被 STALE 那半邊叫，刪掉即可。",
-  },
-  "field:abilities.effects[]#taunt.radiusTier": {
-    status: "landing",
-    since: "2026-08-18",
-    why: "同上（`taunt` 的第二格）。⚠️ 這一格**短期內不會自然變綠**，而理由是內容事實不是缺陷：`config.aoe-tiers@1` 四級距最大是 8（超大），而這兩支嘲弄的半徑是 24（決鬥區本身 ＝ 卡面的「全場」）與 14.67 —— 兩個都在級距表之外，所以它們照 owner 的規則走的是 `radius` 那一格。**到期**：級距表加了「全場」那一級，或某一支嘲弄的範圍落進 3/4.5/6/8。",
   },
   "field:augments.vision": {
     status: "landing",
@@ -2509,26 +2499,21 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "是同一條路。⛔ 不要為了讓它變綠去把既有技能改成「極大」—— 那是把距離拉長，" +
       "而 owner 2026-08-19 抱怨的正是「距離普遍超遠」。",
   },
-  "enum:abilities.effects[]#blink.radiusTier=極大": {
+  // ⭐ 2026-08-21 —— 耗魔級距（`config.mana-tiers@1`），五軸的**最後一軸**。
+  // ⚠️ 它落地當天四格就有內容（極小 / 小 / 中 / 大 分佈在 204 支上），只有頂格是零。
+  "enum:abilities.manaCostTier=極大": {
     status: "landing",
-    since: "2026-08-19",
+    since: "2026-08-21",
     why:
-      "GH#414 五級距的第五格（半徑 12 = 決鬥區半徑的一半）。五格共用 `resolveRadiusTier` " +
-      "同一段查表，已落地的「小/中/大/超大」逐字是同一條路。零採用 = 內容還沒有一支需要" +
-      "半場範圍的 blink，⛔ 不是機制缺口。",
+      "五格共用 `resolveManaCostTier` 同一段查表，另外四格當天就有 204 支在走 —— " +
+      "路是通的。「極大」＝**魔力池的一半**（owner 2026-08-19 的兩個錨長出來的頂格：" +
+      "連續兩發清空魔條），而全庫最貴的一支首階 MP 是 650，離它還有一段。" +
+      "⛔ 不要為了讓這一列變綠把某支技能的耗魔拉上去 —— 那是**平衡改動**，是 owner 的題。",
   },
-  "enum:abilities.radiusTier=極大": {
-    status: "landing",
-    since: "2026-08-19",
-    why:
-      "同上（技能頂層的那一格）。⭐ 第五格是**加在頂端**的，所以既有 110 支填了級別的技能" +
-      "一格都沒有動 —— 這一列是零採用**的原因**，不是它的缺陷。",
-  },
-  // ⭐ GH#414 —— 施法距離級距。owner 2026-08-19:「可施展技能的距離普遍超遠」。
-  // ⚠️ 這兩列的零採用是**刻意**的：把 216 支的施法距離收進級距是一次真的平衡變更
-  // （中位數 11、最大 29.33），而落差大的 13 支已經列進
-  // `docs/editor-contract/ggd-skill-tiers.md` 第四章等 owner 過目。
-  // ⛔ 不要為了讓這兩列變綠就把技能批次改成級距詞 —— 第〇·六守則：可以停就停。
+  // ⭐ GH#414 施法距離級距／AoE 級距的零採用列**已經全部到期並刪掉**（2026-08-21
+  //    五級距全轉：rangeTier 188 支、radiusTier 85 支、manaCostTier 204 支落地）。
+  //    ⚠️ 留這一段是為了說明**為什麼這裡現在是空的** —— 它們不是被放寬掉的，
+  //    是內容真的填上去了；STALE 那半邊當天就把四列叫出來要求刪除。
 };
 
 let census: Census;

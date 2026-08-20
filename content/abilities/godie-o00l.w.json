@@ -20,6 +20,7 @@
     73.0,
     73.0
   ],
+  "manaCostTier": "極小",
   "effects": [],
   "template": {
     "ref": "tpl-instant-blast",
@@ -41,9 +42,10 @@
   },
   "vfxKey": "fx.prim.fire.explosion",
   "targetsEnemies": true,
-  "radius": 3.69,
+  "radius": 3.0,
   "schema": "ability@1",
   "castTimeSec": 0.767,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "radiusTier": "極小"
 }

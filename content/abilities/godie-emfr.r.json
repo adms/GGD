@@ -13,9 +13,9 @@
     60.0
   ],
   "manaCost": [
-    200.0,
-    200.0,
-    200.0
+    146.0,
+    146.0,
+    146.0
   ],
   "range": 0.0,
   "targetsEnemies": false,
@@ -153,5 +153,6 @@
   "icon": "assets/icons/abilities/godie-emfr.r.webp",
   "vfxKey": "fx.prim.lightning.beam-lg",
   "cooldownTier": "極大",
+  "manaCostTier": "小",
   "castTimeSec": 0.667
 }

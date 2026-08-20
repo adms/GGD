@@ -3,6 +3,7 @@
   "12-002|castTimeSec",
   "12-002|effects",
   "12-002|manaCost",
+  "12-002|manaCostTier",
   "12-01|cooldown",
   "12-01|effects",
   "12-01|manaCost",
@@ -18,6 +19,7 @@
   "12-03|cooldownTier",
   "12-03|effects",
   "12-03|manaCost",
+  "12-03|manaCostTier",
   "12-03|passive",
   "12-03|range",
   "12-03|rangeTier",
@@ -27,6 +29,7 @@
   "12-04|cooldownTier",
   "12-04|effects",
   "12-04|manaCost",
+  "12-04|manaCostTier",
   "12-04|radiusTier",
   "12-04|range",
   "12-04|rangeTier"

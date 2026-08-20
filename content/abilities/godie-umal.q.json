@@ -16,12 +16,13 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    90.0,
-    90.0,
-    90.0,
-    90.0,
-    90.0
+    73.0,
+    73.0,
+    73.0,
+    73.0,
+    73.0
   ],
+  "manaCostTier": "極小",
   "effects": [],
   "template": {
     "ref": "tpl-single-strike",

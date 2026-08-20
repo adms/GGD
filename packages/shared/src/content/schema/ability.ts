@@ -12,6 +12,7 @@ import { zAbilityVfxLayers } from "./abilityVfx";
 import { AOE_TIER_NAMES } from "../aoeTiers";
 import { RANGE_TIER_NAMES } from "../rangeTiers";
 import { COOLDOWN_SHAPES, COOLDOWN_TIER_NAMES } from "../cooldownTiers";
+import { MANA_TIER_NAMES } from "../manaTiers";
 
 export const zCastType = z.enum(["targeted", "skillshot", "ground", "self", "dash"]);
 
@@ -596,6 +597,23 @@ export const zAbilityDef = z
     /** per rank (index rank-1), seconds */
     cooldown: z.array(z.number().min(0)).min(1),
     manaCost: z.array(z.number().min(0)).min(1),
+    /**
+     * ⭐ 耗魔級別（2026-08-21，五軸裡**最後補上**的那一軸）。
+     *
+     * 與 `radiusTier` / `rangeTier` / `cooldownTier` 完全同一個形態：填了這一格就
+     * **不要**填 `manaCost` —— 註冊時由 `config.mana-tiers@1` 翻成點數
+     * （`content/manaTiers.ts` 的 `resolveManaCostTier`，全專案唯一的查表處）。
+     * 兩格都填 → **級別贏**，而且**每一階都寫同一個值**（級距是一支技能一格）。
+     *
+     * ⚠️ 「每一階同一個值」是 owner 2026-08-21 ① 的直接推論：
+     * 「除了冷卻以外 **傷害跟耗魔是一起變動的**」＋「B 全轉，接受升階只剩 ratios 成長」
+     * ⇒ 傷害的 `perRank` 交出去之後，耗魔的 `perRank` 就不可以留著自己漲 ——
+     * 留著＝「升一階只多花錢、不多傷害」，那是把他的連動關係**弄反**。
+     *
+     * ⚠️ 免費技（`manaCost` 全 0）**不要**填這一格：下界是 1，填了級別就一定
+     * 收得到錢。owner 2026-08-21 ④「那就不要調耗魔阿」講的正是那 78 支。
+     */
+    manaCostTier: z.enum(MANA_TIER_NAMES).optional(),
     range: z.number().min(0),
     /** skillshot width or AoE radius */
     radius: z.number().positive().optional(),

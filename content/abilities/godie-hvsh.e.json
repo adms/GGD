@@ -14,11 +14,12 @@
   ],
   "cooldownTier": "中",
   "manaCost": [
-    120.0,
-    120.0,
-    120.0,
-    120.0
+    146.0,
+    146.0,
+    146.0,
+    146.0
   ],
+  "manaCostTier": "小",
   "range": 0,
   "radiusTier": "大",
   "targetsEnemies": true,

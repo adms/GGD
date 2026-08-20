@@ -15,12 +15,13 @@
   ],
   "cooldownTier": "中",
   "manaCost": [
-    100.0,
-    100.0,
-    100.0
+    73.0,
+    73.0,
+    73.0
   ],
+  "manaCostTier": "極小",
   "range": 0,
-  "radius": 4,
+  "radius": 4.5,
   "effects": [],
   "template": {
     "ref": "tpl-proxy-cast",
@@ -45,5 +46,6 @@
   },
   "vfxKey": "fx.prim.void.nova-lg",
   "targetsEnemies": true,
-  "castTimeSec": 1.5
+  "castTimeSec": 1.5,
+  "radiusTier": "小"
 }

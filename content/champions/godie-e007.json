@@ -55,7 +55,7 @@
       "name": "12-01 鬥仙術",
       "icon": "assets/icons/abilities/godie-e007.q.webp",
       "provenance": "w3x-import",
-      "description": "[主動攻擊]\n20秒冷卻時間\n\n將武道融入仙道而創出來所謂的不敗的武術，以念體攻擊敵人，造成{{dmg}}傷害的同時可以迷惑目標1秒。",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n將武道融入仙道而創出來所謂的不敗的武術，以念體攻擊敵人，造成{{dmg}}傷害的同時可以迷惑目標1秒。",
       "slot": "Q",
       "castType": "targeted",
       "maxRank": 5,
@@ -100,7 +100,8 @@
       "castTimeSec": 0.167,
       "rangeTier": "小",
       "range": 4.5,
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "manaCostTier": "極小"
     },
     "W": {
       "id": "godie-e007.w",
@@ -153,7 +154,7 @@
       "id": "godie-e007.e",
       "name": "12-03 破凰之心-徒手空破山",
       "provenance": "w3x-import",
-      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n使用破凰之力的志狼，在每次攻擊皆能施展空破山，劃出大氣之刃，造成100%的擴散傷害，持續12秒。",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n使用破凰之力的志狼徒手空破山，劃出大氣之刃，對目標造成{{dmg}}點傷害。",
       "slot": "E",
       "castType": "targeted",
       "maxRank": 4,
@@ -191,13 +192,14 @@
       "castTimeSec": 0.467,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "大"
+      "cooldownTier": "大",
+      "manaCostTier": "極小"
     },
     "R": {
       "id": "godie-e007.r",
       "name": "12-04 龍氣爆發",
       "provenance": "w3x-import",
-      "description": "[主動傷害]\n{{cd}}秒冷卻時間\n\n凝聚體內的龍氣造成550點傷害，集氣每秒增加(敏捷*5)傷害，最多集氣3秒。\n(建築傷害25%)",
+      "description": "[主動傷害]\n{{cd}}秒冷卻時間\n\n凝聚體內的龍氣造成{{dmg}}點傷害，集氣每秒增加(敏捷*5)傷害，最多集氣3秒。\n(建築傷害25%)",
       "slot": "R",
       "castType": "targeted",
       "maxRank": 3,
@@ -207,9 +209,9 @@
         60.0
       ],
       "manaCost": [
-        215.0,
-        215.0,
-        215.0
+        146.0,
+        146.0,
+        146.0
       ],
       "effects": [
         {
@@ -247,7 +249,8 @@
       },
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "極大"
+      "cooldownTier": "極大",
+      "manaCostTier": "小"
     }
   },
   "skillOrder": [

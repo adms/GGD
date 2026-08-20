@@ -66,10 +66,10 @@
         30.0
       ],
       "manaCost": [
-        175.0,
-        175.0,
-        175.0,
-        175.0
+        146.0,
+        146.0,
+        146.0,
+        146.0
       ],
       "range": 6.0,
       "targetsEnemies": true,
@@ -113,6 +113,7 @@
       ],
       "rangeTier": "中",
       "cooldownTier": "中",
+      "manaCostTier": "小",
       "castTimeSec": 0.467
     },
     "W": {
@@ -130,10 +131,10 @@
         60.0
       ],
       "manaCost": [
-        120.0,
-        120.0,
-        120.0,
-        120.0
+        146.0,
+        146.0,
+        146.0,
+        146.0
       ],
       "range": 0.0,
       "targetsEnemies": false,
@@ -244,6 +245,7 @@
       "vfxKey": "fx.prim.wind.pulse",
       "sfxKey": "wc3.akamapissed8",
       "cooldownTier": "極大",
+      "manaCostTier": "小",
       "castTimeSec": 0.267
     },
     "E": {
@@ -261,10 +263,10 @@
         45.0
       ],
       "manaCost": [
-        180.0,
-        180.0,
-        180.0,
-        180.0
+        146.0,
+        146.0,
+        146.0,
+        146.0
       ],
       "range": 0.0,
       "targetsEnemies": false,
@@ -339,6 +341,7 @@
       "vfxKey": "fx.prim.fire.nova",
       "icon": "assets/icons/abilities/godie-emfr.e.webp",
       "cooldownTier": "小",
+      "manaCostTier": "小",
       "castTimeSec": 0.267
     },
     "R": {
@@ -355,9 +358,9 @@
         60.0
       ],
       "manaCost": [
-        200.0,
-        200.0,
-        200.0
+        146.0,
+        146.0,
+        146.0
       ],
       "range": 0.0,
       "targetsEnemies": false,
@@ -495,6 +498,7 @@
       "icon": "assets/icons/abilities/godie-emfr.r.webp",
       "vfxKey": "fx.prim.lightning.beam-lg",
       "cooldownTier": "極大",
+      "manaCostTier": "小",
       "castTimeSec": 0.667
     }
   },

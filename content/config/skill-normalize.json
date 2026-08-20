@@ -1,0 +1,14 @@
+{
+  "id": "skill-normalize",
+  "schema": "config.skill-normalize@1",
+  "note": "技能正規化的**九個決策點**（owner 2026-08-21：「決策點一律做成後台開關，預設 = 你的建議」）。⭐ 它回答的唯一問題是「一支技能的某一軸，該不該有級別？」——420 支 × 5 欄裡有一大半本來就不該有值（被動技沒冷卻、免費技不耗魔、位移技不造成傷害），⛔ 塞 0 是假話、留白又和漏填長得一模一樣。⇒ 每一格只有兩種合法狀態：**有級別**，或**有一個推導得出來的理由**。⚠️ 這一份**不改任何技能**：寫入路徑是 tools/skill-remake/tierize.py（機制）+ apply_tiers.py / batch1.py（兩堆各自的入口），這裡只決定閘怎麼問。",
+  "enabled": true,
+  "carrierBaseMax": 1,
+  "damageLeafScope": "cast-amount",
+  "damageColumnBasis": "leaf",
+  "radiusColumnBasis": "authored-node",
+  "snapPolicy": "nearest",
+  "riskAllowance": true,
+  "proportionalityExemptNoDamage": true,
+  "gapAlert": 0.25
+}

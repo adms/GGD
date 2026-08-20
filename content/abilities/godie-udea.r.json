@@ -14,10 +14,11 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    250.0,
-    250.0,
-    250.0
+    292.0,
+    292.0,
+    292.0
   ],
+  "manaCostTier": "中",
   "effects": [
     {
       "kind": "dash",
@@ -29,7 +30,7 @@
       "kind": "chainLightning",
       "shape": "circle",
       "centre": "caster",
-      "radius": 9.17,
+      "radius": 8.0,
       "maxSources": 20,
       "damageType": "magic",
       "amount": {
@@ -55,7 +56,8 @@
             ]
           }
         }
-      ]
+      ],
+      "radiusTier": "大"
     },
     {
       "kind": "damageArea",
@@ -64,8 +66,9 @@
         "damageTier": "小",
         "flat": 1500.0
       },
-      "radius": 8.25,
-      "maxTargets": 1
+      "radius": 8.0,
+      "maxTargets": 1,
+      "radiusTier": "大"
     }
   ],
   "vfxKey": "fx.prim.holy.nova-lg",

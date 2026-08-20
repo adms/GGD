@@ -12,8 +12,9 @@
   ],
   "cooldownTier": "中",
   "manaCost": [
-    800.0
+    584.0
   ],
+  "manaCostTier": "大",
   "effects": [],
   "template": {
     "ref": "tpl-instant-blast",
@@ -35,9 +36,10 @@
   },
   "vfxKey": "fx.prim.void.nova-lg",
   "schema": "ability@1",
-  "radius": 4.71,
+  "radius": 4.5,
   "targetsEnemies": true,
   "castTimeSec": 1.5,
   "rangeTier": "大",
-  "range": 8
+  "range": 8,
+  "radiusTier": "小"
 }

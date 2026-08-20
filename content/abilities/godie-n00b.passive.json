@@ -17,7 +17,7 @@
     0.0
   ],
   "range": 0,
-  "radius": 14.67,
+  "radius": 12.0,
   "targetsEnemies": true,
   "effects": [
     {
@@ -77,9 +77,11 @@
     {
       "kind": "taunt",
       "durationSec": 3.0,
-      "radius": 14.67
+      "radius": 12.0,
+      "radiusTier": "極大"
     }
   ],
   "vfxKey": "fx.prim.arcane.summon",
-  "castTimeSec": 0.767
+  "castTimeSec": 0.767,
+  "radiusTier": "極大"
 }

@@ -65,9 +65,9 @@
         15.0
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0
+        73.0,
+        73.0,
+        73.0
       ],
       "effects": [
         {
@@ -107,7 +107,8 @@
       "castTimeSec": 0.367,
       "rangeTier": "小",
       "range": 4.5,
-      "cooldownTier": "小"
+      "cooldownTier": "小",
+      "manaCostTier": "極小"
     },
     "W": {
       "id": "godie-e008.w",
@@ -194,10 +195,10 @@
         45.0
       ],
       "manaCost": [
-        165.0,
-        165.0,
-        165.0,
-        165.0
+        146.0,
+        146.0,
+        146.0,
+        146.0
       ],
       "effects": [
         {
@@ -241,7 +242,8 @@
       "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "大"
+      "cooldownTier": "大",
+      "manaCostTier": "小"
     },
     "R": {
       "id": "godie-e008.r",

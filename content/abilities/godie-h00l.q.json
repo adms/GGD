@@ -14,10 +14,10 @@
     30.0
   ],
   "manaCost": [
-    100.0,
-    100.0,
-    100.0,
-    100.0
+    73.0,
+    73.0,
+    73.0,
+    73.0
   ],
   "range": 0.0,
   "radiusTier": "小",
@@ -53,5 +53,6 @@
   "vfxKey": "fx.prim.wind.slash",
   "sfxKey": "wc3.druidofthetalonmissilelaunch2",
   "cooldownTier": "極小",
+  "manaCostTier": "極小",
   "castTimeSec": 0.667
 }

@@ -13,9 +13,9 @@
     120.0
   ],
   "manaCost": [
-    150.0,
-    150.0,
-    150.0
+    146.0,
+    146.0,
+    146.0
   ],
   "range": 0.0,
   "radiusTier": "極小",
@@ -77,5 +77,6 @@
   "interruptOn": "damage",
   "recoverySec": 0.8,
   "cooldownTier": "極大",
+  "manaCostTier": "小",
   "castTimeSec": 0.6
 }

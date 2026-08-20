@@ -33,6 +33,7 @@ import { DEFAULT_RANGE_TIERS } from "./rangeTiers";
 import { DEFAULT_AOE_TIERS } from "./aoeTiers";
 import { DEFAULT_COOLDOWN_TIERS, cooldownShapeOf } from "./cooldownTiers";
 import { DEFAULT_DAMAGE_TIERS } from "./damageTiers";
+import { DEFAULT_MANA_TIERS } from "./manaTiers";
 import { SKILL_TIER_NAMES, type SkillTierName } from "./skillTiers";
 
 const REPO = resolve(dirname(fileURLToPath(import.meta.url)), "../../../..");
@@ -57,10 +58,10 @@ const tierValue = (t: unknown, tbl: Readonly<Record<SkillTierName, number>>): nu
     : undefined;
 
 describe("填了級別的節點，原始值必須等於級距值（owner 2026-08-21 ②）", () => {
-  it("⭐ 四軸一起看 —— 級別與原始值不可以說兩句話", () => {
+  it("⭐ 五軸一起看 —— 級別與原始值不可以說兩句話", () => {
     const stale = new Set(Object.keys(TIER_RAW_DRIFT));
     const bad: string[] = [];
-    const seen = { range: 0, radius: 0, cooldown: 0, damage: 0 };
+    const seen = { range: 0, radius: 0, cooldown: 0, damage: 0, mana: 0 };
     const flag = (key: string, msg: string): void => {
       if (stale.delete(key)) return;
       bad.push(msg);
@@ -86,6 +87,21 @@ describe("填了級別的節點，原始值必須等於級距值（owner 2026-08
         const cd = doc["cooldown"];
         if (!Array.isArray(cd) || cd.some((x) => x !== want)) {
           flag(`${f}:cooldown`, `${f}.cooldown = ${JSON.stringify(cd)}，級別要每一階都是 ${want}`);
+        }
+      }
+
+      // ②b 耗魔 —— 頂層一格（2026-08-21 起是五軸的第五軸）。
+      // ⚠️ 它與冷卻**完全同一個形態**，而漏掉它的後果更難看見：
+      // `manaCostTier` 的下界是 1，所以一支「級別寫著極小、manaCost 卻是 0」的
+      // 免費技，會在註冊時被 `resolveManaCostTier` 悄悄改成收 73 —— 卡片、
+      // schema、全套測試都正常，只有玩家會發現按不下去（失敗形態②）。
+      const mt = doc["manaCostTier"];
+      if (typeof mt === "string") {
+        seen.mana++;
+        const want = DEFAULT_MANA_TIERS.manaCost[mt as SkillTierName];
+        const mp = doc["manaCost"];
+        if (!Array.isArray(mp) || mp.some((x) => x !== want)) {
+          flag(`${f}:manaCost`, `${f}.manaCost = ${JSON.stringify(mp)}，級別要每一階都是 ${want}`);
         }
       }
 
@@ -122,8 +138,8 @@ describe("填了級別的節點，原始值必須等於級距值（owner 2026-08
       "真的要留特例，就進 TIER_RAW_DRIFT 並寫下為什麼。").toEqual([]);
     // ⭐ 反向：名單上的必須真的還在漂移。收乾淨就要刪掉那一筆。
     expect([...stale], "TIER_RAW_DRIFT 有過期的項目").toEqual([]);
-    // ⭐ 這一條的**承重線**：四軸都要真的掃到東西。若某一軸掃到 0 筆，
+    // ⭐ 這一條的**承重線**：五軸都要真的掃到東西。若某一軸掃到 0 筆，
     //    上面那個迴圈對它就是空轉，而空轉的守衛與綠燈長得一模一樣。
-    expect(Object.values(seen).every((n) => n > 0), `四軸的覆蓋筆數 ${JSON.stringify(seen)}`).toBe(true);
+    expect(Object.values(seen).every((n) => n > 0), `五軸的覆蓋筆數 ${JSON.stringify(seen)}`).toBe(true);
   });
 });

@@ -16,7 +16,7 @@
     0.0
   ],
   "range": 0,
-  "radius": 11.0,
+  "radius": 12.0,
   "effects": [],
   "passive": {
     "name": "99-00 可愛就是正義",
@@ -36,5 +36,6 @@
         ]
       }
     ]
-  }
+  },
+  "radiusTier": "極大"
 }

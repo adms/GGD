@@ -158,10 +158,10 @@
         30.0
       ],
       "manaCost": [
-        150.0,
-        150.0,
-        150.0,
-        150.0
+        146.0,
+        146.0,
+        146.0,
+        146.0
       ],
       "range": 12.0,
       "radiusTier": "中",
@@ -195,6 +195,7 @@
       "sfxKey": "wc3.rokhanwhat2",
       "rangeTier": "極大",
       "cooldownTier": "極小",
+      "manaCostTier": "小",
       "castTimeSec": 0.767
     },
     "R": {
@@ -211,9 +212,9 @@
         30.0
       ],
       "manaCost": [
-        150.0,
-        150.0,
-        150.0
+        146.0,
+        146.0,
+        146.0
       ],
       "range": 12.0,
       "targetsEnemies": true,
@@ -262,6 +263,7 @@
       "sfxKey": "wc3.gruntyesattack3",
       "rangeTier": "極大",
       "cooldownTier": "中",
+      "manaCostTier": "小",
       "castTimeSec": 0.767
     }
   },

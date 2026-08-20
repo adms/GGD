@@ -229,6 +229,13 @@ export type Page =
   // 而 owner 調其中一格的時候一定會看另外三格。
   | "cooldownTiers"
   | "damageTiers"
+  // 耗魔五級距 (2026-08-21) —— 五軸的**最後一軸**。⚠️ 在它之前 `ability@1` 上
+  // 根本沒有 `manaCostTier` 一格，所以另外四軸各有 96–350 支填了級別，而這一軸
+  // 是 **0 支** —— 那不是大家忘了填，是機制沒做。
+  | "manaTiers"
+  // 技能正規化決策點 (2026-08-21) —— owner「決策點一律做成後台開關」。
+  // ⚠️ 它是 authoring-time 的設定（決定閘怎麼問），⛔ 不影響正在跑的比賽。
+  | "skillNormalize"
   | "manaEconomy"
   /**
    * 五級距總覽 (owner 2026-08-21「後台設定及說明⋯全部都是推導動態即時產生」) ——
@@ -635,6 +642,11 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // ⛔ 漏掉 gate 的後果在這三頁特別重: 它們決定的是全部技能的冷卻、傷害與回魔。
   "cooldownTiers",
   "damageTiers",
+  // 耗魔五級距 (2026-08-21): 同上。⛔ 漏掉 gate 的後果同樣重 —— 這一頁決定
+  // 全部 212 支要花魔力的技能各花多少。
+  "manaTiers",
+  // 技能正規化決策點 (2026-08-21): 同上。
+  "skillNormalize",
   "manaEconomy",
   "uiLexicon",
   // 混音 (owner 2026-08-17): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。

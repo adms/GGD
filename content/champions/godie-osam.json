@@ -181,7 +181,8 @@
       "castTimeSec": 0.167,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "manaCostTier": "極小"
     },
     "R": {
       "id": "godie-osam.r",
@@ -198,9 +199,9 @@
         45.0
       ],
       "manaCost": [
-        200.0,
-        200.0,
-        200.0
+        146.0,
+        146.0,
+        146.0
       ],
       "effects": [],
       "template": {
@@ -229,7 +230,8 @@
       "castTimeSec": 0.833,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "大"
+      "cooldownTier": "大",
+      "manaCostTier": "小"
     }
   },
   "skillOrder": [

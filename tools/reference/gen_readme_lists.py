@@ -841,6 +841,9 @@ TIER_FILE_FIELDS = {
     "config.displacement-tiers@1": ("`distanceTier`", "位移（衝刺 / 擊退）"),
     "config.cooldown-tiers@1": ("`cooldownTier` + `cooldownShape`", "冷卻"),
     "config.damage-tiers@1": ("`damageTier`（住 `amount.zScaling`）", "傷害"),
+    # ⭐ 2026-08-21 —— 五軸的**最後一軸**。在它之前 `ability@1` 上根本沒有這一格，
+    #    所以另外四軸各有 85–350 支填了級別，而耗魔是 0 支（機制沒做，⛔ 不是漏填）。
+    "config.mana-tiers@1": ("`manaCostTier`", "耗魔"),
 }
 
 

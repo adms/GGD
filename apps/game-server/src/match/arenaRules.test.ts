@@ -447,13 +447,18 @@ describe("同一回合撞卡：聖杯願望贏、寶具讓路 (#340, arena-02, a
     expect(grant?.augmentTier && grant?.weaponLootTable, `round ${round} 不是撞卡回合`).toBeTruthy();
     expect(ARENA.draftConflict, "出貨文件的裁決漂走了").toBe(DEFAULT_DRAFT_CONFLICT);
 
-    // ⚠️ GH#422 —— seed 555 換成 **557**。出貨的 `draftConflict` 是 `round-roll`
-    //    （＝撞卡回合擲一顆骰決定誰讓路），所以「聖杯贏」這一場是**這顆種子的**
-    //    結果，⛔ 不是一條恆真的規則。開場擺位改成四隊分開站（12 個座位不再疊在
-    //    6 個點上）之後，bot 的第一段軌跡變了 ⇒ `world.rng` 的流跟著位移 ⇒ 555
-    //    那一場改成寶具贏。⛔ 不是把斷言放寬（那會留下一條對缺陷不敏感的綠燈）——
-    //    照這個檔案已經做過兩次的辦法重掃 555–604，取最小的 557。
-    const ctl = makeArenaMatch(557);
+    // ⚠️ 種子換過**三次**：555 → 557（GH#422）→ **555**（2026-08-21 五級距全轉）。
+    //    出貨的 `draftConflict` 是 `round-roll`（＝撞卡回合擲一顆骰決定誰讓路），
+    //    所以「聖杯贏」這一場是**這顆種子的**結果，⛔ 不是一條恆真的規則。
+    //    ⭐ 每一次換種子的成因都一樣：**任何會改變 bot 行為的內容改動**都會讓
+    //    `world.rng` 的流位移。GH#422 是開場擺位改成四隊分開站；這一次是
+    //    五級距全轉（420 支技能的冷卻／耗魔／傷害／半徑同時變）——
+    //    bot 施法時機不同 ⇒ 骰子落在不同的位置。
+    //    ⛔ 不是把斷言放寬（那會留下一條對缺陷不敏感的綠燈）——
+    //    照這個檔案已經做過兩次的辦法重掃 555–604，取最小的。
+    //    ⚠️ 這一次最小的**又是 555**（實測 555 / 556 / 558 都是聖杯贏）——
+    //    ⛔ 那不代表「換回去了」，只代表這條流又走回一個聖杯贏的位置。
+    const ctl = makeArenaMatch(555);
     runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === round);
     let checked = 0;
     for (const seat of ctl.seats.values()) {
