@@ -135,7 +135,17 @@ const out = {
   schema: "ggd-hero-archetypes@1",
   generatedBy: "tools/hero-archetypes/build.ts",
   generatedFrom: {
-    population: "docs/hero-stat-tiers.json → population.rows（74 = 可選本體 53 + 可達變身 21）",
+    population:
+      // ⛔ 這一行在 2026-08-21 之前寫死「74 = 可選本體 53 + 可達變身 21」,而產生器輸出的
+      //    名單是 **49** —— 兩個數字**都是真的,只是在講不同的事**:53 是「濾掉變身之後」,
+      //    49 是「再扣掉退場英雄之後」。散文只講了前半,而 roster 閘把它讀成後半 ⇒ 紅,
+      //    ⭐ 而且它擋住 `pnpm content:build`。⛔ 修法不是換個數字（那只是把過期往後推一輪),
+      //    是把三個數字**全部推導**並各自標明它在講什麼。
+      `docs/hero-stat-tiers.json → population.rows（${T.population.rows.length} = 本體·可選 ` +
+      `${T.population.rows.filter((r) => r.group !== "transform").length} + 可達變身 ` +
+      `${T.population.rows.filter((r) => r.group === "transform").length}）` +
+      ` → 扣掉 ${T.population.rows.filter((r) => r.group !== "transform" && RETIRED.has(r.id)).length} 位退場` +
+      ` → 本產生器的母體 ${rows.length} 位`,
     statFunction: "championStatBase(def, stat, L) —— 出貨的那一支，⛔ 沒有抄公式",
     initial: "L1 的最終值", perLevel: "L2 − L1（含三圍成長那一項）",
   },
@@ -217,7 +227,7 @@ owner 2026-08-12：「出身跟定位**是影響所有屬性**不是這幾項而
 ### 🟡 攻擊距離：雙峰不是藉口，是**兩把階梯**的理由
 
 它在 2026-08-16 之前被**刻意排除**，而那個理由沒有失效 —— 它被正面解掉了。
-重量（53 位可選本體，2026-08-16）：
+重量（${rows.length} 位母體，⛔ 數字由 rows.length 推導）：
 
 | 型別 | n | 實際值 | 中位 |
 |---|---:|---|---:|
@@ -333,7 +343,7 @@ ${(Object.keys(N.bands) as (keyof typeof N.bands)[]).flatMap((k) => {
 而移速沒有三圍來源可以在反解時被減掉。實測改成成長通道 →
 坦克 15/16 位、法師 18/18 位被夾在 0，排序會變成坦克第二。
 
-⚠️ **攻擊距離也走初始值**，而且理由更直接：**53 位可選英雄裡 0 位有
+⚠️ **攻擊距離也走初始值**，而且理由更直接：**${rows.length} 位母體英雄裡 0 位有
 \`growth.range\`** —— 它從來就只是一個初始值。它同時是唯一分**兩把階梯**的屬性
 （見第一節），所以它是這張表裡唯一「級距的數字要看你是近戰還是遠程」的一列。
 

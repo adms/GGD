@@ -1,6 +1,6 @@
 {
  "schema": "model-budget@1",
- "sourcesDigest": "43cfc2820207a406",
+ "sourcesDigest": "94721069e9404795",
  "generatedBy": "tools/model-budget/emit_report.ts (task #99)",
  "sources": [
   {
@@ -15,13 +15,13 @@
   },
   {
    "path": "content/champions/_index.json",
-   "sha256": "fe94fa4fc8dd0f1d",
-   "bytes": 10294
+   "sha256": "9fe002d456a1e34f",
+   "bytes": 9377
   },
   {
    "path": "apps/client/src/render/ArenaGround.ts",
-   "sha256": "2865d5d4e00a5e39",
-   "bytes": 31755
+   "sha256": "098a3a6287fa1dbd",
+   "bytes": 33087
   },
   {
    "path": "apps/client/src/render/intermission/layout.ts",
@@ -676,12 +676,12 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 92342,
-     "drawCalls": 193,
-     "animChannels": 240,
-     "textureBytes": 1278680,
-     "vramBytes": 65015801,
+     "label": "中位陣容（12 隻 herokyo —— 名冊面數中位數）",
+     "triangles": 92222,
+     "drawCalls": 181,
+     "animChannels": 216,
+     "textureBytes": 1267556,
+     "vramBytes": 64841038,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
@@ -848,12 +848,12 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 79866,
-     "drawCalls": 219,
-     "animChannels": 240,
-     "textureBytes": 2904044,
-     "vramBytes": 70608206,
+     "label": "中位陣容（12 隻 herokyo —— 名冊面數中位數）",
+     "triangles": 79746,
+     "drawCalls": 207,
+     "animChannels": 216,
+     "textureBytes": 2892920,
+     "vramBytes": 70433443,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
@@ -1020,12 +1020,12 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 94420,
-     "drawCalls": 209,
-     "animChannels": 240,
-     "textureBytes": 754814,
-     "vramBytes": 59422032,
+     "label": "中位陣容（12 隻 herokyo —— 名冊面數中位數）",
+     "triangles": 94300,
+     "drawCalls": 197,
+     "animChannels": 216,
+     "textureBytes": 743690,
+     "vramBytes": 59247269,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
@@ -1200,12 +1200,12 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 59881,
-     "drawCalls": 186,
-     "animChannels": 240,
-     "textureBytes": 3018003,
-     "vramBytes": 58026659,
+     "label": "中位陣容（12 隻 herokyo —— 名冊面數中位數）",
+     "triangles": 59761,
+     "drawCalls": 174,
+     "animChannels": 216,
+     "textureBytes": 3006879,
+     "vramBytes": 57851896,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
@@ -1348,12 +1348,12 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 45680,
-     "drawCalls": 226,
-     "animChannels": 268,
-     "textureBytes": 2642041,
-     "vramBytes": 20538705,
+     "label": "中位陣容（12 隻 herokyo —— 名冊面數中位數）",
+     "triangles": 45560,
+     "drawCalls": 214,
+     "animChannels": 244,
+     "textureBytes": 2630917,
+     "vramBytes": 20363942,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
@@ -1532,15 +1532,15 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 84507,
-     "drawCalls": 176,
-     "animChannels": 243,
-     "textureBytes": 4558111,
-     "vramBytes": 80657057,
+     "label": "中位陣容（12 隻 herokyo —— 名冊面數中位數）",
+     "triangles": 84387,
+     "drawCalls": 164,
+     "animChannels": 219,
+     "textureBytes": 4546987,
+     "vramBytes": 80482294,
      "verdicts": {
       "triangles": "ok",
-      "drawCalls": "warn",
+      "drawCalls": "ok",
       "animChannels": "ok",
       "vramBytes": "over"
      }
@@ -1696,12 +1696,12 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 51956,
-     "drawCalls": 186,
-     "animChannels": 240,
-     "textureBytes": 542406,
-     "vramBytes": 34257574,
+     "label": "中位陣容（12 隻 herokyo —— 名冊面數中位數）",
+     "triangles": 51836,
+     "drawCalls": 174,
+     "animChannels": 216,
+     "textureBytes": 531282,
+     "vramBytes": 34082811,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
@@ -1884,12 +1884,12 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 60169,
-     "drawCalls": 229,
-     "animChannels": 256,
-     "textureBytes": 1992046,
-     "vramBytes": 56892067,
+     "label": "中位陣容（12 隻 herokyo —— 名冊面數中位數）",
+     "triangles": 60049,
+     "drawCalls": 217,
+     "animChannels": 232,
+     "textureBytes": 1980922,
+     "vramBytes": 56717304,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
@@ -2068,12 +2068,12 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 64764,
-     "drawCalls": 194,
-     "animChannels": 243,
-     "textureBytes": 3277477,
-     "vramBytes": 61085005,
+     "label": "中位陣容（12 隻 herokyo —— 名冊面數中位數）",
+     "triangles": 64644,
+     "drawCalls": 182,
+     "animChannels": 219,
+     "textureBytes": 3266353,
+     "vramBytes": 60910242,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
@@ -2216,12 +2216,12 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 37360,
-     "drawCalls": 129,
-     "animChannels": 240,
-     "textureBytes": 1641504,
-     "vramBytes": 23072764,
+     "label": "中位陣容（12 隻 herokyo —— 名冊面數中位數）",
+     "triangles": 37240,
+     "drawCalls": 117,
+     "animChannels": 216,
+     "textureBytes": 1630380,
+     "vramBytes": 22898001,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
@@ -2400,12 +2400,12 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 76354,
-     "drawCalls": 192,
-     "animChannels": 243,
-     "textureBytes": 1110808,
-     "vramBytes": 55492601,
+     "label": "中位陣容（12 隻 herokyo —— 名冊面數中位數）",
+     "triangles": 76234,
+     "drawCalls": 180,
+     "animChannels": 219,
+     "textureBytes": 1099684,
+     "vramBytes": 55317838,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
@@ -2560,12 +2560,12 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 46280,
-     "drawCalls": 133,
-     "animChannels": 240,
-     "textureBytes": 1340222,
-     "vramBytes": 45441019,
+     "label": "中位陣容（12 隻 herokyo —— 名冊面數中位數）",
+     "triangles": 46160,
+     "drawCalls": 121,
+     "animChannels": 216,
+     "textureBytes": 1329098,
+     "vramBytes": 45266256,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
@@ -2744,12 +2744,12 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
-     "triangles": 70700,
-     "drawCalls": 196,
-     "animChannels": 243,
-     "textureBytes": 1134074,
-     "vramBytes": 58287439,
+     "label": "中位陣容（12 隻 herokyo —— 名冊面數中位數）",
+     "triangles": 70580,
+     "drawCalls": 184,
+     "animChannels": 219,
+     "textureBytes": 1122950,
+     "vramBytes": 58112676,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
@@ -2950,7 +2950,7 @@
      "kind": "COMBAT",
      "label": "英雄",
      "count": 12,
-     "detail": "4 位英雄使用：國寶級的畜生 - 熊貓、不死之身-無 - 藤井八雲、魔界霸主 - 巴恩大魔王、北斗神拳掌門人 - 拳四郎"
+     "detail": "3 位英雄使用：國寶級的畜生 - 熊貓、魔界霸主 - 巴恩大魔王、北斗神拳掌門人 - 拳四郎"
     },
     {
      "kind": "COMBAT",
@@ -3046,7 +3046,7 @@
      "kind": "COMBAT",
      "label": "英雄",
      "count": 12,
-     "detail": "12 位英雄使用：白木老樹精 - 白木卡迪那、完全而瀟灑的女僕 - 十六夜Sakuya、白木老樹精 - 白木卡迪那、揍敵客大家長 - 揍敵客桀諾、慈悲的王者 - 賈修貝爾、小叮噹 - 哆拉A夢、電車癡漢 - 臭作、美白大法師 - 黑人牙膏、電車癡漢 - 臭作、邪惡意念集合體 - 死之王、萬夫莫敵 - 黑化張飛、Sela, the Ember Sage"
+     "detail": "9 位英雄使用：白木老樹精 - 白木卡迪那、白木老樹精 - 白木卡迪那、揍敵客大家長 - 揍敵客桀諾、小叮噹 - 哆拉A夢、電車癡漢 - 臭作、美白大法師 - 黑人牙膏、電車癡漢 - 臭作、邪惡意念集合體 - 死之王、Sela, the Ember Sage"
     }
    ],
    "broken": "",
@@ -6092,7 +6092,7 @@
    "path": "assets/models/imported/herokunoichi.glb",
    "group": "imported",
    "shipping": true,
-   "role": "champion",
+   "role": "unused",
    "triangles": 1397,
    "vertices": 1041,
    "drawCalls": 3,
@@ -6120,23 +6120,11 @@
     }
    ],
    "fileBytes": 265512,
-   "worstCount": 12,
-   "usedBy": [
-    {
-     "kind": "COMBAT",
-     "label": "英雄",
-     "count": 12,
-     "detail": "2 位英雄使用：戰國刺客Azumi - 安云、戰國刺客Azumi - 安云"
-    }
-   ],
+   "worstCount": 1,
+   "usedBy": [],
    "broken": "",
-   "verdicts": {
-    "triangles": "ok",
-    "drawCalls": "ok",
-    "maxTextureEdge": "ok",
-    "animChannels": "ok"
-   },
-   "note": ""
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "imported.herokyo",
@@ -9083,7 +9071,7 @@
    "path": "assets/models/imported/ye-wuqi1.glb",
    "group": "imported",
    "shipping": true,
-   "role": "champion",
+   "role": "unused",
    "triangles": 884,
    "vertices": 1552,
    "drawCalls": 1,
@@ -9105,23 +9093,11 @@
     }
    ],
    "fileBytes": 221780,
-   "worstCount": 12,
-   "usedBy": [
-    {
-     "kind": "COMBAT",
-     "label": "英雄",
-     "count": 12,
-     "detail": "1 位英雄使用：通靈人 - 麻倉葉"
-    }
-   ],
+   "worstCount": 1,
+   "usedBy": [],
    "broken": "",
-   "verdicts": {
-    "triangles": "ok",
-    "drawCalls": "ok",
-    "maxTextureEdge": "ok",
-    "animChannels": "ok"
-   },
-   "note": ""
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "imported.zy3",
@@ -15811,6 +15787,6 @@
   "vramBytes": 413928669,
   "zeroGeometry": 11,
   "nearZero": 33,
-  "unused": 115
+  "unused": 117
  }
 }
