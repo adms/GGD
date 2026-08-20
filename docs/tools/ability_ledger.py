@@ -637,8 +637,14 @@ def render_md(L, W):
     W(f"| **w3x 內建對照** | {a['✔']} | ⚠ {a['⚠']} | — | — | {a['—']} |\n")
     W(f"| **JASS 實作** | {b['✔']} | — | ✘ {b['✘']} | {b['?']} | {b['—']} |\n")
     W(f"| **特效綁定** | {c['✔']} | ◐ {c['◐']} | △ {c['△']} / ✘ {c['✘']} | — | — |\n")
-    W(f"\n技能總數 **{len(recs)}** 支 · 53 隻出貨名單內 **{sum(1 for r in recs if r['star'])}** 支。\n\n")
-    W('### 只看 53 隻出貨名單（玩家真的會碰到的）\n\n| 欄位 | ✔ | ◐ / ⚠ | △ / ✘ | ? | — |\n|---|---|---|---|---|---|\n')
+    # ⛔ 「幾隻在出貨名單上」是**數出來的**，⛔ 不是一個打在散文裡的數字。
+    #    這裡以前寫死 53，而 starter.go 早就不是 53 了（2026-08-21：49 位可選本體）——
+    #    一個手打的母體大小就是第二住處，它會在下一次上下架時安靜地說謊。
+    starred = len({r['championId'] for r in recs if r['star']})
+    W(f"\n技能總數 **{len(recs)}** 支 · {starred} 隻出貨名單內 "
+      f"**{sum(1 for r in recs if r['star'])}** 支。\n\n")
+    W(f'### 只看 {starred} 隻出貨名單（玩家真的會碰到的）\n\n'
+      '| 欄位 | ✔ | ◐ / ⚠ | △ / ✘ | ? | — |\n|---|---|---|---|---|---|\n')
     a, b, c = tal('builtin', True), tal('jass', True), tal('vfx', True)
     W(f"| w3x 內建對照 | {a['✔']} | ⚠ {a['⚠']} | — | — | {a['—']} |\n")
     W(f"| JASS 實作 | {b['✔']} | — | ✘ {b['✘']} | {b['?']} | {b['—']} |\n")
@@ -673,7 +679,7 @@ def render_md(L, W):
     render_templates_md(L, W)
     render_families_md(L, W)
 
-    W('\n---\n\n## 逐支明細\n\n**★ = 53 隻出貨名單。**未上架的排在後面。\n')
+    W(f'\n---\n\n## 逐支明細\n\n**★ = {starred} 隻出貨名單。**未上架的排在後面。\n')
     cur = None
     for r in recs:
         if r['championId'] != cur:

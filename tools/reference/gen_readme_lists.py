@@ -52,6 +52,7 @@ There is no timestamp — the contentVersion is the freshness stamp.
 
 import json
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -81,7 +82,12 @@ DOC_ITEMS = "docs/reference/items.md"
 DOC_GRAIL = "docs/reference/grail-wishes.md"
 DOC_MECHANICS = "docs/reference/mechanics.md"
 
-BLOCKS = ("roster", "abilities", "items", "grail", "mechanics", "arenas")
+# 級距那一節借用的兩份**產生的**文件（⛔ 都不是這支寫的，只是連過去 / 讀數字）。
+DOC_TIERS = "docs/editor-contract/ggd-skill-tiers.md"   # `pnpm tiers:build`
+DOC_ANCHORS = "docs/平衡錨點量測.md"                      # `pnpm anchors:build`
+
+BLOCKS = ("roster", "abilities", "items", "grail", "mechanics", "arenas",
+          "combat-env", "tiers")
 
 
 # ---------------------------------------------------------------------------
@@ -694,8 +700,334 @@ def gen_arenas(ctx):
     return "\n".join(L), len(arenas)
 
 
+# ---------------------------------------------------------------------------
+# combat-env + tiers — 「卡面值」與「玩家實際吃到的值」中間那兩條接縫
+# ---------------------------------------------------------------------------
+
+def load_config(name):
+    """`content/config/<name>.json` —— 出貨值那一份（後台 override 會再蓋它一層）。"""
+    path = os.path.join(G.CONTENT, "config", f"{name}.json")
+    if not os.path.exists(path):
+        sys.exit(f"missing {path} —— README 的倍率／級距表是從出貨 config 產生的，"
+                 f"⛔ 不是手寫的")
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def _ts_const(rel, pattern, what):
+    """從一支 TS 檔把**一個**常數挖出來 —— ⛔ 不在這裡再宣告一份。
+
+    ⭐ 判準：這個數字／名單在 TS 裡有**唯一**的住處（而且有守衛看著），這裡就只
+    負責把它讀出來。抄一份進 Python 就是第零守則⑨的反面標記 —— 兩份會分岔，而
+    分岔的那一刻 README 會**用正確的格式印出錯誤的內容**。
+    """
+    path = os.path.join(G.REPO, rel)
+    if not os.path.exists(path):
+        sys.exit(f"missing {path} —— {what} 只有那一個住處")
+    with open(path, encoding="utf-8") as f:
+        m = re.search(pattern, f.read())
+    if not m:
+        sys.exit(f"{rel} 裡找不到 {what}（pattern: {pattern}）—— 它被改名或搬家了，"
+                 f"⛔ 不要在 README 產生器裡另外寫一份")
+    return m
+
+
+SKILL_TIERS_TS = "packages/shared/src/content/skillTiers.ts"
+EXPAND_TS = "packages/shared/src/content/templates/expand.ts"
+ADMIN_ENV_TS = "apps/admin/src/combatEnv.ts"
+
+ENV_LABEL_RE = re.compile(r"(\w+)\s*:\s*\{\s*zh\s*:\s*\"([^\"]+)\"", re.S)
+
+
+def env_labels():
+    """每一格倍率的中文名 —— 唯一住處是後台那一頁（`apps/admin/src/combatEnv.ts`）。
+
+    ⭐ 讀它而不是在 README 再寫一份「作用」欄：那一欄手寫時已經過期過一次
+    （寫著 `cooldown` 0.25 / `maxHealth` 8.0，而出貨是 0.2 / 4）。
+    ⛔ 找不到標籤不 die —— 少一個中文名不會讓任何人做錯事，印 `—` 就好。
+    """
+    path = os.path.join(G.REPO, ADMIN_ENV_TS)
+    if not os.path.exists(path):
+        return {}
+    with open(path, encoding="utf-8") as f:
+        return {m.group(1): m.group(2) for m in ENV_LABEL_RE.finditer(f.read())}
+
+
+def tier_names():
+    """五個級距名 —— 唯一住處是 `skillTiers.ts` 的 `SKILL_TIER_NAMES`。"""
+    m = _ts_const(SKILL_TIERS_TS, r"SKILL_TIER_NAMES\s*=\s*\[([^\]]*)\]",
+                  "SKILL_TIER_NAMES")
+    return [s.strip().strip('"').strip("'") for s in m.group(1).split(",") if s.strip()]
+
+
+def wc3_per_unit():
+    """`GGD_PER_WC3` —— w3x 的一格距離換成 GGD 的一格距離。"""
+    m = _ts_const(EXPAND_TS, r"GGD_PER_WC3\s*=\s*([0-9.]+)\s*/\s*([0-9.]+)",
+                  "GGD_PER_WC3")
+    return float(m.group(1)), float(m.group(2))
+
+
+POP_RE = re.compile(r"\*\*(\d+) 位對戰可選英雄\*\*")
+
+
+def balance_population():
+    """平衡量測的**母體大小** —— 讀 `pnpm anchors:build` 寫的那份報告。
+
+    ⛔ 這裡**不**重算母體。母體只有一個定義（`packages/shared/testkit/
+    balancePopulation.ts`：對戰可選名單 − 退場 − 變身態），`anchors:build` 把它印
+    進報告，`pnpm roster:check` 的第 ⑦ 條再驗「報告裡印的母體 ↔ 名單長度」。
+    ⇒ 這一行只是把那個已經被守著的數字接過來；在 Python 裡重寫一次定義，就會多出
+    一個**沒有守衛**的第二住處，而它一定會在下一次上下架時說謊。
+    """
+    path = os.path.join(G.REPO, DOC_ANCHORS)
+    if not os.path.exists(path):
+        sys.exit(f"missing {path} —— 跑 `pnpm anchors:build`")
+    with open(path, encoding="utf-8") as f:
+        m = POP_RE.search(f.read())
+    if not m:
+        sys.exit(f"{DOC_ANCHORS} 裡找不到「**N 位對戰可選英雄**」—— "
+                 f"母體出處被拿掉了，跑 `pnpm anchors:build`")
+    return int(m.group(1))
+
+
+def gen_combat_env(ctx):
+    """README 區塊：全域倍率表 —— **從 `content/config/combat-env.json` 產生**。
+
+    ⭐ 為什麼它必須是產生的：這一節手寫時說 `cooldown` 0.25 / `damageDealt` 0.5 /
+    `maxHealth` 8.0 / `abilityRange` 0.6「其餘 14 項 1.0」，而出貨那一份**四項全部
+    不是那個值**、非 1.0 的項目也不只四項。它就是這個 repo 反覆踩的同一個形狀：
+    一張手寫的鏡子，鏡子不會因為本體變了而紅。
+    """
+    env = load_config("combat-env")
+    mult = env.get("multipliers") or {}
+    if not mult:
+        sys.exit("combat-env.json 沒有 multipliers —— 這一節整段的來源不見了")
+    tuned = sorted((k for k, v in mult.items() if float(v) != 1.0), key=str)
+    neutral = sorted((k for k, v in mult.items() if float(v) == 1.0), key=str)
+
+    L = [
+        f"#### 全域倍率表 `combat-env`（{len(mult)} 項 · {len(tuned)} 項不是 1.0）",
+        "",
+    ]
+    L += note([
+        "`content/config/combat-env.json` 是一張全域倍率表，每項只作用在模擬裡的**唯一一個**"
+        "公式點。**遊戲內顯示的每一個數字，都是乘完倍率之後的最終值** —— 換算走唯一一條接縫 "
+        "`apps/client/src/ui/displayFinal.ts`，React 端訂閱權威的 `combatEnvJson`，"
+        "後台改倍率時畫面即時跟著變。",
+        "",
+        "⚠️ 下表是**出貨值**。後台覆寫逐鍵蓋過 content 預設，所以線上那一場可能不是這些數字"
+        "（改 config 前先查有沒有存過 override）。",
+    ])
+    labels = env_labels()
+    L += ["| 倍率 | 值 | 是什麼 |", "| --- | ---: | --- |"]
+    for k in tuned:
+        L.append(f"| `{k}` | **{_num(mult[k])}** | {G.cell(labels.get(k) or '—')} |")
+    L.append("")
+    L.append(f"其餘 **{len(neutral)}** 項是 1.0（不動）："
+             + "、".join(f"`{k}`" for k in neutral) + "。")
+    L.append("")
+    L += provenance(ctx, f"倍率讀 `content/config/combat-env.json`（version "
+                         f"{env.get('version', '?')}）。")
+    return "\n".join(L), len(mult)
+
+
+# 每一份 `*-tiers.json` 對應的**作者欄位**（技能 JSON 裡填的那個 key）。
+# ⛔ 這裡只放**名字**，⛔ 一個數字都沒有 —— 數字全部從那份 config 讀。
+# 多出一份沒登記的 `*-tiers.json` 會讓這支直接 die（見 gen_tiers），那是刻意的閘：
+# 第六張表出現時，README 應該**紅**，⛔ 不是安靜地只印五張。
+TIER_FILE_FIELDS = {
+    "config.range-tiers@1": ("`rangeTier`", "施法距離"),
+    "config.aoe-tiers@1": ("`radiusTier`", "施法範圍（AoE 半徑）"),
+    "config.displacement-tiers@1": ("`distanceTier`", "位移（衝刺 / 擊退）"),
+    "config.cooldown-tiers@1": ("`cooldownTier` + `cooldownShape`", "冷卻"),
+    "config.damage-tiers@1": ("`damageTier`（住 `amount.zScaling`）", "傷害"),
+}
+
+
+def _ladders(doc, names):
+    """把一份 tier config 裡**每一條梯子**挖出來。
+
+    ⭐ 判準是**形狀**，⛔ 不是一張寫死的 key 清單：任何「key 剛好就是那五個級距名」
+    的 dict 就是一條梯子。⇒ 新增一條梯子（例如冷卻表多一個形狀）不用改這支。
+    值可以是數字（`damage`）也可以是物件（`travel.極小 = {distance, speed}`），
+    後者按子欄位再拆成一列。
+    """
+    want = set(names)
+    out = []
+
+    def walk(node, path):
+        if not isinstance(node, dict):
+            return
+        if set(node.keys()) == want:
+            vals = [node[n] for n in names]
+            if all(isinstance(v, (int, float)) for v in vals):
+                out.append((path, vals))
+            elif all(isinstance(v, dict) for v in vals):
+                subs = sorted({k for v in vals for k in v})
+                for s in subs:
+                    if all(isinstance(v.get(s), (int, float)) for v in vals):
+                        out.append((path + [s], [v[s] for v in vals]))
+            return
+        for k, v in node.items():
+            walk(v, path + [k])
+
+    walk(doc, [])
+    return out
+
+
+def gen_tiers(ctx):
+    """README 區塊：**技能五級距** —— 五張表、卡面↔實際、與原始值的關係、母體。
+
+    ⭐ 這一節整段是產生的，理由跟 arenas 那一段一樣：級距表在 2026-08-20／21 三天內
+    重錨了**三次**（500/1250/… → 1150/2875/… → 600/1500/…），每一次都讓散文裡的
+    五個數字變成謊話，而**沒有任何東西會紅**。這裡一個級距數字都不手寫。
+    """
+    import glob
+    names = tier_names()
+    paths = sorted(glob.glob(os.path.join(G.CONTENT, "config", "*-tiers.json")))
+    if not paths:
+        sys.exit("content/config/*-tiers.json 一份都沒有 —— 級距表整層不見了")
+
+    tables = []
+    for p in paths:
+        with open(p, encoding="utf-8") as f:
+            doc = json.load(f)
+        tag = doc.get("schema")
+        if tag not in TIER_FILE_FIELDS:
+            sys.exit(
+                f"{os.path.relpath(p, G.REPO)} 的 schema `{tag}` 沒有登記在 "
+                f"TIER_FILE_FIELDS 裡。\n"
+                f"   → 這是**第六張級距表**。補一列（作者欄位 + 中文軸名）到 "
+                f"tools/reference/gen_readme_lists.py，⛔ 不要把它從 README 漏掉。")
+        field, axis = TIER_FILE_FIELDS[tag]
+        tables.append((os.path.basename(p), doc, field, axis, _ladders(doc, names)))
+
+    rows = sum(1 for t in tables for _p, v in t[4] if len(set(v)) > 1)
+    off = [t[0] for t in tables if t[1].get("enabled") is False]
+    # 「卡面 ↔ 實際」那一句的驗算用的是**單體·極小**那一格 —— 從剛讀進來的梯子
+    # 取，⛔ 不另外打一個 6 進去（它 2026-08-19 才被 owner 給滿，下次還會動）。
+    smallest_cd, smallest_cd_label = None, ""
+    for _fname, doc, _field, _axis, ladders in tables:
+        if doc.get("schema") != "config.cooldown-tiers@1":
+            continue
+        for path, vals in ladders:
+            if smallest_cd is None or vals[0] < smallest_cd:
+                smallest_cd, smallest_cd_label = vals[0], path[-1]
+    pop = balance_population()
+    num, den = wc3_per_unit()
+    env = (load_config("combat-env").get("multipliers") or {})
+    cdrules = load_config("cooldown-rules")
+
+    L = [
+        f"#### ⭐ 技能五級距（{len(tables)} 張表 · {rows} 條梯子 · 母體 **{pop} 位對戰可選英雄**）",
+        "",
+    ]
+    L += note([
+        f"**級距名全專案只有一份**（`{SKILL_TIERS_TS}` 的 `SKILL_TIER_NAMES` = "
+        + " / ".join(f"**{n}**" for n in names)
+        + "）—— ⛔ 沒有「超大」，也沒有任何一軸可以自己再宣告一組。",
+        "",
+        "⭐ **靠攏發生在註冊時，⛔ 內容 JSON 不動。** 技能檔裡那些從 w3x 匯進來的自由"
+        "秒數／耗魔，是在 `packages/shared/src/content/tierSnap.ts` 被靠到格點上的 —— "
+        "舊技能、新技能、模板展開出來的技能走**同一個**接縫。"
+        "靠攏方向是 owner 的規則「**傷害低的往前靠、傷害高的往後靠**」，"
+        "而「高／低」那條線是後台一格（`highDamageThreshold`，**0 = 自動**＝全庫中位滿階傷害）。",
+        "",
+        "每一張表自己帶 `enabled` 開關：翻掉那一格，那一軸就回到技能自己手寫的數字"
+        "（**一鍵 rollback**，⛔ 不必改任何一份技能 JSON）。",
+    ])
+    if off:
+        L += note([f"⚠️ 目前 **{len(off)}** 張表的 `enabled` 是 false："
+                   + "、".join(f"`{n}`" for n in off) + "。"])
+
+    L += ["##### 一 · 五張表（**卡面值**，出貨 `content/config/*-tiers.json`）", ""]
+    L += ["| 軸 | 技能 JSON 填什麼 | 梯子 | " + " | ".join(names) + " | 開關 | 出處 |",
+          "|---|---|---|" + "---:|" * len(names) + ":-:|---|"]
+    flat = []   # 五格全同的「梯子」—— 它是一個伴隨欄位，⛔ 不是一條級距
+    for fname, doc, field, axis, ladders in tables:
+        first = True
+        for path, vals in ladders:
+            if len(set(vals)) == 1:
+                flat.append((fname, ".".join(path), vals[0]))
+                continue
+            L.append(
+                f"| {axis if first else ' '} | {field if first else ' '} | "
+                f"`{'.'.join(path)}` | " + " | ".join(f"**{_num(v)}**" for v in vals)
+                + f" | {'✅' if doc.get('enabled') else '⛔'} | `{fname}` |")
+            first = False
+    L.append("")
+    if flat:
+        # ⛔ 不要把它們默默丟掉 —— 讀者要知道那些欄位存在、而且**刻意**五格一樣。
+        L.append("同一份 config 裡另外 **{n}** 個欄位五格是同一個值（⇒ 它是伴隨參數，"
+                 "⛔ 不是一條級距）：{items}。".format(
+                     n=len(flat),
+                     items="、".join(f"`{p}` = **{_num(v)}**（`{f}`）" for f, p, v in flat)))
+        L.append("")
+
+    L += ["##### 二 · 卡面 ↔ 實際（表上的數字**不是**玩家吃到的數字）", ""]
+    L += note([
+        "五張表印的全部是**卡面值**。玩家實際吃到的是它再過一次全域倍率表"
+        "（上一節的 `combat-env`），⛔ 而且**不是每一軸都有倍率**：",
+    ])
+    L += ["| 軸 | 卡面 → 實際 | 接縫 |", "|---|---|---|"]
+    L += [
+        f"| 冷卻 | × `cooldown` **{_num(env.get('cooldown'))}**，再被 "
+        f"`config.cooldown-rules@1.minSeconds` **{_num(cdrules.get('minSeconds'))}** 夾一次 "
+        f"| `sim/abilities/abilitySystem.ts` |",
+        f"| 施法距離 · AoE 半徑 | × `abilityRange` **{_num(env.get('abilityRange'))}**"
+        f"（**⛔ 不含普攻** —— 那條走 `attackRange` **{_num(env.get('attackRange'))}**）"
+        f"| `abilityCastRange()` / `abilityRadius()` |",
+        f"| 傷害 | × `damageDealt` **{_num(env.get('damageDealt'))}**，之後才進減傷 "
+        f"| `sim/combat/damage.ts` |",
+        "| 位移（衝刺／擊退） | **⛔ 不套倍率** —— 卡面即實際 "
+        "| `sim/effects/dash.ts` · `sim/effects/knockback.ts` |",
+    ]
+    L.append("")
+    if smallest_cd is not None:
+        actual = max(smallest_cd * float(env.get("cooldown", 1)),
+                     float(cdrules.get("minSeconds", 0)))
+        L += note([
+            f"⚠️ 所以「{smallest_cd_label}·{names[0]}」的 **{_num(smallest_cd)} 卡面秒**，"
+            f"在出貨設定下實際是 "
+            f"**{_num(actual)} 秒**。⛔ 卡面上寫的是前者 —— "
+            "傷害與回魔的反算全部站在這個換算上。",
+        ])
+
+    L += ["##### 三 · 級距與**原始值**的關係", ""]
+    L += ["| 軸 | 原始值是什麼 | 怎麼變成級距 |", "|---|---|---|"]
+    L += [
+        f"| 施法距離 · AoE · 位移 | w3x 的 `w3a` 欄位（JASS 優先） | "
+        f"先乘換算係數 `GGD_PER_WC3 = {_num(num)}/{_num(den)}`，再靠到梯子上。"
+        f"梯子本身是**決鬥區半徑的分數**（owner 給的錨：大 = 1/4、極大 = 1/3），"
+        f"⛔ 不是等比也不是等差 |",
+        "| 冷卻 | w3x 匯進來的自由秒數 | owner 2026-08-19 **直接給滿**十五格"
+        "（單體／範圍／變身各一列），⛔ 所以這一軸照抄，沒有推導梯子。"
+        "不在格點上的走 `tierSnap` 靠攏 |",
+        f"| 傷害 | 技能自己手寫的 `flat` / `perRank` | **推導**：母體 {pop} 位可選英雄的"
+        f"純基礎中位血量 ÷ owner 的「20 發要能殺死」× HP 倍率 ＋ 初始加成 ÷ 20 → 進位 "
+        f"= 極小；其餘四格 = 極小 × **單體冷卻比**。填了 `damageTier` 就**取代** "
+        f"`flat`/`perRank`（⛔ 不是相加） |",
+    ]
+    L.append("")
+    L += note([
+        f"⭐ **母體是 {pop} 位對戰可選英雄**，⛔ 不是 `content/champions/` 的檔案數 —— "
+        "那一份含**變身態**（同一位英雄的第二張卡 ⇒ 重複計數）與 fail-open 骨架佔位。"
+        "定義只有一個住處（`packages/shared/testkit/balancePopulation.ts`："
+        "對戰可選名單 − 退場名單 − 變身態），`pnpm roster:check` 逐份交付物驗它。",
+        "",
+        f"逐格推導、三個錨點（LV30 hard / LV50 soft / LV99 極限）的達成率、"
+        f"以及兩個「空間」（純基礎 ↔ 引擎最終）的對照表在 "
+        f"[`{DOC_ANCHORS}`](./{DOC_ANCHORS})；"
+        f"與 w3x 的逐支對照與梯子推導在 [`{DOC_TIERS}`](./{DOC_TIERS})。兩份都是產生的。",
+    ])
+    L += provenance(ctx, f"級距讀 `content/config/*-tiers.json`（{len(tables)} 張表）、"
+                         f"母體讀 `{DOC_ANCHORS}`。")
+    return "\n".join(L), rows
+
+
 GENERATORS = {"roster": gen_roster, "abilities": gen_abilities, "items": gen_items,
-              "grail": gen_grail, "mechanics": gen_mechanics, "arenas": gen_arenas}
+              "grail": gen_grail, "mechanics": gen_mechanics, "arenas": gen_arenas,
+              "combat-env": gen_combat_env, "tiers": gen_tiers}
 
 
 def render(ctx):

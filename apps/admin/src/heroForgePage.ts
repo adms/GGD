@@ -46,7 +46,7 @@ import {
   type RouteInfo,
 } from "@ggd/shared/content/originRoutes";
 import { embeddedForm } from "@ggd/shared/content/editModel";
-import { abilityQuantities, renderAbilityText } from "@ggd/shared/content/abilityProse";
+import { renderAbilityDescription } from "@ggd/shared/content/renderAbilityText";
 import {
   deriveAbilityDefaults,
   applyAbilityDefaults,
@@ -342,7 +342,10 @@ function cardFrom(id: string, raw: unknown): AbilityCard {
     //    走的那一支，兩邊共用它才不會出現「後台顯示 A、場上跑 B」。
     //    ⚠️ 這一頁拿的是**磁碟形狀**的文件（沒有 `Configs`），所以幾何級距詞走
     //    `DEFAULT_PROSE_TABLES` 那條退路；三個數字軸與出貨逐字相同。
-    description: renderAbilityText(str("description", ""), abilityQuantities(d)),
+    //    ⛔ **實際值（`{{cd!}}`）這一頁算不出來**（那要 `config.combat-env@1`，
+    //    它是這一頁向 `/admin/combat-env` **抓**回來的東西）⇒ 它會原樣印在預覽上。
+    //    那是刻意的：一個中性表算出來的「實戰 45 秒」看起來完全正常，而玩家等 9 秒。
+    description: renderAbilityDescription(d, str("description", "")),
     doc: d,
   };
 }

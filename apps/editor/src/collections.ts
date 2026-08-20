@@ -7,6 +7,11 @@ import type { ZodTypeAny } from "zod";
 import { starterMap } from "@ggd/shared/map/starter";
 // ⛔ 種子值不可以是字面量：`progression.levelCap` 抄 99 的那一刻就開始等著過期。
 import { LEVEL_CAP } from "@ggd/shared/sim/economy/progression";
+// ⭐ 同一個理由的第二批（owner 2026-08-19「技能相關設定正規化成五級距⋯編輯器⋯都統一」）：
+//    新技能的冷卻與施法距離從**級距表**長出來，⛔ 不是一組手打的數字。
+import { SKILL_TIER_NAMES } from "@ggd/shared/content/skillTiers";
+import { DEFAULT_COOLDOWN_TIERS } from "@ggd/shared/content/cooldownTiers";
+import { DEFAULT_RANGE_TIERS } from "@ggd/shared/content/rangeTiers";
 
 export interface CollectionEntry {
   name: CollectionName;
@@ -15,16 +20,46 @@ export interface CollectionEntry {
   template(id: string): unknown;
 }
 
+/**
+ * ⭐ 新技能的骨架 —— 落在**五級距的格點上**，⛔ 不是一組手打的秒數與距離。
+ *
+ * owner 2026-08-19：「總之請你將**技能相關設定正規化成五級距** 並且將相關
+ * **文件 JSON 編輯器 後台設定 都統一**」。
+ *
+ * ⚠️ 在此之前這個骨架寫的是 `cooldown: [10, 9, 8, 7, 6]` / `range: 0` ——
+ * 也就是**編輯器每按一次「新增技能」，就多生一支不在格點上的技能**，
+ * 而那正是 `tierSnap` 那條規則存在的原因（它一次收掉 137 支從 w3x 匯進來的
+ * 自由數字）。⛔ 一邊收舊的、一邊從新建鍵繼續生新的，那條規則永遠追不完。
+ *
+ * ⭐ 兩格都填是**刻意**的（級別 + 值）：
+ *   · `cooldown` 陣列**必填**，而且 `resolveCooldownTier` 只在有陣列時才蓋
+ *     （「⛔ 不憑空長出一格冷卻」）—— 所以陣列要先在。
+ *   · `range` 在 `ability@1` 是必填的純量。
+ *   兩格都填時**級別永遠贏**（三支 resolver 一致的決定），所以這裡的值不是
+ *   第二個住處，而是「級距關掉時的退路」—— 它從同一份 `DEFAULT_*` 讀出來，
+ *   ⛔ 不是手打的。
+ *
+ * ⚠️ 預設挑**正中間**那一格（五級的第 3 格），⛔ 不是最小或最大 ——
+ * 作者從中間往兩邊調，比從一端往上爬少一半的操作。
+ */
+const MID_TIER = SKILL_TIER_NAMES[Math.floor(SKILL_TIER_NAMES.length / 2)]!;
+
 function abilityTemplate(id: string, slot: "Q" | "W" | "E" | "R") {
+  const maxRank = 5;
   return {
     id,
     name: "New Ability",
     slot,
     castType: "self",
-    maxRank: 5,
-    cooldown: [10, 9, 8, 7, 6],
+    maxRank,
+    // ⭐ 級距是**一支技能一格**，所以每一階都是同一個值（＝ resolver 會寫回來的樣子）。
+    cooldownTier: MID_TIER,
+    cooldown: Array.from<number>({ length: maxRank }).fill(
+      DEFAULT_COOLDOWN_TIERS.seconds["單體"][MID_TIER],
+    ),
     manaCost: [50, 55, 60, 65, 70],
-    range: 0,
+    rangeTier: MID_TIER,
+    range: DEFAULT_RANGE_TIERS.range[MID_TIER],
     effects: [],
   };
 }
@@ -43,7 +78,17 @@ const TEMPLATES: Record<CollectionName, (id: string) => unknown> = {
       Q: abilityTemplate(`${id}.q`, "Q"),
       W: abilityTemplate(`${id}.w`, "W"),
       E: abilityTemplate(`${id}.e`, "E"),
-      R: { ...abilityTemplate(`${id}.r`, "R"), maxRank: 3, cooldown: [100, 85, 70], manaCost: [100, 100, 100] },
+      // ⭐ 大絕：級距挑**最貴**那一格（⛔ 不是手打 100/85/70），而且 `cooldownShape`
+      //    留空 —— 讓出貨的自動判斷去看它到底是單體、範圍還是變身。
+      R: {
+        ...abilityTemplate(`${id}.r`, "R"),
+        maxRank: 3,
+        cooldownTier: SKILL_TIER_NAMES[SKILL_TIER_NAMES.length - 1]!,
+        cooldown: Array.from<number>({ length: 3 }).fill(
+          DEFAULT_COOLDOWN_TIERS.seconds["單體"][SKILL_TIER_NAMES[SKILL_TIER_NAMES.length - 1]!],
+        ),
+        manaCost: [100, 100, 100],
+      },
     },
     skillOrder: ["Q", "W", "E", "R"],
     buildPriority: [],

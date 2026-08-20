@@ -61,6 +61,20 @@ describe("兩頁真的掛進 console", () => {
     }
   });
 
+  /**
+   * 🪜 五級距總覽（2026-08-21）—— 唯讀主控台，所以它**不**走上面那個 session 斷言，
+   * 但「忘了接線」這個缺陷對它一模一樣：導覽列點得到、路由沒有 ⇒ 一片空白。
+   * ⛔ 它刻意不 session-gate（一格都不寫，沒登入時退回同源的出貨 JSON）。
+   */
+  it("五級距總覽：靜態 import + 一條路由，而且**不**要 session", () => {
+    cover(TAG);
+    expect(pageRequiresSession("tierOverview"), "唯讀總覽不該 session-gate").toBe(false);
+    expect(APP).toContain('import { TierOverviewPage } from "./TierOverviewPage";');
+    expect(APP, "沒有路由 —— 導覽列點進去會是一片空白").toContain(
+      'page === "tierOverview" && <TierOverviewPage />',
+    );
+  });
+
   it("兩頁都**不在** DEV 閘裡面 —— 它們必須存在於正式 bundle", () => {
     cover(TAG);
     // 內容·素材管理那一整套是 `import.meta.env.DEV` 後面的動態 import；這兩頁的

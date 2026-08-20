@@ -108,6 +108,8 @@ import {
   PROSE_SLOT_KEYS,
   parseSlot,
 } from "../../packages/shared/src/content/abilityProse";
+// ⭐ 卡面值 ↔ 實際值那一半（`{{cd!}}`）—— 逐軸的決定只有一份，文件從它長出來。
+import { LIVE_RULES, LIVE_SUFFIX } from "../../packages/shared/src/content/renderAbilityText";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = resolve(HERE, "../..");
@@ -817,6 +819,136 @@ function exampleBlock(u: Slot | undefined, pathOverride?: string): string[] {
   ];
 }
 
+/**
+ * ⭐ 五級距 —— 「級別 → 數字」的**全部**表，以及卡面值到場上實際值的那一乘。
+ *
+ * ⚠️ 為什麼這一節要在這裡：這份文件回答「它**怎麼用**」，而一個作者填了
+ * `radiusTier: "中"` 之後最想知道的下一件事就是「中是多大」。在 2026-08-21 之前
+ * 這份文件一個級距值都沒印，於是唯一寫著數字的地方是幾段**手打的散文**，
+ * 而那些散文已經被量到過期（連級別名都少了一格）。
+ *
+ * ⭐ 表是**現場掃 `content/config/` 得到的**：任何一份 `config.*-tiers@1` 都會自己
+ * 出現在下面，⛔ 不需要有人記得回來加一列。數字一格都不手打。
+ */
+export function tierLadderSection(): string[] {
+  const dir = join(REPO, "content/config");
+  const TIER_DOC_RE = /^config\.[a-z-]+-tiers@\d+$/;
+  const docs: Record<string, unknown>[] = [];
+  for (const f of readdirSync(dir).sort()) {
+    if (!f.endsWith(".json") || f === "_index.json") continue;
+    const doc = JSON.parse(readFileSync(join(dir, f), "utf8")) as Record<string, unknown>;
+    if (TIER_DOC_RE.test(String(doc["schema"] ?? ""))) docs.push(doc);
+  }
+  const isNumMap = (v: unknown): v is Record<string, number> =>
+    v !== null &&
+    typeof v === "object" &&
+    !Array.isArray(v) &&
+    Object.values(v).length > 0 &&
+    Object.values(v).every((x) => typeof x === "number");
+
+  const SKIP = new Set(["id", "schema", "note", "version", "enabled"]);
+  const body = (d: Record<string, unknown>): [string, unknown][] =>
+    Object.entries(d).filter(([k]) => !SKIP.has(k));
+
+  // ⭐ 級別名是**推出來的**（各張表最常見的那一組鍵），⛔ 不是寫死的五個字 ——
+  //   GH#463 才剛把它們整體左移過一格，一份抄本會在下一次改名時就地說謊。
+  // ⚠️ 票**一份文件只投一次**：`{distance,speed}` 在位移那一份裡出現 10 次，
+  //    級別名在整個 `content/config/` 裡只出現 8 次 —— 逐次投票會選錯那一組。
+  //    級別名的判準是「**跨文件**共用」，那正是「五軸共用同一組名字」這件事本身。
+  const votes = new Map<string, number>();
+  const scan = (v: unknown, take: (keys: string[]) => void): void => {
+    if (v === null || typeof v !== "object" || Array.isArray(v)) return;
+    take(Object.keys(v));
+    for (const x of Object.values(v)) scan(x, take);
+  };
+  for (const d of docs) {
+    const seen = new Set<string>();
+    for (const [, v] of body(d)) scan(v, (keys) => void seen.add(keys.join("｜")));
+    for (const k of seen) votes.set(k, (votes.get(k) ?? 0) + 1);
+  }
+  const winner = [...votes.entries()].sort((a, b) => b[1] - a[1])[0];
+  if (winner === undefined) {
+    throw new Error("content/config 裡找不到任何一張級距表 —— 解析器與出貨設定分家了");
+  }
+  const LEVELS = winner[0].split("｜");
+  const isLadder = (v: unknown): v is Record<string, unknown> =>
+    v !== null && typeof v === "object" && !Array.isArray(v) && Object.keys(v).join("｜") === winner[0];
+
+  // 一份級距文件裡「級別 → 數字」的每一張表。三種形狀，⛔ 都不靠鍵名認：
+  //   ① `radius.<級別>` 直接是數字            → 一張表
+  //   ② `seconds.<形狀>.<級別>` 再一層         → 每個形狀一張
+  //   ③ `travel.<級別>.{distance,speed}` 格子是物件 → 每個葉鍵一張
+  const ladders: { id: string; rows: [string, Record<string, number>][] }[] = [];
+  for (const d of docs) {
+    const rows: [string, Record<string, number>][] = [];
+    const harvest = (label: string, v: unknown): void => {
+      if (!isLadder(v)) {
+        if (v !== null && typeof v === "object" && !Array.isArray(v)) {
+          for (const [k, x] of Object.entries(v)) harvest(label ? `${label} · ${k}` : k, x);
+        }
+        return;
+      }
+      const cells = LEVELS.map((lv) => v[lv]);
+      if (cells.every((c) => typeof c === "number")) {
+        rows.push([label, Object.fromEntries(LEVELS.map((lv, i) => [lv, cells[i] as number]))]);
+        return;
+      }
+      if (!cells.every((c) => isNumMap(c))) return;
+      for (const leaf of Object.keys(cells[0] as Record<string, number>)) {
+        rows.push([
+          `${label} · ${leaf}`,
+          Object.fromEntries(LEVELS.map((lv, i) => [lv, (cells[i] as Record<string, number>)[leaf]!])),
+        ]);
+      }
+    };
+    for (const [k, v] of body(d)) harvest(k, v);
+    if (rows.length > 0) ladders.push({ id: String(d["id"] ?? d["schema"]), rows });
+  }
+
+  const env = (
+    JSON.parse(readFileSync(join(dir, "combat-env.json"), "utf8")) as {
+      multipliers: Record<string, number>;
+    }
+  ).multipliers;
+
+  const L = [
+    "---",
+    "",
+    "## 0.5 五級距 —— 級別是**什麼數字**，以及它跟原始欄位誰贏",
+    "",
+    "填了級別欄位（`radiusTier` / `rangeTier` / `cooldownTier` / `damageTier` /",
+    "`distanceTier`）就 ⛔ **不要**填它旁邊那格原始值。兩格都填 → **級別贏**，",
+    "原始值被整格取代（⛔ 不是相加、⛔ 不是取大）。⭐ 要留特例的唯一寫法是**不填級別**。",
+    "",
+    "⚠️ 這件事發生在**註冊時**，⛔ 不在 JSON 裡 —— 所以任何直接讀技能 JSON 的工具",
+    "（外部編輯器、報表、你自己的 grep）看到的原始值**可能不是引擎跑的那個數字**。",
+    "",
+  ];
+  for (const l of ladders) {
+    const names = Object.keys(l.rows[0]![1]);
+    L.push(`**\`${l.id}\`**`, "");
+    L.push("| 表 | " + names.join(" | ") + " |");
+    L.push("|---|" + "--:|".repeat(names.length));
+    for (const [label, row] of l.rows) {
+      L.push(`| ${label} | ` + names.map((n) => String(row[n] ?? "—")).join(" | ") + " |");
+    }
+    L.push("");
+  }
+  L.push(
+    "⚠️ 上面每一格都是**卡面值**。場上實際值還要再乘「戰鬥系統」頁的一格全域倍率：",
+    "",
+    "| 軸 | 倍率 | 出貨值 |",
+    "|---|---|---:|",
+    `| 冷卻 | \`cooldown\` | **${env["cooldown"]}** |`,
+    `| 施法距離 · AoE 半徑 | \`abilityRange\` | **${env["abilityRange"]}** |`,
+    `| 傷害 | \`damageDealt\` | **${env["damageDealt"]}** |`,
+    "",
+    "⛔ **不要拿卡面秒去算 DPS** —— 冷卻那一格的倍率離 1 最遠。",
+    "",
+  );
+  return L;
+}
+
 export function buildSpecMarkdown(): string {
   const man = buildCapabilityManifest();
   const usage = scanContent();
@@ -902,8 +1034,26 @@ export function buildSpecMarkdown(): string {
   p();
   p("· 語法逐字是 `{{鍵}}`，鍵是小寫英文。⛔ 不吃空白（`{{ cd }}` 不算）。");
   p(`· 只有 \`${INDEXED_SLOTS.join("` / `")}\` 可以帶序號：\`{{dmg2}}\` = 效果樹上**第 2 個**傷害葉。`);
+  p(
+    `· 結尾加 \`${LIVE_SUFFIX}\` = **實際值**：\`{{cd}}\` 是**卡面秒**（\`config.cooldown-tiers@1\` 那三張表的空間），` +
+      `\`{{cd${LIVE_SUFFIX}}}\` 是玩家**真的等到**的秒（卡面 × \`combatEnv.cooldown\`，再過 \`config.cooldown-rules@1\` 的秒數地板）。`,
+  );
+  p("  ⛔ 兩個都是真的，它們住在**不同的空間** —— 語法表達不出第二種的話，作者只能把它手打回去。");
   p("· **解不開的佔位符會原樣印在卡片上**（`{{dmg3}}` 就是 `{{dmg3}}`），⛔ 引擎不會替你");
   p("  退回一個看起來合理的數字 —— 一個裸的佔位符是刺眼的，一個憑空的 `0` 不是。");
+  p();
+  p(`**⭐ 哪幾軸有實際值（\`{{鍵${LIVE_SUFFIX}}}\`）** —— ⛔ 判準只有一條：**這一軸的「實際」`);
+  p("是不是一個單一因子**？不是的話就沒有，因為一個看起來合理、實際上算錯的數字比一個裸的");
+  p("佔位符糟得多。⚠️ 沒有實際值的軸寫成 `{{鍵!}}` 會**原樣印在卡片上**，⛔ 不會退回卡面值。");
+  p();
+  p("| 佔位符 | 實際值 | 為什麼 |");
+  p("|---|---|---|");
+  for (const k of PROSE_SLOT_KEYS) {
+    const r = LIVE_RULES[k];
+    p(
+      `| \`{{${k}${LIVE_SUFFIX}}}\` | ${r.kind === "factor" ? `× \`combatEnv.${r.env}\`` : "⛔ 沒有"} | ${r.why} |`,
+    );
+  }
   p();
   p("**⭐ 為什麼傷害／冷卻／耗魔是數字、距離／範圍是級距詞** —— owner 2026-08-19 逐字：");
   p("「所有**卡面範圍跟距離說明**都應該要跟著改五級距（**傷害/冷卻/耗魔要明確數值**");
@@ -919,6 +1069,9 @@ export function buildSpecMarkdown(): string {
   p("⚠️ **外部編輯器的自動建議也適用**：讀說明去猜機制之前要先剝掉 `「…」`，");
   p("否則產出的 JSON 會多出台詞裡那個不存在的機制。");
   p();
+
+  // ── 0.5 五級距 ──────────────────────────────────────────────────────
+  p(...tierLadderSection());
 
   // ── 1 總覽 ──────────────────────────────────────────────────────────
   p("---");

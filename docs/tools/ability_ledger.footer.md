@@ -29,7 +29,8 @@ python3 docs/tools/ability_ledger.py --json --md > docs/_ability-fidelity-ledger
 - `apps/client/src/render/vfx/w3xFamilyArt.ts` — 家族晉升（表上 258 列，實際說了算 236 支）
 - `apps/client/src/render/vfx/w3xArtFamilies.ts` — 21 個族原型（形狀／預設外觀／普查引用數）
 - `apps/client/src/render/vfx/artParams.ts` — 每次呼叫可覆寫的旋鈕（`ArtParams`）
-- `apps/platform/internal/curation/starter.go` — 53 隻出貨名單
+- `apps/platform/internal/curation/starter.go` — 出貨名單（`★` 那些；**支數在上面的總覽裡數出來**，
+  ⛔ 這裡刻意不寫死一個數字 —— 2026-08-21 起是 **49 位對戰可選英雄**，⛔ 不再是 53）
 
 ⚠️ **這份帳本會過期。** 它是某一次 `content:build` 的切片，不是活的守衛，
 而且**沒有任何 CI 在跑這支腳本**。真正會擋回歸的是各套件裡的普查測試；

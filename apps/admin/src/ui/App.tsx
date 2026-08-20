@@ -34,6 +34,7 @@ import { ItemDraftPage } from "./ItemDraftPage";
 import { ServerOpsPage } from "./ServerOpsPage";
 import { AiSettingsPage } from "./AiSettingsPage";
 import { ModelBudgetPage } from "./ModelBudgetPage";
+import { TierOverviewPage } from "./TierOverviewPage";
 import { IconTrackingPage } from "./IconTrackingPage";
 import { VoxelSkinSheetPage } from "./VoxelSkinSheetPage";
 // 體素鑄造廠 (task #229) — EAGER, like Quick Approval and for the same reason.
@@ -236,6 +237,11 @@ export const NAV: NavItem[] = [
   { page: "damageTiers", label: "傷害五級距", emoji: "💥", section: SEC_COMBAT },
   // 回魔地板 (GH#446)。緊鄰上面兩頁：owner 那三張單是同一次反算出來的。
   { page: "manaEconomy", label: "魔力經濟（建議滿魔時間）", emoji: "🔵", section: SEC_COMBAT },
+  // 五級距總覽 (owner 2026-08-21「後台設定及說明⋯全部都是推導動態即時產生」)。
+  // ⭐ 它排在四張級距頁**後面**是刻意的：先看得到四把尺各自在哪一頁，再看它們
+  // 攤平之後的樣子。它唯讀，而且是唯一同時印出「卡面 → 實際」兩欄的地方 ——
+  // 那兩欄不一樣，正是 owner 那句「不計入系統倍率」造成的。
+  { page: "tierOverview", label: "五級距總覽（卡面→實際）", emoji: "🪜", section: SEC_COMBAT },
   { page: "uiLexicon", label: "介面用語（Fate）", emoji: "🏆", section: SEC_COMBAT },
   { page: "statNormalization", label: "英雄屬性正規化", emoji: "📐", section: SEC_COMBAT },
   // GH#322 —— 這四頁的 spec 早就寫好了，但導覽列沒有那一列 ⇒ 操作者點不到。
@@ -1020,6 +1026,7 @@ function Console(): React.JSX.Element {
             {page === "dataMigration" && <DataMigrationPage />}
             {page === "ai" && <AiSettingsPage />}
             {page === "modelBudget" && <ModelBudgetPage />}
+            {page === "tierOverview" && <TierOverviewPage />}
             {page === "iconTracking" && <IconTrackingPage />}
             {page === "voxelSkins" && <VoxelSkinSheetPage />}
             {page === "voxelForge" && <VoxelFoundryPage />}

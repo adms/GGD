@@ -230,6 +230,20 @@ export type Page =
   | "cooldownTiers"
   | "damageTiers"
   | "manaEconomy"
+  /**
+   * 五級距總覽 (owner 2026-08-21「後台設定及說明⋯全部都是推導動態即時產生」) ——
+   * 四軸一頁，每一格 **卡面值 → 實際值**。
+   *
+   * ⭐ 它是**唯讀**的，也是這五頁裡唯一一頁**不編輯任何文件**的：上面四頁各自
+   * 編一份 config，而這一頁把四份攤平再乘上現在生效的 combat-env 倍率。分開的
+   * 理由和 itemDraft / mobWaves 那一組一樣 —— 一頁同時寫四份文件，兩條 lane 會
+   * 互相蓋掉對方。
+   *
+   * ⚠️ 刻意**不**在 SESSION_REQUIRED_PAGES 裡：它一格都不寫，而且沒有 session
+   * 時會退回同源的出貨 JSON（`/content/config/*.json`）並在畫面上標出來 ——
+   * 與 hub / modelBudget 同一類的唯讀主控台。
+   */
+  | "tierOverview"
   | "uiLexicon"
   /**
    * 混音 (`config/audio-mix.json`, owner 2026-08-17「其他角色語音應該是自己的一半」)

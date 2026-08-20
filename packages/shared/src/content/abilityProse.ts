@@ -37,6 +37,10 @@
  *   `{{travel}}`  位移距離      ← dash/leap/blink 的距離 → **級距詞**
  *   `{{push}}`    擊退距離      ← knockback 的距離 → **級距詞**
  *
+ * ⭐ 結尾加 `!` = **實際值**（`{{cd!}}` = 玩家真的等到的秒數 = 卡面 ×
+ * `combatEnv.cooldown`，出貨 0.2 ⇒ 45 秒的技能實際只轉 9 秒）。哪幾軸有實際值、
+ * 其餘為什麼**刻意沒有**，住在 {@link ./renderAbilityText}，⛔ 不在這一份。
+ *
  * ⭐ 為什麼**傷害/冷卻/耗魔是數字、幾何是級距詞** —— owner 2026-08-19 逐字：
  * 「所有**卡面範圍跟距離說明**都應該要跟著改五級距（**傷害/冷卻/耗魔要明確數值**
  *  不然很難讓玩家判斷取捨）」。⛔ 這不是排版偏好，是玩家要拿來算取捨的東西。
@@ -88,19 +92,33 @@ export const PROSE_SLOT_DOC: Readonly<Record<ProseSlotKey, { zh: string; from: s
 export const INDEXED_SLOTS: readonly ProseSlotKey[] = ["dmg"];
 
 /**
- * 一個佔位符。⚠️ `\{\{key[N]\}\}` —— 鍵是小寫英文，序號是選填的十進位。
+ * 一個佔位符。⚠️ `\{\{key[N][!]\}\}` —— 鍵是小寫英文，序號是選填的十進位，
+ * 結尾的 `!` 是**實際值**（見 {@link ./renderAbilityText}）。
  * ⛔ 刻意不吃空白（`{{ cd }}` 不算）：一個寬鬆的語法會讓「這是不是佔位符」
  * 變成兩個實作各自的判斷，而外部編輯器抄的是這一行。
+ *
+ * ⭐ **為什麼要有第二種值**：卡面的「45秒冷卻」與玩家真的等到的秒數**不是同一個
+ * 數字** —— 出貨 `combatEnv.cooldown` 是 0.2，所以那一支實際只轉 9 秒。
+ * 兩個都是真的，而它們住在**不同的空間**（`cooldownTiers.ts`：「這三張表是卡面秒」）。
+ * ⇒ 語法要表達得出兩種，⛔ 不然想寫實際值的作者只能手打回去，
+ * 而手打正是這一整支要消滅的東西。
  */
-export const PLACEHOLDER_RE = /\{\{([a-z]+)(\d*)\}\}/g;
+export const PLACEHOLDER_RE = /\{\{([a-z]+)(\d*)(!?)\}\}/g;
 
-/** 解析一個佔位符鍵。回 `undefined` = 不在詞彙裡（閘會對它紅）。 */
-export function parseSlot(key: string, index: string): { slot: ProseSlotKey; i: number } | undefined {
+/**
+ * 解析一個佔位符鍵。回 `undefined` = 不在詞彙裡（閘會對它紅）。
+ * @param live 第三個捕獲群組（`"!"` = 要**實際值**那一種）。
+ */
+export function parseSlot(
+  key: string,
+  index: string,
+  live = "",
+): { slot: ProseSlotKey; i: number; live: boolean } | undefined {
   if (!(PROSE_SLOT_KEYS as readonly string[]).includes(key)) return undefined;
   const slot = key as ProseSlotKey;
   if (index !== "" && !INDEXED_SLOTS.includes(slot)) return undefined;
   const i = index === "" ? 0 : Number.parseInt(index, 10) - 1;
-  return i >= 0 ? { slot, i } : undefined;
+  return i >= 0 ? { slot, i, live: live === "!" } : undefined;
 }
 
 /* ─────────────────────── 受保護段落 · 數字字樣 ─────────────────────── */
@@ -614,14 +632,31 @@ export function slotValue(q: AbilityQuantities, slot: ProseSlotKey, i: number): 
  * ⚠️ 台詞與（GGD 註記）裡的 `{{…}}`：⛔ 不特別排除 —— 一段台詞裡不會有佔位符，
  * 而真的有的話它也該被算出來（作者刻意寫的）。剝台詞是給**讀數字**的人用的。
  */
-export function renderAbilityText(text: string, q: AbilityQuantities): string {
+export function renderAbilityText(
+  text: string,
+  q: AbilityQuantities,
+  live?: LiveValues,
+): string {
   if (!text.includes("{{")) return text;
-  return text.replace(PLACEHOLDER_RE, (whole, key: string, index: string) => {
-    const s = parseSlot(key, index);
+  return text.replace(PLACEHOLDER_RE, (whole, key: string, index: string, bang: string) => {
+    const s = parseSlot(key, index, bang);
     if (s === undefined) return whole;
+    // ⛔ `{{cd!}}` 拿不到實際值時**原樣印出來**，⛔ 不退回卡面值 ——
+    //    退回去的話卡面會印一個「實際 45 秒」，而玩家等的是 9 秒（同檔頭的 fail-loud）。
+    if (s.live) return (s.i === 0 ? live?.[s.slot] : undefined) ?? whole;
     return slotValue(q, s.slot, s.i) ?? whole;
   });
 }
+
+/**
+ * 一支技能上**實際值**那一半（`{{cd!}}` 這一族）。
+ *
+ * ⚠️ 型別刻意寫成一張純字串表，⛔ 不 import `./renderAbilityText` ——
+ * 那一支要 import 這一支的詞彙，兩邊互相 import 就是一個模組初始化循環。
+ * ⭐ 誰**算**它、哪幾軸算得出來、為什麼其餘幾軸刻意算不出來：全部住在
+ * {@link ./renderAbilityText}（`LIVE_RULES`），⛔ 不在這裡。
+ */
+export type LiveValues = Readonly<Partial<Record<ProseSlotKey, string>>>;
 
 /**
  * 把每一個佔位符換成一顆**不含數字**的私用區字元。
@@ -635,11 +670,14 @@ export const maskPlaceholders = (text: string): string =>
 export const PLACEHOLDER_MASK = "\uE000";
 
 /** 這一段字裡的佔位符，逐個列出來（閘用）。 */
-export function placeholdersIn(text: string): { raw: string; key: string; index: string }[] {
+export function placeholdersIn(
+  text: string,
+): { raw: string; key: string; index: string; live: string }[] {
   return [...text.matchAll(PLACEHOLDER_RE)].map((m) => ({
     raw: m[0]!,
     key: m[1]!,
     index: m[2]!,
+    live: m[3]!,
   }));
 }
 
@@ -828,10 +866,14 @@ export interface ProseViolation {
  *   · **台詞裡的數字**（第〇·六守則②）—— 44-04「在35秒後宣布勝利吧」。
  *     ⭐ 反駁方式：把台詞從 `「…」` 裡拿出來，它就會被算成機制數字。
  */
-export function proseViolations(text: string, q: AbilityQuantities): ProseViolation[] {
+export function proseViolations(
+  text: string,
+  q: AbilityQuantities,
+  live?: LiveValues,
+): ProseViolation[] {
   const out: ProseViolation[] = [];
   for (const ph of placeholdersIn(text)) {
-    const s = parseSlot(ph.key, ph.index);
+    const s = parseSlot(ph.key, ph.index, ph.live);
     if (s === undefined) {
       out.push({
         rule: "unknown-placeholder",
@@ -841,12 +883,21 @@ export function proseViolations(text: string, q: AbilityQuantities): ProseViolat
       });
       continue;
     }
-    if (slotValue(q, s.slot, s.i) === undefined) {
+    // ⭐ `{{cd!}}` 問的是**實際值**那一張表，⛔ 不是 `slotValue` —— 引擎有卡面值
+    //    ⛔ 不代表那一軸算得出實際值（多數軸刻意算不出來，理由在 `LIVE_RULES`）。
+    const resolved = s.live
+      ? s.i === 0
+        ? live?.[s.slot]
+        : undefined
+      : slotValue(q, s.slot, s.i);
+    if (resolved === undefined) {
       out.push({
         rule: "unresolved-placeholder",
         slot: s.slot,
         text: ph.raw,
-        why: `引擎這一軸是空的（${describeSlotAny(q, s.slot)}）—— 這個佔位符會**原樣印在卡片上**`,
+        why: s.live
+          ? `這一軸沒有**實際值**（見 renderAbilityText.ts 的 LIVE_RULES：多數軸刻意沒有，因為「實際」不是一個單一因子）—— 這個佔位符會**原樣印在卡片上**`
+          : `引擎這一軸是空的（${describeSlotAny(q, s.slot)}）—— 這個佔位符會**原樣印在卡片上**`,
       });
     }
   }

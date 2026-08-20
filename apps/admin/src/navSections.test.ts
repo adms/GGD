@@ -162,6 +162,10 @@ const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
       "cooldownTiers",
       "damageTiers",
       "manaEconomy",
+      // 2026-08-21 owner「後台設定及說明⋯全部都是推導動態即時產生」——
+      // ⭐ 五級距總覽（唯讀，卡面→實際）。它必須和上面四張級距頁同一區：
+      // 分到別區的話，操作者調完一格之後要跨兩區才看得到它換算成幾秒。
+      "tierOverview",
       "statNormalization",
       "castTime",
       "mitigation",
@@ -242,6 +246,9 @@ describe("分類重編一頁都沒有掉", () => {
       "cooldownTiers",
       "damageTiers",
       "manaEconomy",
+      // 2026-08-21：五級距總覽。⚠️ 它和上面三頁不同 —— 它**不編輯任何文件**，
+      // 所以它也不在 SESSION_REQUIRED_PAGES 裡（唯讀主控台，同 hub / modelBudget）。
+      "tierOverview",
     ]);
     const added = [...after].filter((p) => !before.has(p) && !SINCE_BASELINE.has(p));
     expect(lost, `搬家把這些頁面弄丟了（元件還在，但左欄按不到）：${lost.join(", ")}`).toEqual([]);

@@ -111,7 +111,20 @@ import { zConfigMapSpecDoc } from "@ggd/shared/content/schema/mapSpecDoc";
 import { zConfigCameraDoc } from "@ggd/shared/content/schema/config";
 import { zConfigDisplacementTiersDoc } from "@ggd/shared/content/schema/displacementDoc";
 // ⛔ 級距名只有一份（GH#414）—— 後台不重打一組字串。
-import { SKILL_TIER_NAMES } from "@ggd/shared/content/skillTiers";
+// ⭐ 2026-08-21（owner「後台設定及說明⋯**全部都是推導動態即時產生**」）：連
+//    「決鬥區半徑」與「這一格是半徑的幾分之幾」也一起從梯子讀 —— 那兩個數字在
+//    這一頁的說明裡出現過 6 次，而 GH#463 改名之後其中三處**當場變成假的**
+//    （「中 = 4.5」變成 6、「大 = 6」變成 8），⛔ 而且 `content:build` 是綠的。
+import {
+  DUEL_ZONE_RADIUS_REF,
+  LADDER_FRACTIONS,
+  SKILL_TIER_NAMES,
+} from "@ggd/shared/content/skillTiers";
+// ⛔ AoE／施法距離的五個數字也只有一份 —— 說明裡的「大 = ?」從它讀。
+import { AOE_TIER_RADIUS_MAX, DEFAULT_AOE_TIERS } from "@ggd/shared/content/aoeTiers";
+import { DEFAULT_RANGE_TIERS, RANGE_TIER_MAX } from "@ggd/shared/content/rangeTiers";
+// 英雄碰撞半徑（AoE 命中是身體重疊，所以半徑 r 掃得到圓心距離 r + 這個數的人）。
+import { CHAMPION_BODY_RADIUS } from "@ggd/shared/content/displacementTiers";
 // ⛔ 形狀名（單體／範圍／變身）也只有一份 —— 後台不重打一組字串（同上一行）。
 import { COOLDOWN_SHAPES, DEFAULT_COOLDOWN_TIERS } from "@ggd/shared/content/cooldownTiers";
 // ⛔ 傷害級距的五個數字也只有一份 —— 相稱性下拉的選項說明從它推導。
@@ -1115,6 +1128,26 @@ const CAST_TIME_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
+/**
+ * 「決鬥區半徑的幾分之幾」—— ⭐ 從**梯子本身**推導，⛔ 不在說明裡手打 `24 ÷ 4`。
+ *
+ * ⚠️ 這一段在 2026-08-21 之前是手抄的，而 GH#463 改名把每一格往左移了一格 ⇒
+ * 「中 = 4.5」（真值 6）、「大 = 6 畫在地上 4.8」（真值 8）三處**當場變成假的**，
+ * 而 `content:build`、全套測試、卡片全部是綠的（第一·五守則的形狀）。
+ * ⇒ 現在半徑、分數、上下界全部現算：owner 哪天把決鬥區改小，這一頁自己跟上。
+ */
+const fracText = (f: number): string => {
+  for (let q = 1; q <= 64; q++) {
+    const num = f * q;
+    if (Math.abs(num - Math.round(num)) < 1e-9) return `${Math.round(num)}/${q}`;
+  }
+  return f.toFixed(4);
+};
+/** AoE／施法距離取梯子的橫木 [1..5]，所以第 i 格對應 `LADDER_FRACTIONS[i + 1]`。 */
+const rungFrac = (i: number): string => fracText(LADDER_FRACTIONS[i + 1] ?? 0);
+/** 「（決鬥區半徑 24 的 1/4）」那一段字。 */
+const rungWhy = (i: number): string => `決鬥區半徑 ${DUEL_ZONE_RADIUS_REF} 的 ${rungFrac(i)}`;
+
 const AOE_TIERS_SPEC: ConfigDocSpec = {
   page: "aoeTiers",
   collection: "config",
@@ -1124,12 +1157,12 @@ const AOE_TIERS_SPEC: ConfigDocSpec = {
   title: "AoE 範圍五級距",
   intro: [
     "技能的範圍**寫級別不寫數字**。owner 2026-08-11：「重新對應範圍只有 小／中／大／超大，**原則上不寫範圍數字**」（⚠️ 那是 08-11 的**四級**舊詞彙；GH#463 已換成他 08-19 的 極小/小/中/大/極大，值不變、名字整體左移一格）。技能 JSON 填 `radiusTier: \"中\"`，這一頁決定「中」是多少半徑。",
-    "⭐ 這一頁存在的理由就是**單一住處**：把數字寫在每支技能上等於 115 個住處，想把「中」從 4.5 調成 5.0 要改 115 個檔案。填了級別的技能，改這一格全部一起動。",
+    `⭐ 這一頁存在的理由就是**單一住處**：把數字寫在每支技能上等於 115 個住處 —— 想把「${SKILL_TIER_NAMES[2]}」從現在的 ${DEFAULT_AOE_TIERS.radius[SKILL_TIER_NAMES[2]!]} 調成別的數字，就要改 115 個檔案。填了級別的技能，改這一格全部一起動。`,
     "⭐ owner 2026-08-19（GH#414）：「正規化成**五級距**」。第五格「極大」是新加的，前四格**一個數字都沒有動** —— 所以 110 支填了級別的技能手感完全不變。",
-    "五個級別的意思：極小 ≈ 同時打到 5 人 ／ 小 ≈ 10 人 ／ 中 ≈ 1/4 競技場 ／ 大 ≈ 1/3 競技場 ／ 極大 ≈ 1/2 競技場。",
-    "⭐ 這五個數字**不是挑的**：它們是「決鬥區半徑 24 的 1/8 · 3/16 · 1/4 · 1/3 · 1/2」。其中 1/4 與 1/3 是 owner 自己指定的錨，其餘由同一條分母數列延伸。同一條梯子也產出位移級距與施法距離級距（`packages/shared/src/content/skillTiers.ts`）。",
-    "⚠️ 這四個數字是**卡面值**。玩家實際吃到的是它再乘「戰鬥系統」頁的 `abilityRange`（出貨 0.8）—— 所以「大 = 6」畫在地上是 4.8，也就是決鬥區半徑 24 的 **1/5**，不是 1/4。要讓比例在畫面上成立，這四格要各自除以 0.8。",
-    "⚠️ AoE 命中是身體碰撞（英雄碰撞半徑 0.6），所以半徑 r 實際會掃到**圓心距離 r + 0.6** 的人。",
+    `五個級別現在各是多少：${SKILL_TIER_NAMES.map((t, i) => `**${t} ${DEFAULT_AOE_TIERS.radius[t]}**（${rungWhy(i)}）`).join(" ／ ")}。`,
+    `⭐ 這五個數字**不是挑的**：它們是「決鬥區半徑 ${DUEL_ZONE_RADIUS_REF} 的 ${SKILL_TIER_NAMES.map((_, i) => rungFrac(i)).join(" · ")}」。其中 ${rungFrac(2)} 與 ${rungFrac(3)} 是 owner 自己指定的錨（「大 = 1/4 競技場、超大 = 1/3」），其餘由同一條分母數列延伸。同一條梯子也產出位移級距與施法距離級距（\`packages/shared/src/content/skillTiers.ts\`）。`,
+    `⚠️ 這 ${SKILL_TIER_NAMES.length} 個數字是**卡面值**，⛔ 不是畫在地上的圈。玩家實際吃到的是它再乘「戰鬥系統」頁的 \`abilityRange\` —— 那個係數出貨不是 1，所以「${SKILL_TIER_NAMES[3]} = ${DEFAULT_AOE_TIERS.radius[SKILL_TIER_NAMES[3]!]}」掃到的其實比 ${DEFAULT_AOE_TIERS.radius[SKILL_TIER_NAMES[3]!]} 小，owner 指定的「${rungFrac(3)} 競技場」在畫面上就不成立。⭐ **兩欄並排的實際值在「五級距總覽」那一頁**（它讀現在生效的係數當場算），⛔ 這裡刻意不抄一個會過期的數字。要讓比例在畫面上成立，這五格要各自除以那個係數。`,
+    `⚠️ AoE 命中是身體碰撞（英雄碰撞半徑 ${CHAMPION_BODY_RADIUS}），所以半徑 r 實際會掃到**圓心距離 r + ${CHAMPION_BODY_RADIUS}** 的人 —— 畫面上的圈比命中範圍小一點是正常的。`,
     "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/aoe-tiers.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
   ],
   consumer:
@@ -1157,9 +1190,9 @@ const AOE_TIERS_SPEC: ConfigDocSpec = {
         [
           "約同時打到 5 人（原 WC3 100~200）。",
           "約同時打到 10 人（原 WC3 200~300）。",
-          "設計意圖是 1/4 競技場（決鬥區半徑 24 ÷ 4），原 WC3 300~500 那一批落在這裡。",
-          "1/3 競技場（24 ÷ 3）。原 WC3 500 以上。",
-          "1/2 競技場（24 ÷ 2）。⚠️ 上界 24 ＝ 決鬥區半徑：大於它就是全場命中，那要走不設 radius 的寫法，⛔ 不是把這一格填爆。",
+          `設計意圖是 ${rungWhy(2)}（owner 指定的錨），原 WC3 300~500 那一批落在這裡。`,
+          `${rungWhy(3)}（owner 指定的另一個錨）。原 WC3 500 以上。`,
+          `${rungWhy(4)}。⚠️ 上界 ${AOE_TIER_RADIUS_MAX} ＝ 決鬥區半徑：大於它就是全場命中，那要走不設 radius 的寫法，⛔ 不是把這一格填爆。`,
         ][i],
     })),
   ],
@@ -1179,8 +1212,9 @@ const RANGE_TIERS_SPEC: ConfigDocSpec = {
   intro: [
     "owner 2026-08-19：「**可施展技能的距離普遍超遠**」。技能的施法距離**寫級別不寫數字**，技能 JSON 填 `rangeTier: \"中\"`，這一頁決定「中」是多遠。",
     "⚠️ 「超遠」的根因**不是換算係數錯**。係數（`GGD_PER_WC3 = 11/600`）經 owner 自己的校準點驗證過是對的。根因是**這一軸在 GH#414 之前完全沒有表** —— 量到 404 筆施法距離，中位數 11、**最大 29.33**，而決鬥區半徑只有 24：有技能打得比整個決鬥區還遠。",
-    "⭐ 梯級與 AoE **完全同一條**（決鬥區半徑 24 的 1/8 · 3/16 · 1/4 · 1/3 · 1/2）。同一個字在兩軸上指向同一個絕對值 —— 一支「大」的技能打得到 6，炸開也是 6。那是 owner 說的「統一」最強的讀法。",
-    "⚠️ 這五個是**卡面值**。玩家實際吃到的是它再乘「戰鬥系統」頁的 `abilityRange`（出貨 0.8），與 AoE 完全同一個形態。",
+    `⭐ 梯級與 AoE **完全同一條**（決鬥區半徑 ${DUEL_ZONE_RADIUS_REF} 的 ${SKILL_TIER_NAMES.map((_, i) => rungFrac(i)).join(" · ")}）。同一個字在兩軸上指向同一個絕對值 —— 一支「${SKILL_TIER_NAMES[3]}」的技能打得到 ${DEFAULT_RANGE_TIERS.range[SKILL_TIER_NAMES[3]!]}，炸開也是 ${DEFAULT_AOE_TIERS.radius[SKILL_TIER_NAMES[3]!]}。那是 owner 說的「統一」最強的讀法。`,
+    `五個級別現在各是多少：${SKILL_TIER_NAMES.map((t, i) => `**${t} ${DEFAULT_RANGE_TIERS.range[t]}**（${rungWhy(i)}）`).join(" ／ ")}。⚠️ 上界 ${RANGE_TIER_MAX} ＝ 決鬥區半徑：比它更遠的「施法距離」意思是整個決鬥區都在射程內，那不是一個距離級別。`,
+    "⚠️ 這五個是**卡面值**。玩家實際吃到的是它再乘「戰鬥系統」頁的 `abilityRange`（與 AoE 完全同一個係數、同一個形態）。⭐ **兩欄並排的實際值在「五級距總覽」那一頁**（它讀現在生效的係數當場算），⛔ 這裡刻意不抄一個會過期的數字。",
     "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/range-tiers.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
   ],
   consumer:
@@ -1205,18 +1239,25 @@ const RANGE_TIERS_SPEC: ConfigDocSpec = {
 
 // ───────────────────────────── 冷卻級距 (config/cooldown-tiers) ─
 
+const CD_SECONDS = DEFAULT_COOLDOWN_TIERS.seconds;
+const CD_SMALLEST = SKILL_TIER_NAMES[0];
+const CD_LARGEST = SKILL_TIER_NAMES[SKILL_TIER_NAMES.length - 1]!;
+/** 範圍表相對單體表貴幾倍 —— ⭐ 現算，⛔ 不是說明裡手打的「2–5 倍」。 */
+const CD_SHAPE_RATIOS = SKILL_TIER_NAMES.map(
+  (t) => Math.round((CD_SECONDS["範圍"][t] / CD_SECONDS["單體"][t]) * 10) / 10,
+);
 const COOLDOWN_SHAPE_WHY: Record<string, string> = {
-  單體: "打一個人的技能。⭐ 極小那一格 **6 秒**是 owner 的 Q1 反算出來的：卡面 6 秒 ＝ **1.2 實際秒**，連續 20 次 ＝ 24 秒內要能殺死對方。",
-  範圍: "打一片的技能。整張表比單體貴 **2–5 倍**，那就是「打到很多人」的代價 —— 也是傷害級距只需要**一張**表的原因（同一個懲罰不收兩次）。",
-  變身: "變身／長持續增益。⚠️ 與範圍**同一組數字**是 owner 給的，⛔ 不是我複製貼上：這一類的價值來自「一場只有幾次」。",
+  單體: `打一個人的技能。⭐ 「${CD_SMALLEST}」那一格 **${CD_SECONDS["單體"][CD_SMALLEST]} 卡面秒**是 owner 的 Q1 反算出來的（「連續施展 ${KILL_CASTS_REF} 次以內一定要能殺死對方」），而傷害五級距的錨又是從它長出來的 —— ⛔ 動這一格等於同時動了傷害那一頁。`,
+  範圍: `打一片的技能。整張表比單體貴 **${Math.min(...CD_SHAPE_RATIOS)}–${Math.max(...CD_SHAPE_RATIOS)} 倍**（現算），那就是「打到很多人」的代價 —— 也是傷害級距只需要**一張**表的原因（同一個懲罰不收兩次）。`,
+  變身: `變身／長持續增益。⚠️ 與範圍**同一組數字**是 owner 給的，⛔ 不是我複製貼上：這一類的價值來自「一場只有幾次」。`,
 };
 
 const COOLDOWN_TIER_WHY = [
   "**下限例外**（owner 2026-08-19：「極大跟極小都是屬於卡上下限的例外而非線性規則」）。單體這一格是整套系統的錨 —— 傷害級距的極小也是從它反算的。",
   "線性段的第一格。",
-  "線性段的中間。⚠️ 出貨 358 支有冷卻的技能，中位是 **55 秒** —— 也就是說大部分技能今天落在「大」附近，而傷害只有中位 532。那個落差就是 GH#447 說的「AP 太弱勢」。",
+  "線性段的中間。⚠️ 量於 **2026-08-19（GH#445 落地前）**：358 支有冷卻的技能中位 55 卡面秒、傷害中位 532 —— 大部分技能落在偏貴的那一格，而回報沒有跟上。那個落差就是 GH#447 說的「AP 太弱勢」。⛔ 這兩個數字是**當時的快照**，級距靠攏之後不再成立；要看現在的分佈請跑稽核，⛔ 不要把它們當成現值。",
   "線性段的最後一格。",
-  "**上限例外**（同極小）。⚠️ 這一格 × 範圍表 ＝ 120 卡面秒 ＝ 24 實際秒，一回合放得出兩次左右。",
+  `**上限例外**（同極小）。⚠️ 這一格在範圍表上是 **${CD_SECONDS["範圍"][CD_LARGEST]} 卡面秒**，而實際等待要再乘「戰鬥系統」頁的冷卻係數 —— ⭐ 換算後的秒數在「五級距總覽」那一頁現算，⛔ 這裡不抄。`,
 ];
 
 const COOLDOWN_TIERS_SPEC: ConfigDocSpec = {
@@ -1229,8 +1270,8 @@ const COOLDOWN_TIERS_SPEC: ConfigDocSpec = {
   intro: [
     "owner 2026-08-19 逐字：「冷卻的階段只會分幾種 一樣是**極小小中大極大** ／ **單體 6/15/30/45/60** ／ **範圍 30/45/60/90/120** ／ **變身或持續增益狀態 30/45/60/90/120** ／ **不計入系統倍率及減少 CD 等效果**」。技能 JSON 填 `cooldownTier: \"中\"`，這一頁決定「中」是幾秒。",
     "⭐ 這十五格是 owner **直接給滿的規格**，所以它們是**照抄**的 —— ⛔ 沒有像 AoE／施法距離／位移那樣套一條推導梯子。再推一次就是拿「編輯器產生的 JSON」去蓋「owner 的新版說明」，那違反優先序階梯。",
-    "⚠️ 這裡的秒數是**卡面秒**（owner：「不計入系統倍率」）。玩家實際等到的 ＝ 這一格 × 「戰鬥系統」頁的 `cooldown`（出貨 **0.2**）× 暴走倍率，再被「冷卻規則」頁的秒數地板夾一次。⇒ 單體·極小 6 卡面秒 ＝ **1.2 實際秒**。",
-    "⚠️ 「6 為什麼不在 15 的整除格點上」不是算術副作用。owner 2026-08-19：「**極大跟極小都是屬於卡上下限的例外而非線性規則**」—— 線性段（小／中／大）的範圍÷單體 ＝ 3.0／2.0／2.0，全部落在他給的「2–5× 上下限參考準則」內。",
+    `⚠️ 這裡的秒數是**卡面秒**（owner：「不計入系統倍率」）。玩家實際等到的 ＝ 這一格 ×「戰鬥系統」頁的 \`cooldown\` × 暴走倍率，再被「冷卻規則」頁的秒數地板夾一次 ⇒ 後台寫 ${CD_SECONDS["單體"][CD_SMALLEST]} 秒，遊戲裡等到的比它短。⭐ **兩欄並排的實際秒數在「五級距總覽」那一頁**（它讀現在生效的係數與地板當場算），⛔ 這裡刻意不抄一個會過期的數字。`,
+    `⚠️ 「${CD_SMALLEST}」為什麼不落在線性段的整除格點上 —— 那不是算術副作用。owner 2026-08-19：「**極大跟極小都是屬於卡上下限的例外而非線性規則**」—— 線性段（${SKILL_TIER_NAMES.slice(1, -1).join("／")}）的範圍÷單體 ＝ ${SKILL_TIER_NAMES.slice(1, -1).map((t) => (CD_SECONDS["範圍"][t] / CD_SECONDS["單體"][t]).toFixed(1)).join("／")}（現算），全部落在他給的「2–5× 上下限參考準則」內。`,
     "⚠️ 級距是**一支技能一格**，⛔ 不是逐等級各一格：解析時整條冷卻陣列的每一階都被寫成同一個值。想做「升階冷卻下降」的技能就**不要**填級別，手寫陣列一直都合法。",
     "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/cooldown-tiers.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
   ],
@@ -1254,7 +1295,7 @@ const COOLDOWN_TIERS_SPEC: ConfigDocSpec = {
         path: `seconds.${shape}.${tier}`,
         zh: `${shape}・${tier} — 卡面秒`,
         note:
-          `填 \`cooldownTier: "${tier}"\` 且形狀是「${shape}」的技能要等幾**卡面**秒（實際 ×0.2）。` +
+          `填 \`cooldownTier: "${tier}"\` 且形狀是「${shape}」的技能要等幾**卡面**秒（⚠️ 實際等待還要乘「戰鬥系統」頁的冷卻係數再夾一次地板，換算好的秒數在「五級距總覽」頁）。` +
           `改這一格，樹上每一支落在這一格的技能同時跟著變。${COOLDOWN_SHAPE_WHY[shape]}${COOLDOWN_TIER_WHY[i]}`,
       })),
     ),

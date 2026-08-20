@@ -384,19 +384,42 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 
 ### 全域倍率表（重要：畫面上的數字已經乘過了）
 
-`content/config/combat-env.json` 是一張全域倍率表，每項只作用在模擬裡的**唯一一個**公式點。**目前的值**：
+<!-- BEGIN GENERATED:combat-env -->
+#### 全域倍率表 `combat-env`（36 項 · 20 項不是 1.0）
 
-| 倍率 | 值 | 作用 |
+> `content/config/combat-env.json` 是一張全域倍率表，每項只作用在模擬裡的**唯一一個**公式點。**遊戲內顯示的每一個數字，都是乘完倍率之後的最終值** —— 換算走唯一一條接縫 `apps/client/src/ui/displayFinal.ts`，React 端訂閱權威的 `combatEnvJson`，後台改倍率時畫面即時跟著變。
+>
+> ⚠️ 下表是**出貨值**。後台覆寫逐鍵蓋過 content 預設，所以線上那一場可能不是這些數字（改 config 前先查有沒有存過 override）。
+
+| 倍率 | 值 | 是什麼 |
 | --- | ---: | --- |
-| `cooldown` | **0.25** | 技能冷卻秒數（含 EX） |
-| `damageDealt` | **0.5** | 所有減傷前的傷害封包 |
-| `maxHealth` | **8.0** | 最大生命 |
-| `abilityRange` | **0.6** | 技能施放距離與 AoE 半徑（**不含普攻**） |
-| 其餘 14 項 | 1.0 | defense / attackDamage / abilityPower / healthRegen / maxMana / manaRegen / moveSpeed / attackSpeed / healing / shield / critChance / critDamage / lifesteal / attackRange |
+| `abilityRange` | **0.8** | 技能範圍 |
+| `agiToArmor` | **0.3** | 敏捷 → 護甲 |
+| `agiToAttackSpeed` | **0.01** | 敏捷 → 攻速 |
+| `attackDamage` | **0.6** | 物理攻擊力 |
+| `attackRange` | **0.6** | 攻擊距離 |
+| `cooldown` | **0.2** | 技能冷卻時間 |
+| `goldEliteKill` | **0.1** | 打特殊殭屍／殭屍王發放金錢 |
+| `goldMobKill` | **0.5** | 打一般殭屍發放金錢 |
+| `intToAbilityPower` | **6.5** | 智慧 → 法強 |
+| `intToMagicResist` | **0** | 智慧 → 魔抗 |
+| `intToManaRegen` | **0.21** | 智慧 → 回魔 |
+| `intToMaxMana` | **15** | 智慧 → 魔力 |
+| `magicResistMult` | **0.2** | 魔法抗性倍率 |
+| `manaRegen` | **8** | 魔力回復 |
+| `maxHealth` | **4** | 生命上限 |
+| `moveSpeedMelee` | **0.8** | 近戰移速倍率 |
+| `moveSpeedRanged` | **0.6** | 遠程移速倍率 |
+| `strToAttackDamage` | **0.4** | 力量 → 攻擊力 |
+| `strToHealthRegen` | **0.04** | 力量 → 回血 |
+| `strToMaxHealth` | **23** | 力量 → 生命 |
 
-**遊戲內顯示的每一個數字，都是乘完倍率之後的最終值。** 一個原始 35 秒冷卻的技能，在 `cooldown: 0.25` 之下實際是 8.75 秒 —— UI 顯示的就是 8.75，不是 35。換算走唯一一條接縫 `apps/client/src/ui/displayFinal.ts`，React 端訂閱權威的 `combatEnvJson`，後台改倍率時畫面即時跟著變。
+其餘 **16** 項是 1.0（不動）：`abilityPower`、`attackSpeed`、`critChance`、`critDamage`、`damageDealt`、`defense`、`goldHeroKill`、`goldQuest`、`goldRoundPayout`、`healing`、`healthRegen`、`itemCooldown`、`lifesteal`、`maxMana`、`moveSpeed`、`shield`。
 
-倍率表在 tick 0 之前注入模擬並隨快照下發，兩邊用同一支正規化函式，所以預測與伺服器永遠對得上。後台覆寫逐鍵蓋過 content 預設。
+*由 `pnpm docs:readme` 從 contentVersion `cv_4d39c7f795f2` 產生。 倍率讀 `content/config/combat-env.json`（version 8）。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+<!-- END GENERATED:combat-env -->
+
+倍率表在 tick 0 之前注入模擬並隨快照下發，兩邊用同一支正規化函式，所以預測與伺服器永遠對得上。技能卡面上的冷卻／距離／傷害怎麼過這張表，見 [⭐ 技能五級距](#-技能五級距)。
 
 ### 每回合換地圖
 
@@ -731,6 +754,64 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 編號同時是**英雄身分的唯一判準** —— 同模型 ≠ 同角色（`championIdentity.ts` 開頭的黑化Saber 案例值得讀一次）。
 
 > ⚠️ 程式裡有幾則**過期註解**，不要抄：`apps/client/src/ui/codex/` 的 `CodexPage.tsx`、`codexSearch.ts`、`codexData.ts` 都還寫著 879 entries，`apps/admin/src/content.ts` 寫 "113 champions / 212 items / 554 abilities" —— 實際是 78 + 461 + 239 = **778**。以 `manifest.json` 為準。（`codexLive.test.ts` 已經有一條守衛禁止把 113/212/554/879 寫進 codex 的**原始碼**，但它管不到註解，也管不到別的 app。）
+
+### ⭐ 技能五級距
+
+> ⚠️ **這一節與上面那張「英雄定位與屬性級距」是兩套不同的東西**，只是共用同五個級距名：
+> 那一張講的是**英雄的屬性**落在哪一格（`config.stat-normalization@1`），
+> 這一節講的是**一支技能**的冷卻／距離／範圍／位移／傷害落在哪一格。
+
+<!-- BEGIN GENERATED:tiers -->
+#### ⭐ 技能五級距（5 張表 · 8 條梯子 · 母體 **49 位對戰可選英雄**）
+
+> **級距名全專案只有一份**（`packages/shared/src/content/skillTiers.ts` 的 `SKILL_TIER_NAMES` = **極小** / **小** / **中** / **大** / **極大**）—— ⛔ 沒有「超大」，也沒有任何一軸可以自己再宣告一組。
+>
+> ⭐ **靠攏發生在註冊時，⛔ 內容 JSON 不動。** 技能檔裡那些從 w3x 匯進來的自由秒數／耗魔，是在 `packages/shared/src/content/tierSnap.ts` 被靠到格點上的 —— 舊技能、新技能、模板展開出來的技能走**同一個**接縫。靠攏方向是 owner 的規則「**傷害低的往前靠、傷害高的往後靠**」，而「高／低」那條線是後台一格（`highDamageThreshold`，**0 = 自動**＝全庫中位滿階傷害）。
+>
+> 每一張表自己帶 `enabled` 開關：翻掉那一格，那一軸就回到技能自己手寫的數字（**一鍵 rollback**，⛔ 不必改任何一份技能 JSON）。
+
+##### 一 · 五張表（**卡面值**，出貨 `content/config/*-tiers.json`）
+
+| 軸 | 技能 JSON 填什麼 | 梯子 | 極小 | 小 | 中 | 大 | 極大 | 開關 | 出處 |
+|---|---|---|---:|---:|---:|---:|---:|:-:|---|
+| 施法範圍（AoE 半徑） | `radiusTier` | `radius` | **3** | **4.5** | **6** | **8** | **12** | ✅ | `aoe-tiers.json` |
+| 冷卻 | `cooldownTier` + `cooldownShape` | `seconds.單體` | **6** | **15** | **30** | **45** | **60** | ✅ | `cooldown-tiers.json` |
+|   |   | `seconds.範圍` | **30** | **45** | **60** | **90** | **120** | ✅ | `cooldown-tiers.json` |
+|   |   | `seconds.變身` | **30** | **45** | **60** | **90** | **120** | ✅ | `cooldown-tiers.json` |
+| 傷害 | `damageTier`（住 `amount.zScaling`） | `damage` | **600** | **1500** | **3000** | **4500** | **6000** | ✅ | `damage-tiers.json` |
+| 位移（衝刺 / 擊退） | `distanceTier` | `travel.distance` | **5.5** | **8.25** | **11** | **14.67** | **22** | ✅ | `displacement-tiers.json` |
+|   |   | `push.distance` | **2** | **3** | **4.5** | **6** | **8** | ✅ | `displacement-tiers.json` |
+| 施法距離 | `rangeTier` | `range` | **3** | **4.5** | **6** | **8** | **12** | ✅ | `range-tiers.json` |
+
+同一份 config 裡另外 **2** 個欄位五格是同一個值（⇒ 它是伴隨參數，⛔ 不是一條級距）：`travel.speed` = **16**（`displacement-tiers.json`）、`push.speed` = **16**（`displacement-tiers.json`）。
+
+##### 二 · 卡面 ↔ 實際（表上的數字**不是**玩家吃到的數字）
+
+> 五張表印的全部是**卡面值**。玩家實際吃到的是它再過一次全域倍率表（上一節的 `combat-env`），⛔ 而且**不是每一軸都有倍率**：
+
+| 軸 | 卡面 → 實際 | 接縫 |
+|---|---|---|
+| 冷卻 | × `cooldown` **0.2**，再被 `config.cooldown-rules@1.minSeconds` **0.1** 夾一次 | `sim/abilities/abilitySystem.ts` |
+| 施法距離 · AoE 半徑 | × `abilityRange` **0.8**（**⛔ 不含普攻** —— 那條走 `attackRange` **0.6**）| `abilityCastRange()` / `abilityRadius()` |
+| 傷害 | × `damageDealt` **1**，之後才進減傷 | `sim/combat/damage.ts` |
+| 位移（衝刺／擊退） | **⛔ 不套倍率** —— 卡面即實際 | `sim/effects/dash.ts` · `sim/effects/knockback.ts` |
+
+> ⚠️ 所以「單體·極小」的 **6 卡面秒**，在出貨設定下實際是 **1.2 秒**。⛔ 卡面上寫的是前者 —— 傷害與回魔的反算全部站在這個換算上。
+
+##### 三 · 級距與**原始值**的關係
+
+| 軸 | 原始值是什麼 | 怎麼變成級距 |
+|---|---|---|
+| 施法距離 · AoE · 位移 | w3x 的 `w3a` 欄位（JASS 優先） | 先乘換算係數 `GGD_PER_WC3 = 11/600`，再靠到梯子上。梯子本身是**決鬥區半徑的分數**（owner 給的錨：大 = 1/4、極大 = 1/3），⛔ 不是等比也不是等差 |
+| 冷卻 | w3x 匯進來的自由秒數 | owner 2026-08-19 **直接給滿**十五格（單體／範圍／變身各一列），⛔ 所以這一軸照抄，沒有推導梯子。不在格點上的走 `tierSnap` 靠攏 |
+| 傷害 | 技能自己手寫的 `flat` / `perRank` | **推導**：母體 49 位可選英雄的純基礎中位血量 ÷ owner 的「20 發要能殺死」× HP 倍率 ＋ 初始加成 ÷ 20 → 進位 = 極小；其餘四格 = 極小 × **單體冷卻比**。填了 `damageTier` 就**取代** `flat`/`perRank`（⛔ 不是相加） |
+
+> ⭐ **母體是 49 位對戰可選英雄**，⛔ 不是 `content/champions/` 的檔案數 —— 那一份含**變身態**（同一位英雄的第二張卡 ⇒ 重複計數）與 fail-open 骨架佔位。定義只有一個住處（`packages/shared/testkit/balancePopulation.ts`：對戰可選名單 − 退場名單 − 變身態），`pnpm roster:check` 逐份交付物驗它。
+>
+> 逐格推導、三個錨點（LV30 hard / LV50 soft / LV99 極限）的達成率、以及兩個「空間」（純基礎 ↔ 引擎最終）的對照表在 [`docs/平衡錨點量測.md`](./docs/平衡錨點量測.md)；與 w3x 的逐支對照與梯子推導在 [`docs/editor-contract/ggd-skill-tiers.md`](./docs/editor-contract/ggd-skill-tiers.md)。兩份都是產生的。
+
+*由 `pnpm docs:readme` 從 contentVersion `cv_4d39c7f795f2` 產生。 級距讀 `content/config/*-tiers.json`（5 張表）、母體讀 `docs/平衡錨點量測.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+<!-- END GENERATED:tiers -->
 
 ### 開放清單（以下預設展開，不用點）
 

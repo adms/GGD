@@ -36,7 +36,9 @@ import { rangeTiersFromDoc, resolveRangeTier } from "./rangeTiers";
 import { cooldownTiersFromDoc, resolveCooldownTier } from "./cooldownTiers";
 import { damageTiersFromDoc, resolveDamageTier } from "./damageTiers";
 // ⭐ 說明推導（票號待開） —— 技能說明的佔位符在 `withProse` 被代入（見下面那一格的說明）。
-import { abilityQuantities, renderAbilityText, type ProseTables } from "./abilityProse";
+import { type ProseTables } from "./abilityProse";
+// ⭐ 唯一入口（抽量 → 算實際值 → 代入）。⛔ 不要退回自己組那三步，見 `withProse`。
+import { liveDepsFromConfigs, renderAbilityDescription } from "./renderAbilityText";
 // 位移四級距 + **無條件的速度天花板**（GH#318）。同上，唯一的查表處。
 import {
   displacementTiersFromDoc,
@@ -307,12 +309,17 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
       ...store.all<ArenaDoc>("arenas").flatMap((a) => a.zones.map((z) => z.boundaryRadius)),
     ),
   };
+  // ⭐ 實際值（`{{cd!}}` = 卡面 × `combatEnv.cooldown`）要的兩份設定，同樣從 store 讀
+  //   —— ⛔ 不讀 `Configs` 註冊表（那一圈跑在技能之後，會拿到上一次載入留下的那一份）。
+  const liveDeps = liveDepsFromConfigs(configDocs);
   const withProse = (d: AbilityDef): AbilityDef => {
     const text = (d as { description?: unknown }).description;
     if (typeof text !== "string" || !text.includes("{{")) return d;
     return {
       ...d,
-      description: renderAbilityText(text, abilityQuantities(d, proseTables)),
+      // ⛔ 這裡刻意呼叫**入口**而不是自己組三步（抽量 → 算實際值 → 代入）：
+      //    漏掉中間那步的那天，`{{cd!}}` 會原樣印在卡片上而測試全綠（失敗形態②）。
+      description: renderAbilityDescription(d, text, proseTables, liveDeps),
     } as AbilityDef;
   };
 
