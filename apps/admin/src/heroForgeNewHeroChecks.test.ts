@@ -5,6 +5,7 @@
  * 拿掉 `pageWarnings` 裡的 `draftWarnings(...)` 那一行 → 第二條紅。
  */
 import { describe, it, expect } from "vitest";
+import { abilityQuantities, renderAbilityText } from "@ggd/shared/content/abilityProse";
 import {
   blankHeroForgeForm,
   emptyCatalog,
@@ -61,7 +62,12 @@ describe("創建新英雄：六欄", () => {
     // 【傷害】也是六欄之一 —— 剛出生的技能至少會做一件事。
     expect((q["effects"] as unknown[]).length).toBeGreaterThan(0);
     // ⭐【說明】是從**同一組數字**生出來的,所以它與 JSON 依構造一致。
-    expect(String(q["description"] ?? "")).toContain(`冷卻 ${cd} 秒`);
+    // ⭐ 說明推導（票號待開） —— 而且那個「一致」現在是**結構上的**：說明裡住的是佔位符,
+    //    算繪出來才是數字。⛔ 兩條都要驗 —— 只驗第一條的話,一支算不出來的
+    //    佔位符（引擎那一軸是空的）會讓卡片印出裸的 `{{cd}}` 而測試全綠。
+    const desc = String(q["description"] ?? "");
+    expect(desc).toContain("{{cd}}");
+    expect(renderAbilityText(desc, abilityQuantities(q))).toContain(`冷卻 ${cd} 秒`);
   });
 
   it("⭐ 寫進「」的機制數字會被警示（接線:這一條紅代表整組警示沒接上）", () => {

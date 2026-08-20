@@ -4,7 +4,7 @@
   "name": "01-00 怒斬",
   "icon": "assets/icons/abilities/godie-hart.passive.webp",
   "provenance": "w3x-import",
-  "description": "[被動]\n0秒冷卻時間\n\n攻擊時有15%的機會，造成175點額外傷害，並震昏敵人0.5秒。",
+  "description": "[被動]\n{{cd}}秒冷卻時間\n\n攻擊時有15%的機會，造成{{dmg}}點額外傷害，並震昏敵人0.5秒。",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",

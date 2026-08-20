@@ -3,7 +3,7 @@
   "name": "90-02 麻痺粉",
   "icon": "assets/icons/abilities/godie-h02r.w.webp",
   "provenance": "w3x-import",
-  "description": "[輔助]\n25秒冷卻時間\n\n散發出麻痺的粉末，令周圍600的敵人減緩速度60%，持續3秒。",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n散發出麻痺的粉末，令周圍600的敵人減緩速度60%，持續3秒。",
   "slot": "W",
   "castType": "ground",
   "maxRank": 4,

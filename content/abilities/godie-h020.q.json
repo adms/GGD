@@ -3,7 +3,7 @@
   "name": "04-01 火球術",
   "icon": "assets/icons/abilities/godie-h020.q.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n18秒冷卻時間\n\n使用火球來攻擊敵人造成170點傷害，並附帶暈眩1.50秒的效果。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n使用火球來攻擊敵人造成{{dmg}}點傷害，並附帶暈眩1.50秒的效果。",
   "slot": "Q",
   "castType": "targeted",
   "maxRank": 4,

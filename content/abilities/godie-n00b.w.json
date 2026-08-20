@@ -4,7 +4,7 @@
   "name": "57-03 複製鏡",
   "icon": "assets/icons/abilities/godie-n00b.w.webp",
   "provenance": "w3x-import",
-  "description": "[輔助攻擊]\n75秒冷卻時間\n\n未來的法寶，可將鏡前的人或物加以複製，複製出來的人物擁有與本尊相同的攻擊力，但將承受200%額外傷害，持續20秒。\n對非英雄部隊及任務用英雄無效。",
+  "description": "[輔助攻擊]\n{{cd}}秒冷卻時間\n\n未來的法寶，可將鏡前的人或物加以複製，複製出來的人物擁有與本尊相同的攻擊力，但將承受200%額外傷害，持續20秒。\n對非英雄部隊及任務用英雄無效。",
   "slot": "W",
   "castType": "targeted",
   "maxRank": 3,

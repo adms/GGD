@@ -3,7 +3,7 @@
   "name": "34-04 奧義˙蒼龍破",
   "icon": "assets/icons/abilities/godie-osam.r.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n45秒冷卻時間\n\n蒼龍破是殺生丸釋放自己的妖力施展出來的絕招，將妖氣集中在劍刃上揮出，妖氣化作蒼龍沿著面向一路推進，逐段掃過一直線上的敵人，給予600點傷害（每人只吃一次）。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n蒼龍破是殺生丸釋放自己的妖力施展出來的絕招，將妖氣集中在劍刃上揮出，妖氣化作蒼龍沿著面向一路推進，逐段掃過一直線上的敵人，給予{{dmg}}點傷害（每人只吃一次）。",
   "slot": "R",
   "castType": "skillshot",
   "maxRank": 3,

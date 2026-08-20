@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "77-03 GLADIARIA ALAT",
   "provenance": "owner-spec",
-  "description": "[主動][變身][加速][飛行]\n120秒冷卻\n消耗MP90/180/270/360\n\n「GLADIARIA  ALAT 。翼之劍士」\n[加速][攻擊速度]60/90/120/150% ，並可以變換為[飛行]狀態無視碰撞，持續6/9/12/15秒。",
+  "description": "[主動][變身][加速][飛行]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n\n「GLADIARIA  ALAT 。翼之劍士」\n[加速][攻擊速度]60/90/120/150% ，並可以變換為[飛行]狀態無視碰撞，持續6/9/12/15秒。",
   "slot": "E",
   "castType": "self",
   "maxRank": 4,

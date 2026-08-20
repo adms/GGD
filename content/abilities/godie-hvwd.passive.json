@@ -4,7 +4,7 @@
   "name": "02-00 淨化",
   "icon": "assets/icons/abilities/godie-hvwd.passive.webp",
   "provenance": "w3x-import",
-  "description": "[輔助]\n60秒冷卻時間\n\n淨化移除所有的異常狀態，並可以緩慢對手4秒，燃燒50點瑪那。",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n淨化移除所有的異常狀態，並可以緩慢對手4秒，燃燒50點瑪那。",
   "slot": "PASSIVE",
   "innateKind": "active",
   "castType": "targeted",

@@ -3,7 +3,7 @@
   "name": "58-03 就決定是你了!小智",
   "icon": "assets/icons/abilities/godie-ofar.e.webp",
   "provenance": "w3x-import",
-  "description": "[主動傷害]\n60秒冷卻時間\n\n對著敵方的部隊投出皮卡丘痛恨已久的低能小智缺，造成350傷害之後還會將對方打昏0.5秒。",
+  "description": "[主動傷害]\n{{cd}}秒冷卻時間\n\n對著敵方的部隊投出皮卡丘痛恨已久的低能小智缺，造成{{dmg}}傷害之後還會將對方打昏0.5秒。",
   "slot": "E",
   "castType": "targeted",
   "maxRank": 4,

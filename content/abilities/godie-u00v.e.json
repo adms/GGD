@@ -3,7 +3,7 @@
   "name": "78-03 廬山昇龍破",
   "icon": "assets/icons/abilities/godie-u00v.e.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n55秒冷卻時間\n\n使數百輛警車和警察仆街的超必殺技，可對附近敵方單位造成450點傷害。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n使數百輛警車和警察仆街的超必殺技，可對附近敵方單位造成{{dmg}}點傷害。",
   "slot": "E",
   "castType": "ground",
   "maxRank": 4,

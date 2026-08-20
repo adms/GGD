@@ -46,6 +46,8 @@ import engine_vocab as V  # noqa: E402  — python 端唯一的引擎詞彙來�
 CONTENT = os.environ.get("GGD_CONTENT_DIR") or os.path.join(REPO, "content")
 WHITELIST = os.path.join(REPO, "data", "curation", "whitelist.json")
 OUTDIR = os.path.join(REPO, "docs", "reference")
+# ⭐ 說明推導（票號待開） —— 算繪好的技能說明（`pnpm spec:build` 的產物，`spec:check` 守著）。
+ABILITY_PROSE = os.path.join(REPO, "docs", "editor-contract", "ggd-ability-prose.json")
 
 CMD = "pnpm docs:reference"
 SCRIPT = "tools/reference/gen_reference.py"
@@ -727,6 +729,18 @@ def build_context():
 
     champions = load_collection("champions")
     abilities = load_collection("abilities")
+    # ⭐ 說明推導（票號待開） —— 技能說明在 JSON 裡是**帶佔位符的原文**（`{{cd}}秒冷卻`），
+    #    算繪器是 TypeScript。這一支是 Python，所以它讀**算繪好的產物**，
+    #    ⛔ 不是自己再寫一份算繪 —— 第二份算繪就是下一次「文件說 A、場上跑 B」。
+    #    產物由 `pnpm spec:build` 寫出，`pnpm spec:check` 逐位元組守著它。
+    rendered = (load_json(ABILITY_PROSE, {}) or {}).get("rendered") or {}
+    for _a in abilities:
+        if _a.get("id") in rendered:
+            _a["description"] = rendered[_a["id"]]
+    for _c in champions:
+        for _slot, _emb in (_c.get("abilities") or {}).items():
+            if isinstance(_emb, dict) and _emb.get("id") in rendered:
+                _emb["description"] = rendered[_emb["id"]]
     items = load_collection("items")
     retired_items = load_legacy_items()
 

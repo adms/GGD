@@ -96,11 +96,35 @@ import { zChampionDoc } from "../../packages/shared/src/content/schema/champion"
 import { zTemplateDoc } from "../../packages/shared/src/content/schema/template";
 import { Stat } from "../../packages/shared/src/sim/stats/statTypes";
 import { ModOp } from "../../packages/shared/src/sim/stats/modifiers";
+import { ContentLoader } from "../../packages/shared/src/content/loader";
+import { FsContentSource } from "../../packages/shared/src/content/node/FsContentSource";
+import { registerAll } from "../../packages/shared/src/content/registries";
+import { Abilities } from "../../packages/shared/src/sim/content/registry";
+// ⭐ 說明推導（票號待開） —— 佔位符詞彙**只有一份**（`abilityProse.ts`），文件從它長出來。
+import {
+  INDEXED_SLOTS,
+  PLACEHOLDER_RE,
+  PROSE_SLOT_DOC,
+  PROSE_SLOT_KEYS,
+  parseSlot,
+} from "../../packages/shared/src/content/abilityProse";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = resolve(HERE, "../..");
 
 export const DEFAULT_OUT = join(REPO, "docs/技能標記機制與效果規則.md");
+/**
+ * ⭐ 說明推導（票號待開） —— **算繪好的**技能說明（id → 玩家真的看到的那段字）。
+ *
+ * 為什麼要有這一份：`content/abilities/*.json` 裡住的是**帶佔位符**的原文
+ *（`{{cd}}秒冷卻`），而算繪器是 TypeScript。任何**不是 TS** 的下游
+ *（`tools/reference/gen_readme_lists.py` 的 README／參考文件、外部編輯器）
+ * 要嘛印出裸的 `{{cd}}`，要嘛**自己再寫一份算繪** —— 而第二份算繪正是
+ * `abilityProse.ts` 檔頭那條紅線。⇒ 由**唯一**那支算繪器把結果寫出來給它們讀。
+ *
+ * ⛔ 它不是第二個住處：這一份是**產物**，`--check` 逐位元組比對，過期就紅。
+ */
+export const DEFAULT_PROSE_OUT = join(REPO, "docs/editor-contract/ggd-ability-prose.json");
 
 /**
  * ⭐ GH#467 —— 一個 effect kind 現在住在哪個檔。
@@ -838,6 +862,62 @@ export function buildSpecMarkdown(): string {
   p("| **本檔** | 「它**怎麼用**」—— 參數、上下界、觸發時機、持有者方向、誰在用 | 設計卡片／技能的人 |");
   p();
   p("兩者共用同一個 `buildCapabilityManifest()`，所以名詞那一層不可能互相矛盾。");
+  p();
+
+  // ── 0 技能說明的佔位符（說明推導（票號待開））──────────────────────────────────────
+  // ⭐ 用量是**數出來的**（出貨 `content/abilities/*.json` 的說明），⛔ 不是手寫的。
+  const proseUse = new Map<string, number>();
+  for (const f of readdirSync(join(REPO, "content/abilities"))) {
+    if (!f.endsWith(".json") || f === "_index.json") continue;
+    const desc = (
+      JSON.parse(readFileSync(join(REPO, "content/abilities", f), "utf8")) as {
+        description?: unknown;
+      }
+    ).description;
+    if (typeof desc !== "string") continue;
+    for (const m of desc.matchAll(PLACEHOLDER_RE)) {
+      const slot = parseSlot(m[1]!, m[2]!);
+      if (slot !== undefined) proseUse.set(slot.slot, (proseUse.get(slot.slot) ?? 0) + 1);
+    }
+  }
+  p("---");
+  p();
+  p("## 0. 技能說明（`description`）—— ⛔ 不可以手打機制數字");
+  p();
+  p("一段說明裡的**冷卻／耗魔／傷害／施法距離／範圍**一律寫成**佔位符**，");
+  p("由引擎在註冊時從**同一份 JSON** 算繪出來（`packages/shared/src/content/abilityProse.ts`，");
+  p("接在 `registerAll` 的級距解析正上方 —— 全專案**唯一**的算繪處）。");
+  p();
+  p("⛔ **為什麼不可以手打**：一句「45秒冷卻」與 `cooldown: [45,45,45,45]` 是**兩個住處**，");
+  p("而它們之間沒有守衛。級距表一改、倍率一轉，說明就地變成謊話 ——");
+  p("`content:build` 綠、Zod 綠、全套測試綠。佔位符讓這一族的謊話**在結構上寫不出來**：");
+  p("`{{cd}}` 沒有自己的值，它**就是** `cooldown[]`。");
+  p();
+  p("| 佔位符 | 是什麼 | 從哪一格推導 | 算繪成 | 出貨內容用到 |");
+  p("|---|---|---|---|---:|");
+  for (const k of PROSE_SLOT_KEYS) {
+    const d = PROSE_SLOT_DOC[k];
+    p(`| \`{{${k}}}\` | ${d.zh} | \`${d.from}\` | ${d.renders} | ${proseUse.get(k) ?? 0} |`);
+  }
+  p();
+  p("· 語法逐字是 `{{鍵}}`，鍵是小寫英文。⛔ 不吃空白（`{{ cd }}` 不算）。");
+  p(`· 只有 \`${INDEXED_SLOTS.join("` / `")}\` 可以帶序號：\`{{dmg2}}\` = 效果樹上**第 2 個**傷害葉。`);
+  p("· **解不開的佔位符會原樣印在卡片上**（`{{dmg3}}` 就是 `{{dmg3}}`），⛔ 引擎不會替你");
+  p("  退回一個看起來合理的數字 —— 一個裸的佔位符是刺眼的，一個憑空的 `0` 不是。");
+  p();
+  p("**⭐ 為什麼傷害／冷卻／耗魔是數字、距離／範圍是級距詞** —— owner 2026-08-19 逐字：");
+  p("「所有**卡面範圍跟距離說明**都應該要跟著改五級距（**傷害/冷卻/耗魔要明確數值**");
+  p("不然很難讓玩家判斷取捨）」。⛔ 這不是排版偏好，是玩家要拿來算取捨的東西。");
+  p();
+  p("**⛔ 兩種段落一個字都不會被動到**");
+  p();
+  p("| 段落 | 為什麼 |");
+  p("|---|---|");
+  p("| `「…」` | **角色對白不是效果**。44-04 心臟麻痺的「在35秒後宣布勝利吧」是台詞，⛔ 不是一支有 35 秒時序的技能。整段受保護（含跨行、含行中） |");
+  p("| `（GGD 註記 …）` | 那是**當初為什麼這樣做**的紀錄；機械改寫它等於把歷史改成看起來像現在的樣子 |");
+  p();
+  p("⚠️ **外部編輯器的自動建議也適用**：讀說明去猜機制之前要先剝掉 `「…」`，");
+  p("否則產出的 JSON 會多出台詞裡那個不存在的機制。");
   p();
 
   // ── 1 總覽 ──────────────────────────────────────────────────────────
@@ -1610,12 +1690,57 @@ function fieldTableOfStatModifier(): string[] {
 // CLI
 // ---------------------------------------------------------------------------
 
-function main(argv: readonly string[]): number {
+/**
+ * id → **算繪之後**的說明。⚠️ 走的是 `registerAll` 那一份（模板展開 + 級距解析
+ * 之後），⛔ 不是磁碟原文 —— 104 支模板技的效果樹在磁碟上是空的。
+ */
+function buildProseJson(): string {
+  const rendered: Record<string, string> = {};
+  for (const id of [...Abilities.ids()].sort()) {
+    const def = Abilities.get(id) as unknown as { description?: unknown };
+    if (typeof def?.description === "string" && def.description !== "") {
+      rendered[id] = def.description;
+    }
+  }
+  return (
+    JSON.stringify(
+      {
+        schema: "ggd-ability-prose@1",
+        note:
+          "算繪之後的技能說明（玩家看到的字）。來源是 content/abilities/*.json 的佔位符原文，" +
+          "由 packages/shared/src/content/abilityProse.ts 唯一那支算繪器產生。⛔ 不要手改。",
+        rendered,
+      },
+      null,
+      2,
+    ) + "\n"
+  );
+}
+
+async function main(argv: readonly string[]): Promise<number> {
   const check = argv.includes("--check");
   const outIdx = argv.indexOf("--out");
   const out = outIdx >= 0 ? resolve(argv[outIdx + 1] ?? "") : DEFAULT_OUT;
+  const proseOut = outIdx >= 0 ? undefined : DEFAULT_PROSE_OUT;
 
   const md = buildSpecMarkdown();
+  // ⭐ 算繪好的說明要走**註冊表**（模板展開 + 級距解析之後），⛔ 不是磁碟原文。
+  registerAll((await new ContentLoader(new FsContentSource(join(REPO, "content"))).load()).store);
+  const proseJson = buildProseJson();
+
+  if (proseOut !== undefined) {
+    if (check) {
+      if (!existsSync(proseOut) || readFileSync(proseOut, "utf8") !== proseJson) {
+        process.stderr.write(
+          `⛔ ${proseOut} 已經過期 —— 技能說明或它推導的數字改過了。\n` +
+            `   跑 \`pnpm spec:build\` 然後 \`git add docs/\`。⛔ 不要改測試。\n`,
+        );
+        return 1;
+      }
+    } else {
+      writeFileSync(proseOut, proseJson);
+    }
+  }
 
   if (check) {
     if (!existsSync(out)) {
@@ -1640,5 +1765,6 @@ function main(argv: readonly string[]): number {
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === resolve(fileURLToPath(import.meta.url))) {
-  process.exit(main(process.argv.slice(2)));
+  // ⛔ 不用 top-level await —— tsx 這裡的輸出格式是 cjs，它會 transform 失敗。
+  void main(process.argv.slice(2)).then((code) => process.exit(code));
 }

@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "44-00 機警",
   "provenance": "owner-spec",
-  "description": "[主動][吸收（護盾）]\n15秒冷卻\n\n「我是新世界的神」\n夜神月的機警，將智慧具現化成魔力[護盾]，可抵擋全部傷害。每點魔力可以抵免3點傷害。",
+  "description": "[主動][吸收（護盾）]\n{{cd}}秒冷卻\n\n「我是新世界的神」\n夜神月的機警，將智慧具現化成魔力[護盾]，可抵擋全部傷害。每點魔力可以抵免3點傷害。",
   "slot": "PASSIVE",
   "castType": "self",
   "maxRank": 1,

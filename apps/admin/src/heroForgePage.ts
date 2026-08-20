@@ -46,6 +46,7 @@ import {
   type RouteInfo,
 } from "@ggd/shared/content/originRoutes";
 import { embeddedForm } from "@ggd/shared/content/editModel";
+import { abilityQuantities, renderAbilityText } from "@ggd/shared/content/abilityProse";
 import {
   deriveAbilityDefaults,
   applyAbilityDefaults,
@@ -332,7 +333,18 @@ function cardFrom(id: string, raw: unknown): AbilityCard {
   const d = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>;
   const str = (k: string, fallback: string): string =>
     typeof d[k] === "string" && d[k] !== "" ? (d[k] as string) : fallback;
-  return { id, name: str("name", id), slot: str("slot", ""), description: str("description", ""), doc: d };
+  return {
+    id,
+    name: str("name", id),
+    slot: str("slot", ""),
+    // ⭐ 說明推導（票號待開） —— 說明裡的 `{{cd}}` / `{{dmg}}` … 在這裡算繪成數字與級距詞。
+    //    ⛔ 這一頁**不可以**自己寫第二份算繪：`renderAbilityText` 就是遊戲內卡片
+    //    走的那一支，兩邊共用它才不會出現「後台顯示 A、場上跑 B」。
+    //    ⚠️ 這一頁拿的是**磁碟形狀**的文件（沒有 `Configs`），所以幾何級距詞走
+    //    `DEFAULT_PROSE_TABLES` 那條退路；三個數字軸與出貨逐字相同。
+    description: renderAbilityText(str("description", ""), abilityQuantities(d)),
+    doc: d,
+  };
 }
 
 async function getJson(fetchFn: typeof fetch, url: string): Promise<unknown> {

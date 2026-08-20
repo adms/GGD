@@ -35,6 +35,8 @@ import { rangeTiersFromDoc, resolveRangeTier } from "./rangeTiers";
 // 冷卻五級距 → 秒數（GH#445）／傷害五級距 → 基礎值（GH#447）。同上，唯一的查表處。
 import { cooldownTiersFromDoc, resolveCooldownTier } from "./cooldownTiers";
 import { damageTiersFromDoc, resolveDamageTier } from "./damageTiers";
+// ⭐ 說明推導（票號待開） —— 技能說明的佔位符在 `withProse` 被代入（見下面那一格的說明）。
+import { abilityQuantities, renderAbilityText, type ProseTables } from "./abilityProse";
 // 位移四級距 + **無條件的速度天花板**（GH#318）。同上，唯一的查表處。
 import {
   displacementTiersFromDoc,
@@ -219,12 +221,14 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   //   （standalone 與 champion-embedded）必須拿到同一個答案 —— 只包一邊就是
   //   「商店顯示 6.0、場上打 4.5」那種對不起來的死法。
   const expandStandalone = (d: AbilityDef): AbilityDef =>
-    withTiers(expandIfTemplated(d, templates, true, onFailure, failures, undefined));
+    withProse(withTiers(expandIfTemplated(d, templates, true, onFailure, failures, undefined)));
   const expandEmbedded =
     (championId: string, slot: string) =>
     (d: AbilityDef): AbilityDef =>
-      withTiers(
-        expandIfTemplated(d, templates, false, onFailure, failures, { championId, slot }),
+      withProse(
+        withTiers(
+          expandIfTemplated(d, templates, false, onFailure, failures, { championId, slot }),
+        ),
       );
 
   // AoE 級距表要在**技能之前**讀出來（owner 2026-08-11「原則上不寫範圍數字」）。
@@ -275,6 +279,42 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
       ) as never,
       cooldownTiers,
     ) as T;
+
+  /**
+   * ⭐【技能說明的**唯一**算繪處】說明推導（票號待開） —— `{{cd}}` / `{{dmg}}` / `{{range}}`…
+   * 在這裡被代入。
+   *
+   * ⚠️ 它包在 `withTiers` 的**外面**是硬性的：佔位符讀的是**級距解析之後**的
+   * `cooldown[]` / `range` / 傷害葉。包在裡面的話 44-01 死神之眼會印出退路值
+   * `2` 而不是級距值 `12` —— 那正是這一支要消滅的「卡面說 2、引擎跑 12」。
+   *
+   * ⭐ 接在這一格（⛔ 不是 client 的一支 helper）是因為**每一個消費端都讀註冊表**：
+   * 遊戲內卡片 / 選人 / 商店 / 後台預覽 / codex / 文件產生器 / `descriptionClaims`
+   * 閘。一個接縫 ⇒ ⛔ 不可能出現「這裡印舊值、場上跑新值」。
+   */
+  const proseTables: ProseTables = {
+    range: rangeTiers.range,
+    radius: aoeTiers.radius,
+    travel: Object.fromEntries(
+      Object.entries(displacementTiers.travel).map(([k, v]) => [k, v.distance]),
+    ) as ProseTables["travel"],
+    push: Object.fromEntries(
+      Object.entries(displacementTiers.push).map(([k, v]) => [k, v.distance]),
+    ) as ProseTables["push"],
+    // ⭐ 錨從 store 裡的 arenas **推導**，⛔ 不抄字面值 24（`Arenas` 那一圈跑在
+    //   技能之後，讀註冊表會拿到上一次載入留下的那一份 —— 一個安靜的跨載入污染）。
+    zoneRadius: Math.min(
+      ...store.all<ArenaDoc>("arenas").flatMap((a) => a.zones.map((z) => z.boundaryRadius)),
+    ),
+  };
+  const withProse = (d: AbilityDef): AbilityDef => {
+    const text = (d as { description?: unknown }).description;
+    if (typeof text !== "string" || !text.includes("{{")) return d;
+    return {
+      ...d,
+      description: renderAbilityText(text, abilityQuantities(d, proseTables)),
+    } as AbilityDef;
+  };
 
   // 英雄屬性正規化：同樣要在**英雄註冊之前**讀（`Configs.register` 那一圈在後面）。
   // ⭐ 一個 seam，接在 registerChampion 的正上方 —— 商店預覽 / 選人畫面 / 後台

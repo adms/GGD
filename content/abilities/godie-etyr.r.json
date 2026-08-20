@@ -3,7 +3,7 @@
   "name": "14-04 聖夜降臨",
   "icon": "assets/icons/abilities/godie-etyr.r.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n0秒冷卻時間\n\n利用木乃香身上深不可測的魔力使得周圍死去的亡靈轉換成1個式神，持續8秒，召喚瞬間會造成周圍200傷害。",
+  "description": "[主動攻擊]\n0秒冷卻時間\n\n利用木乃香身上深不可測的魔力使得周圍死去的亡靈轉換成1個式神，持續8秒，召喚瞬間會造成周圍{{dmg}}傷害。",
   "slot": "R",
   "castType": "targeted",
   "maxRank": 3,

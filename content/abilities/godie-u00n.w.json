@@ -3,7 +3,7 @@
   "name": "76-02 伸縮自如的橡膠火箭砲",
   "icon": "assets/icons/abilities/godie-u00n.w.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n25秒冷卻時間\n\n藉由橡膠果實的能力，將手臂伸長，長距離給於敵人200點傷害，並且將其擊退且擊昏1秒。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n藉由橡膠果實的能力，將手臂伸長，長距離給於敵人{{dmg}}點傷害，並且將其擊退且擊昏1秒。",
   "slot": "W",
   "castType": "targeted",
   "maxRank": 4,

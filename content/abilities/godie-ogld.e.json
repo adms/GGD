@@ -3,7 +3,7 @@
   "name": "72-03 超亮白",
   "icon": "assets/icons/abilities/godie-ogld.e.webp",
   "provenance": "w3x-import",
-  "description": "[輔助]\n45秒冷卻時間\n\n使用超亮白牙膏攻擊目標，帶腐蝕性的牙膏會侵蝕目標6點裝甲，亮白效果也將使目標暴露於我方視野之中，持續8秒。",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n使用超亮白牙膏攻擊目標，帶腐蝕性的牙膏會侵蝕目標6點裝甲，亮白效果也將使目標暴露於我方視野之中，持續8秒。",
   "slot": "E",
   "castType": "targeted",
   "maxRank": 3,

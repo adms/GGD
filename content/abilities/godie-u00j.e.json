@@ -3,7 +3,7 @@
   "name": "74-03 闇之天使",
   "icon": "assets/icons/abilities/godie-u00j.e.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n60秒冷卻時間\n\n抽取星球之力轉換為魔晃能量，瞬間爆發的威力造成150點傷害，共8道爆炸。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n抽取星球之力轉換為魔晃能量，瞬間爆發的威力造成{{dmg}}點傷害，共8道爆炸。",
   "slot": "E",
   "castType": "ground",
   "maxRank": 4,

@@ -3,7 +3,7 @@
   "name": "72-02 黑人牙菌斑",
   "icon": "assets/icons/abilities/godie-ogld.w.webp",
   "provenance": "w3x-import",
-  "description": "[主動]\n15秒冷卻時間\n\n釋放黑人牙菌斑病毒，被感染的部隊會每秒受到20點傷害並減緩攻擊移動速度30%，持續10秒。死亡後會釋放出1隻成熟的牙菌斑並聽從黑人控制，持續60秒。",
+  "description": "[主動]\n{{cd}}秒冷卻時間\n\n釋放黑人牙菌斑病毒，被感染的部隊會每秒受到{{dmg}}點傷害並減緩攻擊移動速度30%，持續10秒。死亡後會釋放出1隻成熟的牙菌斑並聽從黑人控制，持續60秒。",
   "slot": "W",
   "castType": "targeted",
   "maxRank": 3,

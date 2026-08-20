@@ -4,7 +4,7 @@
   "name": "79-00 靈壓",
   "icon": "assets/icons/abilities/godie-h01o.passive.webp",
   "provenance": "w3x-import",
-  "description": "[靈氣]\n0秒冷卻時間\n\n卍解後的一護具有更強大的靈力，初始法力值較一般人高，伴隨其靈力而來的巨大靈壓可降低範圍600內敵人攻擊速度50%及移動速度10%。",
+  "description": "[靈氣]\n{{cd}}秒冷卻時間\n\n卍解後的一護具有更強大的靈力，初始法力值較一般人高，伴隨其靈力而來的巨大靈壓可降低{{radius}}範圍內敵人攻擊速度50%及移動速度10%。",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",

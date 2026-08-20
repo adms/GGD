@@ -3,7 +3,7 @@
   "name": "90-04 陽光烈焰",
   "icon": "assets/icons/abilities/godie-hgam.r.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n60秒冷卻時間\n\n草系的強力招式之一，將陽光的能量慢慢聚集起來，累積成強烈的烈焰後發射，造成一直線上敵方部隊600+全能力總和*2傷害。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n草系的強力招式之一，將陽光的能量慢慢聚集起來，累積成強烈的烈焰後發射，造成一直線上敵方部隊{{dmg}}+全能力總和*2傷害。",
   "slot": "R",
   "castType": "skillshot",
   "maxRank": 3,

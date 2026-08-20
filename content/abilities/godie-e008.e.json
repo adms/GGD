@@ -3,7 +3,7 @@
   "name": "21-03 赤焰爆發",
   "icon": "assets/icons/abilities/godie-e008.e.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n45秒冷卻時間\n\n赤焰爆發可以攻擊一直線敵人，將其打到空中給予400點損害，落地後暈眩1秒。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n赤焰爆發可以攻擊一直線敵人，將其打到空中給予400點損害，落地後暈眩1秒。",
   "slot": "E",
   "castType": "skillshot",
   "maxRank": 4,

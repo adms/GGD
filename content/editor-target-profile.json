@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_2da230123c44",
+    "contentVersion": "cv_4d39c7f795f2",
     "collections": {
       "champions": {
-        "hash": "cac1768f3af6",
+        "hash": "92b639a312f7",
         "count": 71
       },
       "abilities": {
-        "hash": "9d86856a9d40",
+        "hash": "491c799eab71",
         "count": 420
       },
       "items": {
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "26c7ab285f9f",
+        "hash": "704dae1da69d",
         "count": 69
       },
       "models": {
@@ -3158,24 +3158,24 @@
             "unlocked": 561720
           },
           "maxMana": {
-            "base": 348050,
-            "unlocked": 348050
+            "base": 345050,
+            "unlocked": 345050
           },
           "healthRegen": {
             "base": 1134,
             "unlocked": 1134
           },
           "manaRegen": {
-            "base": 3276,
-            "unlocked": 3276
+            "base": 3271,
+            "unlocked": 3271
           },
           "ad": {
             "base": 20948,
             "unlocked": 20948
           },
           "armor": {
-            "base": 8160,
-            "unlocked": 8160
+            "base": 7939,
+            "unlocked": 7939
           },
           "mr": {
             "base": 12560,
@@ -3395,9 +3395,9 @@
     ]
   },
   "curation": {
-    "championDigest": "f2cffa9161ae",
+    "championDigest": "e39f1147b9e7",
     "itemDigest": "9943a99f7205",
-    "championCount": 46,
+    "championCount": 49,
     "itemCount": 101,
     "liveEndpoint": "/api/v1/curation/whitelist"
   },
@@ -3412,5 +3412,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "978462cd2aaa"
+  "profileDigest": "3f539f387f53"
 }

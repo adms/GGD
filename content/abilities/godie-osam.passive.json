@@ -4,7 +4,7 @@
   "name": "34-00 靈魂吞噬",
   "icon": "assets/icons/abilities/godie-osam.passive.webp",
   "provenance": "w3x-import",
-  "description": "[輔助]\n60秒冷卻時間\n\n身為妖怪中貴公子的殺生丸，喜好汲取敵人靈魂的生命力來恢復自身生命值的妖怪特性，每秒吸取200點生命，持續5秒。",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n身為妖怪中貴公子的殺生丸，喜好汲取敵人靈魂的生命力來恢復自身生命值的妖怪特性，每秒吸取200點生命，持續5秒。",
   "slot": "PASSIVE",
   "innateKind": "active",
   "castType": "self",

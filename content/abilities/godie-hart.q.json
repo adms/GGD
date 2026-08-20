@@ -3,7 +3,7 @@
   "name": "01-01 凶斬",
   "icon": "assets/icons/abilities/godie-hart.q.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n25秒冷卻時間\n\n使用大刀在敵人身上刻下凶字造成150傷害，並且使人暫時無法行動1秒。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n使用大刀在敵人身上刻下凶字造成{{dmg}}傷害，並且使人暫時無法行動1秒。",
   "slot": "Q",
   "castType": "targeted",
   "maxRank": 5,

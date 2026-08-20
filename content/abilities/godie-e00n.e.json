@@ -3,7 +3,7 @@
   "name": "22-03 五吋釘",
   "icon": "assets/icons/abilities/godie-e00n.e.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n25秒冷卻時間\n\n將一枚充滿詛咒的五吋釘射向敵方目標，造成瞬間350點傷害，並減緩60%移動速度5秒。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n將一枚充滿詛咒的五吋釘射向敵方目標，造成瞬間{{dmg}}點傷害，並減緩60%移動速度5秒。",
   "slot": "E",
   "castType": "targeted",
   "maxRank": 4,

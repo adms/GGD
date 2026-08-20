@@ -3,7 +3,7 @@
   "name": "53-02 強化炸彈陣",
   "icon": "assets/icons/abilities/godie-o00l.w.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n35秒冷卻時間\n\n施展火焰爆裂魔法傷害敵方部隊，燒傷150點。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n施展火焰爆裂魔法傷害敵方部隊，燒傷150點。",
   "slot": "W",
   "castType": "ground",
   "maxRank": 4,

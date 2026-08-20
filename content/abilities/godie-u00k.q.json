@@ -4,7 +4,7 @@
   "name": "71-01 死亡隕落",
   "icon": "assets/icons/abilities/godie-u00k.q.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n45秒冷卻時間\n\n死之王可幻化成代表死亡的隕石造成敵方250點傷害。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n死之王可幻化成代表死亡的隕石造成敵方{{dmg}}點傷害。",
   "slot": "Q",
   "castType": "ground",
   "maxRank": 3,

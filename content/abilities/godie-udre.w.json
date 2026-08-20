@@ -3,7 +3,7 @@
   "name": "11-02 虎狩獵",
   "icon": "assets/icons/abilities/godie-udre.w.webp",
   "provenance": "w3x-import",
-  "description": "[主動傷害]\n45秒冷卻時間\n\n由背負著2把刀的型態下揮出「斬擊」系招式。據說名稱的由來是因為其傷痕簡直好像老虎的條紋一樣。給予多個對手250傷害並擊暈對手1.25秒。",
+  "description": "[主動傷害]\n{{cd}}秒冷卻時間\n\n由背負著2把刀的型態下揮出「斬擊」系招式。據說名稱的由來是因為其傷痕簡直好像老虎的條紋一樣。給予多個對手250傷害並擊暈對手1.25秒。",
   "slot": "W",
   "castType": "ground",
   "maxRank": 4,

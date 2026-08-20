@@ -264,19 +264,37 @@ export const WC3_PROSE_CAPTION = "數值以介面標示為準（WC3 原文）";
  * for the English shapes; the trailing negative lookahead stops a "N seconds"
  * from being mis-read as "N s".
  */
+const NUM_SRC = "\\d+(?:\\.\\d+)?";
+/**
+ * ⭐ 逐階斜線串（`60/50/40/30`）也要吃得下。
+ *
+ * ⚠️ 這一格在 說明推導（票號待開） 之前是**單一數字**，而卡面上的逐階寫法（13-01 / 44-03）
+ * 因此只有**最後一階**被乘 —— 「60/50/40/**30**秒冷卻」變成
+ * 「60/50/40/6秒冷卻」，一句比原本更難懂的謊話。
+ * 佔位符 `{{cd}}` 算繪出來的就是這種串（而且現在有 83 處新的），
+ * ⇒ ⛔ 這一條不修就是把一個已知缺陷放大 83 倍。
+ */
+const RANKS_SRC = `${NUM_SRC}(?:\\s*/\\s*${NUM_SRC})*`;
+
 const COOLDOWN_PROSE_RE = new RegExp(
   [
-    "(\\d+(?:\\.\\d+)?)(\\s*秒\\s*冷卻(?:時間)?)", // 1: NN + 秒冷卻[時間]
-    "(冷卻(?:時間)?\\s*)(\\d+(?:\\.\\d+)?)(\\s*秒)", // 2: 冷卻[時間] + NN + 秒
-    "(\\d+(?:\\.\\d+)?)(\\s*s\\s+cooldown)", // 3: NNs cooldown
-    "(cooldown\\s+)(\\d+(?:\\.\\d+)?)(\\s*s)(?![a-z])", // 4: cooldown NNs
+    `(${RANKS_SRC})(\\s*秒\\s*冷卻(?:時間)?)`, // 1: NN + 秒冷卻[時間]
+    `(冷卻(?:時間)?\\s*)(${RANKS_SRC})(\\s*秒)`, // 2: 冷卻[時間] + NN + 秒
+    `(${NUM_SRC})(\\s*s\\s+cooldown)`, // 3: NNs cooldown
+    `(cooldown\\s+)(${NUM_SRC})(\\s*s)(?![a-z])`, // 4: cooldown NNs
   ].join("|"),
   "gi",
 );
 
-/** Round a numeric literal string by a combat-env factor (integer result). */
+/**
+ * Round a numeric literal string by a combat-env factor (integer result).
+ * ⭐ 逐階串**逐階乘**，⛔ 不是只乘其中一個（見 {@link RANKS_SRC} 的說明）。
+ */
 function scaleProseLiteral(literal: string, factor: number): string {
-  return String(Math.round(Number(literal) * factor));
+  return literal
+    .split("/")
+    .map((t) => String(Math.round(Number(t.trim()) * factor)))
+    .join("/");
 }
 
 /**
@@ -295,9 +313,9 @@ function scaleProseLiteral(literal: string, factor: number): string {
  */
 const DAMAGE_PROSE_RE = new RegExp(
   [
-    "(造成\\s*)(\\d+(?:\\.\\d+)?)(\\s*(?:點\\s*)?傷害)", // 1: 造成 NNN [點]傷害
-    "(\\d+(?:\\.\\d+)?)(\\s*點\\s*傷害)", // 2: NNN 點傷害
-    "(\\d+(?:\\.\\d+)?)(\\s+damage)", // 3: [deal] NNN damage
+    `(造成\\s*)(${RANKS_SRC})(\\s*(?:點\\s*)?傷害)`, // 1: 造成 NNN [點]傷害
+    `(${RANKS_SRC})(\\s*點\\s*傷害)`, // 2: NNN 點傷害
+    `(${NUM_SRC})(\\s+damage)`, // 3: [deal] NNN damage
   ].join("|"),
   "gi",
 );

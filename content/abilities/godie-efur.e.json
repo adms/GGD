@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "13-03 龍頭戲畫。布陣",
   "provenance": "owner-spec",
-  "description": "[主動][範圍][AP加成]\n60秒冷卻\n消耗[MP] 120/180/240/300\n\n「其實還可以衝刺，但老了」\n將念形成龍形衝擊波包裹全身，造成[範圍]敵人 150/250/350/450 + 60% [AP] 傷害。",
+  "description": "[主動][範圍][AP加成]\n{{cd}}秒冷卻\n消耗[MP] {{mp}}\n\n「其實還可以衝刺，但老了」\n將念形成龍形衝擊波包裹全身，造成[範圍]敵人 {{dmg}} + 60% [AP] 傷害。",
   "slot": "E",
   "castType": "self",
   "maxRank": 4,

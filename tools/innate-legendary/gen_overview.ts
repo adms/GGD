@@ -80,6 +80,19 @@ import { ModOp } from "../../packages/shared/src/sim/stats/modifiers";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = resolve(HERE, "../..");
 const CONTENT = join(REPO, "content");
+/**
+ * ⭐ 說明推導（票號待開） —— 算繪好的技能說明（id → 玩家看到的字）。
+ * 技能說明在 JSON 裡是**帶佔位符的原文**（`{{cd}}秒冷卻`）。這一份是
+ * `pnpm spec:build` 的產物（跑在 `content:build` 裡、`overview:build` 之前），
+ * ⛔ 這裡不自己再算一次 —— 第二份算繪就是下一次「文件說 A、場上跑 B」。
+ */
+const ABILITY_PROSE = join(REPO, "docs/editor-contract/ggd-ability-prose.json");
+
+const renderedProse = (): Readonly<Record<string, string>> => {
+  if (!existsSync(ABILITY_PROSE)) return {};
+  const d = JSON.parse(readFileSync(ABILITY_PROSE, "utf8")) as { rendered?: Record<string, string> };
+  return d.rendered ?? {};
+};
 
 export const DEFAULT_OUT = join(REPO, "docs/固有能力及寶具總覽.md");
 
@@ -370,7 +383,7 @@ function collectInnates(): {
       cooldown: num(arr(a["cooldown"])[0]),
       manaCost: num(arr(a["manaCost"])[0]),
       mech: mechanicsOf(a),
-      description: str(a["description"]),
+      description: renderedProse()[id] ?? str(a["description"]),
     });
   }
   innates.sort((x, y) => x.hero - y.hero || x.id.localeCompare(y.id));

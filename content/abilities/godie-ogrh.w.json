@@ -3,7 +3,7 @@
   "name": "09-02 瞬間移動",
   "icon": "assets/icons/abilities/godie-ogrh.w.webp",
   "provenance": "w3x-import",
-  "description": "[輔助]\n18秒冷卻時間\n\n悟空跟佛利沙大戰之後，在宇宙漂流到了亞德拉特星，跟那邊的人習得了瞬間移動，以傳送的方式移動850的距離到指定的位置。",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n悟空跟佛利沙大戰之後，在宇宙漂流到了亞德拉特星，跟那邊的人習得了瞬間移動，以傳送的方式移動{{travel}}距離到指定的位置。",
   "slot": "W",
   "castType": "ground",
   "maxRank": 4,

@@ -3,7 +3,7 @@
   "name": "77-01 百烈櫻華斬",
   "icon": "assets/icons/abilities/godie-e00x.q.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n40秒冷卻時間\n\n用劍捲起一陣由內往外的旋風，給予複數敵人200點傷害，並暈眩1秒，擊退1000距離。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n用劍捲起一陣由內往外的旋風，給予複數敵人{{dmg}}點傷害，並暈眩1秒，擊退1000距離。",
   "slot": "Q",
   "castType": "ground",
   "maxRank": 4,

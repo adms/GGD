@@ -3,7 +3,7 @@
   "name": "92-01 臥草泥馬",
   "icon": "assets/icons/abilities/godie-h02u.q.webp",
   "provenance": "w3x-import",
-  "description": "[輔助]\n40秒冷卻時間\n\n這是較高等級的草泥馬才有的稱號，優秀的牠們被允許躺在朝尼族的水槽邊休息恢復體力，每秒恢復3%體力，持續10秒，於臥草泥馬期間無法移動。",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n這是較高等級的草泥馬才有的稱號，優秀的牠們被允許躺在朝尼族的水槽邊休息恢復體力，每秒恢復3%體力，持續10秒，於臥草泥馬期間無法移動。",
   "slot": "Q",
   "castType": "self",
   "maxRank": 4,

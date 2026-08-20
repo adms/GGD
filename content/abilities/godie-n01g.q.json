@@ -3,7 +3,7 @@
   "name": "42-01 凍結的大地",
   "icon": "assets/icons/abilities/godie-n01g.q.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n25秒冷卻時間\n\n以一波冰雪轟擊敵方部隊，造成目標250點的傷害，以及周圍目標150點的冰爆傷害。冰冷傷害可以降低部隊的移動與攻擊速度1.2秒。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n以一波冰雪轟擊敵方部隊，造成目標{{dmg}}點的傷害，以及周圍目標150點的冰爆傷害。冰冷傷害可以降低部隊的移動與攻擊速度1.2秒。",
   "slot": "Q",
   "castType": "ground",
   "maxRank": 4,

@@ -3,7 +3,7 @@
   "name": "01-04 超究武神霸斬",
   "icon": "assets/icons/abilities/godie-hart.r.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n60秒冷卻時間\n\n克勞德的奧義招式，連斬七次的超必殺攻擊，每一次斬擊皆造成極大傷害，總傷害630+力量*1點。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n克勞德的奧義招式，連斬七次的超必殺攻擊，每一次斬擊皆造成極大傷害，總傷害630+力量*1點。",
   "slot": "R",
   "castType": "targeted",
   "maxRank": 3,

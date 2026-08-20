@@ -4,7 +4,7 @@
   "name": "58-00 電光一閃",
   "icon": "assets/icons/abilities/godie-o02l.passive.webp",
   "provenance": "w3x-import",
-  "description": "[輔助]\n35秒冷卻時間\n\n皮卡丘的得意技能之一，可以瞬間移動到800距離內的任何地方，幫助他瞬間烙跑或偷襲。",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n皮卡丘的得意技能之一，可以瞬間移動到800距離內的任何地方，幫助他瞬間烙跑或偷襲。",
   "slot": "PASSIVE",
   "innateKind": "active",
   "castType": "ground",

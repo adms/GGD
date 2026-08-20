@@ -3,7 +3,7 @@
   "name": "90-03 藤鞭",
   "icon": "assets/icons/abilities/godie-h02r.e.webp",
   "provenance": "w3x-import",
-  "description": "[輔助]\n45秒冷卻時間\n\n指定目標區域，1秒後將位於該區域上的所有單位拉到身旁，若受作用的目標是敵人則會給予350點傷害。",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n指定目標區域，1秒後將位於該區域上的所有單位拉到身旁，若受作用的目標是敵人則會給予{{dmg}}點傷害。",
   "slot": "E",
   "castType": "targeted",
   "maxRank": 4,

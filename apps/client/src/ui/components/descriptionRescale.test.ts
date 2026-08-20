@@ -36,6 +36,7 @@ import {
   WC3_PROSE_CAPTION,
 } from "./abilityText";
 import { displayFinal, envFactor, statDisplayFactor } from "../displayFinal";
+import { abilityQuantities, renderAbilityText } from "@ggd/shared/content/abilityProse";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT = join(HERE, "../../../../../content");
@@ -74,9 +75,16 @@ function pickRealIds(n: number): string[] {
   const out: string[] = [];
   for (const f of readdirSync(dir).sort()) {
     if (!f.endsWith(".json") || f === "_index.json") continue;
-    const desc = docDescription(JSON.parse(readFileSync(join(dir, f), "utf8")));
-    if (typeof desc !== "string") continue;
-    if (/\d+秒冷卻(?:時間)?/.test(desc) && /造成\s*\d+\s*(?:點\s*)?傷害/.test(desc)) {
+    const doc = JSON.parse(readFileSync(join(dir, f), "utf8")) as Record<string, unknown>;
+    const raw = docDescription(doc);
+    if (typeof raw !== "string") continue;
+    // ⭐ 說明推導（票號待開） —— 掃的是**算繪之後**的字（磁碟上住的是 `{{cd}}` 佔位符）。
+    // ⚠️ 冷卻那一條刻意要求**單一數字**（`(?<![\d/])`）：`{{cd}}` 算繪出來可能是
+    //    逐階串「60/50/40/30秒冷卻」，而下面那個 `expectedFor` 鏡像只模型化了
+    //    單一字面值的形狀。⛔ 這不是放寬 —— 逐階串的重寫由 `abilityText.test.ts`
+    //    的單元測試守，這一支守的是「真實說明 → 真實重寫器」那一條線。
+    const desc = renderAbilityText(raw, abilityQuantities(doc));
+    if (/(?<![\d/])\d+(?:\.\d+)?\s*秒冷卻(?:時間)?/.test(desc) && /造成\s*\d+\s*(?:點\s*)?傷害/.test(desc)) {
       out.push(f.replace(/\.json$/, ""));
       if (out.length >= n) break;
     }
@@ -84,6 +92,18 @@ function pickRealIds(n: number): string[] {
   return out;
 }
 const REAL_IDS = pickRealIds(5);
+/**
+ * ⭐ 說明推導（票號待開） —— 技能說明在磁碟上是**帶佔位符的原文**（`{{cd}}秒冷卻時間`），
+ * 而 HUD 拿到的是**算繪之後**那一份（`registerAll` 的 `withProse`）。
+ * ⛔ 這裡一定要跟著算繪，否則這一支驗的就不是 HUD 真的收到的字（失敗形態⑤：
+ * 被測的不是出貨的那個），而且每一條「這段字裡有 NN秒冷卻」的前提都會落空。
+ */
+function loadDescription(id: string): string | undefined {
+  const doc = loadAbility(id);
+  const raw = docDescription(doc);
+  return raw === undefined ? undefined : renderAbilityText(raw, abilityQuantities(doc));
+}
+
 function loadAbility(id: string): Record<string, unknown> {
   // GH#323 —— 走 `content/` → `content/_legacy/` 後備。這個檔驗的是**文案改寫器**
   // （損害/公式傷害要原封不動、冷卻要換算），技能 doc 只是一段真的中文夾具；
@@ -260,7 +280,7 @@ describe("rescaleAbilityProse cooldown + damage together (hud-display-final)", (
     let checked = 0;
     let damageRewrites = 0;
     for (const id of REAL_IDS) {
-      const desc = docDescription(loadAbility(id));
+      const desc = loadDescription(id);
       expect(desc, `${id} has a description`).toBeDefined();
       expect(desc!.match(/(\d+)秒冷卻(?:時間)?/), `${id} carries a NN秒冷卻[時間] literal`).not.toBeNull();
 
@@ -289,13 +309,13 @@ describe("rescaleAbilityProse cooldown + damage together (hud-display-final)", (
     cover("hud-display-final");
     // godie-h001.w uses 損害 (synonym, out of scope) and godie-e00k.e uses formula
     // damage — both must survive verbatim even as their cooldown is rescaled.
-    const h001 = rescaleAbilityProse(docDescription(loadAbility("godie-h001.w"))!, LIVE);
+    const h001 = rescaleAbilityProse(loadDescription("godie-h001.w")!, LIVE);
     expect(h001).toContain("200點損害");
-    const e00k = rescaleAbilityProse(docDescription(loadAbility("godie-e00k.e"))!, LIVE);
+    const e00k = rescaleAbilityProse(loadDescription("godie-e00k.e")!, LIVE);
     expect(e00k).toContain("(40+敏捷*1)傷害");
     expect(e00k).toContain("力量*0.5傷害");
     // hblm's flat 550 is rescaled, but its formula 額外傷害 term is preserved
-    const hblm = rescaleAbilityProse(docDescription(loadAbility("godie-hblm.r"))!, LIVE);
+    const hblm = rescaleAbilityProse(loadDescription("godie-hblm.r")!, LIVE);
     {
       const d = LIVE.damageDealt;
       expect(hblm).toContain(
@@ -357,7 +377,7 @@ describe("real ability descriptions carry no role markup (hud-desc-role-colour)"
     cover("hud-desc-role-colour");
     // pins the no-markup fact: a role-rescale would be a no-op, so none is added.
     for (const id of REAL_IDS) {
-      const desc = docDescription(loadAbility(id));
+      const desc = loadDescription(id);
       expect(desc, `${id} has a description`).toBeDefined();
       expect(parseRoleMarkup(desc!).length, `${id} has no [c=role] markup`).toBe(1);
     }

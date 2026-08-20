@@ -4,7 +4,7 @@
   "name": "25-00 北斗暗殺拳",
   "icon": "assets/icons/abilities/godie-u00l.passive.webp",
   "provenance": "w3x-import",
-  "description": "[輔助]\n45秒冷卻時間\n\n北斗神拳本身就是暗殺拳的極致代表，因此使用拳法的人能隱藏自身並且提升100%速度以暗殺目標，當攻擊時隱形術即告失效，但是會造成額外350點的背刺傷害，持續12秒。",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n北斗神拳本身就是暗殺拳的極致代表，因此使用拳法的人能隱藏自身並且提升100%速度以暗殺目標，當攻擊時隱形術即告失效，但是會造成額外350點的背刺傷害，持續12秒。",
   "slot": "PASSIVE",
   "innateKind": "active",
   "castType": "self",

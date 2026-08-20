@@ -3,7 +3,7 @@
   "name": "65-01 神出鬼沒",
   "icon": "assets/icons/abilities/godie-udea.q.webp",
   "provenance": "w3x-import",
-  "description": "[輔助]\n25秒冷卻時間\n\n飛鼠先生可以瞬間移動3300的距離到指定的位置。",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n飛鼠先生可以瞬間移動{{travel}}距離到指定的位置。",
   "slot": "Q",
   "castType": "ground",
   "maxRank": 4,

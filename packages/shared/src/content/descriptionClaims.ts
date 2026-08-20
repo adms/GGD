@@ -47,6 +47,7 @@
  * ⛔ 不是在這裡發明一個換算容差。
  */
 import type { AbilityDef } from "../sim/content/defs";
+import { abilityQuantities, renderAbilityText } from "./abilityProse";
 
 /** 一支技能上的一處不一致。 */
 export interface Mismatch {
@@ -329,7 +330,12 @@ export const TAG_NEEDS_KIND: Readonly<Record<string, readonly string[]>> = {
  * 由 `registerAll` 展開（失敗形態⑤：被測的不是出貨的那個）。
  */
 export function scanAbility(def: AbilityDef & { description?: string }): Mismatch[] {
-  const desc = def.description ?? "";
+  // ⭐ 說明推導（票號待開） —— 先把佔位符**算繪**掉，再抽數字。
+  // ⚠️ 少了這一行，一支已經改成 `{{cd}}秒冷卻` 的技能會讓每一條規則都抽到
+  //    **零個數字**，於是這支閘對它永遠是綠的 —— 一條被無聲關掉的閘。
+  // ⚠️ 出貨路徑（`Abilities.get`）拿到的說明**已經**算繪過，這一行是 no-op；
+  //    會真的用到它的是後台/編輯器手上那份**磁碟形狀**的草稿。
+  const desc = renderAbilityText(def.description ?? "", abilityQuantities(def));
   if (desc.trim() === "") return [];
   const t = mechanicsText(desc);
   const n = abilityNumbers(def);

@@ -3,7 +3,7 @@
   "name": "14-002 魔力激發",
   "icon": "assets/icons/abilities/godie-etyr.ex.webp",
   "provenance": "w3x-import",
-  "description": "[靈氣]\n0秒冷卻時間\n\n打開魔力封印使得木乃香自身的魔力回復到達顛峰，每秒獲得7%的瑪那回復，使用東風繪扇、南風末廣有效範圍也能增加。",
+  "description": "[靈氣]\n{{cd}}秒冷卻時間\n\n打開魔力封印使得木乃香自身的魔力回復到達顛峰，每秒獲得7%的瑪那回復，使用東風繪扇、南風末廣有效範圍也能增加。",
   "slot": "EX",
   "castType": "self",
   "maxRank": 1,

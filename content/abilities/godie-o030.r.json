@@ -3,7 +3,7 @@
   "name": "30-04 電車之狼衝擊",
   "icon": "assets/icons/abilities/godie-o030.r.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n30秒冷卻時間\n\n在臭作肛了新幹線車長之時，導致車長興奮過度讓新幹線脫軌衝了出來，造成一直線地面部隊550點傷害。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n在臭作肛了新幹線車長之時，導致車長興奮過度讓新幹線脫軌衝了出來，造成一直線地面部隊{{dmg}}點傷害。",
   "slot": "R",
   "castType": "skillshot",
   "maxRank": 3,
