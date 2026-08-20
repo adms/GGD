@@ -1,4 +1,4 @@
-<title>GGD 作戰板</title>
+<title>GGD 作戰板 · 2026-08-20 19:16 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">v0.21.4 → v0.21.5 · 開發中</p><h1>GGD 作戰板</h1><div class="meta"><span>帳本 <b>2</b> 份</span><span>點名票號 <b>95</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">v0.21.4 → v0.21.5 · 開發中</p><h1>GGD 作戰板 · 2026-08-20 19:16 (GMT+8)</h1><div class="meta"><span>帳本 <b>2</b> 份</span><span>點名票號 <b>96</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -360,7 +360,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <blockquote>⭐ 這張表由 <code>scripts/message-ledger.sh</code> 從 session transcript <b>逐則</b>撈出來對帳，</blockquote>
 <blockquote><code>scripts/ruling.sh</code> 收到裁決時也寫進同一張表。</blockquote>
 <blockquote>表格那一格是<b>截斷</b>過的；⛔ 全文沒有被壓縮取代，它在 <code>ledger-source_temp_*.md</code>。</blockquote>
-<blockquote>票號那一格 ⛔ 不可以留空：對不到票就寫 <code>⏸ 未對票</code>，<code>--check</code> 會紅。</blockquote>
+<blockquote>票號那一格 ⛔ 不可以留空：對不到票就寫 <code>#484</code>，<code>--check</code> 會紅。</blockquote>
 <div class="scroll"><table><tr><th>時間</th><th>owner 說了什麼（逐字）</th><th>票</th></tr>
 <tr><td>02:13</td><td>（冒煙測試，可忽略）resourcePct 的修法等 #467 落地後套用</td><td>#468</td></tr>
 <tr><td>03:28</td><td>owner 2026-08-20（逐字，一次多題）：  &gt; #456 vfxOrientDerived 產生器衝突 =&gt;「<b>看不懂請你解釋清楚並給我建議三選一</b>」 &gt; 20/15 拆檔 =&gt;「<b>為什麼要這樣分，統一從JSON產生不好嗎？</b>」 &gt; batch1.py =&gt;「<b>why 20?15? 開放可選英雄數量更多不是嗎？</b>」 &gt; 變身/夜神月 =&gt;「請你想個<b>一勞永逸</b>的方法…<b>高調放在 GGD作戰區</b>」（→ #479） &gt; 創建新英雄 =&gt;「<b>生成代入與檢查跳警示</b>都要記得更新，特別是 <b>script 程式自動化跟警示</b>」（→ #480） &gt; reconcile 工作流 =&gt;「<b>完成了嗎? 請優先獨立運作工作流</b>」 &gt; #467 =&gt;「<b>完成了嗎? 請優先獨立運作工作流</b>，優化機制與結果要寫到 <b>github readme, release note, &gt;   codex編輯器契約與相關說明文件、相關 script、JSON 及後台設定機制</b>」 &gt; 「以上都要記得<b>開票(GITHUB ISSUE)跟更新票的狀態</b>」</td><td>#456 #467 #479 #480</td></tr>
@@ -374,7 +374,9 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>01:05</td><td>這格開關就是「榜上至少要幾個人，才開始發段位」： =&gt; 先留 0。 理由是這是家人小圈子，人本來就少 also 「4 人榜也要有一個菁英」 如果我現在更版上線，會得到什麼好處？有壞處嗎</td><td>#352</td></tr>
 <tr><td>01:32</td><td>備份規則都是 {用途}_temp_{timestam,p}.md 給你參考，並且清理docs資料夾文件時，方便被認出是否已經過時要放到legacy, 請你放到開發守則</td><td>— 開發守則（CLAUDE.md 📛 暫存檔命名）+ <code>scripts/temp-sweep.sh</code> 已落地,⛔ 不需開票</td></tr>
 <tr><td>01:40</td><td>可以先commit再做 ①②③</td><td>— 流程指示（先 commit 再做①②③）,⛔ 不需開票</td></tr>
-<tr><td>18:59</td><td>的每一句話在哪張票上 🧾 逐則對票 · owner 的每一句話在哪張票上 你要持續更新吧</td><td>⏸ 未對票</td></tr>
+<tr><td>18:59</td><td>的每一句話在哪張票上 🧾 逐則對票 · owner 的每一句話在哪張票上 你要持續更新吧</td><td>#484</td></tr>
+<tr><td>19:15</td><td>GGD 作戰板 please update</td><td>#484</td></tr>
+<tr><td>19:16</td><td>平衡數值決策建議_temp_*.md 好了沒？</td><td>#484</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

@@ -100,6 +100,26 @@ def md_to_html(md: str) -> str:
     return "\n".join(out)
 
 
+def data_asof(dailies: list) -> str:
+    """⭐ 標題上的 GMT+8 時間戳（owner 2026-08-20：「標題請一定要加上 GMT8 時間戳記」）。
+
+    ⛔ 它**不是產生時間** —— 那會是時鐘欄位，讓逐位元組 `--check` 永遠不可能綠，
+    而那正是這支產生器在 2026-08-20 之前**完全沒有閘**的原因（見 `meta()` 的註解）。
+
+    ⭐ 改成從**來源**推導：最新那份帳本的日期 + 該檔「逐則對票」表裡**最晚的一則訊息時間**。
+    ⇒ 它只在真的有新訊息時才變 ⇒ `--check` 比得起來，而且它回答的是
+    **「這塊板的資料到幾點」**，比「這個檔案幾點被產生」有用得多
+    （產生時間不告訴你資料新不新）。
+    """
+    if not dailies:
+        return ""
+    newest = dailies[-1]
+    day = newest.stem                      # 2026-08-20
+    times = re.findall(r"^\|\s*(\d{2}:\d{2})\s*\|", newest.read_text(encoding="utf-8"), re.M)
+    hhmm = max(times) if times else "00:00"
+    return f"{day} {hhmm} (GMT+8)"
+
+
 def meta(body: str, dailies: list) -> str:
     """⛔ **這一格刻意不放 git 狀態**（owner 2026-08-20：「fix all, fix gen_board.py」）。
 
@@ -147,9 +167,9 @@ def build() -> str:
         f"<h2>{inline(t)}</h2>{md_to_html(md)}</section>"
         for t, md in blocks if md.strip()
     )
-    return (f"<title>GGD 作戰板</title>\n<style>{CSS}</style>\n"
+    return (f"<title>GGD 作戰板 · {data_asof(dailies)}</title>\n<style>{CSS}</style>\n"
             f'<div class="wrap"><header><p class="eyebrow">v0.21.4 → v0.21.5 · 開發中</p>'
-            f"<h1>GGD 作戰板</h1>{meta(body, dailies)}</header>\n{body}\n"
+            f"<h1>GGD 作戰板 · {html.escape(data_asof(dailies))}</h1>{meta(body, dailies)}</header>\n{body}\n"
             f'<footer>由 <code>tools/board/gen_board.py</code> 從 docs/_daily · docs/_release 產生（⛔ 不含 git 狀態:那是時鐘欄位） —— '
             f'⛔ 不要手改這份 HTML</footer></div>\n')
 
