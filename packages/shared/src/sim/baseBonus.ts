@@ -124,6 +124,16 @@ export const DEFAULT_BASE_BONUS: BaseBonusTable = Object.freeze({
   // 連帶熊貓+1000 也被回歸校正用統一做法就好」——
   // ⭐ 一格全域欄位取代逐英雄寫死（熊貓 `godie-h02k` 的 maxMana 已從 1100 改回 100）。
   [Stat.MaxMana]: 600,
+  // owner 2026-08-20（GH#446）：「智慧影響回魔可以增加更多、**初始回魔也增加少許**」
+  //   ⇒ 「增加更多」那一半是 `combatEnv.intToManaRegen` 0.07 → 0.21；
+  //     **這一格是「少許」那一半**：一個扁平的每秒回魔贈禮。
+  //   ⭐ 為什麼「少許」落在**這裡**而不是英雄卡：這一頁正是 owner 2026-07-28 立的
+  //     「初始HP/MP/AP/AD⋯增加數值」，⛔ 而且它**不參與倍率** ——
+  //     所以 10 就是玩家拿到的 10（`combatEnv.manaRegen` 出貨 8，走倍率那條會變成 80）。
+  //   ⚠️ 它是全 71 隻裡**唯一**碰得到 `godie-h02k` 熊貓的旋鈕：他 INT 2、intGrowth 0，
+  //     智慧那根軸對他逐位元是 0。⇒ 兩格一起調不是重複，是**兩種英雄各一格**。
+  //   量到的：調後中位回魔 LV30 **124.8/s**，+10 ≈ **8%**（＝「少許」）。
+  [Stat.ManaRegen]: 10,
 });
 
 /** Read one stat's grant, tolerating a partial / absent / junk table. */

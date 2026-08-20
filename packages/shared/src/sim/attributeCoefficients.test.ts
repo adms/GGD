@@ -112,7 +112,15 @@ const FIELD_OF: Record<AttributeEnvKey, Provenance> = {
     why: "等級上限 30 → 99 之後，唯一的乘法列被指數外插（owner 2026-08-13）",
   },
   intToMaxMana: { field: "IntManaBonus" },
-  intToManaRegen: { field: "IntRegenBonus" },
+  // 🔴 owner 2026-08-20 覆寫：0.07 → 0.21（×3）。GH#446。
+  //   「那我覺得**智慧影響回魔可以增加更多**、**初始回魔也增加少許**，
+  //    同時 **20 秒的限制可以調高到 30 秒**」
+  //   ⇒ 三個錨點的中位滿魔從 42.1/38.0/34.5 秒降到 14.9/13.8/12.9 秒。
+  intToManaRegen: {
+    overrides: "IntRegenBonus",
+    upstream: 0.07,
+    why: "回魔節奏：中位滿魔 42 秒 → 15 秒以內（owner 2026-08-20，GH#446）",
+  },
   // Warcraft III has no 法強 attribute axis at all — the owner's own decision.
   intToAbilityPower: { ownerDesign: "IntAbilityPowerBonus" },
   // …and no 魔抗 ATTRIBUTE axis either (WC3's magic resistance is a per-unit

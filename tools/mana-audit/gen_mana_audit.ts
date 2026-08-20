@@ -22,7 +22,7 @@
  * 錨點與門檻也都是**推導**的，⛔ 不抄字面值：
  *   · 三個等級 ← `content/balanceAnchors.ts` 的 `BALANCE_ANCHOR_LEVELS`
  *   · 「建議」門檻 ← 出貨的 `refillSeconds`
- *   · 「最糟」門檻 ← `REFILL_SECONDS_MAX`（owner 的「最糟也不超過 20 秒」）
+ *   · 「最糟」門檻 ← `REFILL_SECONDS_MAX`（owner 2026-08-20：「**20 秒的限制可以調高到 30 秒**」）
  *
  * ⛔ 刻意沒有產生日期（同 `caps:export` / `spec:build` / `tiers:build`）：任何隨時鐘
  * 變動的欄位都會讓逐位元組比對永遠不相等，於是 `--check` 只能被放寬成模糊比對 ——
@@ -198,7 +198,7 @@ async function build(): Promise<string> {
   p();
   p(
     `門檻是**推導**的，⛔ 不是字面值：**建議 ${ADVISED} 秒** ← 出貨的 \`refillSeconds\`；` +
-      `**最糟 ${WORST} 秒** ← \`REFILL_SECONDS_MAX\`（owner：「最糟的情形也不超過 20 秒」）。`,
+      `**最糟 ${WORST} 秒** ← \`REFILL_SECONDS_MAX\`（owner 2026-08-20：「20 秒的限制可以調高到 30 秒」）。`,
   );
   p();
   p(`| 錨點 | 身分 | 中位魔力池 | 中位回魔/s | 中位滿魔 | 超過 ${ADVISED}s | 超過 ${WORST}s |`);

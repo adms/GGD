@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_1782d3591580",
+    "contentVersion": "cv_624c17a148ee",
     "collections": {
       "champions": {
         "hash": "d1f1852b3667",
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "7036fde6aa28",
+        "hash": "1c1f1a279cbd",
         "count": 69
       },
       "models": {
@@ -2794,10 +2794,74 @@
           "configDoc": "config.authoring-rules@1"
         },
         {
+          "id": "principle.proportionality.單體.小",
+          "field": "damageTier",
+          "unit": "none",
+          "note": "冷卻級距「小」的**單體**技能，傷害級距至少要「小」。⭐ 這一格是**推導**出來的（owner 2026-08-20：「30/6秒=5⋯可能位於 2 個人的命中範圍，所以再除 2⋯約等於 **2.5 倍**」）：要求傷害 ＝ 單位輸出率 × 這一格的卡面冷卻 ÷ 期望命中人數，⛔ 不是有人手填的。 —— 付得多、打得少、傷害又低的那些格子沒有人會選，而一個死格比不存在更糟：它佔著一個標籤，作者會填它，然後那些技能上線就是弱的。⚠️ 違反只**警告**。",
+          "source": "admin-config",
+          "configDoc": "config.authoring-rules@1"
+        },
+        {
+          "id": "principle.proportionality.單體.中",
+          "field": "damageTier",
+          "unit": "none",
+          "note": "冷卻級距「中」的**單體**技能，傷害級距至少要「中」。⭐ 這一格是**推導**出來的（owner 2026-08-20：「30/6秒=5⋯可能位於 2 個人的命中範圍，所以再除 2⋯約等於 **2.5 倍**」）：要求傷害 ＝ 單位輸出率 × 這一格的卡面冷卻 ÷ 期望命中人數，⛔ 不是有人手填的。 —— 付得多、打得少、傷害又低的那些格子沒有人會選，而一個死格比不存在更糟：它佔著一個標籤，作者會填它，然後那些技能上線就是弱的。⚠️ 違反只**警告**。",
+          "source": "admin-config",
+          "configDoc": "config.authoring-rules@1"
+        },
+        {
+          "id": "principle.proportionality.單體.大",
+          "field": "damageTier",
+          "unit": "none",
+          "note": "冷卻級距「大」的**單體**技能，傷害級距至少要「大」。⭐ 這一格是**推導**出來的（owner 2026-08-20：「30/6秒=5⋯可能位於 2 個人的命中範圍，所以再除 2⋯約等於 **2.5 倍**」）：要求傷害 ＝ 單位輸出率 × 這一格的卡面冷卻 ÷ 期望命中人數，⛔ 不是有人手填的。 —— 付得多、打得少、傷害又低的那些格子沒有人會選，而一個死格比不存在更糟：它佔著一個標籤，作者會填它，然後那些技能上線就是弱的。⚠️ 違反只**警告**。",
+          "source": "admin-config",
+          "configDoc": "config.authoring-rules@1"
+        },
+        {
+          "id": "principle.proportionality.單體.極大",
+          "field": "damageTier",
+          "unit": "none",
+          "note": "冷卻級距「極大」的**單體**技能，傷害級距至少要「極大」。⭐ 這一格是**推導**出來的（owner 2026-08-20：「30/6秒=5⋯可能位於 2 個人的命中範圍，所以再除 2⋯約等於 **2.5 倍**」）：要求傷害 ＝ 單位輸出率 × 這一格的卡面冷卻 ÷ 期望命中人數，⛔ 不是有人手填的。 —— 付得多、打得少、傷害又低的那些格子沒有人會選，而一個死格比不存在更糟：它佔著一個標籤，作者會填它，然後那些技能上線就是弱的。⚠️ 違反只**警告**。",
+          "source": "admin-config",
+          "configDoc": "config.authoring-rules@1"
+        },
+        {
           "id": "principle.proportionality.範圍.極小",
           "field": "damageTier",
           "unit": "none",
-          "note": "冷卻級距「極小」的**範圍**技能，傷害級距至少要「大」。owner 2026-08-19：「的確是太小不合理，要綜合看傷害是不是極大或至少大的」 —— 付得多、打得少、傷害又低的那些格子沒有人會選，而一個死格比不存在更糟：它佔著一個標籤，作者會填它，然後那些技能上線就是弱的。⚠️ 違反只**警告**。",
+          "note": "冷卻級距「極小」的**範圍**技能，傷害級距至少要「小」。⭐ 這一格是**推導**出來的（owner 2026-08-20：「30/6秒=5⋯可能位於 2 個人的命中範圍，所以再除 2⋯約等於 **2.5 倍**」）：要求傷害 ＝ 單位輸出率 × 這一格的卡面冷卻 ÷ 期望命中人數，⛔ 不是有人手填的。 —— 付得多、打得少、傷害又低的那些格子沒有人會選，而一個死格比不存在更糟：它佔著一個標籤，作者會填它，然後那些技能上線就是弱的。⚠️ 違反只**警告**。",
+          "source": "admin-config",
+          "configDoc": "config.authoring-rules@1"
+        },
+        {
+          "id": "principle.proportionality.範圍.小",
+          "field": "damageTier",
+          "unit": "none",
+          "note": "冷卻級距「小」的**範圍**技能，傷害級距至少要「中」。⭐ 這一格是**推導**出來的（owner 2026-08-20：「30/6秒=5⋯可能位於 2 個人的命中範圍，所以再除 2⋯約等於 **2.5 倍**」）：要求傷害 ＝ 單位輸出率 × 這一格的卡面冷卻 ÷ 期望命中人數，⛔ 不是有人手填的。 —— 付得多、打得少、傷害又低的那些格子沒有人會選，而一個死格比不存在更糟：它佔著一個標籤，作者會填它，然後那些技能上線就是弱的。⚠️ 違反只**警告**。",
+          "source": "admin-config",
+          "configDoc": "config.authoring-rules@1"
+        },
+        {
+          "id": "principle.proportionality.範圍.中",
+          "field": "damageTier",
+          "unit": "none",
+          "note": "冷卻級距「中」的**範圍**技能，傷害級距至少要「中」。⭐ 這一格是**推導**出來的（owner 2026-08-20：「30/6秒=5⋯可能位於 2 個人的命中範圍，所以再除 2⋯約等於 **2.5 倍**」）：要求傷害 ＝ 單位輸出率 × 這一格的卡面冷卻 ÷ 期望命中人數，⛔ 不是有人手填的。 —— 付得多、打得少、傷害又低的那些格子沒有人會選，而一個死格比不存在更糟：它佔著一個標籤，作者會填它，然後那些技能上線就是弱的。⚠️ 違反只**警告**。",
+          "source": "admin-config",
+          "configDoc": "config.authoring-rules@1"
+        },
+        {
+          "id": "principle.proportionality.範圍.大",
+          "field": "damageTier",
+          "unit": "none",
+          "note": "冷卻級距「大」的**範圍**技能，傷害級距至少要「大」。⭐ 這一格是**推導**出來的（owner 2026-08-20：「30/6秒=5⋯可能位於 2 個人的命中範圍，所以再除 2⋯約等於 **2.5 倍**」）：要求傷害 ＝ 單位輸出率 × 這一格的卡面冷卻 ÷ 期望命中人數，⛔ 不是有人手填的。 —— 付得多、打得少、傷害又低的那些格子沒有人會選，而一個死格比不存在更糟：它佔著一個標籤，作者會填它，然後那些技能上線就是弱的。⚠️ 違反只**警告**。",
+          "source": "admin-config",
+          "configDoc": "config.authoring-rules@1"
+        },
+        {
+          "id": "principle.proportionality.範圍.極大",
+          "field": "damageTier",
+          "unit": "none",
+          "note": "冷卻級距「極大」的**範圍**技能，傷害級距至少要「極大」。⭐ 這一格是**推導**出來的（owner 2026-08-20：「30/6秒=5⋯可能位於 2 個人的命中範圍，所以再除 2⋯約等於 **2.5 倍**」）：要求傷害 ＝ 單位輸出率 × 這一格的卡面冷卻 ÷ 期望命中人數，⛔ 不是有人手填的。 —— 付得多、打得少、傷害又低的那些格子沒有人會選，而一個死格比不存在更糟：它佔著一個標籤，作者會填它，然後那些技能上線就是弱的。⚠️ 違反只**警告**。",
           "source": "admin-config",
           "configDoc": "config.authoring-rules@1"
         }
@@ -3148,7 +3212,7 @@
           "agiToArmor": 0.3,
           "agiToAttackSpeed": 0.01,
           "intToMaxMana": 15,
-          "intToManaRegen": 0.07,
+          "intToManaRegen": 0.21,
           "intToAbilityPower": 6.5,
           "intToMagicResist": 0,
           "goldRoundPayout": 1,
@@ -3316,5 +3380,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "a3332c7f80a8"
+  "profileDigest": "004337a1da46"
 }

@@ -16,7 +16,14 @@ import { fileURLToPath } from "node:url";
 import { registerAll } from "./registries";
 import type { ContentStore } from "./store";
 import { Abilities, Champions, Items } from "../sim/content/registry";
-import { DEFAULT_COOLDOWN_TIERS, cooldownShapeOf } from "./cooldownTiers";
+import { COOLDOWN_SHAPES, DEFAULT_COOLDOWN_TIERS, cooldownShapeOf } from "./cooldownTiers";
+import {
+  DEFAULT_EXPECTED_HITS,
+  OWNER_20260819_CELL,
+  deriveMinDamageTier,
+  requiredDamage,
+} from "./proportionality";
+import { SKILL_TIER_NAMES } from "./skillTiers";
 import {
   DAMAGE_TIER_MAX,
   DAMAGE_TIER_NAMES,
@@ -177,12 +184,59 @@ describe("三個住處對得上 —— 出貨 JSON ↔ DEFAULT_*", () => {
 });
 
 describe("相稱性 (GH#465)", () => {
-  it("⭐ 只發出 owner 真的裁決過的那一格，⛔ 不發十四條「至少極小」的雜訊", () => {
+  // ⭐ 驗的是**公式會不會發生**，⛔ 不是「2.5 是不是對的數字」——
+  //    2.5 本身從 `冷卻比 ÷ expectedHits` 推回來，⛔ 沒有一個字面值住在這裡。
+  const S = DEFAULT_COOLDOWN_TIERS.seconds;
+  const D = DEFAULT_DAMAGE_TIERS.damage;
+  const H = DEFAULT_EXPECTED_HITS;
+  const FLOOR = SKILL_TIER_NAMES[0]!;
+
+  it("⭐ 三個住處：出貨 JSON 的十五格 === 公式推出來的十五格（⛔ 不是手填的資料）", () => {
+    const doc = shipped("authoring-rules") as {
+      proportionality: { expectedHits: typeof H; minDamageTier: unknown };
+    };
+    expect(doc.proportionality.expectedHits).toEqual(H);
+    expect(doc.proportionality.minDamageTier).toEqual(deriveMinDamageTier(S, D, H));
+  });
+
+  it("⭐ owner 2026-08-20 的係數真的落在表上：範圍·極小 要求 ÷ 單體·極小 要求 = 冷卻比 ÷ 期望命中人數", () => {
+    const aoe = requiredDamage(S, D, H, "範圍", FLOOR);
+    const single = requiredDamage(S, D, H, "單體", FLOOR);
+    // 「30/6秒=5，⋯再除 2，約等於 2.5 倍」——⛔ 兩邊都是算出來的，沒有 2.5 這個字面值。
+    const cooldownRatio = S["範圍"][FLOOR] / S["單體"][FLOOR];
+    expect(aoe / single).toBeCloseTo((cooldownRatio / H["範圍"]) * H["單體"], 9);
+  });
+
+  it("⛔ 公式**重現不了** owner 2026-08-19 手填的那一格 —— 這件事本身被釘住", () => {
+    // ⚠️ 這一條紅了**不要改它**：它紅 = 有人動了係數／級距表，使得公式現在
+    //    真的長出「範圍·極小 → 大」。那是要拿給 owner 的消息，不是一個要修的測試。
+    const derived = deriveMinDamageTier(S, D, H)[OWNER_20260819_CELL.shape][
+      OWNER_20260819_CELL.tier
+    ];
+    expect(derived).not.toBe(OWNER_20260819_CELL.damageTier);
+  });
+
+  it("⛔ 期望命中人數 0 ＝ 整個形狀豁免（變身的回報軸不是傷害）", () => {
+    expect(H["變身"]).toBe(0);
+    const row = deriveMinDamageTier(S, D, H)["變身"];
+    expect(SKILL_TIER_NAMES.every((t) => row[t] === FLOOR)).toBe(true);
+  });
+
+  it("⭐ 只發出**真的構成限制**的那幾格，⛔ 不發「至少極小」的雜訊", () => {
     const read = (id: string): unknown => (id === "authoring-rules" ? shipped(id) : undefined);
     const ids = buildAuthoringRules(read)
       .principle.filter((r) => r.id.startsWith("principle.proportionality."))
       .map((r) => r.id);
-    expect(ids).toEqual(["principle.proportionality.範圍.極小"]);
+    const table = deriveMinDamageTier(S, D, H);
+    const expected = COOLDOWN_SHAPES.slice()
+      .sort()
+      .flatMap((s) =>
+        SKILL_TIER_NAMES.filter((t) => table[s][t] !== FLOOR).map(
+          (t) => `principle.proportionality.${s}.${t}`,
+        ),
+      );
+    expect(ids).toEqual(expected);
+    expect(expected.length).toBeGreaterThan(0); // ⛔ 空清單要紅,不要無聲通過
   });
 
   it("關掉總開關 = 這一族完全不出現在對外契約裡", () => {

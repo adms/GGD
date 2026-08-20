@@ -490,7 +490,30 @@ export const ATTRIBUTE_ENV_DEFAULTS = {
   /** war3mapMisc.txt [Misc] IntManaBonus = 15.0      (Blizzard MiscGame.txt: 15) */
   intToMaxMana: 15,
   /** war3mapMisc.txt [Misc] IntRegenBonus = 0.07     (Blizzard MiscGame.txt: 0.05) */
-  intToManaRegen: 0.07,
+  // 🔴 2026-08-20 owner 覆寫：0.07 → **0.21**（×3）。GH#446。
+  //   逐字：「那我覺得**智慧影響回魔可以增加更多**、**初始回魔也增加少許**，
+  //          同時 **20 秒的限制可以調高到 30 秒**」
+  //
+  //   ⚠️ 為什麼是**回魔**而不是耗魔：那是 owner 2026-08-19 親自轉的向 ——
+  //     拉高耗魔要動 342 支技能的卡面數字，調回魔只動這一格。
+  //   ⭐ 為什麼是**智慧係數**而不是打開 `manaEconomy.enforceFloor`：
+  //     地板會把每一位英雄拉到同一個滿魔時間，**與他的智力無關**；
+  //     owner 這一則要的是「**智慧**影響回魔增加更多」＝ 保留智力的差距。
+  //
+  //   量到的（71 隻裸裝，`pnpm mana:audit` 走出貨管線，LV30/50/99 三個錨點）：
+  //     調前 0.07 + base 0   中位滿魔 42.1 / 38.0 / 34.5 秒，超過 30 秒 **68 / 66 / 62 隻**
+  //     調後 0.21 + base 10  中位滿魔 **15.8 / 14.1 / 13.2** 秒，超過 30 秒 **1 / 1 / 1 隻**
+  //   ⇒ owner 的新門檻（30 秒）三個錨點都只剩 1 隻超標；**建議值 15 秒**在
+  //     LV50/LV99 達成，LV30 差 0.8 秒（15.8，超 5%）—— ⛔ 沒有為了那 5% 再加碼。
+  //
+  //   ⚠️ 唯一的例外是 `godie-h02k` 熊貓，而他是**結構性**的：INT 2、intGrowth 0
+  //     ⇒ 智慧那根軸對他逐位元是 0，係數再拉高他也不動（調後仍是 38.8 / 36.4 / 34.0 秒，
+  //     而那一段全部來自扁平的 base-bonus）。
+  //     ⭐ 他只吃得到 `config.base-bonus@1` 的扁平那一格。逐隻的表在
+  //     `docs/魔力回復例外清單.md`（`pnpm mana:audit`）。
+  //   ⚠️ 沒有撞到 `stat-caps` 的 `manaRegen` 上限 926：撞到的仍然只有
+  //     `godie-h020` 莉娜一隻（調前調後都是），⛔ 所以這一批**沒有動上限**。
+  intToManaRegen: 0.21,
   /** OWNER'S DESIGN — no WC3 source exists; Warcraft III has no 法強 attribute */
   // 🔴 2026-08-13 owner：1 → **2**。理由是他量到的落差：
   //   「目前**技能傷害跟普通攻擊傷害落差實在太大了**」

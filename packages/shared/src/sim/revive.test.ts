@@ -8,6 +8,8 @@ import { describe, it, expect, beforeAll } from "vitest";
 import { cover } from "../../testkit/cover";
 import { SimWorld } from "./SimWorld";
 import { DEFAULT_MANA_ECONOMY } from "./manaEconomy";
+import { DEFAULT_BASE_BONUS } from "./baseBonus";
+import { Stat } from "./stats/statTypes";
 import { SKELETON_ARENA } from "./world/ArenaDef";
 import { registerSkeletonContent } from "./content/skeleton";
 import { spawnChampion } from "./spawnChampion";
@@ -95,6 +97,11 @@ function duelWorld(rules: ReviveRules = FAST): {
   //    這一行今天是多餘的 —— 留著是因為它釘的是**這一支要什麼**，⛔ 不是
   //    「出貨預設剛好是什麼」：預設哪天翻回去，這一支也不該跟著變。
   w.manaEconomy = { ...DEFAULT_MANA_ECONOMY, enabled: false };
+  // ⚠️ 2026-08-20（GH#446）：`base-bonus.manaRegen` 現在是一格**全域**的
+  //    每秒回魔贈禮（owner：「初始回魔也增加少許」）。它是一個**調校值**，
+  //    ⛔ 不是這一支要量的機制 —— 留著它，這裡量到的魔力差會混進一個
+  //    跟本題無關的全域數字（而且它每週都可能被改）。
+  w.baseBonus = { ...DEFAULT_BASE_BONUS, [Stat.ManaRegen]: 0 };
   const c = SKELETON_ARENA.zones[0]!.center;
   const victim = champAt(w, 0, 0, c.x, c.z);
   const ally = champAt(w, 1, 0, c.x + 8, c.z);

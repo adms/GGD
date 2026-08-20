@@ -86,6 +86,14 @@ import {
   castsToKill,
 } from "../damageTiers";
 import { MEDIAN_EFFECTIVE_HP } from "../balanceAnchors";
+// ⭐ GH#465 相稱性 —— 公式與 owner 的係數住在 content/proportionality.ts，
+//    schema 這一層只是把它搬上 Zod（⛔ 不在這裡再算一次）。
+import {
+  DEFAULT_EXPECTED_HITS,
+  EXPECTED_HITS_MAX,
+  EXPECTED_HITS_MIN,
+  deriveMinDamageTier,
+} from "../proportionality";
 // 魔力經濟（GH#446）—— 回魔的地板。⚠️ 它住 `sim/`（每 tick 都跑的純函式）。
 import {
   DEFAULT_MANA_ECONOMY,
@@ -5220,7 +5228,8 @@ export const DEFAULT_DAMAGE_TIERS_DOC = {
  * ⇒ `refillSeconds` 現在是**建議目標**，要不要真的拉住 `enforceFloor`（出貨 **false**）。
  * 例外清單 = `pnpm mana:audit` → `docs/魔力回復例外清單.md`（LV30/50/99 三個錨點）。
  *
- * ⚠️ 上界 20 秒是**他自己給的數字**（「最糟的情形也不超過 20 秒」），
+ * ⚠️ 上界 30 秒是**他自己給的數字**（2026-08-19「最糟也不超過 20 秒」→
+ * 2026-08-20「**20 秒的限制可以調高到 30 秒**」），
  * ⛔ 不是防手滑的柵欄。語意與量到的後果寫在 `sim/manaEconomy.ts`。
  */
 export const zConfigManaEconomyDoc = z
@@ -5240,7 +5249,7 @@ export const zConfigManaEconomyDoc = z
       .describe(
         "從空到滿的**建議**秒數（owner 2026-08-20:「時間是建議原則 不是死程式邏輯」）。" +
           "只有兩個讀者:enforceFloor 開著時的地板算式(池 ÷ 這個數),以及 `pnpm mana:audit` 的超標門檻。" +
-          `上界 ${REFILL_SECONDS_MAX} 是 owner 的「最糟也不超過 20 秒」。`,
+          `上界 ${REFILL_SECONDS_MAX} 是 owner 自己給的（2026-08-20：「20 秒的限制可以調高到 30 秒」）。`,
       ),
     /** ⭐ 超標時要不要真的拉。出貨 **false**（建議原則，⛔ 不是死程式邏輯）。 */
     enforceFloor: z
@@ -5249,7 +5258,8 @@ export const zConfigManaEconomyDoc = z
         "超標時要不要**真的**把回魔拉到建議值。出貨 **false** ——" +
           "owner 說那是建議原則,所以預設什麼都不做,只把超標的列進例外清單。" +
           "打開 = 回到 2026-08-19 的硬地板 Math.max(回魔, 池 ÷ 建議秒數)。" +
-          "量到的現況(71 隻,裸裝):LV30/LV50/LV99 各有 70 隻滿魔超過 20 秒。",
+          "量到的現況(71 隻,裸裝,2026-08-20 調完回魔之後):中位滿魔 LV30 15.8s / LV50 14.1s / LV99 13.2s,\n" +
+          "三個錨點各只剩 1 隻超過 30 秒(godie-h02k 熊貓,INT 2/成長 0 ⇒ 智慧軸碰不到他)。",
       ),
     /** 只套在英雄身上（出貨 true）。 */
     championsOnly: z
@@ -6913,15 +6923,23 @@ const zCooldownBand = z
  * 那一格合不合理**取決於另一個軸**。合起來與他的 Q4（「傷害相應的冷卻跟耗魔
  * 做限制」）是**同一條雙向規則** —— 傷害決定成本，成本反過來要求傷害。
  *
- * ⚠️ 這張表是**十五格**，而 owner 只裁決了**一格**（範圍·極小 → 大）。
- * ⛔ 其餘十四格**沒有**被我填成「看起來合理」的值 —— 它們全是「極小」＝
- * **不構成限制**。理由是第一守則：把選擇權做成欄位，⛔ 不要替他挑數字。
- * 他哪天想收緊哪一格，那是一格下拉選單，不是一次部署。
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⭐ 2026-08-20：它從**十五格資料**變成**一條公式 + 一個係數**
  *
- * ⚠️ 而且它**推導不出來** —— 試過三條路（每卡面秒輸出下限、期望命中數加權、
- * 冷卻倍數的級距位移），沒有一條同時重現「單體·極小 → 極小」與
- * 「範圍·極小 → 大」。那代表 owner 的那一格帶著「瞄準風險」這個**表上沒有的**
- * 輸入，所以它是**資料**不是公式。
+ * 這一段在昨天寫的是「⚠️ 它推導不出來⋯所以它是**資料**不是公式」。
+ * owner 2026-08-20 把缺的那個輸入給了我（逐字）：
+ *
+ * > 「簡單粗暴的建議，**30/6秒=5，所以是 5 倍差距**，但由於是極小還是有可能位於
+ * >  **2 個人的命中範圍，所以再除 2**，最後結論**約等於 2.5 倍**」
+ *
+ * ⇒ 缺的輸入是**期望命中人數**（`expectedHits`），公式與整張表的推導寫在
+ * `content/proportionality.ts`。`minDamageTier` 現在是**推導出來的**，
+ * ⛔ 不是手填的 —— 改係數，十五格自己跟著動。
+ *
+ * ⚠️ ⛔ 公式**沒有重現** owner 2026-08-19 手填的那一格（範圍·極小 → 大）：
+ * 它給的是「小」，差 3.0 倍／兩級。⛔ 我沒有去湊 —— 照第〇·六守則，
+ * 比較新的第 1 層贏且**預設啟動**，舊的那一格另存在
+ * `proportionality.ts` 的 `OWNER_20260819_CELL`，而 `expectedHits` 就是回頭的開關。
  *
  * ⚠️ 違反只**警告不擋**（和這一份文件的其餘欄位同一層）：owner 說的是
  * 「不合理」不是「不准」，而刻意的例外要留空間。
@@ -6945,7 +6963,32 @@ const zProportionality = z
     /** 關掉 = 這條相稱性檢查完全不出現在編輯器的警告清單裡。 */
     enabled: z.boolean(),
     /**
+     * ⭐ **期望命中人數** —— owner 2026-08-20 給的那個係數（範圍 **2 人**）。
+     * ⛔ **0 ＝ 這個形狀豁免**（出貨的「變身」就是 0：它的回報軸不是傷害）。
+     * 語意與公式寫在 `content/proportionality.ts`。
+     */
+    expectedHits: z
+      .object(
+        Object.fromEntries(
+          COOLDOWN_SHAPES.map((s) => [
+            s,
+            z
+              .number()
+              .finite()
+              .min(EXPECTED_HITS_MIN)
+              .max(EXPECTED_HITS_MAX)
+              .describe(
+                `「${s}」一次打到幾個人。⭐ 範圍那一格就是 owner 的「2 個人的命中範圍」` +
+                  `（他把量到的 1.33 人進位成 2）。0 ＝ 這個形狀不套相稱性。`,
+              ),
+          ]),
+        ) as Record<(typeof COOLDOWN_SHAPES)[number], z.ZodNumber>,
+      )
+      .strict(),
+    /**
      * 形狀 → 冷卻級距 → **最低**傷害級距。
+     * ⭐ **推導出來的**（`deriveMinDamageTier`），⛔ 不是手填的資料 ——
+     * 它跟著 `expectedHits` × 冷卻級距表 × 傷害級距表走。
      * 「極小」＝ 不構成限制（那是傷害軸的最低一格）。
      */
     minDamageTier: z
@@ -6959,18 +7002,16 @@ const zProportionality = z
   })
   .strict();
 
-/** 十五格的出貨值：只有 owner 親口裁決的那一格有限制，其餘不構成限制。 */
-const shippedMinDamageTier = (): Record<string, Record<string, string>> => {
-  const out: Record<string, Record<string, string>> = {};
-  for (const s of COOLDOWN_SHAPES) {
-    const row: Record<string, string> = {};
-    for (const n of COOLDOWN_TIER_NAMES) row[n] = DAMAGE_TIER_NAMES[0];
-    out[s] = row;
-  }
-  // owner 2026-08-19：「的確是太小不合理，要綜合看傷害是不是極大或**至少大**的」
-  out["範圍"]!["極小"] = "大";
-  return out;
-};
+/**
+ * 十五格的出貨值 —— ⭐ **推導**，⛔ 不是抄的。
+ * 三個輸入全部是既有的出貨表：冷卻級距 × 傷害級距 × owner 的期望命中人數。
+ */
+const shippedMinDamageTier = (): Record<string, Record<string, string>> =>
+  deriveMinDamageTier(
+    DEFAULT_COOLDOWN_TIERS.seconds,
+    DEFAULT_DAMAGE_TIERS.damage,
+    DEFAULT_EXPECTED_HITS,
+  ) as unknown as Record<string, Record<string, string>>;
 
 export const DEFAULT_AUTHORING_PRINCIPLES = {
   id: AUTHORING_RULES_DOC_ID,
@@ -6978,7 +7019,11 @@ export const DEFAULT_AUTHORING_PRINCIPLES = {
   singleTargetCooldown: { min: 5, max: 30 },
   aoeCooldown: { min: 30, max: 120 },
   transformCooldownMin: 120,
-  proportionality: { enabled: true, minDamageTier: shippedMinDamageTier() },
+  proportionality: {
+    enabled: true,
+    expectedHits: DEFAULT_EXPECTED_HITS,
+    minDamageTier: shippedMinDamageTier(),
+  },
 } as const;
 
 export const zConfigAuthoringRulesDoc = z

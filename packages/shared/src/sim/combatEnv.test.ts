@@ -292,6 +292,12 @@ describe("combat-env formula-site multipliers", () => {
     const burst = (table?: CombatEnvMultipliers): { hp: number; mana: number; maxHp: number; maxMana: number } => {
       const w = makeWorld(11, table);
       w.flowerRules = rules;
+      // ⚠️ 2026-08-20（GH#446）：`base-bonus.manaRegen` 是一格**全域**的每秒回魔贈禮
+      //    （owner：「初始回魔也增加少許」）。這一條量的是**花朵爆發回復**，
+      //    ⛔ 不是全域回魔 —— 不歸零的話那一 tick 的回魔會混進差值裡。
+      //    ⚠️ ⛔ 只在這一支歸零，⛔ 不在 `makeWorld` 裡：env-01 的
+      //    「加成不被倍率放大」正需要那一格贈禮真的存在。
+      w.baseBonus = { ...DEFAULT_BASE_BONUS, [Stat.ManaRegen]: 0 };
       const c = SKELETON_ARENA.zones[0]!.center;
       const killer = spawnChampion(w, {
         championId: "sela" as ChampionId,

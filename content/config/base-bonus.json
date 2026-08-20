@@ -3,6 +3,7 @@
   "schema": "config.base-bonus@1",
   "bonus": {
     "maxHealth": 650,
-    "maxMana": 600
+    "maxMana": 600,
+    "manaRegen": 10
   }
 }

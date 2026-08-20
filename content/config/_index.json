@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "7036fde6aa28",
+  "hash": "1c1f1a279cbd",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -47,14 +47,14 @@
     {
       "id": "authoring-rules",
       "path": "config/authoring-rules.json",
-      "hash": "32f1735e9c8a",
-      "size": 1436
+      "hash": "cd5742260d51",
+      "size": 2762
     },
     {
       "id": "base-bonus",
       "path": "config/base-bonus.json",
-      "hash": "8e6693746cc6",
-      "size": 119
+      "hash": "4bf362011f8d",
+      "size": 140
     },
     {
       "id": "berserk",
@@ -101,7 +101,7 @@
     {
       "id": "combat-env",
       "path": "config/combat-env.json",
-      "hash": "ed46ba2a14f1",
+      "hash": "3d60f07ce507",
       "size": 985
     },
     {
@@ -209,8 +209,8 @@
     {
       "id": "mana-economy",
       "path": "config/mana-economy.json",
-      "hash": "d97c5d1df70c",
-      "size": 2193
+      "hash": "a9c130dc45e0",
+      "size": 2365
     },
     {
       "id": "map-report",
