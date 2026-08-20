@@ -56,6 +56,11 @@ import {
   scanAbility,
 } from "./descriptionClaims";
 import { analyseAbility } from "./abilityNoOpEffects";
+// ⭐ GH#445 —— 「傷害太低」那一族。⛔ 判斷與文案都在那一支裡推導，這裡只呼叫。
+import {
+  abilitiesInLowDamageCells,
+  describeLowDamageCells,
+} from "./lowDamageCells";
 import { NORMALIZED_STAT_KEYS } from "./statNormalization";
 import {
   columnApplies,
@@ -72,9 +77,10 @@ export type NewHeroWarnRule =
   | "principle-band"
   | "claim-mismatch"
   | "no-op-effect"
-  | "dialogue-claim";
+  | "dialogue-claim"
+  | "low-damage-cell";
 
-/** 六條規則的次序 + 一句「它擋的是什麼」。⭐ 後台開關表與文件都從這裡推導。 */
+/** 七條規則的次序 + 一句「它擋的是什麼」。⭐ 後台開關表與文件都從這裡推導。 */
 export const NEW_HERO_WARN_RULES: readonly {
   readonly rule: NewHeroWarnRule;
   readonly zh: string;
@@ -109,6 +115,13 @@ export const NEW_HERO_WARN_RULES: readonly {
     rule: "dialogue-claim" as const,
     zh: "機制數字寫進了台詞",
     note: "⭐「」裡是**角色對白不是效果**（第〇·六守則②）。寫在裡面的冷卻／耗魔／傷害／持續**引擎一格都不讀**。",
+  }),
+  Object.freeze({
+    rule: "low-damage-cell" as const,
+    zh: "傷害相對冷卻偏低",
+    // ⭐ ⛔ 這一句**不是手寫的**：它是 `describeLowDamageCells()` 現算出來的，
+    //    所以「哪幾格、低幾 %、要跳到哪一級」永遠等於出貨的三張表在說的話。
+    note: describeLowDamageCells(),
   }),
 ]);
 
@@ -148,6 +161,9 @@ export const DEFAULT_NEW_HERO_CHECKS: NewHeroChecksConfig = Object.freeze({
     "claim-mismatch": true,
     "no-op-effect": true,
     "dialogue-claim": true,
+    // ⭐ GH#445 —— owner 2026-08-20：「傷害太低要跳出警告清單給我，後台跟 codex
+    //    編輯器也同步跳警告」⇒ 預設 **on**（第〇·六守則：高層級的更新預設啟動）。
+    "low-damage-cell": true,
   }),
   minSample: 8,
   autofillDescription: true,
@@ -354,6 +370,22 @@ function checkAbility(
   // ⚠️ 剝掉台詞之後說明整個空掉 = 這一格只有台詞，沒有任何機制文字。
   if (desc.trim() !== "" && mechanicsText(desc).trim() === "")
     push("dialogue-claim", "description", "整段說明都是角色對白 —— 剝掉「」之後一個字都不剩，玩家讀不到這支技能做什麼。");
+
+  // ⑦ ⭐ GH#445 —— 這支技能的冷卻落在**傷害相對冷卻偏低**的那幾格嗎。
+  //    ⛔ 名單、百分比、「要跳到哪一級」全部由 `lowDamageCells()` 現算，
+  //      這裡一個字面值都沒有：三張出貨表任何一格動了，訊息就跟著動。
+  for (const p of abilitiesInLowDamageCells([{ ...doc, id: where }])) {
+    const c = p.cell!;
+    push(
+      "low-damage-cell",
+      "cooldown",
+      `冷卻 ${p.seconds} 卡面秒 ⇒ 落在「${p.shape}・${p.tier}」這一格，而它的期望輸出` +
+        `比錨點（${c.anchorRate.toFixed(1)}/卡面秒）` +
+        `**${c.deficitPct}%**：照級距名填「${c.diagonalDamageTier}」傷害的話，` +
+        `每卡面秒只有 ${c.ratePerCardSecond.toFixed(1)}。⇒ 要嘛把傷害拉到「${c.requiredDamageTier}」，` +
+        `要嘛把冷卻挪出這一格。⚠️ 只警告不擋（owner 說的是「不合理」不是「不准」）。`,
+    );
+  }
 
   return out;
 }

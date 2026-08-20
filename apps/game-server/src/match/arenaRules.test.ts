@@ -563,55 +563,86 @@ describe("every-round augment 3-choose-1 restored (arena-08, #157)", () => {
   // 行為的守衛（第三守則）。取而代之的是上面 #340 那個 describe，它從排程推導
   // 撞卡回合、兩個方向一起讀。這裡不重複第二份。
 
+  /**
+   * ⭐【GH#483】**掃一段 seed**，⛔ 不是釘死一個。
+   *
+   * ── 為什麼（模式本身才是缺陷）────────────────────────────────────────────
+   *
+   * 這條測試的 seed 被重新挑過**四次**（1234 → 1200 → 1201 → 1202 → 1201），
+   * 而**四次都不是這條斷言壞掉**：
+   *
+   *   · GH#414/#442 —— 12 支瞬移改成真 blink + 205 支技能的射程收進級距
+   *   · GH#455 ——「中場入口把每個人還原」⇒ 被打倒的 bot 在商店裡是站著的
+   *   · GH#422 —— 開場擺位改成四隊分開站
+   *   · GH#470 —— 晨曦之光在兩張寶具池之間搬家（每回合消耗的 rng draw 數變了）
+   *
+   * 四件**全部是對的內容改動**，而每一件都讓那一場的 rng 流位移，於是
+   * 「第 2 回合有沒有人拿到 augment offer」這個**機率事件**翻面 ⇒ `checked` 變 0。
+   *
+   * ⛔ 這訓練所有人「紅了就換個數字」，而那正是把守衛變成噪音的路徑
+   *（第二守則失敗形態④：斷言方向跟缺陷無關）。這條測試想驗的是
+   * 「三選一**會**發生而且**不重複發**」，⛔ 不是「在 seed X 下它會發生」。
+   *
+   * ── 現在的形狀 ────────────────────────────────────────────────────────────
+   *
+   * 掃 {@link EXCLUSION_SEEDS} 這一段連續 seed，對**每一個有 offer 的座位**都跑
+   * 完整的排除斷言，最後要求**至少 {@link EXCLUSION_MIN_SEEDS} 個 seed** 真的
+   * 提供了第 2 回合的三選一。
+   *
+   * ⭐ `toBeGreaterThan(0)` **沒有被拿掉**（issue 明說不可以）——
+   * 它升級成「一段裡至少 N 個」，而 N > 1 比單一 seed **更**敏感：
+   * 排除規則真的壞掉時，⛔ 沒有任何一個 seed 會過。
+   */
+  // ⚠️ 這兩個數字是**這條測試的參數**，⛔ 不是出貨值（第二守則：出貨數字不進測試）。
+  //    ⭐ 量到的（2026-08-20，GH#483 落地當下）：1200–1219 這 20 個 seed 裡
+  //    **8 個**提供了第 2 回合的三選一（1200,1203,1205,1208,1211,1215,1216,1217）。
+  //    門檻取 **3** ＝ 那個密度的 **2.7 倍餘裕**：內容改動讓密度掉一半也不會紅，
+  //    而排程／發卡真的壞掉時**一個都不會過**。
+  //    ⛔ 這條測試紅了**不要再挑數字** —— 那正是它取代掉的那個壞習慣。
+  const EXCLUSION_SEEDS = Array.from({ length: 20 }, (_, i) => 1200 + i);
+  const EXCLUSION_MIN_SEEDS = 3;
+
   it("a picked augment is excluded from the next round's silver re-offer", () => {
     cover("arena-config-parse");
-    // ⚠️ GH#414/#442 —— seed 1234 換成 **1200**。這一版把 12 支瞬移改成真 blink、
-    //    205 支技能的射程收進級距 ⇒ bot 的戰鬥軌跡改變，1234 那一場第 2 回合
-    //    **沒有任何座位拿到 augment offer**，於是 `checked` 是 0、這條測試變成空轉。
-    //    ⛔ 不是把 `toBeGreaterThan(0)` 拿掉（那會留下一條對缺陷不敏感的綠燈，
-    //    失敗形態④）—— 掃了 1200–1399，1200/1201/1203/1204 都重現。
-    // ⚠️ GH#455 —— seed 1200 換成 **1201**（同一個理由，第二次換）：中場入口現在
-    //    會把每個人還原（`restoreForNextRound`），⇒ **被打倒的 bot 在商店裡是站著
-    //    的**（`Tier0Brain.replan` 對 `!alive` 直接早退，所以牠以前整個中場不點技能
-    //    也不買東西），整場的資源曲線與 rng 流因此改變，1200 那一場第 2 回合又變成
-    //    沒有人拿到 offer。⛔ 不是把 `toBeGreaterThan(0)` 拿掉 —— 重掃 1200–1399，
-    //    1201/1203/1204/1205/1206/1207 都重現，取最小的。
-    // ⚠️ GH#422 —— seed 1201 換成 **1202**（同一個理由，第三次換）：開場擺位
-    //    改成四隊分開站之後 bot 的軌跡與 rng 流位移，1201 那一場第 2 回合又變成
-    //    沒有人拿到 offer。重掃 1201–1259，取最小的。
-    // ⚠️ GH#470 —— seed 1202 換回 **1201**（同一個理由，第四次換）：晨曦之光
-    //    `godie-i016` 從 `ex-release-weapons` 歸位到 `legendary-weapons`（owner 的
-    //    階級表是第 1 層），兩張池的成員數因此各動一格 ⇒ 每一回合的寶具抽取消耗的
-    //    rng draw 數改變、整場的流位移，1202 那一場第 2 回合又變成沒有人拿到 offer。
-    //    重掃 1200–1279：1201/1203/1204/1210/1211/1216/1217/1222 都重現，取最小的。
-    // ⭐ **四次都不是這條斷言壞掉**，是「用一個寫死的 seed 去撞一個機率事件」這個
-    //    寫法本身 —— 它對**任何**改動 rng 流的東西都會紅，而那些改動全部是對的。
-    //    ⛔ 修法仍然不是拿掉 `toBeGreaterThan(0)`（那會留下一條對缺陷不敏感的綠燈，
-    //    失敗形態④）。要根治就是掃一段 seed 取第一個有 offer 的，⛔ 不是釘死一個。
-    const ctl = makeArenaMatch(1201);
     // Round 2 is silver again: its fresh 3 choices must EXCLUDE whatever the seat
     // already owns from round 1. The round-1 draft is auto-resolved on the timer,
     // and task #207 makes that a DETERMINISTIC RANDOM one of the three (not the
     // old fixed choices[0]), so we read the champion's ACTUAL augments rather
     // than assuming which card was taken.
-    runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 2);
-    let checked = 0;
-    for (const seat of ctl.seats.values()) {
-      if (seat.entityId === null) continue;
-      const offer = ctl.offers.get(`2:${seat.seatId}`);
-      if (!offer || offer.kind !== "augment") continue;
-      const owned = ctl.world.champion.get(seat.entityId)!.augments as string[];
-      expect(owned.length).toBeGreaterThan(0); // the round-1 draft was auto-resolved
-      // 同上（GH#357）：排定的等級是地板。
-      const RANK3: Record<string, number> = { silver: 0, gold: 1, prismatic: 2 };
-      expect(RANK3[offer.tier] ?? -1).toBeGreaterThanOrEqual(RANK3.silver!);
-      const choices = offer.choices as string[];
-      expect(choices).toHaveLength(3);
-      expect(new Set(choices).size).toBe(3);
-      for (const own of owned) expect(choices).not.toContain(own); // never re-offered
-      checked++;
+    const seedsWithOffer: number[] = [];
+    let seatsChecked = 0;
+    for (const seed of EXCLUSION_SEEDS) {
+      const ctl = makeArenaMatch(seed);
+      runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 2);
+      let checked = 0;
+      for (const seat of ctl.seats.values()) {
+        if (seat.entityId === null) continue;
+        const offer = ctl.offers.get(`2:${seat.seatId}`);
+        if (!offer || offer.kind !== "augment") continue;
+        const owned = ctl.world.champion.get(seat.entityId)!.augments as string[];
+        expect(owned.length, `seed ${seed}`).toBeGreaterThan(0); // round-1 draft auto-resolved
+        // 同上（GH#357）：排定的等級是地板。
+        const RANK3: Record<string, number> = { silver: 0, gold: 1, prismatic: 2 };
+        expect(RANK3[offer.tier] ?? -1, `seed ${seed}`).toBeGreaterThanOrEqual(RANK3.silver!);
+        const choices = offer.choices as string[];
+        expect(choices, `seed ${seed}`).toHaveLength(3);
+        expect(new Set(choices).size, `seed ${seed}`).toBe(3);
+        for (const own of owned) expect(choices, `seed ${seed}`).not.toContain(own); // never re-offered
+        checked++;
+      }
+      if (checked > 0) seedsWithOffer.push(seed);
+      seatsChecked += checked;
     }
-    expect(checked).toBeGreaterThan(0);
+    expect(
+      seatsChecked,
+      `掃了 ${EXCLUSION_SEEDS.length} 個 seed 一個座位都沒驗到 —— 這條測試在空轉`,
+    ).toBeGreaterThan(0);
+    expect(
+      seedsWithOffer.length,
+      `${EXCLUSION_SEEDS.length} 個 seed 裡只有 ${seedsWithOffer.length} 個` +
+        `（${seedsWithOffer.join(",")}）在第 2 回合提供三選一 —— 低於 ${EXCLUSION_MIN_SEEDS} 就不是` +
+        `「rng 流位移」而是排程／發卡機制本身壞了`,
+    ).toBeGreaterThanOrEqual(EXCLUSION_MIN_SEEDS);
   });
 });
 

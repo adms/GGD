@@ -8,12 +8,12 @@
   "attachmentsEnabled": true,
   "forms": {
     "godie-o00x": {
-      "note": "掛件=w3x A0MJ 球體(悟空超3)=Goku3head.mdx,掛點 origin 也是 w3x 自己記的;金色 tint 與 1.08 倍身高是美術決定 —— w3u 的 Ogrh/O00X 兩半 tint 皆 [1,1,1]、usca 皆未設(=1.0),A09E 觸發也沒有 SetUnitVertexColor",
+      "note": "掛件=w3x A0MJ 球體(悟空超3)=Goku3head.mdx,掛點 origin 也是 w3x 自己記的;金色 tint 與 1.08 倍身高是美術決定 —— w3u 的 Ogrh/O00X 兩半 tint 皆 [1,1,1]、usca 皆未設(=1.0),A09E 觸發也沒有 SetUnitVertexColor。⭐ attachScale 0.4161 是**推導**的(GH#482,owner 2026-08-20「照原著 改成忠實值」):models_report.json 的 goku.mdx scale_factor 0.01156 ÷ Goku3head.mdx scale_factor 0.02778 —— 把掛件從道具倍率換算回本體的英雄身高座標系。⛔ 舊值 0.3221 是忠實尺寸的 77%,而它旁邊那句註解引用的 0.008946 在整個 repo 裡不存在(第三守則)。守衛:packages/shared/src/content/attachmentScale.test.ts",
       "tint": [1.45, 1.3, 0.55],
       "scaleMult": 1.08,
       "attachModelKey": "imported.goku3head",
       "attachBone": "origin",
-      "attachScale": 0.3221,
+      "attachScale": 0.4161,
       "attachOffsetY": 0
     },
     "godie-e00l": {

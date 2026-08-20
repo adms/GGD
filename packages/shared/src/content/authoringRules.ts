@@ -48,6 +48,8 @@ import {
   tableForModel,
 } from "./proportionality";
 import { SKILL_TIER_NAMES } from "./skillTiers";
+// ⭐ GH#445 —— 「傷害相對冷卻偏低」的推導。⛔ 這裡只呼叫，判斷與文案都在那一支裡。
+import { ANCHOR_SHAPE, ANCHOR_TIER, lowDamageCells } from "./lowDamageCells";
 import { COMBAT_ENV_DEFAULTS } from "../sim/combatEnv";
 import {
   BAND_MEANING,
@@ -134,8 +136,42 @@ export interface AuthoringRulesManifest {
    * ⛔ 不是這份清單在擋。
    */
   readonly newHeroChecks: readonly NewHeroCheckRule[];
+  /**
+   * ⭐【GH#445】**傷害相對冷卻偏低的那幾格**（owner 2026-08-20：「傷害太低要跳出
+   * 警告清單給我，**後台跟 codex 編輯器也同步跳警告**」）。
+   *
+   * ⚠️ 為什麼它是**一格資料**而不是十五條 `principle` 規則：`principle` 那一族
+   * 回答「這樣寫合不合規」，而這一格回答「**這一格本身有多不划算**」——
+   * 後者是編輯器要**畫**給作者看的（黃字：「你挑的這一格每卡面秒少 60%」），
+   * ⛔ 不是一條可以違反的規則。十五格全發成規則就是把一格資料變成十四條廢話
+   *（同 `proportionalityRules()` 檔頭那一段）。
+   *
+   * ⭐ 逐格**現算**：冷卻五級距 × 傷害五級距 × 期望命中人數。owner 在後台動任何
+   * 一格，這裡下一秒就變。⛔ 對面抄一份就是第二個住處。
+   */
+  readonly lowDamageCells: readonly LowDamageCellRule[];
   /** 每一條規則現在的實際值都從這裡算出來,所以它跟著後台走。 */
   readonly derivedFrom: readonly string[];
+}
+
+/** 一格「傷害偏低」對外的樣子。⛔ 欄位語意寫在 `content/lowDamageCells.ts`。 */
+export interface LowDamageCellRule {
+  readonly shape: string;
+  readonly cooldownTier: string;
+  /** 這一格的卡面冷卻秒數（＝ `config.cooldown-tiers@1` 的那一格） */
+  readonly cooldownSec: number;
+  /** 照對角線填傷害時的每卡面秒期望輸出 */
+  readonly ratePerCardSecond: number;
+  /** 錨點（單體・極小）的每卡面秒期望輸出 */
+  readonly anchorRate: number;
+  /** 相對錨點差幾 %（負數 = 偏低）。⚠️ 已四捨五入 —— 它是給人看的。 */
+  readonly deficitPct: number;
+  /** 作者「照級距名填」會拿到的傷害級距 */
+  readonly diagonalDamageTier: string;
+  /** 要追平錨點得跳到哪一個傷害級距 */
+  readonly requiredDamageTier: string;
+  /** 給人看的一句話（⛔ 對面不要自己組，兩邊組出來的話一定會分岔） */
+  readonly note: string;
 }
 
 /** 一條「創建新英雄」警示對外的樣子。⛔ 名稱與說明從 `NEW_HERO_WARN_RULES` 抄，不重寫。 */
@@ -422,6 +458,29 @@ export function buildAuthoringRules(read: ConfigReader): AuthoringRulesManifest 
     enabled: checks.rules[r.rule],
   }));
 
+  // ⭐ GH#445 —— 「傷害太低」的那幾格。⚠️ 三個輸入讀的都是**現在這一刻**的 config
+  //    （同上面相稱性那一段的理由）：拿 DEFAULT_* 算會讓端點對後台改過的表說謊。
+  const cellSeconds = cooldownTiersFromDoc(read("cooldown-tiers")).seconds;
+  const cellDamage = damageTiersFromDoc(read("damage-tiers")).damage;
+  const cellHits = expectedHitsFromDoc(principles.proportionality.expectedHits);
+  const lowDamage: LowDamageCellRule[] = lowDamageCells(cellSeconds, cellDamage, cellHits).map(
+    (c) => ({
+      shape: c.shape,
+      cooldownTier: c.tier,
+      cooldownSec: cellSeconds[c.shape][c.tier],
+      ratePerCardSecond: c.ratePerCardSecond,
+      anchorRate: c.anchorRate,
+      deficitPct: c.deficitPct,
+      diagonalDamageTier: c.diagonalDamageTier,
+      requiredDamageTier: c.requiredDamageTier,
+      note:
+        `「${c.shape}・${c.tier}」的期望輸出比錨點（${ANCHOR_SHAPE}・${ANCHOR_TIER}）` +
+        `**${c.deficitPct}%**：照級距名填「${c.diagonalDamageTier}」傷害的話，每卡面秒只有 ` +
+        `${c.ratePerCardSecond.toFixed(1)}。⇒ 要嘛把傷害拉到「${c.requiredDamageTier}」，` +
+        "要嘛把冷卻挪出這一格。⚠️ 只警告不擋。",
+    }),
+  );
+
   return {
     schema: AUTHORING_RULES_SCHEMA,
     hard,
@@ -429,7 +488,12 @@ export function buildAuthoringRules(read: ConfigReader): AuthoringRulesManifest 
     manaIsDerived: true,
     statTuning: buildStatTuning(read),
     newHeroChecks,
+    lowDamageCells: lowDamage,
     derivedFrom: [
+      // GH#445 —— 「傷害偏低的那幾格」與相稱性都讀這兩張表。⛔ 它們在 2026-08-20
+      // 之前漏在這張清單外面，而那正是「對外契約說得出自己從哪裡來」的那一格。
+      "config.cooldown-tiers@1",
+      "config.damage-tiers@1",
       "config.cast-time@1",
       "config.cooldown-rules@1",
       "config.aoe-tiers@1",

@@ -262,8 +262,22 @@ export class AIDriver implements SeatDriver {
           // 在這裡先扣一半再送出去，sim 會收全額 —— 兩邊各算一次價就是遲早分岔的
           // 兩份價目表。這裡只用它算「買不買得起」。
           //
-          // ⚠️ 為什麼是 `else`：還寫著推薦出裝的那 12 位英雄照走自己的梯子
-          // （那是刻意的內容）。其餘 66 位直接走這一條，⛔ 不必補梯子。
+          // ⭐ GH#474（2026-08-20）——「推薦出裝」整條**退場**了，所以這個 `else`
+          // 現在是**每一位** bot 的路徑，⛔ 不再是「沒有梯子的那 66 位」。
+          // owner 逐字：「**拔乾淨**，現在 bot 都是**半價購買隨機寶具**，但**隨機三選一
+          // 還是會根據自己屬性購買有利的選項**（不會變成法師買近戰暴擊武器）」。
+          // ⇒ 出貨內容的 `buildPriority` 一律是 `[]`（守衛：`buildPath.test.ts` 的
+          //   「推薦出裝已退場」），於是 `nextBuildPurchase` 必然回 null 而落到這裡。
+          // ⚠️ ⛔ 上面那個 `if` **沒有被拿掉**是刻意的：它是骨架註冊表（`skeleton.ts`
+          //   的兩位仍帶著兩件）與任何手動塞梯子的除錯路徑仍然走得通的地方 ——
+          //   拔掉它會讓「內容全毀退回骨架」那條路上的 bot 一件都不買。
+          // ⚠️ owner 同一則還說「**隨機三選一還是會根據自己屬性購買有利的選項**」——
+          //   ⛔ **那件事今天沒有發生**（2026-08-20 量到的，第三守則：不要把期望寫成註解）。
+          //   bot 從來不送 `pickOffer`，牠拿到的卡一律由 `MatchController.autoPickIndex`
+          //   在計時器上自動選掉，而那是 `seed × offerId` 的純雜湊 ——
+          //   **一格屬性都沒讀**。⇒ 法師真的會抽到近戰暴擊武器。
+          //   這是一條獨立的缺口（要一支「照 champion 的屬性權重挑卡」的比較器），
+          //   ⛔ 不在 #474 的範圍內，已在回報中點名。
           const price = shopChargeFor(this.botShop.priceMult, LEGENDARY_ORB_PRICE);
           if (champ.gold >= price) {
             commands.push({ kind: "buyItem", itemId: LEGENDARY_ORB_ITEM_ID });

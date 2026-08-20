@@ -64,6 +64,11 @@
       "rule": "dialogue-claim",
       "zh": "機制數字寫進了台詞",
       "note": "⭐「」裡是**角色對白不是效果**（第〇·六守則②）。寫在裡面的冷卻／耗魔／傷害／持續**引擎一格都不讀**。"
+    },
+    {
+      "rule": "low-damage-cell",
+      "zh": "傷害相對冷卻偏低",
+      "note": "⚠️ **傷害偏低的 2 格**（相對錨點 單體・極小 的 191.7/卡面秒）：「範圍・極小」-60%（照對角線填「極小」＝1150 傷害 × 2 人 ÷ 30 卡面秒 = 76.7/秒；要追平錨點得跳到「小」）；「範圍・小」-33%（照對角線填「小」＝2875 傷害 × 2 人 ÷ 45 卡面秒 = 127.8/秒；要追平錨點得跳到「中」）。⭐ 全部是**算出來的**：改「期望命中人數」／冷卻五級距／傷害五級距任何一格，這份名單下一秒就跟著動。⚠️ 只**警告不擋** —— owner 說的是「不合理」不是「不准」。"
     }
   ],
   "defaults": [
@@ -100,11 +105,12 @@
     {
       "slot": "PASSIVE",
       "castType": "skillshot",
-      "description": "朝指定方向發射，施法距離 12，範圍 8.71，（效果待填）。冷卻 45 秒，消耗[MP] 140。",
+      "description": "朝指定方向發射，施法距離 12，範圍 8.71，（效果待填）。冷卻 60 秒，消耗[MP] 140。",
       "cooldown": {
-        "value": 45,
+        "value": 60,
         "sample": 35,
-        "basis": "slot"
+        "basis": "slot",
+        "liftedFromMedian": 45
       },
       "manaCost": {
         "value": 140,
@@ -130,11 +136,12 @@
     {
       "slot": "PASSIVE",
       "castType": "ground",
-      "description": "在指定地點，施法距離 12，範圍 8.71，（效果待填）。冷卻 45 秒，消耗[MP] 140。",
+      "description": "在指定地點，施法距離 12，範圍 8.71，（效果待填）。冷卻 60 秒，消耗[MP] 140。",
       "cooldown": {
-        "value": 45,
+        "value": 60,
         "sample": 35,
-        "basis": "slot"
+        "basis": "slot",
+        "liftedFromMedian": 45
       },
       "manaCost": {
         "value": 140,
@@ -250,11 +257,12 @@
     {
       "slot": "Q",
       "castType": "skillshot",
-      "description": "朝指定方向發射，施法距離 12，範圍 5.5，造成 160 點傷害。冷卻 30 秒，消耗[MP] 65。",
+      "description": "朝指定方向發射，施法距離 12，範圍 5.5，造成 160 點傷害。冷卻 60 秒，消耗[MP] 65。",
       "cooldown": {
-        "value": 30,
+        "value": 60,
         "sample": 67,
-        "basis": "slot"
+        "basis": "slot",
+        "liftedFromMedian": 30
       },
       "manaCost": {
         "value": 65,
@@ -280,11 +288,12 @@
     {
       "slot": "Q",
       "castType": "ground",
-      "description": "在指定地點，施法距離 12，範圍 5.5，造成 175 點傷害。冷卻 30 秒，消耗[MP] 80。",
+      "description": "在指定地點，施法距離 12，範圍 5.5，造成 175 點傷害。冷卻 60 秒，消耗[MP] 80。",
       "cooldown": {
-        "value": 30,
+        "value": 60,
         "sample": 16,
-        "basis": "slot+castType"
+        "basis": "slot+castType",
+        "liftedFromMedian": 30
       },
       "manaCost": {
         "value": 80,
@@ -400,11 +409,12 @@
     {
       "slot": "W",
       "castType": "skillshot",
-      "description": "朝指定方向發射，施法距離 12，範圍 5.5，造成 200 點傷害。冷卻 30 秒，消耗[MP] 60。",
+      "description": "朝指定方向發射，施法距離 12，範圍 5.5，造成 200 點傷害。冷卻 60 秒，消耗[MP] 60。",
       "cooldown": {
-        "value": 30,
+        "value": 60,
         "sample": 62,
-        "basis": "slot"
+        "basis": "slot",
+        "liftedFromMedian": 30
       },
       "manaCost": {
         "value": 60,
@@ -430,11 +440,12 @@
     {
       "slot": "W",
       "castType": "ground",
-      "description": "在指定地點，施法距離 12，範圍 5.5，造成 200 點傷害。冷卻 25 秒，消耗[MP] 70。",
+      "description": "在指定地點，施法距離 12，範圍 5.5，造成 200 點傷害。冷卻 60 秒，消耗[MP] 70。",
       "cooldown": {
-        "value": 25,
+        "value": 60,
         "sample": 15,
-        "basis": "slot+castType"
+        "basis": "slot+castType",
+        "liftedFromMedian": 25
       },
       "manaCost": {
         "value": 70,

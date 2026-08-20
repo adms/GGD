@@ -100,11 +100,16 @@ const CHAMPION_GROUPS: readonly FieldGroup[] = [
     ],
   },
   {
+    // ⛔ GH#474 —— 「推薦出裝」（`buildPriority`）那一格**拔掉了**。owner 2026-08-20：
+    //    「**拔乾淨**，現在 bot 都是**半價購買隨機寶具**」。欄位本身仍在 `champion@1`
+    //    的 schema 裡（骨架註冊表用得到），但出貨內容一律 `[]`，而
+    //    `botBuildPriorityRetired.test.ts` 會在任何一份重新長出非空梯子時變紅。
+    //    ⇒ 這裡留一個輸入框 = 邀請下一個人再填一條沒有人會走的梯子。
+    //    退場的 12 條梯子逐字存在 `docs/legacy/_bot-build-priority-retired-20260820.md`。
     title: "技能與出裝",
     fields: [
       { path: "exAbility", label: "EX 技能 id", kind: "text", hint: "abilities/ 的 id；清空代表沒有 EX" },
       { path: "skillOrder", label: "加點順序", kind: "stringList", hint: "Q, W, E, R" },
-      { path: "buildPriority", label: "推薦出裝", kind: "stringList", hint: "items/ 的 id，逗號分隔" },
     ],
   },
 ];
@@ -273,7 +278,9 @@ const VFX_GROUPS: readonly FieldGroup[] = [
       { path: "follow", label: "跟隨骨頭", kind: "boolean", hint: "空/開 = 每幀跟著那根骨頭走；關 = 生成當下取一次座標就不動" },
       { path: "anim", label: "播哪條動畫", kind: "text", hint: "掛件自己的動畫軌名（多數是 Stand）；空 = 播全部" },
       { path: "animLoop", label: "動畫循環", kind: "boolean", hint: "空 = 循環。關掉 = 只播一次就停在最後一格" },
-      { path: "scale", label: "掛件縮放", kind: "number", hint: "兩份 glb 的轉檔倍率常常不同，1 未必對（悟空超三頭是 0.3221）" },
+      // ⭐ GH#482 —— ⛔ 不寫死數字：它是 本體 glb 的 scale_factor ÷ 掛件 glb 的
+      //    scale_factor（`models_report.json`），算法在 shared 的 attachmentScale.ts。
+      { path: "scale", label: "掛件縮放", kind: "number", hint: "兩份 glb 的轉檔倍率常常不同，1 未必對 —— 它是「本體 scale_factor ÷ 掛件 scale_factor」" },
       { path: "offsetY", label: "掛件高度", kind: "number", hint: "沿 Y 微調；0 = 用 mdx 自己烘的高度" },
     ],
   },

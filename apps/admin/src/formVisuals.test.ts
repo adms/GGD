@@ -87,7 +87,8 @@ describe("輸入驗證有上界 (formvis-admin-bounds)", () => {
     expect(validateFormVisualInput("scaleMult", "15")).not.toBe("");
     expect(validateFormVisualInput("scaleMult", "0.01")).not.toBe("");
     // 掛件縮放 0.01..10
-    expect(validateFormVisualInput("attachScale", "0.3221")).toBe("");
+    // ⛔ 不抄出貨值（GH#482 剛把它從 0.3221 改成 0.4161）——「界內的一個數」就夠了。
+    expect(validateFormVisualInput("attachScale", "0.5")).toBe("");
     expect(validateFormVisualInput("attachScale", "100")).not.toBe("");
     // 掛件高度 -5..5(可以是負的,但不能離譜)
     expect(validateFormVisualInput("attachOffsetY", "-0.5")).toBe("");

@@ -1,10 +1,14 @@
 /**
- * ai-build-path: the Tier-0 bot walks its champion's buildPriority instead of
- * re-buying entry #1 every replan, and the authored ladders stay executable
- * (whitelisted ids, ascending cost, within the inventory).
+ * ai-build-path: `nextBuildPurchase` 的步進規則（不重複買、不卡在買不到的那一階、
+ * 不把 0 元的三選一獎品當成免費商品）。
+ *
+ * ⭐ **2026-08-20（GH#474）**：「推薦出裝」這個**內容機制**退場了 —— 出貨的
+ * `buildPriority` 一律是空的，bot 一律走「半價 + 隨機寶具」。這一支**沒有跟著刪掉**，
+ * 因為那個函式仍然是骨架註冊表（`sim/content/skeleton.ts` 的兩位）與除錯路徑的
+ * 購買邏輯；退場本身由下面第二個 describe 守著。
  */
 import { describe, it, expect, beforeAll } from "vitest";
-import { isShipped } from "../testkit/contentFixtures";
+import { shippedChampionIds } from "../testkit/contentFixtures";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../../../packages/shared/testkit/cover";
@@ -99,82 +103,60 @@ describe("build-path stepping (ai-build-path)", () => {
   });
 });
 
-describe("authored starter ladders are executable (ai-build-path)", () => {
-  // the 13 demo starter champions — 12 from task #47, plus godie-e00q, who
-  // joined in task #55 and only got a real ladder afterwards (she shipped on
-  // the two-item roster placeholder, so her bot stalled at 1100g).
-  const STARTERS = [
-    "godie-e001", "godie-e008", "godie-edem", "godie-h01u",
-    "godie-hart", "godie-hpb1", "godie-o02p", "godie-etyr",
-    "godie-h020", "godie-n003", "godie-o00k", "godie-ofar",
-    "godie-e00q",
-  ];
-
+/**
+ * ⭐【GH#474】「推薦出裝」**整條退場**了 —— 這個 describe 取代了原本的
+ * 「authored starter ladders are executable」。
+ *
+ * owner 2026-08-18：「66 位英雄的推薦出裝變成空的 => **不需要推薦出裝**」
+ * owner 2026-08-20（裁決 A）：「**拔乾淨**，現在 bot 都是**半價購買隨機寶具**」
+ *                             「`[v] A　清乾淨 + 拔後台欄`」
+ *
+ * ⛔ 舊的那條 `it` **不是刪掉**是**取代**（第一·五守則：留著一條說得出舊行為的
+ * 守衛比沒有守衛更糟 —— 它會在梯子回來的時候變綠，而那正是要擋的事）。
+ * 被清空的 12 條梯子逐字存在 `docs/legacy/_bot-build-priority-retired-20260820.md`。
+ */
+describe("推薦出裝已退場（ai-build-path · GH#474）", () => {
   beforeAll(async () => {
     registerAll((await new ContentLoader(new FsContentSource(CONTENT_DIR)).load()).store);
   });
 
-  it("every starter build is non-trivial, ascending, distinct and slot-sized", () => {
-    // GH#323 —— 這 13 位裡的 `godie-e00q` 在 2026-08-13 隨變身系統整理退場了。
-    // ⛔ 從清單刪掉會讓「哪幾位還在、他們的 ladder 還對」看不出來 ⇒ 跳過即可，
-    //    但**不能全部退場**（下面那條擋著），否則這個迴圈就變成空跑。
+  it("出貨內容裡沒有任何一位英雄還帶著梯子", () => {
+    cover("ai-build-tolerance");
+    // ⭐ 讀**真的註冊表**（＝載入器跑完的那一份），⛔ 不是掃 JSON 字串：
+    //   champion-embedded 與 standalone 兩條路都要落在同一個答案上。
+    const withLadder: string[] = [];
     let checked = 0;
-    for (const id of STARTERS) {
-      if (!isShipped("champions", id)) continue;
+    for (const id of shippedChampionIds()) {
+      const def = Champions.tryGet(id as never);
+      if (!def) continue;
       checked++;
-      const def = Champions.get(id as never);
-      const build = def.buildPriority;
-      expect(build.length, `${id} still has a placeholder build`).toBeGreaterThan(2);
-      expect(build.length, `${id} exceeds the inventory`).toBeLessThanOrEqual(INVENTORY_SLOTS);
-      expect(new Set(build).size, `${id} repeats an item`).toBe(build.length);
-
-      // CLIMBABLE, which is what ASCENDING used to be a proxy for.
-      //
-      // The old gate required buildPriority to be sorted by cost, because with
-      // a continuous price ladder an out-of-order rung made the bot skip ahead
-      // to a cheaper, worse item instead of saving. Task #82 removed the
-      // ladder: there are exactly two prices and gold-efficiency is FLAT
-      // between them, so "buy the 300g one now and the 1200g one next round"
-      // is not a mistake — it is the intended play. Sortedness is therefore no
-      // longer meaningful, and asserting it would only pin the authoring order
-      // of content/champions, which this task does not own.
-      //
-      // What still has to hold is that the bot never STALLS: given the real
-      // match income it eventually owns every rung it is allowed to buy. 0g
-      // rungs are draft-only legendaries (they lost their price when
-      // 「傳說的武器道具，只能隨機三選一」 landed) and are skipped, not bought.
-      // A SHOP rung is priced AND effective — the same S1/S3 shape the
-      // curation layer uses. godie-i003 聖光石 sits in seven starter ladders
-      // and is an S3 casualty (its whole payload is an unported 500 HP heal),
-      // so it keeps its imported price and is skipped by the whitelist in a
-      // real match; it is not part of the two-price contract.
-      const isShopRung = (i: ItemId): boolean => {
-        const d = Items.get(i);
-        return d.cost > 0 && ((d.modifiers?.length ?? 0) > 0 || d.passive !== undefined);
-      };
-      const rungs = (build as ItemId[]).filter(isShopRung);
-      expect(rungs.length, `${id} has no purchasable rung left`).toBeGreaterThanOrEqual(2);
-      for (const i of rungs) {
-        expect([300, 1200], `${id} rung ${i} is off the two-price ladder`).toContain(Items.get(i).cost);
-      }
-
-      const costOfReal = (i: ItemId): number | null => Items.tryGet(i)?.cost ?? null;
-      const owned: (ItemId | null)[] = Array<ItemId | null>(INVENTORY_SLOTS).fill(null);
-      let spent = 0;
-      // the deterministic shop-open cumulative purse, round by round
-      for (const purse of [600, 1350, 3850, 4850, 6100, 7600]) {
-        let buy = nextBuildPurchase(build as ItemId[], owned, purse - spent, costOfReal);
-        while (buy !== null) {
-          owned[owned.indexOf(null)] = buy;
-          spent += Items.get(buy).cost;
-          buy = nextBuildPurchase(build as ItemId[], owned, purse - spent, costOfReal);
-        }
-      }
-      for (const i of rungs) {
-        expect(owned, `${id}'s bot never reached rung ${i} — its ladder stalls`).toContain(i);
-      }
+      if ((def.buildPriority?.length ?? 0) > 0) withLadder.push(`${id}(${def.buildPriority.length})`);
     }
-    expect(checked, "13 位 starter 全部退場了 —— 這條守衛已經沒有對象").toBeGreaterThan(0);
+    // ⚠️ 空語料 = 讀壞了，⛔ 不是「一位都沒有」。同 roster-guard 的那一條。
+    expect(checked, "一位出貨英雄都讀不到 —— 讀取器壞了，這條守衛在空轉").toBeGreaterThan(0);
+    expect(
+      withLadder,
+      `這幾位又長出推薦出裝了 —— 它會讓 bot 走回舊的購買路徑，而其餘 ${checked - withLadder.length} 位走隨機寶具：${withLadder.join(", ")}`,
+    ).toEqual([]);
+  });
+
+  it("梯子空了之後，購買分支一定落到「半價隨機寶具」那一條", () => {
+    cover("ai-build-tolerance");
+    // ⭐ 這是**接線**那一半：`Tier0Brain.replan` 寫的是
+    //     `const buy = nextBuildPurchase(...); if (buy !== null) … else 買寶具`
+    //   ⇒ 「梯子退場」要真的變成「走寶具」，唯一的條件就是這一支對空梯子回 null。
+    //   ⛔ 沒有這一條，拔掉內容之後 bot 有可能整場什麼都不買，而 12 位英雄的
+    //     JSON 看起來完全正常（失敗形態②）。
+    const costOfReal = (i: ItemId): number | null => Items.tryGet(i)?.cost ?? null;
+    expect(nextBuildPurchase([], empty(), 999_999, costOfReal)).toBeNull();
+    for (const id of shippedChampionIds()) {
+      const def = Champions.tryGet(id as never);
+      if (!def) continue;
+      expect(
+        nextBuildPurchase(def.buildPriority as ItemId[], empty(), 999_999, costOfReal),
+        `${id} 的梯子還買得出東西 —— 這一位不會走隨機寶具`,
+      ).toBeNull();
+    }
   });
 
   it("a 0g draft reward on a ladder is SKIPPED, never bought for free", () => {

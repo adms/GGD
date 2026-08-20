@@ -3,10 +3,10 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_9e98baa6d77f",
+    "contentVersion": "cv_4918fa15b029",
     "collections": {
       "champions": {
-        "hash": "d1f1852b3667",
+        "hash": "cac1768f3af6",
         "count": 71
       },
       "abilities": {
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "2952464b67e1",
+        "hash": "a2fe8300c9fe",
         "count": 69
       },
       "models": {
@@ -3340,9 +3340,41 @@
           "zh": "機制數字寫進了台詞",
           "note": "⭐「」裡是**角色對白不是效果**（第〇·六守則②）。寫在裡面的冷卻／耗魔／傷害／持續**引擎一格都不讀**。",
           "enabled": true
+        },
+        {
+          "rule": "low-damage-cell",
+          "zh": "傷害相對冷卻偏低",
+          "note": "⚠️ **傷害偏低的 2 格**（相對錨點 單體・極小 的 191.7/卡面秒）：「範圍・極小」-60%（照對角線填「極小」＝1150 傷害 × 2 人 ÷ 30 卡面秒 = 76.7/秒；要追平錨點得跳到「小」）；「範圍・小」-33%（照對角線填「小」＝2875 傷害 × 2 人 ÷ 45 卡面秒 = 127.8/秒；要追平錨點得跳到「中」）。⭐ 全部是**算出來的**：改「期望命中人數」／冷卻五級距／傷害五級距任何一格，這份名單下一秒就跟著動。⚠️ 只**警告不擋** —— owner 說的是「不合理」不是「不准」。",
+          "enabled": true
+        }
+      ],
+      "lowDamageCells": [
+        {
+          "shape": "範圍",
+          "cooldownTier": "極小",
+          "cooldownSec": 30,
+          "ratePerCardSecond": 76.66666666666667,
+          "anchorRate": 191.66666666666666,
+          "deficitPct": -60,
+          "diagonalDamageTier": "極小",
+          "requiredDamageTier": "小",
+          "note": "「範圍・極小」的期望輸出比錨點（單體・極小）**-60%**：照級距名填「極小」傷害的話，每卡面秒只有 76.7。⇒ 要嘛把傷害拉到「小」，要嘛把冷卻挪出這一格。⚠️ 只警告不擋。"
+        },
+        {
+          "shape": "範圍",
+          "cooldownTier": "小",
+          "cooldownSec": 45,
+          "ratePerCardSecond": 127.77777777777777,
+          "anchorRate": 191.66666666666666,
+          "deficitPct": -33,
+          "diagonalDamageTier": "小",
+          "requiredDamageTier": "中",
+          "note": "「範圍・小」的期望輸出比錨點（單體・極小）**-33%**：照級距名填「小」傷害的話，每卡面秒只有 127.8。⇒ 要嘛把傷害拉到「中」，要嘛把冷卻挪出這一格。⚠️ 只警告不擋。"
         }
       ],
       "derivedFrom": [
+        "config.cooldown-tiers@1",
+        "config.damage-tiers@1",
         "config.cast-time@1",
         "config.cooldown-rules@1",
         "config.aoe-tiers@1",
@@ -3380,5 +3412,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "787cad5aef66"
+  "profileDigest": "d793ce16fbb3"
 }

@@ -44,6 +44,10 @@
  * ⛔ 這個檔案**不碰 fs、不碰 DOM**：語料由呼叫端餵進來
  *（後台頁已經抓了 461 支技能，CLI 直接讀 `content/abilities/`）。
  */
+import { DEFAULT_COOLDOWN_TIERS } from "./cooldownTiers";
+// ⭐ GH#445 —— 「傷害相對冷卻偏低」的那幾格。生成端與警示端**共用同一支推導**。
+import { lowDamageCells, placeAbility } from "./lowDamageCells";
+import { SKILL_TIER_NAMES } from "./skillTiers";
 import type { CastType } from "../sim/content/defs";
 
 /** 六欄 —— owner 點名的那幾格。⭐ 這是唯一一份清單，文件與後台都從它推導。 */
@@ -76,6 +80,15 @@ export interface ColumnDefault {
   /** 這個中位數是從幾支技能算出來的（0 = 沒有樣本，用的是 {@link FALLBACK}） */
   readonly sample: number;
   readonly basis: DefaultBasis;
+  /**
+   * ⭐ GH#445 —— 中位數**原本**是多少，在它被挪出「傷害相對冷卻偏低」的級距格之前。
+   * 只有真的挪過的那幾格才有這一欄。
+   *
+   * ⚠️ ⛔ 不是把 `basis` 換掉：中位數的出處**沒有消失**，只是它落在一個
+   * owner 2026-08-20 判定為不相稱的格子裡（範圍・極小 −60% / 範圍・小 −33%）。
+   * 兩件事都要說得出來，否則後台畫出來的會是一個沒有出處的數字。
+   */
+  readonly liftedFromMedian?: number;
 }
 
 export type DefaultBasis =
@@ -279,6 +292,52 @@ export function columnApplies(
 }
 
 /**
+ * ⭐【GH#445】把冷卻的中位數**挪出**「傷害相對冷卻偏低」的級距格。
+ *
+ * owner 2026-08-20 對那兩格（範圍・極小 **−60%** / 範圍・小 **−33%**）的裁決是
+ * 「**傷害太低要跳出警告清單給我，後台跟 codex 編輯器也同步跳警告**」。
+ * ⇒ 那條警告在 `newHeroChecks` 的 `low-damage-cell`。
+ *
+ * ⛔ 而一支**照預設值生出來的**新技能不可以一出生就踩到它 ——
+ * 那正是 `tools/newhero/gen.ts` 的配對閘在守的事（「生成代入」↔「檢查警示」）。
+ * 實測（2026-08-20）：30 組預設值裡有 **6 組**（PASSIVE/Q/W × skillshot/ground）
+ * 的中位冷卻落在那兩格。
+ *
+ * ⭐ 做法：往上找**第一個不偏低的級距**，用它的卡面秒數。⛔ 不是挑一個數字 ——
+ * 級距表動了，這裡自己跟著動。⚠️ 原本的中位數存在 `liftedFromMedian`，
+ * ⛔ 不是無聲蓋掉（第二守則：fail-open 沒錯，靜默才是缺陷）。
+ *
+ * ⚠️ 為什麼是**挪冷卻**而不是**拉傷害**：拉傷害要動 `damage` 那一欄，而那一欄的
+ * 出貨中位數（現況 ~400）遠低於傷害五級距（最低 1,150）—— 那是 GH#447 整批要處理的事，
+ * ⛔ 不是這一支能替 owner 決定的（第一·五守則③：需要改平衡資料時不要自己挑數字）。
+ */
+function liftCooldown(
+  cooldown: ColumnDefault,
+  castType: CastType,
+  slot: string,
+  radius: ColumnDefault,
+): ColumnDefault {
+  const cells = lowDamageCells();
+  if (cells.length === 0 || !(cooldown.value > 0)) return cooldown;
+  // ⭐ 形狀走**同一支**判斷（`placeAbility` → `cooldownShapeOf`），⛔ 不在這裡重寫：
+  //    生成端與警示端對「什麼算範圍技」一旦分岔，就會生出一支自己觸發自己警示的草稿。
+  const probe: Record<string, unknown> = { cooldown: [cooldown.value] };
+  if (columnApplies("radius", castType, slot) && radius.value > 0) probe["radius"] = radius.value;
+  const placed = placeAbility(probe, cells);
+  if (!placed || placed.cell === null) return cooldown;
+
+  const row = DEFAULT_COOLDOWN_TIERS.seconds[placed.shape];
+  const from = SKILL_TIER_NAMES.indexOf(placed.tier);
+  for (let i = from + 1; i < SKILL_TIER_NAMES.length; i++) {
+    const tier = SKILL_TIER_NAMES[i]!;
+    if (cells.some((c) => c.shape === placed.shape && c.tier === tier)) continue;
+    return { ...cooldown, value: row[tier], liftedFromMedian: cooldown.value };
+  }
+  // 整列都偏低（今天不會發生）—— ⛔ 原樣返回，讓警示自己去叫，不要憑空造一個數字。
+  return cooldown;
+}
+
+/**
  * 一支新技能的六欄預設值。
  *
  * ⚠️ `corpus` 要餵**出貨的技能文件**。模板技（`template` 有值）的 `effects`
@@ -297,11 +356,12 @@ export function deriveAbilityDefaults(
     columnFrom(rows, slot, castType, pick, fb, minSample);
 
   const zero: ColumnDefault = { value: 0, sample: 0, basis: "fallback" };
-  const cooldown = col((r) => r.cooldown, FALLBACK.cooldown);
   const manaCost = col((r) => r.manaCost, FALLBACK.manaCost);
   const range = columnApplies("range", castType, slot) ? col((r) => r.range, FALLBACK.range) : zero;
   const radius = columnApplies("radius", castType, slot) ? col((r) => r.radius, FALLBACK.radius) : zero;
   const damage = columnApplies("damage", castType, slot) ? col((r) => r.damage, FALLBACK.damage) : zero;
+  // ⭐ GH#445 —— 冷卻的中位數要**挪出**「傷害相對冷卻偏低」的那幾格。⛔ 見 liftCooldown()。
+  const cooldown = liftCooldown(col((r) => r.cooldown, FALLBACK.cooldown), castType, slot, radius);
 
   const out: AbilityDefaults = {
     slot,

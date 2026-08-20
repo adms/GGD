@@ -103,7 +103,12 @@ export const FORM_VISUAL_ROW_HINT: Record<FormVisualRowField, string> = {
   scaleMult: "疊在身高正規化之上；1 = 和本體一樣高",
   attachModelKey: "models/ 的文件 id，例如 imported.goku3head。留白 = 沒有掛件",
   attachBone: "origin = 模型原點（w3x 對悟空兩顆球體記的就是這個）；其他值當骨頭名",
-  attachScale: "把掛件的轉檔倍率換算回本體座標系；悟空是 0.3221",
+  // ⭐ GH#482 —— ⛔ 這一格**不寫死數字**。它是**本體 glb 的 scale_factor ÷ 掛件 glb 的
+  //    scale_factor**（兩個都在 tools/w3x-import/out/GoDieEX22s/models_report.json），
+  //    算法在 packages/shared/src/content/attachmentScale.ts、守衛在它旁邊的 .test.ts。
+  //    這裡寫一個字面值就是第二個住處，而它上一次過期時撒的謊叫「0.008946」。
+  attachScale:
+    "把掛件的轉檔倍率換算回本體座標系 = 本體 glb 的 scale_factor ÷ 掛件 glb 的 scale_factor（models_report.json）；1 只有在兩份 glb 用同一個倍率烘出來時才對",
   attachOffsetY: "沿 Y 微調；0 = 用 mdx 自己烘的高度",
 };
 

@@ -223,9 +223,8 @@ export function NewHeroPage({ api, onNavigate }: NewHeroPageProps): React.JSX.El
               placeholder="Q, W, E, R"
             />
           </Labeled>
-          <Labeled label="推薦出裝 buildPriority（items id）">
-            <TextInput value={form.buildPriority.join(", ")} onChange={(v) => set("buildPriority", splitList(v))} />
-          </Labeled>
+          {/* ⛔ GH#474 —— 「推薦出裝 buildPriority」那一格**拔掉了**（owner 2026-08-20
+              「拔乾淨」）。送出時一律 `[]`，見 heroTemplate.ts 的 emitDocs。 */}
         </div>
       </Panel>
 

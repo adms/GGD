@@ -67,7 +67,8 @@ export interface HeroTemplateForm {
   readonly baseStats: Readonly<Record<string, number>>;
   readonly growth: Readonly<Record<string, number>>;
   readonly skillOrder: readonly CoreSlot[];
-  readonly buildPriority: readonly string[];
+  // ⛔ GH#474 —— `buildPriority` 不再是一格表單欄位（owner 2026-08-20「拔乾淨」）。
+  //    ⇒ 這個型別上**沒有這一格**，送出時一律寫 `[]`（見 emitDocs）。
   readonly q: AbilityRow;
   readonly w: AbilityRow;
   readonly e: AbilityRow;
@@ -100,7 +101,6 @@ export function blankHeroForm(): HeroTemplateForm {
     baseStats: {},
     growth: {},
     skillOrder: ["Q", "W", "E", "R"],
-    buildPriority: [],
     q: blankAbilityRow(),
     w: blankAbilityRow(),
     e: blankAbilityRow(),
@@ -250,7 +250,9 @@ export function buildHeroDocs(
     growth: { ...form.growth },
     abilities: embeddedAbilities,
     skillOrder: [...form.skillOrder],
-    buildPriority: [...form.buildPriority],
+    // ⛔ GH#474 —— 一律空的。`champion@1` 仍然要求這一格存在，但「推薦出裝」
+    //    這個機制已經退場（owner 2026-08-20「拔乾淨」），⇒ 新英雄不會帶著梯子出生。
+    buildPriority: [],
     tags: [...form.tags],
   };
   if (form.icon !== undefined && form.icon.trim() !== "") champion["icon"] = form.icon.trim();

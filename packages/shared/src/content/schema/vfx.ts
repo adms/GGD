@@ -366,8 +366,18 @@ export const zAttachmentDoc = z
     animLoop: z.boolean().optional(),
     /**
      * 掛件在**掛點的 local frame**（= 本體 glb 的原生座標系）裡的縮放。
-     * 省略 = 1。⚠️ 兩份 glb 常常是用不同的轉檔倍率烘出來的，所以 1 未必是對的
-     * ——悟空的超三頭是 0.3221 = 0.008946 / 0.027778。
+     * 省略 = 1。⚠️ 兩份 glb 常常是用不同的轉檔倍率烘出來的，所以 1 未必是對的。
+     *
+     * ⭐ 它是**兩個 `scale_factor` 的比值**，算法與出處寫在
+     * `content/attachmentScale.ts`（`attachScaleFor()`）：悟空的超三頭是
+     * **0.4161 = 0.01156 / 0.02778** —— 兩個數字都逐字取自
+     * `tools/w3x-import/out/GoDieEX22s/models_report.json`（`goku.mdx` 走英雄身高
+     * 規則、`Goku3head.mdx` 走 1/36 道具規則）。
+     *
+     * ⛔ 這一行在 2026-08-20 之前寫的是「0.3221 = 0.008946 / 0.027778」，
+     * 而 **`0.008946` 在整個 repo 裡不存在** —— 一段事後合理化（第三守則）。
+     * 出貨值因此是忠實尺寸的 77%；owner 2026-08-20：「**照原著 改成忠實值**」。
+     * 守衛：`content/attachmentScale.test.ts`（真的讀那兩份 JSON 對數字，⛔ 不掃註解）。
      */
     scale: z.number().min(0.01).max(10).optional(),
     /** 沿 Y 的微調，單位是掛點 local frame。省略 = 0 = 用 mdx 自己烘的高度。 */

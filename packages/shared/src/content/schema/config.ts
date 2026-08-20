@@ -4541,11 +4541,17 @@ export const zFormVisualEntry = z
     /**
      * 掛件在**掛點的 local frame**(= 本體 glb 的原生座標系)裡的縮放。
      *
-     * 為什麼預設是 0.3221 而不是 1:兩份 glb 是用**不同的轉檔倍率**烘出來的。
-     * `goku.glb` 走英雄身高規則(整隻 1.70u),`goku3head.glb` 走 1/36 道具倍率
-     * (2.836u,比本體還高)。0.3221 = 0.008946 / 0.027778,就是把後者換算回前者
-     * 的座標系。換算完 SSJ3 的頭髮落在 Y 0.73..1.65,而本體頭骨在 1.476、
-     * 頭頂在 1.698 —— 自己站到正確位置,所以 `attachOffsetY` 是 0。
+     * 為什麼不是 1:兩份 glb 是用**不同的轉檔倍率**烘出來的。`goku.glb` 走英雄
+     * 身高規則(整隻 1.70u),`goku3head.glb` 走 1/36 道具倍率(2.836u,比本體還高)。
+     * ⇒ 這一格是**兩個 `scale_factor` 的比值**:悟空是
+     * **0.4161 = 0.01156 / 0.02778**,兩個數字都逐字取自
+     * `tools/w3x-import/out/GoDieEX22s/models_report.json`。
+     * 算法與出處寫在 `content/attachmentScale.ts`,守衛在它旁邊的 `.test.ts`
+     * (它真的讀那兩份 JSON 對數字,⛔ 不掃註解)。
+     *
+     * ⛔ 這一段在 2026-08-20 之前寫的是「0.3221 = 0.008946 / 0.027778」,
+     * 而 **`0.008946` 在整個 repo 裡不存在** —— 一段事後合理化(第三守則,GH#482)。
+     * 出貨值因此是忠實尺寸的 77%;owner 2026-08-20:「**照原著 改成忠實值**」。
      */
     attachScale: z.number().min(0.01).max(10).optional(),
     /** 掛件沿 Y 的微調,單位是掛點 local frame。0 = 用 mdx 自己烘的高度。 */
@@ -7766,7 +7772,10 @@ export const DEFAULT_FORM_VISUALS: ConfigFormVisualsDoc = {
       scaleMult: 1.08,
       attachModelKey: "imported.goku3head",
       attachBone: "origin",
-      attachScale: 0.3221,
+      // ⭐ GH#482 —— 忠實值 0.01156 / 0.02778（`models_report.json` 的兩個
+      //    `scale_factor`）。⛔ 舊值 0.3221 只有它的 77%，而旁邊那句註解引用的
+      //    `0.008946` 在整個 repo 裡不存在。守衛：`content/attachmentScale.test.ts`。
+      attachScale: 0.4161,
       attachOffsetY: 0,
     },
     // 20 Saber → 風王結界。w3x 沒有任何視覺差(同模型、同色、同 usca 1.10,
