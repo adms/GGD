@@ -29,6 +29,8 @@ import {
 } from "../src/sim/index";
 import type { EffectDef } from "../src/sim/effects/effect";
 import { MAX_ROUNDS_UNLIMITED } from "../src/roomSettings";
+// ⛔ 同 apps/editor/src/collections.ts：種子值**引用**真正的常數，⛔ 不抄一份。
+import { LEVEL_CAP } from "../src/sim/economy/progression";
 import type { HookDef } from "../src/sim/stats/modifiers";
 import { COLLECTIONS, type CollectionName } from "../src/content/schema/index";
 import type { ConfigDoc } from "../src/content/schema/config";
@@ -137,7 +139,7 @@ const MATCH_CONFIG: ConfigDoc = {
     inventorySlots: 6,
   },
   progression: {
-    levelCap: 18,
+    levelCap: LEVEL_CAP,
     xpBase: 100,
     xpPerLevel: 80,
     xpKill: 120,

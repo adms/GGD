@@ -5,6 +5,8 @@
 import { COLLECTIONS, COLLECTION_NAMES, type CollectionName } from "@ggd/shared/content";
 import type { ZodTypeAny } from "zod";
 import { starterMap } from "@ggd/shared/map/starter";
+// ⛔ 種子值不可以是字面量：`progression.levelCap` 抄 99 的那一刻就開始等著過期。
+import { LEVEL_CAP } from "@ggd/shared/sim/economy/progression";
 
 export interface CollectionEntry {
   name: CollectionName;
@@ -93,7 +95,7 @@ const TEMPLATES: Record<CollectionName, (id: string) => unknown> = {
     tick: { tickHz: 30, snapshotHz: 20 },
     match: { teamCount: 4, teamSize: 3, startingTeamLives: 8, champSelectSec: 30, intermissionSec: 60, combatMaxSec: 90, resolutionSec: 6 },
     economy: { startingGold: 600, killGold: 150, assistGold: 75, roundWinGold: 300, roundLoseGold: 150, sellRefund: 0.7, inventorySlots: 6 },
-    progression: { levelCap: 18, xpBase: 100, xpPerLevel: 80, xpKill: 120, xpAssist: 60, xpRoundSurvive: 100 },
+    progression: { levelCap: LEVEL_CAP, xpBase: 100, xpPerLevel: 80, xpKill: 120, xpAssist: 60, xpRoundSurvive: 100 },
     draft: { offerCount: 3, tierSchedule: { "1": "silver" } },
   }),
   models: (id) => ({

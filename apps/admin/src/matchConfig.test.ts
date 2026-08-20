@@ -50,6 +50,8 @@ import {
   fireRingRulesFromConfig,
 } from "@ggd/shared/sim/fireRing";
 import { LEVEL_CAP } from "@ggd/shared/sim/economy/progression";
+// 編輯器「新建一份 config」的種子 —— 出貨那一份的出生值，不是這一頁的鏡像。
+import { collectionEntry } from "../../editor/src/collections";
 import { TICK_HZ } from "@ggd/shared/constants";
 
 const TAG = "adminui-match-config";
@@ -347,6 +349,32 @@ describe("跨欄位規則 —— 單格上下界擋不住的那兩條", () => {
     cover(TAG);
     expect(matchDocIssues(SHIPPED_DOC)).toEqual([]);
     expect(readMatchDoc(SHIPPED_DOC).parseError).toBeNull();
+  });
+
+  /**
+   * 閘 B —— **出貨 config 不准跟程式常數說反話**。
+   *
+   * ⛔ `progression.levelCap: 18` 從 initial commit 就在出貨，而 sim **從來沒讀過
+   * 它**（`grantLevels` / `grantXp` 讀的是 `LEVEL_CAP = 99`）。這一頁的檔頭甚至
+   * **逐字寫下了這個矛盾**，而沒有任何測試在比對兩者 —— 一句散文替一個出貨的謊
+   * 背書了六個月。⭐ 這是「說了但不會發生」的一種：schema 收得下、後台顯示得
+   * 出來、`content:build` 全綠、3,500 條測試全綠，而那個數字對任何一場比賽都沒有
+   * 意義。它會騙的是**下一個讀這份檔案的人**（含 Codex 編輯器與運維唯讀頁）。
+   *
+   * ⚠️ 走 `readMatchDoc`（＝出貨的 Zod + `.default()`），⛔ 不是直接讀原始 JSON ——
+   * 玩家那一側拿到的是 loader 跑完的那一份，不是磁碟上的位元組。
+   */
+  it("出貨 config 不跟程式常數說反話 —— `progression.levelCap` === `LEVEL_CAP`", () => {
+    cover(TAG);
+    const read = readMatchDoc(SHIPPED_DOC);
+    expect(read.parseError).toBeNull();
+    expect(Number(read.values["progression.levelCap"])).toBe(LEVEL_CAP);
+    // ⭐ 兩份「新建一份 config」的種子也釘住 —— 它們是下一份文件的出生值，
+    //    抄一個字面量進去就是把同一個謊生一次。
+    const seeded = collectionEntry("config").template("seed") as {
+      progression: { levelCap: number };
+    };
+    expect(seeded.progression.levelCap).toBe(LEVEL_CAP);
   });
 });
 

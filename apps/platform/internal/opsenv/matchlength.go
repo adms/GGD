@@ -213,7 +213,9 @@ func DefaultMatchShape() MatchShape {
 		KillGold:           150,
 		SellRefund:         0.4,
 		InventorySlots:     6,
-		LevelCap:           18,
+		// 99 = packages/shared/src/sim/economy/progression.ts 的 LEVEL_CAP。
+		// ⛔ 這裡曾經是 18，跟著出貨的 config.match 一起說了同一個謊。
+		LevelCap:           99,
 	}
 }
 

@@ -14,8 +14,11 @@
  * 背包格數走 `sim/economy/shop.ts` 的 `INVENTORY_SLOTS`，三選一的 tier 表走
  * `content/config/arena-rules.json`，隊伍數走 `constants.ts`。
  *
- * 而且它們已經**互相矛盾**了 —— 文件寫 `progression.levelCap: 18`，程式是
- * `LEVEL_CAP = 99`；文件寫 `tick.snapshotHz: 20`，程式是 `SNAPSHOT_HZ = 30`。
+ * ⭐ **2026-08-20：`progression.levelCap` 那一筆矛盾修掉了**（出貨 18 → 99，
+ * 對齊 `LEVEL_CAP`）。這一段以前逐字寫著「文件寫 18，程式是 99」，而**沒有任何
+ * 測試在比對這兩者** —— 一句散文替一個出貨的謊背了書。現在
+ * `matchConfig.test.ts` 的「出貨 config 不跟程式常數說反話」是那道閘。
+ * ⚠️ 還沒修的那一筆：文件寫 `tick.snapshotHz: 20`，程式是 `SNAPSHOT_HZ = 30`。
  *
  * 把那 18 格做成可以編輯的輸入框，就是這張單要防的那個缺陷本身：操作者把起始
  * 金錢改成 2000、存檔、重啟 shard，**什麼都不會發生**，而頁面重整之後還會理直
@@ -413,7 +416,7 @@ export const MATCH_FIELD_INFO: Readonly<Record<string, MatchFieldInfo>> = Object
   },
   "progression.levelCap": {
     zh: "等級上限",
-    note: "沒有消費端，而且**已經和程式對不上**：文件寫 18，程式是 99。",
+    note: "沒有消費端 —— `grantLevels` / `grantXp` 讀的是程式裡的 `LEVEL_CAP`。⭐ 2026-08-20 起出貨值**與它相等**（99），由測試釘住；在此之前文件寫 18 而程式是 99，兩邊說了六個月的反話。",
     live: null,
     realHome: "packages/shared/src/sim/economy/progression.ts 的 LEVEL_CAP",
   },

@@ -42,6 +42,26 @@
  */
 import { STAT_CLAMPS, Stat } from "./stats/statTypes";
 
+/**
+ * ⛔ **這不是一個平衡錨點** —— 它是下面 7 條硬上限被算出來時用的那個等級。
+ *
+ * owner 2026-08-20（逐字，對 #447 的更正）：
+ * > 「我的錨點有講過是 **LV 30/50/99 三個**，至少要滿足 **30(hard limit)**，
+ * >  能 **50 比較好(soft limit)**, **99 是極限**」
+ *
+ * ⇒ 錨點住在 `content/balanceAnchors.ts` 的 `BALANCE_ANCHOR_LEVELS`，而這一格是
+ * **18** —— 2026-08-12 那一批 `中位數 × 200` 是在 L18 量的，⛔ 還沒有被重算。
+ *
+ * ⭐ 它為什麼要存在：在此之前「18」只活在**一段註解**和**一條守衛的呼叫參數**裡
+ *（`statCapsAreFences.test.ts` 的 `championStatBase(d, stat, 18)`）—— 也就是說
+ * 一條**綠燈的守衛正在替一個過期的錨點背書**，而沒有任何東西看得到它。
+ * 具名之後 `content/balanceAnchors.test.ts` 那道閘才問得到它。
+ *
+ * ⚠️ ⛔ **改這一格不會重算任何上限** —— 那 7 個數字是烘死的字面值。
+ * 重算是一個**平衡決定**（會動到出貨數值），⛔ 不由程式順手做，要 owner 點頭。
+ */
+export const STAT_CAP_ANCHOR_LEVEL = 18;
+
 /** 一條屬性的兩個天花板。`unlocked >= base` 由建構端保證。 */
 export interface StatCap {
   /** 沒有解鎖來源時的上限 */
@@ -138,7 +158,9 @@ export const DEFAULT_STAT_CAPS: StatCapTable = Object.freeze({
   // owner：「至於**硬上限 場中最終值（卡片 × 道具 × buff × 增幅）的天花板則是 200x**」
   //
   // ⭐ 所以這一批不再是我挑的整數，而是一條**算式**：
-  //      base = unlocked = round(該屬性在**等級 18** 的母體中位數 × 200)
+  //      base = unlocked = round(該屬性在 `STAT_CAP_ANCHOR_LEVEL`（**18**）的母體中位數 × 200)
+  //    ⛔ 那個 18 **不是** owner 的錨點（LV 30/50/99，`content/balanceAnchors.ts`）——
+  //    見 `STAT_CAP_ANCHOR_LEVEL` 的檔頭。要重算的是 `MEDIAN_X200_CAPPED_STATS` 那 7 條。
   //    中位數量自 73 位可達英雄（`docs/hero-archetypes.json`，`championStatBase`）。
   //
   // ⚠️ 為什麼是「場中最終值」而不是卡面：卡面 × 道具 × buff × 增幅 疊起來差很多級。
@@ -202,6 +224,31 @@ export const DEFAULT_STAT_CAPS: StatCapTable = Object.freeze({
   //   就是持有者在飛。那道閘紅掉的時候，⛔ 不要改閘，去給那份文件飛行或改回 18。
   [Stat.MoveSpeed]: Object.freeze({ base: 18, unlocked: 24 }),
 });
+
+/**
+ * ⭐ **這 7 條是 `STAT_CAP_ANCHOR_LEVEL` 的中位數 × 200 烘出來的**，其餘 6 條不是
+ *（as / ap / lifesteal / cdr 是 owner 直接給的數字；attackRange 是「卡面 12 延伸到
+ * 16」；moveSpeed 是穿牆平手線）。
+ *
+ * ⛔ 這張清單存在的理由不是好看，是**回答「重算要動哪幾格」** ——
+ * 錨點從 18 換成 30/50/99 的那一天，要重算的正好是這 7 格，⛔ 不是整張表。
+ * 沒有它的話，那個範圍只寫在一段散文裡，而散文不會紅。
+ *
+ * ⚠️ 兩件事由 `content/balanceAnchors.test.ts` 守著：
+ * ① 每一條都真的在 `DEFAULT_STAT_CAPS` 裡且 `base === unlocked`（單層＝只有一個
+ *    數字，那正是「owner 只給了一個倍率」的形狀）；
+ * ② 反向 —— 名單以外的那幾條**不可以**混進來（混進來就是「它其實也錨在 18」，
+ *    而重算時會被漏掉）。
+ */
+export const MEDIAN_X200_CAPPED_STATS: readonly Stat[] = Object.freeze([
+  Stat.MaxHealth,
+  Stat.MaxMana,
+  Stat.HealthRegen,
+  Stat.ManaRegen,
+  Stat.AttackDamage,
+  Stat.Armor,
+  Stat.MagicResist,
+]);
 
 // ------------------------------------------------------------- bounds ------
 /**

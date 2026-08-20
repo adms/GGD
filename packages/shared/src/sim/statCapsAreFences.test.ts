@@ -18,7 +18,7 @@ import { ContentStore } from "../content/store";
 import { registerAll } from "../content/registries";
 import { Champions } from "./content/registry";
 import { championStatBase } from "./stats/attributes";
-import { DEFAULT_STAT_CAPS, capFor } from "./statCaps";
+import { DEFAULT_STAT_CAPS, STAT_CAP_ANCHOR_LEVEL, capFor } from "./statCaps";
 import { Stat } from "./stats/statTypes";
 
 const CONTENT_DIR = join(__dirname, "../../../../content");
@@ -56,7 +56,11 @@ describe("新加的硬上下限一個人都夾不到（圍欄不是繩索）", (
    */
   const KNOWN_OVER = new Set(["godie-h020 manaRegen"]);
 
-  it("出貨英雄卡在等級 18 沒有意料之外的一條頂到 base 上限", () => {
+  // ⚠️ 等級**不是**字面值：它是 `STAT_CAP_ANCHOR_LEVEL`，也就是那 7 條上限被算出來
+  //    時用的那一級。⛔ 這一條守衛以前寫死 `18`，於是它在**替一個過期的錨點背書**
+  //    （owner 的錨點是 LV 30/50/99）—— 而綠燈看起來完全正常。
+  //    現在 `content/balanceAnchors.test.ts` 那道閘看得到它了。
+  it(`出貨英雄卡在錨定等級沒有意料之外的一條頂到 base 上限`, () => {
     cover("statcaps-unit");
     const all = Champions.all();
     expect(all.length, "空母體會讓下面整段變成真空").toBeGreaterThan(50);
@@ -66,7 +70,7 @@ describe("新加的硬上下限一個人都夾不到（圍欄不是繩索）", (
       if (DELIBERATE.has(stat)) continue;
       const { base } = capFor(DEFAULT_STAT_CAPS, stat);
       for (const d of all) {
-        const v = championStatBase(d, stat, 18);
+        const v = championStatBase(d, stat, STAT_CAP_ANCHOR_LEVEL);
         if (v <= base) continue;
         const key = `${d.id} ${stat}`;
         (KNOWN_OVER.has(key) ? seen : over).push(`${key}=${v} > ${base}`);
