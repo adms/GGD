@@ -38,6 +38,15 @@ import {
   type ConfigAuthoringRulesDoc,
 } from "./schema/config";
 import { DEFAULT_STAT_CAPS, statCapsFromDoc } from "../sim/statCaps";
+// ⭐ GH#465 的三個模型 —— 表在這裡**現推**，⛔ 不是把文件裡那十五格照抄出去。
+import { cooldownTiersFromDoc } from "./cooldownTiers";
+import { damageTiersFromDoc } from "./damageTiers";
+import {
+  aimRiskFromDoc,
+  expectedHitsFromDoc,
+  proportionalityModelFromDoc,
+  tableForModel,
+} from "./proportionality";
 import { SKILL_TIER_NAMES } from "./skillTiers";
 import { COMBAT_ENV_DEFAULTS } from "../sim/combatEnv";
 import {
@@ -384,8 +393,22 @@ export function buildAuthoringRules(read: ConfigReader): AuthoringRulesManifest 
     // ⛔ 只發出**真的構成限制**的那幾格（最低傷害級距 > 第一格）。十五格全發
     //    等於在對外契約裡塞十四條「傷害至少要極小」的廢話，而編輯器沒有辦法
     //    分辨哪一條是 owner 真的裁決過的 —— 那是把一格資料變成十五格雜訊。
+    // ⭐ 三個模型（owner 2026-08-20「fix #465, 3 suggestions?」）在**這裡**生效 ——
+    //    ⛔ 不是只把一格字串存進文件。少了這一行，後台那格下拉就是一句
+    //    「說了但不會發生」的話（第一·五守則），而每一個零件看起來都對。
+    // ⚠️ 兩張級距表讀的是**現在這一刻**的 config，⛔ 不是 DEFAULT_* ——
+    //    owner 改了冷卻／傷害級距，相稱性要跟著動，不然它會拿舊表發警告。
     ...(principles.proportionality.enabled
-      ? proportionalityRules(principles.proportionality.minDamageTier)
+      ? proportionalityRules(
+          tableForModel(
+            proportionalityModelFromDoc(principles.proportionality.model),
+            cooldownTiersFromDoc(read("cooldown-tiers")).seconds,
+            damageTiersFromDoc(read("damage-tiers")).damage,
+            expectedHitsFromDoc(principles.proportionality.expectedHits),
+            aimRiskFromDoc(principles.proportionality.aimRiskMult),
+            principles.proportionality.minDamageTier,
+          ),
+        )
       : []),
   ];
 

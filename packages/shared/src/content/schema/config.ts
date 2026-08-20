@@ -89,10 +89,16 @@ import { MEDIAN_EFFECTIVE_HP } from "../balanceAnchors";
 // ⭐ GH#465 相稱性 —— 公式與 owner 的係數住在 content/proportionality.ts，
 //    schema 這一層只是把它搬上 Zod（⛔ 不在這裡再算一次）。
 import {
+  AIM_RISK_MAX,
+  AIM_RISK_MIN,
+  DEFAULT_AIM_RISK_MULT,
   DEFAULT_EXPECTED_HITS,
+  DEFAULT_PROPORTIONALITY_MODEL,
   EXPECTED_HITS_MAX,
   EXPECTED_HITS_MIN,
-  deriveMinDamageTier,
+  PROPORTIONALITY_MODELS,
+  describeProportionalityModels,
+  tableForModel,
 } from "../proportionality";
 // 魔力經濟（GH#446）—— 回魔的地板。⚠️ 它住 `sim/`（每 tick 都跑的純函式）。
 import {
@@ -6963,6 +6969,46 @@ const zProportionality = z
     /** 關掉 = 這條相稱性檢查完全不出現在編輯器的警告清單裡。 */
     enabled: z.boolean(),
     /**
+     * ⭐ **哪一個模型**推導下面那十五格（owner 2026-08-20「fix #465, 3 suggestions?」）。
+     *
+     * ⛔ 這一格存在的理由是**兩層 owner 說法打架**，而我沒有替他挑：08-19 手填
+     * 「範圍・極小 → 大」，08-20 給的公式算出來是「小」。⭐ 出貨 = **今天的行為**
+     *（第〇·六守則：高層級的更新預設啟動），另外兩條路各是一格下拉。
+     */
+    model: z
+      .enum(PROPORTIONALITY_MODELS)
+      .describe(
+        describeProportionalityModels(
+          DEFAULT_COOLDOWN_TIERS.seconds,
+          DEFAULT_DAMAGE_TIERS.damage,
+          DEFAULT_EXPECTED_HITS,
+          DEFAULT_AIM_RISK_MULT,
+        ),
+      ),
+    /**
+     * ⭐ **瞄準風險倍率** —— 只有 `model: "aimRisk"` 會讀它。
+     * 語意：一支範圍技**有多容易完全落空**（⛔ 與「打到幾個人」是兩件事）。
+     * 出貨那一格是**反算**出來的：切過去就會重現 owner 2026-08-19 手填的那一格。
+     */
+    aimRiskMult: z
+      .object(
+        Object.fromEntries(
+          COOLDOWN_SHAPES.map((s) => [
+            s,
+            z
+              .number()
+              .finite()
+              .min(AIM_RISK_MIN)
+              .max(AIM_RISK_MAX)
+              .describe(
+                `「${s}」的瞄準風險倍率 —— 要求傷害再乘這個數字。1 ＝ 沒有額外要求` +
+                  `（＝ 公式本身）。⚠️ 只有「相稱性模型」選 aimRisk 時才生效。`,
+              ),
+          ]),
+        ) as Record<(typeof COOLDOWN_SHAPES)[number], z.ZodNumber>,
+      )
+      .strict(),
+    /**
      * ⭐ **期望命中人數** —— owner 2026-08-20 給的那個係數（範圍 **2 人**）。
      * ⛔ **0 ＝ 這個形狀豁免**（出貨的「變身」就是 0：它的回報軸不是傷害）。
      * 語意與公式寫在 `content/proportionality.ts`。
@@ -6987,9 +7033,13 @@ const zProportionality = z
       .strict(),
     /**
      * 形狀 → 冷卻級距 → **最低**傷害級距。
-     * ⭐ **推導出來的**（`deriveMinDamageTier`），⛔ 不是手填的資料 ——
-     * 它跟著 `expectedHits` × 冷卻級距表 × 傷害級距表走。
+     * ⭐ **推導出來的**（`tableForModel`），⛔ 不是手填的資料 ——
+     * 它跟著 `model` × `expectedHits` × `aimRiskMult` × 冷卻級距表 × 傷害級距表走。
      * 「極小」＝ 不構成限制（那是傷害軸的最低一格）。
+     *
+     * ⚠️ **只有 `model: "custom"` 會讀這十五格。** 其餘三個模型一律現推 ——
+     * 否則切換模型會變成一格「說了但不會發生」的下拉（第一·五守則）。
+     * ⇒ 想做**單格破例**就把模型切到 `custom`，這十五格才是效力來源。
      */
     minDamageTier: z
       .object(
@@ -7007,10 +7057,12 @@ const zProportionality = z
  * 三個輸入全部是既有的出貨表：冷卻級距 × 傷害級距 × owner 的期望命中人數。
  */
 const shippedMinDamageTier = (): Record<string, Record<string, string>> =>
-  deriveMinDamageTier(
+  tableForModel(
+    DEFAULT_PROPORTIONALITY_MODEL,
     DEFAULT_COOLDOWN_TIERS.seconds,
     DEFAULT_DAMAGE_TIERS.damage,
     DEFAULT_EXPECTED_HITS,
+    DEFAULT_AIM_RISK_MULT,
   ) as unknown as Record<string, Record<string, string>>;
 
 export const DEFAULT_AUTHORING_PRINCIPLES = {
@@ -7021,7 +7073,10 @@ export const DEFAULT_AUTHORING_PRINCIPLES = {
   transformCooldownMin: 120,
   proportionality: {
     enabled: true,
+    // ⭐ 出貨 = **今天的行為**（公式）。另外兩條路是 owner 一格下拉就切得過去的。
+    model: DEFAULT_PROPORTIONALITY_MODEL,
     expectedHits: DEFAULT_EXPECTED_HITS,
+    aimRiskMult: DEFAULT_AIM_RISK_MULT,
     minDamageTier: shippedMinDamageTier(),
   },
 } as const;

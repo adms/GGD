@@ -104,9 +104,18 @@ import { zConfigDisplacementTiersDoc } from "@ggd/shared/content/schema/displace
 // ⛔ 級距名只有一份（GH#414）—— 後台不重打一組字串。
 import { SKILL_TIER_NAMES } from "@ggd/shared/content/skillTiers";
 // ⛔ 形狀名（單體／範圍／變身）也只有一份 —— 後台不重打一組字串（同上一行）。
-import { COOLDOWN_SHAPES } from "@ggd/shared/content/cooldownTiers";
+import { COOLDOWN_SHAPES, DEFAULT_COOLDOWN_TIERS } from "@ggd/shared/content/cooldownTiers";
 // ⛔ 傷害級距的五個數字也只有一份 —— 相稱性下拉的選項說明從它推導。
 import { DEFAULT_DAMAGE_TIERS } from "@ggd/shared/content/damageTiers";
+// ⭐ GH#465 三選一 —— 下拉的**選項標籤與說明都是算出來的**（每個模型的十格），
+//    ⛔ 不是手寫「這是方案 B」那種對操作者不構成資訊的字。
+import {
+  DEFAULT_AIM_RISK_MULT,
+  DEFAULT_EXPECTED_HITS,
+  PROPORTIONALITY_MODELS,
+  describeProportionalityModels,
+  tableForModel,
+} from "@ggd/shared/content/proportionality";
 // ⚠️ 深路徑 import：`config.victory-podium@1` 的 Zod 住在自己的檔案裡（欄位的理由
 // 很長，而且客戶端 render/** 直接吃它），`content/schema/index.ts` **沒有**再匯出
 // 一次，所以這裡走 package.json 的 `"./*"` 子路徑。`laneConfigDocs.test.ts` 走的是
@@ -825,6 +834,54 @@ const AUTHORING_RULES_SPEC: ConfigDocSpec = {
       zh: "相稱性檢查總開關",
       note: "關掉之後，「付得多、打得少、傷害又低」的組合**完全不會**出現在編輯器的警告清單裡。⚠️ 關掉不會讓那些技能上不了線 —— 這一整族本來就只警告不擋。",
     },
+    // ⭐ GH#465 三選一（owner 2026-08-20「fix #465, 3 suggestions?」）——
+    //    ⛔ 我沒有替他挑，三條路都做成一格下拉，出貨 = **今天的行為**。
+    {
+      path: "proportionality.model",
+      zh: "相稱性模型（三選一）",
+      // ⛔ 四個選項的標籤把**那個模型的範圍五格**帶上，⛔ 不是只寫一個代號 ——
+      //    「這是方案 B」對操作者不構成資訊，「範圍＝大/極大/極大/極大/極大」才是。
+      optionLabels: Object.fromEntries(
+        PROPORTIONALITY_MODELS.map((m) => [
+          m,
+          m === "custom"
+            ? "custom 手填（吃下面十五格）"
+            : `${m}：範圍＝${SKILL_TIER_NAMES.map(
+                (t) =>
+                  tableForModel(
+                    m,
+                    DEFAULT_COOLDOWN_TIERS.seconds,
+                    DEFAULT_DAMAGE_TIERS.damage,
+                    DEFAULT_EXPECTED_HITS,
+                    DEFAULT_AIM_RISK_MULT,
+                  )["範圍"][t],
+              ).join("/")}`,
+        ]),
+      ),
+      note:
+        "**哪一個模型推導下面那十五格。** 這一格存在的理由是 owner 自己的兩句話打架：" +
+        "2026-08-19 手填「範圍・極小要配傷害**大**」，2026-08-20 給的公式算出來是「**小**」" +
+        "（差 3 倍／兩級）。⛔ 三條路都做出來了，⭐ 出貨是 **formula ＝ 今天的行為**。" +
+        describeProportionalityModels(
+          DEFAULT_COOLDOWN_TIERS.seconds,
+          DEFAULT_DAMAGE_TIERS.damage,
+          DEFAULT_EXPECTED_HITS,
+          DEFAULT_AIM_RISK_MULT,
+        ) +
+        "⚠️ 改這一格會**同時**改掉範圍那五條警告，⛔ 不影響任何技能上不上得了線。",
+    },
+    // ⭐ 方案 C 的第二個係數 —— 與「打到幾個人」刻意分開。
+    ...COOLDOWN_SHAPES.map((shape) => ({
+      path: `proportionality.aimRiskMult.${shape}`,
+      zh: `${shape}・瞄準風險倍率`,
+      note:
+        `一支「${shape}」形狀的技能**有多容易一個人都沒打到** —— 要求傷害再乘這個數字。` +
+        "**1 ＝ 沒有額外要求**（＝ 公式本身）。⚠️ **只有上面的模型選 `aimRisk` 時才生效**。" +
+        "⭐ 它與「期望命中人數」刻意是**兩格**：「打到幾個人」與「有多容易完全落空」是" +
+        "兩件不同的事，混成一格的代價是 owner 親口說的「**2 個人**」會被改寫成 0.67 人，" +
+        "而那格 config 從此在說謊。⚠️ 出貨「範圍」那格是**反算**出來的：切到 `aimRisk` " +
+        "就會重現 owner 2026-08-19 手填的「範圍・極小 → 大」。",
+    })),
     // ⭐ owner 2026-08-20 給的那個係數 —— 十五格現在是**從這三個數字推導**出來的。
     ...COOLDOWN_SHAPES.map((shape) => ({
       path: `proportionality.expectedHits.${shape}`,
@@ -851,11 +908,11 @@ const AUTHORING_RULES_SPEC: ConfigDocSpec = {
         note:
           `一支「${shape}」形狀、冷卻級距填「${tier}」的技能，傷害級距至少要到哪一格才算相稱。` +
           "填「極小」＝**不構成限制**（那是傷害軸的第一格）。⚠️ 違反只**警告不擋**。" +
-          "⭐ **出貨值是推導出來的**（owner 2026-08-20 的 2.5× 邏輯）：要求傷害 = " +
-          "單位輸出率 × 這一格的卡面冷卻 ÷ 上面那格「期望命中人數」。⇒ 想整列一起動就改係數，" +
-          "這一格留給**刻意的單格破例**。⚠️ ⛔ 公式沒有重現 owner 2026-08-19 手填的" +
-          "「範圍・極小 → 大」（它給的是「小」，差 3.0 倍／兩級）—— 那一格已經另存，" +
-          "要回頭在這裡把它改回「大」即可。",
+          "⚠️ ⛔ **這一格只有在上面的「相稱性模型」選 `custom` 時才生效** —— 其餘三個模型" +
+          "都是**現推**的（改了模型，十五格自己跟著動）。⇒ 想做**刻意的單格破例**，" +
+          "先把模型切到 `custom`，這裡才是效力來源。" +
+          "⭐ 出貨值 = `formula` 推出來的那一份（owner 2026-08-20 的 2.5× 邏輯）：要求傷害 = " +
+          "單位輸出率 × 這一格的卡面冷卻 ÷「期望命中人數」。",
       })),
     ),
   ],

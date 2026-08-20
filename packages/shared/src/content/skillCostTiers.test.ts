@@ -18,7 +18,9 @@ import type { ContentStore } from "./store";
 import { Abilities, Champions, Items } from "../sim/content/registry";
 import { COOLDOWN_SHAPES, DEFAULT_COOLDOWN_TIERS, cooldownShapeOf } from "./cooldownTiers";
 import {
+  DEFAULT_AIM_RISK_MULT,
   DEFAULT_EXPECTED_HITS,
+  DEFAULT_PROPORTIONALITY_MODEL,
   OWNER_20260819_CELL,
   deriveMinDamageTier,
   requiredDamage,
@@ -193,9 +195,17 @@ describe("相稱性 (GH#465)", () => {
 
   it("⭐ 三個住處：出貨 JSON 的十五格 === 公式推出來的十五格（⛔ 不是手填的資料）", () => {
     const doc = shipped("authoring-rules") as {
-      proportionality: { expectedHits: typeof H; minDamageTier: unknown };
+      proportionality: {
+        model: string;
+        expectedHits: typeof H;
+        aimRiskMult: unknown;
+        minDamageTier: unknown;
+      };
     };
     expect(doc.proportionality.expectedHits).toEqual(H);
+    // ⭐ GH#465 三選一：出貨模型與兩個係數也要對得上（⛔ 不抄字面值）。
+    expect(doc.proportionality.model).toBe(DEFAULT_PROPORTIONALITY_MODEL);
+    expect(doc.proportionality.aimRiskMult).toEqual(DEFAULT_AIM_RISK_MULT);
     expect(doc.proportionality.minDamageTier).toEqual(deriveMinDamageTier(S, D, H));
   });
 
@@ -237,6 +247,41 @@ describe("相稱性 (GH#465)", () => {
       );
     expect(ids).toEqual(expected);
     expect(expected.length).toBeGreaterThan(0); // ⛔ 空清單要紅,不要無聲通過
+  });
+
+  // ⭐ GH#465 三選一（owner 2026-08-20）。⛔ 只驗**預設啟動**的那一個模型
+  //    （第〇·六守則：「測試也只做預設啟動的項目就好」）—— 另外兩條路不寫測試。
+  it("⭐ 出貨模型**現推**那十五格 —— 文件裡手填的值不會被照抄成對外規則", () => {
+    // ⚠️ 承重的那一條線：少了 `authoringRules` 的 `tableForModel(...)`，那格模型下拉
+    //    就變成「說了但不會發生」——存得起來、畫得出來、而警告一條都不會變（失敗形態②）。
+    const worst = DAMAGE_TIER_NAMES[DAMAGE_TIER_NAMES.length - 1]!; // ⛔ 推出來的，不是字面值
+    const poisoned = {
+      ...DEFAULT_AUTHORING_PRINCIPLES,
+      proportionality: {
+        ...DEFAULT_AUTHORING_PRINCIPLES.proportionality,
+        minDamageTier: Object.fromEntries(
+          COOLDOWN_SHAPES.map((s) => [
+            s,
+            Object.fromEntries(SKILL_TIER_NAMES.map((t) => [t, worst])),
+          ]),
+        ),
+      },
+    };
+    const read = (id: string): unknown => (id === "authoring-rules" ? poisoned : undefined);
+    const ids = buildAuthoringRules(read)
+      .principle.filter((r) => r.id.startsWith("principle.proportionality."))
+      .map((r) => r.id);
+    const table = deriveMinDamageTier(S, D, H);
+    const fromFormula = COOLDOWN_SHAPES.slice()
+      .sort()
+      .flatMap((s) =>
+        SKILL_TIER_NAMES.filter((t) => table[s][t] !== FLOOR).map(
+          (t) => `principle.proportionality.${s}.${t}`,
+        ),
+      );
+    // 照抄那十五格會發出**全部**十五條；現推只發公式那一份 ⇒ 兩者數量都不一樣。
+    expect(ids).toEqual(fromFormula);
+    expect(ids.length).toBeLessThan(COOLDOWN_SHAPES.length * SKILL_TIER_NAMES.length);
   });
 
   it("關掉總開關 = 這一族完全不出現在對外契約裡", () => {
