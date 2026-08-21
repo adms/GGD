@@ -1,0 +1,10 @@
+{
+  "id": "gamepad",
+  "schema": "config.gamepad@1",
+  "note": "手把手感（GH#520）。五格全部是出貨值 —— 這一份上線的當天一個位元都沒動,只是把它們從 TS 常數搬到後台調得到的地方。",
+  "deadzone": 0.15,
+  "moveLead": 4,
+  "attackMoveLead": 5,
+  "basicAttackRange": 12,
+  "longPressMs": 400
+}

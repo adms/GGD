@@ -280,6 +280,13 @@ export type Page =
    */
   | "lobbyRally"
   /**
+   * 手把手感 (`config/gamepad.json`, GH#520「五個手感常數全部寫死在 TS」)
+   * —— 死區／兩個前導距離／搜敵半徑／長按門檻。同一個 `ConfigDocPage` 元件、
+   * 同一條 `putOverlayDoc`。⚠️ 消費端是**客戶端**（`input/GamepadInput.ts` 每一幀
+   * 重讀），所以存檔之後玩家**重整一次分頁**就生效，⛔ 不必重啟 shard。
+   */
+  | "gamepad"
+  /**
    * 管理員預設好友 (`config/admin-friend.json`, GH#499「所有人預設都會加管理員帳號
    * 為好友」「管理員是強制雙向 不必請求」) —— 同一個 `ConfigDocPage` 元件、同一條
    * `putOverlayDoc`。⚠️ 消費端是 **Go 平台**（`internal/friend/adminfriend.go`），
@@ -689,6 +696,9 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // 大廳集合令 (GH#492): 同上。⛔ 漏掉 gate 的話沒登入的人改得到「一鍵開打要不要
   // 先等人」與倒數秒數 —— 那是每一場比賽開場前的節奏。
   "lobbyRally",
+  // 手把手感 (GH#520): 同上。⛔ 漏掉 gate 的話沒登入的人改得到死區與長按門檻 ——
+  // 死區被推到上界＝每一個手把玩家的搖桿前半段整段變成死的。
+  "gamepad",
   // 管理員預設好友 (GH#499): 同上。⛔ 漏掉 gate 的後果在這一頁特別重 —— 那一格填的是
   // 「誰會出現在每一個玩家的好友名單上、因此看得到全站每一個人的在線狀態」。
   "adminFriend",

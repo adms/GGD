@@ -348,6 +348,9 @@ export const NAV: NavItem[] = [
   // 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   { page: "practice", label: "練習模式", emoji: "🎯", section: SEC_SYS },
   { page: "lobbyRally", label: "大廳集合令", emoji: "📣", section: SEC_SYS },
+  // 手把手感 (GH#520)：死區／兩個前導距離／搜敵半徑／長按門檻。同一個 `ConfigDocPage`
+  // 元件、同一條 `putOverlayDoc`。⚠️ 消費端是客戶端，玩家重整一次分頁就生效。
+  { page: "gamepad", label: "手把手感", emoji: "🎮", section: SEC_SYS },
   // 圖示風格 (GH#178)：地端兩階段產圖器的 PASS-2 風格字串與參數。
   // ⚠️ 它是**產圖時**的設定，不是遊戲執行期的 —— 改了要重跑產圖器才看得到。
   { page: "iconStyle", label: "圖示風格", emoji: "🖌", section: SEC_ASSETS },

@@ -104,6 +104,8 @@ import {
   // 管理員預設好友（GH#499，owner 2026-08-21）—— 走 barrel，同上面那一族。
   zConfigAdminFriendDoc,
   zConfigLobbyRallyDoc,
+  // 手把手感（GH#520，owner 2026-08-22）—— 走 barrel，同上面那一族。
+  zConfigGamepadDoc,
 } from "@ggd/shared/content";
 // ⚠️ 同上的深路徑理由：這兩份 Zod 住自己的檔案（欄位理由長、且 sim 直接吃）。
 import { DEFAULT_STAT_NORMALIZATION } from "@ggd/shared/content/statNormalization";
@@ -3470,6 +3472,55 @@ const AUDIO_MIX_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
+// ─────────────────────────────────────────────── 手把手感 (config/gamepad) ─
+
+const GAMEPAD_SPEC: ConfigDocSpec = {
+  page: "gamepad",
+  collection: "config",
+  docId: "gamepad",
+  schemaTag: "config.gamepad@1",
+  zod: zConfigGamepadDoc,
+  title: "手把手感",
+  intro: [
+    "手把摸起來是什麼感覺，全部在這一頁。GH#520 之前這五格是 `apps/client/src/input/GamepadInput.ts` 的五個 module-level 常數 —— 想把死區調鬆一格要改程式、重建 client 映像、重新部署（第一守則）。而死區太緊／太鬆是**每一個手把玩家第一天就會抱怨**的東西。",
+    "⭐ **這一頁上線的當天，手感一個位元都沒有變**：五格的出貨值逐字等於原本那五個常數。機制上線、數值一格沒動 —— 所以「後台調得到了」與「手感被改掉了」不會混在同一次部署裡。",
+    "⚠️ 消費端是**客戶端**（`input/GamepadInput.ts` 每一幀重讀），所以存檔之後玩家**重整一次分頁**就生效，⛔ 不必重建映像、⛔ 不必重啟 shard。",
+    "⚠️ 這一頁**只管手把**。觸控（`input/TouchInput.ts`）今天仍然吃出貨常數，⛔ 存這一頁不會改變觸控的手感 —— 那要另一份文件，⛔ 不是借住這一份。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/gamepad.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "apps/client/src/input/GamepadInput.ts 的 activeGamepadFeel()（讀 Configs 登錄表），由 GamepadInput.poll()（死區＋長按門檻）與 mapGamepadFrame()（兩個前導距離＋搜敵半徑）每一幀消費",
+  effect: "**存檔就生效**，玩家重整一次分頁即可。⛔ 不必重建映像，也⛔ 不必重啟任何服務。",
+  fields: [
+    {
+      path: "deadzone",
+      zh: "搖桿死區",
+      note: "搖桿要推過這個比例（0..1 的徑向長度）才算「有推」。出貨 {{出貨值}}。調小＝更靈敏，代價是**鬆手之後角色還會自己走** —— 老舊手把的靜止漂移量得到 0.05–0.1，死區低於它就等於角色一直被輕輕推著。調大＝要推很深才動得了，微調瞄準那一段行程會整個消失。⚠️ 兩根搖桿共用這一格（移動與瞄準），⛔ 沒有分開的兩格。",
+    },
+    {
+      path: "moveLead",
+      zh: "移動前導距離",
+      note: "左搖桿把移動指令下在角色**前方多遠**的那一點（世界單位）。⚠️ 它**不是速度** —— 角色永遠跑自己的移速，這一格決定的是指令重下的節奏感。調太小＝每一幀都在重下一個很近的點，轉向會黏；調太大＝**鬆手之後角色還會往前滑一段**（手把刻意跟滑鼠一樣：放開不等於停，最後那個點會走完）。",
+    },
+    {
+      path: "attackMoveLead",
+      zh: "attack-move 前導距離",
+      note: "LT（攻擊移動）把指令下在前方多遠。同上，差別是那是一條**會邊走邊打**的路線，所以它通常比純移動前導再遠一點點 —— 走得太短會讓角色一直停下來重新找目標。⛔ 這一格不影響普通移動。",
+    },
+    {
+      path: "basicAttackRange",
+      zh: "基本攻擊搜敵半徑",
+      note: "按 RT 時往這個半徑內找最近的敵人。⚠️ 它是**手把幫你挑目標**的範圍，⛔ 不是英雄真的打得到的距離（那是英雄自己的攻擊距離，由伺服器判）。調得比英雄射程大很多＝按 RT 會鎖上一個**要先跑過去**的人；調太小＝站在射程邊緣按 RT 完全沒反應。",
+    },
+    {
+      path: "longPressMs",
+      zh: "長按門檻（毫秒）",
+      note: "按住 A/B/X/Y 多久算「升級這一格技能」（沒有技能點時則是「顯示說明」）。出貨 {{出貨值}}，落在兩個真實的邊界之間：戰鬥中一次刻意的重按輕鬆超過 200，**調得比它低會在打架時誤加技能點**（而點數花掉不能退）；超過 500 左右玩家已經斷定「沒反應」而放手。⚠️ 施放**永遠不會被延後** —— 長按的同時那一招已經放出去了，這一格只決定「多久之後**額外**觸發升級／說明」。",
+    },
+  ],
+  preserved: [],
+};
+
 // ───────────────────────────────────────────── 練習模式 (config/practice) ─
 
 const PRACTICE_SPEC: ConfigDocSpec = {
@@ -4513,6 +4564,11 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   // store.ts 的 `Page` union / App.tsx 的導覽列一起才到得了操作者手上，那兩個檔
   // 不在這條 lane 手上（見 needsFromIntegrator）。
   PRACTICE_SPEC,
+  // 手把手感（GH#520，owner 2026-08-22）。⚠️ 同 AUDIO_MIX_SPEC 那一段：這一列要跟
+  // store.ts 的 `Page` union + `SESSION_REQUIRED_PAGES`、App.tsx 的導覽列一列，
+  // 以及 `content/config/gamepad.json` 出貨檔一起，才到得了操作者手上
+  // （少了出貨檔 `configForms.test.ts` 直接紅 —— 它對每一個 spec 都 readFileSync 那份 JSON）。
+  GAMEPAD_SPEC,
   // 大廳集合令（GH#492，owner 2026-08-21）。⚠️ 同 AUDIO_MIX_SPEC 那一段：這一列要
   // 跟 store.ts 的 `Page` union + `SESSION_REQUIRED_PAGES`、App.tsx 的導覽列一列，
   // 以及 `content/config/lobby-rally.json` 出貨檔一起，才到得了操作者手上。

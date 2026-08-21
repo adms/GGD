@@ -34,6 +34,15 @@
  * NO @babylonjs imports here (client-08).
  */
 import { asEntityId } from "@ggd/shared/ids";
+// 手把手感（GH#520）——⭐ 五個常數的**唯一**來源。⛔ 這支檔案不再自己寫字面值。
+import {
+  Configs,
+  DEFAULT_GAMEPAD_FEEL_POLICY,
+  GAMEPAD_DOC_ID,
+  resolveGamepadFeel,
+  type ConfigGamepadDoc,
+  type GamepadFeelPolicyDoc,
+} from "@ggd/shared/content";
 import type { CastableSlot, Command, CoreAbilitySlot, Order } from "@ggd/shared/sim/intents";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 import { abilityActivationCue } from "../ui/abilityCue";
@@ -42,11 +51,42 @@ import { envFactor } from "../ui/displayFinal";
 import { buildCastCommand, setCursorlessAim, type AimAbility } from "./AimResolver";
 import { isPadMenuCapturing } from "./padMenuCapture";
 
-export const GAMEPAD_DEADZONE = 0.15;
+export type GamepadFeel = GamepadFeelPolicyDoc;
+
+/**
+ * 出貨手感 —— **⛔ 不是一組寫死的常數，是 `config.gamepad@1` 的保險絲**（GH#520）。
+ *
+ * 在這一版之前，死區／兩個前導距離／搜敵半徑／長按門檻是五個 module-level
+ * `export const`：owner 想把死區調鬆一格，要改程式 + 重建 client 映像 + 重新部署
+ * （第一守則）。現在它們住在 `content/config/gamepad.json`，這一族只是
+ * 「內容還沒載完 / 載失敗」時的回退值 —— 而回退值逐字等於出貨值，
+ * 所以那個回退**不改變任何行為**。
+ */
+export const DEFAULT_GAMEPAD_FEEL: GamepadFeel = { ...DEFAULT_GAMEPAD_FEEL_POLICY };
+
+/**
+ * 生效中的手把手感 —— 後台 overlay ?? `content/config/gamepad.json` ?? 出貨預設。
+ *
+ * ⭐ 和 `aimAssistMobPenalty()`（`config.combat-feel@1`）以及 `CameraRig` 讀
+ * `config.camera@1` 是**同一條路**：每次呼叫都重讀，所以後台存檔之後玩家
+ * 重整一次分頁就生效，⛔ 不必重建映像。
+ */
+export function activeGamepadFeel(): GamepadFeel {
+  return resolveGamepadFeel(Configs.tryGet(GAMEPAD_DOC_ID) as ConfigGamepadDoc | undefined);
+}
+
+/**
+ * ⚠️ 以下五個匯出是**出貨值的別名**，留著給還沒改讀即時設定的呼叫端
+ * （`ui/inputMode` 的預設參數、`input/TouchInput` 的觸控路徑、以及測試夾具）。
+ * ⛔ 它們**不會**跟著後台變 —— 手把自己的每一條路都已經改讀 {@link activeGamepadFeel}。
+ * ⛔ 也不要在這裡重打數字：它們從 {@link DEFAULT_GAMEPAD_FEEL} 推導，
+ * 手打一份就是第四個住處，而第四個住處一定會過期。
+ */
+export const GAMEPAD_DEADZONE = DEFAULT_GAMEPAD_FEEL.deadzone;
 /** How far ahead of the champion a stick-move order targets. */
-export const MOVE_LEAD = 4;
+export const MOVE_LEAD = DEFAULT_GAMEPAD_FEEL.moveLead;
 /** Attack-move lead distance (RT). */
-export const ATTACK_MOVE_LEAD = 5;
+export const ATTACK_MOVE_LEAD = DEFAULT_GAMEPAD_FEEL.attackMoveLead;
 /**
  * ⚠️ **LEGACY — 手把已經不用它了（GH#512）。** 留著只因為 `input/TouchInput`
  * 的 tap / drag-aim 兩條路還匯入它（拖曳有自己的 0..1 magnitude 語意）。
@@ -73,7 +113,7 @@ export function padCastReach(ability: AimAbility, abilityRangeMult: number): num
 }
 
 /** LT basic-attack target search radius. */
-export const BASIC_ATTACK_RANGE = 12;
+export const BASIC_ATTACK_RANGE = DEFAULT_GAMEPAD_FEEL.basicAttackRange;
 
 /**
  * Button indices of the W3C **Standard Gamepad** mapping (`Gamepad.buttons[]`),
@@ -186,16 +226,17 @@ const SLOT_BY_BUTTON: Partial<Record<number, CastableSlot>> = {
  * deferring the cast.
  */
 /**
- * How long a button must be down before it counts as a long press.
+ * How long a button must be down before it counts as a long press —— **出貨值**。
  *
- * 400 ms, chosen between two real bounds: a deliberate hard tap in a fight
- * comfortably clears 200 ms (so a lower threshold would rank up during combat by
- * accident, and a skill point spent is not undoable), while past ~500 ms a
- * player has already concluded that nothing is going to happen and lets go. It
- * also matches `padFocusNav.NAV_INITIAL_DELAY_MS` (420 ms) closely enough that
- * "hold something for a beat" feels like one gesture across the whole product.
+ * ⚠️ 這是保險絲，⛔ 不是執行期真的在用的那個值：`GamepadInput.poll()` 每一幀
+ * 從 {@link activeGamepadFeel} 讀 `longPressMs`（GH#520，後台調得到）。
+ *
+ * 出貨值落在兩個真實的邊界之間：戰鬥中一次刻意的重按輕鬆超過 200ms（門檻再低
+ * 就會在打架時誤加技能點，而點數花掉不能退），而超過 ~500ms 玩家已經斷定
+ * 「沒反應」而放手。它也和 `padFocusNav.NAV_INITIAL_DELAY_MS` 夠接近，
+ * 讓「按住一拍」在整個產品裡是同一個手勢。
  */
-export const GAMEPAD_LONG_PRESS_MS = 400;
+export const GAMEPAD_LONG_PRESS_MS = DEFAULT_GAMEPAD_FEEL.longPressMs;
 
 /**
  * Long press → the rankable slot it spends a point on. Only the FOUR core
@@ -295,6 +336,15 @@ export interface GamepadPlayerCtx {
    * 所以 `mapGamepadFrame` 本身維持**純函式**——測試餵一個數字就好。
    */
   abilityRangeMult?: number;
+  /**
+   * 生效中的手把手感（GH#520）。省略 = 出貨值。
+   *
+   * ⚠️ 它和 `abilityRangeMult` 同一個理由**不由 ctxProvider 提供**：
+   * `GamepadSystem` / `MultiGamepadSystem` 在 poll 的當下從 `Configs` 讀進來
+   * （operator 隨時可以改），所以 `mapGamepadFrame` 本身維持**純函式** ——
+   * 測試餵一個物件就好。
+   */
+  feel?: GamepadFeel;
 }
 
 export interface GamepadIntent {
@@ -339,6 +389,8 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
   const self = ctx.selfPos;
   const aimDir = frame.aim ?? ctx.lastAimDir ?? ctx.facing ?? null;
   const rangeMult = ctx.abilityRangeMult ?? 1;
+  // ⭐ 手感五格從後台讀（GH#520）。⛔ 這個函式裡不可以再出現一個字面距離。
+  const feel = ctx.feel ?? DEFAULT_GAMEPAD_FEEL;
 
   let camera: GamepadCameraIntent | undefined;
   const cam = (patch: GamepadCameraIntent): void => {
@@ -349,7 +401,10 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
   if (frame.move && self) {
     order = {
       kind: "move",
-      point: { x: self.x + frame.move.x * MOVE_LEAD, z: self.z + frame.move.z * MOVE_LEAD },
+      point: {
+        x: self.x + frame.move.x * feel.moveLead,
+        z: self.z + frame.move.z * feel.moveLead,
+      },
     };
   }
 
@@ -389,14 +444,17 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
       if (dir) {
         order = {
           kind: "attackMove",
-          point: { x: self.x + dir.x * ATTACK_MOVE_LEAD, z: self.z + dir.z * ATTACK_MOVE_LEAD },
+          point: {
+            x: self.x + dir.x * feel.attackMoveLead,
+            z: self.z + dir.z * feel.attackMoveLead,
+          },
         };
       }
     } else if (b === BTN.RT && self) {
       // RT = basic attack. The right trigger is the primary action everywhere
       // else on a console, and #221's auto-attack means the manual one is now a
       // correction rather than a rotation key.
-      const id = ctx.nearestEnemy(self, BASIC_ATTACK_RANGE, aimDir);
+      const id = ctx.nearestEnemy(self, feel.basicAttackRange, aimDir);
       if (id !== null) order = { kind: "attackTarget", entity: asEntityId(id) };
     } else if (b === BTN.DPAD_UP) {
       order = { kind: "stop" };
@@ -491,6 +549,11 @@ export class GamepadInput {
     readonly gamepadIndex: number,
     private readonly readPad?: () => PadState | null,
     private readonly now: () => number = defaultNow,
+    /**
+     * 生效中的手感（GH#520）—— **每一次 poll 都重讀**，⛔ 不是建構時抓一次快照。
+     * 抓快照的話 operator 在後台改了死區，已經插著的那支手把要拔掉重插才會跟上。
+     */
+    private readonly feel: () => GamepadFeel = activeGamepadFeel,
   ) {}
 
   private currentPad(): PadState | null {
@@ -512,6 +575,7 @@ export class GamepadInput {
       return null;
     }
     const now = this.now();
+    const feel = this.feel();
     const justPressed: number[] = [];
     const held: number[] = [];
     const longPressed: number[] = [];
@@ -530,7 +594,7 @@ export class GamepadInput {
         this.downAt[i] = now;
         this.longFired[i] = false;
       }
-      if (now - (this.downAt[i] ?? now) >= GAMEPAD_LONG_PRESS_MS) {
+      if (now - (this.downAt[i] ?? now) >= feel.longPressMs) {
         if (!this.longFired[i]) {
           this.longFired[i] = true;
           longPressed.push(i);
@@ -540,8 +604,8 @@ export class GamepadInput {
     }
     this.prevPressed = pressed;
     return {
-      move: stickToWorld(pad.axes[0] ?? 0, pad.axes[1] ?? 0),
-      aim: stickToWorld(pad.axes[2] ?? 0, pad.axes[3] ?? 0),
+      move: stickToWorld(pad.axes[0] ?? 0, pad.axes[1] ?? 0, feel.deadzone),
+      aim: stickToWorld(pad.axes[2] ?? 0, pad.axes[3] ?? 0, feel.deadzone),
       justPressed,
       held,
       longPressed,
@@ -584,7 +648,13 @@ export interface GamepadSinks {
 }
 
 /** Player context providers (the per-frame live values). */
-export type GamepadCtxProvider = () => Omit<GamepadPlayerCtx, "lastAimDir" | "abilityRangeMult">;
+export type GamepadCtxProvider = () => Omit<
+  GamepadPlayerCtx,
+  "lastAimDir" | "abilityRangeMult" | "feel"
+>;
+
+/** 生效中手感的來源（GH#520）。預設讀 `Configs`，測試注入一個物件就好。 */
+export type GamepadFeelProvider = () => GamepadFeel;
 
 /**
  * 即時 `abilityRange` 係數的來源（GH#512）。預設讀 `ui/displayFinal` 的
@@ -614,6 +684,7 @@ export class GamepadSystem {
     private readonly ctxProvider: GamepadCtxProvider,
     private readonly listPads: () => (PadState | null)[] = listPadSources,
     private readonly abilityRangeMult: AbilityRangeMultProvider = liveAbilityRangeMult,
+    private readonly gamepadFeel: GamepadFeelProvider = activeGamepadFeel,
   ) {}
 
   attach(): void {
@@ -661,7 +732,9 @@ export class GamepadSystem {
     let input = this.inputs.get(this.activeIndex);
     if (!input) {
       const idx = this.activeIndex;
-      input = new GamepadInput(idx, () => this.listPads()[idx] ?? null);
+      input = new GamepadInput(idx, () => this.listPads()[idx] ?? null, defaultNow, () =>
+        this.gamepadFeel(),
+      );
       this.inputs.set(idx, input);
     }
     const frame = input.poll();
@@ -674,6 +747,7 @@ export class GamepadSystem {
       ...this.ctxProvider(),
       lastAimDir: this.lastAimDir,
       abilityRangeMult: this.abilityRangeMult(),
+      feel: this.gamepadFeel(),
     });
     if (frame.aim) this.lastAimDir = frame.aim;
     if (intent.order) this.sinks.onOrder(intent.order);
@@ -735,9 +809,10 @@ export class MultiGamepadSystem {
     private readonly sinks: MultiGamepadSinks,
     private readonly ctxProvider: (
       player: number,
-    ) => Omit<GamepadPlayerCtx, "lastAimDir" | "abilityRangeMult">,
+    ) => Omit<GamepadPlayerCtx, "lastAimDir" | "abilityRangeMult" | "feel">,
     private readonly listPads: () => (PadState | null)[] = listPadSources,
     private readonly abilityRangeMult: AbilityRangeMultProvider = liveAbilityRangeMult,
+    private readonly gamepadFeel: GamepadFeelProvider = activeGamepadFeel,
   ) {}
 
   dispose(): void {
@@ -766,7 +841,9 @@ export class MultiGamepadSystem {
       if (padIndex === undefined) continue; // fewer pads than players
       let input = this.inputs.get(padIndex);
       if (!input) {
-        input = new GamepadInput(padIndex, () => this.listPads()[padIndex] ?? null);
+        input = new GamepadInput(padIndex, () => this.listPads()[padIndex] ?? null, defaultNow, () =>
+          this.gamepadFeel(),
+        );
         this.inputs.set(padIndex, input);
       }
       const frame = input.poll();
@@ -787,6 +864,7 @@ export class MultiGamepadSystem {
         ...this.ctxProvider(player),
         lastAimDir: this.lastAim.get(player) ?? null,
         abilityRangeMult: this.abilityRangeMult(),
+        feel: this.gamepadFeel(),
       });
       if (frame.aim) this.lastAim.set(player, frame.aim);
       if (intent.order) this.sinks.onOrder(player, intent.order);
