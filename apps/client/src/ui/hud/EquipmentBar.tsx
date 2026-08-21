@@ -22,6 +22,9 @@ import { GlyphTile } from "../components/GlyphTile";
 import { Tooltip } from "../components/Tooltip";
 // owner 2026-08-02 的卡片排版,四個渲染點之一(#140 的裝備欄 hover 詳情)。
 import { ItemCardBody } from "../components/ItemCardBody";
+// ⭐ 與商店貨架格讀**同一格**後台參數（`config.item-card@1.iconFillPct`，#338）——
+// ⛔ 不是第二個「裝備欄專用」的數字，那會讓 owner 調一格得調兩處。
+import { itemIconFillPct } from "../components/itemCardTheme";
 import { UNKNOWN_ITEM_LABEL } from "../panels/itemStats";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM } from "../theme";
 import { hudSlotStyle, hudSlotWidth } from "./hudLayout";
@@ -45,9 +48,13 @@ export function EquipmentBar(): React.JSX.Element | null {
   const touch = hudTouch();
   const cells = buildEquipmentCells(seat.items, lookupItem);
   const cap = equipmentCap(seat.items);
-  // tile size is derived from the reserved width so the six cells + gaps always
-  // fit the slot the registry hands us on either pointer type.
-  const tile = touch ? 20 : 26;
+  // ⛔ 這裡以前算一個 `tile` px 邊長交給 `<GlyphTile size>`，而格子是
+  // `repeat(N,1fr)` 的**流動寬度** —— 觸控模式下 `hudLayout` 的 120px 分成六格
+  // 約 15.5px，塞一個 20px 的 tile 就是溢出被裁（GH#344，與商店格 GH#338
+  // 同一個形狀）。⭐ 現在幾何整個交給格子（`GlyphTile fill`），
+  // ⛔ 這個檔案不再持有任何一個圖示邊長。
+  const iconPct = itemIconFillPct();
+  const iconInset = iconPct >= 100 ? undefined : { inset: `${(100 - iconPct) / 2}%` };
 
   return (
     <div
@@ -122,7 +129,8 @@ export function EquipmentBar(): React.JSX.Element | null {
                   seed={cell.itemId}
                   icon={cell.icon}
                   label={cell.name ?? UNKNOWN_ITEM_LABEL}
-                  size={tile}
+                  fill
+                  style={iconInset}
                   accent={cell.unique ? ACCENT : undefined}
                 />
                 {cell.unique && (

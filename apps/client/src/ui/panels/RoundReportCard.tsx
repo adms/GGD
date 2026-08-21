@@ -57,6 +57,13 @@ export interface AffordableRead {
  * from the same two sources the shop's own rows use — `shopServicePrice` for
  * the two service entries (屬性強化 / 傳說寶珠) and `cost` for everything else
  * — so the hint can never claim an item the shelf would refuse to sell.
+ *
+ * ⚠️ CORRECTED 2026-08-22 (GH#274)：這一段散文在此之前是**假的**。呼叫端
+ * (`RoundReportCard` 內) 硬給 `shopCatalogue(..., true)`，也就是在正式 UI 裡把
+ * GH#261 的下架旗標關掉 —— 於是提示算進 12 支買不到的武器，說「買得起 4 件」
+ * 而同一個畫面上只有 1 個按鈕按得下去。⛔ 這支函式本身沒有錯：錯的是餵給它的
+ * 那一份目錄。⭐ 現在呼叫端與 `MerchantShop.tsx` 讀**同一組預設參數**，
+ * 守衛在 `roundReportAffordable.test.ts`。
  */
 export function affordableFrom(
   catalogue: readonly { id: string; cost?: number }[],
@@ -92,8 +99,10 @@ export function RoundReportCard(): React.JSX.Element | null {
   const { whitelist } = useWhitelist();
 
   const gold = seat?.gold ?? 0;
+  // ⛔ 沒有第三個參數 —— 逐字就是 `MerchantShop.tsx` 自己的那一行。提示能數的
+  // 只有玩家**真的按得下去**的那些貨（GH#274）。
   const affordable = useMemo(
-    () => affordableFrom(shopCatalogue(Items.all(), whitelist, true), gold),
+    () => affordableFrom(shopCatalogue(Items.all(), whitelist), gold),
     [whitelist, gold],
   );
 

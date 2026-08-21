@@ -4,7 +4,7 @@
   "name": "22-00 嗚鎖打!",
   "icon": "assets/icons/abilities/godie-e00n.passive.webp",
   "provenance": "w3x-import",
-  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n爆發殺氣，對附近的敵方地面部隊造成150的傷害，並將他們嚇昏0.5秒，殺氣將會使禮奈速度瞬間暴增。",
+  "description": "[輔助][範圍]\n{{cd}}秒冷卻時間\n\n爆發殺氣，對附近的敵方地面部隊造成{{dmg}}的傷害，並將他們嚇昏0.5秒，殺氣將會使禮奈速度瞬間暴增。",
   "slot": "PASSIVE",
   "innateKind": "active",
   "castType": "self",
@@ -18,11 +18,10 @@
   ],
   "manaCostTier": "小",
   "range": 0.0,
-  "radius": 6.0,
   "targetsEnemies": true,
   "effects": [
     {
-      "kind": "damage",
+      "kind": "damageArea",
       "damageType": "physical",
       "amount": {
         "damageTier": "小",
@@ -32,13 +31,17 @@
             "coeff": 0.5
           }
         ]
-      }
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "burnstun",
-      "duration": 0.5,
-      "stun": true
+      },
+      "radius": 6.0,
+      "radiusTier": "中",
+      "onHitTargets": [
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 0.5,
+          "stun": true
+        }
+      ]
     },
     {
       "kind": "applyBuff",
