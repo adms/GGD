@@ -1,4 +1,4 @@
-<title>GGD 作戰板 · 2026-08-22 03:24 (GMT+8)</title>
+<title>GGD 作戰板 · 2026-08-22 05:14 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.24.0 · 資料截至 2026-08-22 03:24 (GMT+8)</p><h1>GGD 作戰板 · 2026-08-22 03:24 (GMT+8)</h1><div class="meta"><span>帳本 <b>4</b> 份</span><span>點名票號 <b>139</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.24.1 · 資料截至 2026-08-22 05:14 (GMT+8)</p><h1>GGD 作戰板 · 2026-08-22 05:14 (GMT+8)</h1><div class="meta"><span>帳本 <b>4</b> 份</span><span>點名票號 <b>142</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -571,6 +571,21 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>02:58</td><td>魔法陣を展開（hit）已經在本遊戲中大量使用 放入背景音樂中會造成遊戲判斷混亂 建議更換 其他如有類似也要更換</td><td>#533</td></tr>
 <tr><td>03:03</td><td>maxHealth 請設定為 6 票 問題 #534 ⭐ 把 199 個 flat 拿掉 —— 做完之後「改公式表 = 全改完」。⚠️ 但有 74 個只有 flat 沒有級別的節點要先決定怎麼辦=&gt;給我建議、舉例淺顯說明 #533 intToAbilityPower 4 / strToAttackDamage 0.4 也還在扮演「相對關係旋鈕」。要不要一起搬進基礎層？=&gt;什麼是基礎層? #502 手把還有 15 張沒做（含 3 個 blocker：登入頁打不了字、註冊沒有手把路徑）=&gt; go</td><td>#534 #533 #502</td></tr>
 <tr><td>03:24</td><td>1, 2, 3 =&gt; 作為例外在後台跳出警告就好, 4 你拉上來 --- 拿掉那 199 個 flat —— 到這一步「改公式表 = 全改完」才成立 =&gt; 故意的，因為AP目前也很強，並且HP系統倍率提升到6倍了，這樣大家有一定程度的拉平</td><td>#534</td></tr>
+<tr><td>03:57</td><td>登入的問題，我們不是設計過掃畫面QR code 手機代替登入的機制嗎？ =&gt; 裁決：兩個都留：鍵盤 + 手機註冊 QR</td><td>#535</td></tr>
+<tr><td>04:00</td><td>記得更新對話開票到 GGD作戰版跟 GGD平行批次盤</td><td>#501</td></tr>
+<tr><td>03:55</td><td>登入的問題，我們不是設計過掃畫面QR code 手機代替登入的機制嗎？</td><td>#535</td></tr>
+<tr><td>03:59</td><td>好 可以 commit</td><td>#534</td></tr>
+<tr><td>04:02</td><td>沒關係 讓別的commit也行</td><td>#534</td></tr>
+<tr><td>04:03</td><td>我現在想拆解 FATE 系列的元素 是否有機會加到音樂風格裡 目前聽起來有點太現代了 可能是樂器的關係？</td><td>#534</td></tr>
+<tr><td>04:06</td><td>每張地圖都有其設定的時代背景，應該要用到設定時代的代表樂器作為主旋律才對，但又不能跟其他首重複</td><td>— 誤傳到本 session,已從 #531 撤回（owner:「請不要理會…我傳錯session」）</td></tr>
+<tr><td>04:07</td><td>我傳錯seesion</td><td>#534</td></tr>
+<tr><td>04:07</td><td>請不要理會我剛剛說得話</td><td>#534</td></tr>
+<tr><td>04:09</td><td>attackDamage 已設回 1.0，但 0.6 還沒折進卡片 =&gt; 什麼是卡片看不懂 delete #531</td><td>#531</td></tr>
+<tr><td>04:13</td><td>⇒ 數字完全不變，但那個全域旋鈕變乾淨了 —— 以後你調 attackDamage，它就是「所有人普攻等比變強變弱」，⛔ 而不是偷偷在改「技能 vs 普攻誰比較強」。=&gt; fix 折進卡片</td><td>#533</td></tr>
+<tr><td>04:12</td><td>⇒ 數字完全不變，但那個全域旋鈕變乾淨了 —— 以後你調 attackDamage，它就是「所有人普攻等比變強變弱」，⛔ 而不是偷偷在改「技能 vs 普攻誰比較強」。=&gt; fix折進卡片</td><td>#533</td></tr>
+<tr><td>04:56</td><td>請將音樂接上線</td><td>#531</td></tr>
+<tr><td>05:01</td><td>福利連地圖地板全黑了</td><td>#536</td></tr>
+<tr><td>05:14</td><td>朋友清單，有上線的應該會特別排到最上面顯示吧？ 似乎是讀取不夠快 並且沒有提前在商店完成讀取的緣故</td><td>#537</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

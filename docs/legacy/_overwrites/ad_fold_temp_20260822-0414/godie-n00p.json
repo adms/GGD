@@ -1,0 +1,265 @@
+{
+  "id": "godie-n00p",
+  "schema": "champion@1",
+  "name": "妖狐藏馬 - 南野秀一",
+  "description": "故事：\n魔界高級妖魔轉生寄宿為人類，為控制魔界植物的支配者。\n(出自:幽遊白書)\n\n角色成長：\n力量 + 1.85\n敏捷 + 1.80\n智慧 + 2.65\n基礎跑速 300\n\n可學習的技能：\n寄生種子、風華圓舞陣、妖狐變化、魔界樹海",
+  "role": "marksman",
+  "attackType": "ranged",
+  "modelKey": "imported.fox",
+  "missileSpeed": 27.5,
+  "attackDamagePoint": 0.3,
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 74,
+    "ap": 0,
+    "armor": 4,
+    "mr": 28,
+    "as": 0.526316,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 6.0
+  },
+  "growth": {
+    "maxHealth": 37,
+    "healthRegen": 0.09,
+    "maxMana": 32,
+    "manaRegen": 0.11,
+    "ad": 1.8,
+    "armor": 0.5,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "attributes": {
+    "str": 16,
+    "agi": 14,
+    "int": 25,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "INT",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.28,
+    "knockbackMag": 0.0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-n00p.q",
+      "name": "18-01 風華圓舞陣",
+      "icon": "assets/icons/abilities/godie-n00p.q.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n周圍內飄逸出10片的花瓣，每片花瓣碰觸到敵方時造成50傷害，持續8秒。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.nature.slash",
+      "targetsEnemies": true,
+      "castTimeSec": 0.667,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "大",
+      "manaCostTier": "小"
+    },
+    "W": {
+      "id": "godie-n00p.w",
+      "name": "18-02 寄生種子",
+      "icon": "assets/icons/abilities/godie-n00p.w.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n把魔界凶惡植物寄生在敵人身上造成{{dmg}}點傷害，若干時間後將會侵蝕敵人的身體造成每秒60點傷害，持續2秒。",
+      "slot": "W",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.bolt.nature",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              }
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.nature.swarm",
+      "sfxKey": "wc3.spiritofvengeanceyes3",
+      "castTimeSec": 0.767,
+      "rangeTier": "大",
+      "range": 8,
+      "cooldownTier": "中",
+      "manaCostTier": "極小"
+    },
+    "E": {
+      "id": "godie-n00p.e",
+      "name": "18-03 妖狐變化",
+      "icon": "assets/icons/abilities/godie-n00p.e.webp",
+      "provenance": "w3x-import",
+      "description": "[變身]\n{{cd}}秒冷卻時間\n\n幻化為妖狐型態，能力將會大幅提升，隨著技能等級提升妖狐可以具備更多的能力，攻擊力和各方面的數值也會獲得成長，持續8秒。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.nature.pulse",
+      "sfxKey": "wc3.altarofelderswhat1",
+      "targetsEnemies": true,
+      "castTimeSec": 0.667,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "極大",
+      "manaCostTier": "小"
+    },
+    "R": {
+      "id": "godie-n00p.r",
+      "name": "18-04 億年樹",
+      "icon": "assets/icons/abilities/godie-n00p.r.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n讓魔界最具強大魔力的億年樹在現世甦醒，億年樹擁有500點生命，出現時造成附近敵軍{{dmg}}傷害，每秒回復附近友軍4%生命，降低敵軍30%攻擊速度、20%移動速度，當敵人攻擊藏馬的時候將有10%的機率受到老樹盤根的攻擊，持續8秒。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.7
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.nature.shockwave-lg",
+      "targetsEnemies": true,
+      "castTimeSec": 1.233,
+      "rangeTier": "中",
+      "range": 6,
+      "cooldownTier": "極大",
+      "manaCostTier": "小"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "thrown"
+  ],
+  "exAbility": "godie-n00p.ex",
+  "passiveAbility": "godie-n00p.passive",
+  "icon": "assets/icons/champions/godie-n00p.png",
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-nsjs",
+    "normalUnitRawcode": "NSJS",
+    "alternateUnitRawcode": "N00P",
+    "triggerAbility": {
+      "rawcode": "A0IH",
+      "name": "18-03 妖狐變化",
+      "durationSec": {
+        "1": 8.0,
+        "2": 12.0,
+        "3": 16.0,
+        "4": 20.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      }
+    }
+  }
+}

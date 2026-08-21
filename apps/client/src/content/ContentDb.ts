@@ -84,6 +84,7 @@ import { setOneShotMaxLifeSec } from "../vfx/oneShotLife";
 import { setCastHeightSource } from "../render/vfx/familyCastHeight";
 import { setFamilyPitchDefaults } from "../render/vfx/familyOrient";
 import { setProjectileTuning } from "../render/views/projectileArt";
+import { zoneTextureRadius } from "../render/ArenaGround";
 import { ensureContentLoaded } from "./bootContent";
 import { withContentVersion } from "./assetVersion";
 import { applyUiLexiconDoc } from "../ui/panels/fateLexicon";
@@ -615,5 +616,36 @@ export class ContentDb {
 
   get arena(): ArenaDoc | null {
     return this.arenaDoc;
+  }
+
+  /**
+   * ⭐ GH#535 —— 每一張已載入場地會用到的（地面樣式 · 貼圖半徑），去重。
+   *
+   * owner 2026-08-22：「大混戰也是 似乎是讀取不夠快 並且**沒有提前在商店完成讀取**
+   * 的緣故」。`GameApp` 在**中場（商店）**拿這張表去暖 `groundTextureCache`，
+   * 於是下一回合換圖時貼圖**已經在**，⛔ 不是那時才開始抓。
+   *
+   * ⚠️ 半徑不是裝飾：快取鍵含 uv scale，而 uv scale 由半徑算。所以這裡用的是
+   * `zoneTextureRadius` —— 跟 `buildZoneGround` **同一個函式**，⛔ 不是一個
+   * 「差不多」的數字（那會暖到另一個鍵，看起來有暖其實一格都沒命中）。
+   *
+   * ⚠️ 出貨的 13 張圖只落在 **2 個半徑**（矩形場地 24、大混戰 42）× 7 種樣式,
+   * 所以這張表很短 —— ⛔ 不是每張圖一格。
+   */
+  arenaGroundWarmList(): { style: string; radius: number }[] {
+    const seen = new Set<string>();
+    const out: { style: string; radius: number }[] = [];
+    for (const doc of Arenas.all()) {
+      const style = doc.groundStyle;
+      if (!style) continue; // 沒宣告樣式的場地本來就不抓貼圖（平色地板）
+      for (const zone of doc.zones ?? []) {
+        const radius = zoneTextureRadius(zone);
+        const key = `${style}@${radius}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        out.push({ style, radius });
+      }
+    }
+    return out;
   }
 }

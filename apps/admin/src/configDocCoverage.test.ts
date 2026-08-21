@@ -180,12 +180,15 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // OWN_PAGE 走進了通用引擎（`ARENA_RULES_SPEC`）。⭐ 這是這張表最健康的
     // 移動方向（帳單被付掉，總列數變少），而且它是**必要**的：一份文件同時
     // 在註冊表與豁免表上會被 `verdict.duplicated` 抓到。
-    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(24);
+    // 2026-08-22：24 → 25。`damage-tier-exemptions`（#534）以 OWN_PAGE 進場 ——
+    // 它是**警告頁**不是編輯頁（owner：「作為例外在後台跳出警告就好」），
+    // 而通用引擎畫不動它的 `rules` 陣列。到期條件寫在那一列的 expiresWhen。
+    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(25);
     // 2026-08-17：13 → 14。`roster`（英雄上下架）**往下走了一格** —— 它從
     // KNOWN_GAP 變成 OWN_PAGE，因為 ui/RosterPage.tsx 做出來了。⚠️ 這是這張表
     // 唯一「健康」的移動方向：帳單被付掉，而總列數不變。
     // 2026-08-20：14 → 13（arena-rules 走進通用引擎，見上面那一段）。
-    expect(byKind("OWN_PAGE")).toHaveLength(13);
+    expect(byKind("OWN_PAGE")).toHaveLength(14);
     expect(byKind("NOT_TUNABLE")).toHaveLength(3);
     // 2026-08-02：2 → 5。新增的三列是 lobby-layout / valhalla-sandbox /
     // victory-podium —— 三份文件與 Zod 都接完了,只差客戶端還在讀寫死的常數。

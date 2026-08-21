@@ -1,0 +1,524 @@
+{
+  "id": "godie-emfr",
+  "schema": "champion@1",
+  "name": "魔法老師 - 涅吉。史普林。菲爾德",
+  "description": "故事：\n英國某間魔法學校修行的首席畢業生涅吉，目前還只是個10歲的少年。他的目標是成為「出色的魔法使」。\n(出自:魔法老師)\n\n推薦玩家 : 團戰牽制\n上手度 : 難\n\n角色成長：\n力量 + 1.60\n敏捷 + 1.40\n智慧 + 3.00\n基礎跑速 290\n\n可學習的技能：\n風精召喚、沉睡之霧、雷電風暴、千之雷",
+  "role": "marksman",
+  "attackType": "ranged",
+  "origin": "狂戰",
+  "modelKey": "imported.negi",
+  "attackDamagePoint": 0.3,
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 15,
+    "ap": 0,
+    "armor": 2,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.6,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.4
+  },
+  "growth": {
+    "maxHealth": 60.769,
+    "healthRegen": 0.334,
+    "maxMana": 21.3546,
+    "manaRegen": 0.0593,
+    "ad": 5.1306,
+    "armor": 0.6599,
+    "mr": 1.8261,
+    "as": 0.0295,
+    "ap": 0.2122
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 18,
+    "agi": 18,
+    "int": 20,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "INT",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.24,
+    "knockbackMag": 0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-emfr.q",
+      "name": "15-01 雷神槍「巨神殺手」",
+      "provenance": "owner-spec",
+      "description": "[主動][指向][範圍][AP加成]\n{{cd}}秒冷卻\n消耗[MP] {{mp}}\n施法距離：{{range}}\n\n「千之雷是頂級魔法，但我還可以開掛」\n對[前方]一[直線]敵方單位造成 {{dmg}} +30% [AP]傷害，附帶麻痺 [緩慢] [移動速度]，持續1秒",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "range": 6.0,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.3
+              }
+            ]
+          },
+          "length": 6.42,
+          "width": 1.6,
+          "aim": "target",
+          "fromCaster": true,
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "statusId": "slow50",
+              "duration": 1.0,
+              "moveSpeedMult": 0.5
+            }
+          ]
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-emfr.q.webp",
+      "vfxKey": "fx.prim.wind.tornado",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.lightning.bolt",
+          "attachTo": "point",
+          "pitchDeg": 0
+        }
+      ],
+      "cooldownTier": "中",
+      "manaCostTier": "小",
+      "rangeTier": "中",
+      "castTimeSec": 0.467
+    },
+    "W": {
+      "id": "godie-emfr.w",
+      "name": "15-02 疾風迅雷",
+      "provenance": "owner-spec",
+      "description": "[主動][輔助][變身][普攻時][AP加成]\n{{cd}}秒冷卻\n消耗[MP] {{mp}}\n持續12秒\n\n「質疑魔法、成為魔法、超越魔法」\n獲得 1.2倍 [移動速度] 與 30/60/90/120% [攻擊速度]，普通攻擊附加 30/45/60/75 +10% [AP] 雷電傷害。\n([變身]為唯一狀態不可疊加)",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "range": 0.0,
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctMult",
+              "value": 0.2
+            },
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.3
+            }
+          ],
+          "duration": 12.0,
+          "exclusiveGroup": "emfr-form",
+          "perRank": [
+            {
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctMult",
+                  "value": 0.2
+                },
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": 0.3
+                }
+              ],
+              "duration": 12.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctMult",
+                  "value": 0.2
+                },
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": 0.6
+                }
+              ],
+              "duration": 12.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctMult",
+                  "value": 0.2
+                },
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": 0.9
+                }
+              ],
+              "duration": 12.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctMult",
+                  "value": 0.2
+                },
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": 1.2
+                }
+              ],
+              "duration": 12.0
+            }
+          ],
+          "hooks": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小",
+                    "ratios": [
+                      {
+                        "stat": "ap",
+                        "coeff": 0.1
+                      }
+                    ]
+                  }
+                }
+              ],
+              "target": "event"
+            }
+          ]
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-emfr.w.webp",
+      "vfxKey": "fx.prim.wind.pulse",
+      "sfxKey": "wc3.akamapissed8",
+      "cooldownTier": "極大",
+      "manaCostTier": "小",
+      "castTimeSec": 0.267
+    },
+    "E": {
+      "id": "godie-emfr.e",
+      "name": "15-03 獄炎煉我",
+      "provenance": "owner-spec",
+      "description": "[主動][變身][普攻時][範圍][AP加成]\n{{cd}}秒冷卻\n消耗[MP] {{mp}}\n持續12秒\n\n「問問這砂鍋大的火拳？」\n普通攻擊附加 60/90/120/150 + 40% [AP] 火焰傷害，每次技能命中都會引發爆炎[燃燒]標記，對[周圍]敵人造成 {{dmg2}} +60% [AP] [範圍]傷害，但[移動速度]減半。\n([變身]為唯一狀態不可疊加)",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "range": 0.0,
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctMult",
+              "value": -0.5
+            }
+          ],
+          "duration": 12.0,
+          "exclusiveGroup": "emfr-form",
+          "hooks": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "perRank": [
+                      60.0,
+                      90.0,
+                      120.0,
+                      150.0
+                    ],
+                    "ratios": [
+                      {
+                        "stat": "ap",
+                        "coeff": 0.4
+                      }
+                    ]
+                  }
+                }
+              ],
+              "target": "event"
+            },
+            {
+              "on": "onDamageDealt",
+              "effects": [
+                {
+                  "kind": "damageArea",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小",
+                    "ratios": [
+                      {
+                        "stat": "ap",
+                        "coeff": 0.6
+                      }
+                    ]
+                  },
+                  "radius": 4.5,
+                  "radiusTier": "小"
+                },
+                {
+                  "kind": "applyStatus",
+                  "statusId": "burn",
+                  "duration": 3.0
+                }
+              ],
+              "target": "event",
+              "damageSource": "ability"
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.fire.nova",
+      "icon": "assets/icons/abilities/godie-emfr.e.webp",
+      "cooldownTier": "小",
+      "manaCostTier": "小",
+      "castTimeSec": 0.267
+    },
+    "R": {
+      "id": "godie-emfr.r",
+      "name": "15-04 雷天大壯。貳式",
+      "provenance": "owner-spec",
+      "description": "[主動][變身][普攻時][AP加成]\n{{cd}}秒冷卻\n消耗[MP] {{mp}}\n持續12秒\n\n「比光更快的是思念，比思念更快的是昨天」\n獲得 2倍 [移動速度]、100/150/200% [攻擊速度]、[攻擊速度上限]提升至10。施放技能後的下一次普通攻擊將釋放雷神一擊，造成 {{dmg}} + 70% [AP] 雷屬性傷害。\n([變身]為唯一狀態不可疊加)",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "range": 0.0,
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctMult",
+              "value": 1.0
+            },
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 1.0
+            },
+            {
+              "stat": "as",
+              "op": "capRaise",
+              "value": 10.0
+            }
+          ],
+          "duration": 12.0,
+          "exclusiveGroup": "emfr-form",
+          "perRank": [
+            {
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctMult",
+                  "value": 1.0
+                },
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": 1.0
+                },
+                {
+                  "stat": "as",
+                  "op": "capRaise",
+                  "value": 10.0
+                }
+              ],
+              "duration": 12.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctMult",
+                  "value": 1.0
+                },
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": 1.5
+                },
+                {
+                  "stat": "as",
+                  "op": "capRaise",
+                  "value": 10.0
+                }
+              ],
+              "duration": 12.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctMult",
+                  "value": 1.0
+                },
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": 2.0
+                },
+                {
+                  "stat": "as",
+                  "op": "capRaise",
+                  "value": 10.0
+                }
+              ],
+              "duration": 12.0
+            }
+          ],
+          "hooks": [
+            {
+              "on": "onAbilityCast",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "modifiers": [],
+                  "duration": 3.0,
+                  "stackKey": "emfr-thunder-arm",
+                  "maxStacks": 1,
+                  "hooks": [
+                    {
+                      "on": "onBasicAttack",
+                      "effects": [
+                        {
+                          "kind": "damage",
+                          "damageType": "magic",
+                          "amount": {
+                            "damageTier": "極小",
+                            "ratios": [
+                              {
+                                "stat": "ap",
+                                "coeff": 0.7
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "kind": "spawnVfx",
+                          "vfxId": "fx.prim.lightning.bolt",
+                          "at": "target"
+                        }
+                      ],
+                      "target": "event",
+                      "maxTriggers": 1,
+                      "consumeOn": "fire",
+                      "onConsumed": "detachSource"
+                    }
+                  ]
+                }
+              ],
+              "target": "self"
+            }
+          ]
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-emfr.r.webp",
+      "vfxKey": "fx.prim.lightning.beam-lg",
+      "cooldownTier": "極大",
+      "manaCostTier": "小",
+      "castTimeSec": 0.667
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "magic"
+  ],
+  "exAbility": "godie-emfr.ex",
+  "passiveAbility": "godie-emfr.passive",
+  "icon": "assets/icons/champions/godie-emfr.png",
+  "playstyle": [
+    "高回復",
+    "變身",
+    "高攻速"
+  ],
+  "pitch": "先撐過戰鬥，再透過變身把攻速與近戰能力推高，持續追擊直到敵人倒下。"
+}

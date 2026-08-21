@@ -600,6 +600,11 @@ export interface AppState {
  */
 const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "contentOverlay",
+  // #534：「不吃五級距的傷害節點」是**唯讀警告頁**，⛔ 但仍然 gate ——
+  // 與 mapReport 同一條規則：它讀的是 content overlay（`damage-tier-exemptions`），
+  // 而 loopback 免登入模式下那個讀取會 401，畫出來的會是一張「零個豁免」的空表 ——
+  // 那比沒有頁更糟：操作者會以為**真的沒有例外**，然後照著調級距。
+  "damageTierWarnings",
   "players",
   "approvals",
   // #242: every one of its writes is platform-admin-backed (curation bulk +

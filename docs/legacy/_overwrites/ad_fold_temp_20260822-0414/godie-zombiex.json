@@ -1,0 +1,280 @@
+{
+  "id": "godie-zombiex",
+  "schema": "champion@1",
+  "name": "聖杯黑泥醬 - 喪標麥可",
+  "icon": "assets/icons/champions/godie-zombiex.webp",
+  "description": "故事：\n黑化聖杯溢出的惡意黑泥受肉凝聚，本來在美國重生，但不小心被印度工程師當成咖喱帶回家鄉，成了印度麥可，因為專幹壞事，人稱喪標麥可。\n(去死團原創角色)\n\n推薦玩家 : 站樁扛傷、團戰吸收\n上手度 : 易\n\n角色成長：\n生命 + 45 / 級（基礎 380）\n攻擊 + 2.0 / 級\n基礎跑速 3（極慢，喪屍設定；可再調）\n\n【#244 數值理由】380 是「全場最脆，但不會被一套秒」的位置（Saber 580、揍敵客 420、魯夫 480）。成長刻意壓回接近一般的 45 — 這隻的爆發力不能來自看不見的成長曲線，要來自天生技「黑泥吞噬」：玩家看得到、也賺得到。\n\n配音員參考：台灣台語版的兩津勘吉\n\n可學習的技能：黑泥吞噬（天生）、肝泥抹德、黑天覆七重咖哩・硬啦、咕咕嘎嘎、百式・哈基米、此世全部之咖哩・バタンキュー（EX）",
+  "role": "tank",
+  "attackType": "melee",
+  "origin": "硬輔",
+  "modelKey": "champ.godie-zombiex",
+  "baseStats": {
+    "maxHealth": 104,
+    "healthRegen": 0.4,
+    "maxMana": 210,
+    "manaRegen": 5.7,
+    "ad": 24,
+    "ap": 0,
+    "armor": 0,
+    "mr": 0,
+    "as": 0.603448,
+    "ms": 2.6,
+    "critChance": 0.05,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 100.0663,
+    "healthRegen": 0.1286,
+    "maxMana": 37.6367,
+    "manaRegen": 0.0941,
+    "ad": 3.1347,
+    "armor": 1.1246,
+    "mr": 3.2998,
+    "as": 0.009,
+    "ap": 2.0064
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 12,
+    "agi": 8,
+    "int": 6,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "STR",
+    "source": "authored"
+  },
+  "hitFeel": {
+    "hitstopTicks": 3,
+    "shakeMag": 0.5,
+    "knockbackMag": 0.3
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-zombiex.q",
+      "name": "100-01 肝泥抹德",
+      "icon": "assets/icons/abilities/godie-zombiex.q.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n噴出一灘黑泥，對範圍內敵人造成魔法傷害並減速。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "radius": 3,
+      "effects": [],
+      "template": {
+        "ref": "tpl-proxy-cast",
+        "params": {
+          "anchor": "point",
+          "radius": 163.5,
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.5
+              }
+            ]
+          },
+          "damageType": "magic",
+          "statusId": "slow30",
+          "statusDurationSec": 1.5
+        }
+      },
+      "vfxKey": "fx.prim.void.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.767,
+      "rangeTier": "中",
+      "range": 6,
+      "cooldownTier": "極小",
+      "manaCostTier": "極小",
+      "radiusTier": "極小"
+    },
+    "W": {
+      "id": "godie-zombiex.w",
+      "name": "100-02 黑天覆七重咖哩・硬啦",
+      "icon": "assets/icons/abilities/godie-zombiex.w.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n拖著腐爛的身體向前衝撞，是這隻慢吞吞喪屍唯一的突進手段。\n衝撞的同時黑泥瞬間硬化成殼，短時間大幅提升護甲與魔抗 —— 對一隻護甲魔抗都是 0 的喪屍來說，這 4 秒是他全部的生存視窗。",
+      "slot": "W",
+      "castType": "dash",
+      "maxRank": 4,
+      "cooldown": [
+        6.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "forward",
+          "speed": 16,
+          "maxDistance": 6.0
+        },
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 35.0
+            },
+            {
+              "stat": "mr",
+              "op": "flat",
+              "value": 35.0
+            }
+          ],
+          "duration": 4.0
+        }
+      ],
+      "vfxKey": "fx.prim.void.dash",
+      "castTimeSec": 0.067,
+      "rangeTier": "中",
+      "range": 6,
+      "cooldownTier": "極小"
+    },
+    "E": {
+      "id": "godie-zombiex.e",
+      "name": "100-03 咕咕嘎嘎",
+      "icon": "assets/icons/abilities/godie-zombiex.e.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n在地面攤開一片黑泥沼，踩進去的敵人受傷並被黏住定身。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "radius": 3.0,
+      "effects": [],
+      "template": {
+        "ref": "tpl-proxy-cast",
+        "params": {
+          "anchor": "point",
+          "radius": 191,
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.5
+              }
+            ]
+          },
+          "damageType": "magic",
+          "statusId": "root",
+          "statusDurationSec": 1
+        }
+      },
+      "vfxKey": "fx.prim.void.shockwave",
+      "targetsEnemies": true,
+      "castTimeSec": 0.767,
+      "rangeTier": "大",
+      "range": 8,
+      "cooldownTier": "極小",
+      "manaCostTier": "極小",
+      "radiusTier": "極小"
+    },
+    "R": {
+      "id": "godie-zombiex.r",
+      "name": "100-04 百式・哈基米",
+      "icon": "assets/icons/abilities/godie-zombiex.r.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n聖杯的黑泥從體內爆發，對周圍造成大範圍魔法傷害並重減速。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0
+      ],
+      "range": 0,
+      "radius": 4.5,
+      "effects": [],
+      "vfxKey": "fx.prim.void.nova-lg",
+      "targetsEnemies": true,
+      "castTimeSec": 1.5,
+      "template": {
+        "ref": "tpl-proxy-cast",
+        "params": {
+          "anchor": "point",
+          "radius": 218,
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 1.5,
+          "statusId": "slow40",
+          "statusDurationSec": 1.5
+        }
+      },
+      "cooldownTier": "中",
+      "manaCostTier": "極小",
+      "radiusTier": "小"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "godie",
+    "original",
+    "tank"
+  ],
+  "exAbility": "godie-zombiex.ex",
+  "passiveAbility": "godie-zombiex.passive",
+  "playstyle": [
+    "高生命",
+    "控制",
+    "減速",
+    "護陣"
+  ],
+  "pitch": "站在敵人與隊友中間，用高生命與黑泥控制拖住敵人，替隊友製造空間。"
+}

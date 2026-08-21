@@ -8,6 +8,8 @@ import { useApp } from "./store";
 import { Btn, TextInput, PresenceDot, Panel, OK } from "./widgets";
 import { TEXT_DIM, TEXT_MAIN } from "../theme";
 import { padFocusLanding } from "../padFocusLanding";
+import { orderFriends } from "./friendOrder";
+import { DEFAULT_LOBBY_LAYOUT } from "./lobbyLayout";
 
 /** friend REQUESTS have no WS push (only presence does) — poll lightly */
 const FRIENDS_POLL_MS = 10_000;
@@ -28,6 +30,17 @@ export function FriendsPanel(): React.JSX.Element {
     const t = setInterval(() => void refreshFriends(), FRIENDS_POLL_MS);
     return () => clearInterval(t);
   }, [refreshFriends]);
+
+  // ⭐ GH#536 —— owner 2026-08-22:「朋友清單,有上線的應該會特別排到最上面顯示吧?」
+  //
+  // ⚠️ 排序吃的是**合併後**的狀態（WS 推播疊在 REST 快照上），⛔ 不是 `f.state`
+  //    那一半 —— REST 是 `FRIENDS_POLL_MS = 10_000` 才重抓一次,拿它排等於「綠點
+  //    已經亮了,人還在清單底下再待十秒」。決策與排序規則住 `friendOrder.ts`。
+  const rows = orderFriends(
+    friends?.friends ?? [],
+    (f) => presence[f.id] ?? f.state,
+    DEFAULT_LOBBY_LAYOUT.friendSort,
+  );
 
   const iAmHost = !!room && room.room.hostId === meId && room.room.status === "open";
   const memberIds = new Set(room?.members.map((m) => m.accountId) ?? []);
@@ -70,11 +83,13 @@ export function FriendsPanel(): React.JSX.Element {
       {/* GH#514 —— 一列只有在「我是房主且對方在線」時才長出 Invite 按鈕，所以
           平常這整塊對手把沒有任何焦點落點 ⇒ 好友一多就捲不下去。 */}
       <div {...padFocusLanding()} style={{ flex: 1, overflowY: "auto", minHeight: 0 }}>
-        {(friends?.friends ?? []).length === 0 && (
+        {rows.length === 0 && (
           <div style={{ fontSize: 12, color: TEXT_DIM }}>No friends yet — add one by username.</div>
         )}
-        {(friends?.friends ?? []).map((f) => {
+        {rows.map((f) => {
           const state = presence[f.id] ?? f.state ?? "offline";
+          // ⚠️ 「邀得動」比「排在上面」窄:`in-match` 的人亮著燈但正在打,
+          //    所以他排在線上那一群的最後,而這裡不長 Invite 按鈕。
           const online = state === "online" || state === "in-lobby";
           return (
             <div key={f.id} style={{ display: "flex", alignItems: "center", padding: "4px 0" }}>

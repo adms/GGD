@@ -1,0 +1,360 @@
+{
+  "id": "godie-e00w",
+  "schema": "champion@1",
+  "name": "神鳴流劍士 - 櫻綻剎那",
+  "description": "故事：\n武道四天王之一，是在京都流傳已久的神鳴流劍術高手，也是個精通陰陽道的劍士。烏鴉族混血兒，由於擁有白色翅膀被族人逐出村莊，遂為木乃香的父親收養。\n(出自:魔法老師)\n\n推薦玩家 : 追擊殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.85\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n百烈櫻華斬、雷鳴劍、GLADIARIA ALAT、真-雷光劍",
+  "role": "fighter",
+  "attackType": "melee",
+  "origin": "鬥士",
+  "modelKey": "imported.mfls",
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
+    "ap": 0,
+    "armor": 0,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 77.4,
+    "healthRegen": 0.205,
+    "maxMana": 47.4031,
+    "manaRegen": 0.171,
+    "ad": 5.1816,
+    "armor": 0.8458,
+    "mr": 2.3541,
+    "as": 0.0114,
+    "ap": 0.4776
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 18,
+    "agi": 24,
+    "int": 16,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "AGI",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 2,
+    "shakeMag": 0.34,
+    "knockbackMag": 0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-e00w.q",
+      "name": "77-01 百烈櫻華斬",
+      "provenance": "owner-spec",
+      "description": "[主動][範圍][擊退][AD加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n有效半徑：{{radius}}\n\n「我的劍，成為了守護之風」\n用劍捲起一陣由內往外的旋風，給予[周圍]敵人200/300/400/500+50% [AD]點傷害，並[擊退]一段距離。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "range": 0.0,
+      "radiusTier": "中",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          },
+          "radius": 6.0,
+          "radiusTier": "中",
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "knockback",
+              "distance": 3.0,
+              "speed": 15.0,
+              "from": "caster"
+            }
+          ]
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-e00w.q.webp",
+      "vfxKey": "fx.prim.physical.slash",
+      "sfxKey": "wc3.darksummoninglaunch1",
+      "cooldownTier": "小",
+      "manaCostTier": "極小",
+      "castTimeSec": 0.667
+    },
+    "W": {
+      "id": "godie-e00w.w",
+      "name": "77-02 雷鳴劍",
+      "provenance": "owner-spec",
+      "description": "[被動][普攻時][機率][暴擊][範圍][AP加成]\n\n「雷鳴。會心」\n[攻擊時]有10%的[機率]可以使出[會心一擊]造成1.5倍的[暴擊]傷害，並且附加落雷，造成[範圍內]敵方10% [AP]傷害。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "targetsEnemies": false,
+      "effects": [],
+      "passive": {
+        "name": "77-02 雷鳴劍",
+        "ranks": [
+          {
+            "critStrike": {
+              "chance": 0.1,
+              "damageMult": 1.5,
+              "lifestealFraction": 0.0
+            },
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damageArea",
+                    "damageType": "magic",
+                    "amount": {
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.1
+                        }
+                      ]
+                    },
+                    "radius": 3.0,
+                    "radiusTier": "極小"
+                  }
+                ],
+                "chance": 0.1,
+                "target": "event"
+              }
+            ]
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-e00w.w.webp",
+      "vfxKey": "fx.prim.lightning.beam"
+    },
+    "E": {
+      "id": "godie-e00w.e",
+      "name": "77-03 GLADIARIA ALAT",
+      "provenance": "owner-spec",
+      "description": "[主動][變身][加速][飛行]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n\n「GLADIARIA  ALAT 。翼之劍士」\n[加速][攻擊速度]60/90/120/150% ，並可以變換為[飛行]狀態無視碰撞，持續6/9/12/15秒。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        120.0,
+        120.0,
+        120.0,
+        120.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "championForm",
+          "to": "alternate",
+          "durationSec": [
+            6.0,
+            9.0,
+            12.0,
+            15.0
+          ]
+        },
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.6
+            }
+          ],
+          "duration": 6.0,
+          "perRank": [
+            {
+              "modifiers": [
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": 0.6
+                }
+              ],
+              "duration": 6.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": 0.9
+                }
+              ],
+              "duration": 9.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": 1.2
+                }
+              ],
+              "duration": 12.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": 1.5
+                }
+              ],
+              "duration": 15.0
+            }
+          ],
+          "flight": {
+            "hoverHeight": 0.45,
+            "ignoreUnits": true,
+            "ignoreObstacles": true,
+            "stayInsideBoundary": true
+          }
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-e00w.e.webp",
+      "vfxKey": "fx.prim.lightning.nova",
+      "cooldownTier": "極大",
+      "castTimeSec": 0.267
+    },
+    "R": {
+      "id": "godie-e00w.r",
+      "name": "77-04 真-雷光劍",
+      "provenance": "owner-spec",
+      "description": "[主動][範圍][AD加成]\n{{cd}}秒冷卻，施展時間2秒\n消耗MP{{mp}}\n施法距離：{{range}}\n\n「神鳴。雷光」\n神鳴流決戰奧義，聚集大量雷電於劍上予以斬擊，給予[小範圍]敵人600/800/1000+60% [AD]傷害。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "range": 12.0,
+      "radiusTier": "極小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "中",
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "radius": 3.0,
+          "radiusTier": "極小",
+          "includeOrigin": true
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-e00w.r.webp",
+      "vfxKey": "fx.prim.lightning.beam-lg",
+      "cooldownTier": "中",
+      "manaCostTier": "小",
+      "rangeTier": "極大",
+      "castTimeSec": 2
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "katana"
+  ],
+  "exAbility": "godie-e00w.ex",
+  "passiveAbility": "godie-e00w.passive",
+  "icon": "assets/icons/champions/godie-e00w.png",
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-e00x",
+    "normalUnitRawcode": "E00W",
+    "alternateUnitRawcode": "E00X",
+    "triggerAbility": {
+      "rawcode": "A0JG",
+      "name": "77-03 GLADIARIA ALAT",
+      "durationSec": {
+        "1": 6,
+        "2": 12,
+        "3": 18,
+        "4": 24
+      },
+      "cooldownSec": {
+        "1": 60,
+        "2": 60,
+        "3": 60,
+        "4": 60
+      }
+    }
+  },
+  "playstyle": [
+    "攻速",
+    "普攻觸發",
+    "短時強化"
+  ],
+  "pitch": "攻得越快價值越高，利用高頻普攻反覆觸發效果並完成連斬。"
+}

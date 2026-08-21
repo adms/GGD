@@ -1,0 +1,530 @@
+{
+  "id": "damage-tier-exemptions",
+  "schema": "config.damage-tier-exemptions@1",
+  "note": "**傷害五級距的豁免表**（CLAUDE.md 第〇·四守則的最後一行：「例外要帶理由」）。owner #534 逐字：「①②③ **作為例外在後台跳出警告就好**，④ **你拉上來**」。⭐ 這一份是**資料**，⛔ 不是 TS 常數 —— 守衛（`packages/shared`）與後台警告（`apps/admin`）讀的是同一份，兩邊不可能各記一張名單。⭐ 每一列的 `reason` 都必須是**能被反駁**的（⛔ 不是「還沒收」）—— 每一條後面都寫了「什麼情況下這一列就該死掉」。⚠️ 範圍：`content/abilities/**`（英雄卡內嵌版是同一份資料的鏡射，走同一列）。⛔ 不含 `content/items` / `content/augments` —— 那兩個集合從來沒有被 `tierize()` 掃過，整批收進五級距是另一件事，⛔ 不要靠這張表偷渡。⚠️ `grantGold` 的 `flat` 也不在這裡：它長在 effect 自己身上而不是 `zScaling` 裡，`damageTier` 那一格根本到不了它。",
+  "categories": [
+    {
+      "key": "notDamage",
+      "label": "① 本來就不是傷害"
+    },
+    {
+      "key": "hitProbe",
+      "label": "② 送狀態用的載體節點"
+    },
+    {
+      "key": "perTick",
+      "label": "③ 持續傷害的每一跳"
+    },
+    {
+      "key": "perHitRider",
+      "label": "⑤ 每次攻擊／每個命中目標的追加（法球那一族）"
+    },
+    {
+      "key": "ratioOnly",
+      "label": "⑥ 純比例，基礎值是 0"
+    },
+    {
+      "key": "baselineFixture",
+      "label": "⑦ 骨架英雄的基準夾具"
+    }
+  ],
+  "exemptions": [
+    {
+      "id": "godie-e00l.passive",
+      "path": "passive.ranks[0].hooks[0].effects[0].amount",
+      "kind": "shield",
+      "category": "notDamage",
+      "reason": "這一格不是傷害 —— `config.damage-tiers@1` 只有**傷害**一條軸，護盾與治療沒有級距表、耗魔走 `manaCostTier`。把傷害級距套上去 = 拿傷害的尺去量另一種量。⭐ 可反駁：哪天護盾／治療也有了自己的五級距，這一類整批退場。"
+    },
+    {
+      "id": "godie-e00l.w",
+      "path": "passive.ranks[0].hooks[0].effects[0].amount",
+      "kind": "spendMana",
+      "category": "notDamage",
+      "reason": "這一格不是傷害 —— `config.damage-tiers@1` 只有**傷害**一條軸，護盾與治療沒有級距表、耗魔走 `manaCostTier`。把傷害級距套上去 = 拿傷害的尺去量另一種量。⭐ 可反駁：哪天護盾／治療也有了自己的五級距，這一類整批退場。"
+    },
+    {
+      "id": "godie-e00r.e",
+      "path": "passive.ranks[0].hooks[0].effects[0].amount",
+      "kind": "shield",
+      "category": "notDamage",
+      "reason": "這一格不是傷害 —— `config.damage-tiers@1` 只有**傷害**一條軸，護盾與治療沒有級距表、耗魔走 `manaCostTier`。把傷害級距套上去 = 拿傷害的尺去量另一種量。⭐ 可反駁：哪天護盾／治療也有了自己的五級距，這一類整批退場。"
+    },
+    {
+      "id": "godie-e00r.e",
+      "path": "passive.ranks[1].hooks[0].effects[0].amount",
+      "kind": "shield",
+      "category": "notDamage",
+      "reason": "這一格不是傷害 —— `config.damage-tiers@1` 只有**傷害**一條軸，護盾與治療沒有級距表、耗魔走 `manaCostTier`。把傷害級距套上去 = 拿傷害的尺去量另一種量。⭐ 可反駁：哪天護盾／治療也有了自己的五級距，這一類整批退場。"
+    },
+    {
+      "id": "godie-e00r.e",
+      "path": "passive.ranks[2].hooks[0].effects[0].amount",
+      "kind": "shield",
+      "category": "notDamage",
+      "reason": "這一格不是傷害 —— `config.damage-tiers@1` 只有**傷害**一條軸，護盾與治療沒有級距表、耗魔走 `manaCostTier`。把傷害級距套上去 = 拿傷害的尺去量另一種量。⭐ 可反駁：哪天護盾／治療也有了自己的五級距，這一類整批退場。"
+    },
+    {
+      "id": "godie-e00r.e",
+      "path": "passive.ranks[3].hooks[0].effects[0].amount",
+      "kind": "shield",
+      "category": "notDamage",
+      "reason": "這一格不是傷害 —— `config.damage-tiers@1` 只有**傷害**一條軸，護盾與治療沒有級距表、耗魔走 `manaCostTier`。把傷害級距套上去 = 拿傷害的尺去量另一種量。⭐ 可反駁：哪天護盾／治療也有了自己的五級距，這一類整批退場。"
+    },
+    {
+      "id": "godie-emfr.passive",
+      "path": "passive.ranks[0].hooks[0].effects[1].amount",
+      "kind": "spendMana",
+      "category": "notDamage",
+      "reason": "這一格不是傷害 —— `config.damage-tiers@1` 只有**傷害**一條軸，護盾與治療沒有級距表、耗魔走 `manaCostTier`。把傷害級距套上去 = 拿傷害的尺去量另一種量。⭐ 可反駁：哪天護盾／治療也有了自己的五級距，這一類整批退場。"
+    },
+    {
+      "id": "godie-h02r.passive",
+      "path": "effects[1].amount",
+      "kind": "heal",
+      "category": "notDamage",
+      "reason": "這一格不是傷害 —— `config.damage-tiers@1` 只有**傷害**一條軸，護盾與治療沒有級距表、耗魔走 `manaCostTier`。把傷害級距套上去 = 拿傷害的尺去量另一種量。⭐ 可反駁：哪天護盾／治療也有了自己的五級距，這一類整批退場。"
+    },
+    {
+      "id": "godie-u00k.passive",
+      "path": "passive.ranks[0].auras[0].hooks[0].effects[0].amount",
+      "kind": "spendMana",
+      "category": "notDamage",
+      "reason": "這一格不是傷害 —— `config.damage-tiers@1` 只有**傷害**一條軸，護盾與治療沒有級距表、耗魔走 `manaCostTier`。把傷害級距套上去 = 拿傷害的尺去量另一種量。⭐ 可反駁：哪天護盾／治療也有了自己的五級距，這一類整批退場。"
+    },
+    {
+      "id": "sela.w",
+      "path": "effects[0].amount",
+      "kind": "shield",
+      "category": "notDamage",
+      "reason": "這一格不是傷害 —— `config.damage-tiers@1` 只有**傷害**一條軸，護盾與治療沒有級距表、耗魔走 `manaCostTier`。把傷害級距套上去 = 拿傷害的尺去量另一種量。⭐ 可反駁：哪天護盾／治療也有了自己的五級距，這一類整批退場。"
+    },
+    {
+      "id": "thorne.w",
+      "path": "effects[0].amount",
+      "kind": "shield",
+      "category": "notDamage",
+      "reason": "這一格不是傷害 —— `config.damage-tiers@1` 只有**傷害**一條軸，護盾與治療沒有級距表、耗魔走 `manaCostTier`。把傷害級距套上去 = 拿傷害的尺去量另一種量。⭐ 可反駁：哪天護盾／治療也有了自己的五級距，這一類整批退場。"
+    },
+    {
+      "id": "godie-e00s.e",
+      "path": "effects[0].amount",
+      "kind": "damageArea",
+      "category": "hitProbe",
+      "reason": "載體節點 —— 這顆 `damageArea` 的工作是**送狀態**（卡面沒有任何傷害字樣），那 1 點只是為了讓圈／線成立。門檻是後台一格 `config.skill-normalize@1.carrierBaseMax`，⛔ 不是這裡的字面值。收進級距 ⇒ 一支純控場技變成一發實打實的傷害。⭐ 可反駁：把卡面補上傷害字樣，或把 `carrierBaseMax` 調到 0，這一列就該死掉。"
+    },
+    {
+      "id": "godie-edem.ex",
+      "path": "effects[0].amount",
+      "kind": "damageArea",
+      "category": "hitProbe",
+      "reason": "載體節點 —— 這顆 `damageArea` 的工作是**送狀態**（卡面沒有任何傷害字樣），那 1 點只是為了讓圈／線成立。門檻是後台一格 `config.skill-normalize@1.carrierBaseMax`，⛔ 不是這裡的字面值。收進級距 ⇒ 一支純控場技變成一發實打實的傷害。⭐ 可反駁：把卡面補上傷害字樣，或把 `carrierBaseMax` 調到 0，這一列就該死掉。"
+    },
+    {
+      "id": "godie-h00l.r",
+      "path": "passive.ranks[0].hooks[1].effects[0].amount",
+      "kind": "damageArea",
+      "category": "hitProbe",
+      "reason": "載體節點 —— 這顆 `damageArea` 的工作是**送狀態**（卡面沒有任何傷害字樣），那 1 點只是為了讓圈／線成立。門檻是後台一格 `config.skill-normalize@1.carrierBaseMax`，⛔ 不是這裡的字面值。收進級距 ⇒ 一支純控場技變成一發實打實的傷害。⭐ 可反駁：把卡面補上傷害字樣，或把 `carrierBaseMax` 調到 0，這一列就該死掉。"
+    },
+    {
+      "id": "godie-h01n.q",
+      "path": "effects[1].amount",
+      "kind": "damageArea",
+      "category": "hitProbe",
+      "reason": "載體節點 —— 這顆 `damageArea` 的工作是**送狀態**（卡面沒有任何傷害字樣），那 1 點只是為了讓圈／線成立。門檻是後台一格 `config.skill-normalize@1.carrierBaseMax`，⛔ 不是這裡的字面值。收進級距 ⇒ 一支純控場技變成一發實打實的傷害。⭐ 可反駁：把卡面補上傷害字樣，或把 `carrierBaseMax` 調到 0，這一列就該死掉。"
+    },
+    {
+      "id": "godie-h02k.w",
+      "path": "passive.ranks[0].hooks[1].effects[0].amount",
+      "kind": "damageArea",
+      "category": "hitProbe",
+      "reason": "載體節點 —— 這顆 `damageArea` 的工作是**送狀態**（卡面沒有任何傷害字樣），那 1 點只是為了讓圈／線成立。門檻是後台一格 `config.skill-normalize@1.carrierBaseMax`，⛔ 不是這裡的字面值。收進級距 ⇒ 一支純控場技變成一發實打實的傷害。⭐ 可反駁：把卡面補上傷害字樣，或把 `carrierBaseMax` 調到 0，這一列就該死掉。"
+    },
+    {
+      "id": "godie-h02v.r",
+      "path": "effects[0].amount",
+      "kind": "damageArea",
+      "category": "hitProbe",
+      "reason": "載體節點 —— 這顆 `damageArea` 的工作是**送狀態**（卡面沒有任何傷害字樣），那 1 點只是為了讓圈／線成立。門檻是後台一格 `config.skill-normalize@1.carrierBaseMax`，⛔ 不是這裡的字面值。收進級距 ⇒ 一支純控場技變成一發實打實的傷害。⭐ 可反駁：把卡面補上傷害字樣，或把 `carrierBaseMax` 調到 0，這一列就該死掉。"
+    },
+    {
+      "id": "godie-edem.ex",
+      "path": "effects[0].onHitTargets[3].amountPerTick",
+      "kind": "dot",
+      "category": "perTick",
+      "reason": "**每跳**的量，⛔ 不是一發的量 —— `dot` 一次施法會跳 `durationSec / intervalSec` 次。五級距的錨點是「20 發打死中位英雄」，那把尺量的是**單發**；把每跳拉到級距 = 整條 DoT 乘上跳數。⭐ 可反駁：等 DoT 有了自己的「每跳級距」表（總量 ÷ 跳數），這一類整批退場。"
+    },
+    {
+      "id": "godie-edem.q",
+      "path": "effects[0].onHitTargets[1].amountPerTick",
+      "kind": "dot",
+      "category": "perTick",
+      "reason": "**每跳**的量，⛔ 不是一發的量 —— `dot` 一次施法會跳 `durationSec / intervalSec` 次。五級距的錨點是「20 發打死中位英雄」，那把尺量的是**單發**；把每跳拉到級距 = 整條 DoT 乘上跳數。⭐ 可反駁：等 DoT 有了自己的「每跳級距」表（總量 ÷ 跳數），這一類整批退場。"
+    },
+    {
+      "id": "godie-h02v.e",
+      "path": "passive.ranks[0].hooks[0].effects[0].onHitTargets[0].amountPerTick",
+      "kind": "dot",
+      "category": "perTick",
+      "reason": "**每跳**的量，⛔ 不是一發的量 —— `dot` 一次施法會跳 `durationSec / intervalSec` 次。五級距的錨點是「20 發打死中位英雄」，那把尺量的是**單發**；把每跳拉到級距 = 整條 DoT 乘上跳數。⭐ 可反駁：等 DoT 有了自己的「每跳級距」表（總量 ÷ 跳數），這一類整批退場。"
+    },
+    {
+      "id": "godie-h02v.e",
+      "path": "passive.ranks[1].hooks[0].effects[0].onHitTargets[0].amountPerTick",
+      "kind": "dot",
+      "category": "perTick",
+      "reason": "**每跳**的量，⛔ 不是一發的量 —— `dot` 一次施法會跳 `durationSec / intervalSec` 次。五級距的錨點是「20 發打死中位英雄」，那把尺量的是**單發**；把每跳拉到級距 = 整條 DoT 乘上跳數。⭐ 可反駁：等 DoT 有了自己的「每跳級距」表（總量 ÷ 跳數），這一類整批退場。"
+    },
+    {
+      "id": "godie-h02v.e",
+      "path": "passive.ranks[2].hooks[0].effects[0].onHitTargets[0].amountPerTick",
+      "kind": "dot",
+      "category": "perTick",
+      "reason": "**每跳**的量，⛔ 不是一發的量 —— `dot` 一次施法會跳 `durationSec / intervalSec` 次。五級距的錨點是「20 發打死中位英雄」，那把尺量的是**單發**；把每跳拉到級距 = 整條 DoT 乘上跳數。⭐ 可反駁：等 DoT 有了自己的「每跳級距」表（總量 ÷ 跳數），這一類整批退場。"
+    },
+    {
+      "id": "godie-h02v.e",
+      "path": "passive.ranks[3].hooks[0].effects[0].onHitTargets[0].amountPerTick",
+      "kind": "dot",
+      "category": "perTick",
+      "reason": "**每跳**的量，⛔ 不是一發的量 —— `dot` 一次施法會跳 `durationSec / intervalSec` 次。五級距的錨點是「20 發打死中位英雄」，那把尺量的是**單發**；把每跳拉到級距 = 整條 DoT 乘上跳數。⭐ 可反駁：等 DoT 有了自己的「每跳級距」表（總量 ÷ 跳數），這一類整批退場。"
+    },
+    {
+      "id": "godie-e002.w",
+      "path": "passive.ranks[0].hooks[0].effects[0].amount",
+      "kind": "damage",
+      "category": "perHitRider",
+      "reason": "掛在 `onBasicAttack` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-e002.w",
+      "path": "passive.ranks[1].hooks[0].effects[0].amount",
+      "kind": "damage",
+      "category": "perHitRider",
+      "reason": "掛在 `onBasicAttack` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-e002.w",
+      "path": "passive.ranks[2].hooks[0].effects[0].amount",
+      "kind": "damage",
+      "category": "perHitRider",
+      "reason": "掛在 `onBasicAttack` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-e002.w",
+      "path": "passive.ranks[3].hooks[0].effects[0].amount",
+      "kind": "damage",
+      "category": "perHitRider",
+      "reason": "掛在 `onBasicAttack` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-e00l.w",
+      "path": "passive.ranks[0].hooks[0].effects[1].amount",
+      "kind": "damage",
+      "category": "perHitRider",
+      "reason": "掛在 `onBasicAttack` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-e00s.w",
+      "path": "passive.ranks[0].hooks[0].effects[0].amount",
+      "kind": "damageArea",
+      "category": "perHitRider",
+      "reason": "掛在 `onBasicAttack` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-e00s.w",
+      "path": "passive.ranks[1].hooks[0].effects[0].amount",
+      "kind": "damageArea",
+      "category": "perHitRider",
+      "reason": "掛在 `onBasicAttack` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-e00s.w",
+      "path": "passive.ranks[2].hooks[0].effects[0].amount",
+      "kind": "damageArea",
+      "category": "perHitRider",
+      "reason": "掛在 `onBasicAttack` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-e00s.w",
+      "path": "passive.ranks[3].hooks[0].effects[0].amount",
+      "kind": "damageArea",
+      "category": "perHitRider",
+      "reason": "掛在 `onBasicAttack` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-edem.r",
+      "path": "passive.ranks[0].hooks[0].effects[0].amount",
+      "kind": "damageArea",
+      "category": "perHitRider",
+      "reason": "掛在 `onAbilityHit` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-edem.r",
+      "path": "passive.ranks[1].hooks[0].effects[0].amount",
+      "kind": "damageArea",
+      "category": "perHitRider",
+      "reason": "掛在 `onAbilityHit` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-edem.r",
+      "path": "passive.ranks[2].hooks[0].effects[0].amount",
+      "kind": "damageArea",
+      "category": "perHitRider",
+      "reason": "掛在 `onAbilityHit` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-h02k.passive",
+      "path": "passive.ranks[0].hooks[0].effects[0].amount",
+      "kind": "damage",
+      "category": "perHitRider",
+      "reason": "掛在 `onBasicAttack` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-h02v.e",
+      "path": "passive.ranks[0].hooks[0].effects[0].amount",
+      "kind": "damageLine",
+      "category": "perHitRider",
+      "reason": "掛在 `onDamageTaken` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-h02v.e",
+      "path": "passive.ranks[1].hooks[0].effects[0].amount",
+      "kind": "damageLine",
+      "category": "perHitRider",
+      "reason": "掛在 `onDamageTaken` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-h02v.e",
+      "path": "passive.ranks[2].hooks[0].effects[0].amount",
+      "kind": "damageLine",
+      "category": "perHitRider",
+      "reason": "掛在 `onDamageTaken` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-h02v.e",
+      "path": "passive.ranks[3].hooks[0].effects[0].amount",
+      "kind": "damageLine",
+      "category": "perHitRider",
+      "reason": "掛在 `onDamageTaken` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-hapm.e",
+      "path": "passive.ranks[0].hooks[0].effects[0].amount",
+      "kind": "damage",
+      "category": "perHitRider",
+      "reason": "掛在 `onBasicAttack` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-hapm.e",
+      "path": "passive.ranks[1].hooks[0].effects[0].amount",
+      "kind": "damage",
+      "category": "perHitRider",
+      "reason": "掛在 `onBasicAttack` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-hapm.e",
+      "path": "passive.ranks[2].hooks[0].effects[0].amount",
+      "kind": "damage",
+      "category": "perHitRider",
+      "reason": "掛在 `onBasicAttack` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-hapm.e",
+      "path": "passive.ranks[3].hooks[0].effects[0].amount",
+      "kind": "damage",
+      "category": "perHitRider",
+      "reason": "掛在 `onBasicAttack` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-ofar.w",
+      "path": "passive.ranks[0].hooks[0].effects[0].amount",
+      "kind": "damage",
+      "category": "perHitRider",
+      "reason": "掛在 `onBasicAttack` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-ofar.w",
+      "path": "passive.ranks[1].hooks[0].effects[0].amount",
+      "kind": "damage",
+      "category": "perHitRider",
+      "reason": "掛在 `onBasicAttack` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-ofar.w",
+      "path": "passive.ranks[2].hooks[0].effects[0].amount",
+      "kind": "damage",
+      "category": "perHitRider",
+      "reason": "掛在 `onBasicAttack` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-ofar.w",
+      "path": "passive.ranks[3].hooks[0].effects[0].amount",
+      "kind": "damage",
+      "category": "perHitRider",
+      "reason": "掛在 `onBasicAttack` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-ofar.w",
+      "path": "passive.ranks[4].hooks[0].effects[0].amount",
+      "kind": "damage",
+      "category": "perHitRider",
+      "reason": "掛在 `onBasicAttack` 上的追加傷害 —— 一次施法會發生**很多次**（`fireHooks` 逐刀／逐目標發，見 `abilitySystem.ts` 與 `CastResolveSystem.ts` 的 for-of），⛔ 不是一發。五級距的錨點是單發的尺，套在法球／每刀追加上等於把它乘上這場比賽的攻擊次數。⭐ 可反駁：做出「每次攻擊追加」自己的一張級距表（單發值 ÷ 預期命中數），這一類就該改讀那一張。"
+    },
+    {
+      "id": "godie-e002.ex",
+      "path": "passive.ranks[0].hooks[0].effects[0].effects[0].amount",
+      "kind": "damage",
+      "category": "ratioOnly",
+      "reason": "基礎值是 0 ⇒ 這一葉**整份**傷害來自 `resourcePct` / `ratios` / `attrRatios`；`effect.ts` 的 `(sc.flat ?? 0)` 讓這個 0 逐位元等於不存在。給它一個級距 = 憑空長出一個卡面上沒有寫的基礎傷害。⭐ 可反駁：把這格 0 直接刪掉（純無害），這一列連帶消失。"
+    },
+    {
+      "id": "godie-e002.r",
+      "path": "effects[0].hooks[0].effects[0].amount",
+      "kind": "damage",
+      "category": "ratioOnly",
+      "reason": "基礎值是 0 ⇒ 這一葉**整份**傷害來自 `resourcePct` / `ratios` / `attrRatios`；`effect.ts` 的 `(sc.flat ?? 0)` 讓這個 0 逐位元等於不存在。給它一個級距 = 憑空長出一個卡面上沒有寫的基礎傷害。⭐ 可反駁：把這格 0 直接刪掉（純無害），這一列連帶消失。"
+    },
+    {
+      "id": "godie-edem.passive",
+      "path": "passive.ranks[0].hooks[0].effects[0].amount",
+      "kind": "damage",
+      "category": "ratioOnly",
+      "reason": "基礎值是 0 ⇒ 這一葉**整份**傷害來自 `resourcePct` / `ratios` / `attrRatios`；`effect.ts` 的 `(sc.flat ?? 0)` 讓這個 0 逐位元等於不存在。給它一個級距 = 憑空長出一個卡面上沒有寫的基礎傷害。⭐ 可反駁：把這格 0 直接刪掉（純無害），這一列連帶消失。"
+    },
+    {
+      "id": "godie-efur.ex",
+      "path": "passive.ranks[0].hooks[0].effects[0].amount",
+      "kind": "damage",
+      "category": "ratioOnly",
+      "reason": "基礎值是 0 ⇒ 這一葉**整份**傷害來自 `resourcePct` / `ratios` / `attrRatios`；`effect.ts` 的 `(sc.flat ?? 0)` 讓這個 0 逐位元等於不存在。給它一個級距 = 憑空長出一個卡面上沒有寫的基礎傷害。⭐ 可反駁：把這格 0 直接刪掉（純無害），這一列連帶消失。"
+    },
+    {
+      "id": "godie-emfr.ex",
+      "path": "effects[0].hooks[0].effects[0].amount",
+      "kind": "damage",
+      "category": "ratioOnly",
+      "reason": "基礎值是 0 ⇒ 這一葉**整份**傷害來自 `resourcePct` / `ratios` / `attrRatios`；`effect.ts` 的 `(sc.flat ?? 0)` 讓這個 0 逐位元等於不存在。給它一個級距 = 憑空長出一個卡面上沒有寫的基礎傷害。⭐ 可反駁：把這格 0 直接刪掉（純無害），這一列連帶消失。"
+    },
+    {
+      "id": "godie-h00l.passive",
+      "path": "passive.ranks[0].hooks[0].effects[0].amount",
+      "kind": "damage",
+      "category": "ratioOnly",
+      "reason": "基礎值是 0 ⇒ 這一葉**整份**傷害來自 `resourcePct` / `ratios` / `attrRatios`；`effect.ts` 的 `(sc.flat ?? 0)` 讓這個 0 逐位元等於不存在。給它一個級距 = 憑空長出一個卡面上沒有寫的基礎傷害。⭐ 可反駁：把這格 0 直接刪掉（純無害），這一列連帶消失。"
+    },
+    {
+      "id": "godie-h00l.r",
+      "path": "effects[0].hooks[0].effects[0].amount",
+      "kind": "damage",
+      "category": "ratioOnly",
+      "reason": "基礎值是 0 ⇒ 這一葉**整份**傷害來自 `resourcePct` / `ratios` / `attrRatios`；`effect.ts` 的 `(sc.flat ?? 0)` 讓這個 0 逐位元等於不存在。給它一個級距 = 憑空長出一個卡面上沒有寫的基礎傷害。⭐ 可反駁：把這格 0 直接刪掉（純無害），這一列連帶消失。"
+    },
+    {
+      "id": "godie-h02k.e",
+      "path": "passive.ranks[0].hooks[1].effects[0].amount",
+      "kind": "damage",
+      "category": "ratioOnly",
+      "reason": "基礎值是 0 ⇒ 這一葉**整份**傷害來自 `resourcePct` / `ratios` / `attrRatios`；`effect.ts` 的 `(sc.flat ?? 0)` 讓這個 0 逐位元等於不存在。給它一個級距 = 憑空長出一個卡面上沒有寫的基礎傷害。⭐ 可反駁：把這格 0 直接刪掉（純無害），這一列連帶消失。"
+    },
+    {
+      "id": "godie-h02k.e",
+      "path": "passive.ranks[1].hooks[1].effects[0].amount",
+      "kind": "damage",
+      "category": "ratioOnly",
+      "reason": "基礎值是 0 ⇒ 這一葉**整份**傷害來自 `resourcePct` / `ratios` / `attrRatios`；`effect.ts` 的 `(sc.flat ?? 0)` 讓這個 0 逐位元等於不存在。給它一個級距 = 憑空長出一個卡面上沒有寫的基礎傷害。⭐ 可反駁：把這格 0 直接刪掉（純無害），這一列連帶消失。"
+    },
+    {
+      "id": "godie-h02k.e",
+      "path": "passive.ranks[2].hooks[1].effects[0].amount",
+      "kind": "damage",
+      "category": "ratioOnly",
+      "reason": "基礎值是 0 ⇒ 這一葉**整份**傷害來自 `resourcePct` / `ratios` / `attrRatios`；`effect.ts` 的 `(sc.flat ?? 0)` 讓這個 0 逐位元等於不存在。給它一個級距 = 憑空長出一個卡面上沒有寫的基礎傷害。⭐ 可反駁：把這格 0 直接刪掉（純無害），這一列連帶消失。"
+    },
+    {
+      "id": "godie-h02k.e",
+      "path": "passive.ranks[3].hooks[1].effects[0].amount",
+      "kind": "damage",
+      "category": "ratioOnly",
+      "reason": "基礎值是 0 ⇒ 這一葉**整份**傷害來自 `resourcePct` / `ratios` / `attrRatios`；`effect.ts` 的 `(sc.flat ?? 0)` 讓這個 0 逐位元等於不存在。給它一個級距 = 憑空長出一個卡面上沒有寫的基礎傷害。⭐ 可反駁：把這格 0 直接刪掉（純無害），這一列連帶消失。"
+    },
+    {
+      "id": "godie-h02k.ex",
+      "path": "effects[0].branches[0].effects[0].amount",
+      "kind": "damage",
+      "category": "ratioOnly",
+      "reason": "基礎值是 0 ⇒ 這一葉**整份**傷害來自 `resourcePct` / `ratios` / `attrRatios`；`effect.ts` 的 `(sc.flat ?? 0)` 讓這個 0 逐位元等於不存在。給它一個級距 = 憑空長出一個卡面上沒有寫的基礎傷害。⭐ 可反駁：把這格 0 直接刪掉（純無害），這一列連帶消失。"
+    },
+    {
+      "id": "godie-h02k.ex",
+      "path": "effects[0].branches[1].effects[0].amount",
+      "kind": "damage",
+      "category": "ratioOnly",
+      "reason": "基礎值是 0 ⇒ 這一葉**整份**傷害來自 `resourcePct` / `ratios` / `attrRatios`；`effect.ts` 的 `(sc.flat ?? 0)` 讓這個 0 逐位元等於不存在。給它一個級距 = 憑空長出一個卡面上沒有寫的基礎傷害。⭐ 可反駁：把這格 0 直接刪掉（純無害），這一列連帶消失。"
+    },
+    {
+      "id": "godie-h02k.ex",
+      "path": "effects[1].branches[0].effects[0].amount",
+      "kind": "damage",
+      "category": "ratioOnly",
+      "reason": "基礎值是 0 ⇒ 這一葉**整份**傷害來自 `resourcePct` / `ratios` / `attrRatios`；`effect.ts` 的 `(sc.flat ?? 0)` 讓這個 0 逐位元等於不存在。給它一個級距 = 憑空長出一個卡面上沒有寫的基礎傷害。⭐ 可反駁：把這格 0 直接刪掉（純無害），這一列連帶消失。"
+    },
+    {
+      "id": "godie-h02k.ex",
+      "path": "effects[1].branches[1].effects[0].amount",
+      "kind": "damage",
+      "category": "ratioOnly",
+      "reason": "基礎值是 0 ⇒ 這一葉**整份**傷害來自 `resourcePct` / `ratios` / `attrRatios`；`effect.ts` 的 `(sc.flat ?? 0)` 讓這個 0 逐位元等於不存在。給它一個級距 = 憑空長出一個卡面上沒有寫的基礎傷害。⭐ 可反駁：把這格 0 直接刪掉（純無害），這一列連帶消失。"
+    },
+    {
+      "id": "godie-h02k.ex",
+      "path": "effects[2].branches[0].effects[0].amount",
+      "kind": "damage",
+      "category": "ratioOnly",
+      "reason": "基礎值是 0 ⇒ 這一葉**整份**傷害來自 `resourcePct` / `ratios` / `attrRatios`；`effect.ts` 的 `(sc.flat ?? 0)` 讓這個 0 逐位元等於不存在。給它一個級距 = 憑空長出一個卡面上沒有寫的基礎傷害。⭐ 可反駁：把這格 0 直接刪掉（純無害），這一列連帶消失。"
+    },
+    {
+      "id": "godie-h02k.ex",
+      "path": "effects[2].branches[1].effects[0].amount",
+      "kind": "damage",
+      "category": "ratioOnly",
+      "reason": "基礎值是 0 ⇒ 這一葉**整份**傷害來自 `resourcePct` / `ratios` / `attrRatios`；`effect.ts` 的 `(sc.flat ?? 0)` 讓這個 0 逐位元等於不存在。給它一個級距 = 憑空長出一個卡面上沒有寫的基礎傷害。⭐ 可反駁：把這格 0 直接刪掉（純無害），這一列連帶消失。"
+    },
+    {
+      "id": "godie-h02k.w",
+      "path": "passive.ranks[0].hooks[0].effects[0].amount",
+      "kind": "damage",
+      "category": "ratioOnly",
+      "reason": "基礎值是 0 ⇒ 這一葉**整份**傷害來自 `resourcePct` / `ratios` / `attrRatios`；`effect.ts` 的 `(sc.flat ?? 0)` 讓這個 0 逐位元等於不存在。給它一個級距 = 憑空長出一個卡面上沒有寫的基礎傷害。⭐ 可反駁：把這格 0 直接刪掉（純無害），這一列連帶消失。"
+    },
+    {
+      "id": "godie-hapm.r",
+      "path": "effects[2].amount",
+      "kind": "damageArea",
+      "category": "ratioOnly",
+      "reason": "基礎值是 0 ⇒ 這一葉**整份**傷害來自 `resourcePct` / `ratios` / `attrRatios`；`effect.ts` 的 `(sc.flat ?? 0)` 讓這個 0 逐位元等於不存在。給它一個級距 = 憑空長出一個卡面上沒有寫的基礎傷害。⭐ 可反駁：把這格 0 直接刪掉（純無害），這一列連帶消失。"
+    },
+    {
+      "id": "sela.e",
+      "path": "effects[0].amount",
+      "kind": "damage",
+      "category": "baselineFixture",
+      "reason": "`sela` / `thorne` 是 fail-open 的**骨架英雄**，不在 `starter.go` 的對戰可選名單上。它們四支技能整組走 `flat + perRank` 曲線，而其中兩支（`sela.r` / `thorne.r`）連 `flat` 都沒有、級距根本搆不到；只收另外三支會讓同一位英雄一半有逐階成長一半沒有。而 `resolveDamageTier` 會**刪掉 `perRank`** ⇒ 收進級距等於抹掉這個 repo 裡唯一一組逐階成長的參考夾具，換來零個玩家看得到的變化。⭐ 可反駁：把它們放進對戰名單，或連 `perRank`-only 的兩支一起收，這一類就該死掉。"
+    },
+    {
+      "id": "sela.q",
+      "path": "effects[0].onHit[0].amount",
+      "kind": "damage",
+      "category": "baselineFixture",
+      "reason": "`sela` / `thorne` 是 fail-open 的**骨架英雄**，不在 `starter.go` 的對戰可選名單上。它們四支技能整組走 `flat + perRank` 曲線，而其中兩支（`sela.r` / `thorne.r`）連 `flat` 都沒有、級距根本搆不到；只收另外三支會讓同一位英雄一半有逐階成長一半沒有。而 `resolveDamageTier` 會**刪掉 `perRank`** ⇒ 收進級距等於抹掉這個 repo 裡唯一一組逐階成長的參考夾具，換來零個玩家看得到的變化。⭐ 可反駁：把它們放進對戰名單，或連 `perRank`-only 的兩支一起收，這一類就該死掉。"
+    },
+    {
+      "id": "thorne.e",
+      "path": "effects[0].onHit[0].amount",
+      "kind": "damage",
+      "category": "baselineFixture",
+      "reason": "`sela` / `thorne` 是 fail-open 的**骨架英雄**，不在 `starter.go` 的對戰可選名單上。它們四支技能整組走 `flat + perRank` 曲線，而其中兩支（`sela.r` / `thorne.r`）連 `flat` 都沒有、級距根本搆不到；只收另外三支會讓同一位英雄一半有逐階成長一半沒有。而 `resolveDamageTier` 會**刪掉 `perRank`** ⇒ 收進級距等於抹掉這個 repo 裡唯一一組逐階成長的參考夾具，換來零個玩家看得到的變化。⭐ 可反駁：把它們放進對戰名單，或連 `perRank`-only 的兩支一起收，這一類就該死掉。"
+    }
+  ]
+}

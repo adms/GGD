@@ -33,6 +33,7 @@ import { Stat, zeroStats } from "../sim/stats/statTypes";
 import { ModOp } from "../sim/stats/modifiers";
 import { championStatBase } from "../sim/stats/attributes";
 import { DEFAULT_COMBAT_ENV } from "../sim/combatEnv";
+import { resolveDamageTier, DEFAULT_DAMAGE_TIERS } from "./damageTiers";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT = join(HERE, "../../../../content");
@@ -382,12 +383,16 @@ describe("imported ability stat scaling", () => {
     const stats = zeroStats();
     const withAp = { ...zeroStats(), [Stat.AbilityPower]: ap!.value };
 
+    // ⭐ 2026-08-22（#534）：出貨 JSON 只剩 `damageTier`，`flat` 由
+    // `resolveDamageTier()` 在**註冊時**填回去。所以這裡要先解析，⛔ 不能直接讀原始
+    // 文件 —— 讀原始的話 `before` 是 0，而這條會用「ap 是死屬性」這個**錯誤的訊息**紅掉。
     let before = 0;
     let after = 0;
     for (const e of amountEffects(lina)) {
       if (e.kind !== "damage") continue;
-      before += resolveScaling(stats, e.amount, 1, NO_ATTR_LOOKUP);
-      after += resolveScaling(withAp, e.amount, 1, NO_ATTR_LOOKUP);
+      const amt = resolveDamageTier(e.amount as object, DEFAULT_DAMAGE_TIERS) as typeof e.amount;
+      before += resolveScaling(stats, amt, 1, NO_ATTR_LOOKUP);
+      after += resolveScaling(withAp, amt, 1, NO_ATTR_LOOKUP);
     }
     expect(before).toBeGreaterThan(0);
     expect(after).toBeGreaterThan(before); // ap is no longer a dead stat

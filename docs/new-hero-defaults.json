@@ -249,9 +249,9 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 500,
-        "sample": 8,
-        "basis": "slot+castType"
+        "value": 50,
+        "sample": 13,
+        "basis": "corpus"
       }
     },
     {
@@ -280,9 +280,9 @@
         "basis": "slot"
       },
       "damage": {
-        "value": 500,
-        "sample": 18,
-        "basis": "slot"
+        "value": 50,
+        "sample": 13,
+        "basis": "corpus"
       }
     },
     {
@@ -311,9 +311,9 @@
         "basis": "slot+castType"
       },
       "damage": {
-        "value": 500,
-        "sample": 18,
-        "basis": "slot"
+        "value": 50,
+        "sample": 13,
+        "basis": "corpus"
       }
     },
     {
@@ -341,9 +341,9 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 500,
-        "sample": 18,
-        "basis": "slot"
+        "value": 50,
+        "sample": 13,
+        "basis": "corpus"
       }
     },
     {
@@ -371,9 +371,9 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 500,
-        "sample": 18,
-        "basis": "slot"
+        "value": 50,
+        "sample": 13,
+        "basis": "corpus"
       }
     },
     {
@@ -401,9 +401,9 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 500,
-        "sample": 17,
-        "basis": "slot"
+        "value": 50,
+        "sample": 13,
+        "basis": "corpus"
       }
     },
     {
@@ -432,9 +432,9 @@
         "basis": "corpus"
       },
       "damage": {
-        "value": 500,
-        "sample": 17,
-        "basis": "slot"
+        "value": 50,
+        "sample": 13,
+        "basis": "corpus"
       }
     },
     {
@@ -463,9 +463,9 @@
         "basis": "corpus"
       },
       "damage": {
-        "value": 500,
-        "sample": 17,
-        "basis": "slot"
+        "value": 50,
+        "sample": 13,
+        "basis": "corpus"
       }
     },
     {
@@ -493,9 +493,9 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 500,
-        "sample": 17,
-        "basis": "slot"
+        "value": 50,
+        "sample": 13,
+        "basis": "corpus"
       }
     },
     {
@@ -523,9 +523,9 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 500,
-        "sample": 17,
-        "basis": "slot"
+        "value": 50,
+        "sample": 13,
+        "basis": "corpus"
       }
     },
     {
@@ -553,9 +553,9 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 500,
-        "sample": 22,
-        "basis": "slot"
+        "value": 50,
+        "sample": 13,
+        "basis": "corpus"
       }
     },
     {
@@ -584,9 +584,9 @@
         "basis": "slot"
       },
       "damage": {
-        "value": 500,
-        "sample": 22,
-        "basis": "slot"
+        "value": 50,
+        "sample": 13,
+        "basis": "corpus"
       }
     },
     {
@@ -615,9 +615,9 @@
         "basis": "slot+castType"
       },
       "damage": {
-        "value": 575,
-        "sample": 8,
-        "basis": "slot+castType"
+        "value": 50,
+        "sample": 13,
+        "basis": "corpus"
       }
     },
     {
@@ -645,9 +645,9 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 500,
-        "sample": 22,
-        "basis": "slot"
+        "value": 50,
+        "sample": 13,
+        "basis": "corpus"
       }
     },
     {
@@ -675,9 +675,9 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 500,
-        "sample": 22,
-        "basis": "slot"
+        "value": 50,
+        "sample": 13,
+        "basis": "corpus"
       }
     },
     {
@@ -705,9 +705,9 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 500,
-        "sample": 19,
-        "basis": "slot"
+        "value": 50,
+        "sample": 13,
+        "basis": "corpus"
       }
     },
     {
@@ -735,9 +735,9 @@
         "basis": "corpus"
       },
       "damage": {
-        "value": 500,
-        "sample": 19,
-        "basis": "slot"
+        "value": 50,
+        "sample": 13,
+        "basis": "corpus"
       }
     },
     {
@@ -765,9 +765,9 @@
         "basis": "corpus"
       },
       "damage": {
-        "value": 500,
-        "sample": 19,
-        "basis": "slot"
+        "value": 50,
+        "sample": 13,
+        "basis": "corpus"
       }
     },
     {
@@ -795,9 +795,9 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 500,
-        "sample": 19,
-        "basis": "slot"
+        "value": 50,
+        "sample": 13,
+        "basis": "corpus"
       }
     },
     {
@@ -825,9 +825,9 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 500,
-        "sample": 19,
-        "basis": "slot"
+        "value": 50,
+        "sample": 13,
+        "basis": "corpus"
       }
     },
     {
@@ -855,8 +855,8 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 500,
-        "sample": 83,
+        "value": 50,
+        "sample": 13,
         "basis": "corpus"
       }
     },
@@ -885,8 +885,8 @@
         "basis": "corpus"
       },
       "damage": {
-        "value": 500,
-        "sample": 83,
+        "value": 50,
+        "sample": 13,
         "basis": "corpus"
       }
     },
@@ -915,8 +915,8 @@
         "basis": "corpus"
       },
       "damage": {
-        "value": 500,
-        "sample": 83,
+        "value": 50,
+        "sample": 13,
         "basis": "corpus"
       }
     },
@@ -945,8 +945,8 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 500,
-        "sample": 83,
+        "value": 50,
+        "sample": 13,
         "basis": "corpus"
       }
     },
@@ -975,8 +975,8 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 500,
-        "sample": 83,
+        "value": 50,
+        "sample": 13,
         "basis": "corpus"
       }
     }

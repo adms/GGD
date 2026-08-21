@@ -1,0 +1,265 @@
+{
+  "id": "godie-ubal",
+  "schema": "champion@1",
+  "name": "魔界霸主 - 巴恩大魔王",
+  "description": "故事：\n巴恩為了永恆年輕的肉體，將自己精神轉移到老頭子身上，並將年輕肉體封印起來，只在重要戰役才有機會再使用，但是老邁身軀仍然擁有深不可測的智慧和魔力...。\n(出自:神龍之謎)\n\n推薦玩家 : 破塔殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.80\n敏捷 + 1.95\n智慧 + 2.55\n基礎跑速 295\n\n可學習的技能：\n凱薩之鷹、黑核晶、災難之牆、魔界之王",
+  "role": "fighter",
+  "attackType": "melee",
+  "origin": "法師",
+  "modelKey": "champ.skin.barbarian",
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
+    "ap": 0,
+    "armor": 0,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.7,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 8.2
+  },
+  "growth": {
+    "maxHealth": 77.8694,
+    "healthRegen": 0.1629,
+    "maxMana": 45.8724,
+    "manaRegen": 0.1496,
+    "ad": 3.2612,
+    "armor": 0.6926,
+    "mr": 1.8261,
+    "as": 0.0092,
+    "ap": 0.6799
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 16,
+    "agi": 14,
+    "int": 26,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "INT",
+    "source": "w3x"
+  },
+  "bodyScale": 1.3,
+  "hitFeel": {
+    "hitstopTicks": 3,
+    "shakeMag": 0.44,
+    "knockbackMag": 0.25
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-ubal.q",
+      "name": "37-01 凱薩之鷹",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n召喚魔界火焰形成像鷹一樣的灼熱衝擊波重創敵人，是巴恩的得意技，但是在老年姿態施展會有些慢，威力也相當程度的下降，造成一直線敵人{{dmg}}點傷害。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.367
+        }
+      },
+      "vfxKey": "fx.prim.void.beam",
+      "targetsEnemies": true,
+      "icon": "assets/icons/abilities/godie-ubal.q.png",
+      "castTimeSec": 0.367,
+      "rangeTier": "中",
+      "range": 6,
+      "cooldownTier": "小",
+      "manaCostTier": "極小"
+    },
+    "W": {
+      "id": "godie-ubal.w",
+      "name": "37-03 災難之牆",
+      "icon": "assets/icons/abilities/godie-ubal.w.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n釋放一道火牆，對面前所有的敵人每秒造成{{dmg}}點的傷害，火牆持續3秒。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        288.0,
+        288.0,
+        288.0,
+        288.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.667
+        }
+      },
+      "vfxKey": "fx.prim.void.shockwave",
+      "sfxKey": "wc3.trollbatriderpissed2",
+      "targetsEnemies": true,
+      "castTimeSec": 0.667,
+      "rangeTier": "大",
+      "range": 8,
+      "cooldownTier": "中",
+      "manaCostTier": "中"
+    },
+    "E": {
+      "id": "godie-ubal.e",
+      "name": "37-02 黑核晶",
+      "icon": "assets/icons/abilities/godie-ubal.e.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n黑核晶是長年埋在魔界地底深層的脈礦，吸收蘊藏了相當驚人的魔力，一旦被引爆釋放出來將會毀滅一切，範圍200內造成{{dmg}}點傷害 。\n\n戰場上最多出現7顆",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        6.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "damageType": "magic"
+        }
+      },
+      "vfxKey": "fx.prim.void.explosion",
+      "targetsEnemies": true,
+      "castTimeSec": 0.167,
+      "rangeTier": "大",
+      "range": 8,
+      "cooldownTier": "極小",
+      "manaCostTier": "極小"
+    },
+    "R": {
+      "id": "godie-ubal.r",
+      "name": "37-04 魔界之王",
+      "icon": "assets/icons/abilities/godie-ubal.r.webp",
+      "provenance": "w3x-import",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n召喚巴恩大魔王封印的年輕肉體並將靈魂合而為一，隨著技能等級提升可以使用的招式也將變多，變身後各方面的能力也會隨著技能等級提升而上升，持續35秒。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.7
+              }
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 1.233
+        }
+      },
+      "vfxKey": "fx.prim.void.pulse-lg",
+      "sfxKey": "wc3.shadowhunterready1",
+      "targetsEnemies": true,
+      "castTimeSec": 1.233,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "極大",
+      "manaCostTier": "極小"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "exAbility": "godie-ubal.ex",
+  "passiveAbility": "godie-ubal.passive",
+  "icon": "assets/icons/champions/godie-ubal.png",
+  "tint": [
+    1,
+    0.7843,
+    0.7843
+  ],
+  "playstyle": [
+    "火牆",
+    "爆炸物",
+    "陣地",
+    "變身"
+  ],
+  "pitch": "不斷用法術改變戰場形狀，限制敵人走位，再透過變身提高壓制能力。"
+}

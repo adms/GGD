@@ -1,0 +1,263 @@
+{
+  "id": "godie-u00k",
+  "schema": "champion@1",
+  "name": "邪惡意念集合體 - 死之王",
+  "icon": "assets/icons/champions/godie-u00k.webp",
+  "description": "故事：\n所有邪惡的聚合體，從上古時代就誕生的惡魔，與飛鼠先生一戰後魂飛魄散，在此次戰役中被召喚回來。\n(出自:去死去死團的逆襲原創)\n\n角色成長：\n力量 + 1.00\n敏捷 + 2.00\n智慧 + 3.00\n基礎跑速 275\n\n可學習的技能：\n死亡隕落、靈魂吸取、厄夜靈魂、萬惡歸宗",
+  "role": "marksman",
+  "attackType": "ranged",
+  "origin": "法鬥",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 8,
+    "maxMana": 100,
+    "manaRegen": 3,
+    "ad": 12,
+    "ap": 0,
+    "armor": 1,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.3,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 77.8694,
+    "healthRegen": 0.0838,
+    "maxMana": 46.1786,
+    "manaRegen": 0.1243,
+    "ad": 5.1694,
+    "armor": 0.6762,
+    "mr": 1.8261,
+    "as": 0.009,
+    "ap": 0.8126
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 16,
+    "agi": 16,
+    "int": 24,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "INT",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.24,
+    "knockbackMag": 0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-u00k.q",
+      "name": "71-01 死亡隕落",
+      "icon": "assets/icons/abilities/godie-u00k.q.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n死之王可幻化成代表死亡的隕石造成敵方{{dmg}}點傷害。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-instant-blast",
+        "params": {
+          "radius": 300,
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 1.133
+        }
+      },
+      "vfxKey": "fx.prim.void.explosion",
+      "targetsEnemies": true,
+      "radius": 6.0,
+      "castTimeSec": 1.133,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "小",
+      "manaCostTier": "極小",
+      "radiusTier": "中"
+    },
+    "W": {
+      "id": "godie-u00k.w",
+      "name": "71-02 靈魂吸取",
+      "icon": "assets/icons/abilities/godie-u00k.w.webp",
+      "provenance": "w3x-import",
+      "description": "[被動]\n0秒冷卻時間\n\n死之王每次攻擊可造成部隊的靈魂凍結0.01秒，並於部隊死亡後20秒內增加死之王全能力1點(最高累計10次)。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        6.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.167
+        }
+      },
+      "vfxKey": "fx.prim.void.beam",
+      "targetsEnemies": true,
+      "castTimeSec": 0.167,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "極小",
+      "manaCostTier": "極小"
+    },
+    "E": {
+      "id": "godie-u00k.e",
+      "name": "71-03 厄夜靈魂",
+      "icon": "assets/icons/abilities/godie-u00k.e.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n抽取範圍內所有生命的泉源，造成生命8%傷害。\n\n夜間施展全地圖敵方移動速度降低",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.667
+        }
+      },
+      "vfxKey": "fx.prim.void.swarm",
+      "sfxKey": "wc3.parasite",
+      "targetsEnemies": true,
+      "castTimeSec": 0.667,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "極大",
+      "manaCostTier": "小"
+    },
+    "R": {
+      "id": "godie-u00k.r",
+      "name": "71-04 萬惡歸宗",
+      "icon": "assets/icons/abilities/godie-u00k.r.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n抽走附近敵我所有魔力，釋放出魔力總合乘上15%的魔法爆炸傷害。\n\n夜間施法傷害加成500",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.7
+              }
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 1.233
+        }
+      },
+      "vfxKey": "fx.prim.void.nova-lg",
+      "sfxKey": "wc3.taunt",
+      "targetsEnemies": true,
+      "castTimeSec": 1.233,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "極大",
+      "manaCostTier": "小"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin",
+    "magic"
+  ],
+  "exAbility": "godie-u00k.ex",
+  "passiveAbility": "godie-u00k.passive",
+  "playstyle": [
+    "資源累積",
+    "吸魔",
+    "資源兌現"
+  ],
+  "pitch": "先透過戰鬥累積資源與狀態，再把累積成果一次轉換成巨大輸出。"
+}

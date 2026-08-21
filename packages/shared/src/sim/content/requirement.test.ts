@@ -421,8 +421,15 @@ describe("tier 5 積分獎勵 · 光環真的送到隊友身上", () => {
     // ⚠️ 遠程那邊不能斷言「剛好 0」:兩 tick 的 healthRegen 會給他大約 +0.065。
     // 吸血一次是攻擊力的 30%(數十點),所以 <1 這個界線分得開「回了一點血」與
     // 「完全沒吸血」,而且不會因為 regen 調整就假紅。
-    expect(meleeGain).toBeGreaterThan(10);
-    expect(rangedGain).toBeLessThan(1);
+    // ⭐ 驗**機制**（近戰吸到血、遠程沒有），⛔ 不驗數字。
+    // ⚠️ 這裡原本寫 `> 10` —— 那是 2026-08 當時 `ad` 的 30% 剛好落在的區間。
+    // 2026-08-22 把 `attackDamage 0.6` 折進卡片之後回血變成 7.34，於是這條用
+    // 「光環沒送到隊友身上」這個**錯誤的訊息**紅掉（第二守則：⛔ 不要把出貨數值抄進斷言）。
+    expect(rangedGain).toBeLessThan(1); // 只有 healthRegen 的 ~0.065
+    expect(
+      meleeGain,
+      `近戰隊友應該靠吸血回一個量級以上的血（近戰 ${meleeGain} / 遠程 ${rangedGain}）`,
+    ).toBeGreaterThan(Math.max(1, rangedGain * 10));
   });
 
   it("★ 三件都不再是空的(mods=0 hooks=0 的原始缺陷不會悄悄回來)", () => {

@@ -38,7 +38,7 @@ export const DERIVED_CAP_PROVENANCE: DerivedCapProvenance = Object.freeze({
   "maxMana": 1693.5668,
   "healthRegen": 6.8298,
   "manaRegen": 8.5545,
-  "ad": 167.4664,
+  "ad": 100.481,
   "armor": 26.185,
   "mr": 80.9569,
   }),
@@ -49,7 +49,7 @@ export const DERIVED_STAT_CAPS: Readonly<Partial<Record<Stat, DerivedStatCap>>> 
   "maxMana": Object.freeze({ base: 338713, unlocked: 338713 }),
   "healthRegen": Object.freeze({ base: 1366, unlocked: 1366 }),
   "manaRegen": Object.freeze({ base: 1711, unlocked: 1711 }),
-  "ad": Object.freeze({ base: 33493, unlocked: 33493 }),
+  "ad": Object.freeze({ base: 20096, unlocked: 20096 }),
   "armor": Object.freeze({ base: 5237, unlocked: 5237 }),
   "mr": Object.freeze({ base: 16191, unlocked: 16191 }),
 });

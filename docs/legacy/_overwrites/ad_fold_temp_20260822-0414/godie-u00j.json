@@ -1,0 +1,298 @@
+{
+  "id": "godie-u00j",
+  "schema": "champion@1",
+  "name": "神性的流失 - 賽菲洛斯",
+  "description": "故事：\n賽菲洛斯是路克麗西亞和寶條博士的兒子。在胎兒時期被親生父親植入傑諾娃細胞，造成年輕的他成了神羅最強的精英戰士，與扎克斯和克勞德到了尼布爾罕做觀察，在那裡的神羅建築地下室發現自己真正的身世，毀了尼布爾罕之後，開始向全世界「復仇」，尋找「約束之地」。\n(出自:最終幻想7)\n\n推薦玩家 : 團戰破塔\n上手度 : 中\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.10\n智慧 + 1.90\n基礎跑速 295\n\n可學習的技能：\n獄門、八刀一閃、闇之天使、最終殞落星",
+  "role": "fighter",
+  "attackType": "melee",
+  "origin": "法鬥",
+  "modelKey": "imported.herosephiroth",
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
+    "ap": 0,
+    "armor": 0,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.7,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6,
+    "evasion": 0.15
+  },
+  "growth": {
+    "maxHealth": 77.8694,
+    "healthRegen": 0.1629,
+    "maxMana": 47.7092,
+    "manaRegen": 0.1753,
+    "ad": 5.1898,
+    "armor": 0.6558,
+    "mr": 1.8261,
+    "as": 0.0079,
+    "ap": 1.4758
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 16,
+    "agi": 26,
+    "int": 14,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "AGI",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 2,
+    "shakeMag": 0.34,
+    "knockbackMag": 0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-u00j.q",
+      "name": "74-01 獄門",
+      "icon": "assets/icons/abilities/godie-u00j.q.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n傳說中刺死愛麗絲的必殺技，命中範圍不算大，卻具有強大殺傷力，造成{{radius}}範圍{{dmg}}傷害。\n\n（GGD 註記 2026-08-21 · GH#433）owner 2026-08-19 逐支裁決「74-01 獄門 → **中**」。此前這一格是 `radiusTier: 極小`（半徑 3），而 2026-08-21 的普查是從 w3a 換算來的 1.5 自動收上去的，⛔ 不是任何人的決定。原作 JASS 落地 AoE 370 ≡ 6.78，與「中」= 6 對得上。\n⚠️ w3x 原文寫的是「雖然命中範圍**小**，卻具有強大殺傷力，造成**小範圍**傷害」——「小」在裁決之後是假的，所以那兩處改掉，範圍那一處換成 radius 佔位符（GH#461：幾何一律印五級距詞，⛔ 不在卡面寫死級距名）。原文留在這一段裡。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "invulnerable",
+          "durationSec": 0.3,
+          "applyTo": "self",
+          "blocksDamage": "all",
+          "blocksTrueDamage": false,
+          "blocksControl": true
+        },
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 0.8,
+          "stun": true
+        }
+      ],
+      "vfxKey": "fx.w3x.orb.herocloudkfksword.p00",
+      "targetsEnemies": true,
+      "radius": 6.0,
+      "castTimeSec": 0.8,
+      "hitFeel": {
+        "hitstopTicks": 4,
+        "hitstunTicks": 6,
+        "shakeMag": 0.41,
+        "shakeStyle": "directional",
+        "sparkKind": "heavy",
+        "flashColor": [
+          0.85,
+          0.92,
+          1
+        ],
+        "flashMs": 140,
+        "camKick": 0.351
+      },
+      "cooldownTier": "小",
+      "manaCostTier": "小",
+      "radiusTier": "中"
+    },
+    "W": {
+      "id": "godie-u00j.w",
+      "name": "74-02 八刀一閃",
+      "icon": "assets/icons/abilities/godie-u00j.w.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n極快的速度衝刺到敵人面前，給予週遭敵人80% [AP]+150傷害。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.8
+              }
+            ]
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.667
+        }
+      },
+      "vfxKey": "fx.prim.physical.slash",
+      "sfxKey": "wc3.snapdragonmissilelaunch1",
+      "targetsEnemies": true,
+      "castTimeSec": 0.667,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "大",
+      "manaCostTier": "小"
+    },
+    "E": {
+      "id": "godie-u00j.e",
+      "name": "74-03 闇之天使",
+      "icon": "assets/icons/abilities/godie-u00j.e.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n抽取星球之力轉換為魔晃能量，瞬間爆發的威力造成{{dmg}}點傷害，共8道爆炸。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-instant-blast",
+        "params": {
+          "radius": 327,
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          },
+          "damageType": "physical",
+          "castTimeSec": 1.433
+        }
+      },
+      "vfxKey": "fx.prim.void.pulse",
+      "targetsEnemies": true,
+      "radius": 6.0,
+      "castTimeSec": 1.433,
+      "rangeTier": "中",
+      "range": 6,
+      "cooldownTier": "中",
+      "manaCostTier": "小",
+      "radiusTier": "中"
+    },
+    "R": {
+      "id": "godie-u00j.r",
+      "name": "74-04 最終殞落星",
+      "icon": "assets/icons/abilities/godie-u00j.r.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n75秒冷卻時間\n\n招喚災難彗星造成地面嚴重傷害，每顆隕石造成650點傷害，總共1顆隕石。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        288.0,
+        288.0,
+        288.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "damageType": "physical",
+          "castTimeSec": 1.233
+        }
+      },
+      "vfxKey": "fx.prim.void.explosion-lg",
+      "targetsEnemies": true,
+      "castTimeSec": 1.233,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "極大",
+      "manaCostTier": "中"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "katana"
+  ],
+  "exAbility": "godie-u00j.ex",
+  "passiveAbility": "godie-u00j.passive",
+  "icon": "assets/icons/champions/godie-u00j.png",
+  "tint": [
+    1,
+    0.7843,
+    0.7843
+  ],
+  "playstyle": [
+    "劍技",
+    "技能連段",
+    "持續近戰"
+  ],
+  "pitch": "用技能取得攻擊節奏，再將普攻與高傷劍技交錯形成持續壓力。"
+}

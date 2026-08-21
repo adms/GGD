@@ -1,0 +1,264 @@
+{
+  "id": "godie-hvwd",
+  "schema": "champion@1",
+  "name": "除魔巫女 - 桔梗",
+  "description": "故事：\n原本是四魂之玉的守護巫女，為了守護世界的和平，只好再度轉生修練來對抗去死團的怨念。\n(出自:犬夜叉)\n\n推薦玩家 : 牽制輔助\n上手度 : 易\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.40\n智慧 + 1.80\n基礎跑速 295\n\n可學習的技能：\n破魔之箭、明鏡止水、魂飛魄散、百鬼夜行",
+  "role": "marksman",
+  "attackType": "ranged",
+  "origin": "射手",
+  "modelKey": "imported.kikyou",
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 7,
+    "ap": 0,
+    "armor": 0,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.7,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 8.2
+  },
+  "growth": {
+    "maxHealth": 60.769,
+    "healthRegen": 0.1277,
+    "maxMana": 47.8622,
+    "manaRegen": 0.1774,
+    "ad": 8.4265,
+    "armor": 0.3862,
+    "mr": 1.0342,
+    "as": 0.0155,
+    "ap": 0.0995
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 18,
+    "agi": 24,
+    "int": 13,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "AGI",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.28,
+    "knockbackMag": 0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-hvwd.q",
+      "name": "02-01 破魔之箭",
+      "icon": "assets/icons/abilities/godie-hvwd.q.webp",
+      "provenance": "w3x-import",
+      "description": "[法球效應]\n0秒冷卻時間\n\n桔梗擁有極強力的淨化能力，使敵人受到25點傷害的同時流失法力。\n本技能為法球效應",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        6.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "effects": [],
+      "vfxKey": "fx.prim.holy.beam",
+      "castTimeSec": 0.067,
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 12,
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "flat",
+              "value": 30
+            }
+          ],
+          "castTimeSec": 0.067
+        }
+      },
+      "cooldownTier": "極小"
+    },
+    "W": {
+      "id": "godie-hvwd.w",
+      "name": "02-02 明鏡止水",
+      "icon": "assets/icons/abilities/godie-hvwd.w.webp",
+      "provenance": "w3x-import",
+      "description": "[靈氣]\n0秒冷卻時間\n\n明鏡止水可以讓桔梗的弓箭威力有7%的遠距攻擊傷害加成。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        6.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "effects": [],
+      "vfxKey": "fx.prim.holy.pulse",
+      "castTimeSec": 0.167,
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 12,
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 0.07
+            }
+          ],
+          "castTimeSec": 0.167
+        }
+      },
+      "cooldownTier": "極小"
+    },
+    "E": {
+      "id": "godie-hvwd.e",
+      "name": "02-03 魂飛魄散",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n桔梗將死魂收集的妖力爆發噴射，造成一直線上的敵人{{dmg}}點傷害。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.667
+        }
+      },
+      "vfxKey": "fx.w3x.particle.heronarutos4effect.p00",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.w3x.particle.heronarutos4effect.p00"
+        },
+        {
+          "vfxKey": "fx.w3x.particle.heronarutos4effect.p05"
+        },
+        {
+          "vfxKey": "fx.w3x.particle.heronarutos4effect.p01"
+        }
+      ],
+      "targetsEnemies": true,
+      "icon": "assets/icons/abilities/godie-hvwd.e.png",
+      "castTimeSec": 0.667,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "極大",
+      "manaCostTier": "小"
+    },
+    "R": {
+      "id": "godie-hvwd.r",
+      "name": "02-04 死魂蟲",
+      "icon": "assets/icons/abilities/godie-hvwd.r.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n放出6隻死魂蟲，吸取附近敵軍部隊的生命能量。當他們回到身邊時，他們會將從犧牲者身上吸取的生命能量，用於補充生命值 。持續時間8秒。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.7
+              }
+            ]
+          }
+        },
+        {
+          "kind": "spawnVfx",
+          "vfxId": "godie-aquaspikeversion2-p0",
+          "at": "self"
+        }
+      ],
+      "vfxKey": "fx.prim.void.swarm-lg",
+      "targetsEnemies": true,
+      "castTimeSec": 1.233,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "極大",
+      "manaCostTier": "小"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "bow"
+  ],
+  "exAbility": "godie-hvwd.ex",
+  "passiveAbility": "godie-hvwd.passive",
+  "icon": "assets/icons/champions/godie-hvwd.png",
+  "playstyle": [
+    "普攻",
+    "法球",
+    "消魔",
+    "終結射擊"
+  ],
+  "pitch": "持續用弓箭與法球壓低敵人狀態，再利用強力射擊完成收頭。"
+}

@@ -1,0 +1,266 @@
+{
+  "id": "godie-nsjs",
+  "schema": "champion@1",
+  "name": "妖狐藏馬 - 南野秀一",
+  "description": "故事：\n魔界高級妖魔轉生寄宿為人類，為控制魔界植物的支配者。\n(出自:幽遊白書)\n\n推薦玩家 : 追擊破塔\n上手度 : 難\n\n角色成長：\n力量 + 1.85\n敏捷 + 1.80\n智慧 + 2.65\n基礎跑速 300\n\n可學習的技能：\n風華圓舞陣、寄生種子、妖狐變化、億年樹",
+  "role": "marksman",
+  "attackType": "melee",
+  "origin": "法師",
+  "modelKey": "imported.fox2",
+  "missileSpeed": 17.4,
+  "attackDamagePoint": 0.3,
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
+    "ap": 0,
+    "armor": 1,
+    "mr": 28,
+    "as": 0.526316,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 8.2
+  },
+  "growth": {
+    "maxHealth": 77.8694,
+    "healthRegen": 0.1629,
+    "maxMana": 46.0255,
+    "manaRegen": 0.1517,
+    "ad": 3.2612,
+    "armor": 0.6823,
+    "mr": 1.8261,
+    "as": 0.009,
+    "ap": 0.7462
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 16,
+    "agi": 14,
+    "int": 25,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "INT",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.28,
+    "knockbackMag": 0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-nsjs.q",
+      "name": "18-01 風華圓舞陣",
+      "icon": "assets/icons/abilities/godie-nsjs.q.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n周圍內飄逸出10片的花瓣，每片花瓣碰觸到敵方時造成50傷害，持續8秒。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.667
+        }
+      },
+      "vfxKey": "fx.prim.wind.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.667,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "大",
+      "manaCostTier": "小"
+    },
+    "W": {
+      "id": "godie-nsjs.w",
+      "name": "18-02 寄生種子",
+      "icon": "assets/icons/abilities/godie-nsjs.w.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n把魔界凶惡植物寄生在敵人身上造成{{dmg}}點傷害，若干時間後將會侵蝕敵人的身體造成每秒60點傷害，持續2秒。",
+      "slot": "W",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.bolt.nature",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              }
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.nature.bolt",
+      "castTimeSec": 0.767,
+      "rangeTier": "大",
+      "range": 8,
+      "cooldownTier": "中",
+      "manaCostTier": "極小"
+    },
+    "E": {
+      "id": "godie-nsjs.e",
+      "name": "18-03 妖狐變化",
+      "icon": "assets/icons/abilities/godie-nsjs.e.webp",
+      "provenance": "w3x-import",
+      "description": "[變身]\n{{cd}}秒冷卻時間\n\n幻化為妖狐型態，能力將會大幅提升，隨著技能等級提升妖狐可以具備更多的能力，攻擊力和各方面的數值也會獲得成長，持續8秒。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "championForm",
+          "to": "alternate",
+          "durationSec": 8
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "sfxKey": "wc3.altarofelderswhat1",
+      "castTimeSec": 0.267,
+      "cooldownTier": "中"
+    },
+    "R": {
+      "id": "godie-nsjs.r",
+      "name": "18-04 億年樹",
+      "icon": "assets/icons/abilities/godie-nsjs.r.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n讓魔界最具強大魔力的億年樹在現世甦醒，億年樹擁有500點生命，出現時造成附近敵軍{{dmg}}傷害，每秒回復附近友軍4%生命，降低敵軍30%攻擊速度、20%移動速度，當敵人攻擊藏馬的時候將有10%的機率受到老樹盤根的攻擊，持續8秒。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.7
+              }
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 1.233
+        }
+      },
+      "vfxKey": "fx.prim.nature.nova-lg",
+      "targetsEnemies": true,
+      "castTimeSec": 1.233,
+      "rangeTier": "中",
+      "range": 6,
+      "cooldownTier": "極大",
+      "manaCostTier": "小"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "thrown"
+  ],
+  "exAbility": "godie-nsjs.ex",
+  "passiveAbility": "godie-nsjs.passive",
+  "icon": "assets/icons/champions/godie-nsjs.png",
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-n00p",
+    "normalUnitRawcode": "NSJS",
+    "alternateUnitRawcode": "N00P",
+    "triggerAbility": {
+      "rawcode": "A0IH",
+      "name": "18-03 妖狐變化",
+      "durationSec": {
+        "1": 8,
+        "2": 12,
+        "3": 16,
+        "4": 20
+      },
+      "cooldownSec": {
+        "1": 60,
+        "2": 60,
+        "3": 60,
+        "4": 60
+      }
+    }
+  },
+  "playstyle": [
+    "植物",
+    "持續傷害",
+    "陣地控制"
+  ],
+  "pitch": "用植物與召喚效果建立自己的戰鬥區域，敵人在其中待得越久越不利。"
+}

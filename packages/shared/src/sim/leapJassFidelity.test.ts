@@ -185,9 +185,11 @@ describe("#247 fidelity — godie-u00n.r / godie-u00o.r (A0RZ 巨人迴旋彈)",
         amount["damageTier"],
         "war3map.j:36719 執行的是 300+300×level ⇒ 滿階 1200，收進最近的那一格",
       ).toBe(want);
-      expect(amount["flat"], "級別與原始值必須說同一句話（tierRawParity）").toBe(
-        DEFAULT_DAMAGE_TIERS.damage[want],
-      );
+      // ⛔ 2026-08-22（#534）：出貨文件**只寫級別**，算好的 `flat` 由
+      // `resolveDamageTier()` 在註冊時填回去（第〇·四守則）。
+      // ⇒ 這裡改驗「⛔ 文件裡沒有 flat」，⛔ 不是驗它等於級距值 ——
+      // 後者現在恆為 undefined，會用「級別與原始值說了兩句話」這個**錯誤的訊息**紅。
+      expect(amount["flat"], "⛔ 出貨文件不可以再帶算好的 flat（#534）").toBeUndefined();
       expect(amount["perRank"], "級距**取代** perRank，⛔ 不是相加").toBeUndefined();
     }
   });

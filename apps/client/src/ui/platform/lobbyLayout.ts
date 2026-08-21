@@ -97,6 +97,20 @@ export type LeftColumnMode = "split" | "stack";
  */
 export type AlreadyFriendMode = "greyed-button" | "hide-row";
 
+/**
+ * How 朋友列表 orders its rows (GH#536).
+ *
+ * owner 2026-08-22:「朋友清單，**有上線的應該會特別排到最上面顯示吧**？」
+ * ⇒ `online-first` is the shipped value, and it is his instruction, ⛔ not my
+ * pick. `name` is the plain alphabetical list for somebody who would rather
+ * look a specific person up than see who is around.
+ *
+ * ⚠️ 這在 GH#499（管理員預設好友一次回填 **198 人**）之後才變成真的問題：
+ * 平台端是照**帳號 id** 排的（`friend/handlers.go::entries`），對眼睛等於亂序，
+ * 於是找那三個在線的人要用捲的。實作 `friendOrder.ts`。
+ */
+export type FriendSortMode = "online-first" | "name";
+
 export interface Viewport {
   width: number;
   height: number;
@@ -115,6 +129,8 @@ export interface LobbyLayoutPolicy {
   leaderboardShare: number;
   /** How the 宿敵榜 orders its rows (GH#454). */
   nemesisSort: NemesisSortMode;
+  /** How 朋友列表 orders its rows (GH#536). */
+  friendSort: FriendSortMode;
   /** Top-to-bottom order of the panels in `split` mode (desktop). */
   splitOrder: LeftColumnSlot[];
   /** How 線上玩家 renders somebody who is already a friend. */
@@ -156,6 +172,7 @@ export const DEFAULT_LOBBY_LAYOUT: LobbyLayoutPolicy = {
   nemesisShare: 0.2,
   leaderboardShare: 0.4,
   nemesisSort: "played",
+  friendSort: "online-first",
   splitOrder: ["friends", "online", "nemesis", "leaderboard"],
   alreadyFriendMode: "greyed-button",
   stackOrder: ["friends", "online", "nemesis", "leaderboard"],

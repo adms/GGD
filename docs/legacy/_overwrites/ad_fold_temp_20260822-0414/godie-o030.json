@@ -1,0 +1,266 @@
+{
+  "id": "godie-o030",
+  "schema": "champion@1",
+  "name": "電車癡漢 - 臭作",
+  "description": "故事：\n傳說中的變態色魔老頭，身懷眾多變態絕技，是去死團裡強大的怨念支柱，興趣是偷窺以及(嗶.............成人向)。\n(出自:臭作)\n\n|CFFFF0000推薦玩家 : |CFFFE890D牽制殺人\n|CFFFF0000上手度 : |CFFFE890D中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.75\n智慧 + 1.75\n基礎跑速 295\n\n可學習的技能：\n綁架、酒精灌腸、癡漢火焰、電車之狼衝擊",
+  "role": "marksman",
+  "attackType": "ranged",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
+    "ap": 0,
+    "armor": 0,
+    "mr": 28,
+    "as": 0.588235,
+    "ms": 5.7,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 12.0
+  },
+  "growth": {
+    "maxHealth": 34,
+    "healthRegen": 0.09,
+    "maxMana": 21,
+    "manaRegen": 0.07,
+    "ad": 1.7,
+    "armor": 0.8,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "attributes": {
+    "str": 15,
+    "agi": 22,
+    "int": 18,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "AGI",
+    "source": "w3x"
+  },
+  "bodyScale": 3,
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.24,
+    "knockbackMag": 0.0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-o030.q",
+      "name": "30-01 綁架",
+      "icon": "assets/icons/abilities/godie-o030.q.webp",
+      "provenance": "w3x-import",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n因為想非常想要肛人而起了綁架人的念頭，導致不分敵我的胡亂綁架來肛，綑綁範圍{{range}}。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 6.0,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "root",
+          "duration": 1.0,
+          "root": true
+        }
+      ],
+      "vfxKey": "fx.prim.void.pulse-sm",
+      "sfxKey": "wc3.headhunteryes4",
+      "castTimeSec": 0.367,
+      "cooldownTier": "小",
+      "rangeTier": "中",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-o030.w",
+      "name": "30-02 酒精灌腸",
+      "icon": "assets/icons/abilities/godie-o030.w.webp",
+      "provenance": "w3x-import",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n把敵人肛門泡在酒精中，讓他們的移動速度降低10%，而且有20%的機會在攻擊時失手。當這個受到酒醉迷霧影響的敵方部隊，再受到火焰類攻擊時，它們會著火並不斷受到灼傷。可持續8秒。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.nature.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.667,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "中",
+      "manaCostTier": "極小"
+    },
+    "E": {
+      "id": "godie-o030.e",
+      "name": "30-03 痴漢火焰",
+      "icon": "assets/icons/abilities/godie-o030.e.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n讓一個敵方單位身陷痴漢火焰之中，造成每秒{{dmg}}點的持續性的傷害，並使其無法施展法術、並降低攻擊力50%，持續7秒。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.fire.explosion",
+      "targetsEnemies": true,
+      "castTimeSec": 0.667,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "中",
+      "manaCostTier": "小"
+    },
+    "R": {
+      "id": "godie-o030.r",
+      "name": "30-04 電車之狼衝擊",
+      "icon": "assets/icons/abilities/godie-o030.r.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n在臭作肛了新幹線車長之時，導致車長興奮過度讓新幹線脫軌衝了出來，造成一直線地面部隊{{dmg}}點傷害。",
+      "slot": "R",
+      "castType": "skillshot",
+      "maxRank": 3,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave.physical",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "大"
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "burnstun",
+              "duration": 1.2,
+              "stun": true
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.physical.shockwave-lg",
+      "castTimeSec": 0.767,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "中",
+      "manaCostTier": "小"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin",
+    "magic"
+  ],
+  "exAbility": "godie-o030.ex",
+  "passiveAbility": "godie-o030.passive",
+  "icon": "assets/icons/champions/godie-o030.png",
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-orkn",
+    "normalUnitRawcode": "ORKN",
+    "alternateUnitRawcode": "O030",
+    "triggerAbility": {
+      "rawcode": "A0YT",
+      "name": "30-002 變態紳士",
+      "durationSec": {
+        "1": 15.0,
+        "2": 15.0,
+        "3": 21.0,
+        "4": 27.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      }
+    }
+  }
+}

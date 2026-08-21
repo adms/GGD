@@ -1,0 +1,278 @@
+{
+  "id": "godie-orkn",
+  "schema": "champion@1",
+  "name": "電車癡漢 - 臭作",
+  "description": "故事：\n傳說中的變態色魔老頭，身懷眾多變態絕技，是去死團裡強大的怨念支柱，興趣是偷窺以及(嗶.............成人向)。\n(出自:臭作)\n\n推薦玩家 : 牽制殺人\n上手度 : 中\n\n角色成長：\n力量 + 1.90\n敏捷 + 2.75\n智慧 + 1.75\n基礎跑速 295\n\n可學習的技能：\n綁架、酒精灌腸、癡漢火焰、電車之狼衝擊",
+  "role": "marksman",
+  "attackType": "ranged",
+  "origin": "法師",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
+    "ap": 0,
+    "armor": 0,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.7,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 8.2
+  },
+  "growth": {
+    "maxHealth": 78.1041,
+    "healthRegen": 0.1633,
+    "maxMana": 47.0969,
+    "manaRegen": 0.1667,
+    "ad": 3.2653,
+    "armor": 0.6681,
+    "mr": 1.8261,
+    "as": 0.0083,
+    "ap": 1.2105
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 15,
+    "agi": 22,
+    "int": 18,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "AGI",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.24,
+    "knockbackMag": 0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-orkn.q",
+      "name": "30-01 綁架",
+      "icon": "assets/icons/abilities/godie-orkn.q.webp",
+      "provenance": "w3x-import",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n因為想非常想要肛人而起了綁架人的念頭，導致不分敵我的胡亂綁架來肛，綑綁範圍{{range}}。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 6.0,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "root",
+          "duration": 1.0,
+          "root": true
+        }
+      ],
+      "vfxKey": "fx.prim.void.pulse-sm",
+      "sfxKey": "wc3.headhunteryes4",
+      "castTimeSec": 0.367,
+      "cooldownTier": "小",
+      "rangeTier": "中",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-orkn.w",
+      "name": "30-02 酒精灌腸",
+      "icon": "assets/icons/abilities/godie-orkn.w.webp",
+      "provenance": "w3x-import",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n把敵人肛門泡在酒精中，讓他們的移動速度降低10%，而且有20%的機會在攻擊時失手。當這個受到酒醉迷霧影響的敵方部隊，再受到火焰類攻擊時，它們會著火並不斷受到灼傷。可持續8秒。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.667
+        }
+      },
+      "vfxKey": "fx.prim.nature.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.667,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "中",
+      "manaCostTier": "極小"
+    },
+    "E": {
+      "id": "godie-orkn.e",
+      "name": "30-03 痴漢火焰",
+      "icon": "assets/icons/abilities/godie-orkn.e.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n讓一個敵方單位身陷痴漢火焰之中，造成每秒{{dmg}}點的持續性的傷害，並使其無法施展法術、並降低攻擊力50%，持續7秒。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.667
+        }
+      },
+      "vfxKey": "fx.prim.fire.explosion",
+      "targetsEnemies": true,
+      "castTimeSec": 0.667,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "中",
+      "manaCostTier": "小"
+    },
+    "R": {
+      "id": "godie-orkn.r",
+      "name": "30-04 電車之狼衝擊",
+      "icon": "assets/icons/abilities/godie-orkn.r.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n在臭作肛了新幹線車長之時，導致車長興奮過度讓新幹線脫軌衝了出來，造成一直線地面部隊{{dmg}}點傷害。",
+      "slot": "R",
+      "castType": "skillshot",
+      "maxRank": 3,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave.physical",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "大"
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "burnstun",
+              "duration": 1.2,
+              "stun": true
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.physical.shockwave-lg",
+      "castTimeSec": 0.767,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "中",
+      "manaCostTier": "小"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin",
+    "magic"
+  ],
+  "exAbility": "godie-orkn.ex",
+  "passiveAbility": "godie-orkn.passive",
+  "icon": "assets/icons/champions/godie-orkn.png",
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-o030",
+    "normalUnitRawcode": "ORKN",
+    "alternateUnitRawcode": "O030",
+    "triggerAbility": {
+      "rawcode": "A0YT",
+      "name": "30-002 變態紳士",
+      "durationSec": {
+        "1": 15,
+        "2": 15,
+        "3": 21,
+        "4": 27
+      },
+      "cooldownSec": {
+        "1": 60,
+        "2": 60,
+        "3": 60,
+        "4": 60
+      }
+    }
+  },
+  "playstyle": [
+    "負面狀態",
+    "控制",
+    "技能連鎖"
+  ],
+  "pitch": "先替敵人掛上各種妨害，再利用技能之間的連動逐步把目標逼入死局。"
+}

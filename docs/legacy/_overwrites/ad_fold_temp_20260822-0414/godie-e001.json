@@ -1,0 +1,369 @@
+{
+  "id": "godie-e001",
+  "schema": "champion@1",
+  "name": "蟬在叫人壞掉 - 龍宮禮奈",
+  "description": "故事：\n來自雛見澤的小女孩，喜歡把\"好可愛\"的東西帶回家。\n(出自:寒蟬鳴泣之時)\n\n推薦玩家 : 追擊殺人\n上手度 : 中\n\n角色成長：\n力量 + 1.75\n敏捷 + 2.80\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n鬼隱之擊\n、染血的柴刀、五吋釘、雛見澤症候群L5",
+  "role": "fighter",
+  "attackType": "melee",
+  "origin": "狂戰",
+  "modelKey": "imported.renaryugu2",
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 25,
+    "ap": 0,
+    "armor": 0,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.4
+  },
+  "growth": {
+    "maxHealth": 61.0037,
+    "healthRegen": 0.3344,
+    "maxMana": 21.3546,
+    "manaRegen": 0.0593,
+    "ad": 5.0327,
+    "armor": 0.665,
+    "mr": 1.8261,
+    "as": 0.0281,
+    "ap": 0.2122
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 17,
+    "agi": 23,
+    "int": 20,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "AGI",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 2,
+    "shakeMag": 0.34,
+    "knockbackMag": 0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-e001.q",
+      "name": "22-01 鬼隱之擊",
+      "icon": "assets/icons/abilities/godie-e001.q.webp",
+      "provenance": "w3x-import",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n隱形並在一定的時間內提昇50%速度以暗殺目標，當攻擊時隱形術即告失效，但是會造成額外100點的背刺傷害，持續12秒。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 5,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": 0.5
+            }
+          ],
+          "duration": 12.0,
+          "perRank": [
+            {
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "value": 0.5
+                }
+              ],
+              "duration": 12.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "value": 0.5
+                }
+              ],
+              "duration": 12.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "value": 0.5
+                }
+              ],
+              "duration": 12.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "value": 1.5
+                }
+              ],
+              "duration": 45.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "value": 3.0
+                }
+              ],
+              "duration": 45.0
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.void.pulse-sm",
+      "castTimeSec": 0.067,
+      "cooldownTier": "極大"
+    },
+    "W": {
+      "id": "godie-e001.w",
+      "name": "22-02 染血的柴刀",
+      "icon": "assets/icons/abilities/godie-e001.w.webp",
+      "provenance": "w3x-import",
+      "description": "[被動]\n{{cd}}秒冷卻時間\n\n攻擊時有18%的機率可以使出會心一擊造成1.25倍的傷害。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "effects": [],
+      "vfxKey": "fx.prim.blood.slash",
+      "passive": {
+        "name": "22-02 染血的柴刀",
+        "ranks": [
+          {
+            "modifiers": [
+              {
+                "stat": "critChance",
+                "op": "flat",
+                "value": 0.18
+              },
+              {
+                "stat": "critDamage",
+                "op": "override",
+                "value": 1.25
+              }
+            ]
+          },
+          {
+            "modifiers": [
+              {
+                "stat": "critChance",
+                "op": "flat",
+                "value": 0.16
+              },
+              {
+                "stat": "critDamage",
+                "op": "override",
+                "value": 2.0
+              }
+            ]
+          },
+          {
+            "modifiers": [
+              {
+                "stat": "critChance",
+                "op": "flat",
+                "value": 0.14
+              },
+              {
+                "stat": "critDamage",
+                "op": "override",
+                "value": 2.75
+              }
+            ]
+          },
+          {
+            "modifiers": [
+              {
+                "stat": "critChance",
+                "op": "flat",
+                "value": 0.12
+              },
+              {
+                "stat": "critDamage",
+                "op": "override",
+                "value": 3.5
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "E": {
+      "id": "godie-e001.e",
+      "name": "22-03 五吋釘",
+      "icon": "assets/icons/abilities/godie-e001.e.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n將一枚充滿詛咒的五吋釘射向敵方目標，造成瞬間{{dmg}}點傷害，並減緩60%移動速度5秒。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow60",
+          "duration": 5.0,
+          "moveSpeedMult": 0.4
+        }
+      ],
+      "vfxKey": "fx.prim.physical.beam",
+      "targetsEnemies": true,
+      "castTimeSec": 0.367,
+      "rangeTier": "大",
+      "range": 8,
+      "cooldownTier": "小",
+      "manaCostTier": "極小"
+    },
+    "R": {
+      "id": "godie-e001.r",
+      "name": "22-04 雛見澤症候群L5",
+      "icon": "assets/icons/abilities/godie-e001.r.webp",
+      "provenance": "w3x-import",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n注射藥物使自己短暫激發到L5的病狀，此狀態將會強化攻擊55點和移動速度，並暫時減少生命最大值150點，持續7秒。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "championForm",
+          "to": "alternate",
+          "durationSec": 7.0
+        },
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "flat",
+              "value": 55
+            }
+          ],
+          "duration": 7
+        }
+      ],
+      "vfxKey": "fx.prim.blood.nova-lg",
+      "castTimeSec": 0.667,
+      "cooldownTier": "中"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-e001.ex",
+  "passiveAbility": "godie-e001.passive",
+  "icon": "assets/icons/champions/godie-e001.png",
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-e00n",
+    "normalUnitRawcode": "E001",
+    "alternateUnitRawcode": "E00N",
+    "triggerAbility": {
+      "rawcode": "A02Q",
+      "name": "22-04 雛見澤症候群L5",
+      "durationSec": {
+        "1": 7,
+        "2": 14,
+        "3": 21,
+        "4": 28
+      },
+      "cooldownSec": {
+        "1": 60,
+        "2": 60,
+        "3": 60,
+        "4": 75
+      }
+    }
+  },
+  "playstyle": [
+    "追殺",
+    "吸血",
+    "暴擊"
+  ],
+  "pitch": "黏住敵人不停攻擊，靠吸血維持生命，殺進戰場後就不要停手。"
+}

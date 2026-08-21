@@ -1,0 +1,280 @@
+{
+  "id": "godie-huth",
+  "schema": "champion@1",
+  "name": "超級普烏 - 魔人普烏",
+  "description": "故事：\n看似貪玩可愛，骨子裡卻充滿邪惡的魔人普烏。擁有強大的分身再生能力，摧毀敵人也只不過是他的娛樂。\n(出自:七龍珠)\n\n推薦玩家 : 破塔堵人\n上手度 : 易\n\n角色成長：\n力量 + 2.50\n敏捷 + 1.85\n智慧 + 1.75\n基礎跑速 300\n\n可學習的技能：\n吃掉你、把你變成餅乾、分身、破滅能量彈",
+  "role": "fighter",
+  "attackType": "melee",
+  "origin": "坦克",
+  "modelKey": "imported.herobuu",
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 12,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 17.5,
+    "ap": 0,
+    "armor": 2,
+    "mr": 28,
+    "as": 0.526316,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.4
+  },
+  "growth": {
+    "maxHealth": 97.25,
+    "healthRegen": 0.0835,
+    "maxMana": 21.6607,
+    "manaRegen": 0.0636,
+    "ad": 3.1602,
+    "armor": 1.7753,
+    "mr": 4.9939,
+    "as": 0.009,
+    "ap": 0.3449
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 22,
+    "agi": 14,
+    "int": 18,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "STR",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.18,
+    "knockbackMag": 0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-huth.q",
+      "name": "28-01 吃掉你",
+      "icon": "assets/icons/abilities/godie-huth.q.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n張開大口吃掉目標，把敵人變成養分。\n\n每吃掉6隻增加1點力量。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        6.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "damageType": "magic"
+        }
+      },
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "targetsEnemies": true,
+      "castTimeSec": 0.167,
+      "rangeTier": "極小",
+      "range": 3,
+      "cooldownTier": "極小",
+      "manaCostTier": "極小"
+    },
+    "W": {
+      "id": "godie-huth.w",
+      "name": "28-02 把你變成餅乾",
+      "icon": "assets/icons/abilities/godie-huth.w.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n把低等的敵人變成餅乾，吃下餅乾可以回復體力500點，也會對目標造成{{dmg}}傷害。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 0.3,
+          "stun": true
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse",
+      "sfxKey": "wc3.eggsackdeath1",
+      "targetsEnemies": true,
+      "castTimeSec": 0.3,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "小",
+      "manaCostTier": "極小"
+    },
+    "E": {
+      "id": "godie-huth.e",
+      "name": "28-03 分身",
+      "icon": "assets/icons/abilities/godie-huth.e.webp",
+      "provenance": "w3x-import",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n創造出2個普烏的實體來攻擊敵人，具有30%攻擊力，並除掉身上的所有法術效果，可持續10秒。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.667
+        }
+      },
+      "vfxKey": "fx.prim.arcane.swarm",
+      "targetsEnemies": true,
+      "castTimeSec": 0.667,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "極大",
+      "manaCostTier": "小"
+    },
+    "R": {
+      "id": "godie-huth.r",
+      "name": "28-04 破滅能量彈",
+      "icon": "assets/icons/abilities/godie-huth.r.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n指定一區域給予強大的重力能量彈，造成該區域單位行動速度降低35%，並且每秒受到{{dmg}}點傷害，持續5秒。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        288.0,
+        288.0,
+        288.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.7
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow35",
+          "duration": 5.0,
+          "moveSpeedMult": 0.65
+        }
+      ],
+      "vfxKey": "fx.prim.void.explosion-lg",
+      "targetsEnemies": true,
+      "castTimeSec": 1.433,
+      "rangeTier": "大",
+      "range": 8,
+      "cooldownTier": "極大",
+      "manaCostTier": "中"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-huth.ex",
+  "passiveAbility": "godie-huth.passive",
+  "passive": {
+    "name": "28-00 無限再生",
+    "modifiers": [
+      {
+        "stat": "healthRegen",
+        "op": "flat",
+        "value": 12
+      }
+    ]
+  },
+  "icon": "assets/icons/champions/godie-huth.png",
+  "playstyle": [
+    "高生存",
+    "再生",
+    "持久戰"
+  ],
+  "pitch": "黏在戰場中央不斷承受傷害，戰鬥拖得越久，敵人越難真正解決你。"
+}

@@ -1,0 +1,310 @@
+{
+  "id": "godie-e008",
+  "schema": "champion@1",
+  "name": "火霧戰士 - 夏娜",
+  "description": "故事：\n身分為火霧戰士，為了存在感稀薄的人而戰。\n(出自:灼眼的夏娜)\n\n推薦玩家 : 團戰殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.75\n敏捷 + 2.90\n智慧 + 1.55\n基礎跑速 310\n\n可學習的技能：\n拔焰刀、火羽、赤焰爆發、討滅封絕",
+  "role": "fighter",
+  "attackType": "melee",
+  "origin": "法鬥",
+  "modelKey": "imported.heroshana",
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 20,
+    "ap": 0,
+    "armor": 0,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 6,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 77.6347,
+    "healthRegen": 0.1624,
+    "maxMana": 47.25,
+    "manaRegen": 0.1689,
+    "ad": 5.0837,
+    "armor": 0.6711,
+    "mr": 1.8261,
+    "as": 0.0084,
+    "ap": 1.2768
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 17,
+    "agi": 21,
+    "int": 17,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "AGI",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 2,
+    "shakeMag": 0.34,
+    "knockbackMag": 0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-e008.q",
+      "name": "21-02 拔焰刀",
+      "icon": "assets/icons/abilities/godie-e008.q.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n拔抽覆蓋火焰的刀斬擊敵人造成{{dmg}}傷害，同時可以打昏目標0.5秒。同時熾熱的刀身能造成普攻附加額外75點火焰擴散傷害4秒。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 0.5,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.prim.fire.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.w3x.orb.minitypeflame.p00"
+        },
+        {
+          "vfxKey": "fx.w3x.orb.minitypeflame.p01",
+          "attachTo": "point",
+          "delayMs": 90
+        }
+      ],
+      "sfxKey": "wc3.flaretarget3",
+      "targetsEnemies": true,
+      "castTimeSec": 0.367,
+      "rangeTier": "小",
+      "range": 4.5,
+      "cooldownTier": "小",
+      "manaCostTier": "極小"
+    },
+    "W": {
+      "id": "godie-e008.w",
+      "name": "21-01 火羽",
+      "icon": "assets/icons/abilities/godie-e008.w.webp",
+      "provenance": "w3x-import",
+      "description": "[傷害加成]\n{{cd}}秒冷卻時間\n\n召喚火焰般的羽毛幫助周圍單位加速移動1.5倍，持續6秒。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": 1.5
+            }
+          ],
+          "duration": 6.0,
+          "perRank": [
+            {
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "value": 1.5
+                }
+              ],
+              "duration": 6.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "value": 1.5
+                }
+              ],
+              "duration": 12.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "value": 1.5
+                }
+              ],
+              "duration": 18.0
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.fire.nova",
+      "castTimeSec": 0.267,
+      "cooldownTier": "中"
+    },
+    "E": {
+      "id": "godie-e008.e",
+      "name": "21-03 赤焰爆發",
+      "icon": "assets/icons/abilities/godie-e008.e.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n赤焰爆發可以攻擊一直線敵人，將其打到空中給予400點損害，落地後暈眩1秒。",
+      "slot": "E",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "burnstun",
+              "duration": 1.0,
+              "stun": true
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.w3x.particle.enchant.p00",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.w3x.particle.enchant.p00"
+        },
+        {
+          "vfxKey": "fx.w3x.orb.minitypeflame.p00",
+          "attachTo": "point"
+        },
+        {
+          "vfxKey": "fx.w3x.particle.enchant.p01"
+        },
+        {
+          "vfxKey": "fx.w3x.orb.minitypeflame.p01",
+          "attachTo": "point"
+        }
+      ],
+      "castTimeSec": 1,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "大",
+      "manaCostTier": "小"
+    },
+    "R": {
+      "id": "godie-e008.r",
+      "name": "21-04 討滅封絕",
+      "icon": "assets/icons/abilities/godie-e008.r.webp",
+      "provenance": "w3x-import",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n開啟封絕的結界，範圍1800敵方移動速度下降30%、攻擊速度下降100%，而夏娜在結界內每殺死一名英雄可取得存在之力，增加全能力2點並恢復所有生命及瑪那，結界持續6秒。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "effects": [],
+      "vfxKey": "fx.prim.fire.explosion-lg",
+      "sfxKey": "wc3.soulpreservation",
+      "castTimeSec": 0.667,
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "castTimeSec": 0.667
+        }
+      },
+      "cooldownTier": "極大"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "katana"
+  ],
+  "exAbility": "godie-e008.ex",
+  "passiveAbility": "godie-e008.passive",
+  "icon": "assets/icons/champions/godie-e008.png",
+  "playstyle": [
+    "火焰劍",
+    "普攻強化",
+    "近戰循環"
+  ],
+  "pitch": "先用技能強化戰鬥狀態，再貼住敵人以火焰普攻與劍技持續輸出。"
+}

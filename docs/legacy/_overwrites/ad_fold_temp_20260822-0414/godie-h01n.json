@@ -1,0 +1,436 @@
+{
+  "id": "godie-h01n",
+  "schema": "champion@1",
+  "name": "開外掛的死神 - 黑崎一護",
+  "description": "故事：黑崎一護除了能夠看見靈之外，是個很普通的高中生，但是有一天，出現了一個叫做〔虛〕的惡靈找上了他，此時！他遇見了死神朽木露琪亞，為了拯救家人，踏上代理死神這條路 。\n(出自:死神BLEACH)\n\n推薦玩家 : 輸出殺人\n上手度 : 易\n\n角色成長：\n力量 + 2.75\n敏捷 + 1.45\n智慧 + 1.6\n基礎跑速 295\n\n可學習的技能：\n瞬步、斬擊、月牙天衝、卍解",
+  "role": "fighter",
+  "attackType": "melee",
+  "origin": "鬥士",
+  "modelKey": "imported.heroichigo",
+  "attackDamagePoint": 0.5,
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 300,
+    "manaRegen": 0.2,
+    "ad": 10,
+    "ap": 0,
+    "armor": 1,
+    "mr": 28,
+    "as": 0.526316,
+    "ms": 5.7,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 75.9918,
+    "healthRegen": 0.2026,
+    "maxMana": 45.8214,
+    "manaRegen": 0.1764,
+    "ad": 5.1571,
+    "armor": 0.857,
+    "mr": 2.3541,
+    "as": 0.0121,
+    "ap": 0.6765
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 24,
+    "agi": 17,
+    "int": 13,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "STR",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 3,
+    "shakeMag": 0.44,
+    "knockbackMag": 0.25
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-h01n.q",
+      "name": "79-01 瞬步",
+      "provenance": "owner-spec",
+      "description": "[主動][指向][範圍][衝刺]\n{{cd}}秒冷卻\n消耗[MP] {{mp}}\n施法距離：{{range}}\n\n「不是我消失，是你反應太慢」\n以急快的速度[直線] [衝刺] 至對方身旁，造成 [範圍] 敵方單位 [破魔] 魔抗減半，持續 3秒。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 8.0,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "toPoint",
+          "speed": 16,
+          "maxDistance": 9.17
+        },
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "flat": 1.0
+          },
+          "radius": 3.0,
+          "radiusTier": "極小",
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "statusId": "magic-break",
+              "duration": 3.0
+            }
+          ]
+        },
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "mr",
+              "op": "pctAdd",
+              "value": -1.0
+            }
+          ],
+          "duration": 3.0,
+          "dispellable": true,
+          "polarity": "debuff"
+        },
+        {
+          "kind": "spawnVfx",
+          "vfxId": "fx.prim.void.bolt",
+          "at": "point"
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-h01n.q.webp",
+      "vfxKey": "fx.prim.void.pulse-sm",
+      "cooldownTier": "極小",
+      "radiusTier": "極小",
+      "rangeTier": "大",
+      "castTimeSec": 0.067
+    },
+    "W": {
+      "id": "godie-h01n.w",
+      "name": "79-02 月牙斬擊",
+      "provenance": "owner-spec",
+      "description": "[主動][AP加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n\n「月牙。斬魄刀」\n給予目標額外200/350/500/650傷害。\n(若對方在 [破魔] 狀態，則額外造成 100% [AP] 傷害)\n(卍解 [變身] 狀態下傷害額外追加 200% [AP])",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "range": 4.5,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.5
+              }
+            ]
+          }
+        }
+      ],
+      "passive": {
+        "name": "79-02 月牙斬擊",
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onAbilityHit",
+                "abilitySlot": "W",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 1.0
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "magic-break"
+                },
+                "target": "event"
+              },
+              {
+                "on": "onAbilityHit",
+                "abilitySlot": "W",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 2.0
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "bankai"
+                },
+                "target": "event"
+              }
+            ]
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-h01n.w.webp",
+      "vfxKey": "fx.prim.physical.slash",
+      "cooldownTier": "極大",
+      "manaCostTier": "極小",
+      "rangeTier": "小",
+      "castTimeSec": 0.667
+    },
+    "E": {
+      "id": "godie-h01n.e",
+      "name": "79-03 月牙天衝",
+      "provenance": "owner-spec",
+      "description": "[主動][指向][範圍][AP加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n施法距離：{{range}}\n\n「月牙天衝！招式喊得越大聲，傷害就越強大」\n造成一[直線]上的敵方部隊受到450/600/750/900傷害。\n(若對方在 [破魔] 狀態，則額外造成 60% [AP] 傷害)\n(卍解 [變身] 狀態下傷害額外追加 120% [AP])",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        288.0,
+        288.0,
+        288.0,
+        288.0
+      ],
+      "range": 12.0,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "中"
+          },
+          "length": 11,
+          "width": 2.0,
+          "aim": "target",
+          "fromCaster": true,
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "damage",
+              "condition": {
+                "kind": "status",
+                "subject": "target",
+                "statusId": "magic-break"
+              },
+              "damageType": "magic",
+              "amount": {
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.6
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "damage",
+              "condition": {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "bankai"
+              },
+              "damageType": "magic",
+              "amount": {
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 1.2
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-h01n.e.webp",
+      "vfxKey": "fx.prim.void.beam",
+      "cooldownTier": "大",
+      "manaCostTier": "中",
+      "rangeTier": "極大",
+      "castTimeSec": 0.467
+    },
+    "R": {
+      "id": "godie-h01n.r",
+      "name": "79-04 卍解",
+      "provenance": "owner-spec",
+      "description": "[主動][輔助][變身]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n\n「卍解。天鎖斬月」\n壓縮全部力量並進入 [卍解] 狀態，[攻擊速度]提升100/150/200%，[瞬步] 冷卻縮短 50%，持續8秒。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "championForm",
+          "to": "alternate",
+          "durationSec": 8.0
+        },
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 1.0
+            }
+          ],
+          "duration": 8.0,
+          "statusId": "bankai",
+          "perRank": [
+            {
+              "modifiers": [
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": 1.0
+                }
+              ],
+              "duration": 8.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": 1.5
+                }
+              ],
+              "duration": 8.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": 2.0
+                }
+              ],
+              "duration": 8.0
+            }
+          ]
+        },
+        {
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "Q",
+          "mode": "reduce",
+          "amount": 0.5
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-h01n.r.webp",
+      "vfxKey": "fx.prim.void.pulse-lg",
+      "cooldownTier": "大",
+      "castTimeSec": 0.667
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "katana"
+  ],
+  "exAbility": "godie-h01n.ex",
+  "passiveAbility": "godie-h01n.passive",
+  "icon": "assets/icons/champions/godie-h01n.png",
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-h01o",
+    "normalUnitRawcode": "H01N",
+    "alternateUnitRawcode": "H01O",
+    "triggerAbility": {
+      "rawcode": "A0LN",
+      "name": "79-04 卍解",
+      "durationSec": {
+        "1": 8,
+        "2": 16,
+        "3": 24,
+        "4": 25
+      },
+      "cooldownSec": {
+        "1": 60,
+        "2": 60,
+        "3": 60,
+        "4": 30
+      }
+    }
+  },
+  "playstyle": [
+    "追擊",
+    "連續斬擊",
+    "近戰壓迫"
+  ],
+  "pitch": "持續逼近敵人，以普攻與斬擊保持壓力，適合一路追著目標砍到底。"
+}

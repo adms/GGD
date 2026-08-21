@@ -1,0 +1,40 @@
+{
+  "schema": "item@1",
+  "id": "sasumata",
+  "name": "討伐叉",
+  "icon": "assets/icons/items/sasumata.webp",
+  "cost": 0,
+  "tier": 5,
+  "craftRole": "none",
+  "tags": [
+    "legendary",
+    "ex-origin",
+    "aura",
+    "teamplay"
+  ],
+  "description": "道具\n效能\n[合力制伏] 周圍每有一名活著的隊友（最多計 2 名），你與範圍內的隊友 攻擊力+12、護甲+3\n[合力制伏] 身邊一名隊友都沒有時，這個增幅整份消失（不是變弱，是完全沒有）\n[合力制伏] 隊友走出範圍就少一份，走回來立刻補上\n\n解說\n一個人拿著它，那只是一根叉子；三個人一起拿著它，那才叫制伏。",
+  "auras": [
+    {
+      "key": "sasumata-pin",
+      "radius": 9.17,
+      "affects": "ally",
+      "scaleByNearby": {
+        "count": "ally",
+        "max": 2
+      },
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "flat",
+          "value": 12
+        },
+        {
+          "stat": "armor",
+          "op": "flat",
+          "value": 3
+        }
+      ]
+    }
+  ],
+  "authoringNote": "⭐【合力制伏】＝ 一圈 `auras[0]` 加一格 `scaleByNearby`（2026-08-18 新機制，sim/aura/aura.ts DECISION 7）。⛔ 引擎裡**沒有**一個叫「人多就變強」的專屬機制（第〇·五守則）—— 這張卡是既有的靈氣投影 × 既有的 `ModifierSource.stacks` 組出來的：圈裡數到 N 名隊友 ⇒ 那一份投影的 stacks = N，而 `statPipeline` 對 Flat/PercentAdd/PercentMult 三種 op 一視同仁地乘 stacks。\n\n逐句對照：\n· 「周圍每有一名活著的隊友…攻擊力+12、護甲+3」= `scaleByNearby.count:\"ally\"` 數人 → stacks，`modifiers` 是 ad flat 12 + armor flat 3。「活著」不是修辭：數人與掛圈走的是同一次 `queryOverlap({aliveOnly:true})`，倒地的隊友一份都不算。\n· 「最多計 2 名」= `scaleByNearby.max: 2`。⭐ 2 是**這座競技場數得到的上限**（一個 duel zone 是 3v3，所以「我以外的隊友」最多兩名），⛔ 不是一個平衡意見；它同時是 mis-parse 柵欄（`AURA_COUNT_MAX` 是 8）。owner 想改成「連召喚物也算、算到 4 名」就是把這一格改成 4。\n· 「身邊一名隊友都沒有時，這個增幅整份消失」= `scaleByNearby.min` 省略 = 1，而人數 < min ⇒ **這一圈整份不掛**（連持有者自己都沒有）。⛔ 刻意不是「掛 0 層」—— 0 層的來源在屬性面板上看得到卻什麼都不做，那正是第一·五守則要擋的東西。\n· 「隊友走出範圍就少一份，走回來立刻補上」= `auraSystem` 每 tick 從位置重建，層數變動是**同一個來源 id** 就地改 stacks（⛔ 不是離開再進來一次，所以不會噴一對 auraApply/auraEnd、也不會重置任何 hook 帳）。\n· `radius 9.17` = w3x 500 距離單位的標準換算（與 79-00 靈壓同一個數），文案沒有給這個數字，所以卡面也沒有印它。\n· `affects:\"ally\"` + `includeSelf` 省略（＝ally 圈預設含自己）⇒ 圈內隊友與持有者本人都吃得到，卡面因此寫「你與範圍內的隊友」。\n\n⚠️ **與 owner 原文哪裡不一樣、為什麼**：\n① ⛔ **owner 那份 15 件清單的『討伐叉』原文不在這個 repo 裡**（我找得到的唯一一句是 `content/loot-tables/ex-origin-weapons.json` 的 note：「靈氣強度要隨『範圍內有幾個隊友』變化」）。⇒ 這張卡的機制骨架照那一句寫，但**逐字的逆轉條件／逆轉效果、以及 +12 / +3 / 最多 2 名這三個數字全部是我挑的**，⚠️ 要請 owner 覆核。三個都是純資料，改它不必動程式。\n② 「隊友」在引擎裡的定義是**同隊、還活著、拿得住 modifier 的身體**（`world.team` 相同 + 有 `StatsComp`）—— 所以召喚物與被復活的隊友**算人頭**，殭屍（MONSTER_TEAM）與中立守衛（沒有隊伍）**不算**。引擎今天沒有「只數英雄」這根軸，⛔ 我不為這一張卡寫一個 if（第〇·五守則）。\n③ ⚠️ 這一格原本寫「這一版沒有圖示（檔案不存在），所以 icon 欄位整格省略」—— **兩半都是假的**（第三守則，2026-08-18 訂正）：`content/assets/icons/items/sasumata.webp` 真的存在，而這份文件的 `icon` 欄位也一直指著它。⛔ 下一輪不要照著那句話去「補圖示」。"
+}

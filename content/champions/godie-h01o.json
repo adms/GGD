@@ -104,12 +104,7 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "perRank": [
-                  200.0,
-                  300.0,
-                  400.0,
-                  500.0
-                ]
+                "damageTier": "小"
               }
             }
           ]

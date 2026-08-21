@@ -1,0 +1,350 @@
+{
+  "id": "godie-h01o",
+  "schema": "champion@1",
+  "name": "外掛開很大的死神 - 黑崎一護",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.heroichigo",
+  "attackDamagePoint": 0.5,
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 300,
+    "manaRegen": 0.2,
+    "ad": 10,
+    "ap": 0,
+    "armor": 1,
+    "mr": 28,
+    "as": 0.833333,
+    "ms": 7.7,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 55,
+    "healthRegen": 0.14,
+    "maxMana": 19,
+    "manaRegen": 0.06,
+    "ad": 2.8,
+    "armor": 0.4,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "attributes": {
+    "str": 24,
+    "agi": 17,
+    "int": 13,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "STR",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 3,
+    "shakeMag": 0.44,
+    "knockbackMag": 0.25
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-h01o.q",
+      "name": "79-01 瞬步",
+      "icon": "assets/icons/abilities/godie-h01o.q.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n以急快的速度移動至對方身旁並給予兩段式傷害，共計{{dmg}}點傷害。\n\n於斬擊蓄力狀態有額外50% [AP]點傷害加成",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [
+        {
+          "kind": "blink",
+          "shape": "single",
+          "to": "targetUnit",
+          "applyTo": "self",
+          "stopShortUnits": 1.8,
+          "onArrive": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小",
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.5
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "kind": "blink",
+          "shape": "single",
+          "to": "targetUnit",
+          "applyTo": "self",
+          "stopShortUnits": 1.8,
+          "onArrive": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  200.0,
+                  300.0,
+                  400.0,
+                  500.0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.bolt",
+      "castTimeSec": 0.267,
+      "rangeTier": "大",
+      "range": 8,
+      "cooldownTier": "中",
+      "manaCostTier": "極小"
+    },
+    "W": {
+      "id": "godie-h01o.w",
+      "name": "79-02 斬擊",
+      "icon": "assets/icons/abilities/godie-h01o.w.webp",
+      "provenance": "w3x-import",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n將月牙的能量聚集在斬月上，在攻擊敵人的同時釋放出，給予目標額外100+50% [AP]點傷害。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "range": 4.5,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.5
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.slash",
+      "castTimeSec": 0.667,
+      "cooldownTier": "極大",
+      "manaCostTier": "極小",
+      "passive": {
+        "name": "79-02 月牙斬擊",
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onAbilityHit",
+                "abilitySlot": "W",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 1.0
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "magic-break"
+                },
+                "target": "event"
+              },
+              {
+                "on": "onAbilityHit",
+                "abilitySlot": "W",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 2.0
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "bankai"
+                },
+                "target": "event"
+              }
+            ]
+          }
+        ]
+      },
+      "rangeTier": "小",
+      "targetsEnemies": true
+    },
+    "E": {
+      "id": "godie-h01o.e",
+      "name": "79-03 月牙天衝",
+      "icon": "assets/icons/abilities/godie-h01o.e.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n讓斬月吸收靈力的力量，再由刀尖放出超高密度靈壓的斬擊，造成一直線上的敵方部隊受到450傷害。\n在卍解狀態下轉變為黑色月牙，傷害加成250",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        },
+        {
+          "kind": "spawnVfx",
+          "vfxId": "godie-deathwave-p0",
+          "at": "target"
+        }
+      ],
+      "vfxKey": "fx.prim.void.dash",
+      "targetsEnemies": true,
+      "castTimeSec": 0.667,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "大",
+      "manaCostTier": "小"
+    },
+    "R": {
+      "id": "godie-h01o.r",
+      "name": "79-04 卍解",
+      "icon": "assets/icons/abilities/godie-h01o.r.webp",
+      "provenance": "w3x-import",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n死神中的奧義，只有踏上死神最高點才可習得的技能，黑崎的卍解是將靈氣集中於斬月上，使其爆發出最高的力量，攻擊及移動速度大幅提昇，靈壓也會隨之變強，持續8秒。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "maxHealth",
+              "op": "flat",
+              "value": 300
+            }
+          ],
+          "duration": 3.0
+        }
+      ],
+      "vfxKey": "fx.prim.void.pulse-lg",
+      "castTimeSec": 0.667,
+      "cooldownTier": "極大"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "katana"
+  ],
+  "exAbility": "godie-h01o.ex",
+  "passiveAbility": "godie-h01o.passive",
+  "icon": "assets/icons/champions/godie-h01o.png",
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-h01n",
+    "normalUnitRawcode": "H01N",
+    "alternateUnitRawcode": "H01O",
+    "triggerAbility": {
+      "rawcode": "A0LN",
+      "name": "79-04 卍解",
+      "durationSec": {
+        "1": 8.0,
+        "2": 16.0,
+        "3": 24.0,
+        "4": 25.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 30.0
+      }
+    }
+  }
+}

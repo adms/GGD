@@ -1,0 +1,38 @@
+{
+  "id": "godie-i05o",
+  "schema": "item@1",
+  "name": "刺針",
+  "icon": "assets/icons/items/godie-i05o.webp",
+  "description": "飾品\n效能\n攻擊力+5.2\n生命+11\n魔力+7\n看穿隱形\n\n解說\n刺針是一把精靈匕首，原為哈比人比爾博-巴金斯所有。比爾博在幽暗密林以此劍刺擊大蜘蛛，因此為其取名為刺針。刺針的法力可偵察附近的敵人，當敵人接近時，劍面會泛起藍光。",
+  "cost": 300,
+  "tier": 1,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "ad",
+      "op": "flat",
+      "value": 5.2
+    },
+    {
+      "stat": "maxHealth",
+      "op": "flat",
+      "value": 11
+    },
+    {
+      "stat": "maxMana",
+      "op": "flat",
+      "value": 7
+    }
+  ],
+  "craftRole": "final",
+  "recipe": {
+    "components": [
+      "godie-i06m",
+      "godie-i005",
+      "godie-i06k"
+    ],
+    "book": "godie-i00a"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "9090b7d7cf30",
+  "hash": "607d3541ca9f",
   "entries": [
     {
       "id": "admin-friend",
@@ -113,8 +113,8 @@
     {
       "id": "combat-env",
       "path": "config/combat-env.json",
-      "hash": "b80f8a6d66b7",
-      "size": 983
+      "hash": "dc4cd0fdf6d1",
+      "size": 984
     },
     {
       "id": "combat-feel",
@@ -163,6 +163,12 @@
       "path": "config/damage-rules.json",
       "hash": "0a4975f8e3f5",
       "size": 651
+    },
+    {
+      "id": "damage-tier-exemptions",
+      "path": "config/damage-tier-exemptions.json",
+      "hash": "195461728e14",
+      "size": 5615
     },
     {
       "id": "damage-tiers",
@@ -359,7 +365,7 @@
     {
       "id": "stat-caps",
       "path": "config/stat-caps.json",
-      "hash": "e81ec1472ed7",
+      "hash": "e1d91f5745c5",
       "size": 920
     },
     {

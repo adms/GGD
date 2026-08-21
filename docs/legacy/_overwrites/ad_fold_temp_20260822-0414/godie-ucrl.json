@@ -1,0 +1,306 @@
+{
+  "id": "godie-ucrl",
+  "schema": "champion@1",
+  "name": "職業獵人 - 傑 富力士",
+  "description": "故事：\n出身於鯨魚島，從小就在大自然中成長，鍛鍊出他一身恐怖的能力。在尋找父親的旅程中，莫名其妙捲入愛與怨念的戰場。\n(出自:獵人X獵人)\n\n推薦玩家 : 血牛巨砲\n上手度 : 易\n\n角色成長：\n力量 + 2.45\n敏捷 + 1.80\n智慧 + 1.75\n基礎跑速 300\n\n可學習的技能：\n山形修煉-放出系、山形修煉-變化系、山形修煉-強化系、傑桑",
+  "role": "fighter",
+  "attackType": "melee",
+  "origin": "鬥士",
+  "modelKey": "champ.thorne",
+  "attackDamagePoint": 0.5,
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
+    "ap": 0,
+    "armor": 2,
+    "mr": 28,
+    "as": 0.526316,
+    "ms": 6.1,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 75.7571,
+    "healthRegen": 0.2021,
+    "maxMana": 47.7092,
+    "manaRegen": 0.1753,
+    "ad": 5.1531,
+    "armor": 0.853,
+    "mr": 2.3541,
+    "as": 0.0124,
+    "ap": 0.6102
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 25,
+    "agi": 15,
+    "int": 14,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "STR",
+    "source": "w3x"
+  },
+  "bodyScale": 1.1,
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.18,
+    "knockbackMag": 0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-ucrl.q",
+      "name": "06-01 山形修煉-放",
+      "icon": "assets/icons/abilities/godie-ucrl.q.webp",
+      "provenance": "w3x-import",
+      "description": "[被動]\n0秒冷卻時間\n\n攻擊敵人時，4%機率施展放出系能力，由掌心放出念彈造成一直線敵人150點傷害，並增強「猜猜拳-布」的威力為300點。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        6.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.9
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 25
+            }
+          ],
+          "duration": 6.0
+        }
+      ],
+      "vfxKey": "fx.prim.ki.pulse-sm",
+      "sfxKey": "wc3.mortarteampissed9",
+      "castTimeSec": 0.167,
+      "cooldownTier": "極小",
+      "manaCostTier": "極小"
+    },
+    "W": {
+      "id": "godie-ucrl.w",
+      "name": "06-02 山形修煉-變",
+      "icon": "assets/icons/abilities/godie-ucrl.w.webp",
+      "provenance": "w3x-import",
+      "description": "[被動]\n0秒冷卻時間\n\n攻擊時有25%機率會發動變化系能力，將念化為刀刃攻擊目標造成75點額外傷害。並增強「猜猜拳-剪刀」的威力為350。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        6.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 3.0
+        }
+      ],
+      "vfxKey": "fx.prim.ki.pulse-sm",
+      "sfxKey": "wc3.mortarteampissed9",
+      "castTimeSec": 0.167,
+      "cooldownTier": "極小",
+      "manaCostTier": "極小"
+    },
+    "E": {
+      "id": "godie-ucrl.e",
+      "name": "06-03 山形修煉-強",
+      "icon": "assets/icons/abilities/godie-ucrl.e.webp",
+      "provenance": "w3x-import",
+      "description": "[被動]\n0秒冷卻時間\n\n不斷地修煉強化系能力，能讓自身攻防能力大幅上升，永久性的提昇力量7點。並增強「猜猜拳-石頭」的威力為500點。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        6.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.167
+        }
+      },
+      "vfxKey": "fx.prim.earth.pulse-sm",
+      "sfxKey": "wc3.mortarteampissed9",
+      "targetsEnemies": true,
+      "castTimeSec": 0.167,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "極小",
+      "manaCostTier": "極小"
+    },
+    "R": {
+      "id": "godie-ucrl.r",
+      "name": "06-04 傑桑變化",
+      "provenance": "w3x-import",
+      "description": "[變身]\n{{cd}}秒冷卻時間\n\n將全身的念發揮至極限，強制讓身體成長為數十年後的面貌，成長後攻擊和移動速度大幅提昇，攻擊時有(5+敏捷/10)%的機率隨機使出猜猜拳(無視距離因素)，持續7秒。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "championForm",
+          "to": "alternate",
+          "durationSec": 7.0
+        }
+      ],
+      "vfxKey": "fx.w3x.locust.boomnl.p01",
+      "icon": "assets/icons/abilities/godie-ucrl.r.png",
+      "castTimeSec": 0.667,
+      "hitFeel": {
+        "hitstopTicks": 5,
+        "hitstunTicks": 8,
+        "shakeMag": 0.591,
+        "shakeStyle": "omni",
+        "sparkKind": "heavy",
+        "flashColor": [
+          1,
+          0.72,
+          0.34
+        ],
+        "flashMs": 202,
+        "camKick": 0.506
+      },
+      "cooldownTier": "中"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "exAbility": "godie-ucrl.ex",
+  "passiveAbility": "godie-ucrl.passive",
+  "icon": "assets/icons/champions/godie-ucrl.png",
+  "tint": [
+    0.3922,
+    1,
+    0.3922
+  ],
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-u034",
+    "normalUnitRawcode": "UCRL",
+    "alternateUnitRawcode": "U034",
+    "triggerAbility": {
+      "rawcode": "A0Y1",
+      "name": "06-04 傑桑變化",
+      "durationSec": {
+        "1": 7,
+        "2": 14,
+        "3": 21
+      },
+      "cooldownSec": {
+        "1": 60,
+        "2": 60,
+        "3": 60
+      }
+    }
+  },
+  "playstyle": [
+    "蓄力",
+    "重擊",
+    "單點突破"
+  ],
+  "pitch": "想辦法接近目標，把力量集中在關鍵一擊，擅長抓住窗口完成單點突破。"
+}

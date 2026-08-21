@@ -116,18 +116,21 @@ describe("填了級別的節點，原始值必須等於級距值（owner 2026-08
             flag(`${f}:radius`, `${f} 的 ${String(node["kind"])}.radius = ${node["radius"]}，級別要 ${rad}`);
           }
         }
-        const dmg = tierValue(node["damageTier"], DEFAULT_DAMAGE_TIERS.damage);
-        if (dmg !== undefined) {
-          seen.damage++;
-          // ⛔ `perRank` 必須不在：`resolveDamageTier` 會**刪掉**它（級距取代，
-          //    ⛔ 不是相加）⇒ 留著它的文件與註冊後的物件說的不是同一件事。
-          if (node["flat"] !== dmg || node["perRank"] !== undefined) {
-            flag(
-              `${f}:damage`,
-              `${f} 的 amount = {flat:${node["flat"]}, perRank:${JSON.stringify(node["perRank"])}}，級別要 {flat:${dmg}, 無 perRank}`,
-            );
-          }
-        }
+        // ⛔⛔ **傷害那一軸 2026-08-22（#534）退場了** —— ⛔ 不要把它加回來。
+        //
+        // owner:「那你**只要改公式表 等於全改完**」「不然英雄、技能、道具、特效
+        // 這些堆積起來會**指數爆炸**」⇒ 出貨文件現在**只寫 `damageTier`**，
+        // 算好的 `flat` 由 `resolveDamageTier()` 在**註冊時**填回去（第〇·四守則）。
+        //
+        // ⚠️ 這一段原本要求 `flat === 級距值`，而**新的閘要求它們不可以並存**
+        //（`tierFlatExclusive.test.ts`）—— 兩條守衛會互相打架，而打架的那一刻
+        // 一定有一條在用錯誤的訊息紅。⭐ 拿掉這一段之後，「級別與原始值說兩句話」
+        // 這個缺陷在**結構上不可能發生**（原始值根本不在文件裡了），
+        // 那比用一條測試去守它強。
+        //
+        // ⭐ 其餘四軸（冷卻／射程／半徑／耗魔）**仍然**把原始值與級別一起存，
+        // 所以它們留著。哪天它們也改成載入時解析，這整支就該退休。
+        if (node["damageTier"] !== undefined) seen.damage++;
         for (const v of Object.values(node)) walk(v);
       };
       walk(doc);

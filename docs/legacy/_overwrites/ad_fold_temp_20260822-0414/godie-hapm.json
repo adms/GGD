@@ -1,0 +1,530 @@
+{
+  "id": "godie-hapm",
+  "schema": "champion@1",
+  "name": "海克力斯 - Berserker",
+  "description": "故事：\nBerserker是希臘神話中著名的英雄海格力斯(Hercules) ，血統為半神半人，力大無窮，曾在聖杯戰爭中被召喚為SENVENT與嬌小的Master依利亞並肩作戰。\n(第一屆去死團大賽獎勵角色 出自:Fate/stay night)\n\n推薦玩家 : 衝鋒殺人\n上手度 : 中\n\n角色成長：\n力量 + 2.80\n敏捷 + 1.40\n智慧 + 1.70\n基礎跑速 300\n\n可學習的技能：\n狂戰士之怒、蹂躪編年史、無銘斧劍、巨神一擊",
+  "role": "fighter",
+  "attackType": "melee",
+  "origin": "坦克",
+  "modelKey": "champ.thorne",
+  "baseStats": {
+    "maxHealth": 100,
+    "healthRegen": 0.25,
+    "maxMana": 0,
+    "manaRegen": 0.1,
+    "ad": 7,
+    "ap": 0,
+    "armor": 0,
+    "mr": 28,
+    "as": 0.526316,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.4
+  },
+  "growth": {
+    "maxHealth": 96.1173,
+    "healthRegen": 0.2005,
+    "maxMana": 23.2934,
+    "manaRegen": 0.0721,
+    "ad": 3.2388,
+    "armor": 1.7988,
+    "mr": 4.9939,
+    "as": 0.0091,
+    "ap": 0.6102
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 29,
+    "agi": 13,
+    "int": 14,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "STR",
+    "source": "w3x"
+  },
+  "bodyScale": 1.2,
+  "healthDrainPctOfMax": 0,
+  "hitFeel": {
+    "hitstopTicks": 4,
+    "shakeMag": 0.55,
+    "knockbackMag": 0.45
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-hapm.q",
+      "name": "52-01 狂戰士之怒",
+      "provenance": "owner-spec",
+      "description": "[主動][輔助]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n持續6秒\n\n「吼叫不是技能前搖，只是想嚇嚇他」\n進入[狂怒]狀態，提升60/90/120/150% [攻擊速度] 與10/15/20/25%[吸血]。\n期間每承受自身[最大生命]5%的傷害，「狂怒」持續時間延長2秒。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.6
+            },
+            {
+              "stat": "lifesteal",
+              "op": "flat",
+              "value": 0.1
+            }
+          ],
+          "duration": 6.0,
+          "statusId": "rage",
+          "perRank": [
+            {
+              "modifiers": [
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": 0.6
+                },
+                {
+                  "stat": "lifesteal",
+                  "op": "flat",
+                  "value": 0.1
+                }
+              ],
+              "duration": 6.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": 0.9
+                },
+                {
+                  "stat": "lifesteal",
+                  "op": "flat",
+                  "value": 0.15
+                }
+              ],
+              "duration": 6.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": 1.2
+                },
+                {
+                  "stat": "lifesteal",
+                  "op": "flat",
+                  "value": 0.2
+                }
+              ],
+              "duration": 6.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": 1.5
+                },
+                {
+                  "stat": "lifesteal",
+                  "op": "flat",
+                  "value": 0.25
+                }
+              ],
+              "duration": 6.0
+            }
+          ]
+        }
+      ],
+      "passive": {
+        "name": "52-01 狂戰士之怒",
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onDamageTaken",
+                "effects": [
+                  {
+                    "kind": "extendBuff",
+                    "shape": "single",
+                    "who": "self",
+                    "stackKey": "rage",
+                    "addSec": 2.0,
+                    "perDamagePctOfMaxHealth": 0.05,
+                    "maxRemainingSec": 30.0
+                  }
+                ],
+                "target": "self"
+              }
+            ]
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-hapm.q.webp",
+      "vfxKey": "fx.prim.physical.pulse",
+      "cooldownTier": "極大",
+      "castTimeSec": 0.067
+    },
+    "W": {
+      "id": "godie-hapm.w",
+      "name": "52-02 蹂躪編年史",
+      "provenance": "owner-spec",
+      "description": "[主動][指向][範圍][AP加成]\n{{cd}}秒冷卻，吟唱 1秒\n消耗MP{{mp}}\n施法距離：{{range}}\n\n「歷史是勝利者寫的，敗者只配飛出去擦地板」\n將敵方目標抓回再暴力的丟出去，使之撞擊[前方]一[直線][範圍]的敵人造成{{dmg}}+50% [AP]傷害。\n(若自身在 [狂怒] 狀態則額外附加受到 [範圍] 傷害的敵人 [恐懼] 狀態，持續 3秒)",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "range": 12.0,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "invulnerable",
+          "durationSec": 1.05,
+          "applyTo": "self",
+          "blocksDamage": "all",
+          "blocksTrueDamage": false,
+          "blocksControl": true
+        },
+        {
+          "kind": "leap",
+          "applyTo": "target",
+          "mode": "toPoint",
+          "apexHeight": 1.2,
+          "durationSec": 0.42,
+          "throwDistance": 7.33,
+          "dragToCaster": true,
+          "landRadius": 4.95,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小",
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.5
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "condition": {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "rage"
+              },
+              "statusId": "fear",
+              "duration": 3.0,
+              "feared": true
+            }
+          ]
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-hapm.w.webp",
+      "vfxKey": "fx.prim.physical.shockwave",
+      "cooldownTier": "大",
+      "manaCostTier": "極小",
+      "rangeTier": "極大",
+      "castTimeSec": 1
+    },
+    "E": {
+      "id": "godie-hapm.e",
+      "name": "52-03 無銘斧劍",
+      "provenance": "owner-spec",
+      "description": "[被動][普攻時]\n\n「沒有名字不是低階裝備，是作者懶得取」\n每次普通 [攻擊時] 造成額外{{dmg}} 傷害且附加 [麻痺] 效果，持續0.6秒。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "targetsEnemies": false,
+      "effects": [],
+      "passive": {
+        "name": "52-03 無銘斧劍",
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "flat": 50.0
+                    }
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "numbness",
+                    "duration": 0.6
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "modifiers": [
+                      {
+                        "stat": "as",
+                        "op": "pctAdd",
+                        "value": -0.4
+                      }
+                    ],
+                    "duration": 0.6,
+                    "dispellable": true,
+                    "polarity": "debuff"
+                  }
+                ],
+                "target": "event"
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "flat": 70.0
+                    }
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "numbness",
+                    "duration": 0.6
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "modifiers": [
+                      {
+                        "stat": "as",
+                        "op": "pctAdd",
+                        "value": -0.6
+                      }
+                    ],
+                    "duration": 0.6,
+                    "dispellable": true,
+                    "polarity": "debuff"
+                  }
+                ],
+                "target": "event"
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "flat": 90.0
+                    }
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "numbness",
+                    "duration": 0.6
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "modifiers": [
+                      {
+                        "stat": "as",
+                        "op": "pctAdd",
+                        "value": -0.8
+                      }
+                    ],
+                    "duration": 0.6,
+                    "dispellable": true,
+                    "polarity": "debuff"
+                  }
+                ],
+                "target": "event"
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "flat": 110.0
+                    }
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "numbness",
+                    "duration": 0.6
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "modifiers": [
+                      {
+                        "stat": "as",
+                        "op": "pctAdd",
+                        "value": -1.0
+                      }
+                    ],
+                    "duration": 0.6,
+                    "dispellable": true,
+                    "polarity": "debuff"
+                  }
+                ],
+                "target": "event"
+              }
+            ]
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-hapm.e.webp",
+      "vfxKey": "fx.prim.physical.slash"
+    },
+    "R": {
+      "id": "godie-hapm.r",
+      "name": "52-04 巨神一擊",
+      "provenance": "owner-spec",
+      "description": "[主動][衝刺][範圍]\n{{cd}}秒冷卻，吟唱2秒\n消耗[MP] {{mp}}\n\n「體型差不是霸凌，是傷害公式」\n向前[衝刺]一小段距離後揮出致命的一擊，對[周圍][範圍] 敵人造成{{dmg}} 傷害。\n(若敵人具有[恐懼]狀態，則額外追加 自身[最大生命]25%傷害)",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        120.0,
+        120.0,
+        120.0
+      ],
+      "manaCost": [
+        288.0,
+        288.0,
+        288.0
+      ],
+      "range": 0.0,
+      "radiusTier": "中",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "forward",
+          "speed": 16,
+          "maxDistance": 5.0
+        },
+        {
+          "kind": "damageArea",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "大"
+          },
+          "radius": 6.0,
+          "radiusTier": "中",
+          "includeOrigin": true
+        },
+        {
+          "kind": "damageArea",
+          "damageType": "physical",
+          "amount": {
+            "flat": 0.0
+          },
+          "radius": 6.0,
+          "radiusTier": "中",
+          "includeOrigin": true,
+          "victimCondition": {
+            "kind": "status",
+            "subject": "target",
+            "tag": "fear"
+          },
+          "resourcePct": {
+            "subject": "self",
+            "resource": "health",
+            "basis": "max",
+            "perRank": [
+              0.25
+            ]
+          }
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-hapm.r.webp",
+      "vfxKey": "fx.prim.physical.shockwave-lg",
+      "cooldownTier": "極大",
+      "manaCostTier": "中",
+      "castTimeSec": 2
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin",
+    "greatsword"
+  ],
+  "exAbility": "godie-hapm.ex",
+  "passiveAbility": "godie-hapm.passive",
+  "icon": "assets/icons/champions/godie-hapm.png",
+  "tint": [
+    0.3137,
+    0.3137,
+    0.3137
+  ],
+  "playstyle": [
+    "多次復活",
+    "消耗敵方資源"
+  ],
+  "pitch": "死亡也是你的戰術，逼敵人反覆投入傷害與技能才能真正處理掉你。"
+}

@@ -1,0 +1,301 @@
+{
+  "id": "godie-n003",
+  "schema": "champion@1",
+  "name": "黑暗福音 - 依文潔琳",
+  "description": "故事：\n吸血鬼的真祖〔以怪物來說是最強的等級而且是吸血鬼中屬於最高階的人物﹞，在15年以前是被稱為『闇之福音』、『不死的魔法使』。\n(出自:魔法老師)\n\n推薦玩家 : 團戰殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.20\n敏捷 + 1.50\n智慧 + 2.60\n基礎跑速 295\n*只有在夜晚才會自動回覆生命值\n\n可學習的技能：\n凍結的大地、吸血祭品、暗夜吹雪、世界終結",
+  "role": "marksman",
+  "attackType": "ranged",
+  "origin": "法師",
+  "modelKey": "imported.long",
+  "attackDamagePoint": 0.3,
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 2.5,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 18,
+    "ap": 0,
+    "armor": 0,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.7,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 8.2
+  },
+  "growth": {
+    "maxHealth": 76.9306,
+    "healthRegen": 0.1383,
+    "maxMana": 46.7908,
+    "manaRegen": 0.1624,
+    "ad": 3.1633,
+    "armor": 0.6864,
+    "mr": 1.8261,
+    "as": 0.009,
+    "ap": 1.0779
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 20,
+    "agi": 16,
+    "int": 20,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "INT",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.24,
+    "knockbackMag": 0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-n003.q",
+      "name": "42-01 凍結的大地",
+      "icon": "assets/icons/abilities/godie-n003.q.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n以一波冰雪轟擊敵方部隊，造成目標{{dmg}}點的傷害，以及周圍目標150點的冰爆傷害。冰冷傷害可以降低部隊的移動與攻擊速度1.2秒。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-proxy-cast",
+        "params": {
+          "anchor": "point",
+          "radius": 300,
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.767,
+          "statusId": "slow40",
+          "statusDurationSec": 1.5
+        }
+      },
+      "vfxKey": "fx.prim.ice.shockwave",
+      "targetsEnemies": true,
+      "radius": 6.0,
+      "castTimeSec": 0.767,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "極小",
+      "manaCostTier": "極小",
+      "radiusTier": "中"
+    },
+    "W": {
+      "id": "godie-n003.w",
+      "name": "42-02 吸血祭品",
+      "icon": "assets/icons/abilities/godie-n003.w.webp",
+      "provenance": "w3x-import",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n犧牲選定的友方不死部隊，並將它50%的生命點數轉化為吸血鬼的生命力，20%轉化為吸血鬼的法力。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "heal",
+          "amount": {
+            "perRank": [
+              200.0,
+              360.0,
+              520.0,
+              680.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.blood.nova",
+      "castTimeSec": 0.067,
+      "cooldownTier": "極大"
+    },
+    "E": {
+      "id": "godie-n003.e",
+      "name": "42-03 暗夜吹雪",
+      "icon": "assets/icons/abilities/godie-n003.e.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n依文潔琳的得意技之一，使用高等冰系黑魔法造成一直線敵方{{dmg}}點傷害。",
+      "slot": "E",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave.ice",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "大"
+              }
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.ice.nova",
+      "castTimeSec": 1.133,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "大",
+      "manaCostTier": "小"
+    },
+    "R": {
+      "id": "godie-n003.r",
+      "name": "42-04 世界終結",
+      "icon": "assets/icons/abilities/godie-n003.r.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n由暗系永遠的黑暗以及冰系魔法永遠的冰河混合成的超強力魔法,有著足以將上古鬼神一擊殺的恐怖力量，給予隨機12次區域傷害150點以及一次100% [AP]點傷害，區域內移動和攻擊速度將會下降50%。",
+      "slot": "R",
+      "castType": "skillshot",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        576.0,
+        576.0,
+        576.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-line-sweep",
+        "params": {
+          "segmentCount": 6,
+          "stepSize": 200,
+          "segmentAoe": 400,
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 1.233
+        }
+      },
+      "vfxKey": "fx.w3x.locust.frostnova.p01",
+      "castTimeSec": 1.233,
+      "hitFeel": {
+        "hitstopTicks": 5,
+        "hitstunTicks": 8,
+        "shakeMag": 0.543,
+        "shakeStyle": "omni",
+        "sparkKind": "ice",
+        "flashColor": [
+          0.6,
+          0.82,
+          1
+        ],
+        "flashMs": 186,
+        "camKick": 0.466
+      },
+      "targetsEnemies": true,
+      "rangeTier": "大",
+      "range": 8,
+      "cooldownTier": "極大",
+      "manaCostTier": "大"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "bow"
+  ],
+  "exAbility": "godie-n003.ex",
+  "passiveAbility": "godie-n003.passive",
+  "icon": "assets/icons/champions/godie-n003.png",
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-n01g",
+    "normalUnitRawcode": "N003",
+    "alternateUnitRawcode": "N01G",
+    "triggerAbility": {
+      "rawcode": "A06K",
+      "name": "42-002 魔力印章",
+      "durationSec": {
+        "1": 7,
+        "2": 15,
+        "3": 21,
+        "4": 27
+      },
+      "cooldownSec": {
+        "1": 60,
+        "2": 60,
+        "3": 60,
+        "4": 60
+      }
+    }
+  },
+  "playstyle": [
+    "冰系控制",
+    "範圍法術",
+    "續航"
+  ],
+  "pitch": "用冰魔法限制敵人的行動與位置，持續掌控戰場，再以大型法術收尾。"
+}

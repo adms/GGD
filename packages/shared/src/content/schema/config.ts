@@ -6754,6 +6754,14 @@ export const zConfigLobbyLayoutDoc = z
      */
     nemesisSort: z.enum(["played", "rivalry", "bane"]),
     /**
+     * 朋友列表的排序（GH#536）。owner 2026-08-22:「朋友清單,**有上線的應該會
+     * 特別排到最上面顯示吧**？」⇒ `online-first` 是他指定的出貨值,
+     * ⛔ 不是我挑的;`name` 是純字母序（給「我要找某個人」而不是「誰在線上」）。
+     * ⚠️ 排序做在**客戶端**:面板畫的狀態是 REST 快照 + WS 推播疊起來的,
+     * 而 REST 十秒才重抓一次 —— 排在伺服器等於用最舊的那一半排。
+     */
+    friendSort: z.enum(["online-first", "name"]),
+    /**
      * 分割模式（桌機）下面板由上到下的順序。
      * ⚠️ 它是欄位而不是常數,因為**兩塊**面板都被 owner 指名要放在「朋友列表跟
      * 排位榜中間」（2026-08-03 線上玩家、2026-08-19 宿敵榜）—— 兩句話不論誰排前面
@@ -8739,6 +8747,7 @@ export const DEFAULT_LOBBY_LAYOUT_POLICY: LobbyLayoutPolicyDoc = {
   nemesisShare: 0.2,
   leaderboardShare: 0.4,
   nemesisSort: "played",
+  friendSort: "online-first",
   splitOrder: ["friends", "online", "nemesis", "leaderboard"],
   alreadyFriendMode: "greyed-button",
   stackOrder: ["friends", "online", "nemesis", "leaderboard"],
@@ -8778,6 +8787,7 @@ export function resolveLobbyLayout(
     nemesisShare: doc.nemesisShare,
     leaderboardShare: doc.leaderboardShare,
     nemesisSort: doc.nemesisSort,
+    friendSort: doc.friendSort,
     splitOrder: doc.splitOrder,
     alreadyFriendMode: doc.alreadyFriendMode,
     stackOrder: doc.stackOrder,

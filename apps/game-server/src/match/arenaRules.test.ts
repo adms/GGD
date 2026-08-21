@@ -515,8 +515,13 @@ describe("同一回合撞卡：聖杯願望贏、寶具讓路 (#340, arena-02, a
     expect(offered.size, "切成 both 之後一張寶具卡都沒有 —— 壓的是整條路不是衝突").toBeGreaterThan(0);
 
     // AI seats auto-pick after the short delay -> item granted FREE
-    for (let i = 0; i < 15; i++) ctl.tick();
-    expect(ctl.offers.size).toBe(0);
+    // ⭐ **有界地跑到排空**，⛔ 不是寫死 15 tick。驗的是「AI 真的會自動選完」這個機制；
+    // 寫死 tick 數的話，任何改動 tick 時序的平衡變更都會讓它用「還有卡沒發完」這個
+    // 誤導的訊息紅（2026-08-22 的五級距移除就是第 N 次）。上界 120 仍然會抓到
+    // 「AI 根本不選」——那是這條真正要守的缺陷。
+    let guard = 0;
+    while (ctl.offers.size > 0 && guard++ < 120) ctl.tick();
+    expect(ctl.offers.size, "AI 沒有在合理時間內把三選一選完").toBe(0);
     for (const [seatId, choices] of offered) {
       const seat = ctl.seats.get(seatId)!;
       const items = ctl.world.champion.get(seat.entityId!)!.items;

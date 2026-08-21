@@ -23,11 +23,11 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 673 個檔案**，分佈在 2 個隔離區。
+**目前共 790 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
-| [`docs/legacy/`](legacy-index.md#docslegacy) | 233 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
+| [`docs/legacy/`](legacy-index.md#docslegacy) | 350 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
 | [`content/_legacy/`](legacy-index.md#contentlegacy) | 440 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
@@ -35,7 +35,7 @@ owner 2026-08-13：
 
 ---
 
-## `docs/legacy/` —— 233 檔
+## `docs/legacy/` —— 350 檔
 
 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）
 
@@ -127,32 +127,46 @@ owner 2026-08-13：
 | `_bgm-versions/map.castle/map.castle_temp_20260822-0306_53944a29e086c268.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.castle/map.castle_temp_20260822-0329_ab49ae1c84d009ce.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.castle/map.castle_temp_20260822-0340_12dbc18aac06828e.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.castle/map.castle_temp_20260822-0418_b61a6fce0f332ae7.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.colosseum/map.colosseum_temp_20260822-0330_59a39c646e63f193.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.colosseum/map.colosseum_temp_20260822-0419_a708d99a1c37026e.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.dota/map.dota_temp_20260822-0307_94dd80633a987f90.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.dota/map.dota_temp_20260822-0331_060ac728da77ca3f.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.dota/map.dota_temp_20260822-0420_ac0243274f2716ce.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.frieren/map.frieren_temp_20260822-0242_4c196f15d14935f5.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.frieren/map.frieren_temp_20260822-0303_35bb6685196a2d1a.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.frieren/map.frieren_temp_20260822-0321_0fb9e46fbad64da0.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.frieren/map.frieren_temp_20260822-0412_09acf8f69c2036f2.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.godie/map.godie_temp_20260822-0308_8801d931347bf83a.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.godie/map.godie_temp_20260822-0332_061f36b49a549442.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.godie/map.godie_temp_20260822-0421_77a0c785f73f41fe.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.heavens-arena/map.heavens-arena_temp_20260822-0242_08166a1fef285dfe.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.heavens-arena/map.heavens-arena_temp_20260822-0304_3bcd73c94e43a751.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.heavens-arena/map.heavens-arena_temp_20260822-0323_97d87925a62947eb.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.heavens-arena/map.heavens-arena_temp_20260822-0413_48bd578312a38d81.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.holy-grail/map.holy-grail_temp_20260822-0304_12a2bfef133b3bd3.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.holy-grail/map.holy-grail_temp_20260822-0324_b7f3e598bbff16c4.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.holy-grail/map.holy-grail_temp_20260822-0413_2e26e2afc7de759c.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.infinity-castle/map.infinity-castle_temp_20260822-0243_73653dd2f11c1ffe.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.infinity-castle/map.infinity-castle_temp_20260822-0305_e08ae77a5e978e12.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.infinity-castle/map.infinity-castle_temp_20260822-0325_62166e303f1e85a2.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.infinity-castle/map.infinity-castle_temp_20260822-0414_b4d01416d004da9d.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.nazarick/map.nazarick_temp_20260822-0244_9eed7ae1d21a2f82.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.nazarick/map.nazarick_temp_20260822-0326_91de01bbea4dd1b6.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.nazarick/map.nazarick_temp_20260822-0415_170c4c9ee326540c.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.royale/map.royale_temp_20260822-0307_bac3512b266bf177.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.royale/map.royale_temp_20260822-0335_36d70fca69009e04.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.royale/map.royale_temp_20260822-0423_2236ffc20461cafb.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.shiganshina/map.shiganshina_temp_20260822-0327_c5f8f6bd7ac7cac9.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.shiganshina/map.shiganshina_temp_20260822-0416_d151cdef95ad8b02.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.skeleton/map.skeleton_temp_20260822-0309_195e8bdf326a79ea.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.skeleton/map.skeleton_temp_20260822-0333_14b31d525247c016.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.skeleton/map.skeleton_temp_20260822-0352_5d7c1094fe5e2bdc.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.skeleton/map.skeleton_temp_20260822-0422_5da328aeb30477dc.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.world-tree/map.world-tree_temp_20260822-0244_ac0478fc9bb9387a.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.world-tree/map.world-tree_temp_20260822-0309_be3365b2ad89e72d.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.world-tree/map.world-tree_temp_20260822-0328_3d56ac069fa10c56.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.world-tree/map.world-tree_temp_20260822-0417_e98d50e86826221f.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/AudioDirector_temp_20260822-0122.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/ConfigDocPage_temp_20260821-2358.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/RallyConfirmDialog_temp_20260821-2355.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
@@ -178,10 +192,111 @@ owner 2026-08-13：
 | `_overwrites/skill-normalize-writeback_temp_20260821-033052.tar.gz` | （.gz 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/stat-caps_temp_20260822-0033.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/statTypes_temp_20260822-0033.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/tierize_temp_20260822-0517.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/victoryTaunt_temp_20260822-0122.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/voiceMixPolicy_temp_20260822-0122.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/20260820-012418/CLAUDE.md` | GGD — 開發守則 —— 這一份是**規則**，不是說明書。架構與現況看 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/20260820-012959/docs/_release/board-live.md` | ⭐ 瓶頸已解除：鎖是 `bundle.json`，不是 `content/` 目錄 —— 切分依據是**檔案領域互斥**，⛔ 不是主題相近 —— 兩條 lane 只要會編到同一個檔就不能併行。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/combat-env.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-e001.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-e002.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-e007.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-e008.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-e00l.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-e00n.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-e00r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-e00s.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-e00w.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-e00x.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-e010.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-edem.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-efur.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-emfr.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-emns.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-etyr.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-ewar.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-h00l.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-h01n.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-h01o.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-h01u.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-h020.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-h02k.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-h02r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-h02u.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-h02v.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-hapm.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-hart.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-hgam.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-hjai.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-hpb1.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-huth.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-hvsh.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-hvwd.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i000.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i008.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i00l.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i013.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i01o.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i02g.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i02x.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i033.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i03d.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i040.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i049.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i04b.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i04v.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i05h.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i05k.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i05l.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i05o.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i06a.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i06c.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i06d.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i06g.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i06h.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i06i.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i06k.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i06o.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-i06s.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-n003.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-n00b.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-n00p.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-n01c.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-n01g.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-nbbc.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-nsjs.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-o00k.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-o00l.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-o00x.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-o02l.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-o02p.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-o030.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-ofar.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-ogld.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-ogrh.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-orkn.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-osam.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-u00h.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-u00j.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-u00k.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-u00l.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-u00n.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-u00o.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-u00v.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-u010.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-u01u.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-u034.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-ubal.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-ucrl.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-udea.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-udre.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-umal.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-uvng.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/godie-zombiex.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/piercer-crossbow.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/sasumata.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/sela.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ad_fold_temp_20260822-0414/thorne.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/claims-baseline-stale_temp_20260821-033411/grail-ex-13.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/claims-baseline-stale_temp_20260821-033411/grail-ex-18.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/ledger-repair_temp_20260820/2026-08-20.md` | 2026-08-20 補登 —— ⚠️ **這一份是補的。** `2026-08-19.md` 的帳本停在 **#1068**，之後的 16 則我**憑印象**處理， | （未逐檔裁決 —— 補進產生器的 CURATED） |
@@ -240,6 +355,8 @@ owner 2026-08-13：
 | `_overwrites/overwrite_temp_20260822-011214/apps/client/src/ui/panels/roundVictoryCollapse.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260822-012357/apps/client/src/ui/panels/settlementStartFocus.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260822-031728/apps/client/src/input/gamepadFeelConfig.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260822-041744/content/config/damage-tier-exemptions.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260822-041819/packages/shared/src/content/shippedDamageTiersResolve.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/04.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/06.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/08.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |

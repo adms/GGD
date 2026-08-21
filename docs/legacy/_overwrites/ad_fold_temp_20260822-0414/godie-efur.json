@@ -1,0 +1,354 @@
+{
+  "id": "godie-efur",
+  "schema": "champion@1",
+  "name": "揍敵客大家長 - 揍敵客桀諾",
+  "icon": "assets/icons/champions/godie-efur.webp",
+  "description": "故事：\n來自殺手世家揍敵客家族，其才能在揍敵客家族歷史也是非常優秀。擁有超強的念能力，可以任意操縱敵人的生死。暗殺家族揍敵客家的家長。奇犽的祖父。 穿著「一日一殺」和「生涯現役」等刺繡的衣服。\n(出自:偽獵人X獵人)\n\n推薦玩家 : 追擊殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.20\n智慧 + 2.30\n基礎跑速 315\n\n可學習的技能：\n暗步。極限之圓、龍頭戲畫。牙突、龍頭戲畫。佈壁、龍星群",
+  "role": "marksman",
+  "attackType": "melee",
+  "origin": "鬥士",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 30,
+    "ap": 0,
+    "armor": 2,
+    "mr": 28,
+    "as": 0.555556,
+    "ms": 6.1,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 78.1041,
+    "healthRegen": 0.2062,
+    "maxMana": 46.7908,
+    "manaRegen": 0.1624,
+    "ad": 4.9898,
+    "armor": 0.853,
+    "mr": 2.3541,
+    "as": 0.0121,
+    "ap": 0.2122
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 15,
+    "agi": 15,
+    "int": 20,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "INT",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.24,
+    "knockbackMag": 0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-efur.q",
+      "name": "13-01 暗步。極限之圓",
+      "provenance": "owner-spec",
+      "description": "[主動][指定][瞬移]\n施法距離：{{range}}\n{{cd}}秒冷卻\n\n「年輕全盛時期的老朽可以把圓擴大到整個競技場呢」\n[指定一名]敵人，無視地形與碰撞[瞬移]至其身旁，並造成[致盲]效果，持續1秒。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        6.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 4.5,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "blink",
+          "shape": "single",
+          "to": "targetUnit",
+          "applyTo": "self",
+          "stopShortUnits": 1.0,
+          "onArrive": [
+            {
+              "kind": "applyStatus",
+              "statusId": "blind",
+              "duration": 1.0,
+              "missChance": 0.5
+            }
+          ]
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-efur.q.webp",
+      "vfxKey": "fx.fam.blink.ki.s65",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.fam.blink.ki.s65",
+          "w3xScale": 1.1
+        },
+        {
+          "vfxKey": "fx.prim.ki.bolt-lg",
+          "delayMs": 60,
+          "attachTo": "point",
+          "w3xScale": 0.8,
+          "alpha": 0.8
+        }
+      ],
+      "recoverySec": 0.25,
+      "cooldownTier": "極小",
+      "rangeTier": "小",
+      "castTimeSec": 0.167
+    },
+    "W": {
+      "id": "godie-efur.w",
+      "name": "13-02 龍頭戲畫。牙突",
+      "provenance": "owner-spec",
+      "description": "[主動][指定][擊退]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n施法距離：{{range}}\n\n「突起的不一定是牙，也可能是老朽的愛」\n對指定敵人造成{{dmg}} + 目標[最大生命]6/8/10/12%的傷害，並[擊退]6距離。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "range": 3.0,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          },
+          "resourcePct": {
+            "subject": "target",
+            "resource": "health",
+            "basis": "max",
+            "perRank": [
+              0.06,
+              0.08,
+              0.1,
+              0.12
+            ]
+          }
+        },
+        {
+          "kind": "knockback",
+          "distance": 6.0,
+          "speed": 16,
+          "from": "caster"
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-efur.w.webp",
+      "vfxKey": "fx.prim.ki.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.ki.slash",
+          "delayMs": 80,
+          "attachTo": "point",
+          "w3xScale": 1.3
+        },
+        {
+          "vfxKey": "fx.fam.shockwave-ring.ki.s100",
+          "delayMs": 160,
+          "attachTo": "point",
+          "w3xScale": 0.9,
+          "alpha": 0.8
+        }
+      ],
+      "cooldownTier": "大",
+      "manaCostTier": "極小",
+      "rangeTier": "極小",
+      "castTimeSec": 0.467
+    },
+    "E": {
+      "id": "godie-efur.e",
+      "name": "13-03 龍頭戲畫。布陣",
+      "provenance": "owner-spec",
+      "description": "[主動][範圍][AP加成]\n{{cd}}秒冷卻\n消耗[MP] {{mp}}\n\n「其實還可以衝刺，但老了」\n將念形成龍形衝擊波包裹全身，造成[範圍]敵人 {{dmg}} + 60% [AP] 傷害。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "range": 0.0,
+      "radiusTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "radius": 4.5,
+          "radiusTier": "小",
+          "includeOrigin": true
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-efur.e.webp",
+      "vfxKey": "fx.prim.physical.shockwave-lg",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.shockwave-lg",
+          "delayMs": 70,
+          "w3xScale": 1.2
+        },
+        {
+          "vfxKey": "fx.fam.ground-dust.ki.s120",
+          "delayMs": 260,
+          "attachTo": "point",
+          "w3xScale": 1.1,
+          "alpha": 0.7
+        }
+      ],
+      "cooldownTier": "中",
+      "manaCostTier": "小",
+      "castTimeSec": 0.667
+    },
+    "R": {
+      "id": "godie-efur.r",
+      "name": "13-04 龍星群",
+      "provenance": "owner-spec",
+      "description": "[主動][範圍][週期][AP加成]\n{{cd}}秒冷卻，吟唱0.6秒\n消耗MP{{mp}}\n\n「生。意。星。龍」\n自身[周圍]每0.2秒[隨機]地點落下一顆流星，共10顆；每顆造成[小範圍] {{dmg}} + 40% [AP] [魔法傷害]。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        120.0,
+        120.0,
+        120.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "range": 0.0,
+      "radiusTier": "極小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "randomArea",
+          "who": "self",
+          "count": [
+            10
+          ],
+          "intervalSec": 0.2,
+          "scatterRadius": 8.0,
+          "firstAtCast": true,
+          "stopOnCasterDeath": true,
+          "effects": [
+            {
+              "kind": "damageArea",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小",
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.4
+                  }
+                ]
+              },
+              "radius": 3.0,
+              "radiusTier": "極小",
+              "includeOrigin": true
+            }
+          ]
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-efur.r.webp",
+      "vfxKey": "fx.fam.light-column.fire.s150",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.fam.light-column.fire.s150",
+          "attachTo": "point",
+          "w3xScale": 1.8
+        },
+        {
+          "vfxKey": "fx.fam.bolt-strike.physical.s345",
+          "delayMs": 1900,
+          "attachTo": "point",
+          "w3xScale": 1.5
+        },
+        {
+          "vfxKey": "fx.fam.kaboom.fire.s115",
+          "delayMs": 2100,
+          "attachTo": "point",
+          "w3xScale": 1.6,
+          "timeScale": 1.5
+        }
+      ],
+      "interruptOn": "damage",
+      "recoverySec": 0.8,
+      "cooldownTier": "極大",
+      "manaCostTier": "小",
+      "castTimeSec": 0.6
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin",
+    "magic"
+  ],
+  "exAbility": "godie-efur.ex",
+  "passiveAbility": "godie-efur.passive",
+  "playstyle": [
+    "攻速",
+    "暗殺",
+    "追擊"
+  ],
+  "pitch": "高速貼住指定目標，以密集攻擊迅速解決敵人，再尋找下一個獵物。"
+}

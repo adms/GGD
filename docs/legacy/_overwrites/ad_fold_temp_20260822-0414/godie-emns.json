@@ -1,0 +1,292 @@
+{
+  "id": "godie-emns",
+  "schema": "champion@1",
+  "name": "奇樂 - 夜神月",
+  "description": "故事：\n英俊瀟灑，謹慎且機智，雖然極有女人緣但對異性不感興趣。高中三年級時在學校撿到了死神路克遺留人間界的死亡筆記\"DEATH NOTE\"，從而擁有了操縱生死的能力，並以\"新世界的神\"的名義君臨天下。\n(出自:死亡筆記本)\n\n推薦玩家 : 心機暗殺\n上手度 : 難\n\n角色成長：\n力量 + 1.75\n敏捷 + 1.50\n智慧 + 2.70\n基礎跑速 300\n\n可學習的技能：\n死神的規則、機警、火車輾過、心臟麻痺",
+  "role": "marksman",
+  "attackType": "ranged",
+  "origin": "法師",
+  "modelKey": "imported.herolight",
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 2.1,
+    "ad": 12,
+    "ap": 0,
+    "armor": 2,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 8.2
+  },
+  "growth": {
+    "maxHealth": 78.1041,
+    "healthRegen": 0.1633,
+    "maxMana": 46.4847,
+    "manaRegen": 0.1378,
+    "ad": 3.2449,
+    "armor": 0.6568,
+    "mr": 1.8261,
+    "as": 0.0086,
+    "ap": 0.9452
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 15,
+    "agi": 19,
+    "int": 22,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "INT",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.24,
+    "knockbackMag": 0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-emns.q",
+      "name": "44-01 死神之眼",
+      "provenance": "owner-spec",
+      "description": "[主動][指定][詛咒（失手）]\n{{cd}}秒冷卻，吟唱2秒\n消耗MP{{mp}}\n施法距離：極大\n\n「這個世界正在腐敗，腐敗的人不該活著。」\n被鎖定的目標會因為死神的[詛咒]標記而暫時50%攻擊失手，持續6/12/18/24秒。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 12.0,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "curse",
+          "duration": [
+            6.0,
+            12.0,
+            18.0,
+            24.0
+          ],
+          "missChance": 0.5
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-emns.q.webp",
+      "vfxKey": "fx.prim.void.pulse-sm",
+      "sfxKey": "wc3.gruntyesattack1",
+      "cooldownTier": "中",
+      "rangeTier": "極大",
+      "castTimeSec": 2
+    },
+    "W": {
+      "id": "godie-emns.w",
+      "name": "44-02 死神的規則",
+      "provenance": "owner-spec",
+      "description": "[被動]\n\n「我是新世界的神」\n將這份知識化為 [智慧] 7/12/17/22點。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "targetsEnemies": false,
+      "effects": [],
+      "passive": {
+        "name": "44-02 死神的規則",
+        "ranks": [
+          {
+            "attributes": {
+              "int": 7
+            }
+          },
+          {
+            "attributes": {
+              "int": 12
+            }
+          },
+          {
+            "attributes": {
+              "int": 17
+            }
+          },
+          {
+            "attributes": {
+              "int": 22
+            }
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-emns.w.webp",
+      "vfxKey": "fx.prim.void.pulse"
+    },
+    "E": {
+      "id": "godie-emns.e",
+      "name": "44-03 火車輾過",
+      "provenance": "owner-spec",
+      "description": "[主動][範圍][AP加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n有效半徑：{{radius}}\n\n「我就是正義！」\n使敵方 [詛咒]標記的 [周圍]的敵方部隊受到650/750/850/950+ 60% [AP]點的劇烈傷害。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "range": 12.0,
+      "radiusTier": "中",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageArea",
+          "condition": {
+            "kind": "status",
+            "subject": "target",
+            "statusId": "curse"
+          },
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "中",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "radius": 6.0,
+          "radiusTier": "中",
+          "includeOrigin": true
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-emns.e.webp",
+      "vfxKey": "fx.prim.physical.shockwave",
+      "sfxKey": "wc3.rokhanwhat2",
+      "cooldownTier": "極小",
+      "manaCostTier": "小",
+      "rangeTier": "極大",
+      "castTimeSec": 0.767
+    },
+    "R": {
+      "id": "godie-emns.r",
+      "name": "44-04 心臟麻痺",
+      "provenance": "owner-spec",
+      "description": "[主動][AP加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n\n「不，還不能笑，我一定要忍住……在35秒後宣布勝利吧。」\n造成敵方[詛咒]標記的[現存生命] 30/40/50% + 40% [AP] 傷害，並使動作[緩慢]持續5秒。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "range": 12.0,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "condition": {
+            "kind": "status",
+            "subject": "target",
+            "statusId": "curse"
+          },
+          "damageType": "magic",
+          "amount": {
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.4
+              }
+            ]
+          },
+          "resourcePct": {
+            "subject": "target",
+            "resource": "health",
+            "basis": "current",
+            "perRank": [
+              0.3,
+              0.4,
+              0.5
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "condition": {
+            "kind": "status",
+            "subject": "target",
+            "statusId": "curse"
+          },
+          "statusId": "slow50",
+          "duration": 5.0,
+          "moveSpeedMult": 0.5
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-emns.r.webp",
+      "vfxKey": "fx.prim.void.nova-lg",
+      "sfxKey": "wc3.gruntyesattack3",
+      "cooldownTier": "中",
+      "manaCostTier": "小",
+      "rangeTier": "極大",
+      "castTimeSec": 0.767
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "magic"
+  ],
+  "exAbility": "godie-emns.ex",
+  "passiveAbility": "godie-emns.passive",
+  "icon": "assets/icons/champions/godie-emns.png",
+  "playstyle": [
+    "條件施法",
+    "控制",
+    "處決"
+  ],
+  "pitch": "先建立技能條件與資訊優勢，再選擇最有價值的目標進行處決。"
+}

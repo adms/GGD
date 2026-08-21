@@ -1,0 +1,258 @@
+{
+  "id": "godie-osam",
+  "schema": "champion@1",
+  "name": "犬妖 - 殺生丸",
+  "description": "故事：\n犬夜叉同父異母的哥哥。他是完全的妖怪，能力要強得多，性格非常冷酷殘忍，對付自己的弟弟也是手下毫不留情。為了獲得更強大的力量加入去死團。\n(出自:犬夜叉)\n\n推薦玩家 : 龜裝PK\n上手度 : 易\n\n角色成長：\n力量 + 1.85\n敏捷 + 2.80\n智慧 + 1.55\n基礎跑速 305\n\n可學習的技能：\n合氣斬、風華之爪、爆碎丸、奧義蒼龍破",
+  "role": "fighter",
+  "attackType": "melee",
+  "origin": "鬥士",
+  "modelKey": "imported.sesshomaru",
+  "attackDamagePoint": 0.5,
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 200,
+    "manaRegen": 2.1,
+    "ad": 27,
+    "ap": 0,
+    "armor": 0,
+    "mr": 28,
+    "as": 0.526316,
+    "ms": 5.9,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 78.1041,
+    "healthRegen": 0.2062,
+    "maxMana": 46.8418,
+    "manaRegen": 0.157,
+    "ad": 5.0204,
+    "armor": 0.8366,
+    "mr": 2.3541,
+    "as": 0.0107,
+    "ap": 0.6765
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 15,
+    "agi": 27,
+    "int": 13,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "AGI",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 2,
+    "shakeMag": 0.34,
+    "knockbackMag": 0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-osam.q",
+      "name": "34-01 毒華爪",
+      "icon": "assets/icons/abilities/godie-osam.q.webp",
+      "provenance": "w3x-import",
+      "description": "[被動]\n0秒冷卻時間\n\n殺生丸以毒華爪攻擊,爪中劇毒，導致這一擊之中10%的傷害會擊穿對方，並造成附近敵人的傷害。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 5,
+      "cooldown": [
+        6.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "effects": [],
+      "vfxKey": "fx.prim.wind.slash",
+      "castTimeSec": 0.067,
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 12,
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 0.1
+            }
+          ],
+          "castTimeSec": 0.067
+        }
+      },
+      "cooldownTier": "極小"
+    },
+    "W": {
+      "id": "godie-osam.w",
+      "name": "34-02 閃光鞭",
+      "icon": "assets/icons/abilities/godie-osam.w.webp",
+      "provenance": "w3x-import",
+      "description": "[被動]\n0秒冷卻時間\n\n攻擊時有10%的機率造成1.5倍的傷害。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 5,
+      "cooldown": [
+        6.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "effects": [],
+      "vfxKey": "fx.prim.wind.slash",
+      "castTimeSec": 0.167,
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 6,
+          "modifiers": [
+            {
+              "stat": "critChance",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "castTimeSec": 0.167
+        }
+      },
+      "cooldownTier": "極小"
+    },
+    "E": {
+      "id": "godie-osam.e",
+      "name": "34-03 爆碎牙",
+      "icon": "assets/icons/abilities/godie-osam.e.webp",
+      "provenance": "w3x-import",
+      "description": "[被動]\n0秒冷卻時間\n\n新生的爆碎牙，有15%的機會，對目標敵人造成90點額外傷害，並擊昏敵人0.5秒。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        6.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.167
+        }
+      },
+      "vfxKey": "fx.prim.void.explosion",
+      "targetsEnemies": true,
+      "castTimeSec": 0.167,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "極小",
+      "manaCostTier": "極小"
+    },
+    "R": {
+      "id": "godie-osam.r",
+      "name": "34-04 奧義˙蒼龍破",
+      "icon": "assets/icons/abilities/godie-osam.r.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n蒼龍破是殺生丸釋放自己的妖力施展出來的絕招，將妖氣集中在劍刃上揮出，妖氣化作蒼龍沿著面向一路推進，逐段掃過一直線上的敵人，給予{{dmg}}點傷害（每人只吃一次）。",
+      "slot": "R",
+      "castType": "skillshot",
+      "maxRank": 3,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-traveling-wave",
+        "params": {
+          "stepCount": 12,
+          "stepSize": 67,
+          "stepIntervalSec": 0.13,
+          "aoePerStep": 350,
+          "stepVfx": "fx.fam.bolt-strike.lightning.s115",
+          "damage": {
+            "damageTier": "大",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.7
+              }
+            ]
+          },
+          "damageType": "magic"
+        }
+      },
+      "vfxKey": "fx.prim.ki.beam-lg",
+      "targetsEnemies": true,
+      "castTimeSec": 0.833,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "大",
+      "manaCostTier": "小"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "katana"
+  ],
+  "exAbility": "godie-osam.ex",
+  "passiveAbility": "godie-osam.passive",
+  "icon": "assets/icons/champions/godie-osam.png",
+  "playstyle": [
+    "劍技",
+    "持續壓制",
+    "正面纏鬥"
+  ],
+  "pitch": "用穩定普攻與劍技持續施壓，適合喜歡直接正面作戰的玩家。"
+}

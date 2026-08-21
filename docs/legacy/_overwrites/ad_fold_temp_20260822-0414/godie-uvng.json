@@ -1,0 +1,334 @@
+{
+  "id": "godie-uvng",
+  "schema": "champion@1",
+  "name": "邪眼師 - 飛影",
+  "description": "故事：\n在魔界中有名的盜賊妖怪，除了是一位邪王炎殺拳的高手之外，也是一位用劍的高手。為了尋找妹妹雪菜，而流浪於人間界與魔界。\n(出自:幽遊白書)\n\n推薦玩家 : PK殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.95\n敏捷 + 2.65\n智慧 + 1.65\n基礎跑速 310\n\n可學習的技能：\n邪王炎殺劍、邪王炎殺煉獄焦、邪王炎殺黑龍波、黑龍波吸收",
+  "role": "fighter",
+  "attackType": "melee",
+  "origin": "法刺",
+  "modelKey": "imported.herohehi",
+  "attackDamagePoint": 0.3,
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
+    "ap": 0,
+    "armor": 0,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 6,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.4
+  },
+  "growth": {
+    "maxHealth": 36.5265,
+    "healthRegen": 0.1289,
+    "maxMana": 37.5347,
+    "manaRegen": 0.1341,
+    "ad": 1.9796,
+    "armor": 0.3801,
+    "mr": 1.0342,
+    "as": 0.003,
+    "ap": 2.9184
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 15,
+    "agi": 26,
+    "int": 14,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "AGI",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 2,
+    "shakeMag": 0.34,
+    "knockbackMag": 0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-uvng.q",
+      "name": "38-01 邪王炎殺劍",
+      "icon": "assets/icons/abilities/godie-uvng.q.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n招喚魔界火炎盤旋在劍上，使劍在瞬間變得鋒利無比，衝刺砍殺一直線上的敵人直到撞到為止，砍殺造成{{dmg}}+30% [AP]傷害。\n\n邪眼發動期間，可增加威力(50% [AP])",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [
+        {
+          "kind": "invulnerable",
+          "durationSec": 0.24,
+          "applyTo": "self",
+          "blocksDamage": "all",
+          "blocksTrueDamage": false,
+          "blocksControl": true
+        },
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.3
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.w3x.particle.flamessmoke.p01",
+      "sfxKey": "wc3.darksummoninglaunch1",
+      "targetsEnemies": true,
+      "castTimeSec": 0.667,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "大",
+      "manaCostTier": "極小"
+    },
+    "W": {
+      "id": "godie-uvng.w",
+      "name": "38-02 邪王炎殺煉獄焦",
+      "icon": "assets/icons/abilities/godie-uvng.w.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n將火燄集中於拳頭上，以連續拳頭攻擊區域內的敵人造成{{dmg}}傷害。\n\n邪眼發動期間，可增加威力(50% [AP])",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 5,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.5
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 1.5,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "godie-fireblast-p3",
+      "sfxKey": "wc3.hcancelbuilding",
+      "targetsEnemies": true,
+      "radius": 6.0,
+      "castTimeSec": 0.767,
+      "hitFeel": {
+        "hitstopTicks": 3,
+        "hitstunTicks": 5,
+        "shakeMag": 0.382,
+        "shakeStyle": "omni",
+        "sparkKind": "heavy",
+        "flashColor": [
+          1.0,
+          0.66,
+          0.3
+        ],
+        "flashMs": 131,
+        "camKick": 0.328
+      },
+      "rangeTier": "大",
+      "range": 8,
+      "cooldownTier": "極小",
+      "manaCostTier": "極小",
+      "radiusTier": "中"
+    },
+    "E": {
+      "id": "godie-uvng.e",
+      "name": "38-03 邪王炎殺黑龍波",
+      "icon": "assets/icons/abilities/godie-uvng.e.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n將飛影手上封印的魔界生物炎殺黑龍釋放，凝聚到極限使出邪王奧義黑龍波，造成{{dmg}}傷害將敵方燒得只剩影子。",
+      "slot": "E",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [],
+      "template": {
+        "ref": "tpl-line-sweep",
+        "params": {
+          "segmentCount": 6,
+          "stepSize": 200,
+          "segmentAoe": 400,
+          "damage": {
+            "damageTier": "大"
+          },
+          "damageType": "magic",
+          "castTimeSec": 1.5
+        }
+      },
+      "vfxKey": "godie-tectonicfury-p0",
+      "sfxKey": "wc3.dragonyes2",
+      "castTimeSec": 1.5,
+      "hitFeel": {
+        "hitstopTicks": 4,
+        "hitstunTicks": 6,
+        "shakeMag": 0.42,
+        "shakeStyle": "omni",
+        "sparkKind": "heavy",
+        "flashColor": [
+          0.9,
+          0.72,
+          0.48
+        ],
+        "flashMs": 144,
+        "camKick": 0.36
+      },
+      "targetsEnemies": true,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "極大",
+      "manaCostTier": "小"
+    },
+    "R": {
+      "id": "godie-uvng.r",
+      "name": "38-04 黑龍波吸收",
+      "icon": "assets/icons/abilities/godie-uvng.r.webp",
+      "provenance": "w3x-import",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n吸收黑龍波的妖力，使支配魔界火焰的妖術師獲得爆發性的能力成長，但是會持續消耗魔力10點。\n增加100%傷害，每使用一次敏捷永久增加1點，持續10秒。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "effects": [],
+      "vfxKey": "fx.w3x.particle.flamessmoke.p01",
+      "sfxKey": "wc3.dragonroostwhat1",
+      "castTimeSec": 0.667,
+      "hitFeel": {
+        "hitstopTicks": 4,
+        "hitstunTicks": 7,
+        "shakeMag": 0.472,
+        "shakeStyle": "directional",
+        "sparkKind": "heavy",
+        "flashColor": [
+          1,
+          0.6,
+          0.26
+        ],
+        "flashMs": 162,
+        "camKick": 0.405
+      },
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 10,
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 1
+            },
+            {
+              "stat": "manaRegen",
+              "op": "flat",
+              "value": -10
+            }
+          ],
+          "castTimeSec": 0.667
+        }
+      },
+      "cooldownTier": "極大"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "katana"
+  ],
+  "exAbility": "godie-uvng.ex",
+  "passiveAbility": "godie-uvng.passive",
+  "icon": "assets/icons/champions/godie-uvng.png",
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-u010",
+    "normalUnitRawcode": "UVNG",
+    "alternateUnitRawcode": "U010",
+    "triggerAbility": {
+      "rawcode": "A0OH",
+      "name": "38-00 邪眼全開",
+      "durationSec": {
+        "1": 10
+      },
+      "cooldownSec": {
+        "1": 60
+      }
+    }
+  },
+  "playstyle": [
+    "高速切入",
+    "短時爆發"
+  ],
+  "pitch": "利用高速位移突然進場，把傷害集中在短時間內，殺完就走。"
+}

@@ -1,0 +1,402 @@
+{
+  "id": "godie-edem",
+  "schema": "champion@1",
+  "name": "寫輪眼復仇者 - 宇智波佐助",
+  "description": "故事：\n在忍者學校以第一名的成績畢業，是有名的\"宇智波一族\"的後代。復仇信念堅定，一心想殺了哥哥宇智波鼬。在與大蛇丸戰鬥時被施以咒印，有時會難以控制自我心性與力量。\n(出自:火影忍者)\n\n推薦玩家 : 連技殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.40\n敏捷 + 2.50\n智慧 + 2.00\n基礎跑速 305\n\n可學習的技能：\n火遁-豪火龍之術、千鳥流、雷切、哥哥",
+  "role": "fighter",
+  "attackType": "melee",
+  "origin": "法刺",
+  "modelKey": "imported.herosasuke",
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.01,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
+    "ap": 0,
+    "armor": 0,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.9,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.4
+  },
+  "growth": {
+    "maxHealth": 36.0571,
+    "healthRegen": 0.1305,
+    "maxMana": 37.5347,
+    "manaRegen": 0.1341,
+    "ad": 1.9714,
+    "armor": 0.3801,
+    "mr": 1.0342,
+    "as": 0.003,
+    "ap": 2.9184
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 17,
+    "agi": 26,
+    "int": 14,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "AGI",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.18,
+    "knockbackMag": 0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-edem.q",
+      "name": "45-01 火遁-豪火龍之術",
+      "provenance": "owner-spec",
+      "description": "[主動][指定][範圍][燃燒][週期]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n施法距離：{{range}}\n有效半徑：{{radius}}\n\n「接招吧！我的復仇之火」\n將吐出的火焰化為龍形，對[指定範圍]內敵人造250/350/450/550傷害，並附加[燃燒]標記，使其每秒受到當下[現存生命]1%的傷害，持續3秒。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "range": 12.0,
+      "radiusTier": "中",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小"
+          },
+          "radius": 6.0,
+          "radiusTier": "中",
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "statusId": "burn",
+              "duration": 3.0
+            },
+            {
+              "kind": "dot",
+              "damageType": "magic",
+              "amountPerTick": {
+                "flat": 1.0
+              },
+              "resourcePct": {
+                "subject": "target",
+                "resource": "health",
+                "basis": "current",
+                "scale": "ratio",
+                "perRank": [
+                  0.01
+                ]
+              },
+              "resourcePctPhase": "onTick",
+              "intervalSec": 1.0,
+              "durationSec": 3.0,
+              "stacking": "refresh"
+            }
+          ]
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-edem.q.webp",
+      "vfxKey": "fx.prim.fire.explosion",
+      "cooldownTier": "小",
+      "manaCostTier": "小",
+      "rangeTier": "極大",
+      "castTimeSec": 1.033
+    },
+    "W": {
+      "id": "godie-edem.w",
+      "name": "45-02 千鳥流",
+      "provenance": "owner-spec",
+      "description": "[主動][範圍][減速][AP加成]\n{{cd}}秒冷卻\n消耗[MP] {{mp}}\n有效半徑：{{radius}}\n\n「千鳥流。奔流」\n讓全身充滿千鳥的雷電，對[周圍][大範圍]敵人造成{{dmg}}+20% [AP]點傷害，並使其[攻擊與移動速度][降低]50%，持續3秒。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "range": 0.0,
+      "radiusTier": "中",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.2
+              }
+            ]
+          },
+          "radius": 6.0,
+          "radiusTier": "中",
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyBuff",
+              "modifiers": [
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": -0.5
+                }
+              ],
+              "duration": 3.0,
+              "dispellable": true,
+              "polarity": "debuff"
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "slow50",
+              "duration": 3.0,
+              "moveSpeedMult": 0.5
+            }
+          ]
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-edem.w.webp",
+      "vfxKey": "fx.prim.lightning.beam",
+      "cooldownTier": "小",
+      "manaCostTier": "極小",
+      "castTimeSec": 0.833
+    },
+    "E": {
+      "id": "godie-edem.e",
+      "name": "45-03 千鳥",
+      "provenance": "owner-spec",
+      "description": "[主動][指向][範圍][衝刺][AP加成]\n{{cd}}秒冷卻，吟唱2秒\n消耗MP{{mp}}\n施法距離：{{range}}\n有效半徑：{{radius}}\n\n「千鳥・雷切」\n將查克拉集中在手上，以高速[直線][衝刺]，對沿途[周圍]敵人造成{{dmg}}+100% [AP]點傷害。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "range": 12.0,
+      "radiusTier": "中",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "toPoint",
+          "speed": 16,
+          "maxDistance": 12.83
+        },
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          },
+          "length": 12.83,
+          "width": 12.0,
+          "aim": "facing",
+          "fromCaster": true,
+          "includeOrigin": true
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-edem.e.webp",
+      "vfxKey": "fx.prim.lightning.beam",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.lightning.bolt",
+          "attachTo": "point",
+          "pitchDeg": 0
+        }
+      ],
+      "cooldownTier": "小",
+      "manaCostTier": "小",
+      "rangeTier": "極大",
+      "castTimeSec": 2
+    },
+    "R": {
+      "id": "godie-edem.r",
+      "name": "45-04 哥哥",
+      "provenance": "owner-spec",
+      "description": "[被動][技能命中時][身上有某狀態時][範圍][AP加成]\n{{cd}}秒冷卻\n有效半徑：{{radius}}\n\n「我愚蠢的弟弟啊！憎恨吧！」\n當「千鳥」命中帶有[燃燒]標記的敵人時引發忍術「麒麟」雷電大爆炸，對目標[周圍][小範圍]敵人造成{{dmg}}+ 300% [AP] 傷害。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "targetsEnemies": false,
+      "effects": [],
+      "passive": {
+        "name": "45-04 哥哥",
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onAbilityHit",
+                "abilitySlot": "E",
+                "effects": [
+                  {
+                    "kind": "damageArea",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 400.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 3.0
+                        }
+                      ]
+                    },
+                    "radius": 3.0,
+                    "radiusTier": "極小",
+                    "includeOrigin": true
+                  }
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "tag": "burn"
+                },
+                "target": "event"
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onAbilityHit",
+                "abilitySlot": "E",
+                "effects": [
+                  {
+                    "kind": "damageArea",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 700.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 3.0
+                        }
+                      ]
+                    },
+                    "radius": 3.0,
+                    "radiusTier": "極小",
+                    "includeOrigin": true
+                  }
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "tag": "burn"
+                },
+                "target": "event"
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onAbilityHit",
+                "abilitySlot": "E",
+                "effects": [
+                  {
+                    "kind": "damageArea",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 1000.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 3.0
+                        }
+                      ]
+                    },
+                    "radius": 3.0,
+                    "radiusTier": "極小",
+                    "includeOrigin": true
+                  }
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "tag": "burn"
+                },
+                "target": "event"
+              }
+            ]
+          }
+        ]
+      },
+      "vfxKey": "fx.prim.void.pulse-lg",
+      "sfxKey": "wc3.thunderboltmissiledeath",
+      "icon": "assets/icons/abilities/godie-edem.r.png"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-edem.ex",
+  "passiveAbility": "godie-edem.passive",
+  "icon": "assets/icons/champions/godie-edem.png",
+  "playstyle": [
+    "位移",
+    "爆發",
+    "切後排"
+  ],
+  "pitch": "等待破綻快速切入，把技能集中在脆弱目標身上，殺完立即脫離。"
+}

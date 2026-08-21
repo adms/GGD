@@ -88,6 +88,8 @@ import { Renderer } from "./render/Renderer";
 import { AimIndicator } from "./render/AimIndicator";
 import { setupLighting, type LightingHandle } from "./render/Lighting";
 import { buildArena, dressArena, disposeArena, type ArenaHandles } from "./render/ArenaScene";
+import { groundTextureSet } from "./render/groundMaterials";
+import { warmGroundTextures } from "./render/groundTextureCache";
 import { resolveArenaId, type ArenaIdSource } from "./render/arenaSelect";
 import { RoundWinnerStage, planRoundWinnerShow, victoryPodiumPolicy } from "./render/RoundWinnerStage";
 // ONE number for how long the round-win beat owns the screen: the stage's grey
@@ -333,6 +335,9 @@ export class GameApp {
    * owns the stage.
    */
   private readonly roundWinner: RoundWinnerStage;
+  /** previous phase seen by the ground-texture warm edge detector (GH#535). */
+  private warmedPhase = "";
+
   /** previous phase seen by the round-winner edge detector. */
   private roundWinnerPhase = "";
   /** performance.now() deadline after which the winner model clears. */
@@ -1276,6 +1281,32 @@ export class GameApp {
     }
   }
 
+  /**
+   * ⭐ GH#535 —— 在**中場（商店）**把每一種地面貼圖先抓好。
+   *
+   * owner 2026-08-22：「福利連地圖地板全黑了」/「大混戰也是 似乎是**讀取不夠快**
+   * 並且**沒有提前在商店完成讀取**的緣故」—— 他的診斷是對的。地圖每回合換
+   * （task #145），而在此之前四張地面 PNG 是**戰鬥開始那一刻**才開始抓的，
+   * 抓完之前 babylon 讓整片地板材質 not-ready ⇒ **那片 mesh 整片不畫** ⇒
+   * 露出 `scene.clearColor`＝這張圖的 `palette.void`（芙莉蓮 `#060a12`、
+   * 大混戰 `#05060d`）＝**全黑**。
+   *
+   * 中場是正確的時機，理由是**這時候沒有任何東西趕時間**：玩家在逛商店，
+   * 而下一回合要用的貼圖在這幾十秒裡可以慢慢抓完。
+   *
+   * ⚠️ 只在**進入**中場那一格做（`phase` 的邊緣），⛔ 不是每一個快照都做 ——
+   * 雖然 `warmGroundTextures` 本身是冪等的（命中就是一次 map 查找），
+   * 但每秒 20 次的無謂呼叫仍然是白花的。
+   */
+  private warmGroundForNextRound(phase: string): void {
+    if (phase === this.warmedPhase) return;
+    this.warmedPhase = phase;
+    if (phase !== "intermission") return;
+    for (const { style, radius } of this.contentDb.arenaGroundWarmList()) {
+      warmGroundTextures(this.renderer.scene, [groundTextureSet(style)], radius);
+    }
+  }
+
   private applyArena(mapId: string): void {
     if (this.disposed || !mapId) return;
     if (mapId === this.appliedMapId || mapId === this.applyingMapId) return;
@@ -1397,6 +1428,7 @@ export class GameApp {
     // + supersedes, so feeding it every patch only rebuilds on an actual change.
     const arenaId = resolveArenaId(state as unknown as ArenaIdSource);
     if (arenaId) this.applyArena(arenaId);
+    this.warmGroundForNextRound(state.phase);
     const nowMs = performance.now();
     this.connStats.noteSnapshot(nowMs); // snapshot cadence → jitter / gap
     if (state.tick > 0) this.timeSync.noteServerTick(state.tick, nowMs);

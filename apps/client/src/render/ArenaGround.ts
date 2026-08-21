@@ -51,20 +51,12 @@ import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
-import { Texture } from "@babylonjs/core/Materials/Textures/texture";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { Matrix, Vector3 } from "@babylonjs/core/Maths/math.vector";
 // Side-effect: adds thinInstance* to Mesh (contact shadows are one draw call).
 import "@babylonjs/core/Meshes/thinInstanceMesh";
-import { effectiveQuality } from "./RenderConfig";
-import {
-  GROUND_BLEND_LEVELS,
-  detailUvScale,
-  groundTextureSet,
-  groundTextureUrls,
-  TILE_WORLD_SIZE,
-  type GroundTextureSet,
-} from "./groundMaterials";
+import { GROUND_BLEND_LEVELS, groundTextureSet, TILE_WORLD_SIZE } from "./groundMaterials";
+import { acquireGroundTextures, type GroundTextures } from "./groundTextureCache";
 
 // ---------------------------------------------------------------------------
 // heights — every one of these is measured from the walkable plane at y = 0
@@ -106,7 +98,6 @@ export const RIM_OUTER_OFFSET = 6;
  * The mobile tier stays at the default: it is fill-rate bound before it is
  * detail bound (RenderConfig caps its DPR at 1.5 for the same reason).
  */
-const GROUND_ANISOTROPY_DESKTOP = 8;
 
 // ---------------------------------------------------------------------------
 // pure geometry — no Babylon, unit-tested
@@ -277,60 +268,9 @@ export interface GroundPalette {
   wall: { r: number; g: number; b: number };
 }
 
-/**
- * Load one texture from the generated set.
- *
- * `gammaSpace` is the whole reason this helper exists. Only the albedo is
- * colour; `normal`, `orm` and `macro` carry DATA, and Babylon gamma-decodes any
- * texture with `gammaSpace` left at its default `true` — which silently bends
- * every roughness and normal value and turns the floor shiny and over-embossed
- * with no error anywhere. See groundMaterials.ts note 1.
- */
-function dataTexture(url: string, scene: Scene, gammaSpace: boolean, wrap: boolean): Texture {
-  const tex = new Texture(url, scene, false, false);
-  tex.gammaSpace = gammaSpace;
-  const mode = wrap ? Texture.WRAP_ADDRESSMODE : Texture.CLAMP_ADDRESSMODE;
-  tex.wrapU = mode;
-  tex.wrapV = mode;
-  return tex;
-}
-
-/** Textures shared by a zone's floor and rim materials (one fetch, two users). */
-interface GroundTextures {
-  albedo: Texture;
-  normal: Texture;
-  orm: Texture;
-  macro: Texture;
-}
-
-function loadGroundTextures(
-  scene: Scene,
-  set: GroundTextureSet,
-  boundaryRadius: number,
-): GroundTextures {
-  const urls = groundTextureUrls(set);
-  const scale = detailUvScale(boundaryRadius);
-  const albedo = dataTexture(urls.albedo, scene, true, true);
-  const normal = dataTexture(urls.normal, scene, false, true);
-  const orm = dataTexture(urls.orm, scene, false, true);
-  // The detail maps repeat once per TILE_WORLD_SIZE world units. Both the floor
-  // (planar UVs over the bounding square) and the rim (arc-length UVs divided
-  // by the same 2R) are authored so this ONE scale is correct for both — which
-  // is what lets them share these texture objects.
-  const aniso = effectiveQuality() === "mobile" ? albedo.anisotropicFilteringLevel : GROUND_ANISOTROPY_DESKTOP;
-  for (const t of [albedo, normal, orm]) {
-    t.uScale = scale;
-    t.vScale = scale;
-    t.anisotropicFilteringLevel = aniso;
-  }
-  // The macro layer is the anti-repetition half of phase 1: stretched over the
-  // zone EXACTLY ONCE (uScale = vScale = 1) and clamped, never tiled.
-  const macro = dataTexture(urls.macro, scene, false, false);
-  return { albedo, normal, orm, macro };
-}
-
-/** Common PBR setup for both ground materials. */
-function baseGroundMaterial(name: string, scene: Scene, tex: GroundTextures | null): PBRMaterial {
+/** Common PBR setup for both ground materials. The maps are NOT bound here —
+ *  see {@link dressWhenReady} for why binding is deferred until they decode. */
+function baseGroundMaterial(name: string, scene: Scene): PBRMaterial {
   const mat = new PBRMaterial(name, scene);
   mat.metallic = 0;
   mat.roughness = 0.9;
@@ -340,18 +280,78 @@ function baseGroundMaterial(name: string, scene: Scene, tex: GroundTextures | nu
   mat.environmentIntensity = 0;
   mat.specularIntensity = 0.35; // damp dielectric sheen; this is dirt and stone
   mat.backFaceCulling = true;
-  if (tex) {
-    mat.albedoTexture = tex.albedo;
-    mat.bumpTexture = tex.normal;
-    // glTF ORM packing — R = occlusion, G = roughness, B = metallic. Babylon
-    // reads all three off the ONE `metallicTexture` once these flags are set.
-    mat.metallicTexture = tex.orm;
-    mat.useAmbientOcclusionFromMetallicTextureRed = true;
-    mat.useRoughnessFromMetallicTextureGreen = true;
-    mat.useMetallnessFromMetallicTextureBlue = true;
-    mat.useRoughnessFromMetallicTextureAlpha = false;
-  }
   return mat;
+}
+
+/**
+ * ⭐ GH#535 —— 把四張圖掛上材質，**而且只在它們解碼完之後**。
+ *
+ * ⛔ 早一步掛上去就是 owner 看到的「地板全黑」，⛔ 不是「模糊幾幀」：貼圖沒好時
+ * babylon 綁的是 `engine.emptyTexture` —— `createRawTexture(new Uint8Array(4),
+ * 1, 1, …)`，也就是 **1×1 的 (0,0,0,0)**（`abstractEngine.js:275`）。albedo 是
+ * **相乘**的 ⇒ 任何顏色 × 黑 = 黑。（出貨的 `isBlocking = true` 走另一條路到同一個
+ * 地方：整片 mesh 不畫，露出 `scene.clearColor` = 這張圖的 `palette.void`。）
+ *
+ * 所以在此之前材質先穿 `GROUND_BASE` 那組平色 —— 那組常數的註解本來就寫著它存在是
+ * 為了「degrade to the old floor instead of **a black hole**」，只是**只套在
+ * 「抓失敗」，沒套在「還在抓」**。這裡把它套上去。
+ */
+function attachGroundTextures(
+  mat: PBRMaterial,
+  tex: GroundTextures,
+  detail: boolean,
+  texturedColor: Color3,
+): void {
+  mat.albedoTexture = tex.albedo;
+  mat.bumpTexture = tex.normal;
+  // glTF ORM packing — R = occlusion, G = roughness, B = metallic. Babylon
+  // reads all three off the ONE `metallicTexture` once these flags are set.
+  mat.metallicTexture = tex.orm;
+  mat.useAmbientOcclusionFromMetallicTextureRed = true;
+  mat.useRoughnessFromMetallicTextureGreen = true;
+  mat.useMetallnessFromMetallicTextureBlue = true;
+  mat.useRoughnessFromMetallicTextureAlpha = false;
+  if (detail) {
+    mat.detailMap.texture = tex.macro;
+    mat.detailMap.diffuseBlendLevel = GROUND_BLEND_LEVELS.diffuse;
+    mat.detailMap.roughnessBlendLevel = GROUND_BLEND_LEVELS.roughness;
+    mat.detailMap.bumpLevel = GROUND_BLEND_LEVELS.bump;
+    mat.detailMap.isEnabled = true;
+  }
+  // The maps now carry the colour, so the tint stops doubling as the base.
+  mat.albedoColor = texturedColor;
+}
+
+/**
+ * Bind now if the cache already holds them (round 2+ after the shop-phase warm
+ * — the common case), otherwise when they land.
+ *
+ * ⚠️ The arena is torn down every round while a first-round fetch may still be
+ * in flight, so the late callback checks the material is still alive. Same
+ * shape as `dressArena`'s in-flight-orphan guard (GH#337): an async wake-up
+ * must ask whether the thing it is about to write to still exists.
+ */
+function dressWhenReady(
+  mat: PBRMaterial,
+  tex: GroundTextures | null,
+  detail: boolean,
+  texturedColor: Color3,
+): void {
+  if (!tex) return;
+  if (tex.isReady()) {
+    attachGroundTextures(mat, tex, detail, texturedColor);
+    return;
+  }
+  let dead = false;
+  mat.onDisposeObservable.addOnce(() => {
+    dead = true;
+  });
+  void tex.whenReady().then(() => {
+    // `isReady()` false here = a map 404'd or failed to decode. Keeping the flat
+    // fallback is the correct degrade (it is the pre-#80 floor), ⛔ not black.
+    if (dead || !tex.isReady()) return;
+    attachGroundTextures(mat, tex, detail, texturedColor);
+  });
 }
 
 /**
@@ -367,20 +367,17 @@ function createFloorMaterial(
   fallback: Color3,
   palette?: GroundPalette,
 ): PBRMaterial {
-  const mat = baseGroundMaterial(name, scene, tex);
+  const mat = baseGroundMaterial(name, scene);
   // ⚠️ 斷言要讀**這一顆最終物件**：染色是乘進 `albedoColor` 的，⛔ 不是換掉貼圖 ——
   //    對 `albedoTexture` 寫的斷言不管有沒有染色都會過（`views/mobTint.test.ts` 檔頭）。
-  const base = tex ? Color3.White() : fallback;
-  mat.albedoColor = palette
-    ? base.multiply(new Color3(palette.floor.r, palette.floor.g, palette.floor.b))
-    : base;
-  if (tex) {
-    mat.detailMap.texture = tex.macro;
-    mat.detailMap.diffuseBlendLevel = GROUND_BLEND_LEVELS.diffuse;
-    mat.detailMap.roughnessBlendLevel = GROUND_BLEND_LEVELS.roughness;
-    mat.detailMap.bumpLevel = GROUND_BLEND_LEVELS.bump;
-    mat.detailMap.isEnabled = true;
-  }
+  const tint = palette
+    ? new Color3(palette.floor.r, palette.floor.g, palette.floor.b)
+    : Color3.White();
+  // Frame 0 wears the FLAT colour. `dressWhenReady` swaps it to `White × tint`
+  // the moment the maps decode — so there is never a frame with a texture slot
+  // pointing at babylon's 1×1 black stand-in.
+  mat.albedoColor = fallback.multiply(tint);
+  dressWhenReady(mat, tex, true, tint.clone());
   return mat;
 }
 
@@ -398,12 +395,12 @@ function createRimMaterial(
   fallback: Color3,
   palette?: GroundPalette,
 ): PBRMaterial {
-  const mat = baseGroundMaterial(name, scene, tex);
-  const wall = palette
-    ? new Color3(palette.wall.r, palette.wall.g, palette.wall.b)
-    : KERB_TINT;
-  mat.albedoColor = (tex ? Color3.White() : fallback).multiply(wall);
+  const mat = baseGroundMaterial(name, scene);
+  const wall = palette ? new Color3(palette.wall.r, palette.wall.g, palette.wall.b) : KERB_TINT;
+  mat.albedoColor = fallback.multiply(wall);
   mat.roughness = 0.95;
+  // NO detail map on the rim — see this function's docstring.
+  dressWhenReady(mat, tex, false, wall.clone());
   return mat;
 }
 
@@ -540,6 +537,50 @@ export interface ZoneGround {
 }
 
 /**
+ * The radius a zone scales its DETAIL MAPS by — a rectangular zone uses its own
+ * half-extent, a disc uses its boundary radius.
+ *
+ * ⭐ 它是**匯出**的，因為 `groundTextureCache` 的鍵含 uv scale，而 uv scale 由這個
+ * 半徑算出來。⛔ 商店階段的預熱如果用「差不多的半徑」去暖，暖出來的是**另一個鍵**
+ * —— 快取看起來滿的、實際上一格都沒命中，而且畫面上跟沒暖完全一樣
+ * （第一·五守則：說了但不會發生）。所以預熱與建場**共用這一個函式**。
+ */
+export function zoneTextureRadius(zone: {
+  boundaryRadius: number;
+  bounds?: { kind: "disc" } | { kind: "rect"; halfW: number; halfD: number };
+}): number {
+  return zone.bounds !== undefined && zone.bounds.kind === "rect"
+    ? Math.max(zone.bounds.halfW, zone.bounds.halfD)
+    : zone.boundaryRadius;
+}
+
+/**
+ * ⭐ GH#535 —— 拆場地**之前**先把共用貼圖從材質上摘下來。
+ *
+ * `disposeArena` 用的是 `mesh.dispose(false, **true**)`，第二個參數是
+ * `disposeMaterialAndTextures`（babylon `Meshes/mesh.js:2484`）—— 它會把材質上
+ * **每一個貼圖槽**一起銷毀。而地面那四張圖現在是 `groundTextureCache` 的財產、
+ * 跨回合共用，⛔ 不是這一趟場地的財產。
+ *
+ * ⛔ 少了這一步，快取就等於不存在：每一回合換圖都會把剛剛快取好的四張圖銷毀，
+ * 下一回合再從零抓一次 —— 也就是 owner 看到的「讀取不夠快」原封不動。
+ *
+ * ⚠️ 只摘**地面**那兩顆材質。道具、火焰、裝飾照舊由 `dispose(false, true)` 回收，
+ * 因為它們的貼圖真的屬於這一趟場地。
+ */
+export function detachGroundTextures(g: ZoneGround): void {
+  for (const mesh of [g.floor, g.rim]) {
+    const mat = mesh.material;
+    if (!(mat instanceof PBRMaterial)) continue;
+    mat.albedoTexture = null;
+    mat.bumpTexture = null;
+    mat.metallicTexture = null;
+    mat.detailMap.texture = null;
+    mat.detailMap.isEnabled = false;
+  }
+}
+
+/**
  * Build a zone's floor + rim under `parent`. `groundStyle` undefined means "no
  * doc yet" — the meshes are built with the flat fallback colour and NO texture
  * fetch, so the pre-match placeholder arena never downloads a set the real map
@@ -560,9 +601,11 @@ function buildRectGround(
   zoneIndex: number,
   groundStyle: string | undefined,
   palette: GroundPalette | undefined,
+  /** {@link zoneTextureRadius} — passed in so the warm and the build agree. */
+  texRadius: number,
 ): ZoneGround {
   const tex = groundStyle
-    ? loadGroundTextures(scene, groundTextureSet(groundStyle), Math.max(bounds.halfW, bounds.halfD))
+    ? acquireGroundTextures(scene, groundTextureSet(groundStyle), texRadius)
     : null;
   const fallback = GROUND_BASE[groundStyle ?? "stone"] ?? GROUND_BASE.stone!;
 
@@ -634,11 +677,14 @@ export function buildZoneGround(
   // 而地板本來畫到 `boundaryRadius` ⇒ 圓盤會從四條牆**外面**冒出來，玩家會看到
   // 走不到的地板，然後以為自己被卡住。這正是「畫面說的和碰撞說的不一樣」那一類。
   const rectBounds = zone.bounds !== undefined && zone.bounds.kind === "rect" ? zone.bounds : null;
+  const texRadius = zoneTextureRadius(zone);
   if (rectBounds !== null) {
-    return buildRectGround(scene, parent, zone.center, rectBounds, zoneIndex, groundStyle, palette);
+    return buildRectGround(
+      scene, parent, zone.center, rectBounds, zoneIndex, groundStyle, palette, texRadius,
+    );
   }
   const r = zone.boundaryRadius;
-  const tex = groundStyle ? loadGroundTextures(scene, groundTextureSet(groundStyle), r) : null;
+  const tex = groundStyle ? acquireGroundTextures(scene, groundTextureSet(groundStyle), texRadius) : null;
   const fallback = GROUND_BASE[groundStyle ?? "stone"] ?? GROUND_BASE.stone!;
 
   const floor = buildFloorMesh(scene, `zone-${zoneIndex}-floor`, r);

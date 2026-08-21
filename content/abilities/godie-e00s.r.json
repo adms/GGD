@@ -59,11 +59,7 @@
           "kind": "damageArea",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              250.0,
-              350.0,
-              450.0
-            ],
+            "damageTier": "小",
             "ratios": [
               {
                 "stat": "ap",

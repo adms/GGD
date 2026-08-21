@@ -1,0 +1,290 @@
+{
+  "id": "godie-e007",
+  "schema": "champion@1",
+  "name": "龍之子 - 天地志狼",
+  "description": "故事：\n本是平凡的國中二年級學生，因為母親項鍊的神奇力量來到三國時代，而被當做龍之子，跟仙人學習仙術及武術，以拯救龍之女為目標。\n(出自:龍狼傳)\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.85\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n柳術、鬥仙術、雲體風身之術、仙氣發勁",
+  "role": "marksman",
+  "attackType": "ranged",
+  "modelKey": "imported.herolingtong",
+  "missileSpeed": 22.0,
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
+    "ap": 0,
+    "armor": 0,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 8.2
+  },
+  "growth": {
+    "maxHealth": 36,
+    "healthRegen": 0.09,
+    "maxMana": 20,
+    "manaRegen": 0.07,
+    "ad": 2.8,
+    "armor": 0.9,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "attributes": {
+    "str": 18,
+    "agi": 24,
+    "int": 16,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "AGI",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.24,
+    "knockbackMag": 0.0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-e007.q",
+      "name": "12-01 鬥仙術",
+      "icon": "assets/icons/abilities/godie-e007.q.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n將武道融入仙道而創出來所謂的不敗的武術，以念體攻擊敵人，造成{{dmg}}傷害的同時可以迷惑目標1秒。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        6.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 1.0,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.prim.ki.pulse-sm",
+      "targetsEnemies": true,
+      "castTimeSec": 0.167,
+      "rangeTier": "小",
+      "range": 4.5,
+      "cooldownTier": "極小",
+      "manaCostTier": "極小"
+    },
+    "W": {
+      "id": "godie-e007.w",
+      "name": "12-02 仙氣．採藥",
+      "icon": "assets/icons/abilities/godie-e007.w.webp",
+      "provenance": "w3x-import",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n利用身體小周天循環恢復生命持續250點，並且除去身上任何附加法術狀態。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "effects": [
+        {
+          "kind": "heal",
+          "amount": {
+            "perRank": [
+              250,
+              500,
+              750,
+              1000
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.nature.pulse",
+      "targetsEnemies": false,
+      "castTimeSec": 0.067,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "極大"
+    },
+    "E": {
+      "id": "godie-e007.e",
+      "name": "12-03 破凰之心-徒手空破山",
+      "provenance": "w3x-import",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n使用破凰之力的志狼徒手空破山，劃出大氣之刃，對目標造成{{dmg}}點傷害。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.ki.shockwave",
+      "targetsEnemies": true,
+      "icon": "assets/icons/abilities/godie-e007.e.png",
+      "castTimeSec": 0.667,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "大",
+      "manaCostTier": "極小"
+    },
+    "R": {
+      "id": "godie-e007.r",
+      "name": "12-04 龍氣爆發",
+      "provenance": "w3x-import",
+      "description": "[主動傷害]\n{{cd}}秒冷卻時間\n\n凝聚體內的龍氣造成{{dmg}}點傷害，集氣每秒增加(130% [AP])傷害，最多集氣3秒。\n(建築傷害25%)",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "大",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.3
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.w3x.particle.supershinythingy.p00",
+      "targetsEnemies": true,
+      "icon": "assets/icons/abilities/godie-e007.r.png",
+      "castTimeSec": 1.5,
+      "hitFeel": {
+        "hitstopTicks": 4,
+        "hitstunTicks": 7,
+        "shakeMag": 0.52,
+        "shakeStyle": "omni",
+        "sparkKind": "magic",
+        "flashColor": [
+          1.0,
+          0.92,
+          0.6
+        ],
+        "flashMs": 178,
+        "camKick": 0.446
+      },
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "極大",
+      "manaCostTier": "小"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "thrown"
+  ],
+  "exAbility": "godie-e007.ex",
+  "passiveAbility": "godie-e007.passive",
+  "icon": "assets/icons/champions/godie-e007.png",
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-ewar",
+    "normalUnitRawcode": "EWAR",
+    "alternateUnitRawcode": "E007",
+    "triggerAbility": {
+      "rawcode": "A02W",
+      "name": "12-03 破凰之心-徒手空破山",
+      "durationSec": {
+        "1": 12.0,
+        "2": 18.0,
+        "3": 24.0,
+        "4": 30.0
+      },
+      "cooldownSec": {
+        "1": 45.0,
+        "2": 45.0,
+        "3": 45.0,
+        "4": 45.0
+      }
+    }
+  }
+}

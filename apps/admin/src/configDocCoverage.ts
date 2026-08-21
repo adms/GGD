@@ -93,6 +93,14 @@ export interface ConfigDocExemption {
  */
 export const CONFIG_DOC_EXEMPTIONS: readonly ConfigDocExemption[] = [
   {
+    docId: "damage-tier-exemptions",
+    kind: "OWN_PAGE",
+    page: "damageTierWarnings",
+    docIdConstant: "damage-tier-exemptions",
+    why: "「不吃五級距的傷害節點」有自己的**唯讀**頁（⚠️ 那一頁）。⛔ 它不走通用引擎有兩個理由：① 這份文件的 `rules` 是一個**會長大的陣列**，而通用引擎畫得動的是固定形狀的純量葉；② ⭐ 它的用途是**警告**不是編輯 —— owner #534：「①②③ 作為例外在後台**跳出警告就好**」。把它做成可編輯欄位，等於讓操作者用手打一條謂詞去豁免任意節點，而那正是這份表要防的東西。",
+    expiresWhen: "⚠️ 通用引擎長出「陣列型欄位（新增/刪除列 + 每列一組子欄位）」的那一天，如果 owner 同時決定豁免表**可以在後台編輯**，這一列才該退場。⛔ 只長出欄位型別而語意仍是「警告」的話，這一列繼續成立。",
+  },
+  {
     docId: "arena-pool",
     kind: "OWN_PAGE",
     page: "arenaPool",

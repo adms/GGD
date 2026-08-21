@@ -552,12 +552,23 @@ def tierize(doc, grids=None, log=None):
     dgrid = grids.dmg_row()
     leaves = damage_leaves(doc)
     if leaves:
-        base, amount = max(leaves, key=lambda x: x[0])
+        # ⭐ **每一片葉子都要收級距**,⛔ 不是只收最大的那一片。
+        #
+        # ⚠️ 這裡原本是 `max(leaves, ...)` —— 一支技能只有最重的那一片拿得到級別,
+        # 其餘的**永遠**留著自由數字,級距表怎麼改它們一動都不動,而且沒有任何東西會紅。
+        # 量到（2026-08-22,#534 之後總閘才看得見）:70-04 千年練成 · 15-03 獄炎煉我 ·
+        # 79-01 瞬步 · 65-04 天譴 —— 四支都是「多片傷害葉,只有一片有級別」。
+        #
+        # ⭐ `idx`（給冷卻／耗魔當參照的那一格）仍然取**最重的那一片**,
+        # 因為「這支技能有多重」看的是它最大的一發,⛔ 不是每一片各自算。
+        for lbase, lamount in leaves:
+            li = nearest_index(lbase, dgrid)
+            lbefore = lamount.get("damageTier"), lamount.get("flat"), lamount.get("perRank")
+            _rewrite_scaling(lamount, TIER_NAMES[li])
+            if lbefore != (TIER_NAMES[li], None, None):
+                log.append(("damage", lbefore, dgrid[li], TIER_NAMES[li]))
+        base = max(b for b, _ in leaves)
         idx = nearest_index(base, dgrid)
-        before = amount.get("damageTier"), amount.get("flat"), amount.get("perRank")
-        _rewrite_scaling(amount, TIER_NAMES[idx])
-        if before != (TIER_NAMES[idx], None, None):
-            log.append(("damage", before, dgrid[idx], TIER_NAMES[idx]))
     else:
         # 沒有可換算的葉子 ⇒ 用它**有沒有傷害**決定 i_d：純 ratios 的傷害技仍是
         # 傷害技，但它的卡面基礎是 0 ⇒ 落在最低那一格。

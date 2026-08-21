@@ -1,0 +1,415 @@
+{
+  "id": "godie-hart",
+  "schema": "champion@1",
+  "name": "最終幻想 - 克勞德",
+  "description": "故事：\nCloud的名字暗示著他神祕，不清楚的過去以及他那不可預知的將來，為了過去奮戰們的朋友，使得他不得不重新提起沉重的大刀迎敵。\n(出自:太空戰士7)\n\n推薦玩家 : 追擊殺手\n上手度 : 中\n\n角色成長：\n力量 + 2.50\n敏捷 + 1.80\n智慧 + 1.90\n基礎跑速 310\n\n可學習的技能：\n凶斬、隕石擊、畫龍點睛、超究武神霸斬",
+  "role": "fighter",
+  "attackType": "melee",
+  "origin": "鬥士",
+  "modelKey": "imported.cloud",
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 15,
+    "ap": 0,
+    "armor": 2,
+    "mr": 28,
+    "as": 0.526316,
+    "ms": 6,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 75.9918,
+    "healthRegen": 0.2026,
+    "maxMana": 47.8622,
+    "manaRegen": 0.1774,
+    "ad": 5.1061,
+    "armor": 0.8468,
+    "mr": 2.3541,
+    "as": 0.0121,
+    "ap": 0.6765
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 24,
+    "agi": 17,
+    "int": 13,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "STR",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 4,
+    "shakeMag": 0.55,
+    "knockbackMag": 0.45
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-hart.q",
+      "name": "01-01 凶斬",
+      "icon": "assets/icons/abilities/godie-hart.q.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n使用大刀在敵人身上刻下凶字造成{{dmg}}傷害，並且使人暫時無法行動1秒。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 1.0,
+          "moveSpeedMult": 0.6
+        },
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 0,
+          "durationSec": 0.2
+        }
+      ],
+      "vfxKey": "fx.prim.physical.slash",
+      "targetsEnemies": true,
+      "castTimeSec": 0.367,
+      "rangeTier": "大",
+      "range": 8,
+      "cooldownTier": "小",
+      "manaCostTier": "極小"
+    },
+    "W": {
+      "id": "godie-hart.w",
+      "name": "01-02 隕石擊",
+      "icon": "assets/icons/abilities/godie-hart.w.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n招喚隕石擊落攻擊區域內的敵人造成100傷害並且跳躍到該範圍給予斬殺造成100傷害。",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 5,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 2.4,
+          "durationSec": 0.82,
+          "landRadius": 4.58,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "ratios": [
+                  {
+                    "stat": "ad",
+                    "coeff": 0.5
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "slow40",
+              "duration": 1.5,
+              "moveSpeedMult": 0.6
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.fire.explosion",
+      "targetsEnemies": true,
+      "radius": 4.58,
+      "castTimeSec": 0.767,
+      "rangeTier": "大",
+      "range": 8,
+      "cooldownTier": "極小",
+      "manaCostTier": "極小"
+    },
+    "E": {
+      "id": "godie-hart.e",
+      "name": "01-03 畫龍點睛",
+      "icon": "assets/icons/abilities/godie-hart.e.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n快速迴旋巨劍產生龍捲風砍殺敵人造成{{dmg}}點傷害，並降低目標裝甲3點，持續5秒。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": -3
+            }
+          ],
+          "duration": 5.0,
+          "perRank": [
+            {
+              "modifiers": [
+                {
+                  "stat": "armor",
+                  "op": "flat",
+                  "value": -3
+                }
+              ],
+              "duration": 5.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "armor",
+                  "op": "flat",
+                  "value": -6
+                }
+              ],
+              "duration": 5.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "armor",
+                  "op": "flat",
+                  "value": -9
+                }
+              ],
+              "duration": 5.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "armor",
+                  "op": "flat",
+                  "value": -12
+                }
+              ],
+              "duration": 5.0
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.physical.beam",
+      "targetsEnemies": true,
+      "radius": 6.0,
+      "castTimeSec": 1.133,
+      "rangeTier": "極小",
+      "range": 3,
+      "cooldownTier": "小",
+      "manaCostTier": "小",
+      "radiusTier": "中"
+    },
+    "R": {
+      "id": "godie-hart.r",
+      "name": "01-04 超究武神霸斬",
+      "icon": "assets/icons/abilities/godie-hart.r.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n克勞德的奧義招式，連斬七次的超必殺攻擊，每一次斬擊皆造成極大傷害，總傷害630+30% [AP]點。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "omnislash-lock",
+          "duration": 3.5,
+          "stun": true
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "omnislash-perform",
+          "duration": 3.5,
+          "applyTo": "self",
+          "stun": true
+        },
+        {
+          "kind": "invulnerable",
+          "durationSec": 3.5,
+          "applyTo": "self",
+          "blocksDamage": "all",
+          "blocksTrueDamage": false,
+          "blocksControl": false
+        },
+        {
+          "kind": "dot",
+          "damageType": "physical",
+          "amountPerTick": {
+            "perRank": [
+              99.0,
+              149.0,
+              199.0
+            ]
+          },
+          "intervalSec": 0.5,
+          "durationSec": 3.5,
+          "stacking": "independent"
+        },
+        {
+          "kind": "dot",
+          "damageType": "physical",
+          "amountPerTick": {
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.3
+              }
+            ]
+          },
+          "intervalSec": 3.5,
+          "durationSec": 3.5,
+          "stacking": "independent"
+        }
+      ],
+      "vfxKey": "fx.w3x.orb.herocloudkfksword.p00",
+      "targetsEnemies": true,
+      "castTimeSec": 1.5,
+      "hitFeel": {
+        "hitstopTicks": 5,
+        "hitstunTicks": 9,
+        "shakeMag": 0.614,
+        "shakeStyle": "directional",
+        "sparkKind": "heavy",
+        "flashColor": [
+          0.85,
+          0.92,
+          1.0
+        ],
+        "flashMs": 211,
+        "camKick": 0.526
+      },
+      "rangeTier": "大",
+      "range": 8,
+      "cooldownTier": "極大",
+      "manaCostTier": "小"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "greatsword"
+  ],
+  "exAbility": "godie-hart.ex",
+  "passiveAbility": "godie-hart.passive",
+  "passive": {
+    "name": "01-00 怒斬",
+    "hooks": [
+      {
+        "on": "onBasicAttack",
+        "chance": 0.15,
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "physical",
+            "amount": {
+              "flat": 175
+            }
+          },
+          {
+            "kind": "applyStatus",
+            "statusId": "burnstun",
+            "duration": 0.5,
+            "stun": true
+          }
+        ]
+      }
+    ]
+  },
+  "icon": "assets/icons/champions/godie-hart.png",
+  "playstyle": [
+    "切入",
+    "劍技",
+    "多段必殺"
+  ],
+  "pitch": "用劍技闖入戰局並建立壓力，抓到機會後以連續必殺完成擊殺。"
+}

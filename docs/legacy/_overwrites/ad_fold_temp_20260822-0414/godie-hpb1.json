@@ -1,0 +1,312 @@
+{
+  "id": "godie-hpb1",
+  "schema": "champion@1",
+  "name": "獸矛傳承使 - 蒼月潮",
+  "description": "故事：\n無意間破除光霸明宗所設的密室結界， 並意外成為獸矛這一世的傳承者。充滿熱血正義感的蒼月潮為了阻止去死團的破壞拿起獸矛奮戰了。\n(出自:魔力小馬、潮與虎)\n\n推薦玩家 : 追擊殺手\n上手度 : 中\n\n角色成長：\n力量 + 2.10\n敏捷 + 2.00\n智慧 + 1.70\n基礎跑速 310\n\n可學習的技能：\n臨兵鬥、者皆陣、列在前、神聖結界",
+  "role": "fighter",
+  "attackType": "melee",
+  "origin": "狂戰",
+  "modelKey": "imported.herotoshiiemaeda",
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
+    "ap": 0,
+    "armor": 2,
+    "mr": 28,
+    "as": 0.526316,
+    "ms": 6,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.4
+  },
+  "growth": {
+    "maxHealth": 58.8914,
+    "healthRegen": 0.3307,
+    "maxMana": 22.426,
+    "manaRegen": 0.0743,
+    "ad": 5.149,
+    "armor": 0.6691,
+    "mr": 1.8261,
+    "as": 0.0301,
+    "ap": 0.6765
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 26,
+    "agi": 15,
+    "int": 13,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "STR",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 3,
+    "shakeMag": 0.44,
+    "knockbackMag": 0.25
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-hpb1.q",
+      "name": "07-01 臨、兵、鬥",
+      "icon": "assets/icons/abilities/godie-hpb1.q.webp",
+      "provenance": "w3x-import",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n可抵擋對方負性魔法。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "effects": [],
+      "vfxKey": "fx.prim.physical.pulse-sm",
+      "castTimeSec": 0.067,
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 6,
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": 0.5
+            }
+          ],
+          "castTimeSec": 0.067
+        }
+      },
+      "cooldownTier": "大"
+    },
+    "W": {
+      "id": "godie-hpb1.w",
+      "name": "07-02 者、皆、陣",
+      "icon": "assets/icons/abilities/godie-hpb1.w.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n以超快的速度衝刺砍殺一直線上的敵人使得血流成河，砍殺造成{{dmg}}+30% [AP]傷害。\n\n在\"臨、兵、鬥\"發動後1秒內施展可增加(80% [AP])傷害，30級之後可增加(150% [AP])傷害",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [
+        {
+          "kind": "invulnerable",
+          "durationSec": 0.1,
+          "applyTo": "self",
+          "blocksDamage": "all",
+          "blocksTrueDamage": false,
+          "blocksControl": true
+        },
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.3
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "moon-combo",
+          "duration": 1.0,
+          "applyTo": "self"
+        }
+      ],
+      "vfxKey": "fx.prim.physical.pulse-sm",
+      "sfxKey": "wc3.moongo",
+      "targetsEnemies": true,
+      "castTimeSec": 0.667,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "大",
+      "manaCostTier": "小"
+    },
+    "E": {
+      "id": "godie-hpb1.e",
+      "name": "07-03 列、在、前",
+      "icon": "assets/icons/abilities/godie-hpb1.e.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n用盡全身力氣跳起落下斬擊使得大地震動，區域內敵人皆受到(50% [AP])+450傷害。\n\n在\"者、皆、陣\"發動後1秒內施展可增加(130% [AP])傷害，30級之後可增加(250% [AP])傷害",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        288.0,
+        288.0,
+        288.0,
+        288.0
+      ],
+      "radius": 6.05,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 2.4,
+          "durationSec": 1.44,
+          "landRadius": 6.05,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.5
+                  }
+                ]
+              },
+              "comboBonus": {
+                "statusId": "moon-combo",
+                "amount": {
+                  "ratios": [
+                    {
+                      "coeff": 1.25,
+                      "stat": "ad"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.physical.beam",
+      "sfxKey": "wc3.moonjump",
+      "targetsEnemies": true,
+      "castTimeSec": 1.433,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "中",
+      "manaCostTier": "中"
+    },
+    "R": {
+      "id": "godie-hpb1.r",
+      "name": "07-04 神聖結界",
+      "icon": "assets/icons/abilities/godie-hpb1.r.webp",
+      "provenance": "w3x-import",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n展開一道強力的結界，可以抵擋50%的傷害，持續8秒。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 25
+            }
+          ],
+          "duration": 8.0,
+          "perRank": [
+            {
+              "modifiers": [
+                {
+                  "stat": "armor",
+                  "op": "flat",
+                  "value": 25
+                }
+              ],
+              "duration": 8.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "armor",
+                  "op": "flat",
+                  "value": 25
+                }
+              ],
+              "duration": 12.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "armor",
+                  "op": "flat",
+                  "value": 25
+                }
+              ],
+              "duration": 16.0
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.holy.nova-lg",
+      "castTimeSec": 0.667,
+      "cooldownTier": "大"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-hpb1.ex",
+  "passiveAbility": "godie-hpb1.passive",
+  "icon": "assets/icons/champions/godie-hpb1.png",
+  "playstyle": [
+    "連段",
+    "斬殺",
+    "擊殺回血"
+  ],
+  "pitch": "持續追著敵人打，完成擊殺後回復生命，再直接轉向下一個目標。"
+}

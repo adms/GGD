@@ -1,0 +1,286 @@
+{
+  "id": "godie-u00v",
+  "schema": "champion@1",
+  "name": "黑手黨老大 - 基廉列克",
+  "description": "故事：\n前黑手黨老大，被手下背叛炸爛後接合回去所以身上有須多接痕及顏色，平常安靜，必要時非常的暴躁，武功高強，刀槍不入，有潔癖，愛帆布鞋成痴。\n(出自:監獄兔)\n\n推薦玩家 : 連技戰士\n上手度 : 難\n\n角色成長：\n力量 + 2.60\n敏捷 + 1.60\n智慧 + 1.60\n基礎跑速 300\n\n可學習的技能：\n斬鐵拳、地走龍牙破、廬山昇龍破、死亡噴射肘擊",
+  "role": "fighter",
+  "attackType": "melee",
+  "origin": "鬥士",
+  "modelKey": "imported.rabbit",
+  "baseStats": {
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 25,
+    "ap": 0,
+    "armor": 0,
+    "mr": 28,
+    "as": 0.526316,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 76.4612,
+    "healthRegen": 0.2034,
+    "maxMana": 47.0969,
+    "manaRegen": 0.1667,
+    "ad": 5.0122,
+    "armor": 0.8764,
+    "mr": 2.3541,
+    "as": 0.0125,
+    "ap": 0.3449
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 22,
+    "agi": 14,
+    "int": 18,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "STR",
+    "source": "w3x"
+  },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.18,
+    "knockbackMag": 0
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-u00v.q",
+      "name": "78-01 斬鐵拳",
+      "icon": "assets/icons/abilities/godie-u00v.q.webp",
+      "provenance": "w3x-import",
+      "description": "[被動]\n0秒冷卻時間\n\n基廉列克的拳頭在攻擊時有10%機率增加75點破壞力，並有機會將敵人震昏1秒。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 5,
+      "cooldown": [
+        6.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "effects": [],
+      "vfxKey": "fx.prim.physical.beam",
+      "castTimeSec": 0.067,
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "castTimeSec": 0.067
+        }
+      },
+      "cooldownTier": "極小"
+    },
+    "W": {
+      "id": "godie-u00v.w",
+      "name": "78-02 地走龍牙破",
+      "icon": "assets/icons/abilities/godie-u00v.w.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n對付裝甲戰車時發動之必殺技，挖地道到目標上方後突襲，使該範圍受到{{dmg}}點傷害，並且暈眩0.1秒。",
+      "slot": "W",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        72.0,
+        72.0,
+        72.0,
+        72.0
+      ],
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave.earth",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              }
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.earth.shockwave",
+      "sfxKey": "wc3.gluescreenmeteorhit1",
+      "castTimeSec": 0.833,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "大",
+      "manaCostTier": "極小"
+    },
+    "E": {
+      "id": "godie-u00v.e",
+      "name": "78-03 廬山昇龍破",
+      "icon": "assets/icons/abilities/godie-u00v.e.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n使數百輛警車和警察仆街的超必殺技，可對附近敵方單位造成{{dmg}}點傷害。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0,
+        144.0
+      ],
+      "range": 0,
+      "effects": [],
+      "vfxKey": "fx.prim.ki.beam",
+      "sfxKey": "wc3.dragonyes2",
+      "targetsEnemies": true,
+      "radius": 6,
+      "castTimeSec": 0.8,
+      "template": {
+        "ref": "tpl-proxy-cast",
+        "params": {
+          "anchor": "point",
+          "radius": 327,
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.8,
+          "statusId": "burnstun",
+          "statusDurationSec": 0.8
+        }
+      },
+      "cooldownTier": "小",
+      "manaCostTier": "小",
+      "radiusTier": "中"
+    },
+    "R": {
+      "id": "godie-u00v.r",
+      "name": "78-04 死亡噴射肘擊",
+      "icon": "assets/icons/abilities/godie-u00v.r.webp",
+      "provenance": "w3x-import",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n在基廉列克發怒的時候，將會使出意外的致命一擊，超快速速飛奔到敵人面前，使用肘擊敵方造成{{dmg}}點傷害，擊退目標1000距離，暈眩時間1秒，若受到撞擊停止，周圍敵人將會受到80% [AP]額外傷害。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        144.0,
+        144.0,
+        144.0
+      ],
+      "effects": [
+        {
+          "kind": "blink",
+          "shape": "single",
+          "to": "targetUnit",
+          "applyTo": "self",
+          "stopShortUnits": 1.8,
+          "onArrive": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.8
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "burnstun",
+              "duration": 1.0,
+              "stun": true
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.w3x.locust.boomnl.p01",
+      "targetsEnemies": true,
+      "castTimeSec": 0.667,
+      "hitFeel": {
+        "hitstopTicks": 5,
+        "hitstunTicks": 8,
+        "shakeMag": 0.591,
+        "shakeStyle": "omni",
+        "sparkKind": "heavy",
+        "flashColor": [
+          1.0,
+          0.72,
+          0.34
+        ],
+        "flashMs": 202,
+        "camKick": 0.506
+      },
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "大",
+      "manaCostTier": "小"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-u00v.ex",
+  "passiveAbility": "godie-u00v.passive",
+  "icon": "assets/icons/champions/godie-u00v.png",
+  "playstyle": [
+    "攻防轉換",
+    "突進",
+    "普攻觸發"
+  ],
+  "pitch": "把攻擊轉化成生存優勢，再利用突進持續貼住敵人進行近身纏鬥。"
+}

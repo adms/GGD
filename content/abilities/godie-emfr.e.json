@@ -41,12 +41,7 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "perRank": [
-                  60.0,
-                  90.0,
-                  120.0,
-                  150.0
-                ],
+                "damageTier": "極小",
                 "ratios": [
                   {
                     "stat": "ap",

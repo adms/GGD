@@ -1,0 +1,280 @@
+{
+  "id": "thorne",
+  "schema": "champion@1",
+  "name": "Thorne, the Bramble Knight",
+  "icon": "assets/icons/champions/thorne.webp",
+  "role": "bruiser",
+  "attackType": "melee",
+  "modelKey": "champ.thorne",
+  "attackDamagePoint": 0.25,
+  "baseStats": {
+    "maxHealth": 40,
+    "healthRegen": 0.6,
+    "maxMana": 70,
+    "manaRegen": 0.5,
+    "ad": 38,
+    "ap": 0,
+    "armor": 26.6,
+    "mr": 32,
+    "as": 0.514706,
+    "ms": 6.9,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 110,
+    "healthRegen": 0.16,
+    "maxMana": 30,
+    "manaRegen": 0.1,
+    "ad": 3.6,
+    "armor": 4.6,
+    "mr": 2,
+    "as": 0.025
+  },
+  "attributes": {
+    "str": 24,
+    "agi": 18,
+    "int": 14,
+    "strGrowth": 4.4,
+    "agiGrowth": 2.429,
+    "intGrowth": 2,
+    "primary": "STR",
+    "source": "authored"
+  },
+  "hitFeel": {
+    "hitstopTicks": 3,
+    "shakeMag": 0.44,
+    "knockbackMag": 0.25
+  },
+  "abilities": {
+    "Q": {
+      "id": "thorne.q",
+      "name": "Thorn Lash",
+      "icon": "assets/icons/abilities/thorne.q.webp",
+      "slot": "Q",
+      "castType": "dash",
+      "maxRank": 5,
+      "cooldown": [
+        9,
+        8,
+        7,
+        6,
+        5
+      ],
+      "manaCost": [
+        40,
+        40,
+        40,
+        40,
+        40
+      ],
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "forward",
+          "speed": 16,
+          "maxDistance": 6
+        }
+      ],
+      "vfxKey": "fx.thorn-lash",
+      "castTimeSec": 0.067,
+      "provenance": "w3x-import",
+      "rangeTier": "中",
+      "range": 6
+    },
+    "W": {
+      "id": "thorne.w",
+      "name": "Barkskin Bulwark",
+      "icon": "assets/icons/abilities/thorne.w.webp",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 5,
+      "cooldown": [
+        14,
+        13,
+        12,
+        11,
+        10
+      ],
+      "manaCost": [
+        50,
+        55,
+        60,
+        65,
+        70
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 60,
+            "perRank": [
+              50,
+              85,
+              120,
+              155,
+              190
+            ],
+            "ratios": [
+              {
+                "stat": "maxHealth",
+                "coeff": 0.06
+              }
+            ]
+          },
+          "duration": 3
+        },
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 30
+            }
+          ],
+          "duration": 3
+        }
+      ],
+      "vfxKey": "fx.barkskin",
+      "castTimeSec": 0.067,
+      "provenance": "w3x-import"
+    },
+    "E": {
+      "id": "thorne.e",
+      "name": "Root Snare",
+      "icon": "assets/icons/abilities/thorne.e.webp",
+      "slot": "E",
+      "castType": "skillshot",
+      "maxRank": 5,
+      "cooldown": [
+        13,
+        12,
+        11,
+        10,
+        9
+      ],
+      "manaCost": [
+        60,
+        65,
+        70,
+        75,
+        80
+      ],
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "thorne.e.thorn",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "flat": 20,
+                "perRank": [
+                  40,
+                  70,
+                  100,
+                  130,
+                  160
+                ],
+                "ratios": [
+                  {
+                    "stat": "ad",
+                    "coeff": 0.6
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "root",
+              "duration": 1.25,
+              "root": true
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.root-snare",
+      "castTimeSec": 0.233,
+      "provenance": "w3x-import",
+      "rangeTier": "大",
+      "range": 8
+    },
+    "R": {
+      "id": "thorne.r",
+      "name": "Bramble Burst",
+      "icon": "assets/icons/abilities/thorne.r.webp",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        100,
+        85,
+        70
+      ],
+      "manaCost": [
+        100,
+        100,
+        100
+      ],
+      "range": 1,
+      "radius": 4.5,
+      "targetsEnemies": true,
+      "castTimeSec": 1.767,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "perRank": [
+              150,
+              250,
+              350
+            ],
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.8
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 2,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.bramble-burst",
+      "provenance": "w3x-import"
+    }
+  },
+  "passive": {
+    "name": "Barkskin",
+    "modifiers": [
+      {
+        "stat": "armor",
+        "op": "flat",
+        "value": 8
+      }
+    ]
+  },
+  "skillOrder": [
+    "E",
+    "Q",
+    "W",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "bruiser",
+    "engage",
+    "melee"
+  ]
+}

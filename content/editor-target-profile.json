@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_af7baeae83d7",
+    "contentVersion": "cv_16502fc4f91c",
     "collections": {
       "champions": {
-        "hash": "19e96a6124f8",
+        "hash": "273c5fbd98d6",
         "count": 71
       },
       "abilities": {
-        "hash": "4552615538a7",
+        "hash": "dfe43b48928b",
         "count": 420
       },
       "items": {
@@ -42,8 +42,8 @@
         "count": 7
       },
       "config": {
-        "hash": "9090b7d7cf30",
-        "count": 77
+        "hash": "607d3541ca9f",
+        "count": 78
       },
       "models": {
         "hash": "38d96d54f6e6",
@@ -89,7 +89,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "86c08cf4",
+    "fingerprint": "3ae19522",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -1084,6 +1084,33 @@
         "token": "hook:onDeath",
         "what": "⚠️ **一半修好，一半沒有 —— 兩半的成因不同，不要只讀一句結論。** ✅ **英雄那一半已修（GH#293）**：`WorldHookSystem` 的【死亡】那一列填了 `firesWhenOwnerDead: true`，`fireHooks` 的存活閘改成逐事件放行，所以「自己死亡時 ⋯」寫得出來。⛔ **小怪（`world.mob`）那一半仍然掛不上去，但成因在 2026-08-09 換了一個** —— ⚠️ 這一段先前寫的是「`mobSystem`（slot 9d′）在 `worldHookSystem`（9f）之前就 `destroy` 掉屍體」，**那個成因已經被 GH#296 修掉了**（`MobSystem` 兩處改成 `destroyAfterHooks`，屍體留到 slot 9g）。留著這句過期的理由比沒有理由更糟：對方會照一個假的閘去繞路，而真正的閘在別的地方。**真正的閘是**：`spawnMobBody` 沒有 `world.stats.set`（殭屍沒有屬性表，owner 2026-08-04 的 A3a 裁決），而 `attachSource` 第一句就是 `if (!sc) return` —— 所以沒有任何內容掛得上小怪的 onDeath。⭐ 這是**被守著的**，不是疏忽：`mobs.statusVsStats.test.ts` 逐字斷言 `world.stats.has(mob) === false`。→ 「殺死小怪時 ⋯」用 `onKill`（會發，掛在擊殺者身上）；「**小怪死亡時** ⋯」要等殭屍拿到屬性表，⛔ 不可以用 `onKill` 近似 —— 沒有擊殺者的死亡它一次都不會發。",
         "issue": "GH#296"
+      }
+    ],
+    "deprecatedFields": [
+      {
+        "field": "flat",
+        "where": "傷害系 effect 的 `amount`（`Scaling`）—— damage / damageArea / damageLine / dot / chainLightning",
+        "useInstead": "damageTier",
+        "why": "傷害五級距（`config.damage-tiers@1`）在**註冊時**把級別翻成數字，⛔ 是**取代**不是相加 —— 兩格都填的那一份，`flat` 一個位元都不會被讀。而且它是同一個值的**第二個住處**：owner 改一次公式表，填了級別的全庫跟著動，填了字面值的那幾支不動，**沒有任何一步會報錯**。",
+        "exceptions": [
+          "① 這個數字根本不是傷害（護盾／治療／耗魔）—— 五級距只有傷害一條軸",
+          "② 判定用的一點（範圍／直線技用一個極小值當「有沒有打到」）—— 作用是觸發不是輸出",
+          "③ 持續傷害的每一跳（`dot`）—— 級距錨的是**一次施法**的總量",
+          "④ per-hit rider（法球效應／每次普攻追加／多段命中各打一次）",
+          "⭐ ④ 的判準是「**這個數字一次施法會發生幾次？**」——⛔ 不是「它的 kind 是不是傷害」。大於一次的就不屬於單發五級距。",
+          "⚠️ 完整的分類鍵與逐筆理由在遊戲端的豁免表（`config.damage-tier-exemptions@1`）,⛔ 這裡只放判準：名單會動，而這份契約是逐位元組比對的。"
+        ],
+        "issue": "GH#534"
+      },
+      {
+        "field": "perRank",
+        "where": "同上 —— 傷害系 effect 的 `amount`",
+        "useInstead": "damageTier",
+        "why": "與 `flat` 同一條規則、同一個取代路徑。⚠️ 額外一句：填了級別 = **每一階同一個值**，所以「升階傷害變高」現在由 `ratios` / `attrRatios` 那一面負責，⛔ 不是回頭手寫一條逐階陣列。",
+        "exceptions": [
+          "同 `flat` 的四類"
+        ],
+        "issue": "GH#534"
       }
     ]
   },
@@ -2674,12 +2701,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "86c08cf4",
+    "engineFingerprint": "3ae19522",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 86c08cf4 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 3ae19522 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -3174,8 +3201,8 @@
             "unlocked": 1711
           },
           "ad": {
-            "base": 33493,
-            "unlocked": 33493
+            "base": 20096,
+            "unlocked": 20096
           },
           "armor": {
             "base": 5237,
@@ -3212,7 +3239,7 @@
           "itemCooldown": 1,
           "strToMaxHealth": 23,
           "strToHealthRegen": 0.04,
-          "strToAttackDamage": 0.4,
+          "strToAttackDamage": 0.24,
           "agiToArmor": 0.3,
           "agiToAttackSpeed": 0.01,
           "intToMaxMana": 15,
@@ -3417,5 +3444,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "01f4f90286b3"
+  "profileDigest": "07fa0295a299"
 }
