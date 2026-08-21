@@ -29,7 +29,24 @@
 import type { PadInfo } from "./gamepadDetect";
 
 export type NavDir = "up" | "down" | "left" | "right";
-export type NavAction = NavDir | "activate" | "back";
+/**
+ * Right-stick nudge — "scroll the box the focus is in", never "move focus"
+ * (#506/K4). It is its own family because the left stick is already spoken
+ * for: in a bounded pane whose contents carry no focusable children
+ * (the champ-select 技能/數值/故事 tabs are plain `<div>`s) there is nothing for
+ * the left stick to step onto, so before this the pad simply could not reach
+ * anything below the first screenful.
+ */
+export type NavScroll = "scroll-up" | "scroll-down" | "scroll-left" | "scroll-right";
+/**
+ * ⭐ SCROLL IS PART OF `NavAction` ON PURPOSE. `ui/controlLegendModel` keys a
+ * `Record<NavAction, string>` off this union, so the on-screen key card cannot
+ * go on describing a smaller menu layer than the one the player is holding:
+ * growing the union is what makes that file stop compiling until the new row
+ * is written (第一·五守則 —— 卡片上不可以有說了但不會發生的字, and its mirror:
+ * 做得到卻沒有說).
+ */
+export type NavAction = NavDir | NavScroll | "activate" | "back";
 
 /** A screen-space rectangle (getBoundingClientRect shape). */
 export interface FocusRect {
@@ -52,6 +69,89 @@ export const NAV_ACTIVATE_BTN = 0;
 export const NAV_BACK_BTN = 1;
 /** D-pad indices in the standard mapping (up, down, left, right). */
 export const NAV_DPAD = { up: 12, down: 13, left: 14, right: 15 } as const;
+/** Right-stick axes in the standard mapping — the SCROLL stick (see NavScroll). */
+export const NAV_SCROLL_AXES = { x: 2, y: 3 } as const;
+/**
+ * Scroll repeats with no initial delay and a short interval: a held right stick
+ * should glide, not step. (The left stick keeps {@link NAV_INITIAL_DELAY_MS}
+ * because a focus jump that repeats on the first frame overshoots.)
+ */
+export const NAV_SCROLL_REPEAT_MS = 32;
+/** One scroll nudge travels this fraction of the visible box… */
+export const NAV_SCROLL_PAGE_RATIO = 0.22;
+/** …with this floor, so a short pane still moves a useful amount. */
+export const NAV_SCROLL_MIN_PX = 48;
+
+/**
+ * Pixels one scroll nudge travels inside a box `clientSize` px tall/wide.
+ *
+ * ⚠️ These live here beside NAV_REPEAT_MS / STICK_NAV_THRESHOLD rather than in
+ * `content/config/*.json` on purpose: they are the same KIND of number as the
+ * pad-feel constants already in this module (frame-rate-coupled input response,
+ * meaningless to a designer, never mentioned on a card), and splitting one
+ * family of four across two homes is how the drift in 第一·五守則 starts. Any
+ * number a player or the owner would ever want to tune belongs in config.
+ */
+export function scrollStepPx(clientSize: number): number {
+  return Math.max(NAV_SCROLL_MIN_PX, Math.round(clientSize * NAV_SCROLL_PAGE_RATIO));
+}
+
+// ------------------------------------------- value controls: adjust in place --
+
+/**
+ * Controls the pad EDITS instead of stepping off (#505/K3). Focus could always
+ * land on a `<select>` or a `<input type=range>` — it is in the focusable set
+ * and it lit the focus ring — but A only did `el.click()`, which a browser will
+ * not honour as "open the native dropdown" from an untrusted event, and left/
+ * right moved focus away. So every dropdown in the game (arena, bot difficulty,
+ * room settings) and every slider (volume, resolution scale) was visible,
+ * reachable, and unchangeable on a pad.
+ *
+ * PURE: takes the tag/type strings so the DOM half is a two-line call.
+ */
+export type PadValueKind = "select" | "range" | null;
+
+export function padValueKind(el: { tag: string; type?: string | null }): PadValueKind {
+  const tag = el.tag.toLowerCase();
+  if (tag === "select") return "select";
+  if (tag === "input" && (el.type ?? "").toLowerCase() === "range") return "range";
+  return null;
+}
+
+/**
+ * Next `<select>` option index. Nav (left/right) CLAMPS so the player can feel
+ * the ends of the list; A (activate) WRAPS, because there the whole gesture is
+ * "give me the next one" and a dead button at the last option reads as broken.
+ */
+export function nextOptionIndex(
+  current: number,
+  length: number,
+  delta: number,
+  wrap = false,
+): number {
+  if (length <= 0) return -1;
+  const raw = (current < 0 ? 0 : current) + delta;
+  if (wrap) return ((raw % length) + length) % length;
+  return Math.max(0, Math.min(length - 1, raw));
+}
+
+/**
+ * Next `<input type=range>` value, stepped by the element's own `step` and
+ * clamped to its own [min,max] — ⛔ never a step size invented here, or the pad
+ * would disagree with the mouse on the very same slider.
+ */
+export function nextRangeValue(
+  v: { value: number; min: number; max: number; step: number },
+  delta: number,
+): number {
+  const min = Number.isFinite(v.min) ? v.min : 0;
+  const max = Number.isFinite(v.max) ? v.max : 100;
+  const step = Number.isFinite(v.step) && v.step > 0 ? v.step : 1;
+  const cur = Number.isFinite(v.value) ? v.value : min;
+  // toFixed(6) kills the 0.1+0.2 dust a fractional step accumulates
+  const raw = Number((cur + delta * step).toFixed(6));
+  return Math.max(min, Math.min(max, raw));
+}
 
 /**
  * Match phases in which the PAD IS DRIVING A CHAMPION, so the menu focus layer
@@ -236,6 +336,22 @@ export function readNavDirection(pad: PadInfo, threshold = STICK_NAV_THRESHOLD):
 }
 
 /**
+ * The dominant RIGHT-stick direction this frame (axes 2/3), or null inside the
+ * deadzone. Deliberately reads no D-pad: the D-pad is the focus stick, and one
+ * physical input must not do two things.
+ */
+export function readScrollDirection(pad: PadInfo, threshold = STICK_NAV_THRESHOLD): NavDir | null {
+  const x = pad.axes[NAV_SCROLL_AXES.x] ?? 0;
+  const y = pad.axes[NAV_SCROLL_AXES.y] ?? 0;
+  if (Math.abs(x) >= Math.abs(y)) {
+    if (Math.abs(x) < threshold) return null;
+    return x > 0 ? "right" : "left";
+  }
+  if (Math.abs(y) < threshold) return null;
+  return y > 0 ? "down" : "up";
+}
+
+/**
  * Stateful reader: one poll → the discrete nav actions that happened since the
  * last poll. Owns edge detection for A/B and auto-repeat for the held direction,
  * so the DOM controller only has to react to clean events.
@@ -245,6 +361,8 @@ export class PadMenuNav {
   private prevBack = false;
   private heldDir: NavDir | null = null;
   private nextRepeatMs = 0;
+  private heldScroll: NavDir | null = null;
+  private nextScrollMs = 0;
 
   /** Forget all held state (e.g. when the focus scope changes under us). */
   reset(): void {
@@ -252,6 +370,8 @@ export class PadMenuNav {
     this.prevBack = false;
     this.heldDir = null;
     this.nextRepeatMs = 0;
+    this.heldScroll = null;
+    this.nextScrollMs = 0;
   }
 
   read(pads: readonly (PadInfo | null)[], nowMs: number): NavAction[] {
@@ -282,6 +402,16 @@ export class PadMenuNav {
     } else if (nowMs >= this.nextRepeatMs) {
       this.nextRepeatMs = nowMs + NAV_REPEAT_MS;
       events.push(dir);
+    }
+
+    const sdir = readScrollDirection(pad);
+    if (sdir === null) {
+      this.heldScroll = null;
+      this.nextScrollMs = 0;
+    } else if (sdir !== this.heldScroll || nowMs >= this.nextScrollMs) {
+      this.heldScroll = sdir;
+      this.nextScrollMs = nowMs + NAV_SCROLL_REPEAT_MS;
+      events.push(`scroll-${sdir}` as NavScroll);
     }
     return events;
   }
