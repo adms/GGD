@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "c4e5e2c9eedb",
+  "hash": "9090b7d7cf30",
   "entries": [
     {
       "id": "admin-friend",
@@ -113,7 +113,7 @@
     {
       "id": "combat-env",
       "path": "config/combat-env.json",
-      "hash": "251a10bba0a1",
+      "hash": "b80f8a6d66b7",
       "size": 983
     },
     {
@@ -167,8 +167,8 @@
     {
       "id": "damage-tiers",
       "path": "config/damage-tiers.json",
-      "hash": "d2bf60d1cdef",
-      "size": 2996
+      "hash": "821c20c28a84",
+      "size": 2997
     },
     {
       "id": "dispel",
@@ -193,6 +193,12 @@
       "path": "config/form-visuals.json",
       "hash": "7f927eb2fbf0",
       "size": 1764
+    },
+    {
+      "id": "gamepad",
+      "path": "config/gamepad.json",
+      "hash": "6522a29e34db",
+      "size": 342
     },
     {
       "id": "gore",

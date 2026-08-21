@@ -32,7 +32,7 @@ export const MEDIAN_BASE_MANA: Readonly<Record<number, number>> = Object.freeze(
 });
 
 /** `combat-env` 在最大生命上的 env 鏈乘積（出貨值的快照）。 */
-export const HP_ENV_MULT = 4;
+export const HP_ENV_MULT = 6;
 /** `combat-env` 在最大魔力上的 env 鏈乘積（出貨值的快照）。 */
 export const MANA_ENV_MULT = 1;
 /** `base-bonus.maxHealth` —— **倍率之外**的扁平贈禮（owner #273「不參與倍率計算」）。 */

@@ -119,17 +119,27 @@ GRID_GAIN = {"X": 1.0, "x": 0.72, "o": 0.40, ".": 0.0, "-": 0.0}
 # oscillator kit never had, so they are routed here too — ⛔ a voice missing from
 # these tables raises a KeyError deep inside a layer closure, which reads as a
 # bug in the score rather than as "that instrument has no home".
-CHORD_BUS = {"pad": "pad", "strings": "strings", "supersaw": "pad",
-             "guitar": "gtr", "piano": "keys", "pluck": "keys",
-             "tremolo": "strings", "cello": "strings",
-             "horn": "strings", "brass": "strings", "trombone": "strings",
-             "trumpet": "strings", "organ": "pad",
-             "harp": "keys", "koto": "keys", "shamisen": "keys",
-             "choir": "pad", "voiceoo": "pad"}
-OSTINATO_BUS = {"piano": "keys", "pluck": "keys", "supersaw": "lead",
-                "harp": "keys", "koto": "keys", "shamisen": "keys",
-                "guitar": "gtr", "strings": "strings", "tremolo": "strings",
-                "organ": "pad", "cello": "strings"}
+#: ⭐ ONE table, every playable voice. ⛔ Not two hand-kept lists: keeping them
+#: separate is what made `trumpet`, `brass`, `horn` and `shamisen` each surface
+#: as a KeyError thrown from inside a layer closure, one render at a time —
+#: exactly the run-fix-run shape 第零守則 forbids. A voice added to `sampler`
+#: and missing from here is now a single edit, in one place.
+_VOICE_BUS = {
+    # the original oscillator kit
+    "pad": "pad", "strings": "strings", "supersaw": "lead", "guitar": "gtr",
+    "piano": "keys", "pluck": "keys",
+    # orchestral colours the soundfont added (GH#531)
+    "tremolo": "strings", "cello": "strings", "organ": "pad",
+    "horn": "strings", "brass": "strings", "trombone": "strings",
+    "trumpet": "strings", "timpani": "perc", "taiko": "perc",
+    # ethnic plucks + harp — the per-arena fingerprints
+    "harp": "keys", "koto": "keys", "shamisen": "keys",
+    # sampled voices (the 和聲混曲 layer)
+    "choir": "pad", "voiceoo": "pad",
+}
+
+CHORD_BUS = dict(_VOICE_BUS)
+OSTINATO_BUS = {k: v for k, v in _VOICE_BUS.items() if k not in ("choir", "voiceoo")}
 
 # How long each percussion voice is allowed to ring, in seconds.
 DRUM_LEN = {"kick": 0.55, "clap": 0.40, "snare": 0.40, "hat": 0.28,

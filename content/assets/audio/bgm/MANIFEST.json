@@ -510,8 +510,8 @@
         "seed": 5301,
         "source": "bgm-gen (aot.py)",
         "sceneSfx": [
-          "魔法陣を展開(hit)",
-          "水のしたたる洞窟(bed)"
+          "魔法門開啟（hit）",
+          "魔法符文嗡鳴（bed）"
         ],
         "rap": [
           {
@@ -531,7 +531,11 @@
             "confidence": "high"
           }
         ],
-        "rapVoiceRef": "godie-h020.wav"
+        "rapVoiceRef": "godie-h020.wav",
+        "colour": "harp",
+        "motif": "下行、留白 —— 冷",
+        "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
+        "vocal": "CosyVoice 名句 + 合唱和聲"
       },
       {
         "arena": "arena.heavens-arena",
@@ -545,9 +549,8 @@
         "seed": 5302,
         "source": "bgm-gen (aot.py)",
         "sceneSfx": [
-          "試合開始のゴング(hit)",
-          "スタジアムの歓声(hit)",
-          "風が吹く1 ヒュオオオ(bed)"
+          "賽前號角（hit）",
+          "高空的風（bed）"
         ],
         "rap": [
           {
@@ -567,7 +570,11 @@
             "confidence": "high"
           }
         ],
-        "rapVoiceRef": "godie-efur.wav"
+        "rapVoiceRef": "godie-efur.wav",
+        "colour": "trumpet",
+        "motif": "四音上行號角 —— 開闊",
+        "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
+        "vocal": "CosyVoice 名句 + 合唱和聲"
       },
       {
         "arena": "arena.holy-grail",
@@ -581,9 +588,8 @@
         "seed": 5303,
         "source": "bgm-gen (aot.py)",
         "sceneSfx": [
-          "聖魔法(hit)",
-          "魔力に満ちた部屋(bed)",
-          "水のしたたる洞窟(bed)"
+          "異界之眼（hit）",
+          "地下水流（bed）"
         ],
         "rap": [
           {
@@ -603,7 +609,11 @@
             "confidence": "high"
           }
         ],
-        "rapVoiceRef": "godie-e002.wav"
+        "rapVoiceRef": "godie-e002.wav",
+        "colour": "organ",
+        "motif": "級進、儀式 —— 厚",
+        "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
+        "vocal": "CosyVoice 名句 + 合唱和聲"
       },
       {
         "arena": "arena.infinity-castle",
@@ -617,9 +627,8 @@
         "seed": 5304,
         "source": "bgm-gen (aot.py)",
         "sceneSfx": [
-          "引き戸を開ける1(hit)",
-          "お寺の鐘(hit)",
-          "異次元空間 時の流れが違う(bed)"
+          "房間移動（hit）",
+          "被施術的牢籠（bed）"
         ],
         "rap": [
           {
@@ -639,7 +648,11 @@
             "confidence": "high"
           }
         ],
-        "rapVoiceRef": "godie-e00w.wav"
+        "rapVoiceRef": "godie-e00w.wav",
+        "colour": "koto",
+        "motif": "切分撥弦 —— 不規則",
+        "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
+        "vocal": "CosyVoice 名句 + 合唱和聲"
       },
       {
         "arena": "arena.nazarick",
@@ -653,8 +666,8 @@
         "seed": 5305,
         "source": "bgm-gen (aot.py)",
         "sceneSfx": [
-          "鉄の扉を開ける(hit)",
-          "死後の世界 死者の声が響く(bed)"
+          "巨門撞擊（hit）",
+          "霜之哀傷的亡靈低鳴（bed）"
         ],
         "rap": [
           {
@@ -674,7 +687,11 @@
             "confidence": "medium"
           }
         ],
-        "rapVoiceRef": "godie-u00k.wav"
+        "rapVoiceRef": "godie-u00k.wav",
+        "colour": "cello",
+        "motif": "最低把位 —— 沉",
+        "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
+        "vocal": "CosyVoice 名句 + 合唱和聲"
       },
       {
         "arena": "arena.shiganshina",
@@ -688,8 +705,8 @@
         "seed": 5306,
         "source": "bgm-gen (aot.py)",
         "sceneSfx": [
-          "門を開ける(hit)",
-          "風が吹く2 強風が吹き荒れる(bed)"
+          "大城門開啟（hit）",
+          "牆外的風（bed）"
         ],
         "rap": [
           {
@@ -709,7 +726,11 @@
             "confidence": "high"
           }
         ],
-        "rapVoiceRef": "godie-h01n.wav"
+        "rapVoiceRef": "godie-h01n.wav",
+        "colour": "tremolo",
+        "motif": "重複音起手的進行曲 —— 本批原型",
+        "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
+        "vocal": "CosyVoice 名句 + 合唱和聲"
       },
       {
         "arena": "arena.world-tree",
@@ -723,8 +744,8 @@
         "seed": 5307,
         "source": "bgm-gen (aot.py)",
         "sceneSfx": [
-          "ワープ消えるイメージ(hit)",
-          "風に揺れる草木2 風の強い日(bed)"
+          "傳送門穿入（hit）",
+          "梣谷森林（bed）"
         ],
         "rap": [
           {
@@ -744,7 +765,11 @@
             "confidence": "high"
           }
         ],
-        "rapVoiceRef": "godie-etyr.wav"
+        "rapVoiceRef": "godie-etyr.wav",
+        "colour": "pluck",
+        "motif": "高把位流動 —— 亮",
+        "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
+        "vocal": "CosyVoice 名句 + 合唱和聲"
       },
       {
         "arena": "arena.castle",
@@ -758,11 +783,14 @@
         "seed": 5308,
         "source": "bgm-gen (aot.py)",
         "sceneSfx": [
-          "鉄の扉を開ける(hit)",
-          "教会の鐘1(hit)",
-          "地下通路 靴音が響く(bed)"
+          "厚重木門甩上（hit）",
+          "大教堂（bed）"
         ],
-        "rap": []
+        "rap": [],
+        "colour": "trombone",
+        "motif": "三和弦分解 —— 端正",
+        "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
+        "vocal": "合唱團唱本圖 motif（和聲混曲）"
       },
       {
         "arena": "arena.colosseum",
@@ -776,11 +804,14 @@
         "seed": 5309,
         "source": "bgm-gen (aot.py)",
         "sceneSfx": [
-          "スタジアムの歓声(hit)",
-          "大勢で拍手(hit)",
-          "イベントホール 騒がしい会場(bed)"
+          "石造升起（hit）",
+          "人聲鼎沸（bed）"
         ],
-        "rap": []
+        "rap": [],
+        "colour": "brass",
+        "motif": "雙擊行軍 —— 群眾",
+        "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
+        "vocal": "合唱團唱本圖 motif（和聲混曲）"
       },
       {
         "arena": "arena.dota",
@@ -794,10 +825,14 @@
         "seed": 5310,
         "source": "bgm-gen (aot.py)",
         "sceneSfx": [
-          "鈴を鳴らす(hit)",
-          "小川のせせらぎ(bed)"
+          "符文開關（hit）",
+          "湖水（bed）"
         ],
-        "rap": []
+        "rap": [],
+        "colour": "shamisen",
+        "motif": "十六分回音 —— 輕",
+        "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
+        "vocal": "合唱團唱本圖 motif（和聲混曲）"
       },
       {
         "arena": "arena.godie",
@@ -811,10 +846,14 @@
         "seed": 5311,
         "source": "bgm-gen (aot.py)",
         "sceneSfx": [
-          "警報が鳴る(hit)",
-          "工業地帯 機械が駆動する(bed)"
+          "藍焰爆發（hit）",
+          "大鍋沸騰（bed）"
         ],
-        "rap": []
+        "rap": [],
+        "colour": "guitar",
+        "motif": "逐級推上去 —— 直接",
+        "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
+        "vocal": "合唱團唱本圖 motif（和聲混曲）"
       },
       {
         "arena": "arena.skeleton",
@@ -828,10 +867,14 @@
         "seed": 5312,
         "source": "bgm-gen (aot.py)",
         "sceneSfx": [
-          "学校のチャイム(hit)",
-          "公園1 大きな公園(bed)"
+          "符文亮起（hit）",
+          "風車（bed）"
         ],
-        "rap": []
+        "rap": [],
+        "colour": "piano",
+        "motif": "拱形、溫和 —— 不危險",
+        "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
+        "vocal": "合唱團唱本圖 motif（和聲混曲）"
       },
       {
         "arena": "arena.royale",
@@ -845,14 +888,19 @@
         "seed": 5313,
         "source": "bgm-gen (aot.py)",
         "sceneSfx": [
-          "大型船の汽笛1(hit)",
-          "魔の時計塔の鐘(hit)",
-          "雷雨 対決シーンにも使える(bed)"
+          "地震（hit）",
+          "滾雷（bed）"
         ],
-        "rap": []
+        "rap": [],
+        "colour": "horn",
+        "motif": "開闊四五度 —— 最大",
+        "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
+        "vocal": "合唱團唱本圖 motif（和聲混曲）"
       }
     ],
     "rapNote": "RAP 由 CosyVoice 3 預先算成 committed 的 wav(tools/bgm-gen/vox/),⛔ 不在 render 時呼叫模型。名句由 owner 2026-08-22 逐句指定(芙莉蓮/天空鬥技場/無限城/納薩力克/世界樹核心);希干希納與大聖杯維持原樣。長句在 bar 28 改放切出來的短句 —— 轉折只有 4 小節,整句會拖進高潮段被埋掉。位階實測 bar22 −1.8~+0.9 dB · bar28 −6.8~−3.3 dB。",
-    "versionNote": "⛔ 舊版不刪除(owner 2026-08-22:「舊的歌不要刪除,移到 leagcy 備份就好 不要直接取代」)。render.py 的 archive_previous() 在覆蓋前把上一版複製到 docs/legacy/_bgm-versions/<track>/,內容定址(同一份位元組只留一次)。名言 wav 同理,落在 _bgm-versions/_vox/。"
+    "versionNote": "⛔ 舊版不刪除(owner 2026-08-22:「舊的歌不要刪除,移到 leagcy 備份就好 不要直接取代」)。render.py 的 archive_previous() 在覆蓋前把上一版複製到 docs/legacy/_bgm-versions/<track>/,內容定址(同一份位元組只留一次)。名言 wav 同理,落在 _bgm-versions/_vox/。",
+    "arcNote": "⭐ 弧線 2026-08-22 改版(owner:「導入與熱血驅動 每一首都太像了…特別是一開頭 安靜幾秒只有環境音效 辨識度要非常高」):bars 0–2 = **零樂器,只有該場地的 WC3 環境音**(實測 −29~−33 dB,而 2–8 小節的招牌旋律比它大 +11~+17 dB);bars 2–8 = 該場地**專屬 motif** 獨奏。⛔ 之前 13 首在熱血段放的是同一個 HOOK_CELL。",
+    "fxNote": "⛔ 這一批**不含任何合成過場件**(riser/impact/downlifter)。owner 2026-08-22 對回落的下滑掃頻:「我非常討厭因為很廉價」——根因是音色庫沒有 EDM 過場件,那五個是全曲唯一還走振盪器的層。⇒ 換成管弦樂手勢:顫音弦樂漸強、定音鼓滾奏、真鈸+太鼓落點。"
   }
 }

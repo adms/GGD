@@ -84,10 +84,19 @@ def missing() -> list[str]:
     return sorted(set(_MISSING))
 
 
+#: WC3 ambience lives in its own directory, extracted straight from the retail
+#: MPQs and kept byte-exact — ⛔ not under `wav/`, which is the (gitignored)
+#: decode cache for the 効果音ラボ mp3s and gets rebuilt from them.
+WC3_DIR = os.path.join(ENV_DIR, "wc3")
+
+
 def _load(rel: str) -> np.ndarray | None:
     if rel in _WAV:
         return _WAV[rel]
-    path = os.path.join(WAV_DIR, rel.replace("/", "__") + ".wav")
+    if rel.startswith("wc3/"):
+        path = os.path.join(WC3_DIR, rel[4:] + ".wav")
+    else:
+        path = os.path.join(WAV_DIR, rel.replace("/", "__") + ".wav")
     if not os.path.exists(path):
         _MISSING.append(rel)
         return None
@@ -185,15 +194,73 @@ def describe(arena_id: str) -> str:
     return " + ".join(f"{t}({role})" for _r, t, _g, role in _entries(arena_id)) or "(none)"
 
 
+#: ⛔ Categories the GAME already draws its own SFX cues from. A scene sound
+#: taken from either is heard during play as a CUE — owner 2026-08-22:
+#: 「魔法陣を展開（hit）已經在本遊戲中大量使用 放入背景音樂中會造成遊戲判斷混亂」.
+#: Measured at the time: the shipped SFX pack takes 21 clips from `battle/` and
+#: 4 from `anime/`. ⛔ Do not "just avoid the exact files" — the confusion is
+#: about a shared vocabulary, not about byte equality.
+CUE_CATEGORIES = ("battle", "anime")
+
+#: The shipped SFX ledger, used to catch an EXACT collision as well.
+LAB_MANIFEST = os.path.abspath(os.path.join(
+    HERE, "..", "..", "..", "..", "content", "assets", "audio", "sfx", "lab", "MANIFEST.json"))
+
+
+def _game_sfx_rels() -> dict[str, str]:
+    """`<category>/<name>` -> the in-game event it plays for."""
+    try:
+        with open(LAB_MANIFEST, encoding="utf-8") as fh:
+            lab = json.load(fh)
+    except FileNotFoundError:
+        return {}
+    out = {}
+    for c in lab.get("clips", []):
+        page = c.get("sourcePage", "")
+        cat = page.split("/sound/", 1)[1].split("/")[0] if "/sound/" in page else ""
+        stem = os.path.splitext(c.get("sourceFile", ""))[0]
+        if cat and stem:
+            out[f"{cat}/{stem}"] = c.get("ggdEvent") or c.get("file", "?")
+    return out
+
+
 def audit() -> list[str]:
-    """⭐ Every arena must have BOTH a hit and a bed. This is the gate that the
-    duration heuristic could not be: it reads the authored roles and names the
-    arenas that are short one, instead of quietly rendering a scene layer that
-    is half missing."""
+    """Three things the manifest must satisfy. ⭐ All three are GATES, not
+    reminders — each one is a mistake that already happened once.
+
+    1. Every arena has BOTH a hit and a bed. (The first version inferred the
+       role from clip duration and left two arenas with no transient at all.)
+    2. ⛔ No clip from a category the GAME uses for its own cues. A player who
+       hears 「魔法陣を展開」 in the music reads it as somebody casting.
+    3. ⛔ No clip that is byte-for-byte one of the shipped SFX. Redundant with
+       (2) today, kept because (2)'s category list is a judgement about the
+       shipped pack and this one is a fact about it.
+    """
     bad = []
-    for arena, rows in manifest().get("scenes", {}).items():
+    scenes = manifest().get("scenes", {})
+    for arena, rows in scenes.items():
         roles = {r[3] for r in rows}
         for want in ("hit", "bed"):
             if want not in roles:
                 bad.append(f"{arena}: 沒有 {want}")
+    # ⭐ owner 2026-08-22:「太多重複滴水洞窟，每一首都要是獨特的樂器音色跟環境音效，
+    # 不能重複」。在此之前 `environment/cave1` 同時掛在芙莉蓮與大聖杯上,而那正是他
+    # 聽出來的重複。⛔ 這條是閘,不是提醒。
+    owner_of = {}
+    for arena, rows in scenes.items():
+        for rel, title, _g, _role in rows:
+            if rel in owner_of:
+                bad.append(f"⛔ `{rel}`（{title}）同時用在 {owner_of[rel]} 與 {arena} —— "
+                           f"每一張場地的環境音必須是獨一無二的")
+            owner_of[rel] = arena
+    game = _game_sfx_rels()
+    for arena, rows in scenes.items():
+        for rel, title, _g, _role in rows:
+            cat = rel.split("/", 1)[0]
+            if cat in CUE_CATEGORIES:
+                bad.append(f"{arena}: `{rel}`（{title}）來自 `{cat}/` —— "
+                           f"遊戲的提示音就住在那個分類,玩家會誤判")
+            if rel in game:
+                bad.append(f"⛔ {arena}: `{rel}`（{title}）**就是**遊戲的 "
+                           f"{game[rel]} 音效,同一支素材不可以同時當 BGM 場景音")
     return bad

@@ -76,6 +76,12 @@ from .score import Score
 BPM = music.BPM_DRIVE          # 135.0
 BARS = 48                      # 2× loop grid: 48 × 78,400 = 3,763,200 samples
 
+#: ⭐ owner 2026-08-22:「特別是一開頭 安靜幾秒只有環境音效 辨識度要非常高」。
+#: 這兩小節 = 3.6 秒,⛔ 一件樂器都沒有 —— 只有那張場地自己的 WC3 環境音。
+#: 那是整首曲子裡辨識度最高的地方,因為它是唯一「只有這張圖有」的聲音。
+ENV_ONLY = (0, 2)
+#: 招牌旋律獨奏:那張場地的 motif,在它自己的音色上,幾乎沒有伴奏。
+SIGNATURE = (2, 8)
 INTRO = (0, 8)
 DRIVE = (8, 20)
 HOLLOW = (20, 28)
@@ -102,7 +108,14 @@ _MISSING_VOX: list[str] = []
 #   ⛔ NO `scene` key: the arena's scene recordings are bound per-arena in
 #      tools/bgm-gen/env/MANIFEST.json, keyed by the SAME arena id as this
 #      table. Naming them twice would be a second home that goes stale.
-#   colour   the ostinato instrument — the track's fingerprint
+#   colour   the ostinato instrument — the track's fingerprint.
+#            ⭐ ALL THIRTEEN ARE DIFFERENT. owner 2026-08-22:「每一首都要是獨特的
+#            樂器音色跟環境音效，不能重複」—— before that, `piano` was on three
+#            maps and `harp` on two, which is most of why the openings blurred.
+#   motif    ⭐ THAT MAP'S OWN MELODY, in scale degrees (0 = D4, 7 = D5, -7 = D3).
+#            It is stated ALONE in the signature bars, becomes the ostinato
+#            contour under the drive, and is what the choir sings. owner:
+#            「導入與熱血驅動 每一首都太像了 請一定要有不同旋律特色 是符合場景的」
 #   shape    chord-tone indices for the ostinato (0=root, 2=fifth, 4=octave)
 #   kit      drumkit preset for DRIVE
 #   vowels   (hollow vowel, climax vowel) for the choir
@@ -114,91 +127,104 @@ MAPS: dict[str, dict] = {
     "arena.frieren": dict(
         name="芙莉蓮迷宮", seed=5301,
         prog=music.PROG_DARK, prog_climax=music.PROG_HOME,
-        colour="harp", shape=(0, 4, 2, 4), subdiv=8, kit="drive",
+        colour="harp", motif=[(0,1.5,7),(2,1.5,4),(4,4,2)], motifNote="下行、留白 —— 冷",
+        shape=(0, 4, 2, 4), subdiv=8, kit="drive",
         brass="horn", vowels=("oo", "ah"), hollow="solo", pump=0.50,
         note="stone · 雪藍 peaks · ruin_hall · magic_door gates ⇒ 冷、稀疏、水晶質地",
     ),
     "arena.heavens-arena": dict(
         name="天空鬥技場", seed=5302,
         prog=music.PROG_DRIVE, prog_climax=music.PROG_RISE,
-        colour="piano", shape=(0, 2, 4, 6), subdiv=8, kit="rock",
+        colour="trumpet", motif=[(0,1,4),(1,1,7),(2,1,9),(3,3,11)], motifNote="四音上行號角 —— 開闊",
+        shape=(0, 2, 4, 6), subdiv=8, kit="rock",
         brass="horn", vowels=("oh", "ah"), hollow="pad", pump=0.55,
         note="wood · cloudSea · ring ⇒ 高、亮、開闊；上行的 climax",
     ),
     "arena.holy-grail": dict(
         name="大聖杯洞窟", seed=5303,
         prog=music.PROG_DARK, prog_climax=music.PROG_RESOLVE,
-        colour="organ", shape=(0, 1, 2, 1), subdiv=8, kit="epic",
+        colour="organ", motif=[(0,2,0),(2,1,1),(3,1,2),(4,4,1)], motifNote="級進、儀式 —— 厚",
+        shape=(0, 1, 2, 1), subdiv=8, kit="epic",
         brass="brass", vowels=("oo", "oh"), hollow="pad", pump=0.62,
         note="stone · 金邊 towers · grail · mud gates ⇒ 厚、儀式感、低男聲",
     ),
     "arena.infinity-castle": dict(
         name="無限城", seed=5304,
         prog=music.PROG_DRIVE, prog_climax=music.PROG_DARK,
-        colour="koto", shape=(0, 2, 3, 2), subdiv=16, kit="drive",
+        colour="koto", motif=[(0,.5,7),(.75,.5,6),(1.5,.5,4),(2.5,1.5,7)], motifNote="切分撥弦 —— 不規則",
+        shape=(0, 2, 3, 2), subdiv=16, kit="drive",
         brass="horn", vowels=("ah", "ah"), hollow="solo", pump=0.58,
         note="tatami · torii · biwa_hall · 拉門 ⇒ 撥弦為主、16 分驅動",
     ),
     "arena.nazarick": dict(
         name="納薩力克大墳墓", seed=5305,
         prog=music.PROG_DARK, prog_climax=music.PROG_DARK,
-        colour="piano", shape=(0, 2, 4, 2), subdiv=8, kit="epic",
+        colour="cello", motif=[(0,2,-7),(2,2,-5),(4,4,-7)], motifNote="最低把位 —— 沉",
+        shape=(0, 2, 4, 2), subdiv=8, kit="epic",
         brass="brass", vowels=("oo", "oh"), hollow="pad", pump=0.66,
         note="obsidian · 亡靈綠 pagoda · throne ⇒ 全套最重；合唱壓到低把位",
     ),
     "arena.shiganshina": dict(
         name="希干希納", seed=5306,
         prog=music.PROG_DRIVE, prog_climax=music.PROG_RISE,
-        colour="piano", shape=(0, 4, 2, 4), subdiv=8, kit="march",
+        colour="tremolo", motif=[(0,1,4),(1,1,4),(2,2,7),(4,1,6),(5,3,5)], motifNote="重複音起手的進行曲 —— 本批原型",
+        shape=(0, 4, 2, 4), subdiv=8, kit="march",
         brass="brass", vowels=("ah", "ah"), hollow="strings", pump=0.60, hook="A",
         note="dirt · 磚 towers · plaza · city_gate ⇒ 進行曲；⭐ 這一張是本批的原型",
     ),
     "arena.world-tree": dict(
         name="世界樹核心", seed=5307,
         prog=music.PROG_RESOLVE, prog_climax=music.PROG_HOME,
-        colour="harp", shape=(0, 2, 4, 5), subdiv=16, kit="four",
+        colour="pluck", motif=[(0,1,9),(1,1,11),(2,1,10),(3,1,9),(4,4,7)], motifNote="高把位流動 —— 亮",
+        shape=(0, 2, 4, 5), subdiv=16, kit="four",
         brass="horn", vowels=("ah", "ah"), hollow="strings", pump=0.48,
         note="grass · sakura · tree_core · warp gates ⇒ 明亮；女聲高把位",
     ),
     "arena.castle": dict(
         name="城堡競技場（室內）", seed=5308,
         prog=music.PROG_HOME, prog_climax=music.PROG_DRIVE,
-        colour="strings", shape=(0, 2, 4, 2), subdiv=8, kit="rock",
+        colour="strings", motif=[(0,1,0),(1,1,2),(2,1,4),(3,3,2)], motifNote="三和弦分解 —— 端正",
+        shape=(0, 2, 4, 2), subdiv=8, kit="rock",
         brass="horn", vowels=("oh", "ah"), hollow="pad", pump=0.55,
         note="stone · 室內 ⇒ 通用場地：弦樂 ostinato，⛔ 不掛任何作品名句",
     ),
     "arena.colosseum": dict(
         name="羅馬大擂台（室外）", seed=5309,
         prog=music.PROG_RISE, prog_climax=music.PROG_RISE,
-        colour="guitar", shape=(0, 2, 4, 2), subdiv=8, kit="march",
+        colour="brass", motif=[(0,1,0),(1,1,0),(2,1,4),(3,1,4),(4,1,5),(5,3,4)], motifNote="雙擊行軍 —— 群眾",
+        shape=(0, 2, 4, 2), subdiv=8, kit="march",
         brass="brass", vowels=("ah", "ah"), hollow="strings", pump=0.58,
         note="sand · 室外 ⇒ 群眾與行軍；⛔ 不掛任何作品名句",
     ),
     "arena.dota": dict(
         name="Dota 三路河道（迷你）", seed=5310,
         prog=music.PROG_HOME, prog_climax=music.PROG_DRIVE,
-        colour="pluck", shape=(0, 2, 4, 6), subdiv=16, kit="four",
+        colour="shamisen", motif=[(0,.5,4),(.5,.5,6),(1,.5,7),(1.5,.5,6),(2,2,4)], motifNote="十六分回音 —— 輕",
+        shape=(0, 2, 4, 6), subdiv=16, kit="four",
         brass="horn", vowels=("oo", "ah"), hollow="pad", pump=0.52,
         note="grass · 河道 ⇒ 輕、流動；⛔ 不掛任何作品名句",
     ),
     "arena.godie": dict(
         name="去死團的逆襲 EX 2.2s", seed=5311,
         prog=music.PROG_DRIVE, prog_climax=music.PROG_DRIVE,
-        colour="guitar", shape=(0, 3, 2, 3), subdiv=16, kit="drive",
+        colour="guitar", motif=[(0,1,0),(1,1,0),(2,1,2),(3,1,3),(4,4,4)], motifNote="逐級推上去 —— 直接",
+        shape=(0, 3, 2, 3), subdiv=16, kit="drive",
         brass="brass", vowels=("ah", "ah"), hollow="solo", pump=0.66, hook="A",
         note="dirt · 本家場地 ⇒ 最直接的 drive；⭐ 這張圖是遊戲自己的名字",
     ),
     "arena.skeleton": dict(
         name="新手競技場", seed=5312,
         prog=music.PROG_RESOLVE, prog_climax=music.PROG_HOME,
-        colour="piano", shape=(0, 2, 4, 2), subdiv=8, kit="halftime",
+        colour="piano", motif=[(0,1.5,7),(1.5,1.5,9),(3,1,8),(4,4,7)], motifNote="拱形、溫和 —— 不危險",
+        shape=(0, 2, 4, 2), subdiv=8, kit="halftime",
         brass="horn", vowels=("oo", "oh"), hollow="pad", pump=0.42,
         note="stone · 新手 ⇒ ⭐ 唯一刻意不危險的一首：最輕的 kit、最低的 pump",
     ),
     "arena.royale": dict(
         name="終局大混戰", seed=5313,
         prog=music.PROG_DRIVE, prog_climax=music.PROG_HOME,
-        colour="strings", shape=(0, 4, 2, 4), subdiv=8, kit="epic",
+        colour="horn", motif=[(0,2,0),(2,2,4),(4,2,7),(6,2,11)], motifNote="開闊四五度 —— 最大",
+        shape=(0, 4, 2, 4), subdiv=8, kit="epic",
         brass="brass", vowels=("oh", "ah"), hollow="strings", pump=0.70, hook="A",
         note="決賽場地（刻意不在輪替池）⇒ 全套最大；climax 敢直接引用 HOOK_A",
     ),
@@ -206,6 +232,20 @@ MAPS: dict[str, dict] = {
 
 #: `arena.frieren` -> `map.frieren`. The score id, the mp3 name and the
 #: audio-map key all derive from this, so there is exactly one spelling.
+#: A motif is [(beat, beats, degree)] where degree 0 = D4 and the scale is D
+#: natural minor — so 7 = D5, -7 = D3. ⭐ Writing motifs in DEGREES rather than
+#: midi is what keeps them inside the pack's key no matter which chord they land
+#: on, and it makes the thirteen contours comparable at a glance in the table.
+def motif_notes(motif: list[tuple[float, float, int]], octave: int = 0
+                ) -> list[tuple[float, float, int]]:
+    base = music.note("D4") + 12 * octave
+    steps = (0, 2, 3, 5, 7, 8, 10)
+    out = []
+    for beat, dur, deg in motif:
+        out.append((beat, dur, base + 12 * (deg // 7) + steps[deg % 7]))
+    return out
+
+
 def slug(arena_id: str) -> str:
     return arena_id.split(".", 1)[1]
 
@@ -290,6 +330,30 @@ def vox_line(s: Score, at_bar: float, wav: str, *, gain: float = 0.85,
     return s
 
 
+def vocal_motif(s: Score, m: dict, bars: tuple[int, int], *, gain: float = 1.0,
+                octave: int = 0) -> Score:
+    """⭐ THE CHOIR SINGS THIS MAP'S OWN MELODY — the 和聲混曲 half of owner's
+    2026-08-22 ruling「每一首都要有RAP或和聲混曲，包含之前不是動漫改編的場地」.
+
+    Two sampled voices in real harmony: `choir` (Choir Aahs) on the motif and
+    `voiceoo` (Voice Oohs) a third below. ⛔ Not the formant engine here — that
+    one sings sustained vowels beautifully but has no note-level melody API, and
+    the point of this layer is that you can HEAR which map you are on from the
+    tune. The formant choir still owns the pads and the chant everywhere else.
+
+    ⭐ Why this exists at all: six arenas are not adapted from any work, so they
+    have no quote to speak. Giving them a sung motif means every one of the
+    thirteen has a voice — ⛔ and it is not a consolation prize: the sung line is
+    that map's melody, which is more identifying than a borrowed sentence.
+    """
+    notes = motif_notes(m["motif"], octave=octave)
+    third = [(b, d, n - 3) for b, d, n in notes]      # a minor third under
+    for b0 in range(bars[0], bars[1], 4):
+        s.melody(b0, notes, voice="choir", bus="pad", gain=0.46 * gain)
+        s.melody(b0, third, voice="voiceoo", bus="pad", gain=0.30 * gain)
+    return s
+
+
 # ---------------------------------------------------------------- the scene
 
 def scene_layer(s: Score, arena_id: str) -> Score:
@@ -343,16 +407,28 @@ def build(arena_id: str) -> Score:
     s.progression(list(m["prog"]))
     s.gain(choir=1.05, drums=1.10, lead=1.0, keys=0.95)
 
-    # ---- the spine: the ostinato runs every bar (README house rule 4)
-    s.ostinato((0, BARS), voice=m["colour"], shape=m["shape"],
+    # ---- the spine: the ostinato runs from the SIGNATURE on (README house rule 4)
+    # ⛔ It no longer starts at bar 0 — the first two bars belong to the arena.
+    s.ostinato((SIGNATURE[0], BARS), voice=m["colour"], shape=m["shape"],
                subdiv=m["subdiv"], gain=0.30, pan=-0.12)
     scene_layer(s, arena_id)
 
-    # ---- INTRO — one voice of colour, a sub arriving under it
-    s.chords(INTRO, voice="pad", gain=0.20, cutoff=1500.0)
-    s.bass((INTRO[0] + 4, INTRO[1]), "X.......X.......", style="sub", gain=0.55)
-    s.choir_pad(INTRO, vowel=v_low, dyn=0.42, gain=0.55, effort=0.30,
-                parts=("tenor", "bass"), voices_scale=0.6)
+    # ---- ⭐ ENV_ONLY (bars 0–2): the arena, alone. Not one instrument.
+    #      owner:「一開頭 安靜幾秒只有環境音效 辨識度要非常高」. Nothing is
+    #      scheduled here on purpose — `scene_layer` already lays the bed and
+    #      the hit across these bars, and ANY layer added here would take the
+    #      recognisability away, which is the whole point of the section.
+
+    # ---- SIGNATURE (bars 2–8): this map's own melody, on this map's own
+    #      instrument, nearly unaccompanied. This is the bar the player learns.
+    motif = motif_notes(m["motif"])
+    s.melody(SIGNATURE[0], motif, voice=m["colour"], bus="lead", gain=0.62)
+    s.melody(SIGNATURE[0] + 4, motif_notes(m["motif"], octave=1),
+             voice=m["colour"], bus="lead", gain=0.34)
+    s.chords((SIGNATURE[0] + 2, INTRO[1]), voice="pad", gain=0.14, cutoff=1300.0)
+    s.bass((INTRO[1] - 2, INTRO[1]), "X.......X.......", style="sub", gain=0.50)
+    s.choir_pad((SIGNATURE[0] + 4, INTRO[1]), vowel=v_low, dyn=0.36, gain=0.42,
+                effort=0.26, parts=("tenor", "bass"), voices_scale=0.5)
 
     # ---- DRIVE — 熱血
     s.drumkit(DRIVE, style=m["kit"])
@@ -362,8 +438,14 @@ def build(arena_id: str) -> Score:
     s.chords(DRIVE, voice="strings", gain=0.22, cutoff=3200.0)
     s.ostinato(DRIVE, voice="supersaw", shape=m["shape"], subdiv=m["subdiv"],
                octave=1, gain=0.16, pan=0.20)
-    s.melody(DRIVE[0] + 4, music.hook("cell", octave=-1), voice="supersaw",
-             gain=0.26)
+    # ⭐ THE DRIVE CARRIES THIS MAP'S MOTIF, not the pack's shared cell.
+    # owner:「導入與熱血驅動 每一首都太像了」— and he was right: every track
+    # used to state `HOOK_CELL` here, so thirteen drives opened with the same
+    # three notes. The cell still belongs to the pack; it just is not what makes
+    # one arena sound like itself.
+    s.melody(DRIVE[0] + 4, motif, voice=m["colour"], bus="lead", gain=0.30)
+    s.melody(DRIVE[0] + 8, motif_notes(m["motif"], octave=1), voice="supersaw",
+             bus="lead", gain=0.20)
 
     # ---- HOLLOW — ⭐ 收束靜止低潮. No kit. No bass. This is the floor.
     if hollow_kind == "solo":
@@ -382,8 +464,17 @@ def build(arena_id: str) -> Score:
     s.drum("taiko", "X...............", (HOLLOW[0] + 4, HOLLOW[1]), gain=0.30)
 
     # ---- TURN — ⭐ 高潮轉折
-    s.fx("riser", TURN[0], length_bars=4.0, gain=0.34)
-    s.drum("timpani", "x.x.x.x.x.x.X.X.", TURN, gain=0.42, humanize=0.004)
+    # ⛔ NO `fx("riser"/"impact"/"downlifter")` ANYWHERE IN THIS ARC.
+    # owner 2026-08-22, on the descent sweep:「我非常討厭因為很廉價」。
+    # He was right, and the reason is structural: the soundfont has no EDM
+    # transition furniture, so those five voices (riser/impact/downlifter/
+    # reverse/sweepdown) are the ONLY layers still coming out of the
+    # oscillators — every other instrument became a real recording on
+    # 2026-08-22. A synthesised noise sweep next to a recorded orchestra reads
+    # as cheap because it IS the one cheap thing left.
+    # ⇒ The build and the landing are played by the orchestra instead:
+    # a tremolo crescendo, a timpani roll, and a struck cymbal + taiko.
+    s.drum("timpani", "x.x.x.x.x.x.X.X.", TURN, gain=0.46, humanize=0.004)
     # ⭐ Tremolo strings under the riser. This is the single most recognisable
     # gesture of the register owner asked for, and it was simply unavailable
     # before the sample bank — the oscillator kit has no bowed tremolo at all.
@@ -391,7 +482,9 @@ def build(arena_id: str) -> Score:
     s.choir_pad(TURN, vowel=v_high, dyn=0.70, gain=0.85, effort=0.55, per_bar=2)
     s.bass((TURN[0] + 2, TURN[1]), "X...X...X...X...", style="reese", gain=0.70)
     s.drumkit((TURN[1] - 1, TURN[1]), style="drive", gain=0.8)
-    s.fx("impact", CLIMAX[0], length_bars=1.5, gain=0.52)
+    # the landing: real cymbal + taiko + a brass stab on the downbeat
+    s.drum("cymbal", "X...............", (CLIMAX[0], CLIMAX[0] + 1), gain=0.62)
+    s.drum("taiko", "X...............", (CLIMAX[0], CLIMAX[0] + 1), gain=0.9)
 
     # ---- CLIMAX — 高潮
     s.progression(list(m["prog"]))          # DRIVE/HOLLOW cycle stays authoritative
@@ -405,9 +498,9 @@ def build(arena_id: str) -> Score:
                      gain=0.9)
         s.lead((CLIMAX[0] + 4, CLIMAX[0] + 8), phrase="A", octave=-1, gain=0.46)
     else:
-        s.melody(CLIMAX[0] + 4, music.hook("cell"), voice="supersaw", gain=0.40)
-        s.melody(CLIMAX[0] + 8, music.hook("cell", octave=1), voice="supersaw",
-                 gain=0.32)
+        s.melody(CLIMAX[0] + 4, motif_notes(m["motif"], octave=1),
+                 voice="supersaw", gain=0.40)
+        s.melody(CLIMAX[0] + 8, motif, voice=m["brass"], bus="strings", gain=0.30)
     s.chords(CLIMAX, voice="strings", gain=0.26, cutoff=4200.0)
     # ⭐ THE HORN STACK — recorded brass under the choir, holding whole bars an
     # octave below the voices. ⛔ Not a supersaw pretending: the reason this
@@ -426,7 +519,16 @@ def build(arena_id: str) -> Score:
                 parts=("tenor", "bass"), voices_scale=0.7)
     s.drum("taiko", "X.......x.......", (DESCENT[0], DESCENT[0] + 2), gain=0.42)
     s.drum("kick", "X...X...X...X...", (DESCENT[0], DESCENT[0] + 1), gain=0.7)
-    s.fx("downlifter", DESCENT[0], length_bars=2.0, gain=0.30)
+
+    # ---- ⭐ EVERY track gets a voice (owner 2026-08-22). Arenas adapted from a
+    #      work speak their quote; the six that are not SING their own motif.
+    #      ⛔ No track may be voiceless.
+    voiced = load_lines().get("arenas", {}).get(arena_id, {}).get("lines")
+    if voiced:
+        vocal_motif(s, m, (CLIMAX[0] + 4, CLIMAX[0] + 12), gain=0.55)
+    else:
+        vocal_motif(s, m, (HOLLOW[0] + 2, HOLLOW[1]), gain=1.0)
+        vocal_motif(s, m, (CLIMAX[0] + 4, CLIMAX[0] + 12), gain=0.8, octave=1)
 
     # ---- the RAP, if this arena has authored lines
     # ⚠️ `["arenas"][arena_id]`, ⛔ not `[arena_id]`: lines.json nests the table

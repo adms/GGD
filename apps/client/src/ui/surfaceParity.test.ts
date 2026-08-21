@@ -298,6 +298,14 @@ const CLAIM_EXEMPTIONS: Record<string, string> = {
  * feature is invisible to a real player, with the audit line that says so.
  */
 const KNOWN_GAPS: Record<string, string> = {
+  // ⭐ #503：PadKeyboard 是**覆蓋層**，⛔ 不是一個畫面。PadFocusNav 在焦點落到
+  // <input>/<textarea> 時把它開起來，蓋在**當下那個**畫面上（自己宣告
+  // data-pad-scope priority 90 接管焦點）。它渲染 <GlobalChrome/> 會讓畫面上出現
+  // **第二套** chrome —— 兩個音效鈕、兩條圖例。
+  // ⚠️ 這一列是**決定**不是靜音鈕：它成立的前提是「開它的那個畫面自己已經有 chrome」。
+  // ⛔ 哪天它變成獨立路由（例如全螢幕輸入頁），這一列就要拿掉。
+  "render-root/PadKeyboard":
+    "an overlay mounted over whatever screen has focus — the host screen owns the chrome",
   // P1-2 — phone. HudRoot:144 swaps AbilityBar out for TouchControls, and
   // (P1-2 「TouchControls has no CastNoticeLine」 was CLOSED on 2026-07-30 and its
   //  row deleted, as this file demands of a fixed gap. The line no longer lives

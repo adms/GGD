@@ -2,7 +2,7 @@
   "note": "bgm-gen 的場景音效素材 —— 每一張場地一組真實錄音，於 render 時混進該場地 BGM 的 fx 匯流排。⛔ 這些不是 runtime SFX，client 從不請求它們；它們在 build 時被烘進 map.<slug>.mp3。",
   "reason": "owner 2026-08-22 (GH#531)「環境音效也是 請先上網尋找來使用」——原本 13 個場景音效是 numpy 合成的,owner 判定合成品質不足。",
   "licence": {
-    "source": "効果音ラボ (Sound Effect Lab) — https://soundeffect-lab.info/",
+    "source": "Warcraft III (Blizzard Entertainment) — 見 content/assets/audio/wc3/PROVENANCE.md 的同一個裁決",
     "terms": "https://soundeffect-lab.info/agreement/ — 商用可・報告不要・クレジット任意",
     "ownerRule": "owner 的規則比授權嚴:「只要好好列出附記在授權頁面就好」⇒ 每一支都必須列進 content/assets/CREDITS.md 與遊戲內授權頁。",
     "sourceWarning": "⛔ 只從 soundeffect-lab.info 下載。ニコニ・コモンズ 上有逐位元組相同的副本,但授權是商用受限的。",
@@ -12,344 +12,188 @@
   "scenes": {
     "arena.frieren": [
       [
-        "battle/magic-circle1",
-        "魔法陣を展開",
+        "wc3/ShimmeringPortalBirth",
+        "魔法門開啟",
         1.0,
         "hit"
       ],
       [
-        "environment/cave1",
-        "水のしたたる洞窟",
-        0.55,
+        "wc3/CityScapeMagicRunesLoop1",
+        "魔法符文嗡鳴",
+        0.62,
         "bed"
       ]
     ],
     "arena.heavens-arena": [
       [
-        "anime/gong-played1",
-        "試合開始のゴング",
+        "wc3/TheHornOfCenarius",
+        "賽前號角",
         1.0,
         "hit"
       ],
       [
-        "voice/people/people-stadium-cheer1",
-        "スタジアムの歓声",
-        0.45,
-        "hit"
-      ],
-      [
-        "environment/wind1",
-        "風が吹く1 ヒュオオオ",
-        0.6,
+        "wc3/GlueScreenWindLoop1",
+        "高空的風",
+        0.62,
         "bed"
       ]
     ],
     "arena.holy-grail": [
       [
-        "battle/magic-attack-holy1",
-        "聖魔法",
+        "wc3/EyeOfSargeras",
+        "異界之眼",
         1.0,
         "hit"
       ],
       [
-        "environment/magical-power-room1",
-        "魔力に満ちた部屋",
-        0.75,
-        "bed"
-      ],
-      [
-        "environment/cave1",
-        "水のしたたる洞窟",
-        0.45,
+        "wc3/WaterStreamLoop1",
+        "地下水流",
+        0.62,
         "bed"
       ]
     ],
     "arena.infinity-castle": [
       [
-        "various/slidingdoor-open1",
-        "引き戸を開ける1",
+        "wc3/Elevator",
+        "房間移動",
         1.0,
         "hit"
       ],
       [
-        "anime/temple-bell1",
-        "お寺の鐘",
-        0.55,
-        "hit"
-      ],
-      [
-        "environment/different-dimension1",
-        "異次元空間 時の流れが違う",
-        0.7,
+        "wc3/EnchantedCellLoop",
+        "被施術的牢籠",
+        0.62,
         "bed"
       ]
     ],
     "arena.nazarick": [
       [
-        "various/iron-door-open1",
-        "鉄の扉を開ける",
+        "wc3/GateEpicBash",
+        "巨門撞擊",
         1.0,
         "hit"
       ],
       [
-        "environment/after-death-word1",
-        "死後の世界 死者の声が響く",
-        0.65,
+        "wc3/FrostmourneLoopUndead01",
+        "霜之哀傷的亡靈低鳴",
+        0.62,
         "bed"
       ]
     ],
     "arena.shiganshina": [
       [
-        "various/gate-open1",
-        "門を開ける",
+        "wc3/LargeCityGateOpen1",
+        "大城門開啟",
         1.0,
         "hit"
       ],
       [
-        "environment/wind2",
-        "風が吹く2 強風が吹き荒れる",
-        0.55,
+        "wc3/WindLoopStereo",
+        "牆外的風",
+        0.62,
         "bed"
       ]
     ],
     "arena.world-tree": [
       [
-        "battle/magic-worp1",
-        "ワープ消えるイメージ",
+        "wc3/ShimmeringPortalEntrance",
+        "傳送門穿入",
         1.0,
         "hit"
       ],
       [
-        "environment/plants-swaying2",
-        "風に揺れる草木2 風の強い日",
-        0.7,
+        "wc3/FreakyForest1",
+        "梣谷森林",
+        0.62,
         "bed"
       ]
     ],
     "arena.castle": [
       [
-        "various/iron-door-open1",
-        "鉄の扉を開ける",
+        "wc3/DoorSlam1",
+        "厚重木門甩上",
         1.0,
         "hit"
       ],
       [
-        "anime/church-bell1",
-        "教会の鐘1",
-        0.5,
-        "hit"
-      ],
-      [
-        "environment/subway-passage1",
-        "地下通路 靴音が響く",
-        0.55,
+        "wc3/CityScapeCathedralLoop1",
+        "大教堂",
+        0.62,
         "bed"
       ]
     ],
     "arena.colosseum": [
       [
-        "voice/people/people-stadium-cheer1",
-        "スタジアムの歓声",
+        "wc3/StoneBridgeRise",
+        "石造升起",
         1.0,
         "hit"
       ],
       [
-        "various/clapping-hands1",
-        "大勢で拍手",
-        0.55,
-        "hit"
-      ],
-      [
-        "environment/eventhall1",
-        "イベントホール 騒がしい会場",
-        0.65,
+        "wc3/CityScapeTavernLoop1",
+        "人聲鼎沸",
+        0.62,
         "bed"
       ]
     ],
     "arena.dota": [
       [
-        "anime/bell1",
-        "鈴を鳴らす",
+        "wc3/Switch",
+        "符文開關",
         1.0,
         "hit"
       ],
       [
-        "environment/creek1",
-        "小川のせせらぎ",
-        0.75,
+        "wc3/WaterLakeLoop1",
+        "湖水",
+        0.62,
         "bed"
       ]
     ],
     "arena.godie": [
       [
-        "anime/emergency-alert1",
-        "警報が鳴る",
+        "wc3/BlueFireBurst",
+        "藍焰爆發",
         1.0,
         "hit"
       ],
       [
-        "environment/industrialzone1",
-        "工業地帯 機械が駆動する",
-        0.55,
+        "wc3/LordaeronSummerCauldronLoop1",
+        "大鍋沸騰",
+        0.62,
         "bed"
       ]
     ],
     "arena.skeleton": [
       [
-        "anime/school-chime1",
-        "学校のチャイム",
+        "wc3/RunesGlow",
+        "符文亮起",
         1.0,
         "hit"
       ],
       [
-        "environment/park1",
-        "公園1 大きな公園",
-        0.65,
+        "wc3/LordaeronSummerWindMillLoop1",
+        "風車",
+        0.62,
         "bed"
       ]
     ],
     "arena.royale": [
       [
-        "machine/ship-big-whistle1",
-        "大型船の汽笛1",
+        "wc3/Earthquake",
+        "地震",
         1.0,
         "hit"
       ],
       [
-        "anime/clock-tower-bell1",
-        "魔の時計塔の鐘",
-        0.6,
-        "hit"
-      ],
-      [
-        "environment/thunderstorm1",
-        "雷雨 対決シーンにも使える",
-        0.6,
+        "wc3/RollingThunder1",
+        "滾雷",
+        0.62,
         "bed"
       ]
     ]
   },
   "clips": [
-    {
-      "rel": "anime/bell1",
-      "mp3": "anime__bell1.mp3",
-      "wav": "anime__bell1.wav",
-      "sourceTitle": "鈴を鳴らす",
-      "sourceBytes": 38592,
-      "sha256": "3766075fc1c597f2",
-      "sourceUrl": "https://soundeffect-lab.info/sound/anime/mp3/bell1.mp3",
-      "sourcePage": "https://soundeffect-lab.info/sound/anime/",
-      "bytes": 135914,
-      "durationSec": 1.54
-    },
-    {
-      "rel": "anime/church-bell1",
-      "mp3": "anime__church-bell1.mp3",
-      "wav": "anime__church-bell1.wav",
-      "sourceTitle": "教会の鐘1",
-      "sourceBytes": 74304,
-      "sha256": "d5e52edaba9cab2e",
-      "sourceUrl": "https://soundeffect-lab.info/sound/anime/mp3/church-bell1.mp3",
-      "sourcePage": "https://soundeffect-lab.info/sound/anime/",
-      "bytes": 268290,
-      "durationSec": 3.041
-    },
-    {
-      "rel": "anime/clock-tower-bell1",
-      "mp3": "anime__clock-tower-bell1.mp3",
-      "wav": "anime__clock-tower-bell1.wav",
-      "sourceTitle": "魔の時計塔の鐘",
-      "sourceBytes": 59558,
-      "sha256": "650d2c81b124d96a",
-      "sourceUrl": "https://soundeffect-lab.info/sound/anime/mp3/clock-tower-bell1.mp3",
-      "sourcePage": "https://soundeffect-lab.info/sound/anime/",
-      "bytes": 213458,
-      "durationSec": 2.419
-    },
-    {
-      "rel": "anime/emergency-alert1",
-      "mp3": "anime__emergency-alert1.mp3",
-      "wav": "anime__emergency-alert1.wav",
-      "sourceTitle": "警報が鳴る",
-      "sourceBytes": 97174,
-      "sha256": "d9c4a388351d3029",
-      "sourceUrl": "https://soundeffect-lab.info/sound/anime/mp3/emergency-alert1.mp3",
-      "sourcePage": "https://soundeffect-lab.info/sound/anime/",
-      "bytes": 352366,
-      "durationSec": 3.994
-    },
-    {
-      "rel": "anime/gong-played1",
-      "mp3": "anime__gong-played1.mp3",
-      "wav": "anime__gong-played1.wav",
-      "sourceTitle": "試合開始のゴング",
-      "sourceBytes": 42630,
-      "sha256": "c4672be70738f773",
-      "sourceUrl": "https://soundeffect-lab.info/sound/anime/mp3/gong-played1.mp3",
-      "sourcePage": "https://soundeffect-lab.info/sound/anime/",
-      "bytes": 151170,
-      "durationSec": 1.713
-    },
-    {
-      "rel": "anime/school-chime1",
-      "mp3": "anime__school-chime1.mp3",
-      "wav": "anime__school-chime1.wav",
-      "sourceTitle": "学校のチャイム",
-      "sourceBytes": 626310,
-      "sha256": "e9f579c063cc84ab",
-      "sourceUrl": "https://soundeffect-lab.info/sound/anime/mp3/school-chime1.mp3",
-      "sourcePage": "https://soundeffect-lab.info/sound/anime/",
-      "bytes": 2295902,
-      "durationSec": 26.03
-    },
-    {
-      "rel": "anime/temple-bell1",
-      "mp3": "anime__temple-bell1.mp3",
-      "wav": "anime__temple-bell1.wav",
-      "sourceTitle": "お寺の鐘",
-      "sourceBytes": 71552,
-      "sha256": "e848099d32b17433",
-      "sourceUrl": "https://soundeffect-lab.info/sound/anime/mp3/temple-bell1.mp3",
-      "sourcePage": "https://soundeffect-lab.info/sound/anime/",
-      "bytes": 249102,
-      "durationSec": 2.821
-    },
-    {
-      "rel": "battle/magic-attack-holy1",
-      "mp3": "battle__magic-attack-holy1.mp3",
-      "wav": "battle__magic-attack-holy1.wav",
-      "sourceTitle": "聖魔法",
-      "sourceBytes": 103444,
-      "sha256": "c719d31facfeb48d",
-      "sourceUrl": "https://soundeffect-lab.info/sound/battle/mp3/magic-attack-holy1.mp3",
-      "sourcePage": "https://soundeffect-lab.info/sound/battle/",
-      "bytes": 374782,
-      "durationSec": 4.248
-    },
-    {
-      "rel": "battle/magic-circle1",
-      "mp3": "battle__magic-circle1.mp3",
-      "wav": "battle__magic-circle1.wav",
-      "sourceTitle": "魔法陣を展開",
-      "sourceBytes": 85262,
-      "sha256": "46daea997d69cc25",
-      "sourceUrl": "https://soundeffect-lab.info/sound/battle/mp3/magic-circle1.mp3",
-      "sourcePage": "https://soundeffect-lab.info/sound/battle/",
-      "bytes": 308672,
-      "durationSec": 3.499
-    },
-    {
-      "rel": "battle/magic-worp1",
-      "mp3": "battle__magic-worp1.mp3",
-      "wav": "battle__magic-worp1.wav",
-      "sourceTitle": "ワープ消えるイメージ",
-      "sourceBytes": 33853,
-      "sha256": "ad998e6db42e0c6f",
-      "sourceUrl": "https://soundeffect-lab.info/sound/battle/mp3/magic-worp1.mp3",
-      "sourcePage": "https://soundeffect-lab.info/sound/battle/",
-      "bytes": 118828,
-      "durationSec": 1.346
-    },
     {
       "rel": "environment/after-death-word1",
       "mp3": "environment__after-death-word1.mp3",
@@ -519,6 +363,30 @@
       "durationSec": 8.469
     },
     {
+      "rel": "machine/train-horn2",
+      "mp3": "machine__train-horn2.mp3",
+      "wav": "machine__train-horn2.wav",
+      "sourceTitle": "電車のクラクション2",
+      "sourceBytes": 23195,
+      "sha256": "4ec29ed51f1cf3cd",
+      "sourceUrl": "https://soundeffect-lab.info/sound/machine/mp3/train-horn2.mp3",
+      "sourcePage": "https://soundeffect-lab.info/sound/machine/",
+      "bytes": 79966,
+      "durationSec": 0.906
+    },
+    {
+      "rel": "various/autodoor-open1",
+      "mp3": "various__autodoor-open1.mp3",
+      "wav": "various__autodoor-open1.wav",
+      "sourceTitle": "自動ドアが開く",
+      "sourceBytes": 36736,
+      "sha256": "9e35678d6bb326b0",
+      "sourceUrl": "https://soundeffect-lab.info/sound/various/mp3/autodoor-open1.mp3",
+      "sourcePage": "https://soundeffect-lab.info/sound/various/",
+      "bytes": 127322,
+      "durationSec": 1.441
+    },
+    {
       "rel": "various/clapping-hands1",
       "mp3": "various__clapping-hands1.mp3",
       "wav": "various__clapping-hands1.wav",
@@ -529,6 +397,30 @@
       "sourcePage": "https://soundeffect-lab.info/sound/various/",
       "bytes": 254098,
       "durationSec": 2.88
+    },
+    {
+      "rel": "various/classroom-door-open1",
+      "mp3": "various__classroom-door-open1.mp3",
+      "wav": "various__classroom-door-open1.wav",
+      "sourceTitle": "教室の戸を開ける",
+      "sourceBytes": 61312,
+      "sha256": "e5e474394c2b5de3",
+      "sourceUrl": "https://soundeffect-lab.info/sound/various/mp3/classroom-door-open1.mp3",
+      "sourcePage": "https://soundeffect-lab.info/sound/various/",
+      "bytes": 215470,
+      "durationSec": 2.44
+    },
+    {
+      "rel": "various/fusuma-open1",
+      "mp3": "various__fusuma-open1.mp3",
+      "wav": "various__fusuma-open1.wav",
+      "sourceTitle": "ふすまを開ける1",
+      "sourceBytes": 62066,
+      "sha256": "ed2c679e5c2a13b0",
+      "sourceUrl": "https://soundeffect-lab.info/sound/various/mp3/fusuma-open1.mp3",
+      "sourcePage": "https://soundeffect-lab.info/sound/various/",
+      "bytes": 222302,
+      "durationSec": 2.52
     },
     {
       "rel": "various/gate-open1",
@@ -555,6 +447,18 @@
       "durationSec": 1.147
     },
     {
+      "rel": "various/jail-door-close1",
+      "mp3": "various__jail-door-close1.mp3",
+      "wav": "various__jail-door-close1.wav",
+      "sourceTitle": "牢屋の扉を閉める",
+      "sourceBytes": 28838,
+      "sha256": "0280481c44820a1e",
+      "sourceUrl": "https://soundeffect-lab.info/sound/various/mp3/jail-door-close1.mp3",
+      "sourcePage": "https://soundeffect-lab.info/sound/various/",
+      "bytes": 99390,
+      "durationSec": 1.126
+    },
+    {
       "rel": "various/slidingdoor-open1",
       "mp3": "various__slidingdoor-open1.mp3",
       "wav": "various__slidingdoor-open1.wav",
@@ -565,6 +469,42 @@
       "sourcePage": "https://soundeffect-lab.info/sound/various/",
       "bytes": 115182,
       "durationSec": 1.305
+    },
+    {
+      "rel": "various/stone-wall-slide1",
+      "mp3": "various__stone-wall-slide1.mp3",
+      "wav": "various__stone-wall-slide1.wav",
+      "sourceTitle": "石の壁がスライドする",
+      "sourceBytes": 42624,
+      "sha256": "0a8c3ed031c3090c",
+      "sourceUrl": "https://soundeffect-lab.info/sound/various/mp3/stone-wall-slide1.mp3",
+      "sourcePage": "https://soundeffect-lab.info/sound/various/",
+      "bytes": 150614,
+      "durationSec": 1.707
+    },
+    {
+      "rel": "various/water-bukubuku1",
+      "mp3": "various__water-bukubuku1.mp3",
+      "wav": "various__water-bukubuku1.wav",
+      "sourceTitle": "水ぶくぶく1",
+      "sourceBytes": 99055,
+      "sha256": "fa3908b21bd9f8e6",
+      "sourceUrl": "https://soundeffect-lab.info/sound/various/mp3/water-bukubuku1.mp3",
+      "sourcePage": "https://soundeffect-lab.info/sound/various/",
+      "bytes": 359480,
+      "durationSec": 4.075
+    },
+    {
+      "rel": "various/water-throw-stone1",
+      "mp3": "various__water-throw-stone1.mp3",
+      "wav": "various__water-throw-stone1.wav",
+      "sourceTitle": "水面に石投げ1",
+      "sourceBytes": 21315,
+      "sha256": "2bd14b9d3fdd06d7",
+      "sourceUrl": "https://soundeffect-lab.info/sound/various/mp3/water-throw-stone1.mp3",
+      "sourcePage": "https://soundeffect-lab.info/sound/various/",
+      "bytes": 73118,
+      "durationSec": 0.828
     },
     {
       "rel": "voice/people/people-stadium-cheer1",
@@ -579,5 +519,8 @@
       "durationSec": 4.779
     }
   ],
-  "roleNote": "每一列是 [來源, 標題, 增益, 角色]。⭐ 角色是**設計決定**,所以逐筆寫出來,⛔ 不從時長推導 —— 第一版用「≥10 秒就是 bed」猜,結果把 26 秒的「学校のチャイム」判成環境音(它其實是一個手勢),而大聖杯與新手場整場沒有 hit。hit=瞬態手勢(門/鑼/傳送),peak 正規化;bed=環境層(風/洞窟/群眾),RMS 正規化。⭐ 每一張場地都必須**兩者都有**。"
+  "roleNote": "每一列是 [來源, 標題, 增益, 角色]。⭐ 角色是**設計決定**,所以逐筆寫出來,⛔ 不從時長推導 —— 第一版用「≥10 秒就是 bed」猜,結果把 26 秒的「学校のチャイム」判成環境音(它其實是一個手勢),而大聖杯與新手場整場沒有 hit。hit=瞬態手勢(門/鑼/傳送),peak 正規化;bed=環境層(風/洞窟/群眾),RMS 正規化。⭐ 每一張場地都必須**兩者都有**。",
+  "collisionNote": "⛔ owner 2026-08-22:「魔法陣を展開（hit）已經在本遊戲中大量使用 放入背景音樂中會造成遊戲判斷混亂 建議更換 其他如有類似也要更換」。\n量到的:3 支**完全撞號**(magic-circle1→castBegin · magic-attack-holy1→exUnlock · gong-played1→matchStart),另外 7 支雖然沒撞號但來自 `battle/` 與 `anime/` —— 而遊戲的 SFX 有 **21 支來自 battle/、4 支來自 anime/**,那兩個分類就是遊戲自己的提示音字彙。\n⇒ 規則:場景音效**只能**取自 `environment/` `various/` `machine/` `voice/people/`,⛔ 永遠不要用 `battle/` 或 `anime/`。⛔ 也不要用 walk-*/dash-*(遊戲有 footstep 事件)。閘在 scenefx.audit(),⛔ 不是靠記得。",
+  "source": "Warcraft III retail MPQs（Blizzard Entertainment）—— Sound\\Ambient\\**",
+  "sourceNote": "⭐ owner 2026-08-22:「用魔獸爭霸就好 畢竟是魔獸爭霸自訂地圖之一，有大量預設語音跟音效可以亂入使用」。⇒ 場景音效整批從 効果音ラボ 換成 **WC3 原作環境音**。\n⭐ 這同時解掉撞號問題:WC3 的 72 支 Sound\\Ambient\\ **遊戲一支都沒綁**(遊戲綁的 132 支是 ability SFX 與 model soundset,完全不同的集合)。\n⛔ 而 効果音ラボ 那批之所以要換掉,是因為遊戲的 SFX 有 21 支來自 battle/、4 支來自 anime/,同一個字彙放進音樂會被誤判成技能。\n⚠️ 抽取要用 repo 自己的 `tools/w3x-import/w3xlib/mpqaudio.AudioArchive` —— `Sound\\Ambient\\` 底下 **72 支全部加密**,mpyq 讀不了(NotImplementedError)。\n版權:與 content/assets/audio/wc3/ 同一個立場(owner 2026-08-19 取消了 blizzard-local 規則)。"
 }

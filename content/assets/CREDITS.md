@@ -710,7 +710,48 @@ Played by **FluidSynth** (LGPL) at build time into a local note bank; the bank i
 a gitignored cache, the soundfont is committed because it is the deterministic
 input.
 
-### Scene sounds — 効果音ラボ / Sound Effect Lab (29 clips)
+### 場景音效 —— Warcraft III 原作環境音（26 支）
+
+owner 2026-08-22，兩則裁決把這一層整個換掉：
+
+> 「魔法陣を展開（hit）已經在本遊戲中大量使用 放入背景音樂中會造成遊戲判斷混亂 建議更換 其他如有類似也要更換」
+> 「用魔獸爭霸就好 畢竟是魔獸爭霸自訂地圖之一，有大量預設語音跟音效可以亂入使用」
+
+⚠️ **原本用的是 効果音ラボ**（見下一節，那批仍在授權頁上，只是不再被 BGM 使用）。
+換掉的理由是量到的：遊戲的 SFX 有 **21 支來自 `battle/`、4 支來自 `anime/`**，
+其中 3 支**逐檔相同**（`magic-circle1`→castBegin、`magic-attack-holy1`→exUnlock、
+`gong-played1`→matchStart）。同一個聲音字彙放進音樂，玩家會誤判成技能。
+
+⭐ WC3 的 `Sound\Ambient\` 有 **72 支，遊戲一支都沒綁**（遊戲綁的 132 支是
+ability SFX 與 model soundset，完全不同的集合），所以零撞號。
+
+| | |
+|---|---|
+| 來源 | Warcraft III 零售 MPQ（`war3.mpq` / `War3x.mpq`）`Sound\Ambient\**` |
+| 權利人 | **Blizzard Entertainment** |
+| 立場 | 與 `content/assets/audio/wc3/` 同一個裁決（owner 2026-08-19 取消了 blizzard-local 規則：「直接上架但註記來源就好 不要ignore」） |
+| 抽取 | `tools/w3x-import/w3xlib/mpqaudio.AudioArchive` —— ⚠️ 這 72 支**全部加密**，通用的 mpyq 讀不了 |
+| 處理 | 轉成 mono 44.1 kHz PCM，⛔ 沒有其他加工 |
+
+⭐ **13 張場地、26 支素材、零重複**（owner：「每一首都要是獨特的樂器音色跟環境音效，不能重複」）：
+
+| hit | 用途 | bed | 用途 |
+|---|---|---|---|
+| `ShimmeringPortalBirth.wav` | 魔法門開啟 | `CityScapeMagicRunesLoop1.wav` | 魔法符文嗡鳴 |
+| `TheHornOfCenarius.wav` | 賽前號角 | `GlueScreenWindLoop1.wav` | 高空的風 |
+| `EyeOfSargeras.wav` | 異界之眼 | `WaterStreamLoop1.wav` | 地下水流 |
+| `Elevator.wav` | 房間移動 | `EnchantedCellLoop.wav` | 被施術的牢籠 |
+| `GateEpicBash.wav` | 巨門撞擊 | `FrostmourneLoopUndead01.wav` | 霜之哀傷的亡靈低鳴 |
+| `LargeCityGateOpen1.wav` | 大城門開啟 | `WindLoopStereo.wav` | 牆外的風 |
+| `ShimmeringPortalEntrance.wav` | 傳送門穿入 | `FreakyForest1.wav` | 梣谷森林 |
+| `DoorSlam1.wav` | 厚重木門甩上 | `CityScapeCathedralLoop1.wav` | 大教堂 |
+| `StoneBridgeRise.wav` | 石造升起 | `CityScapeTavernLoop1.wav` | 人聲鼎沸 |
+| `Switch.wav` | 符文開關 | `WaterLakeLoop1.wav` | 湖水 |
+| `BlueFireBurst.wav` | 藍焰爆發 | `LordaeronSummerCauldronLoop1.wav` | 大鍋沸騰 |
+| `RunesGlow.wav` | 符文亮起 | `LordaeronSummerWindMillLoop1.wav` | 風車 |
+| `Earthquake.wav` | 地震 | `RollingThunder1.wav` | 滾雷 |
+
+### （已停用）### Scene sounds — 効果音ラボ / Sound Effect Lab (29 clips)
 
 Same source, same standing authorisation and the **same mandatory-listing
 condition** as the `audio/sfx/lab/` pack documented below — see that section for

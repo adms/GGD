@@ -23,11 +23,11 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 648 個檔案**，分佈在 2 個隔離區。
+**目前共 673 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
-| [`docs/legacy/`](legacy-index.md#docslegacy) | 208 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
+| [`docs/legacy/`](legacy-index.md#docslegacy) | 233 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
 | [`content/_legacy/`](legacy-index.md#contentlegacy) | 440 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
@@ -35,7 +35,7 @@ owner 2026-08-13：
 
 ---
 
-## `docs/legacy/` —— 208 檔
+## `docs/legacy/` —— 233 檔
 
 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）
 
@@ -124,11 +124,35 @@ owner 2026-08-13：
 | `_bgm-versions/bgm_temp_20260822-0235/vox/nazarick.0.wav` | （.wav 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/bgm_temp_20260822-0235/vox/shiganshina.0.wav` | （.wav 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/bgm_temp_20260822-0235/vox/world-tree.0.wav` | （.wav 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.castle/map.castle_temp_20260822-0306_53944a29e086c268.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.castle/map.castle_temp_20260822-0329_ab49ae1c84d009ce.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.castle/map.castle_temp_20260822-0340_12dbc18aac06828e.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.colosseum/map.colosseum_temp_20260822-0330_59a39c646e63f193.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.dota/map.dota_temp_20260822-0307_94dd80633a987f90.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.dota/map.dota_temp_20260822-0331_060ac728da77ca3f.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.frieren/map.frieren_temp_20260822-0242_4c196f15d14935f5.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.frieren/map.frieren_temp_20260822-0303_35bb6685196a2d1a.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.frieren/map.frieren_temp_20260822-0321_0fb9e46fbad64da0.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.godie/map.godie_temp_20260822-0308_8801d931347bf83a.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.godie/map.godie_temp_20260822-0332_061f36b49a549442.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.heavens-arena/map.heavens-arena_temp_20260822-0242_08166a1fef285dfe.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.heavens-arena/map.heavens-arena_temp_20260822-0304_3bcd73c94e43a751.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.heavens-arena/map.heavens-arena_temp_20260822-0323_97d87925a62947eb.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.holy-grail/map.holy-grail_temp_20260822-0304_12a2bfef133b3bd3.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.holy-grail/map.holy-grail_temp_20260822-0324_b7f3e598bbff16c4.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.infinity-castle/map.infinity-castle_temp_20260822-0243_73653dd2f11c1ffe.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.infinity-castle/map.infinity-castle_temp_20260822-0305_e08ae77a5e978e12.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.infinity-castle/map.infinity-castle_temp_20260822-0325_62166e303f1e85a2.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.nazarick/map.nazarick_temp_20260822-0244_9eed7ae1d21a2f82.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.nazarick/map.nazarick_temp_20260822-0326_91de01bbea4dd1b6.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.royale/map.royale_temp_20260822-0307_bac3512b266bf177.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.royale/map.royale_temp_20260822-0335_36d70fca69009e04.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.shiganshina/map.shiganshina_temp_20260822-0327_c5f8f6bd7ac7cac9.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.skeleton/map.skeleton_temp_20260822-0309_195e8bdf326a79ea.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.skeleton/map.skeleton_temp_20260822-0333_14b31d525247c016.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/map.world-tree/map.world-tree_temp_20260822-0244_ac0478fc9bb9387a.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.world-tree/map.world-tree_temp_20260822-0309_be3365b2ad89e72d.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.world-tree/map.world-tree_temp_20260822-0328_3d56ac069fa10c56.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/AudioDirector_temp_20260822-0122.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/ConfigDocPage_temp_20260821-2358.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/RallyConfirmDialog_temp_20260821-2355.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
@@ -215,6 +239,7 @@ owner 2026-08-13：
 | `_overwrites/overwrite_temp_20260822-010608/tools/bgm-gen/src/ggd/scenefx.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260822-011214/apps/client/src/ui/panels/roundVictoryCollapse.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260822-012357/apps/client/src/ui/panels/settlementStartFocus.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260822-031728/apps/client/src/input/gamepadFeelConfig.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/04.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/06.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/08.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
