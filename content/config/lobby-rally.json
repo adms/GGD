@@ -3,7 +3,7 @@
   "schema": "config.lobby-rally@1",
   "note": "大廳集合令（GH#492）。owner 2026-08-21 逐字:「創建房間最重要的就是拉人進來,請你將所有線上在大廳的人都跳出確認視窗是否進入房間一起開始,同意後就一起進入開始遊戲,最多等 10 秒,包含 vs bot,若有其他玩家一起進入房間遊戲,也請出現明顯提示姓名與積分、所選英雄,每回合結算也都要特別再提示一次,因為有可能斷線離開或連線回來房間繼續遊戲」。⭐ waitSeconds 是 owner 唯一說死的數字(10);其餘七格都是決策點,預設值一律選「照他的話做」的那一邊。⛔ enabled=false 是一鍵 rollback:建房不再廣播、一鍵開打回到 2026-08-21 之前那條「立刻開,不等人」的路(POST /rooms/solo)。⚠️ 練習模式永遠走 solo 那條路,跟 includeBotMatch 無關 —— 練習房是測試碼的鑰匙,一間有旁人的練習房就是作弊房。⚠️ 值的唯一真相是 apps/client/src/ui/platform/lobbyRally.ts 的 DEFAULT_LOBBY_RALLY,這一份是內容層的鏡像(apps/admin/src/laneConfigDocs.test.ts 逐格比對)。",
   "enabled": true,
-  "waitSeconds": 10,
+  "waitSeconds": 5,
   "includeBotMatch": true,
   "startIgnoresReady": true,
   "readyOnAccept": true,

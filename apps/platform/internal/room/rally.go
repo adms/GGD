@@ -53,7 +53,7 @@ import (
 // `content/config/lobby-rally.json` (+ the Zod DEFAULT_LOBBY_RALLY_POLICY and the
 // admin form), and the client sends it explicitly on every call. This constant
 // only decides what happens to a request that omitted the field entirely.
-const RallyWaitDefaultSec = 10
+const RallyWaitDefaultSec = 5
 
 // Rally wait bounds. ⛔ These are transport guards, NOT policy knobs — the same
 // call `maxOnlinePlayers` makes in friend/online.go. A rally that waits an hour

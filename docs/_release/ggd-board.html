@@ -1,4 +1,4 @@
-<title>GGD 作戰板 · 2026-08-21 18:34 (GMT+8)</title>
+<title>GGD 作戰板 · 2026-08-21 19:25 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.23.0 · 資料截至 2026-08-21 18:34 (GMT+8)</p><h1>GGD 作戰板 · 2026-08-21 18:34 (GMT+8)</h1><div class="meta"><span>帳本 <b>3</b> 份</span><span>點名票號 <b>121</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.23.0 · 資料截至 2026-08-21 19:25 (GMT+8)</p><h1>GGD 作戰板 · 2026-08-21 19:25 (GMT+8)</h1><div class="meta"><span>帳本 <b>3</b> 份</span><span>點名票號 <b>122</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -473,6 +473,14 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>18:26</td><td>殭屍死掉後 掉落小金幣 停留 1秒後 動畫效果軌跡(貝茲曲線加速)吸回到擊殺的英雄 搭配輕音效 提高爽度 模仿肉鴿遊戲的氛圍感 連擊也會有像 candy crush 類似連段音階升高的音效刺激玩家帶來獎勵感</td><td>#495</td></tr>
 <tr><td>18:30</td><td>你在施展技能的時候會釋放一個粒子特效，最後會飄散到天空，這個特效存活時間真的太長了，請你砍半，不需要後半段飄到天空</td><td>#494</td></tr>
 <tr><td>18:34</td><td>清理變身態、通過邀請碼審查、上下架角色道具 等常用批核，應該都要在 [Quick Approval] 這邊簡易一鍵批核通過吧？</td><td>#495</td></tr>
+<tr><td>18:48</td><td>創建房間最重要的就是拉人進來，請你將所有線上在大廳的人都跳出確認視窗是否進入房間一起開始，同意後就一起進入開始遊戲，最多等 10 秒，包含 vs bot，若有其他玩家一起進入房間遊戲，也請出現明顯提示姓名與積分、所選英雄，每回合結算也都要特別再提示一次，因為有可能斷線離開或連線回來房間繼續遊戲</td><td>492</td></tr>
+<tr><td>19:21</td><td>owner 2026-08-21（⭐ 集合令的語意反轉）： &gt; 「你說的是對的，<b>預設是加入，五秒是讓人按否定的</b>」 ⇒ ⭐ <b>大廳集合令的預設是「加入」，⛔ 不是「等你按同意」。</b> 那五秒是<b>讓人按「否定」的視窗</b>，⛔ 不是「來得及按同意」的視窗。 ## ⚠️ 這推翻了 #492 已經做出來的語意 <code>15877dff</code> 做的是「跳確認視窗 → <b>同意</b> → 進房」（opt-in）。 正確的是 <b>opt-out</b>：<b>跳視窗 → 5 秒內沒按「不要」就進房</b>。 ## ⭐ 為什麼這個差別很大 5 秒對「主動點同意」太短（多數人來不及）⇒ opt-in 幾乎等於沒有人會加入。 opt-out 才讓 5 秒說得通，也才符合 owner 的「<b>創建房間最重要的就是拉人進來</b>」。 ## ⇒ 要改的 - <code>readyOnAccept</code> 那一格的語意要反轉（或新增 <code>joinByDefault: true</code>） - 視窗的預設按鈕／倒數行為：<b>倒數結束 = 加入</b>，⛔ 不是「倒數結束 = 放棄」 - ⚠️ <b>正在比賽中的人仍然排除</b>（伺服器端 <code>presence.in-match</code>），⛔ 這一條不變 - ⭐ 做成後台一格（opt-in / opt-out 可切），預設 <b>opt-out</b></td><td>492</td></tr>
+<tr><td>18:47</td><td>後台 戰鬥回放 出現的是 localhost 無法觀看 英雄上下架 及 免費解鎖名單 英雄ID以外還要有英雄名稱 不然看不出來是誰 變身態的話也要註明 對戰錄影 超過幾天的錄影一律刪掉 預設不刪除</td><td>— 進度/指令,不需開票</td></tr>
+<tr><td>18:49</td><td>你還有多久可以做完 然後 push note deploy?</td><td>— 進度/指令,不需開票</td></tr>
+<tr><td>18:53</td><td>盡量多開工作流 最大效率完成吧</td><td>— 工作流指令</td></tr>
+<tr><td>19:19</td><td>所有人預設都會加</td><td>— 進度/指令,不需開票</td></tr>
+<tr><td>19:21</td><td>⭐ 這一句解掉了 5 秒的一個矛盾 —— 5 秒太短，要每個人主動點「同意」幾乎沒人來得及。預設加入才讓 5 秒說得通。=&gt; 你說的是對的，預設是加入，五秒是讓人按否定的</td><td>#492</td></tr>
+<tr><td>19:25</td><td>owner 2026-08-21（#499 兩個問題都答了）： &gt; ①「做成後台一格 adminAccountId =&gt; <b>yes, 如果只有一個就預設那一個</b>」 &gt; ②「<b>管理員是強制雙向 不必請求 每個人創號自動預設有管理員好友</b>」 ⇒ ① <code>adminAccountId</code> 做成後台一格，⭐ <b>若系統只有一個 RoleAdmin 帳號，預設就是那一個</b> （⛔ 不是留空要 owner 填）。多於一個時才需要他挑。 ⇒ ② ⭐ <b>強制雙向，⛔ 不走 <code>Request()</code>（那是送請求等對方接受）</b> —— 要直接<b>建立雙向好友關係</b>。 ⇒ ⭐ <b>每個人創號自動預設有管理員好友</b> —— 新帳號建立當下就有，⛔ 不是之後補。 ⚠️ 既有 198 個帳號仍需<b>回填</b>（掛 Quick Approval 的「加入」區，#495 已經做好那一區）。</td><td>499</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

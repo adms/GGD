@@ -1,0 +1,9 @@
+{
+  "id": "replay",
+  "schema": "config.replay@1",
+  "note": "對戰錄影政策。owner 2026-08-02「請幫我預設打開，就算玩到一半就離開也應該有 replay 才對」。enabled 出貨為 true；flushIntervalMs 決定「程序被硬砍時最多丟幾秒」。GH#498 owner 2026-08-21「對戰錄影 超過幾天的錄影一律刪掉 預設不刪除」⇒ 兩條保留量都出貨 0（0 = 不限／不刪）。retainMaxFiles 是與天數獨立的第二條刪除規則，只改天數的話第 201 場照樣會刪掉第 1 場,所以一起改。ROLLBACK：填回 200 / 30 即是舊行為（要重啟 game shard）。",
+  "enabled": true,
+  "flushIntervalMs": 500,
+  "retainMaxFiles": 0,
+  "retainMaxAgeDays": 30
+}

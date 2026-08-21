@@ -8386,7 +8386,7 @@ export type LobbyRallyPolicyDoc = Omit<ConfigLobbyRallyDoc, "id" | "schema" | "n
 /**
  * 出貨預設（＝內容載不到時的保險絲）。
  *
- * ⭐ `waitSeconds: 10` 是 owner 明說的那一格；其餘七格是決策點，預設值選的是
+ * ⭐ `waitSeconds: 5` 是 owner 明說的那一格（2026-08-21 從 10 改成 **5**：「改成五秒」）；其餘七格是決策點，預設值選的是
  * 「照 owner 的話做」的那一邊（第〇·六守則：優先權大的更新預設啟動）。
  *
  * ⚠️ 每一格都必須和 `apps/client/src/ui/platform/lobbyRally.ts` 的
@@ -8395,7 +8395,7 @@ export type LobbyRallyPolicyDoc = Omit<ConfigLobbyRallyDoc, "id" | "schema" | "n
  */
 export const DEFAULT_LOBBY_RALLY_POLICY: LobbyRallyPolicyDoc = {
   enabled: true,
-  waitSeconds: 10,
+  waitSeconds: 5,
   includeBotMatch: true,
   startIgnoresReady: true,
   readyOnAccept: true,
