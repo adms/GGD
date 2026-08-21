@@ -70,6 +70,7 @@ import {
   type AutoScrollToRowHandle,
 } from "../scroll/useAutoScrollToRow";
 import { PANEL_BG, PANEL_BORDER, teamCss, TEXT_DIM, TEXT_MAIN } from "../theme";
+import { applyPadFocus } from "../focusGlow";
 import { padModalScope } from "../padModalScope";
 import { ProgressChartPanel } from "./ProgressChartPanel";
 import { buildProgressSeries, progressAdvice } from "./progressChart";
@@ -562,6 +563,39 @@ export function MatchEndPanel({
     audioSystem.playSfx("settlementReveal");
   }, [cardShown, settlement]);
 
+  /**
+   * ⭐ GH#528 —— 結算畫面的**起始焦點**。
+   *
+   * 缺陷（#502 稽核逐字）：「結算畫面沒有起始焦點：第一次推搖桿落在最上最左，
+   * ⛔ 不是『返回大廳』」。`PadFocusNav` 在**沒有任何東西持有** `PAD_FOCUS_ATTR`
+   * 時走 `initialFocusIndex`，而那支是純幾何的「最上、再最左」—— 在這張卡上
+   * 那是右上角的收合鍵或排名列，⛔ 不是這個畫面唯一的出口。
+   * ⇒ 一個純手把玩家要盲推好幾次才找得到 `返回大廳`。
+   *
+   * 做法照 `ui/LeaveConfirmDialog` 的同一個模板（⛔ 不是第二套機制）：真的
+   * `el.focus()` **加上** `applyPadFocus` 的光暈 —— 光暈是 pad-only 的提示，
+   * 而 `focusedInScope()` 只認得那個屬性，所以只做 DOM focus 是「說了但不會
+   * 發生」（第一·五守則）。⚠️ `Btn` 沒有 `...rest`，寫 `data-*` 會被靜默丟掉，
+   * 所以拿到把手的是它明文開的 `btnRef`。
+   *
+   * ⚠️ 等 `cardHeld` 放開才做：贏家的卡片被烤雞煙火扣住那段時間，整片 wash 是
+   * `pointerEvents: "none"`、卡片還沒淡入，把焦點放到一個**按不下去**的按鈕上
+   * 比沒有起始焦點更糟。第一次真的滑鼠／鍵盤輸入會由 `PadFocusNav` 的
+   * `onUserInput` 把光暈收掉，所以這對非手把玩家不留痕跡。
+   */
+  const exitRef = useRef<HTMLButtonElement | null>(null);
+  useEffect(() => {
+    if (cardHeld) return;
+    const el = exitRef.current;
+    if (!el) return;
+    applyPadFocus(el);
+    try {
+      el.focus({ preventScroll: true });
+    } catch {
+      el.focus();
+    }
+  }, [cardHeld]);
+
   // 「查看戰績變化」 — the per-round panel (owner, 2026-07-27). Closed by
   // default: the grade, the breakdown and the auto-scrolling ranking are what
   // this screen opens with, and the chart is what a player asks for afterwards.
@@ -787,7 +821,10 @@ export function MatchEndPanel({
           >
             {showProgress ? "收起戰績變化" : "查看戰績變化"}
           </Btn>
-          <Btn onClick={() => void returnToLobby()}>返回大廳</Btn>
+          {/* GH#528 — 這顆是手把的起始焦點（見上面 `exitRef` 的效果）。 */}
+          <Btn btnRef={exitRef} onClick={() => void returnToLobby()}>
+            返回大廳
+          </Btn>
         </div>
       </div>
 
