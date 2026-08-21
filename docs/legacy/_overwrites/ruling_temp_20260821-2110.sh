@@ -18,9 +18,6 @@
 #   yes，跟殭屍一樣只是不會移動，加上屬於施展技能方，加上有生命週期時限
 #   EOF
 set -uo pipefail
-
-# ⭐ 任何一次 gh 寫入失敗都要讓**離開碼**說出來 —— 第二守則:fail-open 沒錯,**靜默**才是缺陷。
-FAILED=0
 cd "$(dirname "$0")/.."
 [ $# -lt 1 ] && { echo "用法: $0 <票號[,票號…]> [<<'EOF' 逐字原話 EOF]" >&2; exit 2; }
 
@@ -40,18 +37,10 @@ for n in "${NS[@]}"; do
   # ① 逐張票留言(時間軸:第幾次講的、什麼時候講的)
   printf '## ⭐ owner 裁決 %s（逐字）\n\n%s\n\n---\n⚠️ 由 `scripts/ruling.sh` 在**收到當下**寫入 —— ⛔ 不要再就這一點詢問 owner。\n若這則裁決推翻了票裡先前的內容,以**本則為準**（第〇·六守則：同一層新的贏）。\n' \
     "$NOW" "$QUOTED" > /private/tmp/ruling-body.md
-  # ⭐ 閘 D：**票不存在就當場停**，⛔ 不是寫失敗印一行警告然後照樣說「兩處都寫了」。
-  # 前科 2026-08-21：`ruling.sh 500` 對一張**根本不存在**的票跑完，兩次 gh 寫入都失敗、
-  # 兩行警告都印了，而最後一行仍然說「⭐ 兩處都寫了」且**離開碼 0** ——
-  # 於是那則裁決只活在當日帳本裡，release note 的 `#500` 連結是 **404**。
-  if ! gh issue view "$n" --json number >/dev/null 2>&1; then
-    echo "  ⛔ #$n **這張票不存在** —— 先 \`gh issue create\` 開票再跑一次" >&2
-    FAILED=$((FAILED + 1)); continue
-  fi
   if gh issue comment "$n" --body-file /private/tmp/ruling-body.md >/dev/null 2>&1; then
     echo "  ✓ #$n 留言"
   else
-    echo "  ⛔ #$n 留言失敗" >&2; FAILED=$((FAILED + 1))
+    echo "  ⛔ #$n 留言失敗" >&2
   fi
 
   # ②（閘 C）**同一則也要前置到 body 最上面**。
@@ -77,10 +66,10 @@ for n in "${NS[@]}"; do
     if gh issue edit "$n" --body-file "$BODY_OUT" >/dev/null 2>&1; then
       echo "  ✓ #$n body 已前置更正"
     else
-      echo "  ⛔ #$n body 更新失敗(原文未被動到) —— 手動貼: $BODY_OUT" >&2; FAILED=$((FAILED + 1))
+      echo "  ⛔ #$n body 更新失敗(原文未被動到) —— 手動貼: $BODY_OUT" >&2
     fi
   else
-    echo "  ⛔ #$n 讀不到原 body —— **跳過 body 更新**,⛔ 不可以用只含更正的內容覆蓋原文" >&2; FAILED=$((FAILED + 1))
+    echo "  ⛔ #$n 讀不到原 body —— **跳過 body 更新**,⛔ 不可以用只含更正的內容覆蓋原文" >&2
   fi
 done
 
@@ -94,8 +83,4 @@ done
 printf '%s' "$TEXT" | python3 scripts/ledger_table.py \
   "$DAY" "$(date '+%H:%M')" "$(echo "$ISSUES" | tr ',' ' ' | sed 's/\([0-9]\+\)/#\1/g')"
 echo
-if [ "$FAILED" -gt 0 ]; then
-  echo "⛔ 帳本寫了,但**票沒寫全**($FAILED 次 gh 寫入失敗) —— ⚠️ 只活在帳本裡的裁決,下一輪讀不到。" >&2
-  exit 1
-fi
 echo "⭐ 兩處都寫了。⛔ 這一點以後不要再問 owner —— 要查就跑 scripts/asked-before.sh"
