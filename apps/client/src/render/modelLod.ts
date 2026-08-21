@@ -32,10 +32,10 @@
  * ---------------------------------------------------------------------------
  * `AdaptiveManager` re-rungs on a seconds-scale timer while the match is
  * running. Resolution scale and particle budgets are free to move on that clock
- * — they are per-frame GPU knobs. A model tier is NOT: switching it evicts the
- * AssetContainer and issues a NETWORK FETCH, and a ladder oscillating around a
- * threshold would issue them repeatedly, mid-fight, on the exact device that is
- * already struggling. So the tier is derived from the fixed preset only, and
+ * — they are per-frame GPU knobs. A model tier is NOT: switching it issues a
+ * NETWORK FETCH and ADDS a second AssetContainer, and a ladder oscillating
+ * around a threshold would do that repeatedly, mid-fight, on the exact device
+ * that is already struggling. So the tier is derived from the fixed preset only, and
  * the SHIPPED table keeps "auto" at the top tier. The place that genuinely
  * benefits is first boot: `autoDetectPreset` puts a touch device on "medium"
  * (→ `-mid`) — or on "low" (→ `-small`) when it reports ≤3 cores or <3 GB —
@@ -77,12 +77,59 @@
  * meshes keep their tier until the scene is rebuilt — deliberately: swapping a
  * champion's mesh under a playing animation is a visible pop, and the next
  * round rebuilds the scene anyway.
+ *
+ * ⚠️ CORRECTED 2026-08-22 (GH#36, third 守則). The two paragraphs above used to
+ * say a tier switch "evicts the AssetContainer". #276 measured that it does NOT:
+ * `AssetManager`'s container cache is documented as never evicting, so a switch
+ * ADDS a container and the old tier stays resident forever. Measured on the
+ * #276 branch, one zoom out-and-back: containers 12 → 23, resident triangles
+ * +36.0%, textures +88%, bytes downloaded +53.6%. That is the whole reason
+ * per-load tier selection was rejected and the tier still follows the fixed
+ * preset. The sentence was describing behaviour the code never had.
+ *
+ * ---------------------------------------------------------------------------
+ * QUARANTINE — A GENERATED TIER IS NOT AUTOMATICALLY A USABLE TIER (GH#36)
+ * ---------------------------------------------------------------------------
+ * #276 rendered all 83 models at every tier in real Chrome on real WebGL and
+ * found 41 of the 166 tier files (25%) had lost SHAPE, not just detail:
+ * `heroxelloss-small` is 71.8% narrower (the wings are gone), `heromiku-small`
+ * 39.2% shorter (the twintails), `hex/rock` broken at BOTH tiers. That branch
+ * was rejected for unrelated reasons (the cache blow-up above), so for weeks
+ * the verdict existed and nothing acted on it: `autoDetectPreset` puts a weak
+ * touch device on "low", `lodTierForPreset("low")` is "small", and every one of
+ * those files was exactly what such a device downloaded.
+ *
+ * The verdict now lives WITH THE DATA IT JUDGES — `quarantine` / `quarantineNote`
+ * on the model's row in `content/assets/models/_lod.json` — and `cheaperPath`
+ * refuses it. Three reasons that file and not a TS constant:
+ *   · `content/` is a live bind-mount, so clearing a row after regenerating a
+ *     tier is a file edit, not a client rebuild (第一守則);
+ *   · a census verdict that lives in a different file from the row it judges is
+ *     the stale-row hazard this module's header already warns about;
+ *   · it SURVIVES `pnpm lod:gen` — `gen_lod.py` rewrites only `bytes`,
+ *     `triangles` and the per-tier records inside each row, and rebuilds the
+ *     TOP level from scratch. (Which is also why there is no top-level
+ *     provenance key here: it would be silently deleted on the next run.)
+ *
+ * ⚠️ The census is bbox-based, so it is structurally blind to a part collapsing
+ * INSIDE the silhouette. #276 named two it missed and measured them per-node
+ * (`negi-small`, `merchant_cart`); both carry a `[NODE]` note. Adding that axis
+ * to the audit is the open half of GH#36.
+ *
+ * ⚠️ Refusing a tier is FAIL-SAFE IN ONE DIRECTION ONLY: it degrades to less
+ * saving, never to a worse-looking file. So a quarantine row left behind after
+ * someone regenerates a tier costs bytes, never correctness — re-run the audit
+ * and clear the row.
  */
 import { Configs, DEFAULT_MODEL_LOD, type ConfigModelLodDoc } from "@ggd/shared/content";
 import type { QualityPreset } from "../settings";
 
 /** Model detail tier. "high" = the authored file, i.e. no LOD swap. */
 export type ModelLodTier = "high" | "mid" | "small";
+
+/** A tier `gen_lod.py` actually PRODUCES a file for. "high" is the authored
+ * file, so it can never be quarantined — there is nothing to fall back to. */
+export type GeneratedLodTier = Exclude<ModelLodTier, "high">;
 
 /** One generated tier's record in `_lod.json`. */
 export interface LodTierEntry {
@@ -95,6 +142,14 @@ export interface LodModelEntry {
   /** authored file size / triangle count, for the payload accounting. */
   bytes?: number;
   triangles?: number;
+  /**
+   * Tiers the #276 census MEASURED as disagreeing with the base model. The
+   * runtime must never auto-select one — see the QUARANTINE section in the
+   * header. Absent = the census found nothing wrong with this model.
+   */
+  quarantine?: readonly GeneratedLodTier[];
+  /** the measurement that put it there, kept so the verdict stays auditable */
+  quarantineNote?: string;
   mid?: LodTierEntry;
   small?: LodTierEntry;
 }
@@ -104,6 +159,15 @@ export interface LodManifest {
   generatedAt?: string;
   tiers?: string[];
   models: Record<string, LodModelEntry>;
+}
+
+/** The tiers `path` may NOT be auto-downgraded to, per the shipped manifest. */
+export function quarantinedTiers(
+  path: string,
+  from: LodManifest | null = manifest,
+): readonly GeneratedLodTier[] {
+  const q = from?.models[path]?.quarantine;
+  return Array.isArray(q) ? q : [];
 }
 
 let manifest: LodManifest | null = null;
@@ -230,8 +294,17 @@ export function lodTierForPreset(preset: QualityPreset): ModelLodTier {
  * behaviour, not a silent global disable of LOD. Only a measured NON-saving
  * declines the swap.
  */
-function cheaperPath(entry: LodModelEntry, t: LodTierEntry | undefined): string | null {
+function cheaperPath(
+  entry: LodModelEntry,
+  at: GeneratedLodTier,
+  t: LodTierEntry | undefined,
+): string | null {
   if (!t || typeof t.path !== "string" || t.path.length === 0) return null;
+  // QUARANTINE (GH#36). A tier the census measured as BROKEN is refused exactly
+  // like one that was never generated, so the caller keeps degrading (small →
+  // mid → authored) instead of short-circuiting. Bytes are irrelevant here: a
+  // wingless model is not a cheap model, it is a wrong one.
+  if (Array.isArray(entry.quarantine) && entry.quarantine.includes(at)) return null;
   if (typeof entry.bytes !== "number" || typeof t.bytes !== "number") return t.path;
   return t.bytes < entry.bytes ? t.path : null;
 }
@@ -256,8 +329,10 @@ export function resolveLodPath(
   if (at === "high" || !from) return path;
   const entry = from.models[path];
   if (!entry) return path;
-  if (at === "small") return cheaperPath(entry, entry.small) ?? cheaperPath(entry, entry.mid) ?? path;
-  return cheaperPath(entry, entry.mid) ?? path;
+  if (at === "small") {
+    return cheaperPath(entry, "small", entry.small) ?? cheaperPath(entry, "mid", entry.mid) ?? path;
+  }
+  return cheaperPath(entry, "mid", entry.mid) ?? path;
 }
 
 /**

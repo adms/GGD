@@ -36,7 +36,15 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync, statSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { resolveLodPath, type LodManifest, type ModelLodTier } from "./modelLod";
+import {
+  applyModelLodPolicy,
+  lodTierForPreset,
+  quarantinedTiers,
+  resolveLodPath,
+  type GeneratedLodTier,
+  type LodManifest,
+  type ModelLodTier,
+} from "./modelLod";
 
 /** repo-root-relative `content/` — this test reads SHIPPING data, not a fixture. */
 const CONTENT = fileURLToPath(new URL("../../../../content/", import.meta.url));
@@ -154,5 +162,54 @@ describe("L3 · 換過去一定要更省 —— 這是 LOD 唯一的賣點", () 
         ).not.toBe(e.path);
       }
     }
+  });
+});
+
+/**
+ * L3 · GH#36 —— 被實測判死的那些變體，弱裝置到底還抓不抓得到。
+ *
+ * ⚠️ 這一段刻意**不抄任何一個路徑名，也不抄 "small"**：
+ * 隔離名單從出貨的 `_lod.json` 讀、弱裝置那一階從出貨的 `config/model-lod.json`
+ * 讀。抄字面值就是第四個住處(第二守則),而且它會用錯誤的訊息紅。
+ */
+const SHIPPED_POLICY = JSON.parse(
+  readFileSync(`${CONTENT}config/model-lod.json`, "utf8"),
+) as Parameters<typeof applyModelLodPolicy>[0];
+
+/** 出貨的 `_lod.json` 上，每一組「這個模型的這一階被判死了」。 */
+const QUARANTINED: ReadonlyArray<[string, GeneratedLodTier]> = ROWS.flatMap(([p]) =>
+  quarantinedTiers(p, MANIFEST).map((t) => [p, t] as [string, GeneratedLodTier]),
+);
+
+describe("L3 · GH#36 隔離：普查判死的變體不可以被自動選到", () => {
+  it("名單有東西，而且每一列都指到真的存在的一階", () => {
+    // 沒有這一條，下面兩條在「有人手滑清空 quarantine」之後會真空通過(失敗形態③)。
+    expect(QUARANTINED.length).toBeGreaterThan(0);
+    const dangling = QUARANTINED.filter(([p, t]) => !MANIFEST.models[p]?.[t]);
+    expect(dangling, "隔離了一個根本沒生出來的階 —— 這一列是陳舊的，清掉它").toEqual([]);
+  });
+
+  it("resolver 拒絕每一個被判死的階 —— 而且是退回更精細，不是退更低", () => {
+    const served: string[] = [];
+    for (const [p, t] of QUARANTINED) {
+      const picked = resolveLodPath(p, t, MANIFEST);
+      if (picked === MANIFEST.models[p]![t]!.path) served.push(`${p} @${t}`);
+      // 退路一定要是真的存在的檔，否則「擋下來」變成 404(靜默,只有手機看得到)
+      expect(realBytes(picked), `${p} @${t} 退到一個不存在的檔:${picked}`).not.toBeNull();
+    }
+    expect(served, "普查判死的變體仍然被送出去了").toEqual([]);
+  });
+
+  it("弱裝置的出貨預設下，解出來的檔沒有一個是被判死的", () => {
+    // 這是玩家那一端真正發生的事：`autoDetectPreset` 把弱手機放進 low，
+    // 而 low 抓哪一階由出貨的 config 決定 —— ⛔ 不是這裡寫死的字串。
+    applyModelLodPolicy(SHIPPED_POLICY);
+    const at = lodTierForPreset("low");
+    const bad = ROWS.map(([p]) => [p, resolveLodPath(p, at, MANIFEST)] as const).filter(
+      ([p, picked]) =>
+        quarantinedTiers(p, MANIFEST).some((t) => MANIFEST.models[p]![t]?.path === picked),
+    );
+    applyModelLodPolicy(null); // 還原出貨表，⛔ 不要洩漏到別的檔
+    expect(bad, `弱裝置預設(${at})下載的正是普查判死的檔`).toEqual([]);
   });
 });

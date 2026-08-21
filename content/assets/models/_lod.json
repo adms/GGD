@@ -37,6 +37,10 @@
     "assets/models/guardians/guardian_treant_roots.glb": {
       "bytes": 15376,
       "triangles": 232,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_H] small: y differs by 21.6% (0.622 → 0.487); [BBOX_XZ] small: z differs by 8.2% (1.031 → 0.947)",
       "mid": {
         "path": "assets/models/guardians/guardian_treant_roots-mid.glb",
         "bytes": 8392,
@@ -51,6 +55,10 @@
     "assets/models/guardians/guardian_treant_trunk.glb": {
       "bytes": 24412,
       "triangles": 256,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] small: x differs by 18.5% (2.302 → 1.875); [BBOX_XZ] small: z differs by 15.9% (1.377 → 1.157)",
       "mid": {
         "path": "assets/models/guardians/guardian_treant_trunk-mid.glb",
         "bytes": 12424,
@@ -79,6 +87,10 @@
     "assets/models/hex/hex_water.glb": {
       "bytes": 18872,
       "triangles": 24,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] small: z differs by 25.0% (2.309 → 1.732)",
       "mid": {
         "path": "assets/models/hex/hex_water-mid.glb",
         "bytes": 9032,
@@ -93,6 +105,11 @@
     "assets/models/hex/rock.glb": {
       "bytes": 18656,
       "triangles": 18,
+      "quarantine": [
+        "mid",
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] mid: z differs by 13.9% (0.284 → 0.244); [BBOX_XZ] small: x differs by 28.7% (0.298 → 0.213); [BBOX_XZ] small: z differs by 31.2% (0.284 → 0.195)",
       "mid": {
         "path": "assets/models/hex/rock-mid.glb",
         "bytes": 8824,
@@ -135,6 +152,10 @@
     "assets/models/hex/tree_single.glb": {
       "bytes": 20800,
       "triangles": 50,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] small: x differs by 18.7% (0.574 → 0.466)",
       "mid": {
         "path": "assets/models/hex/tree_single-mid.glb",
         "bytes": 9944,
@@ -191,6 +212,10 @@
     "assets/models/imported/bulbasaur.glb": {
       "bytes": 450824,
       "triangles": 250,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] mid: x differs by 2.7% (1.982 → 1.929); [BBOX_XZ] small: x differs by 2.7% (1.982 → 1.929); [BBOX_H] small: y differs by 3.7% (1.700 → 1.636); [BBOX_XZ] small: z differs by 5.9% (1.348 → 1.268)",
       "mid": {
         "path": "assets/models/imported/bulbasaur-mid.glb",
         "bytes": 331768,
@@ -205,6 +230,10 @@
     "assets/models/imported/cloud.glb": {
       "bytes": 711880,
       "triangles": 3270,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_H] small: y differs by 4.7% (1.969 → 1.877)",
       "mid": {
         "path": "assets/models/imported/cloud-mid.glb",
         "bytes": 471956,
@@ -289,6 +318,10 @@
     "assets/models/imported/herobiggon.glb": {
       "bytes": 217568,
       "triangles": 564,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] small: x differs by 15.7% (1.129 → 0.952)",
       "mid": {
         "path": "assets/models/imported/herobiggon-mid.glb",
         "bytes": 156628,
@@ -331,6 +364,10 @@
     "assets/models/imported/herogirl.glb": {
       "bytes": 272392,
       "triangles": 1397,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_H] small: y differs by 7.6% (1.700 → 1.571)",
       "mid": {
         "path": "assets/models/imported/herogirl-mid.glb",
         "bytes": 187516,
@@ -345,6 +382,11 @@
     "assets/models/imported/herohanzouhattori.glb": {
       "bytes": 262864,
       "triangles": 719,
+      "quarantine": [
+        "mid",
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] mid: x differs by 25.1% (2.305 → 1.726); [BBOX_XZ] small: x differs by 25.1% (2.305 → 1.726)",
       "mid": {
         "path": "assets/models/imported/herohanzouhattori-mid.glb",
         "bytes": 169052,
@@ -387,6 +429,11 @@
     "assets/models/imported/heroichigo.glb": {
       "bytes": 479956,
       "triangles": 2061,
+      "quarantine": [
+        "mid",
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] mid: x differs by 17.4% (2.241 → 1.850); [BBOX_XZ] small: x differs by 17.4% (2.241 → 1.850)",
       "mid": {
         "path": "assets/models/imported/heroichigo-mid.glb",
         "bytes": 380296,
@@ -401,6 +448,10 @@
     "assets/models/imported/herokunoichi.glb": {
       "bytes": 265512,
       "triangles": 1397,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_H] small: y differs by 7.6% (1.700 → 1.571)",
       "mid": {
         "path": "assets/models/imported/herokunoichi-mid.glb",
         "bytes": 186340,
@@ -429,6 +480,11 @@
     "assets/models/imported/herolight.glb": {
       "bytes": 148276,
       "triangles": 490,
+      "quarantine": [
+        "mid",
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] mid: z differs by 20.9% (1.487 → 1.177); [BBOX_H] small: y differs by 2.6% (1.700 → 1.655); [BBOX_XZ] small: z differs by 20.9% (1.487 → 1.177)",
       "mid": {
         "path": "assets/models/imported/herolight-mid.glb",
         "bytes": 107408,
@@ -443,6 +499,10 @@
     "assets/models/imported/herolingtong.glb": {
       "bytes": 280824,
       "triangles": 682,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] small: z differs by 22.0% (0.847 → 0.660)",
       "mid": {
         "path": "assets/models/imported/herolingtong-mid.glb",
         "bytes": 180376,
@@ -457,6 +517,10 @@
     "assets/models/imported/heromiku.glb": {
       "bytes": 474288,
       "triangles": 1981,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] small: x differs by 20.2% (1.364 → 1.088); [BBOX_H] small: y differs by 39.2% (2.021 → 1.229); [BBOX_XZ] small: z differs by 35.8% (1.175 → 0.754)",
       "mid": {
         "path": "assets/models/imported/heromiku-mid.glb",
         "bytes": 291408,
@@ -541,6 +605,10 @@
     "assets/models/imported/herosaber.glb": {
       "bytes": 252312,
       "triangles": 1690,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_H] small: y differs by 6.8% (1.700 → 1.584)",
       "mid": {
         "path": "assets/models/imported/herosaber-mid.glb",
         "bytes": 176240,
@@ -555,6 +623,10 @@
     "assets/models/imported/herosasuke.glb": {
       "bytes": 286084,
       "triangles": 988,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] small: x differs by 5.0% (0.442 → 0.420); [BBOX_XZ] small: z differs by 13.2% (0.902 → 0.783)",
       "mid": {
         "path": "assets/models/imported/herosasuke-mid.glb",
         "bytes": 195592,
@@ -583,6 +655,11 @@
     "assets/models/imported/heroshana.glb": {
       "bytes": 240920,
       "triangles": 1498,
+      "quarantine": [
+        "mid",
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] mid: x differs by 57.6% (1.351 → 0.572); [BBOX_XZ] small: x differs by 57.6% (1.351 → 0.572)",
       "mid": {
         "path": "assets/models/imported/heroshana-mid.glb",
         "bytes": 170368,
@@ -611,6 +688,10 @@
     "assets/models/imported/herotoshiiemaeda.glb": {
       "bytes": 252412,
       "triangles": 1125,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] small: z differs by 27.9% (1.202 → 0.866)",
       "mid": {
         "path": "assets/models/imported/herotoshiiemaeda-mid.glb",
         "bytes": 173712,
@@ -625,6 +706,10 @@
     "assets/models/imported/heroxelloss.glb": {
       "bytes": 238712,
       "triangles": 941,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] small: x differs by 71.8% (1.769 → 0.500); [BBOX_XZ] small: z differs by 10.8% (0.681 → 0.607)",
       "mid": {
         "path": "assets/models/imported/heroxelloss-mid.glb",
         "bytes": 170112,
@@ -639,6 +724,10 @@
     "assets/models/imported/horse.glb": {
       "bytes": 271228,
       "triangles": 210,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] mid: x differs by 2.7% (1.280 → 1.245); [BBOX_XZ] small: x differs by 14.8% (1.280 → 1.091); [BBOX_H] small: y differs by 3.3% (1.700 → 1.645); [BBOX_XZ] small: z differs by 11.9% (0.542 → 0.478)",
       "mid": {
         "path": "assets/models/imported/horse-mid.glb",
         "bytes": 203832,
@@ -667,6 +756,10 @@
     "assets/models/imported/hzyn.glb": {
       "bytes": 360952,
       "triangles": 1813,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_H] small: y differs by 3.2% (1.700 → 1.645)",
       "mid": {
         "path": "assets/models/imported/hzyn-mid.glb",
         "bytes": 231932,
@@ -695,6 +788,10 @@
     "assets/models/imported/kikyou.glb": {
       "bytes": 205672,
       "triangles": 722,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_H] small: y differs by 6.5% (1.700 → 1.590)",
       "mid": {
         "path": "assets/models/imported/kikyou-mid.glb",
         "bytes": 140624,
@@ -723,6 +820,10 @@
     "assets/models/imported/linainvers.glb": {
       "bytes": 229008,
       "triangles": 808,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] small: x differs by 19.7% (0.498 → 0.400); [BBOX_H] small: y differs by 6.2% (1.850 → 1.734)",
       "mid": {
         "path": "assets/models/imported/linainvers-mid.glb",
         "bytes": 131944,
@@ -737,6 +838,11 @@
     "assets/models/imported/linkstik.glb": {
       "bytes": 206392,
       "triangles": 380,
+      "quarantine": [
+        "mid",
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] mid: x differs by 12.9% (1.360 → 1.184); [BBOX_XZ] mid: z differs by 2.3% (0.871 → 0.851); [BBOX_XZ] small: x differs by 12.9% (1.360 → 1.184); [BBOX_H] small: y differs by 28.6% (1.700 → 1.215); [BBOX_XZ] small: z differs by 2.3% (0.871 → 0.851)",
       "mid": {
         "path": "assets/models/imported/linkstik-mid.glb",
         "bytes": 140228,
@@ -751,6 +857,10 @@
     "assets/models/imported/long.glb": {
       "bytes": 228556,
       "triangles": 818,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] small: z differs by 65.3% (1.347 → 0.468)",
       "mid": {
         "path": "assets/models/imported/long-mid.glb",
         "bytes": 163644,
@@ -821,6 +931,10 @@
     "assets/models/imported/negi.glb": {
       "bytes": 323992,
       "triangles": 855,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[NODE] small: mesh#3 y −66% (1.502 → 0.510), mesh#6 z −70%; same-camera silhouette IoU 0.494 vs high",
       "mid": {
         "path": "assets/models/imported/negi-mid.glb",
         "bytes": 271676,
@@ -835,6 +949,11 @@
     "assets/models/imported/niya.glb": {
       "bytes": 338552,
       "triangles": 2462,
+      "quarantine": [
+        "mid",
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] mid: z differs by 49.9% (1.067 → 0.534); [BBOX_XZ] small: z differs by 49.9% (1.067 → 0.534)",
       "mid": {
         "path": "assets/models/imported/niya-mid.glb",
         "bytes": 245096,
@@ -849,6 +968,10 @@
     "assets/models/imported/picacugy.glb": {
       "bytes": 169972,
       "triangles": 762,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] small: x differs by 18.7% (2.472 → 2.008); [BBOX_H] small: y differs by 25.9% (2.295 → 1.700)",
       "mid": {
         "path": "assets/models/imported/picacugy-mid.glb",
         "bytes": 123812,
@@ -891,6 +1014,10 @@
     "assets/models/imported/renaryugu2.glb": {
       "bytes": 217528,
       "triangles": 1690,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_H] small: y differs by 7.1% (1.700 → 1.579)",
       "mid": {
         "path": "assets/models/imported/renaryugu2-mid.glb",
         "bytes": 164592,
@@ -919,6 +1046,10 @@
     "assets/models/imported/sesshomaru.glb": {
       "bytes": 333424,
       "triangles": 566,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] small: x differs by 22.8% (2.305 → 1.780); [BBOX_XZ] small: z differs by 3.6% (1.245 → 1.200)",
       "mid": {
         "path": "assets/models/imported/sesshomaru-mid.glb",
         "bytes": 176300,
@@ -947,6 +1078,10 @@
     "assets/models/imported/zy3.glb": {
       "bytes": 447428,
       "triangles": 1335,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_H] small: y differs by 4.5% (1.700 → 1.623); [BBOX_XZ] small: z differs by 5.5% (1.077 → 1.018)",
       "mid": {
         "path": "assets/models/imported/zy3-mid.glb",
         "bytes": 312016,
@@ -1045,6 +1180,10 @@
     "assets/models/props/chest.glb": {
       "bytes": 81412,
       "triangles": 728,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_H] small: y differs by 10.6% (1.300 → 1.162)",
       "mid": {
         "path": "assets/models/props/chest-mid.glb",
         "bytes": 40712,
@@ -1101,6 +1240,10 @@
     "assets/models/props/torch.glb": {
       "bytes": 29380,
       "triangles": 216,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] small: x differs by 23.2% (0.550 → 0.423); [BBOX_XZ] small: z differs by 11.6% (0.550 → 0.487)",
       "mid": {
         "path": "assets/models/props/torch-mid.glb",
         "bytes": 13940,
@@ -1115,6 +1258,10 @@
     "assets/models/props/torch_mounted.glb": {
       "bytes": 33220,
       "triangles": 278,
+      "quarantine": [
+        "small"
+      ],
+      "quarantineNote": "[BBOX_XZ] small: x differs by 23.2% (0.550 → 0.423)",
       "mid": {
         "path": "assets/models/props/torch_mounted-mid.glb",
         "bytes": 15592,
@@ -1143,6 +1290,11 @@
     "assets/models/shop/merchant_cart.glb": {
       "bytes": 108660,
       "triangles": 2659,
+      "quarantine": [
+        "mid",
+        "small"
+      ],
+      "quarantineNote": "[NODE] mid+small: Cart#3 z −53%",
       "mid": {
         "path": "assets/models/shop/merchant_cart-mid.glb",
         "bytes": 67448,

@@ -331,3 +331,40 @@ describe("lifecycle + pooling", () => {
     expect(w.has(17)).toBe(false);
   });
 });
+
+/**
+ * GH#32 —— 飛影(imported.herohehi)。`strip_geoset_prims.py` 把它的 Tornado2b
+ * 剝掉之後,只剩一個空的 `whirlWindDummy` 掛點,而這支英雄在 starter.go 的
+ * 預設開放名單上。這一條走**出貨的 WHIRLWIND_BINDINGS**(⛔ 不是夾具),
+ * 所以「那一列被刪掉」與「它掛在永遠不會發生的 state 上」兩種壞法都會紅。
+ */
+describe("GH#32 飛影的旋風真的補回來了", () => {
+  const HIEI = "imported.herohehi";
+
+  it("出貨的綁定表認得它，掛在 stripper 留下來的那個關節上", () => {
+    expect(WhirlwindFx.handles(HIEI)).toBe(true);
+    expect(WHIRLWIND_BINDINGS[HIEI]!.anchorBone).toBe("whirlWindDummy");
+  });
+
+  it("idle 什麼都不長，cast 時才出現並且會轉", () => {
+    const w = fx(); // ⛔ 不傳 bindings ⇒ 用出貨的那一張表
+    const { root, bone } = makeRig("hiei");
+    for (const s of ["idle", "run", "attack"] as WhirlwindState[]) {
+      w.sync(9, HIEI, root, s, 0);
+      w.tick(0, 16);
+    }
+    expect(w.has(9)).toBe(false);
+
+    bone.position.set(0, 1.1, 0);
+    const angles: number[] = [];
+    for (let t = 0; t < 400; t += 16) {
+      w.sync(9, HIEI, root, "cast", t);
+      w.tick(t, 16);
+      const outer = scene.meshes.find((m) => m.name === "whirlwind-outer");
+      if (outer) angles.push(outer.rotation.y);
+    }
+    expect(w.activeCount).toBe(1);
+    expect(new Set(angles.map((a) => a.toFixed(4))).size).toBeGreaterThan(5);
+    w.dispose();
+  });
+});

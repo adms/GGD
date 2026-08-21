@@ -103,6 +103,25 @@ export interface WhirlwindBinding {
  * alpha track would therefore show it NEVER. `cast` is the faithful mapping:
  * 索隆's kit (鬼氣九刀流 / 三千世界) is spin attacks, and cast is what the
  * ability buttons pulse.
+ *
+ * herohehi (飛影 邪眼師, GH#32): same stripper, same surviving joint, opposite
+ * evidence. `strip_geoset_prims.py` took its `Textures\Tornado2b.blp` geoset
+ * out of the .glb (verified today: 3 primitives / 3 materials / 2 images, and
+ * `whirlWindDummy` still there among the 30 nodes) — an attachment point with
+ * nothing attached, for months, on a champion `starter.go` already ships open.
+ *
+ * ⚠️ The state gate here is NOT copied, because there was nothing to copy: the
+ * source MDX's KGAO track is 0.0 in ALL NINE sequences, so the literal port is
+ * "never visible" — the same dead end as 索隆, reached from the other side.
+ * `cast` is the honest reading of the same reasoning: 飛影's signature is
+ * 38-03 邪王炎殺黑龍波, whose ability doc carries `castTimeSec: 1.5`, so the
+ * gate opens for a real, deliberate window rather than flickering per frame.
+ * `idle` was rejected — a permanently-on whirlwind is the bug #73 removed.
+ *
+ * The tint deliberately does NOT reuse 索隆's pale wind-blue: 炎殺黑龍 is a
+ * sealed demon-world flame, so this is a dark crimson-violet. Under
+ * ALPHA_ADD a dark hue also reads dimmer for the same alpha, which is why
+ * `alpha` sits above 索隆's — same perceived weight, darker colour.
  */
 export const WHIRLWIND_BINDINGS: Readonly<Record<string, WhirlwindBinding>> = {
   "imported.heromusashimiyamoto": {
@@ -120,6 +139,23 @@ export const WHIRLWIND_BINDINGS: Readonly<Record<string, WhirlwindBinding>> = {
     fadeSec: 0.12,
     texture: "assets/textures/particles/twirl_01.png",
     debrisEveryMs: 110,
+  },
+  "imported.herohehi": {
+    anchorBone: "whirlWindDummy",
+    states: ["cast"],
+    // 飛影 renders at the same normalised 1.7u as 索隆 (modelBbox fixture:
+    // fullHeight 1.7, scale 1.0), so 索隆's tuned proportions transfer. Taller
+    // and narrower than his: a rising column of flame, not a sword vortex.
+    topRadius: 0.9,
+    bottomRadius: 0.26,
+    height: 1.75,
+    yOffset: 0.05,
+    spinRadPerSec: 6.2,
+    tint: [0.58, 0.09, 0.38], // 炎殺黑龍 — dark crimson-violet, never wind-blue
+    alpha: 0.58,
+    fadeSec: 0.14,
+    texture: "assets/textures/particles/twirl_01.png",
+    debrisEveryMs: 130,
   },
 };
 
