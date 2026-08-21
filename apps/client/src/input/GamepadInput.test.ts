@@ -22,6 +22,7 @@ import {
   MOVE_LEAD,
   ATTACK_MOVE_LEAD,
   GROUND_CAST_MAX,
+  padCastReach,
   type GamepadFrame,
   type GamepadPlayerCtx,
   type PadState,
@@ -125,19 +126,17 @@ describe("twin-stick order/command mapping (client-11)", () => {
     expect(intent.commands).toEqual([{ kind: "castAbility", slot: "W", target: { type: "self" } }]);
   });
 
-  it("X casts E at a ground point clamped to min(range, GROUND_CAST_MAX)", () => {
+  it("X casts E at the ability's OWN effective range (GH#512 — no fixed clamp)", () => {
     cover("client-gamepad-mapping");
     const intent = mapGamepadFrame(
       frame({ aim: { x: 0, z: 1 }, justPressed: [BTN.X] }),
       ctx(),
     );
-    // range 9 > GROUND_CAST_MAX → lands GROUND_CAST_MAX out
+    // ⭐ 距離從 E 自己的 range 推導（測試 ctx 不帶係數 ⇒ ×1），⛔ 不是寫死的 6。
+    const reach = padCastReach(ABILITIES.E, 1);
+    expect(reach).toBeGreaterThan(GROUND_CAST_MAX); // 舊夾限會把它砍掉
     expect(intent.commands).toEqual([
-      {
-        kind: "castAbility",
-        slot: "E",
-        target: { type: "point", point: { x: 10, z: 5 + GROUND_CAST_MAX } },
-      },
+      { kind: "castAbility", slot: "E", target: { type: "point", point: { x: 10, z: 5 + reach } } },
     ]);
   });
 

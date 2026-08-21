@@ -3,6 +3,11 @@
  * plus the current cursor/self state onto the exact CastTarget shape the sim
  * consumes. Quick-cast semantics: resolve at the instant of keydown.
  * Pure TS — unit-testable (client-05).
+ *
+ * ⚠️ ONE exception to "pure", and it is deliberate: {@link setCursorlessAim}.
+ * See its doc — a pad has NO cursor, and the preview centre has to come from
+ * somewhere. Everything the sim actually receives (`resolveCastTarget` /
+ * `buildCastCommand`) is still a pure function of its arguments.
  */
 import { asEntityId } from "@ggd/shared/ids";
 import type { CastTarget, CastableSlot, Command } from "@ggd/shared/sim/intents";
@@ -41,6 +46,55 @@ export function resolveCastTarget(ability: AimAbility, ctx: AimContext): CastTar
   }
 }
 
+// ---------------------------------------------------------------------------
+// 無游標瞄準（手把）—— GH#512
+// ---------------------------------------------------------------------------
+
+/**
+ * 手把目前的瞄準方向（單位向量），⛔ 沒有手把在瞄準時為 null。
+ *
+ * ⭐ **為什麼這是一個暫存器而不是一個參數**：`resolveAoeCenter` 唯一的呼叫端
+ * （`GameApp.resolveHoldPreview`）餵給它的 `cursorGround` 是**滑鼠**落點 ——
+ * `cursor.inside` 只有 `mousemove` 寫得到它。純手把玩家從來沒動過滑鼠，
+ * 於是 `cursorGround` 退回 `self`，**長按預覽的 AoE 圈就畫在自己腳下**，
+ * 而技能會飛到瞄準方向上（GH#512）。那比沒有圈更糟：玩家會照著它站位。
+ *
+ * ⚠️ 滑鼠那條路本身就是一個全域可變的游標 store（`ui/cursor`）；
+ * 這一格是它在**無游標輸入**上的對應物，寫入者只有 `GamepadInput` 的
+ * `PadDescribeHold`（跟 `ui/abilityHold` 同一個生命週期：按住寫、放開清）。
+ */
+let cursorlessAim: Vec2 | null = null;
+
+/** 手把按住技能鍵時每幀寫入；放開／拔掉手把寫 null。零向量視同 null。 */
+export function setCursorlessAim(dir: Vec2 | null): void {
+  cursorlessAim = dir && (dir.x !== 0 || dir.z !== 0) ? normalize(dir) : null;
+}
+
+/** 目前的手把瞄準方向（測試與偵錯用）。 */
+export function getCursorlessAim(): Vec2 | null {
+  return cursorlessAim;
+}
+
+/**
+ * 把「滑鼠落點」換成「手把瞄準方向上的落點」。沒有手把在瞄準 → 原樣回傳。
+ *
+ * ⚠️ 距離用的是**傳進來的 `ability.range`**，而 `resolveHoldPreview` 餵的正是
+ * **乘過 `envFactor("abilityRange")` 之後**的那一個 ⇒ 圈心永遠落在玩家真的
+ * 打得到的最遠處，⛔ 不是一個寫死的距離。
+ *
+ * ⛔ `hoveredEntityId` 一律丟掉：它是用**滑鼠**落點挑出來的實體，手把在瞄準時
+ * 那個 pick 跟玩家的意圖無關。沒有目標就不畫圓 —— 畫一個錯的比不畫更糟。
+ */
+function withCursorlessAim(ability: AimAbility, ctx: AimContext): AimContext {
+  const dir = cursorlessAim;
+  if (!dir) return ctx;
+  return {
+    selfPos: ctx.selfPos,
+    cursorGround: add(ctx.selfPos, { x: dir.x * ability.range, z: dir.z * ability.range }),
+    hoveredEntityId: null,
+  };
+}
+
 /**
  * 範圍指示圈（AoE）的**圓心**，GH#415。
  *
@@ -69,7 +123,9 @@ export function resolveAoeCenter(
   ctx: AimContext,
   entityPos?: (id: number) => Vec2 | null,
 ): Vec2 | null {
-  const target = resolveCastTarget(ability, ctx);
+  // ⭐ 手把在瞄準時，圓心的來源是**搖桿方向**而不是滑鼠（GH#512）。
+  const aimed = withCursorlessAim(ability, ctx);
+  const target = resolveCastTarget(ability, aimed);
   if (target === null) return null;
   switch (target.type) {
     // ⭐ 已經夾過了 —— 這就是伺服器會收到的點。
@@ -80,7 +136,7 @@ export function resolveAoeCenter(
     case "entity":
       return entityPos?.(target.entityId as unknown as number) ?? null;
     case "self":
-      return ctx.selfPos;
+      return aimed.selfPos;
     // 走廊，不是圓。
     case "dir":
       return null;

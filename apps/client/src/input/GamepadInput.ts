@@ -38,7 +38,8 @@ import type { CastableSlot, Command, CoreAbilitySlot, Order } from "@ggd/shared/
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 import { abilityActivationCue } from "../ui/abilityCue";
 import { getHeldAbility, setHeldAbility } from "../ui/abilityHold";
-import { buildCastCommand, type AimAbility } from "./AimResolver";
+import { envFactor } from "../ui/displayFinal";
+import { buildCastCommand, setCursorlessAim, type AimAbility } from "./AimResolver";
 import { isPadMenuCapturing } from "./padMenuCapture";
 
 export const GAMEPAD_DEADZONE = 0.15;
@@ -46,8 +47,31 @@ export const GAMEPAD_DEADZONE = 0.15;
 export const MOVE_LEAD = 4;
 /** Attack-move lead distance (RT). */
 export const ATTACK_MOVE_LEAD = 5;
-/** Ground-targeted casts land at most this far out on a stick. */
+/**
+ * ⚠️ **LEGACY — 手把已經不用它了（GH#512）。** 留著只因為 `input/TouchInput`
+ * 的 tap / drag-aim 兩條路還匯入它（拖曳有自己的 0..1 magnitude 語意）。
+ *
+ * 它原本是手把地面型技能的**硬夾限**：`Math.min(ability.range, 6)`。量到的代價是
+ * 出貨 70 支 `ground` 技能裡 **42 支**的實際射程（`range × abilityRange`）大於 6，
+ * 也就是**手把玩家打不到自己技能卡上寫的距離**，而且畫面上沒有任何東西說得出來。
+ * 現在的夾限由 {@link padCastReach} 從技能自己的 `range` 推導。
+ */
 export const GROUND_CAST_MAX = 6;
+
+/**
+ * 手把的「虛擬游標」要放多遠 —— 就是這支技能**真的打得到**的最遠處。
+ *
+ * ⭐ 從技能自己的 `range` × 出貨 combat-env 的 `abilityRange` 係數推導，
+ * ⛔ 不是一個寫死的常數。伺服器對 `ground` 的夾限用的正是
+ * `resolveAbilityRange(world, def.range)`（`sim/abilities/abilitySystem`），
+ * 對 `targeted` 的 out-of-range 判定也是同一個值 ⇒ 這裡算出來的距離
+ * 與伺服器會接受的距離是**同一個公式**，⛔ 不是第二份會分岔的規則。
+ */
+export function padCastReach(ability: AimAbility, abilityRangeMult: number): number {
+  const mult = Number.isFinite(abilityRangeMult) && abilityRangeMult > 0 ? abilityRangeMult : 1;
+  return ability.range * mult;
+}
+
 /** LT basic-attack target search radius. */
 export const BASIC_ATTACK_RANGE = 12;
 
@@ -263,6 +287,14 @@ export interface GamepadPlayerCtx {
    * rank-up gesture that can never fire. Let the compiler ask.
    */
   skillPoints: number;
+  /**
+   * 出貨 combat-env 的 `abilityRange` 係數（task #136 / GH#512）。省略 = 1。
+   *
+   * ⚠️ 它**不是**由 ctxProvider 提供的：`GamepadSystem` / `MultiGamepadSystem`
+   * 在 poll 的當下從 `ui/displayFinal` 的即時表讀進來（operator 隨時可以改），
+   * 所以 `mapGamepadFrame` 本身維持**純函式**——測試餵一個數字就好。
+   */
+  abilityRangeMult?: number;
 }
 
 export interface GamepadIntent {
@@ -280,15 +312,33 @@ export interface GamepadIntent {
    * (#152) and the mouse-down on an ability tile use.
    */
   describe?: CastableSlot;
+  /**
+   * 目前 `describe` 那一格的**瞄準方向**（單位向量），GH#512。系統層把它推進
+   * `AimResolver.setCursorlessAim`，長按預覽的 AoE 圓心才會落在搖桿指的方向上
+   * ——⛔ 而不是滑鼠游標（手把玩家從來沒有游標）。
+   */
+  describeAim?: Vec2;
+  /**
+   * 這一幀被**拒絕**的技能鍵，GH#512。按下去但沒有產生任何 command：技能還沒學／
+   * EX 還沒解鎖（`ctx.ability` 回 null）、或 `targeted` 找不到目標。
+   *
+   * ⚠️ 在此之前這種按壓是**完全靜音**的 —— 沒有聲音、沒有句子、沒有震動，
+   * 跟一個掉包的封包長得一模一樣（就是 castFeedback 檔頭那個 P7 的形狀）。
+   * 系統層對每一格叫一次 `abilityActivationCue(slot, { denied: true })`，
+   * 那條路自己會接上 `castAnnounce` → `predictCastReject` 的句子。
+   */
+  refused?: CastableSlot[];
 }
 
 /** PURE frame → intent mapping (reused per local player). */
 export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): GamepadIntent {
   const commands: Command[] = [];
+  const refused: CastableSlot[] = [];
   let order: Order | undefined;
 
   const self = ctx.selfPos;
   const aimDir = frame.aim ?? ctx.lastAimDir ?? ctx.facing ?? null;
+  const rangeMult = ctx.abilityRangeMult ?? 1;
 
   let camera: GamepadCameraIntent | undefined;
   const cam = (patch: GamepadCameraIntent): void => {
@@ -312,18 +362,27 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
 
   for (const b of frame.justPressed) {
     const slot = SLOT_BY_BUTTON[b];
-    if (slot && self) {
+    if (slot) {
+      if (!self) continue; // 還沒有英雄位置 —— 這一按什麼都不是,連拒絕都不是
       const ability = ctx.ability(slot);
-      if (!ability) continue;
+      // ⭐ 沒學／沒解鎖也要**答一聲**（GH#512）：靜音跟掉包分不出來。
+      if (!ability) {
+        refused.push(slot);
+        continue;
+      }
       const dir = aimDir ?? { x: 0, z: 1 };
-      const reach = Math.min(ability.range, GROUND_CAST_MAX);
+      // ⭐ 虛擬游標放在**這支技能真的打得到的最遠處**，⛔ 不是寫死的 6
+      //   —— 出貨 70 支 ground 技能有 42 支的實際射程超過 6（見 GROUND_CAST_MAX）。
+      const reach = padCastReach(ability, rangeMult);
       // a virtual "cursor" along the aim direction lets the mouse AimResolver
       // do the castType-specific work (skillshot dir / ground clamp / self)
       const cursorGround = { x: self.x + dir.x * reach, z: self.z + dir.z * reach };
-      const hovered =
-        ability.castType === "targeted" ? ctx.nearestEnemy(self, ability.range, aimDir) : null;
+      // ⚠️ `targeted` 的搜尋半徑也走同一個 `reach`：伺服器的 out-of-range 判定用的
+      //   就是 `range × abilityRange`,拿卡面值去挑目標會挑到一個必定被拒的敵人。
+      const hovered = ability.castType === "targeted" ? ctx.nearestEnemy(self, reach, aimDir) : null;
       const cmd = buildCastCommand(slot, ability, { selfPos: self, cursorGround, hoveredEntityId: hovered });
       if (cmd) commands.push(cmd);
+      else refused.push(slot); // targeted 沒目標／方向退化成零向量
     } else if (b === BTN.LT && self) {
       // LT = attack-move (owner, 2026-07-27: the triggers swapped)
       const dir = frame.move ?? aimDir;
@@ -374,7 +433,12 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
   if (order) out.order = order;
   if (frame.aim) out.aim = frame.aim;
   if (camera) out.camera = camera;
-  if (describe) out.describe = describe;
+  if (describe) {
+    out.describe = describe;
+    // 預覽圓心的方向來源（GH#512）。⛔ 沒有方向時不寫 —— 讓下游維持滑鼠那條路。
+    if (aimDir) out.describeAim = aimDir;
+  }
+  if (refused.length > 0) out.refused = refused;
   return out;
 }
 
@@ -387,7 +451,15 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
 class PadDescribeHold {
   private mine: CastableSlot | null = null;
 
-  set(slot: CastableSlot | null): void {
+  /**
+   * @param aim 這一幀的瞄準方向。⭐ 它推進 `AimResolver.setCursorlessAim`，
+   *   長按預覽的 AoE 圓心才會落在搖桿指的方向上（GH#512）——⛔ 而不是滑鼠游標，
+   *   純手把玩家從來沒有動過滑鼠，那個圈會畫在他自己腳下。
+   *   ⚠️ 它跟 held slot **同一個生命週期**：按住寫、放開／拔掉手把清掉，
+   *   ⛔ 不留一個過期的方向去污染滑鼠玩家的預覽。
+   */
+  set(slot: CastableSlot | null, aim: Vec2 | null = null): void {
+    setCursorlessAim(slot ? aim : null);
     if (slot === this.mine) return;
     if (slot) setHeldAbility(slot);
     else if (getHeldAbility() === this.mine) setHeldAbility(null);
@@ -512,7 +584,17 @@ export interface GamepadSinks {
 }
 
 /** Player context providers (the per-frame live values). */
-export type GamepadCtxProvider = () => Omit<GamepadPlayerCtx, "lastAimDir">;
+export type GamepadCtxProvider = () => Omit<GamepadPlayerCtx, "lastAimDir" | "abilityRangeMult">;
+
+/**
+ * 即時 `abilityRange` 係數的來源（GH#512）。預設讀 `ui/displayFinal` 的
+ * singleton —— 那一份由 `GameApp` 每幀用權威的 `MatchState.combatEnvJson`
+ * 同步，所以 operator 在後台改一次，手把的射程當場跟著動，
+ * ⛔ 不需要重新部署，也⛔ 不會有第二份會過期的抄本。
+ */
+export type AbilityRangeMultProvider = () => number;
+
+const liveAbilityRangeMult: AbilityRangeMultProvider = () => envFactor("abilityRange");
 
 /**
  * Connect/disconnect tracking + single-player wiring: the most recently
@@ -531,6 +613,7 @@ export class GamepadSystem {
     private readonly sinks: GamepadSinks,
     private readonly ctxProvider: GamepadCtxProvider,
     private readonly listPads: () => (PadState | null)[] = listPadSources,
+    private readonly abilityRangeMult: AbilityRangeMultProvider = liveAbilityRangeMult,
   ) {}
 
   attach(): void {
@@ -587,19 +670,26 @@ export class GamepadSystem {
       return;
     }
 
-    const intent = mapGamepadFrame(frame, { ...this.ctxProvider(), lastAimDir: this.lastAimDir });
+    const intent = mapGamepadFrame(frame, {
+      ...this.ctxProvider(),
+      lastAimDir: this.lastAimDir,
+      abilityRangeMult: this.abilityRangeMult(),
+    });
     if (frame.aim) this.lastAimDir = frame.aim;
     if (intent.order) this.sinks.onOrder(intent.order);
     if (intent.aim) this.sinks.onAim(intent.aim);
     if (intent.camera) this.sinks.onCamera?.(intent.camera);
     // long press with no point to spend → the ability explains itself (#152's
     // description panel + floor telegraph), and releasing takes it away.
-    this.describeHold.set(intent.describe ?? null);
+    this.describeHold.set(intent.describe ?? null, intent.describeAim ?? null);
     for (const cmd of intent.commands) {
       // pad A/B/X/Y/LB/RB cast → same click cue as tile/key (de-duped)
       if (cmd.kind === "castAbility") abilityActivationCue(cmd.slot);
       this.sinks.onCommand(cmd);
     }
+    // ⭐ 按空了也要答一聲（GH#512）：同一條 cue 漏斗,`denied` 走 uiDenied +
+    //   震動 + `castAnnounce`(→`predictCastReject`) 的句子。⛔ 不要另造一條。
+    for (const slot of intent.refused ?? []) abilityActivationCue(slot, { denied: true });
   }
 }
 
@@ -643,8 +733,11 @@ export class MultiGamepadSystem {
   constructor(
     private readonly playerCount: () => number,
     private readonly sinks: MultiGamepadSinks,
-    private readonly ctxProvider: (player: number) => Omit<GamepadPlayerCtx, "lastAimDir">,
+    private readonly ctxProvider: (
+      player: number,
+    ) => Omit<GamepadPlayerCtx, "lastAimDir" | "abilityRangeMult">,
     private readonly listPads: () => (PadState | null)[] = listPadSources,
+    private readonly abilityRangeMult: AbilityRangeMultProvider = liveAbilityRangeMult,
   ) {}
 
   dispose(): void {
@@ -693,17 +786,20 @@ export class MultiGamepadSystem {
       const intent = mapGamepadFrame(frame, {
         ...this.ctxProvider(player),
         lastAimDir: this.lastAim.get(player) ?? null,
+        abilityRangeMult: this.abilityRangeMult(),
       });
       if (frame.aim) this.lastAim.set(player, frame.aim);
       if (intent.order) this.sinks.onOrder(player, intent.order);
       if (intent.aim) this.sinks.onAim(player, intent.aim);
       if (intent.camera) this.sinks.onCamera?.(player, intent.camera);
-      if (player === 0) this.describeHold.set(intent.describe ?? null);
+      if (player === 0) this.describeHold.set(intent.describe ?? null, intent.describeAim ?? null);
       for (const cmd of intent.commands) {
         // pad cast → the shared button click cue (de-duped per slot)
         if (cmd.kind === "castAbility") abilityActivationCue(cmd.slot);
         this.sinks.onCommand(player, cmd);
       }
+      // 按空了的那一格也要答一聲（GH#512）——⛔ 靜音跟掉包分不出來。
+      for (const slot of intent.refused ?? []) abilityActivationCue(slot, { denied: true });
     }
   }
 }
