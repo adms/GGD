@@ -148,7 +148,6 @@ export interface AppState {
   friends: FriendsList | null;
   rooms: OpenRoom[];
   room: RoomResp | null;
-  myPick: string;
   myReady: boolean;
   /** couch players on MY machine for the current room (1..4) */
   myLocalPlayers: number;
@@ -301,8 +300,7 @@ export interface AppState {
   joinRoom(roomId: string): Promise<void>;
   leaveRoom(): Promise<void>;
   refreshRoom(): Promise<void>;
-  setReady(ready: boolean, champion?: string): Promise<void>;
-  setPick(championId: string): void;
+  setReady(ready: boolean): Promise<void>;
   setLocalPlayers(count: number): Promise<void>;
   /** host edits room settings post-create (e.g. the #215 肉鴿殭屍模式 toggle);
    *  takes effect for the NEXT match since arenaRules is frozen at match start. */
@@ -531,7 +529,6 @@ export const appStore = createStore<AppState>()((set, get) => {
     friends: null,
     rooms: [],
     room: null,
-    myPick: "",
     myReady: false,
     myLocalPlayers: 1,
     createdInvite: null,
@@ -664,7 +661,6 @@ export const appStore = createStore<AppState>()((set, get) => {
         friends: null,
         rooms: [],
         room: null,
-        myPick: "",
         myReady: false,
         createdInvite: null,
         ws: initialLobbyWsState(),
@@ -838,7 +834,7 @@ export const appStore = createStore<AppState>()((set, get) => {
           // rather than serialized.
           ...presentRoomSettings(settings),
         });
-        set({ room: resp, myReady: false, myPick: "", myLocalPlayers: 1, createdInvite: null, ws: { ...get().ws, chat: [] } });
+        set({ room: resp, myReady: false, myLocalPlayers: 1, createdInvite: null, ws: { ...get().ws, chat: [] } });
       } catch (err) {
         set({ lastError: errText(err) });
       }
@@ -847,7 +843,7 @@ export const appStore = createStore<AppState>()((set, get) => {
     async joinRoom(roomId) {
       try {
         const resp = await apiFns.joinRoom(roomId);
-        set({ room: resp, myReady: false, myPick: "", myLocalPlayers: 1, createdInvite: null, ws: { ...get().ws, chat: [] } });
+        set({ room: resp, myReady: false, myLocalPlayers: 1, createdInvite: null, ws: { ...get().ws, chat: [] } });
         try {
           const hist = await apiFns.chatHistory(roomId);
           set({ ws: { ...get().ws, chat: hist.messages.slice(-100) } });
@@ -867,7 +863,7 @@ export const appStore = createStore<AppState>()((set, get) => {
       } catch {
         /* already gone */
       }
-      set({ room: null, myReady: false, myPick: "", createdInvite: null, ws: { ...get().ws, chat: [] } });
+      set({ room: null, myReady: false, createdInvite: null, ws: { ...get().ws, chat: [] } });
       await get().refreshRooms();
     },
 
@@ -889,23 +885,16 @@ export const appStore = createStore<AppState>()((set, get) => {
       }
     },
 
-    async setReady(ready, champion) {
+    async setReady(ready) {
       const room = get().room;
       if (!room) return;
       try {
-        await apiFns.setReady(room.room.id, ready, champion ?? (get().myPick || undefined));
+        await apiFns.setReady(room.room.id, ready);
         set({ myReady: ready });
         await get().refreshRoom();
       } catch (err) {
         set({ lastError: errText(err) });
       }
-    },
-
-    setPick(championId) {
-      set({ myPick: championId });
-      const { room, myReady } = get();
-      // picks ride the ready endpoint; re-send to record the new pick
-      if (room) void get().setReady(myReady, championId);
     },
 
     async setLocalPlayers(count) {
@@ -1013,7 +1002,6 @@ export const appStore = createStore<AppState>()((set, get) => {
         set({
           room: resp,
           myReady: false,
-          myPick: "",
           createdInvite: null,
           ws: removeInvite({ ...get().ws, chat: [] }, token.trim()),
         });

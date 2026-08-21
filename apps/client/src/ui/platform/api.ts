@@ -260,10 +260,18 @@ export function leaveRoom(roomId: string): Promise<{ status: string }> {
   return api.request<{ status: string }>(`/rooms/${encodeURIComponent(roomId)}/leave`, { body: {} });
 }
 
-export function setReady(roomId: string, ready: boolean, champion?: string): Promise<{ status: string }> {
-  const body: { ready: boolean; champion?: string } = { ready };
-  if (champion) body.champion = champion;
-  return api.request<{ status: string }>(`/rooms/${encodeURIComponent(roomId)}/ready`, { body });
+/**
+ * POST /rooms/:id/ready. The route ALSO accepts an optional `champion` (the
+ * room-level pre-pick), and this client deliberately never sends it — GH#491
+ * took the pre-pick dropdown out because nothing downstream consumed it (the
+ * reasoning is in RoomView.tsx's header). The Go side keeps the field as a
+ * defence against a crafted client; adding it back here needs that whole chain
+ * wired first, starting with `gamelink.Seat.Champion`, which no one assigns.
+ */
+export function setReady(roomId: string, ready: boolean): Promise<{ status: string }> {
+  return api.request<{ status: string }>(`/rooms/${encodeURIComponent(roomId)}/ready`, {
+    body: { ready },
+  });
 }
 
 export function startRoom(roomId: string): Promise<StartInfo> {

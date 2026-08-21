@@ -1,8 +1,31 @@
 /**
- * RoomView — inside a room: member list with ready states, champion pick
- * dropdown (owned champions only), ready toggle, host start button, invite
- * code display, and the room chat (lobby WS). Membership/ready changes have
- * no WS push, so the room is polled while open.
+ * RoomView — inside a room: member list with ready states, ready toggle, host
+ * start button, invite code display, and the room chat (lobby WS).
+ * Membership/ready changes have no WS push, so the room is polled while open.
+ *
+ * ---------------------------------------------------------------------------
+ * GH#491 — 這裡以前還有一個「充滿一堆 id」的下拉（owner 2026-08-21 的原話）
+ * ---------------------------------------------------------------------------
+ * 它是一個 `<select>`，把 `catalog.champions` 整份倒出來當選項，而 label 印的是
+ * **原始 id**（`godie-e001`、`godie-h02u`⋯，實測 71 筆），沒有名字 ——
+ * `CatalogChampion` 只有 `{id, price, owned}`，Go 的 `GET /store/catalog` 是
+ * 刻意 name-free 的。#227 那一輪把 store 與排行榜接上 `championDisplayFor`，
+ * 唯獨漏掉這一格，所以它是全大廳最後一個印 id 給玩家看的地方。
+ *
+ * ⛔ 而且它是**死的**（拆下來之前逐段量過）：
+ *   ① 選了 → `setPick` → `POST /rooms/:id/ready {champion}` → 寫進 redis
+ *      `room:<id>:champions`。到此為止。
+ *   ② 那份 hash 全平台**只有一個讀者**：`room.Service.Start` 的持有權閘。
+ *      而這個 `<select>` 對沒買的英雄下 `disabled`，所以那道閘從這個 UI
+ *      **永遠觸發不了**；真的觸發也只能「擋住開始」，不會讓你玩到那隻。
+ *   ③ `gamelink.Seat.Champion` 這個欄位在整個 platform **從來沒有被賦值過**
+ *      —— 選擇從來沒有送到遊戲伺服器。真正的英雄選擇在場內
+ *      `ui/panels/ChampSelectPanel`（由 `Seat.Owned` 權威把關）。
+ *   ④ `GET /rooms/:id` 不回傳 picks，所以誰都看不到它，重整之後連自己都看不到。
+ *   ⑤ 它自己的 placeholder 就寫著「pick champion in-game」。
+ *
+ * 伺服器那半（`PickChampion` + `readyReq.Champion` + 開場持有權閘）**刻意留著**：
+ * 沒有寫入者之後它就是一道對偽造客戶端的防守，而且有 Go 測試在守。
  */
 import { useEffect, useRef, useState } from "react";
 import { useApp } from "./store";
@@ -127,14 +150,11 @@ export function RoomView(): React.JSX.Element | null {
   const room = useApp((s) => s.room);
   const meId = useApp((s) => s.account?.id);
   const friends = useApp((s) => s.friends);
-  const myPick = useApp((s) => s.myPick);
   const myReady = useApp((s) => s.myReady);
   const myLocalPlayers = useApp((s) => s.myLocalPlayers);
   const createdInvite = useApp((s) => s.createdInvite);
-  const catalog = useApp((s) => s.catalog);
   const refreshRoom = useApp((s) => s.refreshRoom);
   const setReady = useApp((s) => s.setReady);
-  const setPick = useApp((s) => s.setPick);
   const setLocalPlayers = useApp((s) => s.setLocalPlayers);
   const updateRoomSettings = useApp((s) => s.updateRoomSettings);
   const startMatch = useApp((s) => s.startMatch);
@@ -254,30 +274,13 @@ export function RoomView(): React.JSX.Element | null {
             </div>
           )}
 
-          {/* champion pick + ready row */}
+          {/* ready row. 英雄在場內的英雄選擇畫面挑 —— 見檔頭 GH#491。 */}
           <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 8 }}>
-            <select
-              value={myPick}
-              onChange={(e) => setPick(e.target.value)}
-              style={{
-                flex: 1,
-                padding: "8px 10px",
-                borderRadius: 8,
-                border: "1px solid #2c3448",
-                background: "#10141f",
-                color: TEXT_MAIN,
-                fontSize: 13,
-              }}
+            <Btn
+              kind={myReady ? "ghost" : "primary"}
+              onClick={() => void setReady(!myReady)}
+              style={{ flex: 1 }}
             >
-              <option value="">pick champion in-game</option>
-              {(catalog?.champions ?? []).map((c) => (
-                <option key={c.id} value={c.id} disabled={!c.owned}>
-                  {c.id}
-                  {c.owned ? "" : ` (locked · Ⓜ${c.price})`}
-                </option>
-              ))}
-            </select>
-            <Btn kind={myReady ? "ghost" : "primary"} onClick={() => void setReady(!myReady)}>
               {myReady ? "Unready" : "Ready"}
             </Btn>
           </div>
