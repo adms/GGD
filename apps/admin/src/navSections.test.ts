@@ -172,6 +172,10 @@ const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
       // ⭐ 五級距總覽（唯讀，卡面→實際）。它必須和上面四張級距頁同一區：
       // 分到別區的話，操作者調完一格之後要跨兩區才看得到它換算成幾秒。
       "tierOverview",
+      // 2026-08-22 owner #534 —— ⚠️ 不吃五級距的傷害節點（唯讀）。它必須和
+      // tierOverview 同一區：那一頁說「級距表長這樣」，這一頁說「⛔ 但這幾十個
+      // 節點不聽它的」，分到兩區等於把警告藏起來。
+      "damageTierWarnings",
       "statNormalization",
       "castTime",
       "mitigation",
@@ -285,6 +289,11 @@ describe("分類重編一頁都沒有掉", () => {
       // 而這份基準沒跟上，所以這條守衛從那次起就一直是紅的（它擋不了任何東西）。
       // ⛔ 這一列不是新頁，是把基準線補回可以比較的狀態。
       "apDamageScaling",
+      // 2026-08-22 owner #534「①②③ 作為例外在後台跳出警告就好」——
+      // ⚠️ 不吃五級距的傷害節點。⭐ 它補的是第〇·四守則**唯一的例外**在畫面上
+      // 沒有住處：豁免只寫在一份 JSON 裡的話，級距一改它們原地不動，而
+      // `content:build` 與全套測試都是綠的。
+      "damageTierWarnings",
     ]);
     const added = [...after].filter((p) => !before.has(p) && !SINCE_BASELINE.has(p));
     expect(lost, `搬家把這些頁面弄丟了（元件還在，但左欄按不到）：${lost.join(", ")}`).toEqual([]);

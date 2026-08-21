@@ -261,6 +261,11 @@ export type Page =
    * 與 hub / modelBudget 同一類的唯讀主控台。
    */
   | "tierOverview"
+  /**
+   * ⚠️ 不吃五級距的傷害節點 (owner #534「①②③ 作為例外在後台跳出警告就好」) ——
+   * 唯讀，和 tierOverview 同一類，所以同樣**不**在 SESSION_REQUIRED_PAGES 裡。
+   */
+  | "damageTierWarnings"
   | "uiLexicon"
   /**
    * 混音 (`config/audio-mix.json`, owner 2026-08-17「其他角色語音應該是自己的一半」)

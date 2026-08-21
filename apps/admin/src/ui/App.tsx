@@ -38,6 +38,7 @@ import { ServerOpsPage } from "./ServerOpsPage";
 import { AiSettingsPage } from "./AiSettingsPage";
 import { ModelBudgetPage } from "./ModelBudgetPage";
 import { TierOverviewPage } from "./TierOverviewPage";
+import { DamageTierWarningsPage } from "../damageTierWarnings";
 import { IconTrackingPage } from "./IconTrackingPage";
 import { VoxelSkinSheetPage } from "./VoxelSkinSheetPage";
 // 體素鑄造廠 (task #229) — EAGER, like Quick Approval and for the same reason.
@@ -254,6 +255,10 @@ export const NAV: NavItem[] = [
   // 攤平之後的樣子。它唯讀，而且是唯一同時印出「卡面 → 實際」兩欄的地方 ——
   // 那兩欄不一樣，正是 owner 那句「不計入系統倍率」造成的。
   { page: "tierOverview", label: "五級距總覽（卡面→實際）", emoji: "🪜", section: SEC_COMBAT },
+  // ⚠️ 不吃五級距的傷害節點 (owner #534)。⭐ 緊鄰總覽是刻意的：總覽說「級距表長
+  // 這樣」，這一頁說「⛔ 但這幾十個節點不聽它的」。分開放的話，owner 調完級距
+  // 之後不會有任何東西提醒他還有一批數字原地不動 —— 而那正是這一頁在防的誤判。
+  { page: "damageTierWarnings", label: "⚠️ 不吃五級距的傷害節點", emoji: "🚫", section: SEC_COMBAT },
   { page: "uiLexicon", label: "介面用語（Fate）", emoji: "🏆", section: SEC_COMBAT },
   { page: "statNormalization", label: "英雄屬性正規化", emoji: "📐", section: SEC_COMBAT },
   // GH#322 —— 這四頁的 spec 早就寫好了，但導覽列沒有那一列 ⇒ 操作者點不到。
@@ -1070,6 +1075,7 @@ export function Console(): React.JSX.Element {
             {page === "ai" && <AiSettingsPage />}
             {page === "modelBudget" && <ModelBudgetPage />}
             {page === "tierOverview" && <TierOverviewPage />}
+            {page === "damageTierWarnings" && <DamageTierWarningsPage />}
             {page === "iconTracking" && <IconTrackingPage />}
             {page === "voxelSkins" && <VoxelSkinSheetPage />}
             {page === "voxelForge" && <VoxelFoundryPage />}
