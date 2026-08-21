@@ -65,15 +65,38 @@ describe("級距名", () => {
   });
 
   it("三張級距表的鍵名就是那五個字，順序也一樣", () => {
+    /**
+     * ⚠️ GH#490：辨識「哪個區塊是一張級距表」原本只問「鍵剛好五個」，而
+     * `displacement-tiers.wallBlock` 在多了 `flightExempt` 之後**也剛好五格**
+     * （enabled / blink / leap / pillarsBlock / flightExempt）—— 於是一組開關被
+     * 當成級距表，紅在一個跟級距名完全無關的地方。
+     *
+     * ⭐ 收窄的方向是**更精確**，⛔ 不是更寬鬆：一張級距表的每一格裝的是**那一級
+     * 的值**（`range`/`radius` 是數字，`travel`/`push` 是 `{distance, speed}`），
+     * ⛔ 而一組開關裝的是 boolean 或 enum 字串。所以「格子是 boolean 或字串」的
+     * 區塊不是級距表。
+     *
+     * ⭐ 而收窄一定要配一個 guard-the-guard，否則下一次收窄可以讓它掃到 0 張表
+     * 而全綠（＝ `bundle.test.ts` 那個形態）。四張真表釘在下面。
+     */
+    const checked: string[] = [];
     for (const name of ["range-tiers", "aoe-tiers", "displacement-tiers"]) {
       const doc = JSON.parse(readFileSync(join(CONTENT, "config", `${name}.json`), "utf8"));
       for (const [k, v] of Object.entries(doc)) {
-        // 級距表的那幾個區塊 = 值是物件、而且鍵剛好是五個級距名那幾個
         if (typeof v !== "object" || v === null || Array.isArray(v)) continue;
-        const keys = Object.keys(v);
-        if (keys.length !== SKILL_TIER_NAMES.length) continue;
-        expect(keys, `${name}.${k}`).toEqual([...SKILL_TIER_NAMES]);
+        const cells = Object.values(v as Record<string, unknown>);
+        if (cells.length !== SKILL_TIER_NAMES.length) continue;
+        if (cells.some((c) => typeof c === "boolean" || typeof c === "string")) continue;
+        checked.push(`${name}.${k}`);
+        expect(Object.keys(v as object), `${name}.${k}`).toEqual([...SKILL_TIER_NAMES]);
       }
     }
+    // ⛔ 一張都沒掃到 = 這條守衛在保護空氣。四張真表逐字釘住。
+    expect(checked).toEqual([
+      "range-tiers.range",
+      "aoe-tiers.radius",
+      "displacement-tiers.travel",
+      "displacement-tiers.push",
+    ]);
   });
 });

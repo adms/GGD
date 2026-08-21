@@ -24,6 +24,8 @@
  * ---------------------------------------------------------------------------
  *   · `movement/leap.ts` 的 `resolveDisplacementEnd(...)` 換回
  *     `{ pos: requested }`（＝ 2026-08-21 之前的那一行）→ 這一整份紅
+ *   · GH#490：`policyFor(rules, mode, flightIgnoresObstacles(world, flyerId))`
+ *     的第三個參數換成 `false`（＝這個閘不認得飛行）→ 飛行那一條紅
  */
 import { describe, it, expect } from "vitest";
 import { readdirSync, readFileSync } from "node:fs";
@@ -35,9 +37,11 @@ import { arenaDefFromDoc, type ObstacleBox, type ZoneDef } from "../world/ArenaD
 import { spotIsClear } from "../map/bounds";
 import { runEffects } from "../effects/effectRunner";
 import { leapSystem } from "../systems/LeapSystem";
+import { flightSystem, type FlightGrant } from "../flight";
+import { zeroStats } from "../stats/statTypes";
 import type { EffectDef } from "../effects/effect";
 import type { Vec2 } from "../math/vec2";
-import { asSeatId, asTeamId, type EntityId } from "../../ids";
+import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../../ids";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../../..");
 /** 英雄的碰撞半徑（`spawnChampion.ts`）。⛔ 不是出貨平衡值，是夾具尺寸。 */
@@ -186,5 +190,71 @@ describe("位移不可以穿牆 (wall-block)", () => {
     // ⚠️ 這一條**不是**「舊行為也要測」（第〇·六守則：只測預設那一邊）——
     //    它測的是**開關真的接上了**。接不上的開關 = owner 回不了頭。
     expect(side(world.transform.get(hero)!.pos, pr)).toBeGreaterThan(0);
+  });
+
+  /**
+   * ⭐ GH#490 —— owner 2026-08-21「**翔封界 等飛行效果實作**」。
+   *
+   * 兩個方向**在同一具身體上**問完，所以它不可能靠「所有人都放行」通過：
+   *   ① 飛行中（出貨的 04-00 翔封界 那份授予）→ 跨得過牆
+   *   ② 那份授予**到期**之後 → #487 的閘回來，⛔ 再也跨不過去
+   *
+   * ⚠️ 飛行**不是** `world.flight.set()` 手塞的（失敗形態⑤）：掛一個真的
+   * `ModifierSource.flight` 到 `StatsComp.sources`，再跑出貨的 `flightSystem`
+   * —— 那正是天生技 / 限時 buff / 道具 / 增益卡四種來源共用的那條路，而 ② 走的
+   * 是 `expiresAtTick` 這條真的到期路徑（77-03 GLADIARIA ALAT 的 6/9/12/15 秒）。
+   */
+  it("★ 飛行是穿牆判定的合法例外，飛行結束後閘就回來 (GH#490)", () => {
+    cover("displacement-wall-block");
+    const doc = shippedArenas().find((a) => a.id === "arena.infinity-castle")!.doc;
+    const arena = arenaDefFromDoc(doc as unknown as Parameters<typeof arenaDefFromDoc>[0]);
+    const pr = probeOf(arena.zones[0]!)!;
+    const world = new SimWorld(arena, 9);
+    const hero = place(world, pr.from);
+    // ⛔ 不手寫一份飛行參數 —— 讀出貨的 04-00 翔封界。手寫的夾具只證明「如果有人
+    //    這樣授權的話會動」，而這條守衛要證明的是**出貨那支技能**跨得過去。
+    const shipped = JSON.parse(
+      readFileSync(join(ROOT, "content/abilities/godie-hjai.passive.json"), "utf8"),
+    ) as { passive?: { ranks?: { flight?: FlightGrant }[] } };
+    const grant = shipped.passive?.ranks?.[0]?.flight;
+    expect(grant, "04-00 翔封界 沒有 flight 授予 —— 這條守衛在保護空氣").toBeDefined();
+    const EXPIRES_AT = 20;
+    world.stats.set(hero, {
+      championId: "probe" as ChampionId,
+      final: zeroStats(),
+      dirty: false,
+      sources: [
+        { id: "buff:test.flight", kind: "buff", flight: grant!, expiresAtTick: EXPIRES_AT },
+      ],
+    });
+
+    /** 從牆的負側往正側瞬移一次，回傳落點的帶號偏移。 */
+    const blinkAcross = (): number => {
+      world.transform.get(hero)!.pos = { x: pr.from.x, z: pr.from.z };
+      world.nav.get(hero)!.override = null;
+      runEffects([{ kind: "blink", shape: "single", to: "point" } as EffectDef], {
+        world,
+        caster: hero,
+        rank: 1,
+        targets: [],
+        point: { x: pr.to.x, z: pr.to.z },
+        origin: "ability:test.wall-block",
+        rng: world.rng,
+      });
+      return side(world.transform.get(hero)!.pos, pr);
+    };
+
+    // ① 飛行中 —— 承重的那一條：她本來就穿得過這道牆（走路也穿得過）。
+    flightSystem(world);
+    expect(world.flight.get(hero), "出貨授予沒有被 flightSystem 看到").toBeDefined();
+    expect(blinkAcross(), "在飛卻被擋在牆前 —— #487 的閘不認得飛行").toBeGreaterThan(0);
+
+    // ② 飛行到期 —— ⛔ 閘一定要回來，否則「加了飛行」等於替所有人開了一道後門。
+    world.tick = EXPIRES_AT;
+    flightSystem(world);
+    expect(world.flight.get(hero), "授予到期了但飛行還在").toBeUndefined();
+    expect(blinkAcross(), "不會飛卻穿過去了 —— #487 的閘被飛行機制繞過了").toBeLessThanOrEqual(
+      -pr.half,
+    );
   });
 });

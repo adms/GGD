@@ -140,6 +140,21 @@ export const zConfigDisplacementTiersDoc = z
           .describe(
             "圓柱算不算牆。false（出貨）＝只有 box／segment 的牆擋位移，柱子照樣跳得過、瞬移得過。",
           ),
+        /**
+         * ⭐ GH#490 —— **飛行是這條規則的合法例外**（owner 2026-08-21「翔封界 等飛行效果」）。
+         *
+         * ⚠️ **必須 `.optional()`**，理由與 `wallBlock` 自己那一格逐字相同：
+         * 線上的耐久覆蓋層可能已經存過一份**有 `wallBlock` 但沒有這個 key** 的
+         * 文件（`wallBlock` 是同一天早上才加的）。⛔ 必填 ⇒ `.strict()` 退回 ⇒
+         * 內容整份載入失敗 ⇒ fail-open 退回骨架 2 隻英雄（2026-08-02 事故形態）。
+         * 缺席時 `wallBlockFromDoc` 回**出貨值 `true`**，⛔ 不是關掉。
+         */
+        flightExempt: z
+          .boolean()
+          .optional()
+          .describe(
+            "在飛的單位（走路就穿得過牆的那些）位移時要不要照樣穿得過。true（出貨）＝飛行是這條規則的合法例外。",
+          ),
       })
       .strict()
       .optional(),

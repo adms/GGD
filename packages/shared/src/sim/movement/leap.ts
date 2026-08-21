@@ -70,6 +70,7 @@ import type { CastableSlot } from "../intents";
 import type { SimWorld } from "../SimWorld";
 import type { LeapOverride } from "../components";
 import { relaxBody } from "../collision/resolve";
+import { flightIgnoresObstacles } from "../flight";
 import { crossesWalls, policyFor, resolveDisplacementEnd } from "./wallBlock";
 import { TICK_HZ } from "../../constants";
 
@@ -135,7 +136,11 @@ export function leapTicks(durationSec: number): number {
  *     那**不是**同一件事：一道 graybox 牆只有 2 單位厚，所以對面 1.6 單位外的
  *     那個點不在任何障礙物裡、在邊界內、`relaxBody` 一格都不動它 —— 於是每一層
  *     都是對的而組合是空的，玩家看到的是「牆瞬移過去」（owner 2026-08-21，
- *     無限城）。整段機制與它的三格後台開關住在 `movement/wallBlock.ts`。
+ *     無限城）。整段機制與它的四格後台開關住在 `movement/wallBlock.ts`。
+ *     ⚠️ **唯一的例外是飛行**（GH#490）：一具走路就穿得過牆的身體
+ *     （`flight.ts::flightIgnoresObstacles`）位移時照樣穿得過去，否則同一個身體
+ *     會被兩個系統用兩種方式對待。⛔ 那不是一個 if —— 它是 `wallBlock.flightExempt`
+ *     這一格後台開關，出貨 `true`。
  *
  * NO RANGE CLAMP LIVES HERE (task #247 follow-up). This function used to take a
  * `maxRange` and clamp `requested` toward the flyer, and the ONE caller passed
@@ -187,12 +192,18 @@ export function resolveLandingPoint(
   //    的點完全合法）。整段理由與三個決策點寫在 `movement/wallBlock.ts`。
   const rules = world.wallBlock;
   const from = opts?.from ?? t.pos;
+  // ⭐ GH#490 —— **在飛的身體是那條規則的合法例外**（owner 2026-08-21
+  //    「翔封界 等飛行效果實作」）。判準刻意是 `flightIgnoresObstacles` 而不是
+  //    「有沒有飛行」：`MovementSystem` 用**同一個謂詞**決定她走路時穿不穿得過牆，
+  //    所以「走得過去卻瞬移不過去」在構造上不可能發生（理由寫在 wallBlock.ts）。
+  //    ⛔ 問的是**被位移的那個人**（`flyerId`），不是施法者 —— 52-02 蹂躪編年史
+  //    丟的是受害者，而跨不跨得過牆是**那具身體**的性質。
   const end = resolveDisplacementEnd(
     zone,
     from,
     requested,
     t.radius,
-    policyFor(rules, opts?.mode ?? "leap"),
+    policyFor(rules, opts?.mode ?? "leap", flightIgnoresObstacles(world, flyerId)),
     rules.pillarsBlock,
   );
   const body = { pos: { x: end.pos.x, z: end.pos.z }, radius: t.radius };

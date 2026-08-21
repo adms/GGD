@@ -52,6 +52,31 @@
  * 想連柱子也擋（＝完全實心的地形）就把這一格打開。
  *
  * ═══════════════════════════════════════════════════════════════════════════
+ *  ⭐ 飛行是這條規則的**合法例外**（GH#490，owner 2026-08-21「翔封界 等飛行效果」）
+ * ═══════════════════════════════════════════════════════════════════════════
+ * 一個**在飛**的身體本來就該跨得過牆 —— `sim/flight.ts` 從 2026-07-30 起就讓
+ * `MovementSystem` 對飛行者跳過**全部三處**平面推擠（`moveWithCollision`、
+ * 軟分離、落幕的 `pushOutOfObstacle`），所以她**用走的**就已經穿得過去。
+ *
+ * ⛔ 於是「瞬移過去被擋、走過去卻可以」不是嚴格，是**兩個系統對同一個身體有兩種
+ * 看法**。這正是 `sim/flight.ts` 檔頭替那三處豁免立的規矩：
+ * 「the three exemptions can never disagree about who is airborne」。
+ *
+ * ⭐ 判準用的是 **`flightIgnoresObstacles`，⛔ 不是 `isFlying`**。兩者不同：
+ * 一份 `ignoreObstacles: false` 的授予是「飛起來但仍然撞牆」（schema 寫得出來），
+ * 而那種身體**走**不過去，所以它也不可以**瞬移**過去。綁在「會不會穿牆走路」上，
+ * 兩個系統就是**構造上**一致，⛔ 不是靠兩份各自維護的判斷同意。
+ *
+ * ⚠️ 反方向也關死了：豁免只在 `flightExempt` **且**這個身體真的帶著穿牆飛行時
+ * 成立。⛔ 不會飛的身體一格都沒鬆 —— `policyFor` 的第三個參數是**必填**的，
+ * 所以下一個呼叫端不可能「忘了想這件事」而默默拿到 `allow`
+ * （一個有預設值的參數會讓漏接長得跟正確一模一樣 —— 失敗形態 ③）。
+ *
+ * ⭐ 落點合法性（`relaxBody`）**照跑**：飛行不代表可以停在牆的肚子裡。飛行者
+ * 下一 tick 照樣可以自己走進去，但「位移不結束在幾何體內」是 #247 起唯一一份
+ * 落點規則的保證，⛔ 這裡不分岔它。
+ *
+ * ═══════════════════════════════════════════════════════════════════════════
  *  purity
  * ═══════════════════════════════════════════════════════════════════════════
  * 只有 + − × ÷、比較、`Math.sqrt` / `Math.min|max`。⛔ 無 rng（`world.rng` 一次
@@ -75,6 +100,12 @@ export interface WallBlockRules {
   leap: WallBlockPolicy;
   /** 圓柱算不算牆。false（出貨）= 只有 box／segment 擋位移。 */
   pillarsBlock: boolean;
+  /**
+   * ⭐ GH#490 —— **在飛的身體不受這條規則管**（出貨 `true`）。
+   * 判準是 `flight.ts::flightIgnoresObstacles`（＝走路時就穿得過牆的那些人），
+   * ⛔ 不是「有沒有飛行授予」。關掉 = 連飛行也擋（2026-08-21 到 GH#490 之間的行為）。
+   */
+  flightExempt: boolean;
 }
 
 /**
@@ -87,6 +118,7 @@ export const DEFAULT_WALL_BLOCK: WallBlockRules = Object.freeze({
   blink: "clamp",
   leap: "clamp",
   pillarsBlock: false,
+  flightExempt: true,
 });
 
 /**
@@ -202,11 +234,27 @@ export function wallBlockFromDoc(doc: unknown): WallBlockRules {
     leap: policy(w.leap, DEFAULT_WALL_BLOCK.leap),
     pillarsBlock:
       typeof w.pillarsBlock === "boolean" ? w.pillarsBlock : DEFAULT_WALL_BLOCK.pillarsBlock,
+    flightExempt:
+      typeof w.flightExempt === "boolean" ? w.flightExempt : DEFAULT_WALL_BLOCK.flightExempt,
   });
 }
 
-/** 這一次位移該讀哪一格。總開關關掉 = 每一種都 `allow`。 */
-export function policyFor(rules: WallBlockRules, mode: "blink" | "leap"): WallBlockPolicy {
+/**
+ * 這一次位移該讀哪一格。總開關關掉 = 每一種都 `allow`。
+ *
+ * @param flying 這具身體**走路時就穿得過牆**嗎（`flight.ts::flightIgnoresObstacles`）。
+ *   ⛔ 這個參數是**必填**的：一個 `= false` 的預設值會讓「新呼叫端忘了問飛行」
+ *   長得跟正確一模一樣，而它的症狀是一支飛行技被擋成穿牆缺陷（見檔頭）。
+ */
+export function policyFor(
+  rules: WallBlockRules,
+  mode: "blink" | "leap",
+  flying: boolean,
+): WallBlockPolicy {
   if (!rules.enabled) return "allow";
+  // ⭐ GH#490：飛行的例外**在總開關之後**才問 —— 總開關關掉時整個機制不存在，
+  //    這一格是不是 true 都無所謂；⛔ 反過來把它放前面會讓一個關著的機制
+  //    仍然有一條「飛行專用」的分支活著。
+  if (flying && rules.flightExempt) return "allow";
   return mode === "blink" ? rules.blink : rules.leap;
 }
