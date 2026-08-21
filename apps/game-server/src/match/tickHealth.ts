@@ -58,9 +58,26 @@
 /**
  * The grep token. `/healthz` is the structured channel; this is the one for
  * `journalctl | grep`. It is a fixed, unique, machine-parseable prefix so
- * reading production logs for 「乙」 is ONE command with no guesswork:
+ * reading production logs for 「乙」 is ONE command with no guesswork.
  *
- *     ssh … 'docker logs ggd-game 2>&1 | grep ggd.tick.shed'
+ * ---------------------------------------------------------------------------
+ * ⚠️ GH#122 —— 這一段以前寫著兩條**跑不起來**的指令（第三守則：註解會說謊）
+ * ---------------------------------------------------------------------------
+ * 舊文寫的是 `docker logs ggd-game …`。**沒有那個容器。** 兩份 compose 都沒有設
+ * `container_name`，專案名是 `ggd`（docker/compose.family.yaml），服務名是
+ * `game`，所以 docker 實際取的名字是 **`ggd-game-1`**。照舊文抄一次 = 白跑一趟，
+ * 而回報的錯誤（"No such container"）長得像「這台沒在跑遊戲」。
+ *
+ * 同樣要說清楚的第二件事：**`sim` 這一區從外網讀不到**。edge 的
+ * `location = /healthz` 是 nginx 自己回一句靜態 `ok`，只有 `/colyseus/` 與
+ * `/ws/` 被 proxy 到 game；而 game 綁在 `127.0.0.1:2567`。所以下面兩條都必須
+ * **在主機上**跑，⛔ 不是對著 https://ggd.adms.ai 打。
+ *
+ *     docker logs ggd-game-1 2>&1 | grep ggd.tick.shed     # 事件（已節流）
+ *     curl -s localhost:2567/healthz | jq .sim             # 計數器（真值）
+ *
+ * ⭐ 兩條都要，而且**計數器才是真值**：上面那條 log 被 SHED_LOG_HEAD /
+ * SHED_LOG_EVERY 節流過，所以 `grep | wc -l` **不等於** shedEvents。
  *
  * The human sentence from #46 is kept at the end of the same line so the older
  * instruction in docs/_延遲改進計畫.md (grep `sim fell behind real-time`) still

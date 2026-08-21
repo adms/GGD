@@ -30,6 +30,8 @@ const DEV_DEFAULTS = {
   api: "http://localhost:8080",
   admin: "http://127.0.0.1:60721/admin/",
   docs: "/admin/docs",
+  // GH#122 —— game shard 的 /healthz（`sim` 那一區就住在裡面）。
+  gameHealth: "http://127.0.0.1:2567/healthz",
 } as const;
 
 /** Same-origin production preset (everything behind the nginx edge). */
@@ -41,6 +43,13 @@ const PROD_PRESET = {
   api: "/api",
   admin: "/admin/",
   docs: "/admin/docs",
+  // ⛔ 空字串 = 正式站上**不畫這張卡**，而這是刻意的，不是漏填（GH#122）：
+  // edge 的 `location = /healthz` 是 nginx 自己回一句靜態 "ok"，只有 `/colyseus/`
+  // 與 `/ws/` 被 proxy 到 game；game 本身綁在 127.0.0.1:2567。所以瀏覽器**不可能**
+  // 讀到 `sim` 這一區。畫一張讀不到的卡等於在卡片上印一句不會發生的話（第一·五
+  // 守則）—— 而且它會用「離線」偽裝成一台掛掉的 game shard。
+  // 有人替它開了 proxy，就用 VITE_GAME_HEALTH_URL 指過去，卡片自己會回來。
+  gameHealth: "",
 } as const;
 
 function pick(env: HubEnv, key: string, fallback: string): string {
@@ -63,6 +72,7 @@ export function resolveHubLinks(env: HubEnv = {}, mode: "dev" | "prod" = "dev"):
   const api = pick(env, "VITE_PLATFORM_API_URL", base.api);
   const admin = pick(env, "VITE_ADMIN_URL", base.admin);
   const docs = pick(env, "VITE_DOCS_URL", base.docs);
+  const gameHealth = pick(env, "VITE_GAME_HEALTH_URL", base.gameHealth);
 
   // audition pages are static files on the client origin (apps/client/public/)
   const clientBase = client.endsWith("/") ? client : `${client}/`;
@@ -111,6 +121,21 @@ export function resolveHubLinks(env: HubEnv = {}, mode: "dev" | "prod" = "dev"):
     { key: "docs", label: "說明文件", sub: "Docs (README / REPORT)", url: docs, healthUrl: null, emoji: "📖" },
     { key: "admin", label: "本後台", sub: "This console", url: admin, healthUrl: `${api}/v1/healthz`, emoji: "🗄️" },
   ];
+
+  // GH#122 —— 「線上 tick 健康度還沒有人讀」的第一個原因是**後台根本沒有入口**：
+  // 這個 hub 的健康卡從頭到尾只指 platform 的 /api/v1/healthz，game shard 的
+  // `sim`（p50/p95/p99 · shedEvents · behindMs）沒有任何一頁看得到。
+  // 同 contentApi 的形狀：有網址才畫卡，⛔ 沒有就不畫。
+  if (gameHealth.trim() !== "") {
+    links.push({
+      key: "gameHealth",
+      label: "對戰引擎健康 (sim)",
+      sub: "Game shard /healthz — tick p99 / shed counters",
+      url: gameHealth,
+      healthUrl: gameHealth,
+      emoji: "🫀",
+    });
+  }
 
   // content-api is dev-only; only surface a card when a URL exists.
   if (contentApi.trim() !== "") {

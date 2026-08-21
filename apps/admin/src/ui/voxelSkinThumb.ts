@@ -10,12 +10,17 @@
  * The layout is a front elevation (head over torso, arms flanking, legs below)
  * plus a narrow side strip, drawn at 1 texel = 1 pixel and then scaled up with
  * `imageSmoothingEnabled = false` so the blocks stay hard-edged.
+ *
+ * GH#96 —— 這一頁的用途就是「給 owner 看出貨的像素」，所以它必須跟遊戲吃同一份
+ * 條碼：少了第二個參數，對照表畫的是 L3 產生器的猜測，而遊戲裡（條碼串進去之後）
+ * 畫的是 L0 條碼 —— 兩張圖不一樣，而**畫面上看不出來哪一張才是真的**。
  */
 import {
   ATLAS_FACES,
   ATLAS_W,
   paintVoxelAtlas,
   type AtlasRect,
+  type VoxelBarcode,
   type VoxelSkinRecipe,
 } from "@ggd/shared/content/voxelSkin";
 
@@ -54,8 +59,11 @@ function frontPlacements(): Placement[] {
  * Compose the paper doll into a fresh ImageData-compatible buffer.
  * PURE — no DOM. The caller decides where to put it.
  */
-export function composeThumb(recipe: VoxelSkinRecipe): Uint8ClampedArray {
-  const atlas = paintVoxelAtlas(recipe);
+export function composeThumb(
+  recipe: VoxelSkinRecipe,
+  barcode?: VoxelBarcode | null,
+): Uint8ClampedArray {
+  const atlas = paintVoxelAtlas(recipe, barcode ?? null);
   const out = new Uint8ClampedArray(THUMB_W * THUMB_H * 4);
   for (const { src, dx, dy } of frontPlacements()) {
     for (let y = 0; y < src.h; y++) {
@@ -80,10 +88,15 @@ export function composeThumb(recipe: VoxelSkinRecipe): Uint8ClampedArray {
  * false when the browser refuses a 2D context (the caller then shows the
  * palette chips alone rather than a blank tile).
  */
-export function drawThumb(canvas: HTMLCanvasElement, recipe: VoxelSkinRecipe, scale = 4): boolean {
+export function drawThumb(
+  canvas: HTMLCanvasElement,
+  recipe: VoxelSkinRecipe,
+  scale = 4,
+  barcode?: VoxelBarcode | null,
+): boolean {
   const ctx = canvas.getContext("2d");
   if (!ctx) return false;
-  const data = composeThumb(recipe);
+  const data = composeThumb(recipe, barcode);
   canvas.width = THUMB_W * scale;
   canvas.height = THUMB_H * scale;
   const small = ctx.createImageData(THUMB_W, THUMB_H);
