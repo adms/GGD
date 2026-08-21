@@ -53,6 +53,7 @@ import {
   type WhitelistDoc,
 } from "../curation";
 import { CurationResetPanel } from "./CurationResetPanel";
+import { CurationTransformPanel } from "./CurationTransformPanel";
 import { Btn, ErrorBanner, Panel, TextInput } from "./widgets";
 import { ACCENT, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "./theme";
 
@@ -524,6 +525,23 @@ export function CurationPage(): React.JSX.Element {
           {busy ? "儲存中…" : "儲存 Save"}
         </Btn>
       </div>
+
+      {/* 🧹 一鍵清理變身態 (owner 2026-08-21). ABOVE 危險操作 on purpose: this one
+          only removes ids the game already refuses to serve, so it is a cleanup,
+          not a decision — but it still writes straight to the server, hence the
+          preview + the undo snapshot it takes. */}
+      <CurationTransformPanel
+        server={server}
+        championRows={rows.champions}
+        busy={busy}
+        dirty={dirty}
+        onApplied={(doc) => {
+          setServer(doc);
+          setDraft(doc);
+          setSel(EMPTY_SELECTION);
+          setFlash(null);
+        }}
+      />
 
       <CurationResetPanel
         dirty={dirty}

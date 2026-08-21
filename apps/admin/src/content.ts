@@ -58,6 +58,17 @@ export function rowFromDoc(id: string, raw: unknown): ContentRow {
   if (typeof doc["name"] === "string" && doc["name"] !== "") row.name = doc["name"];
   if (typeof doc["icon"] === "string" && doc["icon"].startsWith("assets/")) row.icon = doc["icon"];
   if (typeof doc["role"] === "string") row.role = doc["role"];
+  // ⭐ 變身態的判定來源（owner 2026-08-21「一鍵清理變身態」）。
+  // `transform.role` 只有 "base" / "alternate" 兩個值（schema:
+  // packages/shared/src/content/schema/champion.ts 的 zTransformLink），而
+  // "alternate" 的那一半永遠不是可選英雄。⛔ 刻意讀這一格而不是抄一張 id 名單 ——
+  // 以後新增的變身英雄，內容側寫完 doc 這裡當天就認得它。
+  // ⚠️ 與上一行的 `role`（fighter/marksman/tank）是**完全不同的欄位**，同名純屬巧合。
+  const tf = doc["transform"];
+  if (tf !== null && typeof tf === "object") {
+    const tfRole = (tf as Record<string, unknown>)["role"];
+    if (typeof tfRole === "string" && tfRole !== "") row.transformRole = tfRole;
+  }
   if (typeof doc["cost"] === "number") row.cost = doc["cost"];
   if (typeof doc["tier"] === "number") row.tier = doc["tier"];
   return row;

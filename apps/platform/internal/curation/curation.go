@@ -154,10 +154,16 @@ type options struct{ contentDir string }
 // Option configures a curation Repo/Service.
 type Option func(*options)
 
-// WithContentDir hands the content tree to the whitelist's LEGACY GATE, so an
-// id whose document lives under content/_legacy/ can neither be served nor
-// stored (see legacyevict.go). Without it the gate is inert and logs that it
-// is — the platform wires cfg.ContentDir in internal/server/server.go.
+// WithContentDir hands the content tree to the whitelist's GATE — the single
+// funnel every read and write passes through (see transformevict.go). Two rules
+// hang off it today and neither has a hand-written id:
+//
+//	· legacyevict.go   — the doc was archived under content/_legacy/  (GH#479)
+//	· transformevict.go — it is a 變身態, `transform.role == "alternate"`
+//	                      (owner 2026-08-21「幫我後台跳出一鍵清理變身態的按鈕」)
+//
+// Without it the gate is inert and logs that it is — the platform wires
+// cfg.ContentDir in internal/server/server.go.
 func WithContentDir(dir string) Option { return func(o *options) { o.contentDir = dir } }
 
 func resolve(opts []Option) options {
@@ -173,13 +179,13 @@ func resolve(opts []Option) options {
 type Repo struct {
 	store *jsonstore.Store
 	rdb   *redisx.Client
-	// legacy evicts retired ids on BOTH sides of the funnel — see Load/Save.
-	legacy LegacyArchive
+	// gate evicts un-curatable ids on BOTH sides of the funnel — see Load/Save.
+	gate WhitelistGate
 }
 
 // NewRepo builds the repository. rdb may be nil (no mirror).
 func NewRepo(store *jsonstore.Store, rdb *redisx.Client, opts ...Option) *Repo {
-	return &Repo{store: store, rdb: rdb, legacy: LoadLegacyArchive(resolve(opts).contentDir)}
+	return &Repo{store: store, rdb: rdb, gate: LoadWhitelistGate(resolve(opts).contentDir)}
 }
 
 // Load reads the JSON truth, with retired content already evicted. A missing
@@ -198,7 +204,7 @@ func (r *Repo) load() (Doc, bool, []string, error) {
 	if err != nil {
 		return d, existed, nil, err
 	}
-	d, removed := r.legacy.Evict(d)
+	d, removed := r.gate.Evict(d)
 	return d, existed, removed, nil
 }
 
@@ -248,10 +254,11 @@ func (r *Repo) Save(ctx context.Context, d Doc) error {
 // are not on disk and will not be served — a whitelist that reads back
 // differently from what it stored is worse than one that refuses the write.
 func (r *Repo) save(ctx context.Context, d Doc) (Doc, error) {
-	d, removed := r.legacy.Evict(d)
+	d, removed := r.gate.Evict(d)
 	if len(removed) > 0 {
-		slog.Warn("curation: refused to store whitelist entries whose documents are archived under content/_legacy/",
-			"count", len(removed), "removed", removed)
+		slog.Warn("curation: refused to store whitelist entries the content tree says are not curatable "+
+			"(archived under content/_legacy/, or a 變身態)",
+			"count", len(removed), "removed", removed, "reasons", r.gate.Reasons(removed))
 	}
 	if err := r.store.Put(Collection, DocID, d); err != nil {
 		return d, err
@@ -300,10 +307,10 @@ type Service struct {
 }
 
 // New builds the service. rdb may be nil (mirror disabled). Pass
-// WithContentDir to arm the legacy gate (see legacyevict.go).
+// WithContentDir to arm the gate (see transformevict.go).
 func New(store *jsonstore.Store, rdb *redisx.Client, opts ...Option) *Service {
 	repo := NewRepo(store, rdb, opts...)
-	repo.legacy.LogBootSummary()
+	repo.gate.LogBootSummary()
 	return &Service{repo: repo, store: store, now: time.Now, starter: StarterSet}
 }
 
@@ -345,8 +352,12 @@ func (s *Service) Get(ctx context.Context) (Doc, error) {
 			s.Audit("system", "curation.legacy-evict", map[string]any{
 				"removed": evicted,
 				"count":   len(evicted),
-				"why": "these ids' documents live under content/_legacy/ and can no longer load, " +
-					"so keeping them checked only shrank champ-select / the shop / the EX hotkey silently",
+				"reasons": s.repo.gate.Reasons(evicted),
+				"trigger": "auto-self-heal",
+				"why": "`legacy-archived` = the doc lives under content/_legacy/ and can no longer load, " +
+					"so keeping it checked only shrank champ-select / the shop / the EX hotkey silently; " +
+					"`transformed-body` = transform.role == \"alternate\", a body reached only by casting " +
+					"the transform ability, so it is never a pickable champion",
 			})
 		}
 	}

@@ -110,6 +110,14 @@ export interface ContentRow {
   icon?: string;
   /** champions only */
   role?: string;
+  /**
+   * champions only — `transform.role` off the champion doc: `"base"` (the hero
+   * a player picks) or `"alternate"` (the 變身態 body, reachable ONLY by casting
+   * the transform ability). Absent on the ~90 champions with no transform pair.
+   *
+   * ⚠️ NOT the same field as `role` above (fighter / marksman / tank).
+   */
+  transformRole?: string;
   /** items only */
   cost?: number;
   /** items only */

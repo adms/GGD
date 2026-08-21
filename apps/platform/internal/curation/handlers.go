@@ -24,6 +24,8 @@ const publicMaxAgeSeconds = "10"
 //	POST /api/v1/curation/whitelist/starter  admin only — union the starter bundle in
 //	POST /api/v1/curation/whitelist/reset    admin only — REPLACE the selected kinds
 //	                                         with the starter bundle (see reset.go)
+//	POST /api/v1/curation/whitelist/evict-transformed
+//	                                         admin only — 一鍵清理變身態 (transformevict.go)
 //	GET  /api/v1/curation/whitelist/snapshots admin only — the undo points
 //	POST /api/v1/curation/whitelist/restore  admin only — undo, by snapshot id
 type Handlers struct {
@@ -65,6 +67,10 @@ func (h *Handlers) Mount(r chi.Router) {
 		// The reset family. NEVER on MountPublic: reset is the only route here
 		// that turns content off without naming an id.
 		ar.Post("/curation/whitelist/reset", h.reset)
+		// 一鍵清理變身態 (owner 2026-08-21). Like reset it can turn content off
+		// without the operator naming an id, so it is admin-only, takes an undo
+		// snapshot and demands a server-re-checked `expect`. See transformevict.go.
+		ar.Post("/curation/whitelist/evict-transformed", h.evictTransformed)
 		ar.Get("/curation/whitelist/snapshots", h.listSnapshots)
 		// NOTE there is deliberately NO GET …/snapshots/{id}. The console lists
 		// snapshots and restores by id; it never needs the stored document, and

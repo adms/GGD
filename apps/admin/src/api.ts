@@ -564,6 +564,55 @@ export async function resetWhitelist(body: ResetRequestBody): Promise<ResetRespo
   };
 }
 
+// ---- 一鍵清理變身態 (evict transformed bodies) ------------------------------
+// owner 2026-08-21「幫我後台跳出一鍵清理變身態的按鈕」. The SERVER derives the id
+// list from `transform.role == "alternate"` in its own content tree and takes an
+// undo snapshot; the console never sends ids, so a stale console cannot delete a
+// champion the platform does not agree is a 變身態.
+
+/** The server's reply to POST /curation/whitelist/evict-transformed. */
+export interface EvictTransformedResponse {
+  dryRun: boolean;
+  /** false = the platform could not read content/champions/ (its gate is inert). */
+  armed: boolean;
+  /** the GGD_CURATION_TRANSFORM_GATE switch (the AUTOMATIC half only). */
+  gateEnabled: boolean;
+  /** how many 變身態 the platform's content tree declares. */
+  indexed: number;
+  remove: string[];
+  names: Record<string, string>;
+  before: number;
+  after: number;
+  snapshotId?: string;
+  whitelist: WhitelistDoc;
+}
+
+/**
+ * Preview (`dryRun`) or run the cleanup. `expect` is the second confirmation,
+ * re-checked server-side under the whitelist mutex — a count that moved between
+ * the preview and the click comes back 409 `confirm_mismatch`, never a bigger
+ * delete than the operator agreed to.
+ */
+export async function evictTransformedBodies(
+  body: { dryRun: boolean; expect?: number },
+): Promise<EvictTransformedResponse> {
+  const raw = await api.request<Record<string, unknown>>("/curation/whitelist/evict-transformed", {
+    body,
+  });
+  return {
+    dryRun: raw["dryRun"] === true,
+    armed: raw["armed"] === true,
+    gateEnabled: raw["gateEnabled"] === true,
+    indexed: typeof raw["indexed"] === "number" ? raw["indexed"] : 0,
+    remove: Array.isArray(raw["remove"]) ? (raw["remove"] as string[]) : [],
+    names: (raw["names"] as Record<string, string>) ?? {},
+    before: typeof raw["before"] === "number" ? raw["before"] : 0,
+    after: typeof raw["after"] === "number" ? raw["after"] : 0,
+    snapshotId: typeof raw["snapshotId"] === "string" ? raw["snapshotId"] : undefined,
+    whitelist: normalizeWhitelist(raw["whitelist"]),
+  };
+}
+
 export interface WhitelistSnapshot {
   id: string;
   takenAt: string;
