@@ -552,3 +552,56 @@ owner 2026-08-21 逐字：
 
 ⚠️ 兩條測試現在都**從級距表推導**那個數字（`DEFAULT_COOLDOWN_TIERS` /
 `DEFAULT_DAMAGE_TIERS`），⛔ 不再抄字面值 —— owner 改表它們自己跟著動。
+
+---
+
+## GH#417 · 70-04 千年練成「紮根形態」那一份：被取代的 w3x 匯入數值（2026-08-22）
+
+`abilityCodeParity.test.ts`（同編號＝同一支技能＝同樣的機制數值）的 `70.json` 分片上，
+**整片 26+3 個鍵都是白木一個人的**：`godie-e00s.*`（本體）與 `godie-e010.*`（紮根形態）
+是**同一位英雄的兩個形態**，掛著同一組編號 `70-00`…`70-04`，卻是**兩份各自腐爛的抄本**。
+
+這一輪只動 **70-04**（本輪 lane 名下的檔），把三個鍵從棘輪上拿掉。
+
+### 判決依據（第〇·六守則的階梯，⛔ 不是挑好看的那一邊）
+
+| 這一份 | `provenance` | 階梯層級 |
+|---|---|---|
+| `godie-e00s.r`（本體） | `owner-spec` | **第 1 層** —— owner 的新版技能說明（`tools/skill-remake/batch1.py` 的輸出） |
+| `godie-e010.r`（紮根形態） | `w3x-import` | **第 5 層** —— w3x 原始設定 |
+
+⇒ 第 1 層贏。⛔ 而且方向也**只能**是這一邊：本體那一份是那 90 支重製的產生器輸出，
+`packages/shared/src/ops/skillRemakeJsonFresh.test.ts`（GH#319）擋著任何手改 ——
+往本體改是「下一次重生成時被無聲覆寫」，不是一個選項。
+
+### 被取代的那一組（改回去＝改三格 JSON）
+
+| 欄位 | **舊值**（`godie-e010.r`，w3x 匯入） | 新值（＝本體 `godie-e00s.r`） |
+|---|---|---|
+| `cooldown` | **60 / 60 / 60** | 90 / 90 / 90 |
+| `cooldownTier` | **中** | 大 |
+| `effects[0].count`（樹精顆數） | **4 / 4 / 4** | 4 / 6 / 8（＝卡面數字＝w3a `A0GN.DataB`） |
+| `effects[0].effects[].ratios[].coeff`（[AP] 係數） | **0.7**，單發 | 0.3，**兩發**（第二發帶 `victimCondition: status/root` ⇒ [定身] 時傷害加倍） |
+
+⚠️ **這是一次真的平衡改動，兩個方向都有**：紮根形態的大絕冷卻變長（60→90）、
+單發 [AP] 係數變小（0.7→0.3），但顆數隨階成長（4/4/4→4/6/8）且對 [定身] 目標翻倍 ——
+而 70-03 木束縛之術正是白木自己的 [定身]。⇒ 這一組的意圖是「先綁再炸」，
+⛔ 不是等比縮放。owner 若要退回，把上表左欄抄回 `content/abilities/godie-e010.r.json`
+與 `content/champions/godie-e010.json` 的 `abilities.R`，並把三個鍵加回
+`packages/shared/src/content/abilityCodeParity.baseline/70.json`。
+
+### ⛔ 還沒動的：`70-00` / `70-01` / `70-02` / `70-03`（26 個鍵）
+
+同一片分片上還有 **26 個鍵**是同一個形狀（伸卡球 60 vs 30 秒、木束縛 45 vs 60 秒、
+大怒石 被動 vs `applyBuff`…）。⛔ 這一輪**刻意沒有動**：那四支的本體那一份同樣是
+產生器輸出，而**紮根形態那四份不在本 lane 名下**（`godie-e010.{q,w,e,passive}.json`）。
+⇒ 下一條 lane 照這一節的判決模式一次做完，⛔ 不要一支一輪。
+
+### ⚠️ 與 GH#404 / GH#423 的關係：這一節**沒有**碰召喚
+
+70-04 到今天仍然**沒有任何 `summon`** —— 兩份文件都只有 `randomArea` + `damageArea`，
+而卡面也只講「誕生的瞬間」（第一·五守則出路②，見上面 GH#404 那一節）。
+真的召喚缺的是**一具身體**：`summon.championId` 是 `zRef("champions")`，
+⇒ 需要一份 body-only 的 `champion@1` + 它的 `model@1` + 圖示，
+並且要從選人畫面／白名單排除；`durationSec`（原作沒有這個數字）與
+`maxAlive` / `onCap` 是 owner 的平衡裁決。⛔ 本 lane 名下沒有這些檔案。
