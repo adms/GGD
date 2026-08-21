@@ -19,7 +19,6 @@
  * 那條路把他剛裁決掉的行為又點回來。
  */
 import { DEFAULT_AUDIO_MIX, type ConfigAudioMixDoc } from "@ggd/shared/content";
-import { applyRoundEndVoiceDoc } from "./roundEndVoice";
 
 const SHIPPED = DEFAULT_AUDIO_MIX.voice.othersGain;
 
@@ -37,11 +36,6 @@ let current: number = SHIPPED;
 export function applyAudioMixDoc(doc: ConfigAudioMixDoc | null | undefined): void {
   const g = doc?.voice?.othersGain;
   current = typeof g === "number" && Number.isFinite(g) ? Math.min(1, Math.max(0, g)) : SHIPPED;
-  // GH#527 —— 回合結束的語音政策住同一份文件的同一個 `voice` 物件。⭐ 在這裡轉發
-  // 而不是在 `ContentDb` 多加一行，是因為 `ContentDb.load()` 已經把整份
-  // `config.audio-mix@1` 交給這一支了：多一個呼叫端＝多一個會被忘記接的地方
-  // （失敗形態②：算出來了但從沒送到）。
-  applyRoundEndVoiceDoc(doc);
 }
 
 /** 現行倍率。每一個決定「別人的語音多大聲」的地方都必須讀這一支。 */

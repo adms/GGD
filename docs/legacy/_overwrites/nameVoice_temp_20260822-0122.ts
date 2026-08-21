@@ -41,7 +41,6 @@
  */
 import { AUDIO_CONTENT_BASE, audioSystem, shouldSilenceAudio } from "./AudioSystem";
 import { effectiveGain, type VolumeState } from "./audioSelect";
-import { grantRoundEndVoice } from "./roundEndVoice";
 
 /** Path of the generated name-VO manifest, relative to the content mount. */
 export const NAME_VO_MANIFEST_PATH = "assets/audio/voices/names/MANIFEST.json";
@@ -447,11 +446,6 @@ export class ChampionNameVoice {
    */
   async playQuote(champId: string, opts: { gain?: number } = {}): Promise<boolean> {
     if (!champId || !this.audio.isUnlocked) return false;
-    // GH#527 —— 名言是 macOS `say` 產的 **TTS**（`tools/tts-gen/src/build-champ-quotes.mjs`
-    // 的 Kyoko / Otoya），也就是 owner 2026-08-22 說的「機械語音」。回合結束那一拍
-    // 開著時它要問過 `roundEndVoice`；⛔ 其餘每一個呼叫端（比賽結束的結算、選角
-    // 確認、點自己的英雄）那一拍是關著的 ⇒ 永遠 true ⇒ 行為逐位元不變。
-    if (!grantRoundEndVoice("machine", champId)) return false;
     const volume = effectiveGain(this.audio.volumes(), "sfx", opts.gain ?? this.gain);
     if (volume <= 0) return false; // muted: no fetch, no guard burn
     const t = this.now();

@@ -32,7 +32,6 @@
  */
 import { AUDIO_CONTENT_BASE, audioSystem, shouldSilenceAudio } from "./AudioSystem";
 import { effectiveGain, type VolumeState } from "./audioSelect";
-import { grantRoundEndVoice } from "./roundEndVoice";
 
 /** Path of the authored taunt script, relative to the content mount. */
 export const VICTORY_TAUNTS_PATH = "config/victory-taunts.json";
@@ -325,14 +324,6 @@ export class VictoryTauntPlayer {
     opts: PlayTauntOptions = {},
   ): Promise<VictoryTauntLine | null> {
     if (!championId) return null;
-    // GH#527 —— 嘲諷是 macOS `say` 產的 **TTS**：`content/config/victory-taunts.json`
-    // 的 `direction` 自己寫著「Flat, crisp, emotionless — Google-Assistant register」，
-    // `voices` 是 Shelley / Kyoko / Karen。owner 2026-08-22:「回合結束只播放角色
-    // 自己語音，不要播放機械語音」⇒ 這一拍開著時要問過 `roundEndVoice`。
-    // ⚠️ 回傳 null 而不是「選了台詞但不出聲」是刻意的：`onSpeak` 是**字幕**的
-    // 驅動來源，讓它照跑等於畫面上還留著一句沒有人講的嘲諷（第一·五守則：
-    // ⛔ 不放任何「說了但不會發生」的東西）。
-    if (!grantRoundEndVoice("machine", championId)) return null;
     const line = selectRoundTaunt(await this.load(), championId, round);
     return this.emit(line, opts);
   }

@@ -34,13 +34,6 @@ import type { Rng } from "./audioSelect";
 import { championVoice } from "./championVoice";
 import type { VoiceAudioPort } from "./championVoice";
 import { packClips, pickSelectClip, type ChampionVoicePack } from "./selectVoiceLadder";
-import { grantRoundEndVoice, setRoundEndChampionLinePort } from "./roundEndVoice";
-
-/**
- * GH#527 —— 回合結束那一拍上 owner 要**留下**的就是這一支（英雄自己的語音包）。
- * 這個類別因此是 `roundEndVoice` 眼中的 `champion` 聲源。
- */
-export const ROUND_END_VOICE_CATEGORY = "victory";
 
 /** One-voice-per-beat, arena-wide (matches the abilityCast SfxGate budget). */
 export const GLOBAL_MIN_GAP_MS = 1_200;
@@ -307,15 +300,6 @@ export class ContextualVoicePlayer {
     // pick a different variant of the same category.
     if (this.activeClips.has(clip)) return false;
 
-    // GH#527 —— 回合結束那一拍的發言權。⚠️ 問得**這麼晚**是刻意的：上面每一層
-    // 都可能無聲拒絕（全域 1.2s 間隔、每英雄 1.5s 間隔、機率、in-flight 去重），
-    // 早問就會出現「名額燒掉了但沒有人講話」＝一整拍的安靜，而畫面上完全
-    // 正常（失敗形態②）。這一拍**關著時永遠 true**，所以戰鬥中的每一句與比賽
-    // 結束那一拍逐位元不變。
-    if (category === ROUND_END_VOICE_CATEGORY && !grantRoundEndVoice("champion", champId, t)) {
-      return false;
-    }
-
     // Commit throttle state only once we are actually going to play.
     this.lastVoiceAt = t;
     this.lastChampAt.set(champId, t);
@@ -348,17 +332,6 @@ export class ContextualVoicePlayer {
     return true;
   }
 
-  /**
-   * GH#527 —— 這位英雄的語音包裡**有沒有**這個類別的台詞。同步（只讀已經 warm
-   * 好的 pack），因為 `roundEndVoice` 的 `fallback` 模式要在機械語音被呼叫的
-   * 那一瞬間就答得出來。未 warm / 沒有語音包 ⇒ false（＝「他沒有自己的聲音」，
-   * 也就是 fallback 該讓機械語音接手的那一邊）。
-   */
-  hasLine(champId: string, category: string): boolean {
-    if (!champId || !category || !this.pack) return false;
-    return packClips(this.pack, champId, category).length > 0;
-  }
-
   /** Drop caches + cooldowns (tests / content live-reload). */
   reset(): void {
     this.pack = null;
@@ -372,12 +345,6 @@ export class ContextualVoicePlayer {
 
 /** Process-wide contextual voice layer riding the process-wide mixer + pack cache. */
 export const contextualVoice = new ContextualVoicePlayer();
-
-// GH#527 —— 把「這位英雄有沒有自己的勝利宣言」接給 `roundEndVoice` 的 `fallback`
-// 模式。⭐ 用註冊而不是讓 `roundEndVoice` 直接 import 這一支，是因為那會成環
-// （roundEndVoice → contextualVoice → championVoice → nameVoice → roundEndVoice）,
-// 而環在 ESM 底下的症狀是模組層常數變成 undefined —— 一個不會報錯的壞法。
-setRoundEndChampionLinePort((id) => contextualVoice.hasLine(id, ROUND_END_VOICE_CATEGORY));
 
 /** Warm the contextual layer (cached; safe to repeat from any boot path). */
 export function warmContextualVoice(): Promise<void> {

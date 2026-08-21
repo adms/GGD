@@ -36,6 +36,11 @@
  *                 (`content/audio-manifests/sfx-preload.json`), so the 2.7 MB
  *                 combat bucket is fetched during the shop rather than on the
  *                 combat edge, and the login screen still fetches none of it
+ *   roundEndVoice GH#527 — 回合結束那一拍**誰可以出聲**：owner 2026-08-22
+ *                 「只播放角色自己語音，不要播放機械語音，重複播放太吵了」。
+ *                 三支播放器（nameVoice 名言／victoryTaunt 嘲諷＝macOS `say` 的
+ *                 TTS，contextualVoice 的 victory＝英雄自己的語音包）各自來問它
+ *                 一次；設定住 config/audio-mix.json 的 voice.roundEnd*
  *   victoryTaunt  round/match victory taunt VO — the line is DETERMINISTIC in
  *                 replicated state so every client hears the same joke (#93)
  *   spatial       PURE 3D sound-field geometry: world position + listener frame
@@ -65,6 +70,7 @@ export * from "./crowdCheer";
 export * from "./championVoice";
 export * from "./selectVoiceLadder";
 export * from "./contextualVoice";
+export * from "./roundEndVoice";
 export * from "./sfxManifest";
 export * from "./sfxPreloadPolicy";
 export * from "./spatial";

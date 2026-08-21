@@ -51,8 +51,13 @@ import {
 } from "../audio";
 import { setCombatSfxSeat } from "../audio/combatSfx";
 import { playContextualVoice } from "../audio/contextualVoice";
-import { closeRoundEndVoiceBeat, openRoundEndVoiceBeat } from "../audio/roundEndVoice";
-import { useAudioBoot, useAudioScene, useBgmOverride, useLoginTheme } from "./useAudio";
+import {
+  useAudioArena,
+  useAudioBoot,
+  useAudioScene,
+  useBgmOverride,
+  useLoginTheme,
+} from "./useAudio";
 
 export function AudioDirector(): null {
   useAudioBoot();
@@ -69,6 +74,9 @@ export function AudioDirector(): null {
   const connected = useHud((s) => s.connected);
 
   const phase = useHud((s) => s.phase);
+  // GH#531 — which arena is being played. A per-ROUND string, so this is a
+  // discrete projection like every other input here, not a per-frame read.
+  const mapId = useHud((s) => s.mapId);
   const phaseSecondsLeft = useHud((s) => s.phaseSecondsLeft);
   const localSeatId = useHud((s) => s.localSeatId);
   const placement = useHud((s) => {
@@ -134,6 +142,12 @@ export function AudioDirector(): null {
   // the lobby, so this never collides with a match scene. (task #134)
   const override = useBgmOverride();
   const scene = override ?? derivedScene;
+  // ⭐ The arena must be told to the mixer BEFORE the scene, so that when the
+  // intermission→combat edge fires, `playBgm("combat")` already resolves to
+  // this round's own battle theme instead of starting the shared bed and
+  // crossfading again a frame later. React runs effects in declaration order,
+  // which is what makes "before" mean anything here.
+  useAudioArena(mapId || null);
   useAudioScene(scene);
 
   // WHO AM I → the per-frame combat SFX layer. `guardianSlain` (#89) is fanned
@@ -208,15 +222,6 @@ export function AudioDirector(): null {
     // into the shop, which is exactly what the owner heard. The edge (not a
     // phase test) is the seam: leaving combat for ANY phase ends them.
     if (isCombatEnd(prev, phase)) audioSystem.stopSustainedSfx();
-    // GH#527 —— 回合結束那一拍的**開與關**。owner 2026-08-22:「回合結束只播放角色
-    // 自己語音，不要播放機械語音，重複播放太吵了」。決策整個住在
-    // `audio/roundEndVoice`（三支播放器各自去問它一次）；這裡只發出「現在是那一拍」
-    // 這個訊號 —— 這個元件本來就是全 app 唯一持有 phase 的音訊擁有者，而它已經用
-    // 同一個形狀把座位 id 發給 `combatSfx.setCombatSfxSeat` 了。
-    // ⚠️ 必須**兩個邊緣都發**：只開不關的話，比賽結束的結算（`matchEnd`）與選角
-    // 確認的名言會被回合結束的政策一起關掉，而那不是 owner 講的東西。
-    if (phase === "resolution") openRoundEndVoiceBeat();
-    else if (prev === "resolution") closeRoundEndVoiceBeat();
     if (phase === "champSelect" && prev !== "champSelect") audioSystem.playSfx("vsReveal");
     if (phase === "matchEnd" && prev !== "matchEnd") audioSystem.playSfx("matchEndGong");
     // eslint-disable-next-line react-hooks/exhaustive-deps
