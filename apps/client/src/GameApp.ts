@@ -69,6 +69,11 @@ import { InputCapture } from "./input/InputCapture";
 import { IntentClock } from "./input/IntentClock";
 import { MultiGamepadSystem, BTN, type GamepadCameraIntent } from "./input/GamepadInput";
 import { PadCameraControl } from "./input/padCamera";
+import {
+  cycleCouchChampion,
+  primeWhitelist,
+  shippedCouchPickableIds,
+} from "./input/couchChampSelect";
 import { aimAssistMobPenalty } from "./ui/displayAimAssist";
 import { pickUnit, pickNearestUnit, type PickableUnit } from "./input/Picking";
 import { resolveAoeCenter, type AimAbility } from "./input/AimResolver";
@@ -589,8 +594,10 @@ export class GameApp {
   private readonly teamBySeat = new Map<number, number>();
   /** per-player last-observed alive state (death-spectator camera transitions) */
   private readonly aliveByPlayer = new Map<number, boolean>();
-  /** per-player champ-select cycling cursor (pad A cycles) */
-  private readonly champCursor = new Map<number, number>();
+  // ⛔ GH#518 —— per-player champ-select 游標**搬去** `input/couchChampSelect`：
+  // 那裡記的是英雄 **id** 而不是索引，因為白名單是非同步回來的，清單長度會在
+  // 一場之內變一次（`NO_FILTER` → 營運勾選的那幾隻），而存索引會讓每個人手上的
+  // 英雄在那一刻無聲跳掉。
   /**
    * Per-player pad free-pan vector for the frame in flight (task #197). The
    * right-stick pan is continuous, so it is latched here by the pad `onCamera`
@@ -1076,15 +1083,25 @@ export class GameApp {
     if (cam.pan) this.padCameraPan[player] = cam.pan;
   }
 
-  /** Champ-select pad picking: A cycles through the roster for that player. */
+  /**
+   * Champ-select pad picking: A cycles FORWARD through that player's roster,
+   * B cycles BACK (GH#518 — 一個沙發玩家按過頭之後沒有回頭路).
+   *
+   * ⭐ 清單來自 `input/couchChampSelect`，它讀的是**後台白名單**（外加下架／
+   * 隱藏／變身態三層內容事實），⛔ 不是 `Champions.ids()` 那份整份登錄表 ——
+   * 那份裡面有一半是伺服器會拒絕的 id，而按下去畫面上看不出任何事情發生。
+   * 游標與 `ChampSelectPanel` 的格子共用同一支 `whitelistedChampionIds`，
+   * ⛔ 不是第二套規則。
+   */
   private onPadButton(player: number, button: number): void {
-    if (button !== BTN.A) return;
-    if (hudStore.getState().phase !== "champSelect") return;
-    const ids = Champions.ids();
-    if (ids.length === 0) return;
-    const cur = (this.champCursor.get(player) ?? -1) + 1;
-    this.champCursor.set(player, cur);
-    this.sessions.sendSelectChampion(player, String(ids[cur % ids.length]!));
+    if (button !== BTN.A && button !== BTN.B) return;
+    const hud = hudStore.getState();
+    if (hud.phase !== "champSelect") return;
+    // 一場一次的 memo；champ-select 期間第一次按鍵把白名單拉進快照。
+    primeWhitelist(hud.matchId);
+    const id = cycleCouchChampion(player, button === BTN.A ? 1 : -1, shippedCouchPickableIds());
+    if (id === null) return;
+    this.sessions.sendSelectChampion(player, id);
   }
 
   /**

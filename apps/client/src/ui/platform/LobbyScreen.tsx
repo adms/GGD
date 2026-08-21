@@ -53,6 +53,7 @@ import { StoreScreen } from "./StoreScreen";
 import { ValhallaPanel } from "./ValhallaPanel";
 import { openCodex } from "../codex/CodexRoute";
 import { topRightClear, topRightReserve } from "../chromeReserve";
+import { PAD_BACK } from "../padModalScope";
 import { Btn, MCoin, Crystal, Panel, CodeBox, ACCENT, OK, DANGER } from "./widgets";
 import { useArenaOptions, DEFAULT_MAP_ID } from "./maps";
 import {
@@ -109,6 +110,22 @@ function InviteToasts(): React.JSX.Element | null {
   );
 }
 
+/**
+ * 錯誤小提示。
+ *
+ * ⭐ GH#513 —— 它在此之前是**一整塊 `<div onClick>`**，於是：
+ * · 手把關不掉 —— `PadFocusNav` 只走得到 focusable（`<button>` / `<a>` / 表單
+ *   元素），一個掛著 onClick 的 div 對它**不存在**，B 也找不到它（`findBackControl`
+ *   先找 `data-pad-back`，再掃 focusable 的標籤）。一個純手把玩家因此得看著這行
+ *   紅字直到下一個錯誤把它蓋掉。
+ * · 鍵盤與讀螢幕器同理：Tab 停不下來，沒有 role、沒有名字。
+ * ⇒ 關閉是一顆**真的** `<button>`，並且帶 `data-pad-back` —— 那是契約，
+ *   ⛔ 不是 `backControlIndex` 的標籤啟發式（GH#271 就是那條啟發式惹的）。
+ *
+ * ⚠️ 外層那個 div 的 onClick **留著**：滑鼠玩家「點哪裡都能關」是既有行為，
+ * 拿掉它會是一次無聲的退步。按鈕的 click 冒泡上去再呼叫一次 `clearError`
+ * 是冪等的（`lastError` 已經是 null）。
+ */
 export function ErrorToast(): React.JSX.Element | null {
   const lastError = useApp((s) => s.lastError);
   const clearError = useApp((s) => s.clearError);
@@ -117,6 +134,9 @@ export function ErrorToast(): React.JSX.Element | null {
     <div
       onClick={clearError}
       style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 10,
         position: "absolute",
         left: "50%",
         bottom: 24,
@@ -132,7 +152,26 @@ export function ErrorToast(): React.JSX.Element | null {
         pointerEvents: "auto",
       }}
     >
-      {lastError} <span style={{ color: TEXT_DIM }}>(click to dismiss)</span>
+      <span>{lastError}</span>
+      <button
+        type="button"
+        aria-label="關閉錯誤訊息"
+        onClick={clearError}
+        {...PAD_BACK}
+        style={{
+          flex: "0 0 auto",
+          background: "transparent",
+          border: "1px solid #7a3230",
+          borderRadius: 6,
+          color: TEXT_DIM,
+          font: "inherit",
+          fontSize: 11,
+          padding: "2px 8px",
+          cursor: "pointer",
+        }}
+      >
+        ✕ 關閉
+      </button>
     </div>
   );
 }
