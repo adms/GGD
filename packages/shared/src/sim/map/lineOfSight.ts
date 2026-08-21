@@ -59,8 +59,8 @@ function segmentsCross(a: Vec2, b: Vec2, c: Vec2, d: Vec2): boolean {
   return onSeg(c, d, a) || onSeg(c, d, b) || onSeg(a, b, c) || onSeg(a, b, d);
 }
 
-/** 線段 A→B 穿過這個圓嗎。 */
-function segmentHitsCircle(a: Vec2, b: Vec2, c: Vec2, r: number): boolean {
+/** 線段 A→B 穿過這個圓嗎。`grow` 放大／縮小障礙物（見 {@link LOS_GRAZE}）。 */
+function segmentHitsCircle(a: Vec2, b: Vec2, c: Vec2, r: number, grow: number): boolean {
   const dx = b.x - a.x;
   const dz = b.z - a.z;
   const len2 = dx * dx + dz * dz;
@@ -68,7 +68,7 @@ function segmentHitsCircle(a: Vec2, b: Vec2, c: Vec2, r: number): boolean {
   t = Math.max(0, Math.min(1, t));
   const px = a.x + dx * t - c.x;
   const pz = a.z + dz * t - c.z;
-  const rr = Math.max(0, r - LOS_GRAZE);
+  const rr = Math.max(0, r + grow);
   return px * px + pz * pz < rr * rr;
 }
 
@@ -79,9 +79,10 @@ function segmentHitsBox(
   c: Vec2,
   halfW: number,
   halfD: number,
+  grow: number,
 ): boolean {
-  const hw = Math.max(0, halfW - LOS_GRAZE);
-  const hd = Math.max(0, halfD - LOS_GRAZE);
+  const hw = Math.max(0, halfW + grow);
+  const hd = Math.max(0, halfD + grow);
   const inside = (p: Vec2): boolean => Math.abs(p.x - c.x) <= hw && Math.abs(p.z - c.z) <= hd;
   if (inside(a) || inside(b)) return true;
   const x0 = c.x - hw;
@@ -101,6 +102,34 @@ function segmentHitsBox(
 }
 
 /**
+ * ⭐ **一個 kind 分派，兩個消費者** —— 線段 A→B 有沒有碰到這一組障礙物中的任何一個。
+ *
+ * ⛔ 不要為了第二個問法再寫一份 switch（`collision/resolve.ts` 的 `obstacleOverlap`
+ * 檔頭記著同一條理由）：兩份分派會各自腐爛，而下一個 obstacle kind 只被其中一份
+ * 認得 —— 視線擋得住卻擋不住位移（或反過來），而兩邊看起來都是對的。
+ *
+ * @param grow 障礙物尺寸的增減。視線用 `-LOS_GRAZE`（縮一點，見上），
+ *             位移的穿牆判定用 **0**（真尺寸：問的是「這條直線有沒有跨過牆」）。
+ */
+export function segmentHitsAny(
+  from: Vec2,
+  to: Vec2,
+  obstacles: readonly Obstacle[],
+  grow: number,
+): boolean {
+  for (const ob of obstacles) {
+    if (ob.kind === "circle") {
+      if (segmentHitsCircle(from, to, ob.center, ob.radius, grow)) return true;
+    } else if (ob.kind === "box") {
+      if (segmentHitsBox(from, to, ob.center, ob.halfW, ob.halfD, grow)) return true;
+    } else if (segmentsCross(from, to, ob.a, ob.b)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
  * 從 `from` 看得到 `to` 嗎？
  *
  * @param obstacles ⚠️ 傳**這一 tick 真的擋路**的那些（gate 過濾之後）。
@@ -109,14 +138,5 @@ function segmentHitsBox(
  * 不是還沒做完。
  */
 export function hasLineOfSight(from: Vec2, to: Vec2, obstacles: readonly Obstacle[]): boolean {
-  for (const ob of obstacles) {
-    if (ob.kind === "circle") {
-      if (segmentHitsCircle(from, to, ob.center, ob.radius)) return false;
-    } else if (ob.kind === "box") {
-      if (segmentHitsBox(from, to, ob.center, ob.halfW, ob.halfD)) return false;
-    } else if (segmentsCross(from, to, ob.a, ob.b)) {
-      return false;
-    }
-  }
-  return true;
+  return !segmentHitsAny(from, to, obstacles, -LOS_GRAZE);
 }

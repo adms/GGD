@@ -70,6 +70,7 @@ import type { CastableSlot } from "../intents";
 import type { SimWorld } from "../SimWorld";
 import type { LeapOverride } from "../components";
 import { relaxBody } from "../collision/resolve";
+import { crossesWalls, policyFor, resolveDisplacementEnd } from "./wallBlock";
 import { TICK_HZ } from "../../constants";
 
 /** Minimum flight length in ticks — a 1-tick "leap" is a teleport, not an arc. */
@@ -129,7 +130,12 @@ export function leapTicks(durationSec: number): number {
  *   - it can never end inside an obstacle (`to` was pushed out before flight,
  *     and leapPosAt(N,N) returns `to` verbatim),
  *   - it can never end outside the boundary (the boundary clamp is part of
- *     `relaxBody`, and runs last on the same body).
+ *     `relaxBody`, and runs last on the same body),
+ *   - ⭐ 2026-08-21 —— it can never end on the FAR SIDE OF A WALL either.
+ *     那**不是**同一件事：一道 graybox 牆只有 2 單位厚，所以對面 1.6 單位外的
+ *     那個點不在任何障礙物裡、在邊界內、`relaxBody` 一格都不動它 —— 於是每一層
+ *     都是對的而組合是空的，玩家看到的是「牆瞬移過去」（owner 2026-08-21，
+ *     無限城）。整段機制與它的三格後台開關住在 `movement/wallBlock.ts`。
  *
  * NO RANGE CLAMP LIVES HERE (task #247 follow-up). This function used to take a
  * `maxRange` and clamp `requested` toward the flyer, and the ONE caller passed
@@ -154,12 +160,49 @@ export function leapTicks(durationSec: number): number {
  * two interior points lies wholly inside it — so every intermediate position of
  * a straight-line arc is already legal by construction.
  */
-export function resolveLandingPoint(world: SimWorld, flyerId: EntityId, requested: Vec2): Vec2 {
+export interface LandingOptions {
+  /**
+   * 弧線的**起點**。省略 = 飛行者現在的位置（每一支自跳都是這樣）。
+   * 52-02 蹂躪編年史 覆寫它：JASS 先把受害者拖到施法者身上才丟出去。
+   */
+  from?: Vec2;
+  /**
+   * 這是哪一種位移 —— 決定讀 `world.wallBlock` 的哪一格（`blink` / `leap`）。
+   * 省略 = `"leap"`（這支函式的原始呼叫者全部是弧線）。
+   */
+  mode?: "blink" | "leap";
+}
+
+export function resolveLandingPoint(
+  world: SimWorld,
+  flyerId: EntityId,
+  requested: Vec2,
+  opts?: LandingOptions,
+): Vec2 {
   const t = world.transform.get(flyerId);
   if (!t) return { x: requested.x, z: requested.z };
   const zone = world.arena.zones[t.zone] ?? world.arena.zones[0]!;
-  const body = { pos: { x: requested.x, z: requested.z }, radius: t.radius };
+  // ⭐ owner 2026-08-21「有許多地圖的牆 瞬移過去」——「終點不在牆裡」不蘊含
+  //    「終點在牆的**這一邊**」（一道 graybox 牆只有 2 單位厚，對面 1.6 單位外
+  //    的點完全合法）。整段理由與三個決策點寫在 `movement/wallBlock.ts`。
+  const rules = world.wallBlock;
+  const from = opts?.from ?? t.pos;
+  const end = resolveDisplacementEnd(
+    zone,
+    from,
+    requested,
+    t.radius,
+    policyFor(rules, opts?.mode ?? "leap"),
+    rules.pillarsBlock,
+  );
+  const body = { pos: { x: end.pos.x, z: end.pos.z }, radius: t.radius };
   relaxBody(body, zone);
+  // ⚠️ `relaxBody` 推的是「離開障礙物」，它不知道牆的哪一邊是**來的那一邊** ——
+  //    在一條窄走廊裡它可以把身體從牆前推到牆後，於是這一整個機制在最需要它的
+  //    地形上靜默失效（失敗形態 ②）。推完之後**再問一次**，⛔ 不要假設。
+  //    夾出來的那個點本來就退開了一個體半徑，所以退回它是安全的，而且下一 tick
+  //    `MovementSystem` 的落幕掃描照樣會把身體推出任何殘餘重疊。
+  if (end.blocked && crossesWalls(zone, from, body.pos, rules.pillarsBlock)) return end.pos;
   return body.pos;
 }
 

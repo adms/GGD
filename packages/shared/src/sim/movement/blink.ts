@@ -88,7 +88,10 @@ export function teleportBody(world: SimWorld, id: EntityId, requested: Vec2): Ve
 
   // 落點合法性走 `leap` 的**同一支**函式（障礙推出 + 邊界夾限，用走路的人用的
   // 那份 `relaxBody`）。⛔ 不要在這裡再寫一份。
-  const to = resolveLandingPoint(world, id, requested);
+  // ⭐ `mode: "blink"` 是給**穿牆判定**看的（owner 2026-08-21「牆 瞬移過去」）：
+  //    瞬移與拋物線各有一格後台開關，因為「跳過一根柱子」與「瞬移到牆後面」
+  //    在設計上不是同一件事。⛔ 不是兩份規則 —— 兩者共用 `wallBlock.ts`。
+  const to = resolveLandingPoint(world, id, requested, { mode: "blink" });
 
   // ⭐ 承重的那一行：**同一個 tick**，位置就是新的了。中間位置一格都不存在。
   t.pos = { x: to.x, z: to.z };

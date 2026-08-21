@@ -65,7 +65,11 @@ export const leapEffect: EffectKindSpec<"leap"> = {
       // `throwDistance` (already through the #136 reach factor). The clamp this
       // call used to carry was passed `len(requested - flyer.pos)` — its own
       // input distance — so it could never fire; see resolveLandingPoint.
-      const to = resolveLandingPoint(world, flyer, requested);
+      // ⭐ owner 2026-08-21 —— 弧線的終點也不可以落在**牆的另一邊**。
+      //    `from` 要傳 `takeoff` 而不是飛行者現在的位置：52-02 先把受害者拖到
+      //    施法者身上才丟，穿牆判定問的是**這條弧線真正跨過什麼**，⛔ 不是
+      //    受害者原本站在哪（少了這一格，被拖過來的人會從錯的起點量牆）。
+      const to = resolveLandingPoint(world, flyer, requested, { mode: "leap", from: takeoff });
       startLeap(world, flyer, {
         ...(drag ? { from: takeoff } : {}),
         to,

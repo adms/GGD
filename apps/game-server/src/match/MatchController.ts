@@ -19,6 +19,7 @@ import {
   type BaseBonusTable,
 } from "@ggd/shared/sim/baseBonus";
 import { statCapsFromDoc, type StatCapTable } from "@ggd/shared/sim/statCaps";
+import { wallBlockFromDoc } from "@ggd/shared/sim/movement/wallBlock";
 import {
   COMBAT_FEEL_DOC_ID,
   combatFeelFromDoc,
@@ -1076,6 +1077,12 @@ export class MatchController {
     // ⭐ 每級加成（owner 2026-08-13「英雄每等級都會 +1 AP」）。
     //   ⛔ 漏掉這一行，那一格就永遠是出貨預設，後台改了場上沒反應。
     this.world.perLevelBonus = perLevelBonusFromDoc(Configs.tryGet("per-level-bonus"));
+    // ⭐ 位移不可以穿牆 (`config.displacement-tiers@1` 的 `wallBlock`，owner
+    //   2026-08-21「有許多地圖的牆 瞬移過去 例如無限城等」)。⛔ 漏掉這一行，
+    //   後台那四格就永遠是出貨預設 —— 那正是 `augmentEnemyFilter` 的同型故障
+    //   （schema 有、後台編得到、sim 讀不到）。走 `Configs.tryGet` 是刻意的：
+    //   和 `per-level-bonus` 同一條路，已知限制也一樣（後台改了要重啟 shard）。
+    this.world.wallBlock = wallBlockFromDoc(Configs.tryGet("displacement-tiers"));
     // 屬性上限 (`config.stat-caps@1`, GH#286) —— 一般上限 / 解鎖上限。
     //
     // ⚠️ 走**建構子參數**,和 baseBonus 同一條路,不是在這裡讀 `Configs`。

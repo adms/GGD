@@ -298,10 +298,15 @@ export const knockbackEffect: EffectKindSpec<"knockback"> = {
         //    numbers as the slide (distance / speed), so an author tuning the
         //    shove cannot accidentally desync the arc from its own length.
         const durationSec = distance / speed;
-        const to = resolveLandingPoint(world, id, {
-          x: t.pos.x + dir.x * distance,
-          z: t.pos.z + dir.z * distance,
-        });
+        // ⭐ owner 2026-08-21 —— 擊飛的落點也不可以在**牆的另一邊**。⚠️ 地面
+        //    滑行那一半（下面 else）本來就不會穿牆（`moveWithCollision`），
+        //    所以在此之前「同一支技能推人」的兩條路對地形的看法是相反的。
+        const to = resolveLandingPoint(
+          world,
+          id,
+          { x: t.pos.x + dir.x * distance, z: t.pos.z + dir.z * distance },
+          { mode: "leap" },
+        );
         const ok = startLeap(world, id, {
           to,
           apexHeight: apex,

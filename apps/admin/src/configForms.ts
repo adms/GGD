@@ -127,6 +127,7 @@ import { AOE_TIER_RADIUS_MAX, DEFAULT_AOE_TIERS } from "@ggd/shared/content/aoeT
 import { DEFAULT_RANGE_TIERS, RANGE_TIER_MAX } from "@ggd/shared/content/rangeTiers";
 // 英雄碰撞半徑（AoE 命中是身體重疊，所以半徑 r 掃得到圓心距離 r + 這個數的人）。
 import { CHAMPION_BODY_RADIUS } from "@ggd/shared/content/displacementTiers";
+import type { WallBlockPolicy } from "@ggd/shared/sim/movement/wallBlock";
 // ⛔ 形狀名（單體／範圍／變身）也只有一份 —— 後台不重打一組字串（同上一行）。
 import { COOLDOWN_SHAPES, DEFAULT_COOLDOWN_TIERS } from "@ggd/shared/content/cooldownTiers";
 // ⛔ 傷害級距的五個數字也只有一份 —— 相稱性下拉的選項說明從它推導。
@@ -3388,6 +3389,17 @@ const ICON_STYLE_SPEC: ConfigDocSpec = {
   ],
 };
 
+/**
+ * ⭐ owner 2026-08-21「有許多地圖的牆 瞬移過去」的三個選項。
+ * ⛔ `satisfies Record<WallBlockPolicy, …>` 是刻意的：哪天多一種處置，
+ * **這裡不補標籤就編不過**，⛔ 不是等 `configForms.test.ts` 在半夜紅。
+ */
+const WALL_BLOCK_OPTION_LABELS = {
+  allow: "allow 照舊穿過去（＝這個缺陷本體，只給 rollback 用）",
+  clamp: "clamp 停在牆前（出貨）",
+  cancel: "cancel 整段位移不發生",
+} satisfies Record<WallBlockPolicy, string>;
+
 const DISPLACEMENT_TIERS_SPEC: ConfigDocSpec = {
   page: "displacementTiers",
   collection: "config",
@@ -3400,6 +3412,7 @@ const DISPLACEMENT_TIERS_SPEC: ConfigDocSpec = {
     "⭐ owner 2026-08-19：「將技能相關設定**正規化成五級距**，並且將相關**文件 JSON 編輯器 後台設定 都統一**」，而他指名的五個字是「**極小 小 中 大 極大**」。⛔ **沒有「超大」這一級**：GH#463 之前這一頁與 AoE 那一頁的第四格是兩個不同的名字，統一時我一度挑了他 08-11 的四級舊詞彙（小/中/大/超大），已經改回來 —— 現在兩張表逐字共用 `SKILL_TIER_NAMES`。⚠️ 那次改名**值一格都沒動**，只有名字整體左移一格。",
     "⭐ **兩條梯子**：`travel` = 自己動（衝刺），`push` = 別人被推（擊退）。出貨分佈幾乎不重疊（衝刺 5.0–14.67、擊退 2.0–6.0），硬塞成一條會讓 14 支擊退全部擠進「小」。要合成一條就把兩張表填成一樣的數字。",
     "⚠️ **速度那一欄是安全欄位不是手感欄位**（GH#318）：穿牆的門檻是「每 tick 位移 > 身體半徑」，所以上限 = ⌊30 × 最小身體半徑 × 安全係數⌋。**關掉「夾住速度」穿牆就會回來**。",
+    "⭐ **穿牆有兩半，這一頁兩半都在**（owner 2026-08-21「有許多地圖的牆 瞬移過去 例如無限城等」）：上面那一格修的是**穿隧**（`dash`／擊退滑行一步跨太遠），最下面那四格修的是**終點就在牆的另一邊**（`blink` 沒有中間位置、`leap` 刻意離開平面物理）。⛔ 兩者不可互相取代 —— 夾住瞬移的速度是沒有意義的，它沒有速度。",
     "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/displacement-tiers.json`**。",
   ],
   consumer: "packages/shared/src/content/displacementTiers.ts 的 resolveDisplacementTier（註冊時把級別翻成距離/速度）",
@@ -3416,6 +3429,23 @@ const DISPLACEMENT_TIERS_SPEC: ConfigDocSpec = {
       { path: `push.${tier}.distance`, zh: `擊退 · ${tier} · 距離`, note: `被別人推（擊退類）在「${tier}」這一格推多遠。⚠️ 與衝刺是**兩條獨立的梯子**，改這裡不影響衝刺。` },
       { path: `push.${tier}.speed`, zh: `擊退 · ${tier} · 速度`, note: `每秒幾單位。⚠️ 同衝刺那一欄：這是**安全欄位不是手感欄位**，超過上限會被「夾住位移速度」截掉。` },
     ]),
+    // ⭐ owner 2026-08-21「我發現**有許多地圖的牆 瞬移過去** 例如**無限城**等」。
+    //    ⛔ 這**不是**上面那一格的重複：「夾住位移速度」修的是穿隧（一步跨太遠），
+    //    這四格修的是「終點就在牆的另一邊」。瞬移沒有速度，夾它是沒有意義的。
+    { path: "wallBlock.enabled", zh: "位移不可以穿牆（總開關）", note: "⭐ **這是 owner 2026-08-21 那則回報的修復本體**：瞬移／跳躍的**終點**必須落在牆的這一邊。⛔ 關掉＝回到 2026-08-21 之前（無限城的 16 道牆對位移完全不存在）。⚠️ 它與「夾住位移速度」是**兩個不同的缺陷**，兩格都要開著。" },
+    {
+      path: "wallBlock.blink",
+      zh: "真瞬移撞到牆時",
+      note: "⚠️ **不建議 cancel**：一支保命技在最需要它的貼牆場合會靜默失效，玩家看到的是「按了沒反應」。",
+      optionLabels: WALL_BLOCK_OPTION_LABELS,
+    },
+    {
+      path: "wallBlock.leap",
+      zh: "跳躍／擊飛撞到牆時",
+      note: "管的是拋物線（`leap` 與 `launchHeight > 0` 的擊飛）。⚠️ 地面滑行的擊退本來就撞得到牆（走碰撞），所以這一格開著之後，同一支技能的兩條路才對地形有一致的看法。",
+      optionLabels: WALL_BLOCK_OPTION_LABELS,
+    },
+    { path: "wallBlock.pillarsBlock", zh: "圓柱也算牆", note: "false（出貨）＝只有有厚度的牆（box）與牆線（segment）擋位移，**圓柱跳得過也瞬移得過**——那本來就是跳躍的定義，而且六張手寫舊場地的障礙物全是圓，所以它們逐位元組不變。打開＝地形完全實心。" },
   ],
   preserved: [],
 };

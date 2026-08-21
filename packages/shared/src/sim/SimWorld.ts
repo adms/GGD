@@ -36,6 +36,7 @@ import { DEFAULT_BODY_SCALE_RULES, type BodyScaleRules } from "./bodyScale";
 import { DEFAULT_REGEN_RULES, type RegenRules } from "./regenRules";
 import { DEFAULT_MANA_ECONOMY, type ManaEconomy } from "./manaEconomy";
 import { DEFAULT_COMBAT_FEEL, type CombatFeelRules } from "./combatFeel";
+import { DEFAULT_WALL_BLOCK, type WallBlockRules } from "./movement/wallBlock";
 import { DEFAULT_SHIELD_RULES, type ShieldRules } from "./shieldRules";
 import { DEFAULT_BLOCK_RULES, type BlockRules } from "./blockRules";
 import { DEFAULT_CRIT_RULES, type CritRules } from "./critRules";
@@ -793,6 +794,14 @@ export class SimWorld {
    * 預設是**出貨表**,不是空表 —— 空表會讓擊退/站定兩條規則靜默消失。
    */
   combatFeel: CombatFeelRules = DEFAULT_COMBAT_FEEL;
+
+  /**
+   * 位移的穿牆規則 (see movement/wallBlock.ts, `config.displacement-tiers@1`
+   * 的 `wallBlock` 區塊) —— owner 2026-08-21「有許多地圖的牆 瞬移過去」。
+   * 和 `combatFeel` 同一條規矩:開賽前指派一次,之後不再動。
+   * 預設是**出貨表**（＝修好的那一邊），不是空表 —— 空表等於缺陷回來。
+   */
+  wallBlock: WallBlockRules = DEFAULT_WALL_BLOCK;
 
   /**
    * 護盾規則 (see shieldRules.ts) —— 目前只有「多個護盾池誰先被吃掉」一格

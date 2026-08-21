@@ -30,6 +30,19 @@ export {
   MIN_LEAP_TICKS,
 } from "./movement/leap";
 export { leapSystem } from "./systems/LeapSystem";
+// owner 2026-08-21「有許多地圖的牆 瞬移過去」—— 位移終點的穿牆規則。
+// `wallBlockFromDoc` 是 `MatchController` 的入口（和 combatFeel 同一條路）。
+export {
+  DEFAULT_WALL_BLOCK,
+  WALL_BLOCK_POLICIES,
+  crossesWalls,
+  policyFor,
+  resolveDisplacementEnd,
+  wallBlockFromDoc,
+  wallObstacles,
+  type WallBlockPolicy,
+  type WallBlockRules,
+} from "./movement/wallBlock";
 
 export * from "./stats/statTypes";
 export * from "./stats/modifiers";
