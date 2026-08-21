@@ -46,6 +46,7 @@ import { LobbyAnnouncement } from "./LobbyAnnouncement";
 import { LeaderboardPanel } from "./LeaderboardPanel";
 import { NemesisPanel } from "./NemesisPanel";
 import { OnlinePlayersPanel } from "./OnlinePlayersPanel";
+import { RallyConfirmDialog } from "./RallyConfirmDialog";
 import { RoomListPanel } from "./RoomListPanel";
 import { RoomView } from "./RoomView";
 import { StoreScreen } from "./StoreScreen";
@@ -67,9 +68,13 @@ import { GOLD, PANEL_BG, TEXT_DIM, TEXT_MAIN } from "../theme";
 const LOBBY_PAD = 16;
 
 function InviteToasts(): React.JSX.Element | null {
-  const invites = useApp((s) => s.ws.invites);
+  const allInvites = useApp((s) => s.ws.invites);
   const joinByCode = useApp((s) => s.joinByCode);
   const dismissInvite = useApp((s) => s.dismissInvite);
+  // ⭐ 大廳集合令（GH#492）走的是**確認視窗**（`RallyConfirmDialog`），⛔ 不是這裡
+  // 的角落小提示 —— owner 的原話是「都跳出確認視窗」。分流的欄位在伺服器上
+  // （`InvitePush.broadcast`），一對一的私人邀請完全沒有變。
+  const invites = allInvites.filter((i) => i.broadcast !== true);
   if (invites.length === 0) return null;
   return (
     // right-aligned toasts pass UNDER the audio cluster rather than beside it
@@ -599,6 +604,10 @@ export function LobbyScreen(): React.JSX.Element {
       )}
 
       <InviteToasts />
+      {/* ⭐ 大廳集合令的確認視窗（GH#492）。⚠️ 掛在 ErrorToast **之前**只是排版
+          順序；它自己是 inset:0 的 overlay，該不該出現由它自己判（有沒有 broadcast
+          邀請、倒數到期了沒）。 */}
+      <RallyConfirmDialog />
       <ErrorToast />
       {/* 大廳公告 (#259) — 「玩家會在大廳跳出訊息看到」. Self-gating: renders null
           unless the public feed handed us an announcement this browser has not

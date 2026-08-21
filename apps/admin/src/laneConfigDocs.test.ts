@@ -48,6 +48,7 @@ import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
 import {
   DEFAULT_LOBBY_LAYOUT_POLICY,
+  DEFAULT_LOBBY_RALLY_POLICY,
   DEFAULT_VALHALLA_SANDBOX_POLICY,
   resolveLobbyLayout,
   resolveValhallaSandbox,
@@ -65,6 +66,9 @@ import {
   DEFAULT_VALHALLA_SANDBOX,
   VALHALLA_SANDBOX_BOUNDS,
 } from "../../client/src/ui/platform/valhalla/valhallaSandboxRules";
+// 大廳集合令（GH#492）。⚠️ 同上：`lobbyRally.ts` 的 `DEFAULT_LOBBY_RALLY` 才是
+// **畫面真的在用的**那一份。它是葉節點（只 import @ggd/shared），node 環境拉得動。
+import { DEFAULT_LOBBY_RALLY } from "../../client/src/ui/platform/lobbyRally";
 import { readSchema } from "./configForms";
 
 const TAG = "adminui-lane-config-docs";
@@ -80,7 +84,7 @@ const META = ["id", "schema", "note"];
 const payload = (doc: Record<string, unknown>): Record<string, unknown> =>
   Object.fromEntries(Object.entries(doc).filter(([k]) => !META.includes(k)));
 
-const NEW_DOCS = ["lobby-layout", "valhalla-sandbox", "victory-podium"] as const;
+const NEW_DOCS = ["lobby-layout", "valhalla-sandbox", "victory-podium", "lobby-rally"] as const;
 
 describe("三份新 config 文件真的被接進出貨路徑 (adminui-lane-config-docs)", () => {
   it("★ 每一份出貨文件都被 collection union 收下 —— 2026-08-02 事故的那一步", () => {
@@ -147,6 +151,21 @@ describe("三份新 config 文件真的被接進出貨路徑 (adminui-lane-confi
     const parsed = zConfigLobbyLayoutDoc.parse({ ...doc, friendsShare: 0.7 });
     expect(resolveLobbyLayout(parsed).friendsShare).toBe(0.7);
     expect(resolveLobbyLayout(null)).toEqual(DEFAULT_LOBBY_LAYOUT_POLICY);
+  });
+
+  it("★ 出貨值 == 大廳真的在用的那一份（lobby-rally,逐格）", () => {
+    cover(TAG);
+    // GH#492 的三個住處：出貨文件 / shared 的保險絲 / 客戶端常數。三份一致是
+    // 今天的事實，不是機制 —— 所以逐格比對，而且比對的是**真的 import 進來的
+    // 常數**，⛔ 不是 grep 原始碼有沒有出現那串數字（失敗形態 ⑥/⑦）。
+    const doc = shipped("lobby-rally");
+    expect(payload(doc), "content/config/lobby-rally.json 與 DEFAULT_LOBBY_RALLY 不一致").toEqual({
+      ...DEFAULT_LOBBY_RALLY,
+    });
+    expect(DEFAULT_LOBBY_RALLY_POLICY).toEqual({ ...DEFAULT_LOBBY_RALLY });
+    // ⭐ owner 明說死的唯一一格：「最多等 10 秒」。⛔ 其餘七格是決策點,
+    // 它們的值本來就會被 owner 調,所以這裡不釘（第零守則：不要過度測試數值）。
+    expect(DEFAULT_LOBBY_RALLY.waitSeconds, "owner 2026-08-21:「最多等 10 秒」").toBe(10);
   });
 
   it("★ 出貨值 == 沙盒真的在用的那一份（valhalla-sandbox,逐格 + owner 明說的兩格）", () => {

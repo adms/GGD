@@ -48,6 +48,7 @@ import { PrepClock } from "./panels/PrepClock";
 import { ReadyButton } from "./panels/ReadyButton";
 import { MatchEndPanel } from "./panels/MatchEndPanel";
 import { RoundVictoryPanel } from "./panels/RoundVictoryPanel";
+import { HumanRosterPanel } from "./panels/HumanRosterPanel";
 import { IntermissionStage } from "./IntermissionStage";
 import { RoundEndVoice } from "./RoundEndVoice";
 import { VfxDebugPanel } from "./VfxDebugPanel";
@@ -206,6 +207,7 @@ const HUD_LABELS: HudBoundaryLabels = new Map<unknown, string>([
   [ReadyButton, "準備按鈕"],
   [RoundOverPill, "回合結束提示"],
   [RoundVictoryPanel, "回合勝利畫面"],
+  [HumanRosterPanel, "真人玩家名冊"],
   [MatchEndPanel, "結算畫面"],
   [VfxDebugPanel, "特效發射器診斷"],
 ]);
@@ -439,6 +441,11 @@ export function HudRoot(): React.JSX.Element {
           <RoundVictoryPanel />
         </>
       )}
+      {/* ⭐ 真人玩家名冊（GH#492）—— 姓名 · 積分 · 所選英雄 · 誰斷線了。
+          ⛔ 這裡**不寫相位條件**：該不該出現由 `rosterShows()` 判（選角 / 每回合
+          結算，各自一格後台開關 + 「場上至少幾個真人」）。把名單抄一份到 JSX 上
+          就是第二個住處，而它會在 owner 下一次改開關時安靜地過期。 */}
+      <HumanRosterPanel />
       {phase === "matchEnd" && <MatchEndPanel />}
     </HudBoundaryGroup>
   );

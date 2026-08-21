@@ -61,6 +61,19 @@ export interface SeatView {
   connected: boolean;
   driver: string;
   championId: string;
+  /**
+   * 這個座位的**積分**（平台 MMR），GH#492 —— owner:「明顯提示姓名與**積分**、
+   * 所選英雄」。0 = 平台沒給（bot 座位、dev/LAN 直連），名冊上不畫數字。
+   */
+  rating?: number;
+  /**
+   * 這個位子**屬於一個人**嗎（GH#492）。⛔ 不是 `driver !== "ai"` —— 一個斷線的
+   * 真人 driver 就是 "ai"，而 owner 要的名冊必須在那一刻仍然看得見他。
+   *
+   * OPTIONAL，理由和 `roundDeathTick` 一樣：手刻的夾具省略它就是在斷言
+   * 「這不是一個真人的位子」，而那正是缺席該有的意思。
+   */
+  human?: boolean;
   entityId: number;
   level: number;
   gold: number;
@@ -782,6 +795,10 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
       connected: ss.connected,
       driver: ss.driver,
       championId: ss.championId,
+      // GH#492 積分。`?? 0` 是給手刻 fixture 與舊 snapshot 的：缺席讀成「平台沒給」,
+      // 而那正是缺席該有的意思。
+      rating: ss.rating ?? 0,
+      human: ss.human ?? false,
       entityId: ss.entityId,
       level: ss.level,
       gold: ss.gold,

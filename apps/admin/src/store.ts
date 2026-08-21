@@ -267,6 +267,13 @@ export type Page =
    */
   | "practice"
   /**
+   * 大廳集合令 (`config/lobby-rally.json`, GH#492「創建房間最重要的就是拉人進來⋯
+   * 最多等 10 秒，包含 vs bot」) —— 同一個 `ConfigDocPage` 元件、同一條
+   * `putOverlayDoc`。⚠️ 消費端是**客戶端**（`ui/platform/lobbyRally.ts`），所以
+   * 存檔之後玩家**重整一次分頁**就生效，⛔ 不必重啟 shard。
+   */
+  | "lobbyRally"
+  /**
    * 排名獎勵 (`config/ranking.json`, owner 2026-08-17「MMR 倍率跟賽季積分也是類似
    * 的規則」) —— 真人倍率進 MMR／賽季積分的兩格 share，加上宿敵加成。
    * ⚠️ 它的消費端是 **Go**（`internal/ranking/standingsoverride.go`），而且是
@@ -663,6 +670,9 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // 練習模式 (GH#343): 同上。⛔ 這一頁決定練習房開不開得起來與作弊碼的第二扇門，
   // 少了 session gate 等於讓沒登入的人改得到那些開關。
   "practice",
+  // 大廳集合令 (GH#492): 同上。⛔ 漏掉 gate 的話沒登入的人改得到「一鍵開打要不要
+  // 先等人」與倒數秒數 —— 那是每一場比賽開場前的節奏。
+  "lobbyRally",
   // 排名獎勵 (owner 2026-08-17): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   // ⛔ 漏掉 gate 的後果在這一頁特別重: 它決定的是「一場比賽值多少排名分」,
   // 而沒登入的人改得到它 = 任何人都能替自己開加成。

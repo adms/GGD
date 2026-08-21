@@ -177,6 +177,11 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
     ss.connected = seat.sessionId !== null;
     ss.driver = seat.driverKind;
     ss.championId = seat.championId;
+    // GH#492 積分。⛔ 沒有這一行，欄位存在、平台也送了數字，而每一列的積分都是 0
+    // —— 「算出來了但從沒送到客戶端」（失敗形態②）。夾進 uint16 的理由見宣告。
+    ss.rating = Math.max(0, Math.min(seat.rating, 0xffff));
+    // GH#492：⛔ 這一格不可以從 driver 推 —— 斷線的真人 driver 就是 "ai"。
+    ss.human = seat.humanSeat;
     ss.ready = seat.ready;
     ss.lastAckSeq = humanDrivers.get(seatId)?.mailbox.lastSeq ?? 0;
     // PER-ROUND K/D (reset at each combat entry, never cumulative). The round-end

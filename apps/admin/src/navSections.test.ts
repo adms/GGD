@@ -265,6 +265,14 @@ describe("分類重編一頁都沒有掉", () => {
       // 2026-08-21：五級距總覽。⚠️ 它和上面三頁不同 —— 它**不編輯任何文件**，
       // 所以它也不在 SESSION_REQUIRED_PAGES 裡（唯讀主控台，同 hub / modelBudget）。
       "tierOverview",
+      // 2026-08-21 GH#492：大廳集合令（廣播確認視窗 / 倒數秒數 / 一鍵開打走不走
+      // 集合令 / 玩家名冊要不要出現）。⭐ owner 明說死的只有「最多等 10 秒」，
+      // 其餘七格是決策點 —— 而決策點就是第一守則要做成欄位的東西。
+      "lobbyRally",
+      // ⚠️ 2026-08-21 順手補上的基準線缺口：`apDamageScaling` 早就在 NAV 上，
+      // 而這份基準沒跟上，所以這條守衛從那次起就一直是紅的（它擋不了任何東西）。
+      // ⛔ 這一列不是新頁，是把基準線補回可以比較的狀態。
+      "apDamageScaling",
     ]);
     const added = [...after].filter((p) => !before.has(p) && !SINCE_BASELINE.has(p));
     expect(lost, `搬家把這些頁面弄丟了（元件還在，但左欄按不到）：${lost.join(", ")}`).toEqual([]);

@@ -61,12 +61,27 @@ import { cover } from "@ggd/shared/testkit/cover";
 
 /** The platform seam. Everything else in ./api is stubbed so no test fetches. */
 const startSoloMatch = vi.fn(async () => ({ matchId: "m_test", botFill: 11 }));
+// ⭐ GH#492：一鍵開打 2026-08-21 起走**大廳集合令**（建一間列在大廳的房 → 廣播 →
+// 等倒數），⛔ 不再是 POST /rooms/solo。這兩個是那條路的關節。
+const createRoom = vi.fn(async (settings: { mapId?: string }) => ({
+  room: { id: "r_test", name: "一鍵開打 · 等你上車", hostId: "me", status: "open", mapId: settings.mapId },
+  members: [{ accountId: "me", ready: false, isHost: true, localPlayers: 1 }],
+}));
+const rallyRoom = vi.fn(async () => ({
+  invited: 0,
+  inLobby: 1,
+  truncated: false,
+  expiresAt: Date.now() + 10_000,
+  waitSec: 10,
+}));
 
 vi.mock("./api", async (importOriginal) => {
   const real = await importOriginal<typeof import("./api")>();
   return {
     ...real,
     startSoloMatch,
+    createRoom,
+    rallyRoom,
     listOpenRooms: async () => ({ rooms: [] }),
     listFriends: async () => ({ friends: [], incoming: [], outgoing: [] }),
     leaderboard: async () => ({ rows: [], page: 1, pageSize: 20, total: 0 }),
@@ -226,6 +241,8 @@ function renderedShares(): number[] {
 beforeEach(async () => {
   gate.arm();
   startSoloMatch.mockClear();
+  createRoom.mockClear();
+  rallyRoom.mockClear();
   appStore.setState({
     screen: "lobby",
     lobbyView: "play",
@@ -456,7 +473,7 @@ describe("單人 vs BOT is the room browser's default room (GH#258)", () => {
     expect(list!.firstElementChild).toBe(card);
   });
 
-  it("pressing it goes through the SHIPPED bot-match path (POST /rooms/solo)", async () => {
+  it("pressing it goes through the SHIPPED bot-match path (GH#492 大廳集合令)", async () => {
     cover("lobby-default-room-merge");
     const card = container.querySelector<HTMLElement>("[data-ggd-default-room]")!;
     const play = [...card.querySelectorAll("button")].find((b) =>
@@ -467,9 +484,10 @@ describe("單人 vs BOT is the room browser's default room (GH#258)", () => {
     await act(async () => {
       play!.click();
     });
-    // #200: the seat is NOT minted while the one-time content load is pending —
-    // the merged entry inherits the fix because it presses the same action.
-    expect(startSoloMatch).not.toHaveBeenCalled();
+    // #200: nothing is asked of the platform while the one-time content load is
+    // pending — the merged entry inherits the fix because it presses the same
+    // action.
+    expect(createRoom).not.toHaveBeenCalled();
     expect(appStore.getState().botMatchBusy).toBe(true);
     expect(appStore.getState().screen).toBe("lobby");
 
@@ -478,7 +496,8 @@ describe("單人 vs BOT is the room browser's default room (GH#258)", () => {
       await Promise.resolve();
     });
     // Only now, and with the arena the card's own selector is showing.
-    expect(startSoloMatch).toHaveBeenCalledWith({ mapId: DEFAULT_MAP_ID });
+    expect(createRoom.mock.calls[0]?.[0]).toMatchObject({ mapId: DEFAULT_MAP_ID });
+    expect(rallyRoom, "⭐ owner:「最多等 10 秒，包含 vs bot」").toHaveBeenCalledTimes(1);
   });
 
   it("sends the arena the player PICKED on the card, not the default", async () => {
@@ -518,7 +537,7 @@ describe("單人 vs BOT is the room browser's default room (GH#258)", () => {
       gate.resolve();
       await Promise.resolve();
     });
-    expect(startSoloMatch).toHaveBeenCalledWith({ mapId: picked });
+    expect(createRoom.mock.calls[0]?.[0]).toMatchObject({ mapId: picked });
   });
 
   it("`pinned` is purely additive — a caller that passes nothing still renders", async () => {

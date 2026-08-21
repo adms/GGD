@@ -2,13 +2,11 @@ package friend
 
 import (
 	"net/http"
-	"sort"
 
 	"github.com/go-chi/chi/v5"
 
 	"github.com/ggd/platform/internal/auth"
 	"github.com/ggd/platform/internal/httpx"
-	"github.com/ggd/platform/internal/presence"
 )
 
 // ---- GET /lobby/online — 大廳線上玩家列表 -------------------------------------
@@ -81,22 +79,21 @@ func (h *Handlers) MountPlayable(r chi.Router) {
 	r.Get("/lobby/online", h.online)
 }
 
+// errPresenceUnavailable is the FAIL-LOUD answer when presence cannot be read.
+// An empty list would be indistinguishable from 「沒有人在線上」 — see the file
+// header. Shared with roster.go's livePlayable so both enumerations fail the
+// same way.
+var errPresenceUnavailable = httpx.Internal("presence unavailable")
+
 func (h *Handlers) online(w http.ResponseWriter, r *http.Request) {
 	me := auth.MustIdentity(r.Context())
 
-	ids, err := h.accounts.List(r.Context())
+	// The 「誰在線上而且能玩」 half is shared with the GH#492 rally broadcast
+	// (roster.go) so the two lists cannot disagree about who a lobby player is.
+	// Rows are already sorted by username there.
+	live, err := h.livePlayable(r.Context())
 	if err != nil {
 		httpx.WriteError(w, err)
-		return
-	}
-	// Deterministic input order → deterministic output for equal usernames.
-	sort.Strings(ids)
-
-	states, err := h.presence.GetMany(r.Context(), ids)
-	if err != nil {
-		// Fail LOUD: an empty list would be indistinguishable from "nobody is
-		// playing right now".
-		httpx.WriteError(w, httpx.Internal("presence unavailable"))
 		return
 	}
 
@@ -110,39 +107,20 @@ func (h *Handlers) online(w http.ResponseWriter, r *http.Request) {
 	}
 
 	rows := make([]OnlinePlayer, 0, 16)
-	for i, id := range ids {
-		if id == me.AccountID {
+	for _, a := range live {
+		if a.ID == me.AccountID {
 			continue // the viewer is not somebody to befriend
 		}
-		if states[i] == presence.StateOffline || states[i] == "" {
-			continue
-		}
-		if _, blocked := doc.Blocked[id]; blocked {
+		if _, blocked := doc.Blocked[a.ID]; blocked {
 			continue // I blocked them; they are not on my list
 		}
-		a, err := h.accounts.GetByID(r.Context(), id)
-		if err != nil {
-			continue // a presence key with no account file — nothing to show
-		}
-		// #126: a banned or not-yet-approved account is not a lobby player, so
-		// it is not on anybody's roster even if a stale presence key survives.
-		if a.Banned || !a.IsApproved() {
-			continue
-		}
 		rows = append(rows, OnlinePlayer{
-			ID:       id,
+			ID:       a.ID,
 			Username: a.Username,
-			State:    states[i],
-			Relation: relationOf(doc, id),
+			State:    a.State,
+			Relation: relationOf(doc, a.ID),
 		})
 	}
-
-	sort.Slice(rows, func(i, j int) bool {
-		if rows[i].Username != rows[j].Username {
-			return rows[i].Username < rows[j].Username
-		}
-		return rows[i].ID < rows[j].ID
-	})
 
 	total := len(rows)
 	truncated := false

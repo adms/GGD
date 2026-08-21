@@ -32,6 +32,7 @@ import { useApp } from "./store";
 import { memberSeatLabel, seatSum } from "./couch";
 import { connectedPadIndices, listPadSources } from "../../input/GamepadInput";
 import { Btn, TextInput, Panel, Badge, CodeBox, unescapeHtml, ACCENT, OK, DANGER } from "./widgets";
+import { rallyCountdown } from "./lobbyRally";
 import { arenaLabel } from "./maps";
 import { GOLD, TEXT_DIM, TEXT_MAIN } from "../theme";
 
@@ -97,7 +98,10 @@ function ChatBox(): React.JSX.Element {
   const logRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    logRef.current?.scrollTo({ top: logRef.current.scrollHeight });
+    // ⚠️ 可選呼叫：jsdom/happy-dom 沒有實作 `Element.scrollTo`，而 GH#492 之後
+    // 一鍵開打會真的把玩家帶進這一頁，所以每一支渲染大廳的測試都會走到這裡。
+    // 瀏覽器一律有它，⇒ 這一個 `?.` 只影響測試環境，⛔ 不改任何行為。
+    logRef.current?.scrollTo?.({ top: logRef.current.scrollHeight });
   }, [chat.length]);
 
   const submit = (): void => {
@@ -146,6 +150,60 @@ function ChatBox(): React.JSX.Element {
   );
 }
 
+/**
+ * 主揪這一側的集合令倒數（GH#492）。
+ *
+ * ⚠️ 它**只畫**：什麼時候真的開場由 `store.beginRally` 的計時器決定，而那個計時器
+ * 用的是**同一個** `expiresAt`（伺服器蓋的）。⛔ 兩邊各自倒數會讓畫面寫著 3 秒
+ * 而比賽已經開了 —— 那正是 `expiresAt` 而不是 `waitSec` 當基準的理由。
+ */
+function RallyCountdownStrip(props: {
+  expiresAt: number;
+  waitSec: number;
+  invited: number;
+  onStartNow: () => void;
+}): React.JSX.Element {
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 200);
+    return () => clearInterval(id);
+  }, []);
+  const cd = rallyCountdown(props.expiresAt, props.waitSec, now);
+  return (
+    <div
+      style={{
+        marginTop: 8,
+        padding: "8px 10px",
+        borderRadius: 8,
+        background: "rgba(90,120,200,0.18)",
+        border: `1px solid ${ACCENT}`,
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12, color: TEXT_MAIN }}>
+        <span style={{ flex: 1 }}>
+          📣 已通知大廳 <b>{props.invited}</b> 人 —— <b>{cd.secondsLeft}</b> 秒後開打
+        </span>
+        <Btn small kind="primary" onClick={props.onStartNow}>
+          不等了
+        </Btn>
+      </div>
+      <div style={{ height: 5, background: "#1b2233", borderRadius: 3, overflow: "hidden", marginTop: 6 }}>
+        <div
+          style={{
+            height: "100%",
+            width: `${Math.round(cd.fraction * 100)}%`,
+            background: ACCENT,
+            transition: "width 200ms linear",
+          }}
+        />
+      </div>
+      <div style={{ fontSize: 10, color: TEXT_DIM, marginTop: 4 }}>
+        沒趕上的位子會由 BOT 補上（owner 2026-08-21:「最多等 10 秒，包含 vs bot」）
+      </div>
+    </div>
+  );
+}
+
 export function RoomView(): React.JSX.Element | null {
   const room = useApp((s) => s.room);
   const meId = useApp((s) => s.account?.id);
@@ -159,6 +217,10 @@ export function RoomView(): React.JSX.Element | null {
   const updateRoomSettings = useApp((s) => s.updateRoomSettings);
   const startMatch = useApp((s) => s.startMatch);
   const leaveRoom = useApp((s) => s.leaveRoom);
+  // ⭐ 大廳集合令（GH#492）—— 主揪這一台擁有倒數，見 `store.beginRally`。
+  const rally = useApp((s) => s.rally);
+  const beginRally = useApp((s) => s.beginRally);
+  const startRallyNow = useApp((s) => s.startRallyNow);
 
   useEffect(() => {
     const t = setInterval(() => void refreshRoom(), ROOM_POLL_MS);
@@ -272,6 +334,31 @@ export function RoomView(): React.JSX.Element | null {
                 dismiss
               </Btn>
             </div>
+          )}
+
+          {/* ⭐ 集合令倒數（GH#492）—— owner:「最多等 10 秒」。
+              ⚠️ 主揪必須**看得見**這件事正在發生：他按了「建立房間」之後畫面就
+              自己在倒數，而十秒後比賽會直接開始。一個看不見的倒數就是一個
+              「我什麼都沒按它就開打了」的缺陷。 */}
+          {rally && rally.roomId === room.room.id && (
+            <RallyCountdownStrip
+              expiresAt={rally.expiresAt}
+              waitSec={rally.waitSec}
+              invited={rally.invited}
+              onStartNow={() => void startRallyNow()}
+            />
+          )}
+          {/* 沒有在集合時，主揪可以再喊一次（有人剛上線的時候）。 */}
+          {iAmHost && !rally && room.room.status === "open" && (
+            <Btn
+              small
+              kind="ghost"
+              style={{ marginTop: 8 }}
+              title="對大廳裡的每一個人再送一次確認視窗"
+              onClick={() => void beginRally(room.room.id)}
+            >
+              📣 再喊一次大廳
+            </Btn>
           )}
 
           {/* ready row. 英雄在場內的英雄選擇畫面挑 —— 見檔頭 GH#491。 */}

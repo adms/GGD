@@ -76,6 +76,12 @@ export interface MatchRoomOptions {
     accountId: string;
     displayName: string;
     championId?: string;
+    /**
+     * 平台積分（MMR），GH#492。owner 2026-08-21:「明顯提示姓名與**積分**、所選
+     * 英雄」。⚠️ 平台從一開始就在 `gamelink.Seat.MMR` 送它，只是這裡沒有欄位收，
+     * 所以它一路被丟掉 —— 缺席仍然合法（dev/LAN 直連沒有平台）。
+     */
+    rating?: number;
     owned?: string[];
   }[];
   callbackUrl?: string;
@@ -892,6 +898,10 @@ export class MatchRoom extends Room<MatchState> {
     const seat = this.ctl.seats.get(seatId)!;
     seat.sessionId = client.sessionId;
     seat.accountId = accountId;
+    // GH#492：dev/LAN 直連接管的是一個**天生 bot** 的座位，而坐下的是一個人。
+    // ⛔ 少了這一行，那位玩家在名冊上會被當成 bot（而平台這條路早就在建構時
+    // 標好了，所以這一行只影響 dev 那條路）。⚠️ 只翻成 true,永不回頭。
+    seat.humanSeat = true;
     // NAME the taken-over seat (#156). The dev/LAN direct-join path claims an AI
     // seat that still carries the generic "Bot N" label stamped at construction,
     // so the human's own champion shows "Bot 0". Overwrite ONLY a generic

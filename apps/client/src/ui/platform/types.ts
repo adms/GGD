@@ -275,6 +275,21 @@ export interface InviteMsg {
   roomName: string;
   from: string;
   token: string;
+  /**
+   * ⭐ 大廳集合令 (GH#492) —— 整個大廳都被叫了，所以要開**強制確認視窗**而不是
+   * 角落的小提示。缺席 = 一對一的私人邀請（2026-08-21 之前唯一的那種）。
+   */
+  broadcast?: boolean;
+  /** 主揪的名字與積分。owner:「明顯提示**姓名與積分**」—— 收到的人查不到這兩格。 */
+  fromName?: string;
+  fromMmr?: number;
+  /**
+   * **伺服器蓋的**倒數截止時間（unix ms）。⛔ 不可以用「我收到訊息的那一刻 + 10 秒」
+   * 代替：sockets 送達時間不同，各自起算會讓比賽已經開打而某個人的視窗還在數。
+   */
+  expiresAt?: number;
+  /** 倒數的**跨距**（秒）—— 進度條要它，光有終點畫不出來。 */
+  waitSec?: number;
 }
 
 export interface ChatMsg {

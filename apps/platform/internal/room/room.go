@@ -184,6 +184,8 @@ type Service struct {
 	pres    *presence.Service
 	starter MatchStarter
 	owns    ChampionOwnership
+	// roster is the GH#492 大廳集合令 seam (rally.go); nil disables broadcasting.
+	roster LobbyRoster
 }
 
 // New builds the room service. starter may be set later via SetStarter.
@@ -612,6 +614,28 @@ func (s *Service) UpdateSettings(ctx context.Context, actor, roomID string, st S
 // botFill = 12 − humans and hands off to the gamelink seam. On success the
 // room closes (leaves rooms:open) and members flip to in-match presence.
 func (s *Service) Start(ctx context.Context, actor, roomID string) (StartInfo, error) {
+	return s.start(ctx, actor, roomID, false)
+}
+
+// StartIgnoringReady is Start with the ready gate lifted — the GH#492 rally's
+// 「最多等 10 秒」 deadline.
+//
+// ⚠️ WHY THE GATE HAS TO BE LIFTABLE AT ALL. A rally start is a DEADLINE, not a
+// consensus: owner said 「最多等 10 秒⋯時間到就用 bot 補位開始」. Meanwhile the room
+// stays listed while it rallies, so a stranger can walk in from the room browser
+// at second 9 and never press ready. With the gate in force that lobby-goer
+// silently converts the host's countdown into a start that fails forever, and the
+// visible symptom is 「按了開始，什麼都沒發生」.
+//
+// Lifting it costs nothing the room did not already concede: readiness is a
+// courtesy flag in the LOBBY, while the real 選角 happens inside the match
+// (the champSelect phase), so a not-ready member loses no choice by being taken
+// in. Host-only, exactly like Start.
+func (s *Service) StartIgnoringReady(ctx context.Context, actor, roomID string) (StartInfo, error) {
+	return s.start(ctx, actor, roomID, true)
+}
+
+func (s *Service) start(ctx context.Context, actor, roomID string, ignoreNotReady bool) (StartInfo, error) {
 	rm, err := s.requireHost(ctx, actor, roomID)
 	if err != nil {
 		return StartInfo{}, err
@@ -623,9 +647,11 @@ func (s *Service) Start(ctx context.Context, actor, roomID string) (StartInfo, e
 	if err != nil {
 		return StartInfo{}, err
 	}
-	for _, m := range members {
-		if !m.Ready && m.AccountID != rm.HostID {
-			return StartInfo{}, httpx.Conflict("all players must be ready")
+	if !ignoreNotReady {
+		for _, m := range members {
+			if !m.Ready && m.AccountID != rm.HostID {
+				return StartInfo{}, httpx.Conflict("all players must be ready")
+			}
 		}
 	}
 	// Seat-capacity gate: Σ localPlayers can never exceed the 12 seats.

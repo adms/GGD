@@ -304,6 +304,11 @@ export interface SeatSpec {
   accountId?: string;
   displayName?: string;
   championId?: string;
+  /**
+   * 這個座位的平台積分（MMR），GH#492 —— owner:「明顯提示姓名與**積分**、所選英雄」。
+   * 缺席 = 平台沒給（bot / dev 直連），名冊上不畫數字。
+   */
+  rating?: number;
   isBot: boolean;
 }
 
@@ -1217,6 +1222,12 @@ export class MatchController {
       );
       seat.accountId = spec.accountId ?? `bot-${spec.seatId}`;
       seat.displayName = spec.displayName ?? (spec.isBot ? `Bot ${spec.seatId}` : `Player ${spec.seatId}`);
+      // GH#492 積分。⚠️ 夾進 [0, uint16] 是因為它上線是 `SeatState.rating`
+      // 的 uint16 —— 一個沒有夾的 3 萬分會在網路層繞回成 0，而寫端看起來完全正確。
+      seat.rating = Math.max(0, Math.min(Math.round(spec.rating ?? 0), 0xffff));
+      // GH#492：平台保留給真人的位子。dev/LAN 直連接管一個 bot 座位時，
+      // `MatchRoom.onJoin` 會再把它翻成 true（那也是一個真人）。
+      seat.humanSeat = !spec.isBot;
       if (spec.championId) seat.championId = spec.championId;
       this.seats.set(seatId, seat);
       this.specs.set(seatId, spec);

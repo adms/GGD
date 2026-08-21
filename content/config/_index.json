@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "fdc38e00a516",
+  "hash": "41a083b3331b",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -211,6 +211,12 @@
       "path": "config/lobby-layout.json",
       "hash": "bee90198878d",
       "size": 2038
+    },
+    {
+      "id": "lobby-rally",
+      "path": "config/lobby-rally.json",
+      "hash": "fddddbc4c986",
+      "size": 1376
     },
     {
       "id": "mana-economy",

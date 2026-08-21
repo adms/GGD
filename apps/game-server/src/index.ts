@@ -118,6 +118,12 @@ interface InternalMatchRequest {
     team: number;
     slot: number;
     champion?: string;
+    /**
+     * 平台積分 (GH#492). ⚠️ `gamelink.Seat` 的 JSON tag 就是 `mmr` —— 這個欄位名
+     * 必須**逐位元組**對上，打錯不會有人報錯：欄位靜靜消失，名冊上每個人的積分
+     * 都是 0，而畫面看起來完全正常（失敗形態②）。
+     */
+    mmr?: number;
     isBot?: boolean;
     // Task #201: the account's playable champion set (free roster ∪ unlocked),
     // resolved server-side by the platform (gamelink.PlayableChampions) and
@@ -185,6 +191,9 @@ async function handleInternalMatches(req: IncomingMessage, res: ServerResponse, 
       // Pass through the account's owned set (task #201). Only a real array
       // enrolls the seat for enforcement; an absent field leaves it unenforced.
       owned: Array.isArray(s.owned) ? s.owned.filter((x): x is string => typeof x === "string") : undefined,
+      // GH#492 積分 —— 平台的 `mmr` 換成引擎那一側的名字 `rating`。⛔ 少了這一行，
+      // 平台送對了數字也會在這道門口消失,而名冊上每一列的積分都是 0。
+      rating: typeof s.mmr === "number" && Number.isFinite(s.mmr) ? s.mmr : undefined,
     }));
 
   const room = await matchMaker.createRoom("match", {

@@ -4836,6 +4836,141 @@ export const zConfigVfxCleanupDoc = z
   .strict();
 
 /**
+ * config.feel-fx@1 —— **爽度**那一層 (`content/config/feel-fx.json`, GH#494)。
+ *
+ * owner 2026-08-21 逐字：
+ *   「殭屍死掉後**掉落小金幣**停留 **1秒**後**動畫效果軌跡(貝茲曲線加速)吸回到
+ *     擊殺的英雄**搭配**輕音效** **提高爽度 模仿肉鴿遊戲的氛圍感**」
+ *   「**連擊也會有像 candy crush 類似連段音階升高的音效**刺激玩家帶來獎勵感」
+ *   「你在施展技能的時候會釋放一個粒子特效，最後會飄散到天空，這個**特效存活
+ *     時間真的太長了，請你砍半，不需要後半段飄到天空**」
+ *
+ * ⭐ 這一份文件裡**沒有一格會改變任何人拿到的金幣**。擊殺賞金今天就已經在
+ * `sim/systems/MobSystem.ts` 發完了（`grantGold` / `payMobBounty`），這裡描述的
+ * 是那一刻**看得到、聽得到**的部分。`goldPickup.enabled = false` ⇒ 逐位元回到
+ * 這一版之前：錢照給，只是不畫不響。
+ *
+ * ⚠️ 為什麼是自己一份文件而不是塞進 `config.vfx-cleanup@1`：那一份管的是
+ * **回收**（池子留幾個、發射器上限），這一份管的是**手感**（飛多久、彎多高、
+ * 音階升幾階）。兩者一起調的機會是零，而混在一起會讓「關掉爽度」這個止血閥
+ * 順手把回收也關掉。
+ *
+ * ⚠️ 每一格都是 number / boolean，⛔ 沒有 enum：後台通用表單引擎的
+ * `deriveFields` 只認得這兩種，一個 enum 會被歸進 `unsupported` 而那一頁會紅。
+ * 「用哪一種緩動」因此是 `easePower` 這個**連續**的數字，而不是三選一 ——
+ * 好處是 owner 可以把它調到「剛剛好」，⛔ 不必在三個別人挑好的名字裡選。
+ */
+export const zConfigFeelFxDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.feel-fx@1"),
+    note: z.string().optional(),
+    /** 殭屍死了掉一枚小金幣、停一下、彎著飛回擊殺者身上的那一段。 */
+    goldPickup: z
+      .object({
+        /**
+         * 總開關。false = 完全不畫金幣、不播吸取音效，玩家拿到的錢**一毛不差**
+         * （賞金在 sim 裡早就發完了）。這是止血閥：畫面太吵或手機掉幀時一鍵回到
+         * 這個功能存在之前。
+         */
+        enabled: z.boolean(),
+        /**
+         * 金幣落在屍體上之後，**停在原地閃多久**才開始飛（秒）。owner 指定 1 秒。
+         * 調小 = 錢一掉就被吸走，節奏更快但看不清楚掉了幾枚；調大 = 戰場上會同時
+         * 躺著更多枚金幣，畫面更「肉鴿」但也更亂。
+         */
+        hoverSeconds: z.number().min(0).max(5),
+        /**
+         * 從起飛到被吸進英雄身上要**飛多久**（秒）。這一格決定「吸力」有多強：
+         * 短 = 啪一下就進口袋（爽但幾乎看不到軌跡），長 = 看得清楚它繞過來，
+         * 但太長會讓死亡與獎勵之間斷開。
+         */
+        flightSeconds: z.number().min(0.05).max(3),
+        /**
+         * **加速的力道**。1 = 等速直線（owner 明說⛔ 不要的那個）；越大越像被磁鐵
+         * 吸走 —— 起步慢慢飄、末段暴衝進身體。這一格就是 owner 說的「貝茲曲線加速」
+         * 裡的**加速**那一半（彎度是下面那一格）。
+         */
+        easePower: z.number().min(1).max(6),
+        /**
+         * 貝茲曲線的**控制點抬多高**（世界單位）。0 = 退化成直線（⛔ owner 不要的
+         * 那個）；越大金幣拋得越高、弧越誇張。太大會讓金幣飛出畫面上緣再掉回來。
+         */
+        arcHeight: z.number().min(0).max(8),
+        /**
+         * 同時最多讓幾枚金幣在**飛**。超過的直接算成已吸取（錢本來就已經到手了），
+         * 只是不畫那一段軌跡。這一格是畫面預算，⛔ 不是掉落上限。
+         */
+        maxConcurrent: z.number().int().min(1).max(256),
+        /**
+         * 兩發吸取音效之間至少隔幾毫秒。一次 AoE 掃掉一整排殭屍時，這一格決定
+         * 你聽到的是「叮」還是一團糊掉的噪音。⛔ 被擋掉的那幾發是**不播**，
+         * 不是排隊等一下再播（排隊只會把噪音延後）。
+         */
+        sfxThrottleMs: z.number().int().min(0).max(2000),
+        /**
+         * 吸取音效的音量倍率（乘在 `audio-map` 那一格自己的 gain 上）。owner 要的是
+         * 「**輕**」音效 —— 一場幾十隻殭屍，這一格開太大就會蓋掉技能與打擊聲。
+         */
+        sfxVolume: z.number().min(0).max(2),
+      })
+      .strict(),
+    /** 連段音階：連擊越長，吸金幣的「叮」越高，⭐ 到頂就不再升（⛔ 不刺耳）。 */
+    comboPitch: z
+      .object({
+        /**
+         * 總開關。false = 每一枚金幣都用**同一個**音高（連擊照樣算、HUD 照樣顯示，
+         * 只是聽不出高低）。
+         */
+        enabled: z.boolean(),
+        /**
+         * 連擊每前進一段，音高升幾個**半音**。1 = 半音階（candy crush 的那種爬升），
+         * 2 = 全音階（更明顯但爬得更快就到頂）。0 = 等於關掉。
+         */
+        semitonesPerStep: z.number().min(0).max(4),
+        /**
+         * 最多升到第幾段就**停住**。這一格是「不刺耳」的保證：12 段 × 1 半音 = 剛好
+         * 一個八度。越大越尖，⛔ 到某個點之後聽起來就只是壞掉。
+         */
+        maxSteps: z.number().int().min(0).max(24),
+        /**
+         * 多久沒有再擊殺就把音階**歸零**（秒）。⚠️ 這是**聲音**的記憶，與 sim 的連擊
+         * 視窗（`sim/combat/killCombo.ts` 的 5 秒）是兩件事：畫面上的連殺數字可以還
+         * 亮著，而音階已經回到起點 —— 反過來也行。出貨值刻意設成一樣，所以耳朵與
+         * 眼睛預設是同步的。
+         */
+        resetAfterSeconds: z.number().min(0.5).max(30),
+      })
+      .strict(),
+    /**
+     * 施法光柱那一圈**往上飄的粒子**（`vfx/castPillar.ts` 的 `moteSpec`）。
+     *
+     * owner 2026-08-21：「特效存活時間真的太長了，請你砍半，不需要後半段飄到天空」。
+     * ⚠️ 只砍壽命是不夠的 —— 那會變成「飄到一半**突然消失**」。所以上升本身也要在
+     * 壽命結束**之前**收斂（`gravityY` 小一點、`drag` 大一點），粒子才會自然停住。
+     */
+    castMotes: z
+      .object({
+        /** 這一圈粒子最短活幾秒。與下面那格一起決定「餘燼在畫面上留多久」。 */
+        lifetimeMinSec: z.number().min(0.05).max(3),
+        /** 最長活幾秒。調大 = 回到 GH#494 之前那種「一路飄到天上」的畫面。 */
+        lifetimeMaxSec: z.number().min(0.05).max(3),
+        /**
+         * 往**上**的重力（全 repo 唯一一處重力是反的）。它就是「飄到天空」那個
+         * 動作本身：越大爬得越高越久，0 = 粒子原地擴散不上升。
+         */
+        gravityY: z.number().min(0).max(20),
+        /**
+         * 空氣阻力（每秒保留幾成速度）。越小煞得越快 —— 這是讓上升在**還看得見的
+         * 時候**就停下來的那一格，⛔ 不是靠壽命把它切掉。1 = 完全不減速。
+         */
+        drag: z.number().min(0.1).max(1),
+      })
+      .strict(),
+  })
+  .strict();
+
+/**
  * config.shield@1 — 護盾規則 (GH#289 lane P6)。
  *
  * 目前只有一格:**同一個單位身上有多個護盾池時,誰先被吃掉**。語意、三個值的
@@ -6528,6 +6663,95 @@ export const zConfigLobbyLayoutDoc = z
   .strict();
 
 /**
+ * ⭐【`config.lobby-rally@1`】—— **大廳集合令**（GH#492）。
+ *
+ * owner 2026-08-21 逐字：
+ *
+ * > 「**創建房間最重要的就是拉人進來**，請你將**所有線上在大廳的人都跳出確認視窗**
+ * >  是否進入房間一起開始，同意後就一起進入開始遊戲，**最多等 10 秒**，
+ * >  **包含 vs bot**，若有其他玩家一起進入房間遊戲，也請出現**明顯提示姓名與積分、
+ * >  所選英雄**，**每回合結算也都要特別再提示一次**，因為**有可能斷線離開或連線
+ * >  回來房間繼續遊戲**」
+ *
+ * ⭐ 「**最多等 10 秒**」是這一族唯一被 owner 說死的數字，其餘每一格都是
+ * **決策點**（第一守則：「心裡出現要選 A 還是 B」的那些），所以它們是欄位而不是
+ * 常數 —— 而且 `enabled` 那一格就是第〇·六守則要的**一鍵 rollback**：關掉它，
+ * 一鍵開打回到 2026-08-21 之前那條「立刻開，不等人」的路。
+ *
+ * ⚠️ 這一份**真的有執行期消費端**（⛔ 不像 `lobby-layout` 那一份）：
+ * `apps/client/src/ui/platform/lobbyRally.ts` 的 `activeLobbyRally()` 讀
+ * `Configs.tryGet(LOBBY_RALLY_DOC_ID)`，和 `CameraRig` 讀 `config.camera@1`
+ * 同一條路。⇒ 後台存檔 → 下一次載入內容就生效，⛔ 不必重建映像。
+ *
+ * ⚠️ 伺服器那一端**刻意只有柵欄，沒有政策**：`waitSeconds` 由客戶端送上去，
+ * `internal/room/rally.go` 只把它夾進 [1, 120] 的傳輸界。理由和
+ * `room.MatchSettings` 一模一樣 —— 界線抄第二份，drift 的那一份會安靜地拒絕
+ * 主揪有權設定的值，而且看起來完全正常。
+ */
+export const LOBBY_RALLY_DOC_ID = "lobby-rally";
+
+export const zConfigLobbyRallyDoc = z
+  .object({
+    id: z.literal(LOBBY_RALLY_DOC_ID),
+    schema: z.literal("config.lobby-rally@1"),
+    note: z.string().optional(),
+    /**
+     * 總開關。⛔ 關掉 = 建房不再廣播、一鍵開打回到「立刻開」。
+     *
+     * ⭐ 預設 **on**，因為第〇·六守則說「優先權大的更新後都是預設啟動」——
+     * 開關存在是為了**回頭**，不是為了觀望。
+     */
+    enabled: z.boolean(),
+    /**
+     * 集合令的倒數秒數。⭐ owner 明說 **10**。
+     *
+     * 上界 120 是傳輸柵欄（伺服器同界）：再長的等待不是「拉人」，是把主揪關在
+     * 一個他自己按不掉的畫面裡。下界 3 是「來得及看清楚視窗上寫什麼」。
+     */
+    waitSeconds: z.number().min(3).max(120),
+    /**
+     * ⭐ owner 明說的「**包含 vs bot**」：一鍵開打也走同一條集合令
+     * （建 listed 房 → 廣播 → 等 → bot 補位開始），⛔ 不是兩條流程。
+     *
+     * 關掉 = 一鍵開打退回 `POST /rooms/solo`（不列房、不等人、立刻開）。
+     * ⚠️ **練習模式永遠走 solo 那條路**，跟這一格無關：練習房是測試碼的鑰匙，
+     * 一間有旁人的練習房＝作弊房（見 `room.Create()` 的檔頭）。
+     */
+    includeBotMatch: z.boolean(),
+    /**
+     * 倒數到期時，⛔ 不管有沒有人按過「準備」就開始。
+     *
+     * 決策點：集合令是**期限**不是共識。關掉它的話，一個從房間列表走進來、
+     * 從不按準備的路人就能讓主揪的倒數永遠開不了場，而畫面上只會顯示
+     * 「按了開始，什麼都沒發生」。
+     */
+    startIgnoresReady: z.boolean(),
+    /**
+     * 按下確認視窗的「加入」＝同時標記準備好（同一個 request）。
+     *
+     * 決策點：關掉的話玩家要在倒數剩不到幾秒時再按一次準備，而那一趟來回
+     * 正好是開場會把他丟下的那個窗口。
+     */
+    readyOnAccept: z.boolean(),
+    /**
+     * 場上要有幾個**真人**才顯示玩家名冊。⭐ owner 的條件句是
+     * 「**若有其他玩家**一起進入房間遊戲」—— 2 就是那句話的直譯。
+     *
+     * 填 1 = 連單機 vs bot 也永遠顯示（除錯時有用）。
+     */
+    rosterMinHumans: z.number().int().min(1).max(12),
+    /**
+     * ⭐ owner 明說的「**每回合結算也都要特別再提示一次**」。
+     * 他自己給了理由：「因為**有可能斷線離開或連線回來房間繼續遊戲**」——
+     * ⛔ 這不是裝飾，是斷線重連之後「我現在跟誰在打」的唯一資訊來源。
+     */
+    showRosterInSettlement: z.boolean(),
+    /** 選角階段（＝一起進場的那一刻）也顯示一次名冊。 */
+    showRosterInChampSelect: z.boolean(),
+  })
+  .strict();
+
+/**
  * config.valhalla-sandbox@1 — 英靈殿技能試放空間的規則（GH#254）。
  *
  * owner 原話:「英靈殿 多一個施展技能小模擬空間(但人不會移動，鏡頭永遠跟著人)
@@ -7589,6 +7813,10 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigFormVisualsDoc,
   zConfigModelLodDoc,
   zConfigVfxCleanupDoc,
+  // 爽度特效（GH#494，owner 2026-08-21）。⚠️ 漏掉這一行 = 一份 feel-fx.json 進了
+  // content/ 之後**整份**內容驗證失敗 → fail-open 退回 2 隻骨架英雄，而網站看起來
+  // 完全正常（2026-08-02 事故的形狀）。
+  zConfigFeelFxDoc,
   zConfigRoundGradeDoc,
   zConfigShieldDoc,
   zConfigBlockDoc,
@@ -7656,6 +7884,9 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   // 完全正常。那正是 2026-08-02 線上壞掉四小時的根因（roster / boss-intro /
   // item-card / victory-fx 四個 tag 同時漏掉）。
   zConfigLobbyLayoutDoc,
+  // 大廳集合令（GH#492，owner 2026-08-21）。⚠️ 漏掉這一行 = 一份 lobby-rally.json
+  // 進了 content/ 之後整份內容驗證失敗 → 退回 2 隻骨架英雄，而網站看起來完全正常。
+  zConfigLobbyRallyDoc,
   zConfigValhallaSandboxDoc,
   zConfigVictoryPodiumDoc,
   // 位移級距（GH#318，owner 2026-08-13）。⚠️ 漏掉這一行 = 內容整份驗證失敗 → 骨架英雄。
@@ -7775,6 +8006,8 @@ export type ConfigFormVisualsDoc = z.infer<typeof zConfigFormVisualsDoc>;
 export type ModelLodTierName = z.infer<typeof zModelLodTier>;
 export type ConfigModelLodDoc = z.infer<typeof zConfigModelLodDoc>;
 export type ConfigVfxCleanupDoc = z.infer<typeof zConfigVfxCleanupDoc>;
+/** 爽度特效（`content/config/feel-fx.json`，GH#494）。 */
+export type ConfigFeelFxDoc = z.infer<typeof zConfigFeelFxDoc>;
 export type ConfigShieldDoc = z.infer<typeof zConfigShieldDoc>;
 export type ConfigBlockDoc = z.infer<typeof zConfigBlockDoc>;
 export type ConfigAugmentFilterDoc = z.infer<typeof zConfigAugmentFilterDoc>;
@@ -7889,6 +8122,45 @@ export const DEFAULT_VFX_CLEANUP: ConfigVfxCleanupDoc = {
   // 三個住處都有它：這裡 · Zod（`.optional()`，線上舊 override 沒有這一格）·
   // `content/config/vfx-cleanup.json`。
   purgeVictoryFxOnCombatStart: true,
+};
+
+/**
+ * 出貨預設 —— `content/config/feel-fx.json` 讀不到（舊部署 / 內容掛掉 / 被存壞的
+ * override）時，`readFeelFx` 回退到的就是這一份。
+ *
+ * ⚠️ 每一格都要和 `content/config/feel-fx.json` 一字不差 ——
+ * `apps/client/src/vfx/feelFx.test.ts` 的 drift 斷言在守。
+ *
+ * ⭐ 為什麼保險絲是**開著**的（`enabled: true`）：這一層碰不到任何一塊錢，
+ * 它只決定「看不看得到」。讀不到內容就靜音掉 owner 明說要的爽度，是把一個
+ * 內容故障翻譯成一個設計倒退（`arenaFire` 那格是相反的方向，因為 owner 明說
+ * 要「全部場地都去掉」—— 保險絲要站在 owner 說過的那一邊）。
+ */
+export const DEFAULT_FEEL_FX: ConfigFeelFxDoc = {
+  id: "feel-fx",
+  schema: "config.feel-fx@1",
+  goldPickup: {
+    enabled: true,
+    hoverSeconds: 1,
+    flightSeconds: 0.42,
+    easePower: 3,
+    arcHeight: 1.9,
+    maxConcurrent: 32,
+    sfxThrottleMs: 55,
+    sfxVolume: 0.32,
+  },
+  comboPitch: {
+    enabled: true,
+    semitonesPerStep: 1,
+    maxSteps: 12,
+    resetAfterSeconds: 5,
+  },
+  castMotes: {
+    lifetimeMinSec: 0.175,
+    lifetimeMaxSec: 0.35,
+    gravityY: 3,
+    drag: 0.7,
+  },
 };
 
 /**
@@ -8088,6 +8360,57 @@ export function resolveLobbyLayout(
     minSlotHeightPx: doc.minSlotHeightPx,
     splitMinHeightPx: doc.splitMinHeightPx,
     stackBelowWidthPx: doc.stackBelowWidthPx,
+  };
+}
+
+// ─────────────────────── 大廳集合令（GH#492）────────────────────────────
+
+export type ConfigLobbyRallyDoc = z.infer<typeof zConfigLobbyRallyDoc>;
+
+/** 去掉 id/schema/note 的殼之後,程式真正讀的那一份。 */
+export type LobbyRallyPolicyDoc = Omit<ConfigLobbyRallyDoc, "id" | "schema" | "note">;
+
+/**
+ * 出貨預設（＝內容載不到時的保險絲）。
+ *
+ * ⭐ `waitSeconds: 10` 是 owner 明說的那一格；其餘七格是決策點，預設值選的是
+ * 「照 owner 的話做」的那一邊（第〇·六守則：優先權大的更新預設啟動）。
+ *
+ * ⚠️ 每一格都必須和 `apps/client/src/ui/platform/lobbyRally.ts` 的
+ * `DEFAULT_LOBBY_RALLY` 一字不差 —— 那一份才是畫面真的在用的。
+ * `apps/admin/src/laneConfigDocs.test.ts` 逐格比對兩邊,差一格就紅。
+ */
+export const DEFAULT_LOBBY_RALLY_POLICY: LobbyRallyPolicyDoc = {
+  enabled: true,
+  waitSeconds: 10,
+  includeBotMatch: true,
+  startIgnoresReady: true,
+  readyOnAccept: true,
+  rosterMinHumans: 2,
+  showRosterInSettlement: true,
+  showRosterInChampSelect: true,
+};
+
+/**
+ * 文件 → 政策。缺席／壞掉一律回退到出貨預設。
+ *
+ * ⚠️ 這裡**沒有**「載不到就關掉功能」這個選項:一份載不到的內容文件是
+ * 2026-08-01 骨架事故那一條路,而在那條路上把集合令靜靜關掉,會讓「內容全毀」
+ * 長得跟「owner 昨天關掉了集合令」一模一樣 —— 兩個都不會有人看見。
+ */
+export function resolveLobbyRally(
+  doc: ConfigLobbyRallyDoc | null | undefined,
+): LobbyRallyPolicyDoc {
+  if (!doc) return DEFAULT_LOBBY_RALLY_POLICY;
+  return {
+    enabled: doc.enabled,
+    waitSeconds: doc.waitSeconds,
+    includeBotMatch: doc.includeBotMatch,
+    startIgnoresReady: doc.startIgnoresReady,
+    readyOnAccept: doc.readyOnAccept,
+    rosterMinHumans: doc.rosterMinHumans,
+    showRosterInSettlement: doc.showRosterInSettlement,
+    showRosterInChampSelect: doc.showRosterInChampSelect,
   };
 }
 

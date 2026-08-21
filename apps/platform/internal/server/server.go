@@ -307,6 +307,11 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 		cfg.MatchPendingTTL, cfg.MatchLivenessGrace, cfg.HMACSkew)
 	rooms.SetStarter(glink)
 	rooms.SetOwnership(walletSvc)
+	// 大廳集合令 (GH#492): who a rally broadcast may reach. The enumeration lives
+	// in friend (accounts + presence are already there) and is SHARED with
+	// GET /lobby/online, so the room browser and the broadcast can never disagree
+	// about who counts as a lobby player.
+	rooms.SetRoster(lobbyRoster{friend.NewHandlers(friends, accounts, pres)})
 
 	adminSvc := admin.New(accounts, walletSvc, rank, friends, store, rdb, cfg.AdminBootstrapUsername)
 	// CONTENT_DIR arms the whitelist's LEGACY GATE: an id whose document has
@@ -832,4 +837,34 @@ func (s *Server) Close() {
 	}
 	_ = s.Ranking.Flush(context.Background())
 	_ = s.Rdb.Close()
+}
+
+// ---- 大廳集合令 seam (GH#492) -------------------------------------------------
+//
+// `room` may not import `friend` (server.go already wires friend → room, and the
+// reverse edge would close a cycle), so the roster crosses the boundary as a
+// tiny adapter that re-labels friend.LiveAccount into room.LobbyAccount. The two
+// structs are field-for-field identical BY DESIGN: this function is the one place
+// a drift between them turns into a compile error rather than a silently empty
+// invite list.
+type lobbyRoster struct{ h *friend.Handlers }
+
+func (r lobbyRoster) Lookup(ctx context.Context, accountID string) (room.LobbyAccount, error) {
+	a, err := r.h.Lookup(ctx, accountID)
+	if err != nil {
+		return room.LobbyAccount{}, err
+	}
+	return room.LobbyAccount{ID: a.ID, Username: a.Username, State: a.State, MMR: a.MMR}, nil
+}
+
+func (r lobbyRoster) InLobby(ctx context.Context) ([]room.LobbyAccount, error) {
+	live, err := r.h.InLobby(ctx)
+	if err != nil {
+		return nil, err
+	}
+	out := make([]room.LobbyAccount, 0, len(live))
+	for _, a := range live {
+		out = append(out, room.LobbyAccount{ID: a.ID, Username: a.Username, State: a.State, MMR: a.MMR})
+	}
+	return out, nil
 }

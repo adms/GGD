@@ -46,6 +46,7 @@ import { restartAction, ONLINE_RESTART_NOTE } from "./restart";
 import { connectedPadIndices } from "../../input/GamepadInput";
 import { setLocalDisplayName } from "../../net/RoomConnection";
 import { appendPage, hasMore, nextOffset, PAGE_SIZE } from "./ranking";
+import { activeLobbyRally } from "./lobbyRally";
 import type {
   AccountPublic,
   Catalog,
@@ -82,6 +83,15 @@ export const MATCH_LOADING_MIN_MS = 1000;
  * cannot see and would otherwise wait in forever.
  */
 export const BOT_MATCH_SEAT_TIMEOUT_MS = 12_000;
+
+/**
+ * 一鍵開打透過**大廳集合令**開出來的那間房叫什麼（GH#492）。
+ *
+ * ⚠️ 它會**列在大廳的房間列表上**，因為那正是重點：owner 要的是「拉人進來」。
+ * 名字要讓大廳裡的人一眼看懂那是一場馬上要開的公開場，⛔ 不是 `POST /rooms/solo`
+ * 那間不列房的 `單機 vs BOT`（那個名字現在只屬於練習模式與 rollback 那條路）。
+ */
+export const BOT_MATCH_ROOM_NAME = "一鍵開打 · 等你上車";
 
 /**
  * A match launch staged behind the loading transition (task #74). While this is
@@ -153,6 +163,14 @@ export interface AppState {
   myLocalPlayers: number;
   /** last invite token created by me (copyable room code) */
   createdInvite: { token: string; forName: string } | null;
+  /**
+   * ⭐ 大廳集合令 (GH#492) —— 我這一間房正在「拉人」，倒數到 `expiresAt` 就開打。
+   *
+   * `expiresAt` 是**伺服器蓋的**，和每一個收到確認視窗的人拿到的是同一個數字，
+   * ⛔ 不是各自瀏覽器起算 —— 不然主揪的 0 秒和別人的 3 秒會是不同的時刻。
+   * null = 沒有在集合（一般建房、或 `enabled` 被關掉了）。
+   */
+  rally: { roomId: string; expiresAt: number; waitSec: number; invited: number; inLobby: number } | null;
 
   ws: LobbyWsState;
   wsStatus: "connecting" | "connected" | "disconnected";
@@ -321,6 +339,20 @@ export interface AppState {
   playBotMatch(mapId?: string, rogueliteMobs?: boolean, practice?: boolean): Promise<void>;
   createInvite(accountId: string, username: string): Promise<void>;
   joinByCode(token: string): Promise<void>;
+  /**
+   * ⭐ 按下集合令確認視窗的「加入」(GH#492)。一個 request 就進房而且是 ready 的
+   * （`readyOnAccept`）—— 主揪的倒數正在跑，⛔ 沒有第二趟來回的餘裕。
+   */
+  acceptRally(token: string): Promise<void>;
+  /**
+   * ⭐ 對整個大廳發出集合令並開始倒數 (GH#492)。建房之後自動跑一次；主揪也可以在
+   * 房間裡再按一次「再喊一次」（有人剛上線時）。
+   *
+   * ⛔ 政策關掉（`enabled: false`）時它什麼都不做 —— 那是 owner 的一鍵 rollback。
+   */
+  beginRally(roomId: string): Promise<void>;
+  /** 主揪按「不等了，現在開始」/ 倒數到期 —— 兩個都走這一條。 */
+  startRallyNow(): Promise<void>;
   dismissInvite(token: string): void;
   sendChat(text: string): void;
 
@@ -532,6 +564,7 @@ export const appStore = createStore<AppState>()((set, get) => {
     myReady: false,
     myLocalPlayers: 1,
     createdInvite: null,
+    rally: null,
     ws: initialLobbyWsState(),
     wsStatus: "disconnected",
     leaderboard: null,
@@ -834,7 +867,11 @@ export const appStore = createStore<AppState>()((set, get) => {
           // rather than serialized.
           ...presentRoomSettings(settings),
         });
-        set({ room: resp, myReady: false, myLocalPlayers: 1, createdInvite: null, ws: { ...get().ws, chat: [] } });
+        set({ room: resp, myReady: false, myLocalPlayers: 1, createdInvite: null, rally: null, ws: { ...get().ws, chat: [] } });
+        // ⭐ 建好房的下一件事就是**拉人**（GH#492，owner:「創建房間最重要的就是
+        // 拉人進來」）。⛔ 這不是「開好房再自己按一次邀請」—— 那顆按鈕 2026-08-21
+        // 之前就存在，而它一次只邀得到一個人。
+        await get().beginRally(resp.room.id);
       } catch (err) {
         set({ lastError: errText(err) });
       }
@@ -843,7 +880,7 @@ export const appStore = createStore<AppState>()((set, get) => {
     async joinRoom(roomId) {
       try {
         const resp = await apiFns.joinRoom(roomId);
-        set({ room: resp, myReady: false, myLocalPlayers: 1, createdInvite: null, ws: { ...get().ws, chat: [] } });
+        set({ room: resp, myReady: false, myLocalPlayers: 1, createdInvite: null, rally: null, ws: { ...get().ws, chat: [] } });
         try {
           const hist = await apiFns.chatHistory(roomId);
           set({ ws: { ...get().ws, chat: hist.messages.slice(-100) } });
@@ -863,7 +900,7 @@ export const appStore = createStore<AppState>()((set, get) => {
       } catch {
         /* already gone */
       }
-      set({ room: null, myReady: false, createdInvite: null, ws: { ...get().ws, chat: [] } });
+      set({ room: null, myReady: false, createdInvite: null, rally: null, ws: { ...get().ws, chat: [] } });
       await get().refreshRooms();
     },
 
@@ -957,6 +994,27 @@ export const appStore = createStore<AppState>()((set, get) => {
       // A press can be abandoned while content loads (logout, navigation). If we
       // are no longer the pending press, do not mint a seat nobody will claim.
       if (!get().botMatchBusy || get().screen !== "lobby") return;
+      // ⭐ owner 2026-08-21 明說「最多等 10 秒，**包含 vs bot**」——
+      // 一鍵開打走的是**同一條**集合令，⛔ 不是第二條流程：建一間會列在大廳的房
+      // → 對全大廳廣播 → 等 `waitSeconds` → 誰來了誰上，剩下的位子 bot 補。
+      //
+      // ⛔ **練習模式永遠不走這條路**：練習房是測試碼的鑰匙，一間有旁人的練習房
+      // 就是作弊房（理由寫在 platform 的 `room.Create()` 檔頭）。所以它繼續走
+      // 不列房、不等人的 POST /rooms/solo。
+      const rallyPolicy = activeLobbyRally();
+      if (rallyPolicy.enabled && rallyPolicy.includeBotMatch && practice !== true) {
+        // botMatchBusy 的座位逾時是給「立刻開場」那條路的；集合令會先等一段
+        // 倒數，所以在這裡先放掉那個旗標，⛔ 不然玩家會在等人的十秒裡看到
+        // 「沒收到座位」的錯誤訊息。
+        set({ botMatchBusy: false });
+        await get().createRoom(
+          BOT_MATCH_ROOM_NAME,
+          "normal",
+          mapId,
+          rogueliteMobs,
+        );
+        return;
+      }
       try {
         // Only include a field when it deviates from the default: map when set,
         // rogueliteMobs only when explicitly OFF (sending nothing = ON, #215),
@@ -983,6 +1041,82 @@ export const appStore = createStore<AppState>()((set, get) => {
           lastError: "開房成功但沒收到座位（大廳連線可能斷了）— 重新整理後再試一次",
         });
       }, BOT_MATCH_SEAT_TIMEOUT_MS);
+    },
+
+    // ---- 大廳集合令 (GH#492) --------------------------------------------
+    //
+    // owner 2026-08-21:「創建房間最重要的就是拉人進來，請你將所有線上在大廳的人
+    // 都跳出確認視窗是否進入房間一起開始，同意後就一起進入開始遊戲，最多等 10 秒」
+    //
+    // ⭐ 倒數住在**主揪這一台**，而截止時間是**伺服器蓋的**。伺服器端的計時器要
+    // 活過 replica 重啟，而且會替一個已經關掉分頁的主揪開場 —— 一間主揪不在的房
+    // 正是不該把別人拉進去的那一間。⇒ 客戶端擁有的只有「什麼時候按下開始」，
+    // 那本來就是它一直有的權力。
+
+    async beginRally(roomId) {
+      const policy = activeLobbyRally();
+      if (!policy.enabled) return; // ⛔ owner 的一鍵 rollback
+      try {
+        const info = await apiFns.rallyRoom(roomId, policy.waitSeconds);
+        set({
+          rally: {
+            roomId,
+            expiresAt: info.expiresAt,
+            waitSec: info.waitSec,
+            invited: info.invited,
+            inLobby: info.inLobby,
+          },
+        });
+        // 到期就開打。⚠️ 用**伺服器的截止時間 − 現在**當延遲，⛔ 不是
+        // `policy.waitSeconds × 1000`：後者會在時鐘有偏差時和收到確認視窗的人
+        // 各數各的，而視窗上寫的秒數是從同一個 `expiresAt` 算出來的。
+        const delay = Math.max(0, info.expiresAt - Date.now());
+        setTimeout(() => {
+          const cur = get().rally;
+          if (!cur || cur.roomId !== roomId) return; // 已經離開/取消了
+          void get().startRallyNow();
+        }, delay);
+      } catch (err) {
+        // ⚠️ 廣播失敗**不可以**害這間房開不成：主揪還是可以自己按開始。
+        // 說出來（fail-loud），⛔ 不要靜靜地變成一間沒人被通知的房。
+        set({ rally: null, lastError: errText(err) });
+      }
+    },
+
+    async startRallyNow() {
+      const { rally, room } = get();
+      if (!rally || !room || room.room.id !== rally.roomId) return;
+      set({ rally: null, practiceIntent: false });
+      const policy = activeLobbyRally();
+      try {
+        // ⭐ 倒數是**期限**不是共識：時間到就開，⛔ 不管有沒有人按過準備。
+        // 少了這一格，一個從房間列表走進來、從不按準備的路人就能讓倒數永遠
+        // 開不了場，而畫面上只寫著「按了開始，什麼都沒發生」。
+        await apiFns.startRoom(rally.roomId, policy.startIgnoresReady);
+        // seat token arrives over the lobby WS (match_ready) for everyone
+      } catch (err) {
+        set({ lastError: errText(err) });
+      }
+    },
+
+    async acceptRally(token) {
+      const policy = activeLobbyRally();
+      const trimmed = token.trim();
+      try {
+        // 一個 request 進房 + 標記準備好 —— 主揪的倒數正在跑（見 api.joinByCode）。
+        const resp = await apiFns.joinByCode(trimmed, policy.readyOnAccept);
+        set({
+          room: resp,
+          myReady: policy.readyOnAccept,
+          createdInvite: null,
+          rally: null,
+          ws: removeInvite({ ...get().ws, chat: [] }, trimmed),
+        });
+      } catch (err) {
+        // 集合令過期／房間已經開打是**正常結局**，不是缺陷 —— 但要說出來，
+        // 不然按下去什麼都沒發生看起來像按鈕壞了。
+        set({ ws: removeInvite(get().ws, trimmed), lastError: errText(err) });
+      }
     },
 
     async createInvite(accountId, username) {

@@ -274,8 +274,34 @@ export function setReady(roomId: string, ready: boolean): Promise<{ status: stri
   });
 }
 
-export function startRoom(roomId: string): Promise<StartInfo> {
-  return api.request<StartInfo>(`/rooms/${encodeURIComponent(roomId)}/start`, { body: {} });
+/**
+ * Start the room. `ignoreNotReady` is the GH#492 集合令 deadline: 「最多等 10 秒」
+ * is a DEADLINE, not a consensus, so the rally's auto-start lifts the
+ * 「all players must be ready」 gate. ⛔ An ordinary 按開始 must NOT pass it —
+ * that gate is what stops a host yanking a room-mate out of champ select.
+ */
+export function startRoom(roomId: string, ignoreNotReady = false): Promise<StartInfo> {
+  return api.request<StartInfo>(`/rooms/${encodeURIComponent(roomId)}/start`, {
+    body: ignoreNotReady ? { ignoreNotReady: true } : {},
+  });
+}
+
+/**
+ * 大廳集合令 (GH#492) — fan a confirm-dialog invite out to EVERY account sitting
+ * in the lobby. Host-only, open-rooms-only.
+ *
+ * ⛔ Accounts in a match are excluded SERVER-side (internal/room/rally.go), not
+ * here: owner's rule is 「所有線上**在大廳**的人」 and a client-side filter would
+ * be decoration — the browser cannot see who is playing.
+ *
+ * The response's `expiresAt` is the SERVER's stamp and is the ONLY clock the
+ * countdown may use; every recipient counts down to the same instant.
+ */
+export function rallyRoom(
+  roomId: string,
+  waitSec: number,
+): Promise<{ invited: number; inLobby: number; truncated: boolean; expiresAt: number; waitSec: number }> {
+  return api.request(`/rooms/${encodeURIComponent(roomId)}/rally`, { body: { waitSec } });
 }
 
 /**
@@ -318,8 +344,18 @@ export function inviteToRoom(roomId: string, accountId: string): Promise<{ token
   return api.request<{ token: string }>(`/rooms/${encodeURIComponent(roomId)}/invite`, { body: { accountId } });
 }
 
-export function joinByCode(token: string): Promise<RoomResp> {
-  return api.request<RoomResp>("/rooms/join-by-code", { body: { token } });
+/**
+ * Redeem an invite token.
+ *
+ * `ready` marks the caller ready IN THE SAME REQUEST (GH#492): pressing 加入 on a
+ * 集合令 dialog IS the consent the ready flag records, and the host's countdown is
+ * already running — a second round trip to /ready is a window the start can fire
+ * inside, leaving the accepter behind in a room that just emptied.
+ */
+export function joinByCode(token: string, ready = false): Promise<RoomResp> {
+  return api.request<RoomResp>("/rooms/join-by-code", {
+    body: ready ? { token, ready: true } : { token },
+  });
 }
 
 export function chatHistory(roomId: string): Promise<{ messages: ChatMsg[] }> {

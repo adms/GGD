@@ -326,6 +326,38 @@ export class SeatState extends Schema {
    * 畫面就得從金額反推來源，而 0 反推不出任何東西。
    */
   declare itemRandom: ArraySchema<boolean>;
+  /**
+   * ⭐【積分】—— 這個座位的平台 MMR（GH#492）。
+   *
+   * owner 2026-08-21:「若有其他玩家一起進入房間遊戲，也請出現**明顯提示姓名與
+   * 積分、所選英雄**，**每回合結算也都要特別再提示一次**」。姓名（{@link displayName}）
+   * 與英雄（{@link championId}）本來就在線上，積分是缺的那一格。
+   *
+   * ⚠️ 它**不是**新資料 —— 平台從第一天起就把 `mmr` 放進 `/_internal/matches` 的
+   * 每一個座位（`gamelink.Seat.MMR`），只是 game-server 沒有欄位收它，於是它在
+   * 進場那道門口被丟掉。⇒ 這一格補的是**投遞**，不是計算（失敗形態②）。
+   *
+   * 0 = 平台沒給（bot 座位、dev/LAN 直連），名冊上那一列不畫數字 ——
+   * ⛔ 不是畫「0 分」，那會讓 bot 看起來像一個很弱的真人。
+   */
+  declare rating: number;
+  /**
+   * ⭐【這個位子屬於一個人】—— 這一場開打時，平台把它保留給真人嗎（GH#492）。
+   *
+   * ⛔ **它不是 `driver !== "ai"`**，而那正是它必須存在的理由。owner 2026-08-21 的
+   * 理由句是「因為**有可能斷線離開或連線回來房間繼續遊戲**」：一個真人斷線的瞬間
+   * `MatchRoom.onLeave` 就把 driver 換成 AI、`sessionId` 清成 null，於是那個座位在
+   * 線上長得和一個天生的 bot **一模一樣**。少了這一格，名冊會在他最需要被看見的
+   * 那一刻把他整列刪掉，而畫面上完全看不出來。
+   *
+   * ⚠️ 它**只會 false → true，永不回頭**：斷線不是「這個位子不再屬於他」。
+   * dev/LAN 直連接管一個 bot 座位時也會翻成 true（那也是一個真人）。
+   *
+   * ⇒ 「現在是誰在開」是 `human × connected × driver` 三格一起讀：
+   * human && connected → 本人；human && !connected → **斷線 · BOT 接手**；
+   * !human → 天生 bot。
+   */
+  declare human: boolean;
 
   constructor() {
     super();
@@ -367,6 +399,8 @@ export class SeatState extends Schema {
     this.counterCounts = new ArraySchema<number>();
     this.itemRefund = new ArraySchema<number>();
     this.itemRandom = new ArraySchema<boolean>();
+    this.rating = 0;
+    this.human = false;
   }
 }
 defineTypes(SeatState, {
@@ -425,6 +459,14 @@ defineTypes(SeatState, {
   // 投影端 `net/snapshot.ts` 仍然夾一次，所以永遠不會繞回一個荒謬的數字。
   itemRefund: ["uint32"],
   itemRandom: ["boolean"],
+  // APPEND-ONLY (見上)：⭐【積分】GH#492。⛔ **最後一格**。uint16 裝得下這個
+  // 專案任何可能的 MMR（起始 1000，Elo 的 K 值把它綁在四位數內），而投影端
+  // `net/snapshot.ts` 與 `MatchController` 都夾過一次 —— 一個沒有夾的 70000 會
+  // 在網路層繞回成 4464，而寫端看起來完全正確。
+  rating: "uint16",
+  // APPEND-ONLY (見上)：⭐【這個位子屬於一個人】GH#492。⛔ **最後一格**。
+  // 理由寫在宣告上 —— 它擋的是「真人一斷線就從名冊上整列消失」。
+  human: "boolean",
 });
 
 /**

@@ -46,6 +46,8 @@ func (h *Handlers) Mount(r chi.Router) {
 		rr.Patch("/settings", h.settings)
 		rr.Post("/start", h.start)
 		rr.Post("/invite", h.invite)
+		// 大廳集合令 (GH#492): fan the invite out to everybody in the lobby.
+		rr.Post("/rally", h.rally)
 	})
 }
 
@@ -185,9 +187,59 @@ func (h *Handlers) settings(w http.ResponseWriter, r *http.Request) {
 	h.respondRoom(w, r, rm)
 }
 
+// startReq is the optional body of POST /rooms/{id}/start.
+type startReq struct {
+	// IgnoreNotReady lifts the 「all players must be ready」 gate — the GH#492
+	// rally deadline. Host-only by construction (the whole route is), and an
+	// absent body means false, so every existing caller keeps the old behaviour.
+	IgnoreNotReady bool `json:"ignoreNotReady,omitempty"`
+}
+
 func (h *Handlers) start(w http.ResponseWriter, r *http.Request) {
 	me := auth.MustIdentity(r.Context())
-	info, err := h.svc.Start(r.Context(), me.AccountID, chi.URLParam(r, "id"))
+	var req startReq
+	// An empty body is the ordinary 「按開始」 — decode only when one was sent.
+	if r.ContentLength != 0 {
+		if err := httpx.DecodeJSON(r, &req); err != nil {
+			httpx.WriteError(w, err)
+			return
+		}
+	}
+	roomID := chi.URLParam(r, "id")
+	var (
+		info StartInfo
+		err  error
+	)
+	if req.IgnoreNotReady {
+		info, err = h.svc.StartIgnoringReady(r.Context(), me.AccountID, roomID)
+	} else {
+		info, err = h.svc.Start(r.Context(), me.AccountID, roomID)
+	}
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, info)
+}
+
+type rallyReq struct {
+	// WaitSec is the countdown the host's client will run. Absent/out of range
+	// folds onto the transport bounds in rally.go — the POLICY value lives in
+	// content/config/lobby-rally.json and is sent by the client.
+	WaitSec float64 `json:"waitSec,omitempty"`
+}
+
+// rally fans a confirm-dialog invite out to every account in the lobby (GH#492).
+func (h *Handlers) rally(w http.ResponseWriter, r *http.Request) {
+	me := auth.MustIdentity(r.Context())
+	var req rallyReq
+	if r.ContentLength != 0 {
+		if err := httpx.DecodeJSON(r, &req); err != nil {
+			httpx.WriteError(w, err)
+			return
+		}
+	}
+	info, err := h.svc.Rally(r.Context(), me.AccountID, chi.URLParam(r, "id"), req.WaitSec)
 	if err != nil {
 		httpx.WriteError(w, err)
 		return
@@ -239,6 +291,12 @@ func (h *Handlers) invite(w http.ResponseWriter, r *http.Request) {
 
 type joinByCodeReq struct {
 	Token string `json:"token"`
+	// Ready marks the caller ready IN THE SAME REQUEST (GH#492). Pressing 加入 on
+	// a 大廳集合令 dialog IS the consent the ready flag records, and the host's
+	// countdown is already running — a second round trip to /ready is a window in
+	// which the start can fire and leave the accepter behind. Absent = false, so
+	// the hand-typed room-code path is unchanged.
+	Ready bool `json:"ready,omitempty"`
 }
 
 func (h *Handlers) joinByCode(w http.ResponseWriter, r *http.Request) {
@@ -252,6 +310,12 @@ func (h *Handlers) joinByCode(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		httpx.WriteError(w, err)
 		return
+	}
+	if req.Ready {
+		if err := h.svc.SetReady(r.Context(), me.AccountID, rm.ID, true); err != nil {
+			httpx.WriteError(w, err)
+			return
+		}
 	}
 	h.respondRoom(w, r, rm)
 }

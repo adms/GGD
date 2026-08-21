@@ -49,6 +49,8 @@ import {
   zConfigGoreDoc,
   zConfigItemCardDoc,
   zConfigModelLodDoc,
+  // 爽度特效（GH#494）—— 金幣吸回 · 連段音階 · 施法餘燼壽命。
+  zConfigFeelFxDoc,
   zConfigReplayDoc,
   zConfigBlockDoc,
   zConfigCritDoc,
@@ -98,6 +100,8 @@ import {
   // 競技場規則（GH#410）—— 走 barrel，同上面那一族。⚠️ 這一份是全 repo 唯一一份
   // 被四頁共同編輯的 config，所以它是唯一用得到 `ConfigDocSpec.elsewhere` 的。
   zConfigArenaRulesDoc,
+  // 大廳集合令（GH#492，owner 2026-08-21）—— 走 barrel，同上面那一族。
+  zConfigLobbyRallyDoc,
 } from "@ggd/shared/content";
 // ⚠️ 同上的深路徑理由：這兩份 Zod 住自己的檔案（欄位理由長、且 sim 直接吃）。
 import { DEFAULT_STAT_NORMALIZATION } from "@ggd/shared/content/statNormalization";
@@ -563,6 +567,109 @@ const VFX_CLEANUP_SPEC: ConfigDocSpec = {
       path: "purgeVictoryFxOnCombatStart",
       zh: "開打就掐掉上一回合的勝利煙火",
       note: "上面每一格管的都是「池子」，這一格管的是另一種殘留：上一回合的勝利煙火還在天上飛，而下一回合已經開打了。開著＝下一回合開打的那一幀把還在飛的煙火停掉，並且把勝利偵測重新武裝（所以這一回合的煙火照樣放得出來）—— 場地乾淨，出貨值。關掉＝煙火可以飄進下一回合當表演；⚠️ 它同時是**止血閥**：萬一「強制停掉」這個動作本身造成閃爍、或連這一回合的煙火一起吃掉，關這一格就回到舊行為，不必重新 build 客戶端。",
+    },
+  ],
+  preserved: [],
+};
+
+// ───────────────────────────────────────────── 爽度特效 (config/feel-fx) ───
+
+const FEEL_FX_SPEC: ConfigDocSpec = {
+  page: "feelFx",
+  collection: "config",
+  docId: "feel-fx",
+  schemaTag: "config.feel-fx@1",
+  zod: zConfigFeelFxDoc,
+  title: "爽度特效",
+  intro: [
+    "殭屍死掉之後掉出來的那一枚小金幣：躺在屍體上停一下，然後沿著一條會加速的弧線飛回擊殺者身上，落袋時「叮」一聲；連續擊殺時那一聲會逐段升高音階（到頂就停住，不會刺耳）。owner 的原話是「提高爽度 模仿肉鴿遊戲的氛圍感」。",
+    "⛔ 這一頁沒有一格會改變任何人拿到的金幣。擊殺賞金是伺服器發的，早在金幣畫出來之前就已經進了口袋；這裡調的只是「那一刻看得到、聽得到什麼」。把總開關關掉，玩家拿到的錢一毛不差，只是不畫也不響。",
+    "最後一區是施法光柱腳邊那圈往上飄的餘燼 —— owner 2026-08-21：「特效存活時間真的太長了，請你砍半，不需要後半段飄到天空」。三格要一起看：只砍壽命會讓粒子在半空中被剪掉（看起來像破圖），所以上升的力道與阻力也要讓它在壽命結束之前自己停住。",
+  ],
+  consumer:
+    "apps/client/src/vfx/feelFx.ts 的 feelFx() → GoldPickupFx（掉落/停留/貝茲飛行/落袋音效）與 castPillar.ts 的 moteSpec()（施法上升餘燼）",
+  effect:
+    "玩家**下一次重新整理遊戲頁面**時生效（客戶端開機時載內容覆蓋層）。⛔ 不必重開一場，但已經在飛的金幣會用它出發時的那一份設定飛完。",
+  fields: [
+    {
+      path: "goldPickup.enabled",
+      zh: "金幣吸取特效總開關",
+      note: "關掉＝殭屍死了不畫金幣、不播落袋音效。⭐ 玩家拿到的錢**一毛不差**（賞金是伺服器發的，跟這一層無關），所以這是純粹的止血閥：畫面太吵、手機掉幀、或這個特效出了任何問題時，關它就回到這個功能存在之前。",
+    },
+    {
+      path: "goldPickup.hoverSeconds",
+      zh: "金幣落地後停留幾秒",
+      note: "金幣掉在屍體上、開始飛之前先在原地閃多久。owner 指定 1 秒。調小＝錢一掉就被吸走，節奏更快但看不清楚掉了幾枚；調大＝戰場上會同時躺著更多枚金幣，更有肉鴿味但也更亂。",
+    },
+    {
+      path: "goldPickup.flightSeconds",
+      zh: "金幣飛回來要幾秒",
+      note: "從起飛到沒入英雄身體的時間，也就是「吸力」有多強。短＝啪一下就進口袋（爽，但幾乎看不到軌跡）；長＝看得清楚它繞過來，但太長會讓「殭屍死掉」和「拿到獎勵」在感覺上斷開。",
+    },
+    {
+      path: "goldPickup.easePower",
+      zh: "飛行加速力道",
+      note: "owner 特別點名要「加速」而不是等速直線。1＝等速（回到他不要的那個）；越大越像被磁鐵吸走 —— 起步慢慢飄、末段暴衝進身體。這一格只管步調，弧彎多少是下面那格。",
+    },
+    {
+      path: "goldPickup.arcHeight",
+      zh: "飛行弧線抬多高",
+      note: "貝茲曲線的控制點往上抬幾個世界單位。0＝退化成直線（同樣是 owner 不要的那個）；越大拋得越高、弧越誇張。太大金幣會飛出畫面上緣再掉回來。抬高而不是往側邊偏，是因為戰鬥相機固定 68 度俯角，側偏在螢幕上幾乎看不出來。",
+    },
+    {
+      path: "goldPickup.maxConcurrent",
+      zh: "同時最多幾枚在飛",
+      note: "超過的直接算成已經吸走（不畫那一段軌跡）。⭐ 這是畫面預算，**不是掉落上限**，更不是金錢上限 —— 被略過的那幾枚，錢一樣早就到手了。",
+    },
+    {
+      path: "goldPickup.sfxThrottleMs",
+      zh: "落袋音效最短間隔（毫秒）",
+      note: "兩聲「叮」之間至少隔多久。一次範圍技掃掉一排殭屍時，這一格決定你聽到的是清脆的幾聲還是一團糊掉的噪音。⛔ 被擋掉的那幾發是**不播**，不是排隊等一下再播（排隊只會把噪音往後挪）。0＝完全不節流。",
+    },
+    {
+      path: "goldPickup.sfxVolume",
+      zh: "落袋音效音量倍率",
+      note: "乘在這個音效自己的音量上。owner 要的字是「**輕**」—— 一場幾十隻殭屍，開太大就會蓋掉技能聲與打擊聲。0＝靜音（金幣照飛）。",
+    },
+    {
+      path: "comboPitch.enabled",
+      zh: "連段音階總開關",
+      note: "關掉＝每一枚金幣都用同一個音高。⭐ 連擊本身照樣算、HUD 上的連殺數字照樣顯示，只是聽不出高低 —— 這一格碰不到任何機制。",
+    },
+    {
+      path: "comboPitch.semitonesPerStep",
+      zh: "每連一段升幾個半音",
+      note: "1＝半音階（candy crush 那種一階一階爬上去的感覺，出貨值）；2＝全音階，更明顯但很快就到頂。0＝等於關掉。",
+    },
+    {
+      path: "comboPitch.maxSteps",
+      zh: "最多升到第幾段",
+      note: "⭐ 這一格就是「不刺耳」的保證：升到這一段之後就停住，再連下去也不會更高。12 段 × 1 半音＝剛好一個八度。調更大會越來越尖，過了某個點聽起來就只是壞掉。",
+    },
+    {
+      path: "comboPitch.resetAfterSeconds",
+      zh: "多久沒擊殺就把音階歸零（秒）",
+      note: "⚠️ 這是**聲音**的記憶，和畫面上那個連殺數字是兩件事（那個由伺服器用 5 秒視窗決定）。出貨值刻意設成一樣，所以耳朵和眼睛預設是同步的；設小＝音階更容易回到起點，設大＝聲音會記得比畫面久。",
+    },
+    {
+      path: "castMotes.lifetimeMinSec",
+      zh: "施法餘燼最短壽命（秒）",
+      note: "施法光柱腳邊那圈往上飄的粒子活多久。owner 2026-08-21 要求「砍半」，所以出貨值是原本的一半。⚠️ 只調這兩格會讓粒子在還往上衝的時候被剪掉（看起來像破圖）—— 要一起看下面的重力與阻力。",
+    },
+    {
+      path: "castMotes.lifetimeMaxSec",
+      zh: "施法餘燼最長壽命（秒）",
+      note: "同上的另一端。調大＝回到「一路飄到天空」的舊畫面，那正是 owner 說「太長了」的那個。",
+    },
+    {
+      path: "castMotes.gravityY",
+      zh: "施法餘燼往上的力道",
+      note: "全遊戲唯一一處重力是往上的地方 —— 它就是「飄到天空」那個動作本身。越大爬得越高越久；0＝粒子原地擴散不上升，光柱會失去「能量被吸進去」的讀法。",
+    },
+    {
+      path: "castMotes.drag",
+      zh: "施法餘燼空氣阻力",
+      note: "每秒保留幾成速度。越小煞得越快 —— ⭐ 這是讓上升在「還看得見的時候」自己停住的那一格，也就是不靠壽命硬切掉粒子的正解。1＝完全不減速（衝上天）。",
     },
   ],
   preserved: [],
@@ -4230,6 +4337,70 @@ const ARENA_RULES_SPEC: ConfigDocSpec = {
   ],
 };
 
+// ─────────────────────────────────── 大廳集合令 (config/lobby-rally) ─
+
+const LOBBY_RALLY_SPEC: ConfigDocSpec = {
+  page: "lobbyRally",
+  collection: "config",
+  docId: "lobby-rally",
+  schemaTag: "config.lobby-rally@1",
+  zod: zConfigLobbyRallyDoc,
+  title: "大廳集合令",
+  intro: [
+    "⭐ owner 2026-08-21：「**創建房間最重要的就是拉人進來**，請你將**所有線上在大廳的人都跳出確認視窗**是否進入房間一起開始，同意後就一起進入開始遊戲，**最多等 10 秒**，**包含 vs bot**，若有其他玩家一起進入房間遊戲，也請出現**明顯提示姓名與積分、所選英雄**，**每回合結算也都要特別再提示一次**」。這一頁是那句話的全部參數。",
+    "⛔ **比賽中的人永遠不會被打擾。** 廣播的收件人由伺服器決定（`internal/room/rally.go` 只取 presence 是「在大廳」的帳號），⛔ 這裡沒有那一格 —— 一個能把確認視窗丟到別人比賽上的開關，只會被按錯一次。",
+    "⚠️ **練習模式永遠不走集合令**：練習房是測試碼的鑰匙，一間有旁人的練習房就是作弊房。所以不管「一鍵開打也走集合令」開著還是關著，練習模式都是不列房的單人沙盒。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/lobby-rally.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "apps/client/src/ui/platform/lobbyRally.ts 的 activeLobbyRally()（讀 Configs 登錄表），由 store.beginRally / startRallyNow / acceptRally 與 panels/HumanRosterPanel 消費",
+  effect:
+    "**下一次客戶端載入內容就生效**（和 鏡頭 同一個形態）—— 玩家重整一次分頁即可，⛔ 不必重建映像，也⛔ 不必重啟 shard。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "集合令總開關",
+      note: "⛔ 關掉 = **一鍵 rollback**：建立房間不再對大廳廣播、一鍵開打回到 2026-08-21 之前那條「立刻開，不等人」的路。⚠️ 關掉之後主揪仍然可以用既有的一對一邀請（房間裡點名字送邀請碼），那條路完全沒有變。",
+    },
+    {
+      path: "waitSeconds",
+      zh: "倒數幾秒後開打",
+      note: "⭐ owner 明說 **10**。這是**期限**不是共識：時間到就開，沒趕上的位子由 BOT 補。調大＝更容易湊到真人，代價是每一場開打前都要空等；調小＝幾乎等於立刻開。⚠️ 上界 120 由 schema 給（伺服器的傳輸柵欄同界），⛔ 那不是政策，是防止一個打錯的數字把主揪關在自己按不掉的畫面裡。",
+    },
+    {
+      path: "includeBotMatch",
+      zh: "一鍵開打也走集合令",
+      note: "⭐ owner 明說的「**包含 vs bot**」。開著（出貨值）＝ 按下一鍵開打會先建一間**列在大廳**的房、廣播、等倒數，誰來了誰上。關掉＝一鍵開打回到不列房、不等人、立刻對 11 隻 bot 開場。⚠️ 練習模式不受這一格影響（見上面的說明）。",
+    },
+    {
+      path: "startIgnoresReady",
+      zh: "倒數到期就開，不管有沒有人按準備",
+      note: "開著（出貨值）＝ 期限到就開場。關掉＝照一般房間的規則，**每一個非主揪成員都要按過準備**才開得了 —— ⚠️ 那表示一個從房間列表走進來、從不按準備的路人，可以讓主揪的倒數永遠開不了場，而畫面上只會顯示「按了開始，什麼都沒發生」。⛔ 一般的「開始遊戲」按鈕**不受這一格影響**，它永遠要求全員準備。",
+    },
+    {
+      path: "readyOnAccept",
+      zh: "按下「加入」就等於準備好",
+      note: "開著（出貨值）＝ 確認視窗按加入時，進房與標記準備是**同一個 request**。關掉＝玩家進房之後還要自己再按一次準備，而那一趟來回正好落在倒數剩不到幾秒的時候 —— 開場會把他丟下。",
+    },
+    {
+      path: "rosterMinHumans",
+      zh: "場上至少幾個真人才顯示名冊",
+      note: "⭐ owner 的條件句是「**若有其他玩家**一起進入房間遊戲」，2（出貨值）就是那句話的直譯。填 1 ＝ 連單機打 BOT 也永遠顯示（除錯時有用）。⚠️ 數的是「這個位子屬於真人」的**座位數**，⛔ 不是「現在還連著的人」—— 不然一個玩家斷線的瞬間名冊就會自己消失，而那正是最需要它的時候。上界 12 就是一場比賽的座位數。",
+    },
+    {
+      path: "showRosterInSettlement",
+      zh: "每回合結算顯示玩家名冊",
+      note: "⭐ owner 明說「**每回合結算也都要特別再提示一次**」，理由是他自己給的：「因為**有可能斷線離開或連線回來房間繼續遊戲**」。⛔ 這不是裝飾 —— 斷線重連的玩家沒有事件歷史，這份名冊是他「我現在跟誰在打、誰還在線上」的唯一資訊來源。關掉＝回合結算與中場商店都不再顯示。",
+    },
+    {
+      path: "showRosterInChampSelect",
+      zh: "選角畫面顯示玩家名冊",
+      note: "一起進場的那一刻也報一次姓名／積分／所選英雄。⚠️ 選角當下多數人還沒鎖英雄，所以那一欄會先寫「未選角」再一個一個亮起來 —— 那是對的，⛔ 不是漏資料。",
+    },
+  ],
+  preserved: [],
+};
+
 export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   // 競技場規則（GH#410）。⚠️ 這一列同時做了兩件事：①把八個一直調不到的區塊變成
   // 真的欄位；②讓 `configForms.test.ts` 的「每一個葉節點都有標籤」**開始管**
@@ -4249,6 +4420,10 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   // store.ts 的 `Page` union / App.tsx 的導覽列一起才到得了操作者手上，那兩個檔
   // 不在這條 lane 手上（見 needsFromIntegrator）。
   PRACTICE_SPEC,
+  // 大廳集合令（GH#492，owner 2026-08-21）。⚠️ 同 AUDIO_MIX_SPEC 那一段：這一列要
+  // 跟 store.ts 的 `Page` union + `SESSION_REQUIRED_PAGES`、App.tsx 的導覽列一列，
+  // 以及 `content/config/lobby-rally.json` 出貨檔一起，才到得了操作者手上。
+  LOBBY_RALLY_SPEC,
   // 排名獎勵（owner 2026-08-17）。⚠️ 同 AUDIO_MIX_SPEC 那一段的三件事，外加一件
   // 這一頁獨有的：它的消費端是 **Go**（`internal/ranking/standingsoverride.go`），
   // 所以「後台存了、Go 端讀不到」不會有任何 TypeScript 測試看得見 ——
@@ -4260,6 +4435,12 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   DISPLACEMENT_TIERS_SPEC,
   MODEL_LOD_SPEC,
   VFX_CLEANUP_SPEC,
+  // 爽度特效（GH#494，owner 2026-08-21）。⚠️ 同 AUDIO_MIX_SPEC 那一段：這一列要跟
+  // store.ts 的 `Page` union + `SESSION_REQUIRED_PAGES`、以及 App.tsx 的導覽列一列
+  // 一起，才到得了操作者手上；那兩個檔不在這條 lane 手上（#491/#492/#493 正在動）。
+  // ⭐ 出貨檔 `content/config/feel-fx.json` 已經在這條 lane 裡了 —— 少了它
+  // `configForms.test.ts` 會直接紅（它對每一個 spec 都 readFileSync 那份 JSON）。
+  FEEL_FX_SPEC,
   GORE_SPEC,
   DAMAGE_COLORS_SPEC,
   // 範圍指引與預告（GH#376）。⚠️ 同 AUDIO_MIX_SPEC 那一段：這一列要跟 store.ts 的

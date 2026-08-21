@@ -19,10 +19,25 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { cover } from "@ggd/shared/testkit/cover";
 
 const startSoloMatch = vi.fn(async () => ({ matchId: "m_test", botFill: 11 }));
+// ⭐ GH#492：一鍵開打的**出貨路徑**在 2026-08-21 換了 —— owner 的原話是
+// 「最多等 10 秒，**包含 vs bot**」，所以它現在建一間**列在大廳**的房、對全大廳
+// 廣播集合令、等倒數，⛔ 不再是「立刻對 11 隻 bot 開場」。這三個 mock 就是那條
+// 新路徑的三個關節。
+const createRoom = vi.fn(async (settings: { mapId?: string }) => ({
+  room: { id: "r_test", name: "一鍵開打 · 等你上車", hostId: "me", status: "open", mapId: settings.mapId },
+  members: [{ accountId: "me", ready: false, isHost: true, localPlayers: 1 }],
+}));
+const rallyRoom = vi.fn(async () => ({
+  invited: 2,
+  inLobby: 3,
+  truncated: false,
+  expiresAt: Date.now() + 10_000,
+  waitSec: 10,
+}));
 
 vi.mock("./api", async (importOriginal) => {
   const real = await importOriginal<typeof import("./api")>();
-  return { ...real, startSoloMatch };
+  return { ...real, startSoloMatch, createRoom, rallyRoom };
 });
 
 const { appStore, BOT_MATCH_SEAT_TIMEOUT_MS } = await import("./store");
@@ -39,6 +54,8 @@ const seatPush = {
 describe("lobby one-click bot match (#188)", () => {
   beforeEach(() => {
     startSoloMatch.mockClear();
+    createRoom.mockClear();
+    rallyRoom.mockClear();
     appStore.setState({
       screen: "lobby",
       account: { id: "me", username: "owner", mmr: 1000 } as never,
@@ -49,23 +66,33 @@ describe("lobby one-click bot match (#188)", () => {
     });
   });
 
-  it("goes through the PLATFORM, not the direct game-server join", async () => {
+  it("goes through the PLATFORM, and (GH#492) through the 大廳集合令 —— 不是直連", async () => {
     cover("solo-bot-client-route");
     await appStore.getState().playBotMatch("arena-lava");
 
-    expect(startSoloMatch).toHaveBeenCalledWith({ mapId: "arena-lava" });
+    // ⭐ owner 2026-08-21:「最多等 10 秒，**包含 vs bot**」—— 一鍵開打與建房是
+    // **同一條**流程：開一間列在大廳的房 + 對全大廳廣播，⛔ 不是立刻開場。
+    expect(createRoom).toHaveBeenCalledTimes(1);
+    expect(createRoom.mock.calls[0]?.[0]).toMatchObject({ mapId: "arena-lava" });
+    expect(rallyRoom).toHaveBeenCalledTimes(1);
+    expect(startSoloMatch, "⛔ 立刻開場那條路只留給練習模式與 rollback").not.toHaveBeenCalled();
     // The old button flipped straight to "match" with a mode:"offline" launch.
     // That is exactly the behaviour that settled nowhere, so it must NOT happen
     // here: the screen only changes when the platform's seat token arrives.
     expect(appStore.getState().screen).toBe("lobby");
     expect(appStore.getState().match).toBeNull();
-    expect(appStore.getState().botMatchBusy).toBe(true);
+    // 倒數在跑,所以房間是活的 —— 而「沒收到座位」的逾時錯誤⛔ 不可以在等人的
+    // 那十秒裡跳出來。
+    expect(appStore.getState().rally?.roomId).toBe("r_test");
   });
 
   it("one click is one match — a second press while pending does nothing", async () => {
     cover("solo-bot-client-route");
-    await appStore.getState().playBotMatch();
-    await appStore.getState().playBotMatch();
+    // ⚠️ 練習模式仍然走「不列房、立刻開」那條路（練習房是測試碼的鑰匙,
+    // 一間有旁人的練習房就是作弊房）—— 所以一press-一match 的守衛釘在它上面。
+    const first = appStore.getState().playBotMatch(undefined, undefined, true);
+    await appStore.getState().playBotMatch(undefined, undefined, true);
+    await first;
     expect(startSoloMatch).toHaveBeenCalledTimes(1);
   });
 
@@ -86,7 +113,10 @@ describe("lobby one-click bot match (#188)", () => {
     cover("solo-bot-client-route");
     vi.useFakeTimers();
     try {
-      await appStore.getState().playBotMatch();
+      // 練習模式那條路 —— 它才是「立刻開場、然後等座位推播」的那一條，
+      // 也就是這個逾時守衛真正在守的那一條。集合令那條路刻意**沒有**這個逾時：
+      // 它本來就要等人（⛔ 不然玩家會在等人的十秒裡看到「沒收到座位」的錯誤）。
+      await appStore.getState().playBotMatch(undefined, undefined, true);
       vi.advanceTimersByTime(BOT_MATCH_SEAT_TIMEOUT_MS + 1);
     } finally {
       vi.useRealTimers();
@@ -98,7 +128,8 @@ describe("lobby one-click bot match (#188)", () => {
   it("surfaces a refused start (e.g. an unapproved account) rather than swallowing it", async () => {
     cover("solo-bot-client-route");
     startSoloMatch.mockRejectedValueOnce(new Error("account is awaiting approval"));
-    await appStore.getState().playBotMatch();
+    // 練習模式那條路（同上）—— 被拒絕的原因要說出來,⛔ 不可以靜靜地回到大廳。
+    await appStore.getState().playBotMatch(undefined, undefined, true);
     expect(appStore.getState().botMatchBusy).toBe(false);
     expect(appStore.getState().lastError).toContain("approval");
   });

@@ -19,12 +19,34 @@ type Invite struct {
 }
 
 // InvitePush is the message delivered to the target over the lobby WS.
+//
+// ⚠️ The five GH#492 fields below are all `omitempty`, and that is what keeps a
+// hand-picked invite (invite.go's CreateInvite) byte-identical to what it has
+// always been on the wire: the client tells a RALLY apart from a personal invite
+// by `broadcast`, and only a rally opens the modal confirm dialog. A personal
+// invite stays the quiet corner toast it was.
 type InvitePush struct {
 	Type   string `json:"type"` // "invite"
 	RoomID string `json:"roomId"`
 	Room   string `json:"roomName"`
 	From   string `json:"from"`
 	Token  string `json:"token"`
+	// Broadcast marks a 大廳集合令 (GH#492) — the whole lobby was called, so the
+	// client raises a MODAL confirm dialog with a countdown instead of a toast.
+	Broadcast bool `json:"broadcast,omitempty"`
+	// FromName / FromMMR are the HOST's display name and ladder rating. owner
+	// 2026-08-21:「明顯提示姓名與積分」 — the recipient cannot resolve an accountId
+	// into either, so they ride on the push.
+	FromName string `json:"fromName,omitempty"`
+	FromMMR  int    `json:"fromMmr,omitempty"`
+	// ExpiresAt is the SERVER-stamped deadline (unix ms) shared by every
+	// recipient of one broadcast. ⛔ Never let a browser start its own clock from
+	// the frame's arrival: sockets deliver at different times and the match would
+	// start while somebody's dialog still shows 4 秒.
+	ExpiresAt int64 `json:"expiresAt,omitempty"`
+	// WaitSec is the countdown length the deadline was built from — the dialog's
+	// progress bar needs the span, not just the end.
+	WaitSec float64 `json:"waitSec,omitempty"`
 }
 
 // CreateInvite mints a crypto/rand 256-bit single-use token (TTL ttl) for the
