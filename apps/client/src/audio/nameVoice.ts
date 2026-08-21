@@ -42,6 +42,7 @@
 import { AUDIO_CONTENT_BASE, audioSystem, shouldSilenceAudio } from "./AudioSystem";
 import { effectiveGain, type VolumeState } from "./audioSelect";
 import { grantRoundEndVoice } from "./roundEndVoice";
+import { withContentVersion } from "../content/assetVersion";
 
 /** Path of the generated name-VO manifest, relative to the content mount. */
 export const NAME_VO_MANIFEST_PATH = "assets/audio/voices/names/MANIFEST.json";
@@ -532,8 +533,21 @@ export class ChampionNameVoice {
     return this.el;
   }
 
+  /**
+   * GH#70 —— 語音 URL 要帶 `?h=<contentVersion>`。
+   *
+   * ⚠️ 這條路徑在 `93bacb58`（「actually cache the 73 MB」）被**漏掉了**：那一筆
+   * 只改了 AssetManager / AudioSystem.urlFor / groundMaterials / icons 四處，而
+   * 名言與稱號走的是 `HTMLAudioElement`，不經過 `AudioSystem.urlFor`。edge 端
+   * `map $arg_h $content_cache` 把空的 `$arg_h` 映射成 `no-cache`，所以
+   * names + quotes + voice-taunt 這 830 個檔（11.1 MB）每次載入都 revalidate。
+   *
+   * `withContentVersion` 在 manifest 落地前是 no-op，所以測試注入的 baseUrl 與
+   * 任何 pre-boot 的 clip 逐位元不變 —— 與 `AudioSystem.urlFor` 完全同一個作法。
+   */
   private url(path: string): string {
-    return this.baseUrl.endsWith("/") ? this.baseUrl + path : `${this.baseUrl}/${path}`;
+    const url = this.baseUrl.endsWith("/") ? this.baseUrl + path : `${this.baseUrl}/${path}`;
+    return withContentVersion(url);
   }
 
   /** Fetch a JSON doc under the content mount; null on 404 / bad JSON / error. */

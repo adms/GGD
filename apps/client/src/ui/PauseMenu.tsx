@@ -8,7 +8,9 @@
  */
 import { useEffect, useState } from "react";
 import { useApp } from "./platform/store";
+import { useHud } from "../net/RoomStore";
 import { leaveConfirmStore, useRequestLeave } from "./leaveFlow";
+import { shouldConfirmLeave } from "./leaveConfirm";
 import { LeaveConfirmDialog } from "./LeaveConfirmDialog";
 import { openCodex } from "./codex/CodexRoute";
 import { SfxButton } from "./SfxButton";
@@ -47,6 +49,13 @@ export function PauseMenu(): React.JSX.Element {
   const { hidden: menuHidden, style: menuStyle } = useHudSlotPlacement("menu", touch);
   const isOffline = useApp((s) => s.match?.mode === "offline");
   const restartMatch = useApp((s) => s.restartMatch);
+  // GH#99（leave-11）—— 線上的「↻ Restart match」**不是**重開，它走
+  // `platform/store.restartMatch` 的 else 分支 `returnToLobby()`：一次點擊就把玩家
+  // 送出這一場，而它就在 ⏻ Leave 上方兩格。#271 立的規則是「戰鬥中的**自願離開**
+  // 要先過 [確認/取消]」——⛔ 那條規則沒有理由因為按鈕上寫的是 Restart 就不適用。
+  // ⭐ 判斷用的是**同一個** `shouldConfirmLeave`，⛔ 不是第二份條件表：兩份一定會分歧。
+  const screen = useApp((s) => s.screen);
+  const phase = useHud((s) => s.phase);
   // #193: leave routes through the shared flow — an eliminated player sees their
   // settlement screen first; everyone else returns to the lobby as before.
   const requestLeave = useRequestLeave();
@@ -145,6 +154,11 @@ export function PauseMenu(): React.JSX.Element {
             <SfxButton
               onClick={() => {
                 setOpen(false);
+                // 離線 Restart 留在這一場（清場、第 1 回合），⛔ 不是離開 ⇒ 不問。
+                if (!isOffline && shouldConfirmLeave({ screen, phase })) {
+                  leaveConfirmStore.getState().ask(restartMatch);
+                  return;
+                }
                 restartMatch();
               }}
               style={menuBtn}

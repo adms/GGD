@@ -33,6 +33,7 @@
 import { AUDIO_CONTENT_BASE, audioSystem, shouldSilenceAudio } from "./AudioSystem";
 import { effectiveGain, type VolumeState } from "./audioSelect";
 import { grantRoundEndVoice } from "./roundEndVoice";
+import { withContentVersion } from "../content/assetVersion";
 
 /** Path of the authored taunt script, relative to the content mount. */
 export const VICTORY_TAUNTS_PATH = "config/victory-taunts.json";
@@ -461,8 +462,14 @@ export class VictoryTauntPlayer {
     return this.el;
   }
 
+  /**
+   * GH#70 —— 同 `audio/nameVoice` 的 `url()`：嘲諷的 379 個 clip（5.7 MB）也走
+   * `HTMLAudioElement`，所以 `93bacb58` 那一波的 `?h=` 從來沒有蓋到它們。
+   * `withContentVersion` 在 manifest 落地前是 no-op ⇒ 注入 baseUrl 的測試不變。
+   */
   private url(path: string): string {
-    return this.baseUrl.endsWith("/") ? this.baseUrl + path : `${this.baseUrl}/${path}`;
+    const url = this.baseUrl.endsWith("/") ? this.baseUrl + path : `${this.baseUrl}/${path}`;
+    return withContentVersion(url);
   }
 
   /** Fetch a JSON doc under the content mount; null on 404 / bad JSON / error. */
