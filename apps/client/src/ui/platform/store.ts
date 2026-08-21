@@ -340,8 +340,12 @@ export interface AppState {
   createInvite(accountId: string, username: string): Promise<void>;
   joinByCode(token: string): Promise<void>;
   /**
-   * ⭐ 按下集合令確認視窗的「加入」(GH#492)。一個 request 就進房而且是 ready 的
-   * （`readyOnAccept`）—— 主揪的倒數正在跑，⛔ 沒有第二趟來回的餘裕。
+   * ⭐ 接下這一則集合令 (GH#492)。一個 request 就進房而且是 ready 的
+   * （`readyOnJoin`）—— 主揪的倒數正在跑，⛔ 沒有第二趟來回的餘裕。
+   *
+   * ⚠️ 呼叫它的**多數不是按鈕**：owner 2026-08-21 把語意反轉成「預設是加入」，
+   * 所以倒數走完時 `RallyConfirmDialog` 會自己呼叫這一條（沒有人按過任何東西）。
+   * 按鈕「立刻加入」只是把等待跳過去。
    */
   acceptRally(token: string): Promise<void>;
   /**
@@ -1104,10 +1108,10 @@ export const appStore = createStore<AppState>()((set, get) => {
       const trimmed = token.trim();
       try {
         // 一個 request 進房 + 標記準備好 —— 主揪的倒數正在跑（見 api.joinByCode）。
-        const resp = await apiFns.joinByCode(trimmed, policy.readyOnAccept);
+        const resp = await apiFns.joinByCode(trimmed, policy.readyOnJoin);
         set({
           room: resp,
-          myReady: policy.readyOnAccept,
+          myReady: policy.readyOnJoin,
           createdInvite: null,
           rally: null,
           ws: removeInvite({ ...get().ws, chat: [] }, trimmed),

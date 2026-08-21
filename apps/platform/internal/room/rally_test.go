@@ -37,6 +37,7 @@ func TestRallyCallsTheLobbyIntoTheMatch(t *testing.T) {
 	host := ts.Register("host")
 	joiner := ts.Register("joiner")
 	busy := ts.Register("busy")
+	parked := ts.Register("parked")
 
 	// Presence is what makes an account 「在大廳」: the lobby WS handshake sets it
 	// (lobby/ws.go). Dialling is therefore not test scaffolding — it is the exact
@@ -47,18 +48,27 @@ func TestRallyCallsTheLobbyIntoTheMatch(t *testing.T) {
 	defer wsJoiner.Conn.CloseNow()
 	wsBusy := ts.MustDialWS(busy.Access)
 	defer wsBusy.Conn.CloseNow()
+	wsParked := ts.MustDialWS(parked.Access)
+	defer wsParked.Conn.CloseNow()
 
 	// `busy` is IN A MATCH — his own solo room. owner's rule is 「所有線上在大廳的
 	// 人」, so he must NOT get a confirm dialog thrown over his fight.
 	require.Equal(t, http.StatusOK,
 		ts.Do(http.MethodPost, "/api/v1/rooms/solo", busy.Access, nil).Status)
 
+	// ⭐ `parked` is waiting in a room OF HIS OWN. owner 2026-08-21 reversed the
+	// dialog to opt-out (「預設是加入，五秒是讓人按否定的」), so a push he ignores
+	// would AUTO-JOIN him out of his own room five seconds later. Under the old
+	// opt-in dialog this was a stray modal; now it is a player being taken away.
+	_ = createRoom(ts, parked, "Parked Room")
+
 	rid := roomID(createRoom(ts, host, "Rally Room"))
 
 	r := rally(ts, host, rid, 10)
 	require.Equal(t, http.StatusOK, r.Status, string(r.Raw))
-	// One dialog: joiner. NOT the host (he is looking at the room) and NOT busy.
-	require.EqualValues(t, 1, r.Body["invited"], "只有大廳裡的人收到集合令")
+	// One dialog: joiner. NOT the host (he is looking at the room), NOT busy (in a
+	// match) and NOT parked (already sitting in an open room of his own).
+	require.EqualValues(t, 1, r.Body["invited"], "只有大廳裡、而且沒在任何一間房裡的人收到集合令")
 	require.Greater(t, r.Body["expiresAt"].(float64), float64(time.Now().UnixMilli()),
 		"倒數截止時間是伺服器蓋的,⛔ 不是各自瀏覽器自己起算")
 
@@ -73,6 +83,11 @@ func TestRallyCallsTheLobbyIntoTheMatch(t *testing.T) {
 	// ⛔ busy must have received NOTHING but his own match_ready.
 	_, err = wsBusy.ReadUntil(700*time.Millisecond, func(m map[string]any) bool { return m["type"] == "invite" })
 	require.Error(t, err, "⛔ 比賽中的玩家不可以被集合令打斷")
+
+	// ⛔ ...and neither may somebody already waiting in another room: 預設加入
+	// 之下,一則他沒理會的推播會在五秒後把他從自己的房間帶走。
+	_, err = wsParked.ReadUntil(700*time.Millisecond, func(m map[string]any) bool { return m["type"] == "invite" })
+	require.Error(t, err, "⛔ 已經在別的房間裡的玩家不可以被集合令拉走")
 
 	// 同意 → 一個 request 就進房而且是 ready 的（倒數在跑,⛔ 沒有第二趟的餘裕）。
 	acc := ts.Do(http.MethodPost, "/api/v1/rooms/join-by-code", joiner.Access,

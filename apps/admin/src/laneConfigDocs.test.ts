@@ -163,9 +163,11 @@ describe("三份新 config 文件真的被接進出貨路徑 (adminui-lane-confi
       ...DEFAULT_LOBBY_RALLY,
     });
     expect(DEFAULT_LOBBY_RALLY_POLICY).toEqual({ ...DEFAULT_LOBBY_RALLY });
-    // ⭐ owner 明說死的唯一一格：「最多等 10 秒」。⛔ 其餘七格是決策點,
-    // 它們的值本來就會被 owner 調,所以這裡不釘（第零守則：不要過度測試數值）。
-    expect(DEFAULT_LOBBY_RALLY.waitSeconds, "owner 2026-08-21:「最多等 10 秒」").toBe(10);
+    // ⭐ 釘的是 owner 2026-08-21 反轉的那個**預設語意**（「預設是加入,五秒是讓人
+    // 按否定的」）—— 預設值本身改變要測新的預設（第〇·六守則）。
+    // ⛔ 秒數不釘:它是決策點,owner 當天就把 10 改成 5,而一個抄在測試裡的出貨值
+    // 就是第四個住處（第零守則：不要過度測試數值)。
+    expect(DEFAULT_LOBBY_RALLY.joinMode, "owner 2026-08-21:「預設是加入」").toBe("opt-out");
   });
 
   it("★ 出貨值 == 沙盒真的在用的那一份（valhalla-sandbox,逐格 + owner 明說的兩格）", () => {

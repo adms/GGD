@@ -85,6 +85,107 @@ export function rallyCountdown(expiresAt: number, waitSec: number, now: number):
   };
 }
 
+// ────────────────────── ⭐ 預設加入（opt-out）的那個決定 ─────────────────────
+//
+// owner 2026-08-21 逐字（**推翻**了同一天早上做出來的 opt-in 版本）：
+//
+// > 「你說的是對的，**預設是加入，五秒是讓人按否定的**」
+//
+// ⇒ 倒數結束 = **加入**。⛔ 不是「放棄」。這一節就是那句話的全部邏輯，寫成純函式，
+//   因為它有四個會出錯的地方，而每一個都是**決定**不是畫面：
+//
+//  ① **什麼時候**自動加入 —— ⛔ 不是 `expiresAt` 那一刻。主揪的客戶端在那一刻按下
+//     開始，一間已經開打的房會把同一刻送出的加入請求拒掉 ⇒「預設加入」變成
+//     「預設加入失敗」，而畫面上什麼都不會說。`autoJoinAt()` 是那趟來回的餘裕。
+//  ② **誰**不該被自動加入 —— 掛機的人（見 `rallyAutoJoin` 的 `idle`）。opt-in 之下
+//     「沒反應 = 不加入」是安全的；opt-out 之下「沒反應 = 被拉進一場比賽」，而一個
+//     整場不動的隊友對其他人來說**比少一個人更糟**。
+//  ③ **我已經在別的房間裡**的時候不該被拉走（伺服器也擋一次，見 rally.go）。
+//  ④ **已經過期**的推播（分頁在背景睡了一分鐘才醒）⛔ 不可以「補加入」。
+
+/** 這一刻該對這則集合令做什麼。 */
+export type AutoJoinVerdict =
+  /** 自動加入（時間到了，而且沒有任何一條擋下來）。 */
+  | "join"
+  /** 還在倒數，什麼都不做。 */
+  | "waiting"
+  /** 後台切成 opt-in：⛔ 永遠不自動加入，要人按「加入」。 */
+  | "opt-in"
+  /** ⚠️ 人不在螢幕前 —— 視窗留著，⛔ 但不替他進房。 */
+  | "idle"
+  /** 我已經在一間房裡了。 */
+  | "in-room"
+  /** 這則集合令已經過期（主揪早就開場了）。 */
+  | "expired";
+
+export interface AutoJoinCtx {
+  /** **伺服器蓋的**截止時間（主揪按下開始的那一刻）。 */
+  expiresAt: number;
+  /** 倒數跨距（秒）—— 提前量的夾制要它。 */
+  waitSec: number;
+  now: number;
+  /** 最後一次**真的使用者輸入**（ms epoch）。0 = 這個分頁從來沒有被碰過。 */
+  lastInputAt: number;
+  /** 分頁在背景（`document.hidden`）—— 他根本沒看到這個視窗。 */
+  hidden: boolean;
+  /** 我已經在某一間房裡（含正在等開場的那一間）。 */
+  inRoom: boolean;
+}
+
+/**
+ * 自動加入的**那一刻** = 伺服器截止時間 − 提前量。
+ *
+ * ⚠️ 提前量被夾在窗口的一半以內：`autoJoinLeadSeconds` 的上界（10）大於
+ * `waitSeconds` 的下界（3），所以「提前量吃掉整個窗口」是後台設定得出來的，
+ * 而那會讓「不要」按不到 —— ⛔ 一個按不到的否定按鈕就是沒有否定按鈕。
+ */
+export function autoJoinAt(policy: LobbyRallyPolicy, expiresAt: number, waitSec: number): number {
+  const span = waitSec > 0 ? waitSec : policy.waitSeconds;
+  const lead = Math.min(policy.autoJoinLeadSeconds, span / 2);
+  return expiresAt - lead * 1000;
+}
+
+/**
+ * 視窗上那個倒數要數到哪一刻：opt-out 數到**自動加入**、opt-in 數到期限。
+ * ⛔ 兩者不可以混用 —— 寫著「3 秒」卻在第 1.5 秒就把人送進房，是同一個缺陷的另一面。
+ */
+export function rallyDeadline(
+  policy: LobbyRallyPolicy,
+  expiresAt: number,
+  waitSec: number,
+): number {
+  return policy.joinMode === "opt-out" ? autoJoinAt(policy, expiresAt, waitSec) : expiresAt;
+}
+
+/**
+ * ⭐ 人現在在不在螢幕前 —— opt-out 唯一的安全閥。
+ *
+ * ⚠️ 為什麼這件事**只有瀏覽器答得出來**：平台的 presence 是一把 TTL 鑰匙，而續期的
+ * heartbeat 是大廳 WS 每隔幾秒**用計時器**送的（`lobby/ws.go`），⛔ 不是使用者做了
+ * 什麼。⇒ 伺服器眼中「盯著大廳的人」和「開著分頁去睡覺的人」逐位元相同。
+ * ⛔ 所以不要在伺服器上造第二套 presence，判斷放在收件人自己那一台 ——
+ * 反正自動加入的那個 request 本來就是他發的。
+ */
+export function rallyIdle(policy: LobbyRallyPolicy, ctx: AutoJoinCtx): boolean {
+  if (policy.idleExcludeSeconds <= 0) return false; // 閘關掉了
+  if (ctx.hidden) return true; // 看不到視窗的人，不可能是「沒有按不要」
+  if (ctx.lastInputAt <= 0) return true; // 這個分頁從來沒有被碰過
+  return ctx.now - ctx.lastInputAt > policy.idleExcludeSeconds * 1000;
+}
+
+/** 這一刻該對這則集合令做什麼（⛔ 沒有副作用，畫面與請求都在別處）。 */
+export function rallyAutoJoin(policy: LobbyRallyPolicy, ctx: AutoJoinCtx): AutoJoinVerdict {
+  if (policy.joinMode !== "opt-out") return "opt-in";
+  if (ctx.inRoom) return "in-room";
+  // ⛔ 沒有截止時間的推播（舊版／私人邀請被誤送進來）**永遠不自動加入**：
+  // 不知道什麼時候到期，就沒有「時間到」這件事，⛔ 不可以退化成「立刻加入」。
+  if (ctx.expiresAt <= 0) return "waiting";
+  if (ctx.expiresAt > 0 && ctx.now >= ctx.expiresAt) return "expired";
+  if (ctx.now < autoJoinAt(policy, ctx.expiresAt, ctx.waitSec)) return "waiting";
+  if (rallyIdle(policy, ctx)) return "idle";
+  return "join";
+}
+
 // ───────────────────────────── 玩家名冊 ─────────────────────────────────────
 
 /** 名冊要讀的那幾格 —— `net/RoomStore` 的 `SeatView` 的子集。 */

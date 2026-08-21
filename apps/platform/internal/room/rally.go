@@ -26,19 +26,41 @@ import (
 // that shipped one shared token would be a room key any recipient could forward,
 // and the 「only that account may use it」 check in AcceptInvite is what stops it.
 //
-// ---- THE THREE RULES THE FAN-OUT ENFORCES -----------------------------------
+// ---- ⭐ 2026-08-21: THE DIALOG IS OPT-OUT, WHICH RAISES THE STAKES HERE ------
+// owner reversed the semantics the same day: 「你說的是對的，**預設是加入，五秒是
+// 讓人按否定的**」. A recipient who presses nothing IS PULLED INTO A MATCH.
+// ⇒ every exclusion below stopped being 「一個多餘的視窗」 and became 「一個人被拉走」,
+//   which is why the room filter is now 「in ANY open room」 and not just this one.
+//   The five-second window is far too short to be somebody's only defence, so the
+//   defences are: the server never reaching people who are busy (here), the
+//   recipient's own browser refusing to auto-join while nobody is at the keyboard
+//   (`ui/platform/userIdle.ts` — presence cannot answer that, see below), and a
+//   leave path that still works after the match starts (`ui/LeaveConfirmDialog`).
+//
+// ---- THE FOUR RULES THE FAN-OUT ENFORCES ------------------------------------
 //  1. ⛔ NOBODY IN A MATCH. The roster seam (friend.InLobby) drops
 //     presence.StateInMatch before this function ever sees it. owner's wording is
 //     「所有線上**在大廳**的人」, and a modal thrown over a live fight is the one
-//     outcome that makes this feature worse than not having it.
-//  2. NOBODY ALREADY IN THE ROOM. A member who is already sitting in the room
-//     (the host above all) would get a confirm dialog inviting them to join the
-//     room they are looking at.
+//     outcome that makes this feature worse than not having it. Champion select
+//     is on the far side of `room.Start`, so it is in-match too — a player picking
+//     a hero is never a recipient.
+//  2. NOBODY ALREADY IN A ROOM — ⛔ not just THIS room. Under opt-out, a player
+//     sitting in room B waiting for his friends would be AUTO-JOINED out of it in
+//     five seconds. The client also refuses (`inRoom` in RallyConfirmDialog), but
+//     「我不送」 and 「我送了、希望對方不理」 are different guarantees and only the
+//     first one survives a client bug.
 //  3. EVERY PUSH CARRIES THE SAME DEADLINE. `expiresAt` is stamped ONCE, here, in
 //     server time, and every recipient's countdown is derived from it. Letting
 //     each browser start its own 10 s from the moment its socket happened to
 //     deliver the frame is how you get a dialog that is still counting down after
 //     the match has started.
+//  4. ⛔ IDLENESS IS NOT DECIDABLE HERE, SO IT IS NOT DECIDED HERE. presence is a
+//     TTL key refreshed by a TIMER-driven heartbeat (lobby/ws.go), so an account
+//     staring at the lobby and an account whose owner went to bed are bit-for-bit
+//     identical on this side. The 「掛機的人不要被拉進去」 gate therefore lives in the
+//     recipient's browser, which is the only place real input events exist — and
+//     which is where the auto-join request comes from anyway. ⛔ Do NOT grow a
+//     second presence system here to fake it.
 //
 // ---- WHY THE HOST'S CLIENT OWNS THE COUNTDOWN, NOT A SERVER TIMER ------------
 // The rally window ends in `POST /rooms/{id}/start`, called by the host's browser
@@ -146,11 +168,16 @@ func (s *Service) Rally(ctx context.Context, actor, roomID string, waitSec float
 	if err != nil {
 		return RallyInfo{}, err
 	}
+	// Rule 2: everyone who is already sitting in a room — THIS one (which may be
+	// unlisted, so the scan below cannot see it) or any other open one.
 	members, err := s.rdb.R.SMembers(ctx, redisx.KeyRoomMembers(roomID)).Result()
 	if err != nil {
 		return RallyInfo{}, err
 	}
-	inRoom := make(map[string]struct{}, len(members))
+	inRoom, err := s.membersOfOpenRooms(ctx)
+	if err != nil {
+		return RallyInfo{}, err
+	}
 	for _, id := range members {
 		inRoom[id] = struct{}{}
 	}
@@ -191,6 +218,39 @@ func (s *Service) Rally(ctx context.Context, actor, roomID string, waitSec float
 		info.Invited++
 	}
 	return info, nil
+}
+
+// maxRallyRoomScan bounds the open-room walk rule 2 does. Same window as
+// ListOpen's lobby list, for the same reason: the room browser only ever shows
+// that many, so a room past it is not one a player could have walked into.
+const maxRallyRoomScan = 50
+
+// membersOfOpenRooms is every account currently sitting in ANY open room.
+//
+// ⭐ It exists because the dialog is OPT-OUT (owner 2026-08-21: 「預設是加入」):
+// a player waiting in another room would otherwise be pulled OUT of it by a
+// countdown he never asked for. Under the old opt-in dialog this was merely a
+// stray modal.
+//
+// ⚠️ A read error is an ERROR, ⛔ never an empty map: degrading to 「nobody is in a
+// room」 would silently restore exactly the behaviour this prevents, and the only
+// visible symptom would be a stranger appearing in somebody else's match.
+func (s *Service) membersOfOpenRooms(ctx context.Context) (map[string]struct{}, error) {
+	ids, err := s.rdb.R.ZRevRange(ctx, redisx.KeyRoomsOpen(), 0, maxRallyRoomScan-1).Result()
+	if err != nil {
+		return nil, err
+	}
+	out := make(map[string]struct{}, 16)
+	for _, id := range ids {
+		mem, err := s.rdb.R.SMembers(ctx, redisx.KeyRoomMembers(id)).Result()
+		if err != nil {
+			return nil, err
+		}
+		for _, m := range mem {
+			out[m] = struct{}{}
+		}
+	}
+	return out, nil
 }
 
 // rallyTokenGrace is how long a rally token outlives the countdown it was minted

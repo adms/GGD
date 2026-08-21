@@ -6673,10 +6673,20 @@ export const zConfigLobbyLayoutDoc = z
  * >  所選英雄**，**每回合結算也都要特別再提示一次**，因為**有可能斷線離開或連線
  * >  回來房間繼續遊戲**」
  *
- * ⭐ 「**最多等 10 秒**」是這一族唯一被 owner 說死的數字，其餘每一格都是
- * **決策點**（第一守則：「心裡出現要選 A 還是 B」的那些），所以它們是欄位而不是
- * 常數 —— 而且 `enabled` 那一格就是第〇·六守則要的**一鍵 rollback**：關掉它，
- * 一鍵開打回到 2026-08-21 之前那條「立刻開，不等人」的路。
+ * ⭐ **2026-08-21 owner 反轉了語意**（逐字）：
+ *
+ * > 「你說的是對的，**預設是加入，五秒是讓人按否定的**」
+ *
+ * ⇒ 倒數結束 = **加入**，⛔ 不是「放棄」。視窗的主要按鈕是「**不要**」，
+ * 沒有互動就進房。理由是量得出來的：`waitSeconds` 出貨是 **5 秒**，
+ * 5 秒對「主動點同意」太短 ⇒ opt-in 幾乎等於沒有人會加入，
+ * 而 owner 的原話是「**創建房間最重要的就是拉人進來**」。
+ * `joinMode` 是那個反轉的一鍵 rollback（`opt-in` = 2026-08-21 早上那一版）。
+ *
+ * ⭐ 「**最多等 10 秒**」是這一族唯一被 owner 說死的數字（後來他自己改成 5），
+ * 其餘每一格都是**決策點**（第一守則：「心裡出現要選 A 還是 B」的那些），
+ * 所以它們是欄位而不是常數 —— 而且 `enabled` 那一格就是第〇·六守則要的
+ * **一鍵 rollback**：關掉它，一鍵開打回到 2026-08-21 之前那條「立刻開，不等人」的路。
  *
  * ⚠️ 這一份**真的有執行期消費端**（⛔ 不像 `lobby-layout` 那一份）：
  * `apps/client/src/ui/platform/lobbyRally.ts` 的 `activeLobbyRally()` 讀
@@ -6727,12 +6737,52 @@ export const zConfigLobbyRallyDoc = z
      */
     startIgnoresReady: z.boolean(),
     /**
-     * 按下確認視窗的「加入」＝同時標記準備好（同一個 request）。
+     * ⭐ **集合令是「預設加入」還是「預設不加入」** —— owner 2026-08-21 逐字：
+     * 「**預設是加入，五秒是讓人按否定的**」。
+     *
+     * | 值 | 倒數結束時 | 視窗的主要按鈕 |
+     * |---|---|---|
+     * | `opt-out`（出貨） | **自動加入** | 「不要」 |
+     * | `opt-in` | 什麼都不做（視窗關掉） | 「加入」 |
+     *
+     * ⛔ 這不是措辭差異：`waitSeconds` 出貨 5 秒，5 秒對「主動點同意」太短 ——
+     * opt-in 幾乎等於沒有人會加入，而這張票的目的是「拉人進來」。
+     * ⇒ `opt-in` 存在只為了**回頭**（第〇·六守則），⛔ 不是為了觀望。
+     */
+    joinMode: z.enum(["opt-out", "opt-in"]),
+    /**
+     * opt-out 的**提前量**：倒數在截止前這麼多秒就自動加入，⛔ 不是掐在同一刻。
+     *
+     * ⚠️ 這一格是承重的，不是裝飾：主揪的客戶端在 `expiresAt` 那一刻按下開始，
+     * 一間**已經開打**的房會把同一刻送出的加入請求拒掉（409/404）——
+     * 於是「預設加入」會變成「預設加入失敗」，而畫面上什麼都不會說。
+     * 提前量就是那趟 click→request→SADD 的來回餘裕。
+     *
+     * ⚠️ 上界 10 大於 `waitSeconds` 的下界 3，所以「提前量吃掉整個窗口」是**設定得出來**的
+     * ⇒ `autoJoinAt()` 另外夾住「提前量不得超過窗口的一半」，⛔ 讓「不要」永遠按得到。
+     */
+    autoJoinLeadSeconds: z.number().min(0.2).max(10),
+    /**
+     * ⭐ **掛機的人不要被拉進去**：這麼多秒沒有任何輸入（或分頁在背景）的人，
+     * 集合令**不會**替他自動加入 —— 視窗留著，他回來仍然可以自己按「加入」。
+     * `0` = 關掉這道閘（誰都會被自動拉進去）。
+     *
+     * ⚠️ 為什麼判斷在**瀏覽器**而不是伺服器：平台的 presence 只有「連線活著」
+     * （`lobby/ws.go` 的 heartbeat 是**計時器**送的，⛔ 不是使用者動作），
+     * 所以伺服器分不出「盯著大廳的人」和「開著分頁去睡覺的人」。真正的輸入事件
+     * 只有收件人自己的分頁看得到 —— 而自動加入本來就是他那一台發出的請求。
+     * ⛔ 不要為了這一格在伺服器上造第二套 presence。
+     */
+    idleExcludeSeconds: z.number().int().min(0).max(3600),
+    /**
+     * 加入房間（**自動或手動都算**）＝同時標記準備好（同一個 request）。
      *
      * 決策點：關掉的話玩家要在倒數剩不到幾秒時再按一次準備，而那一趟來回
      * 正好是開場會把他丟下的那個窗口。
+     * ⚠️ 2026-08-21 從 `readyOnAccept` 改名：opt-out 之下**沒有人按過「同意」**，
+     * 舊名字描述的動作不存在了（第一守則：語意改了，舊文案就是謊話）。
      */
-    readyOnAccept: z.boolean(),
+    readyOnJoin: z.boolean(),
     /**
      * 場上要有幾個**真人**才顯示玩家名冊。⭐ owner 的條件句是
      * 「**若有其他玩家**一起進入房間遊戲」—— 2 就是那句話的直譯。
@@ -8386,7 +8436,9 @@ export type LobbyRallyPolicyDoc = Omit<ConfigLobbyRallyDoc, "id" | "schema" | "n
 /**
  * 出貨預設（＝內容載不到時的保險絲）。
  *
- * ⭐ `waitSeconds: 5` 是 owner 明說的那一格（2026-08-21 從 10 改成 **5**：「改成五秒」）；其餘七格是決策點，預設值選的是
+ * ⭐ `waitSeconds: 5` 是 owner 明說的那一格（2026-08-21 從 10 改成 **5**：「改成五秒」），
+ * `joinMode: "opt-out"` 是他同一天說死的第二格（「**預設是加入，五秒是讓人按否定的**」）；
+ * 其餘各格是決策點，預設值選的是
  * 「照 owner 的話做」的那一邊（第〇·六守則：優先權大的更新預設啟動）。
  *
  * ⚠️ 每一格都必須和 `apps/client/src/ui/platform/lobbyRally.ts` 的
@@ -8398,7 +8450,11 @@ export const DEFAULT_LOBBY_RALLY_POLICY: LobbyRallyPolicyDoc = {
   waitSeconds: 5,
   includeBotMatch: true,
   startIgnoresReady: true,
-  readyOnAccept: true,
+  // ⭐ owner 2026-08-21:「預設是加入，五秒是讓人按否定的」。
+  joinMode: "opt-out",
+  autoJoinLeadSeconds: 1.5,
+  idleExcludeSeconds: 120,
+  readyOnJoin: true,
   rosterMinHumans: 2,
   showRosterInSettlement: true,
   showRosterInChampSelect: true,
@@ -8420,7 +8476,10 @@ export function resolveLobbyRally(
     waitSeconds: doc.waitSeconds,
     includeBotMatch: doc.includeBotMatch,
     startIgnoresReady: doc.startIgnoresReady,
-    readyOnAccept: doc.readyOnAccept,
+    joinMode: doc.joinMode,
+    autoJoinLeadSeconds: doc.autoJoinLeadSeconds,
+    idleExcludeSeconds: doc.idleExcludeSeconds,
+    readyOnJoin: doc.readyOnJoin,
     rosterMinHumans: doc.rosterMinHumans,
     showRosterInSettlement: doc.showRosterInSettlement,
     showRosterInChampSelect: doc.showRosterInChampSelect,
