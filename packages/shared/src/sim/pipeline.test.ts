@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import { cover } from "../../testkit/cover";
 import { SimWorld } from "./SimWorld";
+import { apDamageMult } from "./combat/apDamageScaling";
 import { SKELETON_ARENA } from "./world/ArenaDef";
 import { registerSkeletonContent } from "./content/skeleton";
 import { spawnChampion } from "./spawnChampion";
@@ -405,7 +406,16 @@ describe("abilities", () => {
     // 與上面 `thorneMr` 逐字同一個理由（那一格也是被 GH#221 教出來的）。
     // 這一條測的是「flat + AP 係數 + 魔抗曲線三層都在」，⛔ 不是 AP 等於多少。
     const selaAp = world.stats.get(sela)!.final[Stat.AbilityPower];
-    expect(abilityDamage).toBeCloseTo((80 + 0.7 * selaAp) * (100 / (100 + thorneMr)), 1);
+    // ⚠️ 2026-08-21：**第四層** —— AP 傷害加成（owner「技能傷害都套用公式
+    // (1+AP*1%)」，`combat/apDamageScaling.ts`）。⛔ 同樣是**讀**不是寫：乘數
+    // 由那支出貨函式算，所以 owner 調 `rate` 時這一條跟著走而不是用錯誤的訊息紅。
+    // ⚠️ origin 只要前綴是 `ability:` 就同一個答案（`originInScope` 只看前綴），
+    // 而這一發真的是技能投射物 —— 所以拿一個技能 origin 去問是等價的。
+    const apMult = apDamageMult(world, sela, "ability:sela.q");
+    expect(abilityDamage).toBeCloseTo(
+      (80 + 0.7 * selaAp) * apMult * (100 / (100 + thorneMr)),
+      1,
+    );
     expect(kindlingDamage).toBeGreaterThan(0); // passive fired
     expect(world.health.get(thorne)!.hp).toBeLessThan(hpBefore);
   });

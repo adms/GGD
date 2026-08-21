@@ -71,7 +71,7 @@ import { capsule } from "../collision/shapes";
 import { queryOverlap } from "../collision/queries";
 import { canSee } from "../stealth";
 import { distSq, type Vec2 } from "../math/vec2";
-import { aimDirection, casterAttrs, casterStats } from "./effectCommon";
+import { aimDirection, casterAttrs, casterDamageStats } from "./effectCommon";
 import { resourcePctAmount } from "./dynamicTerms";
 import { clampSpreadRadius, clampSpreadTargets } from "./spreadLimits";
 import { runOnHitChain, selectVictims } from "./victimFilter";
@@ -149,7 +149,7 @@ export const damageLineEffect: EffectKindSpec<"damageLine"> = {
       return;
     }
 
-    const stats = casterStats(ctx);
+    const stats = casterDamageStats(ctx);
     const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx));
     for (const v of struck) {
       let amount = base;

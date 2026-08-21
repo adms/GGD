@@ -54,6 +54,10 @@ import { DEFAULT_CAST_TIME_RULES, type CastTimeRules } from "./castTimeRules";
 import { DEFAULT_WOUND_RULES, type WoundRules } from "./grievousWounds";
 import { DEFAULT_WEAKNESS_RULES, type WeaknessRules } from "./weakness";
 import { DEFAULT_DAMAGE_RULES, type DamageRules } from "./damageRules";
+import {
+  DEFAULT_AP_DAMAGE_SCALING,
+  type ApDamageScaling,
+} from "./combat/apDamageScaling";
 import { DEFAULT_MITIGATION_RULES, type MitigationRules } from "./combat/penetration";
 import { DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES } from "./economy/offerEligibility";
 import {
@@ -1233,6 +1237,14 @@ export class SimWorld {
   weaknessRules: WeaknessRules = DEFAULT_WEAKNESS_RULES;
   /** 傷害規則 —— 今天只有「沒寫 `damageType` 時用哪一種」。 */
   damageRules: DamageRules = DEFAULT_DAMAGE_RULES;
+  /**
+   * AP 傷害加成 (`config.ap-damage-scaling@1`, owner 2026-08-21：
+   * 「技能傷害都套用公式 (1+AP*1%)⋯=> 預設 0.5%」)。
+   * 同 `damageRules` 的規矩：開賽前指派一次，之後不再動。預設是**出貨表**，
+   * ⛔ 不是空物件 —— 空表會讓 `rate` 讀成 undefined，於是 `1 + ap * undefined`
+   * 產出 **NaN**，而 NaN 傷害在畫面上等於「這一發沒扣血」，⛔ 一行都不會報錯。
+   */
+  apDamageScaling: ApDamageScaling = DEFAULT_AP_DAMAGE_SCALING;
   /**
    * 減傷曲線 (`config.mitigation@1`) —— 今天只有「負抗性最多放大到幾倍」。
    * 同 `damageRules` 的規矩：開賽前指派一次，之後不再動。預設是**出貨表**

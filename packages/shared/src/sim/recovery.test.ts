@@ -15,6 +15,7 @@
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { SimWorld } from "./SimWorld";
+import { apDamageMult } from "./combat/apDamageScaling";
 import { SKELETON_ARENA } from "./world/ArenaDef";
 import { registerSkeletonContent } from "./content/skeleton";
 import { spawnChampion } from "./spawnChampion";
@@ -453,8 +454,14 @@ describe("THE COMBO BUDGET: does the follow-up's startup fit inside hitstun?", (
     world.health.get(b)!.maxHp = 1e6;
     world.health.get(b)!.hp = 1e6;
     // `true` damage skips mitigation, so `amount` IS the impact the profile sees
+    // —— ⚠️ 只要把**每一層**全域倍率都先除掉。2026-08-21 多了第二層：AP 傷害加成
+    // （`combat/apDamageScaling.ts`，origin 是 `ability:x` 所以它吃得到）。
+    // ⛔ 除數**讀**出貨函式而不是抄一個數字：這一條釘的是硬直上限與到達它所需的
+    // 衝擊力，⛔ 不是「一發技能打多少」。
     world.damageQueue.push({
-      source: a, target: b, amount: amount / world.combatEnv.damageDealt,
+      source: a, target: b,
+      amount:
+        amount / world.combatEnv.damageDealt / apDamageMult(world, a, "ability:x"),
       type: "true", crit: false, origin: "ability:x",
     });
     world.step(NO_INTENTS);

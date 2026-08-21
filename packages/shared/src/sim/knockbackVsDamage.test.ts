@@ -37,6 +37,7 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import { cover } from "../../testkit/cover";
 import { SimWorld } from "./SimWorld";
+import { apDamageMult } from "./combat/apDamageScaling";
 import { SKELETON_ARENA } from "./world/ArenaDef";
 import { registerSkeletonContent } from "./content/skeleton";
 import { spawnChampion } from "./spawnChampion";
@@ -174,11 +175,22 @@ function travelled(r: Rig, path: V.Vec2[]): number {
  * 改註冊表的數字，因為受測英雄的 maxHp 是由出貨的 spawnChampion 決定的，
  * 硬寫一個數字會在平衡改動的那天悄悄失效。
  */
+/**
+ * ⚠️ 2026-08-21 —— `flat` 除掉 AP 傷害加成（`combat/apDamageScaling.ts`）。
+ *
+ * 這支 helper 的**契約**是「這一發**落地時**剛好是最大生命的 DAMAGE_PCT」，
+ * 因為底下每一條斷言量的都是「打掉這麼多血會把人推多遠」。技能傷害多了一層
+ * 全域乘數之後，⛔ 不除掉的話這個契約就靜默變成「1.7 × DAMAGE_PCT」——
+ * 而在 `longerDamageWins` 那一條裡它會直接把人打死（死人不會被推），
+ * 於是測試用一個**與缺陷無關**的理由紅（失敗形態④）。
+ * ⛔ 除數讀出貨函式，不抄數字。
+ */
 function armDamage(r: Rig, abilityId: AbilityId): number {
   const maxHp = r.world.health.get(r.victim)!.maxHp;
   const def = Abilities.get(abilityId);
+  const apMult = apDamageMult(r.world, r.caster, `ability:${abilityId}`);
   for (const e of def.effects) {
-    if (e.kind === "damage") (e.amount as { flat: number }).flat = maxHp * DAMAGE_PCT;
+    if (e.kind === "damage") (e.amount as { flat: number }).flat = (maxHp * DAMAGE_PCT) / apMult;
   }
   return maxHp;
 }
@@ -230,7 +242,11 @@ describe("同一 tick 的傷害不得蓋掉技能授權的擊退", () => {
     const maxHp = r.world.health.get(r.victim)!.maxHp;
     const def = Abilities.get(SHOVE_HIT);
     for (const e of def.effects) {
-      if (e.kind === "damage") (e.amount as { flat: number }).flat = maxHp * 0.99;
+      // ⛔ 除掉 AP 傷害加成，理由與 `armDamage` 逐字相同：這裡要的是「打掉 99%
+      //    生命」，⛔ 不是「打死他」—— 一具屍體不會被推。
+      if (e.kind === "damage")
+        (e.amount as { flat: number }).flat =
+          (maxHp * 0.99) / apDamageMult(r.world, r.caster, `ability:${SHOVE_HIT}`);
       if (e.kind === "knockback") e.distance = 3;
     }
     const d = travelled(r, castAndRun(r, SHOVE_HIT, 200));

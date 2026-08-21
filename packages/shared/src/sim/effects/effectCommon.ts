@@ -13,6 +13,8 @@ import type { SimWorld } from "../SimWorld";
 import type { AttrLookup, EffectContext, EffectDef } from "./effect";
 import { resolveScaling } from "./effect";
 import type { Stat } from "../stats/statTypes";
+import { Stat as StatEnum } from "../stats/statTypes";
+import { apRatiosSuppressed } from "../combat/apDamageScaling";
 import { liveAttribute } from "../stats/attrSources";
 import { clampMarkCount, markExpired } from "../markLimits";
 import { len, normalize, sub, type Vec2 } from "../math/vec2";
@@ -54,6 +56,31 @@ export function aimDirection(
 
 export function casterStats(ctx: EffectContext): Record<Stat, number> {
   return ctx.world.stats.get(ctx.caster)?.final ?? ({} as Record<Stat, number>);
+}
+
+/**
+ * ⭐ 傷害葉專用的施法者屬性表 —— `apRatioMode: "replace"` 的**唯一**落地點。
+ *
+ * `"stack"`（出貨）時它**就是** {@link casterStats}，同一個物件、零複製、
+ * ⇒ 對今天每一場比賽逐位元等價。
+ *
+ * `"replace"` 時（owner 判定「乘法一層就夠、加法那層拿掉」）它回一份把 `ap`
+ * 摀成 0 的**副本**，於是 `Scaling.ratios` 裡 `{stat:"ap"}` 那一條算出 0，
+ * 而 `flat` / `perRank` / 其他 `ratios` / `attrRatios` **一格都不動**。
+ *
+ * ⛔ 為什麼是「摀」而不是「刪內容」：那 115 條係數是作者資料（分佈 0.1…7.0），
+ * 刪掉就回不去了，而一個回不去的開關不是開關。摀是執行期的，切回來下一場就恢復。
+ *
+ * ⛔ 為什麼只有傷害葉：一支跟著法強長的**治療**或**護盾**與「技能傷害怎麼吃 AP」
+ * 是兩件事 —— 把它們一起摀掉會讓一個講傷害的旋鈕靜默改掉補師的數字。
+ *
+ * ⚠️ 判定用的是 `ctx.origin`（同一支 `originInScope`），⛔ 不是第二份
+ * `startsWith("ability:")` —— 理由逐字見 `combat/damageTypeOverride.ts` 的檔頭。
+ */
+export function casterDamageStats(ctx: EffectContext): Record<Stat, number> {
+  const stats = casterStats(ctx);
+  if (!apRatiosSuppressed(ctx.world, ctx.origin)) return stats;
+  return { ...stats, [StatEnum.AbilityPower]: 0 };
 }
 
 /**
@@ -168,7 +195,10 @@ export function comboAddend(
   const combo = e.comboBonus;
   if (combo === undefined) return 0;
   if (!hasStatus(ctx.world, ctx.caster, combo.statusId)) return 0;
-  return resolveScaling(casterStats(ctx), combo.amount, ctx.rank, casterAttrs(ctx));
+  // ⭐ `casterDamageStats` 而不是 `casterStats`：連擊窗加成**是傷害**，
+  // 少了這一個字，`apRatioMode: "replace"` 就只摀掉主體、漏掉連擊那一項 ——
+  // 一個「只有一半生效」的開關比沒有開關更難查。
+  return resolveScaling(casterDamageStats(ctx), combo.amount, ctx.rank, casterAttrs(ctx));
 }
 
 /**

@@ -82,6 +82,11 @@ import {
   type DamageRules,
 } from "@ggd/shared/sim/damageRules";
 import {
+  apDamageScalingFromDoc,
+  AP_DAMAGE_SCALING_DOC_ID,
+  type ApDamageScaling,
+} from "@ggd/shared/sim/combat/apDamageScaling";
+import {
   mitigationRulesFromDoc,
   MITIGATION_DOC_ID,
   type MitigationRules,
@@ -995,6 +1000,15 @@ export class MatchController {
     weaknessRules: WeaknessRules = weaknessRulesFromDoc(Configs.tryGet(WEAKNESS_DOC_ID)),
     damageRules: DamageRules = damageRulesFromDoc(Configs.tryGet(DAMAGE_RULES_DOC_ID)),
     /**
+     * AP 傷害加成 (`config.ap-damage-scaling@1`, owner 2026-08-21) —— 技能傷害
+     * ×(1 + 法強 × 加成率)。和 `damageRules` 完全同一條路（含同一個已知限制：
+     * `Configs` 是 boot 時載入的，後台改了要重啟 shard）。
+     * ⭐ 出貨加成率填 0 就是一鍵 rollback，那時這一整層對每一場比賽逐位元不存在。
+     */
+    apDamageScaling: ApDamageScaling = apDamageScalingFromDoc(
+      Configs.tryGet(AP_DAMAGE_SCALING_DOC_ID),
+    ),
+    /**
      * 減傷曲線 (`config.mitigation@1`) —— 負抗性最多把傷害放大到幾倍
      * (1.0 = 關掉負分支 = 一鍵 rollback)。和 `damageRules` 完全同一條路
      * (含同一個已知限制:`Configs` 是 boot 時載入的,後台改了要重啟 shard)。
@@ -1139,6 +1153,12 @@ export class MatchController {
     this.world.woundRules = woundRules;
     this.world.weaknessRules = weaknessRules;
     this.world.damageRules = damageRules;
+    // AP 傷害加成 (`config.ap-damage-scaling@1`) —— 同樣在 tick 0 之前定格。
+    // ⚠️ 少了這一行就是 `augmentEnemyFilter` 那個同型故障：後台在編輯它、說明寫著
+    // 「MatchController 在開場 tick 0 之前灌進 world」，而 sim 讀到的永遠是
+    // `SimWorld` 的出貨預設，於是把加成率調成 0 的 rollback **按不下去**，
+    // 而畫面上一切正常。
+    this.world.apDamageScaling = apDamageScaling;
     // 減傷曲線 (`config.mitigation@1`) —— 同樣在 tick 0 之前定格。
     // ⚠️ 少了這一行就是下面那個 `augmentEnemyFilter` 的同型故障:後台在編輯它、
     // 說明寫著「MatchController 在開場 tick 0 之前灌進 world」,而 sim 讀到的

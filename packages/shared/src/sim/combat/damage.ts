@@ -24,6 +24,7 @@ import {
   impactGateTypeOf,
   resolveDamageConversion,
 } from "./damageTypeOverride";
+import { apDamageMult } from "./apDamageScaling";
 import { mitigationMult, resistAfterPenetration, resolvePenetration } from "./penetration";
 import { cancelLeap } from "../movement/leap";
 import { healTarget, restoreMana } from "./restore";
@@ -941,6 +942,27 @@ export function combatResolveSystem(world: SimWorld): void {
       // 反彈就會被乘第二次(比例變成 `pct × k`)。整段推導寫在 `DamagePacket`
       // 那個欄位上,開關是 `incomingPct.applyGlobalDamageMult`。
       if (pkt.skipGlobalDamageMult !== true) pkt.amount *= world.combatEnv.damageDealt;
+
+      // ⭐ AP 傷害加成 —— 「AP 變為**原本傷害的額外加成**」（owner 2026-08-21：
+      // 「技能傷害都套用公式 (1+AP*1%)⋯=> **預設 0.5%**」）。
+      //
+      // ⭐ 位置是刻意的：**緊貼全域傷害倍率**，也就是同一層 —— 出手多重，
+      // 減傷之前。三個後果，每一個都看得見：
+      //   · 在 `mitigate()` 之前 → 它是「我這一發多重」，⛔ 不是「他扛得多好」，
+      //     所以對高護甲目標不會被吃掉一大半；
+      //   · 在傷害**佇列**上 → 技能／技能投射物／技能 DoT／代放**全部**走這一行，
+      //     ⛔ 不必在五個傷害葉各乘一次（那是五份會分頭腐爛的算式）；
+      //   · 與 `pkt.crit` 相乘而不是相加 → 暴擊與法強是兩條獨立的軸。
+      //
+      // ⚠️ 共用 `skipGlobalDamageMult` 而**不開第二個旗標**，理由與上面那一行
+      // 逐字相同：一發反彈的三個讀數已經吃過**攻擊者**的 AP 乘數，反彈者再乘
+      // 一次自己的，反彈比例就不等於卡面寫的百分比了。
+      //
+      // ⭐ `rate = 0` ⇒ `apDamageMult` 回 1 ⇒ **對今天每一場比賽逐位元等價**，
+      // 也就是這一格的一鍵 rollback。整段推導寫在 `combat/apDamageScaling.ts`。
+      if (pkt.skipGlobalDamageMult !== true) {
+        pkt.amount *= apDamageMult(world, pkt.source, pkt.origin);
+      }
 
       // 【虛弱】—— 攻擊者**造成的傷害**打折（GH#301-4，owner 2026-08-09：
       // 「攻擊速度暫時減半、AP/AD 造成傷害暫時減半」）。

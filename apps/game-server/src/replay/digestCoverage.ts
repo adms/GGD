@@ -116,6 +116,9 @@ export const SIM_WORLD_DIGEST_EXEMPT: Readonly<Record<string, string>> = {
   woundRules: CONFIG,
   weaknessRules: CONFIG,
   damageRules: CONFIG,
+  // AP 傷害加成（owner 2026-08-21）—— 和 `damageRules` 完全同一條路：
+  // `MatchController` 在 tick 0 之前定格，比賽中途不會變，所以每個 replica 讀到同一份。
+  apDamageScaling: CONFIG,
   mitigationRules: CONFIG,
   stealthRules: CONFIG,
   berserkRules: CONFIG,

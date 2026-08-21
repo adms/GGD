@@ -47,7 +47,7 @@ import type { EntityId } from "../../ids";
 import type { DamageType } from "./effect";
 import { resolveScaling } from "./effect";
 import type { EffectKindSpec } from "./effectKind";
-import { casterAttrs, casterStats } from "./effectCommon";
+import { casterAttrs, casterDamageStats } from "./effectCommon";
 import type { ResourcePctTerm } from "./dynamicTerms";
 import { resourcePctAmount } from "./dynamicTerms";
 import { rankColumn } from "../perRank";
@@ -180,7 +180,7 @@ export const dotEffect: EffectKindSpec<"dot"> = {
     // the number is frozen at APPLY. A DoT that re-read the caster's AP on each
     // payout would be a different (and un-authorable) spell — and would keep
     // changing after the caster died.
-    const base = resolveScaling(casterStats(ctx), e.amountPerTick, ctx.rank, casterAttrs(ctx));
+    const base = resolveScaling(casterDamageStats(ctx), e.amountPerTick, ctx.rank, casterAttrs(ctx));
     // Seconds→ticks ONCE, here. Never per payout: a per-tick division could
     // round differently on a different host, which is a desync in the one place
     // that decides who dies.

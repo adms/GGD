@@ -6,7 +6,7 @@
 import type { EffectKindSpec } from "./effectKind";
 import { Stat } from "../stats/statTypes";
 import { resolveScaling, type TriggerDamage } from "./effect";
-import { bankedAddend, casterAttrs, casterStats, comboAddend } from "./effectCommon";
+import { bankedAddend, casterAttrs, casterDamageStats, comboAddend } from "./effectCommon";
 import { DAMAGE_QUEUE_MAX_PASSES } from "./reflectLimits";
 import { distanceScaleAmount, resourcePctAmount } from "./dynamicTerms";
 // ⭐ ⑨（2026-08-10）—— 技能暴擊與普攻走**同一支**判定，見那支的檔頭。
@@ -15,7 +15,9 @@ import { rollAbilityCrit } from "../combat/critStrike";
 export const damageEffect: EffectKindSpec<"damage"> = {
   apply(e, ctx) {
     const { world } = ctx;
-    const stats = casterStats(ctx);
+    // ⭐ `casterDamageStats` = `casterStats`，除非 `apRatioMode: "replace"`
+    // （那時 `ap` 被摀成 0，見那支的檔頭）。出貨模式下逐位元等價。
+    const stats = casterDamageStats(ctx);
     // COMBO WINDOW: resolved ONCE, before the target loop — the JASS reads
     // `udg_MoonCombo` once (j:34189) and bakes the result into
     // `udg_MoonDamage`, so every unit in the blast takes the same boosted

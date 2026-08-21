@@ -363,6 +363,9 @@ export const NAV: NavItem[] = [
   // 打折」的全域定義，而且兩頁的倍率都不進屬性面板。
   { page: "weaknessRules", label: "虛弱規則", emoji: "🥀", section: SEC_SYS },
   { page: "damageRules", label: "傷害規則", emoji: "⚔️", section: SEC_SYS },
+  // AP 傷害加成 (owner 2026-08-21) —— 緊接在 傷害規則 後面：那一頁決定技能傷害吃
+  // 護甲還是魔抗,這一頁決定它乘多少。兩頁合起來才是「一發技能到底打多痛」。
+  { page: "apDamageScaling", label: "AP 傷害加成", emoji: "🔮", section: SEC_SYS },
   // 增益卡敵方過濾 (批 1 決策點 1-1) —— 稜彩卡上「敵方英雄」那句話在殭屍波裡算不算
   // 數。緊接在 格擋規則 後面：三頁都是「同一段結算的規則」，而這一頁決定的是
   // hook 到底跑不跑，也就是前兩頁那些判定有沒有機會被叫到。

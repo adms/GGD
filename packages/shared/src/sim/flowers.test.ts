@@ -252,7 +252,11 @@ describe("targeting filters + static prop (flw-05)", () => {
     manaCost: [0],
     range: 20,
     targetsEnemies: true,
-    effects: [{ kind: "damage", damageType: "magic", amount: { flat: 25 } }],
+    // ⚠️ 傷害從**花的血量**推導，⛔ 不是一個字面值 25。這一條驗的是「敵方指定
+    // 與地面 AoE 打得到花」，也就是**兩次都要削掉一塊而不是打死它** ——
+    // 而技能傷害在 2026-08-21 之後還要再乘一層全域 AP 加成，一個寫死的 25
+    // 會讓這條測試在某個 `rate` 上安靜地變成「一發就死」（失敗形態④）。
+    effects: [{ kind: "damage", damageType: "magic", amount: { flat: RULES.hp / 8 } }],
   };
   const GROUND_AOE: AbilityDef = {
     id: "test.aoe" as AbilityId,
@@ -264,7 +268,8 @@ describe("targeting filters + static prop (flw-05)", () => {
     manaCost: [0],
     range: 20,
     radius: 3,
-    effects: [{ kind: "damage", damageType: "magic", amount: { flat: 25 } }],
+    // 同 ENEMY_NUKE：從花的血量推導，理由見那裡。
+    effects: [{ kind: "damage", damageType: "magic", amount: { flat: RULES.hp / 8 } }],
   };
 
   beforeAll(() => {

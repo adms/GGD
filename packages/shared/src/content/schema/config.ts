@@ -28,6 +28,10 @@ import { baseBonusBounds } from "../../sim/baseBonus";
 // 屬性上限的 per-stat 區間 —— 同一條規矩:數字定義在 sim,schema 只是搬上 Zod。
 import { STAT_CAP_CEILING, statCapBounds } from "../../sim/statCaps";
 import {
+  AP_DAMAGE_RATE_MAX,
+  DEFAULT_AP_DAMAGE_SCALING,
+} from "../../sim/combat/apDamageScaling";
+import {
   COOLDOWN_MIN_SECONDS_MAX,
   COOLDOWN_MIN_SECONDS_MIN,
   COOLDOWN_RULES_DOC_ID,
@@ -5853,6 +5857,65 @@ export const SHIPPED_DAMAGE_RULES: ConfigDamageRulesDoc = {
   defaultAbilityDamageType: "magic",
 };
 
+/**
+ * `config.ap-damage-scaling@1` —— 「AP 是**原本傷害的額外加成**」。
+ *
+ * owner 2026-08-21：「技能傷害都套用公式 (1+AP*1%)⋯**=> 預設 0.5%**」。
+ * ⭐ 這是調整**技能 vs 普攻**全域關係的**唯一**旋鈕；
+ * 完整推導（含「為什麼掛在傷害佇列而不是五個傷害葉」、「為什麼反彈不吃」、
+ * 以及 `apRatioMode` 那 115 個節點的量測）見 `sim/combat/apDamageScaling.ts` 檔頭。
+ */
+export const zConfigApDamageScalingDoc = z
+  .object({
+    id: z.literal("ap-damage-scaling"),
+    schema: z.literal("config.ap-damage-scaling@1"),
+    note: z.string().optional(),
+    rate: z
+      .number()
+      .min(0)
+      .max(AP_DAMAGE_RATE_MAX)
+      .describe(
+        "每 1 點法強讓這一發傷害多幾成 —— 最終傷害 = 基礎傷害 × (1 + 法強 × 這一格)。" +
+          `出貨 ${DEFAULT_AP_DAMAGE_SCALING.rate}（＝0.5%/點：法強 100 → ×1.5、法強 200 → ×2.0）。` +
+          "⭐ 調大 = 技能整體變重、堆法強的收益變陡、出身（法師 vs 射手）差距拉開；" +
+          "調小 = 技能回到只吃自己卡面的數字。" +
+          "⭐ 填 0 = 這一層**整個不存在**（乘數恆為 1），也就是一鍵 rollback 回到這個欄位出現之前。",
+      ),
+    scope: z
+      .enum(["ability", "basic", "all"])
+      .describe(
+        "哪一類傷害吃這一層。ability = 只有技能傷害（出貨值，owner 說的「技能傷害都套用」）——" +
+          "涵蓋瞬發／吟唱技能、技能投射物、技能掛上去的持續傷害、以及代放；" +
+          "basic = 只有普通攻擊；all = 全部再加上道具／增益卡的觸發傷害、場地火焰、守衛塔、殭屍。" +
+          "⚠️ 選 all 會讓每一件「造成 N 點傷害」的道具也跟著法強長，那是一個大得多的平衡改動。",
+      ),
+    apRatioMode: z
+      .enum(["stack", "replace"])
+      .describe(
+        "這一層與技能卡上既有的「法強係數」（ratios.ap）怎麼共存。" +
+          "stack = 兩層都吃（出貨值）：卡面係數決定「這一支特別吃法強」，這一格決定「技能整體吃多少」；" +
+          "replace = 卡面的法強係數在技能傷害上不算，只留這一層。" +
+          "⚠️ 選 replace 之前先讀 docs/editor-contract/ap-damage-scaling.md 那張**量出來**的表：" +
+          "帶法強係數的技能傷害節點，絕大多數拿掉係數之後就完全沒有屬性相依（變成純固定值），" +
+          "而係數今天橫跨一個數量級 —— 所以 replace 會把「特別吃法強的大招」與「幾乎不吃的小招」壓成同一支。",
+      ),
+  })
+  .strict();
+export type ConfigApDamageScalingDoc = z.infer<typeof zConfigApDamageScalingDoc>;
+
+/**
+ * ⚠️ 缺文件 = 這一份，不是空物件 —— 一個 undefined 的 `rate` 會讓
+ * `1 + ap * rate` 產出 **NaN**，而 NaN 傷害在畫面上等於「這一發沒扣血」。
+ * ⛔ 三個值不抄字面量，從 `sim/combat/apDamageScaling.ts` 的出貨表推導。
+ */
+export const SHIPPED_AP_DAMAGE_SCALING: ConfigApDamageScalingDoc = {
+  id: "ap-damage-scaling",
+  schema: "config.ap-damage-scaling@1",
+  rate: DEFAULT_AP_DAMAGE_SCALING.rate,
+  scope: DEFAULT_AP_DAMAGE_SCALING.scope,
+  apRatioMode: DEFAULT_AP_DAMAGE_SCALING.apRatioMode,
+};
+
 export const zConfigWoundsDoc = z
   .object({
     id: z.literal("wounds"),
@@ -7538,6 +7601,10 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   // content/ 之後整份內容驗證失敗 → 骨架英雄，理由見下面那一段。
   zConfigWeaknessDoc,
   zConfigDamageRulesDoc,
+  // AP 傷害加成（owner 2026-08-21「技能傷害都套用公式 (1+AP*1%)」）。⚠️ 漏掉這一行 =
+  // 一份 ap-damage-scaling.json 進了 content/ 之後**整份**內容驗證失敗 → 骨架英雄
+  // （2026-08-02 事故的形狀），而網站看起來完全正常。
+  zConfigApDamageScalingDoc,
   zConfigDispelDoc,
   zConfigCooldownRulesDoc,
   // 吟唱規則（owner 2026-08-13）。⚠️ 漏掉這一行 = 一份 cast-time.json 進了

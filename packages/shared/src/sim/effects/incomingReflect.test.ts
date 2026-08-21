@@ -37,6 +37,7 @@ import { fileURLToPath } from "node:url";
 import { SimWorld } from "../SimWorld";
 import { SKELETON_ARENA } from "../world/ArenaDef";
 import { registerSkeletonContent } from "../content/skeleton";
+import { apDamageMult } from "../combat/apDamageScaling";
 import { spawnChampion } from "../spawnChampion";
 import { attachSource } from "../stats/statPipeline";
 import { addShield, combatResolveSystem } from "../combat/damage";
@@ -341,7 +342,14 @@ describe("[反彈] damageSource —— owner 的文案是「反彈**普通攻擊
   it("★ `nonBasic` 是它的反面(兩邊都正向測,過濾才不會是「永遠通過」)", () => {
     const w1 = makeWorld();
     const [a1, v1] = victimWith(w1, "nonBasic");
-    const expected = afterArmor(w1, v1, 100) * 2;
+    // ⚠️ 這一發是**技能**傷害,所以它先吃了一次 AP 傷害加成
+    // (`combat/apDamageScaling.ts`,出貨只作用在 `ability:*`)。⛔ 這裡問的是
+    // **出貨管線**而不是一個被關掉的管線,所以乘數從那支函式讀,⛔ 不抄 1.7
+    // 也⛔ 不把那一層關掉 —— owner 調 `rate` 的那一天這一條照樣綠。
+    // ⭐ 而且它只乘在**進來的那一發**上:反彈封包自己帶 `skipGlobalDamageMult`,
+    //    所以下面的 `× 2` 仍然剛好是文案寫的 200%。
+    const apMult = apDamageMult(w1, a1, "ability:thorne.q");
+    const expected = afterArmor(w1, v1, 100 * apMult) * 2;
     expect(exchange(w1, a1, v1, 100, "ability:thorne.q")[0]).toBeCloseTo(expected, 5);
 
     const w2 = makeWorld();

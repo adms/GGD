@@ -304,6 +304,8 @@ export type Page =
   | "woundRules"
   | "weaknessRules"
   | "damageRules"
+  /** AP 傷害加成 (`config/ap-damage-scaling.json`, owner 2026-08-21)：技能 vs 普攻的全域旋鈕。 */
+  | "apDamageScaling"
   /**
    * 增益卡敵方過濾 (`config/augment-filter.json`, 批 1 決策點 1-1): 殭屍算不算
    * hook 上 `victim: "enemyChampion"` 的敵人。自己一頁而不是併進 戰鬥系統,
@@ -683,6 +685,8 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "woundRules",
   "weaknessRules",
   "damageRules",
+  // AP 傷害加成: 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`,所以同一條 session 規則。
+  "apDamageScaling",
   // 增益卡敵方過濾: 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "augmentEnemyFilter",
   "stealthRules",

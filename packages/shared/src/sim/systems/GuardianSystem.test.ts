@@ -11,6 +11,7 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import { cover } from "../../../testkit/cover";
 import { SimWorld } from "../SimWorld";
+import { apDamageMult } from "../combat/apDamageScaling";
 import { SKELETON_ARENA } from "../world/ArenaDef";
 import { registerSkeletonContent } from "../content/skeleton";
 import { spawnChampion } from "../spawnChampion";
@@ -270,21 +271,28 @@ describe("guardian mitigation + per-packet cap (#89 §5.1/§5.3)", () => {
     const hp = w.health.get(gid)!;
     expect(hp.maxHp).toBe(1450); // round 1 shipped HP (cap = 217.5, both hits are under it)
 
+    // ⚠️ 2026-08-21：`hit()` 的 origin 是 `ability:test`，所以每一發都先吃一次
+    // AP 傷害加成（`combat/apDamageScaling.ts`）。⛔ 乘數**讀**出貨函式，不寫死
+    // —— 這一條驗的是「護甲 0 不減傷 / 魔抗 17.65 是 ×0.85」，⛔ 不是封包多大。
+    const apMult = apDamageMult(w, a, "ability:test");
+
     const beforePhys = hp.hp;
     hit(w, a, gid, 100, "physical");
     step(w);
-    expect(beforePhys - hp.hp).toBeCloseTo(100, 6); // armor 0 → the siege lane is free
+    expect(beforePhys - hp.hp).toBeCloseTo(100 * apMult, 6); // armor 0 → the siege lane is free
 
     const beforeMagic = hp.hp;
     hit(w, a, gid, 100, "magic");
     step(w);
-    expect(beforeMagic - hp.hp).toBeCloseTo(100 * (100 / 117.65), 4); // the A0C1 0.85
+    expect(beforeMagic - hp.hp).toBeCloseTo(100 * apMult * (100 / 117.65), 4); // the A0C1 0.85
 
     // true damage bypasses armour/MR exactly as it does on a champion
+    // ⚠️ 但它**不**繞過 AP 傷害加成 —— 那一層在減傷**之前**（「我這一發多重」），
+    //    而真傷繞過的是減傷（「他扛得多好」）。兩者是不同的位置。
     const beforeTrue = hp.hp;
     hit(w, a, gid, 100, "true");
     step(w);
-    expect(beforeTrue - hp.hp).toBeCloseTo(100, 6);
+    expect(beforeTrue - hp.hp).toBeCloseTo(100 * apMult, 6);
   });
 
   it("caps ONE packet at maxHitPctMaxHp × maxHp — a burst cannot delete the tower", () => {
@@ -340,7 +348,11 @@ describe("guardian mitigation + per-packet cap (#89 §5.1/§5.3)", () => {
     step(w);
     const dealt = w.events.find((e) => e.type === "damage" && e.data.target === v)!.data
       .amount as number;
-    expect(dealt).toBeCloseTo(400 * (100 / (100 + armor)), 6);
+    // ⚠️ 同上：`hit()` 用的是技能 origin，所以封包先過了一次 AP 傷害加成。
+    expect(dealt).toBeCloseTo(
+      400 * apDamageMult(w, a, "ability:test") * (100 / (100 + armor)),
+      6,
+    );
     expect(dealt).toBeGreaterThan(hp.maxHp * 0.15);
   });
 });

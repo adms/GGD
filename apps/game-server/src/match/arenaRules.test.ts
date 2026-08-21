@@ -447,7 +447,8 @@ describe("同一回合撞卡：聖杯願望贏、寶具讓路 (#340, arena-02, a
     expect(grant?.augmentTier && grant?.weaponLootTable, `round ${round} 不是撞卡回合`).toBeTruthy();
     expect(ARENA.draftConflict, "出貨文件的裁決漂走了").toBe(DEFAULT_DRAFT_CONFLICT);
 
-    // ⚠️ 種子換過**三次**：555 → 557（GH#422）→ **555**（2026-08-21 五級距全轉）。
+    // ⚠️ 種子換過**四次**：555 → 557（GH#422）→ 555（2026-08-21 五級距全轉）
+    //    → **558**（2026-08-21 AP 傷害加成上線）。
     //    出貨的 `draftConflict` 是 `round-roll`（＝撞卡回合擲一顆骰決定誰讓路），
     //    所以「聖杯贏」這一場是**這顆種子的**結果，⛔ 不是一條恆真的規則。
     //    ⭐ 每一次換種子的成因都一樣：**任何會改變 bot 行為的內容改動**都會讓
@@ -456,9 +457,11 @@ describe("同一回合撞卡：聖杯願望贏、寶具讓路 (#340, arena-02, a
     //    bot 施法時機不同 ⇒ 骰子落在不同的位置。
     //    ⛔ 不是把斷言放寬（那會留下一條對缺陷不敏感的綠燈）——
     //    照這個檔案已經做過兩次的辦法重掃 555–604，取最小的。
-    //    ⚠️ 這一次最小的**又是 555**（實測 555 / 556 / 558 都是聖杯贏）——
-    //    ⛔ 那不代表「換回去了」，只代表這條流又走回一個聖杯贏的位置。
-    const ctl = makeArenaMatch(555);
+    //    ⚠️ 第四次的成因是 **AP 傷害加成**（owner 2026-08-21「技能傷害都套用公式
+    //    (1+AP*1%)」）：每一發技能傷害都乘上一層，bot 打死人的 tick 就變了，
+    //    骰子又落在別的位置。重掃 555–604 之後最小的是 **558**
+    //    （實測命中 558 / 560 / 563）。
+    const ctl = makeArenaMatch(558);
     runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === round);
     let checked = 0;
     for (const seat of ctl.seats.values()) {

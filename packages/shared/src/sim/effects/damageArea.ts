@@ -10,7 +10,7 @@ import type { EffectKindSpec } from "./effectKind";
 import { Stat } from "../stats/statTypes";
 import { enemiesInCircle } from "../abilities/abilitySystem";
 import { distSq } from "../math/vec2";
-import { casterAttrs, casterStats } from "./effectCommon";
+import { casterAttrs, casterDamageStats } from "./effectCommon";
 import { resourcePctAmount } from "./dynamicTerms";
 import { clampSpreadFalloff, clampSpreadRadius, clampSpreadTargets } from "./spreadLimits";
 import { runOnHitChain, selectVictims } from "./victimFilter";
@@ -68,7 +68,7 @@ export const damageAreaEffect: EffectKindSpec<"damageArea"> = {
     // 花掉一枚硬幣, 否則 `victimCondition` 的有無會改變 rng 串流位置 (determinism)。
     const struck = selectVictims(victims, cap, e.victimCondition, e.maxTargetsCounts, ctx);
 
-    const stats = casterStats(ctx);
+    const stats = casterDamageStats(ctx);
     const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx));
     for (const v of struck) {
       // 線性衰減: t=0 (圓心) 吃滿額, t=1 (半徑) 吃 falloff 倍。

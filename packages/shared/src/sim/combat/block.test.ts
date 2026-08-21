@@ -41,6 +41,7 @@
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { SimWorld } from "../SimWorld";
+import { apDamageMult } from "./apDamageScaling";
 import { SKELETON_ARENA } from "../world/ArenaDef";
 import { registerSkeletonContent } from "../content/skeleton";
 import { spawnChampion } from "../spawnChampion";
@@ -541,7 +542,13 @@ describe("格擋 — ⑤ 鏈式獨立判定 (owner 2026-07-31 的裁決)", () =>
     // remaining `impact`, so the two terms must sum to the whole packet. That
     // identity holds whatever thorne's armour is, which is why it is asserted
     // instead of a hard-coded number.
-    expect(world.matchStats.get(victim)!.damageBlocked).toBeCloseTo(400, 6);
+    //
+    // ⚠️ 「the whole packet」是**解算後**的量,不是 `amount` —— 這一發的 origin 是
+    // `ability:*`,所以它先吃了一次 AP 傷害加成(`combat/apDamageScaling.ts`)。
+    // ⛔ 乘數從那支函式讀而不是抄一個數字,也⛔ 不把那一層關掉:這一條驗的是
+    // **出貨管線**下的恆等式,而恆等式本來就與封包多大無關。
+    const packet = 400 * apDamageMult(world, attacker, "ability:test.block");
+    expect(world.matchStats.get(victim)!.damageBlocked).toBeCloseTo(packet, 6);
     expect(world.matchStats.get(victim)!.damageTaken).toBe(0);
   });
 

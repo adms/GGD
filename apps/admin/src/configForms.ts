@@ -72,6 +72,7 @@ import {
   zConfigWoundsDoc,
   zConfigWeaknessDoc,
   zConfigDamageRulesDoc,
+  zConfigApDamageScalingDoc,
   zConfigAugmentFilterDoc,
   zConfigBodyScaleDoc,
   zConfigRegenDoc,
@@ -129,6 +130,12 @@ import { DEFAULT_RANGE_TIERS, RANGE_TIER_MAX } from "@ggd/shared/content/rangeTi
 // 英雄碰撞半徑（AoE 命中是身體重疊，所以半徑 r 掃得到圓心距離 r + 這個數的人）。
 import { CHAMPION_BODY_RADIUS } from "@ggd/shared/content/displacementTiers";
 import type { WallBlockPolicy } from "@ggd/shared/sim/movement/wallBlock";
+// ⛔ AP 傷害加成的出貨值與上界也只有一份 —— 這一頁的每一個乘數例子都從它算，
+// ⛔ 不抄字面值（owner 調 rate 的那一天，說明會自己跟著變）。
+import {
+  AP_DAMAGE_RATE_MAX,
+  DEFAULT_AP_DAMAGE_SCALING,
+} from "@ggd/shared/sim/combat/apDamageScaling";
 // ⛔ 形狀名（單體／範圍／變身）也只有一份 —— 後台不重打一組字串（同上一行）。
 import { COOLDOWN_SHAPES, DEFAULT_COOLDOWN_TIERS } from "@ggd/shared/content/cooldownTiers";
 // ⛔ 傷害級距的五個數字也只有一份 —— 相稱性下拉的選項說明從它推導。
@@ -736,6 +743,57 @@ const DAMAGE_RULES_SPEC: ConfigDocSpec = {
         physical: "物理（吃護甲）",
         magic: "魔法 / AP（吃魔抗，出貨值）",
         true: "真實（什麼都不吃）",
+      },
+    },
+  ],
+  preserved: [],
+};
+
+const AP_DAMAGE_SCALING_SPEC: ConfigDocSpec = {
+  page: "apDamageScaling",
+  collection: "config",
+  docId: "ap-damage-scaling",
+  schemaTag: "config.ap-damage-scaling@1",
+  zod: zConfigApDamageScalingDoc,
+  title: "AP 傷害加成",
+  intro: [
+    "⭐ **這是調整「技能 vs 普攻」全域關係的唯一旋鈕。** owner 2026-08-21：「技能傷害都套用公式 (1+AP\\*1%)⋯物理意義來說 就是 **AP 變為原本傷害的額外加成**」「**=> 預設 0.5%**」。",
+    `⭐ 公式是 **最終傷害 = 基礎傷害 × (1 + 法強 × 加成率)**。出貨 ${DEFAULT_AP_DAMAGE_SCALING.rate}（${+(DEFAULT_AP_DAMAGE_SCALING.rate * 100).toFixed(4)}%/點）⇒ 法強 100 的人技能打 **×${+(1 + 100 * DEFAULT_AP_DAMAGE_SCALING.rate).toFixed(3)}**、法強 200 打 **×${+(1 + 200 * DEFAULT_AP_DAMAGE_SCALING.rate).toFixed(3)}**、法強 300 打 **×${+(1 + 300 * DEFAULT_AP_DAMAGE_SCALING.rate).toFixed(3)}**。`,
+    "⚠️ **動這一格等於同時動每一支技能。** 它掛在傷害佇列上（減傷之前、與全域傷害倍率同一層），⛔ 不是某一支技能的數值 —— 每一支技能、技能投射物、技能種下的持續傷害都走這一行。",
+    "⭐ **加成率填 0 = 這一層整個不存在**（乘數恆為 1），也就是**一鍵 rollback** 回到這個欄位出現之前的每一場比賽。這是這一頁最重要的一句話：不確定就填 0，不會有任何殘留。",
+    "⚠️ 它與「傷害規則」是兩件事：那一頁決定技能傷害**吃護甲還是魔抗**，這一頁決定**乘多少**。",
+    "⚠️ **反彈不吃這一層**（不論範圍填什麼）—— 反彈的量是「剛剛打中我的那一下」的百分比，那個讀數已經吃過攻擊者的乘數；反彈者再乘一次自己的，反彈比例就不等於卡面寫的百分比了。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/ap-damage-scaling.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "packages/shared/src/sim/combat/apDamageScaling.ts::apDamageMult（唯一讀取點，由 combat/damage.ts 的傷害佇列排空迴圈每發封包呼叫一次）與 ::apRatiosSuppressed（effects/effectCommon.ts::casterDamageStats，五個傷害葉共用）；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.apDamageScaling",
+  effect:
+    "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 傷害規則／重創規則／格擋規則 同一個形態(#278)。",
+  fields: [
+    {
+      path: "rate",
+      // ⛔ 這裡**不填** `max` —— Zod 已經給了上界（`AP_DAMAGE_RATE_MAX`），
+      // 而 `boundsFor` 明令兩邊只能有一個（兩份上界就是兩個會分頭腐爛的答案）。
+      zh: "每 1 點法強讓技能多幾成傷害",
+      note: `最終傷害 = 基礎傷害 ×(1 + 法強 × 這一格)。出貨 ${DEFAULT_AP_DAMAGE_SCALING.rate} = ${+(DEFAULT_AP_DAMAGE_SCALING.rate * 100).toFixed(4)}%/點。⭐ 調大 → 技能整體變重、堆法強的收益變陡、**出身差距被拉開**（法師與射手的技能傷害終於不一樣）；調小 → 技能回到只吃自己卡面的數字，法強變成一根幾乎沒有感覺的屬性。⭐ **填 0 = 一鍵 rollback**：乘數恆為 1，逐位元回到這個欄位出現之前。⚠️ 上界 ${AP_DAMAGE_RATE_MAX}（${+(AP_DAMAGE_RATE_MAX * 100).toFixed(2)}%/點）不是保險起見 —— 那已經是「法強 200 的人技能打 ×11」的區間，再高就不是平衡而是打錯字（#277：50 打成 500 會過後台）。`,
+    },
+    {
+      path: "scope",
+      zh: "哪一類傷害吃這一層",
+      note: "技能＝只有技能傷害（出貨值，owner 說的「**技能**傷害都套用」）：瞬發／吟唱技能、技能投射物、技能種下的持續傷害、代放，全部算。普攻＝只有普通攻擊。全部＝再加上道具／增益卡的觸發傷害、場地火焰、守衛塔、殭屍。⚠️ 選「全部」是一個**大得多**的平衡改動：每一件「造成 N 點傷害」的道具會跟著法強長，而那些道具的數字當初是照著沒有這一層設計的。逐一列出哪個來源落在哪一格的表在 `docs/editor-contract/ap-damage-scaling.md`（那張表是算出來的，不是寫上去的）。",
+      optionLabels: {
+        ability: "技能傷害（出貨值）",
+        basic: "只有普通攻擊",
+        all: "全部傷害來源",
+      },
+    },
+    {
+      path: "apRatioMode",
+      zh: "與技能卡上既有的法強係數怎麼共存",
+      note: "疊加＝兩層都吃（出貨值）：卡面係數決定「**這一支**特別吃法強」，上面那一格決定「技能**整體**吃多少」，兩者是不同的軸。取代＝卡面的法強係數在技能傷害上不算，只留上面那一層。⚠️ 選「取代」之前先看 `docs/editor-contract/ap-damage-scaling.md` 那張**量出來**的表：帶法強係數的技能傷害節點，絕大多數拿掉係數之後就**完全沒有屬性相依**（變成純固定值），而係數今天橫跨一個數量級 —— 取代會把「特別吃法強的大招」與「幾乎不吃的小招」壓成同一支。⭐ 它存在是為了**回頭**，⛔ 不是為了觀望。⚠️ 它只摀技能**傷害**：跟著法強長的治療與護盾一格都不動。",
+      optionLabels: {
+        stack: "疊加：卡面係數 + 這一層（出貨值）",
+        replace: "取代：只留這一層",
       },
     },
   ],
@@ -4242,6 +4300,7 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   WOUNDS_SPEC,
   WEAKNESS_SPEC,
   DAMAGE_RULES_SPEC,
+  AP_DAMAGE_SCALING_SPEC,
   AUGMENT_FILTER_SPEC,
   STEALTH_SPEC,
   TAUNT_SPEC,
