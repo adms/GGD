@@ -125,3 +125,87 @@ export function resolveHubLinks(env: HubEnv = {}, mode: "dev" | "prod" = "dev"):
   }
   return links;
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+ * GH#496 —— 「戰鬥回放 出現的是 localhost 無法觀看」
+ * ══════════════════════════════════════════════════════════════════════════
+ *
+ * owner 2026-08-21：「後台 **戰鬥回放 出現的是 localhost 無法觀看**」
+ *
+ * ── 根因（量到的，不是猜的）────────────────────────────────────────────────
+ * `ReplaysPage` 呼叫的是 `resolveHubLinks(env)` —— **少了第二個參數**。而它的
+ * 預設值是 `"dev"`，於是那一頁在**正式站上**也拿 `DEV_DEFAULTS`，也就是
+ * `http://localhost:39527`。其餘三個呼叫端（ConsoleHub / AudioAuditionPage /
+ * App）每一個都寫了 `raw.PROD ? "prod" : "dev"`，只有這一頁漏了。
+ *
+ * ⚠️ **不是「hub link 沒設定」**。`VITE_CLIENT_URL` 在這個 repo 裡從頭到尾沒有
+ * 任何地方設定過（沒有 .env、compose 沒有 build arg、host-deploy.sh 沒有），
+ * 那是**刻意的**：正式站的每一個面都在同一個 nginx 後面，所以 PROD_PRESET 給的
+ * 是同源路徑 `/`。少的是「問 PROD_PRESET」這個動作，不是一個環境變數。
+ *
+ * ── 為什麼舊的 `?? "http://localhost:39527"` 修不好它 ────────────────────
+ * 那一行是**死碼** —— `resolveHubLinks` 永遠回傳一張含 `client` 的表，`??` 那一
+ * 邊到不了。它看起來像個 fallback，所以它把真正的 bug（少一個參數）藏了起來，
+ * 而且**兩種狀態長得一模一樣**：設定好了、跟根本沒問，畫面上都是一個連結。
+ *
+ * ⇒ 所以下面這個函式做兩件事：問對 preset，**而且回報自己是不是不可能通**。
+ */
+
+/** 這個網址指向本機嗎（loopback / 未指定位址）？ */
+export function isLoopbackHost(host: string): boolean {
+  const h = host.toLowerCase().replace(/^\[|\]$/g, "");
+  return h === "localhost" || h === "0.0.0.0" || h === "::1" || h === "::" || /^127\./.test(h);
+}
+
+export interface ReplayClientBase {
+  /** 「觀看」要開的網址前綴。 */
+  url: string;
+  /**
+   * 非 null ＝ 這個網址在這個環境下**不可能通**，畫面上要用紅字說出來。
+   *
+   * ⛔ 一行 console.warn 不算（CLAUDE.md：fail-open 沒錯，**靜默**才是缺陷）。
+   */
+  warning: string | null;
+}
+
+/**
+ * 回放檢視器的 client 網址前綴 —— 而且會**自己說出**它是不是壞的 (GH#496)。
+ *
+ * ⭐ 判斷用的是**兩個名詞的關係**，不是一個名詞：「client 指向本機」本身不是
+ * 錯的（開發機上那才是對的），錯的是「**後台自己不在本機，client 卻指向本機**」。
+ * 只看其中一半的檢查在這個故障面前必然是綠的 —— 那正是 2026-08-02 四項後置條件
+ * 全綠而網站不能玩的形狀（`ggd-pairwise-postconditions`）。
+ *
+ * @param env         `import.meta.env` 那一包
+ * @param isProd      `import.meta.env.PROD`
+ * @param adminHref   後台自己的網址（`window.location.href`）
+ */
+export function resolveReplayClientBase(env: HubEnv, isProd: boolean, adminHref: string): ReplayClientBase {
+  const link = resolveHubLinks(env, isProd ? "prod" : "dev").find((l) => l.key === "client");
+  if (!link || link.url.trim() === "") {
+    return {
+      url: adminHref,
+      warning: "找不到遊戲客戶端的網址（Console Hub 的 client 卡片不存在）——「觀看」會開到後台自己身上。請設定 VITE_CLIENT_URL。",
+    };
+  }
+  const url = link.url;
+  let clientHost: string | null = null;
+  let adminHost: string | null = null;
+  try {
+    // 相對網址（PROD_PRESET 的 "/"）要以後台自己的位址為基準解析,
+    // 否則同源的正確設定會被誤判成「量不到主機名」。
+    clientHost = new URL(url, adminHref).hostname;
+    adminHost = new URL(adminHref).hostname;
+  } catch {
+    return { url, warning: null }; // 解析不出來就別亂喊 —— 假警報比沒有警報更糟
+  }
+  if (isLoopbackHost(clientHost) && !isLoopbackHost(adminHost)) {
+    return {
+      url,
+      warning:
+        `這個後台開在 ${adminHost}，但回放連結指向本機 ${clientHost} —— 點下去只會連到你自己的電腦，看不到這場錄影。` +
+        `（成因：這一頁沒有拿到正式站的網址預設值，或 VITE_CLIENT_URL 設成了本機位址。）`,
+    };
+  }
+  return { url, warning: null };
+}

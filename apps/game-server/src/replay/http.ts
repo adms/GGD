@@ -11,7 +11,7 @@
  * ReplayRoom websocket, and that requires a short-lived, single-recording ticket
  * minted here.
  *
- *   GET  /_internal/replays              -> { replays: ReplaySummary[] }
+ *   GET  /_internal/replays              -> { replays: ReplaySummary[], storage }
  *   GET  /_internal/replays/:id          -> { summary, header, compatible, refusal? }
  *   POST /_internal/replays/:id/ticket   -> { ticket, endpoint, replayId, expiresIn }
  *
@@ -23,7 +23,7 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import { verify } from "../auth/hmac";
 import { mintReplayTicket, REPLAY_TICKET_TTL_SECS } from "./access";
 import { checkCompatibility, currentIdentity } from "./Player";
-import { loadReplay, safeRecordingId, summarise } from "./store";
+import { loadReplay, replayStorage, safeRecordingId, summarise } from "./store";
 import { listReplaysIndexed } from "./sidecar";
 
 function json(res: ServerResponse, status: number, body: unknown): void {
@@ -56,8 +56,13 @@ export async function handleInternalReplays(
     // this same http server). Measured 2026-07-30 at the 200-file retention
     // ceiling: full scan 2.53-2.81 s with 19-21 separate blocks over one tick
     // budget; indexed 3-4 ms with none. See sidecar.ts.
-    const { replays } = await listReplaysIndexed();
-    json(res, 200, { replays, identity: currentIdentity() });
+    // `storage` (GH#498) rides along on the SAME request rather than getting its
+    // own route: the retention default is now 「不刪」, so the disk figure is not
+    // a separate diagnostic the owner might go look for — it belongs at the top
+    // of the very page that lists what is filling the disk. It costs one
+    // readdir+stat pass over the same directory the listing just walked.
+    const [{ replays }, storage] = await Promise.all([listReplaysIndexed(), replayStorage()]);
+    json(res, 200, { replays, identity: currentIdentity(), storage });
     return;
   }
 

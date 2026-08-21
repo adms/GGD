@@ -40,6 +40,7 @@ import { hostDigest } from "./digest";
 import { decodeLines, REPLAY_FORMAT_VERSION, type ReplayHeader } from "./format";
 import { registryFingerprint, resetRegistryFingerprintCache } from "./fingerprint";
 import { listReplays, pruneReplays, RETAIN_MAX_FILES } from "./store";
+import { retainIsUnlimited } from "@ggd/shared/content";
 import { mintReplayTicket, verifyReplayTicket } from "./access";
 import { isFannedOutEvent } from "../net/eventFanout";
 
@@ -928,9 +929,16 @@ describe("recording cost + storage", () => {
     expect(row.complete).toBe(false);
   }, 60_000);
 
-  it("retention prunes to the named ceiling and never touches a live recording", async () => {
+  it("retention never touches a live recording, and the shipped policy deletes nothing", async () => {
+    // GH#498: the shipped ceiling is now 0 = UNLIMITED, so "under the ceiling"
+    // is no longer expressible as a `<` — asking it that way is how a test ends
+    // up pinning a shipped number (CLAUDE.md 第零守則). The behaviour that
+    // matters here is unchanged: this directory holds a handful of recordings
+    // and pruning must delete none of them. The retention rules themselves have
+    // their own guard in replayRetention.test.ts.
     const before = (await listReplays()).length;
-    expect(before).toBeLessThan(RETAIN_MAX_FILES); // nothing to prune yet
+    expect(before).toBeGreaterThan(0);
+    expect(retainIsUnlimited(RETAIN_MAX_FILES) || before < RETAIN_MAX_FILES).toBe(true);
     const deleted = await pruneReplays([]);
     expect(deleted).toEqual([]);
     expect((await readdir(dir)).length).toBeGreaterThan(0);

@@ -14,7 +14,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { zConfigReplayDoc } from "./schema/config";
-import { DEFAULT_REPLAY_POLICY, replayPolicyFromDoc } from "./replayPolicy";
+import { DEFAULT_REPLAY_POLICY, replayPolicyFromDoc, retainIsUnlimited } from "./replayPolicy";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const SHIPPED = join(REPO_ROOT, "content", "config", "replay.json");
@@ -39,17 +39,28 @@ describe("對戰錄影政策 —— 出貨的那一份 (replay-shipped-default-o
     const shape = zConfigReplayDoc.shape;
     // 直接把每一格換成越界值再丟回 schema：如果哪一格其實沒有上界，
     // 這裡的「應該被拒」就會落空。
-    for (const [key, over] of [
-      ["flushIntervalMs", 10_001],
-      ["retainMaxFiles", 5_001],
-      ["retainMaxAgeDays", 3_651],
+    // ⚠️ 下界逐格不同：兩格保留量的合法下界是 **0**（GH#498 的「不限／不刪」哨兵），
+    // 所以它們的越界值是 -1。⛔ 不可以三格共用同一個 0 —— 那會讓「0 被接受了」
+    // 這件事看起來像退步，其實是 owner 要的行為。
+    for (const [key, over, under] of [
+      ["flushIntervalMs", 10_001, 49],
+      ["retainMaxFiles", 5_001, -1],
+      ["retainMaxAgeDays", 3_651, -1],
     ] as const) {
       expect(shape[key], `${key} 不在 schema 裡`).toBeDefined();
       const bad = { ...(shippedDoc() as Record<string, unknown>), [key]: over };
       expect(zConfigReplayDoc.safeParse(bad).success, `${key} 沒有上界 —— #277 的形狀`).toBe(false);
-      const under = { ...(shippedDoc() as Record<string, unknown>), [key]: 0 };
-      expect(zConfigReplayDoc.safeParse(under).success, `${key} 沒有下界`).toBe(false);
+      const low = { ...(shippedDoc() as Record<string, unknown>), [key]: under };
+      expect(zConfigReplayDoc.safeParse(low).success, `${key} 沒有下界`).toBe(false);
     }
+  });
+
+  it("⭐ 出貨的保留量是「不刪」—— owner 2026-08-21 的裁決 (GH#498)", () => {
+    // ⛔ 不抄字面值 0：問的是**語意**（`retainIsUnlimited`），所以哪天哨兵換成
+    // 別的表示法，這一條仍然在問同一件事。出貨檔改回 30 天 → 這裡紅。
+    const p = replayPolicyFromDoc(shippedDoc());
+    expect(retainIsUnlimited(p.retainMaxAgeDays), "出貨仍然會因為天數刪錄影 —— owner 說預設不刪除").toBe(true);
+    expect(retainIsUnlimited(p.retainMaxFiles), "天數不刪了但份數還在刪 —— 第 201 場照樣會洗掉第 1 場").toBe(true);
   });
 
   it("⚠️ 缺文件／壞文件仍然**錄** —— 內容載入失敗不可以順手把錄影關掉", () => {
@@ -77,7 +88,13 @@ describe("對戰錄影政策 —— 出貨的那一份 (replay-shipped-default-o
     const doc = { id: "replay", schema: "config.replay@1", enabled: true } as Record<string, unknown>;
     expect(replayPolicyFromDoc({ ...doc, flushIntervalMs: 0 }).flushIntervalMs).toBe(50);
     expect(replayPolicyFromDoc({ ...doc, flushIntervalMs: 999_999 }).flushIntervalMs).toBe(10_000);
-    expect(replayPolicyFromDoc({ ...doc, retainMaxFiles: 0 }).retainMaxFiles).toBe(1);
+    // ⚠️ 0 **不再**是越界值（GH#498：它是「不限」的哨兵），負數才是。
+    expect(replayPolicyFromDoc({ ...doc, retainMaxFiles: -5 }).retainMaxFiles).toBe(0);
+    expect(replayPolicyFromDoc({ ...doc, retainMaxFiles: 0 }).retainMaxFiles).toBe(0);
     expect(replayPolicyFromDoc({ ...doc, retainMaxAgeDays: 99_999 }).retainMaxAgeDays).toBe(3_650);
+    // 壞掉的值仍然退回出貨值,⛔ 不是意外地變成「不限」。
+    expect(replayPolicyFromDoc({ ...doc, retainMaxFiles: "很多" as unknown as number }).retainMaxFiles).toBe(
+      DEFAULT_REPLAY_POLICY.retainMaxFiles,
+    );
   });
 });

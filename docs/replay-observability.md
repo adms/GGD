@@ -253,8 +253,20 @@ docker compose -f docker/compose.family.yaml logs game 2>&1 | grep ggd.replay
 |---|---|---|
 | `enabled` | `true` | 錄不錄。⚠️ **讀不到文件也是 `true`** —— fail-open，理由見 `packages/shared/src/content/replayPolicy.ts` 檔頭：內容載入失敗不可以順手把錄影關掉。 |
 | `flushIntervalMs` | `500` | 多久把緩衝交給磁碟一次 ＝ **程序被硬砍時最多丟幾秒**。範圍 50–10000。 |
-| `retainMaxFiles` | `200` | 磁碟上最多留幾份。 |
-| `retainMaxAgeDays` | `30` | 超過幾天一律刪（與上一格取先觸發的）。 |
+| `retainMaxFiles` | `0` | 磁碟上最多留幾份。**0 ＝ 不限**（GH#498）。範圍 0–5000。 |
+| `retainMaxAgeDays` | `0` | 超過幾天一律刪（與上一格取先觸發的）。**0 ＝ 永不因年齡刪除**（GH#498）。範圍 0–3650。 |
+
+⭐ **GH#498（owner 2026-08-21）：「對戰錄影 超過幾天的錄影一律刪掉 預設不刪除」**
+出貨從 `200 / 30` 改成 `0 / 0`。兩格一起改是刻意的 —— 它們是**兩條獨立的刪除
+規則**，只把天數設成不刪的話，第 201 場照樣會把第 1 場刪掉，而 owner 會看到
+「我明明設了不刪」卻還是不見了。
+⚠️ 代價是**磁碟無限成長**，而正式機的 docker data-root 和 `data/replays` 在
+**同一顆碟**（2026-08-16 那次 80GB build cache 把碟塞爆 → 網站 502）。煞車是
+後台「對戰回放」頁首那一行：目前佔用 · 份數 · 生效中的保留規則 · **整顆碟的
+剩餘空間**（剩餘 <10% 整行轉紅）。資料來自 `store.ts` 的 `replayStorage()`，
+搭在 `GET /_internal/replays` 的回應上。
+⭐ **ROLLBACK**：後台 → 系統設定 → 對戰錄影，兩格填回 `200` / `30`，存檔後重啟
+game shard。⛔ 不需要改程式、不需要重建映像。
 
 ⚠️ **要重啟 game shard 才生效**（`Configs` 是開機時載入的登錄表），和
 `config.stat-caps@1` 同一個狀態。逐台 shard 的逃生門是 `GGD_REPLAY_ENABLED=0`，

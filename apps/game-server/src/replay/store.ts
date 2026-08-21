@@ -9,11 +9,19 @@
  * complete line. There is no database and no index file to fall out of sync
  * with the directory: the directory IS the index.
  *
- * RETENTION (the named rule): keep the 200 most recent recordings, and delete
- * any recording older than 30 days — whichever prunes first. At the measured
- * ~60 KB gzipped per 4-minute 12-player match that ceiling is about 12 MB, so a
- * whole season of family playtests cannot fill a disk. Pruning runs at boot and
- * again after each match finalises, never on the tick path.
+ * RETENTION: two INDEPENDENT rules — a file-count ceiling and an age cutoff —
+ * whichever prunes first, both configurable (`config.replay@1`) and both
+ * shipping as **0 = unlimited / never delete** (GH#498, owner 2026-08-21
+ * 「超過幾天的錄影一律刪掉 預設不刪除」). Pruning runs at boot and again after
+ * each match finalises, never on the tick path.
+ *
+ * ⚠️ THE SHIPPED DEFAULT IS THEREFORE UNBOUNDED GROWTH. At the measured ~60 KB
+ * gzipped per 4-minute 12-player match that is ~4 MB per hundred matches, which
+ * is why it is safe to ship — but "safe" is a rate, not a bound, and the
+ * production docker data-root lives on the SAME disk as `data/replays`. So the
+ * brake is `replayStorage()` below, surfaced on the admin 對戰回放 page: the
+ * owner can see the number climb before it matters. ⛔ Do not tighten the
+ * default back without removing that display's reason to exist.
  *
  * PRIVACY. Recordings carry player display names, so nothing here is reachable
  * from a public route: the HTTP surface is `/_internal/replays…` (HMAC-signed,
@@ -21,14 +29,14 @@
  * console reaches it through the platform's admin-authenticated proxy.
  */
 import { createReadStream, createWriteStream, type WriteStream } from "node:fs";
-import { mkdir, readdir, rm, stat, writeFile } from "node:fs/promises";
+import { mkdir, readdir, rm, stat, statfs, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createGzip, gunzipSync } from "node:zlib";
 import { pipeline } from "node:stream/promises";
 import { readFile } from "node:fs/promises";
 import { decodeLines, type ReplayFooter, type ReplayHeader, type ReplayLine } from "./format";
-import { DEFAULT_REPLAY_POLICY } from "@ggd/shared/content";
+import { DEFAULT_REPLAY_POLICY, retainIsUnlimited } from "@ggd/shared/content";
 import { replayPolicy } from "./policy";
 
 /**
@@ -37,6 +45,9 @@ import { replayPolicy } from "./policy";
  * `DEFAULT_REPLAY_POLICY` 是缺文件時的退路。留在這裡只為了讓既有的 import
  * （測試、sidecar 的註解）還讀得到同一個數字，`replayPolicyShipped.test.ts`
  * 釘住兩邊相等，所以它們不可能各自漂走。
+ *
+ * ⚠️ GH#498 之後這兩個出貨值都是 **0（＝不限）**，所以任何把它們當成「上限」
+ * 拿去比大小的程式碼都是錯的 —— 要問「是不是不限」請用 `retainIsUnlimited()`。
  */
 export const RETAIN_MAX_FILES = DEFAULT_REPLAY_POLICY.retainMaxFiles;
 /** 同上：出貨的天數，權威在 `config.replay@1`。 */
@@ -236,8 +247,18 @@ export async function pruneReplays(skipIds: readonly string[] = []): Promise<str
   // 後台可調 (config.replay@1)。讀在這裡而不是模組載入時，所以 owner 改了保留量
   // 之後**下一次**保留掃描就照新的跑，不必等到重新 import 這個模組。
   const { retainMaxFiles, retainMaxAgeDays } = replayPolicy();
-  const cutoff = Date.now() - retainMaxAgeDays * 86_400_000;
-  const doomed = files.filter((f, idx) => idx >= retainMaxFiles || f.mtime < cutoff);
+  // GH#498 — **0 = 不限／不刪**（出貨值，owner 2026-08-21「預設不刪除」）。
+  // ⚠️ 兩條規則各自獨立地判斷 0：只讓天數認得 0，第 201 場照樣會刪掉第 1 場。
+  // ⛔ 不要寫成 `idx >= (retainMaxFiles || Infinity)` —— 那個寫法把「0」和
+  // 「NaN／undefined」混成同一件事，而壞掉的設定應該退回出貨值（clampInt 的事），
+  // 不是意外地變成「不限」。
+  const tooMany = retainIsUnlimited(retainMaxFiles)
+    ? () => false
+    : (idx: number) => idx >= retainMaxFiles;
+  const tooOld = retainIsUnlimited(retainMaxAgeDays)
+    ? () => false
+    : (mtime: number) => mtime < Date.now() - retainMaxAgeDays * 86_400_000;
+  const doomed = files.filter((f, idx) => tooMany(idx) || tooOld(f.mtime));
   const deleted: string[] = [];
   for (const f of doomed) {
     try {
@@ -248,6 +269,71 @@ export async function pruneReplays(skipIds: readonly string[] = []): Promise<str
     }
   }
   return deleted;
+}
+
+/** 錄影目錄現在佔了多少磁碟，以及那顆碟還剩多少 (GH#498)。 */
+export interface ReplayStorage {
+  /** 錄影目錄的絕對路徑（`GGD_REPLAY_DIR` 或 `<repo>/data/replays`）。 */
+  dir: string;
+  /** 目錄裡的錄影檔數（`.jsonl` / `.jsonl.gz`，⛔ 不含 `.index.json` / `.probe`）。 */
+  files: number;
+  /** 那些檔案的位元組總和。 */
+  bytes: number;
+  /** 這顆檔案系統剩餘可用位元組；量不到時 null。 */
+  freeBytes: number | null;
+  /** 這顆檔案系統的總容量；量不到時 null。 */
+  totalBytes: number | null;
+  /** 現在生效的保留量（0 = 不限），讓後台不必自己再讀一次設定。 */
+  retainMaxFiles: number;
+  retainMaxAgeDays: number;
+}
+
+/**
+ * GH#498 的**煞車**。
+ *
+ * owner 2026-08-21 要「預設不刪除」，而不刪 = 無限成長。這個函式存在的唯一理由
+ * 是讓那個成長**在畫面上看得見** —— 沒有它，「預設不刪」會在某一天變成
+ * 「磁碟爆掉、網站 502」，而中間沒有任何一刻有人知道。
+ *
+ * ⚠️ **`freeBytes` 量的是整顆檔案系統，不是錄影目錄。** 那是刻意的，而且是這裡
+ * 唯一真正重要的決定：正式機的 docker data-root 和 `data/replays` 在**同一顆碟**
+ * （`/data`，sdb），所以「錄影還能長多久」的答案取決於 **docker 也在吃的那個
+ * 剩餘量**，不是錄影自己佔了多少。只報自己佔多少 = 又一個只驗「名詞」的儀表
+ * （2026-08-02 那四項後置條件的形狀）。
+ *
+ * fail-soft：`statfs` 在某些容器/檔案系統上會丟，而一個算不出剩餘空間的儀表
+ * ⛔ 不可以讓回放列表整頁失敗。量不到就回 null，後台那一格印「(量不到)」。
+ */
+export async function replayStorage(): Promise<ReplayStorage> {
+  const dir = replayDir();
+  const { retainMaxFiles, retainMaxAgeDays } = replayPolicy();
+  let files = 0;
+  let bytes = 0;
+  try {
+    const names = await readdir(dir);
+    for (const name of names) {
+      if (!name.endsWith(".jsonl") && !name.endsWith(".jsonl.gz")) continue;
+      try {
+        const st = await stat(join(dir, name));
+        files++;
+        bytes += st.size;
+      } catch {
+        /* vanished under us */
+      }
+    }
+  } catch {
+    /* directory not created yet — 0 files, 0 bytes is the honest answer */
+  }
+  let freeBytes: number | null = null;
+  let totalBytes: number | null = null;
+  try {
+    const fs = await statfs(dir);
+    freeBytes = Number(fs.bavail) * Number(fs.bsize);
+    totalBytes = Number(fs.blocks) * Number(fs.bsize);
+  } catch {
+    /* not every filesystem/container answers statfs; the display says so */
+  }
+  return { dir, files, bytes, freeBytes, totalBytes, retainMaxFiles, retainMaxAgeDays };
 }
 
 /**
