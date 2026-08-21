@@ -1,6 +1,8 @@
 # 🧾 v0.23.0..HEAD 票務結案清單
 
 > 產出時間 2026-08-21 19:38 · 範圍 `git log v0.23.0..HEAD` = **27 個 commit**
+> ⚠️ **19:44 更新**：盤點期間又有 **3 個 commit 落地**（`8be1fc6d` · `b3d13396` · `3c83170f`）
+> ⇒ 現在是 **30 個**。三個都已補進 §1 的表。八條 lane 併行時「commit 數」是一個會動的量。
 > ⛔ 唯讀盤點。⛔ 沒有 push / deploy / gh 寫入 / content:build / skills:sync。
 > ⭐ 每一張「可關」都**讀了出貨檔或跑了守衛**，⛔ 沒有一張是只看 commit message 就判的。
 
@@ -33,6 +35,9 @@ GitHub 已經把那個 commit cross-link 上去了。⛔ **這兩張絕對不可
 
 | # | hash | 主旨（節錄） | 票 | 判定 |
 |--:|---|---|---|---|
+| 0a | `3c83170f` | feat(lobby): 集合令反轉成 **opt-out** | **#492** | ✅ 正確（19:4x 落地，見 §2 #492） |
+| 0b | `b3d13396` | docs(deploy): 部署協定第 2 步的 owner 勾選表 | —（守則） | 不需要票 |
+| 0c | `8be1fc6d` | docs(rules): ⚡ 平行工作流的四條加速規則 | —（守則） | 不需要票 |
 | 1 | `1438c1d7` | docs: 逐則對票裸票號正規化 | **#484**（⚠️ 未帶號） | 帳本工具硬化 |
 | 2 | `50cf594a` | docs: context 快照(96%) + 集合令 waitSeconds 10→5 | **#492**（⚠️ 未帶號，⛔ **內含出貨值改動**） | 見 §2 #492 |
 | 3 | `3c4ce3a0` | docs(contract): codex 契約補 AP 最後一乘 + 出身決定成長 | **#447** **#414** | ✅ 正確 |
@@ -121,7 +126,7 @@ textContent 不含目錄裡任何一個英雄 id —— 1 passed。
 | owner 的字 | 出貨在哪 | 驗到 |
 |---|---|---|
 | 「所有線上在大廳的人都跳出確認視窗」 | `apps/platform/internal/room/rally.go` + `handlers.go:50 rr.Post("/rally", h.rally)` | ✅ 路由與檔案都在 |
-| 「最多等 10 秒」→ owner 同日改口「**五秒是讓人按否定的**」 | `content/config/lobby-rally.json` `waitSeconds: 5` · `joinMode: "opt-out"` | ✅（`50cf594a` 把 10→5，⚠️ 那個 commit 沒帶票號） |
+| 「最多等 10 秒」→ owner 同日改口「**五秒是讓人按否定的**」 | `content/config/lobby-rally.json` `waitSeconds: 5` · `joinMode: "opt-out"` | ✅（`50cf594a` 把 10→5，⚠️ 那個 commit 沒帶票號；opt-out 那一半在 `3c83170f`）。⚠️ **披露**：我 19:36 讀這份 JSON 時 opt-out 那一半還在另一條 lane 的**工作樹**裡（19:4x 才 commit）—— 現在已落地，結論不變 |
 | 「包含 vs bot」 | `includeBotMatch: true` | ✅ |
 | 「明顯提示姓名與積分、**所選英雄**」 | `HumanRosterPanel.tsx:50` `championDisplayFor(row.championId).name`（無選角顯示「未選角」）· `:82` `row.rating` | ✅ 三樣齊 |
 | 「每回合結算也都要特別再提示一次」 | `showRosterInSettlement: true` · `showRosterInChampSelect: true` | ✅ |
@@ -475,22 +480,39 @@ owner 給的數字：`單體 6/15/30/45/60` · `範圍 30/45/60/90/120`（`變�
 
 ---
 
-## 4. ❌ 開了票但這一版**完全沒做**
+## 4. ⏳ 開了票、**沒有任何 commit**，但**正在飛**
 
 ### #499 所有帳號預設與管理員成為好友
 
-**實測（19:36）**：`grep -rn "autoFriendAdmin|adminAccountId|autoFriend" apps/platform apps/admin/src content/config`
-→ **零命中**。27 個 commit 裡沒有一個提到它。
+⚠️ **這一節我第一次寫錯了，已更正** —— 19:36 我 grep 的是
+`autoFriendAdmin|adminAccountId|autoFriend`（票的 body 裡建議的欄位名），**零命中**，
+於是我下了「這一版完全沒做」的結論。**那個結論是錯的**：實作用的識別字是 `autoAdmin`，
+而它此刻正躺在**另一條 lane 的工作樹裡**（19:42 實測，未 commit）：
 
-⛔ **不要關**。而且它的 body 裡已經有 owner 2026-08-21 的**完整裁決**（`ruling.sh` 前置到 body 最上面）：
+| 位置 | 內容 |
+|---|---|
+| `apps/platform/internal/friend/friend.go:51` | `// autoAdmin is 管理員預設好友 (GH#499). nil = not wired…` |
+| `apps/platform/internal/friend/friend.go:149` | `// (GH#499). owner 2026-08-21:「**管理員是強制雙向 不必請求**」` |
+| `apps/platform/internal/account/account.go:238` | `// ---- WHY IT RETURNS NOTHING (GH#499) ----` |
+| `apps/platform/internal/server/server.go:222` | `// 管理員預設好友 (GH#499…「每個人創號自動預設有管理員好友」)` |
+| `apps/platform/internal/server/server.go:775` | `// 管理員預設好友 的回填 (GH#499)` ⭐ 回填那一半也在做 |
+
+⭐ **教訓（值得寫進守則）**：用**票的 body 裡建議的欄位名**去 grep，量到的是
+「有沒有人照我的建議命名」，⛔ **不是**「這件事有沒有被做」。正確的查法是
+`grep -rn "#499"` —— 票號是**唯一**跨 lane 不會被改寫的 join key。
+
+⛔ **不要關**（它一個 commit 都還沒有）。它的 body 裡已經有 owner 2026-08-21 的**完整裁決**
+（`ruling.sh` 前置到 body 最上面）：
 
 > ①「做成後台一格 adminAccountId => **yes, 如果只有一個就預設那一個**」
 > ②「**管理員是強制雙向 不必請求 每個人創號自動預設有管理員好友**」
 
-⇒ 三件事已經沒有任何未知數，可以直接開幹（⛔ 不要排版次）：
+⇒ 三件事已經沒有任何未知數（而那條 lane 看起來三件都在做）：
 1. `account.Repo.Create` **之後**建立雙向好友（⛔ 不走 `friend.Service.Request()` —— 那是送請求等對方接受）
 2. `adminAccountId` 做成後台一格，⭐ **只有一個 `RoleAdmin` 帳號時預設就是那一個**（⛔ 不是留空要 owner 填）
 3. 既有 **198 個帳號**回填 —— 掛 **Quick Approval 的「加入」區**（#495 這一版已經把那一區做好了）
+
+**建議**：等那條 lane 的 commit 落地後再驗一次（三件事逐件），驗過才關。
 
 ---
 
@@ -503,6 +525,29 @@ owner 給的數字：`單體 6/15/30/45/60` · `範圍 30/45/60/90/120`（`變�
 | 3 | 6 個 commit 修好了某張票卻**沒帶號**（`f0779b70`→#486 · `5ea04900`→#487 · `00935377`→#488 · `373b3065`/`1438c1d7`→#484 · `50cf594a`→#492，⚠️ 最後這個還夾帶了 `waitSeconds 10→5` 這個**出貨值改動**藏在 `docs:` 前綴底下） | `msgledger` 已經在對「owner 的話 ↔ 票」；缺的是對「**commit ↔ 票**」的同一張表。同一支 hook 的第三條：`feat`/`fix` 前綴的 commit 必須至少帶一個真票號 |
 
 ⭐ 三條是**同一支 hook**，實作成本 < 40 行，而它擋的正是這一版量到的 11 次違規。
+
+### ⛔ 第 4 次 lane 互掃 —— **就發生在寫這份報告的時候（我自己）**
+
+19:41 我要 commit 這份報告，做了 `git add <我的檔>` 然後 `git commit -m …`
+—— ⛔ **`git add` 有 pathspec，`git commit` 沒有**。於是索引裡另一條 lane
+**已經 staged 的 15 個檔**（rally opt-out 那一批）被一起送進 `a8479a45`。
+
+我用 `git reset --soft HEAD~1` 還原（⛔ 不是 `--hard`、⛔ 不是 `checkout`：
+soft 只退 HEAD，索引與工作樹一個位元組都沒動，那條 lane 的 staging 原樣還在），
+而在我重打指令之前，**那條 lane 自己 commit 了 `3c83170f`** ——
+於是這份報告反過來被掃進**他們的** commit 裡。內容安全、路徑正確，只是掛在錯的 commit 上。
+⛔ **沒有再去改寫歷史**（改寫另一條 lane 的 commit 比錯掛更糟）。
+
+⭐ **今天的規矩要再收緊一格**：`git add <path>` **不夠** ——
+`git commit` 自己也必須帶 pathspec：
+
+```bash
+git commit -m "…" -- <逐檔列名>      # ✅ 繞過索引,只送這幾個檔
+git add <path> && git commit -m "…"  # ⛔ 索引裡別人的 staged 檔會一起走
+```
+
+這是**判準換成閘**的又一個位置：pre-commit hook 可以在「索引裡有本 lane 路徑柵欄
+以外的檔」時直接擋。
 
 ---
 
