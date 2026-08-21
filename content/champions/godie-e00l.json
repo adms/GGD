@@ -184,7 +184,7 @@
           }
         ]
       },
-      "vfxKey": "fx.prim.wind.nova",
+      "vfxKey": "fx.prim.wind.tornado",
       "castTimeSec": 0.267,
       "cooldownTier": "極小"
     },
@@ -280,7 +280,7 @@
           }
         }
       ],
-      "vfxKey": "fx.prim.earth.nova-lg",
+      "vfxKey": "fx.prim.holy.nova-lg",
       "targetsEnemies": true,
       "radius": 3.0,
       "castTimeSec": 1.5,

@@ -28,7 +28,13 @@
       "duration": 6.0
     }
   ],
-  "vfxKey": "fx.prim.arcane.pulse-lg",
+  "vfxKey": "fx.prim.holy.beam-lg",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.holy.beam-flat",
+      "attachTo": "point"
+    }
+  ],
   "schema": "ability@1",
   "castTimeSec": 1.033
 }
