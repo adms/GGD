@@ -42,8 +42,14 @@ BAR = 4 * 60.0 / aot.BPM
 #: shapes are COMPARABLE — a per-track autoscale would make every arc look
 #: identical, which is the one thing this drawing exists to disprove.
 DB_LO, DB_HI = -21.0, -12.0
-SECTIONS = [("導入", *aot.INTRO), ("熱血驅動", *aot.DRIVE), ("收束靜止低潮", *aot.HOLLOW),
+SECTIONS = [("純環境音", *aot.ENV_ONLY), ("招牌旋律", *aot.SIGNATURE),
+            ("熱血驅動", *aot.DRIVE), ("收束靜止低潮", *aot.HOLLOW),
             ("轉折", *aot.TURN), ("高潮", *aot.CLIMAX), ("回落→LOOP", *aot.DESCENT)]
+#: ⭐ Derived from the section NAMES, so adding or reordering a section can never
+#: again make the page quote a different pair of numbers than it claims to.
+I_ENV = [n for n, *_ in SECTIONS].index("純環境音")
+I_LOW = [n for n, *_ in SECTIONS].index("收束靜止低潮")
+I_PEAK = [n for n, *_ in SECTIONS].index("高潮")
 
 
 def esc(s) -> str:
@@ -129,15 +135,17 @@ h1{font-family:"Noto Serif TC",serif;font-weight:900;font-size:clamp(30px,5.5vw,
   font-size:12px;color:var(--dim);font-variant-numeric:tabular-nums}
 
 /* the arc — heights are MEASURED, not decorative */
-.arc{display:grid;grid-template-columns:repeat(6,1fr);gap:3px;align-items:end;
+.arc{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;align-items:end;
   height:96px;padding:0;margin:2px 0 0}
 .seg{position:relative;display:flex;flex-direction:column;justify-content:flex-end;height:100%}
 .seg .bar{border-radius:3px 3px 0 0;background:var(--cold);transition:none}
+.seg.env .bar{background:linear-gradient(180deg,#3B4A6B,transparent 160%)}
+.arclabels span.env{color:#7E92BE}
 .seg.low .bar{background:linear-gradient(180deg,var(--faint),transparent 140%)}
 .seg.peak .bar{background:linear-gradient(180deg,var(--ember),#B8402A)}
 .seg .db{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;color:var(--faint);
   text-align:center;padding-bottom:3px;font-variant-numeric:tabular-nums}
-.arclabels{display:grid;grid-template-columns:repeat(6,1fr);gap:3px;margin-top:6px}
+.arclabels{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:6px}
 .arclabels span{font-size:10.5px;color:var(--dim);text-align:center;line-height:1.35}
 .arclabels span b{display:block;color:var(--faint);font-family:"IBM Plex Mono",monospace;
   font-weight:400;font-size:9.5px}
@@ -179,14 +187,18 @@ def build() -> str:
             t = by_arena[arena]
             path = os.path.join(BGM, t["file"])
             db = arc_db(pcm(path))
-            drops.append(round(db[4] - db[2], 1))
+            # ⚠️ 索引是**推導**出來的,⛔ 不是硬寫 4 與 2。SECTIONS 從六段變七段
+            # (加了「純環境音」與「招牌旋律」)時,寫死的索引悄悄變成算「轉折 − 熱血」,
+            # 頁面就印出一個負的「低潮→高潮」。名字不會位移,位置會。
+            drops.append(round(db[I_PEAK] - db[I_LOW], 1))
             b64 = preview_b64(path, tmp)
             v = lines.get(arena)
 
             segs, labs = [], []
             for i, (nm, b0, b1) in enumerate(SECTIONS):
                 frac = max(0.06, min(1.0, (db[i] - DB_LO) / (DB_HI - DB_LO)))
-                cls = "low" if i == 2 else ("peak" if i == 4 else "")
+                cls = "env" if i == I_ENV else ("low" if i == I_LOW else
+                                                ("peak" if i == I_PEAK else ""))
                 segs.append(f"<div class='seg {cls}'><div class='db'>{db[i]:.1f}</div>"
                             f"<div class='bar' style='height:{frac*100:.0f}%'></div></div>")
                 labs.append(f"<span class='{cls}'>{esc(nm)}<b>{b0}–{b1}</b></span>")
@@ -216,7 +228,7 @@ def build() -> str:
                 f"<span class='aid'>{esc(arena)}</span>{work}</div>"
                 f"<div class='spec'><span>{t['durationSec']:.1f}s</span><span>135 bpm</span>"
                 f"<span>D 小調</span><span>48 小節 = loop 格線 ×2</span>"
-                f"<span>低潮→高潮 {db[4]-db[2]:+.1f} dB</span></div>"
+                f"<span>低潮→高潮 {db[I_PEAK]-db[I_LOW]:+.1f} dB</span></div>"
                 f"<div><div class='arc'>{''.join(segs)}</div>"
                 f"<div class='arclabels'>{''.join(labs)}</div></div>"
                 f"<div class='row'><span class='k'>場景音效</span>"
@@ -240,26 +252,33 @@ def build() -> str:
         "<div class='eyebrow'>GH#531 · 2026-08-22</div>"
         "<h1>十三張場地，十三首戰鬥曲</h1>"
         "<p class='lede'>在這之前，十三張場地共用同一首 <b>combat</b>。"
-        "每一首都是同一條五段弧線：導入 → 熱血驅動 → <b>收束靜止低潮</b> → "
-        "<b>轉折</b> → <b>高潮</b> → 回落成 LOOP。"
+        "每一首都是同一條弧線：<b>純環境音</b> → 招牌旋律 → 熱血驅動 → "
+        "<b>收束靜止低潮</b> → <b>轉折</b> → <b>高潮</b> → 回落成 LOOP。"
         "下面每張卡片的弧線是<b>量出來的</b>——柱高就是那一段在檔案裡的實際 RMS，"
         "⛔ 不是示意圖。</p>"
+        "<p class='lede'>⭐ <b>開頭 3.6 秒一件樂器都沒有</b>，只有那張圖自己的環境音"
+        "（實測 −29～−33 dB，而接著進來的招牌旋律比它大 +11～+17 dB）。"
+        "接著是<b>那張圖專屬的旋律</b>，用<b>那張圖專屬的樂器</b>——"
+        "十三張的音色與旋律全部不重複。</p>"
         "<p class='lede'>樂器是 <b>MuseScore_General.sf3</b>（MIT）的真實錄音經 fluidsynth 演奏；"
-        "場景音效是 <b>効果音ラボ</b> 實錄；人聲是本包自有的 formant 合唱引擎；"
-        "名句由 <b>CosyVoice 3</b> 預先算成檔案。</p>"
+        "場景音效是 <b>Warcraft III 原作環境音</b>（遊戲一支都沒綁，所以不會被誤判成技能）；"
+        "名句由 <b>CosyVoice 3</b> 預先算成檔案，沒有名句的六張場地則由"
+        "<b>合唱團唱該圖的旋律</b>。⛔ 全曲不含任何合成過場件。</p>"
         "</header>"
         "<div class='stats'>"
         f"<div class='stat'><span class='n'>13</span><span class='l'>場地 · 每張一首</span></div>"
         f"<div class='stat'><span class='n'>13/13</span><span class='l'>通過全部音訊閘</span></div>"
         f"<div class='stat'><span class='n'>{lo}–{hi}</span>"
         f"<span class='l'>低潮→高潮 dB（中位 {med}）</span></div>"
-        f"<div class='stat'><span class='n'>{n_quote}</span><span class='l'>配名句的場地</span></div>"
+        f"<div class='stat'><span class='n'>13</span><span class='l'>不重複音色 · 不重複環境音</span></div>"
         "</div>"
         + "".join(cards) +
         "<footer>"
         "<div>⚠️ 這裡的音檔是 <b>AAC 64 kbps 單聲道預覽</b>，為了讓整頁自帶音訊。"
         "出貨檔是 128 kbps 立體聲，−16 LUFS，真峰 ≤ −1 dBTP。</div>"
         "<div>⛔ 火圈不受影響：那是對著時鐘寫的緊急 cue，在每張圖上都該是同一個意思。</div>"
+        "<div>⛔ 場景音效不使用遊戲已在播的任何音效 —— 之前那批有 3 支與 castBegin / "
+        "exUnlock / matchStart <b>逐檔相同</b>，會讓玩家誤判成有人施法。</div>"
         "<div>逐筆授權見 <code>content/assets/CREDITS.md</code>；"
         "舊版曲子留在 <code>docs/legacy/_bgm-versions/</code>，⛔ 不覆蓋刪除。</div>"
         "</footer></div>")

@@ -183,10 +183,10 @@ MAPS: dict[str, dict] = {
     "arena.castle": dict(
         name="城堡競技場（室內）", seed=5308,
         prog=music.PROG_HOME, prog_climax=music.PROG_DRIVE,
-        colour="strings", motif=[(0,1,0),(1,1,2),(2,1,4),(3,3,2)], motifNote="三和弦分解 —— 端正",
+        colour="trombone", motif=[(0,1,0),(1,1,2),(2,1,4),(3,3,2)], motifNote="三和弦分解 —— 端正",
         shape=(0, 2, 4, 2), subdiv=8, kit="rock",
         brass="horn", vowels=("oh", "ah"), hollow="pad", pump=0.55,
-        note="stone · 室內 ⇒ 通用場地：弦樂 ostinato，⛔ 不掛任何作品名句",
+        note="stone · 室內 ⇒ ⚠️ colour 原本是 strings,與希干希納的 tremolo 量到只差 0.46(中位 1.52)——同為弓弦、同一條匯流排。換成長號:銅管在石廳裡的殘響是這張圖自己的東西。 通用場地：弦樂 ostinato，⛔ 不掛任何作品名句",
     ),
     "arena.colosseum": dict(
         name="羅馬大擂台（室外）", seed=5309,
@@ -217,7 +217,7 @@ MAPS: dict[str, dict] = {
         prog=music.PROG_RESOLVE, prog_climax=music.PROG_HOME,
         colour="piano", motif=[(0,1.5,7),(1.5,1.5,9),(3,1,8),(4,4,7)], motifNote="拱形、溫和 —— 不危險",
         shape=(0, 2, 4, 2), subdiv=8, kit="halftime",
-        brass="horn", vowels=("oo", "oh"), hollow="pad", pump=0.42,
+        brass="horn", vowels=("oo", "oh"), hollow="pad", pump=0.42, headroom=0.74,
         note="stone · 新手 ⇒ ⭐ 唯一刻意不危險的一首：最輕的 kit、最低的 pump",
     ),
     "arena.royale": dict(
@@ -403,6 +403,13 @@ def build(arena_id: str) -> Score:
         id=score_id(arena_id), title=m["name"], mood=m["note"],
         bpm=BPM, bars=BARS, key="Dm", seed=m["seed"], loop=True,
         pump_depth=m.get("pump", 0.55), hall=3.4,
+        # ⚠️ Per-map, because the true-peak a track lands on depends on its own
+        # crest factor, not on a global setting. `map.skeleton` measured
+        # **−0.93 dBTP** against the gate's −1.0 ceiling — the gentlest mix in
+        # the pack, so the limiter never engages and the master scale alone
+        # decides the peak. ⛔ Lowering the ENCODER's target instead would move
+        # all thirteen to fix one.
+        master_headroom=m.get("headroom", 0.80),
     )
     s.progression(list(m["prog"]))
     s.gain(choir=1.05, drums=1.10, lead=1.0, keys=0.95)

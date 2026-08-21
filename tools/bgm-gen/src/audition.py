@@ -190,6 +190,8 @@ def arena_rows() -> list[dict]:
             "gain": amap.get(m["arena"], {}).get("gain"),
             "url": url_for(f"assets/audio/bgm/{m['file']}"),
             "sceneSfx": m.get("sceneSfx", []),
+            "colour": m.get("colour"), "motif": m.get("motif"),
+            "vocal": m.get("vocal"), "sceneSource": m.get("sceneSource"),
             "rap": m.get("rap", []),
             "rapRef": m.get("rapVoiceRef"),
         })
@@ -391,10 +393,16 @@ def arena_card(p: list, r: dict) -> None:
         p.append(f"<span class='{cls}'><b>{esc(name)}</b>bar {b0}–{b1}</span>")
     p.append("</div>")
 
+    bits = [x for x in (f"音色 {r['colour']}" if r.get("colour") else None,
+                        f"旋律 {r['motif']}" if r.get("motif") else None,
+                        r.get("vocal")) if x]
+    if bits:
+        p.append("<div class='row'><span class='k'>本圖特徵</span>"
+                 f"<span class='v'>{esc(' · '.join(bits))}</span></div>")
     if r["sceneSfx"]:
         p.append("<div class='env'><b>場景音效 ▸</b> " +
                  esc(" ＋ ".join(r["sceneSfx"])) +
-                 " <span style='color:var(--dim)'>（効果音ラボ 實錄）</span></div>")
+                 f" <span style='color:var(--dim)'>（{esc(r.get('sceneSource') or '')}）</span></div>")
 
     for ln in r["rap"]:
         conf = ln.get("confidence", "")
