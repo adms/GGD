@@ -728,20 +728,20 @@
         ],
         "rap": [
           {
-            "text": "世界樹の中心へ",
+            "text": "リンク・スタート",
             "bar": 22.0,
             "gain": 0.67,
-            "work": null,
-            "source": "⚠️ GGD 原創 —— 這張圖我**查不出**改編自哪一部作品,所以 ⛔ 沒有引任何名言。這一句是照地圖自己的 landmark(`tree_core`)與 gimmick(`warp_*`)寫的。owner 若能指認作品,改 text+kana 兩格再跑 RENDER.py。",
-            "confidence": "n/a-original"
+            "work": "ソードアート・オンライン",
+            "source": "ソードアート・オンライン —— ダイブ時の合言葉（owner 2026-08-22 指認「世界樹核心 是刀劍神域」；世界樹＝ALO のワールドツリー）",
+            "confidence": "high"
           },
           {
-            "text": "世界樹の中心へ",
+            "text": "リンク・スタート",
             "bar": 28.0,
             "gain": 0.56,
-            "work": null,
-            "source": "同上（轉折起手複誦）",
-            "confidence": "n/a-original"
+            "work": "ソードアート・オンライン",
+            "source": "ソードアート・オンライン —— ダイブ時の合言葉（owner 2026-08-22 指認「世界樹核心 是刀劍神域」；世界樹＝ALO のワールドツリー）（轉折起手複誦）",
+            "confidence": "high"
           }
         ],
         "rapVoiceRef": "godie-etyr.wav"

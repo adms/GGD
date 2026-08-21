@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 """Regenerate apps/client/public/bgm-audition.html — audition the WHOLE audio
-pack in the browser: all 12 self-made BGM tracks (the theme is TWO tracks now —
-the epic menu bed + the serene menuNocturne that rotates with it) AND every SFX
-cue, each with a play button for testing.
+pack in the browser: the 12 scene beds (the theme is TWO tracks — the epic menu
+bed + the serene menuNocturne that rotates with it), the 13 PER-ARENA battle
+themes (GH#531), the 12 Samantha variants, the 名言 pack AND every SFX cue,
+each with a play button for testing.
+
+⚠️ The arena themes are the one section with THIRD-PARTY inputs: real instrument
+samples (MuseScore_General.sf3, MIT) and real field recordings (効果音ラボ). The
+sentence below about the pack being wholly self-made is scoped to the rest.
 
 No 魔王魂 anywhere any more. That pack is gone, not shipped, and its files were
 overwritten during rendering — there is nothing to compare against and no reason
@@ -153,6 +158,44 @@ def samantha_rows() -> list[dict]:
     return rows
 
 
+#: The five-section arc every arena theme is built on (GH#531). Bars at 135 bpm.
+ARC = [("導入", 0, 8), ("熱血驅動", 8, 20), ("收束靜止低潮", 20, 28),
+       ("轉折", 28, 32), ("高潮", 32, 45), ("回落→LOOP", 45, 48)]
+
+
+def arena_rows() -> list[dict]:
+    """The 13 per-arena battle themes (GH#531), read from the manifest's
+    `mapThemes` block (NOT `tracks` — those are the 12 scene beds, and
+    audioAssets.test.ts asserts every `tracks` entry has an audio-map `bgm` key,
+    which these deliberately do not: they bind under `mapBgm`).
+
+    ⚠️ Everything shown per card is READ, never restated here: the scene
+    recordings come from the manifest's own `sceneSfx`, the rap line and its
+    source/confidence from `rap`, the gain from audio-map's `mapBgm`. A page
+    that re-typed any of it would be a second home for it, and it would go
+    stale the first time someone re-authored a track."""
+    man = json.load(open(MANIFEST, encoding="utf-8"))
+    block = man.get("mapThemes") or {}
+    amap = json.load(open(AUDIO_MAP, encoding="utf-8")).get("mapBgm", {})
+    rows = []
+    for m in block.get("tracks", []):
+        rows.append({
+            "arena": m["arena"],
+            "zh": m.get("title", m["arena"]),
+            "title": m["arena"],
+            "mood": m.get("mood", ""),
+            "bpm": m.get("bpm"), "key": m.get("key"),
+            "sec": duration(os.path.join(BGM_DIR, m["file"])),
+            "loop": bool(m.get("loop", True)),
+            "gain": amap.get(m["arena"], {}).get("gain"),
+            "url": url_for(f"assets/audio/bgm/{m['file']}"),
+            "sceneSfx": m.get("sceneSfx", []),
+            "rap": m.get("rap", []),
+            "rapRef": m.get("rapVoiceRef"),
+        })
+    return rows
+
+
 def voiceline_rows() -> list[dict]:
     """名言・英雄語音 (task #137 addendum): one row per champion that has a JP
     voice-line clip. Joins quotes.json (jpQuote / romaji / zhGloss / voice) with
@@ -267,6 +310,24 @@ audio{width:100%;height:34px}
 .vromaji{color:var(--dim);font-size:12px;margin:0 0 2px;font-style:italic}
 .vgloss{color:#c3cbdd;font-size:13px;margin:0 0 8px}
 .vcard audio{max-width:340px}
+.card.arena{border-color:#5fd1a0}
+.badge.arena{color:#5fd1a0;border-color:#5fd1a0}
+.badge.warn{color:#f2a13c;border-color:#f2a13c}
+.arc{display:flex;flex-wrap:wrap;gap:0;margin:6px 0 8px;font-size:11px;border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.arc span{flex:1 1 0;min-width:56px;text-align:center;padding:4px 2px;background:#121728;border-right:1px solid var(--line);color:var(--dim)}
+.arc span:last-child{border-right:0}
+.arc span.low{background:#0e1322;color:#6f7c9c}
+.arc span.peak{background:rgba(95,209,160,.16);color:#8fe6c0;font-weight:700}
+.arc span b{display:block;color:#c3cbdd;font-weight:600}
+.env{font-size:12px;color:#c3cbdd;margin:0 0 6px;padding-left:10px;border-left:2px solid #5fd1a0}
+.env b{color:#5fd1a0}
+.arena-rap{background:rgba(126,162,255,.10);border-left:3px solid var(--theme);border-radius:0 6px 6px 0;padding:7px 10px;margin:2px 0 8px;font-size:13px}
+.arena-rap .jp{font-size:16px;font-weight:700;color:#dfe7ff}
+.arena-rap .src{display:block;color:var(--dim);font-size:11px;margin-top:3px}
+.conf{font-size:10px;border-radius:3px;padding:0 5px;margin-left:6px;vertical-align:middle}
+.conf.high{background:rgba(95,209,160,.18);color:#8fe6c0}
+.conf.medium{background:rgba(242,161,60,.18);color:var(--accent)}
+.conf.orig{background:rgba(147,160,192,.18);color:var(--dim)}
 @media(max-width:640px){.vcard{grid-template-columns:44px 1fr}.vico{width:44px;height:44px}}
 """
 
@@ -303,8 +364,55 @@ def bgm_card(p: list, r: dict, variant: bool = False) -> None:
     p.append(f"<audio controls preload='none' src='{r['url']}'></audio></div>")
 
 
+def arena_card(p: list, r: dict) -> None:
+    """One arena theme. Shows the things that make it THAT map's music: the
+    five-section arc, the real recordings its scene sound is made of, and the
+    quoted line with its source and how sure we are that it IS the source's."""
+    p.append("<div class='card arena'>")
+    badge = "<span class='badge arena'>場地戰鬥曲</span>"
+    if r["rap"]:
+        conf = r["rap"][0].get("confidence", "")
+        cls = {"high": "high", "medium": "medium"}.get(conf, "orig")
+        badge += f" <span class='badge {'warn' if cls == 'medium' else ''}'>CosyVoice 名句</span>"
+    p.append(f"<div class='hd'><span class='zh'>{esc(r['zh'])}</span>"
+             f"<span class='en'>{esc(r['title'])}</span>{badge}</div>")
+    meta = [f"{r['sec']:.1f}s", f"gain {r['gain']}", "loop" if r["loop"] else "one-shot"]
+    if r.get("bpm"):
+        meta.append(f"{r['bpm']:g}bpm")
+    if r.get("key"):
+        meta.append(esc(r["key"]))
+    meta.append("48 小節 = loop 格線 ×2")
+    p.append("<div class='meta'>" + " · ".join(str(m) for m in meta) + "</div>")
+
+    # the arc, drawn rather than described
+    p.append("<div class='arc'>")
+    for name, b0, b1 in ARC:
+        cls = "low" if name.startswith("收束") else ("peak" if name == "高潮" else "")
+        p.append(f"<span class='{cls}'><b>{esc(name)}</b>bar {b0}–{b1}</span>")
+    p.append("</div>")
+
+    if r["sceneSfx"]:
+        p.append("<div class='env'><b>場景音效 ▸</b> " +
+                 esc(" ＋ ".join(r["sceneSfx"])) +
+                 " <span style='color:var(--dim)'>（効果音ラボ 實錄）</span></div>")
+
+    for ln in r["rap"]:
+        conf = ln.get("confidence", "")
+        cls = {"high": "high", "medium": "medium"}.get(conf, "orig")
+        label = {"high": "原文把握 高", "medium": "原文把握 中"}.get(conf, "GGD 原創")
+        work = ln.get("work") or "（無來源作品）"
+        p.append(f"<div class='arena-rap'><span class='jp'>「{esc(ln['text'])}」</span>"
+                 f"<span class='conf {cls}'>{esc(label)}</span>"
+                 f"<span class='src'>bar {ln.get('bar')} · gain {ln.get('gain')} · "
+                 f"{esc(work)} · {esc(ln.get('source', ''))}</span></div>")
+    if r.get("mood"):
+        p.append(f"<div class='mood'>{esc(r['mood'])}</div>")
+    p.append(f"<audio controls preload='none' src='{r['url']}'></audio></div>")
+
+
 def render() -> str:
     bgm = bgm_rows()
+    arena = arena_rows()
     sam = samantha_rows()
     voice = voiceline_rows()
     sfx = sfx_rows()
@@ -333,6 +441,22 @@ def render() -> str:
     p.append(f"<h2>背景音樂 BGM · 原曲（{len(bgm)} 首）</h2>")
     for r in bgm:
         bgm_card(p, r)
+
+    p.append(f"<h2>場地戰鬥曲 · 一張地圖一首（{len(arena)} 首）</h2>")
+    p.append("<p class='sub'>★ <b style='color:#5fd1a0'>#531 新增</b>——在此之前"
+             "<b>十三張場地共用同一首 <code>combat</code></b>。現在每一張有自己的戰鬥曲，"
+             "由 <code>MatchState.mapId</code> 在戰鬥進場時解析。"
+             "⛔ <b>火圈不受影響</b>：那是對著時鐘寫的緊急 cue，在每張圖上都該是同一個意思"
+             "（owner 明說）。</p>")
+    p.append("<p class='sub'>五段弧線：導入 → 熱血驅動 → <b>收束靜止低潮</b> → <b>轉折</b> → "
+             "<b>高潮</b> → 回落成 LOOP。逐段 RMS 實測：收束低潮永遠是全曲最安靜、高潮永遠最大聲，"
+             "低潮→高潮 <b>+5.3 ~ +7.3 dB</b>，13/13 一致。<br>"
+             "樂器為 <b>MuseScore_General.sf3</b>（MIT）真實錄音經 fluidsynth 演奏；"
+             "場景音效為 <b>効果音ラボ</b> 實錄；人聲為本包自有的 formant 合唱引擎；"
+             "名句由 <b>CosyVoice 3</b> 預先算成 committed 的 wav。"
+             "完整逐筆授權見 <code>content/assets/CREDITS.md</code>。</p>")
+    for r in arena:
+        arena_card(p, r)
 
     p.append(f"<h2>Samantha James 變體 · nu-jazz / deep house（{len(sam)} 首 · 輪播）</h2>")
     for r in sam:
@@ -391,8 +515,8 @@ def main() -> None:
     with open(OUT, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"wrote {OUT}")
-    print(f"  {len(bgm_rows())} 原曲 + {len(samantha_rows())} Samantha 變體 (12+12) "
-          f"+ {len(voiceline_rows())} 名言 + SFX, playable, no 魔王魂")
+    print(f"  {len(bgm_rows())} 原曲 + {len(arena_rows())} 場地戰鬥曲 "
+          f"+ {len(samantha_rows())} Samantha 變體 + {len(voiceline_rows())} 名言 + SFX")
 
 
 if __name__ == "__main__":
