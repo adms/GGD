@@ -2,6 +2,10 @@
 import { z } from "zod";
 // 角色定位的四個值。⛔ 不要在這裡重打一份字串陣列。
 import { ARCHETYPES, ORIGINS } from "../statNormalization";
+import {
+  SPEED_GROWTH_AXIS_LABEL,
+  SPEED_GROWTH_TIER_NAMES,
+} from "../speedGrowthTiers";
 import type { AbilityId, ChampionId, ItemId } from "../../ids";
 import {
   zAlpha,
@@ -220,6 +224,44 @@ export const zChampionDef = z
      * not by omission.
      */
     growth: zPartialStatBlock,
+    /**
+     * ⭐ **移動速度**的每級成長級別（owner 2026-08-21：「請你給我**移動速度及
+     * 攻擊速度 每級成長五級距**」）。
+     *
+     * 與技能那五軸（`radiusTier` / `rangeTier` / `cooldownTier` / `damageTier` /
+     * `manaCostTier`）完全同一個形態：填了這一格，註冊時由
+     * `config.speed-growth-tiers@1` 翻成 `growth.ms`
+     * （`content/speedGrowthTiers.ts` 的 `resolveSpeedGrowthTiers`，全專案唯一的查表處）。
+     *
+     * ⚠️ 與那五軸**唯一**的差別：這裡「兩格都填」是**正常狀態**，⛔ 不是重複來源。
+     * `growth.ms` 是**退路原始值** —— 級距總開關關掉的那一秒，每一位就是靠它回到
+     * 今天的數字。⛔ 所以不要因為填了級別就把它刪掉。
+     *
+     * ⚠️ 量到的起點：49 位可選本體的 ms 每級成長**全部是 0**（一個都沒有成長）。
+     * 出貨一律填「極小」（＝0）⇒ 這一版**零平衡改動**，機制上線而數值一格沒動。
+     */
+    msGrowthTier: z
+      .enum(SPEED_GROWTH_TIER_NAMES)
+      .optional()
+      .describe(
+        `${SPEED_GROWTH_AXIS_LABEL.ms}的每級成長級別。填了就由 config.speed-growth-tiers@1 翻成 growth.ms；` +
+          "⚠️ growth.ms 要留著當退路（總開關關掉時靠它回到今天的值）。",
+      ),
+    /**
+     * ⭐ **攻擊速度**的每級成長級別。形態與 {@link msGrowthTier} 逐字相同。
+     *
+     * ⚠️ 量到的起點：49 位可選本體的 as 每級成長**全部是 0.02**（完全相同）。
+     * 出貨一律填「小」（＝0.02）⇒ 零平衡改動。
+     * ⛔ **不是「中」** —— 梯子上的「中」是 0.03，填它會讓 49 位一起變快，
+     * 而 owner 這一則的內文是「不動現況，只給兩端空間」（第〇·六守則①：內文 > 標籤）。
+     */
+    asGrowthTier: z
+      .enum(SPEED_GROWTH_TIER_NAMES)
+      .optional()
+      .describe(
+        `${SPEED_GROWTH_AXIS_LABEL.as}的每級成長級別。填了就由 config.speed-growth-tiers@1 翻成 growth.as；` +
+          "⚠️ growth.as 要留著當退路。⚠️ 攻速有系統上限 4，級別調高在高等會被夾住（見那一頁的量測表）。",
+      ),
     /**
      * 三圍 — STRENGTH / AGILITY / INTELLIGENCE + per-level growths (task #248),
      * recovered from the source map by walking each unit's `base` chain into

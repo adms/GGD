@@ -162,6 +162,7 @@ const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
       "cooldownTiers",
       "damageTiers",
       "manaTiers",
+      "speedGrowthTiers",
       "skillNormalize",
       "manaEconomy",
       // 2026-08-21 owner「後台設定及說明⋯全部都是推導動態即時產生」——
@@ -252,6 +253,10 @@ describe("分類重編一頁都沒有掉", () => {
       // 同型但更徹底：`ability@1` 上根本沒有 `manaCostTier` 一格，所以另外四軸
       // 各有 96–350 支填了級別，而這一軸是 **0 支**。
       "manaTiers",
+      // 2026-08-21：移速／攻速的每級成長五級距。⚠️ 它與上面四頁的起點相反 ——
+      // 那些是「216 支各帶一個自由數字」，這一軸是「49 位共用一個常數」
+      // （ms 成長全部 0、as 全部 0.02），所以它開的是一個今天不存在的維度。
+      "speedGrowthTiers",
       // 2026-08-21：技能正規化決策點 —— owner「決策點一律做成後台開關，
       // 預設 = 你的建議」。⚠️ 它是這一區裡唯一一頁 **authoring-time** 的設定
       // （決定閘怎麼問），但它必須和五張級距頁同一區：九格裡有一格直接決定

@@ -3,10 +3,10 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_da7bb275a409",
+    "contentVersion": "cv_4a37feafeef9",
     "collections": {
       "champions": {
-        "hash": "73a86333368f",
+        "hash": "e13e75cb8a98",
         "count": 71
       },
       "abilities": {
@@ -42,8 +42,8 @@
         "count": 7
       },
       "config": {
-        "hash": "12ea131f0b55",
-        "count": 71
+        "hash": "37fea9413d32",
+        "count": 72
       },
       "models": {
         "hash": "38d96d54f6e6",
@@ -89,7 +89,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "deab0bce",
+    "fingerprint": "86c08cf4",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -712,6 +712,7 @@
         "abilities",
         "alpha",
         "archetype",
+        "asGrowthTier",
         "attackDamagePoint",
         "attackType",
         "attributes",
@@ -730,6 +731,7 @@
         "immobile",
         "missileSpeed",
         "modelKey",
+        "msGrowthTier",
         "name",
         "origin",
         "passive",
@@ -2672,12 +2674,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "deab0bce",
+    "engineFingerprint": "86c08cf4",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 deab0bce —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 86c08cf4 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -3414,5 +3416,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "cd0f0aa8bcb1"
+  "profileDigest": "b3013e2308b9"
 }

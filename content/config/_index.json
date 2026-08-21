@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "12ea131f0b55",
+  "hash": "37fea9413d32",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -167,8 +167,8 @@
     {
       "id": "displacement-tiers",
       "path": "config/displacement-tiers.json",
-      "hash": "97272936c725",
-      "size": 1917
+      "hash": "3b8a6f6b779d",
+      "size": 2592
     },
     {
       "id": "form-visuals",
@@ -319,6 +319,12 @@
       "path": "config/skill-normalize.json",
       "hash": "790f4a7be6f1",
       "size": 1038
+    },
+    {
+      "id": "speed-growth-tiers",
+      "path": "config/speed-growth-tiers.json",
+      "hash": "44d5928e9d17",
+      "size": 2424
     },
     {
       "id": "stat-caps",

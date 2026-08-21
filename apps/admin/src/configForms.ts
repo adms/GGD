@@ -65,6 +65,7 @@ import {
   zConfigCooldownTiersDoc,
   zConfigDamageTiersDoc,
   zConfigManaTiersDoc,
+  zConfigSpeedGrowthTiersDoc,
   zConfigSkillNormalizeDoc,
   zConfigManaEconomyDoc,
   zConfigStatNormalizationDoc,
@@ -149,6 +150,16 @@ import {
   MANA_TIER_MIN,
   describeManaTiers,
 } from "@ggd/shared/content/manaTiers";
+import {
+  DEFAULT_SPEED_GROWTH_TIERS,
+  SPEED_GROWTH_AXES,
+  SPEED_GROWTH_AXIS_LABEL,
+  SPEED_GROWTH_LADDER_IDS,
+  SPEED_GROWTH_MAX,
+  SPEED_GROWTH_MIN,
+  SPEED_GROWTH_TIER_FIELD,
+  SPEED_GROWTH_TIER_NAMES,
+} from "@ggd/shared/content/speedGrowthTiers";
 import {
   DEFAULT_SKILL_NORMALIZE,
   CARRIER_BASE_MAX_CEILING,
@@ -1447,6 +1458,85 @@ const MANA_TIERS_SPEC: ConfigDocSpec = {
     })),
   ],
   // 五格純量 + 一個開關，沒有不編輯的分支要原封帶走。
+  preserved: [],
+};
+
+// ──────────────────── 速度成長級距 (config/speed-growth-tiers) ─
+
+/** 兩把梯子在同一格的值 —— 現算，⛔ 不是說明裡手打的數字。 */
+const SG = (id: (typeof SPEED_GROWTH_LADDER_IDS)[number], axis: "ms" | "as"): string =>
+  SPEED_GROWTH_TIER_NAMES.map((n) => DEFAULT_SPEED_GROWTH_TIERS.growth[id][axis][n]).join(" / ");
+
+/** 出貨 49 位落在哪一格（＝值等於他們今天成長的那一格）。 */
+const SG_SHIPPED_TIER: Readonly<Record<"ms" | "as", (typeof SPEED_GROWTH_TIER_NAMES)[number]>> =
+  Object.freeze({ ms: SPEED_GROWTH_TIER_NAMES[0], as: SPEED_GROWTH_TIER_NAMES[1] });
+
+const SPEED_GROWTH_TIERS_SPEC: ConfigDocSpec = {
+  page: "speedGrowthTiers",
+  collection: "config",
+  docId: "speed-growth-tiers",
+  schemaTag: "config.speed-growth-tiers@1",
+  zod: zConfigSpeedGrowthTiersDoc,
+  title: "速度成長五級距",
+  intro: [
+    `英雄卡填 \`${SPEED_GROWTH_TIER_FIELD.ms}\` / \`${SPEED_GROWTH_TIER_FIELD.as}\`，這一頁決定那一格**每升一級加多少**。owner 2026-08-21：「請你給我**移動速度及攻擊速度 每級成長五級距**」。`,
+    `⭐ **它與另外五軸的起點相反**：冷卻／耗魔／AoE／施法距離／傷害那五軸是「216 支各帶一個從 w3a 換算來的自由數字，收進格點」，而這兩軸量到的是「**49 位共用一個常數**」—— 移速每級成長 **49 位全部是 0**、攻速每級成長 **49 位全部是 0.02**（一個都不差）。⇒ 這一頁開的是一個**今天不存在的設計維度**（「這位英雄會不會越打越快／越跑越快」），⛔ 不是一次重新分配。`,
+    `⭐ **這一版零平衡改動**：49 位一律 ${SPEED_GROWTH_AXIS_LABEL.ms}「${SG_SHIPPED_TIER.ms}」（＝${DEFAULT_SPEED_GROWTH_TIERS.growth.A.ms[SG_SHIPPED_TIER.ms]}）· ${SPEED_GROWTH_AXIS_LABEL.as}「${SG_SHIPPED_TIER.as}」（＝${DEFAULT_SPEED_GROWTH_TIERS.growth.A.as[SG_SHIPPED_TIER.as]}），也就是他們今天的值。機制上線，數值一格沒動。`,
+    `⚠️ **⛔ 不是「中」** —— owner 那一則裡「49 位全部給中」與「維持今天的值 / 零平衡改動」兩句話**打架**（梯子上的「中」是 ms ${DEFAULT_SPEED_GROWTH_TIERS.growth.A.ms[SPEED_GROWTH_TIER_NAMES[2]]} / as ${DEFAULT_SPEED_GROWTH_TIERS.growth.A.as[SPEED_GROWTH_TIER_NAMES[2]]}，全給「中」等於 49 位一起變快，移速在 LV99 會從 5.8 變 7.76）。照第〇·六守則①**內文修正標籤**：梯子照抄他的五個數字，級別取「值等於他今天成長」的那一格。`,
+    `⭐ 兩把梯子都是 owner **逐字給滿**的規格，所以**照抄**，⛔ 沒有像 AoE／施法距離／耗魔那樣再套一條推導梯子（再推一次就是拿第 2 層去蓋第 1 層）。A：${SPEED_GROWTH_AXIS_LABEL.ms} ${SG("A", "ms")} · ${SPEED_GROWTH_AXIS_LABEL.as} ${SG("A", "as")}；B：${SPEED_GROWTH_AXIS_LABEL.ms} ${SG("B", "ms")} · ${SPEED_GROWTH_AXIS_LABEL.as} ${SG("B", "as")}。`,
+    `⚠️ **今天切 A↔B 一個位元都不會動**：出貨 49 位落在兩把梯子**值相同**的那兩格（${SPEED_GROWTH_AXIS_LABEL.ms}「${SG_SHIPPED_TIER.ms}」兩邊都是 0、${SPEED_GROWTH_AXIS_LABEL.as}「${SG_SHIPPED_TIER.as}」兩邊都是 0.02）。⇒ 開關已經接好而且**是惰性的**；要它生效必須先有人把某一位移出那兩格，而那會是一筆看得見的內容 diff。`,
+    `🔴 **攻速上限 4 今天就已經撞穿了**（\`config.stat-caps@1\` 的 \`as.base\`）：出貨成長 0.02 在 LV99 的母體中位就是 **7.51**。所以「LV99 撞不撞上限」對任何候選都是 ⛔ 撞（含現況），它不是判準。分得出勝負的是 owner 指定的 hard limit **LV30** —— **A 極大在 LV30 中位 3.34 < 4**（49 位裡 4 位越線），**B 極大 4.82 > 4**（49 位裡 **47 位**越線 ⇒ 頂端那一格在 hard anchor 上整排被夾住，五級距的頂端變成看不出差別的格子）。⇒ 預設 A；B 是給「攻速上限解到 10」之後的世界用的。`,
+    `⚠️ ${SPEED_GROWTH_AXIS_LABEL.ms}兩把梯子都撞不到上限 18（B 極大在 LV99 中位 13.64），但它有另一個代價：B 極大在 LV30 把移速從 5.8 推到 **8.12（+40%）** ⇒ 那是**追逃節奏**的改動，不是數值微調。`,
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/speed-growth-tiers.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "packages/shared/src/content/speedGrowthTiers.ts 的 resolveSpeedGrowthTiers（全專案唯一的查表處）← content/registries.ts 的 registerAll，在英雄註冊時把 msGrowthTier / asGrowthTier 翻成 growth.ms / growth.as；選人畫面、商店預覽、後台試算、文件產生器全部讀同一份註冊表",
+  effect:
+    "**要重啟 game-server shard 才生效**（內容在註冊時就解析完）。客戶端要重新載入 bundle。和冷卻／傷害／耗魔五級距同一個形態(#278)。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "級距總開關",
+      note:
+        `關掉之後 \`${SPEED_GROWTH_TIER_FIELD.ms}\` / \`${SPEED_GROWTH_TIER_FIELD.as}\` 不解析，每一位回到自己英雄卡上手寫的 \`growth.ms\` / \`growth.as\` —— ⭐ 那就是**一鍵回到今天的那一套數字**。` +
+        "⚠️ 那些原值一直都在（級別只在**註冊時**蓋過去），⛔ 這一軸從來沒有銷毀退路值。",
+    },
+    {
+      path: "ladder",
+      zh: "用哪一把梯子",
+      note:
+        "owner 2026-08-21 給的兩個候選，⭐ 出貨 `A`（他自己說「預設走 A」）。" +
+        "⚠️ **今天切過去一個位元都不會動** —— 49 位落在兩把梯子值相同的那兩格。" +
+        "⭐ 切成 `B` 的到期條件很明確：攻速上限從 4 解到 10 的那一天（今天 B 的極大在 LV30 就讓 49 位裡 47 位越過上限）。",
+      optionLabels: {
+        A: `A（預設・保守）— ${SPEED_GROWTH_AXIS_LABEL.ms} ${SG("A", "ms")}／${SPEED_GROWTH_AXIS_LABEL.as} ${SG("A", "as")}`,
+        B: `B（激進）— ${SPEED_GROWTH_AXIS_LABEL.ms} ${SG("B", "ms")}／${SPEED_GROWTH_AXIS_LABEL.as} ${SG("B", "as")}`,
+      },
+    },
+    {
+      path: "requireAuthoredParity",
+      zh: "宣告「這一版零平衡改動」",
+      note:
+        "開著 = 宣告「每一位的級別解析出來**逐位元等於**他英雄卡上原本的成長」，`pnpm speedtiers:check` 與守衛會逐位對帳。⭐ 這一版出貨就是這樣。" +
+        "⚠️ 開始重新分級（把某一位移出預設那一格）的那天**把它關掉** —— 那才是「我知道我在改平衡」的宣告。⛔ 不要去改測試：一條永遠為真的守衛與一條被偷偷改掉的守衛，壞處是一樣的。",
+    },
+    ...SPEED_GROWTH_LADDER_IDS.flatMap((id) =>
+      SPEED_GROWTH_AXES.flatMap((axis) =>
+        SPEED_GROWTH_TIER_NAMES.map((tier) => ({
+          path: `growth.${id}.${axis}.${tier}`,
+          zh: `梯子 ${id}・${SPEED_GROWTH_AXIS_LABEL[axis]}・${tier}`,
+          note:
+            `填 \`${SPEED_GROWTH_TIER_FIELD[axis]}: "${tier}"\` 的英雄**每升一級**加多少${SPEED_GROWTH_AXIS_LABEL[axis]}。` +
+            `⚠️ 只有「用哪一把梯子」選到 ${id} 的時候這一格才生效。` +
+            `⭐ 出貨值 ${DEFAULT_SPEED_GROWTH_TIERS.growth[id][axis][tier]}（owner 逐字給的規格，⛔ 不是推導出來的）。` +
+            `⚠️ 改這一格，每一位標成「${tier}」的英雄同時跟著變 —— 而且它乘上等級：LV99 的差距是這個數字的 98 倍。` +
+            `⚠️ 上界 ${SPEED_GROWTH_MAX[axis]} ＝ 這條屬性解鎖後的天花板 ÷ (等級上限−1)，是一道 mis-parse 柵欄（把 0.05 打成 5），⛔ 不是平衡判準。` +
+            `⚠️ 下界 ${SPEED_GROWTH_MIN}：負成長＝越升級越慢，會被 STAT_CLAMPS 靜默夾住（做得到、看不出來、沒有東西會紅）。`,
+        })),
+      ),
+    ),
+  ],
+  // 純量葉 + 一個開關 + 一個下拉，沒有不編輯的分支要原封帶走。
   preserved: [],
 };
 
@@ -4131,6 +4221,10 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   // 耗魔五級距（2026-08-21）—— 五軸的最後一軸。⚠️ 少了這一列，`ability@1` 上
   // 新開的 `manaCostTier` 就是一格**後台調不到**的參數（第一守則）。
   MANA_TIERS_SPEC,
+  // 速度成長五級距（2026-08-21）。⚠️ 少了這一列，`champion@1` 上新開的
+  // `msGrowthTier` / `asGrowthTier` 就是兩格**後台調不到**的參數（第一守則），
+  // 而它們決定 49 位英雄跑多快、打多快隨等級怎麼變。
+  SPEED_GROWTH_TIERS_SPEC,
   // 技能正規化決策點（2026-08-21）—— owner「決策點一律做成後台開關」的落地。
   SKILL_NORMALIZE_SPEC,
   MANA_ECONOMY_SPEC,

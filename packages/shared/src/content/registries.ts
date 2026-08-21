@@ -36,6 +36,7 @@ import { rangeTiersFromDoc, resolveRangeTier } from "./rangeTiers";
 import { cooldownTiersFromDoc, resolveCooldownTier } from "./cooldownTiers";
 import { damageTiersFromDoc, resolveDamageTier } from "./damageTiers";
 import { manaTiersFromDoc, resolveManaCostTier } from "./manaTiers";
+import { resolveSpeedGrowthTiers, speedGrowthTiersFromDoc } from "./speedGrowthTiers";
 // ⭐ 說明推導（票號待開） —— 技能說明的佔位符在 `withProse` 被代入（見下面那一格的說明）。
 import { type ProseTables } from "./abilityProse";
 // ⭐ 唯一入口（抽量 → 算實際值 → 代入）。⛔ 不要退回自己組那三步，見 `withProse`。
@@ -336,6 +337,13 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   // 英雄屬性正規化：同樣要在**英雄註冊之前**讀（`Configs.register` 那一圈在後面）。
   // ⭐ 一個 seam，接在 registerChampion 的正上方 —— 商店預覽 / 選人畫面 / 後台
   //   全部走同一份註冊表，所以不會出現「這裡顯示舊值、場上跑新值」。
+  // 移速／攻速的**每級成長**五級距（owner 2026-08-21）。⭐ 它與上面那五軸走**同一個
+  // 接縫**（`withTiers` 那一格是技能與道具的，這裡是英雄的那一格）——⛔ 不另立一條
+  // 解析路徑，理由同上：一個接縫 ⇒ 選人畫面／商店預覽／後台試算／文件產生器不可能
+  // 各自算出不一樣的答案。
+  const speedGrowth = speedGrowthTiersFromDoc(
+    configDocs.find((c) => c.schema === "config.speed-growth-tiers@1"),
+  );
   const statNorm = statNormalizationFromDoc(
     store.all<{ schema?: string }>("config").find((c) => c.schema === "config.stat-normalization@1"),
   );
@@ -353,11 +361,21 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   }
   for (const d of store.all<ChampionDef>("champions")) {
     registerChampion(
-      resolveChampionStats(
-        mapChampionAbilities(d, expandEmbedded) as never,
-        statNorm,
-        STAT_RESOLVE_DEPS,
-      ),
+      // ⚠️ 級距解析包在 `resolveChampionStats` 的**外面**是硬性的：`msGrowthTier` /
+      //    `asGrowthTier` 是**這一位作者填的**，它應該是 `growth.ms` / `growth.as`
+      //    的最後一句話。⛔ 包在裡面的話，屬性正規化哪天把 `as` 加進 `appliesTo`
+      //    （它的 `channel` 已經寫著 `growth`）就會靜靜地蓋掉級別，而級別欄位照樣
+      //    在卡上、後台照樣顯示它 —— 失敗形態②。
+      //    ⭐ 今天不會發生：出貨 `appliesTo` 沒有 `as`，而 `ms` 走 `baseStats` 通道
+      //    （L1 的值與成長無關），所以兩者順序無關；`speedtiers:check` 在守這個前提。
+      resolveSpeedGrowthTiers(
+        resolveChampionStats(
+          mapChampionAbilities(d, expandEmbedded) as never,
+          statNorm,
+          STAT_RESOLVE_DEPS,
+        ) as never,
+        speedGrowth,
+      ) as never,
     );
   }
   for (const d of store.all<LootTable>("loot-tables")) LootTables.register(d.id, d);

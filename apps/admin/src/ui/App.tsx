@@ -236,6 +236,9 @@ export const NAV: NavItem[] = [
   { page: "cooldownTiers", label: "冷卻五級距", emoji: "⏲", section: SEC_COMBAT },
   { page: "damageTiers", label: "傷害五級距", emoji: "💥", section: SEC_COMBAT },
   { page: "manaTiers", label: "耗魔五級距", emoji: "🔷", section: SEC_COMBAT },
+  // 移速／攻速的**每級成長**五級距 (2026-08-21)。緊鄰上面五軸 —— 同一組級距名、
+  // 同一個「級別住內容、數字住 config」的形狀，只是它掛在**英雄卡**上不是技能。
+  { page: "speedGrowthTiers", label: "速度成長五級距", emoji: "🏃", section: SEC_COMBAT },
   { page: "skillNormalize", label: "技能正規化決策點", emoji: "🧮", section: SEC_COMBAT },
   // 回魔地板 (GH#446)。緊鄰上面兩頁：owner 那三張單是同一次反算出來的。
   { page: "manaEconomy", label: "魔力經濟（建議滿魔時間）", emoji: "🔵", section: SEC_COMBAT },

@@ -2510,6 +2510,36 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "連續兩發清空魔條），而全庫最貴的一支首階 MP 是 650，離它還有一段。" +
       "⛔ 不要為了讓這一列變綠把某支技能的耗魔拉上去 —— 那是**平衡改動**，是 owner 的題。",
   },
+  // ⭐ 2026-08-21 —— 速度成長級距（`config.speed-growth-tiers@1`），掛在**英雄卡**上。
+  // ⚠️ 它與另外五軸的形狀相反：那五軸落地當天四格就有內容，而這一軸**刻意只有兩格**。
+  //    量到的起點是 49 位可選本體的 ms 每級成長**全部 0**、as 全部 0.02（一個都不差），
+  //    所以「值等於他們今天的成長」的那兩格（ms 極小 / as 小）各有 49 位，其餘八格是零。
+  //    ⛔ 那八格要有人，就是一次**平衡改動** —— 那是 owner 的題，⛔ 不是我可以自己填的
+  //    （`config.speed-growth-tiers@1` 的 `requireAuthoredParity` 正在守這件事）。
+  ...Object.fromEntries(
+    [
+      "enum:champions.msGrowthTier=小",
+      "enum:champions.msGrowthTier=中",
+      "enum:champions.msGrowthTier=大",
+      "enum:champions.msGrowthTier=極大",
+      "enum:champions.asGrowthTier=極小",
+      "enum:champions.asGrowthTier=中",
+      "enum:champions.asGrowthTier=大",
+      "enum:champions.asGrowthTier=極大",
+    ].map((key) => [
+      key,
+      {
+        status: "landing",
+        since: "2026-08-21",
+        why:
+          "十格共用 `resolveSpeedGrowthTiers` 同一段查表，而其中兩格（ms「極小」· as「小」）" +
+          "當天就各有 **49 位**在走 —— 路是通的，⛔ 不是機制沒接上。零的那八格是**設計空間**：" +
+          "這一版宣告零平衡改動（49 位一律填「值等於他今天成長」的那一格），把任何一位移出去" +
+          "都是在改他跑多快／打多快。⛔ 不要為了讓這一列變綠去動任何一張英雄卡 —— " +
+          "到期條件是 owner 的速度平衡盤，不是這條測試。",
+      } satisfies Exemption,
+    ]),
+  ),
   // ⭐ GH#414 施法距離級距／AoE 級距的零採用列**已經全部到期並刪掉**（2026-08-21
   //    五級距全轉：rangeTier 188 支、radiusTier 85 支、manaCostTier 204 支落地）。
   //    ⚠️ 留這一段是為了說明**為什麼這裡現在是空的** —— 它們不是被放寬掉的，
