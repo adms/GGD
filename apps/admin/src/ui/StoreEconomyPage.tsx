@@ -25,6 +25,7 @@
  */
 import { useEffect, useMemo, useState } from "react";
 import { Panel, Btn } from "./widgets";
+import { ChampionIdList, useChampionLabelIndex } from "./ChampionIdList";
 import { ACCENT, DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
 import { getOverlayDoc, getShippedDoc, getWhitelist, putOverlayDoc } from "../api";
 import {
@@ -128,6 +129,9 @@ export function StoreEconomyPage(): JSX.Element {
   const known = useMemo(() => new Set(roster ?? []), [roster]);
   const cost = useMemo(() => parseUnlockCost(costText), [costText]);
   const free = useMemo(() => parseFreeChampionIds(freeText, known), [freeText, known]);
+
+  // ⭐ GH#497：id 旁邊要有名字，變身態要標註（owner 2026-08-21「不然看不出來是誰」）。
+  const labels = useChampionLabelIndex(free.ids);
 
   const crystalErrs = useMemo(() => validateCrystalRewards(crystal), [crystal]);
   const crystalOK = Object.keys(crystalErrs).length === 0;
@@ -389,6 +393,8 @@ export function StoreEconomyPage(): JSX.Element {
         <code style={{ color: TEXT_DIM, fontSize: 11 }}>freeChampionIds</code>{" "}
         <span style={{ color: TEXT_DIM, fontSize: 11 }}>
           一行一個英雄 id（也吃逗號／空白分隔）。目前 {free.ids.length} 位。
+          下面會翻成英雄名稱並標出 <b style={{ color: ACCENT }}>[變身態 ← 本體 id]</b>
+          —— 十幾組本體／變身態的名字逐字相同，只看名字分不出來。
         </span>
       </div>
       <textarea
@@ -408,6 +414,17 @@ export function StoreEconomyPage(): JSX.Element {
           fontFamily: "monospace",
           fontSize: 12,
         }}
+      />
+      {/*
+        ⭐ GH#497 —— owner 2026-08-21「英雄ID以外還要有英雄名稱 不然看不出來是誰，
+        變身態的話也要註明」。⚠️ 免費名單特別需要形態標註：把一個**變身態**放進免費
+        名單是一句沒有效果的話（那張卡不能選、商店也不賣），而它的名字常常與本體逐字
+        相同，所以只印名字看起來完全正確。
+      */}
+      <ChampionIdList
+        ids={free.ids}
+        state={labels}
+        emptyText="免費名單是空的 —— 每一位英雄都要付統一價。"
       />
 
       {free.unknown.length > 0 && (

@@ -24,8 +24,31 @@ const read = (file: string): string =>
     .replace(/\/\*[\s\S]*?\*\//g, "")
     .replace(/\/\/[^\n]*/g, "");
 
-/** Every lobby screen that resolves a champion id → a player-facing name. */
-const SCREENS = ["./StoreScreen.tsx", "./LeaderboardPanel.tsx"] as const;
+/**
+ * Every lobby screen that resolves a champion id → a player-facing name.
+ *
+ * ⚠️ GH#497 swept this list again (after #491 found `RoomView` printing raw ids
+ * from OUTSIDE it). `ChampionMarquee.tsx` — the component whose failure this
+ * whole file is named after, quoted in the header above — was itself **not on
+ * the list**: the fix landed, and nothing was watching it. That is the same
+ * shape as the bug: the guard existed and the screen was invisible to it.
+ *
+ * ⛔ Two platform screens are deliberately still absent, and both are real gaps
+ * rather than exemptions — they are filed, not forgotten:
+ *   · `ValhallaPanel.tsx` — subscribes correctly (`contentReady` is in the deps
+ *     of its roster memo) but the memo body calls `valhallaRoster(whitelist)`,
+ *     so `REGISTRY_READ` sees no registry call and the "reads no champion
+ *     registry at all" assertion would fire. The predicate needs widening
+ *     before this can join.
+ *   · `valhalla/ValhallaSandboxPanel.tsx` — reads `Champions.tryGet` /
+ *     `championDisplayFor` in the render body with NO `useContentReady()` at
+ *     all, so it re-renders on content boot only if a parent happens to.
+ */
+const SCREENS = [
+  "./StoreScreen.tsx",
+  "./LeaderboardPanel.tsx",
+  "./ChampionMarquee.tsx",
+] as const;
 
 /** A champion-registry read — the thing that returns nothing before boot. */
 const REGISTRY_READ = /Champions\.(all|tryGet)\(|championDisplayFor\(/;

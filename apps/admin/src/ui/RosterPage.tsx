@@ -10,6 +10,7 @@
  */
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import { Panel, Btn } from "./widgets";
+import { ChampionIdList, useChampionLabelIndex } from "./ChampionIdList";
 import { ACCENT, DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
 import { getOverlayDoc, getShippedDoc, getWhitelist, putOverlayDoc } from "../api";
 import {
@@ -83,6 +84,13 @@ export function RosterPage(): JSX.Element {
   const retired = useMemo(() => parseChampionIdList(retiredText, known), [retiredText, known]);
   const hidden = useMemo(() => parseChampionIdList(hiddenText, known), [hiddenText, known]);
 
+  // ⭐ GH#497：id 旁邊要有名字，變身態要標註（owner 2026-08-21「不然看不出來是誰」）。
+  // 兩張清單共用一份索引（一次 fetch），並把兩邊的 id 都交給它去補 `_legacy` 那幾列。
+  const labels = useChampionLabelIndex(useMemo(
+    () => [...retired.ids, ...hidden.ids],
+    [retired.ids, hidden.ids],
+  ));
+
   const preview: RosterLists | null = loaded
     ? { retired: retired.ids, hidden: hidden.ids, ...(loaded.note !== undefined ? { note: loaded.note } : {}) }
     : null;
@@ -147,6 +155,13 @@ export function RosterPage(): JSX.Element {
         ⚠️ 存過一次之後，<code>content/config/roster.json</code> 就不再是玩家看到的那一份
         —— 要改就從這一頁改。
       </p>
+      <p style={{ color: TEXT_DIM, fontSize: 13, lineHeight: 1.7, margin: "0 0 14px" }}>
+        每一格下面會把 id 翻成<b style={{ color: TEXT_MAIN }}>英雄名稱</b>，並標出
+        <b style={{ color: ACCENT }}>[變身態 ← 本體 id]</b>。⚠️ 這不是裝飾 ——
+        有<b style={{ color: TEXT_MAIN }}>十幾組</b>本體與變身態的名字<b>逐字相同</b>
+        （索隆 · 飛影 · 草泥馬 · 莉娜因巴斯…），只看名字會看到兩列一模一樣的字，
+        而兩張卡的意義正好相反。
+      </p>
 
       <div style={{ color: TEXT_MAIN, fontSize: 13, marginBottom: 12 }}>
         {preview ? rosterSummary(preview, roster?.length ?? null) : "讀取中…"}
@@ -178,6 +193,11 @@ export function RosterPage(): JSX.Element {
         onChange={(e) => setRetiredText(e.target.value)}
         style={boxStyle(retired.unknown.length > 0)}
       />
+      <ChampionIdList
+        ids={retired.ids}
+        state={labels}
+        emptyText="下架名單是空的 —— 每一位英雄都拿得到。"
+      />
       {retired.unknown.length > 0 && (
         <div style={{ color: GOLD, fontSize: 13, marginTop: 8 }}>
           ⚠️ 這些 id 不在目前的開放名單裡：<code>{retired.unknown.join("、")}</code>。
@@ -200,6 +220,11 @@ export function RosterPage(): JSX.Element {
         rows={8}
         onChange={(e) => setHiddenText(e.target.value)}
         style={boxStyle(hidden.unknown.length > 0)}
+      />
+      <ChampionIdList
+        ids={hidden.ids}
+        state={labels}
+        emptyText="隱藏名單是空的 —— 沒有任何彩蛋英雄。"
       />
       {hidden.unknown.length > 0 && (
         <div style={{ color: GOLD, fontSize: 13, marginTop: 8 }}>

@@ -68,6 +68,10 @@ export function rowFromDoc(id: string, raw: unknown): ContentRow {
   if (tf !== null && typeof tf === "object") {
     const tfRole = (tf as Record<string, unknown>)["role"];
     if (typeof tfRole === "string" && tfRole !== "") row.transformRole = tfRole;
+    // ⭐ GH#497：`[變身態 ← godie-hjai]` 的那個 id。同名的兩張卡（索隆／飛影／草泥馬
+    // ／莉娜因巴斯…）只有靠它才分得出誰是誰。⛔ 不從 id 猜，讀 doc 自己寫的配對。
+    const tfPair = (tf as Record<string, unknown>)["counterpartId"];
+    if (typeof tfPair === "string" && tfPair !== "") row.transformCounterpartId = tfPair;
   }
   if (typeof doc["cost"] === "number") row.cost = doc["cost"];
   if (typeof doc["tier"] === "number") row.tier = doc["tier"];
@@ -178,6 +182,46 @@ export async function loadDocsByIds(
         out.set(id, await getJson(fetchFn, `${base}/${byId.get(id) as string}`));
       } catch {
         // absent from the map — "unknown", never a default
+      }
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(concurrency, wanted.length) }, worker));
+  return out;
+}
+
+/**
+ * 退休英雄的 doc（`content/_legacy/champions/<id>.json`）。GH#497。
+ *
+ * ⚠️ 出貨的下架名單上有 7 個 id，其中 **6 個在 `content/champions/` 裡根本沒有 doc**
+ * ——它們被搬進 `_legacy/`。所以「讀 live 樹拿名字」對那一頁的**多數列**答不出來，
+ * 而 owner 的抱怨正是「看不出來是誰」。
+ *
+ * ⛔ `_legacy/champions/` **沒有 `_index.json`**（它不是一個出貨集合），所以這裡
+ * ⛔ 不能列舉、只能**按 id 直接取**——而 id 本來就是呼叫端手上那張清單，不是猜的。
+ * 取不到就是取不到（沒有這個 id 的列會留在「內容樹裡沒有這個 doc」），⛔ 不編名字。
+ */
+export const LEGACY_CHAMPIONS_DIR = "_legacy/champions";
+
+export async function loadLegacyChampionRows(
+  ids: readonly string[],
+  opts: LoadOptions = {},
+): Promise<ContentRow[]> {
+  if (ids.length === 0) return [];
+  const fetchFn = opts.fetchFn ?? ((...args: Parameters<typeof fetch>) => fetch(...args));
+  const base = opts.base ?? CONTENT_BASE;
+  const concurrency = Math.max(1, opts.concurrency ?? 8);
+  const wanted = [...new Set(ids)];
+  const out: ContentRow[] = [];
+
+  let next = 0;
+  const worker = async (): Promise<void> => {
+    for (;;) {
+      const id = wanted[next++];
+      if (id === undefined) return;
+      try {
+        out.push(rowFromDoc(id, await getJson(fetchFn, `${base}/${LEGACY_CHAMPIONS_DIR}/${id}.json`)));
+      } catch {
+        // 沒有這個 id 就是沒有 —— 呼叫端會畫成「內容樹裡沒有這個 doc」
       }
     }
   };

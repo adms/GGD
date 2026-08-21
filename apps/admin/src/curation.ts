@@ -118,6 +118,16 @@ export interface ContentRow {
    * ⚠️ NOT the same field as `role` above (fighter / marksman / tank).
    */
   transformRole?: string;
+  /**
+   * champions only — `transform.counterpartId`: the champion doc on the OTHER
+   * side of the 變身 link. Absent when that half was never imported.
+   *
+   * ⭐ GH#497 needs it because a 變身態's own `name` is very often **byte-for-byte
+   * the same** as its base's (索隆 · 飛影 · 草泥馬 · 莉娜因巴斯 …). Printing the
+   * name alone turns two opposite rows into two identical-looking rows, which is
+   * worse than printing ids — so the list prints 「… [變身態 ← <counterpartId>]」.
+   */
+  transformCounterpartId?: string;
   /** items only */
   cost?: number;
   /** items only */
