@@ -783,6 +783,28 @@ docs/_reports/<票號>_temp_<YYYYMMDD-HHMM>.md   ← 完整
 今天發生**三次** lane 互相把對方 staged 的檔掃進自己的 commit。
 ⇒ commit **一律 pathspec 逐檔列名**，⛔ 不要 `git commit -a`、⛔ 不要目錄層 `git add`。
 
+#### ⛔⛔ 而那條規則**只寫對了一半**，所以 2026-08-22 又破了第四次
+
+那天我 `git add -- <我的 6 個檔>`（完全照規則），然後打了一個**裸的 `git commit`**
+—— 結果提交了 **332 個檔**。因為 index 是**全 repo 共用的**，而另一條 lane
+早就把他們的 326 個檔 stage 進去了。⭐ **`git add` 逐檔擋不住任何事**：
+決定 commit 內容的是 `git commit`，不是 `git add`。
+
+```bash
+git commit -F msg.txt -- a.ts b.ts c.json     # ✅ 只有這三個檔進 commit,index 其餘不動
+git add -- a.ts b.ts c.json && git commit     # ⛔ 別人 staged 的東西全部一起送上車
+```
+
+| | |
+|---|---|
+| **閘** | `git commit` **後面永遠要有 `-- <逐檔 pathspec>`** |
+| **為什麼是閘不是判準** | 它是一段可以逐字檢查的指令文字，⛔ 不是「要記得先看一下 `git diff --cached`」 |
+| **手滑了怎麼救** | `git reset --soft HEAD~1`（index 與工作樹都不動）→ 重打帶 pathspec 的 commit。⛔ 不要 `git reset --hard`、⛔ 不要 `git stash`（見共用 stash 那條） |
+
+⚠️ `git diff --cached --name-only` 要在**自己的一次 Bash 呼叫裡**看，
+⛔ 不要跟 `git commit` 串在同一行 —— 那樣輸出印出來的時候 commit 已經跑完了，
+我 2026-08-22 就是這樣「看著」332 個檔的清單卻來不及反應。
+
 ⚠️ **已知唯一真正共用的檔**：`configDocCoverage.test.ts` 要求每個新 config 都要有
 session-gate + 導覽列 ⇒ 新增 `content/config/*.json` **一定**會動到
 `apps/admin/src/store.ts` 與 `ui/App.tsx` **各一行**。那兩行是共用的，其餘都可以並行。
