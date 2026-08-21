@@ -24,6 +24,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Btn, Panel, PresenceDot } from "./widgets";
 import { TEXT_DIM, TEXT_MAIN } from "../theme";
+import { padFocusLanding } from "../padFocusLanding";
 import { DEFAULT_LOBBY_LAYOUT } from "./lobbyLayout";
 import type { LobbyLayoutPolicy } from "./lobbyLayout";
 import {
@@ -104,7 +105,10 @@ export function OnlinePlayersPanel(props: {
 
   return (
     <Panel title="線上玩家" style={{ flex: 1, minHeight: 120 }} data-ggd-online-panel="">
-      <div style={{ flex: 1, overflowY: "auto", minHeight: 0 }}>
+      {/* GH#514 —— 有列的時候「加朋友」鈕本身就是落點，但**空清單／讀取中／
+          讀不到**這三種狀態一個可聚焦元素都沒有，而那正是手把最需要能站進來
+          讀說明的時候。落點掛在容器上，三種狀態都在。 */}
+      <div {...padFocusLanding()} style={{ flex: 1, overflowY: "auto", minHeight: 0 }}>
         {failed && (
           <div data-ggd-online-error="" style={{ fontSize: 12, color: "#e5a13f" }}>
             線上名單暫時讀不到 —— 這不代表沒有人在線上。

@@ -102,9 +102,25 @@ export function StorePreviewCanvas(props: {
   onStatus?: (status: PreviewStatus) => void;
   /** whose art colour to paint on this model; absent = leave it untinted */
   championId?: string | null;
+  /**
+   * Player-driven turntable angle, in DEGREES either side of the pose this
+   * model was framed at. Absent = nobody is steering, and the stage keeps its
+   * own idle auto-orbit.
+   *
+   * ⭐ WHY A NUMBER AND NOT A DRAG (第一·五守則). The store's caption promised
+   * 「拖曳可旋轉檢視」, and dragging really does work — through Babylon's
+   * `attachControl`, which reads POINTER events. A pad emits none: the focus
+   * layer moves focus and clicks, so that sentence described, to a pad player,
+   * a gesture that does not exist. An angle can come from a slider, and #505
+   * taught the pad to step sliders, so the same promise is now keepable on a
+   * pad, a mouse and a keyboard through one prop.
+   */
+  yawDeg?: number;
 }): React.JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const previewRef = useRef<StorePreview | null>(null);
+  /** The framed pose `yawDeg` is measured FROM; re-read after each `show()`. */
+  const baseAlphaRef = useRef<number | null>(null);
   // WebGL can be missing entirely (software-blocked GPU, locked-down browser);
   // `new Engine()` throws there, and an unhandled throw in an effect would take
   // the whole lobby down. Caught → reported as "failed" → the caller degrades.
@@ -135,6 +151,20 @@ export function StorePreviewCanvas(props: {
     previewRef.current?.setPaused(props.paused === true);
   }, [props.paused]);
 
+  // Steering the turntable. `undefined` means the caller renders no control at
+  // all (champ-select, the 英靈殿 showcase), and those stages must behave
+  // EXACTLY as before — hence the early return rather than a `?? 0` default,
+  // which would silently switch off their auto-orbit on mount.
+  useEffect(() => {
+    const preview = previewRef.current;
+    if (!preview || props.yawDeg === undefined) return;
+    if (baseAlphaRef.current === null) baseAlphaRef.current = preview.camera.alpha;
+    // Taking the wheel stops the idle spin, the same way a mouse drag does —
+    // otherwise the stage would keep rotating away from the angle just asked for.
+    preview.camera.useAutoRotationBehavior = false;
+    preview.camera.alpha = baseAlphaRef.current + (props.yawDeg * Math.PI) / 180;
+  }, [props.yawDeg]);
+
   useEffect(() => {
     if (engineFailed) return;
     if (!props.modelKey) {
@@ -159,6 +189,10 @@ export function StorePreviewCanvas(props: {
         relativeScale: standinSizes.relativeScaleFor(championId, doc.glbPath),
       });
       if (cancelled) return;
+      // `show()` re-frames the camera, so the angle a player dialled in for the
+      // PREVIOUS model no longer describes this one. Forget the base pose; the
+      // next steer re-reads it.
+      baseAlphaRef.current = null;
       // `show()` never throws: a glb that 404s or fails to parse simply leaves
       // no model node. That is the honest signal — report it rather than
       // pretending a black stage is a loaded champion.

@@ -57,6 +57,7 @@ import { iconSrc } from "../icons";
 import { SfxButton } from "../SfxButton";
 import { Panel, Btn, ACCENT, OK, DANGER } from "./widgets";
 import { padModalScope } from "../padModalScope";
+import { padFocusLanding } from "../padFocusLanding";
 import { GOLD, TEXT_DIM, TEXT_MAIN } from "../theme";
 // touch/narrow-viewport layer (crest scaling, thumb-sized rows, 1-col picker)
 import "./ranking.css";
@@ -94,13 +95,17 @@ function LadderRow(props: {
         {me ? "你 · " : ""}
         {row.username || row.accountId}
       </span>
-      {/* dense row: crest only (names need the width) — the Chinese label rides
-          the tooltip, and the pinned "you" row below spells it out in full. */}
+      {/* GH#515 —— 段位的中文名**畫在列上**。
+          ⛔ 這裡以前是 `showLabel={false}` + `title=`，理由寫著「names need the
+          width, the Chinese label rides the tooltip」。那句話對滑鼠玩家是真的，
+          對手把玩家是**謊話**：pad 沒有 hover，`setFocus` 只 focus + scrollIntoView
+          （PadFocusNav.tsx），tooltip 一輩子不會出現 ⇒ 這一欄的資訊對他們是空的
+          （CLAUDE.md 第一·五守則：卡片上不可以有「說了但不會發生」的字）。
+          名字本來就已經 ellipsis，讓出去的是它，⛔ 不是這一欄的唯一住處。 */}
       <TierBadge
         tier={row.tier}
         division={row.division}
         size="sm"
-        showLabel={false}
         title={formatRank(row.tier, row.division)}
       />
       <span style={{ color: ACCENT, fontWeight: 600, width: 44, textAlign: "right" }}>{row.points.toLocaleString()}</span>
@@ -389,7 +394,9 @@ function ChampionTab(props: {
             <span style={{ color: TEXT_DIM, fontSize: 11 }}>▾</span>
           </SfxButton>
 
-          <div style={{ flex: 1, overflowY: "auto", minHeight: 0 }}>
+          {/* GH#514 —— 名次列是純 div，「載入更多」只有還有下一頁時才在 ⇒
+              沒有落點的時候手把捲不動這一格。 */}
+          <div {...padFocusLanding()} style={{ flex: 1, overflowY: "auto", minHeight: 0 }}>
             {!selected && <Hint>挑一位英雄，看看誰在這個英雄上分數最高。</Hint>}
             {board.loading && <Hint>載入中…</Hint>}
             {board.error && <Hint>載入失敗，稍後再試。</Hint>}
@@ -403,7 +410,7 @@ function ChampionTab(props: {
           </div>
         </>
       ) : (
-        <div style={{ flex: 1, overflowY: "auto", minHeight: 0 }}>
+        <div {...padFocusLanding()} style={{ flex: 1, overflowY: "auto", minHeight: 0 }}>
           {!props.loggedIn && <Hint>登入後即可查看你每位英雄的排位。</Hint>}
           {props.loggedIn && mine.loading && <Hint>載入中…</Hint>}
           {props.loggedIn && mine.error && <Hint>載入失敗，稍後再試。</Hint>}
@@ -423,11 +430,11 @@ function ChampionTab(props: {
                 <span style={{ flex: 1, minWidth: 0, color: TEXT_MAIN, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                   {opt?.name ?? r.championId}
                 </span>
+                {/* GH#515 —— 同上：中文段位畫在列上，⛔ 不是只活在 tooltip 裡。 */}
                 <TierBadge
                   tier={r.tier}
                   division={r.division}
                   size="sm"
-                  showLabel={false}
                   title={formatRank(r.tier, r.division)}
                 />
                 <span style={{ color: ACCENT, fontWeight: 600, width: 44, textAlign: "right" }}>{r.points.toLocaleString()}</span>
@@ -470,7 +477,11 @@ function PlayerTab(props: { meId: string | null }): React.JSX.Element {
   return (
     <>
       <style>{AUTO_SCROLL_HIGHLIGHT_CSS}</style>
-      <div ref={scroll.listRef} style={{ flex: 1, overflowY: "auto", minHeight: 0 }}>
+      <div
+        ref={scroll.listRef}
+        {...padFocusLanding()}
+        style={{ flex: 1, overflowY: "auto", minHeight: 0 }}
+      >
         {playerBoard === null && <Hint>載入中…</Hint>}
         {playerBoard !== null && rows.length === 0 && <Hint>還沒有排位玩家 — 打一場排位賽取得定級。</Hint>}
         {rows.map((r) => {

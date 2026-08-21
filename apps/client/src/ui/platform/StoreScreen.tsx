@@ -40,12 +40,20 @@
  * no i18n layer and #19 owns introducing one — inventing a key/lookup system in
  * one screen would fork it.
  */
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useApp } from "./store";
-import { deriveStoreRows, storeRowsForWhitelist, type SkinRow } from "./catalog";
+import { deriveStoreRows, storeRowsForWhitelist, type ChampionRow, type SkinRow } from "./catalog";
+import type { PurchaseItem } from "./purchase";
+import type { Wallet } from "./types";
 import { useWhitelist } from "../panels/whitelist";
 import { championDisplayFor } from "./championDisplay";
-import { balanceOf, shortfallHint, CRYSTAL_EARN_HINT, CURRENCY_LABEL } from "./currency";
+import {
+  balanceOf,
+  shortfallHint,
+  CRYSTAL_EARN_HINT,
+  CURRENCY_LABEL,
+  MCOIN_GRANT_NOTE,
+} from "./currency";
 import { useContentReady } from "./ContentGate";
 import { StorePreviewCanvas } from "./StorePreviewCanvas";
 import { Btn, Panel, Badge, Crystal, MCoin, Price, ACCENT, OK, DANGER } from "./widgets";
@@ -128,6 +136,220 @@ function PurchaseDialog(): React.JSX.Element | null {
   );
 }
 
+/**
+ * The list pane's scroll box, exported because it is a CONTRACT, not styling.
+ *
+ * #522 — 「手把在商店只能一列一列爬」. The pad's scroll layer (#505/#506) finds a
+ * pane by walking up from the focused control and asking `getComputedStyle`
+ * whether `overflow-y` is auto/scroll/overlay and whether it actually overflows
+ * (PadFocusNav `overflowsAlong`). So the right stick scrolls this list ONLY for
+ * as long as this box keeps that overflow — swap it for `overflow: hidden` plus
+ * a transform, or hoist the scrolling to `<body>`, and the pad silently goes
+ * back to crawling a row at a time with nothing turning red. The guard reads
+ * this object, so that swap fails loudly instead.
+ */
+export const STORE_LIST_SCROLL: React.CSSProperties = {
+  flex: 1,
+  overflowY: "auto",
+  minHeight: 0,
+  paddingRight: 4,
+};
+
+/**
+ * ⭐ ONE CHAMPION'S SHELF — and the reason it is a component instead of inline
+ * JSX: it is the unit both pad tickets are about, and it renders from PLAIN
+ * PROPS, so a guard can render an unaffordable shelf without a live store.
+ *
+ * ── #516 買不起的整列對手把隱形 ──────────────────────────────────────────────
+ * The skin row used to be a NAKED `<div onClick>`: the only focusable child was
+ * its buy button, and M幣 is admin-granted (see currency.ts), so for almost
+ * every player that button is `disabled`. #505 already removed
+ * `:not([disabled])` from `FOCUSABLE_SELECTOR`, which fixed HALF of this — a
+ * disabled button is now focusable-but-inert, so the row no longer vanishes and
+ * the rows after it no longer shift. The other half is still broken without
+ * this change: SELECTING a skin (i.e. previewing it) lives on the naked div's
+ * `onClick`, so a pad player could land on the shelf and still never see the
+ * model. The row itself is therefore a focusable node (`data-pad-focusable` +
+ * tabIndex), and A / Enter / Space select it.
+ *
+ * The champion HEADING gets the same treatment for a different reason: an
+ * already-owned champion renders no button at all, so an owned champion with no
+ * skins was a shelf the focus ring could not land on anywhere.
+ *
+ * ── #517 買不起的原因只掛在 title tooltip ───────────────────────────────────
+ * A pad has no hover, so `title={shortfallHint(...)}` was an explanation only a
+ * mouse could read. The reason is now DRAWN: a compact 「…不足」 chip on every
+ * unaffordable row (the wallet name comes from `CURRENCY_LABEL`, ⛔ not a
+ * literal), and the full sentence expands on the row the player has actually
+ * selected — 「聚焦時顯示」 as the ticket asks, without stamping the same
+ * paragraph onto a hundred shelves.
+ */
+export function StoreChampionGroup(props: {
+  champ: ChampionRow;
+  wallet: Wallet | null;
+  shownSkinId: string | null;
+  onSelect: (sk: SkinRow) => void;
+  onBuy: (item: PurchaseItem) => void;
+  onEquip: (championId: string, skinId: string | null) => void;
+}): React.JSX.Element {
+  const { champ, wallet } = props;
+  const champShort = balanceOf(wallet, champ.currency) < champ.price;
+  return (
+    <div style={{ marginBottom: 16 }}>
+      <div
+        data-pad-focusable=""
+        tabIndex={0}
+        aria-label={champ.title ? `${champ.fullName} ${champ.title}` : champ.fullName}
+        style={{
+          display: "flex",
+          alignItems: "baseline",
+          gap: 8,
+          marginBottom: 4,
+          outline: "none",
+        }}
+      >
+        {/* #227: the NAME, never the id. `fullName`/`title` already fall
+            back to the id when no content doc is registered. */}
+        <span style={{ fontSize: 15, fontWeight: 700, color: TEXT_MAIN }}>{champ.fullName}</span>
+        {champ.title && (
+          <span style={{ fontSize: 11, color: GOLD, fontWeight: 600 }}>{champ.title}</span>
+        )}
+        <div style={{ flex: 1 }} />
+        {champ.owned ? (
+          <Badge color={OK}>已擁有</Badge>
+        ) : (
+          <>
+            {/* #227: 英雄 = 藍水晶. The glyph comes from the row's own
+                currency, so it can never disagree with what is spent. */}
+            <Price currency={champ.currency} amount={champ.price} size={12} />
+            {/* #517: the reason, DRAWN. The full 「怎麼賺」 sentence for 藍水晶 is
+                permanently on screen in this pane's footer, so the chip only has
+                to say WHICH wallet is short. */}
+            {champShort && <Badge color={DANGER}>{CURRENCY_LABEL[champ.currency]}不足</Badge>}
+            <Btn
+              small
+              kind="primary"
+              disabled={champShort}
+              title={champShort ? shortfallHint(champ.currency) : `解鎖 ${champ.name}`}
+              onClick={() =>
+                props.onBuy({
+                  kind: "champion",
+                  id: champ.id,
+                  name: champ.name,
+                  price: champ.price,
+                  currency: champ.currency,
+                })
+              }
+            >
+              解鎖
+            </Btn>
+          </>
+        )}
+      </div>
+      {/* graceful empty: 13 of 114 champion docs carry no description at
+          all, so this must never render an empty box (skin-row pattern). */}
+      {champ.blurb && (
+        <div
+          style={{
+            fontSize: 11,
+            color: TEXT_DIM,
+            marginBottom: 6,
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {champ.blurb}
+        </div>
+      )}
+      {champ.skins.map((sk) => {
+        const isShown = props.shownSkinId === sk.id;
+        const short = !sk.owned && balanceOf(wallet, sk.currency) < sk.price;
+        return (
+          <div
+            key={sk.id}
+            // #516: the row IS the control — A/Enter/Space preview this skin,
+            // whether or not its buy button is pressable.
+            data-pad-focusable=""
+            tabIndex={0}
+            role="button"
+            aria-label={sk.description ? `${sk.name} ${sk.description}` : sk.name}
+            onClick={() => props.onSelect(sk)}
+            onKeyDown={(e) => {
+              if (e.key !== "Enter" && e.key !== " ") return;
+              e.preventDefault();
+              props.onSelect(sk);
+            }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "8px 10px",
+              marginBottom: 4,
+              borderRadius: 8,
+              cursor: "pointer",
+              outline: "none",
+              background: isShown ? "rgba(80,100,160,0.25)" : "#141926",
+              border: isShown ? `1px solid ${ACCENT}` : "1px solid #232b3d",
+            }}
+          >
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: TEXT_MAIN }}>{sk.name}</div>
+              {sk.description && (
+                <div style={{ fontSize: 11, color: TEXT_DIM, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  {sk.description}
+                </div>
+              )}
+              {/* #517: the selected row spells the shortfall out in full — the
+                  hover tooltip a pad player never gets. */}
+              {short && isShown && (
+                <div style={{ fontSize: 11, color: DANGER, marginTop: 2 }}>
+                  {shortfallHint(sk.currency)}
+                </div>
+              )}
+            </div>
+            {sk.equipped && <Badge color={GOLD}>已裝備</Badge>}
+            {sk.owned && !sk.equipped && <Badge color={OK}>已擁有</Badge>}
+            {/* 造型 stay on M幣 — verified against the platform's
+                Buy(KindSkin), which really does debit MCoin. */}
+            {!sk.owned && <Price currency={sk.currency} amount={sk.price} size={12} />}
+            {short && <Badge color={DANGER}>{CURRENCY_LABEL[sk.currency]}不足</Badge>}
+            {!sk.owned && (
+              <Btn
+                small
+                kind="primary"
+                disabled={short}
+                title={short ? shortfallHint(sk.currency) : `購買 ${sk.name}`}
+                onClick={() =>
+                  props.onBuy({
+                    kind: "skin",
+                    id: sk.id,
+                    name: sk.name,
+                    price: sk.price,
+                    currency: sk.currency,
+                  })
+                }
+              >
+                購買
+              </Btn>
+            )}
+            {sk.owned && !sk.equipped && (
+              <Btn small onClick={() => void props.onEquip(sk.championId, sk.id)}>
+                裝備
+              </Btn>
+            )}
+            {sk.owned && sk.equipped && (
+              <Btn small title="卸下後恢復原本外觀" onClick={() => void props.onEquip(sk.championId, null)}>
+                卸下
+              </Btn>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export function StoreScreen(): React.JSX.Element {
   const catalog = useApp((s) => s.catalog);
   const skinDocs = useApp((s) => s.skinDocs);
@@ -135,6 +357,10 @@ export function StoreScreen(): React.JSX.Element {
   const purchaseBegin = useApp((s) => s.purchaseBegin);
   const equip = useApp((s) => s.equip);
   const [selected, setSelected] = useState<SkinRow | null>(null);
+  // `null` = NOBODY HAS TAKEN THE WHEEL. It is not the same as 0: the stage
+  // idles on its own slow turntable, and handing it an angle is what stops
+  // that. So an untouched slider must send nothing at all.
+  const [yawDeg, setYawDeg] = useState<number | null>(null);
   // RULE (see header): the champion registry is EMPTY while the shell paints.
   // This dependency is what makes the names appear instead of the ids.
   const contentReady = useContentReady();
@@ -160,138 +386,29 @@ export function StoreScreen(): React.JSX.Element {
     const d = championDisplayFor(shown.championId);
     return d.named ? d.name : "";
   }, [shown, contentReady]);
+  // A new model RE-FRAMES the camera (StorePreview.show resets alpha), so a
+  // carried-over angle would describe the previous skin's pose. Hand the wheel
+  // back at every change of subject.
+  useEffect(() => setYawDeg(null), [shown?.id]);
 
   return (
     <div style={{ display: "flex", gap: 14, flex: 1, minHeight: 0 }}>
       {/* catalog list */}
       <Panel title="商店" style={{ flex: 1.3, minWidth: 0, overflow: "hidden" }}>
-        <div style={{ flex: 1, overflowY: "auto", minHeight: 0, paddingRight: 4 }}>
+        <div style={STORE_LIST_SCROLL}>
           {rows.length === 0 && (
             <div style={{ fontSize: 12, color: TEXT_DIM }}>商店目前無法載入 · 請稍後再試</div>
           )}
           {rows.map((champ) => (
-            <div key={champ.id} style={{ marginBottom: 16 }}>
-              <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 4 }}>
-                {/* #227: the NAME, never the id. `fullName`/`title` already fall
-                    back to the id when no content doc is registered. */}
-                <span style={{ fontSize: 15, fontWeight: 700, color: TEXT_MAIN }}>{champ.fullName}</span>
-                {champ.title && (
-                  <span style={{ fontSize: 11, color: GOLD, fontWeight: 600 }}>{champ.title}</span>
-                )}
-                <div style={{ flex: 1 }} />
-                {champ.owned ? (
-                  <Badge color={OK}>已擁有</Badge>
-                ) : (
-                  <>
-                    {/* #227: 英雄 = 藍水晶. The glyph comes from the row's own
-                        currency, so it can never disagree with what is spent. */}
-                    <Price currency={champ.currency} amount={champ.price} size={12} />
-                    <Btn
-                      small
-                      kind="primary"
-                      disabled={balanceOf(wallet, champ.currency) < champ.price}
-                      title={
-                        balanceOf(wallet, champ.currency) < champ.price
-                          ? shortfallHint(champ.currency)
-                          : `解鎖 ${champ.name}`
-                      }
-                      onClick={() =>
-                        purchaseBegin({
-                          kind: "champion",
-                          id: champ.id,
-                          name: champ.name,
-                          price: champ.price,
-                          currency: champ.currency,
-                        })
-                      }
-                    >
-                      解鎖
-                    </Btn>
-                  </>
-                )}
-              </div>
-              {/* graceful empty: 13 of 114 champion docs carry no description at
-                  all, so this must never render an empty box (skin-row pattern). */}
-              {champ.blurb && (
-                <div
-                  style={{
-                    fontSize: 11,
-                    color: TEXT_DIM,
-                    marginBottom: 6,
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {champ.blurb}
-                </div>
-              )}
-              {champ.skins.map((sk) => {
-                const isShown = shown?.id === sk.id;
-                return (
-                  <div
-                    key={sk.id}
-                    onClick={() => setSelected(sk)}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 8,
-                      padding: "8px 10px",
-                      marginBottom: 4,
-                      borderRadius: 8,
-                      cursor: "pointer",
-                      background: isShown ? "rgba(80,100,160,0.25)" : "#141926",
-                      border: isShown ? `1px solid ${ACCENT}` : "1px solid #232b3d",
-                    }}
-                  >
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: 13, fontWeight: 600, color: TEXT_MAIN }}>{sk.name}</div>
-                      {sk.description && (
-                        <div style={{ fontSize: 11, color: TEXT_DIM, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                          {sk.description}
-                        </div>
-                      )}
-                    </div>
-                    {sk.equipped && <Badge color={GOLD}>已裝備</Badge>}
-                    {sk.owned && !sk.equipped && <Badge color={OK}>已擁有</Badge>}
-                    {/* 造型 stay on M幣 — verified against the platform's
-                        Buy(KindSkin), which really does debit MCoin. */}
-                    {!sk.owned && <Price currency={sk.currency} amount={sk.price} size={12} />}
-                    {!sk.owned && (
-                      <Btn
-                        small
-                        kind="primary"
-                        disabled={balanceOf(wallet, sk.currency) < sk.price}
-                        title={
-                          balanceOf(wallet, sk.currency) < sk.price ? shortfallHint(sk.currency) : `購買 ${sk.name}`
-                        }
-                        onClick={() =>
-                          purchaseBegin({
-                            kind: "skin",
-                            id: sk.id,
-                            name: sk.name,
-                            price: sk.price,
-                            currency: sk.currency,
-                          })
-                        }
-                      >
-                        購買
-                      </Btn>
-                    )}
-                    {sk.owned && !sk.equipped && (
-                      <Btn small onClick={() => void equip(sk.championId, sk.id)}>
-                        裝備
-                      </Btn>
-                    )}
-                    {sk.owned && sk.equipped && (
-                      <Btn small title="卸下後恢復原本外觀" onClick={() => void equip(sk.championId, null)}>
-                        卸下
-                      </Btn>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+            <StoreChampionGroup
+              key={champ.id}
+              champ={champ}
+              wallet={wallet}
+              shownSkinId={shown?.id ?? null}
+              onSelect={setSelected}
+              onBuy={purchaseBegin}
+              onEquip={(championId, skinId) => void equip(championId, skinId)}
+            />
           ))}
         </div>
         {/* Both wallets, because this screen now spends BOTH: 英雄=藍水晶,
@@ -300,7 +417,11 @@ export function StoreScreen(): React.JSX.Element {
         <div style={{ borderTop: "1px solid #2c3448", paddingTop: 8, fontSize: 11, color: TEXT_DIM }}>
           英雄用 <Crystal amount={wallet?.crystal ?? 0} size={11} /> 解鎖 · 造型用{" "}
           <MCoin amount={wallet?.mcoin ?? 0} size={11} /> 購買
+          {/* #517: both wallets explain themselves HERE, permanently, because a
+              pad has no hover to reveal `title`. 藍水晶 says how to earn it;
+              M幣 says the true thing instead — that it cannot be earned. */}
           <div style={{ marginTop: 2 }}>{CRYSTAL_EARN_HINT}</div>
+          <div style={{ marginTop: 2 }}>{MCOIN_GRANT_NOTE}</div>
         </div>
       </Panel>
 
@@ -313,7 +434,38 @@ export function StoreScreen(): React.JSX.Element {
         <StorePreviewCanvas
           modelKey={shown?.modelKey ?? null}
           championId={shown?.championId ?? null}
+          {...(yawDeg === null ? {} : { yawDeg })}
         />
+        {/* ⛔ 「拖曳可旋轉檢視」 WAS A LIE TO A PAD PLAYER (第一·五守則).
+            Dragging is a MOUSE verb; the pad focus layer only moves focus and
+            clicks, so on a pad that sentence described a gesture that does not
+            exist. Rather than shrink the promise, the promise now has a second
+            route: a real <input type=range>, which #505 taught the pad to step
+            with left/right. Same control, three input devices. */}
+        {shown && (
+          <label
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              marginTop: 8,
+              fontSize: 11,
+              color: TEXT_DIM,
+            }}
+          >
+            旋轉
+            <input
+              type="range"
+              min={-180}
+              max={180}
+              step={5}
+              value={yawDeg ?? 0}
+              aria-label="旋轉檢視"
+              onChange={(e) => setYawDeg(Number(e.currentTarget.value))}
+              style={{ flex: 1, minWidth: 0 }}
+            />
+          </label>
+        )}
         {/* #227: the caption used to print `modelKey` and `championId` — two
             developer strings — at the player. It says whose skin this is, by
             name, and how to look around. */}
@@ -324,7 +476,7 @@ export function StoreScreen(): React.JSX.Element {
                 <span style={{ color: TEXT_MAIN }}>{shownOwner}</span> 的造型 ·{" "}
               </>
             ) : null}
-            拖曳可旋轉檢視
+            拖曳或用「旋轉」滑桿檢視
           </div>
         )}
       </Panel>

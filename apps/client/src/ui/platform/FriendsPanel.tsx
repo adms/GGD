@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useApp } from "./store";
 import { Btn, TextInput, PresenceDot, Panel, OK } from "./widgets";
 import { TEXT_DIM, TEXT_MAIN } from "../theme";
+import { padFocusLanding } from "../padFocusLanding";
 
 /** friend REQUESTS have no WS push (only presence does) — poll lightly */
 const FRIENDS_POLL_MS = 10_000;
@@ -66,7 +67,9 @@ export function FriendsPanel(): React.JSX.Element {
         </div>
       )}
 
-      <div style={{ flex: 1, overflowY: "auto", minHeight: 0 }}>
+      {/* GH#514 —— 一列只有在「我是房主且對方在線」時才長出 Invite 按鈕，所以
+          平常這整塊對手把沒有任何焦點落點 ⇒ 好友一多就捲不下去。 */}
+      <div {...padFocusLanding()} style={{ flex: 1, overflowY: "auto", minHeight: 0 }}>
         {(friends?.friends ?? []).length === 0 && (
           <div style={{ fontSize: 12, color: TEXT_DIM }}>No friends yet — add one by username.</div>
         )}

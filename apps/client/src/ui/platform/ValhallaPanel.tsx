@@ -81,6 +81,7 @@ import { attackTypeLabel } from "../codex/codexLabels";
 import { pitchTooltipForChampion, PITCH_ACCENT } from "../panels/champselect/pitchTooltip";
 import { useLobbyCombatEnv } from "./lobbyCombatEnv";
 import { Panel, ACCENT } from "./widgets";
+import { padFocusLanding } from "../padFocusLanding";
 import { GOLD, PANEL_BG, TEXT_DIM, TEXT_MAIN } from "../theme";
 import { ValhallaSandboxPanel } from "./valhalla/ValhallaSandboxPanel";
 import { playValhallaDeclaration } from "./valhalla/valhallaDeclaration";
@@ -332,6 +333,54 @@ function ValhallaStage({
           🎭 替身
         </div>
       )}
+    </div>
+  );
+}
+
+/**
+ * 故事描述框 —— 一塊**純文字**的捲動區。
+ *
+ * ⭐ EXPORTED 是為了 GH#514 的守衛（`lobbyPadFocusLanding.test.ts`）。這張卡的
+ * 完整版本只在 `advance()` 跑過之後才畫得出來，而 `advance()` 住在 `useEffect`
+ * 裡 ⇒ `renderToStaticMarkup` 永遠只拿得到骨架，量不到這個框。把它抽成一個真的
+ * 元件，守衛就讀得到出貨的那一份 markup（⛔ 不是掃原始碼字串 —— 失敗形態⑥）。
+ *
+ * GH#514：`{...padFocusLanding()}` 是這裡唯一的可聚焦元素。少了它，這個 56px 的
+ * 框對手把完全不存在 —— 描述超過三行的英雄，手把玩家永遠讀不到後面那幾行。
+ */
+export function ValhallaDescription(props: {
+  text: string;
+  maxHeight: number;
+  /** 玩家開始／停止「正在讀這一段」。⚠️ 見下面 onFocus 那一行。 */
+  onEngage?: (engaged: boolean) => void;
+}): React.JSX.Element {
+  const engage = props.onEngage;
+  return (
+    <div
+      data-ggd-valhalla-desc=""
+      {...padFocusLanding()}
+      onScroll={() => engage?.(true)}
+      /* GH#507 —— 輪播的「暫停」在此之前**只綁滑鼠事件**（onMouseEnter /
+         onScroll / onPointerLeave），而純手把玩家沒有指標 ⇒ `engaged` 永遠是
+         false，正在讀的英雄會在讀到一半被換走，卡片上又只有「下一位」沒有
+         「暫停」。焦點進到這一段 = 玩家正在讀，和 hover 是同一件事。
+         ⛔ 不能掛在 <Panel> 上：它只轉發 `data-*` 與 onMouseEnter/Leave
+         （widgets.tsx），寫上去會被靜默丟掉而畫面看起來完全正常。 */
+      onFocus={() => engage?.(true)}
+      onBlur={() => engage?.(false)}
+      style={{
+        maxHeight: props.maxHeight,
+        overflowY: "auto",
+        overflowX: "hidden",
+        paddingRight: 4,
+        fontSize: 11.5,
+        lineHeight: 1.6,
+        color: "#c8d0e0",
+        whiteSpace: "pre-wrap",
+        flexShrink: 0,
+      }}
+    >
+      {props.text || "（此英雄在原地圖沒有描述文字）"}
     </div>
   );
 }
@@ -706,23 +755,7 @@ export function ValhallaPanel({
               discover the showcase even HAS a kit, which is half of what the
               owner asked for. The description gets a small fixed budget with
               its own scrollbar; the kit always starts on screen. */}
-          <div
-            data-ggd-valhalla-desc=""
-            onScroll={() => setEngaged(true)}
-            style={{
-              maxHeight: descHeight,
-              overflowY: "auto",
-              overflowX: "hidden",
-              paddingRight: 4,
-              fontSize: 11.5,
-              lineHeight: 1.6,
-              color: "#c8d0e0",
-              whiteSpace: "pre-wrap",
-              flexShrink: 0,
-            }}
-          >
-            {blurb || "（此英雄在原地圖沒有描述文字）"}
-          </div>
+          <ValhallaDescription text={blurb} maxHeight={descHeight} onEngage={setEngaged} />
           {/* KIT: NAMES ONLY, one wrapped line.
               owner 2026-07-26, after seeing it: 「英靈殿佔的高度太多了 你可以拿掉
               技能詳細說明的部分」. The full `SkillRowView` rows (icon + name +

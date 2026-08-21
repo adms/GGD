@@ -32,6 +32,7 @@ import { GlyphTile } from "../components/GlyphTile";
 import { GOLD, TEXT_DIM, TEXT_MAIN } from "../theme";
 import { DEFAULT_LOBBY_LAYOUT } from "./lobbyLayout";
 import type { LobbyLayoutPolicy } from "./lobbyLayout";
+import { padFocusLanding } from "../padFocusLanding";
 import {
   canReadNemesis,
   fetchNemesis,
@@ -138,7 +139,12 @@ export function NemesisPanel(props: { policy?: LobbyLayoutPolicy }): React.JSX.E
 
   return (
     <Panel title="宿敵榜" style={{ flex: 1, minHeight: 120 }} data-ggd-nemesis-panel="">
-      <div style={{ flex: 1, overflowY: "auto", overflowX: "hidden", minHeight: 0 }}>
+      {/* GH#514 —— 每一列都是純 div，所以這個框在此之前對手把是**不存在**的：
+          焦點放不進去 ⇒ 右搖桿與方向鍵都捲不動它，第一屏之後的宿敵看不到。 */}
+      <div
+        {...padFocusLanding()}
+        style={{ flex: 1, overflowY: "auto", overflowX: "hidden", minHeight: 0 }}
+      >
         {rows.length === 0 ? (
           <div
             data-ggd-nemesis-empty={emptyState}
