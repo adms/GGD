@@ -48,6 +48,17 @@
  * ⇒ 49 位一律 `msGrowthTier: 極小` · `asGrowthTier: 小`。
  * 兩邊的內文都成立，只有「中」這個標籤被改掉 —— 那正是①要求的處理方式。
  *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * 🔴 **2026-08-21 下午：`as` 這一半被 owner 收走了** —— 「照出身表的規劃來設定就好」
+ * ─────────────────────────────────────────────────────────────────────────────
+ * `as` 進了 `config.stat-normalization@1` 的 `appliesTo`，⇒ `growth.as` 的主人
+ * 變成**出身五級距**，而 `pnpm speedtiers:build` **不再敲 `asGrowthTier`**
+ * （它從 `appliesTo` × `channel` **推導**自己該管哪幾條軸，⛔ 不是寫死名單，
+ *  所以 owner 哪天把 `as` 拿回來，級別欄位會自動長回去）。
+ * ⇒ 這一支今天實際只管 **`ms`**；上面 `asGrowthTier` 的每一句話都變成**紀錄**。
+ * ⚠️ 這**不是**把機制刪掉：兩把梯子的 `as` 欄、`resolveSpeedGrowthTiers` 的
+ * `as` 分支、後台那一格全部原封不動 —— 差別只在**今天沒有一張卡填它**。
+ *
  * ⭐ 而且那個結果讀起來是對的：`0` 是 ms 成長的**地板**（負成長＝越級越慢，
  * 會被 `STAT_CLAMPS[MoveSpeed]` 的下界 2 靜默夾住），所以 ms 這一軸的空間
  * 本來就**只在上面**；as 今天的 0.02 在梯子上正好是第 2 格，下面還留一格
@@ -83,6 +94,7 @@
  */
 import { LIMIT_ANCHOR_LEVEL } from "./balanceAnchors";
 import { SKILL_TIER_NAMES, type SkillTierName } from "./skillTiers";
+import { DEFAULT_STAT_NORMALIZATION } from "./statNormalization";
 import { DEFAULT_STAT_CAPS } from "../sim/statCaps";
 import { Stat } from "../sim/stats/statTypes";
 
@@ -231,16 +243,19 @@ export const DEFAULT_SPEED_GROWTH_TIERS: SpeedGrowthTiers = Object.freeze({
  * **拿給 owner 看**，讓他自己決定那些差異是不是他要的。
  */
 export const SPEED_GROWTH_PARITY_DRIFT: Readonly<Record<string, string>> = Object.freeze({
-  as:
-    "⛔ 待 owner 裁決。2026-08-21 的架構改動（owner 逐字：「我決定廢掉三屬性 純用十出身的" +
-    "五級距表來代表每級屬性成長就好」）把 49 位的 `growth.as` 從一致的 0.02 重推導成" +
-    " 0.003–0.0281（十出身 × `config.stat-normalization@1` 的 `bands.as`，referenceLevel 99）。" +
-    "⚠️ 但 `as` **不在**那份 config 的 `appliesTo` 裡（owner 自己那張表：攻速「生效中 FALSE」）" +
-    "⇒ 引擎今天跑的仍然是級別的 0.02，卡上那個新數字**一個位元都沒有生效**。" +
-    "⛔ 三條出路都要 owner 挑，⛔ 不由我決定：①把 `growth.as` 還原成 0.02（引擎行為零改動）" +
-    " ②把 `as` 放進 `appliesTo` 並把這一軸 `enabled: false`（那才是「純用出身表」的字面意思）" +
-    " ③接受出身表的值，重跑 `pnpm speedtiers:build` 讓級別跟上（＝一次真的攻速平衡改動）。" +
-    "⭐ 差異逐位印在 `pnpm speedtiers:check` 的輸出與這條守衛的失敗訊息裡。",
+  // ⭐ **`as` 在 2026-08-21 被 owner 裁掉了，所以這張表現在是空的。**
+  //
+  //   > 「看不懂你第二第三選項，**請你照出身表的規劃來設定就好**」
+  //
+  //   ⇒ 出身表（`config.stat-normalization@1`）成為 `growth.as` 的主人：
+  //     `as` 進 `appliesTo`，而 `pnpm speedtiers:build` **不再敲 `asGrowthTier`**
+  //     （它從 `appliesTo` 推導自己該管哪幾條軸，⛔ 不是寫死名單）。
+  //   ⇒ 「原值與級別說兩句話」在 `as` 這條軸上**不再可能發生** —— 級別欄位沒了。
+  //   被取代的那條紀錄（三個選項、49 位的 0.003–0.0281、為什麼它沒生效）
+  //   另存在 `docs/legacy/_attr-growth-zeroed-superseded.md` ④。
+  //
+  // ⚠️ 這張表**留著**：它是給下一條真的漂了的軸用的，而它的反向斷言
+  //   （「清單上的軸必須真的還在漂」）會讓一筆過期的豁免紅，⛔ 不是靜靜留著。
 });
 
 function clampGrowth(v: unknown, axis: SpeedGrowthAxis, fallback: number): number {
@@ -344,9 +359,25 @@ export function describeSpeedGrowthTiers(
   const row = (axis: SpeedGrowthAxis): string =>
     `${SPEED_GROWTH_AXIS_LABEL[axis]} ` +
     SPEED_GROWTH_TIER_NAMES.map((n) => `${n} ${t[axis][n]}`).join(" / ");
+  const normalized = SPEED_GROWTH_AXES.filter(
+    (a) =>
+      (DEFAULT_STAT_NORMALIZATION.appliesTo as readonly string[]).includes(a) &&
+      DEFAULT_STAT_NORMALIZATION.channel[a] === "growth",
+  );
+  const managed = SPEED_GROWTH_AXES.filter((a) => !normalized.includes(a));
   return (
     `每級成長五級距（梯子 ${tiers.ladder}）：${row("ms")}；${row("as")}。` +
-    `⚠️ 出貨 49 位一律 ms「${SPEED_GROWTH_TIER_NAMES[0]}」· as「${SPEED_GROWTH_TIER_NAMES[1]}」` +
-    `＝今天的值 ⇒ 這一版**零平衡改動**。`
+    (managed.length > 0
+      ? `⚠️ 出貨 49 位一律 ${managed
+          .map((a) => `${a}「${SPEED_GROWTH_TIER_NAMES[a === "ms" ? 0 : 1]}」`)
+          .join(" · ")}＝今天的值 ⇒ 這幾條軸**零平衡改動**。`
+      : "") +
+    (normalized.length > 0
+      ? `⭐ ${normalized
+          .map((a) => SPEED_GROWTH_AXIS_LABEL[a])
+          .join(" · ")}**不由這一頁決定** —— owner 2026-08-21「請你照出身表的規劃來設定就好」⇒` +
+        ` 它的每級成長由 \`config.stat-normalization@1\` 的出身五級距推導，` +
+        `英雄卡上那一格級別欄位已經由 \`pnpm speedtiers:build\` 刪除（⛔ 一條軸只能有一個主人）。`
+      : "")
   );
 }

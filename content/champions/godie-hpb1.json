@@ -36,7 +36,6 @@
     "ap": 0.6765
   },
   "msGrowthTier": "極小",
-  "asGrowthTier": "小",
   "attributes": {
     "str": 26,
     "agi": 15,
@@ -97,7 +96,7 @@
       "name": "07-02 者、皆、陣",
       "icon": "assets/icons/abilities/godie-hpb1.w.webp",
       "provenance": "w3x-import",
-      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n以超快的速度衝刺砍殺一直線上的敵人使得血流成河，砍殺造成{{dmg}}+力量*1傷害。\n\n在\"臨、兵、鬥\"發動後1秒內施展可增加(敏捷係數*3)傷害，30級之後可增加(敏捷係數*6)傷害",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n以超快的速度衝刺砍殺一直線上的敵人使得血流成河，砍殺造成{{dmg}}+30% [AP]傷害。\n\n在\"臨、兵、鬥\"發動後1秒內施展可增加(80% [AP])傷害，30級之後可增加(150% [AP])傷害",
       "slot": "W",
       "castType": "targeted",
       "maxRank": 5,
@@ -132,8 +131,8 @@
             "flat": 600.0,
             "ratios": [
               {
-                "stat": "ad",
-                "coeff": 0.5
+                "stat": "ap",
+                "coeff": 0.3
               }
             ]
           }
@@ -159,7 +158,7 @@
       "name": "07-03 列、在、前",
       "icon": "assets/icons/abilities/godie-hpb1.e.webp",
       "provenance": "w3x-import",
-      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n用盡全身力氣跳起落下斬擊使得大地震動，區域內敵人皆受到(力量*2)+450傷害。\n\n在\"者、皆、陣\"發動後1秒內施展可增加(敏捷係數*5)傷害，30級之後可增加(敏捷係數*10)傷害",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n用盡全身力氣跳起落下斬擊使得大地震動，區域內敵人皆受到(50% [AP])+450傷害。\n\n在\"者、皆、陣\"發動後1秒內施展可增加(130% [AP])傷害，30級之後可增加(250% [AP])傷害",
       "slot": "E",
       "castType": "ground",
       "maxRank": 4,
@@ -193,7 +192,7 @@
                 "flat": 600.0,
                 "ratios": [
                   {
-                    "stat": "ad",
+                    "stat": "ap",
                     "coeff": 0.5
                   }
                 ]
@@ -203,8 +202,8 @@
                 "amount": {
                   "ratios": [
                     {
-                      "stat": "ad",
-                      "coeff": 1.25
+                      "coeff": 1.25,
+                      "stat": "ad"
                     }
                   ]
                 }

@@ -25,6 +25,12 @@ import { readFileSync, readdirSync } from "node:fs";
 import { cover } from "../../testkit/cover";
 import { balancePopulationIds } from "../../testkit/balancePopulation";
 import { zChampionDoc, type ChampionDoc } from "./schema/champion";
+import {
+  DEFAULT_STAT_NORMALIZATION,
+  NORMALIZED_STAT_TO_STAT,
+  resolveChampionStats,
+  type NormalizedStatKey,
+} from "./statNormalization";
 import { Stat, ALL_STATS } from "../sim/stats/statTypes";
 import {
   championStatBase,
@@ -56,6 +62,8 @@ function allChampions(): ChampionDoc[] {
 }
 
 const champs = allChampions();
+/** 平衡母體（49 位可選本體）。⛔ 模組層一份，不要在每個 `it` 裡各自建。 */
+const POP = new Set(balancePopulationIds(join(HERE, "../../../..")));
 
 /** The doc's own raw numbers, read WITHOUT going through the sim helpers. */
 function raw(c: ChampionDoc, stat: Stat): { base: number; growth: number } {
@@ -344,7 +352,6 @@ describe("#248 attr-04 — `growth` survived the re-derivation", () => {
     //    ⭐ **owner 還沒裁決過**的缺口：一位英雄變身之後，他的每級成長又同時有
     //    兩個來源了。⛔ 我不替他決定要不要一起歸零 —— 下面第二段把它**逐張列出來**，
     //    而反向斷言保證它收乾淨的那天這裡會紅、這段話會被刪掉。
-    const POP = new Set(balancePopulationIds(join(HERE, "../../../..")));
     expect(POP.size, "平衡母體讀壞了 —— 下面兩個迴圈會空轉成綠").toBeGreaterThan(0);
     const attrKeys = ["strGrowth", "agiGrowth", "intGrowth"] as const;
     const inPop: string[] = [];
@@ -392,42 +399,81 @@ describe("#248 attr-04 — `growth` survived the re-derivation", () => {
   });
 });
 
-describe("#248 attr-05 — godie-zombiex keeps #244's deliberate tuning", () => {
-  it("380 HP at level 1 —— owner #244 親自挑的那一半**還在**", () => {
+describe("#248 attr-05 — 照**出身表**套用，⛔ 沒有逐英雄的例外（owner 2026-08-21）", () => {
+  /**
+   * ⭐ owner 2026-08-21 逐字（針對 #244「每級 +45 HP」與 #248 四個 level-12 有效血量）：
+   *
+   *   > 「**照出身表套用不行嗎 有什麼例外的原因？**
+   *   >  如果沒有例外特定原因請將**舊規則及文件打包移到 legacy**」
+   *
+   * ⇒ **沒有例外原因。** 被取代的那一組（喪標麥可的 380 / +45、四位英雄的
+   *   level-12 有效血量、`attributes.str === 12`）連同它們**守過什麼**、
+   *   為什麼那個缺陷不會再發生，全部另存在
+   *   `docs/legacy/_attr-growth-zeroed-superseded.md`（②④）——
+   *   ⭐ **測試可以跟著設計走，知識不可以無聲消失。**
+   *
+   * ── ⛔ 為什麼不是把那幾個數字重算一組填回來 ──────────────────────────
+   * 那會是**第四個住處**（前三個：`content/config/` · Zod `DEFAULT_*` ·
+   * admin `SHIPPED_*`），而它沒有守衛 ⇒ 一定過期，而且會用
+   * 「殭屍王壞了」這種**錯誤訊息**紅（第零守則）。
+   *
+   * ── ⭐ 接手的性質：**出身表是唯一的來源，卡上手寫的 growth 不算數** ────
+   * 這比舊斷言強：舊的只在**一位**英雄身上抽查一個總和；這一條在**全部**
+   * 母體身上證明「同一個出身 + 同一份初始值 ⇒ 同一組每級成長，⛔ 與作者
+   * 在卡上填了什麼**完全無關**」。#244 的「+45」如果哪天被人用任何形式接回去
+   * （逐英雄的 if、讀回作者值、一張豁免表），這一條就會紅並指名那一位。
+   */
+  it("正規化後的每級成長是**出身的函數** —— 卡上手寫的 growth 一格都不算數", () => {
+    cover("attr-248-zombiex-pinned");
+    const N = DEFAULT_STAT_NORMALIZATION;
+    const growthKeys = N.appliesTo.filter((k) => N.channel[k] === "growth");
+    expect(growthKeys.length, "出身表沒有任何一條走 growth 通道 —— 讀取器壞了").toBeGreaterThan(0);
+
+    const deps = {
+      statAt: (def: unknown, key: NormalizedStatKey, level: number): number => {
+        const d = def as { baseStats?: unknown; growth?: unknown };
+        const safe = { ...(d as object), baseStats: d.baseStats ?? {}, growth: d.growth ?? {} };
+        return championStatBase(safe as never, NORMALIZED_STAT_TO_STAT[key], level);
+      },
+    };
+    const normalizedGrowth = (c: ChampionDoc, authored: Record<string, number>) =>
+      (
+        resolveChampionStats({ ...c, growth: authored } as never, N, deps as never) as {
+          growth: Record<string, number>;
+        }
+      ).growth;
+
+    const leaking: string[] = [];
+    for (const c of champs) {
+      if (!POP.has(c.id)) continue;
+      const asShipped = normalizedGrowth(c, c.growth as Record<string, number>);
+      // ⭐ 同一張卡，**只**把作者填的每級成長換成一組荒謬的值。出身表若真的是
+      //    唯一來源，正規化後的結果必須**逐位元相同**。
+      const vandalised = Object.fromEntries(
+        Object.keys(c.growth as Record<string, number>).map((k) => [k, 999]),
+      );
+      const asVandalised = normalizedGrowth(c, vandalised);
+      for (const key of growthKeys) {
+        if (asShipped[key] !== asVandalised[key]) {
+          leaking.push(`${c.id}.${key}: 出貨 ${asShipped[key]} vs 塗改後 ${asVandalised[key]}`);
+        }
+      }
+    }
+    expect(
+      leaking.slice(0, 20),
+      "⛔ 有英雄的每級成長仍然吃卡上手寫的值 —— 出身表不是唯一來源了（owner 2026-08-21：「照出身表套用」）",
+    ).toEqual([]);
+  });
+
+  it("喪標麥可**不是**例外 —— 他走的是跟另外 48 位一模一樣的那一條路", () => {
     cover("attr-248-zombiex-pinned");
     const z = champs.find((c) => c.id === "godie-zombiex")!;
-    // #244 chose 380 / +45 on purpose. #248 moved WHERE the 380 comes from
-    // without changing it, and the coefficient correction had to move it AGAIN.
-    //
-    // 喪標麥可 has NO w3x source — his `attributes.source` is "authored", i.e.
-    // the block exists only to REPRODUCE a sheet the owner chose. So when the
-    // reconstruction constant changed (strToMaxHealth 25 -> the map's 23), the
-    // reconstruction was redone rather than left to drift: the raw card went
-    // 80 -> 104 so that `104 + 23 × 12` is still exactly 380. Leaving it would
-    // have silently dropped him to 356 and quietly undone #244.
-    //
-    // ⭐ 2026-08-21 的架構裁決（三圍成長歸 0 · 每級成長改由十出身五級距推導）
-    //    把 #244 那組數字**切成兩半**，而只有一半撐住了。⛔ 這個事實要寫在
-    //    斷言上，不是寫在一句樂觀的註解裡：
-    //
-    //      ✅ 「等級 1 是 380」—— 完全沒動（它是 base + 23×STR，兩項都不含成長）
-    //      ⛔ 「每級 +45」—— 沒有了。`growth.maxHealth` 現在由他的出身推導，
-    //         而屬性層那 41.4 歸 0。⇒ ⭐ **這一半沒有人裁決過**，
-    //         要不要把它收回 45 是 owner 的決定，⛔ 不是我的。
-    //    完整的前後對照在 `docs/legacy/_attr-growth-zeroed-superseded.md`。
-    expect(z.attributes!.source).toBe("authored");
-    expect(sheet(z, Stat.MaxHealth, 1)).toBe(380);
-    expect(z.attributes!.str).toBe(12);
-    // ⭐ 而「380 撐住」的**理由**也要釘：它撐住是因為屬性層在等級 1 仍然出全額
-    //    （`23 × 12 = 276`，加上卡上的 104）。三圍被真的關掉的那天這裡會紅，
-    //    而那正是 owner 說的「⛔ **不是真的沒作用**」那一句在程式上的樣子。
-    expect(sheet(z, Stat.MaxHealth, 1) - raw(z, Stat.MaxHealth).base).toBeCloseTo(
-      ATTRIBUTE_ENV_DEFAULTS.strToMaxHealth * z.attributes!.str,
-      9,
-    );
-    // …而每級成長現在**整份**來自 `growth`，屬性層一分錢都不出（上一條 attr-04
-    // 對全部英雄驗這件事；這裡只是把喪標麥可的那一份寫明，因為 #244 的另一半
-    // 就是在這一格上被取代的）。⛔ 期望值從卡上讀，⛔ 不抄 45 也不抄 100.07。
+    // ⚠️ 他的 `attributes.source` 仍然是 `authored`（他沒有 w3x 來源），
+    //    ⭐ 但那是**出處標籤**，⛔ 不再是一張「這一位可以有自己的數字」的通行證。
+    expect(POP.has(z.id), "喪標麥可掉出平衡母體了 —— 這條守衛會變成空轉").toBe(true);
+    // 每級成長 100% 由 `growth` 供給、屬性層一分錢都不出（上一條 attr-04 對全部
+    // 英雄驗這件事；這裡把他那一份寫明，因為 #244 的另一半就是在這一格被取代的）。
     expect(championStatGrowth(z, Stat.MaxHealth)).toBeCloseTo(raw(z, Stat.MaxHealth).growth, 9);
+    expect(ATTRIBUTE_ENV_DEFAULTS.strToMaxHealth * (z.attributes!.strGrowth ?? 0)).toBe(0);
   });
 });

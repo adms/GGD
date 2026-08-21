@@ -2,7 +2,7 @@
   "id": "godie-e007.r",
   "name": "12-04 龍氣爆發",
   "provenance": "w3x-import",
-  "description": "[主動傷害]\n{{cd}}秒冷卻時間\n\n凝聚體內的龍氣造成{{dmg}}點傷害，集氣每秒增加(敏捷*5)傷害，最多集氣3秒。\n(建築傷害25%)",
+  "description": "[主動傷害]\n{{cd}}秒冷卻時間\n\n凝聚體內的龍氣造成{{dmg}}點傷害，集氣每秒增加(130% [AP])傷害，最多集氣3秒。\n(建築傷害25%)",
   "slot": "R",
   "castType": "targeted",
   "maxRank": 3,
@@ -28,7 +28,7 @@
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 0.7
+            "coeff": 1.3
           }
         ]
       }

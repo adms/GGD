@@ -57,6 +57,7 @@
  * ⭐ 把 `appliesTo` 做成一格後台欄位，之後開啟任何一項都不用改程式。
  */
 import type { ChampionDef } from "../sim/content/defs";
+import { Stat } from "../sim/stats/statTypes";
 
 /** `content/config/stat-normalization.json` 的文件 id。 */
 export const STAT_NORMALIZATION_DOC_ID = "stat-normalization";
@@ -325,6 +326,25 @@ export const NORMALIZED_STAT_KEYS = [
 export type NormalizedStatKey = (typeof NORMALIZED_STAT_KEYS)[number];
 
 /**
+ * 正規化鍵 → `Stat`。⭐ **全專案唯一一份**（`registries.ts` 的注入、守衛、
+ * 文件產生器全部讀它）—— ⛔ 不要在別處再打一次這張表：它有 11 列，
+ * 抄第二份的那一刻就開始有兩個答案，而且不會有任何東西紅。
+ */
+export const NORMALIZED_STAT_TO_STAT: Readonly<Record<NormalizedStatKey, Stat>> = Object.freeze({
+  ms: Stat.MoveSpeed,
+  mr: Stat.MagicResist,
+  armor: Stat.Armor,
+  maxHealth: Stat.MaxHealth,
+  maxMana: Stat.MaxMana,
+  ad: Stat.AttackDamage,
+  ap: Stat.AbilityPower,
+  as: Stat.AttackSpeed,
+  healthRegen: Stat.HealthRegen,
+  manaRegen: Stat.ManaRegen,
+  range: Stat.AttackRange,
+});
+
+/**
  * 這一項的級距值要寫進哪一個通道。
  *
  * ⭐ owner 2026-08-12 立的法則：「**初始的屬性是用來補正角色個性化差異，
@@ -503,8 +523,20 @@ export const DEFAULT_STAT_NORMALIZATION: StatNormalization = Object.freeze({
   //   量到的證據：owner 那張表裡射程是**出身的純函數** —— 10 個出身各只有一個值
   //   （鬥士/法鬥/硬輔 1.6 · 坦克/狂戰/法刺 1.4 · 法師/射手/軟輔 8.2 · 砲手 12），
   //   49/49 位零例外。⇒ 這一項本來就該由出身驅動，逐隻寫值是在抄同一張表 49 遍。
+  // ⭐ 2026-08-21 **攻速（`as`）進名單**，owner 逐字：
+  //   「看不懂你第二第三選項，**請你照出身表的規劃來設定就好**」
+  //   ⚠️ 下面那一大段「攻速最終仍不在名單」的紀錄**沒有被刪掉**（知識不可以無聲
+  //   消失），但它的兩個前提都已經不成立：
+  //     ① 那時 `growth.as` 是 **49 位共用的 0.02**（一個常數），所以正規化是
+  //        「第三層尺」。2026-08-21 的架構裁決（三圍成長歸 0）之後，`growth.as`
+  //        本來就已經被重推導成十出身五級距的 **0.003–0.0281** —— 卡上那個數字
+  //        一直在，只是**沒有生效**（`resolveSpeedGrowthTiers` 包在外面，用
+  //        `asGrowthTier` 的 0.02 蓋過去）。
+  //     ② `agiToAttackSpeed` 已經從 0.02 降到 0.01，負成長的規模小很多。
+  //   ⇒ 進名單之後 `speedtiers:build` **不再敲 `asGrowthTier`**（它從這個陣列
+  //     推導自己該管哪幾條軸），所以「兩個系統同時寫 `growth.as`」在結構上不可能。
   appliesTo: Object.freeze([
-    "ms", "mr", "armor", "maxHealth", "maxMana", "ad", "ap", "healthRegen", "manaRegen", "range",
+    "ms", "mr", "armor", "maxHealth", "maxMana", "ad", "ap", "as", "healthRegen", "manaRegen", "range",
   ] as const),
   // 🔴 **攻速曾經被拿掉，然後 owner 修好了根因，它就回來了。** 這段留著當紀錄：
   //

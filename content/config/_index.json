@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "df379ae441ff",
+  "hash": "fdc38e00a516",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -13,6 +13,12 @@
       "path": "config/aoe-tiers.json",
       "hash": "5f4b138cc6e9",
       "size": 1142
+    },
+    {
+      "id": "ap-damage-scaling",
+      "path": "config/ap-damage-scaling.json",
+      "hash": "a4ebb9e1aa44",
+      "size": 935
     },
     {
       "id": "arena-pool",
@@ -101,8 +107,8 @@
     {
       "id": "combat-env",
       "path": "config/combat-env.json",
-      "hash": "3d60f07ce507",
-      "size": 985
+      "hash": "c224bbd04377",
+      "size": 983
     },
     {
       "id": "combat-feel",
@@ -299,8 +305,8 @@
     {
       "id": "roster",
       "path": "config/roster.json",
-      "hash": "6bb9ecb1b0f4",
-      "size": 2707
+      "hash": "d2a500f3d1d9",
+      "size": 4098
     },
     {
       "id": "round-grade",
@@ -335,8 +341,8 @@
     {
       "id": "stat-normalization",
       "path": "config/stat-normalization.json",
-      "hash": "6d8c4d83c8ff",
-      "size": 16116
+      "hash": "84f2ba769eb1",
+      "size": 16931
     },
     {
       "id": "stealth",

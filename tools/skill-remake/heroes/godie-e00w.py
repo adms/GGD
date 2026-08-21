@@ -9,12 +9,12 @@ from common import A, M, area, buff, dmg, status
 
 
 A("77-00", "77-00 浮雲-旋一閃", "self", [30], [0], 0,
-  "[被動][機率][迴避][迴避時][旋轉][暈眩]\n{{cd}}秒冷卻\n\n「少女的雙腿就是你的墓穴」\n有10%[機率][迴避]物理攻擊；[迴避]成功後發動，雙腿抓住對手[旋轉]拋摔，造成{{dmg}}+[敏捷]*5點傷害並[暈眩]2秒。",
+  "[被動][機率][迴避][迴避時][旋轉][暈眩]\n{{cd}}秒冷卻\n\n「少女的雙腿就是你的墓穴」\n有10%[機率][迴避]物理攻擊；[迴避]成功後發動，雙腿抓住對手[旋轉]拋摔，造成{{dmg}}+130% [AP]點傷害並[暈眩]2秒。",
   innate="passive",
   passive={"name": "77-00 浮雲-旋一閃", "ranks": [{
       "modifiers": [M("evasion", "flat", 0.10)],
       "hooks": [{"on": "onEvade", "target": "event", "internalCooldown": 30.0,
-                 "effects": [dmg("physical", flat=250, ad=1.0),
+                 "effects": [dmg("physical", flat=250, ap=1.3),
                              status("stun", 2.0, stun=True)]}]}]})
 
 A("77-01", "77-01 百烈櫻華斬", "self", [40, 40, 40, 40], [75, 110, 145, 180], 0,

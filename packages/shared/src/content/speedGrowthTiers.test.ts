@@ -54,6 +54,7 @@ import {
   type SpeedGrowthTierName,
   type SpeedGrowthTiers,
 } from "./speedGrowthTiers";
+import { DEFAULT_STAT_NORMALIZATION } from "./statNormalization";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const CONTENT = join(REPO, "content");
@@ -64,6 +65,17 @@ let store: ContentStore;
 let shipped: SpeedGrowthTiers;
 /** ⚠️ 開關與梯子選擇讀出貨文件，**數字**讀 `DEFAULT_*` —— 兩者另有 drift 測試在守。 */
 let table: ReturnType<typeof speedGrowthTableOf>;
+
+/**
+ * ⭐ 出身表擁有的軸 —— **推導**，⛔ 不是寫死名單。
+ * 與 `tools/speed-growth/gen.ts` 讀同一個來源（`appliesTo` × `channel`），
+ * 所以 owner 哪天把 `as` 拿回級距頁，產生器與這條守衛會**同時**改變行為。
+ */
+const NORMALIZED_AXES: readonly (typeof SPEED_GROWTH_AXES)[number][] = SPEED_GROWTH_AXES.filter(
+  (a) =>
+    (DEFAULT_STAT_NORMALIZATION.appliesTo as readonly string[]).includes(a) &&
+    DEFAULT_STAT_NORMALIZATION.channel[a] === "growth",
+);
 
 beforeAll(async () => {
   store = (await new ContentLoader(new FsContentSource(CONTENT)).load()).store;
@@ -89,6 +101,21 @@ describe("速度成長五級距（owner 2026-08-21）", () => {
       const authored = (card["growth"] ?? {}) as Record<string, number>;
       for (const axis of SPEED_GROWTH_AXES) {
         const tier = card[SPEED_GROWTH_TIER_FIELD[axis]] as SpeedGrowthTierName | undefined;
+        // ⭐ 2026-08-21 —— owner：「看不懂你第二第三選項，**請你照出身表的規劃來設定就好**」
+        //   ⇒ 在 `config.stat-normalization@1` 的 `appliesTo` 裡、而且走 `growth` 通道的
+        //   那幾條軸，主人是**出身表**，這一頁不插手：`pnpm speedtiers:build` 會把
+        //   卡上的級別欄位**刪掉**（⛔ 一條軸只能有一個主人 —— 級距包在正規化外面，
+        //   兩邊都留著會讓出身表那一半被靜靜吃掉，而後台照樣顯示那一格）。
+        //   ⚠️ ⛔ 這**不是**在放寬 —— 下面多了一條反向斷言：正規化擁有的軸，
+        //   卡上**必須沒有**級別欄位。兩個方向都關起來了。
+        if (NORMALIZED_AXES.includes(axis)) {
+          expect(
+            tier,
+            `${id} 還留著 ${SPEED_GROWTH_TIER_FIELD[axis]}，但 ${axis} 已經交給出身表了 ——` +
+              " 兩個系統會同時寫 growth。跑 `pnpm speedtiers:build`",
+          ).toBeUndefined();
+          continue;
+        }
         expect(
           tier,
           `${id} 沒有填 ${SPEED_GROWTH_TIER_FIELD[axis]} —— 跑 \`pnpm speedtiers:build\``,

@@ -242,7 +242,17 @@ describe("per-team elimination settlement (elimination-settlement, task #193 / G
     //    ⛔ 不是把測試調鬆 —— 掃 4200–4289 共 90 個 seed：**90 個全部**有隊伍歸零、
     //    其中 12 個（4212/4221/4233/4234/4247/4256/4258/4279/4280/4282/4284/4288）
     //    冠軍本人也被打光過。取最小的。
-    const run = runFullMatch("elim1", 4212, matchDocWithCard(false));
+    // ⚠️ GH#447/#414 —— seed 4212 換成 **4205**（第五次換，同一個理由）：
+    //    2026-08-21 三件事同一天落地 —— ①`config.ap-damage-scaling@1`（技能傷害
+    //    ×(1+法強×0.5%)）②58 支技能的「屬性額外傷害」換成 AP 百分比
+    //    ③`as` 交給出身五級距（49 位 LV30 中位攻速 1.283 → 0.906）。
+    //    三者都改變「誰先被打光」，於是 4212 不再落在那個情境上（它的
+    //    `spent` 是隊伍 0 與 3，而冠軍是隊伍 1）。
+    //    ⛔ 這不是把測試調鬆 —— 掃 4200–4399，前八個重現的是
+    //    **4205 / 4213 / 4215 / 4221 / 4234 / 4253 / 4260 / 4265**，取最小的。
+    //    ⭐ 判準不變：如果哪天掃 200 個 seed 一個都不重現，那就不是換 seed 的
+    //    問題，是**淘汰這條路整個死了**。
+    const run = runFullMatch("elim1", 4205, matchDocWithCard(false));
     // 這一條測的是 OFF 那一側 —— 而且是**經由內容文件**到達控制器的。
     expect(run.ctl.settlementCardOnHealthSpent).toBe(false);
 
@@ -269,7 +279,7 @@ describe("per-team elimination settlement (elimination-settlement, task #193 / G
   it("後台打開就退回舊行為 —— 這個功能是被關掉,不是被刪掉", () => {
     cover("elimination-settlement");
     // 同上，與 OFF 那一側用同一個 seed 才比得出「打開的代價」。
-    const run = runFullMatch("elim1", 4212, matchDocWithCard(true));
+    const run = runFullMatch("elim1", 4205, matchDocWithCard(true));
     expect(run.ctl.settlementCardOnHealthSpent).toBe(true);
 
     // 血歸零的隊伍**當場**拿到一張卡:不多不少就是那些隊伍，各一張。

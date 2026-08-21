@@ -54,7 +54,7 @@
       "name": "79-01 瞬步",
       "icon": "assets/icons/abilities/godie-h01o.q.webp",
       "provenance": "w3x-import",
-      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n以急快的速度移動至對方身旁並給予兩段式傷害，共計{{dmg}}點傷害。\n\n於斬擊蓄力狀態有額外力量*2點傷害加成",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n以急快的速度移動至對方身旁並給予兩段式傷害，共計{{dmg}}點傷害。\n\n於斬擊蓄力狀態有額外50% [AP]點傷害加成",
       "slot": "Q",
       "castType": "targeted",
       "maxRank": 4,
@@ -83,7 +83,13 @@
               "damageType": "magic",
               "amount": {
                 "damageTier": "極小",
-                "flat": 600.0
+                "flat": 600.0,
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.5
+                  }
+                ]
               }
             }
           ]
@@ -122,7 +128,7 @@
       "name": "79-02 斬擊",
       "icon": "assets/icons/abilities/godie-h01o.w.webp",
       "provenance": "w3x-import",
-      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n將月牙的能量聚集在斬月上，在攻擊敵人的同時釋放出，給予目標額外100+力量*2點傷害，蓄力最久可持續10秒。",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n將月牙的能量聚集在斬月上，在攻擊敵人的同時釋放出，給予目標額外100+50% [AP]點傷害，蓄力最久可持續10秒。",
       "slot": "W",
       "castType": "self",
       "maxRank": 4,
@@ -160,7 +166,7 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 0.3
+                "coeff": 0.5
               }
             ]
           }

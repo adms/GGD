@@ -3,7 +3,7 @@
   "name": "04-002 惡夢魔王的碎片",
   "icon": "assets/icons/abilities/godie-h020.ex.webp",
   "provenance": "w3x-import",
-  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n使用惡夢魔王碎片來短暫增幅黑魔法的威力，持續20秒。\n\n龍破斬及神滅斬增加傷害(智慧*7)",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n使用惡夢魔王碎片來短暫增幅黑魔法的威力，持續20秒。\n\n龍破斬及神滅斬增加傷害(180% [AP])",
   "slot": "EX",
   "castType": "self",
   "maxRank": 1,

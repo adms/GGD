@@ -37,7 +37,6 @@
     "ap": 0.0
   },
   "msGrowthTier": "極小",
-  "asGrowthTier": "小",
   "attributes": {
     "str": 22,
     "agi": 13,
@@ -198,7 +197,7 @@
       "name": "72-04 黑化",
       "icon": "assets/icons/abilities/godie-ogld.r.webp",
       "provenance": "w3x-import",
-      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n黑化後的黑人牙膏將會在短時間內使出敵我皆傷的噴牙膏攻擊，對周圍所有生物造成最多智慧*9的傷害。",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n黑化後的黑人牙膏將會在短時間內使出敵我皆傷的噴牙膏攻擊，對周圍所有生物造成最多230% [AP]的傷害。",
       "slot": "R",
       "castType": "ground",
       "maxRank": 3,
@@ -229,7 +228,7 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 0.7
+                "coeff": 2.3
               }
             ]
           },

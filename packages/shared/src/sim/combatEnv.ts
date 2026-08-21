@@ -565,7 +565,21 @@ export const ATTRIBUTE_ENV_DEFAULTS = {
   // ⚠️ 2026-08-13 第二次調整：4 → **6.5**（owner「int to ap lift to 6.5」）。
   //   4 之後量到 L99 的一發技能 = 普攻 2.01 秒（法師）/ 0.71 秒（射手），
   //   而 owner 要的曲線是「60 級以下技能更強」。6.5 把整條曲線再往技能那一側推。
-  intToAbilityPower: 6.5,
+  // 🔴 2026-08-21 第三次調整：6.5 → **4**。⚠️ owner 當天**講了兩次，後面那一次
+  //   推翻前面那一次**，⛔ 這裡記的是後面那一次（第〇·六守則：最新的裁決贏）：
+  //
+  //     16:51 「intToAbilityPower 6.5 => 10」            ← ⛔ 已被推翻
+  //     17:19 「intToAbilityPower 維持 6.5 => **調整到 4**」 ← ✅ 這一則
+  //
+  //   ⭐ 為什麼會反過來：同一天落地的 `config.ap-damage-scaling@1`
+  //   （傷害 **×(1 + AP × 0.5%)**）把 AP 從**加法項**變成**乘法項**。
+  //     · 舊世界（AP 只進 `ratios`）：AP 多一點 = 傷害多一點點 ⇒ 要調高才推得動。
+  //     · 新世界：AP 直接乘上整發傷害 ⇒ 同一個 AP 值強得多，這一格的意義從
+  //       「技能夠不夠強」變成「**前期**有多強」（L1 的法強 100% 由它決定）。
+  //   ⚠️ 而且它在 **L99 沒有作用** —— `config.stat-normalization@1` 把 `ap` 的
+  //   終值釘在出身級距上（`referenceLevel: 99`），調高這一格只會讓反解出的
+  //   `growth.ap` 等量變低。實測見 `docs/技能AP換算計畫.md`。
+  intToAbilityPower: 4,
   /**
    * OWNER'S DESIGN (2026-07-30, GH#221「新增 智慧→每 1 點智慧增加的魔抗 0.6」).
    * No WC3 source exists: Warcraft III has no magic-resistance ATTRIBUTE at all

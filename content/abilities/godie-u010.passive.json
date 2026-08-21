@@ -4,7 +4,7 @@
   "name": "38-00 邪眼全開",
   "icon": "assets/icons/abilities/godie-u010.passive.webp",
   "provenance": "w3x-import",
-  "description": "[變化]\n{{cd}}秒冷卻時間\n\n將移植到身上的邪眼全部打開，使得妖氣爆增，攻擊速度提升100%和移動速度50點，使用一二招傷害會增加(敏捷*2)點，持續10秒。",
+  "description": "[變化]\n{{cd}}秒冷卻時間\n\n將移植到身上的邪眼全部打開，使得妖氣爆增，攻擊速度提升100%和移動速度50點，使用一二招傷害會增加(50% [AP])點，持續10秒。",
   "slot": "PASSIVE",
   "innateKind": "active",
   "castType": "self",

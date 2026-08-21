@@ -37,7 +37,6 @@
     "ap": 0.4146
   },
   "msGrowthTier": "極小",
-  "asGrowthTier": "小",
   "attributes": {
     "str": 15,
     "agi": 14,
@@ -59,7 +58,7 @@
       "name": "14-01 東風繪扇、南風末廣",
       "icon": "assets/icons/abilities/godie-etyr.q.webp",
       "provenance": "w3x-import",
-      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n揮動兩把具有神奇魔力的扇子，使我方範圍300內單位解除異常狀態，並且回復生命力150+智慧*2點。",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n揮動兩把具有神奇魔力的扇子，使我方範圍300內單位解除異常狀態，並且回復生命力150+50% [AP]點。",
       "slot": "Q",
       "castType": "self",
       "maxRank": 3,
@@ -187,7 +186,7 @@
       "name": "14-02 式神炸裂",
       "icon": "assets/icons/abilities/godie-etyr.e.webp",
       "provenance": "w3x-import",
-      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n讓每個召喚出來的式神自爆，使周圍敵人受到150+智慧*3點傷害，每位式神的犧牲都能讓木乃香獲得150點魔力。\n注意先要招換式神",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n讓每個召喚出來的式神自爆，使周圍敵人受到150+80% [AP]點傷害，每位式神的犧牲都能讓木乃香獲得150點魔力。\n注意先要招換式神",
       "slot": "E",
       "castType": "ground",
       "maxRank": 4,
@@ -221,7 +220,7 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 0.6
+                "coeff": 0.8
               }
             ]
           },

@@ -246,18 +246,20 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   //      不是刪除 —— 知識不可以無聲消失。
   //    ⚠️ 下一次有人加一個字母序更前面的 effect kind,這三列會**再搬一次家**。
   //      那不是缺陷,照樣改前綴即可。
-"enum:abilities.effects[]#chainLightning.amount.attrRatios[].attr=agi": {
-    status: "debt",
-    why: "**移植覆蓋率的缺口,不是壞掉的程式**。`resolveScaling` 對 agi 與對 str 走同一行,所以寫上去就會生效;零的原因是目前只有兩支技能用 `attrRatios`,而它們的 JASS 都讀 `bj_HEROSTAT_STR`(龍神槍 godie-i018「傷害 = 總力量」、01-04 超究武神霸斬「+STR×等級」)。原作裡確實有讀 AGI 的招式(例如 蒼月潮 07-00 的敏捷門檻),只是還沒有一支被改寫成「傷害隨敏捷成長」。記成 debt 而不是 default-live,是因為零在這裡**不是**因為有一個更好的預設值 —— 它單純代表「還沒移植到」,而那是一件要做的事。",
-  },
-"enum:abilities.effects[]#chainLightning.amount.attrRatios[].attr=int": {
-    status: "debt",
-    why: "同 `attr=agi`:程式路徑共用、寫上去就生效,零的原因是兩支用 `attrRatios` 的技能在 JASS 裡讀的都是力量。智力在 GGD 走的是 `ratios[{stat:\"ap\"}]`(combat-env `intToAbilityPower` 把智力折進 AP),所以「智力係數」今天有兩種寫法而只有一種被用;哪一種才是對的要看被移植那一支的 JASS 讀的是 `bj_HEROSTAT_INT` 還是法術傷害欄位 —— 在有第一支這樣的技能之前不要替它決定。",
-  },
-"enum:abilities.effects[]#chainLightning.amount.attrRatios[].basis=base": {
-    status: "default-live",
-    why: "缺席 = \"total\"(`sim/effects/effect.ts` 的 `resolveScaling`:`attrs(r.attr, r.basis ?? \"total\")`),對應 Blizzard 的 `GetHeroStatBJ(…, true)` = 含裝備。兩份寫了 `attrRatios` 的出貨文件(龍神槍 godie-i018 的 on-hit 閃電、GH#250 的 01-04 超究武神霸斬 終結段)在 JASS 裡讀的都是 `true`,所以兩份都明寫 \"total\"。\"base\" 對應 `GetHeroStatBJ(…, false)`,原作**確實用過**(蒼月潮 07-00 獸化心靈 的 120 敏上限),只是那一支走的是 `grantAttribute.maxAttributeBasis` 而不是 `attrRatios`。所以這一格的零是「沒有一支用 attrRatios 的技能需要不含裝備的讀法」,不是機制沒接上。",
-  },
+// 🔴 2026-08-21 —— **`attrRatios` 那三列退場**，而它們是被 owner 的裁決收走的，
+  //    ⛔ 不是「修好了」。
+  //
+  //    > 「檢查所有技能 原本有屬性額外傷害的部分**都換成 AP**」
+  //
+  //    ⇒ `pnpm apconv:build` 把 01-04 超究武神霸斬（唯一一支用 `attrRatios` 表達
+  //      「屬性額外傷害」的技能）換成了 `ratios[{stat:"ap"}]`，於是整棵
+  //      `amount.attrRatios` 的 reach 從 2 掉到 **1**，低於 `MIN_REACH 3`
+  //      ⇒ 普查**不再對它宣稱任何事**，留著那三列就是三句謊話（STALE 那半邊會紅）。
+  //    ⭐ 三段 `why` 的內容（為什麼 agi/int 是零、`basis:"base"` 對應哪一個 JASS 讀法）
+  //      逐字另存在 `docs/legacy/_ap-conversion-superseded.md`，
+  //      ⛔ 知識不可以無聲消失 —— 這裡刪的是**豁免**，不是那份知識。
+  //    ⚠️ 唯一還在用 `attrRatios` 的是龍神槍 `godie-i018`（on-hit 閃電，讀總力量），
+  //      它**沒有**被換算：那是道具的被動，卡面沒有「力量*N」那種宣稱。
 
   // ── 以下九列才是真的 chainLightning 自己的欄位 ──────────────────────────
   // 出貨兩支(86-04 打雷絕招 godie-o00k.r / 65-04 天譴 godie-udea.r,各含 champion
@@ -2484,27 +2486,44 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   //    所以「值等於他們今天的成長」的那兩格（ms 極小 / as 小）各有 49 位，其餘八格是零。
   //    ⛔ 那八格要有人，就是一次**平衡改動** —— 那是 owner 的題，⛔ 不是我可以自己填的
   //    （`config.speed-growth-tiers@1` 的 `requireAuthoredParity` 正在守這件事）。
+  // 🔴 2026-08-21（同日下午）—— **`as` 那五格全部退場**。owner 逐字：
+  //   「看不懂你第二第三選項，**請你照出身表的規劃來設定就好**」
+  //   ⇒ `as` 進了 `config.stat-normalization@1` 的 `appliesTo`，`growth.as` 的主人
+  //   變成**出身五級距**，而 `pnpm speedtiers:build` 從 `appliesTo` × `channel`
+  //   **推導**自己該管哪幾條軸 ⇒ 它不再敲 `asGrowthTier`，並把 49 張卡上那一行刪掉。
+  //   ⛔ 一條軸只能有一個主人：級距包在正規化**外面**（`registries.ts`），
+  //   兩邊都留著會讓出身表那一半被靜靜吃掉（失敗形態②）。
+  //   ⚠️ 機制**一行都沒刪** —— 兩把梯子的 `as` 欄、`resolveSpeedGrowthTiers` 的
+  //   `as` 分支、後台那一格全都在；差別只在今天沒有一張卡填它。
+  "field:champions.asGrowthTier": {
+    status: "superseded",
+    why:
+      "`growth.as` 的主人在 2026-08-21 交給了 `config.stat-normalization@1` 的出身五級距" +
+      "（owner：「請你照出身表的規劃來設定就好」）。⇒ 這個欄位**刻意**是 0 —— " +
+      "`tools/speed-growth/gen.ts` 從 `appliesTo` × `channel` 推導，只要 `as` 還在名單上就" +
+      "不敲它，而且會把卡上舊的那一行刪掉。⭐ 欄位與整條解析路徑都留著（`ms` 正在走同一條），" +
+      "owner 哪天把 `as` 從 `appliesTo` 拿掉，產生器會自動把它寫回 49 張卡 ⇒ 這一列自動變綠。" +
+      "⛔ 不要為了讓它變綠去手填一張卡：那會讓兩個系統同時寫 growth.as，而出身表那一半" +
+      "會被靜靜吃掉。前後對照在 `docs/legacy/_attr-growth-zeroed-superseded.md` ⑤。",
+  },
   ...Object.fromEntries(
     [
       "enum:champions.msGrowthTier=小",
       "enum:champions.msGrowthTier=中",
       "enum:champions.msGrowthTier=大",
       "enum:champions.msGrowthTier=極大",
-      "enum:champions.asGrowthTier=極小",
-      "enum:champions.asGrowthTier=中",
-      "enum:champions.asGrowthTier=大",
-      "enum:champions.asGrowthTier=極大",
     ].map((key) => [
       key,
       {
         status: "landing",
         since: "2026-08-21",
         why:
-          "十格共用 `resolveSpeedGrowthTiers` 同一段查表，而其中兩格（ms「極小」· as「小」）" +
-          "當天就各有 **49 位**在走 —— 路是通的，⛔ 不是機制沒接上。零的那八格是**設計空間**：" +
+          "五格共用 `resolveSpeedGrowthTiers` 同一段查表，而其中一格（ms「極小」）" +
+          "當天就有 **49 位**在走 —— 路是通的，⛔ 不是機制沒接上。零的那四格是**設計空間**：" +
           "這一版宣告零平衡改動（49 位一律填「值等於他今天成長」的那一格），把任何一位移出去" +
-          "都是在改他跑多快／打多快。⛔ 不要為了讓這一列變綠去動任何一張英雄卡 —— " +
-          "到期條件是 owner 的速度平衡盤，不是這條測試。",
+          "都是在改他跑多快。⛔ 不要為了讓這一列變綠去動任何一張英雄卡 —— " +
+          "到期條件是 owner 的速度平衡盤，不是這條測試。" +
+          "⚠️ `as` 的那五格在同一天**退場**了（交給出身表，見上面 `field:champions.asGrowthTier`）。",
       } satisfies Exemption,
     ]),
   ),

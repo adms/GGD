@@ -603,7 +603,30 @@ const BASE_FLAT = (() => {
   const dmg = ((E_LEAP as unknown as Json)["onLand"] as Json[]).find((e) => e["kind"] === "damage")!;
   return ((dmg["amount"] as Json)["flat"] as number) ?? 0;
 })();
-const BASE_DAMAGE = BASE_FLAT + TEST_AD * 0.5;
+/**
+ * 基礎那一發的**係數項** —— ⭐ 2026-08-21 起連 `stat` 與 `coeff` 都從出貨文件讀。
+ *
+ * ⚠️ 這一行以前寫死 `TEST_AD * 0.5`，而 owner 2026-08-21 的「屬性額外傷害全換成
+ * AP 百分比」把這一支的 `ad×0.5` 換成了 `ap×0.5`（卡面本來就寫著「(力量*2)+450」，
+ * 而那條 `ad×0.5` 是 `tools/w3x-import` 的**合成**係數，⛔ 不是 JASS 讀出來的 ——
+ * 出處是 `abilityScaling.test.ts` 檔頭的 scaling model：「coeff proportional to
+ * the ability's own base (0.003/point of base damage)」）。
+ *
+ * ⭐ 這條測試**守的東西一個字都沒放寬**：它問的是「連擊窗在施法當下被烘進去、
+ * 之後窗關了也照付」（j:34189/j:34440 的時序），⛔ 不是「那一項係數掛在哪一條屬性上」。
+ * 所以期望值改成**從那份文件現算**，而測試夾具只餵 ad ⇒ 換成 ap 之後這一項是 0，
+ * 而時序斷言照樣會抓到任何一次烘焙錯誤。
+ * ⚠️ 被取代的原值記在 `docs/legacy/_ap-conversion-superseded.md`。
+ */
+const BASE_RATIOS = (() => {
+  const dmg = ((E_LEAP as unknown as Json)["onLand"] as Json[]).find((e) => e["kind"] === "damage")!;
+  const stats: Record<string, number> = { [Stat.AttackDamage]: TEST_AD };
+  return (((dmg["amount"] as Json)["ratios"] as Json[] | undefined) ?? []).reduce(
+    (sum, r) => sum + (stats[r["stat"] as string] ?? 0) * (r["coeff"] as number),
+    0,
+  );
+})();
+const BASE_DAMAGE = BASE_FLAT + BASE_RATIOS;
 /** ad×1.25 — the combo half (j:34214, at this doc's own 0.25/point rate). */
 const COMBO_BONUS = TEST_AD * 1.25;
 

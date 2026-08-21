@@ -15,6 +15,12 @@
  *   ✅ 一條規則 —— 這支。級別由「他今天的成長落在梯子的哪一格」**推導**，
  *      所以「零平衡改動」不是我逐位核對出來的結論，是這支腳本的**定義**。
  *
+ * ⭐ 2026-08-21 下午加了**第二條推導**：這支該管哪幾條軸，也是推導出來的
+ * （{@link NORMALIZED_AXES} / {@link MANAGED_AXES}，讀 `config.stat-normalization@1`）。
+ * owner：「看不懂你第二第三選項，**請你照出身表的規劃來設定就好**」⇒ `as` 交給出身表，
+ * 這支不再敲 `asGrowthTier` 而且會把卡上舊的那一行刪掉。⛔ 不是寫死「只管 ms」——
+ * owner 哪天把 `as` 從 `appliesTo` 拿掉，級別欄位會自動長回 49 張卡。
+ *
  * ─────────────────────────────────────────────────────────────────────────────
  * ⚠️ 它做**外科手術式**的文字插入，⛔ 不是 JSON round-trip
  * ─────────────────────────────────────────────────────────────────────────────
@@ -38,9 +44,13 @@
  *  ① 49 張卡都有兩個級別欄位，而且逐位元組等於現在重生成的結果。
  *  ② `requireAuthoredParity` 開著時：每一位的級別**解析出來等於他卡上的原值**
  *    （＝「這一版零平衡改動」那句宣稱的證據，⛔ 不是我在報告裡打的字）。
- *  ③ `config.stat-normalization@1` 沒有同時在寫 `growth.ms` / `growth.as`。
+ *  ③ ⭐ **一條軸恰好一個主人**：`config.stat-normalization@1` 的 `appliesTo`
+ *    擁有的那幾條軸，英雄卡上**不可以**還留著級別欄位。
  *    ⚠️ 這一條是**兩個名詞的關係**：兩份設定各自都合法，只有它們的組合會讓
- *    級別被靜靜蓋掉（`as` 的 `channel` 今天就已經寫著 `growth`，只差沒進 `appliesTo`）。
+ *    出身表那一半被靜靜蓋掉（級距包在正規化**外面**，所以級距永遠贏）。
+ *    ⚠️ 它在 2026-08-21 翻了面 —— 舊版問的是「正規化有沒有在寫 growth.<軸>」，
+ *    那個問法預設了級距永遠是主人；owner「請你照出身表的規劃來設定就好」之後
+ *    兩個主人都合法，⛔ 不合法的是**同時**。
  *
  * ⚠️ ⛔ 刻意**沒有產生日期**（同 `caps:export` / `anchors:build`）：任何隨時鐘變動的
  * 欄位都會讓逐位元組比對永遠不相等，於是 `--check` 只能被放寬 —— 而一條被放寬的閘
@@ -95,18 +105,49 @@ function tierFor(
 }
 
 /**
- * 在 `"growth": {…}` 區塊後面插（或就地更新）兩行級別。
- * ⛔ 不 parse 也不 stringify 整份文件 —— 理由見檔頭。
+ * ⭐ **這一支該管哪幾條軸 —— 從 `config.stat-normalization@1` 推導，⛔ 不是寫死名單。**
+ *
+ * owner 2026-08-21：「看不懂你第二第三選項，**請你照出身表的規劃來設定就好**」
+ * ⇒ 出身表（`stat-normalization` 的 `bands` × `byOrigin`）是**那條軸的最後一句話**。
+ *
+ * ⚠️ 兩個系統寫**同一格** `growth.<軸>`，而註冊時級距包在正規化**外面**
+ * （`registries.ts`）⇒ 兩邊都留著的話，正規化那一半會被靜靜吃掉（失敗形態②）。
+ * ⇒ 規則只有一條：**一條軸只能有一個主人**。在 `appliesTo` 且走 `growth` 通道的
+ * 軸交給正規化，這支就**不敲**它的級別欄位（而且會把卡上舊的那一行**刪掉**）。
+ *
+ * ⭐ 推導的好處是雙向的：owner 哪天把 `as` 從 `appliesTo` 拿掉，這支自動把
+ * `asGrowthTier` 敲回去，⛔ 不必改程式、⛔ 不必記得。
+ */
+const NORM = JSON.parse(
+  readFileSync(join(REPO, "content/config/stat-normalization.json"), "utf8"),
+) as { appliesTo?: string[]; channel?: Record<string, string> };
+
+const NORMALIZED_AXES: readonly SpeedGrowthAxis[] = SPEED_GROWTH_AXES.filter(
+  (a) => (NORM.appliesTo ?? []).includes(a) && NORM.channel?.[a] === "growth",
+);
+const MANAGED_AXES: readonly SpeedGrowthAxis[] = SPEED_GROWTH_AXES.filter(
+  (a) => !NORMALIZED_AXES.includes(a),
+);
+
+/**
+ * 在 `"growth": {…}` 區塊後面插（或就地更新）級別行；正規化擁有的那幾條軸
+ * 則**把既有那一行刪掉**。⛔ 不 parse 也不 stringify 整份文件 —— 理由見檔頭。
  */
 function withTierLines(raw: string, tiers: Record<SpeedGrowthAxis, SpeedGrowthTierName>): string {
   let out = raw;
+  // ⭐ 正規化擁有的軸：卡上那一行要**消失**，⛔ 不是留著一個沒有效果的欄位
+  //   （留著＝後台照樣顯示它、作者照樣改它，而場上一個位元都不動）。
+  for (const axis of NORMALIZED_AXES) {
+    const field = SPEED_GROWTH_TIER_FIELD[axis];
+    out = out.replace(new RegExp(`\\n  "${field}": "[^"]*",?`), "");
+  }
   // 已經有的話就地換值（冪等，讓 build 可以重跑）。
-  for (const axis of SPEED_GROWTH_AXES) {
+  for (const axis of MANAGED_AXES) {
     const field = SPEED_GROWTH_TIER_FIELD[axis];
     const re = new RegExp(`^  "${field}": "[^"]*",?$`, "m");
     if (re.test(out)) out = out.replace(re, `  "${field}": "${tiers[axis]}",`);
   }
-  if (SPEED_GROWTH_AXES.every((a) => out.includes(`  "${SPEED_GROWTH_TIER_FIELD[a]}":`))) return out;
+  if (MANAGED_AXES.every((a) => out.includes(`  "${SPEED_GROWTH_TIER_FIELD[a]}":`))) return out;
 
   const start = out.indexOf('\n  "growth": {');
   if (start < 0) throw new Error("這張卡沒有頂層 growth 區塊 —— 插入點斷了，去修這裡");
@@ -115,7 +156,7 @@ function withTierLines(raw: string, tiers: Record<SpeedGrowthAxis, SpeedGrowthTi
   if (close < 0) throw new Error("找不到 growth 區塊的結尾");
   const after = close + "\n  }".length;
   const comma = out[after] === "," ? 1 : 0;
-  const lines = SPEED_GROWTH_AXES.map(
+  const lines = MANAGED_AXES.map(
     (a) => `\n  "${SPEED_GROWTH_TIER_FIELD[a]}": "${tiers[a]}",`,
   ).join("");
   return out.slice(0, after + comma) + lines + out.slice(after + comma);
@@ -138,7 +179,7 @@ for (const id of ids) {
   const doc = JSON.parse(raw) as Record<string, unknown>;
   const tiers = {} as Record<SpeedGrowthAxis, SpeedGrowthTierName>;
   const drift: string[] = [];
-  for (const axis of SPEED_GROWTH_AXES) {
+  for (const axis of MANAGED_AXES) {
     const value = authored(doc, axis);
     // ⭐ 具名待裁決的軸**凍結**：卡上已經有的級別留著，⛔ 不從原值重新挑一格。
     //
@@ -226,18 +267,33 @@ if (TIERS.requireAuthoredParity) {
   }
 }
 
-// ③ 兩份設定的**關係** —— 各自合法、組合起來會靜靜蓋掉級別。
-const norm = JSON.parse(
-  readFileSync(join(REPO, "content/config/stat-normalization.json"), "utf8"),
-) as { appliesTo?: string[]; channel?: Record<string, string> };
-const clash = (norm.appliesTo ?? []).filter(
-  (k) => (SPEED_GROWTH_AXES as readonly string[]).includes(k) && norm.channel?.[k] === "growth",
-);
-if (clash.length > 0) {
+// ③ 兩份設定的**關係** —— ⭐ **一條軸恰好一個主人**。
+//
+// ⚠️ 這一條在 2026-08-21 翻了面（owner：「請你照出身表的規劃來設定就好」）。
+// 舊版問的是「正規化有沒有在寫 growth.<軸>」——那個問法預設了級距永遠是主人。
+// 現在兩個主人都合法，⛔ 不合法的是**同時**：註冊時級距包在正規化外面，
+// 兩邊都寫 ⇒ 出身表那一半被靜靜吃掉，而後台照樣顯示級別欄位（失敗形態②）。
+//
+// ⇒ 檢查改成「正規化擁有的軸，卡上不可以還留著級別欄位」。
+// 突變：把 `NORMALIZED_AXES` 的過濾拿掉（＝兩邊都寫）→ 這裡逐位點名紅。
+const doubleOwned: string[] = [];
+for (const id of ids) {
+  const doc = JSON.parse(
+    readFileSync(join(REPO, "content/champions", `${id}.json`), "utf8"),
+  ) as Record<string, unknown>;
+  for (const axis of NORMALIZED_AXES) {
+    if (typeof doc[SPEED_GROWTH_TIER_FIELD[axis]] === "string") {
+      doubleOwned.push(`${id}.${SPEED_GROWTH_TIER_FIELD[axis]}`);
+    }
+  }
+}
+if (doubleOwned.length > 0) {
   problems.push(
-    `\`config.stat-normalization@1\` 正在寫 growth.${clash.join(" / growth.")} —— 那與速度級距是**同一格**，` +
-      `而註冊時級距在後面 ⇒ 正規化那一半會被靜靜吃掉。\n` +
-      `  → 把它從 appliesTo 拿掉，或把那一項的 channel 改成 baseStats，或關掉速度級距的總開關。⛔ 不要兩邊都留著。`,
+    `${doubleOwned.length} 張卡同時被**兩個系統**寫同一格 growth：` +
+      `${doubleOwned.slice(0, 8).join(", ")}${doubleOwned.length > 8 ? " …" : ""}\n` +
+      `  → \`config.stat-normalization@1\` 的 appliesTo 已經擁有 ` +
+      `${NORMALIZED_AXES.map((a) => `growth.${a}`).join(" / ")}，而註冊時級距包在正規化**外面** ⇒ ` +
+      `出身表那一半會被靜靜吃掉。跑 \`pnpm speedtiers:build\` 把那幾行刪掉，⛔ 不要手改、⛔ 不要放寬這條。`,
   );
 }
 
@@ -254,8 +310,14 @@ const tally = (axis: SpeedGrowthAxis): string =>
 
 console.log(`[speedtiers] 母體 ${rows.length} 位（${BALANCE_POPULATION_PROVENANCE}）`);
 console.log(`[speedtiers] 梯子 ${TIERS.ladder}　總開關 ${TIERS.enabled ? "on" : "off"}`);
-for (const axis of SPEED_GROWTH_AXES) {
+for (const axis of MANAGED_AXES) {
   console.log(`[speedtiers] ${SPEED_GROWTH_AXIS_LABEL[axis]} 級別分佈：${tally(axis)}`);
+}
+for (const axis of NORMALIZED_AXES) {
+  console.log(
+    `[speedtiers] ${SPEED_GROWTH_AXIS_LABEL[axis]} 交給**出身表**（config.stat-normalization@1 的 appliesTo）` +
+      ` ⇒ 這一支不敲 ${SPEED_GROWTH_TIER_FIELD[axis]}，卡上舊的那一行已刪除`,
+  );
 }
 
 if (problems.length > 0) {

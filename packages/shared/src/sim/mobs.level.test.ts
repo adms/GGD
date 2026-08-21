@@ -236,7 +236,22 @@ describe("#244 the MOB CARD is what a mob is made of (was: the hero sheet)", () 
     //
     // 這一行因此是純粹的英雄卡面數字,兩邊共用。玩家實際拿到的 680(380+300)
     // 釘在 sim/balanceTuning.test.ts。
-    expect(championStatBase(HERO_DEF, Stat.MaxHealth, 1)).toBe(380);
+    // ⭐ 2026-08-21 —— owner 對 #244／#248 的裁決逐字：
+    //
+    //   > 「**照出身表套用不行嗎 有什麼例外的原因？**
+    //   >  如果沒有例外特定原因請將**舊規則及文件打包移到 legacy**」
+    //
+    // ⇒ **沒有例外原因**，所以字面值 `380` 退場（連同它守過什麼，另存在
+    //   `docs/legacy/_attr-growth-zeroed-superseded.md` ②④）。
+    // ⚠️ ⛔ 退場的是**數字**，⛔ 不是這條斷言：它問的仍然是同一件事 ——
+    //   「等級 1 的有效血量 = 卡上的 `baseStats` **加上**屬性層」。
+    //   少掉任何一層、或某一層被算了兩次，這裡照樣紅；差別只在期望值現在
+    //   **從卡面推導**，⛔ 不是替一個 owner 每週在動的數字上鎖（第零守則）。
+    expect(championStatBase(HERO_DEF, Stat.MaxHealth, 1)).toBeCloseTo(
+      (HERO_DEF.baseStats[Stat.MaxHealth] ?? 0) +
+        ATTRIBUTE_ENV_DEFAULTS.strToMaxHealth * (HERO_DEF.attributes?.str ?? 0),
+      9,
+    );
 
     // THE +45 WAS TWO LAYERS. ⭐ 2026-08-21 起它**只剩一層**。
     //

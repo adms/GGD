@@ -1,0 +1,19 @@
+{
+  "$note": "屬性額外傷害 → AP 百分比換算的六格開關（owner 2026-08-21）。⚠️ 這是**建置期**輸入，⛔ 不是執行期設定：改了要跑 `pnpm apconv:build` 才生效（rollback 同一條路）。⭐ 刻意不住在 content/config/ —— 一格後台存得下去、卡面照樣印、場上零反應的開關，正是第一·五守則說的「說了但不會發生」。",
+  "apPerAttrPoint": 0.25,
+  "stepPct": 10,
+  "rounding": "halfUp",
+  "minPct": 10,
+  "mode": "replace",
+  "physical": "keepDamageType",
+  "enabled": true,
+  "$fields": {
+    "apPerAttrPoint": "owner 的「1/4」：一點屬性乘數 = 這麼多 AP 百分比。改它 = 整批重算。",
+    "stepPct": "百分比粒度（owner：「取百分比整數例如 10/20/30…」）。5 / 25 也可以。",
+    "rounding": "halfUp（出貨・四捨五入，.5 一律進位）/ ceil / nearestEven。⛔ 不選 nearestEven：25→20 而 75→80，同樣的 .5 走兩個方向。",
+    "minPct": "下限 —— ⛔ 不讓任何一條宣稱被取整成 0（那就是第一·五守則的空宣稱）。",
+    "mode": "replace（出貨）= 換掉那條與卡面無關的捏造係數（owner 說「換成」）；add = 疊在上面。",
+    "physical": "keepDamageType（出貨）= 物理技能保持物理、只把成長換成 AP（⛔ 不動護甲/魔抗減傷）；retypeToMagic = 連減傷一起換（一次 owner 沒要求的平衡變更）；skip = 物理技能整批不換（最保守的 rollback）。",
+    "enabled": "false = 從 claims.json 的快照把**原文與原係數**寫回去 ⇒ 一個指令回到換算前，⛔ 不是「這次不做」。"
+  }
+}

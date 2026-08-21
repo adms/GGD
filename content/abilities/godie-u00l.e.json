@@ -3,7 +3,7 @@
   "name": "25-03 北斗百裂拳",
   "icon": "assets/icons/abilities/godie-u00l.e.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n拳四郎得意絕技之一，以連續拳頭攻擊區域內的敵人造成單體攻擊{{dmg}}+力量*2傷害。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n拳四郎得意絕技之一，以連續拳頭攻擊區域內的敵人造成單體攻擊{{dmg}}+50% [AP]傷害。",
   "slot": "E",
   "castType": "ground",
   "maxRank": 4,
@@ -30,7 +30,7 @@
         "flat": 600.0,
         "ratios": [
           {
-            "stat": "ad",
+            "stat": "ap",
             "coeff": 0.5
           }
         ]

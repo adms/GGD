@@ -68,9 +68,20 @@ function godieChampions(): ChampionDoc[] {
 }
 
 /** Effects that carry an `amount`, paired with the ability that owns them. */
+/**
+ * ⭐ 卡面上「這一項是**法強百分比**」的字樣（`80% [AP]`）。
+ * ⛔ 這不是一張豁免表 —— 它問的是**這一支技能自己說了什麼**，
+ * 所以「JSON 改回 ad 而卡面照樣寫 [AP]」會紅，反過來也會紅。
+ * ⚠️ 與 `tools/ap-conversion/apply.py` 的 `AP_CLAIM_RE` 是同一個字樣。
+ */
+const AP_CLAIM_RE = /[0-9]+(?:\.[0-9]+)?%\s*\[AP\]/;
+
 function amountEffects(c: ChampionDoc) {
-  const out: { slot: string; kind: string; dtype?: string; amount: Scaling }[] = [];
+  const out: { slot: string; kind: string; dtype?: string; amount: Scaling; apClaim: boolean }[] = [];
   for (const [slot, ab] of Object.entries(c.abilities ?? {})) {
+    const apClaim = AP_CLAIM_RE.test(
+      String((ab as unknown as { description?: string }).description ?? ""),
+    );
     // 讀**展開後**的形狀，不是文件裡打了什麼 —— 2026-08-02 之後有 143 支技能的
     // effects 住在模板裡，`ab.effects` 是 `[]`（見 testkit/expandedEffects.ts）。
     for (const e of effectsOf(ab) as Record<string, never>[]) {
@@ -81,6 +92,7 @@ function amountEffects(c: ChampionDoc) {
           kind: e["kind"] as unknown as string,
           dtype: e["damageType"] as unknown as string | undefined,
           amount,
+          apClaim,
         });
       }
     }
@@ -239,8 +251,31 @@ describe("imported ability stat scaling", () => {
           // damage/physical→ad ×102, damageLine/physical→ad ×1, heal+shield
           // (no damageType)→ap ×15. ZERO physical effects scale off anything
           // but ad, so keying off `dtype` alone is both simpler and exact.
-          const want = e.dtype === "physical" ? Stat.AttackDamage : Stat.AbilityPower;
-          expect(`${c.id}.${e.slot}:${r.stat}`).toBe(`${c.id}.${e.slot}:${want}`);
+          //
+          // ⭐ 2026-08-21 —— owner「原本有屬性額外傷害的部分**都換成 AP**」。
+          //   19 支**物理**技能的卡面本來寫著 `力量*3`（而 JSON 捏了一個與它
+          //   無關的 `ad×0.5`），換算之後卡面寫 `80% [AP]`、JSON 也吃 `ap`。
+          //   ⚠️ `damageType` **刻意不動**（`physical: keepDamageType`）：減傷走
+          //   `damageType`（護甲 vs 魔抗），改它是一個 owner 沒有要求的平衡變更。
+          //   ⇒ 「物理技能吃 ap」從此是**合法的**，但**只在卡面自己這樣說**的時候。
+          //   ⛔ 這不是一張豁免名單（那種東西會腐爛）—— 它問的是這一支技能
+          //   **自己的說明**，所以卡面被改掉而 JSON 還吃 `ap` → 這裡就紅。
+          //   ⚠️ **反方向這裡守不到**（`ad` 在有 `[AP]` 宣稱時仍然合法，而且必須
+          //   合法：07-03 列、在、前 的連擊窗加成就是一條真的 `ad×1.25`，與基礎那一
+          //   發的 `ap×0.5` 並存）。「JSON 偷偷改回 `ad`」由 **`pnpm apconv:check`**
+          //   逐位元組守（它在 `skills:check` 裡），⛔ 不是這一條。
+          const allowed =
+            e.dtype === "physical"
+              ? e.apClaim
+                ? [Stat.AttackDamage, Stat.AbilityPower]
+                : [Stat.AttackDamage]
+              : [Stat.AbilityPower];
+          expect(
+            `${c.id}.${e.slot}:${r.stat}`,
+            e.dtype === "physical" && !e.apClaim
+              ? "物理技能的係數必須是 ad —— 除非卡面自己寫了「N% [AP]」（AP 換算，owner 2026-08-21）"
+              : "非物理技能的係數必須是 ap",
+          ).toBe(`${c.id}.${e.slot}:${allowed.includes(r.stat) ? r.stat : allowed[0]}`);
           expect(r.coeff).toBeGreaterThan(0);
           expect(r.coeff).toBeLessThanOrEqual(RATIO_MAX);
         }

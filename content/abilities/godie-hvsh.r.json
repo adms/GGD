@@ -3,7 +3,7 @@
   "name": "48-04 騎英之疆繩",
   "icon": "assets/icons/abilities/godie-hvsh.r.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n招喚飛馬以超快的速度衝擊前方，對指定地點上的地面部隊造成敏捷*3+300的傷害。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n招喚飛馬以超快的速度衝擊前方，對指定地點上的地面部隊造成80% [AP]+300的傷害。",
   "slot": "R",
   "castType": "targeted",
   "maxRank": 3,
@@ -29,7 +29,7 @@
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 0.7
+            "coeff": 0.8
           }
         ]
       },

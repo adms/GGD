@@ -51,6 +51,7 @@ import {
 import {
   resolveChampionStats,
   statNormalizationFromDoc,
+  NORMALIZED_STAT_TO_STAT,
   type StatResolveDeps,
   type NormalizedStatKey,
 } from "./statNormalization";
@@ -184,19 +185,8 @@ function stable(v: unknown): string {
  * denormalised copy embedded in the champion doc. See `registerChampion`.
  */
 /** `NormalizedStatKey` → 引擎的 `Stat`。⚠️ 加新 key 時這裡漏一格 = 那一項靜默不生效。 */
-const STAT_OF: Readonly<Record<NormalizedStatKey, Stat>> = Object.freeze({
-  ms: Stat.MoveSpeed,
-  mr: Stat.MagicResist,
-  armor: Stat.Armor,
-  maxHealth: Stat.MaxHealth,
-  maxMana: Stat.MaxMana,
-  ad: Stat.AttackDamage,
-  ap: Stat.AbilityPower,
-  as: Stat.AttackSpeed,
-  healthRegen: Stat.HealthRegen,
-  manaRegen: Stat.ManaRegen,
-  range: Stat.AttackRange,
-});
+//: ⭐ 這張表住在 `statNormalization.ts`（唯一一份），⛔ 這裡不再抄第二份。
+const STAT_OF = NORMALIZED_STAT_TO_STAT;
 
 const STAT_RESOLVE_DEPS: StatResolveDeps = Object.freeze({
   // ⚠️ `championStatBase` 直接讀 `def.baseStats[stat]` 與 `def.growth[stat]`，
