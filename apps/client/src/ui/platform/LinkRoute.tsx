@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { useApp } from "./store";
 import * as apiFns from "./api";
 import { Btn, Panel } from "./widgets";
+import { padModalScope } from "../padModalScope";
 import { PANEL_BG, TEXT_DIM, TEXT_MAIN } from "../theme";
 
 export const LINK_PATH = "/link";
@@ -65,6 +66,12 @@ export function LinkRoute(): React.JSX.Element | null {
 
   return (
     <div
+      // GH#504 — this full-screen approval card is reachable ON THE HANDHELD
+      // ITSELF (same tab, /link). Without a scope the D-pad walked out of the
+      // card, and B had NOTHING to hit: 「拒絕 Deny」/「完成 Done」 match none of
+      // `backControlIndex`'s dismissal words. ⛔ 拒絕 is an ACTION, not a back —
+      // only the terminal 完成 / 去登入 carry `padBack`.
+      {...padModalScope("device-link")}
       style={{
         position: "fixed",
         inset: 0,
@@ -102,7 +109,7 @@ export function LinkRoute(): React.JSX.Element | null {
             <div style={{ fontSize: 12, color: "#f0c98a", marginBottom: 12 }}>
               請先登入這支手機的帳號，再回到此頁核准。
             </div>
-            <Btn kind="primary" onClick={closeLink} style={{ width: "100%" }}>
+            <Btn kind="primary" padBack onClick={closeLink} style={{ width: "100%" }}>
               去登入 Sign in first
             </Btn>
           </>
@@ -110,7 +117,7 @@ export function LinkRoute(): React.JSX.Element | null {
           <div style={{ fontSize: 14, color: "#9fe0a8", textAlign: "center" }}>
             ✓ 已核准，另一台裝置即將登入
             <div style={{ marginTop: 14 }}>
-              <Btn onClick={closeLink} style={{ width: "100%" }}>
+              <Btn padBack onClick={closeLink} style={{ width: "100%" }}>
                 完成 Done
               </Btn>
             </div>
@@ -119,7 +126,7 @@ export function LinkRoute(): React.JSX.Element | null {
           <div style={{ fontSize: 14, color: TEXT_DIM, textAlign: "center" }}>
             已拒絕
             <div style={{ marginTop: 14 }}>
-              <Btn onClick={closeLink} style={{ width: "100%" }}>
+              <Btn padBack onClick={closeLink} style={{ width: "100%" }}>
                 完成 Done
               </Btn>
             </div>

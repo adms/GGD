@@ -93,6 +93,15 @@ export function Btn(props: {
    * with the D-pad). Opt-in and unused by every existing caller.
    */
   btnRef?: React.Ref<HTMLButtonElement>;
+  /**
+   * GH#504 — mark this button as the modal's BACK/cancel control, i.e. render
+   * `data-pad-back` so `PadFocusNav.findBackControl` returns it by CONTRACT.
+   * ⛔ Not spreadable from the caller: `Btn` has an explicit prop list (it does
+   * NOT `...rest` onto the <button> the way `SfxButton` does), so a caller
+   * writing `data-pad-back` on a `<Btn>` would be silently dropped — which is
+   * exactly the「說了但不會發生」shape CLAUDE.md 第一·五守則 is about.
+   */
+  padBack?: boolean;
   children: React.ReactNode;
 }): React.JSX.Element {
   const kind = props.kind ?? "ghost";
@@ -121,6 +130,7 @@ export function Btn(props: {
       onPointerEnter={sfx?.onPointerEnter}
       disabled={props.disabled}
       title={props.title}
+      {...(props.padBack === true ? { "data-pad-back": "" } : {})}
       style={{ transition: "transform 80ms ease", ...base }}
       onPointerDown={(e) => {
         if (!props.disabled) e.currentTarget.style.transform = "scale(0.95)";

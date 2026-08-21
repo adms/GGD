@@ -35,6 +35,7 @@ import {
   sortSettlementRanking,
 } from "./settlementModel";
 import { PANEL_BG, PANEL_BORDER, teamCss, TEXT_DIM, TEXT_MAIN } from "../theme";
+import { padModalScope } from "../padModalScope";
 
 function championName(champ: string): string {
   return Champions.tryGet(champ as ChampionId)?.name ?? champ;
@@ -204,6 +205,13 @@ export function LeaveSettlementOverlay(): React.JSX.Element | null {
 
   return (
     <div
+      // GH#504 — 60, 與 LeaveConfirmDialog 同級。⚠️ 這一格是 blocker：這張卡
+      // 出現在 combat/resolution，而那兩個相位在 COMBAT_LIVE_PHASES 裡，
+      // `focusNavActive` 在**沒有 scope** 時回 false ⇒ 焦點層整個站下來，
+      // 「返回大廳」「繼續觀戰」兩顆對純手把玩家都不存在。宣告 scope 是唯一
+      // 把焦點層翻回來的開關（⛔ 不是去改 COMBAT_LIVE_PHASES —— 那條規則對
+      // 還活著的玩家仍然要成立）。
+      {...padModalScope("leave-settlement")}
       style={{
         position: "absolute",
         inset: 0,
@@ -267,7 +275,9 @@ export function LeaveSettlementOverlay(): React.JSX.Element | null {
           <Btn kind="primary" onClick={() => void returnToLobby()} style={{ flex: 1 }}>
             返回大廳
           </Btn>
-          <Btn onClick={() => closeLeaveGate()}>繼續觀戰</Btn>
+          {/* ⭐ 只有「繼續觀戰」是 back：它是安全的 dismissal。
+              ⛔「返回大廳」被 BACK_VETO_RE 擋住是**對的** —— B 不可以一按就退賽。 */}
+          <Btn padBack onClick={() => closeLeaveGate()}>繼續觀戰</Btn>
         </div>
       </div>
     </div>

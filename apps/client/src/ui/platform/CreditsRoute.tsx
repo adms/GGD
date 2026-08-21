@@ -22,6 +22,7 @@ import {
 } from "./blizzardVfxCredits";
 import { GOLD, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 import { SfxButton } from "../SfxButton";
+import { padModalScope } from "../padModalScope";
 
 export const CREDITS_HASH = "#credits";
 
@@ -302,6 +303,11 @@ export function CreditsPage(props: { onClose: () => void }): React.JSX.Element {
     <div
       role="dialog"
       aria-label="版權聲明"
+      // GH#504 — B used to reach the ✕ only because `backControlIndex` happened
+      // to match the word 「關閉」 in its title. That is a coincidence, not a
+      // contract: it dies the day the copy changes. Now the scope confines the
+      // focus set to this page and `data-pad-back` names the exit.
+      {...padModalScope("credits")}
       onClick={(e) => {
         // backdrop-only: a click that lands on the overlay itself (not on the
         // inner content) closes. Clicks on links/text inside do not.
@@ -331,6 +337,7 @@ export function CreditsPage(props: { onClose: () => void }): React.JSX.Element {
             kind="ghost"
             onClick={props.onClose}
             title="關閉"
+            data-pad-back
             style={{
               marginLeft: "auto",
               padding: "4px 14px",

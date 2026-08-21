@@ -70,6 +70,7 @@ import {
   type AutoScrollToRowHandle,
 } from "../scroll/useAutoScrollToRow";
 import { PANEL_BG, PANEL_BORDER, teamCss, TEXT_DIM, TEXT_MAIN } from "../theme";
+import { padModalScope } from "../padModalScope";
 import { ProgressChartPanel } from "./ProgressChartPanel";
 import { buildProgressSeries, progressAdvice } from "./progressChart";
 import { TeamPointsRows } from "./RoundVictoryPanel";
@@ -648,6 +649,12 @@ export function MatchEndPanel({
       // (failure shape ③). `hud/hudSurfacePaint.test.ts` now renders HudRoot at
       // `matchEnd` and looks for this attribute.
       data-hud-mount="match-end"
+      // GH#504 — 55, over pause(50). Without it the pad's root was
+      // `document.body`, and `HudRoot` mounts `<Scoreboard />` in EVERY phase:
+      // the D-pad moved focus onto a button painted at HUD_Z.slot (25) and
+      // buried under this panel — `isVisible` does no occlusion test — so A
+      // opened a drawer nobody could see.
+      {...padModalScope("match-end")}
       style={{
         position: "absolute",
         inset: 0,

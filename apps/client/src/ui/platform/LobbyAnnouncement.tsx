@@ -54,6 +54,7 @@ import { useApp } from "./store";
 import { announcementDate, announcementLines, type PublicAnnouncement } from "./announcements";
 import { Btn, ACCENT } from "./widgets";
 import { GOLD, PANEL_BG, TEXT_DIM, TEXT_MAIN } from "../theme";
+import { padModalScope } from "../padModalScope";
 
 /**
  * Height (px) of the bottom strip left uncovered for the build stamp (#66).
@@ -103,6 +104,10 @@ export function LobbyAnnouncementCard(props: {
       role="dialog"
       aria-modal="true"
       aria-label="大廳公告"
+      // GH#504 — without this the pad's root fell back to `document.body` and
+      // the D-pad walked onto the lobby buttons UNDER the scrim (A clicked
+      // them: PadFocusNav uses `el.click()`, which ignores pointer-events).
+      {...padModalScope("announcement")}
       style={{
         position: "fixed",
         left: 0,
@@ -185,7 +190,7 @@ export function LobbyAnnouncementCard(props: {
             borderTop: "1px solid rgba(120, 140, 190, 0.22)",
           }}
         >
-          <Btn kind="primary" onClick={onDismiss} title="關閉公告（同一則不會再跳出）">
+          <Btn kind="primary" padBack onClick={onDismiss} title="關閉公告（同一則不會再跳出）">
             知道了
           </Btn>
         </div>

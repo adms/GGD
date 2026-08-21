@@ -14,6 +14,7 @@
 import { useEffect, useRef, useState } from "react";
 import { SfxButton } from "../../SfxButton";
 import { GOLD, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../../theme";
+import { padModalScope } from "../../padModalScope";
 import { BRIEFING_BEATS, BRIEFING_BEAT_MS, activeBeatIndex } from "./briefingContent";
 
 export function RulesBriefing({ onDismiss }: { onDismiss: () => void }): React.JSX.Element {
@@ -36,6 +37,10 @@ export function RulesBriefing({ onDismiss }: { onDismiss: () => void }): React.J
     <div
       role="dialog"
       aria-label="新手須知"
+      // GH#504 — 40, over champ-select(20): the briefing is painted ON the
+      // picker, so it has to own the pad while it is up. B used to reach 跳過
+      // only because the label happened to contain ✕.
+      {...padModalScope("briefing")}
       style={{
         position: "absolute",
         left: "50%",
@@ -65,6 +70,7 @@ export function RulesBriefing({ onDismiss }: { onDismiss: () => void }): React.J
         <SfxButton
           onClick={onDismiss}
           title="skip the briefing"
+          data-pad-back
           kind="ghost"
           style={{
             padding: "4px 12px",

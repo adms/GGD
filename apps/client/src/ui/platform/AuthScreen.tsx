@@ -928,7 +928,12 @@ export function AuthScreen(): React.JSX.Element {
 
       {/* 用手機登入 QR panel (#197/#199): a modal over the login screen. The
           gamepad drives it (D-pad focus + A/B); on approval the granted session
-          lands and the app transitions to the lobby. B / Cancel dismisses. */}
+          lands and the app transitions to the lobby. B / Cancel dismisses.
+          ⚠️ GH#504 — the `data-pad-scope` is declared on DeviceLoginPanel's own
+          root, not on this scrim: the scrim's only child IS the panel, and
+          scoping to the panel keeps `getFocusables` down to 取消 (+ 重試).
+          ⛔ Do not add a second scope here — two nested scopes at the same
+          priority make `topScope()` a document-order coin flip. */}
       {showDeviceLogin && (
         <div
           style={{

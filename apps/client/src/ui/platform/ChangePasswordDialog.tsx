@@ -16,6 +16,7 @@ import { useState } from "react";
 import { changePassword } from "./api";
 import { submitChangePassword, validateChangePassword } from "./changePassword";
 import { Btn, TextInput, OK, DANGER } from "./widgets";
+import { padModalScope } from "../padModalScope";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 
 export function ChangePasswordDialog(props: { onClose: () => void }): React.JSX.Element {
@@ -65,6 +66,9 @@ export function ChangePasswordDialog(props: { onClose: () => void }): React.JSX.
     >
       <div
         onClick={(e) => e.stopPropagation()}
+        // GH#504 — 46 beats the lobby announcement (45): a dialog the player
+        // OPENED must never be trapped behind one that opened itself.
+        {...padModalScope("change-password")}
         style={{
           background: PANEL_BG,
           border: PANEL_BORDER,
@@ -100,7 +104,7 @@ export function ChangePasswordDialog(props: { onClose: () => void }): React.JSX.
               ✅ {done}
             </div>
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <Btn kind="primary" onClick={props.onClose}>
+              <Btn kind="primary" padBack onClick={props.onClose}>
                 關閉 Close
               </Btn>
             </div>
@@ -158,7 +162,7 @@ export function ChangePasswordDialog(props: { onClose: () => void }): React.JSX.
             />
 
             <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", marginTop: 18 }}>
-              <Btn onClick={props.onClose} disabled={busy}>
+              <Btn padBack onClick={props.onClose} disabled={busy}>
                 取消 Cancel
               </Btn>
               <Btn kind="primary" disabled={busy || !ready} onClick={() => void apply()}>

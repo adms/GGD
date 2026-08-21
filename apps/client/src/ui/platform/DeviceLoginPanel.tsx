@@ -5,17 +5,18 @@
  * 用手機登入; pressing A opens this panel, which shows a QR (the verification URL
  * + the short public user-code — NEVER a token) and waits for an already-logged-
  * in phone to scan and approve. No text field ever focuses: the whole panel is
- * D-pad + A/B navigable (see ./gamepadFocus). On approval the granted token pair
+ * D-pad + A/B navigable — driven by the ONE global loop in `ui/PadFocusNav`,
+ * which this panel opts into by declaring `data-pad-scope` (GH#504; it used to
+ * run a second, competing loop of its own). On approval the granted token pair
  * is fed into the SAME session sink a typed login uses (store.applyDeviceSession
  * → api.setTokens), and the app transitions into the lobby.
  */
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useApp } from "./store";
 import * as apiFns from "./api";
 import { encodeQR } from "./qr";
 import { runDeviceLogin, type DevicePhase } from "./deviceLogin";
-import { startGamepadFocus, nextFocusIndex, type NavDir } from "./gamepadFocus";
-import { applyPadFocus, clearPadFocus } from "../focusGlow";
+import { padModalScope } from "../padModalScope";
 import { Btn, ACCENT } from "./widgets";
 import { TEXT_DIM, TEXT_MAIN } from "../theme";
 
@@ -69,12 +70,7 @@ export function DeviceLoginPanel({ onClose }: { onClose: () => void }): React.JS
   const applyDeviceSession = useApp((s) => s.applyDeviceSession);
   const [phase, setPhase] = useState<DevicePhase | null>(null);
   const [attempt, setAttempt] = useState(0); // bump to restart
-  // Gamepad focus ring over the panel's buttons. Retry only exists on a
-  // terminal state, so the focusable set changes with the phase.
-  const [focus, setFocus] = useState(0);
-  const btnRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const terminal = phase?.kind === "denied" || phase?.kind === "expired" || phase?.kind === "error";
-  const focusCount = terminal ? 2 : 1; // [取消] or [取消, 重試]
 
   // Drive one grant attempt; re-run when the user retries.
   useEffect(() => {
@@ -90,32 +86,15 @@ export function DeviceLoginPanel({ onClose }: { onClose: () => void }): React.JS
     return () => handle.cancel();
   }, [attempt, applyDeviceSession]);
 
-  // Reflect the focus index onto real DOM focus so A/click activate the right
-  // button and a mouse/touch user is unaffected. It ALSO paints the shared
-  // focus glow (#222, ../focusGlow): this panel is the one surface with no
-  // keyboard at all, so "which button will A press?" has to be unmissable — and
-  // it drives its own pad loop rather than PadFocusNav, so nothing else would
-  // mark it. Cleared on unmount so the glow never outlives the panel.
-  useEffect(() => {
-    const el = btnRefs.current[focus];
-    el?.focus();
-    applyPadFocus(el);
-  }, [focus, focusCount]);
-  useEffect(() => () => clearPadFocus(), []);
-
-  // Gamepad: D-pad moves focus, A activates, B cancels (the trust-preserving
-  // "back" — a mistaken open never strands a handheld with no keyboard).
-  useEffect(() => {
-    const stop = startGamepadFocus(
-      {
-        navigate: (dir: NavDir) => setFocus((f) => nextFocusIndex(f, focusCount, dir)),
-        activate: () => btnRefs.current[focus]?.click(),
-        back: onClose,
-      },
-      () => true,
-    );
-    return stop;
-  }, [focus, focusCount, onClose]);
+  // ⛔ GH#504 — THIS PANEL USED TO RUN ITS OWN `startGamepadFocus` LOOP.
+  // 一支手把只能有一個讀者：the global `ui/PadFocusNav` never stopped running
+  // while this modal was open, so BOTH loops read the same A on the same frame
+  // and BOTH wrote `applyPadFocus` — the ring flickered between this panel's
+  // 取消 and whatever `document.body` scope PadFocusNav had drifted onto (the
+  // login form behind the scrim, 「⚔️ 一鍵開打」, 「Play offline vs bots」).
+  // The panel now declares `data-pad-scope` below instead, which is the ONE
+  // mechanism that both confines the focus set to this panel AND keeps the
+  // focus layer standing up. ⛔ Do not reintroduce a second reader.
 
   const grant = phase?.kind === "waiting" ? phase.grant : null;
   const st = statusLine(phase);
@@ -123,6 +102,10 @@ export function DeviceLoginPanel({ onClose }: { onClose: () => void }): React.JS
 
   return (
     <div
+      // GH#504 — the pad scope lives HERE, not on AuthScreen's scrim <div>:
+      // the scrim's only child is this panel, so scoping to the panel gives
+      // `getFocusables` exactly 取消 (+ 重試) and nothing else.
+      {...padModalScope("device-login")}
       style={{
         display: "flex",
         flexDirection: "column",
@@ -161,20 +144,14 @@ export function DeviceLoginPanel({ onClose }: { onClose: () => void }): React.JS
       <div style={{ fontSize: 12, color: toneColor, textAlign: "center", minHeight: 18 }}>{st.text}</div>
 
       <div style={{ display: "flex", gap: 10 }}>
-        <Btn
-          btnRef={(el) => (btnRefs.current[0] = el)}
-          onClick={onClose}
-          style={terminal ? undefined : { borderColor: ACCENT }}
-        >
+        <Btn padBack onClick={onClose} style={terminal ? undefined : { borderColor: ACCENT }}>
           取消 Cancel
         </Btn>
         {terminal && (
           <Btn
             kind="primary"
-            btnRef={(el) => (btnRefs.current[1] = el)}
             onClick={() => {
               setPhase(null);
-              setFocus(0);
               setAttempt((a) => a + 1);
             }}
           >

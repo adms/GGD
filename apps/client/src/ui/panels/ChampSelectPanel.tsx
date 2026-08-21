@@ -43,6 +43,7 @@ import { isTouchDevice, readTouchEnv } from "../../input/mobileDetect";
 import { HUD_GAP, HUD_STAMP_BAND, hudSlotBand } from "../hud/hudLayout";
 import { topRightReserve } from "../chromeReserve";
 import { GOLD, PANEL_BG, PANEL_BORDER, teamCss, TEXT_DIM, TEXT_MAIN } from "../theme";
+import { padModalScope } from "../padModalScope";
 import {
   applyChampionWhitelist,
   filterChampions,
@@ -308,6 +309,13 @@ export function ChampSelectPanel(): React.JSX.Element {
       }}
     >
       <div
+        // GH#504 — 20, the FLOOR of the ladder: this is a phase panel, not an
+        // overlay, so briefing(40) and augment-draft(40) must out-rank it.
+        // ⭐ Declared on the two-column card and NOT on the root above: the root
+        // is `pointerEvents:none` and spans the whole viewport, so scoping there
+        // would re-admit the very HUD corners (audio cluster / scoreboard /
+        // version badge) this exists to keep the D-pad out of.
+        {...padModalScope("champ-select")}
         style={{
           display: "flex",
           flexDirection: layout.stacked ? "column" : "row",

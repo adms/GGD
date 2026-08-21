@@ -288,10 +288,19 @@ describe("#222 shared focus glow — nothing else may grow its own", () => {
       const src = stripTs(read(f));
       return /startGamepadFocus|listPadSources|padFocusNav/.test(src) && /\.focus\(/.test(src);
     });
+    // ⚠️ FLOOR LOWERED 2 → 1 (GH#504, 2026-08-22). It used to be 2 because there
+    // really were two pad loops: `ui/PadFocusNav` and `platform/DeviceLoginPanel`'s
+    // own `startGamepadFocus`. That second reader was the BUG — two loops read the
+    // same A on the same frame and both wrote `applyPadFocus`, so the ring
+    // flickered between the QR panel and whatever `document.body` scope
+    // PadFocusNav had drifted onto. #504 deleted it and gave the panel a
+    // `data-pad-scope` instead. ⛔ Do NOT raise this back to 2 by adding a
+    // driver: the floor exists to catch a BROKEN SCAN (0 hits), not to require a
+    // particular number of loops.
     expect(
       drivers.length,
       "no gamepad focus driver found — the driver scan is broken, not clean",
-    ).toBeGreaterThanOrEqual(2);
+    ).toBeGreaterThanOrEqual(1);
     const bare = drivers
       .filter((f) => !/from\s+["'][^"']*\/focusGlow["']/.test(stripTs(read(f))))
       .map((f) => `\n  • ${rel(f)} moves DOM focus from a gamepad but imports nothing from ./focusGlow`);

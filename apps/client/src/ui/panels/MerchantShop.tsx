@@ -47,6 +47,7 @@ import { MerchantHeadIcon } from "../components/MerchantHeadIcon";
 import { championIconUrl } from "../icons";
 import { SfxButton } from "../SfxButton";
 import { GOLD, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
+import { padModalScope } from "../padModalScope";
 import { shopCatalogue } from "./champSelectFilter";
 import { useWhitelist } from "./whitelist";
 import { shopGate, shouldAutoOpen } from "./shopGate";
@@ -437,6 +438,12 @@ export function MerchantShop(): React.JSX.Element | null {
         the card, never a section inside it. */}
     <RoundReportCard />
     <div
+      // GH#504 — 30: BELOW augment-draft(40), so 三選一 opened over the shop
+      // takes the pad and hands it back on close. ⭐ Declared only on the OPEN
+      // card (the collapsed branch above returns before this): a scope on the
+      // 🛒 chip would keep the focus layer standing up through live combat and
+      // steal the champion's own stick.
+      {...padModalScope("shop")}
       style={{
         position: "absolute",
         // #107/#106: the registry row for "shop" declares `z: HUD_Z.screen`.
@@ -475,6 +482,7 @@ export function MerchantShop(): React.JSX.Element | null {
           kind="ghost"
           onClick={toggle}
           title="關閉商店"
+          data-pad-back
           style={{
             padding: "2px 10px",
             borderRadius: 6,

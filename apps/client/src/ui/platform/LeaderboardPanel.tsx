@@ -56,6 +56,7 @@ import { GlyphTile } from "../components/GlyphTile";
 import { iconSrc } from "../icons";
 import { SfxButton } from "../SfxButton";
 import { Panel, Btn, ACCENT, OK, DANGER } from "./widgets";
+import { padModalScope } from "../padModalScope";
 import { GOLD, TEXT_DIM, TEXT_MAIN } from "../theme";
 // touch/narrow-viewport layer (crest scaling, thumb-sized rows, 1-col picker)
 import "./ranking.css";
@@ -163,7 +164,12 @@ function TabBar(props: {
 
 // ---------------------------------------------------------------- champion picker
 
-function ChampionPicker(props: {
+/**
+ * ⭐ EXPORTED for the GH#504 guard (`ui/padModalScope.test.ts`): the picker is a
+ * `position:absolute inset:0` overlay, so it MUST declare a pad scope — and the
+ * only honest way to prove it does is to render it and read the markup back.
+ */
+export function ChampionPicker(props: {
   options: ChampOption[];
   onPick: (championId: string) => void;
   onClose: () => void;
@@ -173,6 +179,11 @@ function ChampionPicker(props: {
   const shown = q === "" ? props.options : props.options.filter((o) => o.name.toLowerCase().includes(q) || o.id.toLowerCase().includes(q));
   return (
     <div
+      // GH#504 — 42: under the lobby announcement (45), which paints over the
+      // whole lobby. Without a scope the D-pad walked onto the lobby controls
+      // this overlay covers (visible to `isVisible`, which does no occlusion
+      // test) and B scanned the WHOLE document for a 「關閉」.
+      {...padModalScope("champion-picker")}
       style={{
         position: "absolute",
         inset: 0,
@@ -205,7 +216,7 @@ function ChampionPicker(props: {
             minWidth: 0,
           }}
         />
-        <Btn small onClick={props.onClose}>
+        <Btn small padBack onClick={props.onClose}>
           ✕
         </Btn>
       </div>

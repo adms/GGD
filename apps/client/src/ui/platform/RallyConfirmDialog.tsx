@@ -12,7 +12,7 @@
  * > 「你說的是對的，**預設是加入，五秒是讓人按否定的**」
  *
  * ⇒ 主要按鈕是「**不要**」，⛔ 不是「同意」；**沒有互動就進房**。
- * ⛔ 這不是措辭差異：`waitSeconds` 出貨 **5 秒**，5 秒對「主動點同意」太短 ——
+ * ⛔ 這不是措辭差異：opt-in 要人**主動點同意** ——
  * opt-in 之下幾乎沒有人來得及按，而這張票的目的是「拉人進來」。
  * 後台一格 `joinMode` 可以切回 opt-in（rollback），⛔ 但預設是 opt-out。
  *
@@ -54,6 +54,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useApp } from "./store";
 import { Btn, ACCENT, Panel } from "./widgets";
+import { padModalScope } from "../padModalScope";
 import { activeLobbyRally, rallyAutoJoin, rallyCountdown, rallyDeadline } from "./lobbyRally";
 import { lastUserInputAt, tabHidden } from "./userIdle";
 import { GOLD, TEXT_DIM, TEXT_MAIN } from "../theme";
@@ -125,6 +126,11 @@ export function RallyConfirmDialog(): React.JSX.Element | null {
   const host = call.fromName?.trim() || call.from;
   return (
     <div
+      // GH#504 — 60, 同 LeaveConfirmDialog：這是一個**有期限**的終局選擇。
+      // 沒有它的時候 scope 退回 document.body，方向鍵會把焦點移到遮罩底下的
+      // 大廳按鈕（建房 / 一鍵開打 / 登出），而 pad 的 A 是 `el.click()` ——
+      // scrim 擋得住滑鼠，擋不住手把。
+      {...padModalScope("rally-confirm")}
       style={{
         position: "absolute",
         inset: 0,
@@ -177,7 +183,10 @@ export function RallyConfirmDialog(): React.JSX.Element | null {
         <div style={{ display: "flex", gap: 8 }}>
           {optOut && !idle ? (
             <>
-              <Btn kind="danger" onClick={() => dismissInvite(call.token)} style={{ flex: 1 }}>
+              {/* ⛔「不要」「不了」都不在 backControlIndex 的允許字裡，⛔ 也不可以
+                  為了它們去放寬那張表（那正是 #271 的全域誤觸）。padBack 讓 B
+                  精準關到這一顆。 */}
+              <Btn kind="danger" padBack onClick={() => dismissInvite(call.token)} style={{ flex: 1 }}>
                 不要
               </Btn>
               <Btn onClick={() => void acceptRally(call.token)}>立刻加入</Btn>
@@ -187,7 +196,7 @@ export function RallyConfirmDialog(): React.JSX.Element | null {
               <Btn kind="primary" onClick={() => void acceptRally(call.token)} style={{ flex: 1 }}>
                 加入
               </Btn>
-              <Btn onClick={() => dismissInvite(call.token)}>不了</Btn>
+              <Btn padBack onClick={() => dismissInvite(call.token)}>不了</Btn>
             </>
           )}
         </div>
