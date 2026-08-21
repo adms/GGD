@@ -535,7 +535,10 @@
         "colour": "harp",
         "motif": "下行、留白 —— 冷",
         "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
-        "vocal": "CosyVoice 名句 + 合唱和聲"
+        "vocal": "CosyVoice 名句 + 合唱和聲",
+        "second": "flute",
+        "era": "orchestral",
+        "eraNote": "中世紀歐洲奇幻 —— 豎琴是吟遊詩人的樂器"
       },
       {
         "arena": "arena.heavens-arena",
@@ -571,10 +574,13 @@
           }
         ],
         "rapVoiceRef": "godie-efur.wav",
-        "colour": "trumpet",
+        "colour": "guitar",
         "motif": "四音上行號角 —— 開闊",
         "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
-        "vocal": "CosyVoice 名句 + 合唱和聲"
+        "vocal": "CosyVoice 名句 + 合唱和聲",
+        "second": "trumpet",
+        "era": "modern",
+        "eraNote": "⭐ owner 指定:電吉他 —— 雖是日本作品但場景是**現代都市**高塔"
       },
       {
         "arena": "arena.holy-grail",
@@ -613,7 +619,10 @@
         "colour": "organ",
         "motif": "級進、儀式 —— 厚",
         "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
-        "vocal": "CosyVoice 名句 + 合唱和聲"
+        "vocal": "CosyVoice 名句 + 合唱和聲",
+        "second": "bells",
+        "era": "orchestral",
+        "eraNote": "西洋魔術與教會儀式 —— 管風琴"
       },
       {
         "arena": "arena.infinity-castle",
@@ -649,10 +658,13 @@
           }
         ],
         "rapVoiceRef": "godie-e00w.wav",
-        "colour": "koto",
+        "colour": "shamisen",
         "motif": "切分撥弦 —— 不規則",
         "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
-        "vocal": "CosyVoice 名句 + 合唱和聲"
+        "vocal": "CosyVoice 名句 + 合唱和聲",
+        "second": "koto",
+        "era": "orchestral",
+        "eraNote": "⭐ owner 指定:三味線 —— 呼應**大正日本**與琵琶廳"
       },
       {
         "arena": "arena.nazarick",
@@ -691,7 +703,10 @@
         "colour": "cello",
         "motif": "最低把位 —— 沉",
         "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
-        "vocal": "CosyVoice 名句 + 合唱和聲"
+        "vocal": "CosyVoice 名句 + 合唱和聲",
+        "second": "contrabass",
+        "era": "orchestral",
+        "eraNote": "異世界亡靈墳墓 —— 低音弦樂"
       },
       {
         "arena": "arena.shiganshina",
@@ -727,10 +742,13 @@
           }
         ],
         "rapVoiceRef": "godie-h01n.wav",
-        "colour": "tremolo",
+        "colour": "bells",
         "motif": "重複音起手的進行曲 —— 本批原型",
         "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
-        "vocal": "CosyVoice 名句 + 合唱和聲"
+        "vocal": "CosyVoice 名句 + 合唱和聲",
+        "second": "tremolo",
+        "era": "orchestral",
+        "eraNote": "⭐ owner 指定:**警鐘/管鐘** —— 巨人來襲的警報感"
       },
       {
         "arena": "arena.world-tree",
@@ -766,10 +784,13 @@
           }
         ],
         "rapVoiceRef": "godie-etyr.wav",
-        "colour": "pluck",
+        "colour": "celesta",
         "motif": "高把位流動 —— 亮",
         "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
-        "vocal": "CosyVoice 名句 + 合唱和聲"
+        "vocal": "CosyVoice 名句 + 合唱和聲",
+        "second": "glock",
+        "era": "orchestral",
+        "eraNote": "妖精鄉 VRMMO —— 鋼片琴是「魔法」的音色"
       },
       {
         "arena": "arena.castle",
@@ -787,10 +808,13 @@
           "大教堂（bed）"
         ],
         "rap": [],
-        "colour": "trombone",
+        "colour": "harpsi",
         "motif": "三和弦分解 —— 端正",
         "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
-        "vocal": "合唱團唱本圖 motif（和聲混曲）"
+        "vocal": "合唱團唱本圖 motif（和聲混曲）",
+        "second": "viola",
+        "era": "orchestral",
+        "eraNote": "中世紀／文藝復興宮廷 —— 大鍵琴"
       },
       {
         "arena": "arena.colosseum",
@@ -811,7 +835,10 @@
         "colour": "brass",
         "motif": "雙擊行軍 —— 群眾",
         "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
-        "vocal": "合唱團唱本圖 motif（和聲混曲）"
+        "vocal": "合唱團唱本圖 motif（和聲混曲）",
+        "second": "timpani",
+        "era": "orchestral",
+        "eraNote": "古羅馬 —— 銅管即羅馬軍號 cornu"
       },
       {
         "arena": "arena.dota",
@@ -829,10 +856,13 @@
           "湖水（bed）"
         ],
         "rap": [],
-        "colour": "shamisen",
+        "colour": "supersaw",
         "motif": "十六分回音 —— 輕",
         "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
-        "vocal": "合唱團唱本圖 motif（和聲混曲）"
+        "vocal": "合唱團唱本圖 motif（和聲混曲）",
+        "second": "celesta",
+        "era": "modern",
+        "eraNote": "⭐ owner 指定:合成器 —— **電子競技**感"
       },
       {
         "arena": "arena.godie",
@@ -850,10 +880,13 @@
           "大鍋沸騰（bed）"
         ],
         "rap": [],
-        "colour": "guitar",
+        "colour": "bagpipe",
         "motif": "逐級推上去 —— 直接",
         "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
-        "vocal": "合唱團唱本圖 motif（和聲混曲）"
+        "vocal": "合唱團唱本圖 motif（和聲混曲）",
+        "second": "brass",
+        "era": "orchestral",
+        "eraNote": "⭐ owner 指定:蘇格蘭風笛 —— **魔獸爭霸人類主題偏凱爾特風**"
       },
       {
         "arena": "arena.skeleton",
@@ -871,10 +904,13 @@
           "風車（bed）"
         ],
         "rap": [],
-        "colour": "piano",
+        "colour": "xylo",
         "motif": "拱形、溫和 —— 不危險",
         "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
-        "vocal": "合唱團唱本圖 motif（和聲混曲）"
+        "vocal": "合唱團唱本圖 motif（和聲混曲）",
+        "second": "harp",
+        "era": "orchestral",
+        "eraNote": "⭐ owner 指定:木琴 —— 骷髏主題呼應**死亡之舞**（聖桑用木琴敲骨頭）"
       },
       {
         "arena": "arena.royale",
@@ -892,15 +928,19 @@
           "滾雷（bed）"
         ],
         "rap": [],
-        "colour": "horn",
+        "colour": "synthdrum",
         "motif": "開闊四五度 —— 最大",
         "sceneSource": "Warcraft III Sound\\Ambient (Blizzard)",
-        "vocal": "合唱團唱本圖 motif（和聲混曲）"
+        "vocal": "合唱團唱本圖 motif（和聲混曲）",
+        "second": "trombone",
+        "era": "modern",
+        "eraNote": "⭐ owner 指定:工業打擊/808 鼓機 —— **未來大逃殺**"
       }
     ],
     "rapNote": "RAP 由 CosyVoice 3 預先算成 committed 的 wav(tools/bgm-gen/vox/),⛔ 不在 render 時呼叫模型。名句由 owner 2026-08-22 逐句指定(芙莉蓮/天空鬥技場/無限城/納薩力克/世界樹核心);希干希納與大聖杯維持原樣。長句在 bar 28 改放切出來的短句 —— 轉折只有 4 小節,整句會拖進高潮段被埋掉。位階實測 bar22 −1.8~+0.9 dB · bar28 −6.8~−3.3 dB。",
     "versionNote": "⛔ 舊版不刪除(owner 2026-08-22:「舊的歌不要刪除,移到 leagcy 備份就好 不要直接取代」)。render.py 的 archive_previous() 在覆蓋前把上一版複製到 docs/legacy/_bgm-versions/<track>/,內容定址(同一份位元組只留一次)。名言 wav 同理,落在 _bgm-versions/_vox/。",
     "arcNote": "⭐ 弧線 2026-08-22 改版(owner:「導入與熱血驅動 每一首都太像了…特別是一開頭 安靜幾秒只有環境音效 辨識度要非常高」):bars 0–2 = **零樂器,只有該場地的 WC3 環境音**(實測 −29~−33 dB,而 2–8 小節的招牌旋律比它大 +11~+17 dB);bars 2–8 = 該場地**專屬 motif** 獨奏。⛔ 之前 13 首在熱血段放的是同一個 HOOK_CELL。",
-    "fxNote": "⛔ 這一批**不含任何合成過場件**(riser/impact/downlifter)。owner 2026-08-22 對回落的下滑掃頻:「我非常討厭因為很廉價」——根因是音色庫沒有 EDM 過場件,那五個是全曲唯一還走振盪器的層。⇒ 換成管弦樂手勢:顫音弦樂漸強、定音鼓滾奏、真鈸+太鼓落點。"
+    "fxNote": "⛔ 這一批**不含任何合成過場件**(riser/impact/downlifter)。owner 2026-08-22 對回落的下滑掃頻:「我非常討厭因為很廉價」——根因是音色庫沒有 EDM 過場件,那五個是全曲唯一還走振盪器的層。⇒ 換成管弦樂手勢:顫音弦樂漸強、定音鼓滾奏、真鈸+太鼓落點。",
+    "eraNote": "⭐ 2026-08-22 風格改版。owner:「拆解 FATE 系列的元素…目前聽起來有點太現代了 可能是樂器的關係？」—— **量到的答案是:不是樂器**。13 首全部帶著側鏈抽吸(0.42–0.70)、supersaw、reese 低音、四四拍 kick+clap+hat。那四個是**製作慣例**,換樂器不會有用。\n⇒ 收成一格 `era`:`orchestral` 把四個全關(側鏈歸零、太鼓+定音鼓取代流行鼓、低音只留 sub+contrabass),`modern` 保留。實測抽吸深度 orchestral 4.0–5.4 dB vs modern 7.6–7.8 dB,⛔ 零重疊。\n⭐ owner 又立了第二條:「每張地圖都有其設定的時代背景，應該要用到設定時代的代表樂器作為主旋律才對，但又不能跟其他首重複」⇒ 主旋律 13/13 不重複,且每一張都有 `eraNote` 寫下理由(⛔ 不是「聽起來像」)。三張留在 modern 是**對的**:現代都市高塔、電子競技、未來大逃殺。"
   }
 }

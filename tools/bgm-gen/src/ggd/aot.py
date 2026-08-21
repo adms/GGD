@@ -108,7 +108,14 @@ _MISSING_VOX: list[str] = []
 #   ⛔ NO `scene` key: the arena's scene recordings are bound per-arena in
 #      tools/bgm-gen/env/MANIFEST.json, keyed by the SAME arena id as this
 #      table. Naming them twice would be a second home that goes stale.
-#   colour   the ostinato instrument — the track's fingerprint.
+#   colour   ⭐ THE PERIOD INSTRUMENT OF THAT MAP'S SETTING, and it carries the
+#            motif everywhere — signature, drive, climax. owner 2026-08-22:
+#            「每張地圖都有其設定的時代背景，應該要用到設定時代的代表樂器作為主旋律
+#            才對，但又不能跟其他首重複」. ⛔ My first pass picked by "what sounds
+#            like the place", which is a weaker rule and produced piano ×3.
+#            `eraNote` records the justification per map, so a future swap has to
+#            argue with a reason rather than a preference.
+#   second   the CLIMAX counter-line colour. Also distinct across the thirteen.
 #            ⭐ ALL THIRTEEN ARE DIFFERENT. owner 2026-08-22:「每一首都要是獨特的
 #            樂器音色跟環境音效，不能重複」—— before that, `piano` was on three
 #            maps and `harp` on two, which is most of why the openings blurred.
@@ -120,6 +127,17 @@ _MISSING_VOX: list[str] = []
 #   kit      drumkit preset for DRIVE
 #   vowels   (hollow vowel, climax vowel) for the choir
 #   hollow   what carries the low point: "solo" | "strings" | "pad"
+#   era      "orchestral"（預設）or "modern". ⭐ THE FOUR TELLS, in one field.
+#            owner 2026-08-22:「拆解 FATE 系列的元素…目前聽起來有點太現代了
+#            可能是樂器的關係？」— measured answer: it was NOT the instruments.
+#            Thirteen tracks all carried a sidechain pump (0.42–0.70), a
+#            supersaw, a reese bass and a four-on-the-floor kick+clap+hat grid.
+#            Those four are PRODUCTION conventions; swapping the melody onto a
+#            koto changes nothing while they are running.
+#            "orchestral" turns all four off and hands their jobs to the
+#            梶浦由記 register: solo violin, harpsichord, tubular bells, struck
+#            percussion, contrabass. ⛔ It is a FIELD, not a decision I made for
+#            him — flipping one map back to "modern" is one word.
 #   brass    the CLIMAX horn stack — real recorded brass is what makes this
 #            register read as 進擊的巨人 rather than as a synth pad
 
@@ -127,105 +145,131 @@ MAPS: dict[str, dict] = {
     "arena.frieren": dict(
         name="芙莉蓮迷宮", seed=5301,
         prog=music.PROG_DARK, prog_climax=music.PROG_HOME,
-        colour="harp", motif=[(0,1.5,7),(2,1.5,4),(4,4,2)], motifNote="下行、留白 —— 冷",
+        colour="harp", second="flute", era="orchestral",
+        motif=[(0,1.5,7),(2,1.5,4),(4,4,2)], motifNote="下行、留白 —— 冷",
         shape=(0, 4, 2, 4), subdiv=8, kit="drive",
         brass="horn", vowels=("oo", "ah"), hollow="solo", pump=0.50,
+        eraNote="中世紀歐洲奇幻 —— 豎琴是吟遊詩人的樂器",
         note="stone · 雪藍 peaks · ruin_hall · magic_door gates ⇒ 冷、稀疏、水晶質地",
     ),
     "arena.heavens-arena": dict(
         name="天空鬥技場", seed=5302,
         prog=music.PROG_DRIVE, prog_climax=music.PROG_RISE,
-        colour="trumpet", motif=[(0,1,4),(1,1,7),(2,1,9),(3,3,11)], motifNote="四音上行號角 —— 開闊",
+        colour="guitar", second="trumpet", era="modern",
+        motif=[(0,1,4),(1,1,7),(2,1,9),(3,3,11)], motifNote="四音上行號角 —— 開闊",
         shape=(0, 2, 4, 6), subdiv=8, kit="rock",
         brass="horn", vowels=("oh", "ah"), hollow="pad", pump=0.55,
+        eraNote="⭐ owner 指定:電吉他 —— 雖是日本作品但場景是**現代都市**高塔",
         note="wood · cloudSea · ring ⇒ 高、亮、開闊；上行的 climax",
     ),
     "arena.holy-grail": dict(
         name="大聖杯洞窟", seed=5303,
         prog=music.PROG_DARK, prog_climax=music.PROG_RESOLVE,
-        colour="organ", motif=[(0,2,0),(2,1,1),(3,1,2),(4,4,1)], motifNote="級進、儀式 —— 厚",
+        colour="organ", second="bells", era="orchestral",
+        motif=[(0,2,0),(2,1,1),(3,1,2),(4,4,1)], motifNote="級進、儀式 —— 厚",
         shape=(0, 1, 2, 1), subdiv=8, kit="epic",
         brass="brass", vowels=("oo", "oh"), hollow="pad", pump=0.62,
+        eraNote="西洋魔術與教會儀式 —— 管風琴",
         note="stone · 金邊 towers · grail · mud gates ⇒ 厚、儀式感、低男聲",
     ),
     "arena.infinity-castle": dict(
         name="無限城", seed=5304,
         prog=music.PROG_DRIVE, prog_climax=music.PROG_DARK,
-        colour="koto", motif=[(0,.5,7),(.75,.5,6),(1.5,.5,4),(2.5,1.5,7)], motifNote="切分撥弦 —— 不規則",
+        colour="shamisen", second="koto", era="orchestral",
+        motif=[(0,.5,7),(.75,.5,6),(1.5,.5,4),(2.5,1.5,7)], motifNote="切分撥弦 —— 不規則",
         shape=(0, 2, 3, 2), subdiv=16, kit="drive",
         brass="horn", vowels=("ah", "ah"), hollow="solo", pump=0.58,
+        eraNote="⭐ owner 指定:三味線 —— 呼應**大正日本**與琵琶廳",
         note="tatami · torii · biwa_hall · 拉門 ⇒ 撥弦為主、16 分驅動",
     ),
     "arena.nazarick": dict(
         name="納薩力克大墳墓", seed=5305,
         prog=music.PROG_DARK, prog_climax=music.PROG_DARK,
-        colour="cello", motif=[(0,2,-7),(2,2,-5),(4,4,-7)], motifNote="最低把位 —— 沉",
+        colour="cello", second="contrabass", era="orchestral",
+        motif=[(0,2,-7),(2,2,-5),(4,4,-7)], motifNote="最低把位 —— 沉",
         shape=(0, 2, 4, 2), subdiv=8, kit="epic",
         brass="brass", vowels=("oo", "oh"), hollow="pad", pump=0.66,
+        eraNote="異世界亡靈墳墓 —— 低音弦樂",
         note="obsidian · 亡靈綠 pagoda · throne ⇒ 全套最重；合唱壓到低把位",
     ),
     "arena.shiganshina": dict(
         name="希干希納", seed=5306,
         prog=music.PROG_DRIVE, prog_climax=music.PROG_RISE,
-        colour="tremolo", motif=[(0,1,4),(1,1,4),(2,2,7),(4,1,6),(5,3,5)], motifNote="重複音起手的進行曲 —— 本批原型",
+        colour="bells", second="tremolo", era="orchestral",
+        motif=[(0,1,4),(1,1,4),(2,2,7),(4,1,6),(5,3,5)], motifNote="重複音起手的進行曲 —— 本批原型",
         shape=(0, 4, 2, 4), subdiv=8, kit="march",
         brass="brass", vowels=("ah", "ah"), hollow="strings", pump=0.60, hook="A",
+        eraNote="⭐ owner 指定:**警鐘/管鐘** —— 巨人來襲的警報感",
         note="dirt · 磚 towers · plaza · city_gate ⇒ 進行曲；⭐ 這一張是本批的原型",
     ),
     "arena.world-tree": dict(
         name="世界樹核心", seed=5307,
         prog=music.PROG_RESOLVE, prog_climax=music.PROG_HOME,
-        colour="pluck", motif=[(0,1,9),(1,1,11),(2,1,10),(3,1,9),(4,4,7)], motifNote="高把位流動 —— 亮",
+        colour="celesta", second="glock", era="orchestral",
+        motif=[(0,1,9),(1,1,11),(2,1,10),(3,1,9),(4,4,7)], motifNote="高把位流動 —— 亮",
         shape=(0, 2, 4, 5), subdiv=16, kit="four",
         brass="horn", vowels=("ah", "ah"), hollow="strings", pump=0.48,
+        eraNote="妖精鄉 VRMMO —— 鋼片琴是「魔法」的音色",
         note="grass · sakura · tree_core · warp gates ⇒ 明亮；女聲高把位",
     ),
     "arena.castle": dict(
         name="城堡競技場（室內）", seed=5308,
         prog=music.PROG_HOME, prog_climax=music.PROG_DRIVE,
-        colour="trombone", motif=[(0,1,0),(1,1,2),(2,1,4),(3,3,2)], motifNote="三和弦分解 —— 端正",
+        colour="harpsi", second="viola", era="orchestral",
+        motif=[(0,1,0),(1,1,2),(2,1,4),(3,3,2)], motifNote="三和弦分解 —— 端正",
         shape=(0, 2, 4, 2), subdiv=8, kit="rock",
         brass="horn", vowels=("oh", "ah"), hollow="pad", pump=0.55,
+        eraNote="中世紀／文藝復興宮廷 —— 大鍵琴",
         note="stone · 室內 ⇒ ⚠️ colour 原本是 strings,與希干希納的 tremolo 量到只差 0.46(中位 1.52)——同為弓弦、同一條匯流排。換成長號:銅管在石廳裡的殘響是這張圖自己的東西。 通用場地：弦樂 ostinato，⛔ 不掛任何作品名句",
     ),
     "arena.colosseum": dict(
         name="羅馬大擂台（室外）", seed=5309,
         prog=music.PROG_RISE, prog_climax=music.PROG_RISE,
-        colour="brass", motif=[(0,1,0),(1,1,0),(2,1,4),(3,1,4),(4,1,5),(5,3,4)], motifNote="雙擊行軍 —— 群眾",
+        colour="brass", second="timpani", era="orchestral",
+        motif=[(0,1,0),(1,1,0),(2,1,4),(3,1,4),(4,1,5),(5,3,4)], motifNote="雙擊行軍 —— 群眾",
         shape=(0, 2, 4, 2), subdiv=8, kit="march",
         brass="brass", vowels=("ah", "ah"), hollow="strings", pump=0.58,
+        eraNote="古羅馬 —— 銅管即羅馬軍號 cornu",
         note="sand · 室外 ⇒ 群眾與行軍；⛔ 不掛任何作品名句",
     ),
     "arena.dota": dict(
         name="Dota 三路河道（迷你）", seed=5310,
         prog=music.PROG_HOME, prog_climax=music.PROG_DRIVE,
-        colour="shamisen", motif=[(0,.5,4),(.5,.5,6),(1,.5,7),(1.5,.5,6),(2,2,4)], motifNote="十六分回音 —— 輕",
+        colour="supersaw", second="celesta", era="modern",
+        motif=[(0,.5,4),(.5,.5,6),(1,.5,7),(1.5,.5,6),(2,2,4)], motifNote="十六分回音 —— 輕",
         shape=(0, 2, 4, 6), subdiv=16, kit="four",
         brass="horn", vowels=("oo", "ah"), hollow="pad", pump=0.52,
+        eraNote="⭐ owner 指定:合成器 —— **電子競技**感",
         note="grass · 河道 ⇒ 輕、流動；⛔ 不掛任何作品名句",
     ),
     "arena.godie": dict(
         name="去死團的逆襲 EX 2.2s", seed=5311,
         prog=music.PROG_DRIVE, prog_climax=music.PROG_DRIVE,
-        colour="guitar", motif=[(0,1,0),(1,1,0),(2,1,2),(3,1,3),(4,4,4)], motifNote="逐級推上去 —— 直接",
+        colour="bagpipe", second="brass", era="orchestral",
+        motif=[(0,1,0),(1,1,0),(2,1,2),(3,1,3),(4,4,4)], motifNote="逐級推上去 —— 直接",
         shape=(0, 3, 2, 3), subdiv=16, kit="drive",
         brass="brass", vowels=("ah", "ah"), hollow="solo", pump=0.66, hook="A",
+        eraNote="⭐ owner 指定:蘇格蘭風笛 —— **魔獸爭霸人類主題偏凱爾特風**",
         note="dirt · 本家場地 ⇒ 最直接的 drive；⭐ 這張圖是遊戲自己的名字",
     ),
     "arena.skeleton": dict(
         name="新手競技場", seed=5312,
         prog=music.PROG_RESOLVE, prog_climax=music.PROG_HOME,
-        colour="piano", motif=[(0,1.5,7),(1.5,1.5,9),(3,1,8),(4,4,7)], motifNote="拱形、溫和 —— 不危險",
+        colour="xylo", second="harp", era="orchestral",
+        motif=[(0,1.5,7),(1.5,1.5,9),(3,1,8),(4,4,7)], motifNote="拱形、溫和 —— 不危險",
         shape=(0, 2, 4, 2), subdiv=8, kit="halftime",
         brass="horn", vowels=("oo", "oh"), hollow="pad", pump=0.42, headroom=0.74,
+        eraNote="⭐ owner 指定:木琴 —— 骷髏主題呼應**死亡之舞**（聖桑用木琴敲骨頭）",
         note="stone · 新手 ⇒ ⭐ 唯一刻意不危險的一首：最輕的 kit、最低的 pump",
     ),
     "arena.royale": dict(
         name="終局大混戰", seed=5313,
         prog=music.PROG_DRIVE, prog_climax=music.PROG_HOME,
-        colour="horn", motif=[(0,2,0),(2,2,4),(4,2,7),(6,2,11)], motifNote="開闊四五度 —— 最大",
+        colour="synthdrum", second="trombone", era="modern",
+        motif=[(0,2,0),(2,2,4),(4,2,7),(6,2,11)], motifNote="開闊四五度 —— 最大",
         shape=(0, 4, 2, 4), subdiv=8, kit="epic",
         brass="brass", vowels=("oh", "ah"), hollow="strings", pump=0.70, hook="A",
+        eraNote="⭐ owner 指定:工業打擊/808 鼓機 —— **未來大逃殺**",
         note="決賽場地（刻意不在輪替池）⇒ 全套最大；climax 敢直接引用 HOOK_A",
     ),
 }
@@ -397,12 +441,21 @@ def build(arena_id: str) -> Score:
         raise ValueError(f"unknown arena {arena_id!r}; have {sorted(MAPS)}")
     m = MAPS[arena_id]
     hollow_kind = m.get("hollow", "pad")
+    era = m.get("era", "orchestral")
+    modern = era == "modern"
+    # The four tells, resolved once so the arc below reads as musical intent.
+    # ⭐ The map's own period instrument carries the melody. ⛔ Not one shared
+    # solo violin — that is the same repeat in a different costume.
+    lead_voice = "supersaw" if modern else m["colour"]
+    bass_style = "both" if modern else "sub"
+    kit = m["kit"] if modern else "orchestral"
+    pump = m.get("pump", 0.55) if modern else 0.0
     v_low, v_high = m["vowels"]
 
     s = Score(
         id=score_id(arena_id), title=m["name"], mood=m["note"],
         bpm=BPM, bars=BARS, key="Dm", seed=m["seed"], loop=True,
-        pump_depth=m.get("pump", 0.55), hall=3.4,
+        pump_depth=pump, hall=3.4,
         # ⚠️ Per-map, because the true-peak a track lands on depends on its own
         # crest factor, not on a global setting. `map.skeleton` measured
         # **−0.93 dBTP** against the gate's −1.0 ceiling — the gentlest mix in
@@ -438,21 +491,29 @@ def build(arena_id: str) -> Score:
                 effort=0.26, parts=("tenor", "bass"), voices_scale=0.5)
 
     # ---- DRIVE — 熱血
-    s.drumkit(DRIVE, style=m["kit"])
-    s.bass(DRIVE, "X..x..X.X..x..X.", style="both", gain=0.85)
+    s.drumkit(DRIVE, style=kit)
+    s.bass(DRIVE, "X..x..X.X..x..X." if modern else "X.......X.......",
+           style=bass_style, gain=0.85)
+    if not modern:
+        # the low string floor a reese used to occupy
+        s.chords(DRIVE, voice="contrabass", octave=-1, gain=0.26, cutoff=900.0)
     s.choir_chant(DRIVE, "x...x...x.x.x...", vowel=v_high, gain=0.85,
                   parts=("tenor", "bass"))
     s.chords(DRIVE, voice="strings", gain=0.22, cutoff=3200.0)
-    s.ostinato(DRIVE, voice="supersaw", shape=m["shape"], subdiv=m["subdiv"],
-               octave=1, gain=0.16, pan=0.20)
+    # ⛔ NOT a shared harpsichord: that would have put one instrument on twelve
+    # of thirteen tracks, which is the exact repeat owner just ruled out — and it
+    # would have collided with 城堡, whose PERIOD instrument is the harpsichord.
+    s.ostinato(DRIVE, voice="supersaw" if modern else m["colour"],
+               shape=m["shape"], subdiv=m["subdiv"] if modern else 12,
+               octave=1, gain=0.16 if modern else 0.22, pan=0.20)
     # ⭐ THE DRIVE CARRIES THIS MAP'S MOTIF, not the pack's shared cell.
     # owner:「導入與熱血驅動 每一首都太像了」— and he was right: every track
     # used to state `HOOK_CELL` here, so thirteen drives opened with the same
     # three notes. The cell still belongs to the pack; it just is not what makes
     # one arena sound like itself.
     s.melody(DRIVE[0] + 4, motif, voice=m["colour"], bus="lead", gain=0.30)
-    s.melody(DRIVE[0] + 8, motif_notes(m["motif"], octave=1), voice="supersaw",
-             bus="lead", gain=0.20)
+    s.melody(DRIVE[0] + 8, motif_notes(m["motif"], octave=1), voice=lead_voice,
+             bus="lead", gain=0.20 if modern else 0.34)
 
     # ---- HOLLOW — ⭐ 收束靜止低潮. No kit. No bass. This is the floor.
     if hollow_kind == "solo":
@@ -487,27 +548,30 @@ def build(arena_id: str) -> Score:
     # before the sample bank — the oscillator kit has no bowed tremolo at all.
     s.chords(TURN, voice="tremolo", gain=0.34, cutoff=5000.0)
     s.choir_pad(TURN, vowel=v_high, dyn=0.70, gain=0.85, effort=0.55, per_bar=2)
-    s.bass((TURN[0] + 2, TURN[1]), "X...X...X...X...", style="reese", gain=0.70)
-    s.drumkit((TURN[1] - 1, TURN[1]), style="drive", gain=0.8)
+    s.bass((TURN[0] + 2, TURN[1]), "X...X...X...X...",
+           style="reese" if modern else "sub", gain=0.70)
+    s.drumkit((TURN[1] - 1, TURN[1]), style="drive" if modern else "orchestral", gain=0.8)
     # the landing: real cymbal + taiko + a brass stab on the downbeat
     s.drum("cymbal", "X...............", (CLIMAX[0], CLIMAX[0] + 1), gain=0.62)
     s.drum("taiko", "X...............", (CLIMAX[0], CLIMAX[0] + 1), gain=0.9)
 
     # ---- CLIMAX — 高潮
     s.progression(list(m["prog"]))          # DRIVE/HOLLOW cycle stays authoritative
-    s.drumkit(CLIMAX, style="drive", gain=1.05)
+    s.drumkit(CLIMAX, style="drive" if modern else "orchestral", gain=1.05)
     s.drum("taiko", "X...X...X..xX.x.", CLIMAX, gain=0.62, humanize=0.006)
     s.drum("cymbal", "X...............", (CLIMAX[0], CLIMAX[0] + 1), gain=0.45)
-    s.bass(CLIMAX, "X..x..X.X..x..X.", style="both", gain=0.92)
+    s.bass(CLIMAX, "X..x..X.X..x..X." if modern else "X...X...X...X...",
+           style=bass_style, gain=0.92)
     s.choir_pad(CLIMAX, vowel=v_high, dyn=0.86, gain=1.0, effort=0.72, per_bar=2)
     if m.get("hook") == "A":
         s.choir_hook((CLIMAX[0] + 4, CLIMAX[0] + 8), phrase="A", vowel=v_high,
                      gain=0.9)
-        s.lead((CLIMAX[0] + 4, CLIMAX[0] + 8), phrase="A", octave=-1, gain=0.46)
+        s.lead((CLIMAX[0] + 4, CLIMAX[0] + 8), phrase="A", octave=-1, gain=0.46,
+               voice="supersaw" if modern else lead_voice)
     else:
         s.melody(CLIMAX[0] + 4, motif_notes(m["motif"], octave=1),
-                 voice="supersaw", gain=0.40)
-        s.melody(CLIMAX[0] + 8, motif, voice=m["brass"], bus="strings", gain=0.30)
+                 voice=lead_voice, gain=0.40 if modern else 0.52)
+        s.melody(CLIMAX[0] + 8, motif, voice=m["second"], bus="strings", gain=0.30)
     s.chords(CLIMAX, voice="strings", gain=0.26, cutoff=4200.0)
     # ⭐ THE HORN STACK — recorded brass under the choir, holding whole bars an
     # octave below the voices. ⛔ Not a supersaw pretending: the reason this
@@ -517,8 +581,9 @@ def build(arena_id: str) -> Score:
              cutoff=5200.0)
     s.chords((CLIMAX[0] + 6, CLIMAX[1]), voice="trombone", octave=-1, gain=0.18,
              rhythm="X.......X.......", hit_beats=2.0)
-    s.ostinato(CLIMAX, voice="supersaw", shape=m["shape"], subdiv=m["subdiv"],
-               octave=1, gain=0.22, pan=0.22)
+    s.ostinato(CLIMAX, voice="supersaw" if modern else m["second"],
+               shape=m["shape"], subdiv=m["subdiv"] if modern else 12,
+               octave=1, gain=0.22 if modern else 0.26, pan=0.22)
 
     # ---- DESCENT — fall back to what bar 0 already is, so the join is a return
     s.chords(DESCENT, voice="pad", gain=0.22, cutoff=1600.0)

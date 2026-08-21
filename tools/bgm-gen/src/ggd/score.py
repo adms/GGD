@@ -119,25 +119,41 @@ GRID_GAIN = {"X": 1.0, "x": 0.72, "o": 0.40, ".": 0.0, "-": 0.0}
 # oscillator kit never had, so they are routed here too — ⛔ a voice missing from
 # these tables raises a KeyError deep inside a layer closure, which reads as a
 # bug in the score rather than as "that instrument has no home".
-#: ⭐ ONE table, every playable voice. ⛔ Not two hand-kept lists: keeping them
-#: separate is what made `trumpet`, `brass`, `horn` and `shamisen` each surface
-#: as a KeyError thrown from inside a layer closure, one render at a time —
-#: exactly the run-fix-run shape 第零守則 forbids. A voice added to `sampler`
-#: and missing from here is now a single edit, in one place.
-_VOICE_BUS = {
-    # the original oscillator kit
-    "pad": "pad", "strings": "strings", "supersaw": "lead", "guitar": "gtr",
-    "piano": "keys", "pluck": "keys",
-    # orchestral colours the soundfont added (GH#531)
-    "tremolo": "strings", "cello": "strings", "organ": "pad",
-    "horn": "strings", "brass": "strings", "trombone": "strings",
-    "trumpet": "strings", "timpani": "perc", "taiko": "perc",
-    # ethnic plucks + harp — the per-arena fingerprints
-    "harp": "keys", "koto": "keys", "shamisen": "keys",
-    # sampled voices (the 和聲混曲 layer)
-    "choir": "pad", "voiceoo": "pad",
+#: ⭐ DERIVED from `sampler.PITCHED`, ⛔ not hand-copied. Hand-copying is exactly
+#: what failed twice: first `trumpet`/`brass`/`horn`/`shamisen` surfaced as
+#: KeyErrors one render at a time, and then — one hour after I merged the two
+#: lists "so a new voice is a single edit" — I added nine Fate-register
+#: instruments to the sampler and forgot that single edit anyway. A table that
+#: has to be remembered is not one table, it is two.
+#:
+#: A voice's bus follows from what it IS. Anything the sampler gains later lands
+#: on `keys` by default, which is playable and wrong-ish rather than a crash.
+_BUS_BY_FAMILY = {
+    "pad": ("pad", "organ"),
+    "lead": ("supersaw",),
+    "gtr": ("guitar",),
+    "strings": ("strings", "tremolo", "cello", "viola", "violin", "contrabass",
+                "horn", "brass", "trombone", "trumpet", "flute", "oboe", "bagpipe"),
+    "perc": ("timpani", "taiko", "synthdrum"),
+    "keys": ("piano", "pluck", "harp", "koto", "shamisen", "harpsi",
+             "glock", "celesta", "bells", "xylo"),
+    "sub": ("sub", "reese"),
 }
 
+
+def _voice_bus() -> dict[str, str]:
+    from . import sampler
+    out: dict[str, str] = {}
+    for bus, names in _BUS_BY_FAMILY.items():
+        for n in names:
+            out[n] = bus
+    for n in sampler.PITCHED:                 # anything new is playable, not fatal
+        out.setdefault(n, "keys")
+    out.update({"choir": "pad", "voiceoo": "pad"})
+    return out
+
+
+_VOICE_BUS = _voice_bus()
 CHORD_BUS = dict(_VOICE_BUS)
 OSTINATO_BUS = {k: v for k, v in _VOICE_BUS.items() if k not in ("choir", "voiceoo")}
 
@@ -535,6 +551,13 @@ class Score:
                           hat="", taiko="X.......X.......", tgain=0.7),
             "epic": dict(kick="X.......X.......", snare="", hat="",
                          taiko="X...X...X..xX.x.", tgain=0.95),
+            # ⭐ ORCHESTRAL — the one kit with no drum-machine in it.
+            # owner 2026-08-22:「目前聽起來有點太現代了」. A kick+clap+hihat grid
+            # is a POP kit; it says "2010s game score" no matter what plays the
+            # melody. This one is struck percussion only: a taiko on the strong
+            # beats, a timpani figure, and nothing on the offbeats.
+            "orchestral": dict(kick="", snare="", hat="", clap="",
+                               taiko="X.......X...X...", tgain=0.85),
             "none": dict(),
         }[style]
         if P.get("kick"):

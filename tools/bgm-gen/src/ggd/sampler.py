@@ -101,6 +101,24 @@ PITCHED: dict[str, dict] = {
     "shamisen": dict(prog=106, lo=40, hi=88,  name="Shamisen"),
     "taiko":    dict(prog=116, lo=28, hi=60,  name="Taiko Drum"),
     "organ":    dict(prog=19,  lo=24, hi=96,  name="Church Organ"),
+    # NEW — the 梶浦由記 / Fate register (2026-08-22, owner:「拆解 FATE 系列的元素…
+    # 目前聽起來有點太現代了」). ⭐ These are not decoration: a solo violin, a
+    # harpsichord and tubular bells are the three sounds that place a cue in
+    # that world, and none of them existed in the oscillator kit OR in the bank
+    # until now — which is most of why every track reached for a supersaw.
+    "violin":   dict(prog=40,  lo=55, hi=100, name="Violin"),
+    "viola":    dict(prog=41,  lo=48, hi=88,  name="Viola"),
+    "harpsi":   dict(prog=6,   lo=29, hi=89,  name="Harpsichord"),
+    "glock":    dict(prog=9,   lo=72, hi=108, name="Glockenspiel"),
+    "celesta":  dict(prog=8,   lo=60, hi=108, name="Celesta"),
+    "bells":    dict(prog=14,  lo=48, hi=84,  name="Tubular Bells"),
+    "flute":    dict(prog=73,  lo=59, hi=96,  name="Flute"),
+    "oboe":     dict(prog=68,  lo=58, hi=91,  name="Oboe"),
+    "contrabass": dict(prog=43, lo=28, hi=60, name="Contrabass"),
+    # owner 2026-08-22 逐張點名的時代樂器
+    "bagpipe":  dict(prog=109, lo=55, hi=84,  name="Bagpipe"),      # 魔獸人類主題的凱爾特風
+    "xylo":     dict(prog=13,  lo=65, hi=96,  name="Xylophone"),    # 骷髏／死亡之舞
+    "synthdrum":dict(prog=118, lo=36, hi=72,  name="Synth Drum"),   # 808／工業打擊
     "choir":    dict(prog=52,  lo=36, hi=84,  name="Choir Aahs"),
     "voiceoo":  dict(prog=53,  lo=36, hi=84,  name="Voice Oohs"),
 }
@@ -117,7 +135,8 @@ PERCUSSION: dict[str, dict] = {
 
 #: Voices that hold indefinitely and may need to loop past the banked length.
 SUSTAINING = {"strings", "pad", "supersaw", "horn", "brass", "trombone",
-              "trumpet", "organ", "choir", "voiceoo", "tremolo", "sub", "reese"}
+              "trumpet", "organ", "choir", "voiceoo", "tremolo", "sub", "reese",
+              "violin", "viola", "flute", "oboe", "contrabass"}
 
 
 #: The master switch. ON whenever the soundfont + a built bank are present;
