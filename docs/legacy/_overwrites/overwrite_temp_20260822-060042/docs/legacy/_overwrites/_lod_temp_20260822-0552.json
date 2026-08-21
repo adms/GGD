@@ -1,0 +1,1172 @@
+{
+  "schema": "lod@1",
+  "generatedBy": "tools/lod-gen/gen_lod.py",
+  "tiers": [
+    "mid",
+    "small"
+  ],
+  "models": {
+    "assets/models/guardians/guardian_beast.glb": {
+      "bytes": 309684,
+      "triangles": 1332,
+      "mid": {
+        "path": "assets/models/guardians/guardian_beast-mid.glb",
+        "bytes": 226048,
+        "triangles": 726
+      },
+      "small": {
+        "path": "assets/models/guardians/guardian_beast-small.glb",
+        "bytes": 148484,
+        "triangles": 402
+      }
+    },
+    "assets/models/guardians/guardian_stone.glb": {
+      "bytes": 301924,
+      "triangles": 4300,
+      "mid": {
+        "path": "assets/models/guardians/guardian_stone-mid.glb",
+        "bytes": 139052,
+        "triangles": 2364
+      },
+      "small": {
+        "path": "assets/models/guardians/guardian_stone-small.glb",
+        "bytes": 54792,
+        "triangles": 1204
+      }
+    },
+    "assets/models/guardians/guardian_treant_roots.glb": {
+      "bytes": 15376,
+      "triangles": 232,
+      "mid": {
+        "path": "assets/models/guardians/guardian_treant_roots-mid.glb",
+        "bytes": 8392,
+        "triangles": 124
+      },
+      "small": {
+        "path": "assets/models/guardians/guardian_treant_roots-small.glb",
+        "bytes": 5136,
+        "triangles": 62
+      }
+    },
+    "assets/models/guardians/guardian_treant_trunk.glb": {
+      "bytes": 24412,
+      "triangles": 256,
+      "mid": {
+        "path": "assets/models/guardians/guardian_treant_trunk-mid.glb",
+        "bytes": 12424,
+        "triangles": 140
+      },
+      "small": {
+        "path": "assets/models/guardians/guardian_treant_trunk-small.glb",
+        "bytes": 7056,
+        "triangles": 70
+      }
+    },
+    "assets/models/hex/hex_grass.glb": {
+      "bytes": 19816,
+      "triangles": 36,
+      "mid": {
+        "path": "assets/models/hex/hex_grass-mid.glb",
+        "bytes": 9408,
+        "triangles": 18
+      },
+      "small": {
+        "path": "assets/models/hex/hex_grass-small.glb",
+        "bytes": 5160,
+        "triangles": 10
+      }
+    },
+    "assets/models/hex/hex_water.glb": {
+      "bytes": 18872,
+      "triangles": 24,
+      "mid": {
+        "path": "assets/models/hex/hex_water-mid.glb",
+        "bytes": 9032,
+        "triangles": 12
+      },
+      "small": {
+        "path": "assets/models/hex/hex_water-small.glb",
+        "bytes": 4896,
+        "triangles": 6
+      }
+    },
+    "assets/models/hex/rock.glb": {
+      "bytes": 18656,
+      "triangles": 18,
+      "mid": {
+        "path": "assets/models/hex/rock-mid.glb",
+        "bytes": 8824,
+        "triangles": 8
+      },
+      "small": {
+        "path": "assets/models/hex/rock-small.glb",
+        "bytes": 4820,
+        "triangles": 4
+      }
+    },
+    "assets/models/hex/tower_blue.glb": {
+      "bytes": 335200,
+      "triangles": 5659,
+      "mid": {
+        "path": "assets/models/hex/tower_blue-mid.glb",
+        "bytes": 181784,
+        "triangles": 3111
+      },
+      "small": {
+        "path": "assets/models/hex/tower_blue-small.glb",
+        "bytes": 105152,
+        "triangles": 1583
+      }
+    },
+    "assets/models/hex/tower_red.glb": {
+      "bytes": 335192,
+      "triangles": 5659,
+      "mid": {
+        "path": "assets/models/hex/tower_red-mid.glb",
+        "bytes": 181780,
+        "triangles": 3111
+      },
+      "small": {
+        "path": "assets/models/hex/tower_red-small.glb",
+        "bytes": 105152,
+        "triangles": 1583
+      }
+    },
+    "assets/models/hex/tree_single.glb": {
+      "bytes": 20800,
+      "triangles": 50,
+      "mid": {
+        "path": "assets/models/hex/tree_single-mid.glb",
+        "bytes": 9944,
+        "triangles": 26
+      },
+      "small": {
+        "path": "assets/models/hex/tree_single-small.glb",
+        "bytes": 5544,
+        "triangles": 14
+      }
+    },
+    "assets/models/hex/trees_large.glb": {
+      "bytes": 74488,
+      "triangles": 864,
+      "mid": {
+        "path": "assets/models/hex/trees_large-mid.glb",
+        "bytes": 36548,
+        "triangles": 474
+      },
+      "small": {
+        "path": "assets/models/hex/trees_large-small.glb",
+        "bytes": 20000,
+        "triangles": 240
+      }
+    },
+    "assets/models/hex/trees_medium.glb": {
+      "bytes": 49144,
+      "triangles": 480,
+      "mid": {
+        "path": "assets/models/hex/trees_medium-mid.glb",
+        "bytes": 23768,
+        "triangles": 264
+      },
+      "small": {
+        "path": "assets/models/hex/trees_medium-small.glb",
+        "bytes": 12772,
+        "triangles": 134
+      }
+    },
+    "assets/models/hex/waterlily.glb": {
+      "bytes": 20048,
+      "triangles": 68,
+      "mid": {
+        "path": "assets/models/hex/waterlily-mid.glb",
+        "bytes": 9984,
+        "triangles": 36
+      },
+      "small": {
+        "path": "assets/models/hex/waterlily-small.glb",
+        "bytes": 5468,
+        "triangles": 18
+      }
+    },
+    "assets/models/imported/bulbasaur.glb": {
+      "bytes": 450824,
+      "triangles": 250,
+      "mid": {
+        "path": "assets/models/imported/bulbasaur-mid.glb",
+        "bytes": 331768,
+        "triangles": 142
+      },
+      "small": {
+        "path": "assets/models/imported/bulbasaur-small.glb",
+        "bytes": 224072,
+        "triangles": 80
+      }
+    },
+    "assets/models/imported/cloud.glb": {
+      "bytes": 711880,
+      "triangles": 3270,
+      "mid": {
+        "path": "assets/models/imported/cloud-mid.glb",
+        "bytes": 471956,
+        "triangles": 2188
+      },
+      "small": {
+        "path": "assets/models/imported/cloud-small.glb",
+        "bytes": 290892,
+        "triangles": 1592
+      }
+    },
+    "assets/models/imported/collision.glb": {
+      "bytes": 1148,
+      "triangles": 0,
+      "mid": {
+        "path": "assets/models/imported/collision-mid.glb",
+        "bytes": 1164,
+        "triangles": 0
+      },
+      "small": {
+        "path": "assets/models/imported/collision-small.glb",
+        "bytes": 1164,
+        "triangles": 0
+      }
+    },
+    "assets/models/imported/fox.glb": {
+      "bytes": 204752,
+      "triangles": 2199,
+      "mid": {
+        "path": "assets/models/imported/fox-mid.glb",
+        "bytes": 124532,
+        "triangles": 652
+      },
+      "small": {
+        "path": "assets/models/imported/fox-small.glb",
+        "bytes": 88408,
+        "triangles": 364
+      }
+    },
+    "assets/models/imported/fox2.glb": {
+      "bytes": 219376,
+      "triangles": 2199,
+      "mid": {
+        "path": "assets/models/imported/fox2-mid.glb",
+        "bytes": 128900,
+        "triangles": 652
+      },
+      "small": {
+        "path": "assets/models/imported/fox2-small.glb",
+        "bytes": 90460,
+        "triangles": 364
+      }
+    },
+    "assets/models/imported/goku.glb": {
+      "bytes": 251648,
+      "triangles": 1250,
+      "mid": {
+        "path": "assets/models/imported/goku-mid.glb",
+        "bytes": 145248,
+        "triangles": 686
+      },
+      "small": {
+        "path": "assets/models/imported/goku-small.glb",
+        "bytes": 99604,
+        "triangles": 358
+      }
+    },
+    "assets/models/imported/gumdam.glb": {
+      "bytes": 284592,
+      "triangles": 474,
+      "mid": {
+        "path": "assets/models/imported/gumdam-mid.glb",
+        "bytes": 195432,
+        "triangles": 280
+      },
+      "small": {
+        "path": "assets/models/imported/gumdam-small.glb",
+        "bytes": 169592,
+        "triangles": 242
+      }
+    },
+    "assets/models/imported/herobiggon.glb": {
+      "bytes": 217568,
+      "triangles": 564,
+      "mid": {
+        "path": "assets/models/imported/herobiggon-mid.glb",
+        "bytes": 156628,
+        "triangles": 310
+      },
+      "small": {
+        "path": "assets/models/imported/herobiggon-small.glb",
+        "bytes": 77720,
+        "triangles": 156
+      }
+    },
+    "assets/models/imported/herobuu.glb": {
+      "bytes": 226920,
+      "triangles": 590,
+      "mid": {
+        "path": "assets/models/imported/herobuu-mid.glb",
+        "bytes": 140880,
+        "triangles": 324
+      },
+      "small": {
+        "path": "assets/models/imported/herobuu-small.glb",
+        "bytes": 90156,
+        "triangles": 164
+      }
+    },
+    "assets/models/imported/herofate.glb": {
+      "bytes": 330916,
+      "triangles": 2372,
+      "mid": {
+        "path": "assets/models/imported/herofate-mid.glb",
+        "bytes": 241728,
+        "triangles": 1298
+      },
+      "small": {
+        "path": "assets/models/imported/herofate-small.glb",
+        "bytes": 155240,
+        "triangles": 682
+      }
+    },
+    "assets/models/imported/herogirl.glb": {
+      "bytes": 272392,
+      "triangles": 1397,
+      "mid": {
+        "path": "assets/models/imported/herogirl-mid.glb",
+        "bytes": 187516,
+        "triangles": 740
+      },
+      "small": {
+        "path": "assets/models/imported/herogirl-small.glb",
+        "bytes": 139296,
+        "triangles": 388
+      }
+    },
+    "assets/models/imported/herohanzouhattori.glb": {
+      "bytes": 262864,
+      "triangles": 719,
+      "mid": {
+        "path": "assets/models/imported/herohanzouhattori-mid.glb",
+        "bytes": 169052,
+        "triangles": 402
+      },
+      "small": {
+        "path": "assets/models/imported/herohanzouhattori-small.glb",
+        "bytes": 121520,
+        "triangles": 242
+      }
+    },
+    "assets/models/imported/herohehi.glb": {
+      "bytes": 226252,
+      "triangles": 1296,
+      "mid": {
+        "path": "assets/models/imported/herohehi-mid.glb",
+        "bytes": 157708,
+        "triangles": 622
+      },
+      "small": {
+        "path": "assets/models/imported/herohehi-small.glb",
+        "bytes": 118632,
+        "triangles": 422
+      }
+    },
+    "assets/models/imported/herohimurakenshin.glb": {
+      "bytes": 345644,
+      "triangles": 590,
+      "mid": {
+        "path": "assets/models/imported/herohimurakenshin-mid.glb",
+        "bytes": 278124,
+        "triangles": 318
+      },
+      "small": {
+        "path": "assets/models/imported/herohimurakenshin-small.glb",
+        "bytes": 204112,
+        "triangles": 176
+      }
+    },
+    "assets/models/imported/heroichigo.glb": {
+      "bytes": 479956,
+      "triangles": 2061,
+      "mid": {
+        "path": "assets/models/imported/heroichigo-mid.glb",
+        "bytes": 380296,
+        "triangles": 1127
+      },
+      "small": {
+        "path": "assets/models/imported/heroichigo-small.glb",
+        "bytes": 217368,
+        "triangles": 571
+      }
+    },
+    "assets/models/imported/herokunoichi.glb": {
+      "bytes": 265512,
+      "triangles": 1397,
+      "mid": {
+        "path": "assets/models/imported/herokunoichi-mid.glb",
+        "bytes": 186340,
+        "triangles": 740
+      },
+      "small": {
+        "path": "assets/models/imported/herokunoichi-small.glb",
+        "bytes": 138928,
+        "triangles": 388
+      }
+    },
+    "assets/models/imported/herokyo.glb": {
+      "bytes": 263584,
+      "triangles": 826,
+      "mid": {
+        "path": "assets/models/imported/herokyo-mid.glb",
+        "bytes": 188964,
+        "triangles": 438
+      },
+      "small": {
+        "path": "assets/models/imported/herokyo-small.glb",
+        "bytes": 137388,
+        "triangles": 286
+      }
+    },
+    "assets/models/imported/herolight.glb": {
+      "bytes": 148276,
+      "triangles": 490,
+      "mid": {
+        "path": "assets/models/imported/herolight-mid.glb",
+        "bytes": 107408,
+        "triangles": 266
+      },
+      "small": {
+        "path": "assets/models/imported/herolight-small.glb",
+        "bytes": 81260,
+        "triangles": 156
+      }
+    },
+    "assets/models/imported/herolingtong.glb": {
+      "bytes": 280824,
+      "triangles": 682,
+      "mid": {
+        "path": "assets/models/imported/herolingtong-mid.glb",
+        "bytes": 180376,
+        "triangles": 374
+      },
+      "small": {
+        "path": "assets/models/imported/herolingtong-small.glb",
+        "bytes": 119656,
+        "triangles": 220
+      }
+    },
+    "assets/models/imported/heromiku.glb": {
+      "bytes": 474288,
+      "triangles": 1981,
+      "mid": {
+        "path": "assets/models/imported/heromiku-mid.glb",
+        "bytes": 291408,
+        "triangles": 1087
+      },
+      "small": {
+        "path": "assets/models/imported/heromiku-small.glb",
+        "bytes": 171860,
+        "triangles": 653
+      }
+    },
+    "assets/models/imported/heromusashimiyamoto.glb": {
+      "bytes": 264104,
+      "triangles": 1296,
+      "mid": {
+        "path": "assets/models/imported/heromusashimiyamoto-mid.glb",
+        "bytes": 188100,
+        "triangles": 667
+      },
+      "small": {
+        "path": "assets/models/imported/heromusashimiyamoto-small.glb",
+        "bytes": 144224,
+        "triangles": 423
+      }
+    },
+    "assets/models/imported/herooichi.glb": {
+      "bytes": 238616,
+      "triangles": 1650,
+      "mid": {
+        "path": "assets/models/imported/herooichi-mid.glb",
+        "bytes": 155956,
+        "triangles": 773
+      },
+      "small": {
+        "path": "assets/models/imported/herooichi-small.glb",
+        "bytes": 114540,
+        "triangles": 413
+      }
+    },
+    "assets/models/imported/heropika.glb": {
+      "bytes": 285172,
+      "triangles": 588,
+      "mid": {
+        "path": "assets/models/imported/heropika-mid.glb",
+        "bytes": 221824,
+        "triangles": 324
+      },
+      "small": {
+        "path": "assets/models/imported/heropika-small.glb",
+        "bytes": 101936,
+        "triangles": 166
+      }
+    },
+    "assets/models/imported/heropikachu.glb": {
+      "bytes": 80760,
+      "triangles": 416,
+      "mid": {
+        "path": "assets/models/imported/heropikachu-mid.glb",
+        "bytes": 64992,
+        "triangles": 228
+      },
+      "small": {
+        "path": "assets/models/imported/heropikachu-small.glb",
+        "bytes": 43996,
+        "triangles": 116
+      }
+    },
+    "assets/models/imported/herorider.glb": {
+      "bytes": 186736,
+      "triangles": 1205,
+      "mid": {
+        "path": "assets/models/imported/herorider-mid.glb",
+        "bytes": 131720,
+        "triangles": 659
+      },
+      "small": {
+        "path": "assets/models/imported/herorider-small.glb",
+        "bytes": 99456,
+        "triangles": 345
+      }
+    },
+    "assets/models/imported/herosaber.glb": {
+      "bytes": 252312,
+      "triangles": 1690,
+      "mid": {
+        "path": "assets/models/imported/herosaber-mid.glb",
+        "bytes": 176240,
+        "triangles": 620
+      },
+      "small": {
+        "path": "assets/models/imported/herosaber-small.glb",
+        "bytes": 120596,
+        "triangles": 358
+      }
+    },
+    "assets/models/imported/herosasuke.glb": {
+      "bytes": 286084,
+      "triangles": 988,
+      "mid": {
+        "path": "assets/models/imported/herosasuke-mid.glb",
+        "bytes": 195592,
+        "triangles": 542
+      },
+      "small": {
+        "path": "assets/models/imported/herosasuke-small.glb",
+        "bytes": 152540,
+        "triangles": 288
+      }
+    },
+    "assets/models/imported/herosephiroth.glb": {
+      "bytes": 273060,
+      "triangles": 654,
+      "mid": {
+        "path": "assets/models/imported/herosephiroth-mid.glb",
+        "bytes": 187548,
+        "triangles": 352
+      },
+      "small": {
+        "path": "assets/models/imported/herosephiroth-small.glb",
+        "bytes": 129720,
+        "triangles": 224
+      }
+    },
+    "assets/models/imported/heroshana.glb": {
+      "bytes": 240920,
+      "triangles": 1498,
+      "mid": {
+        "path": "assets/models/imported/heroshana-mid.glb",
+        "bytes": 170368,
+        "triangles": 822
+      },
+      "small": {
+        "path": "assets/models/imported/heroshana-small.glb",
+        "bytes": 120252,
+        "triangles": 416
+      }
+    },
+    "assets/models/imported/heroshanawingsmall.glb": {
+      "bytes": 28292,
+      "triangles": 8,
+      "mid": {
+        "path": "assets/models/imported/heroshanawingsmall-mid.glb",
+        "bytes": 28384,
+        "triangles": 8
+      },
+      "small": {
+        "path": "assets/models/imported/heroshanawingsmall-small.glb",
+        "bytes": 16756,
+        "triangles": 8
+      }
+    },
+    "assets/models/imported/herotoshiiemaeda.glb": {
+      "bytes": 252412,
+      "triangles": 1125,
+      "mid": {
+        "path": "assets/models/imported/herotoshiiemaeda-mid.glb",
+        "bytes": 173712,
+        "triangles": 496
+      },
+      "small": {
+        "path": "assets/models/imported/herotoshiiemaeda-small.glb",
+        "bytes": 133672,
+        "triangles": 324
+      }
+    },
+    "assets/models/imported/heroxelloss.glb": {
+      "bytes": 238712,
+      "triangles": 941,
+      "mid": {
+        "path": "assets/models/imported/heroxelloss-mid.glb",
+        "bytes": 170112,
+        "triangles": 517
+      },
+      "small": {
+        "path": "assets/models/imported/heroxelloss-small.glb",
+        "bytes": 82232,
+        "triangles": 263
+      }
+    },
+    "assets/models/imported/horse.glb": {
+      "bytes": 271228,
+      "triangles": 210,
+      "mid": {
+        "path": "assets/models/imported/horse-mid.glb",
+        "bytes": 203832,
+        "triangles": 114
+      },
+      "small": {
+        "path": "assets/models/imported/horse-small.glb",
+        "bytes": 113244,
+        "triangles": 58
+      }
+    },
+    "assets/models/imported/horsehead.glb": {
+      "bytes": 108052,
+      "triangles": 40,
+      "mid": {
+        "path": "assets/models/imported/horsehead-mid.glb",
+        "bytes": 43348,
+        "triangles": 22
+      },
+      "small": {
+        "path": "assets/models/imported/horsehead-small.glb",
+        "bytes": 14644,
+        "triangles": 10
+      }
+    },
+    "assets/models/imported/hzyn.glb": {
+      "bytes": 360952,
+      "triangles": 1813,
+      "mid": {
+        "path": "assets/models/imported/hzyn-mid.glb",
+        "bytes": 231932,
+        "triangles": 997
+      },
+      "small": {
+        "path": "assets/models/imported/hzyn-small.glb",
+        "bytes": 167356,
+        "triangles": 733
+      }
+    },
+    "assets/models/imported/japanesecherry.glb": {
+      "bytes": 101128,
+      "triangles": 74,
+      "mid": {
+        "path": "assets/models/imported/japanesecherry-mid.glb",
+        "bytes": 99768,
+        "triangles": 64
+      },
+      "small": {
+        "path": "assets/models/imported/japanesecherry-small.glb",
+        "bytes": 37620,
+        "triangles": 58
+      }
+    },
+    "assets/models/imported/kikyou.glb": {
+      "bytes": 205672,
+      "triangles": 722,
+      "mid": {
+        "path": "assets/models/imported/kikyou-mid.glb",
+        "bytes": 140624,
+        "triangles": 400
+      },
+      "small": {
+        "path": "assets/models/imported/kikyou-small.glb",
+        "bytes": 94168,
+        "triangles": 204
+      }
+    },
+    "assets/models/imported/lgcr.glb": {
+      "bytes": 211932,
+      "triangles": 1296,
+      "mid": {
+        "path": "assets/models/imported/lgcr-mid.glb",
+        "bytes": 131528,
+        "triangles": 712
+      },
+      "small": {
+        "path": "assets/models/imported/lgcr-small.glb",
+        "bytes": 100088,
+        "triangles": 400
+      }
+    },
+    "assets/models/imported/linainvers.glb": {
+      "bytes": 229008,
+      "triangles": 808,
+      "mid": {
+        "path": "assets/models/imported/linainvers-mid.glb",
+        "bytes": 131944,
+        "triangles": 444
+      },
+      "small": {
+        "path": "assets/models/imported/linainvers-small.glb",
+        "bytes": 77504,
+        "triangles": 222
+      }
+    },
+    "assets/models/imported/linkstik.glb": {
+      "bytes": 206392,
+      "triangles": 380,
+      "mid": {
+        "path": "assets/models/imported/linkstik-mid.glb",
+        "bytes": 140228,
+        "triangles": 210
+      },
+      "small": {
+        "path": "assets/models/imported/linkstik-small.glb",
+        "bytes": 76984,
+        "triangles": 124
+      }
+    },
+    "assets/models/imported/long.glb": {
+      "bytes": 228556,
+      "triangles": 818,
+      "mid": {
+        "path": "assets/models/imported/long-mid.glb",
+        "bytes": 163644,
+        "triangles": 448
+      },
+      "small": {
+        "path": "assets/models/imported/long-small.glb",
+        "bytes": 130692,
+        "triangles": 280
+      }
+    },
+    "assets/models/imported/lubu.glb": {
+      "bytes": 577624,
+      "triangles": 1525,
+      "mid": {
+        "path": "assets/models/imported/lubu-mid.glb",
+        "bytes": 281340,
+        "triangles": 837
+      },
+      "small": {
+        "path": "assets/models/imported/lubu-small.glb",
+        "bytes": 165196,
+        "triangles": 487
+      }
+    },
+    "assets/models/imported/luffe.glb": {
+      "bytes": 314236,
+      "triangles": 1889,
+      "mid": {
+        "path": "assets/models/imported/luffe-mid.glb",
+        "bytes": 192868,
+        "triangles": 1037
+      },
+      "small": {
+        "path": "assets/models/imported/luffe-small.glb",
+        "bytes": 128412,
+        "triangles": 527
+      }
+    },
+    "assets/models/imported/ma.glb": {
+      "bytes": 269500,
+      "triangles": 706,
+      "mid": {
+        "path": "assets/models/imported/ma-mid.glb",
+        "bytes": 155424,
+        "triangles": 388
+      },
+      "small": {
+        "path": "assets/models/imported/ma-small.glb",
+        "bytes": 75564,
+        "triangles": 196
+      }
+    },
+    "assets/models/imported/mfls.glb": {
+      "bytes": 260044,
+      "triangles": 1604,
+      "mid": {
+        "path": "assets/models/imported/mfls-mid.glb",
+        "bytes": 175488,
+        "triangles": 882
+      },
+      "small": {
+        "path": "assets/models/imported/mfls-small.glb",
+        "bytes": 131248,
+        "triangles": 448
+      }
+    },
+    "assets/models/imported/negi.glb": {
+      "bytes": 323992,
+      "triangles": 855,
+      "mid": {
+        "path": "assets/models/imported/negi-mid.glb",
+        "bytes": 271676,
+        "triangles": 479
+      },
+      "small": {
+        "path": "assets/models/imported/negi-small.glb",
+        "bytes": 208852,
+        "triangles": 253
+      }
+    },
+    "assets/models/imported/niya.glb": {
+      "bytes": 338552,
+      "triangles": 2462,
+      "mid": {
+        "path": "assets/models/imported/niya-mid.glb",
+        "bytes": 245096,
+        "triangles": 1110
+      },
+      "small": {
+        "path": "assets/models/imported/niya-small.glb",
+        "bytes": 156988,
+        "triangles": 620
+      }
+    },
+    "assets/models/imported/picacugy.glb": {
+      "bytes": 169972,
+      "triangles": 762,
+      "mid": {
+        "path": "assets/models/imported/picacugy-mid.glb",
+        "bytes": 123812,
+        "triangles": 422
+      },
+      "small": {
+        "path": "assets/models/imported/picacugy-small.glb",
+        "bytes": 78356,
+        "triangles": 218
+      }
+    },
+    "assets/models/imported/pika.glb": {
+      "bytes": 315848,
+      "triangles": 790,
+      "mid": {
+        "path": "assets/models/imported/pika-mid.glb",
+        "bytes": 209764,
+        "triangles": 446
+      },
+      "small": {
+        "path": "assets/models/imported/pika-small.glb",
+        "bytes": 100304,
+        "triangles": 244
+      }
+    },
+    "assets/models/imported/rabbit.glb": {
+      "bytes": 172036,
+      "triangles": 520,
+      "mid": {
+        "path": "assets/models/imported/rabbit-mid.glb",
+        "bytes": 123520,
+        "triangles": 286
+      },
+      "small": {
+        "path": "assets/models/imported/rabbit-small.glb",
+        "bytes": 104204,
+        "triangles": 144
+      }
+    },
+    "assets/models/imported/renaryugu2.glb": {
+      "bytes": 217528,
+      "triangles": 1690,
+      "mid": {
+        "path": "assets/models/imported/renaryugu2-mid.glb",
+        "bytes": 164592,
+        "triangles": 620
+      },
+      "small": {
+        "path": "assets/models/imported/renaryugu2-small.glb",
+        "bytes": 117608,
+        "triangles": 360
+      }
+    },
+    "assets/models/imported/sd2.glb": {
+      "bytes": 265128,
+      "triangles": 836,
+      "mid": {
+        "path": "assets/models/imported/sd2-mid.glb",
+        "bytes": 153840,
+        "triangles": 396
+      },
+      "small": {
+        "path": "assets/models/imported/sd2-small.glb",
+        "bytes": 91936,
+        "triangles": 282
+      }
+    },
+    "assets/models/imported/sesshomaru.glb": {
+      "bytes": 333424,
+      "triangles": 566,
+      "mid": {
+        "path": "assets/models/imported/sesshomaru-mid.glb",
+        "bytes": 176300,
+        "triangles": 306
+      },
+      "small": {
+        "path": "assets/models/imported/sesshomaru-small.glb",
+        "bytes": 112608,
+        "triangles": 156
+      }
+    },
+    "assets/models/imported/ye-wuqi1.glb": {
+      "bytes": 221780,
+      "triangles": 884,
+      "mid": {
+        "path": "assets/models/imported/ye-wuqi1-mid.glb",
+        "bytes": 138160,
+        "triangles": 486
+      },
+      "small": {
+        "path": "assets/models/imported/ye-wuqi1-small.glb",
+        "bytes": 96736,
+        "triangles": 246
+      }
+    },
+    "assets/models/imported/zy3.glb": {
+      "bytes": 447428,
+      "triangles": 1335,
+      "mid": {
+        "path": "assets/models/imported/zy3-mid.glb",
+        "bytes": 312016,
+        "triangles": 733
+      },
+      "small": {
+        "path": "assets/models/imported/zy3-small.glb",
+        "bytes": 244620,
+        "triangles": 501
+      }
+    },
+    "assets/models/menu/dragon2.glb": {
+      "bytes": 4349884,
+      "triangles": 19542,
+      "mid": {
+        "path": "assets/models/menu/dragon2-mid.glb",
+        "bytes": 3935912,
+        "triangles": 10748
+      },
+      "small": {
+        "path": "assets/models/menu/dragon2-small.glb",
+        "bytes": 3627632,
+        "triangles": 5470
+      }
+    },
+    "assets/models/props/banner_shield_blue.glb": {
+      "bytes": 55104,
+      "triangles": 639,
+      "mid": {
+        "path": "assets/models/props/banner_shield_blue-mid.glb",
+        "bytes": 29208,
+        "triangles": 351
+      },
+      "small": {
+        "path": "assets/models/props/banner_shield_blue-small.glb",
+        "bytes": 14484,
+        "triangles": 177
+      }
+    },
+    "assets/models/props/banner_shield_green.glb": {
+      "bytes": 55104,
+      "triangles": 639,
+      "mid": {
+        "path": "assets/models/props/banner_shield_green-mid.glb",
+        "bytes": 29208,
+        "triangles": 351
+      },
+      "small": {
+        "path": "assets/models/props/banner_shield_green-small.glb",
+        "bytes": 14484,
+        "triangles": 177
+      }
+    },
+    "assets/models/props/banner_shield_red.glb": {
+      "bytes": 55104,
+      "triangles": 639,
+      "mid": {
+        "path": "assets/models/props/banner_shield_red-mid.glb",
+        "bytes": 29208,
+        "triangles": 351
+      },
+      "small": {
+        "path": "assets/models/props/banner_shield_red-small.glb",
+        "bytes": 14484,
+        "triangles": 177
+      }
+    },
+    "assets/models/props/banner_shield_yellow.glb": {
+      "bytes": 55104,
+      "triangles": 639,
+      "mid": {
+        "path": "assets/models/props/banner_shield_yellow-mid.glb",
+        "bytes": 29208,
+        "triangles": 351
+      },
+      "small": {
+        "path": "assets/models/props/banner_shield_yellow-small.glb",
+        "bytes": 14488,
+        "triangles": 177
+      }
+    },
+    "assets/models/props/barrel_small.glb": {
+      "bytes": 32060,
+      "triangles": 207,
+      "mid": {
+        "path": "assets/models/props/barrel_small-mid.glb",
+        "bytes": 14500,
+        "triangles": 113
+      },
+      "small": {
+        "path": "assets/models/props/barrel_small-small.glb",
+        "bytes": 6880,
+        "triangles": 57
+      }
+    },
+    "assets/models/props/chest.glb": {
+      "bytes": 81412,
+      "triangles": 728,
+      "mid": {
+        "path": "assets/models/props/chest-mid.glb",
+        "bytes": 40712,
+        "triangles": 400
+      },
+      "small": {
+        "path": "assets/models/props/chest-small.glb",
+        "bytes": 20820,
+        "triangles": 202
+      }
+    },
+    "assets/models/props/crates_stacked.glb": {
+      "bytes": 103704,
+      "triangles": 1331,
+      "mid": {
+        "path": "assets/models/props/crates_stacked-mid.glb",
+        "bytes": 46920,
+        "triangles": 731
+      },
+      "small": {
+        "path": "assets/models/props/crates_stacked-small.glb",
+        "bytes": 22212,
+        "triangles": 371
+      }
+    },
+    "assets/models/props/floor_tile_large.glb": {
+      "bytes": 28100,
+      "triangles": 188,
+      "mid": {
+        "path": "assets/models/props/floor_tile_large-mid.glb",
+        "bytes": 13764,
+        "triangles": 102
+      },
+      "small": {
+        "path": "assets/models/props/floor_tile_large-small.glb",
+        "bytes": 6308,
+        "triangles": 52
+      }
+    },
+    "assets/models/props/pillar.glb": {
+      "bytes": 25552,
+      "triangles": 136,
+      "mid": {
+        "path": "assets/models/props/pillar-mid.glb",
+        "bytes": 11996,
+        "triangles": 74
+      },
+      "small": {
+        "path": "assets/models/props/pillar-small.glb",
+        "bytes": 6224,
+        "triangles": 38
+      }
+    },
+    "assets/models/props/torch.glb": {
+      "bytes": 29380,
+      "triangles": 216,
+      "mid": {
+        "path": "assets/models/props/torch-mid.glb",
+        "bytes": 13940,
+        "triangles": 118
+      },
+      "small": {
+        "path": "assets/models/props/torch-small.glb",
+        "bytes": 6932,
+        "triangles": 58
+      }
+    },
+    "assets/models/props/torch_mounted.glb": {
+      "bytes": 33220,
+      "triangles": 278,
+      "mid": {
+        "path": "assets/models/props/torch_mounted-mid.glb",
+        "bytes": 15592,
+        "triangles": 152
+      },
+      "small": {
+        "path": "assets/models/props/torch_mounted-small.glb",
+        "bytes": 7492,
+        "triangles": 74
+      }
+    },
+    "assets/models/shop/merchant.glb": {
+      "bytes": 1598564,
+      "triangles": 7276,
+      "mid": {
+        "path": "assets/models/shop/merchant-mid.glb",
+        "bytes": 1092168,
+        "triangles": 3998
+      },
+      "small": {
+        "path": "assets/models/shop/merchant-small.glb",
+        "bytes": 893108,
+        "triangles": 2214
+      }
+    },
+    "assets/models/shop/merchant_cart.glb": {
+      "bytes": 108660,
+      "triangles": 2659,
+      "mid": {
+        "path": "assets/models/shop/merchant_cart-mid.glb",
+        "bytes": 67448,
+        "triangles": 1585
+      },
+      "small": {
+        "path": "assets/models/shop/merchant_cart-small.glb",
+        "bytes": 47596,
+        "triangles": 1077
+      }
+    },
+    "assets/models/shop/merchant_stall.glb": {
+      "bytes": 63640,
+      "triangles": 1132,
+      "mid": {
+        "path": "assets/models/shop/merchant_stall-mid.glb",
+        "bytes": 32884,
+        "triangles": 628
+      },
+      "small": {
+        "path": "assets/models/shop/merchant_stall-small.glb",
+        "bytes": 23388,
+        "triangles": 414
+      }
+    }
+  }
+}

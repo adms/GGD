@@ -109,7 +109,7 @@ import {
   type HudSlotId,
   type HudViewport,
 } from "./hudLayout";
-import { ABILITY_CLUSTER_H, ABILITY_CLUSTER_W } from "../controlLegendModel";
+import { ABILITY_CLUSTER_H, ABILITY_CLUSTER_W, DEFAULT_LEGEND_PHASE_GATE } from "../controlLegendModel";
 
 const clientSrc = (p: string): string => readFileSync(join(__dirname, "..", "..", p), "utf8");
 
@@ -319,13 +319,22 @@ describe("where it lands", () => {
     // dismissible; the counter is juice. On desktop both fit — the counter
     // simply docks below the strip. On a landscape phone the corridor is ~70px
     // and cannot hold both, so the counter stands down entirely.
+    // ⭐ 2026-08-22（#199）：**觸控裝置一格都不畫操作說明**（owner 2026-07-28 裁決）
+    // ⇒ 觸控視窗上 `controlLegendRect` 回 null，根本**沒有東西要讓**。
+    // 這裡改成**從實際幾何推導**該不該讓，⛔ 不是假設每個視窗都有圖例 ——
+    // 後者會用「連擊計數蓋住了操作說明」這個**錯誤的訊息**紅掉，而真相是
+    // 那台裝置上操作說明已經不存在了。
+    let checked = 0;
     for (const vp of VIEWPORTS) {
       const opts = { touch: vp.touch, legendUp: true };
+      if (vp.touch && DEFAULT_LEGEND_PHASE_GATE.hideOnTouch) continue; // 這台裝置沒有圖例
+      checked++;
       const hits = killComboCollisions(vp, opts);
       expect(`${vp.width}x${vp.height}: ${hits.join(",")}`).toBe(`${vp.width}x${vp.height}: `);
     }
-    // and the yield is real, not vacuous: it IS null on the short phones…
-    expect(killComboRect({ width: 812, height: 375 }, { touch: true, legendUp: true })).toBeNull();
+    // ⛔ 承重線：真的有視窗被檢查過。全部被 `continue` 跳掉的話，
+    //    這條迴圈就是空轉，而空轉的守衛與綠燈長得一模一樣（失敗形態③）。
+    expect(checked, "沒有任何視窗畫得出操作說明 —— 這條在空轉").toBeGreaterThan(0);
     // …while the same phone shows it happily once the legend is gone (round 2+,
     // which is also the first round that can have zombies at all).
     expect(
@@ -721,7 +730,12 @@ describe("the container's own gate (previously uncovered)", () => {
     onPhone(() => {
       inCombat({ round: 1 });
       chain(9);
-      expect(renderCombo()).toBe("");
+      // ⭐ 2026-08-22（#199）：**觸控裝置一格都不畫操作說明**（owner 2026-07-28 裁決）
+      // ⇒ 手機上那條走廊**是空的**，連擊計數不再需要讓位。
+      // ⚠️ 這是**行為變更不是回歸**：在此之前這裡斷言 `toBe("")`，理由是
+      // 「走廊 ~70px 容不下圖例＋計數」—— 而現在圖例本身不存在了。
+      // ⭐ #107 的優先序仍然成立，只是它在觸控上**沒有東西要排序**。
+      expect(renderCombo(), "手機上圖例已不畫（#199），連擊計數應該出得來").not.toBe("");
       // round 2 — the first round that can even have zombies — brings it back,
       // so the yield is a real decision and not a dead phone viewport.
       inCombat({ round: 2 });

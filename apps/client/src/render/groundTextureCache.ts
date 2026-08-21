@@ -1,7 +1,7 @@
 /**
  * groundTextureCache — the ground PNG sets, loaded ONCE per scene and kept.
  *
- * owner 2026-08-22 (GH#535)：「福利連地圖地板全黑了」/「大混戰也是 **似乎是讀取
+ * owner 2026-08-22 (GH#536)：「福利連地圖地板全黑了」/「大混戰也是 **似乎是讀取
  * 不夠快 並且沒有提前在商店完成讀取**的緣故」—— 他的診斷是對的，而下面是量到的
  * 完整鏈條，⛔ 不是推測：
  *

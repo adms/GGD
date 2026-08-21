@@ -23,11 +23,11 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 790 個檔案**，分佈在 2 個隔離區。
+**目前共 805 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
-| [`docs/legacy/`](legacy-index.md#docslegacy) | 350 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
+| [`docs/legacy/`](legacy-index.md#docslegacy) | 365 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
 | [`content/_legacy/`](legacy-index.md#contentlegacy) | 440 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
@@ -35,7 +35,7 @@ owner 2026-08-13：
 
 ---
 
-## `docs/legacy/` —— 350 檔
+## `docs/legacy/` —— 365 檔
 
 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）
 
@@ -185,6 +185,7 @@ owner 2026-08-13：
 | `_overwrites/gen_board_temp_20260822-0005.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/godie-e00r_ex_temp_20260822-0017.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/godie-e00r_gen_temp_20260822-0027.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/godie-ogld.ex_temp_20260822-0609.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/ledger_table_temp_20260822-0005.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/lobby-rally_temp_20260821-2355.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/nameVoice_temp_20260822-0122.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
@@ -299,6 +300,9 @@ owner 2026-08-13：
 | `_overwrites/ad_fold_temp_20260822-0414/thorne.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/claims-baseline-stale_temp_20260821-033411/grail-ex-13.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/claims-baseline-stale_temp_20260821-033411/grail-ex-18.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/gh417-70-04_temp_20260822-0555/abilityCodeParity.baseline.70.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/gh417-70-04_temp_20260822-0555/godie-e010.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/gh417-70-04_temp_20260822-0555/godie-e010.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/ledger-repair_temp_20260820/2026-08-20.md` | 2026-08-20 補登 —— ⚠️ **這一份是補的。** `2026-08-19.md` 的帳本停在 **#1068**，之後的 16 則我**憑印象**處理， | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260820-014449/content/abilities/godie-e010.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260820-020339/packages/shared/src/content/descriptionClaims.baseline/godie-zzzz.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
@@ -357,6 +361,17 @@ owner 2026-08-13：
 | `_overwrites/overwrite_temp_20260822-031728/apps/client/src/input/gamepadFeelConfig.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260822-041744/content/config/damage-tier-exemptions.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260822-041819/packages/shared/src/content/shippedDamageTiersResolve.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260822-055344/content/assets/models/_lod.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260822-055434/content/abilities/godie-e00l.w.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260822-055434/data/curation/whitelist.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260822-055752/docs/legacy/_overwrites/godie-e00l.ex_temp_20260822-0700.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260822-055918/apps/client/src/ui/audioClusterSfx.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260822-060042/docs/legacy/_overwrites/_lod_temp_20260822-0552.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260822-060129/packages/shared/src/sim/systems/friendlyFirePayout.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260822-060150/apps/game-server/src/ai/castRange.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260822-060733/apps/editor/src/preview/forgeRealCast.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260822-061106/tools/skill-tiers/gen_tiers.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260822-061216/apps/client/src/ui/WorldAnchorLayer.nameSink.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/04.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/06.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/08.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |

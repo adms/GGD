@@ -98,7 +98,7 @@ export type LeftColumnMode = "split" | "stack";
 export type AlreadyFriendMode = "greyed-button" | "hide-row";
 
 /**
- * How 朋友列表 orders its rows (GH#536).
+ * How 朋友列表 orders its rows (GH#537).
  *
  * owner 2026-08-22:「朋友清單，**有上線的應該會特別排到最上面顯示吧**？」
  * ⇒ `online-first` is the shipped value, and it is his instruction, ⛔ not my
@@ -129,7 +129,7 @@ export interface LobbyLayoutPolicy {
   leaderboardShare: number;
   /** How the 宿敵榜 orders its rows (GH#454). */
   nemesisSort: NemesisSortMode;
-  /** How 朋友列表 orders its rows (GH#536). */
+  /** How 朋友列表 orders its rows (GH#537). */
   friendSort: FriendSortMode;
   /** Top-to-bottom order of the panels in `split` mode (desktop). */
   splitOrder: LeftColumnSlot[];

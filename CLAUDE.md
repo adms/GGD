@@ -1091,6 +1091,12 @@ hosted 頁面**可以累積成歷史紀錄**，同一份計畫改版時重發同
   · 真的手滑了：`git fsck --unreachable` 找 dangling blob（`git cat-file -p <sha>`
     逐個比對關鍵字），這次就是這樣救回來的 —— **但那是運氣**（有人剛好做過 stash）。
   ⭐ 判準跟 `git add -A` 一樣：**一個動詞影響到我沒有逐一看過的檔案，就是越線。**
+- ⛔ **`git commit --amend` 在併行 lane 裡是禁令**（2026-08-22 實際發生）。
+  一條 lane 想把測試修剪 15 行而 `--amend`，⚠️ 而**另一條 lane 剛好在那幾秒之間 commit 了** ——
+  於是它改到的是**別人的** commit（訊息與 diff 從此對不上）。
+  ⭐ `--amend` 與 `git add -A` 同型：它動到的是 **HEAD**，而 HEAD 在併行時不屬於任何一條 lane。
+  ⛔ **pathspec 保護不了它** —— `git commit --amend -- <逐檔列名>` 仍然改的是別人的 HEAD。
+  ⇒ 要修剪就**再 commit 一次**，⛔ 不要改寫歷史。
 
 ---
 

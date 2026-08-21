@@ -6754,7 +6754,7 @@ export const zConfigLobbyLayoutDoc = z
      */
     nemesisSort: z.enum(["played", "rivalry", "bane"]),
     /**
-     * 朋友列表的排序（GH#536）。owner 2026-08-22:「朋友清單,**有上線的應該會
+     * 朋友列表的排序（GH#537）。owner 2026-08-22:「朋友清單,**有上線的應該會
      * 特別排到最上面顯示吧**？」⇒ `online-first` 是他指定的出貨值,
      * ⛔ 不是我挑的;`name` 是純字母序（給「我要找某個人」而不是「誰在線上」）。
      * ⚠️ 排序做在**客戶端**:面板畫的狀態是 REST 快照 + WS 推播疊起來的,

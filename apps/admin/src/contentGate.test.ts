@@ -108,7 +108,17 @@ describe("A: the game client (LAN-published) has NO content-api route", () => {
   it("the tripwire hooks ONLY the dev/preview servers, never a build step", () => {
     cover("content-admin-no-lan-route");
     expect(CLIENT_VITE).toMatch(/configureServer/);
-    expect(code(CLIENT_VITE)).not.toMatch(/closeBundle|generateBundle|writeBundle/);
+    // ⭐ 2026-08-22：斷言收窄到**這個 plugin 自己**，⛔ 不是整份 vite.config。
+    // ⚠️ 原本掃全檔 ⇒ 任何**無關**的 build hook 都會讓它紅，而訊息說的是
+    // 「tripwire 掛到了 build」——⛔ 一句用錯誤訊息說謊的話。
+    // #83 的 `ggd-strip-debug-pages`（把 14 頁 debug 主控台從出貨產物拿掉）
+    // 就是這樣被誤判的：它是**安全修正**，而且它必須是 build hook。
+    // ⭐ 這一條真正要守的是：**tripwire 不可以在 build 期跑** —— 它是一個
+    // dev/preview 的絆線，跑進 build 就會把一條 LAN 路由烘進出貨產物。
+    const tripwire = /name:\s*"ggd-content-api-guard"[\s\S]*?\n\s{2}\};/.exec(code(CLIENT_VITE));
+    expect(tripwire, "找不到 ggd-content-api-guard —— tripwire 被改名或刪掉了").toBeTruthy();
+    expect(tripwire![0]).not.toMatch(/closeBundle|generateBundle|writeBundle/);
+    expect(tripwire![0]).toMatch(/apply:\s*"serve"|configureServer/);
   });
 });
 

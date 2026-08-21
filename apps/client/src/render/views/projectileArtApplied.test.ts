@@ -61,7 +61,7 @@ import { Projectiles } from "@ggd/shared/sim/content/registry";
 import type { ProjectileId } from "@ggd/shared/ids";
 import { ProjectileView } from "./ProjectileView";
 import { PROJECTILE_REFERENCE_HIT_RADIUS } from "@ggd/shared/content/schema/vfx";
-import {
+import { MAX_TRAIL_LIFE_SEC,
   SHIPPED_TRAIL_LIFE,
   SHIPPED_TRAIL_RATE,
   projectileSizeMultiplierOf,
@@ -170,7 +170,26 @@ describe("#251 投射物的特效文件真的到得了畫面 (projectile-art-app
 
     // 逐項比對，這樣紅的時候會指名是哪一格沒送到
     expect(a.emitRate, "密度沒有跟著文件的 burstCount 走").not.toBe(b.emitRate);
-    expect(a.maxLife, "壽命沒有跟著文件的 lifetimeSec 走").not.toBe(b.maxLife);
+    // ⭐ 2026-08-22（#44）：拖尾壽命上界從 0.5 降成 **`MAX_TRAIL_LIFE_SEC`**
+    // （由 `RIBBON_FADE_BUDGET_SEC = 0.25` 的收尾契約推導）。這兩份對照文件的
+    // 壽命是 0.35 與 0.46 —— **雙雙撞頂被夾成同一個數**，於是這一條用
+    // 「壽命沒有跟著文件走」這個**錯誤的訊息**紅掉（第二守則：⛔ 不要驗數字）。
+    //
+    // ⇒ 改成驗**機制**：引擎給的壽命 === `min(文件的 max, 出貨上界)`。
+    // ⭐ 上界從出貨常數推導，⛔ 不抄 0.25 —— 上界哪天再變，這一條自己跟著走；
+    // 而「文件沒有送到引擎」（例如硬寫死一個值）仍然會紅。
+    const lifeOf = (d: NonNullable<typeof thorn>): number => {
+      const L = (d as { lifetimeSec?: { max?: number } | number }).lifetimeSec;
+      return typeof L === "number" ? L : (L?.max ?? 0);
+    };
+    expect(a.maxLife, "thorn 的壽命沒有跟著文件（或上界）走").toBeCloseTo(
+      Math.min(lifeOf(thorn!), MAX_TRAIL_LIFE_SEC),
+      5,
+    );
+    expect(b.maxLife, "ice 的壽命沒有跟著文件（或上界）走").toBeCloseTo(
+      Math.min(lifeOf(ice!), MAX_TRAIL_LIFE_SEC),
+      5,
+    );
     expect(a.peakSize, "粒子大小沒有跟著文件的 sizeStops 走").not.toBe(b.peakSize);
     // …而且 ice 的峰值真的比 thorn 大（方向對，不只是「有差」）
     expect(b.peakSize).toBeGreaterThan(a.peakSize);

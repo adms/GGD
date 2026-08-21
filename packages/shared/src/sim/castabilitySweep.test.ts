@@ -216,6 +216,18 @@ const WORKING_CELL_RATIO_FLOOR = 1.0;
  * 都沒有落在假人身上。
  */
 const KNOWN_GAPS: readonly { key: string; verdict: "FAIL" | "VFX_ONLY"; why: string }[] = [
+  {
+    key: "godie-ogld|EX",
+    verdict: "FAIL",
+    why:
+      "⭐ 2026-08-22（#80）**這是修好之後才出現的格子**。在此之前它是 `effects: []` " +
+      "配 `tpl-buff-self` —— 卡面承諾「每秒大範圍 200 點傷害持續 30 秒」而引擎什麼都不做" +
+      "（第一·五守則）。現在它是真的 `randomArea` 流星雨,而**隨機落點**打不打得到普查的" +
+      "假人是擲骰（實測 FAIL 18/24、PASS 6/24,見 SEED_DEPENDENT_CELLS）。" +
+      "⛔ 它在遊戲裡是會發生的,⛔ 不是一個缺口 —— 是**普查量不動它**。" +
+      "⚠️ 到期條件:普查長出「同一格跑 N 個 seed,有一次命中就算 PASS」的能力,這一列與 " +
+      "SEED_DEPENDENT_CELLS 那一列要**一起**刪掉。",
+  },
 ];
 
 /**
@@ -252,7 +264,18 @@ const FORM_GATED_CELLS: readonly { key: string; why: string }[] = [];
  * 顆 seed 各量一次；**全部一致才算量到**，只要有一顆不同就落進這一本。
  * 同樣三個方向都會紅。
  */
-const SEED_DEPENDENT_CELLS: readonly { key: string; why: string }[] = [];
+const SEED_DEPENDENT_CELLS: readonly { key: string; why: string }[] = [
+  {
+    key: "godie-ogld|EX",
+    why:
+      "⭐ 2026-08-22（#80）：這一支在此之前是 `effects: []` 配一個 `tpl-buff-self` —— " +
+      "卡面承諾「每秒大範圍 200 點傷害持續 30 秒」而引擎**什麼都不做**（第一·五守則）。" +
+      "修好之後它是真的 `randomArea` 流星雨,而**隨機落點**打不打得到普查的假人是擲骰" +
+      "（實測 FAIL 18/24、PASS 6/24）。⛔ 這不是缺陷,是這支技能的形狀。" +
+      "⚠️ 到期條件:普查哪天長出「同一格跑 N 個 seed,只要有一次命中就算 PASS」的能力," +
+      "這一列就該退場 —— 那才是對隨機技能正確的量法。",
+  },
+];
 // 2026-08-13：300 → 312，量出來的（`docs/_castability-128.md` 首發 53 人 312/318）。
 // ⚠️ 這一次的棘輪**不是**內容變好，是 {@link castWindow} 讓觀察者看得夠久 ——
 //    同一天 owner 把吟唱改成 0.06~4.00 秒，141 支技能吃到 ≥1 秒的前搖，
@@ -1141,9 +1164,22 @@ describe("task #128 — in-game castability coverage sweep", () => {
     );
     // ⚠️ `FORM_GATED` 和 `NONE` 一樣從**兩邊**扣掉：它是「這一格本次沒有被量」，
     // 不是一個量測結果。留在分母等於用一個永遠不會變綠的常數壓低覆蓋率。
+    //
+    // ⭐ 2026-08-22：`seedDependent` 也從**兩邊**扣掉，同一個理由 ——
+    // 那一格今天是**擲骰**不是量測（`SEED_DEPENDENT_CELLS` 逐格記著為什麼與到期條件）。
+    // ⚠️ 留在分母的話，一支**修好了**的技能（#80 億萬衛星殞落：從 `effects: []`
+    // 變成真的隨機流星）會讓覆蓋率**下降** —— ⛔ 那個訊號的方向是反的。
+    // ⛔ 它們沒有被靜音：上面那兩條斷言仍然要求「名單外不可以有擲骰格」與
+    // 「名單上的必須真的還在擲骰」，⭐ 棘輪從比例移到了那張名單上。
     const cells = trackedResults.reduce(
       (n, r) =>
-        n + COLS.filter((s) => r.cells[s].verdict !== "NONE" && r.cells[s].verdict !== "FORM_GATED").length,
+        n +
+        COLS.filter(
+          (s) =>
+            r.cells[s].verdict !== "NONE" &&
+            r.cells[s].verdict !== "FORM_GATED" &&
+            !r.cells[s].seedDependent,
+        ).length,
       0,
     );
     expect(

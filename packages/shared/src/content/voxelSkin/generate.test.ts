@@ -454,6 +454,13 @@ describe("voxel skin — the committed roster snapshot", () => {
    *   `bowl|single-eyepatch|tunic|shorts|eye|headband|spikes|tail` **逐字未變**。
    *   ⇒ 這是一個好改動的正確後果，⛔ 不是規則或階梯出事。
    *   漂移 1 位，其餘 77 位逐字相同。
+   *
+   * ⭐ 2026-08-22（#63）同一個形態又發生一次：`godie-e00l`（Saber）的 `vfxKey`
+   *   被改過，元素帶跟著移 ⇒ **前兩格顏色**變了
+   *   （`9,6,17|9,5,10` → `10,19,9|11,20,20`）。
+   *   ⚠️ 照本檔自己的判準先問「部件也變了嗎？」——
+   *   `shaved-band|closed|vest|skirt|arrow|brim-hat|epaulets|scarf-tail` **逐字未變**。
+   *   ⇒ 這是一個好改動的正確後果，⛔ 不是規則出事。漂移 1 位，其餘逐字相同。
    */
   it("matches every champion's committed look signature", () => {
     cover("voxel-skin-snapshot");

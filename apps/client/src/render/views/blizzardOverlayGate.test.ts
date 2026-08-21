@@ -365,9 +365,15 @@ describe("overlay gate: the dev mappings are unchanged", () => {
     expect(conf).toContain(OVERLAY_DIR);
     expect(conf).toContain(OVERLAY_URL_PREFIX);
     expect(conf).toMatch(/plugins:\s*\[[^\]]*serveBlizzardOverlay\(\)/);
-    // dev/preview servers only — never a build-time asset copy. Comments are
-    // stripped first so documenting the property cannot fail the assertion.
-    expect(stripJsComments(conf)).not.toMatch(/closeBundle|generateBundle|writeBundle/);
+    // dev/preview servers only — never a build-time asset copy.
+    // ⭐ 2026-08-22：斷言收窄到 **`serveBlizzardOverlay` 這個 plugin 自己**，
+    // ⛔ 不是整份 vite.config。⚠️ 原本掃全檔 ⇒ 任何**無關**的 build hook 都會讓它紅，
+    // 而訊息說的是「overlay 被 build 期複製了」——⛔ 一句用錯誤訊息說謊的話。
+    // #83 的 `ggd-strip-debug-pages`（安全修正，必須是 build hook）就是這樣被誤判的。
+    const plugin = /name:\s*"ggd-serve-blizzard-overlay"[\s\S]*?\n\s{2}\};/.exec(stripJsComments(conf));
+    expect(plugin, "找不到 ggd-serve-blizzard-overlay —— 被改名或刪掉了").toBeTruthy();
+    expect(plugin![0]).not.toMatch(/closeBundle|generateBundle|writeBundle/);
+    expect(plugin![0]).toMatch(/apply:\s*"serve"|configureServer/);
   });
 
   it("the dev nginx include serves the overlay from a bind mount, not the image", () => {

@@ -256,7 +256,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 鬼畜紅王 - 鬼畜狂刀KYO `godie-u00h` | W | 39-02 無明神風流-朱雀 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
 | 鬼畜紅王 - 鬼畜狂刀KYO `godie-u00h` | E | 39-03 無明神風流-蛟龍 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave.ice maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |
 | 鬼畜紅王 - 鬼畜狂刀KYO `godie-u00h` | R | 39-04 祕奧義．金色的神風 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
-| 鬼畜紅王 - 鬼畜狂刀KYO `godie-u00h` | EX | 39-002-紅王 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 鬼畜紅王 - 鬼畜狂刀KYO `godie-u00h` | EX | 39-002 紅王 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 神性的流失 - 賽菲洛斯 `godie-u00j` | PASSIVE | 74-00 JENOVA | `—` | — | 🟣 PASSIVE | never cast |
 | 神性的流失 - 賽菲洛斯 `godie-u00j` | Q | 74-01 獄門 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
 | 神性的流失 - 賽菲洛斯 `godie-u00j` | W | 74-02 八刀一閃 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |

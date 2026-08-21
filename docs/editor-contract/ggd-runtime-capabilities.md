@@ -1,6 +1,6 @@
 # GGD 遊戲端執行期能力清單（`ggd-runtime-capabilities@1`）
 
-**指紋 `3ae19522`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
+**指紋 `11464833`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
 
 ## 這份文件是什麼
 
@@ -55,11 +55,44 @@
 | `effect.convert-team@1` | ⚠️ 部分支援 | [EX∅ 根源] 大師球（『陣營轉換 —— 把一個既有單位改成友軍』） | ⛔ 五個邊界：① **`onHitTargets` 這一格 `convertTeam` 沒有**（`carry` 才有）⇒ 掛在同一個 `effects` 陣列裡的回血／上鎖是**無條件**跑的，捕獲被拒絕的那一刻它們照樣發生。要「成功才給」今天寫不出來；② **不對稱**：被借走的殭屍**會**被其他殭屍打，但它**打不到**其他殭屍（`isMobTargetable` 對一隻沒被捕的普通 mob 一律回 false）。它仍然會去打敵方英雄，所以寶具是有用的；③ **捕獲者死掉不會歸位** —— 歸位只有三條路（被捕者死亡／`until:"duration"` 到期／回合開始）。`until` 那個 enum 沒有「載具死亡」這一格（`carry` 的 `onCarrierDeath` 才有）；④ `countsForOriginalTeam` **預設 `false`**（owner 2026-08-18：被捕的單位實質上就是我方單位）—— `true` 是一鍵回頭（被借走的敵方英雄在勝負判定上仍替原隊活著）。填 `false` 只是把原隊那一側的人頭拿掉，⛔ **不會**改算捕獲者那一隊 —— 座位是勝負判定的軸，而借調不動座位；⑤ ⛔ 它**不發任何事件** —— 玩家的可見性靠 `ENTITY_FLAG.TEAM_OVERRIDE*` 三顆 bit 讓那具身體當場換顏色。⇒ 想掛特效的話要自己在同一份 `effects` 裡加一發 `spawnVfx`。 | packages/shared/src/sim/mindControl.ts + sim/effects/mindControl.ts + apps/game-server/src/net/mindControlWire.test.ts（⭐ 第三條斷言真的跑 `projectSnapshot` + Colyseus encode→decode 再把隊伍序數解回來 —— 那是「遊戲邏輯全對、螢幕全錯」的唯一防線）+ content/items/master-ball.json |
 | `vfx.bound-sound@1` | ✅ 支援 | GH#390 特效自帶的音效一個都沒移植 | ⭐ 四個時機（發射 / 命中 / 循環 / 消散）填的是 **`config.audio-map@1.sfx` 的 key**，⛔ 不是檔名也不是 URL —— 音量 / 冷卻 / 同時發聲數住在 audio-map 那一份，播放走 `AudioSystem.playSfx` ⇒ 玩家的總音量與 SFX 開關自動適用。⚠️ 兩層逐格覆寫：`abilities[<id>].soundX` 蓋 `families[<fam>].soundX`，⛔ 不是「填一格就整組換掉」。⚠️ **循環音是重播不是真 loop**：每 `soundLoopMs` 重放一次，並在 `soundLoopMaxMs` 絕對到期時自動回收並改播消散音（⛔ 沒有「一直響到有人叫停」）。⚠️ 填一個 audio-map 沒有的 key = 這個時機安靜（⛔ 不是報錯）；填 `wc3.*` 那一族要注意它們住在只有 full-asset build 才掛得上的 Blizzard overlay，正式站上會**退回家族那一格**。 | packages/shared/src/content/schema/vfx.ts（`VFX_SOUND_CUES` / `resolveVfxSound`）+ apps/client/src/audio/vfxSound.ts + apps/client/src/audio/vfxSoundWired.test.ts + content/config/vfx-families.json（21 個家族原型 + 72 支原作 JASS 音效的逐支覆寫，由 tools/w3x-import/build_vfx_sound_bindings.py 產生） |
 | `vfx.bone-attachment@1` | ✅ 支援 | GH#392 穿在骨頭上的模型（WC3 `Asph` 球體） | ⭐ **一份 `attachment@1` 綁在 `config.ambient-vfx@1.bindings` 上**，鍵可以是 **modelKey**（所有穿這具身體的人都戴著）或 **championId**（形態感知）。⚠️ 悟空兩態共用 `imported.goku`，所以「只有超三戴」**一定要用 championId** —— 填 modelKey 的話基本型也會戴上。⚠️ `points[]` **一格掛一份拷貝**（= WC3 的 `atac`）：雙手就是 `["left,hand","right,hand"]`。⛔ `"right,hand"` 是**一個**掛點的兩個逗號 token，⛔ 不是兩個掛點。掛點名解析不出來 = 退回模型原點（那是 WC3 自己的行為，⛔ 不是缺陷）。⚠️ `anim` 填的是**掛件自己的** glb 動畫軌名（出貨的三顆都只有一條 `Stand`）；省略 = 播全部，填一個對不上的名字 = 一條都不播（⛔ 不會退回第一條）。⚠️ `follow: false` 是**世界座標快照**，掛件從此和角色無關 —— ⛔ 不是「掛在模型根上」（那還是會跟著角色走）。⚠️ 掛件的生命週期綁在那具 body 上：變身會整個重建 view，所以「變回本體 = 掛件消失」不需要任何解除步驟。 | packages/shared/src/content/schema/vfx.ts（`zAttachmentDoc`）+ packages/shared/src/content/wornAttachments.ts（兩個來源折成一個型別）+ apps/client/src/render/views/ChampionView.ts（`attachOnePart`：parent = 跟隨、`g.play()` = 播動畫）+ apps/client/src/render/boneAttachmentFollow.test.ts（NullEngine 真的移動角色再讀掛件的**世界座標**） |
+| `action.grant-shield@1` | ✅ 支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「grantShield」 | — | packages/shared/src/sim/effects/shield.ts —— ⭐ `absorbs` 是一格**傷害類型過濾器**（「只擋魔法傷害」寫得出來），⛔ 它不是一個 effect kind，所以不要去 effectKinds 裡找它。 |
+| `action.summon-unit@1` | ✅ 支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「summonUnit」 | — | packages/shared/src/sim/effects/summon.ts（`SimWorld.summon` + summonSystem） |
+| `action.revive-self@1` | ✅ 支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「reviveSelf」 | — | packages/shared/src/sim/effects/revive.ts —— handler 決定 WHO / WHERE / WHETHER，「被復活的人長什麼樣」是 `sim/revive.ts::reviveChampionAt` 那一份契約。 |
+| `action.reset-cooldown@1` | ✅ 支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「resetCooldown」 | — | packages/shared/src/content/schema/effects/modifyCooldown.ts 的 `mode: z.enum(["reduce","reduceFlat","reset"])`。⚠️ `reduce` 的 `amount` 是**比例**（上界 1），按秒縮短要用 `reduceFlat` —— 填錯 mode 會被 refine 擋下，⛔ 不會靜默夾掉。 |
+| `action.copy-ability@1` | ⚠️ 部分支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「copyAbility」 | ⭐ `proxyCast` 做到的是「**代放一次**」：一支技能施放另一支技能，`payCosts` 非 none 時走 `castAbility` 的同一排閘（沉默／暈眩／魔力），終止性靠深度嚴格遞增 + 有界上限。⛔ **它不是「複製到自己的槽位」**：施法者的六格技能列一格都不會變，所以「偷來的招之後可以再放」寫不出來 —— 那需要執行期改寫 `world.abilities`，而那一格今天只在 `spawnChampion` 寫一次（同 #129 變身技能列的那個缺口）。 | packages/shared/src/sim/effects/proxyCast.ts |
+| `action.change-target-rule@1` | ⚠️ 部分支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「changeTargetRule」 | ⭐ 引擎有**一根**改寫瞄準的軸：`targeting.forcedTargetOf`（`sim/taunt.ts`），而且 `taunt` 已經證明它可以**反向**用（`godie-i06q` 偵查鏡：讓敵人**不**選你）。⛔ 但它是「指定一個人」這一種規則，⛔ 不是一個可組合的瞄準規則語言 ——「優先打血最少的」「優先打施法者」這些今天只能靠 `effect` 上的 `targetPriority` / `targetMode` 在**單一效果**的範圍內表達，⛔ 改不了那個單位平常的自動選敵。 | packages/shared/src/sim/taunt.ts + sim/tauntReverseDirection.test.ts |
+| `action.modify-resource-rule@1` | ⚠️ 部分支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「modifyResourceRule」 | ⭐ 兩個**具名的**規則改寫已經出貨：`swapResource`（原子交換雙方的 HP↔MP）與 `manaBarrier`（扣血之前先把傷害換成扣魔，44-00 機警）。`eventValueConversion` 再補一條「把這次事件的數值換成另一種資源」。⛔ 但它們是**三條寫死的路**，⛔ 不是「這個單位從現在起用怒氣代替魔力」那種一般化的規則層 ——資源條的種類今天是 HP / MP 兩根，內容側加不了第三根。 | packages/shared/src/sim/effects/swapResource.ts + manaBarrier.ts + eventValueConversion.ts |
+| `action.create-zone@1` | ⚠️ 部分支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「createZone」（票 body 的第 3 順位） | ⛔ **今天所有的「範圍」都是瞬間的**：`damageArea` / `damageLine` / `randomArea` 在結算的那一 tick 查一次重疊就結束。「留下一片持續 N 秒的區域」只能用 `delayed`（凍住名單）或 `randomArea`（到期用圓心重解）硬湊成 N 次脈衝，而且 ⚠️ **畫面上不會有那一圈** —— 沒有任何實體過網，玩家看不到自己站在裡面。⇒ 毒圈／治療圈／減速場這一整族的骨架今天寫不出來。 | packages/shared/src/sim/effects/randomArea.ts（draw 預算 2×count，到期走絕對 tick）+ delayed.ts（⛔ 與 randomArea 的差別是一句話：那邊到期用圓心重解，這邊用凍住的名單） |
+| `action.delay-death@1` | ⚠️ 部分支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「delayDeath」 | ⭐ 「這一發不會死」已經有兩條路：`invulnerable`（無條件擋，含真傷）與**免死**（`sim/marks.ts` 的 `lethal` 標記 + `combat/lethalSave.ts`，攔在護盾之後扣血之前）。⛔ 但引擎**沒有「死亡延後 N 秒」**：死亡是在同一 tick commit 的，⛔ 沒有一個「已經死了但還站著」的中間狀態。⇒ 「陣亡後 3 秒內仍可行動」這種卡片今天要改寫成「免死 + 一段短無敵」，⚠️ 而那兩者的**可被驅散性**與畫面表現都不一樣，⛔ 不是同一句話。⚠️ 免死的 `restoreMode` 預設是 `clamp`（見 `hook.on-lethal-damage@1`），⛔ 寫「留在 N% 生命」的卡片一定要填 `restore`。 | packages/shared/src/sim/effects/invulnerable.ts + sim/combat/lethalSave.ts + sim/marks.ts |
+| `action.redirect-damage@1` | ⛔ 不支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「redirectDamage —— 把即將落在 A 身上的傷害轉到 B」 | 傷害佇列今天只認得**一個**承受者（`combat/damage.ts` 的封包帶 target，沒有第二個座位）。「換一個人挨」要在扣血之前改寫封包的 target，而那一格是護盾／免死／無敵三道閘共用的輸入。 | — |
+| `action.store-damage@1` | ⛔ 不支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「storeDamage —— 把承受到的傷害存起來」 | 引擎有「記一個數字」的機制，但它的**存款來源只有一種**：`spendMana.bankAs` 記的是**這一次實際扣掉的法力**。⛔ 沒有任何一格讀得到「剛剛那一發打了我多少」再把它記下來 —— `HookDef` 的過濾器與 `condition@1` 的葉子都沒有那個數字（`extendBuff` 的檔頭逐條查過同一件事）。 | — |
+| `action.release-stored-damage@1` | ⛔ 不支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「releaseStoredDamage —— 把存起來的傷害一次放出去」 | 與 `action.store-damage@1` 是同一條路的兩端：沒有存款端就沒有支出端。⚠️ 兩者要一起做，⛔ 只做一半的話卡片會宣稱一個永遠是 0 的數字（第一·五守則的形狀）。 | — |
+| `action.rewind-state@1` | ⛔ 不支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「rewindState —— 把一個單位倒回 N 秒前的狀態」 | ⛔ sim **沒有保存任何歷史狀態**。決定性重播靠的是重跑輸入（`MatchRecorder` 錄的是 input log），⛔ 不是狀態快照 —— 所以「倒回去」在引擎裡沒有可以讀的東西。要做的話是動 `SimWorld` 的儲存體本身，而那是決定性與重播的承重牆（票 body 建議**最後**做）。 | — |
+| `action.swap-position@1` | ⛔ 不支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「swapPosition —— 兩個單位對調位置」 | 位移的三個 kind（`dash` / `leap` / `blink`）都只搬**一具身體**，而且落點是算出來的座標。「同一 tick 把兩具身體互換」還要決定**對方能不能拒絕**（免疫／不可位移／卡在牆裡），而那組決策今天一個欄位都沒有。 | — |
+| `action.create-terrain@1` | ⛔ 不支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「createTerrain —— 執行期長出新的地形/障礙」 | 場地幾何是**編譯期**的：`arena@1.obstacles` 由 `map/compile.ts` 從格盤產出，而碰撞的 relax 每 tick 掃的就是那個陣列。執行期插一塊新的要同時處理導航（`nav.nextHop` 是烘好的）與「有人正好站在那裡」——⛔ 兩件事今天都沒有答案。 | — |
+| `action.create-portal@1` | ⛔ 不支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「createPortal —— 放一個持續存在、任何人踩得到的傳送門」 | 傳送門是**一個持續存在的世界實體**（有位置、有半徑、有壽命、對誰生效是欄位），而引擎今天唯一的持續實體是 `summon`（一具身體）與投射物。⚠️ 它與 `action.create-zone@1` 是同一個缺口的兩張臉，⛔ 不要分兩次做。 | — |
+| `action.modify-arena-boundary@1` | ⛔ 不支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「modifyArenaBoundary —— 技能改變場地邊界」 | 邊界（`arena@1.bounds` 與火圈半徑）是**一份 config 的排程**，不是任何一支技能寫得到的狀態。而且它是所有出生點合法性檢查與 `sim/map/bounds.ts` 的共同前提 —— 改它會讓那些檢查的答案在一場比賽中途改變。票 body 建議**最後**做，理由與 `rewindState` 同一條。 | — |
+| `action.transfer-cooldown@1` | ⛔ 不支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「transferCooldown —— 把自己的冷卻轉給別人（或反過來）」 | `modifyCooldown` 的三個 mode（`reduce` / `reduceFlat` / `reset`）都只動**持有者自己**的一支技能，而且它拿的是 `abilityId`。「轉給別人」要先回答「對方有沒有這一支」以及「對方的槽位是哪一格」——⛔ 兩個問題今天都沒有欄位。 | — |
+| `action.copy-buff@1` | ⛔ 不支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「copyBuff —— 讀出目標身上那一份增益，複製到自己（或隊友）身上」 | `applyBuff` 掛的是**作者在 JSON 裡寫死的**那一份修飾子。「讀出對方身上現在有什麼」需要一個把 `StatsComp.sources` 反序列化回一份 `applyBuff` 的路徑，而 modifier 的來源（道具／技能／靈氣／標記）語意各不相同 —— 複製過來之後**歸誰、什麼時候到期**今天沒有答案。 | — |
+| `action.evolve-item@1` | ⛔ 不支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「evolveItem —— 一件道具在戰鬥中升級成另一件」 | ⛔ **GGD 沒有合成步驟**：`item@1.recipe`（book + components）的欄位註解自己寫著「GGD has no combine step; this is provenance only」——它是從原作 TRIGGERS 撈回來的**出處紀錄**，⛔ 不是一條執行期的路。而且沒有任何 effect kind 動得了背包（`economy/itemSource.ts` 只在購買與回合邊界寫）。 | — |
+| `action.sacrifice-item@1` | ⛔ 不支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「sacrificeItem —— 消耗掉一件道具換取效果」 | 與 `action.evolve-item@1` 同一個缺口：⛔ 沒有任何 effect 拿得走背包裡的一格。⚠️ 它還多一個決策：**退不退錢、退多少** —— 那是 owner 的平衡題，⛔ 不是實作題。 | — |
 
 ## 2. ⛔ 不可使用清單
 
 編輯器產出的內容只要用到下列任何一項，遊戲端就會回 `unsupported-runtime`：
 
+- `action.copy-buff@1`
+- `action.create-portal@1`
+- `action.create-terrain@1`
+- `action.evolve-item@1`
+- `action.modify-arena-boundary@1`
+- `action.redirect-damage@1`
+- `action.release-stored-damage@1`
+- `action.rewind-state@1`
+- `action.sacrifice-item@1`
+- `action.store-damage@1`
+- `action.swap-position@1`
+- `action.transfer-cooldown@1`
 - `condition.ability-state@1`
 - `effect.attack-dash@1`
 - `effect.control-restriction@1`

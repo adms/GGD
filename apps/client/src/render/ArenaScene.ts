@@ -407,7 +407,7 @@ export function disposeArena(_scene: Scene, handles: ArenaHandles): void {
   for (const ps of handles.flames) ps.dispose();
   handles.flames.length = 0;
   handles.fader.clear(); // fade materials dispose with their meshes below
-  // ⭐ GH#535 —— 地面那四張圖是 `groundTextureCache` 跨回合共用的財產,⛔ 不是這一趟
+  // ⭐ GH#536 —— 地面那四張圖是 `groundTextureCache` 跨回合共用的財產,⛔ 不是這一趟
   // 場地的。下面那行的第二個參數是 `disposeMaterialAndTextures` ⇒ 不先摘下來,
   // 每一次換圖都會把快取好的貼圖銷毀,而下一回合又從零抓一次(=「讀取不夠快」)。
   for (const g of handles.grounds) detachGroundTextures(g);

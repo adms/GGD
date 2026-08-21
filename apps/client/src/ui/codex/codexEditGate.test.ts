@@ -160,7 +160,12 @@ describe("layer A: the dev-server route is dev-server only", () => {
     expect(VITE_SRC).toMatch(/configureServer/);
     // the exact assertion the copyright gate uses: never a build-time hook
     // (comments stripped — prose about the rule must not satisfy the rule)
-    expect(code(VITE_SRC)).not.toMatch(/closeBundle|generateBundle|writeBundle/);
+    // ⭐ 2026-08-22：收窄到 **contentApiGuard 這個 plugin 自己**，⛔ 不是整份 vite.config。
+    // ⚠️ 掃全檔的話，任何無關的 build hook 都會讓它紅（#83 的 `ggd-strip-debug-pages`
+    // 是安全修正而且**必須**是 build hook），而訊息會說「guard 掛到了 build」——⛔ 說謊。
+    const guardPlugin = /name:\s*"ggd-content-api-guard"[\s\S]*?\n\s{2}\};/.exec(code(VITE_SRC));
+    expect(guardPlugin, "找不到 ggd-content-api-guard —— 被改名或刪掉了").toBeTruthy();
+    expect(guardPlugin![0]).not.toMatch(/closeBundle|generateBundle|writeBundle/);
   });
 
   it("the GAME CLIENT has no /content-api route at all — the guard is terminal", () => {

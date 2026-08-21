@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_16502fc4f91c`
+contentVersion `cv_e8d5c1b343d8`
 
 ---
 
@@ -24,8 +24,8 @@ contentVersion `cv_16502fc4f91c`
 | `championForm` | 變身／切換形態 | 23 | `godie-e001.r`、`godie-e002.w`、`godie-e00l.w`、`godie-e00s.passive`、`godie-e00w.e`、`godie-e010.passive`、`godie-h01n.r`、`godie-h02v.q`、`godie-hgam.ex`、`godie-hjai.ex`、`godie-n003.ex`、`godie-n01c.ex` …（共 23） |
 | `convertTeam` | 陣營轉換（把一個既有單位借到自己這一隊） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `cycleBuff` | 輪替增益 | 1 | `godie-efur.passive` |
-| `damage` | 傷害 | 156 | `godie-e001.e`、`godie-e001.passive`、`godie-e002.ex`、`godie-e002.r`、`godie-e002.w`、`godie-e007.e`、`godie-e007.ex`、`godie-e007.q`、`godie-e007.r`、`godie-e008.e`、`godie-e008.q`、`godie-e00l.e` …（共 156） |
-| `damageArea` | 範圍傷害 | 31 | `godie-e002.w`、`godie-e00s.e`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00s.w`、`godie-e00w.ex`、`godie-e00w.q`、`godie-e00w.r`、`godie-e00w.w`、`godie-e010.r`、`godie-edem.ex`、`godie-edem.q` …（共 31） |
+| `damage` | 傷害 | 153 | `godie-e001.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e002.w`、`godie-e007.e`、`godie-e007.ex`、`godie-e007.q`、`godie-e007.r`、`godie-e008.e`、`godie-e008.q`、`godie-e00l.e`、`godie-e00l.r` …（共 153） |
+| `damageArea` | 範圍傷害 | 35 | `godie-e001.passive`、`godie-e002.w`、`godie-e00n.passive`、`godie-e00s.e`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00s.w`、`godie-e00w.ex`、`godie-e00w.q`、`godie-e00w.r`、`godie-e00w.w`、`godie-e00x.passive` …（共 35） |
 | `damageLine` | 直線傷害 | 10 | `godie-e002.e`、`godie-e002.ex`、`godie-e00r.r`、`godie-edem.e`、`godie-emfr.q`、`godie-h01n.e`、`godie-h01u.e`、`godie-h02v.e`、`godie-n00p.passive`、`godie-nsjs.passive` |
 | `dash` | 衝刺（腳不離地） | 7 | `godie-edem.e`、`godie-h01n.q`、`godie-h01u.e`、`godie-hapm.r`、`godie-udea.r`、`godie-zombiex.w`、`thorne.q` |
 | `delayed` | 延遲落地／排程 | 8 | `godie-e002.ex`、`godie-h02v.ex`、`godie-h02v.q`、`godie-hapm.ex`、`godie-hapm.passive`、`grail-a-08`、`grail-ex-05`、`grail-ex-16` |
@@ -39,12 +39,12 @@ contentVersion `cv_16502fc4f91c`
 | `grantGold` | 發錢 | 1 | `godie-n00b.passive` |
 | `heal` | 治療（吃係數） | 10 | `godie-e007.w`、`godie-etyr.q`、`godie-h02r.passive`、`godie-hvsh.e`、`godie-n003.w`、`godie-n01c.q`、`godie-n01g.w`、`godie-nbbc.q`、`godie-o02p.r`、`godie-o02p.w` |
 | `invulnerable` | 免疫／魔免／免控 | 16 | `godie-hapm.ex`、`godie-hapm.passive`、`godie-hapm.w`、`godie-hart.r`、`godie-hpb1.w`、`godie-u00j.q`、`godie-u00n.r`、`godie-u00o.r`、`godie-u010.q`、`godie-uvng.q`、`grail-c-12`、`grail-a-06` …（共 16） |
-| `knockback` | 擊退／擊飛／拉扯／擊倒 | 11 | `godie-e00w.q`、`godie-efur.w`、`godie-ewar.ex`、`godie-h00l.q`、`godie-h00l.r`、`godie-h01u.w`、`godie-h02k.r`、`godie-hapm.ex`、`godie-hapm.passive`、`grail-c-02`、`grail-a-01` |
+| `knockback` | 擊退／擊飛／拉扯／擊倒 | 12 | `godie-e00w.q`、`godie-efur.w`、`godie-ewar.ex`、`godie-h00l.q`、`godie-h00l.r`、`godie-h01u.w`、`godie-h02k.r`、`godie-hapm.ex`、`godie-hapm.passive`、`godie-u00v.r`、`grail-c-02`、`grail-a-01` |
 | `leap` | 跳躍（拋物線離地） | 7 | `godie-h00l.w`、`godie-hapm.w`、`godie-hart.q`、`godie-hart.w`、`godie-hpb1.e`、`godie-u00n.r`、`godie-u00o.r` |
 | `manaBarrier` | 魔力護盾 | 1 | `godie-emns.passive` |
 | `modifyCooldown` | 改冷卻 | 13 | `godie-h00l.ex`、`godie-h01n.r`、`grail-c-11`、`grail-c-13`、`grail-c-14`、`grail-a-05`、`grail-a-07`、`grail-a-17`、`grail-a-18`、`grail-ex-02`、`grail-ex-03`、`grail-ex-11` …（共 13） |
 | `proxyCast` | 代放別的技能 | 6 | `godie-h01u.r`、`grail-a-08`、`grail-ex-04`、`grail-ex-05`、`grail-ex-08`、`grail-ex-15` |
-| `randomArea` | 隨機落點 | 5 | `godie-e00s.r`、`godie-e010.r`、`godie-efur.r`、`grail-c-19`、`grail-ex-09` |
+| `randomArea` | 隨機落點 | 6 | `godie-e00s.r`、`godie-e010.r`、`godie-efur.r`、`godie-ogld.ex`、`grail-c-19`、`grail-ex-09` |
 | `restore` | 回復（按最大值百分比） | 17 | `godie-e00s.ex`、`godie-emfr.passive`、`godie-ewar.w`、`godie-h00l.r`、`godie-h02v.ex`、`godie-h02v.q`、`godie-hapm.passive`、`godie-n00b.passive`、`godie-o02p.ex`、`grail-c-03`、`grail-a-02`、`grail-a-06` …（共 17） |
 | `revive` | 復活 | 1 | `grail-ex-10` |
 | `shield` | 吸收（護盾） | 10 | `godie-e00l.passive`、`godie-e00r.e`、`godie-h00l.ex`、`godie-o00l.e`、`sela.w`、`thorne.w`、`grail-c-17`、`grail-a-16`、`aegis-surge`、`guardian-ward` |
@@ -383,6 +383,18 @@ contentVersion `cv_16502fc4f91c`
 ## ⛔ 已知壞掉 / 未支援
 
 - ⛔ `hook:onDeath` —— 已知壞掉（GH#296）
+- ⛔ `action.copy-buff@1` —— 宣告為 unsupported，⛔ 不要寫進 JSON
+- ⛔ `action.create-portal@1` —— 宣告為 unsupported，⛔ 不要寫進 JSON
+- ⛔ `action.create-terrain@1` —— 宣告為 unsupported，⛔ 不要寫進 JSON
+- ⛔ `action.evolve-item@1` —— 宣告為 unsupported，⛔ 不要寫進 JSON
+- ⛔ `action.modify-arena-boundary@1` —— 宣告為 unsupported，⛔ 不要寫進 JSON
+- ⛔ `action.redirect-damage@1` —— 宣告為 unsupported，⛔ 不要寫進 JSON
+- ⛔ `action.release-stored-damage@1` —— 宣告為 unsupported，⛔ 不要寫進 JSON
+- ⛔ `action.rewind-state@1` —— 宣告為 unsupported，⛔ 不要寫進 JSON
+- ⛔ `action.sacrifice-item@1` —— 宣告為 unsupported，⛔ 不要寫進 JSON
+- ⛔ `action.store-damage@1` —— 宣告為 unsupported，⛔ 不要寫進 JSON
+- ⛔ `action.swap-position@1` —— 宣告為 unsupported，⛔ 不要寫進 JSON
+- ⛔ `action.transfer-cooldown@1` —— 宣告為 unsupported，⛔ 不要寫進 JSON
 - ⛔ `condition.ability-state@1` —— 宣告為 unsupported，⛔ 不要寫進 JSON
 - ⛔ `effect.attack-dash@1` —— 宣告為 unsupported，⛔ 不要寫進 JSON
 - ⛔ `effect.control-restriction@1` —— 宣告為 unsupported，⛔ 不要寫進 JSON

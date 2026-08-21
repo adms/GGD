@@ -284,7 +284,7 @@ function baseGroundMaterial(name: string, scene: Scene): PBRMaterial {
 }
 
 /**
- * ⭐ GH#535 —— 把四張圖掛上材質，**而且只在它們解碼完之後**。
+ * ⭐ GH#536 —— 把四張圖掛上材質，**而且只在它們解碼完之後**。
  *
  * ⛔ 早一步掛上去就是 owner 看到的「地板全黑」，⛔ 不是「模糊幾幀」：貼圖沒好時
  * babylon 綁的是 `engine.emptyTexture` —— `createRawTexture(new Uint8Array(4),
@@ -555,7 +555,7 @@ export function zoneTextureRadius(zone: {
 }
 
 /**
- * ⭐ GH#535 —— 拆場地**之前**先把共用貼圖從材質上摘下來。
+ * ⭐ GH#536 —— 拆場地**之前**先把共用貼圖從材質上摘下來。
  *
  * `disposeArena` 用的是 `mesh.dispose(false, **true**)`，第二個參數是
  * `disposeMaterialAndTextures`（babylon `Meshes/mesh.js:2484`）—— 它會把材質上
