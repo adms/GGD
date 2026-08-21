@@ -75,7 +75,7 @@
  *     + `configFromForm`;
  *   · `ContentDb.load()` — one line: `applyHudStatsOverride(this.configDoc(…))`.
  */
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import type { ChampionId } from "@ggd/shared/ids";
 import { attrBonusFromArray } from "@ggd/shared/sim/economy/statPath";
@@ -99,6 +99,7 @@ import { useDisplayStatCaps } from "../displayStatCaps";
 import { contentBodyScaleRules } from "../displayBodyScale";
 import { GOLD, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 import { hudTouch } from "./HudSlot";
+import { padHudFocusMode, subscribePadHudFocus } from "./padHudFocus";
 import {
   hudSlotPanelMaxHeight,
   hudSlotPanelStyle,
@@ -129,6 +130,13 @@ export interface HudStatsTuning {
   desktopTrigger: "hover" | "off";
   /** 觸控怎麼開:長按,或不開(出貨值,理由見檔頭 ③)。 */
   touchTrigger: "hold" | "off";
+  /**
+   * 手把怎麼開(GH#508)。這個抽屜是六個「戰鬥中純手把碰不到」的控制項裡**唯一
+   * 沒有任何可聚焦元素**的一個 —— 它整片 `pointerEvents:none`,連一顆按鈕都沒有,
+   * 所以光是打開焦點層也到不了它。`"focus"` = 在 HUD 焦點模式下長出一顆可聚焦的
+   * 小開關;`"off"` = 手把玩家看不到自己的屬性(舊行為)。
+   */
+  padTrigger: "focus" | "off";
   /** 長按要按多久(毫秒)才算數。 */
   holdMs: number;
   /** 面板寬度上限(px);視窗更窄時會再被夾。 */
@@ -175,6 +183,11 @@ export const HUD_STATS_FIELDS: readonly HudStatsFieldSpec[] = [
     values: ["hold", "off"],
     label: "觸控怎麼叫出來:長按頭像/金錢區,或關閉（右下角在手機上是技能弧）",
   },
+  {
+    key: "padTrigger",
+    values: ["focus", "off"],
+    label: "手把怎麼叫出來:在 HUD 焦點模式下長出一顆可聚焦的開關,或關閉",
+  },
   { key: "holdMs", min: 120, max: 2000, label: "觸控長按要按滿幾毫秒才展開" },
   { key: "widthPx", min: 200, max: 560, label: "面板寬度上限（視窗更窄時會再被夾）" },
   { key: "maxHeightPx", min: 160, max: 900, label: "面板高度上限（視窗更矮時會再被夾）" },
@@ -210,6 +223,9 @@ export const SHIPPED_HUD_STATS: HudStatsTuning = {
   enabled: true,
   desktopTrigger: "hover",
   touchTrigger: "off",
+  // 第〇·六守則:優先權大的更新後**預設啟動**。owner 要的是「手把直接操作到底」,
+  // 而關掉這一格就是手把玩家整場看不到自己的屬性(#508 的舊行為)。
+  padTrigger: "focus",
   holdMs: 400,
   widthPx: 320,
   maxHeightPx: 520,
@@ -626,6 +642,10 @@ export function StatsHoverPanel(): React.JSX.Element | null {
   const baseBonus = useDisplayBaseBonus();
   const caps = useDisplayStatCaps();
   const [open, setOpen] = useState(false);
+  // GH#508 — the pad's own open/close, kept SEPARATE from the pointer's so a
+  // stray mousemove cannot slam the drawer shut under a pad player's hands.
+  const [padOpen, setPadOpen] = useState(false);
+  const padMode = useSyncExternalStore(subscribePadHudFocus, padHudFocusMode, () => false);
   const [viewport, setViewport] = useState<HudViewport>(readViewport);
   const openRef = useRef(false);
   const holdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -635,6 +655,8 @@ export function StatsHoverPanel(): React.JSX.Element | null {
   const live = tuning.enabled && (touch ? tuning.touchTrigger : tuning.desktopTrigger) !== "off";
   const holdMs = tuning.holdMs;
   const touchHold = touch && tuning.touchTrigger === "hold";
+  const padOn = tuning.enabled && tuning.padTrigger === "focus" && padMode;
+  const shown = open || (padOn && padOpen);
 
   useEffect(() => {
     if (!live || typeof window === "undefined") return;
@@ -695,16 +717,52 @@ export function StatsHoverPanel(): React.JSX.Element | null {
     };
   }, [live, touch, touchHold, holdMs]);
 
+  // leaving HUD 焦點模式 must not leave the drawer stuck open over the fight —
+  // the chip that closes it is gone the same frame.
+  useEffect(() => {
+    if (!padMode && padOpen) setPadOpen(false);
+  }, [padMode, padOpen]);
+
   const bodyScaleRules = useMemo(() => contentBodyScaleRules(), []);
   const model = useMemo(
     () =>
-      seat === null || !open
+      seat === null || !shown
         ? null
         : statsHoverModel(seat, { env, baseBonus, caps, bodyScaleRules, tuning }),
-    [seat, open, env, baseBonus, caps, bodyScaleRules, tuning],
+    [seat, shown, env, baseBonus, caps, bodyScaleRules, tuning],
   );
 
-  if (!live || !open || model === null) return null;
+  // ⭐ THE ONE FOCUSABLE PIXEL THIS PANEL HAS EVER HAD. Everything else here is
+  // `pointerEvents:none` by design (module doc ②), which is also why the pad
+  // could not reach it even once #508 opened the focus layer in combat.
+  const anchorRect = hudSlotRect(STATS_HOVER_ANCHOR, viewport, touch);
+  const chip = padOn ? (
+    <button
+      type="button"
+      data-pad-stats-toggle=""
+      aria-label="屬性面板"
+      title="屬性面板"
+      onClick={() => setPadOpen((v) => !v)}
+      style={{
+        position: "absolute",
+        left: Math.max(4, anchorRect.x + anchorRect.w - 44),
+        top: Math.max(4, anchorRect.y - 24),
+        pointerEvents: "auto",
+        padding: "2px 8px",
+        background: PANEL_BG,
+        border: PANEL_BORDER,
+        borderRadius: 6,
+        color: TEXT_MAIN,
+        fontSize: 10.5,
+        fontWeight: 700,
+        cursor: "pointer",
+      }}
+    >
+      屬性
+    </button>
+  ) : null;
+
+  if ((!live && !padOn) || !shown || model === null) return chip;
 
   const maxH = Math.min(
     tuning.maxHeightPx,
@@ -712,7 +770,7 @@ export function StatsHoverPanel(): React.JSX.Element | null {
   );
   // Below this there is no drawer worth painting — a 40px sliver of a stat table
   // reads as a rendering bug, not as information.
-  if (maxH < 80) return null;
+  if (maxH < 80) return chip;
   const width = Math.min(tuning.widthPx, Math.max(0, viewport.width - 20));
 
   const blocks: React.JSX.Element[] = [];
@@ -771,6 +829,8 @@ export function StatsHoverPanel(): React.JSX.Element | null {
   }
 
   return (
+    <>
+      {chip}
     <div
       data-hud-drawer="stats-hover"
       data-hud-drawer-anchor={STATS_HOVER_ANCHOR}
@@ -798,5 +858,6 @@ export function StatsHoverPanel(): React.JSX.Element | null {
       </div>
       {blocks}
     </div>
+    </>
   );
 }

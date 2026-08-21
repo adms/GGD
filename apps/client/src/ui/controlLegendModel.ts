@@ -76,6 +76,14 @@ import {
 } from "../input/GamepadInput";
 import { SLOT_BY_CODE } from "../input/InputCapture";
 import {
+  focusNavActive,
+  NAV_DPAD,
+  PadMenuNav,
+  type NavAction,
+  type NavScroll,
+} from "../input/padFocusNav";
+import type { PadInfo } from "../input/gamepadDetect";
+import {
   HUD_EDGE,
   HUD_GAP,
   HUD_SLOTS,
@@ -327,7 +335,17 @@ export function gamepadLegend(): LegendRow[] {
   for (const [name, index] of Object.entries(BTN)) {
     const action = probeGamepadButton(index);
     if (!action) continue;
-    rows.push({ id: `btn-${name}`, control: padFace(name), label: legendActionLabel(action) });
+    // ⚠️ GH#506: `mapGamepadFrame` is not the ONLY thing listening to a pad
+    // button. START is bound TWICE — `ready` here, and the pause-menu bridge in
+    // `ui/PadFocusNav.tsx`. A probe of the combat map structurally cannot see
+    // the second one, so the row said 「準備完成」 and a player who pressed it
+    // got thrown into the pause menu with no warning. The extra clause is
+    // DECLARED with the token that proves it and scanned both ways.
+    const extra = PAD_COMBAT_EXTRA[name];
+    const label = extra
+      ? `${legendActionLabel(action)}（同時${extra.label}）`
+      : legendActionLabel(action);
+    rows.push({ id: `btn-${name}`, control: padFace(name), label });
   }
   if (probeGamepadPan()) {
     rows.push({
@@ -443,11 +461,168 @@ export function touchLegend(): LegendRow[] {
   return TOUCH_BINDINGS.map((b) => ({ id: `touch-${b.id}`, control: b.control, label: b.label }));
 }
 
+/* ── the MENU layer (GH#506) ───────────────────────────────────────────────
+ * ════════════════════════════════════════════════════════════════════════════
+ * WHY THERE ARE TWO PAD CARDS AND NOT ONE
+ * ════════════════════════════════════════════════════════════════════════════
+ * A pad drives TWO completely different machines in this client:
+ *
+ *   • the CHAMPION — `input/GamepadInput.mapGamepadFrame`, probed above.
+ *   • the MENUS    — `input/padFocusNav.PadMenuNav`, which turns the same
+ *     physical buttons into `activate / back / up / down / left / right`.
+ *
+ * `focusNavActive` decides which one owns the pad at any moment, and the two
+ * maps DISAGREE on the same buttons: A casts Q in combat and presses the
+ * focused button in a menu; the D-pad orders a stop in combat and moves focus
+ * in a menu. So a single card is a lie in one of the two states no matter what
+ * it says — which is exactly what shipped: the legend only ever printed the
+ * combat card, so the shop, champ-select and the settlement screen (all
+ * menu-layer) had a player reading 「Start 準備完成」 while START did nothing at
+ * all there (`GamepadInput.poll` hands pad0 to the menu layer and drops it).
+ *
+ * The menu rows are PROBED the same way the combat rows are — by RUNNING the
+ * real `PadMenuNav` over a synthetic pad snapshot. Move A off button 0 and this
+ * card follows in the same commit; there is no second table to remember.
+ */
+
+/** A synthetic pad snapshot: only what `PadMenuNav` actually reads. */
+function probePad(patch: { buttons?: readonly number[]; axes?: readonly number[] }): PadInfo {
+  const down = new Set(patch.buttons ?? []);
+  return {
+    connected: true,
+    // FOUR axes: 0/1 are the focus stick, 2/3 the scroll stick (NAV_SCROLL_AXES)
+    axes: patch.axes ?? [0, 0, 0, 0],
+    buttons: Array.from({ length: 16 }, (_, i) => ({ pressed: down.has(i) })),
+  };
+}
+
+const SCROLLS: readonly string[] = ["scroll-up", "scroll-down", "scroll-left", "scroll-right"];
+
+/** Run one button through the REAL menu nav. null = it does nothing in menus. */
+export function probeMenuNavButton(button: number): NavAction | null {
+  const nav = new PadMenuNav();
+  nav.read([probePad({})], 0); // baseline poll: edge detection needs a "before"
+  const ev = nav.read([probePad({ buttons: [button] })], 1).find((e) => !SCROLLS.includes(e));
+  return (ev as NavAction | undefined) ?? null;
+}
+
+/** Does the LEFT stick still move menu focus? (axes 0/1, not the D-pad.) */
+export function probeMenuNavStick(): NavAction | null {
+  const nav = new PadMenuNav();
+  nav.read([probePad({})], 0);
+  return nav.read([probePad({ axes: [0, 1, 0, 0] })], 1)[0] ?? null;
+}
+
+/** Does the RIGHT stick still scroll the focused container? (axes 2/3.) */
+export function probeMenuNavScroll(): NavScroll | null {
+  const nav = new PadMenuNav();
+  nav.read([probePad({})], 0);
+  const ev = nav.read([probePad({ axes: [0, 0, 0, 1] })], 1).find((e) => SCROLLS.includes(e));
+  return (ev as NavScroll | undefined) ?? null;
+}
+
+const NAV_DIRS: readonly NavAction[] = ["up", "down", "left", "right"];
+
+/**
+ * Caption per menu action, INCLUDING the right-stick scroll nudges.
+ *
+ * ⚠️ Keyed by plain `string` and resolved through {@link navMenuLabel}, NOT a
+ * `Record<NavAction, string>`. `padFocusNav` has moved the scroll family in and
+ * out of `NavAction` twice while this was being written, and a legend that
+ * stops COMPILING because a neighbouring union was re-shaped is a legend people
+ * fix by deleting rows. The fail-loud property is kept where it belongs — at
+ * runtime, on the probed value: an action nobody has named throws, and the
+ * reconciliation guard walks every probe result, so it throws in the test.
+ */
+const NAV_LABEL: Record<string, string> = {
+  activate: "確定（按下選中的那一顆）",
+  back: "返回 / 關閉這一層",
+  up: "移動焦點",
+  down: "移動焦點",
+  left: "移動焦點",
+  right: "移動焦點",
+  // The right stick IS a real binding (`padFocusNav.readScrollDirection`), so
+  // it gets a row. A bound input the card never mentions is a feature nobody
+  // discovers — the other half of GH#506.
+  "scroll-up": "捲動清單 / 說明欄",
+  "scroll-down": "捲動清單 / 說明欄",
+  "scroll-left": "捲動清單 / 說明欄",
+  "scroll-right": "捲動清單 / 說明欄",
+};
+
+export function navMenuLabel(action: string): string {
+  const label = NAV_LABEL[action];
+  if (!label) throw new Error(`controlLegend: no caption for menu action "${action}"`);
+  return label;
+}
+/**
+ * Bindings that share a COMBAT button but live outside `mapGamepadFrame`, so no
+ * probe can reach them. Declared WITH the token that proves them and scanned
+ * against the owning file, exactly like `KEYBOARD_ORDER_BINDINGS`.
+ */
+export const PAD_FOCUS_SOURCE = "ui/PadFocusNav.tsx";
+
+export const PAD_COMBAT_EXTRA: Record<string, DeclaredBinding> = {
+  START: {
+    id: "start-pause-menu",
+    control: "Start",
+    label: "開啟暫停選單 · 離開比賽的唯一鍵",
+    source: 'new KeyboardEvent("keydown", { key: "Escape"',
+  },
+};
+
+/**
+ * The menu card. ⛔ NO `ready` ROW: in every menu-layer phase `GamepadInput`
+ * has already handed pad0 to the focus layer, so START sends nothing — the
+ * player readies up by moving focus onto the ready button and pressing A, and
+ * that is what the A row says.
+ */
+export function padMenuLegend(): LegendRow[] {
+  const rows: LegendRow[] = [];
+  if (probeMenuNavStick()) rows.push({ id: "menu-stick-left", control: "左類比", label: navMenuLabel("up") });
+  const scroll = probeMenuNavScroll();
+  if (scroll) rows.push({ id: "menu-stick-right", control: "右類比", label: navMenuLabel(scroll) });
+  const dpadBound = (Object.values(NAV_DPAD) as number[]).some((i) =>
+    NAV_DIRS.includes(probeMenuNavButton(i) as NavAction),
+  );
+  if (dpadBound) rows.push({ id: "menu-dpad", control: "十字鍵", label: navMenuLabel("up") });
+  for (const [name, index] of Object.entries(BTN)) {
+    const action = probeMenuNavButton(index);
+    // directions are already covered by the single 十字鍵 row above
+    if (!action || NAV_DIRS.includes(action)) continue;
+    rows.push({ id: `menu-btn-${name}`, control: padFace(name), label: navMenuLabel(action) });
+  }
+  return rows;
+}
+
+/**
+ * Which pad button casts `slot`, as a printed face — derived by probing the
+ * real map. ⭐ Exists so the ability tiles (`ui/abilityHold`, `AbilityBar`) can
+ * stop hand-writing 「D / ✛↑」 and 「F / Back」, two faces that have been wrong
+ * since the 2026-07-27 remap moved EX to LB and 天生技 to RB (GH#506).
+ * null = this build binds no pad button to that slot.
+ */
+export function padFaceForSlot(slot: CastableSlot): string | null {
+  for (const [name, index] of Object.entries(BTN)) {
+    const action = probeGamepadButton(index);
+    if (action?.kind === "cast" && action.slot === slot) return padFace(name);
+  }
+  return null;
+}
+
 /** The rows for one input mode. The ONE place the mode picks a binding set. */
 export function legendRows(mode: "keyboard" | "gamepad" | "touch"): LegendRow[] {
   if (mode === "gamepad") return gamepadLegend();
   if (mode === "touch") return touchLegend();
   return keyboardLegend();
+}
+
+/** Rows for a resolved layer — the ONE place a layer picks its binding set. */
+export function legendLayerRows(
+  layer: LegendLayer,
+  mode: "keyboard" | "gamepad" | "touch",
+): LegendRow[] {
+  return layer === "menu" ? padMenuLegend() : legendRows(mode);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -804,6 +979,9 @@ function stripRect(
  * ═══════════════════════════════════════════════════════════════════════════ */
 
 /**
+ * ⚠️ SUPERSEDED BY `controlLegendLayer` (GH#506) — kept because the boss bars
+ * and the kill-combo ask it before they claim the flank, and it now DELEGATES.
+ *
  * ROUND 1 ONLY. `round` is a real discrete field on the HUD store (RoomStore
  * `HudState.round`, projected from MatchState), so this needs no invented
  * state. `round <= 1` and not `=== 1` because the field initialises to 0 and a
@@ -821,8 +999,82 @@ export function controlLegendVisible(opts: {
   /** a corner-covering panel is open — chrome yields, always (#107) */
   panelCovering: boolean;
 }): boolean {
-  if (opts.dismissed || opts.panelCovering) return false;
-  return opts.phase === "combat" && opts.round <= 1;
+  // ⚠️ GH#506: the legend is no longer one card, and this predicate is what the
+  // boss bars / kill-combo ask before they claim the flank. They only ever
+  // share the screen with the COMBAT card, so that is what it answers — and it
+  // DELEGATES rather than keeping a second copy of the rule, which is how the
+  // round-1 gate and its four consumers would otherwise drift apart. `mode` is
+  // irrelevant to the combat layer (only the menu card is gamepad-only).
+  return controlLegendLayer({ ...opts, mode: "gamepad" }) === "combat";
+}
+
+/**
+ * ════════════════════════════════════════════════════════════════════════════
+ * WHICH CARD, AND WHEN (GH#506)
+ * ════════════════════════════════════════════════════════════════════════════
+ * Two questions, and only ONE of them is a preference:
+ *
+ *   WHICH card — NOT a setting, and NOT a list. It is `focusNavActive`, the
+ *     exact predicate that decides who really owns the pad. Deriving it means
+ *     the legend can never print the combat card while the menu layer is the
+ *     one reading the buttons — the shape of the bug this ticket is about. Add
+ *     a phase to `COMBAT_LIVE_PHASES` and this follows in the same commit.
+ *   WHEN — a real decision (第一守則): 「第一回合才提示」 vs 「每一回合都提示」
+ *     vs 「連載入畫面也提示」 is the owner's call, not mine, so it is DATA.
+ */
+export type LegendLayer = "combat" | "menu";
+
+export interface LegendPhaseGate {
+  /** phases that get a card at all. ⛔ NOT which card — that is derived. */
+  phases: readonly string[];
+  /** combat card shows while `round <= this`. Rounds repeat; the map does not. */
+  combatRoundLimit: number;
+  /** menu card is a PAD concept — a mouse/touch player never sees a focus ring */
+  gamepadOnly: boolean;
+}
+
+/**
+ * ⚠️ 出貨值。第一守則要求它同時住在 `content/config/*.json` 與 admin 的
+ * `SHIPPED_*`；那兩個住處在別的 lane 名下（見 GH#506 的回報），所以這裡先做成
+ * **一格參數**而不是寫死的 `if` —— 接上去只要把讀到的 doc 傳進 `gate`。
+ *
+ * ⛔ 「連載入畫面也提示」刻意不在預設裡：`connecting` 期間畫面上還沒有東西可以
+ * 操作，一張操作卡在那裡只是噪音。
+ */
+export const DEFAULT_LEGEND_PHASE_GATE: LegendPhaseGate = {
+  phases: ["combat", "champSelect", "intermission", "matchEnd"],
+  combatRoundLimit: 1,
+  gamepadOnly: true,
+};
+
+/**
+ * The resolved layer, or null for "no card here". Pure; `screen` defaults to
+ * `"match"` because that is the only screen this component is mounted on today
+ * — passing the real one lets a future lobby mount reuse the same predicate.
+ */
+export function controlLegendLayer(opts: {
+  phase: string;
+  round: number;
+  dismissed: boolean;
+  panelCovering: boolean;
+  mode: "keyboard" | "gamepad" | "touch";
+  screen?: string;
+  gate?: LegendPhaseGate;
+}): LegendLayer | null {
+  const gate = opts.gate ?? DEFAULT_LEGEND_PHASE_GATE;
+  if (opts.dismissed || opts.panelCovering) return null;
+  if (!gate.phases.includes(opts.phase)) return null;
+  // hasScope:false — a modal open on top has its OWN focus scope, and the box
+  // is chrome that has already yielded to it via `panelCovering`.
+  const menuLayer = focusNavActive({
+    screen: opts.screen ?? "match",
+    phase: opts.phase,
+    hasScope: false,
+  });
+  if (menuLayer) {
+    return gate.gamepadOnly && opts.mode !== "gamepad" ? null : "menu";
+  }
+  return opts.round <= gate.combatRoundLimit ? "combat" : null;
 }
 
 /* ── dismissal ─────────────────────────────────────────────────────────────

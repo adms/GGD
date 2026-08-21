@@ -38,8 +38,15 @@ import {
   ABILITY_CLUSTER_W,
   approxTextWidth,
   controlLegendRect,
+  controlLegendLayer,
   controlLegendVisible,
   gamepadLegend,
+  legendLayerRows,
+  padMenuLegend,
+  probeMenuNavButton,
+  probeMenuNavScroll,
+  probeMenuNavStick,
+  PAD_COMBAT_EXTRA,
   keyboardLegend,
   keyCodeFace,
   KEYBOARD_ORDER_BINDINGS,
@@ -518,5 +525,76 @@ describe("the strip is tall enough for what it actually wraps", () => {
   it("the same rows in a narrower strip need more lines", () => {
     const rows = legendRows("keyboard");
     expect(legendStripLines(rows, 300)).toBeGreaterThan(legendStripLines(rows, 600));
+  });
+});
+
+/**
+ * GH#506 — THE CARD MAY NOT PRINT A KEY NOTHING BINDS, AND MAY NOT HIDE ONE
+ * THAT IS BOUND. Two directions, because they fail differently: a printed-but-
+ * unbound key sends a player pressing Back for an EX that moved to LB three
+ * weeks ago; a bound-but-unprinted one is a feature nobody discovers.
+ */
+describe("GH#506 legend ↔ implementation reconcile BOTH ways", () => {
+  const PAD_FOCUS_NAV = readSrc("ui/PadFocusNav.tsx");
+  const chip = (c: string): string => c.replace(/^長按 /, "");
+  const isDir = (a: unknown): boolean => ["up", "down", "left", "right"].includes(a as string);
+
+  /** Faces the COMBAT map really binds, from the probes — never a copy. */
+  const boundCombat = new Set<string>();
+  for (const [n, i] of Object.entries(BTN)) {
+    if (probeGamepadButton(i) ?? probeGamepadLongPress(i, 1) ?? probeGamepadLongPress(i, 0)) {
+      boundCombat.add(padFace(n));
+    }
+  }
+  if (probeGamepadSticks().move) boundCombat.add("左類比");
+  if (probeGamepadSticks().aim) boundCombat.add("右類比");
+
+  /** Faces the MENU nav really binds. Directions collapse to one 十字鍵 row. */
+  const boundMenu = new Set<string>();
+  for (const [n, i] of Object.entries(BTN)) {
+    const a = probeMenuNavButton(i);
+    if (!a) continue;
+    boundMenu.add(isDir(a) ? "十字鍵" : padFace(n));
+  }
+  if (probeMenuNavStick()) boundMenu.add("左類比");
+  if (probeMenuNavScroll()) boundMenu.add("右類比");
+
+  it("prints no combat key the pad map does not bind", () => {
+    expect(boundCombat.size).toBeGreaterThan(0);
+    for (const row of legendLayerRows("combat", "gamepad")) {
+      expect(boundCombat, `combat legend prints "${row.control}"`).toContain(chip(row.control));
+    }
+  });
+
+  it("prints no menu key PadMenuNav does not bind", () => {
+    expect(boundMenu.size).toBeGreaterThan(0);
+    for (const row of legendLayerRows("menu", "gamepad")) {
+      expect(boundMenu, `menu legend prints "${row.control}"`).toContain(chip(row.control));
+    }
+  });
+
+  it("leaves no menu binding undocumented", () => {
+    const printed = new Set(padMenuLegend().map((r) => chip(r.control)));
+    for (const f of boundMenu) expect(printed, `menu binding "${f}" has no row`).toContain(f);
+  });
+
+  it("says START opens the pause menu, and that bridge really exists on BTN.START", () => {
+    const extra = PAD_COMBAT_EXTRA.START!;
+    expect(PAD_FOCUS_NAV).toContain(extra.source);
+    // the bridge's own button index must BE the one the card prints against
+    const declared = /START_BTN\s*=\s*(\d+)/.exec(PAD_FOCUS_NAV);
+    expect(Number(declared?.[1])).toBe(BTN.START);
+    const start = legendLayerRows("combat", "gamepad").find((r) => r.control === padFace("START"));
+    expect(start?.label).toContain(extra.label);
+  });
+
+  it("shows the MENU card wherever the focus layer owns the pad — pad only", () => {
+    const base = { round: 9, dismissed: false, panelCovering: false, mode: "gamepad" as const };
+    for (const phase of ["champSelect", "intermission", "matchEnd"]) {
+      expect(controlLegendLayer({ ...base, phase })).toBe("menu");
+      expect(controlLegendLayer({ ...base, phase, mode: "keyboard" })).toBeNull();
+    }
+    expect(controlLegendLayer({ ...base, phase: "combat", round: 1 })).toBe("combat");
+    expect(controlLegendLayer({ ...base, phase: "combat" })).toBeNull();
   });
 });

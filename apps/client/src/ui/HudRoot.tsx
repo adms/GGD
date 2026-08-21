@@ -30,6 +30,7 @@ import { KillCombo } from "./hud/KillCombo";
 import { SelfStatusBar } from "./hud/SelfStatusBar";
 import { MarkBar } from "./hud/MarkBar";
 import { StatsHoverPanel } from "./hud/StatsHoverPanel";
+import { PadHudFocusBanner } from "./hud/PadHudFocusBanner";
 import { ZombieWaveBar } from "./hud/ZombieWaveBar";
 import { MobBossOverlay } from "./hud/MobBossOverlay";
 import { BossIntroOverlay } from "./hud/BossIntroOverlay";
@@ -184,6 +185,7 @@ const HUD_LABELS: HudBoundaryLabels = new Map<unknown, string>([
   [EnemyTeamPanel, "敵隊面板"],
   [GoldLevel, "金錢與等級"],
   [StatsHoverPanel, "屬性懸停面板"],
+  [PadHudFocusBanner, "手把介面操作模式提示"],
   [EquipmentBar, "裝備欄"],
   [SpectatorHint, "陣亡觀戰提示"],
   [KillCombo, "連殺提示"],
@@ -304,6 +306,11 @@ export function HudRoot(): React.JSX.Element {
       <ReviveBanner />
       {!couch && <Scoreboard />}
       <GamepadIndicator />
+      {/* GH#508 —— 手把在戰鬥中切進「HUD 焦點模式」時，畫面上那個**明顯的視覺
+          狀態**。掛在 `inGame && !couch` 群組**外面**是刻意的：模式的閘在
+          ui/PadFocusNav（相位 + modal + 那顆鍵），這裡只負責把它說出來，
+          ⛔ 不要在 JSX 上再抄一份相位條件（#289 就是那樣過期的）。 */}
+      <PadHudFocusBanner />
       {/* First-round 操作說明 (task #187). Mounted OUTSIDE the `!couch` group and
           outside the touch branch on purpose: it is the one piece of chrome
           every input tree and every seat count needs, and it owns its own gate

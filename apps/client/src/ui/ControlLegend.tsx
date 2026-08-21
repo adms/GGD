@@ -1,6 +1,10 @@
 /**
- * ControlLegend — the semi-transparent 操作說明 shown BESIDE the arena during
- * the first combat round, for the input the player is actually holding.
+ * ControlLegend — the semi-transparent 操作說明 shown BESIDE the arena, for the
+ * input the player is actually holding AND for the layer that input is driving
+ * right now (GH#506): the CHAMPION card in the first combat round, the MENU
+ * card (A 確定 / B 返回 / 十字鍵 移動焦點) in champ-select, the shop and the
+ * settlement screen — the three places a pad player used to be told nothing at
+ * all while reading a card that described a different machine.
  *
  * The reason it exists is a first evening: four people who have never played
  * sit down with pads and a keyboard, and round 1 is otherwise spent asking the
@@ -27,10 +31,10 @@
 import { useEffect, useState } from "react";
 import { useHud } from "../net/RoomStore";
 import {
+  controlLegendLayer,
   controlLegendRect,
-  controlLegendVisible,
   legendChipColumnWidth,
-  legendRows,
+  legendLayerRows,
   readLegendDismissed,
   writeLegendDismissed,
   type LegendRect,
@@ -352,23 +356,24 @@ export function ControlLegend(): React.JSX.Element | null {
   const viewport = useViewport();
   const mode = useInputMode();
 
-  const visible = controlLegendVisible({
-    phase,
-    round,
-    dismissed,
-    panelCovering: panels.length > 0,
-  });
-
-  // Device sniffing runs ONLY while the legend is up — nothing else in the
+  const gateOpts = { phase, round, dismissed, panelCovering: panels.length > 0 };
+  const layer = controlLegendLayer({ ...gateOpts, mode });
+  // Device sniffing runs ONLY while a card COULD be up — nothing else in the
   // client needs the answer, and a 250ms poll for the whole match to feed a
   // box that is not on screen would be pure cost.
+  // ⚠️ GH#506: the dependency is the PAD-player answer, not `layer`. The menu
+  // card is gamepad-only, and `mode` starts at the keyboard default until the
+  // sniffer proves otherwise — gating the sniffer on `layer` would mean it
+  // never attaches in a menu phase, so `mode` never becomes "gamepad", so the
+  // card never appears. A gate that switches off its own evidence.
+  const couldShow = controlLegendLayer({ ...gateOpts, mode: "gamepad" }) !== null;
   useEffect(() => {
-    if (!visible) return;
+    if (!couldShow) return;
     return attachInputModeDetection();
-  }, [visible]);
+  }, [couldShow]);
 
-  if (!visible) return null;
-  const rows = legendRows(mode);
+  if (!layer) return null;
+  const rows = legendLayerRows(layer, mode);
   // The ROWS go in, not a count: the strip wraps, so its height depends on how
   // wide each caption is, and a count cannot answer that. Passing a count is
   // what made the 812x375 strip clip 「F EX 技能」 off the bottom.
@@ -381,12 +386,16 @@ export function ControlLegend(): React.JSX.Element | null {
     writeLegendDismissed(true);
     setDismissed(true);
   };
+  // Which card this is, said out loud: the bindings now change with the phase,
+  // and 「手把」 on its own read as "these are all of them".
+  const modeLabel =
+    layer === "menu" ? `${INPUT_MODE_LABEL[mode]} · 選單操作` : INPUT_MODE_LABEL[mode];
 
   return (
     <ControlLegendView
       rect={rect}
       rows={rows}
-      modeLabel={INPUT_MODE_LABEL[mode]}
+      modeLabel={modeLabel}
       onDismiss={onDismiss}
     />
   );
