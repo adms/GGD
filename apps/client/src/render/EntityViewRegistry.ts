@@ -66,8 +66,6 @@ function composeGrowth(tint: ModelTint | null, tier: GrowthTier): ModelTint | nu
 
 /** EMA factor for the observed ground speed fed to run-rate sync. */
 const SPEED_SMOOTH = 0.25;
-/** Assumed strike point within an attack clip (fraction of the clip). */
-const ATTACK_STRIKE_FRACTION = 0.5;
 
 /** Plain snapshot of one entity (adapter over the schema EntityState). */
 export interface EntityViewState {
@@ -581,18 +579,18 @@ export class EntityViewRegistry {
         if (caster !== undefined) this.champions.get(caster)?.endCast();
         break;
       }
-      // attackWindup leads the swing: play the attack clip so its strike
-      // point (~mid-clip) lands when the wind-up completes (the damage
-      // point, where basicAttack fires).
+      // attackWindup leads the swing: PLAN the attack clip so its contact frame
+      // lands on the damage tick `basicAttack` fires at (GH#40). This used to
+      // pass `windowMs: windupMs / 0.5` and let `pulseSpeedRatio` stretch the
+      // clip to fill it — which the animator's [0.5x, 3x] rate clamp then broke
+      // without saying so, exactly as it did for casts before `alignPulseClip`.
+      // `beginAttack` goes through the same plan the cast path does, and reads
+      // the per-model fraction from `anim/castStrike` instead of a fixed 0.5.
       case "attackWindup": {
         const source = ev.data.source as number | undefined;
         if (source === undefined) break;
         const ticks = typeof ev.data.ticks === "number" ? ev.data.ticks : 0;
-        const windupMs = Math.max(1, ticks * TICK_MS);
-        this.champions.get(source)?.pulse("attack", nowMs, {
-          windowMs: windupMs / ATTACK_STRIKE_FRACTION,
-          clipWindowMs: windupMs / ATTACK_STRIKE_FRACTION,
-        });
+        this.champions.get(source)?.beginAttack(Math.max(1, ticks * TICK_MS), nowMs);
         break;
       }
       // basicAttack fires at the swing/damage point. If a wind-up already

@@ -40,6 +40,7 @@
  * （`config.vfx-families@1.projectileArtFromDoc`，關掉 = 升級前的固定彗星）。
  */
 import type { VfxBlendMode, VfxDoc } from "@ggd/shared/content";
+import { RIBBON_FADE_BUDGET_SEC } from "../../vfx/ribbonMath";
 import {
   DEFAULT_PROJECTILE_ART_FROM_DOC,
   DEFAULT_PROJECTILE_FLY_HEIGHT_Y,
@@ -112,7 +113,16 @@ export const SHIPPED_BODY_GIRTH = 0.26;
 /** 拖尾預算：少而大而亮而短（#33 的重調）。 */
 export const SHIPPED_TRAIL_CAPACITY = 48;
 export const SHIPPED_TRAIL_RATE = 55;
-export const SHIPPED_TRAIL_LIFE = { min: 0.14, max: 0.3 } as const;
+/**
+ * 拖尾樣本的壽命（秒）。
+ *
+ * ⚠️ GH#44 —— 這裡原本是 `{ min: 0.14, max: 0.3 }`，而 0.3 **超過專案自己寫在
+ * `vfx/ribbonMath.ts` 的收尾契約** `RIBBON_FADE_BUDGET_SEC = 0.25`：「刀停下來
+ * 之後這麼久，整條光要完全消失」。刀光遵守它、投射物拖尾不遵守，等於自家規則
+ * 在自家程式裡開了一個沒有理由的例外 —— 而一場打完畫面上全是化不開的線，正是
+ * 那條預算存在的原因。⛔ 這不是「調小一點比較好看」，是把例外收回契約裡。
+ */
+export const SHIPPED_TRAIL_LIFE = { min: 0.12, max: 0.24 } as const;
 /** 拖尾粒子的峰值大小（pop-shrink 斜坡會把它縮到 0）。 */
 export const SHIPPED_TRAIL_PEAK_SIZE = 0.42;
 /** 拖尾的混色模式。 */
@@ -126,12 +136,18 @@ export const SHIPPED_TRAIL_BLEND: VfxBlendMode = "additive";
 export const MIN_TRAIL_PEAK_SIZE = 0.1;
 export const MAX_TRAIL_PEAK_SIZE = 1.2;
 /**
- * 拖尾粒子壽命（秒）。上界 0.5 擋的是「把爆點文件的 1–6 秒壽命照抄進拖尾」——
+ * 拖尾粒子壽命（秒）。上界擋的是「把爆點文件的 1–6 秒壽命照抄進拖尾」——
  * 那會讓每一發子彈在空中留一條化不開的煙，整場打完畫面全是線。
  * 下界 0.06 ≈ 手機 30fps 的兩張畫面。
+ *
+ * ⭐ GH#44 —— 上界**從契約推導，⛔ 不再是自己寫的 0.5**。0.5 是那條 0.25 秒收尾
+ * 契約的**兩倍**，也就是說「文件驅動」這條路可以合法地生出一條比出貨預設還長、
+ * 而且比刀光允許的還長一倍的尾巴，⛔ 沒有任何東西會喊。綁在
+ * `RIBBON_FADE_BUDGET_SEC` 上之後，owner 哪天放寬收尾預算，這裡自動跟著放寬 ——
+ * ⛔ 不必記得改第二個數字（第零守則：抄一份出貨值 = 一個沒有守衛的住處）。
  */
 export const MIN_TRAIL_LIFE_SEC = 0.06;
-export const MAX_TRAIL_LIFE_SEC = 0.5;
+export const MAX_TRAIL_LIFE_SEC = RIBBON_FADE_BUDGET_SEC;
 /**
  * 拖尾同時存在的粒子上限。
  *

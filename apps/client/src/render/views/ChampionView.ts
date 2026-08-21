@@ -49,7 +49,11 @@ import { resolveAttachment } from "../vfx/attachment";
 import { TARGET_HEIGHT, normalizedModelScale } from "./modelSizing";
 import { ENABLED_ONLY, applyHiddenPrimitives } from "./hiddenPrimitives";
 import { isStandinBodyGlb } from "@ggd/shared/content/standinScale";
-import { castFollowThroughMs, castStrikeFractionFor } from "../anim/castStrike";
+import {
+  attackStrikeFractionFor,
+  castFollowThroughMs,
+  castStrikeFractionFor,
+} from "../anim/castStrike";
 import { ARCHETYPE_BY_MODEL_KEY, fallbackAccentFor, type VoxelLook } from "./voxelLook";
 import {
   applyVoxelLook,
@@ -1159,6 +1163,42 @@ export class ChampionView {
    */
   get castStrikeFraction(): number {
     return castStrikeFractionFor(this.modelKey);
+  }
+
+  /**
+   * The same number for the BASIC-ATTACK swing — the fraction of the attack
+   * clip that has played at the CONTACT frame (GH#40, anim/castStrike).
+   */
+  get attackStrikeFraction(): number {
+    return attackStrikeFractionFor(this.modelKey);
+  }
+
+  /**
+   * ATTACK WIND-UP — the swing's half of the same honesty fix (GH#40).
+   *
+   * `windupMs` is the sim's authoritative wind-up: `attackWindup` fires now and
+   * `BasicAttackSystem` deals the damage exactly that long afterwards. Until
+   * this existed the swing merely got a WIDER pulse window (`windup / 0.5`) and
+   * `pulseSpeedRatio` stretched the clip to fill it — which the [0.5x, 3x] rate
+   * clamp then silently broke for every rig outside that band, leaving the
+   * contact frame off the damage tick. Now the clip is PLANNED the way a cast
+   * is, so the contact frame lands on the tick and the recovery plays after it.
+   *
+   * That alignment is also what hitstop is judged against: `setHitstop` freezes
+   * whatever frame is up, so a mis-aligned swing freezes on a blade that is
+   * still travelling (or already back at the hip).
+   */
+  beginAttack(windupMs: number, nowMs: number): void {
+    const f = this.attackStrikeFraction;
+    const startup = Math.max(1, windupMs);
+    this.anim.trigger("attack", nowMs, startup + castFollowThroughMs(startup, f));
+    if (this.clipAnimator) {
+      this.clipAnimator.setPulseAlignment("attack", {
+        startupSec: startup / 1000,
+        strikeFraction: f,
+      });
+      this.clipAnimator.restart("attack");
+    }
   }
 
   /**

@@ -35,6 +35,12 @@ import {
   type ImpactIntensity,
   type RingSpec,
 } from "./vfxPresets";
+import { RIBBON_FADE_BUDGET_SEC } from "./ribbonMath";
+import {
+  MAX_TRAIL_LIFE_SEC,
+  SHIPPED_TRAIL_LIFE,
+  resolveProjectileArt,
+} from "../render/views/projectileArt";
 
 let engine: NullEngine;
 let scene: Scene;
@@ -370,5 +376,39 @@ describe("ImpactComposer layering + pooling (vfx-preset-composer)", () => {
     expect(scene.particleSystems.length).toBe(before + 3);
     composer.dispose();
     expect(scene.particleSystems.length).toBe(before);
+  });
+});
+
+/* ------------------------------------------------- GH#44 收尾預算是一條契約 */
+
+/**
+ * 專案自己在 `ribbonMath.ts` 寫下 `RIBBON_FADE_BUDGET_SEC`：「刀停下來之後這麼久，
+ * 整條光要完全消失」。刀光遵守它，⛔ 投射物拖尾原本不遵守（出貨 0.3s，而文件驅動
+ * 的上界更是 0.5s ＝ 契約的兩倍），而**沒有任何測試會在有人把尾巴放長時叫出來**：
+ * 舊斷言 `trail.maxLifeTime <= 0.35` 是把當時的值當允許值抄進測試。
+ *
+ * ⭐ 這一條從**契約常數推導**，⛔ 不抄 0.24／0.25 —— owner 哪天放寬收尾預算，
+ * 這條守衛自動跟著放寬（第零守則：出貨值住進測試 = 第四個沒有守衛的住處）。
+ */
+describe("投射物拖尾守專案自己的收尾預算 (GH#44)", () => {
+  it("出貨值與文件驅動的上界都在 RIBBON_FADE_BUDGET_SEC 之內", () => {
+    cover("vfx-preset-toolkit");
+    expect(SHIPPED_TRAIL_LIFE.max).toBeLessThanOrEqual(RIBBON_FADE_BUDGET_SEC);
+    expect(SHIPPED_TRAIL_LIFE.min).toBeLessThan(SHIPPED_TRAIL_LIFE.max);
+    // 上界本身就是契約：任何一份 vfx 文件都翻不出這條牆
+    expect(MAX_TRAIL_LIFE_SEC).toBeLessThanOrEqual(RIBBON_FADE_BUDGET_SEC);
+    // 拿一份壽命長到離譜的爆點文件（1–6 秒）跑真的解析器，證明它被夾回契約內
+    const doc = {
+      lifetimeSec: { min: 1, max: 6 },
+      size: { start: 0.5 },
+      blendMode: "additive",
+      burstCount: 18,
+    } as unknown as Parameters<typeof resolveProjectileArt>[0];
+    const art = resolveProjectileArt(doc, 0.5, {
+      artFromDoc: true,
+      radiusGain: 1,
+      flyHeightY: 1,
+    });
+    expect(art.trailLife.max).toBeLessThanOrEqual(RIBBON_FADE_BUDGET_SEC);
   });
 });
