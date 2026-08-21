@@ -1,7 +1,13 @@
 {
   "collection": "config",
-  "hash": "c65f33b40d65",
+  "hash": "aca18379ef66",
   "entries": [
+    {
+      "id": "admin-friend",
+      "path": "config/admin-friend.json",
+      "hash": "f62b5374ce71",
+      "size": 1789
+    },
     {
       "id": "ambient-vfx",
       "path": "config/ambient-vfx.json",

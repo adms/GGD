@@ -93,7 +93,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 治癒系公主 - 木乃香 `godie-etyr` | PASSIVE | 14-00 召喚式神 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
 | 治癒系公主 - 木乃香 `godie-etyr` | Q | 14-01 東風繪扇、南風末廣 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 治癒系公主 - 木乃香 `godie-etyr` | W | 14-03 魔力應援 | `—` | — | 🟣 PASSIVE | never cast |
-| 治癒系公主 - 木乃香 `godie-etyr` | E | 14-02 式神炸裂 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 治癒系公主 - 木乃香 `godie-etyr` | E | 14-02 式神炸裂 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
 | 治癒系公主 - 木乃香 `godie-etyr` | R | 14-04 聖夜降臨 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 治癒系公主 - 木乃香 `godie-etyr` | EX | 14-002 魔力激發 | `—` | — | 🟣 PASSIVE | never cast |
 | 龍之子 - 天地志狼 `godie-ewar` | PASSIVE | 12-00 感應意脈 | `—` | — | 🟣 PASSIVE | never cast |
@@ -213,7 +213,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 獸神官 - 傑洛士 `godie-o00l` | PASSIVE | 53-00 空間穿梭 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 獸神官 - 傑洛士 `godie-o00l` | Q | 53-01 獸王牙操彈 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave.void maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |
 | 獸神官 - 傑洛士 `godie-o00l` | W | 53-02 強化炸彈陣 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
-| 獸神官 - 傑洛士 `godie-o00l` | E | 53-03 破法對咒 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 獸神官 - 傑洛士 `godie-o00l` | E | 53-03 破法對咒 | `ground` | circle r=6.40u | ✅ OK | radius 8 × abilityRange 0.8 |
 | 獸神官 - 傑洛士 `godie-o00l` | R | 53-04 暴爆咒 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 獸神官 - 傑洛士 `godie-o00l` | EX | 53-002 恐懼力量 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 夢幻之星 - 初音 `godie-o02p` | PASSIVE | 99-00 可愛就是正義 | `—` | — | 🟣 PASSIVE | never cast |
@@ -258,7 +258,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 鬼畜紅王 - 鬼畜狂刀KYO `godie-u00h` | R | 39-04 祕奧義．金色的神風 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
 | 鬼畜紅王 - 鬼畜狂刀KYO `godie-u00h` | EX | 39-002-紅王 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 神性的流失 - 賽菲洛斯 `godie-u00j` | PASSIVE | 74-00 JENOVA | `—` | — | 🟣 PASSIVE | never cast |
-| 神性的流失 - 賽菲洛斯 `godie-u00j` | Q | 74-01 獄門 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
+| 神性的流失 - 賽菲洛斯 `godie-u00j` | Q | 74-01 獄門 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
 | 神性的流失 - 賽菲洛斯 `godie-u00j` | W | 74-02 八刀一閃 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 神性的流失 - 賽菲洛斯 `godie-u00j` | E | 74-03 闇之天使 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
 | 神性的流失 - 賽菲洛斯 `godie-u00j` | R | 74-04 最終殞落星 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |

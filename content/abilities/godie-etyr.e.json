@@ -3,7 +3,7 @@
   "name": "14-02 式神炸裂",
   "icon": "assets/icons/abilities/godie-etyr.e.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n讓每個召喚出來的式神自爆，使{{radius}}範圍內的敵人受到{{dmg}}點傷害，每位式神的犧牲都能讓木乃香獲得150點魔力。\n注意先要招換式神\n\n（GGD 註記 2026-08-21 · GH#433）owner 2026-08-19 逐支裁決「14-02 式神炸裂 → **中**」。⚠️ 這一支的圈**不住頂層 radius**，它是模板 `tpl-orbit-array` 的 `params.reach` 推導出來的，而那一格的單位是 **wc3u**（`resolveRadiusTier` 結構上碰不到它，`skillNormalize` 把這一軸判成 N/A）。⇒ 兩格一起改成「中」：`reach` 327 wc3u（× GGD_PER_WC3 11/600 ≡ 6.0，與 `godie-u00h.r` / `godie-u00j.e` / `godie-umal.e` 同一個寫法）＋ 頂層 `radiusTier:\"中\"`（註冊時級別贏，兩者今天逐位元相等）。此前是 `reach: 82` ≡ 1.5，那是從 w3a 直接換算來的數字，⛔ 不是任何人的決定。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n讓每個召喚出來的式神自爆，使周圍敵人受到150+80% [AP]點傷害，每位式神的犧牲都能讓木乃香獲得150點魔力。\n注意先要招換式神",
   "slot": "E",
   "castType": "ground",
   "maxRank": 4,

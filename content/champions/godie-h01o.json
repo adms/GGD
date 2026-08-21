@@ -128,15 +128,15 @@
       "name": "79-02 斬擊",
       "icon": "assets/icons/abilities/godie-h01o.w.webp",
       "provenance": "w3x-import",
-      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n將月牙的能量聚集在斬月上，在攻擊敵人的同時釋放出，給予目標額外100+50% [AP]點傷害，蓄力最久可持續10秒。",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n將月牙的能量聚集在斬月上，在攻擊敵人的同時釋放出，給予目標額外100+50% [AP]點傷害。",
       "slot": "W",
-      "castType": "self",
+      "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        15.0,
-        15.0,
-        15.0,
-        15.0
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
         72.0,
@@ -144,19 +144,8 @@
         72.0,
         72.0
       ],
-      "range": 0.0,
+      "range": 4.5,
       "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [
-            {
-              "stat": "as",
-              "op": "flat",
-              "value": 0.4
-            }
-          ],
-          "duration": 10.0
-        },
         {
           "kind": "damage",
           "damageType": "magic",
@@ -173,9 +162,68 @@
         }
       ],
       "vfxKey": "fx.prim.arcane.slash",
-      "castTimeSec": 0.367,
-      "cooldownTier": "小",
-      "manaCostTier": "極小"
+      "castTimeSec": 0.467,
+      "cooldownTier": "極大",
+      "manaCostTier": "極小",
+      "passive": {
+        "name": "79-02 月牙斬擊",
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onAbilityHit",
+                "abilitySlot": "W",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 1.0
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "magic-break"
+                },
+                "target": "event"
+              },
+              {
+                "on": "onAbilityHit",
+                "abilitySlot": "W",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 2.0
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "bankai"
+                },
+                "target": "event"
+              }
+            ]
+          }
+        ]
+      },
+      "rangeTier": "小",
+      "targetsEnemies": true
     },
     "E": {
       "id": "godie-h01o.e",

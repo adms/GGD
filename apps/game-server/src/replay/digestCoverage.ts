@@ -90,6 +90,7 @@ export const SIM_WORLD_DIGEST_EXEMPT: Readonly<Record<string, string>> = {
   legendaryShelf: CONFIG,
   ultGateOverride: CONFIG,
   flowerRules: CONFIG,
+  wallBlock: CONFIG,
   reviveRules: CONFIG,
   guardianRules: CONFIG,
   coinRules: CONFIG,

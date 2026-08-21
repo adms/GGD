@@ -396,17 +396,17 @@
       {
         "label": "小",
         "range": "< 4.5",
-        "count": 39
+        "count": 36
       },
       {
         "label": "中",
-        "range": "4.5 – 6.97",
-        "count": 60
+        "range": "4.5 – 8",
+        "count": 64
       },
       {
         "label": "大",
-        "range": "≥ 6.97",
-        "count": 53
+        "range": "≥ 8",
+        "count": 52
       }
     ]
   },

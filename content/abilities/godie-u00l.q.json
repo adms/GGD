@@ -23,11 +23,18 @@
     72.0
   ],
   "manaCostTier": "極小",
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "physical",
-      "amount": {
+  "effects": [],
+  "vfxKey": "fx.prim.physical.beam",
+  "sfxKey": "wc3.peondeath",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "castTimeSec": 0.367,
+  "rangeTier": "極小",
+  "range": 3,
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "damageTier": "極小",
         "flat": 600.0,
         "ratios": [
@@ -36,14 +43,8 @@
             "coeff": 0.8
           }
         ]
-      }
+      },
+      "damageType": "magic"
     }
-  ],
-  "vfxKey": "fx.prim.physical.beam",
-  "sfxKey": "wc3.peondeath",
-  "targetsEnemies": true,
-  "schema": "ability@1",
-  "castTimeSec": 0.367,
-  "rangeTier": "極小",
-  "range": 3
+  }
 }

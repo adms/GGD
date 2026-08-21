@@ -73,11 +73,19 @@
         72.0,
         72.0
       ],
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.physical.beam",
+      "sfxKey": "wc3.peondeath",
+      "targetsEnemies": true,
+      "castTimeSec": 0.367,
+      "rangeTier": "極小",
+      "range": 3,
+      "cooldownTier": "小",
+      "manaCostTier": "極小",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "damageTier": "極小",
             "flat": 600.0,
             "ratios": [
@@ -86,17 +94,10 @@
                 "coeff": 0.8
               }
             ]
-          }
+          },
+          "damageType": "magic"
         }
-      ],
-      "vfxKey": "fx.prim.physical.beam",
-      "sfxKey": "wc3.peondeath",
-      "targetsEnemies": true,
-      "castTimeSec": 0.367,
-      "rangeTier": "極小",
-      "range": 3,
-      "cooldownTier": "小",
-      "manaCostTier": "極小"
+      }
     },
     "W": {
       "id": "godie-u00l.w",

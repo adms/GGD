@@ -196,7 +196,7 @@
               {
                 "stat": "critDamage",
                 "op": "override",
-                "value": 2
+                "value": 2.0
               }
             ]
           },

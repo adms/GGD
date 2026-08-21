@@ -1,6 +1,6 @@
 {
  "schema": "model-budget@1",
- "sourcesDigest": "cf53ba68f422d1ac",
+ "sourcesDigest": "516eba598f64b065",
  "generatedBy": "tools/model-budget/emit_report.ts (task #99)",
  "sources": [
   {
@@ -15,7 +15,7 @@
   },
   {
    "path": "content/champions/_index.json",
-   "sha256": "bd1f77cf603cc750",
+   "sha256": "ba478c3b45d9163a",
    "bytes": 9377
   },
   {

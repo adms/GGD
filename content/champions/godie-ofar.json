@@ -145,7 +145,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 75
+                      "flat": 75.0
                     }
                   },
                   {
@@ -168,7 +168,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 150
+                      "flat": 150.0
                     }
                   },
                   {
@@ -191,7 +191,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 225
+                      "flat": 225.0
                     }
                   },
                   {
@@ -214,7 +214,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 300
+                      "flat": 300.0
                     }
                   },
                   {
@@ -237,7 +237,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 300
+                      "flat": 300.0
                     }
                   },
                   {
