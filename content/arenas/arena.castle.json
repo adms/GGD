@@ -224,6 +224,62 @@
       ]
     }
   ],
+  "backdrop": {
+    "layers": [
+      {
+        "fromRadius": 1,
+        "toRadius": 1.98,
+        "y": -3,
+        "color": "#6d5a44",
+        "alpha": 1,
+        "profile": "towers",
+        "rim": {
+          "color": "#ffc47a",
+          "width": 2
+        },
+        "jitter": 0.55,
+        "segments": 36
+      },
+      {
+        "fromRadius": 1.78,
+        "toRadius": 3.3,
+        "y": -11,
+        "color": "#493a2c",
+        "alpha": 1,
+        "profile": "towers",
+        "rim": {
+          "color": "#c98a44",
+          "width": 1.5
+        },
+        "jitter": 0.68,
+        "segments": 24
+      },
+      {
+        "fromRadius": 3.05,
+        "toRadius": 5.05,
+        "y": -28,
+        "color": "#261e18",
+        "alpha": 1,
+        "profile": "shards",
+        "rim": {
+          "color": "#6e4a2a",
+          "width": 1.1
+        },
+        "jitter": 0.7,
+        "segments": 34
+      },
+      {
+        "fromRadius": 4.7,
+        "toRadius": 6,
+        "y": -62,
+        "color": "#120f0d",
+        "alpha": 1,
+        "profile": "flat",
+        "jitter": 0,
+        "segments": 20
+      }
+    ]
+  },
   "decor": [
     {
       "model": "assets/models/props/pillar.glb",

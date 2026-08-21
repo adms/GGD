@@ -5,7 +5,7 @@
  * 那是 owner 每週在調的東西，抄進測試就是第四個住處。
  */
 import { describe, expect, it } from "vitest";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { buildBackdropLayer, backdropSeed, profileInset } from "./backdrop";
 import type { BackdropProfile } from "./backdrop";
@@ -109,17 +109,38 @@ describe("圓盤外的 2D 景深背景", () => {
     expect(JSON.stringify(def)).not.toContain(doc.backdrop!.layers[0]!.color);
   });
 
-  it("★ 出貨的七張圖都有背景，而且六張既有場地一層都沒有（行為不變）", () => {
+  /**
+   * ★ GH#452 的追蹤閘 —— 「場地之外是全黑」剩下哪幾張。
+   *
+   * ⚠️ 這一條在 GH#324 當時寫的是「七張有、六張**一層都沒有**（行為不變）」。
+   * 那個凍結**就是 owner 2026-08-19 抱怨的東西**：
+   *
+   * > 「場地之外的背景 最好生成一張 2d 圖是符合場景的 而不是全黑」
+   *
+   * ⇒ 它現在是一張**分割**而不是兩張手抄名單：出貨的每一張場地，要嘛已經有背景，
+   * 要嘛還欠一張（`PENDING`）。兩件事都會紅：
+   *  · 補上了背景卻沒把它從 `PENDING` 移走 ⇒ 紅（清單會腐爛）
+   *  · 新增一張場地而兩邊都沒列到 ⇒ 紅（＝又多一張場外全黑的圖，而沒有人會知道）
+   *
+   * ⛔ 這裡不驗顏色也不驗層數 —— 那是內容，owner 每週在調（第二守則）。
+   */
+  it("★ GH#452：出貨的每一張場地，不是已經有背景，就是列在待補清單上", () => {
+    /** 還欠一張背景的場地。⭐ 補完一張就從這裡刪掉一行，⛔ 不要放寬斷言。 */
+    const PENDING = ["dota", "godie", "royale", "skeleton"];
+    const shipped = readdirSync(join(REPO, "content/arenas"))
+      .filter((f) => f.startsWith("arena.") && f.endsWith(".json"))
+      .map((f) => f.slice("arena.".length, -".json".length));
     const has = (id: string): boolean => {
       const p = join(REPO, `content/arenas/arena.${id}.json`);
       const d = zArenaDoc.parse(JSON.parse(readFileSync(p, "utf8")));
       return (d.backdrop?.layers.length ?? 0) > 0;
     };
-    for (const id of ["infinity-castle", "shiganshina", "frieren", "heavens-arena"]) {
-      expect(has(id), id).toBe(true);
-    }
-    for (const id of ["skeleton", "castle", "dota"]) {
-      expect(has(id), id).toBe(false);
-    }
+    const withBackdrop = shipped.filter((id) => has(id)).sort();
+    expect(shipped.filter((id) => !has(id)).sort(), "待補清單與出貨樹對不上").toEqual(
+      [...PENDING].sort(),
+    );
+    // 對照組：少了它，「全部都沒有背景」的壞實作也會過（失敗形態 ④）。
+    expect(withBackdrop).toContain("infinity-castle");
+    expect(withBackdrop.length).toBe(shipped.length - PENDING.length);
   });
 });

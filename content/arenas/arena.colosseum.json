@@ -404,6 +404,62 @@
       ]
     }
   ],
+  "backdrop": {
+    "layers": [
+      {
+        "fromRadius": 1,
+        "toRadius": 2,
+        "y": -4,
+        "color": "#c9a86c",
+        "alpha": 1,
+        "profile": "towers",
+        "rim": {
+          "color": "#fff0c2",
+          "width": 2.2
+        },
+        "jitter": 0.45,
+        "segments": 48
+      },
+      {
+        "fromRadius": 1.8,
+        "toRadius": 3.35,
+        "y": -13,
+        "color": "#8d7145",
+        "alpha": 1,
+        "profile": "towers",
+        "rim": {
+          "color": "#e8c98a",
+          "width": 1.6
+        },
+        "jitter": 0.6,
+        "segments": 36
+      },
+      {
+        "fromRadius": 3.1,
+        "toRadius": 5.15,
+        "y": -31,
+        "color": "#4e3f2a",
+        "alpha": 1,
+        "profile": "peaks",
+        "rim": {
+          "color": "#a8834c",
+          "width": 1.2
+        },
+        "jitter": 0.7,
+        "segments": 36
+      },
+      {
+        "fromRadius": 4.75,
+        "toRadius": 6,
+        "y": -66,
+        "color": "#2b1f11",
+        "alpha": 1,
+        "profile": "flat",
+        "jitter": 0,
+        "segments": 20
+      }
+    ]
+  },
   "decor": [
     {
       "model": "assets/models/props/pillar.glb",
