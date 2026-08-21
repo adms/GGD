@@ -383,8 +383,18 @@ export type RowKind =
   | "champion-open"
   /** enabled live but missing ability slots — approving fills them in */
   | "ability-fill"
+  /**
+   * 上架道具 (GH#495) — items declared in starter.go but not enabled live.
+   *
+   * ⭐ ONE AGGREGATE ROW, not one row per item. A champion row earns its own
+   * card because it carries a 數值體檢 the owner has to read; an item id does
+   * not, and forty single-line cards would bury the four rows that do matter.
+   */
+  | "item-open"
   /** enabled live but never declared — a warning; no tick can "approve" it */
   | "champion-undeclared"
+  /** items enabled live but in no starter list — the 下架 candidates for 第②區 */
+  | "item-undeclared"
   /** a real person waiting in the #126 queue */
   | "account-approve"
   /** a live probe of something this page CANNOT change */
@@ -422,6 +432,8 @@ export interface QuickRow {
   champions?: string[];
   /** ability ids this row's tick unions in */
   abilities?: string[];
+  /** item ids this row's tick unions in (GH#495) */
+  items?: string[];
   /** account id this row's tick approves */
   accountId?: string;
   /** the page that OWNS this thing (Quick Approval owns nothing) */
@@ -434,6 +446,16 @@ export interface BuildRowsInput {
   /** GET /curation/whitelist */
   liveChampions: readonly string[];
   liveAbilities: readonly string[];
+  /**
+   * The ITEM halves of the same two documents (GH#495 「上下架角色道具」).
+   *
+   * OPTIONAL on purpose: champions and items are independent lists on the
+   * platform, and a caller that can only read one of them must still get the
+   * rows for the other. Omitting them means "I did not read the item lists",
+   * which produces no item rows — never a row claiming an empty item whitelist.
+   */
+  declaredItems?: readonly string[];
+  liveItems?: readonly string[];
   /** champion docs, by id — may be partial or empty when /content is unreachable */
   stats: ReadonlyMap<string, ChampionStats>;
   /**
@@ -450,6 +472,16 @@ export interface BuildRowsInput {
    * back 200 — the status alone can no longer tell the two apart.
    */
   editorProbe: { status: number | null; servesEditor?: boolean; error?: string };
+}
+
+/**
+ * A subtitle for an aggregate row: the first few ids, then how many more.
+ * The full list is what the tick writes, so the subtitle must never READ as the
+ * whole list — hence the explicit 「…等 N 件」 rather than a bare ellipsis.
+ */
+function previewIds(ids: readonly string[], head = 5): string {
+  if (ids.length <= head) return ids.join("、");
+  return `${ids.slice(0, head).join("、")} …等 ${ids.length} 件`;
 }
 
 const NAME_OF = (id: string, stats: ReadonlyMap<string, ChampionStats>): string => {
@@ -507,7 +539,7 @@ export function buildRows(input: BuildRowsInput): QuickRow[] {
       what: "這名英雄寫在版本控管的開放名單（starter.go）裡，但這台伺服器的白名單還沒有他。",
       why:
         "白名單是「營運狀態」，預設全空，而自動套用起始組合只在白名單「一名英雄都沒有」時才會跑（ApplyStarterSetIfEmpty）。" +
-        "現在已經有 49 名，所以重開機、重新部署都永遠不會補上這兩位 — 只能你在這裡按。",
+        `現在已經有 ${input.liveChampions.length} 名，所以重開機、重新部署都永遠不會補上他 — 只能你在這裡按。`,
       effect: `英雄 ${id} 加入白名單，同時補上 ${missing.length} 個技能格（${ABILITY_SLOTS.join("/")}），選角畫面立刻可選。`,
       risk: bad
         ? (audit?.findings.join(" ") ?? "讀不到數值，無法體檢。") + " 建議先修數值再開放。"
@@ -545,6 +577,30 @@ export function buildRows(input: BuildRowsInput): QuickRow[] {
     });
   }
 
+  // --- D1b: 上架道具 (GH#495) — one aggregate row, ticked or not as a whole --
+  const itemDelta =
+    input.declaredItems !== undefined && input.liveItems !== undefined
+      ? rosterDelta(input.declaredItems, input.liveItems)
+      : null;
+  if (itemDelta !== null && itemDelta.waiting.length > 0) {
+    rows.push({
+      key: "items:open",
+      kind: "item-open",
+      title: `開放 ${itemDelta.waiting.length} 件道具`,
+      subtitle: previewIds(itemDelta.waiting),
+      what: "這些道具寫在版本控管的開放名單（starter.go）裡，但這台伺服器的白名單還沒有它們。",
+      why:
+        "英雄與道具是兩份清單：開放一名英雄不會連帶開放商店道具，而自動套用起始組合只在白名單全空時跑過一次。",
+      effect: `${itemDelta.waiting.length} 個道具 id 加入白名單（union），商店立刻買得到。`,
+      risk: "只做「加入」，不會動到任何現有的啟用項目。道具 id 進白名單不代表它的數值平衡過。",
+      tone: "warn",
+      tickable: true,
+      needsSecondConfirm: false,
+      items: itemDelta.waiting,
+      ownerPage: { page: "curation", label: "內容白名單" },
+    });
+  }
+
   // --- D2: enabled but never declared — a WARNING, not an approval ----------
   for (const id of delta.undeclared) {
     const cand = input.stats.get(id);
@@ -557,7 +613,9 @@ export function buildRows(input: BuildRowsInput): QuickRow[] {
       subtitle: `${id}${cand?.role ? ` · ${cand.role}` : ""}`,
       what: "這名英雄已經在白名單裡，但不在版本控管的開放名單（starter.go）中 — 沒有任何一次審查涵蓋他。",
       why: "他已經是啟用狀態，所以這裡沒有「通過」可按 — 打勾也不會改變任何事。",
-      effect: "（無）這一列不參與送出。要處理只有兩條路：停用他，或把數值補好再正式列入名單。",
+      effect:
+        "（無）這一列不參與送出。要下架他，用下面第②區的「下架未經名單審查的英雄」" +
+        "（會先逐項預覽，做完給你一鍵還原）；或把數值補好再正式列入名單。",
       risk: bad
         ? (audit?.findings.join(" ") ?? "讀不到數值，無法體檢。") +
           " 家人現在就選得到他，而且會直接輸掉。"
@@ -567,6 +625,27 @@ export function buildRows(input: BuildRowsInput): QuickRow[] {
       tickable: false,
       needsSecondConfirm: false,
       champions: [id],
+      ownerPage: { page: "curation", label: "內容白名單" },
+    });
+  }
+
+  // --- D2b: items enabled but never declared (GH#495) -----------------------
+  if (itemDelta !== null && itemDelta.undeclared.length > 0) {
+    rows.push({
+      key: "items:undeclared",
+      kind: "item-undeclared",
+      title: `${itemDelta.undeclared.length} 件道具沒有經過名單審查`,
+      subtitle: previewIds(itemDelta.undeclared),
+      what: "這些道具已經在白名單裡（商店買得到），但不在版本控管的開放名單（starter.go）中。",
+      why:
+        "他們已經是啟用狀態，所以這裡沒有「通過」可按。這不一定是錯的 — 營運手動加的道具長得就是這樣。",
+      effect:
+        "（無）這一列不參與送出。確定是誤加的話，用下面第②區的「下架未經名單審查的道具」。",
+      risk: "沒有經過名單審查，所以沒有人看過它們的價格與數值。",
+      tone: "dim",
+      tickable: false,
+      needsSecondConfirm: false,
+      items: itemDelta.undeclared,
       ownerPage: { page: "curation", label: "內容白名單" },
     });
   }
@@ -639,6 +718,8 @@ export interface SubmitPlan {
   champions: string[];
   /** ability ids to UNION into the whitelist */
   abilities: string[];
+  /** item ids to UNION into the whitelist (GH#495) */
+  items: string[];
   /** account ids to approve */
   accounts: string[];
   /** everything on the page that will NOT be touched, and why */
@@ -647,7 +728,7 @@ export interface SubmitPlan {
 
 /** Nothing is planned. */
 export function emptyPlan(): SubmitPlan {
-  return { champions: [], abilities: [], accounts: [], skipped: [] };
+  return { champions: [], abilities: [], items: [], accounts: [], skipped: [] };
 }
 
 /**
@@ -660,6 +741,7 @@ export function buildPlan(rows: readonly QuickRow[], ticked: ReadonlySet<string>
   const plan = emptyPlan();
   const champions = new Set<string>();
   const abilities = new Set<string>();
+  const items = new Set<string>();
   for (const row of rows) {
     if (!row.tickable) {
       plan.skipped.push({
@@ -678,16 +760,23 @@ export function buildPlan(rows: readonly QuickRow[], ticked: ReadonlySet<string>
     }
     for (const id of row.champions ?? []) champions.add(id);
     for (const id of row.abilities ?? []) abilities.add(id);
+    for (const id of row.items ?? []) items.add(id);
     if (row.accountId !== undefined) plan.accounts.push(row.accountId);
   }
   plan.champions = [...champions].sort();
   plan.abilities = [...abilities].sort();
+  plan.items = [...items].sort();
   return plan;
 }
 
 /** True when the plan would write nothing at all. */
 export function planIsEmpty(plan: SubmitPlan): boolean {
-  return plan.champions.length === 0 && plan.abilities.length === 0 && plan.accounts.length === 0;
+  return (
+    plan.champions.length === 0 &&
+    plan.abilities.length === 0 &&
+    plan.items.length === 0 &&
+    plan.accounts.length === 0
+  );
 }
 
 /**
@@ -710,18 +799,22 @@ export function planBulkRequests(plan: SubmitPlan): BulkRequest[] {
   if (plan.abilities.length > 0) {
     out.push({ kind: "abilities", enable: [...plan.abilities], disable: [] });
   }
+  if (plan.items.length > 0) {
+    out.push({ kind: "items", enable: [...plan.items], disable: [] });
+  }
   return out;
 }
 
 /**
- * The DISABLE request for one already-enabled champion — the only honest
- * mutation for a D2 row, and deliberately NOT reachable from the batch submit.
- * It is its own separately-confirmed control so that "one click approves
- * everything" can never also mean "one click removed a hero".
+ * ⛔ NO `disable` BUILDER LIVES IN THIS MODULE ANY MORE (GH#495).
+ *
+ * Until 2026-08-21 a D2 row carried its own 停用 button backed by a
+ * `disableChampionRequest()` here — one window.confirm, no item list, no undo
+ * point. 第②區 (../quickCleanup.ts) now owns every removal behind a mandatory
+ * preview, and leaving a second, preview-less removal path on the SAME page
+ * would have made the zone contract unenforceable: a guard can only prove
+ * 「移除一定經過預覽」 while there is exactly one door.
  */
-export function disableChampionRequest(championId: string): BulkRequest {
-  return { kind: "champions", enable: [], disable: [championId] };
-}
 
 /** Which rows still need the extra confirmation, given the current ticks. */
 export function rowsNeedingSecondConfirm(
@@ -750,6 +843,7 @@ export function describePlan(plan: SubmitPlan): string {
   if (plan.accounts.length > 0) parts.push(`通過帳號 ${plan.accounts.length}`);
   if (plan.champions.length > 0) parts.push(`開放英雄 ${plan.champions.length}`);
   if (plan.abilities.length > 0) parts.push(`補技能 ${plan.abilities.length}`);
+  if (plan.items.length > 0) parts.push(`開放道具 ${plan.items.length}`);
   if (parts.length === 0) return "沒有勾選任何項目";
   return parts.join("、");
 }

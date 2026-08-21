@@ -31,6 +31,10 @@ describe("the page renders without a browser", () => {
     expect(html).toContain("Quick Approval");
     // the promise the page makes, stated before any row exists
     expect(html).toContain("永遠不會替你移除任何已啟用的內容");
+    // GH#495: 第②區 paints before the first read lands (its cards say 載入中),
+    // and 第③區 says where the uncollected owner-only actions are
+    expect(html).toContain("② 清理／移除");
+    expect(html).toContain("③ 其他只有你能按的動作");
   });
 
   it("renders EVERY row shape, including the read-only ones", () => {
@@ -76,7 +80,6 @@ describe("the page renders without a browser", () => {
           busy: false,
           onToggle: noop,
           onNavigate: noop,
-          onDisable: noop,
         }),
       );
       expect(html, row.key).toContain(row.title);
@@ -97,7 +100,13 @@ describe("the page renders without a browser", () => {
         { label: "開放英雄", ok: true, detail: "已加入 1 個 id" },
         { label: "通過帳號", ok: false, detail: "boom" },
       ],
-      { champions: [], abilities: [], accounts: [], skipped: [{ key: "k", title: "略過的", why: "沒有打勾" }] },
+      {
+        champions: [],
+        abilities: [],
+        items: [],
+        accounts: [],
+        skipped: [{ key: "k", title: "略過的", why: "沒有打勾" }],
+      },
     );
     const html = renderToString(createElement(ResultPanel, { result }));
     expect(html).toContain("有項目失敗");

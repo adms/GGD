@@ -39,7 +39,6 @@ import {
   buildPlan,
   buildRows,
   describePlan,
-  disableChampionRequest,
   editorExposureRow,
   halfEnabledChampions,
   median,
@@ -55,6 +54,7 @@ import {
   type BuildRowsInput,
   type ChampionStats,
 } from "./quickApproval";
+import { cleanupWriteRequest, disablePreview } from "./quickCleanup";
 
 // --------------------------------------------------------------- fixtures --
 
@@ -683,7 +683,10 @@ describe("the submit plan — union only, and honest about what it skipped", () 
 
   it("停用 is its own request, reachable only outside the batch", () => {
     cover("adminui-quick-approval");
-    const req = disableChampionRequest("extra");
+    // GH#495: the disable shape moved to 第②區, where it is built from a preview
+    const req = cleanupWriteRequest(
+      disablePreview("undeclared-champions", [{ id: "extra", name: "多出來的" }], 3),
+    );
     expect(req).toEqual({ kind: "champions", enable: [], disable: ["extra"] });
     // …and nothing the batch produces can ever look like it
     const plan = buildPlan(rows, new Set(rows.map((r) => r.key)));

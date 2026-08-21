@@ -25,37 +25,61 @@
  *
  *  3. IT WRITES ONLY THROUGH THE EXISTING AUDITED SEAMS. The whitelist half
  *     goes through POST /curation/whitelist/bulk (admin-only, union-merged
- *     server-side, audited `curation.bulk`) with `disable: []`; the account half
- *     goes through POST /admin/accounts/{id}/approve (admin-only, last-admin
- *     guarded, audited `approval_approved`). No new endpoint, no second way to
- *     write the whitelist, and deliberately NO import of saveWhitelist/diffDoc —
- *     that draft machinery emits a `disable` array and would delete the
- *     operator's extra entries in one click.
+ *     server-side, audited `curation.bulk`); the account half goes through POST
+ *     /admin/accounts/{id}/approve (admin-only, last-admin guarded, audited
+ *     `approval_approved`); the cleanup half goes through POST
+ *     /curation/whitelist/evict-transformed and /curation/whitelist/restore.
+ *     No new endpoint, and deliberately NO import of saveWhitelist/diffDoc —
+ *     that draft machinery emits a `disable` array computed from whatever this
+ *     page happens to know, and would delete the operator's extra entries.
+ *
+ * ---------------------------------------------------------------------------
+ * ⭐ 2026-08-21 (GH#495): TWO ZONES — 加入 and 清理／移除
+ * ---------------------------------------------------------------------------
+ * owner:「清理變身態、通過邀請碼審查、上下架角色道具 等常用批核，應該都要在
+ * [Quick Approval] 這邊簡易一鍵批核通過吧？」
+ *
+ * The removals could NOT simply join the tick list. 一鍵送出確認's safety comes
+ * from every request it sends carrying `disable: []` — that is what makes it
+ * pressable without reading. So:
+ *
+ *   ① 加入 (the rows + one submit)  every bulk request has `disable: []`
+ *   ② 清理／移除 (QuickCleanupSection) preview by name+id → confirm → 一鍵還原
+ *
+ * The per-row 停用 button that used to sit on a 未經名單審查 row is GONE: it was a
+ * removal without an item list and without an undo point, and while a second
+ * removal door existed on this page, 「移除一定經過預覽」 was not something a
+ * guard could prove.
  *
  * This file is presentation + wiring only; all the derivation lives in
- * ../quickApproval.ts as pure functions (unit-tested under plain node).
+ * ../quickApproval.ts and ../quickCleanup.ts as pure functions (unit-tested
+ * under plain node).
  */
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   approveAccount,
   bulkWhitelist,
+  evictTransformedBodies,
   getCombatEnv,
   getStarterSet,
   getWhitelist,
   listPendingAccounts,
+  restoreWhitelistSnapshot,
 } from "../api";
 import { normalizeCombatEnv, type CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
-import { loadDocsByIds } from "../content";
+import { loadDocsByIds, rowFromDoc } from "../content";
 import { useApp, type Page } from "../store";
 import { waitedText } from "../approvals";
+import { isTransformedBodyRow } from "../curationTransform";
+import type { Kind } from "../curation";
 import {
   buildPlan,
   buildRows,
   describePlan,
-  disableChampionRequest,
   parseChampionStats,
   planBulkRequests,
   planIsEmpty,
+  rosterDelta,
   rowsNeedingSecondConfirm,
   secondConfirmText,
   summarizeResult,
@@ -64,6 +88,20 @@ import {
   type StepResult,
   type SubmitResult,
 } from "../quickApproval";
+import {
+  OWNER_ONLY_ACTIONS,
+  cleanupWriteRequest,
+  disablePreview,
+  transformPreview,
+  undoRequest,
+  type CleanupItem,
+  type CleanupPreview,
+} from "../quickCleanup";
+import {
+  QuickCleanupSection,
+  type CleanupAction,
+  type CleanupOutcome,
+} from "./QuickCleanupSection";
 import { Btn, ErrorBanner, Panel } from "./widgets";
 import { ACCENT, DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "./theme";
 
@@ -81,8 +119,17 @@ const KIND_LABEL: Record<QuickRow["kind"], string> = {
   "account-approve": "帳號審核",
   "champion-open": "開放英雄",
   "ability-fill": "補技能格",
+  "item-open": "上架道具",
   "champion-undeclared": "未經名單審查",
+  "item-undeclared": "未經名單審查",
   exposure: "對外暴露",
+};
+
+/** Step label per whitelist kind — the union writes 第①區 can produce. */
+const BULK_LABEL: Record<Kind, string> = {
+  champions: "開放英雄",
+  abilities: "補技能格",
+  items: "上架道具",
 };
 
 interface Loaded {
@@ -90,6 +137,20 @@ interface Loaded {
   /** live whitelist champion count, for the header line */
   liveChampions: number;
   declaredChampions: number;
+  /** live whitelist item count — the denominator 第②區's 下架 preview quotes */
+  liveItems: number;
+  /**
+   * GH#495 第②區 inputs, derived in the SAME pass as the rows so the zone can
+   * never describe a different world from the one above it.
+   */
+  cleanup: {
+    /** live champions reading `transform.role === "alternate"`, for the pairing check */
+    alternates: string[];
+    /** live-but-undeclared champions MINUS the alternates (those are 清理變身態's) */
+    undeclaredChampions: CleanupItem[];
+    /** live-but-undeclared item ids; names are fetched at preview time */
+    undeclaredItems: string[];
+  };
   /** the FULL server-side pending count… */
   pendingTotal: number;
   /** …and how many of them this page actually loaded as rows */
@@ -133,6 +194,30 @@ async function probeEditor(): Promise<{
   } catch (err) {
     return { status: null, error: err instanceof Error ? err.message : String(err) };
   }
+}
+
+/**
+ * The write for a previewed 下架, and its undo. Both id lists come from
+ * `preview.items` and from nowhere else — this function has no way to remove an
+ * id the operator did not just read (GH#495's whole point).
+ */
+async function runDisable(
+  preview: CleanupPreview,
+  after: () => Promise<void>,
+): Promise<CleanupOutcome> {
+  const req = cleanupWriteRequest(preview);
+  const back = undoRequest(preview);
+  if (req === null || back === null) throw new Error("這個動作沒有 bulk 寫入路徑");
+  await bulkWhitelist(req);
+  await after();
+  return {
+    text: `✓ 已下架 ${req.disable.length} 個：${preview.before} → ${preview.after}。按 ↩ 可以整批加回去。`,
+    undo: async () => {
+      await bulkWhitelist(back);
+      await after();
+      return `已把 ${back.enable.length} 個 id 加回白名單。`;
+    },
+  };
 }
 
 export function QuickApprovalPage(): React.JSX.Element {
@@ -182,6 +267,11 @@ export function QuickApprovalPage(): React.JSX.Element {
       // an unreadable stat sheet downgrades every champion row to "unchecked",
       // which forces the second confirmation rather than waving it through.
       let stats = new Map<string, ChampionStats>();
+      // GH#495: the SAME champion docs answer a second question — which live
+      // champions are 變身態. Deriving it here costs zero extra fetches and gives
+      // 第②區 an answer computed on a different path from the platform's, which
+      // is the only way to notice that the platform's fail-open gate went inert.
+      let alternates: string[] = [];
       let contentOk = true;
       try {
         // The 三圍 coefficients are OPERATOR-TUNABLE (戰鬥系統). Reading them
@@ -198,6 +288,10 @@ export function QuickApprovalPage(): React.JSX.Element {
         const wanted = [...new Set([...starter.champions, ...live.champions])];
         const docs = await loadDocsByIds("champions", wanted);
         stats = new Map([...docs].map(([id, raw]) => [id, parseChampionStats(id, raw, env)]));
+        alternates = live.champions.filter((id) => {
+          const raw = docs.get(id);
+          return raw !== undefined && isTransformedBodyRow(rowFromDoc(id, raw));
+        });
       } catch {
         contentOk = false;
       }
@@ -208,6 +302,8 @@ export function QuickApprovalPage(): React.JSX.Element {
         declaredChampions: starter.champions,
         liveChampions: live.champions,
         liveAbilities: live.abilities,
+        declaredItems: starter.items,
+        liveItems: live.items,
         stats,
         pendingAccounts: pending.accounts.map((a) => ({
           id: a.id,
@@ -216,10 +312,26 @@ export function QuickApprovalPage(): React.JSX.Element {
         })),
         editorProbe: probe,
       });
+      // 第②區's two 下架 lists, from the same delta the rows above are built on.
+      // ⭐ The 變身態 are SUBTRACTED here: they are undeclared too, but they have
+      // their own action with the platform's own re-derivation and an undo
+      // snapshot — offering the same champion under two buttons would let one
+      // preview quietly disagree with the other.
+      const alternateSet = new Set(alternates);
+      const undeclaredChampions = rosterDelta(starter.champions, live.champions)
+        .undeclared.filter((id) => !alternateSet.has(id))
+        .map((id) => ({ id, name: stats.get(id)?.name ?? id }));
+
       setLoaded({
         rows,
         liveChampions: live.champions.length,
         declaredChampions: starter.champions.length,
+        liveItems: live.items.length,
+        cleanup: {
+          alternates,
+          undeclaredChampions,
+          undeclaredItems: rosterDelta(starter.items, live.items).undeclared,
+        },
         pendingTotal: pending.total,
         pendingRows: pending.accounts.length,
         contentOk,
@@ -275,10 +387,10 @@ export function QuickApprovalPage(): React.JSX.Element {
     const steps: StepResult[] = [];
     try {
       for (const req of planBulkRequests(plan)) {
-        const label = req.kind === "champions" ? "開放英雄" : "補技能格";
+        const label = BULK_LABEL[req.kind];
         try {
           const doc = await bulkWhitelist(req);
-          const after = req.kind === "champions" ? doc.champions : doc.abilities;
+          const after = doc[req.kind];
           const landed = req.enable.filter((id) => after.includes(id));
           steps.push({
             ok: landed.length === req.enable.length,
@@ -319,51 +431,132 @@ export function QuickApprovalPage(): React.JSX.Element {
   };
 
   /**
-   * 停用 for an already-enabled, never-declared champion — its own control with
-   * its own confirmation, deliberately OUTSIDE the batch submit. Removing a
-   * hero is not something "一鍵送出全部" may ever do as a side effect.
+   * 第②區 (GH#495) — every REMOVAL the owner used to have to go find on another
+   * page, as parameter sets of one two-stage card.
+   *
+   * Each entry answers only two questions: where does the preview come from, and
+   * where does the confirmed write go. The preview→confirm→還原 contract itself
+   * belongs to CleanupCard, so a fourth removal cannot ship a weaker version of
+   * it by accident.
    */
-  const onDisable = async (row: QuickRow): Promise<void> => {
-    const id = row.champions?.[0];
-    if (id === undefined) return;
-    if (
-      !window.confirm(
-        `停用 ${row.title}？\n\n` +
-          `${id} 會從白名單移除，選角畫面立刻看不到他（已進行中的對戰不受影響）。\n` +
-          "這是一次獨立的變更，不會跟著上面的一鍵送出一起走。\n" +
-          "想反悔的話，到「內容白名單」再開回來即可。",
-      )
-    ) {
-      return;
-    }
-    setBusy(true);
-    try {
-      await bulkWhitelist(disableChampionRequest(id));
-      setResult(
-        summarizeResult(
-          [{ ok: true, label: "停用英雄", detail: `${row.title}（${id}）已從白名單移除。` }],
-          { champions: [], abilities: [], accounts: [], skipped: [] },
-        ),
-      );
+  const cleanupActions = useMemo((): CleanupAction[] => {
+    const notLoaded = loaded === null ? "載入中…" : null;
+    const cleanup = loaded?.cleanup;
+    const after = async (): Promise<void> => {
       await reload();
-    } catch (e) {
-      setErr(`停用失敗：${e instanceof Error ? e.message : String(e)}`);
-    } finally {
-      setBusy(false);
-    }
-  };
+    };
+    return [
+      {
+        kind: "transform",
+        unavailable: notLoaded,
+        blurb: (
+          <>
+            變身態（<code>transform.role === &quot;alternate&quot;</code>）是**技能觸發**才會出現的第二具身體，
+            永遠不是一個可以被選的英雄。⭐ 名單由<b>平台自己</b>從內容樹推導（後台不送 id），
+            這一頁再用 <code>/content/</code> 算一次來對帳。<b>本體不受影響。</b>
+            <br />
+            還原：平台會在寫入前留一個<b>快照</b>，做完直接按 ↩ 一鍵還原。
+          </>
+        ),
+        preview: async () =>
+          transformPreview(await evictTransformedBodies({ dryRun: true }), {
+            ok: loaded?.contentOk === true,
+            liveAlternateIds: cleanup?.alternates ?? [],
+          }),
+        run: async (p) => {
+          // ⭐ `expect` is the SERVER's own dry-run count, re-checked under its
+          // mutex — a list that moved since the preview comes back 409 instead
+          // of deleting more than the operator agreed to.
+          const res = await evictTransformedBodies({ dryRun: false, expect: p.items.length });
+          const snap = res.snapshotId;
+          await after();
+          return {
+            text:
+              `✓ 已清理 ${res.remove.length} 個變身態：啟用英雄 ${res.before} → ${res.after}。` +
+              (snap ? `　還原點 ${snap}` : "　⚠ 平台沒有回還原點。"),
+            undo:
+              snap === undefined
+                ? null
+                : async () => {
+                    const r = await restoreWhitelistSnapshot(snap);
+                    await after();
+                    return `已還原到 ${snap}（新的還原點 ${r.undoSnapshotId}）。`;
+                  },
+          };
+        },
+      },
+      {
+        kind: "undeclared-champions",
+        unavailable: notLoaded,
+        blurb: (
+          <>
+            上面標成「未經名單審查」的英雄 —— 已經開放中，但不在版本控管的開放名單（
+            <code>starter.go</code>）裡，所以<b>沒有任何一次審查涵蓋他們</b>。
+            <br />
+            還原：白名單是一個集合，所以「把同一批 id 加回去」就是逐位元的還原 —— 做完按 ↩ 即可。
+          </>
+        ),
+        preview: async () =>
+          disablePreview(
+            "undeclared-champions",
+            cleanup?.undeclaredChampions ?? [],
+            loaded?.liveChampions ?? 0,
+            loaded?.contentOk === false
+              ? ["註：讀不到英雄文件，下面只有 id 沒有名字 — 建議先確認 /content 再下架。"]
+              : [],
+          ),
+        run: (p) => runDisable(p, after),
+      },
+      {
+        kind: "undeclared-items",
+        unavailable: notLoaded,
+        blurb: (
+          <>
+            商店買得到、但不在版本控管開放名單裡的道具。⚠️ 營運手動加的道具長得<b>一模一樣</b>，
+            所以這一顆只在你確定那批是誤加時才按。
+            <br />
+            還原：同上，按 ↩ 就把同一批 id 加回白名單。
+          </>
+        ),
+        preview: async () => {
+          const ids = cleanup?.undeclaredItems ?? [];
+          // names are fetched HERE, for these ids only: the page never loads the
+          // whole item collection, and 「移除 <一串英數 id>」 is not something an
+          // operator can meaningfully agree to.
+          let named: CleanupItem[] = ids.map((id) => ({ id, name: id }));
+          const notes: string[] = [];
+          try {
+            const docs = await loadDocsByIds("items", ids);
+            named = ids.map((id) => {
+              const raw = docs.get(id);
+              return { id, name: raw === undefined ? id : rowFromDoc(id, raw).name };
+            });
+          } catch {
+            notes.push("註：讀不到 /content/items/ 的道具文件，下面只有 id 沒有名字。");
+          }
+          return disablePreview("undeclared-items", named, loaded?.liveItems ?? 0, notes);
+        },
+        run: (p) => runDisable(p, after),
+      },
+    ];
+  }, [loaded, reload]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14, maxWidth: 1000 }}>
       <div>
         <div style={{ fontSize: 18, fontWeight: 800, color: TEXT_MAIN }}>Quick Approval · 待你確認</div>
         <div style={{ fontSize: 12, color: TEXT_DIM, marginTop: 4, lineHeight: 1.8 }}>
-          這一頁把「只有你能決定」的事情列在一起：打勾要通過的，按 {SUBMIT_LABEL}。
+          這一頁把「只有你能決定」的事情列在一起，分成<b>兩區</b>：
+          <br />
+          <b>① 加入</b>（下面這一區）：打勾要通過的，按 {SUBMIT_LABEL}。
+          它<b>只會「加入」，永遠不會替你移除任何已啟用的內容</b>（送出的每個請求 disable 都是空的）——
+          所以它可以不用讀就按。
+          <br />
+          <b>② 清理／移除</b>（頁面下半）：<b>會</b>動到已啟用的東西，所以<b>不在</b>那顆一鍵裡。
+          每一個都是<b>先逐項預覽 → 再確認 → 給你一鍵還原</b>。
           <br />
           每一列都是<b>當下即時算出來的</b> — 比對版本控管的開放名單、這台伺服器的白名單、待審帳號佇列，
           以及對 /editor/ 的即時探測。沒有任何一列是寫死的清單，所以它不會過期。
-          <br />
-          這一頁<b>只會「加入」，永遠不會替你移除任何已啟用的內容</b>（送出的每個請求 disable 都是空的）。
         </div>
       </div>
 
@@ -442,7 +635,6 @@ export function QuickApprovalPage(): React.JSX.Element {
               checked={ticked.has(row.key)}
               onToggle={() => toggle(row.key)}
               onNavigate={(p) => navigate(p as Page)}
-              onDisable={() => void onDisable(row)}
               busy={busy}
             />
           ))}
@@ -479,7 +671,65 @@ export function QuickApprovalPage(): React.JSX.Element {
           {result !== null && <ResultPanel result={result} />}
         </>
       )}
+
+      {/* ② 清理／移除 — rendered even before the first read lands, so the owner
+          can see the zone exists (its cards say 載入中 and refuse to preview). */}
+      <QuickCleanupSection actions={cleanupActions} busy={busy} />
+
+      <OwnerOnlyElsewhere onNavigate={(p) => navigate(p)} />
     </div>
+  );
+}
+
+/**
+ * ③ 其他只有你能按的動作 (GH#495 item 4) — the reason #242 was opened was
+ * 「一直撞到 only you can do this」, and the honest answer is that Quick Approval
+ * covers the common ones and NOT the rest. Printing the rest with a 前往 button
+ * is worth more than pretending the list is complete.
+ */
+export function OwnerOnlyElsewhere(props: {
+  onNavigate: (page: Page) => void;
+}): React.JSX.Element {
+  return (
+    <Panel
+      title="③ 其他只有你能按的動作"
+      right={
+        <span style={{ fontSize: 11, color: TEXT_DIM }}>
+          已收攏 {OWNER_ONLY_ACTIONS.filter((a) => a.covered).length} / {OWNER_ONLY_ACTIONS.length}
+        </span>
+      }
+    >
+      <div style={{ fontSize: 12, color: TEXT_DIM, lineHeight: 1.8, marginBottom: 10 }}>
+        這些動作<b>沒有</b>收進上面兩區 —— 它們要嘛是逐人／逐份的決定（沒有批次語意），
+        要嘛沒有還原點。這一段只是<b>指路</b>，按不到任何東西。
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {OWNER_ONLY_ACTIONS.map((a) => (
+          <div
+            key={`${a.page}:${a.action}`}
+            style={{
+              display: "flex",
+              gap: 10,
+              alignItems: "baseline",
+              flexWrap: "wrap",
+              fontSize: 12,
+              color: TEXT_DIM,
+              borderTop: PANEL_BORDER,
+              paddingTop: 8,
+            }}
+          >
+            <span style={{ color: a.covered ? OK : GOLD, fontSize: 11, fontWeight: 700 }}>
+              {a.covered ? "✓ 已收攏" : "↗ 在別頁"}
+            </span>
+            <span style={{ color: TEXT_MAIN, fontWeight: 700 }}>{a.action}</span>
+            <span style={{ flex: 1, minWidth: 200 }}>{a.what}</span>
+            <Btn small onClick={() => props.onNavigate(a.page)}>
+              前往「{a.where}」
+            </Btn>
+          </div>
+        ))}
+      </div>
+    </Panel>
   );
 }
 
@@ -495,7 +745,6 @@ export function RowCard(props: {
   busy: boolean;
   onToggle: () => void;
   onNavigate: (page: string) => void;
-  onDisable: () => void;
 }): React.JSX.Element {
   const { row } = props;
   const color = TONE_COLOR[row.tone];
@@ -546,11 +795,9 @@ export function RowCard(props: {
           {row.ownerPage !== undefined && (
             <OwnerPageLink page={row.ownerPage} onNavigate={props.onNavigate} />
           )}
-          {row.kind === "champion-undeclared" && (
-            <Btn small kind="danger" onClick={props.onDisable} disabled={props.busy}>
-              停用這名英雄（獨立確認）
-            </Btn>
-          )}
+          {/* ⛔ GH#495: no 停用 button here any more. Removals live in 第②區,
+              behind a mandatory preview — a second door would make the zone's
+              guarantee unprovable. */}
         </div>
       </div>
     </div>
