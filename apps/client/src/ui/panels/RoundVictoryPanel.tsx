@@ -28,6 +28,14 @@
  * 加一個 order > 1 的非 transient slot 會讓 `hudLayout.test.ts` 掛;而這片卡
  * 只在 `resolution` 出現、不是常駐 chrome,本來就不該進那張表。
  *
+ * ── 摺疊 (GH#528) ───────────────────────────────────────────────────────────
+ * owner 2026-08-22:「回合結算的成績會檔到右邊勝利第三人的3d model 最好做成
+ * 可以摺疊展開」。卡片貼右側,而頒獎台的出貨站位是**銀左·金中·銅右** ——
+ * 右邊就是銅牌站的地方,挪位置解不掉。所以卡頭多了一個摺疊鈕,
+ * **一開始收合還是展開是後台的一格**(`config.victory-podium@1` 的
+ * `roundCardCollapsed`,出貨 = 收合)。細節見 {@link roundCardStartsCollapsed}
+ * 上方那一段。
+ *
  * ── 為什麼分成兩個 component ────────────────────────────────────────────────
  * `RoundVictoryView` 是純 props,所以整張卡在 node env 用 `react-dom/server`
  * 就渲染得出來 —— 每一條斷言都讀**畫面吐出來的字串**,不是模型的回傳值。
@@ -40,8 +48,14 @@
  * (`max-height` 在 2026-07-30 之前只檢查「有沒有這個宣告」,把它灌大就能讓盒子
  * 往下長出被證明乾淨的矩形之外。)
  */
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Configs } from "@ggd/shared/content/registries";
+import {
+  resolveVictoryPodium,
+  type ConfigVictoryPodiumDoc,
+} from "@ggd/shared/content/schema/victoryPodium";
 import { useHud } from "../../net/RoomStore";
+import { SfxButton } from "../SfxButton";
 import { hudSurfaceStyle } from "../hud/hudSurfaces";
 import { useHudSurface } from "../hud/useHudSurface";
 import { GOLD, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, teamCss } from "../theme";
@@ -127,6 +141,10 @@ export function RoundVictoryPanel(): React.JSX.Element | null {
       localTeamId={localTeamId}
       roundsSeen={teamLedger.roundsSeen()}
       style={hudSurfaceStyle("round-victory", surface)}
+      // GH#528:一開始收合還是展開是**後台那一格**,⛔ 不是這裡挑一個。
+      // 面板每一回合重新掛載(HudRoot 只在 `resolution` 掛它),所以玩家展開
+      // 之後不會黏住下一回合 —— 每一回合都回到 owner 設的那一邊。
+      defaultCollapsed={roundCardStartsCollapsed()}
     />
   );
 }
@@ -209,6 +227,51 @@ export function resetRoundVictoryMemory(): void {
   memoryMatchId = "";
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+ * 摺疊 (GH#528) —— owner 2026-08-22:
+ *   「回合結算的成績會檔到右邊勝利第三人的3d model 最好做成可以摺疊展開」
+ *
+ * 為什麼一定會擋到:頒獎台的出貨站位是 `centreFirst`(銀左·金中·**銅右**,
+ * `content/config/victory-podium.json`),而這張卡停在右上角 slot 欄的內側、
+ * 340 寬 —— 兩者在 `resolution` 這**同一個相位**同時在畫面上,而且中間那位
+ * 金冠還被 `winnerScale` 放大。挪位置解不掉:右邊就是銅牌站的地方。
+ *
+ * ⚠️ 收合**不可以**改根節點的 `max-height`。那個盒子的四個邊由 #107 的 surface
+ * 註冊表決定,而 `hud/hudSurfacePaint.test.ts` 逐一讀回來比對(閉集合允許清單);
+ * 在根節點多寫一個 `height` 或改掉 `max-height` 就是那條守衛要抓的東西。
+ * ⭐ 不需要:根節點是 `position:absolute` + `width` + **`max-height`**,高度是
+ * `auto` —— 也就是**內容有多高它就有多高**。所以「收合」＝ 不渲染卡身,
+ * 盒子自己縮成一條卡頭,而註冊表宣告的矩形一個位元組都沒有動。
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/** 卡頭那一列的高度(px)。收合之後畫面上只剩這一列 + 上下內距。 */
+export const ROUND_VICTORY_HEADER_H = 38;
+/** 卡片自己的上下內距(px)。與根節點 `padding` 的第一個值是同一個數字。 */
+export const ROUND_VICTORY_PAD_Y = 12;
+
+/**
+ * ⚠️ 收合後這張卡在畫面上的高度**沒有第二個住處**:它就是
+ * `ROUND_VICTORY_PAD_Y * 2 + ROUND_VICTORY_HEADER_H`,而
+ * `roundVictoryCollapse.test.ts` 是從**渲染出來的標記**把這兩個數字讀回去算的
+ * (⛔ 不是讀這兩個常數 —— 那樣的話「收合其實沒收」也會綠,失敗形態 ⑤)。
+ */
+
+/**
+ * 這張卡**一開始**收合還是展開 —— `config.victory-podium@1` 的
+ * `roundCardCollapsed`(第一守則:這是決策點,不是我在程式裡挑一個)。
+ *
+ * 讀 `Configs` 登錄表而不是 `ContentDb`,理由與 `RoundWinnerStage`
+ * 的 `victoryPodiumPolicy()` 完全相同(內容還沒載完 → 退回出貨預設,
+ * ⛔ 不是退回一個空白的卡)。⚠️ 刻意**不**去 import 那一支:它會把
+ * Babylon(`StorePreview`)整包拖進這個純 DOM 面板。
+ */
+export function roundCardStartsCollapsed(): boolean {
+  const doc = Configs.tryGet("victory-podium") as { schema?: string } | undefined;
+  return resolveVictoryPodium(
+    doc?.schema === "config.victory-podium@1" ? (doc as ConfigVictoryPodiumDoc) : null,
+  ).roundCardCollapsed;
+}
+
 const STATE_LABEL: Record<RoundVictoryModel["state"], string> = {
   victory: "回合勝利",
   defeat: "回合敗北",
@@ -227,13 +290,21 @@ export function RoundVictoryView({
   localTeamId,
   roundsSeen,
   style,
+  defaultCollapsed = false,
 }: {
   model: RoundVictoryModel;
   standings: readonly TeamStanding[];
   localTeamId: number | null;
   roundsSeen: number;
   style?: React.CSSProperties;
+  /**
+   * 一開始收合嗎(GH#528)。出貨的 `RoundVictoryPanel` 餵的是後台那一格
+   * (`roundCardStartsCollapsed()`);這裡的預設值 `false` 只是給既有的純 view
+   * 測試用的 —— 它們讀的是**卡身**印出來的字。
+   */
+  defaultCollapsed?: boolean;
 }): React.JSX.Element {
+  const [collapsed, setCollapsed] = useState(defaultCollapsed);
   const graded = model.grade !== null;
   const accent = graded ? ROUND_VICTORY_COLOR[model.grade!.grade] : TEXT_DIM;
   return (
@@ -257,7 +328,7 @@ export function RoundVictoryView({
         display: "flex",
         flexDirection: "column",
         gap: 8,
-        padding: "12px 14px",
+        padding: `${ROUND_VICTORY_PAD_Y}px 14px`,
         background: PANEL_BG,
         border: PANEL_BORDER,
         borderRadius: 12,
@@ -267,8 +338,17 @@ export function RoundVictoryView({
         ...style,
       }}
     >
-      {/* ── 大字母 + 標題 ── */}
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      {/* ── 大字母 + 標題 + 摺疊鈕(GH#528) ── */}
+      <div
+        data-ggd-round-head=""
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          height: ROUND_VICTORY_HEADER_H,
+          flex: "none",
+        }}
+      >
         <div
           style={{
             fontSize: 38,
@@ -290,8 +370,55 @@ export function RoundVictoryView({
             {model.headline}
           </div>
         </div>
+        {/*
+          摺疊鈕。⚠️ 三件事一起才算做完(GH#502 的稽核):
+            · 它是一個**真的 `<button>`** —— `PadFocusNav` 的 FOCUSABLE_SELECTOR
+              只認得 button/a/input/[tabindex],一個掛 onClick 的 <div> 手把永遠
+              摸不到(而滑鼠玩家看不出差別,所以這是靜默的);
+            · `pointerEvents: "auto"` —— 卡片根節點是 `pointer-events: none`
+              (它蓋在競技場上,不可以吃掉點擊),所以按鈕要自己把命中測試打開,
+              否則它畫得出來、聚焦得到、**按不下去**;
+            · `data-pad-back` —— 手把的 B 直接收起來,不用先把焦點移過來。
+        */}
+        <SfxButton
+          onClick={() => setCollapsed((v) => !v)}
+          aria-expanded={!collapsed}
+          aria-label={collapsed ? "展開回合成績" : "收合回合成績"}
+          title={collapsed ? "展開回合成績" : "收合回合成績（不擋住勝利模型）"}
+          data-pad-back
+          data-ggd-round-collapse={collapsed ? "collapsed" : "expanded"}
+          sfxVolume={0.6}
+          style={{
+            marginLeft: "auto",
+            flex: "none",
+            pointerEvents: "auto",
+            width: 26,
+            height: 26,
+            padding: 0,
+            borderRadius: 6,
+            background: PANEL_BG,
+            border: PANEL_BORDER,
+            color: TEXT_DIM,
+            fontSize: 12,
+            lineHeight: 1,
+            cursor: "pointer",
+          }}
+        >
+          {collapsed ? "▾" : "▴"}
+        </SfxButton>
       </div>
 
+      {/*
+        ── 卡身 ── 收合時整段不渲染,盒子因此縮成一條卡頭(見檔案上方的
+        「⚠️ 收合不可以改根節點的 max-height」)。⛔ 不是 `display: none` 也不是
+        `height: 0`:那兩種都留著一個看不見但仍然在版面上的盒子,而這裡要的
+        效果是**銅牌那位的模型露出來**。
+      */}
+      {!collapsed && (
+      <div
+        data-ggd-round-body=""
+        style={{ display: "flex", flexDirection: "column", gap: 8, minHeight: 0 }}
+      >
       {/* ── 這個等第看過什麼(不可以省) ── */}
       {graded && (
         <div style={{ fontSize: 10, color: TEXT_DIM, lineHeight: 1.35 }}>{ROUND_VICTORY_BASIS}</div>
@@ -381,6 +508,8 @@ export function RoundVictoryView({
 
       {/* ── 團隊累積積分 —— 結算畫面讀的是同一支 teamStandings() ── */}
       <TeamPointsRows standings={standings} localTeamId={localTeamId} roundsSeen={roundsSeen} />
+      </div>
+      )}
     </div>
   );
 }

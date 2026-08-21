@@ -1386,7 +1386,14 @@ describe("the SHIPPED components paint where the registry says (client-27b)", ()
     cover("hud-panel-cover");
     expect(SHIPPED["spectate-notice"]!.render()).toContain(SPECTATE_OFFER_TEXT);
     expect(SHIPPED["round-over"]!.render()).toContain("Round over");
-    expect(SHIPPED["round-victory"]!.render()).toContain("團隊累積積分");
+    // ⚠️ 這一格以前找的是「團隊累積積分」——那是**卡身**的字,而 GH#528 之後
+    // 出貨預設是**收合**的(owner 2026-08-22:成績卡擋到銅牌那位的 3D 模型),
+    // 所以卡身在這個 mount 上本來就不該出現。找卡頭那兩樣東西:回合抬頭(內容)
+    // 與摺疊鈕(新機制)—— 兩者都是「這個 mount 真的畫了東西」的證據,而且
+    // 兩者在收合/展開下都成立。展開之後才有的卡身由
+    // `panels/roundVictoryCollapse.test.ts` 兩個方向一起釘。
+    expect(SHIPPED["round-victory"]!.render()).toContain("回合");
+    expect(SHIPPED["round-victory"]!.render()).toContain("data-ggd-round-collapse");
     expect(SHIPPED["scoreboard-list"]!.render()).toContain('data-hud-surface="scoreboard-list"');
     expect(SHIPPED["progress-chart"]!.render()).toContain("每回合戰績變化");
   });

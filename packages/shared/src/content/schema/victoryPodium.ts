@@ -217,6 +217,21 @@ export const zConfigVictoryPodiumDoc = z
       .min(VICTORY_ROUND_PRESENT_SEC_MIN)
       .max(VICTORY_ROUND_PRESENT_SEC_MAX)
       .optional(),
+    /**
+     * ⭐ 回合結算成績卡(`ui/panels/RoundVictoryPanel`)一開始是**收合**還是展開
+     * (owner 2026-08-22:「回合結算的成績會檔到右邊勝利第三人的3d model
+     * 最好做成可以摺疊展開」, GH#528)。
+     *
+     * ⚠️ 這是一個**決策點**不是一個數字:那張卡停在右上角欄的內側、340 寬,
+     * 而頒獎台的**銅牌那一位**(`podiumLayout: "centreFirst"` ⇒ 銀左金中銅右)
+     * 的卡片正好站在畫面右側 —— 兩者在 `resolution` 這一個相位同時在畫面上。
+     * 出貨值是 `true`(收合),因為那是「不擋到模型」的那一邊;玩家按一下卡頭的
+     * 摺疊鈕就展開,而展開狀態每一回合重置回這一格。
+     *
+     * 缺席 ⇒ `DEFAULT_VICTORY_PODIUM.roundCardCollapsed`(理由同上面兩格:
+     * 線上已經有耐久覆蓋層,少了必填欄會讓整份內容被 Zod 退回)。
+     */
+    roundCardCollapsed: z.boolean().optional(),
   })
   .strict();
 
@@ -236,6 +251,8 @@ export interface VictoryPodiumPolicy {
   podiumZoneSource: VictoryPodiumZoneSource;
   /** 回合頒獎台佔著螢幕幾秒。⚠️ 它**不再**決定嘲諷語音何時被切掉（見下）。 */
   roundPresentSec: number;
+  /** 回合結算成績卡一開始收合(true,出貨)還是展開。收合＝不擋到銅牌那位的模型。 */
+  roundCardCollapsed: boolean;
 }
 
 /**
@@ -269,6 +286,11 @@ export const DEFAULT_VICTORY_PODIUM: VictoryPodiumPolicy = {
   // ⛔ 但這一格**不是**語音的保命符 —— 語音現在會播完它自己（見
   // `RoundWinnerStage.clear` 的 `cancelVoice`）。這裡只決定畫面停多久。
   roundPresentSec: 5.5,
+  // ⭐ 收合(GH#528)。owner 2026-08-22:「回合結算的成績會檔到右邊勝利第三人的
+  // 3d model」—— 340 寬的成績卡停在右上角欄內側,銅牌那位的模型卡就站在右邊,
+  // 兩者在 `resolution` 同時在畫面上。預設選「不擋到模型」的那一邊
+  // (第〇·六守則:優先權大的更新後都是預設啟動)。
+  roundCardCollapsed: true,
 };
 
 /**
@@ -309,6 +331,7 @@ export function resolveVictoryPodium(
     clipBronze: doc.clipBronze,
     podiumZoneSource: doc.podiumZoneSource ?? DEFAULT_VICTORY_PODIUM.podiumZoneSource,
     roundPresentSec: doc.roundPresentSec ?? DEFAULT_VICTORY_PODIUM.roundPresentSec,
+    roundCardCollapsed: doc.roundCardCollapsed ?? DEFAULT_VICTORY_PODIUM.roundCardCollapsed,
   };
 }
 
@@ -410,5 +433,12 @@ export const VICTORY_PODIUM_FIELDS = [
     min: VICTORY_ROUND_PRESENT_SEC_MIN,
     max: VICTORY_ROUND_PRESENT_SEC_MAX,
     help: "回合結束後三位模型加灰幕佔著螢幕幾秒,時間到就收掉、進商店。⚠️ 這一格已經不會切掉嘲諷語音了(畫面收掉、聲音自己講完),所以它純粹是「你想看模型看多久」;調大只是延後進商店,不會延長回合結算(那是戰鬥系統的 resolutionSec)。",
+  },
+  {
+    key: "roundCardCollapsed",
+    label: "成績卡預設收合",
+    group: "頒獎台",
+    kind: "bool" as const,
+    help: "回合結算的成績卡(右上角那張評價/建議/積分)一開始只留一條卡頭,還是整張攤開。攤開的那張 340 寬,正好蓋住站在畫面右邊的銅牌那一位的 3D 模型 —— owner 2026-08-22 回報的就是這件事。收合仍然看得到等第與標題,按卡頭的摺疊鈕(手把 A/B 也可以)就展開。",
   },
 ] as const;
