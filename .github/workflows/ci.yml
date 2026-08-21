@@ -87,6 +87,24 @@ jobs:
         run: pnpm -r --if-present test
         env:
           GGD_COVERAGE_FILE: ${{ runner.temp }}/coverage-unit.ndjson
+      # F-16 / GH#83. The vitest guard next door proves the RULE and proves the
+      # plugin is still in vite.config's plugins array — but neither can prove
+      # the PAIRING: that vite's verbatim publicDir copy really is finished by
+      # the time closeBundle runs, so the pages are actually gone from the
+      # artefact docker/edge.Dockerfile copies into the image. That is a
+      # relationship between two versioned things (the plugin and vite's own
+      # build order), and 配對式後置條件 says only a real build can answer it.
+      # `ls dist/*.html` was ZERO-hit in this file before today — the audition
+      # page set grew 5 → 14 with nothing watching.
+      - name: Client build ships index.html and no audition/debug page
+        run: |
+          pnpm --filter @ggd/client build
+          shipped="$(cd apps/client/dist && ls -1 *.html)"
+          echo "dist html: $shipped"
+          if [ "$shipped" != "index.html" ]; then
+            echo "::error::apps/client/dist/ must contain index.html and nothing else that is html; got: $shipped" >&2
+            exit 1
+          fi
       - name: testrunner go vet + unit tests
         working-directory: tools/testrunner
         env:

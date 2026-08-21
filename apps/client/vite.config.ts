@@ -1,7 +1,7 @@
 /// <reference types="vitest/config" />
 import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
-import { createReadStream, existsSync, statSync, type Stats } from "node:fs";
+import { createReadStream, existsSync, readdirSync, rmSync, statSync, type Stats } from "node:fs";
 import { extname, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createGzip } from "node:zlib";
@@ -470,6 +470,88 @@ function liveBuildStamp(): Plugin {
   };
 }
 
+/**
+ * THE AUDITION/DEBUG PAGES MUST NOT BE IN A PRODUCTION BUNDLE (F-16 / GH#83).
+ *
+ * `apps/client/public/` holds 14 hand-written audition/debug pages
+ * (bgm-audition, model-budget, frame-data, w3x-emitter-audition, …). They are
+ * genuinely useful ON A DEV MACHINE — that is why they live in `public/`, where
+ * the dev server hands them out for free. But vite copies `public/` VERBATIM
+ * into `dist/`, `docker/edge.Dockerfile` copies `dist/` verbatim into the image,
+ * and nginx's `try_files $uri` serves any real file it finds. Three hops, none
+ * of them filtering, and the pages end up publicly served on ggd.adms.ai.
+ *
+ * That is not a tidiness complaint. Those pages render data fetched from
+ * `/content` through `innerHTML = <template literal>` — 45 such sinks across the
+ * set — and nginx's CSP has `frame-ancestors 'none'` and NO `script-src`
+ * (F-15), so anything injected there executes with the site's origin. They have
+ * zero value to a player.
+ *
+ * WHY THE RULE IS "EVERY .html EXCEPT index.html" AND NOT A LIST OF 14 NAMES.
+ * The set grew from 5 (at the audit) to 14 without anyone noticing, which is
+ * exactly what a name list cannot survive — page #15 would ship. `index.html` is
+ * the ONLY html the game needs: it is vite's entry, emitted from the package
+ * root, not copied from `public/`. So the shipping set is a closed set of one,
+ * and every other top-level html in the output is by construction a debug page.
+ *
+ * THE ESCAPE HATCH IS AN ENV VAR, NOT A CODE EDIT (第一守則): set
+ * `GGD_INCLUDE_DEBUG_PAGES=1` on the build to keep them — the same shape as
+ * `GGD_INCLUDE_EDITOR` in docker/edge.Dockerfile, which gates /editor/ the same
+ * way. Default 0: shipping them has to be a decision somebody typed.
+ *
+ * ⚠️ This strips the BUILD output only (`apply: "build"`). `pnpm dev` still
+ * serves all 14 from `public/` — the pages keep working where they are used.
+ * `vite preview` serves `dist/`, so it sees the stripped set; that is correct,
+ * preview exists to show what the image will contain.
+ */
+const DEBUG_PAGES_ENV = "GGD_INCLUDE_DEBUG_PAGES";
+
+/** The one html a player's browser actually loads (vite's entry). */
+const SHIPPING_HTML = "index.html";
+
+/** Opt back in to shipping the debug pages. Anything but 1/true means "no". */
+export function includeDebugPages(env: NodeJS.ProcessEnv = process.env): boolean {
+  const raw = (env[DEBUG_PAGES_ENV] ?? "").trim().toLowerCase();
+  return raw === "1" || raw === "true";
+}
+
+/**
+ * Which of `names` (one directory listing of the build output) are debug pages.
+ * Pure, so the guard can assert the RULE without running a 3-minute build.
+ */
+export function debugPagesToStrip(names: readonly string[]): string[] {
+  return names.filter((n) => n.toLowerCase().endsWith(".html") && n !== SHIPPING_HTML).sort();
+}
+
+function stripDebugPages(): Plugin {
+  let outDir = "";
+  return {
+    name: "ggd-strip-debug-pages",
+    apply: "build", // dev/serve keeps every page; this is about the ARTEFACT
+    configResolved(config) {
+      outDir = resolve(config.root, config.build.outDir);
+    },
+    // closeBundle, not generateBundle: these files are never part of the rollup
+    // bundle at all — vite copies publicDir into outDir as a separate step, so
+    // the only moment they exist to be removed is after the write is finished.
+    closeBundle() {
+      if (!existsSync(outDir)) return;
+      const found = debugPagesToStrip(readdirSync(outDir));
+      if (found.length === 0) return;
+      if (includeDebugPages()) {
+        // LOUD on purpose (第二守則: a fail-open needs someone to say so). This
+        // build is publishing debug pages because an operator asked it to.
+        console.warn(
+          `[ggd] ${DEBUG_PAGES_ENV} is set — SHIPPING ${found.length} audition/debug page(s): ${found.join(", ")}`,
+        );
+        return;
+      }
+      for (const name of found) rmSync(resolve(outDir, name), { force: true });
+      console.info(`[ggd] stripped ${found.length} audition/debug page(s) from the build output`);
+    },
+  };
+}
+
 // The voxel game client. In dev the client talks to the local game-server
 // directly (ws://localhost:2567, override with VITE_GAME_WS); the /colyseus
 // proxy below covers the platform-style same-origin path as well.
@@ -497,6 +579,9 @@ export default defineConfig({
     compressDevModules(),
     serveBlizzardOverlay(),
     serveContent(),
+    // LAST: it only acts after the whole build output (including the verbatim
+    // publicDir copy) has been written. See stripDebugPages / GH#83.
+    stripDebugPages(),
   ],
   server: {
     // fixed game port (user-pinned): http://localhost:39527

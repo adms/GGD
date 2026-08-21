@@ -265,7 +265,7 @@ func (s *Service) generateMusicAsync(ctx context.Context, cfg Config, req MusicR
 	if res := api.parse(createRaw); res.failed {
 		return nil, provErr("music provider job failed")
 	} else if res.done {
-		return s.resolveMusicAudio(ctx, client, res)
+		return s.resolveMusicAudio(ctx, client, res, cfg.MusicBaseURL)
 	}
 
 	pollURL := api.pollURL(cfg, createRaw)
@@ -273,7 +273,9 @@ func (s *Service) generateMusicAsync(ctx context.Context, cfg Config, req MusicR
 		return nil, provErr("music provider returned no job location")
 	}
 	for i := 0; i < maxMusicPolls; i++ {
-		pollRaw, err := s.getRaw(ctx, client, pollURL, cfg, false)
+		// pollURL came out of the provider's create response — guardProviderURL
+		// inside getRaw is what keeps the API key from following it off-domain.
+		pollRaw, err := s.getRaw(ctx, client, pollURL, cfg.MusicBaseURL, cfg, false)
 		if err != nil {
 			return nil, err
 		}
@@ -282,7 +284,7 @@ func (s *Service) generateMusicAsync(ctx context.Context, cfg Config, req MusicR
 			return nil, provErr("music provider job failed")
 		}
 		if res.done {
-			return s.resolveMusicAudio(ctx, client, res)
+			return s.resolveMusicAudio(ctx, client, res, cfg.MusicBaseURL)
 		}
 		// Still running: wait, but abort promptly if the caller cancels.
 		t := time.NewTimer(s.musicPollInterval())
@@ -299,7 +301,7 @@ func (s *Service) generateMusicAsync(ctx context.Context, cfg Config, req MusicR
 // resolveMusicAudio turns a finished job result into raw track bytes: inline
 // base64 if the provider embedded it, otherwise a keyless fetch of the delivery
 // URL (the key must never leave the provider API host — see fetchAudioBytes).
-func (s *Service) resolveMusicAudio(ctx context.Context, client *http.Client, res musicPollResult) ([]byte, error) {
+func (s *Service) resolveMusicAudio(ctx context.Context, client *http.Client, res musicPollResult, base string) ([]byte, error) {
 	if res.audioB64 != "" {
 		raw, err := base64.StdEncoding.DecodeString(res.audioB64)
 		if err != nil {
@@ -311,7 +313,7 @@ func (s *Service) resolveMusicAudio(ctx context.Context, client *http.Client, re
 		return raw, nil
 	}
 	if res.audioURL != "" {
-		return s.fetchAudioBytes(ctx, client, res.audioURL)
+		return s.fetchAudioBytes(ctx, client, res.audioURL, base)
 	}
 	return nil, provErr("music job finished without audio")
 }

