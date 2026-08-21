@@ -252,6 +252,65 @@ function measurable(): { doc: ModelDocLite; chir: Chirality; axial: ReturnType<t
 
 type Measured = { doc: ModelDocLite; chir: Chirality; axial: ReturnType<typeof axialCue> };
 
+// ---------------------------------------------------------------------------
+// GH#216 —— 普查：**每一具**出貨模型都要被歸到一格，⛔ 沒有「安靜地不算」
+// ---------------------------------------------------------------------------
+/**
+ * `measurable()` 上面那一版把讀不出來的模型**直接 continue 掉**，而唯一的下界是
+ * 一個手寫的 `>= 40`。出貨模型量到 124 具 ⇒ 最多 84 具可以無聲地退出普查而
+ * 每一條斷言照樣全綠（CLAUDE.md 失敗形態 ③）。而 GH#216 要的正是
+ * 「**N 支正確 / M 支偏差**的判定與證據」+「**靜默退回要紅**」。
+ *
+ * ⇒ 這裡把同一批模型**窮舉**成互斥的幾格，下界改成**從語料推導**的等式
+ * （measured + noSkeleton === 全部），⛔ 不是一個會過期的數字。
+ */
+type CensusVerdict =
+  /** 讀得出骨架方向：進入下面每一條「面向對不對」的斷言 */
+  | { kind: "measured" }
+  /** 一對 L/R 骨頭都沒有 —— **結構性**讀不出來（靜態道具、單網格模型），⛔ 不是退步 */
+  | { kind: "no-skeleton" }
+  /** 有 1–2 對：樣本太少，方向可能是巧合 */
+  | { kind: "few-pairs"; n: number }
+  /** 有 ≥3 對但**彼此不同意** —— 這一格才是真的可疑（骨架被鏡射過？） */
+  | { kind: "incoherent"; n: number; coherence: number }
+  /** .glb 根本讀不開 —— 內容壞了 */
+  | { kind: "unreadable" };
+
+/**
+ * ⚠️ **量到的洞，逐具具名** —— 出貨 124 具模型裡有 3 具的面向**沒有任何守衛在看**。
+ * ⛔ 它們不可以繼續躲在一個 `continue` 後面：列在這裡 = 洞還在，但它**有名字、有理由、
+ * 而且不會長大**（第 4 具出現就紅）。⭐ 反方向也關：哪天有人把某一具修好變成量得出來，
+ * 它還留在這張表上一樣紅 —— 一張活得比缺陷還久的豁免表就是下一個謊。
+ *
+ * ⚠️ 這三具**不是**「已知面向錯誤」，是「**面向對不對沒有人知道**」。
+ * 前兩具是真的上場英雄（`godie-u00n/u00o` 魯夫、`godie-emns` 夜神月）
+ * ⇒ 要真的判定它們，得靠 `axialCue()` 之外的第三個線索，那是 GH#216 的後續。
+ */
+const FACING_UNVERIFIED: Readonly<Record<string, string>> = {
+  "imported.luffe": "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合（英雄 godie-u00n / u00o 魯夫）",
+  "imported.herolight": "7 對 L/R 骨頭彼此不同意（骨架疑似被鏡射過）（英雄 godie-emns 夜神月）",
+  "prop.guardian.beast": "8 對骨頭略微不同意；是場景 prop，⛔ 不是英雄模型",
+};
+
+function census(): { doc: ModelDocLite; verdict: CensusVerdict }[] {
+  const out: { doc: ModelDocLite; verdict: CensusVerdict }[] = [];
+  for (const doc of loadModelDocs()) {
+    const file = path.join(CONTENT, doc.glbPath);
+    if (!fs.existsSync(file)) continue; // 沒出貨這個檔就不在語料裡
+    const g = readGlb(file);
+    if (!g) { out.push({ doc, verdict: { kind: "unreadable" } }); continue; }
+    const chir = chiralityForward(g);
+    if (!chir) { out.push({ doc, verdict: { kind: "no-skeleton" } }); continue; }
+    if (chir.n < 3) { out.push({ doc, verdict: { kind: "few-pairs", n: chir.n } }); continue; }
+    if (chir.coherence < 0.99) {
+      out.push({ doc, verdict: { kind: "incoherent", n: chir.n, coherence: chir.coherence } });
+      continue;
+    }
+    out.push({ doc, verdict: { kind: "measured" } });
+  }
+  return out;
+}
+
 /**
  * The yaw a model's own geometry requires — ONE definition, used by every case
  * below so no assertion can quietly disagree with another about what "flipped"
@@ -268,11 +327,51 @@ function requiredPhi(m: Measured): number {
 }
 
 describe("champion model facing, re-measured from the shipped .glb (model-facing-measured)", () => {
-  it("measures a meaningful number of shipped models (the corpus is not silently empty)", () => {
+  it("GH#216 普查 — every shipped model lands in a bucket; none drops out silently", () => {
     cover("model-facing-measured");
-    // Guards 失敗形態 ⑥/③: if the reader broke, or content moved, every other
-    // case here would vacuously pass over an empty list.
-    expect(measurable().length).toBeGreaterThanOrEqual(40);
+    // Guards 失敗形態 ③/⑥. The retired form of this case was
+    // `expect(measurable().length).toBeGreaterThanOrEqual(40)` — a hand-written
+    // floor under a corpus that is now far larger, i.e. most of the roster
+    // could stop being measured and every assertion below would still be green.
+    const all = census();
+    const of = (k: CensusVerdict["kind"]) => all.filter((c) => c.verdict.kind === k);
+    const name = (c: (typeof all)[number]) => `${c.doc.id} (${c.doc.glbPath})`;
+
+    // ① 語料不是空的，而且下界是**推導**的：measurable() 就是 measured 那一格。
+    expect(all.length, "no shipped model docs point at a .glb that exists").toBeGreaterThan(0);
+    expect(measurable().length).toBe(of("measured").length);
+
+    // ② 內容壞掉要紅（讀不開的 .glb 在遊戲裡也是讀不開的）。
+    expect(of("unreadable").map(name), "shipped .glb files that do not parse").toEqual([]);
+
+    // ③ ⭐ 這是 #216 真正要的那一條：**沒有第三種下場**。一具模型要嘛量得出方向，
+    //    要嘛「一對 L/R 骨頭都沒有」這個結構性事實。落在中間兩格的（樣本太少 /
+    //    骨頭彼此不同意）代表這具模型的面向**沒有人在看**，⛔ 而它以前是靜默的。
+    const holes = all.filter(
+      (c) => c.verdict.kind === "few-pairs" || c.verdict.kind === "incoherent",
+    );
+    expect(
+      holes
+        .filter((c) => !(c.doc.id in FACING_UNVERIFIED))
+        .map((c) =>
+          c.verdict.kind === "few-pairs"
+            ? `${name(c)}: only ${c.verdict.n} L/R bone pair(s) — direction may be coincidence`
+            : `${name(c)}: ${(c.verdict as { n: number }).n} pairs disagree ` +
+              `(coherence ${(c.verdict as { coherence: number }).coherence.toFixed(3)}) — skeleton mirrored?`,
+        ),
+      "models whose facing nothing measures and which are not declared in FACING_UNVERIFIED",
+    ).toEqual([]);
+
+    // ④ 反方向：豁免表不可以活得比缺陷久。修好一具就要把它從表上拿掉。
+    const holeIds = new Set(holes.map((c) => c.doc.id));
+    expect(
+      Object.keys(FACING_UNVERIFIED).filter((id) => !holeIds.has(id)),
+      "FACING_UNVERIFIED entries that are no longer holes — delete them",
+    ).toEqual([]);
+
+    // ⑤ 判定與證據（#216 的「N 支正確 / M 支偏差」）：窮舉且互斥 —— 每一具模型
+    //    要嘛量得出來、要嘛沒有骨架、要嘛在具名的豁免表上。⛔ 沒有第四種下場。
+    expect(of("measured").length + of("no-skeleton").length + holes.length).toBe(all.length);
   });
 
   it("the SHIPPED offset equals the offset each model's own geometry requires", () => {

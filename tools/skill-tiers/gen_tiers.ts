@@ -1,6 +1,9 @@
 #!/usr/bin/env tsx
 /**
- * 技能級距規範 —— **產生器**（GH#414）。
+ * 技能級距規範 —— **產生器**（GH#414 幾何三軸 · GH#438 傷害/耗魔/冷卻三軸）。
+ *
+ * ⭐ **六個視窗，一條梯子。** 軸的清單**從出貨 config 推導**（`assertEveryTierAxisIsAccountedFor`），
+ * ⛔ 不是這支程式裡的一份手寫名單 —— 少一軸會讓 `tiers:build` / `tiers:check` 直接回非零。
  *
  * owner 2026-08-19：
  * > 「請你將**詳細規範及對應自 w3x 的關係**詳細寫成一個 md 檔給我參考，
@@ -31,7 +34,7 @@
  *   pnpm tiers:build     # 寫出 docs/editor-contract/ggd-skill-tiers.md
  *   pnpm tiers:check     # 過期就回非零
  */
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync, readdirSync, writeFileSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -54,6 +57,9 @@ import {
   displacementTiersFromDoc,
   minBodyRadiusFromConfigs,
 } from "../../packages/shared/src/content/displacementTiers";
+import { damageTiersFromDoc } from "../../packages/shared/src/content/damageTiers";
+import { manaTiersFromDoc } from "../../packages/shared/src/content/manaTiers";
+import { COOLDOWN_SHAPES, cooldownTiersFromDoc } from "../../packages/shared/src/content/cooldownTiers";
 import { GGD_PER_WC3 } from "../../packages/shared/src/content/templates/expand";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../..");
@@ -132,6 +138,90 @@ function loadOriginals(): Map<string, Original> {
 }
 
 // ---------------------------------------------------------------------------
+// ⛔ 這份文件不可以再**少一軸** —— 覆蓋率是推導的，不是一份手寫清單
+// ---------------------------------------------------------------------------
+/**
+ * ⚠️ 這一段是 GH#438 的核心教訓。在它之前，這份**對外契約**上寫著一句
+ *
+ *   > 「傷害與耗魔：⛔ 還沒有表，這是 owner 的決定」
+ *
+ * 而那句話在 `damage-tiers.json` / `mana-tiers.json` / `cooldown-tiers.json`
+ * 三份出貨 config 落地之後就變成**假的**，⛔ 卻沒有任何東西會紅：`tiers:check`
+ * 只比對「文件 == 產生器現在會吐的字」，而那句謊話**住在產生器裡**。
+ * （CLAUDE.md 第三守則：一個活得比它描述的行為還久的宣稱，比沒有註解更糟。）
+ *
+ * ⇒ 現在軸的清單**從出貨的 config 推導**：凡是 `config.*-tiers@N`，要嘛在
+ * {@link EMITTED_TIER_SCHEMAS}（這份文件真的畫出它的表），要嘛在
+ * {@link NOT_A_SKILL_AXIS} 帶著一個**能被反駁的理由**。兩邊都沒有 → 產生器
+ * 直接 throw，`pnpm tiers:build` 與 `pnpm tiers:check` 一起回非零。
+ * ⭐ 形狀刻意抄 `skillsSyncCoversGenerators.test.ts`：加第 8 份級距 config
+ * 而不做選擇 = 紅，⛔ 不是靜靜地少畫一張表。
+ */
+const EMITTED_TIER_SCHEMAS: readonly string[] = [
+  "config.range-tiers@1",
+  "config.aoe-tiers@1",
+  "config.displacement-tiers@1",
+  "config.damage-tiers@1",
+  "config.mana-tiers@1",
+  "config.cooldown-tiers@1",
+];
+
+/** 是級距 config，但**不是技能的一軸** —— 每一列都要說得出為什麼。 */
+const NOT_A_SKILL_AXIS: Readonly<Record<string, string>> = {
+  "config.speed-growth-tiers@1":
+    "英雄**移動速度成長**的級距，掛在 `champion@1` 上（`speedGrowthTier`）。" +
+    "它不寫在 `ability@1` 的任何一格，也不參與「威力 ↔ 代價」那條式子 ⇒ 不是技能軸。" +
+    "文件在 `tools/speed-growth/`（`pnpm speedtiers:build`）。",
+};
+
+const isTierSchema = (s: string): boolean => /^config\.[a-z-]+-tiers@\d+$/.test(s);
+
+/** 兩個方向都關：漏畫一軸 → throw；豁免了卻其實有畫 → 也 throw（豁免理由過期了）。 */
+function assertEveryTierAxisIsAccountedFor(shipped: readonly string[]): void {
+  const unknown = shipped.filter((s) => !EMITTED_TIER_SCHEMAS.includes(s) && !(s in NOT_A_SKILL_AXIS));
+  if (unknown.length > 0) {
+    throw new Error(
+      `❌ 出貨了級距 config 但這份契約沒有表態：${unknown.join(", ")}\n` +
+        `   → 把它加進 gen_tiers.ts 的 EMITTED_TIER_SCHEMAS（畫出它的表），\n` +
+        `     或加進 NOT_A_SKILL_AXIS 並寫下**為什麼它不是技能的一軸**。`,
+    );
+  }
+  const bothWays = EMITTED_TIER_SCHEMAS.filter((s) => s in NOT_A_SKILL_AXIS);
+  if (bothWays.length > 0) {
+    throw new Error(`❌ 同時被列為「已畫出」與「不是技能軸」：${bothWays.join(", ")}`);
+  }
+  const missing = EMITTED_TIER_SCHEMAS.filter((s) => !shipped.includes(s));
+  if (missing.length > 0) {
+    throw new Error(
+      `❌ 這份契約宣稱畫得出這幾軸，但出貨 config 裡根本沒有：${missing.join(", ")}\n` +
+        `   → 對外編輯器會照著做出上線就是死的內容（第〇·五守則）。`,
+    );
+  }
+}
+
+/**
+ * 逐軸的**採用率** —— 有幾支出貨技能真的填了那一格。
+ *
+ * ⚠️ 為什麼掃原始 JSON 而不是註冊表：`resolveDamageTier()` / `resolveCooldownTier()`
+ * 在**註冊時**就把級別換成數字了（GH#534），所以註冊表裡看不到「這一支是填級別
+ * 還是手寫數字」——那正是這一節唯一想回答的問題。
+ */
+function tierAdoption(): { readonly total: number; readonly byKey: ReadonlyMap<string, number> } {
+  const dir = join(CONTENT, "abilities");
+  const files = existsSync(dir)
+    ? readdirSync(dir).filter((f) => f.endsWith(".json") && !f.startsWith("_")).sort()
+    : [];
+  const byKey = new Map<string, number>();
+  for (const f of files) {
+    const text = readFileSync(join(dir, f), "utf8");
+    for (const key of ["rangeTier", "radiusTier", "distanceTier", "damageTier", "manaCostTier", "cooldownTier"]) {
+      if (new RegExp(`"${key}"\\s*:`).test(text)) byKey.set(key, (byKey.get(key) ?? 0) + 1);
+    }
+  }
+  return { total: files.length, byKey };
+}
+
+// ---------------------------------------------------------------------------
 // 產生
 // ---------------------------------------------------------------------------
 
@@ -161,6 +251,18 @@ async function build(): Promise<string> {
     cfgs.find((c) => c.schema === "config.displacement-tiers@1"),
     minBodyRadiusFromConfigs(cfgs as never),
   );
+  // ⭐ 三個「代價/回報」軸（GH#445 冷卻 · #446 耗魔 · #447 傷害）。
+  //    值一律走 `*FromDoc()`，⛔ 不讀 JSON 的欄位 —— 那三支才是引擎真的在用的解析器。
+  const dmg = damageTiersFromDoc(cfgs.find((c) => c.schema === "config.damage-tiers@1"));
+  const mana = manaTiersFromDoc(cfgs.find((c) => c.schema === "config.mana-tiers@1"));
+  const cd = cooldownTiersFromDoc(cfgs.find((c) => c.schema === "config.cooldown-tiers@1"));
+  // ⛔ 少一軸就 throw（見 assertEveryTierAxisIsAccountedFor 的檔頭）。
+  const shippedTierSchemas = cfgs
+    .map((c) => c.schema ?? "")
+    .filter(isTierSchema)
+    .sort();
+  assertEveryTierAxisIsAccountedFor(shippedTierSchemas);
+  const adoption = tierAdoption();
   // ⭐ 錨從 `Arenas` **推導**，⛔ 不抄字面值 24（第二守則：出貨數值不住在文件裡）。
   const zoneRadius = Math.min(...Arenas.all().flatMap((a) => a.zones.map((z) => z.boundaryRadius)));
   const originals = loadOriginals();
@@ -193,7 +295,7 @@ async function build(): Promise<string> {
   const L: string[] = [];
   const p = (s = "") => L.push(s);
 
-  p("# GGD 技能級距規範（施法距離 · 施法範圍 · 位移）");
+  p("# GGD 技能級距規範（施法距離 · 施法範圍 · 位移 · 傷害 · 耗魔 · 冷卻）");
   p();
   p("> ⚙️ 這一份是**產生的**。⛔ 不要手改 —— 跑 `" + CMD + "` 重新產生。");
   p("> 守衛：`packages/shared/src/ops/skillTiersDocFresh.test.ts`（真的用 `--check` 跑這支）。");
@@ -205,27 +307,54 @@ async function build(): Promise<string> {
   p();
   p("> 「總之請你將**技能相關設定正規化成五級距**，並且將相關**文件 JSON 編輯器 後台設定 都統一**」");
   p();
+  p("owner 2026-08-19（GH#438，這一份要涵蓋的**全部**軸）：");
+  p();
+  p("> 「你要記得**統一抽象化所有技能的設計模板**，將我說的**施法距離、範圍、");
+  p("> 基於傷害及單體/範圍的[耗魔及冷卻]**都模板化」");
+  p();
   p("---");
   p();
   p("## 〇 · 一句話結論");
   p();
-  p("**換算係數是對的，缺的是級距表。**");
+  p("**換算係數是對的；六個視窗現在各有一張表，而且六張全部住在後台改得到的地方。**");
   p();
   p("`GGD_PER_WC3 = 11/600 = " + GGD_PER_WC3.toFixed(7) + "`（`templates/expand.ts`）通過 owner 自己的校準點：");
   p("04-02 炸彈陣 w3a 300 → 5.5 落「大」，04-03 龍破斬 w3a 450 → 8.25 落「超大」——");
   p("**剛好高一級**，正是 owner 說的「龍破斬應該高一級」。⇒ 係數不動。");
   p();
-  p("真正缺的是**施法距離這一軸從來沒有表**：量到 " + rows.filter((r) => r.range !== undefined).length +
+  p("這一份最早（GH#414）只回答了**幾何**那三軸；缺的是施法距離從來沒有表 —— 量到 " +
+    rows.filter((r) => r.range !== undefined).length +
     " 支帶施法距離的技能，各自帶一個從 w3a 換算來的自由數字，最大 " +
     num(Math.max(...rows.filter((r) => r.range !== undefined).map((r) => r.range!))) +
     "，而決鬥區半徑只有 " + num(zoneRadius) + "。");
+  p();
+  p("**六個視窗現在全部有表了**（GH#438 點名的四軸 = 幾何三軸 + 傷害/耗魔/冷卻），");
+  p("而且每一軸都住在 `content/config/*-tiers.json`（＝後台在改的那一份）：");
+  p();
+  p("| 軸 | JSON 欄位 | 出貨 config | 幾支技能填了 | 開關 |");
+  p("|---|---|---|---:|---|");
+  const adopt = (k: string) => adoption.byKey.get(k) ?? 0;
+  const pct = (k: string) =>
+    adoption.total > 0 ? " (" + num(Math.round((adopt(k) / adoption.total) * 1000) / 10) + "%)" : "";
+  const onOff = (b: boolean) => (b ? "`enabled: true`" : "⛔ **`enabled: false`（這一軸現在不解析）**");
+  p("| 施法距離 | `rangeTier` | `range-tiers.json` | " + adopt("rangeTier") + pct("rangeTier") + " | " + onOff(rng.enabled) + " |");
+  p("| 施法範圍 | `radiusTier` | `aoe-tiers.json` | " + adopt("radiusTier") + pct("radiusTier") + " | " + onOff(aoe.enabled) + " |");
+  p("| 位移 | `distanceTier` | `displacement-tiers.json` | " + adopt("distanceTier") + pct("distanceTier") + " | " + onOff(disp.enabled) + " |");
+  p("| **傷害** | `damageTier` | `damage-tiers.json` | " + adopt("damageTier") + pct("damageTier") + " | " + onOff(dmg.enabled) + " |");
+  p("| **耗魔** | `manaCostTier` | `mana-tiers.json` | " + adopt("manaCostTier") + pct("manaCostTier") + " | " + onOff(mana.enabled) + " |");
+  p("| **冷卻** | `cooldownTier` (+`cooldownShape`) | `cooldown-tiers.json` | " + adopt("cooldownTier") + pct("cooldownTier") + " | " + onOff(cd.enabled) + " |");
+  p();
+  p("<sub>分母 = `content/abilities/` 的 " + adoption.total + " 份技能文件（含被動與 EX）。" +
+    "⚠️ 採用率**不是** 100% 不代表壞掉：手寫數字一直是合法的寫法，級距是**預設走的那條路**。</sub>");
   p();
   p("---");
   p();
   p("## 一 · 五級距表（出貨值）");
   p();
-  p("⭐ **一條梯子，四個視窗。** 五個級距名全專案只有一份（`packages/shared/src/content/skillTiers.ts`");
+  p("⭐ **一條梯子，多個視窗。** 五個級距名全專案只有一份（`packages/shared/src/content/skillTiers.ts`");
   p("的 `SKILL_TIER_NAMES`），⛔ 沒有任何一軸可以自己再宣告一組。");
+  p();
+  p("### ① 幾何三軸（長度，單位是 GGD 距離）");
   p();
   p("| 軸 | " + SKILL_TIER_NAMES.join(" | ") + " | 出處 |");
   p("|---|" + SKILL_TIER_NAMES.map(() => "---:").join("|") + "|---|");
@@ -236,11 +365,49 @@ async function build(): Promise<string> {
   p();
   p("⚠️ 這些是**卡面值**。玩家實際吃到的是它再乘「戰鬥系統」頁的 `abilityRange`（出貨 0.8）。");
   p();
-  p("### 傷害與耗魔：⛔ 還沒有表，這是 owner 的決定");
+  p("### ② 回報一軸：傷害（GH#447）");
   p();
-  p("GH#414 點名四軸，但**傷害與耗魔沒有幾何錨** —— 上面三軸的每一個數字都是");
-  p("「決鬥區半徑的幾分之幾」，而傷害沒有對應的東西可以除。⛔ 依第一·五守則第 3 條");
-  p("（需要改平衡資料時不要自己挑數字），這兩軸留給 owner 指定，⛔ 產生器不編一組出來。");
+  p("| 軸 | " + SKILL_TIER_NAMES.join(" | ") + " | 出處 |");
+  p("|---|" + SKILL_TIER_NAMES.map(() => "---:").join("|") + "|---|");
+  p("| **傷害** `damageTier` | " + SKILL_TIER_NAMES.map((t) => num(dmg.damage[t])).join(" | ") + " | `config/damage-tiers.json` |");
+  p();
+  p("⭐ **只有一張表** —— 形狀（單體/範圍）的代價整個住在冷卻軸上，在傷害軸再打一次折");
+  p("就是同一個懲罰收兩次。這正是 owner 對 Q4 的回答：「**不用**，已經有傷害相應的冷卻跟耗魔做限制」。");
+  p();
+  p("⚠️ ⛔ 填了 `damageTier` 就**不要**再填 `flat` / `perRank` —— 級距會取代它們（GH#534）。");
+  p("出貨 JSON 裡只寫級別，`flat` 由 `resolveDamageTier()` 在**註冊時**填回去；");
+  p("⛔ 直接讀原始 JSON 算傷害會拿到 `undefined`。");
+  p();
+  p("### ③ 代價兩軸：耗魔（GH#446）與冷卻（GH#445）");
+  p();
+  p("| 軸 | " + SKILL_TIER_NAMES.join(" | ") + " | 出處 |");
+  p("|---|" + SKILL_TIER_NAMES.map(() => "---:").join("|") + "|---|");
+  p("| **耗魔** `manaCostTier` | " + SKILL_TIER_NAMES.map((t) => num(mana.manaCost[t])).join(" | ") + " | `config/mana-tiers.json` |");
+  for (const shape of COOLDOWN_SHAPES) {
+    p("| **冷卻 · " + shape + "** `cooldownTier` | " +
+      SKILL_TIER_NAMES.map((t) => num(cd.seconds[shape][t])).join(" | ") + " | `config/cooldown-tiers.json` |");
+  }
+  p();
+  p("⭐ **這是 owner 說的「基於傷害及單體/範圍的耗魔及冷卻」那一句的落地**：形狀不是");
+  p("另一個自由參數，它就是**選哪一張冷卻表**。沒填 `cooldownShape` 時由 `cooldownShapeOf()`");
+  p("推（`autoShape: " + (cd.autoShape ? "true" : "**false** ⛔ 沒填的一律當「單體」，範圍技會靜默拿到便宜的那張表") + "`）。");
+  p();
+  p("⚠️ 形狀的定義是 owner 更正過的（U3）：「**單體還是範圍並不是看實際傷害到的個數**，");
+  p("而是**施展技能的命中率難易度及傷害效率轉換**」⇒ 看 `castType`，⛔ 不是看 `maxTargets` 或半徑。");
+  p();
+  p("⚠️ 冷卻是**卡面秒**（owner 對 Q6 的回答）。實際等待 = 卡面 × `combatEnv.cooldown`，");
+  p("再被 `config.cooldown-rules@1` 的 `minSeconds` 夾一次。⛔ 不計入系統倍率與減 CD 效果。");
+  p();
+  p("### ④ 是級距 config，但**不是技能的一軸**");
+  p();
+  p("⭐ 這一節存在的理由：這份契約的軸清單是**從出貨 config 推導**的，⛔ 不是手寫的。");
+  p("出貨了 `config.*-tiers@N` 卻兩邊都沒列 → `" + CMD + "` 直接回非零並指名它。");
+  p();
+  p("| schema | 為什麼不在上面 |");
+  p("|---|---|");
+  for (const s of Object.keys(NOT_A_SKILL_AXIS).sort()) {
+    p("| `" + s + "` | " + NOT_A_SKILL_AXIS[s] + " |");
+  }
   p();
   p("---");
   p();
@@ -283,6 +450,29 @@ async function build(): Promise<string> {
   p("⇒ 第四格統一叫「超大」，沒人用的「極大」讓給新的第五格。");
   p("**沒有任何一支既有技能的級距詞改變意思。**");
   p();
+  p("### ⭐ 傷害 / 耗魔 / 冷卻：錨不是幾何的，所以理由**逐字住在 config 裡**");
+  p();
+  p("上面那三軸的每一個數字都是「決鬥區半徑的幾分之幾」—— 一個客觀長度。");
+  p("這三軸沒有那種東西可以除，錨只能是**遊戲性**的（一池魔力、一回合能放幾發、擊殺所需發數），");
+  p("而那些是**設計決定**。⇒ ⛔ 產生器不編一組出來；下面每一段都是**出貨 config 的 `note` 原文**，");
+  p("而那份 note 記著 owner 的原話與推導鏈。改表就要改 note，⛔ 不會有第二份會過期的拷貝。");
+  p();
+  const noteOf = (schema: string): string => {
+    const doc = cfgs.find((c) => c.schema === schema) as { note?: unknown } | undefined;
+    const n = doc?.note;
+    // ⛔ 沒有 note 不是「留白」—— 那表示這一軸的數字沒有來源（第三守則）。
+    return typeof n === "string" && n.trim() !== "" ? n.trim() : "⛔ **這份 config 沒有 `note`** —— 這五個數字目前沒有可查證的來源。";
+  };
+  for (const [label, schema] of [
+    ["傷害 `damage-tiers.json`", "config.damage-tiers@1"],
+    ["耗魔 `mana-tiers.json`", "config.mana-tiers@1"],
+    ["冷卻 `cooldown-tiers.json`", "config.cooldown-tiers@1"],
+  ] as const) {
+    p("#### " + label);
+    p();
+    p("> " + noteOf(schema).replace(/\n+/g, " "));
+    p();
+  }
   p("---");
   p();
   p("## 三 · w3x → GGD 的換算關係");
