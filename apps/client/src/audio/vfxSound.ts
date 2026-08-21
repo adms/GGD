@@ -23,12 +23,15 @@
  *      聲音。所以一發循環從開始那一刻就帶著**絕對到期時間**，`update()` 到期就
  *      發消散音並刪掉自己；`reset()`（回合結束／teardown）一次清空。
  *      而且有 {@link MAX_ACTIVE_LOOPS} 硬上界：一份壞掉的內容不可以讓它無限長。
+ *      ⭐ **同一個登記表也負責一次性特效的消散音**（GH#440）：沒有 `soundLoop`
+ *      但填了 `soundDissipate` 的五個家族（54 支技能）在這之前那一格是死的。
  *   ③ 把 key 交給既有管線 —— 呼叫端把它 push 進 `SpatialSfxQueue`，於是空間化
  *      （#253）、SfxGate 的冷卻／同時發聲數、總音量與 SFX 開關（#14）**全部自動
  *      適用**。⛔ 這一層自己不碰 WebAudio，一條繞過玩家設定的新路徑就是缺陷。
  */
 import type { ConfigVfxFamiliesDoc, VfxSoundCue } from "@ggd/shared/content";
 import { resolveVfxSound, vfxSoundLoopMaxMs, vfxSoundLoopMs } from "@ggd/shared/content";
+import { DEFAULT_ONE_SHOT_MAX_LIFE_SEC } from "@ggd/shared/content/schema/vfx";
 import type { EventMessage } from "@ggd/shared/protocol/messages";
 import { abilityIdOfOrigin } from "@ggd/shared/sim/combat/damage";
 import { spatialSourceFor } from "./spatialPolicy";
@@ -45,9 +48,16 @@ export const OVERLAY_ASSET_PREFIX = "assets/blizzard-local/";
  */
 export const MAX_ACTIVE_LOOPS = 24;
 
-/** 一發正在跑的循環音。 */
+/**
+ * 一發正在跑的登記。
+ *
+ * ⭐ `key: null` = **一次性特效的消散預約**（GH#440）：這一族沒有循環音，但它填了
+ * `soundDissipate`。登記進來只為了讓到期那一發消散音真的響 —— ⛔ 沒有任何東西
+ * 會被重播。
+ */
 interface ActiveLoop {
-  readonly key: string;
+  /** 循環要重播的 key，或 null（＝只預約消散音，什麼都不重播） */
+  readonly key: string | null;
   readonly gain: number;
   readonly abilityId: string;
   readonly familyId: string | undefined;
@@ -130,20 +140,31 @@ export class VfxSoundLayer {
   /**
    * 開始一發循環音（持續型特效的底噪）。已經在跑的同一個實體會被**取代**，
    * 因為那代表同一具身體重新施法了。回傳第一發要播的音，或 null。
+   *
+   * ⭐ **沒有循環音但填了消散音的家族也會登記**（GH#440）。在這之前
+   * `soundDissipate` 只從循環音登記表發得出來，於是出貨的
+   * **blink / dissipate / mirrorImage / mark / cloud 五族（54 支技能）**填的那一格
+   * **逐位元等於不存在** —— schema 收得下、後台存得起來、`content:build` 全綠，
+   * 而遊戲裡什麼都不響（第一·五守則點名的形態）。
+   * ⚠️ 到期時間用 `oneShotMaxLifeSec`（**後台調得到**的一次性特效壽命天花板，
+   * 出貨 0.6 秒）而 ⛔ 不是 `soundLoopMaxMs`（那是 8 秒 —— 一次瞬移的消散音
+   * 8 秒後才響，聽起來會像是別的東西發生了）。
    */
   startLoop(entityId: number, abilityId: string | undefined, nowMs: number): VfxSoundHit | null {
     const hit = this.cue(abilityId, "loop");
-    if (!hit) return null;
+    // 沒有循環音時，只有「這一族真的填了消散音」才值得佔一格登記。
+    if (!hit && !this.cue(abilityId, "dissipate")) return null;
     if (!this.loops.has(entityId) && this.loops.size >= MAX_ACTIVE_LOOPS) return null;
     const familyId = abilityId ? this.familyOf(abilityId) : undefined;
     const everyMs = vfxSoundLoopMs(this.doc, familyId);
+    const oneShotMs = (this.doc?.oneShotMaxLifeSec ?? DEFAULT_ONE_SHOT_MAX_LIFE_SEC) * 1000;
     this.loops.set(entityId, {
-      key: hit.key,
-      gain: hit.gain,
+      key: hit?.key ?? null,
+      gain: hit?.gain ?? 1,
       abilityId: abilityId ?? "",
       familyId,
       nextMs: nowMs + everyMs,
-      endMs: nowMs + vfxSoundLoopMaxMs(this.doc, familyId),
+      endMs: nowMs + (hit ? vfxSoundLoopMaxMs(this.doc, familyId) : oneShotMs),
     });
     return hit;
   }
@@ -166,7 +187,8 @@ export class VfxSoundLayer {
         if (end) out.push({ ...end, entityId: id });
         continue;
       }
-      if (nowMs >= loop.nextMs) {
+      // `key === null` = 消散預約，⛔ 它沒有東西可以重播。
+      if (loop.key !== null && nowMs >= loop.nextMs) {
         loop.nextMs = nowMs + vfxSoundLoopMs(this.doc, loop.familyId);
         out.push({ key: loop.key, gain: loop.gain, entityId: id });
       }

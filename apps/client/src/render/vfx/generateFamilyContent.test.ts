@@ -103,4 +103,44 @@ describe("vfx 家族產生器（GH#378 / GH#427）", () => {
       rmSync(sandbox, { recursive: true, force: true });
     }
   }, 120_000);
+
+  it("🔴 出貨的 abilities 鏡像逐格等於證據那一份 —— 兩個住處不准漂開（GH#427 末節）", () => {
+    // ⚠️ GH#384 之後同一份證據住在兩個地方：`vfx-ability-art.json` 的
+    // `bindings.<id>.family`（**主**）與 `vfx-families.json` 的 `abilities.<id>`
+    // 那五格（**鏡像**，後台 UI 在讀）。鏡像是這支產生器寫的，⛔ 但沒有任何東西
+    // 在量它有沒有跟著主的那份走：改了 `vfx-ability-art.json` 卻忘了重跑產生器，
+    // 出貨的鏡像就變成一份**過期而看起來完全正常**的資料（失敗形態②）。
+    //
+    // ⭐ 期望值由 `abilityArtRows()` **推導**（產生器自己那一支函式，讀的是磁碟上
+    // 那份證據），⛔ 沒有第二張手抄的對照表 —— 之後鏡像多一格或少一格，這條自動跟上。
+    const shipped = (JSON.parse(readFileSync(SHIPPED, "utf8")) as Doc).abilities;
+    const expected = abilityArtRows();
+    const mirrored = ownedRowFields(expected);
+    const drift: string[] = [];
+    for (const [id, want] of Object.entries(expected)) {
+      const got = shipped[id];
+      if (!got) {
+        drift.push(`abilities.${id} — 整列不在出貨檔裡`);
+        continue;
+      }
+      for (const [k, v] of Object.entries(want)) {
+        if (JSON.stringify(got[k]) !== JSON.stringify(v)) {
+          drift.push(`abilities.${id}.${k} — 出貨 ${JSON.stringify(got[k])} ≠ 證據 ${JSON.stringify(v)}`);
+        }
+      }
+    }
+    // 反方向：鏡像格留在出貨檔上、而證據已經不再點名它 ⇒ 一格過期的值。
+    for (const [id, row] of Object.entries(shipped)) {
+      for (const k of Object.keys(row)) {
+        if (mirrored.has(k) && !(k in (expected[id] ?? {}))) drift.push(`abilities.${id}.${k} — 證據已經不再有這一格`);
+      }
+    }
+    expect(
+      drift,
+      "`content/config/vfx-families.json` 的 abilities 鏡像與 `content/config/vfx-ability-art.json` " +
+        "的證據漂開了。⛔ 不要手改任何一邊：跑\n" +
+        "  pnpm exec tsx apps/client/src/render/vfx/generateFamilyContent.ts\n" +
+        "然後 `git add content/`：\n  " + drift.slice(0, 20).join("\n  "),
+    ).toEqual([]);
+  });
 });

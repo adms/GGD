@@ -95,6 +95,28 @@ describe("每一發特效音都經過空間音場政策表 (vfx-sound-policy)", 
     for (const p of again) expect(p.source, `${p.key} 重播時被 pan 了`).toBeNull();
   });
 
+  it("填了 soundDissipate 卻沒有 soundLoop 的家族，消散音真的響得出來（GH#440）", () => {
+    // ⭐ 家族名單從**出貨設定推導**，⛔ 不是抄一份 blink/mark/cloud 的名單 ——
+    // owner 哪天替某一族補了 soundLoop，這條自動放行，⛔ 不必改測試。
+    const fams = FAMILIES.families as Record<string, Record<string, unknown>>;
+    const dissipateOnly = Object.keys(fams).filter((f) => fams[f]!.soundDissipate && !fams[f]!.soundLoop);
+    expect(dissipateOnly.length, "出貨設定沒有這種家族了 —— 這條在測空氣").toBeGreaterThan(0);
+    const silent: string[] = [];
+    for (const famId of dissipateOnly) {
+      const layer = shippedLayer(() => famId);
+      vfxSoundCues(layer, cast("ab-x", 3), AT(9), 0);
+      // 一次性特效的壽命天花板（出貨 0.6 秒）之後，消散音要出現。
+      const late = vfxLoopPushes(layer, 60_000, () => AT(9));
+      if (!late.some((p) => p.key === fams[famId]!.soundDissipate)) silent.push(famId);
+    }
+    expect(
+      silent,
+      "這幾族的 `soundDissipate` 逐位元等於不存在：消散音只從循環音登記表發得出來，" +
+        "而它們沒有 `soundLoop` ⇒ 後台存得起來、卡片上寫著，遊戲裡什麼都不響" +
+        "（第一·五守則）：\n  " + silent.join("\n  "),
+    ).toEqual([]);
+  });
+
   it("stopLoop 真的有呼叫端了 —— 施法被打斷 / 施法者死亡就收掉登記", () => {
     const layer = shippedLayer(() => "flamePillar");
     vfxSoundCues(layer, cast("ab-x", 3), AT(9), 0);

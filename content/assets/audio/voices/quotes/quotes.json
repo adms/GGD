@@ -19,12 +19,12 @@
     "truePeakDb": -1.5
   },
   "coverage": {
-    "names": 92,
-    "ids": 114,
+    "names": 93,
+    "ids": 115,
     "real": 83,
-    "original": 31,
+    "original": 32,
     "byGender": {
-      "male": 73,
+      "male": 74,
       "female": 28,
       "neutral": 13
     }
@@ -1409,18 +1409,18 @@
       "source": "original：GGD seed（Thorne, the Bramble Knight・荊棘騎士）",
       "real": false,
       "clip": "assets/audio/voices/quotes/thorne.mp3"
+    },
+    "godie-zombiex": {
+      "name": "喪標麥可",
+      "character": "聖杯黑泥醬-喪標麥可（原創；#215 肉鴿小怪 avatar）",
+      "gender": "male",
+      "voice": "Otoya",
+      "jpQuote": "マイ・キョー・グァ・エ・ミャー、キョー・グァ・カン・リンニャー",
+      "romaji": "Mai kyō gua e myā, kyō gua kan rin-nyā",
+      "zhGloss": "台語諧音惡搞：「莫叫我的名，叫我『幹恁娘』」（mài kiò guá ê miâ, kiò guá kàn lín-niâ）",
+      "source": "原創角色台詞（owner 2026-07-25 更新）",
+      "real": false,
+      "clip": "assets/audio/voices/quotes/godie-zombiex.mp3"
     }
-  },
-  "godie-zombiex": {
-    "name": "喪標麥可",
-    "character": "聖杯黑泥醬-喪標麥可（原創；#215 肉鴿小怪 avatar）",
-    "gender": "male",
-    "voice": "Otoya",
-    "jpQuote": "マイ・キョー・グァ・エ・ミャー、キョー・グァ・カン・リンニャー",
-    "romaji": "Mai kyō gua e myā, kyō gua kan rin-nyā",
-    "zhGloss": "台語諧音惡搞：「莫叫我的名，叫我『幹恁娘』」（mài kiò guá ê miâ, kiò guá kàn lín-niâ）",
-    "source": "原創角色台詞（owner 2026-07-25 更新）",
-    "real": false,
-    "clip": "assets/audio/voices/quotes/godie-zombiex.mp3"
   }
 }
