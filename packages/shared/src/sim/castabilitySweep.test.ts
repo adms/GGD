@@ -323,6 +323,38 @@ function leapWindow(effects: readonly EffectDef[]): number {
   }
   return extra;
 }
+/**
+ * ⭐ GH#46 —— **這一支技能要看幾格**，一個公式，普查與守衛讀同一份。
+ *
+ * ⚠️ 在此之前這條算式只以一個行內表達式活在 `measureSlot()` 裡（`WINDOW +
+ * leapWindow(...) + castWindow(...)`），於是**沒有任何東西**在守它：把
+ * `+ castWindow(...)` 拿掉，2026-08-13 的 120 格假 ❌ 會原封不動地回來，
+ * 而測試全綠 —— 因為棘輪比的是比例，而假 ❌ 會**同時**壓低分子與地板兩邊的期待。
+ * 抽成具名函式之後，下面那條守衛真的讀得到它（⛔ 不是掃原始碼字串）。
+ */
+function observationWindow(def: AbilityDef): number {
+  return WINDOW + leapWindow(def.effects) + castWindow(def.castTimeSec);
+}
+
+/**
+ * `abilitySystem.ts` 決定「這一格在第幾 tick 解析」的**同一條**算式
+ * （`Math.round((def.castTimeSec ?? 0) / world.dt)`，dt = 1/{@link TICK_HZ}）。
+ * ⛔ 抄的是**形狀**不是數字 —— 兩邊都跟著 TICK_HZ 走。
+ */
+function resolveTick(castTimeSec: number | undefined): number {
+  return Math.round((castTimeSec ?? 0) / (1 / TICK_HZ));
+}
+
+/** 出貨技能裡觀察窗最寬的那一支（報告用；⛔ 不抄字面值）。id 排序 = 可重現。 */
+function widestObservationWindow(): { abilityId: string; ticks: number } {
+  let best = { abilityId: "—", ticks: 0 };
+  for (const def of [...Abilities.all()].sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0))) {
+    const ticks = observationWindow(def);
+    if (ticks > best.ticks) best = { abilityId: def.id, ticks };
+  }
+  return best;
+}
+
 /** Ticks allowed for the FIRST basic-attack swing to land. */
 const BASIC_WINDOW = 40;
 
@@ -852,7 +884,7 @@ function testSlot(championId: string, slot: CastableSlot, seed: number): Cell {
     }
     events.push(...world.events.map((e) => e.type));
 
-    const window = WINDOW + leapWindow(def.effects) + castWindow(def.castTimeSec);
+    const window = observationWindow(def);
     /** 假人現在被釘在哪 —— 散落型技能會把它改成下一個落點（見 nextScatterPoint）。 */
     const pin = { ...foePos };
     for (let i = 0; i < window; i++) {
@@ -1203,6 +1235,34 @@ describe("task #128 — in-game castability coverage sweep", () => {
         "於是 gate 6 結構上永遠綠（出貨內容裡確實有 `weightedBranch` 與 `randomArea`）。",
     ).toBeGreaterThan(0);
   });
+
+  /**
+   * ⭐ 閘 8（GH#46）—— **觀察窗要涵蓋技能自己的解析 tick**。
+   *
+   * 這是把「已知量測盲點」那段散文換掉的**閘**：散文只在有人讀它的時候有用，
+   * 而它從 2026-08-13 `castWindow` 落地起就一直在說一件不再為真的事。
+   *
+   * ⛔ 它守的不是一個數字，是**兩個名詞的關係** —— 「觀察者看多久」對上
+   * 「被觀察的事情在第幾格發生」。分別檢查任一半都是綠的（`WINDOW = 26` 很好，
+   * 141 支 ≥1 秒的吟唱也很好），壞掉的只有它們的**配對**。
+   */
+  it("觀察窗涵蓋每一支技能自己的解析 tick —— ⛔ 不是一個寫死的數字", () => {
+    const defs = Abilities.all();
+    const tooShort = defs
+      .filter((d) => observationWindow(d) <= resolveTick(d.castTimeSec))
+      .map((d) => `${d.id} 前搖 ${d.castTimeSec}s → 解析 tick ${resolveTick(d.castTimeSec)}，窗口只有 ${observationWindow(d)}`)
+      .sort();
+    expect(
+      tooShort,
+      "這幾支技能會在觀察窗**關掉之後**才解析 ⇒ 普查會把它們記成「接受了卻沒有效果」的假 ❌。" +
+        "⛔ 修法是讓窗口跟著資料走（`observationWindow`），不是把它們加進豁免名單。",
+    ).toEqual([]);
+    // 偵測器要活著：真的有技能的前搖長到基礎窗口接不住，否則上面那條結構上永遠綠。
+    expect(
+      defs.filter((d) => resolveTick(d.castTimeSec) >= WINDOW).length,
+      `出貨內容裡一支「前搖 ≥ 基礎窗口 ${WINDOW} tick」的技能都沒有 —— 那上面那條斷言不再證明任何事。`,
+    ).toBeGreaterThan(0);
+  });
 });
 
 // ------------------------------------------------------------------- reporting
@@ -1508,23 +1568,36 @@ function writeReport(): void {
       "回血／回魔前先把目標降到半血半魔，確保有回復空間；" +
       "施法者法力設為剛好夠付，使自我回魔也量得到。被動回血（RegenSystem）不發 `heal` 事件，故不會誤判。",
   );
+  // ⭐ 這兩個數字**量出來**（⛔ 不抄字面值）：文件裡的「最長那一格」必須跟公式
+  //    今天真的算出來的一致，否則它就是下一份會過期的散文（GH#46）。
+  const widest = widestObservationWindow();
+  const longestWindow = widest.ticks;
+  const longestWindowAbility = widest.abilityId;
   L.push(
-    `- 每次施放後步進 **${WINDOW} tick**（涵蓋 0.8s=24 tick 以內的施法前搖）讓有前搖的技能結算；普攻給 **${BASIC_WINDOW} tick** 讓第一次揮擊落地。` +
-      "\n- ⚠️ **已知量測盲點**：全樹最長前搖是 `godie-u00n.r`／`godie-u00o.r` 的 **0.9s = 27 tick**，比本觀測窗多 1 tick，" +
-      "所以下方唯一那格 ❌ 很可能是「觀測太早收手」而非技能真的沒效果。改 WINDOW 會改變量測定義，歸 #128／#198 處理，本次不動。",
+    `- 每次施放後的觀察窗是**逐支算出來的**（\`observationWindow\`）：基礎 **${WINDOW} tick**` +
+      `　＋　吟唱 \`castWindow\` = round(castTimeSec × ${TICK_HZ}) + 1　＋　位移飛行 \`leapWindow\`。` +
+      `普攻另給 **${BASIC_WINDOW} tick** 讓第一次揮擊落地。` +
+      `本次實測最長的一格是 **${longestWindow} tick**（\`${longestWindowAbility}\`）。` +
+      "\n- ⛔ **它不是一個固定數字，而且不可以改回去**：2026-08-13 owner 把吟唱放寬到 0.06~4.00 秒（141 支技能吃到 ≥1 秒前搖）那天，" +
+      "一個寫死 26 tick 的窗口一次造出 **120 格假 ❌** —— 技能全部是好的，是**觀察者在該看的時候閉眼**。" +
+      "\n- ⭐ 因此**沒有「前搖超出窗口」這種盲點**：窗口按定義涵蓋解析那一格（`abilitySystem` 用 round(castTimeSec ÷ dt)，" +
+      "而 `castWindow` 是同一個 round **加一**）。⚠️ 這一行以前是一段寫死的「已知量測盲點⋯下方唯一那格 ❌」警語，" +
+      "它在 `castWindow` 落地之後每跑一次就重生一份**自相矛盾**的文件（GH#46）—— 現在守它的是本檔的「觀察窗涵蓋解析 tick」那條閘。",
   );
   L.push(
     `- **完整跑遍全 ${results.length} 英雄 × ${cols.length} 槽 = ${totalCells} 格，無抽樣**。`,
   );
   L.push(
-    `- **會變紅的七道閘**（都只看版控名單那 ${ROSTER_SIZE} 人，營運額外開放的英雄不影響）：` +
+    `- **會變紅的八道閘**（(1)–(7) 都只看版控名單那 ${ROSTER_SIZE} 人，營運額外開放的英雄不影響）：` +
       `(1) 掃描必須跑完 ${ROSTER_SIZE}×${cols.length}；(2) ${ROSTER_SIZE} 位英雄全部要能生成；` +
       `(3) 可用格數（✅+🟣）佔比不得低於 **${(WORKING_CELL_RATIO_FLOOR * 100).toFixed(2)}%**（棘輪下限，比例不是絕對值 —— 名單長度會變）；` +
       "(4) **逐格釘死的缺口名單**（`KNOWN_GAPS`）：冒出名單外的新缺口會紅、名單上的缺口修好了沒劃掉會紅、" +
       "同一格從 ❌ 變 🟡（或反過來）也會紅 —— 替一支空技能補個特效不是修好它；" +
       "(5) **形態閘名單**（`FORM_GATED_CELLS`，三個方向，GH#412）；" +
       "(6) **seed 依賴名單**（`SEED_DEPENDENT_CELLS`，三個方向，GH#407）；" +
-      "(7) **跨 seed 量測儀器本身要活著** —— 一格都沒被跨 seed 量過就是偵測器壞了，那會讓 (6) 結構上永遠綠。" +
+      "(7) **跨 seed 量測儀器本身要活著** —— 一格都沒被跨 seed 量過就是偵測器壞了，那會讓 (6) 結構上永遠綠；" +
+      "(8) ⭐ **觀察窗涵蓋每一支技能自己的解析 tick**（GH#46，掃全部已註冊技能不只首發名單）—— " +
+      "窗口接不住前搖就會把好技能記成假 ❌，2026-08-13 一次量到 120 格。" +
       "個別既知 no-op 不會使測試變紅（它們是要回報的發現，列在上方兩張表），但既有可用的格子被改壞會。",
   );
   L.push("");

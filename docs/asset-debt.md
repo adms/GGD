@@ -1,13 +1,30 @@
-# Copyright-gated asset debt
+# WC3 overlay asset debt — ⛔ **not** a copyright gate
 
 Every asset listed here is **Blizzard-owned**, extracted from the user's own
-locally-installed Warcraft III MPQs so that local development can see the map as
-it originally looked. **None of it may ship.** The gate is real and was verified
-by execution, not by inspection — see [Why the gate holds](#why-the-gate-holds).
+locally-installed Warcraft III MPQs so that development could see the map as it
+originally looked.
 
-That makes this list *technical debt*: the game currently looks right in dev and
-would look **broken in a real build**, because every gated asset silently
-degrades to a stand-in (a shared CC0 mesh, a missing icon, a placeholder effect).
+> ⚠️ **Updated 2026-08-22 (#37). This document used to say「None of it may ship」,
+> and it had been wrong since 2026-07-26.** There is no copyright gate any
+> more: it was retired on that date by explicit owner decision — see
+> [`copyright-content-gate.md`](copyright-content-gate.md) (「THIS GATE NO LONGER
+> EXISTS. Do not restore it as a bug fix.」) — and #177 then mounted the overlay
+> on the family host on purpose. **These bytes are served today** to anyone with
+> the URL: `nginx/tier/family/10-blizzard-overlay.server.conf` aliases
+> `/content/assets/blizzard-local/` at `/srv/blizzard-overlay/` with the ordinary
+> `?h=`-keyed cache policy and no per-peer check.
+>
+> §2 below already says so from the other direction: **30 of the 40 overlay units
+> back a champion whose voice entry is `source: "none"`**, i.e. players are
+> hearing these clips right now. A register that told a reader the opposite was
+> the single most dangerous file in the tree, which is why this note is loud.
+
+So what this file tracks is **the artistic / licensing debt of the replacements**
+— what still has to be generated or sourced so the game stops depending on
+someone else's art — **not an access gate**, and not a claim about what leaves
+the build. It is still *technical debt*: everything below degrades to a stand-in
+(a shared CC0 mesh, a missing icon, a placeholder effect) the moment the overlay
+is not mounted, e.g. on any fresh clone or in CI, where `/data/**` does not exist.
 
 This document is the register. Each row has to end in one of:
 
@@ -96,20 +113,41 @@ the JASS. Expect this section to grow.
 
 ---
 
-## Why the gate holds
+## Where these bytes actually are (there is no gate)
 
-Worth writing down, because the whole register depends on it and it was proven
-rather than assumed:
+This section used to be called **「Why the gate holds」** and listed four proofs
+that a production build could not emit the overlay. Every one of those proofs
+described machinery that has since been deleted; the section is kept, retitled,
+so that anyone who remembers it finds the correction instead of the claim.
 
-- A real production build (`vite build`) emits **zero** `.glb`, `.wav`, `.mpq` or
-  `MANIFEST.json`. The dev-only gate compiles to a dead-folded `function(){return!1}` —
-  no fetch to the overlay is even reachable from a prod bundle.
-- Real nginx in Docker, in the production mount shape, returns **404** for every
-  overlay path; only the dev shape serves them, with `no-store` and `noindex`.
-- `.gitignore` covers `/data/**`; no Dockerfile `COPY` references it; the Helm
-  chart ships only the two nginx configs.
-- The `../data:/data` mount on the platform service was checked separately —
-  the Go service has no static-file handler at all, so it cannot leak the overlay.
+- **The gate is retired, not bypassed.** `copyrightTierGate()` and the
+  `classifyEnvTier` / `mayServeRestrictedContent` imports were removed from
+  `apps/client/vite.config.ts` in `39125a60` (#239); nginx's
+  `map $ggd_deny_copyright` and its `return 403` are gone from both
+  `nginx/nginx.conf` and `deploy/helm/ggd/files/nginx.conf`.
+  `packages/shared/src/envTier.ts` states the same in its header.
+  ⛔ Do not re-add either half as a bug fix — nginx would refuse to start on a
+  `$ggd_deny_copyright` that no longer has a `map`.
+- **The overlay is served deliberately (#177).**
+  `nginx/tier/family/10-blizzard-overlay.server.conf` mounts 556 files /
+  87,403,869 B (511 `.wav`, 40 unit `.glb`, 5 `.json`) at
+  `/content/assets/blizzard-local/`, cached like every other content asset.
+- **`nginx/tier/family/00-full-assets.geo.conf` still exists and still matters —
+  for a different reason.** It is now the trigger for the #176 boot-time
+  integrity assertion: `tools/deploy/ggd-assets.sh` keys the whole full-asset
+  check on that file's presence, so a partial upload of the overlay is caught
+  instead of silently rendering 40 champions as voiceless stand-ins. It looks
+  like copyright machinery; it is not.
+- **What is still true:** `.gitignore` covers `/data/**`, no Dockerfile `COPY`
+  references it, and the Helm chart ships only the nginx configs — so the bytes
+  are not *in git* and not *baked into the image*. They reach players through a
+  runtime mount. That is a statement about packaging, ⛔ not about exposure.
+
+Still open (#37): the counts in §1–§3 are hand-maintained here. Per the project's
+「reports as live pages」 convention they should be computed at view time from the
+live tree (`content/config/icon-plan.json` + `tools/icon-gen/src/plan.py` is the
+existing example of that shape). Nothing under `apps/client/public/` computes
+asset debt today.
 
 ## The replacement route
 
