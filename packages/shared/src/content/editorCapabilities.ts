@@ -259,6 +259,17 @@ const has =
   (kind: string): CapabilityProbe =>
   (f) =>
     f.effectKinds.has(kind);
+/**
+ * 這幾個候選 kind 名**任何一個**在不在。
+ *
+ * ⚠️ 與 {@link anyHookField} 同一個理由（檔頭 ③）：單一名字的 probe 猜錯就永遠
+ * 回 false，而 `unsupported` 那一列會**自己跟自己對得上**。多列候選名是安全的
+ * （多一個不存在的名字不會誤報），漏列才致命。
+ */
+const anyKind =
+  (...kinds: readonly string[]): CapabilityProbe =>
+  (f) =>
+    kinds.some((k) => f.effectKinds.has(k));
 const hook =
   (ev: string): CapabilityProbe =>
   (f) =>
@@ -287,10 +298,194 @@ const anyCondLeaf =
     kinds.some((k) => f.conditionLeafKinds.has(k));
 
 /**
+ * ⭐ GH#354 —— owner 2026-08-17 那張 **Action 清單裡「引擎完全沒有」的那 12 個**。
+ *
+ * ── 為什麼它們必須出現在這份契約裡 ─────────────────────────────────────────
+ *
+ * owner 那張表的 21 個 action 裡，`redirectDamage` 這一族在**這份 manifest 裡
+ * 一個字都不存在**。而 `SIM_CAPABILITIES` 的檔頭已經記過這個形狀的代價：
+ * `invulnerable` **整列漏掉**比寫 `false` 更糟，「因為沒有人在找一列不存在的
+ * 東西」。⛔ 對外部編輯器來說，「沒被點名」讀起來就是「不需要」，
+ * 而它會照著這份清單去猜一個相近的效果 —— 那正是計畫 §2.1.1 明文禁止的降級。
+ *
+ * ── ⛔ 為什麼是一張表而不是 12 段散文 ─────────────────────────────────────
+ *
+ * 12 筆之間只差三個字串（owner 的原詞 · 為什麼還沒有 · 最接近的既有機制），
+ * 逐筆手寫 12 個 `{ key, plan, expected, probe, reason, nearestExisting }`
+ * 就是 CLAUDE.md 第零守則⑨ 說的「到處改改改」。這裡是 **1 個模板 + 12 列參數**。
+ *
+ * ⚠️ `probeNames` 收的是**候選 kind 名**（見 {@link anyKind}）：漏列會讓這一列
+ * 在機制真的落地那天繼續說「引擎裡什麼都沒有」，而守衛不會紅 —— 那正是
+ * `effect.execute@1` 在 `devour` 出貨之後還撒了半年謊的成因（檔頭 ③）。
+ */
+const OWNER_ACTIONS_ABSENT: readonly {
+  readonly key: string;
+  /** owner 2026-08-17 的原詞，⛔ 不要改寫成我們的說法 —— 對方是照他的清單找的。 */
+  readonly owner: string;
+  readonly probeNames: readonly string[];
+  readonly reason: string;
+  readonly nearest: string;
+}[] = [
+  {
+    key: "action.redirect-damage@1",
+    owner: "redirectDamage —— 把即將落在 A 身上的傷害轉到 B",
+    probeNames: ["redirectDamage", "damageRedirect", "redirect", "transferDamage"],
+    reason:
+      "傷害佇列今天只認得**一個**承受者（`combat/damage.ts` 的封包帶 target，沒有第二個座位）。" +
+      "「換一個人挨」要在扣血之前改寫封包的 target，而那一格是護盾／免死／無敵三道閘共用的輸入。",
+    nearest:
+      "⚠️ 三個看起來像、但都不是：① **反彈**（`onReflectSuccess` + `damage.incomingPct`）把傷害送回" +
+      "**攻擊者**，⛔ 方向是固定的，指不到第三個人；② `manaBarrier` 把傷害換成扣魔，" +
+      "⛔ 仍然扣在同一個人身上；③ `taunt` 改的是**誰被瞄準**（`targeting.forcedTargetOf`），" +
+      "⛔ 那是在傷害發生**之前**改目標，已經飛在路上的那一發它動不了。",
+  },
+  {
+    key: "action.store-damage@1",
+    owner: "storeDamage —— 把承受到的傷害存起來",
+    probeNames: ["storeDamage", "bankDamage", "absorbLedger", "storedDamage"],
+    reason:
+      "引擎有「記一個數字」的機制，但它的**存款來源只有一種**：`spendMana.bankAs` 記的是" +
+      "**這一次實際扣掉的法力**。⛔ 沒有任何一格讀得到「剛剛那一發打了我多少」再把它記下來 —— " +
+      "`HookDef` 的過濾器與 `condition@1` 的葉子都沒有那個數字（`extendBuff` 的檔頭逐條查過同一件事）。",
+    nearest:
+      "⭐ **形狀已經存在，只是綁在別的數字上**：`spendMana.bankAs` → `sim/marks.ts` 的具名標記 → " +
+      "`damage.bankedBonus`（`min(標記帶的數字 × coeff, max)`）。⇒ 缺的不是「帳本」也不是「支出端」，" +
+      "是一個**把傷害寫進標記**的入口。⛔ 也不要拿 `shield` 當它：護盾吸掉的量沒有被記在任何地方，" +
+      "吸完就消失了。",
+  },
+  {
+    key: "action.release-stored-damage@1",
+    owner: "releaseStoredDamage —— 把存起來的傷害一次放出去",
+    probeNames: ["releaseStoredDamage", "releaseDamage", "dischargeDamage", "unleash"],
+    reason:
+      "與 `action.store-damage@1` 是同一條路的兩端：沒有存款端就沒有支出端。" +
+      "⚠️ 兩者要一起做，⛔ 只做一半的話卡片會宣稱一個永遠是 0 的數字（第一·五守則的形狀）。",
+    nearest:
+      "⭐ **支出端其實已經出貨**：`damage.bankedBonus` 就是「把標記裡的數字乘上係數變成額外傷害」，" +
+      "而且三個上界都是欄位（owner 2026-07-31 的裁決）。⇒ 這一列真正缺的只有「存的是傷害」那一半。",
+  },
+  {
+    key: "action.rewind-state@1",
+    owner: "rewindState —— 把一個單位倒回 N 秒前的狀態",
+    probeNames: ["rewindState", "rewind", "timeRewind", "snapshotRestore"],
+    reason:
+      "⛔ sim **沒有保存任何歷史狀態**。決定性重播靠的是重跑輸入（`MatchRecorder` 錄的是 input log），" +
+      "⛔ 不是狀態快照 —— 所以「倒回去」在引擎裡沒有可以讀的東西。" +
+      "要做的話是動 `SimWorld` 的儲存體本身，而那是決定性與重播的承重牆（票 body 建議**最後**做）。",
+    nearest:
+      "⚠️ `revive` 與 `restore` 都是**設值**（把血魔設到一個算出來的數字），" +
+      "⛔ 不是「回到當時那一刻」—— 位置、冷卻、身上的 buff、標記層數一格都不會跟著回去。",
+  },
+  {
+    key: "action.swap-position@1",
+    owner: "swapPosition —— 兩個單位對調位置",
+    probeNames: ["swapPosition", "positionSwap", "swapPlaces", "teleportSwap"],
+    reason:
+      "位移的三個 kind（`dash` / `leap` / `blink`）都只搬**一具身體**，而且落點是算出來的座標。" +
+      "「同一 tick 把兩具身體互換」還要決定**對方能不能拒絕**（免疫／不可位移／卡在牆裡），" +
+      "而那組決策今天一個欄位都沒有。",
+    nearest:
+      "⚠️ `swapResource` 是引擎裡**唯一**的原子雙向交換，形狀對得上（兩個當事人、一個 tick、" +
+      "拒絕條件寫成欄位）—— ⛔ 但它換的是資源不是座標。`blink` 是同一 tick 換座標的那一半，" +
+      "⛔ 只搬自己。",
+  },
+  {
+    key: "action.create-terrain@1",
+    owner: "createTerrain —— 執行期長出新的地形/障礙",
+    probeNames: ["createTerrain", "spawnTerrain", "createObstacle", "wallOfForce"],
+    reason:
+      "場地幾何是**編譯期**的：`arena@1.obstacles` 由 `map/compile.ts` 從格盤產出，" +
+      "而碰撞的 relax 每 tick 掃的就是那個陣列。執行期插一塊新的要同時處理導航（`nav.nextHop` 是烘好的）" +
+      "與「有人正好站在那裡」——⛔ 兩件事今天都沒有答案。",
+    nearest:
+      "⭐ **可開關的幾何已經有了**：`arena@1.obstacles[].gateGroup` + `sim/map/gates.ts` 讓一塊障礙" +
+      "按排程（或 `toggleGate` 互動點）開開關關。⛔ 差別是那些方塊**是作者事先擺好的**，" +
+      "技能只能開關它們，不能憑空多一塊。⇒ 「魔法牆」這一族今天的寫法是先在地圖上擺好再用 gate 開關。",
+  },
+  {
+    key: "action.create-portal@1",
+    owner: "createPortal —— 放一個持續存在、任何人踩得到的傳送門",
+    probeNames: ["createPortal", "portal", "spawnPortal", "warpGate"],
+    reason:
+      "傳送門是**一個持續存在的世界實體**（有位置、有半徑、有壽命、對誰生效是欄位），" +
+      "而引擎今天唯一的持續實體是 `summon`（一具身體）與投射物。" +
+      "⚠️ 它與 `action.create-zone@1` 是同一個缺口的兩張臉，⛔ 不要分兩次做。",
+    nearest:
+      "⚠️ `blink` 做得到「同一 tick 換座標」那一半（中間位置一格都不存在），" +
+      "⛔ 但它是**施法者自己、一次性**的 —— 沒有留在地上的東西，隊友踩不到，敵人也踩不到。",
+  },
+  {
+    key: "action.modify-arena-boundary@1",
+    owner: "modifyArenaBoundary —— 技能改變場地邊界",
+    probeNames: ["modifyArenaBoundary", "shrinkBoundary", "expandArena", "moveBoundary"],
+    reason:
+      "邊界（`arena@1.bounds` 與火圈半徑）是**一份 config 的排程**，不是任何一支技能寫得到的狀態。" +
+      "而且它是所有出生點合法性檢查與 `sim/map/bounds.ts` 的共同前提 —— 改它會讓那些檢查的答案" +
+      "在一場比賽中途改變。票 body 建議**最後**做，理由與 `rewindState` 同一條。",
+    nearest:
+      "⭐ 「可站區域會隨時間縮小」**已經在跑**：火圈（`match.fireRing` + `combat/environmentalBurn.ts`）。" +
+      "⛔ 但它是一份出貨排程，⛔ 技能／道具動不到它的任何一格。",
+  },
+  {
+    key: "action.transfer-cooldown@1",
+    owner: "transferCooldown —— 把自己的冷卻轉給別人（或反過來）",
+    probeNames: ["transferCooldown", "cooldownTransfer", "shareCooldown"],
+    reason:
+      "`modifyCooldown` 的三個 mode（`reduce` / `reduceFlat` / `reset`）都只動**持有者自己**的一支技能，" +
+      "而且它拿的是 `abilityId`。「轉給別人」要先回答「對方有沒有這一支」以及「對方的槽位是哪一格」——" +
+      "⛔ 兩個問題今天都沒有欄位。",
+    nearest:
+      "⚠️ `modifyCooldown`（含 `reset` 模式）是最接近的，⛔ 但它的作用對象永遠是持有者。" +
+      "`swapResource` 有「兩個當事人原子交換」的形狀，⛔ 但冷卻不是它認得的資源。",
+  },
+  {
+    key: "action.copy-buff@1",
+    owner: "copyBuff —— 讀出目標身上那一份增益，複製到自己（或隊友）身上",
+    probeNames: ["copyBuff", "stealBuff", "mirrorBuff", "cloneStatus"],
+    reason:
+      "`applyBuff` 掛的是**作者在 JSON 裡寫死的**那一份修飾子。" +
+      "「讀出對方身上現在有什麼」需要一個把 `StatsComp.sources` 反序列化回一份 `applyBuff` 的路徑，" +
+      "而 modifier 的來源（道具／技能／靈氣／標記）語意各不相同 —— 複製過來之後**歸誰、什麼時候到期**" +
+      "今天沒有答案。",
+    nearest:
+      "⚠️ `dispel` 證明了**讀得到**那些池子（它按 `pools` 清 status / dot / shields / buffs），" +
+      "⛔ 但它只會刪，不會複製。`cycleBuff` 會輪替**自己這一份**的內容，⛔ 與目標身上有什麼無關。",
+  },
+  {
+    key: "action.evolve-item@1",
+    owner: "evolveItem —— 一件道具在戰鬥中升級成另一件",
+    probeNames: ["evolveItem", "upgradeItem", "transformItem", "itemEvolve"],
+    reason:
+      "⛔ **GGD 沒有合成步驟**：`item@1.recipe`（book + components）的欄位註解自己寫著" +
+      "「GGD has no combine step; this is provenance only」——它是從原作 TRIGGERS 撈回來的**出處紀錄**，" +
+      "⛔ 不是一條執行期的路。而且沒有任何 effect kind 動得了背包（`economy/itemSource.ts` 只在" +
+      "購買與回合邊界寫）。",
+    nearest:
+      "⚠️ `championForm`（變身）是引擎裡唯一「整份定義換成第二份」的機制，形狀對得上，" +
+      "⛔ 但它換的是**英雄**不是道具，而且是靠 `content/champions` 的第二份文件，不是背包欄位。",
+  },
+  {
+    key: "action.sacrifice-item@1",
+    owner: "sacrificeItem —— 消耗掉一件道具換取效果",
+    probeNames: ["sacrificeItem", "consumeItem", "destroyItem", "itemSacrifice"],
+    reason:
+      "與 `action.evolve-item@1` 同一個缺口：⛔ 沒有任何 effect 拿得走背包裡的一格。" +
+      "⚠️ 它還多一個決策：**退不退錢、退多少** —— 那是 owner 的平衡題，⛔ 不是實作題。",
+    nearest:
+      "⚠️ `spendMana`（含 `bankAs` 記帳）是「花掉一種東西換一筆好處」最完整的樣板，" +
+      "⛔ 但它花的是資源條上的數字。`condition.has-equipment@1` 讀得到「身上有沒有這一件」，" +
+      "⛔ 只能讀，不能拿走。",
+  },
+];
+
+/**
  * 計畫 §12 G4 點名的 capability，逐筆對帳。
  *
  * ⛔ **這張表的順序與內容跟著 `main_load_editor_plan.md` 走**，不要按「我們做了
  * 什麼」重排 —— 對方是照計畫的章節找東西的。
+ *
+ * ⭐ **例外只有一個**：結尾那一段 `action.*@1` 來自 owner 2026-08-17 的清單
+ * （GH#354），不在計畫的章節樹上，所以它整段接在最後而不是插進去。
  */
 export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
   // ── 2026-08-08 這一輪真的做出來的三個 ────────────────────────────────
@@ -1142,6 +1337,155 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
       "⛔ 也不要跟 #73/#255「烘進 glb 的幾何」混淆：共用 modelKey 的變身對只能走執行期，" +
       "烘進去基本型也會長出來。",
   },
+
+  // ══ GH#354 · owner 2026-08-17 的 21 個 Action ════════════════════════════
+  //
+  // ⭐ **事件那一半刻意不在這裡重複一份。** owner 同一天列的 18 個事件現在
+  //    `zHookEvent` 裡**一個不缺**（GH#354 那一批 13 個 + 既有的 5 個），而
+  //    `hookEvents` 是這份 manifest **推導出來**的一格 —— 對方直接讀得到。
+  //    在這裡再抄 18 列會變成第二個住處，而它一定會與 enum 漂開（檔頭 ① 的形狀）。
+  //
+  // ⚠️ Action 那一半沒有這種好運：`redirectDamage` 這一族**不是一個 effect kind**，
+  //    所以「引擎沒有它」在推導事實裡長得跟「我們從沒聽過這個詞」一模一樣。
+  //    ⇒ 這 21 列存在的唯一理由，就是把後者變成前者。
+  {
+    key: "action.grant-shield@1",
+    plan: "GH#354 owner 2026-08-17 的 Action 清單 —— 「grantShield」",
+    expected: "supported",
+    probe: has("shield"),
+    evidence:
+      "packages/shared/src/sim/effects/shield.ts —— ⭐ `absorbs` 是一格**傷害類型過濾器**" +
+      "（「只擋魔法傷害」寫得出來），⛔ 它不是一個 effect kind，所以不要去 effectKinds 裡找它。",
+  },
+  {
+    key: "action.summon-unit@1",
+    plan: "GH#354 owner 2026-08-17 的 Action 清單 —— 「summonUnit」",
+    expected: "supported",
+    probe: has("summon"),
+    evidence: "packages/shared/src/sim/effects/summon.ts（`SimWorld.summon` + summonSystem）",
+  },
+  {
+    key: "action.revive-self@1",
+    plan: "GH#354 owner 2026-08-17 的 Action 清單 —— 「reviveSelf」",
+    expected: "supported",
+    probe: has("revive"),
+    evidence:
+      "packages/shared/src/sim/effects/revive.ts —— handler 決定 WHO / WHERE / WHETHER，" +
+      "「被復活的人長什麼樣」是 `sim/revive.ts::reviveChampionAt` 那一份契約。",
+  },
+  {
+    key: "action.reset-cooldown@1",
+    plan: "GH#354 owner 2026-08-17 的 Action 清單 —— 「resetCooldown」",
+    expected: "supported",
+    // ⛔ 只問 `modifyCooldown` 不夠：三個 mode 裡少了 `reset` 這一列就成了謊。
+    probe: (f) => f.effectKinds.has("modifyCooldown") && f.effectFields.has("mode"),
+    evidence:
+      "packages/shared/src/content/schema/effects/modifyCooldown.ts 的 " +
+      '`mode: z.enum(["reduce","reduceFlat","reset"])`。⚠️ `reduce` 的 `amount` 是**比例**' +
+      "（上界 1），按秒縮短要用 `reduceFlat` —— 填錯 mode 會被 refine 擋下，⛔ 不會靜默夾掉。",
+  },
+  {
+    key: "action.copy-ability@1",
+    plan: "GH#354 owner 2026-08-17 的 Action 清單 —— 「copyAbility」",
+    expected: "partial",
+    probe: has("proxyCast"),
+    caveat:
+      "⭐ `proxyCast` 做到的是「**代放一次**」：一支技能施放另一支技能，" +
+      "`payCosts` 非 none 時走 `castAbility` 的同一排閘（沉默／暈眩／魔力），" +
+      "終止性靠深度嚴格遞增 + 有界上限。" +
+      "⛔ **它不是「複製到自己的槽位」**：施法者的六格技能列一格都不會變，" +
+      "所以「偷來的招之後可以再放」寫不出來 —— 那需要執行期改寫 `world.abilities`，" +
+      "而那一格今天只在 `spawnChampion` 寫一次（同 #129 變身技能列的那個缺口）。",
+    evidence: "packages/shared/src/sim/effects/proxyCast.ts",
+    nearestExisting:
+      "⚠️ `championForm` 會把**整份** runtime 定義換掉（含技能），形狀比 `proxyCast` 更接近" +
+      "「換槽位」—— ⛔ 但它換的是一整個形態，不是單獨一格技能。",
+  },
+  {
+    key: "action.change-target-rule@1",
+    plan: "GH#354 owner 2026-08-17 的 Action 清單 —— 「changeTargetRule」",
+    expected: "partial",
+    probe: (f) => f.effectKinds.has("taunt") && f.effectFields.has("forcedTarget"),
+    caveat:
+      "⭐ 引擎有**一根**改寫瞄準的軸：`targeting.forcedTargetOf`（`sim/taunt.ts`），" +
+      "而且 `taunt` 已經證明它可以**反向**用（`godie-i06q` 偵查鏡：讓敵人**不**選你）。" +
+      "⛔ 但它是「指定一個人」這一種規則，⛔ 不是一個可組合的瞄準規則語言 ——" +
+      "「優先打血最少的」「優先打施法者」這些今天只能靠 `effect` 上的 `targetPriority` / " +
+      "`targetMode` 在**單一效果**的範圍內表達，⛔ 改不了那個單位平常的自動選敵。",
+    evidence: "packages/shared/src/sim/taunt.ts + sim/tauntReverseDirection.test.ts",
+    nearestExisting:
+      "⚠️ `convertTeam`（大師球）也會改「誰打誰」，⛔ 但它是換陣營不是換規則，" +
+      "而且 `isMobTargetable` 讓它是**不對稱**的（被借走的殭屍打不到其他殭屍）。",
+  },
+  {
+    key: "action.modify-resource-rule@1",
+    plan: "GH#354 owner 2026-08-17 的 Action 清單 —— 「modifyResourceRule」",
+    expected: "partial",
+    probe: (f) => f.effectKinds.has("swapResource") && f.effectKinds.has("manaBarrier"),
+    caveat:
+      "⭐ 兩個**具名的**規則改寫已經出貨：`swapResource`（原子交換雙方的 HP↔MP）與 " +
+      "`manaBarrier`（扣血之前先把傷害換成扣魔，44-00 機警）。`eventValueConversion` 再補一條" +
+      "「把這次事件的數值換成另一種資源」。" +
+      "⛔ 但它們是**三條寫死的路**，⛔ 不是「這個單位從現在起用怒氣代替魔力」那種一般化的規則層 ——" +
+      "資源條的種類今天是 HP / MP 兩根，內容側加不了第三根。",
+    evidence:
+      "packages/shared/src/sim/effects/swapResource.ts + manaBarrier.ts + eventValueConversion.ts",
+    nearestExisting:
+      "⚠️ `spendMana`（含 `bankAs` 記帳）示範了「一次施放要多付一種代價」，" +
+      "⛔ 但它加的是額外支出，⛔ 不是換掉那個單位的資源規則。",
+  },
+  {
+    key: "action.create-zone@1",
+    plan: "GH#354 owner 2026-08-17 的 Action 清單 —— 「createZone」（票 body 的第 3 順位）",
+    expected: "partial",
+    probe: (f) => f.effectKinds.has("randomArea") && f.effectKinds.has("delayed"),
+    caveat:
+      "⛔ **今天所有的「範圍」都是瞬間的**：`damageArea` / `damageLine` / `randomArea` 在" +
+      "結算的那一 tick 查一次重疊就結束。「留下一片持續 N 秒的區域」只能用 " +
+      "`delayed`（凍住名單）或 `randomArea`（到期用圓心重解）硬湊成 N 次脈衝，" +
+      "而且 ⚠️ **畫面上不會有那一圈** —— 沒有任何實體過網，玩家看不到自己站在裡面。" +
+      "⇒ 毒圈／治療圈／減速場這一整族的骨架今天寫不出來。",
+    evidence:
+      "packages/shared/src/sim/effects/randomArea.ts（draw 預算 2×count，到期走絕對 tick）+ " +
+      "delayed.ts（⛔ 與 randomArea 的差別是一句話：那邊到期用圓心重解，這邊用凍住的名單）",
+    nearestExisting:
+      "⭐ **最接近的是 `summon`**：它是引擎裡唯一「留在場上、有壽命、有位置」的實體，" +
+      "配一份 `auras`（靈氣）可以做出一個會影響周圍的圈。⛔ 三個差別要知道："
+      + "① 它是一具**身體**（會被打、會擋路、算人頭）；② 靈氣只投射 modifier，" +
+      "⛔ 投不出持續傷害；③ 它的外觀是一個單位模型，⛔ 不是地上的一圈。",
+  },
+  {
+    key: "action.delay-death@1",
+    plan: "GH#354 owner 2026-08-17 的 Action 清單 —— 「delayDeath」",
+    expected: "partial",
+    probe: (f) => f.effectKinds.has("invulnerable") && f.hookEvents.has("onLethalDamage"),
+    caveat:
+      "⭐ 「這一發不會死」已經有兩條路：`invulnerable`（無條件擋，含真傷）與" +
+      "**免死**（`sim/marks.ts` 的 `lethal` 標記 + `combat/lethalSave.ts`，攔在護盾之後扣血之前）。" +
+      "⛔ 但引擎**沒有「死亡延後 N 秒」**：死亡是在同一 tick commit 的，" +
+      "⛔ 沒有一個「已經死了但還站著」的中間狀態。" +
+      "⇒ 「陣亡後 3 秒內仍可行動」這種卡片今天要改寫成「免死 + 一段短無敵」，" +
+      "⚠️ 而那兩者的**可被驅散性**與畫面表現都不一樣，⛔ 不是同一句話。" +
+      "⚠️ 免死的 `restoreMode` 預設是 `clamp`（見 `hook.on-lethal-damage@1`），" +
+      "⛔ 寫「留在 N% 生命」的卡片一定要填 `restore`。",
+    evidence:
+      "packages/shared/src/sim/effects/invulnerable.ts + sim/combat/lethalSave.ts + sim/marks.ts",
+    nearestExisting:
+      "⚠️ `revive` 是「死了之後再站起來」，時序在死亡**之後**；`delayDeath` 要的是死亡**之前**" +
+      "多出一段可以行動的時間。兩者在畫面上像，在狀態機上是相反的兩側。",
+  },
+  // ⭐ 12 個「引擎完全沒有」的 —— 一個模板 + 一張參數表（第零守則⑨），
+  //    ⛔ 不是 12 段各自會腐爛的散文。表在 {@link OWNER_ACTIONS_ABSENT}。
+  ...OWNER_ACTIONS_ABSENT.map(
+    (r): CapabilityEntry => ({
+      key: r.key,
+      plan: `GH#354 owner 2026-08-17 的 Action 清單 —— 「${r.owner}」`,
+      expected: "unsupported",
+      probe: anyKind(...r.probeNames),
+      reason: r.reason,
+      nearestExisting: r.nearest,
+    }),
+  ),
 ];
 
 export interface RuntimeCapabilityManifest {

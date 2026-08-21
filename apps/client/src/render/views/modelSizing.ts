@@ -31,6 +31,27 @@
  * scene added tomorrow gets the size right by construction. `modelSizing.test.ts`
  * asserts the call sites, not the existence of the function.
  *
+ * ⚠️⚠️ **BUT「呼叫同一支函式」不等於「餵它同一個量測」—— 這一段以前寫得像是等價的，
+ * 而它不是**（CLAUDE.md 第三守則：註解會說謊，去驗證）。量到的（2026-08-22，GH#368）：
+ *
+ *   | 路徑 | `hiddenPrimitives` | 量高度用的 predicate |
+ *   |---|---|---|
+ *   | `ChampionView.tryUpgradeToGlb`  | ✅ 藏 | `ENABLED_ONLY` |
+ *   | `StorePreview.show`             | ✅ 藏 | `ENABLED_ONLY` |
+ *   | `IntermissionScene.setChampion` | ✅ 藏 | `ENABLED_ONLY` |
+ *   | **`championModelAudition`**（`/model` 稽核頁） | ⛔ **從來沒藏** | ⛔ **裸的 `getHierarchyBoundingVectors(true)`** |
+ *
+ * ⇒ 第四條**呼叫了 {@link normalizedModelScale}，卻餵它血泥的高度**。後果與 #368
+ * 原本那三條一模一樣：16 隻 overlay 英雄在稽核頁上矮 ~35%，而且腳底貼的是血泥
+ * 不是身體（`hiddenPrimitives.ts` 的 `ENABLED_ONLY` 檔頭寫著「⛔ Never measure a
+ * freshly-mounted champion WITHOUT this predicate」，而這一條正是那句話的反例）。
+ *
+ * ⚠️ 這正是**失敗形態 ⑤（被測的不是出貨的那個）**的一個新面孔：`modelSizing.test.ts`
+ * 釘住了三條路徑算出同一個世界高度，⛔ 而稽核頁那一條**不在夾具裡**，所以它退回
+ * 錯的量測時一格都不會紅。⇒ 修法在 `render/championModelAudition.ts`
+ * （`applyHiddenPrimitives` + 兩處 `ENABLED_ONLY`），⛔ 不在這一支；
+ * 這裡只負責不再宣稱它已經對了。
+ *
  * This module is deliberately PURE (no @babylonjs import): the scenes hand it
  * numbers they measured with `getHierarchyBoundingVectors`, so it unit-tests
  * without an engine and can be imported by probe scripts.
