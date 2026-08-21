@@ -1,4 +1,4 @@
-<title>GGD 作戰板 · 2026-08-21 12:48 (GMT+8)</title>
+<title>GGD 作戰板 · 2026-08-21 15:33 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.23.0 · 資料截至 2026-08-21 12:48 (GMT+8)</p><h1>GGD 作戰板 · 2026-08-21 12:48 (GMT+8)</h1><div class="meta"><span>帳本 <b>3</b> 份</span><span>點名票號 <b>105</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.23.0 · 資料截至 2026-08-21 15:33 (GMT+8)</p><h1>GGD 作戰板 · 2026-08-21 15:33 (GMT+8)</h1><div class="meta"><span>帳本 <b>3</b> 份</span><span>點名票號 <b>105</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -424,6 +424,11 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>12:38</td><td>等等 你的意思是 十出身 十一屬性 都沒上線嗎？ 請你重新列給我</td><td>#486 #487 #488</td></tr>
 <tr><td>12:40</td><td>我上次記錄的如下，請你告訴我與系統生效的是否有差異 出身 移速 攻速 攻擊力 法強 生命 裝甲 魔抗 魔力 生命回復 魔力回復 攻擊距離 鬥士 中 中 大 小 中 中 中 中 大 中 近戰・中 1.6 狂戰 大 極大 大 小 小 小 小 極小 極大 極小 近戰・小 1.4 射手 中 大 極大 極小 小 極小 極小 中 小 中 遠程・中 8.2 砲手 大 小 極大 小 極小 極小 極小 小 小 小 遠程・極大 12 坦克 小 小 小 小 大 極大 極大 極小 大 極小 近戰・小 1.4 法鬥 小 小 大 大 中 小 小 中 中 中 近戰・中 1.6 法師 中 小 小 大 中 小 小 中 中 中…</td><td>#486 #487 #488</td></tr>
 <tr><td>12:47</td><td>因為等級錨點已不同 我們來重新設計 十一屬性五級距 你先給我目前系統使用的 JSON 並且判斷是否已經有串連從JSON動態載入 並非定值</td><td>#486 #487 #488</td></tr>
+<tr><td>15:33</td><td>owner 2026-08-21（⭐ 重大架構裁決）： &gt; 「我決定<b>廢掉三屬性 純用十出身的五級距表來代表每級屬性成長</b>就好 &gt; 我所謂的廢掉指的是 <b>所有角色的 力敏智成長都歸 0 不是真的沒作用</b>， &gt; 不然<b>隨機能力那些都要大改太麻煩</b>」 &gt; 「我們<b>計算的時候都不考慮任何系統倍率</b>」 ## ⇒ 新模型（＝我提的方案 🅲 的變形：三圍權重歸零） - <code>strGrowth</code> / <code>agiGrowth</code> / <code>intGrowth</code> <b>全部 49 位歸 0</b> - ⛔ <b>三圍本身不刪</b> —— 起始值留著，係數留著（隨機能力/寶具還在引用它們） - ⇒ 三圍貢獻變成<b>固定值</b>（不隨等級變），⛔ 不再是膨脹來源 - ⇒ <b>每級成長 100% 由出身的五級距決定</b> —— 一個角色的成長只看它的出身 - ⭐ 所有試算<b>一律不含系統倍率</b>（combat-env 的 maxHealth ×4 等） ## ⭐ 這解掉的三個問題（都是量到的） ① 膨脹率 5–24× 各軸不一 → 由單一來源決定，一致 ② 三圍主導度 0–100%（法強 100%、魔抗 0%）→ 全部歸零，級距真的生效 ③ 法強/魔力回復的五級距被 <code>allowNegativeGrowth:false</code> 夾成 0 而失效 → 消失 ## 交付 一份 EXCEL，四個 sheet，<b>全部從系統 JSON 讀</b>： 1. 十一屬性五級距 + 30/50/99 試算 2. 十出身對應五級 + 30/50/99 試算 3. 49 位英雄對應出身 + 30/50/99 試算 4. 系統倍率參考與建議</td><td>#485 #414</td></tr>
+<tr><td>13:13</td><td>攻擊力 每級成長 法強 每級成長 生命 每級成長 魔力 每級成長 裝甲 每級成長 魔抗 每級成長 生命回復 每級成長 魔力回復 每級成長 這些數值怎麼那麼誇張 你不要亂乘上倍率 我只要看原始阿</td><td>#485 #414</td></tr>
+<tr><td>13:25</td><td>那我要每級成長阿 你怎麼給錯了 並且我們還有 智慧 力量 敏捷 三屬性 怎麼辦？還是這三個屬性已經沒有計算？</td><td>#485 #414</td></tr>
+<tr><td>13:34</td><td>三主屬性如何影響其他屬性？</td><td>#485 #414</td></tr>
+<tr><td>13:37</td><td>我覺得目前有十出身已經夠了 不然太多屬性要平衡 請你重新思考 不要數值膨脹 要容易平衡的新數值成長系統 建議三個方案給我</td><td>#485 #414</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>
