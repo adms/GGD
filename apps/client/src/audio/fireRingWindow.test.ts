@@ -22,9 +22,11 @@ import {
   fireRingShrinkSecFrom,
   fireRingWindowSec,
   fireRingWindowSecFrom,
+  fireRingWindowSecFromWire,
   noteFireRingIgnition,
 } from "./fireRingWindow";
 import { sceneForMatch } from "./scene";
+import { hudStore } from "../net/RoomStore";
 
 const CONFIG_PATH = join(__dirname, "../../../../content/config/config.match.json");
 
@@ -206,5 +208,80 @@ describe("fire-ring ignition drift alarm (firering-config)", () => {
     // failure this alarm exists for.
     noteFireRingIgnition(5);
     expect(spy).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("the cue follows the AUTHORITY, not the config prediction (GH#186)", () => {
+  // 一個「真實窗口 ≠ 文件推導」的回合。決賽回合就是這個形狀：伺服器把點火挪到
+  // 180 s、把回合拉到 210 s（`match/PairedDuels.ts` 的兩個常數），而
+  // `config.match@1` 只看得到 180 − 60 = 120。⛔ 這裡**不抄**那兩個常數,只要
+  // 「兩者不相等」這個關係。
+  const DOC = { combatMaxSec: 180, fireRing: { startSec: 60 } }; // 推導窗口 = 120
+  const BOUNDARY = 30; // 分區邊界半徑 = 火圈休眠時複製回來的半徑
+  const REAL_LEFT = 30; // 權威真正點火時,回合鐘剩下的秒數
+
+  // 一「幀」：把 snapshot 放上 store,然後讓 cue 讀一次 —— 這就是 AudioDirector
+  // 每次 `sceneForMatch` 做的事。⚠️ 休眠半徑是**觀察**來的,不是假設來的,所以
+  // 這個 helper 必須真的讀一次,不能只 setState。
+  const wire = (fireRingRadius: number, phaseSecondsLeft = REAL_LEFT): number => {
+    hudStore.setState({ phase: "combat", phaseSecondsLeft, fireRingTicks: 0, fireRingRadius });
+    return fireRingWindowSec();
+  };
+
+  afterEach(() => {
+    hudStore.setState({ phase: "connecting", phaseSecondsLeft: 0, fireRingTicks: -1, fireRingRadius: 0 });
+    __resetFireRingDriftAlarm();
+  });
+
+  it("stays on the combat bed while the ring is armed but has NOT started closing", () => {
+    cover("audio-scene-map");
+    registerMatchConfig(DOC);
+    // 這一行是整條的承重點：舊實作回的是 120 ≥ 30 ⇒ 早 90 秒換床,而火圈連縮都還沒縮。
+    expect(wire(BOUNDARY)).toBe(0);
+    expect(sceneForMatch({ phase: "combat", phaseSecondsLeft: REAL_LEFT })).toBe("combat");
+  });
+
+  it("swaps the instant the replicated radius starts shrinking, and stays swapped", () => {
+    cover("audio-scene-map");
+    registerMatchConfig(DOC);
+    wire(BOUNDARY); // 先看到休眠半徑（＝這一回合的最大值）
+    wire(BOUNDARY - 1); // …然後它縮了
+    expect(sceneForMatch({ phase: "combat", phaseSecondsLeft: REAL_LEFT })).toBe("fireRing");
+    wire(1, REAL_LEFT - 20);
+    expect(sceneForMatch({ phase: "combat", phaseSecondsLeft: REAL_LEFT - 20 })).toBe("fireRing");
+  });
+
+  it("the sim's own ignition event arms the cue one tick before the radius moves", () => {
+    cover("firering-config");
+    registerMatchConfig(DOC);
+    wire(BOUNDARY);
+    // 這個回合的真實窗口與文件推導本來就對不起來（這條測試的前提），所以對帳警報
+    // 一定會響 —— 那是它該做的事，⛔ 不是這條在驗的東西。
+    const quiet = vi.spyOn(console, "error").mockImplementation(() => {});
+    noteFireRingIgnition(REAL_LEFT); // 權威說：就是現在
+    expect(quiet).toHaveBeenCalledTimes(1);
+    quiet.mockRestore();
+    expect(sceneForMatch({ phase: "combat", phaseSecondsLeft: REAL_LEFT })).toBe("fireRing");
+  });
+
+  it("falls back to the config prediction when the wire cannot answer", () => {
+    cover("firering-config");
+    registerMatchConfig(DOC);
+    // 未連線 / 大廳 / 單元測試：沒有權威可讀,推導是唯一的答案（既有行為）。
+    expect(fireRingWindowSec()).toBe(DOC.combatMaxSec - DOC.fireRing.startSec);
+    // 進了戰鬥但這一回合沒有火圈（disarmed）也一樣。
+    hudStore.setState({ phase: "combat", phaseSecondsLeft: REAL_LEFT, fireRingTicks: -1, fireRingRadius: 0 });
+    expect(fireRingWindowSec()).toBe(DOC.combatMaxSec - DOC.fireRing.startSec);
+  });
+
+  it("PURE core: null = wire cannot answer · 0 = dormant · seconds-left = closing", () => {
+    cover("firering-config");
+    const w = { phase: "combat", phaseSecondsLeft: REAL_LEFT, fireRingTicks: 0, fireRingRadius: BOUNDARY };
+    expect(fireRingWindowSecFromWire({ ...w, phase: "intermission" }, BOUNDARY, false)).toBeNull();
+    expect(fireRingWindowSecFromWire({ ...w, fireRingTicks: -1 }, BOUNDARY, false)).toBeNull();
+    expect(fireRingWindowSecFromWire(w, 0, false)).toBeNull();
+    expect(fireRingWindowSecFromWire(w, BOUNDARY, false)).toBe(0);
+    expect(fireRingWindowSecFromWire({ ...w, fireRingRadius: BOUNDARY - 1 }, BOUNDARY, false)).toBe(REAL_LEFT);
+    expect(fireRingWindowSecFromWire(w, BOUNDARY, true)).toBe(REAL_LEFT);
   });
 });

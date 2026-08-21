@@ -45,6 +45,7 @@ import {
   missingAbilitySlots,
   parseChampionStats,
   peerBaseline,
+  REGEN_OUTLIER_MULT,
   planBulkRequests,
   planIsEmpty,
   rosterDelta,
@@ -726,6 +727,54 @@ describe("it forks no second way to write the whitelist", () => {
       expect(code, `${url.pathname} must not import saveWhitelist`).not.toMatch(/\bsaveWhitelist\b/);
       expect(code, `${url.pathname} must not import diffDoc`).not.toMatch(/\bdiffDoc\b/);
       expect(code, `${url.pathname} must not import putWhitelist`).not.toMatch(/\bputWhitelist\b/);
+    }
+  });
+});
+
+describe("回復力離群：核准前看得到，而且會攔（GH#177）", () => {
+  it("回血超出同場中位數一個量級時體檢紅，而且說出「下游沒有夾限」", () => {
+    cover("adminui-quick-approval");
+    const peers = [
+      { ...healthy("a"), healthRegen: 1, manaRegen: 1 },
+      { ...healthy("b"), healthRegen: 1.2, manaRegen: 1.4 },
+    ];
+    const base = peerBaseline(peers);
+    const peer = base.healthRegen ?? 0;
+    expect(peer).toBeGreaterThan(0);
+
+    // ⛔ 不抄任何出貨值：離群的定義就是 `REGEN_OUTLIER_MULT`，所以測試從它推。
+    const audit = auditStats({ ...healthy("h"), healthRegen: peer * (REGEN_OUTLIER_MULT + 1) }, base);
+    expect(audit.ok).toBe(false);
+    const hit = audit.findings.find((f) => f.includes("回血"));
+    expect(hit, "回血離群沒有產生 finding").toBeDefined();
+    // ⚠️ 這半句是這條 finding 存在的**全部理由**：離群的護甲最後還是被減傷吃掉，
+    // 離群的回復不會被任何東西吃掉（STAT_CLAMPS 沒有這一項）。
+    expect(hit).toContain("上限");
+
+    // 讀數本身也要出現。在此之前這一頁**一個回復數字都不印**，所以
+    // 「沒看到警告」和「沒有人看過」在畫面上長得一模一樣。
+    expect(audit.line).toContain("回血");
+    expect(audit.line).toContain("回魔");
+
+    // …而且它不亂喊：剛好在門檻上的英雄是綠的（會亂喊的頁面會被無腦點過）。
+    expect(auditStats({ ...healthy("k"), healthRegen: peer * REGEN_OUTLIER_MULT }, base).ok).toBe(true);
+  });
+
+  it("出貨名單真的有這一族，而且體檢抓得到（⛔ 不釘任何一隻英雄的數字）", () => {
+    cover("adminui-quick-approval");
+    const roster = realRoster();
+    const base = peerBaseline(roster);
+    // 前提：中位數還是正的。它一旦崩成 0，這條 finding 對任何人都不再發射，
+    // 而且長得跟「大家回復都很正常」一模一樣（#244 護甲那條的同一個病）。
+    expect(base.healthRegen ?? 0, "出貨名單的回血中位數是 0 —— finding 變成死碼").toBeGreaterThan(0);
+
+    const outliers = roster.filter(
+      (p) => (p.healthRegen ?? 0) > (base.healthRegen ?? 0) * REGEN_OUTLIER_MULT,
+    );
+    // ⛔ 零筆 = 這條靜靜地什麼都沒驗（失敗形態③）。GH#177 點名的那一族還在名單上。
+    expect(outliers.length, "一隻回復離群的出貨英雄都找不到 —— 這條守衛會空跑").toBeGreaterThan(0);
+    for (const o of outliers) {
+      expect(auditStats(o, base).findings.some((f) => f.includes("回血")), o.id).toBe(true);
     }
   });
 });

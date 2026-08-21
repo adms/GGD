@@ -164,6 +164,22 @@ export interface ChampionStats {
   mr?: number;
   ms?: number;
   /**
+   * 每秒回血 / 每秒回魔 at level 1, through the same seam as everything above.
+   *
+   * ⭐ GH#177 —— 這兩格是**後補的,而它們的缺席是可以量的**。四份英雄卡從 w3x 照抄
+   * 進來時帶著 `healthRegen` 8 / 12 / 15 / **75**（全體中位數 1.15），其中兩位
+   * （`godie-huth` · `godie-u00k`）就在預設開放名單上。而
+   * `sim/stats/statTypes.ts` 的 `STAT_CLAMPS` **完全沒有** `HealthRegen` /
+   * `ManaRegen` 條目,`sim/systems/RegenSystem.ts` 也只夾最大值不夾速率 ——
+   * ⛔ **下游沒有任何一層會攔住它**。
+   *
+   * 在此之前這一頁比的是 `maxHealth / growthHealth / armor / mr / ms` 五項,
+   * 所以核准那兩位的時候螢幕上**一個回復數字都不會出現**：不是體檢說「沒問題」,
+   * 是體檢根本沒看。
+   */
+  healthRegen?: number;
+  manaRegen?: number;
+  /**
    * true when the doc carried a readable `attributes` block, so the numbers
    * above went through the 三圍 derivation. false means the doc predates #248
    * or is hand-authored and `baseStats` really is the level-1 truth for it.
@@ -265,6 +281,10 @@ export function parseChampionStats(
   out.armor = at1("armor", Stat.Armor);
   out.mr = at1("mr", Stat.MagicResist);
   out.ms = at1("ms", Stat.MoveSpeed);
+  // GH#177 —— 同一條路徑,所以 STR→回血 / INT→回魔 的派生與 `manaRegen` 的系統
+  // 倍率都被算進去了（那個倍率是 8×,把一張看起來普通的卡變成每秒 37 點魔力）。
+  out.healthRegen = at1("healthRegen", Stat.HealthRegen);
+  out.manaRegen = at1("manaRegen", Stat.ManaRegen);
   // 每級 for health includes the attribute growth (str_growth × strToMaxHealth),
   // which is the only reason a champion with `growth.maxHealth: 0` can still
   // gain health per level — and the reason 熊貓 (all three growths 0) does not.
@@ -290,6 +310,8 @@ export interface PeerBaseline {
   armor?: number;
   mr?: number;
   ms?: number;
+  healthRegen?: number;
+  manaRegen?: number;
 }
 
 /** The middle of the roster this champion would actually be matched against. */
@@ -300,8 +322,22 @@ export function peerBaseline(peers: readonly ChampionStats[]): PeerBaseline {
     armor: median(peers.map((p) => p.armor)),
     mr: median(peers.map((p) => p.mr)),
     ms: median(peers.map((p) => p.ms)),
+    healthRegen: median(peers.map((p) => p.healthRegen)),
+    manaRegen: median(peers.map((p) => p.manaRegen)),
   };
 }
+
+/**
+ * GH#177 —— 幾倍於同場中位數才算「離群」。
+ *
+ * ⚠️ 刻意鬆（和這一頁其他三條門檻同一個理由：會亂喊的頁面會被無腦點過）。
+ * 5× 是「一眼看得出是另一個量級」的線 —— 一張中位數 1.15 的名單上，這條抓的是
+ * 8 / 12 / 15 / 75 那一族，⛔ 不會抓 2.5 那種只是偏高的卡。
+ *
+ * ⛔ 這不是一個平衡數值,所以它不進 `content/config/` ——
+ * 它是這一頁「什麼時候該提醒操作者」的判準,和上面的 0.5 / 0.7 同一層。
+ */
+export const REGEN_OUTLIER_MULT = 5;
 
 export interface StatAudit {
   /** false when at least one finding fired, OR when there was nothing to check */
@@ -340,10 +376,14 @@ export function auditStats(cand: ChampionStats, base: PeerBaseline): StatAudit {
   parts.push(cand.armor === undefined ? "護甲 ?" : `護甲 ${show(cand.armor)}`);
   parts.push(cand.mr === undefined ? "魔抗 ?" : `魔抗 ${show(cand.mr)}`);
   parts.push(cand.ms === undefined ? "移速 ?" : `移速 ${show(cand.ms)}`);
+  // GH#177 —— 回復兩格。印出來是這條的一半價值：在此之前核准一位每秒回 12 點血的
+  // 英雄時,螢幕上不會出現任何回復數字,所以「沒看到警告」等於「沒有人看過」。
+  parts.push(cand.healthRegen === undefined ? "回血 ?" : `回血 ${show(cand.healthRegen)}/秒`);
+  parts.push(cand.manaRegen === undefined ? "回魔 ?" : `回魔 ${show(cand.manaRegen)}/秒`);
   const line =
     `${parts.join(" · ")}` +
     (base.count > 0
-      ? `　（已開放 ${base.count} 名英雄的中位數：血量 ${show(base.maxHealth)} · 護甲 ${show(base.armor)} · 魔抗 ${show(base.mr)} · 移速 ${show(base.ms)}）`
+      ? `　（已開放 ${base.count} 名英雄的中位數：血量 ${show(base.maxHealth)} · 護甲 ${show(base.armor)} · 魔抗 ${show(base.mr)} · 移速 ${show(base.ms)} · 回血 ${show(base.healthRegen)}/秒 · 回魔 ${show(base.manaRegen)}/秒）`
       : "　（沒有可比較的已開放英雄）");
 
   if (cand.maxHealth === undefined || base.count === 0 || base.maxHealth === undefined) {
@@ -373,6 +413,32 @@ export function auditStats(cand: ChampionStats, base: PeerBaseline): StatAudit {
       `移速 ${cand.ms}，同場中位數 ${base.ms} — 跑不掉也追不到（約 ${pct(cand.ms, base.ms)}）。`,
     );
   }
+  // ── GH#177 回復離群 ────────────────────────────────────────────────────────
+  // ⚠️ 這兩條的措辭刻意講出「下游沒有夾限」：它是這個 finding 存在的全部理由。
+  // 一個離群的護甲值最後仍然被減傷公式吃掉，一個離群的回復值**不會被任何東西吃掉**
+  // —— `STAT_CLAMPS` 沒有這兩項，`RegenSystem` 只夾最大值不夾速率。
+  const regenFinding = (
+    what: string,
+    value: number | undefined,
+    peer: number | undefined,
+    tail: string,
+  ): void => {
+    if (value === undefined || peer === undefined || !(peer > 0)) return;
+    if (!(value > peer * REGEN_OUTLIER_MULT)) return;
+    findings.push(
+      `${what} ${show(value)}/秒，是同場中位數 ${show(peer)}/秒 的 ${show(value / peer)} 倍${tail}` +
+        ` ⚠️ 系統沒有任何回復速率上限（STAT_CLAMPS 沒有這一項），所以下游不會替你夾住它。`,
+    );
+  };
+  regenFinding(
+    "回血",
+    cand.healthRegen,
+    base.healthRegen,
+    cand.maxHealth !== undefined && cand.maxHealth > 0
+      ? `，等於每秒回滿血的 ${pct(cand.healthRegen ?? 0, cand.maxHealth)}。`
+      : "。",
+  );
+  regenFinding("回魔", cand.manaRegen, base.manaRegen, "。");
   return { ok: findings.length === 0, unknown: false, findings, line };
 }
 
