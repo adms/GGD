@@ -63,6 +63,56 @@ export function buttonSfx(onClick?: () => void, opts?: ButtonSfxOptions): Button
 }
 
 /**
+ * The event fields {@link buttonPressFx} reads. Structural on purpose: it keeps
+ * this module React-free while still being assignable to React's pointer
+ * handlers (a `React.PointerEvent<HTMLButtonElement>` has all three).
+ */
+export interface PressFxEvent {
+  currentTarget: HTMLElement;
+  clientX: number;
+  clientY: number;
+}
+
+/** Press-scale + ripple handlers, ready to spread onto any `<button>`. */
+export interface ButtonPressFxProps {
+  onPointerDown: (e: PressFxEvent) => void;
+  onPointerUp: (e: PressFxEvent) => void;
+  onPointerLeave: (e: PressFxEvent) => void;
+}
+
+/**
+ * The VISUAL half of a button press — the press-scale and the click ripple —
+ * WITHOUT the `.ggd-btn` skin (GH#113).
+ *
+ * `<SfxButton>` bundles the two together, but its class list ALWAYS carries
+ * `ggd-btn`, whose buttonFx.css skin notches the corners and animates a
+ * gradient bloom. A button that already owns its look — the global audio
+ * cluster's 32px icon squares, which sit over the login artwork and the arena —
+ * needs the feedback and NOT that restyle, and re-skinning the most global
+ * control in the game is a look decision nobody asked for. So the cue is
+ * offered on its own here instead of being copy-pasted into that component.
+ *
+ * Both halves respect prefers-reduced-motion (checked per call, so a mid-session
+ * OS change is picked up) and both are DOM-guarded, so this is safe to spread in
+ * a non-DOM test env.
+ */
+export function buttonPressFx(scale = 0.92): ButtonPressFxProps {
+  const reduced = prefersReducedMotion();
+  const release = (e: PressFxEvent): void => {
+    if (e.currentTarget?.style) e.currentTarget.style.transform = "";
+  };
+  return {
+    onPointerDown: (e) => {
+      if (reduced || !e.currentTarget?.style) return;
+      e.currentTarget.style.transform = `scale(${scale})`;
+      spawnClickRipple(e.currentTarget, e.clientX, e.clientY, { reduced });
+    },
+    onPointerUp: release,
+    onPointerLeave: release,
+  };
+}
+
+/**
  * True when the OS/browser asks for reduced motion. Safe in a non-DOM env
  * (no window / matchMedia → false, i.e. motion allowed by default in tests).
  */

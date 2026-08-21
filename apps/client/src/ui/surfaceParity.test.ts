@@ -314,9 +314,13 @@ const KNOWN_GAPS: Record<string, string> = {
   //  inside the in-game group, so the touch surface gets the sentence too. That
   //  is the 「one line」 the deleted row asked for, just in HudRoot rather than in
   //  TouchControls.)
-  // P1-2 — couch/split-screen. HudRoot:142 replaces the whole single-player HUD
-  // block with CouchHudGrid, which is display-only. Same one-line fix.
-  "hud-input-variant/CouchHudGrid": "docs/_false-completions.md P1-2 (open, task #181/#160)",
+  //
+  // (P1-2 「CouchHudGrid has no CastNoticeLine」 was CLOSED on 2026-08-22 as GH#109
+  //  and its row deleted, as this file demands of a fixed gap. HudRoot's couch
+  //  branch now renders <CastNoticeLine/> beside <CouchHudGrid/>: the notice box
+  //  in ui/castFeedback is a SINGLE global sentence with no seat field, so one
+  //  line for the whole split screen is the honest rendering — one per viewport
+  //  would print the same sentence up to four times.)
   // #74 — the dev direct-join button in LobbyScreen jumps straight to "match":
   // no bar, and the login roar never gets its fade.
   "match-entry/playOffline": "docs/_false-completions.md (#74 handoff covers 1 of 3 paths)",

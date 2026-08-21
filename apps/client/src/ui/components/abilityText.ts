@@ -276,12 +276,29 @@ const NUM_SRC = "\\d+(?:\\.\\d+)?";
  */
 const RANKS_SRC = `${NUM_SRC}(?:\\s*/\\s*${NUM_SRC})*`;
 
+/**
+ * ⭐ GH#103 —— 一段 `[c=role]` / `[/c]` **角色色彩標記**，出現在數字與關鍵字之間。
+ *
+ * ⚠️ 這兩條正則錨定的是「數字**緊貼**關鍵字」，而 #114 的語意色彩把數字包起來：
+ * `造成[c=damage]650[/c]傷害`、`冷卻時間[c=duration]30[/c]秒`。實測（見票 #103）
+ * 三種寫法**全部不命中** —— 於是 rescale 靜默變成 no-op，卡片上印的是 WC3 原始的
+ * 60 秒而不是出貨的 12 秒（`combat-env` 的 `cooldown` 目前是 0.2，**差 5 倍**），
+ * 而且沒有任何東西會紅：純文字的技能照樣被改寫，帶標記的那些安靜地不被改寫。
+ *
+ * ⛔ 這一格**不是**「順手加的容錯」：它是 #114 內容補上去的那一刻會不會靜默出錯的
+ * 分界線。⭐ 出貨內容目前 0 份帶標記（票 #103 ①），所以這個修正今天逐位元不改變任何
+ * 一張卡 —— 它是為了讓 ① 落地時不會撞壞 #125。
+ *
+ * 標記被**捕捉進前後綴群組**（⛔ 不進數字群組），所以重寫之後標記原封不動地留著。
+ */
+const MARKUP = "(?:\\[c=[a-z-]+\\]|\\[/c\\])*";
+
 const COOLDOWN_PROSE_RE = new RegExp(
   [
-    `(${RANKS_SRC})(\\s*秒\\s*冷卻(?:時間)?)`, // 1: NN + 秒冷卻[時間]
-    `(冷卻(?:時間)?\\s*)(${RANKS_SRC})(\\s*秒)`, // 2: 冷卻[時間] + NN + 秒
-    `(${NUM_SRC})(\\s*s\\s+cooldown)`, // 3: NNs cooldown
-    `(cooldown\\s+)(${NUM_SRC})(\\s*s)(?![a-z])`, // 4: cooldown NNs
+    `(${RANKS_SRC})(${MARKUP}\\s*秒\\s*冷卻(?:時間)?)`, // 1: NN + 秒冷卻[時間]
+    `(冷卻(?:時間)?\\s*${MARKUP}\\s*)(${RANKS_SRC})(${MARKUP}\\s*秒)`, // 2: 冷卻[時間] + NN + 秒
+    `(${NUM_SRC})(${MARKUP}\\s*s\\s+cooldown)`, // 3: NNs cooldown
+    `(cooldown\\s+${MARKUP})(${NUM_SRC})(${MARKUP}\\s*s)(?![a-z])`, // 4: cooldown NNs
   ].join("|"),
   "gi",
 );
@@ -313,9 +330,10 @@ function scaleProseLiteral(literal: string, factor: number): string {
  */
 const DAMAGE_PROSE_RE = new RegExp(
   [
-    `(造成\\s*)(${RANKS_SRC})(\\s*(?:點\\s*)?傷害)`, // 1: 造成 NNN [點]傷害
-    `(${RANKS_SRC})(\\s*點\\s*傷害)`, // 2: NNN 點傷害
-    `(${NUM_SRC})(\\s+damage)`, // 3: [deal] NNN damage
+    // ⭐ GH#103：三條都吃得下夾在中間的 `[c=role]` / `[/c]`（見 {@link MARKUP}）。
+    `(造成\\s*${MARKUP}\\s*)(${RANKS_SRC})(${MARKUP}\\s*(?:點\\s*)?傷害)`, // 1: 造成 NNN [點]傷害
+    `(${RANKS_SRC})(${MARKUP}\\s*點\\s*傷害)`, // 2: NNN 點傷害
+    `(${NUM_SRC})(${MARKUP}\\s+damage)`, // 3: [deal] NNN damage
   ].join("|"),
   "gi",
 );

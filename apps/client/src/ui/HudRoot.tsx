@@ -416,7 +416,20 @@ export function HudRoot(): React.JSX.Element {
         </>
       )}
       {touchControls && <TouchControls />}
-      {inGame && couch && <CouchHudGrid />}
+      {/* GH#109 —— 沙發分割畫面也要說出「為什麼不能放」。
+          `announceCastAttempt` 在**每一條**輸入路徑都算好了那四句話之一（冷卻中／
+          魔力不足／距離太遠／尚未學習），沙發側走的是 input/InputCapture 與
+          input/GamepadInput；在此之前 `<CastNoticeLine/>` 只掛在 `!couch` 那一側，
+          於是那句話被算出來、然後丟掉 —— 玩家只看到一下抖動（失敗形態 ②）。
+          ⚠️ 掛在**這裡**而不是塞進 CouchHudGrid：`ui/castFeedback` 的告示是**單一
+          全域**的（一場只有一句，沒有座位欄位），放進每格 viewport 會變成同一句話
+          印四次。它自己有 ~2s TTL、pointerEvents:none，沒有告示時 return null。 */}
+      {inGame && couch && (
+        <>
+          <CouchHudGrid />
+          <CastNoticeLine />
+        </>
+      )}
       {phase === "champSelect" && <ChampSelectPanel />}
       {/* 中場 is its own Babylon scene laid over the arena — the phase change
           IS the phase signal the HUD used to be missing (task #38). */}

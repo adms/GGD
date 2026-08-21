@@ -59,6 +59,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { audioSettings, audioSystem, type AudioBus } from "../audio";
+import { buttonPressFx, buttonSfx } from "./buttonSfx";
 import { CURSOR_SIZE_OPTIONS } from "../cursor";
 import { useAudioVolumes } from "./useAudio";
 import { useCursorSize } from "./useCursor";
@@ -94,8 +95,28 @@ interface BusButtonProps {
   onToggle: (bus: AudioBus) => void;
 }
 
+/**
+ * GH#113 — every button in this cluster speaks. `clusterBtnProps` is the ONE
+ * place that says how: hover → `uiHoverCyber`, click → `unlock()` + `uiToggle`
+ * (an on/off switch cue, not the generic blip), plus the press-scale + ripple.
+ * Before this existed the 🎚 disclosure was fully silent and 🎵/🔊 were silent
+ * on HOVER — they only got a click sound because the container happened to call
+ * `playSfx("uiToggle")` by hand inside its own state handler.
+ *
+ * ⚠️ ORDER MATTERS AND IT IS `buttonSfx`'S, NOT OURS: unlock → play → run the
+ * caller's handler. Muting the SFX bus therefore still gets its confirmation
+ * blip, because the cue is emitted BEFORE the mute flips.
+ */
+function clusterBtnProps(onActivate: () => void): Record<string, unknown> {
+  return { ...buttonSfx(onActivate, { clickSfx: "uiToggle" }), ...buttonPressFx() };
+}
+
 const BTN_BASE: React.CSSProperties = {
   pointerEvents: "auto",
+  // `position`/`overflow` are here for the ripple: it is an absolutely
+  // positioned child that must clip to the button's rounded box.
+  position: "relative",
+  overflow: "hidden",
   width: AUDIO_BTN_SIZE,
   height: AUDIO_BTN_SIZE,
   minWidth: AUDIO_BTN_SIZE,
@@ -125,10 +146,9 @@ function BusButton({ bus, muted, icon, label, onToggle }: BusButtonProps): React
       aria-pressed={!muted}
       aria-label={`${label} ${muted ? "off" : "on"}`}
       title={`${label}: ${muted ? "off (tap to unmute)" : "on (tap to mute)"}`}
-      onClick={() => onToggle(bus)}
+      {...clusterBtnProps(() => onToggle(bus))}
       style={{
         ...BTN_BASE,
-        position: "relative",
         background: muted ? "rgba(12, 16, 26, 0.42)" : "rgba(12, 16, 26, 0.62)",
         color: muted ? "#5a6478" : "#aeb8cc",
         opacity: muted ? 0.62 : 0.9,
@@ -360,7 +380,7 @@ export function AudioToggleView({
           aria-controls="ggd-audio-tray"
           aria-label={open ? "Hide volume and cursor size" : "Show volume and cursor size"}
           title={open ? "hide the sliders" : "volume + cursor size"}
-          onClick={() => onToggleExpanded?.()}
+          {...clusterBtnProps(() => onToggleExpanded?.())}
           style={{
             ...BTN_BASE,
             background: open ? "rgba(44, 63, 107, 0.86)" : "rgba(12, 16, 26, 0.62)",
@@ -475,12 +495,12 @@ export function AudioToggle(): React.JSX.Element {
   const matchTop = hudSlotOffset("audio-toggle", touch);
   const bandHeight = hudSlotHeight("audio-toggle", touch);
 
+  // ⚠️ GH#113: the unlock + `playSfx("uiToggle")` that used to be inline here
+  // moved into `clusterBtnProps` (i.e. into the shared `buttonSfx`), so all
+  // THREE buttons get the same cue — and the same hover. Doing it here made the
+  // sound a property of "the mute action" rather than of "a button in this
+  // cluster", which is exactly why the 🎚 disclosure never made a sound.
   const onToggle = (bus: AudioBus): void => {
-    // a tap is a user gesture: kick autoplay if the context is still suspended
-    audioSystem.unlock();
-    // on/off switch cue — emitted BEFORE the mute flips so muting the SFX bus
-    // still gets its confirmation blip (playSfx no-ops under test-mode silence).
-    audioSystem.playSfx("uiToggle");
     audioSettings.toggleBusMuted(bus);
   };
 
