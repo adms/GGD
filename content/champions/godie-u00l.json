@@ -60,11 +60,11 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        6.0,
-        6.0,
-        6.0,
-        6.0,
-        6.0
+        15.0,
+        15.0,
+        15.0,
+        15.0,
+        15.0
       ],
       "manaCost": [
         72.0,
@@ -92,10 +92,10 @@
       "vfxKey": "fx.prim.physical.beam",
       "sfxKey": "wc3.peondeath",
       "targetsEnemies": true,
-      "castTimeSec": 0.167,
+      "castTimeSec": 0.367,
       "rangeTier": "極小",
       "range": 3,
-      "cooldownTier": "極小",
+      "cooldownTier": "小",
       "manaCostTier": "極小"
     },
     "W": {

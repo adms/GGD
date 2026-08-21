@@ -8,13 +8,13 @@
   "castType": "targeted",
   "maxRank": 5,
   "cooldown": [
-    6.0,
-    6.0,
-    6.0,
-    6.0,
-    6.0
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0
   ],
-  "cooldownTier": "極小",
+  "cooldownTier": "小",
   "manaCost": [
     72.0,
     72.0,
@@ -43,7 +43,7 @@
   "sfxKey": "wc3.peondeath",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.167,
+  "castTimeSec": 0.367,
   "rangeTier": "極小",
   "range": 3
 }
