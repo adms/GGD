@@ -404,8 +404,9 @@ describe("control legend placement obeys the safe-area contract (#107)", () => {
     });
   });
 
-  it("switches to the top-gutter strip on touch and in couch play", () => {
-    expect(controlLegendRect({ width: 812, height: 375 }, PC(true, 1, legendRows("touch")))?.shape).toBe("strip");
+  // ⚠️ GH#199 拿掉了「觸控也走 strip」那一半 —— 觸控現在**完全不畫**（見下面的
+  // describe）。couch 這一半沒有變，它是 strip 剩下的唯一使用者。
+  it("switches to the top-gutter strip in couch play", () => {
     expect(controlLegendRect({ width: 1546, height: 900 }, PC(false, 2, legendRows("gamepad")))?.shape).toBe("strip");
   });
 
@@ -419,6 +420,47 @@ describe("control legend placement obeys the safe-area contract (#107)", () => {
 
   it("shows nothing rather than overlapping on a portrait phone", () => {
     expect(controlLegendRect({ width: 375, height: 667 }, PC(true, 1, legendRows("touch")))).toBeNull();
+  });
+});
+
+/* ── GH#199: 觸控裝置完全不畫操作說明 ──────────────────────────────────────
+ * owner 2026-07-28:「手機不必顯示操作說明，因為沒有隱藏按鍵了」。
+ *
+ * ⚠️ 斷言的是**幾何**，⛔ 不是「有一個 touch 旗標被讀到」—— 後者對壞掉的實作
+ * 也會過（失敗形態⑦）。這裡問的是票裡那一句：這個框在觸控裝置上**佔了多少
+ * 空間**？答案必須是 null，⛔ 不是「一條比較小的 strip」。
+ *
+ * ⭐ 掃過**每一個守衛視窗 × 每一種綁定集 × 每一種 couch 人數**，因為 strip 有
+ * 三條分別的 return 路徑（沒空間 / 跨中線 / couch 撞到 mini-HUD），而只挑一個
+ * 視窗來測，會被「剛好那一台本來就沒空間」蒙混過去。
+ */
+describe("GH#199 觸控裝置一格都不畫", () => {
+  it("每一個守衛視窗 × 每一種綁定集，觸控都拿不到任何矩形", () => {
+    for (const vp of VIEWPORTS) {
+      for (const mode of MODES) {
+        for (const couchPlayers of [1, 2, 4]) {
+          expect(
+            controlLegendRect(vp, PC(true, couchPlayers, legendRows(mode))),
+            `${vp.width}x${vp.height} ${mode} players=${couchPlayers}`,
+          ).toBeNull();
+        }
+      }
+    }
+  });
+
+  /*
+   * ⛔ 這裡刻意**沒有**「390×844 是 null」那一條。票點名的就是那一台，但突變驗證
+   * （把上面那道閘改成 `false && …`）時它**照樣綠** —— 直立手機本來就窄到
+   * `stripRect` 自己會回 null。一條對壞掉的實作也會過的斷言就是失敗形態④，
+   * 留著只會讓人以為這裡被守住了。承重的是上面那個掃六個視窗的迴圈。
+   */
+
+  // 票第 5 條：「鍵盤/手把路徑**完全不變** —— 要有一條測試證明這件事」
+  it("非觸控的鍵盤與手把路徑一格都沒動", () => {
+    const kb = controlLegendRect({ width: 1546, height: 900 }, PC(false, 1, legendRows("keyboard")));
+    expect(kb?.shape).toBe("column");
+    const couchPad = controlLegendRect({ width: 1546, height: 900 }, PC(false, 2, legendRows("gamepad")));
+    expect(couchPad?.shape).toBe("strip");
   });
 });
 

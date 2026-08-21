@@ -171,15 +171,15 @@ describe("the touch / couch top-gutter strip", () => {
     expect(out).not.toContain("右鍵");
   });
 
-  it("fits a phone and stays inert there too", () => {
-    const rows = legendRows("touch");
-    const rect = rectFor(PHONE, true, 1, rows);
-    const out = html(rect, "touch", "觸控");
-    expect(out).toContain('data-control-legend="strip"');
-    expect(out).toContain("左側搖桿");
-    expect(out).toContain("pointer-events:none");
-    expect(out.match(/pointer-events:auto/g)).toHaveLength(1);
-    expect(out).not.toContain("Back"); // a touch player is never shown pad faces
-    expect(out).not.toContain("十字鍵");
+  /**
+   * ⭐ GH#199 —— 這一條以前是「手機上也塞得下、也是 inert 的」。owner 2026-07-28
+   * 裁決之後手機上**根本沒有這個框**：「手機不必顯示操作說明，因為沒有隱藏按鍵
+   * 了」。所以斷言從「畫出來的樣子對不對」換成「有沒有東西可以畫」——
+   * `ControlLegend` 拿到 null 就 `return null`，⛔ 一個像素都不產生。
+   */
+  it("手機上沒有任何東西可以畫（GH#199）", () => {
+    // ⚠️ 用 812×375（橫向手機，本來塞得下 strip），⛔ 不用票裡那台 390×844 ——
+    // 直立手機窄到 `stripRect` 自己就會回 null，那條斷言對壞掉的實作也會過（④）。
+    expect(controlLegendRect(PHONE, { touch: true, couchPlayers: 1, rows: legendRows("touch") })).toBeNull();
   });
 });

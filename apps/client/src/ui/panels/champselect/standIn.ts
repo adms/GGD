@@ -29,6 +29,35 @@
  * actually true of the stage the player is looking at, rather than being
  * deleted on the strength of a fix that has not reached it yet.
  *
+ * ⛔ …AND THAT PARAGRAPH WENT STALE THE SAME WEEK (GH#224, 第一·五守則).
+ * ═══════════════════════════════════════════════════════════════════════════
+ * owner 2026-07-28:「請你都先用**暴雪的 3d model**，要替換成體素是我從後台設定
+ * 套用才生效」. `defaultPrefersVoxelBody`（`shared/content/voxelSkin/types.ts`）
+ * therefore stopped being `isStandIn` alone: a champion takes the procedural
+ * voxel figure ONLY when it points at a stand-in AND no WC3 model is reachable
+ * for it or its transform counterpart.
+ *
+ * MEASURED on the shipped content, 2026-08-22: of the 17 champion docs this
+ * badge fires on, `defaultPrefersVoxelBody` is true for exactly **two** — `sela`
+ * and `thorne`, the two CC0 characters that are not map heroes and are not on
+ * the pickable roster at all. For **every pickable champion the badge appears
+ * on, the sentence 「戰鬥中已改用本角色專屬體素外觀」 describes something that
+ * does not happen**: they get their own Warcraft III mesh through
+ * `BlizzardOverlayModels.resolve`, or — when no overlay is installed — the very
+ * same shared box-man the preview is showing.
+ *
+ * That is the exact shape 第一·五守則 names: every part is legal, every test is
+ * green, and the card states an outcome the build never produces. The fix taken
+ * here is the rule's option ②「把描述改成只講真的會發生的事」 — the badge knows
+ * only a `modelKey`, and a `modelKey` structurally cannot answer 「戰鬥中他會穿
+ * 什麼」 (that needs the champion id, the overlay probe and the admin override:
+ * see `render/views/standinCensus.ts`, which walks the real resolution path).
+ * ⛔ Option ①「換成做得到的等效機制」 — feeding the census answer to the badge —
+ * needs `ProfileBlock.tsx` and `ValhallaPanel.tsx`, the two files that render
+ * it, and both are outside this lane's fence. Recorded on GH#224 instead.
+ * `standIn.test.ts` re-derives the measurement above from the shipped roster
+ * every run, so the sentence cannot quietly grow the promise back.
+ *
  * The `voxel-standin` CONTENT TAG (40 of these 43 docs carry it; sela's and
  * thorne's own three in-house docs do not) is likewise KEPT and re-read: it
  * means "this champion has no imported art of its own", which is still exactly
@@ -39,18 +68,22 @@
  *
  * The set is deliberately EXPLICIT rather than a `champ.` prefix rule: every
  * real per-champion model is `imported.*` (or a runtime-synthesized Blizzard
- * overlay), and pinning the four known fallbacks means a champion that later
- * gains its OWN `champ.*` mesh is not mistaken for a stand-in. If a fifth
- * generic fallback is ever added to the content, it is added here too.
+ * overlay), and pinning the known fallbacks means a champion that later gains
+ * its OWN `champ.*` mesh is not mistaken for a stand-in.
  */
+import { STAND_IN_MODEL_KEYS as SHARED_STAND_IN_MODEL_KEYS } from "@ggd/shared/content/voxelSkin";
 
-/** The four generic meshes used when a champion has no imported model. */
-export const STAND_IN_MODEL_KEYS: ReadonlySet<string> = new Set([
-  "champ.sela",
-  "champ.thorne",
-  "champ.skin.barbarian",
-  "champ.skin.rogue",
-]);
+/**
+ * The generic meshes used when a champion has no imported model.
+ *
+ * ⭐ DERIVED, ⛔ not a second hand-typed copy. It used to be a literal list of
+ * four keys sitting a few metres from `shared/content/voxelSkin`'s own list of
+ * the same four — and `defaultPrefersVoxelBody` reads THAT one. Two lists mean
+ * a fifth fallback added to the content makes the renderer switch bodies while
+ * this badge stays silent, with nothing going red. Re-exported as a `Set`
+ * because that is the shape this module's callers already use.
+ */
+export const STAND_IN_MODEL_KEYS: ReadonlySet<string> = new Set(SHARED_STAND_IN_MODEL_KEYS);
 
 /** True when `modelKey` is one of the generic stand-in meshes (never a real model). */
 export function isStandInModel(modelKey: string | null | undefined): boolean {
@@ -60,7 +93,17 @@ export function isStandInModel(modelKey: string | null | undefined): boolean {
 /**
  * The honest one-line label the stage shows over a stand-in, so nobody reads a
  * generic mage/knight as the champion. Trilingual-adjacent (zh load-bearing).
+ *
+ * ⛔ IT MAY NOT NAME A COMBAT BODY. See this file's header: the only input the
+ * badge has is a `modelKey`, and the body a champion really wears in the arena
+ * is decided two layers later by `BlizzardOverlayModels.resolve` and the admin
+ * `preferVoxelBody` override. The previous wording promised the voxel figure
+ * and was false for every pickable champion it appeared on (GH#224). What is
+ * true of ALL of them — and is the thing a player actually needs to know while
+ * looking at a shared box-man on the preview stage — is that the SHARED MESH IS
+ * A PREVIEW ARTEFACT, not this character's art.
  */
-export const STAND_IN_NOTE_ZH = "替身模型 · 本頁預覽用；戰鬥中已改用本角色專屬體素外觀";
+export const STAND_IN_NOTE_ZH =
+  "替身模型 · 僅本頁預覽：這位角色沒有自己的匯入模型，戰鬥中的實際外觀另行決定";
 export const STAND_IN_NOTE_EN =
-  "stand-in model — preview only; in combat this champion wears its own generated voxel look";
+  "stand-in model — preview only; this champion has no imported model of its own, and what it wears in combat is decided separately";

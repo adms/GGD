@@ -860,6 +860,12 @@ export interface LegendPlacementOpts {
    * how the 812x375 strip came to clip 「F EX 技能」 off the bottom.
    */
   rows: readonly LegendRow[];
+  /**
+   * ⭐ GH#199 —— 同一份 gate，省略 = 出貨值（{@link DEFAULT_LEGEND_PHASE_GATE}）。
+   * ⛔ 這裡刻意**不**另開一個 `hideOnTouch?: boolean` 參數：那會是第二個住處，
+   * 而兩個住處遲早會說不一樣的話。
+   */
+  gate?: LegendPhaseGate;
 }
 
 /**
@@ -872,6 +878,11 @@ export function controlLegendRect(
   opts: LegendPlacementOpts,
 ): LegendRect | null {
   const { touch, couchPlayers, rows } = opts;
+  // ⭐ GH#199 —— 觸控裝置上這個框**不存在**：不畫、也不宣告任何矩形。
+  // owner 2026-07-28:「手機不必顯示操作說明，因為沒有隱藏按鍵了」——
+  // 觸控介面的按鍵全部**看得到**，沒有需要被說明的隱藏鍵位。
+  // ⛔ 這一行拿掉，觸控又會拿到一條 strip，而它會回來跟裝備欄搶同一塊空間。
+  if (touch && (opts.gate ?? DEFAULT_LEGEND_PHASE_GATE).hideOnTouch) return null;
   const couch = couchPlayers > 1;
   if (touch || couch) return stripRect(viewport, touch, couchPlayers, rows);
   // Desktop prefers the flank. When the flank is too SHORT for the whole
@@ -1031,6 +1042,23 @@ export interface LegendPhaseGate {
   combatRoundLimit: number;
   /** menu card is a PAD concept — a mouse/touch player never sees a focus ring */
   gamepadOnly: boolean;
+  /**
+   * ⭐ GH#199 —— 觸控裝置**一格都不畫**。owner 2026-07-28 裁決：
+   * 「手機不必顯示操作說明，**因為沒有隱藏按鍵了**」。
+   *
+   * ⚠️ 這是一個**決策點**（第一守則），所以它是一格資料而不是寫死的 `if`：
+   * 「觸控要不要提示」與「第幾回合才提示」是同一種選擇，兩者住在同一個 gate。
+   * 預設 `true` = owner 明說的那一邊（第〇·六守則：優先權大的更新預設啟動）。
+   *
+   * ⭐ 它被讀在 {@link controlLegendRect}，**不是** {@link controlLegendLayer}：
+   * 票要求的斷言是「觸控 390×844 下 control legend **不佔任何幾何空間**」，
+   * 而幾何是這一支函數的答案。⛔ 一個「有 touch 旗標被讀到」的屬性斷言對
+   * 壞掉的實作也會過（失敗形態⑦）。
+   *
+   * ⭐ 它也**一併解掉** GH#275b 的優先權衝突：觸控下這個框不再宣告任何矩形，
+   * 所以 `reservedRects` 不需要把裝備欄排除掉 —— 沒有東西在跟它搶。
+   */
+  hideOnTouch: boolean;
 }
 
 /**
@@ -1045,6 +1073,8 @@ export const DEFAULT_LEGEND_PHASE_GATE: LegendPhaseGate = {
   phases: ["combat", "champSelect", "intermission", "matchEnd"],
   combatRoundLimit: 1,
   gamepadOnly: true,
+  // GH#199 —— owner 明說的那一邊。⛔ 觸控不畫，⛔ 不是縮小、不是半透明。
+  hideOnTouch: true,
 };
 
 /**
