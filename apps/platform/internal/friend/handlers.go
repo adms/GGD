@@ -32,6 +32,36 @@ func (h *Handlers) Mount(r chi.Router) {
 	r.Post("/friends/requests/{accountId}/decline", h.decline)
 	r.Delete("/friends/{accountId}", h.remove)
 	r.Post("/friends/{accountId}/block", h.block)
+	// 管理員預設好友 的回填 (GH#499) — the Quick Approval「加入」區 button.
+	r.Post("/friends/admin-backfill", h.adminBackfill)
+}
+
+// adminBackfill re-runs the 管理員預設好友 pass over EVERY existing account
+// (GH#499). It belongs to Quick Approval's ①加入 half by construction: it only
+// ever ADDS friendships, never removes one, so it needs no two-step preview and
+// no restore point (see #495's two-zone rule).
+//
+// ⛔ It is mounted on the ordinary authenticated router rather than the admin
+// one, so the role check is HERE and not in a middleware — an unauthorised
+// caller gets the same 404 an unknown route would, because「這個站有一個只有管理員
+// 按得動的按鈕」is itself information.
+func (h *Handlers) adminBackfill(w http.ResponseWriter, r *http.Request) {
+	me := auth.MustIdentity(r.Context())
+	acct, err := h.accounts.GetByID(r.Context(), me.AccountID)
+	if err != nil || !acct.HasRole(account.RoleAdmin) {
+		httpx.WriteError(w, httpx.NotFound("not found"))
+		return
+	}
+	if h.svc.autoAdmin == nil {
+		httpx.WriteError(w, httpx.BadRequest("管理員預設好友 is not wired on this deploy"))
+		return
+	}
+	res, err := h.svc.autoAdmin.Backfill(r.Context())
+	if err != nil {
+		httpx.WriteError(w, httpx.BadRequest(err.Error()))
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, res)
 }
 
 type friendEntry struct {

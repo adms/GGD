@@ -160,6 +160,10 @@ export const NAV: NavItem[] = [
   // that actually owns that thing. This page owns no state of its own.
   { page: "quickApproval", label: "Quick Approval", emoji: "🚦", section: SEC_OPS },
   { page: "players", label: "Players", emoji: "👤", section: SEC_OPS },
+  // 管理員預設好友 (GH#499「所有人預設都會加管理員帳號為好友」) —— 緊接在 Players
+  // 後面，因為它改的是**每一個帳號**的社交圖，不是任何一場比賽。⚠️ 它的消費端是
+  // Go 平台（`internal/friend/adminfriend.go`），存檔就生效。
+  { page: "adminFriend", label: "管理員預設好友", emoji: "🤝", section: SEC_OPS },
   { page: "matches", label: "Matches", emoji: "⚔️", section: SEC_OPS },
   // 排名獎勵 (owner 2026-08-17「MMR 倍率跟賽季積分也是類似的規則」) —— 一場比賽
   // 值多少 MMR／賽季積分。⚠️ 放「營運」而**不是**「戰鬥規則」是刻意的：那一區問

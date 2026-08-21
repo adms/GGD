@@ -101,6 +101,8 @@ import {
   // 被四頁共同編輯的 config，所以它是唯一用得到 `ConfigDocSpec.elsewhere` 的。
   zConfigArenaRulesDoc,
   // 大廳集合令（GH#492，owner 2026-08-21）—— 走 barrel，同上面那一族。
+  // 管理員預設好友（GH#499，owner 2026-08-21）—— 走 barrel，同上面那一族。
+  zConfigAdminFriendDoc,
   zConfigLobbyRallyDoc,
 } from "@ggd/shared/content";
 // ⚠️ 同上的深路徑理由：這兩份 Zod 住自己的檔案（欄位理由長、且 sim 直接吃）。
@@ -4421,6 +4423,57 @@ const LOBBY_RALLY_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
+// ──────────────────────────────────────── 管理員預設好友 (config/admin-friend) ─
+
+/**
+ * ⭐ 管理員預設好友（GH#499）。⚠️ 這一頁和這個檔案裡其他每一頁都不同的地方：
+ * **它的消費端是 Go 平台，不是客戶端也不是 game-server** —— 所以「後台存了、
+ * 平台讀不到」不會有任何 TypeScript 測試看得見，和 `RANKING_SPEC` 同一個處境。
+ * 對得起來的那一半住在 `apps/platform/internal/friend/adminfriend_test.go`
+ * （它讀真的 `content/config/admin-friend.json`，逐格比對 Go 的出貨預設）。
+ */
+const ADMIN_FRIEND_SPEC: ConfigDocSpec = {
+  page: "adminFriend",
+  collection: "config",
+  docId: "admin-friend",
+  schemaTag: "config.admin-friend@1",
+  zod: zConfigAdminFriendDoc,
+  title: "管理員預設好友",
+  intro: [
+    "⭐ owner 2026-08-21 逐字：「**所有人預設都會加管理員帳號為好友**」「**管理員是強制雙向 不必請求 每個人創號自動預設有管理員好友**」。這一頁是那兩句話的全部參數。",
+    "⭐ **強制雙向，⛔ 不是送出好友請求。** 平台直接寫入雙方的好友邊（`ForceFriend`），⛔ 不走「送出請求等對方接受」那條路 —— 對既有的 198 個帳號跑一次，那條路會產生 **198 個沒有人會按的待處理請求**，功能看起來做完了而實際效果是零。",
+    "⚠️⚠️ **這一頁的隱私後果要先看懂再存檔**：被指名的那個管理員會出現在**每一個玩家**的好友名單上，而好友名單會即時顯示**在線狀態**（在線／在大廳／比賽中）。⇒ 這等於**讓那個帳號看得到全站每一個人現在在不在、正在幹嘛**，也讓每一個人看得到他。⛔ 不要填一個不是站方的人。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/admin-friend.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "apps/platform/internal/friend/adminfriend.go 的 AutoAdmin.Policy() → ResolveAdminID()，由 account.Repo.Create 的 post-create hook（新帳號當下）與 Server.Boot 的 BackfillAdminFriendsInBackground（既有帳號）消費",
+  effect:
+    "**平台每一次決策都重讀一次**（和 商店經濟 💎 同一個形態）—— 存檔之後下一個註冊的帳號就吃到新設定，⛔ 不必重建映像。⚠️ 但**既有帳號的回填是開機時跑的**，所以打開「開機回填既有帳號」之後要等平台重啟一次，或去 Quick Approval 的「加入」區手動按一次。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "總開關：新帳號自動加管理員好友",
+      note: "關掉之後，新註冊的帳號不再自動有管理員好友，開機回填也不會跑。⛔ 它**不會**拆掉任何已經建立的好友關係 —— 那是移除動作，要拆得由玩家自己在好友名單裡移除。這一格是「以後還要不要繼續加」的一鍵 rollback。",
+    },
+    {
+      path: "adminAccountId",
+      zh: "⭐ 大家會被加到的那個管理員帳號 id",
+      note: "填 **auto**（出貨值）＝ owner 說的「如果只有一個就預設那一個」：系統只有一個管理員帳號時就是它，兩個以上時平台**不替你挑人**、只記一行 log 等你來填。填一個實際的帳號 id 則是 fail closed —— 那個帳號讀不到、或它其實沒有管理員角色，平台什麼都不做也不會退回自動，因為一個打錯的 id 靜靜地把全站好友加到別人身上比不加更糟。⛔ 不可以留空（要回到自動請填 auto）。",
+    },
+    {
+      path: "backfillExisting",
+      zh: "開機時回填既有帳號",
+      note: "⭐ 這是 owner 那句「所有人」的另一半：只接新帳號等於今天以後註冊的人才有，而站上已經有 198 個帳號 —— 也就是絕大多數人沒有。冪等，已經是好友的帳號一次寫入都不會發生，所以它可以每次開機跑。關掉之後既有帳號改由 Quick Approval 的「加入」區手動觸發。",
+    },
+    {
+      path: "overrideBlocked",
+      zh: "封鎖了管理員也照樣強制加回去",
+      note: "出貨**關著**。owner 說的「強制」指的是「不必送請求」，而封鎖是玩家明確按下去的動作 —— 打開這一格等於「封鎖對管理員無效」，那是站方應該自己決定、而不是被預設值決定的事。打開時會連封鎖名單一起清掉，否則會留下「是好友、但也在封鎖名單上」這種兩個互相矛盾的真相。",
+    },
+  ],
+  preserved: [],
+};
+
 export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   // 競技場規則（GH#410）。⚠️ 這一列同時做了兩件事：①把八個一直調不到的區塊變成
   // 真的欄位；②讓 `configForms.test.ts` 的「每一個葉節點都有標籤」**開始管**
@@ -4444,6 +4497,10 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   // 跟 store.ts 的 `Page` union + `SESSION_REQUIRED_PAGES`、App.tsx 的導覽列一列，
   // 以及 `content/config/lobby-rally.json` 出貨檔一起，才到得了操作者手上。
   LOBBY_RALLY_SPEC,
+  // 管理員預設好友（GH#499，owner 2026-08-21）。⚠️ 同 AUDIO_MIX_SPEC 那一段：這一列
+  // 要跟 store.ts 的 `Page` union + `SESSION_REQUIRED_PAGES`、App.tsx 的導覽列一列，
+  // 以及 `content/config/admin-friend.json` 出貨檔一起，才到得了操作者手上。
+  ADMIN_FRIEND_SPEC,
   // 排名獎勵（owner 2026-08-17）。⚠️ 同 AUDIO_MIX_SPEC 那一段的三件事，外加一件
   // 這一頁獨有的：它的消費端是 **Go**（`internal/ranking/standingsoverride.go`），
   // 所以「後台存了、Go 端讀不到」不會有任何 TypeScript 測試看得見 ——

@@ -280,6 +280,14 @@ export type Page =
    */
   | "lobbyRally"
   /**
+   * 管理員預設好友 (`config/admin-friend.json`, GH#499「所有人預設都會加管理員帳號
+   * 為好友」「管理員是強制雙向 不必請求」) —— 同一個 `ConfigDocPage` 元件、同一條
+   * `putOverlayDoc`。⚠️ 消費端是 **Go 平台**（`internal/friend/adminfriend.go`），
+   * 而且是**每一次決策重讀**，所以存檔就生效，⛔ 不必重啟 shard —— 只有「開機回填
+   * 既有帳號」那一格要等下一次重啟（或去 Quick Approval 手動按一次）。
+   */
+  | "adminFriend"
+  /**
    * 排名獎勵 (`config/ranking.json`, owner 2026-08-17「MMR 倍率跟賽季積分也是類似
    * 的規則」) —— 真人倍率進 MMR／賽季積分的兩格 share，加上宿敵加成。
    * ⚠️ 它的消費端是 **Go**（`internal/ranking/standingsoverride.go`），而且是
@@ -681,6 +689,9 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // 大廳集合令 (GH#492): 同上。⛔ 漏掉 gate 的話沒登入的人改得到「一鍵開打要不要
   // 先等人」與倒數秒數 —— 那是每一場比賽開場前的節奏。
   "lobbyRally",
+  // 管理員預設好友 (GH#499): 同上。⛔ 漏掉 gate 的後果在這一頁特別重 —— 那一格填的是
+  // 「誰會出現在每一個玩家的好友名單上、因此看得到全站每一個人的在線狀態」。
+  "adminFriend",
   // 排名獎勵 (owner 2026-08-17): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   // ⛔ 漏掉 gate 的後果在這一頁特別重: 它決定的是「一場比賽值多少排名分」,
   // 而沒登入的人改得到它 = 任何人都能替自己開加成。

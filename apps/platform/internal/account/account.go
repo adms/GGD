@@ -227,7 +227,41 @@ type Repo struct {
 	store *jsonstore.Store
 	rdb   *redisx.Client
 	locks *keyedmutex.M
+
+	// postCreate runs AFTER a Create has durably landed. nil = nothing wired
+	// (every unit test, and any deploy that turned the feature off).
+	postCreate PostCreateHook
 }
+
+// PostCreateHook is notified once per account that DURABLY EXISTS.
+//
+// ---- WHY IT RETURNS NOTHING (GH#499) ----------------------------------------
+// owner 2026-08-21:「**每個人創號自動預設有管理員好友**」. The obvious way to hang
+// that off registration is a step in auth.Register — but the thing that must be
+// impossible is 「帳號沒建成，好友關係卻留下來了」, and a hook placed anywhere
+// BEFORE the account file lands can produce exactly that. So the seam is here,
+// at the last statement of Create, where the account is already durable:
+//
+//   - Create failed  → this never runs → no orphan edge, by construction.
+//   - Create landed  → the edge is written against an account that exists.
+//
+// It returns no error ON PURPOSE. A friendship that could not be written is a
+// degraded feature (an admin can re-run the backfill); failing the Create would
+// destroy an account the caller already paid an argon2id for and — on the
+// registration path — already burned an invite code for. Same reasoning as
+// auth's own POST-CREATE, ALL BEST-EFFORT block. ⚠️ Best-effort therefore means
+// the implementation MUST log loudly on failure: a silent fail-open is the
+// defect, not the fail-open itself.
+type PostCreateHook interface {
+	AfterAccountCreated(ctx context.Context, accountID string)
+}
+
+// SetPostCreateHook installs the post-create notification (composition root
+// only). Nil disables it. ⛔ This package must never import the hook's
+// implementation: internal/friend already imports internal/account, so the
+// edge would be an import cycle — the same reason auth takes WalletSeeder as an
+// interface instead of importing internal/wallet.
+func (r *Repo) SetPostCreateHook(h PostCreateHook) { r.postCreate = h }
 
 // NewRepo builds the repository.
 func NewRepo(store *jsonstore.Store, rdb *redisx.Client) *Repo {
@@ -338,6 +372,12 @@ func (r *Repo) Create(ctx context.Context, a Account) error {
 	if err := r.store.Put(ColAccounts, a.ID, a); err != nil {
 		rollback()
 		return err
+	}
+	// The account is now DURABLE. Everything past this line is best-effort and
+	// must not be able to fail the create (see PostCreateHook) — which is also
+	// why it sits below the last rollback point rather than beside it.
+	if r.postCreate != nil {
+		r.postCreate.AfterAccountCreated(ctx, a.ID)
 	}
 	return nil
 }

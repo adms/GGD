@@ -58,6 +58,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   approveAccount,
+  backfillAdminFriends,
   bulkWhitelist,
   evictTransformedBodies,
   getCombatEnv,
@@ -669,6 +670,8 @@ export function QuickApprovalPage(): React.JSX.Element {
           </div>
 
           {result !== null && <ResultPanel result={result} />}
+
+          <AdminFriendBackfillCard busy={busy} />
         </>
       )}
 
@@ -678,6 +681,60 @@ export function QuickApprovalPage(): React.JSX.Element {
 
       <OwnerOnlyElsewhere onNavigate={(p) => navigate(p)} />
     </div>
+  );
+}
+
+/**
+ * 管理員預設好友 的回填 (GH#499) — owner 2026-08-21:「所有人預設都會加管理員帳號
+ * 為好友」.
+ *
+ * ⭐ IT LIVES IN ZONE ①, and that is a claim this component has to earn: the
+ * action only ever ADDS friendships and can never remove one, so it needs no
+ * two-step preview and no restore point (#495's rule for what may sit behind one
+ * press). ⛔ If it ever grows an "unlink" direction it belongs in 第②區, not here.
+ *
+ * New accounts are linked at creation time by the platform, and existing ones at
+ * boot — so this button is for the case where the owner has JUST changed
+ * `adminAccountId` in 管理員預設好友 and does not want to restart to see it apply.
+ * Idempotent, so pressing it twice costs nothing.
+ */
+export function AdminFriendBackfillCard(props: { busy: boolean }): React.JSX.Element {
+  const [running, setRunning] = useState(false);
+  const [msg, setMsg] = useState<string | null>(null);
+  const [failed, setFailed] = useState(false);
+  const run = async (): Promise<void> => {
+    setRunning(true);
+    setMsg(null);
+    try {
+      const r = await backfillAdminFriends();
+      setFailed(r.failed > 0);
+      setMsg(
+        `✓ 掃過 ${r.scanned} 個帳號，新接上 ${r.linked} 個（其餘本來就已經是好友）` +
+          (r.failed > 0 ? `，⚠ ${r.failed} 個失敗，請看平台 log` : ""),
+      );
+    } catch (e) {
+      setFailed(true);
+      setMsg(e instanceof Error ? e.message : String(e));
+    } finally {
+      setRunning(false);
+    }
+  };
+  return (
+    <Panel title="① 加入 · 管理員預設好友回填">
+      <div style={{ fontSize: 12, color: TEXT_DIM, lineHeight: 1.8 }}>
+        把<b>每一個既有帳號</b>都接上管理員好友（<b>強制雙向，不送請求</b>）。
+        新帳號在註冊當下就會接上，這一顆是給「剛剛在 <b>管理員預設好友</b> 換了帳號 id、
+        不想等平台重啟」的情況。<b>只會加入，永遠不會移除任何好友關係</b>，重複按也不會有副作用。
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 10, flexWrap: "wrap" }}>
+        <Btn kind="primary" onClick={() => void run()} disabled={running || props.busy}>
+          {running ? "回填中…" : "回填既有帳號"}
+        </Btn>
+        {msg !== null && (
+          <span style={{ fontSize: 12, color: failed ? WARN : OK }}>{msg}</span>
+        )}
+      </div>
+    </Panel>
   );
 }
 

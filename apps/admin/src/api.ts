@@ -820,3 +820,27 @@ export function archiveDeleteBackup(stamp: string): Promise<{ status: string; st
     { method: "DELETE" },
   );
 }
+
+/**
+ * 管理員預設好友 的回填 (GH#499) — link EVERY existing account to the
+ * administrator, both ways, in one pass.
+ *
+ * ⭐ It belongs to Quick Approval's ① 加入 zone by construction: it only ever
+ * ADDS friendships and can never remove one, so it needs no two-step preview and
+ * no restore point (#495's two-zone rule).
+ *
+ * Idempotent — an account that is already linked costs one read and zero writes,
+ * so pressing it twice is free. The platform also runs it at boot; this button
+ * is for the case where the owner just named a different `adminAccountId` and
+ * does not want to wait for a restart.
+ */
+export interface AdminFriendBackfillResult {
+  adminId: string;
+  scanned: number;
+  linked: number;
+  failed: number;
+}
+
+export function backfillAdminFriends(): Promise<AdminFriendBackfillResult> {
+  return api.request<AdminFriendBackfillResult>("/friends/admin-backfill", { body: {} });
+}

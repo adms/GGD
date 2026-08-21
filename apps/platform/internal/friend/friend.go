@@ -47,6 +47,10 @@ func emptyDoc(id string) Doc {
 type Service struct {
 	store *jsonstore.Store
 	locks *keyedmutex.M
+
+	// autoAdmin is 管理員預設好友 (GH#499). nil = not wired (every unit test, and
+	// any deploy that never called EnableAdminAutoFriend). See adminfriend.go.
+	autoAdmin *AutoAdmin
 }
 
 // New builds the friend service.
@@ -139,6 +143,57 @@ func (s *Service) Request(ctx context.Context, actor, target string) error {
 		b.Incoming[actor] = e
 		return nil
 	})
+}
+
+// ForceFriend makes a and b friends WITHOUT a request/accept round trip
+// (GH#499). owner 2026-08-21:「**管理員是強制雙向 不必請求**」.
+//
+// ⛔ It is deliberately NOT Request(): Request sends a pending edge that the
+// other side has to accept, so running it for every account would have turned
+// 198 accounts into 198 pending requests nobody would ever press — the feature
+// would look done and be zero. This writes BOTH Friends edges in the one
+// two-sided transaction withBoth already provides, so「只有一邊看得到對方」
+// is not a reachable state.
+//
+// Idempotent: already-friends is a no-op that reports changed=false, so a
+// backfill can run on every boot without rewriting 198 files.
+//
+// Any pending request between the two (in either direction) is CONSUMED rather
+// than left behind — a stale「等待對方接受」row pointing at somebody who is
+// already your friend is the same lie in a different table.
+//
+// overrideBlocked decides the one case owner did not rule on: b has BLOCKED a
+// (or vice versa). Blocking is an explicit player action, so the shipped
+// default respects it and reports changed=false; the admin knob flips it for a
+// deploy that wants「強制」to mean strictly forced.
+func (s *Service) ForceFriend(ctx context.Context, a, b string, overrideBlocked bool) (bool, error) {
+	changed := false
+	err := s.withBoth(a, b, func(x, y *Doc) error {
+		if _, ok := x.Friends[b]; ok {
+			if _, ok := y.Friends[a]; ok {
+				return nil // already both ways — nothing to write
+			}
+		}
+		_, blockedByOther := y.Blocked[a]
+		_, blockedByMe := x.Blocked[b]
+		if (blockedByOther || blockedByMe) && !overrideBlocked {
+			return nil
+		}
+		if overrideBlocked {
+			delete(x.Blocked, b)
+			delete(y.Blocked, a)
+		}
+		now := Edge{At: time.Now()}
+		delete(x.Incoming, b)
+		delete(x.Outgoing, b)
+		delete(y.Incoming, a)
+		delete(y.Outgoing, a)
+		x.Friends[b] = now
+		y.Friends[a] = now
+		changed = true
+		return nil
+	})
+	return changed, err
 }
 
 // Accept accepts a pending request that was sent BY requester TO actor.

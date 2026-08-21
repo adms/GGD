@@ -219,6 +219,10 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 	})
 	pres := presence.New(rdb, cfg.PresenceTTL)
 	friends := friend.New(store)
+	// 管理員預設好友 (GH#499, owner 2026-08-21「每個人創號自動預設有管理員好友」).
+	// The hook fires from account.Repo.Create's post-create seam, so a failed
+	// registration can never leave an orphan friendship behind.
+	accounts.SetPostCreateHook(friends.EnableAdminAutoFriend(accounts, friend.LoadAdminPolicy(cfg.ContentDir)))
 	rooms := room.New(rdb, pres)
 	templates := room.NewTemplates(store)
 	ladder := ranking.DefaultLadderConfig()
@@ -765,7 +769,16 @@ func (s *Server) Boot(ctx context.Context) error {
 	// Report the deploy's ownership state (and mint/clear the one-time owner
 	// token). This runs LAST so it sees the bootstrap grant above and reports
 	// the deploy as owned rather than reopening the claim window for it.
-	return s.Auth.PrepareOwnerBootstrap(ctx)
+	if err := s.Auth.PrepareOwnerBootstrap(ctx); err != nil {
+		return err
+	}
+	// 管理員預設好友 的回填 (GH#499). ⭐ Linking only NEW accounts would leave the
+	// 198 that already exist without it — i.e. almost everybody. It runs AFTER
+	// EnsureBootstrapAdmin above on purpose: that is what makes the admin it has
+	// to resolve already carry the role. Backgrounded and non-fatal — a social
+	// convenience must never stop the platform booting.
+	s.Friends.BackfillAdminFriendsInBackground(ctx)
+	return nil
 }
 
 // reaperInterval is the sweep period this binary REQUESTS. gamelink clamps it
