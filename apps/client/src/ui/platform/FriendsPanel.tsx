@@ -31,7 +31,7 @@ export function FriendsPanel(): React.JSX.Element {
     return () => clearInterval(t);
   }, [refreshFriends]);
 
-  // ⭐ GH#536 —— owner 2026-08-22:「朋友清單,有上線的應該會特別排到最上面顯示吧?」
+  // ⭐ GH#537 —— owner 2026-08-22:「朋友清單,有上線的應該會特別排到最上面顯示吧?」
   //
   // ⚠️ 排序吃的是**合併後**的狀態（WS 推播疊在 REST 快照上），⛔ 不是 `f.state`
   //    那一半 —— REST 是 `FRIENDS_POLL_MS = 10_000` 才重抓一次,拿它排等於「綠點
@@ -83,7 +83,17 @@ export function FriendsPanel(): React.JSX.Element {
       {/* GH#514 —— 一列只有在「我是房主且對方在線」時才長出 Invite 按鈕，所以
           平常這整塊對手把沒有任何焦點落點 ⇒ 好友一多就捲不下去。 */}
       <div {...padFocusLanding()} style={{ flex: 1, overflowY: "auto", minHeight: 0 }}>
-        {rows.length === 0 && (
+        {/* ⭐ GH#537 ② —— owner:「似乎是**讀取不夠快**」。
+            ⚠️ 在此之前這兩件事共用同一句話:清單**還沒到**(`friends === null`)
+            跟**真的一個朋友都沒有**都印「No friends yet」。GH#499 之後 owner 的
+            帳號有 **198 個**朋友,所以他在載入那一段看到的是一句**假話** ——
+            而那正是「讀取不夠快」在畫面上的樣子。
+            ⭐ 這條規矩隔壁的 `onlinePlayers.ts` 已經寫著了(「⛔ 永遠不是宣稱名單
+            是空的理由」),朋友面板只是沒有照做。 */}
+        {friends === null && (
+          <div style={{ fontSize: 12, color: TEXT_DIM }}>讀取朋友清單中…</div>
+        )}
+        {friends !== null && rows.length === 0 && (
           <div style={{ fontSize: 12, color: TEXT_DIM }}>No friends yet — add one by username.</div>
         )}
         {rows.map((f) => {

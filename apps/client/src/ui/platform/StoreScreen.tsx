@@ -376,6 +376,7 @@ export function StoreScreen(): React.JSX.Element {
   const wallet = useApp((s) => s.wallet);
   const purchaseBegin = useApp((s) => s.purchaseBegin);
   const equip = useApp((s) => s.equip);
+  const refreshFriends = useApp((s) => s.refreshFriends);
   const [selected, setSelected] = useState<SkinRow | null>(null);
   // `null` = NOBODY HAS TAKEN THE WHEEL. It is not the same as 0: the stage
   // idles on its own slow turntable, and handing it an angle is what stops
@@ -410,6 +411,26 @@ export function StoreScreen(): React.JSX.Element {
   // carried-over angle would describe the previous skin's pose. Hand the wheel
   // back at every change of subject.
   useEffect(() => setYawDeg(null), [shown?.id]);
+
+  // ⭐ GH#537 ② —— owner 2026-08-22：「似乎是**讀取不夠快** 並且**沒有提前在商店
+  // 完成讀取**的緣故」。這是那句話的第二半，⛔ 不是排序那一半（`friendOrder.ts`）。
+  //
+  // ⚠️ 在此之前好友清單只有**兩個**抓取點：登入時的那一趟 fan-out，以及
+  // `FriendsPanel` 掛著時每 10 秒一次的輪詢。兩者之間有一個真的洞 ——
+  // `store.ts::refreshFriends` 是**靜默 fail**（`catch { /* transient */ }`），
+  // 所以登入那一趟只要掉一次，`friends` 就一直是 `null`，而**面板沒被掛起來的
+  // 期間沒有任何人會再試一次**。逛商店正是那段期間。
+  //
+  // ⭐ 商店是正確的時機，跟 `GameApp.warmGroundForNextRound`（GH#536，同一則裁決
+  // 的另一半）是同一個理由：**這時候沒有任何東西趕時間**，玩家在逛，而回大廳的
+  // 那一刻清單必須已經在手上。⛔ 不是「回大廳時才開始抓」。
+  //
+  // ⚠️ 只在**進商店那一格**做（空 deps）⛔ 不是每次 re-render —— 逛商店時的即時
+  // 上下線由 WS 推播疊在快照上（`FriendsPanel` 的 `presence[f.id] ?? f.state`），
+  // 所以這裡不需要第二個輪詢，只需要讓快照存在。
+  useEffect(() => {
+    void refreshFriends();
+  }, [refreshFriends]);
 
   return (
     <div style={{ display: "flex", gap: 14, flex: 1, minHeight: 0 }}>
