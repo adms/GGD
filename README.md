@@ -416,7 +416,7 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 
 其餘 **16** 項是 1.0（不動）：`abilityPower`、`attackSpeed`、`critChance`、`critDamage`、`damageDealt`、`defense`、`goldHeroKill`、`goldQuest`、`goldRoundPayout`、`healing`、`healthRegen`、`itemCooldown`、`lifesteal`、`maxMana`、`moveSpeed`、`shield`。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_377d5d720fbb` 產生。 倍率讀 `content/config/combat-env.json`（version 9）。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_116659ae0eab` 產生。 倍率讀 `content/config/combat-env.json`（version 9）。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:combat-env -->
 
 倍率表在 tick 0 之前注入模擬並隨快照下發，兩邊用同一支正規化函式，所以預測與伺服器永遠對得上。技能卡面上的冷卻／距離／傷害怎麼過這張表，見 [⭐ 技能五級距](#-技能五級距)。
@@ -452,7 +452,7 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 | `arena.skeleton` | 新手競技場 | 🔁 | 24 | 2 | 4 | 12 | `stone` | — | 24+20 | — |
 | `arena.world-tree` | 世界樹核心 | 🔁 | 30 | 2 | 24 | 12 | `grass` | ✅ | 29+36 | 區域×10、互動×16、機關門 |
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_377d5d720fbb` 產生。 輪替 12 / 全 13 張。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_116659ae0eab` 產生。 輪替 12 / 全 13 張。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:arenas -->
 
 ### 設定陷阱（改了不會生效）
@@ -619,7 +619,8 @@ make lan-probe
 | 上限 | `content/config/stat-caps.json` |
 | 每位英雄的出身 | `content/champions/*.json` 的 `origin`（批次改用 `pnpm champions:csv:export`） |
 
-#### 十出身 × 十一屬性 —— 每一格落在哪一級距
+<!-- BEGIN GENERATED:stat-bands -->
+#### 十出身 × 十一屬性 —— 每一格落在哪一級距（10 × 11）
 
 | 出身 | 移速 | 攻速 | 攻擊力 | 法強 | 生命 | 裝甲 | 魔抗 | 魔力 | 生命回復 | 魔力回復 | 攻擊距離 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
@@ -634,30 +635,40 @@ make lan-probe
 | **硬輔** | 小 | 小 | 小 | 大 | 大 | 大 | 大 | 小 | 小 | 小 | 近戰・中 1.6 |
 | **軟輔** | 小 | 小 | 小 | 大 | 小 | 小 | 小 | 小 | 大 | 大 | 遠程・中 8.2 |
 
-
 **級距語意**：`極小 = 缺陷 · 小 = 偏低 · 中 = 標準 · 大 = 優勢 · 極大 = 特化`
 
 #### 級距的實際數值與上限
 
 | 屬性 | 極小 | 小 | 中 | 大 | 極大 | 一般上限 | 解鎖上限 | 生效中 |
 |---|--:|--:|--:|--:|--:|--:|--:|:-:|
-| 移速 | 5 | 6 | 8 | 10 | 12 | 18 | 18 | ✅ |
-| 攻速 | 1 | 1.6 | 2 | 2.5 | 4 | 4 | 10 | ⛔ |
-| 攻擊力 | 210 | 336 | 420 | 525 | 840 | 21200 | 21200 | ✅ |
+| 移速 | 5 | 6 | 8 | 10 | 12 | 18 | 24 | ✅ |
+| 攻速 | 1 | 1.6 | 2 | 2.5 | 4 | 4 | 10 | ✅ |
+| 攻擊力 | 210 | 336 | 420 | 525 | 840 | 33493 | 33493 | ✅ |
 | 法強 | 94.25 | 150.8 | 188.5 | 235.63 | 377 | 500000 | 500000 | ✅ |
-| 生命 | 4074.6 | 6519.36 | 8149.2 | 10186.5 | 16298.4 | 375960 | 375960 | ✅ |
-| 裝甲 | 45.05 | 72.07 | 90.09 | 112.61 | 180.18 | 5078 | 5078 | ✅ |
-| 魔抗 | 129.35 | 206.96 | 258.7 | 323.38 | 517.4 | 15344 | 15344 | ✅ |
-| 魔力 | 2492.75 | 3988.4 | 4985.5 | 6231.88 | 9971 | 232150 | 232150 | ✅ |
-| 生命回復 | 8.43 | 13.48 | 16.85 | 21.06 | 33.7 | 744 | 744 | ✅ |
-| 魔力回復 | 10.11 | 16.18 | 20.22 | 25.27 | 40.44 | 926 | 926 | ✅ |
+| 生命 | 4074.6 | 6519.36 | 8149.2 | 10186.5 | 16298.4 | 555243 | 555243 | ✅ |
+| 裝甲 | 45.05 | 72.07 | 90.09 | 112.61 | 180.18 | 5237 | 5237 | ✅ |
+| 魔抗 | 129.35 | 206.96 | 258.7 | 323.38 | 517.4 | 16191 | 16191 | ✅ |
+| 魔力 | 2492.75 | 3988.4 | 4985.5 | 6231.88 | 9971 | 338713 | 338713 | ✅ |
+| 生命回復 | 8.43 | 13.48 | 16.85 | 21.06 | 33.7 | 1366 | 1366 | ✅ |
+| 魔力回復 | 10.11 | 16.18 | 20.22 | 25.27 | 40.44 | 1711 | 1711 | ✅ |
 | **攻擊距離**（近戰尺） | 1.2 | 1.4 | 1.6 | 1.8 | 2 | 16 | 16 | ✅ |
 | **攻擊距離**（遠程尺） | 6 | 7 | 8.2 | 10 | 12 | 16 | 16 | ✅ |
 
 - 「級距值」是**基準等級（99 級）的最終總值**，⛔ 不是初始值
 - 「解鎖上限」要靠道具／技能標籤才碰得到
-- 移速的極大 **12** 貼著碰撞安全線（每 tick 走身體半徑 67%），上限 **18** 是穿牆平手線本身
-- 攻速 ⛔ 不在生效名單：它已經有 `stat-caps` 兩層在管，正規化會是第三層
+- ⛔ 「生效中」是這張表最容易說謊的一欄：級距數字一直都在，但 `⛔` 的那幾項**沒有接進 `appliesTo`**，照它們調平衡會調到一條沒接上的線
+- 移速那一列的兩個天花板是**碰撞物理**不是偏好：一般上限就是**穿牆平手線**（每 tick 剛好走滿一個身體半徑），級距的極大刻意留在線內 —— 推導在 `packages/shared/src/sim/statCaps.ts`
+
+#### 🔴 每級成長 **100% 由出身決定**（三圍成長已經全部歸 0）
+
+> 力量／敏捷／智慧的**每級成長全部是 0**（71/71 張英雄卡，含變身態）。一位英雄升一級拿到的每一點，都是引擎**反解**出來的 —— 反解的目標就是上表那一格級距值（等級 99 的終值）。
+>
+> ⭐ owner 的分工一句話：**初始＝個性（卡上的 `baseStats`），成長＝定位（出身的級距）**。兩位同出身的英雄可以有不同的起點，但他們在等級 99 收斂到同一格。
+>
+> ⚠️ 所以調 `combat-env` 的 `intToAbilityPower` **不會**讓法強終值變高 —— 它只改「等級 1 拿到多少」，反解把差額從每級成長裡等量扣掉，等級 99 逐位元不變。要改法強終值只有一格：上表的 `bands.ap`。
+
+*由 `pnpm docs:readme` 從 contentVersion `cv_116659ae0eab` 產生。 級距與 `appliesTo` 讀 `content/config/stat-normalization.json`、上限讀 `stat-caps.json`、成長現況現場數 `content/champions/`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+<!-- END GENERATED:stat-bands -->
 
 **49 位可選英雄的逐隻對照**（出身 / 普攻距離 / 核心玩法 / 選角說明）在
 [`docs/英雄定位與屬性總表.md`](docs/英雄定位與屬性總表.md)，
@@ -790,6 +801,8 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 同一份 config 裡另外 **2** 個欄位五格是同一個值（⇒ 它是伴隨參數，⛔ 不是一條級距）：`travel.speed` = **16**（`displacement-tiers.json`）、`push.speed` = **16**（`displacement-tiers.json`）。
 
+> ⚠️ **英雄卡那一軸有 1 格今天是 0 份用量**：`asGrowthTier`。級距表、後台欄位、schema 都在，但**沒有一張卡填它** —— 那條屬性已經交給 `config.stat-normalization@1` 的出身表（`appliesTo` 現在有 11 條）。⛔ 不要因為表上印著五格就以為它是一個可以填的設計維度。
+
 ##### 二 · 卡面 ↔ 實際（表上的數字**不是**玩家吃到的數字）
 
 > 7 張表印的全部是**卡面值**。玩家實際吃到的是它再過一次全域倍率表（上一節的 `combat-env`），⛔ 而且**不是每一軸都有倍率**：
@@ -800,6 +813,8 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 | 施法距離 · AoE 半徑 | × `abilityRange` **0.8**（**⛔ 不含普攻** —— 那條走 `attackRange` **0.6**）| `abilityCastRange()` / `abilityRadius()` |
 | 傷害 | × `damageDealt` **1**，之後才進減傷 | `sim/combat/damage.ts` |
 | 位移（衝刺／擊退） | **⛔ 不套倍率** —— 卡面即實際 | `sim/effects/dash.ts` · `sim/effects/knockback.ts` |
+
+> 🔴 **傷害還有第三層**（2026-08-21 新增，⛔ 只打在傷害這一軸）：`基礎傷害 × (1 + 施法者法強 × 0.005)`（＝ **0.5%**／點法強） —— 出貨 `scope: ability` / `apRatioMode: stack`（`content/config/ap-damage-scaling.json`，`rate = 0` 是一鍵 rollback）。⇒ 級距表上那一列**不是**玩家看到的傷害；法強級距從極小到極大，同一支技能差 **1.96×**。契約在 [`docs/editor-contract/ap-damage-scaling.md`](./docs/editor-contract/ap-damage-scaling.md)。
 
 > ⚠️ 所以「單體·極小」的 **6 卡面秒**，在出貨設定下實際是 **1.2 秒**。⛔ 卡面上寫的是前者 —— 傷害與回魔的反算全部站在這個換算上。
 
@@ -815,7 +830,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 >
 > 逐格推導、三個錨點（LV30 hard / LV50 soft / LV99 極限）的達成率、以及兩個「空間」（純基礎 ↔ 引擎最終）的對照表在 [`docs/平衡錨點量測.md`](./docs/平衡錨點量測.md)；與 w3x 的逐支對照與梯子推導在 [`docs/editor-contract/ggd-skill-tiers.md`](./docs/editor-contract/ggd-skill-tiers.md)。兩份都是產生的。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_377d5d720fbb` 產生。 級距讀 `content/config/*-tiers.json`（7 張表）、母體讀 `docs/平衡錨點量測.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_116659ae0eab` 產生。 級距讀 `content/config/*-tiers.json`（7 張表）、母體讀 `docs/平衡錨點量測.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:tiers -->
 
 ### 開放清單（以下預設展開，不用點）
@@ -1273,7 +1288,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **完整 71 名英雄**（含 22 名未開放）與逐欄資料（開放旗標、技能 id、攻擊類型…）在 [`docs/reference/roster.md`](./docs/reference/roster.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_377d5d720fbb` 產生。 開放 49 / 全 71 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_116659ae0eab` 產生。 開放 49 / 全 71 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:roster -->
 
 <!-- BEGIN GENERATED:abilities -->
@@ -1289,7 +1304,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **全 420 個技能的逐欄表**（id、名稱、slot、型態、編號、擁有英雄、開放旗標、完整短效果）在 [`docs/reference/abilities.md`](./docs/reference/abilities.md)；互動版在 <http://localhost:39527/#codex>。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_377d5d720fbb` 產生。 開放英雄技能 293 / 全 420 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_116659ae0eab` 產生。 開放英雄技能 293 / 全 420 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:abilities -->
 
 <!-- BEGIN GENERATED:items -->
@@ -1465,7 +1480,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 > 📖 **全 142 件道具依 craftRole 的完整分類表**（component 16 / token 0 / none 24 …）在 [`docs/reference/items.md`](./docs/reference/items.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_377d5d720fbb` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_116659ae0eab` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:items -->
 
 <!-- BEGIN GENERATED:grail -->
@@ -1554,7 +1569,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 逐張的完整 JSON（每一格參數、每一個 hook、每一條條件）在 [`docs/reference/grail-wishes.md`](docs/reference/grail-wishes.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_377d5d720fbb` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_116659ae0eab` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:grail -->
 
 ### ⭐ 2026-08-17／18 這一批新加的機制（GH#354）
@@ -1692,7 +1707,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 完整的參數與上下界（每個效果每一格能填什麼）在 [`docs/技能標記機制與效果規則.md`](docs/技能標記機制與效果規則.md)，同樣是產生的。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_377d5d720fbb` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_116659ae0eab` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:mechanics -->
 
 

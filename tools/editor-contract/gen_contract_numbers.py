@@ -58,7 +58,8 @@ DOC = REPO / "docs" / "技能編輯器引擎須知 20260811.md"
 VOCAB_DOC = REPO / "docs" / "效果標籤詞彙表v2.md"
 CMD = "pnpm contract:numbers"
 
-BLOCKS = ("contract-caps", "contract-env", "contract-range", "contract-bands", "contract-tiers",
+BLOCKS = ("contract-caps", "contract-env", "contract-ap-damage", "contract-range",
+          "contract-normalized", "contract-bands", "contract-tiers",
           "contract-effects", "contract-sharding")
 VOCAB_BLOCKS = ("vocab-kind-count",)
 
@@ -215,6 +216,148 @@ def table_env():
         if key not in mult:
             continue
         out.append(f"| `{key}` | **{num(mult[key])}** | {note} |")
+    # ⭐ 2026-08-21 —— 這一句在此之前是**散文**，而它寫著「`manaRegen ×16`」而出貨是 8。
+    #   ⛔ 一句手打的倍率沒有任何東西在對帳（正是這支產生器存在的理由），所以它進區塊。
+    out += [
+        "",
+        f"⭐ **`cooldown ×{num(mult['cooldown'])}` 與 `manaRegen ×{num(mult['manaRegen'])}` "
+        "一起造成一個必須知道的後果**：**MP 現在根本不是成本** —— 見第九節。",
+    ]
+    # ⭐ 智慧 → 法強那一格現在**同時**是傷害公式的輸入（第一之二節），所以它的沿革要講：
+    #   ⛔ 一個只讀這張表的人會以為調它就是「技能強不強」，而那已經不成立。
+    out += [
+        "",
+        f"⚠️ **`intToAbilityPower` 現在是傷害公式的輸入之一** —— 出貨 "
+        f"**{num(mult['intToAbilityPower'])}**（沿革 1 → 4 → 6.5 → 10 → "
+        f"**{num(mult['intToAbilityPower'])}**，owner 2026-08-21 定案）。"
+        "⛔ 它**不是**「技能有多強」的旋鈕：法強在等級 99 的終值由出身級距（第七之二節）"
+        "釘住，這一格只決定那個終值在升級曲線上**怎麼分配**。真正決定技能強度的是"
+        "**第一之二節**那一乘。",
+    ]
+    return "\n".join(out)
+
+
+# ---------------------------------------------------------------------------
+# ⭐ 技能傷害的最後一乘（owner 2026-08-21）—— 在它之前這份契約**一個字都沒提**
+# ---------------------------------------------------------------------------
+#
+# ⚠️ 這是這一版最貴的一個缺口，而且它是**沉默**的：一個外部編輯器照著第一節的
+#   `amount` / `scaling` 去算一支技能會打多少，算出來的數字在出貨設定下**差到 2 倍**
+#   （法強 200 的法刺 ⇒ ×2），而 JSON 完全合法、載入不報錯、卡片照樣印那個數字。
+#
+# ⭐ 兩個方向都關（同 `tier_axes()` 的規矩）：
+#   · 出貨 config 的 schema tag 對不上 → 中止（我們在描述一份不存在的文件）
+#   · `scope` / `apRatioMode` 不在引擎的 union 裡 → 中止（照抄會產出引擎不認得的設定）
+AP_DMG_CFG = "ap-damage-scaling"
+AP_DMG_SCHEMA = "config.ap-damage-scaling@1"
+AP_DMG_TS = REPO / "packages" / "shared" / "src" / "sim" / "combat" / "apDamageScaling.ts"
+# ⛔ `scope` 的三個值**不住在** apDamageScaling.ts —— 它 `export type ApDamageScope =
+#   DamageConversionScope`，也就是刻意共用「什麼算技能傷害」的那一份唯一定義。
+#   ⇒ 要印那三個字就去它真正的住處拿，⛔ 不要在這裡抄第二份。
+SCOPE_TS = REPO / "packages" / "shared" / "src" / "sim" / "combat" / "damageTypeOverride.ts"
+AP_DMG_CONTRACT = "docs/editor-contract/ap-damage-scaling.md"
+
+# 示範用的法強讀數。⛔ 不是「隨便挑幾個」——它們對齊第七之二節 `bands.ap` 的五格
+#   （極小 94.25 … 極大 377），所以讀者看到的乘數就是**出身真的會拿到的**那幾個。
+AP_DEMO_BANDS = BANDS
+
+
+def _ts_union(path, name):
+    """從一支 TS 檔把一個字串 union 的成員挖出來（⛔ 不在這裡抄一份）。
+
+    ⛔ 找不到就中止：一個「悄悄少印兩個合法值」的契約，會讓對面以為只有一個選項。
+    """
+    m = re.search(rf"export type {name} =([^;]+);", path.read_text(encoding="utf-8"))
+    members = [s.strip().strip('"') for s in m.group(1).split("|")] if m else []
+    members = [s for s in members if s and not s.startswith("//")]
+    if not members:
+        sys.exit(f"{path.name} 裡解析不到 `{name}` 的成員 —— 它被改名或搬家了，"
+                 f"⛔ 不要在這支產生器裡另外寫一份")
+    return members
+
+
+def table_ap_damage():
+    c = cfg(AP_DMG_CFG)
+    if c.get("schema") != AP_DMG_SCHEMA:
+        sys.exit(f"{AP_DMG_CFG}.json 的 schema 是 {c.get('schema')}，契約寫 {AP_DMG_SCHEMA}")
+    rate, scope, mode = c["rate"], c["scope"], c["apRatioMode"]
+    modes = _ts_union(AP_DMG_TS, "ApRatioMode")
+    scopes = _ts_union(SCOPE_TS, "DamageConversionScope")
+    if mode not in modes:
+        sys.exit(f"{AP_DMG_CFG}.json 的 apRatioMode `{mode}` 不在引擎的 union {modes} 裡")
+    if scope not in scopes:
+        sys.exit(f"{AP_DMG_CFG}.json 的 scope `{scope}` 不在引擎的 union {scopes} 裡")
+    pct = num(round(rate * 100, 6))
+    n = cfg("stat-normalization")
+    ap_bands = n["bands"]["ap"]
+
+    out = [
+        "## 一之二、🔴 技能傷害的**最後一乘** —— 你填的數字**不是**玩家看到的數字",
+        "",
+        "⛔ **這一節整段是產生的。** owner 2026-08-21 逐字：",
+        "",
+        "> 「我有個更好的建議，就是**技能傷害都套用公式 (1+AP\\*1%)**　"
+        "物理意義來說 就是 **AP 變為原本傷害的額外加成**」「=> **預設 0.5%**」",
+        "",
+        "```",
+        "最終技能傷害 = 基礎傷害 × (1 + 施法者法強 × 加成率)",
+        "```",
+        "",
+        "| 格 | 出貨值 | 意思 |",
+        "|---|---:|---|",
+        f"| `rate` | **{num(rate)}**（{pct}%/點） | 每 1 點法強讓這一發多幾成 |",
+        f"| `scope` | **{scope}** | 哪一類傷害吃這一層（`{'` / `'.join(scopes)}`）|",
+        f"| `apRatioMode` | **{mode}** | 與技能卡上既有的法強係數怎麼共存 |",
+        "",
+        f"⭐ **`rate = 0` 是完整的一鍵 rollback** —— 乘數逐位元回到 1，"
+        "也就是這一層出現之前的每一場比賽。後台一格，⛔ 不必改任何一份技能 JSON。",
+        "",
+        "### ⛔ `stack` 的語意：既有的 `ratios:{stat:\"ap\"}` **留著**，再被乘一次",
+        "",
+        "| `apRatioMode` | 一支寫著 `flat: 1000` + `ratios ap 0.6` 的技能，法強 200 時 |",
+        "|---|---|",
+    ]
+    demo_flat, demo_coeff, demo_ap = 1000, 0.6, 200
+    add = demo_flat + demo_ap * demo_coeff
+    out += [
+        f"| **{mode}**（出貨） | `({demo_flat} + {demo_ap}×{demo_coeff}) × "
+        f"(1 + {demo_ap}×{num(rate)})` = **{num(round(add * (1 + demo_ap * rate), 4))}** |",
+        f"| `replace` | 加法那一項被拿掉：`{demo_flat} × (1 + {demo_ap}×{num(rate)})` = "
+        f"**{num(round(demo_flat * (1 + demo_ap * rate), 4))}** |",
+        "",
+        f"⇒ 出貨是 **{mode}**：⛔ **不要**因為這一層出現就把技能卡上的 `ratios` 拿掉，"
+        "也 ⛔ **不要**把這一層預先算進 `flat` / `perRank` —— 那會被乘兩次，"
+        "而且 owner 調 `rate` 的那天那一支不會跟著動。",
+        "",
+        "### ⭐ 出身直接決定這一乘有多大",
+        "",
+        "法強的等級 99 終值由**出身級距**釘住（第七之二節），所以同一支技能在不同出身手上：",
+        "",
+        "| 法強級距 | " + " | ".join(AP_DEMO_BANDS) + " |",
+        "|---|" + "--:|" * len(AP_DEMO_BANDS),
+        "| 法強（LV99） | " + " | ".join(num(ap_bands[b]) for b in AP_DEMO_BANDS) + " |",
+        "| **這一乘** | " + " | ".join(
+            f"×{num(round(1 + ap_bands[b] * rate, 4))}" for b in AP_DEMO_BANDS) + " |",
+        "",
+        f"⚠️ **這是「出身」第一次真的改變技能強度**：法強極大 ÷ 法強極小 = "
+        f"**{num(round((1 + ap_bands['極大'] * rate) / (1 + ap_bands['極小'] * rate), 3))}×**。"
+        "在這一層出現之前，那個差距只影響 `ratios` 那一條加法項。",
+        "",
+        "### ⛔ 三件不要弄錯的事",
+        "",
+        f"1. **範圍只有 `{scope}`** —— 普攻、道具／增益卡觸發、火圈、守衛塔、殭屍"
+        f"{'**不吃**' if scope == 'ability' else '見出貨 `scope`'}。"
+        "判定走 `sim/combat/damageTypeOverride.ts` 的 `originInScope()`，"
+        "⛔ 沒有第二份「什麼算技能傷害」的定義。",
+        "2. **技能種下的 DoT 吃得到** —— `DotInstance.origin` 原封不動抄施放它的那一次執行，"
+        "所以每一跳都還是 `ability:<id>`。⛔ 不需要在技能 JSON 裡多寫一格。",
+        "3. **反彈封包不吃** —— 反彈量是「剛剛打中我的那一下」的百分比，"
+        "而那三個讀數已經吃過**攻擊者**的乘數。它與全域傷害倍率共用同一個旗標。",
+        "",
+        f"📘 逐格對照（哪一個 origin 吃、`apRatioMode` 是怎麼量出來的）在 "
+        f"[`{AP_DMG_CONTRACT}`](editor-contract/ap-damage-scaling.md)，那一份也是產生的"
+        "（`pnpm apdmg:build`）。",
+    ]
     return "\n".join(out)
 
 
@@ -252,6 +395,47 @@ def table_range():
         out.append("⛔ 你在英雄卡上填的射程沒有用。要改請改該英雄的 `origin`，或改上面那張表（後台）。")
     else:
         out.append("⚠️ 這一項**不在**正規化名單裡 —— `baseStats.range` 以英雄卡上填的為準。")
+    return "\n".join(out)
+
+
+def table_normalized():
+    """⭐ §七的第一段 —— 「哪幾條**不是你填的**」。
+
+    ⛔ 這一段在 2026-08-21 之前是**散文**，而它寫著：
+
+        「`移動速度` 與 `攻擊距離` 已經進入屬性正規化」
+        「⚠️ `攻擊速度` **不在** `appliesTo` —— 所以它仍然是你填的」
+
+    兩句都過期了：出貨 `appliesTo` 現在是**十一條全部**（owner 2026-08-21：
+    「請你照出身表的規劃來設定就好」把 `as` 交回出身表）。⛔ 而且第二句的
+    危害是**反向**的 —— 它叫作者去填一格填了沒有用的欄位，然後那位英雄的攻速
+    與他以為的不一樣，⛔ 沒有任何一步會報錯。
+    """
+    n = cfg("stat-normalization")
+    applies = n["appliesTo"]
+    keys = [k for k in STAT_ZH if k in n["bands"]]
+    on = [k for k in keys if k in applies]
+    off = [k for k in keys if k not in applies]
+    out = [
+        f"| 十一項屬性 | 由**出身**改寫？ | 你在 `baseStats` 上填的值 |",
+        "|---|:-:|---|",
+    ]
+    for k in keys:
+        yes = k in applies
+        out.append(f"| {STAT_ZH[k]} `{k}` | {'✅' if yes else '⛔'} | "
+                   f"{'**會被蓋掉**（填了沒有用）' if yes else '照你填的'} |")
+    out += [
+        "",
+        f"⭐ 出貨 **{len(on)}/{len(keys)}** 條由出身改寫"
+        + ("。⛔ **沒有例外** —— 十一條全部。" if not off else
+           f"；⛔ 仍然由你填的是：{'、'.join('`' + k + '`' for k in off)}。"),
+        "",
+        "```",
+        "英雄卡 origin ──► byOrigin[屬性][出身] ──► 級距 ──► bands[屬性][級距] ──► 寫回卡上",
+        "```",
+        "",
+        "⇒ 想改一位英雄的這幾條，改他的 `origin`；想改一整個出身，改那張級距表（後台）。",
+    ]
     return "\n".join(out)
 
 
@@ -325,7 +509,94 @@ def table_bands():
         who = [o for o in ORIGIN_ORDER if scales.get(o) == scale]
         if who:
             out.append(f"- **{zh}尺**：{' · '.join(who)}")
+    out.append("")
+    out += table_growth(n)
     return "\n".join(out)
+
+
+# ⭐ 2026-08-21 的架構裁決：**三圍成長全部歸 0**。在它之前，一位英雄每升一級拿到的
+#   東西有**兩個來源**（卡上的 `growth.str/agi/int` × 係數，加上正規化反解出來的
+#   `growth.<屬性>`），而那兩份會互相抵銷 —— 實測 `intToAbilityPower` 從 4 調到 6.5
+#   之後，法強在 LV99 **逐位元不變**，因為反解會把多出來的那一半吃掉。
+#   ⇒ 現在只有一個來源，而那個來源是**出身**。
+GROWTH_KEYS = ("str", "agi", "int")
+CHAMPS_DIR = REPO / "content" / "champions"
+# 母體那個數字只有一個定義（`packages/shared/testkit/balancePopulation.ts`），
+# `pnpm anchors:build` 把它印進報告、`pnpm roster:check` 再驗一次。
+# ⛔ 這裡**不重算**母體 —— 在 python 裡重寫一次定義就是一個沒有守衛的第二住處。
+ANCHORS_DOC = REPO / "docs" / "平衡錨點量測.md"
+POP_RE = re.compile(r"\*\*(\d+) 位對戰可選英雄\*\*")
+
+
+def _growth_survey():
+    """出貨英雄卡上 `growth.str/agi/int` 的現況。⛔ 現場數，不打字。"""
+    total, zero, nonzero = 0, 0, []
+    for p in sorted(CHAMPS_DIR.glob("*.json")):
+        if p.name.startswith("_"):
+            continue
+        total += 1
+        g = (json.loads(p.read_text(encoding="utf-8")).get("growth") or {})
+        vals = [float(g.get(k) or 0) for k in GROWTH_KEYS]
+        if any(v != 0 for v in vals):
+            nonzero.append(p.stem)
+        else:
+            zero += 1
+    return total, zero, nonzero
+
+
+def table_growth(n):
+    """④ ⭐ **每級成長 100% 由出身級距決定** —— 契約在此之前一個字都沒說。"""
+    total, zero, nonzero = _growth_survey()
+    pop = None
+    if ANCHORS_DOC.exists():
+        m = POP_RE.search(ANCHORS_DOC.read_text(encoding="utf-8"))
+        pop = int(m.group(1)) if m else None
+    lv = n["referenceLevel"]
+    out = [
+        "#### ④ 🔴 每級成長 **100% 由出身決定** —— 三圍成長已經全部歸 0",
+        "",
+        "⛔ **這一條推翻了「英雄卡上填成長」這件事。** owner 2026-08-21 的架構裁決：",
+        "力量／敏捷／智慧的**每級成長全部設為 0**，一位英雄升一級拿到的每一點，"
+        "都是引擎**反解**出來的 —— 反解的目標就是上面那張級距表。",
+        "",
+        "```",
+        f"出身 ──► 級距 ──► bands[屬性][級距]（= 等級 {lv} 的終值）",
+        f"                        │",
+        f"     每級成長 = 反解「從卡上的初始值走到這個終值」需要多少 ──► growth[屬性]",
+        "```",
+        "",
+        "| 你在英雄卡上填的 | 引擎怎麼用它 |",
+        "|---|---|",
+        f"| `growth.str` / `growth.agi` / `growth.int` | ⛔ **出貨全部是 0** "
+        f"（{zero}/{total} 張卡，含變身態）—— 三圍在升級時不動 |",
+        "| `baseStats.*`（初始值） | ✅ **還在用** —— 它是反解的**起點**（＝ owner 說的「個性」） |",
+        "| `growth.<十一項屬性>` | ⛔ 註冊時被反解結果**整格取代**（那幾條在 `appliesTo` 裡） |",
+        "",
+        "⭐ owner 的分工一句話講完：**初始＝個性，成長＝定位。**"
+        "兩位同出身的英雄可以有不同的初始值（卡上填的），"
+        f"但他們在等級 {lv} 會收斂到**同一格級距值**。",
+        "",
+        f"⚠️ 所以**調 `combat-env` 的 `intToAbilityPower` 不會讓法強變高** —— "
+        f"它只改「等級 1 拿到多少」，反解會把差額從每級成長裡等量扣掉，"
+        f"等級 {lv} 的終值逐位元不變。要改法強終值只有一個地方：上面那張 `bands.ap`。",
+    ]
+    if pop:
+        out += [
+            "",
+            f"⚠️ **平衡量測的母體是 {pop} 位對戰可選英雄**，"
+            f"⛔ 不是 `content/champions/` 的 {total} 張卡 —— 那一份含**變身態**"
+            "（同一位英雄的第二張卡 ⇒ 重複計數）與 fail-open 骨架佔位。"
+            "定義只有一個住處（`packages/shared/testkit/balancePopulation.ts`），"
+            "`pnpm roster:check` 逐份交付物驗它。",
+        ]
+    if nonzero:
+        out += [
+            "",
+            f"🔴 **例外 {len(nonzero)} 張**（三圍成長不是 0）："
+            + "、".join(f"`{c}`" for c in nonzero)
+            + " —— ⛔ 這幾張的升級曲線有**兩個來源**，卡面與實際會分岔。",
+        ]
+    return out
 
 
 def table_effects():
@@ -693,16 +964,25 @@ def table_tiers():
         "它只讀得到磁碟上那份 JSON）。從「檔案裡的字」到「場上真的發生的事」中間有兩道：",
         "",
         "```",
-        "JSON 欄位 ──①級距解析（註冊時，上面那張表）──► 卡面值 ──②全域倍率──► 場上實際值",
+        "JSON 欄位 ──①級距解析（註冊時，上面那張表）──► 卡面值 ──②全域倍率──► ③AP 乘法層 ──► 場上實際值",
         "```",
         "",
-        "| 你在 JSON 裡讀到的欄位 | ① 註冊時被誰整格取代 | ② 卡面值再乘哪一格倍率 |",
-        "|---|---|---|",
+        "| 你在 JSON 裡讀到的欄位 | ① 註冊時被誰整格取代 | ② 卡面值再乘哪一格倍率 | ③ 再乘 AP 層？ |",
+        "|---|---|---|:-:|",
     ]
+    ap = cfg(AP_DMG_CFG)
+    ap_on = ap["rate"] != 0 and ap["scope"] in ("ability", "all")
     for a in axes:
         e = f"`{a['env']}` **{num(env[a['env']])}**" if a["env"] else "—（這一軸不吃全域倍率）"
-        out.append(f"| {' / '.join('`' + k + '`' for k in a['raw'])} | `{a['field']}` | {e} |")
+        third = "✅" if (a["field"] == "damageTier" and ap_on) else "—"
+        out.append(f"| {' / '.join('`' + k + '`' for k in a['raw'])} | `{a['field']}` | {e} | {third} |")
     out += [
+        "",
+        f"🔴 **③ 是 2026-08-21 新增的一層，⛔ 只打在傷害那一軸上**："
+        f"`基礎傷害 × (1 + 施法者法強 × {num(ap['rate'])})`"
+        f"（出貨 `scope: {ap['scope']}`、`apRatioMode: {ap['apRatioMode']}`）。"
+        "⇒ 一支「傷害·中」的技能在法強極大的英雄手上，打出來的數字是級距表的**好幾倍** ——"
+        "⛔ 級距表上那一列**不是**玩家看到的傷害。細節見**第一之二節**。",
         "",
         _cooldown_example(axes, names, env),
         "",
@@ -733,6 +1013,8 @@ COLS = 5
 BODIES = {
     "contract-caps": table_caps,
     "contract-env": table_env,
+    "contract-ap-damage": table_ap_damage,
+    "contract-normalized": table_normalized,
     "contract-range": table_range,
     "contract-bands": table_bands,
     "contract-tiers": table_tiers,
@@ -750,8 +1032,17 @@ ENGINE_REGISTRY_SOURCE = "`packages/shared/src/sim/effects/effectRegistry.ts`（
 SHARD_SOURCE = "**分片目錄本身**（現場 `readdir`，⛔ 不是手打的宣稱）"
 # ⭐ 五級距那一段讀三種東西，出處要三個都講：級距表（後台）· 出貨 schema（哪幾格存在）·
 #   `content/abilities/`（現場數出來的「級別與原始值對不上」那幾支）。
-TIER_SOURCE = "`content/config/*-tiers.json`（級距表）＋ 出貨 Zod schema（哪幾格存在）"
+TIER_SOURCE = ("`content/config/*-tiers.json`（級距表）＋ 出貨 Zod schema（哪幾格存在）"
+               "＋ `ap-damage-scaling.json`（第 ③ 層）")
+AP_DMG_SOURCE = ("`content/config/ap-damage-scaling.json`（後台一格）"
+                 "＋ `sim/combat/apDamageScaling.ts`（合法值的唯一住處）")
+# ⭐ §七那一段讀的是 `appliesTo` 這一格，⛔ 沒有一格取決於今天有幾支技能。
+NORMALIZED_SOURCE = "`content/config/stat-normalization.json` 的 `appliesTo`"
 SOURCES = {
+    # ⚠️ **不蓋內容版號**（同 `contract-sharding` 的理由）：這一段讀的是三格設定 + 一個
+    #    TS union，⛔ 沒有一格取決於「今天新增了幾支技能」。
+    "contract-ap-damage": (AP_DMG_SOURCE, False),
+    "contract-normalized": (NORMALIZED_SOURCE, False),
     # ⚠️ **不蓋內容版號**（同 `contract-sharding` 的理由）：這一段讀的是**級距表與 schema**，
     #    ⛔ 沒有一格取決於「今天新增了幾支技能」。蓋上去會讓它在每一次內容改動時被重寫，
     #    而那個版號說的是一件與級距無關的事 —— 一條會因為無關的事紅的閘，下一步就是被放寬。

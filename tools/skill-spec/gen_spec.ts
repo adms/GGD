@@ -830,6 +830,66 @@ function exampleBlock(u: Slot | undefined, pathOverride?: string): string[] {
  * ⭐ 表是**現場掃 `content/config/` 得到的**：任何一份 `config.*-tiers@1` 都會自己
  * 出現在下面，⛔ 不需要有人記得回來加一列。數字一格都不手打。
  */
+/**
+ * 出貨 schema 上**所有**叫 `*Tier` 的作者欄位（`ability@1` 頂層 + `Scaling`）。
+ *
+ * ⛔ 這一份不可以手打：2026-08-21 補上 `manaCostTier` 的那一刻，散文裡那五個名字
+ * 就地少了一格，而**沒有任何東西會紅** —— 一個作者填不到、也不知道存在的欄位，
+ * 就等於這個機制對他不存在。
+ */
+export function tierFieldNames(): string[] {
+  const names = new Set<string>();
+  // ⚠️ 三個面都要掃，⛔ 不是只有 `ability@1` 頂層：`distanceTier` 住在 effect 那一面
+  //    （`dash` / `leap` / `blink` / `knockback`），只掃前兩個會**漏掉它**。
+  const surfaces: z.ZodTypeAny[] = [zAbilityDef, zScaling, ...unionArmsByKind(zEffectDef).values()];
+  for (const s of surfaces) {
+    for (const f of fieldsOf(s)) if (/Tier$/.test(f.name)) names.add(f.name);
+  }
+  if (names.size === 0) {
+    throw new Error("出貨 schema 上找不到任何 `*Tier` 欄位 —— 解析器與 schema 分家了");
+  }
+  return [...names].sort();
+}
+
+/**
+ * §2.4 的最後一段：**傷害那一族的「相加」不是最後一步**（owner 2026-08-21）。
+ *
+ * ⛔ 每一格都從 `content/config/ap-damage-scaling.json` 讀，⛔ 不打字 ——
+ * `rate` 是後台一格（`rate = 0` 就是一鍵 rollback），而一句手寫的「×1.5」
+ * 會在他調整那一格的當天變成假的。
+ */
+export function apDamageNote(): string[] {
+  const ap = JSON.parse(
+    readFileSync(join(REPO, "content/config/ap-damage-scaling.json"), "utf8"),
+  ) as { rate: number; scope: string; apRatioMode: string };
+  if (!(ap.rate > 0) || (ap.scope !== "ability" && ap.scope !== "all")) {
+    return ["⭐ 目前**沒有**額外的傷害乘法層（`config.ap-damage-scaling@1` 的 `rate` 是 0，", 
+            "或它的 `scope` 不含技能）—— 上面四格相加就是最終的基礎傷害。"];
+  }
+  const pct = `${+(ap.rate * 100).toFixed(6)}%`;
+  return [
+    `🔴 **但傷害那一族「相加」之後還有一乘**（2026-08-21，⛔ 治療與護盾沒有）：`,
+    "",
+    "```",
+    `最終技能傷害 = （上面四格相加的結果） × (1 + 施法者法強 × ${ap.rate})`,
+    "```",
+    "",
+    `出貨 \`rate\` **${ap.rate}**（${pct}／點法強）· \`scope\` **${ap.scope}** · ` +
+      `\`apRatioMode\` **${ap.apRatioMode}**。`,
+    ap.apRatioMode === "stack"
+      ? "⭐ `stack` = 上面那格 `ratios: [{ stat: ap }]` **留著**，先加進去、再被這一乘乘一次。"
+        + "⛔ 不要因為這一層出現就把 `ratios` 拿掉。"
+      : "⚠️ `replace` = 這一族的 `ratios: [{ stat: ap }]` **讀不到**，只剩這一乘。",
+    "",
+    "⛔ **不要把這一層預先算進 `flat` / `perRank`** —— 那會被乘兩次，"
+      + "而且 owner 調 `rate` 的那天那一支不會跟著動。",
+    "⚠️ 技能種下的 `dot` 每一跳都吃得到（它抄施放那一次的 origin）；"
+      + "普攻與道具觸發**不吃**（出貨 `scope`）。",
+    "",
+    "📘 逐格對照在 `docs/editor-contract/ap-damage-scaling.md`（`pnpm apdmg:build` 產生）。",
+  ];
+}
+
 export function tierLadderSection(): string[] {
   const dir = join(REPO, "content/config");
   const TIER_DOC_RE = /^config\.[a-z-]+-tiers@\d+$/;
@@ -916,8 +976,12 @@ export function tierLadderSection(): string[] {
     "",
     "## 0.5 五級距 —— 級別是**什麼數字**，以及它跟原始欄位誰贏",
     "",
-    "填了級別欄位（`radiusTier` / `rangeTier` / `cooldownTier` / `damageTier` /",
-    "`distanceTier`）就 ⛔ **不要**填它旁邊那格原始值。兩格都填 → **級別贏**，",
+    // ⭐ 級別欄位的**名單**從出貨 schema 推導，⛔ 不手打 —— 這一行在 2026-08-21 之前
+    //    列了五格而 schema 已經有六格（`manaCostTier` 是當天補上的第五軸）。
+    //    ⛔ 手加一個名字只是把過期往後推一次：漏掉的那一格，作者永遠不會知道它存在。
+    `填了級別欄位（${tierFieldNames().map((n) => `\`${n}\``).join(" / ")}，`
+      + `共 **${tierFieldNames().length}** 格）就 ⛔ **不要**填它旁邊那格原始值。`,
+    "兩格都填 → **級別贏**，",
     "原始值被整格取代（⛔ 不是相加、⛔ 不是取大）。⭐ 要留特例的唯一寫法是**不填級別**。",
     "",
     "⚠️ 這件事發生在**註冊時**，⛔ 不在 JSON 裡 —— 所以任何直接讀技能 JSON 的工具",
@@ -1142,6 +1206,10 @@ export function buildSpecMarkdown(): string {
   p("```json");
   p('{ "flat": 40, "ratios": [{ "stat": "ap", "coeff": 0.3 }] }   // 40 +（30% 法強）');
   p("```");
+  p();
+  // ⭐ 2026-08-21 —— 「最後相加」在傷害這一族**已經不是最後一步**了。
+  //   ⛔ 少講這一層 = 這一節在教人算一個與場上差到兩倍的數字，而 JSON 完全合法。
+  p(...apDamageNote());
   p();
 
   // ── 3 hook 事件 ─────────────────────────────────────────────────────

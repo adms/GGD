@@ -39,6 +39,14 @@ const LIVE_DOCS = [
   "docs/技能編輯器引擎須知 20260811.md",
   "docs/editor-contract/ggd-skill-tiers.md",
   "docs/_session-handover.md",
+  // ⭐ 2026-08-21 —— 這三份現在也**描述現況**，所以它們也進閘：
+  //   · 英雄定位總表：`tools/hero-archetypes/build.ts` 產生，§一那張「幾項套用中」
+  //     在這一天之前是手打的，而它已經說謊（印著「尚未套用 2 項」而 `as` 已經開了）
+  //   · AP 傷害契約：技能傷害多出來的那一乘，外部編輯器照著抄
+  //   · 技能 AP 換算計畫：級距↔AP 的換算表，數字全部來自級距表
+  "docs/英雄定位與屬性總表.md",
+  "docs/editor-contract/ap-damage-scaling.md",
+  "docs/技能AP換算計畫.md",
 ];
 
 /** 死掉的數字 → 它是什麼。訊息要讓人**不必翻 git log** 就知道下一步。 */

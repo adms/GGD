@@ -94,7 +94,11 @@ describe("Codex 合約散文裡的數字", () => {
     // ⭐ `contract-tiers`（2026-08-21）：五級距那一整節。它在此之前是**四段散文**，
     //    而四段全部過期 —— 其中一段甚至印著一個已經不存在的級別名（`超大`），
     //    照著抄產出的技能會在載入時被整份拒絕，而沒有任何東西會紅。
-    for (const name of ["contract-caps", "contract-env", "contract-range", "contract-bands", "contract-tiers",
+    // ⭐ `contract-ap-damage` / `contract-normalized`（2026-08-21）：兩節在此之前是**散文**
+    //    或**根本不存在**，而散文那一半已經量到過期（`manaRegen ×16` vs 出貨 8、
+    //    「攻速不在 `appliesTo`」vs 它已經在）。⛔ 標記被刪掉就退回同一個形狀。
+    for (const name of ["contract-caps", "contract-env", "contract-ap-damage", "contract-range",
+                        "contract-normalized", "contract-bands", "contract-tiers",
                         "contract-effects", "contract-sharding"]) {
       expect(`${name}:${doc.includes(`<!-- BEGIN GENERATED:${name} -->`)}`).toBe(`${name}:true`);
     }
@@ -105,6 +109,40 @@ describe("Codex 合約散文裡的數字", () => {
     expect(`vocab-kind-count:${vocab.includes("<!-- BEGIN GENERATED:vocab-kind-count -->")}`).toBe(
       "vocab-kind-count:true",
     );
+  });
+
+  it("⭐ 契約有講**技能傷害的新公式**與**出身決定每級成長**（2026-08-21 的兩條架構裁決）", () => {
+    cover("codex-contract-numbers");
+    // ⚠️ 這一條補的是失敗形態③：把 `table_ap_damage()` 或 `table_growth()` 整段拿掉再
+    //    重新產生一次，「產出 == 磁碟」仍然成立 ⇒ `--check` 全綠，而契約少講了**兩件會讓
+    //    對面算錯每一個傷害數字**的事。⛔ 所以這裡釘的是那幾句規則本身。
+    // ⛔ 一個出貨數字都不釘（第零守則）—— `rate` / 級距值住在 `content/config/`，
+    //    是 owner 每週在改的東西；這裡只問「契約有沒有把**關係**講出來」。
+    const doc = readFileSync(DOC, "utf8");
+    const block = (name: string): string =>
+      doc.slice(doc.indexOf(`<!-- BEGIN GENERATED:${name} -->`),
+                doc.indexOf(`<!-- END GENERATED:${name} -->`));
+    const ap = block("contract-ap-damage");
+    for (const [what, phrase] of [
+      ["傷害是乘出來的不是加出來的", "最終技能傷害 = 基礎傷害 × (1 + 施法者法強 ×"],
+      ["`stack` 的語意：既有 AP 係數留著", "留著"],
+      ["⛔ 不要預先算進卡面", "被乘兩次"],
+      ["rate=0 是 rollback", "rollback"],
+      ["範圍由 originInScope 判", "originInScope"],
+    ] as const) {
+      expect(`${what}:${ap.includes(phrase)}`).toBe(`${what}:true`);
+    }
+    const growth = block("contract-bands");
+    for (const [what, phrase] of [
+      ["三圍成長歸 0", "三圍成長已經全部歸 0"],
+      ["成長是反解出來的", "反解"],
+      ["初始＝個性，成長＝定位", "初始＝個性，成長＝定位"],
+    ] as const) {
+      expect(`${what}:${growth.includes(phrase)}`).toBe(`${what}:true`);
+    }
+    // ⭐ §七那一段的重點不是「有幾條」，是**「你填的會被蓋掉」這句話有沒有印出來** ——
+    //    少了它，作者會去填一格填了沒有用的欄位，而沒有任何一步會報錯。
+    expect(`會被蓋掉:${block("contract-normalized").includes("會被蓋掉")}`).toBe("會被蓋掉:true");
   });
 
   it("⭐ 五級距那一節有講**級別贏**與**卡面↔實際**換算 —— `--check` 對「整節被抽掉」是綠的", () => {

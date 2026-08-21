@@ -87,7 +87,7 @@ DOC_TIERS = "docs/editor-contract/ggd-skill-tiers.md"   # `pnpm tiers:build`
 DOC_ANCHORS = "docs/平衡錨點量測.md"                      # `pnpm anchors:build`
 
 BLOCKS = ("roster", "abilities", "items", "grail", "mechanics", "arenas",
-          "combat-env", "tiers")
+          "combat-env", "stat-bands", "tiers")
 
 
 # ---------------------------------------------------------------------------
@@ -978,6 +978,33 @@ def gen_tiers(ctx):
                      items="、".join(f"`{p}` = **{_num(v)}**（`{f}`）" for f, p, v in flat)))
         L.append("")
 
+    # ⭐ 2026-08-21 —— 一張級距表**存在**不代表有人填得到它。
+    #   `asGrowthTier` 就是這個形狀：軸還在、後台還在、README 還印著五格，
+    #   而 `speedtiers:build` 已經**不再敲它**（攻速交回 `stat-normalization` 的出身表）。
+    #   ⛔ 不講的話，讀者會以為那是一個可以用的設計維度 —— 這正是第一·五守則的
+    #   「說了但不會發生」。⛔ 用量現場數 `content/champions/`，不打字。
+    champ_fields = {"msGrowthTier", "asGrowthTier"}
+    used = {f: 0 for f in champ_fields}
+    for p in sorted(glob.glob(os.path.join(G.CONTENT, "champions", "*.json"))):
+        if os.path.basename(p).startswith("_"):
+            continue
+        with open(p, encoding="utf-8") as fh:
+            doc = json.load(fh)
+        for f in champ_fields:
+            if doc.get(f) is not None:
+                used[f] += 1
+    dead = sorted(f for f, n in used.items() if n == 0)
+    if dead:
+        norm_applies = load_config("stat-normalization").get("appliesTo") or []
+        L += note([
+            "⚠️ **英雄卡那一軸有 " + str(len(dead)) + " 格今天是 0 份用量**："
+            + "、".join(f"`{f}`" for f in dead)
+            + "。級距表、後台欄位、schema 都在，但**沒有一張卡填它** —— "
+            + ("那條屬性已經交給 `config.stat-normalization@1` 的出身表"
+               f"（`appliesTo` 現在有 {len(norm_applies)} 條）"
+               if norm_applies else "那一軸還沒有內容在用")
+            + "。⛔ 不要因為表上印著五格就以為它是一個可以填的設計維度。",
+        ])
     L += ["##### 二 · 卡面 ↔ 實際（表上的數字**不是**玩家吃到的數字）", ""]
     L += note([
         f"{len(tables)} 張表印的全部是**卡面值**。玩家實際吃到的是它再過一次全域倍率表"
@@ -997,6 +1024,24 @@ def gen_tiers(ctx):
         "| `sim/effects/dash.ts` · `sim/effects/knockback.ts` |",
     ]
     L.append("")
+    # ⭐ 2026-08-21 —— 傷害那一軸多了**第三層**，而這張表在此之前只講到全域倍率。
+    #    ⛔ 少講它 = 讀者拿級距表當「玩家看到的傷害」，而出貨設定下差到 2 倍。
+    ap = load_config("ap-damage-scaling")
+    if ap.get("rate") and ap.get("scope") in ("ability", "all"):
+        # ⛔ **不可以**用 `_num()` 印這一格：它 round 到兩位小數，而出貨值是 0.005 ——
+        #    印出來會是 `0.01`，也就是**剛好兩倍**的一個看起來很合理的假數字。
+        rate_txt = f"{ap['rate']:.10g}"
+        L += note([
+            f"🔴 **傷害還有第三層**（2026-08-21 新增，⛔ 只打在傷害這一軸）："
+            f"`基礎傷害 × (1 + 施法者法強 × {rate_txt})`"
+            f"（＝ **{+round(ap['rate'] * 100, 6):g}%**／點法強） —— "
+            f"出貨 `scope: {ap['scope']}` / `apRatioMode: {ap['apRatioMode']}`"
+            f"（`content/config/ap-damage-scaling.json`，`rate = 0` 是一鍵 rollback）。"
+            f"⇒ 級距表上那一列**不是**玩家看到的傷害；法強級距從極小到極大，"
+            f"同一支技能差 "
+            f"**{_num(round((1 + load_config('stat-normalization')['bands']['ap']['極大'] * ap['rate']) / (1 + load_config('stat-normalization')['bands']['ap']['極小'] * ap['rate']), 3))}×**。"
+            f"契約在 [`docs/editor-contract/ap-damage-scaling.md`](./docs/editor-contract/ap-damage-scaling.md)。",
+        ])
     if smallest_cd is not None:
         actual = max(smallest_cd * float(env.get("cooldown", 1)),
                      float(cdrules.get("minSeconds", 0)))
@@ -1039,9 +1084,146 @@ def gen_tiers(ctx):
     return "\n".join(L), rows
 
 
+# ---------------------------------------------------------------------------
+# stat-bands —— 十出身 × 十一屬性（⭐ 2026-08-21 之前這一整段是**手打的**）
+# ---------------------------------------------------------------------------
+#
+# ⚠️ 而它已經在說謊：那張表的「生效中」欄替**攻速**印著 `⛔`，底下還跟著一句
+#   「攻速 ⛔ 不在生效名單：它已經有 `stat-caps` 兩層在管」—— 而 owner 2026-08-21
+#   已經把 `as` 交回出身表（「請你照出身表的規劃來設定就好」）。
+#   ⛔ 手改成 ✅ 只是把過期往後推一次，所以整段改成從 `stat-normalization.json` 產生。
+#
+# ⭐ 中文顯示名。⚠️ 只是顯示名 —— key 才是契約（同 Codex 契約那一份）。
+STAT_ZH = {
+    "ms": "移速", "as": "攻速", "ad": "攻擊力", "ap": "法強",
+    "maxHealth": "生命", "armor": "裝甲", "mr": "魔抗", "maxMana": "魔力",
+    "healthRegen": "生命回復", "manaRegen": "魔力回復", "range": "攻擊距離",
+}
+# 出身的排序 —— ⚠️ 六個純血在前（力/敏/智 × 近/遠），四個混血在後。
+ORIGIN_ORDER = ["鬥士", "狂戰", "射手", "砲手", "坦克", "法鬥", "法師", "法刺", "硬輔", "軟輔"]
+STAT_NORM_TS = "packages/shared/src/content/statNormalization.ts"
+BAND_MEANING_RE = r"(?s)BAND_MEANING[^{]*\{(.*?)\}"
+GROWTH_KEYS = ("str", "agi", "int")
+
+
+def band_meaning(names):
+    """五格的語意（缺陷／偏低／標準／優勢／特化）—— 唯一住處是 `statNormalization.ts`。"""
+    m = _ts_const(STAT_NORM_TS, BAND_MEANING_RE, "BAND_MEANING")
+    got = dict(re.findall(r"(\S+?):\s*\"([^\"]+)\"", m.group(1)))
+    missing = [n for n in names if n not in got]
+    if missing:
+        sys.exit(f"{STAT_NORM_TS} 的 BAND_MEANING 少了 {missing} —— "
+                 f"⛔ 不要在 README 產生器裡補一份")
+    return got
+
+
+def growth_survey():
+    """出貨英雄卡上 `growth.str/agi/int` 的現況 —— ⛔ 現場數，不打字。"""
+    import glob
+    total, zero, nonzero = 0, 0, []
+    for p in sorted(glob.glob(os.path.join(G.CONTENT, "champions", "*.json"))):
+        if os.path.basename(p).startswith("_"):
+            continue
+        total += 1
+        with open(p, encoding="utf-8") as f:
+            g = (json.load(f).get("growth") or {})
+        if any(float(g.get(k) or 0) != 0 for k in GROWTH_KEYS):
+            nonzero.append(os.path.splitext(os.path.basename(p))[0])
+        else:
+            zero += 1
+    return total, zero, nonzero
+
+
+def gen_stat_bands(ctx):
+    """README 區塊：**十出身 × 十一屬性**（級距、數值、上限、成長來源）。"""
+    n = load_config("stat-normalization")
+    caps = load_config("stat-caps").get("caps") or load_config("stat-caps")
+    names = tier_names()
+    bo, bands = n["byOrigin"], n["bands"]
+    two = n.get("bandsByScale", {})
+    scales = n.get("scaleByOrigin", {}).get("range", {})
+    applies = n["appliesTo"]
+    keys = [k for k in STAT_ZH if k in bands]
+    origins = [o for o in ORIGIN_ORDER if any(o in bo.get(k, {}) for k in keys)]
+    unlisted = sorted({o for k in keys for o in bo.get(k, {})} - set(origins))
+    if unlisted:
+        # ⛔ 靜默漏掉一個出身 = 這張表在**別人**新增出身的那天變成假的而沒人知道。
+        sys.exit(f"stat-normalization.json 的 byOrigin 有 {len(unlisted)} 個沒登記在 "
+                 f"ORIGIN_ORDER 裡的出身：{unlisted} —— 補進 gen_readme_lists.py")
+    meaning = band_meaning(names)
+    total, zero, nonzero = growth_survey()
+    lv = n["referenceLevel"]
+
+    L = [f"#### 十出身 × 十一屬性 —— 每一格落在哪一級距（{len(origins)} × {len(keys)}）", ""]
+    L += ["| 出身 | " + " | ".join(STAT_ZH[k] for k in keys) + " |",
+          "|---|" + "---|" * len(keys)]
+    for o in origins:
+        cells = []
+        for k in keys:
+            b = bo.get(k, {}).get(o)
+            if k == "range" and b:
+                scale = scales.get(o)
+                zh = "近戰" if scale == "melee" else "遠程"
+                v = (two.get(k, {}).get(scale, {}) or {}).get(b)
+                cells.append(f"{zh}・{b} {_num(v)}" if v is not None else b)
+            else:
+                cells.append(b or "—")
+        L.append(f"| **{o}** | " + " | ".join(cells) + " |")
+    L += ["", "**級距語意**：`"
+          + " · ".join(f"{b} = {meaning[b]}" for b in names) + "`", ""]
+
+    L += ["#### 級距的實際數值與上限", ""]
+    L += ["| 屬性 | " + " | ".join(names) + " | 一般上限 | 解鎖上限 | 生效中 |",
+          "|---|" + "--:|" * len(names) + "--:|--:|:-:|"]
+    for k in keys:
+        c = caps.get(k) or {}
+        cap = f"{_num(c['base'])} | {_num(c['unlocked'])}" if c else "— | —"
+        live = "✅" if k in applies else "⛔"
+        if k in two:
+            for scale, zh in (("melee", "近戰尺"), ("ranged", "遠程尺")):
+                row = " | ".join(_num(two[k][scale][b]) for b in names)
+                L.append(f"| **{STAT_ZH[k]}**（{zh}） | {row} | {cap} | {live} |")
+        else:
+            L.append(f"| {STAT_ZH[k]} | "
+                     + " | ".join(_num(bands[k][b]) for b in names) + f" | {cap} | {live} |")
+    L.append("")
+    L += [
+        f"- 「級距值」是**基準等級（{lv} 級）的最終總值**，⛔ 不是初始值",
+        "- 「解鎖上限」要靠道具／技能標籤才碰得到",
+        f"- ⛔ 「生效中」是這張表最容易說謊的一欄：級距數字一直都在，"
+        f"但 `⛔` 的那幾項**沒有接進 `appliesTo`**，照它們調平衡會調到一條沒接上的線",
+        "- 移速那一列的兩個天花板是**碰撞物理**不是偏好：一般上限就是**穿牆平手線**"
+        "（每 tick 剛好走滿一個身體半徑），級距的極大刻意留在線內 —— 推導在 "
+        "`packages/shared/src/sim/statCaps.ts`",
+        "",
+    ]
+    # ⭐ 2026-08-21 的架構裁決 —— 這一段在此之前 README 一個字都沒說。
+    L += [f"#### 🔴 每級成長 **100% 由出身決定**（三圍成長已經全部歸 0）", ""]
+    L += note([
+        f"力量／敏捷／智慧的**每級成長全部是 0**（{zero}/{total} 張英雄卡，含變身態）。"
+        f"一位英雄升一級拿到的每一點，都是引擎**反解**出來的 —— "
+        f"反解的目標就是上表那一格級距值（等級 {lv} 的終值）。",
+        "",
+        "⭐ owner 的分工一句話：**初始＝個性（卡上的 `baseStats`），"
+        "成長＝定位（出身的級距）**。兩位同出身的英雄可以有不同的起點，"
+        f"但他們在等級 {lv} 收斂到同一格。",
+        "",
+        f"⚠️ 所以調 `combat-env` 的 `intToAbilityPower` **不會**讓法強終值變高 —— "
+        f"它只改「等級 1 拿到多少」，反解把差額從每級成長裡等量扣掉，等級 {lv} 逐位元不變。"
+        f"要改法強終值只有一格：上表的 `bands.ap`。",
+    ])
+    if nonzero:
+        L += note([f"🔴 **例外 {len(nonzero)} 張**（三圍成長不是 0）："
+                   + "、".join(f"`{c}`" for c in nonzero) + "。"])
+    L += provenance(ctx, "級距與 `appliesTo` 讀 `content/config/stat-normalization.json`、"
+                         "上限讀 `stat-caps.json`、成長現況現場數 `content/champions/`。")
+    return "\n".join(L), len(origins) * len(keys)
+
+
 GENERATORS = {"roster": gen_roster, "abilities": gen_abilities, "items": gen_items,
               "grail": gen_grail, "mechanics": gen_mechanics, "arenas": gen_arenas,
-              "combat-env": gen_combat_env, "tiers": gen_tiers}
+              "combat-env": gen_combat_env, "stat-bands": gen_stat_bands,
+              "tiers": gen_tiers}
 
 
 def render(ctx):
