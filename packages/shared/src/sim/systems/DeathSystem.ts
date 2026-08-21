@@ -7,7 +7,7 @@ import type { SimWorld } from "../SimWorld";
 import { grantXp, grantGold, XP_REWARDS, GOLD_REWARDS } from "../economy/progression";
 import { fireHooks } from "../effects/hooks";
 import { creditKillCombo } from "../combat/killCombo";
-import { recordChampionDeath, recordFlowerEaten } from "../stats/matchStats";
+import { killScores, recordChampionDeath, recordFlowerEaten } from "../stats/matchStats";
 import { cancelLeap } from "../movement/leap";
 import { releaseUnit } from "../mindControl";
 
@@ -61,7 +61,13 @@ export function deathSystem(world: SimWorld): void {
     } else if (world.champion.has(id)) {
       // champion death: scoreboard (deaths / kills / assists / KP / multikills)
       recordChampionDeath(world, id, killer);
-      if (killer !== null && world.champion.has(killer)) {
+      // ⭐ GH#159 —— 發放的閘是 `killScores`（`stats/matchStats.ts`），⛔ 不是
+      // 「兇手是英雄」。在此之前這一行只有 `killer !== null && champion.has(killer)`，
+      // 於是**打死自己隊友**（普攻是唯一沒有隊伍濾網的傷害路徑）照樣領擊殺金 +
+      // 首殺賞金 + XP + onKill + 連殺，配上 #84 的復活圈就是救回來再殺一次的印鈔機。
+      // ⛔ 謂詞刻意跟計分板共用同一支函式：擋住金幣卻讓 KDA／連殺照加，只是把
+      // 漏洞換一個地方出現。
+      if (killScores(world, id, killer)) {
         grantXp(world, killer, XP_REWARDS.kill);
         // 擊敗英雄發放倍率 (owner 2026-08-04): both the base kill reward and the
         // #90 first-blood bounty below are the SAME bucket — they are two halves

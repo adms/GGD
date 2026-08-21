@@ -12,6 +12,7 @@ import type { EntityId, ItemId } from "@ggd/shared/ids";
 import type { Command, IntentFrame, Order } from "@ggd/shared/sim/intents";
 import type { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { Champions, Items } from "@ggd/shared/sim/content/registry";
+import { resolveAbilityRange } from "@ggd/shared/sim/abilities/abilitySystem";
 import {
   LEGENDARY_ORB_ITEM_ID,
   LEGENDARY_ORB_PRICE,
@@ -373,28 +374,46 @@ export class AIDriver implements SeatDriver {
           const mana = abilityDef.manaCost[inst.rank - 1] ?? 0;
           if ((world.health.get(id)?.mana ?? 0) < mana) continue;
 
+          // ⭐ GH#149 —— 射程一律走 `resolveAbilityRange`，⛔ 不是 `def.range`。
+          //
+          // `def.range` 是**卡面**的數字；場上真正認的是它乘上 #136 的系統倍率
+          // (`world.combatEnv.abilityRange`)，而 `abilitySystem` 的三個消費者
+          // （cast 驗證、ground 落點夾取、投射物的 `remainingRange`）全部讀那一份。
+          // 在此之前這裡拿的是未乘倍率的原始值，於是 bot 以為自己的射程是實際的
+          // 1/倍率 倍，而三種 castType **各自壞在不同的地方**：
+          //   · `targeted`  → sim 回 `out-of-range`：不燒魔不上 CD，但每次 replan
+          //                   都送出一個必被拒的指令，那一 tick 就沒有別的動作了；
+          //   · `skillshot`/`dash` → castAbility 對方向型**完全沒有距離檢查**，
+          //                   照扣魔照上 CD，而投射物只飛倍率後的距離 ⇒ **必定射空**；
+          //   · `ground`    → 落點被夾回倍率後的距離，AoE 打在半路上。
+          // 後兩者會同時汙染命中率、法力曲線與冷卻使用率三組平衡數字，而 bot 正是
+          // 那些數字的來源。
+          //
+          // ⛔ 這裡刻意**不抄 0.8 這個數字**：倍率是 `content/config/combat-env.json`
+          // 的一格後台欄位（2026-08-22 是 0.8，開票當時是 0.6），抄下來就是第四個住處。
+          // ⚠️ 上一版註解寫著「Exactly the range the sim honours」——那是**半套修正**
+          // 留下的謊話（有人拿掉了 1.2 灌水係數，卻沒補上 #136 的倍率），第三守則。
+          const castRange = resolveAbilityRange(world, abilityDef.range);
+          const inCastRange = nearestD2 <= castRange * castRange;
+
           switch (abilityDef.castType) {
             case "self":
               commands.push({ kind: "castAbility", slot, target: { type: "self" } });
               break;
             case "targeted":
-              if (nearestD2 <= abilityDef.range * abilityDef.range)
+              if (inCastRange)
                 commands.push({ kind: "castAbility", slot, target: { type: "entity", entityId: nearest } });
               break;
             case "skillshot":
             case "dash": {
-              // Exactly the range the sim honours. The old 1.2 fudge factor let
-              // the bot fire from 10% beyond its reach: the skillshot is
-              // direction-based so it simply fell short, burning mana and the
-              // cooldown for a shot that could never connect.
-              if (nearestD2 <= abilityDef.range * abilityDef.range) {
+              if (inCastRange) {
                 const dir = { x: tgtT.pos.x - t.pos.x, z: tgtT.pos.z - t.pos.z };
                 commands.push({ kind: "castAbility", slot, target: { type: "dir", dir } });
               }
               break;
             }
             case "ground":
-              if (nearestD2 <= abilityDef.range * abilityDef.range)
+              if (inCastRange)
                 commands.push({
                   kind: "castAbility",
                   slot,

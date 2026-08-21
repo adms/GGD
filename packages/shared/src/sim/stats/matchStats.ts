@@ -151,6 +151,40 @@ function creditedTo(world: SimWorld, source: EntityId): EntityId {
   return world.mindControl.get(source)?.captor ?? source;
 }
 
+/**
+ * ⭐ 一次英雄擊殺**算不算數** —— 賞金／經驗／onKill／連殺／計分板五條線共用的
+ * **同一個**謂詞（GH#159）。
+ *
+ * 在此之前發放端只問「兇手存在而且是英雄」，⛔ **一格隊伍都沒有比** ——
+ * 而普攻是目前唯一沒有隊伍濾網的傷害路徑（`OrderSystem` 的 `attackTarget`
+ * 直接吃玩家指定的 entity，`combat/damage.ts` 與 `BasicAttackSystem` 對
+ * `world.team` 都是零命中），所以**打死自己隊友照樣領擊殺金 + 首殺賞金 + 連殺**，
+ * 配上 #84 的復活圈就是一台印鈔機：救回來再殺一次。
+ *
+ * ⛔ 為什麼是**一個匯出的謂詞**而不是兩個 if：發放（`DeathSystem`）與計分板
+ * （`recordChampionDeath`）是同一條規則的兩個出口。兩份 if 保證有一天只改到一份，
+ * 而那個結果 —— 「金幣擋住了但 KDA／連殺仍可刷」—— 正是這張票 body 點名要避免的
+ * 那一半（第零守則⑨：N 個同型 = K 個模板）。
+ *
+ * ⚠️ 隊伍資訊缺任何一半就**不算數**（fail-closed）。出貨路徑 `spawnChampion`
+ * 一定寫 `TeamComp`，能造出「英雄身上沒有隊伍」的只有手寫夾具 —— 一個**發錢**的
+ * 判斷在不確定的時候不發，是唯一安全的退化方向。
+ *
+ * ⭐ [陣營轉換]（大師球）自動是對的：被借走的身體 `world.team` 已經換過隊，
+ * 所以「借來的敵人殺掉他的舊隊友」照付，「借來的身體殺掉我的人」不付。
+ */
+export function killScores(
+  world: SimWorld,
+  victim: EntityId,
+  killer: EntityId | null,
+): killer is EntityId {
+  if (killer === null || killer === victim) return false;
+  if (!world.champion.has(killer)) return false;
+  const kt = world.team.get(killer);
+  const vt = world.team.get(victim);
+  return kt !== undefined && vt !== undefined && kt.teamId !== vt.teamId;
+}
+
 export function recordDamage(
   world: SimWorld,
   source: EntityId,
@@ -339,6 +373,10 @@ export function recordXp(world: SimWorld, id: EntityId, amount: number): void {
  * Record a champion death: victim death, killer kill + multikill streak, recent
  * enemy damagers as assists, and kill-participation for everyone credited. The
  * victim's recent-damager log is cleared (a fresh life starts clean).
+ *
+ * ⚠️ The DEATH is always booked; only the KILLER half is gated by `killScores`
+ * — a player who suicides or is finished off by a teammate is still dead, and
+ * hiding that would make the scoreboard disagree with the corpse on the floor.
  */
 export function recordChampionDeath(
   world: SimWorld,
@@ -349,7 +387,9 @@ export function recordChampionDeath(
   if (v) v.deaths += 1;
 
   const now = world.tick;
-  if (killer !== null && world.champion.has(killer)) {
+  // 同一個謂詞守住 KDA / 連殺 / 多殺 —— ⛔ 擋住金幣但讓計分板照加，等於把漏洞
+  // 從「印錢」降級成「刷數據」，而結算評分讀的正是這幾格（GH#159）。
+  if (killScores(world, victim, killer)) {
     const k = world.matchStats.get(killer);
     if (k) {
       k.kills += 1;
