@@ -26,14 +26,15 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 49,
-    "healthRegen": 0.12,
-    "maxMana": 21,
-    "manaRegen": 0.07,
-    "ad": 1.8,
-    "armor": 0.5,
-    "mr": 1.2,
-    "as": 0.02
+    "maxHealth": 75.7571,
+    "healthRegen": 0.2021,
+    "maxMana": 47.7092,
+    "manaRegen": 0.1753,
+    "ad": 5.1531,
+    "armor": 0.853,
+    "mr": 2.3541,
+    "as": 0.0124,
+    "ap": 0.6102
   },
   "msGrowthTier": "極小",
   "asGrowthTier": "小",
@@ -41,9 +42,9 @@
     "str": 25,
     "agi": 15,
     "int": 14,
-    "strGrowth": 2.45,
-    "agiGrowth": 1.8,
-    "intGrowth": 1.75,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "w3x"
   },
@@ -70,12 +71,12 @@
         6.0
       ],
       "manaCost": [
-        73.0,
-        73.0,
-        73.0,
-        73.0
+        72.0,
+        72.0,
+        72.0,
+        72.0
       ],
-      "range": 0,
+      "range": 0.0,
       "effects": [
         {
           "kind": "damage",
@@ -125,12 +126,12 @@
         6.0
       ],
       "manaCost": [
-        73.0,
-        73.0,
-        73.0,
-        73.0
+        72.0,
+        72.0,
+        72.0,
+        72.0
       ],
-      "range": 0,
+      "range": 0.0,
       "effects": [
         {
           "kind": "damage",
@@ -181,11 +182,11 @@
         6.0
       ],
       "manaCost": [
-        73.0,
-        73.0,
-        73.0,
-        73.0,
-        73.0
+        72.0,
+        72.0,
+        72.0,
+        72.0,
+        72.0
       ],
       "effects": [],
       "template": {
@@ -232,7 +233,7 @@
         0.0,
         0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "effects": [
         {
           "kind": "championForm",

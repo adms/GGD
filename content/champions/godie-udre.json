@@ -26,14 +26,15 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 56,
-    "healthRegen": 0.14,
-    "maxMana": 20,
-    "manaRegen": 0.07,
-    "ad": 1.6,
-    "armor": 0.5,
-    "mr": 1.2,
-    "as": 0.02
+    "maxHealth": 76.4612,
+    "healthRegen": 0.2034,
+    "maxMana": 46.0765,
+    "manaRegen": 0.1463,
+    "ad": 5.1653,
+    "armor": 0.8764,
+    "mr": 2.3541,
+    "as": 0.0125,
+    "ap": 0.3449
   },
   "msGrowthTier": "極小",
   "asGrowthTier": "小",
@@ -41,9 +42,9 @@
     "str": 22,
     "agi": 14,
     "int": 18,
-    "strGrowth": 2.8,
-    "agiGrowth": 1.65,
-    "intGrowth": 1.65,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "w3x"
   },
@@ -74,7 +75,7 @@
         0.0,
         0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "effects": [],
       "vfxKey": "fx.w3x.particle.lavabreathdamage.p00",
       "castTimeSec": 0.067,
@@ -124,10 +125,10 @@
         45.0
       ],
       "manaCost": [
-        73.0,
-        73.0,
-        73.0,
-        73.0
+        72.0,
+        72.0,
+        72.0,
+        72.0
       ],
       "range": 0,
       "effects": [],
@@ -176,10 +177,10 @@
         45.0
       ],
       "manaCost": [
-        73.0,
-        73.0,
-        73.0,
-        73.0
+        72.0,
+        72.0,
+        72.0,
+        72.0
       ],
       "effects": [
         {
@@ -230,7 +231,7 @@
         0.0,
         0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.wind.pulse-lg",
       "castTimeSec": 0.667,

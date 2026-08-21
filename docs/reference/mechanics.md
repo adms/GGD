@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_da7bb275a409`
+contentVersion `cv_2c6cf2ba19a0`
 
 ---
 
@@ -17,7 +17,7 @@ contentVersion `cv_da7bb275a409`
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
 | `applyBuff` | 增益／減益（改屬性） | 108 | `godie-e001.passive`、`godie-e001.q`、`godie-e001.r`、`godie-e002.r`、`godie-e008.w`、`godie-e00l.ex`、`godie-e00n.ex`、`godie-e00n.passive`、`godie-e00n.q`、`godie-e00n.r`、`godie-e00n.w`、`godie-e00r.ex` …（共 108） |
-| `applyStatus` | 掛狀態 | 93 | `godie-e001.e`、`godie-e001.passive`、`godie-e007.ex`、`godie-e007.q`、`godie-e008.e`、`godie-e008.q`、`godie-e00n.e`、`godie-e00n.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00s.e`、`godie-e00w.passive` …（共 93） |
+| `applyStatus` | 掛狀態 | 94 | `godie-e001.e`、`godie-e001.passive`、`godie-e007.ex`、`godie-e007.q`、`godie-e008.e`、`godie-e008.q`、`godie-e00n.e`、`godie-e00n.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.q`、`godie-e00s.e` …（共 94） |
 | `blink` | 瞬移 | 15 | `godie-efur.q`、`godie-h01o.q`、`godie-n00b.e`、`godie-n01c.r`、`godie-n01c.w`、`godie-nbbc.r`、`godie-nbbc.w`、`godie-o00k.w`、`godie-o00x.w`、`godie-o02l.passive`、`godie-ofar.passive`、`godie-ogrh.w` …（共 15） |
 | `carry` | 背負（帶著隊友移動 + 不可被選取） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `chainLightning` | 連鎖閃電 | 2 | `godie-o00k.r`、`godie-udea.r` |
@@ -78,7 +78,7 @@ contentVersion `cv_da7bb275a409`
 | `onFireRingIgnite` | 火圈點燃時 | 1 | `grail-ex-09` |
 | `onGuardianDown` | 守衛塔倒下時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onHeal` | 治療真的補到血時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
-| `onInterval` | 週期（每 N 秒） | 8 | `godie-e00r.e`、`godie-e00r.e`、`godie-e00r.e`、`godie-e00r.e`、`godie-emfr.passive`、`godie-hvsh.e`、`grail-c-19`、`grail-ex-02` |
+| `onInterval` | 週期（每 N 秒） | 9 | `godie-e00r.e`、`godie-e00r.e`、`godie-e00r.e`、`godie-e00r.e`、`godie-e00r.q`、`godie-emfr.passive`、`godie-hvsh.e`、`grail-c-19`、`grail-ex-02` |
 | `onKill` | 擊殺時 | 14 | `godie-h01u.passive`、`godie-hpb1.passive`、`godie-hvsh.e`、`godie-o00x.passive`、`godie-ogrh.passive`、`godie-zombiex.passive`、`godie-zombiex.passive`、`grail-c-10`、`grail-c-14`、`grail-a-05`、`grail-ex-03`、`conqueror` …（共 14） |
 | `onLethalDamage` | 受到致命傷害時（免死有沒有生效都會發） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onOverheal` | 治療溢出時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
@@ -103,9 +103,9 @@ contentVersion `cv_da7bb275a409`
 | `equipment` | 裝備了某道具時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `kind` | 對象是誰（小兵／英雄／BOSS） | 1 | `godie-h02k.ex` |
 | `stat` | 屬性門檻（血量低於 X%…） | 8 | `godie-e002.w`、`godie-e00l.w`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-emfr.passive`、`godie-h00l.ex`、`godie-h02v.w`、`grail-ex-13` |
-| `status` | 身上有某狀態時 | 20 | `godie-edem.r`、`godie-efur.ex`、`godie-emns.e`、`godie-emns.r`、`godie-ewar.e`、`godie-h00l.e`、`godie-h01n.e`、`godie-h01n.w`、`godie-h01u.e`、`godie-h02k.ex`、`godie-h02k.passive`、`godie-h02k.q` …（共 20） |
+| `status` | 身上有某狀態時 | 21 | `godie-e00r.q`、`godie-edem.r`、`godie-efur.ex`、`godie-emns.e`、`godie-emns.r`、`godie-ewar.e`、`godie-h00l.e`、`godie-h01n.e`、`godie-h01n.w`、`godie-h01u.e`、`godie-h02k.ex`、`godie-h02k.passive` …（共 21） |
 
-## 狀態標籤 —— 98 個
+## 狀態標籤 —— 103 個
 
 開放詞彙（自由字串）。條件葉 `status` 的**類別分支**查的就是它。
 
@@ -132,10 +132,12 @@ contentVersion `cv_da7bb275a409`
 | `charmed` | `charmed` |
 | `combo` | `moon-combo` |
 | `confusion` | `confusion` |
+| `cooldown` | `devour-cooldown` |
 | `counter` | `grief-seed-charge`、`triforce-courage` |
 | `curse` | `curse` |
 | `damage-bank` | `light-wand-banked`、`nen-banked` |
 | `debuff` | `armor-break`、`blind`、`burn`、`burnstun`、`charmed`、`confusion`、`curse`、`fang-stun`、`fear`、`grievous-wounds`、`ingredient`、`magic-break`、`no-heal`、`numbness`、`omnislash-lock`、`paralysis`、`root`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60`、`stun`、`trial-stun` |
+| `devour-cooldown` | `devour-cooldown` |
 | `disable` | `burnstun`、`fang-stun`、`fear`、`ingredient`、`numbness`、`omnislash-lock`、`omnislash-perform`、`paralysis`、`root`、`stun`、`trial-stun` |
 | `dot` | `burn` |
 | `elemental` | `burn` |
@@ -159,6 +161,7 @@ contentVersion `cv_da7bb275a409`
 | `heal-down` | `grievous-wounds`、`no-heal` |
 | `immobilize` | `root` |
 | `ingredient` | `ingredient` |
+| `internal-cooldown` | `devour-cooldown` |
 | `lifesteal-down` | `grievous-wounds`、`no-heal` |
 | `lifesteal-up` | `rage` |
 | `light-wand-banked` | `light-wand-banked` |
@@ -166,7 +169,7 @@ contentVersion `cv_da7bb275a409`
 | `magic-resist-down` | `magic-break` |
 | `magical` | `magic-break` |
 | `mana-banked` | `light-wand-banked`、`nen-banked` |
-| `marker` | `burn` |
+| `marker` | `burn`、`devour-cooldown` |
 | `mechanism-on-card` | `bankai`、`numbness`、`paralysis`、`triforce-courage` |
 | `millennium-plot-armor` | `millennium-plot-armor` |
 | `miss` | `blind`、`curse` |
@@ -177,6 +180,7 @@ contentVersion `cv_da7bb275a409`
 | `nen-banked` | `nen-banked` |
 | `next-attack` | `grail-strengthened-projection` |
 | `no-heal` | `no-heal` |
+| `no-stat-change` | `devour-cooldown` |
 | `numbness` | `numbness` |
 | `omnislash-lock` | `omnislash-lock` |
 | `omnislash-perform` | `omnislash-perform` |
@@ -188,6 +192,7 @@ contentVersion `cv_da7bb275a409`
 | `regen-down` | `grievous-wounds`、`no-heal` |
 | `resist-down` | `armor-break`、`magic-break` |
 | `root` | `root` |
+| `self` | `devour-cooldown` |
 | `self-lock` | `omnislash-perform` |
 | `shred` | `armor-break`、`magic-break` |
 | `slow` | `slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60` |

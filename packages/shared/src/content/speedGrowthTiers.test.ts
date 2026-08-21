@@ -1,7 +1,18 @@
 /**
- * ⭐【速度成長五級距 —— 級別要真的變成成長，而這一版**一格平衡都沒動**】
+ * ⭐【速度成長五級距 —— 級別要真的變成成長，而原值不可以在旁邊說另一句話】
  *
  * owner 2026-08-21：「請你給我**移動速度及攻擊速度 每級成長五級距**」。
+ *
+ * ⚠️ **2026-08-21 改寫過一次，理由要記著**：這一條原本斷言「解析後與卡上原值
+ * 逐位元相同」，並且把那件事叫做「**這一版零平衡改動**」。當天下午 owner 的架構
+ * 裁決（「廢掉三屬性 純用十出身的五級距表來代表每級屬性成長」）把 49 位的
+ * `growth.as` 重推導了，於是那條斷言紅了。
+ *
+ * ⛔ 而「前提沒了所以放寬它」是**錯的解法** —— owner 逐字說過「**我沒這樣說過**」：
+ * 他要的是一次**架構**改動，那些 ±80% 是它的**後果**，⛔ 不是他點的菜。
+ * ⇒ 正確的形狀是把它從「斷言零差異」換成「**如實報告差異**」：
+ * 每一處差異都要有一條具名的軸（{@link SPEED_GROWTH_PARITY_DRIFT}）帶著理由，
+ * 而差異本身會被**逐位印出來拿給 owner 看**。⛔ 沒有具名的差異一筆都不准。
  *
  * ⚠️ 斷言讀的是 **`registerAll` 之後的註冊表**，⛔ 不是直接呼叫
  * `resolveSpeedGrowthTiers` —— 後者對「模組寫對了但沒有人接上去」是綠的
@@ -18,11 +29,10 @@
  * `content/config/` 讀（那樣會變成「產生器跟它自己比對」）。
  *
  * 突變紀錄：
- *   · `registries.ts` 拿掉 `resolveSpeedGrowthTiers(…)` 那一層 → ② 紅
- *     （① 仍然綠 —— 見上面那一段，那正是它存在的理由）。
- *   · 把 `godie-e001.json` 的 `asGrowthTier` 改成「極大」→ ① 紅並指名它
- *     （解析出 0.05、卡上原值 0.02 ⇒ 一次平衡改動，而這一版宣告了零改動）。
- *     ⭐ `pnpm speedtiers:check` 同一個突變也非零離開。
+ *   · `registries.ts` 拿掉 `resolveSpeedGrowthTiers(…)` 那一層 → ①②**都**紅
+ *     （改寫之後 ① 也讀註冊表，所以接縫斷掉不再只有 ② 抓得到）。
+ *   · 把 `SPEED_GROWTH_PARITY_DRIFT` 的 `as` 那一筆刪掉 → ① 紅並逐位列出 49 位。
+ *   · 把 `ms` 的漂移做出來（改一位的 `msGrowthTier`）→ ① 紅，因為 `ms` 不在清單上。
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { dirname, join } from "node:path";
@@ -38,6 +48,7 @@ import {
   SPEED_GROWTH_AXES,
   SPEED_GROWTH_TIER_NAMES,
   SPEED_GROWTH_TIER_FIELD,
+  SPEED_GROWTH_PARITY_DRIFT,
   speedGrowthTableOf,
   speedGrowthTiersFromDoc,
   type SpeedGrowthTierName,
@@ -62,10 +73,15 @@ beforeAll(async () => {
 });
 
 describe("速度成長五級距（owner 2026-08-21）", () => {
-  it("① 出貨 49 位都填了級別，而且解析後與卡上原值逐位元相同（零平衡改動）", () => {
+  it("① 出貨 49 位都填了級別，而且原值與級別的每一處差異都具名列出來", () => {
     const ids = balancePopulationIds(REPO);
     const cards = balancePopulationDocs(REPO);
     expect(ids.length, "母體讀壞了 —— 下面的迴圈會空轉成綠").toBeGreaterThan(0);
+
+    /** 具名清單上那幾條軸，每一條真的漂了幾位（反向斷言用）。 */
+    const drifted: Record<string, string[]> = {};
+    /** ⛔ 沒有具名的漂移 —— 一筆都不准。 */
+    const unlisted: string[] = [];
 
     for (let i = 0; i < ids.length; i++) {
       const id = ids[i]!;
@@ -77,16 +93,52 @@ describe("速度成長五級距（owner 2026-08-21）", () => {
           tier,
           `${id} 沒有填 ${SPEED_GROWTH_TIER_FIELD[axis]} —— 跑 \`pnpm speedtiers:build\``,
         ).toBeTruthy();
-        if (!shipped.requireAuthoredParity) continue;
+        // ⭐ 承重的那一半：註冊表上跑的**就是級別**（出貨的那條路，⛔ 不是模組的
+        //    單元測試）。它與下面的漂移報告無關 —— 漂移是「原值說了另一句話」，
+        //    這一條是「引擎跑的是哪一句」，⛔ 任何情況下都不放寬。
         expect(
-          table[axis][tier!],
-          `${id} 的「${tier}」解析出 ${table[axis][tier!]}，卡上原值是 ${authored[axis] ?? 0}` +
-            ` —— 那是一次平衡改動，而這一版宣告了零改動。要嘛改回來，要嘛把` +
-            ` config.speed-growth-tiers@1 的 requireAuthoredParity 關掉。⛔ 不要改這條測試。`,
-        ).toBe(authored[axis] ?? 0);
-        // 註冊表上就是這個值（出貨的那條路，⛔ 不是模組的單元測試）。
-        expect(growthOf(id)[axis] ?? 0).toBe(table[axis][tier!]);
+          growthOf(id)[axis] ?? 0,
+          `${id} 的 growth.${axis} 不是級別解析出來的值 —— registries.ts 的接縫斷了`,
+        ).toBe(table[axis][tier!]);
+
+        if (!shipped.requireAuthoredParity) continue;
+        const raw = authored[axis] ?? 0;
+        const resolved = table[axis][tier!];
+        if (raw === resolved) continue;
+        const pct = raw === 0 ? "∞" : `${(((resolved - raw) / raw) * 100).toFixed(1)}%`;
+        const line = `${id}：卡上 ${raw} → 級別「${tier}」${resolved}（${pct}）`;
+        if (SPEED_GROWTH_PARITY_DRIFT[axis] === undefined) unlisted.push(`${axis} · ${line}`);
+        else (drifted[axis] ??= []).push(line);
       }
+    }
+
+    // ⭐ ① 沒有具名理由的漂移一筆都不准。⛔ 修法不是把它加進清單了事 ——
+    //    清單上的每一筆都要能被反駁，而且它是**拿給 owner 看**的東西。
+    expect(
+      unlisted,
+      "有軸的原值與級別說了兩句話，而它不在 SPEED_GROWTH_PARITY_DRIFT 上。\n" +
+        "⛔ 不要改這條測試、⛔ 不要關掉 requireAuthoredParity —— 要嘛把值收回來，\n" +
+        "要嘛把那條軸連同**一個能被反駁的理由**寫進 speedGrowthTiers.ts 的具名清單。",
+    ).toEqual([]);
+
+    // ⭐ ② 反向：清單上的軸必須**真的還在漂**。收乾淨了就要刪掉那一筆，
+    //    ⛔ 不可以留著變成一條沒有人讀的豁免。
+    for (const [axis, why] of Object.entries(SPEED_GROWTH_PARITY_DRIFT)) {
+      expect(
+        (drifted[axis] ?? []).length,
+        `SPEED_GROWTH_PARITY_DRIFT 上的「${axis}」已經不漂了 —— 刪掉那一筆。理由欄寫著：\n${why}`,
+      ).toBeGreaterThan(0);
+    }
+
+    // ⭐ ③ 把差異**逐位印出來**。這不是除錯輸出 —— 這份清單存在的唯一理由就是
+    //    讓 owner 看得到那幾個百分比，然後由他決定要不要。
+    for (const [axis, lines] of Object.entries(drifted)) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        `\n[速度成長級距] ⚠️ 「${axis}」有 ${lines.length} 位的原值與級別不同（具名待裁決）：\n` +
+          `  理由：${SPEED_GROWTH_PARITY_DRIFT[axis]}\n` +
+          lines.map((l) => `    · ${l}`).join("\n"),
+      );
     }
   });
 

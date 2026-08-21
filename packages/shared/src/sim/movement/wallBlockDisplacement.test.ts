@@ -26,6 +26,8 @@
  *     `{ pos: requested }`（＝ 2026-08-21 之前的那一行）→ 這一整份紅
  *   · GH#490：`policyFor(rules, mode, flightIgnoresObstacles(world, flyerId))`
  *     的第三個參數換成 `false`（＝這個閘不認得飛行）→ 飛行那一條紅
+ *   · GH#490：`resolveLandingPoint` 裡的 `relaxBody(body, zone)` 拿掉
+ *     （＝牆體豁免順手把邊界一起豁免了）→ 飛行那一條的**邊界方向**紅
  */
 import { describe, it, expect } from "vitest";
 import { readdirSync, readFileSync } from "node:fs";
@@ -195,16 +197,32 @@ describe("位移不可以穿牆 (wall-block)", () => {
   /**
    * ⭐ GH#490 —— owner 2026-08-21「**翔封界 等飛行效果實作**」。
    *
-   * 兩個方向**在同一具身體上**問完，所以它不可能靠「所有人都放行」通過：
-   *   ① 飛行中（出貨的 04-00 翔封界 那份授予）→ 跨得過牆
-   *   ② 那份授予**到期**之後 → #487 的閘回來，⛔ 再也跨不過去
+   * ⭐ owner 2026-08-21 又把飛行**逐字定義**了一次，三條規則缺一不可：
+   *
+   *   > 「**飛行就是可以穿牆 跟 無視所有人碰撞 但地圖標界還是要遵守**」
+   *
+   * ⚠️ 他同一天先說過「**照規則就好不要例外**」，而那句的意思**不是**「飛行不能
+   * 穿牆」——是「⛔ **不要為飛行另立一套規則**」。⇒ 飛行走的仍然是**同一條**位移
+   * 管線，只是**牆體那一格**對它回 allow，而**邊界那一格照樣回 true**。
+   *
+   * 三個方向**在同一具身體上**問完，所以它不可能靠「所有人都放行」通過：
+   *   ① 飛行中（出貨的 04-00 翔封界 那份授予）→ **跨得過牆**
+   *   ② 飛行中往場外瞬移 → ⛔ **飛不出地圖邊界**（⭐ 這一條比穿牆嚴重得多：
+   *      飛出去會直接繞過火圈這個回合結束機制，而決鬥判定 / `teamAliveInZone` /
+   *      小地圖三個下游會開始推理一個不在任何地方的英雄）
+   *   ③ 那份授予**到期**之後 → #487 的閘回來，⛔ 再也跨不過去
+   *
+   * ⛔ ①②**必須一起問**：牆體與邊界在 `resolveLandingPoint` 裡是**兩段不同的
+   * 程式**（`resolveDisplacementEnd` 只看 `zone.obstacles`；邊界在後面的
+   * `relaxBody` → `collision/resolve.ts::clampToBoundary`），而它們長得很像 ——
+   * 哪一天有人「順手」把整段跳過去，只有 ② 會紅。
    *
    * ⚠️ 飛行**不是** `world.flight.set()` 手塞的（失敗形態⑤）：掛一個真的
    * `ModifierSource.flight` 到 `StatsComp.sources`，再跑出貨的 `flightSystem`
    * —— 那正是天生技 / 限時 buff / 道具 / 增益卡四種來源共用的那條路，而 ② 走的
    * 是 `expiresAtTick` 這條真的到期路徑（77-03 GLADIARIA ALAT 的 6/9/12/15 秒）。
    */
-  it("★ 飛行是穿牆判定的合法例外，飛行結束後閘就回來 (GH#490)", () => {
+  it("★ 飛行穿得過牆、⛔ 飛不出邊界，飛行結束後閘就回來 (GH#490)", () => {
     cover("displacement-wall-block");
     const doc = shippedArenas().find((a) => a.id === "arena.infinity-castle")!.doc;
     const arena = arenaDefFromDoc(doc as unknown as Parameters<typeof arenaDefFromDoc>[0]);
@@ -249,7 +267,33 @@ describe("位移不可以穿牆 (wall-block)", () => {
     expect(world.flight.get(hero), "出貨授予沒有被 flightSystem 看到").toBeDefined();
     expect(blinkAcross(), "在飛卻被擋在牆前 —— #487 的閘不認得飛行").toBeGreaterThan(0);
 
-    // ② 飛行到期 —— ⛔ 閘一定要回來，否則「加了飛行」等於替所有人開了一道後門。
+    // ② ⭐ 邊界**不是**例外（owner：「但**地圖標界還是要遵守**」）。
+    //    往場外遠處瞬移一次 —— 落點必須仍然在決鬥區的碟裡。
+    //    ⛔ 期望值從 zone 推導（`center` / `radius` / 體半徑），⛔ 不抄座標。
+    const zone = arena.zones[0]!;
+    const far = { x: zone.center.x + zone.boundaryRadius * 4, z: zone.center.z };
+    world.transform.get(hero)!.pos = { x: zone.center.x, z: zone.center.z };
+    world.nav.get(hero)!.override = null;
+    runEffects([{ kind: "blink", shape: "single", to: "point" } as EffectDef], {
+      world,
+      caster: hero,
+      rank: 1,
+      targets: [],
+      point: far,
+      origin: "ability:test.boundary",
+      rng: world.rng,
+    });
+    const landed = world.transform.get(hero)!.pos;
+    const dx = landed.x - zone.center.x;
+    const dz = landed.z - zone.center.z;
+    expect(
+      Math.sqrt(dx * dx + dz * dz),
+      "在飛的身體瞬移出了地圖邊界 —— 牆體豁免把 clampToBoundary 一起帶走了。\n" +
+        "⛔ 那兩件事是兩段不同的程式（resolveDisplacementEnd 只看 zone.obstacles，\n" +
+        "邊界在 relaxBody → clampToBoundary），⛔ 不可以一起豁免。",
+    ).toBeLessThanOrEqual(zone.boundaryRadius + 1e-6);
+
+    // ③ 飛行到期 —— ⛔ 閘一定要回來，否則「加了飛行」等於替所有人開了一道後門。
     world.tick = EXPIRES_AT;
     flightSystem(world);
     expect(world.flight.get(hero), "授予到期了但飛行還在").toBeUndefined();

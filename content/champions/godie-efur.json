@@ -26,14 +26,15 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 30,
-    "healthRegen": 0.08,
-    "maxMana": 28,
-    "manaRegen": 0.09,
-    "ad": 2.2,
-    "armor": 0.7,
-    "mr": 1.2,
-    "as": 0.02
+    "maxHealth": 78.1041,
+    "healthRegen": 0.2062,
+    "maxMana": 46.7908,
+    "manaRegen": 0.1624,
+    "ad": 4.9898,
+    "armor": 0.853,
+    "mr": 2.3541,
+    "as": 0.0121,
+    "ap": 0.2122
   },
   "msGrowthTier": "極小",
   "asGrowthTier": "小",
@@ -41,9 +42,9 @@
     "str": 15,
     "agi": 15,
     "int": 20,
-    "strGrowth": 1.5,
-    "agiGrowth": 2.2,
-    "intGrowth": 2.3,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "w3x"
   },
@@ -127,10 +128,10 @@
         45.0
       ],
       "manaCost": [
-        73.0,
-        73.0,
-        73.0,
-        73.0
+        72.0,
+        72.0,
+        72.0,
+        72.0
       ],
       "range": 3.0,
       "targetsEnemies": true,
@@ -204,10 +205,10 @@
         60.0
       ],
       "manaCost": [
-        146.0,
-        146.0,
-        146.0,
-        146.0
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "range": 0.0,
       "radiusTier": "小",
@@ -265,9 +266,9 @@
         120.0
       ],
       "manaCost": [
-        146.0,
-        146.0,
-        146.0
+        144.0,
+        144.0,
+        144.0
       ],
       "range": 0.0,
       "radiusTier": "極小",

@@ -31,6 +31,7 @@ import { SKELETON_ARENA } from "./world/ArenaDef";
 import { registerSkeletonContent } from "./content/skeleton";
 import { Champions } from "./content/registry";
 import { championStatBase, championStatGrowth } from "./stats/attributes";
+import { ATTRIBUTE_ENV_DEFAULTS } from "./combatEnv";
 import { Stat } from "./stats/statTypes";
 import type { ChampionDef } from "./content/defs";
 import type { ChampionId } from "../ids";
@@ -237,26 +238,35 @@ describe("#244 the MOB CARD is what a mob is made of (was: the hero sheet)", () 
     // 釘在 sim/balanceTuning.test.ts。
     expect(championStatBase(HERO_DEF, Stat.MaxHealth, 1)).toBe(380);
 
-    // THE +45 IS TWO LAYERS, AND THEY NO LONGER COINCIDE.
+    // THE +45 WAS TWO LAYERS. ⭐ 2026-08-21 起它**只剩一層**。
+    //
     // #244 authored `growth.maxHealth = 45`. #248 gave the hero STR +1.8/level,
     // which through Blizzard's 25 was ALSO exactly 45 — a coincidence that the
-    // map's real 23 ends: the attribute layer is now 41.4. The owner ruled that
-    // `growth` survives the re-derivation as a designer knob layered on the
-    // w3x-faithful attribute curve (「growth 區塊就是重複來源 => 本來就可以重複
-    // 沒有衝突」), so the effective per-level health is the SUM, 86.4. Pin the
-    // LAYERS separately, so losing either one fails here rather than silently
-    // halving or doubling the roguelite boss.
-    const ATTR_LAYER = 23 * 1.8; // strToMaxHealth (war3mapMisc StrHitPointBonus) × strGrowth
-    const GROWTH_LAYER = 45; // #244's authored growth.maxHealth — untouched
-    expect(ATTR_LAYER).toBeCloseTo(41.4, 9);
-    expect(HERO_DEF.growth[Stat.MaxHealth]).toBe(GROWTH_LAYER);
+    // map's real 23 ended (the attribute layer became 41.4, the sum 86.4).
+    // owner 2026-08-21 逐字：「**所有角色的 力敏智成長都歸 0**」⇒ 屬性層那一半
+    // 現在是 **0**，而 `growth.maxHealth` 改由他的**出身五級距**推導。
+    // 前後三組數字（41.4 / 45 / 5321.6 → 0 / 100.0663 / 5923）與它們守過什麼，
+    // 另存在 `docs/legacy/_attr-growth-zeroed-superseded.md`。
+    //
+    // ⭐ 這裡**仍然逐層驗**，只是期望值從**英雄卡推導**、⛔ 不再抄字面值 ——
+    //    抄字面值就是替一個 owner 每週在動的數字上鎖（第零守則），而且它會用
+    //    「殭屍王壞了」這種錯誤訊息紅。少掉任何一層照樣在這裡失敗。
+    const ATTR_LAYER =
+      ATTRIBUTE_ENV_DEFAULTS.strToMaxHealth * (HERO_DEF.attributes?.strGrowth ?? 0);
+    const GROWTH_LAYER = HERO_DEF.growth[Stat.MaxHealth] ?? 0;
+    expect(GROWTH_LAYER, "喪標麥可掉了 growth.maxHealth 這一列 —— 小怪曲線的來源沒了").toBeGreaterThan(0);
     expect(championStatGrowth(HERO_DEF, Stat.MaxHealth)).toBeCloseTo(ATTR_LAYER + GROWTH_LAYER, 9);
-    // The owner's own sanity number, end to end: level 12, maxHealth ×4. It was
-    // 5480 under the 25 and is 5321.6 under the map's 23 — a consequence of the
-    // corrected coefficient, logged for him in docs/_execution-batches.md.
-    // #265 也沒有移動它:這一行問的是屬性卡面(×4,#248 當時的算法)。玩家現在
-    // 實際看到的是 `1330.4 × 3 + 300`,釘在 sim/balanceTuning.test.ts。
-    expect(championStatBase(HERO_DEF, Stat.MaxHealth, 12) * 4).toBeCloseTo(5321.6, 6);
+    // ⭐ 而且**現在**那個和裡屬性層是 0：每級成長 100% 由五級距那一格供給。
+    //    有人把 `strGrowth` 改回非零 ⇒ 這裡紅，⛔ 而不是等到某一場遊戲裡才發現
+    //    小怪血量莫名其妙多了一截（#244 這條 tripwire 本來就是為那件事存在的）。
+    expect(ATTR_LAYER, "屬性層又開始出每級成長了 —— owner 2026-08-21 的裁決是歸 0").toBe(0);
+    // The owner's own sanity number, end to end: level 12, maxHealth ×4 ——
+    // 同樣改成從卡面推導。#265 沒有移動它:這一行問的是屬性卡面(×4,#248 當時的
+    // 算法)。玩家實際看到的是再 `×3 + 300`,釘在 sim/balanceTuning.test.ts。
+    expect(championStatBase(HERO_DEF, Stat.MaxHealth, 12) * 4).toBeCloseTo(
+      (championStatBase(HERO_DEF, Stat.MaxHealth, 1) + championStatGrowth(HERO_DEF, Stat.MaxHealth) * 11) * 4,
+      6,
+    );
     expect(
       championStatBase(Champions.get(MOB_CHAMPION_ID as ChampionId), Stat.MaxHealth, 1),
     ).toBe(380);

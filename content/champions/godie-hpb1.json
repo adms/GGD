@@ -25,14 +25,15 @@
     "range": 1.4
   },
   "growth": {
-    "maxHealth": 42,
-    "healthRegen": 0.1,
-    "maxMana": 20,
-    "manaRegen": 0.07,
-    "ad": 2.1,
-    "armor": 0.6,
-    "mr": 1.2,
-    "as": 0.02
+    "maxHealth": 58.8914,
+    "healthRegen": 0.3307,
+    "maxMana": 22.426,
+    "manaRegen": 0.0743,
+    "ad": 5.149,
+    "armor": 0.6691,
+    "mr": 1.8261,
+    "as": 0.0301,
+    "ap": 0.6765
   },
   "msGrowthTier": "極小",
   "asGrowthTier": "小",
@@ -40,9 +41,9 @@
     "str": 26,
     "agi": 15,
     "int": 13,
-    "strGrowth": 2.1,
-    "agiGrowth": 2,
-    "intGrowth": 1.7,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "w3x"
   },
@@ -71,7 +72,7 @@
         0.0,
         0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.physical.pulse-sm",
       "castTimeSec": 0.067,
@@ -108,11 +109,11 @@
         45.0
       ],
       "manaCost": [
-        146.0,
-        146.0,
-        146.0,
-        146.0,
-        146.0
+        144.0,
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "effects": [
         {
@@ -169,10 +170,10 @@
         60.0
       ],
       "manaCost": [
-        292.0,
-        292.0,
-        292.0,
-        292.0
+        288.0,
+        288.0,
+        288.0,
+        288.0
       ],
       "radius": 6.05,
       "effects": [
@@ -240,7 +241,7 @@
         0.0,
         0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "effects": [
         {
           "kind": "applyBuff",

@@ -26,14 +26,15 @@
     "range": 8.2
   },
   "growth": {
-    "maxHealth": 30,
-    "healthRegen": 0.08,
-    "maxMana": 19,
-    "manaRegen": 0.06,
-    "ad": 1.5,
-    "armor": 0.9,
-    "mr": 1.2,
-    "as": 0.02
+    "maxHealth": 61.5139,
+    "healthRegen": 0.1281,
+    "maxMana": 47.9643,
+    "manaRegen": 0.1646,
+    "ad": 8.4,
+    "armor": 0.4046,
+    "mr": 1.0342,
+    "as": 0.0165,
+    "ap": 0.0
   },
   "msGrowthTier": "極小",
   "asGrowthTier": "小",
@@ -41,9 +42,9 @@
     "str": 17,
     "agi": 18,
     "int": 19,
-    "strGrowth": 1.5,
-    "agiGrowth": 2.9,
-    "intGrowth": 1.6,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "w3x"
   },
@@ -71,11 +72,11 @@
         30.0
       ],
       "manaCost": [
-        73.0,
-        73.0,
-        73.0,
-        73.0,
-        73.0
+        72.0,
+        72.0,
+        72.0,
+        72.0,
+        72.0
       ],
       "effects": [],
       "template": {
@@ -129,7 +130,7 @@
         0.0,
         0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.physical.slash",
       "passive": {
@@ -269,10 +270,10 @@
         60.0
       ],
       "manaCost": [
-        73.0,
-        73.0,
-        73.0,
-        73.0
+        72.0,
+        72.0,
+        72.0,
+        72.0
       ],
       "effects": [
         {
@@ -323,7 +324,7 @@
         0.0,
         0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "effects": [
         {
           "kind": "championForm",

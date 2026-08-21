@@ -529,7 +529,21 @@ describe("§2C 朗基努斯之槍 —— 機率讀總敏捷,傷害讀總力量",
     HERO = withAttrs[0]!.id;
   });
 
-  function heroRig(level: number): Rig {
+  /**
+   * ⭐ 2026-08-21 —— **變數從「等級」換成「三圍加成」**，⛔ 而且不是為了讓它變綠。
+   *
+   * 這兩條守衛要證明的事情從來沒變：機率與傷害讀的是**活的總敏捷／總力量**，
+   * ⛔ 不是一個算好一次就不動的常數。它們原本用「等級 1 vs 等級 9」當那個變數。
+   * owner 2026-08-21 的架構裁決（「**所有角色的 力敏智成長都歸 0**」）之後，
+   * ⛔ **等級不再改變三圍** —— 於是「等級 9 的力量 > 等級 1 的力量」變成一句假話,
+   * 而它會用「朗基努斯之槍壞了」這個**錯誤的訊息**紅。
+   *
+   * ⇒ 換成一個在新架構下**仍然活著**的槓桿：`ChampionComp.attrBonus`。
+   *   那正是 owner 說「⛔ **不是真的沒作用**，不然**隨機能力那些都要大改**」時
+   *   指的那條路 —— 能力屬性強化三選一 / `grantAttribute` / 道具授予全部落在它上面
+   *   （`sim/stats/attrSources.ts`）。⛔ 不是手塞 `world.stats`（失敗形態⑤）。
+   */
+  function heroRig(level: number, bonus?: { str?: number; agi?: number }): Rig {
     const world = new SimWorld(SKELETON_ARENA, 90210);
     world.combatEnv = { ...ENV, damageDealt: 1 };
     const mk = (seat: number, team: number, dx: number): EntityId => {
@@ -552,18 +566,22 @@ describe("§2C 朗基努斯之槍 —— 機率讀總敏捷,傷害讀總力量",
     vhp.hp = 1e7;
     world.champion.get(attacker)!.items[0] = LONGINUS;
     attachItemSource(world, attacker, LONGINUS, 0, doc(LONGINUS));
+    // ⭐ 能力屬性強化的那條路（`applyAttrPick` 就是 `+=` 這一格）。
+    const ac = world.champion.get(attacker)!;
+    ac.attrBonus.str += bonus?.str ?? 0;
+    ac.attrBonus.agi += bonus?.agi ?? 0;
     recomputeStats(world, attacker);
     world.rebuildGrid();
     return { world, attacker, victim };
   }
 
-  it("傷害等於持有者的**總力量**(而且會隨等級與裝備一起動)", () => {
+  it("傷害等於持有者的**總力量**(而且會隨三圍加成與裝備一起動)", () => {
     cover(`${TAG}/longinus/damage-is-total-str`);
     // max: 1 的 clamp 對這一條沒有影響 —— 我們把機率門檻臨時推到必定觸發,
     // 免得測「傷害」的斷言被骰子決定。做法是直接讀 sim 算出來的傷害:
     // 連打多次,取有掉血的那些。
-    for (const level of [1, 9]) {
-      const r = heroRig(level);
+    for (const extra of [0, 40]) {
+      const r = heroRig(1, { str: extra });
       const str = liveAttribute(r.world, r.attacker, "str", "total")!;
       expect(str).toBeGreaterThan(0);
       let sawHit = false;
@@ -583,14 +601,14 @@ describe("§2C 朗基努斯之槍 —— 機率讀總敏捷,傷害讀總力量",
         const mr = r.world.stats.get(r.victim)!.final[Stat.MagicResist];
         expect(dealt).toBeCloseTo(str * (100 / (100 + Math.max(0, mr))), 4);
       }
-      expect(sawHit, `level ${level} 應該至少 proc 過一次`).toBe(true);
+      expect(sawHit, `str +${extra} 應該至少 proc 過一次`).toBe(true);
     }
   });
 
-  it("等級高 → 力量高 → 傷害高(不是一個固定數字)", () => {
+  it("力量高 → 傷害高(讀的是活的總力量,不是一個固定數字)", () => {
     cover(`${TAG}/longinus/damage-scales`);
     const lo = heroRig(1);
-    const hi = heroRig(9);
+    const hi = heroRig(1, { str: 40 });
     expect(liveAttribute(hi.world, hi.attacker, "str", "total")!).toBeGreaterThan(
       liveAttribute(lo.world, lo.attacker, "str", "total")!,
     );
@@ -599,8 +617,8 @@ describe("§2C 朗基努斯之槍 —— 機率讀總敏捷,傷害讀總力量",
   it("觸發率 ≈ 總敏捷 %,而且會隨敏捷一起上升", () => {
     cover(`${TAG}/longinus/chance-is-total-agi`);
     const trials = 3000;
-    const measure = (level: number): { agi: number; rate: number } => {
-      const r = heroRig(level);
+    const measure = (extraAgi: number): { agi: number; rate: number } => {
+      const r = heroRig(1, { agi: extraAgi });
       const agi = liveAttribute(r.world, r.attacker, "agi", "total")!;
       let procs = 0;
       for (let i = 0; i < trials; i++) {
@@ -617,8 +635,8 @@ describe("§2C 朗基努斯之槍 —— 機率讀總敏捷,傷害讀總力量",
       }
       return { agi, rate: procs / trials };
     };
-    const lo = measure(1);
-    const hi = measure(9);
+    const lo = measure(0);
+    const hi = measure(30);
     // 門檻就是 AGI × 0.01。±5 pp 的帶寬:3000 次抽樣下夠窄,能抓到「係數寫錯
     // 一個數量級」或「其實用的是靜態 chance」,又不會被種子弄成飄的。
     expect(lo.rate).toBeGreaterThan(lo.agi * 0.01 - 0.05);

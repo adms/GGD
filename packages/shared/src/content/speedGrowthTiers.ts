@@ -190,11 +190,17 @@ export interface SpeedGrowthTiers {
   /** 用哪一把梯子。⭐ owner 的兩個候選，出貨 `A`。 */
   ladder: SpeedGrowthLadderId;
   /**
-   * ⭐ **這一版宣告「零平衡改動」**：每一位的級別解析出來必須**逐位元**等於他卡上
-   * 原本的 `growth`。守衛（`speedGrowthTiers.test.ts`）讀這一格決定要不要驗。
+   * 每一位的級別解析出來必須**逐位元**等於他卡上原本的 `growth`。
+   * 守衛（`speedGrowthTiers.test.ts`）與 `pnpm speedtiers:check` 讀這一格決定要不要驗。
    *
-   * ⚠️ owner 開始重新分級的那天把它**關掉**，⛔ 不是去改測試 ——
-   * 一條「永遠為真」的守衛與一條被偷偷改掉的守衛，壞處是一樣的。
+   * ⚠️ **它不是一句「這一版沒改平衡」的宣稱**（2026-08-21 之前的註解是那樣寫的，
+   * 而那個框架在同一天就壞了）。它守的是一件**永遠**該成立的事：
+   * **卡上的原值與級別解析值不可以說兩句話** —— 級別是引擎跑的那個，原值是
+   * `enabled: false` 拉下去之後接手的那個，兩者不一致 ⇒ 止血閥拉下去等於一次
+   * 沒有人宣告過的平衡改動（第一·五守則的鏡像）。
+   *
+   * ⛔ 有差異的時候**不要關掉它**，也⛔ 不要去改測試 —— 把那條軸連同**理由**寫進
+   * {@link SPEED_GROWTH_PARITY_DRIFT}，差異就會被**逐位列出來拿給 owner 看**。
    */
   requireAuthoredParity: boolean;
   /** 兩把梯子的全部 20 個數字。⭐ 每一格都可以在後台單獨調。 */
@@ -210,6 +216,31 @@ export const DEFAULT_SPEED_GROWTH_TIERS: SpeedGrowthTiers = Object.freeze({
   ladder: DEFAULT_SPEED_GROWTH_LADDER,
   requireAuthoredParity: true,
   growth: SPEED_GROWTH_LADDERS,
+});
+
+/**
+ * ⛔ **具名退路** —— 軸 → 為什麼這一條軸的原值與級別還在說兩句話。
+ *
+ * ⚠️ 這是**名單**不是豁免（同 `tierRawParity.test.ts` 的 `TIER_RAW_DRIFT`、
+ * `balanceAnchors.test.ts` 的 `LEGACY_ANCHORS`）：每一筆都要帶一個**能被反駁的
+ * 理由**，而守衛與 `pnpm speedtiers:check` 兩邊都有**反向斷言** ——
+ * 收乾淨之後那一筆會變成過期項目而紅，⛔ 不會靜靜留著變成沒人讀的豁免。
+ *
+ * ⭐ 而且列在這裡**不等於被消音**：守衛會把那一軸的差異**逐位印出來**
+ *（哪一位 · 卡上多少 · 級別多少 · 差幾 %），因為這份清單存在的目的就是
+ * **拿給 owner 看**，讓他自己決定那些差異是不是他要的。
+ */
+export const SPEED_GROWTH_PARITY_DRIFT: Readonly<Record<string, string>> = Object.freeze({
+  as:
+    "⛔ 待 owner 裁決。2026-08-21 的架構改動（owner 逐字：「我決定廢掉三屬性 純用十出身的" +
+    "五級距表來代表每級屬性成長就好」）把 49 位的 `growth.as` 從一致的 0.02 重推導成" +
+    " 0.003–0.0281（十出身 × `config.stat-normalization@1` 的 `bands.as`，referenceLevel 99）。" +
+    "⚠️ 但 `as` **不在**那份 config 的 `appliesTo` 裡（owner 自己那張表：攻速「生效中 FALSE」）" +
+    "⇒ 引擎今天跑的仍然是級別的 0.02，卡上那個新數字**一個位元都沒有生效**。" +
+    "⛔ 三條出路都要 owner 挑，⛔ 不由我決定：①把 `growth.as` 還原成 0.02（引擎行為零改動）" +
+    " ②把 `as` 放進 `appliesTo` 並把這一軸 `enabled: false`（那才是「純用出身表」的字面意思）" +
+    " ③接受出身表的值，重跑 `pnpm speedtiers:build` 讓級別跟上（＝一次真的攻速平衡改動）。" +
+    "⭐ 差異逐位印在 `pnpm speedtiers:check` 的輸出與這條守衛的失敗訊息裡。",
 });
 
 function clampGrowth(v: unknown, axis: SpeedGrowthAxis, fallback: number): number {

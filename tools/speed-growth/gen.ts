@@ -55,6 +55,8 @@ import {
   SPEED_GROWTH_AXES,
   SPEED_GROWTH_AXIS_LABEL,
   SPEED_GROWTH_TIER_FIELD,
+  SPEED_GROWTH_PARITY_DRIFT,
+  SPEED_GROWTH_TIER_NAMES,
   speedGrowthTableOf,
   speedGrowthTiersFromDoc,
   type SpeedGrowthAxis,
@@ -138,11 +140,26 @@ for (const id of ids) {
   const drift: string[] = [];
   for (const axis of SPEED_GROWTH_AXES) {
     const value = authored(doc, axis);
-    const { tier, exact } = tierFor(axis, value);
+    // ⭐ 具名待裁決的軸**凍結**：卡上已經有的級別留著，⛔ 不從原值重新挑一格。
+    //
+    // ⚠️ 這一格是 2026-08-21 補的，而它擋掉的是一次**真的、無聲的平衡改動**：
+    // 那天的架構改動把 49 位的 `growth.as` 重推導成 0.003–0.0281，而「挑最近的
+    // 一格」會把 43 位的 `asGrowthTier` 從「小」(0.02) 改成「極小」(0.01) ——
+    // ⇒ 攻速每級成長**砍半**，而它會以「產生器跑了一次」的樣子悄悄進 repo。
+    // ⛔ 那個值今天**還沒有生效**（`as` 不在 stat-normalization 的 `appliesTo` 裡），
+    // 所以拿它去挑級別＝拿一個死值去改活值。凍結 ⇒ 等 owner 裁決（理由逐字寫在
+    // `SPEED_GROWTH_PARITY_DRIFT`），而下面的 ② 會把差異逐位印給他看。
+    const held = doc[SPEED_GROWTH_TIER_FIELD[axis]];
+    const frozen =
+      SPEED_GROWTH_PARITY_DRIFT[axis] !== undefined &&
+      typeof held === "string" &&
+      (SPEED_GROWTH_TIER_NAMES as readonly string[]).includes(held);
+    const tier = frozen ? (held as SpeedGrowthTierName) : tierFor(axis, value).tier;
     tiers[axis] = tier;
-    if (!exact) {
+    if (Math.abs(TABLE[axis][tier] - value) > 1e-9) {
       drift.push(
-        `${SPEED_GROWTH_AXIS_LABEL[axis]} 卡上 ${value} → 最近的一格「${tier}」是 ${TABLE[axis][tier]}`,
+        `${SPEED_GROWTH_AXIS_LABEL[axis]} 卡上 ${value} → 級別「${tier}」是 ${TABLE[axis][tier]}` +
+          `${frozen ? "（**凍結**，⛔ 沒有重挑）" : "（最近的一格）"}`,
       );
     }
   }
@@ -165,14 +182,48 @@ if (stale.length > 0) {
   );
 }
 
-// ② 零平衡改動的宣稱 —— 有宣稱就要有證據。
-const drifted = rows.filter((r) => r.drift.length > 0);
-if (TIERS.requireAuthoredParity && drifted.length > 0) {
-  problems.push(
-    `\`requireAuthoredParity\` 開著（＝這一版宣告「零平衡改動」），但有 ${drifted.length} 位的級別解析出來**不等於**他卡上的原值：\n` +
-      drifted.map((r) => `    · ${r.id} — ${r.drift.join("；")}`).join("\n") +
-      `\n  → 要嘛把梯子調到收得住他，要嘛把 \`requireAuthoredParity\` 關掉（那就是在宣告這一版**有**平衡改動）。⛔ 不要改測試。`,
-  );
+// ② 原值與級別不可以說兩句話 —— 有差異就要**具名**，而且要**印出來**。
+//
+// ⚠️ 2026-08-21 改過一次：這一格原本是「宣告零平衡改動就要有證據」，而那個框架
+// 在同一天下午被 owner 的架構裁決打破（`growth.as` 被十出身表重推導）。
+// ⛔ 放寬它或把 `requireAuthoredParity` 關掉都是錯的 —— owner 逐字「**我沒這樣說過**」，
+// 那些 ±% 是架構改動的**後果**不是他要的目標。⇒ 現在它**如實報告**：
+// 具名清單上的軸把差異逐位印出來給 owner 看，沒具名的一筆都不准。
+const byAxis = new Map<SpeedGrowthAxis, string[]>();
+for (const r of rows) {
+  for (const axis of SPEED_GROWTH_AXES) {
+    const line = r.drift.find((d) => d.startsWith(SPEED_GROWTH_AXIS_LABEL[axis]));
+    if (line !== undefined) byAxis.set(axis, [...(byAxis.get(axis) ?? []), `${r.id} — ${line}`]);
+  }
+}
+if (TIERS.requireAuthoredParity) {
+  for (const [axis, lines] of [...byAxis].sort((a, b) => (a[0] < b[0] ? -1 : 1))) {
+    const why = SPEED_GROWTH_PARITY_DRIFT[axis];
+    if (why === undefined) {
+      problems.push(
+        `「${SPEED_GROWTH_AXIS_LABEL[axis]}」有 ${lines.length} 位的級別解析出來**不等於**他卡上的原值，` +
+          `而這條軸**不在** \`SPEED_GROWTH_PARITY_DRIFT\` 上：\n` +
+          lines.map((l) => `    · ${l}`).join("\n") +
+          `\n  → 要嘛把值收回來，要嘛把這條軸連同**一個能被反駁的理由**寫進 ` +
+          `packages/shared/src/content/speedGrowthTiers.ts。⛔ 不要關掉 requireAuthoredParity、⛔ 不要改測試。`,
+      );
+      continue;
+    }
+    // ⭐ 具名 ⇒ 不是問題，但**一定要印出來** —— 這份清單存在的唯一理由就是給 owner 看。
+    console.warn(
+      `\n[speedtiers] ⚠️ 「${SPEED_GROWTH_AXIS_LABEL[axis]}」有 ${lines.length} 位原值與級別不同（具名待裁決）\n` +
+        `  理由：${why}\n` +
+        lines.map((l) => `    · ${l}`).join("\n"),
+    );
+  }
+  // ⭐ 反向：清單上的軸必須真的還在漂。收乾淨了就要刪掉那一筆。
+  for (const axis of Object.keys(SPEED_GROWTH_PARITY_DRIFT)) {
+    if (!byAxis.has(axis as SpeedGrowthAxis)) {
+      problems.push(
+        `\`SPEED_GROWTH_PARITY_DRIFT\` 上的「${axis}」已經不漂了 —— 刪掉那一筆，⛔ 不要留成沒人讀的豁免。`,
+      );
+    }
+  }
 }
 
 // ③ 兩份設定的**關係** —— 各自合法、組合起來會靜靜蓋掉級別。

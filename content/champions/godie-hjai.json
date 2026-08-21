@@ -26,14 +26,15 @@
     "range": 8.2
   },
   "growth": {
-    "maxHealth": 32,
-    "healthRegen": 0.08,
-    "maxMana": 36,
-    "manaRegen": 0.12,
-    "ad": 1.6,
-    "armor": 0.5,
-    "mr": 1.2,
-    "as": 0.02
+    "maxHealth": 77.8694,
+    "healthRegen": 0.1629,
+    "maxMana": 45.7194,
+    "manaRegen": 0.1474,
+    "ad": 3.2612,
+    "armor": 0.6956,
+    "mr": 1.8261,
+    "as": 0.0093,
+    "ap": 0.6136
   },
   "msGrowthTier": "極小",
   "asGrowthTier": "小",
@@ -41,9 +42,9 @@
     "str": 16,
     "agi": 13,
     "int": 27,
-    "strGrowth": 1.6,
-    "agiGrowth": 1.7,
-    "intGrowth": 3,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "w3x"
   },
@@ -69,10 +70,10 @@
         15.0
       ],
       "manaCost": [
-        73.0,
-        73.0,
-        73.0,
-        73.0
+        72.0,
+        72.0,
+        72.0,
+        72.0
       ],
       "effects": [
         {
@@ -120,10 +121,10 @@
         30.0
       ],
       "manaCost": [
-        73.0,
-        73.0,
-        73.0,
-        73.0
+        72.0,
+        72.0,
+        72.0,
+        72.0
       ],
       "effects": [],
       "template": {
@@ -170,10 +171,10 @@
         60.0
       ],
       "manaCost": [
-        292.0,
-        292.0,
-        292.0,
-        292.0
+        288.0,
+        288.0,
+        288.0,
+        288.0
       ],
       "effects": [
         {
@@ -222,9 +223,9 @@
         60.0
       ],
       "manaCost": [
-        146.0,
-        146.0,
-        146.0
+        144.0,
+        144.0,
+        144.0
       ],
       "effects": [
         {

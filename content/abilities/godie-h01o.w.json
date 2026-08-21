@@ -15,13 +15,13 @@
   ],
   "cooldownTier": "小",
   "manaCost": [
-    73.0,
-    73.0,
-    73.0,
-    73.0
+    72.0,
+    72.0,
+    72.0,
+    72.0
   ],
   "manaCostTier": "極小",
-  "range": 0,
+  "range": 0.0,
   "effects": [
     {
       "kind": "applyBuff",

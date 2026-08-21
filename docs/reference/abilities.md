@@ -2,7 +2,7 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_da7bb275a409`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 產生自 contentVersion **`cv_2c6cf2ba19a0`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
 > 資料列：**420**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-08-20T16:58:56.072938Z`）
 
 `content/abilities/*.json` 共 **420** 份，每個英雄每個 slot 一份：天生 PASSIVE 68　·　Q 71　·　W 71　·　E 71　·　R 71　·　EX 68。
@@ -58,7 +58,7 @@
 | `godie-e00n.r` | 22-04 雛見澤症候群L5 | R | 輔助 | 22-04 | `godie-e00n` 龍宮禮奈 | — | 注射藥物使自己短暫激發到L5的病狀，此狀態將會強化攻擊55點和移動速度，並暫時減少生命最大值150點，持續7秒。 |
 | `godie-e00n.ex` | 22-002 月光下的決鬥者 | EX | 被動 | 22-002 | `godie-e00n` 龍宮禮奈 | — | 在夜晚的時刻決鬥能讓禮奈異常興奮，被敵人攻擊的時候有20%機率，引起嗚鎖打的快速打擊狀態，狀態內亦可連續引發嗚鎖打，並且讓… |
 | `godie-e00r.passive` | 59-00 暴走 | PASSIVE | 天生·被動 | 59-00 | `godie-e00r` 初號機 | — | [被動][暴走][迴避][吸血][受到傷害時][屬性門檻][機率] |
-| `godie-e00r.q` | 59-01 吞噬 | Q | 主動 | 59-01 | `godie-e00r` 初號機 | ✅ | [主動][指定][處決][吸血][吞噬][屬性門檻] |
+| `godie-e00r.q` | 59-01 吞噬 | Q | 被動 | 59-01 | `godie-e00r` 初號機 | ✅ | [被動][週期][範圍][處決][吸血][吞噬][屬性門檻] |
 | `godie-e00r.w` | 59-02 高週波短刀 | W | 被動 | 59-02 | `godie-e00r` 初號機 | ✅ | [被動][普攻時][機率][真傷] |
 | `godie-e00r.e` | 59-03 AT力場 | E | 被動 | 59-03 | `godie-e00r` 初號機 | ✅ | [被動][週期][護盾] |
 | `godie-e00r.r` | 59-04 野戰型陽電子砲 | R | 主動 | 59-04 | `godie-e00r` 初號機 | ✅ | [主動][指向][範圍][真傷] |

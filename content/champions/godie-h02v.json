@@ -26,14 +26,15 @@
     "range": 1.4
   },
   "growth": {
-    "maxHealth": 30,
-    "healthRegen": 0.08,
-    "maxMana": 24,
-    "manaRegen": 0.08,
-    "ad": 1.5,
-    "armor": 0.8,
-    "mr": 1.2,
-    "as": 0.02
+    "maxHealth": 98.6582,
+    "healthRegen": 0.2033,
+    "maxMana": 21.2015,
+    "manaRegen": 0.0571,
+    "ad": 3.2612,
+    "armor": 1.7478,
+    "mr": 4.9939,
+    "as": 0.0082,
+    "ap": 0.1459
   },
   "msGrowthTier": "極小",
   "asGrowthTier": "小",
@@ -41,9 +42,9 @@
     "str": 16,
     "agi": 23,
     "int": 21,
-    "strGrowth": 1.5,
-    "agiGrowth": 2.5,
-    "intGrowth": 2,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "w3x"
   },

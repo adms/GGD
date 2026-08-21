@@ -23,6 +23,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { readFileSync, readdirSync } from "node:fs";
 import { cover } from "../../testkit/cover";
+import { balancePopulationIds } from "../../testkit/balancePopulation";
 import { zChampionDoc, type ChampionDoc } from "./schema/champion";
 import { Stat, ALL_STATS } from "../sim/stats/statTypes";
 import {
@@ -311,53 +312,88 @@ describe("#248 attr-04 — `growth` survived the re-derivation", () => {
     expect(champs.every((c) => (c.growth as Record<string, number>)[Stat.MagicResist] !== undefined)).toBe(true);
   });
 
-  it("reproduces the owner's four level-12 effective-HP sanity numbers", () => {
+  it("每級成長 100% 由 `growth` 供給 —— 屬性層一格都不出（owner 2026-08-21）", () => {
     cover("attr-248-growth-kept");
-    // Stated in the #248 brief as the check that our attribute resolution
-    // agrees with his: level 12, maxHealth multiplier ×4, both sources kept.
-    // (Deleting `growth` would land these at 50–63% instead of 78–91%.)
+    // ═══════════════════════════════════════════════════════════════════════
+    // ⭐ 這一條 2026-08-21 換過守的東西，⛔ 舊的那個不是被放寬，是**被架構取代**
+    // ═══════════════════════════════════════════════════════════════════════
+    // 它原本釘的是 owner 在 #248 給的**四個 level-12 有效血量**（`godie-e002` 7824 /
+    // `godie-u00n` 7837 / `godie-efur` 4818 / `godie-zombiex` 5322，MULT ×4）。
+    // 那四個數字連同它們**兩次**移動的完整沿革，已經另存在
+    // `docs/legacy/_attr-growth-zeroed-superseded.md` —— ⛔ 測試可以跟著設計走，
+    // 知識不可以無聲消失。
     //
-    // THESE FOUR MOVED, and the reason is recorded rather than papered over.
-    // #248 computed them with Blizzard's strToMaxHealth 25; the SOURCE MAP's
-    // own war3mapMisc.txt says 23, and the map wins. Every level-12 figure
-    // therefore drops by `2 × STR(12)`, roughly −5%:
+    // owner 2026-08-21 逐字：
+    //   > 「我決定**廢掉三屬性 純用十出身的五級距表來代表每級屬性成長**就好，
+    //   >  我所謂的廢掉指的是 **所有角色的 力敏智成長都歸 0 不是真的沒作用**，
+    //   >  不然**隨機能力那些都要大改太麻煩**」
     //
-    //   godie-e002    8246 -> 7824   (亞瑟王 - Saber)
-    //   godie-u00n    8241 -> 7837   (蒙其.D.魯夫)
-    //   godie-efur    5070 -> 4818   (揍敵客桀諾)
-    //   godie-zombiex 5480 -> 5322   (喪標麥可 — see attr-05: his LEVEL-1 380
-    //                                 is owner-chosen and was re-preserved by
-    //                                 back-solving the raw card 80 -> 104; only
-    //                                 the per-level attribute layer moved)
+    // ⇒ 那四個數字的**兩個輸入同時被取代**了（`strGrowth` 歸 0、`growth.maxHealth`
+    //    改由出身五級距推導），所以它們現在既不是 owner 的算術也不是我們的 ——
+    //    重新算一組填回去只是給一個**每次重錨都會變**的出貨值找第四個住處
+    //    （第零守則：⛔ 數字不可以住在測試裡）。
     //
-    // These are a CONSEQUENCE of a corrected coefficient, not a re-tune. If the
-    // owner wants the old totals back, the lever is the combat-env maxHealth
-    // ×factor, not the imported coefficient.
+    // ⭐ 取代它的是**那個裁決本身**：三圍的每級成長全部 0 ⇒ 一位英雄的每級成長
+    //    **就是** `growth` 那一格，⛔ 屬性層一分錢都不出。這是新架構的**唯一**
+    //    承重點，而且它是有人把 `strGrowth` 改回非零時**第一個**會紅的東西 ——
+    //    那一天五級距表就不再是每級成長的唯一來源，而沒有別的東西會說。
     //
-    // 2026-07-28 (#265): THE SHIPPED NUMBERS ARE NO LONGER THESE. The owner set
-    // maxHealth ×4 → ×3 and added a flat +300 to every champion's base, so what
-    // a player actually sees at level 12 is `(sheet + 300) × 3`. This test
-    // deliberately keeps ×4 and the bonus OFF, because what it guards is the
-    // ATTRIBUTE RESOLUTION agreeing with the owner's #248 arithmetic — a pin
-    // that has to survive every later balance pass or it stops being a pin. The
-    // shipped multiplier and the +300 are pinned in sim/balanceTuning.test.ts.
-    const MULT = 4;
-    const expected: Record<string, number> = {
-      "godie-e002": 7824, // 亞瑟王 - Saber
-      "godie-u00n": 7837, // 蒙其.D.魯夫
-      "godie-efur": 4818, // 揍敵客桀諾
-      "godie-zombiex": 5322, // 喪標麥可
-    };
-    for (const [id, want] of Object.entries(expected)) {
-      const c = champs.find((x) => x.id === id)!;
-      const got = sheet(c, Stat.MaxHealth, 12) * MULT;
-      expect(`${id}:${Math.round(got)}`).toBe(`${id}:${want}`);
+    // ⚠️ **母體是那 49 位對戰可選本體**，⛔ 不是 `content/champions` 全部 71 張卡 ——
+    //    因為 2026-08-21 的落地**只走到那 49 位**。剩下的 22 張（20 個變身態 +
+    //    sela/thorne 兩張 fail-open 骨架佔位）**還帶著三圍成長**，而那是一個
+    //    ⭐ **owner 還沒裁決過**的缺口：一位英雄變身之後，他的每級成長又同時有
+    //    兩個來源了。⛔ 我不替他決定要不要一起歸零 —— 下面第二段把它**逐張列出來**，
+    //    而反向斷言保證它收乾淨的那天這裡會紅、這段話會被刪掉。
+    const POP = new Set(balancePopulationIds(join(HERE, "../../../..")));
+    expect(POP.size, "平衡母體讀壞了 —— 下面兩個迴圈會空轉成綠").toBeGreaterThan(0);
+    const attrKeys = ["strGrowth", "agiGrowth", "intGrowth"] as const;
+    const inPop: string[] = [];
+    const outside: string[] = [];
+    for (const c of champs) {
+      const a = c.attributes!;
+      for (const k of attrKeys) {
+        if (a[k] === 0) continue;
+        (POP.has(c.id) ? inPop : outside).push(`${c.id}.${k} = ${a[k]}`);
+      }
     }
+    expect(
+      inPop.slice(0, 20),
+      "對戰可選本體的三圍每級成長不是 0 —— 那一位的每級成長就同時有兩個來源了\n" +
+        "（出身五級距 + 屬性層），而 owner 2026-08-21 的裁決是「力敏智成長都歸 0」。\n" +
+        "⛔ 不要改這條測試。",
+    ).toEqual([]);
+    // ⭐ 反向：缺口必須**還在**。變身態與骨架被一起歸零的那天，這一條會紅，
+    //    而正確的修法是**刪掉這一段**（連同上面那段說明），⛔ 不是放寬它。
+    expect(
+      outside.length,
+      "變身態／骨架佔位的三圍成長已經歸零了 —— 缺口收乾淨了，把這一段反向斷言刪掉。",
+    ).toBeGreaterThan(0);
+
+    // ⭐ 而且要真的走到最終物件：每一條屬性支撐的列，`championStatGrowth`（引擎報給
+    //    面板、給小怪曲線、給試算的那一個）必須**逐位元**等於卡上的 `growth`。
+    //    ⛔ 掃屬性欄位是屬性，這一段才是行為（失敗形態⑦）。
+    // ⚠️ 容差 1e-9 而不是逐位元組相等：`championStatGrowth` 是 `base(2) − base(1)`
+    //    的差，浮點誤差 ~1e-14（`61.0037` 出來是 `61.00369999999998`）。⛔ 那不是
+    //    「屬性層出了錢」—— 屬性層出錢的量級是**整數位**（喪標麥可那一層是 41.4）。
+    const leaking: string[] = [];
+    for (const c of champs) {
+      if (!POP.has(c.id)) continue; // 上面那個缺口 —— 變身態今天還走舊模型
+      for (const stat of ALL_STATS) {
+        if (ATTR_STAT_SOURCE[stat] === undefined) continue;
+        if (ATTR_STAT_SOURCE[stat]!.mode !== "add") continue; // 攻速是乘區，不是一層加法
+        const gap = championStatGrowth(c, stat) - raw(c, stat).growth;
+        if (Math.abs(gap) > 1e-9) leaking.push(`${c.id}.${stat} 多了 ${gap}`);
+      }
+    }
+    expect(
+      leaking.slice(0, 20),
+      "每級成長不等於卡上的 growth —— 屬性層又開始出錢了（五級距表不再是唯一來源）",
+    ).toEqual([]);
   });
 });
 
 describe("#248 attr-05 — godie-zombiex keeps #244's deliberate tuning", () => {
-  it("380 HP at level 1, with the attribute layer supplying exactly +45/level", () => {
+  it("380 HP at level 1 —— owner #244 親自挑的那一半**還在**", () => {
     cover("attr-248-zombiex-pinned");
     const z = champs.find((c) => c.id === "godie-zombiex")!;
     // #244 chose 380 / +45 on purpose. #248 moved WHERE the 380 comes from
@@ -369,18 +405,29 @@ describe("#248 attr-05 — godie-zombiex keeps #244's deliberate tuning", () => 
     // reconstruction was redone rather than left to drift: the raw card went
     // 80 -> 104 so that `104 + 23 × 12` is still exactly 380. Leaving it would
     // have silently dropped him to 356 and quietly undone #244.
+    //
+    // ⭐ 2026-08-21 的架構裁決（三圍成長歸 0 · 每級成長改由十出身五級距推導）
+    //    把 #244 那組數字**切成兩半**，而只有一半撐住了。⛔ 這個事實要寫在
+    //    斷言上，不是寫在一句樂觀的註解裡：
+    //
+    //      ✅ 「等級 1 是 380」—— 完全沒動（它是 base + 23×STR，兩項都不含成長）
+    //      ⛔ 「每級 +45」—— 沒有了。`growth.maxHealth` 現在由他的出身推導，
+    //         而屬性層那 41.4 歸 0。⇒ ⭐ **這一半沒有人裁決過**，
+    //         要不要把它收回 45 是 owner 的決定，⛔ 不是我的。
+    //    完整的前後對照在 `docs/legacy/_attr-growth-zeroed-superseded.md`。
     expect(z.attributes!.source).toBe("authored");
     expect(sheet(z, Stat.MaxHealth, 1)).toBe(380);
     expect(z.attributes!.str).toBe(12);
-    expect(z.attributes!.strGrowth).toBe(1.8);
-    // WHAT COULD NOT BE PRESERVED, stated plainly. Under 25 the attribute layer
-    // happened to supply exactly +45/level, matching #244's authored growth.
-    // Under 23 it supplies 41.4, and hitting 45 would need strGrowth 1.9565…,
-    // a number invented to flatter a coincidence. The owner's AUTHORED knob is
-    // untouched at 45; the effective per-level is now 86.4 instead of 90 and is
-    // logged for him in docs/_execution-batches.md.
-    expect(ATTRIBUTE_ENV_DEFAULTS.strToMaxHealth * z.attributes!.strGrowth).toBeCloseTo(41.4, 9);
-    expect((z.growth as Record<string, number>)[Stat.MaxHealth]).toBe(45);
-    expect(championStatGrowth(z, Stat.MaxHealth)).toBeCloseTo(86.4, 9);
+    // ⭐ 而「380 撐住」的**理由**也要釘：它撐住是因為屬性層在等級 1 仍然出全額
+    //    （`23 × 12 = 276`，加上卡上的 104）。三圍被真的關掉的那天這裡會紅，
+    //    而那正是 owner 說的「⛔ **不是真的沒作用**」那一句在程式上的樣子。
+    expect(sheet(z, Stat.MaxHealth, 1) - raw(z, Stat.MaxHealth).base).toBeCloseTo(
+      ATTRIBUTE_ENV_DEFAULTS.strToMaxHealth * z.attributes!.str,
+      9,
+    );
+    // …而每級成長現在**整份**來自 `growth`，屬性層一分錢都不出（上一條 attr-04
+    // 對全部英雄驗這件事；這裡只是把喪標麥可的那一份寫明，因為 #244 的另一半
+    // 就是在這一格上被取代的）。⛔ 期望值從卡上讀，⛔ 不抄 45 也不抄 100.07。
+    expect(championStatGrowth(z, Stat.MaxHealth)).toBeCloseTo(raw(z, Stat.MaxHealth).growth, 9);
   });
 });

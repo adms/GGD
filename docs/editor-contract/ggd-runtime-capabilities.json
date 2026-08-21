@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "deab0bce",
+  "fingerprint": "86c08cf4",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -623,6 +623,7 @@
       "abilities",
       "alpha",
       "archetype",
+      "asGrowthTier",
       "attackDamagePoint",
       "attackType",
       "attributes",
@@ -641,6 +642,7 @@
       "immobile",
       "missileSpeed",
       "modelKey",
+      "msGrowthTier",
       "name",
       "origin",
       "passive",

@@ -1,6 +1,6 @@
 # GGD 遊戲端執行期能力清單（`ggd-runtime-capabilities@1`）
 
-**指紋 `deab0bce`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
+**指紋 `86c08cf4`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
 
 ## 這份文件是什麼
 
@@ -145,7 +145,7 @@
 | `projectile@1` | `flight` · `hitRadius` · `id` · `maxRange` · `meshShape` · `pierce` · `schema` · `speed` · `vfxKey` |
 | `status-effect@1` | `description` · `iconKey` · `id` · `name` · `polarity` · `schema` · `tags` |
 | `item@1` | `attributes` · `auras` · `authoringNote` · `block` · `cost` · `craftRole` · `critStrike` · `damageTypeOverride` · `description` · `draftEligible` · `flight` · `icon` · `iconKey` · `id` · `marks` · `modifiers` · `name` · `passive` · `penetration` · `recipe` · `requiresAttackType` · `schema` · `sets` · `tags` · `tier` · `typeStreakImmunity` · `unique` · `vision` |
-| `champion@1` | `abilities` · `alpha` · `archetype` · `attackDamagePoint` · `attackType` · `attributes` · `baseAttackTime` · `baseStats` · `bodyScale` · `buildPriority` · `description` · `exAbility` · `growth` · `healthDrainPctOfMax` · `healthRegenPctOfMax` · `hitFeel` · `icon` · `id` · `immobile` · `missileSpeed` · `modelKey` · `name` · `origin` · `passive` · `passiveAbility` · `pitch` · `playstyle` · `role` · `schema` · `skillOrder` · `tags` · `tint` · `transform` |
+| `champion@1` | `abilities` · `alpha` · `archetype` · `asGrowthTier` · `attackDamagePoint` · `attackType` · `attributes` · `baseAttackTime` · `baseStats` · `bodyScale` · `buildPriority` · `description` · `exAbility` · `growth` · `healthDrainPctOfMax` · `healthRegenPctOfMax` · `hitFeel` · `icon` · `id` · `immobile` · `missileSpeed` · `modelKey` · `msGrowthTier` · `name` · `origin` · `passive` · `passiveAbility` · `pitch` · `playstyle` · `role` · `schema` · `skillOrder` · `tags` · `tint` · `transform` |
 | `template@1` | `description` · `exemplar` · `family` · `gapScore` · `id` · `name` · `params` · `requires` · `schema` · `status` |
 
 ⭐ `ability@1.marks[]` 是**巢狀**的（只看 `ability@1` 只看得到 `marks` 這個名字），而且 `item@1.marks[]` 用的是**同一份**定義 —— 一件道具給的疊層和一支技能給的疊層寫法完全一樣。⚠️ `template@1` 是**參數化的技能骨架**（第 5 節那些家族的文件形狀），⛔ 不是另一種技能。

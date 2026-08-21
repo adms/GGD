@@ -266,21 +266,38 @@ describe("imported ability stat scaling", () => {
     // types an `ap` into `baseStats`/`growth`, that champion gets a silent
     // second helping on top of INT — exactly the double-count #248's three
     // additive layers make easy to introduce.
+    //
+    // ⭐ 2026-08-21 —— owner 的架構裁決把這條規則**切成兩半**，而只有一半還成立：
+    //
+    //   > 「我決定**廢掉三屬性 純用十出身的五級距表來代表每級屬性成長**就好，
+    //   >  我所謂的廢掉指的是 **所有角色的 力敏智成長都歸 0 不是真的沒作用**」
+    //
+    //   · **等級 1 的 ap** —— 仍然 100% 是屬性層（`intToAbilityPower × INT`）。
+    //     `baseStats.ap` 打一個數字進去就是那個雙重計算 ⇒ ✅ 這一半照守。
+    //   · **每級成長的 ap** —— `intGrowth` 現在是 0，所以它**只能**來自
+    //     `growth.ap`（十出身的五級距寫進來的那一格）。⇒ ⛔ 舊斷言
+    //     「`growth.ap` 必須是 0」現在會把**正確的新內容**判成違規，
+    //     而它「修好」的方向正是把 owner 剛建立的那一層刪掉。
+    //
+    // ⇒ 斷言改成問**同一個問題的新答案**：ap 有且只有兩個來源，一個管等級 1、
+    //    一個管每一級，⛔ 而且兩者不可以同時出現在同一個位置上。
     // ---------------------------------------------------------------------
     for (const c of champs) {
       expect(`${c.id}:${c.baseStats.ap}`).toBe(`${c.id}:0`);
-      expect((c.growth as Record<string, number>).ap ?? 0).toBe(0);
       // …and every champion DOES now carry the 三圍 block that supplies it.
       expect(`${c.id}:${c.attributes === undefined}`).toBe(`${c.id}:false`);
     }
 
-    // The whole of a champion's zero-item ap is the attribute term, at every
-    // level — no residue from anywhere else.
+    // A champion's zero-item ap is EXACTLY the two layers — the INT constant
+    // plus the per-level growth row — at every level, with no residue from
+    // anywhere else. ⚠️ 這一條在 `intGrowth` 被改回非零的那一天也會紅，
+    // 因為那時 ap 的每級成長就同時有兩個來源了（第三個住處）。
     const lina = champs.find((c) => c.id === "godie-h020")!;
+    const apGrowth = (lina.growth as Record<string, number>).ap ?? 0;
     for (const level of [1, 6, 12, 18]) {
       const int = lina.attributes!.int + lina.attributes!.intGrowth * (level - 1);
       expect(championStatBase(lina, Stat.AbilityPower, level)).toBeCloseTo(
-        DEFAULT_COMBAT_ENV.intToAbilityPower * int,
+        DEFAULT_COMBAT_ENV.intToAbilityPower * int + apGrowth * (level - 1),
         6,
       );
     }

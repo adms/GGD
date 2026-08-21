@@ -25,14 +25,15 @@
     "range": 1.4
   },
   "growth": {
-    "maxHealth": 35,
-    "healthRegen": 0.09,
-    "maxMana": 20,
-    "manaRegen": 0.07,
-    "ad": 2.8,
-    "armor": 0.8,
-    "mr": 1.2,
-    "as": 0.02
+    "maxHealth": 61.0037,
+    "healthRegen": 0.3344,
+    "maxMana": 21.3546,
+    "manaRegen": 0.0593,
+    "ad": 5.0327,
+    "armor": 0.665,
+    "mr": 1.8261,
+    "as": 0.0281,
+    "ap": 0.2122
   },
   "msGrowthTier": "極小",
   "asGrowthTier": "小",
@@ -40,9 +41,9 @@
     "str": 17,
     "agi": 23,
     "int": 20,
-    "strGrowth": 1.75,
-    "agiGrowth": 2.8,
-    "intGrowth": 1.65,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "w3x"
   },
@@ -75,7 +76,7 @@
         0.0,
         0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "effects": [
         {
           "kind": "applyBuff",
@@ -166,7 +167,7 @@
         0.0,
         0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.blood.slash",
       "passive": {
@@ -247,10 +248,10 @@
         15.0
       ],
       "manaCost": [
-        73.0,
-        73.0,
-        73.0,
-        73.0
+        72.0,
+        72.0,
+        72.0,
+        72.0
       ],
       "effects": [
         {
@@ -301,7 +302,7 @@
         0.0,
         0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "effects": [
         {
           "kind": "championForm",

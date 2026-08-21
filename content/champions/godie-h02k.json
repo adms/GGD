@@ -26,14 +26,15 @@
     "range": 1.4
   },
   "growth": {
-    "maxHealth": 50,
-    "healthRegen": 0.13,
-    "maxMana": 6,
-    "manaRegen": 0.02,
-    "ad": 2.5,
-    "armor": 0.45,
-    "mr": 1.2,
-    "as": 0.02
+    "maxHealth": 95.3724,
+    "healthRegen": 0.2001,
+    "maxMana": 24.1097,
+    "manaRegen": 0.0979,
+    "ad": 2.8316,
+    "armor": 1.7722,
+    "mr": 4.9939,
+    "as": 0.0091,
+    "ap": 1.4061
   },
   "msGrowthTier": "極小",
   "asGrowthTier": "小",

@@ -25,14 +25,15 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 35,
-    "healthRegen": 0.09,
-    "maxMana": 19,
-    "manaRegen": 0.06,
-    "ad": 2.9,
-    "armor": 0.9,
-    "mr": 1.2,
-    "as": 0.02
+    "maxHealth": 77.6347,
+    "healthRegen": 0.1624,
+    "maxMana": 47.25,
+    "manaRegen": 0.1689,
+    "ad": 5.0837,
+    "armor": 0.6711,
+    "mr": 1.8261,
+    "as": 0.0084,
+    "ap": 1.2768
   },
   "msGrowthTier": "極小",
   "asGrowthTier": "小",
@@ -40,9 +41,9 @@
     "str": 17,
     "agi": 21,
     "int": 17,
-    "strGrowth": 1.75,
-    "agiGrowth": 2.9,
-    "intGrowth": 1.55,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "w3x"
   },
@@ -67,9 +68,9 @@
         15.0
       ],
       "manaCost": [
-        73.0,
-        73.0,
-        73.0
+        72.0,
+        72.0,
+        72.0
       ],
       "effects": [
         {
@@ -131,7 +132,7 @@
         0.0,
         0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "effects": [
         {
           "kind": "applyBuff",
@@ -197,10 +198,10 @@
         45.0
       ],
       "manaCost": [
-        146.0,
-        146.0,
-        146.0,
-        146.0
+        144.0,
+        144.0,
+        144.0,
+        144.0
       ],
       "effects": [
         {
@@ -266,7 +267,7 @@
         0.0,
         0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.fire.explosion-lg",
       "sfxKey": "wc3.soulpreservation",

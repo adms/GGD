@@ -82,13 +82,13 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 146,
+        "value": 144,
         "sample": 139,
         "basis": "corpus"
       },
       "range": {
         "value": 12,
-        "sample": 129,
+        "sample": 128,
         "basis": "corpus"
       },
       "radius": {
@@ -113,13 +113,13 @@
         "liftedFromMedian": 45
       },
       "manaCost": {
-        "value": 146,
+        "value": 144,
         "sample": 139,
         "basis": "corpus"
       },
       "range": {
         "value": 12,
-        "sample": 129,
+        "sample": 128,
         "basis": "corpus"
       },
       "radius": {
@@ -144,13 +144,13 @@
         "liftedFromMedian": 45
       },
       "manaCost": {
-        "value": 146,
+        "value": 144,
         "sample": 139,
         "basis": "corpus"
       },
       "range": {
         "value": 12,
-        "sample": 129,
+        "sample": 128,
         "basis": "corpus"
       },
       "radius": {
@@ -174,7 +174,7 @@
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 146,
+        "value": 144,
         "sample": 139,
         "basis": "corpus"
       },
@@ -204,13 +204,13 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 146,
+        "value": 144,
         "sample": 139,
         "basis": "corpus"
       },
       "range": {
         "value": 12,
-        "sample": 129,
+        "sample": 128,
         "basis": "corpus"
       },
       "radius": {
@@ -230,17 +230,17 @@
       "description": "指定單一敵人，施法距離 {{range}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
       "cooldown": {
         "value": 15,
-        "sample": 19,
+        "sample": 18,
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 73,
+        "value": 72,
         "sample": 14,
         "basis": "slot+castType"
       },
       "range": {
         "value": 8,
-        "sample": 19,
+        "sample": 18,
         "basis": "slot+castType"
       },
       "radius": {
@@ -265,13 +265,13 @@
         "liftedFromMedian": 30
       },
       "manaCost": {
-        "value": 73,
+        "value": 72,
         "sample": 30,
         "basis": "slot"
       },
       "range": {
         "value": 12,
-        "sample": 32,
+        "sample": 31,
         "basis": "slot"
       },
       "radius": {
@@ -296,7 +296,7 @@
         "liftedFromMedian": 30
       },
       "manaCost": {
-        "value": 73,
+        "value": 72,
         "sample": 11,
         "basis": "slot+castType"
       },
@@ -321,12 +321,12 @@
       "castType": "self",
       "description": "對自身，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
       "cooldown": {
-        "value": 22.5,
-        "sample": 12,
+        "value": 30,
+        "sample": 13,
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 73,
+        "value": 72,
         "sample": 30,
         "basis": "slot"
       },
@@ -356,13 +356,13 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 73,
+        "value": 72,
         "sample": 30,
         "basis": "slot"
       },
       "range": {
         "value": 12,
-        "sample": 32,
+        "sample": 31,
         "basis": "slot"
       },
       "radius": {
@@ -386,7 +386,7 @@
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 73,
+        "value": 72,
         "sample": 15,
         "basis": "slot+castType"
       },
@@ -417,7 +417,7 @@
         "liftedFromMedian": 30
       },
       "manaCost": {
-        "value": 73,
+        "value": 72,
         "sample": 28,
         "basis": "slot"
       },
@@ -448,7 +448,7 @@
         "liftedFromMedian": 30
       },
       "manaCost": {
-        "value": 73,
+        "value": 72,
         "sample": 28,
         "basis": "slot"
       },
@@ -478,7 +478,7 @@
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 73,
+        "value": 72,
         "sample": 28,
         "basis": "slot"
       },
@@ -508,7 +508,7 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 73,
+        "value": 72,
         "sample": 28,
         "basis": "slot"
       },
@@ -538,7 +538,7 @@
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 73,
+        "value": 72,
         "sample": 14,
         "basis": "slot+castType"
       },
@@ -569,7 +569,7 @@
         "liftedFromMedian": 45
       },
       "manaCost": {
-        "value": 146,
+        "value": 144,
         "sample": 36,
         "basis": "slot"
       },
@@ -600,7 +600,7 @@
         "liftedFromMedian": 45
       },
       "manaCost": {
-        "value": 146,
+        "value": 144,
         "sample": 13,
         "basis": "slot+castType"
       },
@@ -630,7 +630,7 @@
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 146,
+        "value": 144,
         "sample": 36,
         "basis": "slot"
       },
@@ -660,7 +660,7 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 146,
+        "value": 144,
         "sample": 36,
         "basis": "slot"
       },
@@ -690,7 +690,7 @@
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 146,
+        "value": 144,
         "sample": 15,
         "basis": "slot+castType"
       },
@@ -720,7 +720,7 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 146,
+        "value": 144,
         "sample": 34,
         "basis": "slot"
       },
@@ -750,7 +750,7 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 146,
+        "value": 144,
         "sample": 34,
         "basis": "slot"
       },
@@ -780,7 +780,7 @@
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 146,
+        "value": 144,
         "sample": 34,
         "basis": "slot"
       },
@@ -810,7 +810,7 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 146,
+        "value": 144,
         "sample": 34,
         "basis": "slot"
       },
@@ -840,7 +840,7 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 146,
+        "value": 144,
         "sample": 139,
         "basis": "corpus"
       },
@@ -870,7 +870,7 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 146,
+        "value": 144,
         "sample": 139,
         "basis": "corpus"
       },
@@ -900,7 +900,7 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 146,
+        "value": 144,
         "sample": 139,
         "basis": "corpus"
       },
@@ -930,7 +930,7 @@
         "basis": "slot+castType"
       },
       "manaCost": {
-        "value": 146,
+        "value": 144,
         "sample": 139,
         "basis": "corpus"
       },
@@ -960,7 +960,7 @@
         "basis": "slot"
       },
       "manaCost": {
-        "value": 146,
+        "value": 144,
         "sample": 139,
         "basis": "corpus"
       },
