@@ -33,6 +33,7 @@ import { Color3 } from "@babylonjs/core/Maths/math.color";
 import type { AimIndicatorState } from "../input/TouchInput";
 import { ABILITY_RANGE_GUIDE, type Rgb01 } from "../ui/abilityRangeGuide";
 import { createGroundQuad, placeGroundQuad } from "./groundShapes";
+import type { TargetMarkerState } from "./views/targetMarker";
 
 const LINE_WIDTH = 0.4;
 const Y = 0.07; // just above the ground plane (telegraphs sit at 0.05/0.06)
@@ -42,10 +43,12 @@ const Y = 0.07; // just above the ground plane (telegraphs sit at 0.05/0.06)
  * it is the smaller circle and the one being aimed; painting the wide range
  * fill over it would wash the amber out to nothing.
  */
+/** One step of the stack. ⛔ 每一層都從它推導，不要再打第二次 0.005。 */
+const LAYER = 0.005;
 const Y_RANGE_FILL = Y;
-const Y_RANGE_RIM = Y + 0.005;
-const Y_AOE_FILL = Y + 0.01;
-const Y_AOE_RIM = Y + 0.015;
+const Y_RANGE_RIM = Y + LAYER;
+const Y_AOE_FILL = Y + LAYER * 2;
+const Y_AOE_RIM = Y + LAYER * 3;
 
 /** One circle of the guide: a scaled unit disc + a rim rebuilt on radius change. */
 interface GuideCircle {
@@ -63,10 +66,18 @@ export class AimIndicator {
   // hold-preview circles (task #152 / GH#367)
   private readonly rangeCircle: GuideCircle = emptyCircle();
   private readonly aoeCircle: GuideCircle = emptyCircle();
+  /** 手把軟鎖定的「這一發會打誰」環（GH#519）。 */
+  private readonly targetCircle: GuideCircle = emptyCircle();
 
   constructor(private readonly scene: Scene) {}
 
-  update(state: AimIndicatorState): void {
+  /**
+   * @param target 手把軟鎖定到的那個人的腳下環（GH#519），null = 沒鎖到任何人。
+   *   ⚠️ 它**與 `state` 無關**：`AimIndicatorState` 是「這一發打去哪」，這一格是
+   *   「這一發打**誰**」。⛔ 不把它塞進那個 union —— 那個 union 是觸控與滑鼠共用的，
+   *   而軟鎖定只有手把有，多出來的五個 nullable 欄位對另外兩條路永遠是 null。
+   */
+  update(state: AimIndicatorState, target: TargetMarkerState | null = null): void {
     const isLine = state?.kind === "line";
     const isDisc = state?.kind === "disc";
 
@@ -120,6 +131,33 @@ export class AimIndicator {
       yFill: Y_AOE_FILL,
       yRim: Y_AOE_RIM,
     });
+
+    // ⭐ GH#519 ——「這一發會打**誰**」。純手把玩家沒有游標：`nearestEnemy` 挑完
+    // 直接送出，於是人堆裡他按下去才知道打錯人。這個環是那個答案。
+    // ⛔ 它不是第三種指引，是**同一支 `paintCircle`** 的第三次呼叫（issue 明說
+    // 「復用 AimIndicator，⛔ 不要另做一套渲染」）。
+    //
+    // 顏色/透明度/粗細一格都不是這裡發明的：`rgb`/`alpha` 走 `paletteFor(relation)`
+    // （敵紅友綠，`config.range-guide@1` 的後台欄位），`rimThickness` 同一份文件同一格。
+    // 高度走 marker 自己的 `y` —— 它被夾在自己人光環之上、瞄準指引之下，
+    // 所以鎖到自己時兩個環不會疊成一個（失敗形態①）。
+    this.paintCircle(
+      this.targetCircle,
+      "aim-target",
+      target ? target.diameter / 2 : null,
+      { x: target?.x ?? 0, z: target?.z ?? 0 },
+      {
+        rgb: target?.rgb ?? ABILITY_RANGE_GUIDE.aoeRgb,
+        // ⚠️ 填色走 AoE 那一格的**半透明**值，⛔ 不是 `target.alpha` ——
+        // 後者是預告環的峰值不透明度（≈1.0），拿去填一個腳下的圓盤會把角色的
+        // 下半身糊掉。`alpha` 的正確去處是**框**（下面那一行）。
+        fillAlpha: ABILITY_RANGE_GUIDE.aoeFillAlpha,
+        yFill: target?.y ?? Y,
+        yRim: (target?.y ?? Y) + LAYER,
+        rimAlpha: target?.alpha,
+        rimThickness: target?.rimThickness,
+      },
+    );
   }
 
   dispose(): void {
@@ -127,7 +165,7 @@ export class AimIndicator {
     this.disc?.dispose(false, true);
     this.line = null;
     this.disc = null;
-    for (const c of [this.rangeCircle, this.aoeCircle]) {
+    for (const c of [this.rangeCircle, this.aoeCircle, this.targetCircle]) {
       c.fill?.dispose(false, true);
       c.rim?.dispose(false, true);
       c.fill = null;
@@ -175,7 +213,16 @@ export class AimIndicator {
     name: string,
     radius: number | null,
     at: { x: number; z: number },
-    look: { rgb: Rgb01; fillAlpha: number; yFill: number; yRim: number },
+    look: {
+      rgb: Rgb01;
+      fillAlpha: number;
+      yFill: number;
+      yRim: number;
+      /** 框的不透明度。省略 = 範圍指引的那一格（出貨兩個圈都用它）。 */
+      rimAlpha?: number;
+      /** 框的世界寬度。省略 = 範圍指引的那一格。 */
+      rimThickness?: number;
+    },
   ): void {
     if (radius === null) {
       c.fill?.setEnabled(false);
@@ -189,7 +236,7 @@ export class AimIndicator {
 
     if (!c.rim || Math.abs(c.rimR - radius) >= 0.05) {
       c.rim?.dispose(false, true);
-      c.rim = this.makeGuideRim(`${name}-rim`, radius, look.rgb);
+      c.rim = this.makeGuideRim(`${name}-rim`, radius, look.rgb, look.rimAlpha, look.rimThickness);
       c.rimR = radius;
     }
     c.rim.setEnabled(true);
@@ -213,12 +260,18 @@ export class AimIndicator {
   }
 
   /** Flat torus on XZ — the 「特殊顏色框框」 at constant world thickness. */
-  private makeGuideRim(name: string, radius: number, rgb: Rgb01): Mesh {
+  private makeGuideRim(
+    name: string,
+    radius: number,
+    rgb: Rgb01,
+    alpha = ABILITY_RANGE_GUIDE.rimAlpha,
+    thickness = ABILITY_RANGE_GUIDE.rimThickness,
+  ): Mesh {
     const mesh = MeshBuilder.CreateTorus(
       name,
       {
         diameter: radius * 2,
-        thickness: ABILITY_RANGE_GUIDE.rimThickness,
+        thickness,
         tessellation: 64,
       },
       this.scene,
@@ -230,7 +283,7 @@ export class AimIndicator {
     mat.emissiveColor = new Color3(...rgb);
     mat.disableLighting = true;
     mat.backFaceCulling = false;
-    mat.alpha = ABILITY_RANGE_GUIDE.rimAlpha;
+    mat.alpha = alpha;
     mesh.material = mat;
     return mesh;
   }

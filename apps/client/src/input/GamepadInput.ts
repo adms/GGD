@@ -48,7 +48,12 @@ import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 import { abilityActivationCue } from "../ui/abilityCue";
 import { getHeldAbility, setHeldAbility } from "../ui/abilityHold";
 import { envFactor } from "../ui/displayFinal";
-import { buildCastCommand, setCursorlessAim, type AimAbility } from "./AimResolver";
+import {
+  buildCastCommand,
+  setCursorlessAim,
+  setCursorlessTarget,
+  type AimAbility,
+} from "./AimResolver";
 import { isPadMenuCapturing } from "./padMenuCapture";
 
 export type GamepadFeel = GamepadFeelPolicyDoc;
@@ -369,6 +374,19 @@ export interface GamepadIntent {
    */
   describeAim?: Vec2;
   /**
+   * `describe` 那一格**這一幀會打到誰**（GH#519）—— 指定型技能的軟鎖定目標，
+   * 沒鎖到人／不是指定型 → null。
+   *
+   * ⭐ **它跟真的按下去時挑目標用的是同一支 `ctx.nearestEnemy(self, reach, aimDir)`**，
+   * 同一個 `padCastReach` 夾限、同一個方向偏壓。⛔ 不在這裡另寫一次「大概是誰」——
+   * 兩份挑法遲早分岔，而分岔的樣子是**畫面高亮 A、技能飛向 B**，兩邊看起來都對
+   * （失敗形態⑤）。
+   *
+   * ⚠️ 這一格是**每幀**解的，不是按下那一刻才解：#519 的整個重點就是玩家在**按下之前**
+   * 要看得到答案。系統層把它推進 `AimResolver.setCursorlessTarget`。
+   */
+  describeTarget?: number | null;
+  /**
    * 這一幀被**拒絕**的技能鍵，GH#512。按下去但沒有產生任何 command：技能還沒學／
    * EX 還沒解鎖（`ctx.ability` 回 null）、或 `targeted` 找不到目標。
    *
@@ -495,6 +513,13 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
     out.describe = describe;
     // 預覽圓心的方向來源（GH#512）。⛔ 沒有方向時不寫 —— 讓下游維持滑鼠那條路。
     if (aimDir) out.describeAim = aimDir;
+    // ⭐ GH#519 ——「這一發會打誰」。⛔ 跟按下去那條路共用同一支挑選函式與同一個
+    //   夾限（`padCastReach`），所以畫面上高亮的那個人，就是 command 會鎖住的那個人。
+    const held = ctx.ability(describe);
+    out.describeTarget =
+      held && held.castType === "targeted" && self
+        ? ctx.nearestEnemy(self, padCastReach(held, rangeMult), aimDir)
+        : null;
   }
   if (refused.length > 0) out.refused = refused;
   return out;
@@ -515,9 +540,13 @@ class PadDescribeHold {
    *   純手把玩家從來沒有動過滑鼠，那個圈會畫在他自己腳下。
    *   ⚠️ 它跟 held slot **同一個生命週期**：按住寫、放開／拔掉手把清掉，
    *   ⛔ 不留一個過期的方向去污染滑鼠玩家的預覽。
+   * @param target 這一幀軟鎖定到的實體（GH#519）。⚠️ **一定要在 `setCursorlessAim`
+   *   之後才寫**：那一支收到 null 方向時會把目標一起清掉，順序反過來就等於每一幀
+   *   都把剛寫進去的目標抹掉一次。
    */
-  set(slot: CastableSlot | null, aim: Vec2 | null = null): void {
+  set(slot: CastableSlot | null, aim: Vec2 | null = null, target: number | null = null): void {
     setCursorlessAim(slot ? aim : null);
+    setCursorlessTarget(slot ? target : null);
     if (slot === this.mine) return;
     if (slot) setHeldAbility(slot);
     else if (getHeldAbility() === this.mine) setHeldAbility(null);
@@ -755,7 +784,11 @@ export class GamepadSystem {
     if (intent.camera) this.sinks.onCamera?.(intent.camera);
     // long press with no point to spend → the ability explains itself (#152's
     // description panel + floor telegraph), and releasing takes it away.
-    this.describeHold.set(intent.describe ?? null, intent.describeAim ?? null);
+    this.describeHold.set(
+      intent.describe ?? null,
+      intent.describeAim ?? null,
+      intent.describeTarget ?? null,
+    );
     for (const cmd of intent.commands) {
       // pad A/B/X/Y/LB/RB cast → same click cue as tile/key (de-duped)
       if (cmd.kind === "castAbility") abilityActivationCue(cmd.slot);
@@ -870,7 +903,13 @@ export class MultiGamepadSystem {
       if (intent.order) this.sinks.onOrder(player, intent.order);
       if (intent.aim) this.sinks.onAim(player, intent.aim);
       if (intent.camera) this.sinks.onCamera?.(player, intent.camera);
-      if (player === 0) this.describeHold.set(intent.describe ?? null, intent.describeAim ?? null);
+      if (player === 0) {
+        this.describeHold.set(
+          intent.describe ?? null,
+          intent.describeAim ?? null,
+          intent.describeTarget ?? null,
+        );
+      }
       for (const cmd of intent.commands) {
         // pad cast → the shared button click cue (de-duped per slot)
         if (cmd.kind === "castAbility") abilityActivationCue(cmd.slot);

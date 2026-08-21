@@ -86,6 +86,8 @@ import {
 } from "./input/TouchInput";
 import { Renderer } from "./render/Renderer";
 import { AimIndicator } from "./render/AimIndicator";
+import { resolvePadTargetMarker } from "./render/views/targetMarker";
+import type { TelegraphRelation } from "./vfx/telegraphChannel";
 import { setupLighting, type LightingHandle } from "./render/Lighting";
 import { buildArena, dressArena, disposeArena, type ArenaHandles } from "./render/ArenaScene";
 import { groundTextureSet } from "./render/groundMaterials";
@@ -335,7 +337,7 @@ export class GameApp {
    * owns the stage.
    */
   private readonly roundWinner: RoundWinnerStage;
-  /** previous phase seen by the ground-texture warm edge detector (GH#535). */
+  /** previous phase seen by the ground-texture warm edge detector (GH#536). */
   private warmedPhase = "";
 
   /** previous phase seen by the round-winner edge detector. */
@@ -1282,7 +1284,7 @@ export class GameApp {
   }
 
   /**
-   * ⭐ GH#535 —— 在**中場（商店）**把每一種地面貼圖先抓好。
+   * ⭐ GH#536 —— 在**中場（商店）**把每一種地面貼圖先抓好。
    *
    * owner 2026-08-22：「福利連地圖地板全黑了」/「大混戰也是 似乎是**讀取不夠快**
    * 並且**沒有提前在商店完成讀取**的緣故」—— 他的診斷是對的。地圖每回合換
@@ -1640,7 +1642,17 @@ export class GameApp {
         const held = getHeldAimSlot(); // castable slots only — a 天生技 has no cast ring
         if (held !== null) indicator = this.resolveHoldPreview(held);
       }
-      this.aimIndicator.update(indicator);
+      // ⭐ GH#519 ——「這一發會打**誰**」。⛔ 這裡不挑目標：手把每幀 publish 它
+      // **真的會送出去**的那一個（`GamepadIntent.describeTarget` → `setCursorlessTarget`），
+      // 這一行只是把它解成一個環。⇒ 高亮的人與 command 鎖住的人不可能分岔。
+      // 放開技能鍵 → 暫存器清空 → 回 null → 環自己收掉；滑鼠/觸控玩家永遠是 null。
+      this.aimIndicator.update(
+        indicator,
+        resolvePadTargetMarker(
+          (id) => this.entityPos(id),
+          (id) => this.padTargetRelation(id),
+        ),
+      );
     }
 
     // 4) entity views — imperative transform writes
@@ -2909,6 +2921,24 @@ export class GameApp {
   private entityPos(id: number): Vec2 | null {
     const e = this.conn.room?.state.entities.get(String(id));
     return e ? { x: e.x, z: e.z } : null;
+  }
+
+  /**
+   * 手把軟鎖定目標對本地玩家是敵/友/自己（GH#519）—— 決定那個環的**顏色**。
+   *
+   * ⭐ 走的是 `teamOfEntity`，跟 `footstepRelation` / `VfxSystem.relationOf` 同一個
+   * 原始資料，⛔ 不是第二份隊伍判定。
+   * ⚠️ 隊伍還沒接上時回 `"unknown"`，而 `telegraphChannel` 刻意把 unknown 畫成
+   * **敵方**通道 —— 把一個還不知道是誰的目標畫成友善的，比畫成危險的貴得多。
+   */
+  private padTargetRelation(id: number): TelegraphRelation {
+    const localId = hudStore.getState().localEntityId;
+    if (localId === null) return "unknown";
+    if (id === localId) return "self";
+    const mine = this.teamOfEntity(localId);
+    const theirs = this.teamOfEntity(id);
+    if (mine === null || theirs === null) return "unknown";
+    return mine === theirs ? "ally" : "enemy";
   }
 
   private abilityForSeat(seatId: number | null, slot: CastableSlot): AimAbility | null {
