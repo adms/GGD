@@ -58,7 +58,7 @@
       "name": "74-01 獄門",
       "icon": "assets/icons/abilities/godie-u00j.q.webp",
       "provenance": "w3x-import",
-      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n傳說中刺死愛麗絲的必殺技，雖然命中範圍小，卻具有強大殺傷力，造成小範圍{{dmg}}傷害。",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n傳說中刺死愛麗絲的必殺技，命中範圍不算大，卻具有強大殺傷力，造成{{radius}}範圍{{dmg}}傷害。\n\n（GGD 註記 2026-08-21 · GH#433）owner 2026-08-19 逐支裁決「74-01 獄門 → **中**」。此前這一格是 `radiusTier: 極小`（半徑 3），而 2026-08-21 的普查是從 w3a 換算來的 1.5 自動收上去的，⛔ 不是任何人的決定。原作 JASS 落地 AoE 370 ≡ 6.78，與「中」= 6 對得上。\n⚠️ w3x 原文寫的是「雖然命中範圍**小**，卻具有強大殺傷力，造成**小範圍**傷害」——「小」在裁決之後是假的，所以那兩處改掉，範圍那一處換成 radius 佔位符（GH#461：幾何一律印五級距詞，⛔ 不在卡面寫死級距名）。原文留在這一段裡。",
       "slot": "Q",
       "castType": "ground",
       "maxRank": 4,
@@ -107,7 +107,7 @@
       ],
       "vfxKey": "fx.w3x.orb.herocloudkfksword.p00",
       "targetsEnemies": true,
-      "radius": 3.0,
+      "radius": 6.0,
       "castTimeSec": 0.8,
       "hitFeel": {
         "hitstopTicks": 4,
@@ -125,7 +125,7 @@
       },
       "cooldownTier": "小",
       "manaCostTier": "小",
-      "radiusTier": "極小"
+      "radiusTier": "中"
     },
     "W": {
       "id": "godie-u00j.w",

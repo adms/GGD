@@ -70,8 +70,8 @@
   ],
   "icon": "assets/icons/abilities/godie-hapm.w.webp",
   "vfxKey": "fx.prim.physical.shockwave",
-  "rangeTier": "極大",
   "cooldownTier": "大",
   "manaCostTier": "極小",
+  "rangeTier": "極大",
   "castTimeSec": 1
 }

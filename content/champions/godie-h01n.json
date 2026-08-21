@@ -120,9 +120,9 @@
       ],
       "icon": "assets/icons/abilities/godie-h01n.q.webp",
       "vfxKey": "fx.prim.void.pulse-sm",
-      "rangeTier": "大",
       "cooldownTier": "極小",
       "radiusTier": "極小",
+      "rangeTier": "大",
       "castTimeSec": 0.067
     },
     "W": {
@@ -145,7 +145,7 @@
         72.0,
         72.0
       ],
-      "range": 3.0,
+      "range": 4.5,
       "targetsEnemies": true,
       "effects": [
         {
@@ -223,8 +223,8 @@
       "icon": "assets/icons/abilities/godie-h01n.w.webp",
       "vfxKey": "fx.prim.physical.slash",
       "cooldownTier": "極大",
-      "rangeTier": "極小",
       "manaCostTier": "極小",
+      "rangeTier": "小",
       "castTimeSec": 0.467
     },
     "E": {
@@ -302,9 +302,9 @@
       ],
       "icon": "assets/icons/abilities/godie-h01n.e.webp",
       "vfxKey": "fx.prim.void.beam",
-      "rangeTier": "極大",
       "cooldownTier": "大",
       "manaCostTier": "中",
+      "rangeTier": "極大",
       "castTimeSec": 0.467
     },
     "R": {

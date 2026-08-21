@@ -202,7 +202,16 @@ def register_heroes(mapping):
 #: （或反過來、或換槽位）時，把舊的救回來就是把重製稿改回去。
 SPEC_OWNED = frozenset({
     "id", "schema", "name", "description", "slot", "castType", "maxRank",
-    "cooldown", "manaCost", "range", "innateKind", "radiusTier",
+    # ⭐ `rangeTier` 2026-08-21 補進來（GH#433）。⚠️ 在它之前這張表上有 `radiusTier`
+    #    **卻沒有它的雙胞胎** —— 於是 A-6 把舊文件的 `rangeTier` 原樣救回來，
+    #    `tierize()` 的 `_apply_geometry` 再照那一格把 `range` 寫回去（級別贏）。
+    #    ⇒ 2026-08-21 全轉替 90 支都填上 `rangeTier` 之後，`A(...)` 的 `rng`
+    #    **對這 90 支整個失效**：改 hero 檔裡的數字，重生成出來一個位元都不會動，
+    #    ⛔ 而且沒有任何東西會紅（第二守則失敗形態②）。實測：79-02 從 2.0 改成
+    #    4.5 重跑，`godie-h01n.w.json` 逐位元不變。
+    #    ⛔ 不要改成「在 hero 檔裡順便寫 rangeTier」—— 那是把一個壞掉的接縫
+    #    繞過去，下一支照樣踩。
+    "cooldown", "manaCost", "range", "rangeTier", "innateKind", "radiusTier",
     "targetsEnemies", "effects", "passive", "marks", "toggle", "augment",
 })
 
@@ -381,6 +390,15 @@ def dmg(dtype="magic", **kw):
 #    改成被動圓的那一刻就過期了（第三守則：註解會說謊）。
 #    ⇒ 現在它**不可能**過期，也 ⛔ 不可能少一格：aoe-tiers 加一級就自動有。
 TIER_R = {k: float(v) for k, v in _tierize_load("aoe-tiers")["radius"].items()}
+
+# 五級距的出貨**施法距離**（`A(...)` 的 `rng` 位置參數）。⭐ 與 `TIER_R` 同一個做法：
+# ⛔ 不在這裡寫 `4.5`，那會是 `content/config/range-tiers.json` 的第四個住處。
+#
+# ⚠️ 為什麼需要它：`A(...)` 收的是一個**自由數字**，`tierize()` 再把它收到最近一格。
+# 那條路對「從 w3a 換算來的數字」是對的，但 owner **逐支裁決了一個級別**的時候
+# （GH#433 的 9 支）它就反了 —— 寫 2.0 會被收成「極小」，而裁決是「小」。
+# ⇒ 那幾支在 hero 檔裡寫 `TIER_RANGE["小"]`，級別本身才是來源。
+TIER_RANGE = {k: float(v) for k, v in _tierize_load("range-tiers")["range"].items()}
 
 
 def area(dtype="magic", tier="小", maxt=None, onhit=None, **kw):

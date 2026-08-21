@@ -49,8 +49,8 @@
   "icon": "assets/icons/abilities/godie-emns.e.webp",
   "vfxKey": "fx.prim.physical.shockwave",
   "sfxKey": "wc3.rokhanwhat2",
-  "rangeTier": "極大",
   "cooldownTier": "極小",
   "manaCostTier": "小",
+  "rangeTier": "極大",
   "castTimeSec": 0.767
 }

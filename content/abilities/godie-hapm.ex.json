@@ -70,8 +70,8 @@
   ],
   "icon": "assets/icons/abilities/godie-hapm.ex.webp",
   "vfxKey": "fx.prim.fire.explosion-lg",
-  "rangeTier": "中",
   "cooldownTier": "極大",
   "manaCostTier": "中",
+  "rangeTier": "中",
   "castTimeSec": 2
 }

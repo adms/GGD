@@ -74,8 +74,8 @@
   ],
   "icon": "assets/icons/abilities/godie-h01n.e.webp",
   "vfxKey": "fx.prim.void.beam",
-  "rangeTier": "極大",
   "cooldownTier": "大",
   "manaCostTier": "中",
+  "rangeTier": "極大",
   "castTimeSec": 0.467
 }

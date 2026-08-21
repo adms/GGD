@@ -45,8 +45,8 @@
   "vfxKey": "fx.prim.arcane.pulse",
   "sfxKey": "wc3.waygatewhat1",
   "targetsEnemies": false,
-  "radius": 3.0,
+  "radius": 8.0,
   "schema": "ability@1",
   "castTimeSec": 0.067,
-  "radiusTier": "極小"
+  "radiusTier": "大"
 }

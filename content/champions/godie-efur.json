@@ -108,8 +108,8 @@
         }
       ],
       "recoverySec": 0.25,
-      "rangeTier": "小",
       "cooldownTier": "極小",
+      "rangeTier": "小",
       "castTimeSec": 0.167
     },
     "W": {
@@ -185,8 +185,8 @@
         }
       ],
       "cooldownTier": "大",
-      "rangeTier": "極小",
       "manaCostTier": "極小",
+      "rangeTier": "極小",
       "castTimeSec": 0.467
     },
     "E": {

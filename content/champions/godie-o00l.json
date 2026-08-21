@@ -199,10 +199,10 @@
       "vfxKey": "fx.prim.arcane.pulse",
       "sfxKey": "wc3.waygatewhat1",
       "targetsEnemies": false,
-      "radius": 3.0,
+      "radius": 8.0,
       "castTimeSec": 0.067,
       "cooldownTier": "極小",
-      "radiusTier": "極小"
+      "radiusTier": "大"
     },
     "R": {
       "id": "godie-o00l.r",
