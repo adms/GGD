@@ -59,7 +59,15 @@ import { StorePreviewCanvas } from "./StorePreviewCanvas";
 import { Btn, Panel, Badge, Crystal, MCoin, Price, ACCENT, OK, DANGER } from "./widgets";
 import { GOLD, TEXT_DIM, TEXT_MAIN } from "../theme";
 
-function PurchaseDialog(): React.JSX.Element | null {
+/**
+ * ⭐ EXPORTED FOR ITS GUARD (#511). `Btn` has an EXPLICIT prop list — it does not
+ * `...rest` onto its `<button>` the way `SfxButton` does — so a caller writing
+ * `data-pad-back` on a `<Btn>` is dropped silently and a source grep stays green
+ * (the very 第一·五守則 shape). The only honest assertion is to render this
+ * dialog in each of its four phases and read the attribute back off the markup,
+ * and this package's vitest is `environment: "node"`, so it needs the component.
+ */
+export function PurchaseDialog(): React.JSX.Element | null {
   const purchase = useApp((s) => s.purchase);
   const confirm = useApp((s) => s.purchaseConfirm);
   const cancel = useApp((s) => s.purchaseCancel);
@@ -103,7 +111,13 @@ function PurchaseDialog(): React.JSX.Element | null {
               <Btn kind="primary" onClick={() => void confirm()}>
                 確認購買
               </Btn>
-              <Btn onClick={cancel}>取消</Btn>
+              {/* #511 — B 是**契約**，⛔ 不是 `backControlIndex` 的標籤掃描。
+                  「取消」剛好被 BACK_ALLOW_RE 認得，但那是巧合：那條啟發式正是
+                  #271（一按 B 就離場）的成因，而它認不認得一句中文完全取決於
+                  文案。宣告了它，改文案就不會無聲弄死 B。 */}
+              <Btn padBack onClick={cancel}>
+                取消
+              </Btn>
             </div>
           </>
         )}
@@ -117,7 +131,11 @@ function PurchaseDialog(): React.JSX.Element | null {
               {purchase.item.kind === "skin" ? "已自動裝備 · " : ""}目前{CURRENCY_LABEL[currency]}餘額{" "}
               <Price currency={currency} amount={balanceOf(purchase.wallet, currency)} />
             </div>
-            <Btn kind="primary" onClick={cancel}>
+            {/* ⭐ #511 的逐點證據就是這一顆。買完之後對話框**只剩這一顆**，
+                而「太好了」不含 取消/關閉/收起/返回/back/close/cancel/dismiss/✕
+                裡的任何一個字 ⇒ `backControlIndex` 回 -1 ⇒ B 在這個對話框上是
+                死鍵，玩家會以為卡住，得先撥方向鍵讓焦點落上去再按 A。 */}
+            <Btn padBack kind="primary" onClick={cancel}>
               太好了
             </Btn>
           </>
@@ -128,7 +146,9 @@ function PurchaseDialog(): React.JSX.Element | null {
               {purchase.message}
             </div>
             <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 12 }}>({purchase.code})</div>
-            <Btn onClick={cancel}>關閉</Btn>
+            <Btn padBack onClick={cancel}>
+              關閉
+            </Btn>
           </>
         )}
       </Panel>
