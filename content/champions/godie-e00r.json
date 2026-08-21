@@ -12,7 +12,7 @@
     "healthRegen": 0.25,
     "maxMana": 100,
     "manaRegen": 0.1,
-    "ad": 10,
+    "ad": 6.0,
     "ap": 0,
     "armor": 0,
     "mr": 28,
@@ -29,7 +29,7 @@
     "healthRegen": 0.3328,
     "maxMana": 21.9668,
     "manaRegen": 0.0679,
-    "ad": 5.1694,
+    "ad": 3.1016,
     "armor": 0.6681,
     "mr": 1.8261,
     "as": 0.0284,
@@ -389,8 +389,7 @@
           "kind": "damageLine",
           "damageType": "true",
           "amount": {
-            "damageTier": "大",
-            "flat": 1500.0
+            "damageTier": "大"
           },
           "length": 8.25,
           "width": 2.2,

@@ -35,8 +35,7 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "damageTier": "小",
-            "flat": 500.0
+            "damageTier": "小"
           }
         }
       ]

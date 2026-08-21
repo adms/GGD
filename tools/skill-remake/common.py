@@ -249,9 +249,21 @@ def _TIER_GRIDS():
     return _GRIDS_CACHE[0]
 
 
-def amt(per=None, flat=None, ap=None, ad=None, **kw):
-    """amount 物件：perRank 陣列 / flat 常數 / ratios 加成係數。"""
+def amt(per=None, flat=None, ap=None, ad=None, dmg_tier=None, **kw):
+    """amount 物件：perRank 陣列 / flat 常數 / ratios 加成係數。
+
+    ⭐ `dmg_tier=` —— **第〇·四守則**的入口：填了它就**只**寫 `damageTier`，
+    值在載入時由 `resolveDamageTier()` 從 `content/config/damage-tiers.json` 解析。
+    ⛔ 不要同時給 `flat=`／`per=`（級距**取代**它們，兩個一起寫 = 第二個住處）。
+    ⚠️ 鍵序：`damageTier` 在最前 —— 理由同 `area()` 那一段（英雄卡內嵌版是 Zod
+    重建出來的，順序不同就會被 fx-19 判成 desync）。
+    """
     o = {}
+    if dmg_tier is not None:
+        assert flat is None and per is None, (
+            "amt(): `dmg_tier=` 與 `flat=`/`per=` 只能給一個 —— 級距**取代**基礎值，"
+            "兩個一起寫就是同一個數字的兩個住處（CLAUDE.md 第〇·四守則）")
+        o["damageTier"] = dmg_tier
     if per is not None:
         o["perRank"] = [float(x) for x in per]
     if flat is not None:
@@ -356,7 +368,7 @@ def _require_base(kw, where):
     ⛔ 純比例（只有 ap/ad/attrRatios）**不算惰性** —— 它有基礎，基礎是施法者的
        屬性。`abilityScaling.test.ts` 的 `baseOf` 同步放寬（B1-E 的另一半）。
     """
-    if "per" in kw or "flat" in kw:
+    if "per" in kw or "flat" in kw or "dmg_tier" in kw:
         return
     if any(k in kw for k in _PROPORTIONAL):
         return

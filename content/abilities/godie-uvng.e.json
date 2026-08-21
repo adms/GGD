@@ -29,8 +29,7 @@
       "stepSize": 200,
       "segmentAoe": 400,
       "damage": {
-        "damageTier": "大",
-        "flat": 1500.0
+        "damageTier": "大"
       },
       "damageType": "magic",
       "castTimeSec": 1.5

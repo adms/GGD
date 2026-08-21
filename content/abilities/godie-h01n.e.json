@@ -26,8 +26,7 @@
       "kind": "damageLine",
       "damageType": "magic",
       "amount": {
-        "damageTier": "中",
-        "flat": 1000.0
+        "damageTier": "中"
       },
       "length": 11,
       "width": 2.0,

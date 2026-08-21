@@ -27,8 +27,7 @@
       "kind": "damageArea",
       "damageType": "physical",
       "amount": {
-        "damageTier": "小",
-        "flat": 500.0
+        "damageTier": "小"
       },
       "radius": 4.5,
       "radiusTier": "小",

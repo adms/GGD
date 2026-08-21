@@ -13,7 +13,7 @@
     "healthRegen": 0.25,
     "maxMana": 200,
     "manaRegen": 2.1,
-    "ad": 27,
+    "ad": 16.2,
     "ap": 0,
     "armor": 0,
     "mr": 28,
@@ -30,7 +30,7 @@
     "healthRegen": 0.2062,
     "maxMana": 46.8418,
     "manaRegen": 0.157,
-    "ad": 5.0204,
+    "ad": 3.0122,
     "armor": 0.8366,
     "mr": 2.3541,
     "as": 0.0107,
@@ -166,7 +166,6 @@
         "params": {
           "damage": {
             "damageTier": "小",
-            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -216,7 +215,6 @@
           "stepVfx": "fx.fam.bolt-strike.lightning.s115",
           "damage": {
             "damageTier": "大",
-            "flat": 1500.0,
             "ratios": [
               {
                 "stat": "ap",

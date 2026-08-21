@@ -181,6 +181,17 @@ def hook_icd(tier="極小", shape="單體", seconds=None):
 CARRIER_BASE_MAX = float(_load("skill-normalize")["carrierBaseMax"])
 
 
+_DMG_ROW_CACHE = {}
+
+
+def _tier_value(tier):
+    """一格傷害級別現在值多少 —— ⭐ **讀 `content/config/damage-tiers.json`**，
+    ⛔ 這裡沒有字面值（改公式表 = 這一支跟著改）。"""
+    if not _DMG_ROW_CACHE:
+        _DMG_ROW_CACHE.update(_load("damage-tiers")["damage"])
+    return float(_DMG_ROW_CACHE[tier])
+
+
 def _scaling_base(amount):
     """一個 `zScaling` 的**可換算基礎值**（flat + 滿階 perRank）。沒有就 None。
 
@@ -189,6 +200,13 @@ def _scaling_base(amount):
     """
     if not isinstance(amount, dict):
         return None
+    # ⭐ 已經收進級距的那一格：基礎值**回頭從表查**，⛔ 不是從一個烘進去的 `flat`
+    #    讀（第〇·四守則 —— `flat` 已經不寫了）。少了這三行，第二次跑 `tierize()`
+    #    會在同一份文件上找不到任何傷害葉 ⇒ `idx` 掉回 0（極小）⇒ **冷卻級距被
+    #    重新吸到另一格**，而 JSON 的傷害那一格看起來完全正常。
+    tier = amount.get("damageTier")
+    if tier in TIER_NAMES:
+        return _tier_value(tier)
     flat = amount.get("flat")
     per = amount.get("perRank")
     if flat is None and not per:
@@ -339,19 +357,24 @@ def snap_index(value, grid, damage_index):
 # ─────────────────────────────────────────────────────────────────────────────
 # 寫入
 # ─────────────────────────────────────────────────────────────────────────────
-def _rewrite_scaling(amount, tier, value):
-    """把一個 `zScaling` 換成「級別 + 逐位元相等的 flat」。
+def _rewrite_scaling(amount, tier):
+    """把一個 `zScaling` 換成**只有級別**，⛔ 不再寫回算好的 `flat`。
 
     ⚠️ 鍵序照 `zScaling` 的宣告序（`damageTier` 在最前）—— `abilityScaling.test.ts`
     的 fx-19 已經改成順序無關的深比較，但 `content/champions` 的內嵌鏡射版是
     Zod 重建出來的，序列化成同一個形狀讓 diff 讀得懂。
     ⛔ `perRank` 要**移除**：`resolveDamageTier` 就是這樣做的（級距**取代** flat
     與 perRank，⛔ 不是相加），留著它 = 出貨檔與註冊後的物件不一致。
+
+    ⭐ 2026-08-22（CLAUDE.md 第〇·四守則）—— `flat` 也一起走。在此之前這一行寫
+    `amount["flat"] = float(value)`，於是**同一個數字有兩個住處**：級別（`content/
+    config/damage-tiers.json`）與烘進 420 份技能文件的那一份。owner 的一行公式
+    改動因此變成 199 個節點重寫 + 12 支下游產生器 + 4 份棘輪基準線 ≈ 一小時。
+    現在值只在載入時由 `resolveDamageTier()` 解析 ⇒ 改公式表 = 全改完。
     """
     rest = {k: v for k, v in amount.items() if k not in ("damageTier", "flat", "perRank")}
     amount.clear()
     amount["damageTier"] = tier
-    amount["flat"] = float(value)
     amount.update(rest)
 
 
@@ -531,9 +554,9 @@ def tierize(doc, grids=None, log=None):
     if leaves:
         base, amount = max(leaves, key=lambda x: x[0])
         idx = nearest_index(base, dgrid)
-        before = amount.get("flat"), amount.get("perRank")
-        _rewrite_scaling(amount, TIER_NAMES[idx], dgrid[idx])
-        if before != (amount["flat"], None):
+        before = amount.get("damageTier"), amount.get("flat"), amount.get("perRank")
+        _rewrite_scaling(amount, TIER_NAMES[idx])
+        if before != (TIER_NAMES[idx], None, None):
             log.append(("damage", before, dgrid[idx], TIER_NAMES[idx]))
     else:
         # 沒有可換算的葉子 ⇒ 用它**有沒有傷害**決定 i_d：純 ratios 的傷害技仍是

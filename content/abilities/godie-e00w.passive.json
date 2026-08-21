@@ -36,7 +36,7 @@
                 "kind": "damage",
                 "damageType": "physical",
                 "amount": {
-                  "flat": 250.0,
+                  "damageTier": "極小",
                   "ratios": [
                     {
                       "stat": "ap",

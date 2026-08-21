@@ -1,0 +1,44 @@
+{
+  "id": "damage-tier-exemptions",
+  "schema": "config.damage-tier-exemptions@1",
+  "note": "**傷害五級距的豁免表**（GH#534）—— CLAUDE.md 第〇·四守則最後一行「例外要帶理由」的落點。owner #534 逐字：「①②③ **作為例外在後台跳出警告就好**，④ **你拉上來**」。⭐ **收的是謂詞，⛔ 不是一張逐節點的名單** —— 一張 166 列的名單就是第〇·四守則要消滅的那個 O(N) 第二住處（每一次內容編輯讓它過期一列，而且沒有東西會紅）。閘在 `packages/shared/src/content/tierFlatExclusive.test.ts`，它**兩個方向都關**：沒有級別也沒有豁免 → 紅；豁免規則已經匹配不到任何節點 → 也紅（棘輪只准降）。⚠️ 規則是**依序**比對、**第一條命中的贏**（`exemptionRuleFor`），所以順序是資料的一部分：窄的在前、寬的在後。⭐ 母體含 `abilities` / `champions` / `items` / `augments` 四個集合 —— 只有 abilities 被 `tierize()` 掃過，另外三個從來沒有，所以它們整批落在下面的謂詞上，⛔ 這不是「偷渡」，是「這批機制還沒有級距軸」這件事被寫下來的樣子。",
+  "rules": [
+    {
+      "id": "not-damage",
+      "kinds": ["shield", "heal", "spendMana"],
+      "warn": true,
+      "reason": "這一格不是傷害 —— `config.damage-tiers@1` 只有**傷害**一條軸：護盾與治療沒有自己的級距表，耗魔走的是 `manaCostTier`（另一張表、另一把尺）。把傷害級距套上去等於拿傷害的尺去量另一種量，而卡面上那個數字會整個換掉。⭐ 可反駁：哪天護盾／治療也有了自己的五級距（或耗魔改讀 `manaCostTier` 的葉子層），這一條就該死掉。"
+    },
+    {
+      "id": "dot-per-tick",
+      "kinds": ["dot"],
+      "warn": true,
+      "reason": "`dot` 的 `amountPerTick` 是**每一跳**的量，⛔ 不是一發的量：一次施法會跳 `durationSec ÷ intervalSec` 次。五級距的錨點是「20 發打死中位英雄」，那把尺量的是**單發**；把每跳拉到級距等於整條 DoT 乘上跳數。⭐ 可反駁：做出 DoT 自己的「每跳級距」表（單發值 ÷ 跳數），這一條就該改讀那一張、然後被刪掉。"
+    },
+    {
+      "id": "zero-base",
+      "zeroOnly": true,
+      "warn": false,
+      "reason": "基礎值是 0 ⇒ 這一葉**整份**傷害來自 `ratios` / `attrRatios` / `resourcePct`（例：「造成目標最大生命 1% 的真實傷害」）。`effect.ts` 的 `(sc.flat ?? 0)` 讓這個 0 逐位元等於不存在，所以它不是「一個沒收進級距的數字」，而是「沒有數字」。給它級距＝憑空長出一個卡面上沒寫的基礎傷害。⛔ 不跳後台警告的理由：這一類**改了什麼都不會變**，把它混進警告列會讓真正需要看的那幾條被淹掉。⭐ 可反駁：把這格 0 直接刪掉（純無害的清理），這一條就沒有節點可匹配、然後被反向閘刪掉。"
+    },
+    {
+      "id": "carrier-probe",
+      "kinds": ["damageArea", "damageLine"],
+      "maxFlat": 5,
+      "warn": true,
+      "reason": "載體節點 —— 這顆圈／線的工作是**送狀態**（卡面沒有任何傷害字樣，例：木束縛之術、瞬步、馬勒戈壁、天照），那 1 點只是為了讓範圍判定成立。收進級距 ⇒ 一支純控場技變成一發實打實的傷害。⚠️ 這裡的 `maxFlat` 與寫入端的 `config.skill-normalize@1.carrierBaseMax` 是**同一條慣例的兩半**（寫入端決定「不要把它收進級距」，這裡決定「不要為它紅」），刻意留了餘裕：寫入端調嚴時這一條仍然接得住。⭐ 可反駁：把卡面補上傷害字樣（那它就真的是一發傷害），或把兩個門檻一起調到 0，這一條就該死掉。"
+    },
+    {
+      "id": "per-hit-rider",
+      "perTrigger": true,
+      "warn": true,
+      "reason": "掛在 `hooks` / `passive` 底下的追加傷害 —— **一次施法會發生很多次**：`onBasicAttack` 是每一刀（法球那一族，例 20-01 風王結界「法球效應，只吃普攻」、52-03 無銘斧劍「每次普通攻擊」），`onAbilityHit` 是**逐命中目標**發（`CastResolveSystem.ts` / `abilitySystem.ts` 的 `for (const hitId of targets)`），`onDamageTaken` 是每次挨打。五級距的錨點是單發的尺，套在這一族上等於乘上這場比賽的攻擊次數。⭐ 可反駁：做出 per-hit rider 自己的一張級距表（單發值 ÷ 預期觸發次數），或替 hook 補上「每次施法只結算一次」的語意，這一條就該改讀那一張。"
+    },
+    {
+      "id": "skeleton-baseline",
+      "docs": ["sela", "sela.q", "sela.e", "thorne", "thorne.e"],
+      "warn": false,
+      "reason": "`sela` / `thorne` 是 fail-open 的**骨架英雄**，不在 `apps/platform/internal/curation/starter.go` 的對戰可選名單上（`testkit/shippedSurface.ts` 也把它們排除在上架面之外）。它們整組技能走 `flat + perRank` 曲線，而其中兩支（`sela.r` / `thorne.r`）連 `flat` 都沒有、級距根本搆不到；只收另外三支會讓同一位英雄一半有逐階成長、一半沒有。而 `resolveDamageTier` 會**刪掉 `perRank`** ⇒ 收進級距等於抹掉這個 repo 裡唯一一組逐階成長的參考夾具，換來零個玩家看得到的變化。⛔ 不跳後台警告：後台調不到一位不能選的英雄。⭐ 可反駁：把它們放進對戰名單，或連 `perRank`-only 的那兩支一起收進級距，這一條就該死掉。"
+    }
+  ]
+}

@@ -14,7 +14,7 @@ A("77-00", "77-00 浮雲-旋一閃", "self", [30], [0], 0,
   passive={"name": "77-00 浮雲-旋一閃", "ranks": [{
       "modifiers": [M("evasion", "flat", 0.10)],
       "hooks": [{"on": "onEvade", "target": "event", "internalCooldown": 30.0,
-                 "effects": [dmg("physical", flat=250, ap=1.3),
+                 "effects": [dmg("physical", dmg_tier="極小", ap=1.3),  # ④ 單發（onEvade + 30 秒 ICD）⇒ 收進級距
                              status("stun", 2.0, stun=True)]}]}]})
 
 A("77-01", "77-01 百烈櫻華斬", "self", [40, 40, 40, 40], [75, 110, 145, 180], 0,

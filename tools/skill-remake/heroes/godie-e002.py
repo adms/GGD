@@ -49,7 +49,7 @@ A("20-01", "20-01 風王結界", "self", [60, 60, 60, 60], [50, 100, 150, 200], 
       # ⭐ 「關閉時，凝聚的風能一次釋放『風王鐵槌』，造成前方圓形[範圍] 120+30% [AP]」
       #    —— `exitToggle` 是全專案唯一跑 `onExit` 的地方，所以它就是這一句的家。
       "onExit": [{"kind": "championForm", "to": "toggle"},
-                 area("magic", tier="小", flat=120, ap=0.3)],
+                 area("magic", tier="小", dmg_tier="極小", ap=0.3)]  # ④ 收招爆發，一次關閉只炸一發,
   },
   passive={"name": "20-01 風王結界 · 法球", "ranks": [
       {"whileForm": "alternate",

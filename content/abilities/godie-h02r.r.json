@@ -28,8 +28,7 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "damageTier": "大",
-            "flat": 1500.0
+            "damageTier": "大"
           }
         }
       ]

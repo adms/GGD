@@ -22,7 +22,6 @@
       "radius": 513.5,
       "damage": {
         "damageTier": "小",
-        "flat": 500.0,
         "ratios": [
           {
             "stat": "ap",

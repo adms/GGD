@@ -24,8 +24,7 @@
       "kind": "damageLine",
       "damageType": "true",
       "amount": {
-        "damageTier": "大",
-        "flat": 1500.0
+        "damageTier": "大"
       },
       "length": 8.25,
       "width": 2.2,

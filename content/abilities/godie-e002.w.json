@@ -225,7 +225,7 @@
         "kind": "damageArea",
         "damageType": "magic",
         "amount": {
-          "flat": 120.0,
+          "damageTier": "極小",
           "ratios": [
             {
               "stat": "ap",

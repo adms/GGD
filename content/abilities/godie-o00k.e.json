@@ -28,7 +28,6 @@
       "radius": 500,
       "damage": {
         "damageTier": "大",
-        "flat": 1500.0,
         "ratios": [
           {
             "stat": "ap",

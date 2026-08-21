@@ -42,7 +42,6 @@
           "damageType": "physical",
           "amount": {
             "damageTier": "中",
-            "flat": 1000.0,
             "ratios": [
               {
                 "stat": "ap",

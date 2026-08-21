@@ -13,7 +13,7 @@
     "healthRegen": 0.25,
     "maxMana": 100,
     "manaRegen": 0.1,
-    "ad": 15,
+    "ad": 9.0,
     "ap": 0,
     "armor": 7,
     "mr": 28,
@@ -30,7 +30,7 @@
     "healthRegen": 0.1624,
     "maxMana": 47.8622,
     "manaRegen": 0.1774,
-    "ad": 5.1347,
+    "ad": 3.0808,
     "armor": 0.5874,
     "mr": 1.8261,
     "as": 0.008,
@@ -135,7 +135,6 @@
         "params": {
           "damage": {
             "damageTier": "小",
-            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -185,8 +184,7 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "damageTier": "小",
-                "flat": 500.0
+                "damageTier": "小"
               }
             }
           ]
@@ -233,7 +231,6 @@
         "params": {
           "damage": {
             "damageTier": "小",
-            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
