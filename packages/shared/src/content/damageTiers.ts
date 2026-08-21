@@ -375,3 +375,166 @@ export function resolveDamageTier<T extends object>(def: T, tiers: DamageTiers):
     return out;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * ⛔【#534】同一個節點不可以**同時**有級別與算好的值
+ *
+ * CLAUDE.md 第〇·四守則的判準逐字：
+ *
+ *     ⭐ 對： {"damageTier": "極大"}
+ *     ⛔ 錯： {"damageTier": "極大", "flat": 2000}   ← flat 是第二個住處
+ *
+ * ⇒ 做完之後**改公式表 = 全改完**（零重新產生、零棘輪、零基準線）。
+ * 閘在 `tierFlatExclusive.test.ts`；這裡只放**純**的機制（⛔ 不碰 fs，同
+ * `lowDamageCells.ts`：語料由呼叫端餵進來）。
+ *
+ * ── ⭐ 豁免是**規則**，⛔ 不是一張 169 列的名單 ─────────────────────────────
+ * owner #534：「①②③ **作為例外在後台跳出警告就好**，④ **你拉上來**」。
+ * ①②③ 是**類別**（不是傷害的量 · 判定用的 1 點 · 每跳／每次觸發），
+ * 而一張逐節點的名單正是第〇·四守則要消滅的東西 —— 它是 O(N) 的第二個住處，
+ * 每一次內容編輯都會讓它過期一列。所以豁免表收的是**謂詞 + 一個能被反駁的理由**
+ * （第零守則⑨：N 個同型 = K 個模板 + 一張表）。
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/** `content/config/damage-tier-exemptions.json` 的文件 id。 */
+export const DAMAGE_TIER_EXEMPTIONS_DOC_ID = "damage-tier-exemptions";
+
+/**
+ * `Scaling` 的完整鍵集合（`schema/common.ts::zScaling` 是 `.strict()` 的）。
+ * ⭐ 掃描用**結構**認 Scaling，⛔ 不靠「鍵叫 amount」—— 它在樹上有
+ * `amount` / `amountPerTick` / … 好幾個名字，而漏認一個名字＝那一族靜默逃過閘。
+ */
+const SCALING_KEYS: ReadonlySet<string> = new Set([
+  "damageTier",
+  "flat",
+  "perRank",
+  "ratios",
+  "attrRatios",
+]);
+
+/** 走到一個 `Scaling` 上時，這棵樹告訴我們的全部事實。 */
+export interface ScalingNode {
+  /** `abilities` / `items` / `augments` / `champions` */
+  readonly collection: string;
+  /** 檔名，讓失敗訊息**指名得到檔案** */
+  readonly file: string;
+  readonly docId: string;
+  /** JSON path，讓失敗訊息**指名得到那一格** */
+  readonly path: string;
+  /** 最近一層 `kind`（沒有就是 `?`） */
+  readonly kind: string;
+  readonly flat?: number;
+  readonly damageTier?: string;
+  /**
+   * ⭐ 這一格**一次施法會發生幾次**？`true` = 掛在 `hooks` / `passive` 底下 ——
+   * 法球、每次普攻追加、每次命中的 proc。
+   * ⚠️ 主 session 2026-08-22 抓到的例外（20-01 風王結界 `flat: 10`）就是這一族：
+   * 它是**附著在每一次攻擊上的追加**，拉到單發五級距就是每刀 ×20。
+   */
+  readonly perTrigger: boolean;
+}
+
+/** 走一份內容文件，回傳它身上每一個 `Scaling`。順序穩定（深度優先）。 */
+export function scanScalingNodes(collection: string, file: string, doc: unknown): ScalingNode[] {
+  const docId = (doc as { id?: unknown })?.id;
+  const out: ScalingNode[] = [];
+  walk(doc, "$", "?", false);
+  return out;
+
+  function walk(node: unknown, path: string, kind: string, perTrigger: boolean): void {
+    if (Array.isArray(node)) {
+      node.forEach((v, i) => walk(v, `${path}[${i}]`, kind, perTrigger));
+      return;
+    }
+    if (node === null || typeof node !== "object") return;
+    const rec = node as Record<string, unknown>;
+    const k = typeof rec["kind"] === "string" ? (rec["kind"] as string) : kind;
+    const keys = Object.keys(rec);
+    if (keys.length > 0 && keys.every((x) => SCALING_KEYS.has(x))) {
+      out.push({
+        collection,
+        file,
+        docId: typeof docId === "string" ? docId : "",
+        path,
+        kind: k,
+        flat: typeof rec["flat"] === "number" ? (rec["flat"] as number) : undefined,
+        damageTier: typeof rec["damageTier"] === "string" ? (rec["damageTier"] as string) : undefined,
+        perTrigger,
+      });
+    }
+    for (const [key, v] of Object.entries(rec)) {
+      walk(v, `${path}.${key}`, k, perTrigger || key === "hooks" || key === "passive");
+    }
+  }
+}
+
+/** 一條豁免規則 —— 全部是**謂詞**，未填的那格 = 不設限。 */
+export interface DamageTierExemptionRule {
+  /** 穩定代號，失敗訊息與後台警告都印它 */
+  readonly id: string;
+  /** ⭐ 一個**能被反駁**的理由，⛔ 不是「還沒收」 */
+  readonly reason: string;
+  /** effect kind 白名單（例：`shield` / `heal` / `spendMana`） */
+  readonly kinds?: readonly string[];
+  /** `|flat| ≤ 這個值`（例：判定用的 1 點） */
+  readonly maxFlat?: number;
+  /** `flat === 0`（純成長，沒有基礎值可以交出去） */
+  readonly zeroOnly?: boolean;
+  /** 節點掛在 `hooks` / `passive` 底下嗎（＝一次施法會發生很多次） */
+  readonly perTrigger?: boolean;
+  /** 一次性的逐文件豁免（`doc.id`） */
+  readonly docs?: readonly string[];
+  /** 後台要不要為它跳警告（owner #534：「作為例外在後台跳出警告就好」） */
+  readonly warn: boolean;
+}
+
+export interface DamageTierExemptions {
+  readonly rules: readonly DamageTierExemptionRule[];
+}
+
+/**
+ * ⚠️ 出貨預設是**空的**，這是刻意的：豁免住 `content/config/`，⛔ 不住程式。
+ * 空的預設 = 「什麼都不豁免」＝ 閘最嚴的那一邊，⛔ 不是 fail-open。
+ */
+export const DEFAULT_DAMAGE_TIER_EXEMPTIONS: DamageTierExemptions = Object.freeze({
+  rules: Object.freeze([]) as readonly DamageTierExemptionRule[],
+});
+
+/** 把一份 `config.damage-tier-exemptions@1` 文件正規化。認不得 → 出貨值（空）。 */
+export function damageTierExemptionsFromDoc(doc: unknown): DamageTierExemptions {
+  const d = doc as { schema?: string; rules?: unknown } | undefined;
+  if (!d || d.schema !== "config.damage-tier-exemptions@1" || !Array.isArray(d.rules)) {
+    return DEFAULT_DAMAGE_TIER_EXEMPTIONS;
+  }
+  return Object.freeze({ rules: Object.freeze(d.rules as readonly DamageTierExemptionRule[]) });
+}
+
+/**
+ * 這個節點被哪一條規則豁免（`null` = 沒有，⇒ 閘會紅）。
+ * ⭐ 謂詞是 **AND**，而一條**一個謂詞都沒填**的規則會豁免全世界 ——
+ * 那一條由 Zod 擋（見 `zConfigDamageTierExemptionsDoc` 的 refine）。
+ */
+export function exemptionRuleFor(
+  node: ScalingNode,
+  ex: DamageTierExemptions = DEFAULT_DAMAGE_TIER_EXEMPTIONS,
+): DamageTierExemptionRule | null {
+  for (const r of ex.rules) {
+    if (r.kinds && !r.kinds.includes(node.kind)) continue;
+    if (r.maxFlat !== undefined && !(Math.abs(node.flat ?? 0) <= r.maxFlat)) continue;
+    if (r.zeroOnly === true && node.flat !== 0) continue;
+    if (r.perTrigger !== undefined && node.perTrigger !== r.perTrigger) continue;
+    if (r.docs && !r.docs.includes(node.docId)) continue;
+    return r;
+  }
+  return null;
+}
+
+/** 需要一條豁免的節點：**只有** `flat`、沒有級別。 */
+export function needsExemption(n: ScalingNode): boolean {
+  return typeof n.flat === "number" && n.damageTier === undefined;
+}
+
+/** ⛔ 兩個住處：級別**和**算好的值一起寫進同一格。 */
+export function hasTierAndFlat(n: ScalingNode): boolean {
+  return n.damageTier !== undefined && typeof n.flat === "number";
+}
