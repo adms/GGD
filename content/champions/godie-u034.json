@@ -38,9 +38,9 @@
     "str": 25,
     "agi": 15,
     "int": 14,
-    "strGrowth": 2.45,
-    "agiGrowth": 1.8,
-    "intGrowth": 1.75,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "w3x"
   },
