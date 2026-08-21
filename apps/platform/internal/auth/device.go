@@ -16,12 +16,42 @@ import (
 // Device Authorization Grant (RFC 8628), adapted for a QR + a trusted phone
 // (#197/#199). The keyboard-less handheld calls DeviceStart, renders the QR
 // (which carries ONLY the short public user-code — never the secret device-code,
-// never a token), and polls DevicePoll. A phone that is ALREADY authenticated
-// scans the QR and calls DeviceApprove; its existing session is the trust
-// anchor, and the session the handheld receives is minted for THAT phone's
-// account through the unchanged issueTokens path. A photographed QR is inert: it
-// can only ASK an authenticated phone to approve, and approving links the
-// handheld to whoever approved — never the other way round.
+// never a token), and polls DevicePoll. A phone holding a session scans the QR
+// and calls DeviceApprove; that session is the trust anchor, and the session the
+// handheld receives is minted for THAT phone's account through the unchanged
+// issueTokens path. A photographed QR is inert: it can only ASK an authenticated
+// phone to approve, and approving links the handheld to whoever approved — never
+// the other way round.
+//
+// ---- GH#535: the brand-new player -----------------------------------------
+// The sentence above used to read "a phone that is ALREADY authenticated", and
+// that framing is what made the flow useless to someone with no account: the
+// handheld's QR was the only thing they could reach, and it led to a page that
+// told them to go sign in. GH#535 closes that WITHOUT a second server flow —
+// the phone page (client ui/platform/LinkRoute.tsx) now registers in place and
+// approves with the session that registration mints. This file is unchanged
+// because it did not need changing, and that is the point:
+//
+//   ⛔ No "registration intent" code, no /auth/register/qr, no second TTL, no
+//      second rate limit. One grant primitive serves both flows (第〇·五守則 /
+//      模板化 — a second code type would be a second thing to expire, throttle,
+//      audit and keep honest).
+//
+// ⚠️ What DID change is where the trust is anchored, and it is worth naming:
+// for a returning player the anchor is a session that predates the QR; for a
+// new one there is no such session, so the anchor collapses onto the user-code
+// itself. Three properties carry that weight, all of them already here:
+//
+//	① deviceGrantTTL — the window in which the code means anything is minutes
+//	② the throttles below + the IP throttle handlers.go hangs on /device/start
+//	③ the code is PRINTED on both screens, so a human compares them; the client
+//	   deliberately does not auto-approve after registering (see LinkRoute)
+//
+// ⚠️ Registering does not bypass the play gate. Whatever status the new account
+// lands in, DevicePoll re-runs AuthorizePlay before minting — a pending account
+// gets no session here for exactly the same reason it gets none at a typed
+// login. On a gated deploy (#126) registration returns no token at all, so the
+// phone never reaches DeviceApprove and the grant simply expires.
 
 const (
 	// deviceGrantTTL is short by design: a QR on a screen is broadcast, so the
@@ -43,6 +73,15 @@ const (
 	// deviceApproveLimit / deviceApproveWindow lock out an authenticated phone
 	// that sprays user-codes: approval is attributable to the account, so a
 	// brute-force is throttled AND bannable. Keyed by accountID.
+	//
+	// ⚠️ GH#535 makes this budget RENEWABLE in principle — an approver may now be
+	// an account created seconds ago, and /auth/register carries no IP throttle
+	// of its own (handlers.go mounts it bare, unlike /auth/device/start). ⛔ Do
+	// not read that as "so raise the limit": the guess space is 32^8 ≈ 1.1e12
+	// against a handful of live grants inside a deviceGrantTTL window, so even an
+	// unbounded sprayer is ~1e-9 per attempt. The thing actually worth fixing is
+	// the missing throttle on /auth/register itself (registration spam, not code
+	// guessing) — a different file and a different ticket.
 	deviceApproveLimit  = 10
 	deviceApproveWindow = time.Minute
 

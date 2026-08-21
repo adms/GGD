@@ -4,7 +4,10 @@
  * On a keyboard-less handheld the login screen focuses a single gamepad button,
  * 用手機登入; pressing A opens this panel, which shows a QR (the verification URL
  * + the short public user-code — NEVER a token) and waits for an already-logged-
- * in phone to scan and approve. No text field ever focuses: the whole panel is
+ * in phone to scan and approve — or, since GH#535, for a BRAND-NEW player to
+ * create their account on the phone at that same `/link?code=…` page and approve
+ * with it. Either way the handheld's side is unchanged: one grant, one poll.
+ * No text field ever focuses: the whole panel is
  * D-pad + A/B navigable — driven by the ONE global loop in `ui/PadFocusNav`,
  * which this panel opts into by declaring `data-pad-scope` (GH#504; it used to
  * run a second, competing loop of its own). On approval the granted token pair
@@ -115,9 +118,13 @@ export function DeviceLoginPanel({ onClose }: { onClose: () => void }): React.JS
         width: 300,
       }}
     >
-      <div style={{ fontSize: 15, fontWeight: 800, color: TEXT_MAIN, letterSpacing: 1 }}>用手機登入</div>
+      <div style={{ fontSize: 15, fontWeight: 800, color: TEXT_MAIN, letterSpacing: 1 }}>用手機登入或註冊</div>
       <div style={{ fontSize: 11, color: TEXT_DIM, textAlign: "center", lineHeight: 1.6 }}>
-        用已登入的手機掃描下方 QR，或到 {grant?.verificationUri ?? "/link"} 輸入代碼核准。
+        用手機掃描下方 QR，或到 {grant?.verificationUri ?? "/link"} 輸入代碼。
+        {/* GH#535 — 全新玩家在此之前讀到的是「用**已登入**的手機」,而那正好排除了他。
+            手機那一頁現在自己帶註冊表單,所以這裡要說得出第二條路。 */}
+        <br />
+        已登入的手機可直接核准；還沒有帳號的話，可以在手機上建立帳號再核准。
       </div>
 
       {grant ? (
@@ -138,6 +145,17 @@ export function DeviceLoginPanel({ onClose }: { onClose: () => void }): React.JS
           aria-label="user code"
         >
           {grant.userCode}
+        </div>
+      )}
+
+      {grant && (
+        // GH#535 — the short TTL is one of the three things the registration
+        // anchor rests on (the other two are the rate limits and the fact that
+        // this code is printed here to be compared). Say it out loud, and ⛔ read
+        // it off the SERVER's `expiresIn` — a literal here would be a fourth
+        // home for `deviceGrantTTL` and would start lying the day it is tuned.
+        <div style={{ fontSize: 10, color: TEXT_DIM, textAlign: "center" }}>
+          代碼 {Math.max(1, Math.round(grant.expiresIn / 60))} 分鐘後失效，請與手機上顯示的代碼核對
         </div>
       )}
 
