@@ -26,8 +26,10 @@ import { Stat } from "../sim/stats/statTypes";
 import { parseItemCard } from "./itemCardText";
 import { DEFAULT_ITEM_CARD } from "./schema/config";
 import { magicResistMitigationPct, withDerivedNumbers } from "./itemCardDerived";
+import { shippedItemIds } from "../../testkit/shippedSurface";
 
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
+const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const ITEMS = join(CONTENT, "items");
 
 /**
@@ -52,10 +54,20 @@ interface ItemDoc {
   modifiers?: { stat?: string; op?: string; value?: number }[];
 }
 
+/**
+ * ⚠️ 這一支以前叫 `shippedItems()` 而回的是 `readdirSync(content/items)` 的**全部 142 件**
+ * —— 名字在說謊（第三守則）。2026-08-21 量到出貨樹裡有 **53 件玩家一場都拿不到**
+ * （`weaponShelfOpen` 出貨是 false，而它們也不在任何一張獎池裡）。
+ *
+ * ⭐ 現在它真的只回上架面（GH#472，owner：「沒開放的別浪費 token」），
+ * 而上架面是**推導**的 —— owner 在後台把貨架打開，這裡自己就變多，⛔ 不必改測試。
+ */
 function shippedItems(): ItemDoc[] {
+  const open = shippedItemIds(REPO);
   return readdirSync(ITEMS)
     .filter((f) => f.endsWith(".json") && f !== "_index.json")
-    .map((f) => JSON.parse(readFileSync(join(ITEMS, f), "utf8")) as ItemDoc);
+    .map((f) => JSON.parse(readFileSync(join(ITEMS, f), "utf8")) as ItemDoc)
+    .filter((d) => typeof d.id === "string" && open.has(d.id));
 }
 
 /** 卡面上「魔抗+N%」那一行印出來的數字（沒有這一行 → null）。 */

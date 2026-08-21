@@ -42,8 +42,89 @@ import { ModOp } from "../sim/stats/modifiers";
 import type { StatusEffect } from "../sim/components";
 import { zEffectDefUnion } from "./schema/effect";
 import { DEFAULT_DISPEL_RULES, dispelRulesFromDoc } from "../sim/dispelRules";
+import {
+  shippedAbilityIds,
+  shippedChampionIds,
+  shippedItemIds,
+  SHIPPED_SURFACE_PROVENANCE,
+} from "../../testkit/shippedSurface";
 
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
+const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
+
+/** 這一支要掃的四個集合 —— 順序固定，讓失敗訊息可重現。 */
+const COLLECTIONS = ["items", "abilities", "augments", "champions"] as const;
+
+/**
+ * ⭐【一支迭代器，兩種母體】—— GH#472：「稽核／工作的範圍收斂到**上架中**」。
+ *
+ * owner 講過兩次：
+ * > M48（2026-08-18）：「這些是哪裡來的老舊東西，**根本沒上架阿 幹嘛修**…」
+ * > M105-1（2026-08-19）：「只要做**有開放的**角色技能及隨機三選一就好，**沒開放的別浪費 token**」
+ *
+ * ⚠️ 但**不是每一條都該收窄**，所以這一支要一個 `scope` 參數而不是一個過濾器：
+ *
+ * | scope | 誰用 | 判準 |
+ * |---|---|---|
+ * | `"shipped"` | 「**卡片上的字會不會騙到玩家**」那一族 | 玩家看不到的卡，說謊不花任何人的成本 |
+ * | `"all"` | 「**知識有沒有無聲消失**」「**機制平手線**」那一族 | 與玩家看不看得到無關 |
+ *
+ * ⭐ 上架面是**推導**的（`testkit/shippedSurface.ts`）：獎池 ∪ 後台貨架開關 ∪ 合成前置。
+ * ⛔ 不是一張手打的 id 名單 —— owner 在後台把 `weaponShelfOpen` 打開的那一刻，
+ * 這裡掃的東西自己就變多，⛔ 不必改測試。
+ *
+ * ⚠️ 被略過的那些**沒有消失**：`pnpm roster:check` 的第 ⑫ 條每次都把它們的數量印出來，
+ * 所以「未上架的東西悄悄變多」看得見。
+ */
+function eachContentDoc(
+  scope: "all" | "shipped",
+  cb: (label: string, raw: string, coll: string, id: string) => void,
+): void {
+  const allow =
+    scope === "all"
+      ? null
+      : {
+          items: shippedItemIds(REPO),
+          abilities: shippedAbilityIds(REPO),
+          champions: shippedChampionIds(REPO),
+          // 增益卡沒有貨架也沒有獎池表 —— 抽卡直接吃整個集合，
+          // 所以對它們而言「掃全部」就是「掃上架中」（見 shippedSurface 的檔尾）。
+          augments: null as ReadonlySet<string> | null,
+        };
+  let seen = 0;
+  for (const coll of COLLECTIONS) {
+    let files: string[];
+    try {
+      files = readdirSync(join(CONTENT, coll));
+    } catch {
+      continue;
+    }
+    for (const f of files) {
+      if (!f.endsWith(".json") || f === "_index.json") continue;
+      const id = basename(f, ".json");
+      if (allow) {
+        const set = allow[coll];
+        if (set && !set.has(id)) continue;
+      }
+      let raw: string;
+      try {
+        raw = readFileSync(join(CONTENT, coll, f), "utf8");
+      } catch {
+        continue;
+      }
+      seen += 1;
+      cb(`${coll}/${id}`, raw, coll, id);
+    }
+  }
+  // ⚠️ 掃到 0 份 = 過濾條件或路徑壞了，⛔ 不是「內容是空的」。一支空轉的掃描器
+  //    對「全綠」與「壞掉」給出一模一樣的答案（失敗形態③）。
+  if (seen === 0) {
+    throw new Error(
+      `內容掃描器掃到 0 份文件（scope=${scope}）—— 路徑或過濾條件壞了。` +
+        `上架面來源：${SHIPPED_SURFACE_PROVENANCE}`,
+    );
+  }
+}
 
 /**
  * 這些屬性的 base 是 0 且語意是「加成」，所以乘區對它們恆為 0。
@@ -227,49 +308,33 @@ function scanFakeStatuses(
     for (const [name, d] of docs) visit(d, "", name, []);
     return out;
   }
-  for (const coll of ["items", "abilities", "augments", "champions"]) {
-    let files: string[];
+  // ⭐ 只掃**上架面**：一句玩家永遠看不到的假狀態不騙任何人（GH#472）。
+  eachContentDoc("shipped", (label, raw) => {
+    let parsed: unknown;
     try {
-      files = readdirSync(join(CONTENT, coll));
+      parsed = JSON.parse(raw);
     } catch {
-      continue;
+      return;
     }
-    for (const f of files) {
-      if (!f.endsWith(".json") || f === "_index.json") continue;
-      let parsed: unknown;
-      try {
-        parsed = JSON.parse(readFileSync(join(CONTENT, coll, f), "utf8"));
-      } catch {
-        continue;
-      }
-      visit(parsed, "", `${coll}/${basename(f, ".json")}`, []);
-    }
-  }
+    visit(parsed, "", label, []);
+  });
   return out;
 }
 
 function scan(): Claim[] {
   const raisable = raisableStats();
   const out: Claim[] = [];
-  for (const coll of ["items", "abilities", "augments", "champions"]) {
-    let files: string[];
+  // ⭐ 只掃**上架面**：這一條問的是「卡片上的字會不會騙到玩家」，
+  //    而玩家拿不到的卡上面寫什麼都不會發生在任何一場比賽裡（GH#472）。
+  eachContentDoc("shipped", (label, raw) => {
+    let parsed: unknown;
     try {
-      files = readdirSync(join(CONTENT, coll));
+      parsed = JSON.parse(raw);
     } catch {
-      continue;
+      return;
     }
-    for (const f of files) {
-      if (!f.endsWith(".json") || f === "_index.json") continue;
-      const doc = `${coll}/${basename(f, ".json")}`;
-      let parsed: unknown;
-      try {
-        parsed = JSON.parse(readFileSync(join(CONTENT, coll, f), "utf8"));
-      } catch {
-        continue;
-      }
-      walk(parsed, "", doc, raisable, out);
-    }
-  }
+    walk(parsed, "", label, raisable, out);
+  });
   return out;
 }
 
@@ -330,27 +395,21 @@ describe("⛔ 卡片上不可以有「說了但不會發生」的字（owner 202
   it("★ ⛔ 沒有任何 authoringNote 是被**截斷**的（撞上限要另存，不是壓縮）", () => {
     const MARKERS = ["…（略）", "…(略)", "……（略", "[truncated]", "（以下略）"];
     const bad: string[] = [];
-    for (const coll of ["items", "abilities", "augments", "champions"]) {
-      let files: string[];
+    // ⚠️ 這一條**刻意掃全部**（GH#472 的例外之一）：它問的是「**知識有沒有無聲消失**」
+    //    （第一·五守則：撞字數上限要另存，⛔ 不是壓縮取代），而那與這件東西玩家
+    //    拿不拿得到完全無關 —— 一段被剪掉的原文，不會因為那件道具下架就長回來。
+    eachContentDoc("all", (label, raw) => {
+      let d: { authoringNote?: unknown };
       try {
-        files = readdirSync(join(CONTENT, coll));
+        d = JSON.parse(raw) as { authoringNote?: unknown };
       } catch {
-        continue;
+        return;
       }
-      for (const f of files) {
-        if (!f.endsWith(".json") || f === "_index.json") continue;
-        let d: { authoringNote?: unknown };
-        try {
-          d = JSON.parse(readFileSync(join(CONTENT, coll, f), "utf8")) as { authoringNote?: unknown };
-        } catch {
-          continue;
-        }
-        const note = typeof d.authoringNote === "string" ? d.authoringNote : "";
-        for (const m of MARKERS) {
-          if (note.includes(m)) bad.push(`${coll}/${basename(f, ".json")} —— 帶截斷標記「${m}」`);
-        }
+      const note = typeof d.authoringNote === "string" ? d.authoringNote : "";
+      for (const m of MARKERS) {
+        if (note.includes(m)) bad.push(`${label} —— 帶截斷標記「${m}」`);
       }
-    }
+    });
     expect(
       bad,
       [
@@ -403,29 +462,22 @@ describe("⛔ 卡片上不可以有「說了但不會發生」的字（owner 202
    */
   it("★ ⛔ 抬「移速上限」的文件必須同時給飛行（穿牆平手線的唯一豁免）", () => {
     const offenders: string[] = [];
-    for (const coll of ["items", "abilities", "augments", "champions"]) {
-      let files: string[];
+    // ⚠️ 這一條也**刻意掃全部**（GH#472 的例外之二）：穿牆平手線是**遊戲機制**，
+    //    而「有沒有上架」是一格後台開關（`arena-rules.weaponShelfOpen`）——
+    //    ⛔ 未上架不等於永遠不上架，而開關翻開的那一刻沒有人會重跑這條稽核。
+    eachContentDoc("all", (label, raw) => {
+      // 先便宜地篩掉絕大多數文件，再做結構檢查。
+      if (!raw.includes("capRaise")) return;
+      let doc: unknown;
       try {
-        files = readdirSync(join(CONTENT, coll));
+        doc = JSON.parse(raw);
       } catch {
-        continue;
+        return;
       }
-      for (const f of files) {
-        if (!f.endsWith(".json") || f === "_index.json") continue;
-        const raw = readFileSync(join(CONTENT, coll, f), "utf8");
-        // 先便宜地篩掉絕大多數文件，再做結構檢查。
-        if (!raw.includes("capRaise")) continue;
-        let doc: unknown;
-        try {
-          doc = JSON.parse(raw);
-        } catch {
-          continue;
-        }
-        if (raisesMoveSpeedCap(doc) && !grantsFlight(doc)) {
-          offenders.push(`${coll}/${basename(f, ".json")}`);
-        }
+      if (raisesMoveSpeedCap(doc) && !grantsFlight(doc)) {
+        offenders.push(label);
       }
-    }
+    });
     expect(
       offenders,
       [
@@ -606,24 +658,17 @@ describe("⛔ 卡片上不可以有「說了但不會發生」的字（owner 202
     expect(canary.length, "掃描器空轉 —— 它對一份違規夾具也回空").toBe(1);
 
     const over: string[] = [];
-    for (const coll of ["items", "abilities", "augments", "champions"]) {
-      let files: string[];
+    // ⭐ 只掃**上架面**：靜默夾取的傷害是「卡面寫淨化全部、實際只淨化 N 個」——
+    //    那是一句騙玩家的話，而玩家拿不到的卡騙不到任何人（GH#472）。
+    eachContentDoc("shipped", (label, raw) => {
+      let parsed: unknown;
       try {
-        files = readdirSync(join(CONTENT, coll));
+        parsed = JSON.parse(raw);
       } catch {
-        continue;
+        return;
       }
-      for (const f of files) {
-        if (!f.endsWith(".json") || f === "_index.json") continue;
-        let parsed: unknown;
-        try {
-          parsed = JSON.parse(readFileSync(join(CONTENT, coll, f), "utf8"));
-        } catch {
-          continue;
-        }
-        walkDispel(parsed, "", `${coll}/${basename(f, ".json")}`, over);
-      }
-    }
+      walkDispel(parsed, "", label, over);
+    });
 
     expect(
       over,

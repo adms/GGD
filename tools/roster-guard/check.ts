@@ -32,6 +32,17 @@
  *   產出文件裡印的母體 ↔ 名單長度 · 內容樹的每一張卡 ↔ 三種身分
  *   可選名單 ↔ 變身態存在        · 營運白名單 ↔ 對戰可選名單（檔案在就驗）
  *
+ * ⭐ 2026-08-21 再加第 ⑫ 條（GH#472，owner 兩則：「這些是哪裡來的老舊東西，**根本沒
+ *   上架阿 幹嘛修**…你的判斷標準究竟是？」/「只要做**有開放的**角色技能及隨機三選一
+ *   就好，**沒開放的別浪費 token**」）：
+ *
+ *   **稽核母體 ↔ 上架面** —— 每一支掃 `content/items` 的稽核，都要說得出它掃的是
+ *   **全部**還是**上架中**。量到的原形：出貨樹 142 件道具裡玩家今天只拿得到 **89 件**
+ *   （`arena-rules.weaponShelfOpen` 出貨 false ⇒ 有價武器買不到，而它們也不在任何一張
+ *   獎池裡）—— 而每一條掃全樹的稽核都會替那 53 件產生待修項。
+ *   ⚠️ 「未上架」⛔ 不等於「退場」：退場物住 `content/_legacy/`，而這 53 件是**一格
+ *   後台開關**關著而已 —— 所以上架面必須從那格開關**推導**，⛔ 不可以寫成一張名單。
+ *
  * ⚠️ 量到的原形:六支量測（錨點/滿魔/低傷/出身/柵欄/新英雄預設）拿
  *   `readdirSync(content/champions)`（或 `Champions.all()`）當母體 ＝ **71 張卡**,
  *   其中 20 張是變身態（同一位英雄的第二張卡 ⇒ 重複計數）、2 張是 fail-open 骨架佔位。
@@ -60,6 +71,12 @@ import {
   balancePopulationFrom,
   balancePopulationIds,
 } from "../../packages/shared/testkit/balancePopulation";
+import {
+  shippedAbilityIds,
+  shippedChampionIds,
+  shippedItemIds,
+  unreachableItemIds,
+} from "../../packages/shared/testkit/shippedSurface";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../..");
 const STARTER_GO = "apps/platform/internal/curation/starter.go";
@@ -383,6 +400,198 @@ export function checkRoster(): Finding[] {
     }
   }
 
+  // ⑫ ⭐ 稽核母體 ↔ 上架面 —— GH#472：「稽核／工作的範圍收斂到**上架中**」。
+  out.push(...checkAuditScope());
+
+  return out;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ⑫【每一支掃 `content/items` 的稽核，都要說得出它掃的是**全部**還是**上架中**】
+//
+// owner 講過兩次，兩次都是同一條規則的不同一半（GH#472）：
+//
+// > M48（2026-08-18）：「這些是哪裡來的老舊東西，**根本沒上架阿 幹嘛修**…
+// >  **你的判斷標準究竟是？**」
+// > M105-1（2026-08-19）：「只要做**有開放的**角色技能及隨機三選一就好，
+// >  **沒開放的別浪費 token**」
+//
+// ── 為什麼閘只架在**道具**上（量到的，2026-08-21） ─────────────────────────
+//
+//   | 集合 | 出貨樹 | 玩家拿得到 | 差多少 |
+//   |---|---:|---:|---|
+//   | `content/abilities` | 420 | 412 | 8 份 fail-open 骨架 |
+//   | `content/champions` | 71 | 69 | 2 張 fail-open 骨架 |
+//   | **`content/items`** | **142** | **89** | ⭐ **53 件（37%）** |
+//
+// 技能與英雄那兩棵樹在 #464 / #485 之後已經幾乎逐份等於上架面，差的只有那兩張
+// 骨架佔位（而 `SKELETON_CHAMPION_IDS` 已經是推導出來的）。**道具是唯一還在漏的
+// 地方**：`arena-rules.weaponShelfOpen` 出貨是 `false`（owner 2026-07-28「其他武器
+// 道具先全部暫時下架」），而那 53 件也不在任何一張獎池裡 ⇒ 一場比賽裡不存在。
+// ⇒ 閘架在差距真的存在的那一格，⛔ 不是每一個掃描器都掛一張表（那是過度配比）。
+//
+// ── 兩種合法狀態，⛔ 沒有第三種 ────────────────────────────────────────────
+//
+//   ① **走推導模組** —— import `testkit/shippedSurface` 或 `testkit/balancePopulation`。
+//      ⇒ 自動偵測，⛔ 不必登記（母體改變時它自己跟著動）。
+//   ② **在 {@link WHOLE_TREE_BY_DESIGN} 裡帶著一個能被反駁的理由**。
+//
+// ⚠️ 這張表**自己也會過期**：某一支哪天改走推導模組了，它那一列就必須刪掉，
+// 否則這裡紅 —— 與 `noOpModifierClaims` 的 `CURATION_PENDING` 同一個形狀。
+// ═══════════════════════════════════════════════════════════════════════════
+
+/** 掃描器要從哪幾棵子樹找。⛔ `apps/**` 不在內 —— 見 {@link SKIPPED_ROOTS}。 */
+const AUDIT_SCAN_ROOTS = ["packages/shared/src", "packages/shared/testkit", "tools"];
+
+/**
+ * 這幾個子樹**不受這條閘管**，各自帶著理由（⛔ 不是「太麻煩所以跳過」）。
+ */
+const SKIPPED_ROOTS: Record<string, string> = {
+  "tools/w3x-import/":
+    "一次性的 w3x 匯入器 —— 它的母體是**原作地圖檔**，`content/` 是它的輸出而不是輸入。" +
+    "用上架面過濾它等於叫匯入器只匯入自己已經匯入過的東西。",
+  "tools/icon-gen/":
+    "圖示產生管線 —— 它要替**磁碟上真的存在的每一份**文件備妥圖示，含 fail-open 骨架。" +
+    "骨架沒有圖示的話，內容載入失敗那一刻畫面是全黑的（而那正是骨架存在的理由）。",
+};
+
+/**
+ * 真的 **import** 這兩支之一 = 母體是推導出來的 ⇒ 自動通過，⛔ 不必登記。
+ *
+ * ⚠️ 判準是**一行 import**，⛔ 不是「檔案裡出現這個字」—— 第一版寫成後者，
+ * 於是 `tools/reference/gen_readme_lists.py` 只因為**註解裡提到**
+ * `balancePopulation.ts` 就被判成已收斂（實測，2026-08-21）。
+ * 那正是第三守則的形狀：一句散文宣稱自己有來源，而事實不在那裡。
+ *
+ * ⚠️ `.py` 一律要登記：Python 匯入不了 TS 模組，所以「它有沒有收斂」對這支腳本
+ * 而言不可能是機械事實 —— 只能是一句寫下來、可以被反駁的話。
+ */
+const DERIVATION_IMPORT = /from\s+["'][^"']*\/(shippedSurface|balancePopulation)["']/;
+
+/**
+ * ⛔ 具名豁免 —— 每一列都是「**為什麼掃全部才是對的**」，不是「還沒改」。
+ * ⚠️ 加一列之前先問：這一支的失敗訊息會不會叫人去**修一件玩家拿不到的道具**？
+ * 會 → 它該走推導模組，⛔ 不該進這張表。
+ */
+const WHOLE_TREE_BY_DESIGN: Record<string, string> = {
+  // ── 母體是**具名的那幾件**，掃全樹只是為了把它們找出來 ──────────────────
+  "packages/shared/src/content/blockNoteTruth.test.ts":
+    "母體是【格擋】具名四支的 authoringNote ↔ 出貨資料，⛔ 不是道具樹。",
+  "packages/shared/src/content/legendary49OwnerText.test.ts":
+    "母體是 **owner 親筆的 49 支文案**（`__fixtures__/legendary49OwnerText.json`）—— " +
+    "掃內容樹是為了找到那 49 件；用上架面過濾會讓「owner 列了但我們還沒上架」這個落差消失。",
+  "packages/shared/src/content/legendaryOwnerRulings.test.ts":
+    "母體是 owner 2026-08-01 的**三支具名數值裁決**，⛔ 不是道具樹。",
+  "packages/shared/src/sim/alchemyShieldShipped.test.ts":
+    "具名一件（`godie-i06q` 鍊金術之盾）在出貨文件上跑真的 sim。",
+  "packages/shared/src/sim/effects/exOriginStructuralFix.test.ts":
+    "具名兩件 EX 寶具（`senzu-bean` / `all-might-hair`）的方向守衛。",
+  "packages/shared/src/sim/effects/onHitTerms.shipped.test.ts":
+    "具名五支傳說武器的算式，走出貨的裝備路徑。",
+  "packages/shared/src/sim/grantAttributeMaxBasis.test.ts":
+    "`grantAttribute.maxAttributeBasis` 的預設值量測 —— 母體是**用到那一格的文件**。",
+  "packages/shared/src/sim/itemAttributes.test.ts":
+    "`item@1.attributes` 的裝備／賣出／變身路徑，靶是具名道具。",
+  "packages/shared/src/sim/lanceGodieI01g.test.ts": "具名一件（貫雷槍 `godie-i01g`）。",
+  "packages/shared/src/sim/lichkingSet.test.ts": "具名三件（死之王套裝）。",
+  "packages/shared/src/content/abilityScaling.test.ts":
+    "結構普查：每一支技能有沒有屬性成長。母體是**技能**，讀 items 只為了拿道具給的屬性當基準。",
+
+  // ── 它問的**正是**「退場的東西有沒有被誤引用」⇒ 必須掃全部 ──────────────
+  "packages/shared/src/content/retiredItemsAbsent.test.ts":
+    "⭐ 這一支就是 GH#472 說要保留的那一種：退場物**只驗有沒有被誤引用**。" +
+    "用上架面過濾它 = 把它要找的東西先濾掉，斷言恆真。",
+  "packages/shared/src/content/retiredLootTables.test.ts":
+    "同上 —— 封存的獎池有沒有被排回某一回合。母體必須含退場物。",
+
+  // ── 它驗的**就是上架面本身**，用上架面過濾會變成同義反覆 ────────────────
+  "packages/shared/src/content/legendaryOwnerTiers.test.ts":
+    "owner 的**上架寶具階級表** ↔ 三張抽獎池對帳（GH#470）。它在驗上架面對不對，" +
+    "⛔ 不能拿上架面當前提。",
+  "packages/shared/src/content/weaponTierTables.test.ts":
+    "每一階 `weaponTiers[].table` 有沒有一張真的抽得到東西的池 —— 同上，它在驗上架面本身。",
+  "tools/economy/gen_legendary_xlsx.py":
+    "來源就是三張池（＝已經是上架面的定義本身），再套一層過濾不會改變任何一列。",
+
+  // ── 對外契約：母體是**出貨註冊表**，⛔ 不是內容樹 ────────────────────────
+  "tools/capability-export/export.ts":
+    "`ggd-runtime-capabilities` 回答「這個**名字**存不存在」—— 母體是出貨註冊表。" +
+    "掃內容只為了數用量；把未上架的用量藏起來會讓外部編輯器以為某個機制沒有人用。",
+
+  // ── 掃全部但**每一列都標了開不開放** ⇒ 它是展示不是待修清單 ──────────────
+  "tools/reference/gen_readme_lists.py":
+    "README 的名單：逐列標「開放／未開放」（來源是營運白名單），母體＝**顯示**而不是待修清單。",
+  "tools/reference/gen_reference.py":
+    "`docs/reference/*.md` 同上 —— 881 列全部逐列標開放狀態。",
+};
+
+/**
+ * 這一支掃不掃 `content/items`。⚠️ 兩層條件，⛔ 不是「檔案裡有 items 這個字」。
+ */
+function listsItemsDir(src: string): boolean {
+  const lists = /readdirSync\s*\(|globSync\s*\(|os\.listdir\s*\(|glob\.glob\s*\(/.test(src);
+  const dir = /content\/items\b|CONTENT[^\n]{0,60}["'`]items["'`]|\[\s*"items"/.test(src);
+  return lists && dir;
+}
+
+function checkAuditScope(): Finding[] {
+  const found: string[] = [];
+  const walk = (rel: string): void => {
+    let entries: string[];
+    try {
+      entries = readdirSync(join(ROOT, rel), { withFileTypes: true }).map((e) =>
+        e.isDirectory() ? `/${e.name}` : e.name,
+      );
+    } catch {
+      return;
+    }
+    for (const raw of entries) {
+      const isDir = raw.startsWith("/");
+      const name = isDir ? raw.slice(1) : raw;
+      if (["node_modules", "dist", "__fixtures__", "__snapshots__"].includes(name)) continue;
+      const child = `${rel}/${name}`;
+      if (isDir) {
+        walk(child);
+        continue;
+      }
+      if (!/\.(ts|tsx|py)$/.test(name)) continue;
+      if (Object.keys(SKIPPED_ROOTS).some((p) => child.startsWith(p))) continue;
+      const src = readFileSync(join(ROOT, child), "utf8");
+      if (!listsItemsDir(src)) continue;
+      if (!name.endsWith(".py") && DERIVATION_IMPORT.test(src)) continue; // ① 走推導模組
+      found.push(child);
+    }
+  };
+  for (const r of AUDIT_SCAN_ROOTS) walk(r);
+
+  // ⚠️ 掃到 0 支 = 探測器壞了（這棵樹本來就有二十幾支），⛔ 不是「大家都收斂好了」。
+  //    一支永遠回空的探測器對「全都登記了」與「探測器死了」給出一樣的答案。
+  const out: Finding[] = [];
+  const declared = Object.keys(WHOLE_TREE_BY_DESIGN);
+  const undeclared = found.filter((f) => !(f in WHOLE_TREE_BY_DESIGN)).sort();
+  if (undeclared.length > 0) {
+    out.push({
+      pair: "稽核母體 ↔ 上架面（content/items）",
+      detail:
+        `這 ${undeclared.length} 支掃了 \`content/items\` 卻沒說自己掃的是全部還是上架中：\n      ` +
+        undeclared.join("\n      "),
+      fix:
+        "二選一：① 改走 `packages/shared/testkit/shippedSurface.ts` 的 `shippedItemIds()`" +
+        "（出貨樹 142 件裡玩家今天只拿得到 89 件 —— owner GH#472：「沒開放的別浪費 token」）；" +
+        "② 如果掃全部才是對的，去 `tools/roster-guard/check.ts` 的 `WHOLE_TREE_BY_DESIGN` " +
+        "加一列**能被反駁的理由**。⛔ 沒有第三種狀態。",
+    });
+  }
+  const stale = declared.filter((f) => !found.includes(f)).sort();
+  if (stale.length > 0) {
+    out.push({
+      pair: "稽核母體豁免表 ↔ 實際掃描器",
+      detail:
+        `\`WHOLE_TREE_BY_DESIGN\` 這 ${stale.length} 列已經過期（檔案改走推導模組、改名、或不再掃 content/items）：\n      ` +
+        stale.join("\n      "),
+      fix: "把那幾列刪掉。⭐ 一張不會過期的豁免表，過幾個月就變成一份沒有人敢動的散文。",
+    });
+  }
   return out;
 }
 
@@ -466,8 +675,26 @@ export function runRosterCheck(): number {
     console.log(
       "✓ 英雄名單漣漪檢查通過（下架↔種子 · 種子↔內容樹 · Go 兩份清單 · 經濟拆分 · 沒有人抄長度 · " +
         "平衡母體↔名單 · 平衡母體↔變身態 · 產出文件的母體↔名單 · 內容樹↔三種身分 · " +
-        "名單↔變身態存在 · 營運白名單↔名單）",
+        "名單↔變身態存在 · 營運白名單↔名單 · 稽核母體↔上架面）",
     );
+    // ⭐ 上架面**每次都印出來** —— GH#472 的另一半：被稽核略過的東西⛔不可以無聲變多。
+    //    ⚠️ 這裡刻意是 `console.log` 而不是斷言：它是**觀測**不是閘（出貨數值⛔不住進斷言，
+    //    第二守則「守衛驗機制不驗數字」）。閘是上面第 ⑫ 條「每一支掃描器都要宣告範圍」。
+    try {
+      const champs = shippedChampionIds(ROOT).size;
+      const abilities = shippedAbilityIds(ROOT).size;
+      const items = shippedItemIds(ROOT).size;
+      const dark = unreachableItemIds(ROOT).length;
+      console.log(
+        `  上架面：英雄 ${champs}（可選本體＋變身態） · 技能 ${abilities} · ` +
+          `道具 ${items}（另有 ${dark} 件在後台貨架關著時一場都拿不到 —— ⛔ 它們不是退場物，` +
+          `退場物住 content/_legacy/）`,
+      );
+    } catch (err) {
+      // ⚠️ fail-open 的代價要有人說出來（CLAUDE.md：靜默才是缺陷）。
+      console.error(`  ⚠️ 上架面算不出來：${(err as Error).message}`);
+      return 1;
+    }
     return 0;
   }
   console.error("\n⛔ 英雄名單的下游對不上 —— 這些是**關係**破了，不是某個測試脾氣不好：\n");

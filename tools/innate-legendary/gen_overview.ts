@@ -74,6 +74,10 @@ import { buildCapabilityManifest } from "../../packages/shared/src/content/edito
 import { HERO_NUMBER_RE } from "../../packages/shared/src/content/championIdentity";
 import { DEFAULT_WEAPON_TIERS } from "../../packages/shared/src/content/schema/config";
 import { LEGENDARY_POOL_TABLE } from "../../packages/shared/src/sim/economy/itemTiers";
+import {
+  shippedChampionIds,
+  SHIPPED_SURFACE_PROVENANCE,
+} from "../../packages/shared/testkit/shippedSurface";
 import { Stat } from "../../packages/shared/src/sim/stats/statTypes";
 import { ModOp } from "../../packages/shared/src/sim/stats/modifiers";
 
@@ -123,6 +127,33 @@ function readCollection(name: string): Doc[] {
     }
   }
   return out.sort((a, b) => str(a["id"]).localeCompare(str(b["id"])));
+}
+
+/**
+ * ⭐【這一份總覽的母體是**上架面**，⛔ 不是 `content/champions/` 的檔案數】
+ *
+ * GH#472，owner 講過兩次：
+ * > M48（2026-08-18）：「這些是哪裡來的老舊東西，**根本沒上架阿 幹嘛修**…」
+ * > M105-1（2026-08-19）：「只要做**有開放的**角色技能…**沒開放的別浪費 token**」
+ *
+ * ⚠️ 這一行以前寫 `readCollection("champions").length` 並且把它印成
+ * **「出貨英雄總數」** —— 那是 **71**，而其中 2 張是 `main.tsx` 內容載入失敗時
+ * 註冊的 **fail-open 骨架**（`sela` / `thorne`），玩家永遠選不到。
+ * ⇒ 一份自稱從出貨資料產生的總覽，第一格統計就在說謊（第三守則）。
+ *
+ * ⛔ 上架面**推導**自 `starterChampions − retired − 變身態 ＋ 那些本體的變身態`，
+ * ⛔ 不是一張手打的 id 名單。
+ */
+function shippedChampionDocs(): Doc[] {
+  const open = shippedChampionIds(REPO);
+  const docs = readCollection("champions").filter((d) => open.has(str(d["id"])));
+  // ⚠️ 空母體 = 讀壞了，⛔ 不是「沒有人上架」。
+  if (docs.length === 0) {
+    throw new Error(
+      `上架面過濾之後剩 0 位英雄 —— 讀取器壞了。來源：${SHIPPED_SURFACE_PROVENANCE}`,
+    );
+  }
+  return docs;
 }
 
 /**
@@ -344,7 +375,7 @@ function collectInnates(): {
   danglingRefs: { champion: string; ref: string }[];
 } {
   const abilities = readCollection("abilities");
-  const champs = readCollection("champions");
+  const champs = shippedChampionDocs();
 
   const byId = new Map<string, Doc>();
   for (const a of abilities) byId.set(str(a["id"]), a);
@@ -578,7 +609,7 @@ export function buildOverviewMarkdown(): string {
   p();
   const withInnate = innates.filter((i) => i.owners.length > 0);
   const orphanInnates = innates.filter((i) => i.owners.length === 0);
-  const champTotal = readCollection("champions").length;
+  const champTotal = shippedChampionDocs().length;
   const byKind = new Map<string, number>();
   for (const i of innates) byKind.set(i.kind, (byKind.get(i.kind) ?? 0) + 1);
 
@@ -586,7 +617,7 @@ export function buildOverviewMarkdown(): string {
   p();
   p("| | 數量 |");
   p("|---|---:|");
-  p(`| 出貨英雄總數（\`content/champions/\`） | ${champTotal} |`);
+  p(`| **上架面英雄總數**（可選本體＋它們的變身態） | ${champTotal} |`);
   p(`| **帶 \`passiveAbility\` 的英雄** | **${champions.length}** |`);
   p(`| 沒有天生技的英雄 | ${champTotal - champions.length} |`);
   p(`| 天生技文件（\`slot: "PASSIVE"\`） | ${innates.length} |`);
