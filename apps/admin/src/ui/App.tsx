@@ -1,6 +1,9 @@
 /** App shell — boot → login → console with a left nav rail. */
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { pageRequiresSession, useApp, type Page } from "../store";
+// GH#493 —— 外框的捲動版型與「切頁回頂」。抽成模組是為了讓守衛驗**關係**
+// （有界高度 ⇒ 一定捲得動、右欄永遠不是 hidden），⛔ 不是掃一串字面樣式。
+import { resetContentScroll, shellScrollLayout } from "./shellLayout";
 import { LoginScreen } from "./LoginScreen";
 import { ConsoleHub } from "./ConsoleHub";
 import { ApprovalsPage } from "./ApprovalsPage";
@@ -851,7 +854,12 @@ export function App(): React.JSX.Element {
   return <Console />;
 }
 
-function Console(): React.JSX.Element {
+/**
+ * ⚠️ `export` 是給守衛用的（同 `NavRail` 的理由）：`shellLayout.test.ts` 要
+ * `renderToString` **出貨在用的那一棵**渲染樹來讀 `<main>` 的樣式，⛔ 而不是掃
+ * 原始碼字串 —— 少了它，把外框樣式換回會截斷內容的那一版照樣全綠（失敗形態⑤）。
+ */
+export function Console(): React.JSX.Element {
   const page = useApp((s) => s.page);
   const navigate = useApp((s) => s.navigate);
   const account = useApp((s) => s.account);
@@ -910,10 +918,22 @@ function Console(): React.JSX.Element {
   // not. With no session those player-ops pages show a 需登入 state instead.
   const gated = account === null && pageRequiresSession(page);
 
+  // GH#493 —— 切頁後右欄回到最上面。桌機捲的是 `<main>` 自己、手機捲的是文件，
+  // 所以兩個都重設（`resetContentScroll` 的註解記了為什麼缺一不可）。
+  const contentRef = useRef<HTMLElement | null>(null);
+  useEffect(() => {
+    const w = globalThis as { scrollTo?: (x: number, y: number) => void };
+    resetContentScroll({
+      pane: contentRef.current,
+      win: typeof w.scrollTo === "function" ? { scrollTo: w.scrollTo.bind(w) } : null,
+    });
+  }, [page]);
+  const layout = shellScrollLayout(narrow);
+
   return (
     <div
       style={{
-        minHeight: "100vh",
+        ...layout.shell,
         display: "grid",
         gridTemplateColumns: narrow ? "1fr" : "220px 1fr",
         background: BG,
@@ -921,6 +941,7 @@ function Console(): React.JSX.Element {
     >
       <aside
         style={{
+          ...layout.rail,
           background: PANEL_BG,
           // on a phone the rail is a strip ABOVE the content, so its divider
           // has to move from the right edge to the bottom one
@@ -997,15 +1018,17 @@ function Console(): React.JSX.Element {
           )}
         </div>
       </aside>
-      {/* maxHeight/overflow only in the two-column layout — on a phone the rail
-          is stacked above, so the PAGE scrolls and pinning main to 100vh would
-          strand content below the fold */}
+      {/* GH#493 —— 高度與 overflow 由 `shellScrollLayout` 決定：桌機兩欄各自捲、
+          文件本身不捲；手機整頁捲（那時把 main 釘成 100vh 會把下半頁關在外面）。
+          ⛔ 不要在這裡補上 `overflow: hidden` 或一個捲不動的固定高度 ——
+          那會讓超過一個螢幕的內容看不到也捲不到，而畫面上看起來完全正常。 */}
       <main
+        ref={contentRef}
+        data-testid="content-pane"
         style={{
+          ...layout.content,
           padding: narrow ? 12 : 20,
           minWidth: 0,
-          overflow: narrow ? "visible" : "auto",
-          maxHeight: narrow ? undefined : "100vh",
         }}
       >
         {gated ? (
