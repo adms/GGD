@@ -22,6 +22,9 @@ import {
   ORIGIN_TO_ARCHETYPE,
   MIXED_RATIO,
   DEFAULT_STAT_NORMALIZATION,
+  NORMALIZED_STAT_KEYS,
+  type NormalizedStatKey,
+  type StatNormalization,
   originOf,
   archetypeOf,
   type Origin,
@@ -364,14 +367,27 @@ export function archetypeForOrigin(o: Origin): Archetype {
   return ORIGIN_TO_ARCHETYPE[o];
 }
 
-/** 生成當下那三項會被填成什麼（給畫面**預覽**用，⛔ 不是它自己算的）。 */
-export function normalizedPreview(a: Archetype): { ms: number; mr: number; armor: number } {
-  const n = DEFAULT_STAT_NORMALIZATION;
-  return {
-    ms: n.bands.ms[n.byArchetype.ms[a]],
-    mr: n.bands.mr[n.byArchetype.mr[a]],
-    armor: n.bands.armor[n.byArchetype.armor[a]],
-  };
+/**
+ * 生成當下**每一項**正規化屬性會被填成什麼（給畫面**預覽**用，⛔ 不是它自己算的）。
+ *
+ * ⛔ **在 2026-08-21 之前這一支寫死 `DEFAULT_STAT_NORMALIZATION`** —— 也就是 TS 裡的那份
+ * 常數，⛔ 不是出貨的 `content/config/stat-normalization.json`。後果是：owner 在後台把
+ * 「坦克的裝甲」從中改成大,**遊戲裡真的變了**,而鑄技工坊那一格預覽**還顯示舊值** ——
+ * 一個只在那一格說謊的畫面,而沒有任何東西會紅（第三守則）。
+ * ⇒ 現在接受呼叫端傳進來的規則（由 `Configs` 動態讀出),缺席時才退回出貨預設。
+ *
+ * ⭐ 而且它以前**只回三項**（ms/mr/armor）—— 那是第一版只做三項時留下的殘骸,
+ * 而 `appliesTo` 今天有 **10 項**。現在逐項回,⛔ 不再挑三個。
+ */
+export function normalizedPreview(
+  a: Archetype,
+  rules: StatNormalization = DEFAULT_STAT_NORMALIZATION,
+): Record<NormalizedStatKey, number> {
+  const out = {} as Record<NormalizedStatKey, number>;
+  for (const key of NORMALIZED_STAT_KEYS) {
+    out[key] = rules.bands[key][rules.byArchetype[key][a]];
+  }
+  return out;
 }
 
 /** 混血的門檻（畫面上要說明「為什麼這組三圍算混血」）。 */

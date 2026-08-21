@@ -38,6 +38,11 @@ import {
   type ForgeWarning,
   type StatMedians,
 } from "@ggd/shared/content/heroForge";
+import {
+  NORMALIZED_STAT_KEYS,
+  type NormalizedStatKey,
+  type StatNormalization,
+} from "@ggd/shared/content/statNormalization";
 import { archetypeOf, type Archetype, type Origin } from "@ggd/shared/content/statNormalization";
 import {
   DEFAULT_ORIGIN_ROUTES,
@@ -549,9 +554,17 @@ export function heroForgeResult(form: HeroForgeForm, catalog: HeroForgeCatalog):
   return forgeChampion(forgeInputFrom(form, catalog));
 }
 
-/** 生成當下 ms / mr / armor 會被正規化填成什麼（唯讀預覽）。 */
-export function normalizedRow(form: HeroForgeForm): { ms: number; mr: number; armor: number } {
-  return normalizedPreview(archetypeForOrigin(form.origin));
+/**
+ * 生成當下**每一項**正規化屬性會被填成什麼（唯讀預覽）。
+ *
+ * ⛔ 在 2026-08-21 之前這裡只回三項（ms/mr/armor）而且底層寫死 TS 常數 ——
+ * owner 在後台改了級距,這一格**還顯示舊值**。現在規則由呼叫端從 `Configs` 讀進來。
+ */
+export function normalizedRow(
+  form: HeroForgeForm,
+  rules?: StatNormalization,
+): Record<NormalizedStatKey, number> {
+  return normalizedPreview(archetypeForOrigin(form.origin), rules);
 }
 
 const ID_RE = /^[a-z0-9][a-z0-9._-]*$/;
