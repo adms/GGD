@@ -291,6 +291,13 @@ export interface HudState {
   connected: boolean;
   matchId: string;
   phase: string;
+  /**
+   * The arena being played this round (`MatchState.mapId`, e.g. "arena.nazarick"),
+   * "" before a match. GH#531 — the mixer resolves the `combat` bed from it, so
+   * each map plays its own battle theme. It is a per-ROUND value: the controller
+   * swaps arenas at combat entry and the server re-stamps it every tick.
+   */
+  mapId: string;
   round: number;
   phaseSecondsLeft: number;
   localSeatId: number | null;
@@ -638,6 +645,7 @@ const initial: HudState = {
   connected: false,
   matchId: "",
   phase: "connecting",
+  mapId: "",
   round: 0,
   phaseSecondsLeft: 0,
   localSeatId: null,
@@ -738,6 +746,10 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
   if (!prev.connected) patch.connected = true;
   if (prev.matchId !== state.matchId) patch.matchId = state.matchId;
   if (prev.phase !== state.phase) patch.phase = state.phase;
+  // GH#531 — the arena drives which battle theme the mixer plays. Diffed
+  // like every other field so a 20 Hz snapshot of an unchanged arena is a
+  // no-op and never restarts the bed mid-round.
+  if (prev.mapId !== state.mapId) patch.mapId = state.mapId;
   if (prev.round !== state.round) patch.round = state.round;
 
   const secondsLeft = Math.max(0, Math.ceil(state.phaseTicksLeft / TICK_HZ));

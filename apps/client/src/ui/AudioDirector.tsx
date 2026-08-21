@@ -52,7 +52,13 @@ import {
 import { setCombatSfxSeat } from "../audio/combatSfx";
 import { playContextualVoice } from "../audio/contextualVoice";
 import { closeRoundEndVoiceBeat, openRoundEndVoiceBeat } from "../audio/roundEndVoice";
-import { useAudioBoot, useAudioScene, useBgmOverride, useLoginTheme } from "./useAudio";
+import {
+  useAudioArena,
+  useAudioBoot,
+  useAudioScene,
+  useBgmOverride,
+  useLoginTheme,
+} from "./useAudio";
 
 export function AudioDirector(): null {
   useAudioBoot();
@@ -69,6 +75,9 @@ export function AudioDirector(): null {
   const connected = useHud((s) => s.connected);
 
   const phase = useHud((s) => s.phase);
+  // GH#531 — which arena is being played. A per-ROUND string, so this is a
+  // discrete projection like every other input here, not a per-frame read.
+  const mapId = useHud((s) => s.mapId);
   const phaseSecondsLeft = useHud((s) => s.phaseSecondsLeft);
   const localSeatId = useHud((s) => s.localSeatId);
   const placement = useHud((s) => {
@@ -134,6 +143,12 @@ export function AudioDirector(): null {
   // the lobby, so this never collides with a match scene. (task #134)
   const override = useBgmOverride();
   const scene = override ?? derivedScene;
+  // ⭐ The arena must be told to the mixer BEFORE the scene, so that when the
+  // intermission→combat edge fires, `playBgm("combat")` already resolves to
+  // this round's own battle theme instead of starting the shared bed and
+  // crossfading again a frame later. React runs effects in declaration order,
+  // which is what makes "before" mean anything here.
+  useAudioArena(mapId || null);
   useAudioScene(scene);
 
   // WHO AM I → the per-frame combat SFX layer. `guardianSlain` (#89) is fanned

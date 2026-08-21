@@ -487,5 +487,371 @@
       "variantOf": "fireRing",
       "variantStyle": "samantha-james-deep-house"
     }
-  ]
+  ],
+  "mapThemes": {
+    "note": "GH#531 —— 每張場地的專屬戰鬥曲。⛔ 刻意**不在** `tracks` 裡:audioAssets.test.ts 逐筆檢查 `tracks` 的每一項在 audio-map 的 `bgm` 底下都有 key,而這些綁在 `mapBgm`。同 #137 的 samanthaVariants 處理。",
+    "attribution": "⚠️ 與那 24 首不同,這 13 首**帶第三方輸入**:樂器來自 MuseScore_General.sf3 (MIT),場景音效來自 効果音ラボ。完整逐筆出處在 content/assets/CREDITS.md 的「Per-arena battle themes」。",
+    "instruments": {
+      "soundfont": "MuseScore_General.sf3",
+      "licence": "MIT",
+      "sha256": "5b85b6c2c61d10b2b91cddd41efcce7b25cd31c8271d511c73afafbef20b6fa3",
+      "player": "fluidsynth"
+    },
+    "tracks": [
+      {
+        "arena": "arena.frieren",
+        "file": "map.frieren.mp3",
+        "title": "芙莉蓮迷宮",
+        "durationSec": 85.333,
+        "loop": true,
+        "bpm": 135.0,
+        "bars": 48,
+        "key": "Dm",
+        "seed": 5301,
+        "source": "bgm-gen (aot.py)",
+        "sceneSfx": [
+          "魔法陣を展開(hit)",
+          "水のしたたる洞窟(bed)"
+        ],
+        "rap": [
+          {
+            "text": "人を殺す魔法",
+            "bar": 22.0,
+            "gain": 0.67,
+            "work": "葬送のフリーレン",
+            "source": "葬送のフリーレン —— フリーレンの得意魔法として反復される語",
+            "confidence": "medium"
+          },
+          {
+            "text": "人を殺す魔法",
+            "bar": 28.0,
+            "gain": 0.56,
+            "work": "葬送のフリーレン",
+            "source": "同上（轉折起手複誦）",
+            "confidence": "medium"
+          }
+        ],
+        "rapVoiceRef": "godie-h020.wav"
+      },
+      {
+        "arena": "arena.heavens-arena",
+        "file": "map.heavens-arena.mp3",
+        "title": "天空鬥技場",
+        "durationSec": 85.333,
+        "loop": true,
+        "bpm": 135.0,
+        "bars": 48,
+        "key": "Dm",
+        "seed": 5302,
+        "source": "bgm-gen (aot.py)",
+        "sceneSfx": [
+          "試合開始のゴング(hit)",
+          "スタジアムの歓声(hit)",
+          "風が吹く1 ヒュオオオ(bed)"
+        ],
+        "rap": [
+          {
+            "text": "纏 絶 練",
+            "bar": 22.0,
+            "gain": 0.67,
+            "work": "HUNTER×HUNTER",
+            "source": "HUNTER×HUNTER —— 念の基本四大行（の三つ）",
+            "confidence": "high"
+          },
+          {
+            "text": "纏 絶 練",
+            "bar": 28.0,
+            "gain": 0.56,
+            "work": "HUNTER×HUNTER",
+            "source": "同上（轉折起手複誦）",
+            "confidence": "high"
+          }
+        ],
+        "rapVoiceRef": "godie-efur.wav"
+      },
+      {
+        "arena": "arena.holy-grail",
+        "file": "map.holy-grail.mp3",
+        "title": "大聖杯洞窟",
+        "durationSec": 85.333,
+        "loop": true,
+        "bpm": 135.0,
+        "bars": 48,
+        "key": "Dm",
+        "seed": 5303,
+        "source": "bgm-gen (aot.py)",
+        "sceneSfx": [
+          "聖魔法(hit)",
+          "魔力に満ちた部屋(bed)",
+          "水のしたたる洞窟(bed)"
+        ],
+        "rap": [
+          {
+            "text": "令呪をもって命ずる",
+            "bar": 22.0,
+            "gain": 0.67,
+            "work": "Fate/stay night",
+            "source": "Fate/stay night —— 令呪の詠唱",
+            "confidence": "high"
+          },
+          {
+            "text": "令呪をもって命ずる",
+            "bar": 28.0,
+            "gain": 0.56,
+            "work": "Fate/stay night",
+            "source": "同上（轉折起手複誦）",
+            "confidence": "high"
+          }
+        ],
+        "rapVoiceRef": "godie-e002.wav"
+      },
+      {
+        "arena": "arena.infinity-castle",
+        "file": "map.infinity-castle.mp3",
+        "title": "無限城",
+        "durationSec": 85.333,
+        "loop": true,
+        "bpm": 135.0,
+        "bars": 48,
+        "key": "Dm",
+        "seed": 5304,
+        "source": "bgm-gen (aot.py)",
+        "sceneSfx": [
+          "引き戸を開ける1(hit)",
+          "お寺の鐘(hit)",
+          "異次元空間 時の流れが違う(bed)"
+        ],
+        "rap": [
+          {
+            "text": "全集中の呼吸",
+            "bar": 22.0,
+            "gain": 0.67,
+            "work": "鬼滅の刃",
+            "source": "鬼滅の刃 —— 呼吸法の総称",
+            "confidence": "high"
+          },
+          {
+            "text": "全集中の呼吸",
+            "bar": 28.0,
+            "gain": 0.56,
+            "work": "鬼滅の刃",
+            "source": "同上（轉折起手複誦）",
+            "confidence": "high"
+          }
+        ],
+        "rapVoiceRef": "godie-e00w.wav"
+      },
+      {
+        "arena": "arena.nazarick",
+        "file": "map.nazarick.mp3",
+        "title": "納薩力克大墳墓",
+        "durationSec": 85.333,
+        "loop": true,
+        "bpm": 135.0,
+        "bars": 48,
+        "key": "Dm",
+        "seed": 5305,
+        "source": "bgm-gen (aot.py)",
+        "sceneSfx": [
+          "鉄の扉を開ける(hit)",
+          "死後の世界 死者の声が響く(bed)"
+        ],
+        "rap": [
+          {
+            "text": "至高の御方",
+            "bar": 22.0,
+            "gain": 0.67,
+            "work": "オーバーロード",
+            "source": "オーバーロード —— 守護者が至高の四十一人を指す呼称",
+            "confidence": "medium"
+          },
+          {
+            "text": "至高の御方",
+            "bar": 28.0,
+            "gain": 0.56,
+            "work": "オーバーロード",
+            "source": "同上（轉折起手複誦）",
+            "confidence": "medium"
+          }
+        ],
+        "rapVoiceRef": "godie-u00k.wav"
+      },
+      {
+        "arena": "arena.shiganshina",
+        "file": "map.shiganshina.mp3",
+        "title": "希干希納",
+        "durationSec": 85.333,
+        "loop": true,
+        "bpm": 135.0,
+        "bars": 48,
+        "key": "Dm",
+        "seed": 5306,
+        "source": "bgm-gen (aot.py)",
+        "sceneSfx": [
+          "門を開ける(hit)",
+          "風が吹く2 強風が吹き荒れる(bed)"
+        ],
+        "rap": [
+          {
+            "text": "心臓を捧げよ",
+            "bar": 22.0,
+            "gain": 0.67,
+            "work": "進撃の巨人",
+            "source": "進撃の巨人 —— 調査兵団の敬礼",
+            "confidence": "high"
+          },
+          {
+            "text": "心臓を捧げよ",
+            "bar": 28.0,
+            "gain": 0.56,
+            "work": "進撃の巨人",
+            "source": "同上（轉折起手複誦）",
+            "confidence": "high"
+          }
+        ],
+        "rapVoiceRef": "godie-h01n.wav"
+      },
+      {
+        "arena": "arena.world-tree",
+        "file": "map.world-tree.mp3",
+        "title": "世界樹核心",
+        "durationSec": 85.333,
+        "loop": true,
+        "bpm": 135.0,
+        "bars": 48,
+        "key": "Dm",
+        "seed": 5307,
+        "source": "bgm-gen (aot.py)",
+        "sceneSfx": [
+          "ワープ消えるイメージ(hit)",
+          "風に揺れる草木2 風の強い日(bed)"
+        ],
+        "rap": [
+          {
+            "text": "世界樹の中心へ",
+            "bar": 22.0,
+            "gain": 0.67,
+            "work": null,
+            "source": "⚠️ GGD 原創 —— 這張圖我**查不出**改編自哪一部作品,所以 ⛔ 沒有引任何名言。這一句是照地圖自己的 landmark(`tree_core`)與 gimmick(`warp_*`)寫的。owner 若能指認作品,改 text+kana 兩格再跑 RENDER.py。",
+            "confidence": "n/a-original"
+          },
+          {
+            "text": "世界樹の中心へ",
+            "bar": 28.0,
+            "gain": 0.56,
+            "work": null,
+            "source": "同上（轉折起手複誦）",
+            "confidence": "n/a-original"
+          }
+        ],
+        "rapVoiceRef": "godie-etyr.wav"
+      },
+      {
+        "arena": "arena.castle",
+        "file": "map.castle.mp3",
+        "title": "城堡競技場（室內）",
+        "durationSec": 85.333,
+        "loop": true,
+        "bpm": 135.0,
+        "bars": 48,
+        "key": "Dm",
+        "seed": 5308,
+        "source": "bgm-gen (aot.py)",
+        "sceneSfx": [
+          "鉄の扉を開ける(hit)",
+          "教会の鐘1(hit)",
+          "地下通路 靴音が響く(bed)"
+        ],
+        "rap": []
+      },
+      {
+        "arena": "arena.colosseum",
+        "file": "map.colosseum.mp3",
+        "title": "羅馬大擂台（室外）",
+        "durationSec": 85.333,
+        "loop": true,
+        "bpm": 135.0,
+        "bars": 48,
+        "key": "Dm",
+        "seed": 5309,
+        "source": "bgm-gen (aot.py)",
+        "sceneSfx": [
+          "スタジアムの歓声(hit)",
+          "大勢で拍手(hit)",
+          "イベントホール 騒がしい会場(bed)"
+        ],
+        "rap": []
+      },
+      {
+        "arena": "arena.dota",
+        "file": "map.dota.mp3",
+        "title": "Dota 三路河道（迷你）",
+        "durationSec": 85.333,
+        "loop": true,
+        "bpm": 135.0,
+        "bars": 48,
+        "key": "Dm",
+        "seed": 5310,
+        "source": "bgm-gen (aot.py)",
+        "sceneSfx": [
+          "鈴を鳴らす(hit)",
+          "小川のせせらぎ(bed)"
+        ],
+        "rap": []
+      },
+      {
+        "arena": "arena.godie",
+        "file": "map.godie.mp3",
+        "title": "去死團的逆襲 EX 2.2s",
+        "durationSec": 85.333,
+        "loop": true,
+        "bpm": 135.0,
+        "bars": 48,
+        "key": "Dm",
+        "seed": 5311,
+        "source": "bgm-gen (aot.py)",
+        "sceneSfx": [
+          "警報が鳴る(hit)",
+          "工業地帯 機械が駆動する(bed)"
+        ],
+        "rap": []
+      },
+      {
+        "arena": "arena.skeleton",
+        "file": "map.skeleton.mp3",
+        "title": "新手競技場",
+        "durationSec": 85.333,
+        "loop": true,
+        "bpm": 135.0,
+        "bars": 48,
+        "key": "Dm",
+        "seed": 5312,
+        "source": "bgm-gen (aot.py)",
+        "sceneSfx": [
+          "学校のチャイム(hit)",
+          "公園1 大きな公園(bed)"
+        ],
+        "rap": []
+      },
+      {
+        "arena": "arena.royale",
+        "file": "map.royale.mp3",
+        "title": "終局大混戰",
+        "durationSec": 85.333,
+        "loop": true,
+        "bpm": 135.0,
+        "bars": 48,
+        "key": "Dm",
+        "seed": 5313,
+        "source": "bgm-gen (aot.py)",
+        "sceneSfx": [
+          "大型船の汽笛1(hit)",
+          "魔の時計塔の鐘(hit)",
+          "雷雨 対決シーンにも使える(bed)"
+        ],
+        "rap": []
+      }
+    ],
+    "rapNote": "RAP 由 CosyVoice 3 預先算成 committed 的 wav(tools/bgm-gen/vox/),⛔ 不在 render 時呼叫模型 —— 那會毀掉「同 score + 同 seed ⇒ 逐位元組相同」。位置與增益是**量出來的**:vox 匯流排 vs 成品混音的 RMS 比,bar22 −1.8 dB(收束低潮,人聲主導) · bar28 −5.6 dB(融進 build)。"
+  }
 }

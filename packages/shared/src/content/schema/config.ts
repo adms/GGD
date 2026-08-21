@@ -3934,6 +3934,23 @@ export const zConfigAudioMapDoc = z
     schema: z.literal("config.audio-map@1"),
     /** scene name -> background-music track */
     bgm: z.record(z.string().min(1), zAudioBgmTrack),
+    /**
+     * ARENA id -> the battle theme that REPLACES the shared `combat` bed while
+     * that arena is being played (GH#531, owner 2026-08-22:「因為現在地圖變多了，
+     * 我們來為每張地圖創作新音樂吧」).
+     *
+     * Keys are `arena.*` ids exactly as `config.arena-pool@1` spells them, which
+     * is also what the server puts in `MatchState.mapId` every tick — so the
+     * client can resolve the bed from the snapshot with no extra fetch.
+     *
+     * ⚠️ OPEN and OPTIONAL, in that order. An arena with no entry falls back to
+     * the shared `combat` scene rather than going silent, because a missing
+     * track must never be able to mute a match. That fallback is exactly why
+     * `mapBgmCoversArenaPool.test.ts` exists: it fails when an arena in the
+     * rotation pool has no theme, so "arena #14 shipped without music" is a red
+     * test rather than a silent reversion nobody notices.
+     */
+    mapBgm: z.record(z.string().min(1), zAudioBgmTrack).optional(),
     /** event name -> SFX clip pool + throttling */
     sfx: z.record(z.string().min(1), zAudioSfxEntry),
   })
@@ -6678,8 +6695,8 @@ export const zConfigLobbyLayoutDoc = z
  * > 「你說的是對的，**預設是加入，五秒是讓人按否定的**」
  *
  * ⇒ 倒數結束 = **加入**，⛔ 不是「放棄」。視窗的主要按鈕是「**不要**」，
- * 沒有互動就進房。理由是量得出來的：`waitSeconds` 出貨是 **5 秒**，
- * 5 秒對「主動點同意」太短 ⇒ opt-in 幾乎等於沒有人會加入，
+ * 沒有互動就進房。⭐ 這是 owner **獨立的**裁決（「預設是加入」），
+ * ⛔ 與窗口長短無關 —— 窗口 2026-08-21 晚上已從 5 秒改回 **10 秒**，而 opt-out 不變，
  * 而 owner 的原話是「**創建房間最重要的就是拉人進來**」。
  * `joinMode` 是那個反轉的一鍵 rollback（`opt-in` = 2026-08-21 早上那一版）。
  *
@@ -6870,7 +6887,7 @@ export const zConfigLobbyRallyDoc = z
      * | `opt-out`（出貨） | **自動加入** | 「不要」 |
      * | `opt-in` | 什麼都不做（視窗關掉） | 「加入」 |
      *
-     * ⛔ 這不是措辭差異：`waitSeconds` 出貨 5 秒，5 秒對「主動點同意」太短 ——
+     * ⛔ 這不是措辭差異：opt-in 要人**主動點同意** ——
      * opt-in 幾乎等於沒有人會加入，而這張票的目的是「拉人進來」。
      * ⇒ `opt-in` 存在只為了**回頭**（第〇·六守則），⛔ 不是為了觀望。
      */
@@ -8564,7 +8581,9 @@ export type LobbyRallyPolicyDoc = Omit<ConfigLobbyRallyDoc, "id" | "schema" | "n
 /**
  * 出貨預設（＝內容載不到時的保險絲）。
  *
- * ⭐ `waitSeconds: 5` 是 owner 明說的那一格（2026-08-21 從 10 改成 **5**：「改成五秒」），
+ * ⭐ `waitSeconds: 10` 是 owner 明說的那一格。⚠️ 它當天改過**兩次**：
+ * 原始規格「最多等 10 秒」→ 早上「改成五秒」→ **晚上改回 10**
+ * （「調整戰鬥開始的拉人時間 5->10秒」）。⛔ 中間那一版已被取代，⛔ 不要再改回 5。
  * `joinMode: "opt-out"` 是他同一天說死的第二格（「**預設是加入，五秒是讓人按否定的**」）；
  * 其餘各格是決策點，預設值選的是
  * 「照 owner 的話做」的那一邊（第〇·六守則：優先權大的更新預設啟動）。
@@ -8575,10 +8594,11 @@ export type LobbyRallyPolicyDoc = Omit<ConfigLobbyRallyDoc, "id" | "schema" | "n
  */
 export const DEFAULT_LOBBY_RALLY_POLICY: LobbyRallyPolicyDoc = {
   enabled: true,
-  waitSeconds: 5,
+  waitSeconds: 10,
   includeBotMatch: true,
   startIgnoresReady: true,
   // ⭐ owner 2026-08-21:「預設是加入，五秒是讓人按否定的」。
+  // ⚠️ 那句話裡的「五秒」是當時的窗口值,同日晚上改成 10 —— ⛔ 裁決講的是**預設方向**,不是秒數。
   joinMode: "opt-out",
   autoJoinLeadSeconds: 1.5,
   idleExcludeSeconds: 120,

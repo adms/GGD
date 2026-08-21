@@ -65,6 +65,26 @@ export function useAudioBoot(): void {
  * from the taunt config. NOT gated on unlock — it is a plain content fetch, not a
  * WebAudio buffer, and test-mode silence still applies at PLAYBACK time.
  */
+/**
+ * Tell the mixer which arena is being played, so the `combat` bed resolves to
+ * that map's own battle theme (GH#531).
+ *
+ * ⚠️ Deliberately NOT folded into `useAudioScene`: the arena and the scene
+ * change on different edges — the arena is re-stamped every tick by the server
+ * and swaps at combat entry, while the scene follows the phase machine. Keeping
+ * them separate means an arena change during a NON-combat phase costs nothing,
+ * and `AudioSystem.setArena` can no-op on an unchanged id.
+ *
+ * ⛔ `fireRing` is unaffected by design — owner 2026-08-22:「火圈時一樣還是播放
+ * 緊急的火圈音樂喔」. The scoping lives in `audioSelect.resolveBed`, guarded by
+ * `mapBed.test.ts`.
+ */
+export function useAudioArena(arenaId: string | null): void {
+  useEffect(() => {
+    audioSystem.setArena(arenaId);
+  }, [arenaId]);
+}
+
 export function useAudioScene(scene: AudioScene | null): void {
   useEffect(() => {
     audioSystem.playBgm(scene);

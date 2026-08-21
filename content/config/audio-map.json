@@ -63,6 +63,73 @@
       "gain": 0.76
     }
   },
+  "mapBgm": {
+    "arena.frieren": {
+      "file": "assets/audio/bgm/map.frieren.mp3",
+      "loop": true,
+      "gain": 0.5
+    },
+    "arena.heavens-arena": {
+      "file": "assets/audio/bgm/map.heavens-arena.mp3",
+      "loop": true,
+      "gain": 0.52
+    },
+    "arena.holy-grail": {
+      "file": "assets/audio/bgm/map.holy-grail.mp3",
+      "loop": true,
+      "gain": 0.52
+    },
+    "arena.infinity-castle": {
+      "file": "assets/audio/bgm/map.infinity-castle.mp3",
+      "loop": true,
+      "gain": 0.52
+    },
+    "arena.nazarick": {
+      "file": "assets/audio/bgm/map.nazarick.mp3",
+      "loop": true,
+      "gain": 0.54
+    },
+    "arena.shiganshina": {
+      "file": "assets/audio/bgm/map.shiganshina.mp3",
+      "loop": true,
+      "gain": 0.54
+    },
+    "arena.world-tree": {
+      "file": "assets/audio/bgm/map.world-tree.mp3",
+      "loop": true,
+      "gain": 0.5
+    },
+    "arena.castle": {
+      "file": "assets/audio/bgm/map.castle.mp3",
+      "loop": true,
+      "gain": 0.52
+    },
+    "arena.colosseum": {
+      "file": "assets/audio/bgm/map.colosseum.mp3",
+      "loop": true,
+      "gain": 0.54
+    },
+    "arena.dota": {
+      "file": "assets/audio/bgm/map.dota.mp3",
+      "loop": true,
+      "gain": 0.48
+    },
+    "arena.godie": {
+      "file": "assets/audio/bgm/map.godie.mp3",
+      "loop": true,
+      "gain": 0.54
+    },
+    "arena.skeleton": {
+      "file": "assets/audio/bgm/map.skeleton.mp3",
+      "loop": true,
+      "gain": 0.44
+    },
+    "arena.royale": {
+      "file": "assets/audio/bgm/map.royale.mp3",
+      "loop": true,
+      "gain": 0.56
+    }
+  },
   "sfx": {
     "attackWindup": {
       "files": [

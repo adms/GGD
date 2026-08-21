@@ -1,0 +1,6 @@
+# The decoded form is a CACHE — one ffmpeg call per clip, rebuilt by FETCH.py
+# from the committed `mp3/` sources beside it. ⛔ Never commit wav/ (36 MB for
+# 3 MB of actual information); ⛔ never gitignore mp3/ — those ARE the
+# deterministic input to thirteen rendered tracks, and a source site that
+# changes a clip must not be able to change our music behind our backs.
+wav/

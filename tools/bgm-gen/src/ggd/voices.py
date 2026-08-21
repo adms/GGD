@@ -1,10 +1,18 @@
-"""The non-choir instrument kit — all synthesised, no samples anywhere.
+"""The non-choir instrument kit.
 
-Every function returns a MONO float array of exactly `n` samples and is pure
-given its rng, so the same seed always produces the same bytes.
+⚠️ THE HEADER USED TO SAY "all synthesised, no samples anywhere". That stopped
+being true on 2026-08-22 (GH#531, owner: 「樂器聲音 最好上網抓音色庫 不要用合成的
+品質太差」) and the sentence is replaced rather than left standing — a comment
+that outlived its truth is the thing 第三守則 exists to catch.
 
-The kit is deliberately small and each entry earns its place in the Sawano /
-Attack-on-Titan palette:
+WHAT IS TRUE NOW: `make()` prefers a REAL RECORDED note from `sampler` (the
+MuseScore_General.sf3 bank, MIT) and falls back to the oscillators below when
+the bank is absent or `GGD_BGM_SYNTH=1`. Everything in this file is still pure
+given its rng, and the sampled path is deterministic given the committed
+soundfont — so "same score + same seed ⇒ same bytes" survives either way.
+
+The oscillator kit that remains is the FALLBACK, and each entry still earns its
+place in the Sawano / Attack-on-Titan palette:
 
   supersaw   7 detuned saws          the EDM lead and the wall-of-chords
   pluck      Karplus-Strong string    arpeggios, the "digital koto" figure
@@ -27,9 +35,11 @@ Attack-on-Titan palette:
 
 from __future__ import annotations
 
+import inspect as _inspect
+
 import numpy as np
 
-from . import dsp
+from . import dsp, sampler
 from .dsp import SR, TWO_PI
 from .music import hz
 
@@ -394,11 +404,76 @@ _GEN = {
 }
 
 
+#: Nearest oscillator for a voice that exists only in the sample bank. Used
+#: ONLY when the bank is unavailable — see the note in `make()`.
+SYNTH_ALIAS = {
+    "tremolo": "strings", "cello": "strings",
+    "horn": "supersaw", "brass": "supersaw", "trombone": "supersaw",
+    "trumpet": "supersaw", "organ": "pad",
+    "harp": "pluck", "koto": "pluck", "shamisen": "pluck",
+    "choir": "pad", "voiceoo": "pad",
+}
+
+#: Default pitch for the two voices that are melodic in the soundfont but were
+#: written here as untuned percussion, so a caller that passes no `f0` still
+#: gets the drum it asked for rather than a note at 0 Hz.
+_PERC_DEFAULT_F0 = {"taiko": 78.0, "timpani": 110.0}
+
+#: name -> the real generator behind the `_GEN` lambda, used only to read its
+#: signature. ⭐ This kills a whole BUG CLASS rather than one bug: a kwarg meant
+#: for one voice (`bright` for pluck, `vel` for the sampler) used to reach a
+#: different voice as an unexpected keyword, and the TypeError surfaced three
+#: frames inside a layer closure naming a kwarg the score never wrote. Now every
+#: synth voice silently receives only what it can accept.
+_FN = {
+    "supersaw": supersaw, "pad": pad, "strings": strings, "piano": piano,
+    "pluck": pluck, "guitar": guitar, "sub": sub, "reese": reese,
+    "kick": kick, "clap": clap, "snare": snare, "hat": hat, "openhat": hat,
+    "taiko": taiko, "timpani": timpani, "cymbal": cymbal, "riser": riser,
+    "impact": impact, "downlifter": downlifter, "reverse": reverse_swell,
+    "sweepdown": noise_sweep_down,
+}
+_ACCEPTS = {k: set(_inspect.signature(f).parameters) for k, f in _FN.items()}
+
+
 def make(name: str, n: int, rng: np.random.Generator, f0: float | None = None,
          env: np.ndarray | None = None, **kw) -> np.ndarray:
-    """The single entry point: level-trimmed, envelope applied, mono."""
-    if name not in _GEN:
-        raise ValueError(f"unknown voice {name!r}; have {sorted(_GEN)}")
+    """The single entry point: level-trimmed, envelope applied, mono.
+
+    ⭐ THE SAMPLE SEAM (GH#531, owner: 「樂器聲音…不要用合成的品質太差」). When the
+    MuseScore_General bank is present this returns a REAL RECORDED note and the
+    oscillator below is never reached; without it, the synth kit still answers,
+    so the tool degrades to its old behaviour instead of failing. Because this
+    is the kit's single entry point, every layer method in `score.py` — and
+    therefore every score ever written — switches over with no edit.
+
+    ⚠️ The sampler normalises its bank to the same −12 dBFS RMS reference that
+    `TRIM` encodes, so `gain=1.0` still means what it meant. ⛔ Do not "fix" a
+    level here by scaling one branch; that silently splits the pack's balance in
+    two, and only one of the two is ever heard.
+    """
+    if name not in _GEN and name not in sampler.PITCHED and name not in sampler.PERCUSSION:
+        raise ValueError(f"unknown voice {name!r}; have "
+                         f"{sorted(set(_GEN) | set(sampler.PITCHED) | set(sampler.PERCUSSION))}")
+    if sampler.enabled() and sampler.has(name):
+        x = sampler.note(name, n, f0 or _PERC_DEFAULT_F0.get(name),
+                         vel=float(kw.get("vel", 0.8)))
+        if x is not None:
+            return x * env if env is not None else x
+    # The bank is unavailable (no fluidsynth, or GGD_BGM_SYNTH=1). Voices that
+    # only ever existed as samples fall back to their nearest oscillator so the
+    # pack still renders on a bare machine.
+    # ⚠️ This is an APPROXIMATION, not a substitute: a sawtooth standing in for
+    # a French horn has no brass formant and no section timing spread, which is
+    # exactly the shortfall that made owner ask for a sample library. ⛔ Never
+    # ship a track rendered this way — `render.py` prints the kit it used.
+    name = SYNTH_ALIAS.get(name, name) if name not in _GEN else name
+    # `vel` is the SAMPLER's velocity-layer selector and callers now pass it for
+    # every pitched voice. Of the oscillators only `piano` has a `vel` parameter,
+    # so it is dropped here rather than reaching a synth function as an
+    # unexpected keyword — ⛔ the alternative is a TypeError raised from three
+    # frames inside a layer closure, naming a kwarg the score never wrote.
+    kw = {k: v for k, v in kw.items() if k in _ACCEPTS.get(name, ())}
     if name in ("supersaw", "pad", "guitar", "reese"):
         kw["env"] = env
         env = None

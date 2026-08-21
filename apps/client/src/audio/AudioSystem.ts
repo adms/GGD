@@ -28,11 +28,15 @@
 import {
   CROSSFADE_MS,
   SfxGate,
+  ARENA_THEMED_SCENE,
+  bedPhaseKey,
   bgmTrackFor,
   clampPan,
   clampVolume,
   crossfadeCurves,
+  mapBedFor,
   needsSceneChange,
+  resolveBed,
   pickSfxFile,
   sfxEntryFor,
   sfxVoiceMultiplier,
@@ -51,7 +55,13 @@ import {
   sfxPreloadPolicyFromDoc,
   type SfxPreloadPolicy,
 } from "./sfxPreloadPolicy";
-import { EMPTY_AUDIO_MAP, audioMapFromDoc, type AudioMap, type AudioScene } from "./types";
+import {
+  EMPTY_AUDIO_MAP,
+  audioMapFromDoc,
+  type AudioMap,
+  type AudioScene,
+  type BgmTrack,
+} from "./types";
 import { withContentVersion } from "../content/assetVersion";
 
 /**
@@ -402,6 +412,11 @@ export class AudioSystem {
    */
   private readonly sceneElapsedMs = new Map<string, number>();
   private currentScene: AudioScene | null = null;
+  /**
+   * GH#531 — the arena currently being played (`arena.*`), or null outside a
+   * match. Drives which battle theme the `combat` scene resolves to.
+   */
+  private arenaId: string | null = null;
   /** subscribers to "a non-looping bed played itself out" — see BedEndedEvent */
   private readonly bedEndListeners = new Set<(ev: BedEndedEvent) => void>();
   private pendingSting: AudioScene | null = null;
@@ -499,11 +514,39 @@ export class AudioSystem {
   }
 
   /** Install a map directly (tests / editor live-reload). */
+  /**
+   * GH#531 — tell the mixer which arena is being played, so `combat` resolves to
+   * that map's own battle theme. Safe to call every tick: an unchanged id is a
+   * no-op, and a change only restarts the bed if a COMBAT bed is what is
+   * playing — ⛔ the arena must never interrupt champ select, the intermission
+   * or the settlement music.
+   */
+  setArena(arenaId: string | null): void {
+    if (this.disposed || arenaId === this.arenaId) return;
+    this.arenaId = arenaId;
+    if (this.currentScene !== ARENA_THEMED_SCENE) return;
+    const next = this.trackFor(ARENA_THEMED_SCENE);
+    if (!next || next.file === this.bed?.file) return;
+    this.currentBgmFile = null; // force chooseBgmFile to re-resolve
+    if (this.unlocked) this.startScene(ARENA_THEMED_SCENE);
+  }
+
+  /**
+   * The track a scene should play right now. Identical to `bgmTrackFor` except
+   * that `combat` prefers the current arena's own theme — that substitution
+   * lives HERE, at the one place every bed resolution passes through, so
+   * `playBgm`, `startScene` and a live `setMap` can never disagree about which
+   * file the combat bed is.
+   */
+  private trackFor(scene: AudioScene): BgmTrack | null {
+    return resolveBed(this.map, scene, this.arenaId);
+  }
+
   setMap(map: AudioMap): void {
-    this.map = { bgm: map.bgm ?? {}, sfx: map.sfx ?? {} };
+    this.map = { bgm: map.bgm ?? {}, mapBgm: map.mapBgm ?? {}, sfx: map.sfx ?? {} };
     // a map swap can change the current scene's file — restart the bed
     if (this.unlocked && this.currentScene) {
-      const track = bgmTrackFor(this.map, this.currentScene);
+      const track = this.trackFor(this.currentScene);
       if (!track || track.file !== this.bed?.file) this.startScene(this.currentScene);
     }
   }
@@ -782,14 +825,14 @@ export class AudioSystem {
    */
   private chooseBgmFile(scene: AudioScene | null): string | null {
     if (!scene) return null;
-    const track = bgmTrackFor(this.map, scene);
+    const track = this.trackFor(scene);
     return track ? this.rotation.next(scene, track.file) : null;
   }
 
   private startScene(scene: AudioScene | null): void {
     const ctx = this.ensureCtx();
     if (!ctx || !this.bgmBus) return;
-    const track = scene ? bgmTrackFor(this.map, scene) : null;
+    const track = scene ? this.trackFor(scene) : null;
     if (!track) {
       // unmapped scene = authored silence
       this.stopBed();
@@ -812,7 +855,9 @@ export class AudioSystem {
     void this.loadBuffer(chosen).then((buffer) => {
       if (this.disposed || this.currentScene !== scene) return; // scene raced ahead
       if (!buffer) return; // 404/decode failure: keep whatever is playing
-      this.swapBed(buffer, track.gain ?? 1, track.loop, scene ?? "", chosen);
+      const usingMapBed = scene === ARENA_THEMED_SCENE && !!mapBedFor(this.map, this.arenaId);
+      this.swapBed(buffer, track.gain ?? 1, track.loop,
+                   bedPhaseKey(scene ?? "", this.arenaId, usingMapBed), chosen);
     });
   }
 

@@ -114,9 +114,22 @@ DEFAULT_BUS_GAIN = {
 
 GRID_GAIN = {"X": 1.0, "x": 0.72, "o": 0.40, ".": 0.0, "-": 0.0}
 
+# Which mix bus each playable voice lands on. The bank added by `sampler`
+# (GH#531) brought real brass, orchestral colours and two ethnic plucks that the
+# oscillator kit never had, so they are routed here too — ⛔ a voice missing from
+# these tables raises a KeyError deep inside a layer closure, which reads as a
+# bug in the score rather than as "that instrument has no home".
 CHORD_BUS = {"pad": "pad", "strings": "strings", "supersaw": "pad",
-             "guitar": "gtr", "piano": "keys", "pluck": "keys"}
-OSTINATO_BUS = {"piano": "keys", "pluck": "keys", "supersaw": "lead"}
+             "guitar": "gtr", "piano": "keys", "pluck": "keys",
+             "tremolo": "strings", "cello": "strings",
+             "horn": "strings", "brass": "strings", "trombone": "strings",
+             "trumpet": "strings", "organ": "pad",
+             "harp": "keys", "koto": "keys", "shamisen": "keys",
+             "choir": "pad", "voiceoo": "pad"}
+OSTINATO_BUS = {"piano": "keys", "pluck": "keys", "supersaw": "lead",
+                "harp": "keys", "koto": "keys", "shamisen": "keys",
+                "guitar": "gtr", "strings": "strings", "tremolo": "strings",
+                "organ": "pad", "cello": "strings"}
 
 # How long each percussion voice is allowed to ring, in seconds.
 DRUM_LEN = {"kick": 0.55, "clap": 0.40, "snare": 0.40, "hat": 0.28,
@@ -420,8 +433,16 @@ class Score:
                     deg = shape[i % len(shape)]
                     m = tones[deg % len(tones)] + 12 * (deg // len(tones))
                     n = int(step * 60.0 / self.bpm * SR) + int(0.5 * SR)
+                    # ⛔ `.get`, not `[voice]`: this table holds the two or three
+                    # voices that want a per-note tweak, and indexing it made
+                    # every OTHER playable voice a KeyError raised from inside a
+                    # layer closure — which reads as "the score is broken", not
+                    # as "this instrument has no tweak". `vel` is passed for all
+                    # of them because the sample bank uses it to pick a real
+                    # velocity layer.
                     kw = {"piano": {"vel": 0.55 + 0.3 * (i % 2 == 0)},
-                          "pluck": {"bright": 0.75}, "supersaw": {}}[voice]
+                          "pluck": {"bright": 0.75}}.get(voice, {})
+                    kw.setdefault("vel", 0.62 + 0.22 * (i % 2 == 0))
                     env = dsp.adsr(n, 0.005, 0.09, 0.4, 0.15) if voice == "supersaw" else None
                     x = voices.make(voice, n, r, hz(m), env=env, **kw)
                     ctx.add(OSTINATO_BUS[voice], x * gain, b * 4 + i * step, pan)

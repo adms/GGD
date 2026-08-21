@@ -38,6 +38,67 @@ export function bgmTrackFor(map: AudioMap, scene: string): BgmTrack | null {
   return t;
 }
 
+/**
+ * GH#531 — the battle theme authored for an ARENA, or null to keep the shared
+ * `combat` bed. Owner 2026-08-22:「因為現在地圖變多了，我們來為每張地圖創作新音樂吧」.
+ *
+ * ⚠️ Returning null is the SAFE answer, not a failure: thirteen arenas have
+ * their own theme and a fourteenth without one must still have music. The gate
+ * that notices a missing theme is a test over `config.arena-pool@1`
+ * (`mapBgmCoversArenaPool.test.ts`), ⛔ not a hole in the mixer.
+ */
+export function mapBedFor(map: AudioMap, arenaId: string | null | undefined): BgmTrack | null {
+  if (!arenaId) return null;
+  const t = map.mapBgm?.[arenaId];
+  if (!t || typeof t.file !== "string" || !t.file) return null;
+  return t;
+}
+
+/**
+ * The ONLY scene an arena theme is allowed to replace.
+ *
+ * ⭐ owner 2026-08-22 (GH#531), mid-implementation:
+ *   「火圈時一樣還是播放緊急的火圈音樂喔」
+ *
+ * `fireRing` is the 30-second countdown cue: written against the clock, and the
+ * sound of "you are about to die". It means the same thing on every map, so an
+ * arena theme swallowing it would replace an URGENT cue with an ambient one at
+ * exactly the moment the player most needs telling. Same for the stings and the
+ * intermission. ⛔ Widening this is a decision, not a tweak.
+ */
+export const ARENA_THEMED_SCENE = "combat";
+
+/**
+ * The bed a scene should play right now: the current arena's own theme when the
+ * scene is {@link ARENA_THEMED_SCENE} and that arena has one, otherwise the
+ * shared authored bed.
+ *
+ * ⭐ This lives here, not in `AudioSystem`, for the reason that file's own
+ * header gives: "All non-trivial decisions live in ./audioSelect (pure,
+ * unit-tested); this file is the imperative shell." A test that re-implemented
+ * the substitution beside the mixer would pass whether or not the mixer did the
+ * same thing — failure form ⑤, 被測的不是出貨的那個.
+ */
+export function resolveBed(map: AudioMap, scene: string,
+                           arenaId: string | null | undefined): BgmTrack | null {
+  if (scene === ARENA_THEMED_SCENE) {
+    const bed = mapBedFor(map, arenaId);
+    if (bed) return bed;
+  }
+  return bgmTrackFor(map, scene);
+}
+
+/**
+ * The bed-phase bookkeeping key for a scene. Per-arena themes get their OWN key
+ * so `loopResumeOffsetSec` resumes each map's bed where that map left off —
+ * ⛔ not at the elapsed time accumulated on a different arena's track, which
+ * would drop the player into an arbitrary bar of a track they have not heard.
+ */
+export function bedPhaseKey(scene: string, arenaId: string | null | undefined,
+                            usingMapBed: boolean): string {
+  return usingMapBed && arenaId ? `${scene}:${arenaId}` : scene;
+}
+
 /** The SFX entry authored for an event, or null when unmapped / empty. */
 export function sfxEntryFor(map: AudioMap, event: string): SfxEntry | null {
   const e = map.sfx[event];

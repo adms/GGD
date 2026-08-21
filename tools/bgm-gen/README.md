@@ -1,10 +1,39 @@
 # bgm-gen — the GGD soundtrack generator
 
-A deterministic **score → audio** pipeline that writes the twelve BGM tracks in
-`content/assets/audio/bgm/`. Everything is synthesised from numpy arrays: there
-is no sampled audio anywhere in this tool, no soundfont, no download, and no
-model-generated audio. The only external binary is **ffmpeg** (encode +
-loudness measurement). Same score + same seed ⇒ byte-identical mp3, verified.
+A deterministic **score → audio** pipeline that writes the BGM in
+`content/assets/audio/bgm/` — the twelve scene beds, their twelve Samantha
+variants, and (GH#531) **thirteen per-arena battle themes**.
+
+⚠️ **THIS PARAGRAPH USED TO SAY "there is no sampled audio anywhere in this
+tool, no soundfont, no download".** That stopped being true on **2026-08-22**,
+when the owner ruled:
+
+> 「樂器聲音 最好上網抓音色庫 不要用合成的品質太差」
+> 「環境音效也是 請先上網尋找來使用」
+
+⛔ The old sentence is replaced rather than left standing (第一·五守則). What is
+true now:
+
+| | |
+|---|---|
+| **Instruments** | real recorded notes from **MuseScore_General.sf3** (MIT), played by **fluidsynth** into a local note bank — `src/ggd/sampler.py` |
+| **Scene sounds** | real field recordings from **効果音ラボ**, staged by `env/FETCH.py` — `src/ggd/scenefx.py` |
+| **Choir** | still formant-synthesised — the ensemble IS the effect, and a sample gives you one voice (§3) |
+| **Structure** | still every note, rhythm and arrangement decision, in this repo |
+| **Model-generated audio** | still **none**, anywhere |
+
+⭐ **The property that mattered survives**: *same score + same seed + same
+soundfont ⇒ byte-identical mp3*. The soundfont is committed (it is the
+deterministic input); the note bank is a gitignored cache keyed by the
+soundfont's own hash. External binaries are now **ffmpeg** (encode + loudness)
+and **fluidsynth** (sample playback).
+
+```sh
+brew install fluid-synth                          # once
+bash tools/bgm-gen/sf/FETCH.sh                    # once — the soundfont
+python3 tools/bgm-gen/env/FETCH.py                # once — the scene recordings
+python3 -c 'import sys;sys.path.insert(0,"tools/bgm-gen/src");from ggd import sampler;sampler.main([])'
+```
 
 ```sh
 python3 tools/bgm-gen/src/render.py menu           # one track

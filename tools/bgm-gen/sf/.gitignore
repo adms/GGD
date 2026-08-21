@@ -1,0 +1,6 @@
+# The note bank is a CACHE derived from the committed soundfont — ~1.2 GB, and
+# `sampler.build_bank()` rebuilds it in about five minutes. The soundfont itself
+# IS committed, because it is the deterministic INPUT: "same score + same seed +
+# same soundfont ⇒ same bytes" is only checkable if everyone has the same
+# soundfont. ⛔ Never commit bank/ — and ⛔ never gitignore the .sf3.
+bank/

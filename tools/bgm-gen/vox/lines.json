@@ -1,0 +1,193 @@
+{
+  "note": "GH#531 —— 每張動漫場地的 RAP／名句層。owner 2026-08-22:「也可RAP由CozyVoice產生幾句該動畫作品名句短語搭配」",
+  "howItWorks": "⭐ 這些句子是**預先算成 committed 的 wav**,score 讀 wav。⛔ 不在 render 時呼叫 TTS —— 那會毀掉整包「同 score + 同 seed ⇒ 逐位元組相同」的決定性(這也是既有的 Score.say_line 預設關閉的原因)。產生: python3 tools/bgm-gen/vox/RENDER.py",
+  "confidenceNote": "⚠️ `confidence` 是**我對這句台詞是否為該作品原文**的把握,⛔ 不是音訊品質。low/medium 的請 owner 逐句過目 —— 引錯一句名言比不引還糟。改一句只要動 text+kana 兩格再重跑 RENDER.py。",
+  "noRapNote": "⛔ skeleton / castle / colosseum / dota / godie / royale 六張**刻意沒有**名句 —— 它們不是改編自任何作品,掰一句「名言」就是說謊。",
+  "voiceNote": "ref 從 voice-reference-pipeline/approved/processed 挑,盡量選同作品的英雄;沒有同作品英雄時挑音域相符的。⛔ 効果音ラボ 的声素材不得作為 ref(其條款禁止 AI 用途)。",
+  "arenas": {
+    "arena.shiganshina": {
+      "work": "進撃の巨人",
+      "ref": "godie-h01n.wav",
+      "lines": [
+        {
+          "bar": 22.0,
+          "text": "心臓を捧げよ",
+          "kana": "シンゾウ ヲ ササゲヨ",
+          "source": "進撃の巨人 —— 調査兵団の敬礼",
+          "confidence": "high",
+          "wav": "shiganshina.0.wav",
+          "gain": 0.67,
+          "pan": -0.06
+        },
+        {
+          "bar": 28.0,
+          "text": "心臓を捧げよ",
+          "kana": "シンゾウ ヲ ササゲヨ",
+          "source": "同上（轉折起手複誦）",
+          "confidence": "high",
+          "wav": "shiganshina.0.wav",
+          "gain": 0.56,
+          "pan": 0.08
+        }
+      ]
+    },
+    "arena.infinity-castle": {
+      "work": "鬼滅の刃",
+      "ref": "godie-e00w.wav",
+      "lines": [
+        {
+          "bar": 22.0,
+          "text": "全集中の呼吸",
+          "kana": "ゼンシュウチュウ ノ コキュウ",
+          "source": "鬼滅の刃 —— 呼吸法の総称",
+          "confidence": "high",
+          "wav": "infinity-castle.0.wav",
+          "gain": 0.67,
+          "pan": -0.06
+        },
+        {
+          "bar": 28.0,
+          "text": "全集中の呼吸",
+          "kana": "ゼンシュウチュウ ノ コキュウ",
+          "source": "同上（轉折起手複誦）",
+          "confidence": "high",
+          "wav": "infinity-castle.0.wav",
+          "gain": 0.56,
+          "pan": 0.08
+        }
+      ]
+    },
+    "arena.nazarick": {
+      "work": "オーバーロード",
+      "ref": "godie-u00k.wav",
+      "lines": [
+        {
+          "bar": 22.0,
+          "text": "至高の御方",
+          "kana": "シコウ ノ オンカタ",
+          "source": "オーバーロード —— 守護者が至高の四十一人を指す呼称",
+          "confidence": "medium",
+          "wav": "nazarick.0.wav",
+          "gain": 0.67,
+          "pan": -0.06
+        },
+        {
+          "bar": 28.0,
+          "text": "至高の御方",
+          "kana": "シコウ ノ オンカタ",
+          "source": "同上（轉折起手複誦）",
+          "confidence": "medium",
+          "wav": "nazarick.0.wav",
+          "gain": 0.56,
+          "pan": 0.08
+        }
+      ]
+    },
+    "arena.holy-grail": {
+      "work": "Fate/stay night",
+      "ref": "godie-e002.wav",
+      "lines": [
+        {
+          "bar": 22.0,
+          "text": "令呪をもって命ずる",
+          "kana": "レイジュ ヲ モッテ メイズル",
+          "source": "Fate/stay night —— 令呪の詠唱",
+          "confidence": "high",
+          "wav": "holy-grail.0.wav",
+          "gain": 0.67,
+          "pan": -0.06
+        },
+        {
+          "bar": 28.0,
+          "text": "令呪をもって命ずる",
+          "kana": "レイジュ ヲ モッテ メイズル",
+          "source": "同上（轉折起手複誦）",
+          "confidence": "high",
+          "wav": "holy-grail.0.wav",
+          "gain": 0.56,
+          "pan": 0.08
+        }
+      ]
+    },
+    "arena.frieren": {
+      "work": "葬送のフリーレン",
+      "ref": "godie-h020.wav",
+      "lines": [
+        {
+          "bar": 22.0,
+          "text": "人を殺す魔法",
+          "kana": "ヒト ヲ コロス マホウ",
+          "source": "葬送のフリーレン —— フリーレンの得意魔法として反復される語",
+          "confidence": "medium",
+          "wav": "frieren.0.wav",
+          "gain": 0.67,
+          "pan": -0.06
+        },
+        {
+          "bar": 28.0,
+          "text": "人を殺す魔法",
+          "kana": "ヒト ヲ コロス マホウ",
+          "source": "同上（轉折起手複誦）",
+          "confidence": "medium",
+          "wav": "frieren.0.wav",
+          "gain": 0.56,
+          "pan": 0.08
+        }
+      ]
+    },
+    "arena.heavens-arena": {
+      "work": "HUNTER×HUNTER",
+      "ref": "godie-efur.wav",
+      "lines": [
+        {
+          "bar": 22.0,
+          "text": "纏 絶 練",
+          "kana": "テン ゼツ レン",
+          "source": "HUNTER×HUNTER —— 念の基本四大行（の三つ）",
+          "confidence": "high",
+          "wav": "heavens-arena.0.wav",
+          "gain": 0.67,
+          "pan": -0.06
+        },
+        {
+          "bar": 28.0,
+          "text": "纏 絶 練",
+          "kana": "テン ゼツ レン",
+          "source": "同上（轉折起手複誦）",
+          "confidence": "high",
+          "wav": "heavens-arena.0.wav",
+          "gain": 0.56,
+          "pan": 0.08
+        }
+      ]
+    },
+    "arena.world-tree": {
+      "work": null,
+      "ref": "godie-etyr.wav",
+      "lines": [
+        {
+          "bar": 22.0,
+          "text": "世界樹の中心へ",
+          "kana": "セカイジュ ノ チュウシン エ",
+          "source": "⚠️ GGD 原創 —— 這張圖我**查不出**改編自哪一部作品,所以 ⛔ 沒有引任何名言。這一句是照地圖自己的 landmark(`tree_core`)與 gimmick(`warp_*`)寫的。owner 若能指認作品,改 text+kana 兩格再跑 RENDER.py。",
+          "confidence": "n/a-original",
+          "wav": "world-tree.0.wav",
+          "gain": 0.67,
+          "pan": -0.06
+        },
+        {
+          "bar": 28.0,
+          "text": "世界樹の中心へ",
+          "kana": "セカイジュ ノ チュウシン エ",
+          "source": "同上（轉折起手複誦）",
+          "confidence": "n/a-original",
+          "wav": "world-tree.0.wav",
+          "gain": 0.56,
+          "pan": 0.08
+        }
+      ]
+    }
+  },
+  "placementNote": "⚠️ 第一版把兩句都放在 bar 12(熱血)與 bar 34(高潮)——**全曲最吵的兩段**——而且走 fx 匯流排(增益 1.10,對照 lead 2.00 / drums 1.90)。用 6 首沒有 RAP 的當對照組量出來:有 RAP 的 7 首在那兩個窗口只比對照組高 **+0.2 dB** ⇒ 層排進去了、檔是真的、混音裡**不存在**(失敗形態②)。⭐ 現在放在 **bar 22（收束靜止低潮，全曲唯一有空間的地方）** 與 **bar 28（轉折起手，這個曲風本來就在這裡喊）**,並改走 lead 匯流排。⛔ 判準是量到的對照組差值,不是我聽起來覺得如何。",
+  "gainNote": "⭐ 這兩個增益是**從量測反推的**,⛔ 不是聽感也不是猜:把 vox 匯流排單獨算出來,量它對成品混音的 RMS 比。gain 1.35/1.15 量到 **+3.1 / +0.2 dB**(人聲比整個樂團還大聲);目標 bar22 **−3 dB**(收束低潮,人聲主導那一刻)、bar28 **−6 dB**(融進 build)⇒ ×0.49 ⇒ **0.67 / 0.56**。⚠️ 在此之前的第一版是 fx 匯流排 gain 0.80 放在 bar 12/34,對照組量到 +0.2 dB ⇒ 聽不到。重量測法:見 commit 訊息。"
+}

@@ -116,11 +116,21 @@ export interface SfxEntry {
 
 export interface AudioMap {
   bgm: Record<string, BgmTrack>;
+  /**
+   * GH#531 — arena id (`arena.*`, exactly as `config.arena-pool@1` spells it)
+   * to the battle theme that replaces the shared `combat` bed on that map.
+   * Absent, or missing this arena, = keep the shared bed; ⛔ never silence.
+   *
+   * ⚠️ OPTIONAL on purpose. Making it required turned ten existing test
+   * fixtures red for a field none of them cares about — and a fixture edited
+   * only to satisfy the compiler is a fixture nobody re-read.
+   */
+  mapBgm?: Record<string, BgmTrack>;
   sfx: Record<string, SfxEntry>;
 }
 
 /** The "no audio authored" map — every lookup misses and every play no-ops. */
-export const EMPTY_AUDIO_MAP: AudioMap = { bgm: {}, sfx: {} };
+export const EMPTY_AUDIO_MAP: AudioMap = { bgm: {}, mapBgm: {}, sfx: {} };
 
 /** Which gain bus a sound rides. */
 export type AudioBus = "bgm" | "sfx";
@@ -134,5 +144,11 @@ export function audioMapFromDoc(doc: unknown): AudioMap | null {
   const d = doc as Partial<ConfigAudioMapDoc> | null | undefined;
   if (!d || d.schema !== "config.audio-map@1") return null;
   if (!d.bgm || !d.sfx || typeof d.bgm !== "object" || typeof d.sfx !== "object") return null;
-  return { bgm: d.bgm as Record<string, BgmTrack>, sfx: d.sfx as Record<string, SfxEntry> };
+  return {
+    bgm: d.bgm as Record<string, BgmTrack>,
+    // Optional in the doc and tolerated here: an older bundle without `mapBgm`
+    // must keep playing the shared combat bed rather than failing to parse.
+    mapBgm: (d.mapBgm ?? {}) as Record<string, BgmTrack>,
+    sfx: d.sfx as Record<string, SfxEntry>,
+  };
 }

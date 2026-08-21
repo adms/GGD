@@ -566,14 +566,17 @@ creates an obligation — it is provenance, not attribution.
 
 ## Background music (`bgm/`)
 
-**All eleven BGM tracks are OUR OWN WORK. No attribution is required for any of
-them, and no third-party terms apply to the music.** They are synthesised from
+**The 12 scene beds + their 12 Samantha variants are OUR OWN WORK. No
+attribution is required for them, and no third-party terms apply.**
+⚠️ This paragraph is scoped to those 24 files. The **thirteen per-arena battle
+themes** (`bgm/map.*.mp3`, GH#531) DO carry third-party inputs — a sample
+library and field recordings — and have their own section below. They are synthesised from
 scratch in this repo by `tools/bgm-gen` — a deterministic score→audio pipeline
 that computes every waveform from numpy arrays (a formant-synthesised SATB
 choir, supersaw, Karplus–Strong pluck, additive struck piano, membrane-mode
 taiko, noise-based kit and FX) and mixes/encodes with ffmpeg. **No audio file of
-any kind is read as input**: nothing is sampled, nothing is downloaded, and
-nothing is model-generated, so no licence attaches. `bgm/MANIFEST.json` is the
+any kind is read as input** for these 24: nothing is sampled, nothing is
+downloaded, and nothing is model-generated, so no licence attaches. `bgm/MANIFEST.json` is the
 live record — every entry now has `"source": "bgm-gen"` and
 `generator.stillThirdParty` is empty.
 
@@ -677,6 +680,98 @@ built and measured as a comparison reference only — it was **rejected** and
 TTS dependency at render time and no licence question at all;
 `tools/bgm-gen/probe/tts_route.py` reproduces the measurements behind that call.
 
+
+## Per-arena battle themes (`bgm/map.*.mp3`) — third-party INPUTS
+
+⚠️ **These thirteen tracks are NOT covered by the "no audio file of any kind is
+read as input" statement above.** That statement remains true of the 12 + 12
+scene beds; it stopped being true for the map themes on **2026-08-22**, when the
+owner ruled (GH#531):
+
+> 「樂器聲音 最好上網抓音色庫 不要用合成的品質太差」
+> 「環境音效也是 請先上網尋找來使用」
+
+The composition, arrangement and mixing are still ours. What is third-party is
+the **instrument sample library** the notes are played on, and the **field
+recordings** used as each arena's scene sound. Both are listed below, and both
+are baked into the shipped mp3 — nothing is requested at runtime.
+
+### Instruments — MuseScore_General.sf3 (**MIT**)
+
+| | |
+|---|---|
+| File | `tools/bgm-gen/sf/MuseScore_General.sf3` (39,900,972 bytes) |
+| sha256 | `5b85b6c2c61d10b2b91cddd41efcce7b25cd31c8271d511c73afafbef20b6fa3` |
+| Source | https://ftp.osuosl.org/pub/musescore/soundfont/MuseScore_General/ |
+| Licence | **MIT** — see `tools/bgm-gen/sf/MuseScore_General_License.md` (committed) |
+| Credit | Adaptation by **S. Christian Collins**; FluidR3Mono mono conversion by **Michael Cowgill**; FluidR3 original by **Frank Wen**. Temple Blocks by Ethan Winer; Drumline Cymbals by Michael Schorsch. |
+
+Played by **FluidSynth** (LGPL) at build time into a local note bank; the bank is
+a gitignored cache, the soundfont is committed because it is the deterministic
+input.
+
+### Scene sounds — 効果音ラボ / Sound Effect Lab (29 clips)
+
+Same source, same standing authorisation and the **same mandatory-listing
+condition** as the `audio/sfx/lab/` pack documented below — see that section for
+the full licence text and the ⛔ download-from-soundeffect-lab.info-only rule.
+Staged by `tools/bgm-gen/env/FETCH.py`, ledgered in
+`tools/bgm-gen/env/MANIFEST.json`.
+
+⚠️ 効果音ラボ's terms forbid use as AI training data. These clips are mixed into
+a music bed — they are **not** used as voice-clone reference audio anywhere.
+
+**Which arena uses what:**
+
+| track | arena | 効果音ラボ clips (hit / bed) |
+|---|---|---|
+| `map.frieren.mp3` | 芙莉蓮迷宮 | `battle/magic-circle1` 魔法陣を展開<br>`environment/cave1` 水のしたたる洞窟 |
+| `map.heavens-arena.mp3` | 天空鬥技場 | `anime/gong-played1` 試合開始のゴング<br>`voice/people/people-stadium-cheer1` スタジアムの歓声<br>`environment/wind1` 風が吹く1 ヒュオオオ |
+| `map.holy-grail.mp3` | 大聖杯洞窟 | `battle/magic-attack-holy1` 聖魔法<br>`environment/magical-power-room1` 魔力に満ちた部屋<br>`environment/cave1` 水のしたたる洞窟 |
+| `map.infinity-castle.mp3` | 無限城 | `various/slidingdoor-open1` 引き戸を開ける1<br>`anime/temple-bell1` お寺の鐘<br>`environment/different-dimension1` 異次元空間 時の流れが違う |
+| `map.nazarick.mp3` | 納薩力克大墳墓 | `various/iron-door-open1` 鉄の扉を開ける<br>`environment/after-death-word1` 死後の世界 死者の声が響く |
+| `map.shiganshina.mp3` | 希干希納 | `various/gate-open1` 門を開ける<br>`environment/wind2` 風が吹く2 強風が吹き荒れる |
+| `map.world-tree.mp3` | 世界樹核心 | `battle/magic-worp1` ワープ消えるイメージ<br>`environment/plants-swaying2` 風に揺れる草木2 風の強い日 |
+| `map.castle.mp3` | 城堡競技場（室內） | `various/iron-door-open1` 鉄の扉を開ける<br>`anime/church-bell1` 教会の鐘1<br>`environment/subway-passage1` 地下通路 靴音が響く |
+| `map.colosseum.mp3` | 羅馬大擂台（室外） | `voice/people/people-stadium-cheer1` スタジアムの歓声<br>`various/clapping-hands1` 大勢で拍手<br>`environment/eventhall1` イベントホール 騒がしい会場 |
+| `map.dota.mp3` | Dota 三路河道（迷你） | `anime/bell1` 鈴を鳴らす<br>`environment/creek1` 小川のせせらぎ |
+| `map.godie.mp3` | 去死團的逆襲 EX 2.2s | `anime/emergency-alert1` 警報が鳴る<br>`environment/industrialzone1` 工業地帯 機械が駆動する |
+| `map.skeleton.mp3` | 新手競技場 | `anime/school-chime1` 学校のチャイム<br>`environment/park1` 公園1 大きな公園 |
+| `map.royale.mp3` | 終局大混戰 | `machine/ship-big-whistle1` 大型船の汽笛1<br>`anime/clock-tower-bell1` 魔の時計塔の鐘<br>`environment/thunderstorm1` 雷雨 対決シーンにも使える |
+
+**The 29 source clips:**
+
+| source | title | source page | duration |
+|---|---|---|---|
+| `anime/bell1` | 鈴を鳴らす | [https://soundeffect-lab.info/sound/anime/](https://soundeffect-lab.info/sound/anime/) | 1.54 s |
+| `anime/church-bell1` | 教会の鐘1 | [https://soundeffect-lab.info/sound/anime/](https://soundeffect-lab.info/sound/anime/) | 3.04 s |
+| `anime/clock-tower-bell1` | 魔の時計塔の鐘 | [https://soundeffect-lab.info/sound/anime/](https://soundeffect-lab.info/sound/anime/) | 2.42 s |
+| `anime/emergency-alert1` | 警報が鳴る | [https://soundeffect-lab.info/sound/anime/](https://soundeffect-lab.info/sound/anime/) | 3.99 s |
+| `anime/gong-played1` | 試合開始のゴング | [https://soundeffect-lab.info/sound/anime/](https://soundeffect-lab.info/sound/anime/) | 1.71 s |
+| `anime/school-chime1` | 学校のチャイム | [https://soundeffect-lab.info/sound/anime/](https://soundeffect-lab.info/sound/anime/) | 26.03 s |
+| `anime/temple-bell1` | お寺の鐘 | [https://soundeffect-lab.info/sound/anime/](https://soundeffect-lab.info/sound/anime/) | 2.82 s |
+| `battle/magic-attack-holy1` | 聖魔法 | [https://soundeffect-lab.info/sound/battle/](https://soundeffect-lab.info/sound/battle/) | 4.25 s |
+| `battle/magic-circle1` | 魔法陣を展開 | [https://soundeffect-lab.info/sound/battle/](https://soundeffect-lab.info/sound/battle/) | 3.50 s |
+| `battle/magic-worp1` | ワープ消えるイメージ | [https://soundeffect-lab.info/sound/battle/](https://soundeffect-lab.info/sound/battle/) | 1.35 s |
+| `environment/after-death-word1` | 死後の世界 死者の声が響く | [https://soundeffect-lab.info/sound/environment/](https://soundeffect-lab.info/sound/environment/) | 60.84 s |
+| `environment/cave1` | 水のしたたる洞窟 | [https://soundeffect-lab.info/sound/environment/](https://soundeffect-lab.info/sound/environment/) | 72.19 s |
+| `environment/creek1` | 小川のせせらぎ | [https://soundeffect-lab.info/sound/environment/](https://soundeffect-lab.info/sound/environment/) | 64.88 s |
+| `environment/different-dimension1` | 異次元空間 時の流れが違う | [https://soundeffect-lab.info/sound/environment/](https://soundeffect-lab.info/sound/environment/) | 31.54 s |
+| `environment/eventhall1` | イベントホール 騒がしい会場 | [https://soundeffect-lab.info/sound/environment/](https://soundeffect-lab.info/sound/environment/) | 69.97 s |
+| `environment/industrialzone1` | 工業地帯 機械が駆動する | [https://soundeffect-lab.info/sound/environment/](https://soundeffect-lab.info/sound/environment/) | 15.74 s |
+| `environment/magical-power-room1` | 魔力に満ちた部屋 | [https://soundeffect-lab.info/sound/environment/](https://soundeffect-lab.info/sound/environment/) | 19.78 s |
+| `environment/park1` | 公園1 大きな公園 | [https://soundeffect-lab.info/sound/environment/](https://soundeffect-lab.info/sound/environment/) | 24.67 s |
+| `environment/plants-swaying2` | 風に揺れる草木2 風の強い日 | [https://soundeffect-lab.info/sound/environment/](https://soundeffect-lab.info/sound/environment/) | 17.44 s |
+| `environment/subway-passage1` | 地下通路 靴音が響く | [https://soundeffect-lab.info/sound/environment/](https://soundeffect-lab.info/sound/environment/) | 66.73 s |
+| `environment/thunderstorm1` | 雷雨 対決シーンにも使える | [https://soundeffect-lab.info/sound/environment/](https://soundeffect-lab.info/sound/environment/) | 80.86 s |
+| `environment/wind1` | 風が吹く1 ヒュオオオ | [https://soundeffect-lab.info/sound/environment/](https://soundeffect-lab.info/sound/environment/) | 104.77 s |
+| `environment/wind2` | 風が吹く2 強風が吹き荒れる | [https://soundeffect-lab.info/sound/environment/](https://soundeffect-lab.info/sound/environment/) | 83.03 s |
+| `machine/ship-big-whistle1` | 大型船の汽笛1 | [https://soundeffect-lab.info/sound/machine/](https://soundeffect-lab.info/sound/machine/) | 8.47 s |
+| `various/clapping-hands1` | 大勢で拍手 | [https://soundeffect-lab.info/sound/various/](https://soundeffect-lab.info/sound/various/) | 2.88 s |
+| `various/gate-open1` | 門を開ける | [https://soundeffect-lab.info/sound/various/](https://soundeffect-lab.info/sound/various/) | 1.71 s |
+| `various/iron-door-open1` | 鉄の扉を開ける | [https://soundeffect-lab.info/sound/various/](https://soundeffect-lab.info/sound/various/) | 1.15 s |
+| `various/slidingdoor-open1` | 引き戸を開ける1 | [https://soundeffect-lab.info/sound/various/](https://soundeffect-lab.info/sound/various/) | 1.30 s |
+| `voice/people/people-stadium-cheer1` | スタジアムの歓声 | [https://soundeffect-lab.info/sound/voice/game.html](https://soundeffect-lab.info/sound/voice/game.html) | 4.78 s |
 
 ## Login / UI sound effects (`sfx/dragon-roar*.mp3`, `sfx/ui-*.mp3`)
 
