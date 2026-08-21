@@ -117,7 +117,7 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "damageTier": "小",
+            "damageTier": "大",
             "flat": 1500.0,
             "ratios": [
               {
@@ -141,7 +141,7 @@
       ],
       "vfxKey": "fx.prim.physical.shockwave",
       "sfxKey": "wc3.taunt",
-      "castTimeSec": 0.667,
+      "castTimeSec": 1.5,
       "cooldownTier": "極大",
       "rangeTier": "大",
       "targetsEnemies": true,
@@ -173,8 +173,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -208,7 +208,7 @@
       ],
       "vfxKey": "fx.prim.nature.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.767,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
@@ -239,8 +239,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -262,7 +262,7 @@
         }
       ],
       "vfxKey": "fx.prim.nature.explosion-lg",
-      "castTimeSec": 0.833,
+      "castTimeSec": 1.033,
       "cooldownTier": "極大",
       "manaCostTier": "中"
     }

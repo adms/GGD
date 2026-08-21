@@ -83,8 +83,8 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "damageTier": "極小",
-                "flat": 600.0,
+                "damageTier": "小",
+                "flat": 500.0,
                 "ratios": [
                   {
                     "stat": "ap",
@@ -97,7 +97,7 @@
         }
       ],
       "vfxKey": "fx.prim.void.beam",
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.767,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
@@ -130,8 +130,8 @@
         "params": {
           "radius": 201,
           "damage": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -228,8 +228,8 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -238,13 +238,13 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.833
+          "castTimeSec": 1.233
         }
       },
       "vfxKey": "fx.prim.fire.explosion-lg",
       "sfxKey": "wc3.taunt",
       "targetsEnemies": true,
-      "castTimeSec": 0.833,
+      "castTimeSec": 1.233,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",

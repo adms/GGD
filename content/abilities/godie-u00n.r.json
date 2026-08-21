@@ -41,8 +41,8 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "damageTier": "小",
-            "flat": 1500.0,
+            "damageTier": "中",
+            "flat": 1000.0,
             "ratios": [
               {
                 "stat": "ap",

@@ -18,7 +18,7 @@
  *    之後玩家要重新整理頁面才拿得到。寫成「下一場生效」是 #278 那個形態：
  *    操作者照著做，然後以為功能壞了。
  */
-import { useEffect, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { Panel, Btn } from "./widgets";
 import { ACCENT, DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
 import { getOverlayDoc, getShippedDoc, putOverlayDoc } from "../api";
@@ -65,6 +65,9 @@ function boundsText(row: ConfigFieldRow): string {
   const hi = max === undefined ? "" : `${exclusiveMax ? "<" : "≤"} ${max}`;
   return [lo, hi].filter(Boolean).join(" · ");
 }
+
+/** 說明裡代表「這一格的出貨值」的佔位。⛔ 不要在說明裡手打數字。 */
+export const SHIPPED_TOKEN = "{{出貨值}}";
 
 export function ConfigDocPage(props: { spec: ConfigDocSpec }): JSX.Element {
   const { spec } = props;
@@ -326,9 +329,21 @@ export function ConfigDocPage(props: { spec: ConfigDocSpec }): JSX.Element {
                   出貨值 {displayValue(r.shipped, r.label)}
                 </span>
               </div>
-              {/* 說明寫「它影響什麼」。複述欄位名的說明等於沒有說明 —— configForms.test.ts 在守。 */}
+              {/*
+                說明寫「它影響什麼」。複述欄位名的說明等於沒有說明 —— configForms.test.ts 在守。
+                ⭐ owner 2026-08-21：「**其他說明也應該以設定檔內容為準**」⇒ 說明裡的
+                `{{出貨值}}` 在這裡被**真的出貨值**代入（同一個 `r.shipped`，就是上面那行
+                「出貨值 …」印的那一份）。⛔ 說明不可以自己抄一份數字 —— 抄的那一份就是
+                第四個住處，而它沒有守衛，所以它一定會過期（前例：這一頁的「倒數幾秒後開打」
+                說明寫著「owner 明說 10」而出貨值是 5，整整半天沒有人發現）。
+                閘：configForms.test.ts 的「說明不可以複述自己的出貨值」。
+              */}
               <div style={{ color: TEXT_DIM, fontSize: 12, lineHeight: 1.7, marginTop: 6 }}>
-                {r.label.note}
+                {r.label.note.split(SHIPPED_TOKEN).reduce<ReactNode[]>((acc, part, i) => {
+                  if (i > 0) acc.push(<b key={`s${i}`}>{displayValue(r.shipped, r.label)}</b>);
+                  acc.push(part);
+                  return acc;
+                }, [])}
               </div>
               {err && <div style={{ color: DANGER, fontSize: 12, marginTop: 5 }}>{err}</div>}
             </div>

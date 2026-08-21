@@ -14,7 +14,7 @@ export enum Stat {
   CritChance = "critChance", // 0..1
   CritDamage = "critDamage", // 1.75 = +75%
   CooldownReduction = "cdr", // 0..1
-  Lifesteal = "lifesteal", // 0..1 of basic-attack damage
+  Lifesteal = "lifesteal", // 0..2 of basic-attack damage (owner 2026-08-22:200%)
   AttackRange = "range",
   /**
    * 迴避 — chance (0..1) for the DEFENDER to make an incoming BASIC ATTACK miss
@@ -150,7 +150,7 @@ export const STAT_CLAMPS: Partial<Record<Stat, [number, number]>> = {
   [Stat.CooldownReduction]: [0, 0.99],
   [Stat.CritChance]: [0, 1],
   [Stat.MoveSpeed]: [2, 14],
-  [Stat.Lifesteal]: [0, 0.8],
+  [Stat.Lifesteal]: [0, 2.0], // ⭐ owner 2026-08-22「上限應該是 200%」(0.8→2.0);解除上限 20 由 config.stat-caps@1 給
   /**
    * A rate, so the lower bound is the real guard: a NEGATIVE evasion is
    * meaningless (there is no "extra hittable" in this model) and would make

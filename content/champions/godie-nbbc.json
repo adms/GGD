@@ -134,8 +134,8 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -144,12 +144,12 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 0.467
+          "castTimeSec": 0.667
         }
       },
       "vfxKey": "fx.prim.lightning.slash",
       "targetsEnemies": true,
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.667,
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "中",
@@ -185,8 +185,8 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "damageTier": "極小",
-                "flat": 600.0
+                "damageTier": "小",
+                "flat": 500.0
               }
             }
           ]
@@ -194,7 +194,7 @@
       ],
       "vfxKey": "fx.prim.ki.bolt",
       "sfxKey": "wc3.thunderclapcaster",
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.833,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
@@ -232,8 +232,8 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -242,12 +242,12 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 0.833
+          "castTimeSec": 1.233
         }
       },
       "vfxKey": "fx.prim.nature.slash-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.833,
+      "castTimeSec": 1.233,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",

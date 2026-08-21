@@ -130,8 +130,8 @@
               "kind": "damage",
               "damageType": "physical",
               "amount": {
-                "damageTier": "極小",
-                "flat": 600.0,
+                "damageTier": "小",
+                "flat": 500.0,
                 "ratios": [
                   {
                     "stat": "ad",
@@ -181,8 +181,8 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "damageTier": "極小",
-                "flat": 600.0
+                "damageTier": "小",
+                "flat": 500.0
               }
             }
           ]
@@ -190,7 +190,7 @@
       ],
       "vfxKey": "fx.prim.fire.beam",
       "sfxKey": "wc3.thunderclapcaster",
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.833,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
@@ -227,8 +227,8 @@
               "kind": "damage",
               "damageType": "physical",
               "amount": {
-                "damageTier": "極小",
-                "flat": 600.0,
+                "damageTier": "小",
+                "flat": 500.0,
                 "ratios": [
                   {
                     "stat": "ap",

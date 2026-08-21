@@ -127,8 +127,8 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -147,7 +147,7 @@
       "vfxKey": "fx.prim.physical.pulse-sm",
       "sfxKey": "wc3.moongo",
       "targetsEnemies": true,
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.667,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
@@ -188,8 +188,8 @@
               "kind": "damage",
               "damageType": "physical",
               "amount": {
-                "damageTier": "極小",
-                "flat": 600.0,
+                "damageTier": "小",
+                "flat": 500.0,
                 "ratios": [
                   {
                     "stat": "ap",
@@ -215,7 +215,7 @@
       "vfxKey": "fx.prim.physical.beam",
       "sfxKey": "wc3.moonjump",
       "targetsEnemies": true,
-      "castTimeSec": 1.233,
+      "castTimeSec": 1.433,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",

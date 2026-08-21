@@ -37,7 +37,7 @@
           "damageType": "magic",
           "amount": {
             "damageTier": "極小",
-            "flat": 600.0,
+            "flat": 200.0,
             "ratios": [
               {
                 "stat": "ap",

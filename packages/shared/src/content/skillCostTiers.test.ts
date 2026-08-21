@@ -38,6 +38,7 @@ import {
   SHIPPED_ANCHOR_LEVEL,
   anchorIsSatisfiable,
   castsToKill,
+  castsToKillBase,
 } from "./damageTiers";
 import {
   HARD_ANCHOR_LEVEL,
@@ -170,7 +171,10 @@ describe("傷害級距錨在 owner 的三個錨點上 (GH#447, owner 2026-08-20)
     //    ⛔ 不再是「滿足得了的最高那一個」（那條規則會挑到更高的錨點）。
     expect(SHIPPED_ANCHOR_LEVEL).toBe(HARD_ANCHOR_LEVEL);
     // ② hard limit 是門檻，⛔ 不是「盡量」。
-    expect(castsToKill(HARD_ANCHOR_LEVEL, smallest)).toBeLessThanOrEqual(KILL_CASTS_REF);
+    // ⭐ 達成率驗在**純基礎空間** —— owner 2026-08-22:「系統倍率不能放在裡面」。
+    // ⛔ 用含倍率的 castsToKill() 對是錯的:那條路上倍率會自己抵銷掉,
+    //    而抵銷掉正是這一版要修的缺陷（#532）。
+    expect(castsToKillBase(HARD_ANCHOR_LEVEL, smallest)).toBeLessThanOrEqual(KILL_CASTS_REF);
     // ③ 出貨錨點本身撞不破「一發不可以秒殺」那條天花板。
     expect(anchorIsSatisfiable(SHIPPED_ANCHOR_LEVEL)).toBe(true);
   });
@@ -180,9 +184,8 @@ describe("傷害級距錨在 owner 的三個錨點上 (GH#447, owner 2026-08-20)
     //    （量到的差距是 +16.5%，而上一版正是那樣錯的）。
     const step = tierStep();
     const raw =
-      (medianBaseHp(HARD_ANCHOR_LEVEL) / KILL_CASTS_REF) * HP_ENV_MULT +
-      HP_BASE_BONUS / KILL_CASTS_REF;
-    expect(anchorFloorFrom(medianBaseHp(HARD_ANCHOR_LEVEL), HP_ENV_MULT, HP_BASE_BONUS)).toBe(
+      (medianBaseHp(HARD_ANCHOR_LEVEL) + HP_BASE_BONUS) / KILL_CASTS_REF;
+    expect(anchorFloorFrom(medianBaseHp(HARD_ANCHOR_LEVEL), HP_BASE_BONUS)).toBe(
       Math.ceil(raw / step) * step,
     );
     // ② 「使五格皆整數的最小單位」是推導出來的，而出貨粒度是它的整數倍。
@@ -228,11 +231,24 @@ describe("相稱性 (GH#465)", () => {
         minDamageTier: unknown;
       };
     };
-    expect(doc.proportionality.expectedHits).toEqual(H);
+    // ⭐ 逐軸用容差比 —— ⛔ 不是 toEqual。`H` 是**現算**的浮點（級距 ÷ 級距），
+    // 出貨 JSON 存的是它被序列化過的樣子，兩者可以差一個 ULP：
+    // 2026-08-22 級距換算之後真的出現 3 vs 2.9999999999999996，
+    // 而那個紅講的是「相稱性壞了」——⛔ 一句用錯誤訊息說謊的話。
+    for (const [k, v] of Object.entries(H)) {
+      expect((doc.proportionality.expectedHits as Record<string, number>)[k]).toBeCloseTo(v, 9);
+    }
     // ⭐ GH#465 三選一：出貨模型與兩個係數也要對得上（⛔ 不抄字面值）。
     expect(doc.proportionality.model).toBe(DEFAULT_PROPORTIONALITY_MODEL);
-    expect(doc.proportionality.aimRiskMult).toEqual(DEFAULT_AIM_RISK_MULT);
-    expect(doc.proportionality.minDamageTier).toEqual(deriveMinDamageTier(S, D, H));
+    // ⭐ 同上,逐軸容差 —— aimRiskMult 也是級距相除來的浮點。
+    for (const [k, v] of Object.entries(DEFAULT_AIM_RISK_MULT)) {
+      expect((doc.proportionality.aimRiskMult as Record<string, number>)[k]).toBeCloseTo(v as number, 9);
+    }
+    // ⭐ H 是現算的浮點,序列化後可能差一個 ULP（2026-08-22 真的出現 3 vs 2.9999999999999996）。
+    // 用出貨 JSON 自己那一份 H 去推,⛔ 不是拿現算的 H —— 否則這條會用「相稱性壞了」
+    // 這個**錯誤的訊息**紅掉,而真相只是浮點。
+    const shippedH = doc.proportionality.expectedHits as typeof H;
+    expect(doc.proportionality.minDamageTier).toEqual(deriveMinDamageTier(S, D, shippedH));
   });
 
   it("⭐ owner 2026-08-20 的係數真的落在表上：範圍·極小 要求 ÷ 單體·極小 要求 = 冷卻比 ÷ 期望命中人數", () => {

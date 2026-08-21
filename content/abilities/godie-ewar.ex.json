@@ -20,8 +20,8 @@
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "damageTier": "小",
-        "flat": 1500.0,
+        "damageTier": "極大",
+        "flat": 2000.0,
         "ratios": [
           {
             "stat": "ap",

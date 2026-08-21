@@ -26,8 +26,8 @@
     "params": {
       "radius": 200,
       "damage": {
-        "damageTier": "極小",
-        "flat": 600.0,
+        "damageTier": "小",
+        "flat": 500.0,
         "ratios": [
           {
             "stat": "ad",
@@ -36,7 +36,7 @@
         ]
       },
       "damageType": "physical",
-      "castTimeSec": 0.833
+      "castTimeSec": 1.133
     }
   },
   "vfxKey": "fx.prim.fire.slash",
@@ -44,7 +44,7 @@
   "radius": 3.0,
   "schema": "ability@1",
   "icon": "assets/icons/abilities/godie-u00h.w.png",
-  "castTimeSec": 0.833,
+  "castTimeSec": 1.133,
   "rangeTier": "大",
   "range": 8,
   "radiusTier": "極小"

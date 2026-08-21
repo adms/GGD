@@ -389,7 +389,7 @@
           "kind": "damageLine",
           "damageType": "true",
           "amount": {
-            "damageTier": "小",
+            "damageTier": "大",
             "flat": 1500.0
           },
           "length": 8.25,

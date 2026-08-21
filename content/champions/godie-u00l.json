@@ -86,8 +86,8 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -125,8 +125,8 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -170,8 +170,8 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -184,7 +184,7 @@
       "vfxKey": "fx.prim.physical.swarm",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 1.233,
+      "castTimeSec": 1.433,
       "rangeTier": "極小",
       "range": 3,
       "cooldownTier": "中",
@@ -215,8 +215,8 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -229,7 +229,7 @@
       "vfxKey": "fx.prim.physical.pulse-lg",
       "sfxKey": "wc3.nocute",
       "targetsEnemies": true,
-      "castTimeSec": 0.833,
+      "castTimeSec": 1.233,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",

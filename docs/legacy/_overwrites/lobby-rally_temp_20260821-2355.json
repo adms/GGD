@@ -1,0 +1,16 @@
+{
+  "id": "lobby-rally",
+  "schema": "config.lobby-rally@1",
+  "note": "大廳集合令（GH#492）。owner 2026-08-21 逐字:「創建房間最重要的就是拉人進來,請你將所有線上在大廳的人都跳出確認視窗是否進入房間一起開始,同意後就一起進入開始遊戲,最多等 10 秒,包含 vs bot,若有其他玩家一起進入房間遊戲,也請出現明顯提示姓名與積分、所選英雄,每回合結算也都要特別再提示一次,因為有可能斷線離開或連線回來房間繼續遊戲」。⭐ 同日 owner 反轉語意:「你說的是對的,預設是加入,五秒是讓人按否定的」⇒ joinMode=opt-out:倒數結束就自動加入,視窗的主要按鈕是「不要」。⛔ 這不是措辭差異:waitSeconds 出貨 5 秒,5 秒對「主動點同意」太短,opt-in 幾乎等於沒有人會加入。⭐ idleExcludeSeconds 是 opt-out 帶來的新問題的答案:掛機或分頁在背景的人不自動加入(判斷在收件人的瀏覽器,平台的 presence heartbeat 是計時器送的,分不出人在不在)。⛔ enabled=false 是一鍵 rollback:建房不再廣播、一鍵開打回到 2026-08-21 之前那條「立刻開,不等人」的路(POST /rooms/solo);joinMode=opt-in 則是只退回「要按同意才進房」那一版。⚠️ 練習模式永遠走 solo 那條路,跟 includeBotMatch 無關 —— 練習房是測試碼的鑰匙,一間有旁人的練習房就是作弊房。⚠️ 值的唯一真相是 apps/client/src/ui/platform/lobbyRally.ts 的 DEFAULT_LOBBY_RALLY,這一份是內容層的鏡像(apps/admin/src/laneConfigDocs.test.ts 逐格比對)。",
+  "enabled": true,
+  "waitSeconds": 5,
+  "includeBotMatch": true,
+  "startIgnoresReady": true,
+  "joinMode": "opt-out",
+  "autoJoinLeadSeconds": 1.5,
+  "idleExcludeSeconds": 120,
+  "readyOnJoin": true,
+  "rosterMinHumans": 2,
+  "showRosterInSettlement": true,
+  "showRosterInChampSelect": true
+}

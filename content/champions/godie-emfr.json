@@ -80,8 +80,8 @@
           "kind": "damageLine",
           "damageType": "magic",
           "amount": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -228,7 +228,7 @@
                   "damageType": "magic",
                   "amount": {
                     "damageTier": "極小",
-                    "flat": 600.0,
+                    "flat": 200.0,
                     "ratios": [
                       {
                         "stat": "ap",
@@ -317,7 +317,7 @@
                   "damageType": "magic",
                   "amount": {
                     "damageTier": "極小",
-                    "flat": 600.0,
+                    "flat": 200.0,
                     "ratios": [
                       {
                         "stat": "ap",
@@ -469,7 +469,7 @@
                           "damageType": "magic",
                           "amount": {
                             "damageTier": "極小",
-                            "flat": 600.0,
+                            "flat": 200.0,
                             "ratios": [
                               {
                                 "stat": "ap",

@@ -269,11 +269,13 @@ describe("the 三選一 modal family has accessible names (rr-15..rr-18)", () =>
   it("KNOWN SET: PadFocusNav still decides focus with the selectors this guard mirrors", () => {
     cover(SCAN);
     expect(padFocusableSelectors()).toEqual([
+      // ⚠️ 2026-08-22（#505/K3）拿掉了 `:not([disabled])` —— 停用的控制項現在
+      // **聚焦得到但按不動**（買不起的造型／英雄本來整列對手把隱形）。
       "a[href]",
-      "button:not([disabled])",
-      "input:not([disabled]):not([type=hidden])",
-      "select:not([disabled])",
-      "textarea:not([disabled])",
+      "button",
+      "input:not([type=hidden])",
+      "select",
+      "textarea",
       '[tabindex]:not([tabindex="-1"])',
       "[data-pad-focusable]",
     ]);

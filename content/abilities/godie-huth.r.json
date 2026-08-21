@@ -24,8 +24,8 @@
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "damageTier": "極小",
-        "flat": 600.0,
+        "damageTier": "小",
+        "flat": 500.0,
         "ratios": [
           {
             "stat": "ap",
@@ -44,7 +44,7 @@
   "vfxKey": "fx.prim.void.explosion-lg",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 1.033,
+  "castTimeSec": 1.433,
   "rangeTier": "大",
   "range": 8
 }

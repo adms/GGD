@@ -461,7 +461,10 @@ describe("同一回合撞卡：聖杯願望贏、寶具讓路 (#340, arena-02, a
     //    (1+AP*1%)」）：每一發技能傷害都乘上一層，bot 打死人的 tick 就變了，
     //    骰子又落在別的位置。重掃 555–604 之後最小的是 **558**
     //    （實測命中 558 / 560 / 563）。
-    const ctl = makeArenaMatch(558);
+    //    ⚠️ **第五次**：owner 2026-08-22「不能把系統倍率乘進去再反推」⇒ 五級距
+    //    600/1500/3000/4500/6000 → 200/500/1000/1500/2000,420 支技能的傷害同時變,
+    //    骰子又落到別處。重掃 555–604 之後最小的是 **556**。
+    const ctl = makeArenaMatch(556);
     runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === round);
     let checked = 0;
     for (const seat of ctl.seats.values()) {

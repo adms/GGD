@@ -1,0 +1,31 @@
+{
+  "method": "cosyvoice3/cv3-0.5b-v1/base/e1ec96e10e12",
+  "key": "e786153ccbff4a505132c54e25779845",
+  "core": "voicegen-core-v2",
+  "createdAt": "2026-08-21T18:38:54Z",
+  "id": "nazarick.0.wav.raw.wav",
+  "engine": "cosyvoice3",
+  "variant": "base",
+  "engineReason": "default",
+  "category": "wav",
+  "lang": "ja",
+  "text": "強者は思うがままに振る舞い、弱者は耐えるのみ。それが世界の理だ",
+  "modelText": "キョウシャ ワ オモウガママニ フルマイ ジャクシャ ワ タエル ノミ ソレガ セカイ ノ コトワリ ダ",
+  "ref": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-u00k.wav",
+  "refSha256": "041fee5dac6b5c19",
+  "device": "mps",
+  "params": {
+    "maxChars": 60,
+    "intervalSilence": 200,
+    "speed": 1.0,
+    "seed": null,
+    "takes": 1
+  },
+  "wallSec": 28.58,
+  "segments": 1,
+  "durationSec": 5.12,
+  "sampleRate": 24000,
+  "channels": 1,
+  "bytes": 491600,
+  "rtf": 5.58
+}

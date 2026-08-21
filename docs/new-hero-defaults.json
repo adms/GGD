@@ -68,7 +68,7 @@
     {
       "rule": "low-damage-cell",
       "zh": "傷害相對冷卻偏低",
-      "note": "⚠️ **傷害偏低的 2 格**（相對錨點 單體・極小 的 100.0/卡面秒）：「範圍・極小」-60%（照對角線填「極小」＝600 傷害 × 2 人 ÷ 30 卡面秒 = 40.0/秒；要追平錨點得跳到「小」）；「範圍・小」-33%（照對角線填「小」＝1500 傷害 × 2 人 ÷ 45 卡面秒 = 66.7/秒；要追平錨點得跳到「中」）。⭐ 全部是**算出來的**：改「期望命中人數」／冷卻五級距／傷害五級距任何一格，這份名單下一秒就跟著動。⚠️ 只**警告不擋** —— owner 說的是「不合理」不是「不准」。"
+      "note": "⚠️ **傷害偏低的 2 格**（相對錨點 單體・極小 的 33.3/卡面秒）：「範圍・極小」-60%（照對角線填「極小」＝200 傷害 × 2 人 ÷ 30 卡面秒 = 13.3/秒；要追平錨點得跳到「小」）；「範圍・小」-33%（照對角線填「小」＝500 傷害 × 2 人 ÷ 45 卡面秒 = 22.2/秒；要追平錨點得跳到「中」）。⭐ 全部是**算出來的**：改「期望命中人數」／冷卻五級距／傷害五級距任何一格，這份名單下一秒就跟著動。⚠️ 只**警告不擋** —— owner 說的是「不合理」不是「不准」。"
     }
   ],
   "defaults": [
@@ -249,7 +249,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 8,
         "basis": "slot+castType"
       }
@@ -280,7 +280,7 @@
         "basis": "slot"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 18,
         "basis": "slot"
       }
@@ -311,7 +311,7 @@
         "basis": "slot+castType"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 18,
         "basis": "slot"
       }
@@ -341,7 +341,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 18,
         "basis": "slot"
       }
@@ -371,7 +371,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 18,
         "basis": "slot"
       }
@@ -401,7 +401,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 17,
         "basis": "slot"
       }
@@ -432,7 +432,7 @@
         "basis": "corpus"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 17,
         "basis": "slot"
       }
@@ -463,7 +463,7 @@
         "basis": "corpus"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 17,
         "basis": "slot"
       }
@@ -493,7 +493,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 17,
         "basis": "slot"
       }
@@ -523,7 +523,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 17,
         "basis": "slot"
       }
@@ -553,7 +553,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 22,
         "basis": "slot"
       }
@@ -584,7 +584,7 @@
         "basis": "slot"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 22,
         "basis": "slot"
       }
@@ -615,7 +615,7 @@
         "basis": "slot+castType"
       },
       "damage": {
-        "value": 600,
+        "value": 575,
         "sample": 8,
         "basis": "slot+castType"
       }
@@ -645,7 +645,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 22,
         "basis": "slot"
       }
@@ -675,7 +675,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 22,
         "basis": "slot"
       }
@@ -705,7 +705,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 19,
         "basis": "slot"
       }
@@ -735,7 +735,7 @@
         "basis": "corpus"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 19,
         "basis": "slot"
       }
@@ -765,7 +765,7 @@
         "basis": "corpus"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 19,
         "basis": "slot"
       }
@@ -795,7 +795,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 19,
         "basis": "slot"
       }
@@ -825,7 +825,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 19,
         "basis": "slot"
       }
@@ -855,7 +855,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 83,
         "basis": "corpus"
       }
@@ -885,7 +885,7 @@
         "basis": "corpus"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 83,
         "basis": "corpus"
       }
@@ -915,7 +915,7 @@
         "basis": "corpus"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 83,
         "basis": "corpus"
       }
@@ -945,7 +945,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 83,
         "basis": "corpus"
       }
@@ -975,7 +975,7 @@
         "basis": "fallback"
       },
       "damage": {
-        "value": 600,
+        "value": 500,
         "sample": 83,
         "basis": "corpus"
       }

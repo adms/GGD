@@ -63,7 +63,7 @@
       "kind": "damageArea",
       "damageType": "magic",
       "amount": {
-        "damageTier": "小",
+        "damageTier": "大",
         "flat": 1500.0
       },
       "radius": 8.0,

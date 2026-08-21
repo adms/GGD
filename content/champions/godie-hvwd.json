@@ -159,8 +159,8 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -169,7 +169,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.467
+          "castTimeSec": 0.667
         }
       },
       "vfxKey": "fx.w3x.particle.heronarutos4effect.p00",
@@ -186,7 +186,7 @@
       ],
       "targetsEnemies": true,
       "icon": "assets/icons/abilities/godie-hvwd.e.png",
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.667,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
@@ -216,8 +216,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -234,7 +234,7 @@
       ],
       "vfxKey": "fx.prim.void.swarm-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.833,
+      "castTimeSec": 1.233,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",

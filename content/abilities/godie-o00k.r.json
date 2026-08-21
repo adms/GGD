@@ -35,8 +35,8 @@
       "maxSources": 20,
       "damageType": "magic",
       "amount": {
-        "damageTier": "極小",
-        "flat": 600.0
+        "damageTier": "小",
+        "flat": 500.0
       },
       "jumps": 16,
       "jumpRange": 24.0,

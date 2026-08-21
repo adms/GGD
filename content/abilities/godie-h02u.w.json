@@ -29,7 +29,7 @@
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "damageTier": "小",
+        "damageTier": "大",
         "flat": 1500.0,
         "ratios": [
           {
@@ -54,5 +54,5 @@
   "vfxKey": "fx.prim.physical.shockwave",
   "sfxKey": "wc3.taunt",
   "schema": "ability@1",
-  "castTimeSec": 0.667
+  "castTimeSec": 1.5
 }

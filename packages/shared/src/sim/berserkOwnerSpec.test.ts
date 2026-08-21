@@ -416,9 +416,17 @@ describe("59-001 完全暴走(EX·被動·自動觸發)—— owner 2026-08-12 �
     const { world, id } = arena(909);
     expect(learnEx(world, id)).toBe(true);
 
-    // 一半血 —— 離門檻很遠。
-    hurtTo(world, id, 0.5);
-    expect(isBerserk(world, id), "半血就暴走了 —— EX 的門檻沒有在擋").toBe(false);
+    // ⭐ 探針**從出貨門檻推導**，⛔ 不是手抄一個數字。
+    // ⚠️ 前科（owner 2026-08-22 把 EX 門檻 20% → 50%）：這裡原本寫死 `0.5`
+    // 並註解「一半血 —— 離門檻很遠」，門檻一改成 50% 它就**剛好等於門檻**，
+    // 於是這條守衛用「半血就暴走了」這個**錯誤的訊息**紅掉 ——
+    // 真相只是出貨值被調過（第二守則：驗機制，⛔ 不要驗數字）。
+    const tooHealthy = Math.min(1, spec.hpPct + (1 - spec.hpPct) / 2);
+    hurtTo(world, id, tooHealthy);
+    expect(
+      isBerserk(world, id),
+      `血還在 ${(tooHealthy * 100).toFixed(0)}%（門檻 ${(spec.hpPct * 100).toFixed(0)}%）就暴走了 —— EX 的門檻沒有在擋`,
+    ).toBe(false);
 
     // 門檻**外緣**,只差 0.01 個百分點。門檻被寫寬的話它會在這裡就開。
     hurtTo(world, id, spec.hpPct + 0.0001);

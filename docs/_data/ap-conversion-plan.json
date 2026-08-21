@@ -8,7 +8,7 @@
       "beforeLv30": 1822.2,
       "afterLv30": 2466.6,
       "growth": 1.35,
-      "overBiggestTier": false,
+      "overBiggestTier": true,
       "pctOfMedianHp30": 21.0
     },
     {
@@ -21,7 +21,7 @@
       "beforeLv30": 1875.9,
       "afterLv30": 2198.1,
       "growth": 1.17,
-      "overBiggestTier": false,
+      "overBiggestTier": true,
       "pctOfMedianHp30": 18.7
     },
     {
@@ -60,28 +60,6 @@
       "pctOfMedianHp30": 13.8
     },
     {
-      "abilityId": "godie-u00n.r",
-      "abilityName": "76-04 三檔.巨人迴旋彈",
-      "apPct": 50,
-      "conditionalPct": [],
-      "beforeLv30": 1560.3,
-      "afterLv30": 1580.3,
-      "growth": 1.01,
-      "overBiggestTier": false,
-      "pctOfMedianHp30": 13.4
-    },
-    {
-      "abilityId": "godie-u00o.r",
-      "abilityName": "76-04 三檔.巨人迴旋彈",
-      "apPct": 50,
-      "conditionalPct": [],
-      "beforeLv30": 1521.9,
-      "afterLv30": 1558.5,
-      "growth": 1.02,
-      "overBiggestTier": false,
-      "pctOfMedianHp30": 13.3
-    },
-    {
       "abilityId": "godie-hart.r",
       "abilityName": "01-04 超究武神霸斬",
       "apPct": 30,
@@ -93,205 +71,191 @@
       "pctOfMedianHp30": 12.1
     },
     {
+      "abilityId": "godie-u00o.r",
+      "abilityName": "76-04 三檔.巨人迴旋彈",
+      "apPct": 50,
+      "conditionalPct": [],
+      "beforeLv30": 1036.4,
+      "afterLv30": 1058.5,
+      "growth": 1.02,
+      "overBiggestTier": false,
+      "pctOfMedianHp30": 9.0
+    },
+    {
       "abilityId": "godie-h01o.q",
       "abilityName": "79-01 瞬步",
       "apPct": 50,
       "conditionalPct": [],
-      "beforeLv30": 1100.0,
-      "afterLv30": 1140.5,
+      "beforeLv30": 1000.0,
+      "afterLv30": 1040.5,
       "growth": 1.04,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 9.7
+      "pctOfMedianHp30": 8.9
     },
     {
       "abilityId": "godie-ogld.r",
       "abilityName": "72-04 黑化",
       "apPct": 230,
       "conditionalPct": [],
-      "beforeLv30": 700.8,
-      "afterLv30": 931.3,
-      "growth": 1.33,
+      "beforeLv30": 600.8,
+      "afterLv30": 831.3,
+      "growth": 1.38,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 7.9
+      "pctOfMedianHp30": 7.1
     },
     {
       "abilityId": "godie-n01c.r",
       "abilityName": "08-04 阿邦快速劍X",
       "apPct": 180,
       "conditionalPct": [],
-      "beforeLv30": 638.2,
-      "afterLv30": 853.8,
+      "beforeLv30": 563.7,
+      "afterLv30": 753.8,
       "growth": 1.34,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 7.3
+      "pctOfMedianHp30": 6.4
     },
     {
       "abilityId": "godie-nbbc.r",
       "abilityName": "08-04 阿邦快速劍X",
       "apPct": 180,
       "conditionalPct": [],
-      "beforeLv30": 661.5,
-      "afterLv30": 843.6,
-      "growth": 1.28,
+      "beforeLv30": 602.4,
+      "afterLv30": 743.6,
+      "growth": 1.23,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 7.2
-    },
-    {
-      "abilityId": "godie-hpb1.e",
-      "abilityName": "07-03 列、在、前",
-      "apPct": 50,
-      "conditionalPct": [
-        130,
-        250
-      ],
-      "beforeLv30": 778.2,
-      "afterLv30": 782.4,
-      "growth": 1.01,
-      "overBiggestTier": false,
-      "pctOfMedianHp30": 6.7
+      "pctOfMedianHp30": 6.3
     },
     {
       "abilityId": "godie-o00l.q",
       "abilityName": "53-01 獸王牙操彈",
       "apPct": 80,
       "conditionalPct": [],
-      "beforeLv30": 600.0,
-      "afterLv30": 766.5,
-      "growth": 1.28,
+      "beforeLv30": 500.0,
+      "afterLv30": 666.5,
+      "growth": 1.33,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 6.5
+      "pctOfMedianHp30": 5.7
     },
     {
       "abilityId": "godie-n003.r",
       "abilityName": "42-04 世界終結",
       "apPct": 100,
       "conditionalPct": [],
-      "beforeLv30": 600.0,
-      "afterLv30": 755.1,
-      "growth": 1.26,
+      "beforeLv30": 500.0,
+      "afterLv30": 655.1,
+      "growth": 1.31,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 6.4
+      "pctOfMedianHp30": 5.6
     },
     {
       "abilityId": "godie-etyr.e",
       "abilityName": "14-02 式神炸裂",
       "apPct": 80,
       "conditionalPct": [],
-      "beforeLv30": 709.9,
-      "afterLv30": 746.6,
-      "growth": 1.05,
+      "beforeLv30": 609.9,
+      "afterLv30": 646.6,
+      "growth": 1.06,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 6.4
+      "pctOfMedianHp30": 5.5
     },
     {
       "abilityId": "godie-e00l.r",
       "abilityName": "20-04 Avalon-永恆的理想鄉",
       "apPct": 130,
       "conditionalPct": [],
-      "beforeLv30": 631.1,
-      "afterLv30": 741.7,
-      "growth": 1.18,
+      "beforeLv30": 551.8,
+      "afterLv30": 641.7,
+      "growth": 1.16,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 6.3
+      "pctOfMedianHp30": 5.5
     },
     {
       "abilityId": "godie-e00s.q",
       "abilityName": "70-01 伸卡球",
       "apPct": 80,
       "conditionalPct": [],
-      "beforeLv30": 668.9,
-      "afterLv30": 735.3,
-      "growth": 1.1,
+      "beforeLv30": 614.8,
+      "afterLv30": 635.3,
+      "growth": 1.03,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 6.3
+      "pctOfMedianHp30": 5.4
     },
     {
       "abilityId": "godie-hvsh.r",
       "abilityName": "48-04 騎英之疆繩",
       "apPct": 80,
       "conditionalPct": [],
-      "beforeLv30": 702.6,
-      "afterLv30": 717.3,
+      "beforeLv30": 602.6,
+      "afterLv30": 617.3,
       "growth": 1.02,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 6.1
+      "pctOfMedianHp30": 5.3
     },
     {
       "abilityId": "godie-u00h.e",
       "abilityName": "39-03 無明神風流-蛟龍",
       "apPct": 80,
       "conditionalPct": [],
-      "beforeLv30": 600.0,
-      "afterLv30": 710.5,
-      "growth": 1.18,
+      "beforeLv30": 500.0,
+      "afterLv30": 610.5,
+      "growth": 1.22,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 6.0
+      "pctOfMedianHp30": 5.2
     },
     {
       "abilityId": "godie-u00j.w",
       "abilityName": "74-02 八刀一閃",
       "apPct": 80,
       "conditionalPct": [],
-      "beforeLv30": 650.1,
-      "afterLv30": 710.5,
-      "growth": 1.09,
+      "beforeLv30": 583.5,
+      "afterLv30": 610.5,
+      "growth": 1.05,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 6.0
+      "pctOfMedianHp30": 5.2
     },
     {
       "abilityId": "godie-n01g.r",
       "abilityName": "42-04 世界終結",
       "apPct": 100,
       "conditionalPct": [],
-      "beforeLv30": 600.0,
-      "afterLv30": 709.0,
-      "growth": 1.18,
+      "beforeLv30": 500.0,
+      "afterLv30": 609.0,
+      "growth": 1.22,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 6.0
+      "pctOfMedianHp30": 5.2
     },
     {
       "abilityId": "godie-e010.q",
       "abilityName": "70-01 伸卡球",
       "apPct": 80,
       "conditionalPct": [],
-      "beforeLv30": 600.0,
-      "afterLv30": 703.2,
-      "growth": 1.17,
+      "beforeLv30": 500.0,
+      "afterLv30": 603.2,
+      "growth": 1.21,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 6.0
-    },
-    {
-      "abilityId": "godie-u00v.r",
-      "abilityName": "78-04 死亡噴射肘擊",
-      "apPct": 80,
-      "conditionalPct": [],
-      "beforeLv30": 664.5,
-      "afterLv30": 699.5,
-      "growth": 1.05,
-      "overBiggestTier": false,
-      "pctOfMedianHp30": 6.0
+      "pctOfMedianHp30": 5.1
     },
     {
       "abilityId": "godie-umal.q",
       "abilityName": "25-01 北斗懺悔拳",
       "apPct": 80,
       "conditionalPct": [],
-      "beforeLv30": 657.9,
-      "afterLv30": 692.7,
-      "growth": 1.05,
+      "beforeLv30": 557.9,
+      "afterLv30": 592.7,
+      "growth": 1.06,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 5.9
+      "pctOfMedianHp30": 5.0
     },
     {
       "abilityId": "godie-u00l.q",
       "abilityName": "25-01 北斗懺悔拳",
       "apPct": 80,
       "conditionalPct": [],
-      "beforeLv30": 619.6,
-      "afterLv30": 671.2,
-      "growth": 1.08,
+      "beforeLv30": 532.8,
+      "afterLv30": 571.2,
+      "growth": 1.07,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 5.7
+      "pctOfMedianHp30": 4.9
     },
     {
       "abilityId": "godie-ogrh.r",
@@ -300,35 +264,11 @@
       "conditionalPct": [
         80
       ],
-      "beforeLv30": 600.0,
-      "afterLv30": 662.2,
-      "growth": 1.1,
+      "beforeLv30": 500.0,
+      "afterLv30": 562.2,
+      "growth": 1.12,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 5.6
-    },
-    {
-      "abilityId": "godie-udre.e",
-      "abilityName": "11-03 鬼氣九刀流-阿修羅壹霧銀",
-      "apPct": 50,
-      "conditionalPct": [
-        80
-      ],
-      "beforeLv30": 650.6,
-      "afterLv30": 662.2,
-      "growth": 1.02,
-      "overBiggestTier": false,
-      "pctOfMedianHp30": 5.6
-    },
-    {
-      "abilityId": "godie-umal.e",
-      "abilityName": "25-03 北斗百裂拳",
-      "apPct": 50,
-      "conditionalPct": [],
-      "beforeLv30": 651.3,
-      "afterLv30": 657.9,
-      "growth": 1.01,
-      "overBiggestTier": false,
-      "pctOfMedianHp30": 5.6
+      "pctOfMedianHp30": 4.8
     },
     {
       "abilityId": "godie-o00x.r",
@@ -337,11 +277,11 @@
       "conditionalPct": [
         80
       ],
-      "beforeLv30": 600.0,
-      "afterLv30": 650.5,
-      "growth": 1.08,
+      "beforeLv30": 500.0,
+      "afterLv30": 550.5,
+      "growth": 1.1,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 5.5
+      "pctOfMedianHp30": 4.7
     },
     {
       "abilityId": "godie-u01u.e",
@@ -350,33 +290,33 @@
       "conditionalPct": [
         80
       ],
-      "beforeLv30": 619.6,
-      "afterLv30": 650.5,
-      "growth": 1.05,
+      "beforeLv30": 532.6,
+      "afterLv30": 550.5,
+      "growth": 1.03,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 5.5
+      "pctOfMedianHp30": 4.7
     },
     {
       "abilityId": "godie-u00l.e",
       "abilityName": "25-03 北斗百裂拳",
       "apPct": 50,
       "conditionalPct": [],
-      "beforeLv30": 619.6,
-      "afterLv30": 644.5,
-      "growth": 1.04,
+      "beforeLv30": 532.8,
+      "afterLv30": 544.5,
+      "growth": 1.02,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 5.5
+      "pctOfMedianHp30": 4.6
     },
     {
       "abilityId": "godie-h01o.w",
       "abilityName": "79-02 斬擊",
       "apPct": 50,
       "conditionalPct": [],
-      "beforeLv30": 624.3,
-      "afterLv30": 640.5,
+      "beforeLv30": 524.3,
+      "afterLv30": 540.5,
       "growth": 1.03,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 5.4
+      "pctOfMedianHp30": 4.6
     }
   ],
   "mirrorPairs": {
@@ -454,7 +394,7 @@
     ]
   },
   "medianEngineHpLv30": 11754.8,
-  "biggestDamageTier": 6000,
+  "biggestDamageTier": 2000,
   "provenance": {
     "population": "apps/platform/internal/curation/starter.go 的 starterChampions − content/config/roster.json 的 retiredChampions − 變身態（英雄卡的 transform.role === \"alternate\"）",
     "populationSize": 49,
@@ -489,32 +429,32 @@
     {
       "level": 30,
       "medianAp": 135.3,
-      "medianAd": 100.5,
+      "medianAd": 167.5,
       "medianAs": 0.906,
-      "medianSkillDps": 438.9,
-      "medianAutoDps": 92.5,
-      "medianRatio": 5.88,
-      "meanRatio": 8.2
+      "medianSkillDps": 368.3,
+      "medianAutoDps": 154.2,
+      "medianRatio": 3.05,
+      "meanRatio": 4.29
     },
     {
       "level": 50,
       "medianAp": 178.8,
-      "medianAd": 162.7,
+      "medianAd": 271.1,
       "medianAs": 1.107,
-      "medianSkillDps": 546.9,
-      "medianAutoDps": 181.9,
-      "medianRatio": 3.37,
-      "meanRatio": 5.09
+      "medianSkillDps": 432.8,
+      "medianAutoDps": 303.2,
+      "medianRatio": 1.78,
+      "meanRatio": 2.69
     },
     {
       "level": 99,
       "medianAp": 333.6,
-      "medianAd": 315.0,
+      "medianAd": 525.0,
       "medianAs": 1.6,
-      "medianSkillDps": 825.4,
-      "medianAutoDps": 504.0,
-      "medianRatio": 1.76,
-      "meanRatio": 2.73
+      "medianSkillDps": 694.9,
+      "medianAutoDps": 840.0,
+      "medianRatio": 0.96,
+      "meanRatio": 1.47
     }
   ],
   "whatIfIntToAp": [
@@ -524,24 +464,24 @@
       "byLevel": {
         "30": {
           "medianAp": 135.3,
-          "medianSkillDps": 434.1,
-          "medianAutoDps": 92.5,
-          "medianRatio": 5.72,
-          "meanRatio": 8.13
+          "medianSkillDps": 368.3,
+          "medianAutoDps": 154.2,
+          "medianRatio": 3.05,
+          "meanRatio": 4.26
         },
         "50": {
           "medianAp": 178.8,
-          "medianSkillDps": 546.9,
-          "medianAutoDps": 181.9,
-          "medianRatio": 3.37,
-          "meanRatio": 5.03
+          "medianSkillDps": 432.8,
+          "medianAutoDps": 303.2,
+          "medianRatio": 1.78,
+          "meanRatio": 2.66
         },
         "99": {
           "medianAp": 333.6,
-          "medianSkillDps": 793.0,
-          "medianAutoDps": 504.0,
-          "medianRatio": 1.76,
-          "meanRatio": 2.69
+          "medianSkillDps": 664.9,
+          "medianAutoDps": 840.0,
+          "medianRatio": 0.96,
+          "meanRatio": 1.45
         }
       },
       "growthApZeroed": 0,
@@ -553,24 +493,24 @@
       "byLevel": {
         "30": {
           "medianAp": 135.3,
-          "medianSkillDps": 438.9,
-          "medianAutoDps": 92.5,
-          "medianRatio": 5.88,
-          "meanRatio": 8.2
+          "medianSkillDps": 368.3,
+          "medianAutoDps": 154.2,
+          "medianRatio": 3.05,
+          "meanRatio": 4.29
         },
         "50": {
           "medianAp": 178.8,
-          "medianSkillDps": 546.9,
-          "medianAutoDps": 181.9,
-          "medianRatio": 3.37,
-          "meanRatio": 5.09
+          "medianSkillDps": 432.8,
+          "medianAutoDps": 303.2,
+          "medianRatio": 1.78,
+          "meanRatio": 2.69
         },
         "99": {
           "medianAp": 333.6,
-          "medianSkillDps": 825.4,
-          "medianAutoDps": 504.0,
-          "medianRatio": 1.76,
-          "meanRatio": 2.73
+          "medianSkillDps": 694.9,
+          "medianAutoDps": 840.0,
+          "medianRatio": 0.96,
+          "meanRatio": 1.47
         }
       },
       "growthApZeroed": 0,
@@ -582,24 +522,24 @@
       "byLevel": {
         "30": {
           "medianAp": 165.2,
-          "medianSkillDps": 490.3,
-          "medianAutoDps": 92.5,
-          "medianRatio": 6.75,
-          "meanRatio": 9.12
+          "medianSkillDps": 414.1,
+          "medianAutoDps": 154.2,
+          "medianRatio": 3.5,
+          "meanRatio": 4.79
         },
         "50": {
           "medianAp": 209.1,
-          "medianSkillDps": 560.9,
-          "medianAutoDps": 181.9,
-          "medianRatio": 3.61,
-          "meanRatio": 5.42
+          "medianSkillDps": 474.0,
+          "medianAutoDps": 303.2,
+          "medianRatio": 1.95,
+          "meanRatio": 2.87
         },
         "99": {
           "medianAp": 333.6,
-          "medianSkillDps": 793.0,
-          "medianAutoDps": 504.0,
-          "medianRatio": 1.76,
-          "meanRatio": 2.69
+          "medianSkillDps": 664.9,
+          "medianAutoDps": 840.0,
+          "medianRatio": 0.96,
+          "meanRatio": 1.45
         }
       },
       "growthApZeroed": 2,
@@ -611,24 +551,24 @@
       "byLevel": {
         "30": {
           "medianAp": 165.2,
-          "medianSkillDps": 490.3,
-          "medianAutoDps": 92.5,
-          "medianRatio": 6.75,
-          "meanRatio": 9.23
+          "medianSkillDps": 417.4,
+          "medianAutoDps": 154.2,
+          "medianRatio": 3.5,
+          "meanRatio": 4.85
         },
         "50": {
           "medianAp": 209.1,
-          "medianSkillDps": 569.2,
-          "medianAutoDps": 181.9,
-          "medianRatio": 3.75,
-          "meanRatio": 5.49
+          "medianSkillDps": 474.0,
+          "medianAutoDps": 303.2,
+          "medianRatio": 1.95,
+          "meanRatio": 2.91
         },
         "99": {
           "medianAp": 333.6,
-          "medianSkillDps": 825.4,
-          "medianAutoDps": 504.0,
-          "medianRatio": 1.76,
-          "meanRatio": 2.73
+          "medianSkillDps": 694.9,
+          "medianAutoDps": 840.0,
+          "medianRatio": 0.96,
+          "meanRatio": 1.47
         }
       },
       "growthApZeroed": 2,

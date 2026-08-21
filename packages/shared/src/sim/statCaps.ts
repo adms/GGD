@@ -114,7 +114,7 @@ export const AP_CAP_OPEN = 500000;
  *   `ModOp.CapRaise` 用到。
  * · 法強 100000 / 100000 —— owner 2026-08-01「所以要有這個欄位,但先不要夾」。
  *   見 `AP_CAP_OPEN`。
- * · 吸血 0.8 / 1.0 —— owner 2026-08-03 的暴走定稿要求「吸血 **100%**」,而
+ * · 吸血 2.0 / 20 —— owner 2026-08-22:「上限應該是 200%」。在此之前 base 是 0.8,而
  *   `STAT_CLAMPS[Stat.Lifesteal]` 的上界是 0.8。沒有這一列的話 `capFor` 會退回
  *   那個 0.8 而且 `base === unlocked`,於是 `flat 1.0` 被**靜默**夾成 0.8 ——
  *   面板寫 100%、實際回 80%,而且沒有任何一行訊息會提到它。第二層(1.0)只有
@@ -146,11 +146,14 @@ export const DEFAULT_STAT_CAPS: StatCapTable = Object.freeze({
   //     要夾就把那一格填進後台，存檔生效。
   [Stat.AbilityPower]: Object.freeze({ base: AP_CAP_OPEN, unlocked: AP_CAP_OPEN }),
   // ⭐ 2026-08-12 owner：「**吸血可以超過 100%**，上限為 **20x**，傷害 100 回復 2000」
-  //   → `unlocked` 從 1.0 提到 **20**。`base` 留 0.8（沒有解鎖來源時的一般上限，
-  //   owner 2026-07-28 立的），所以每一件吸血裝與其餘 118 張卡逐位元不變 ——
-  //   只有帶 `ModOp.CapRaise` 的來源（59-00 / 59-001 暴走）碰得到上面那一段。
+  //   → `unlocked` 從 1.0 提到 **20**。
+  // ⭐ 2026-08-22 owner：「**lifesteal.base 上限應該是 200% 吧 解除上限可以到20**」
+  //   → `base` 0.8 → **2.0**（`unlocked` 20 不動）。
+  //   ⚠️ 這一改讓 59-001 完全暴走的「吸血 120%」**不再需要** `CapRaise`：
+  //   1.2 已經在 base 之內，再補一條 capRaise 就是逐位元不改變任何數字的
+  //   空 modifier（第一·五守則，`noOpModifierClaims.test.ts` 會紅）。
   //   ⚠️ `STAT_CAP_MAX[Lifesteal]` 也要跟著抬，否則 20 會被 Zod 的保險絲擋在後台外面。
-  [Stat.Lifesteal]: Object.freeze({ base: 0.8, unlocked: 20 }),
+  [Stat.Lifesteal]: Object.freeze({ base: 2.0, unlocked: 20 }),
   // 2026-08-10 —— owner 要仙后座「CD 時間再減少 50%」。base 就是那個最大單件值;
   // unlocked 0.8 留給未來的 CapRaise。⚠️ 這一列與 content/config/stat-caps.json
   // 必須同時存在,capUnlockContent.test.ts 比對的就是兩者相等。

@@ -27,9 +27,11 @@ unchanged — the soundfont and the recordings are committed INPUTS, so
 from __future__ import annotations
 
 import argparse
+import hashlib
 import importlib.util
 import json
 import os
+import shutil
 import sys
 import time
 
@@ -77,6 +79,42 @@ def measure(y: np.ndarray, sc) -> dict:
     }
 
 
+ARCHIVE_DIR = os.path.join(ROOT, "docs", "legacy", "_bgm-versions")
+
+
+def archive_previous(mp3: str) -> str | None:
+    """Copy the track that is about to be OVERWRITTEN into legacy first.
+
+    owner 2026-08-22:「舊的歌不要刪除，移到 leagcy 備份就好 **不要直接取代**」
+
+    ⛔ WHY THIS LIVES HERE AND NOT IN THE HOOK. The repo has a PreToolUse hook
+    (`scripts/preserve-before-overwrite.py`) that preserves a file before an
+    overwrite — but it can only see the `Write` tool and bash `>` redirection.
+    `render.py` opens the mp3 from Python, so the hook never fires and every
+    re-render silently destroyed the previous take. A rule the tooling cannot
+    observe is not a rule; this function is the gate.
+
+    ⭐ Content-addressed: if the bytes about to be replaced are already archived,
+    nothing is copied. Re-rendering an unchanged score therefore costs 0 bytes,
+    and `docs/legacy/` does not balloon at ~1.3 MB per track per run.
+    """
+    if not os.path.exists(mp3):
+        return None
+    track = os.path.splitext(os.path.basename(mp3))[0]
+    dest_dir = os.path.join(ARCHIVE_DIR, track)
+    with open(mp3, "rb") as fh:
+        digest = hashlib.sha256(fh.read()).hexdigest()
+    if os.path.isdir(dest_dir):
+        for name in os.listdir(dest_dir):
+            if digest[:16] in name:
+                return None                      # this exact take is already kept
+    os.makedirs(dest_dir, exist_ok=True)
+    stamp = time.strftime("%Y%m%d-%H%M")
+    dest = os.path.join(dest_dir, f"{track}_temp_{stamp}_{digest[:16]}.mp3")
+    shutil.copy2(mp3, dest)
+    return dest
+
+
 def render_one(track_id: str, keep_wav: bool = False, do_analyze: bool = False,
                out_dir: str = OUT_DIR) -> dict:
     t0 = time.time()
@@ -90,6 +128,7 @@ def render_one(track_id: str, keep_wav: bool = False, do_analyze: bool = False,
     wav = os.path.join(BUILD_DIR, f"{track_id}.wav")
     mp3 = os.path.join(out_dir, f"{track_id}.mp3")
     write_wav(wav, y, bits=24)
+    kept = archive_previous(mp3)          # ⛔ 覆蓋之前先留一份(owner 2026-08-22)
     m = encode_mp3(wav, mp3, target_lufs=-16.0, tp=-1.5)
 
     meta = {
@@ -115,6 +154,8 @@ def render_one(track_id: str, keep_wav: bool = False, do_analyze: bool = False,
         os.remove(wav)
     print(f"[{track_id}] {dur:.3f}s -> {mp3}  "
           f"(in {m['input_i']} LUFS / TP {m['input_tp']} dB)  {time.time()-t0:.1f}s")
+    if kept:
+        print(f"    ↳ 舊版留底 {os.path.relpath(kept, ROOT)}")
     if do_analyze:
         for k, v in meta["measured"].items():
             print(f"    {k:22} {v}")

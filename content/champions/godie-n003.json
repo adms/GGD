@@ -81,8 +81,8 @@
           "anchor": "point",
           "radius": 300,
           "damage": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -181,7 +181,7 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "damageTier": "小",
+                "damageTier": "大",
                 "flat": 1500.0
               }
             }
@@ -189,7 +189,7 @@
         }
       ],
       "vfxKey": "fx.prim.ice.nova",
-      "castTimeSec": 0.833,
+      "castTimeSec": 1.133,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
@@ -222,8 +222,8 @@
           "stepSize": 200,
           "segmentAoe": 400,
           "damage": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -232,11 +232,11 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.033
+          "castTimeSec": 1.233
         }
       },
       "vfxKey": "fx.w3x.locust.frostnova.p01",
-      "castTimeSec": 1.033,
+      "castTimeSec": 1.233,
       "hitFeel": {
         "hitstopTicks": 5,
         "hitstunTicks": 8,

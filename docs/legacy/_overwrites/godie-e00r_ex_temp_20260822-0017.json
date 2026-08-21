@@ -1,0 +1,79 @@
+{
+  "id": "godie-e00r.ex",
+  "schema": "ability@1",
+  "name": "59-001 完全暴走",
+  "provenance": "owner-spec",
+  "description": "[被動][暴走][迴避][吸血][加速][屬性門檻]\n{{cd}}秒冷卻\n\n「什麼？竟然沒有世界末日嗎？」\n[暴走]的門檻降為低於自身[最大生命] 20%，[攻擊速度]提升至最上限 10，[吸血]120%、[迴避]50%，持續 12秒。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "targetsEnemies": false,
+  "effects": [],
+  "passive": {
+    "name": "59-001 完全暴走",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onDamageTaken",
+            "effects": [
+              {
+                "kind": "applyBuff",
+                "modifiers": [
+                  {
+                    "stat": "as",
+                    "op": "capRaise",
+                    "value": 10.0
+                  },
+                  {
+                    "stat": "as",
+                    "op": "pctAdd",
+                    "value": 4.0
+                  },
+                  {
+                    "stat": "lifesteal",
+                    "op": "flat",
+                    "value": 0.8
+                  },
+                  {
+                    "stat": "evasion",
+                    "op": "flat",
+                    "value": 0.5
+                  }
+                ],
+                "duration": 12.0
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "berserk",
+                "duration": 12.0,
+                "applyTo": "self",
+                "berserk": true
+              }
+            ],
+            "internalCooldown": 150.0,
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "hp",
+              "mode": "percent",
+              "op": "<=",
+              "value": 0.2
+            },
+            "target": "self"
+          }
+        ]
+      }
+    ]
+  },
+  "icon": "assets/icons/abilities/godie-e00r.ex.webp",
+  "vfxKey": "fx.prim.void.explosion-lg",
+  "cooldownTier": "極大"
+}

@@ -40,7 +40,7 @@
  *
  *     KILL_CASTS_REF   = 20                       ← owner Q1「20 次以內一定要能殺死對方」
  *     MEDIAN_BASE_HP   純基礎中位血量（三個錨點）   ← `pnpm anchors:build` 量到的
- *     HP_ENV_MULT      combat-env 的最大生命倍率    ← 出貨 config 的快照
+ *     ⛔ **HP 系統倍率不在裡面**（owner 2026-08-22）—— 留給 owner 當最後的旋鈕
  *     HP_BASE_BONUS    base-bonus 的初始生命加成    ← 出貨 config 的快照
  *     DEFAULT_COOLDOWN_TIERS.seconds.單體          ← owner 2026-08-19 給的冷卻表
  *
@@ -211,15 +211,30 @@ export const DAMAGE_TIER_MAX = Math.floor(medianFinalHp(HARD_ANCHOR_LEVEL));
  * 某一個錨點**要求**的極小值 —— 檔頭 ① 那一條式子，逐項對得起來：
  *
  * ```
- *   純基礎中位 ÷ 擊殺次數 × HP 倍率   +   初始加成 ÷ 擊殺次數   →  進位到 tierStep()
+ *   （純基礎中位 + 初始加成） ÷ 擊殺次數   →  進位到 tierStep()
  * ```
  *
- * ⚠️ 加成那一項**在倍率之外**（owner #273）—— 兩項分開寫是刻意的，
- * ⛔ 不可以「化簡」成 `(純基礎 + 加成) × 倍率 ÷ 次數`，那正是上一版 +16.5% 的錯。
+ * ⛔⛔ **公式裡沒有 HP 系統倍率，這是刻意的。** owner 2026-08-22 逐字：
+ *
+ * > 「你的傷害要**從生命反推我沒意見**，但**不能把系統倍率乘進去再反推**啊，
+ * >  這樣我用系統倍率就**沒意義了**」
+ * > 「我就是要**保留系統倍率來做最後調整**」
+ *
+ * ⚠️ 在此之前這裡乘了 `HP_ENV_MULT`，於是**倍率自己把自己抵銷掉了**：
+ * 血條 ×N 的同時級距也 ×N ⇒「一發極大佔血條幾 %」**逐位元不變**。
+ * 實測三次（2026-08-22）：`maxHealth` 4.0 / 6.0 / 7.2 分別得到 51.0% / 52.0% / 50.9%
+ * —— 也就是後台那一格**轉不動任何東西**，而它看起來完全正常
+ *（第一·五守則：欄位在、schema 收得下、存得起來、全套測試綠，而它是空的）。
+ *
+ * ⇒ 現在倍率只進**血量**那一側，所以它就是 owner 要的那支最後的旋鈕：
+ * 倍率調高 ⇒ 同一發佔血條的比例下降 ⇒ 要更多發才殺得死。
+ *
+ * ⚠️ 連帶語意變更：`KILL_CASTS_REF` 現在是**純基礎空間**的參考次數，
+ * ⛔ 不再是「遊戲裡真的打幾發」——真實發數 = 參考次數 × HP 倍率。
  */
-export function anchorFloorFrom(baseHp: number, mult: number, bonus: number): number {
+export function anchorFloorFrom(baseHp: number, bonus: number): number {
   const step = tierStep();
-  const raw = (baseHp / KILL_CASTS_REF) * mult + bonus / KILL_CASTS_REF;
+  const raw = (baseHp + bonus) / KILL_CASTS_REF;
   return Math.ceil(raw / step) * step;
 }
 
@@ -229,7 +244,7 @@ export function anchorFloorFrom(baseHp: number, mult: number, bonus: number): nu
  * 不然會拿上一輪的量測算出這一輪的表（差一拍，而且 `--check` 要跑兩次才綠）。
  */
 export function anchorFloor(level: BalanceAnchorLevel): number {
-  return anchorFloorFrom(medianBaseHp(level), HP_ENV_MULT, HP_BASE_BONUS);
+  return anchorFloorFrom(medianBaseHp(level), HP_BASE_BONUS);
 }
 
 /**
@@ -278,6 +293,23 @@ export const SHIPPED_ANCHOR_LEVEL: BalanceAnchorLevel = HARD_ANCHOR_LEVEL;
  */
 export function castsToKill(level: BalanceAnchorLevel, smallest: number): number {
   return medianFinalHp(level) / smallest;
+}
+
+/**
+ * 同上，但在**純基礎空間**（⛔ 不含 HP 系統倍率）。
+ *
+ * ⭐ `KILL_CASTS_REF` 的達成率**只能拿這一支對**。owner 2026-08-22：
+ *
+ * > 「技能 普攻 生命 五級距公式 **可以互相影響帶入公式作為參數**，
+ * >  但是**系統倍率不能放在裡面**」
+ *
+ * ⇒ 級距是從**純基礎**血量反推的，所以「幾發殺死」這個**設計承諾**也活在純基礎空間。
+ * ⚠️ 上面那支 `castsToKill()` 回答的是**另一個問題**——「遊戲裡實際要打幾發」，
+ * 它含倍率是對的（那是玩家真的會經歷的數字），⛔ 但它不可以拿來驗設計承諾：
+ * 兩者現在**刻意**不相等，差距就是 HP 系統倍率本身，而那正是 owner 要的旋鈕。
+ */
+export function castsToKillBase(level: BalanceAnchorLevel, smallest: number): number {
+  return (medianBaseHp(level) + HP_BASE_BONUS) / smallest;
 }
 
 /**

@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "aca18379ef66",
+  "hash": "c4e5e2c9eedb",
   "entries": [
     {
       "id": "admin-friend",
@@ -41,14 +41,14 @@
     {
       "id": "audio-map",
       "path": "config/audio-map.json",
-      "hash": "7246e7843f60",
-      "size": 42678
+      "hash": "17a1acf9fbee",
+      "size": 44283
     },
     {
       "id": "audio-mix",
       "path": "config/audio-mix.json",
-      "hash": "e056c0157e42",
-      "size": 1069
+      "hash": "325c2458388e",
+      "size": 1912
     },
     {
       "id": "augment-filter",
@@ -113,7 +113,7 @@
     {
       "id": "combat-env",
       "path": "config/combat-env.json",
-      "hash": "c224bbd04377",
+      "hash": "251a10bba0a1",
       "size": 983
     },
     {
@@ -167,8 +167,8 @@
     {
       "id": "damage-tiers",
       "path": "config/damage-tiers.json",
-      "hash": "861e338c32be",
-      "size": 2997
+      "hash": "d2bf60d1cdef",
+      "size": 2996
     },
     {
       "id": "dispel",
@@ -227,8 +227,8 @@
     {
       "id": "lobby-rally",
       "path": "config/lobby-rally.json",
-      "hash": "9e465269f4f3",
-      "size": 1917
+      "hash": "e3b83db78c07",
+      "size": 2297
     },
     {
       "id": "mana-economy",
@@ -353,8 +353,8 @@
     {
       "id": "stat-caps",
       "path": "config/stat-caps.json",
-      "hash": "b5e832ea88cf",
-      "size": 922
+      "hash": "e81ec1472ed7",
+      "size": 920
     },
     {
       "id": "stat-normalization",
@@ -425,8 +425,8 @@
     {
       "id": "victory-podium",
       "path": "config/victory-podium.json",
-      "hash": "a77267b01c13",
-      "size": 2388
+      "hash": "6e2386feb7c6",
+      "size": 2732
     },
     {
       "id": "victory-taunts",

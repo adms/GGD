@@ -152,7 +152,8 @@ const finalMana = (lv: BalanceAnchorLevel): number => q(baseMana[lv]! * MP_MULT 
 
 // ⭐ 級距表用**這一輪剛量到的**數字算，⛔ 不是 `anchorFloor()`（那讀的是上一輪
 //   寫進 `balanceAnchorsDerived.ts` 的量測 —— 會差一拍，而且 `--check` 要跑兩次才綠）。
-const floorAt = (lv: BalanceAnchorLevel): number => anchorFloorFrom(baseHp[lv]!, HP_MULT, HP_BONUS);
+// ⛔ 沒有 HP_MULT —— owner 2026-08-22:「不能把系統倍率乘進去再反推,這樣我用系統倍率就沒意義了」。
+const floorAt = (lv: BalanceAnchorLevel): number => anchorFloorFrom(baseHp[lv]!, HP_BONUS);
 const SMALLEST = floorAt(SHIPPED_ANCHOR_LEVEL);
 const DAMAGE = tiersFromAnchor(SMALLEST);
 /** 天花板：一發不可以秒殺 hard limit 那一級的中位英雄（**引擎最終**空間）。 */

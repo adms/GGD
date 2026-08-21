@@ -1,0 +1,31 @@
+{
+  "method": "cosyvoice3/cv3-0.5b-v1/base/e1ec96e10e12",
+  "key": "7490db7e5bfc3c85f414fb3ca2e59993",
+  "core": "voicegen-core-v2",
+  "createdAt": "2026-08-21T17:43:38Z",
+  "id": "shiganshina.0.wav",
+  "engine": "cosyvoice3",
+  "variant": "base",
+  "engineReason": "default",
+  "category": "wav",
+  "lang": "ja",
+  "text": "心臓を捧げよ",
+  "modelText": "シンゾウ ヲ ササゲヨ",
+  "ref": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-h01n.wav",
+  "refSha256": "c5627653970cc01a",
+  "device": "mps",
+  "params": {
+    "maxChars": 60,
+    "intervalSilence": 200,
+    "speed": 1.0,
+    "seed": null,
+    "takes": 1
+  },
+  "wallSec": 187.94,
+  "segments": 1,
+  "durationSec": 1.36,
+  "sampleRate": 24000,
+  "channels": 1,
+  "bytes": 130640,
+  "rtf": 138.19
+}

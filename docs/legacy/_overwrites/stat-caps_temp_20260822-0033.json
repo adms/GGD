@@ -1,0 +1,58 @@
+{
+  "id": "stat-caps",
+  "schema": "config.stat-caps@1",
+  "caps": {
+    "as": {
+      "base": 4,
+      "unlocked": 10
+    },
+    "ap": {
+      "base": 500000,
+      "unlocked": 500000
+    },
+    "lifesteal": {
+      "base": 0.8,
+      "unlocked": 20
+    },
+    "cdr": {
+      "base": 0.99,
+      "unlocked": 0.99
+    },
+    "maxHealth": {
+      "base": 555243,
+      "unlocked": 555243
+    },
+    "maxMana": {
+      "base": 338713,
+      "unlocked": 338713
+    },
+    "healthRegen": {
+      "base": 1366,
+      "unlocked": 1366
+    },
+    "manaRegen": {
+      "base": 1711,
+      "unlocked": 1711
+    },
+    "ad": {
+      "base": 33493,
+      "unlocked": 33493
+    },
+    "armor": {
+      "base": 5237,
+      "unlocked": 5237
+    },
+    "mr": {
+      "base": 16191,
+      "unlocked": 16191
+    },
+    "range": {
+      "base": 16,
+      "unlocked": 16
+    },
+    "ms": {
+      "base": 18,
+      "unlocked": 24
+    }
+  }
+}

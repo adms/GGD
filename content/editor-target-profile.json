@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_959618ce2e04",
+    "contentVersion": "cv_eb9461dc2cb3",
     "collections": {
       "champions": {
-        "hash": "5f762641437f",
+        "hash": "19e96a6124f8",
         "count": 71
       },
       "abilities": {
-        "hash": "c6d47a76b48e",
+        "hash": "4552615538a7",
         "count": 420
       },
       "items": {
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "aca18379ef66",
+        "hash": "c4e5e2c9eedb",
         "count": 76
       },
       "models": {
@@ -3150,7 +3150,7 @@
             "unlocked": 24
           },
           "lifesteal": {
-            "base": 0.8,
+            "base": 2,
             "unlocked": 20
           },
           "ap": {
@@ -3194,7 +3194,7 @@
           "cooldown": 0.2,
           "damageDealt": 1,
           "defense": 1,
-          "attackDamage": 0.6,
+          "attackDamage": 1,
           "abilityPower": 1,
           "maxHealth": 4,
           "healthRegen": 1,
@@ -3349,7 +3349,7 @@
         {
           "rule": "low-damage-cell",
           "zh": "傷害相對冷卻偏低",
-          "note": "⚠️ **傷害偏低的 2 格**（相對錨點 單體・極小 的 100.0/卡面秒）：「範圍・極小」-60%（照對角線填「極小」＝600 傷害 × 2 人 ÷ 30 卡面秒 = 40.0/秒；要追平錨點得跳到「小」）；「範圍・小」-33%（照對角線填「小」＝1500 傷害 × 2 人 ÷ 45 卡面秒 = 66.7/秒；要追平錨點得跳到「中」）。⭐ 全部是**算出來的**：改「期望命中人數」／冷卻五級距／傷害五級距任何一格，這份名單下一秒就跟著動。⚠️ 只**警告不擋** —— owner 說的是「不合理」不是「不准」。",
+          "note": "⚠️ **傷害偏低的 2 格**（相對錨點 單體・極小 的 33.3/卡面秒）：「範圍・極小」-60%（照對角線填「極小」＝200 傷害 × 2 人 ÷ 30 卡面秒 = 13.3/秒；要追平錨點得跳到「小」）；「範圍・小」-33%（照對角線填「小」＝500 傷害 × 2 人 ÷ 45 卡面秒 = 22.2/秒；要追平錨點得跳到「中」）。⭐ 全部是**算出來的**：改「期望命中人數」／冷卻五級距／傷害五級距任何一格，這份名單下一秒就跟著動。⚠️ 只**警告不擋** —— owner 說的是「不合理」不是「不准」。",
           "enabled": true
         }
       ],
@@ -3358,23 +3358,23 @@
           "shape": "範圍",
           "cooldownTier": "極小",
           "cooldownSec": 30,
-          "ratePerCardSecond": 40,
-          "anchorRate": 100,
+          "ratePerCardSecond": 13.333333333333334,
+          "anchorRate": 33.333333333333336,
           "deficitPct": -60,
           "diagonalDamageTier": "極小",
           "requiredDamageTier": "小",
-          "note": "「範圍・極小」的期望輸出比錨點（單體・極小）**-60%**：照級距名填「極小」傷害的話，每卡面秒只有 40.0。⇒ 要嘛把傷害拉到「小」，要嘛把冷卻挪出這一格。⚠️ 只警告不擋。"
+          "note": "「範圍・極小」的期望輸出比錨點（單體・極小）**-60%**：照級距名填「極小」傷害的話，每卡面秒只有 13.3。⇒ 要嘛把傷害拉到「小」，要嘛把冷卻挪出這一格。⚠️ 只警告不擋。"
         },
         {
           "shape": "範圍",
           "cooldownTier": "小",
           "cooldownSec": 45,
-          "ratePerCardSecond": 66.66666666666667,
-          "anchorRate": 100,
+          "ratePerCardSecond": 22.22222222222222,
+          "anchorRate": 33.333333333333336,
           "deficitPct": -33,
           "diagonalDamageTier": "小",
           "requiredDamageTier": "中",
-          "note": "「範圍・小」的期望輸出比錨點（單體・極小）**-33%**：照級距名填「小」傷害的話，每卡面秒只有 66.7。⇒ 要嘛把傷害拉到「中」，要嘛把冷卻挪出這一格。⚠️ 只警告不擋。"
+          "note": "「範圍・小」的期望輸出比錨點（單體・極小）**-33%**：照級距名填「小」傷害的話，每卡面秒只有 22.2。⇒ 要嘛把傷害拉到「中」，要嘛把冷卻挪出這一格。⚠️ 只警告不擋。"
         }
       ],
       "derivedFrom": [
@@ -3417,5 +3417,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "1b291406d501"
+  "profileDigest": "3a47f20ec201"
 }

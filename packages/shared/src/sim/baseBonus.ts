@@ -194,7 +194,7 @@ export const BASE_BONUS_MAX: Readonly<Record<Stat, number>> = Object.freeze({
   [Stat.MoveSpeed]: 12, // [2, 14]
   [Stat.CritChance]: 1, // [0, 1]
   [Stat.CooldownReduction]: 0.99, // [0, 0.99] —— 跟著 STAT_CLAMPS 走,見那裡的註解
-  [Stat.Lifesteal]: 0.8, // [0, 0.8]
+  [Stat.Lifesteal]: 2.0, // [0, 2.0] ⭐ owner 2026-08-22:「上限應該是 200%」
   [Stat.Evasion]: 0.8, // [0, 0.8]
   [Stat.SpellVamp]: 0.8, // [0, 0.8]
 });

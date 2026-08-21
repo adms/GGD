@@ -61,10 +61,10 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        30.0,
-        30.0,
-        30.0,
-        30.0
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
         72.0,
@@ -80,8 +80,8 @@
           "kind": "damageArea",
           "damageType": "physical",
           "amount": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ad",
@@ -105,7 +105,7 @@
       "icon": "assets/icons/abilities/godie-e00w.q.webp",
       "vfxKey": "fx.prim.physical.slash",
       "sfxKey": "wc3.darksummoninglaunch1",
-      "cooldownTier": "極小",
+      "cooldownTier": "小",
       "manaCostTier": "極小",
       "castTimeSec": 0.667
     },
@@ -294,8 +294,8 @@
           "kind": "damageArea",
           "damageType": "physical",
           "amount": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "中",
+            "flat": 1000.0,
             "ratios": [
               {
                 "stat": "ad",

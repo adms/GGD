@@ -36,6 +36,29 @@ def sh(*a: str) -> str:
         return ""
 
 
+def _split_cells(line: str) -> list[str]:
+    """⭐ 在**沒有被跳脫**的 `|` 上切欄（與 scripts/ledger_table.py 同一套規則）。
+
+    ⚠️ 裸 `split("|")` 會在 `\\|` 的 `|` 上切開,把一則內嵌 Markdown 表格的裁決
+    炸成十幾個 <td> —— owner 2026-08-22 在作戰板上看到的就是這個。
+    """
+    out, buf, esc = [], [], False
+    for ch in line.strip().strip("|"):
+        if esc:
+            buf.append(ch if ch == "|" else "\\" + ch)
+            esc = False
+        elif ch == "\\":
+            esc = True
+        elif ch == "|":
+            out.append("".join(buf).strip()); buf = []
+        else:
+            buf.append(ch)
+    if esc:
+        buf.append("\\")
+    out.append("".join(buf).strip())
+    return out
+
+
 def section(md: str, title: str) -> str:
     """抓 `## <title>` 到下一個同級標題之間的原文。
 
@@ -81,7 +104,7 @@ def md_to_html(md: str) -> str:
     for line in md.split("\n"):
         t = line.strip()
         if t.startswith("|"):
-            rows.append([c.strip() for c in t.strip("|").split("|")])
+            rows.append(_split_cells(t))
             continue
         flush_table()
         if not t or t == "---":

@@ -89,8 +89,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -103,7 +103,7 @@
       "vfxKey": "fx.w3x.particle.flamessmoke.p01",
       "sfxKey": "wc3.darksummoninglaunch1",
       "targetsEnemies": true,
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.667,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
@@ -137,8 +137,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -208,16 +208,16 @@
           "stepSize": 200,
           "segmentAoe": 400,
           "damage": {
-            "damageTier": "小",
+            "damageTier": "大",
             "flat": 1500.0
           },
           "damageType": "magic",
-          "castTimeSec": 0.833
+          "castTimeSec": 1.5
         }
       },
       "vfxKey": "godie-tectonicfury-p0",
       "sfxKey": "wc3.dragonyes2",
-      "castTimeSec": 0.833,
+      "castTimeSec": 1.5,
       "hitFeel": {
         "hitstopTicks": 4,
         "hitstunTicks": 6,

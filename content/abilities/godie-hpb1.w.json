@@ -36,8 +36,8 @@
       "kind": "damage",
       "damageType": "physical",
       "amount": {
-        "damageTier": "極小",
-        "flat": 600.0,
+        "damageTier": "小",
+        "flat": 500.0,
         "ratios": [
           {
             "stat": "ap",
@@ -57,7 +57,7 @@
   "sfxKey": "wc3.moongo",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.467,
+  "castTimeSec": 0.667,
   "rangeTier": "極大",
   "range": 12
 }

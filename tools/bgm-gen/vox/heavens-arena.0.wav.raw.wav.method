@@ -1,0 +1,31 @@
+{
+  "method": "cosyvoice3/cv3-0.5b-v1/base/e1ec96e10e12",
+  "key": "cb2dbe42a15ea96fff80de204c3e274f",
+  "core": "voicegen-core-v2",
+  "createdAt": "2026-08-21T18:39:48Z",
+  "id": "heavens-arena.0.wav.raw.wav",
+  "engine": "cosyvoice3",
+  "variant": "base",
+  "engineReason": "default",
+  "category": "wav",
+  "lang": "ja",
+  "text": "クラピカはいつ船を降りるんだ",
+  "modelText": "クラピカ ワ イツ フネ オ オリルンダ",
+  "ref": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-efur.wav",
+  "refSha256": "dc9886aa29b77ba3",
+  "device": "mps",
+  "params": {
+    "maxChars": 60,
+    "intervalSilence": 200,
+    "speed": 1.0,
+    "seed": null,
+    "takes": 1
+  },
+  "wallSec": 15.21,
+  "segments": 1,
+  "durationSec": 2.28,
+  "sampleRate": 24000,
+  "channels": 1,
+  "bytes": 218960,
+  "rtf": 6.67
+}

@@ -23,8 +23,8 @@
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "damageTier": "極小",
-        "flat": 600.0,
+        "damageTier": "小",
+        "flat": 500.0,
         "ratios": [
           {
             "stat": "ap",
@@ -36,7 +36,7 @@
   ],
   "vfxKey": "fx.prim.earth.pulse-sm",
   "sfxKey": "wc3.mortarteampissed9",
-  "castTimeSec": 0.467,
+  "castTimeSec": 0.667,
   "rangeTier": "小",
   "range": 4.5
 }

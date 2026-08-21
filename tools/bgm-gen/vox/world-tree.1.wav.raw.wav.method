@@ -1,0 +1,31 @@
+{
+  "method": "cosyvoice3/cv3-0.5b-v1/base/e1ec96e10e12",
+  "key": "1dc44d9cc72bf04fa4f813f78060b4fe",
+  "core": "voicegen-core-v2",
+  "createdAt": "2026-08-21T18:40:16Z",
+  "id": "world-tree.1.wav.raw.wav",
+  "engine": "cosyvoice3",
+  "variant": "base",
+  "engineReason": "default",
+  "category": "wav",
+  "lang": "ja",
+  "text": "スターバースト・ストリーム！",
+  "modelText": "スターバースト ストリーム",
+  "ref": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-etyr.wav",
+  "refSha256": "326954befa551d7c",
+  "device": "mps",
+  "params": {
+    "maxChars": 60,
+    "intervalSilence": 200,
+    "speed": 1.0,
+    "seed": null,
+    "takes": 1
+  },
+  "wallSec": 13.28,
+  "segments": 1,
+  "durationSec": 1.32,
+  "sampleRate": 24000,
+  "channels": 1,
+  "bytes": 126800,
+  "rtf": 10.06
+}

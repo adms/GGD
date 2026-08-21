@@ -23,11 +23,11 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 585 個檔案**，分佈在 2 個隔離區。
+**目前共 648 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
-| [`docs/legacy/`](legacy-index.md#docslegacy) | 145 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
+| [`docs/legacy/`](legacy-index.md#docslegacy) | 208 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
 | [`content/_legacy/`](legacy-index.md#contentlegacy) | 440 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
@@ -35,7 +35,7 @@ owner 2026-08-13：
 
 ---
 
-## `docs/legacy/` —— 145 檔
+## `docs/legacy/` —— 208 檔
 
 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）
 
@@ -94,9 +94,68 @@ owner 2026-08-13：
 | `_ability-prose-before-placeholders_temp_2026082016462/descriptions.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_ability-prose-before-placeholders_temp_2026082017032/README.md` | 技能說明改成佔位符 —— 轉檔前的原文（說明推導（票號待開）） —— · 改寫 **18** 支技能、**33** 個 JSON、**2** 處產生器規格字串。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_ability-prose-before-placeholders_temp_2026082017032/descriptions.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026082118304/README.md` | 技能說明改成佔位符 —— 轉檔前的原文（說明推導（票號待開）） —— · 改寫 **1** 支技能、**2** 個 JSON、**0** 處產生器規格字串。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026082118304/descriptions.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/_vox/frieren.0_temp_20260822-0239_b5c924117e30bbe2.wav` | （.wav 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/_vox/heavens-arena.0_temp_20260822-0239_64118f01b35f60d0.wav` | （.wav 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/_vox/infinity-castle.0_temp_20260822-0237_d2c644bff4d29776.wav` | （.wav 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/_vox/nazarick.0_temp_20260822-0238_57154d275f161665.wav` | （.wav 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/_vox/world-tree.0_temp_20260822-0239_7afe3d36c559a82a.wav` | （.wav 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/README.md` | BGM 版本備份 20260822-0235 —— owner 2026-08-22：「**舊的歌不要刪除，移到 legacy 備份就好 不要直接取代**」 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/bgm/map.castle.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/bgm/map.colosseum.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/bgm/map.dota.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/bgm/map.frieren.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/bgm/map.godie.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/bgm/map.heavens-arena.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/bgm/map.holy-grail.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/bgm/map.infinity-castle.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/bgm/map.nazarick.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/bgm/map.royale.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/bgm/map.shiganshina.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/bgm/map.skeleton.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/bgm/map.world-tree.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/vox/frieren.0.wav` | （.wav 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/vox/heavens-arena.0.wav` | （.wav 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/vox/holy-grail.0.wav` | （.wav 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/vox/infinity-castle.0.wav` | （.wav 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/vox/lines.json.committed` | （.committed 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/vox/lines.json.prev` | （.prev 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/vox/nazarick.0.wav` | （.wav 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/vox/shiganshina.0.wav` | （.wav 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/bgm_temp_20260822-0235/vox/world-tree.0.wav` | （.wav 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.frieren/map.frieren_temp_20260822-0242_4c196f15d14935f5.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.heavens-arena/map.heavens-arena_temp_20260822-0242_08166a1fef285dfe.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.infinity-castle/map.infinity-castle_temp_20260822-0243_73653dd2f11c1ffe.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.nazarick/map.nazarick_temp_20260822-0244_9eed7ae1d21a2f82.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_bgm-versions/map.world-tree/map.world-tree_temp_20260822-0244_ac0478fc9bb9387a.mp3` | （.mp3 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/AudioDirector_temp_20260822-0122.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ConfigDocPage_temp_20260821-2358.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/RallyConfirmDialog_temp_20260821-2355.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/_ledger.tsv` | （.tsv 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/audio-mix_temp_20260822-0122.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/audioMixDoc_temp_20260822-0122.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/claims_temp_20260821-2048.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/configForms_temp_20260821-2355.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/configForms_temp_20260821-2358.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/configForms_temp_20260822-0122.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/config_temp_20260821-2355.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/contextualVoice_temp_20260822-0122.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/damageTiers_temp_20260822-0100.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/damageTiers_temp_20260822-0109.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/fieldAdoption_broken_temp_20260822-0126.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/gen_board_temp_20260822-0005.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/godie-e00r_ex_temp_20260822-0017.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/godie-e00r_gen_temp_20260822-0027.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ledger_table_temp_20260822-0005.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/lobby-rally_temp_20260821-2355.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/nameVoice_temp_20260822-0122.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/ruling_temp_20260821-2110.sh` | （.sh 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/skill-normalize-writeback_temp_20260821-033052.tar.gz` | （.gz 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/stat-caps_temp_20260822-0033.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/statTypes_temp_20260822-0033.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/victoryTaunt_temp_20260822-0122.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/voiceMixPolicy_temp_20260822-0122.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/20260820-012418/CLAUDE.md` | GGD — 開發守則 —— 這一份是**規則**，不是說明書。架構與現況看 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/20260820-012959/docs/_release/board-live.md` | ⭐ 瓶頸已解除：鎖是 `bundle.json`，不是 `content/` 目錄 —— 切分依據是**檔案領域互斥**，⛔ 不是主題相近 —— 兩條 lane 只要會編到同一個檔就不能併行。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/claims-baseline-stale_temp_20260821-033411/grail-ex-13.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
@@ -152,6 +211,10 @@ owner 2026-08-13：
 | `_overwrites/overwrite_temp_20260821-190732/content/config/replay.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260821-191214/apps/admin/src/quickCleanup.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260821-195520/packages/shared/scripts/_gh433_check_temp.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260822-010522/packages/shared/src/content/damageTiers.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260822-010608/tools/bgm-gen/src/ggd/scenefx.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260822-011214/apps/client/src/ui/panels/roundVictoryCollapse.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260822-012357/apps/client/src/ui/panels/settlementStartFocus.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/04.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/06.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/08.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |

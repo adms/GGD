@@ -117,8 +117,8 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -127,12 +127,12 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.467
+          "castTimeSec": 0.667
         }
       },
       "vfxKey": "fx.prim.ice.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.667,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
@@ -166,8 +166,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -255,7 +255,7 @@
           "kind": "damageArea",
           "damageType": "magic",
           "amount": {
-            "damageTier": "小",
+            "damageTier": "大",
             "flat": 1500.0
           },
           "radius": 8.0,

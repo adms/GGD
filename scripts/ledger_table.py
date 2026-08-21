@@ -43,8 +43,33 @@ SECTION_NOTE = (
 )
 
 
+# ⭐ 表格欄位要在**沒有被跳脫**的 `|` 上切,⛔ 不是裸 split("|")。
+#
+# ⚠️ 前科（owner 2026-08-22:「GGD作戰版的一個表格好像格式跑掉了」）:
+# `cell()` 一直都有把內容裡的 `|` 跳脫成 `\|`,但**兩個讀端都用裸 split**,
+# 於是在跳脫字元上切開 —— 一則裡面內嵌 Markdown 表格的裁決,
+# 在作戰板上炸成十幾個 <td>,每一格結尾還掛著一個孤兒 `\`。
+# ⛔ 沒有任何東西變紅:HTML 仍然合法,只是讀不懂。
+def split_cells(line: str) -> list[str]:
+    out, buf, esc = [], [], False
+    for ch in line.strip().strip("|"):
+        if esc:
+            buf.append(ch if ch == "|" else "\\" + ch)
+            esc = False
+        elif ch == "\\":
+            esc = True
+        elif ch == "|":
+            out.append("".join(buf).strip()); buf = []
+        else:
+            buf.append(ch)
+    if esc:
+        buf.append("\\")
+    out.append("".join(buf).strip())
+    return out
+
+
 def cells(line: str) -> list[str]:
-    return [c.strip() for c in line.strip().strip("|").split("|")]
+    return split_cells(line)
 
 
 def cell(text: str, limit: int = 0) -> str:

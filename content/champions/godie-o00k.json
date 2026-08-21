@@ -82,8 +82,8 @@
         "params": {
           "radius": 350,
           "damage": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -169,7 +169,7 @@
         "params": {
           "radius": 500,
           "damage": {
-            "damageTier": "小",
+            "damageTier": "大",
             "flat": 1500.0,
             "ratios": [
               {
@@ -227,8 +227,8 @@
           "maxSources": 20,
           "damageType": "magic",
           "amount": {
-            "damageTier": "極小",
-            "flat": 600.0
+            "damageTier": "小",
+            "flat": 500.0
           },
           "jumps": 16,
           "jumpRange": 24.0,

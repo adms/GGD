@@ -30,15 +30,15 @@
       "stepSize": 200,
       "segmentAoe": 400,
       "damage": {
-        "damageTier": "極小",
-        "flat": 600.0
+        "damageTier": "小",
+        "flat": 500.0
       },
       "damageType": "magic",
-      "castTimeSec": 0.467
+      "castTimeSec": 0.767
     }
   },
   "vfxKey": "fx.prim.wind.beam",
-  "castTimeSec": 0.467,
+  "castTimeSec": 0.767,
   "targetsEnemies": true,
   "rangeTier": "大",
   "range": 8

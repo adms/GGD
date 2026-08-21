@@ -1,0 +1,31 @@
+{
+  "method": "cosyvoice3/cv3-0.5b-v1/base/e1ec96e10e12",
+  "key": "6550adea36c5510a0d6f69b186b79c87",
+  "core": "voicegen-core-v2",
+  "createdAt": "2026-08-21T17:44:18Z",
+  "id": "holy-grail.0.wav",
+  "engine": "cosyvoice3",
+  "variant": "base",
+  "engineReason": "default",
+  "category": "wav",
+  "lang": "ja",
+  "text": "令呪をもって命ずる",
+  "modelText": "レイジュ ヲ モッテ メイズル",
+  "ref": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-e002.wav",
+  "refSha256": "58d5de4463b3d460",
+  "device": "mps",
+  "params": {
+    "maxChars": 60,
+    "intervalSilence": 200,
+    "speed": 1.0,
+    "seed": null,
+    "takes": 1
+  },
+  "wallSec": 15.03,
+  "segments": 1,
+  "durationSec": 1.56,
+  "sampleRate": 24000,
+  "channels": 1,
+  "bytes": 149840,
+  "rtf": 9.63
+}

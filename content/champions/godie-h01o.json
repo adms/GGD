@@ -82,8 +82,8 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "damageTier": "極小",
-                "flat": 600.0,
+                "damageTier": "小",
+                "flat": 500.0,
                 "ratios": [
                   {
                     "stat": "ap",
@@ -150,8 +150,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -162,7 +162,7 @@
         }
       ],
       "vfxKey": "fx.prim.arcane.slash",
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.667,
       "cooldownTier": "極大",
       "manaCostTier": "極小",
       "passive": {
@@ -251,8 +251,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -269,7 +269,7 @@
       ],
       "vfxKey": "fx.prim.void.dash",
       "targetsEnemies": true,
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.667,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",

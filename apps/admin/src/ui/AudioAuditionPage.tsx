@@ -62,7 +62,11 @@ export function AudioAuditionPage(): React.JSX.Element {
         label: "音樂/音效試聽",
         url: byKey("bgmAudition"),
         needsClient: true,
-        note: "BGM 與 SFX 的試聽與命名審核（#52 / #155）。",
+        note:
+          "12 首場景曲 ＋ 13 首場地戰鬥曲（#531，一張地圖一首）＋ 12 首 Samantha 變體 " +
+          "＋ 114 句英雄名言 ＋ 全部 SFX，共 381 個播放器。" +
+          "場地曲每張卡片會畫出五段弧線（導入→熱血→收束低潮→轉折→高潮→LOOP）、" +
+          "列出該場地的實錄場景音效，以及 CosyVoice 名言與它的作品出處與「原文把握」。",
       },
       {
         key: "voice",
@@ -89,7 +93,7 @@ export function AudioAuditionPage(): React.JSX.Element {
       <div>
         <h2 style={{ margin: 0, fontSize: 18, color: TEXT_MAIN }}>音樂音效素材管理</h2>
         <div style={{ fontSize: 11, color: TEXT_DIM, marginTop: 6, lineHeight: 1.7 }}>
-          BGM／SFX／角色語音的試聽與看板都收在這裡。試聽頁以 iframe 嵌入遊戲客戶端
+          BGM／SFX／角色語音的試聽與看板都收在這裡（#531 起也含 13 首場地戰鬥曲）。試聽頁以 iframe 嵌入遊戲客戶端
           （:39527）— 那是唯一以可播放 MIME 提供 mp3 的來源；本後台不掛載 /content
           音訊、也不代理 :39527，避免把音訊位元組放到可寫入的 loopback 來源上。
           音訊在操作者本機播放是預期行為（非 #62 背景靜音規則）。要寫入／驗收語音，

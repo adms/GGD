@@ -23,7 +23,7 @@ long note at the top of tools/voice-gen/engine_cosyvoice3.py.
 ⛔ 効果音ラボ clips must never be used as a `ref`: their terms forbid AI use.
 Refs come from voice-reference-pipeline/approved/processed only.
 """
-import json, os, subprocess, sys
+import hashlib, json, os, shutil, subprocess, sys, time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
@@ -33,6 +33,26 @@ VENV = os.environ.get("GGD_COSYVOICE_PY",
 HOME = os.environ.get("GGD_COSYVOICE_HOME",
                       "/Users/Takuro/ggd-voice-cosyvoice3/CosyVoice")
 SYNTH = os.path.join(REPO, "tools", "voice-gen", "synth.py")
+ARCHIVE = os.path.join(REPO, "docs", "legacy", "_bgm-versions", "_vox")
+
+
+def archive_previous(path: str) -> str | None:
+    """owner 2026-08-22:「舊的歌不要刪除，移到 leagcy 備份就好 不要直接取代」.
+
+    Same reasoning as `render.py::archive_previous` — the overwrite happens from
+    Python, so the repo's PreToolUse hook cannot see it. Content-addressed, so
+    re-running with an unchanged line copies nothing."""
+    if not os.path.exists(path):
+        return None
+    digest = hashlib.sha256(open(path, "rb").read()).hexdigest()
+    os.makedirs(ARCHIVE, exist_ok=True)
+    stem = os.path.splitext(os.path.basename(path))[0]
+    for name in os.listdir(ARCHIVE):
+        if digest[:16] in name:
+            return None
+    dest = os.path.join(ARCHIVE, f"{stem}_temp_{time.strftime('%Y%m%d-%H%M')}_{digest[:16]}.wav")
+    shutil.copy2(path, dest)
+    return dest
 
 
 def plan() -> list[dict]:
@@ -52,6 +72,7 @@ def plan() -> list[dict]:
 def main(argv: list[str]) -> int:
     jobs = plan()
     go = "--go" in argv
+    force = "--force" in argv
     missing_ref = [j for j in jobs if not os.path.exists(os.path.join(REFS, j["ref"]))]
     print(f"{len(jobs)} 句 · ref 目錄 {REFS}")
     for j in jobs:
@@ -75,9 +96,21 @@ def main(argv: list[str]) -> int:
     failed = 0
     for j in jobs:
         out = os.path.join(HERE, j["wav"])
-        if os.path.exists(out):
-            print(f"  skip {j['wav']} (已存在;刪掉它才會重算)")
-            continue
+        # ⭐ A sidecar records the exact text+kana that produced this wav, so
+        # editing a line in lines.json re-renders it AUTOMATICALLY. ⛔ The old
+        # behaviour ("skip if the file exists") meant a changed quote silently
+        # kept the previous recording — the file was there, so nothing complained.
+        want = f"{j['text']}\n{j['kana']}\n"
+        side = out + ".txt"
+        if os.path.exists(out) and not force:
+            have = open(side, encoding="utf-8").read() if os.path.exists(side) else ""
+            if have == want:
+                print(f"  skip {j['wav']} (台詞未變)")
+                continue
+            print(f"  ↻ {j['wav']} 台詞變了 —— 重算")
+        kept = archive_previous(out)
+        if kept:
+            print(f"  ↳ 舊版留底 {os.path.relpath(kept, REPO)}")
         cmd = [VENV, SYNTH, "--ref", os.path.join(REFS, j["ref"]), "--lang", "ja",
                "--kana", j["kana"], "--text", j["text"], "--out", out]
         print(f"  … {j['arena']:22} {j['text']}")
@@ -96,6 +129,7 @@ def main(argv: list[str]) -> int:
                         "-ar", "44100", "-ac", "1", "-c:a", "pcm_s16le", out],
                        check=True)
         os.remove(raw)
+        open(side, "w", encoding="utf-8").write(want)
     if failed:
         print(f"⛔ {failed} 句沒產出 —— aot.vox_line 會靜默略過它們,"
               f"所以 render.py 的 vox_status() 會把缺的印出來。", file=sys.stderr)

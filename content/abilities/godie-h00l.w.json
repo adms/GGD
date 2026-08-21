@@ -35,8 +35,8 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "damageTier": "極小",
-            "flat": 600.0
+            "damageTier": "小",
+            "flat": 500.0
           }
         }
       ]
@@ -48,5 +48,5 @@
   "cooldownTier": "大",
   "manaCostTier": "極小",
   "rangeTier": "極大",
-  "castTimeSec": 0.467
+  "castTimeSec": 0.667
 }

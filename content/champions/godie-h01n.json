@@ -152,8 +152,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -225,7 +225,7 @@
       "cooldownTier": "極大",
       "manaCostTier": "極小",
       "rangeTier": "小",
-      "castTimeSec": 0.467
+      "castTimeSec": 0.667
     },
     "E": {
       "id": "godie-h01n.e",
@@ -254,8 +254,8 @@
           "kind": "damageLine",
           "damageType": "magic",
           "amount": {
-            "damageTier": "極小",
-            "flat": 600.0
+            "damageTier": "中",
+            "flat": 1000.0
           },
           "length": 11,
           "width": 2.0,

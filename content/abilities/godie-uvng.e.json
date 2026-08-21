@@ -29,17 +29,17 @@
       "stepSize": 200,
       "segmentAoe": 400,
       "damage": {
-        "damageTier": "小",
+        "damageTier": "大",
         "flat": 1500.0
       },
       "damageType": "magic",
-      "castTimeSec": 0.833
+      "castTimeSec": 1.5
     }
   },
   "vfxKey": "godie-tectonicfury-p0",
   "sfxKey": "wc3.dragonyes2",
   "schema": "ability@1",
-  "castTimeSec": 0.833,
+  "castTimeSec": 1.5,
   "hitFeel": {
     "hitstopTicks": 4,
     "hitstunTicks": 6,

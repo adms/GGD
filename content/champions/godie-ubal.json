@@ -76,8 +76,8 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -124,8 +124,8 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -134,13 +134,13 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.467
+          "castTimeSec": 0.667
         }
       },
       "vfxKey": "fx.prim.void.shockwave",
       "sfxKey": "wc3.trollbatriderpissed2",
       "targetsEnemies": true,
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.667,
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "中",
@@ -172,8 +172,8 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -216,8 +216,8 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -226,13 +226,13 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.833
+          "castTimeSec": 1.233
         }
       },
       "vfxKey": "fx.prim.void.pulse-lg",
       "sfxKey": "wc3.shadowhunterready1",
       "targetsEnemies": true,
-      "castTimeSec": 0.833,
+      "castTimeSec": 1.233,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",

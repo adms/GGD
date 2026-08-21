@@ -83,15 +83,15 @@
           "stepSize": 200,
           "segmentAoe": 400,
           "damage": {
-            "damageTier": "極小",
-            "flat": 600.0
+            "damageTier": "小",
+            "flat": 500.0
           },
           "damageType": "magic",
-          "castTimeSec": 0.467
+          "castTimeSec": 0.767
         }
       },
       "vfxKey": "fx.prim.wind.beam",
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.767,
       "targetsEnemies": true,
       "rangeTier": "大",
       "range": 8,
@@ -122,8 +122,8 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -132,13 +132,13 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.467
+          "castTimeSec": 0.667
         }
       },
       "vfxKey": "fx.prim.arcane.pulse",
       "sfxKey": "wc3.spellbreakerpissed4",
       "targetsEnemies": true,
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.667,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
@@ -205,8 +205,8 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",

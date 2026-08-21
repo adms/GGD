@@ -26,8 +26,8 @@
       "kind": "damage",
       "damageType": "physical",
       "amount": {
-        "damageTier": "極小",
-        "flat": 600.0,
+        "damageTier": "小",
+        "flat": 500.0,
         "ratios": [
           {
             "stat": "ap",
@@ -41,7 +41,7 @@
   "targetsEnemies": true,
   "radius": 6.0,
   "schema": "ability@1",
-  "castTimeSec": 1.233,
+  "castTimeSec": 1.433,
   "rangeTier": "極小",
   "range": 3,
   "radiusTier": "中"

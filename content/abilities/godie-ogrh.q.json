@@ -28,8 +28,8 @@
     "ref": "tpl-single-strike",
     "params": {
       "damage": {
-        "damageTier": "極小",
-        "flat": 600.0,
+        "damageTier": "小",
+        "flat": 500.0,
         "ratios": [
           {
             "stat": "ap",
@@ -38,13 +38,13 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.467
+      "castTimeSec": 0.667
     }
   },
   "vfxKey": "fx.prim.holy.slash",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.467,
+  "castTimeSec": 0.667,
   "rangeTier": "極大",
   "range": 12
 }

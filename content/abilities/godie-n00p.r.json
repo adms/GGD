@@ -24,8 +24,8 @@
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "damageTier": "極小",
-        "flat": 600.0,
+        "damageTier": "小",
+        "flat": 500.0,
         "ratios": [
           {
             "stat": "ap",
@@ -38,7 +38,7 @@
   "vfxKey": "fx.prim.nature.shockwave-lg",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.833,
+  "castTimeSec": 1.233,
   "rangeTier": "中",
   "range": 6
 }

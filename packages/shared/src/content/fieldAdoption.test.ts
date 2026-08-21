@@ -216,21 +216,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   //    `resolveDamageTier` 已經有 203 份文件在走，路是通的。
   // ⚠️ 用 `landing` 而不是 `default-live`：30 天後再紅一次，逼我們回來問
   //    「owner 到底要不要有 3000 以上的技能」。⛔ 不可以安靜地消失。
-  "enum:abilities.effects[]#chainLightning.amount.damageTier=中": {
-    status: "landing",
-    since: "2026-08-21",
-    why: "五級距全轉之後 202 個 amount 站點的分佈是 極小 181 / 小 33 / 中 0 —— 要填「中」(3000) 需要卡面基礎 ≥2250，而全庫最高只有 1800。零代表**還沒有一支技能夠格**，那是 owner 的平衡題，⛔ 不是機制沒接（`resolveDamageTier` 已有 203 份文件在走）。",
-  },
-  "enum:abilities.effects[]#chainLightning.amount.damageTier=大": {
-    status: "landing",
-    since: "2026-08-21",
-    why: "同「中」那一列：五級距全轉之後 202 個 amount 站點的分佈是 極小 181 / 小 33 / 中 0 / 大 0。要填「大」(4500) 需要卡面基礎 ≥3750，而全庫最高的一支是 1800（12-002 仙氣發勁）。零代表**還沒有一支技能夠格**，⛔ 不是機制沒接 —— 同一個 `resolveDamageTier` 已經有 203 份文件在走。要不要有這一級的技能是 owner 的平衡題。",
-  },
-  "enum:abilities.effects[]#chainLightning.amount.damageTier=極大": {
-    status: "landing",
-    since: "2026-08-21",
-    why: "同「中」，門檻最高（6000，＝ hard limit LV30 中位血量的一半）。⚠️ `damageTiers.ts` 的天花板本來就是「一發不可以秒殺 LV30 的中位英雄」，所以這一格出貨為零是**設計上預期**的稀有度。",
-  },
 
   // ═══ GH#451 連鎖閃電 2026-08-20 ═══════════════════════════════════════════
   // ⚠️ 先讀這一段再讀下面十二列,否則你會以為 `damage` 的三格被弄丟了。

@@ -78,8 +78,8 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -88,12 +88,12 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.467
+          "castTimeSec": 0.667
         }
       },
       "vfxKey": "fx.prim.wind.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.667,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
@@ -129,15 +129,15 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "damageTier": "極小",
-                "flat": 600.0
+                "damageTier": "小",
+                "flat": 500.0
               }
             }
           ]
         }
       ],
       "vfxKey": "fx.prim.nature.bolt",
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.767,
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "中",
@@ -201,8 +201,8 @@
         "ref": "tpl-single-strike",
         "params": {
           "damage": {
-            "damageTier": "極小",
-            "flat": 600.0,
+            "damageTier": "小",
+            "flat": 500.0,
             "ratios": [
               {
                 "stat": "ap",
@@ -211,12 +211,12 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.833
+          "castTimeSec": 1.233
         }
       },
       "vfxKey": "fx.prim.nature.nova-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.833,
+      "castTimeSec": 1.233,
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "極大",

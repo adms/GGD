@@ -162,13 +162,16 @@ A("59-04", "59-04 野戰型陽電子砲", "ground", [90, 90, 90], [350, 500, 650
   effects=[line("true", length=8.25, width=2.2, per=[750, 1200, 1650])])
 
 A("59-002", "59-001 完全暴走", "self", [150], [0], 0,
-  "[被動][暴走][迴避][吸血][加速][屬性門檻]\n{{cd}}秒冷卻\n\n「什麼？竟然沒有世界末日嗎？」\n[暴走]的門檻降為低於自身[最大生命] 20%，[攻擊速度]提升至最上限 10，[吸血]120%、[迴避]50%，持續 12秒。",
+  "[被動][暴走][迴避][吸血][加速][屬性門檻]\n{{cd}}秒冷卻\n\n「什麼？竟然沒有世界末日嗎？」\n[暴走]的門檻降為低於自身[最大生命] 50%，[攻擊速度]提升至最上限 10，[吸血]120%、[迴避]50%，持續 12秒。",
   passive={"name": "59-001 完全暴走", "ranks": [{"hooks": [
       {"on": "onDamageTaken", "target": "self", "internalCooldown": 150.0,
        "condition": {"kind": "stat", "subject": "self", "stat": "hp",
-                     "mode": "percent", "op": "<=", "value": 0.2},
+                     "mode": "percent", "op": "<=", "value": 0.5},  # ⭐ owner 2026-08-22:「暴走EX血量門檻降到50%」(20%→50%)
+       # ⚠️ ⛔ 這裡**不要**補 lifesteal capRaise:owner 2026-08-22 把 base 抬到 2.0(200%)
+       #    之後 1.2 已經在上限內,再寫一條 capRaise 就是**逐位元不會改變任何數字**的
+       #    空 modifier（第一·五守則,noOpModifierClaims.test.ts 會紅）。
        "effects": [buff([M("as", "capRaise", 10.0), M("as", "pctAdd", 4.0),
-                         M("lifesteal", "flat", 0.8), M("evasion", "flat", 0.5)], 12.0),
+                         M("lifesteal", "flat", 1.2), M("evasion", "flat", 0.5)], 12.0),
                    # ⭐ 同 59-00：這一行才是「暴走」，也是施法門檻認得出這支技能的憑據
                    #    （berserkRules.trigger = 'berserkGrantors'）。
                    status("berserk", 12.0, berserk=True, applyTo="self")]}]}]})

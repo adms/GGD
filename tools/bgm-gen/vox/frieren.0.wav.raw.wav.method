@@ -1,0 +1,31 @@
+{
+  "method": "cosyvoice3/cv3-0.5b-v1/base/e1ec96e10e12",
+  "key": "ce84bc4295dd850ee9943b1cae806180",
+  "core": "voicegen-core-v2",
+  "createdAt": "2026-08-21T18:39:31Z",
+  "id": "frieren.0.wav.raw.wav",
+  "engine": "cosyvoice3",
+  "variant": "base",
+  "engineReason": "default",
+  "category": "wav",
+  "lang": "ja",
+  "text": "勇者ヒンメルなら、きっとそうした",
+  "modelText": "ユウシャ ヒンメル ナラ キット ソウシタ",
+  "ref": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-h020.wav",
+  "refSha256": "5b15ded02eeaef4c",
+  "device": "mps",
+  "params": {
+    "maxChars": 60,
+    "intervalSilence": 200,
+    "speed": 1.0,
+    "seed": null,
+    "takes": 1
+  },
+  "wallSec": 16.45,
+  "segments": 1,
+  "durationSec": 2.04,
+  "sampleRate": 24000,
+  "channels": 1,
+  "bytes": 195920,
+  "rtf": 8.07
+}

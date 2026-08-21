@@ -30,7 +30,7 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "damageTier": "小",
+            "damageTier": "大",
             "flat": 1500.0
           }
         }
@@ -39,7 +39,7 @@
   ],
   "vfxKey": "fx.prim.ice.nova",
   "schema": "ability@1",
-  "castTimeSec": 0.833,
+  "castTimeSec": 1.133,
   "rangeTier": "極大",
   "range": 12
 }

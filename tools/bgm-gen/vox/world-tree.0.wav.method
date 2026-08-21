@@ -1,0 +1,31 @@
+{
+  "method": "cosyvoice3/cv3-0.5b-v1/base/e1ec96e10e12",
+  "key": "0ca6ad1888c58bbc21bc247e63b0bbcb",
+  "core": "voicegen-core-v2",
+  "createdAt": "2026-08-21T17:45:00Z",
+  "id": "world-tree.0.wav",
+  "engine": "cosyvoice3",
+  "variant": "base",
+  "engineReason": "default",
+  "category": "wav",
+  "lang": "ja",
+  "text": "世界樹の中心へ",
+  "modelText": "セカイジュ ノ チュウシン エ",
+  "ref": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-etyr.wav",
+  "refSha256": "326954befa551d7c",
+  "device": "mps",
+  "params": {
+    "maxChars": 60,
+    "intervalSilence": 200,
+    "speed": 1.0,
+    "seed": null,
+    "takes": 1
+  },
+  "wallSec": 11.32,
+  "segments": 1,
+  "durationSec": 1.2,
+  "sampleRate": 24000,
+  "channels": 1,
+  "bytes": 115280,
+  "rtf": 9.43
+}

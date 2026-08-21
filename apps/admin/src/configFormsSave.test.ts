@@ -341,7 +341,13 @@ describe("設定頁的共同規則 (adminui-config-forms-save)", () => {
       expect(h.text()).toContain(spec.effect);
       expect(h.text()).toContain(spec.consumer);
       // 說明也要真的畫出來，不是只存在標籤表裡。
-      for (const f of spec.fields) expect(h.text()).toContain(f.note);
+      // ⭐ 說明裡的 `{{出貨值}}` 在渲染時被真的出貨值取代（configFormsShippedProse.test.ts
+      //    在守「⛔ 說明不可以自己抄一份數字」），所以這裡逐段比對，⛔ 不是整串比。
+      for (const f of spec.fields) {
+        for (const seg of f.note.split("{{出貨值}}")) {
+          if (seg.length > 0) expect(h.text()).toContain(seg);
+        }
+      }
     }
   });
 });

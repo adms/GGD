@@ -36,7 +36,7 @@
  *   shield        × shield effect amounts (effects/effectRunner.ts)
  *   critChance    × Stat.CritChance          (statPipeline, before the [0,1] clamp)
  *   critDamage    × Stat.CritDamage          (statPipeline)
- *   lifesteal     × Stat.Lifesteal           (statPipeline, before the [0,0.8] clamp)
+ *   lifesteal     × Stat.Lifesteal           (statPipeline, before the [0,2.0] clamp)
  *   attackRange   × Stat.AttackRange         (statPipeline; BASIC-attack reach only.
  *                   ⚠️ SINCE GH#252 IT IS NOT THE ONLY FACTOR ON THAT ROW: the
  *                   champion's 身體放大倍數 multiplies it at the same seam via
