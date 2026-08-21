@@ -139,7 +139,14 @@ if not FROM_TX:
         print(f"⚠️ transcript 撈不到 {DAY} 的訊息 —— 退回已版控的 {ARCHIVE}（{len(msgs)} 則）")
 
 hay = norm(LEDGER.read_text(encoding="utf-8")) if LEDGER.exists() else ""
-missing = [(t, m) for t, m in msgs if not covered(m, hay)]
+# ⭐ 2026-08-21 修：⛔ 只比文字窗會漏掉整則訊息。
+# `scripts/ruling.sh` 把 owner 的原話**逐字**寫進帳本當「裁決」列 ⇒ 那一則的 24 字窗
+# 在帳本裡找得到（藏在裁決列裡），於是閘以為「它有列了」——
+# ⛔ **把「這段文字出現在某處」誤認成「這則訊息有自己的列」。**
+# 實測漏掉 2026-08-21 的 12:52 / 12:56 / 13:06 / 14:48 四則，而 13:06 是 #486–#490 五張票的來源。
+# ⇒ 現在**兩個條件都要成立**：文字窗命中，**而且**該時間戳真的有一列。
+_row_times = {c[0].strip() for _, c in LT.canonical_rows(LEDGER)} if LEDGER.exists() else set()
+missing = [(t, m) for t, m in msgs if not (covered(m, hay) and t in _row_times)]
 
 if CHECK:
     # ⭐ 票號那一格只有兩種合法值：`#123`（對到票）或 `— <理由>`（明說不需要開票）。

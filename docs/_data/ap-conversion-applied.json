@@ -1,0 +1,459 @@
+{
+  "knobs": {
+    "$note": "屬性額外傷害 → AP 百分比換算的六格開關（owner 2026-08-21）。⚠️ 這是**建置期**輸入，⛔ 不是執行期設定：改了要跑 `pnpm apconv:build` 才生效（rollback 同一條路）。⭐ 刻意不住在 content/config/ —— 一格後台存得下去、卡面照樣印、場上零反應的開關，正是第一·五守則說的「說了但不會發生」。",
+    "apPerAttrPoint": 0.25,
+    "stepPct": 10,
+    "rounding": "halfUp",
+    "minPct": 10,
+    "mode": "replace",
+    "physical": "keepDamageType",
+    "enabled": true,
+    "$fields": {
+      "apPerAttrPoint": "owner 的「1/4」：一點屬性乘數 = 這麼多 AP 百分比。改它 = 整批重算。",
+      "stepPct": "百分比粒度（owner：「取百分比整數例如 10/20/30…」）。5 / 25 也可以。",
+      "rounding": "halfUp（出貨・四捨五入，.5 一律進位）/ ceil / nearestEven。⛔ 不選 nearestEven：25→20 而 75→80，同樣的 .5 走兩個方向。",
+      "minPct": "下限 —— ⛔ 不讓任何一條宣稱被取整成 0（那就是第一·五守則的空宣稱）。",
+      "mode": "replace（出貨）= 換掉那條與卡面無關的捏造係數（owner 說「換成」）；add = 疊在上面。",
+      "physical": "keepDamageType（出貨）= 物理技能保持物理、只把成長換成 AP（⛔ 不動護甲/魔抗減傷）；retypeToMagic = 連減傷一起換（一次 owner 沒要求的平衡變更）；skip = 物理技能整批不換（最保守的 rollback）。",
+      "enabled": "false = 從 claims.json 的快照把**原文與原係數**寫回去 ⇒ 一個指令回到換算前，⛔ 不是「這次不做」。"
+    }
+  },
+  "abilities": [
+    {
+      "abilityId": "godie-e007.r",
+      "owner": "json",
+      "apPct": 130,
+      "conditionalPct": [],
+      "damageType": "magic"
+    },
+    {
+      "abilityId": "godie-e00l.r",
+      "owner": "json",
+      "apPct": 130,
+      "conditionalPct": [],
+      "damageType": "physical"
+    },
+    {
+      "abilityId": "godie-e00s.q",
+      "owner": "generator",
+      "apPct": 80,
+      "conditionalPct": [],
+      "damageType": "physical"
+    },
+    {
+      "abilityId": "godie-e00w.passive",
+      "owner": "generator",
+      "apPct": 130,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-e00x.e",
+      "owner": "json",
+      "apPct": 30,
+      "conditionalPct": [],
+      "damageType": "physical"
+    },
+    {
+      "abilityId": "godie-e010.q",
+      "owner": "json",
+      "apPct": 80,
+      "conditionalPct": [],
+      "damageType": "magic"
+    },
+    {
+      "abilityId": "godie-etyr.e",
+      "owner": "json",
+      "apPct": 80,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-etyr.q",
+      "owner": "json",
+      "apPct": 50,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-h01o.q",
+      "owner": "json",
+      "apPct": 50,
+      "conditionalPct": [],
+      "damageType": "magic"
+    },
+    {
+      "abilityId": "godie-h01o.w",
+      "owner": "json",
+      "apPct": 50,
+      "conditionalPct": [],
+      "damageType": "magic"
+    },
+    {
+      "abilityId": "godie-h020.e",
+      "owner": "json",
+      "apPct": 180,
+      "conditionalPct": [],
+      "damageType": "magic"
+    },
+    {
+      "abilityId": "godie-h020.ex",
+      "owner": "json",
+      "apPct": 180,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-h020.r",
+      "owner": "json",
+      "apPct": 130,
+      "conditionalPct": [
+        180
+      ],
+      "damageType": "magic"
+    },
+    {
+      "abilityId": "godie-hart.r",
+      "owner": "json",
+      "apPct": 30,
+      "conditionalPct": [],
+      "damageType": "physical"
+    },
+    {
+      "abilityId": "godie-hjai.e",
+      "owner": "json",
+      "apPct": 180,
+      "conditionalPct": [],
+      "damageType": "magic"
+    },
+    {
+      "abilityId": "godie-hjai.ex",
+      "owner": "json",
+      "apPct": 180,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-hjai.r",
+      "owner": "json",
+      "apPct": 130,
+      "conditionalPct": [
+        180
+      ],
+      "damageType": "magic"
+    },
+    {
+      "abilityId": "godie-hpb1.e",
+      "owner": "json",
+      "apPct": 50,
+      "conditionalPct": [
+        130,
+        250
+      ],
+      "damageType": "physical"
+    },
+    {
+      "abilityId": "godie-hpb1.w",
+      "owner": "json",
+      "apPct": 30,
+      "conditionalPct": [
+        80,
+        150
+      ],
+      "damageType": "physical"
+    },
+    {
+      "abilityId": "godie-hvsh.ex",
+      "owner": "json",
+      "apPct": 150,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-hvsh.r",
+      "owner": "json",
+      "apPct": 80,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-n003.r",
+      "owner": "json",
+      "apPct": 100,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-n01c.r",
+      "owner": "json",
+      "apPct": 180,
+      "conditionalPct": [],
+      "damageType": "physical"
+    },
+    {
+      "abilityId": "godie-n01g.r",
+      "owner": "json",
+      "apPct": 100,
+      "conditionalPct": [],
+      "damageType": "magic"
+    },
+    {
+      "abilityId": "godie-nbbc.r",
+      "owner": "json",
+      "apPct": 180,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-o00l.q",
+      "owner": "json",
+      "apPct": 80,
+      "conditionalPct": [],
+      "damageType": "magic"
+    },
+    {
+      "abilityId": "godie-o00l.r",
+      "owner": "json",
+      "apPct": 30,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-o00x.ex",
+      "owner": "json",
+      "apPct": 250,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-o00x.r",
+      "owner": "json",
+      "apPct": 50,
+      "conditionalPct": [
+        80
+      ],
+      "damageType": "magic"
+    },
+    {
+      "abilityId": "godie-o02p.ex",
+      "owner": "json",
+      "apPct": 150,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-ogld.r",
+      "owner": "json",
+      "apPct": 230,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-ogrh.ex",
+      "owner": "json",
+      "apPct": 250,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-ogrh.r",
+      "owner": "json",
+      "apPct": 50,
+      "conditionalPct": [
+        80
+      ],
+      "damageType": "magic"
+    },
+    {
+      "abilityId": "godie-u00h.e",
+      "owner": "json",
+      "apPct": 80,
+      "conditionalPct": [],
+      "damageType": "magic"
+    },
+    {
+      "abilityId": "godie-u00h.ex",
+      "owner": "json",
+      "apPct": 80,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-u00h.r",
+      "owner": "json",
+      "apPct": 30,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-u00j.w",
+      "owner": "json",
+      "apPct": 80,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-u00l.e",
+      "owner": "json",
+      "apPct": 50,
+      "conditionalPct": [],
+      "damageType": "physical"
+    },
+    {
+      "abilityId": "godie-u00l.ex",
+      "owner": "json",
+      "apPct": 230,
+      "conditionalPct": [
+        150
+      ],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-u00l.q",
+      "owner": "json",
+      "apPct": 80,
+      "conditionalPct": [],
+      "damageType": "physical"
+    },
+    {
+      "abilityId": "godie-u00n.passive",
+      "owner": "json",
+      "apPct": 50,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-u00n.r",
+      "owner": "json",
+      "apPct": 50,
+      "conditionalPct": [],
+      "damageType": "physical"
+    },
+    {
+      "abilityId": "godie-u00o.passive",
+      "owner": "json",
+      "apPct": 50,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-u00o.r",
+      "owner": "json",
+      "apPct": 50,
+      "conditionalPct": [],
+      "damageType": "physical"
+    },
+    {
+      "abilityId": "godie-u00v.r",
+      "owner": "json",
+      "apPct": 80,
+      "conditionalPct": [],
+      "damageType": "physical"
+    },
+    {
+      "abilityId": "godie-u010.passive",
+      "owner": "json",
+      "apPct": 50,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-u010.q",
+      "owner": "json",
+      "apPct": 30,
+      "conditionalPct": [
+        50
+      ],
+      "damageType": "magic"
+    },
+    {
+      "abilityId": "godie-u010.w",
+      "owner": "json",
+      "apPct": 50,
+      "conditionalPct": [],
+      "damageType": "magic"
+    },
+    {
+      "abilityId": "godie-u01u.e",
+      "owner": "json",
+      "apPct": 50,
+      "conditionalPct": [
+        80
+      ],
+      "damageType": "physical"
+    },
+    {
+      "abilityId": "godie-u01u.r",
+      "owner": "json",
+      "apPct": 80,
+      "conditionalPct": [
+        130
+      ],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-udre.e",
+      "owner": "json",
+      "apPct": 50,
+      "conditionalPct": [
+        80
+      ],
+      "damageType": "physical"
+    },
+    {
+      "abilityId": "godie-udre.r",
+      "owner": "json",
+      "apPct": 80,
+      "conditionalPct": [
+        130
+      ],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-umal.e",
+      "owner": "json",
+      "apPct": 50,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-umal.ex",
+      "owner": "json",
+      "apPct": 230,
+      "conditionalPct": [
+        150
+      ],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-umal.q",
+      "owner": "json",
+      "apPct": 80,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-uvng.passive",
+      "owner": "json",
+      "apPct": 50,
+      "conditionalPct": [],
+      "damageType": null
+    },
+    {
+      "abilityId": "godie-uvng.q",
+      "owner": "json",
+      "apPct": 30,
+      "conditionalPct": [
+        50
+      ],
+      "damageType": "magic"
+    },
+    {
+      "abilityId": "godie-uvng.w",
+      "owner": "json",
+      "apPct": 50,
+      "conditionalPct": [],
+      "damageType": "magic"
+    }
+  ]
+}

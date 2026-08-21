@@ -23,11 +23,11 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 574 個檔案**，分佈在 2 個隔離區。
+**目前共 577 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
-| [`docs/legacy/`](legacy-index.md#docslegacy) | 134 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
+| [`docs/legacy/`](legacy-index.md#docslegacy) | 137 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
 | [`content/_legacy/`](legacy-index.md#contentlegacy) | 440 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
@@ -35,7 +35,7 @@ owner 2026-08-13：
 
 ---
 
-## `docs/legacy/` —— 134 檔
+## `docs/legacy/` —— 137 檔
 
 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）
 
@@ -47,6 +47,7 @@ owner 2026-08-13：
 | `_ability-fidelity-ledger.md` | 696 支技能的三欄帳本（描述 vs 實作 vs w3x） | 第三欄的權威是 w3x。⚠️ 產生器 `docs/tools/ability_ledger.py` 的輸出路徑已改指這裡 |
 | `_ability-ledger-editor-spec.md` | 保真度編輯器規格 | 第三欄權威是 w3x；它操作的帳本本體早就在 legacy，規格卻留在第一層 |
 | `_ability-prose-residual-claims_temp_20260821-0110.tsv` | （.tsv 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ap-conversion-superseded.md` | 被 2026-08-21「屬性額外傷害 → AP 百分比」換算取代的知識 —— ⭐ **測試可以跟著設計走，知識不可以無聲消失**（CLAUDE.md 第一·五守則 · 第〇·六守則）。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_attr-growth-zeroed-superseded.md` | 被 2026-08-21 架構裁決取代的三圍成長知識 —— ⭐ **測試可以跟著設計走，知識不可以無聲消失**（CLAUDE.md 第〇·六守則）。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bot-build-priority-retired-20260820.md` | 退場：12 位英雄的「推薦出裝」梯子（`champion@1.buildPriority`） —— owner 2026-08-18：「66 位英雄的推薦出裝變成空的 => **不需要推薦出裝**」 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_card-prose-superseded.md` | 被取代的卡面文案（原文另存） —— ⛔ **測試可以跟著設計走，知識不可以無聲消失**（CLAUDE.md 第一·五守則）。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
@@ -141,6 +142,8 @@ owner 2026-08-13：
 | `_overwrites/overwrite_temp_20260821-151806/packages/shared/src/sim/effects/_dbg_temp_20260821.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260821-151845/packages/shared/src/sim/effects/devourPassiveIcd.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260821-152714/packages/shared/src/sim/effects/_dbg_temp_20260821b.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260821-173050/tools/_probe/norm.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260821-175405/package.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/04.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/06.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/08.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |

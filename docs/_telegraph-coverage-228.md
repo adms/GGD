@@ -8,20 +8,20 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | verdict | cells | meaning |
 | --- | ---: | --- |
-| ✅ OK | 220 | shape derived from the ability's own authored data |
+| ✅ OK | 219 | shape derived from the ability's own authored data |
 | 🟡 AMBIGUOUS | 17 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
 | ❌ MISSING | 0 | no derivable shape — **fails the test** |
-| 🟣 PASSIVE | 56 | permanent WC3 passive, never cast, nothing to warn about |
+| 🟣 PASSIVE | 57 | permanent WC3 passive, never cast, nothing to warn about |
 
-**237 / 237 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
+**236 / 236 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
 
 ## By castType
 
 | castType | cells | shape language |
 | --- | ---: | --- |
 | `self` | 95 | self marker at the caster's feet |
-| `targeted` | 73 | lock (arc at the victim + tether to the caster) — walking does not help |
-| `—` | 56 | not cast |
+| `targeted` | 72 | lock (arc at the victim + tether to the caster) — walking does not help |
+| `—` | 57 | not cast |
 | `ground` | 52 | circle — the real `enemiesInCircle` disc; you can walk out |
 | `skillshot` | 15 | line — the projectile's corridor; step sideways |
 | `dash` | 2 | line — the sweep of the dash body |
@@ -49,7 +49,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 火霧戰士 - 夏娜 `godie-e008` | R | 21-04 討滅封絕 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 火霧戰士 - 夏娜 `godie-e008` | EX | 21-002 天破壤碎 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 最終泛用人型決戰兵器 - 初號機 `godie-e00r` | PASSIVE | 59-00 暴走 | `—` | — | 🟣 PASSIVE | never cast |
-| 最終泛用人型決戰兵器 - 初號機 `godie-e00r` | Q | 59-01 吞噬 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 最終泛用人型決戰兵器 - 初號機 `godie-e00r` | Q | 59-01 吞噬 | `—` | — | 🟣 PASSIVE | never cast |
 | 最終泛用人型決戰兵器 - 初號機 `godie-e00r` | W | 59-02 高週波短刀 | `—` | — | 🟣 PASSIVE | never cast |
 | 最終泛用人型決戰兵器 - 初號機 `godie-e00r` | E | 59-03 AT力場 | `—` | — | 🟣 PASSIVE | never cast |
 | 最終泛用人型決戰兵器 - 初號機 `godie-e00r` | R | 59-04 野戰型陽電子砲 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |

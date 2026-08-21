@@ -1,4 +1,4 @@
-<title>GGD 作戰板 · 2026-08-21 16:12 (GMT+8)</title>
+<title>GGD 作戰板 · 2026-08-21 18:05 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.23.0 · 資料截至 2026-08-21 16:12 (GMT+8)</p><h1>GGD 作戰板 · 2026-08-21 16:12 (GMT+8)</h1><div class="meta"><span>帳本 <b>3</b> 份</span><span>點名票號 <b>106</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.23.0 · 資料截至 2026-08-21 18:05 (GMT+8)</p><h1>GGD 作戰板 · 2026-08-21 18:05 (GMT+8)</h1><div class="meta"><span>帳本 <b>3</b> 份</span><span>點名票號 <b>115</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -155,43 +155,46 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <p class="li"><code>python3 tools/icon-console/emit_style_spec.py</code> —— 等 <code>prompt.py</code> 定稿</p>
 <p class="li"><code>pnpm exec tsx tools/model-budget/emit_report.ts</code> —— <code>report.json</code> 現在就過期，而<b>沒有守衛會說</b></p>
 <p class="li"><code>eventFanout.ts:114</code> 的註解已成假話（線路成本從「施放次數」變成「跳數」）</p></section>
-<section><p class="eyebrow">這一版（08-20）</p><h2>🧾 逐句對票 · 這一版（08-20）</h2><p>owner 2026-08-19：「這是很好的開發守則，避免遺漏又可以揭露足夠版本更新資訊」</p>
-<div class="scroll"><table><tr><th>owner 說的（節錄）</th><th>票</th><th>狀態</th></tr>
-<tr><td>「明明就是 極小 小 中 大 極大 五級距⋯<b>沒有超大這種東西</b>」</td><td>#463</td><td>✅ 505 筆同批重寫</td></tr>
-<tr><td>「he can kill enemy <b>below 3% hp</b>⋯including zombies. boss」</td><td>#408</td><td>✅ <code>victim:&amp;quot;any&amp;quot;</code></td></tr>
-<tr><td>「<b>極大跟極小都是卡上下限的例外</b>而非線性規則」</td><td>#445</td><td>✅ 我的建議是錯的，已撤回；線性段 3.0/2.0/2.0，表不用改</td></tr>
-<tr><td>「同一個技能 <b>升級冷卻通常不會變化</b> 有變化就是特例 一樣要給我審查列管」</td><td>#464</td><td>⏳ W 外，24 支列管中</td></tr>
-<tr><td>「連鎖閃電⋯<b>預設是 12</b>⋯但打雷跟天譴範圍內的確<b>沒有</b>⋯上限」</td><td>#451</td><td>✅ 查到原作是 <b>16</b>；鏈數無上限</td></tr>
-<tr><td>「<b>DECAY 0.9</b>⋯重點在於<b>隨機選擇單位遞減時間差</b>的閃電特效與傷害」</td><td>#451</td><td>⏳ <code>wf_0e721af0</code> 實作中</td></tr>
-<tr><td>「<b>通道多好 因為跑才是重點</b>」</td><td>#409</td><td>⏳ 已進票，W2 執行中</td></tr>
-<tr><td>「please <b>fix all</b> even after that」</td><td>#374</td><td>⏳ 已進票；⚠️ 推翻第零守則⑧在這批的適用</td></tr>
-<tr><td>「只要做<b>有開放的角色技能及隨機三選一</b>就好，沒開放的別浪費 token」</td><td>#462</td><td>✅ 範圍限縮成 70 英雄 / 414 技能 / 91 增益</td></tr>
-<tr><td>「其他票盡量開<b>不衝突的獨立工作流</b>⋯測試不要重複做」</td><td>—</td><td>✅ 六條併行，全域檢查收成一個</td></tr>
-<tr><td>「<b>逐句對票</b>⋯要持續更新阿，並且寫到 NOTE」</td><td>—</td><td>✅ 已寫進 CLAUDE.md 部署協定第 1 步 + 本節</td></tr>
-<tr><td>「每次 <b>context 要滿</b>⋯先開一個 <code>memory_temp_{timestamp}.md</code>」</td><td>—</td><td>✅ <code>scripts/memory-temp.sh</code> + 守衛</td></tr>
-<tr><td>「界線在 <b>95%</b>⋯最多到 <b>98%</b>」</td><td>—</td><td>✅ 寫進 CLAUDE.md，數字不是判準</td></tr>
-<tr><td>「每一次更動技能相關機制或內容⋯讓 <b>script 動態更新</b>所有相關文件」</td><td>#466</td><td>✅ <code>pnpm skills:sync</code> + 聚合自己的閘</td></tr>
-<tr><td>檔案拆分策略（讓大量改技能時的平行化不卡住）—— 「<b>優先做因為關鍵</b>」</td><td>#467</td><td>✅ 四個單一寫入者全拆；產出逐位元組相同，新漂移 0</td></tr>
-<tr><td>「優化機制與結果要寫到 <b>github readme, release note, codex編輯器契約與相關說明文件、相關 script、JSON 及後台設定機制</b>」</td><td>#467</td><td>✅ 六個落點逐一處理（兩個「不需要改」有寫理由，⛔ 不是漏掉）</td></tr>
-<tr><td>「你是否能<b>盤點現在 0.21.4 107 所有票</b>盡量獨立不同工作流加速」</td><td>—</td><td>✅ 107 張逐張讀完，切成 5 條新工作流</td></tr>
-<tr><td>「更新 <b>GGD作戰版</b>跟 release note，包括你工作流分工的方式跟群組現況、注意事項」</td><td>—</td><td>✅ 作戰板原地更新 + 本節</td></tr>
+<section><p class="eyebrow">這一版（08-20）</p><h2>🧾 逐句對票 · 這一版（08-20）</h2><blockquote>來源：<code>docs/_daily/2026-08-21.md</code> 的「逐則對票」表（<code>scripts/message-ledger.sh</code> 維護）</blockquote>
+<blockquote><b>＋</b> session transcript 直接重撈（<code>1fc1e42e-….jsonl</code>，照 CLAUDE.md 部署協定第 1 步的 python）。</blockquote>
+<blockquote>窗口 = v0.23.0 tag（04:15）之後 ⇒ <b>12:28 → 17:48，28 則</b>。</blockquote>
+<blockquote>⚠️ 04:15–12:28 之間 owner 一則訊息都沒有（transcript 與帳本兩邊都是空的，⛔ 不是漏撈）。</blockquote>
+<p>&gt;</p>
+<blockquote>⚠️ <b>帳本漏了 4 列</b>（12:52 · 12:56 · 13:06 · 14:48）—— transcript 有、<code>2026-08-21.md</code></blockquote>
+<blockquote>的表沒有。這正是 2026-08-19「我猜你掉了超多」的那個形態，所以下表以 <b>transcript 為準</b>。</blockquote>
+<div class="scroll"><table><tr><th>#</th><th>時間</th><th>owner 說了什麼（逐字，長則截斷）</th><th>票</th><th>狀態</th></tr>
+<tr><td>1</td><td>12:28</td><td>「我發現<b>有許多地圖的牆 瞬移過去</b> 例如<b>無限城</b>等」／「請你給我<b>移動速度及攻擊速度 每級成長五級距</b>」／「白名單還是 59 … =&gt; <b>幫我後台跳出一鍵清理變身態的按鈕</b>」</td><td>#487 #486 · ms/as ⏸ 未開票</td><td>✅ 三件全落地（<code>5ea04900</code> · <code>bedfcfc5</code> · <code>f0779b70</code>）</td></tr>
+<tr><td>2</td><td>12:35</td><td>「你確定 你上次給我／屬性 極小 小 中 大 極大 上限 解鎖上限／移速 2.5 4 5 6.25 10 10 12／攻速 * 1 1.6 2 2.5 4 4 10」</td><td>帳本記 #486 #487 #488 ⚠️ 批次填錯，實為 #485 #414</td><td>✅ 已逐格比對回覆</td></tr>
+<tr><td>3</td><td>12:38</td><td>「等等 你的意思是 <b>十出身 十一屬性 都沒上線嗎</b>？請你重新列給我」</td><td>同上（實為 #485）</td><td>✅ 已回覆：出身矩陣<b>確實沒落地</b>，<code>origin-routes.json</code> 只有路線描述</td></tr>
+<tr><td>4</td><td>12:40</td><td>「我上次記錄的如下，請你告訴我<b>與系統生效的是否有差異</b>」（貼上十出身 × 十一屬性完整表 + 五級距 + 上限 + 生效中欄）</td><td>同上（實為 #485）</td><td>✅ 已比對：11 格裡 <b>9 格逐位相同</b>，2 格抄寫差（法強極大 337 vs 出貨 377、生命回復極大 33.77 vs 33.7）</td></tr>
+<tr><td>5</td><td>12:45</td><td>「等等 <b>屬性五級距 出身這些我們討論完在座</b>」</td><td>#485 #414</td><td>⏸ 暫停</td></tr>
+<tr><td>6</td><td>12:47</td><td>「因為<b>等級錨點已不同</b> 我們來重新設計 十一屬性五級距 你先給我目前系統使用的 JSON 並且<b>判斷是否已經有串連從 JSON 動態載入 並非定值</b>」</td><td>#488</td><td>✅ 已回覆並修掉唯一寫死的死角</td></tr>
+<tr><td>7</td><td>12:48</td><td>「<b>十出身跟十一屬性五級距全部都先停下來</b>」</td><td>#485 #414</td><td>⏸ 暫停 → 15:32 被 owner 自己的新裁決取代</td></tr>
+<tr><td>8</td><td>12:52</td><td>「<code>heroForge.ts:369 normalizedPreview()</code> <code>const n = DEFAULT_STAT_NORMALIZATION</code> <b>這個是什麼完全看不懂</b>」／「我們之前都會試算 30/50/99 三個值也在 JSON 作為參考（script 自動產生）」／「<code>statNormalizationFromDoc</code> 是逐格 fallback =&gt; <b>哪裡會少一格?</b>」</td><td>#488 ⚠️ <b>帳本缺列</b></td><td>✅ 已修（<code>00935377</code>）</td></tr>
+<tr><td>9</td><td>12:56</td><td>「<code>DEFAULT_STAT_NORMALIZATION</code> 這個是什麼完全看不懂 =&gt; <b>fix first</b>」／「請你將<b>十一屬性+五級距 這張表 加上 30/50/99 試算</b>給我」</td><td>#488 #485 ⚠️ <b>帳本缺列</b></td><td>✅ fix 已落地；30/50/99 試算在 Excel（<code>af5e3f94</code>）</td></tr>
+<tr><td>10</td><td>13:06</td><td>「① 吞噬的裁決從來沒有落地…」「<b>翔封界 等飛行效果實作</b>」「有許多地圖的牆 瞬移過去」「幫我後台跳出一鍵清理變身態的按鈕」「<code>heroForge.ts:369</code> 完全看不懂」／「<b>以上這些先請你修好 開好票 修好也註記並關票</b>」</td><td>#486 #487 #488 #489 #490 ⚠️ <b>帳本缺列</b></td><td>✅ 五票<b>全開全關</b>（GitHub 上 486–490 皆 CLOSED）</td></tr>
+<tr><td>11</td><td>13:13</td><td>「攻擊力 每級成長／法強 每級成長／…<b>這些數值怎麼那麼誇張 你不要亂乘上倍率 我只要看原始阿</b>」</td><td>#485 #414</td><td>✅ 全部改成<b>不含系統倍率</b>的原始值</td></tr>
+<tr><td>12</td><td>13:25</td><td>「<b>那我要每級成長阿 你怎麼給錯了</b> 並且我們還有 <b>智慧 力量 敏捷 三屬性 怎麼辦</b>？還是這三個屬性已經沒有計算？」</td><td>#485 #414</td><td>✅ 已回覆 —— 這一則直接導出 15:32 的架構裁決</td></tr>
+<tr><td>13</td><td>13:34</td><td>「<b>三主屬性如何影響其他屬性？</b>」</td><td>#485 #414</td><td>✅ 已回覆（三層加法律 + 五個係數）</td></tr>
+<tr><td>14</td><td>13:37</td><td>「我覺得目前<b>有十出身已經夠了</b> 不然太多屬性要平衡 請你重新思考 <b>不要數值膨脹 要容易平衡的新數值成長系統 建議三個方案給我</b>」</td><td>#485 #414</td><td>✅ 三方案已提；owner 15:32 選了 🅲 的變形</td></tr>
+<tr><td>15</td><td>14:48</td><td>「<b>遊戲中 屬性能力總共有多少個？</b>」＋重貼那份四件清單＋「<b>修好了嗎</b>」</td><td>#486–#490 ⚠️ <b>帳本缺列</b></td><td>✅ 已回覆</td></tr>
+<tr><td>16</td><td>15:32</td><td>⭐「我決定<b>廢掉三屬性 純用十出身的五級距表來代表每級屬性成長</b>就好／我所謂的廢掉指的是 <b>所有角色的 力敏智成長都歸 0 不是真的沒作用</b>，不然<b>隨機能力那些都要大改太麻煩</b>」「我們<b>計算的時候都不考慮任何系統倍率</b>」「請你重新給我一個最新號 EXCEL…四個 sheet…<b>都是從系統讀取的 JSON 來</b>」</td><td>#485 #414</td><td>✅ 落地：49 位可選本體歸 0 → <code>7bfd74bb</code> 補完 20 個變身態；Excel 四 sheet（<code>af5e3f94</code>）</td></tr>
+<tr><td>17</td><td>15:43</td><td>「<b>備份壓縮放到 legacy 後，全部套用新的</b>」</td><td>#485 #414 #490</td><td>✅ 先備份再套用；被取代的知識另存 <code>docs/legacy/_attr-growth-zeroed-superseded.md</code></td></tr>
+<tr><td>18</td><td>15:55</td><td>⭐ 兩處<b>更正我的說法</b>：「…=&gt; <b>照規則就好不要例外</b>」／「（零平衡改動的前提沒了）=&gt; <b>我沒這樣說過</b>」</td><td>#490 #487 #485</td><td>✅ 兩處都照更正走（見 §3-A 與 §5）</td></tr>
+<tr><td>19</td><td>15:57</td><td>⭐「<b>飛行就是可以穿牆 跟 無視所有人碰撞 但地圖標界還是要遵守</b>」</td><td>#490 #487</td><td>✅ 三個方向的守衛（<code>095e27fe</code>）</td></tr>
+<tr><td>20</td><td>16:02</td><td>「好了 既然我們大改了 所有屬性成長 30/50/99 我們得來看看<b>我們最近做的技能傷害公式與成長是否合理，是否還能與普通攻擊抗衡</b>」／「那份平衡差異清單（法強 −80% 那批到底是不是你要的）=&gt; <b>這是啥</b>」</td><td>#485 #414 #490</td><td>✅ 已量測（普攻 vs 技能 DPS）→ 導出 17:18 的公式</td></tr>
+<tr><td>21</td><td>16:12</td><td>「不是吧 <b>我們也有設計出身對應 AP 五級距成長阿 怎麼不會成長？</b>」／「我們之前有說過<b>所有技能本來吃 智慧力量敏捷額外傷害 現在全部改為 AP 額外傷害</b>阿」</td><td>#485 #414 #490</td><td>⏳ <b>在飛</b>（AP 換算 lane，未 commit）</td></tr>
+<tr><td>22</td><td>16:50</td><td>「<b>先 commit 一板</b>」＋六個裁決：① <code>intToAbilityPower = 6.5 =&amp;gt; 10</code> ②「原本有屬性額外傷害的部分<b>都換成 AP</b>，乘數幾倍屬性 變成 <b>1/4 百分比</b>…取<b>百分比整數</b>」③「<b>請你照出身表的規劃來設定就好</b>」（<code>growth.as</code>）④⑤「<b>照出身表套用不行嗎 有什麼例外的原因？</b>如果沒有例外特定原因請將<b>舊規則及文件打包移到 legacy</b>」（#244／#248）⑥「請記得<b>全部都要用 script 推導生成 JSON</b> 喔」</td><td>#485 #414 #447</td><td>① 🔴 <b>被 17:19 覆蓋</b>（見 #26）②⏳ 在飛 ③⏳ 在飛（HEAD 仍凍結）④⑤ ✅ 已落地（<code>095e27fe</code> + legacy 檔）⑥ ✅ 全部走 <code>*:build</code>／<code>*:check</code></td></tr>
+<tr><td>23</td><td>17:00</td><td>「<b>現在還有不是照出身表五級距的地方嗎</b>」／「=&gt; <b>我們只換掉 智慧 敏捷 力量 三屬性的技能額外加成</b>」／「請你<b>重新給法強 五級距的建議</b>，並且用法強大小有影響的出身及英雄來跟我舉例解釋」</td><td>⏸ <b>未對票</b></td><td>⏳ 在飛：<code>ad</code> 那 43 處<b>確認不動</b></td></tr>
+<tr><td>24</td><td>17:13</td><td>「5 個屬性完全沒有五級距（暴擊率·暴擊傷害·冷卻縮減·吸血·迴避）=&gt; <b>不需要</b>」／「<b>AP 也有不同出身的成長五級距吧 怎麼會沒有成長呢？</b>」／「我有個更好的建議，就是**技能傷害都套用公式 (1+AP\*1%)**…AP37 =&gt; 額外 37% AP 傷害」</td><td>⏸ <b>未對票</b></td><td>⏳ 在飛（公式已實作，未 commit）</td></tr>
+<tr><td>25</td><td>17:18</td><td>「=&gt; <b>預設 0.5%</b> 並且<b>後台、script, JSON, 文件檔、codex 技能編輯器契約、文件等都要一起更新</b>關於 <b>十出身十一屬性的新規則與參數</b>、<b>技能五級距的傷害、冷卻、耗魔各種新模板與參數</b>」</td><td>#447 #414 #485</td><td>⏳ 在飛：<code>content/config/ap-damage-scaling.json</code>（rate 0.005）已產出但<b>未 commit</b></td></tr>
+<tr><td>26</td><td>17:19</td><td>「<code>intToAbilityPower</code> 維持 6.5 =&gt; <b>調整到 4</b>」</td><td>#447 #414</td><td>🔴 <b>未落地</b> —— HEAD 是 <b>6.5</b>、工作區是 <b>10</b>（16:50 那一版），⛔ <b>兩個都不是 4</b>。⚠️ <b>push 前必修</b></td></tr>
+<tr><td>27</td><td>17:22</td><td>「請你評估<b>盡量多開平行獨立工作流</b> 不衝突的完成／全部做完後，可以整理 <b>對話開單到 GGD 作戰板 push note deploy</b>」</td><td>⏸ <b>未對票</b></td><td>⏳ 本文件是 NOTE 那一步</td></tr>
+<tr><td>28</td><td>17:48</td><td>「godie-udea（飛鼠先生）與 godie-zombiex（喪標麥可）都在上架名單裡 —— 那『隱藏』與『可選』是不是互斥 =&gt; <b>可以重複獨立</b>」</td><td>#469</td><td>⭐ 裁決：<b>「隱藏英雄」與「可選英雄」是兩個獨立旗標，⛔ 不互斥</b>。#469 的四位照填，⛔ 不管在不在上架名單裡（黑化 Saber 仍留空）。⏳ 落地在 #469，⛔ 不在本版範圍</td></tr>
 </table></div>
-<div class="scroll"><table><tr><th>時間</th><th>owner 說的</th><th>票</th><th>狀態</th></tr>
-<tr><td>16:03</td><td>「每次 context 要滿的時候先開一個 <code>memory_temp_{timestamp}.md</code>」</td><td>CLAUDE.md 第零守則</td><td>✅ <code>scripts/memory-temp.sh</code> + 95%/98% 界線</td></tr>
-<tr><td>16:31</td><td>連鎖閃電層級衝突 ⇒「<b>DECAY 0.9</b>…重點在於<b>隨機選擇單位遞減時間差的閃電特效與傷害</b>…<b>有其特殊性與純範圍直接給傷害區別很大</b>」</td><td>#451</td><td>✅ 獨立 <code>chainLightning</code> kind（<code>jumpIntervalSec</code> 讓整條鏈不在同一 tick 結算）</td></tr>
-<tr><td>16:58</td><td><code>RANKED_MIN_APEX_LADDER</code>「<b>看不懂，請你說明的更簡單易懂</b>」</td><td>#4xx</td><td>✅ 已重寫說明</td></tr>
-<tr><td>17:05</td><td>「<b>先留 0</b>。理由是這是家人小圈子」</td><td>同上</td><td>✅ 出貨值 0</td></tr>
-<tr><td>17:32</td><td>「備份規則都是 <b><code>{用途}_temp_{timestamp}.md</code></b>…方便被認出是否已經過時要放到 legacy」</td><td>CLAUDE.md</td><td>✅ <code>scripts/temp-sweep.sh</code>（⛔ 只搬不刪）</td></tr>
-<tr><td>17:40</td><td>「我說過你要做<b>取代</b>這種事情以前都要<b>備份</b>…<b>這一定要放到開發守則嚴守</b>」</td><td>CLAUDE.md</td><td>✅ <b>PreToolUse hook</b> <code>preserve-before-overwrite.py</code>（⛔ 永不擋工具）</td></tr>
-<tr><td>17:43</td><td>「<b>如何拆檔案</b> 讓獨立平行化不會那麼容易卡住…<b>建議你優先做因為關鍵</b>」</td><td><b>#467</b></td><td>✅ 四個瓶頸拆掉（4,754→299 · 2,751→430 · 3,354→393 · 兩支 baseline→79 份 JSON）</td></tr>
-<tr><td>17:53</td><td>「回溯到 v0.18.1…<b>訊息開票對應，沒開票要補開票，票已完成要去註記現況後關閉</b>」</td><td>reconcile lane</td><td>✅ 關 29 張 · 補開 9 張（#469–#477）</td></tr>
-<tr><td>20:13</td><td>「<b>fix all, fix gen_board.py</b>」</td><td>—</td><td>✅ 拿掉三格時鐘欄位 + <code>board:check</code> 進聚合閘</td></tr>
-<tr><td>20:13</td><td>「<b>創建新英雄</b> 十一種屬性、技能說明、施展距離、範圍、傷害、冷卻、耗魔的<b>生成代入與檢查跳警示</b>…特別是 <b>script 程式自動化跟警示</b>」</td><td><b>#480</b></td><td>✅ 六欄從 420 支語料取中位數 + 六條警示 + <code>newhero:check</code></td></tr>
-<tr><td>20:13</td><td>「優化機制與結果要寫到 <b>github readme, release note, codex編輯器契約與相關說明文件、相關 script、JSON 及後台設定機制</b>」</td><td>#467 擴散</td><td>✅ README §9 · 契約第 15 章 + 第 10 節 · 8 支產生器補 npm script</td></tr>
-<tr><td>（多則）</td><td>「注意有時候你會<b>改錯有變身檔的英雄技能，只改了其中一個</b>…<b>godie-e00u Sakuya…要移到 legacy 不要再被掃到</b>…<b>請你想個一勞永逸的方法</b>」</td><td><b>#479</b></td><td>✅ 26 組對子雙向對帳 + 7 位英雄進 <code>_legacy</code> ⇒ 編號碰撞 2→0</td></tr>
-<tr><td>（多則）</td><td>「<b>每次我回答你以後，就馬上去更新 github issue</b>…避免我要重複講」</td><td>CLAUDE.md</td><td>✅ <code>scripts/ruling.sh</code> + <code>scripts/asked-before.sh</code></td></tr>
-<tr><td>15:37</td><td>「<b>只要做有開放的角色技能及隨機三選一就好，沒開放的別浪費 token</b>」</td><td>#472</td><td>✅ 範圍收斂；退場物進 <code>_legacy</code> 後自動不被掃到</td></tr>
-</table></div></section>
+<p><b>統計</b>：<b>28 列</b> · ⏸ 未對票 <b>3 列</b>（#23 · #24 · #27）· 帳本缺列 <b>4 列</b>（#8 · #9 · #10 · #15）</p>
+<p>· 🔴 與 owner 裁決不符 <b>1 列</b>（#26）。</p>
+<p>⚠️ 17:38 有一則與 17:22 <b>逐字相同</b>的重送，⛔ 沒有當成獨立一列。</p></section>
 <section><p class="eyebrow">的每一句話在哪張票上</p><h2>🧾 逐則對票 · owner 的每一句話在哪張票上</h2><h3>08-18</h3>
 <div class="scroll"><table><tr><th>#</th><th>時間</th><th>owner 說了什麼</th><th>落到哪</th><th>狀態</th></tr>
 <tr><td>1</td><td>03:48</td><td>魔抗百分比要實作，避免數字誤差及過期</td><td>已實作（三張卡真值回寫）</td><td>✅</td></tr>
@@ -434,6 +437,33 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>15:43</td><td>⚠️ 一件我沒做的：三圍成長歸 0 還沒寫進 49 份英雄 JSON —— Excel 是照「歸 0 之後」算的，但出貨資料還是舊的。⇒ 要我現在落地嗎？那會動到 49 個檔案，我會給你「歸 0 前後」的逐位對照。 =&gt; 備份壓縮放到 legacy 後，全部套用新的</td><td>#485 #414 #490</td></tr>
 <tr><td>16:02</td><td>好了 既然我們大改了 所有屬性成長30/50/99 我們得來看看我們最近做的技能傷害公式與成長是否合理，是否還能與普通攻擊抗衡 那份平衡差異清單（法強 −80% 那批到底是不是你要的）=&gt;這是啥</td><td>#485 #414 #490</td></tr>
 <tr><td>16:12</td><td>不是吧 我們也有設計出身對應AP五級距成長阿 怎麼不會成長？ 🅱 技能傷害吃法強＝&gt;現在已經是拉 我們之前有說過所有技能本來吃 智慧力量敏捷額外傷害 現在全部改為 AP額外傷害阿</td><td>#485 #414 #490</td></tr>
+<tr><td>16:51</td><td>owner 2026-08-21（六個裁決）： ## ① <code>intToAbilityPower</code> <b>6.5 → 10</b> ## ② ⭐ 所有技能的「屬性額外傷害」換成 AP 百分比 &gt; 「檢查所有技能 原本有屬性額外傷害的部分<b>都換成 AP</b>， &gt; <b>乘數幾倍屬性 變成 1/4 百分比</b>，例如**原本 力量*4 =&gt; AP *100%<b> &gt; 但取</b>百分比整數<b>例如 10/20/30/40/50/60/70/80/90/100/110/120/130/140%…」 ⇒ 換算：</b>AP 百分比 = 屬性乘數 × 25%<b>，再</b>取整到 10% 的倍數<b>。 ⇒ 今天量到的成長來源：<code>ap</code> 127 處 · <code>ad</code> 43 處 · <code>maxHealth</code> 2 處 · </b><code>attr:str</code> 1 處<b>。 ⚠️ <code>attrRatios</code>（吃三圍的那種）要全部換掉 —— 三圍成長已歸 0，它們是死的。 ## ③ <code>growth.as</code> → </b>照出身表的規劃設定就好<b> &gt; 「看不懂你第二第三選項，</b>請你照出身表的規劃來設定就好<b>」 ⇒ 把 <code>as</code> 放進 <code>appliesTo</code>，讓出身表的值真的生效。⛔ 不再凍結。 ## ④⑤ #244「每級 +45 HP」與 #248 四個 level-12 有效血量 &gt; 「看不懂，</b>照出身表套用不行嗎 有什麼例外的原因？ &gt; 如果沒有例外特定原因請將舊規則及文件打包移到 legacy<b>」 ⇒ ⛔ </b>沒有例外原因<b> ⇒ 全部照出身表套用， 舊規則與文件</b>打包移到 <code>docs/legacy/</code><b>。 ## ⑥ ⭐⭐ 全部要用 script 推導生成 &gt; 「請記得</b>全部都要用 script 推導生成 JSON** 喔」 ⇒ ⛔ 不可以有任何手改的 JSON。要有 <code>xxx:build</code> / <code>xxx:check</code> 兩個 npm script 並接進 <code>skills:sync</code> / <code>skills:check</code>。</td><td>#485 #414 #447</td></tr>
+<tr><td>17:01</td><td>owner 2026-08-21： &gt; 「① ad 那 43 處怎麼辦…=&gt; <b>我們只換掉 智慧 敏捷 力量 三屬性的技能額外加成</b>」 ⇒ ⭐ 換算範圍<b>限縮</b>：只換 <code>attrRatios</code>（吃 str/agi/int 那種）， ⛔ <b><code>ratios: [{stat:&amp;quot;ad&amp;quot;}]</code> 那 43 處不要動</b> —— 它們吃的是<b>最終攻擊力</b>不是三屬性。 ⚠️ 跑中的 workflow 我要它「自己判斷 ad 怎麼辦」—— owner 已經替它決定了， 主 session 收回來時要確認它沒有動到那 43 處。</td><td>#447 #414</td></tr>
+<tr><td>17:18</td><td>owner 2026-08-21（⭐ 技能傷害公式定案 + 全面擴散）： ## ⭐ 技能傷害公式：<b>傷害 × (1 + AP × 加成率)</b>，加成率<b>預設 0.5%</b> &gt; 「⇒ <b>預設 0.5%</b> 並且<b>後台、script, JSON, 文件檔、codex技能編輯器契約、文件等都要一起更新</b> &gt; 關於<b>十出身十一屬性的新規則與參數</b>、<b>技能五級距的傷害、冷卻、耗魔各種新模板與參數</b>」 ### 量到的效果（⛔ 不是估的） \</td><td>\</td><td>普攻 DPS \</td><td>中位 AP \</td><td>倍率 \</td><td>技能 DPS \</td><td><b>技能/普攻</b> \</td><td>\</td><td>---\</td><td>---:\</td><td>---:\</td><td>---:\</td><td>---:\</td><td>---:\</td><td>\</td><td>LV30 \</td><td>91 \</td><td>136 \</td><td>1.68× \</td><td>590 \</td><td><b>6.5×</b> \</td><td>\</td><td>LV50 \</td><td>180 \</td><td>160 \</td><td>1.80× \</td><td>632 \</td><td><b>3.5×</b> \</td><td>\</td><td>LV99 \</td><td>506 \</td><td>236 \</td><td><b>2.18×</b> \</td><td>766 \</td><td><b>1.5×</b> \</td><td>（1% 的話是 12.9× / 7.2× / 3.3×） ### ⭐ 為什麼這個公式比「抬高法強級距」好 - ⛔ <b>法強級距表一個數字都不用改</b> - ⭐ <b>出身終於真的有意義</b>：法刺(AP 377) 的技能是射手(AP 94) 的 <b>2.46 倍</b>； 今天這個差距只有 <b>1.4%</b> - ⭐ <b>一格旋鈕</b>（加成率）就能調整「技能 vs 普攻」的全域關係 ## ⇒ 要擴散到的地方（owner 逐字點名） 1. <b>後台</b>（設定頁 + 欄位說明） 2. <b>script</b>（產生器 + <code>--check</code>，接進 <code>skills:sync</code> / <code>skills:check</code>） 3. <b>JSON</b>（<code>content/config/</code> 三個住處） 4. <b>文件檔</b> 5. <b>codex 技能編輯器契約</b> 6. 內容：<b>十出身 × 十一屬性的新規則與參數</b> 7. 內容：<b>技能五級距的傷害／冷卻／耗魔各種新模板與參數</b> ## ⛔ 5 個屬性不做五級距（前一則） 暴擊率 · 暴擊傷害 · 冷卻縮減 · 吸血 · 迴避 —— owner：「<b>不需要</b>」</td><td>#447 #414 #485</td></tr>
+<tr><td>17:20</td><td>owner 2026-08-21（⭐ 覆蓋先前的 6.5 → 10）： &gt; 「<code>intToAbilityPower</code> 維持 6.5 =&gt; <b>調整到 4</b>」 ⇒ ⛔ <b>不是 10、⛔ 不是 6.5 —— 是 4。</b> ⚠️ 這一則<b>推翻</b>他更早的「6.5 =&gt; 10」（那是在「AP 用加法」的前提下說的； 新公式是 <code>傷害 × (1 + AP × 0.5%)</code>，係數的意義變成「決定前期強度」）。</td><td>#447 #414</td></tr>
+<tr><td>17:00</td><td>現在還有不是照出身表五級距的地方嗎 ① ad 那 43 處怎麼辦 —— 你說的是「屬性額外傷害換 AP」。但 ad（攻擊力）是最終屬性還是屬性？物理系技能吃 AD 成長可能是刻意的。⇒ 要它判斷並說明，⛔ 不准擅自把物理技能也換成 AP。=&gt; 我們只換掉 智慧 敏捷 力量 三屬性的技能額外加成 請你重新給法強 五級距的建議，並且用法強大小有影響的出身及英雄來跟我舉例解釋</td><td>#447 #414</td></tr>
+<tr><td>17:13</td><td>5 個屬性完全沒有五級距 暴擊率 · 暴擊傷害 · 冷卻縮減 · 吸血 · 迴避 ⛔ 連表都沒有=&gt;不需要 AP 也有不同出身的成長五級距吧 怎麼會沒有成長呢？ 我有個更好的建議，就是技能傷害都套用公式 (1+AP*1%) 物理意義來說 就是AP變為原本傷害的額外加成，例如AP37 =&gt; 額外37%AP傷害；AP245 =&gt; 額外245%AP傷害 這樣呢</td><td>#447 #414</td></tr>
+<tr><td>17:22</td><td>請你評估盡量多開平行獨立工作流 不衝突的完成 全部做完後，可以整理 對話開單到 GGD 作戰板 push note deploy</td><td>— 工作流指令,不需開票</td></tr>
+<tr><td>17:48</td><td>owner 2026-08-21： &gt; 「godie-udea（飛鼠先生）與 godie-zombiex（喪標麥可）都在上架名單裡 &gt; —— 那「隱藏」與「可選」是不是互斥 =&gt; <b>可以重複獨立</b>」 ⇒ ⭐ <b>「隱藏英雄」與「可選英雄」是兩個獨立的旗標，⛔ 不互斥。</b> 一位英雄可以同時是「上架可選」與「隱藏（彩蛋）」。 ⇒ ⛔ 不要因為某位在白名單裡就把他從隱藏名單剔除，反之亦然。 ⇒ #469 的四位（死之王 · 飛鼠先生 · 喪標麥可 · 黑人牙膏）<b>照填</b>， ⛔ 不管他們在不在上架名單裡。黑化 Saber 仍然留空（owner 標「待補」）。</td><td>#469</td></tr>
+<tr><td>00:39</td><td>錯誤的母體資料 下架沒使用的英雄 技能 說明 道具 請都整理到 legacy 好嗎</td><td>#485</td></tr>
+<tr><td>00:55</td><td>上架不能包含變身態 我們討論過了 之前就是這樣才沒改到正確的英雄技能</td><td>#485 #479</td></tr>
+<tr><td>00:59</td><td>好 請你做 A 之後重算 全部重新檢查 重新生成 後更新 GGD作戰表 對話開票 及 平衡數值決策建議</td><td>#485 #414</td></tr>
+<tr><td>01:32</td><td>上限 maxMana / manaRegen / armor 348050 / 3276 / 8160 345050 / 3271 / 7939 這什麼鬼阿 太誇張了吧 你沒算錯嗎 🔴 最重要的：填 damageTier 會廢掉升階回報 =&gt; 我們也有升階公式討論過不是嗎 除了冷卻以外 傷害跟耗魔是一起變動的 應該是比較接近 B 全轉，接受升階只剩 ratios 成長 44-01 死神之眼 godie-emns.q 12 2 6 倍 =&gt; 這個我們討論過了 請你把json填12 你是不是沒用對話開票 記錄跟解 manaCostTier 342 78 支免費技 =&gt; 那就不要調耗魔阿 coold…</td><td>#485</td></tr>
+<tr><td>02:16</td><td>我們架構已經改過了 你要同步開最大限度工作流來檢查跟更新 應該沒問題吧</td><td>#485 #414</td></tr>
+<tr><td>02:36</td><td>[v ] A 只改分級定義（總計/有效覆蓋），4 支自動落到正確級距，⛔ 不動任何數值 飛鼠先生本來就會變成隱藏角色，所以強一點合理，並且他要有足夠多敵人在範圍內才有連鎖加成效果，算是有額外條件風險</td><td>#469</td></tr>
+<tr><td>02:45</td><td>你檢查過所有技能說明的 冷卻 耗魔 傷害 距離 範圍 都已經正規化 五級距 (以上皆動態顯示非固定文字)，並且JSON, script, 文件、後台設定、創建英雄、codex編輯器契約與文件 等 都一致了嗎？ 請思考盡量同個檔案一次改完，節省時間與算力並且不互卡又不妨礙平行最大化工作流，並且不要重複測試跟讀取浪費 token 並且你都在看了，順便也請你對照檢查技能說明與JSON是否都有比對正確實作 以上可以的話盡量寫script自動化完成，而不是全部都要LLM判斷 有需要決策或我給意見的情況，不要停下來，盡量做下去，把決策點做成後台開關，但note要記錄詳實有這個開關來妥協預設你的建議，開關是…</td><td>#414 #447</td></tr>
+<tr><td>12:45</td><td>等等 屬性五級距 出身這些我們討論完在座</td><td>#414 #447</td></tr>
+<tr><td>12:52</td><td>heroForge.ts:369 normalizedPreview() const n = DEFAULT_STAT_NORMALIZATION 這個是什麼完全看不懂 我們之前都會試算 30/50/99三個值也在JSON作為參考（script自動產生） statNormalizationFromDoc 是逐格 fallback —— JSON 少一格就用預設補 =&gt; 哪裡會少一格?</td><td>— 進度/指令,不需開票</td></tr>
+<tr><td>12:56</td><td>DEFAULT_STAT_NORMALIZATION 這個是什麼完全看不懂 =&gt; fix first 請你將十一屬性+五級距 這張表 加上 30/50/99試算給我</td><td>#485 #414</td></tr>
+<tr><td>13:06</td><td>① 吞噬的裁決從來沒有落地。 你 08-19 說「59-01 吞噬改成被動，內部冷卻跟主動一樣就好」—— 而出貨 JSON 今天仍是 castType: targeted · slot: Q · cooldown: [60,60,60,60]。⇒ 那則裁決寫進了票，但沒有人做。 翔封界 等飛行效果實作 有許多地圖的牆 瞬移過去 例如無限城等 幫我後台跳出一鍵清理變身態的按鈕 heroForge.ts:369 normalizedPreview() const n = DEFAULT_STAT_NORMALIZATION 這個是什麼完全看不懂 以上這些先請你修好 開好票 修好也註記並關票</td><td>#485 #479</td></tr>
+<tr><td>14:48</td><td>遊戲中 屬性能力總共有多少個？ ① 吞噬的裁決從來沒有落地。 你 08-19 說「59-01 吞噬改成被動，內部冷卻跟主動一樣就好」—— 而出貨 JSON 今天仍是 castType: targeted · slot: Q · cooldown: [60,60,60,60]。⇒ 那則裁決寫進了票，但沒有人做。 翔封界 等飛行效果實作 有許多地圖的牆 瞬移過去 例如無限城等 幫我後台跳出一鍵清理變身態的按鈕 heroForge.ts:369 normalizedPreview() const n = DEFAULT_STAT_NORMALIZATION 這個是什麼完全看不懂 以上這些先請你修好…</td><td>#485 #479</td></tr>
+<tr><td>15:32</td><td>我決定廢掉三屬性 純用十出身的五級距表來代表每級屬性成長 就好 我所謂的廢掉指的是 所有角色的 力敏智成長都歸0 不是真的沒作用 不然隨機能力那些都要大改太麻煩 我們計算的時候都不考慮任何系統倍率 請你重新給我一個 最新號 EXCEL 包含以下內容 每個項目都是一個sheet 都是從系統讀取的JSON來 1. 所有屬性及十一屬性五級距 包含30/50/99試算 2. 所有出身對應五級 包含30/50/99試算 3. 所有英雄對應出身 包含30/50/99試算 4. 系統倍率參考與建議</td><td>#485 #414</td></tr>
+<tr><td>16:50</td><td>先 commit 一板 1. intToAbilityPower = 6.5 =&gt; 10 2. 檢查所有技能 原本有屬性額外傷害的部分都換成 AP，乘數幾倍屬性 變成 1/4百分比，例如 原本 力量*4 =&gt; AP *100% 但取百分比整數例如 10/20/30/40/50/60/70/80/90/100/110/120/130/140%... 20 個變身態 ✅ 補上了 —— 前一批漏了，而你說的是「所有角色」=&gt; 這又是啥 ① growth.as 三條出路 [ ] 還原成 0.02（引擎零改動） [ ] 把 as 放進 appliesTo 並把這一軸關掉（⭐ 那才是「純用出身表」的字面意…</td><td>#244 #248</td></tr>
+<tr><td>17:19</td><td>intToAbilityPower 維持 6.5 =&gt;調整到 4</td><td>#447 #414</td></tr>
+<tr><td>17:38</td><td>請你評估盡量多開平行獨立工作流 不衝突的完成 全部做完後，可以整理 對話開單到 GGD 作戰板 push note deploy</td><td>— 工作流指令,不需開票</td></tr>
+<tr><td>18:02</td><td>⭐ 但這反而讓另一件事更需要驗證：既然兩者可以重複，一位同時是可選 + 隱藏的英雄（飛鼠先生、喪標麥可）在選人畫面上長什麼樣？那個彩蛋機制（#336）對他做什麼？=&gt; 不用因為只是暫時的 創建房間後底下有個選單 充滿一堆id那是什麼不明的東西？沒用的話請拿掉 創建房間最重要的就是拉人進來，請你將所有線上在大廳的人都跳出確認視窗是否進入房間一起開始，同意後就一起進入開始遊戲，最多等10秒，包含 vs bot ，若有其他玩家一起進入房間遊戲，也請出現明顯提示姓名與積分、所選英雄，每回合結算也都要特別再提示一次，因為有可能斷線離開或連線回來房間繼續遊戲 後台左邊選單點選後，右邊自動回到最上面，並且右…</td><td>#336</td></tr>
+<tr><td>18:03</td><td>owner 2026-08-21（五件）： &gt; ①「一位同時是可選+隱藏的英雄在選人畫面長什麼樣…=&gt; <b>不用因為只是暫時的</b>」 &gt; ②「<b>創建房間後底下有個選單 充滿一堆 id 那是什麼不明的東西？沒用的話請拿掉</b>」 &gt; ③「<b>創建房間最重要的就是拉人進來</b>，請你將<b>所有線上在大廳的人都跳出確認視窗</b>是否進入房間 &gt; 一起開始，同意後就一起進入開始遊戲，<b>最多等 10 秒</b>，<b>包含 vs bot</b>， &gt; 若有其他玩家一起進入房間遊戲，也請出現<b>明顯提示姓名與積分、所選英雄</b>， &gt; <b>每回合結算也都要特別再提示一次</b>，因為<b>有可能斷線離開或連線回來房間繼續遊戲</b>」 &gt; ④「<b>後台左邊選單點選後，右邊自動回到最上面</b>，並且<b>右邊內容要正常顯示</b> &gt; （目前<b>超過一個螢幕畫面長度外會被吃掉</b>）」 &gt; ⑤ AP 疊加 =&gt;「<b>原本技能裡面有額外 AP 傷害都要保留一起加總後，被乘新的技能 AP 額外傷害吧</b>」 ⇒ ⑤ <b>確認 <code>stack</code> 是對的</b>（出貨已是 stack）。⛔ <code>replace</code> 的問題已用真技能舉證： 寄生種子(×0.6)/千鳥流(×0.2)/疾風迅雷(×0.1) 卡面基礎都是 600， replace 之後<b>三支全部變成 1,083 一模一樣</b> —— 抹掉了「這支吃多少法強」的設計表達。 stack 讓三支都 +81% 但<b>保留它們之間 4 倍的差距</b>。 ⇒ ① ⛔ 不驗（暫時的）</td><td>469 447</td></tr>
+<tr><td>18:05</td><td>⭐ 但這反而讓另一件事更需要驗證：既然兩者可以重複，一位同時是可選 + 隱藏的英雄（飛鼠先生、喪標麥可）在選人畫面上長什麼樣？那個彩蛋機制（#336）對他做什麼？=&gt; 不用因為只是暫時的 創建房間後底下有個選單 充滿一堆id那是什麼不明的東西？沒用的話請拿掉 創建房間最重要的就是拉人進來，請你將所有線上在大廳的人都跳出確認視窗是否進入房間一起開始，同意後就一起進入開始遊戲，最多等10秒，包含 vs bot ，若有其他玩家一起進入房間遊戲，也請出現明顯提示姓名與積分、所選英雄，每回合結算也都要特別再提示一次，因為有可能斷線離開或連線回來房間繼續遊戲 後台左邊選單點選後，右邊自動回到最上面，並且右…</td><td>#336</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>
