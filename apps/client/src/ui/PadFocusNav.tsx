@@ -68,6 +68,9 @@ import {
   setPadHudFocusMode,
 } from "./hud/padHudFocus";
 import { PAD_FOCUS_ATTR, applyPadFocus, clearPadFocus } from "./focusGlow";
+// GH#503/K1 — A 停在文字欄位上時開螢幕小鍵盤（見下面 activate 分支）。
+import { openPadKeyboard } from "./PadKeyboard";
+import { shouldOpenPadKeyboard } from "../input/padKeyboard";
 import { appStore } from "./platform/store";
 import { hudStore } from "../net/RoomStore";
 
@@ -352,6 +355,20 @@ export function PadFocusNav(): null {
         // open a native <select>, so cycling is the only thing A can honestly do.
         if (kindOf(cur) === "select") {
           adjustValue(cur, "select", 1, true);
+          return;
+        }
+        // ⭐ GH#503/K1 — 文字欄位按 A 要**叫出螢幕小鍵盤**。`cur.click()` 對一個
+        // `<input>` 只是把游標放進去，一個字元都產生不了，而全 repo 沒有任何
+        // 輸入手段 ⇒ 登入 / 註冊 / 改密碼 / 房名 / 邀請碼 / 聊天 / 兩個搜尋框
+        // 對純手把玩家全部是死的（16 個缺口，同一個根因）。
+        if (
+          shouldOpenPadKeyboard({
+            tag: cur.tagName,
+            type: cur.getAttribute("type"),
+            readOnly: (cur as HTMLInputElement).readOnly === true,
+          })
+        ) {
+          openPadKeyboard(cur as HTMLInputElement);
           return;
         }
         cur.click();

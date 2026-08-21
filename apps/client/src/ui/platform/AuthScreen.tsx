@@ -792,24 +792,29 @@ export function AuthScreen(): React.JSX.Element {
               {authBusy ? "…" : mode === "login" ? "Sign in" : "Create account"}
             </Btn>
           </span>
-          {mode === "login" && (
-            // 用手機登入 (#197/#199): the gamepad-first login path. type="button"
-            // so it never submits the surrounding form. On a handheld the pad
-            // just focuses THIS button and presses A — no keyboard, no text
-            // field. Opens the QR panel below.
-            <span onMouseEnter={playHover} style={{ display: "block" }}>
-              <Btn
-                type="button"
-                onClick={() => {
-                  playClick();
-                  setShowDeviceLogin(true);
-                }}
-                style={{ width: "100%" }}
-              >
-                用手機登入 · Sign in with phone
-              </Btn>
-            </span>
-          )}
+          {/* 用手機登入 (#197/#199): the gamepad-first login path. type="button"
+              so it never submits the surrounding form. On a handheld the pad
+              just focuses THIS button and presses A — no keyboard, no text
+              field. Opens the QR panel below.
+              ⭐ GH#503/K1 — 它以前只在 `mode === "login"` 渲染, so a pad player
+              who landed on Create account had NO non-typing path at all. Typing
+              itself is fixed by the shared on-screen keyboard (ui/PadKeyboard —
+              A on any text field opens it), so this button is no longer the only
+              way in; it stays offered on BOTH tabs because a RETURNING player who
+              tapped the wrong tab would otherwise be stranded there. ⛔ The label
+              changes with the tab — it signs you IN, it never registers. */}
+          <span onMouseEnter={playHover} style={{ display: "block" }}>
+            <Btn
+              type="button"
+              onClick={() => {
+                playClick();
+                setShowDeviceLogin(true);
+              }}
+              style={{ width: "100%" }}
+            >
+              {mode === "login" ? "用手機登入 · Sign in with phone" : "已有帳號？用手機登入"}
+            </Btn>
+          </span>
         </form>
           </>
         )}
