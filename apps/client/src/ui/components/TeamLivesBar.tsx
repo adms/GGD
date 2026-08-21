@@ -13,9 +13,22 @@
  * He also said it does not belong in combat at all — 「團隊的生命在戰鬥畫面沒有
  * 意義」 — and he is right about when the number matters: team health only moves
  * at round settlement, and what you act on mid-fight is the enemy trio's HP,
- * not a standings tally that cannot change until the round ends. So it shows
- * everywhere the number can actually change or be read (intermission, shop,
- * settlement) and stays out of the way while you are fighting.
+ * not a standings tally that cannot change until the round ends. So it stays
+ * out of the way while you are fighting.
+ *
+ * ⚠️ WHERE IT IS **NOT** (GH#126 —— 這一段以前寫的是「intermission, shop,
+ * settlement 都看得到」，而那是一句**假的自述**，跟隔壁 `hud/hudLayout.ts` 的
+ * 宣告直接打架):
+ *
+ * | 畫面 | 這條 bar | 為什麼 |
+ * |---|---|---|
+ * | 結算 (`matchEnd`) | ⛔ **根本沒進 DOM** | `match-end` panel 宣告 `covers` 四個角落 → `useHudSlotHidden` 為 true → 下面直接 `return null`。⭐ 生命值改由 `panels/MatchEndPanel` 自己印（`TeamLivesRows`）—— 調 z-index 連理論上都無效 |
+ * | 商店開著時 | ⛔ 隱藏 | slot 的 `displaced: "hide"`（240px 的左讀 bar 在 45vw 貨架旁邊沒有位置，也塞不進窄的右欄）。**這一半仍未解**，見 GH#126 |
+ * | 戰鬥中 | ⛔ 隱藏 | owner 的裁決（見上） |
+ * | 其餘（備戰/回合結算、商店收起時） | ✅ 看得到 | 這是它唯一真正出現的地方 |
+ *
+ * ⛔ 不要再把「哪裡看得到」寫成散文而不對照 `hudLayout` 的 `displaced` 政策 ——
+ * 那正是這一段前一版說謊的方式。
  */
 import { useHud } from "../../net/RoomStore";
 import { hudTouch } from "../hud/HudSlot";

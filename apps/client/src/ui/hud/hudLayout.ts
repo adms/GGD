@@ -216,6 +216,19 @@ const SLOTS = [
     // right control column. It simply hides while the shop covers the corner —
     // in intermission the shared-lives count is static and shopping is the
     // point; in combat the shop is up only for a defeated spectator.
+    //
+    // ⚠️ GH#126 CONTESTS THE INTERMISSION HALF, and it is right to: commit
+    // 97944609「取消淘汰」turned team health into the scoreboard that
+    // `finalStandings()` ranks 2nd/3rd/4th by, and a 0-life team still shops and
+    // still spends. `relocate` is NOT the fix — `hudDisplacedOffset` docks past
+    // the target corner's whole stack without knowing about OTHER displaced
+    // slots, and the ☰ menu already relocates into top-right whenever this same
+    // shop covers the corner, so both would land on the same band. So this row
+    // stays `hide` and the SHOP half needs a home inside the shop card itself
+    // (panels/MerchantShop.tsx), i.e. a #107 layout call, not a flag flip here.
+    // ⭐ The SETTLEMENT half is closed elsewhere and deliberately: the
+    // `match-end` panel below covers all four corners, so this slot can never be
+    // the answer there — `panels/MatchEndPanel` prints the lives itself.
     displaced: "hide",
     note: "team colours + shared lives; single row, height is content-independent",
   },

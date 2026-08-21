@@ -337,6 +337,24 @@ export function matchDecided(teams: readonly RoundTeamView[]): boolean {
   return teams.filter((t) => !t.eliminated).length <= 1;
 }
 
+/**
+ * ⭐ GH#126 —— 結算畫面的**團隊生命值**列，名次順序。
+ *
+ * 為什麼這一支要存在（而不是在 JSX 裡再排一次）：`compareTeamStanding` 已經是
+ * 這個檔案裡「誰排在誰前面」的**唯一**答案，而 commit 97944609「取消淘汰」把
+ * 團隊生命降級成純計分板之後，伺服器的 `finalStandings()` 正是拿 teamHealth
+ * 遞減決定全場 2/3/4 名 —— 也就是說**生命值就是「你為什麼是第 3 名」的唯一解釋**。
+ * 排序邏輯在畫面上分岔一次，玩家看到的名次就會跟他讀到的數字對不起來。
+ *
+ * ⚠️ 在此之前 `lives` 在整個客戶端只被這支**未匯出**的比較器當排序鍵讀過 ——
+ * **拿來排序 ≠ 畫在畫面上**，而結算是唯一會看名次的畫面。
+ *
+ * ⛔ 不做任何格式化：純排序，回傳新陣列，輸入不被修改。
+ */
+export function settlementTeamLives<T extends RoundTeamView>(teams: readonly T[]): T[] {
+  return [...teams].sort(compareTeamStanding);
+}
+
 /** Standing comparator: the better-placed team sorts first (see roundLeaderChampion). */
 function compareTeamStanding(a: RoundTeamView, b: RoundTeamView): number {
   // an alive team always outranks an eliminated one

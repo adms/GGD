@@ -46,6 +46,7 @@ import {
   localWinQuoteChampion,
   formatKda,
   reflectionHints,
+  settlementTeamLives,
   sortSettlementRanking,
 } from "./settlementModel";
 import { audioSystem } from "../../audio";
@@ -293,6 +294,63 @@ function RankingTable(props: {
   );
 }
 
+/**
+ * ⭐ GH#126 —— 團隊生命值，畫在結算卡**裡面**。
+ *
+ * ⛔ 這不是「調 z-index 就好」的那種缺陷：`hud/hudLayout.ts` 的 `match-end`
+ * panel 宣告 `covers` **四個角落**，`useHudPanels` 在 `phase === "matchEnd"` 把
+ * 它判為 active，於是 `useHudSlotHidden("team-lives")` 為 true，
+ * `components/TeamLivesBar.tsx` 直接 `return null` —— 結算時那條 bar **根本沒進
+ * DOM**。所以唯一解就是主面板自己印。
+ *
+ * 為什麼非印不可：commit 97944609「取消淘汰」之後團隊生命是純計分板，而伺服器
+ * 的 `finalStandings()` 拿 teamHealth 遞減決定全場 2/3/4 名 ——
+ * **生命值就是「你為什麼是第 3 名」的唯一解釋**，卻在唯一會看名次的畫面上缺席。
+ *
+ * 讀的是 `useHud(s => s.teams)`（`net/RoomStore` 的 `TeamView` 從快照投影，
+ * 帶著 `lives`），⛔ 不是本地重算；排序共用 `settlementTeamLives`，⛔ 不是第二
+ * 份比較器。0 生命**照樣印 0**：那是它進商店還在花錢的那一隊。
+ */
+function TeamLivesRows(props: { localTeamId: number | null }): React.JSX.Element | null {
+  const teams = useHud((s) => s.teams);
+  if (teams.length === 0) return null;
+  const ordered = settlementTeamLives(teams);
+  return (
+    <div data-ggd-team-lives="" style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      {ordered.map((t, i) => (
+        <div
+          key={t.teamId}
+          data-ggd-team-lives-row={t.teamId}
+          style={{
+            display: "flex",
+            gap: 6,
+            alignItems: "baseline",
+            fontSize: 11,
+            opacity: t.eliminated ? 0.55 : 1,
+            fontWeight: t.teamId === props.localTeamId ? "bold" : "normal",
+          }}
+        >
+          <span style={{ color: TEXT_DIM, width: 16 }}>#{t.placement || i + 1}</span>
+          <span style={{ flex: 1, minWidth: 0, color: teamCss(t.teamId) }}>
+            隊伍 {t.teamId + 1}
+            {t.teamId === props.localTeamId ? "（你）" : ""}
+          </span>
+          <span
+            style={{
+              color: teamCss(t.teamId),
+              fontWeight: 700,
+              // 四隊的數字在同一欄，變寬度會抖
+              fontVariantNumeric: "tabular-nums",
+            }}
+          >
+            {Math.max(t.lives, 0)}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /** Legacy fallback: team placements only (settlement payload not yet received). */
 function TeamPlacementFallback(): React.JSX.Element {
   const teams = useHud((s) => s.teams);
@@ -309,6 +367,11 @@ function TeamPlacementFallback(): React.JSX.Element {
         {localTeamId !== null && ordered[0]?.teamId === localTeamId ? "勝利！" : "戰鬥結束"}
       </div>
       <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 14 }}>最終名次</div>
+      {/* GH#126 —— 連這條退路也要印生命值：名次就是拿它排出來的 */}
+      <div style={{ marginBottom: 10, textAlign: "left" }}>
+        <div style={{ fontSize: 10, color: TEXT_DIM, letterSpacing: "0.04em", marginBottom: 2 }}>團隊生命值</div>
+        <TeamLivesRows localTeamId={localTeamId} />
+      </div>
       {ordered.map((t) => (
         <div
           key={t.teamId}
@@ -788,7 +851,14 @@ export function MatchEndPanel({
             所以「累積 N 回合」也印在旁邊。 */}
         {collapsed ? null : (
           <>
-            <div style={{ fontSize: 11, color: TEXT_DIM, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6 }}>團隊累積積分</div>
+            {/* GH#126 —— 團隊生命值。⛔ 與上面的「累積積分」是兩個不同的數字：
+                積分是回合表現的帳（panels/teamLedger，重連會斷），生命值是
+                伺服器權威的計分板，而 `finalStandings()` 正是拿它排全場名次。
+                放在積分**前面**，因為它才是「你為什麼是這個名次」的答案。 */}
+            <div style={{ fontSize: 11, color: TEXT_DIM, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6 }}>團隊生命值</div>
+            <TeamLivesRows localTeamId={local?.teamId ?? null} />
+
+            <div style={{ fontSize: 11, color: TEXT_DIM, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6, marginTop: 12 }}>團隊累積積分</div>
             <TeamPointsRows
               standings={teamStandings()}
               localTeamId={local?.teamId ?? null}

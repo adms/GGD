@@ -19,6 +19,7 @@
  * different authorisation models, so two different pages.
  */
 import { useCallback, useEffect, useState } from "react";
+import { api } from "../api";
 import {
   deleteOverlayDoc,
   getOverlayDocVersions,
@@ -64,6 +65,41 @@ function errText(err: unknown): string {
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
+/**
+ * ⭐ GH#127 —— 「這一份覆蓋層，玩家真的看得到嗎？」
+ *
+ * ⚠️ 這一頁在此之前只回答**檔案存不存在**（generation / fingerprint / dataPath）——
+ * 那是一個**名詞**。而事故形狀從來都是**兩個名詞的關係**：操作者寫進去的那一份，
+ * 與**玩家的瀏覽器真的抓得到的那一份**，是不是同一份。
+ *
+ * 所以這裡打的是 `/content-overlay/bundle` —— **客戶端開機時抓的同一條路徑**
+ * （`apps/client/src/content/clientOverlay.ts` 的 `OVERLAY_BUNDLE_URL`）。⛔ 不是
+ * 另外做一個「給後台看的」端點：那樣就又變成兩個各自可能說謊的名詞。
+ *
+ * ⚠️ 它答得了什麼、答不了什麼，要說清楚：
+ *   ✅ 「瀏覽器抓得到、而且是第 N 版」 —— 真的打過那條路徑
+ *   ⛔ 「遊戲伺服器現在跑的是第 N 版」 —— 那要問 shard 自己的登錄表；shard 只在
+ *      **開機**時疊 overlay，而 `apps/game-server/src/config/contentBus.ts` 的
+ *      `CONTENT_KINDS` 至今沒有 `"content-overlay"`，所以存檔**不會**熱生效。
+ */
+interface PlayerBundleProbe {
+  generation: number;
+  docs: number;
+  deleted: number;
+}
+
+/** 把公開 bundle 端點的回應收斂成三個數字（⛔ 不重做一份 parser）。 */
+export function summarisePlayerBundle(raw: unknown): PlayerBundleProbe {
+  const r = (typeof raw === "object" && raw !== null ? raw : {}) as Record<string, unknown>;
+  const count = (v: unknown): number =>
+    typeof v === "object" && v !== null && !Array.isArray(v) ? Object.keys(v).length : 0;
+  return {
+    generation: typeof r.generation === "number" ? r.generation : 0,
+    docs: count(r.docs),
+    deleted: count(r.deleted),
+  };
+}
+
 export function ContentOverlayPage(): React.JSX.Element {
   const [status, setStatus] = useState<OverlayStatus>(emptyStatus());
   const [log, setLog] = useState<OverlayLogLine[]>([]);
@@ -101,6 +137,21 @@ export function ContentOverlayPage(): React.JSX.Element {
     }
   }, [collection, docId]);
 
+  // GH#127 —— 玩家那一端真的抓得到什麼（見上面 summarisePlayerBundle 的檔頭）
+  const [playerBundle, setPlayerBundle] = useState<PlayerBundleProbe | null>(null);
+  const [playerBundleErr, setPlayerBundleErr] = useState<string | null>(null);
+
+  const probePlayerBundle = useCallback(async (): Promise<void> => {
+    try {
+      setPlayerBundle(summarisePlayerBundle(await api.request<unknown>("/content-overlay/bundle")));
+      setPlayerBundleErr(null);
+    } catch (err) {
+      // ⛔ 不可以靜默退回「看起來沒事」：探測失敗要說出來
+      setPlayerBundle(null);
+      setPlayerBundleErr(errText(err));
+    }
+  }, []);
+
   const refresh = useCallback(async (): Promise<void> => {
     setBusy(true);
     try {
@@ -122,6 +173,11 @@ export function ContentOverlayPage(): React.JSX.Element {
   useEffect(() => {
     void loadVersions();
   }, [loadVersions]);
+
+  // 每次 generation 動了就重探一次 —— 「存檔了，玩家拿到了嗎」是同一個動作的兩半
+  useEffect(() => {
+    void probePlayerBundle();
+  }, [probePlayerBundle, status.generation]);
 
   /** 整批還原到某一版。⭐ 伺服器會鑄一個新版本，所以這一步本身也還原得回來。 */
   const doRestoreAll = async (v: OverlayVersion): Promise<void> => {
@@ -317,6 +373,65 @@ export function ContentOverlayPage(): React.JSX.Element {
                 {" "}讀不到（{status.shipped.detail || "未設定"}）— 無法判斷任何一筆是否過期
               </span>
             )}
+          </div>
+        </div>
+      </Panel>
+
+      {/* ── 1.5 玩家看得到嗎（GH#127）───────────────────────────────────── */}
+      <Panel
+        title="送達 · 這一份覆蓋層誰看得到"
+        right={
+          <Btn small onClick={() => void probePlayerBundle()} disabled={busy}>
+            重新探測
+          </Btn>
+        }
+      >
+        <div style={{ fontSize: 11, color: TEXT_DIM, lineHeight: 1.8, marginBottom: 10 }}>
+          ⚠️ 「存檔成功」<b style={{ color: TEXT_MAIN }}>不等於</b>「玩家看到了」。覆蓋層有
+          <b style={{ color: TEXT_MAIN }}>兩個</b>消費端，⛔ 生效時機不一樣。
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 10, fontSize: 12 }}>
+          <div>
+            <b style={{ color: TEXT_MAIN }}>① 玩家的瀏覽器</b>
+            <span style={{ color: TEXT_DIM }}>（圖鑑／選角／技能列這些純客戶端的內容）</span>
+            <div style={{ marginTop: 4 }}>
+              {playerBundleErr !== null ? (
+                <span style={{ color: DANGER }}>
+                  ⛔ 探測失敗：{playerBundleErr} —— 這一份<b>沒有</b>送到玩家手上。
+                </span>
+              ) : playerBundle === null ? (
+                <span style={{ color: TEXT_DIM }}>探測中…</span>
+              ) : (
+                <>
+                  <Badge color={playerBundle.generation === status.generation ? OK : WARN}>
+                    generation {playerBundle.generation}
+                  </Badge>{" "}
+                  <span style={{ color: TEXT_DIM }}>
+                    {playerBundle.docs} 份覆蓋 · {playerBundle.deleted} 份隱藏
+                    {playerBundle.generation === status.generation
+                      ? " — 與上面的耐久檔案同一版"
+                      : `　⚠️ 耐久檔案是 ${status.generation}，玩家抓到的是 ${playerBundle.generation}`}
+                  </span>
+                </>
+              )}
+            </div>
+            <div style={{ fontSize: 11, color: TEXT_DIM, marginTop: 3 }}>
+              打的是<b style={{ color: TEXT_MAIN }}>客戶端開機時抓的同一條路徑</b>，⛔ 不是另外一個給後台看的端點。
+              玩家要<b style={{ color: TEXT_MAIN }}>重新整理頁面</b>才會拿到新的一版。
+            </div>
+          </div>
+
+          <div>
+            <b style={{ color: TEXT_MAIN }}>② 遊戲伺服器</b>
+            <span style={{ color: TEXT_DIM }}>（模擬會用到的內容：技能效果、數值）</span>
+            <div style={{ fontSize: 11, color: TEXT_DIM, marginTop: 3 }}>
+              shard 只在<b style={{ color: WARN }}>開機時</b>把覆蓋層疊上出貨樹，而內容匯流排目前
+              <b style={{ color: WARN }}>不認得</b> <code>content-overlay</code> 這個種類 ——
+              所以存檔之後<b style={{ color: TEXT_MAIN }}>要重啟容器</b>才會生效。
+              <br />
+              ⛔ 這一格是<b>寫死的說明</b>，⛔ 不是探測結果：這一頁看不到 shard 自己的登錄表。
+            </div>
           </div>
         </div>
       </Panel>

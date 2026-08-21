@@ -9,6 +9,23 @@
  * the alarm: it names the tick, shows the expected/actual digests, and states
  * the most likely cause in 繁體中文. There is no "dismiss and keep watching" —
  * everything after a divergence is a match that never happened.
+ *
+ * ⭐ GH#114 —— 這一列的控制項全部要有音訊回饋，⛔ 沒有「內部頁」豁免。
+ *
+ * 上一輪把回放頁歸類成「內部工具」而跳過它，那是判錯：`ui/GlobalChrome.tsx` 的
+ * 檔頭自己寫著「That page is not a corner: it is THE page the owner screenshots
+ * for playtest feedback.」—— 同一個理由讓 #14 的音訊開關與 #66 的版本徽章被補進
+ * 這棵樹，同一個理由讓 transport 屬於**玩家面前**那一桶。
+ *
+ * ⛔ 所以這個檔案裡不可以再出現裸的 `<button>`：一律走 `ui/SfxButton`
+ * （drop-in，hover→uiHoverCyber、click→uiClick、press-scale + ripple，
+ * 而且 forward 全部 button props）。守衛 `replayTransportSfx.test.ts` 掃這個檔，
+ * 裸 `<button` 一顆就紅。
+ *
+ * ⚠️ 拉桿（`<input type="range">`）換不成 `SfxButton`，所以它**手動**接：
+ * hover 用**素的** `uiHover` 滴答（`buttonSfx` 檔頭：賽博殘響留給按鈕、其他欄位
+ * 元件用素的那顆），而放開才出聲 —— `onChange` 在拖曳中每一格都會送一次 seek，
+ * 掛在那上面等於一串機關槍。
  */
 import { useEffect, useMemo, useRef } from "react";
 import type { Room } from "colyseus.js";
@@ -20,6 +37,8 @@ import {
   type ReplayRefusedMessage,
   type ReplayStatusMessage,
 } from "@ggd/shared/protocol/replay";
+import { audioSystem } from "../../audio";
+import { SfxButton } from "../SfxButton";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, GOLD } from "../theme";
 import { replayStore, useReplayStore } from "./replayStore";
 
@@ -116,17 +135,20 @@ export function ReplayControls({ room }: { room: Room<MatchState> | null }): Rea
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <button
+            <SfxButton
               onClick={() => send(room, { action: status.playing ? "pause" : "play" })}
               disabled={status.finished || !!diverged}
               style={btn(status.playing)}
               aria-label={status.playing ? "暫停" : "播放"}
+              // 播/停是一顆開關,不是一次確認 → uiToggle(SfxButton 的 clickSfx
+              // 覆寫,⛔ 不是疊在 uiClick 上面)
+              clickSfx="uiToggle"
             >
               {status.finished ? "▮▮" : status.playing ? "❚❚" : "►"}
-            </button>
-            <button onClick={() => send(room, { action: "restart" })} style={btn(false)} aria-label="從頭">
+            </SfxButton>
+            <SfxButton onClick={() => send(room, { action: "restart" })} style={btn(false)} aria-label="從頭">
               ↺
-            </button>
+            </SfxButton>
             <span style={{ fontFamily: "monospace", fontSize: 13, minWidth: 96 }}>
               {fmtClock(status.tick)} / {fmtClock(status.lastTick)}
             </span>
@@ -137,6 +159,13 @@ export function ReplayControls({ room }: { room: Room<MatchState> | null }): Rea
               value={status.tick}
               onChange={(e) => send(room, { action: "seekTick", tick: Number(e.target.value) })}
               disabled={status.seeking}
+              // ⛔ 不掛在 onChange 上:拖曳中每一格都會觸發一次
+              onPointerEnter={() => audioSystem.playSfx("uiHover")}
+              onPointerUp={() => {
+                audioSystem.unlock(); // 第一次真實手勢解鎖 autoplay,同 buttonSfx
+                audioSystem.playSfx("uiClick");
+              }}
+              onKeyUp={() => audioSystem.playSfx("uiClick")}
               style={{ flex: 1, accentColor: GOLD }}
               aria-label="時間軸"
             />
@@ -145,20 +174,24 @@ export function ReplayControls({ room }: { room: Room<MatchState> | null }): Rea
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 8, flexWrap: "wrap" }}>
             <span style={{ fontSize: 12, color: TEXT_DIM }}>速度</span>
             {SPEEDS.map((sp) => (
-              <button
+              <SfxButton
                 key={sp}
                 onClick={() => send(room, { action: "speed", speed: sp })}
                 style={chip(status.speed === sp)}
+                // 一排互斥的段落選擇 → uiTabSwitch(同 buttonSfx 對 segmented
+                // control 的約定),⛔ 不是通用的 click 嗶聲
+                clickSfx="uiTabSwitch"
+                aria-pressed={status.speed === sp}
               >
                 {sp}×
-              </button>
+              </SfxButton>
             ))}
             <span style={{ width: 1, height: 16, background: "rgba(120,140,190,.3)", margin: "0 4px" }} />
             <span style={{ fontSize: 12, color: TEXT_DIM }}>回合</span>
             {combatRounds.map((r) => (
-              <button key={r} onClick={() => send(room, { action: "seekRound", round: r })} style={chip(false)}>
+              <SfxButton key={r} onClick={() => send(room, { action: "seekRound", round: r })} style={chip(false)}>
                 第 {r} 場
-              </button>
+              </SfxButton>
             ))}
             {status.truncated && (
               <span style={{ fontSize: 12, color: "#e0a13a", marginLeft: "auto" }}>錄影不完整（伺服器中途結束）</span>
