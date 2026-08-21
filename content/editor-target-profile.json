@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_742c0fe9dda8",
+    "contentVersion": "cv_4b50a068f09e",
     "collections": {
       "champions": {
-        "hash": "e13e75cb8a98",
+        "hash": "b27487443465",
         "count": 71
       },
       "abilities": {
-        "hash": "a298be694858",
+        "hash": "cfbb91d8f6c8",
         "count": 420
       },
       "items": {
@@ -26,8 +26,8 @@
         "count": 21
       },
       "status-effects": {
-        "hash": "2d700fbb946c",
-        "count": 40
+        "hash": "7abdf3e0ce34",
+        "count": 41
       },
       "loot-tables": {
         "hash": "50b52195cd4a",
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "169e497098a8",
+        "hash": "8362e9ca0155",
         "count": 72
       },
       "models": {
@@ -3416,5 +3416,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "ac0e3e955327"
+  "profileDigest": "3a3ec6e0df81"
 }

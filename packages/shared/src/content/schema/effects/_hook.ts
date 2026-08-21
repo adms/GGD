@@ -271,6 +271,41 @@ export function refineHookDamageContext(
         "owner TSV 上的 `interval` 指的就是它,不是第二個欄位。",
     });
   }
+  // ── 【吞噬】掛在觸發器上一定要有節奏（GH#489）─────────────────────────────
+  //
+  // owner 2026-08-21：「**不對 有些被動是有冷卻的 例如初號機吞噬**」。
+  //
+  // `devour` 是唯一一個**無視護甲、護盾與傷害倍率、命中即死**的 kind
+  //（`sim/effects/devour.ts`）。掛在一條沒有內部冷卻的觸發器上時，它的頻率
+  // 等於那個事件的頻率 —— `onBasicAttack` 在攻速上限 4 之下是**每秒 4 次處決
+  // 判定**，`onInterval` 更直接是**每秒 30 次**。
+  //
+  // ⭐ 這是**一條機制規則**（第〇·五守則），⛔ 不是替 59-01 / 92-03 各寫一個 if：
+  //    節流的住處是**既有的** `internalCooldown`（`sim/effects/hookIcd.ts` 是
+  //    全 repo 唯一的那份算術），這裡只是不准作者把它留白。
+  //    ⛔ 也刻意**不**在 `zDevour` 上長第二個冷卻欄位：兩個平行的時鐘寫同一件事，
+  //    「一個 hook 同時寫兩種節奏時誰贏」的任何答案都要靠註解解釋
+  //    （理由與 `onInterval` 那一段的 `everySec` 逐字相同）。
+  //
+  // ⚠️ 和上面那一段一樣**只看第一層** `effects`。巢狀 payload（`leap.onLand`、
+  // `spawnProjectile.onHit`）在另一個時間點跑，那是另一個更難的問題 ——
+  // 而一個假裝檢查了的淺掃比誠實地只掃一層更糟。出貨的兩處 devour 觸發器
+  //（92-03 狂草泥馬、grail-ex-13）都在第一層。
+  //
+  // ⚠️ 主動施放的 devour **不受這條管**：它根本不是 hook，節流是技能自己的
+  // `cooldown[]`。
+  if (!hook.internalCooldown && hook.effects.some((e) => e.kind === "devour")) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["internalCooldown"],
+      message:
+        "帶【吞噬】的觸發器一定要填 internalCooldown —— 吞噬是無視護甲/護盾、" +
+        "命中即死的處決，沒有節奏的話它的頻率就是事件的頻率" +
+        "（onBasicAttack 在攻速上限下每秒 4 次、onInterval 每秒 30 次）。" +
+        "⚠️ 這一格是**實際秒**，⛔ 不是卡面秒：卡面 60 秒的冷卻要填 12" +
+        "（卡面 × combat-env 的技能冷卻倍率，出貨 0.2）。",
+    });
+  }
   // ── 機率的兩個欄位:互斥,而且區間不可以顛倒 ──────────────────────────────
   // 這一段**在 DAMAGE_BEARING_EVENTS 的 early-return 之前**,因為機率跟事件
   // 帶不帶封包無關 —— 放在後面的話,`onDamageTaken` 上的一份壞文件會安靜地

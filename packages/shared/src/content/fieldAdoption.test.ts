@@ -2189,27 +2189,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "而出貨的 3 份 delayed 全部是 single。所以零採用不是「沒有人需要」，是「沒有人寫得進去」——這一格要跟 `shape:\"circle\"` 一起出現才合法。" +
       "⛔ 不要把它降級成 default-live：那會把一條「填了就紅」的規則講成「留白剛好」，下一個作者就會以為自己可以填。",
   },
-  "field:abilities.effects[]#devour.radius": {
-    status: "schema-impossible",
-    why:
-      "`refineDispelShape` 的反向檢查：`shape:\"single\"` 填了這一格就是**載入時**的解析錯誤，" +
-      "而出貨的 6 份 devour 全部是 single。所以零採用不是「沒有人需要」，是「沒有人寫得進去」——這一格要跟 `shape:\"circle\"` 一起出現才合法。" +
-      "⛔ 不要把它降級成 default-live：那會把一條「填了就紅」的規則講成「留白剛好」，下一個作者就會以為自己可以填。",
-  },
-  "field:abilities.effects[]#devour.side": {
-    status: "schema-impossible",
-    why:
-      "`refineDispelShape` 的反向檢查：`shape:\"single\"` 填了這一格就是**載入時**的解析錯誤，" +
-      "而出貨的 6 份 devour 全部是 single。所以零採用不是「沒有人需要」，是「沒有人寫得進去」——這一格要跟 `shape:\"circle\"` 一起出現才合法。" +
-      "⛔ 不要把它降級成 default-live：那會把一條「填了就紅」的規則講成「留白剛好」，下一個作者就會以為自己可以填。",
-  },
-  "field:abilities.effects[]#devour.maxTargets": {
-    status: "schema-impossible",
-    why:
-      "`refineDispelShape` 的反向檢查：`shape:\"single\"` 填了這一格就是**載入時**的解析錯誤，" +
-      "而出貨的 6 份 devour 全部是 single。所以零採用不是「沒有人需要」，是「沒有人寫得進去」——這一格要跟 `shape:\"circle\"` 一起出現才合法。" +
-      "⛔ 不要把它降級成 default-live：那會把一條「填了就紅」的規則講成「留白剛好」，下一個作者就會以為自己可以填。",
-  },
 
   // ── ② `radiusTier`：⚠️ 它**不在**那道 refine 裡（讀過原始碼才知道） ──────────
   // 交辦稿說 delayed/devour 的四格（radius / radiusTier / side / maxTargets）都是
@@ -2219,6 +2198,11 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // 那一格沒有人讀（幾何只在 circle 那一支解析）。那是一個真的、但很小的 schema
   // 缺口（不在這個 lane 的範圍：⛔ 本輪不准動 schema/），所以這兩筆誠實地記成
   // landing，和 ③ 的 `shape=circle` 同一個時鐘 —— 它們必然同時變綠。
+  // ⭐ GH#489（2026-08-21）—— devour 的**五筆豁免一起刪掉了**，⛔ 不是過期，是被
+  //    反駁：59-01 吞噬改成被動之後是一顆真的圓（`shape:"circle"` + radius +
+  //    radiusTier + side + maxTargets 全部有人用），也就是這五筆當初寫的
+  //    「反駁方式」逐字發生了。⛔ 不要因為 delayed 那一族還在就把它們留著 ——
+  //    豁免是**逐 kind** 的，而 devour 這一族已經沒有東西要豁免了。
   "field:abilities.effects[]#delayed.radiusTier": {
     status: "landing",
     since: "2026-08-12",
@@ -2226,14 +2210,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "AoE 級距落在共用的幾何欄位群上，普查在每一個 AoE-shaped kind 各看到一次。⚠️ 與同族的 radius/side/maxTargets **不同**：`refineDispelShape` 的反向迴圈只列了那三格，" +
       "`radiusTier` 不在其中，所以 `shape:\"single\"` 寫它會載入成功而沒有人讀。零採用的真正原因是出貨的 3 份 delayed 一支都不是圓形 —— 它會與 `enum:…#delayed.shape=circle` 同一天變綠。" +
       "⛔ 30 天後它再紅一次是對的：如果那時仍然沒有圓形的 delayed，該做的是補上那道 refine，不是續發豁免。",
-  },
-  "field:abilities.effects[]#devour.radiusTier": {
-    status: "landing",
-    since: "2026-08-12",
-    why:
-      "AoE 級距落在共用的幾何欄位群上，普查在每一個 AoE-shaped kind 各看到一次。⚠️ 與同族的 radius/side/maxTargets **不同**：`refineDispelShape` 的反向迴圈只列了那三格，" +
-      "`radiusTier` 不在其中，所以 `shape:\"single\"` 寫它會載入成功而沒有人讀。零採用的真正原因是出貨的 6 份 devour 一支都不是圓形 —— 它會與 `enum:…#devour.shape=circle` 同一天變綠。" +
-      "⛔ 30 天後它再紅一次是對的：如果那時仍然沒有圓形的 devour，該做的是補上那道 refine，不是續發豁免。",
   },
 
   // ── ③ 兩個 kind 的 `shape` 只被選了一半 ──────────────────────────────────
@@ -2246,14 +2222,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-12",
     why:
       "`shape` 是必填所以欄位本身 100%，零的是 circle 這個成員：出貨的 3 份 delayed 全部是單體。" +
-      "⭐ 圓形那一支不是死路 —— 同一支 `shapeTargets` 已經被別的 kind 以 circle 走過（`godie-h02v.ex` 的 weightedBranch 是 circle + side:\"allies\"）" +
-      "，所以缺的是內容不是引擎。它變綠的那一天，上面 ① 的三格幾何與 ② 的 radiusTier 會一起解禁。",
-  },
-  "enum:abilities.effects[]#devour.shape=circle": {
-    status: "landing",
-    since: "2026-08-12",
-    why:
-      "`shape` 是必填所以欄位本身 100%，零的是 circle 這個成員：出貨的 6 份 devour 全部是單體。" +
       "⭐ 圓形那一支不是死路 —— 同一支 `shapeTargets` 已經被別的 kind 以 circle 走過（`godie-h02v.ex` 的 weightedBranch 是 circle + side:\"allies\"）" +
       "，所以缺的是內容不是引擎。它變綠的那一天，上面 ① 的三格幾何與 ② 的 radiusTier 會一起解禁。",
   },

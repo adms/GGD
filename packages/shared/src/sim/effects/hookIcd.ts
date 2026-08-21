@@ -19,6 +19,11 @@
  */
 import type { SimWorld } from "../SimWorld";
 import type { HookDef, ModifierSource } from "../stats/modifiers";
+// ⚠️ 值 import（⛔ 不是 type-only）。`cooldownRules.ts` 是一片**沒有 import 的
+// 葉子**（只有型別與純算術），所以它接不上 effectRegistry 那條環 —— 檔頭那段
+// 「這支只 import 型別」講的是**危害**（執行期 undefined 的 handler），不是一條
+// 「一律不准 import 值」的規矩。
+import { applyHookCooldownFloor } from "../cooldownRules";
 
 /**
  * 「這一格從來沒發動過」的 sentinel。夠負,所以 `world.tick - NEVER_FIRED`
@@ -46,7 +51,18 @@ export const NEVER_FIRED = -1e9;
 export function hookIcdTicks(world: SimWorld, src: ModifierSource, hook: HookDef): number {
   if (!hook.internalCooldown) return 0;
   const factor = src.kind === "item" ? world.combatEnv.itemCooldown : 1;
-  return Math.round((hook.internalCooldown * factor) / world.dt);
+  // ⭐ GH#489 —— 觸發器地板（`config.cooldown-rules@1.hookMinSeconds`，出貨 **0
+  // ＝ 沒有地板**，所以這一行對每一份既有內容與每一份既有錄影是逐位元的 no-op）。
+  //
+  // ⚠️ 位置在**乘完 `itemCooldown` 之後**，與 `applyCooldownFloor` 對技能冷卻的
+  // 規矩逐字相同（那一支的檔頭：「地板是最後一步」）。放在中間會讓「道具冷卻 ×2」
+  // 可以把已經觸底的觸發器再推回地板之上 —— 那讀起來像 bug。
+  //
+  // ⚠️ 這裡夾的是**實際秒**。⛔ 不要拿 `combatEnv.cooldown`（技能冷卻倍率）來
+  // 乘它：那一格乘的是**卡面秒**，而 `internalCooldown` 從第一天起就是實際秒。
+  // 兩把尺量同一件事正是 GH#489 那個 5 倍陷阱本身。
+  const seconds = applyHookCooldownFloor(world.cooldownRules, hook.internalCooldown * factor);
+  return Math.round(seconds / world.dt);
 }
 
 /**

@@ -128,6 +128,10 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
       "charmed",
       "confusion",
       "curse",
+      // ⭐ GH#489 —— 59-01 吞噬改成**被動自動發生**之後，「兩餐之間隔多久」沒有
+      //    技能鈕可以轉圈，所以那個冷卻就是這一格：`devour.onDevour` 掛在自己身上，
+      //    而那條觸發器的 `condition` 問「它還在不在」。它自己不改任何數值。
+      "devour-cooldown",
       "fang-stun",
       // 【恐懼】(2026-08-08) —— 89-002 俄羅斯輪盤 / 52-02 / 52-04 / 52-002。
       // 與【暴走】同一條路（`applyStatus` 的一個布林），但方向相反：暴走是

@@ -1,0 +1,15 @@
+{
+  "id": "devour-cooldown",
+  "schema": "status-effect@1",
+  "name": "吞噬冷卻",
+  "description": "剛吞下去一個，胃還沒空。【吞噬】是**被動自動發生**的處決（59-01 吞噬），所以「兩餐之間要隔多久」沒有技能鈕可以顯示 —— 這一格就是那個冷卻，掛在自己身上、看得見、會倒數。⚠️ 它自己不改任何數值：唯一的作用是讓那條【吞噬】觸發器在它還在的時候不成立。冷卻幾秒寫在施加它的那張卡上（GH#489：與那一支當主動時的冷卻一致）。",
+  "polarity": "debuff",
+  "tags": [
+    "devour-cooldown",
+    "cooldown",
+    "internal-cooldown",
+    "marker",
+    "no-stat-change",
+    "self"
+  ]
+}

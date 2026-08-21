@@ -46,6 +46,36 @@ export interface CooldownRules {
    * 那是打錯數字的樣子（一個 3 秒 CD 的技能配一個 30 秒的「地板」）。
    */
   minSeconds: number;
+  /**
+   * ⭐ GH#489 —— **一條觸發器（hook）的內部冷卻最短幾實際秒**。出貨 **0 = 沒有地板**。
+   *
+   * ── 為什麼它需要自己一格，而不是沿用上面那個 `minSeconds` ────────────────
+   * 兩個欄位量的是**兩種秒**，而它們長得一模一樣（GH#489 的 5 倍陷阱）：
+   *
+   *   | 欄位 | 單位 | 誰乘 `combatEnv.cooldown`（出貨 0.2）|
+   *   |---|---|---|
+   *   | `ability.cooldown[]`    | **卡面秒** | 引擎（⇒ 60 卡面秒 = 12 實際秒）|
+   *   | `hook.internalCooldown` | **實際秒** | ⛔ 沒有人（`effects/hookIcd.ts`）|
+   *
+   * 用同一格夾兩種秒，等於用同一把尺量兩個空間 —— 那正是這個 issue 的起因。
+   *
+   * ── ⚠️ 為什麼出貨值是 0 而不是 1.2（＝最便宜的那一格冷卻）──────────────────
+   * **量到的**（2026-08-21，掃 `content/{abilities,items,augments,champions}`）：
+   * 有填內部冷卻的觸發器裡 **52 條低於 1.2 秒**（0.5 / 0.6 / 1.0），另有 279 條
+   * 刻意不填（03-00 相轉移裝甲的常駐魔免**就是**要每 tick 續期）。
+   * ⇒ 把地板預設拉到 1.2 會**無聲改掉 52 張卡的手感**，而那是 owner 的平衡排序，
+   *   ⛔ 不是我的（第零守則⑧）。所以出貨 0 = 逐位元等於今天。
+   *
+   * ⭐ 它存在的理由是**一鍵**：owner 想一次壓住所有被動的觸發頻率時，填一個數字
+   * 就好，⛔ 不必逐支去改幾百份 JSON。1.2 是那個「他大概會想填的」值 ——
+   * owner 自己的冷卻表最便宜的一格（單體·極小 6 卡面秒 × 0.2）。
+   *
+   * ⚠️ 它**只夾有填內部冷卻的那些**。沒填 = 作者明說「每一次事件都算」，
+   * 而把那 279 條一起夾住會讓一堆常駐效果變成閃爍的 —— 那是另一個功能，不是地板。
+   *
+   * ⚠️ 受 `enabled` 管（同 `minSeconds`）：那一格是這頁的總止血閥。
+   */
+  hookMinSeconds: number;
 }
 
 /**
@@ -57,6 +87,8 @@ export interface CooldownRules {
 export const DEFAULT_COOLDOWN_RULES: CooldownRules = Object.freeze({
   enabled: true,
   minSeconds: 0.1,
+  // ⭐ 0 = 沒有地板 = 逐位元等於這一格出現之前。理由寫在 `hookMinSeconds` 上。
+  hookMinSeconds: 0,
 });
 
 /** 秒數地板的上下界。`schema/config.ts` 與後台欄位共用這一組。 */
@@ -68,14 +100,42 @@ function clampMin(v: unknown): number {
   return Math.min(Math.max(v, COOLDOWN_MIN_SECONDS_MIN), COOLDOWN_MIN_SECONDS_MAX);
 }
 
+function clampHookMin(v: unknown): number {
+  if (typeof v !== "number" || !Number.isFinite(v)) return DEFAULT_COOLDOWN_RULES.hookMinSeconds;
+  return Math.min(Math.max(v, COOLDOWN_MIN_SECONDS_MIN), COOLDOWN_MIN_SECONDS_MAX);
+}
+
 /** 把一份 `config.cooldown-rules@1` 文件正規化成規則物件。認不得 → 出貨值。 */
 export function cooldownRulesFromDoc(doc: unknown): CooldownRules {
-  const d = doc as { schema?: string; enabled?: unknown; minSeconds?: unknown } | undefined;
+  const d = doc as
+    | { schema?: string; enabled?: unknown; minSeconds?: unknown; hookMinSeconds?: unknown }
+    | undefined;
   if (!d || d.schema !== "config.cooldown-rules@1") return DEFAULT_COOLDOWN_RULES;
   return {
     enabled: typeof d.enabled === "boolean" ? d.enabled : DEFAULT_COOLDOWN_RULES.enabled,
     minSeconds: clampMin(d.minSeconds),
+    // ⚠️ 缺席 → 出貨值，⛔ 不是 NaN。線上**已經存過**一份沒有這一格的耐久覆蓋層
+    //    （`data/`），而那一份會蓋掉 `content/config/`：把缺席讀成壞值會讓整份
+    //    config 退回預設，也就是 2026-08-02 那次事故的形狀。
+    hookMinSeconds: clampHookMin(d.hookMinSeconds),
   };
+}
+
+/**
+ * 把觸發器地板套到一條 hook 的內部冷卻上（**實際秒**進、**實際秒**出）。
+ *
+ * ⭐ 與 {@link applyCooldownFloor} 分成兩支是刻意的：兩者夾的是**兩種秒**
+ * （見 {@link CooldownRules.hookMinSeconds} 的那張表）。共用一支函式會讓
+ * 「這個數字是卡面還是實際」變成呼叫端各自記得的事 —— 而這個 repo 已經為
+ * 那件事付過一次代價（GH#489）。
+ *
+ * ⚠️ `seconds <= 0` 直接回傳：那是「這條 hook 沒有內部冷卻」，⛔ 不是
+ * 「內部冷卻是 0 秒所以要被夾到地板」。把它一起夾住會讓 279 條刻意每 tick
+ * 續期的常駐效果（03-00 相轉移裝甲的魔免）變成閃爍的。
+ */
+export function applyHookCooldownFloor(rules: CooldownRules, seconds: number): number {
+  if (!rules.enabled || !(seconds > 0)) return seconds;
+  return Math.max(seconds, rules.hookMinSeconds);
 }
 
 /**

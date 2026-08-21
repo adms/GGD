@@ -66,7 +66,27 @@ export const devourEffect: EffectKindSpec<"devour"> = {
      */
     const devouredIds: EntityId[] = [];
 
-    for (const id of shapeTargets(e, ctx)) {
+    /**
+     * ⭐ GH#489 —— `maxTargets` 在這個 kind 上算的是「**吃得到**幾個」，
+     * ⛔ 不是「圓內最近的幾個（其中大部分吃不到）」。
+     *
+     * ── 為什麼這是引擎的事，⛔ 不是某一支技能的 if ──────────────────────────
+     * `shapeTargets` 是所有帶 `shape` 的 kind 共用的那一份，它在**名額**那一刀
+     * 之前只知道距離 —— 對 `dispel` / `shieldBreak` 那種「圈到誰就對誰做」的
+     * kind 完全正確。`devour` 是唯一一個在**取到目標之後還有一道硬過濾**
+     * （處決線）的：⇒ 先切名額再過濾，等於「看一眼最近的那一個，他滿血就算了」。
+     *
+     * ⚠️ 這不是理論。59-01 吞噬（半徑 12、`maxTargets: 1`）實測：第一餐吃掉之後，
+     * 那具屍體**復活**回滿血並站在更近的位置，於是接下來每一次掃描都把唯一的名額
+     * 花在他身上，而三步之外那個 1.5% 血的敵人**永遠吃不到** ——
+     * 一支看起來完全正常、卻再也不會發動的被動（失敗形態②）。
+     *
+     * ⭐ 出貨影響 = **零**：今天帶 `maxTargets` 的 devour 只有 59-01 一支
+     * （92-03 狂草泥馬與 grail-ex-13 都是 `shape:"single"`，那條路連圓都沒有）。
+     */
+    const cap = e.maxTargets ?? Number.POSITIVE_INFINITY;
+    for (const id of shapeTargets({ ...e, maxTargets: undefined }, ctx)) {
+      if (devouredIds.length >= cap) break;
       const hp = world.health.get(id);
       if (!hp?.alive) continue;
       // 「敵方**英雄**單位」—— owner 的文案。做成欄位是因為第 3 回合之後場上

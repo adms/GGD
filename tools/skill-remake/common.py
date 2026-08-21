@@ -23,6 +23,8 @@ import subprocess
 
 # ⭐ 五級距全轉的**唯一**實作 —— 這 90 支與其餘 330 支共用它（見那一份的檔頭）。
 from tierize import Grids as tierize_grids, hook_icd, tierize  # noqa: F401
+# ⭐ `TIER_R` 從出貨 config 推導要用它（⛔ 不要在這裡再開第二個讀檔器）。
+from tierize import _load as _tierize_load
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 AB = os.path.join(ROOT, "content", "abilities")
@@ -368,12 +370,17 @@ def dmg(dtype="magic", **kw):
     return o
 
 
-# 四級距的出貨值。⚠️ 這裡填 `radius` 只是為了滿足型別（`damageArea.radius` 必填）；
-# **真正生效的是 `radiusTier`** —— 註冊時由 `config.aoe-tiers@1` 覆蓋回來。
-# ⭐ 鍵名 = `SKILL_TIER_NAMES`（GH#463 把 owner 2026-08-11 的舊詞彙換成他 08-19
-#    的新版：極小/小/中/大/極大）。⚠️ **值一個都沒動** —— 只有名字整體左移一格。
-#    ⛔ 這裡少一格「極大」(12.0) 是刻意的：出貨沒有一支 area() 用到它。
-TIER_R = {"極小": 3.0, "小": 4.5, "中": 6.0, "大": 8.0}
+# 五級距的出貨半徑。⚠️ 這裡填 `radius` 只是為了滿足型別（`damageArea.radius` /
+# `shape:"circle"` 的 radius 必填）；**真正生效的是 `radiusTier`** ——
+# 註冊時由 `config.aoe-tiers@1` 覆蓋回來（`resolveRadiusTier`，級別贏）。
+#
+# ⭐ 2026-08-21：從**出貨 config 讀**，⛔ 不再是一行字面值。
+#    在這之前它是 `{"極小":3.0,…,"大":8.0}` 五個手打數字 —— 也就是
+#    `content/config/aoe-tiers.json` 的**第四個住處**，而它旁邊的註解自己承認
+#    「少一格『極大』是刻意的：出貨沒有一支 area() 用到它」。那句話在 59-01 吞噬
+#    改成被動圓的那一刻就過期了（第三守則：註解會說謊）。
+#    ⇒ 現在它**不可能**過期，也 ⛔ 不可能少一格：aoe-tiers 加一級就自動有。
+TIER_R = {k: float(v) for k, v in _tierize_load("aoe-tiers")["radius"].items()}
 
 
 def area(dtype="magic", tier="小", maxt=None, onhit=None, **kw):
@@ -821,6 +828,58 @@ def _set_semantics_gate(doc, e, num):
         )
 
 
+#: 佔位符：「**這一支自己的卡面冷卻，換算成實際秒**」。
+#:
+#: ⭐ owner 2026-08-19（59-01 吞噬改被動）＋ 2026-08-20（⛔ 他已經回答過三次以上）：
+#:      「改成被動 自動發生 低於該門檻直接吃掉」
+#:      「**採用原本主動的冷卻時間就好了**」
+#:
+#: 「跟主動一樣」是一個**關係**，⛔ 不是一個數字。寫成數字要付兩次稅：
+#:   ⚠️ ①**單位不同**（見 `tierize.hook_icd` 那張表）—— `ability.cooldown[]` 是
+#:      **卡面秒**（引擎再乘 `combatEnv.cooldown`，出貨 0.2），而
+#:      `hook.internalCooldown` / `applyStatus.duration` 是**實際秒**（⛔ 沒有人乘）。
+#:      逐字抄 60 進去 = 玩家等 **5 倍**久，而卡片、schema、測試全部正常。
+#:   ⚠️ ②**冷卻會被五級距重寫**（`tierize()` 在解析這個佔位符的正上方跑）。
+#:      手打的那個數字不會跟著動，於是關係在下一次調級距時**安靜地斷掉**。
+#:
+#: ⭐ 做成**佔位符**而不是一格 `icd_follows_cd=True` 的旗標，是因為要它的位置不只
+#:    一個：hook 的 `internalCooldown`、`applyStatus.duration`、未來任何一格。
+#:    一個佔位符 = 一條規則（第〇·五守則），⛔ 不是每個落點各一個旗標。
+CD_ECHO = "__cd_echo__"
+
+
+def _resolve_cd_echo(doc, num):
+    """把整份文件裡的 {@link CD_ECHO} 換成這一支自己的卡面冷卻 × 全域冷卻倍率。
+
+    ⚠️ 呼叫點在 `tierize()` **之後**（⛔ 不可以在之前）：冷卻在那一步才剛被
+       五級距重寫，讀它之前的值就會讓「跟主動一樣」停在一個已經不存在的數字上。
+    ⛔ 留著沒被換掉的佔位符會讓 Zod 當場拒收（字串塞進一個 number 欄位）——
+       那是刻意的：一個「忘了填冷卻」的技能要**吵**，不可以靜靜地變成 0。
+    """
+    cd = [float(x) for x in (doc.get("cooldown") or []) if x]
+    val = hook_icd(seconds=max(cd)) if cd else None
+
+    def walk(node):
+        if isinstance(node, list):
+            for i, x in enumerate(node):
+                if x == CD_ECHO:
+                    assert val is not None, \
+                        f"{num}: 用了 CD_ECHO 但 cooldown[] 全是 0 —— 沒有主動冷卻可以沿用"
+                    node[i] = val
+                else:
+                    walk(x)
+        elif isinstance(node, dict):
+            for k, v in list(node.items()):
+                if v == CD_ECHO:
+                    assert val is not None, \
+                        f"{num}: 用了 CD_ECHO 但 cooldown[] 全是 0 —— 沒有主動冷卻可以沿用"
+                    node[k] = val
+                else:
+                    walk(v)
+
+    walk(doc)
+
+
 def _timing_gates(doc, e, num):
     """⭐ B1-M —— 時序容器沒有 helper，於是「先 A 再 B」被攤平成同一 tick 的兄弟。
 
@@ -887,7 +946,10 @@ def status(sid, dur, **kw):
     o = {
         "kind": "applyStatus",
         "statusId": sid,
-        "duration": [float(x) for x in dur] if isinstance(dur, (list, tuple)) else float(dur),
+        # ⭐ `CD_ECHO` 原樣送下去，由 `_resolve_cd_echo()` 在 `tierize()` 之後換掉
+        #    （⛔ 不可以在這裡 `float()` 掉它：那一刻冷卻還沒被五級距重寫）。
+        "duration": dur if dur == CD_ECHO
+        else ([float(x) for x in dur] if isinstance(dur, (list, tuple)) else float(dur)),
     }
     o.update(kw)
     return o
@@ -1286,6 +1348,10 @@ def build(e):
     # ⚠️ 位置在 `_canonical_order` **之前**是硬性的：`tierize` 會把
     #    `amount` 換成 `{damageTier, flat, …}`，那一步之後才輪到鍵序統一。
     tierize(doc, _TIER_GRIDS(), TIERIZE_LOG.setdefault(aid, []))
+    # ── CD_ECHO：「跟這一支自己的主動冷卻一樣」（owner 2026-08-19 對 59-01 吞噬）──
+    # ⚠️ 位置在 `tierize` **之後**是硬性的：冷卻在上一行才剛被五級距重寫，
+    #    讀它之前的值就會讓「跟主動一樣」停在一個已經不存在的數字上。
+    _resolve_cd_echo(doc, num)
     # ── B2：鍵序統一照 Zod 宣告序重排（⛔ 一定要在所有會動 effects 的步驟之後）──
     doc["effects"] = _canonical_order(doc["effects"])
     if doc.get("passive"):

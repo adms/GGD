@@ -139,7 +139,7 @@ class Grids:
 #: （Zod `DEFAULT_MANA_TIERS` 與 admin `SHIPPED_*` 之間本來就有 drift 測試）。
 
 
-def hook_icd(tier="極小", shape="單體"):
+def hook_icd(tier="極小", shape="單體", seconds=None):
     """一條 hook 的**內部冷卻**（`hook.internalCooldown`）—— ⭐ 從冷卻表推導。
 
     ⚠️ ⛔ **兩個欄位是兩把不同的尺**，而它們長得一模一樣：
@@ -153,8 +153,15 @@ def hook_icd(tier="極小", shape="單體"):
       測試全部正常。⚠️ 這**已經發生在出貨內容裡**：59-00 暴走 `cooldown:[150]`
       （＝30 實際秒）配 `internalCooldown: 150.0`（＝150 實際秒）。
     ⇒ 這一支把換算收成**一個住處**：填級距名，換算它自己做。
+
+    ⭐ `seconds=` —— 換算**一個已知的卡面秒**，給「內部冷卻＝這一支自己的主動冷卻」
+       那一族用（owner 2026-08-19 對 59-01 吞噬：「採用原本主動的冷卻時間就好了」）。
+       ⛔ 呼叫端**不要**自己乘那個倍率：兩份乘法就是兩把尺，而它們分歧的那一天
+       某一支被動會等 5 倍久，卡片、schema、測試全部正常。
+       ⚠️ 呼叫端也 ⛔ 不要傳一個字面值 —— 傳**那一支自己的 `cooldown[]`**
+       （見 `common.py::_icd_follows_cooldown`），否則級距表一改它就停在舊值。
     """
-    cd = _load("cooldown-tiers")["seconds"][shape][tier]
+    cd = seconds if seconds is not None else _load("cooldown-tiers")["seconds"][shape][tier]
     mult = _load("combat-env")["multipliers"]["cooldown"]
     return round(float(cd) * float(mult), 3)
 
@@ -501,6 +508,20 @@ def tierize(doc, grids=None, log=None):
     # ── ②：幾何。先「值 → 級別」（補上從來沒填過的那些），再「級別 → 值」。
     #    ⚠️ 順序不可以顛倒：反過來的話新填的級別當天不會被寫回原始值，
     #    於是 `tierRawParity.test.ts` 當場紅。
+    # ── #268 ——【self 施法沒有施法距離】，⛔ 這不是潔癖 ────────────────────────
+    # `resolveHoldPreview` 對**每一種** castType 都畫 `range × abilityRange` 的虛線
+    # 圈，所以一支 `castType:"self"` 卻帶著非 0 `range` 的技能，會在地上畫一個
+    # 「保證得到、結構上到不了」的圈。出貨守衛是
+    # `packages/shared/src/content/selfCastRange.test.ts`（獨立檔與英雄卡鏡像各一條）。
+    #
+    # ⚠️ 位置必須在幾何**之前**：一支技能從主動改成被動 / self 的時候，
+    # `build()` 的 A-6 denylist 會把舊文件的 `rangeTier` **原樣留著**（規格沒有
+    # 重新定義它），而下面的 `_apply_geometry` 會照著那一格把 `range` 從 0
+    # 寫回 12 —— 一個誰都沒填、卻真的出現在出貨 JSON 裡的數字（GH#489 實測）。
+    if doc.get("castType") == "self":
+        if doc.pop("rangeTier", None) is not None or doc.get("range"):
+            log.append(("self-range", doc.get("range"), 0.0, "#268 self 施法沒有施法距離"))
+        doc["range"] = 0.0
     _assign_geometry_tiers(doc, grids, log)
     _apply_geometry(doc, grids, log)
 

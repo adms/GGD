@@ -5032,6 +5032,21 @@ export const zConfigCooldownRulesDoc = z
      * 數字的樣子（3 秒 CD 的技能配一個 30 秒的「地板」）。
      */
     minSeconds: z.number().min(COOLDOWN_MIN_SECONDS_MIN).max(COOLDOWN_MIN_SECONDS_MAX),
+    /**
+     * ⭐ GH#489 —— 一條**觸發器**（被動 / 道具 / 增益卡的 hook）的內部冷卻最短幾
+     * **實際秒**。出貨 **0 = 沒有地板**。語意、為什麼是自己一格、以及為什麼出貨
+     * 值不是 1.2，全部寫在 `sim/cooldownRules.ts` 的 `hookMinSeconds` 上。
+     *
+     * ⚠️ **`.optional()` 是刻意的**，⛔ 不是偷懶：線上已經存過一份沒有這一格的
+     * 耐久覆蓋層（`data/`），而覆蓋層會蓋掉 `content/config/`。做成必填 = 那一份
+     * 舊文件在下次部署當場驗證失敗 ⇒ 整份 config 退回骨架，也就是 2026-08-02
+     * 那次生產事故的形狀。缺席由 `cooldownRulesFromDoc` 讀成出貨值。
+     */
+    hookMinSeconds: z
+      .number()
+      .min(COOLDOWN_MIN_SECONDS_MIN)
+      .max(COOLDOWN_MIN_SECONDS_MAX)
+      .optional(),
   })
   .strict();
 
@@ -5040,6 +5055,7 @@ export const DEFAULT_COOLDOWN_RULES_DOC = {
   schema: "config.cooldown-rules@1",
   enabled: DEFAULT_COOLDOWN_RULES.enabled,
   minSeconds: DEFAULT_COOLDOWN_RULES.minSeconds,
+  hookMinSeconds: DEFAULT_COOLDOWN_RULES.hookMinSeconds,
 } as const;
 
 /**
