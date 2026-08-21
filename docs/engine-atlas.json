@@ -1,6 +1,6 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "86c08cf4",
+  "capabilityFingerprint": "3ae19522",
   "counts": {
     "effectKinds": 40,
     "hookEvents": 33,
@@ -21,7 +21,7 @@
       "key": "flat（相加）",
       "value": "基底 AP 104 → 139（×1.336538）",
       "from": "measured",
-      "note": "flat 10 ＋ flat 25 → 直接加 35 在基底上。多條就一路加下去。"
+      "note": "flat 10 ＋ flat 25 → 直接加 35 在基底上。多條就一路加下去。⚠️ 這個 `flat` 是**屬性 modifier 的運算子**（`ModOp.Flat`），⛔ 與傷害數值式（`Scaling`）裡那格同名的 `flat` 不是同一件事 —— 後者已經被 `damageTier` 取代（GH#534），這一格沒有。"
     },
     {
       "key": "⭐ pctAdd（同一個總和桶）",
@@ -289,7 +289,7 @@
     },
     {
       "key": "strToAttackDamage",
-      "value": "×0.4",
+      "value": "×0.24",
       "from": "shipped",
       "note": "公式格（不直接乘任何一條屬性）"
     },

@@ -122,7 +122,11 @@ async function measureModOps(): Promise<Row[]> {
       key: "flat（相加）",
       value: show("flat", run([{ op: ModOp.Flat, value: 10 }, { op: ModOp.Flat, value: 25 }])),
       from: "measured",
-      note: "flat 10 ＋ flat 25 → 直接加 35 在基底上。多條就一路加下去。",
+      note:
+        "flat 10 ＋ flat 25 → 直接加 35 在基底上。多條就一路加下去。" +
+        "⚠️ 這個 `flat` 是**屬性 modifier 的運算子**（`ModOp.Flat`），" +
+        "⛔ 與傷害數值式（`Scaling`）裡那格同名的 `flat` 不是同一件事 —— " +
+        "後者已經被 `damageTier` 取代（GH#534），這一格沒有。",
     },
     {
       key: "⭐ pctAdd（同一個總和桶）",

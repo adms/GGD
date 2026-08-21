@@ -1244,7 +1244,82 @@ export interface RuntimeCapabilityManifest {
    * 每一筆都要帶 issue 編號 —— 沒有 issue 的「已知壞掉」只是另一句會過期的散文。
    */
   readonly knownBroken: readonly { token: string; what: string; issue: string }[];
+  /**
+   * ⭐【GH#534】**還收得下、但⛔ 不要再填的欄位** —— 名字 → 該改填哪一格。
+   *
+   * ⚠️ 這一格補的洞與 {@link knownBroken} 是同一族、但更安靜：`flat` **會生效**、
+   * Zod **會收**、載入**不會報錯** —— 它唯一的問題是它是**第二個住處**
+   *（CLAUDE.md 第〇·四守則）。⇒ 外部編輯器照 {@link effectFields} 那個聯集去填，
+   * 得到的是一個「合法、能跑、而且在 owner 改公式表的那天不會跟著動」的數字。
+   *
+   * ⛔ 光把 `flat` 從 {@link effectFields} 拿掉是**錯的**：那個聯集是從出貨 Zod
+   * 推導的「引擎收不收」，而它**真的收**。宣稱不存在＝那份清單開始說謊，
+   * 而這個檔案的整個存在理由就是「一份會說謊的能力清單」。
+   * ⇒ 保留它在聯集裡，另外**宣告一格政策**。
+   *
+   * ⚠️ 這一份**必須手寫**（同 {@link KNOWN_BROKEN}）：「這一格雖然能用但不該用」
+   * 是一個**決策**，推導不出來。代價是它會過期，所以每一筆帶 issue。
+   */
+  readonly deprecatedFields: readonly DeprecatedField[];
 }
+
+/** {@link RuntimeCapabilityManifest.deprecatedFields} 的一筆。 */
+export interface DeprecatedField {
+  /** 欄位名 —— 必須真的在 {@link RuntimeCapabilityManifest.effectFields} 裡。 */
+  readonly field: string;
+  /** 在哪一層／哪一族上不要填（同一個名字在別處可能完全正常）。 */
+  readonly where: string;
+  /** 改填哪一格 —— 必須是一個真的存在的欄位。 */
+  readonly useInstead: string;
+  /** 為什麼。⛔ 一個能被反駁的理由，不是「我們比較喜歡」。 */
+  readonly why: string;
+  /** ⭐ 仍然可以填的例外**判準**。⛔ 這裡不列名單（名單住豁免表，它會動）。 */
+  readonly exceptions: readonly string[];
+  readonly issue: string;
+}
+
+/**
+ * {@link RuntimeCapabilityManifest.deprecatedFields} 的內容。
+ *
+ * ⭐ 這裡**一個級距數字都沒有**，而且⛔ 不列被豁免的節點名單 —— 兩者都會動，
+ * 而這份契約的 `--check` 是逐位元組比對：把會動的東西寫進來，就是叫別人
+ * 每天重新匯出一次一份沒有變的契約。數字在 `config.damage-tiers@1`，
+ * 名單在豁免表，這裡只留**規則**。
+ */
+export const DEPRECATED_FIELDS: readonly DeprecatedField[] = [
+  {
+    field: "flat",
+    where: "傷害系 effect 的 `amount`（`Scaling`）—— damage / damageArea / damageLine / dot / chainLightning",
+    useInstead: "damageTier",
+    why:
+      "傷害五級距（`config.damage-tiers@1`）在**註冊時**把級別翻成數字，" +
+      "⛔ 是**取代**不是相加 —— 兩格都填的那一份，`flat` 一個位元都不會被讀。" +
+      "而且它是同一個值的**第二個住處**：owner 改一次公式表，填了級別的全庫跟著動，" +
+      "填了字面值的那幾支不動，**沒有任何一步會報錯**。",
+    exceptions: [
+      "① 這個數字根本不是傷害（護盾／治療／耗魔）—— 五級距只有傷害一條軸",
+      "② 判定用的一點（範圍／直線技用一個極小值當「有沒有打到」）—— 作用是觸發不是輸出",
+      "③ 持續傷害的每一跳（`dot`）—— 級距錨的是**一次施法**的總量",
+      "④ per-hit rider（法球效應／每次普攻追加／多段命中各打一次）",
+      "⭐ ④ 的判準是「**這個數字一次施法會發生幾次？**」——" +
+        "⛔ 不是「它的 kind 是不是傷害」。大於一次的就不屬於單發五級距。",
+      "⚠️ 完整的分類鍵與逐筆理由在遊戲端的豁免表（`config.damage-tier-exemptions@1`）," +
+        "⛔ 這裡只放判準：名單會動，而這份契約是逐位元組比對的。",
+    ],
+    issue: "GH#534",
+  },
+  {
+    field: "perRank",
+    where: "同上 —— 傷害系 effect 的 `amount`",
+    useInstead: "damageTier",
+    why:
+      "與 `flat` 同一條規則、同一個取代路徑。⚠️ 額外一句：填了級別 = **每一階同一個值**，" +
+      "所以「升階傷害變高」現在由 `ratios` / `attrRatios` 那一面負責，" +
+      "⛔ 不是回頭手寫一條逐階陣列。",
+    exceptions: ["同 `flat` 的四類"],
+    issue: "GH#534",
+  },
+];
 
 /**
  * {@link RuntimeCapabilityManifest.knownBroken} 的內容。
@@ -1579,6 +1654,10 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
       ...PLANNED_CAPABILITIES.map((e) => `${e.key}=${e.expected}`),
       // 已知壞掉的清單也折進指紋：一筆進來或修好離開，對方 pin 的 base 就該換。
       ...KNOWN_BROKEN.map((b) => `broken:${b.token}=${b.issue}`),
+      // ⭐ GH#534 —— 政策也折進指紋：一格從「隨你填」變成「⛔ 不要再填」，
+      // 對方 pin 的 base 就該換。⛔ 少了這一行，這條規則進來的那天契約指紋不動，
+      // 而對方會繼續照舊的規則產內容 —— 而且不會收到任何錯誤。
+      ...DEPRECATED_FIELDS.map((d) => `deprecated:${d.field}→${d.useInstead}=${d.issue}`),
     ]),
     effectKinds,
     hookEvents,
@@ -1597,6 +1676,7 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
       .map((e) => e.key)
       .sort(),
     knownBroken: KNOWN_BROKEN,
+    deprecatedFields: DEPRECATED_FIELDS,
   };
 }
 

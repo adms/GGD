@@ -549,9 +549,38 @@ interface Usage {
    */
   docSurface: Map<string, Slot>;
   statusTags: Map<string, number>;
+  /**
+   * ⭐【GH#534】**數值式的填法普查** —— effect kind → 它底下的 `Scaling` 是怎麼填的。
+   *
+   * ⛔ 這一格不是裝飾：CLAUDE.md 第〇·四守則要求「同一個節點不可以同時有級別與
+   * 算好的值」，而「現在還有幾個」這件事在此之前**沒有任何一份文件答得出來** ——
+   * 它只活在某一次 grep 的輸出裡，於是那個數字一寫進散文就開始過期。
+   * ⇒ 現場數，⛔ 不抄。
+   */
+  damageAmounts: Map<string, AmountCensus>;
   statuses: string[];
   collections: Map<string, number>;
   augments: { id: string; name: string; tier: string; weight: number; hooks: string[]; mods: number }[];
+}
+
+/**
+ * 一個 effect kind 底下的 `Scaling` 填法統計（{@link Usage.damageAmounts} 的格子）。
+ *
+ * ⛔ 這裡刻意**不做分類判斷**（哪一個算合法的特例）—— 判準是 owner 的裁決，
+ * 它住在豁免表裡（見 {@link damageLiteralExempt}）。這一格只回答「有幾個、長什麼樣」。
+ */
+interface AmountCensus {
+  /** 只填了級別（⭐ 第〇·四守則要的形狀）。 */
+  tier: number;
+  /** 只填了 `flat` / `perRank`（字面值）。 */
+  literal: number;
+  /** ⛔ 兩個都填 —— 級別贏，字面值那一格從此是死的。 */
+  both: number;
+  /** 字面值的量級（給讀者判斷「這是傷害還是一個判定用的 1 點」）。 */
+  litMin: number;
+  litMax: number;
+  /** 哪幾格欄位名承載了它（`amount` / `amountPerTick` / …）。 */
+  fields: Set<string>;
 }
 
 /** 集合的偏好順序：範例優先取增益卡（本文件的主要讀者），再來道具、技能。 */
@@ -565,6 +594,47 @@ function jsonSize(v: unknown): number {
   return JSON.stringify(v)?.length ?? Infinity;
 }
 
+/**
+ * 一個節點底下每一格 `Scaling` 記一次帳（{@link Usage.damageAmounts}）。
+ *
+ * ⭐ 判準是**形狀**：帶著 `Scaling` 任一個鍵的物件就是一格數值式。
+ * ⛔ 不靠欄位名 —— `amount` / `amountPerTick` 之外還會有下一個，
+ * 而一份寫死的名單漏掉的那一格，不會有任何東西紅。
+ */
+const SCALING_KEYS = ["damageTier", "flat", "perRank", "ratios", "attrRatios"] as const;
+
+function countAmounts(m: Map<string, AmountCensus>, kind: string, node: Record<string, unknown>): void {
+  for (const [field, v] of Object.entries(node)) {
+    if (v === null || typeof v !== "object" || Array.isArray(v)) continue;
+    const s = v as Record<string, unknown>;
+    if (!SCALING_KEYS.some((k) => k in s)) continue;
+    const tier = typeof s["damageTier"] === "string";
+    const perRank = Array.isArray(s["perRank"]) ? (s["perRank"] as unknown[]) : [];
+    const lits = [
+      ...(typeof s["flat"] === "number" ? [s["flat"] as number] : []),
+      ...perRank.filter((x): x is number => typeof x === "number"),
+    ];
+    if (!tier && lits.length === 0) continue;
+    const c = m.get(kind) ?? {
+      tier: 0,
+      literal: 0,
+      both: 0,
+      litMin: Infinity,
+      litMax: -Infinity,
+      fields: new Set<string>(),
+    };
+    c.fields.add(field);
+    if (tier && lits.length > 0) c.both += 1;
+    else if (tier) c.tier += 1;
+    else c.literal += 1;
+    for (const n of lits) {
+      c.litMin = Math.min(c.litMin, n);
+      c.litMax = Math.max(c.litMax, n);
+    }
+    m.set(kind, c);
+  }
+}
+
 function scanContent(): Usage {
   const u: Usage = {
     effectKinds: new Map(),
@@ -573,6 +643,7 @@ function scanContent(): Usage {
     vfxSurface: new Map(),
     docSurface: new Map(),
     statusTags: new Map(),
+    damageAmounts: new Map(),
     statuses: [],
     collections: new Map(),
     augments: [],
@@ -609,6 +680,12 @@ function scanContent(): Usage {
     const o = node as Record<string, unknown>;
     if (typeof o["kind"] === "string") {
       bump(inCondition ? u.conditionLeaves : u.effectKinds, o["kind"], docId, collection, o);
+      // ⭐ GH#534 —— 數值式的填法。⚠️ 認的是**形狀**（有沒有 Scaling 的鍵），
+      //    ⛔ 不是欄位名：`amount` / `amountPerTick` / `bonus` 各有各的名字，
+      //    寫死一份名單就會漏掉下一個。
+      // ⛔ `champions` 不算：英雄卡把技能文件**整份鏡像**進去（STRICT 鏡像模型），
+      //    把它算進來 = 同一個節點被數兩次，而那個 2× 看起來完全像真的。
+      if (!inCondition && collection !== "champions") countAmounts(u.damageAmounts, o["kind"], o);
     }
     if (typeof o["on"] === "string" && Array.isArray(o["effects"])) bump(u.hookEvents, o["on"], docId, collection, o);
     for (const [k, v] of Object.entries(o)) {
@@ -888,6 +965,200 @@ export function apDamageNote(): string[] {
     "",
     "📘 逐格對照在 `docs/editor-contract/ap-damage-scaling.md`（`pnpm apdmg:build` 產生）。",
   ];
+}
+
+/**
+ * ⭐【GH#534】**豁免表的住處** —— ⛔ 由**鍵**認得，不綁死檔名。
+ *
+ * owner 2026-08-22 對「傷害節點還留著字面值」的四類逐字裁決：
+ * 「①②③ **作為例外在後台跳出警告就好**，④ **你拉上來**」。
+ * ⇒ ①②③（外加後來抓到的 ⑤ per-hit rider）是**帶理由的例外**，
+ * 而 CLAUDE.md 第〇·四守則對例外的要求是硬的：
+ * 「要進豁免表並寫下**為什麼它不該有級別** —— 一個能被反駁的理由，⛔ 不是『還沒收』」。
+ *
+ * ⚠️ 這支**刻意不宣告那張表住哪一個檔**：它掃 `content/config/`，
+ * 找宣告了 `damageLiteralExempt` 的那一份。理由是這份產生器與那張表由不同的
+ * 工作流落地，而一個寫死的檔名會在對方換名字的那天**靜默**指向空氣。
+ * ⇒ 找不到就**明說找不到**（下面那一節會印「尚未出貨」），⛔ 不假裝它存在。
+ */
+export interface ExemptEntry {
+  /** 規則 id。 */
+  who: string;
+  /** 謂詞 —— ⭐ 由**剩下的每一格**組出來，⛔ 不是一份寫死的鍵名清單。 */
+  cls: string;
+  /** 後台會不會為它跳警告（owner #534：「作為例外在後台跳出警告就好」）。 */
+  warn: boolean;
+  why: string;
+}
+
+/** 豁免表文件的 schema 標籤（`@` 之後的版號刻意不比對 —— 升版不該讓這一節消失）。 */
+export const EXEMPT_SCHEMA_PREFIX = "config.damage-tier-exemptions@";
+
+/** 規則物件裡**不是謂詞**的三格。其餘每一格都是謂詞的一部分。 */
+const EXEMPT_META_KEYS = new Set(["id", "reason", "warn"]);
+
+export function damageLiteralExempt(): { home: string; entries: ExemptEntry[] } | null {
+  const dir = join(REPO, "content/config");
+  const str = (v: unknown): string => (typeof v === "string" ? v : "");
+  for (const f of readdirSync(dir).sort()) {
+    if (!f.endsWith(".json") || f === "_index.json") continue;
+    let doc: Record<string, unknown>;
+    try {
+      doc = JSON.parse(readFileSync(join(dir, f), "utf8")) as Record<string, unknown>;
+    } catch {
+      continue;
+    }
+    if (!str(doc["schema"]).startsWith(EXEMPT_SCHEMA_PREFIX)) continue;
+    const entries = (Array.isArray(doc["rules"]) ? doc["rules"] : [])
+      .filter((r): r is Record<string, unknown> => !!r && typeof r === "object" && !Array.isArray(r))
+      .map((r) => ({
+        who: str(r["id"]),
+        // ⭐ 謂詞是**剩下的每一格**組出來的：規則的形狀還在動（今天是
+        //   `kinds` / `zeroOnly` / `maxFlat` / `perTrigger` / `docs`），
+        //   ⛔ 寫死一份鍵名清單 = 下一個謂詞加進來時這一欄**靜默**變成空的。
+        cls: Object.entries(r)
+          .filter(([k]) => !EXEMPT_META_KEYS.has(k))
+          .map(([k, v]) => `\`${k}\` = ${Array.isArray(v) ? v.map((x) => `\`${String(x)}\``).join(" · ") : `**${String(v)}**`}`)
+          .join("；"),
+        warn: r["warn"] === true,
+        why: str(r["reason"]),
+      }));
+    return { home: `content/config/${f}`, entries };
+  }
+  return null;
+}
+
+/**
+ * ⭐【GH#534】§2.5「傷害怎麼填」—— 填**級別**，⛔ 不要填 `flat`。
+ *
+ * ⚠️ 這一節在此之前不存在，而少的不是一句提醒：§2.4 那句「四格可以**同時**存在，
+ * 最後相加」是**對傷害那一族說謊** —— 級距是**取代**不是相加，
+ * 所以照著它寫的人會以為 `{"damageTier":"中","flat":800}` 是「級距 + 800」，
+ * 而引擎跑的是級距那一個數字，那 800 一個位元都沒被讀。
+ *
+ * ⛔ 這一節**一個級距數字都不印**：五格是多少在 §0.5，而那一節現場掃
+ * `content/config/*-tiers.json`。在這裡再抄一次就是第〇·四守則點名的第二個住處。
+ */
+export function damageAuthoringSection(usage: Usage): string[] {
+  const rows = [...usage.damageAmounts.entries()]
+    .filter(([, c]) => c.tier + c.literal + c.both > 0)
+    .sort((a, b) => b[1].literal + b[1].both - (a[1].literal + a[1].both) || a[0].localeCompare(b[0]));
+  const total = rows.reduce(
+    (s, [, c]) => ({ tier: s.tier + c.tier, literal: s.literal + c.literal, both: s.both + c.both }),
+    { tier: 0, literal: 0, both: 0 },
+  );
+  const num = (n: number): string => (Number.isFinite(n) ? String(+n.toFixed(4)) : "—");
+
+  const L = [
+    "### 2.5 ⭐ 傷害怎麼填 —— 填**級別**，⛔ 不要填 `flat`",
+    "",
+    "owner 2026-08-22：",
+    "",
+    "> 「我將**出身 屬性 技能傷害耗魔冷卻距離範圍 這些五級距 正規化 公式化**，",
+    "> 就是為了**統一性 方便設定調整修改 一勞永逸**阿」",
+    "",
+    "```jsonc",
+    '{ "damageTier": "中" }                  // ⭐ 對：值在載入時由級距表解析',
+    '{ "damageTier": "中", "flat": 1000 }    // ⛔ 錯：flat 是第二個住處，必然過期',
+    "```",
+    "",
+    "⛔ **級別是取代，不是相加。** 兩格都填的那一份，`flat` 一個位元都不會被讀 ——",
+    "後台改一格級距表全庫跟著動，只有它不動，而**沒有任何一步會報錯**。",
+    "⭐ 五格各是多少看 **0.5 節**（那一節現場掃 `content/config/*-tiers.json`）；",
+    "這裡刻意不抄一份數字下來。",
+    "",
+    "⚠️ `ratios` / `attrRatios` **不受影響** —— 那兩條是**成長**，不是基礎值，",
+    "填了級別照樣要留著。",
+    "",
+    "#### 2.5.1 什麼時候才可以留字面值 —— **例外要進豁免表**",
+    "",
+    "owner 2026-08-22 對他點名的四類逐字裁決：",
+    "「①②③ **作為例外在後台跳出警告就好**，④ **你拉上來**」。",
+    "",
+    "| | 形狀 | 為什麼它不屬於單發五級距 |",
+    "|---|---|---|",
+    "| ① | 這個數字**根本不是傷害**（護盾／治療／耗魔） | 五級距是拿「打死中位英雄要幾發」錨出來的，回復量與它不同單位 |",
+    "| ② | **判定用的一點**（範圍／直線技拿一個極小值當「有沒有打到」的判定） | 它的作用是觸發，不是輸出；套級距會把一個判定變成一發真傷害 |",
+    "| ③ | **持續傷害的每一跳**（`dot`） | 級距錨的是**一次施法**的總量，一跳乘上跳數才是可比的量 |",
+    "| ④ | 真的是一發技能的基礎傷害 | ⭐ owner：**拉上來** —— 這一類⛔ 不是例外 |",
+    "",
+    "🔴 ⚠️ **④ 有一個踩出來的陷阱**：`kind` 是傷害**不代表**它是一發技能。",
+    "20-01 風王結界的追加傷害掛在**每一次普通攻擊**上（法球效應），",
+    "把它當成一發拉上來就是**每一刀**吃一整格單發級距。",
+    "⇒ ⛔ 不要看到 `kind === \"damage\"` 就套級距，先問",
+    "「**這個數字一次施法會發生幾次？**」——大於一次的就不屬於單發五級距。",
+    "",
+    "⛔ **例外要帶一個能被反駁的理由**（第〇·四守則）——「還沒收」不算理由。",
+    "理由住在豁免表裡，⛔ 不住在這份文件的散文裡。",
+    "",
+  ];
+
+  const ex = damageLiteralExempt();
+  if (ex === null) {
+    L.push(
+      "🚧 **豁免表尚未出貨。** 這份產生器掃 `content/config/`，找 " +
+        `\`${EXEMPT_SCHEMA_PREFIX}\` 那一份 —— 現在沒有任何一份宣告它，` +
+        "所以下面沒有名單可以印。",
+      "⛔ 這一行**不是佔位符**：在豁免表落地之前，「哪幾個節點是刻意留字面值的」" +
+        "這個問題**沒有機器讀得到的答案**，而一份憑印象寫的名單比沒有名單更糟。",
+      "",
+    );
+  } else {
+    L.push(
+      `📘 **豁免表**住在 \`${ex.home}\`（＝後台改得到的那一份）。`,
+      "",
+      "⭐ 它收的是**謂詞**，⛔ 不是一張逐節點的名單 —— 一張名單會在每一次內容編輯時",
+      "過期一列，而且沒有東西會紅（那正是第〇·四守則要消滅的 O(N) 第二住處）。",
+      "⚠️ 規則**依序**比對、**第一條命中的贏** ⇒ 順序是資料的一部分：窄的在前、寬的在後。",
+      "",
+    );
+    if (ex.entries.length > 0) {
+      L.push("| 規則 | 命中什麼 | 後台跳警告 | 為什麼它不該有級別 |", "|---|---|:-:|---|");
+      for (const e of ex.entries) {
+        L.push(
+          `| \`${e.who}\` | ${e.cls || "（無條件）"} | ${e.warn ? "⚠️ 會" : "—"} | ` +
+            `${e.why || "⛔ **沒寫理由**"} |`,
+        );
+      }
+      L.push(
+        "",
+        "⭐ 「後台跳警告」那一欄就是 owner 的「①②③ **作為例外在後台跳出警告就好**」——",
+        "標 — 的那幾條是**結構上不可能有級別**的（基礎值是 0、骨架夾具），⛔ 不是被放過。",
+        "",
+      );
+    }
+  }
+
+  L.push(
+    "#### 2.5.2 出貨內容現在長什麼樣（現場數的）",
+    "",
+    "⭐ 這張表是**掃 `content/` 數出來的**，⛔ 不是一次普查的抄本 ——",
+    "所以它會在別人改一支技能的那天自己跟著動。",
+    "⚠️ `champions/` **不計**（英雄卡整份鏡像技能文件，算進來每一格都會是 2×）。",
+    "⚠️ 「只填字面值」**不等於缺陷** —— 它要嘛命中上面那張謂詞表的一條，",
+    "要嘛就是一個還沒收的節點。⛔ 分辨這兩者的不是這張表，是那張謂詞表。",
+    "",
+    "| effect kind | 只填級別 | 只填字面值 | ⛔ 兩格都填 | 字面值範圍 | 寫在哪一格 |",
+    "|---|--:|--:|--:|---|---|",
+  );
+  for (const [kind, c] of rows) {
+    const span = c.literal + c.both > 0 ? `${num(c.litMin)} – ${num(c.litMax)}` : "—";
+    L.push(
+      `| \`${kind}\` | ${c.tier} | ${c.literal} | ${c.both} | ${span} | ` +
+        `${[...c.fields].sort().map((f) => `\`${f}\``).join(" · ")} |`,
+    );
+  }
+  L.push(`| **合計** | **${total.tier}** | **${total.literal}** | **${total.both}** | | |`, "");
+  L.push(
+    total.both > 0
+      ? `🔴 **「兩格都填」還有 ${total.both} 個。** 每一個都是一句說了不會發生的話：` +
+          "級別贏，字面值那一格是死的。⇒ 把字面值刪掉（級別已經對了），" +
+          "或者**拿掉級別**讓它變成一個帶理由的豁免。"
+      : "⭐ **「兩格都填」是 0。** ⇒ 改一次公式表 = 全部跟著動，" +
+          "⛔ 沒有任何一支技能需要重新產生。",
+    "",
+  );
+  return L;
 }
 
 export function tierLadderSection(): string[] {
@@ -1200,17 +1471,25 @@ export function buildSpecMarkdown(): string {
   p("### 2.4 數值式 —— 傷害／治療／護盾的「多少」怎麼寫");
   p();
   p("十幾個 effect 的 `amount` 都是這個形狀，所以只寫在這裡一次。");
-  p("四格可以**同時**存在，最後相加。");
+  // ⚠️ 這兩行在 2026-08-22 之前寫的是「四格可以**同時**存在，最後相加」——
+  //   而 `damageTier` 是第五格，它是**取代** `flat`/`perRank`，⛔ 不是加上去。
+  //   一句過期的散文在這裡的代價是：照著它算的人得到的數字與場上不同，而 JSON 合法。
+  p("⭐ 一格是**級別**（`damageTier`），其餘是**數字**。");
+  p("級別填了就由級距表把 `flat` / `perRank` **整格取代**（⛔ 不是相加）；");
+  p("`ratios` / `attrRatios` 不受影響，照樣加進去。怎麼選看 **2.5 節**。");
   p();
   p(...fieldTable(fieldsOf(zScaling)));
   p("```json");
-  p('{ "flat": 40, "ratios": [{ "stat": "ap", "coeff": 0.3 }] }   // 40 +（30% 法強）');
+  p('{ "damageTier": "中", "ratios": [{ "stat": "ap", "coeff": 0.3 }] }   // 級距表的「中」+（30% 法強）');
   p("```");
   p();
   // ⭐ 2026-08-21 —— 「最後相加」在傷害這一族**已經不是最後一步**了。
   //   ⛔ 少講這一層 = 這一節在教人算一個與場上差到兩倍的數字，而 JSON 完全合法。
   p(...apDamageNote());
   p();
+  // ⭐ 2026-08-22（GH#534）—— 「填級別還是填數字」是這一節之後的第一個問題，
+  //   而在此之前這份文件沒有回答它。
+  p(...damageAuthoringSection(usage));
 
   // ── 3 hook 事件 ─────────────────────────────────────────────────────
   p("---");

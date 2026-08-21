@@ -78,6 +78,54 @@ def cfg(name):
     return json.loads((REPO / "content" / "config" / f"{name}.json").read_text(encoding="utf-8"))
 
 
+EXEMPT_SCHEMA_PREFIX = "config.damage-tier-exemptions@"
+
+
+def damage_literal_exempt():
+    """⭐【GH#534】傷害字面值的**豁免表** —— ⛔ 由 **schema 標籤**認得，不綁死檔名。
+
+    與 `tools/skill-spec/gen_spec.ts::damageLiteralExempt()` 同一條規則、同一個標籤。
+    ⚠️ `@` 之後的版號刻意不比對：升一版不該讓這一節從契約裡**消失**。
+    找不到就明說找不到，⛔ 不假裝它存在。
+    """
+    for p in sorted((REPO / "content" / "config").glob("*.json")):
+        if p.name == "_index.json":
+            continue
+        try:
+            doc = json.loads(p.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if not isinstance(doc, dict):
+            continue
+        if not str(doc.get("schema", "")).startswith(EXEMPT_SCHEMA_PREFIX):
+            continue
+        rows = []
+        for r in doc.get("rules", []):
+            if not isinstance(r, dict):
+                continue
+            # ⭐ 謂詞由**剩下的每一格**組出來 —— 規則的形狀還在動，
+            #   ⛔ 寫死一份鍵名清單 = 下一個謂詞加進來時這一欄靜默變空。
+            pred = "；".join(
+                f"`{k}` = " + (
+                    " · ".join(f"`{x}`" for x in v)
+                    if isinstance(v, list)
+                    # ⛔ python 的 `True` 不可以漏進一份講 JSON 的契約 —— 對面照著填
+                    #    `"zeroOnly": True` 會被 JSON parser 直接拒絕。
+                    else f"**{json.dumps(v, ensure_ascii=False)}**"
+                )
+                for k, v in r.items()
+                if k not in ("id", "reason", "warn")
+            )
+            rows.append({
+                "who": r.get("id", ""),
+                "cls": pred,
+                "warn": r.get("warn") is True,
+                "why": r.get("reason", ""),
+            })
+        return f"content/config/{p.name}", rows
+    return None
+
+
 def num(v):
     """`4.0` → `4`，`8.2` → `8.2`。⛔ 不要印 `4.0`：文件裡讀起來像精度宣稱。"""
     f = float(v)
@@ -1003,7 +1051,105 @@ def table_tiers():
         "⛔ **不要「修正」這種原始值** —— 它們是退路，引擎一格都沒讀。"
         "要改就改級別，或**拿掉級別**把它變成真的特例。",
     ]
+    out += _damage_literal_rule(axes)
     return "\n".join(out)
+
+
+def _damage_literal_rule(axes):
+    """⭐【GH#534】6.2.6 —— 傷害那一軸的填法，以及**四類例外**。
+
+    ⚠️ 為什麼傷害要單獨再講一次（6.2.3 已經有通則）：通則說的是「兩格都填 → 級別贏」，
+    那是一句**機制**陳述，它沒有回答「那我到底該填哪一個」。而傷害是唯一一軸
+    owner 明說要**全部拉上來**的（2026-08-22：「④ **你拉上來**」）——
+    外部編輯器如果照通則理解成「隨你填」，它產出的每一支技能都會帶一個
+    改公式表時不會跟著動的死數字，而**沒有任何一步會報錯**。
+
+    ⛔ 這一段一個級距數字都不印 —— 五格在 6.2.2，抄一份下來就是第二個住處。
+    """
+    dmg = next((a for a in axes if a["field"] == "damageTier"), None)
+    if dmg is None:
+        # 傷害軸不存在（有人把 `config.damage-tiers@1` 拿掉了）⇒ ⛔ 不要印一段
+        # 在講一個不存在的欄位的規則。這裡沉默是對的：6.2.1 已經不會列它。
+        return []
+    raw = " / ".join(f"`{k}`" for k in dmg["raw"])
+    out = [
+        "",
+        "### 6.2.6 ⭐ 傷害這一軸：**全部填級別**，⛔ 例外只有四類",
+        "",
+        "owner 2026-08-22（逐字）：",
+        "",
+        "> 「我將**出身 屬性 技能傷害耗魔冷卻距離範圍 這些五級距 正規化 公式化**，"
+        "就是為了**統一性 方便設定調整修改 一勞永逸**阿」",
+        "",
+        f"⇒ 一個 `amount`（`Scaling`）裡，填 `{dmg['field']}`，⛔ **不要**填 {raw}。",
+        "6.2.3 的通則說的是「兩格都填會怎樣」；這一條說的是「**你該填哪一個**」——"
+        "⛔ 不要把通則讀成「隨你填」。",
+        "",
+        "```jsonc",
+        '{ "damageTier": "中" }                  // ⭐ 對：值在載入時由級距表解析',
+        '{ "damageTier": "中", "flat": 1000 }    // ⛔ 錯：flat 是第二個住處，必然過期',
+        "```",
+        "",
+        "⚠️ `ratios` / `attrRatios` **不受影響** —— 那兩條是**成長**不是基礎值，填了級別照樣留著。",
+        "",
+        "**⛔ 留字面值的例外要進豁免表**"
+        "（owner 2026-08-22：「①②③ **作為例外在後台跳出警告就好**，④ **你拉上來**」）：",
+        "",
+        "| | 形狀 | 為什麼它不屬於單發五級距 |",
+        "|---|---|---|",
+        "| ① | 這個數字**根本不是傷害**（護盾／治療／耗魔） | 五級距錨的是「打死中位英雄要幾發」，回復量與它不同單位 |",
+        "| ② | **判定用的一點**（範圍／直線技用一個極小值當「有沒有打到」） | 它的作用是觸發不是輸出；套級距會把一個判定變成一發真傷害 |",
+        "| ③ | **持續傷害的每一跳**（`dot`） | 級距錨的是**一次施法**的總量，一跳要乘上跳數才可比 |",
+        "| ④ | 真的是一發技能的基礎傷害 | ⭐ owner：**拉上來** —— 這一類⛔ 不是例外 |",
+        "",
+        "🔴 ⚠️ **④ 有一個踩出來的陷阱**：`kind` 是傷害**不代表**它是一發技能。"
+        "20-01 風王結界的追加傷害掛在**每一次普通攻擊**上（法球效應），"
+        "把它當成一發拉上來就是**每一刀**吃一整格單發級距。"
+        "⇒ ⛔ 不要看到 `kind` 是傷害就套級距，先問"
+        "「**這個數字一次施法會發生幾次？**」——大於一次的就不屬於單發五級距。",
+        "",
+        "⛔ **例外要帶一個能被反駁的理由**，⛔「還沒收」不算。理由住在豁免表裡，⛔ 不住在散文裡。",
+        "",
+    ]
+    found = damage_literal_exempt()
+    if found is None:
+        out += [
+            "🚧 **豁免表尚未出貨。** 產生器掃 `content/config/` 找 "
+            f"`{EXEMPT_SCHEMA_PREFIX}` 那一份，現在沒有任何一份宣告它。"
+            "⇒ 在它落地之前，「哪幾個節點是刻意留字面值的」**沒有機器讀得到的答案** ——"
+            "⛔ 你不要自己編一份，也⛔ 不要把現有內容裡的字面值當成範例照抄。",
+            "",
+        ]
+    else:
+        home, rows = found
+        out += [
+            f"📘 **豁免表**在 `{home}`（＝後台改得到的那一份，你讀得到）。",
+            "",
+            "⭐ 它收的是**謂詞**，⛔ 不是一張逐節點的名單 —— 一張名單會在每一次內容編輯時"
+            "過期一列，而且不會有任何東西紅。"
+            "⚠️ 規則**依序**比對、**第一條命中的贏** ⇒ 順序是資料的一部分：窄的在前、寬的在後。",
+            "",
+        ]
+        if rows:
+            out += ["| 規則 | 命中什麼 | 後台跳警告 | 為什麼它不該有級別 |", "|---|---|:-:|---|"]
+            out += [
+                f"| `{r['who']}` | {r['cls'] or '（無條件）'} | "
+                f"{'⚠️ 會' if r['warn'] else '—'} | {r['why'] or '⛔ **沒寫理由**'} |"
+                for r in rows
+            ]
+            out += [
+                "",
+                "　⭐ 「後台跳警告」那一欄就是 owner 的"
+                "「①②③ **作為例外在後台跳出警告就好**」——"
+                "標 — 的那幾條是**結構上不可能有級別**的，⛔ 不是被放過。",
+                "",
+            ]
+    out += [
+        "⭐ 出貨內容**現在**的填法普查（哪一個 kind 還剩幾個字面值）在 "
+        "`docs/技能標記機制與效果規則.md` §2.5 —— 那一節現場掃 `content/`，"
+        "⛔ 這裡刻意不抄一份，兩份現場普查一定會在不同的日子過期。",
+    ]
+    return out
 
 
 # 一行印幾個 kind。⛔ 不是「看起來剛好」——它決定這一段會不會在 GitHub 的
@@ -1033,7 +1179,8 @@ SHARD_SOURCE = "**分片目錄本身**（現場 `readdir`，⛔ 不是手打的�
 # ⭐ 五級距那一段讀三種東西，出處要三個都講：級距表（後台）· 出貨 schema（哪幾格存在）·
 #   `content/abilities/`（現場數出來的「級別與原始值對不上」那幾支）。
 TIER_SOURCE = ("`content/config/*-tiers.json`（級距表）＋ 出貨 Zod schema（哪幾格存在）"
-               "＋ `ap-damage-scaling.json`（第 ③ 層）")
+               "＋ `ap-damage-scaling.json`（第 ③ 層）"
+               "＋ `damage-tier-exemptions.json`（6.2.6 的豁免謂詞）")
 AP_DMG_SOURCE = ("`content/config/ap-damage-scaling.json`（後台一格）"
                  "＋ `sim/combat/apDamageScaling.ts`（合法值的唯一住處）")
 # ⭐ §七那一段讀的是 `appliesTo` 這一格，⛔ 沒有一格取決於今天有幾支技能。

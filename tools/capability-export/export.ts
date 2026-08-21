@@ -46,6 +46,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   buildCapabilityManifest,
+  DEPRECATED_FIELDS,
   type RuntimeCapabilityManifest,
 } from "../../packages/shared/src/content/editorCapabilities";
 
@@ -260,7 +261,51 @@ export function tierRewriteSection(): string[] {
     "**⇒ 交件建議：能填級別就填級別，⛔ 不要兩格都填。**" +
       "兩格都填不會報錯，只會讓那份文件從此對讀它的人說謊（包括你自己下一次讀它）。",
     "",
+    ...deprecatedFieldsSection(),
   ];
+}
+
+/**
+ * ⭐【GH#534】**還收得下、但⛔ 不要再填的欄位**。
+ *
+ * ⚠️ 這一段補的是上面那張表**答不出來的問題**：通則只說「兩格都填 → 級別贏」，
+ * 它沒有說「那我該填哪一個」。傷害是 owner 明說要**全部**拉成級別的一軸
+ *（2026-08-22：「④ **你拉上來**」），而外部編輯器把通則讀成「隨你填」，
+ * 產出的每一支技能都會帶一個改公式表時不會跟著動的死數字 ——
+ * ⛔ 而且它合法、能跑、不會收到任何錯誤。
+ *
+ * ⭐ 內容從 {@link DEPRECATED_FIELDS} 讀，⛔ 不在這裡打字：那一份與指紋綁在一起，
+ * 所以一條政策進來的那天，對方 pin 的 base 會換。
+ */
+export function deprecatedFieldsSection(): string[] {
+  if (DEPRECATED_FIELDS.length === 0) return [];
+  const L = [
+    "### 11.1 ⛔ 這幾格**還收得下，但不要再填**",
+    "",
+    "⚠️ 它們**不是** `unsupported`：Zod 收得下、引擎跑得動、你不會收到任何錯誤。" +
+      "問題是它們是同一個值的**第二個住處** —— 我們改一次公式表，" +
+      "填了級別的全庫跟著動，填了字面值的那幾支不動。",
+    "",
+    "| 欄位 | 哪一層 | 改填 | 票 |",
+    "|---|---|---|---|",
+    ...DEPRECATED_FIELDS.map(
+      (d) => `| \`${d.field}\` | ${d.where} | \`${d.useInstead}\` | ${d.issue} |`,
+    ),
+    "",
+  ];
+  for (const d of DEPRECATED_FIELDS) {
+    L.push(`**\`${d.field}\` → \`${d.useInstead}\`**：${d.why}`, "");
+    L.push("　⭐ 仍然可以填字面值的例外**判準**（⛔ 不是名單）：");
+    for (const e of d.exceptions) L.push(`　· ${e}`);
+    L.push("");
+  }
+  L.push(
+    "⛔ **例外要帶一個能被反駁的理由** ——「還沒收」不算理由。" +
+      "被豁免的**節點名單**不在這份契約裡（它會動，而這份契約是逐位元組比對的）；" +
+      "判準在上面，名單在遊戲端的豁免表。",
+    "",
+  );
+  return L;
 }
 
 /** 人看的交付物。⭐ 必須自足 —— 對方沒有這個 repo。 */
