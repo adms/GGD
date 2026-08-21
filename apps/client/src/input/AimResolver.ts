@@ -65,14 +65,47 @@ export function resolveCastTarget(ability: AimAbility, ctx: AimContext): CastTar
  */
 let cursorlessAim: Vec2 | null = null;
 
-/** 手把按住技能鍵時每幀寫入；放開／拔掉手把寫 null。零向量視同 null。 */
+/**
+ * 手把這一幀**軟鎖定**到誰 —— `ctx.nearestEnemy(self, reach, aimDir)` 的結果，
+ * ⛔ null = 沒有鎖到人（GH#519）。
+ *
+ * ⭐ **為什麼它必須離開 `GamepadInput` 的區域變數**：在此之前那一次挑選只發生在
+ * **按下的那一瞬間**，挑完直接包成 command 送走 —— 於是「這一發會打誰」這個答案
+ * 在畫面上**一格都沒有出現過**，玩家按下去才知道打錯人（GH#519 的原文）。
+ * 把它publish 成暫存器之後，`resolveAoeCenter` 就能在**按住的每一幀**回答
+ * 「圈圈畫在誰腳下」，而搖桿方向的偏壓（`pickNearestUnit`）本身就是換目標的手勢，
+ * ⛔ 不必新增一顆循環鍵。
+ */
+let cursorlessTarget: number | null = null;
+
+/**
+ * 手把按住技能鍵時每幀寫入；放開／拔掉手把寫 null。零向量視同 null。
+ *
+ * ⚠️ **它同時清掉軟鎖定目標**（GH#519）。兩格是**同一個生命週期**：`PadDescribeHold`
+ * 放開技能鍵時只呼叫得到這一支，而一個活過放開那一刻的目標會讓標記留在畫面上
+ * 指著一個沒有人在瞄的敵人 —— 那比沒有標記更糟（同 GH#415 對「畫錯位置的圈」的裁決）。
+ */
 export function setCursorlessAim(dir: Vec2 | null): void {
   cursorlessAim = dir && (dir.x !== 0 || dir.z !== 0) ? normalize(dir) : null;
+  if (!cursorlessAim) cursorlessTarget = null;
 }
 
 /** 目前的手把瞄準方向（測試與偵錯用）。 */
 export function getCursorlessAim(): Vec2 | null {
   return cursorlessAim;
+}
+
+/**
+ * 手把每幀 publish 它軟鎖定到的實體。⛔ 只在 `setCursorlessAim` 已經寫過方向時
+ * 才有意義 —— 放開技能鍵那一支會把這一格一起清掉。
+ */
+export function setCursorlessTarget(entityId: number | null): void {
+  cursorlessTarget = entityId ?? null;
+}
+
+/** 目前的手把軟鎖定目標（渲染標記與測試用）。 */
+export function getCursorlessTarget(): number | null {
+  return cursorlessTarget;
 }
 
 /**
@@ -82,8 +115,14 @@ export function getCursorlessAim(): Vec2 | null {
  * **乘過 `envFactor("abilityRange")` 之後**的那一個 ⇒ 圈心永遠落在玩家真的
  * 打得到的最遠處，⛔ 不是一個寫死的距離。
  *
- * ⛔ `hoveredEntityId` 一律丟掉：它是用**滑鼠**落點挑出來的實體，手把在瞄準時
- * 那個 pick 跟玩家的意圖無關。沒有目標就不畫圓 —— 畫一個錯的比不畫更糟。
+ * ⛔ 傳進來的 `hoveredEntityId` 一律丟掉：它是用**滑鼠**落點挑出來的實體，
+ * 手把在瞄準時那個 pick 跟玩家的意圖無關。
+ *
+ * ⭐ 取而代之的是**手把自己 publish 的軟鎖定目標**（{@link setCursorlessTarget}，
+ * GH#519）。在此之前這裡寫死 `null`，於是 `targeted` 技能在手把長按時
+ * `resolveCastTarget` 一律回 null ⇒ 沒有落點 ⇒ 沒有圈 ⇒
+ * **畫面上沒有任何東西說出這一發會打誰**，而按下去送出的那一發卻鎖著某個人。
+ * ⚠️ 沒鎖到人時它仍然是 null —— 沒有目標就不畫圓，畫一個錯的比不畫更糟。
  */
 function withCursorlessAim(ability: AimAbility, ctx: AimContext): AimContext {
   const dir = cursorlessAim;
@@ -91,7 +130,7 @@ function withCursorlessAim(ability: AimAbility, ctx: AimContext): AimContext {
   return {
     selfPos: ctx.selfPos,
     cursorGround: add(ctx.selfPos, { x: dir.x * ability.range, z: dir.z * ability.range }),
-    hoveredEntityId: null,
+    hoveredEntityId: cursorlessTarget,
   };
 }
 
