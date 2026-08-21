@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "41a083b3331b",
+  "hash": "ad1a2c321a3b",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -175,6 +175,12 @@
       "path": "config/displacement-tiers.json",
       "hash": "9815c306fbc3",
       "size": 2950
+    },
+    {
+      "id": "feel-fx",
+      "path": "config/feel-fx.json",
+      "hash": "640a98d46516",
+      "size": 942
     },
     {
       "id": "form-visuals",

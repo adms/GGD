@@ -43,6 +43,8 @@
  */
 import { elementStyle, elementFromVfxKey, type Element } from "../render/vfx/elements";
 import { hotToCoolStops, popShrinkStops, type BurstSpec, type Rgb } from "./vfxPresets";
+// GH#494 —— 上升餘燼的壽命/重力/阻力是**後台可調**的（`config.feel-fx@1.castMotes`）。
+import { feelFx, type ConfigFeelFxDoc } from "./feelFx";
 
 // ---------------------------------------------------------------------------
 // Geometry / timing constants (world units, ms)
@@ -314,17 +316,41 @@ export function motesPerPulse(active: number, budgetScale: number): number {
  * A pulse of embers born in a ring at the caster's feet and pulled UPWARD
  * (positive gravity) with heavy drag, so their outward birth velocity dies
  * almost immediately and they read as motes drawn INTO the column.
+ *
+ * ⭐ GH#494 —— owner 2026-08-21：「你在施展技能的時候會釋放一個粒子特效，最後會
+ * 飄散到天空，這個**特效存活時間真的太長了，請你砍半，不需要後半段飄到天空**」。
+ *
+ * ⚠️ **只砍壽命是錯的修法**：粒子會在還往上衝的時候被剪掉，看起來像畫面破圖。
+ * 所以三格一起動，而且方向是「讓上升**在壽命結束之前自己收斂**」：
+ *
+ * | | 之前 | 出貨 | 為什麼 |
+ * |---|---:|---:|---|
+ * | `lifetimeSec` | 0.35–0.7 | 0.175–0.35 | owner 說的「砍半」 |
+ * | `gravityY`（往上） | 7.5 | 3 | 爬升的**力道**減半 ⇒ 不會衝出畫面上緣 |
+ * | `drag`（每秒保留幾成速度） | 0.86 | 0.7 | 煞得更快 ⇒ 餘燼在**還看得見**的時候停住 |
+ *
+ * ⭐ 保留的是「energy converging INTO the column」那個讀法：粒子仍然從腳邊的環
+ * 往上被吸，只是它在光柱的高度就收斂了，⛔ 不再變成一路飄到天空的髒東西。
+ * 三格都是後台可調（`config.feel-fx@1.castMotes`），因為「多久算太久」是體感，
+ * ⛔ 不是事實 —— 寫死＝owner 想微調就要重建 client 映像。
  */
-export function moteSpec(palette: PillarPalette): BurstSpec {
+export function moteSpec(
+  palette: PillarPalette,
+  motes: ConfigFeelFxDoc["castMotes"] = feelFx().castMotes,
+): BurstSpec {
+  // 後台可以把 min 填得比 max 大（兩格是各自獨立的欄位）；夾在這裡而不是讓
+  // `min > max` 靜默流進粒子系統 —— 那會變成一個沒有人看得懂的視覺缺陷。
+  const lo = Math.min(motes.lifetimeMinSec, motes.lifetimeMaxSec);
+  const hi = Math.max(motes.lifetimeMinSec, motes.lifetimeMaxSec);
   return {
     count: MOTE_COUNT,
-    lifetimeSec: { min: 0.35, max: 0.7 },
+    lifetimeSec: { min: lo, max: hi },
     speed: { min: 0.5, max: 1.4 },
     sizeStops: popShrinkStops(0.22, { popT: 0.3 }),
     colorStops: hotToCoolStops(palette.fringe, { peakAlpha: 0.85 }),
     blend: "additive",
-    gravityY: 7.5, // UP: the one place in this codebase gravity is inverted
-    drag: 0.86,
+    gravityY: motes.gravityY, // UP: the one place in this codebase gravity is inverted
+    drag: motes.drag,
     stretched: true,
     tailLength: 1.8,
     flatRing: { radius: SHELL_RADIUS * 0.78, height: 0.12 },

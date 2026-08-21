@@ -243,6 +243,23 @@ export interface SfxPlayOptions {
    */
   loop?: boolean;
   /**
+   * ⭐ GH#494 —— 把這一發**移調**幾個半音（12 = 一個八度，負數是往下）。
+   *
+   * owner 2026-08-21：「連擊也會有像 **candy crush** 類似連段音階升高的音效」。
+   * 在這一行之前整個 codebase **沒有任何一條路**可以改一個 clip 的音高
+   * （`beatSynth` 的 `detune` 走的是振盪器，不是取樣播放），所以「音階升高」
+   * 只有兩種做法：⛔ 準備十二個音檔（十二份會各自腐爛的資產，第零守則⑨），
+   * 或是這一格 —— **一個** clip × `AudioBufferSourceNode.playbackRate`。
+   *
+   * ⚠️ 副作用要知道：`playbackRate` 同時改**速度**。升 12 半音的 clip 只播一半
+   * 的時間。對「叮」這種 100–200 ms 的短音是特色（越高越脆），對語音或長樂句
+   * 就是花栗鼠 —— ⛔ 不要拿它去移調 BGM 或台詞。
+   *
+   * 夾在 ±24 半音（兩個八度）：再遠就只是壞掉的聲音，而一個打錯的數字不應該
+   * 靜默通過（#277 的形狀）。省略或 0 = 原音，每一個既有呼叫端逐位元不變。
+   */
+  semitones?: number;
+  /**
    * Fired exactly once when this clip's playback is DONE — the natural end
    * (`src.onended`), a load/decode failure (404, undecodable buffer), or a
    * throw while wiring the graph. It NEVER fires for a call `playClip` refused
@@ -291,6 +308,28 @@ interface SustainedVoice {
 
 /** Fade applied when a sustained SFX bed is stopped (ms). */
 const SFX_FADE_OUT_MS = 320;
+
+/** 移調的上下界（半音）。兩個八度以外只剩噪音，見 {@link SfxPlayOptions.semitones}。 */
+export const SEMITONE_LIMIT = 24;
+
+/**
+ * 把 `opts.semitones` 套到一個**還沒 start** 的 buffer source 上（GH#494）。
+ *
+ * 等律：一個八度 = 12 半音 = ×2 的 `playbackRate`。省略／0／非有限數 = 不碰
+ * 那個節點，所以每一個既有呼叫端的圖形逐位元不變。
+ *
+ * ⚠️ `playbackRate` 在極舊的 host 上可能是唯讀的 —— 包在 try 裡，失敗就是**原音**
+ * （少一點音階，⛔ 不是少一個音效）。
+ */
+export function applySemitones(src: AudioBufferSourceNode, semitones: number | undefined): void {
+  if (typeof semitones !== "number" || !Number.isFinite(semitones) || semitones === 0) return;
+  const st = Math.min(SEMITONE_LIMIT, Math.max(-SEMITONE_LIMIT, semitones));
+  try {
+    src.playbackRate.value = 2 ** (st / 12);
+  } catch {
+    /* host without a writable playbackRate — plays at the original pitch */
+  }
+}
 
 function defaultCtxFactory(): AudioContext | null {
   try {
@@ -996,6 +1035,7 @@ export class AudioSystem {
         chain = this.makeSpatialChain(ctx, pan, lowpassHz);
         const src = ctx.createBufferSource();
         src.buffer = buffer;
+        applySemitones(src, opts?.semitones);
         // ⭐ GH#403 —— **真 loop**（`AudioBufferSourceNode.loop`），不是定時重播。
         // 這一行之前整個 codebase 沒有任何一發真 loop，而 `SFX_LOOPABLE` 的檔頭
         // 聲稱它的成員會走這條路（第三守則）。呼叫端可以用 `opts.loop` 覆寫

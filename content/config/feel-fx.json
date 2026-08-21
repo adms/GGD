@@ -1,0 +1,27 @@
+{
+  "id": "feel-fx",
+  "schema": "config.feel-fx@1",
+  "note": "爽度特效（GH#494，owner 2026-08-21）。殭屍死掉掉小金幣 → 停 1 秒 → 貝茲曲線加速吸回擊殺者 + 輕音效；連擊音階升高；施法光柱的上升粒子壽命砍半。⛔ 這份文件裡沒有一格會改變任何人拿到的金幣 —— 賞金在 sim 的 MobSystem 早就發完了，這裡只決定那一刻看得到、聽得到什麼。goldPickup.enabled=false ⇒ 逐位元回到這一版之前。",
+  "goldPickup": {
+    "enabled": true,
+    "hoverSeconds": 1,
+    "flightSeconds": 0.42,
+    "easePower": 3,
+    "arcHeight": 1.9,
+    "maxConcurrent": 32,
+    "sfxThrottleMs": 55,
+    "sfxVolume": 0.32
+  },
+  "comboPitch": {
+    "enabled": true,
+    "semitonesPerStep": 1,
+    "maxSteps": 12,
+    "resetAfterSeconds": 5
+  },
+  "castMotes": {
+    "lifetimeMinSec": 0.175,
+    "lifetimeMaxSec": 0.35,
+    "gravityY": 3,
+    "drag": 0.7
+  }
+}

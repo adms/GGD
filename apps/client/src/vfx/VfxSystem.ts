@@ -114,6 +114,7 @@ import { castScorchSpec } from "./feedbackPresets";
 import { StatusAuraFx } from "./StatusAuraFx";
 import { CastPillarFx } from "./CastPillarFx";
 import { ArcBoltFx } from "./ArcBoltFx";
+import { GoldPickupFx } from "./GoldPickupFx";
 import { arcBoltSpec, ARC_TINTS, type ArcBoltOptions } from "./arcBolt";
 import { pillarPalette, pillarTintFromRamp, type PillarPalette } from "./castPillar";
 import { severityForHit, sprayDirection, damageScale, type Vec2 } from "./bloodPresets";
@@ -153,6 +154,15 @@ export interface VfxContext {
    * cannot animate a wind-up.
    */
   castProgress?(id: number, nowMs: number): number | null;
+  /**
+   * ⭐ GH#494 —— 播一發 SFX，走**既有**的音訊管線（總音量、SFX 開關、SfxGate 的
+   * 冷卻與同時發聲數全部自動適用）。注入而不是在 vfx/** 裡 import `audioSystem`：
+   * 一條繞過玩家設定的新音訊路徑就是缺陷（`audio/vfxSound.ts` 檔頭第 ③ 條）。
+   *
+   * 缺席 ⇒ 金幣照飛，只是**沒有聲音** —— 這是 headless 測試與舊接線的樣子，
+   * ⛔ 不是「整個功能不生效」。
+   */
+  playSfx?(event: string, opts: { volume?: number; gateKey?: string; semitones?: number }): boolean;
 }
 
 // ---------------------------------------------------------------------------
@@ -546,6 +556,12 @@ export class VfxSystem {
    */
   private readonly arcs: ArcBoltFx;
   /**
+   * ⭐ GH#494 —— 殭屍的錢：掉在屍體上 → 停 1 秒 → 貝茲曲線加速吸回擊殺者 →
+   * 輕音效（連段音階升高）。⛔ 它碰不到任何一塊錢（賞金在 sim 早就發完了），
+   * 所以 `enabled: false` 是逐位元回到這一版之前的止血閥。
+   */
+  private readonly gold: GoldPickupFx;
+  /**
    * UNIVERSAL CAST TELEGRAPH (task #228): the ground shape every ability draws
    * while it winds up, derived from the ability doc and filled off the cast
    * bar's own progress. Owns the per-caster lifecycle the old ad-hoc
@@ -609,6 +625,11 @@ export class VfxSystem {
       { getScale: () => this.budgetScale() },
     );
     this.arcs = new ArcBoltFx(scene);
+    // ⭐ GH#494 掉錢 → 停 1 秒 → 貝茲加速吸回擊殺者 + 輕音效（連擊音階升高）。
+    this.gold = new GoldPickupFx(scene, {
+      entityPos: (id) => this.ctx.entityPos(id),
+      playSfx: (event, opts) => this.ctx.playSfx?.(event, opts) ?? false,
+    });
     this.w3xCast = new W3xCastFx(scene, { getQualityScale: () => this.budgetScale() });
     this.telegraphLayer = new TelegraphLayer(scene, {
       entityPos: (id) => this.ctx.entityPos(id),
@@ -1645,6 +1666,33 @@ export class VfxSystem {
         this.play(this.doc(FLOWER_BURST_VFX), x, z, nowMs, 0.9);
         break;
       }
+      // ⭐ GH#494 —— 殭屍死掉掉小金幣（owner 2026-08-21：「提高爽度 模仿肉鴿遊戲的
+      // 氛圍感」）。⛔ 這裡**沒有讀 `ev.data.gold`**，而且不可以讀：賞金在伺服器的
+      // `sim/systems/MobSystem.ts` 就發完了，這一層只是把那一刻畫出來。一旦金幣的
+      // 顆數或軌跡開始跟金額有關，畫面就變成經濟的第二個描述，而兩個描述遲早打架。
+      case "mobSlain": {
+        const id = ev.data.id as number | undefined;
+        const killer = ev.data.killer as number | null | undefined;
+        if (typeof id !== "number") break;
+        // `killer === null` = 火圈／環境擊殺：沒有人可以吸，什麼都不畫。
+        // `gold` 原封不動交出去，而那一層**一行都不讀**（守衛在 feelFx.test.ts）。
+        this.gold.spawn(
+          { mobId: id, killer: typeof killer === "number" ? killer : null, gold: ev.data.gold as number | undefined },
+          nowMs,
+        );
+        break;
+      }
+      // ⭐ GH#494 第五段 —— 連段音階。**數字來自 sim**（sim/combat/killCombo.ts 用
+      // `world.tick` 量 5 秒視窗），⛔ 客戶端不自己數：同一 tick 的 AoE 連殺在網路上
+      // 是一批事件，用到達時間分辨「一次橫掃」與「兩次擊殺」是猜的。
+      // 這一層只把數字翻成音高，⛔ 不影響 HUD 上那個連殺數字，也不影響任何結算。
+      case "killCombo": {
+        const killer = ev.data.killer as number | undefined;
+        const count = ev.data.count as number | undefined;
+        if (typeof killer !== "number" || typeof count !== "number") break;
+        this.gold.noteCombo(killer, count, nowMs);
+        break;
+      }
       // 陣亡投幣 (task #191). Both events carry x/z BECAUSE the entity is gone
       // (or, on the drop, has only just appeared): the pickup destroys the coin
       // in the same sim tick it pays out, so there is nothing left to anchor to.
@@ -1865,6 +1913,11 @@ export class VfxSystem {
       const id = anchor.entityId;
       const pos = this.ctx.entityPos(id);
       if (!isFinitePos(pos)) continue;
+      // ⭐ GH#494 —— 記下每一具身體這一幀在哪。`mobSlain` 的 payload **沒有 x/z**，
+      // 而殭屍在事件到達時通常已經從快照裡消失了（sim 同一個 tick 就
+      // `destroyAfterHooks`），`entityPos()` 會回 null。少了這一行，金幣不是掉錯
+      // 地方就是根本不掉 —— 而畫面上看起來只會像「這個功能有時候沒作用」。
+      this.gold.noteBody(id, pos);
       const prop = isRootedProp(anchor.kind, anchor.teamId);
       // shadow under every LIVE body (a corpse/despawned body drops its shadow)
       if (anchor.alive) {
@@ -1952,6 +2005,10 @@ export class VfxSystem {
     // ⚡ 電弧：推進亮度,壽命到的還回 free-list。**一跳一閃**,所以絕大多數幀
     // 這一圈走的是空陣列。
     this.arcs.update(nowMs);
+    // ⭐ GH#494 金幣：停留 → 貝茲加速 → 到站播音效並 `dispose()` 那一枚 instance。
+    // ⚠️ 放在 `syncGroundEntities` **之後**，這樣目標讀到的是這一幀的英雄位置
+    // （英雄邊打邊跑，用上一幀的位置會讓金幣永遠差一格）。
+    this.gold.update(nowMs);
     // #205 多層特效模板:到期的延遲層。放在最後,所以一層在它被排定的那一幀
     // 之後才會播 —— delay 0 的層走的是 playLayeredCast 的立即分支,不經過這裡。
     this.drainPendingLayers(nowMs);
@@ -2034,6 +2091,9 @@ export class VfxSystem {
     this.telegraphLayer.clear(); // 每個施法者的地面預告圈
     this.pillars.clear(); // 向天光束（#233）
     this.arcs.clear(); // ⚡ 上一回合最後一跳的電，⛔ 不可以跟著進商店（#216 / #259）
+    // ⭐ GH#494 —— 還在飛的錢不留到下一回合（#262：mesh 一定要回收）。錢本身早就
+    // 進了口袋，這裡丟掉的只是那一枚 instance。
+    this.gold.reset();
     this.castDecals.clear(); // 地面焦痕 —— 下一回合可能是完全不同的地圖
     this.status.clear(); // 暈/定身/緩速光環
     this.shadows.sync([]); // 腳下影子：這一刻場上沒有任何身體
@@ -2091,6 +2151,8 @@ export class VfxSystem {
     // walks every system it EVER built, pooled or live, so nothing can survive
     // this call by being in a state we forgot about (task #131's lesson).
     this.w3xCast.dispose();
+    // ⭐ GH#494 —— 金幣的來源網格 + 那一份共用材質（instance 已經在 reset 裡丟了）。
+    this.gold.dispose();
     // #262: the per-scene telegraph free-lists + the magic-circle Texture + the
     // kick BurstPool. `TelegraphLayer.dispose()` above only walks its own `live`
     // map — everything already released into the shared pool survived it, and

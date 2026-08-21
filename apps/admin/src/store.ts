@@ -162,6 +162,12 @@ export type Page =
   | "modelLod"
   /** 特效回收 (`config/vfx-cleanup.json`): 回合邊界把共用特效池回收到什麼程度。 */
   | "vfxCleanup"
+  /**
+   * 爽度特效 (`config/feel-fx.json`, GH#494): 殭屍死掉掉的那枚小金幣怎麼飛回
+   * 擊殺者、落袋那一聲多輕、連段音階升多高，以及施法餘燼活多久。
+   * ⛔ 沒有一格會改變任何人拿到的金幣 —— 賞金是伺服器發的。
+   */
+  | "feelFx"
   /** 濺血程度 (`config/gore.json`): 打中噴多少血 —— 家裡有人在看時的那個開關。 */
   | "gore"
   /**
@@ -629,6 +635,8 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "newHeroChecks",
   "modelLod",
   "vfxCleanup",
+  // 爽度特效 (GH#494): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  "feelFx",
   "gore",
   // 傷害數字配色: 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "damageColors",

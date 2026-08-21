@@ -787,6 +787,11 @@ export class GameApp {
           const p = this.casts.progressFor(id, nowMs);
           return p !== null && p.kind === "cast" ? p.fraction : null;
         },
+        // ⭐ GH#494 —— 金幣被吸進身體那一下的**輕**音效（連段音階由 `semitones` 帶）。
+        // 走 `audioSystem.playSfx` 而不是 `sfxQueue`：這一發刻意**不空間化**，
+        // 它講的是「錢進了**你的**口袋」，那件事不在場上某個座標上發生。
+        // 音量／靜音／SfxGate 的冷卻與同時發聲數仍然全部適用（那是 playSfx 給的）。
+        playSfx: (event, opts) => audioSystem.playSfx(event, opts),
       },
       ambient: {
         bindingsFor: (key) => this.contentDb.ambientBindingsFor(key),

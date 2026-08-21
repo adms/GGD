@@ -322,6 +322,10 @@ export const NAV: NavItem[] = [
   { page: "replayPolicy", label: "對戰錄影", emoji: "🎬", section: SEC_SYS },
   { page: "modelLod", label: "畫質分級", emoji: "🪄", section: SEC_SYS },
   { page: "vfxCleanup", label: "特效回收", emoji: "🧹", section: SEC_SYS },
+  // 爽度特效 (GH#494, owner 2026-08-21「提高爽度 模仿肉鴿遊戲的氛圍感」) —— 緊接在
+  // 特效回收 後面，因為它是同一個引擎的另一半：一個管「留多少在記憶體裡」，
+  // 一個管「那一瞬間看得到、聽得到什麼」。⛔ 這一頁沒有一格會改變任何人的金幣。
+  { page: "feelFx", label: "爽度特效", emoji: "🪙", section: SEC_SYS },
   // 濺血程度 —— 調性決定，不是效能決定。放在它們後面而不是中間。
   { page: "gore", label: "濺血程度", emoji: "🩸", section: SEC_SYS },
   // 傷害數字配色 (owner 2026-08-01) —— 物理紅／魔法紫／真實白／治療綠。緊接在
