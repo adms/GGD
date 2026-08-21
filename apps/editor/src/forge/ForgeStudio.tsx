@@ -52,7 +52,8 @@ import { api, WRITES_ENABLED } from "../api/client";
 import { FormRenderer } from "../form/FormRenderer";
 import { walkZod } from "../form/walk";
 import { setIn, type ErrorMap } from "../store";
-import { createSimPreviewController } from "../preview/PreviewController";
+import { createBabylonPreviewController } from "../preview/BabylonPreviewController";
+import type { CastPreviewTrace } from "../preview/PreviewController";
 import { badgeFor } from "./badge";
 import { degradeNotes, satisfiedCaps } from "./degrade";
 import { planForgeWrite, runForgeWrite, type ForgePlan } from "./ForgeWriteback";
@@ -70,7 +71,12 @@ import {
 import { ConditionEditor } from "./ConditionEditor";
 import type { EffectCondition } from "@ggd/shared/sim/content/condition";
 
-const controller = createSimPreviewController();
+/**
+ * GH#174 —— 工坊第 3 步從此有**畫面**。同一個 `PreviewController` 介面，
+ * 資料那一半原封不動（它內部就持有 `createSimPreviewController()`），
+ * 多出來的只有 `mount(canvas)` 之後的那顆 Engine/Scene。
+ */
+const controller = createBabylonPreviewController();
 const fmt = (n: number): string => (Number.isInteger(n) ? String(n) : n.toFixed(2));
 
 /** 衝突處理 labels — the wording an operator has to be able to choose between. */
@@ -103,6 +109,19 @@ export function ForgeStudio({
   const [status, setStatus] = useState<string | null>(null);
   const [plan, setPlan] = useState<ForgePlan | null>(null);
   const [signedOff, setSignedOff] = useState(false);
+  /** 最近一次【真的放一次】之後，sim 真的發生了什麼（GH#174）。 */
+  const [trace, setTrace] = useState<CastPreviewTrace | null>(null);
+
+  /**
+   * 3D 舞台。⚠️ `mount(null)` 一定要在 unmount 時呼叫 —— `controller` 是**模組層**
+   * 的單例（工坊開開關關共用同一顆），少了這一行，離開頁面之後 Engine 還在
+   * `runRenderLoop` 裡轉，而畫面上完全看不出來。
+   */
+  const stageRef = useRef<HTMLCanvasElement | null>(null);
+  useEffect(() => {
+    controller.mount(stageRef.current);
+    return () => controller.mount(null);
+  }, []);
 
   /**
    * Every template the studio can resolve a `ref` against. The picked one is
@@ -245,7 +264,14 @@ export function ForgeStudio({
       abilities: { ...(owner as unknown as ChampionDef).abilities, [ability.slot]: ability },
     };
     try {
-      return controller.previewAbility(champ, ability.slot as CoreAbilitySlot, { level: 1 });
+      return {
+        ...controller.previewAbility(champ, ability.slot as CoreAbilitySlot, { level: 1 }),
+        // ⭐ 把「要對誰、放哪一格」一起帶出來 —— 第 3 步的【真的放一次】就是拿
+        //    這兩個去跑 `castAbility`。⛔ 不在按鈕的 onClick 裡把上面這段找主人的
+        //    邏輯再抄一次：兩份會分岔，而分岔的那一天畫面上的那一發就不是這一發。
+        champ,
+        slot: ability.slot as CoreAbilitySlot,
+      };
     } catch (e) {
       return { error: String(e) } as const;
     }
@@ -444,8 +470,43 @@ export function ForgeStudio({
           <h3>3. 即時試放</h3>
           <p className="forge-note">
             數值來自真正的 sim（sandbox SimWorld + 真 statPipeline + 真 resolveScaling）。
-            這是<b>數值/效果的即時試放</b>，不是 3D 放招 —— 3D 預覽仍是 P2。
+            按<b>真的放一次</b>會把這一發包成 <code>IntentFrame</code> 丟進{" "}
+            <code>world.step()</code> —— 走的是玩家那條路，
+            所以「編輯器放得出來、遊戲裡按下去沒反應」不可能發生。
           </p>
+          <p className="forge-note">
+            ⚠️ 舞台目前只有<b>地面格線 + 英雄模型 + 技能自己的粒子特效</b>
+            （走與遊戲同一支 <code>toParticleSystem</code>）。
+            預告圈、投射物飛行、命中特效還沒接上（那要重用 client 的{" "}
+            <code>render/*</code> 與 <code>vfx/*</code>）。
+          </p>
+          <canvas ref={stageRef} className="preview3d-canvas" style={{ height: 240 }} />
+          {/* `preview3d-controls` 是既有的 flex 列樣式 —— ⛔ 不為了一顆按鈕新增一條 CSS。 */}
+          <div className="preview3d-controls">
+            <button
+              type="button"
+              data-field="stack.cast"
+              disabled={!preview || !("champ" in preview)}
+              onClick={() => {
+                if (!preview || !("champ" in preview)) return;
+                try {
+                  setTrace(controller.castAbility(preview.champ, preview.slot, { level: 1 }));
+                } catch (e) {
+                  setTrace(null);
+                  setStatus(`試放失敗：${String(e)}`);
+                }
+              }}
+            >
+              真的放一次
+            </button>
+            {trace ? (
+              <span className={trace.accepted ? "forge-note" : "error"}>
+                {trace.accepted
+                  ? `sim 收下了 · 魔力 ${fmt(trace.manaBefore)} → ${fmt(trace.manaAfter)} · 冷卻 ${trace.cooldownTicks} tick · 事件 ${trace.events.length} 筆`
+                  : `sim 拒絕了：${trace.reason ?? "沒有 castRejected，也沒有 abilityCast"}`}
+              </span>
+            ) : null}
+          </div>
           {!expansion.ok ? <p className="error">展開失敗：{expansion.error}</p> : null}
           {expansion.ok ? (
             <>

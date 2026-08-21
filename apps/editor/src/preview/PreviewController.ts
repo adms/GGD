@@ -8,10 +8,18 @@
  * (never a direct effectRunner poke); items/augments attach a ModifierSource
  * and show stat deltas; vfx spawn through the shared toParticleSystem factory.
  *
- * THIS FILE ships the interface + `SimPreviewController`, a renderless
- * implementation that runs the DATA half through the real engine (sandbox
- * SimWorld + real statPipeline/registries — no mocks). The Babylon rendering
- * half is the client engineer's seam: see BabylonPreview.todo.md.
+ * THIS FILE ships the interface + `SimPreviewController`, which runs the DATA
+ * half through the real engine (sandbox SimWorld + real statPipeline/registries
+ * — no mocks).
+ *
+ * ⚠️ **這段檔頭在 2026-08-22 之前寫著「renderless … Babylon 那一半是 client
+ * engineer 的接縫」，而那句話撐了一年**（GH#174，第三守則：註解會說謊）。
+ * 現在畫面那一半住在同一個資料夾的 `BabylonPreviewController.ts`：它**持有**
+ * 一份這裡的 `createSimPreviewController()` 並把每一支資料方法原樣轉發，
+ * 所以 ⛔ 沒有第二份 finalStats、⛔ 沒有第二條施法路徑。
+ *
+ * ⭐ `mount()` 在這一支裡**仍然是空的，而且應該是空的** —— 它是「沒有畫布時
+ * 這個介面該有的行為」，不是一個待辦。要畫面的呼叫端拿 Babylon 那一支。
  */
 import {
   SimWorld,
@@ -22,14 +30,20 @@ import {
   recomputeStats,
   resolveScaling,
   ALL_STATS,
+  rankUpAbility,
   type ChampionDef,
   type ItemDef,
   type AugmentDef,
   type AbilityDef,
   type CoreAbilitySlot,
+  type CastableSlot,
+  type CastTarget,
+  type IntentFrame,
   type Stat,
   type EffectDef,
+  type Vec2,
 } from "@ggd/shared/sim";
+import { Abilities } from "@ggd/shared/sim/content/registry";
 import { rankScalar } from "@ggd/shared/sim/perRank";
 import { attachItemSource } from "@ggd/shared/sim/economy/itemSource";
 import { liveAttribute } from "@ggd/shared/sim/stats/attrSources";
@@ -64,12 +78,71 @@ export interface StatDelta {
   after: number;
 }
 
+// ─────────────────────────────────────────── 真的放一次 (GH#174) ──────────
+/**
+ * ⭐ **這一段是「即時試放」從『唸給你聽』變成『真的打出去』的那一半**（GH#174）。
+ *
+ * 在此之前 `previewAbility` 只走 `effectLines` —— 它讀 `AbilityDef.effects` 把每一條
+ * **翻譯成中文**，一個 tick 都沒有跑過。那對「這張卡的數字對不對」是夠的，對
+ * 「這張卡**放得出去嗎**」完全無能：法力不夠、冷卻沒好、`castType` 根本拿不到
+ * 目標、被 `castTimeRules` 擋住 —— 這四種在編輯器裡**長得跟成功一模一樣**。
+ *
+ * ⛔ 而修法**不是**在這裡呼叫 `castAbility()`。GH#174 逐字寫著「必須透過
+ * PreviewDriver 發 IntentFrame 進 `world.step()`，**不可以**直接戳 effectRunner」，
+ * 理由是失敗形態⑤：直接戳等於**繞過** CommandSystem 的每一道閘，於是預覽會
+ * 「成功」地放出一發遊戲裡按下去毫無反應的技能。所以下面走的是玩家那條路：
+ * 一個 `IntentFrame` 丟進 `world.step()`，答案從 `world.events` 讀回來。
+ */
+export interface CastPreviewOptions {
+  level?: number;
+  /**
+   * 送出指令**之前**先把這一格點到第幾階。⚠️ 預設 1 而不是 0 —— 剛 spawn 的
+   * Q/W/E/R 是 rank 0（沒學），照原樣送出去只會拿回一句 `not-learned`，
+   * 而那不是作者想試的東西。EX / PASSIVE 不吃這一格（它們不排等級）。
+   */
+  rank?: number;
+  /** 指令送出後再跑幾個 tick，讓投射物與延遲效果真的走完。預設見 `CAST_PREVIEW_TICKS`。 */
+  ticks?: number;
+  /** 落點；省略＝施法者正前方 `ability.range` 處（`ground`/`skillshot` 都吃得到）。 */
+  point?: Vec2;
+}
+
+/** 一次試放之後，**世界真的發生了什麼**。⛔ 不是把 effects 陣列覆述一遍。 */
+export interface CastPreviewTrace {
+  /** sim 收下了這一發嗎。⚠️ 由 `abilityCast` 事件判定，⛔ 不是「我送出去了」。 */
+  accepted: boolean;
+  /** 被拒時 `castRejected` 給的理由（`CastResult`），例如 `cooldown` / `mana` / `not-learned`。 */
+  reason?: string;
+  manaBefore: number;
+  manaAfter: number;
+  /** 送出那一刻起算的冷卻（tick）。0 而 `accepted` 為 true = 這支技能沒有冷卻。 */
+  cooldownTicks: number;
+  /** 這幾個 tick 內 `world.events` 排出來的東西，照順序。⭐ 3D 面板照它播特效。 */
+  events: readonly { type: string; tick: number; data: Record<string, unknown> }[];
+}
+
+/**
+ * 試放預設跑滿一秒。⚠️ 這個數字是**決策點**（第一守則）所以它是一個具名常數 +
+ * 一格 `opts.ticks`，⛔ 不是散在函式裡的字面值：投射物飛得到、`dot` 至少跳一拍，
+ * 而作者要看一個八秒的持續傷害走完時，改的是呼叫端的那一格。
+ */
+export const CAST_PREVIEW_TICKS = 30;
+
 export interface PreviewController {
   /** attach the (future) Babylon canvas; renderless impl records the intent */
   mount(canvas: HTMLCanvasElement | null): void;
   dispose(): void;
   previewChampion(def: ChampionDef, opts?: { level?: number }): ChampionPreview;
   previewAbility(champion: ChampionDef, slot: CoreAbilitySlot, opts?: { level?: number }): AbilityPreview;
+  /**
+   * 真的把這一發打出去 —— PreviewDriver → `IntentFrame` → `world.step()`（GH#174）。
+   * ⛔ 實作不可以呼叫 `castAbility()` 或 effectRunner：那會繞過 CommandSystem 的閘。
+   */
+  castAbility(
+    champion: ChampionDef,
+    slot: CastableSlot,
+    opts?: CastPreviewOptions,
+  ): CastPreviewTrace;
   previewItem(item: ItemDef, on: ChampionDef, opts?: { level?: number }): StatDelta[];
   previewAugment(aug: AugmentDef, on: ChampionDef, opts?: { level?: number }): StatDelta[];
   /** stub: records the request; Babylon impl plays the ParticleSystem */
@@ -78,8 +151,29 @@ export interface PreviewController {
   stepFixed(ticks: number): void;
 }
 
+/**
+ * 試放用的**假想敵**離施法者多遠（world units）。
+ *
+ * ⚠️ 這個數字是一個決策點（第一守則）：太遠，短射程的技能一律回 `out-of-range`；
+ * 太近，`skillshot` 的方向向量會退化。3 單位在出貨射程的下緣之內
+ * （最短的近戰技能是 ~1.5u），而 `castTargetFor` 對 `ground`/`skillshot`
+ * 一律**改用 `ability.range`**，所以這一格真正只服務 `targeted`。
+ */
+const CAST_PREVIEW_DUMMY_GAP = 3;
+
 /** Sandbox world + champion, going through the REAL registries/spawn/statPipeline. */
-function sandbox(def: ChampionDef, level: number): { world: SimWorld; id: EntityId } {
+function sandbox(
+  def: ChampionDef,
+  level: number,
+  /**
+   * 多生一個**敵隊的身體**站在前方（GH#174 的試放用）。
+   *
+   * ⛔ 預設 false 是刻意的：`previewItem` / `previewAugment` 量的是「裝上去之後
+   * 我的數字變成多少」，世界裡多一具身體對它們沒有意義，而**任何**額外實體都會
+   * 讓那兩支的 tick 內容改變。只有真的要放招的那一條路需要有人可以打。
+   */
+  opts: { dummy?: boolean } = {},
+): { world: SimWorld; id: EntityId; dummyId: EntityId | null } {
   // Sandbox registries: the latest edited doc wins. `overrideAbilities` is
   // REQUIRED here — registerChampion now defaults to letting the standalone
   // content/abilities/<id>.json doc win (it is the source of truth at boot), so
@@ -95,7 +189,57 @@ function sandbox(def: ChampionDef, level: number): { world: SimWorld; id: Entity
     zone: 0,
     level,
   });
-  return { world, id };
+  if (opts.dummy !== true) return { world, id, dummyId: null };
+  // ⚠️ 同一份 def 當假想敵是刻意的：這裡要的是「一個**合法的敵方身體**」，
+  // ⛔ 不是一個平衡對手。換成別人只會把「這一發打得中嗎」變成「那個人的護甲多少」。
+  const dummyId = spawnChampion(world, {
+    championId: def.id,
+    seatId: asSeatId(1),
+    teamId: asTeamId(1),
+    pos: { x: SKELETON_ARENA.zones[0]!.center.x, z: CAST_PREVIEW_DUMMY_GAP },
+    zone: 0,
+    level,
+  });
+  return { world, id, dummyId };
+}
+
+/**
+ * 把一支技能的 `castType` 換成一個**這一發真的可以送出去**的 `CastTarget`。
+ *
+ * ⭐ 它刻意跟客戶端的 `AimResolver.resolveCastTarget` 是同一套語意
+ * （self→self、skillshot/dash→dir、ground→point、targeted→entity），
+ * ⛔ 但**不 import 它** —— 那支住在 `apps/client/src/input/`，是滑鼠與手把的
+ * 瞄準器，它的輸入是游標。編輯器沒有游標，也沒有一個「玩家指著哪裡」的答案。
+ */
+function castTargetFor(
+  ability: Pick<AbilityDef, "castType" | "range"> | undefined,
+  self: Vec2,
+  dummy: Vec2 | null,
+  dummyId: EntityId | null,
+  point?: Vec2,
+): CastTarget {
+  const castType = ability?.castType ?? "self";
+  const range = ability?.range ?? CAST_PREVIEW_DUMMY_GAP;
+  // 「前方」＝ 假想敵所在的方向；沒有假想敵時退回 +Z（sandbox 生怪的那一軸）。
+  const dx = dummy ? dummy.x - self.x : 0;
+  const dz = dummy ? dummy.z - self.z : 1;
+  const len = Math.hypot(dx, dz) || 1;
+  const dir: Vec2 = { x: dx / len, z: dz / len };
+  switch (castType) {
+    case "self":
+      return { type: "self" };
+    case "skillshot":
+    case "dash":
+      return { type: "dir", dir };
+    case "ground":
+      // ⚠️ 落點放在**射程的最遠處**，⛔ 不是假想敵腳下：`ground` 的 sim 端會夾，
+      // 而作者要看的正是「這個圈畫在我打得到的地方嗎」。
+      return { type: "point", point: point ?? { x: self.x + dir.x * range, z: self.z + dir.z * range } };
+    case "targeted":
+      // 沒有假想敵時仍然回一個合法形狀 —— sim 會回 `bad-target`，
+      // ⛔ 而那句話正是我們要讓作者看到的，不是一個被我們吞掉的例外。
+      return dummyId === null ? { type: "self" } : { type: "entity", entityId: dummyId };
+  }
 }
 
 function effectLines(
@@ -758,7 +902,7 @@ export function createSimPreviewController(): PreviewController {
 
   return {
     mount(_canvas) {
-      /* renderless stub — BabylonPreview will own Engine/Scene here */
+      /* 資料版沒有畫面 —— 要畫面請用 `createBabylonPreviewController()`。 */
     },
     dispose() {
       world = null;
@@ -836,6 +980,92 @@ export function createSimPreviewController(): PreviewController {
         before: before[s],
         after: after[s],
       }));
+    },
+
+    /**
+     * 玩家那條路，一步不省：點階（`rankUpAbility`，真的那一支）→ 包一個
+     * `IntentFrame` → `world.step()` → 從 `world.events` 讀回答案。
+     *
+     * ⚠️ `world.events` **每個 tick 都會被 `step()` 清空**（SimWorld.ts:1517
+     * 第一行就是 `this.events.length = 0`），所以每跑一 tick 就要當場抄走。
+     * 抄晚一格 = 事件消失，而「沒有事件」跟「技能沒放出去」在畫面上一模一樣。
+     */
+    castAbility(champion, slot, opts) {
+      const level = opts?.level ?? 1;
+      const sb = sandbox(champion, level, { dummy: true });
+      world = sb.world;
+      const seat = asSeatId(0);
+      const hp = sb.world.health.get(sb.id)!;
+      const ab = sb.world.abilities.get(sb.id)!;
+
+      // 點階。⛔ 不直接寫 `inst.rank` —— 那會跳過 `rankUpAbility` 自己的規則
+      // （上限、EX 的解鎖、技能點）。這裡補的是**技能點**，因為預覽要試的是
+      // 「這一發放不放得出去」，不是「這個等級買不買得起」。
+      const wantRank = Math.max(1, opts?.rank ?? 1);
+      if (slot === "Q" || slot === "W" || slot === "E" || slot === "R") {
+        const inst = ab.slots[slot];
+        while (inst.rank < wantRank) {
+          ab.unspentPoints = Math.max(ab.unspentPoints, 1);
+          if (!rankUpAbility(sb.world, sb.id, slot)) break;
+        }
+      }
+
+      const manaBefore = hp.mana;
+      const selfPos = sb.world.transform.get(sb.id)!;
+      const dummyPos = sb.dummyId === null ? null : (sb.world.transform.get(sb.dummyId) ?? null);
+      // ⚠️ EX 與 PASSIVE **不在** `champion.abilities` 裡（那格只有 Q/W/E/R），
+      // 所以它們的 `castType` 要從 spawn 出來的實例回頭問登錄表 —— ⛔ 少了這一段，
+      // 一支 `targeted` 的 EX 會被當成 `self` 打出去，然後「成功」。
+      const inst0 =
+        slot === "EX" ? ab.exSlot : slot === "PASSIVE" ? ab.passiveSlot : ab.slots[slot];
+      const abilityDef =
+        slot === "Q" || slot === "W" || slot === "E" || slot === "R"
+          ? champion.abilities[slot]
+          : inst0
+            ? Abilities.tryGet(inst0.abilityId)
+            : undefined;
+      const target = castTargetFor(
+        abilityDef,
+        { x: selfPos.pos.x, z: selfPos.pos.z },
+        dummyPos ? { x: dummyPos.pos.x, z: dummyPos.pos.z } : null,
+        sb.dummyId,
+        opts?.point,
+      );
+      const intents = new Map<ReturnType<typeof asSeatId>, IntentFrame>([
+        [seat, { commands: [{ kind: "castAbility", slot, target }] }],
+      ]);
+
+      const events: { type: string; tick: number; data: Record<string, unknown> }[] = [];
+      const drain = (): void => {
+        for (const e of sb.world.events) {
+          events.push({ type: e.type, tick: e.tick, data: e.data });
+        }
+      };
+
+      sb.world.step(intents);
+      drain();
+      // ⚠️ 冷卻要在**指令落地的那一格**抄走，⛔ 不是跑完 30 tick 之後 ——
+      // `tickCooldowns` 每一格都在扣，晚抄就會報一個少了一秒的數字，
+      // 而一支 1 秒冷卻的技能會被報成 0（＝看起來像「這支沒有冷卻」）。
+      const cooldownTicks = inst0?.cooldownRemainingTicks ?? 0;
+      const empty = new Map<ReturnType<typeof asSeatId>, IntentFrame>();
+      const ticks = Math.max(0, opts?.ticks ?? CAST_PREVIEW_TICKS);
+      for (let i = 0; i < ticks; i++) {
+        sb.world.step(empty);
+        drain();
+      }
+
+      const rejected = events.find((e) => e.type === "castRejected");
+      return {
+        // ⭐ 判準是 **sim 自己喊的那一聲**（`abilityCast`），⛔ 不是「我送出去了」。
+        //    前者是「CommandSystem 的每一道閘都放行了」，後者只是我有打字。
+        accepted: events.some((e) => e.type === "abilityCast"),
+        ...(rejected ? { reason: String(rejected.data["reason"] ?? "unknown") } : {}),
+        manaBefore,
+        manaAfter: hp.mana,
+        cooldownTicks,
+        events,
+      };
     },
 
     spawnVfx(vfxKey) {

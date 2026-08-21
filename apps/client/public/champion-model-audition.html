@@ -22,6 +22,16 @@
   #err { top:14px; left:14px; right:14px; max-width:680px; border-color:#7f2d2d;
          background:#2a1212; display:none; }
   code { background:#0009; padding:1px 5px; border-radius:4px; }
+  /* 逐隻普查 (GH#165) */
+  #roster { display:none; top:14px; right:14px; bottom:14px; width:min(560px,46vw);
+            overflow:auto; font-variant-numeric:tabular-nums; }
+  #roster h2 { margin:0 0 6px; font-size:13px; }
+  #roster table { border-collapse:collapse; width:100%; font-size:11px; }
+  #roster th, #roster td { text-align:left; padding:2px 6px; border-bottom:1px solid #1e2433; }
+  #roster th { position:sticky; top:0; background:#12161f; color:var(--dim); }
+  .v-ok   { color:#7ee08a; }
+  .v-bad  { color:#ff8a7a; font-weight:600; }
+  .v-warn { color:#f2c637; }
 </style>
 </head>
 <body>
@@ -40,8 +50,16 @@
     <code>headroomAboveHeadJoint</code> 是這頁的重點：骨架說「頭在這裡」，
     網格的最高點卻在它下面，就是 #267 的形狀。
   </p>
+  <p>
+    <b>GH#165 逐隻普查</b>：<code>?roster=all</code>（整份 champions 名冊，
+    ⭐ 走 <code>&amp;champion=</code> 那條路，＝玩家真的看到的那一具）·
+    <code>&amp;limit=20</code> · <code>&amp;sizeRatio=1.6</code> ·
+    <code>&amp;groundTol=0.06</code>。
+    跑完 <code>window.__rosterReport</code> 就是整份逐隻結果（JSON）。
+  </p>
 </div>
 <div id="stats" class="hud"></div>
+<div id="roster" class="hud"></div>
 
 <script type="module">
   const q = new URLSearchParams(location.search);
@@ -55,24 +73,177 @@
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
+  // ═════════════════════════════════════════════════════════════════════════
+  // GH#165 —— 逐隻執行時視覺驗收
+  // ═════════════════════════════════════════════════════════════════════════
+  // #68 交付的兩層檢查（Foot-L/R 軸向對帳、.glb 位元組守衛）都不把模型畫出來，
+  // 而 f6584a42 把 40 位替身英雄換成**從來沒有在遊戲裡被渲染過**的暴雪模型。
+  //
+  // ⛔ 這一段刻意**不是**一個新的靜態普查 —— 它把每一隻真的載進**這頁既有的
+  // 真鏡頭**（`cam=combat` 是 CameraRig／`cam=select` 是 StorePreview），
+  // 取 `probe()` 的世界座標量測，再判一次。116 隻手點 116 次的成本，換成一次捲動。
+  //
+  // ⚠️ 尺寸那一項刻意用**名冊自己的中位數**當基準，⛔ 不是一個寫死的目標身高：
+  // 這樣它回答的是「這一隻在名冊裡是不是離群值」，而那正是 #224/#368 在問的，
+  // 而且出貨的正規化目標哪天改了它也不會變成一份說謊的清單。
+  async function runRoster(startChampionModelAudition, cam, clip, stepMs) {
+    const panel = document.getElementById("roster");
+    panel.style.display = "block";
+    const idx = await (await fetch("/content/champions/_index.json")).json();
+    const ids = idx.entries.map((e) => e.id).filter((id) => !id.startsWith("_"));
+    const limit = num("limit", ids.length);
+    const rows = [];
+    const draw = (doneN) => {
+      const bad = rows.filter((r) => r.verdicts.length > 0).length;
+      panel.innerHTML =
+        `<h2>逐隻普查 ${doneN}/${Math.min(limit, ids.length)} · 有話要說 ${bad}</h2>` +
+        `<table><tr><th>英雄</th><th>模型</th><th>高</th><th>腳</th><th>頭距</th><th>判定</th></tr>` +
+        rows
+          .map(
+            (r) =>
+              `<tr><td>${r.championId}</td><td>${r.family}</td>` +
+              `<td>${r.renderedHeight === null ? "—" : r.renderedHeight.toFixed(2)}</td>` +
+              `<td>${r.bboxMinY === null ? "—" : r.bboxMinY.toFixed(3)}</td>` +
+              `<td>${r.headroom === null ? "—" : r.headroom.toFixed(3)}</td>` +
+              `<td class="${r.verdicts.length ? "v-bad" : "v-ok"}">` +
+              `${r.verdicts.length ? r.verdicts.join(" · ") : "ok"}</td></tr>`,
+          )
+          .join("") +
+        `</table>`;
+    };
+    draw(0);
+
+    for (const championId of ids.slice(0, limit)) {
+      let doc = null;
+      try {
+        doc = await (await fetch(`/content/champions/${championId}.json`)).json();
+      } catch (e) {
+        rows.push(blankRow(championId, `champion doc 讀不到：${e}`));
+        draw(rows.length);
+        continue;
+      }
+      let handle = null;
+      let facts = { error: "沒有回報" };
+      try {
+        handle = startChampionModelAudition(canvas, {
+          modelKey: doc.modelKey,
+          championId,
+          cam,
+          clip,
+        });
+        handle.stepTo(stepMs);
+        // ⚠️ 一定要等 `settled` —— 沒等到就 probe，量到的是**還沒載完**的空場景，
+        //    而那會讓每一隻都「沒有頭」。逾時本身也是一個 verdict，⛔ 不是靜默跳過。
+        await settle(handle, num("timeoutMs", 20000));
+        facts = handle.probe();
+      } catch (e) {
+        facts = { error: String(e) };
+      } finally {
+        handle?.dispose();
+      }
+      rows.push(rowFor(championId, doc.modelKey, facts));
+      draw(rows.length);
+      await new Promise((r) => setTimeout(r, 0));
+    }
+
+    // 尺寸離群：中位數 × [1/ratio, ratio]。名冊自己當基準（見上）。
+    const heights = rows.map((r) => r.renderedHeight).filter((h) => typeof h === "number").sort((a, b) => a - b);
+    const median = heights.length ? heights[Math.floor(heights.length / 2)] : null;
+    const ratio = num("sizeRatio", 1.6);
+    if (median) {
+      for (const r of rows) {
+        if (typeof r.renderedHeight !== "number") continue;
+        if (r.renderedHeight > median * ratio) r.verdicts.push("比名冊中位數大太多");
+        else if (r.renderedHeight < median / ratio) r.verdicts.push("比名冊中位數小太多");
+      }
+    }
+    draw(rows.length);
+    window.__rosterReport = {
+      cam,
+      clip,
+      stepMs,
+      counted: rows.length,
+      medianHeight: median,
+      sizeRatio: ratio,
+      groundTol: num("groundTol", 0.06),
+      flagged: rows.filter((r) => r.verdicts.length > 0).length,
+      rows,
+    };
+    window.__rosterDone = true;
+  }
+
+  function blankRow(championId, why) {
+    return { championId, modelKey: null, family: "—", renderedHeight: null, bboxMinY: null,
+             headroom: null, triangles: null, verdicts: [why] };
+  }
+
+  function rowFor(championId, modelKey, f) {
+    const glb = typeof f.glbPath === "string" ? f.glbPath : "";
+    const family = glb.startsWith("assets/blizzard-local/")
+      ? "overlay"
+      : glb.startsWith("assets/models/imported/")
+        ? "imported"
+        : glb
+          ? "native"
+          : "—";
+    const verdicts = [];
+    if (f.error) verdicts.push(`載入失敗：${String(f.error).split("\n")[0]}`);
+    const num_ = (v) => (typeof v === "number" && Number.isFinite(v) ? v : null);
+    const h = num_(f.renderedHeight);
+    const minY = num_(f.bboxMinY);
+    const headroom = num_(f.headroomAboveHeadJoint);
+    const tris = num_(f.triangles);
+    if (tris !== null && tris <= 0) verdicts.push("畫面上零個三角形");
+    if (h !== null && h <= 0) verdicts.push("高度為 0");
+    if (minY !== null && Math.abs(minY) > num("groundTol", 0.06)) {
+      verdicts.push(minY > 0 ? "浮在空中" : "陷進地板");
+    }
+    // #267 的形狀：骨架說「頭在這裡」，網格的最高點卻在它下面。
+    if (headroom !== null && headroom < num("headTol", 0)) verdicts.push("頭部缺失(#267 形狀)");
+    return { championId, modelKey, family, renderedHeight: h, bboxMinY: minY, headroom,
+             triangles: tris, verdicts };
+  }
+
+  function settle(handle, timeoutMs) {
+    return new Promise((resolve, reject) => {
+      const t0 = Date.now();
+      const tick = () => {
+        if (handle.settled) return resolve();
+        if (Date.now() - t0 > timeoutMs) return reject(new Error(`settle 逾時 ${timeoutMs}ms`));
+        requestAnimationFrame(tick);
+      };
+      tick();
+    });
+  }
+
   try {
     const { startChampionModelAudition } = await import("/src/render/championModelAudition.ts");
-    const handle = startChampionModelAudition(canvas, {
-      modelKey: q.get("model") ?? "imported.goku",
-      // GH#368 —— 帶上 `&champion=godie-n00b` 才是玩家真的看到的那一具：
-      // overlay 會把共用替身換成他自己的 WC3 模型，_standin-overrides 的尺寸
-      // 倍率也才會生效。少了它，40 位替身英雄看到的是「別人的身體 @ 1.0×」。
-      championId: q.get("champion"),
-      cam: q.get("cam") === "select" ? "select" : "combat",
-      clip: q.get("clip") ?? "idle",
-      offsetZ: num("offsetZ", 0),
-    });
-    handle.stepTo(num("step", 600));
-    window.__audition = handle;
-    Object.defineProperty(window, "__settled", { get: () => handle.settled });
-    window.__probe = () => handle.probe();
-    if (q.get("hud") !== "0") {
-      setInterval(() => { stats.textContent = JSON.stringify(handle.probe(), null, 1); }, 250);
+    if (q.get("roster")) {
+      window.__rosterDone = false;
+      await runRoster(
+        startChampionModelAudition,
+        q.get("cam") === "select" ? "select" : "combat",
+        q.get("clip") ?? "idle",
+        num("step", 600),
+      );
+    } else {
+      const handle = startChampionModelAudition(canvas, {
+        modelKey: q.get("model") ?? "imported.goku",
+        // GH#368 —— 帶上 `&champion=godie-n00b` 才是玩家真的看到的那一具：
+        // overlay 會把共用替身換成他自己的 WC3 模型，_standin-overrides 的尺寸
+        // 倍率也才會生效。少了它，40 位替身英雄看到的是「別人的身體 @ 1.0×」。
+        championId: q.get("champion"),
+        cam: q.get("cam") === "select" ? "select" : "combat",
+        clip: q.get("clip") ?? "idle",
+        offsetZ: num("offsetZ", 0),
+      });
+      handle.stepTo(num("step", 600));
+      window.__audition = handle;
+      Object.defineProperty(window, "__settled", { get: () => handle.settled });
+      window.__probe = () => handle.probe();
+      if (q.get("hud") !== "0") {
+        setInterval(() => { stats.textContent = JSON.stringify(handle.probe(), null, 1); }, 250);
+      }
     }
   } catch (e) {
     err.style.display = "block";
