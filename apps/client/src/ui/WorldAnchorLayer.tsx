@@ -47,26 +47,76 @@ import { teamCss } from "./theme";
 
 const BAR_W = 64;
 
-function makeChampionNode(name: string, color: string, isLocal: boolean): HTMLDivElement {
+/** 一顆有樣式（可選 `data-role`）的 `<div>`。⛔ 這裡是全檔唯一建節點的地方。 */
+function barDiv(cssText: string, role?: string): HTMLDivElement {
+  const d = document.createElement("div");
+  d.style.cssText = cssText;
+  if (role !== undefined) d.setAttribute("data-role", role);
+  return d;
+}
+
+/**
+ * 頭頂血條的骨架 —— ⛔ **玩家的名字一個位元組都不進 HTML**（GH#80／稽核 F-06）。
+ *
+ * 在此之前這裡是 `el.innerHTML = … ${name} …`：一個玩家自己取的顯示名被當成
+ * 標記解析。它今天打不穿，靠的是**這個 sink 之外**的一層伺服器權威清洗
+ * （`apps/game-server/src/net/sanitizeText.ts::sanitizeDisplayName`，剝掉
+ * `< > & " ' \` \` 與 C0/DEL）—— 那支檔的檔頭自己寫著它是「for the client's
+ * innerHTML sink」的 backstop。
+ *
+ * ⚠️ 那一層是**黑名單**（列舉字元），⛔ 不是輸出端跳脫，而且它是**逐接縫**套上去的
+ * （`MatchRoom.onJoin` / `MatchRoom` 內部賽 / `index.ts` 的 HMAC 路徑各一次 ——
+ * F-19 點名的正是「新開一條接縫忘了複製那一行」）。⇒ 放寬一個字元、或新增一條沒套
+ * sanitizer 的接縫，這個 sink 立刻回到可打穿，而**上面每一層看起來都完全正常**。
+ * ⭐ 正解是這裡**不接受標記**：那樣上游怎麼變都與這一格無關。
+ *
+ * ⛔ 不要為了少幾行把任何一格改回字串樣板 —— `WorldAnchorLayer.nameSink.test.ts`
+ * 直接餵一段 `<img onerror=…>` 給這支函式（⛔ 刻意不走 `RoomConnection`：那一層會
+ * 先把 payload 吃掉，於是測到的是 sanitizer 而不是 sink 本身）。
+ *
+ * `color` 來自內部的 `teamCss(teamId)`，不受攻擊者控制，但它一樣改走
+ * `element.style` —— 兩個來源共用一條路，才不會有人下次挑「安全的那一個」貼回字串。
+ */
+export function makeChampionNode(name: string, color: string, isLocal: boolean): HTMLDivElement {
   const el = document.createElement("div");
   el.style.cssText =
     "position:absolute;left:0;top:0;width:0;height:0;pointer-events:none;will-change:transform;";
-  el.innerHTML =
-    `<div style="position:absolute;left:${-BAR_W / 2}px;top:-14px;width:${BAR_W}px;">` +
-    `<div data-role="name" style="text-align:center;font-size:10px;color:${color};` +
-    `text-shadow:0 1px 2px #000;margin-bottom:2px;white-space:nowrap;${isLocal ? "font-weight:bold;" : ""}">${name}</div>` +
-    `<div style="height:6px;background:rgba(0,0,0,0.65);border:1px solid rgba(0,0,0,0.8);border-radius:2px;overflow:hidden;">` +
-    `<div data-role="hp" style="height:100%;width:100%;background:${color};"></div>` +
-    `</div>` +
-    `<div style="height:2px;margin-top:1px;background:rgba(0,0,0,0.5);border-radius:1px;overflow:hidden;">` +
-    `<div data-role="mana" style="height:100%;width:0%;background:#4aa3e8;"></div>` +
-    `</div>` +
-    // over-head cast bar (hidden until casting)
-    `<div data-role="cast-wrap" style="display:none;height:4px;margin-top:2px;background:rgba(0,0,0,0.7);` +
-    `border:1px solid rgba(0,0,0,0.85);border-radius:2px;overflow:hidden;">` +
-    `<div data-role="cast" style="height:100%;width:0%;background:#54b0f0;"></div>` +
-    `</div>` +
-    `</div>`;
+
+  const stack = barDiv(`position:absolute;left:${-BAR_W / 2}px;top:-14px;width:${BAR_W}px;`);
+
+  const nameEl = barDiv(
+    "text-align:center;font-size:10px;text-shadow:0 1px 2px #000;margin-bottom:2px;white-space:nowrap;",
+    "name",
+  );
+  nameEl.style.color = color;
+  if (isLocal) nameEl.style.fontWeight = "bold";
+  nameEl.textContent = name;
+
+  const hpTrack = barDiv(
+    "height:6px;background:rgba(0,0,0,0.65);border:1px solid rgba(0,0,0,0.8);border-radius:2px;overflow:hidden;",
+  );
+  const hpFill = barDiv("height:100%;width:100%;", "hp");
+  hpFill.style.background = color;
+  hpTrack.appendChild(hpFill);
+
+  const manaTrack = barDiv(
+    "height:2px;margin-top:1px;background:rgba(0,0,0,0.5);border-radius:1px;overflow:hidden;",
+  );
+  manaTrack.appendChild(barDiv("height:100%;width:0%;background:#4aa3e8;", "mana"));
+
+  // over-head cast bar (hidden until casting)
+  const castWrap = barDiv(
+    "display:none;height:4px;margin-top:2px;background:rgba(0,0,0,0.7);" +
+      "border:1px solid rgba(0,0,0,0.85);border-radius:2px;overflow:hidden;",
+    "cast-wrap",
+  );
+  castWrap.appendChild(barDiv("height:100%;width:0%;background:#54b0f0;", "cast"));
+
+  stack.appendChild(nameEl);
+  stack.appendChild(hpTrack);
+  stack.appendChild(manaTrack);
+  stack.appendChild(castWrap);
+  el.appendChild(stack);
   return el;
 }
 
