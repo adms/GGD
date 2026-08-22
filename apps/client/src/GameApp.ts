@@ -847,6 +847,10 @@ export class GameApp {
         cameraFor: () => this.viewports.rigFor(0).camera,
         scale: this.renderParams.particleDensity,
       },
+      // ⭐ GH#580 —— 出貨的那一個特效循環音登記表。⚠️ 在此之前它**只**被
+      //    `dispose()`（＝離開房間）清過,回合邊界完全碰不到 ⇒ 上一回合的循環音
+      //    跟著進商店。餵進去而不是讓 registry 自己 import,守衛量到的才是出貨接線。
+      sound: vfxSoundLayer,
     });
     this.vfx = roundFx.vfx;
     // ⭐ GH#549 —— 螢幕震動的出口。owner:「畫面閃爍**及震動** 不然都不知道

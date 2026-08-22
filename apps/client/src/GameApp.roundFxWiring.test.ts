@@ -24,6 +24,15 @@ const read = (rel: string): string =>
  * 一列沒有理由的豁免，跟沒有這條測試是一樣的。
  */
 const NOT_ROUND_SCOPED: Record<string, string> = {
+  // ── GH#594 之後才浮出來的一族（`.reset()` / `.clear()` / `.despawn()` 收尾的） ──
+  footstep: "本地腳步的節拍狀態,跟著**實體**走(單位不在了就沒有腳步),⛔ 不是留在場上的資源",
+  remoteSteps: "同上,另外十一位的推導腳步 —— 它的 key 是實體 id,實體消失即失效",
+  sfxQueue: "**一幀**的空間音效批次,下一幀就 flush 掉 —— 壽命比一個回合短兩個數量級",
+  interp: "實體位置插值緩衝,key 是實體 id;單位從 snapshot 消失時就沒有人再讀它",
+  prediction: "本地預測的替身,跟著本地實體走(despawn 是它自己的生命週期,不是回合的)",
+  aliveByPlayer: "存活表,每一幀由權威 snapshot 整份覆寫 —— 回合邊界清它不會改變任何一幀的結果",
+  casts: "施法進度追蹤,由 cast 開始/結束事件自己增刪;回合邊界不會留下沒結束的施法",
+  connStats: "網路統計(ping/jitter),跟**房間連線**走不跟回合走 —— 回合之間連線並沒有斷",
   postFx: "相機上的 post-process，只在效果衰減中才掛著，衰減完自己就卸下來",
   burnTint: "同上，每個 viewport 的紅色濾鏡，由 BurnTintFrame 每幀驅動",
   deathFocus: "同上，灰階濾鏡只在該玩家死著的時候掛，活過來就卸",
@@ -56,14 +65,27 @@ describe("GH#337 回合邊界的清單與 teardown 的清單對得起來 (round-
     }
     expect(body.length, "dispose() 的大括號沒配對").toBeGreaterThan(0);
 
-    const disposed = new Set([...body.matchAll(/this\.(\w+)\??\.dispose\(\)/g)].map((m) => m[1]!));
-    expect(disposed.size, "一個 this.X.dispose() 都沒抓到 —— 抽取壞了").toBeGreaterThan(5);
+    // ⭐ GH#594 —— 抽取以前**只認 `.dispose()`**,而 `dispose()` 裡有一整族是用
+    //    `.reset()` / `.clear()` / `.clearAll()` / `.despawn()` 收尾的。那一族
+    //    **結構上不可能**進 `disposed` ⇒ 既不必註冊、也不必寫豁免理由,
+    //    而「抽取看不到」與「已經覆蓋」在斷言上長得**一模一樣**。
+    //    ⛔ 這不是理論:GH#580(`vfxSoundLayer` 的循環音跟著進商店)正是這個洞放過去的。
+    const disposed = new Set(
+      [...body.matchAll(/this\.(\w+)\??\.(?:dispose|reset|clear|clearAll|despawn)\(\)/g)].map(
+        (m) => m[1]!,
+      ),
+    );
+    // 第二道:**module 單例**（連 `this.` 都沒有），例如 `vfxSoundLayer.reset()`。
+    for (const m of body.matchAll(/^\s*(\w+)\.reset\(\)/gm)) disposed.add(m[1]!);
+    expect(disposed.size, "一個收尾呼叫都沒抓到 —— 抽取壞了").toBeGreaterThan(5);
 
     const registry = read("./render/roundFxRegistry.ts");
     const registered = new Set(
       [...registry.matchAll(/\.add\(\s*"([^"]+)"/g)].map((m) => m[1]!),
     );
     expect(registered.size, "roundFxRegistry 一個註冊都沒抓到 —— 抽取壞了").toBeGreaterThan(3);
+    // GH#580 —— 特效循環音（龍捲風／火柱／吐息／傳送門,28 支技能覆寫）真的在表上。
+    expect([...registered], "GH#580:特效循環音的登記表不在回合邊界上").toContain("vfxSoundLayer");
 
     const unguarded = [...disposed].filter((n) => !registered.has(n) && !(n in NOT_ROUND_SCOPED));
     expect(

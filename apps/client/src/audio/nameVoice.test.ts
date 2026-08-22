@@ -625,3 +625,29 @@ describe("the generated quotes.json is a well-formed quote pack", () => {
     expect(real).toBe(doc.coverage.real);
   });
 });
+
+/**
+ * GH#583 —— **名言停得下來**。這一層走 `HTMLAudioElement`，⛔ 不在 WebAudio 圖上，
+ * 所以 `stopSustainedSfx()` / `stopAllVoices()` / 場景切換逐位元都碰不到它；
+ * 在 `cancel()` 之前，回合結算的名言（素材 mean 2.4s / **max 9.99s**）會整句講完、
+ * 跨過商店、跨過離開房間、跨進練習模式，而**沒有任何按鈕停得掉**。
+ */
+describe("ChampionNameVoice.cancel (name-vo-cancel, GH#583)", () => {
+  it("停掉正在講的那一句，並且把 onended 鏈斷掉", async () => {
+    cover("name-vo-cancel");
+    const h = harness();
+    expect(await h.vo.playQuote("godie-e008")).toBe(true);
+    expect(h.el.plays.length).toBe(1); // 名言正在響
+    const pausesBefore = h.el.pauses;
+
+    h.vo.cancel();
+
+    // ⭐ `pause()` 是關鍵:只 bump `seq` 只擋得住**下一段**,擋不住**正在響的這一段**,
+    // 而正在響的這一段正是玩家聽到的那個。
+    expect(h.el.pauses).toBe(pausesBefore + 1);
+    expect(h.el.onended).toBeNull();
+    // 取消之後,舊的 chain 已經作廢 —— 再 end() 一次不會推出第二個 clip
+    h.el.end();
+    expect(h.el.plays.length).toBe(1);
+  });
+});

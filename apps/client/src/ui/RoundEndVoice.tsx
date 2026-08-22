@@ -16,7 +16,7 @@
 import { useEffect, useRef } from "react";
 import { hudStore, useHud } from "../net/RoomStore";
 import { roundEndQuoteChampion } from "./panels/settlementModel";
-import { playChampionQuote } from "../audio/nameVoice";
+import { championNameVoice, playChampionQuote } from "../audio/nameVoice";
 import { playContextualVoice } from "../audio/contextualVoice";
 import { playRoundTaunt } from "../audio/victoryTaunt";
 import {
@@ -100,6 +100,12 @@ export function RoundEndVoice(): null {
     const { seats, teams, round } = hudStore.getState();
     const champ = roundEndQuoteChampion(seats, teams);
     if (champ) void speakRoundEnd(champ, round ?? 0).catch(() => {});
+    // GH#583 —— **E1**：離開結算那一拍就把名言掐掉。素材量到 mean 2.4s / max 9.99s,
+    // 而在此之前它會整句講完、跨過商店、跨過離開房間,而且**沒有任何按鈕停得掉**
+    // (它走 HTMLAudioElement,⛔ 不吃 `stopSustainedSfx` / `stopAllVoices` / 場景切換)。
+    // ⚠️ cleanup 在**進入** resolution 那一次也會先跑一遍(React 先清舊 effect),
+    // 所以它同時保證了「新的一句開始前,舊的一句已經停了」。
+    return () => championNameVoice.cancel();
   }, [phase]);
   return null;
 }

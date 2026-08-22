@@ -562,6 +562,28 @@ export class ChampionNameVoice {
     }
   }
 
+  /**
+   * GH#583 —— **停掉正在講的那一句**（名言最長量到 9.99s）。
+   *
+   * ⚠️ 這一層走 `HTMLAudioElement`，⛔ 不在 WebAudio 圖上 ⇒ `stopSustainedSfx()` /
+   * `stopAllVoices()` / 場景切換**逐位元都碰不到它**。在這支之前，回合結算的名言會
+   * 整句講完、跨過商店、跨過離開房間、跨進練習模式，而**沒有任何按鈕停得掉**。
+   *
+   * ⛔ 只 bump `seq` 不夠 —— `seq` 只擋得住**下一段**，擋不住**正在響的那一段**，
+   * 而正在響的那一段正是這條缺陷的形狀。所以一定要 `pause()`。
+   */
+  cancel(): void {
+    this.seq += 1;
+    try {
+      if (this.el) {
+        this.el.onended = null;
+        this.el.pause();
+      }
+    } catch (err) {
+      this.warn("cancel failed (silent)", err);
+    }
+  }
+
   /** Drop the cached manifests + guards (tests / content live-reload). */
   reset(): void {
     this.manifestPromise = null;

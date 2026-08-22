@@ -80,3 +80,31 @@ export * from "./SpatialSfxQueue";
 export * from "./remoteFootsteps";
 export { AudioSystem, audioSystem, AUDIO_CONTENT_BASE, AUDIO_MAP_PATH, VOLUME_RAMP_MS } from "./AudioSystem";
 export type { AudioSystemOptions, BedEndedEvent, SfxPlayOptions } from "./AudioSystem";
+
+import { audioSystem } from "./AudioSystem";
+import { championNameVoice } from "./nameVoice";
+import { victoryTaunts } from "./victoryTaunt";
+import { vfxSoundLayer } from "./vfxSound";
+import { beatPerformance } from "../beat";
+
+/**
+ * GH#584 —— **進到房間那一格**（E3）。
+ *
+ * > owner 2026-08-22:「每次進到房間應該是**乾淨的開始**才對」
+ * > owner 2026-08-23:「你**寧願多次清理乾淨開始回合 也不要漏清到**」
+ *
+ * 在這支之前 `main.tsx` 的 `startMatch()` 對音訊**一行都沒有** ——「乾淨的開始」
+ * 完全是「上一場離開時有沒有收乾淨」的推論，而 GH#581/#582/#583 已經證明它沒有。
+ *
+ * ⭐ 收成**一支具名函式**而不是四行散在 `startMatch` 裡，是為了讓
+ * `audioTeardownCoverage.test.ts` 有東西可以指名：任何一層漏掉，那條閘就紅。
+ */
+export function resetAudioForNewMatch(): void {
+  audioSystem.stopAllVoices(); // GH#581 語音／GH#582 transient（含解碼中的）
+  audioSystem.stopSustainedSfx(); // #216 的循環床（火圈／場地環境音）
+  audioSystem.resetSceneElapsed(); // GH#589 上一張地圖的戰鬥曲相位
+  championNameVoice.cancel(); // GH#583 名言（HTMLAudioElement，⛔ 不在 WebAudio 圖上）
+  victoryTaunts.cancel(); // 同上，嘲諷 TTS 也是自己的 element
+  vfxSoundLayer.reset(); // GH#580 上一回合的特效循環音登記表
+  beatPerformance.reset(); // 「四拍令咒」的合成器貝斯（它自己的 synth，不走 SFX bus）
+}

@@ -320,6 +320,16 @@ interface SustainedVoice {
 /** Fade applied when a sustained SFX bed is stopped (ms). */
 const SFX_FADE_OUT_MS = 320;
 
+/**
+ * GH#589 —— 相位續播的 key 是 **scene ＋ file**，⛔ 不是只有 scene。
+ *
+ * ⚠️ 只用 scene 的時候：`combat` 只有**一個** scene 名，但 GH#531 讓每張地圖有自己的
+ * 戰鬥曲、#145 每回合換地圖 ⇒ 新的曲子會從**上一首**累積的秒數切進去（副歌中間、
+ * 或整段跳過），玩越久偏移越大。task #109 要的是「**同一首**跨回合相位連續」，
+ * ⛔ 不是「跨曲目繼承別人的相位」。
+ */
+const bedElapsedKey = (sceneKey: string, file: string): string => `${sceneKey}::${file}`;
+
 /** 移調的上下界（半音）。兩個八度以外只剩噪音，見 {@link SfxPlayOptions.semitones}。 */
 export const SEMITONE_LIMIT = 24;
 
@@ -398,6 +408,22 @@ export class AudioSystem {
    * cancelled instead of starting into the shop.
    */
   private readonly sustainedEpoch = new Map<string, number>();
+  /**
+   * GH#581 / GH#582 —— **每一發還在響的 one-shot**（`playClip` 的英雄語音／名言，
+   * 以及 `playSfx` 裡**非** `SFX_LOOPABLE` 的 transient）。
+   *
+   * ⚠️ 為什麼是**一個 Set** 而不是塞進 `sustainedVoices`：那個 Map 的 key 是 event 名，
+   * 把 transient 寫進去會退化成 per-event 的 Map 寫入，正好毀掉 `:1057` 刻意保留的
+   * 「一場團戰幾百發 transient 一個 byte 都不配置」。單一 Set 是每發一個 add/delete，
+   * ⛔ 沒有 per-event 的容器生成。
+   */
+  private readonly clipVoices = new Set<SustainedVoice>();
+  /**
+   * GH#581 —— one-shot 的**全域**停止 epoch。`playClip`/`playSfx` 在 `loadBuffer`
+   * **之前**捕捉它；`stopAllVoices()` 把它 +1。⭐ 這是唯一擋得住「離開房間的前一幀才發出、
+   * 解碼完才響進大廳」那一發的東西 —— 登記表只看得到**已經**在響的。
+   */
+  private voiceEpoch = 0;
   /** Per-scene original↔Samantha rotation (task #137). Empty ⇒ never rotates. */
   private readonly rotation: BgmRotationStore;
   /** The rotation-chosen file for the CURRENT scene (resolved once on entry). */
@@ -406,10 +432,11 @@ export class AudioSystem {
   /** `now()` at which the current bed was started; null when nothing is playing */
   private bedStartMs: number | null = null;
   /**
-   * Per-scene ACCUMULATED looping-bed playback (ms), for the phase-continuous
-   * resume (task #109). Each time a looping bed is swapped out its just-played
-   * span is folded in here, so re-entering that scene restarts the source at
-   * `(elapsed mod duration)` instead of snapping back to bar 0 every round.
+   * ACCUMULATED looping-bed playback (ms) per **scene ＋ file** ({@link bedElapsedKey}),
+   * for the phase-continuous resume (task #109). Each time a looping bed is swapped
+   * out its just-played span is folded in here, so re-entering that scene restarts
+   * the source at `(elapsed mod duration)` instead of snapping back to bar 0 every
+   * round. Cleared on entering a new match — see {@link AudioSystem.resetSceneElapsed}.
    */
   private readonly sceneElapsedMs = new Map<string, number>();
   private currentScene: AudioScene | null = null;
@@ -918,7 +945,7 @@ export class AudioSystem {
       // at (elapsed mod duration) so its extended B-section keeps advancing across
       // rounds; a first visit or a one-shot sting resolves to 0 (play from bar 0).
       const offsetSec = loop
-        ? loopResumeOffsetSec(this.sceneElapsedMs.get(scene) ?? 0, buffer.duration)
+        ? loopResumeOffsetSec(this.sceneElapsedMs.get(bedElapsedKey(scene, file)) ?? 0, buffer.duration)
         : 0;
       src.start(ctx.currentTime, offsetSec);
       this.bed = { src, gain, peak, scene, file, loop };
@@ -991,8 +1018,18 @@ export class AudioSystem {
     if (!bed || !bed.loop || this.bedStartMs === null) return;
     const played = this.now() - this.bedStartMs;
     if (played <= 0) return;
-    const prior = this.sceneElapsedMs.get(bed.scene) ?? 0;
-    this.sceneElapsedMs.set(bed.scene, prior + played);
+    const key = bedElapsedKey(bed.scene, bed.file);
+    const prior = this.sceneElapsedMs.get(key) ?? 0;
+    this.sceneElapsedMs.set(key, prior + played);
+  }
+
+  /**
+   * GH#589 —— 丟掉每一條 bed 的累積相位。⭐ 進新房間時叫（`resetAudioForNewMatch`）。
+   *
+   * ⚠️ ⛔ **不可以只在 `dispose()` 裡補** —— 那一支在正式站從來不執行。
+   */
+  resetSceneElapsed(): void {
+    this.sceneElapsedMs.clear();
   }
 
   private fadeOutAndStop(bed: Bed, curve: number[], durSec: number): void {
@@ -1089,6 +1126,10 @@ export class AudioSystem {
     // start rather than let a bed begin after combat ended.
     const sustained = isLoopableSfx(event);
     const epoch = sustained ? (this.sustainedEpoch.get(event) ?? 0) : 0;
+    // GH#582 —— transient 的那一半也要停得掉。`SFX_LOOPABLE` 只有 5 個 key，而**非**
+    // loopable 的出貨素材量到 mean 2.0s、最長 `bossJackpot` 6.0s / `dragonRoar` 5.9s
+    // ⇒ 離開房間之後「大廳裡響一聲 6 秒的龍吼」。⛔ 不是 0.3 秒的碰撞聲。
+    const clipEpoch = this.voiceEpoch;
     void this.loadBuffer(file).then((buffer) => {
       if (!buffer || this.disposed) {
         this.gate.release(gateKey);
@@ -1096,6 +1137,10 @@ export class AudioSystem {
       }
       if (sustained && epoch !== (this.sustainedEpoch.get(event) ?? 0)) {
         this.gate.release(gateKey); // stopped mid-decode — never start it
+        return;
+      }
+      if (!sustained && clipEpoch !== this.voiceEpoch) {
+        this.gate.release(gateKey); // 邊界前一幀發出的 transient —— ⛔ 不准起播
         return;
       }
       let gain: GainNode | null = null;
@@ -1134,27 +1179,33 @@ export class AudioSystem {
         }
         const g = gain;
         const c = chain;
-        voice = sustained ? { src, gain: g, stopping: false } : null;
-        if (voice) {
+        voice = { src, gain: g, stopping: false };
+        if (sustained) {
           let live = this.sustainedVoices.get(event);
           if (!live) {
             live = new Set<SustainedVoice>();
             this.sustainedVoices.set(event, live);
           }
           live.add(voice);
+        } else {
+          this.clipVoices.add(voice); // GH#582
         }
         const v = voice;
         src.onended = (): void => {
           this.gate.release(gateKey);
           this.safeDisconnect(src, g);
           c?.dispose();
-          if (v) this.sustainedVoices.get(event)?.delete(v);
+          if (sustained) this.sustainedVoices.get(event)?.delete(v);
+          else this.clipVoices.delete(v);
         };
         src.start();
       } catch (err) {
         this.gate.release(gateKey);
         // a tracked voice that never started must not linger in the registry
-        if (voice) this.sustainedVoices.get(event)?.delete(voice);
+        if (voice) {
+          this.sustainedVoices.get(event)?.delete(voice);
+          this.clipVoices.delete(voice);
+        }
         // TEARDOWN ON THE THROW PATH. If the wiring above succeeded and only
         // `src.start()` threw, the gain and the spatial nodes are already
         // edge-connected to the SFX bus and `onended` will never fire. Leaving
@@ -1195,30 +1246,58 @@ export class AudioSystem {
     const live = this.sustainedVoices.get(event);
     if (!live || live.size === 0) return 0;
     let stopped = 0;
-    for (const voice of [...live]) {
-      if (voice.stopping) continue;
-      voice.stopping = true;
-      stopped++;
-      const fadeSec = SFX_FADE_OUT_MS / 1000;
-      try {
-        const ctx = this.ctx;
-        const t0 = ctx ? ctx.currentTime : 0;
-        voice.gain.gain.cancelScheduledValues(t0);
-        voice.gain.gain.setValueAtTime(voice.gain.gain.value, t0);
-        voice.gain.gain.linearRampToValueAtTime(0, t0 + fadeSec);
-      } catch {
-        /* automation unsupported/rejected — the hard stop below still lands */
-      }
-      const hardStop = (): void => {
-        try {
-          voice.src.stop();
-        } catch {
-          /* already stopped — `onended` does the disconnect + bookkeeping */
-        }
-      };
-      if (typeof setTimeout === "function") setTimeout(hardStop, SFX_FADE_OUT_MS + 40);
-      else hardStop();
+    for (const voice of [...live]) if (this.fadeOutVoice(voice)) stopped++;
+    return stopped;
+  }
+
+  /**
+   * Fade ONE live voice out over {@link SFX_FADE_OUT_MS} and hard-stop it.
+   * Returns false for a voice already on its way out (so callers do not
+   * double-count it). Never throws: a context without automation still gets the
+   * hard stop, and `onended` still owns the disconnect + registry bookkeeping.
+   */
+  private fadeOutVoice(voice: SustainedVoice): boolean {
+    if (voice.stopping) return false;
+    voice.stopping = true;
+    const fadeSec = SFX_FADE_OUT_MS / 1000;
+    try {
+      const ctx = this.ctx;
+      const t0 = ctx ? ctx.currentTime : 0;
+      voice.gain.gain.cancelScheduledValues(t0);
+      voice.gain.gain.setValueAtTime(voice.gain.gain.value, t0);
+      voice.gain.gain.linearRampToValueAtTime(0, t0 + fadeSec);
+    } catch {
+      /* automation unsupported/rejected — the hard stop below still lands */
     }
+    const hardStop = (): void => {
+      try {
+        voice.src.stop();
+      } catch {
+        /* already stopped — `onended` does the disconnect + bookkeeping */
+      }
+    };
+    if (typeof setTimeout === "function") setTimeout(hardStop, SFX_FADE_OUT_MS + 40);
+    else hardStop();
+    return true;
+  }
+
+  /**
+   * GH#581 / GH#582 —— **停掉每一發 one-shot**：`playClip` 的英雄語音／名言，
+   * 以及 `playSfx` 的 transient（龍吼 5.9s、bossJackpot 6.0s）。回傳停掉幾發。
+   *
+   * ⭐ 兩件事，缺一不可：
+   * ① 已經在響的（`clipVoices` 登記表）→ fade + stop；
+   * ② **還在解碼的** → `voiceEpoch` +1，讓它們的 `.then` 直接放棄起播。
+   *
+   * ⚠️ ⛔ 只做 ① 治不了 owner 聽到的那個 —— 離開房間的**前一幀**才發出的那一句
+   * 還沒有 voice，登記表逐位元看不到它。
+   *
+   * 呼叫端：`ui/AudioDirector`（離開 match 的那一格）與 `audio/resetAudioForNewMatch`。
+   */
+  stopAllVoices(): number {
+    this.voiceEpoch += 1;
+    let stopped = 0;
+    for (const voice of [...this.clipVoices]) if (this.fadeOutVoice(voice)) stopped++;
     return stopped;
   }
 
@@ -1266,13 +1345,18 @@ export class AudioSystem {
       ended = true;
       onEnded();
     };
+    // GH#581 —— 離場 epoch，在**解碼之前**捕捉。離開房間的前一幀才發出的那一句
+    // 語音，解碼完成時房間已經沒了 —— 登記表看不到它（它還沒有 voice），
+    // ⭐ 只有這個比對擋得住它響進大廳。
+    const epoch = this.voiceEpoch;
     void this.loadBuffer(path).then((buffer) => {
-      if (!buffer || this.disposed) {
+      if (!buffer || this.disposed || epoch !== this.voiceEpoch) {
         fireEnded();
         return;
       }
       let gain: GainNode | null = null;
       let chain: SpatialChain | null = null;
+      let voice: SustainedVoice | null = null;
       try {
         gain = ctx.createGain();
         gain.gain.value = volMul;
@@ -1288,13 +1372,19 @@ export class AudioSystem {
         }
         const g = gain;
         const c = chain;
+        // GH#581 —— 登記「還在響的這一發」，`stopAllVoices()` 才有可以斷言的對象。
+        voice = { src, gain: g, stopping: false };
+        this.clipVoices.add(voice);
+        const v = voice;
         src.onended = (): void => {
+          this.clipVoices.delete(v);
           this.safeDisconnect(src, g);
           c?.dispose();
           fireEnded();
         };
         src.start();
       } catch (err) {
+        if (voice) this.clipVoices.delete(voice);
         if (gain) {
           try {
             gain.disconnect();
@@ -1697,6 +1787,12 @@ export class AudioSystem {
     // any still-decoding bed from starting into a torn-down context.
     this.stopSustainedSfx();
     this.sustainedVoices.clear();
+    // GH#581 / GH#582 / GH#589 —— one-shot 語音／transient 與相位表跟著系統死。
+    // ⚠️ 這裡補是**次要的**（`dispose()` 在正式站從不執行）；會生效的是
+    // `resetAudioForNewMatch()` 與 AudioDirector 的離場那一格。
+    this.stopAllVoices();
+    this.clipVoices.clear();
+    this.sceneElapsedMs.clear();
     this.gate.reset();
     // The spatial insert pool holds nodes belonging to the context we are about
     // to close. Dropping them here (rather than letting them ride) means a

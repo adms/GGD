@@ -30,6 +30,7 @@ import { AmbientVfx, type AmbientContentHooks } from "../vfx/AmbientVfx";
 import { WhirlwindFx, type WhirlwindFxOptions } from "../vfx/WhirlwindFx";
 import { FireRingFx, type FireRingFxOptions } from "./vfx/FireRingFx";
 import { VictoryFireworks, type VictoryFireworksOptions } from "../vfx/VictoryFireworks";
+import { vfxSoundLayer } from "../audio/vfxSound";
 import type { RoundEdge, RoundVfxTarget } from "./roundVfxLifecycle";
 
 export type { RoundEdge };
@@ -80,6 +81,19 @@ export interface RoundFxDeps {
   victory?: VictoryFireworksOptions;
   /** 測試 seam:`createTexture: () => null` 讓 headless 不去解圖。 */
   whirlwind?: WhirlwindFxOptions;
+  /**
+   * GH#580 —— 特效**循環音**的登記表。省略時就是出貨的那一個（`vfxSoundLayer`）。
+   *
+   * ⚠️ 為什麼**預設值是那個單例**而不是一個 no-op：漏傳的那一次必須仍然是**對的行為**。
+   * 一個 no-op 預設會讓「忘記接線」與「已經接好」在畫面上長得一模一樣 —— 正是這條
+   * issue 的形狀。留著注入口只是為了讓測試換一份假的來量。
+   */
+  sound?: RoundSoundLoops;
+}
+
+/** 回合邊界要清的循環音登記表 —— `VfxSoundLayer` 的那一格（只用得到 `reset`）。 */
+export interface RoundSoundLoops {
+  reset(): void;
 }
 
 /** 場景型 FX 的整包 —— GameApp 把它拆進自己的欄位，守衛直接拿來量場景。 */
@@ -117,7 +131,18 @@ export function createRoundFx(scene: Scene, deps: RoundFxDeps): RoundFx {
     // 火圈:停掉樂隊與鑲邊火焰。它的資源是有界且重用的,所以是 hide 不是 dispose
     .add("fireRing", BOTH_EDGES, () => fireRing.hide())
     // ⭐ 只有 enter —— 見 VictoryFireworks.resetForRound 的註解（leave 清它 = 刪掉 #235）
-    .add("victoryFx", ENTER_ONLY, (edge) => victoryFx.resetForRound(edge));
+    .add("victoryFx", ENTER_ONLY, (edge) => victoryFx.resetForRound(edge))
+    // ⭐ GH#580 —— 特效循環音的登記表。⚠️ 這一格在此之前**只有 `GameApp.dispose()`**
+    //   （＝離開房間）碰得到,回合邊界的這張表上沒有它 ⇒ 上一回合龍捲風／火柱／吐息的
+    //   循環音會在**商店畫面裡繼續響 8 秒**,踩到 `fireRingLoop`(素材 60.09s)那一發時
+    //   是一整段音軌在商店裡從頭燒,要下一回合開打才被掐掉。出貨內容真的有這個家族:
+    //   `config/vfx-families.json` 的 tornado / flamePillar / breath / portal,28 支技能覆寫。
+    //   ⭐ 名字用 `vfxSoundLayer`(＝ `GameApp.dispose()` 裡那個識別字),⛔ 不是 `vfxSound`:
+    //   `GameApp.roundFxWiring.test.ts` 這條閘靠的就是**名字相等**,對不上等於重新打開
+    //   GH#594 那個洞。⭐ BOTH_EDGES —— owner:「寧願多次清理乾淨開始回合 也不要漏清到」。
+    //   ⚠️ 順序是對的:`GameApp` 的 `roundVfx.sync()` 在 step 0,比 step 5b 的
+    //   `vfxLoopPushes` 早,所以清完當幀不會再推。
+    .add("vfxSoundLayer", BOTH_EDGES, () => (deps.sound ?? vfxSoundLayer).reset());
 
   return { registry, vfx, ambient, whirlwind, fireRing, victoryFx };
 }

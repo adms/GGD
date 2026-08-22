@@ -10,6 +10,7 @@ import { GameApp } from "./GameApp";
 import { AppRoot } from "./ui/platform/AppRoot";
 import { appStore } from "./ui/platform/store";
 import { resetHudStore } from "./net/RoomStore";
+import { resetAudioForNewMatch } from "./audio";
 import { initRenderConfig } from "./render/RenderConfig";
 import { initSettings } from "./settings";
 import { qualityController } from "./render/QualityController";
@@ -78,6 +79,10 @@ function startMatch(): void {
   // the registries are ready (ScreenBody shows MatchContentGate meanwhile).
   if (!isContentReady()) return;
   resetHudStore();
+  // GH#584 —— owner:「每次進到房間應該是**乾淨的開始**才對」。⛔ 這一格在此之前
+  // 對音訊什麼都沒做,所以上一場還在響的語音／音效／名言會跟著進新房間與練習模式
+  // (練習模式走的正是這同一條)。⭐ 一支具名函式,它自己有一條覆蓋率閘在守。
+  resetAudioForNewMatch();
   const platform = match.mode === "platform" && match.endpoint && match.seatTokens;
   app = new GameApp(canvas, {
     accountId: match.accountId ?? undefined,

@@ -1033,6 +1033,31 @@ describe("AudioSystem loop resume (audio-bgm-loop-resume)", () => {
     expect(ctx.started[ctx.started.length - 1]!.startOffset).toBeCloseTo(4);
     sys.dispose();
   });
+
+  it("GH#589 進新房間丟掉累積相位 —— 新的一場從第 0 秒開始，不是上一場的第 270 秒", async () => {
+    cover("audio-bgm-loop-resume");
+    // 量到的:房間 1 三回合 0→2→4s,離開後**進另一張地圖的新房間仍然是 6s**,
+    // `sceneElapsedMs = {"combat": 270000}` —— 這張表在整個 client 的生命週期裡
+    // ⛔ 沒有任何清除點(連 `dispose()` 都漏了它,而 `dispose()` 在正式站從不執行)。
+    let clock = 0;
+    const { sys, ctxRef } = build({ now: () => clock, bufferDuration: 8 });
+    await sys.loadMap();
+    sys.unlock();
+    sys.playBgm("combat");
+    await flush();
+    clock = 4000;
+    sys.playBgm("menu"); // 上一場結束 —— combat 累積了 4 秒
+    await flush();
+
+    sys.resetSceneElapsed(); // ← 進到新房間（resetAudioForNewMatch）
+
+    clock = 5000;
+    sys.playBgm("combat");
+    await flush();
+    const ctx = ctxRef()!;
+    expect(ctx.started[ctx.started.length - 1]!.startOffset).toBe(0);
+    sys.dispose();
+  });
 });
 
 /**
@@ -1351,6 +1376,56 @@ describe("AudioSystem sustained-SFX teardown (audio-sfx-stop, task #216)", () =>
     expect(sys.stopSustainedSfx()).toBe(1);
     expect(sys.stopSustainedSfx()).toBe(0); // second edge: nothing left to cut
     vi.advanceTimersByTime(1000);
+    sys.dispose();
+  });
+});
+
+/**
+ * GH#581 / GH#582 —— **離開房間時還在響的那一發**。
+ *
+ * > owner 2026-08-23:「明明場上沒有皮卡丘卻一直有皮卡丘、多拉A夢聲音」
+ *
+ * `sustainedVoices` 只收 `SFX_LOOPABLE` 那 5 個 key，所以 `stopSustainedSfx()`
+ * 逐位元掃不到 ①`playClip` 的英雄語音／名言（量到 max 3.4s）與
+ * ②`playSfx` 的 transient（`dragonRoar` 5.9s、`bossJackpot` 6.0s）——
+ * 離開房間之後**大廳裡響一聲六秒的龍吼**。⛔ 不是 0.3 秒的碰撞聲。
+ */
+describe("AudioSystem one-shot teardown (audio-voice-stop, GH#581/#582)", () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+
+  it("stopAllVoices 掐掉正在響的語音 clip **與** transient 音效", async () => {
+    cover("audio-voice-stop");
+    const { sys, ctxRef } = build({ fetchFn: okFetch(BED_MAP), now: () => 0 });
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    expect(sys.playClip("assets/audio/voice/hero-victory.mp3")).toBe(true);
+    expect(sys.playSfx("hit")).toBe(true); // ⛔ 不在 SFX_LOOPABLE 裡
+    await flush();
+    const ctx = ctxRef()!;
+    expect(ctx.started.filter((s) => !s.stopped).length).toBe(2);
+
+    expect(sys.stopAllVoices()).toBe(2); // 離開房間
+    vi.advanceTimersByTime(1000);
+    expect(ctx.started.filter((s) => s.stopped).length).toBe(2);
+    sys.dispose();
+  });
+
+  it("取消**還在解碼**的那一發 —— 邊界前一幀發出的語音不准響進大廳", async () => {
+    cover("audio-voice-stop");
+    // ⭐ 這一條才是真的時序:登記表只看得到**已經在響**的,而離開房間的前一幀才發出的
+    // 那一句還沒有 voice。⛔ 少了 epoch 比對,它會在大廳裡自己響起來。
+    const { sys, ctxRef } = build({ fetchFn: okFetch(BED_MAP), now: () => 0 });
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    const before = ctxRef()!.started.length;
+    sys.playClip("assets/audio/voice/hero-victory.mp3"); // 解碼中
+    sys.playSfx("hit"); // 同上,transient 的那一半
+    sys.stopAllVoices(); // …而房間就在這一幀沒了
+    await flush();
+    expect(ctxRef()!.started.length).toBe(before); // 兩發都沒有起播
     sys.dispose();
   });
 });

@@ -50,6 +50,7 @@ import {
   type TallySnapshot,
 } from "../audio";
 import { setCombatSfxSeat } from "../audio/combatSfx";
+import { championNameVoice } from "../audio/nameVoice";
 import { playContextualVoice } from "../audio/contextualVoice";
 import { closeRoundEndVoiceBeat, openRoundEndVoiceBeat } from "../audio/roundEndVoice";
 import {
@@ -182,6 +183,13 @@ export function AudioDirector(): null {
       // (exit to lobby, a bounced join) never crosses the combat→x phase edge,
       // so this is the second, screen-level teardown of the same beds.
       audioSystem.stopSustainedSfx();
+      // GH#581 / GH#582 —— 而**一次性**的那一半在此之前完全沒有停止路徑:
+      // `playClip` 的英雄語音（max 3.4s）與 `playSfx` 的 transient（龍吼 5.9s、
+      // bossJackpot 6.0s）都不進 `sustainedVoices`,所以上一行逐位元掃不到它們
+      // ⇒ 離開房間之後**大廳裡響一聲六秒的龍吼**。
+      audioSystem.stopAllVoices();
+      // GH#583 —— 名言走 HTMLAudioElement,⛔ 不在 WebAudio 圖上,上面兩行都碰不到。
+      championNameVoice.cancel();
       return;
     }
     if (connected && !greeted.current) {
