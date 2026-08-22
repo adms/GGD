@@ -132,6 +132,24 @@ export type AttrKey = "str" | "agi" | "int";
 export const ATTR_KEYS: readonly AttrKey[] = ["str", "agi", "int"];
 
 /**
+ * ⭐ M5(2026-08-23) —— 一份來源可以**改寫這具身體的主屬性**（第十一格授予）。
+ *
+ * 詞彙刻意是英雄卡上那一組大寫的 `"STR"|"AGI"|"INT"`（`ChampionAttributes
+ * .primary`），⛔ 不是 sim 內部的小寫 {@link AttrKey}：這一格的語意就是
+ * 「**覆寫那一格**」，兩個住處用兩套字母是下一個「存得進去但比不中」的形狀。
+ *
+ * 為什麼它需要存在：70-00 紮根的變身態把 `attributes.primary` 從 STR 換成 INT，
+ * 而那個換法今天**只有換一整份英雄卡**（＝變身）做得到 —— 既有的 modifier
+ * 一格都表達不了它（`Stat` 上沒有「主屬性是誰」這個數字）。
+ * ⛔ 所以「把變身態退場」在這一格出現之前必然掉東西。
+ *
+ * 消費端只有一個：`stats/statPipeline.ts::primaryAttrOf`（`perLevelBonus` 的
+ * `primary`/`nonPrimary` 兩種模式）。它走 `StatsComp.sources` 而**不問 `kind`**，
+ * 所以道具 / 天生技 rank / 增益卡 / `applyBuff` 的限時來源同時拿得到。
+ */
+export type PrimaryAttributeGrant = "STR" | "AGI" | "INT";
+
+/**
  * 繁中 labels for the three. Lives here, next to the model, so the shop panel,
  * the 三選一 card and the codex can never disagree about which is which.
  */

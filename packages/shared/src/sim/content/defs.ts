@@ -3,7 +3,7 @@
  * Pure data shapes — authored as TS literals in the skeleton, migrated to
  * external JSON by the content pipeline (same shapes, Zod-validated).
  */
-import type { AbilityId, AugmentId, ChampionId, ItemId, ProjectileId } from "../../ids";
+import type { AbilityId, AugmentId, ChampionId, ItemId, ProjectileId, StatusId } from "../../ids";
 import type { Stat, StatBlock } from "../stats/statTypes";
 import type { AttrGrant, ChampionAttributes } from "../stats/attributes";
 import type { StatModifier, HookDef } from "../stats/modifiers";
@@ -109,6 +109,32 @@ export interface AbilityPassiveRank extends SourceGrantFields {
    * (cast / expiry / death / revert / combat end) can skip it.
    */
   whileForm?: "any" | "base" | "alternate";
+  /**
+   * ⭐ M2(2026-08-23) 狀態閘 —— 「我**帶著這個具名狀態**的時候才掛上」。
+   *
+   * ⛔ 它**不是**第二套 `whileForm`，是同一顆閘多認得一種來源：兩格都填就是
+   * **AND**（`rankBlock` 逐格問過去）。缺席 = 不問 = 1,900 份既有文件逐位元不變。
+   *
+   * ── 為什麼需要它（量到的，⛔ 不是偏好） ──────────────────────────────────
+   * `whileForm` 把「這一階在不在」綁死在**換一整份英雄卡**上，於是那 19 對變身
+   * 裡有 3 對的**全部強度**住在形態裡（20-01 風王結界的 100% 暴擊、79-002 虛化的
+   * AD 翻倍、70-00 紮根的力量 +10）—— 而它們在畫面上**逐位元零差別**。
+   * ⇒ 「這個變身態能不能退場」在這一格出現之前，答案結構性地是「不能」。
+   *
+   * ⭐ 79-04 卍解今天**已經**同時掛了 `championForm` 與 `statusId:"bankai"`
+   *（`content/abilities/godie-h01n.r.json`），而 `content/status-effects/bankai.json`
+   * 的說明逐字寫著它存在的理由就是「讓別的技能問得到『我現在在卍解嗎』」——
+   * 那份說明也逐字寫著「條件系統今天**沒有形態這一種葉子**」。這一格就是那一句
+   * 的另一半：**被動的閘**也不必再從形態問起。
+   *
+   * ── 到期由誰負責 ─────────────────────────────────────────────────────────
+   * `whileForm` 靠 `ChampionFormSystem.setBody`（身體的唯一寫入者）重新求值；
+   * 狀態沒有那樣的唯一寫入者（`applyStatus` 掛、`StatusSystem` 收），所以這一格
+   * 的重新求值由 `sim/statusGatedPassives.ts` 每 tick 做 —— 而它**只在答案真的
+   * 翻面時**才呼叫 `syncAbilityPassives`（那支是 detach+attach，每 tick 呼叫等於
+   * 每 tick 重算整份屬性）。
+   */
+  whileStatus?: StatusId;
 }
 
 /**
@@ -162,7 +188,16 @@ export interface AbilityDef {
   /** per rank (index rank-1) */
   cooldown: number[]; // seconds
   manaCost: number[];
+  /**
+   * ⚠️ 可以是 `Number.POSITIVE_INFINITY` —— 「無上限施法距離」（GH#602）。
+   * 文件寫的是 `rangeUnlimited: true` + `range: 0`，`content/rangeTiers.ts` 的
+   * `resolveRangeTier` 在**載入時**把它翻成 Infinity（全專案唯一的翻譯處）。
+   * `resolveAbilityRange` 乘上 `combatEnv.abilityRange` 之後仍是 Infinity，
+   * 所以每一處 `distSq <= range*range` 的比較恆真、接近指令永遠不會被武裝。
+   */
   range: number;
+  /** ⭐ GH#602 —— 這支技能不受施法距離限制。Mirrors `zAbilityDoc.rangeUnlimited`。 */
+  rangeUnlimited?: boolean;
   /** skillshot width or AoE radius */
   radius?: number;
   targetsEnemies?: boolean;

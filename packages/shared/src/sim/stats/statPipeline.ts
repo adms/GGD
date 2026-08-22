@@ -64,6 +64,31 @@ function primaryAttrOf(def: { attributes?: { primary?: unknown } }): "str" | "ag
   return p === "STR" ? "str" : p === "AGI" ? "agi" : p === "INT" ? "int" : undefined;
 }
 
+/**
+ * ⭐ M5(2026-08-23) —— 身上有沒有一份來源**改寫**了主屬性
+ * （`SourceGrantFields.primaryAttribute`，第十一格授予）。沒有 = `undefined`
+ * = 照英雄卡上那一格（逐位元不變，出貨 0 份文件填它）。
+ *
+ * 在這一格之前，「主屬性從 STR 變成 INT」**只有換一整份英雄卡**（＝變身）做得到
+ * —— `Stat` 上沒有「主屬性是誰」這個數字，所以既有的 modifier 一條都表達不了它。
+ *
+ * ⚠️ 最後掛上的贏（不是第一個）—— 與 `combat/damageTypeOverride.ts` 同一個習慣，
+ * 而 `sources` 的順序是決定性的。⚠️ 跳過已過期的來源，與這支檔案裡另外兩處
+ * 摺疊迴圈逐字同一行。
+ */
+function sourcePrimaryAttribute(
+  sources: readonly ModifierSource[],
+  tick: number,
+): "str" | "agi" | "int" | undefined {
+  let out: "str" | "agi" | "int" | undefined;
+  for (const src of sources) {
+    if (src.primaryAttribute === undefined) continue;
+    if (src.expiresAtTick !== undefined && src.expiresAtTick <= tick) continue;
+    out = primaryAttrOf({ attributes: { primary: src.primaryAttribute } });
+  }
+  return out;
+}
+
 export function recomputeStats(world: SimWorld, id: EntityId): void {
   const sc = world.stats.get(id);
   const champ = world.champion.get(id);
@@ -234,7 +259,9 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
       //     所以召喚物也吃得到，跟其他每一條屬性走同一個等級。
       perLevelBonus: world.perLevelBonus,
       level,
-      primaryAttr: primaryAttrOf(def),
+      // ⭐ M5 —— 來源上的覆寫**贏過**英雄卡（`?? `，⛔ 不是相反）：一份寫著
+      //   「這段期間主屬性是智力」的來源存在的**唯一**理由就是蓋掉卡上那一格。
+      primaryAttr: sourcePrimaryAttribute(sc.sources, world.tick) ?? primaryAttrOf(def),
     });
   };
 

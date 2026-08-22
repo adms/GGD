@@ -28,6 +28,8 @@ import type { ModifierSource } from "../stats/modifiers";
 import { Abilities } from "../content/registry";
 import { attachSource, detachSource } from "../stats/statPipeline";
 import { hasSourceGrant, sourceGrants } from "../stats/sourceGrants";
+// ⛔ 不要在這裡再寫一次「他身上還有沒有這個狀態」—— 見 `rankBlock` 裡狀態閘那一段。
+import { hasStatus } from "../effects/effectCommon";
 import {
   applyAugmentToCritStrike,
   applyAugmentToHooks,
@@ -143,6 +145,17 @@ function rankBlock(
     const inAlternate = (world.championForm.get(id)?.index ?? 0) === 1;
     if ((want === "alternate") !== inAlternate) return null;
   }
+  // ⭐ M2(2026-08-23) 狀態閘 —— 同一顆閘的**第二種來源**：「我帶著這個具名狀態
+  // 的時候才掛上」。缺席 = 不問（1,900 份既有文件逐位元不變）；兩格都填 = AND。
+  //
+  // ⛔ 這裡**不可以**自己再寫一次「他身上還有沒有這個狀態」：`hasStatus` 是那個
+  //    答案的唯一定義，而它多做了一件承重的事 —— `StatusSystem` 在 tick 開頭就把
+  //    過期的清掉了，但它跑在技能結算**之前**，所以 `> world.tick` 的**再**檢查
+  //    才是「這一 tick 到底還算不算」的真答案（見 `content/condition.ts` 的同一段）。
+  // ⚠️ 重新求值不在這裡：`sim/statusGatedPassives.ts` 每 tick 比對「該不該掛」與
+  //    「掛了沒有」，只在翻面時呼叫 `syncAbilityPassives`。⛔ 少了那一支，這顆閘
+  //    只會在生成 / 升級 / 變身時被問到 —— 而變身正是它要取代的東西。
+  if (block.whileStatus !== undefined && !hasStatus(world, id, block.whileStatus)) return null;
   // An AURA-ONLY passive is a real passive: `79-00 靈壓` grants its carrier no
   // stat at all, it only debuffs everyone standing near them. Without `auras`
   // in this emptiness test the source would never be attached and the aura
@@ -245,6 +258,25 @@ function rankBlock(
     // （同一個參照），所以這一行對 1,900 份既有文件逐鍵不變。
     ...(critStrike !== undefined ? { critStrike } : {}),
   };
+}
+
+/**
+ * ⭐ M2(2026-08-23) —— 「這一階**現在**該不該掛在身上」，⛔ 不建立任何東西。
+ *
+ * 它存在的唯一理由是 `sim/statusGatedPassives.ts` 要問**同一個問題**：狀態閘翻面
+ * 了嗎。⛔ 在那裡重寫一次判斷 = 兩份會各自腐爛的程式（形態閘、`whileStatus`、
+ * 空值測試、跨技能強化四面全部要抄），而漂走的那一天沒有任何東西會紅。
+ * 所以那支問的是 {@link rankBlock} **本人**。
+ */
+export function passiveRankAttaches(
+  world: SimWorld,
+  id: EntityId,
+  def: AbilityDef,
+  p: AbilityPassive,
+  rank: number,
+  sourceId: string,
+): boolean {
+  return rankBlock(world, id, def, p, rank, sourceId) !== null;
 }
 
 /**

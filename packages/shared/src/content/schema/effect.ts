@@ -19,9 +19,10 @@
  * 在 `effectShardWiring.test.ts`。
  */
 import { z } from "zod";
+import type { StatusId } from "../../ids";
 import { CHANCE_PER_ATTR_MAX } from "../../sim/effects/dynamicTerms";
 import { AURA_COUNT_MAX, HOOK_MAX_TRIGGERS } from "../../sim/effects/kindLimits";
-import { zCastableSlot, zStatModifier } from "./common";
+import { zCastableSlot, zRef, zStatModifier } from "./common";
 import { zEffectCondition } from "./condition";
 import {
   SOURCE_GRANT_SHAPE,
@@ -255,6 +256,26 @@ export const zAbilityPassiveRank = z
      * sim/systems/ChampionFormSystem.ts for the re-sync that makes it live.
      */
     whileForm: z.enum(["any", "base", "alternate"]).optional(),
+    /**
+     * ⭐ M2(2026-08-23) 狀態閘 —— 「我**帶著這個具名狀態**的時候才掛上」。
+     * 完整語意與「為什麼它不是第二套 `whileForm`」寫在
+     * `sim/content/defs.ts` 的 `AbilityPassiveRank.whileStatus` 上。
+     *
+     * ⭐ 它讓「這一階只在某個狀態下存在」不必再**換一整份英雄卡**。
+     * 在它之前，`whileForm` 是唯一的寫法，於是 20-01 風王結界的 100% 暴擊、
+     * 79-002 虛化的 AD 翻倍、70-00 紮根的力量 +10 三者的**全部強度**都住在
+     * 一個在畫面上逐位元零差別的變身態裡 —— 那個變身態因此永遠退不了場。
+     *
+     * ⚠️ 兩格都填就是 **AND**（`rankBlock` 逐格問過去），⛔ 不是 OR。
+     * `soft: true` 與 `applyStatus.statusId` / 條件葉的 `statusId` 逐字相同：
+     * 狀態文件只給顯示身分，缺一份不該讓整棵內容樹載入失敗。
+     */
+    whileStatus: zRef<StatusId>("status-effects", { soft: true })
+      .describe(
+        "只有在持有者**身上帶著這個具名狀態**時，這一階才掛得上去（例：卍解狀態下才有的格擋）。" +
+          "留空 = 不問。與「形態閘」同時填 = 兩個條件都要成立。",
+      )
+      .optional(),
   })
   .strict();
 

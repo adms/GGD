@@ -118,6 +118,7 @@ import { coinSystem } from "./systems/CoinSystem";
 import { worldHookSystem } from "./systems/WorldHookSystem";
 import { regenSystem } from "./systems/RegenSystem";
 import { statusExpirySystem } from "./systems/StatusSystem";
+import { statusGatedPassiveSystem } from "./statusGatedPassives";
 import { hitstopDecaySystem } from "./systems/HitstopSystem";
 import {
   guardianSystem,
@@ -1561,6 +1562,19 @@ export class SimWorld {
     //                             folds it in — so an aura entered this tick
     //                             affects this tick's movement/attacks/casts and
     //                             no second recompute is needed (aura/aura.ts).
+    statusGatedPassiveSystem(this); // 0c. ⭐ M2 —— 狀態閘住的被動 rank
+    //                             (`whileStatus`) 掛/卸。
+    //
+    //                             SLOT IS LOAD-BEARING IN BOTH DIRECTIONS.
+    //                             AFTER 0a (championFormSystem) so一次翻面只算
+    //                             一遍：形態閘與狀態閘在同一顆 `rankBlock` 裡，
+    //                             排在前面就會用上一 tick 的身體去問這一 tick 的
+    //                             答案。BEFORE 1 (statRecomputeSystem) 是同一個
+    //                             理由 aura 排在它前面 —— 這一 tick 掛上的來源
+    //                             就在**這一 tick** 被摺進屬性表,⛔ 不用第二次
+    //                             recompute,也不會慢一格。
+    //                             它自己會在沒有任何文件用狀態閘時退化成一次
+    //                             WeakMap 查表(見 sim/statusGatedPassives.ts)。
     statRecomputeSystem(this); // 1. recompute dirty stats
     buffExpirySystem(this); //    1b. expire timed buff sources
     attrGrantExpirySystem(this); // 1b′. reverse TIMED 三圍 grants whose absolute

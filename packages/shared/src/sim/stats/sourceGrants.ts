@@ -44,7 +44,7 @@ import type { FlightGrant } from "../flight";
 import type { PenetrationGrant } from "../combat/penetration";
 import type { TypeStreakImmunityGrant } from "../combat/typeStreakImmunity";
 import type { VisionGrant } from "../stealth";
-import type { AttrGrant } from "./attributes";
+import type { AttrGrant, PrimaryAttributeGrant } from "./attributes";
 
 /**
  * 一份內容文件（道具 / 天生技 rank / 增益卡 / `applyBuff` 效果）上，
@@ -122,6 +122,41 @@ export interface SourceGrantFields {
    * `applyBuff` 的限時來源，到期由那份 source 自己收掉，⛔ 不需要第二支掃描器。
    */
   deathWard?: DeathWardGrant;
+  /**
+   * ⭐ M5(2026-08-23) —— 【紮根】**不能移動，但可攻擊、可施法**。第十格。
+   *
+   * owner 2026-08-13 逐字：「應該是**狀態改變，類似定身**（可攻擊跟施展技能但
+   * 不能移動），並非把移動速度調整到 0」。
+   *
+   * ⛔ **不可以拿 `root` 狀態代替**，而理由不是語氣 —— `movementHold.ts` 檔頭
+   * 已經逐字寫下來了：`root` 是 **CC**（可被【淨化】剝掉、被免控 buff 拒絕、
+   * 計進 `ccAppliedTicks` 戰績），而紮根三件事一件都不是。⭐ 掛在**來源**上
+   * 就結構性地全部成立：`StatsComp.sources` 不走 dispel、不走免控、不進 CC 帳。
+   *
+   * 在這一格之前它是**英雄卡上的一格布林**（`champion@1.immobile`，全 repo
+   * 唯一一格，只有 `godie-e010` 用），也就是說「站著不能動」**只有換一整份英雄卡**
+   * （＝變身）做得到。⇒ 這一格是「把 70-00 的變身態退場而不掉東西」的前提。
+   *
+   * 消費端只有一個：`sim/movementHold.ts`（`MovementSystem` 與 GH#216 接敵規則
+   * 共用的**唯一**判準），而它走 `StatsComp.sources` 且**不問 `kind`** ——
+   * 所以掛在 `applyBuff` 的限時來源上就是「接下來 6 秒站著不能動」，
+   * 到期由那份 source 自己的 `expiresAtTick` 收掉，⛔ 不需要第二支掃描器。
+   *
+   * ⚠️ 型別是 `true` 而不是 `boolean`：`immobile: false` 會是一份「什麼都不做卻
+   * 掛得上去」的來源（`hasSourceGrant` 會說有），而那是第一·五守則點名的形狀。
+   * 不想要就**不要填這一格**。
+   */
+  immobile?: true;
+  /**
+   * ⭐ M5(2026-08-23) —— **主屬性覆寫**（STR→INT…）。第十一格。
+   * 語意、詞彙與消費端見 {@link PrimaryAttributeGrant}。
+   *
+   * ⚠️ 多份來源同時覆寫時的贏家是 `sources` 陣列裡**最後**掛上的那一份
+   * （`stats/statPipeline.ts::sourcePrimaryAttribute`）—— 與 `damageTypeOverride`
+   * 同一個習慣，而 `sources` 的順序是決定性的（`syncAbilityPassives` 固定
+   * Q/W/E/R→EX→天生技）。
+   */
+  primaryAttribute?: PrimaryAttributeGrant;
 }
 
 /**
@@ -146,6 +181,10 @@ export function sourceGrants(from: SourceGrantFields): SourceGrantFields {
       : {}),
     ...(from.vision !== undefined ? { vision: from.vision } : {}),
     ...(from.deathWard !== undefined ? { deathWard: from.deathWard } : {}),
+    ...(from.immobile !== undefined ? { immobile: from.immobile } : {}),
+    ...(from.primaryAttribute !== undefined
+      ? { primaryAttribute: from.primaryAttribute }
+      : {}),
   };
 }
 
@@ -168,6 +207,8 @@ export function hasSourceGrant(from: SourceGrantFields): boolean {
     from.penetration !== undefined ||
     from.typeStreakImmunity !== undefined ||
     from.vision !== undefined ||
-    from.deathWard !== undefined
+    from.deathWard !== undefined ||
+    from.immobile !== undefined ||
+    from.primaryAttribute !== undefined
   );
 }

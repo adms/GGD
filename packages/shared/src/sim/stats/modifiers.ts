@@ -1103,6 +1103,26 @@ export interface ModifierSource {
    * 引擎綁死在 `godie-u00k.passive` 上（CLAUDE.md 第〇·五守則的越線）。
    */
   deathWard?: import("../deathWard").DeathWardGrant;
+  /**
+   * ⭐ M5(2026-08-23) ——【紮根】：帶著這份來源期間**不能移動**，但**可攻擊、
+   * 可施法**（owner 2026-08-13 逐字）。第十格。
+   *
+   * ⛔ 它**不是**【定身】：`root` 是 CC（可被淨化、被免控擋、計進 CC 戰績），
+   * 而這三件事紮根一件都不是 —— 掛在**來源**上就結構性地全部成立。
+   * 同前九格：讀它的**只有** `sim/movementHold.ts`，而它走 `StatsComp.sources`
+   * 且**不問 `kind`**，⛔ 不需要第二支掃描器。
+   *
+   * ⚠️ 只有 `true`：`immobile: false` 會是一份掛得上去卻什麼都不做的來源。
+   */
+  immobile?: true;
+  /**
+   * ⭐ M5(2026-08-23) ——**主屬性覆寫**（力→智…）。第十一格。
+   *
+   * `Stat` 上沒有「主屬性是誰」這個數字，所以既有的 modifier 一條都表達不了它；
+   * 在這一格之前，70-00 紮根的 STR→INT **只有換一整份英雄卡**（＝變身）做得到。
+   * 讀它的只有 `stats/statPipeline.ts::sourcePrimaryAttribute`（最後掛上的贏）。
+   */
+  primaryAttribute?: import("./attributes").PrimaryAttributeGrant;
 }
 
 /**

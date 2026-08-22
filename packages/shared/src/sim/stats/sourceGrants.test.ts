@@ -207,6 +207,11 @@ describe("格擋 / 暴擊的授權格 —— 四種來源同一條路", () => {
           stacking: "max",
           modifiers: [{ stat: Stat.MoveSpeed, op: ModOp.PercentAdd, value: 1 }],
         },
+        // ⭐ M5(2026-08-23)：【紮根】是第十格、【主屬性覆寫】是第十一格 ——
+        //    兩者都是為了讓「站著不能動」「主屬性 STR→INT」不必再**換一整份英雄卡**
+        //    （＝變身）才拿得到。同上，這兩行就是維護點。
+        immobile: true,
+        primaryAttribute: "INT",
       }),
     ).sort();
     expect(forwarded).toEqual(Object.keys(SOURCE_GRANT_SHAPE).sort());

@@ -77,6 +77,26 @@ export function movementHold(world: SimWorld, id: EntityId): MovementHold {
   if (sc !== undefined && Champions.tryGet(sc.championId)?.immobile === true) {
     rooted = true;
   }
+  // ⭐ M5(2026-08-23) —— 同一件事的**第二個住處，而它不需要換一整份英雄卡**：
+  // 一份掛在身上的 `ModifierSource` 也可以說「站著不能動」
+  // （`SourceGrantFields.immobile`，第十格授予）。
+  //
+  // ⛔ 這**不是**上面那一行的複製：上面問的是「這具**身體**天生會不會走」，
+  //    這裡問的是「他身上**現在**掛著什麼」。兩者答案的合成就是 OR，跟這支
+  //    檔案裡另外三個來源（status / cast lock / knockdown）逐字同一個形狀。
+  // ⭐ 而它正是「把 70-00 的變身態退場」的前提：紮根從此可以是一份
+  //    `whileStatus` 閘住的天生技 rank，⛔ 不必再換一份英雄卡去拿那一格布林。
+  // ⚠️ 跳過已過期的來源 —— 與 `stats/statPipeline.ts` 的摺疊、`combat/block.ts`
+  //    的 `blockCutFor`、`sim/stealth.ts` 的視野掃描逐字同一行，因為
+  //    `buffExpirySystem` 跑在這支的**後面**時，過期的那一份還在陣列裡。
+  if (sc !== undefined) {
+    for (const src of sc.sources) {
+      if (src.immobile !== true) continue;
+      if (src.expiresAtTick !== undefined && src.expiresAtTick <= world.tick) continue;
+      rooted = true;
+      break;
+    }
+  }
   // Knockdown (prone): rooted like a hard CC. The knockback override is
   // evaluated by MovementSystem BEFORE normal steering, so the victim still
   // slides out, then lies grounded until the getup. Turning is frozen too.

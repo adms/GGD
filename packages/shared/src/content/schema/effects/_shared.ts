@@ -819,6 +819,47 @@ export const SOURCE_GRANT_SHAPE = {
    * ⛔ 少了後者 = schema 畫得出來、引擎永遠讀不到（失敗形態②）。
    */
   typeStreakImmunity: zTypeStreakImmunityGrant.optional(),
+  /**
+   * ⭐ M5(2026-08-23) —— 【紮根】**不能移動，但可攻擊、可施法**。第十格授予。
+   *
+   * owner 2026-08-13 逐字：「應該是**狀態改變，類似定身**（可攻擊跟施展技能但
+   * 不能移動），並非把移動速度調整到 0」。
+   *
+   * ⛔ 它**不是**【定身】(`applyStatus.root`)：那一個是 CC —— 會被【淨化】剝掉、
+   * 被免控 buff 拒絕、計進 CC 戰績；紮根三件事一件都不是。⭐ 掛在**來源**上就
+   * 結構性地全部成立（`StatsComp.sources` 不走 dispel、不走免控、不進 CC 帳）。
+   *
+   * 在此之前它是英雄卡上的一格布林（`champion@1.immobile`，全 repo 唯一一格），
+   * ⇒「站著不能動」只有**換一整份英雄卡**（＝變身）做得到。
+   * 讀它的只有 `sim/movementHold.ts`，而它走 `StatsComp.sources` 且不問 `kind`。
+   *
+   * ⚠️ 只收 `true`，⛔ 沒有 `false`：一份 `immobile:false` 是「掛得上去卻什麼都
+   * 不做」的來源（第一·五守則點名的形狀）。不想要就不要填這一格。
+   */
+  immobile: z
+    .literal(true)
+    .describe(
+      "紮根：持有這份來源期間**不能移動**，但**可以攻擊、可以施放技能**。" +
+        "⛔ 與【定身】不同 —— 它不是控場效果，淨化拔不掉、免控擋不住，也不計進控場戰績。",
+    )
+    .optional(),
+  /**
+   * ⭐ M5(2026-08-23) —— **主屬性覆寫**（力→智…）。第十一格授予。
+   *
+   * `Stat` 上沒有「主屬性是誰」這個數字，所以既有的 modifier 一條都表達不了它 ——
+   * 70-00 紮根的變身態把 `attributes.primary` 從 STR 換成 INT，而那個換法在這一格
+   * 出現之前**只有換一整份英雄卡**做得到。
+   *
+   * 詞彙刻意與英雄卡上那一格相同（大寫 STR/AGI/INT），因為它的語意就是覆寫那一格。
+   * 讀它的只有 `sim/stats/statPipeline.ts::sourcePrimaryAttribute`。
+   */
+  primaryAttribute: z
+    .enum(["STR", "AGI", "INT"])
+    .describe(
+      "持有這份來源期間，把這具身體的**主屬性**改成這一個（蓋掉英雄卡上宣告的那一格）。" +
+        "影響「每級主屬性加成 / 非主屬性加成」那兩種成長模式。留空 = 照英雄卡。",
+    )
+    .optional(),
 } as const;
 
 /**

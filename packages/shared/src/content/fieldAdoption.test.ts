@@ -180,6 +180,57 @@ interface Exemption {
  * Sorted by key, matching the census output order.
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
+  // ═══ 2026-08-23 · M2 狀態閘 + M5 紮根/主屬性覆寫（變身態退場的前提）═══════
+  // ⭐ 這三格（`whileStatus` / `immobile` / `primaryAttribute`）是 GH#599「變身態
+  //    退場」量出來的**擋路機制**：19 對變身裡有 4 對的全部差別住在
+  //    「換一整份英雄卡」才拿得到的東西上 —— 被動的形態閘（20-01 風王結界的
+  //    100% 暴擊、79-002 虛化的 AD 翻倍、70-00 紮根的力量+10）、紮根那一格布林、
+  //    以及 STR→INT。機制不在，「退場」的答案結構性地只能是「不能」。
+  // ⛔ **內容改寫刻意不在這一批**：哪幾對真的退場是 owner 要勾的（第零守則⑧
+  //    排序是他的權力），而動一支出貨技能就會改變那一場比賽。
+  // ⚠️ 用 `landing` ⛔ 不是 `default-live`：30 天後它會**再紅一次** ——
+  //    如果那時候一對都沒退，這幾格就該被承認為死機制並移除，⛔ 不可以靜靜留著。
+  // ⚠️ `primaryAttribute` 還有第二層邊界，量到的：它唯一的消費端是
+  //    `perLevelBonusFor` 的 `appliesTo:"primary"/"nonPrimary"`，而出貨的
+  //    `content/config/per-level-bonus.json` 是 `"all"` ⇒ **今天連英雄卡上那一格
+  //    `attributes.primary` 本身也不影響任何數字**。這一格能不能改變比賽，
+  //    取決於 owner 有沒有把那個模式打開。
+  "field:abilities.effects[]#applyBuff.immobile": {
+    status: "landing",
+    since: "2026-08-23",
+    why: "M5【紮根】剛落地（GH#599）。⛔ 內容改寫是 owner 勾完「哪幾對變身態退場」之後的另一批 —— 動一支出貨技能就會改變那一場比賽。30 天後再紅一次是刻意的。",
+  },
+  "field:abilities.effects[]#applyBuff.primaryAttribute": {
+    status: "landing",
+    since: "2026-08-23",
+    why: "M5【主屬性覆寫】剛落地（GH#599）。⚠️ 而且它唯一的消費端 `perLevelBonusFor` 在出貨設定下走 `appliesTo:\"all\"` ⇒ 今天連英雄卡的 `attributes.primary` 都不影響任何數字。要不要打開那個模式是 owner 的旋鈕。",
+  },
+  "field:abilities.passive.ranks[].immobile": {
+    status: "landing",
+    since: "2026-08-23",
+    why: "同 `applyBuff.immobile` —— 70-00 紮根要的是「天生技 rank 配狀態閘」這一條路，⛔ 不是再換一份英雄卡。內容改寫等 owner 勾。",
+  },
+  "field:abilities.passive.ranks[].primaryAttribute": {
+    status: "landing",
+    since: "2026-08-23",
+    why: "同 `applyBuff.primaryAttribute`。70-00 紮根形態的 STR→INT 就住在這一格上。",
+  },
+  "field:abilities.passive.ranks[].whileStatus": {
+    status: "landing",
+    since: "2026-08-23",
+    why: "M2 狀態閘剛落地（GH#599）。⭐ 79-04 卍解**今天已經**同時掛 `championForm` 與 `statusId:\"bankai\"`，所以 `godie-h01n.ex` 換成這一格是零風險的一行 —— ⛔ 但那一行屬於「退場」那一批，而退場是 owner 要勾的。",
+  },
+  "field:augments.immobile": {
+    status: "landing",
+    since: "2026-08-23",
+    why: "第十格授予落在**四個授權面**上（道具／天生技 rank／增益卡／applyBuff），⛔ 不是四份程式。增益卡這一面今天沒有內容用它，與上面同一批。",
+  },
+  "field:augments.primaryAttribute": {
+    status: "landing",
+    since: "2026-08-23",
+    why: "同 `augments.immobile` —— 一份轉發表落在四個授權面上，增益卡這一面等內容。",
+  },
+
   // ═══ 2026-08-22 · `condition.is` 的三個實體類別（機制先落地）═══════════════
   // ⭐ 這三格是**條件葉**的實體類別（守衛塔／小怪／召喚物），機制在引擎上已經通了，
   //    ⛔ 但出貨內容裡還沒有一支技能寫「只對守衛塔／只對小怪／只對召喚物」。
@@ -2650,12 +2701,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-22",
     why:
       "首批三支用的是 `forward`（龍破斬直線火球 · 約束勝利之劍翻滾光束）與 `radial`（世界終結圓周冰塊）。⭐ `orbit`（繞行）是為**環繞型**演出留的 —— 原作有這一族（繞著施法者轉的球體），而它們還沒被移植（見 #551 五軸普查的軸②：28 具會動 dummy 只接上 22%）。⚠️ 30 天後要嘛有內容採用、要嘛承認引擎多了一條沒人走的路。",
-  },
-  "enum:abilities.effects[]#spawnModelFx.path=toTarget": {
-    status: "landing",
-    since: "2026-08-22",
-    why:
-      "同上。`toTarget`（追著目標飛）是**指向型**演出 —— 首批三支都是地面推進或圓周擴散。⭐ 原作的追蹤型砲擊（小呆龍鬥氣砲那一族）就是它，接線排在 #551 的建議票裡。",
   },
   "enum:abilities.effects[]#spawnModelFx.touchSide=allies": {
     status: "landing",
