@@ -32,6 +32,8 @@ import type { AbilityDef } from "@ggd/shared/sim/content/defs";
 import type { AbilityId } from "@ggd/shared/ids";
 import { impactComposerFor } from "./HitSpark";
 import { colorStopsFor, sizeStopsFor } from "./particleFactory";
+import { clampFadeOutTail } from "./fadeOut";
+import { vfxFadeOutMaxSec } from "./vfxCleanupPolicy";
 import { stopsAscending, IMPACT_TINTS } from "./vfxPresets";
 import {
   VfxSystem,
@@ -151,7 +153,13 @@ describe("play() fires the front-loaded burst (vfx-impact-first)", () => {
     expect(ps).not.toBeNull();
     expect(ps.manualEmitCount).toBe(40); // ALL of it, this frame
     expect(ps.emitRate).toBe(0); // a burst system NEVER rate-emits
-    expect(ps.maxLifeTime).toBe(DEFAULT_ONE_SHOT_MAX_LIFE_SEC); // no lingering fog
+    // no lingering fog. ⏱ GH#569 之後有**兩個**天花板疊在一起：一次性壽命上限
+    // （`oneShotMaxLifeSec`）與尾段 fade 上限（`vfxFadeOutMaxSec`），比較嚴的
+    // 那個贏。這份 doc 整段都是 fade，所以贏的是後者 —— ⛔ 不抄字面值。
+    expect(ps.maxLifeTime).toBe(
+      clampFadeOutTail(frontLoadDoc(streamDoc()), vfxFadeOutMaxSec()).lifetimeSec.max,
+    );
+    expect(ps.maxLifeTime).toBeLessThanOrEqual(DEFAULT_ONE_SHOT_MAX_LIFE_SEC);
     expect(ps.minLifeTime).toBeLessThan(ps.maxLifeTime); // spread = the tail
     vfx.dispose();
   });

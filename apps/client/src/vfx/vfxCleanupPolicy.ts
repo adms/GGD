@@ -17,7 +17,12 @@
  * `DEFAULT_VFX_CLEANUP` —— 「讀不到」必須是「出貨政策」，不可以是「不回收」，
  * 也不可以是兩者的半套混合。
  */
-import { Configs, DEFAULT_VFX_CLEANUP, type ConfigVfxCleanupDoc } from "@ggd/shared/content";
+import {
+  Configs,
+  DEFAULT_VFX_CLEANUP,
+  VFX_FADE_OUT_MAX_SEC_BOUNDS,
+  type ConfigVfxCleanupDoc,
+} from "@ggd/shared/content";
 
 /**
  * 把任意輸入解讀成一份政策。欄位逐格檢查（不是只看 `schema`）：一份被截斷的
@@ -121,4 +126,39 @@ export function purgeVictoryFxOnCombatStart(policy: ConfigVfxCleanupDoc): boolea
   return (
     policy.purgeVictoryFxOnCombatStart ?? DEFAULT_VFX_CLEANUP.purgeVictoryFxOnCombatStart ?? true
   );
+}
+
+// ---------------------------------------------------------------------------
+// ⏱ GH#569 —— 尾段 fade out 的常設上限 + 施法餘燼的生成窗口
+// ---------------------------------------------------------------------------
+
+/**
+ * 現在生效的「尾段 fade out 最多幾秒」（owner 2026-08-23 的常設規定，出貨 0.5）。
+ *
+ * ⚠️ 這一格**不吃 `enabled`**。上面那幾格管的是「回合邊界要不要回收池子」，
+ * 關掉它們是止血閥；而這一條是 owner 對**畫面**下的規定 —— 把它綁在回收總開關
+ * 上，等於「有人為了查一個池子問題關掉 enabled」就順手把他的規定也關掉了，
+ * 而畫面上沒有任何東西會說出來。要回頭就把這一格調到上界（3 秒）。
+ *
+ * 界外的數字（寬鬆路徑 `Configs.tryGet` 收得下）在這裡夾回上下界，⛔ 不是在
+ * 消費端 —— 消費端有兩個（`toParticleSystem` 與 `W3xEmitterRig`），夾在兩邊
+ * 就會有兩份會各自腐爛的規則。
+ */
+export function vfxFadeOutMaxSec(policy: ConfigVfxCleanupDoc = vfxCleanupPolicy()): number {
+  const v = policy.vfxFadeOutMaxSec;
+  const fallback = DEFAULT_VFX_CLEANUP.vfxFadeOutMaxSec ?? 0.5;
+  if (typeof v !== "number" || !Number.isFinite(v)) return fallback;
+  return Math.min(VFX_FADE_OUT_MAX_SEC_BOUNDS.max, Math.max(VFX_FADE_OUT_MAX_SEC_BOUNDS.min, v));
+}
+
+/**
+ * 施法光柱的上升餘燼在施法窗口的**前幾成**生成（0–1，出貨 0.5 = owner 的「減半」）。
+ *
+ * 同上，⛔ 不吃 `enabled`：1 才是「回到 GH#569 之前」的那條路。
+ */
+export function castMoteEmitShare(policy: ConfigVfxCleanupDoc = vfxCleanupPolicy()): number {
+  const v = policy.castMoteEmitShare;
+  const fallback = DEFAULT_VFX_CLEANUP.castMoteEmitShare ?? 0.5;
+  if (typeof v !== "number" || !Number.isFinite(v)) return fallback;
+  return Math.min(1, Math.max(0, v));
 }

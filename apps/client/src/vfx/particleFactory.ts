@@ -17,6 +17,8 @@ import { Color4 } from "@babylonjs/core/Maths/math.color";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import type { VfxDoc, VfxBlendMode, VfxOrient } from "@ggd/shared/content";
 import { addSwirl, orientAxis, orientDirection, orientIsIdentity } from "./orient";
+import { clampFadeOutTail } from "./fadeOut";
+import { vfxFadeOutMaxSec } from "./vfxCleanupPolicy";
 
 const CONTENT_BASE = "/content/";
 
@@ -79,6 +81,15 @@ export interface ToParticleSystemOptions {
    * no image decode is attempted in Node.
    */
   createTexture?: (url: string, scene: Scene) => BaseTexture | null;
+  /**
+   * ⏱ GH#569 —— 尾段 fade out 的上限（秒）。省略 = 讀後台現在生效的那一格
+   * （`config.vfx-cleanup@1.vfxFadeOutMaxSec`，出貨 0.5）。
+   *
+   * ⚠️ 參數存在**不是**讓每個呼叫端各自猜一個數字，是為了讓
+   * `W3xEmitterRig` 能用**同一個**上限算它的效果存活期（＝資源什麼時候真的
+   * 被回收），⛔ 而不是各讀各的。
+   */
+  fadeOutMaxSec?: number;
 }
 
 /** Scaled burst count (mobile tier halves particle budgets; min 1). */
@@ -215,12 +226,18 @@ function applySpriteSheet(ps: ParticleSystem, doc: VfxDoc): void {
  * `opts` may be the legacy bare quality-tier scale number.
  */
 export function toParticleSystem(
-  doc: VfxDoc,
+  rawDoc: VfxDoc,
   scene: Scene,
   opts: ToParticleSystemOptions | number = {},
 ): ParticleSystem {
   const o: ToParticleSystemOptions = typeof opts === "number" ? { scale: opts } : opts;
   const scale = o.scale ?? 1;
+  // ⏱ GH#569 —— owner 2026-08-23:「fade out 尾段一律最多佔 0.5 秒後一定要清理
+  // 乾淨」。夾在**這裡**是刻意的:這支函式是整個 repo 把 vfx@1 變成 Babylon
+  // 粒子系統的**唯一**入口(VfxSystem / AmbientVfx / FireRingFx / W3xEmitterRig /
+  // 編輯器預覽都走它),所以沒有任何一條路徑逃得掉 —— 而逐份改 584 個文件是
+  // 第〇·四守則點名的 O(N)。已經合規的文件回同一個物件,走一位元不差的舊路徑。
+  const doc = clampFadeOutTail(rawDoc, o.fadeOutMaxSec ?? vfxFadeOutMaxSec());
   const ps = new ParticleSystem(o.name ?? `vfx-${doc.id}`, capacityFor(doc, scale), scene);
 
   if (doc.texture) {

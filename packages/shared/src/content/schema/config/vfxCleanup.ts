@@ -30,6 +30,13 @@ import { zId } from "../common";
  * material 線性成長),不是 owner 會想推翻的判斷。給它一個開關等於把
  * 「要不要漏記憶體」放上後台。
  */
+/**
+ * 尾段 fade 上限的上下界（GH#569）。⭐ 這是**唯一**的住處：下面的 Zod
+ * `.min/.max` 與 `vfxCleanupPolicy` 的防禦性夾子都從這裡讀，
+ * ⛔ 不可以再抄一次字面值（第〇·四守則）。
+ */
+export const VFX_FADE_OUT_MAX_SEC_BOUNDS = { min: 0.05, max: 3 } as const;
+
 export const zConfigVfxCleanupDoc = z
   .object({
     id: zId,
@@ -159,6 +166,55 @@ export const zConfigVfxCleanupDoc = z
      * 閃爍或把這一回合的煙火一起吃掉，這一格是不必重新 build 就能回頭的路）。
      */
     purgeVictoryFxOnCombatStart: z.boolean().optional(),
+
+    /* ── ⏱ 尾段 fade out 的**常設**上限（owner 2026-08-23, GH#569）────────────
+     *
+     * > 「有許多特效**最尾段的 fade out 都太久了**，我**統一規定 fade out 尾段
+     * >  一律最多佔 0.5 秒**後**一定要清理乾淨**」
+     *
+     * ⭐ 這是一條**規定**，⛔ 不是一次調整 —— 所以它是一格（第一守則三個住處），
+     * 而且是**在載入時從這一格解析**、⛔ 不是把 0.5 烘進 584 份 vfx 文件
+     * （第〇·四守則：同一個數字不可以有第二個住處）。
+     *
+     * 「尾段」的定義是可以逐位元算出來的：一份 vfx@1 的 alpha 梯度上，**最後一個
+     * 還看得見（alpha > 0）的關鍵格** → **它後面第一個 alpha 歸零的關鍵格**，
+     * 那一段乘上 `lifetimeSec.max` 就是這份文件的尾段秒數。
+     * 夾的做法是把那一段壓到這一格，並且**把歸零之後還活著的部分整個丟掉**
+     * （owner 的第二句話：「一定要清理乾淨」—— 看不見卻還佔著發射器的粒子
+     * 就是 #559 那一族的形狀）。
+     *
+     * 消費端 `apps/client/src/vfx/fadeOut.ts` → `particleFactory.toParticleSystem()`
+     * （**唯一**的解析入口：VfxSystem / AmbientVfx / FireRingFx / W3xEmitterRig /
+     * 編輯器預覽全部走它）＋ `W3xEmitterRig` 的效果存活期（才會真的被回收）。
+     *
+     * 上界 3 秒＝與 `MAX_ONE_SHOT_MAX_LIFE_SEC` 同一個量級的「止血閥」，
+     * ⛔ 不是建議值；下界 0.05＝三幀，再低就是硬切不是 fade。
+     */
+    vfxFadeOutMaxSec: z
+      .number()
+      .min(VFX_FADE_OUT_MAX_SEC_BOUNDS.min)
+      .max(VFX_FADE_OUT_MAX_SEC_BOUNDS.max)
+      .optional(),
+
+    /**
+     * 施法光柱腳邊那圈**往上飄的餘燼**，只在施法窗口的前幾成生成（0–1）。
+     *
+     * owner 2026-08-23（GH#569）：
+     * > 「施展技能時 會有類似**火群粒子飛上天，時間還是太久了**，特別是莉娜
+     * >  施展技能時出現**紅色粒子飄上天時間都要減半以上**」
+     *
+     * ⚠️ 這一格與上面那格是**兩件不同的事**（量過才分開的）：餘燼的**單顆壽命**
+     * 早就只有 0.175–0.35 秒（GH#494 砍過一次），尾段沒有超標；真正長的是
+     * **生成窗口** —— 餘燼每 150ms 補一發、補滿整段施法時間，而莉娜四支技能的
+     * 施法時間全部高於中位數（0.767 / 1.233 / 1.433 / 2.0 秒 vs 中位 0.667），
+     * 所以她那串紅色粒子在畫面上待了 1.12–2.35 秒。⇒ 要砍的是**窗口**。
+     *
+     * 1 = 整段施法都在補（GH#569 之前的行為，止血閥）。出貨 0.5 = owner 的
+     * 「減半」。光柱本體（核心／外殼／地面光暈）**不受影響** —— 它是施法時間的
+     * 讀數，砍它等於讓玩家看不出還要吟唱多久。
+     * 消費端 `apps/client/src/vfx/CastPillarFx.ts`。
+     */
+    castMoteEmitShare: z.number().min(0).max(1).optional(),
   })
   .strict();
 export type ConfigVfxCleanupDoc = z.infer<typeof zConfigVfxCleanupDoc>;
@@ -190,4 +246,9 @@ export const DEFAULT_VFX_CLEANUP: ConfigVfxCleanupDoc = {
   // 三個住處都有它：這裡 · Zod（`.optional()`，線上舊 override 沒有這一格）·
   // `content/config/vfx-cleanup.json`。
   purgeVictoryFxOnCombatStart: true,
+  // owner 2026-08-23 GH#569 —— 「fade out 尾段一律最多佔 0.5 秒後一定要清理乾淨」
+  // 是**常設規定**，所以出貨值就是他說的那個數字，⛔ 不是我挑的。
+  vfxFadeOutMaxSec: 0.5,
+  // owner 2026-08-23 GH#569 —— 「紅色粒子飄上天時間都要減半以上」＝生成窗口減半。
+  castMoteEmitShare: 0.5,
 };

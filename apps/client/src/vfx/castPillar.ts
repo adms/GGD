@@ -358,6 +358,29 @@ export function moteSpec(
   };
 }
 
+/**
+ * ⏱ GH#569 —— 這一發上升餘燼還在生成窗口裡嗎（PURE）。
+ *
+ * owner 2026-08-23：
+ * > 「施展技能時 會有類似**火群粒子飛上天，時間還是太久了**，特別是莉娜施展
+ * >  技能時出現**紅色粒子飄上天時間都要減半以上**」
+ *
+ * ⚠️ 量過才知道要砍的是**窗口**不是壽命：GH#494 已經把單顆餘燼的壽命砍成
+ * 0.175–0.35 秒，尾段一點都不長；長的是「每 150ms 補一發、補滿整段施法時間」。
+ * 而莉娜四支技能的施法時間全部高於中位數（0.767 / 1.233 / 1.433 / 2.0 秒，
+ * 中位數 0.667），所以只有她那串紅色粒子在畫面上待到 1.12–2.35 秒 ——
+ * ⭐ 「特別是莉娜」不是巧合，是她的施法時間。
+ *
+ * ⛔ 光柱本體（核心／外殼／地面光暈）**不受這一格影響**：它是「還要吟唱多久」
+ * 的讀數，砍它等於把一個玩家用來判斷閃避的訊號砍掉。
+ *
+ * `share` 來自後台（`config.vfx-cleanup@1.castMoteEmitShare`，出貨 0.5）；
+ * 1 = 整段施法都補（GH#569 之前的行為）。
+ */
+export function moteEmitOpen(u: number, share: number): boolean {
+  return u <= Math.min(1, Math.max(0, share));
+}
+
 /** Pool key for a palette's motes — bounded by the element count + 1. */
 export function motePoolKey(palette: PillarPalette): string {
   return `castpillar/${palette.element ?? "default"}`;

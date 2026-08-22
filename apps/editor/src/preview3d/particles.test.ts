@@ -15,6 +15,8 @@ import { cover } from "@ggd/shared/testkit/cover";
 import { zVfxDoc, type VfxDoc } from "@ggd/shared/content";
 import { toParticleSystem, burstNow, capacityFor } from "./particles";
 import { assetUrl, glbUrlParts } from "./assetUrl";
+import { clampFadeOutTail } from "../../../client/src/vfx/fadeOut";
+import { vfxFadeOutMaxSec } from "../../../client/src/vfx/vfxCleanupPolicy";
 
 const BURST_DOC: VfxDoc = zVfxDoc.parse({
   id: "fx.test-burst",
@@ -66,8 +68,12 @@ describe("toParticleSystem (vfx@1 -> Babylon)", () => {
     });
 
     expect(ps.particleEmitterType).toBeInstanceOf(PointParticleEmitter);
-    expect(ps.minLifeTime).toBe(0.2);
-    expect(ps.maxLifeTime).toBe(0.6);
+    // ⏱ GH#569 —— 預覽走的是**出貨的**那支 factory，所以 owner 的常設規定
+    // 「fade out 尾段一律最多佔 0.5 秒」在這裡也適用（preview == ship）。
+    // ⛔ 不抄 0.2 / 0.6：上限是後台調得到的一格。
+    const life = clampFadeOutTail(BURST_DOC, vfxFadeOutMaxSec()).lifetimeSec;
+    expect(ps.minLifeTime).toBe(life.min);
+    expect(ps.maxLifeTime).toBe(life.max);
     // WC3 contract (task #30): additive → ONEONE
     expect(ps.blendMode).toBe(ParticleSystem.BLENDMODE_ONEONE);
     expect(ps.getCapacity()).toBeGreaterThanOrEqual(24);

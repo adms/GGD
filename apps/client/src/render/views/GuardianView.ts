@@ -32,6 +32,11 @@ import { Color3 } from "@babylonjs/core/Maths/math.color";
 import type { ModelDoc } from "@ggd/shared/content";
 import type { AssetManager } from "../AssetManager";
 import { ClipAnimator } from "../ClipAnimator";
+// ⭐ GH#567 —— owner 2026-08-23:「請補上該物件**伸縮抖一下**⋯的攻擊效果吧」。
+// 特效層畫得出投射物，但**這具身體**只有這裡拿得到 —— 兩層之間走一張以
+// entityId 為 key 的脈衝表（`vfx/guardianRecoilBus`），⛔ 不是把整個
+// EntityViewRegistry 注進特效層。
+import { guardianRecoilAt } from "../../vfx/guardianRecoilBus";
 
 /** Target rendered height (world units) so every face reads as one big objective. */
 const TARGET_HEIGHT = 3.2;
@@ -86,6 +91,17 @@ export class GuardianView {
   private active = false;
   private alive = true;
   private phase = 0;
+  /** 這具身體是哪一個實體 —— 伸縮脈衝是以 entityId 為 key 的（GH#567）。 */
+  private entityId = -1;
+  /**
+   * 沒有在演伸縮動作時的基準縮放（GH#567）。
+   *
+   * ⚠️ 它**不是 1**：`tryUpgradeToGlb` 把 glb 正規化到 `TARGET_HEIGHT` 之後
+   * 會把倍率寫進 `glbRoot.scaling`。伸縮動作直接寫 `scaling` 而不乘這個基準的話，
+   * 巨獸人開一次火就會**縮成原始 mdx 尺寸**卡在那裡 —— 而畫面上看起來只是
+   * 「這座塔突然變小了」，沒有任何東西會報錯。
+   */
+  private restScale = 1;
 
   constructor(scene: Scene) {
     this.root = new TransformNode("guardian", scene);
@@ -136,6 +152,7 @@ export class GuardianView {
   activate(entityId: number): void {
     this.active = true;
     this.alive = true;
+    this.entityId = entityId;
     this.phase = (entityId % 19) * 0.33 * Math.PI;
     this.setVisible(true);
   }
@@ -172,6 +189,15 @@ export class GuardianView {
     // stays for every face. When the model does carry clips, its own idle plays
     // on top — `play` is idempotent per frame.
     src.position.y = this.groundY + BOB_AMPLITUDE * Math.sin(nowMs * BOB_SPEED + this.phase);
+    // ⭐ GH#567 —— 開火／醒來的伸縮。沒有脈衝時 `guardianRecoilAt` 回恆等，
+    // 而「恆等 **且** 已經在基準上」時一個屬性都不寫 —— 沒有人在打的那些幀走
+    // 一位元不差的舊路徑。⛔ 後面那半個條件不可以省：脈衝結束的那一幀必須把
+    // 縮放**寫回基準**，否則塔會永遠停在動作最後一格的形狀。
+    const rest = src === this.glbRoot ? this.restScale : 1;
+    const recoil = guardianRecoilAt(this.entityId, nowMs);
+    if (recoil.y !== 1 || recoil.xz !== 1 || src.scaling.y !== rest) {
+      src.scaling.set(rest * recoil.xz, rest * recoil.y, rest * recoil.xz);
+    }
     this.ring.rotation.y = nowMs * RING_SPIN + this.phase;
     if (this.alive) this.clipAnimator?.play("idle");
   }
@@ -210,6 +236,7 @@ export class GuardianView {
         const scale =
           Number.isFinite(nativeH) && nativeH > MIN_NATIVE_HEIGHT ? TARGET_HEIGHT / nativeH : doc.scale;
         glbRoot.scaling.setAll(scale);
+        this.restScale = scale; // GH#567：伸縮動作要乘在這個基準上，⛔ 不是 1
         // ground the model on the arena floor (y=0)
         glbRoot.computeWorldMatrix(true);
         const { min } = glbRoot.getHierarchyBoundingVectors(true);

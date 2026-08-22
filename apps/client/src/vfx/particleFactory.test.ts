@@ -18,6 +18,8 @@ import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { ParticleSystem } from "@babylonjs/core/Particles/particleSystem";
 import type { VfxDoc } from "@ggd/shared/content";
+import { clampFadeOutTail } from "./fadeOut";
+import { vfxFadeOutMaxSec } from "./vfxCleanupPolicy";
 import {
   toParticleSystem,
   capacityFor,
@@ -71,8 +73,12 @@ describe("toParticleSystem doc mapping (client-13)", () => {
   it("maps a burst doc: lifetime, gradients, additive blend, no emitRate", () => {
     cover("client-vfx-doc-mapping");
     const ps = toParticleSystem(BURST_DOC, scene);
-    expect(ps.minLifeTime).toBe(0.2);
-    expect(ps.maxLifeTime).toBe(0.6);
+    // ⏱ GH#569 —— 出貨路徑現在會把「整段都是 fade」的文件夾進尾段上限
+    // （`config.vfx-cleanup@1.vfxFadeOutMaxSec`），所以對的是**解析後**的壽命。
+    // ⛔ 不抄 0.2 / 0.6：那會是第二個住處，而上限是後台調得到的。
+    const life = clampFadeOutTail(BURST_DOC, vfxFadeOutMaxSec()).lifetimeSec;
+    expect(ps.minLifeTime).toBe(life.min);
+    expect(ps.maxLifeTime).toBe(life.max);
     expect(ps.blendMode).toBe(ParticleSystem.BLENDMODE_ONEONE);
     expect(ps.emitRate).toBe(0);
     const sizes = ps.getSizeGradients()!;
@@ -305,8 +311,10 @@ describe("sprite sheet mapping (sprite-sheet-map)", () => {
     expect(ps.spriteRandomStartCell).toBe(true);
     expect(ps.startSpriteCellID).toBe(0);
     expect(ps.endSpriteCellID).toBe(7);
-    // avg life (0.2+0.6)/2 = 0.4s over a 0.4s cycle → speed 1
-    expect(ps.spriteCellChangeSpeed).toBeCloseTo(1);
+    // 一個 cycle 0.4s，速度 = 解析後的平均壽命 / cycle（GH#569 之後平均壽命
+    // 由尾段上限決定，⛔ 不再是文件寫的 (0.2+0.6)/2）
+    const sheetLife = clampFadeOutTail(doc, vfxFadeOutMaxSec()).lifetimeSec;
+    expect(ps.spriteCellChangeSpeed).toBeCloseTo((sheetLife.min + sheetLife.max) / 2 / 0.4);
     // cell size uses the fallback grid until the real texture size lands
     expect(ps.spriteCellWidth).toBeGreaterThan(0);
     expect(ps.spriteCellHeight).toBeGreaterThan(0);

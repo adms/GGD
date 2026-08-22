@@ -42,6 +42,8 @@ import "@babylonjs/core/Shaders/particles.vertex";
 import "@babylonjs/core/Shaders/particles.fragment";
 import type { VfxDoc } from "@ggd/shared/content";
 import { burstNow, toParticleSystem } from "../../vfx/particleFactory";
+import { clampFadeOutTail } from "../../vfx/fadeOut";
+import { vfxFadeOutMaxSec } from "../../vfx/vfxCleanupPolicy";
 import { resolveAttachment, type AttachResolution } from "./attachment";
 import { applyRateScale, planEffectBudget, type BudgetContext, type EffectBudgetPlan } from "./emitterBudget";
 import { sampleTrack, type W3xEmitterRuntimeFlags } from "./w3xEmitter";
@@ -237,6 +239,10 @@ export class W3xEmitterRig {
     }
 
     const quality = this.opts.getQualityScale?.() ?? 1;
+    // ⏱ GH#569 —— 讀**一次**，然後同時給 `toParticleSystem`（粒子活多久）與
+    // 下面的 `maxLifeSec`（效果什麼時候被回收）。兩邊各讀一次的話，後台在這
+    // 幾毫秒之間被存過就會讓「粒子」與「回收」用不同的上限。
+    const fadeOutMaxSec = vfxFadeOutMaxSec();
     const runtimeByDocId = new Map(spec.emitters.map((e) => [e.doc.id, e.runtime]));
     const delayByDocId = new Map(spec.emitters.map((e) => [e.doc.id, e.delaySec ?? 0]));
     // Two emitters can be identical as docs and still be different effects,
@@ -275,7 +281,7 @@ export class W3xEmitterRig {
     let maxLifeSec = 0;
     for (const budgeted of plan.emitters) {
       const doc = applyRateScale(budgeted.doc, budgeted.rateScale);
-      const em = this.acquire(doc);
+      const em = this.acquire(doc, fadeOutMaxSec);
       const runtime = runtimeByDocId.get(budgeted.doc.id);
       em.runtime = runtime;
       // A pooled system was built for the SAME doc id but possibly a different
@@ -316,7 +322,15 @@ export class W3xEmitterRig {
       // A staggered member is still in flight `delaySec` after everyone else,
       // so the drain has to wait for it too — otherwise the last locusts of a
       // 22-member swarm get cut off mid-life.
-      maxLifeSec = Math.max(maxLifeSec, doc.lifetimeSec.max + delaySec);
+      // ⏱ GH#569 第二句話（「一定要清理乾淨」）——「效果活多久」必須照**夾過
+      // 尾段之後**的壽命算，⛔ 不是照文件寫的。少了這一行，`toParticleSystem`
+      // 那邊的粒子 0.9 秒就死光了，而這個 `LiveEffect` 連同它的 4 個發射器與
+      // mesh 還要再被 `release()` 等 8 秒 —— 畫面上完全看不出來的那種殘留
+      // （失敗形態②的近親：夾了但沒有人跟著夾）。
+      maxLifeSec = Math.max(
+        maxLifeSec,
+        clampFadeOutTail(doc, fadeOutMaxSec).lifetimeSec.max + delaySec,
+      );
       emitters.push(em);
     }
 
@@ -479,7 +493,7 @@ export class W3xEmitterRig {
   }
 
   /** Take a system for `doc` from the pool, or build one. */
-  private acquire(doc: VfxDoc): LiveEmitter {
+  private acquire(doc: VfxDoc, fadeOutMaxSec: number): LiveEmitter {
     const list = this.pool.get(doc.id);
     const pooled = list?.pop();
     if (pooled && !pooled.mesh.isDisposed()) {
@@ -508,6 +522,7 @@ export class W3xEmitterRig {
     mesh.doNotSyncBoundingInfo = true;
     const ps = toParticleSystem(doc, this.scene, {
       name: `w3xfx-${doc.id}`,
+      fadeOutMaxSec,
       ...(this.opts.resolveTextureUrl ? { resolveTextureUrl: this.opts.resolveTextureUrl } : {}),
       ...(this.opts.createTexture ? { createTexture: this.opts.createTexture } : {}),
     });

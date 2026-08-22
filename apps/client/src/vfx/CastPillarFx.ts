@@ -43,6 +43,8 @@ import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { Constants } from "@babylonjs/core/Engines/constants";
 import { VertexBuffer } from "@babylonjs/core/Buffers/buffer";
 import { BurstPool, type PresetSystemOptions } from "./vfxPresets";
+// ⏱ GH#569 —— 上升餘燼的**生成窗口**是後台可調的（見 `moteEmitOpen`）。
+import { castMoteEmitShare } from "./vfxCleanupPolicy";
 import {
   CORE_RADIUS,
   EXTINGUISH_MS,
@@ -57,6 +59,7 @@ import {
   moteSpec,
   motePoolKey,
   motesPerPulse,
+  moteEmitOpen,
   pillarShape,
   type PillarPalette,
   type PillarPhase,
@@ -445,7 +448,13 @@ export class CastPillarFx {
 
     // rising motes: only while the cast is still charging — the release has its
     // own flash and an interrupt must go quiet immediately.
-    if (slot.phase === "cast" && nowMs >= slot.nextMoteMs) {
+    //
+    // ⏱ GH#569 —— …AND only inside the backstage emission window
+    // (`config.vfx-cleanup@1.castMoteEmitShare`, shipped 0.5). owner
+    // 2026-08-23:「紅色粒子飄上天時間都要減半以上」。The mote LIFETIME is
+    // already 0.175–0.35 s (GH#494); what ran long is the WINDOW — a 2 s cast
+    // kept topping the embers up for all 2 s. See `moteEmitOpen`.
+    if (slot.phase === "cast" && moteEmitOpen(u, castMoteEmitShare()) && nowMs >= slot.nextMoteMs) {
       slot.nextMoteMs = nowMs + MOTE_PERIOD_MS;
       const scale = (this.getScale() * motesPerPulse(active, 1)) / MOTE_COUNT;
       this.motes.fireAt(slot.moteKey, moteSpec(slot.palette), slot.x, slot.z, 0.15, nowMs, scale);
