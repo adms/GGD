@@ -1,0 +1,49 @@
+{
+  "id": "sfx-bind-reserved",
+  "note": "GH#554 —— `build_bindings.py` 的**豁免表**：兩件產生器**推導不出來**的事，每一列帶一個**能被反駁的理由**（CLAUDE.md 第〇·四）。⛔ 這裡不放任何推導得出來的東西 —— 誰用哪一個 cue 由 `content/abilities/*.json` 的 `sfxKey` 決定，產生器讀它。",
+
+  "primaryForUnported": {
+    "_why": "一支 JASS 技能綁了**不只一個** gg_snd 時，「哪一個是施法音」是**設計選擇**。技能有 content doc 時那個選擇住在 doc 的 `sfxKey`（產生器讀它，⛔ 不重抄）。但這幾支的英雄**還沒進 content**，所以沒有 doc 可讀 —— 而它們的 cue 已經被宣告在出貨表上（`sfxReachability` 也有對應列）。⛔ 產生器不可以自己挑（例如「取最後一個」），所以選擇記在這裡，等英雄進 content 時搬進它的 `sfxKey` 並從這裡刪掉。",
+    "godie-obla.r": {
+      "cue": "wc3.sealwhat2",
+      "over": ["wc3.farmwhat1"],
+      "reason": "33-04 動物拳法。farmwhat1 是農民叫聲、sealwhat2 是海豹 —— 動物拳法的施法音取後者較貼技能名。⚠️ 可反駁：如果原作的意圖是「農場動物大雜燴」，兩個都該響 ⇒ 那需要分層播放，⛔ 不是換一列"
+    },
+    "godie-nman.w": {
+      "cue": "wc3.stampedecaster1",
+      "over": ["wc3.bloodlusttarget"],
+      "reason": "40-02 必殺！爆熱神音！ stampede 是持續的轟鳴、bloodlust 是短的增益音 —— 取前者當施法音。⚠️ 可反駁：bloodlusttarget 可能才是 JASS 裡真正掛在施法瞬間的那一個（要回去讀 war3map.j 的呼叫順序才能確定）"
+    },
+    "godie-o01z.e": {
+      "cue": "wc3.soulgem",
+      "over": ["wc3.markofchaos", "wc3.snapdragonmissilelaunch1"],
+      "reason": "81-03 Divine Buster Extention。三個 gg_snd 裡 soulgem 是唯一的**詠唱**音（另兩個是投射物發射/命中）⇒ 取它當施法音，另兩個屬於彈道層。⚠️ 可反駁：如果我們之後把投射物發射音做成獨立事件，這一列就該退回 doc"
+    },
+    "godie-o01z.r": {
+      "cue": "wc3.soulgem",
+      "over": ["wc3.snapdragonmissilelaunch1"],
+      "reason": "81-04 Starlight Breaker Plus。同上：soulgem 是詠唱，snapdragon 是彈道"
+    },
+    "godie-o02v.e": {
+      "cue": "wc3.soulgem",
+      "over": ["wc3.markofchaos", "wc3.snapdragonmissilelaunch1"],
+      "reason": "81-03 的第二個 rawcode（同一支技能掛在另一隻英雄身上）—— 與 godie-o01z.e 同一個選擇，⛔ 不可以分岔"
+    },
+    "godie-o02v.r": {
+      "cue": "wc3.soulgem",
+      "over": ["wc3.snapdragonmissilelaunch1"],
+      "reason": "81-04 的第二個 rawcode —— 與 godie-o01z.r 同一個選擇"
+    }
+  },
+
+  "sourceMapSilent": {
+    "_why": "原作 war3map.j **宣告並呼叫**了這個 sound，但它指向的匯入檔**不在任何一份地圖封存裡** ⇒ 原作自己播出來就是啞的。⭐ 這不是我們欠的帳，所以它的 unmatched 理由⛔ 不可以寫成「去跑抽取」。證據可重跑：`tools/w3x-import/extract_stock_sfx.py` 會 probe 每一份封存的 hash table 並把 `absent_from_archive` 寫進 MANIFEST.json（⚠️ 那份 MANIFEST 落在 gitignore 的 data/ 底下，所以結論記在這裡，⛔ 產生器不依賴一個不進版控的檔）。",
+    "gg_snd_sawch": {
+      "wc3Path": "war3mapImported\\sawch.mp3",
+      "jass": "war3map.j:3555 CreateSound / war3map.j:40249 PlaySoundBJ",
+      "probed": ["src_gogodieEX227s.w3x", "GoDieEX22s.w3x"],
+      "control": "同兩份封存裡 war3mapImported\\4die.mp3 與 war3mapImported\\87joke.Mp3 都 has_file=true ⇒ ⛔ 不是我們的讀取器壞了",
+      "reason": "匯入檔從來沒有被打包進地圖 ⇒ 原作這兩支技能的施法音本來就不會響"
+    }
+  }
+}

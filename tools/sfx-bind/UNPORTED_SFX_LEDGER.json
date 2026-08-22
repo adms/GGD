@@ -1,0 +1,280 @@
+{
+  "id": "unported-sfx-ledger",
+  "note": "GH#554 —— JASS 掃到有施法音、但**英雄還沒進 content** 的技能。⛔ 不可以放進 content 的 `unmatched`（那張表被守衛要求逐列指向一支出貨的技能），而丟掉它就是第一·五守則說的「知識無聲消失」。⭐ 英雄進 content 的時候，把 reservedCue 寫進那支技能 doc 的 `sfxKey`，這一列會自動消失。",
+  "generator": "tools/sfx-bind/build_bindings.py",
+  "abilities": [
+    {
+      "ability": "godie-e00k.e",
+      "name": "19-03 瞬切百殺",
+      "champion": "godie-e00k",
+      "ggSnds": [
+        "gg_snd_FlareTarget2"
+      ],
+      "reservedCue": "wc3.flaretarget2",
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-e00q.ex",
+      "name": "69-002 固有結界-黑洞",
+      "champion": "godie-e00q",
+      "ggSnds": [
+        "gg_snd_Parasite"
+      ],
+      "reservedCue": "wc3.parasite",
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-e00t.w",
+      "name": "66-02 驚駭",
+      "champion": "godie-e00t",
+      "ggSnds": [
+        "gg_snd_NecropolisUpgrade2"
+      ],
+      "reservedCue": "wc3.necropolisupgrade2",
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-e00z.e",
+      "name": "19-03 瞬切百殺",
+      "champion": "godie-e00z",
+      "ggSnds": [
+        "gg_snd_FlareTarget2"
+      ],
+      "reservedCue": "wc3.flaretarget2",
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-e015.q",
+      "name": "94-01 北斗爆橘拳",
+      "champion": "godie-e015",
+      "ggSnds": [
+        "gg_snd_PeonDeath"
+      ],
+      "reservedCue": "wc3.peondeath",
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-h02s.q",
+      "name": "91-01 死亡之握",
+      "champion": "godie-h02s",
+      "ggSnds": [
+        "gg_snd_HeadHunterYes4"
+      ],
+      "reservedCue": "wc3.headhunteryes4",
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-h02z.q",
+      "name": "91-01 死亡之握",
+      "champion": "godie-h02z",
+      "ggSnds": [
+        "gg_snd_HeadHunterYes4"
+      ],
+      "reservedCue": "wc3.headhunteryes4",
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-nbst.ex",
+      "name": "24-002 來~快點吃吧",
+      "champion": "godie-nbst",
+      "ggSnds": [
+        "gg_snd_PeasantPissed3"
+      ],
+      "reservedCue": "wc3.peasantpissed3",
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-nman.r",
+      "name": "40-04 地獄搖滾",
+      "champion": "godie-nman",
+      "ggSnds": [
+        "gg_snd_ShamanReady1"
+      ],
+      "reservedCue": "wc3.shamanready1",
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-nman.w",
+      "name": "40-02 必殺！爆熱神音！",
+      "champion": "godie-nman",
+      "ggSnds": [
+        "gg_snd_BloodlustTarget",
+        "gg_snd_StampedeCaster1"
+      ],
+      "reservedCue": "wc3.stampedecaster1",
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-o01z.e",
+      "name": "81-03 Divine Buster Extention",
+      "champion": "godie-o01z",
+      "ggSnds": [
+        "gg_snd_MarkOfChaos",
+        "gg_snd_SnapDragonMissileLaunch1",
+        "gg_snd_SoulGem"
+      ],
+      "reservedCue": "wc3.soulgem",
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-o01z.q",
+      "name": "81-01 Barrel Shot",
+      "champion": "godie-o01z",
+      "ggSnds": [
+        "gg_snd_DefendCaster",
+        "gg_snd_FlareTarget3"
+      ],
+      "reservedCue": null,
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-o01z.r",
+      "name": "81-04 Starlight Breaker Plus",
+      "champion": "godie-o01z",
+      "ggSnds": [
+        "gg_snd_SnapDragonMissileLaunch1",
+        "gg_snd_SoulGem"
+      ],
+      "reservedCue": "wc3.soulgem",
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-o01z.w",
+      "name": "81-02 Acxel Shooter",
+      "champion": "godie-o01z",
+      "ggSnds": [
+        "gg_snd_DefendCaster",
+        "gg_snd_FlareTarget3"
+      ],
+      "reservedCue": null,
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-o02s.r",
+      "name": "53-03 破法對咒",
+      "champion": "godie-o02s",
+      "ggSnds": [
+        "gg_snd_WayGateWhat1"
+      ],
+      "reservedCue": "wc3.waygatewhat1",
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-o02v.e",
+      "name": "81-03 Divine Buster Extention",
+      "champion": "godie-o02v",
+      "ggSnds": [
+        "gg_snd_MarkOfChaos",
+        "gg_snd_SnapDragonMissileLaunch1",
+        "gg_snd_SoulGem"
+      ],
+      "reservedCue": "wc3.soulgem",
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-o02v.q",
+      "name": "81-01 Barrel Shot",
+      "champion": "godie-o02v",
+      "ggSnds": [
+        "gg_snd_DefendCaster",
+        "gg_snd_FlareTarget3"
+      ],
+      "reservedCue": null,
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-o02v.r",
+      "name": "81-04 Starlight Breaker Plus",
+      "champion": "godie-o02v",
+      "ggSnds": [
+        "gg_snd_SnapDragonMissileLaunch1",
+        "gg_snd_SoulGem"
+      ],
+      "reservedCue": "wc3.soulgem",
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-o02v.w",
+      "name": "81-02 Acxel Shooter",
+      "champion": "godie-o02v",
+      "ggSnds": [
+        "gg_snd_DefendCaster",
+        "gg_snd_FlareTarget3"
+      ],
+      "reservedCue": null,
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-obla.e",
+      "name": "33-03 地道突襲",
+      "champion": "godie-obla",
+      "ggSnds": [
+        "gg_snd_GlueScreenMeteorHit1",
+        "gg_snd_GlueScreenMeteorHit2"
+      ],
+      "reservedCue": null,
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-obla.q",
+      "name": "33-01 放山雞",
+      "champion": "godie-obla",
+      "ggSnds": [
+        "gg_snd_ChickenWhat1"
+      ],
+      "reservedCue": "wc3.chickenwhat1",
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-obla.r",
+      "name": "33-04 動物拳法",
+      "champion": "godie-obla",
+      "ggSnds": [
+        "gg_snd_FarmWhat1",
+        "gg_snd_SealWhat2"
+      ],
+      "reservedCue": "wc3.sealwhat2",
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-opgh.e",
+      "name": "32-03 閃光龍牙",
+      "champion": "godie-opgh",
+      "ggSnds": [
+        "gg_snd_NazgrelYes2"
+      ],
+      "reservedCue": "wc3.nazgrelyes2",
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-u011.e",
+      "name": "61-03 打屁股風林火豬",
+      "champion": "godie-u011",
+      "ggSnds": [
+        "gg_snd_GruntPissed3"
+      ],
+      "reservedCue": "wc3.gruntpissed3",
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-u012.e",
+      "name": "61-03 打屁股風林火豬",
+      "champion": "godie-u012",
+      "ggSnds": [
+        "gg_snd_GruntPissed3"
+      ],
+      "reservedCue": "wc3.gruntpissed3",
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    },
+    {
+      "ability": "godie-usyl.e",
+      "name": "49-03 蛻變",
+      "champion": "godie-usyl",
+      "ggSnds": [
+        "gg_snd_MercenaryWhat1"
+      ],
+      "reservedCue": "wc3.mercenarywhat1",
+      "note": "英雄還沒進 content/champions ⇒ 這支技能沒有 doc 可以掛 `sfxKey`。英雄進來的時候把 reservedCue 寫進它的 `sfxKey`"
+    }
+  ]
+}
