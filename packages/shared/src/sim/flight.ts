@@ -108,6 +108,53 @@ export interface FlightGrant {
 export const FLIGHT_MAX_HOVER_HEIGHT = 6;
 
 /**
+ * ⭐ 飛行的**視覺**（GH#572）—— owner 2026-08-23（逐字）：
+ *
+ *     「技能說明記得改，不然之前都是寫未實作，
+ *       **飛行視覺可以調 3d model 高度與影子變化**」
+ *
+ * ⇒ 這一支的全部視覺就是他點名的兩件事：**離地高度**（`hoverHeight`，住在
+ * 內容文件裡）＋**影子的變化**（下面三格）。⛔ 沒有粒子、沒有翅膀 ——
+ * 他明說了做法，⛔ 不要自己發明第三種。
+ *
+ * ── 為什麼飛行要一條**跟跳躍不同**的影子曲線 ────────────────────────────
+ * 跳躍（#247）是**一瞬間**的高度，玩家的眼睛靠「身體離開影子」就讀得出來；
+ * 飛行是**整場都成立**的高度，而出貨的跳躍曲線在這個高度上幾乎不動 ——
+ * 量到的：`1 / (1 + h × 0.15)` 在 h = 0.45 是 **0.937**，也就是影子只縮 6%。
+ * 那正是 owner 說「看不出來」的原因。⇒ 飛行走自己的斜率。
+ *
+ * ⚠️ 客戶端**分得出兩者**：飛行刻意不點 `ENTITY_FLAG.AIRBORNE`（見上面 ②），
+ * 所以 `h > 0 && !airborne` 就是「在飛」。⇒ 跳躍那條路逐位元不變。
+ *
+ * ⛔ **為什麼是常數而不是一份 `config.flight-visual@1`**：那需要同時動
+ * `schema/config/index.ts`、`registries.ts`、admin 的 `configForms.ts` /
+ * `store.ts` / `App.tsx` —— 這一批那五個檔全部在別的 lane 手上（第零守則⚡④）。
+ * ⭐ 所以三格**集中在這裡一個住處**、由 `flightShadowResponse()` 單一出口供應，
+ * 之後要抬進 config 是一次搬家，⛔ 不是去五個檔案裡找散落的字面值。
+ */
+export const FLIGHT_SHADOW_SHRINK_PER_UNIT = 0.9;
+/**
+ * 影子縮到這裡就不再縮 —— ⭐ 影子是**位置提示**（「她在哪裡的正上方」），
+ * 縮到消失等於把那個提示拿掉，而飛行是永久的。
+ */
+export const FLIGHT_SHADOW_MIN_SCALE = 0.45;
+/** 出貨的落地影子不透明度（`ChampionView` 建立 blob 影子時用的同一個數）。 */
+export const FLIGHT_SHADOW_BASE_ALPHA = 0.38;
+
+/**
+ * 在飛的那具身體，影子該多大、多淡。
+ *
+ * 純函式（只有 + − × ÷，符合 `sim/purity.test.ts`），所以客戶端與守衛讀的是
+ * **同一條曲線** —— ⛔ 不是兩份會各自漂走的抄寫。
+ */
+export function flightShadowResponse(height: number): { scale: number; alpha: number } {
+  const h = height > 0 ? height : 0;
+  const raw = 1 / (1 + h * FLIGHT_SHADOW_SHRINK_PER_UNIT);
+  const scale = raw < FLIGHT_SHADOW_MIN_SCALE ? FLIGHT_SHADOW_MIN_SCALE : raw;
+  return { scale, alpha: FLIGHT_SHADOW_BASE_ALPHA * scale };
+}
+
+/**
  * Is `id` flying right now? The ONE predicate every consumer asks, so the three
  * MovementSystem exemptions can never disagree about who is airborne.
  */

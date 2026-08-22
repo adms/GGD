@@ -49,6 +49,8 @@ import { resolveAttachment } from "../vfx/attachment";
 import { TARGET_HEIGHT, normalizedModelScale } from "./modelSizing";
 import { ENABLED_ONLY, applyHiddenPrimitives } from "./hiddenPrimitives";
 import { isStandinBodyGlb } from "@ggd/shared/content/standinScale";
+// GH#572 —— 飛行影子的那條曲線只有一個住處（見 `sim/flight.ts`）。
+import { flightShadowResponse } from "@ggd/shared/sim/flight";
 import {
   attackStrikeFractionFor,
   castFollowThroughMs,
@@ -1608,10 +1610,23 @@ export class ChampionView {
       this.glbRoot.position.y = this.leapY + this.groundOffsetY * this.growthFactor;
     }
     // Ground cues stay ON THE GROUND; the shadow reads the altitude instead.
-    const shrink = 1 / (1 + Math.max(0, this.leapY) * 0.15);
+    //
+    // ⭐ GH#572 —— 飛行（04-00 翔封界 那一族）走**自己的**影子曲線。
+    // owner 2026-08-23:「飛行視覺可以調 3d model 高度與影子變化」。
+    // 判準是 `h > 0 && !airborne`:飛行刻意**不點** ENTITY_FLAG.AIRBORNE
+    // （`sim/flight.ts` 的 ② —— 在飛的人要保留跑步動畫），所以「有高度、
+    // 但不是彈道」正好等於「在飛」。⇒ 跳躍(#247)那條路逐位元不變，
+    // `growthTier.test.ts` 的 `1 + h × 0.15` 照樣成立。
+    //
+    // ⛔ 兩條曲線的數字都**不寫在這裡**：飛行那條在 `sim/flight.ts` 一個住處
+    // （見那裡「為什麼是常數而不是 config」），跳躍那條是 #247 的出貨值。
+    const h = Math.max(0, this.leapY);
+    const flying = h > 0 && !this.airborne;
+    const resp = flying ? flightShadowResponse(h) : null;
+    const shrink = resp ? resp.scale : 1 / (1 + h * 0.15);
     this.blobShadow.scaling.setAll(this.growthFactor * shrink);
     const shadowMat = this.blobShadow.material as { alpha?: number } | null;
-    if (shadowMat) shadowMat.alpha = 0.38 * shrink;
+    if (shadowMat) shadowMat.alpha = resp ? resp.alpha : 0.38 * shrink;
   }
 
   /**

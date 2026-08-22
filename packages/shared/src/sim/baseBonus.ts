@@ -134,6 +134,20 @@ export const DEFAULT_BASE_BONUS: BaseBonusTable = Object.freeze({
   //     智慧那根軸對他逐位元是 0。⇒ 兩格一起調不是重複，是**兩種英雄各一格**。
   //   量到的：調後中位回魔 LV30 **124.8/s**，+10 ≈ **8%**（＝「少許」）。
   [Stat.ManaRegen]: 10,
+  // ⭐ owner 2026-08-23（GH#598 逐字）：
+  //   「**[優先] 英雄專屬的初始 AD 系統倍率初始 AD 傷害 +32** 不然普攻流一開始
+  //     太弱完全打不了」
+  //   ⚠️ 兩個關鍵字都是他**親自更正過**的：他先問「系統倍率初始 AD +21」，
+  //     被指出系統倍率是全域的（會同時餵飽殭屍與 bot）之後，把它改成
+  //     **英雄專屬**、把數字改成 **+32**。
+  //   ⭐ 所以它落在**這一頁**而不是 `config.combat-env@1`：
+  //     · 這一層是**加數**而且**不參與倍率**（owner 2026-07-28）——32 就是玩家拿到的 32
+  //     · 這一層**只有英雄走得到**（見檔頭 IT IS CHAMPION-ONLY BY CONSTRUCTION：
+  //       `recomputeStats` 沒有 ChampionComp 就提早返回，小怪的攻擊力來自
+  //       `MobRules.attackDamage`，那條路一次都不經過 `finalizeStat`）
+  //       ⇒ owner 更正掉的那一半（殭屍／bot 一起變強）在結構上寫不出來。
+  //   ⛔ 這一格**不是** owner-knobs 的系統倍率，是一般的後台欄位（三個住處齊全）。
+  [Stat.AttackDamage]: 32,
 });
 
 /** Read one stat's grant, tolerating a partial / absent / junk table. */
