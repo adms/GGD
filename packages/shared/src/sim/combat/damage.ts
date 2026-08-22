@@ -798,6 +798,43 @@ function hookNegatesDamage(hook: HookDef): boolean {
   );
 }
 
+/**
+ * 一發被拒的封包的**展示錨點** —— 兩個拒絕出口共用的唯一出處。
+ *
+ * ⭐ 形狀是**逐字**照 `combat/evasion.ts::emitEvade` 抄的（`x` / `z` 讀**受害者**
+ * 的 transform，缺席時退回 0）。⛔ 不是第二種寫法：`immune` 與 `evade` 在客戶端
+ * 走的是**同一個緩衝區**（`net/RoomConnection.EvadeSighting`）與**同一條**浮動
+ * 文字管線（`frameBus.pushEvadeText`），所以兩邊的 payload 只要開始漂，接收端
+ * 就必須長出一個 if —— 而那個 if 沒有任何理由存在。
+ *
+ * ⚠️ **為什麼這幾行是承重的（量到的，⛔ 不是推測）**：在此之前這兩個出口
+ * **完全沒有帶 `x` / `z`**，而客戶端的 `recordEvade` 對缺席的座標退回 `(0, 0)`。
+ * 出貨 13 張場地裡有 **5 張**（`godie` / `skeleton` / `castle` / `colosseum` /
+ * `dota`）的兩個對戰分區都不在原點上，於是 `render/anchorBounds.anchorDrawable`
+ * 對 (0,0) 回 false ⇒ 「免疫」兩個字**一個像素都沒有被畫出來過**；另外 8 張畫得
+ * 出來，但飄在 zone0 的正中央 —— 那多半是另外半張圖。
+ * ⇒ 41-002 絕對屏障 / [EX∅ 根源] L3 / 史萊姆裝的型別連擊免疫，在玩家眼裡與
+ * 「這一發封包被丟掉了」一模一樣（失敗形態②：算出來了但沒送到客戶端）。
+ * 而 `net/eventFanout.ts` 把 `immune` 放進白名單的**唯一理由**，就是它是客戶端
+ * 唯一能知道一擊被拒的證據。
+ *
+ * ⚠️ `eventFanout.ts` 的契約註解從一開始就寫著這個事件帶 `{ x, z, … }`
+ * 並且「same payload shape as `evade`」—— 那句話在此之前是**假的**（第三守則）。
+ * 現在它是真的了。
+ */
+function emitImmune(world: SimWorld, pkt: DamagePacket): void {
+  const tt = world.transform.get(pkt.target);
+  world.emit("immune", {
+    target: pkt.target,
+    source: pkt.source,
+    amount: pkt.amount,
+    dmgType: pkt.type,
+    origin: pkt.origin,
+    x: tt?.pos.x ?? 0,
+    z: tt?.pos.z ?? 0,
+  });
+}
+
 export function combatResolveSystem(world: SimWorld): void {
   // Hooks fired during resolution may queue MORE damage; drain in bounded
   // passes so chains resolve deterministically without infinite loops.
@@ -837,16 +874,12 @@ export function combatResolveSystem(world: SimWorld): void {
       // Two things still have to happen even though the packet is dropped:
       //   · the scoreboard scores it as BLOCKED, so the post-match screen can
       //     show what the immunity was worth (失敗形態 ②);
-      //   · an `immune` event goes out, or the player sees literally nothing.
+      //   · an `immune` event goes out, or the player sees literally nothing —
+      //     WITH the victim's position on it, or the client draws it nowhere
+      //     (see `emitImmune` above; it owns that whole argument).
       if (refusesDamage(world, pkt.target, pkt.type)) {
         recordDamage(world, pkt.source, pkt.target, 0, 0, pkt.amount, pkt.origin);
-        world.emit("immune", {
-          target: pkt.target,
-          source: pkt.source,
-          amount: pkt.amount,
-          dmgType: pkt.type,
-          origin: pkt.origin,
-        });
+        emitImmune(world, pkt);
         continue;
       }
 
@@ -864,13 +897,7 @@ export function combatResolveSystem(world: SimWorld): void {
       // 既有內容是位元等價的。
       if (refusesByTypeStreak(world, pkt.target, pkt.type)) {
         recordDamage(world, pkt.source, pkt.target, 0, 0, pkt.amount, pkt.origin);
-        world.emit("immune", {
-          target: pkt.target,
-          source: pkt.source,
-          amount: pkt.amount,
-          dmgType: pkt.type,
-          origin: pkt.origin,
-        });
+        emitImmune(world, pkt);
         continue;
       }
 
