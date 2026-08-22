@@ -24,7 +24,7 @@
   "effects": [
     {
       "kind": "spawnProjectile",
-      "projectileId": "imported.wave.ki",
+      "projectileId": "imported.wave.fire",
       "onHit": [
         {
           "kind": "damage",
@@ -36,7 +36,7 @@
       ]
     }
   ],
-  "vfxKey": "fx.prim.ki.bolt",
+  "vfxKey": "fx.prim.fire.beam",
   "sfxKey": "wc3.thunderclapcaster",
   "schema": "ability@1",
   "castTimeSec": 0.833,
