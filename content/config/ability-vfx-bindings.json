@@ -133,6 +133,15 @@
       "confidence": "CONFIRMED"
     },
     {
+      "abilityId": "godie-hapm.ex",
+      "vfxKeys": [
+        "fx.w3x.stock.thunderclapcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A0U5",
+      "confidence": "CONFIRMED"
+    },
+    {
       "abilityId": "godie-hart.r",
       "vfxKeys": [
         "fx.w3x.orb.herocloudkfksword.p00"
@@ -165,6 +174,15 @@
       "confidence": "CONFIRMED"
     },
     {
+      "abilityId": "godie-n01c.r",
+      "vfxKeys": [
+        "fx.w3x.stock.warstompcaster.p00"
+      ],
+      "source": "w3a-override:art:area",
+      "rawcode": "A0EZ",
+      "confidence": "CONFIRMED"
+    },
+    {
       "abilityId": "godie-n01g.r",
       "vfxKeys": [
         "fx.w3x.locust.frostnova.p00",
@@ -177,12 +195,57 @@
       "confidence": "CONFIRMED"
     },
     {
+      "abilityId": "godie-nbbc.r",
+      "vfxKeys": [
+        "fx.w3x.stock.warstompcaster.p00"
+      ],
+      "source": "w3a-override:art:area",
+      "rawcode": "A0EZ",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-o00x.e",
+      "vfxKeys": [
+        "fx.w3x.stock.thunderclapcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A09E",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-ogrh.e",
+      "vfxKeys": [
+        "fx.w3x.stock.thunderclapcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A09E",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-u00h.r",
+      "vfxKeys": [
+        "fx.w3x.stock.warstompcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A0DJ",
+      "confidence": "CONFIRMED"
+    },
+    {
       "abilityId": "godie-u00j.q",
       "vfxKeys": [
         "fx.w3x.orb.herocloudkfksword.p00"
       ],
       "source": "w3a-override:art:caster",
       "rawcode": "A0S4",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-u00j.w",
+      "vfxKeys": [
+        "fx.w3x.stock.thunderclapcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A0ET",
       "confidence": "CONFIRMED"
     },
     {
@@ -196,6 +259,15 @@
       ],
       "source": "jass-literal:jass:effectLoc",
       "rawcode": "A0L6",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-u00v.w",
+      "vfxKeys": [
+        "fx.w3x.stock.warstompcaster.p00"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A0L4",
       "confidence": "CONFIRMED"
     },
     {
@@ -268,6 +340,15 @@
       ],
       "source": "w3h-override:buff:B04R/target",
       "rawcode": "A0Y1",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-udea.w",
+      "vfxKeys": [
+        "fx.w3x.stock.warstompcaster.p00"
+      ],
+      "source": "w3a-override:art:area",
+      "rawcode": "A05S",
       "confidence": "CONFIRMED"
     },
     {
@@ -689,14 +770,6 @@
     {
       "vfxKey": "fx.w3x.particle.sonicbreathstream.p02",
       "why": "閘3 可渲染性 —— 3 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
-    },
-    {
-      "vfxKey": "fx.w3x.stock.thunderclapcaster.p00",
-      "why": "⚠️ 這份 emitter 文件在 `models` 裡找不到來源模型 —— 它是別條產生鏈(例:extract_stock_vfx.py 的零售 MPQ 抽取)的產物,不歸這張表管"
-    },
-    {
-      "vfxKey": "fx.w3x.stock.warstompcaster.p00",
-      "why": "⚠️ 這份 emitter 文件在 `models` 裡找不到來源模型 —— 它是別條產生鏈(例:extract_stock_vfx.py 的零售 MPQ 抽取)的產物,不歸這張表管"
     }
   ]
 }

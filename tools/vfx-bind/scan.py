@@ -55,12 +55,48 @@ tools/vfx-bind/scan.py —— 把「哪一支技能該播原作的哪一份特�
 
 ⛔ 對帳**只回報,不自動改** `vfx-ability-art.json` —— 那份檔案有它自己的產生鏈
 (`tools/w3x-import/build_vfx_bindings.py`),兩支腳本互相覆寫會變成無限迴圈。
+
+⭐ #547 —— 這支腳本現在有**兩個證據源**與**兩個產出**
+------------------------------------------------------------------
+owner 2026-08-22:「一堆**攻擊投射物 衝擊波特效**都沒移植 請儘快從 w3x 補上」。
+逐份追下去,那句話底下是**兩個**不同的洞,而它們的證據住在 provenance 檔的
+**兩個不同欄位**裡 —— 上一輪只讀了其中一個(`extractions`)。
+
+| | 洞 | 證據在哪 | 產出 |
+|---|---|---|---|
+| **A** | 施法演出(既有) | `abilities[*].extractions[]` —— 地圖自帶模型抽出來的 emitter | `content/config/ability-vfx-bindings.json` |
+| **B** | **衝擊波 / 落點**(新) | `abilities[*].realArt[]` 的 `stem` ↔ 出貨的 `fx.w3x.stock.<stem>.p*` | 同一張表 |
+| **C** | **投射物美術**(新) | `realArt[channel="art:missile"]` 的 `extractions` ↔ 誰射它 | `content/projectiles/*.json` 的 `vfxKey` |
+
+⭐ **B 為什麼上一輪整個看不見**:`AddSpecialEffect("...WarStompCaster.mdl", x, y)`
+這種**落點**呼叫指的是**暴雪零售模型**,它不在地圖裡 ⇒ 不會出現在 `models`,
+於是 `extractions` 是空的,於是四道閘連跑都沒跑到。⛔ 但那個環**已經在 repo 裡** ——
+`extract_stock_vfx.py` 從零售 MPQ 抽出了 `fx.w3x.stock.warstompcaster.p00` 與
+`fx.w3x.stock.thunderclapcaster.p00`,而上一輪的表把它們寫進 `unmatched`,理由是
+「別條產生鏈的產物,不歸這張表管」。⇒ ⭐ **那句話才是那個洞**:產生鏈不同不代表
+證據不成立,`jass-literal` 是 provenance 契約裡**最強的意圖**。
+
+量到的(2026-08-22):**51 支**活著且 CONFIRMED 的技能在 `realArt` 裡點名這兩個 stem,
+而綁定表一支都沒接。
+
+⚠️ B 只收**落點/範圍**通道(`jass:effectLoc` · `art:area`),⛔ 不收
+`art:caster` / `art:target` / `art:special` / `art:effect` / `buff:*` ——
+那幾個是**施法者或目標身上**的演出。把它們也接上去 = 51 支英雄的招式在畫面上
+變成**同一個灰環**,而 `fx.prim.*` 存在的理由正是「一發聖光不要長得跟每一發聖光一樣」
+(`w3xAbilityArt.ts` 檔頭)。⭐ 那是一個**決策點**,該是後台一格開關,
+⛔ 不是這張表的預設(第一守則)。`--report` 會把那幾支逐支印出來給 owner 勾。
+
+⭐ C 為什麼**不進這張表**:一顆飛彈的美術是**投射物**的性質,⛔ 不是技能的 ——
+`imported.wave` 被 5 支技能共用,而它們的原作飛彈分別是三個不同模型。
+表是 `abilityId → 一組 emitter`,而 `ProjectileView` 手上只有 `projectileId`。
+⇒ 結論寫進 `projectile@1.vfxKey`,由**同一支腳本**產生、`--check` 一起驗。
 """
 from __future__ import annotations
 
 import argparse
 import json
 import os
+import re
 import sys
 from typing import Any
 
@@ -71,6 +107,7 @@ PROVENANCE = os.path.join(REPO, "content", "assets", "vfx", "w3x-ability-provena
 VFX_DIR = os.path.join(REPO, "content", "vfx")
 ABILITY_DIR = os.path.join(REPO, "content", "abilities")
 ABILITY_ART = os.path.join(REPO, "content", "config", "vfx-ability-art.json")
+PROJECTILE_DIR = os.path.join(REPO, "content", "projectiles")
 OUT = os.path.join(REPO, "content", "config", "ability-vfx-bindings.json")
 
 SCHEMA_TAG = "config.ability-vfx-bindings@1"
@@ -84,6 +121,46 @@ INTENT_PROVENANCE = ("w3a-override", "w3h-override", "jass-literal")
 # ⚠️ 超過的家族不是被截斷,是**整列被拒**並進 `unmatched`:截斷會讓表面上綁好了、
 # 畫面上少一半,而那是安靜的失敗。
 MAX_LAYERS = 6
+
+# 原作藝術的兩個前綴 —— 與 `packages/shared/src/content/vfxBindings.ts` 的
+# `ORIGINAL_ART_PREFIXES` 同一個口徑。⛔ 這裡只列**前綴**,不列 id:列 id 就是第二住處。
+ORIGINAL_ART_PREFIXES = ("fx.w3x.", "godie-")
+
+
+def _is_original_art(key: Any) -> bool:
+    return isinstance(key, str) and key.startswith(ORIGINAL_ART_PREFIXES)
+
+
+# ---------------------------------------------------------------------------
+# 證據源 B —— 零售 MPQ 抽出來的 stock emitter(#547 衝擊波)
+# ---------------------------------------------------------------------------
+# ⭐ 這是一條**命名規則**,⛔ 不是一張手抄的清單:`extract_stock_vfx.py` 之後多抽
+# 一個模型,覆蓋率自動長出來,⛔ 不必回來改這支腳本(第〇·四守則)。
+STOCK_DOC_RE = re.compile(r"^fx\.w3x\.stock\.(?P<stem>.+)\.p\d+$")
+
+# ⭐ **落點/範圍**通道 —— 只有這兩個算「衝擊波」。
+#   · `jass:effectLoc`  = 作者在 JASS 裡對一個**座標**呼叫 AddSpecialEffect(落點)
+#   · `art:area`        = w3a 的範圍演出欄位(AoE 環)
+# ⛔ 施法者/目標/buff 那幾個通道刻意不收,理由見檔頭:那會讓 N 支英雄的招式
+# 在畫面上變成同一個環,而那是一個**決策**,該是後台開關(第一守則)。
+LANDING_CHANNELS = ("jass:effectLoc", "art:area")
+
+# ---------------------------------------------------------------------------
+# 證據源 C —— 投射物美術(#547 投射物 / #394 那 32 支的美術那一半)
+# ---------------------------------------------------------------------------
+# ⭐ 一顆飛行中的投射物在畫面上只有**一條拖尾** —— `ProjectileView` 建**一顆**
+# `ParticleSystem`,而 `projectile@1.vfxKey` 也只收得下**一份**文件。
+# ⇒ 只綁 emitter 家族**剛好一份文件**的那些:N>1 的家族要「挑一顆主 emitter」,
+# 而那是猜,⛔ 不是推導(接錯 = 玩家看到別支技能的飛彈,比通用原型更糟)。
+PROJECTILE_TRAIL_DOCS = 1
+
+# ⚠️ ⛔ 這裡**刻意沒有** root-anchor 閘(源 A 的閘 3),而那不是漏掉:
+# 閘 3 擋的是「把整組 emitter 用**世界座標**重播」——掛在模型動畫節點上的 emitter
+# 會全部從同一點噴出,一團而不是一圈。**飛行中的投射物根本不走那條路**:
+# `apps/client/src/render/views/projectileArt.ts` 檔頭逐字記著量測結果 ——
+# 一份文件到得了彈道的只有**顏色、貼圖、混色、burstCount、壽命、峰值大小**,
+# 位置與方向全部來自飛彈自己的移動。⇒ 「所有 emitter 是不是都在根節點」對
+# 一條拖尾**在結構上不成立**,拿它當閘會擋掉正確的綁定而換不到任何東西。
 
 
 def _load_json(path: str) -> Any:
@@ -134,7 +211,139 @@ def _reached_by_other_paths(live: dict[str, dict]) -> dict[str, str]:
     return out
 
 
-def derive() -> dict[str, Any]:
+def _stock_families(shipped: set[str]) -> dict[str, list[str]]:
+    """出貨的零售 MPQ emitter,依模型 stem 分家族。⭐ 從檔名推導,⛔ 不是清單。"""
+    fams: dict[str, list[str]] = {}
+    for doc_id in sorted(shipped):
+        m = STOCK_DOC_RE.match(doc_id)
+        if m:
+            fams.setdefault(m.group("stem"), []).append(doc_id)
+    return fams
+
+
+def _projectile_docs() -> dict[str, dict]:
+    out: dict[str, dict] = {}
+    if not os.path.isdir(PROJECTILE_DIR):
+        return out
+    for f in sorted(os.listdir(PROJECTILE_DIR)):
+        if not f.endswith(".json") or f.startswith("_"):
+            continue
+        out[f[:-5]] = _load_json(os.path.join(PROJECTILE_DIR, f))
+    return out
+
+
+def _projectile_users(live: dict[str, dict]) -> dict[str, list[str]]:
+    """`projectileId` → 射出它的技能。⚠️ 深走整份文件:它藏在 effect 樹的任一層。"""
+    out: dict[str, set[str]] = {}
+
+    def walk(node: Any, aid: str) -> None:
+        if isinstance(node, dict):
+            pid = node.get("projectileId")
+            if isinstance(pid, str):
+                out.setdefault(pid, set()).add(aid)
+            for v in node.values():
+                walk(v, aid)
+        elif isinstance(node, list):
+            for v in node:
+                walk(v, aid)
+
+    for aid, doc in live.items():
+        walk(doc, aid)
+    return {k: sorted(v) for k, v in out.items()}
+
+
+def derive_projectiles() -> tuple[dict[str, str], list[dict[str, str]]]:
+    """
+    每一顆 `projectile@1` 該播原作的哪一份飛彈 emitter。
+
+    回傳 `(綁定, 沒綁的理由)`。四道閘,⛔ 每一道都留下一句**能被反駁**的話:
+
+    | # | 閘 | ⛔ 沒有它會怎樣 |
+    |---|---|---|
+    | 1 | 剛好**一支**活著的技能射這顆投射物 | 共用的投射物綁上去 = 另外那幾支看到**別支技能**的飛彈 |
+    | 2 | 那支技能 `joinConfidence == CONFIRMED` + 作者意圖 provenance | 同源 A 的閘 1/2 |
+    | 3 | `art:missile` 抽得出 emitter 文件,而且**剛好一份** | 0 份 = 那是純網格(`IN_REPO_MESH_ONLY`),沒有東西可以播;>1 份 = 要挑主 emitter,那是猜 |
+    | 4 | 那份文件真的在 `content/vfx/` | 綁一份不存在的 = 這顆子彈完全沒有拖尾 |
+    """
+    prov = _load_json(PROVENANCE)
+    abilities: dict[str, dict] = prov["abilities"]
+    shipped = _shipped_vfx_ids()
+    live = _live_abilities()
+    users = _projectile_users(live)
+    bound: dict[str, str] = {}
+    why: list[dict[str, str]] = []
+
+    def skip(pid: str, reason: str) -> None:
+        why.append({"projectileId": pid, "why": reason})
+
+    for pid in sorted(_projectile_docs()):
+        us = users.get(pid, [])
+        if len(us) == 0:
+            skip(pid, "閘1 專屬 —— 沒有任何活著的技能射這顆投射物(它是備用原型,或引用它的技能已退休)")
+            continue
+        if len(us) > 1:
+            skip(
+                pid,
+                f"閘1 專屬 —— {len(us)} 支活著的技能共用這顆投射物({', '.join(us)})。"
+                "⭐ 一顆投射物只有一份美術,綁上任何一支的原作飛彈,"
+                "另外那幾支就會在畫面上看到**別支技能**的飛彈 —— 比通用原型更糟",
+            )
+            continue
+        aid = us[0]
+        rec = abilities.get(aid)
+        if not rec:
+            skip(pid, f"閘2 證據 —— 唯一射它的技能 `{aid}` 在 w3x provenance 檔裡沒有紀錄(它是 GGD 原創,⛔ 不是移植的)")
+            continue
+        if rec.get("joinConfidence") != "CONFIRMED":
+            skip(pid, f"閘2 join —— `{aid}` 的 rawcode↔技能 join 是 {rec.get('joinConfidence')},接上去可能是**別支技能**的飛彈")
+            continue
+        ex = next(
+            (
+                e
+                for e in rec.get("extractions", [])
+                if e.get("channel") == "art:missile" and e.get("provenance") in INTENT_PROVENANCE
+            ),
+            None,
+        )
+        if ex is None:
+            named = [
+                r
+                for r in rec.get("realArt", [])
+                if r.get("channel") == "art:missile"
+            ]
+            if not named:
+                skip(pid, f"閘3 美術 —— `{aid}` 在原作地圖裡**沒有設飛彈美術**(w3a 的 art:missile 是空的)")
+            else:
+                r = named[0]
+                skip(
+                    pid,
+                    f"閘3 美術 —— `{aid}` 的原作飛彈是 `{r.get('stem')}`,"
+                    f"狀態 {r.get('assetStatus')} / provenance {r.get('provenance')} ⇒ 抽不出 emitter 文件。"
+                    "⭐ `MISSING_BLIZZARD_STOCK` = 那是暴雪零售模型,不在這個 repo 裡(#81/#116);"
+                    "`IN_REPO_MESH_ONLY` = 網格有、但整個模型一顆 PRE2/RIBB emitter 都沒有,沒有東西可以播",
+                )
+            continue
+        docs = list(ex.get("layerDocIds") or [])
+        if len(docs) != PROJECTILE_TRAIL_DOCS:
+            skip(
+                pid,
+                f"閘3 拖尾 —— `{ex.get('stem')}` 這一族有 {len(docs)} 份 emitter 文件,"
+                f"而一顆飛行中的投射物在畫面上只有**一條**拖尾(`projectile@1.vfxKey` 也只收一份)。"
+                "⭐ 要從中挑一顆主 emitter 就是猜,⛔ 不是推導",
+            )
+            continue
+        if docs[0] not in shipped:
+            skip(pid, f"閘4 出貨 —— `{docs[0]}` 不在 content/vfx/(綁上去這顆子彈會完全沒有拖尾)")
+            continue
+        bound[pid] = docs[0]
+    return bound, why
+
+
+def derive(notes: dict[str, Any] | None = None) -> dict[str, Any]:
+    """
+    `notes` 是給 `--report` 用的**出參**,⛔ 不進出貨文件 ——
+    `config.ability-vfx-bindings@1` 是 `.strict()` 的,多一個鍵 = 內容載入整份失敗。
+    """
     prov = _load_json(PROVENANCE)
     abilities: dict[str, dict] = prov["abilities"]
     models: dict[str, dict] = prov["models"]
@@ -220,6 +429,68 @@ def derive() -> dict[str, Any]:
             continue
         seen.add(row["abilityId"])
         deduped.append(row)
+
+    # ------------------------------------------------------------------
+    # 證據源 B —— 落點的零售 stock emitter(#547 衝擊波)
+    # ------------------------------------------------------------------
+    # ⚠️ 跑在源 A **之後**、只補源 A 沒綁到的技能,是刻意的:地圖作者自己匯入的
+    # 模型永遠比零售通用環更貼近那一支的身分。⭐ 這個順序同時讓既有的 27 列
+    # **一位元都不動**,所以這一版的 diff 是純新增。
+    stock_fams = _stock_families(shipped)
+    # stem → 點名它但**不在落點通道**的技能(給 --report 印給 owner 勾的決策點)
+    stock_offchannel: dict[str, list[str]] = {}
+    # 有落點證據、但那一列**永遠不會生效**的技能(見下面的 `_shadowed`)
+    stock_shadowed: list[str] = []
+    for aid in sorted(abilities):
+        if aid not in live or abilities[aid].get("joinConfidence") != "CONFIRMED":
+            continue
+        rec = abilities[aid]
+        pick: tuple[dict, list[str]] | None = None
+        for ch in LANDING_CHANNELS:
+            for r in rec.get("realArt", []):
+                if r.get("channel") != ch or r.get("provenance") not in INTENT_PROVENANCE:
+                    continue
+                docs = stock_fams.get(r.get("stem") or "")
+                if not docs or len(docs) > MAX_LAYERS:
+                    continue
+                pick = (r, docs)
+                break
+            if pick:
+                break
+        if pick is None:
+            for r in rec.get("realArt", []):
+                if r.get("stem") in stock_fams and r.get("provenance") in INTENT_PROVENANCE:
+                    stock_offchannel.setdefault(r["stem"], []).append(f"{aid}:{r.get('channel')}")
+            continue
+        if aid in seen:
+            continue
+        # ⭐ 源 B 專屬的一道閘:**這一列會不會真的生效**(第一·五守則)
+        # ------------------------------------------------------------------
+        # `resolveAbilityVfxSource()` 的階 1(技能文件自己寫了 `vfxLayers`)與
+        # 階 2(自己挑了原作 doc)都排在表**前面**。被它們遮住的一列 = 一句
+        # 「說了但不會發生」的宣稱:表上看得到、畫面上逐位元等於不存在。
+        #
+        # ⚠️ 為什麼這道閘**只給源 B**,⛔ 不給源 A:源 A 的證據是**地圖作者自己
+        # 匯入的模型**,那是那一支技能的身分,即使今天被作者手挑的堆疊遮住,
+        # 記下來仍然是有用的事實(出貨 27 列裡有 20 列正是這種)。源 B 是一個
+        # **零售通用環**,它唯一的價值就是「原作在落點播了它」——遮住了就什麼都不剩。
+        adoc = live[aid]
+        if adoc.get("vfxLayers") or _is_original_art(adoc.get("vfxKey")):
+            stock_shadowed.append(aid)
+            continue
+        r, docs = pick
+        seen.add(aid)
+        rawcodes = tuple(rec.get("rawcodes") or ())
+        deduped.append(
+            {
+                "abilityId": aid,
+                "vfxKeys": docs,
+                "source": f"{r['provenance']}:{r['channel']}",
+                "rawcode": rawcodes[0] if rawcodes else "",
+                "confidence": "CONFIRMED",
+            }
+        )
+
     bound_docs = {d for r in deduped for d in r["vfxKeys"]}
 
     # 剩下的 fx.w3x.* —— 連一條技能證據都沒有碰過
@@ -227,6 +498,22 @@ def derive() -> dict[str, Any]:
         if not doc_id.startswith("fx.w3x."):
             continue
         if doc_id in bound_docs or doc_id in rejected:
+            continue
+        stock_stem = STOCK_DOC_RE.match(doc_id)
+        if stock_stem:
+            off = sorted(stock_offchannel.get(stock_stem.group("stem"), []))
+            rejected[doc_id] = (
+                f"零售 MPQ 抽出來的 `{stock_stem.group('stem')}`,但**沒有任何**活著且 CONFIRMED 的技能"
+                f"在落點通道({' / '.join(LANDING_CHANNELS)})點名它。"
+                + (
+                    f"⚠️ 有 {len(off)} 支在**身上**的通道點名它({', '.join(off[:6])}"
+                    + ("…" if len(off) > 6 else "")
+                    + ");⛔ 那不是落點,接成技能主特效會讓這幾支英雄的招式在畫面上變成同一個環 ——"
+                    "⭐ 那是一個決策點,該是後台一格開關,⛔ 不是這張表的預設"
+                    if off
+                    else ""
+                )
+            )
             continue
         stem = None
         for s, m in models.items():
@@ -252,6 +539,10 @@ def derive() -> dict[str, Any]:
         if d.startswith("fx.w3x.") and d not in bound_docs
     ]
 
+    if notes is not None:
+        notes["stockOffChannel"] = {k: sorted(v) for k, v in sorted(stock_offchannel.items())}
+        notes["stockShadowed"] = sorted(stock_shadowed)
+
     return {
         "id": DOC_ID,
         "schema": SCHEMA_TAG,
@@ -262,6 +553,43 @@ def derive() -> dict[str, Any]:
 
 def _serialize(doc: dict[str, Any]) -> str:
     return json.dumps(doc, ensure_ascii=False, indent=2) + "\n"
+
+
+def _projectile_drift(bound: dict[str, str]) -> list[str]:
+    """
+    出貨的 `content/projectiles/*.json` 有沒有比證據舊。**兩個方向都關**:
+
+    · 推導得出來、文件沒有(或不一樣) → 那顆子彈還在播通用原型
+    · 文件上掛著**原作藝術**、推導卻不承認 → 值活得比它的證據久
+      (⛔ 第〇·四守則的失敗形態:沒有人會發現它已經是謊話)
+    """
+    out: list[str] = []
+    for pid, doc in sorted(_projectile_docs().items()):
+        have = doc.get("vfxKey")
+        want = bound.get(pid)
+        if want and have != want:
+            out.append(f"{pid}.vfxKey = {have!r},證據說它該是 {want!r}")
+        elif not want and _is_original_art(have):
+            out.append(
+                f"{pid}.vfxKey = {have!r} 是原作藝術,但推導**不承認**它 —— "
+                "證據變了(換人射它 / 技能退休 / emitter 被砍),這一格已經沒有來源"
+            )
+    return out
+
+
+def _write_projectiles(bound: dict[str, str]) -> list[str]:
+    """把推導出來的飛彈美術寫進 `projectile@1.vfxKey`。⛔ 只碰有變動的那幾份。"""
+    written: list[str] = []
+    for pid, key in sorted(bound.items()):
+        path = os.path.join(PROJECTILE_DIR, f"{pid}.json")
+        doc = _load_json(path)
+        if doc.get("vfxKey") == key:
+            continue
+        doc["vfxKey"] = key
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(json.dumps(doc, ensure_ascii=False, indent=2) + "\n")
+        written.append(pid)
+    return written
 
 
 def crosscheck(doc: dict[str, Any]) -> list[str]:
@@ -307,14 +635,29 @@ def main() -> int:
     )
     args = ap.parse_args()
 
-    doc = derive()
+    notes: dict[str, Any] = {}
+    doc = derive(notes)
     text = _serialize(doc)
     problems = crosscheck(doc)
+    proj_bound, proj_why = derive_projectiles()
 
     if args.report or args.check:
         print(f"綁定 {len(doc['bindings'])} 支技能 / 未綁 {len(doc['unmatched'])} 份 fx.w3x.* emitter 文件")
+        print(f"投射物 {len(proj_bound)} 顆接上原作飛彈 / {len(proj_why)} 顆沒接(每一顆都帶理由)")
         for p in problems:
             print("  " + p)
+
+    if args.report:
+        for pid, key in sorted(proj_bound.items()):
+            print(f"  PROJ  {pid} → {key}")
+        for row in proj_why:
+            print(f"  ----  {row['projectileId']} —— {row['why']}")
+        # ⭐ 決策點,⛔ 不是缺陷:落點以外的通道點名了 stock emitter 的那幾支。
+        # 出貨的預設是**不接**(理由見檔頭)。要接就是後台一格開關,由 owner 決定。
+        for stem, rows in (notes.get("stockOffChannel") or {}).items():
+            print(f"  DECIDE {stem} —— {len(rows)} 支在非落點通道點名它:{', '.join(rows)}")
+        for aid in notes.get("stockShadowed") or []:
+            print(f"  SHADOW {aid} —— 有落點證據,但技能文件自己寫了 vfxLayers / 原作 vfxKey ⇒ 這一列永遠不會生效,⛔ 不收")
 
     if args.check:
         if not os.path.exists(OUT):
@@ -332,6 +675,15 @@ def main() -> int:
                 file=sys.stderr,
             )
             return 1
+        drift = _projectile_drift(proj_bound)
+        if drift:
+            for d in drift:
+                print("⛔ " + d, file=sys.stderr)
+            print(
+                "⛔ content/projectiles/ 過期了 —— 跑 `python3 tools/vfx-bind/scan.py` 然後 git add",
+                file=sys.stderr,
+            )
+            return 1
         print("✅ 綁定表與證據一致")
         return 0
 
@@ -341,6 +693,8 @@ def main() -> int:
     with open(OUT, "w", encoding="utf-8") as fh:
         fh.write(text)
     print(f"寫入 {os.path.relpath(OUT, REPO)}")
+    for pid in _write_projectiles(proj_bound):
+        print(f"寫入 content/projectiles/{pid}.json(vfxKey ← {proj_bound[pid]})")
     return 0
 
 
