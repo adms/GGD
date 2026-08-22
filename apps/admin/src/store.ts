@@ -196,6 +196,12 @@ export type Page =
    */
   | "uiCues"
   /**
+   * 世界演出 (`config/world-cues.json`, 2026-08-23 稽核): 六則「某個東西在某個
+   * 座標出現／消失／掃過」的事件各自畫成什麼（顏色/大小/高度/壽命）。
+   * ⛔ 沒有一格會改變任何傷害或任何一個實體 —— 只決定那一刻看不看得見。
+   */
+  | "worldCues"
+  /**
    * 競技場規則 (`config/arena-rules.json` 的八個一直調不到的區塊, GH#410):
    * 治療花 · 復活圈 · 守護塔 · 陣亡投幣 · 大絕／EX 解鎖回合 · 最後一回合 ·
    * bot 的商店行為 · #261 普通武器上不上架（GH#350）。
@@ -681,6 +687,8 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "toggleAbility",
   // 畫面提示 (GH#576/#573): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "uiCues",
+  // 世界演出 (2026-08-23): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  "worldCues",
   // 競技場規則 (GH#410): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "arenaTuning",
   // 護盾規則: 第四頁,同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`,所以

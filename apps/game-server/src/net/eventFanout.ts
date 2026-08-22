@@ -111,15 +111,19 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // 而那個事件當時過不了線。沒有它，玩家看到的只有莫名其妙掉血，
   // replay 也一樣。這正是第②種故障（算出來但從沒送到客戶端）。
   // 帶的是線的兩端與寬度，客戶端據此畫那條鞭子。
+  // ⭐ 2026-08-23 —— 那條鞭子在此之前**一次都沒有被畫出來**（客戶端零消費端，
+  // 整整一版）。現在它是 `content/config/world-cues.json` 的 `line.damageLine`
+  // 那一列（顏色／粗細／壽命／高度全部後台可調），畫在 `VfxSystem` 的世界演出模板。
   "damageLine",
   // ⭐ `chainLightning`（GH#451）—— 86-04 打雷絕招 / 65-04 天譴 的那束閃電。
   // 帶 `{ caster, chains, hits, segments[], origin }`，`segments` 是**真的跳過的
   // 那條折線**（每跳一段 `{x,z,x2,z2}`），客戶端據此畫弧，⛔ 不是從施法者面向猜。
   // 它必須過線的理由與上面 `damageLine` 逐字相同：這個機制的 payload 全部在 sim
   // 裡結算，沒有它，玩家看到的只有一整排敵人同時掉血而畫面上什麼都沒發生。
-  // ⚠️ **客戶端目前還沒有這個 case**（`vfx/VfxSystem.handleEvent`）—— 見 GH#451
-  // 的 nextRound：先把資料送到，渲染是下一輪的事。⛔ 順序不可以反過來，
-  // 「事件沒過線」是第②種故障，而且是最難看出來的那一種。
+  // ⚠️ 這一行在 2026-08-23 之前寫著「**客戶端目前還沒有這個 case**」——
+  // **那句話已經是假的**（第三守則）：`vfx/VfxSystem.handleEvent` 的
+  // `case "chainLightning"` 早就在了。⭐ 一個過期的「還沒做」註解比沒有註解更貴：
+  // 它會讓下一個人以為這條線是斷的，而去做第二遍。
   // CADENCE：**每一跳一個事件**，所以線路成本 = **跳數**，⛔ 不是施放次數。
   // ⚠️ 這一行在 GH#477 之前寫的是「一次施放一個事件（⛔ 不是每一跳一個），所以
   // 線路成本 = 施放次數」——**那句話是假的**（第三守則）。`boltOnce` 在每一發
@@ -146,6 +150,14 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // 暈眩是**玩家必須立刻看懂**的狀態：不知道自己被定住，就會以為是延遲或當機。
   // 它是 transition-only（不是每 tick），所以線路成本是被控次數不是 tick 數。
   "stunApplied",
+  // ⭐ 2026-08-23 稽核（世界演出）—— 這兩則的**視覺**判決寫在
+  // `apps/client/src/vfx/worldCues.ts`，⛔ 不要憑「客戶端沒有 case」再稽核一次：
+  //   · `guardianSpawn` —— **刻意沒有視覺消費端**。雕像是開場就存在的實體，
+  //     身體由快照畫；玩家要看的那一拍是 `guardianWake`（今天就有消費端）。
+  //     它仍然過線，因為 replay / 音效 / 分析讀得到「這一場有守護者」這件事。
+  //     完整理由與**到期條件**在 `WORLD_CUE_EXEMPTIONS`。
+  //   · `guardianSleep` —— 接進 `world-cues` 的 `point` 表（威脅解除的一團輕光）。
+  //     ⚠️ 它的 payload 逐字只有 `{ id }`，座標由客戶端的 `entityPos(id)` 解。
   "guardianSpawn",
   "guardianWake",
   "guardianSleep",
@@ -160,6 +172,10 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // no trigger). `mobSpawn` carries `{ id, zone, x, z, maxHp }`; `mobSlain`
   // names who got the last-hit reward like `guardianSlain` does. Same one-list
   // contract as every other combat visual, so the ReplayRoom forwards them too.
+  // ⭐ 2026-08-23 —— `mobSpawn` 的視覺那一半在此之前是**零消費端**（上面那句
+  // 「a voxel-zombie pops into existence with no VFX」描述的正是出貨行為）。
+  // 現在它是 `world-cues` 的 `point.mobSpawn` 那一列（貼地的一小團土色）。
+  // ⚠️ 出貨值刻意是**輕**的：第 9 回合一波 20 隻同時破土，重版會變成一堵牆。
   "mobSpawn",
   "mobSlain",
   // 殭屍王 (task #262). Both are MANDATORY here, and the reason is the whole
@@ -279,6 +295,9 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // entity patch cannot express: the raise burst + its cue at {x, z}. Rate is
   // bounded by champion deaths (≤12 per round, and by `maxFlagsPerZone`), so it
   // is nowhere near a per-tick flood.
+  // ⭐ 2026-08-23 —— 那個「raise burst」在此之前**沒有人畫**（黑圈有，因為它是
+  // 實體，由 `NightFlagView` 從快照畫；插旗的那一拍沒有）。現在它是 `world-cues`
+  // 的 `point.deathWardSpawn` 那一列。⛔ 半徑仍然只有一個住處：實體的 `shield`。
   "deathWardSpawn",
   // ⛔ `"nightPactBurn"` 在 2026-08-19 退場了：71-00 的第二半（「敵方在附近施法
   // 有 12% 機率魔力全失」）現在**沒有引擎程式** —— 它是
@@ -383,6 +402,11 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   //
   // CADENCE: bounded by CASTS, not ticks — one pair per body, and `maxAlive`
   // (default 8) bounds how many bodies one caster can have at a time.
+  // ⭐ 2026-08-23 —— 上面那句「a summon fades in with no conjure VFX/SFX and
+  // vanishes with no dissipate」在此之前**逐字是出貨行為**（客戶端零消費端）。
+  // 現在兩則各是 `world-cues` 的一列（`point.summonSpawn` 重、`point.summonDespawn`
+  // 輕 —— 消失不該比出現更響）。⚠️ `reason` 的四種區別仍然**沒有**被畫出來，
+  // 那是下一個決定：要嘛四種各一列，要嘛寫進豁免表說明為什麼一種就夠。
   "summonSpawn",
   "summonDespawn",
   // 無敵 / 免疫 (GH#289 lane P3). Both cross for the reason this file exists:

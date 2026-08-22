@@ -1,0 +1,58 @@
+{
+  "id": "world-cues",
+  "schema": "config.world-cues@1",
+  "note": "世界演出表（2026-08-23 窮舉稽核）。七則過線但客戶端零消費端的事件，六則在這裡接成**兩個模板 + 一張表**（點 5 列 / 線 1 列），第七則 guardianSpawn 是一列帶理由的豁免（住 apps/client/src/vfx/worldCues.ts 的 WORLD_CUE_EXEMPTIONS）。⛔ 這份文件裡沒有一格會改變任何傷害、任何一塊錢、任何一個實體 —— 它只決定那一刻看不看得見。每一列的 enabled 關掉 ⇒ 畫面逐位元回到這一版之前。",
+  "point": {
+    "mobSpawn": {
+      "enabled": true,
+      "heavy": false,
+      "heightY": 0.15,
+      "tintR": 0.55,
+      "tintG": 0.42,
+      "tintB": 0.28
+    },
+    "summonSpawn": {
+      "enabled": true,
+      "heavy": true,
+      "heightY": 0.9,
+      "tintR": 0.62,
+      "tintG": 0.48,
+      "tintB": 1
+    },
+    "summonDespawn": {
+      "enabled": true,
+      "heavy": false,
+      "heightY": 0.9,
+      "tintR": 0.5,
+      "tintG": 0.42,
+      "tintB": 0.75
+    },
+    "deathWardSpawn": {
+      "enabled": true,
+      "heavy": true,
+      "heightY": 0.1,
+      "tintR": 0.35,
+      "tintG": 0.2,
+      "tintB": 0.5
+    },
+    "guardianSleep": {
+      "enabled": true,
+      "heavy": false,
+      "heightY": 1.2,
+      "tintR": 0.95,
+      "tintG": 0.72,
+      "tintB": 0.42
+    }
+  },
+  "line": {
+    "damageLine": {
+      "enabled": true,
+      "power": 0.9,
+      "lifeMs": 220,
+      "heightY": 0.9,
+      "tintR": 0.45,
+      "tintG": 0.85,
+      "tintB": 0.4
+    }
+  }
+}

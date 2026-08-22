@@ -130,6 +130,7 @@ import { zConfigVictoryFxDoc } from "./victoryFx";
 import { zConfigItemCardDoc } from "./itemCard";
 import { zConfigUiLexiconDoc } from "./uiLexicon";
 import { zConfigUiCuesDoc } from "./uiCues";
+import { zConfigWorldCuesDoc } from "./worldCues";
 import { zConfigLobbyLayoutDoc } from "./lobbyLayout";
 import { zConfigLobbyRallyDoc } from "./lobbyRally";
 import { zConfigAdminFriendDoc } from "./adminFriend";
@@ -214,6 +215,7 @@ export * from "./voxelBarcodes";
 export * from "./voxelBodies";
 export * from "./weakness";
 export * from "./wounds";
+export * from "./worldCues";
 
 
 /** The `config` collection accepts all variants (discriminated on `schema`). */
@@ -327,6 +329,10 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   // ⚠️ 漏掉這一行 = 一份 ui-cues.json 進了 content/ 之後整份內容驗證失敗
   // → 退回 2 隻骨架英雄，而網站看起來完全正常（2026-08-02 的形狀）。
   zConfigUiCuesDoc,
+  // 世界演出（2026-08-23 稽核）：六則「某個東西在某個座標出現／消失／掃過」的
+  // 事件合成兩個模板 + 一張表。⚠️ 漏掉這一行 = 一份 world-cues.json 進了 content/
+  // 之後整份內容驗證失敗 → 退回 2 隻骨架英雄，而網站看起來完全正常。
+  zConfigWorldCuesDoc,
   // ── 2026-08-02 收尾:三個 lane 各自定義的欄位,三個落點一次接完 ───────────
   // ⚠️ **這三行是最重要的一步。** 新的 config 文件進了 `content/` 而 union 不認得
   // 它的 schema tag,`zConfigDoc` 就會拒絕整份文件 → ContentLoader 驗證失敗 →

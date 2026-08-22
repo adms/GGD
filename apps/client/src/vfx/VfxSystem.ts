@@ -127,6 +127,11 @@ import { pillarPalette, pillarTintFromRamp, type PillarPalette } from "./castPil
 import { severityForHit, sprayDirection, damageScale, type Vec2 } from "./bloodPresets";
 import { goreConfig, resolveGore } from "./goreConfig";
 import { clampOneShotLife, DEFAULT_ONE_SHOT_MAX_LIFE_SEC, oneShotMaxLifeSec } from "./oneShotLife";
+/**
+ * ⭐ 2026-08-23 稽核 —— **世界演出**的兩個模板 + 一張表（`worldCues.ts`）。
+ * ⛔ 六則同型的事件**不是**六個 `case`（第零守則⑨）。
+ */
+import { worldCueLine, worldCuePoint, worldCues, type ConfigWorldCuesDoc } from "./worldCues";
 // ⭐ GH#551/#543/#549 —— 三個「演出」層。⛔ 在 2026-08-22 之前它們的唯一 import 端
 //    是自己的測試（失敗形態③：整組刪掉只有測試會紅，而畫面上本來就什麼都沒有）。
 import { ModelFxRig } from "../render/modelFxRig";
@@ -637,6 +642,14 @@ export class VfxSystem {
    * first promoted cast and stays null in a match that has none.
    */
   private readonly w3xCast: W3xCastFx;
+
+  /**
+   * ⭐ **世界演出表**（`content/config/world-cues.json`）—— 解析**一次**
+   * （第〇·四守則），⛔ 不是每一則事件都去查一次登錄表。
+   * 後台存檔之後**玩家下一次重新整理**生效，與 `screenCuePolicyFromContent()`
+   * 和 `feelFx()` 那一族同一個語意。
+   */
+  private readonly worldCueTable: ConfigWorldCuesDoc = worldCues();
   /** last `update()` timestamp — the rig ticks on dt, not on absolute time */
   private lastUpdateMs: number | null = null;
   /** GH#270: wall clock of the last one-shot emitter sweep (`-Infinity` = never). */
@@ -2171,8 +2184,55 @@ export class VfxSystem {
         );
         break;
       }
-      default:
+      /**
+       * ⭐⭐ **世界演出** —— 一張表，⛔ 不是六個 `case`（2026-08-23 稽核）。
+       *
+       * ── 為什麼它在 `default` 裡 ─────────────────────────────────────────
+       * `mobSpawn` · `summonSpawn` · `summonDespawn` · `deathWardSpawn` ·
+       * `guardianSleep` · `damageLine` 六則在做**同一件事**：「某個東西在某個
+       * 座標出現／消失／掃過了，放一個演出」。六則在這一段出現之前 sim 都發了、
+       * `eventFanout` 都放行了、線路上真的都送到了，而客戶端**零個消費端**
+       * （失敗形態②：傷害照樣掉血，所以它看起來完全正常）。
+       *
+       * 第零守則⑨逐字：「N 個同型項目 = K 個模板 + 一張表，⛔ 不是 N 輪」。
+       * ⇒ 這裡是 **K = 2**（點／線），而**哪一則畫成什麼**住 JSON
+       * （`content/config/world-cues.json`，第〇·四守則）。
+       *
+       * ⭐ 加第七列**不必動這裡一行** —— 這一段裡沒有任何一個事件名。
+       * ⛔ 而「不接」也是一個要**寫下來**的決定：`worldCues.ts` 的
+       * `WORLD_CUE_EXEMPTIONS`（出貨只有 `guardianSpawn` 一列，帶著理由與
+       * 到期條件）。閘：`performanceEventsHaveConsumers.test.ts`。
+       *
+       * ⚠️ 放在 `default` 而不是排在上面：上面每一個具名 `case` 都**贏**這張表。
+       * 一則事件哪天需要一段真的專屬邏輯時，寫一個 `case` 就自動接管，
+       * ⛔ 不會變成「兩個地方各畫一次」。
+       */
+      default: {
+        const data = ev.data as Record<string, unknown>;
+        const point = worldCuePoint(this.worldCueTable, ev.type, data, (id) =>
+          this.ctx.entityPos(id),
+        );
+        if (point) {
+          this.layeredPop(
+            point.at.x,
+            point.at.z,
+            nowMs,
+            point.intensity,
+            point.tint,
+            point.heightY,
+          );
+          break;
+        }
+        const line = worldCueLine(this.worldCueTable, ev.type, data);
+        if (line) {
+          this.strikeArc({ ...line.from, y: line.heightY }, { ...line.to, y: line.heightY }, nowMs, {
+            tint: line.tint,
+            power: line.power,
+            lifeMs: line.lifeMs,
+          });
+        }
         break;
+      }
     }
   }
 
