@@ -127,6 +127,7 @@ import { ModelFxRig } from "../render/modelFxRig";
 import type { ModelFxMotionSpec, ModelFxOrigin } from "../render/modelFxPath";
 import { ScreenFxLayer } from "./ScreenFxLayer";
 import { FloatingTextFx } from "./FloatingTextFx";
+import { screenCuePolicyFromContent } from "../render/screenFx";
 
 /** Reusable scratch for the #233 headroom probe — no per-frame allocation. */
 const HEADROOM_F = new Vector3();
@@ -639,8 +640,18 @@ export class VfxSystem {
             loadContainer: (p) => ctx.loadModelContainer!(p) as never,
           })
         : null;
+    // ⭐ GH#549 —— `config.screen-fx@1` 的**唯一** production 消費端。
+    //    ⛔ 在這三行出現之前，那份文件的 10 格是「後台存得起來、遊戲一輩子看不到」
+    //    （第一·五守則）：出貨的理想鄉反彈寫了 `peakAlpha: 0.62`，而全域上界
+    //    是 0.55 —— 少了這一段，那個上界一次都沒有被套用過。
+    //    ⚠️ 解析**一次**（第〇·四守則）：⛔ 不是每一發特效都去查一次登錄表。
+    const cue = screenCuePolicyFromContent();
     this.screenFx = new ScreenFxLayer();
-    this.floatingText = new FloatingTextFx();
+    this.screenFx.setLimits(cue.limits);
+    this.floatingText = new FloatingTextFx({
+      capacity: cue.floatingTextMaxOnScreen,
+      scaleMult: cue.floatingTextScale,
+    });
     this.feedback = new CombatFeedbackFx(scene);
     this.status = new StatusAuraFx(scene);
     this.shadows = new ShadowLayer(scene);
@@ -706,6 +717,11 @@ export class VfxSystem {
   /** ⭐ 特效文字的目前清單 —— 由 `ui/WorldAnchorLayer` 每幀讀（GH#543）。 */
   get floatingTextEntries(): readonly unknown[] {
     return this.floatingText.entries;
+  }
+
+  /** ⭐ 全螢幕閃爍／震動那一層（守衛量它 —— 後台上界真的套用了沒有）。 */
+  get screenFxLayer(): ScreenFxLayer {
+    return this.screenFx;
   }
 
   /** ⭐ 相機震動的出口安裝（出貨接 `CameraRig.addShake`）。 */

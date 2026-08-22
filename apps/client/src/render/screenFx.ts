@@ -17,7 +17,22 @@
  * ⚠️ 上界與下界都要有(第一守則的那一句):`validateField` 只檢查 `min` 的那個年代,
  * 50 打成 500 會過後台、在下游被靜默夾掉。這裡的 `clamp01`/`clampTo` 是**夾**,
  * 而 Zod 那一格要**拒**。兩層都要。
+ *
+ * ── ⭐ GH#549 收尾:上界**從內容來**,⛔ 不是編譯進映像的常數 ──────────────────
+ * `DEFAULT_SCREEN_FX_LIMITS` 在此之前是這一層唯一的真相,而 `config.screen-fx@1`
+ * (出貨值 + 無障礙那三格)是**零 production 消費端**的 —— 操作者存得起來、
+ * 重整讀得回來、遊戲一輩子看不到(第一·五守則的形狀:每一個零件都對,只有組合是空的)。
+ * {@link screenCuePolicyFromContent} 是那條缺的邊:`Configs` → 政策 → 這一層的上界。
+ * ⚠️ 它在**載入時**解析一次(第〇·四守則),⛔ 不是每一發特效都去查一次登錄表。
  */
+import {
+  Configs,
+  SCREEN_FX_DOC_ID,
+  resolveScreenFx,
+  screenFxReducedMultipliers,
+  zConfigScreenFxDoc,
+  type ScreenFxPolicy,
+} from "@ggd/shared/content";
 
 /** 誰看得到這一發 —— 逐字照 L1／L2 共同約定的介面。 */
 export type ScreenFxAudience = "self" | "victim" | "all";
@@ -157,4 +172,58 @@ export function screenFlashAlpha(t01: number, peakAlpha: number, gentle = false)
   const attack = gentle ? GENTLE_ATTACK_FRAC : ATTACK_FRAC;
   if (t <= attack) return peakAlpha * (t / attack);
   return peakAlpha * (1 - (t - attack) / (1 - attack));
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  ⭐ GH#549 —— `config.screen-fx@1` → 這一層（＝那份文件唯一的去向）
+// ═══════════════════════════════════════════════════════════════════════════
+
+/** 「有事發生」那一層的全部後台上界 —— 閃爍/震動 ＋ 特效文字的兩格。 */
+export interface ScreenCuePolicy {
+  limits: ScreenFxLimits;
+  /** 所有 `floatingText` 的字級再乘這個數字（技能寫的 `sizeScale` 是相對值） */
+  floatingTextScale: number;
+  /** 同時最多幾段特效文字（＝池子大小，⛔ 不是「多的丟掉」的軟門檻） */
+  floatingTextMaxOnScreen: number;
+}
+
+/**
+ * 政策 → 這一層真的在夾的那六格。
+ *
+ * ⭐ **總開關只有一個出口**：`enabled: false` 在這裡把兩條**非** reduced-motion
+ * 的路也歸零 —— `screenFxReducedMultipliers` 只管得到 reduced-motion 那一半，
+ * 少了這兩行，關掉總開關的操作者會發現「沒開減少動態的人照樣被閃」。
+ */
+export function screenFxLimitsFrom(policy: ScreenFxPolicy): ScreenFxLimits {
+  const m = screenFxReducedMultipliers(policy);
+  return {
+    flashMaxAlpha: policy.enabled ? policy.flashMaxAlpha : 0,
+    flashMaxSec: policy.flashMaxSec,
+    shakeMaxAmplitude: policy.enabled ? policy.shakeMaxAmplitude : 0,
+    shakeMaxSec: policy.shakeMaxSec,
+    reducedFlashMult: m.flash,
+    reducedShakeMult: m.shake,
+  };
+}
+
+/**
+ * 從**出貨的**內容登錄表解析一次。
+ *
+ * ⚠️ `safeParse` 而不是逐格降級：`resolveScreenFx` 的檔頭已經把「缺席／壞掉一律
+ * 回退到出貨預設」定成這一份的契約，這裡再寫一套逐格夾就是**第二個住處**
+ * （而兩份降級規則分岔的那一天兩份看起來都對）。
+ *
+ * ⚠️ 內容載不到那條路回的是出貨預設，⛔ 不是 0 —— 在 2026-08-01 骨架事故那條路上
+ * 把上界變成 0，會讓「內容全毀」看起來像「這一版把畫面回饋拿掉了」。
+ */
+export function screenCuePolicyFromContent(
+  read: () => unknown = () => Configs.tryGet(SCREEN_FX_DOC_ID),
+): ScreenCuePolicy {
+  const parsed = zConfigScreenFxDoc.safeParse(read());
+  const policy = resolveScreenFx(parsed.success ? parsed.data : null);
+  return {
+    limits: screenFxLimitsFrom(policy),
+    floatingTextScale: policy.floatingTextScale,
+    floatingTextMaxOnScreen: policy.floatingTextMaxOnScreen,
+  };
 }

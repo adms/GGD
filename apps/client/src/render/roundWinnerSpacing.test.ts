@@ -41,10 +41,13 @@ const pct = (v?: string): number => Number.parseFloat(String(v));
 const spread = (v?: string): number => Math.abs(pct(v) - 50);
 /** `min(Xvh, Yvw)` 裡的 Y —— 寬度受限(直式)視窗上真的被畫出來的那一個。 */
 const vwCap = (v?: string): number => Number.parseFloat(/,\s*([\d.]+)vw/.exec(String(v))![1]!);
-// ⚠️ `podiumSpacing` 還不在 shared 的型別上(見 RoundWinnerStage 的 FALLBACK 註解),
-// 所以明著 cast —— 接進 Zod 之後這個 cast 就多餘了。
-const cfg = (podiumSpacing: number): VictoryPodiumPolicy =>
-  ({ ...DEFAULT_VICTORY_PODIUM, podiumSpacing }) as VictoryPodiumPolicy;
+// ⭐ `podiumSpacing` 已經在 shared 的型別上（Zod + `DEFAULT_VICTORY_PODIUM` + 後台），
+// 所以這裡**不需要** cast —— 這個夾具手搭 policy 物件，⛔ 它讀不到出貨檔，
+// 出貨那一條的守衛是 `schema/newKnobsAreLive.test.ts`（失敗形態⑤）。
+const cfg = (podiumSpacing: number): VictoryPodiumPolicy => ({
+  ...DEFAULT_VICTORY_PODIUM,
+  podiumSpacing,
+});
 
 describe("頒獎台的疏密是一格政策,畫面上真的照它擺 (round-podium-spacing GH#545)", () => {
   it("★ 出貨路徑真的靠得比舊算式近 —— owner「不要分那麼開」", () => {

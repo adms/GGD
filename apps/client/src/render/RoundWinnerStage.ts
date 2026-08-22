@@ -65,6 +65,8 @@ import { victoryTaunts, type PlayTauntOptions, type VictoryTauntLine } from "../
 import { crownSvg, CROWN_PALETTE, type CrownMedal } from "./victoryCrown";
 import {
   DEFAULT_VICTORY_PODIUM,
+  VICTORY_PODIUM_SPACING_MAX,
+  VICTORY_PODIUM_SPACING_MIN,
   resolveVictoryPodium,
   type ConfigVictoryPodiumDoc,
   type VictoryPodiumClip,
@@ -149,25 +151,33 @@ export function podiumSlotOrder(total: number, layout: VictoryPodiumLayout): num
  *
  * `spacing === 1` **與 2026-08-22 之前逐字同解**,所以它同時是「回到舊畫面」
  * 的那一格。
+ *
+ * ⭐ 上下界**從 Zod 那一份來**（`VICTORY_PODIUM_SPACING_MIN/MAX`）——
+ * ⛔ 在 2026-08-22 之前這裡是兩個手抄的字面值，也就是第四個住處：
+ * owner 哪天把上界從 1.5 放寬，Zod 收得下而畫面照樣夾在 1.5，
+ * 而**兩邊看起來都對**（第二守則：不要在測試/客戶端再抄一份出貨值）。
  */
-export const PODIUM_SPACING_MIN = 0.2;
-export const PODIUM_SPACING_MAX = 1.5;
+export const PODIUM_SPACING_MIN = VICTORY_PODIUM_SPACING_MIN;
+export const PODIUM_SPACING_MAX = VICTORY_PODIUM_SPACING_MAX;
 
 /**
- * ⚠️ **暫時的保險絲,不是這個值的家。** 這一條 lane 的檔案柵欄碰不到
- * `packages/shared/src/content/schema/victoryPodium.ts` 與 `apps/admin/`,
- * 所以 `podiumSpacing` 這一格還沒落進 Zod / `DEFAULT_VICTORY_PODIUM` / 後台
- * (交辦已寫進 GH#545 的報告)。接上去之後這裡就只剩「內容載不到」那條路會用到,
+ * ⚠️ 這是「**內容載不到**」那條路的值（2026-08-01 骨架事故那一條），
+ * ⛔ 不是這一格的家 —— 家是 `content/config/victory-podium.json` ＋
+ * `DEFAULT_VICTORY_PODIUM.podiumSpacing` ＋ 後台的 `VICTORY_PODIUM_SPEC`（三個住處都在了）。
  * 語意和 `DEFAULT_VICTORY_PODIUM` 對其他欄位的角色一致。
  */
-export const PODIUM_SPACING_FALLBACK = 0.5;
+export const PODIUM_SPACING_FALLBACK = DEFAULT_VICTORY_PODIUM.podiumSpacing;
 
 /**
- * 政策 → 間距倍率。缺席 ⇒ 保險絲;超界 ⇒ 夾回去(0 會讓三個人疊成一個人,
- * 而後台的上下界還沒接上,見上面)。
+ * 政策 → 間距倍率。缺席 ⇒ 退回出貨預設;超界 ⇒ 夾回去
+ * （0 會讓三個人疊成一個人 —— 而「三個人站上台」讀起來變成「只有一個人贏了」，
+ * 正好是這一格要修的相反面）。
+ *
+ * ⚠️ 兩層都要（第一守則）：Zod 那一格是**拒**（越界存不進後台），這裡是**夾**
+ * （一份舊的 / 手改的文件不會把三張卡推出視窗）。
  */
 export function podiumSpacing(cfg: VictoryPodiumPolicy): number {
-  const raw = (cfg as VictoryPodiumPolicy & { podiumSpacing?: number }).podiumSpacing;
+  const raw = cfg.podiumSpacing;
   const v = typeof raw === "number" && Number.isFinite(raw) ? raw : PODIUM_SPACING_FALLBACK;
   return Math.min(PODIUM_SPACING_MAX, Math.max(PODIUM_SPACING_MIN, v));
 }

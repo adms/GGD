@@ -73,8 +73,14 @@ export interface FloatingTextSpawn {
 /**
  * 出貨預設 —— ⚠️ 這幾格是**預算與節奏**,⛔ 不是平衡值。
  * 顏色/字級/上浮速度/壽命全部由技能 JSON 帶進來(第〇·四守則)。
+ *
+ * ⚠️ `MAX_FLOATING_TEXT` 是**沒有內容時**的池子大小 —— 出貨走
+ * `config.screen-fx@1.floatingTextMaxOnScreen`（見 {@link FloatingTextFxOptions}）。
  */
 const MAX_FLOATING_TEXT = 48;
+/** 池子大小的硬柵欄，逐字等於 `SCREEN_FX_BOUNDS.floatingTextMaxOnScreen`。 */
+const MIN_POOL = 1;
+const MAX_POOL = 200;
 /** 同一個發射點最多同時掛幾個（克勞德七刀是錯開的，⛔ 不是同時七個）。 */
 const MAX_PER_ANCHOR = 8;
 /** 同一幀落在同一點的多發，每發往後推這麼多毫秒（原作 `0.2f * i` 的縮版）。 */
@@ -90,32 +96,61 @@ const DEFAULT_RGB: readonly [number, number, number] = [255, 255, 255];
 /** 兩發算不算「同一個錨點」的世界距離（平方比較，⛔ 不開根號）。 */
 const ANCHOR_EPS_SQ = 0.36;
 
+/**
+ * ⭐ GH#549 —— 這一層的兩格後台旋鈕（`config.screen-fx@1`）。
+ *
+ * ⚠️ 兩格都在**建構時**吃掉，⛔ 不是每次 `spawn` 再查一次登錄表：池子是預先配置的
+ * （見下面那一行的理由），而一個「會 resize 的池子」就不是池子了。
+ * ⇒ 後台改了要**玩家下一次重新整理**才生效 —— 與 `feelFx()` 那一族同一個語意。
+ */
+export interface FloatingTextFxOptions {
+  /** `floatingTextMaxOnScreen` —— 池子大小（＝同時最多幾段字）。 */
+  capacity?: number;
+  /** `floatingTextScale` —— 全域字級倍率，乘在技能寫的 `sizeScale` 上。 */
+  scaleMult?: number;
+}
+
+const clampInt = (v: number | undefined, lo: number, hi: number, fallback: number): number => {
+  if (v === undefined || !Number.isFinite(v)) return fallback;
+  return Math.min(hi, Math.max(lo, Math.round(v)));
+};
+
 export class FloatingTextFx {
   private disposed = false;
+  /** 全域字級倍率（⛔ 不夾成 0：0 = 看不見的字 = 一段沒有人讀得到的話）。 */
+  private readonly scaleMult: number;
   /** ⭐ 池**就是**儲存體:預先配置、⛔ 永不 resize（同 frameBus 的 combatTextPool）。 */
-  private readonly pool: FloatingTextEntry[] = Array.from(
-    { length: MAX_FLOATING_TEXT },
-    (_, slot) => ({
-      active: false,
-      slot,
-      gen: 0,
-      text: "",
-      x: 0,
-      y: 0,
-      z: 0,
-      lift: 0,
-      r: 255,
-      g: 255,
-      b: 255,
-      sizeScale: 1,
-      alpha: 0,
-      ageMs: 0,
-      lifeMs: 0,
-      riseSpeed: DEFAULT_RISE,
-      lane: 0,
-      delayMs: 0,
-    }),
-  );
+  private readonly pool: FloatingTextEntry[];
+
+  constructor(opts: FloatingTextFxOptions = {}) {
+    this.scaleMult =
+      opts.scaleMult !== undefined && Number.isFinite(opts.scaleMult) && opts.scaleMult > 0
+        ? opts.scaleMult
+        : 1;
+    this.pool = Array.from(
+      { length: clampInt(opts.capacity, MIN_POOL, MAX_POOL, MAX_FLOATING_TEXT) },
+      (_, slot) => ({
+        active: false,
+        slot,
+        gen: 0,
+        text: "",
+        x: 0,
+        y: 0,
+        z: 0,
+        lift: 0,
+        r: 255,
+        g: 255,
+        b: 255,
+        sizeScale: 1,
+        alpha: 0,
+        ageMs: 0,
+        lifeMs: 0,
+        riseSpeed: DEFAULT_RISE,
+        lane: 0,
+        delayMs: 0,
+      }),
+    );
+  }
 
   /** 渲染端逐幀掃這一份（⛔ 不要複製它 —— 它是穩定的、零配置的）。 */
   get entries(): readonly FloatingTextEntry[] {
@@ -166,7 +201,9 @@ export class FloatingTextFx {
     slot.r = r;
     slot.g = g;
     slot.b = b;
-    slot.sizeScale = s.sizeScale !== undefined && s.sizeScale > 0 ? s.sizeScale : 1;
+    // ⭐ 技能寫的是**相對**字級，後台那一格是全域倍率（第〇·四守則：一個值一個住處）。
+    slot.sizeScale =
+      (s.sizeScale !== undefined && s.sizeScale > 0 ? s.sizeScale : 1) * this.scaleMult;
     slot.riseSpeed = s.riseSpeed !== undefined && s.riseSpeed > 0 ? s.riseSpeed : DEFAULT_RISE;
     slot.lifeMs =
       s.durationSec !== undefined && s.durationSec > 0 ? s.durationSec * 1000 : DEFAULT_LIFE_MS;
