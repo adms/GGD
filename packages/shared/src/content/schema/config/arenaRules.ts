@@ -3,6 +3,45 @@ import { zCoreAbilitySlot, zId } from "../common";
 import { zAugmentTier } from "../augment";
 import { zMobWavesConfig } from "./arenaRules.mobWaves";
 
+/** `Configs` 登錄表裡這份文件的 id。⛔ 不要在呼叫端手打字串。 */
+export const ARENA_RULES_DOC_ID = "arena-rules";
+
+/**
+ * ⭐ **視野規則**（`vision` 區塊，owner 2026-08-23「理論上這個地圖是全視野，
+ * 就算牆後也看得到」）。兩格各是一個決策點，出貨值＝ owner 說的那一邊。
+ * 完整推理（那個不對稱是怎麼量出來的、為什麼隱形不在這裡）見
+ * `packages/shared/src/sim/vision.ts` 的檔頭。
+ *
+ * ⚠️ 每一格都 `.optional()`：線上的耐久覆蓋層可能已經存過一份**有 `vision`
+ * 但少一個 key** 的文件。缺席時 `visionRulesFromDoc` 回**出貨值**，
+ * ⛔ 不是關掉。
+ */
+export const zVisionRules = z
+  .object({
+    fullVision: z
+      .boolean()
+      .optional()
+      .describe(
+        "⭐ **全視野：牆後的敵人也畫出來**（出貨開著）。" +
+          "owner 2026-08-23：「理論上這個地圖是全視野，就算牆後也看得到，不然現在很奇怪，" +
+          "看到 bot 瘋狂隔牆打空氣敵人，但我卻看不到也打不到」。" +
+          "關掉 = 回到 GH#324 的視野遮蔽：站在牆後的**敵人**不畫（隊友與自己永遠畫）。" +
+          "⛔ 它一格都不影響**隱形** —— 隱形是技能機制，住在「隱形規則」那一頁。",
+      ),
+    wallBlocksBasicAttack: z
+      .boolean()
+      .optional()
+      .describe(
+        "牆擋不擋**普攻**（出貨關著 ＝ 不擋）。打開 = 回到 GH#324「走出視線 ＝ 走出射程」" +
+          "（owner 2026-08-14：「擋普攻 不然會風箏到死 但不擋技能」）—— " +
+          "那條規則是**從視野模型推導**出來的，全視野打開之後它就不再自洽，所以出貨關著。" +
+          "⛔ 兩種值都不影響**技能**：技能從 GH#324 起就穿牆，那是裁決不是遺漏。" +
+          "⚠️ 打開它會讓貼牆風箏重新變成一種打法。",
+      ),
+  })
+  .strict();
+export type VisionRulesConfig = z.infer<typeof zVisionRules>;
+
 /**
  * config.arena-rules@1 — LoL-Arena style ROUND RULES (`config/arena-rules.json`).
  * Per-round grants (levels/gold), auto-learned abilities, augment-offer tiers,
@@ -902,6 +941,17 @@ export const zConfigArenaRulesDoc = z
           "⛔ 它不影響三選一卡與傳說寶玉抽獎（那兩條路從來沒被關過），也⛔ 不管寶具" +
           "（寶具走 `legendaryShelf.open`）。",
       ),
+    /**
+     * ⭐ **視野規則**（owner 2026-08-23）。省略 = `sim/vision.ts` 的
+     * `DEFAULT_VISION_RULES`（＝全視野開著、牆不擋普攻）。
+     * 規則本體、為什麼兩格分開、以及那個不對稱是怎麼量出來的，全部在
+     * `packages/shared/src/sim/vision.ts` 的檔頭。
+     *
+     * ⚠️ 必須 `.optional()`：線上已經有 `config.arena-rules@1` 的耐久覆蓋層，
+     * 多一個必填欄會讓整份 config 被 Zod 退回 → 內容載入失敗 → 骨架英雄
+     * （2026-08-02 事故的形狀）。
+     */
+    vision: zVisionRules.optional(),
     /**
      * ⭐ **更高階寶具**（EX解放 / EX∅ 根源）。省略 = {@link DEFAULT_WEAPON_TIERS}。
      * ⚠️ 由**高到低**排；引擎照這個順序逐階骰。

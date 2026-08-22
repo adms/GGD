@@ -21,6 +21,30 @@ import { activeObstacles } from "@ggd/shared/sim/map/gates";
 import { hasLineOfSight } from "@ggd/shared/sim/map/lineOfSight";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 import type { ZoneDef } from "@ggd/shared/sim/world/ArenaDef";
+import { Configs } from "@ggd/shared/content";
+import { ARENA_RULES_DOC_ID } from "@ggd/shared/content/schema/config/arenaRules";
+import {
+  DEFAULT_VISION_RULES,
+  visionRulesFromDoc,
+  type VisionRules,
+} from "@ggd/shared/sim/vision";
+
+/**
+ * 這一幀的視野規則，讀**出貨的登錄表**（＝後台存過的耐久覆蓋層也算數）。
+ *
+ * ⚠️ 記住上一次那份**文件物件**而不是它的內容：`Configs` 只在載入時被寫一次，
+ * 所以身分比對就足夠，而且它讓這支在 `fullVision` 打開時每一幀是零配置。
+ */
+let memoDoc: unknown;
+let memoRules: VisionRules = DEFAULT_VISION_RULES;
+function liveVisionRules(): VisionRules {
+  const doc: unknown = Configs.tryGet(ARENA_RULES_DOC_ID);
+  if (doc !== memoDoc) {
+    memoDoc = doc;
+    memoRules = visionRulesFromDoc(doc);
+  }
+  return memoRules;
+}
 
 /** `EntityViewRegistry.sync` 的 `occlude` 參數。 */
 export interface OccludeArgs {
@@ -31,6 +55,14 @@ export interface OccludeArgs {
 
 /**
  * 觀看者的遮蔽參數，或 undefined（＝這一幀不做遮蔽）。
+ *
+ * ⭐ **出貨從 2026-08-23 起永遠回 undefined**（全視野，owner 逐字：「理論上這個
+ * 地圖是**全視野，就算牆後也看得到**」）。整支保留下來是因為它是那個決定的
+ * **一鍵 rollback**：後台把 `arena-rules.vision.fullVision` 關掉，GH#324 的
+ * 視野遮蔽逐位元回來。⛔ 不要把它刪掉改成常數 undefined —— 那就沒有回頭路了。
+ *
+ * ⛔ 這一格**不管隱形**。隱形是技能機制（`sim/stealth.ts` 的 `canSee`
+ * ＋ `config/stealth.json`），走的是伺服器的索敵/點選閘，⛔ 不是這裡的畫不畫。
  *
  * 三個 fail-safe 的出口，三個都退回「什麼都不遮」——⛔ 不是「猜一區」：
  * 遮蔽做多了會把該看到的人藏起來（玩家看不出那是 bug），做少了只是回到今天。
@@ -44,7 +76,11 @@ export function occludeArgsFor(
   zones: readonly ZoneDef[],
   viewerZone: number | null,
   center: Vec2 | null,
+  rules: VisionRules = liveVisionRules(),
 ): OccludeArgs | undefined {
+  // ⭐ 全視野 —— 牆後也看得到。⛔ 這一行在前面，因為它是**整個機制**的開關，
+  //    ⛔ 不是「這一幀剛好沒有觀看者」那種 fail-safe。
+  if (rules.fullVision) return undefined;
   if (center === null || viewerZone === null) return undefined;
   const zone = zones[viewerZone];
   if (zone === undefined || zone.bounds?.kind !== "rect") return undefined;

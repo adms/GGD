@@ -33,6 +33,10 @@
     "randomOnlyTables": []
   },
   "weaponShelfOpen": false,
+  "vision": {
+    "fullVision": true,
+    "wallBlocksBasicAttack": false
+  },
   "weaponTiers": [
     {
       "id": "ex-origin",

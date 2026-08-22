@@ -24,6 +24,7 @@ import { Champions } from "../content/registry";
 import { distSq, normalize, sub, lenSq, type Vec2 } from "../math/vec2";
 import { hasLineOfSight } from "../map/lineOfSight";
 import { activeObstacles } from "../map/gates";
+import { visionRulesOf } from "../vision";
 import { fireHooks } from "../effects/hooks";
 import { rollEvade, rollFumble } from "../combat/evasion";
 import { rollCritStrike } from "../combat/critStrike";
@@ -155,8 +156,15 @@ export function weaponClassOf(
  *
  * ⚠️ 用**這一 tick 真的擋路**的障礙物（gate 過濾之後）—— 開著的門不擋普攻。
  * ⛔ `ProjectileSystem` 不呼叫這一支：技能照樣穿牆，那是裁決不是遺漏。
+ *
+ * ⭐ **出貨從 2026-08-23 起整條關著**（`sim/vision.ts` 的 `wallBlocksBasicAttack`
+ * 出貨 `false`）。owner 逐字：「理論上這個地圖是全視野，就算牆後也看得到⋯
+ * 我卻**看不到也打不到**」。這道閘的語意是上面那一行寫的「走出視線 ＝ 走出射程」，
+ * 也就是它**從視野模型推導出來** —— 視野模型換成全視野，這個推導就不成立了。
+ * ⛔ 不是刪掉：它是一格後台開關，翻回 `true` 逐位元等於 GH#324 的行為。
  */
 function seesTarget(world: SimWorld, zone: number, from: Vec2, to: Vec2): boolean {
+  if (!visionRulesOf(world).wallBlocksBasicAttack) return true;
   const zoneDef = world.arena.zones[zone] ?? world.arena.zones[0];
   if (zoneDef === undefined) return true;
   const live = activeObstacles(zoneDef.obstacles, world.gateSchedule, world.tick);
