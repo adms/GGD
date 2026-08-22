@@ -55,9 +55,22 @@ export const STOP_ORDER: Order = { kind: "stop" };
 export const RECALL_COMMAND: Command = { kind: "recall" };
 /**
  * 陣亡投幣 (task #191) — G, the dead player's one action. Unconditional here:
- * the SIM owns the "only the dead may throw" rule and answers every refused
- * press with a `coinDropRejected` reason, so gating the key too would just
- * produce a second, silent refusal path that could disagree with the server.
+ * the SIM owns the "only the dead may throw" rule and emits a
+ * `coinDropRejected` reason for every refused press, so gating the key too
+ * would just produce a second, silent refusal path that could disagree with the
+ * server.
+ *
+ * ⚠️ **這段話在 2026-08-23 之前是一句承重的謊**（CLAUDE.md 第三守則）。它拿
+ * 「sim 會回答每一次被拒的按鍵」當作**不設閘的理由**，而那個回答在客戶端
+ * **一個消費端都沒有** —— `game-server/src/net/eventFanout.ts` 自己的註解逐字
+ * 寫著「this event currently has NO client consumer」。於是每一次 G、每一次
+ * 觀戰橫幅上那顆按鈕，都是**純粹的靜默**：沒有 toast、沒有嗶聲、沒有抖動。
+ * ⛔ 而它不是邊角 —— 出貨經濟保證每個玩家每一場都撞得到
+ * （`goldDrop.coinValue × goldDrop.coinsPerRound` 遠大於 `match.startingGold`）。
+ *
+ * ⭐ 現在真的有消費端了：`ui/coinThrow.recordCoinEvent()`，掛在 `GameApp` 的事件
+ * 排水口上（`ui/castFeedback` 的告示管線）。⇒ 這一段的理由重新成立，
+ * 而 `ui/coinThrow.test.ts` 是讓它**不能再默默失效**的那條線。
  */
 export const DROP_COIN_COMMAND: Command = { kind: "dropCoin" };
 

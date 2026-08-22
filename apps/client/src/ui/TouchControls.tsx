@@ -38,6 +38,7 @@ import { INNATE_ACTIVE_CASTABLE } from "./castAnnounce";
 import { setHeldAbility } from "./abilityHold";
 import { rangeGuide } from "./rangeGuideConfig";
 import { abilityActivationCue } from "./abilityCue";
+import { coinThrowAffordable, coinThrowGreysWhenPoor, coinThrowRules } from "./coinThrow";
 import { prefersReducedMotion } from "./buttonSfx";
 import { stripAbilityNumber } from "./components/abilityText";
 import { SfxButton } from "./SfxButton";
@@ -159,9 +160,6 @@ const circleBase: React.CSSProperties = {
   overflow: "hidden",
 };
 
-/** The 陣亡投幣 cap, mirrored from `config.arena-rules@1 goldDrop.coinsPerRound`. */
-const COINS_PER_ROUND = 10;
-
 /** 丟金幣 — the same command the desktop G key and the spectator button send. */
 function dropCoin(): void {
   hudActions.sendCommand({ kind: "dropCoin" });
@@ -229,6 +227,14 @@ export function TouchControls(): React.JSX.Element | null {
   // reset each combat entry) is 0 for exactly those seats, and `localMaxHp > 0`
   // additionally proves a champion exists at all.
   const coinMode = phase === "combat" && !localAlive && localMaxHp > 0 && seat.coinsLeft > 0;
+  // ⭐ 「丟 N 金」的 N 與「x/y」的 y 從 `config.arena-rules@1 goldDrop` 讀
+  // （`ui/coinThrow`），⛔ 不是這個檔裡的 `COINS_PER_ROUND = 10` 與字面值
+  // 「100金」—— 那是 owner 一調 `coinValue` 就同時說謊的兩份文案（第〇·四守則）。
+  const coinRules = coinThrowRules();
+  // ⭐ 金幣不足時變不變灰＝後台一格（`config.ui-cues@1 coinThrowButtonMode`），
+  // 出貨 `always-enabled`。⚠️ 兩種模式下**送得出去的那一次**都會拿到一句話 ——
+  // `ui/coinThrow` 是 `coinDropRejected` 的消費端，⛔ 這一格管不到回饋。
+  const coinPoor = coinMode && coinThrowGreysWhenPoor() && !coinThrowAffordable(seat.gold, coinRules);
   // ⭐ 這一次繪製的尺寸。⚠️ 讀模組單例（不是 React state）—— 與 `AbilityBar` /
   // `EnemyTeamPanel` 同一個做法，所以改設定要等下一次 hud snapshot 才重繪。
   const m = touchMetrics();
@@ -286,16 +292,21 @@ export function TouchControls(): React.JSX.Element | null {
       <div
         data-touch-attack={coinMode ? undefined : ""}
         data-touch-coin={coinMode ? "" : undefined}
-        onTouchStart={coinMode ? dropCoin : pressHandler("ATTACK")}
+        data-touch-coin-poor={coinPoor ? "" : undefined}
+        onTouchStart={coinMode ? (coinPoor ? undefined : dropCoin) : pressHandler("ATTACK")}
         style={{
           ...circleBase,
           right: m.attackCenter - m.attackSize / 2,
           bottom: m.attackCenter - m.attackSize / 2,
           width: m.attackSize,
           height: m.attackSize,
-          background: coinMode ? "rgba(58, 46, 18, 0.9)" : "rgba(58, 28, 30, 0.85)",
-          border: coinMode ? `2px solid ${GOLD}` : "2px solid #7a3230",
-          color: coinMode ? GOLD : TEXT_MAIN,
+          background: coinMode
+            ? coinPoor
+              ? "rgba(38, 34, 26, 0.9)"
+              : "rgba(58, 46, 18, 0.9)"
+            : "rgba(58, 28, 30, 0.85)",
+          border: coinMode ? `2px solid ${coinPoor ? "#6a5c34" : GOLD}` : "2px solid #7a3230",
+          color: coinMode ? (coinPoor ? "#8d8163" : GOLD) : TEXT_MAIN,
           fontSize: coinMode ? m.s(13) : m.s(30),
           lineHeight: 1.25,
           fontWeight: coinMode ? 700 : 400,
@@ -303,8 +314,10 @@ export function TouchControls(): React.JSX.Element | null {
       >
         {coinMode ? (
           <>
-            <div>丟 100金</div>
-            <div style={{ fontSize: m.s(11), opacity: 0.85 }}>{seat.coinsLeft}/{COINS_PER_ROUND}</div>
+            <div>丟 {coinRules.coinValue}金</div>
+            <div style={{ fontSize: m.s(11), opacity: 0.85 }}>
+              {seat.coinsLeft}/{coinRules.coinsPerRound}
+            </div>
           </>
         ) : (
           "⚔"

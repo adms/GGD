@@ -54,10 +54,8 @@ import { RoundEndVoice } from "./RoundEndVoice";
 import { VfxDebugPanel } from "./VfxDebugPanel";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
 import { hudActions } from "./actions";
+import { coinThrowAffordable, coinThrowGreysWhenPoor, coinThrowRules } from "./coinThrow";
 import { HudBoundaryGroup, type HudBoundaryLabels } from "./HudBoundaryGroup";
-
-/** The 陣亡投幣 cap, mirrored from `config.arena-rules@1 goldDrop.coinsPerRound`. */
-const COINS_PER_ROUND = 10;
 
 /**
  * Death-spectator hint — shown while the LOCAL champion is dead (its camera
@@ -68,15 +66,26 @@ function SpectatorHint(): React.JSX.Element | null {
   const alive = useHud((s) => s.localAlive);
   const hasChampion = useHud((s) => s.localMaxHp > 0);
   const phase = useHud((s) => s.phase);
-  const coinsLeft = useHud((s) =>
-    s.localSeatId === null ? 0 : (s.seats.find((v) => v.seatId === s.localSeatId)?.coinsLeft ?? 0),
+  const seat = useHud((s) =>
+    s.localSeatId === null ? null : (s.seats.find((v) => v.seatId === s.localSeatId) ?? null),
   );
+  const coinsLeft = seat?.coinsLeft ?? 0;
   if (alive || !hasChampion) return null;
   // 陣亡投幣 (task #191): the dead player's one action, offered exactly when the
   // server would accept it — combat, dead, throws left. Gating on `!alive` alone
   // would also light it up for a seat that never picked a champion or drew the
   // bye, whose every press comes back `not-in-round`.
   const canThrow = phase === "combat" && coinsLeft > 0;
+  // ⭐ 兩個數字從 `config.arena-rules@1 goldDrop` 讀（`ui/coinThrow`），
+  // ⛔ 不是這個檔裡的 `COINS_PER_ROUND = 10` 加上文案裡的字面值「100金」——
+  // 那是兩個第二住處，而 owner 一調 `coinValue` 它們就同時變成謊話（第〇·四守則）。
+  const rules = coinThrowRules();
+  // ⭐ 金幣不足時這顆按鈕的表現是**一格後台開關**（`config.ui-cues@1
+  // coinThrowButtonMode`）。出貨 `always-enabled`：照亮、照可點，被拒時由
+  // `ui/coinThrow` 把伺服器的原因說出來 —— 權威側說了算，因為 `seat.gold` 是
+  // 快照投影，拿它擋按鈕會在邊界產生「明明有錢卻按不下去」。
+  // `grey-when-poor` = rollback：客戶端預測不足就變灰。
+  const poor = coinThrowGreysWhenPoor() && !coinThrowAffordable(seat?.gold ?? 0, rules);
   return (
     <div
       style={{
@@ -102,20 +111,22 @@ function SpectatorHint(): React.JSX.Element | null {
       {canThrow && (
         <button
           type="button"
+          data-coin-throw
+          disabled={poor}
           onClick={() => hudActions.sendCommand({ kind: "dropCoin" })}
           style={{
             pointerEvents: "auto",
             padding: "3px 12px",
-            background: "rgba(58, 46, 18, 0.9)",
-            border: "1px solid #d9b64e",
+            background: poor ? "rgba(38, 34, 26, 0.9)" : "rgba(58, 46, 18, 0.9)",
+            border: `1px solid ${poor ? "#6a5c34" : "#d9b64e"}`,
             borderRadius: 999,
-            color: "#f0d78a",
+            color: poor ? "#8d8163" : "#f0d78a",
             fontSize: 12,
             fontWeight: 700,
-            cursor: "pointer",
+            cursor: poor ? "not-allowed" : "pointer",
           }}
         >
-          丟 100金 (G) {coinsLeft}/{COINS_PER_ROUND}
+          丟 {rules.coinValue}金 (G) {coinsLeft}/{rules.coinsPerRound}
         </button>
       )}
     </div>

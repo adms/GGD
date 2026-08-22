@@ -116,8 +116,14 @@ export const CAST_DENY_FLASH_MS = 420;
 
 /** One line of cast feedback, ready to render and to play. */
 export interface CastNotice {
-  /** which button it belongs to — the bar shakes THAT tile */
-  readonly slot: ChampionAbilitySlot;
+  /**
+   * which button it belongs to — the bar shakes THAT tile.
+   *
+   * ⭐ **null = 這一句不屬於任何一格按鈕。** 出貨的例子是陣亡投幣被拒
+   * （`ui/coinThrow`）：它是觀戰橫幅上那顆按鈕，⛔ 不在技能列上。抓一格來抖
+   * 會叫玩家去看一顆跟這件事無關的圖示，⛔ 那比不抖更難懂。
+   */
+  readonly slot: ChampionAbilitySlot | null;
   /** ability display name, already stripped of its hero-number prefix ("" if unknown) */
   readonly abilityName: string;
   /** the sentence shown to the player (Traditional Chinese, UI chrome) */
@@ -324,8 +330,14 @@ export function noteCastConfirmed(slot: ChampionAbilitySlot, nowMs: number): voi
   flashes.set(slot, { kind: "confirm", startMs: nowMs });
 }
 
-/** A refused press — the button shakes red instead of confirming. */
-export function noteCastDenied(slot: ChampionAbilitySlot, nowMs: number): void {
+/**
+ * A refused press — the button shakes red instead of confirming.
+ *
+ * `null` = 這一次拒絕不屬於任何一格（陣亡投幣）→ 無事發生。⭐ 收在這裡而不是
+ * 要每一個呼叫端自己判空：⛔ 一個「要記得先檢查」是判準，而判準會漏。
+ */
+export function noteCastDenied(slot: ChampionAbilitySlot | null, nowMs: number): void {
+  if (slot === null) return;
   flashes.set(slot, { kind: "deny", startMs: nowMs });
 }
 

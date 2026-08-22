@@ -60,6 +60,7 @@ import {
   setLocalAccounts,
 } from "./net/RoomStore";
 import { recordCastEvent } from "./ui/castAnnounce";
+import { recordCoinEvent } from "./ui/coinThrow";
 import type { IntentSender } from "./net/IntentSender";
 import { InterpolationBuffer } from "./net/InterpolationBuffer";
 import { TimeSync } from "./net/TimeSync";
@@ -2118,6 +2119,13 @@ export class GameApp {
     // castBegin/abilityCast becomes its confirm rim. Same shape as the shop
     // line above; all the logic lives in ui/castAnnounce.
     recordCastEvent(ev, localId, nowMs);
+    // ⭐ 陣亡投幣被拒 —— 同一句話的最後一個缺口。`coinDropRejected` 逐座位私訊了
+    // 很久，而 `eventFanout` 自己的註解逐字寫著「this event currently has NO
+    // client consumer」：於是金幣不足時按鈕照亮、照可點、每一次都被 sim 拒掉，
+    // 而畫面上**一個字都沒有**。這一行就是那個消費端（ui/coinThrow）。
+    // ⚠️ 它讀的是 SEAT 不是 entity（payload 是 `{seatId, reason}`，因為
+    // `no-champion` 也是它的一個原因），所以⛔ 不能沿用上面那個 `localId`。
+    recordCoinEvent(ev);
     // 連殺 combo (owner 2026-07-27). The COUNT was decided in the sim off
     // world.tick and arrives on this event; this is the one line that carries
     // it to the screen. Gated on the local SEAT inside (the number in the
