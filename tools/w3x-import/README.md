@@ -30,7 +30,30 @@ cd tools/w3x-import && pnpm test
 python3 tools/w3x-import/extract_emitters.py            # MDX PRE2/RIBB emitters -> out/emitters/
 python3 tools/w3x-import/extract_invocation_params.py   # JASS art params -> out/invocation-params/
 python3 tools/w3x-import/build_vfx_bindings.py          # merge both + stock/buff/summon -> out/vfx-bindings/
+python3 tools/w3x-import/extract_jass_spells.py         # per-spell JASS slices -> out/GoDieEX22s/jass-spells/
+python3 tools/w3x-import/extract_jass_spells.py --check # byte-exact staleness gate (read-only)
+python3 tools/w3x-import/extract_jass_spells.py --stats # coverage JSON, writes nothing
 ```
+
+`extract_jass_spells.py` is **trigger-family driven** (GH#542). It enumerates every
+`InitTrig_<base>` in the map script and takes the whole `Trig_<base>_*` family as one unit,
+rather than looking up a list of rawcodes harvested from `content/`. That distinction is the
+whole point: the artifact it replaces was content-driven, so it only ever *considered* 128
+rawcodes out of the 317 the script actually dispatches, and it shipped 67 slices — missing
+79% while looking completely normal. The script that produced it was never committed, so
+nothing could re-run or audit it. Family grouping picks up, for free, the three shapes a
+rawcode lookup drops: forwarded condition chains (`Trig_X_Func001C` never names the rawcode),
+damage/attack/death-event passives that only gate on `GetUnitAbilityLevel`, and families
+bound to their caster through a `udg_*` global.
+
+Slices are keyed on two axes. `<RAWCODE>.j` covers all 317 dispatched ability rawcodes.
+`unit-<RAWCODE>.j` covers **hero-activation clusters** — a hero's signature triggers often
+carry no ability rawcode at all and are armed from outside by a trigger gating on the hero's
+*unit* rawcode (Saber's 理想鄉 `Trig_ExcaliburMAX_*` binds through `udg_saber` and is enabled
+by `Trig_Open_Skill_of_Saber_Actions`, which tests `GetUnitTypeId(...) == 'E002'`). Source is
+`out/GoDieEX22s-src/raw/war3map.j` — the unprotected map, whose rawcode set is a strict
+superset of the obfuscated `GoDieEX22s/raw/scripts__war3map.j` the old artifact read.
+Guard: `packages/shared/src/ops/jassExtractionCoverage.test.ts`.
 
 `extract_invocation_params.py` recovers what the object data cannot express: the per-cast
 scale / tint / alpha / fly height / facing / animation clip / playback rate / spawn offset /
