@@ -183,13 +183,17 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // 2026-08-22：24 → 25。`damage-tier-exemptions`（#534）以 OWN_PAGE 進場 ——
     // 它是**警告頁**不是編輯頁（owner：「作為例外在後台跳出警告就好」），
     // 而通用引擎畫不動它的 `rules` 陣列。到期條件寫在那一列的 expiresWhen。
-    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(25);
+    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(27); // 2026-08-22：25 → 27（#529 ability-vfx-bindings · #541 combo-strikes，兩份都是產生器擁有的推導表）
     // 2026-08-17：13 → 14。`roster`（英雄上下架）**往下走了一格** —— 它從
     // KNOWN_GAP 變成 OWN_PAGE，因為 ui/RosterPage.tsx 做出來了。⚠️ 這是這張表
     // 唯一「健康」的移動方向：帳單被付掉，而總列數不變。
     // 2026-08-20：14 → 13（arena-rules 走進通用引擎，見上面那一段）。
     expect(byKind("OWN_PAGE")).toHaveLength(14);
-    expect(byKind("NOT_TUNABLE")).toHaveLength(3);
+    // 2026-08-22：3 → 5。`ability-vfx-bindings`（#529）與 `combo-strikes`（#541）
+    // 兩份都是**產生器擁有**的推導表（各自有 `--check` 逐位元組閘）——
+    // ⛔ 給它們一張編輯表單,操作者填的值會在下一次跑產生器時被無聲蓋掉,
+    // 而 `source` / `unmatched` 欄位會**繼續宣稱**它有出處(＝ icon-plan 那一列的形狀)。
+    expect(byKind("NOT_TUNABLE")).toHaveLength(5);
     // 2026-08-02：2 → 5。新增的三列是 lobby-layout / valhalla-sandbox /
     // victory-podium —— 三份文件與 Zod 都接完了,只差客戶端還在讀寫死的常數。
     // 2026-08-03：5 → 4。victory-podium **往下走了一格**:客戶端接上了消費端,

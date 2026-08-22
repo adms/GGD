@@ -258,6 +258,21 @@ export const CONFIG_DOC_EXEMPTIONS: readonly ConfigDocExemption[] = [
     expiresWhen: "播放端開始真的讀 rate（＝它變成播放參數）、或文案編輯搬進後台時失效。owner 會改的是文案，入口是 tools/tts-gen + content/audio-manifests/taunts.json。",
   },
 
+  {
+    docId: "ability-vfx-bindings",
+    kind: "NOT_TUNABLE",
+    provenanceKey: "unmatched",
+    why: "產生器擁有的**推導表**（GH#529）：`tools/vfx-bind/scan.py --check` 逐位元組比對，整份由它覆寫。每一列的存在理由都住在證據裡（`source` 指名 JASS 呼叫點或 provenance 的 rawcode），而 `unmatched` 那一半記的是「這一份原作特效**為什麼**不接」——那是一個能被反駁的理由，⛔ 不是一個偏好。開一頁讓人手改綁定＝把一份可稽核的對照變成沒有出處的猜測，而下一次跑產生器又會把它無聲蓋掉（＝ icon-plan 那一列的形狀）。要改綁定的正確路徑是改證據（抽取器／provenance）再重跑。",
+    expiresWhen: "產生器不再覆寫整份、或 schema 長出一格「人來決定」的參數（例如一格 owner 手動覆寫的白名單）時失效。",
+  },
+  {
+    docId: "combo-strikes",
+    kind: "NOT_TUNABLE",
+    provenanceKey: "source",
+    why: "產生器擁有的**JASS 逐字抄本**（GH#541）：`python3 tools/jass-combo/extract.py --check` 逐位元組比對。29 列的 `steps` 是從 `war3map.j` 的 `TriggerSleepAction` 序列**一秒不差抄下來**的（owner 2026-08-22：「⭐ 間隔就是動畫節奏的來源」），每一列都帶 `jassFunc`/`jassLine` 當證據。後台改一格 = 那支技能的節奏不再等於原作，而 `source` 欄位會**繼續宣稱**它抄自 war3map.j:33799（第三守則）。要改節奏的正確路徑是在技能文件上覆寫 `steps`（`family` 之外的顯式值），⛔ 不是改這張抄本。",
+    expiresWhen: "owner 明說要在後台微調原作節奏（＝這份文件從「抄本」變成「參數表」）、或 extract.py 不再覆寫整份時失效。",
+  },
+
   // ── ③ DEFERRED：今天做了會是一句自我一致的謊言，綁到期條件 ──────────────
   {
     docId: "round-grade",

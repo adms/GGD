@@ -6,5 +6,10 @@
   "moveLead": 4,
   "attackMoveLead": 5,
   "basicAttackRange": 12,
-  "longPressMs": 400
+  "longPressMs": 400,
+  "keyboardEnabled": true,
+  "cursorEnabled": true,
+  "cursorSpeed": 1100,
+  "cursorAccel": 1.8,
+  "cursorToggleButton": 10
 }

@@ -109,3 +109,5 @@ export * from "./model";
 export * from "./vfx";
 export * from "./skin";
 export * from "./template";
+export * from "./abilityVfxBindings";
+export * from "./comboStrikesDoc";

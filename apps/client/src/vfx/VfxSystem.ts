@@ -96,6 +96,7 @@ import { familyCastHeightY } from "../render/vfx/familyCastHeight";
 import {
   applyLayerOverrides,
   applyVfxOverrides,
+  abilityVfxSourceFor,
   castLayersFor,
   layerHeightY,
   layerPosition,
@@ -1327,9 +1328,13 @@ export class VfxSystem {
         // `vfxKey`,`layers` 保持 null,`playCastVfx` 走的是升級前一字未改的那
         // 條路 —— 646 支現有技能的向後相容是靠這個分支,不是靠新程式碼「碰巧
         // 算出一樣的結果」。
-        const layers = isLegacySingleVfx(def as AbilityVfxSource | undefined)
+        // ⭐ GH#529 —— 綁定表要在 legacy 判斷**之前**套用:一支只有舊式單值
+        // `vfxKey` 的技能,被綁定表換成原作那一組之後就**不再是** legacy 了。
+        // 順序反了 = 綁定表逐位元組等於不存在(而畫面看起來完全正常)。
+        const vfxSrc = abilityVfxSourceFor(def as AbilityVfxSource | undefined, def?.id);
+        const layers = isLegacySingleVfx(vfxSrc)
           ? null
-          : castLayersFor(def as AbilityVfxSource | undefined, maxAbilityVfxLayers());
+          : castLayersFor(def as AbilityVfxSource | undefined, maxAbilityVfxLayers(), def?.id);
         this.playCastVfx(
           def?.id,
           doc,

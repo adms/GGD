@@ -77,6 +77,8 @@ import { applyAudioMixDoc } from "../audio/voiceMixPolicy";
 import { setFamilyTuning } from "../render/vfx/w3xAbilityArt";
 // GH#384 —— 617 筆逐技能特效綁定（分類／證據／晉升）。同一條縫、同一個理由。
 import { setAbilityArtBindings } from "../render/vfx/abilityArtContent";
+import { setAbilityVfxBindings } from "../render/vfx/abilityLayers";
+import type { ConfigAbilityVfxBindingsDoc } from "@ggd/shared/content/schema/abilityVfxBindings";
 import { vfxSoundLayer } from "../audio/vfxSound";
 import { resolveFamilyArt } from "../render/vfx/familyTuning";
 import { setMaxAbilityVfxLayers } from "../render/vfx/abilityLayers";
@@ -345,6 +347,15 @@ export class ContentDb {
     // 一模一樣（失敗形態②）。`setAbilityArtBindings` 收到空的會吼一行到 console。
     setAbilityArtBindings(
       this.configDoc<ConfigVfxAbilityArtDoc>("vfx-ability-art", "config.vfx-ability-art@1"),
+    );
+    // ⭐ GH#529 —— 技能 ↔ 原作 emitter 的推導綁定表。⛔ 少了這一行,342 支技能
+    // (89%)繼續播**通用原型**(依元素給的火/冰/雷球)而不是它在原作裡的樣子 ——
+    // 而那看起來跟「原作特效還沒匯入」一模一樣(失敗形態②:算出來了但從沒送到)。
+    setAbilityVfxBindings(
+      this.configDoc<ConfigAbilityVfxBindingsDoc>(
+        "ability-vfx-bindings",
+        "config.ability-vfx-bindings@1",
+      ),
     );
     const vfxFamiliesDoc = this.configDoc<ConfigVfxFamiliesDoc>(
       "vfx-families",

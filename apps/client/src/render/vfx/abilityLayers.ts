@@ -23,6 +23,13 @@
  */
 import type { VfxDoc } from "@ggd/shared/content";
 import {
+  EMPTY_ABILITY_VFX_BINDINGS,
+  buildAbilityVfxBindingIndex,
+  resolveAbilityVfxSource,
+  type AbilityVfxBindingIndex,
+} from "@ggd/shared/content/vfxBindings";
+import type { ConfigAbilityVfxBindingsDoc } from "@ggd/shared/content/schema/abilityVfxBindings";
+import {
   ABILITY_VFX_LAYER_OVERRIDE_FIELDS,
   clampMaxAbilityVfxLayers,
   resolveAbilityVfxLayers,
@@ -144,8 +151,41 @@ export function layerPosition(
 export function castLayersFor(
   def: AbilityVfxSource | null | undefined,
   maxLayers?: number,
+  abilityId?: string,
 ): ResolvedVfxLayer[] {
-  return resolveAbilityVfxLayers(def, clampMaxAbilityVfxLayers(maxLayers));
+  return resolveAbilityVfxLayers(
+    abilityVfxSourceFor(def, abilityId),
+    clampMaxAbilityVfxLayers(maxLayers),
+  );
+}
+
+// ---------------------------------------------------------------------------
+// GH#529 —— 技能 ↔ 原作 emitter 的**推導綁定表**,由組合根安裝(同 `setFamilyTuning` 那條路)
+// ---------------------------------------------------------------------------
+
+let activeVfxBindings: AbilityVfxBindingIndex = EMPTY_ABILITY_VFX_BINDINGS;
+
+/**
+ * 安裝 `config.ability-vfx-bindings@1`。
+ *
+ * ⛔ 少了這一行,342 支技能(89%)繼續播**通用原型**而不是它在原作裡的樣子 ——
+ * 而那看起來跟「特效還沒做」一模一樣(失敗形態②:算出來了但從沒送到)。
+ * 傳 null = 沒有覆蓋(⛔ 不是「關掉特效」)。
+ */
+export function setAbilityVfxBindings(doc: ConfigAbilityVfxBindingsDoc | null | undefined): void {
+  activeVfxBindings = buildAbilityVfxBindingIndex(doc);
+}
+
+/**
+ * 一支技能真正要播的特效來源 —— 四階覆蓋住 `packages/shared` 的 `resolveAbilityVfxSource`,
+ * ⛔ 這裡沒有第二套判斷(那會變成第二個住處,而它一定會跟出貨的那份漂開)。
+ */
+export function abilityVfxSourceFor(
+  def: AbilityVfxSource | null | undefined,
+  abilityId?: string,
+): AbilityVfxSource | null | undefined {
+  if (!def || !abilityId) return def;
+  return resolveAbilityVfxSource(abilityId, def, activeVfxBindings);
 }
 
 // ---------------------------------------------------------------------------

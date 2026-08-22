@@ -34,6 +34,12 @@ const FEEL: GamepadFeel = {
   attackMoveLead: SHIP.attackMoveLead + 5,
   basicAttackRange: SHIP.basicAttackRange + 19,
   longPressMs: SHIP.longPressMs + 600,
+  // GH#502 的五格 —— 這條測試量的是**手感**那五格,這五格只是型別上必填。
+  keyboardEnabled: SHIP.keyboardEnabled,
+  cursorEnabled: SHIP.cursorEnabled,
+  cursorSpeed: SHIP.cursorSpeed,
+  cursorAccel: SHIP.cursorAccel,
+  cursorToggleButton: SHIP.cursorToggleButton,
 };
 /** 出貨值與 FEEL 的正中間：⛔ 出貨那一邊收得下，FEEL 那一邊收不下。 */
 const mid = (k: "deadzone" | "longPressMs"): number => (SHIP[k] + FEEL[k]) / 2;

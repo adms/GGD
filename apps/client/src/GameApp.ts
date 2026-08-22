@@ -763,6 +763,18 @@ export class GameApp {
             }
           }
         }
+        // ⭐ GH#539 —— 常駐特效的 **glb** 那一半（原作的魔法陣是一個帶動畫的 mdx,
+        // ⛔ 不是粒子）。同一份 `persistentVfx`,兩條算繪路:指到 `attachment@1`
+        // 走這裡,指到 `vfx@1`/`ribbon@1` 走 AmbientVfx。⛔ 少了這一段,莉娜腳下
+        // 那個圈就是一份填了沒人讀的欄位。
+        for (const id of this.persistentVfxFor(e.key) ?? []) {
+          const doc = this.contentDb.attachmentFor(id);
+          if (!doc) continue;
+          for (const worn of wornFromAttachmentDoc(doc)) {
+            const spec = wornAttachmentSpec(worn, glbPathOf);
+            if (spec) out.push(spec);
+          }
+        }
         return out;
       },
     });
@@ -2259,7 +2271,11 @@ export class GameApp {
       if (!view) continue;
       seen.add(e.id);
       const modelKey = this.resolveModelKey(e.key, e.seatId);
-      this.ambient.attach(e.id, modelKey, view.root);
+      // ⭐ GH#539 —— 常駐特效（`ability@1.persistentVfx`）。原作的粉紫魔法陣
+      // (`MidchilderNanohaAura.mdx`) 掛在 `"origin"` 而**從來沒有 DestroyEffect**,
+      // 所以它與 ambient 綁定是同一件事:活著就播、死了就收。⛔ 少了這一行,
+      // `persistentVfx` 是一格填了沒人讀的欄位（失敗形態③:整條可以刪掉而測試全綠）。
+      this.ambient.attach(e.id, modelKey, view.root, this.persistentVfxFor(e.key));
       // task #59: the state-gated channel needs the CURRENT visual anim state,
       // which only the view knows. Bound models only — everything else is a
       // cheap map miss that never allocates.
@@ -2269,6 +2285,39 @@ export class GameApp {
     }
     this.whirlwind.sweep(seen);
     this.ambient.sweep(seen);
+  }
+
+  /**
+   * 一位英雄現在該掛著的**常駐特效** vfx id（GH#539）。
+   *
+   * ⚠️ 今天只解析 `when` **缺席**的那一批 —— 那等於原作的
+   * `GetUnitAbilityLevel(u, id) > 0`（「這支技能在身上就掛著」）。帶條件的那些需要
+   * `SimWorld` 才求得了值(條件葉住在 sim 那一側),⛔ 而我不在這裡重寫一份會跟 sim
+   * 漂開的求值器（那正是第二守則失敗形態⑤:被測的不是出貨的那個）。
+   * ⭐ 閘在 `persistentVfxClientCoverage.test.ts`:出貨內容一旦出現客戶端求不了值的
+   * `when`,它就紅 —— ⛔ 不是靜靜不掛（那會讓「條件沒成立」與「引擎不支援」長得一樣）。
+   */
+  private persistentVfxFor(championKey: string): readonly string[] | undefined {
+    const doc = Champions.tryGet(championKey as never) as
+      | { abilities?: Record<string, unknown>; exAbility?: unknown; passiveAbility?: unknown }
+      | undefined;
+    if (!doc) return undefined;
+    let out: string[] | undefined;
+    const take = (a: unknown): void => {
+      const specs = (a as { persistentVfx?: readonly { vfxKey: string; when?: unknown }[] } | null)
+        ?.persistentVfx;
+      if (!specs) return;
+      for (const spec of specs) {
+        if (spec.when !== undefined) continue;
+        (out ??= []).push(spec.vfxKey);
+      }
+    };
+    for (const a of Object.values(doc.abilities ?? {})) take(a);
+    for (const ref of [doc.exAbility, doc.passiveAbility]) {
+      if (typeof ref === "string") take(Abilities.tryGet(ref as never));
+      else take(ref);
+    }
+    return out;
   }
 
   /**

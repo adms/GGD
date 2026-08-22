@@ -79,6 +79,12 @@ interface AmbientItem {
 }
 
 interface Attachment {
+  /**
+   * ⭐ GH#539 —— 這一次掛上去的**常駐特效**（`ability@1.persistentVfx`）簽章。
+   * 它與 `modelKey` 一起決定「要不要重掛」：學了 EX 之後簽章變了 → 重掛，
+   * ⛔ 而不是等下一次換模型才生效。
+   */
+  extrasSig?: string;
   modelKey: string;
   root: TransformNode;
   items: AmbientItem[];
@@ -122,10 +128,30 @@ export class AmbientVfx {
    * (entityId, modelKey, rootNode); a changed model re-binds. Call only once
    * content is loaded — an empty binding list is recorded as-is.
    */
-  attach(entityId: number, modelKey: string, rootNode: TransformNode): void {
+  attach(
+    entityId: number,
+    modelKey: string,
+    rootNode: TransformNode,
+    /**
+     * ⭐ GH#539 —— 條件成立的**常駐特效** vfx id（`ability@1.persistentVfx`）。
+     *
+     * 它們刻意騎**同一套**生命週期（tick／detach／sweep／池化）：常駐特效與
+     * ambient 綁定在「掛在實體身上、活著就播、死了就收」這件事上逐字相同，
+     * ⛔ 另造一套只會多一份會各自腐爛的池子（＝ #131 那種孤兒發射器的來源）。
+     */
+    extraVfxIds?: readonly string[],
+  ): void {
     if (this.disposed) return;
+    const extrasSig = extraVfxIds && extraVfxIds.length > 0 ? extraVfxIds.join("|") : undefined;
     const existing = this.attachments.get(entityId);
-    if (existing && existing.modelKey === modelKey && existing.root === rootNode) return;
+    if (
+      existing &&
+      existing.modelKey === modelKey &&
+      existing.root === rootNode &&
+      existing.extrasSig === extrasSig
+    ) {
+      return;
+    }
     if (existing) this.detach(entityId);
 
     const items: AmbientItem[] = [];
@@ -171,10 +197,63 @@ export class AmbientVfx {
       }
       items.push(item);
     }
-    this.attachments.set(entityId, { modelKey, root: rootNode, items });
+    for (const vfxId of extraVfxIds ?? []) {
+      const item = this.buildItem(vfxId, rootNode);
+      if (item) items.push(item);
+    }
+    this.attachments.set(entityId, {
+      modelKey,
+      root: rootNode,
+      items,
+      ...(extrasSig === undefined ? {} : { extrasSig }),
+    });
   }
 
   /** Unbind and return every pooled resource (safe when not attached). */
+  /**
+   * 一筆 vfx id → 一個 `AmbientItem`（粒子或緞帶），掛在 `rootNode`（或它的錨骨）底下。
+   * ⭐ 與 `attach()` 內的那一段是**同一套規則**，抽出來只是為了讓常駐特效重用它。
+   * 回 `null` = 這個 id 沒有被著作（SOFT ref）⇒ 當作沒有，⛔ 不是崩潰。
+   */
+  private buildItem(vfxId: string, rootNode: TransformNode): AmbientItem | null {
+    const vfxDoc = this.hooks.vfxDocFor(vfxId);
+    const ribbonDoc = vfxDoc ? null : this.hooks.ribbonDocFor(vfxId);
+    if (!vfxDoc && !ribbonDoc) return null;
+    const anchorBone = (vfxDoc ?? ribbonDoc)!.anchorBone;
+    const item: AmbientItem = {
+      boneResolved: anchorBone === undefined,
+      nextScanMs: 0,
+      giveUpMs: Infinity,
+      ...(anchorBone !== undefined ? { anchorBone } : {}),
+    };
+    const node = anchorBone !== undefined ? findBoneNode(rootNode, anchorBone) : null;
+    if (node) item.boneResolved = true;
+    const target = node ?? rootNode;
+    if (vfxDoc) {
+      const emitter = this.acquireEmitter(vfxDoc);
+      emitter.emitterMesh.parent = target;
+      emitter.emitterMesh.position.setAll(0);
+      if (vfxDoc.mode === "continuous") {
+        if (isSwingTrailDoc(vfxDoc)) {
+          item.swingGated = true;
+          emitter.ps.emitRate = Math.max(1, Math.round(emitter.baseRate * swingEmitScale(0)));
+        }
+        emitter.ps.start();
+      } else {
+        item.nextBurstMs = 0;
+      }
+      item.emitter = emitter;
+      item.vfxDoc = vfxDoc;
+    } else if (ribbonDoc) {
+      const ribbon =
+        this.ribbonPool.get(ribbonDoc.id)?.pop() ??
+        new RibbonTrail(this.scene, ribbonDoc, { budget: this.ribbonBudget });
+      item.ribbon = ribbon;
+      ribbon.attachTo(target, 0, rootNode);
+    }
+    return item;
+  }
+
   detach(entityId: number): void {
     const att = this.attachments.get(entityId);
     if (!att) return;

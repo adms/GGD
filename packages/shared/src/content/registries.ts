@@ -35,6 +35,10 @@ import { rangeTiersFromDoc, resolveRangeTier } from "./rangeTiers";
 // 冷卻五級距 → 秒數（GH#445）／傷害五級距 → 基礎值（GH#447）。同上，唯一的查表處。
 import { cooldownTiersFromDoc, resolveCooldownTier } from "./cooldownTiers";
 import { damageTiersFromDoc, resolveDamageTier } from "./damageTiers";
+// GH#541 —— 連段的間隔序列住 `config.combo-strikes@1`（第〇·四守則的共用表）,
+// 在**載入時**被解析進每一個 `comboStrikes` 節點。⛔ 沒有這一步,只寫 `family`
+// 的技能會在 sim 裡擲錯,而 `content:build` 與全套測試對它是綠的。
+import { normalizeComboTable, resolveComboFamilies } from "../sim/effects/comboFamilies";
 import { manaTiersFromDoc, resolveManaCostTier } from "./manaTiers";
 import { resolveSpeedGrowthTiers, speedGrowthTiersFromDoc } from "./speedGrowthTiers";
 // ⭐ 說明推導（票號待開） —— 技能說明的佔位符在 `withProse` 被代入（見下面那一格的說明）。
@@ -263,13 +267,22 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   // 沒有 `manaCostTier` 一格，所以 212 支要花魔力的技能各自帶一個自由數字：
   // 級距表一改它們一動都不會動，⛔ 而且沒有任何東西會紅。
   const manaTiers = manaTiersFromDoc(configDocs.find((c) => c.schema === "config.mana-tiers@1"));
+  // GH#541 —— 29 個 JASS 連段函式的間隔表。⭐ 間隔就是動畫節奏的來源(owner 2026-08-22),
+  // 所以它**逐支不同**(克勞德 0.2/0.6/0.4 · 龍虎亂舞 0.3/0.05/0.5 · 理想鄉 0.1/0.3/0.2)——
+  // ⛔ 統一成一個 `intervalSec` 會把每一支的手感抹平。
+  const comboFamilies = normalizeComboTable(
+    configDocs.find((c) => c.schema === "config.combo-strikes@1"),
+  );
   const withTiers = <T extends object>(d: T): T =>
     // ⚠️ 冷卻在**幾何之外**是刻意的：`cooldownShapeOf` 的自動推形狀會去看
     // `radius`/`radiusTier`，而 `resolveRadiusTier` 只**加**欄位不刪 ——
     // 先跑幾何再跑冷卻，兩種寫法（填數字／填級距）看到的形狀才會一樣。
     // ⭐ 耗魔包在最外層只是**順序無關**（它只讀頂層 `manaCostTier`／`manaCost`，
     // ⛔ 不看幾何也不看傷害），⛔ 不要因此以為它有優先權。
-    resolveManaCostTier(
+    // ⭐ 連段家族包在最外層與耗魔同理:它只讀 `comboStrikes` 節點的 `family`,
+    // ⛔ 不看幾何、不看傷害、不看冷卻 ⇒ 順序無關。
+    resolveComboFamilies(
+      resolveManaCostTier(
       resolveCooldownTier(
         resolveDamageTier(
           resolveDisplacementTier(
@@ -281,6 +294,8 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
         cooldownTiers,
       ) as never,
       manaTiers,
+      ) as never,
+      comboFamilies,
     ) as T;
 
   /**

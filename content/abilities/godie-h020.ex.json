@@ -30,5 +30,11 @@
   ],
   "vfxKey": "fx.prim.void.nova-lg",
   "schema": "ability@1",
-  "castTimeSec": 1.033
+  "castTimeSec": 1.033,
+  "persistentVfx": [
+    {
+      "vfxKey": "attach.ex.midchilder-aura",
+      "attach": "origin"
+    }
+  ]
 }

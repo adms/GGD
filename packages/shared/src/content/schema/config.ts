@@ -221,6 +221,9 @@ import { zConfigVfxFamiliesDoc, zConfigVfxAbilityArtDoc } from "./vfx";
 // schema 住自己的檔案，這裡只接進 union。⛔ 漏掉下面那一行 union 成員 = 一份
 // ability-vfx-bindings.json 進了 content/ 之後**整份**內容驗證失敗 → 骨架英雄。
 import { zConfigAbilityVfxBindingsDoc } from "./abilityVfxBindings";
+// GH#541 —— 29 個 JASS 連段函式的間隔表(第〇·四守則的共用表)。
+// ⚠️ 漏掉這一行 = combo-strikes.json 進了 content/ 之後整份載入失敗 → 骨架英雄。
+import { zConfigComboStrikesDoc } from "./comboStrikesDoc";
 // 嘲弄規則的上界 —— 定義在 sim/taunt.ts(sim 也夾同一個數字),schema 只是把它
 // 接上 Zod,所以兩層守的不可能是兩個數字。
 import {
@@ -7014,6 +7017,36 @@ export const zConfigGamepadDoc = z
      * 「沒反應」放手了。⚠️ 施放**永遠不會被延後** —— 長按同時也放了那一招。
      */
     longPressMs: z.number().min(120).max(2000),
+
+    /**
+     * **螢幕小鍵盤**（GH#502）—— 手把焦點停在文字欄且按確認時要不要浮出鍵盤。
+     *
+     * ⚠️ 這是 owner 說的「支援手把**直接操作到底**」的第一個 blocker:在此之前
+     * `PadFocusNav` 對 `<input>` 只做 `click()` —— 焦點進得去、⛔ **一個字元都打不出來**,
+     * 於是登入／註冊／改密碼／房名／邀請碼／聊天／搜尋**全部**走不下去。
+     * ⛔ 關掉它 = 純手把玩家在**第一個畫面**就卡住,所以預設 true。
+     */
+    keyboardEnabled: z.boolean(),
+
+    /**
+     * **虛擬游標**（GH#502，owner:「類比搖桿可以代替對應滑鼠的功能」）。
+     *
+     * ⭐ 只在**選單場合**啟用,戰鬥中自動停用 —— 游標式瞄準在動作中太慢
+     * (業界一致:Steam Big Picture / Wii U 指標 / Xbox 無障礙指標都是「焦點導覽為主、游標為輔」)。
+     */
+    cursorEnabled: z.boolean(),
+
+    /** 虛擬游標速度（像素／秒，搖桿推到底時）。低於 ~300 過不了一個 1080p 螢幕。 */
+    cursorSpeed: z.number().min(100).max(4000),
+
+    /**
+     * 虛擬游標的**加速曲線指數** —— 1 = 線性（近距離難微調），愈大愈「輕推很慢、推到底很快」。
+     * 超過 ~3 會讓中段速度塌掉,變成只有「不動」與「飛出去」兩檔。
+     */
+    cursorAccel: z.number().min(1).max(4),
+
+    /** 切換虛擬游標的按鈕索引（標準 Gamepad 映射；10 = 左搖桿按下 L3）。 */
+    cursorToggleButton: z.number().int().min(0).max(19),
   })
   .strict();
 
@@ -7040,6 +7073,12 @@ export const DEFAULT_GAMEPAD_FEEL_POLICY: GamepadFeelPolicyDoc = {
   attackMoveLead: 5,
   basicAttackRange: 12,
   longPressMs: 400,
+  // GH#502 —— 兩個開關預設 **on**:它們修的是「純手把走不下去」,⛔ 不是一個口味選項。
+  keyboardEnabled: true,
+  cursorEnabled: true,
+  cursorSpeed: 1100,
+  cursorAccel: 1.8,
+  cursorToggleButton: 10,
 };
 
 /**
@@ -7059,6 +7098,11 @@ export function resolveGamepadFeel(
     attackMoveLead: doc.attackMoveLead,
     basicAttackRange: doc.basicAttackRange,
     longPressMs: doc.longPressMs,
+    keyboardEnabled: doc.keyboardEnabled,
+    cursorEnabled: doc.cursorEnabled,
+    cursorSpeed: doc.cursorSpeed,
+    cursorAccel: doc.cursorAccel,
+    cursorToggleButton: doc.cursorToggleButton,
   };
 }
 
@@ -8226,6 +8270,8 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   // GH#529 —— 技能 ↔ 原作 emitter 的推導綁定表。⚠️ 同上：漏掉這一行 =
   // ability-vfx-bindings.json 會讓內容**整份**載入失敗 → 骨架英雄，而網站看起來正常。
   zConfigAbilityVfxBindingsDoc,
+  // GH#541 —— 連段間隔表。⚠️ 同上:漏掉 = 內容整份驗證失敗,而網站看起來正常。
+  zConfigComboStrikesDoc,
   zConfigAudioMapDoc,
   zConfigChampionVoicesDoc,
   zConfigUnitTintsDoc,

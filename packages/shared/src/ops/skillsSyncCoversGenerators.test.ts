@@ -31,6 +31,20 @@ const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
  * 豁免 = 「這支的產出**不可能**因為技能／特效／級距／卡面說明的改動而變」。
  * ⛔ 理由要具體到能被反駁；⛔ 不接受「跟技能無關」這種同義反覆。
  */
+/**
+ * **純守衛**：這幾支 `*:check` 沒有產物，所以「重生成」對它們沒有意義。
+ * ⚠️ 與上面的 `EXEMPT` 不同 —— 那些是「不會因為技能改動而過期」，
+ * 這些是「**過期**這個概念對它們不成立」。兩種都要寫得出理由。
+ */
+const NO_ARTIFACT: Record<string, string> = {
+  roster: "英雄上下架的純守衛 —— 它驗一致性,⛔ 沒有任何檔案是它寫的",
+  models:
+    "GH#540 殘留屍體的**反向閘**：帶 gore geoset 卻沒宣告 `hiddenPrimitives` 的就紅。" +
+    "⛔ 刻意沒有 build —— 填哪幾個圖元要人看過那顆模型再決定,而**藏錯比屍體更嚴重**" +
+    "(藏掉一塊身體 = 英雄缺一角,而且畫面上不會有任何錯誤)。" +
+    "⭐ 自動填的那一版會把「幾何很像屍體」直接當成「就是屍體」—— 那正是這條閘的反面。",
+};
+
 const EXEMPT: Record<string, string> = {
   "voxel:check": "體素**角色身體**產生器 —— 讀的是英雄外觀，不讀 abilities/vfx/級距",
   "voxel:build:check": "同上，只是驗產物",
@@ -96,8 +110,9 @@ describe("skills:sync / skills:check 涵蓋所有產生器", () => {
     );
     const unbuildable = checked.filter((k) => {
       const base = k.slice(0, -":check".length);
-      // roster:check 是純守衛沒有產物;其餘都要有一支能重生成它的 script
-      if (base === "roster") return false;
+      // ⭐ 純守衛(沒有產物,所以沒有「重生成」這回事)。⛔ 這裡是**帶理由的表**,
+      //    ⛔ 不是一串 `if (base === "…")` —— 一個沒有理由的例外過幾個月就沒有人敢動它。
+      if (base in NO_ARTIFACT) return false;
       return !(base in s || `${base}:build` in s || `${base}:export` in s);
     });
     expect(

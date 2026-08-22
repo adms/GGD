@@ -315,33 +315,36 @@
           "blocksControl": false
         },
         {
-          "kind": "dot",
-          "damageType": "physical",
-          "amountPerTick": {
-            "perRank": [
-              99.0,
-              149.0,
-              199.0
-            ]
-          },
-          "intervalSec": 0.5,
-          "durationSec": 3.5,
-          "stacking": "independent"
-        },
-        {
-          "kind": "dot",
-          "damageType": "physical",
-          "amountPerTick": {
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.3
+          "kind": "comboStrikes",
+          "shape": "single",
+          "family": "superff7",
+          "perStrike": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "perRank": [
+                  99.0,
+                  149.0,
+                  199.0
+                ]
               }
-            ]
-          },
-          "intervalSec": 3.5,
-          "durationSec": 3.5,
-          "stacking": "independent"
+            }
+          ],
+          "finisher": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.3
+                  }
+                ]
+              }
+            }
+          ]
         }
       ],
       "vfxKey": "fx.w3x.orb.herocloudkfksword.p00",

@@ -4,11 +4,8 @@
   "name": "拉扯投擲",
   "description": "P2 拉扯投擲 (需位移詞彙)。",
   "family": "pull-throw",
-  "status": "draft",
+  "status": "ready",
   "params": {},
-  "requires": [
-    "knockback"
-  ],
   "gapScore": 3,
   "exemplar": {
     "skill": "(draft)",
