@@ -20,6 +20,7 @@ import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 import { setCursorVariant } from "../cursor";
 import { abilityActivationCue } from "../ui/abilityCue";
 import { clearHeldAbility, setHeldAbility } from "../ui/abilityHold";
+import { rangeGuide } from "../ui/rangeGuideConfig";
 import { buildCastCommand, type AimAbility } from "./AimResolver";
 
 /** Right-click: attack the hovered enemy, otherwise move to the point. */
@@ -272,7 +273,13 @@ export class InputCapture {
       // already answers an unlearned slot with null and draws nothing, so a
       // second gate here would only be a copy of that rule, free to drift.
       this.heldKeySlot = slot;
-      setHeldAbility(slot);
+      // ⭐ owner 2026-08-22（他標為最高優先，而且回報了**兩次**）：
+      //    「**戰鬥回合按下QWER出現技能說明遮住戰鬥畫面**」
+      // ⛔ 這一行以前是 `setHeldAbility(slot)` —— intent 預設 `"full"` ⇒ 頂端整條
+      //    說明橫幅拉出來蓋住戰鬥畫面。⭐ **按下是施放，⛔ 不是閱讀。**
+      // ⚠️ 2026-08-22 第一次修的時候只改了滑鼠（AbilityBar）與觸控（TouchControls）——
+      //    ⛔ 漏掉鍵盤這條，而 owner 用的正是鍵盤。
+      setHeldAbility(slot, "aim");
     }
 
     switch (ev.code) {

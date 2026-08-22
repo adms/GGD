@@ -26,7 +26,6 @@ const SHIPPED_JSON = JSON.parse(read("content/config/range-guide.json")) as Reco
 const EDITED = {
   ...SHIPPED_JSON,
   hoverDelayMs: 900,
-  hoverOpensBanner: true,
   aoeColor: "#00FF00",
   aoeFillAlpha: 0.77,
   telegraph: {
@@ -97,6 +96,8 @@ describe("config.range-guide@1 的值到得了畫面 (GH#376)", () => {
     vi.advanceTimersByTime(SHIPPED_RANGE_GUIDE.hoverDelayMs + 1); // 出貨延遲 ⇒ 還不該出現
     expect(getDescribedAbility()).toBeNull();
     vi.advanceTimersByTime(900);
-    expect(getDescribedAbility()).toBe("Q"); // hoverOpensBanner: true ⇒ 橫幅開了
+    // ⛔ 說明橫幅 2026-08-22 退休 ⇒ `getDescribedAbility()` 現在等於 `getHeldAbility()`。
+    //    這一行改成驗「hover 之後那一格真的被記住」（範圍圈要用）。
+    expect(getDescribedAbility()).toBe("Q");
   });
 });

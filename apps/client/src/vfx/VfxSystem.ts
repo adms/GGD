@@ -121,6 +121,12 @@ import { pillarPalette, pillarTintFromRamp, type PillarPalette } from "./castPil
 import { severityForHit, sprayDirection, damageScale, type Vec2 } from "./bloodPresets";
 import { goreConfig, resolveGore } from "./goreConfig";
 import { clampOneShotLife, DEFAULT_ONE_SHOT_MAX_LIFE_SEC, oneShotMaxLifeSec } from "./oneShotLife";
+// ⭐ GH#551/#543/#549 —— 三個「演出」層。⛔ 在 2026-08-22 之前它們的唯一 import 端
+//    是自己的測試（失敗形態③：整組刪掉只有測試會紅，而畫面上本來就什麼都沒有）。
+import { ModelFxRig } from "../render/modelFxRig";
+import type { ModelFxMotionSpec, ModelFxOrigin } from "../render/modelFxPath";
+import { ScreenFxLayer } from "./ScreenFxLayer";
+import { FloatingTextFx } from "./FloatingTextFx";
 
 /** Reusable scratch for the #233 headroom probe — no per-frame allocation. */
 const HEADROOM_F = new Vector3();
@@ -146,6 +152,17 @@ export interface VfxContext {
   localEntityId?(): number | null;
   /** Team of an entity; null for neutrals (flowers) and unknown ids. */
   teamOf?(id: number): number | null;
+  /**
+   * ⭐ GH#551/#543 —— `spawnModelFx` 要的兩個內容/資產接縫。
+   *
+   * ⚠️ 它們是**注入**的（⛔ VfxSystem 自己不去拿內容）：這個檔已經有 `vfxDoc?()`
+   * 同一個立場 —— 特效層知道「要播什麼」，⛔ 不知道「內容從哪來」。
+   * ⚠️ 兩個都缺席 ⇒ 移動模型特效整條**靜靜不生**（⛔ 不是崩潰）：
+   *    測試環境與早期開機沒有 AssetManager，而一個會崩潰的特效層會弄壞一場遊戲。
+   *    ⭐ 但那條路有守衛在數（`shippedModelFxAbilities.test.ts`），⛔ 不是無聲。
+   */
+  modelDocFor?(modelKey: string): { glbPath: string; scale?: number } | null;
+  loadModelContainer?(glbPath: string): Promise<unknown | null>;
   /**
    * The CAST BAR's own 0→1 wind-up fraction for an entity (task #228), or null
    * when it is not casting. Injected — never re-derived here — so the ground
@@ -556,6 +573,12 @@ export class VfxSystem {
    * 建構它不配置任何東西：沒有人請求過弧的那一場，池子是空的。
    */
   private readonly arcs: ArcBoltFx;
+  /** ⭐ GH#551 —— 移動中的**模型**特效（翻滾光束／圓周冰塊／直線火球）。null = 沒有內容接縫。 */
+  private readonly modelFx: ModelFxRig | null;
+  /** ⭐ GH#549 —— 全螢幕閃爍 + 相機震動。owner：「不然都不知道發生什麼事情有沒有反擊成功」 */
+  private readonly screenFx: ScreenFxLayer;
+  /** ⭐ 特效文字（原作 CreateTextTagUnitBJ）。 */
+  private readonly floatingText: FloatingTextFx;
   /**
    * ⭐ GH#494 —— 殭屍的錢：掉在屍體上 → 停 1 秒 → 貝茲曲線加速吸回擊殺者 →
    * 輕音效（連段音階升高）。⛔ 它碰不到任何一塊錢（賞金在 sim 早就發完了），
@@ -607,6 +630,17 @@ export class VfxSystem {
     private readonly ctx: VfxContext,
   ) {
     this.blood = new BloodFx(scene);
+    // ⭐ GH#551/#549 —— 三個「演出」層。⚠️ `modelFx` 只在**兩個內容接縫都在**時才建：
+    //    缺任一個就整條靜靜不生（⛔ 不是崩潰）—— 測試環境與早期開機沒有 AssetManager。
+    this.modelFx =
+      ctx.modelDocFor !== undefined && ctx.loadModelContainer !== undefined
+        ? new ModelFxRig(scene, {
+            resolveModel: (k) => ctx.modelDocFor!(k),
+            loadContainer: (p) => ctx.loadModelContainer!(p) as never,
+          })
+        : null;
+    this.screenFx = new ScreenFxLayer();
+    this.floatingText = new FloatingTextFx();
     this.feedback = new CombatFeedbackFx(scene);
     this.status = new StatusAuraFx(scene);
     this.shadows = new ShadowLayer(scene);
@@ -667,6 +701,16 @@ export class VfxSystem {
   /** The universal cast-telegraph layer (test/observability seam, task #228). */
   get telegraphs228(): TelegraphLayer {
     return this.telegraphLayer;
+  }
+
+  /** ⭐ 特效文字的目前清單 —— 由 `ui/WorldAnchorLayer` 每幀讀（GH#543）。 */
+  get floatingTextEntries(): readonly unknown[] {
+    return this.floatingText.entries;
+  }
+
+  /** ⭐ 相機震動的出口安裝（出貨接 `CameraRig.addShake`）。 */
+  installShakeSink(fn: (amplitude: number, durationMs: number) => void): void {
+    this.screenFx.setShakeSink(fn);
   }
 
   /** The w3x rig path (test/observability seam). */
@@ -1878,6 +1922,64 @@ export class VfxSystem {
        * 決定，⛔ 不是客戶端自己排的。所以這個 case 裡沒有「鏈」的概念，
        * 換成鎖鏈 / 牽引 / 電纜也是同一則事件（第〇·五守則）。
        */
+      // ── ⭐ GH#551/#543/#549 —— 四個「演出」事件 ────────────────────────
+      //
+      // ⛔ 在 2026-08-22 之前這四個事件**沒有任何客戶端消費端**：sim 每次都發、
+      //    `eventFanout` 也放行了,而畫面上什麼都不會出現（失敗形態②：
+      //    算出來了但從沒送到 —— 而傷害照樣掉血,所以它看起來完全正常）。
+      case "modelFxSpawn": {
+        if (!this.modelFx) break;
+        const spec = ev.data.spec as ModelFxMotionSpec | undefined;
+        const caster = ev.data.caster as number | undefined;
+        if (!spec || caster === undefined) break;
+        const pos = this.ctx.entityPos(caster);
+        if (!pos) break;
+        const tgt = ev.data.target as number | undefined;
+        const tp = tgt !== undefined ? this.ctx.entityPos(tgt) : null;
+        const at: ModelFxOrigin = {
+          origin: { x: pos.x, y: (ev.data.y as number | undefined) ?? 0, z: pos.z },
+          facingRad: (ev.data.facingRad as number | undefined) ?? 0,
+          ...(tp ? { target: { x: tp.x, y: 0, z: tp.z } } : {}),
+        };
+        // ⭐ 落點視覺回呼 —— ⛔ 它**不算傷害**（傷害是 sim 的 `onArrive`）。
+        this.modelFx.spawn(spec, at, (p) => {
+          const key = ev.data.arriveVfxKey as string | undefined;
+          const doc = key ? this.ctx.vfxDoc?.(key) : null;
+          if (doc) this.play(doc, p.x, p.z, nowMs);
+        });
+        break;
+      }
+      case "screenFlash":
+      case "screenShake": {
+        const me = this.ctx.localEntityId?.() ?? null;
+        const viewer = {
+          isCaster: me !== null && me === (ev.data.caster as number | undefined),
+          isVictim: me !== null && me === (ev.data.victim as number | undefined),
+        };
+        if (ev.type === "screenFlash") {
+          this.screenFx.flash(ev.data.spec as never, viewer);
+        } else {
+          this.screenFx.shake(ev.data.spec as never, viewer);
+        }
+        break;
+      }
+      case "floatingText": {
+        const at = ev.data.at as number | undefined;
+        const pos = at !== undefined ? this.ctx.entityPos(at) : null;
+        const text = ev.data.text as string | undefined;
+        if (!pos || !text) break;
+        this.floatingText.spawn({
+          text,
+          x: pos.x,
+          y: (ev.data.y as number | undefined) ?? 2,
+          z: pos.z,
+          colorRgb: ev.data.colorRgb as [number, number, number] | undefined,
+          sizeScale: ev.data.sizeScale as number | undefined,
+          riseSpeed: ev.data.riseSpeed as number | undefined,
+          durationSec: ev.data.durationSec as number | undefined,
+        });
+        break;
+      }
       case "vfxArc": {
         const fx = ev.data.fromX as number | undefined;
         const fz = ev.data.fromZ as number | undefined;
@@ -1982,6 +2084,11 @@ export class VfxSystem {
     const dtMs = this.lastUpdateMs === null ? 0 : nowMs - this.lastUpdateMs;
     this.lastUpdateMs = nowMs;
     this.w3xCast.tick(dtMs, nowMs);
+    // ⭐ 三個「演出」層也要推進 —— ⛔ 少了這三行,模型永遠停在起點、
+    //    閃爍永遠不退、文字永遠不上浮（而且都不會有人報錯）。
+    this.modelFx?.tick(dtMs);
+    this.screenFx.tick(dtMs);
+    this.floatingText.tick(dtMs);
     for (const t of this.telegraphs) t.update(nowMs);
     this.telegraphs = this.telegraphs.filter((t) => !t.done);
     // #228: re-reads the cast bar's fraction per caster and advances/reaps
@@ -2110,6 +2217,10 @@ export class VfxSystem {
     for (const list of this.pool.values()) for (const e of list) e.ps.dispose();
     this.pool.clear();
     this.w3xCast.resetForRound();
+    // ⛔ 回合邊界不清 = 上一回合的光束／閃爍／文字活過來（#131 孤兒發射器的形狀）。
+    this.modelFx?.resetForRound();
+    this.screenFx.resetForRound();
+    this.floatingText.resetForRound();
     // 2b) #262 —— #259 漏掉的那一層：`Telegraph` 的預告圈網格 free-list 不屬於
     //     任何一個 Telegraph 實例，它掛在 `sharedByScene`（per-scene WeakMap）
     //     上、以**半徑字串**為 key，一個 key 上限 8 個網格、每個網格自帶一份
@@ -2156,6 +2267,9 @@ export class VfxSystem {
     // walks every system it EVER built, pooled or live, so nothing can survive
     // this call by being in a state we forgot about (task #131's lesson).
     this.w3xCast.dispose();
+    this.modelFx?.dispose();
+    this.screenFx.dispose();
+    this.floatingText.dispose();
     // ⭐ GH#494 —— 金幣的來源網格 + 那一份共用材質（instance 已經在 reset 裡丟了）。
     this.gold.dispose();
     // #262: the per-scene telegraph free-lists + the magic-circle Texture + the

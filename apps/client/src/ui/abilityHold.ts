@@ -3,7 +3,7 @@
  * (task #152). A HOLD — mouse-down on a desktop ability tile, a finger down on a
  * touch ability button, a pad face button, a **held Q/W/E/R/F/D key**, or a
  * **mouse HOVER** over a desktop tile (both GH#367) — drives two previews at once:
- *   • ui/AbilityDescriptionOverlay — the full name + description panel across the
+ *   ⛔ (2026-08-22 退休) ui/AbilityDescriptionOverlay —— owner:「不需要那麼大的
  *     TOP of the screen, and
  *   • render/AimIndicator — the dashed cast-RANGE ring + AoE disc on the floor
  *     (GameApp reads `getHeldAbility()` every frame and resolves it against the
@@ -57,9 +57,16 @@ const listeners = new Set<() => void>();
  *     頂端的橫幅 = 同一段文字在畫面上出現兩次,而游標掃過六格就閃六次。
  *     owner 要的是「顯示可施展的**範圍**」,⛔ 不是再來一份說明。
  */
-export type HoldIntent = "full" | "aim";
+/**
+ * ⛔ **2026-08-22 退休。**
+ *
+ * 它只有一個消費端 —— `AbilityDescriptionOverlay`（`"full"` 才開那個面板），
+ * 而 owner 逐字：「**根本不需要顯示那麼大的技能說明區塊，請你移除這個功能到
+ * legacy 不要再出現了**」。⇒ 面板沒了，這個型別就沒有意義。
+ * ⭐ 留著一個沒有消費端的參數，下一個人會以為它還有作用（第一·五守則）。
+ */
+export type HoldIntent = "aim";
 
-let heldIntent: HoldIntent = "full";
 
 /** The slot whose button is held right now (null = nothing held). */
 export function getHeldAbility(): ChampionAbilitySlot | null {
@@ -82,14 +89,14 @@ export function getHeldAimSlot(): CastableSlot | null {
 
 /**
  * Press → slot, release → null. No-op when unchanged (skips a needless notify).
- * `intent` defaults to "full" so every pre-#367 caller (touch bar, mouse press,
- * pad) keeps its exact behaviour; only the hover path passes "aim".
+ *
+ * ⛔ `_intent` 是 2026-08-22 之後的**遺跡**：它唯一的用途是「開不開說明橫幅」，
+ * 而那個橫幅已經退休（owner:「不需要那麼大的技能說明區塊」）。⭐ 參數留著只是
+ * 為了不讓十五個呼叫點在同一個 commit 裡一起改；⛔ 它**不影響任何行為**。
  */
-export function setHeldAbility(slot: ChampionAbilitySlot | null, intent: HoldIntent = "full"): void {
-  const next: HoldIntent = slot === null ? "full" : intent;
-  if (held === slot && heldIntent === next) return;
+export function setHeldAbility(slot: ChampionAbilitySlot | null, _intent: HoldIntent = "aim"): void {
+  if (held === slot) return;
   held = slot;
-  heldIntent = next;
   for (const cb of listeners) cb();
 }
 
@@ -111,12 +118,14 @@ export function subscribeHeldAbility(cb: () => void): () => void {
 }
 
 /**
- * The slot the DESCRIPTION BANNER should render — a "full" hold only. A hover
- * resolves to null here while `getHeldAimSlot()` still returns the slot, which
- * is the entire point of `HoldIntent` (see it for why).
+ * ⛔ **2026-08-22 退休之後它就等於 `getHeldAbility()`。**
+ *
+ * 它以前回答的是「說明橫幅該畫哪一格」（`"full"` 才算），而那個橫幅已經移到
+ * `docs/legacy/_retired-ui/`。⭐ 留著這個名字只是因為兩條既有的守衛在讀它；
+ * ⚠️ 它現在**不再**與 `getHeldAbility()` 有任何差別。
  */
 export function getDescribedAbility(): ChampionAbilitySlot | null {
-  return heldIntent === "full" ? held : null;
+  return held;
 }
 
 /** React binding — re-renders a component only when the described slot changes. */

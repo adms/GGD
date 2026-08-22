@@ -42,10 +42,10 @@
         },
         {
           "kind": "knockback",
-          "distanceTier": "大",
+          "distanceTier": "極大",
           "speed": 16.0,
           "from": "caster",
-          "distance": 6
+          "distance": 8
         },
         {
           "kind": "applyStatus",

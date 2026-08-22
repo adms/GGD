@@ -39,7 +39,6 @@ import { setHeldAbility } from "./abilityHold";
 import { rangeGuide } from "./rangeGuideConfig";
 import { abilityActivationCue } from "./abilityCue";
 import { prefersReducedMotion } from "./buttonSfx";
-import { AbilityDescriptionOverlay } from "./AbilityDescriptionOverlay";
 import { stripAbilityNumber } from "./components/abilityText";
 import { SfxButton } from "./SfxButton";
 import { GOLD, PANEL_BG, TEXT_DIM, TEXT_MAIN } from "./theme";
@@ -237,7 +236,6 @@ export function TouchControls(): React.JSX.Element | null {
   return (
     <div ref={rootRef} style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 20 }}>
       {/* held-button description panel across the top of the screen (task #152) */}
-      <AbilityDescriptionOverlay />
       {/* floating joystick chrome (left half; input is captured on the canvas) */}
       <div
         data-role="joy-base"
@@ -350,7 +348,7 @@ export function TouchControls(): React.JSX.Element | null {
                 if (!passive) pressVisualDown(e.currentTarget);
                 if (learned) {
                   pressHandler(slot)(e);
-                  setHeldAbility(slot, rangeGuide().pressOpensBanner ? "full" : "aim");
+                  setHeldAbility(slot, "aim");
                   abilityActivationCue(slot, { denied: cd.onCd, passive });
                 } else {
                   abilityActivationCue(slot, { denied: true, passive });
@@ -444,7 +442,7 @@ export function TouchControls(): React.JSX.Element | null {
             onTouchStart={(e) => {
               pressVisualDown(e.currentTarget);
               pressHandler("EX")(e);
-              setHeldAbility("EX", rangeGuide().pressOpensBanner ? "full" : "aim");
+              setHeldAbility("EX", "aim");
               abilityActivationCue("EX", { denied: cd.onCd, passive: exPassive });
             }}
             onTouchEnd={(e) => {
@@ -528,7 +526,7 @@ export function TouchControls(): React.JSX.Element | null {
             onTouchStart={(e) => {
               pressVisualDown(e.currentTarget);
               if (castable) pressHandler("PASSIVE")(e);
-              setHeldAbility("PASSIVE");
+              setHeldAbility("PASSIVE", "aim");
               abilityActivationCue(
                 "PASSIVE",
                 castable ? { denied: cd.onCd } : { passive: true },

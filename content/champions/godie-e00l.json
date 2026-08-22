@@ -193,9 +193,9 @@
       "name": "20-03 約束與勝利之劍",
       "icon": "assets/icons/abilities/godie-e00l.e.webp",
       "provenance": "w3x-import",
-      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n集結了人們的意念而形成的星星的結晶。是一把精鍊的神造兵裝，被譽為「最強的幻想(Last Phantasm)」。\n在聖劍這個分類上位於最頂端的位置。它會將所有者的魔力轉換成光之後收束並加速以增加其動能，可以讓所有者使用出神靈等級的魔法。\n其斬擊看似是放出了一道光帶，但是能讓前方直線敵人受到魔力*0.4+350點傷害。\n光束一路翻滾前進，貫穿沿途的每一個敵人。",
+      "description": "[主動][指向][範圍][AP加成]\n{{cd}}秒冷卻 吟唱1秒\n消耗[MP] {{mp}}\n施法距離：{{range}}\n\n「放了這招我就要補魔了」\n它會將所有者的魔力轉換成光後收束，對[前方][直線]敵人造成 {{dmg}} + 100% [AP]點傷害。",
       "slot": "E",
-      "castType": "skillshot",
+      "castType": "ground",
       "maxRank": 4,
       "cooldown": [
         60.0,
@@ -203,13 +203,33 @@
         60.0,
         60.0
       ],
+      "cooldownTier": "極大",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        288.0,
+        288.0,
+        288.0,
+        288.0
       ],
+      "manaCostTier": "中",
       "effects": [
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "中",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          },
+          "length": 14,
+          "width": 2.0,
+          "aim": "target",
+          "fromCaster": true,
+          "includeOrigin": true
+        },
         {
           "kind": "floatingText",
           "shape": "single",
@@ -233,15 +253,8 @@
           "distance": 14.0,
           "spinDegPerSec": 720.0,
           "scale": 2.5,
-          "onArrive": [
-            {
-              "kind": "screenShake",
-              "shape": "single",
-              "amplitude": 0.6,
-              "durationSec": 0.8,
-              "applyTo": "all"
-            }
-          ],
+          "touchRadius": 1.5,
+          "touchSide": "enemies",
           "onTouch": [
             {
               "kind": "damage",
@@ -251,12 +264,24 @@
               }
             }
           ],
-          "touchRadius": 1.5,
-          "touchSide": "enemies"
+          "onArrive": [
+            {
+              "kind": "screenShake",
+              "shape": "single",
+              "amplitude": 0.6,
+              "durationSec": 0.8,
+              "applyTo": "all"
+            }
+          ]
+        },
+        {
+          "kind": "spawnVfx",
+          "vfxId": "fx.thorn",
+          "at": "point"
         }
       ],
       "vfxKey": "fx.w3x.particle.holyawakening.p04",
-      "castTimeSec": 0.267,
+      "castTimeSec": 1,
       "hitFeel": {
         "hitstopTicks": 3,
         "hitstunTicks": 6,
@@ -264,7 +289,7 @@
         "shakeStyle": "omni",
         "sparkKind": "magic",
         "flashColor": [
-          1.0,
+          1,
           0.95,
           0.72
         ],
@@ -272,9 +297,14 @@
         "camKick": 0.33
       },
       "rangeTier": "極大",
-      "range": 12,
-      "cooldownTier": "極大",
-      "manaCostTier": "小"
+      "range": 12.0,
+      "targetsEnemies": true,
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.beam-flat",
+          "attachTo": "point"
+        }
+      ]
     },
     "R": {
       "id": "godie-e00l.r",

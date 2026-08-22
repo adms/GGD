@@ -93,10 +93,8 @@ export function cancelHoverGuide(): void {
 /**
  * Cursor entered a tile — arm the delayed range guide.
  *
- * ⭐ GH#376：「hover 要不要**同時**打開頂端說明橫幅」現在是後台的
- * `hoverOpensBanner`，⛔ 不是這一行寫死的 `"aim"`。出貨 false（只出範圍圈）——
- * 理由是技能格自己的 anchored Tooltip 已經在講同一段文字，而橫幅會在游標掃過
- * 技能列時閃六次。owner 想要相反的那一側時，那是一格下拉選單，不是一次部署。
+ * ⛔ **2026-08-22 之後 hover 只出範圍圈** —— 說明橫幅整個退休了
+ * （owner:「根本不需要顯示那麼大的技能說明區塊」）。
  */
 export function hoverGuideEnter(slot: ChampionAbilitySlot): void {
   cancelHoverGuide();
@@ -105,7 +103,7 @@ export function hoverGuideEnter(slot: ChampionAbilitySlot): void {
   hoverTimer = setTimeout(() => {
     hoverTimer = null;
     // still the same tile? (a sweep past it has already re-armed with another)
-    if (hoverSlot === slot) setHeldAbility(slot, cfg.hoverOpensBanner ? "full" : "aim");
+    if (hoverSlot === slot) setHeldAbility(slot, "aim");
   }, cfg.hoverDelayMs);
 }
 

@@ -12,7 +12,7 @@
  * ─────────────────────────────────────────────────────────────────────────────
  * WHAT EACH HALF ACTUALLY PROVES — and what it does not
  *
- *  • ABILITY PANEL: guarded END TO END. `AbilityDescriptionOverlay` is MOUNTED
+ *  • ABILITY PANEL: ⛔ **2026-08-22 退休**（owner:「不需要那麼大的技能說明區塊」）。
  *    (headlessUi — there is no jsdom here) over a REAL registered champion with
  *    a REAL gated hook, and the assertion reads the TEXT OF THE RENDER TREE.
  *    Deleting the `{info.conditions.length > 0 && …}` block, or the
@@ -70,7 +70,6 @@ vi.mock("./abilityHold", async (importOriginal) => {
 
 const { Champions, Abilities } = await import("@ggd/shared/sim/content/registry");
 const { describeHeldAbility } = await import("./abilityHold");
-const { AbilityDescriptionOverlay } = await import("./AbilityDescriptionOverlay");
 const { buildItemRow } = await import("./panels/itemStats");
 type ChampionId = import("@ggd/shared/ids").ChampionId;
 
@@ -177,18 +176,18 @@ describe("技能長按面板 — the gate reaches the screen", () => {
   });
 
   /**
-   * THE anti-③ guard for this surface. Delete the conditions block from
-   * AbilityDescriptionOverlay's JSX and the rendered text loses the sentence.
+   * ⛔ **這一條在 2026-08-22 退休了** —— 它掛載 `AbilityDescriptionOverlay`，
+   * 而 owner 逐字裁決：「**根本不需要顯示那麼大的技能說明區塊，
+   * 請你移除這個功能到 legacy 不要再出現了**」。
+   *
+   * ⚠️ 它守的東西**沒有消失**：`describeHeldAbility()` 仍然是那段文案的唯一算繪處
+   * （技能格的 tooltip、選人畫面、後台預覽都讀它），而上面那一條
+   * 「⭐ 條件真的被算進去」就是在驗它。
+   * ⇒ 消失的只有**那一個面板**，⛔ 不是那段內容。
+   *
+   * ⭐ 退休的元件另存在 `docs/legacy/_retired-ui/`（第一·五守則：
+   * 測試可以跟著設計走，知識不可以無聲消失）。
    */
-  it("the held panel RENDERS it", () => {
-    const h = mount(createElement(AbilityDescriptionOverlay));
-    const shown = h.text();
-    expect(shown).toContain(conditionLabel(GATE));
-    expect(shown).toContain(conditionLabel(RANK3_GATE));
-    // sanity: the panel really did render (so a null render cannot pass by
-    // failing both expectations in some future refactor)
-    expect(shown).toContain("獸矛試作");
-  });
 
   it("a skill with no gated hook adds no chip at all", () => {
     const plain = describeHeldAbility(SEAT() as never, "EX");

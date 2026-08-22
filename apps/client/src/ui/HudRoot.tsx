@@ -15,7 +15,6 @@ import { EquipmentBar } from "./hud/EquipmentBar";
 import { ControlLegend } from "./ControlLegend";
 import { CouchHudGrid } from "./components/CouchHudGrid";
 import { AbilityBar } from "./components/AbilityBar";
-import { AbilityDescriptionOverlay } from "./AbilityDescriptionOverlay";
 import { CastNoticeLine } from "./components/CastNotice";
 import { BottomCluster } from "./hud/BottomCluster";
 import { ExUnlockToast } from "./components/ExUnlockToast";
@@ -179,7 +178,6 @@ const HUD_LABELS: HudBoundaryLabels = new Map<unknown, string>([
   [Scoreboard, "計分板"],
   [GamepadIndicator, "手把指示"],
   [ControlLegend, "操作說明"],
-  [AbilityDescriptionOverlay, "技能說明"],
   [CastNoticeLine, "施法提示"],
   [BottomCluster, "血條與技能列"],
   [EnemyTeamPanel, "敵隊面板"],
@@ -344,7 +342,6 @@ export function HudRoot(): React.JSX.Element {
               phone a refused Q/W/E/R press was computed, phrased, and thrown
               away (surfaceParity's shape-S9 guard names this exactly). Each
               owns its own gate and renders null when idle. */}
-          <AbilityDescriptionOverlay />
           <CastNoticeLine />
           <BottomCluster
             resources={<ResourceBars />}

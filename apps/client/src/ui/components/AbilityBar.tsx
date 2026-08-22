@@ -142,9 +142,8 @@ function holdProps(
       //    ⇒ 按下是**施放**不是**閱讀**：只留範圍圈（`"aim"`），⛔ 不開頂端說明橫幅。
       //    ⚠️ **被動例外** —— owner 2026-08-13「被動技的按鈕應該不能被按下」，
       //    說明正是玩家唯一能對被動做的事，所以那一格照舊開橫幅。
-      //    ⚠️ 這是一個**決策點**所以它是後台欄位（`config.range-guide@1.pressOpensBanner`），
-      //    ⛔ 不是這一行寫死的 —— owner 想要相反那一側時是一格下拉,不是一次部署。
-      setHeldAbility(slot, cue.passive === true || rangeGuide().pressOpensBanner ? "full" : "aim");
+      //    ⛔ 那個橫幅在 2026-08-22 整個退休了（owner:「不需要那麼大的技能說明區塊」）。
+      setHeldAbility(slot, "aim");
       abilityActivationCue(slot, cue);
       if (pressable) pressVisualDown(e.currentTarget);
     },
@@ -519,6 +518,10 @@ export function AbilityBar(): React.JSX.Element | null {
           { label: "冷卻", base: cdMeta, factor: "cooldown", unit: "s" },
         ];
         if (manaMeta > 0) meta.push({ label: "魔力", value: `${manaMeta}` });
+        // ⛔ **觸發條件刻意不放在這裡**（owner 2026-08-22，他當場否決了我把它搬進來）：
+        //    「不行 他實在**太佔空間**了，**要重新設計不要再放回去**」
+        // ⇒ 那一段資訊今天**沒有算繪處**（它跟著大橫幅一起退休了）。
+        //    ⚠️ 這是一個**已知的空缺**，⛔ 不是被遺忘 —— 重新設計開在 GH 票上。
         return (
           <div key={slot} style={{ position: "relative", width: m.tile, textAlign: "center" }}>
             <Tooltip title={ability.name} body={docDescription(ability)} meta={meta} style={{ display: "block" }}>

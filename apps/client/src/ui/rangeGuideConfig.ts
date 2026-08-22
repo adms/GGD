@@ -46,9 +46,6 @@ export interface TelegraphChannelValues {
 /** 這一場實際生效的全部值。 */
 export interface RangeGuideValues {
   hoverDelayMs: number;
-  hoverOpensBanner: boolean;
-  /** 按下技能鈕/鍵要不要開頂端說明橫幅（owner 2026-08-22：⛔ 不要）。 */
-  pressOpensBanner: boolean;
   rangeRgb: Rgb01;
   rangeFillAlpha: number;
   aoeRgb: Rgb01;
@@ -72,8 +69,6 @@ export interface RangeGuideValues {
  */
 export const SHIPPED_RANGE_GUIDE = {
   hoverDelayMs: 140,
-  hoverOpensBanner: false,
-  pressOpensBanner: false,
   rangeColor: "#73BFFF",
   rangeFillAlpha: 0.09,
   aoeColor: "#FF9E3B",
@@ -138,8 +133,6 @@ function decode(raw: Record<string, unknown>): RangeGuideValues {
   const tele = (raw.telegraph ?? {}) as Record<string, unknown>;
   return {
     hoverDelayMs: num(raw.hoverDelayMs, S.hoverDelayMs, 0, 2000),
-    hoverOpensBanner: bool(raw.hoverOpensBanner, S.hoverOpensBanner),
-    pressOpensBanner: bool(raw.pressOpensBanner, S.pressOpensBanner),
     rangeRgb: rgb(raw.rangeColor, S.rangeColor),
     rangeFillAlpha: num(raw.rangeFillAlpha, S.rangeFillAlpha, 0, 1),
     aoeRgb: rgb(raw.aoeColor, S.aoeColor),

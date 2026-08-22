@@ -91,6 +91,7 @@ const DEFAULT_RGB: readonly [number, number, number] = [255, 255, 255];
 const ANCHOR_EPS_SQ = 0.36;
 
 export class FloatingTextFx {
+  private disposed = false;
   /** ⭐ 池**就是**儲存體:預先配置、⛔ 永不 resize（同 frameBus 的 combatTextPool）。 */
   private readonly pool: FloatingTextEntry[] = Array.from(
     { length: MAX_FLOATING_TEXT },
@@ -199,6 +200,12 @@ export class FloatingTextFx {
   }
 
   /** 回合邊界:整池清空（⛔ 不留字到下一回合）。 */
+  /** 收攤。⛔ 與 `resetForRound` 不同:那是回合邊界,這是整個 VfxSystem 被丟掉。 */
+  dispose(): void {
+    this.disposed = true;
+    this.resetForRound();
+  }
+
   resetForRound(): void {
     for (const e of this.pool) {
       e.active = false;

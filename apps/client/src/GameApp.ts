@@ -795,6 +795,17 @@ export class GameApp {
           return p;
         },
         vfxDoc: (key) => this.contentDb.vfxFor(key),
+        // ⭐ GH#551/#543 —— 移動中的**模型**特效要的兩個接縫（翻滾光束／圓周冰塊／
+        //    直線火球）。⚠️ 它們是**注入**的,理由與上面 `vfxDoc` 一字不差：
+        //    特效層知道「要播什麼」,⛔ 不知道「內容從哪來」。
+        // ⛔ 少了這兩行,`VfxSystem` 的 `modelFx` 永遠是 null ⇒ 四支技能的
+        //    JSON 有 `spawnModelFx`、傷害照樣掉血、⛔ 而畫面上一條光束都沒有
+        //    （失敗形態②,而且它看起來完全正常）。
+        modelDocFor: (modelKey) => {
+          const doc = this.contentDb.modelFor(modelKey);
+          return doc?.glbPath ? { glbPath: doc.glbPath, scale: doc.scale } : null;
+        },
+        loadModelContainer: (glbPath) => this.assets.load(glbPath),
         // floating combat text (task #92) is coloured by RELATIONSHIP to the
         // local player, so the vfx layer needs the same seat→team table the
         // healthbars use. render/** may not read the HUD store (client-08), which
@@ -838,6 +849,13 @@ export class GameApp {
       },
     });
     this.vfx = roundFx.vfx;
+    // ⭐ GH#549 —— 螢幕震動的出口。owner:「畫面閃爍**及震動** 不然都不知道
+    //    發生什麼事情有沒有反擊成功」。
+    // ⚠️ ⛔ **不在這裡直接呼叫 `cameraRig.addShake`** —— `combatCameraWiring.test.ts`
+    //    要求 GameApp 裡**只能有一個** addShake 呼叫點（防「同一次命中震兩下」）。
+    //    ⭐ 走同一個漏斗才是對的:作者寫的 `screenShake` 也應該吃到那條路上的
+    //    人群預算（`frameKicks`）與 EX 抑制,⛔ 不是繞過它們自己震一次。
+    this.vfx.installShakeSink((amp, ms) => this.queueAuthoredShake(amp, ms));
     this.ambient = roundFx.ambient;
     this.whirlwind = roundFx.whirlwind;
     this.fireRing = roundFx.fireRing;
@@ -2839,6 +2857,27 @@ export class GameApp {
    * the whole round. Task #196 removed the effect; the asymmetry with the
    * vignette below is the shape any future channel must NOT repeat.
    */
+  /**
+   * ⭐ GH#549 —— 作者寫的 `screenShake` 的暫存格。
+   *
+   * ⚠️ 只留**一發**（取最大）：一次施法可能同時發好幾個 cue，而相機只有一個。
+   * ⛔ 不排隊 —— 一個遲到的震動比沒有更糟（它會在事情結束之後才抖）。
+   */
+  private authoredShake: { amp: number; durationMs: number } | null = null;
+
+  private queueAuthoredShake(amp: number, durationMs: number): void {
+    if (!(amp > 0) || !(durationMs > 0)) return;
+    if (!this.authoredShake || amp > this.authoredShake.amp) {
+      this.authoredShake = { amp, durationMs };
+    }
+  }
+
+  private drainAuthoredShake(): { amp: number; durationMs: number } | null {
+    const s = this.authoredShake;
+    this.authoredShake = null;
+    return s;
+  }
+
   private applyCombatFeedback(ev: EventMessage, localId: number | null, nowMs: number): void {
     const reaction = planCameraReaction(ev, {
       localId,
@@ -2848,8 +2887,19 @@ export class GameApp {
       sinceExPunchMs: nowMs - this.lastExPunchMs,
       tickMs: TICK_MS,
     });
-    if (reaction.kick) {
-      const k = reaction.kick;
+    // ⭐ GH#549 —— 作者寫的 `screenShake` 先排進佇列,在**這裡**與命中反應合流:
+    //    取兩者較大的那一發（⛔ 不是各震一次 —— 那正是這條線在防的「震兩下」）。
+    const authored = this.drainAuthoredShake();
+    const kick =
+      reaction.kick && (!authored || reaction.kick.amp >= authored.amp)
+        ? reaction.kick
+        : authored
+          ? // ⚠️ 作者寫的 cue **沒有方向**（它是螢幕層的提示，⛔ 不是某一次命中的反衝）
+            //    ⇒ `dir: undefined` ⇒ `CameraRig` 走 omni（全向抖）那一條路。
+            { amp: authored.amp, durationMs: authored.durationMs, dir: undefined, style: "omni" as const, kick: 0 }
+          : null;
+    if (kick) {
+      const k = kick;
       this.frameKicks++; // only a kick that actually fired spends crowd budget
       this.cameraRig.addShake(k.amp, k.durationMs, { dir: k.dir, style: k.style, kick: k.kick });
     }

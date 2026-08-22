@@ -63,6 +63,7 @@ export interface ScreenFxLayerOptions {
 }
 
 export class ScreenFxLayer {
+  private shakeSink: ((amplitude: number, durationMs: number) => void) | undefined;
   private readonly slots: FlashSlot[] = Array.from({ length: MAX_FLASHES }, () => ({
     active: false,
     r: 0,
@@ -89,6 +90,14 @@ export class ScreenFxLayer {
   }
 
   /** 後台改了上界之後熱套用（⛔ 不必重建這一層）。 */
+  /**
+   * ⭐ 由組合根安裝相機震動的出口（出貨接 `CameraRig.addShake`）。
+   * ⛔ 沒有安裝 = 震動這一半靜靜不發生,而閃爍照樣出 —— 兩者刻意分開（見檔頭）。
+   */
+  setShakeSink(fn: (amplitude: number, durationMs: number) => void): void {
+    this.shakeSink = fn;
+  }
+
   setLimits(limits: ScreenFxLimits): void {
     this.limits = limits;
   }

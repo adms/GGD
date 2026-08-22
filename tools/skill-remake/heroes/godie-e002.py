@@ -86,7 +86,26 @@ A("20-03", "20-03 約束與勝利之劍", "ground", [60, 60, 60, 60], [250, 350,
   # GH#375 —— 舊文件那顆 `imported.wave` 是 A-5 沿用回來的，規格沒點名過它；
   #           傷害整包住在上面那條 damageLine。改掛 spawnVfx（理由見 carry_mechanisms）。
   cosmetic_projectile="imported.wave",
-  effects=[line("magic", length=14, width=2.0, per=[350, 550, 750, 950], ap=1.0)])
+  # ⭐ GH#543 —— owner 2026-08-22 逐字：「**Saber約束勝利之劍(翻滾光束)**⋯都是**動畫特效**」
+  #    ⛔ 這三個節點在 2026-08-22 曾經被直接寫進 `content/abilities/godie-e002.e.json`,
+  #       而**下一次 `skills:sync` 就把它們刪回去了**（64 行）—— 那個檔是這一支產生的。
+  #    ⚠️ 更糟的是:變身態 `godie-e00l.e` 有而**本體沒有**,而變身態
+  #       **一律被逐出白名單**（`transformevict.go:48`）⇒ ⭐ **玩家選得到的那個 Saber
+  #       打 E 是舊的直線傷害,一條光束都沒有**,而全套測試是綠的。
+  #    ⭐ `spinDegPerSec: 720` 就是「翻滾」;`touchRadius/touchSide` 讓光束**沿路掃到人**,
+  #       ⛔ 不是只在終點結算 —— 那正是「翻滾光束」與一發直線傷害的差別。
+  effects=[
+      line("magic", length=14, width=2.0, per=[350, 550, 750, 950], ap=1.0),
+      {"kind": "floatingText", "shape": "single", "text": "約束與勝利之劍！",
+       "colorRgb": [255, 224, 120], "sizeScale": 1.4, "riseSpeed": 2.0,
+       "durationSec": 2.8, "applyTo": "self"},
+      {"kind": "spawnModelFx", "shape": "single", "modelKey": "imported.netherstrike",
+       "path": "forward", "speed": 30.0, "distance": 14.0, "spinDegPerSec": 720.0,
+       "scale": 2.5, "touchRadius": 1.5, "touchSide": "enemies",
+       "onTouch": [dmg("magic", dmg_tier="小")],
+       "onArrive": [{"kind": "screenShake", "shape": "single", "amplitude": 0.6,
+                     "durationSec": 0.8, "applyTo": "all"}]},
+  ])
 
 A("20-04", "20-04 Avalon-永恆的理想鄉", "self", [60, 60, 60], [150, 250, 350], 0,
   "[主動][輔助][反彈][AP加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n\n「也可能只是我在發呆而已，要不要試試看？」\n在2秒內[反彈]承受的[魔法傷害]，[反彈]量為原傷害的 3/5/7倍，另加 300% [AP]傷害。",

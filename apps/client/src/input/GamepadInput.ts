@@ -47,6 +47,7 @@ import type { CastableSlot, Command, CoreAbilitySlot, Order } from "@ggd/shared/
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 import { abilityActivationCue } from "../ui/abilityCue";
 import { getHeldAbility, setHeldAbility } from "../ui/abilityHold";
+import { rangeGuide } from "../ui/rangeGuideConfig";
 import { envFactor } from "../ui/displayFinal";
 import {
   buildCastCommand,
@@ -548,7 +549,8 @@ class PadDescribeHold {
     setCursorlessAim(slot ? aim : null);
     setCursorlessTarget(slot ? target : null);
     if (slot === this.mine) return;
-    if (slot) setHeldAbility(slot);
+    // ⭐ 同 `InputCapture` —— 按下是**施放**，⛔ 不是閱讀（owner 2026-08-22）。
+    if (slot) setHeldAbility(slot, "aim");
     else if (getHeldAbility() === this.mine) setHeldAbility(null);
     this.mine = slot;
   }

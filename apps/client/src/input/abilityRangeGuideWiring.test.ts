@@ -55,7 +55,8 @@ describe("按住技能鍵 → 地板範圍指引 (GH#367)", () => {
     const win = harness();
     win.dispatch("keydown", key("KeyQ"));
     expect(getHeldAimSlot()).toBe("Q"); // ← GameApp 每一幀讀的就是這個
-    expect(getDescribedAbility()).toBe("Q"); // a KEY hold is a full hold
+    // ⛔ 「a KEY hold is a full hold」在 2026-08-22 之後沒有意義了（沒有橫幅）。
+    expect(getDescribedAbility()).toBe("Q");
     win.dispatch("keyup", { code: "KeyQ" });
     expect(getHeldAimSlot()).toBeNull();
 
@@ -82,7 +83,10 @@ describe("hover 技能圖示 → 只出範圍，不開說明橫幅", () => {
     expect(getHeldAimSlot()).toBeNull(); // 路過不觸發
     vi.advanceTimersByTime(ABILITY_RANGE_GUIDE.hoverDelayMs + 1);
     expect(getHeldAimSlot()).toBe("E");
-    expect(getDescribedAbility()).toBeNull(); // 圖示自己的 Tooltip 已經在講了
+    // ⛔ 說明橫幅 2026-08-22 退休（owner:「不需要那麼大的技能說明區塊」）⇒
+    //    `getDescribedAbility()` 現在**等於** `getHeldAimSlot()`，這一行不再有
+    //    「橫幅開不開」這個意思。⭐ 保留它是為了釘住兩者不會再分岔。
+    expect(getDescribedAbility()).toBe("E");
     hoverGuideLeave("E");
     expect(getHeldAimSlot()).toBeNull();
   });

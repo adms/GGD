@@ -405,6 +405,50 @@
           "includeOrigin": true
         },
         {
+          "kind": "floatingText",
+          "shape": "single",
+          "text": "約束與勝利之劍！",
+          "colorRgb": [
+            255,
+            224,
+            120
+          ],
+          "sizeScale": 1.4,
+          "riseSpeed": 2.0,
+          "durationSec": 2.8,
+          "applyTo": "self"
+        },
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "modelKey": "imported.netherstrike",
+          "path": "forward",
+          "speed": 30.0,
+          "distance": 14.0,
+          "spinDegPerSec": 720.0,
+          "scale": 2.5,
+          "touchRadius": 1.5,
+          "touchSide": "enemies",
+          "onTouch": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              }
+            }
+          ],
+          "onArrive": [
+            {
+              "kind": "screenShake",
+              "shape": "single",
+              "amplitude": 0.6,
+              "durationSec": 0.8,
+              "applyTo": "all"
+            }
+          ]
+        },
+        {
           "kind": "spawnVfx",
           "vfxId": "fx.thorn",
           "at": "point"

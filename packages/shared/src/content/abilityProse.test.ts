@@ -76,10 +76,6 @@ const CLAIM_RULE: Readonly<Record<string, string>> = {
  * ⭐ 每一列都帶著**能被反駁的理由**：照著「反駁方式」做，這一列就會自動失效。
  */
 const KNOWN_UNBINDABLE: Readonly<Record<string, string>> = {
-  "godie-e00l.e|dmg":
-    "卡面是 w3x 原文的**公式**（魔力*0.4+350），GGD 這一支改成了逐階 250/400/550/700 —— " +
-    "兩者是**不同的設計**，⛔ 不是同一個數字的兩種寫法。修法是重寫這一句文案（卡面要說哪一個是 " +
-    "owner 的決定），⛔ 不是機械代換。⭐ 反駁方式：文案改成逐階寫法，這一列就會 stale 而紅",
   // ⭐ 下面四支是**新抽取器多看見的**（「造成N傷害」這種**沒有「點」**的寫法，
   //    `descriptionClaims.damageClaims` 到今天為止抽不到它）。⛔ 四筆都是真的落差，
   //    ⛔ 不是誤報 —— 修法一律要動平衡資料或文案，那是 owner 的排序（第零守則⑧）。
