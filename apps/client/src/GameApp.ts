@@ -177,6 +177,9 @@ import { perfBus } from "./perfBus";
 import { ConnectionStats } from "./net/ConnectionStats";
 import { CastTracker } from "./CastTracker";
 import { registerHudActions } from "./ui/actions";
+// GH#596 —— 非預期斷線唯一的出路（讀 `getState()` 呼叫一支 action，
+// ⛔ 沒有 `.setState(`，架構閘 client-08 第 3 條照樣綠）。
+import { appStore } from "./ui/platform/store";
 import { getHeldAimSlot } from "./ui/abilityHold";
 import { envFactor, setDisplayEnvJson } from "./ui/displayFinal";
 import { audioSystem } from "./audio";
@@ -422,6 +425,17 @@ export class GameApp {
 
   private raf = 0;
   private disposed = false;
+  /**
+   * ⭐ GH#591 —— **具名**的 state-patch 訂閱者。
+   *
+   * colyseus.js 0.16.22 的 `onStateChange(cb)` 回傳的是 **EventEmitter 本身**
+   *（`core/signal.js::createSignal`），⛔ 不是一支 unsubscribe fn ⇒ 唯一的退訂
+   * 路徑是 `room.onStateChange.remove(cb)`，而那需要一個留得住參照的 cb。
+   * 三個 `connect*()` 在此之前掛的都是 inline arrow ⇒ ⛔ 沒有人 remove 得掉。
+   */
+  private readonly onPatch = (state: MatchState): void => this.onStatePatch(state);
+  /** `onPatch` 掛在哪一間房 —— `dispose()` 要跟它退訂。 */
+  private boundRoom: Room<MatchState> | null = null;
   /**
    * Arena DRAW suppressed (task #38). The intermission is its own Babylon scene
    * on its own canvas laid over this one; while it is up the arena is not
@@ -937,6 +951,13 @@ export class GameApp {
       ? this.opts.seatTokens.map((e) => e.accountId)
       : [this.opts.accountId, ...Array<undefined>(playerCount - 1)];
     this.sessions = new MultiSession(accountIds);
+    // ⭐ GH#596 —— 非預期斷線在此之前**沒有一條回大廳的出路**（`onDisconnect`
+    //    全 repo 零指派點）⇒ 伺服器掉了，玩家留在一個永遠不再更新的畫面上。
+    //    ⚠️ `RoomConnection.leave()` 會把它清成 null，所以**自己走掉**的那一條
+    //    ⛔ 不會進來（那不是斷線）。
+    for (const c of this.sessions.connections) {
+      c.onDisconnect = (code) => appStore.getState().matchDisconnected(code);
+    }
     setLocalAccounts(this.sessions.localAccountIds());
     // prediction covers player 0 only; other viewports render authoritative
     this.sender.onSent = (msg) => {
@@ -1086,7 +1107,8 @@ export class GameApp {
       return;
     }
     setLocalAccounts(this.sessions.localAccountIds());
-    room.onStateChange((state) => this.onStatePatch(state));
+    this.boundRoom = room;
+    room.onStateChange(this.onPatch);
     this.onStatePatch(room.state);
   }
 
@@ -1101,7 +1123,8 @@ export class GameApp {
       return;
     }
     setLocalAccounts(this.sessions.localAccountIds());
-    room.onStateChange((state) => this.onStatePatch(state));
+    this.boundRoom = room;
+    room.onStateChange(this.onPatch);
     this.onStatePatch(room.state);
   }
 
@@ -1130,7 +1153,8 @@ export class GameApp {
       return room;
     }
     setLocalAccounts(this.sessions.localAccountIds());
-    room.onStateChange((state) => this.onStatePatch(state));
+    this.boundRoom = room;
+    room.onStateChange(this.onPatch);
     this.onStatePatch(room.state);
     return room;
   }
@@ -1251,6 +1275,11 @@ export class GameApp {
     this.touch?.dispose();
     this.aimIndicator.dispose();
     this.gamepads.dispose();
+    // ⭐ GH#591 —— 訂閱不退，那個閉包就把已 dispose 的 GameApp（含整棵 Babylon
+    //    scene）釘在 heap 上。GH#570 已經讓**寫端**無害（`onStatePatch` 第一行的
+    //    disposed 閘），⛔ 但一份無害的訂閱仍然是一份不會被回收的參照。
+    this.boundRoom?.onStateChange.remove(this.onPatch);
+    this.boundRoom = null;
     this.sessions.dispose(); // leave every room + drop input sinks
     this.vfx.dispose();
     this.ambient.dispose();

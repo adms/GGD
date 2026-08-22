@@ -10,6 +10,7 @@ import { GameApp } from "./GameApp";
 import { AppRoot } from "./ui/platform/AppRoot";
 import { appStore } from "./ui/platform/store";
 import { resetHudStore } from "./net/RoomStore";
+import { resetClientGlobals } from "./clientGlobals";
 import { resetAudioForNewMatch } from "./audio";
 import { initRenderConfig } from "./render/RenderConfig";
 import { initSettings } from "./settings";
@@ -69,6 +70,16 @@ const rootHost = window as unknown as { __ggdRoot?: ReturnType<typeof createRoot
 const root = rootHost.__ggdRoot ?? (rootHost.__ggdRoot = createRoot(hudEl));
 
 let app: GameApp | null = null;
+/**
+ * ⭐ GH#587 —— **這是第幾次進場**。⛔ 不是統計：`join.catch` 的閉包會晚到，
+ * 而 `matchJoinFailed()` 是**無條件**把 screen 打回 lobby/auth 的。
+ * 序列：進 A（join 未落地）→ 離開 → 進練習模式 B → **A 的 join 才 reject**
+ * → B 被踢回大廳，而且連鎖：screen 離開 match ⇒ 下面的 subscribe 把剛建好的 B
+ * 也 `stopMatch()` 掉。玩家看到的是「剛點進練習模式，畫面自己彈回大廳」。
+ *
+ * ⭐ `stopMatch()` 也要 `++` —— 自己走掉的那一場，它的 join 失敗同樣不該再說話。
+ */
+let joinGen = 0;
 
 function startMatch(): void {
   const { match } = appStore.getState();
@@ -79,6 +90,10 @@ function startMatch(): void {
   // the registries are ready (ScreenBody shows MatchContentGate meanwhile).
   if (!isContentReady()) return;
   resetHudStore();
+  // GH#585 / GH#586 —— 上一間房的「魔力不足」提示、**按住的技能格**、以及那顆
+  // **還沒開火**的 hover 計時器都住在模組層，而 HUD 在 `screen !== "match"` 時
+  // 整棵 unmount ⇒ ⛔ 沒有任何人清它們（React 卸載清的是計時器，不是那句話）。
+  resetClientGlobals();
   // GH#584 —— owner:「每次進到房間應該是**乾淨的開始**才對」。⛔ 這一格在此之前
   // 對音訊什麼都沒做,所以上一場還在響的語音／音效／名言會跟著進新房間與練習模式
   // (練習模式走的正是這同一條)。⭐ 一支具名函式,它自己有一條覆蓋率閘在守。
@@ -97,8 +112,11 @@ function startMatch(): void {
     practice: match.practice,
   });
   app.start(); // render the arena immediately; entities appear once connected
+  const gen = ++joinGen; // GH#587 —— 這一次進場的世代
   const join = platform ? app.connectPlatform(match.endpoint!, match.seatTokens!) : app.connect();
   join.catch((err) => {
+    // ⭐ GH#587 —— 上一場的失敗 ⛔ 不可以踢掉這一場。
+    if (gen !== joinGen) return;
     console.error("[client] failed to join match:", err);
     const message = err instanceof Error ? err.message : "connection failed";
     appStore.getState().matchJoinFailed(message); // → back to lobby/auth + toast
@@ -106,10 +124,26 @@ function startMatch(): void {
 }
 
 function stopMatch(): void {
-  if (!app) return;
-  app.dispose();
+  const a = app;
+  if (!a) return;
+  // ⭐ GH#597 —— **先放閂再拆**。`dispose()` 第一行就是 `if (this.disposed) return`，
+  // 所以一顆半拆的 GameApp 再也拆不完；而在此之前 `app = null` 排在 `dispose()`
+  // **後面** ⇒ dispose 丟例外時 `app` 永遠不是 null ⇒ `startMatch()` 的
+  // `if (!match || app) return;` 從此永遠 early-return ⇒ 這個分頁只有 F5 能救。
   app = null;
+  joinGen++; // GH#587：離開也讓上一場的 `join.catch` 失效
+  try {
+    a.dispose();
+  } catch (err) {
+    // fail-open **但不靜默**（第二守則）：拆不乾淨也不可以卡住下一場。
+    console.error("[client] GameApp.dispose() 失敗 —— 這一場沒有拆乾淨", err);
+  }
   resetHudStore();
+  // ⭐ 出口也清一次。owner 2026-08-23：「不管是**出口**還是**入口**⋯
+  //    你**寧願多次清理乾淨開始回合 也不要漏清到**」。
+  //    ⚠️ 入口那一次 ⛔ 不可以取代這一次 —— 大廳／商店的畫面上也不該留著上一場的東西。
+  resetClientGlobals();
+  resetAudioForNewMatch();
 }
 
 // Boot ordering (login-speed pass): the login/auth screen needs NO game

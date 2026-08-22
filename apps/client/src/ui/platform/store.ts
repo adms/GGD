@@ -391,6 +391,12 @@ export interface AppState {
 
   onWsMessage(raw: unknown): void;
   matchJoinFailed(message: string): void;
+  /**
+   * GH#596 —— 比賽**中途**斷線（⛔ 不是 join 失敗）。
+   * ⚠️ 刻意不沿用 `matchJoinFailed`：它的文案是「could not join the match」，
+   * 而玩家明明已經打了十分鐘 —— 那句話會對他說謊（第一·五守則）。
+   */
+  matchDisconnected(code: number): void;
   /** Surface a message in the error toast (a CLIENT-side failure, not an API one). */
   showError(message: string): void;
   clearError(): void;
@@ -1327,6 +1333,17 @@ export const appStore = createStore<AppState>()((set, get) => {
         screen: s.account ? "lobby" : "auth",
         match: null,
         lastError: friendly,
+      });
+    },
+
+    matchDisconnected(code) {
+      const s = get();
+      // ⚠️ 只講**真的發生了**的事：連線斷了、這一場結束了。⛔ 不要猜原因
+      //（伺服器重啟／網路／被踢在客戶端這一側分不出來），代碼留給回報用。
+      set({
+        screen: s.account ? "lobby" : "auth",
+        match: null,
+        lastError: `與伺服器的連線中斷（代碼 ${code}），這一場已經結束。`,
       });
     },
 
