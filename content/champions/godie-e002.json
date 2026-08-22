@@ -367,7 +367,7 @@
       "id": "godie-e002.e",
       "name": "20-03 約束與勝利之劍",
       "provenance": "owner-spec",
-      "description": "[主動][指向][範圍][AP加成]\n{{cd}}秒冷卻 吟唱1秒\n消耗[MP] {{mp}}\n施法距離：{{range}}\n\n「放了這招我就要補魔了」\n它會將所有者的魔力轉換成光後收束，對[前方][直線]敵人造成 {{dmg}} + 100% [AP]點傷害。",
+      "description": "[主動][指向][範圍][AP加成]\n{{cd}}秒冷卻 吟唱1秒\n消耗[MP] {{mp}}\n施法距離：{{range}}\n\n「放了這招我就要補魔了」\n它會將所有者的魔力轉換成光後收束，對[前方][直線]敵人造成 {{dmg}} + 100% [AP]點傷害。\n光束一路翻滾前進，貫穿沿途的每一個敵人。",
       "slot": "E",
       "castType": "ground",
       "maxRank": 4,
@@ -387,22 +387,54 @@
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damageLine",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "中",
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 1.0
+          "kind": "floatingText",
+          "shape": "single",
+          "text": "約束與勝利之劍！",
+          "colorRgb": [
+            255,
+            224,
+            120
+          ],
+          "sizeScale": 1.4,
+          "riseSpeed": 2.0,
+          "durationSec": 2.8,
+          "applyTo": "self"
+        },
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "modelKey": "imported.netherstrike",
+          "path": "forward",
+          "speed": 30.0,
+          "distance": 14.0,
+          "spinDegPerSec": 720.0,
+          "scale": 2.5,
+          "onArrive": [
+            {
+              "kind": "screenShake",
+              "shape": "single",
+              "amplitude": 0.6,
+              "durationSec": 0.8,
+              "applyTo": "all"
+            }
+          ],
+          "onTouch": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "中",
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 1.0
+                  }
+                ]
               }
-            ]
-          },
-          "length": 14,
-          "width": 2.0,
-          "aim": "target",
-          "fromCaster": true,
-          "includeOrigin": true
+            }
+          ],
+          "touchRadius": 1.5,
+          "touchSide": "enemies"
         },
         {
           "kind": "spawnVfx",

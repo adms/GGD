@@ -3,7 +3,7 @@
   "name": "20-03 約束與勝利之劍",
   "icon": "assets/icons/abilities/godie-e00l.e.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n集結了人們的意念而形成的星星的結晶。是一把精鍊的神造兵裝，被譽為「最強的幻想(Last Phantasm)」。\n在聖劍這個分類上位於最頂端的位置。它會將所有者的魔力轉換成光之後收束並加速以增加其動能，可以讓所有者使用出神靈等級的魔法。\n其斬擊看似是放出了一道光帶，但是能讓前方直線敵人受到魔力*0.4+350點傷害。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n集結了人們的意念而形成的星星的結晶。是一把精鍊的神造兵裝，被譽為「最強的幻想(Last Phantasm)」。\n在聖劍這個分類上位於最頂端的位置。它會將所有者的魔力轉換成光之後收束並加速以增加其動能，可以讓所有者使用出神靈等級的魔法。\n其斬擊看似是放出了一道光帶，但是能讓前方直線敵人受到魔力*0.4+350點傷害。\n光束一路翻滾前進，貫穿沿途的每一個敵人。",
   "slot": "E",
   "castType": "skillshot",
   "maxRank": 4,
@@ -23,9 +23,38 @@
   "manaCostTier": "小",
   "effects": [
     {
-      "kind": "spawnProjectile",
-      "projectileId": "imported.wave",
-      "onHit": [
+      "kind": "floatingText",
+      "shape": "single",
+      "text": "約束與勝利之劍！",
+      "colorRgb": [
+        255,
+        224,
+        120
+      ],
+      "sizeScale": 1.4,
+      "riseSpeed": 2.0,
+      "durationSec": 2.8,
+      "applyTo": "self"
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "modelKey": "imported.netherstrike",
+      "path": "forward",
+      "speed": 30.0,
+      "distance": 14.0,
+      "spinDegPerSec": 720.0,
+      "scale": 2.5,
+      "onArrive": [
+        {
+          "kind": "screenShake",
+          "shape": "single",
+          "amplitude": 0.6,
+          "durationSec": 0.8,
+          "applyTo": "all"
+        }
+      ],
+      "onTouch": [
         {
           "kind": "damage",
           "damageType": "magic",
@@ -33,7 +62,9 @@
             "damageTier": "小"
           }
         }
-      ]
+      ],
+      "touchRadius": 1.5,
+      "touchSide": "enemies"
     }
   ],
   "vfxKey": "fx.w3x.particle.holyawakening.p04",
