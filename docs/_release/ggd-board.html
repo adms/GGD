@@ -1,4 +1,4 @@
-<title>GGD 作戰板 · 2026-08-22 13:15 (GMT+8)</title>
+<title>GGD 作戰板 · 2026-08-22 15:02 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.24.2 · 資料截至 2026-08-22 13:15 (GMT+8)</p><h1>GGD 作戰板 · 2026-08-22 13:15 (GMT+8)</h1><div class="meta"><span>帳本 <b>4</b> 份</span><span>點名票號 <b>161</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.24.2 · 資料截至 2026-08-22 15:02 (GMT+8)</p><h1>GGD 作戰板 · 2026-08-22 15:02 (GMT+8)</h1><div class="meta"><span>帳本 <b>4</b> 份</span><span>點名票號 <b>163</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -592,6 +592,9 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>12:34</td><td>ok</td><td>#501</td></tr>
 <tr><td>13:15</td><td>我看起來大部分根本不需要我裁決，你直接做就好了，你的尺度未免太低了? 然後一堆老issue都是舊的資料參考，請你準備好新的英雄、出身、屬性五級距、技能、技能傷害冷卻耗魔距離範圍五級距、武器道具/寶具表來對照好嗎？ 我們的決策順序明明就是 重製新說明&gt;JASS&gt;w3x技能說明&gt;w3x技能設定 而且有一堆早就做完了 把票關一關吧 越老的票越要小心考古 傾向關閉 (&lt;300)</td><td>#501</td></tr>
 <tr><td>13:11</td><td>#163 · ⭐ 票面結論已被推翻 四條未合併分支仍掛在半空中(262b/277/280/281),已落後 main 70–110 個 commit,外加一條 tmp/281-rebase 殘骸 =&gt; 你給我建議阿 #75 · ⭐ 票面結論已被推翻 2346 支語音已出貨但從未用儀器量過：補做出貨後 all-pairs 分離度普查（粗測已顯示音域規格沒兌現） =&gt; 沒差了 這種主觀的問題 上線那麼久沒人反應 代表可接受了 #108 · ⭐ 票面結論已被推翻 跑一場平台建房實測:結算 → M幣 → 水晶 → 解鎖英雄整條迴圈從未執行過(真帳號場次無一場打完) =&gt; 那你跑阿 #33 sphere…</td><td>#163 #75 #108 #33 #53 #68 #85 #95 #122 #137 #139 #181 #222 #329 #147 #314 #441 #20 #198 #210</td></tr>
+<tr><td>15:02</td><td>這三支為何作為驗收標準，是為了建立特效正確性、動畫正確性、傷害正確性 三大標準檢驗(因為有一堆時間序JASS+w3x效果演出)，製作而成的 script 來套驗檢驗其他所有的技能特效傷害與動畫，並且讓codex編輯器也能依照合約做出類似的模板技能、傷害與動畫效果，所以才稱為技能模板驗收標準 --- 莉娜有EX的時候 腳底下有魔法陣這種 你也要記得還原 你最好開一張票去掃 EX 常駐特效 有可能試用等級或是技能已學習的JASS來判斷之類 --- 揍敵客 跟 拳四郎 好像都有殘留屍體3dmodel 在戰鬥回合、英靈殿等地方的問題 --- 不對 粉紫色是EX的特效 橘黃色才是AT立場特效 請你把所有圖片按照編號串起來判斷</td><td>#450 #539 #540</td></tr>
+<tr><td>14:55</td><td>「莉娜龍破斬 / 依文世界終結 / 克勞德超究武神霸斬 怎麼一直沒看到？難道沒開票？」 ⭐ 有票：#450「特效還原的驗收標準」，開著。⛔ 但沒人動它 —— 它從來沒排進任何一批。我剛把它排成 lane 的第一條（vfx450）。 而我先量了現況，結果解釋了你為什麼「一直沒看到」： 技能 vfxKey 判定 莉娜龍破斬 fx.prim.void.nova-lg ⛔ 通用原型（依元素給的紫色 nova） 依文世界終結 fx.prim.arcane.pulse-lg ⛔ 通用原型 克勞德超究武神霸斬 fx.w3x.orb.herocloudkfksword.p00 ✅ 原作特效 三支的 sfxKe…</td><td>#450</td></tr>
+<tr><td>14:58</td><td>不對 粉紫色是EX的特效 橘黃色才是AT立場特效 請你把所有圖片按照編號串起來判斷</td><td>#450</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>
