@@ -12,6 +12,11 @@
         "vfx": "attach.godie-u01u.poweraura"
       }
     ],
+    "godie-o00x": [
+      {
+        "vfx": "attach.godie-o00x.hands"
+      }
+    ],
     "imported.gumdam": [
       {
         "vfx": "godie-gumdam-p0"
@@ -34,6 +39,9 @@
       },
       {
         "vfx": "godie-heroshana-p2"
+      },
+      {
+        "vfx": "godie-heroshana-r0"
       }
     ],
     "imported.renaryugu2": [
@@ -85,6 +93,65 @@
     "imported.sesshomaru": [
       {
         "vfx": "godie-sesshomaru-r0"
+      }
+    ],
+    "imported.herosaber": [
+      {
+        "vfx": "godie-herosaber-r0"
+      },
+      {
+        "vfx": "fx.w3x.orb.herosaber.p01"
+      }
+    ],
+    "imported.heroichigo": [
+      {
+        "vfx": "godie-heroichigo-r0"
+      },
+      {
+        "vfx": "godie-heroichigo-r1"
+      }
+    ],
+    "imported.herosasuke": [
+      {
+        "vfx": "godie-herosasuke-r0"
+      },
+      {
+        "vfx": "godie-herosasuke-r1"
+      }
+    ],
+    "imported.lubu": [
+      {
+        "vfx": "godie-lubu-r0"
+      }
+    ],
+    "imported.cloud": [
+      {
+        "vfx": "godie-cloud-r0"
+      }
+    ],
+    "imported.herotoshiiemaeda": [
+      {
+        "vfx": "godie-herotoshiiemaeda-r0"
+      }
+    ],
+    "imported.herokyo": [
+      {
+        "vfx": "godie-herokyo-r0"
+      }
+    ],
+    "imported.herosephiroth": [
+      {
+        "vfx": "godie-herosephiroth-r0"
+      }
+    ],
+    "imported.herohehi": [
+      {
+        "vfx": "godie-herohehi-r0"
+      }
+    ],
+    "imported.picacugy": [
+      {
+        "vfx": "godie-picacugy-r0"
       }
     ]
   },

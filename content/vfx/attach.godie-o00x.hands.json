@@ -1,0 +1,8 @@
+{
+  "id": "attach.godie-o00x.hands",
+  "schema": "attachment@1",
+  "note": "悟空超三雙手的能量特效。⚠️ 原作沒有這一顆（SPHERE_ATTACHMENTS 對 O00X 只有 A0MJ Goku3head@origin，war3map.j 也沒有）⇒ 這一列是設計。存在的理由是 owner 2026-08-22 逐字點名「超3手的衝擊波」；⛔ 但模型是我挑的 —— SuperShinyThingy.mdx 是原圖唯一掛在手上的（MODEL_USAGE: hand,left×2 / hand,right×1），⭐ 要換只改這一格。⚠️ 鍵必須是 championId：godie-ogrh 與它共用 imported.goku。scale 0.4161 = 0.01156 / 0.02778（models_report 的 goku.mdx / SuperShinyThingy.mdx 之比，⛔ 不是挑的）。",
+  "modelKey": "imported.supershinythingy",
+  "points": ["hand left", "hand right"],
+  "scale": 0.4161
+}
