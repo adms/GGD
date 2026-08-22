@@ -26,6 +26,14 @@
  *    少了前者，回到可用的那一刻沒有任何提示。
  */
 import type { CSSProperties } from "react";
+import { prefersReducedMotion } from "./buttonSfx";
+import {
+  ensureToggleKeyframes,
+  toggleAbility,
+  toggleRgbTriplet,
+  TOGGLE_ANIM_NAME,
+  type ToggleAbilityValues,
+} from "./toggleAbility";
 
 /**
  * 一格磚**現在按不按得動**要看的四件事。
@@ -81,3 +89,77 @@ export function abilityReadyFrameStyle(rgb: string): CSSProperties {
 export const READY_RGB_PASSIVE = "168, 140, 255";
 export const READY_RGB_ACTIVE = "120, 190, 255";
 export const READY_RGB_EX = "255, 206, 110";
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ⭐【開啟中】—— 第三種狀態，⛔ 不是就緒框的一個參數（GH#546）
+// ═══════════════════════════════════════════════════════════════════════════
+/**
+ * owner 2026-08-22：「**風王結界這種開關型按鈕 圖示跟特效要明顯看出是開還是關
+ * 狀態**（w3x會有特殊攻擊特效跟隨手部、**圖示也會有流轉作為打開中顯示**）」。
+ *
+ * ⚠️ 為什麼它不能靠就緒框表達：出貨的 20-01 風王結界**開著的期間自己在 60 秒
+ * 冷卻裡**，所以 `isAbilityTileReady()` 對它是 false —— 一支**開著的**切換技與
+ * 一支**單純在冷卻**的技能，在這一段落地之前於畫面上逐位元一模一樣。
+ *
+ * ⛔ 這裡沒有為風王結界寫任何一個 if（第〇·五守則）：`toggleOn` 是**一格狀態**，
+ * 出貨的兩支切換技（20-01 風王結界 · 70-00 紮根，各兩個英雄變體共 4 份文件）
+ * 與未來每一支都走同一條路。
+ */
+export interface AbilityTileState extends AbilityTileReadiness {
+  /** 這顆按鈕現在是**開著的**切換技嗎（`sim/abilities/toggle.ts::isToggleOn`）。 */
+  readonly toggleOn?: boolean;
+}
+
+/**
+ * 「開啟中」的框 —— **常駐鑲邊（狀態）+ 掃光（流轉）**，畫在磚的子元素上。
+ *
+ * 兩半是刻意分開的，⛔ 不是同一個效果的兩個參數：
+ *   · **鑲邊 + 外暈** 說「它是開著的」。它**永遠在**，減少動態也在。
+ *   · **掃光** 是 owner 點名的「流轉」。它是動作，所以 `prefers-reduced-motion`
+ *     下整段消失 —— ⭐ 保留那句話，拿掉動作（同 `cooldown.css` 的兩支）。
+ *
+ * ⚠️ 用 `background` 掃光而不是轉一圈的 conic 鑲邊：磚自己的 `transform` 已經被
+ * 按下動畫與拒絕抖動佔走（`paintCastFlash` 直接寫 `el.style.transform`），而一個
+ * 會 `rotate` 的方形子元素會轉出磚外。`background-position` 動的東西不碰版面。
+ *
+ * ⚠️ `pointerEvents: "none"` 與就緒框同一個理由：它蓋滿整格，會吃掉
+ * `onPointerDown` —— 少了它，技能一旦開啟就再也**關不掉**。
+ */
+export function abilityToggleFrameStyle(
+  rgb: string,
+  v: ToggleAbilityValues = toggleAbility(),
+  reduced: boolean = prefersReducedMotion(),
+): CSSProperties {
+  ensureToggleKeyframes();
+  const c = toggleRgbTriplet(v.color, rgb);
+  return {
+    position: "absolute",
+    inset: 0,
+    borderRadius: "inherit",
+    // 掃光被磚的圓角切齊；⛔ 它不裁掉自己的外暈（`overflow` 只管子元素）。
+    overflow: "hidden",
+    boxShadow: `inset 0 0 0 ${v.rimPx}px rgba(${c},0.95), 0 0 ${v.glowPx}px rgba(${c},0.6)`,
+    background: reduced
+      ? "none"
+      : `linear-gradient(115deg, rgba(${c},0) 38%, rgba(255,255,255,0.32) 50%, rgba(${c},0) 62%)`,
+    backgroundSize: "300% 100%",
+    animation: reduced ? "none" : `${TOGGLE_ANIM_NAME} ${v.sweepMs}ms linear infinite`,
+    pointerEvents: "none",
+  };
+}
+
+/**
+ * ⭐ **四個磚家族的唯一入口** —— 這一格現在該畫哪一種框（`null` = 不畫）。
+ *
+ * 三態的優先序，以及為什麼「兩個框並存」**沒有做成後台欄位**：開著的期間那支
+ * 技能本來就在冷卻，所以就緒框在出貨內容上**不可能**同時亮 —— 一格切不出任何
+ * 差別的欄位就是第一·五守則說的「說了但不會發生」，⛔ 所以它不存在。
+ *
+ * ⛔ 呼叫端不要自己 `if (toggleOn)` 再挑一支 style：那就是把這個決定寫四遍
+ *（天生技 / QWER / EX / TouchControls），而它們一定會漂（#166 的虛線邊框當年
+ * 就只在其中兩個家族上）。
+ */
+export function abilityTileFrameStyle(rgb: string, t: AbilityTileState): CSSProperties | null {
+  if (t.toggleOn === true && toggleAbility().enabled) return abilityToggleFrameStyle(rgb);
+  return isAbilityTileReady(t) ? abilityReadyFrameStyle(rgb) : null;
+}
