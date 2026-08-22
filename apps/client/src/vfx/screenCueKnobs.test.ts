@@ -65,9 +65,25 @@ function shipDoc(over: Partial<ScreenFxPolicy> = {}): void {
   );
 }
 
-/** 一發**超過**出貨上界的閃爍（理想鄉反彈的受害者那一道就是 0.62 > 0.55）。 */
+/**
+ * 一發**超過**出貨上界的閃爍（理想鄉反彈的受害者那一道就是 0.62 > 0.55）。
+ *
+ * ⛔⛔ **這個夾具在 2026-08-23 之前是 `{ spec: {…} }`**（GH#608）—— 一個
+ * **出貨路徑從來不產生**的形狀：sim 送的是**攤平**的
+ * `{colorRgb, peakAlpha, durationSec, broadcast, subjects, caster, zone}`。
+ * ⇒ 這兩條測試一路綠著，而線上每一發 `screenFlash` 都在客戶端**擲 TypeError**
+ * （第二守則失敗形態⑤：被測的不是出貨的那個）。
+ * ⭐ 現在的形狀與 `sim/effects/clientCues.ts` 的 `ScreenFlashEvent` 逐格相同 ——
+ * ⛔ 改了那一邊而忘了這裡，`screenCueContract.test.ts` 會用**真的** sim 事件抓到。
+ */
 const LOUD_FLASH = {
-  spec: { colorRgb: [255, 232, 160], peakAlpha: 1, durationSec: 0.3 },
+  colorRgb: [255, 232, 160],
+  peakAlpha: 1,
+  durationSec: 0.3,
+  broadcast: true,
+  subjects: [],
+  caster: 1,
+  zone: 0,
 };
 
 describe("config.screen-fx@1 真的到得了畫面 (GH#549)", () => {
@@ -94,7 +110,17 @@ describe("config.screen-fx@1 真的到得了畫面 (GH#549)", () => {
     const mult = DEFAULT_SCREEN_FX.floatingTextScale * 2;
     shipDoc({ floatingTextScale: mult });
     const vfx = new VfxSystem(scene, CTX);
-    vfx.handleEvent(ev("floatingText", { at: 1, text: "1Hit", sizeScale: 1 }), 1000);
+    // ⭐ sim 送的是**一串錨**（`subjects: [{id,x,z}]`），⛔ 不是舊夾具的 `at: 1`。
+    vfx.handleEvent(
+      ev("floatingText", {
+        text: "1Hit",
+        sizeScale: 1,
+        subjects: [{ id: 1, x: 3, z: 4 }],
+        caster: 1,
+        zone: 0,
+      }),
+      1000,
+    );
     const live = (vfx.floatingTextEntries as readonly { active: boolean; sizeScale: number }[])
       .filter((e) => e.active);
     expect(live).toHaveLength(1);

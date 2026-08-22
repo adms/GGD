@@ -34,4 +34,16 @@ export interface ScreenFlashVariant {
    *   · `all`         —— 全場（⚠️ 只給真正的全場事件，例如殭屍王登場）
    */
   applyTo?: "self" | "victim" | "all";
+  /**
+   * ⭐ 劇本指定的演出：豁免 `config.screen-fx@1` 的全域上限（owner 2026-08-23 裁決 (a)）。
+   *
+   * ⛔⛔ **這一格在 2026-08-23 之前只存在於 Zod schema 裡**（GH#608）——
+   * 這個介面是 `zScreenFlash` 的**手寫鏡像**（第〇·四守則說的第二個住處），
+   * 而它漏掉了它。⇒ `screenFlashEffect.apply()` 的 `e` **看不到這一格**，
+   * 於是它不可能被轉發，於是那 1 秒全黑不可能發生 —— 而 `content:build` 是綠的
+   * （schema 收得下）、卡面寫得出、客戶端讀得懂。**四個零件單看都是對的。**
+   *
+   * ⚠️ 它**不是「無上限」**：仍吃 `SCREEN_FLASH_MAX_*` 與無障礙那一格。
+   */
+  scripted?: boolean;
 }

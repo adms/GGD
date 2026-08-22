@@ -131,9 +131,26 @@ import { clampOneShotLife, DEFAULT_ONE_SHOT_MAX_LIFE_SEC, oneShotMaxLifeSec } fr
 //    是自己的測試（失敗形態③：整組刪掉只有測試會紅，而畫面上本來就什麼都沒有）。
 import { ModelFxRig } from "../render/modelFxRig";
 import type { ModelFxSpawnEvent } from "../render/modelFxPath";
+/**
+ * 浮動文字掛在錨點上方多高。⛔ 舊碼是 `ev.data.y ?? 2` 而 **sim 從來沒送過 `y`**
+ * ⇒ 它恆為 2。這裡把那個 2 具名，⛔ 不是新增一個可調參數（第二守則:一個
+ * 沒有人會改的數字不需要三個住處）。
+ */
+const FLOATING_TEXT_ANCHOR_Y = 2;
+import type {
+  FloatingTextEvent,
+  ScreenCueRecipients,
+  ScreenFlashEvent,
+  ScreenShakeEvent,
+} from "@ggd/shared/sim/effects/clientCues";
 import { ScreenFxLayer } from "./ScreenFxLayer";
 import { FloatingTextFx } from "./FloatingTextFx";
-import { screenCuePolicyFromContent } from "../render/screenFx";
+import {
+  screenCueIsForViewer,
+  screenCuePolicyFromContent,
+  screenFlashSpecFromEvent,
+  screenShakeSpecFromEvent,
+} from "../render/screenFx";
 
 /** Reusable scratch for the #233 headroom probe — no per-frame allocation. */
 const HEADROOM_F = new Vector3();
@@ -2044,35 +2061,57 @@ export class VfxSystem {
         this.modelFx.spawn(p);
         break;
       }
+      // ⛔⛔ GH#608 —— 這兩個 case 在 2026-08-23 之前**擲 TypeError**。
+      //
+      // 舊碼 `this.screenFx.flash(ev.data.spec as never, viewer)`：sim 送的是
+      // `{colorRgb, peakAlpha, durationSec, broadcast, subjects, caster, zone}`，
+      // ⛔ **沒有 `spec`** ⇒ `ScreenFxLayer.flash()` 第一行 `spec.applyTo` 對
+      // `undefined` 取值。⚠️ `as never` 讓 tsc 完全沉默。
+      //
+      // ⭐ 而它的代價遠大於它自己：`GameApp.handleDrainedEvent` 第一行就是
+      // `this.vfx.handleEvent(ev)`，而 **`GameApp.ts` 全檔零個 `try`** ⇒ 一次
+      // throw 帶走同一批**後面每一個事件**與**後面每一個 sink**（動畫脈衝／
+      // 施法條／相機回饋／SFX 佇列／HUD 記錄器）。
+      //
+      // ⭐ 觀眾判定改由**權威側**決定：sim 早就把 `applyTo` 解算成
+      // `subjects`/`broadcast` 了。⛔ 客戶端不再有第二份觀眾規則 ——
+      // 舊碼的 `viewer.isVictim` 讀 `ev.data.victim`，**同樣零寫入端**，
+      // 所以「受害者畫面變紅」從來沒有對過人。
       case "screenFlash":
       case "screenShake": {
+        const cue = ev.data as unknown as ScreenCueRecipients;
         const me = this.ctx.localEntityId?.() ?? null;
-        const viewer = {
-          isCaster: me !== null && me === (ev.data.caster as number | undefined),
-          isVictim: me !== null && me === (ev.data.victim as number | undefined),
-        };
+        if (!screenCueIsForViewer(cue as never, me)) break;
+        // 觀眾已經判完 ⇒ 圖層那一層一律「看得到」（`applyTo` 缺席 = `"all"`）。
+        const seen = { isCaster: true, isVictim: true };
         if (ev.type === "screenFlash") {
-          this.screenFx.flash(ev.data.spec as never, viewer);
+          this.screenFx.flash(screenFlashSpecFromEvent(ev.data as unknown as ScreenFlashEvent), seen);
         } else {
-          this.screenFx.shake(ev.data.spec as never, viewer);
+          this.screenFx.shake(screenShakeSpecFromEvent(ev.data as unknown as ScreenShakeEvent), seen);
         }
         break;
       }
+      // ⛔ GH#608 —— 舊碼讀 `ev.data.at`（零寫入端）⇒ `pos` 恆為 null ⇒ 每一次都
+      //    `break`。⇒ **全遊戲每一個作者寫過的浮動文字都沒有出現過**（靜默那一種，
+      //    ⛔ 所以它不像上面兩個會炸掉整批 —— 它只是不存在）。
+      // ⭐ sim 送的是 `subjects: [{id,x,z}]` —— **一則事件可以帶好幾個錨**
+      //    （`applyTo:"victim"` 打中五個人 = 五個字）。舊碼就算接對 `at` 也只會
+      //    生一個（`entityPos` 還要客戶端自己查，而 sim 已經把座標算好送來了）。
       case "floatingText": {
-        const at = ev.data.at as number | undefined;
-        const pos = at !== undefined ? this.ctx.entityPos(at) : null;
-        const text = ev.data.text as string | undefined;
-        if (!pos || !text) break;
-        this.floatingText.spawn({
-          text,
-          x: pos.x,
-          y: (ev.data.y as number | undefined) ?? 2,
-          z: pos.z,
-          colorRgb: ev.data.colorRgb as [number, number, number] | undefined,
-          sizeScale: ev.data.sizeScale as number | undefined,
-          riseSpeed: ev.data.riseSpeed as number | undefined,
-          durationSec: ev.data.durationSec as number | undefined,
-        });
+        const p = ev.data as unknown as FloatingTextEvent;
+        if (!p.text || !p.subjects?.length) break;
+        for (const s of p.subjects) {
+          this.floatingText.spawn({
+            text: p.text,
+            x: s.x,
+            y: FLOATING_TEXT_ANCHOR_Y,
+            z: s.z,
+            colorRgb: p.colorRgb,
+            sizeScale: p.sizeScale,
+            riseSpeed: p.riseSpeed,
+            durationSec: p.durationSec,
+          });
+        }
         break;
       }
       // ⚡⚡ GH#571 —— 連鎖閃電那一束**真的畫出來**。

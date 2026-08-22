@@ -83,9 +83,23 @@ function playRound(fx: RoundFx, round: number, startMs: number): number {
       fx.vfx.handleEvent({ tick: i, type, data } as unknown as EventMessage, now);
     ev("vfxSpawn", { x: i % 7, z: i % 5, vfxId: `fx.r${round}-a${i % 12}` });
     ev("hitImpact", { source: 100 + i, target: 200 + i, amount: 120, x: i % 9, z: (i * 3) % 9 });
+    // ⛔⛔ 這個夾具在 2026-08-23 之前是 `{ caster, spec: { …, motion: "line" } }`
+    //    （GH#608）—— 出貨路徑**從來不產生**那個形狀，而 `motion` 這個欄位
+    //    在 repo 裡根本不存在。它照樣生得出節點（舊消費端只問 `spec` 在不在），
+    //    所以這條「殘留不成長」的守衛量的是一個**虛構通道**的殘留。
+    // ⭐ 現在的形狀與 `sim/effects/spawnModelFx.ts` 的 `ModelFxSpawnEvent` 逐格相同。
     ev("modelFxSpawn", {
       caster: i % 6,
-      spec: { modelKey: `mfx.r${round}-${i % 3}`, motion: "line", speed: 12, count: 2 },
+      modelKey: `mfx.r${round}-${i % 3}`,
+      path: "radial",
+      speed: 12,
+      x: i % 7,
+      z: i % 5,
+      zone: 0,
+      instances: [
+        { x: i % 7, z: i % 5, dx: 1, dz: 0, dist: 6, durationSec: 0.5 },
+        { x: i % 7, z: i % 5, dx: -1, dz: 0, dist: 6, durationSec: 0.5 },
+      ],
     });
     for (const [id, root] of roots) fx.ambient.attach(id, `model-r${round}`, root, [`pv.${round}`]);
     fx.ambient.tick(now, 16);

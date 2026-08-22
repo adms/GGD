@@ -111,6 +111,51 @@ export function screenFxAudienceAllows(
   }
 }
 
+/**
+ * ⭐ **線路酬載 → 圖層 spec**（GH#608）。
+ *
+ * ⛔ 這三支存在的理由是「⛔ 不可以在測試裡手抄一份對應」（第二守則失敗形態⑤）：
+ * `VfxSystem` 的那個 `case` 沒辦法在 headless 下跑（它要整個 Babylon 場景），
+ * 於是**唯一**能被守衛跑到的形狀就是把對應抽成純函式。抽出來之後，
+ * `screenCueContract.test.ts` 餵的是**真的 sim 送出來的那一份**。
+ *
+ * ⚠️ 在此之前 `VfxSystem` 讀的是 `ev.data.spec` —— 一個**零寫入端**的欄位 ——
+ * 而 `flash()` 第一行 `spec.applyTo` 對 `undefined` 取值 ⇒ **擲 TypeError**，
+ * 而 `as never` 讓 tsc 完全沉默。
+ */
+
+/** 這一發演出輪不輪得到本機看。⭐ 觀眾規則只有一份，住在 sim。 */
+export function screenCueIsForViewer(
+  cue: { broadcast: boolean; subjects: readonly number[] },
+  localId: number | null,
+): boolean {
+  if (cue.broadcast) return true;
+  return localId !== null && (cue.subjects ?? []).some((id) => id === localId);
+}
+
+export function screenFlashSpecFromEvent(p: {
+  colorRgb: [number, number, number];
+  peakAlpha: number;
+  durationSec: number;
+  scripted?: boolean;
+}): ScreenFlashSpec {
+  return {
+    colorRgb: p.colorRgb,
+    peakAlpha: p.peakAlpha,
+    durationSec: p.durationSec,
+    // ⭐ 觀眾已經由 `screenCueIsForViewer` 判完 ⇒ 這裡不再帶 `applyTo`
+    //    （缺席 = `"all"` = 放行）。⛔ 兩層都判 = 第二份觀眾規則。
+    ...(p.scripted === true ? { scripted: true } : {}),
+  };
+}
+
+export function screenShakeSpecFromEvent(p: {
+  amplitude: number;
+  durationSec: number;
+}): ScreenShakeSpec {
+  return { amplitude: p.amplitude, durationSec: p.durationSec };
+}
+
 /** 夾過上界、吃過 reduced-motion 之後真的要畫的閃爍。null = 不畫。 */
 export interface ResolvedScreenFlash {
   /** CSS 的 `rgb(r,g,b)` —— overlay 只需要顏色，alpha 走 envelope */

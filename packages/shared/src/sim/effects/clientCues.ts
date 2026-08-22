@@ -66,13 +66,75 @@ export function cueRecipients(
   return { subjects: [ctx.caster], broadcast: false };
 }
 
+
+/**
+ * ⛔⛔ **三個「演出」事件的酬載型別 —— GH#608。**
+ *
+ * 這一族（#543 螢幕回饋 · #549 特效文字）在 2026-08-23 之前**三個全部是死的**，
+ * 而三個的死法各不相同 —— 所以「修好一個」不代表另外兩個會跟著活：
+ *
+ * | 事件 | sim 送 | 客戶端讀 | 下場 |
+ * |---|---|---|---|
+ * | `screenFlash` | `{colorRgb, peakAlpha, durationSec, broadcast, subjects, caster, zone}` | `ev.data.**spec**` | ⛔ **擲 TypeError**（`spec.applyTo`） |
+ * | `screenShake` | 同上（`amplitude` 取代顏色三格） | `ev.data.**spec**` | ⛔ **擲 TypeError** |
+ * | `floatingText` | `{text, subjects:[{id,x,z}], …}` | `ev.data.**at**` | 靜默 `break` |
+ *
+ * ⚠️ 前兩個**擲例外**這件事的代價遠大於它自己：`GameApp.handleDrainedEvent` 的
+ * 第一行就是 `this.vfx.handleEvent(ev)`，而**全檔零個 `try`** ⇒ 一次 throw 會帶走
+ * 同一批後面**每一個**事件與**每一個** sink（動畫脈衝／施法條／相機回饋／SFX 佇列／HUD 記錄器）。
+ *
+ * ⭐ 而 `scripted`（owner 2026-08-23 裁決 (a) 的劇本豁免）**sim 從來沒有轉發過** ——
+ * 所以就算把 `spec` 接對了，殭屍王那 1 秒全黑仍然會被夾成 `0.55 alpha × 0.6 秒`。
+ * ⇒ **三個獨立的斷點串在同一條路上**，這正是為什麼「每一個零件都對」而畫面上什麼都沒有。
+ *
+ * ── ⭐ 觀眾判定改由**權威側**決定 ──────────────────────────────────────────
+ * 舊設計是客戶端拿 `spec.applyTo` ＋ `viewer.{isCaster,isVictim}` 自己判 ——
+ * 而 `ev.data.victim` **同樣零寫入端**，所以「受害者畫面變紅」從來沒有對過人。
+ * ⭐ 新設計：sim 已經把 `applyTo` 解算成 `subjects` / `broadcast`，客戶端只問
+ * 「`broadcast` 嗎？我在 `subjects` 裡嗎？」⛔ 不再有第二份觀眾規則。
+ */
+export interface ScreenCueRecipients {
+  /** true = 全場都看得到（`applyTo:"all"`），此時 `subjects` 是空的 */
+  broadcast: boolean;
+  /** 指名的觀眾（`applyTo:"self"|"victim"` 解算完的結果） */
+  subjects: EntityId[];
+  caster: EntityId;
+  zone: number;
+}
+
+export interface ScreenFlashEvent extends ScreenCueRecipients {
+  colorRgb: [number, number, number];
+  peakAlpha: number;
+  durationSec: number;
+  /** ⭐ 劇本指定的演出，豁免營運端全域上限（⛔ 仍受 schema 上界與無障礙管） */
+  scripted?: boolean;
+}
+
+export interface ScreenShakeEvent extends ScreenCueRecipients {
+  /** 0..1 的**正規化**強度 —— 真正的位移量由 `config.screen-cues@1` 乘出來 */
+  amplitude: number;
+  durationSec: number;
+}
+
+export interface FloatingTextEvent {
+  text: string;
+  /** ⭐ **一則事件可以帶好幾個錨**（`applyTo:"victim"` 打中五個人 = 五個字） */
+  subjects: { id: EntityId; x: number; z: number }[];
+  caster: EntityId;
+  zone: number;
+  colorRgb?: [number, number, number];
+  sizeScale?: number;
+  riseSpeed?: number;
+  durationSec?: number;
+}
+
 export const screenFlashEffect: EffectKindSpec<"screenFlash"> = {
   apply(e, ctx) {
     const { world } = ctx;
     const { subjects, broadcast } = cueRecipients(e, e.applyTo, ctx);
     // 沒有人收得到 = 這一發沒打中任何人。⛔ 不是「壞了」，所以不擲錯。
     if (!broadcast && subjects.length === 0) return;
-    world.emit("screenFlash", {
+    const payload: ScreenFlashEvent = {
       colorRgb: [...e.colorRgb],
       peakAlpha: clamp(e.peakAlpha, 0, SCREEN_FLASH_MAX_ALPHA),
       durationSec: clamp(e.durationSec, 0, SCREEN_FLASH_MAX_SEC),
@@ -80,7 +142,13 @@ export const screenFlashEffect: EffectKindSpec<"screenFlash"> = {
       subjects,
       caster: ctx.caster,
       zone: world.transform.get(ctx.caster)?.zone ?? 0,
-    });
+      // ⭐ GH#608 —— 這一格在 2026-08-23 之前**沒有被轉發**，所以 owner 裁決 (a)
+      //    的「劇本演出豁免全域上限」在畫面上從來沒有發生過:殭屍王那 1 秒全黑
+      //    被夾成 `flashMaxAlpha × flashMaxSec`。schema 收得下、卡面寫得出、
+      //    客戶端讀得懂 —— 中間這一段沒有人接（第一·五守則）。
+      ...(e.scripted === true ? { scripted: true } : {}),
+    };
+    world.emit("screenFlash", payload as unknown as Record<string, unknown>);
   },
 };
 
@@ -89,7 +157,7 @@ export const screenShakeEffect: EffectKindSpec<"screenShake"> = {
     const { world } = ctx;
     const { subjects, broadcast } = cueRecipients(e, e.applyTo, ctx);
     if (!broadcast && subjects.length === 0) return;
-    world.emit("screenShake", {
+    const payload: ScreenShakeEvent = {
       // ⭐ 0..1 的**正規化**強度：真正的位移量由 `config.screen-cues@1` 乘出來，
       //    ⛔ sim 不知道也不該知道一格是幾個像素。
       amplitude: clamp(e.amplitude, 0, SCREEN_SHAKE_MAX_AMPLITUDE),
@@ -98,7 +166,8 @@ export const screenShakeEffect: EffectKindSpec<"screenShake"> = {
       subjects,
       caster: ctx.caster,
       zone: world.transform.get(ctx.caster)?.zone ?? 0,
-    });
+    };
+    world.emit("screenShake", payload as unknown as Record<string, unknown>);
   },
 };
 
@@ -117,7 +186,7 @@ export const floatingTextEffect: EffectKindSpec<"floatingText"> = {
       .filter((s): s is { id: EntityId; t: NonNullable<typeof s.t> } => s.t !== undefined)
       .map((s) => ({ id: s.id, x: s.t.pos.x, z: s.t.pos.z }));
     if (anchored.length === 0) return;
-    world.emit("floatingText", {
+    const payload: FloatingTextEvent = {
       text: resolveCueText(e.text, ctx),
       ...(e.colorRgb !== undefined ? { colorRgb: [...e.colorRgb] } : {}),
       ...(e.sizeScale !== undefined
@@ -132,7 +201,8 @@ export const floatingTextEffect: EffectKindSpec<"floatingText"> = {
       subjects: anchored,
       caster: ctx.caster,
       zone: world.transform.get(ctx.caster)?.zone ?? 0,
-    });
+    };
+    world.emit("floatingText", payload as unknown as Record<string, unknown>);
   },
 };
 
