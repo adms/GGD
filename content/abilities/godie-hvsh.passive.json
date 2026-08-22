@@ -4,7 +4,7 @@
   "name": "48-00 石化之眼",
   "icon": "assets/icons/abilities/godie-hvsh.passive.webp",
   "provenance": "w3x-import",
-  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n開啟石化之眼，將Rider附近{{radius}}範圍的部隊予以石化，持續4秒。\n\n（GGD 更正 2026-08-22 · GH#314）⚠️ 這一支在此之前是 `castType:\"self\"` + 一個裸的 `applyStatus`，而 `self` 分支直接 `targets=[caster]`、頂層 `radius` **只有 `ground` 分支讀得到**（`abilitySystem.ts`）。⇒ 卡片寫的那個圈**一次都沒有石化過任何人**，而那 4 秒的暈眩落在 Rider 自己身上 —— 玩家照付 45 秒冷卻，換來自己被定住（第一·五守則）。⛔ 沒有為它寫任何程式：改成 repo 已有的同形寫法（53-03 破法對咒 `godie-o00l.e`）—— `castType:\"ground\"` + `range: 0`（落點永遠夾回自己腳下＝「附近」）+ 頂層 `radius`／`radiusTier`，於是 `groundAoeTargets` 用**同一個** `radiusTier` 解出圈內敵人，石化落在他們身上。範圍級距一格沒動（小）。",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n開啟石化之眼，將Rider附近{{radius}}範圍的部隊予以石化，持續4秒。\n\n（GGD 更正 2026-08-22 · GH#314）⚠️ 這一支在此之前是 `castType:\"self\"` + 一個裸的 `applyStatus`，而 `self` 分支直接 `targets=[caster]`、頂層 `radius` **只有 `ground` 分支讀得到**（`abilitySystem.ts`）。⇒ 卡片寫的那個圈**一次都沒有石化過任何人**，而那 4 秒的暈眩落在 Rider 自己身上 —— 玩家照付 {{cd}} 秒冷卻，換來自己被定住（第一·五守則）。⛔ 沒有為它寫任何程式：改成 repo 已有的同形寫法（53-03 破法對咒 `godie-o00l.e`）—— `castType:\"ground\"` + `range: 0`（落點永遠夾回自己腳下＝「附近」）+ 頂層 `radius`／`radiusTier`，於是 `groundAoeTargets` 用**同一個** `radiusTier` 解出圈內敵人，石化落在他們身上。範圍級距一格沒動（小）。",
   "slot": "PASSIVE",
   "innateKind": "active",
   "castType": "ground",

@@ -1,7 +1,13 @@
 {
   "collection": "status-effects",
-  "hash": "7abdf3e0ce34",
+  "hash": "30215be0c195",
   "entries": [
+    {
+      "id": "alcohol-enema",
+      "path": "status-effects/alcohol-enema.json",
+      "hash": "6d6c087eae63",
+      "size": 526
+    },
     {
       "id": "armor-break",
       "path": "status-effects/armor-break.json",
@@ -139,6 +145,12 @@
       "path": "status-effects/numbness.json",
       "hash": "40c2562c82ae",
       "size": 774
+    },
+    {
+      "id": "octuple-slash-window",
+      "path": "status-effects/octuple-slash-window.json",
+      "hash": "b058e9ebe19e",
+      "size": 459
     },
     {
       "id": "omnislash-lock",

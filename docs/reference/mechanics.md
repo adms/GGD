@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_e8d5c1b343d8`
+contentVersion `cv_9df329798f27`
 
 ---
 
@@ -16,16 +16,16 @@ contentVersion `cv_e8d5c1b343d8`
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
-| `applyBuff` | 增益／減益（改屬性） | 107 | `godie-e001.passive`、`godie-e001.q`、`godie-e001.r`、`godie-e002.r`、`godie-e008.w`、`godie-e00l.ex`、`godie-e00n.ex`、`godie-e00n.passive`、`godie-e00n.q`、`godie-e00n.r`、`godie-e00n.w`、`godie-e00r.ex` …（共 107） |
-| `applyStatus` | 掛狀態 | 94 | `godie-e001.e`、`godie-e001.passive`、`godie-e007.ex`、`godie-e007.q`、`godie-e008.e`、`godie-e008.q`、`godie-e00n.e`、`godie-e00n.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.q`、`godie-e00s.e` …（共 94） |
+| `applyBuff` | 增益／減益（改屬性） | 106 | `godie-e001.passive`、`godie-e001.q`、`godie-e001.r`、`godie-e002.r`、`godie-e008.w`、`godie-e00l.ex`、`godie-e00n.ex`、`godie-e00n.passive`、`godie-e00n.q`、`godie-e00n.r`、`godie-e00n.w`、`godie-e00r.ex` …（共 106） |
+| `applyStatus` | 掛狀態 | 97 | `godie-e001.e`、`godie-e001.passive`、`godie-e007.ex`、`godie-e007.q`、`godie-e008.e`、`godie-e008.q`、`godie-e00n.e`、`godie-e00n.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.q`、`godie-e00s.e` …（共 97） |
 | `blink` | 瞬移 | 15 | `godie-efur.q`、`godie-h01o.q`、`godie-n00b.e`、`godie-n01c.r`、`godie-n01c.w`、`godie-nbbc.r`、`godie-nbbc.w`、`godie-o00k.w`、`godie-o00x.w`、`godie-o02l.passive`、`godie-ofar.passive`、`godie-ogrh.w` …（共 15） |
 | `carry` | 背負（帶著隊友移動 + 不可被選取） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `chainLightning` | 連鎖閃電 | 2 | `godie-o00k.r`、`godie-udea.r` |
 | `championForm` | 變身／切換形態 | 23 | `godie-e001.r`、`godie-e002.w`、`godie-e00l.w`、`godie-e00s.passive`、`godie-e00w.e`、`godie-e010.passive`、`godie-h01n.r`、`godie-h02v.q`、`godie-hgam.ex`、`godie-hjai.ex`、`godie-n003.ex`、`godie-n01c.ex` …（共 23） |
 | `convertTeam` | 陣營轉換（把一個既有單位借到自己這一隊） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `cycleBuff` | 輪替增益 | 1 | `godie-efur.passive` |
-| `damage` | 傷害 | 153 | `godie-e001.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e002.w`、`godie-e007.e`、`godie-e007.ex`、`godie-e007.q`、`godie-e007.r`、`godie-e008.e`、`godie-e008.q`、`godie-e00l.e`、`godie-e00l.r` …（共 153） |
-| `damageArea` | 範圍傷害 | 35 | `godie-e001.passive`、`godie-e002.w`、`godie-e00n.passive`、`godie-e00s.e`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00s.w`、`godie-e00w.ex`、`godie-e00w.q`、`godie-e00w.r`、`godie-e00w.w`、`godie-e00x.passive` …（共 35） |
+| `damage` | 傷害 | 156 | `godie-e001.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e002.w`、`godie-e007.e`、`godie-e007.ex`、`godie-e007.q`、`godie-e007.r`、`godie-e008.e`、`godie-e008.q`、`godie-e00l.e`、`godie-e00l.r` …（共 156） |
+| `damageArea` | 範圍傷害 | 36 | `godie-e001.passive`、`godie-e002.w`、`godie-e00n.passive`、`godie-e00s.e`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00s.w`、`godie-e00w.ex`、`godie-e00w.q`、`godie-e00w.r`、`godie-e00w.w`、`godie-e00x.passive` …（共 36） |
 | `damageLine` | 直線傷害 | 10 | `godie-e002.e`、`godie-e002.ex`、`godie-e00r.r`、`godie-edem.e`、`godie-emfr.q`、`godie-h01n.e`、`godie-h01u.e`、`godie-h02v.e`、`godie-n00p.passive`、`godie-nsjs.passive` |
 | `dash` | 衝刺（腳不離地） | 7 | `godie-edem.e`、`godie-h01n.q`、`godie-h01u.e`、`godie-hapm.r`、`godie-udea.r`、`godie-zombiex.w`、`thorne.q` |
 | `delayed` | 延遲落地／排程 | 8 | `godie-e002.ex`、`godie-h02v.ex`、`godie-h02v.q`、`godie-hapm.ex`、`godie-hapm.passive`、`grail-a-08`、`grail-ex-05`、`grail-ex-16` |
@@ -50,7 +50,7 @@ contentVersion `cv_e8d5c1b343d8`
 | `shield` | 吸收（護盾） | 10 | `godie-e00l.passive`、`godie-e00r.e`、`godie-h00l.ex`、`godie-o00l.e`、`sela.w`、`thorne.w`、`grail-c-17`、`grail-a-16`、`aegis-surge`、`guardian-ward` |
 | `shieldBreak` | 破盾 | 2 | `grail-c-09`、`grail-ex-14` |
 | `spawnProjectile` | 投射物 | 26 | `godie-e008.e`、`godie-e00l.e`、`godie-e010.q`、`godie-h02r.r`、`godie-n003.e`、`godie-n00p.w`、`godie-n01c.e`、`godie-n01g.e`、`godie-n01g.r`、`godie-nbbc.e`、`godie-nsjs.w`、`godie-o00l.q` …（共 26） |
-| `spawnVfx` | 純演出（特效／音效） | 19 | `godie-e002.e`、`godie-e00r.r`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00x.r`、`godie-e010.r`、`godie-emfr.r`、`godie-h01n.q`、`godie-h01o.e`、`godie-h01u.r`、`godie-h01u.w`、`godie-hvwd.r` …（共 19） |
+| `spawnVfx` | 純演出（特效／音效） | 20 | `godie-e002.e`、`godie-e00r.r`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00x.r`、`godie-e010.r`、`godie-emfr.r`、`godie-h01n.q`、`godie-h01o.e`、`godie-h01u.r`、`godie-h01u.w`、`godie-hvwd.r` …（共 20） |
 | `spendMana` | 燒魔 | 4 | `godie-e00l.w`、`godie-emfr.passive`、`godie-u00k.passive`、`godie-udea.r` |
 | `summon` | 召喚 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `swapResource` | 資源互換 | 1 | `godie-emns.ex` |
@@ -61,11 +61,11 @@ contentVersion `cv_e8d5c1b343d8`
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
-| `onAbilityCast` | 施法時 | 20 | `godie-e00s.ex`、`godie-emfr.r`、`godie-h02v.ex`、`godie-u00k.passive`、`grail-c-12`、`grail-c-20`、`grail-a-08`、`grail-a-08`、`grail-a-08`、`grail-a-08`、`grail-a-16`、`grail-ex-04` …（共 20） |
+| `onAbilityCast` | 施法時 | 22 | `godie-e00s.ex`、`godie-emfr.r`、`godie-h02v.ex`、`godie-u00j.ex`、`godie-u00j.ex`、`godie-u00k.passive`、`grail-c-12`、`grail-c-20`、`grail-a-08`、`grail-a-08`、`grail-a-08`、`grail-a-08` …（共 22） |
 | `onAbilityHit` | 技能命中時 | 21 | `godie-edem.r`、`godie-edem.r`、`godie-edem.r`、`godie-efur.ex`、`godie-h01n.w`、`godie-h01n.w`、`godie-h01o.w`、`godie-h01o.w`、`grail-c-08`、`grail-c-09`、`grail-c-16`、`grail-c-18` …（共 21） |
 | `onAllyDamaged` | 隊友受傷時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onAllyDeath` | 隊友陣亡時 | 3 | `grail-c-15`、`grail-a-06`、`grail-ex-10` |
-| `onBasicAttack` | 普攻時 | 70 | `godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e00l.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00s.w`、`godie-e00s.w`、`godie-e00s.w` …（共 70） |
+| `onBasicAttack` | 普攻時 | 72 | `godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e00l.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00s.w`、`godie-e00s.w`、`godie-e00s.w` …（共 72） |
 | `onBossSpawn` | 殭屍王出現時 | 1 | `grail-c-13` |
 | `onBoundaryTouch` | 碰到場地邊界時（＝踏進火圈） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onCrowdControlApplied` | 對別人施加控場時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
@@ -103,9 +103,9 @@ contentVersion `cv_e8d5c1b343d8`
 | `equipment` | 裝備了某道具時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `kind` | 對象是誰（小兵／英雄／BOSS） | 1 | `godie-h02k.ex` |
 | `stat` | 屬性門檻（血量低於 X%…） | 8 | `godie-e002.w`、`godie-e00l.w`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-emfr.passive`、`godie-h00l.ex`、`godie-h02v.w`、`grail-ex-13` |
-| `status` | 身上有某狀態時 | 22 | `godie-e00r.q`、`godie-edem.r`、`godie-efur.ex`、`godie-emns.e`、`godie-emns.r`、`godie-ewar.e`、`godie-h00l.e`、`godie-h01n.e`、`godie-h01n.w`、`godie-h01o.w`、`godie-h01u.e`、`godie-h02k.ex` …（共 22） |
+| `status` | 身上有某狀態時 | 25 | `godie-e00r.q`、`godie-edem.r`、`godie-efur.ex`、`godie-emns.e`、`godie-emns.r`、`godie-ewar.e`、`godie-h00l.e`、`godie-h01n.e`、`godie-h01n.w`、`godie-h01o.w`、`godie-h01u.e`、`godie-h02k.ex` …（共 25） |
 
-## 狀態標籤 —— 103 個
+## 狀態標籤 —— 106 個
 
 開放詞彙（自由字串）。條件葉 `status` 的**類別分支**查的就是它。
 
@@ -113,6 +113,7 @@ contentVersion `cv_e8d5c1b343d8`
 |---|---|
 | `accuracy-down` | `blind`、`curse` |
 | `ai-override` | `berserk`、`confusion`、`fear` |
+| `alcohol-enema` | `alcohol-enema` |
 | `antiheal` | `grievous-wounds`、`no-heal` |
 | `armor-break` | `armor-break` |
 | `armor-down` | `armor-break` |
@@ -123,23 +124,24 @@ contentVersion `cv_e8d5c1b343d8`
 | `banked` | `light-wand-banked`、`nen-banked` |
 | `berserk` | `berserk` |
 | `blind` | `blind` |
-| `buff` | `bankai`、`berserk`、`grail-strengthened-projection`、`grief-seed-charge`、`light-wand-banked`、`millennium-plot-armor`、`moon-combo`、`nen-banked`、`omnislash-perform`、`rage`、`red-comet`、`triforce-courage`、`united-states-of-smash`、`witch-form` |
+| `buff` | `bankai`、`berserk`、`grail-strengthened-projection`、`grief-seed-charge`、`light-wand-banked`、`millennium-plot-armor`、`moon-combo`、`nen-banked`、`octuple-slash-window`、`omnislash-perform`、`rage`、`red-comet`、`triforce-courage`、`united-states-of-smash`、`witch-form` |
 | `burn` | `burn` |
 | `burnstun` | `burnstun` |
 | `cast-denied` | `burnstun`、`fang-stun`、`ingredient`、`omnislash-lock`、`omnislash-perform`、`stun`、`trial-stun` |
 | `cc` | `blind`、`burnstun`、`charmed`、`confusion`、`curse`、`fang-stun`、`fear`、`ingredient`、`numbness`、`omnislash-lock`、`paralysis`、`root`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60`、`stun`、`trial-stun` |
 | `channel` | `omnislash-perform` |
 | `charmed` | `charmed` |
-| `combo` | `moon-combo` |
+| `combo` | `moon-combo`、`octuple-slash-window` |
 | `confusion` | `confusion` |
 | `cooldown` | `devour-cooldown` |
 | `counter` | `grief-seed-charge`、`triforce-courage` |
 | `curse` | `curse` |
 | `damage-bank` | `light-wand-banked`、`nen-banked` |
-| `debuff` | `armor-break`、`blind`、`burn`、`burnstun`、`charmed`、`confusion`、`curse`、`fang-stun`、`fear`、`grievous-wounds`、`ingredient`、`magic-break`、`no-heal`、`numbness`、`omnislash-lock`、`paralysis`、`root`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60`、`stun`、`trial-stun` |
+| `debuff` | `alcohol-enema`、`armor-break`、`blind`、`burn`、`burnstun`、`charmed`、`confusion`、`curse`、`fang-stun`、`fear`、`grievous-wounds`、`ingredient`、`magic-break`、`no-heal`、`numbness`、`omnislash-lock`、`paralysis`、`root`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60`、`stun`、`trial-stun` |
 | `devour-cooldown` | `devour-cooldown` |
 | `disable` | `burnstun`、`fang-stun`、`fear`、`ingredient`、`numbness`、`omnislash-lock`、`omnislash-perform`、`paralysis`、`root`、`stun`、`trial-stun` |
 | `dot` | `burn` |
+| `drunk` | `alcohol-enema` |
 | `elemental` | `burn` |
 | `empowered` | `millennium-plot-armor` |
 | `empowered-next` | `united-states-of-smash` |
@@ -169,7 +171,7 @@ contentVersion `cv_e8d5c1b343d8`
 | `magic-resist-down` | `magic-break` |
 | `magical` | `magic-break` |
 | `mana-banked` | `light-wand-banked`、`nen-banked` |
-| `marker` | `burn`、`devour-cooldown` |
+| `marker` | `alcohol-enema`、`burn`、`devour-cooldown` |
 | `mechanism-on-card` | `bankai`、`numbness`、`paralysis`、`triforce-courage` |
 | `millennium-plot-armor` | `millennium-plot-armor` |
 | `miss` | `blind`、`curse` |
@@ -182,6 +184,7 @@ contentVersion `cv_e8d5c1b343d8`
 | `no-heal` | `no-heal` |
 | `no-stat-change` | `devour-cooldown` |
 | `numbness` | `numbness` |
+| `octuple-slash-window` | `octuple-slash-window` |
 | `omnislash-lock` | `omnislash-lock` |
 | `omnislash-perform` | `omnislash-perform` |
 | `paralysis` | `paralysis` |
@@ -195,7 +198,7 @@ contentVersion `cv_e8d5c1b343d8`
 | `self` | `devour-cooldown` |
 | `self-lock` | `omnislash-perform` |
 | `shred` | `armor-break`、`magic-break` |
-| `slow` | `slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60` |
+| `slow` | `alcohol-enema`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60` |
 | `slow20` | `slow20` |
 | `slow25` | `slow25` |
 | `slow30` | `slow30` |
@@ -207,7 +210,7 @@ contentVersion `cv_e8d5c1b343d8`
 | `stat-down` | `armor-break`、`magic-break`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60` |
 | `stat-up` | `rage` |
 | `stun` | `burnstun`、`fang-stun`、`ingredient`、`omnislash-lock`、`omnislash-perform`、`stun`、`trial-stun` |
-| `timed-window` | `moon-combo`、`witch-form` |
+| `timed-window` | `moon-combo`、`octuple-slash-window`、`witch-form` |
 | `trial-stun` | `trial-stun` |
 | `triforce-courage` | `triforce-courage` |
 | `uncontrollable` | `berserk`、`confusion`、`fear` |

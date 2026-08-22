@@ -256,7 +256,30 @@ describe("天生技 / innate slot — owned from level 1", () => {
     // claim survives a hero being shelved — but it must have a subject, and an
     // empty roster of percentage innates fails here by name rather than being
     // skipped, because that would be a content fact worth knowing.
-    expect(pctInnate, "營運名單上沒有任何百分比加值的天生技 —— pctAdd 這條路沒有人在走").toBeDefined();
+    // ⛔⛔ 2026-08-22（#314）：**營運名單上現在一支都沒有了**，而那是**好事**。
+    //
+    // 唯一的主體是 `godie-o02p`（39-00 可愛就是正義）。它的卡面寫
+    // 「**週遭的部隊**可以額外獲得 30% 生命恢復率及 8% 跑速」，而
+    // `passive.ranks[0].modifiers` **只掛在自己身上**（`auras` 才是掛給半徑內的人的
+    // 那一格，見 `stats/modifiers.ts`）⇒ **隊友一個都沒拿到**，卡片與遊戲各說各話
+    //（第一·五守則）。#314 把它改成 `auras` 之後才真的照卡面走。
+    //
+    // ⭐ 所以這裡**不能**再要求「必須有主體」——那會逼下一個人把一支修好的技能改回去。
+    // ⛔ 也不可以靜靜跳過：⇒ 有主體就照原樣驗（那條路仍然存在於引擎裡），
+    // 沒有主體就**明說是哪一種空**，並釘住「靈氣那條路有人在走」——
+    // 少了後面那半，這一整段會在「兩條路都沒人走」時安靜地綠。
+    if (pctInnate === undefined) {
+      const auraPct = passiveInnates
+        .filter((d) => Champions.tryGet(d.id.replace(/\.passive$/, "") as ChampionId))
+        .flatMap((d) => d.passive?.ranks[0]?.auras ?? [])
+        .flatMap((a) => a.modifiers ?? [])
+        .filter((x) => x.op === "pctAdd");
+      expect(
+        auraPct.length,
+        "⛔ 直接掛與靈氣**兩條** pctAdd 路都沒有人在走 —— 這才是真的沒有主體",
+      ).toBeGreaterThan(0);
+      return; // 直接掛那條今天沒有主體，理由如上；靈氣那條由 aura 的守衛驗
+    }
     const [pctOn, pctOff] = statWithAndWithout(pctInnate.cid, pctInnate.stat);
     expect(pctOff).toBeGreaterThan(0);
     expect(pctInnate.value).toBeGreaterThan(0);
@@ -396,7 +419,11 @@ describe("天生技 / innate slot — determinism survives", () => {
       "godie-hart", // 01-00 怒斬 — 15 % onBasicAttack proc (rolls world.rng)
       "godie-h02k", // 89-00 憤怒的門牙 — 3 % onBasicAttack proc
       "godie-udea", // 65-00 古老智慧 — flat armor/mr
-      pctInnate.cid, // a pctAdd innate (was godie-opgh 32-00, now archived)
+      // ⭐ 2026-08-22（#314）：`pctInnate` 今天沒有主體（唯一那支已正確改成 `auras`，
+      // 見上面那段長註解）。這一格要的是「一位帶百分比天生技的英雄」讓世界不是常數 ——
+      // ⇒ 沒有主體時退回 `godie-o02p` 本人（它仍然帶那兩條 pctAdd，只是住在 `auras` 裡），
+      // ⛔ 不是讓整條 determinism 守衛因為一個**內容形狀變更**而崩掉。
+      pctInnate?.cid ?? ("godie-o02p" as ChampionId),
       "godie-huth", // 28-00 無限再生 — flat regen (also legacy-inline)
       "godie-e001", // 22-00 嗚鎖打! — ACTIVE innate, must stay inert
     ] as ChampionId[];

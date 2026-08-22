@@ -21,7 +21,7 @@
 ## 總計
 
 - **格數**：51 英雄 × 7 槽 = **357**
-- **✅ PASS：293 / 357**（82.1%）　🟣 PASSIVE：58　🟡 只有特效：0　❌ FAIL：1　— 無此格：5
+- **✅ PASS：292 / 357**（81.8%）　🟣 PASSIVE：59　🟡 只有特效：0　❌ FAIL：1　— 無此格：5
 - 把「正確的永久被動」算進可接受行為：**351 / 357**（98.3%）如預期運作，真正的缺口是 **1** 格（❌ 1 ＋ 🟡 0），另有 **0** 格 🔵 本次未量測（形態閘）。
 - **閘 3 在看的那個數字**（只算版控首發名單那 49 人、扣掉「無此格」）：**341 / 342 = 99.71%**（棘輪下限 100.00%）。
 - 英雄生成失敗：**0**（無）
@@ -39,12 +39,12 @@
 | 頻道 | PASS 格數 |
 | --- | --: |
 | damage | 180 |
-| buff | 65 |
+| buff | 63 |
 | projectile | 14 |
 | status | 8 |
 | heal | 8 |
+| championForm | 7 |
 | dash | 7 |
-| championForm | 6 |
 | shield | 3 |
 | resourceSwap | 1 |
 | taunt | 1 |
@@ -93,7 +93,7 @@
 | 電車癡漢 - 臭作 | `godie-orkn` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 犬妖 - 殺生丸 | `godie-osam` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 鬼畜紅王 - 鬼畜狂刀KYO | `godie-u00h` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 神性的流失 - 賽菲洛斯 | `godie-u00j` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
+| 神性的流失 - 賽菲洛斯 | `godie-u00j` | 近 | ✅ | ✅ | ✅ | ✅ | 🟣 | 🟣 | ✅ |
 | 邪惡意念集合體 - 死之王 | `godie-u00k` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | 草帽小子 - 蒙其.D.魯夫 | `godie-u00n` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 黑手黨老大 - 基廉列克 | `godie-u00v` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
@@ -191,9 +191,10 @@
 | 超級普烏 - 魔人普烏 | `godie-huth` | PASSIVE | passive:modifiers |
 | 傳說的龍騎士 - 勇者小呆 | `godie-nbbc` | PASSIVE | passive:hooks |
 | 妖狐藏馬 - 南野秀一 | `godie-nsjs` | PASSIVE | passive:hooks |
-| 夢幻之星 - 初音 | `godie-o02p` | PASSIVE | passive:modifiers |
+| 夢幻之星 - 初音 | `godie-o02p` | PASSIVE | passive:hooks |
 | 神奇寶貝兒 - 皮卡丘 | `godie-ofar` | W | passive:hooks |
 | 賽亞人 - 悟空 | `godie-ogrh` | PASSIVE | passive:hooks |
+| 神性的流失 - 賽菲洛斯 | `godie-u00j` | EX | passive:hooks |
 | 神性的流失 - 賽菲洛斯 | `godie-u00j` | PASSIVE | passive:modifiers |
 | 邪惡意念集合體 - 死之王 | `godie-u00k` | PASSIVE | passive:hooks |
 | 黑手黨老大 - 基廉列克 | `godie-u00v` | PASSIVE | passive:modifiers |

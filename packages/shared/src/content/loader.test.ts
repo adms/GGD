@@ -115,6 +115,9 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
       // 「暈眩」在出貨內容裡是**五份不同文件**，那正是 exact id 條件擋住熊貓五支的原因。
       // ⛔ status 文件只是**身分**（名字／極性／分類）；魔抗減半多少、每秒燒多少
       // 住在施加它的那支技能的 `applyStatus` 上。
+      // ⭐ 2026-08-22（#53）：orkn.w「灌腸」的具名狀態 —— 30-002 EX 的 condition
+      //    需要它才成立（在此之前那個條件**永遠不會為真**，第一·五守則）。
+      "alcohol-enema",
       "armor-break",
       // ⭐ 2026-08-13 內容批：79-04 卍解掛的具名狀態，讓 79-02/79-03 的
       //    「(卍解狀態下…)」有一顆條件葉問得到 —— 條件系統沒有「形態」葉。
@@ -162,6 +165,9 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
       // 效果負責,不在這個標記上」。所以兩份都建,description 誠實寫出
       // 「它擋住什麼由施加它的技能決定」,⛔ 不宣稱它是哪一種。
       "numbness",
+      // ⭐ 2026-08-22（#53）：八刀一閃的連段窗口 —— 30-002 EX 那句「連段」
+      //    在此之前**逐位元組等於不存在**（第一·五守則）。
+      "octuple-slash-window",
       //   omnislash-lock    01-04 超究武神霸斬 (GH#250) 打在**目標**身上的硬控:
       //                     war3map.j `Trig_SuperFF7_Actions` 對目標
       //                     PauseUnitBJ(true) + 反覆 IssueImmediateOrderBJ("stop")

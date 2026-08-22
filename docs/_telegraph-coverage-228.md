@@ -9,20 +9,20 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | verdict | cells | meaning |
 | --- | ---: | --- |
 | ✅ OK | 219 | shape derived from the ability's own authored data |
-| 🟡 AMBIGUOUS | 17 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
+| 🟡 AMBIGUOUS | 16 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
 | ❌ MISSING | 0 | no derivable shape — **fails the test** |
-| 🟣 PASSIVE | 57 | permanent WC3 passive, never cast, nothing to warn about |
+| 🟣 PASSIVE | 58 | permanent WC3 passive, never cast, nothing to warn about |
 
-**236 / 236 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
+**235 / 235 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
 
 ## By castType
 
 | castType | cells | shape language |
 | --- | ---: | --- |
-| `self` | 95 | self marker at the caster's feet |
+| `self` | 93 | self marker at the caster's feet |
 | `targeted` | 72 | lock (arc at the victim + tether to the caster) — walking does not help |
-| `—` | 57 | not cast |
-| `ground` | 52 | circle — the real `enemiesInCircle` disc; you can walk out |
+| `—` | 58 | not cast |
+| `ground` | 53 | circle — the real `enemiesInCircle` disc; you can walk out |
 | `skillshot` | 15 | line — the projectile's corridor; step sideways |
 | `dash` | 2 | line — the sweep of the dash body |
 
@@ -168,7 +168,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 超級普烏 - 魔人普烏 `godie-huth` | E | 28-03 分身 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 超級普烏 - 魔人普烏 `godie-huth` | R | 28-04 破滅能量彈 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 超級普烏 - 魔人普烏 `godie-huth` | EX | 28-002 純粹魔人普烏 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 梅杜莎 - Rider `godie-hvsh` | PASSIVE | 48-00 石化之眼 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 梅杜莎 - Rider `godie-hvsh` | PASSIVE | 48-00 石化之眼 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
 | 梅杜莎 - Rider `godie-hvsh` | Q | 48-01 魔法鎖鏈 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 梅杜莎 - Rider `godie-hvsh` | W | 48-02 心眼 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 梅杜莎 - Rider `godie-hvsh` | E | 48-03 鮮血神殿 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
@@ -239,7 +239,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 賽亞人 - 悟空 `godie-ogrh` | E | 09-03 超級賽亞人 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 賽亞人 - 悟空 `godie-ogrh` | R | 09-04 龜派氣功 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave.ki maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |
 | 賽亞人 - 悟空 `godie-ogrh` | EX | 09-002 十倍龜派氣功 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 電車癡漢 - 臭作 `godie-orkn` | PASSIVE | 30-00 攝影機 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 電車癡漢 - 臭作 `godie-orkn` | PASSIVE | 30-00 攝影機 | `ground` | circle r=6.40u | ✅ OK | radius 8 × abilityRange 0.8 |
 | 電車癡漢 - 臭作 `godie-orkn` | Q | 30-01 綁架 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 電車癡漢 - 臭作 `godie-orkn` | W | 30-02 酒精灌腸 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 電車癡漢 - 臭作 `godie-orkn` | E | 30-03 痴漢火焰 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
@@ -262,7 +262,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 神性的流失 - 賽菲洛斯 `godie-u00j` | W | 74-02 八刀一閃 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 神性的流失 - 賽菲洛斯 `godie-u00j` | E | 74-03 闇之天使 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
 | 神性的流失 - 賽菲洛斯 `godie-u00j` | R | 74-04 最終殞落星 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 神性的流失 - 賽菲洛斯 `godie-u00j` | EX | 74-002 超新星 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 神性的流失 - 賽菲洛斯 `godie-u00j` | EX | 74-002 超新星 | `—` | — | 🟣 PASSIVE | never cast |
 | 邪惡意念集合體 - 死之王 `godie-u00k` | PASSIVE | 71-00 暗夜契約 | `—` | — | 🟣 PASSIVE | never cast |
 | 邪惡意念集合體 - 死之王 `godie-u00k` | Q | 71-01 死亡隕落 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
 | 邪惡意念集合體 - 死之王 `godie-u00k` | W | 71-02 靈魂吸取 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |

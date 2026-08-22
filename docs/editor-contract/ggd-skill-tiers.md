@@ -33,11 +33,11 @@ owner 2026-08-19（GH#438，這一份要涵蓋的**全部**軸）：
 | 軸 | JSON 欄位 | 出貨 config | 幾支技能填了 | 開關 |
 |---|---|---|---:|---|
 | 施法距離 | `rangeTier` | `range-tiers.json` | 193 (46%) | `enabled: true` |
-| 施法範圍 | `radiusTier` | `aoe-tiers.json` | 85 (20.2%) | `enabled: true` |
+| 施法範圍 | `radiusTier` | `aoe-tiers.json` | 88 (21%) | `enabled: true` |
 | 位移 | `distanceTier` | `displacement-tiers.json` | 1 (0.2%) | `enabled: true` |
-| **傷害** | `damageTier` | `damage-tiers.json` | 202 (48.1%) | `enabled: true` |
+| **傷害** | `damageTier` | `damage-tiers.json` | 203 (48.3%) | `enabled: true` |
 | **耗魔** | `manaCostTier` | `mana-tiers.json` | 204 (48.6%) | `enabled: true` |
-| **冷卻** | `cooldownTier` (+`cooldownShape`) | `cooldown-tiers.json` | 350 (83.3%) | `enabled: true` |
+| **冷卻** | `cooldownTier` (+`cooldownShape`) | `cooldown-tiers.json` | 349 (83.1%) | `enabled: true` |
 
 <sub>分母 = `content/abilities/` 的 420 份技能文件（含被動與 EX）。⚠️ 採用率**不是** 100% 不代表壞掉：手寫數字一直是合法的寫法，級距是**預設走的那條路**。</sub>
 
@@ -382,7 +382,7 @@ owner 2026-08-19：「**JASS 的部分優先權大於 w3x 技能設定**，因�
 | 99-01 甩蔥歌 | `godie-o02p.q` | w3a | 400 | 8 | 大 | 550 | 12 | 極大 |
 | 99-02 最初的聲音 | `godie-o02p.w` | w3a | — | — | — | 600 | 12 | 極大 |
 | 30-03 痴漢火焰 | `godie-o030.e` | — | — | — | — | — | 12 | 極大 |
-| 30-00 攝影機 | `godie-o030.passive` | w3a | — | — | — | 1600 | 12 | 極大 |
+| 30-00 攝影機 | `godie-o030.passive` | w3a | — | 8 | 大 | 1600 | 12 | 極大 |
 | 30-01 綁架 | `godie-o030.q` | w3a | — | — | — | 300 | 6 | 中 |
 | 30-04 電車之狼衝擊 | `godie-o030.r` | w3a | 350 | — | — | — | 12 | 極大 |
 | 30-02 酒精灌腸 | `godie-o030.w` | w3a | 600 | — | — | — | 12 | 極大 |
@@ -397,7 +397,7 @@ owner 2026-08-19：「**JASS 的部分優先權大於 w3x 技能設定**，因�
 | 09-04 龜派氣功 | `godie-ogrh.r` | w3a | 400 | — | — | 900 | 12 | 極大 |
 | 09-02 瞬間移動 | `godie-ogrh.w` | — | — | — | — | — | 12 | 極大 |
 | 30-03 痴漢火焰 | `godie-orkn.e` | — | — | — | — | — | 12 | 極大 |
-| 30-00 攝影機 | `godie-orkn.passive` | w3a | — | — | — | 1600 | 12 | 極大 |
+| 30-00 攝影機 | `godie-orkn.passive` | w3a | — | 8 | 大 | 1600 | 12 | 極大 |
 | 30-01 綁架 | `godie-orkn.q` | w3a | — | — | — | 300 | 6 | 中 |
 | 30-04 電車之狼衝擊 | `godie-orkn.r` | w3a | 350 | — | — | — | 12 | 極大 |
 | 30-02 酒精灌腸 | `godie-orkn.w` | w3a | 600 | — | — | — | 12 | 極大 |
