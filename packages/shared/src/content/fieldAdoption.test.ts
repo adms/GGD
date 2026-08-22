@@ -2705,19 +2705,10 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why:
       "⭐ E1 硬約束逼每一個 kind 帶 `shape`，而首批內容三支全部是 `single`。⚠️ `circle` 對 `screenFlash` 要等到有一支技能真的需要「一圈各發一份」才會被用到。⛔ 零採用是**約束的形狀**，不是缺口。",
   },
-  "field:abilities.effects[]#screenFlash.scripted": {
-    status: "debt",
-    why:
-      "⛔ 這一格與上面五格**不同型**：它不是公共外殼，它是 `screenFlash` **為了一支特定技能**才存在的逃生門，"
-      + "而那支技能沒有打開它。`schema/effects/screenFlash.ts` 的欄位說明逐字寫著「⚠️ 觸發它的是殭屍王的"
-      + "**全畫面變黑一秒漸變回復**」，而出貨的 `content/abilities/godie-zombieking.passive.json` 的 "
-      + "`screenFlash`（`colorRgb [0,0,0]` / `peakAlpha 1.0` / `durationSec 1.0`）**沒有** `scripted: true`。"
-      + "⇒ 在出貨的 `config.screen-fx@1` 上限（`flashMaxAlpha 0.55` / `flashMaxSec 0.6`）下，"
-      + "卡片上寫的「全場陷入黑暗」實際畫出來是**淡灰半秒** —— 每一個零件都對，組合起來是空的。"
-      + "⭐ 標 `debt` 而不是 `landing`：它不會過期成沉默，它會每一輪印在橫幅上。"
-      + "⛔ 這一列**不是我這條 lane 的東西**（內容檔在柵欄外，2026-08-23 由數字漂移 lane 回報給 owner）——"
-      + "修法是在那份文件上補一格 `scripted: true`（或由 owner 裁決淡灰才是要的），補上的那一天刪掉這一列。",
-  },
+  // ⛔ `field:abilities.effects[]#screenFlash.scripted` 的 `debt` 豁免在 2026-08-23
+  // **刪掉**了（GH#602）：owner 那天的裁決 ③ 是 (a)「讓『劇本指定的演出』可以豁免全域上限」，
+  // 而 `content/abilities/godie-zombieking.passive.json` 的 `screenFlash` 已經填上 `scripted: true`。
+  // ⭐ 刪掉這一列本身就是那一格的閘：`scripted` 再被拿掉 ⇒ 零採用又沒有豁免 ⇒ 這一支紅。
   "field:abilities.effects[]#spawnModelFx.condition": {
     status: "landing",
     since: "2026-08-22",
