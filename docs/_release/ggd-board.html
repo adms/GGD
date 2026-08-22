@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-08-23 00:29 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-08-23 01:31 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.25.0 · 資料截至 2026-08-23 00:29 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-23 00:29 (GMT+8)</h1><div class="meta"><span>帳本 <b>5</b> 份</span><span>點名票號 <b>183</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.25.1 · 資料截至 2026-08-23 01:31 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-23 01:31 (GMT+8)</h1><div class="meta"><span>帳本 <b>5</b> 份</span><span>點名票號 <b>191</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -617,6 +617,15 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>00:14</td><td>有許多特效最尾段的fade out都太久了，我統一規定 fade out 尾段一律最多佔 0.5 秒後一定要清理乾淨 =&gt; 這是常設規定，不是一次調整 應該要有空陣列檢查放在 build 裡面硬卡關 =&gt; effects 是空陣列的上架技能要在 content:build 就被擋下來，⛔ 不是一條事後才紅的測試</td><td>#569</td></tr>
 <tr><td>00:29</td><td>限制一名玩家同時最多只能在一個房間，如果有玩家馬上kill AI =&gt; 伺服器端的兜底：同一個帳號不可以同時佔兩間房；玩家離開後座位被 AI 接管正是幽靈房活著的原因，要立刻收掉</td><td>#570</td></tr>
 <tr><td>00:11</td><td>請你優先把 lag 原因清理的部分做完先 push note deploy 請你優先開票處理這個可能是隱形英雄的BUG來源 音效錯用: 莉娜施展技能 竟然出現皮卡丘 皮卡皮卡、男人喊叫聲，打死敵人出現 皮卡丘、臭作 get you 音效等，都令人覺得非常奇怪，你要不要好好梳理一個音效使用表給我審查，並且建議我哪些有問題、多餘、太複雜、同時太多音效等情形，不然我測試的時候覺得很奇怪明明場上沒有皮卡丘卻一直有皮卡丘、多拉A夢聲音 場上打贏可以補血的物件也會攻擊英雄，但沒有明顯的動作跟投射物指引，所以看不出來是物件打英雄，看起來只會覺得有隱形英雄在打我 遊戲第二回合會非常明顯的LAG，跟第一回合完全…</td><td>#400 #599 #555 #547 #550 #556 #551</td></tr>
+<tr><td>01:03</td><td>每間房間存活時間只要開始進入戰鬥後，存活時間最多30分鐘，避免幽靈房間</td><td>#588</td></tr>
+<tr><td>01:03</td><td>莉娜只要施展技能就聽到皮卡丘、蒼月潮，殺死單位就聽到臭作聲音，似乎跟這是獨立分開issue =&gt; 這條與「音效停不下來」(#581#582#583) 是<b>兩件事</b>：這一條是綁定/配對錯了</td><td>#568</td></tr>
+<tr><td>01:03</td><td>殭屍王 應該要會自動學習所有技能並施展技能 並且攻速都是上限4起跳 並且優先攻擊玩家角色而非bot</td><td>#577</td></tr>
+<tr><td>01:03</td><td>被動技 觸發作用的時候 還是要閃一下圖示 (例如初號機暴走都看不出來有沒有生效冷卻剩多少)</td><td>#576</td></tr>
+<tr><td>01:11</td><td>邀請朋友的部分 除了可以等10秒、不等了以外，還可以選多等1分鐘</td><td>#573</td></tr>
+<tr><td>01:31</td><td>三個通用音效池怎麼修 =&gt; 改成中性音效（沒有角色歸屬的通用音） 音效層數：混合1+2，設定上限但同時也讓我知道哪些碰到上限，我可以額外審查白名單，但疊超過又不是白名單雖然不會砍但也不會播出來超過的音效</td><td>#568</td></tr>
+<tr><td>01:02</td><td>[優先] Lina 翔封界 不是已經做好 怎麼還沒接上？ #581#582#583 ⭐ 語音／音效停不下來（playClip 不進任何登記表、名言語音走 new Audio() 完全在音訊系統之外、連 stop API 都沒有，量到最長 10 秒）⇒ 這就是你聽到的皮卡丘／多拉A夢 =&gt; 除此之外，莉娜只要施展技能就聽到皮卡丘、蒼月潮，殺死單位就聽到臭作聲音，似乎跟這是獨立分開issue 你需要認真找一個演算法以及特效貼圖來做出閃電的效果 一堆閃電特效 如皮卡丘 飛鼠先生 雷神之槌 等雷電特效 都沒有真的出現 [優先]英雄專屬的初始 AD 系統倍率初始AD傷害+32 不然普攻流一開始太弱完全打…</td><td>#581 #582 #583 #400 #599 #555 #547 #550 #556 #551</td></tr>
+<tr><td>01:10</td><td>邀請朋友的部分 除了可以等10秒、不等了以外，還可以選多等1分鐘</td><td>#573</td></tr>
+<tr><td>01:19</td><td>📄 你要的變身態退場建議報告 路徑：docs/_reports/579_temp_20260823-0106.md ｜ 整理成票：#599 =&gt; 有許多 3d model 雖然沒有變，但可能會變色、大小或是改變成飛行/紮根形態，更常見透過球體附著特效，變相增加特效、翅膀、武器、冒煙、刀光、閃電、頭髮拉長（獵人富力士）等 3d model or 粒子特效、拖曳特效，請你要考慮進去 拳四郎的變身態 modelKey 指到 imported.heropikachu（皮卡丘的模型）。 =&gt; 這是對的，這是因為要惡搞他大絕招是變身大型皮卡丘</td><td>#599</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>
