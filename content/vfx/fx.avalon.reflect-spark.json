@@ -1,0 +1,79 @@
+{
+  "id": "fx.avalon.reflect-spark",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "sphere",
+    "radius": 0.22
+  },
+  "mode": "burst",
+  "burstCount": 20,
+  "lifetimeSec": {
+    "min": 0.08,
+    "max": 0.3
+  },
+  "size": {
+    "start": 0.24,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      1,
+      0.98,
+      0.9,
+      0.95
+    ],
+    "end": [
+      0.5,
+      0.85,
+      1,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        0.98,
+        0.9,
+        0.95
+      ]
+    ],
+    [
+      0.35,
+      [
+        1,
+        0.55,
+        0.15,
+        0.9
+      ]
+    ],
+    [
+      0.7,
+      [
+        0.35,
+        0.95,
+        1,
+        0.6
+      ]
+    ],
+    [
+      1,
+      [
+        0.5,
+        0.85,
+        1,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 0,
+  "speed": {
+    "min": 5,
+    "max": 13
+  },
+  "texture": "assets/textures/particles/spark_05.png",
+  "stretched": true,
+  "tailLength": 2.5
+}

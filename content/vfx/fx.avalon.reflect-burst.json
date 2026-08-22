@@ -1,0 +1,93 @@
+{
+  "id": "fx.avalon.reflect-burst",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "sphere",
+    "radius": 0.45
+  },
+  "mode": "burst",
+  "burstCount": 72,
+  "lifetimeSec": {
+    "min": 0.16,
+    "max": 0.62
+  },
+  "size": {
+    "start": 0.42,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      1,
+      0.97,
+      0.86,
+      1
+    ],
+    "end": [
+      0.62,
+      0.2,
+      1,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        0.97,
+        0.86,
+        1
+      ]
+    ],
+    [
+      0.28,
+      [
+        1,
+        0.24,
+        0.16,
+        0.95
+      ]
+    ],
+    [
+      0.62,
+      [
+        0.16,
+        1,
+        0.62,
+        0.85
+      ]
+    ],
+    [
+      1,
+      [
+        0.62,
+        0.2,
+        1,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.42
+    ],
+    [
+      0.1,
+      0.86
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 0,
+  "speed": {
+    "min": 9,
+    "max": 22
+  },
+  "texture": "assets/textures/particles/trace_05.png",
+  "stretched": true,
+  "tailLength": 4
+}
