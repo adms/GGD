@@ -183,7 +183,7 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // 2026-08-22：24 → 25。`damage-tier-exemptions`（#534）以 OWN_PAGE 進場 ——
     // 它是**警告頁**不是編輯頁（owner：「作為例外在後台跳出警告就好」），
     // 而通用引擎畫不動它的 `rules` 陣列。到期條件寫在那一列的 expiresWhen。
-    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(27); // 2026-08-22：25 → 27（#529 ability-vfx-bindings · #541 combo-strikes，兩份都是產生器擁有的推導表）
+    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(29); // 2026-08-22：25 → 27（#529 ability-vfx-bindings · #541 combo-strikes，兩份都是產生器擁有的推導表）
     // 2026-08-17：13 → 14。`roster`（英雄上下架）**往下走了一格** —— 它從
     // KNOWN_GAP 變成 OWN_PAGE，因為 ui/RosterPage.tsx 做出來了。⚠️ 這是這張表
     // 唯一「健康」的移動方向：帳單被付掉，而總列數不變。
@@ -193,7 +193,7 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // 兩份都是**產生器擁有**的推導表（各自有 `--check` 逐位元組閘）——
     // ⛔ 給它們一張編輯表單,操作者填的值會在下一次跑產生器時被無聲蓋掉,
     // 而 `source` / `unmatched` 欄位會**繼續宣稱**它有出處(＝ icon-plan 那一列的形狀)。
-    expect(byKind("NOT_TUNABLE")).toHaveLength(5);
+    expect(byKind("NOT_TUNABLE")).toHaveLength(6); // +owner-knobs（授權表，⛔ 不是設定）
     // 2026-08-02：2 → 5。新增的三列是 lobby-layout / valhalla-sandbox /
     // victory-podium —— 三份文件與 Zod 都接完了,只差客戶端還在讀寫死的常數。
     // 2026-08-03：5 → 4。victory-podium **往下走了一格**:客戶端接上了消費端,
@@ -215,9 +215,13 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // TypeScript 常數表搬進 content/ 之後**新出現**的一份 —— 它的 `bindings` 是
     // `z.record`（鍵是技能 doc id），底下還有三個形狀不同的子物件，同樣是引擎的
     // record 缺口。⛔ 它不是 DEFERRED：ContentDb 真的讀它。
+    // 2026-08-22：5 → 6。`toggle-ability`（GH#546「開關型按鈕看不出開/關」）——
+    // 圖示流轉的顏色/速度/開關是 owner 會調的東西,文件與 Zod 落地了而那一頁還沒做。
+    // ⛔ 帳單,⛔ 不是特權。
     expect(byKind("KNOWN_GAP").map((e) => e.docId)).toEqual([
       "per-level-bonus",
       "vfx-ability-art",
+      "toggle-ability",
       "audio-map",
       "origin-routes",
     ]);

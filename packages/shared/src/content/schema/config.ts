@@ -224,6 +224,9 @@ import { zConfigAbilityVfxBindingsDoc } from "./abilityVfxBindings";
 // GH#541 —— 29 個 JASS 連段函式的間隔表(第〇·四守則的共用表)。
 // ⚠️ 漏掉這一行 = combo-strikes.json 進了 content/ 之後整份載入失敗 → 骨架英雄。
 import { zConfigComboStrikesDoc } from "./comboStrikesDoc";
+// ⛔ owner 的人工旋鈕授權表。⚠️ 漏掉這一行 = owner-knobs.json 進了 content/ 之後
+// 整份內容驗證失敗 → 骨架英雄,而網站看起來完全正常。
+import { zConfigOwnerKnobsDoc } from "./ownerKnobsDoc";
 // 嘲弄規則的上界 —— 定義在 sim/taunt.ts(sim 也夾同一個數字),schema 只是把它
 // 接上 Zod,所以兩層守的不可能是兩個數字。
 import {
@@ -8284,6 +8287,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigAbilityVfxBindingsDoc,
   // GH#541 —— 連段間隔表。⚠️ 同上:漏掉 = 內容整份驗證失敗,而網站看起來正常。
   zConfigComboStrikesDoc,
+  zConfigOwnerKnobsDoc,
   zConfigAudioMapDoc,
   zConfigChampionVoicesDoc,
   zConfigUnitTintsDoc,

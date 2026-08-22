@@ -1,0 +1,57 @@
+{
+  "id": "owner-knobs",
+  "schema": "config.owner-knobs@1",
+  "note": "⭐ **系統倍率是 owner 的人工旋鈕** —— 他刻意把它們排除在任何推導公式之外。\nowner 2026-08-22 逐字：「你的傷害要從生命反推我沒意見，但**不能把系統倍率乘進去再反推**啊，這樣我用系統倍率就沒意義了」「技能↔普攻 跟 生命 之間的相對關係，都跟**系統倍率無關**喔」「對 我說過**這是我人工的旋鈕**，並沒有放在公式裡」。\n⇒ 這張表是那句話的**另一半**：⛔ 不只是「倍率不可以進公式」，還有「**倍率不是我能轉的**」。\n⚠️ 每一格的值只有在 owner 給了一句原話時才可以改，而那句原話要**逐字**寫進 `quote`。\n⛔ 沒有 quote 就改 ⇒ `packages/shared/src/ops/ownerKnobs.test.ts` 會紅並指名那一格。",
+  "knobs": {
+    "maxHealth": {
+      "value": 8.0,
+      "quote": "系統生命倍率 6->8",
+      "on": "2026-08-22"
+    },
+    "cooldown": {
+      "value": 0.4,
+      "quote": "系統冷卻倍率0.2->0.4",
+      "on": "2026-08-22"
+    },
+    "damageDealt": {
+      "value": 1.0,
+      "quote": "對 我說過這是我人工的旋鈕，並沒有放在公式裡，我們上次已經釐清過",
+      "on": "2026-08-22"
+    },
+    "attackDamage": {
+      "value": 1.0,
+      "quote": "attackDamage可以調回 1.0",
+      "on": "2026-08-22"
+    },
+    "abilityPower": {
+      "value": 1.0,
+      "quote": "（出貨中性值，owner 從未改過）",
+      "on": "—"
+    },
+    "defense": {
+      "value": 1.0,
+      "quote": "（出貨中性值，owner 從未改過）",
+      "on": "—"
+    },
+    "healing": {
+      "value": 1.0,
+      "quote": "（出貨中性值，owner 從未改過）",
+      "on": "—"
+    },
+    "shield": {
+      "value": 1.0,
+      "quote": "（出貨中性值，owner 從未改過）",
+      "on": "—"
+    },
+    "moveSpeed": {
+      "value": 1.0,
+      "quote": "（出貨中性值，owner 從未改過）",
+      "on": "—"
+    },
+    "attackSpeed": {
+      "value": 1.0,
+      "quote": "（出貨中性值，owner 從未改過）",
+      "on": "—"
+    }
+  }
+}

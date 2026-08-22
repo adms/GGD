@@ -149,11 +149,11 @@ export const COMBAT_ENV_LABELS: Record<CombatEnvKey, CombatEnvLabel> = {
   // #189 — 獨立於上面的技能冷卻。出貨 1.0：在 #189 之前道具冷卻完全沒有被任何
   // 倍率碰過，所以 1.0 才是「維持原狀」的值，不是佔位符。
   itemCooldown: { zh: "道具冷卻時間", note: "道具被動的內部冷卻秒數。與技能冷卻互不影響。大於 1 = 冷卻更久" },
-  damageDealt: { zh: "造成傷害", note: "所有傷害（減傷前），含普攻、技能、持續傷害" },
+  damageDealt: { zh: "造成傷害", note: "所有傷害（減傷前），含普攻、技能、持續傷害。⛔ **這是 owner 的人工旋鈕** —— 它刻意**不在**任何推導公式裡（owner 2026-08-22：「這是我人工的旋鈕，並沒有放在公式裡」）。⚠️ 改它之前要引用得到 owner 的一句原話，否則 `ownerKnobs.test.ts` 會紅。" },
   defense: { zh: "防禦力", note: "護甲與魔法抗性" },
   attackDamage: { zh: "物理攻擊力", note: "AD" },
   abilityPower: { zh: "法術強度", note: "AP" },
-  maxHealth: { zh: "生命上限", note: "最大生命值（現有百分比不變）" },
+  maxHealth: { zh: "生命上限", note: "最大生命值（現有百分比不變）。⛔ **這是 owner 的人工旋鈕** —— 它刻意**不在**傷害五級距的推導鏈裡（owner 2026-08-22：「不能把系統倍率乘進去再反推啊，這樣我用系統倍率就沒意義了」）。⭐ 那條規則就是它**轉得動**的原因：2026-08-22 之前它被乘進推導，於是 4.0 / 6.0 / 7.2 三個值實測都落在 **51% 左右** —— 一格轉不動任何東西。守衛 `pnpm echoloop:check`。" },
   healthRegen: { zh: "生命回復", note: "每秒回血" },
   maxMana: { zh: "魔力上限", note: "最大魔力值（現有百分比不變）" },
   manaRegen: { zh: "魔力回復", note: "每秒回魔" },

@@ -232,6 +232,22 @@ export const DAMAGE_TIER_MAX = Math.floor(medianFinalHp(HARD_ANCHOR_LEVEL));
  * ⚠️ 連帶語意變更：`KILL_CASTS_REF` 現在是**純基礎空間**的參考次數，
  * ⛔ 不再是「遊戲裡真的打幾發」——真實發數 = 參考次數 × HP 倍率。
  */
+/**
+ * ⛔⛔ **這一支不收 `env`，而那是刻意的。**
+ *
+ * owner 2026-08-22（逐字）：「你的傷害要從生命反推我沒意見，但**不能把系統倍率
+ * 乘進去再反推**啊，這樣我用系統倍率就沒意義了」「對 我說過**這是我人工的旋鈕**，
+ * 並沒有放在公式裡」。
+ *
+ * ⚠️ 在此之前它是 `(baseHp / KILL) * HP_ENV_MULT + bonus / KILL` —— 於是
+ * `maxHealth` 同時出現在**級距（分子）與血條（分母）**上，互相抵銷：
+ * 實測 4.0 / 6.0 / 7.2 三個值落在 **51.0% / 52.0% / 50.9%**。
+ * ⭐ 一格出貨的後台欄位**轉不動任何東西**，而每一條閘都是綠的。
+ *
+ * 🔒 **閘**：`pnpm echoloop:check`（`tools/balance-alert/echoLoop.ts`）——
+ * 它把每一格倍率 ×0.5／×2 再用**這一支**重算，問「佔血條有沒有跟著動」。
+ * 突變驗過：把 `baseHp` 換成 `baseHp * env.maxHealth` → 🚨 而且**重現歷史數字** 50.3% / 2.0 發。
+ */
 export function anchorFloorFrom(baseHp: number, bonus: number): number {
   const step = tierStep();
   const raw = (baseHp + bonus) / KILL_CASTS_REF;

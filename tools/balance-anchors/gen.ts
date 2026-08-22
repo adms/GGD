@@ -331,6 +331,20 @@ function docMd(): string {
   L.push("");
   L.push("---");
   L.push("");
+  L.push("## ⛔ 系統倍率是 **owner 的人工旋鈕** —— 這一頁的任何一個數字都不是改它的理由");
+  L.push("");
+  L.push(
+    "owner 2026-08-22（逐字）：「**對 我說過這是我人工的旋鈕，並沒有放在公式裡**，我們上次已經釐清過」" +
+      "「你的傷害要從生命反推我沒意見，但**不能把系統倍率乘進去再反推**啊」。",
+  );
+  L.push("");
+  L.push(
+    `⇒ \`maxHealth ${HP_MULT}\` / \`damageDealt ${DMG_MULT}\` / \`cooldown\` 這一族**只出現在「玩家實際」那幾欄**，` +
+      "⛔ 一個都沒有進推導鏈。⚠️ 看到「幾發送走中位英雄」不合意時，**要問的是 owner 想不想動那一格**，" +
+      "⛔ 不是自己去轉 —— 出貨值與他的逐字原話記在 `content/config/owner-knobs.json`，" +
+      "`packages/shared/src/ops/ownerKnobs.test.ts` 在守。",
+  );
+  L.push("");
   L.push("## ⭐ 傷害五級距的推導鏈（`content/config/damage-tiers.json` 由這一支寫）");
   L.push("");
   L.push("```");
