@@ -46,6 +46,7 @@ import {
   type AugmentEnemyFilter,
 } from "./augmentEnemyFilter";
 import { DEFAULT_STEALTH_RULES, stealthSystem, type StealthRules } from "./stealth";
+import { DEFAULT_VISION_RULES, type VisionRules } from "./vision";
 import { DEFAULT_BERSERK_RULES, type BerserkRules } from "./abilities/berserkRules";
 import { DEFAULT_DISPEL_RULES, type DispelRules } from "./dispelRules";
 import { DEFAULT_COOLDOWN_RULES, type CooldownRules } from "./cooldownRules";
@@ -1263,6 +1264,15 @@ export class SimWorld {
    * false,也就是隱形只剩畫面、完全不影響索敵,而畫面上看起來一切正常。
    */
   stealthRules: StealthRules = DEFAULT_STEALTH_RULES;
+  /**
+   * ⭐ GH#606 —— **視野規則**（owner 2026-08-23：「理論上這個地圖是**全視野**，
+   * 就算牆後也看得到」）。和 `stealthRules` 完全同一個形狀:一份出貨預設住在
+   * `sim/`,實際值由 host 在開場從 `config.arena-rules@1` 灌進來。
+   *
+   * ⚠️ ⛔ **它與隱形是兩件事**:`canSee`（`sim/stealth.ts`）與這一族**零交集** ——
+   * 「全視野」打開的是**牆**,⛔ 不是隱形。守衛 `fullVision.test.ts` 兩個方向一起讀。
+   */
+  visionRules: VisionRules = DEFAULT_VISION_RULES;
 
   /**
    * 暴走規則 (`config.berserk@1`, see abilities/berserkRules.ts) —— 主動暴走的

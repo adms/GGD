@@ -10,6 +10,7 @@ import {
   TEAM_SIZE,
   TICK_HZ,
 } from "@ggd/shared/constants";
+import { visionRulesFromDoc } from "@ggd/shared/sim/vision";
 import { asSeatId, asTeamId, type AugmentId, type ChampionId, type EntityId, type ItemId, type SeatId, type StatusId, type TeamId } from "@ggd/shared/ids";
 import { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
@@ -1185,6 +1186,11 @@ export class MatchController {
     this.world.augmentEnemyFilter = augmentEnemyFilter;
     // 隱形規則 (`config.stealth@1`) —— 同樣在 tick 0 之前定格。
     this.world.stealthRules = stealthRules;
+    // ⭐ GH#606 —— 視野規則（owner 2026-08-23:「理論上這個地圖是**全視野**」）。
+    // ⚠️ 出貨行為在這一行之前**就已經是對的**（`visionRulesOf` 讀不到那格時回出貨值）,
+    //    ⛔ 但少了它,後台的 `vision.wallBlocksBasicAttack` 那一格是**死的** ——
+    //    存了檔、畫面上有、而遊戲裡什麼都不會變（第一·五守則的形狀）。
+    this.world.visionRules = visionRulesFromDoc(Configs.tryGet("arena-rules"));
     // 嘲弄規則 (`config.taunt@1`) —— 同樣在 tick 0 之前定格。
     this.world.tauntRules = tauntRules;
     // 身體放大倍數 → 攻擊距離 (`config.body-scale@1`, GH#252) —— tick 0 之前定格。
@@ -2336,6 +2342,13 @@ export class MatchController {
         // visible in the call rather than omitted.
         undefined,
         this.mobChampionPicker(),
+        // ⭐ GH#577（owner 2026-08-23:「並**優先攻擊玩家角色而非 bot**」)——
+        // 這是 `humanSeats` **唯一**的正式呼叫端（`mobs.ts` 的參數註解逐字寫著）。
+        // ⛔ 省略它 = 索敵退回「誰近打誰」,而那正是 owner 抱怨的行為;
+        // 客戶端的預測影子、重播的純函式重新武裝、每一份測試夾具都刻意走那一邊。
+        // ⚠️ `humanSeat` 是**座位**的身分（`:1231` `!spec.isBot`),⛔ 不是 `driverKind`
+        //    —— 斷線的真人 driver 是 "ai",而他仍然是玩家（GH#492 逐字記過）。
+        new Set([...this.seats.values()].filter((st) => st.humanSeat).map((st) => st.seatId)),
       );
       beginCombatMobs(
         this.world,
