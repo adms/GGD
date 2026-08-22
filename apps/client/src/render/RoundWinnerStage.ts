@@ -129,6 +129,60 @@ export function podiumSlotOrder(total: number, layout: VictoryPodiumLayout): num
   return out;
 }
 
+/**
+ * 三張卡的**疏密** (GH#545)。owner 2026-08-22:
+ * > 「勝利結算三個3d model 角色**靠在一起不要分那麼開**」
+ *
+ * ═══════════════════════════════════════════════════════════════════════════
+ * 為什麼「分那麼開」不是一個誰調錯的數字,而是一個結構性的形狀
+ * ═══════════════════════════════════════════════════════════════════════════
+ * 在這一格出現之前,每一格的中心是 `((slot + 0.5) / n) * 100` **百分比** ——
+ * 也就是三張卡把**整個視窗寬度**均分,永遠是 16.7% / 50% / 83.3%。而卡片的
+ * 寬度是 `min(vh, vw)`,在寬螢幕上由**高度**決定。兩者的單位不同,於是同一份
+ * 設定在不同長寬比下疏密完全不一樣(量到的:16:9 桌機上卡片約 10.8vw、間距
+ * 33.3vw ⇒ **相隔約 3.1 個卡片寬**;直式手機上卡片 29.3vw ⇒ 只隔 1.1 個)。
+ * owner 在桌機上看到的正是那個 3.1。
+ *
+ * ⚠️ 所以修法**不是**把 `0.5` 抄進算式,而是把「間距是幾分之一格」變成一格
+ * 政策(第一守則:決策點做成後台欄位),並讓卡片寬度的 vw 上限跟著它收 ——
+ * 否則在寬度受限的直式視窗上調緊間距會讓三張卡直接疊在一起。
+ *
+ * `spacing === 1` **與 2026-08-22 之前逐字同解**,所以它同時是「回到舊畫面」
+ * 的那一格。
+ */
+export const PODIUM_SPACING_MIN = 0.2;
+export const PODIUM_SPACING_MAX = 1.5;
+
+/**
+ * ⚠️ **暫時的保險絲,不是這個值的家。** 這一條 lane 的檔案柵欄碰不到
+ * `packages/shared/src/content/schema/victoryPodium.ts` 與 `apps/admin/`,
+ * 所以 `podiumSpacing` 這一格還沒落進 Zod / `DEFAULT_VICTORY_PODIUM` / 後台
+ * (交辦已寫進 GH#545 的報告)。接上去之後這裡就只剩「內容載不到」那條路會用到,
+ * 語意和 `DEFAULT_VICTORY_PODIUM` 對其他欄位的角色一致。
+ */
+export const PODIUM_SPACING_FALLBACK = 0.5;
+
+/**
+ * 政策 → 間距倍率。缺席 ⇒ 保險絲;超界 ⇒ 夾回去(0 會讓三個人疊成一個人,
+ * 而後台的上下界還沒接上,見上面)。
+ */
+export function podiumSpacing(cfg: VictoryPodiumPolicy): number {
+  const raw = (cfg as VictoryPodiumPolicy & { podiumSpacing?: number }).podiumSpacing;
+  const v = typeof raw === "number" && Number.isFinite(raw) ? raw : PODIUM_SPACING_FALLBACK;
+  return Math.min(PODIUM_SPACING_MAX, Math.max(PODIUM_SPACING_MIN, v));
+}
+
+/**
+ * 第 `slot` 格的中心,橫向百分比。中間那一格永遠落在 50%(奇數人數時字面上的
+ * `50`),兩側對稱地往外推 `pitch = (100 / n) * spacing`。
+ */
+export function podiumSlotCentrePct(slot: number, total: number, spacing: number): number {
+  const n = Math.max(1, total);
+  const pitch = (100 / n) * spacing;
+  const off = slot - (n - 1) / 2;
+  return Math.round((50 + off * pitch) * 1000) / 1000;
+}
+
 /** 名次 → 該播哪一個剪輯。沒有冠的台階(第四名以後 / 舊呼叫端)一律站姿。 */
 export function podiumClipFor(
   medal: CrownMedal | null | undefined,
@@ -247,11 +301,12 @@ function styleCrown(
   slot: number,
   total: number,
   scale = 1,
+  spacing = 1,
 ): void {
   const s = el?.style;
   if (!s) return;
   const n = Math.max(1, total);
-  const centre = ((slot + 0.5) / n) * 100;
+  const centre = podiumSlotCentrePct(slot, n, spacing);
   s.position = "fixed";
   s.left = `${centre}%`;
   // 卡片的中心在 46%、高度上限 min(56vh…),所以冠要往上讓開卡片的上緣。
@@ -299,6 +354,7 @@ function styleOverlayCanvas(
   slot: number,
   total: number,
   scale = 1,
+  spacing = 1,
 ): void {
   const s = canvas.style;
   if (!s) return; // headless fake — nothing to style
@@ -306,11 +362,19 @@ function styleOverlayCanvas(
   const k = scale > 0 ? scale : 1;
   const vh = (v: number): number => Math.min(88, Math.round(v * k));
   const vw = (v: number): number => Math.min(96, Math.round(v * k));
+  // ⚠️ GH#545: the vw cap follows the SPACING, not just the count. The vh cap
+  // wins on a wide screen (so tightening the row leaves desktop cards alone),
+  // but on a width-limited viewport the vw cap is what is actually drawn —
+  // leaving it at 88/n there means a tighter row simply overlaps into a pile.
+  // `spacing === 1` ⇒ 94/n > 88/n ⇒ min() picks 88/n ⇒ byte-identical to the
+  // pre-#545 sizes. The height cap keeps the card's aspect (96/88).
+  const capW = Math.min(88 / n, ((100 / n) * spacing) * 0.94);
+  const capH = capW * (96 / 88);
   // width per card: the solo card keeps its old size; a row divides the space.
-  const w = n === 1 ? `min(${vh(40)}vh, ${vw(84)}vw)` : `min(${vh(34 / n + 8)}vh, ${vw(88 / n)}vw)`;
-  const h = n === 1 ? `min(${vh(54)}vh, ${vw(96)}vw)` : `min(${vh(46 / n + 10)}vh, ${vw(96 / n)}vw)`;
+  const w = n === 1 ? `min(${vh(40)}vh, ${vw(84)}vw)` : `min(${vh(34 / n + 8)}vh, ${vw(capW)}vw)`;
+  const h = n === 1 ? `min(${vh(54)}vh, ${vw(96)}vw)` : `min(${vh(46 / n + 10)}vh, ${vw(capH)}vw)`;
   // centre of this card's SLOT, as a percentage across the viewport
-  const centre = ((slot + 0.5) / n) * 100;
+  const centre = podiumSlotCentrePct(slot, n, spacing);
   s.position = "fixed";
   s.left = `${centre}%`;
   s.top = "46%";
@@ -523,6 +587,8 @@ export class RoundWinnerStage {
     // (操作者把 podiumLayout 從 rank 切成 centreFirst)的那一回合,圖層是重用的,
     // 所以只在建立時套用會讓那個欄位看起來完全沒作用(失敗形態 ②)。
     const slots = podiumSlotOrder(members.length, cfg.podiumLayout);
+    // GH#545 owner「靠在一起不要分那麼開」—— 疏密和站位一樣每一次都重算。
+    const spacing = podiumSpacing(cfg);
     // #263: hand each winner's championId to its previewer so the w3x art
     // colour is painted here too. Before this the card showed the RAW mesh —
     // 黑化Saber won a round and stood there as a plain gold Saber.
@@ -531,8 +597,8 @@ export class RoundWinnerStage {
       const scale = m.place === 1 ? cfg.winnerScale : 1;
       const slot = slots[i] ?? i;
       const canvas = this.canvases[i];
-      if (canvas) styleOverlayCanvas(canvas, slot, members.length, scale);
-      styleCrown(this.crowns[i] ?? null, slot, members.length, scale);
+      if (canvas) styleOverlayCanvas(canvas, slot, members.length, scale, spacing);
+      styleCrown(this.crowns[i] ?? null, slot, members.length, scale, spacing);
       void this.previews[i]?.show(m.doc, {
         championId: m.championId ?? null,
         clip: m.clip ?? "idle",
