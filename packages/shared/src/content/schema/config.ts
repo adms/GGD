@@ -217,6 +217,10 @@ import { zConfigVictoryPodiumDoc } from "./victoryPodium";
 // config.vfx-families@1 lives in ./vfx next to the vfx@1 docs it tunes (the
 // w3x art family layer); only its union membership belongs here.
 import { zConfigVfxFamiliesDoc, zConfigVfxAbilityArtDoc } from "./vfx";
+// GH#529 —— 技能 ↔ 原作 emitter 的**推導**綁定表（`tools/vfx-bind/scan.py` 產生）。
+// schema 住自己的檔案，這裡只接進 union。⛔ 漏掉下面那一行 union 成員 = 一份
+// ability-vfx-bindings.json 進了 content/ 之後**整份**內容驗證失敗 → 骨架英雄。
+import { zConfigAbilityVfxBindingsDoc } from "./abilityVfxBindings";
 // 嘲弄規則的上界 —— 定義在 sim/taunt.ts(sim 也夾同一個數字),schema 只是把它
 // 接上 Zod,所以兩層守的不可能是兩個數字。
 import {
@@ -8219,6 +8223,9 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   // GH#384 —— 617 筆逐技能特效綁定的住址。⚠️ 漏掉這一行 = 一份
   // vfx-ability-art.json 進了 content/ 之後整份內容驗證失敗 → 骨架英雄。
   zConfigVfxAbilityArtDoc,
+  // GH#529 —— 技能 ↔ 原作 emitter 的推導綁定表。⚠️ 同上：漏掉這一行 =
+  // ability-vfx-bindings.json 會讓內容**整份**載入失敗 → 骨架英雄，而網站看起來正常。
+  zConfigAbilityVfxBindingsDoc,
   zConfigAudioMapDoc,
   zConfigChampionVoicesDoc,
   zConfigUnitTintsDoc,

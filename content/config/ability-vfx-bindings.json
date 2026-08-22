@@ -1,0 +1,702 @@
+{
+  "id": "ability-vfx-bindings",
+  "schema": "config.ability-vfx-bindings@1",
+  "bindings": [
+    {
+      "abilityId": "godie-e002.e",
+      "vfxKeys": [
+        "fx.w3x.particle.holyawakening.p00",
+        "fx.w3x.particle.holyawakening.p01",
+        "fx.w3x.particle.holyawakening.p02",
+        "fx.w3x.particle.holyawakening.p03",
+        "fx.w3x.particle.holyawakening.p04",
+        "fx.w3x.particle.holyawakening.p05"
+      ],
+      "source": "w3a-override:art:caster",
+      "rawcode": "A0D5",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-e002.w",
+      "vfxKeys": [
+        "fx.w3x.particle.holyawakening.p00",
+        "fx.w3x.particle.holyawakening.p01",
+        "fx.w3x.particle.holyawakening.p02",
+        "fx.w3x.particle.holyawakening.p03",
+        "fx.w3x.particle.holyawakening.p04",
+        "fx.w3x.particle.holyawakening.p05"
+      ],
+      "source": "w3a-override:art:caster",
+      "rawcode": "A0DZ",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-e007.ex",
+      "vfxKeys": [
+        "fx.w3x.particle.supershinythingy.p00",
+        "fx.w3x.particle.supershinythingy.p01",
+        "fx.w3x.particle.supershinythingy.p02"
+      ],
+      "source": "jass-literal:jass:effectTargetUnit",
+      "rawcode": "A0SQ",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-e007.r",
+      "vfxKeys": [
+        "fx.w3x.particle.supershinythingy.p00",
+        "fx.w3x.particle.supershinythingy.p01",
+        "fx.w3x.particle.supershinythingy.p02"
+      ],
+      "source": "w3a-override:art:caster",
+      "rawcode": "A04X",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-e00l.e",
+      "vfxKeys": [
+        "fx.w3x.particle.holyawakening.p00",
+        "fx.w3x.particle.holyawakening.p01",
+        "fx.w3x.particle.holyawakening.p02",
+        "fx.w3x.particle.holyawakening.p03",
+        "fx.w3x.particle.holyawakening.p04",
+        "fx.w3x.particle.holyawakening.p05"
+      ],
+      "source": "w3a-override:art:caster",
+      "rawcode": "A0D5",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-e00l.w",
+      "vfxKeys": [
+        "fx.w3x.particle.holyawakening.p00",
+        "fx.w3x.particle.holyawakening.p01",
+        "fx.w3x.particle.holyawakening.p02",
+        "fx.w3x.particle.holyawakening.p03",
+        "fx.w3x.particle.holyawakening.p04",
+        "fx.w3x.particle.holyawakening.p05"
+      ],
+      "source": "w3a-override:art:caster",
+      "rawcode": "A0DZ",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-e00r.e",
+      "vfxKeys": [
+        "fx.w3x.particle.heroeva01s2.p00",
+        "fx.w3x.particle.heroeva01s2.p01"
+      ],
+      "source": "w3a-override:art:target",
+      "rawcode": "A0GH",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-ewar.ex",
+      "vfxKeys": [
+        "fx.w3x.particle.supershinythingy.p00",
+        "fx.w3x.particle.supershinythingy.p01",
+        "fx.w3x.particle.supershinythingy.p02"
+      ],
+      "source": "jass-literal:jass:effectTargetUnit",
+      "rawcode": "A0SQ",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-ewar.r",
+      "vfxKeys": [
+        "fx.w3x.particle.supershinythingy.p00",
+        "fx.w3x.particle.supershinythingy.p01",
+        "fx.w3x.particle.supershinythingy.p02"
+      ],
+      "source": "w3a-override:art:caster",
+      "rawcode": "A04X",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-h00l.r",
+      "vfxKeys": [
+        "godie-bladestorm-swordeffect-p0"
+      ],
+      "source": "w3a-override:art:caster",
+      "rawcode": "A0BR",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-h02r.r",
+      "vfxKeys": [
+        "fx.w3x.particle.supershinythingy.p00",
+        "fx.w3x.particle.supershinythingy.p01",
+        "fx.w3x.particle.supershinythingy.p02"
+      ],
+      "source": "w3a-override:art:caster",
+      "rawcode": "A0R4",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-hart.r",
+      "vfxKeys": [
+        "fx.w3x.orb.herocloudkfksword.p00"
+      ],
+      "source": "jass-literal:jass:effectTargetUnit",
+      "rawcode": "A077",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-hgam.r",
+      "vfxKeys": [
+        "fx.w3x.particle.supershinythingy.p00",
+        "fx.w3x.particle.supershinythingy.p01",
+        "fx.w3x.particle.supershinythingy.p02"
+      ],
+      "source": "w3a-override:art:caster",
+      "rawcode": "A0R4",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-n003.r",
+      "vfxKeys": [
+        "fx.w3x.locust.frostnova.p00",
+        "fx.w3x.locust.frostnova.p01",
+        "fx.w3x.locust.frostnova.p02",
+        "fx.w3x.locust.frostnova.p03"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A05D",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-n01g.r",
+      "vfxKeys": [
+        "fx.w3x.locust.frostnova.p00",
+        "fx.w3x.locust.frostnova.p01",
+        "fx.w3x.locust.frostnova.p02",
+        "fx.w3x.locust.frostnova.p03"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A05D",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-u00j.q",
+      "vfxKeys": [
+        "fx.w3x.orb.herocloudkfksword.p00"
+      ],
+      "source": "w3a-override:art:caster",
+      "rawcode": "A0S4",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-u00v.r",
+      "vfxKeys": [
+        "fx.w3x.locust.boomnl.p00",
+        "fx.w3x.locust.boomnl.p01",
+        "fx.w3x.locust.boomnl.p02",
+        "fx.w3x.locust.boomnl.p03",
+        "fx.w3x.locust.boomnl.p04"
+      ],
+      "source": "jass-literal:jass:effectLoc",
+      "rawcode": "A0L6",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-u010.e",
+      "vfxKeys": [
+        "godie-tectonicfury-p0",
+        "godie-tectonicfury-p1"
+      ],
+      "source": "w3a-override:art:missile",
+      "rawcode": "A09I",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-u010.q",
+      "vfxKeys": [
+        "fx.w3x.particle.flamessmoke.p00",
+        "fx.w3x.particle.flamessmoke.p01",
+        "fx.w3x.particle.flamessmoke.p02",
+        "fx.w3x.particle.flamessmoke.p03"
+      ],
+      "source": "w3a-override:art:caster",
+      "rawcode": "A0OG",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-u010.r",
+      "vfxKeys": [
+        "fx.w3x.particle.flamessmoke.p00",
+        "fx.w3x.particle.flamessmoke.p01",
+        "fx.w3x.particle.flamessmoke.p02",
+        "fx.w3x.particle.flamessmoke.p03"
+      ],
+      "source": "w3a-override:art:caster",
+      "rawcode": "A09K",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-u010.w",
+      "vfxKeys": [
+        "godie-fireblast-p0",
+        "godie-fireblast-p1",
+        "godie-fireblast-p2",
+        "godie-fireblast-p3"
+      ],
+      "source": "w3a-override:art:missile",
+      "rawcode": "A09H",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-u034.r",
+      "vfxKeys": [
+        "fx.w3x.locust.boomnl.p00",
+        "fx.w3x.locust.boomnl.p01",
+        "fx.w3x.locust.boomnl.p02",
+        "fx.w3x.locust.boomnl.p03",
+        "fx.w3x.locust.boomnl.p04"
+      ],
+      "source": "w3h-override:buff:B04R/target",
+      "rawcode": "A0Y1",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-ucrl.r",
+      "vfxKeys": [
+        "fx.w3x.locust.boomnl.p00",
+        "fx.w3x.locust.boomnl.p01",
+        "fx.w3x.locust.boomnl.p02",
+        "fx.w3x.locust.boomnl.p03",
+        "fx.w3x.locust.boomnl.p04"
+      ],
+      "source": "w3h-override:buff:B04R/target",
+      "rawcode": "A0Y1",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-uvng.e",
+      "vfxKeys": [
+        "godie-tectonicfury-p0",
+        "godie-tectonicfury-p1"
+      ],
+      "source": "w3a-override:art:missile",
+      "rawcode": "A09I",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-uvng.q",
+      "vfxKeys": [
+        "fx.w3x.particle.flamessmoke.p00",
+        "fx.w3x.particle.flamessmoke.p01",
+        "fx.w3x.particle.flamessmoke.p02",
+        "fx.w3x.particle.flamessmoke.p03"
+      ],
+      "source": "w3a-override:art:caster",
+      "rawcode": "A0OG",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-uvng.r",
+      "vfxKeys": [
+        "fx.w3x.particle.flamessmoke.p00",
+        "fx.w3x.particle.flamessmoke.p01",
+        "fx.w3x.particle.flamessmoke.p02",
+        "fx.w3x.particle.flamessmoke.p03"
+      ],
+      "source": "w3a-override:art:caster",
+      "rawcode": "A09K",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "abilityId": "godie-uvng.w",
+      "vfxKeys": [
+        "godie-fireblast-p0",
+        "godie-fireblast-p1",
+        "godie-fireblast-p2",
+        "godie-fireblast-p3"
+      ],
+      "source": "w3a-override:art:missile",
+      "rawcode": "A09H",
+      "confidence": "CONFIRMED"
+    }
+  ],
+  "unmatched": [
+    {
+      "vfxKey": "fx.w3x.locust.darkraor.p00",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `darkraor`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.locust.darkraor.p01",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `darkraor`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.locust.darkraor.p02",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `darkraor`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.1hswd-01.p00",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `1hswd_01`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.1hswd-01.p01",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `1hswd_01`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.1hswd-01.p02",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `1hswd_01`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.bloodbreathstream.p00",
+      "why": "閘1 join —— 這個模型只經由 joinConfidence=AMBIGUOUS 的技能列連到技能,自動綁上去可能是**別支技能的特效**。⭐ 人工裁決過的可以留在 `vfx-ability-art.json` 的 promoted 列(對帳會標成 EXTRA,⛔ 不是錯)"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.bloodbreathstream.p01",
+      "why": "閘1 join —— 這個模型只經由 joinConfidence=AMBIGUOUS 的技能列連到技能,自動綁上去可能是**別支技能的特效**。⭐ 人工裁決過的可以留在 `vfx-ability-art.json` 的 promoted 列(對帳會標成 EXTRA,⛔ 不是錯)"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.bloodbreathstream.p02",
+      "why": "閘1 join —— 這個模型只經由 joinConfidence=AMBIGUOUS 的技能列連到技能,自動綁上去可能是**別支技能的特效**。⭐ 人工裁決過的可以留在 `vfx-ability-art.json` 的 promoted 列(對帳會標成 EXTRA,⛔ 不是錯)"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.darkbreathdamage.p00",
+      "why": "⚠️ 已由其他路徑使用(vfx-ability-art.json 的 promoted 列 `godie-ekee.q`)—— 閘4 技能 —— 唯一引用它的技能 `godie-ekee.q` 已經不在 content/abilities/(英雄退休)"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.demonfilth.p00",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `demonfilth`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.demonfilth.p01",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `demonfilth`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.demonfilth.p02",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `demonfilth`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.demonfilth.p03",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `demonfilth`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.demonfilth.p04",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `demonfilth`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.divinering.p00",
+      "why": "閘3 可渲染性 —— 20 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.divinering.p01",
+      "why": "閘3 可渲染性 —— 20 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.divinering.p02",
+      "why": "閘3 可渲染性 —— 20 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.divinering.p03",
+      "why": "閘3 可渲染性 —— 20 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.divinering.p04",
+      "why": "閘3 可渲染性 —— 20 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.divinering.p05",
+      "why": "閘3 可渲染性 —— 20 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.divinering.p06",
+      "why": "閘3 可渲染性 —— 20 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.divinering.p07",
+      "why": "閘3 可渲染性 —— 20 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.divinering.p08",
+      "why": "閘3 可渲染性 —— 20 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.divinering.p09",
+      "why": "閘3 可渲染性 —— 20 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.divinering.p10",
+      "why": "閘3 可渲染性 —— 20 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.divinering.p11",
+      "why": "閘3 可渲染性 —— 20 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.divinering.p12",
+      "why": "閘3 可渲染性 —— 20 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.divinering.p13",
+      "why": "閘3 可渲染性 —— 20 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.divinering.p14",
+      "why": "閘3 可渲染性 —— 20 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.divinering.p15",
+      "why": "閘3 可渲染性 —— 20 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.divinering.p16",
+      "why": "閘3 可渲染性 —— 20 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.divinering.p17",
+      "why": "閘3 可渲染性 —— 20 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.divinering.p18",
+      "why": "閘3 可渲染性 —— 20 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.divinering.p19",
+      "why": "閘3 可渲染性 —— 20 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.herosaber.p00",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `herosaber`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.herosaber.p01",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `herosaber`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.lightningnova.p00",
+      "why": "⚠️ 已由其他路徑使用(vfx-ability-art.json 的 promoted 列 `godie-h022.e`)—— 閘4 技能 —— 唯一引用它的技能 `godie-h022.e` 已經不在 content/abilities/(英雄退休)"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.lightningnova.p01",
+      "why": "⚠️ 已由其他路徑使用(vfx-ability-art.json 的 promoted 列 `godie-h022.e`)—— 閘4 技能 —— 唯一引用它的技能 `godie-h022.e` 已經不在 content/abilities/(英雄退休)"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.magical-sword.p00",
+      "why": "閘3 可渲染性 —— 這個模型抽不出任何 PRE2/RIBB emitter(emitterTotal=0)"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.minitypeflame.p00",
+      "why": "⚠️ 已由其他路徑使用(技能 `godie-e008.e` 的 vfxKey)—— 閘3 可渲染性 —— 2 顆 emitter 只有 1 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.minitypeflame.p01",
+      "why": "⚠️ 已由其他路徑使用(技能 `godie-e008.e` 的 vfxKey)—— 閘3 可渲染性 —— 2 顆 emitter 只有 1 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.babyface.p00",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `babyface`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.blackhole.p00",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `blackhole`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.blackhole.p01",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `blackhole`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.blackhole.p02",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `blackhole`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.blackhole.p03",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `blackhole`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.blackhole.p04",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `blackhole`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.blackhole.p05",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `blackhole`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.blackhole.p06",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `blackhole`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.blackhole1.p00",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `blackhole1`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.blackhole1.p01",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `blackhole1`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.blackhole1.p02",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `blackhole1`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.enchant.p00",
+      "why": "⚠️ 已由其他路徑使用(技能 `godie-e008.e` 的 vfxKey)—— 閘3 可渲染性 —— 5 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.enchant.p01",
+      "why": "⚠️ 已由其他路徑使用(技能 `godie-e008.e` 的 vfxKey)—— 閘3 可渲染性 —— 5 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.enchant.p02",
+      "why": "閘3 可渲染性 —— 5 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.enchant.p03",
+      "why": "閘3 可渲染性 —— 5 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.enchant.p04",
+      "why": "閘3 可渲染性 —— 5 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.flash.p00",
+      "why": "閘3 可渲染性 —— 2 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.flash.p01",
+      "why": "閘3 可渲染性 —— 2 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.gx.p00",
+      "why": "⚠️ 已由其他路徑使用(vfx-ability-art.json 的 promoted 列 `godie-ntin.q`)—— 閘4 技能 —— 唯一引用它的技能 `godie-ntin.q` 已經不在 content/abilities/(英雄退休)"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.gxhuge.p00",
+      "why": "⚠️ 已由其他路徑使用(vfx-ability-art.json 的 promoted 列 `godie-ntin.e`)—— 閘4 技能 —— 唯一引用它的技能 `godie-ntin.e` 已經不在 content/abilities/(英雄退休)"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.heroluffeattack.p00",
+      "why": "閘3 可渲染性 —— 1 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.heronarutos4effect.p00",
+      "why": "⚠️ 已由其他路徑使用(技能 `godie-hvwd.e` 的 vfxKey)—— 閘3 可渲染性 —— 6 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.heronarutos4effect.p01",
+      "why": "⚠️ 已由其他路徑使用(技能 `godie-hvwd.e` 的 vfxKey)—— 閘3 可渲染性 —— 6 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.heronarutos4effect.p02",
+      "why": "閘3 可渲染性 —— 6 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.heronarutos4effect.p03",
+      "why": "閘3 可渲染性 —— 6 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.heronarutos4effect.p04",
+      "why": "閘3 可渲染性 —— 6 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.heronarutos4effect.p05",
+      "why": "⚠️ 已由其他路徑使用(技能 `godie-hvwd.e` 的 vfxKey)—— 閘3 可渲染性 —— 6 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.heroraichus3.p00",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `heroraichus3`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.heroraichus3.p01",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `heroraichus3`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.lasercannonfinalred.p00",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `lasercannonfinalred`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.lasercannonfinalred.p01",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `lasercannonfinalred`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.lasercannonfinalred.p02",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `lasercannonfinalred`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.lasercannonfinalred.p03",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `lasercannonfinalred`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.lasercannonfinalred.p04",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `lasercannonfinalred`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.lasercannonfinalred.p05",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `lasercannonfinalred`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.lasercannonfinalred.p06",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `lasercannonfinalred`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.lasercannonfinalred.p07",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `lasercannonfinalred`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.lavabreathdamage.p00",
+      "why": "⚠️ 已由其他路徑使用(技能 `godie-u01u.q` 的 vfxKey)—— 閘1 join —— 這個模型只經由 joinConfidence=AMBIGUOUS 的技能列連到技能,自動綁上去可能是**別支技能的特效**。⭐ 人工裁決過的可以留在 `vfx-ability-art.json` 的 promoted 列(對帳會標成 EXTRA,⛔ 不是錯)"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.musiccast.p00",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `musiccast`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.musiccast.p01",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `musiccast`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.oblivionaura.p00",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `oblivionaura`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.sephboom.p00",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `sephboom`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.sephboom.p01",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `sephboom`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.sephboom.p02",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `sephboom`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.sephboom.p03",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `sephboom`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.sephboom.p04",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `sephboom`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.sephboom.p05",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `sephboom`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.sephboom.p06",
+      "why": "原作地圖裡**沒有任何技能**引用模型 `sephboom`(models.referencedBy 是空的)—— 它掛在單位/道具/裝飾物上,或整個沒被用到"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.sonicbreathstream.p00",
+      "why": "閘3 可渲染性 —— 3 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.sonicbreathstream.p01",
+      "why": "閘3 可渲染性 —— 3 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.sonicbreathstream.p02",
+      "why": "閘3 可渲染性 —— 3 顆 emitter 只有 0 顆掛在模型根節點;其餘掛在模型自己的動畫節點上,用世界座標重播會全部從同一點噴出(一團而不是一圈/一條龍捲)。⭐ 綁上去會讓辨識度**變差**,⛔ 這不是「還沒收」"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.thunderclapcaster.p00",
+      "why": "⚠️ 這份 emitter 文件在 `models` 裡找不到來源模型 —— 它是別條產生鏈(例:extract_stock_vfx.py 的零售 MPQ 抽取)的產物,不歸這張表管"
+    },
+    {
+      "vfxKey": "fx.w3x.stock.warstompcaster.p00",
+      "why": "⚠️ 這份 emitter 文件在 `models` 裡找不到來源模型 —— 它是別條產生鏈(例:extract_stock_vfx.py 的零售 MPQ 抽取)的產物,不歸這張表管"
+    }
+  ]
+}
