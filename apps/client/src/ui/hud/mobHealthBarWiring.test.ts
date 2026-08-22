@@ -334,7 +334,12 @@ describe("C · GameApp 是 frameBus 那兩格的寫入者", () => {
       "mobBarAnchorY(es.mana",
     );
     // 別區的小怪不進來（波峰一區 50 隻）
-    expect(b).toMatch(/if \(es\.kind === KIND_MOB\) \{\s*if \(!this\.visibleZones\.has\(es\.zone\)\) return;/);
+    expect(b).toMatch(// ⭐ GH#575 —— 原本是 `\{\s*` 要求**緊接著**,而 2026-08-23 在那兩行之間插進了
+    //    `this.vfx.noteGoldBody(...)`（殭屍的身體要在**任何 return 之前**記下來,
+    //    否則金幣不生、音效與音階都不播）。
+    // ⛔ 「相鄰」不是這條守衛要守的東西 —— 它要守的是「**分區剔除存在,而且用的是
+    //    出貨的那個判斷**」。⇒ 放寬相鄰,⛔ 不放寬存在。
+    /if \(es\.kind === KIND_MOB\) \{[\s\S]{0,600}?if \(!this\.visibleZones\.has\(es\.zone\)\) return;/);
   });
 
   it("★ 長血條的 bossId 讀的是『現在有沒有王』，不是那顆單槽的最後一則消息", () => {

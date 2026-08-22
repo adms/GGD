@@ -3873,6 +3873,12 @@ export class GameApp {
     const barCfg = this.mobBarCfg;
     state.entities.forEach((es) => {
       if (es.kind === KIND_MOB) {
+        // ⭐ GH#575 —— **在任何 return 之前**記下這一具身體。`mobSlain` 的 payload
+        // 沒有 x/z，而殭屍在事件到達時通常已經從快照裡消失（sim 同一個 tick 就
+        // `destroyAfterHooks`）⇒ 少了這一行，金幣不生、音效與音階都不播。
+        // ⚠️ 刻意放在**分區剔除與界外閘之前**：金幣的歸屬與音階是**擊殺者**的回饋，
+        //    ⛔ 與「這一隻的血條有沒有畫在螢幕上」無關。
+        this.vfx.noteGoldBody(es.id, es.x, es.z);
         // L3 ZONE CULL —— 別區的小怪血條沒有消費者(`MobHealthBars` 只畫投影到
         // 螢幕上的),而波峰時一區 50 隻,少跑一次 `project()` 是真的省。
         if (!this.visibleZones.has(es.zone)) return;

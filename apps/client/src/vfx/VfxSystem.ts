@@ -84,6 +84,10 @@ import { resolveTelegraphShape, type TelegraphAbilityLike } from "./telegraphSha
 import type { TelegraphRelation } from "./telegraphChannel";
 import { HitSpark, impactComposerFor } from "./HitSpark";
 import { scaledBurstCount, toParticleSystem } from "./particleFactory";
+// ⭐ GH#567 —— 守衛塔的來源指引：伸縮動作（bus → GuardianView）＋ 投射物。
+import { GuardianVolleyFx } from "./GuardianVolleyFx";
+import { clearGuardianRecoils, pulseGuardian } from "./guardianRecoilBus";
+import { volleyTiming, WAKE_MS } from "./guardianVolley";
 import { frontLoadCounts, IMPACT_TINTS, type ImpactIntensity, type Rgb } from "./vfxPresets";
 import { asImpactProfile, type SparkKind } from "../render/combatFeedback";
 import {
@@ -587,6 +591,12 @@ export class VfxSystem {
    */
   private readonly gold: GoldPickupFx;
   /**
+   * ⭐ GH#567 —— 守衛塔齊射的**投射物**。owner 2026-08-23:「場上打贏可以補血的
+   * 物件也會攻擊英雄，但沒有明顯的動作跟投射物指引⋯看起來只會覺得有隱形英雄在
+   * 打我」。預告圈一直都有（畫在**你腳下**），缺的是把它跟**塔**連起來的那條線。
+   */
+  private readonly guardianVolley: GuardianVolleyFx;
+  /**
    * UNIVERSAL CAST TELEGRAPH (task #228): the ground shape every ability draws
    * while it winds up, derived from the ability doc and filled off the cast
    * bar's own progress. Owns the per-caster lifecycle the old ad-hoc
@@ -671,6 +681,7 @@ export class VfxSystem {
       { getScale: () => this.budgetScale() },
     );
     this.arcs = new ArcBoltFx(scene);
+    this.guardianVolley = new GuardianVolleyFx(scene);
     // ⭐ GH#494 掉錢 → 停 1 秒 → 貝茲加速吸回擊殺者 + 輕音效（連擊音階升高）。
     this.gold = new GoldPickupFx(scene, {
       entityPos: (id) => this.ctx.entityPos(id),
@@ -770,6 +781,16 @@ export class VfxSystem {
   /** The cast-telegraph pillar layer (test/observability seam). */
   get castPillarFx(): CastPillarFx {
     return this.pillars;
+  }
+
+  /** ⭐ GH#567 —— 場上還在飛的守衛砲彈數（守衛／診斷用的接縫）。 */
+  get guardianBoltCount(): number {
+    return this.guardianVolley.activeCount;
+  }
+
+  /** 場上還在跑的一次性地面預告圈數（守衛用：圈與球必須**同時**出現）。 */
+  get groundTelegraphCount(): number {
+    return this.telegraphs.length;
   }
 
   /**
@@ -1872,6 +1893,17 @@ export class VfxSystem {
         const radius = typeof ev.data.radius === "number" ? ev.data.radius : 3;
         const impactTick = typeof ev.data.impactTick === "number" ? ev.data.impactTick : ev.tick;
         const windupMs = Math.max(1, (impactTick - ev.tick) * TICK_MS);
+        // ⭐ GH#567 —— 來源指引。owner 2026-08-23:「請補上該物件**伸縮抖一下**
+        // 然後出現**投射物飛向被攻擊方**的攻擊效果吧」。
+        //
+        // ⚠️ 圈與球必須說**同一句話**：`volleyTiming` 從同一個 `windupMs` 切出
+        // 「蓄力」與「飛行」，兩段加起來恰好等於圈填滿的時間，所以球在傷害落地
+        // 的那一幀到站。⛔ 給球一格速度就會讓兩個訊號互相矛盾。
+        const guardianId = ev.data.id as number | undefined;
+        const muzzle = guardianId !== undefined ? this.ctx.entityPos(guardianId) : null;
+        if (guardianId !== undefined && muzzle) {
+          pulseGuardian(guardianId, nowMs, volleyTiming(windupMs).launchMs, "fire");
+        }
         for (const t of targets) {
           if (!isFinitePos(t)) continue;
           // Same DANGER channel as an enemy champion's cast (#228): a neutral
@@ -1882,6 +1914,9 @@ export class VfxSystem {
               palette: telegraphPaletteFor("enemy"),
             }),
           );
+          // ⛔ 沒有塔的座標時**不畫球**（⛔ 不要退回一個猜的原點）—— 一顆從錯的
+          // 地方飛出來的球比沒有球更糟：它會指著一個沒有東西的方向。
+          if (muzzle) this.guardianVolley.fire(muzzle, t, nowMs, windupMs);
         }
         break;
       }
@@ -1892,6 +1927,19 @@ export class VfxSystem {
         const z = ev.data.z as number | undefined;
         if (typeof x !== "number" || typeof z !== "number" || !isFinitePos({ x, z })) break;
         this.layeredPop(x, z, nowMs, "heavy", GUARDIAN_TINT);
+        break;
+      }
+      // ⭐ GH#567 —— 「它醒了」。這個事件在此之前是**零消費端**：sim 每次都發、
+      // eventFanout 也放行，而畫面上什麼都不會發生（失敗形態②）。而「這座塔現在
+      // 會還手了」正是玩家需要先知道的那一件事 —— 不知道它醒了，第一輪齊射就
+      // 一定讀成「隱形英雄」。
+      //
+      // ⚠️ 幅度只有發射動作的一半（`wakeScale`）：醒來是一個**狀態改變**，
+      // ⛔ 不可以看起來像一次攻擊（那會讓人往旁邊跳而其實沒事）。
+      case "guardianWake": {
+        const id = ev.data.id as number | undefined;
+        if (id === undefined) break;
+        pulseGuardian(id, nowMs, WAKE_MS, "wake");
         break;
       }
       // the guardian was SLAIN (last-hit reward, task #89) — a kill-grade pop so
@@ -2065,6 +2113,25 @@ export class VfxSystem {
    * frame). It drives BOTH the blob shadows and the velocity-gated walking
    * dust, then prunes the per-entity walk state for bodies that despawned.
    */
+  /**
+   * ⭐ GH#575 —— **殭屍的身體也要記**（owner：「我殺死的殭屍 金幣卻不是飛向我
+   * 並且沒有金幣音效跟音階」）。
+   *
+   * ⛔ `syncGroundEntities()` 只走 `frameBus.champions`，而**殭屍從來不在裡面**
+   * （`GameApp` 的小怪迴圈是另一條，而且它還有分區剔除與界外閘會提早 `return`）
+   * ⇒ `GoldPickupFx.lastBody` **從沒記過任何一隻殭屍** ⇒ `spawn()` 的 `from` 是 null
+   * ⇒ 金幣不生、音效與音階都不播。
+   *
+   * ⚠️ 同一個檔裡那一行的註解**早就寫著**「少了這一行，金幣不是掉錯地方就是根本不掉 ——
+   * 而畫面上看起來只會像『這個功能有時候沒作用』」。⭐ 那句話是對的，只是它守的是英雄那一半。
+   *
+   * ⭐ 這裡刻意**不吃分區剔除**：金幣的歸屬與音階是**擊殺者**的回饋，
+   * ⛔ 與「這一隻的血條有沒有畫在螢幕上」無關。
+   */
+  noteGoldBody(id: number, x: number, z: number): void {
+    this.gold.noteBody(id, { x, z });
+  }
+
   private syncGroundEntities(nowMs: number): void {
     const scratch = this.shadowScratch;
     scratch.length = 0;
@@ -2143,6 +2210,8 @@ export class VfxSystem {
     this.floatingText.tick(dtMs);
     for (const t of this.telegraphs) t.update(nowMs);
     this.telegraphs = this.telegraphs.filter((t) => !t.done);
+    // ⭐ GH#567 —— 守衛塔的投射物（到站那一幀自己 dispose）。
+    this.guardianVolley.update(nowMs);
     // #228: re-reads the cast bar's fraction per caster and advances/reaps
     this.telegraphLayer.update(nowMs);
     for (const s of this.sparks) s.update(nowMs);
@@ -2255,6 +2324,9 @@ export class VfxSystem {
     this.telegraphLayer.clear(); // 每個施法者的地面預告圈
     this.pillars.clear(); // 向天光束（#233）
     this.arcs.clear(); // ⚡ 上一回合最後一跳的電，⛔ 不可以跟著進商店（#216 / #259）
+    // ⭐ GH#567 —— 還在飛的守衛砲彈與還在演的伸縮動作都不跨回合（同上一行的理由）。
+    this.guardianVolley.resetForRound();
+    clearGuardianRecoils();
     // ⭐ GH#494 —— 還在飛的錢不留到下一回合（#262：mesh 一定要回收）。錢本身早就
     // 進了口袋，這裡丟掉的只是那一枚 instance。
     this.gold.reset();
@@ -2321,6 +2393,9 @@ export class VfxSystem {
     this.castDecals.dispose();
     this.pillars.dispose();
     this.arcs.dispose();
+    // ⭐ GH#567 —— 來源網格 + 共用材質（instance 在 resetForRound 裡已經丟了）。
+    this.guardianVolley.dispose();
+    clearGuardianRecoils();
     // The rig owns its own ParticleSystems and emitter meshes — its dispose()
     // walks every system it EVER built, pooled or live, so nothing can survive
     // this call by being in a state we forgot about (task #131's lesson).
