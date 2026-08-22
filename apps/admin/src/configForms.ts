@@ -49,6 +49,8 @@ import {
   zConfigGoreDoc,
   zConfigItemCardDoc,
   zConfigModelLodDoc,
+  // 走過去放技能（GH#557）—— owner「超過施法距離人物不會走過去放技能（做成後台開關）」。
+  zConfigCastApproachDoc,
   // 爽度特效（GH#494）—— 金幣吸回 · 連段音階 · 施法餘燼壽命。
   zConfigFeelFxDoc,
   zConfigReplayDoc,
@@ -114,7 +116,6 @@ import {
   BALANCE_ANCHOR_LEVELS,
   HARD_ANCHOR_LEVEL,
   HP_BASE_BONUS,
-  HP_ENV_MULT,
   medianBaseHp,
   medianFinalHp,
 } from "@ggd/shared/content/balanceAnchors";
@@ -154,6 +155,7 @@ import {
   SHIPPED_ANCHOR_LEVEL,
   anchorFloor,
   castsToKill,
+  castsToKillBase,
   minTierStep,
   tierRatios,
   tierStep,
@@ -1524,16 +1526,17 @@ const DAMAGE_TIER_WHY = SKILL_TIER_NAMES.map((tier, i) => {
   const dmg = DEFAULT_DAMAGE_TIERS.damage[tier];
   const share = ((dmg / DAMAGE_TIER_MAX) * 100).toFixed(0);
   if (i === 0) {
-    const raw =
-      (medianBaseHp(SHIPPED_ANCHOR_LEVEL) / KILL_CASTS_REF) * HP_ENV_MULT +
-      HP_BASE_BONUS / KILL_CASTS_REF;
+    const raw = (medianBaseHp(SHIPPED_ANCHOR_LEVEL) + HP_BASE_BONUS) / KILL_CASTS_REF;
     return (
       `⭐ **這一格是整張表的錨**，而且它是**算出來的**：` +
-      `LV${SHIPPED_ANCHOR_LEVEL} 的**純基礎**中位血量 ${medianBaseHp(SHIPPED_ANCHOR_LEVEL)}` +
-      `（⛔ 無系統倍率、⛔ 無初始加成、⛔ 無魔抗 —— owner 2026-08-20：「不要計算 HP 系統倍率以及魔抗減傷 **會讓我誤判**」）` +
-      ` ÷ owner 的 ${KILL_CASTS_REF} 次 × HP 倍率 ${HP_ENV_MULT} ＋ 初始加成 ${HP_BASE_BONUS} ÷ ${KILL_CASTS_REF} 次 ＝ ${raw.toFixed(1)}` +
+      `（LV${SHIPPED_ANCHOR_LEVEL} 的**純基礎**中位血量 ${medianBaseHp(SHIPPED_ANCHOR_LEVEL)}` +
+      ` ＋ 初始加成 ${HP_BASE_BONUS}）÷ owner 的 ${KILL_CASTS_REF} 次 ＝ ${raw.toFixed(1)}` +
       `，進位到 ${tierStep()}（「使五格皆整數的最小單位」是 ${minTierStep()}，粒度取它的整數倍）⇒ **${dmg}**。` +
-      `⚠️ **初始加成不參與倍率**（owner #273）—— 算式是 \`base × ${HP_ENV_MULT} + ${HP_BASE_BONUS}\`，⛔ **不是** \`(base + ${HP_BASE_BONUS}) × ${HP_ENV_MULT}\`。` +
+      `⛔⛔ **推導鏈裡一個系統倍率都沒有。** owner 2026-08-22：「你的傷害要從生命反推我沒意見，` +
+      `但**不能把系統倍率乘進去再反推**啊，這樣我用系統倍率就沒意義了」；` +
+      `2026-08-20：「不要計算 HP 系統倍率以及魔抗減傷 **會讓我誤判**」。` +
+      `⚠️ 這一行在 2026-08-22 之前寫著「× HP 倍率」—— 而那正是讓 \`maxHealth\` 4.0／6.0／7.2 ` +
+      `三個值**都落在 51% 左右**（一格轉不動任何東西）的原因。閘：\`pnpm echoloop:check\`。` +
       `⚠️ 一定要**進位** —— 捨去會差幾個 % 違反 owner 的 Q1，而且沒有任何東西會紅。`
     );
   }
@@ -1561,11 +1564,16 @@ const DAMAGE_TIERS_SPEC: ConfigDocSpec = {
   intro: [
     "owner 2026-08-19：「**可以重新設計拉高**，畢竟之前檢討過 **AP 太弱勢**，我們幾乎要拉到高等級才能開始追平普通攻擊無風險的傷害」。技能在 `amount` 裡填 `damageTier: \"中\"`，這一頁決定「中」是多少基礎傷害。",
     "⛔ **2026-08-20 第二次重錨**（owner 逐字兩則）：「**🅲 保留倍率，但把它從錨點推導裡剝掉**」與「**我的建議是拿 30 級的當標準就好**，因為技能通常還有 AP 加成那塊沒算到」，外加「**不要計算 HP 系統倍率以及魔抗減傷 會讓我誤判**」。⇒ ① 錨點空間從「中位**有效**血量」（含魔抗）換成「中位**純基礎**血量」，魔抗那一層**整層退場**；② 出貨錨**就是 hard limit**，⛔ 不再是「滿足得了的最高那一個」。",
-    `⭐ 五個數字**不是挑的**，是**算出來的**：純基礎中位 ${medianBaseHp(SHIPPED_ANCHOR_LEVEL)} ÷ ${KILL_CASTS_REF} 發 × HP 倍率 ${HP_ENV_MULT} ＋ 初始加成 ${HP_BASE_BONUS} ÷ ${KILL_CASTS_REF} 發 → 進位到 ${tierStep()} ⇒ 極小 **${DEFAULT_DAMAGE_TIERS.damage[SKILL_TIER_NAMES[0]]}**；其餘四格 ＝ 極小 × 單體冷卻比 **${SKILL_TIER_NAMES.map((t) => RATIOS[t]).join(" : ")}**。這正是 owner Q4 的意思 ——「**已經有傷害相應的冷卻跟耗魔做限制**」，貴的技能貴在它落在冷卻表的哪一格，⛔ 不是靠一條沒有錨的超線性曲線。`,
-    `⭐ **三個錨點的達成率**（打死該級中位英雄要幾發「${SKILL_TIER_NAMES[0]}」，門檻 ${KILL_CASTS_REF} 發，分母是**引擎最終**血量）：${BALANCE_ANCHOR_LEVELS.map((lv) => {
-      const n = castsToKill(lv, DEFAULT_DAMAGE_TIERS.damage[SKILL_TIER_NAMES[0]]);
+    `⭐ 五個數字**不是挑的**，是**算出來的**：（純基礎中位 ${medianBaseHp(SHIPPED_ANCHOR_LEVEL)} ＋ 初始加成 ${HP_BASE_BONUS}）÷ ${KILL_CASTS_REF} 發 → 進位到 ${tierStep()} ⇒ 極小 **${DEFAULT_DAMAGE_TIERS.damage[SKILL_TIER_NAMES[0]]}**；其餘四格 ＝ 極小 × 單體冷卻比 **${SKILL_TIER_NAMES.map((t) => RATIOS[t]).join(" : ")}**。這正是 owner Q4 的意思 ——「**已經有傷害相應的冷卻跟耗魔做限制**」，貴的技能貴在它落在冷卻表的哪一格，⛔ 不是靠一條沒有錨的超線性曲線。`,
+    "⛔⛔ **推導鏈裡一個系統倍率都沒有。** owner 2026-08-22 逐字：「你的傷害要從生命反推我沒意見，但**不能把系統倍率乘進去再反推**啊，這樣我用系統倍率就沒意義了」「對 我說過**這是我人工的旋鈕**，並沒有放在公式裡」「總之**不要再叫我調整了，公式已定好，只要公式本身自洽，我們只調系統倍率**」。⚠️ 這一段在 2026-08-22 之前寫著「× HP 倍率」—— 而那正是讓 `maxHealth` 4.0／6.0／7.2 三個值**都落在 51% 左右**（一格轉不動任何東西）的原因。閘：`pnpm echoloop:check`。",
+    `⭐ **設計承諾的達成率**（打死該級中位英雄要幾發「${SKILL_TIER_NAMES[0]}」，門檻 ${KILL_CASTS_REF} 發，分母是**純基礎＋加成**，⛔ **不是**引擎最終血量）：${BALANCE_ANCHOR_LEVELS.map((lv) => {
+      const n = castsToKillBase(lv, DEFAULT_DAMAGE_TIERS.damage[SKILL_TIER_NAMES[0]]);
       return `**LV${lv} ${n.toFixed(1)} 發 ${n <= KILL_CASTS_REF ? "✅" : "❌"} ${ANCHOR_ROLE[lv]}**`;
     }).join("・")}。每一級**自己**要求的錨是 ${BALANCE_ANCHOR_LEVELS.map((lv) => `LV${lv} ${anchorFloor(lv)}`).join(" / ")}。`,
+    `⚠️ **玩家實際**要打幾發是**另一個數字**（含系統倍率）：${BALANCE_ANCHOR_LEVELS.map((lv) => {
+      const n = castsToKill(lv, DEFAULT_DAMAGE_TIERS.damage[SKILL_TIER_NAMES[0]]);
+      return `LV${lv} ${n.toFixed(1)} 發`;
+    }).join("・")}。⭐ 兩欄**刻意不相等**，差距就是 HP 系統倍率本身 —— 那正是你要的旋鈕。⛔ 拿這一欄去對門檻是**兩個空間混算**（2026-08-22 抓到：產生的平衡文件因此把三個錨點全印 ❌，而閘一路是綠的）。`,
     "⚠️ 高等級的缺口**不是這五格調得掉的**：血量比傷害長得快。要補它得動成長曲線，⛔ 不是把這一頁填爆。",
     "⭐ 只有**一張**表，⛔ 沒有「單體一張、範圍一張」：形狀的代價整個住在冷卻軸上（範圍表比單體貴 2–5 倍），再在傷害軸打一次折就是同一個懲罰收兩次。",
     "⚠️ 「範圍·極小」是這個讀法唯一壞掉的一格。owner 的答案是「**那一格要求傷害是大／極大**」，而它住在「編輯器創作規則」頁的相稱性表，⛔ 不是把這張表拆成兩張。",
@@ -4634,6 +4642,42 @@ const ADMIN_FRIEND_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
+// ──────────────────────────── 走過去放技能 (config/cast-approach) ─
+
+const CAST_APPROACH_SPEC: ConfigDocSpec = {
+  page: "castApproach",
+  collection: "config",
+  docId: "cast-approach",
+  schemaTag: "config.cast-approach@1",
+  zod: zConfigCastApproachDoc,
+  title: "走過去放技能",
+  intro: [
+    "按下一支**放不到**的指定型技能時，角色該站著不動、還是自己走進射程再放？owner 2026-08-22：「超過施法距離人物不會走過去放技能（做成後台開關）」—— 出貨是走過去。",
+    "⚠️ 只管**指定目標**的技能。地面指定（在地上點一個落點）本來就不會拒絕 —— 它把落點夾回射程邊緣，94 支技能靠著那個行為，這一頁不動它。",
+  ],
+  consumer:
+    "packages/shared/src/sim/abilities/abilitySystem.ts 的 castAbility() → CastApproachRules；接近指令由 MovementSystem 執行，走進射程的那一 tick 自動施放",
+  effect: "**下一場**開始生效（規則在開場載入內容時解析一次）。已經在打的那一場不會中途換行為。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "距離不夠時走過去",
+      note: "關掉之後回到 2026-08-22 之前：放不到就直接拒絕，魔力不扣、冷卻不轉、角色一步都不動 —— 玩家只看到一個沒反應的按鈕。這一格是止血閥：接近行為若在線上把玩家拖去不該去的地方，關掉它立刻回到舊行為。",
+    },
+    {
+      path: "maxApproachDistance",
+      zh: "最多走多遠（超過就直接拒絕）",
+      note: "從按下按鍵的那一格量起，超出射程多遠之內才願意走過去。出貨 {{出貨值}} = 決鬥區半徑，走過半張場地已經是「這一發不值得」。⭐ 它是**事前**閘：按下去的當下就決定要不要走，⛔ 不會跑到一半自己無聲停下（那比不能施法更難懂）。調小 = 只有擦邊的距離會自動貼上去；調大 = 按一個遠方目標會讓角色橫越整張場地。",
+    },
+    {
+      path: "cancelOnNewOrder",
+      zh: "途中收到新指令就放棄",
+      note: "接近的路上玩家送出新的走位／攻擊指令、或「卡住就自動接敵」把方向盤接走時，要不要取消這次接近。開著＝新指令一律贏（與戰鬥手感的「尊重玩家操作」同一個哲學）；關掉＝角色會固執地走完再放技能，玩家的走位指令要等它結束。",
+    },
+  ],
+  preserved: [],
+};
+
 export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   // 競技場規則（GH#410）。⚠️ 這一列同時做了兩件事：①把八個一直調不到的區塊變成
   // 真的欄位；②讓 `configForms.test.ts` 的「每一個葉節點都有標籤」**開始管**
@@ -4739,6 +4783,7 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   BOSS_INTRO_SPEC,
   ITEM_CARD_SPEC,
   REPLAY_SPEC,
+  CAST_APPROACH_SPEC,
 ];
 
 export function specForPage(page: string): ConfigDocSpec | null {

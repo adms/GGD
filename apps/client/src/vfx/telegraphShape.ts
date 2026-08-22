@@ -97,6 +97,15 @@ export interface TelegraphEffectLike {
     readonly startDist?: number;
     readonly dir?: "facing" | "target";
   };
+  /**
+   * GH#553 **會動的模型**（`spawnModelFx`）—— 走廊的長與寬從這三格算出來。
+   * ⚠️ `path` 寫成 `string` 而不是那個 enum 的聯集是刻意的：這個介面是**結構性**的
+   * （`telegraphShape.ts` 不 import 內容 schema），窄成聯集會讓真的 `EffectDef`
+   * 賦值不過去。使用端一律逐格比對字面值。
+   */
+  readonly path?: string;
+  readonly distance?: number;
+  readonly touchRadius?: number;
 }
 
 export interface TelegraphProjectileLike {
@@ -229,7 +238,38 @@ export function deriveTelegraphGeometry(
             };
           }
         }
-        // 兩條都推不出來 ⇒ 內容沒有講這一發飛多遠多寬。**大聲失敗**，
+        // ⭐ GH#553（2026-08-22）—— **會動的模型**（`spawnModelFx`）。同一個形狀第三次
+        // 出現：沒有 projectileId、沒有 delayed.advance，而玩家要閃的仍然是一條走廊。
+        // 三個模板家族（三條黑龍／衝擊波／動地剁）全部走它，所以修在這裡 = 一次解掉
+        // 整族，⛔ 不是替某一支塞一個不存在的投射物（第〇·五守則）。
+        //   長 = `distance` · 寬 = `touchRadius × 2`
+        // ⚠️ 只認 `path: "forward"` 且**真的會傷人**（有 `touchRadius`）的那一顆 ——
+        // `radial`／純裝飾的那幾顆畫成走廊會教錯閃法（同一段註解上面那句「猜的預告
+        // 比沒有更糟」）。⚠️ 兩個尺寸都吃 `mult`，理由同下面投射物那段。
+        const fx = firstEffect(
+          def,
+          (e) =>
+            e.kind === "spawnModelFx" &&
+            e.path === "forward" &&
+            typeof e.distance === "number" &&
+            e.distance > 0 &&
+            typeof e.touchRadius === "number" &&
+            e.touchRadius > 0,
+        );
+        if (fx) {
+          const reach = (fx.distance as number) * mult;
+          const span = (fx.touchRadius as number) * 2 * mult;
+          if (reach >= MIN_EXTENT && span >= MIN_EXTENT) {
+            return {
+              kind: "line",
+              length: reach,
+              width: span,
+              anchor: "caster",
+              source: `spawnModelFx distance ${String(fx.distance)} × abilityRange ${mult}, touchRadius ${String(fx.touchRadius)} ×2 × abilityRange ${mult}`,
+            };
+          }
+        }
+        // 三條都推不出來 ⇒ 內容沒有講這一發飛多遠多寬。**大聲失敗**，
         // ⛔ 不要拿施法距離當走廊畫（那會讓玩家閃錯地方）。
         return null;
       }

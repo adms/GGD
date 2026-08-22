@@ -385,7 +385,7 @@ describe("combat-env abilityRange (task #136)", () => {
       return castAbility(w, sela, "Q", { type: "entity", entityId: thorne });
     };
     expect(tryCast()).toBe("ok"); // neutral: 10 ≤ 12
-    expect(tryCast(env({ abilityRange: 0.6 }))).toBe("out-of-range"); // 10 > 7.2
+    expect(tryCast(env({ abilityRange: 0.6 }))).toBe("approaching"); // 10 > 7.2
   });
 
   it("scales an ability skillshot's TRAVEL range through the same seam (displayed == actual)", () => {

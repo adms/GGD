@@ -83,6 +83,7 @@ export type Page =
    * 的那個決策（「玩家撞牆時要不要讓系統接手」）。寫入走 `putOverlayDoc`。
    */
   | "combatFeel"
+  | "castApproach"
   /**
    * 傳說武器三選一 (`config/arena-rules.json` 的 `itemDraft`, GH#249): 候選武器
    * 不足時卡片要發短、借別的獎池、還是重複補滿。與 mobWaves 同一份文件、不同區塊,
@@ -640,6 +641,7 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // 戰鬥手感 / 對戰設定: 同上 —— eager page + `putOverlayDoc`,沒有 session 每一次
   // 儲存都 401,而畫面看起來只是「壞掉」而不是「沒登入」。
   "combatFeel",
+  "castApproach",
   "matchConfig",
   // 商店經濟: 同上 —— eager page + `putOverlayDoc`,沒有 session 每一次儲存都 401。
   "storeEconomy",

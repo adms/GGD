@@ -2,8 +2,8 @@ import { z } from "zod";
 import { zId } from "../common";
 // 傷害五級距（GH#447）—— 唯一的**回報**軸。五個數字從冷卻表推導，
 // 推導式與 owner 的兩條輸入寫在 content/damageTiers.ts。
-import { DAMAGE_TIER_MAX, DAMAGE_TIER_MIN, DAMAGE_TIER_NAMES, DAMAGE_TIERS_DOC_ID, DEFAULT_DAMAGE_TIERS, KILL_CASTS_REF, SHIPPED_ANCHOR_LEVEL, anchorFloor, castsToKill } from "../../damageTiers";
-import { BALANCE_ANCHOR_LEVELS, HARD_ANCHOR_LEVEL, HP_BASE_BONUS, HP_ENV_MULT, MEDIAN_BASE_HP, medianFinalHp } from "../../balanceAnchors";
+import { DAMAGE_TIER_MAX, DAMAGE_TIER_MIN, DAMAGE_TIER_NAMES, DAMAGE_TIERS_DOC_ID, DEFAULT_DAMAGE_TIERS, KILL_CASTS_REF, SHIPPED_ANCHOR_LEVEL, anchorFloor, castsToKill, castsToKillBase } from "../../damageTiers";
+import { BALANCE_ANCHOR_LEVELS, HARD_ANCHOR_LEVEL, HP_BASE_BONUS, MEDIAN_BASE_HP, medianFinalHp } from "../../balanceAnchors";
 
 /**
  * config.damage-tiers@1 — 傷害**五級距**（GH#447）。
@@ -47,16 +47,28 @@ export const zConfigDamageTiersDoc = z
               .describe(
                 `「${n}」的卡面基礎傷害。⭐ 五格由 \`pnpm anchors:build\` 推導，⛔ 不要手打 ——` +
                   `純基礎中位血量 ${MEDIAN_BASE_HP[HARD_ANCHOR_LEVEL]}（LV${HARD_ANCHOR_LEVEL}，⛔ 無倍率⛔ 無加成⛔ 無魔抗）` +
-                  ` ÷ ${KILL_CASTS_REF} 發 × HP 倍率 ${HP_ENV_MULT} ＋ 初始加成 ${HP_BASE_BONUS} ÷ ${KILL_CASTS_REF} 發` +
-                  `（加成⛔ 不參與倍率，owner #273）→ 進位到「使五格皆整數」的粒度 ⇒ 極小 ${anchorFloor(HARD_ANCHOR_LEVEL)}。` +
+                  `（＋初始加成 ${HP_BASE_BONUS}）÷ ${KILL_CASTS_REF} 發` +
+                  `→ 進位到「使五格皆整數」的粒度 ⇒ 極小 ${anchorFloor(HARD_ANCHOR_LEVEL)}。` +
+                  `⛔⛔ **推導鏈裡一個系統倍率都沒有** —— owner 2026-08-22：「你的傷害要從生命反推我沒意見，` +
+                  `但**不能把系統倍率乘進去再反推**啊，這樣我用系統倍率就沒意義了」「對 我說過**這是我人工的旋鈕**，` +
+                  `並沒有放在公式裡」。⚠️ 這一行在 2026-08-22 之前寫著「× HP 倍率」，而那正是讓 ` +
+                  `\`maxHealth\` 4.0 / 6.0 / 7.2 三個值都落在 51% 左右（**一格轉不動任何東西**）的原因。` +
+                  `閘：\`pnpm echoloop:check\`。` +
                   `其餘四格與單體冷卻表嚴格成正比 ⇒ ` +
                   `${DAMAGE_TIER_NAMES.map((k) => `${k} ${DEFAULT_DAMAGE_TIERS.damage[k]}`).join(" / ")}。` +
                   `出貨錨＝hard limit LV${SHIPPED_ANCHOR_LEVEL}（owner 2026-08-20「拿 30 級的當標準就好」）。` +
-                  `達成率（分母＝引擎最終血量，門檻 ${KILL_CASTS_REF} 發）：` +
+                  `⭐ 設計承諾的達成率（分母＝**純基礎＋加成**，⛔ 不是引擎最終血量；門檻 ${KILL_CASTS_REF} 發）：` +
                   `${BALANCE_ANCHOR_LEVELS.map((lv) => {
-                    const n2 = castsToKill(lv, DEFAULT_DAMAGE_TIERS.damage[DAMAGE_TIER_NAMES[0]]);
+                    const n2 = castsToKillBase(lv, DEFAULT_DAMAGE_TIERS.damage[DAMAGE_TIER_NAMES[0]]);
                     return `LV${lv} ${n2.toFixed(1)} 發 ${n2 <= KILL_CASTS_REF ? "✅" : "❌"}`;
                   }).join(" · ")}。` +
+                  `⚠️ **玩家實際**要打幾發是另一個數字（含系統倍率）：` +
+                  `${BALANCE_ANCHOR_LEVELS.map((lv) => {
+                    const n3 = castsToKill(lv, DEFAULT_DAMAGE_TIERS.damage[DAMAGE_TIER_NAMES[0]]);
+                    return `LV${lv} ${n3.toFixed(1)} 發`;
+                  }).join(" · ")}。` +
+                  `⭐ 兩者**刻意不相等**，差距就是 HP 系統倍率本身 —— 那正是 owner 要的旋鈕。` +
+                  `⛔ 拿「玩家實際」那一欄去對門檻是**兩個空間混算**（2026-08-22 抓到：三個錨點全印 ❌ 而閘是綠的）。` +
                   `上界 ${DAMAGE_TIER_MAX} = LV${HARD_ANCHOR_LEVEL} 的**引擎最終**中位血量 ${medianFinalHp(HARD_ANCHOR_LEVEL)}：超過它的一發就是一發秒殺。`,
               ),
           ]),

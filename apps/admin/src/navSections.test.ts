@@ -58,6 +58,7 @@ const BASELINE_PAGES: readonly Page[] = [
   "baseBonus",
   "statCaps",
   "combatFeel",
+  "castApproach",
   "matchConfig",
   "storeEconomy",
   "formVisuals",
@@ -186,6 +187,7 @@ const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
       "arenaPool",
       "camera",
       "combatFeel",
+      "castApproach",
       "matchConfig",
       // 2026-08-20 GH#410 —— 競技場規則。⚠️ 它和 matchConfig 編的是**同一份**
       // `config/arena-rules.json`（那一頁管時鐘、這一頁管場上的東西），所以它

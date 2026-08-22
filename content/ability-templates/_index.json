@@ -1,12 +1,18 @@
 {
   "collection": "ability-templates",
-  "hash": "04aaae317a10",
+  "hash": "90a3377a58e9",
   "entries": [
     {
       "id": "tpl-barrier-domain",
       "path": "ability-templates/tpl-barrier-domain.json",
       "hash": "e3bda129eee5",
       "size": 293
+    },
+    {
+      "id": "tpl-beam-roll",
+      "path": "ability-templates/tpl-beam-roll.json",
+      "hash": "36b97271cb40",
+      "size": 1979
     },
     {
       "id": "tpl-blink-strike",
@@ -43,6 +49,24 @@
       "path": "ability-templates/tpl-death-mechanic.json",
       "hash": "552354890a7f",
       "size": 293
+    },
+    {
+      "id": "tpl-dragon-quake",
+      "path": "ability-templates/tpl-dragon-quake.json",
+      "hash": "d8ff8d0a9d41",
+      "size": 2615
+    },
+    {
+      "id": "tpl-dragon-serpent",
+      "path": "ability-templates/tpl-dragon-serpent.json",
+      "hash": "9d9d6cc1968d",
+      "size": 3190
+    },
+    {
+      "id": "tpl-dragon-shockwave",
+      "path": "ability-templates/tpl-dragon-shockwave.json",
+      "hash": "0ad27f68daec",
+      "size": 2469
     },
     {
       "id": "tpl-drain-leech",
@@ -85,6 +109,12 @@
       "path": "ability-templates/tpl-life-manipulate.json",
       "hash": "26731145daff",
       "size": 295
+    },
+    {
+      "id": "tpl-line-blast",
+      "path": "ability-templates/tpl-line-blast.json",
+      "hash": "2d8a21ffdc1e",
+      "size": 2311
     },
     {
       "id": "tpl-line-sweep",
@@ -151,6 +181,12 @@
       "path": "ability-templates/tpl-pure-cosmetic.json",
       "hash": "d79926d1ef57",
       "size": 318
+    },
+    {
+      "id": "tpl-radial-burst",
+      "path": "ability-templates/tpl-radial-burst.json",
+      "hash": "8bc5b26edae4",
+      "size": 1949
     },
     {
       "id": "tpl-random-barrage",

@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "35af8c9273ea",
+  "hash": "e05ee1348eef",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -103,6 +103,12 @@
       "path": "config/camera.json",
       "hash": "16038f879da4",
       "size": 1577
+    },
+    {
+      "id": "cast-approach",
+      "path": "config/cast-approach.json",
+      "hash": "9289c4300fc4",
+      "size": 1343
     },
     {
       "id": "cast-time",
@@ -353,8 +359,8 @@
     {
       "id": "roster",
       "path": "config/roster.json",
-      "hash": "d2a500f3d1d9",
-      "size": 4098
+      "hash": "e20cb2ed540e",
+      "size": 6564
     },
     {
       "id": "round-grade",

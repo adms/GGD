@@ -275,6 +275,7 @@ export const NAV: NavItem[] = [
   // 規則的參數**(擊退門檻、站定門檻、面向鎖 tick、卡住判定),而且四張子表全部
   // 是 owner 口中的「決策點」。相鄰就是提醒:填的 0.05 在這一頁是「5% 的門檻」。
   { page: "combatFeel", label: "戰鬥手感", emoji: "🥊", section: SEC_COMBAT },
+  { page: "castApproach", label: "走過去放技能", emoji: "🏃", section: SEC_COMBAT },
   // 對戰設定 — 一場對戰的**時鐘**(階段秒數、起始隊伍生命、火圈),和上面四頁的
   // 「英雄在場上多強」是不同的軸。⚠️ 這份文件有 19 格沒有消費端,頁面上是唯讀的。
   { page: "matchConfig", label: "對戰設定", emoji: "⏱️", section: SEC_COMBAT },

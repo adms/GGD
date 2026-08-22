@@ -248,7 +248,7 @@ describe("13-01 暗步。極限之圓 (efur-q-blink)", () => {
     expect(V.dist(after, pos(r.world, r.foe))).toBeLessThan(2.0);
   });
 
-  it("REFUSES past its distance limit — no move, no cooldown, no mana", () => {
+  it("超距 ⇒ **走過去**（⛔ 不再是原地拒絕）；還沒放到就不扣魔力也不轉冷卻", () => {
     cover("efur-q-blink");
     const def = Abilities.get("godie-efur.q" as AbilityId);
     // The gate is the SHIPPED reach (`range` through the #136 combat-env
@@ -260,12 +260,30 @@ describe("13-01 暗步。極限之圓 (efur-q-blink)", () => {
     const before = pos(r.world, r.efur);
     const mana = r.world.health.get(r.efur)!.mana;
     expect(castAbility(r.world, r.efur, "Q", { type: "entity", entityId: r.foe })).toBe(
-      "out-of-range",
+      "approaching",
     );
-    step(r.world, 12);
-    expect(V.dist(before, pos(r.world, r.efur))).toBeLessThan(0.01);
-    expect(r.world.health.get(r.efur)!.mana).toBeCloseTo(mana, 5);
-    expect(r.world.abilities.get(r.efur)!.slots.Q.cooldownRemainingTicks).toBe(0);
+    // ⭐ owner 2026-08-22 推翻了「原地拒絕」：「**超過施法距離人物不會走過去放技能
+    //    （做成後台開關）**」⇒ 距離不足現在是**武裝接近**。
+    // ⚠️ 這一條原本斷言「一步都不動、不扣魔、不轉冷卻」—— 前一句是**被推翻的行為**，
+    //    ⛔ 不是缺陷；後兩句仍然成立,而且是**接受那一刻**才付錢的證據。
+
+    // ① 接受的當下：一格都還沒付
+    expect(r.world.health.get(r.efur)!.mana, "武裝的當下 ⇒ 魔力一點都不扣").toBeCloseTo(mana, 5);
+    expect(
+      r.world.abilities.get(r.efur)!.slots.Q.cooldownRemainingTicks,
+      "武裝的當下 ⇒ 冷卻一格都不轉",
+    ).toBe(0);
+
+    // ② 走過去 ⇒ 身體真的移動，而且**最後真的放出來**（冷卻開始轉 = 付錢了）
+    step(r.world, 60);
+    expect(
+      V.dist(before, pos(r.world, r.efur)),
+      "武裝接近之後身體要朝目標移動",
+    ).toBeGreaterThan(0.01);
+    expect(
+      r.world.abilities.get(r.efur)!.slots.Q.cooldownRemainingTicks,
+      "走到射程內之後要**真的施放** —— ⛔ 只走過去不放等於功能沒做",
+    ).toBeGreaterThan(0);
   });
 });
 

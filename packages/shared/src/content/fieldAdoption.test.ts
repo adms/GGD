@@ -2665,13 +2665,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why:
       "路徑上碰到**友軍**才觸發。⛔ 首批三支都是攻擊技能（`enemies`）。⭐ 它為「掃過去幫隊友補血/加速」那一族留著 —— 那正是 owner 說的「模板」該吃得下的另一半。",
   },
-  "field:abilities.effects[]#spawnModelFx.touchOncePerTarget": {
-    status: "landing",
-    since: "2026-08-22",
-    why:
-      "同一個目標在路徑上只被打一次。⛔ 首批三支都吃預設（一次），所以沒有人**顯式**寫它。⚠️ 這一格要等到有一支**穿透往返**的光束才會被顯式關掉。",
-  },
-  "field:abilities.effects[]#spawnModelFx.lifeSec": {
+ "field:abilities.effects[]#spawnModelFx.lifeSec": {
     status: "landing",
     since: "2026-08-22",
     why:

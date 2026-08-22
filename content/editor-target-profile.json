@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_fa21920557eb",
+    "contentVersion": "cv_589d182f0ad3",
     "collections": {
       "champions": {
-        "hash": "005f0edf1fc1",
+        "hash": "d76a02628295",
         "count": 71
       },
       "abilities": {
-        "hash": "b8a682d28a77",
+        "hash": "8cdc4547fc42",
         "count": 420
       },
       "items": {
@@ -42,11 +42,11 @@
         "count": 7
       },
       "config": {
-        "hash": "35af8c9273ea",
-        "count": 83
+        "hash": "e05ee1348eef",
+        "count": 84
       },
       "models": {
-        "hash": "38d96d54f6e6",
+        "hash": "8af2c45f476f",
         "count": 124
       },
       "vfx": {
@@ -58,8 +58,8 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "04aaae317a10",
-        "count": 34
+        "hash": "90a3377a58e9",
+        "count": 40
       }
     },
     "collectionCount": 14
@@ -1349,13 +1349,84 @@
     "note": "出貨內容**實際用了**哪些值。⚠️ 與 runtimeCapabilities 不同：那一份說引擎做得到什麼，這一份說內容裡有哪些合法的 id。⛔ 填一個不在這裡的 vfxKey，技能照放但畫面上什麼都不會出現。",
     "ability": {
       "count": 420,
-      "fromTemplate": 93,
+      "fromTemplate": 91,
       "templates": [
         {
           "id": "tpl-barrier-domain",
           "family": "barrier-domain",
           "status": "draft",
           "params": {}
+        },
+        {
+          "id": "tpl-beam-roll",
+          "family": "beam-roll",
+          "status": "draft",
+          "params": {
+            "modelKey": {
+              "type": "docRef",
+              "default": "imported.netherstrike"
+            },
+            "speed": {
+              "type": "number",
+              "default": 30,
+              "min": 1,
+              "max": 200
+            },
+            "distance": {
+              "type": "number",
+              "default": 14,
+              "min": 1,
+              "max": 48
+            },
+            "spinDegPerSec": {
+              "type": "number",
+              "default": 720,
+              "min": -3600,
+              "max": 3600,
+              "optional": true
+            },
+            "scale": {
+              "type": "number",
+              "default": 2.5,
+              "min": 0.1,
+              "max": 20,
+              "optional": true
+            },
+            "touchRadius": {
+              "type": "number",
+              "default": 1.5,
+              "min": 0.5,
+              "max": 12
+            },
+            "touchDamageTier": {
+              "type": "enum",
+              "values": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ],
+              "default": "小"
+            },
+            "damageType": {
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ],
+              "default": "magic"
+            },
+            "castTimeSec": {
+              "type": "number",
+              "default": 1,
+              "min": 0,
+              "max": 5,
+              "unit": "s",
+              "optional": true
+            }
+          }
         },
         {
           "id": "tpl-blink-strike",
@@ -1504,6 +1575,271 @@
           "family": "death-mechanic",
           "status": "draft",
           "params": {}
+        },
+        {
+          "id": "tpl-dragon-quake",
+          "family": "dragon-quake",
+          "status": "draft",
+          "params": {
+            "modelKey": {
+              "type": "docRef",
+              "default": "imported.tectonicfury"
+            },
+            "count": {
+              "type": "number",
+              "default": 12,
+              "min": 2,
+              "max": 12,
+              "unit": "count"
+            },
+            "ringRadius": {
+              "type": "number",
+              "default": 350,
+              "min": 100,
+              "max": 2600,
+              "unit": "wc3u"
+            },
+            "speed": {
+              "type": "number",
+              "default": 1625,
+              "min": 100,
+              "max": 2600,
+              "unit": "wc3u"
+            },
+            "blastRadius": {
+              "type": "number",
+              "default": 150,
+              "min": 50,
+              "max": 1300,
+              "unit": "wc3u",
+              "optional": true
+            },
+            "scale": {
+              "type": "number",
+              "default": 1,
+              "min": 0.1,
+              "max": 20,
+              "optional": true
+            },
+            "shakeAmplitude": {
+              "type": "number",
+              "default": 0.5,
+              "min": 0.05,
+              "max": 1,
+              "unit": "ratio"
+            },
+            "shakeSec": {
+              "type": "number",
+              "default": 0.6,
+              "min": 0.1,
+              "max": 5,
+              "unit": "s"
+            },
+            "impactLifeSec": {
+              "type": "number",
+              "default": 3,
+              "min": 0.5,
+              "max": 30,
+              "unit": "s"
+            },
+            "damage": {
+              "type": "scaling",
+              "default": {
+                "perRank": [
+                  0
+                ],
+                "ratios": []
+              },
+              "optional": true
+            },
+            "damageType": {
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ],
+              "default": "magic"
+            },
+            "scatterBox": {
+              "type": "number",
+              "default": 750,
+              "min": 100,
+              "max": 2600,
+              "unit": "wc3u",
+              "inert": "本版不生效 —— 原作除了那一圈固定落點，還在**移動中**每隔一 tick 於龍頭周圍 750×750 的方框內隨機挑一點放一發 WarStompCaster。那是「跟著主體走的隨機散布」，而 spawnModelFx 的落點在施放當下就決定了；randomArea 能隨機挑點但綁不到一具移動中的模型身上。"
+            }
+          }
+        },
+        {
+          "id": "tpl-dragon-serpent",
+          "family": "dragon-serpent",
+          "status": "draft",
+          "params": {
+            "modelKey": {
+              "type": "docRef",
+              "default": "imported.darkraor"
+            },
+            "instances": {
+              "type": "number",
+              "default": 3,
+              "min": 1,
+              "max": 12,
+              "unit": "count"
+            },
+            "spreadDeg": {
+              "type": "number",
+              "default": 45,
+              "min": 0,
+              "max": 180,
+              "inert": "本版不生效 —— spawnModelFx.path 只有 forward／toTarget／radial／orbit，沒有「以施法者面向為中心的扇形」。radial 把整個 360° 等分，而且起始相位固定在世界 +x（ringPoints 的註解說明為什麼不跟著面向轉），所以 instances:3 出來的是一個朝三方的星爆，⛔ 不是朝面向的 ±45° 扇。原作 A09I 的兩條側龍正是 facing±45。"
+            },
+            "travel": {
+              "type": "number",
+              "default": 1690,
+              "min": 100,
+              "max": 2600,
+              "unit": "wc3u"
+            },
+            "speed": {
+              "type": "number",
+              "default": 1625,
+              "min": 100,
+              "max": 2600,
+              "unit": "wc3u"
+            },
+            "touchRadius": {
+              "type": "number",
+              "default": 250,
+              "min": 50,
+              "max": 650,
+              "unit": "wc3u"
+            },
+            "spinDegPerSec": {
+              "type": "number",
+              "default": 240,
+              "min": -3600,
+              "max": 3600,
+              "optional": true
+            },
+            "scale": {
+              "type": "number",
+              "default": 2,
+              "min": 0.1,
+              "max": 20,
+              "optional": true
+            },
+            "serpentineDeg": {
+              "type": "number",
+              "default": 35,
+              "min": 0,
+              "max": 90,
+              "inert": "本版不生效 —— 原作主龍每 0.08 秒交替 +35°/−35° 蛇行前進（淨位移仍沿面向），而 spawnModelFx 的實例是一條直線。今天只能用 spinDegPerSec 的自轉近似那個扭動感。"
+            },
+            "damageTiming": {
+              "type": "enum",
+              "values": [
+                "onTouch",
+                "onArrive"
+              ],
+              "default": "onTouch",
+              "inert": "本版不生效 —— 原作把碰到的人**收進一個群組**，等 13 步跑完才一次結算（所以先被碰到的人跟最後被碰到的人同時掉血）。引擎的 onTouch 是碰到當下就付款，onArrive 只打落點圓、打不到沿路那些人。兩者都表達不了「延後結算整條路徑的名單」。"
+            },
+            "damage": {
+              "type": "scaling",
+              "default": {
+                "perRank": [
+                  650,
+                  900,
+                  1150,
+                  1400
+                ],
+                "ratios": []
+              }
+            },
+            "damageType": {
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ],
+              "default": "magic"
+            }
+          }
+        },
+        {
+          "id": "tpl-dragon-shockwave",
+          "family": "dragon-shockwave",
+          "status": "draft",
+          "params": {
+            "modelKey": {
+              "type": "docRef",
+              "default": "imported.blackhole"
+            },
+            "travel": {
+              "type": "number",
+              "default": 1690,
+              "min": 100,
+              "max": 2600,
+              "unit": "wc3u"
+            },
+            "speed": {
+              "type": "number",
+              "default": 1625,
+              "min": 100,
+              "max": 2600,
+              "unit": "wc3u"
+            },
+            "scale": {
+              "type": "number",
+              "default": 0.6,
+              "min": 0.1,
+              "max": 20
+            },
+            "spinDegPerSec": {
+              "type": "number",
+              "default": 720,
+              "min": -3600,
+              "max": 3600,
+              "optional": true
+            },
+            "orientation": {
+              "type": "enum",
+              "values": [
+                "flat",
+                "upright"
+              ],
+              "default": "flat",
+              "inert": "本版不生效 —— owner 2026-08-22「衝擊波特效**橫放 beam**」。vfx@1 有一整組 orient（yawDeg/pitchDeg/swirlDegPerSec，pitchDeg:90 是直立＝恆等），但 spawnModelFx **沒有** —— 它只吃 spinDegPerSec（繞自己的軸自轉）與 scale，模型一律直立。所以今天的衝擊波只能靠壓扁的 scale 近似，⛔ 躺不下來。"
+            },
+            "trailSpacingSec": {
+              "type": "number",
+              "default": 0.08,
+              "min": 0.02,
+              "max": 1,
+              "unit": "s",
+              "inert": "本版不生效 —— 原作的尾流是**沿路補生的一串靜態模型**（每 0.08 秒一具，各自留在原地），而 spawnModelFx 一次施放只生**一具會動的**模型。畫面上的差別是「一條留得住的軌跡」vs「一個飛過去的東西」。"
+            },
+            "touchRadius": {
+              "type": "number",
+              "default": 200,
+              "min": 50,
+              "max": 650,
+              "unit": "wc3u",
+              "optional": true
+            },
+            "damage": {
+              "type": "scaling",
+              "default": {
+                "perRank": [
+                  0
+                ],
+                "ratios": []
+              },
+              "optional": true
+            }
+          }
         },
         {
           "id": "tpl-drain-leech",
@@ -1678,6 +2014,107 @@
           "family": "life-manipulate",
           "status": "draft",
           "params": {}
+        },
+        {
+          "id": "tpl-line-blast",
+          "family": "line-blast",
+          "status": "draft",
+          "params": {
+            "modelKey": {
+              "type": "docRef",
+              "default": "imported.fireblast"
+            },
+            "speed": {
+              "type": "number",
+              "default": 27.5,
+              "min": 1,
+              "max": 200
+            },
+            "distance": {
+              "type": "number",
+              "default": 12,
+              "min": 1,
+              "max": 48
+            },
+            "spinDegPerSec": {
+              "type": "number",
+              "default": 360,
+              "min": -3600,
+              "max": 3600,
+              "optional": true
+            },
+            "scale": {
+              "type": "number",
+              "default": 4.5,
+              "min": 0.1,
+              "max": 20,
+              "optional": true
+            },
+            "touchRadius": {
+              "type": "number",
+              "default": 3.67,
+              "min": 0.5,
+              "max": 12
+            },
+            "touchDamageTier": {
+              "type": "enum",
+              "values": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ],
+              "default": "大"
+            },
+            "blastRadiusTier": {
+              "type": "enum",
+              "values": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ],
+              "default": "大"
+            },
+            "blastDamageTier": {
+              "type": "enum",
+              "values": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ],
+              "default": "大"
+            },
+            "blastApRatio": {
+              "type": "number",
+              "default": 1.8,
+              "min": 0,
+              "max": 10,
+              "unit": "ratio",
+              "optional": true
+            },
+            "damageType": {
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ],
+              "default": "magic"
+            },
+            "castTimeSec": {
+              "type": "number",
+              "default": 0,
+              "min": 0,
+              "max": 5,
+              "unit": "s",
+              "optional": true
+            }
+          }
         },
         {
           "id": "tpl-line-sweep",
@@ -2337,6 +2774,84 @@
           "params": {}
         },
         {
+          "id": "tpl-radial-burst",
+          "family": "radial-burst",
+          "status": "draft",
+          "params": {
+            "modelKey": {
+              "type": "docRef",
+              "default": "imported.frostnova"
+            },
+            "count": {
+              "type": "number",
+              "default": 12,
+              "min": 2,
+              "max": 12,
+              "unit": "count"
+            },
+            "speed": {
+              "type": "number",
+              "default": 6,
+              "min": 1,
+              "max": 200
+            },
+            "distance": {
+              "type": "number",
+              "default": 4.5,
+              "min": 1,
+              "max": 48
+            },
+            "spinDegPerSec": {
+              "type": "number",
+              "default": 180,
+              "min": -3600,
+              "max": 3600,
+              "optional": true
+            },
+            "scale": {
+              "type": "number",
+              "default": 3,
+              "min": 0.1,
+              "max": 20,
+              "optional": true
+            },
+            "touchRadius": {
+              "type": "number",
+              "default": 2.5,
+              "min": 0.5,
+              "max": 12
+            },
+            "touchDamageTier": {
+              "type": "enum",
+              "values": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ],
+              "default": "極小"
+            },
+            "damageType": {
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ],
+              "default": "magic"
+            },
+            "castTimeSec": {
+              "type": "number",
+              "default": 0,
+              "min": 0,
+              "max": 5,
+              "unit": "s",
+              "optional": true
+            }
+          }
+        },
+        {
           "id": "tpl-random-barrage",
           "family": "random-barrage",
           "status": "enabled",
@@ -2596,7 +3111,7 @@
         }
       ],
       "templateStatus": {
-        "draft": 17,
+        "draft": 23,
         "enabled": 17
       },
       "innateKinds": [
@@ -3677,5 +4192,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "70ff30da091a"
+  "profileDigest": "4f2fca9b2c3f"
 }

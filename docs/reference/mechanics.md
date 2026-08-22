@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_fa21920557eb`
+contentVersion `cv_589d182f0ad3`
 
 ---
 
@@ -25,7 +25,7 @@ contentVersion `cv_fa21920557eb`
 | `comboStrikes` | 連段（多次獨立斬擊＋可選收尾） | 1 | `godie-hart.r` |
 | `convertTeam` | 陣營轉換（把一個既有單位借到自己這一隊） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `cycleBuff` | 輪替增益 | 1 | `godie-efur.passive` |
-| `damage` | 傷害 | 159 | `godie-e001.e`、`godie-e002.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e002.w`、`godie-e007.e`、`godie-e007.ex`、`godie-e007.q`、`godie-e007.r`、`godie-e008.e`、`godie-e008.q`、`godie-e00l.e` …（共 159） |
+| `damage` | 傷害 | 161 | `godie-e001.e`、`godie-e002.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e002.w`、`godie-e007.e`、`godie-e007.ex`、`godie-e007.q`、`godie-e007.r`、`godie-e008.e`、`godie-e008.q`、`godie-e00l.e` …（共 161） |
 | `damageArea` | 範圍傷害 | 38 | `godie-e001.passive`、`godie-e002.w`、`godie-e00n.passive`、`godie-e00s.e`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00s.w`、`godie-e00w.ex`、`godie-e00w.q`、`godie-e00w.r`、`godie-e00w.w`、`godie-e00x.passive` …（共 38） |
 | `damageLine` | 直線傷害 | 12 | `godie-e002.e`、`godie-e002.ex`、`godie-e00l.e`、`godie-e00l.ex`、`godie-e00r.r`、`godie-edem.e`、`godie-emfr.q`、`godie-h01n.e`、`godie-h01u.e`、`godie-h02v.e`、`godie-n00p.passive`、`godie-nsjs.passive` |
 | `dash` | 衝刺（腳不離地） | 7 | `godie-edem.e`、`godie-h01n.q`、`godie-h01u.e`、`godie-hapm.r`、`godie-udea.r`、`godie-zombiex.w`、`thorne.q` |
@@ -51,11 +51,11 @@ contentVersion `cv_fa21920557eb`
 | `restore` | 回復（按最大值百分比） | 17 | `godie-e00s.ex`、`godie-emfr.passive`、`godie-ewar.w`、`godie-h00l.r`、`godie-h02v.ex`、`godie-h02v.q`、`godie-hapm.passive`、`godie-n00b.passive`、`godie-o02p.ex`、`grail-c-03`、`grail-a-02`、`grail-a-06` …（共 17） |
 | `revive` | 復活 | 1 | `grail-ex-10` |
 | `screenFlash` | 畫面閃爍（全螢幕） | 2 | `godie-e002.ex`、`godie-e00l.ex` |
-| `screenShake` | 畫面震動 | 7 | `godie-e002.e`、`godie-e002.ex`、`godie-e00l.e`、`godie-e00l.ex`、`godie-h020.e`、`godie-hjai.e`、`godie-n01g.r` |
+| `screenShake` | 畫面震動 | 11 | `godie-e002.e`、`godie-e002.ex`、`godie-e00l.e`、`godie-e00l.ex`、`godie-h020.e`、`godie-hjai.e`、`godie-n01g.r`、`godie-u010.e`、`godie-u010.ex`、`godie-uvng.e`、`godie-uvng.ex` |
 | `shield` | 吸收（護盾） | 10 | `godie-e00l.passive`、`godie-e00r.e`、`godie-h00l.ex`、`godie-o00l.e`、`sela.w`、`thorne.w`、`grail-c-17`、`grail-a-16`、`aegis-surge`、`guardian-ward` |
 | `shieldBreak` | 破盾 | 2 | `grail-c-09`、`grail-ex-14` |
-| `spawnModelFx` | 模型特效（帶模型的單位沿路徑移動 —— 光束／砲擊／衝擊波） | 5 | `godie-e002.e`、`godie-e00l.e`、`godie-h020.e`、`godie-hjai.e`、`godie-n01g.r` |
-| `spawnProjectile` | 投射物 | 25 | `godie-e008.e`、`godie-e010.q`、`godie-h02r.r`、`godie-n003.e`、`godie-n00p.w`、`godie-n01c.e`、`godie-n01g.e`、`godie-n01g.r`、`godie-nbbc.e`、`godie-nsjs.w`、`godie-o00l.q`、`godie-o00x.r` …（共 25） |
+| `spawnModelFx` | 模型特效（帶模型的單位沿路徑移動 —— 光束／砲擊／衝擊波） | 9 | `godie-e002.e`、`godie-e00l.e`、`godie-h020.e`、`godie-hjai.e`、`godie-n01g.r`、`godie-u010.e`、`godie-u010.ex`、`godie-uvng.e`、`godie-uvng.ex` |
+| `spawnProjectile` | 投射物 | 24 | `godie-e008.e`、`godie-e010.q`、`godie-h02r.r`、`godie-n003.e`、`godie-n00p.w`、`godie-n01c.e`、`godie-n01g.e`、`godie-n01g.r`、`godie-nbbc.e`、`godie-nsjs.w`、`godie-o00l.q`、`godie-o00x.r` …（共 24） |
 | `spawnVfx` | 純演出（特效／音效） | 23 | `godie-e002.e`、`godie-e002.ex`、`godie-e00l.e`、`godie-e00l.ex`、`godie-e00r.r`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00x.r`、`godie-e010.r`、`godie-emfr.r`、`godie-h01n.q`、`godie-h01o.e` …（共 23） |
 | `spendMana` | 燒魔 | 4 | `godie-e00l.w`、`godie-emfr.passive`、`godie-u00k.passive`、`godie-udea.r` |
 | `summon` | 召喚 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |

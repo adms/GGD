@@ -66,6 +66,9 @@ import { zConfigOwnerKnobsDoc } from "../ownerKnobsDoc";
 // GH#546 —— 開關型技能的「開啟中」外觀。⚠️ 漏掉這一行 = toggle-ability.json 進了
 // content/ 之後整份載入失敗 → 骨架英雄,而網站看起來完全正常。
 import { zConfigToggleAbilityDoc } from "../toggleAbilityDoc";
+// owner 2026-08-22：「超過施法距離人物不會走過去放技能（做成後台開關）」。
+// ⚠️ 漏掉這一行 = cast-approach.json 進了 content/ 之後整份載入失敗 → 骨架英雄。
+import { zConfigCastApproachDoc } from "../castApproachDoc";
 // GH#549 —— 畫面閃爍／震動／特效文字的**上限與無障礙**。⚠️ 漏掉這一行 =
 // screen-fx.json 進了 content/ 之後整份載入失敗 → 骨架英雄。
 import { zConfigScreenFxDoc } from "../screenFxDoc";
@@ -156,6 +159,10 @@ export * from "./bodyScale";
 export * from "./bossIntro";
 export * from "./camera";
 export * from "./castTime";
+// ⭐ `castApproachDoc` 住在上一層（拆檔那天它剛好由另一條 lane 建立）。
+// ⛔ 只 import 不 re-export = 後台 `import { zConfigCastApproachDoc } from "@ggd/shared/content"`
+//    在**執行期**拿到 undefined，而 tsc 之外沒有東西會說 —— 走訪器直接 crash。
+export { zConfigCastApproachDoc } from "../castApproachDoc";
 export * from "./championVoices";
 export * from "./combatEnv";
 export * from "./combatFeel";
@@ -228,6 +235,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigComboStrikesDoc,
   zConfigOwnerKnobsDoc,
   zConfigToggleAbilityDoc,
+  zConfigCastApproachDoc,
   zConfigScreenFxDoc,
   zConfigAudioMapDoc,
   zConfigChampionVoicesDoc,

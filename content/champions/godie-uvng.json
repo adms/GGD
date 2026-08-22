@@ -198,23 +198,68 @@
         144.0,
         144.0
       ],
-      "effects": [],
-      "template": {
-        "ref": "tpl-line-sweep",
-        "params": {
-          "segmentCount": 6,
-          "stepSize": 200,
-          "segmentAoe": 400,
-          "damage": {
-            "damageTier": "大"
-          },
-          "damageType": "magic",
-          "castTimeSec": 1.633
+      "effects": [
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "modelKey": "imported.darkraor",
+          "path": "forward",
+          "speed": 30.0,
+          "distance": 14.0,
+          "spinDegPerSec": 240.0,
+          "scale": 2.0,
+          "touchRadius": 4.58,
+          "touchSide": "enemies",
+          "touchOncePerTarget": true,
+          "onTouch": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "大",
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 1.0
+                  }
+                ]
+              }
+            }
+          ],
+          "onArrive": [
+            {
+              "kind": "screenShake",
+              "shape": "single",
+              "amplitude": 0.5,
+              "durationSec": 0.6,
+              "applyTo": "all"
+            }
+          ]
+        },
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "modelKey": "imported.blackhole",
+          "path": "forward",
+          "speed": 30.0,
+          "distance": 14.0,
+          "spinDegPerSec": 720.0,
+          "scale": 0.6
+        },
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "modelKey": "imported.tectonicfury",
+          "path": "radial",
+          "count": 12,
+          "distance": 6.42,
+          "speed": 30.0,
+          "scale": 1.0
         }
-      },
+      ],
       "vfxKey": "godie-tectonicfury-p0",
       "sfxKey": "wc3.dragonyes2",
-      "castTimeSec": 1.633,
+      "castTimeSec": 0.267,
       "hitFeel": {
         "hitstopTicks": 4,
         "hitstunTicks": 6,
@@ -229,7 +274,6 @@
         "flashMs": 144,
         "camKick": 0.36
       },
-      "targetsEnemies": true,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",

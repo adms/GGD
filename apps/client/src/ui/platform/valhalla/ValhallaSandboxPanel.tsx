@@ -69,6 +69,9 @@ const CAST_REASON: Readonly<Record<CastResult, string>> = {
   cooldown: "冷卻中",
   "no-mana": "魔力不足",
   "out-of-range": "距離太遠",
+  // ⭐ owner 2026-08-22：「**超過施法距離人物不會走過去放技能（做成後台開關）**」
+  //    ⇒ 距離不足不再是**拒絕**，是**武裝接近**：走到射程邊緣再放。
+  approaching: "距離太遠 —— 走過去再放",
   "bad-target": "沒有合法目標",
   passive: "這是永久被動，沒有東西可以施放",
   // 暴走系主動技（59-001 完全暴走）：血夠低才按得下去。門檻是後台欄位

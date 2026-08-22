@@ -318,12 +318,17 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     //
     // 排除的路徑一律是「宣告本人」＋「這條守衛自己的文書作業」：豁免表在字串裡
     // 寫著這些名字,數到自己的文書作業就永遠不會綠（round-grade 那一列踩過）。
+    //
+    // ⚠️ 2026-08-22：`schema/config.ts` **拆成了 `schema/config/<名字>.ts`** ⇒
+    //    這三個排除字串跟著搬。⛔ 不搬的話它們對不上宣告本人,於是掃描器把
+    //    **宣告本人**數成呼叫端,豁免看起來「到期了」而其實一個消費端都沒有。
+    //    ⭐ 第三個是**對照組**(現在還是綠的),⛔ 但語意已經失效,要一起改。
     const PENDING = [
-      { docId: "lobby-layout", symbol: "resolveLobbyLayout", decl: "content/schema/config.ts" },
+      { docId: "lobby-layout", symbol: "resolveLobbyLayout", decl: "content/schema/config/lobbyLayout.ts" },
       {
         docId: "valhalla-sandbox",
         symbol: "resolveValhallaSandbox",
-        decl: "content/schema/config.ts",
+        decl: "content/schema/config/valhallaSandbox.ts",
       },
     ] as const;
     for (const p of PENDING) {
@@ -340,7 +345,7 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // 對照組同上：一個確實有 production 呼叫端的 resolver。少了它,上面那幾條對
     // 「掃描器永遠回 0」的壞實作也會全過（失敗形態 ④）。
     expect(
-      productionCallSites(REPO, "resolveVictoryFx", ["content/schema/config.ts"]),
+      productionCallSites(REPO, "resolveVictoryFx", ["content/schema/config/victoryFx.ts"]),
     ).toBeGreaterThan(0);
   });
 });

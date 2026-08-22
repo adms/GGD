@@ -65,6 +65,8 @@ describe("描述↔JSON 一致性（開放範圍棘輪）", () => {
   let open: Subject[] = [];
   let closedCount = 0;
   let closedAbilities = 0;
+  /** 出貨樹上真的存在的分片擁有者（⛔ 不等於開放名單，見 beforeAll 末尾）。 */
+  const shippedOwners = new Set<string>();
 
   beforeAll(async () => {
     for (const r of [Champions, Abilities, Items, Augments, Projectiles, LootTables]) r.clear();
@@ -102,7 +104,13 @@ describe("描述↔JSON 一致性（開放範圍棘輪）", () => {
     for (const id of Augments.ids().sort()) {
       const a = Augments.get(id)!;
       open.push({ id, label: `固有能力 ${a.name}`, def: asAbility(a) });
+      shippedOwners.add(claimOwner(id));
     }
+    // ⭐ 這份基準線有**第二個消費端**：`ops/skillNormalizeGate` 掃的是**整棵出貨樹**
+    // （⛔ 不是開放名單）。#552 五個變身態下架時退場的是 roster 的**入口**，
+    // 那些 ability 文件**還在 content/ 裡**，所以它們的豁免仍然在承重。
+    // ⇒ 「孤兒」的判準必須是「出貨樹上找不到這個擁有者」，⛔ 不是「它不在開放名單上」。
+    for (const id of Abilities.ids()) shippedOwners.add(claimOwner(id));
   });
 
   it("開放範圍內不可以冒出新的『說了但不會發生』", () => {
@@ -139,7 +147,10 @@ describe("描述↔JSON 一致性（開放範圍棘輪）", () => {
     );
 
     // 棘輪的第二半：修好的要從基準線刪掉，否則這條線永遠不會縮。
-    const stale = KNOWN_MISMATCHES.filter((k) => !found.has(k));
+    // ⚠️ 只追**開放範圍內**的鍵。退場英雄的鍵在 `found` 裡永遠不會出現（它們根本沒被掃），
+    // 那不是「修好了」，是「不在這條棘輪的管轄內」—— 而它們的豁免仍被 skillNormalizeGate 讀。
+    const openOwners = new Set(open.map((s2) => claimOwner(s2.id)));
+    const stale = KNOWN_MISMATCHES.filter((k) => !found.has(k) && openOwners.has(claimOwner(k.split("|")[0]!)));
     expect(
       stale.join("\n"),
       `⭐ 這幾處已經修好了 —— 把它們從 descriptionClaims.baseline/<英雄>.json 刪掉（棘輪只准降）：\n${stale.join(
@@ -155,11 +166,10 @@ describe("描述↔JSON 一致性（開放範圍棘輪）", () => {
    * ⚠️ 英雄退場、id 改名、變身態跟著本體下架都會製造孤兒檔。
    */
   it("⭐ 分片目錄裡不可以有孤兒檔（＝一批永久關掉的豁免）", () => {
-    const owners = new Set(open.map((s) => claimOwner(s.id)));
-    const orphans = [...KNOWN_MISMATCHES_BY_OWNER.keys()].filter((o) => !owners.has(o));
+    const orphans = [...KNOWN_MISMATCHES_BY_OWNER.keys()].filter((o) => !shippedOwners.has(o));
     expect(
       orphans.join("\n"),
-      `⛔ descriptionClaims.baseline/ 裡這幾個檔不對應任何**開放**英雄或固有能力 —— ` +
+      `⛔ descriptionClaims.baseline/ 裡這幾個檔在**出貨樹上找不到擁有者** —— ` +
         `它們豁免的每一筆都永遠不會被棘輪追回來。⭐ 刪掉那些檔：\n${orphans
           .map((o) => `  ${o}.json（${KNOWN_MISMATCHES_BY_OWNER.get(o)!.length} 筆）`)
           .join("\n")}`,

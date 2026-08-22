@@ -147,7 +147,12 @@ export class ScreenFxLayer {
     if (!screenFxAudienceAllows(spec.applyTo, viewer)) return false;
     const r = resolveScreenShake(spec, this.limits, this.reduced);
     if (!r) return false;
-    this.opts.addShake?.(r.amplitude, r.durationMs);
+    // ⛔ **這一行在 2026-08-22 曾經只讀 `this.opts.addShake`** —— 而 `VfxSystem` 是
+    //    `new ScreenFxLayer()`（沒有 opts），於是我加的 `setShakeSink()` 寫進
+    //    `this.shakeSink` 而這裡永遠讀不到 ⇒ ⭐ **相機震動一次都不會發生**
+    //    （失敗形態③：整條接線可以撤銷而測試全綠 —— 因為閃爍那一半照樣會出）。
+    // ⭐ 兩條路都收：建構時給的（測試）與組裝根安裝的（出貨）。
+    (this.shakeSink ?? this.opts.addShake)?.(r.amplitude, r.durationMs);
     return true;
   }
 

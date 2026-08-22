@@ -314,7 +314,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 邪眼師 - 飛影 `godie-uvng` | PASSIVE | 38-00 邪眼全開 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 邪眼師 - 飛影 `godie-uvng` | Q | 38-01 邪王炎殺劍 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 邪眼師 - 飛影 `godie-uvng` | W | 38-02 邪王炎殺煉獄焦 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
-| 邪眼師 - 飛影 `godie-uvng` | E | 38-03 邪王炎殺黑龍波 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |
+| 邪眼師 - 飛影 `godie-uvng` | E | 38-03 邪王炎殺黑龍波 | `skillshot` | line 11.20×7.33u | ✅ OK | spawnModelFx distance 14 × abilityRange 0.8, touchRadius 4.58 ×2 × abilityRange 0.8 |
 | 邪眼師 - 飛影 `godie-uvng` | R | 38-04 黑龍波吸收 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 邪眼師 - 飛影 `godie-uvng` | EX | 38-002 究極暴走黑龍波 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
 | 聖杯黑泥醬 - 喪標麥可 `godie-zombiex` | PASSIVE | 100-00 黑泥吞噬 | `—` | — | 🟣 PASSIVE | never cast |
