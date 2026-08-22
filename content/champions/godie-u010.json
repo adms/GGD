@@ -189,17 +189,28 @@
         60.0,
         60.0
       ],
+      "cooldownTier": "極大",
       "manaCost": [
         144.0,
         144.0,
         144.0,
         144.0
       ],
+      "manaCostTier": "小",
       "effects": [
         {
-          "kind": "spawnProjectile",
-          "projectileId": "imported.wave",
-          "onHit": [
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "modelKey": "imported.darkraor",
+          "path": "forward",
+          "speed": 30.0,
+          "distance": 14.0,
+          "spinDegPerSec": 240.0,
+          "scale": 2.0,
+          "touchRadius": 4.58,
+          "touchSide": "enemies",
+          "touchOncePerTarget": true,
+          "onTouch": [
             {
               "kind": "damage",
               "damageType": "magic",
@@ -213,7 +224,36 @@
                 ]
               }
             }
+          ],
+          "onArrive": [
+            {
+              "kind": "screenShake",
+              "shape": "single",
+              "amplitude": 0.5,
+              "durationSec": 0.6,
+              "applyTo": "all"
+            }
           ]
+        },
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "modelKey": "imported.blackhole",
+          "path": "forward",
+          "speed": 30.0,
+          "distance": 14.0,
+          "spinDegPerSec": 720.0,
+          "scale": 0.6
+        },
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "modelKey": "imported.tectonicfury",
+          "path": "radial",
+          "count": 12,
+          "distance": 6.42,
+          "speed": 30.0,
+          "scale": 1.0
         }
       ],
       "vfxKey": "godie-tectonicfury-p0",
@@ -234,9 +274,7 @@
         "camKick": 0.36
       },
       "rangeTier": "極大",
-      "range": 12,
-      "cooldownTier": "極大",
-      "manaCostTier": "小"
+      "range": 12
     },
     "R": {
       "id": "godie-u010.r",

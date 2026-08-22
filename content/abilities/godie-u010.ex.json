@@ -29,6 +29,35 @@
           }
         ]
       }
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "modelKey": "imported.darkraor",
+      "path": "radial",
+      "count": 3,
+      "distance": 8.0,
+      "speed": 30.0,
+      "spinDegPerSec": 240.0,
+      "scale": 2.4
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "modelKey": "imported.blackhole",
+      "path": "radial",
+      "count": 3,
+      "distance": 8.0,
+      "speed": 30.0,
+      "spinDegPerSec": 720.0,
+      "scale": 0.6
+    },
+    {
+      "kind": "screenShake",
+      "shape": "single",
+      "amplitude": 0.7,
+      "durationSec": 0.9,
+      "applyTo": "all"
     }
   ],
   "vfxKey": "fx.prim.void.explosion-lg",

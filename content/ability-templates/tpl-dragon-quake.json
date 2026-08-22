@@ -1,0 +1,104 @@
+{
+  "id": "tpl-dragon-quake",
+  "schema": "template@1",
+  "name": "動地剁落點環",
+  "description": "施法瞬間在施法者周圍等分出 N 個落點，各自炸一次並搖一次畫面 —— 「地面被剁開一圈」。原作是在半徑 350 的環上每 30° 生一隻 3 秒壽命的傀儡，每隻對自己的腳下丟一次叢集火箭。⭐ 等分相位在這一族**不重要**（環是對稱的），所以 radial 的固定 +x 起始相位在這裡不是缺口。",
+  "family": "dragon-quake",
+  "status": "draft",
+  "params": {
+    "modelKey": {
+      "type": "docRef",
+      "default": "imported.tectonicfury"
+    },
+    "count": {
+      "type": "number",
+      "default": 12,
+      "min": 2,
+      "max": 12,
+      "unit": "count"
+    },
+    "ringRadius": {
+      "type": "number",
+      "default": 350,
+      "min": 100,
+      "max": 2600,
+      "unit": "wc3u"
+    },
+    "speed": {
+      "type": "number",
+      "default": 1625,
+      "min": 100,
+      "max": 2600,
+      "unit": "wc3u"
+    },
+    "blastRadius": {
+      "type": "number",
+      "default": 150,
+      "min": 50,
+      "max": 1300,
+      "unit": "wc3u",
+      "optional": true
+    },
+    "scale": {
+      "type": "number",
+      "default": 1,
+      "min": 0.1,
+      "max": 20,
+      "optional": true
+    },
+    "shakeAmplitude": {
+      "type": "number",
+      "default": 0.5,
+      "min": 0.05,
+      "max": 1,
+      "unit": "ratio"
+    },
+    "shakeSec": {
+      "type": "number",
+      "default": 0.6,
+      "min": 0.1,
+      "max": 5,
+      "unit": "s"
+    },
+    "impactLifeSec": {
+      "type": "number",
+      "default": 3,
+      "min": 0.5,
+      "max": 30,
+      "unit": "s"
+    },
+    "damage": {
+      "type": "scaling",
+      "default": {
+        "perRank": [
+          0
+        ],
+        "ratios": []
+      },
+      "optional": true
+    },
+    "damageType": {
+      "type": "enum",
+      "values": [
+        "magic",
+        "physical",
+        "true"
+      ],
+      "default": "magic"
+    },
+    "scatterBox": {
+      "type": "number",
+      "default": 750,
+      "min": 100,
+      "max": 2600,
+      "unit": "wc3u",
+      "inert": "本版不生效 —— 原作除了那一圈固定落點，還在**移動中**每隔一 tick 於龍頭周圍 750×750 的方框內隨機挑一點放一發 WarStompCaster。那是「跟著主體走的隨機散布」，而 spawnModelFx 的落點在施放當下就決定了；randomArea 能隨機挑點但綁不到一具移動中的模型身上。"
+    }
+  },
+  "requires": [],
+  "gapScore": 8,
+  "exemplar": {
+    "skill": "38-03 邪王炎殺黑龍波",
+    "jass": "A09I"
+  }
+}

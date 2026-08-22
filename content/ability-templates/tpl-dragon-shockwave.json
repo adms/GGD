@@ -1,0 +1,82 @@
+{
+  "id": "tpl-dragon-shockwave",
+  "schema": "template@1",
+  "name": "沿路衝擊波",
+  "description": "跟著主體一起推進的第二具模型，扁而寬、橫躺在地面上，作用是把「有東西剛剛從這裡掃過去」畫出來。原作是每個移動 tick 在當下的落點補生一具 BlackHole.mdl（縮到 0.1），十三具連起來就是那條尾流。可純演出，也可以自己帶穿透傷害。",
+  "family": "dragon-shockwave",
+  "status": "draft",
+  "params": {
+    "modelKey": {
+      "type": "docRef",
+      "default": "imported.blackhole"
+    },
+    "travel": {
+      "type": "number",
+      "default": 1690,
+      "min": 100,
+      "max": 2600,
+      "unit": "wc3u"
+    },
+    "speed": {
+      "type": "number",
+      "default": 1625,
+      "min": 100,
+      "max": 2600,
+      "unit": "wc3u"
+    },
+    "scale": {
+      "type": "number",
+      "default": 0.6,
+      "min": 0.1,
+      "max": 20
+    },
+    "spinDegPerSec": {
+      "type": "number",
+      "default": 720,
+      "min": -3600,
+      "max": 3600,
+      "optional": true
+    },
+    "orientation": {
+      "type": "enum",
+      "values": [
+        "flat",
+        "upright"
+      ],
+      "default": "flat",
+      "inert": "本版不生效 —— owner 2026-08-22「衝擊波特效**橫放 beam**」。vfx@1 有一整組 orient（yawDeg/pitchDeg/swirlDegPerSec，pitchDeg:90 是直立＝恆等），但 spawnModelFx **沒有** —— 它只吃 spinDegPerSec（繞自己的軸自轉）與 scale，模型一律直立。所以今天的衝擊波只能靠壓扁的 scale 近似，⛔ 躺不下來。"
+    },
+    "trailSpacingSec": {
+      "type": "number",
+      "default": 0.08,
+      "min": 0.02,
+      "max": 1,
+      "unit": "s",
+      "inert": "本版不生效 —— 原作的尾流是**沿路補生的一串靜態模型**（每 0.08 秒一具，各自留在原地），而 spawnModelFx 一次施放只生**一具會動的**模型。畫面上的差別是「一條留得住的軌跡」vs「一個飛過去的東西」。"
+    },
+    "touchRadius": {
+      "type": "number",
+      "default": 200,
+      "min": 50,
+      "max": 650,
+      "unit": "wc3u",
+      "optional": true
+    },
+    "damage": {
+      "type": "scaling",
+      "default": {
+        "perRank": [
+          0
+        ],
+        "ratios": []
+      },
+      "optional": true
+    }
+  },
+  "requires": [],
+  "gapScore": 5,
+  "exemplar": {
+    "skill": "38-03 邪王炎殺黑龍波",
+    "jass": "A09I"
+  }
+}

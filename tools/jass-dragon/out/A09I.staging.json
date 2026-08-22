@@ -1,0 +1,139 @@
+{
+ "damage": {
+  "calls": [
+   {
+    "attackType": "NORMAL",
+    "damageType": "MAGIC",
+    "expr": "2500.00"
+   },
+   {
+    "attackType": "NORMAL",
+    "damageType": "MAGIC",
+    "expr": "( 400.00 + ( 250.00 * I2R(GetUnitAbilityLevelSwapped('A09I', udg_DarkDragonCastUnit)) ) )"
+   }
+  ],
+  "destructableRadius": [
+   450.0
+  ],
+  "fedByRadius": [
+   250.0,
+   200.0
+  ],
+  "onceViaGroup": [
+   "DarkDragonGroup"
+  ]
+ },
+ "delegation": {
+  "grantedAbilities": [
+   "A09M"
+  ],
+  "orders": [
+   "clusterrockets",
+   "move"
+  ]
+ },
+ "geometry": {
+  "polarProjections": [
+   {
+    "angle": "GetUnitFacing(GetTriggerUnit())",
+    "dist": 160.0
+   },
+   {
+    "angle": "( 45.00 + GetUnitFacing(GetTriggerUnit()) )",
+    "dist": 200.0
+   },
+   {
+    "angle": "( -45.00 + GetUnitFacing(GetTriggerUnit()) )",
+    "dist": 200.0
+   },
+   {
+    "angle": "( I2R(udg_BlackDargon) * 30.00 )",
+    "dist": 350.0
+   }
+  ]
+ },
+ "header": {
+  "area": "{\"1\": 175.0, \"2\": 175.0, \"3\": 175.0, \"4\": 175.0}",
+  "cooldown": "{\"1\": 60.0, \"2\": 60.0, \"3\": 60.0, \"4\": 60.0}",
+  "mana": "{\"1\": 215, \"2\": 300, \"3\": 385, \"4\": 470}",
+  "nameZh": "38-03 邪王炎殺黑龍波"
+ },
+ "rawcode": "A09I",
+ "timeline": {
+  "alternation": [
+   {
+    "eq": 0,
+    "mod": 2,
+    "var": "DarkDragonCount"
+   }
+  ],
+  "countGates": [
+   {
+    "below": 14,
+    "var": "DarkDragonCount"
+   }
+  ],
+  "loopBounds": [
+   {
+    "max": 12,
+    "var": "BlackDargon"
+   }
+  ],
+  "periodicSec": [
+   0.08
+  ],
+  "sleepSec": [
+   3.0,
+   1.5
+  ],
+  "timedLifeSec": [
+   2.0,
+   3.0
+  ],
+  "unitTimeScalePct": [
+   10.0,
+   30.0
+  ]
+ },
+ "vfx": {
+  "atPoint": [
+   "Boomnl.mdx"
+  ],
+  "onAttachment": [
+   {
+    "attach": "chest",
+    "model": "Boomnl.mdx"
+   }
+  ],
+  "sounds": [
+   "ShimmeringPortalDeath",
+   "DragonYes2"
+  ],
+  "spawnedUnits": [
+   {
+    "count": 1,
+    "model": "Darkraor.mdl",
+    "moveSpeed": 0,
+    "nameZh": "黑龍頭",
+    "rawcode": "h02F",
+    "scale": 2.0
+   },
+   {
+    "count": 1,
+    "model": "Abilities\\Spells\\Human\\FlameStrike\\FlameStrikeTarget.mdl",
+    "moveSpeed": null,
+    "nameZh": "黑龍波",
+    "rawcode": "o00Z",
+    "scale": null
+   },
+   {
+    "count": 1,
+    "model": "BlackHole.mdl",
+    "moveSpeed": 522,
+    "nameZh": "黑龍身體",
+    "rawcode": "h02E",
+    "scale": 0.10000000149011612
+   }
+  ]
+ }
+}
