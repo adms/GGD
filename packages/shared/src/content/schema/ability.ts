@@ -501,6 +501,89 @@ export const zAbilityAugment = z
   .object({ targets: z.array(zAbilityAugmentTarget).min(1).max(AUGMENT_MAX_TARGETS) })
   .strict();
 
+/**
+ * 【常駐特效】的**掛點預設值**。WC3 的 `"origin"` 就是**腳底那一點**，所以
+ * 「莉娜有 EX 的時候腳底下有魔法陣」在原作 JASS 裡逐字就是
+ * `AddSpecialEffectTargetUnitBJ("origin", …)`（`war3map.j:8350`）。
+ *
+ * ⭐ 匯出而不是在兩邊各打一個 `"origin"` 字面值：schema 用它當預設、客戶端
+ * 的 `persistentVfx.ts` 用它補空缺，⛔ 兩個住處會漂到不同的掛點而畫面上只是
+ * 「魔法陣長在胸口」——一個看得見卻查不出來的錯（第〇·四守則）。
+ */
+export const PERSISTENT_VFX_DEFAULT_ATTACH = "origin";
+
+/** 一支技能最多掛幾個常駐特效。與 `attachment@1.points` 同一個量級。 */
+export const PERSISTENT_VFX_MAX = 4;
+
+/**
+ * 【常駐特效】—— 這支技能**在身上的期間一直掛著**的特效（GH#539）。
+ *
+ * owner 2026-08-22：
+ * > 「莉娜有 EX 的時候**腳底下有魔法陣**這種 你也要記得還原
+ * >  你最好**開一張票去掃 EX 常駐特效** 有可能試用**等級或是技能已學習的 JASS**
+ * >  來判斷之類」
+ *
+ * ⚠️ **這一格不是 `vfxKey` 的變體。** `vfxKey` / `vfxLayers` 是**施法的那一瞬間**
+ * 播一次然後消失；這一格是「**只要條件成立就存在**」。兩者在客戶端走的是不同的
+ * 生命週期（一次性 vs attach/detach），把常駐特效寫成一個 duration 很大的
+ * `vfxKey` 會在條件消失時**留下**它 —— 那正是 #262 的特效洩漏形狀。
+ *
+ * ### ⛔ 為什麼不是 `config.ambient-vfx@1.bindings`（既有的那張表）
+ *
+ * 那張表是**無條件**的，而且鍵是 modelKey / championId：「這具身體永遠戴著」。
+ * 它表達不了「**EX 解鎖之後**才戴」，因為條件根本不在它的形狀裡。
+ * ⭐ 而這一格把常駐特效掛在**技能**上，於是「這支技能在不在身上」**自己就是條件**
+ * —— 那正是原作 JASS 用 `GetUnitAbilityLevel` 問的那句話，⛔ 不需要第二張表。
+ *
+ * ### 條件：⛔ 沒有新的條件葉
+ *
+ * | `when` | 意思 | 對應的 JASS |
+ * |---|---|---|
+ * | **缺席**（多數情況） | 這支技能**在身上／已解鎖**就掛著 | `GetUnitAbilityLevel(u, 'A0xx') > 0` |
+ * | 填了 | 上面那條**再 AND 一個** `condition@1` 樹 | `GetUnitLevel(u) >= 30`、`udg_EX_Mode[..] == true` … |
+ *
+ * ⭐ `when` 復用 {@link zEffectCondition} **原封不動** —— 「等級 ≥ N」寫成
+ * `{kind:"stat", subject:"self", stat:"level", op:">=", value:N, mode:"absolute"}`
+ * （`level` 早就在 `PLAIN_STATS` 裡），「在某形態」寫 `status`，「拿著某件裝備」
+ * 寫 `equipment`。⛔ 為 EX 另造一族 `condition.ex-mode@1` 會讓同一個問題有兩種
+ * 問法，而其中一種不會被 `conditionRng` / 深度上限 / 編輯器渲染器認得。
+ *
+ * ⚠️ **這一格刻意沒有 `durationSec`。** 常駐特效的終點是「條件變 false」，
+ * ⛔ 不是一個時鐘 —— 給它一個秒數就是允許「條件還成立但特效已經沒了」這種
+ * 兩個真相打架的狀態。
+ */
+export const zPersistentVfx = z
+  .object({
+    /**
+     * 掛什麼。`vfx` 集合的文件 id —— 粒子（`vfx@1`）、緞帶（`ribbon@1`）
+     * 或**穿在骨頭上的模型**（`attachment@1`）都可以，魔法陣這一族是後者
+     * （原作是一顆 `.mdx`，已經匯入成 `imported.midchildernanohaaura`）。
+     * SOFT ref：內容可以先寫名字、美術後補（與 `ability.vfxKey` 同一個規矩）。
+     */
+    vfxKey: zRef("vfx", { soft: true }),
+    /**
+     * WC3 掛點字串，**逐字**（`"origin"` / `"chest"` / `"right,hand"`）。
+     * 缺席 = {@link PERSISTENT_VFX_DEFAULT_ATTACH}（腳下），因為地面魔法陣是
+     * 這一族最常見的樣子。解析共用 `render/vfx/attachment.ts`。
+     */
+    attach: z.string().min(1).max(32).optional(),
+    /** 額外的條件。缺席 = 只要這支技能在身上就掛著（見上表）。 */
+    when: zEffectCondition.optional(),
+    /** 掛件／粒子的縮放。缺席 = 1 = 照 vfx 文件自己的大小。 */
+    scale: z.number().min(0.05).max(10).optional(),
+    /**
+     * 透明度。缺席 = 照 vfx 文件自己的值。
+     *
+     * ⚠️ **下界刻意是 0.05 而不是 0**：`alpha: 0` 是一個「看不見但還在算粒子」的
+     * 狀態，而「用 alpha 0 假裝移除」正是這張票要禁止的那件事（#262 特效洩漏）。
+     * 要它消失就讓 `when` 變成 false —— 客戶端會**真的把它拆掉**。
+     */
+    alpha: z.number().min(0.05).max(1).optional(),
+  })
+  .strict();
+
+export type PersistentVfx = z.infer<typeof zPersistentVfx>;
+
 /** Embedded form (champion.abilities[slot]) — no schema discriminator. */
 export const zAbilityDef = z
   .object({
@@ -698,6 +781,13 @@ export const zAbilityDef = z
      * example, and why a layer may NOT carry `anchor`.
      */
     vfxLayers: zAbilityVfxLayers.optional(),
+    /**
+     * 【常駐特效】（GH#539）—— 施法**之外**的那一種特效：只要條件成立就掛在
+     * 持有者身上，條件消失就**真的被拆掉**。莉娜腳下的魔法陣、EX 解鎖後的光環。
+     * 缺席 = 這支技能沒有任何常駐特效（1,900 份既有文件一份都不帶它）。
+     * 完整語意與「為什麼不是 `config.ambient-vfx@1`」見 {@link zPersistentVfx}。
+     */
+    persistentVfx: z.array(zPersistentVfx).min(1).max(PERSISTENT_VFX_MAX).optional(),
     /**
      * WC3-derived per-ability cast sound cue — an audio-map SFX key (e.g.
      * "wc3.nocute"), recovered from the source map's gg_snd bindings
