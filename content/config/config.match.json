@@ -15,6 +15,7 @@
     "champSelectEarlyStartVsBot": true,
     "forceSettleVsBot": true,
     "settlementCardOnHealthSpent": false,
+    "disposeEmptyChampSelect": true,
     "intermissionSec": 25,
     "combatMaxSec": 180,
     "fireRing": {

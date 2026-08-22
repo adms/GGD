@@ -422,6 +422,28 @@ export const zConfigMatchDoc = z
          */
         settlementCardOnHealthSpent: z.boolean().optional(),
         /**
+         * **選角結束時房裡沒有任何真人 ⇒ 收房**（GH#588）。
+         *
+         * owner 2026-08-23（逐字）：
+         * > 「限制一名玩家同時最多只能在一個房間，如果有玩家馬上 kill AI」
+         *
+         * true（出貨）= 選角相位結束的那一 tick，如果房裡一個真人 driver 都沒有、
+         * 一條連線都沒有、也沒有任何還沒被領走的保留席位（＝沒有人正在下載資產），
+         * 就把房間收掉。false = 這一格出現之前的行為：`autoPickAndSpawn` 幫 12 個
+         * 座位全部配好英雄，然後一場沒有人在看的比賽以 30Hz 打到底
+         * （練習房的 `endlessCombat` 更是**永遠**打不完 —— 實測 60,660 tick）。
+         *
+         * ⚠️ 三個條件缺一不可，特別是**保留席位**那一條：`setSeatReservationTime(120)`
+         * 存在的理由正是「客戶端要先下載 2.8MB 的資產才連得上遊戲 socket」，而
+         * PvP 的選角只有 20 秒。少了那一條，一個網路慢的玩家會在自己還在讀取時
+         * 被伺服器把房間收掉。
+         *
+         * ⚠️ 缺席 = **true**，⛔ 不是 false（隔壁三個 `.optional()` 布林是 false，
+         * 因為它們「owner 要的那一邊」剛好是 false）。約定是同一條：一份**這一格
+         * 出現之前**的舊文件應該拿到 owner 現在要的行為。
+         */
+        disposeEmptyChampSelect: z.boolean().optional(),
+        /**
          * 中場（商店）秒數。
          *
          * ⚠️ 上界是 #288 補的：這一格從此**房主開房時可以覆蓋**，而房主那條路不會

@@ -154,6 +154,10 @@ export const MATCH_BOOL_LABELS: Readonly<Record<string, MatchBoolLabels>> = Obje
     on: "血一歸零就發結算卡（舊行為）",
     off: "只有整場結束才結算（出貨）",
   },
+  "match.disposeEmptyChampSelect": {
+    on: "沒有真人就收房（出貨）",
+    off: "照樣配好 12 個 bot 打完",
+  },
   "match.fireRing.lethalSaveApplies": {
     on: "免死擋得住火圈（回合可能被拖長）",
     off: "火圈無視免死，燒到 0 就是死（出貨）",
@@ -263,6 +267,16 @@ export const MATCH_FIELD_INFO: Readonly<Record<string, MatchFieldInfo>> = Object
       "關著（出貨）= owner 2026-07-27「不管前面被淘汰與否，大家都回來打第 10 回合」的字面意思：比賽沒結束就沒有人出局，離場走一般的「確定要離開嗎」確認框。" +
       "打開的代價換來的是：計分板墊底的人可以提早看自己的評價再走。",
     live: "game-server MatchController.eliminatedTeams → takeEliminationSettlements → MatchRoom 廣播",
+  },
+  "match.disposeEmptyChampSelect": {
+    zh: "選角結束時沒有真人 → 收房",
+    note:
+      "選角相位結束的那一刻，如果房裡**一個真人都沒有**（沒有連線、也沒有還沒被領走的保留席位），要不要直接把房間收掉。" +
+      "開著（出貨）＝收掉。owner 2026-08-23:「限制一名玩家同時最多只能在一個房間，如果有玩家馬上 kill AI」。" +
+      "關掉＝這一格出現之前的行為：系統幫 12 個座位全部配好英雄，然後一場**沒有人在看**的比賽以 30Hz 打到底；" +
+      "練習房更是永遠打不完（`endlessCombat` 讓相位停在戰鬥，實測 60,660 tick 還在跑）。那正是「離開房間之後還有隱形英雄在打我」的來源。" +
+      "⚠️ 保留席位那一條不能少：客戶端要先下載資產才連得上遊戲 socket（保留席位開 120 秒），而 PvP 的選角只有 20 秒 —— 少了它，網路慢的玩家會在自己還在讀取時被收房。",
+    live: "game-server MatchRoom.loop（選角相位結束的那一 tick）",
   },
   "match.intermissionSec": {
     zh: "中場（商店）秒數",
@@ -500,6 +514,7 @@ export const MATCH_GROUPS: readonly MatchGroup[] = [
       "match.champSelectEarlyStartVsBot",
       "match.forceSettleVsBot",
       "match.settlementCardOnHealthSpent",
+      "match.disposeEmptyChampSelect",
       "match.intermissionSec",
       "match.combatMaxSec",
       "match.resolutionSec",

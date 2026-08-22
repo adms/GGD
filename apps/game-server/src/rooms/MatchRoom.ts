@@ -2,8 +2,11 @@
  * MatchRoom — thin Colyseus wrapper around MatchController.
  * Network in: INPUT -> seat mailbox; SELECT_CHAMPION -> controller.
  * Network out: schema patches (projectSnapshot) + sim event fanout.
- * Disconnect: swap seat driver to AI immediately; allowReconnection window
- * hands control back on return. Match end: HMAC result callback to platform.
+ * Disconnect: the seat goes IDLE — ⛔ AI does NOT take over (owner 2026-08-23:
+ * 「如果有玩家馬上 kill AI」, GH#588); the allowReconnection window hands control
+ * back on return. One account may hold ONE room process-wide (rooms/accountRooms):
+ * joining elsewhere evicts the seat here, and a room left with no human is closed.
+ * Match end: HMAC result callback to platform.
  */
 import { Room, type Client } from "colyseus";
 import { MatchState } from "@ggd/shared/protocol/schema";
@@ -39,7 +42,6 @@ import { Configs, PRACTICE_DOC_ID, resolvePracticeRules } from "@ggd/shared/cont
 import { HumanDriver } from "../seat/HumanDriver";
 import type { Seat } from "../seat/Seat";
 import type { SimEvent } from "@ggd/shared/sim/SimWorld";
-import { AIDriver } from "../ai/Tier0Brain";
 import { projectSnapshot } from "../net/snapshot";
 import { sign, verifyTicket } from "../auth/hmac";
 import { Whitelist, WHITELIST_BYPASS, sharedWhitelistCache } from "../curation/whitelist";
@@ -53,6 +55,8 @@ import { sanitizeInputMessage } from "../net/validateInput";
 import { MessageRateLimiter } from "../net/messageRateLimiter";
 import { sanitizeDisplayName } from "../net/sanitizeText";
 import { roomRegistry } from "./roomRegistry";
+import { accountRooms, EVICTED_CLOSE_CODE, type AccountRoomHolder } from "./accountRooms";
+import { resolveDisposeEmptyChampSelect } from "./emptyRoomPolicy";
 import { verifyCreateToken } from "./createGate";
 import { MatchRecorder, reportRecorderSealFailure } from "../replay/Recorder";
 import { replayRecordingEnabled } from "../replay/policy";
@@ -268,7 +272,7 @@ const DEV_CHEATS = cheatsEnabled(SHARED_SECRET, process.env.GGD_DEV_CHEATS);
 /** WS close code used when a session is booted for sustained message flooding. */
 const RATE_LIMIT_CLOSE_CODE = 4290;
 
-export class MatchRoom extends Room<MatchState> {
+export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
   private ctl!: MatchController;
   /**
    * 這間房准不准測試碼（GH#343）。`onCreate` 用**伺服器端解析出來的**練習房身分
@@ -288,6 +292,14 @@ export class MatchRoom extends Room<MatchState> {
   private readonly rateLimiter = new MessageRateLimiter();
   /** true once this room holds a process-wide concurrent-room slot. */
   private acquiredRoomSlot = false;
+  /**
+   * 還開著的重連窗口（seatId → `allowReconnection` 的 Deferred），GH#588。
+   *
+   * ⚠️ 它存在的唯一理由是**驅逐要關得掉它**：一個保留席位會把整間房撐著不讓
+   * Colyseus 自動回收，所以「這個帳號已經在另一間房了」時必須把窗口 reject 掉，
+   * 否則舊房還會再活 60 秒 —— 而那 60 秒正是 owner 看到的隱形英雄。
+   */
+  private readonly reconnects = new Map<number, { reject: (reason?: unknown) => void }>();
   /**
    * Per-room copy of the private-delivery decision (net/eventFanout). A field
    * rather than a direct read of the module const so the behaviour guard can
@@ -386,6 +398,32 @@ export class MatchRoom extends Room<MatchState> {
       );
     }
     this.acquiredRoomSlot = true;
+    // ── GH#595 —— `tryAcquire()` 之後丟例外，名額就**永遠**回不來 ─────────────
+    // 逐字讀了 Colyseus 0.16.24 的 `MatchMaker.handleCreateRoom`：
+    // `room._events.once("dispose", …)` 是在 `await room.onCreate()` **成功之後**
+    // 才掛的，所以一個丟出去的 onCreate ⇒ `_dispose()` / `onDispose()` 永遠不跑
+    // ⇒ `roomRegistry.release()` 永遠不跑。探針量到 **6 格永久消失**，而
+    // `DEFAULT_MAX_ROOMS = 50`：名額耗盡之後每一個人開房都被拒，重啟前救不回來。
+    //
+    // ⭐ 漏的不只是名額：`__init()` 已經在 onCreate **之前**跑過了，它建立的
+    // `patchInterval`（`Room.js: setInterval(broadcastPatch, patchRate)`）也永遠
+    // 不會被 `clearInterval` ⇒ 整個 Room 物件（含 `MatchController` + `SimWorld`）
+    // 被那顆 timer 永久釘在 heap 上。`releaseRoomResources()` 兩件都收。
+    try {
+      await this.buildMatch(options, ops);
+    } catch (err) {
+      await this.releaseRoomResources();
+      throw err;
+    }
+  }
+
+  /**
+   * `onCreate` 的其餘部分。
+   *
+   * ⚠️ 抽成一支方法**只**為了讓上面那個 `catch` 包得住它（GH#595）——
+   * ⛔ 不要在這裡加「開房」以外的責任。
+   */
+  private async buildMatch(options: MatchRoomOptions, ops: ServerOps): Promise<void> {
     // Per-room client cap (join-flood) + autoDispose (no zombie rooms). A match
     // never has more than SEAT_COUNT human clients, so cap the room there.
     this.maxClients = SEAT_COUNT;
@@ -733,6 +771,9 @@ export class MatchRoom extends Room<MatchState> {
       // budget but never reaches the clamp" — the shape sheds alone can never
       // see. Two clock reads, no allocation (see match/tickHealth.ts).
       const tickStartedMs = performance.now();
+      // GH#588 ③ —— 選角相位**是不是這一 tick 結束的**。⛔ 不可以在 tick() 之後
+      // 才問「現在是不是 champSelect」：那分不出「還在選角」與「早就打到第 3 回合」。
+      const wasChampSelect = this.ctl.phase.phase === "champSelect";
       try {
         phase = this.ctl.tick();
         tickHealth.noteTick(performance.now() - tickStartedMs);
@@ -751,6 +792,16 @@ export class MatchRoom extends Room<MatchState> {
         break;
       }
       stepped = true;
+      // GH#588 ③ —— 選角結束了，而房裡一個真人都沒有 ⇒ 收房。
+      //
+      // ⛔ 在此之前這裡什麼都不做，於是 `autoPickAndSpawn` 幫 12 個座位全部配好
+      // 英雄，一場沒有人在看的比賽以 30Hz 打到底；練習房（`endlessCombat`）更是
+      // **永遠**走不到 `matchEnd` —— 實測 60,660 tick（≈34 分鐘）phase 從頭到尾
+      // 是 'combat'，而 `finishMatch()` 是這間房唯一的主動關閉路徑。
+      if (wasChampSelect && phase !== "champSelect" && this.champSelectLeftEmpty()) {
+        this.closeRoom("選角結束時房裡沒有任何真人（沒有連線、也沒有還沒領走的保留席位）");
+        return;
+      }
       // Fan out selected sim events. The whitelist lives in one place
       // (net/eventFanout) so the ReplayRoom forwards the EXACT same set — a
       // replay that dropped these would be combat-mute (HP bars drain with no
@@ -895,6 +946,17 @@ export class MatchRoom extends Room<MatchState> {
       this.seatByAccount.set(accountId, seatId);
     }
 
+    // ⭐ 一個帳號同時只能在一間房（owner 2026-08-23：「限制一名玩家同時最多只能
+    // 在一個房間，如果有玩家馬上 kill AI」）。GH#588。
+    //
+    // ⚠️ 認領放在座位解析**之後**：上面兩條 `client.leave()` 是「這間房不收你」，
+    // 那種被拒的 join ⛔ 不可以把玩家現在真的在打的那一間房殺掉。
+    // ⚠️ 也放在 `seat.sessionId = …` **之前**：驅逐會同步走進舊房的座位收拾，
+    // 而舊房與新房是兩個不同的物件，順序只影響 log 的先後 —— 但先認領後驅逐是
+    // 必要的（見 `accountRooms.claim` 的說明：反過來會讓舊房洗掉新房的認領）。
+    const previousRoom = accountRooms.claim(accountId, this);
+    if (previousRoom) previousRoom.evictAccount(accountId);
+
     const seat = this.ctl.seats.get(seatId)!;
     seat.sessionId = client.sessionId;
     seat.accountId = accountId;
@@ -918,24 +980,81 @@ export class MatchRoom extends Room<MatchState> {
     seat.setDriver(driver);
   }
 
+  /**
+   * ⛔ **玩家離開時不讓 AI 接管**（owner 2026-08-23:「如果有玩家馬上 kill AI」）。
+   *
+   * 在此之前這裡是 `seat.setDriver(new AIDriver())`，而那正是幽靈房**活著**的機制：
+   * 一個已經走掉（或已經在別的房間）的玩家，他的英雄被 AI 接手繼續打、繼續喊語音、
+   * 繼續挨打把血條打到 0 —— owner 逐字描述的「還是會有隱形的英雄在攻擊我」。
+   *
+   * 座位保留原本那顆 `HumanDriver`（郵箱清空 ⇒ 每 tick 產出空 intent ⇒ 站著不動），
+   * ⛔ 而不是換一個 driver：`Seat.humanSeat` 之外，`driverKind` 仍然是名冊與商店
+   * 折扣（`botShop.priceMult`）讀的那一格，把一個離線的人翻成 "ai" 會讓他回來時
+   * 中間那幾回合被當成 bot 結算。
+   */
+  private releaseSeat(sessionId: string, seatId: SeatId): void {
+    this.humanDrivers.get(seatId)?.mailbox.clear();
+    const seat = this.ctl?.seats.get(seatId);
+    if (seat) seat.sessionId = null;
+    this.humanDrivers.delete(seatId);
+    this.seatBySession.delete(sessionId);
+  }
+
+  /**
+   * 這個帳號在別的房間坐下了 —— 把它從**這一間**請出去（GH#588，`AccountRoomHolder`）。
+   *
+   * 三件事，缺一間房就活著：
+   *  ① 同步收掉座位（⛔ 不等 socket 關閉的回呼：`onLeave` 是非同步的，而下面
+   *     「還有沒有真人」的判斷必須在同一個 tick 內是對的）
+   *  ② 關掉還開著的重連窗口 —— 一格保留席位會把整間房從 Colyseus 的自動回收裡
+   *     撐住 60 秒，而那 60 秒就是隱形英雄
+   *  ③ 沒有真人剩下就**收房**，⛔ 不是等它自己 autoDispose
+   */
+  evictAccount(accountId: string): void {
+    const seatId = this.seatByAccount.get(accountId);
+    if (seatId === undefined) return;
+    const sessionId = this.ctl?.seats.get(seatId)?.sessionId ?? null;
+    const pending = this.reconnects.get(seatId);
+    if (pending) {
+      this.reconnects.delete(seatId);
+      pending.reject(new Error("evicted: the account joined another room"));
+    }
+    if (sessionId !== null) {
+      this.releaseSeat(sessionId, seatId);
+      this.clients.getById(sessionId)?.leave(EVICTED_CLOSE_CODE);
+    }
+    console.warn(
+      `[match ${this.ctl?.matchId ?? "?"}] 帳號 ${accountId} 已經在另一間房坐下 —— ` +
+        `收掉這一間的座位 ${seatId}（⛔ 不交給 AI）`,
+    );
+    if (this.seatBySession.size === 0) {
+      this.closeRoom(`帳號 ${accountId} 已經到別的房間，這一間沒有真人了`);
+    }
+  }
+
   override async onLeave(client: Client, consented: boolean): Promise<void> {
     // Drop the session's rate-limit bucket so they never accumulate unbounded
     // over a long-lived room (a returning client just gets a fresh bucket).
     this.rateLimiter.forget(client.sessionId);
     const seatId = this.seatBySession.get(client.sessionId);
+    // 已經被 `evictAccount` 同步收掉了 —— ⛔ 不要再開一次重連窗口。
     if (seatId === undefined) return;
     const seat = this.ctl.seats.get(seatId)!;
+    const accountId = seat.accountId;
 
-    // AI takes over at the next tick boundary — the bot inherits the exact
-    // entity state (hp/cooldowns/items) because drivers hold no gameplay state.
-    seat.setDriver(new AIDriver());
-    seat.sessionId = null;
-    this.humanDrivers.delete(seatId);
-    this.seatBySession.delete(client.sessionId);
+    this.releaseSeat(client.sessionId, seatId);
 
-    if (consented) return;
+    if (consented) {
+      accountRooms.release(accountId, this);
+      return;
+    }
+    // ⚠️ 非自願離開時**先不放掉認領**：這個帳號在接下來 60 秒仍然「屬於」這一間房。
+    // 放掉的話，他在別的房間坐下時 `claim()` 拿不到 previous ⇒ 不會驅逐 ⇒ 這一間
+    // 被自己的保留席位撐著再活 60 秒。那 60 秒就是 owner 看到的隱形英雄。
+    const pending = this.allowReconnection(client, RECONNECT_GRACE_SECS);
+    this.reconnects.set(seatId, pending as unknown as { reject: (reason?: unknown) => void });
     try {
-      await this.allowReconnection(client, RECONNECT_GRACE_SECS);
+      await pending;
       // human returned: swap control back
       const driver = new HumanDriver();
       this.humanDrivers.set(seatId, driver);
@@ -943,7 +1062,36 @@ export class MatchRoom extends Room<MatchState> {
       seat.sessionId = client.sessionId;
       this.seatBySession.set(client.sessionId, seatId);
     } catch {
-      // window expired — seat stays AI for the rest of the match
+      // 窗口過期，或這個帳號到別的房間去了 —— 這個位子在這一場不再有人操作，
+      // ⛔ 而且**不交給 AI**（owner 2026-08-23）。
+      accountRooms.release(accountId, this);
+    } finally {
+      this.reconnects.delete(seatId);
+    }
+  }
+
+  /** 選角結束的那一 tick，這間房是不是一個真人都沒有（GH#588 ③）。 */
+  private champSelectLeftEmpty(): boolean {
+    if (!resolveDisposeEmptyChampSelect()) return false;
+    if (this.humanDrivers.size > 0 || this.seatBySession.size > 0) return false;
+    if (this.clients.length > 0) return false;
+    // ⚠️ 還沒被領走的保留席位 = **有人正在下載資產**。`setSeatReservationTime(120)`
+    // 存在的理由就是它（見 onCreate），而 PvP 的選角只有 20 秒 —— 少了這一條，
+    // 網路慢的玩家會在自己還在讀取時被伺服器把房間收掉。
+    return Object.keys(this.reservedSeats).length === 0;
+  }
+
+  /**
+   * 主動收房。`disconnect()` 在 `_internalState` 還是 CREATING 時會丟
+   * （建房途中不可能收房），而這條路是從 tick loop / 驅逐叫進來的 ——
+   * ⛔ 一個收尾動作丟出去的例外不可以變成新的故障。
+   */
+  private closeRoom(why: string): void {
+    console.warn(`[match ${this.ctl?.matchId ?? "?"}] 收房：${why}`);
+    try {
+      void this.disconnect();
+    } catch (err) {
+      console.error(`[match ${this.ctl?.matchId ?? "?"}] 收房失敗（房間留著）`, err);
     }
   }
 
@@ -961,24 +1109,47 @@ export class MatchRoom extends Room<MatchState> {
    * 那一場的最後一段輸入真的在磁碟上。
    */
   override async onDispose(): Promise<void> {
+    await this.releaseRoomResources();
+  }
+
+  /**
+   * 這間房佔住的每一樣製程級資源，收在**一個地方**（GH#595）。
+   *
+   * ⭐ 兩個呼叫端：`onDispose()`（正常路徑）與 `onCreate` 的 catch（建房丟例外，
+   * 而 Colyseus 那條路**永遠不會**呼叫 `onDispose`）。⛔ 不要複製貼上兩份收尾
+   * —— 兩份會各自腐爛，而其中一份是「只在例外時才走」的那一份，⛔ 沒有人會發現。
+   */
+  private async releaseRoomResources(): Promise<void> {
     // Return the process-wide concurrent-room slot so a completed/disposed match
     // frees capacity for the next one (the room-cap DoS guard, roomRegistry).
     if (this.acquiredRoomSlot) {
       roomRegistry.release();
       this.acquiredRoomSlot = false;
     }
+    // 一人一房的認領（GH#588）—— 房沒了，它持有的每一格都要放掉，否則那個帳號
+    // 下一次 join 會去驅逐一間**已經不存在**的房。
+    accountRooms.releaseAll(this);
+    // `__init()` 在 onCreate **之前**就建好了 broadcast timer，而建房失敗那條路
+    // 上沒有任何人會 `clearInterval` 它（Colyseus 0.16.24 的 `handleCreateRoom`：
+    // dispose 監聽器掛在 onCreate 成功之後）。⇒ 整個 Room 被那顆 timer 釘在 heap
+    // 上。設 `patchRate = null` 走的是 `__init` 自己裝的 setter，它會清掉 interval。
+    (this as unknown as { patchRate: number | null }).patchRate = null;
     // A room disposed without reaching matchEnd (everyone left, the shard is
     // shutting down) still leaves a recording — footer-less, and therefore
     // marked 未完成 in the list, but playable up to its last complete line.
     // finishMatch() has already closed the recorder on the normal path.
     const rec = this.recorder;
     this.recorder = null;
-    this.ctl.recorder = null;
     // #207:同樣的道理 —— 一場打到第 6 回合斷線的比賽,那 6 個回合已經寫在
     // 磁碟上而且完整可讀。沒有 final 行就是「這場沒打完」的判斷依據。
     const stats = this.statsRecorder;
     this.statsRecorder = null;
-    this.ctl.statsSink = null;
+    // ⚠️ `ctl` 是 `!`（definite assignment）—— 建房在它被指派**之前**丟出去時
+    // 這裡是 undefined，而那正是 #595 唯一會走到的路。
+    if (this.ctl) {
+      this.ctl.recorder = null;
+      this.ctl.statsSink = null;
+    }
     // 兩份一起等,而且**一個失敗不可以害另一個沒落地** —— `allSettled`,不是 `all`。
     // 房間關閉是 best-effort 的收尾，丟例外只會讓 Colyseus 的關機流程停在半路。
     const results = await Promise.allSettled([rec?.abandon(), stats?.abandon()]);

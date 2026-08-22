@@ -18,6 +18,19 @@ export function projectileSystem(world: SimWorld): void {
   for (const [id, proj] of world.projectile) {
     const t = world.transform.get(id);
     if (!t) continue;
+    // 決鬥已經結算的分區不再判定命中（GH#593）。八支同儕系統都有這道閘
+    // （`dotTick` / `randomArea` / `delayed` / `dashOnEnd` / `chainLightning` /
+    // `FireRingSystem` / `MobSystem` / `OrderSystem`），只有投射體漏了 ——
+    // 於是勝負記完之後最多還有 0.8 秒（出貨最長的 `basic-attack`：16/20）有飛彈
+    // 在飛而且**打得到人**，血條在結算演出上又掉一格。
+    //
+    // ⚠️ 用 `settledZones` 而**不是** `combatActive`，理由和那八支一樣：分區決鬥
+    // 會提早結束（#216），`combatActive` 要等主機記完整場勝負才翻，慢好幾 tick，
+    // 而且「某一區已結算、另一區還在打」時它是錯的答案。
+    if (world.settledZones.has(t.zone)) {
+      toDestroy.push(id);
+      continue;
+    }
     const stepLen = Math.min(proj.speed * world.dt, proj.remainingRange);
     const delta = scale(proj.dir, stepLen);
 
