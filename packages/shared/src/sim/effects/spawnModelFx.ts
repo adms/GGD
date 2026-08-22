@@ -85,6 +85,68 @@ interface Instance {
  * ⛔ 沒有一行是為某支技能寫的 if（第〇·五守則）：四個分支是**四種路徑**，
  * 而技能在 JSON 裡挑一個。
  */
+/**
+ * ⛔⛔ **`modelFxSpawn` 事件的酬載型別 —— 這是 sim 與客戶端之間的契約本身。**
+ *
+ * ── 為什麼這個型別必須存在（GH#606）──────────────────────────────────────
+ * `SimWorld.emit(type: string, data: Record<string, unknown>)` **完全沒有型別**，
+ * 所以在 2026-08-23 之前這份契約只活在**散文**裡。結果：sim 送
+ * `{ caster, modelKey, path, speed, x, z, zone, instances }`，而客戶端讀
+ * `ev.data.**spec**` / `facingRad` / `arriveVfxKey` —— ⛔ **全 repo 沒有任何地方
+ * 寫過 `spec`** ⇒ 消費端的第一行 `if (!spec) break;` 每一次都跳出。
+ *
+ * ⇒ **龜派氣功 · 約束與勝利之劍 · 野戰型陽電子砲 · 龍鬥氣砲咒文 · 邪王炎殺黑龍波 ·
+ * 龍破斬 · 世界終結**（12 支 ability 文件）在畫面上一具模型都沒出現過，
+ * 而傷害照樣掉血 —— 所以它看起來完全正常（第二守則失敗形態②）。
+ *
+ * ⚠️ **既有的守衛全部是綠的**：`performanceEventsHaveConsumers` 驗的是
+ * 「這個事件**有一個 case**」—— 它有。⛔ 而「那個 case 的**第一行**會不會立刻
+ * `break`」從來不是任何斷言的反面。
+ *
+ * ⭐ 所以修法不是「把欄位名改對」（那是判準，下一個欄位照樣會歪），
+ * 是**讓兩邊 import 同一個型別** —— 打錯字從此是 `tsc` 的紅，⛔ 不是執行期的靜默。
+ */
+export interface ModelFxSpawnEvent {
+  /** 施法者實體 id（客戶端拿來問「這一發是不是我放的」，⛔ 不是拿來算起點 —— 起點在 `instances` 裡） */
+  caster: EntityId;
+  modelKey: string;
+  path: ModelFxPathName;
+  /** 世界單位／秒。⚠️ 客戶端**不需要**用它算位置（`instances` 已經解算完），只用來做速度相關的表現 */
+  speed: number;
+  /** 施放當下施法者的位置（`instances` 的共同來源；除錯與空間音場用） */
+  x: number;
+  z: number;
+  zone: number;
+  /** `"ability:<id>"` —— 客戶端用既有的 `abilityIdOfOrigin` 解出技能 id 去問 #568 的層數上限 */
+  origin?: string;
+  soundKey?: string;
+  arriveSoundKey?: string;
+  /** 落點那一發聲音要等多久（秒，絕對量，⛔ 不是 tick） */
+  arriveDelaySec?: number;
+  scale?: number;
+  spinDegPerSec?: number;
+  /**
+   * ⭐ **已經解算完的每一具實例。** 客戶端照抄就好 ——
+   * ⛔ 它不需要（也不可以）自己再算一次路徑：`sim` 這一份才是傷害真的發生的地方，
+   * 客戶端算第二份就是「畫面說在這裡、傷害在那裡」（而且它會是第二個住處）。
+   */
+  instances: ModelFxSpawnInstance[];
+}
+
+/** 一具實例：從 `(x,z)` 沿單位向量 `(dx,dz)` 走 `dist`，花 `durationSec`。 */
+export interface ModelFxSpawnInstance {
+  x: number;
+  z: number;
+  /** 單位方向。⚠️ `orbit`（原地環上一點）時**兩個都是 0** —— 客戶端用它分辨動／不動 */
+  dx: number;
+  dz: number;
+  /** ⭐ 這一具**真的**會走多遠（已經被 `lifeSec` 夾過），⛔ 不是作者寫的 `distance` */
+  dist: number;
+  durationSec: number;
+}
+
+export type ModelFxPathName = "forward" | "toTarget" | "orbit" | "radial";
+
 export function modelFxInstances(e: ModelFx, ctx: EffectContext, origin: Vec2): Instance[] {
   const spread = e.path === "radial" || e.path === "orbit";
   const count = spread
@@ -179,7 +241,7 @@ export const spawnModelFxEffect: EffectKindSpec<"spawnModelFx"> = {
     //    ⛔ 一次施放**一發**，⛔ 不是每一具各一發（12 具 = 一次音爆）。
     const arriveDelaySec = wire.reduce((m, w) => Math.max(m, w.ticks * world.dt), 0);
 
-    world.emit("modelFxSpawn", {
+    const payload: ModelFxSpawnEvent = {
       caster: ctx.caster,
       modelKey: e.modelKey,
       path: e.path,
@@ -206,7 +268,10 @@ export const spawnModelFxEffect: EffectKindSpec<"spawnModelFx"> = {
         dist: w.actual,
         durationSec: w.ticks * world.dt,
       })),
-    });
+    };
+    // ⭐ 型別在上面那個 annotation 上,⛔ 不在這裡 —— `emit` 的簽章是
+    //    `Record<string, unknown>`,把物件直接寫在呼叫裡等於**沒有人檢查它**。
+    world.emit("modelFxSpawn", payload as unknown as Record<string, unknown>);
 
     if (e.onTouch === undefined && e.onArrive === undefined) return;
 

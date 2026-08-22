@@ -130,7 +130,7 @@ import { clampOneShotLife, DEFAULT_ONE_SHOT_MAX_LIFE_SEC, oneShotMaxLifeSec } fr
 // ⭐ GH#551/#543/#549 —— 三個「演出」層。⛔ 在 2026-08-22 之前它們的唯一 import 端
 //    是自己的測試（失敗形態③：整組刪掉只有測試會紅，而畫面上本來就什麼都沒有）。
 import { ModelFxRig } from "../render/modelFxRig";
-import type { ModelFxMotionSpec, ModelFxOrigin } from "../render/modelFxPath";
+import type { ModelFxSpawnEvent } from "../render/modelFxPath";
 import { ScreenFxLayer } from "./ScreenFxLayer";
 import { FloatingTextFx } from "./FloatingTextFx";
 import { screenCuePolicyFromContent } from "../render/screenFx";
@@ -2011,26 +2011,37 @@ export class VfxSystem {
       // ⛔ 在 2026-08-22 之前這四個事件**沒有任何客戶端消費端**：sim 每次都發、
       //    `eventFanout` 也放行了,而畫面上什麼都不會出現（失敗形態②：
       //    算出來了但從沒送到 —— 而傷害照樣掉血,所以它看起來完全正常）。
+      // ⛔⛔ GH#606 —— 這一段在 2026-08-23 之前**每一次都在第一行跳出**。
+      //
+      // 舊碼：`const spec = ev.data.spec` → `if (!spec) break;`
+      // 而 sim 送的是 `{ caster, modelKey, path, speed, x, z, zone, instances }`
+      // —— ⛔ **全 repo 沒有任何地方寫過 `spec`**（`facingRad` / `arriveVfxKey`
+      // 也一樣）。⇒ 龜派氣功 · 約束與勝利之劍 · 野戰型陽電子砲 · 龍鬥氣砲咒文 ·
+      // 邪王炎殺黑龍波 · 龍破斬 · 世界終結（12 支 ability 文件）畫面上一具模型
+      // 都沒出現過，而**傷害照樣掉血**,所以它看起來完全正常（失敗形態②）。
+      //
+      // ⚠️ 既有守衛全綠：`performanceEventsHaveConsumers` 問的是「有沒有一個
+      // case」—— 有。⛔ 「那個 case 的第一個 `if` 會不會立刻 break」不是任何
+      // 斷言的反面。⇒ 根治是**兩邊 import 同一個型別**（`ModelFxSpawnEvent`
+      // 住 `sim/effects/spawnModelFx.ts`），打錯字從此是 tsc 的紅。
       case "modelFxSpawn": {
         if (!this.modelFx) break;
-        const spec = ev.data.spec as ModelFxMotionSpec | undefined;
-        const caster = ev.data.caster as number | undefined;
-        if (!spec || caster === undefined) break;
-        const pos = this.ctx.entityPos(caster);
-        if (!pos) break;
-        const tgt = ev.data.target as number | undefined;
-        const tp = tgt !== undefined ? this.ctx.entityPos(tgt) : null;
-        const at: ModelFxOrigin = {
-          origin: { x: pos.x, y: (ev.data.y as number | undefined) ?? 0, z: pos.z },
-          facingRad: (ev.data.facingRad as number | undefined) ?? 0,
-          ...(tp ? { target: { x: tp.x, y: 0, z: tp.z } } : {}),
-        };
-        // ⭐ 落點視覺回呼 —— ⛔ 它**不算傷害**（傷害是 sim 的 `onArrive`）。
-        this.modelFx.spawn(spec, at, (p) => {
-          const key = ev.data.arriveVfxKey as string | undefined;
-          const doc = key ? this.ctx.vfxDoc?.(key) : null;
-          if (doc) this.play(doc, p.x, p.z, nowMs);
-        });
+        const p = ev.data as unknown as ModelFxSpawnEvent;
+        // ⚠️ 只擋「線路上真的沒有實例」這一種（sim 的 `instances.length===0`
+        // 早退場路徑）。⛔ 不要再加「防禦性」的欄位存在檢查 —— 那正是舊碼
+        // 靜靜吃掉整族的方式。
+        if (!p.modelKey || !p.instances?.length) break;
+        // ⭐ 位置**照抄 sim 解算完的結果**，⛔ 不從 `entityPos(caster)` 重算：
+        //    模型要出現在傷害真的發生的地方，而施法者在飛行途中會移動。
+        //
+        // ⛔ **落點特效不在這裡。** 舊碼還讀了一個 `ev.data.arriveVfxKey`
+        //    ——同樣是零個寫入端的幽靈欄位。落點視覺的住處是技能 JSON 的
+        //    `onArrive: [{ kind: "spawnVfx", … }]`：它走 sim 的延遲班表，
+        //    於是**特效與傷害在同一 tick 同一點**發生（第〇·五守則）。
+        //    客戶端自己再排一次 = 第二個住處，而且會跟傷害差幾幀。
+        //    ⚠️ 出貨的 12 支目前 `onArrive` 只有 `damageArea`/`screenShake`
+        //    ⇒ 「光束打到底沒有爆炸」是**內容缺口**，⛔ 不是引擎缺口。
+        this.modelFx.spawn(p);
         break;
       }
       case "screenFlash":

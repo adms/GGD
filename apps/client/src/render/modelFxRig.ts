@@ -19,23 +19,27 @@
  * 「一場 20 分鐘、十幾支技能各生 20 顆」之後就是一份永遠不還的記憶體 ——
  * 它不會像 #131 那樣被看見,所以更難查。
  *
- * ── ⛔ 這裡不算傷害 ─────────────────────────────────────────────────────────
+ * ── ⛔ 這裡不算傷害,也不排落點特效 ────────────────────────────────────────
  * 約定介面上的 `onArrive` / `onTouch` 帶的是 `EffectDef[]`,那是**引擎**(L1)在
- * 權威側解算的。這個 rig 只認得 `onArriveFx` —— 一個「飛到了,在這個座標放個爆炸」
- * 的視覺回呼。客戶端自己解算命中 = 失敗形態⑤,⛔ 永遠不做。
+ * 權威側解算的。客戶端自己解算命中 = 失敗形態⑤,⛔ 永遠不做。
+ *
+ * ⭐ **落點爆炸也不在這裡**（2026-08-23 移除,GH#606）。舊版有一個 `onArriveFx`
+ * 視覺回呼,而唯一的呼叫端讀的是 `ev.data.arriveVfxKey` —— **零個寫入端的幽靈
+ * 欄位**,所以那條回呼從第一天起就沒有響過一次。⛔ 修法不是補上那個欄位:
+ * 落點特效寫在技能 JSON 的 `onArrive: [{ kind: "spawnVfx", … }]` 就好,它走
+ * sim 的延遲班表 ⇒ **特效與傷害在同一 tick 同一點**。客戶端再排一次是第二個
+ * 住處,而且會跟傷害差幾幀（第〇·四／第〇·五守則）。
  */
 import type { Scene } from "@babylonjs/core/scene";
 import type { AssetContainer } from "@babylonjs/core/assetContainer";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import {
   modelFxAxisCorrection,
-  modelFxInstanceCount,
-  modelFxLifeSec,
-  modelFxPose,
+  modelFxPoseFromWire,
+  modelFxWireLifeSec,
   type ModelFxLongAxis,
-  type ModelFxMotionSpec,
-  type ModelFxOrigin,
-  type Vec3Like,
+  type ModelFxSpawnEvent,
+  type ModelFxSpawnInstance,
 } from "./modelFxPath";
 
 /** 一個 `model@1` 文件裡這個 rig 需要的三格。 */
@@ -48,6 +52,8 @@ export interface ModelFxModelDoc {
    * 兩邊必須拿到同一個答案（第〇·四守則）。
    */
   fxLongAxis?: ModelFxLongAxis;
+  /** ⭐ 移動特效離地多高（`model@1.fxSpawnHeight`）。缺席 ⇒ 0 ＝ 今天的行為。 */
+  fxSpawnHeight?: number;
 }
 
 export interface ModelFxRigOptions {
@@ -101,14 +107,12 @@ interface LiveModelFx {
   root: TransformNode;
   axis: TransformNode;
   modelKey: string;
-  spec: ModelFxMotionSpec;
-  at: ModelFxOrigin;
-  index: number;
+  /** ⭐ sim 解算完的**這一具**（⛔ 不是整發的 spec —— 客戶端不再自己算路徑，GH#606） */
+  inst: ModelFxSpawnInstance;
+  y: number;
+  spinDegPerSec?: number;
   ageSec: number;
   lifeSec: number;
-  /** 已經呼叫過 onArriveFx（一次就好，⛔ 不是每一幀） */
-  fired: boolean;
-  onArriveFx?: (at: Vec3Like) => void;
 }
 
 export class ModelFxRig {
@@ -157,20 +161,23 @@ export class ModelFxRig {
    * ⚠️ 撞到 `maxLive` 時**直接不生**,⛔ 不排隊 —— 一個遲到的特效比沒有更糟
    * (它會在事情結束之後才出現)。這與 `emitterBudget` 的 fail-fast 同一個立場。
    */
-  spawn(
-    spec: ModelFxMotionSpec,
-    at: ModelFxOrigin,
-    onArriveFx?: (at: Vec3Like) => void,
-  ): number {
+  /**
+   * ⭐ 吃 **`modelFxSpawn` 的線路酬載**（GH#606）。
+   *
+   * ⛔ 舊簽章是 `spawn(spec, at)` —— 而**出貨路徑從來沒有那樣呼叫過它**：
+   * sim 送的是 `{ caster, modelKey, instances, … }`，客戶端讀的是 `ev.data.spec`，
+   * 兩邊從第一天起就對不上。⚠️ 而 `modelFxRig.test.ts` 一直是綠的，因為
+   * **它自己造了一個 spec 餵進來**（第二守則失敗形態⑤：被測的不是出貨的那個）。
+   */
+  spawn(ev: ModelFxSpawnEvent): number {
     if (this.disposed) return 0;
-    const doc = this.opts.resolveModel(spec.modelKey);
+    const doc = this.opts.resolveModel(ev.modelKey);
     if (!doc) return 0;
-    this.ensureContainer(spec.modelKey, doc.glbPath);
+    this.ensureContainer(ev.modelKey, doc.glbPath);
 
-    const want = modelFxInstanceCount(spec);
     const room = Math.max(0, this.maxLive - this.live.length);
-    const n = Math.min(want, room);
-    const lifeSec = modelFxLifeSec(spec, this.maxEffectSec);
+    const n = Math.min(ev.instances.length, room);
+    const lifeSec = modelFxWireLifeSec(ev.instances, this.maxEffectSec);
 
     // ⭐ 初始姿態:把這份網格烘出來的長軸擺到行進軸上(owner 的「90 度橫放的 beam」)。
     // ⚠️ 它掛在**內**層,所以 `spinDegPerSec` 的翻滾繞的是已經橫放好的那根長軸。
@@ -178,23 +185,23 @@ export class ModelFxRig {
 
     let made = 0;
     for (let i = 0; i < n; i++) {
-      const nodes = this.acquire(spec.modelKey);
+      const inst = ev.instances[i];
+      if (!inst) break;
+      const nodes = this.acquire(ev.modelKey);
       if (!nodes) break;
       const { root, axis } = nodes;
-      root.scaling.setAll((doc.scale ?? 1) * (spec.scale ?? 1));
+      root.scaling.setAll((doc.scale ?? 1) * (ev.scale ?? 1));
       axis.rotation.set(axisEuler.x, axisEuler.y, axisEuler.z);
       root.setEnabled(true);
       const item: LiveModelFx = {
         root,
         axis,
-        modelKey: spec.modelKey,
-        spec,
-        at,
-        index: i,
+        modelKey: ev.modelKey,
+        inst,
+        y: doc.fxSpawnHeight ?? 0,
+        ...(ev.spinDegPerSec !== undefined ? { spinDegPerSec: ev.spinDegPerSec } : {}),
         ageSec: 0,
         lifeSec,
-        fired: false,
-        onArriveFx,
       };
       this.applyPose(item);
       this.live.push(item);
@@ -215,20 +222,23 @@ export class ModelFxRig {
     for (let k = this.live.length - 1; k >= 0; k--) {
       const item = this.live[k]!;
       item.ageSec += dt;
-      const pose = this.applyPose(item);
-      if (pose.arrived && !item.fired) {
-        item.fired = true;
-        item.onArriveFx?.({ x: pose.x, y: pose.y, z: pose.z });
-      }
+      this.applyPose(item);
       if (item.ageSec >= item.lifeSec) {
-        if (!item.fired) {
-          item.fired = true;
-          item.onArriveFx?.({ x: pose.x, y: pose.y, z: pose.z });
-        }
         this.live.splice(k, 1);
         this.release(item);
       }
     }
+  }
+
+  /**
+   * 每一具活著的實例**現在**在哪（測試用）。
+   *
+   * ⭐ 它存在的理由是 GH#606：守衛必須問「模型有沒有真的出現在 sim 算的那條線上」，
+   * 而那個答案只在 Babylon 節點上。⛔ 讀 `spec` 之類的輸入回答不了 ——
+   * 那正是舊守衛全綠的方式（失敗形態⑤）。
+   */
+  livePositions(): { x: number; y: number; z: number }[] {
+    return this.live.map((i) => ({ x: i.root.position.x, y: i.root.position.y, z: i.root.position.z }));
   }
 
   /** 回合邊界:全部收回 free-list（⛔ 不 dispose —— 下一回合還要用）。 */
@@ -270,8 +280,12 @@ export class ModelFxRig {
 
   // ── 內部 ──────────────────────────────────────────────────────────────────
 
-  private applyPose(item: LiveModelFx): ReturnType<typeof modelFxPose> {
-    const pose = modelFxPose(item.spec, item.at, item.index, item.ageSec);
+  private applyPose(item: LiveModelFx): ReturnType<typeof modelFxPoseFromWire> {
+    const pose = modelFxPoseFromWire(
+      item.inst,
+      { y: item.y, ...(item.spinDegPerSec !== undefined ? { spinDegPerSec: item.spinDegPerSec } : {}) },
+      item.ageSec,
+    );
     item.root.position.set(pose.x, pose.y, pose.z);
     // yaw 繞世界 Y,roll 繞模型自己的前方軸(Babylon 的 Z)。
     // ⭐ 長軸修正住在**子**節點(`axis`)上,所以這裡的 roll 繞的是**已經橫放好的**

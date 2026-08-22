@@ -12,20 +12,29 @@ import { describe, expect, it } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { ModelFxRig } from "./modelFxRig";
-import type { ModelFxMotionSpec } from "./modelFxPath";
+import type { ModelFxSpawnEvent } from "./modelFxPath";
 import { ScreenFxLayer } from "../vfx/ScreenFxLayer";
 import { FloatingTextFx } from "../vfx/FloatingTextFx";
 
-const SPEC: ModelFxMotionSpec = {
-  shape: "circle",
+/**
+ * ⭐ **線路形狀**（GH#606）—— `radial count:3`，三個方向由 sim 解算完送來。
+ * ⛔ 舊版這裡是 `ModelFxMotionSpec` ＋ `facingRad`，而出貨路徑從來不產生它。
+ */
+const WIRE: ModelFxSpawnEvent = {
+  caster: 1 as never,
   modelKey: "fx.test.orb",
   path: "radial",
   speed: 10,
-  distance: 5,
-  count: 3,
+  x: 0,
+  z: 0,
+  zone: 0,
   spinDegPerSec: 720,
+  instances: [
+    { x: 0, z: 0, dx: 1, dz: 0, dist: 5, durationSec: 0.5 },
+    { x: 0, z: 0, dx: -0.5, dz: 0.866, dist: 5, durationSec: 0.5 },
+    { x: 0, z: 0, dx: -0.5, dz: -0.866, dist: 5, durationSec: 0.5 },
+  ],
 };
-const AT = { origin: { x: 0, y: 1, z: 0 }, facingRad: 0 };
 const VIEWER = { isCaster: true, isVictim: true };
 
 describe("moving-model FX rig", () => {
@@ -36,7 +45,7 @@ describe("moving-model FX rig", () => {
       loadContainer: () => Promise.resolve(null),
     });
 
-    expect(rig.spawn(SPEC, AT)).toBe(3);
+    expect(rig.spawn(WIRE)).toBe(3);
     expect(rig.liveCount).toBe(3);
     expect(rig.pooledCount).toBe(0);
 
@@ -45,26 +54,12 @@ describe("moving-model FX rig", () => {
     expect(rig.liveCount).toBe(0);
     expect(rig.pooledCount).toBe(3); // ← 回收發生了
 
-    rig.spawn(SPEC, AT);
+    rig.spawn(WIRE);
     expect(rig.liveCount).toBe(3);
     expect(rig.pooledCount).toBe(0); // ← 重用發生了（⛔ 沒有新造）
 
     rig.resetForRound();
     expect(rig.liveCount).toBe(0);
-    rig.dispose();
-  });
-
-  it("落點回呼只發一次（莉娜龍破斬的爆炸⛔ 不是每幀一顆）", () => {
-    const scene = new Scene(new NullEngine());
-    const rig = new ModelFxRig(scene, {
-      resolveModel: () => ({ glbPath: "a.glb" }),
-      loadContainer: () => Promise.resolve(null),
-    });
-    let hits = 0;
-    rig.spawn({ ...SPEC, shape: "single", path: "forward" }, AT, () => hits++);
-    rig.tick(600);
-    rig.tick(600);
-    expect(hits).toBe(1);
     rig.dispose();
   });
 });

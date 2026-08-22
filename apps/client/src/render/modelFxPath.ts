@@ -20,8 +20,13 @@
  * 全部由呼叫端從技能 JSON 帶進來，這個檔一個字面平衡值都沒有。
  */
 
-/** 路徑家族 —— 逐字照 L1／L2 共同約定的介面。 */
-export type ModelFxPath = "forward" | "toTarget" | "orbit" | "radial";
+import type {
+  ModelFxSpawnEvent,
+  ModelFxSpawnInstance,
+} from "@ggd/shared/sim/effects/spawnModelFx";
+
+// ⭐ 契約型別**從 sim 那一側 import**,⛔ 不在這裡抄一份（GH#606 的根治）。
+export type { ModelFxSpawnEvent, ModelFxSpawnInstance };
 
 /**
  * ⭐ 這一份 .glb 的**長軸**烘在自己的哪一軸上（`model@1.fxLongAxis`）。
@@ -72,35 +77,10 @@ export function modelFxAxisCorrection(axis: ModelFxLongAxis | undefined): ModelF
   return NO_AXIS_CORRECTION;
 }
 
-/** `spawnModelFx` 的可見那一半（⛔ 不含 onArrive/onTouch 的 EffectDef[]，那是引擎的）。 */
-export interface ModelFxMotionSpec {
-  shape: "single" | "circle";
-  modelKey: string;
-  path: ModelFxPath;
-  /** 世界單位／秒。`orbit` 時是**切線**速度，角速度由半徑推出來 */
-  speed: number;
-  /** 走多遠（forward/radial），也是 `orbit` 的半徑 */
-  distance?: number;
-  /** radial/orbit：幾個實例等分一圈 */
-  count?: number;
-  /** ⭐ 翻滾：繞自己的**行進軸**轉（度／秒） */
-  spinDegPerSec?: number;
-  scale?: number;
-  lifeSec?: number;
-}
-
 export interface Vec3Like {
   x: number;
   y: number;
   z: number;
-}
-
-/** 發射當下的場景資訊。`facingRad` 是施法者朝向（世界 Y 軸偏航）。 */
-export interface ModelFxOrigin {
-  origin: Vec3Like;
-  facingRad: number;
-  /** `toTarget` 用；缺席時 `toTarget` 退化成 `forward`（fail-open，但呼叫端會拿到 usedFallback） */
-  target?: Vec3Like;
 }
 
 /** 一個實例在某個時刻的姿態。 */
@@ -112,119 +92,68 @@ export interface ModelFxPose {
   yawRad: number;
   /** 繞行進軸的翻滾角 */
   rollRad: number;
-  /** 這一格已經走完全程（forward/toTarget/radial）；orbit 永遠 false */
+  /** 這一具已經走完全程；不動的那一種（orbit）永遠 false */
   arrived: boolean;
 }
 
-/** 一支 `spawnModelFx` 會生幾個實例。`single` 恆為 1，`circle` 吃 `count`。 */
-export function modelFxInstanceCount(spec: ModelFxMotionSpec): number {
-  if (spec.shape === "single") return 1;
-  const n = Math.floor(spec.count ?? 1);
-  return n > 0 ? n : 1;
-}
-
 /**
- * 一個實例活多久（秒）。
+ * ⛔⛔ **這個檔在 2026-08-23 之前自己重算了一次路徑,而那份是死的（GH#606）。**
  *
- * 優先序：明寫的 `lifeSec` > 走完全程要的時間（`distance / speed`）> 一個保底。
- * ⚠️ 沒有上界的話一支忘了寫 `distance` 的技能會留下永久的孤兒（#131 的形狀），
- * 所以 `maxSec` 是**硬**上限，⛔ 不是建議。
- */
-export function modelFxLifeSec(spec: ModelFxMotionSpec, maxSec: number): number {
-  const explicit = spec.lifeSec;
-  if (explicit !== undefined && explicit > 0) return Math.min(explicit, maxSec);
-  const dist = spec.distance;
-  if (dist !== undefined && dist > 0 && spec.speed > 0) {
-    return Math.min(dist / spec.speed, maxSec);
-  }
-  return maxSec;
-}
-
-const TAU = Math.PI * 2;
-
-/**
- * 第 `index` 個實例在 `tSec` 時的姿態。
+ * 舊版匯出 `modelFxPose(spec, at, index, t)` —— 它從 `ModelFxMotionSpec` ＋
+ * `facingRad` 重新推導方向、等分角、行進距離。⛔ 三個問題,每一個都獨立致命：
  *
- * ⭐ 純函式、⛔ 無狀態 —— 所以「暫停 / 倒帶 / 錄影逐格步進」都跟即時播放走同一條路
- * （`W3xEmitterRig` 的 `pendingStartAtSec` 註解記過同一個坑：任何靠 wall clock
- * 的東西一暫停就漂掉）。
+ * | | 舊的客戶端重算 | sim（傷害真的發生的地方） |
+ * |---|---|---|
+ * | `radial` 等分基準 | `facingRad + (i/n)·2π`（跟著施法者轉） | `ringPoints` 的**常數表**（⛔ 不跟著轉） |
+ * | 行進距離 | `speed·t`,**不受 `lifeSec` 夾** | `min(travel, speed·dt·ticks)` |
+ * | `circle` 側向排開 | 有（`lateral`） | ⛔ **沒有** |
+ *
+ * ⇒ 就算 payload 沒接錯,畫面上的光束也會**掃過與傷害不同的格子**。
+ *
+ * ⭐ 現在只有**一份**路徑數學,住在 `sim/effects/spawnModelFx.ts`,解算完的結果
+ * 逐具走線路過來。這裡只負責**把它變成姿態** —— ⛔ 一個決策都不做。
+ * （第〇·四守則的形狀:同一個答案不可以有第二個住處。）
  */
-export function modelFxPose(
-  spec: ModelFxMotionSpec,
-  at: ModelFxOrigin,
-  index: number,
+
+/** 一具實例在 `tSec` 時的姿態。⛔ 純函式、無狀態 —— 暫停／倒帶／逐格步進走同一條路。 */
+export function modelFxPoseFromWire(
+  inst: ModelFxSpawnInstance,
+  opts: { y?: number; spinDegPerSec?: number },
   tSec: number,
 ): ModelFxPose {
-  const n = modelFxInstanceCount(spec);
-  const i = Math.min(Math.max(Math.floor(index), 0), n - 1);
   const t = tSec > 0 ? tSec : 0;
-  const speed = spec.speed > 0 ? spec.speed : 0;
-  const rollRad = ((spec.spinDegPerSec ?? 0) * Math.PI) / 180 * t;
-  const o = at.origin;
+  const rollRad = (((opts.spinDegPerSec ?? 0) * Math.PI) / 180) * t;
+  const y = opts.y ?? 0;
 
-  if (spec.path === "orbit") {
-    const radius = spec.distance !== undefined && spec.distance > 0 ? spec.distance : 1;
-    // 切線速度 → 角速度。半徑越大轉越慢,這樣同一組參數在大小圈上看起來一樣快。
-    const omega = speed / radius;
-    const ang = at.facingRad + (i / n) * TAU + omega * t;
-    return {
-      x: o.x + Math.sin(ang) * radius,
-      y: o.y,
-      z: o.z + Math.cos(ang) * radius,
-      // 面向切線方向(繞著跑的東西頭要朝前)
-      yawRad: ang + Math.PI / 2,
-      rollRad,
-      arrived: false,
-    };
+  // ⚠️ `dx=dz=0` = sim 說這一具**不動**（`orbit` 的環上一點）。
+  // ⛔ 不要在這裡「補上」繞圈 —— sim 的 `onTouch` 班表用的是固定圓心,
+  //    客戶端自己轉起來就是「畫面在轉、傷害在原地」。
+  if (inst.dx === 0 && inst.dz === 0) {
+    return { x: inst.x, y, z: inst.z, yawRad: 0, rollRad, arrived: false };
   }
 
-  // 直線家族:先決定方向與全長,再走 min(speed*t, span)。
-  let dirX: number;
-  let dirZ: number;
-  let span: number;
-
-  if (spec.path === "radial") {
-    const ang = at.facingRad + (i / n) * TAU;
-    dirX = Math.sin(ang);
-    dirZ = Math.cos(ang);
-    span = spec.distance !== undefined && spec.distance > 0 ? spec.distance : 0;
-  } else if (spec.path === "toTarget" && at.target) {
-    const dx = at.target.x - o.x;
-    const dz = at.target.z - o.z;
-    const len = Math.hypot(dx, dz);
-    if (len > 1e-6) {
-      dirX = dx / len;
-      dirZ = dz / len;
-    } else {
-      dirX = Math.sin(at.facingRad);
-      dirZ = Math.cos(at.facingRad);
-    }
-    // ⚠️ `toTarget` 的全長是**到目標的距離**,⛔ 不是 `distance` ——
-    // 一支寫了 distance 的指定型技能不應該飛過頭。distance 只當上界。
-    span = spec.distance !== undefined && spec.distance > 0 ? Math.min(len, spec.distance) : len;
-  } else {
-    // forward,以及 toTarget 缺目標時的退化
-    dirX = Math.sin(at.facingRad);
-    dirZ = Math.cos(at.facingRad);
-    span = spec.distance !== undefined && spec.distance > 0 ? spec.distance : 0;
-  }
-
-  // `circle` + 直線家族(非 radial):等分一個側向排開,這樣「一排光束」不會疊成一根。
-  let lateral = 0;
-  if (spec.shape === "circle" && spec.path !== "radial" && n > 1) {
-    lateral = (i - (n - 1) / 2) * (spec.scale ?? 1);
-  }
-
-  const travelled = span > 0 ? Math.min(speed * t, span) : speed * t;
-  const px = o.x + dirX * travelled + -dirZ * lateral;
-  const pz = o.z + dirZ * travelled + dirX * lateral;
-
+  const frac = inst.durationSec > 0 ? Math.min(1, t / inst.durationSec) : 1;
+  const travelled = inst.dist * frac;
   return {
-    x: px,
-    y: o.y,
-    z: pz,
-    yawRad: Math.atan2(dirX, dirZ),
+    x: inst.x + inst.dx * travelled,
+    y,
+    z: inst.z + inst.dz * travelled,
+    yawRad: Math.atan2(inst.dx, inst.dz),
     rollRad,
-    arrived: span > 0 && travelled >= span - 1e-6,
+    // ⭐ 用**時間**判抵達,⛔ 不是距離 —— `dist` 為 0 的一具（速度 0 / 目標貼臉）
+    //    用距離判會永遠 arrived=true,落點回呼在第 0 幀就響。
+    arrived: frac >= 1 - 1e-6,
   };
+}
+
+/**
+ * 這一發活多久（秒）＝ 最久的那一具。
+ *
+ * ⚠️ `maxSec` 是**硬**上限（`vfxCleanupPolicy` 的三秒鐵則,owner 2026-08-22：
+ * 「不管什麼特效⋯生命週期最多維持三秒」）,⛔ 不是建議。
+ */
+export function modelFxWireLifeSec(insts: readonly ModelFxSpawnInstance[], maxSec: number): number {
+  let m = 0;
+  for (const i of insts) if (i.durationSec > m) m = i.durationSec;
+  return Math.min(m > 0 ? m : maxSec, maxSec);
 }

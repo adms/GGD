@@ -24,18 +24,27 @@ import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { ModelFxRig } from "./modelFxRig";
-import type { ModelFxLongAxis, ModelFxMotionSpec } from "./modelFxPath";
+import type { ModelFxLongAxis, ModelFxSpawnEvent } from "./modelFxPath";
 
-const SPEC: ModelFxMotionSpec = {
-  shape: "single",
+/** ⚠️ 刻意不是軸向的角度 —— 0/90 度會讓一個壞掉的實作剛好蒙對。 */
+const FACING = 0.9;
+/**
+ * ⭐ **線路形狀**（GH#606）—— sim 送的就是這個：方向與距離都**已經解算完**。
+ * ⛔ 舊版這裡是一個 `ModelFxMotionSpec`，而出貨路徑從來不產生那個形狀。
+ */
+const WIRE: ModelFxSpawnEvent = {
+  caster: 1 as never,
   modelKey: "fx.beam",
   path: "forward",
   speed: 10,
-  distance: 8,
+  x: 0,
+  z: 0,
+  zone: 0,
   spinDegPerSec: 720, // ⭐ 翻滾:對齊不可以被它甩掉
+  instances: [
+    { x: 0, z: 0, dx: Math.sin(FACING), dz: Math.cos(FACING), dist: 8, durationSec: 0.8 },
+  ],
 };
-/** ⚠️ 刻意不是軸向的角度 —— 0/90 度會讓一個壞掉的實作剛好蒙對。 */
-const FACING = 0.9;
 const LOCAL: Record<ModelFxLongAxis, Vector3> = {
   x: new Vector3(1, 0, 0),
   y: new Vector3(0, 1, 0),
@@ -46,10 +55,15 @@ const LOCAL: Record<ModelFxLongAxis, Vector3> = {
 function alignment(declared: ModelFxLongAxis | undefined, probe: ModelFxLongAxis): number {
   const scene = new Scene(new NullEngine());
   const rig = new ModelFxRig(scene, {
-    resolveModel: () => ({ glbPath: "assets/models/beam.glb", scale: 1, fxLongAxis: declared }),
+    resolveModel: () => ({
+      glbPath: "assets/models/beam.glb",
+      scale: 1,
+      fxSpawnHeight: 1,
+      ...(declared !== undefined ? { fxLongAxis: declared } : {}),
+    }),
     loadContainer: () => Promise.resolve(null),
   });
-  rig.spawn(SPEC, { origin: { x: 0, y: 1, z: 0 }, facingRad: FACING });
+  rig.spawn(WIRE);
   rig.tick(250); // 翻滾了 180°
   const node = scene.transformNodes.find((n) => n.name.startsWith("modelfx-axis-"));
   expect(node).toBeDefined();
