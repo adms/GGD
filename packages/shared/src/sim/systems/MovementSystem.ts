@@ -26,7 +26,7 @@ import { sub, len, scale, normalize, addScaled, dot, cross, perp, lenSq } from "
 import { moveWithCollision, separatePair, clampToBoundary, pushOutOfObstacle } from "../collision/resolve";
 import { flightIgnoresObstacles, flightIgnoresUnits, flightStaysInBoundary } from "../flight";
 import { steerAroundObstacles } from "../collision/avoid";
-import { nextWaypoint } from "../map/navFollow";
+import { walkWaypoint, navRules } from "../navRoute";
 import { activeObstacles, heldGates } from "../map/gates";
 import { Stat } from "../stats/statTypes";
 import { facingLockDir } from "../facingLock";
@@ -183,9 +183,15 @@ export function movementSystem(world: SimWorld): void {
       // 「下一個路徑點」。路徑是產生器離線烘焙好的 next-hop 表，runtime 只查表 ——
       // 零搜尋、零三角函式、零 Map 迭代序問題（三個約束缺一不可）。
       //
-      // ⚠️ `nextWaypoint` 回 null 有兩種意思（不需要繞路 / 到不了），兩種的處置
+      // ⚠️ `walkWaypoint` 回 null 有兩種意思（不需要繞路 / 到不了），兩種的處置
       // 一樣：直接朝最終目的地走，也就是**既有行為**。沒有導航表的 6 張手寫場地
       // 因此一個字都不用改。
+      //
+      // ⭐ 2026-08-23 —— 查表的**對象換了**（`sim/navRoute.ts`）。烘焙出來的
+      // `nextHop` 有 24–36 % 指向一堵牆的另一邊（量到的，見那支檔頭），而這 6 張
+      // graybox 的障礙物全部是 `box`，`steerAroundObstacles` **只認圓形** ⇒ 切向
+      // 分量 0 ⇒ 原地卡死。修正表用**真實碰撞幾何＋身體半徑**重算鄰接，
+      // 每一跳都保證走得過去。
       const zoneForNav = world.arena.zones[t.zone] ?? world.arena.zones[0];
       // ⭐ GH#324 —— 這一 tick 真的擋路的障礙物（開著的門不擋人）。
       // ⚠️ 沒有 gateSchedule 時 `activeObstacles` 原樣回傳 ⇒ 既有場地零成本。
@@ -208,7 +214,23 @@ export function movementSystem(world: SimWorld): void {
                       .map((eid) => world.transform.get(eid)!.pos),
                   ),
             );
-      const waypoint = nextWaypoint(zoneForNav?.nav, t.pos, nav.moveTarget);
+      // ⭐ 飛行：**不查導航表**（`navRoute.ts` 的 `flyersGoStraight`）。
+      //    飛行的定義就是「穿過牆與柱子」，而導航表存在的唯一理由是繞開它們 ——
+      //    讓她照著地面路線繞路是兩個機制互相矛盾，而且那條繞路是**客戶端預測
+      //    算不出來的**（owner 2026-08-23:「後端計算與前端預測方法不同」）。
+      //    ⚠️ 讀一次存起來：下面挑 `dir` 的那一行也要問同一個問題，
+      //    ⛔ 兩次呼叫是兩份會漂走的答案。
+      const flies = flightIgnoresObstacles(world, id);
+      const waypoint =
+        zoneForNav === undefined || (flies && navRules().flyersGoStraight)
+          ? null
+          : walkWaypoint({
+              zone: zoneForNav,
+              from: t.pos,
+              to: nav.moveTarget,
+              radius: t.radius,
+              liveObstacles,
+            });
       const to = sub(waypoint ?? nav.moveTarget, t.pos);
       const d = len(to);
       if (d > 1e-6) {
@@ -251,7 +273,7 @@ export function movementSystem(world: SimWorld): void {
         // to walk through (sim/mobBossNoClip.test.ts pins the number).
         // Avoidance is also the only obstacle path that can oscillate, which is
         // the other half of owner's 「被卡住永遠走不到」.
-        const dir = flightIgnoresObstacles(world, id)
+        const dir = flies
           ? { x: to.x / d, z: to.z / d }
           : steerAroundObstacles(t.pos, t.radius, { x: to.x / d, z: to.z / d }, d, zone.obstacles);
         // body turns toward the move direction; motion is the ordered direction.
@@ -271,7 +293,7 @@ export function movementSystem(world: SimWorld): void {
         // body at a wall, so a flyer steps straight through instead. The
         // boundary is NOT skipped here — the post-separation sweep below still
         // clamps her to the arena disc — so this cannot walk anybody off the map.
-        if (flightIgnoresObstacles(world, id)) {
+        if (flies) {
           body.pos = { x: body.pos.x + dir.x * stepLen, z: body.pos.z + dir.z * stepLen };
           // ⚠️ THE BOUNDARY IS CLAMPED **HERE**, NOT ONLY IN THE POST PASS.
           // `t.vel` two lines below is derived from this step's real

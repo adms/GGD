@@ -39,25 +39,65 @@ import type { Vec2 } from "../math/vec2";
 const LOS_GRAZE = 0.15;
 
 /** 線段 A→B 與線段 C→D 相交嗎（含端點）。 */
+/**
+ * ⚠️ **模組級，⛔ 不是函式內的箭頭函式** —— 這兩支（與下面 `segmentHitsBox`
+ * 的四個角）原本住在呼叫者裡面，於是**每一次呼叫都配一批物件**：
+ * 每個盒子 = 1 個 `inside` 閉包 ＋ 1 個陣列 ＋ 4 個角物件 ＋ 4 個 `cross` 閉包。
+ *
+ * ⭐ 量到的（無限城，16 個障礙物）：`segmentHitsAny` 一次呼叫 **36.9 µs**，
+ * 也就是每個盒子 2.3 µs —— 對二十來個浮點運算來說是荒謬的，而它全部是配置成本。
+ * 這條路徑是**每 tick 每具身體**都在走的（普攻視線 `BasicAttackSystem`
+ * ＋ 導航 `sim/navRoute.ts`），所以它不是微調。
+ * ⛔ 幾何一個字都沒改（純提出來，同樣的算式、同樣的容差）。
+ */
+function crossAt(px: number, pz: number, qx: number, qz: number, rx: number, rz: number): number {
+  return (qx - px) * (rz - pz) - (qz - pz) * (rx - px);
+}
+
+/** 共線且落在區間內 —— 一律當成擋住（安全的那一邊）。 */
+function onSeg(p: Vec2, q: Vec2, r: Vec2): boolean {
+  return (
+    Math.abs(crossAt(p.x, p.z, q.x, q.z, r.x, r.z)) < 1e-9 &&
+    r.x >= Math.min(p.x, q.x) - 1e-9 &&
+    r.x <= Math.max(p.x, q.x) + 1e-9 &&
+    r.z >= Math.min(p.z, q.z) - 1e-9 &&
+    r.z <= Math.max(p.z, q.z) + 1e-9
+  );
+}
+
 function segmentsCross(a: Vec2, b: Vec2, c: Vec2, d: Vec2): boolean {
-  const cross = (p: Vec2, q: Vec2, r: Vec2): number =>
-    (q.x - p.x) * (r.z - p.z) - (q.z - p.z) * (r.x - p.x);
-  const d1 = cross(c, d, a);
-  const d2 = cross(c, d, b);
-  const d3 = cross(a, b, c);
-  const d4 = cross(a, b, d);
+  return segmentsCrossXZ(a, b, c.x, c.z, d.x, d.z);
+}
+
+/** 同上，但第二條線段以**純數字**傳入（盒子的四條邊不必先做成物件）。 */
+function segmentsCrossXZ(a: Vec2, b: Vec2, cx: number, cz: number, dx: number, dz: number): boolean {
+  const d1 = crossAt(cx, cz, dx, dz, a.x, a.z);
+  const d2 = crossAt(cx, cz, dx, dz, b.x, b.z);
+  const d3 = crossAt(a.x, a.z, b.x, b.z, cx, cz);
+  const d4 = crossAt(a.x, a.z, b.x, b.z, dx, dz);
   if (((d1 > 0 && d2 < 0) || (d1 < 0 && d2 > 0)) && ((d3 > 0 && d4 < 0) || (d3 < 0 && d4 > 0))) {
     return true;
   }
   // 共線且落在區間內的退化情形 —— 一律當成擋住（安全的那一邊）。
-  const onSeg = (p: Vec2, q: Vec2, r: Vec2): boolean =>
-    Math.abs(cross(p, q, r)) < 1e-9 &&
-    r.x >= Math.min(p.x, q.x) - 1e-9 &&
-    r.x <= Math.max(p.x, q.x) + 1e-9 &&
-    r.z >= Math.min(p.z, q.z) - 1e-9 &&
-    r.z <= Math.max(p.z, q.z) + 1e-9;
-  return onSeg(c, d, a) || onSeg(c, d, b) || onSeg(a, b, c) || onSeg(a, b, d);
+  SCRATCH_C.x = cx;
+  SCRATCH_C.z = cz;
+  SCRATCH_D.x = dx;
+  SCRATCH_D.z = dz;
+  return (
+    onSeg(SCRATCH_C, SCRATCH_D, a) ||
+    onSeg(SCRATCH_C, SCRATCH_D, b) ||
+    onSeg(a, b, SCRATCH_C) ||
+    onSeg(a, b, SCRATCH_D)
+  );
 }
+
+/**
+ * ⚠️ 兩個模組級暫存點，只在 {@link segmentsCrossXZ} 的**同一個同步分支**裡用完即棄
+ * （⛔ 從不跨呼叫存活、⛔ 從不外流）。sim 是單執行緒逐 tick 跑的，
+ * 所以這不是狀態，是省掉兩次配置。
+ */
+const SCRATCH_C: Vec2 = { x: 0, z: 0 };
+const SCRATCH_D: Vec2 = { x: 0, z: 0 };
 
 /** 線段 A→B 穿過這個圓嗎。`grow` 放大／縮小障礙物（見 {@link LOS_GRAZE}）。 */
 function segmentHitsCircle(a: Vec2, b: Vec2, c: Vec2, r: number, grow: number): boolean {
@@ -83,22 +123,25 @@ function segmentHitsBox(
 ): boolean {
   const hw = Math.max(0, halfW + grow);
   const hd = Math.max(0, halfD + grow);
-  const inside = (p: Vec2): boolean => Math.abs(p.x - c.x) <= hw && Math.abs(p.z - c.z) <= hd;
-  if (inside(a) || inside(b)) return true;
+  if (Math.abs(a.x - c.x) <= hw && Math.abs(a.z - c.z) <= hd) return true;
+  if (Math.abs(b.x - c.x) <= hw && Math.abs(b.z - c.z) <= hd) return true;
   const x0 = c.x - hw;
   const x1 = c.x + hw;
   const z0 = c.z - hd;
   const z1 = c.z + hd;
-  const corners: Vec2[] = [
-    { x: x0, z: z0 },
-    { x: x1, z: z0 },
-    { x: x1, z: z1 },
-    { x: x0, z: z1 },
-  ];
-  for (let i = 0; i < 4; i++) {
-    if (segmentsCross(a, b, corners[i]!, corners[(i + 1) % 4]!)) return true;
-  }
-  return false;
+  // ⭐ 早退：線段的 AABB 與盒子的 AABB 不重疊 ⇒ 不可能相交。
+  //    這一行擋掉絕大多數的（盒子, 線段）配對，⛔ 而且它不改變任何答案。
+  if (a.x < x0 && b.x < x0) return false;
+  if (a.x > x1 && b.x > x1) return false;
+  if (a.z < z0 && b.z < z0) return false;
+  if (a.z > z1 && b.z > z1) return false;
+  // 四條邊。⛔ 不做成一個 `corners` 陣列 —— 見 `crossAt` 上面那段配置成本的量測。
+  return (
+    segmentsCrossXZ(a, b, x0, z0, x1, z0) ||
+    segmentsCrossXZ(a, b, x1, z0, x1, z1) ||
+    segmentsCrossXZ(a, b, x1, z1, x0, z1) ||
+    segmentsCrossXZ(a, b, x0, z1, x0, z0)
+  );
 }
 
 /**

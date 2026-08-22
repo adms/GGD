@@ -55,6 +55,11 @@
 import { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { orderSystem } from "@ggd/shared/sim/systems/OrderSystem";
 import { movementSystem, turnToward } from "@ggd/shared/sim/systems/MovementSystem";
+// ⭐ 飛行 (owner 2026-08-23「後端計算與前端預測方法不同」) —— 影子跑的是**出貨的**
+//    `flightSystem`，⛔ 不是客戶端自己寫的一個 if。理由與涵蓋範圍寫在 localFlight.ts。
+import { flightSystem, type FlightGrant } from "@ggd/shared/sim/flight";
+import { innateFlightSource } from "./localFlight";
+import type { ModifierSource } from "@ggd/shared/sim/stats/modifiers";
 import { facingLockDir } from "@ggd/shared/sim/facingLock";
 import { AimHold } from "@ggd/shared/sim/aimHold";
 import { SKELETON_ARENA, type ArenaDef } from "@ggd/shared/sim/world/ArenaDef";
@@ -153,6 +158,8 @@ export class LocalPrediction {
    * 呼叫端就不裝這個通道）→ 這條路整條 no-op，行為退回純 (a)。
    */
   private combatFacingTarget: Vec2 | null = null;
+  /** 呼叫端明說的飛行授予（道具/增益/變身）—— 見 {@link LocalPrediction.setFlight}。 */
+  private explicitFlight: FlightGrant | null = null;
 
   constructor(
     arena: ArenaDef = SKELETON_ARENA,
@@ -191,6 +198,8 @@ export class LocalPrediction {
       sources: [],
     });
     this.id = id;
+    this.explicitFlight = null;
+    this.syncFlightSources();
     this.history = [];
     this.baseOrder = null;
     this.aimHold.clear();
@@ -220,6 +229,43 @@ export class LocalPrediction {
     if (this.id === null) return;
     const sc = this.world.stats.get(this.id);
     if (sc !== undefined) sc.championId = championId as ChampionId;
+    // ⭐ 變身換卡 ⇒ 天生技換了 ⇒ 飛行也可能換。與 `immobile` 同一個節奏。
+    this.syncFlightSources();
+  }
+
+  /**
+   * ⭐ 掛在身上的飛行授予（道具 / 增益 / 變身 buff），或 null。
+   *
+   * ⚠️ 這是給呼叫端用的**通道**，⛔ 不是裝飾：`GameApp` 手上有權威快照，
+   * 只有它知道這一刻身上掛了什麼。今天沒有人呼叫它（`GameApp.ts` 由別的 lane
+   * 佔用），所以**只有天生技的飛行**被預測得到 —— 完整的涵蓋範圍表寫在
+   * `predict/localFlight.ts` 的檔頭，⛔ 不要以為飛行預測已經全包了。
+   */
+  setFlight(grant: FlightGrant | null): void {
+    this.explicitFlight = grant === null ? null : { ...grant };
+    this.syncFlightSources();
+  }
+
+  /**
+   * 把「天生技的飛行」＋「呼叫端明說的飛行」寫成影子的 `stats.sources`。
+   *
+   * ⚠️ **整份覆寫**而不是 push：影子的 `sources` 除了這裡沒有第二個 writer
+   * （`spawn()` 鋪的是空陣列），所以覆寫是最不會漏掉舊項目的寫法 ——
+   * push 的話變身之後兩張卡的天生技會同時掛著。
+   * ⭐ 解析交給**出貨的** `flightSystem`（在 `tickOnce` 裡跑），⛔ 不在這裡算
+   * `world.flight` —— 那會變成第二個會與伺服器分歧的來源。
+   */
+  private syncFlightSources(): void {
+    if (this.id === null) return;
+    const sc = this.world.stats.get(this.id);
+    if (sc === undefined) return;
+    const out: ModifierSource[] = [];
+    const innate = innateFlightSource(sc.championId);
+    if (innate) out.push(innate);
+    if (this.explicitFlight) {
+      out.push({ id: "predict:flight", kind: "buff", flight: this.explicitFlight });
+    }
+    sc.sources = out;
   }
 
   /** Keep the shadow's speed in sync with authoritative stat changes. */
@@ -519,6 +565,11 @@ export class LocalPrediction {
     intents.set(this.seatId, frame);
     this.world.rebuildGrid();
     orderSystem(this.world, intents);
+    // ⭐ `SimWorld.step()` 的 slot 1d，逐字同一個位置：在 `movementSystem` **之前**
+    //    （晚一格 = 剛取得飛行的那一 tick 仍然會被牆擋住；早一格也不行，見
+    //    `sim/flight.ts::flightSystem` 的註解）。⛔ 少了這一行，`world.flight`
+    //    恆為空 ⇒ 影子永遠是地面單位 ⇒ 飛行英雄每個快照被拉一次。
+    flightSystem(this.world);
     movementSystem(this.world);
     // ⚠️ BEFORE `tick++`, not after. `aimTick`/`facingLock` are both compared
     // against the CURRENT absolute tick (that is how movementSystem asks
