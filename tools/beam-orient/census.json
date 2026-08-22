@@ -1,0 +1,1549 @@
+{
+ "ambiguousRatio": 1.2,
+ "rows": [
+  {
+   "id": "champ.blocky.undead",
+   "glbPath": "assets/models/champions/blocky-undead.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "champ.godie-zombiex",
+   "glbPath": "assets/models/champions/blocky-undead.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "champ.mob.zombie-king",
+   "glbPath": "assets/models/champions/blocky-undead.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "champ.mob.zombie-special",
+   "glbPath": "assets/models/champions/blocky-undead.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "champ.mob.zombie",
+   "glbPath": "assets/models/champions/blocky-undead.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "champ.sela",
+   "glbPath": "assets/models/champions/blocky-mage.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "champ.skin.barbarian",
+   "glbPath": "assets/models/champions/blocky-barbarian.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "champ.skin.rogue",
+   "glbPath": "assets/models/champions/blocky-rogue.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "champ.thorne",
+   "glbPath": "assets/models/champions/blocky-knight.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.1hswd-01",
+   "glbPath": "assets/models/imported/1hswd-01.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "x",
+   "skip": null,
+   "extents": [
+    2.2765,
+    0.5439,
+    0.3791
+   ],
+   "ratio": 4.186,
+   "longAxis": "x",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.awing",
+   "glbPath": "assets/models/imported/awing.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "z",
+   "skip": null,
+   "extents": [
+    1.7885,
+    5.0787,
+    7.9179
+   ],
+   "ratio": 1.559,
+   "longAxis": "z",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.azunyan",
+   "glbPath": "assets/models/imported/azunyan.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    0.7333,
+    1.7,
+    0.9538
+   ],
+   "ratio": 1.782,
+   "longAxis": "y",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.bahamut",
+   "glbPath": "assets/models/imported/bahamut.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    5.179,
+    2.2165,
+    4.7831
+   ],
+   "ratio": 1.083,
+   "longAxis": "x",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.billy",
+   "glbPath": "assets/models/imported/billy.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    3.4783,
+    1.7,
+    3.4783
+   ],
+   "ratio": 1.0,
+   "longAxis": "x",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.blackhole",
+   "glbPath": "assets/models/imported/blackhole.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "no-mesh"
+  },
+  {
+   "id": "imported.blackhole1",
+   "glbPath": "assets/models/imported/blackhole1.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "x",
+   "skip": null,
+   "extents": [
+    7.1111,
+    0.5556,
+    7.1111
+   ],
+   "ratio": 1.0,
+   "longAxis": "x",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.bladestorm-swordeffect",
+   "glbPath": "assets/models/imported/bladestorm-swordeffect.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "x",
+   "skip": null,
+   "extents": [
+    20.1441,
+    12.1281,
+    19.2598
+   ],
+   "ratio": 1.046,
+   "longAxis": "x",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.boxcat",
+   "glbPath": "assets/models/imported/boxcat.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "x",
+   "skip": null,
+   "extents": [
+    0.5556,
+    0.2996,
+    0.5556
+   ],
+   "ratio": 1.0,
+   "longAxis": "x",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.bulbasaur",
+   "glbPath": "assets/models/imported/bulbasaur.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.bwing",
+   "glbPath": "assets/models/imported/bwing.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "y",
+   "skip": null,
+   "extents": [
+    1.7885,
+    5.0787,
+    3.9821
+   ],
+   "ratio": 1.275,
+   "longAxis": "y",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.charlie",
+   "glbPath": "assets/models/imported/charlie.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    2.0115,
+    1.7,
+    0.4301
+   ],
+   "ratio": 1.183,
+   "longAxis": "x",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.cloud",
+   "glbPath": "assets/models/imported/cloud.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.collision",
+   "glbPath": "assets/models/imported/collision.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "no-mesh"
+  },
+  {
+   "id": "imported.crescent",
+   "glbPath": "assets/models/imported/crescent.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "z",
+   "skip": null,
+   "extents": [
+    4.8824,
+    3.3273,
+    9.4603
+   ],
+   "ratio": 1.938,
+   "longAxis": "z",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.darkraor",
+   "glbPath": "assets/models/imported/darkraor.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "x",
+   "skip": null,
+   "extents": [
+    2.5319,
+    2.4958,
+    2.1667
+   ],
+   "ratio": 1.014,
+   "longAxis": "x",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.deathwave",
+   "glbPath": "assets/models/imported/deathwave.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "z",
+   "skip": null,
+   "extents": [
+    7.3285,
+    4.2971,
+    7.5186
+   ],
+   "ratio": 1.026,
+   "longAxis": "z",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.divinering",
+   "glbPath": "assets/models/imported/divinering.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "no-mesh"
+  },
+  {
+   "id": "imported.doom",
+   "glbPath": "assets/models/imported/doom.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "z",
+   "skip": null,
+   "extents": [
+    0.0,
+    6.0606,
+    6.4871
+   ],
+   "ratio": 1.07,
+   "longAxis": "z",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.earthtornado2",
+   "glbPath": "assets/models/imported/earthtornado2.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "x",
+   "skip": null,
+   "extents": [
+    20.1441,
+    12.1281,
+    19.2598
+   ],
+   "ratio": 1.046,
+   "longAxis": "x",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.enchant",
+   "glbPath": "assets/models/imported/enchant.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "no-mesh"
+  },
+  {
+   "id": "imported.fireblast",
+   "glbPath": "assets/models/imported/fireblast.glb",
+   "declared": "x",
+   "usedBy": [
+    "godie-h020.e",
+    "godie-hjai.e"
+   ],
+   "proposed": "x",
+   "skip": null,
+   "extents": [
+    4.0336,
+    2.6725,
+    2.5578
+   ],
+   "ratio": 1.509,
+   "longAxis": "x",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.firefly",
+   "glbPath": "assets/models/imported/firefly.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "y",
+   "skip": null,
+   "extents": [
+    0.0,
+    0.5556,
+    0.5556
+   ],
+   "ratio": 1.0,
+   "longAxis": "y",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.flamessmoke",
+   "glbPath": "assets/models/imported/flamessmoke.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "y",
+   "skip": null,
+   "extents": [
+    0.0,
+    9.5278,
+    9.5278
+   ],
+   "ratio": 1.0,
+   "longAxis": "y",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.fox",
+   "glbPath": "assets/models/imported/fox.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.fox2",
+   "glbPath": "assets/models/imported/fox2.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.frostnova",
+   "glbPath": "assets/models/imported/frostnova.glb",
+   "declared": null,
+   "usedBy": [
+    "godie-n01g.r"
+   ],
+   "proposed": "z",
+   "skip": null,
+   "extents": [
+    18.7141,
+    0.0,
+    19.1954
+   ],
+   "ratio": 1.026,
+   "longAxis": "z",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.goku",
+   "glbPath": "assets/models/imported/goku.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.goku3head",
+   "glbPath": "assets/models/imported/goku3head.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "y",
+   "skip": null,
+   "extents": [
+    2.2092,
+    2.8364,
+    1.5718
+   ],
+   "ratio": 1.284,
+   "longAxis": "y",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.gokuhead",
+   "glbPath": "assets/models/imported/gokuhead.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "z",
+   "skip": null,
+   "extents": [
+    1.0108,
+    1.1737,
+    1.5235
+   ],
+   "ratio": 1.298,
+   "longAxis": "z",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.grandorcaura",
+   "glbPath": "assets/models/imported/grandorcaura.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "x",
+   "skip": null,
+   "extents": [
+    28.1888,
+    3.0049,
+    26.421
+   ],
+   "ratio": 1.067,
+   "longAxis": "x",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.grandundeadaura",
+   "glbPath": "assets/models/imported/grandundeadaura.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "x",
+   "skip": null,
+   "extents": [
+    28.1888,
+    3.0049,
+    26.421
+   ],
+   "ratio": 1.067,
+   "longAxis": "x",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.gumdam",
+   "glbPath": "assets/models/imported/gumdam.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    0.8055,
+    1.7,
+    1.1172
+   ],
+   "ratio": 1.522,
+   "longAxis": "y",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.gx",
+   "glbPath": "assets/models/imported/gx.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "x",
+   "skip": null,
+   "extents": [
+    10.8981,
+    3.9449,
+    3.9101
+   ],
+   "ratio": 2.763,
+   "longAxis": "x",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.gxhuge",
+   "glbPath": "assets/models/imported/gxhuge.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "x",
+   "skip": null,
+   "extents": [
+    108.9814,
+    78.8978,
+    78.2014
+   ],
+   "ratio": 1.381,
+   "longAxis": "x",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.hero-turtle",
+   "glbPath": "assets/models/imported/hero-turtle.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    1.8216,
+    1.7,
+    1.5844
+   ],
+   "ratio": 1.072,
+   "longAxis": "x",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.herobiggon",
+   "glbPath": "assets/models/imported/herobiggon.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.herobuu",
+   "glbPath": "assets/models/imported/herobuu.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.herocloudcyd",
+   "glbPath": "assets/models/imported/herocloudcyd.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "z",
+   "skip": null,
+   "extents": [
+    0.0,
+    8.4375,
+    8.4444
+   ],
+   "ratio": 1.001,
+   "longAxis": "z",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.herocloudkfksword",
+   "glbPath": "assets/models/imported/herocloudkfksword.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "x",
+   "skip": null,
+   "extents": [
+    6.5,
+    5.7986,
+    6.4188
+   ],
+   "ratio": 1.013,
+   "longAxis": "x",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.herocloudstrife",
+   "glbPath": "assets/models/imported/herocloudstrife.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    3.4442,
+    1.8345,
+    2.4571
+   ],
+   "ratio": 1.402,
+   "longAxis": "x",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.heroeva01s2",
+   "glbPath": "assets/models/imported/heroeva01s2.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "y",
+   "skip": null,
+   "extents": [
+    0.0139,
+    1.4271,
+    1.4271
+   ],
+   "ratio": 1.0,
+   "longAxis": "y",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.herofate",
+   "glbPath": "assets/models/imported/herofate.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    0.888,
+    2.0686,
+    0.8957
+   ],
+   "ratio": 2.309,
+   "longAxis": "y",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.herogirl",
+   "glbPath": "assets/models/imported/herogirl.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    2.3166,
+    1.7,
+    0.6483
+   ],
+   "ratio": 1.363,
+   "longAxis": "x",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.herohanzouhattori",
+   "glbPath": "assets/models/imported/herohanzouhattori.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    2.3054,
+    1.7,
+    0.908
+   ],
+   "ratio": 1.356,
+   "longAxis": "x",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.herohehi",
+   "glbPath": "assets/models/imported/herohehi.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.herohimurakenshin",
+   "glbPath": "assets/models/imported/herohimurakenshin.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    2.163,
+    1.8398,
+    1.168
+   ],
+   "ratio": 1.176,
+   "longAxis": "x",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.heroichigo",
+   "glbPath": "assets/models/imported/heroichigo.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.herokunoichi",
+   "glbPath": "assets/models/imported/herokunoichi.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    2.3166,
+    1.7,
+    0.6483
+   ],
+   "ratio": 1.363,
+   "longAxis": "x",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.herokyo",
+   "glbPath": "assets/models/imported/herokyo.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.herolight",
+   "glbPath": "assets/models/imported/herolight.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.herolingtong",
+   "glbPath": "assets/models/imported/herolingtong.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.heroluffeattack",
+   "glbPath": "assets/models/imported/heroluffeattack.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "z",
+   "skip": null,
+   "extents": [
+    6.5972,
+    4.2361,
+    8.5
+   ],
+   "ratio": 1.288,
+   "longAxis": "z",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.heromiku",
+   "glbPath": "assets/models/imported/heromiku.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.heromusashimiyamoto",
+   "glbPath": "assets/models/imported/heromusashimiyamoto.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.heronarutos4effect",
+   "glbPath": "assets/models/imported/heronarutos4effect.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "no-mesh"
+  },
+  {
+   "id": "imported.herooichi",
+   "glbPath": "assets/models/imported/herooichi.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.heropika",
+   "glbPath": "assets/models/imported/heropika.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    4.6938,
+    2.8191,
+    4.6938
+   ],
+   "ratio": 1.0,
+   "longAxis": "x",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.heropikachu",
+   "glbPath": "assets/models/imported/heropikachu.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.heroraichus3",
+   "glbPath": "assets/models/imported/heroraichus3.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "y",
+   "skip": null,
+   "extents": [
+    0.0108,
+    1.4271,
+    1.4271
+   ],
+   "ratio": 1.0,
+   "longAxis": "y",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.herorider",
+   "glbPath": "assets/models/imported/herorider.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.heroryuk",
+   "glbPath": "assets/models/imported/heroryuk.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    3.0619,
+    1.7,
+    3.0771
+   ],
+   "ratio": 1.005,
+   "longAxis": "z",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.herosaber",
+   "glbPath": "assets/models/imported/herosaber.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.herosasuke",
+   "glbPath": "assets/models/imported/herosasuke.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.herosephiroth",
+   "glbPath": "assets/models/imported/herosephiroth.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.heroshana",
+   "glbPath": "assets/models/imported/heroshana.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.heroshanawingsmall",
+   "glbPath": "assets/models/imported/heroshanawingsmall.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "z",
+   "skip": null,
+   "extents": [
+    1.1215,
+    3.1875,
+    4.9722
+   ],
+   "ratio": 1.56,
+   "longAxis": "z",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.herotoshiiemaeda",
+   "glbPath": "assets/models/imported/herotoshiiemaeda.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.heroxelloss",
+   "glbPath": "assets/models/imported/heroxelloss.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.holo",
+   "glbPath": "assets/models/imported/holo.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "y",
+   "skip": null,
+   "extents": [
+    3.8956,
+    6.8018,
+    3.0155
+   ],
+   "ratio": 1.746,
+   "longAxis": "y",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.horse",
+   "glbPath": "assets/models/imported/horse.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.horsehead",
+   "glbPath": "assets/models/imported/horsehead.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    0.2667,
+    1.7,
+    0.2999
+   ],
+   "ratio": 5.669,
+   "longAxis": "y",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.hzyn",
+   "glbPath": "assets/models/imported/hzyn.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    0.3491,
+    1.7,
+    0.8276
+   ],
+   "ratio": 2.054,
+   "longAxis": "y",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.japanesecherry",
+   "glbPath": "assets/models/imported/japanesecherry.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "y",
+   "skip": null,
+   "extents": [
+    18.0,
+    19.5521,
+    16.1667
+   ],
+   "ratio": 1.086,
+   "longAxis": "y",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.kikyou",
+   "glbPath": "assets/models/imported/kikyou.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.konyui",
+   "glbPath": "assets/models/imported/konyui.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    0.6204,
+    1.7,
+    0.6817
+   ],
+   "ratio": 2.494,
+   "longAxis": "y",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.lgcr",
+   "glbPath": "assets/models/imported/lgcr.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    0.5565,
+    1.7,
+    0.8264
+   ],
+   "ratio": 2.057,
+   "longAxis": "y",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.linainvers",
+   "glbPath": "assets/models/imported/linainvers.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.linkstik",
+   "glbPath": "assets/models/imported/linkstik.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.long",
+   "glbPath": "assets/models/imported/long.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.love2",
+   "glbPath": "assets/models/imported/love2.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "y",
+   "skip": null,
+   "extents": [
+    0.8405,
+    4.0607,
+    2.0271
+   ],
+   "ratio": 2.003,
+   "longAxis": "y",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.lubu",
+   "glbPath": "assets/models/imported/lubu.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.luffe",
+   "glbPath": "assets/models/imported/luffe.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.ma",
+   "glbPath": "assets/models/imported/ma.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    0.527,
+    1.7,
+    2.6587
+   ],
+   "ratio": 1.564,
+   "longAxis": "z",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.magical-sword",
+   "glbPath": "assets/models/imported/magical-sword.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "z",
+   "skip": null,
+   "extents": [
+    0.4501,
+    1.1711,
+    4.0547
+   ],
+   "ratio": 3.462,
+   "longAxis": "z",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.mfls",
+   "glbPath": "assets/models/imported/mfls.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.midchildernanohaaura",
+   "glbPath": "assets/models/imported/midchildernanohaaura.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "x",
+   "skip": null,
+   "extents": [
+    6.9444,
+    0.0,
+    6.9444
+   ],
+   "ratio": 1.0,
+   "longAxis": "x",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.minitypeflame",
+   "glbPath": "assets/models/imported/minitypeflame.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "z",
+   "skip": null,
+   "extents": [
+    1.7604,
+    4.3819,
+    4.3889
+   ],
+   "ratio": 1.002,
+   "longAxis": "z",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.ne-shield",
+   "glbPath": "assets/models/imported/ne-shield.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "y",
+   "skip": null,
+   "extents": [
+    1.7658,
+    2.1836,
+    0.2557
+   ],
+   "ratio": 1.237,
+   "longAxis": "y",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.negi",
+   "glbPath": "assets/models/imported/negi.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.netherstrike",
+   "glbPath": "assets/models/imported/netherstrike.glb",
+   "declared": "y",
+   "usedBy": [
+    "godie-e00l.e",
+    "godie-e002.e"
+   ],
+   "proposed": "y",
+   "skip": null,
+   "extents": [
+    26.9152,
+    30.7109,
+    26.9152
+   ],
+   "ratio": 1.141,
+   "longAxis": "y",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.niya",
+   "glbPath": "assets/models/imported/niya.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    1.1807,
+    1.7,
+    1.0668
+   ],
+   "ratio": 1.44,
+   "longAxis": "y",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.oblivionaura",
+   "glbPath": "assets/models/imported/oblivionaura.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "x",
+   "skip": null,
+   "extents": [
+    5.943,
+    2.5895,
+    5.2246
+   ],
+   "ratio": 1.138,
+   "longAxis": "x",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.picacugy",
+   "glbPath": "assets/models/imported/picacugy.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.pika",
+   "glbPath": "assets/models/imported/pika.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.purplecoat",
+   "glbPath": "assets/models/imported/purplecoat.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    1.0734,
+    1.9794,
+    1.4811
+   ],
+   "ratio": 1.336,
+   "longAxis": "y",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.rabbit",
+   "glbPath": "assets/models/imported/rabbit.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.renaryugu2",
+   "glbPath": "assets/models/imported/renaryugu2.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.ritsu",
+   "glbPath": "assets/models/imported/ritsu.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    0.9016,
+    1.7317,
+    0.8997
+   ],
+   "ratio": 1.921,
+   "longAxis": "y",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.sd2",
+   "glbPath": "assets/models/imported/sd2.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.sesshomaru",
+   "glbPath": "assets/models/imported/sesshomaru.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "imported.student",
+   "glbPath": "assets/models/imported/student.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    0.4897,
+    1.7,
+    1.1331
+   ],
+   "ratio": 1.5,
+   "longAxis": "y",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.supershinythingy",
+   "glbPath": "assets/models/imported/supershinythingy.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "x",
+   "skip": null,
+   "extents": [
+    18.4435,
+    10.5788,
+    18.4435
+   ],
+   "ratio": 1.0,
+   "longAxis": "x",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.tectonicfury",
+   "glbPath": "assets/models/imported/tectonicfury.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "z",
+   "skip": null,
+   "extents": [
+    7.9138,
+    6.7732,
+    9.0223
+   ],
+   "ratio": 1.14,
+   "longAxis": "z",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.txbbb",
+   "glbPath": "assets/models/imported/txbbb.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    0.4555,
+    1.7,
+    1.1782
+   ],
+   "ratio": 1.443,
+   "longAxis": "y",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.war3mapimported-poweraura",
+   "glbPath": "assets/models/imported/war3mapimported-poweraura.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "z",
+   "skip": null,
+   "extents": [
+    7.774,
+    7.4851,
+    8.2311
+   ],
+   "ratio": 1.059,
+   "longAxis": "z",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.windmissle",
+   "glbPath": "assets/models/imported/windmissle.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "z",
+   "skip": null,
+   "extents": [
+    7.3285,
+    4.2971,
+    7.5186
+   ],
+   "ratio": 1.026,
+   "longAxis": "z",
+   "ambiguous": true
+  },
+  {
+   "id": "imported.wuqi",
+   "glbPath": "assets/models/imported/wuqi.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": "x",
+   "skip": null,
+   "extents": [
+    15.0471,
+    4.5344,
+    2.3286
+   ],
+   "ratio": 3.318,
+   "longAxis": "x",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.xzz",
+   "glbPath": "assets/models/imported/xzz.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    2.3156,
+    2.3679,
+    3.6503
+   ],
+   "ratio": 1.542,
+   "longAxis": "z",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.ye-wuqi1",
+   "glbPath": "assets/models/imported/ye-wuqi1.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    1.3648,
+    1.7,
+    0.7083
+   ],
+   "ratio": 1.246,
+   "longAxis": "y",
+   "ambiguous": false
+  },
+  {
+   "id": "imported.zy3",
+   "glbPath": "assets/models/imported/zy3.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "walks",
+   "extents": [
+    2.7092,
+    1.7,
+    1.0774
+   ],
+   "ratio": 1.594,
+   "longAxis": "x",
+   "ambiguous": false
+  },
+  {
+   "id": "prop.flower",
+   "glbPath": "assets/models/hex/waterlily.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "prop.guardian.beast",
+   "glbPath": "assets/models/guardians/guardian_beast.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "prop.guardian",
+   "glbPath": "assets/models/guardians/guardian_stone.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  },
+  {
+   "id": "prop.guardian.treant",
+   "glbPath": "assets/models/guardians/guardian_treant_trunk.glb",
+   "declared": null,
+   "usedBy": [],
+   "proposed": null,
+   "skip": "body"
+  }
+ ]
+}

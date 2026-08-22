@@ -23,6 +23,55 @@
 /** 路徑家族 —— 逐字照 L1／L2 共同約定的介面。 */
 export type ModelFxPath = "forward" | "toTarget" | "orbit" | "radial";
 
+/**
+ * ⭐ 這一份 .glb 的**長軸**烘在自己的哪一軸上（`model@1.fxLongAxis`）。
+ * ⛔ 它不是一個方向（沒有正負），是一條**線** —— 見 `modelFxAxisCorrection`。
+ */
+export type ModelFxLongAxis = "x" | "y" | "z";
+
+/** 一組 euler（弧度），照 Babylon `TransformNode.rotation` 的 x=pitch / y=yaw / z=roll。 */
+export interface ModelFxEuler {
+  x: number;
+  y: number;
+  z: number;
+}
+
+/** ⛔ 不做修正 —— 沒宣告長軸的模型走這一格（今天的行為，逐位元不變）。 */
+const NO_AXIS_CORRECTION: ModelFxEuler = { x: 0, y: 0, z: 0 };
+
+/**
+ * 把模型自己的長軸轉到**行進軸**（Babylon 的 +Z）所需要的初始姿態。
+ *
+ * owner 2026-08-22:「翻滾光束應該包含 **90 度橫放的 beam** 吧」。
+ *
+ * ── 為什麼這是一個**姿態**而不是一個角度欄位 ──────────────────────────────
+ * 一根沿自己 **Y** 建的柱子（`imported.netherstrike`，Saber 約束與勝利之劍）
+ * 需要的是**俯仰**；一團沿自己 **X** 建的火焰（`imported.fireblast`，龍破斬）
+ * 需要的是**偏航**。⛔ 一個 `orientDeg` 講不出兩者的差別 —— 它會逼作者自己去換算
+ * 「哪一軸轉幾度」，而那個換算就是第〇·四守則說的「算得出來的數字」。
+ * ⇒ 文件只寫**級別名**（哪一軸），角度在載入時由這裡解析。
+ *
+ * ── ⭐ 為什麼可以無視正負號 ────────────────────────────────────────────────
+ * 長軸是一條線，⛔ 不是一個箭頭。所以 glTF 載入器那個 X 鏡射
+ * （`__root__` 的 180° + scale(1,1,−1)，見 `views/glbFacing.ts` 檔頭）
+ * 把 +X 變成 −X **不影響結論** —— X 軸還是 X 軸。
+ * ⚠️ 這正是這一格能從 bbox **推導**而 `yawOffsetDeg` 不行的原因：
+ * 後者要分前後，於是它需要骨架對稱性/腳尖偏移那一套線索。
+ *
+ * ── ⭐ 它必須疊在翻滾**裡面** ──────────────────────────────────────────────
+ * 呼叫端把它掛在姿態節點的**子**節點上，於是合成順序是
+ * `Ry(yaw) ∘ Rz(roll) ∘ A` —— A 先把長軸擺到 +Z，`spinDegPerSec` 的 roll 再繞
+ * **那根長軸**滾（+Z 是 roll 的不動軸），最後 yaw 把它指向行進方向。
+ * ⛔ 反過來（A 掛在外面）會讓翻滾把光束**甩離**它飛的那條線。
+ */
+export function modelFxAxisCorrection(axis: ModelFxLongAxis | undefined): ModelFxEuler {
+  // ⚠️ Babylon 是**左手**系：繞 Y 轉 −90° 把 +X 送到 +Z；繞 X 轉 +90° 把 +Y 送到 +Z。
+  if (axis === "x") return { x: 0, y: -Math.PI / 2, z: 0 };
+  if (axis === "y") return { x: Math.PI / 2, y: 0, z: 0 };
+  // "z" 與 undefined 都是恆等 —— Babylon 的前方本來就是 +Z。
+  return NO_AXIS_CORRECTION;
+}
+
 /** `spawnModelFx` 的可見那一半（⛔ 不含 onArrive/onTouch 的 EffectDef[]，那是引擎的）。 */
 export interface ModelFxMotionSpec {
   shape: "single" | "circle";

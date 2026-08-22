@@ -28,18 +28,26 @@ import type { Scene } from "@babylonjs/core/scene";
 import type { AssetContainer } from "@babylonjs/core/assetContainer";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import {
+  modelFxAxisCorrection,
   modelFxInstanceCount,
   modelFxLifeSec,
   modelFxPose,
+  type ModelFxLongAxis,
   type ModelFxMotionSpec,
   type ModelFxOrigin,
   type Vec3Like,
 } from "./modelFxPath";
 
-/** 一個 `model@1` 文件裡這個 rig 需要的兩格。 */
+/** 一個 `model@1` 文件裡這個 rig 需要的三格。 */
 export interface ModelFxModelDoc {
   glbPath: string;
   scale?: number;
+  /**
+   * ⭐ 這一份 .glb 的長軸烘在哪一軸（`model@1.fxLongAxis`）。缺席 ⇒ ⛔ 不修正。
+   * ⚠️ 它是**模型**的性質不是技能的：同一份 `netherstrike.glb` 被兩支技能引用，
+   * 兩邊必須拿到同一個答案（第〇·四守則）。
+   */
+  fxLongAxis?: ModelFxLongAxis;
 }
 
 export interface ModelFxRigOptions {
@@ -60,8 +68,24 @@ const DEFAULT_MAX_LIVE = 48;
 const DEFAULT_MAX_POOLED_PER_MODEL = 12;
 const DEFAULT_MAX_EFFECT_SEC = 8;
 
+/**
+ * 一個實例的**兩層**節點。
+ *
+ * ⭐ 兩層是必要的，⛔ 不是潔癖：`root` 演「它在哪、往哪走、滾多快」，
+ * `axis` 演「這份網格當初朝哪一軸建」。掛成父子之後合成順序是
+ * `Ry(yaw) ∘ Rz(roll) ∘ A` —— 翻滾繞的是**已經橫放好的長軸**。
+ * ⛔ 併成一層（把修正加進 `rotation`）做不到這件事：Babylon 的 euler 是
+ * yaw∘pitch∘roll 固定順序，修正只能擠在 roll **外面**，於是每滾一圈光束就
+ * 甩離航線一次。
+ */
+interface ModelFxNodes {
+  root: TransformNode;
+  axis: TransformNode;
+}
+
 interface LiveModelFx {
   root: TransformNode;
+  axis: TransformNode;
   modelKey: string;
   spec: ModelFxMotionSpec;
   at: ModelFxOrigin;
@@ -74,8 +98,8 @@ interface LiveModelFx {
 }
 
 export class ModelFxRig {
-  /** modelKey → 閒置的實例根節點 */
-  private readonly pool = new Map<string, TransformNode[]>();
+  /** modelKey → 閒置的實例節點對 */
+  private readonly pool = new Map<string, ModelFxNodes[]>();
   /** 這個 rig 造過的**每一個**節點（dispose 走這一份，⛔ 不是走 live） */
   private readonly born: TransformNode[] = [];
   private readonly live: LiveModelFx[] = [];
@@ -129,14 +153,21 @@ export class ModelFxRig {
     const n = Math.min(want, room);
     const lifeSec = modelFxLifeSec(spec, this.maxEffectSec);
 
+    // ⭐ 初始姿態:把這份網格烘出來的長軸擺到行進軸上(owner 的「90 度橫放的 beam」)。
+    // ⚠️ 它掛在**內**層,所以 `spinDegPerSec` 的翻滾繞的是已經橫放好的那根長軸。
+    const axisEuler = modelFxAxisCorrection(doc.fxLongAxis);
+
     let made = 0;
     for (let i = 0; i < n; i++) {
-      const root = this.acquire(spec.modelKey);
-      if (!root) break;
+      const nodes = this.acquire(spec.modelKey);
+      if (!nodes) break;
+      const { root, axis } = nodes;
       root.scaling.setAll((doc.scale ?? 1) * (spec.scale ?? 1));
+      axis.rotation.set(axisEuler.x, axisEuler.y, axisEuler.z);
       root.setEnabled(true);
       const item: LiveModelFx = {
         root,
+        axis,
         modelKey: spec.modelKey,
         spec,
         at,
@@ -205,6 +236,8 @@ export class ModelFxRig {
     const pose = modelFxPose(item.spec, item.at, item.index, item.ageSec);
     item.root.position.set(pose.x, pose.y, pose.z);
     // yaw 繞世界 Y,roll 繞模型自己的前方軸(Babylon 的 Z)。
+    // ⭐ 長軸修正住在**子**節點(`axis`)上,所以這裡的 roll 繞的是**已經橫放好的**
+    //    那根長軸 —— 翻滾光束會沿著自己滾,⛔ 不是每滾一圈甩離航線一次。
     item.root.rotation.set(0, pose.yawRad, pose.rollRad);
     return pose;
   }
@@ -235,23 +268,30 @@ export class ModelFxRig {
    * 幾何晚幾幀補進來。⛔ 反過來(等載入完再生)會讓技能的第一次施放沒有特效,
    * 而那正是玩家最會注意的那一次。
    */
-  private acquire(modelKey: string): TransformNode | null {
+  private acquire(modelKey: string): ModelFxNodes | null {
     const free = this.pool.get(modelKey);
     const reused = free?.pop();
     if (reused) return reused;
 
-    const root = new TransformNode(`modelfx-${modelKey}-${this.born.length}`, this.scene);
+    const serial = this.born.length;
+    const root = new TransformNode(`modelfx-${modelKey}-${serial}`, this.scene);
     this.born.push(root);
+    // ⭐ 內層 = 長軸修正。⚠️ 它是**節點**不是一次性的旋轉:實例會被回收重用,
+    // 而下一次施放的模型可能是另一份 .glb(另一個 free-list),所以修正要跟著節點走。
+    // 名字帶 `axis-` 是刻意的 —— 守衛從**出貨的場景樹**上把它撈出來量,
+    // ⛔ 不是靠一個只有測試會呼叫的存取器(失敗形態⑤)。
+    const axis = new TransformNode(`modelfx-axis-${modelKey}-${serial}`, this.scene);
+    axis.parent = root;
     const container = this.containers.get(modelKey);
     if (container) {
       const inst = container.instantiateModelsToScene(
-        (n) => `modelfx-${this.born.length}-${n}`,
+        (n) => `modelfx-${serial}-${n}`,
         false,
         { doNotInstantiate: true },
       );
-      for (const node of inst.rootNodes) node.parent = root;
+      for (const node of inst.rootNodes) node.parent = axis;
     }
-    return root;
+    return { root, axis };
   }
 
   private release(item: LiveModelFx): void {
@@ -265,7 +305,7 @@ export class ModelFxRig {
     // ⛔ 不可以只是「不放回池子」—— 那個節點會變成沒有人指得到的孤兒,
     //    活到 dispose() 為止,而一場 20 分鐘的比賽會積出幾百個(#131 的慢動作版)。
     if (free.length < this.maxPooledPerModel) {
-      free.push(item.root);
+      free.push({ root: item.root, axis: item.axis });
       return;
     }
     const at = this.born.indexOf(item.root);
