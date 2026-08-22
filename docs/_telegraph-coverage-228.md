@@ -249,7 +249,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 犬妖 - 殺生丸 `godie-osam` | Q | 34-01 毒華爪 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 犬妖 - 殺生丸 `godie-osam` | W | 34-02 閃光鞭 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 犬妖 - 殺生丸 `godie-osam` | E | 34-03 爆碎牙 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 犬妖 - 殺生丸 `godie-osam` | R | 34-04 奧義˙蒼龍破 | `skillshot` | line 11.81×10.27u | ✅ OK | delayed.advance 12×1.23（起始 0）× abilityRange 0.8, radius 6.42 ×2 × abilityRange 0.8 |
+| 犬妖 - 殺生丸 `godie-osam` | R | 34-04 奧義˙蒼龍破 | `skillshot` | line 11.81×4.78u | ✅ OK | delayed.advance 12×1.23（起始 0）× abilityRange 0.8, radius 2.99 ×2 × abilityRange 0.8 |
 | 犬妖 - 殺生丸 `godie-osam` | EX | 34-002 冥道殘月破 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
 | 鬼畜紅王 - 鬼畜狂刀KYO `godie-u00h` | PASSIVE | 39-00 無明神風流-玄武 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 鬼畜紅王 - 鬼畜狂刀KYO `godie-u00h` | Q | 39-01 無明神風流-白虎 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |

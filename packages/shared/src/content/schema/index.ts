@@ -112,3 +112,4 @@ export * from "./template";
 export * from "./abilityVfxBindings";
 export * from "./comboStrikesDoc";
 export * from "./ownerKnobsDoc";
+export * from "./toggleAbilityDoc";

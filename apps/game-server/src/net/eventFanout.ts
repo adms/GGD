@@ -55,6 +55,15 @@ import type { SimEvent } from "@ggd/shared/sim/SimWorld";
 export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // core combat legibility (task #60/#92): damage drives 造成/受到傷害 numbers
   "abilityCast",
+  // ── 2026-08-22 GH#551/#543/#549 —— 四個新 kind 的客戶端事件 ─────────────
+  // ⛔ 漏掉它們 = sim 每次都發、⛔ 而畫面上什麼都不會發生（失敗形態②：
+  //    算出來了但從沒送到客戶端）。四個的 cadence 都是「一次施放/執行一則」。
+  // ⭐ owner 2026-08-22 對其中兩個的理由逐字：「畫面閃爍及震動 **不然都不知道
+  //    發生什麼事情有沒有反擊成功**」——它們就是那句話的實作。
+  "modelFxSpawn", // 移動中的模型特效（翻滾光束 / 圓周冰塊 / 直線火球）
+  "screenFlash",
+  "screenShake",
+  "floatingText", // 原作 CreateTextTagUnitBJ —— 克勞德每一刀的 "1Hit"…"7Hit"
   "damage",
   "death",
   "projectileSpawn",

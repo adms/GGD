@@ -17,8 +17,9 @@ import { describe, expect, it } from "vitest";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+
 import { DEFAULT_VICTORY_PODIUM } from "@ggd/shared/content/schema/victoryPodium";
+import { podiumSpacing, styleOverlayCanvas } from "../../render/RoundWinnerStage";
 import { ROUND_OUTCOME } from "@ggd/shared/protocol/schema";
 import { hudSurfaceRect } from "../hud/hudSurfaces";
 import { buildRoundVictory } from "./roundVictory";
@@ -26,26 +27,40 @@ import { RoundVictoryView, roundCardStartsCollapsed } from "./RoundVictoryPanel"
 
 const VP = { width: 1280, height: 720 };
 
-/** 銅牌(`centreFirst` ⇒ 銀左·金中·銅右)那張卡的中線與下緣,px。 */
+/**
+ * 銅牌（`centreFirst` ⇒ 銀左·金中·銅右）那張卡的中線與下緣，px。
+ *
+ * ⛔ **2026-08-22 之前這一段在 `readFileSync` + 正則掃 `RoundWinnerStage.ts` 的原始碼**
+ *   （失敗形態⑥：掃字串代替行為）。GH#545 把尺寸算式從 `min(vh(a/n+b), vw(c/n))`
+ *   改成吃 `spacing` 的 `capW/capH` 之後，那個正則當場回 `null` ——
+ *   ⭐ 而它報的錯是 `object null is not iterable`，⛔ 與「摺疊壞了」一點關係都沒有。
+ *
+ * ⇒ 現在直接呼叫**出貨的那支函式** `styleOverlayCanvas()`，把它寫進一個假的
+ *   `CSSStyleDeclaration`，再把 `min(...vh, ...vw)` **算**出來。
+ *   ⭐ 算式再怎麼改都不會讓這一支用錯誤的訊息紅。
+ */
 function podiumBand(): { mid: number; bottom: number } {
-  const src = readFileSync(
-    fileURLToPath(new URL("../../render/RoundWinnerStage.ts", import.meta.url)),
-    "utf8",
+  const s: Record<string, string> = {};
+  // ⚠️ 它吃的是一個 **canvas**（讀 `.style`），⛔ 不是 style 本身 ——
+  //    傳錯的話 `if (!s) return` 會提早返回，測試就**空過**（我第一版就是這樣）。
+  // 銅牌 = 第三格（slot 2），三張卡；scale = 1（⛔ 銅牌不吃 winnerScale，那是金卡的）。
+  styleOverlayCanvas(
+    { style: s } as unknown as HTMLCanvasElement,
+    2,
+    3,
+    1,
+    podiumSpacing(DEFAULT_VICTORY_PODIUM),
   );
-  const fn = src.slice(src.indexOf("function styleOverlayCanvas"));
-  const top = Number(/s\.top = "(\d+)%"/.exec(fn)![1]);
-  // 高度那一行(⛔ 不是它上面那行寬度 —— 兩行長得一模一樣)
-  const [, a, b, c] = /`min\(\$\{vh\((\d+) \/ n \+ (\d+)\)\}vh, \$\{vw\((\d+) \/ n\)\}vw\)`/.exec(
-    fn.slice(fn.indexOf("const h = n === 1")),
-  )!;
-  const n = DEFAULT_VICTORY_PODIUM.podiumSize;
-  // 銅牌不吃 winnerScale(那是金卡的),所以 k = 1。
-  const h = Math.min(
-    (Math.min(88, Math.round(Number(a) / n + Number(b))) / 100) * VP.height,
-    (Math.min(96, Math.round(Number(c) / n)) / 100) * VP.width,
-  );
-  const mid = (top / 100) * VP.height;
-  return { mid, bottom: mid + h / 2 };
+  expect(s["top"], "⛔ 空過防線：函式沒有真的寫出樣式").toBeDefined();
+  const px = (expr: string): number => {
+    // `min(Xvh, Yvw)` —— 兩邊各自換算成 px 再取小的。
+    const nums = [...expr.matchAll(/([\d.]+)(vh|vw)/g)].map(([, v, unit]) =>
+      unit === "vh" ? (Number(v) / 100) * VP.height : (Number(v) / 100) * VP.width,
+    );
+    return Math.min(...nums);
+  };
+  const mid = (Number(/([\d.]+)%/.exec(s["top"]!)![1]) / 100) * VP.height;
+  return { mid, bottom: mid + px(s["height"]!) / 2 };
 }
 
 function html(collapsed: boolean): string {

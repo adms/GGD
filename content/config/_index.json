@@ -1,12 +1,12 @@
 {
   "collection": "config",
-  "hash": "a445f0e9f784",
+  "hash": "0a1e99b9e3ff",
   "entries": [
     {
       "id": "ability-vfx-bindings",
       "path": "config/ability-vfx-bindings.json",
-      "hash": "f25089b8de86",
-      "size": 36900
+      "hash": "3303de713547",
+      "size": 38392
     },
     {
       "id": "admin-friend",
@@ -119,7 +119,7 @@
     {
       "id": "combat-env",
       "path": "config/combat-env.json",
-      "hash": "040c55a1631b",
+      "hash": "e1e65c5c91dd",
       "size": 1042
     },
     {
@@ -303,6 +303,12 @@
       "size": 8930
     },
     {
+      "id": "owner-knobs",
+      "path": "config/owner-knobs.json",
+      "hash": "5f2436d36828",
+      "size": 2466
+    },
+    {
       "id": "per-level-bonus",
       "path": "config/per-level-bonus.json",
       "hash": "4787ecfd66fb",
@@ -403,6 +409,12 @@
       "path": "config/taunt.json",
       "hash": "501b1b2be7b7",
       "size": 697
+    },
+    {
+      "id": "toggle-ability",
+      "path": "config/toggle-ability.json",
+      "hash": "6ce567e661a5",
+      "size": 1378
     },
     {
       "id": "ui-lexicon",

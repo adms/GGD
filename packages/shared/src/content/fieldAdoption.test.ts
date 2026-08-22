@@ -2493,6 +2493,50 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "（`attachment@1` → formAttachmentFor、`vfx@1`/`ribbon@1` → AmbientVfx）。" +
       "⚠️ 哪天有一支 **Q/W/E/R** 技能帶常駐特效，這一列就該當場失效並改成 landing。",
   },
+  // ── ⭐ 2026-08-22 GH#551/#543/#549 —— 四個新 kind，機制落地當天內容是 0 ──────
+  //
+  // owner 逐字：「Saber約束勝利之劍(**翻滾光束**), 依文世界終結(**圓周噴發大冰塊**),
+  // 莉娜龍破斬(**一直線火球衝擊波後目的地火焰大爆炸**) 都是**動畫特效**」
+  // 「將 w3x jass + **球體 + 蝗蟲群單位 3d model 特效** 完美實作出來」
+  // 「畫面**閃爍**及**震動** 不然都不知道發生什麼事情有沒有反擊成功」
+  // 「別忘了還有**特效文字**」
+  //
+  // ⛔ 這四筆是 `landing` **不是** `default-live`：它們沒有任何 code 預設在跑,
+  //    內容不填就是**什麼都不會發生**。30 天後要嘛有內容採用、要嘛承認是死機制。
+  "variant:abilities.effects[]#spawnModelFx": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "移動中的**模型**特效（引擎那一半 2026-08-22 落地：路徑求值 + onTouch 逐段取樣 + onArrive 落點，" +
+      "班表推進既有的 SimWorld.delayed，⛔ 零個新排程器）。內容那一半是三支驗收技能（GH#543），" +
+      "由主 session 接 —— content/ 是單執行緒的領域。⚠️ 它與 `spawnVfx` **不是同一件事**：" +
+      "原作的翻滾光束是一隻**帶模型的 dummy 單位**沿路徑移動，⛔ 不是粒子發射器。",
+  },
+  "variant:abilities.effects[]#screenFlash": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "全螢幕閃爍。owner 2026-08-22：「理想鄉被反彈的敵方單位⋯**畫面閃爍及震動 不然都不知道" +
+      "發生什麼事情有沒有反擊成功**」⇒ 它是一個**回饋**機制，⛔ 不是美術偏好。" +
+      "內容接在 GH#549（理想鄉反彈）。⚠️ 強度上限與 reduced-motion 由 config 管。",
+  },
+  "variant:abilities.effects[]#screenShake": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "全螢幕震動（同一句 owner 原話的另一半：「畫面閃爍**及震動**」）。⛔ 它與 `screenFlash` " +
+      "分成兩個 kind 是刻意的：閃爍是**瞬間的注意力**、震動是**重量感**，很多場合只要其中一個" +
+      "（擊殺閃、火圈點燃震），綁在一起就沒得選。⚠️ 必須吃 prefers-reduced-motion —— " +
+      "螢幕震動是無障礙上最容易致暈的一種。內容接在 GH#549（理想鄉反彈）。",
+  },
+  "variant:abilities.effects[]#floatingText": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "特效文字（owner 點名：「別忘了還有**特效文字**」）。原作 `CreateTextTagUnitBJ` —— " +
+      "克勞德 01-04 每一刀冒 \"1Hit\"…\"7Hit\"（war3map.j:33856）。⭐ `{{i}}` 佔位符讓七段是" +
+      "**一個**節點而不是七個。內容接在 GH#543。",
+  },
   // ⭐ 2026-08-21 —— 耗魔級距（`config.mana-tiers@1`），五軸的**最後一軸**。
   // ⚠️ 它落地當天四格就有內容（極小 / 小 / 中 / 大 分佈在 204 支上），只有頂格是零。
   "enum:abilities.manaCostTier=極大": {

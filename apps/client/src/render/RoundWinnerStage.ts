@@ -349,7 +349,8 @@ const CARD_Z = 6;
  * Fixed to the viewport, above the world-anchored HP bars (#anchor-layer, z 5)
  * and below the HUD (#hud-root, z 10); never intercepts input.
  */
-function styleOverlayCanvas(
+/** ⭐ 匯出給  —— 它以前掃這個檔的原始碼（失敗形態⑥）。 */
+export function styleOverlayCanvas(
   canvas: HTMLCanvasElement,
   slot: number,
   total: number,

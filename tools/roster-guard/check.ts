@@ -474,6 +474,15 @@ const DERIVATION_IMPORT = /from\s+["'][^"']*\/(shippedSurface|balancePopulation)
  * 會 → 它該走推導模組，⛔ 不該進這張表。
  */
 const WHOLE_TREE_BY_DESIGN: Record<string, string> = {
+  // ── ⭐ 2026-08-22 GH#544 —— AP 換算稽核**必須**掃全樹 ─────────────────────
+  "tools/ap-conversion/apply.py":
+    "屬性額外傷害→AP 的換算稽核。⭐ 掃**全部** 142 件（⛔ 不是上架的 89 件）是刻意的：" +
+    "貨架關著的道具**照樣帶著那段卡面文字**，而 owner 隨時可以把它打開 —— " +
+    "一件沒換算的道具在那一刻就是一句上線的謊話（第一·五守則）。" +
+    "⚠️ 它也**不會**浪費 token：這支是建置期的一次性掃描，⛔ 不在任何測試的熱路徑上。" +
+    "⭐ 要反駁它：拿出一個「貨架關著的道具其卡面文字不會被任何人看到」的證據 —— " +
+    "今天不成立（後台道具頁與 codex 編輯器都讀得到全樹）。",
+
   // ── 母體是**具名的那幾件**，掃全樹只是為了把它們找出來 ──────────────────
   "packages/shared/src/content/blockNoteTruth.test.ts":
     "母體是【格擋】具名四支的 authoringNote ↔ 出貨資料，⛔ 不是道具樹。",

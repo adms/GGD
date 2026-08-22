@@ -8,11 +8,11 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_f60b92f6a0c5`
+contentVersion `cv_3b1770b0e808`
 
 ---
 
-## 效果（effect kind） —— 42 種
+## 效果（effect kind） —— 46 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
@@ -36,6 +36,7 @@ contentVersion `cv_f60b92f6a0c5`
 | `evasion` | 迴避 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `eventValueConversion` | 把事件的數值換算成別的 | 5 | `godie-emfr.ex`、`grail-c-04`、`grail-a-02`、`grail-ex-12`、`grail-ex-18` |
 | `extendBuff` | 延長既有增益 | 1 | `godie-hapm.q` |
+| `floatingText` | 特效文字（原作的 TextTag，例「1Hit…7Hit」） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `grantAttribute` | 加三圍（力／敏／智） | 5 | `godie-hpb1.passive`、`godie-hvsh.e`、`godie-n01c.passive`、`godie-nbbc.passive`、`grail-c-10` |
 | `grantGold` | 發錢 | 1 | `godie-n00b.passive` |
 | `heal` | 治療（吃係數） | 10 | `godie-e007.w`、`godie-etyr.q`、`godie-h02r.passive`、`godie-hvsh.e`、`godie-n003.w`、`godie-n01c.q`、`godie-n01g.w`、`godie-nbbc.q`、`godie-o02p.r`、`godie-o02p.w` |
@@ -49,8 +50,11 @@ contentVersion `cv_f60b92f6a0c5`
 | `randomArea` | 隨機落點 | 6 | `godie-e00s.r`、`godie-e010.r`、`godie-efur.r`、`godie-ogld.ex`、`grail-c-19`、`grail-ex-09` |
 | `restore` | 回復（按最大值百分比） | 17 | `godie-e00s.ex`、`godie-emfr.passive`、`godie-ewar.w`、`godie-h00l.r`、`godie-h02v.ex`、`godie-h02v.q`、`godie-hapm.passive`、`godie-n00b.passive`、`godie-o02p.ex`、`grail-c-03`、`grail-a-02`、`grail-a-06` …（共 17） |
 | `revive` | 復活 | 1 | `grail-ex-10` |
+| `screenFlash` | 畫面閃爍（全螢幕） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `screenShake` | 畫面震動 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `shield` | 吸收（護盾） | 10 | `godie-e00l.passive`、`godie-e00r.e`、`godie-h00l.ex`、`godie-o00l.e`、`sela.w`、`thorne.w`、`grail-c-17`、`grail-a-16`、`aegis-surge`、`guardian-ward` |
 | `shieldBreak` | 破盾 | 2 | `grail-c-09`、`grail-ex-14` |
+| `spawnModelFx` | 模型特效（帶模型的單位沿路徑移動 —— 光束／砲擊／衝擊波） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `spawnProjectile` | 投射物 | 26 | `godie-e008.e`、`godie-e00l.e`、`godie-e010.q`、`godie-h02r.r`、`godie-n003.e`、`godie-n00p.w`、`godie-n01c.e`、`godie-n01g.e`、`godie-n01g.r`、`godie-nbbc.e`、`godie-nsjs.w`、`godie-o00l.q` …（共 26） |
 | `spawnVfx` | 純演出（特效／音效） | 20 | `godie-e002.e`、`godie-e00r.r`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00x.r`、`godie-e010.r`、`godie-emfr.r`、`godie-h01n.q`、`godie-h01o.e`、`godie-h01u.r`、`godie-h01u.w`、`godie-hvwd.r` …（共 20） |
 | `spendMana` | 燒魔 | 4 | `godie-e00l.w`、`godie-emfr.passive`、`godie-u00k.passive`、`godie-udea.r` |

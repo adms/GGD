@@ -52,6 +52,16 @@
       "value": 1.0,
       "quote": "（出貨中性值，owner 從未改過）",
       "on": "—"
+    },
+    "strToCritChance": {
+      "value": 0.0025,
+      "quote": "每點力量 +0.25% 暴擊率\t\"strToCritChance\"",
+      "on": "2026-08-22"
+    },
+    "agiToEvasion": {
+      "value": 0.002,
+      "quote": "每點敏捷 +0.2% 迴避率\t\"agiToEvasion\"",
+      "on": "2026-08-22"
     }
   }
 }

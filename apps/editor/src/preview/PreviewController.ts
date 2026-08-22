@@ -422,6 +422,48 @@ function effectLines(
         break;
       }
       // ⭐ GH#147 吸引 —— `knockback` 的反向。三種落點,⛔ 不是一個 boolean。
+      // ⭐ GH#551/#543 —— 移動中的**模型**特效（owner:「球體 + 蝗蟲群單位 3d model 特效
+      //    (ex. Saber約束勝利之劍的翻滾光束就是)」）。⚠️ `orbit` 時 `distance` 是**環半徑**,
+      //    ⛔ 不是走多遠 —— 兩邊各自猜的話畫面會是「環大小對、轉速差一個量級」而沒有測試會紅。
+      case "spawnModelFx": {
+        const where =
+          e.path === "orbit"
+            ? `繞行（半徑 ${e.distance ?? "?"}）`
+            : e.path === "radial"
+              ? `圓周向外 ${e.count ?? 1} 道`
+              : e.path === "toTarget"
+                ? "飛向目標"
+                : `直線前進 ${e.distance ?? "?"}`;
+        out.push({
+          depth,
+          kind: e.kind,
+          summary: `模型特效 ${e.modelKey}：${where}，速度 ${e.speed}${e.spinDegPerSec ? `，翻滾 ${e.spinDegPerSec}°/s` : ""}`,
+        });
+        if (e.onTouch !== undefined && e.onTouch.length > 0) {
+          out.push({ depth, kind: e.kind, summary: "路徑上碰到人：" });
+          effectLines(e.onTouch, finalStats, attrs, maxRank, depth + 1, out);
+        }
+        if (e.onArrive !== undefined && e.onArrive.length > 0) {
+          out.push({ depth, kind: e.kind, summary: "抵達落點：" });
+          effectLines(e.onArrive, finalStats, attrs, maxRank, depth + 1, out);
+        }
+        break;
+      }
+      // ⭐ GH#549 —— owner:「畫面閃爍及震動 不然都不知道發生什麼事情有沒有反擊成功」
+      case "screenFlash":
+        out.push({
+          depth,
+          kind: e.kind,
+          summary: `畫面閃爍 rgb(${e.colorRgb.join(",")}) α${e.peakAlpha} ${e.durationSec}s`,
+        });
+        break;
+      case "screenShake":
+        out.push({ depth, kind: e.kind, summary: `畫面震動 幅度 ${e.amplitude} ${e.durationSec}s` });
+        break;
+      // ⭐ 特效文字（owner 點名）。原作 CreateTextTagUnitBJ —— 克勞德每一刀冒 "1Hit"…"7Hit"。
+      case "floatingText":
+        out.push({ depth, kind: e.kind, summary: `特效文字「${e.text}」` });
+        break;
       case "pull": {
         const dest =
           e.destination === "anchorRing"

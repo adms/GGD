@@ -145,6 +145,10 @@ describe("discriminated EffectDef union (editor-02)", () => {
         // 沒有收尾那一發（Saber 卡面「最後施展約束與勝利之劍」是第八段，形狀不同）。
         "comboStrikes",
         "convertTeam",
+        // ── 2026-08-22 GH#551/#543/#549 —— 四個「演出」kind ────────────────
+        // owner:「都是**動畫特效**⋯別忘了還有**特效文字**」
+        // ⭐ `spawnModelFx` 是**帶模型的單位**沿路徑移動（翻滾光束／砲擊／衝擊波），
+        //    ⛔ 不是粒子 —— owner 明說它是「球體 + 蝗蟲群單位 3d model 特效」。
         // ── 2026-07-31 技能批次的四個新 kind ────────────────────────────
         // 這四個是**同一天**進來的，而這條釘子沒有跟上 —— 也就是說有四張卡
         // 在編輯器裡是新的，而「編輯器不能落後 sim」這條保證有四天是假的。
@@ -182,6 +186,7 @@ describe("discriminated EffectDef union (editor-02)", () => {
         // 兩個都跟著 `PreviewController.effectLines` 的 case 一起進來，所以
         // 這條釘子與那個 `never` 分支同時被滿足 —— 補 tag 不是修好它。
         "grantGold", // 「黃金數量為敵方等級」
+        "floatingText",
         "heal",
         "invulnerable", // lane P3 — 無敵
         "knockback", // lane P4 — 擊退
@@ -199,6 +204,9 @@ describe("discriminated EffectDef union (editor-02)", () => {
         "shield",
         // 【破盾】D1（#278）。與 `PreviewController` 的 `case "shieldBreak"` 同時進來。
         "shieldBreak",
+        "screenFlash",
+        "screenShake",
+        "spawnModelFx",
         "spawnProjectile",
         "spawnVfx",
         "spendMana", // 20-01 風王結界 / 13-002 絕。暗殺奧義 —— 燒法力

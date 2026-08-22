@@ -39,7 +39,7 @@
     "moveSpeedMelee": 0.8,
     "moveSpeedRanged": 0.6,
     "magicResistMult": 0.2,
-    "strToCritChance": 0.001,
-    "agiToEvasion": 0.0002
+    "strToCritChance": 0.0025,
+    "agiToEvasion": 0.002
   }
 }
