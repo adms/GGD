@@ -419,3 +419,85 @@ export const PULL_MAX_ANCHORS = 12;
 
 /** 錨點環的半徑上界，GGD 單位。A091 是 200 wc3 ≈ 3.67。 */
 export const PULL_MAX_ANCHOR_RADIUS = 20;
+
+// ══ 移動中的模型特效 `spawnModelFx`（#551）════════════════════════════════════
+//
+// ⚠️ 這一族的界**刻意與 `PULL_*` / `DELAYED_*` 共用同一組數量級**，因為它們共用
+// 兩個零件：等分角度用 `pull.ts` 的 {@link RING_UNIT_ROTATION}（所以實例數的上界
+// 必須 == `PULL_MAX_ANCHORS`，⛔ 大於它就會索引到 undefined 而靜默退化成 1 個），
+// 碰觸取樣推進 `SimWorld.delayed`（所以取樣數的上界必須 == `DELAYED_MAX_COUNT`，
+// ⛔ 大於它會在下游被靜默截短，而畫面上的模型還是飛完整段）。
+
+/** 模型的移動速度上界，GGD 單位/秒。與 {@link PULL_MAX_SPEED} 同值同理由。 */
+export const MODEL_FX_MAX_SPEED = PULL_MAX_SPEED;
+
+/**
+ * 一個實例最多走多遠（`orbit` 時是**環半徑**，見 variant 的 `distance`）。
+ * 與 {@link PULL_MAX_TRAVEL} 同值：決鬥區直徑 48，跨場已經是設計上的極限。
+ */
+export const MODEL_FX_MAX_DISTANCE = PULL_MAX_TRAVEL;
+
+/**
+ * `radial` / `orbit` 最多幾個等分實例。
+ * ⭐ **必須 == {@link PULL_MAX_ANCHORS}** —— 等分角度讀的是同一張
+ * `RING_UNIT_ROTATION`，那張表的長度就是這個數字加一。⛔ 兩者一起改。
+ */
+export const MODEL_FX_MAX_INSTANCES = PULL_MAX_ANCHORS;
+
+/** 一個實例最多活幾秒（`orbit` 唯一的終止條件）。 */
+export const MODEL_FX_MAX_LIFE_SEC = 30;
+
+/** 自轉角速度上界（度/秒）。3600 = 每秒十圈，再快在畫面上就是一團糊。 */
+export const MODEL_FX_MAX_SPIN_DEG_PER_SEC = 3600;
+
+/** 模型縮放上界。與 `vfx@1` 的縮放同一個量級，這是防打錯數字的柵欄。 */
+export const MODEL_FX_MAX_SCALE = 20;
+
+/** `onTouch` 的碰觸半徑上界，GGD 單位。 */
+export const MODEL_FX_MAX_TOUCH_RADIUS = 12;
+
+/**
+ * `onTouch` 一個實例最多取樣幾次。
+ * ⭐ **必須 == {@link DELAYED_MAX_COUNT}** —— 取樣班表推進的就是 `SimWorld.delayed`。
+ * ⚠️ 撞到上限時 ⛔ **不是把尾巴丟掉**（那會讓模型飛完整段而後半段打不到人 ——
+ * 失敗形態②），是把**步距拉大**：取樣點數不變，覆蓋整段路徑，只是粒度變粗。
+ */
+export const MODEL_FX_MAX_TOUCH_SAMPLES = DELAYED_MAX_COUNT;
+
+// ══ 螢幕回饋 / 特效文字（#543 · #549）═══════════════════════════════════════
+//
+// owner 2026-08-22:「畫面閃爍及震動 不然都不知道發生什麼事情」「別忘了還有特效文字」。
+//
+// ⚠️ 下面五個是 **schema 的柵欄**（擋打錯的數字），⛔ **不是出貨強度上限**。
+// 「這一台機器最多准震多大」是**玩家可及性**的問題（暈動症、`prefers-reduced-motion`），
+// 它屬於 `config.screen-cues@1` 的後台一格，⛔ 不屬於任何一支技能的 JSON。
+// 第一守則：寫死才需要理由，而這一格 owner 明說要「能調」。
+
+/** `screenFlash.peakAlpha` 的上界。1 = 整片不透明，再大沒有意義。 */
+export const SCREEN_FLASH_MAX_ALPHA = 1;
+
+/** 一次閃爍最多幾秒。超過就不是回饋而是遮擋。 */
+export const SCREEN_FLASH_MAX_SEC = 5;
+
+/**
+ * `screenShake.amplitude` 的上界。
+ * ⭐ **它是一個 0..1 的正規化強度，⛔ 不是像素**：真正的位移量由
+ * `config.screen-cues@1` 的上限乘出來（後台一格），所以 owner 調小上限的那一天，
+ * 每一支既有技能自動跟著變溫柔，⛔ 不必回頭改 420 份 JSON（第〇·四守則）。
+ */
+export const SCREEN_SHAKE_MAX_AMPLITUDE = 1;
+
+/** 一次震動最多幾秒。 */
+export const SCREEN_SHAKE_MAX_SEC = 5;
+
+/** 特效文字最多幾個字（`CreateTextTagUnitBJ` 的量級：「7Hit」「MISS」「暴擊！」）。 */
+export const FLOATING_TEXT_MAX_LEN = 24;
+
+/** 特效文字的字級倍率上界。 */
+export const FLOATING_TEXT_MAX_SIZE_SCALE = 8;
+
+/** 特效文字每秒往上飄幾格（GGD 單位/秒）。 */
+export const FLOATING_TEXT_MAX_RISE = 20;
+
+/** 特效文字最多停留幾秒。 */
+export const FLOATING_TEXT_MAX_SEC = 10;

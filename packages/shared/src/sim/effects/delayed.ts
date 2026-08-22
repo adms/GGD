@@ -330,6 +330,10 @@ export function delayedSystem(world: SimWorld): void {
         // 與**整棵子樹**（`runEffects` 一路 spread 同一個 ctx；巢狀 `delayed`
         // 會在它自己的 apply 再抄一次，定基冪等）都拿得到同一份快照。
         ...(wave.incoming !== undefined ? { incoming: wave.incoming } : {}),
+        // ⭐ 這一發是這一串的**第幾段**（1 起算）—— `floatingText` 的 `{{i}}`
+        //    唯一的來源（#549：「1Hit…7Hit」是**一個**節點，⛔ 不是七個）。
+        //    ⚠️ 它掛在 `base` 上，所以 `finalEffects` 與整棵子樹拿到同一個號碼。
+        sequenceIndex: index + 1,
         rng: world.rng,
       };
       // ⭐ 這一行是整個機制：`frozen` 的那一份名單，不是重解出來的。

@@ -37,12 +37,13 @@ export const EFFECT_CHILD_CHAINS = [
   "effects", // randomArea · delayed
   "finalEffects", // delayed
   "finisher", // comboStrikes —— 收尾那一發（#541）
-  "onArrive", // blink
+  "onArrive", // blink · spawnModelFx（#551 抵達/壽命到的落點那一串）
   "onDevour", // devour
   "onEnd", // dash
   "onHit", // spawnProjectile
   "onHitTargets", // damageArea · damageLine
   "onLand", // leap
+  "onTouch", // spawnModelFx —— 路徑上碰到人的那一串（#551）
   "perStrike", // comboStrikes —— 每一段各跑一次的那一串（#541）
 ] as const;
 

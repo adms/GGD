@@ -135,6 +135,14 @@ import { chainLightningEffect } from "./chainLightning";
 import { comboStrikesEffect } from "./comboStrikes";
 import { pullEffect } from "./pull";
 
+// ── 移動模型特效 / 螢幕回饋 / 特效文字 (2026-08-22, #551 · #543 · #549) ─────
+// ⚠️ 四支都**沒有自己的排程器或世界欄位**：`spawnModelFx` 把班表推進
+//    `SimWorld.delayed`（第零守則⑨），另外三支只 `world.emit`。
+//    ⛔ 那三個事件必須同時進 `apps/game-server/src/net/eventFanout.ts` 的白名單
+//    —— 白名單是**靜默**的，少一行就是「做完、測過、出貨，遊戲裡不存在」。
+import { spawnModelFxEffect } from "./spawnModelFx";
+import { screenFlashEffect, screenShakeEffect, floatingTextEffect } from "./clientCues";
+
 /**
  * kind → handler. The mapped type demands EVERY member of the `EffectDef`
  * union, so growing the union without landing a handler stops the build.
@@ -254,5 +262,15 @@ export const EFFECT_HANDLERS: EffectRegistry = {
   //    ⛔ 與 `knockback` 的 `from:"pull"` 不同：那邊作者寫的是一段長度而且會走
   //    GH#193 的距離減法（對拉是反的），這邊寫的是**落點**。見 ./pull.ts。
   pull: pullEffect,
+  // ⭐【移動中的模型特效】(#551) —— 原作的 locust dummy：一具**沿路徑硬推**的
+  //    模型，穿透式碰撞（`onTouch` 一人一次）+ 落點結算（`onArrive`）。
+  //    ⛔ 不是 `spawnVfx`（不動、不打人），也不是 `spawnProjectile`（會被擋下來）。
+  spawnModelFx: spawnModelFxEffect,
+  // ⭐【螢幕回饋】(#543) 與【特效文字】(#549) —— sim 只決定「什麼時候發、發給誰」。
+  //    ⛔ 畫面那一半在 apps/client；三者共用 `clientCues.ts::cueRecipients` 一份
+  //    `applyTo` 解析器（第零守則⑨）。
+  screenFlash: screenFlashEffect,
+  screenShake: screenShakeEffect,
+  floatingText: floatingTextEffect,
   // lane P6 — 護盾傷害類型過濾 is NOT a kind: it is `shield.absorbs`, see shield.ts
 };

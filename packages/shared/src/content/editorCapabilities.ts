@@ -1504,6 +1504,81 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
       "位移走的是 `knockback` 已經在用的 `nav.override` 地面滑行 + `world.knockdown` 行動鎖，" +
       "⛔ 沒有第二套位移機制。",
   },
+  // ══ 2026-08-22 —— #551【移動中的模型特效】· #543【螢幕回饋】· #549【特效文字】══
+  {
+    key: "effect.spawn-model-fx@1",
+    plan:
+      "#551 —— owner 2026-08-22「w3x jass + 球體 + 蝗蟲群單位 3d model 特效" +
+      "(ex. Saber 約束勝利之劍的翻滾光束就是)」",
+    expected: "partial",
+    // ⛔ 只問 `spawnModelFx` 這個名字不夠：一顆**命中即消失**的飛行物就是
+    //    `spawnProjectile` 換一個名字，而外部編輯器分不出來。`onTouch`（穿透式、
+    //    一人一次）才是「locust dummy」這件事的簽名欄位。
+    probe: (f) => f.effectKinds.has("spawnModelFx") && f.effectFields.has("onTouch"),
+    caveat:
+      "⭐ **玩法那一半已經全部落地**：路徑求值、`onTouch` 的逐段取樣（穿透式、預設一人一次）、" +
+      "`onArrive` 的落點結算，全部在 sim 裡，而且班表推進**既有的** `SimWorld.delayed`。" +
+      "⛔ **還缺兩件，兩件都不在 `packages/shared` 裡**：" +
+      "① 客戶端要真的把 `modelFxSpawn` 這個事件畫成一具會走、會自轉的模型" +
+      "（`spinDegPerSec` / `scale` / `modelKey` 是**純視覺**參數，sim 一個字都不讀）；" +
+      "② 那個事件要進 `apps/game-server/src/net/eventFanout.ts` 的白名單 —— " +
+      "⚠️ 白名單是**靜默**的，少一行就是「做完、測過、出貨，遊戲裡不存在」。" +
+      "⇒ 在那兩件到齊之前，用這個 kind 寫出來的技能**傷害會發生、畫面上什麼都沒有**。",
+    evidence:
+      "packages/shared/src/sim/effects/spawnModelFx.ts —— ⭐ 等分角度讀的是 `pull.ts` 的" +
+      "`ringPoints` / `RING_UNIT_ROTATION`（單位旋轉常數表），因為 `sim/**` 禁止三角函式" +
+      "（`sim/purity.test.ts`）。⭐ `onTouch` 與 `onArrive` 是**兩串**佇列而不是一串：" +
+      "`delayedSystem` 的 `struck` 過濾同時套用在 `effects` 與 `finalEffects` 上，" +
+      "掛成同一串會讓「被光束掃到的人不會被落點爆炸打到」。",
+    nearestExisting:
+      "⚠️ `spawnVfx` 是**定點**演出（不動、不打人）；`spawnProjectile` 是會被碰撞擋下來、" +
+      "**命中即消失**的實體。原作那一族兩者都不是：它是一隻帶 Locust 的 dummy 單位，" +
+      "每 tick 硬推固定距離、穿過身體不消失。",
+  },
+  {
+    key: "effect.screen-feedback@1",
+    plan: "#543 —— owner 2026-08-22「畫面閃爍及震動 不然都不知道發生什麼事情」",
+    expected: "partial",
+    // ⛔ 一半不算：owner 點名的是**閃爍與震動兩件事**，只做一件的引擎會讓對方
+    //    做出一支「該震卻只閃」的技能，而它不會被任何東西拒絕。
+    probe: (f) => f.effectKinds.has("screenFlash") && f.effectKinds.has("screenShake"),
+    caveat:
+      "⭐ sim 這一半只負責**什麼時候發、發給誰**（`applyTo`：self／victim／all，三個 kind 共用" +
+      "同一支解析器）。⛔ **畫面那一半不在 `packages/shared` 裡**，而且有三件事必須到齊：" +
+      "① 客戶端把 `screenFlash` / `screenShake` 畫出來；" +
+      "② 兩個事件進 `apps/game-server/src/net/eventFanout.ts` 的白名單（⚠️ 白名單靜默失敗）；" +
+      "③ ⭐ **`prefers-reduced-motion` 與後台強度上限**（`config.screen-cues@1`）—— " +
+      "`amplitude` 是一個 **0..1 的正規化強度，⛔ 不是像素**，真正的位移量由那份 config 乘出來。" +
+      "⇒ 寫卡片時 ⛔ 不要假設 `amplitude: 1` 在每一台機器上都會震同樣多；" +
+      "它是「這一發相對於全域上限有多用力」，而不是一個絕對值。",
+    evidence: "packages/shared/src/sim/effects/clientCues.ts（三個 kind 共用 `cueRecipients`）",
+    nearestExisting:
+      "⚠️ `spawnVfx` 是**世界裡**的一個定點演出 —— 玩家把鏡頭轉開就看不到，" +
+      "而「我剛剛被打了」這件事不可以取決於鏡頭朝哪。⛔ 兩者不能互相代替。",
+  },
+  {
+    key: "effect.floating-text@1",
+    plan: "#549 —— owner 2026-08-22「別忘了還有特效文字」（原作 `CreateTextTagUnitBJ`）",
+    expected: "partial",
+    // ⛔ 只問 kind 不夠：一段**寫死**的字冒出來只解決一半。owner 點名的例子是
+    //    克勞德的「1Hit…7Hit」，而那要求段號在**執行時**解析（`{{i}}`）。
+    probe: (f) => f.effectKinds.has("floatingText") && f.effectFields.has("text"),
+    caveat:
+      "⭐ `text` 支援佔位符 **`{{i}}`**（這一次執行是序列裡的第幾段，1 起算），所以" +
+      "「1Hit…7Hit」是 `comboStrikes.perStrike` 裡的**一個**節點寫 `\"{{i}}Hit\"`，" +
+      "⛔ 不是七個各寫死一個數字的節點。段號來自 `EffectContext.sequenceIndex`" +
+      "（由 `delayedSystem` 填），不在序列裡時解析成 **1**。" +
+      "⛔ **缺的兩件**：① 客戶端把 `floatingText` 事件畫成一段會往上飄、會淡出的字；" +
+      "② 該事件進 `eventFanout.ts` 的白名單。" +
+      "⚠️ 它 ⛔ **不是傷害數字**（那一族由 `damage` 事件在客戶端自己算），" +
+      "也 ⛔ 不是 UI 字串 —— 它掛在一個**身體**上（所以 `applyTo` 沒有 `all`）。",
+    evidence:
+      "packages/shared/src/sim/effects/clientCues.ts::resolveCueText + " +
+      "sim/effects/delayed.ts（`sequenceIndex: index + 1`，⛔ 這是 `{{i}}` 唯一的來源）",
+    nearestExisting:
+      "⚠️ 引擎裡最接近的是 `damage` 事件驅動的浮動傷害數字，⛔ 但那是客戶端自己從" +
+      "數值算出來的，作者寫不出「這一刀要冒什麼字」。",
+  },
   // ⭐ 12 個「引擎完全沒有」的 —— 一個模板 + 一張參數表（第零守則⑨），
   //    ⛔ 不是 12 段各自會腐爛的散文。表在 {@link OWNER_ACTIONS_ABSENT}。
   ...OWNER_ACTIONS_ABSENT.map(

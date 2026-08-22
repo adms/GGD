@@ -244,6 +244,10 @@ import type { ConvertTeamVariant } from "./variants/convertTeam";
 import type { ChainLightningVariant } from "./variants/chainLightning";
 import type { ComboStrikesVariant } from "./variants/comboStrikes";
 import type { PullVariant } from "./variants/pull";
+import type { SpawnModelFxVariant } from "./variants/spawnModelFx";
+import type { ScreenFlashVariant } from "./variants/screenFlash";
+import type { ScreenShakeVariant } from "./variants/screenShake";
+import type { FloatingTextVariant } from "./variants/floatingText";
 
 /**
  * ⭐ 2026-08-20（#467 ②）—— 這 40 格**搬到 `sim/effects/variants/<kind>.ts`** 了。
@@ -299,7 +303,14 @@ type EffectVariant =
   | ChainLightningVariant
   // ⭐ 2026-08-22 —— #541【連段】與 #147【吸引】。
   | ComboStrikesVariant
-  | PullVariant;
+  | PullVariant
+  // ⭐ 2026-08-22 —— #551【移動中的模型特效】與 #543 / #549【螢幕回饋・特效文字】。
+  //    ⚠️ 後三個是**送到客戶端的提示**：sim 只決定「什麼時候發、發給誰」，
+  //    ⛔ 畫面那一半在 apps/client（同 `damageLine` / `chainLightning` 那條線）。
+  | SpawnModelFxVariant
+  | ScreenFlashVariant
+  | ScreenShakeVariant
+  | FloatingTextVariant;
 /**
  * ⭐ 每一個 effect kind **共有**的欄位。今天只有一格 —— `condition`。
  *
@@ -412,6 +423,21 @@ export interface EffectContext {
    * 同一條鏈。`TriggerDamage.reflectDepth` 走的正是這條路。
    */
   proxyDepth?: number;
+  /**
+   * ⭐ 這一次執行是序列裡的**第幾段**，1 起算（RUNTIME、從不 authored、無 Zod）。
+   *
+   * 唯一的填寫者是 `delayedSystem`（因此 `delayed` / `comboStrikes` / `spawnModelFx`
+   * 排出來的每一發都帶著它）；唯一的讀者是 `floatingText` 的 `{{i}}` 佔位符。
+   *
+   * **缺席 = 這一段不在序列裡**，`{{i}}` 解析成 1 —— 一發單獨的效果就是它自己的
+   * 第一段。⛔ 這不是 fail-open 的猜測：「第幾段」對一個沒有段的效果來說唯一
+   * 誠實的答案就是「第一段」，而它與序列裡第一發的行為逐字相同。
+   *
+   * ⚠️ 它必須騎在 `ctx` 上而不是存進 `SimWorld`：那是**一次執行**的性質不是世界
+   * 的性質 —— 兩支連段同一 tick 各自落一刀時，一個世界層的計數器會把它們算成
+   * 同一串（與 {@link EffectContext.proxyDepth} 逐字同一個理由）。
+   */
+  sequenceIndex?: number;
   rng: Rng;
 }
 

@@ -266,7 +266,14 @@ export function refineDispelShape(
         // 連段 / 吸引（2026-08-22，#541 / #147）：同一組 shape + radius + side +
         // maxTargets，所以走**同一份**檢查。
         | "comboStrikes"
-        | "pull";
+        | "pull"
+        // 移動模型特效 / 螢幕回饋 / 特效文字（2026-08-22，#551 · #543 · #549）：
+        // 同一組 shape + radius + side + maxTargets，所以走**同一份**檢查。
+        // ⛔ 各寫一份的那一天它們會分岔，而每一份看起來都對。
+        | "spawnModelFx"
+        | "screenFlash"
+        | "screenShake"
+        | "floatingText";
     }
   >,
   ctx: z.RefinementCtx,
@@ -294,6 +301,50 @@ export function refineDispelShape(
         message: `shape:"single" 讀不到 ${k} —— 要用範圍請改成 shape:"circle"，否則這一格是一個看起來有設、其實沒有人讀的數字`,
       });
     }
+  }
+}
+
+/**
+ * ⭐ 0..255 三格的顏色 —— `screenFlash.colorRgb` 與 `floatingText.colorRgb`
+ * **共用同一份**（#543 / #549）。⛔ 兩份的那一天其中一份會少一條界，
+ * 而它跟正確的長得一模一樣。
+ *
+ * ⚠️ 刻意是 `z.tuple` 而不是 `z.array(...).length(3)`：前者的推導型別是
+ * `[number, number, number]`，逐格對得上 `sim/effects/variants/*.ts` 的 TS 宣告
+ * （`content/compat.test.ts` 在守兩邊一致）；後者推成 `number[]`，於是那份
+ * 型別對帳會靜默地少一層精度。
+ */
+export const zRgb = z.tuple([
+  z.number().int().min(0).max(255),
+  z.number().int().min(0).max(255),
+  z.number().int().min(0).max(255),
+]);
+
+/**
+ * 三個「送到客戶端的提示」kind（`screenFlash` / `screenShake` / `floatingText`）
+ * 共有的**死旋鈕**檢查。
+ *
+ * 它們的幾何欄位（`shape:"circle"` + `radius` …）**只有 `applyTo:"victim"`
+ * 讀得到** —— `self` 是施法者一個人、`all` 是全場，兩者都不會去解那個圓。
+ * 所以「圓 + applyTo:self」是一個作者以為自己設定了範圍、而執行期沒有人讀的圓：
+ * 卡片上看起來是一發全場震動，場上只有施法者的畫面在動（失敗形態②）。
+ *
+ * ⚠️ 反方向（`applyTo:"victim"` 卻寫 `shape:"single"`）**是合法的**，
+ * 而且是最常見的寫法：`single` = 沿用上游解好的目標（掛在 `damage` 之後或
+ * hook 上的那一份），⛔ 不是「沒有目標」。
+ */
+export function refineCueGeometry(
+  e: Extract<EffectDef, { kind: "screenFlash" | "screenShake" | "floatingText" }>,
+  ctx: z.RefinementCtx,
+): void {
+  if (e.shape === "circle" && (e.applyTo ?? "self") !== "victim") {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["shape"],
+      message:
+        `applyTo:"${e.applyTo ?? "self"}" 讀不到 shape:"circle" —— 只有 applyTo:"victim" 會去解那個圓，` +
+        "現在這一格是一個看起來有設定範圍、其實沒有人讀的圓",
+    });
   }
 }
 

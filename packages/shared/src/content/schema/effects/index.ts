@@ -66,6 +66,10 @@ import { zConvertTeam, refine as refine_convertTeam } from "./convertTeam";
 import { zChainLightning, refine as refine_chainLightning } from "./chainLightning";
 import { zComboStrikes, refine as refine_comboStrikes } from "./comboStrikes";
 import { zPull, refine as refine_pull } from "./pull";
+import { zSpawnModelFx, refine as refine_spawnModelFx } from "./spawnModelFx";
+import { zScreenFlash, refine as refine_screenFlash } from "./screenFlash";
+import { zScreenShake, refine as refine_screenShake } from "./screenShake";
+import { zFloatingText, refine as refine_floatingText } from "./floatingText";
 
 export const zEffectDefUnion = z.discriminatedUnion("kind", [
   zDamage,
@@ -110,6 +114,10 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   zChainLightning,
   zComboStrikes,
   zPull,
+  zSpawnModelFx,
+  zScreenFlash,
+  zScreenShake,
+  zFloatingText,
 ]);
 
 /**
@@ -142,14 +150,18 @@ export const EFFECT_REFINERS: Partial<Record<EffectDef["kind"], (e: never, ctx: 
   dot: refine_dot,
   eventValueConversion: refine_eventValueConversion,
   extendBuff: refine_extendBuff,
+  floatingText: refine_floatingText,
   grantAttribute: refine_grantAttribute,
   knockback: refine_knockback,
   manaBarrier: refine_manaBarrier,
   modifyCooldown: refine_modifyCooldown,
   proxyCast: refine_proxyCast,
   pull: refine_pull,
+  screenFlash: refine_screenFlash,
+  screenShake: refine_screenShake,
   shield: refine_shield,
   shieldBreak: refine_shieldBreak,
+  spawnModelFx: refine_spawnModelFx,
   swapResource: refine_swapResource,
   weightedBranch: refine_weightedBranch,
 };
