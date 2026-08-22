@@ -140,9 +140,41 @@ export const CLIENT_SFX_POLICY: Readonly<Record<string, PolicyRow>> = {
  * wiring cannot quietly default to centre — which is precisely how the whole
  * voice channel ended up unspatialised in the first place.
  */
+/**
+ * ⭐ GH#441 —— 一格休眠語音**卡在哪一種東西**上。owner 2026-08-22：「補阿」。
+ *
+ * ⚠️ 「沒有觸發點」有**兩種**，而它們的修法完全不同 —— 把兩種混成一句
+ * 「dormant」，下一個人就得把整條路重查一遍才知道自己要做的是哪一件事：
+ *
+ * | | 意思 | 補它要做什麼 |
+ * |---|---|---|
+ * | `no-signal` | 遊戲裡**根本沒有這件事**（沒有狀態文件、沒有事件、沒有輸入通道） | 先做一個**機制**。⛔ 不是接一條線 |
+ * | `no-wiring` | 訊號**今天就在線上**，只是沒有人讀它的上升緣 | 一個 edge detector，跟 `stun`/`slow`/`bind` **逐字同一個模板** |
+ *
+ * ⭐ `no-wiring` 的宣稱是**可以被反駁的**：`statusIds` 逐個都必須真的是
+ * `content/status-effects/<id>.json`，而 `spatialPolicy.test.ts` 去讀那個目錄。
+ * 所以「訊號已經出貨」這句話沒有辦法慢慢腐爛成假的（第三守則）。
+ */
+export type DormantCause = "no-signal" | "no-wiring";
+
+export interface DormantVerdict {
+  readonly cause: DormantCause;
+  /**
+   * `no-wiring` 專用：**今天真的出貨**的狀態文件 id。它們經
+   * `SeatState.statusIds`（per-seat，⚠️ 只有自己的）上線，所以接線的人拿得到的
+   * 是**本地**那一具身體 —— 要讓別人的也說話得先開一顆新的 `ENTITY_FLAG`。
+   * ⛔ `no-signal` 不可以有這一格。
+   */
+  readonly statusIds?: readonly string[];
+  /** 一行：為什麼是這個結論。⛔ 不要只複述 cause。 */
+  readonly note: string;
+}
+
 export interface VoicePolicyRow extends PolicyRow {
   /** does any client code path fire this category today? */
   readonly dispatched: boolean;
+  /** ⛔ 只有 `dispatched: false` 才有；⭐ 而那時候它是**必填**（見守衛）。 */
+  readonly dormant?: DormantVerdict;
 }
 
 /** `skill-name.<slot>` is one policy for all five slots (matched by prefix). */
@@ -188,20 +220,111 @@ export const VOICE_CATEGORY_POLICY: Readonly<Record<string, VoicePolicyRow>> = {
   "taunt": { policy: "world", reason: "GH#441 —— shopPerformVoice 早就在播它（celebrate/spell/attack 三種表演）；商店場景沒有 world listener ⇒ 那條路置中，戰鬥若接上仍走 world", dispatched: true },
   "charge": { policy: "world", reason: "GH#441 —— shopPerformVoice 的 spell/attack 表演已在播；商店無 world listener ⇒ 置中，戰鬥若接上仍走 world", dispatched: true },
   "jump": { policy: "world", reason: "GH#441 —— 由 ENTITY_FLAG.AIRBORNE 的上升緣說（#247 的 leap 在飛）；它屬於一具身體", dispatched: true },
-  "poison": { policy: "world", reason: "status line — same family as stun/slow/bind", dispatched: false },
-  "blind": { policy: "world", reason: "status line", dispatched: false },
-  "paralyzed": { policy: "world", reason: "status line", dispatched: false },
-  "confused": { policy: "world", reason: "status line", dispatched: false },
-  "retreat": { policy: "self", reason: "a call YOU make", dispatched: false },
+  "poison": {
+    policy: "world",
+    reason: "status line — same family as stun/slow/bind",
+    dispatched: false,
+    dormant: {
+      cause: "no-signal",
+      note: "出貨的 40 份 status-effect 裡**沒有中毒**；唯一的持續傷害是 `burn`(燃燒/fire)。把「中毒的咳嗽／作嘔」掛在火焰上，等於用聲音說一件沒發生的事",
+    },
+  },
+  "blind": {
+    policy: "world",
+    reason: "status line",
+    dispatched: false,
+    dormant: {
+      cause: "no-wiring",
+      statusIds: ["blind"],
+      note: "【致盲】今天就在線上（SeatState.statusIds），只差一個上升緣偵測 —— ⛔ 不要順手把【詛咒】也算進來，那是另一格語音(curse=咒罵)",
+    },
+  },
+  "paralyzed": {
+    policy: "world",
+    reason: "status line",
+    dispatched: false,
+    dormant: {
+      cause: "no-wiring",
+      statusIds: ["paralysis", "numbness"],
+      note: "【癱瘓】與【麻痺】都出貨了，兩份都是 disable+cc，共用這一句",
+    },
+  },
+  "confused": {
+    policy: "world",
+    reason: "status line",
+    dispatched: false,
+    dormant: {
+      cause: "no-wiring",
+      statusIds: ["confusion"],
+      note: "【混亂】出貨了。⛔ 同樣掛 `ai-override` 的【暴走】【恐懼】【魅惑】各自是別的東西，沒有自己的語音格",
+    },
+  },
+  "retreat": {
+    policy: "self",
+    reason: "a call YOU make",
+    dispatched: false,
+    dormant: {
+      cause: "no-signal",
+      note: "沒有隊友指令／撤退輸入。⚠️ 這是 46 格裡**唯一一格連選角點擊都碰不到**的自己人語音（不在 manifest 的 selectSourceCategories 裡）",
+    },
+  },
   "free-move": { policy: "self", reason: "GH#441 —— shopPerformVoice 的 pose 表演已在播；你自己的英雄，置中", dispatched: true },
-  "love": { policy: "self", reason: "emote — yours", dispatched: false },
-  "puzzled": { policy: "self", reason: "emote — yours", dispatched: false },
+  "love": {
+    policy: "self",
+    reason: "emote — yours",
+    dispatched: false,
+    dormant: {
+      cause: "no-signal",
+      note: "沒有表情輪。⭐ 但這一格**不是啞的** —— manifest 的 selectSourceCategories 拿它當選角點擊的來源之一",
+    },
+  },
+  "puzzled": {
+    policy: "self",
+    reason: "emote — yours",
+    dispatched: false,
+    dormant: {
+      cause: "no-signal",
+      note: "同 love：沒有表情輪，但選角點擊會抽到它",
+    },
+  },
   "thanks": { policy: "self", reason: "GH#441 —— shopPerformVoice 的 talk/nod 表演已在播；你自己的英雄，置中", dispatched: true },
   "thumbs-up": { policy: "self", reason: "GH#441 —— shopPerformVoice 的 celebrate 表演已在播；你自己的英雄，置中", dispatched: true },
   "watch": { policy: "self", reason: "GH#441 —— shopPerformVoice 的 pose 表演已在播；你自己的英雄，置中", dispatched: true },
-  "respond.ok": { policy: "self", reason: "ping response — yours", dispatched: false },
-  "respond.no": { policy: "self", reason: "ping response — yours", dispatched: false },
+  "respond.ok": {
+    policy: "self",
+    reason: "ping response — yours",
+    dispatched: false,
+    dormant: {
+      cause: "no-signal",
+      note: "沒有 ping／隊友指令，所以沒有東西可以被「回應」。⭐ 選角點擊仍然抽得到它",
+    },
+  },
+  "respond.no": {
+    policy: "self",
+    reason: "ping response — yours",
+    dispatched: false,
+    dormant: {
+      cause: "no-signal",
+      note: "同 respond.ok",
+    },
+  },
 };
+
+/**
+ * ⭐ GH#441 —— 今天**沒有任何呼叫端**的語音格，以及各自卡在哪一種東西上。
+ *
+ * ⚠️ 出貨的 51 個語音包每一位英雄都錄了這幾句，所以每一格休眠 = 51 個真的躺在
+ * `content/assets/audio/voices/lines/` 的 mp3。⭐ 其中 `no-wiring` 那三格
+ * （致盲／癱瘓／混亂）的訊號**今天就在線上**，補它們是一個 edge detector，
+ * 跟 `GameApp.dispatchStatusVoice` 已經在做的 stun/slow/bind 逐字同一個模板。
+ */
+export function dormantVoiceCategories(): readonly (readonly [string, DormantVerdict])[] {
+  const out: (readonly [string, DormantVerdict])[] = [];
+  for (const [cat, row] of Object.entries(VOICE_CATEGORY_POLICY)) {
+    if (!row.dispatched && row.dormant) out.push([cat, row.dormant] as const);
+  }
+  return out;
+}
 
 /** Policy for a voice category (skill-name.* collapses to one rule). */
 export function voicePolicyFor(category: string): VoicePolicyRow | null {

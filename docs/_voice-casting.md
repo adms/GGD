@@ -717,3 +717,67 @@ it is wrong.
 *§9 measured 2026-07-24 from a fresh campplus pass over `data/blizzard-overlay/sounds` (29 soundsets,
 378 clips) plus the stored embeddings in `_separation-baseline.json`. Reproduce from
 `content/assets/audio/voices/_separation-qc-gate.json`.*
+
+---
+
+## 10. Coverage audit — who is silent, and which lines nobody ever hears (GH#441)
+
+§1–§9 ask *whether the voices are tellable apart*. This section asks the cheaper, prior question:
+**does the clip reach a player's ears at all?** Measured 2026-08-22 against the shipped
+`champions/MANIFEST.json` (51 packs × 46 lines), `data/curation/whitelist.json` (49 champions) and
+`content/status-effects/` (41 docs).
+
+### 10.1 Two whitelisted champions have no combat pack
+
+| champion | id | 變身 counterpart | name / 名言 VO |
+|---|---|---|---|
+| 白木老樹精 - 白木卡迪那 | `godie-e00s` | `godie-e010` — also empty | ✅ both ship |
+| 職業獵人 - 傑 富力士 | `godie-ucrl` | `godie-u034` — also empty | ✅ both ship |
+
+Nine *other* whitelisted ids also lack a pack of their own and are **not** silent: they borrow from a
+duplicate hero number through `resolveVoicePackId`'s form-share table (`godie-ewar`←`e007`,
+`h02v`←`h02u`, `hjai`←`h020`, `nbbc`←`n01c`, `nsjs`←`n00p`, `ogrh`←`o00x`, `udre`←`u01u`,
+`umal`←`u00l`, `uvng`←`u010`). These two have **no donor** — both halves of both pairs are empty — so
+the mechanism that rescued the ten champions of #249 has nothing to lend.
+
+What still works for them: the champ-select CLICK and the 稱號→全名→名言 CONFIRM call-out, because
+those ride `names/` + `quotes/` (macOS `say`), not the cloned pack. What does not: every combat line.
+
+**The blocker is not a decision, it is the renderer.** Neither champion is in
+`_voice-casting-plan.json` (48 entries), neither has a reference take in `references/`, and neither
+has authored lines in `lines/ROSTER.json`. Rendering needs CosyVoice 3 — ~31 GB of weights in a venv
+**outside this repo** (`tools/voice-gen/README.md` §0), so it cannot be produced from a normal
+working session. The gap is already ratcheted in both directions by
+`apps/client/src/audio/combatVoiceCoverage.test.ts` (`VOICE_GAP`): the suite reddens if a voiced
+champion loses its pack *and* when these two gain one.
+
+### 10.2 Nine of the 46 categories have no contextual trigger — but only five are inaudible
+
+`spatialPolicy.VOICE_CATEGORY_POLICY` now carries a typed `dormant` verdict per row, because the two
+shapes cost an order of magnitude apart to fix:
+
+| cause | categories | what closing it takes |
+|---|---|---|
+| **`no-wiring`** — the signal is already on the wire | 致盲 `blind`, 被麻痺 `paralyzed`, 被混亂 `confused` | one rising-edge detector, the **same template** `GameApp.dispatchStatusVoice` already runs for stun/slow/bind |
+| **`no-signal`** — the game has no such thing | 中毒 `poison`, 退下 `retreat`, 愛心 `love`, 疑惑 `puzzled`, `respond.ok`, `respond.no` | a mechanism first (a poison status; an emote wheel; a ping system) |
+
+The `no-wiring` three are backed by shipped `status-effect@1` docs — `blind` (致盲), `paralysis` +
+`numbness` (癱瘓/麻痺), `confusion` (混亂) — and the guard in `spatialPolicy.test.ts` re-reads that
+directory, so the claim cannot rot into a lie. ⚠️ The only identity channel for them today is
+`SeatState.statusIds`, which is **per-seat by construction**, so a wiring lane gets the LOCAL body
+only; fanning them out to enemies needs a new `ENTITY_FLAG` bit. The table still declares them
+`world` — that is the answer to *where the sound belongs*, not to *what is reachable this week*.
+
+`poison` is `no-signal` and not merely unwired: there is no 中毒 status at all. The only DoT that
+ships is `burn` (燃燒, fire), and playing 「中毒的咳嗽／作嘔」 on a fire tick would be the 第一·五守則
+shape in audio form.
+
+**Four of the nine are not actually dead content.** `respond.ok`, `respond.no`, `love` and `puzzled`
+are listed in the manifest's own `selectSourceCategories`, so the champ-select click draws them as
+rung-2 material. That leaves **five clips per champion that no player can hear by any path —
+`poison`, `blind`, `paralyzed`, `confused`, `retreat` — 255 rendered mp3s across the 51 packs**, and
+three of those five are one edge detector away.
+
+*§10 measured 2026-08-22. Reproduce by reading the four files named at the top of this section; the
+per-category verdicts live in `apps/client/src/audio/spatialPolicy.ts` and are exported as
+`dormantVoiceCategories()`.*

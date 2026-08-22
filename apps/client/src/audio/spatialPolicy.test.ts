@@ -13,7 +13,7 @@
  * So a new sound in either place lands here unclassified.
  */
 import { describe, it, expect } from "vitest";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
@@ -21,6 +21,7 @@ import {
   CLIENT_SFX_POLICY,
   VOICE_CATEGORY_POLICY,
   combatEventPolicy,
+  dormantVoiceCategories,
   isWorldVoice,
   voicePolicyFor,
   type SpatialPolicy,
@@ -191,5 +192,47 @@ describe("every voice category is classified (spatial-policy-voice)", () => {
       if (dispatchTables.has(cat) || src.includes(`"${cat}"`)) wrong.push(cat);
     }
     expect(wrong, "categories marked dormant that a call site names").toEqual([]);
+  });
+
+  it("every dormant category says WHICH kind of nothing is stopping it", () => {
+    cover("spatial-policy-voice");
+    // ⭐ GH#441 owner「補阿」。上面那一條只答「它有沒有被叫」；這一條答**補它要
+    // 做什麼** —— 而那是兩件成本差一個數量級的事（做一個機制 vs 接一條線）。
+    // ⛔ 判準治不了：`dormant` 是宣告，所以 `no-wiring` 宣稱的訊號逐個回去讀
+    // `content/status-effects/`。訊號被改名或撤掉 → 紅，⛔ 不是靜默腐爛。
+    const shipped = new Set(
+      readdirSync(join(ROOT, "content/status-effects"))
+        .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+        .map((f) => f.slice(0, -5)),
+    );
+    expect(shipped.size).toBeGreaterThan(20); // sanity: we read the real collection
+    for (const [cat, row] of Object.entries(VOICE_CATEGORY_POLICY)) {
+      if (row.dispatched) {
+        expect(row.dormant, `${cat} is dispatched — it must not carry a dormant verdict`)
+          .toBeUndefined();
+        continue;
+      }
+      const d = row.dormant;
+      expect(d, `${cat} fires nowhere and does not say why`).toBeDefined();
+      expect(d!.note.length, `${cat} needs a real note`).toBeGreaterThan(8);
+      if (d!.cause === "no-wiring") {
+        const ids = d!.statusIds ?? [];
+        expect(ids.length, `${cat} claims the signal ships — name it`).toBeGreaterThan(0);
+        const ghosts = ids.filter((id) => !shipped.has(id));
+        expect(
+          ghosts,
+          `${cat} claims these status-effect docs ship, and they do not: ${ghosts.join(", ")}`,
+        ).toEqual([]);
+      } else {
+        expect(d!.statusIds, `${cat} is no-signal — it must not name one`).toBeUndefined();
+      }
+    }
+    // and the export the next lane will read agrees with the table
+    expect(dormantVoiceCategories().map(([c]) => c).sort()).toEqual(
+      Object.entries(VOICE_CATEGORY_POLICY)
+        .filter(([, r]) => !r.dispatched)
+        .map(([c]) => c)
+        .sort(),
+    );
   });
 });
