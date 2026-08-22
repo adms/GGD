@@ -268,6 +268,12 @@ export const ATTR_STAT_SOURCE: Partial<Record<Stat, AttrStatSource>> = {
   [Stat.HealthRegen]: { attr: "str", key: "strToHealthRegen", mode: "add" },
   [Stat.AttackDamage]: { attr: "str", key: "strToAttackDamage", mode: "add" },
   [Stat.Armor]: { attr: "agi", key: "agiToArmor", mode: "add" },
+  // ⭐ owner 2026-08-22：「每一點**力量** 額外增加 **0.1% 暴擊率**」
+  //    「每一點**敏捷** 額外增加 **0.02% 迴避率**」
+  // ⚠️ 兩格都是 0..1 的比率（0.001 = 0.1%），⛔ 不是百分點 —— 出貨係數住
+  //    `content/config/combat-env.json`，這裡只宣告「哪個屬性餵哪個屬性值」。
+  [Stat.CritChance]: { attr: "str", key: "strToCritChance", mode: "add" },
+  [Stat.Evasion]: { attr: "agi", key: "agiToEvasion", mode: "add" },
   [Stat.AttackSpeed]: { attr: "agi", key: "agiToAttackSpeed", mode: "scaleBase" },
   [Stat.MaxMana]: { attr: "int", key: "intToMaxMana", mode: "add" },
   [Stat.ManaRegen]: { attr: "int", key: "intToManaRegen", mode: "add" },

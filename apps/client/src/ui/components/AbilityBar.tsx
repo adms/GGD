@@ -62,6 +62,7 @@ import { hudActions } from "../actions";
 import { setHeldAbility } from "../abilityHold";
 import { hoverGuideEnter, hoverGuideLeave, pressGuide } from "../abilityRangeGuide";
 import { abilityActivationCue } from "../abilityCue";
+import { rangeGuide } from "../rangeGuideConfig";
 import { prefersReducedMotion } from "../buttonSfx";
 import { exSlotView } from "../exSlot";
 import { cooldownView } from "../cooldownView";
@@ -137,11 +138,14 @@ function holdProps(
       // a real press outranks the pending hover timer — drop it so it cannot
       // fire later and DOWNGRADE this full hold back to an aim-only one
       pressGuide(slot);
-      setHeldAbility(slot);
+      // ⭐ owner 2026-08-22（最高優先）：「**天生QWEREX 按按鈕施放時不要一直跳出說明 很亂**」
+      //    ⇒ 按下是**施放**不是**閱讀**：只留範圍圈（`"aim"`），⛔ 不開頂端說明橫幅。
+      //    ⚠️ **被動例外** —— owner 2026-08-13「被動技的按鈕應該不能被按下」，
+      //    說明正是玩家唯一能對被動做的事，所以那一格照舊開橫幅。
+      //    ⚠️ 這是一個**決策點**所以它是後台欄位（`config.range-guide@1.pressOpensBanner`），
+      //    ⛔ 不是這一行寫死的 —— owner 想要相反那一側時是一格下拉,不是一次部署。
+      setHeldAbility(slot, cue.passive === true || rangeGuide().pressOpensBanner ? "full" : "aim");
       abilityActivationCue(slot, cue);
-      // ⭐ owner 2026-08-13：「**被動技的按鈕應該不能被按下**」。
-      //    ⇒ 被動不播按下動畫（縮放/亮度）。按住仍然叫得出說明面板 ——
-      //    那是**讀**不是**按**，而被動的說明正是玩家唯一能對它做的事。
       if (pressable) pressVisualDown(e.currentTarget);
     },
     onPointerUp: (e) => {

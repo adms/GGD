@@ -165,6 +165,10 @@ var Keys = []string{
 	"moveSpeedMelee",
 	"moveSpeedRanged",
 	"magicResistMult",
+	// owner 2026-08-22：每點力量 +0.1% 暴擊率 · 每點敏捷 +0.02% 迴避率。
+	// append-only：TS 那一份（sim/combatEnv.ts COMBAT_ENV_KEYS）逐元素鏡射這裡。
+	"strToCritChance",
+	"agiToEvasion",
 }
 
 // Bounds for the five 金錢發放 factors. They are ×factors like the eighteen
@@ -221,7 +225,9 @@ var AttrDefaults = map[string]float64{
 	"strToMaxHealth":    23,   // war3mapMisc.txt StrHitPointBonus  (Blizzard 25)
 	"strToHealthRegen":  0.04, // war3mapMisc.txt StrRegenBonus     (Blizzard 0.05)
 	"strToAttackDamage": 0.4,  // owner 2026-08-13 從 1 調降（原 war3mapMisc.txt StrAttackBonus 1.0）
-	"agiToArmor":        0.15, // war3mapMisc.txt AgiDefenseBonus   (Blizzard 0.30)
+	"agiToArmor":        0.15,
+	"strToCritChance":   0,
+	"agiToEvasion":      0, // war3mapMisc.txt AgiDefenseBonus   (Blizzard 0.30)
 	"agiToAttackSpeed":  0.01, // ⚠️ 這一格是 MULTIPLICATIVE —— 見 shared 的說明
 	"intToMaxMana":      15,   // war3mapMisc.txt IntManaBonus      (Blizzard 15)
 	"intToManaRegen":    0.07, // war3mapMisc.txt IntRegenBonus     (Blizzard 0.05)

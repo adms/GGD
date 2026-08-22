@@ -36,6 +36,7 @@ import {
 } from "./abilityReadyFrame";
 import { INNATE_ACTIVE_CASTABLE } from "./castAnnounce";
 import { setHeldAbility } from "./abilityHold";
+import { rangeGuide } from "./rangeGuideConfig";
 import { abilityActivationCue } from "./abilityCue";
 import { prefersReducedMotion } from "./buttonSfx";
 import { AbilityDescriptionOverlay } from "./AbilityDescriptionOverlay";
@@ -349,7 +350,7 @@ export function TouchControls(): React.JSX.Element | null {
                 if (!passive) pressVisualDown(e.currentTarget);
                 if (learned) {
                   pressHandler(slot)(e);
-                  setHeldAbility(slot);
+                  setHeldAbility(slot, rangeGuide().pressOpensBanner ? "full" : "aim");
                   abilityActivationCue(slot, { denied: cd.onCd, passive });
                 } else {
                   abilityActivationCue(slot, { denied: true, passive });
@@ -443,7 +444,7 @@ export function TouchControls(): React.JSX.Element | null {
             onTouchStart={(e) => {
               pressVisualDown(e.currentTarget);
               pressHandler("EX")(e);
-              setHeldAbility("EX");
+              setHeldAbility("EX", rangeGuide().pressOpensBanner ? "full" : "aim");
               abilityActivationCue("EX", { denied: cd.onCd, passive: exPassive });
             }}
             onTouchEnd={(e) => {

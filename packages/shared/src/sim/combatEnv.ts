@@ -245,6 +245,12 @@ export const COMBAT_ENV_KEYS = [
   "moveSpeedMelee",
   "moveSpeedRanged",
   "magicResistMult",
+  // ⭐ owner 2026-08-22：「每一點**力量** 額外增加 **0.1% 暴擊率**」
+  //    「每一點**敏捷** 額外增加 **0.02% 迴避率**」
+  // ⚠️ 兩格是 0..1 的**比率**（0.001 = 0.1%），⛔ 不是百分點。
+  // ⚠️ 依慣例 append 在最後（`apps/platform` 的 combatenv.Keys 鏡射同一份）。
+  "strToCritChance",
+  "agiToEvasion",
 ] as const;
 
 export type CombatEnvKey = (typeof COMBAT_ENV_KEYS)[number];
@@ -471,6 +477,8 @@ export const ATTRIBUTE_ENV_DEFAULTS = {
   strToAttackDamage: 0.4,
   /** war3mapMisc.txt [Misc] AgiDefenseBonus = 0.15   (Blizzard MiscGame.txt: 0.30) */
   agiToArmor: 0.15,
+  strToCritChance: 0,
+  agiToEvasion: 0,
   /** Blizzard MiscGame.txt AgiAttackSpeedBonus = 0.02 — the map never overrides it */
   // 🔴 2026-08-13 owner：0.02 → **0.01**。
   //

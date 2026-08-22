@@ -126,6 +126,12 @@ const FIELD_OF: Record<AttributeEnvKey, Provenance> = {
   // …and no 魔抗 ATTRIBUTE axis either (WC3's magic resistance is a per-unit
   // armour-type table, not a stat derived from 智慧). GH#221, owner 2026-07-30.
   intToMagicResist: { ownerDesign: "IntMagicResistBonus" },
+  // ⭐ owner 2026-08-22（逐字）：「每一點**力量** 額外增加 **0.1%暴擊率**」
+  //    「每一點**敏捷** 額外增加 **0.02%迴避率**」
+  // ⛔ war3mapMisc 沒有這兩個欄位（WC3 的暴擊/迴避是**技能**給的，⛔ 不是屬性），
+  //    所以它們是 owner 自己的設計軸，與 `ap`／`mr` 同一類。
+  strToCritChance: { ownerDesign: "StrCritChanceBonus" },
+  agiToEvasion: { ownerDesign: "AgiEvasionBonus" },
 };
 
 /** Map value if the map overrides the field, else Blizzard's, else undefined. */
@@ -193,7 +199,10 @@ describe("三圍 coefficient provenance (#248 follow-up)", () => {
       report.push(`${key} = ${ATTRIBUTE_ENV_DEFAULTS[key]}  (${src?.from}:${field})`);
     }
     // NINE since GH#221 (智慧→魔抗 0.6); #248 shipped eight.
-    expect(report).toHaveLength(9);
+    // ELEVEN since 2026-08-22 —— owner 加了兩條**自己設計**的軸：
+    // 力量→暴擊率（0.1%/點）與敏捷→迴避率（0.02%/點）。⛔ 它們沒有 war3mapMisc
+    // 上游（WC3 的暴擊/迴避是技能給的，不是屬性），所以是 `ownerDesign`。
+    expect(report).toHaveLength(11);
   });
 
   it("attr-248-coef-map-overrides: the four fields the map really does override", () => {
