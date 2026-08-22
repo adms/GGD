@@ -285,8 +285,11 @@ export function pickAnchor(): BalanceAnchorLevel {
 export const SHIPPED_ANCHOR_LEVEL: BalanceAnchorLevel = HARD_ANCHOR_LEVEL;
 
 /**
- * 用出貨表打死某一個錨點的中位英雄要**幾發極小**。
- * ⭐ 達成率表的唯一算式 —— `≤ KILL_CASTS_REF` 就是達成。
+ * 用出貨表打死某一個錨點的中位英雄要**幾發極小**——**玩家實際會經歷的**那個數字。
+ * ⛔ **這一支不是達成率表的算式**（`castsToKillBase()` 才是）。這一行在 2026-08-22
+ *    之前寫著「達成率表的唯一算式」,而它與下面那支的註解**直接矛盾** ——
+ *    `tools/balance-anchors/gen.ts` 照著這一行做,於是文件把三個錨點全印成 ❌,
+ *    而 `anchors:check` 一路是綠的。⭐ 第三守則:註解會說謊,而這一次它騙了 20 天。
  *
  * ⚠️ 分母是**引擎最終**血量（引擎真的在打的那條），⛔ 不是純基礎、
  * 也⛔ 不含魔抗（owner 2026-08-20「不要計算⋯魔抗減傷 會讓我誤判」）。

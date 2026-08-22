@@ -133,6 +133,8 @@ const bonus = shippedBaseBonus();
 const pop = population();
 
 const HP_MULT = envChain(Stat.MaxHealth, env);
+/** ⭐ 全域傷害倍率 —— 級距是**減傷前**的數字,玩家吃到的是它 × 這一格(`combat/damage.ts`)。 */
+const DMG_MULT = env.damageDealt;
 const MP_MULT = envChain(Stat.MaxMana, env);
 const HP_BONUS = bonus["maxHealth"] ?? 0;
 const MP_BONUS = bonus["maxMana"] ?? 0;
@@ -158,7 +160,13 @@ const SMALLEST = floorAt(SHIPPED_ANCHOR_LEVEL);
 const DAMAGE = tiersFromAnchor(SMALLEST);
 /** 天花板：一發不可以秒殺 hard limit 那一級的中位英雄（**引擎最終**空間）。 */
 const CEILING = Math.floor(finalHp(SHIPPED_ANCHOR_LEVEL));
-const castsAt = (lv: BalanceAnchorLevel): number => finalHp(lv) / SMALLEST;
+// ⭐ 達成率**只能**在純基礎空間算 —— `damageTiers.ts::castsToKillBase()` 的註解逐字寫著
+//   「它不可以拿來驗設計承諾：兩者現在**刻意**不相等，差距就是 HP 系統倍率本身」。
+// ⛔ 在此之前這裡是 `finalHp(lv) / SMALLEST`——分子含 ×HP_MULT、分母不含,兩個空間混算,
+//   於是三個錨點**全部印 ❌**,而 `anchors:check` 是綠的。文件與閘各說各話 20 天。
+const castsAt = (lv: BalanceAnchorLevel): number => (baseHp[lv]! + HP_BONUS) / SMALLEST;
+/** 玩家**實際**要打幾發（含 HP 系統倍率）—— owner #530 問的是這一個,⛔ 不是達成率。 */
+const realCastsAt = (lv: BalanceAnchorLevel): number => finalHp(lv) / SMALLEST;
 const RATIOS = tierRatios();
 
 // ------------------------------------------------------------------- emit ---
@@ -234,12 +242,12 @@ function damageTiersJson(): string {
     `② 出貨錨**就是 hard limit LV${SHIPPED_ANCHOR_LEVEL}**，⛔ 不再是「滿足得了的最高那一個」（那條規則會挑到 LV50）。` +
     `⭐ **2026-08-21 第三次重錨（母體）**：owner 逐字「**錯誤的母體資料**」⇒ 中位數的母體從 \`readdirSync(content/champions)\`（71 張卡，含 20 個變身態＋2 張 fail-open 骨架佔位）` +
     `換成 **${pop.length} 位對戰可選英雄**（${BALANCE_POPULATION_PROVENANCE}）。變身態是同一位英雄的第二張卡，放進去就是重複計數。` +
-    `⭐ 推導鏈（四個輸入全部在別處，這裡一個字面值都沒有）：\`純基礎中位 ${baseHp[SHIPPED_ANCHOR_LEVEL]} ÷ ${KILL_CASTS_REF} 發 × HP 倍率 ${HP_MULT} ＋ 初始加成 ${HP_BONUS} ÷ ${KILL_CASTS_REF} 發\` ` +
-    `= ${(((baseHp[SHIPPED_ANCHOR_LEVEL]! / KILL_CASTS_REF) * HP_MULT + HP_BONUS / KILL_CASTS_REF)).toFixed(1)} → 進位到 ${tierStep()}（「使五格皆整數的最小單位」${minTierStep()} 的整數倍）⇒ **${SMALLEST}**。` +
-    `⚠️ **初始加成不參與倍率**（owner #273）—— 算式是 \`base × ${HP_MULT} + ${HP_BONUS}\`，⛔ **不是** \`(base + ${HP_BONUS}) × ${HP_MULT}\`；上一版把它折進「基礎」再回乘，差 **+16.5%**，那不是量測誤差是算術錯誤。` +
+    `⭐ 推導鏈（三個輸入全部在別處，這裡一個字面值都沒有）：\`（純基礎中位 ${baseHp[SHIPPED_ANCHOR_LEVEL]} ＋ 初始加成 ${HP_BONUS}）÷ ${KILL_CASTS_REF} 發\` ` +
+    `= ${((baseHp[SHIPPED_ANCHOR_LEVEL]! + HP_BONUS) / KILL_CASTS_REF).toFixed(1)} → 進位到 ${tierStep()}（「使五格皆整數的最小單位」${minTierStep()} 的整數倍）⇒ **${SMALLEST}**。` +
+    `⚠️ ⛔ **推導鏈裡一個系統倍率都沒有**（owner 2026-08-22：「不能把系統倍率乘進去再反推，這樣我用系統倍率就沒意義了」）—— \`maxHealth ${HP_MULT}\` 只在**引擎最終血量**那一欄出現，⛔ 不在級距的來源裡。` +
     `② 其餘四格 ＝ 極小 × 單體冷卻比（${DAMAGE_TIER_NAMES.map((n) => RATIOS[n]).join(" : ")}），**與冷卻表嚴格成正比** —— 那正是 owner Q4「已經有傷害相應的冷卻跟耗魔做限制」的意思。` +
-    `⇒ 五格 **${ladder}**，五格全整數。⭐ 三個錨點的達成率（打死該級中位英雄要幾發極小，門檻 ${KILL_CASTS_REF} 發，分母是**引擎最終**血量 ${BALANCE_ANCHOR_LEVELS.map((lv) => finalHp(lv)).join(" / ")}）：${rates}。` +
-    `⚠️ LV50/LV99 的缺口**不是這張表調得掉的**：血量比傷害長得快，那要動的是成長曲線。` +
+    `⇒ 五格 **${ladder}**，五格全整數。⭐ 三個錨點的達成率（打死該級中位英雄要幾發極小，門檻 ${KILL_CASTS_REF} 發，分母是**純基礎＋加成** ${BALANCE_ANCHOR_LEVELS.map((lv) => baseHp[lv]! + HP_BONUS).join(" / ")}——⛔ 不是引擎最終血量，那是另一個問題）：${rates}。` +
+    `⚠️ LV50/LV99 的缺口**不是這張表調得掉的**：血量比傷害長得快，那要動的是成長曲線。⭐ 玩家**實際**要打幾發（含 \`maxHealth ${HP_MULT}\`）是設計承諾的 ${HP_MULT} 倍——那正是系統倍率該有的樣子。` +
     `⚠️ 天花板 ${CEILING} ＝ LV${SHIPPED_ANCHOR_LEVEL} 的引擎最終中位血量 —— 一發不可以秒殺 hard limit 那一級的中位英雄；極大 ${DAMAGE[DAMAGE_TIER_NAMES[DAMAGE_TIER_NAMES.length - 1]!]} 是它的 ` +
     `${((DAMAGE[DAMAGE_TIER_NAMES[DAMAGE_TIER_NAMES.length - 1]!] / CEILING) * 100).toFixed(0)}%。` +
     `⭐ 只有**一張**表：形狀的代價整個住在冷卻軸上（範圍表比單體貴 2–5×），再在傷害軸打一次折就是同一個懲罰收兩次。` +
@@ -327,13 +335,10 @@ function docMd(): string {
   L.push("");
   L.push("```");
   L.push(`純基礎中位(LV${SHIPPED_ANCHOR_LEVEL}) ${baseHp[SHIPPED_ANCHOR_LEVEL]}`);
+  L.push(`  + 初始加成 ${HP_BONUS}               ← base-bonus.maxHealth`);
   L.push(`  ÷ ${KILL_CASTS_REF} 發                     ← owner Q1「20 次以內一定要能殺死對方」`);
-  L.push(`  × HP 倍率 ${HP_MULT}                    ← combat-env.maxHealth`);
   L.push(
-    `  + 初始加成 ${HP_BONUS} ÷ ${KILL_CASTS_REF} 發        ← base-bonus.maxHealth，⛔ 不參與倍率（owner #273）`,
-  );
-  L.push(
-    `  = ${(((baseHp[SHIPPED_ANCHOR_LEVEL]! / KILL_CASTS_REF) * HP_MULT + HP_BONUS / KILL_CASTS_REF)).toFixed(2)}`,
+    `  = ${((baseHp[SHIPPED_ANCHOR_LEVEL]! + HP_BONUS) / KILL_CASTS_REF).toFixed(2)}`,
   );
   L.push(
     `  → 進位到 ${tierStep()}（「使五格皆整數的最小單位」= ${minTierStep()}，粒度取它的整數倍）`,
@@ -347,20 +352,29 @@ function docMd(): string {
   L.push(`|---|${DAMAGE_TIER_NAMES.map(() => "---:").join("|")}|`);
   L.push(`| **傷害** | ${DAMAGE_TIER_NAMES.map((n) => `**${DAMAGE[n]}**`).join(" | ")} |`);
   L.push(
-    `| 佔 LV${SHIPPED_ANCHOR_LEVEL} 血條 | ${DAMAGE_TIER_NAMES.map((n) => `${((DAMAGE[n] / finalHp(SHIPPED_ANCHOR_LEVEL)) * 100).toFixed(1)}%`).join(" | ")} |`,
+    `| 表上的值（減傷前） | ${DAMAGE_TIER_NAMES.map((n) => `${DAMAGE[n]}`).join(" | ")} |`,
+  );
+  L.push(
+    `| ⭐ 玩家實際吃到（×${DMG_MULT} damageDealt） | ${DAMAGE_TIER_NAMES.map((n) => `**${Math.round(DAMAGE[n]! * DMG_MULT)}**`).join(" | ")} |`,
+  );
+  L.push(
+    `| ⭐ 佔 LV${SHIPPED_ANCHOR_LEVEL} 血條 | ${DAMAGE_TIER_NAMES.map((n) => `${((DAMAGE[n]! * DMG_MULT / finalHp(SHIPPED_ANCHOR_LEVEL)) * 100).toFixed(1)}%`).join(" | ")} |`,
+  );
+  L.push(
+    `| 幾發送走 LV${SHIPPED_ANCHOR_LEVEL} 中位 | ${DAMAGE_TIER_NAMES.map((n) => `${(finalHp(SHIPPED_ANCHOR_LEVEL) / (DAMAGE[n]! * DMG_MULT)).toFixed(1)}`).join(" | ")} |`,
   );
   L.push("");
   L.push("## 三個錨點的達成率");
   L.push("");
   L.push(`「打死該級中位英雄要幾發**極小**」，門檻 ${KILL_CASTS_REF} 發（owner Q1）。`);
   L.push("");
-  L.push("| 錨點 | 身分 | 引擎最終血量 | 要幾發 | 達成 | 這一級自己要求的極小 |");
-  L.push("|---|---|---:|---:|---|---:|");
+  L.push("| 錨點 | 身分 | 純基礎+加成 | 設計承諾要幾發 | 達成 | 引擎最終血量 | 玩家實際要幾發 | 這一級自己要求的極小 |");
+  L.push("|---|---|---:|---:|---|---:|---:|---:|");
   for (const lv of BALANCE_ANCHOR_LEVELS) {
     const n = castsAt(lv);
     L.push(
-      `| **LV${lv}** | ${ANCHOR_ROLE[lv]} | ${finalHp(lv).toLocaleString()} | ${n.toFixed(1)} | ` +
-        `${n <= KILL_CASTS_REF ? "✅" : "❌"} | ${floorAt(lv).toLocaleString()} |`,
+      `| **LV${lv}** | ${ANCHOR_ROLE[lv]} | ${(baseHp[lv]! + HP_BONUS).toLocaleString()} | ${n.toFixed(1)} | ` +
+        `${n <= KILL_CASTS_REF ? "✅" : "❌"} | ${finalHp(lv).toLocaleString()} | ${realCastsAt(lv).toFixed(1)} | ${floorAt(lv).toLocaleString()} |`,
     );
   }
   L.push("");
