@@ -119,8 +119,14 @@ async function settle(scene: IntermissionScene): Promise<void> {
   for (let i = 0; i < 400 && !scene.isBuilt; i++) {
     await new Promise((r) => setTimeout(r, 5));
   }
-  // the banner is loaded off setTeam's own promise chain, after isBuilt flips
-  await new Promise((r) => setTimeout(r, 50));
+  // ⭐ 橫幅走 `setTeam` 自己的 promise 鏈,在 `isBuilt` 翻過去**之後**才掛上。
+  // ⛔ 這裡原本是固定 `setTimeout(50)` —— 而 50 ms 是一個對**機器負載**的假設:
+  //    全套 808 個檔一起跑時它不夠,於是這條測試會用「橫幅不存在」的訊息紅,
+  //    而產品其實是好的（單獨跑一直是綠的）。⇒ 改成跟上面同一種輪詢。
+  for (let i = 0; i < 400; i++) {
+    if (scene.scene.transformNodes.some((n) => n.name.startsWith("im-banner"))) break;
+    await new Promise((r) => setTimeout(r, 5));
+  }
 }
 
 describe("intermission asset re-use across rounds", () => {

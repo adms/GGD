@@ -1074,6 +1074,13 @@ export class GameApp {
 
   async connect(): Promise<void> {
     const room = await this.sessions.connectDev(this.opts.mapId, this.opts.practice);
+    // ⭐ GH#570 —— `bind()` 那道閘擋不住這三行:它們拿的是 `connectDev()` 的
+    // **回傳值**,⛔ 不是 `conn.room`。離開落在上面那個 await 裡時,這裡照樣
+    // 會把一間幽靈房接上 `onStateChange` → `onStatePatch` → **模組層全域** hudStore。
+    if (this.disposed) {
+      this.sessions.dispose();
+      return;
+    }
     setLocalAccounts(this.sessions.localAccountIds());
     room.onStateChange((state) => this.onStatePatch(state));
     this.onStatePatch(room.state);
@@ -1082,6 +1089,13 @@ export class GameApp {
   /** Platform flow: consume the Go-minted seat token(s) — one per couch player. */
   async connectPlatform(endpoint: string, entries: SeatTokenEntry[]): Promise<void> {
     const room = await this.sessions.connectPlatform(endpoint, entries);
+    // ⭐ GH#570 —— `bind()` 那道閘擋不住這三行:它們拿的是 `connectDev()` 的
+    // **回傳值**,⛔ 不是 `conn.room`。離開落在上面那個 await 裡時,這裡照樣
+    // 會把一間幽靈房接上 `onStateChange` → `onStatePatch` → **模組層全域** hudStore。
+    if (this.disposed) {
+      this.sessions.dispose();
+      return;
+    }
     setLocalAccounts(this.sessions.localAccountIds());
     room.onStateChange((state) => this.onStatePatch(state));
     this.onStatePatch(room.state);
@@ -1101,6 +1115,16 @@ export class GameApp {
     // sitting on a permanent 「量測中」 or, worse, printing 0 ms.
     perfBus.netMode = "replay";
     const room = await this.sessions.connectReplay(replayId, ticket);
+    // ⭐ GH#570 —— `bind()` 那道閘擋不住這三行:它們拿的是 `connectDev()` 的
+    // **回傳值**,⛔ 不是 `conn.room`。離開落在上面那個 await 裡時,這裡照樣
+    // 會把一間幽靈房接上 `onStateChange` → `onStatePatch` → **模組層全域** hudStore。
+    if (this.disposed) {
+      this.sessions.dispose();
+      // ⚠️ 回放這一條要回一個 Room。⛔ 不要在這裡丟一個會跳「連線失敗」toast 的
+      //    例外 —— 使用者是**自己**離開的,那不是錯誤。把已經退掉的 room 原封
+      //    交回去:呼叫端只用它送 transport 訊息,而它已經 leave 了 ⇒ 無害。
+      return room;
+    }
     setLocalAccounts(this.sessions.localAccountIds());
     room.onStateChange((state) => this.onStatePatch(state));
     this.onStatePatch(room.state);
@@ -1451,6 +1475,10 @@ export class GameApp {
 
   /** Runs on every schema patch (SNAPSHOT_HZ): feed clocks/buffers/HUD store. */
   private onStatePatch(state: MatchState): void {
+    // ⭐ GH#570 —— 這一行把 `frame()` 與 `applyArena()` **已經有的**那道閘補到
+    // **第三條路**。現況是「畫面那一半關死了、狀態那一半整個敞開」——
+    // 而 owner 看到的正是「**還在動但畫不出來**」（隱形的英雄在攻擊我）。
+    if (this.disposed) return;
     // reflection-based state may not be materialized before the first patch
     if (!state?.seats || !state.entities) return;
     // the authoritative arena — (re)build the rendered map when it changes. The

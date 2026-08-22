@@ -39,12 +39,12 @@
 | 頻道 | PASS 格數 |
 | --- | --: |
 | damage | 180 |
-| buff | 63 |
+| buff | 62 |
 | projectile | 14 |
 | status | 8 |
 | heal | 8 |
+| dash | 8 |
 | championForm | 7 |
-| dash | 7 |
 | shield | 3 |
 | resourceSwap | 1 |
 | taunt | 1 |
@@ -131,6 +131,7 @@
 
 | 英雄 | ID | 槽 | 隨機節點 | 跨 seed 判定分佈 | 穩定？ |
 | --- | --- | --- | --- | --- | :-: |
+| 火霧戰士 - 夏娜 | `godie-e008` | EX | randomArea | PASS 24/24 | ✅ 是 |
 | 白木老樹精 - 白木卡迪那 | `godie-e00s` | R | randomArea | PASS 24/24 | ✅ 是 |
 | 揍敵客大家長 - 揍敵客桀諾 | `godie-efur` | R | randomArea | PASS 24/24 | ✅ 是 |
 | 國寶級的畜生 - 熊貓 | `godie-h02k` | EX | weightedBranch | PASS 24/24 | ✅ 是 |

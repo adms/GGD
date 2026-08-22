@@ -33,9 +33,9 @@ owner 2026-08-19（GH#438，這一份要涵蓋的**全部**軸）：
 | 軸 | JSON 欄位 | 出貨 config | 幾支技能填了 | 開關 |
 |---|---|---|---:|---|
 | 施法距離 | `rangeTier` | `range-tiers.json` | 193 (46%) | `enabled: true` |
-| 施法範圍 | `radiusTier` | `aoe-tiers.json` | 88 (21%) | `enabled: true` |
-| 位移 | `distanceTier` | `displacement-tiers.json` | 1 (0.2%) | `enabled: true` |
-| **傷害** | `damageTier` | `damage-tiers.json` | 204 (48.6%) | `enabled: true` |
+| 施法範圍 | `radiusTier` | `aoe-tiers.json` | 90 (21.4%) | `enabled: true` |
+| 位移 | `distanceTier` | `displacement-tiers.json` | 2 (0.5%) | `enabled: true` |
+| **傷害** | `damageTier` | `damage-tiers.json` | 205 (48.8%) | `enabled: true` |
 | **耗魔** | `manaCostTier` | `mana-tiers.json` | 204 (48.6%) | `enabled: true` |
 | **冷卻** | `cooldownTier` (+`cooldownShape`) | `cooldown-tiers.json` | 348 (82.9%) | `enabled: true` |
 
@@ -411,7 +411,7 @@ owner 2026-08-19：「**JASS 的部分優先權大於 w3x 技能設定**，因�
 | 74-03 闇之天使 | `godie-u00j.e` | w3a | 600 | 6 | 中 | 350 | 6 | 中 |
 | 74-01 獄門 | `godie-u00j.q` | JASS | 370 | 6 | 中 | — | — | — |
 | 74-04 最終殞落星 | `godie-u00j.r` | w3a | 600 | — | — | 600 | 12 | 極大 |
-| 74-02 八刀一閃 | `godie-u00j.w` | w3a | — | — | — | 850 | 12 | 極大 |
+| 74-02 八刀一閃 | `godie-u00j.w` | w3a | — | 4.5 | 小 | 850 | 12 | 極大 |
 | 71-03 厄夜靈魂 | `godie-u00k.e` | w3a | 250 | — | — | 600 | 12 | 極大 |
 | 71-01 死亡隕落 | `godie-u00k.q` | w3a | 350 | 6 | 中 | 350 | 12 | 極大 |
 | 71-04 萬惡歸宗 | `godie-u00k.r` | w3a | 600 | — | — | — | 12 | 極大 |

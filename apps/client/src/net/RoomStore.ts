@@ -7,6 +7,7 @@
  * alter HUD-visible values cause zero re-renders.
  */
 import { createStore } from "zustand/vanilla";
+import { perfBus } from "../perfBus";
 import { useStore } from "zustand";
 import { TICK_HZ } from "@ggd/shared/constants";
 import { KILL_COMBO_EVENT } from "@ggd/shared/sim/combat/killCombo";
@@ -725,6 +726,9 @@ let localsCacheKey = "";
 let localAccounts: string[] = [];
 
 export function resetHudStore(): void {
+  // ⭐ GH#570 —— 換場了,下一張快照重新 claim。⛔ 忘了這一行會讓上一場的
+  //    matchId 永遠贏,而新的一場整個 HUD 是空的（突變③驗的就是這個方向）。
+  ownerMatchId = null;
   hudStore.setState({ ...initial }, true);
   seatsCacheKey = "";
   teamsCacheKey = "";
@@ -739,7 +743,31 @@ export function setLocalAccounts(accounts: string[]): void {
   localAccounts = [...accounts];
 }
 
+/**
+ * ⭐ GH#570 —— **這一場**的 matchId。第一張快照 claim，`resetHudStore()` 清掉。
+ *
+ * ⛔ 在此之前 `syncHudFromState` 對「這張快照來自**哪一間房**」零檢查 ——
+ * 而 `hudStore` 是**模組層全域**的。一間幽靈房（我離開之後才抵達、卻被接上的房）
+ * 因此可以每 20 Hz 覆寫玩家的 matchId / phase / **血條**。
+ *
+ * ⭐ 量到的：離開房間 → 進練習模式，320 秒之後幽靈房的 champSelect 到期
+ * → `autoPickAndSpawn()` → 我的座位被 AI 接管 → 那個「我」繼續挨打
+ * ⇒ **練習模式畫面上的血條被打到 0/6761**。逐字就是 owner 說的
+ * 「隱形的英雄在攻擊我、喊出語音、特效、給我傷害」。
+ *
+ * ⚠️ 這是**縱深**那一層：F1（`bind()` 的閘）已經擋住來源，這一格讓未來任何一條
+ * 漏網的 socket **無害**，而且它會**出聲**（`perfBus.foreignSnapshots`）。
+ */
+let ownerMatchId: string | null = null;
+
 export function syncHudFromState(state: MatchState, localAccountId: string): void {
+  // ⭐ 第一張快照 claim 這一場;之後任何**別人的** matchId 一律丟掉並記一筆。
+  if (ownerMatchId === null) {
+    if (state.matchId) ownerMatchId = state.matchId;
+  } else if (state.matchId && state.matchId !== ownerMatchId) {
+    perfBus.foreignSnapshots++;
+    return;
+  }
   const prev = hudStore.getState();
   const patch: Partial<HudState> = {};
 

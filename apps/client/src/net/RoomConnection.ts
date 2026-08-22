@@ -7,6 +7,7 @@
  * GameApp loop — network → sim-event fanout never runs inside a socket callback.
  */
 import { Client, type Room, type SeatReservation } from "colyseus.js";
+import { perfBus } from "../perfBus";
 import type { MatchState } from "@ggd/shared/protocol/schema";
 import { recordReject } from "./RoomStore";
 import {
@@ -215,6 +216,15 @@ export function defaultEndpoint(): string {
   return "ws://localhost:2567";
 }
 
+/**
+ * ⭐ GH#570 —— 一間在我離開**之後**才抵達的房被當場退掉了。
+ * ⛔ 不是一行沒有人讀的 log：它進 `perfBus`,而 `ui/PerfOverlay` 的常駐 chip
+ * 把非零的數字**畫在畫面上**（第二守則：fail-open 沒錯,**靜默**才是缺陷）。
+ */
+export function noteOrphanRoom(): void {
+  perfBus.orphanRooms++;
+}
+
 export class RoomConnection {
   room: Room<MatchState> | null = null;
   readonly accountId: string;
@@ -222,6 +232,22 @@ export class RoomConnection {
   readonly displayNameOverride: string;
   private readonly queuedEvents: EventMessage[] = [];
   onDisconnect: ((code: number) => void) | null = null;
+  /**
+   * ⭐ GH#570 —— **已經離開了嗎**。
+   *
+   * ⛔ 在此之前 `leave()` 做的是 `void this.room?.leave(true)`，而 `this.room`
+   * 要等 `await client.create(...)` 回來、`bind()` 跑完才有值 ⇒ 離開落在 join
+   * 的窗口裡時，`leave()` **靜靜什麼都沒做**，接著 `bind()` 把 4 個 onMessage
+   * ＋ socket 接上一條**已經死掉的連線**。而 `main.tsx` 的
+   * `const join = app.connect();` **從來不 await** ⇒ `stopMatch()` 可以落在
+   * 那個 await 的任何一刻。
+   *
+   * ⭐ 量到的窗口寬度（主執行緒每幀被卡 0 / 60 / 250 / 800 ms 時）：
+   * **31 / 370 / 1,511 / 4,817 ms** —— ⇒ 越 LAG 窗口越寬、越容易多一間幽靈房，
+   * 而每一間 = 一條 20 Hz socket ＋ 伺服器一間**永不 autoDispose** 的房（30 tick/s）
+   * ⇒ 更 LAG。**正回饋，⛔ 不是兩件事。**
+   */
+  private disposed = false;
 
   constructor(accountId?: string, displayName?: string) {
     this.accountId = accountId ?? `dev-${Math.random().toString(36).slice(2, 10)}`;
@@ -345,6 +371,17 @@ export class RoomConnection {
   }
 
   private bind(room: Room<MatchState>): void {
+    // ⭐ GH#570 —— **這一行是承重的那一條**（見 `disposed` 的註解）。
+    // 一間在我離開**之後**才抵達的房,只有一個正確答案:把座位還回去然後走人。
+    // ⛔ 一個 handler 都不掛 —— 掛上去它就會寫進**模組層全域** `hudStore`,
+    //    而那正是 owner 看到的「隱形的英雄在攻擊我、喊語音、給我傷害」。
+    // ⚠️ `room.leave(true)` 是必要的:伺服器的 autoDispose 只在 `clients.length === 0`
+    //    才觸發,而幽靈 client 永遠不離開 ⇒ 那間房會用 30 tick/s 一直跑下去。
+    if (this.disposed) {
+      void room.leave(true);
+      noteOrphanRoom();
+      return;
+    }
     this.room = room;
     room.onMessage(MSG.EVENT, (ev: EventMessage) => this.acceptEvent(ev));
     // A whole tick's room-wide events in one message (net/eventBatch on the
@@ -392,6 +429,9 @@ export class RoomConnection {
   }
 
   leave(): void {
+    // ⭐ **第一行** —— ⛔ 不是最後一行:中間還有 `clearEvadeSightings()`,
+    // 晚設就是留一個更小、但仍然存在的窗。
+    this.disposed = true;
     void this.room?.leave(true);
     this.queuedEvents.length = 0;
     // …and the 迴避 buffer with them: a dodge that was never drained belongs to

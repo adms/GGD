@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "9c3c454b8edb",
+  "hash": "b593edb99112",
   "entries": [
     {
       "id": "attach.ex.midchilder-aura",
@@ -13,6 +13,12 @@
       "path": "vfx/attach.godie-e00x.awing.json",
       "hash": "ff3467bdbea9",
       "size": 489
+    },
+    {
+      "id": "attach.godie-o00x.hands",
+      "path": "vfx/attach.godie-o00x.hands.json",
+      "hash": "722f74526bf0",
+      "size": 783
     },
     {
       "id": "attach.godie-u01u.poweraura",

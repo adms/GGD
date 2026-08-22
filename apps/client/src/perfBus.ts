@@ -77,6 +77,22 @@ export interface PerfBus {
   entityCount: number;
   drawCount: number;
   particleCount: number;
+
+  /**
+   * ⭐ GH#570 —— **拆不乾淨的計數器**。⛔ 不是「效能」，是「有沒有東西沒收乾淨」。
+   *
+   * `orphanRooms`：一間在我離開**之後**才抵達、被當場退掉的房。
+   * `foreignSnapshots`：一張**不屬於現在這一場**的快照試圖寫進全域 `hudStore`。
+   *
+   * ⚠️ 兩格都是**縱深防禦的耳朵**：fail-open 沒錯，**靜默**才是缺陷（第二守則）。
+   * 在此之前這條路徑上唯一的訊號是「沒有訊號」—— owner 玩了幾分鐘才發現
+   * 血條被一個看不見的東西打到 0。⇒ 非零就要**畫在畫面上**，
+   * ⛔ 不是一行沒有人讀的 console。
+   */
+  orphanRooms: number;
+  foreignSnapshots: number;
+  /** 非預期斷線（`RoomConnection.onDisconnect`，在此之前全 repo 零指派點）。 */
+  unexpectedDisconnects: number;
 }
 
 export const perfBus: PerfBus = {
@@ -95,6 +111,9 @@ export const perfBus: PerfBus = {
   pingAgeMs: Number.POSITIVE_INFINITY,
   netSnapshots: 0,
   netMode: "live",
+  orphanRooms: 0,
+  foreignSnapshots: 0,
+  unexpectedDisconnects: 0,
   qualityLevel: 0,
   resolutionScale: 1,
   particleDensity: 1,
