@@ -257,6 +257,30 @@ export interface ArenaHandles {
   flames: ParticleSystem[];
   /** auto-fade for the audit's "fade" props (GameApp drives it per frame) */
   fader: DecorFader;
+  /**
+   * ⭐ GH#559 —— **這一趟場地自己 new 出來的每一顆材質**。
+   *
+   * ⛔ 在此之前沒有這一格，而 `disposeArena` 靠的是
+   * `mesh.dispose(false, /* disposeMaterialAndTextures *\/ true)` ——
+   * 也就是說**只有被指派給某顆 mesh 的材質**才會被回收。
+   *
+   * ⚠️ 而 `obstacleMat` / `obstacleRimMat` 是在 zone 迴圈**外面**無條件 `new` 的，
+   * 卻只在「這個 zone 真的有那一種障礙物」時才被指派：
+   *   · `box` / `segment` 障礙 → 只用 `obstacleMat`
+   *   · `circle` 障礙的地面環 → 只用 `obstacleRimMat`
+   * ⇒ 一張**沒有圓形障礙**的場地，每次換圖就留下 2 顆沒有主人的 PBR/Standard 材質。
+   *
+   * ⭐ 量到的（`roundArenaGrowth.test.ts`,8 個回合逐輪換圖）：
+   *   `mesh 0 / node 0 / particleSystem 0`（全部乾淨）而
+   *   `scene.materials` = 1 → 3 → 5 → 7 → **9**，**單調成長、⛔ 沒有上界**。
+   *   而地圖**每回合換**（task #145）⇒ 這就是 owner 說的「越玩越 LAG」。
+   *
+   * owner 2026-08-22 的裁決寫在這一格的存在理由上：
+   * 「你**寧願多次清理乾淨開始回合 也不要漏清到**」
+   * ⇒ 判準從「誰指派給了 mesh」換成「**這一趟建的，這一趟收**」——
+   * ⛔ 後者不會因為某個分支沒跑到而靜默漏掉。
+   */
+  materials: Material[];
 }
 
 /**
@@ -287,6 +311,8 @@ export function buildArena(
     grounds: [],
     flames: [],
     fader: new DecorFader(),
+    // ⭐ GH#559 —— 見 `ArenaHandles.materials` 的註解：這一趟建的,這一趟收。
+    materials: [],
   };
 
   arena.zones.forEach((zone, zi) => {
@@ -294,6 +320,7 @@ export function buildArena(
 
     // ⭐ GH#345 —— 牆色從場地讀，⛔ 不是寫死的水泥灰。見 `wallTintOf()`。
     const obstacleMat = new StandardMaterial(`zone-${zi}-obstacle-mat`, scene);
+    handles.materials.push(obstacleMat);
     // ⚠️ `.clone()` —— 每個 zone 一顆材質，⛔ 不要讓 N 顆材質共用同一個 Color3
     //    實例（任何一處就地改色會靜默改到全部）。
     obstacleMat.diffuseColor = wallTint.clone();
@@ -302,6 +329,7 @@ export function buildArena(
     // groundStyle now that the marker is too low to throw a silhouette —
     // derived from the wall so it follows the theme without a second table.
     const obstacleRimMat = new StandardMaterial(`zone-${zi}-obstacle-rim-mat`, scene);
+    handles.materials.push(obstacleRimMat);
     obstacleRimMat.diffuseColor = kerbEdgeOf(wallTint);
     obstacleRimMat.emissiveColor = new Color3(0.12, 0.11, 0.1);
     obstacleRimMat.specularColor = new Color3(0.08, 0.08, 0.08);
@@ -378,6 +406,7 @@ export function buildArena(
 
     // spawn pads
     const padMat = new StandardMaterial(`zone-${zi}-pad-mat`, scene);
+    handles.materials.push(padMat);
     padMat.diffuseColor = new Color3(0.3, 0.34, 0.4);
     padMat.alpha = 0.65;
     zone.spawns.forEach((side, si) => {
@@ -414,6 +443,16 @@ export function disposeArena(_scene: Scene, handles: ArenaHandles): void {
   // dispose all descendant meshes (with their materials/textures) then the root
   for (const m of handles.root.getChildMeshes(false)) m.dispose(false, true);
   handles.root.dispose();
+  // ⭐ GH#559 —— 上面那行只收得到**被指派給某顆 mesh** 的材質。這一趟自己 new 出來
+  // 的每一顆都要收,⛔ 不管它有沒有被用到（沒有圓形障礙的場地會留下兩顆孤兒,
+  // 而地圖每回合換 ⇒ 單調成長）。
+  // ⚠️ 順序刻意在 mesh 之後:已經被 mesh 收掉的那幾顆再 dispose 一次是 no-op
+  // （babylon 的 `Material.dispose()` 會先 `scene.removeMaterial(this)`,找不到就回 -1）,
+  // ⛔ 而反過來（先收材質）會讓 mesh 那一輪對著已釋放的 effect 再走一次。
+  // owner 2026-08-22:「你**寧願多次清理乾淨開始回合 也不要漏清到**」——
+  // 這一行就是那句話：⭐ 寧可重複 dispose,⛔ 不要靠「應該有人收過了」。
+  for (const mat of handles.materials) mat.dispose();
+  handles.materials.length = 0;
   handles.obstacleMeshes.length = 0;
   handles.grounds.length = 0;
 }

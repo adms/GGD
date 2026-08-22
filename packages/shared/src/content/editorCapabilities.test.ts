@@ -92,11 +92,47 @@ describe("ggd-runtime-capabilities@1 —— 對外契約不可能過期", () => 
       const doc = JSON.parse(readFileSync(join(dir, f), "utf8")) as { family?: string };
       if (typeof doc.family === "string") shipped.add(doc.family);
     }
-    // 清單是候選（多列安全、漏列致命），所以只驗「出貨的都在候選裡」。
+    // ⛔ 2026-08-22：這一條原本寫成
+    //     const known = new Set([...m.templateFamilies, ...shipped]);
+    //     for (const fam of shipped) expect(known.has(fam)) …
+    //   而 `known` 是**用 `shipped` 建的** ⇒ `known.has(fam)` **恆真**。
+    //   ⭐ 它對「候選名單整個是空的」也是綠的 —— 從來沒有驗過任何東西
+    //   （失敗形態③：整條可以刪掉而測試全綠）。
+    //
+    // ⭐ 而拆掉它之後量到：出貨的 40 個 `tpl-*.json` 家族裡有 **23 個**
+    //   `isExpandable()` 是 false。⚠️ 那**不是**缺陷 —— 它們是
+    //   `tools/ability-templates/classify_templates.py` 產出的**分類**模板
+    //   （逐個查過：**零**技能／英雄文件引用它們），⛔ 不是執行期展開模板。
+    //   ⇒ 把兩種混在一起驗會得到一條永遠紅的假警報。
+    //
+    // ⇒ ⭐ 真正致命的那一半是：**被出貨內容真的引用的家族**，必須展開得出來、
+    //   而且必須在對外契約的清單裡。漏它 = 外部編輯器做出來的內容上線就是死的。
     const m = buildCapabilityManifest();
-    const known = new Set([...m.templateFamilies, ...shipped]);
-    for (const fam of shipped) expect(known.has(fam), `家族 ${fam} 不在候選名單`).toBe(true);
-    expect(shipped.size).toBeGreaterThan(0);
+    const exported = new Set(m.templateFamilies);
+    const idToFamily = new Map<string, string>();
+    for (const f of readdirSync(dir)) {
+      if (!f.startsWith("tpl-") || !f.endsWith(".json")) continue;
+      const doc = JSON.parse(readFileSync(join(dir, f), "utf8")) as { id?: string; family?: string };
+      if (doc.id && typeof doc.family === "string") idToFamily.set(doc.id, doc.family);
+    }
+    const referenced = new Set<string>();
+    for (const sub of ["abilities", "champions"]) {
+      const d = join(REPO, "content", sub);
+      for (const f of readdirSync(d)) {
+        if (!f.endsWith(".json") || f.startsWith("_")) continue;
+        const text = readFileSync(join(d, f), "utf8");
+        for (const [id, fam] of idToFamily) if (text.includes(`"${id}"`)) referenced.add(fam);
+      }
+    }
+    const missing = [...referenced].filter((fam) => !exported.has(fam)).sort();
+    expect(
+      missing.join("\n"),
+      `⛔ 出貨內容**真的在用**的模板家族不在 ggd-runtime-capabilities 的清單裡 —— ` +
+        `外部編輯器看不到它,照著做的內容上線就是死的:\n${missing.map((f) => `  ${f}`).join("\n")}`,
+    ).toBe("");
+    expect(shipped.size, "一個 tpl 檔都沒掃到 ⇒ 上面整條在對空集合放行").toBeGreaterThan(0);
+    expect(referenced.size, "沒有任何家族被內容引用 ⇒ 同上,這條守衛等於沒開").toBeGreaterThan(0);
+    expect(exported.size, "契約的家族清單是空的 ⇒ 推導壞了").toBeGreaterThan(0);
   });
 
   /**

@@ -2139,13 +2139,13 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
  * `content/ability-templates/` 的實際家族名比對，漏了就紅。
  */
 const FAMILY_PROBE_LIST: readonly string[] = [
-  "barrier-domain", "blink-strike", "buff-self", "channel-beam", "charge-push",
+  "barrier-domain", "buff-self", "blink-strike", "channel-beam", "charge-push",
   "data-no-trigger", "death-mechanic", "drain-leech", "global-rule", "ground-nova",
   "growth-charge", "instant-blast", "leap-strike", "life-manipulate", "line-sweep",
   "lock-combo", "mark-stacks", "on-attack", "on-hit-react", "orbit-array",
   "periodic-field", "proxy-cast", "proxy-fanout", "pull-throw", "pure-cosmetic",
-  "random-barrage", "range-gamble", "resource-ops", "single-strike",
-  "strip-transform", "summon-agent", "team-synergy", "teleport", "traveling-wave",
+  "random-barrage", "range-gamble", "resource-ops", "single-strike", "strip-transform",
+  "summon-agent", "team-synergy", "teleport", "traveling-wave",
 ];
 
 /** probe 的實際結果 —— 守衛用它跟 `expected` 對帳。 */

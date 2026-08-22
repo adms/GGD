@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""GGD 作戰板 —— 從**來源文件**產生，⛔ 不手寫。
+"""GGD 戰情版 —— 從**來源文件**產生，⛔ 不手寫。
+
+owner 2026-08-22:「我說的作戰版是 ggd-board.html 不要搞混了 我**重新命名為 GGD戰情版**避免混亂」
+⇒ 這一份叫**戰情版**；「平行批次盤」是另一塊手寫的姊妹頁,⛔ 兩者不是同一個東西。
 
 owner 2026-08-20：「我說要**追加**，你怎麼移除了原本那些待追蹤議題、NOTE
 以及對話記錄所對應的票，請你加回來，**這是這次改版的重點總覽**耶」
@@ -40,7 +43,7 @@ def _split_cells(line: str) -> list[str]:
     """⭐ 在**沒有被跳脫**的 `|` 上切欄（與 scripts/ledger_table.py 同一套規則）。
 
     ⚠️ 裸 `split("|")` 會在 `\\|` 的 `|` 上切開,把一則內嵌 Markdown 表格的裁決
-    炸成十幾個 <td> —— owner 2026-08-22 在作戰板上看到的就是這個。
+    炸成十幾個 <td> —— owner 2026-08-22 在戰情版上看到的就是這個。
     """
     out, buf, esc = [], [], False
     for ch in line.strip().strip("|"):
@@ -206,9 +209,9 @@ def build() -> str:
         f"<h2>{inline(t)}</h2>{md_to_html(md)}</section>"
         for t, md in blocks if md.strip()
     )
-    return (f"<title>GGD 作戰板 · {data_asof(dailies)}</title>\n<style>{CSS}</style>\n"
+    return (f"<title>GGD 戰情版 · {data_asof(dailies)}</title>\n<style>{CSS}</style>\n"
             f'<div class="wrap"><header><p class="eyebrow">線上 {html.escape(shipped_version())} · 資料截至 {html.escape(data_asof(dailies))}</p>'
-            f"<h1>GGD 作戰板 · {html.escape(data_asof(dailies))}</h1>{meta(body, dailies)}</header>\n{body}\n"
+            f"<h1>GGD 戰情版 · {html.escape(data_asof(dailies))}</h1>{meta(body, dailies)}</header>\n{body}\n"
             f'<footer>由 <code>tools/board/gen_board.py</code> 從 docs/_daily · docs/_release 產生（⛔ 不含 git 狀態:那是時鐘欄位） —— '
             f'⛔ 不要手改這份 HTML</footer></div>\n')
 
