@@ -73,6 +73,27 @@ export const zAudioCastLayerCap = z
   })
   .strict();
 
+/**
+ * ⭐ GH#605 —— 【移動中的模型特效】自帶音效的**回頭開關**。
+ *
+ * owner 2026-08-23 的常設指令：「沒做完以前別問我了自己判斷 但是**留後台開關可以
+ * 簡易 rollback**」。⇒ 這一格存在的理由是**回頭**，⛔ 不是觀望：出貨值是
+ * 「兩半都開」（＝我挑的那個），關掉就逐位元回到 `spawnModelFx` 沒有聲音的那一版。
+ *
+ * ⚠️ 兩格分開是因為它們是**兩個決定**：`enabled` 是「這一族到底要不要出聲」，
+ * `arrive` 是我自己挑的那一半（「動地剁是**落點**有聲、飛行段沒有」）——
+ * 落點那一發是**客戶端排的**（sim 送 `arriveDelaySec`），所以它比發射那一發多一個
+ * 可能出錯的環節，值得能單獨關掉而不必連發射音一起犧牲。
+ */
+export const zAudioModelFxSound = z
+  .object({
+    /** false = `spawnModelFx` 的 `soundKey` / `arriveSoundKey` 兩格都不播（＝ GH#605 之前）。 */
+    enabled: z.boolean(),
+    /** false = 只播施放那一刻的 `soundKey`，落點那一發不排。 */
+    arrive: z.boolean(),
+  })
+  .strict();
+
 export const zConfigAudioMapDoc = z
   .object({
     id: zId,
@@ -106,9 +127,15 @@ export const zConfigAudioMapDoc = z
      * 改過的夾具，是沒有人重讀過的夾具**。缺這一格 = 走 `DEFAULT_CAST_LAYER_CAP`。
      */
     castLayerCap: zAudioCastLayerCap.optional(),
+    /**
+     * ⭐ GH#605 —— 移動中的模型特效自帶音效的開關（見 {@link zAudioModelFxSound}）。
+     * ⚠️ OPTIONAL 的理由與 `castLayerCap` / `mapBgm` 逐字相同。缺這一格 = 出貨預設。
+     */
+    modelFxSound: zAudioModelFxSound.optional(),
   })
   .strict();
 export type AudioBgmTrack = z.infer<typeof zAudioBgmTrack>;
 export type AudioSfxEntry = z.infer<typeof zAudioSfxEntry>;
 export type AudioCastLayerCap = z.infer<typeof zAudioCastLayerCap>;
+export type AudioModelFxSound = z.infer<typeof zAudioModelFxSound>;
 export type ConfigAudioMapDoc = z.infer<typeof zConfigAudioMapDoc>;

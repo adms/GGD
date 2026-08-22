@@ -95,6 +95,82 @@ export function persistentVfxRequests(
   return out;
 }
 
+// ───────────────────────────────────────────────────────────────────────────
+// ⭐ GH#603 —— 「`when` 缺席」到底是什麼意思
+// ───────────────────────────────────────────────────────────────────────────
+//
+// owner 2026-08-23：「**EX 技學習到時**，底下魔法陣記得要顯示跟 JASS 一樣」。
+//
+// `zPersistentVfx` 的表逐字寫著 `when` 缺席 = `GetUnitAbilityLevel(u,'A0xx') > 0`
+// （「這支技能**在身上／已解鎖**就掛著」），而客戶端把它實作成**恆真** ——
+// 於是魔法陣**從出生就掛著**，⛔ 不是 EX 學到的那一刻才出現。原作是
+// `set udg_EX_Mode = true` **之後**才 `AddSpecialEffectTargetUnitBJ`。
+//
+// ⚠️ 「掛得上去」是綠的（GH#539 驗的就是那個），而「**它什麼時候該掛**」從來沒有
+// 人驗 —— 一個**永遠成立**的條件與一個**正確**的條件在那條守衛面前一模一樣。
+//
+// ⛔ 修法**不是**在客戶端重寫一份條件求值器（`when` 填了的那一批仍然由
+// `persistentVfxClientCoverage.test.ts` 擋著，那個決定是對的）。缺的只是
+// **`GetUnitAbilityLevel` 那一半**，而它早就在線上了：`SeatState.abilityRanks`
+// 與 `SeatState.exRank`。⇒ ⛔ 零個新的 schema 欄位（`defineTypes` 是 APPEND-ONLY，
+// 加一格不可逆），只是去讀本來就送過來的那兩格。
+
+/** 一位英雄現在學到了哪些槽 —— **直接讀 `SeatState`**，⛔ 不是第二份推導。 */
+export interface LearnedSlots {
+  /** Q W E R 的階級，index 與 `SeatState.abilityRanks` 逐格相同。 */
+  readonly abilityRanks: readonly number[];
+  /** EX：0 = 還沒解鎖（`SeatState.exRank`）。 */
+  readonly exRank: number;
+}
+
+/** `champion.abilities` 的鍵順序 —— 與 `SeatState.abilityRanks` 的 index 對齊。 */
+export const PERSISTENT_VFX_RANKED_SLOTS: readonly string[] = ["Q", "W", "E", "R"];
+
+/**
+ * 一份 champion 文件現在該掛著的常駐特效 vfx id。
+ *
+ * `resolveAbility` 把 `exAbility` / `passiveAbility` 的**字串參照**換成文件
+ * （內嵌形式直接傳物件）—— 注入而不是在這裡 import 註冊表，守衛才讀得到出貨內容
+ * 而不用先啟動整個 registry。
+ *
+ * ⚠️ `learned` 是 `null`（seat 還沒同步 / 這具身體不是一位坐席英雄）時**一律不掛
+ * 需要學習的那幾支**，只留天生技。⭐ fail-**closed** 是刻意的：原作是「解鎖之後
+ * 才 attach」，所以「還不知道」的正解是「還沒有」，而它最多持續到 seat 進來的那一幀。
+ */
+export function persistentVfxKeysFor(
+  championDoc: unknown,
+  resolveAbility: (id: string) => unknown,
+  learned: LearnedSlots | null,
+): readonly string[] | undefined {
+  const doc = championDoc as
+    | { abilities?: Record<string, unknown>; exAbility?: unknown; passiveAbility?: unknown }
+    | undefined;
+  if (!doc) return undefined;
+  let out: string[] | undefined;
+  const take = (a: unknown, unlocked: boolean): void => {
+    const specs = (a as { persistentVfx?: readonly { vfxKey: string; when?: unknown }[] } | null)
+      ?.persistentVfx;
+    if (!specs || !unlocked) return;
+    for (const spec of specs) {
+      // 帶條件的那一批仍然走 sim（見上面），⛔ 這裡不重算。
+      if (spec.when !== undefined) continue;
+      (out ??= []).push(spec.vfxKey);
+    }
+  };
+  for (const [slot, a] of Object.entries(doc.abilities ?? {})) {
+    const ix = PERSISTENT_VFX_RANKED_SLOTS.indexOf(slot);
+    // 不在 Q/W/E/R 裡的鍵（內嵌的 EX / 未來的槽）比照 EX 走解鎖那一格。
+    const rank = ix >= 0 ? (learned?.abilityRanks[ix] ?? 0) : (learned?.exRank ?? 0);
+    take(a, rank > 0);
+  }
+  const deref = (ref: unknown): unknown => (typeof ref === "string" ? resolveAbility(ref) : ref);
+  // EX：`exRank > 0` 才掛 —— ⭐ 這一格就是 owner 那句話。
+  take(deref(doc.exAbility), (learned?.exRank ?? 0) > 0);
+  // 天生技：**等級 1 起自動擁有**，所以它沒有「學到了沒」可言（`passiveSlot.ts`）。
+  take(deref(doc.passiveAbility), true);
+  return out;
+}
+
 interface LiveEntity {
   root: TransformNode;
   handles: Map<string, PersistentVfxHandle>;

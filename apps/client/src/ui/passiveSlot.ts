@@ -30,6 +30,7 @@
  * Pure + node-testable: no React, no DOM.
  */
 import { championPassive } from "@ggd/shared/sim/content/registry";
+import { zAbilityPassiveRank } from "@ggd/shared/content/schema/effect";
 import type { ChampionId } from "@ggd/shared/ids";
 import type { CastType } from "@ggd/shared/sim/content/defs";
 import { docDescription, stripAbilityNumber } from "./components/abilityText";
@@ -144,26 +145,60 @@ export function passiveSlotView(championId: string | null | undefined): PassiveS
 }
 
 /**
+ * ⛔ 一個 rank 區塊裡**不是酬載**的欄位 —— 它們是「這一階掛不掛得上去」的**閘**，
+ * 填了它們一格東西都不會多出來（`sim/abilities/abilityPassives.ts::rankBlock`
+ * 逐格問過去，兩格都填 = AND）。
+ *
+ * ⚠️ 這是 {@link PASSIVE_RANK_PAYLOAD_KEYS} 唯一手寫的一半，而它是**刻意**的那一半：
+ * 推導方向選成「schema 的欄位**預設**是酬載，扣掉這裡列名的閘」，於是
+ * **新增一種酬載自動被算進去**（GH#604 就是漏算了兩種而說了四次謊），
+ * 而新增一個**閘**忘了登記會讓一支真的空的天生技被標成「已實作」——
+ * 那個方向由守衛的第二條斷言（52-00 十二道試煉必須仍然是「未實作」）擋住。
+ */
+export const PASSIVE_RANK_GATES: ReadonlySet<string> = new Set(["whileForm", "whileStatus"]);
+
+/**
+ * ⭐ GH#604 —— 一個 rank 區塊**可能帶哪些酬載**，從出貨的 Zod
+ * （`zAbilityPassiveRank`）**推導**，⛔ 不是手寫的三格。
+ *
+ * 在它之前這裡逐字寫著 `modifiers` / `hooks` / `auras` 三格，而 schema 早就長到
+ * 七格（`SOURCE_GRANT_SHAPE` 展開的 `flight` / `vision` / `block` / `deathWard` /
+ * `critStrike` / `attributes` / `penetration`…）。⇒ 全遊戲印「未實作」的 **5 格
+ * 天生技裡有 4 格是謊話**：04-00 翔封界（`flight`，兩份鏡射）、20-00 銀色甲胄
+ * （`block`）、21-00 灼眼（`vision`）—— 三支整場都在生效，而卡面上寫著它們沒有。
+ *
+ * ⛔ 白名單型判準的失敗方向永遠是**靜默地把真的東西標成假的**，
+ * 而「它有沒有漏列一種酬載」從來不是任何斷言的反面 —— 所以判準要從 schema 長出來。
+ */
+export const PASSIVE_RANK_PAYLOAD_KEYS: readonly string[] = Object.keys(
+  zAbilityPassiveRank.shape,
+).filter((k) => !PASSIVE_RANK_GATES.has(k));
+
+/** 一格酬載「真的有東西」嗎。空陣列 / 空物件 / false 都是**沒有**。 */
+function payloadPresent(v: unknown): boolean {
+  if (v === undefined || v === null || v === false) return false;
+  if (Array.isArray(v)) return v.length > 0;
+  if (typeof v === "object") return Object.keys(v as object).length > 0;
+  return true;
+}
+
+/**
  * Does a PERMANENT innate's rank-1 block actually grant anything?
  *
  * `syncAbilityPassives` attaches `passive.ranks[0]` as a ModifierSource at
- * spawn, so the three things that can make a difference in a match are exactly
- * the three the sim reads from that block: `modifiers` (flat/percent stats),
- * `hooks` (on-hit / on-kill procs) and `auras` (projected onto other units).
+ * spawn, and the sim reads EVERY payload field off that source without ever
+ * asking `kind` — so the question is simply「這個區塊裡有沒有**任何一種**酬載」,
+ * and the list of payload kinds is {@link PASSIVE_RANK_PAYLOAD_KEYS}（推導的）.
  * A block with none of them attaches a source that carries nothing — the hero
  * spawns, the tile lights up, and no number anywhere is different.
  *
  * Rank 1 is the only column an innate ever has (`maxRank: 1`), so this is the
  * whole question for the sixth slot.
  */
-function passiveRankGrantsSomething(def: { passive?: { ranks: readonly unknown[] } }): boolean {
-  const rank0 = def.passive?.ranks[0] as
-    | { modifiers?: readonly unknown[]; hooks?: readonly unknown[]; auras?: readonly unknown[] }
-    | undefined;
+export function passiveRankGrantsSomething(def: {
+  passive?: { ranks: readonly unknown[] };
+}): boolean {
+  const rank0 = def.passive?.ranks[0] as Record<string, unknown> | undefined;
   if (!rank0) return false;
-  return (
-    (rank0.modifiers?.length ?? 0) > 0 ||
-    (rank0.hooks?.length ?? 0) > 0 ||
-    (rank0.auras?.length ?? 0) > 0
-  );
+  return PASSIVE_RANK_PAYLOAD_KEYS.some((k) => payloadPresent(rank0[k]));
 }

@@ -106,4 +106,16 @@ export interface SpawnModelFxVariant {
    * 記著同一個缺陷：卡片寫一次的數字，場上打了 12 次）。
    */
   touchOncePerTarget?: boolean;
+  /**
+   * ⭐ GH#605 —— 施放那一刻播的**音效表 key**（`content/config/audio-map.json`）。
+   * sim 只把它**轉發**到 `modelFxSpawn` 事件上；播不播由客戶端的音訊政策決定
+   * （總音量／SfxGate／空間音場／#568 層數上限／`audio-map.modelFxSound` 開關）。
+   */
+  soundKey?: string;
+  /**
+   * ⭐ GH#605 —— **落點**那一發（動地剁是落點有聲、飛行段沒有）。
+   * 一次施放**一發**（取走最久的那一具的抵達時間），⛔ 不是每一具各一發。
+   * ⛔ 刻意沒有 `touchSoundKey` —— 理由寫在 `content/schema/effects/spawnModelFx.ts`。
+   */
+  arriveSoundKey?: string;
 }

@@ -115,6 +115,7 @@ import type { FormAttachmentSpec } from "./render/views/ChampionView";
 import { bodyRelativeScale } from "./render/views/modelSizing";
 import { entityTintFor } from "./render/views/mobTint";
 import { mobRingDiameterFor } from "./render/views/mobGroundRing";
+import { persistentVfxKeysFor } from "./render/views/persistentVfx";
 import {
   MOB_VISUAL_DEFAULT,
   parseMobVisualJson,
@@ -781,7 +782,10 @@ export class GameApp {
         // ⛔ 不是粒子）。同一份 `persistentVfx`,兩條算繪路:指到 `attachment@1`
         // 走這裡,指到 `vfx@1`/`ribbon@1` 走 AmbientVfx。⛔ 少了這一段,莉娜腳下
         // 那個圈就是一份填了沒人讀的欄位。
-        for (const id of this.persistentVfxFor(e.key) ?? []) {
+        // ⚠️ GH#603 —— 這一條路也要吃**同一個**學習閘。⛔ 少了 `e.seatId`,
+        // 粒子那一半等到 EX 解鎖才出現、而模型那一半從出生就掛著（同一份宣告
+        // 兩個時機 = 一個看得見卻查不出來的錯）。
+        for (const id of this.persistentVfxFor(e.key, e.seatId) ?? []) {
           const doc = this.contentDb.attachmentFor(id);
           if (!doc) continue;
           for (const worn of wornFromAttachmentDoc(doc)) {
@@ -2354,7 +2358,7 @@ export class GameApp {
       // (`MidchilderNanohaAura.mdx`) 掛在 `"origin"` 而**從來沒有 DestroyEffect**,
       // 所以它與 ambient 綁定是同一件事:活著就播、死了就收。⛔ 少了這一行,
       // `persistentVfx` 是一格填了沒人讀的欄位（失敗形態③:整條可以刪掉而測試全綠）。
-      this.ambient.attach(e.id, modelKey, view.root, this.persistentVfxFor(e.key));
+      this.ambient.attach(e.id, modelKey, view.root, this.persistentVfxFor(e.key, e.seatId));
       // task #59: the state-gated channel needs the CURRENT visual anim state,
       // which only the view knows. Bound models only — everything else is a
       // cheap map miss that never allocates.
@@ -2375,28 +2379,26 @@ export class GameApp {
    * 漂開的求值器（那正是第二守則失敗形態⑤:被測的不是出貨的那個）。
    * ⭐ 閘在 `persistentVfxClientCoverage.test.ts`:出貨內容一旦出現客戶端求不了值的
    * `when`,它就紅 —— ⛔ 不是靜靜不掛（那會讓「條件沒成立」與「引擎不支援」長得一樣）。
+   *
+   * ⭐ GH#603 —— 「`when` 缺席」**不是恆真**：它逐字是
+   * `GetUnitAbilityLevel(u,id) > 0`（「這支技能**學到了沒**」）。整段判斷住在
+   * `render/views/persistentVfx.ts::persistentVfxKeysFor`（純函式、守衛讀得到出貨內容），
+   * ⛔ 這裡只負責把兩個注入點接上：註冊表與**這位英雄的 seat**。
    */
-  private persistentVfxFor(championKey: string): readonly string[] | undefined {
-    const doc = Champions.tryGet(championKey as never) as
-      | { abilities?: Record<string, unknown>; exAbility?: unknown; passiveAbility?: unknown }
-      | undefined;
+  private persistentVfxFor(
+    championKey: string,
+    seatId?: number,
+  ): readonly string[] | undefined {
+    const doc = Champions.tryGet(championKey as never) as unknown;
     if (!doc) return undefined;
-    let out: string[] | undefined;
-    const take = (a: unknown): void => {
-      const specs = (a as { persistentVfx?: readonly { vfxKey: string; when?: unknown }[] } | null)
-        ?.persistentVfx;
-      if (!specs) return;
-      for (const spec of specs) {
-        if (spec.when !== undefined) continue;
-        (out ??= []).push(spec.vfxKey);
-      }
-    };
-    for (const a of Object.values(doc.abilities ?? {})) take(a);
-    for (const ref of [doc.exAbility, doc.passiveAbility]) {
-      if (typeof ref === "string") take(Abilities.tryGet(ref as never));
-      else take(ref);
-    }
-    return out;
+    // ⚠️ 小怪的 `seatId` 是 -1 ⇒ 找不到 seat ⇒ `null` ⇒ 只有天生技那一格會掛。
+    const seat =
+      seatId === undefined ? undefined : hudStore.getState().seats.find((s) => s.seatId === seatId);
+    return persistentVfxKeysFor(
+      doc,
+      (id) => Abilities.tryGet(id as never) as unknown,
+      seat ? { abilityRanks: seat.abilityRanks, exRank: seat.exRank } : null,
+    );
   }
 
   /**

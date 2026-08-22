@@ -134,6 +134,18 @@ export interface AudioMap {
    * 欄位而變紅）。
    */
   castLayerCap?: CastLayerCapValue;
+  /**
+   * ⭐ GH#605 —— 【移動中的模型特效】自帶音效的開關（`spawnModelFx.soundKey` /
+   * `arriveSoundKey`）。解讀住 `audio/modelFxSound.ts`；缺這一格 =
+   * `DEFAULT_MODEL_FX_SOUND`（兩半都開）。OPTIONAL 的理由同 `castLayerCap`。
+   */
+  modelFxSound?: ModelFxSoundValue;
+}
+
+/** `config.audio-map@1.modelFxSound` 的執行期形狀（與 Zod 逐欄相同）。 */
+export interface ModelFxSoundValue {
+  enabled: boolean;
+  arrive: boolean;
 }
 
 /** `config.audio-map@1.castLayerCap` 的執行期形狀（與 Zod 逐欄相同）。 */
@@ -167,5 +179,7 @@ export function audioMapFromDoc(doc: unknown): AudioMap | null {
     // ⭐ GH#568 —— 原封轉交，⛔ 這裡不解讀也不夾：`sfxLayerCap.readCastLayerCap`
     // 是**唯一**的解讀點（一份被截斷的後台 override 要逐格降級，不是整份丟掉）。
     castLayerCap: d.castLayerCap as CastLayerCapValue | undefined,
+    // ⭐ GH#605 —— 同上，原封轉交（`modelFxSound.readModelFxSound` 是唯一解讀點）。
+    modelFxSound: d.modelFxSound as ModelFxSoundValue | undefined,
   };
 }

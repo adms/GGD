@@ -57,7 +57,8 @@
           "durationSec": 0.6,
           "applyTo": "all"
         }
-      ]
+      ],
+      "arriveSoundKey": "explosion"
     },
     {
       "kind": "spawnModelFx",
@@ -77,7 +78,8 @@
       "count": 12,
       "distance": 6.42,
       "speed": 30.0,
-      "scale": 1.0
+      "scale": 1.0,
+      "soundKey": "guardianSlam"
     }
   ],
   "vfxKey": "godie-tectonicfury-p0",

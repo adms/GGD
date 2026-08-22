@@ -115,6 +115,46 @@ export const zSpawnModelFx = z
       .boolean()
       .optional()
       .describe("同一個人只被同一具模型碰一次。省略 = true。"),
+    /**
+     * ⭐ GH#605 —— 這一族的**聲音**（owner 2026-08-23：「也別忘了動地剁，
+     * 跟相關的音效要播出來」）。
+     *
+     * ⚠️ 在它之前 `spawnModelFx` 的 payload 裡**一個聲音鍵都沒有**，所以三個新
+     * 模板家族（三條黑龍／衝擊波／動地剁）＋ 四支橫放光束砲**整族**畫面有、
+     * 完全無聲 —— 而 `performanceEventsHaveConsumers.test.ts` 是綠的，因為
+     * `modelFxSpawn` **確實**有消費端（畫模型那一半）。「它應該也要發出聲音」
+     * 從來不是任何斷言的反面（第一·五守則的形狀）。
+     *
+     * ⭐ **補一格解決整族**，⛔ 不是逐支接線（第〇·五守則）。
+     *
+     * 值是**音效表（`content/config/audio-map.json`）的 key**，⛔ 不是檔名，
+     * 也⛔ 不是 zRef（audio map 是客戶端設定，不是內容集合 —— 與
+     * `ability@1.sfxKey` 逐字同一個規矩）。播放走既有管線，所以總音量／SFX 開關／
+     * SfxGate 的冷卻與同時發聲數／空間音場政策表／#568 的層數上限**全部自動適用**。
+     */
+    soundKey: z
+      .string()
+      .min(1)
+      .optional()
+      .describe(
+        "施放那一刻播哪一個音效（**音效表 audio-map 的 key**，不是檔名）。留白 = 這個時機不出聲。",
+      ),
+    /**
+     * ⭐ **落點**那一發（動地剁是落點有聲、飛行段沒有）。
+     *
+     * ⛔ **刻意沒有 `touchSoundKey`**，而這是一個決定不是遺漏：`onTouch` 是一串
+     * 逐段取樣的班表（每具最多 `MODEL_FX_MAX_TOUCH_SAMPLES` 發 ×
+     * 最多 {@link MODEL_FX_MAX_INSTANCES} 具），一支技能一次施放就會排出**幾百發**
+     * ——那不是音效是音爆。而「打到人的那一聲」已經有住處：傷害事件走特效家族的
+     * **特效命中**那一層（`audio/vfxSound.ts`）。
+     */
+    arriveSoundKey: z
+      .string()
+      .min(1)
+      .optional()
+      .describe(
+        "模型抵達／壽命到的那一刻在**落點**播哪一個音效（audio-map 的 key）。一次施放**一發**，⛔ 不是每一具各一發。",
+      ),
   })
   .strict();
 

@@ -172,6 +172,13 @@ export const spawnModelFxEffect: EffectKindSpec<"spawnModelFx"> = {
       return { i, ticks: i.dir === undefined ? (lifeTicks ?? 0) : ticks, actual };
     });
 
+    // ⭐ GH#605 —— **落點那一發聲音要等多久**。取整組實例裡走最久的那一個：
+    //    radial×12 的十二具同時落地（一樣的 `travel`／`speed`），所以「最久」與
+    //    「第一個」在出貨內容上是同一個數字，而萬一有人做出長短不一的一組，
+    //    最後一具落地時才響 = 聲音跟畫面上最後發生的事對得起來。
+    //    ⛔ 一次施放**一發**，⛔ 不是每一具各一發（12 具 = 一次音爆）。
+    const arriveDelaySec = wire.reduce((m, w) => Math.max(m, w.ticks * world.dt), 0);
+
     world.emit("modelFxSpawn", {
       caster: ctx.caster,
       modelKey: e.modelKey,
@@ -180,6 +187,15 @@ export const spawnModelFxEffect: EffectKindSpec<"spawnModelFx"> = {
       x: origin.x,
       z: origin.z,
       zone: ct.zone,
+      // ⭐ GH#605 —— 聲音那一半。⛔ 這裡不決定播不播（那是客戶端的音訊政策：
+      //    音量／SfxGate／空間音場／#568 層數上限），sim 只負責把作者填的 key 與
+      //    「落點在多久之後」送過去。`origin` 是 `"ability:<id>"`，客戶端用既有的
+      //    `abilityIdOfOrigin` 解出技能 id 去問層數上限 —— ⛔ 不新開一個欄位。
+      origin: ctx.origin,
+      ...(e.soundKey !== undefined ? { soundKey: e.soundKey } : {}),
+      ...(e.arriveSoundKey !== undefined
+        ? { arriveSoundKey: e.arriveSoundKey, arriveDelaySec }
+        : {}),
       ...(e.scale !== undefined ? { scale: e.scale } : {}),
       ...(e.spinDegPerSec !== undefined ? { spinDegPerSec: e.spinDegPerSec } : {}),
       instances: wire.map((w) => ({

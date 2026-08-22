@@ -1990,5 +1990,9 @@
     "enabled": true,
     "maxLayers": 5,
     "whitelist": []
+  },
+  "modelFxSound": {
+    "enabled": true,
+    "arrive": true
   }
 }

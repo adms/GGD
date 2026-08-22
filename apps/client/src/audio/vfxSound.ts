@@ -43,6 +43,14 @@ import {
   readCastLayerCap,
   type CastSoundLayer,
 } from "./sfxLayerCap";
+import {
+  DEFAULT_MODEL_FX_SOUND,
+  MODEL_FX_ARRIVE_LAYER,
+  MODEL_FX_LAUNCH_LAYER,
+  readModelFxSound,
+  readModelFxSoundEvent,
+} from "./modelFxSound";
+import type { AudioModelFxSound } from "@ggd/shared/content";
 import type { AudioMap } from "./types";
 
 /** overlay 專用資產的 URL 前綴 —— 正式站**刻意**不供應這個路徑（copyright gate）。 */
@@ -54,6 +62,20 @@ export const OVERLAY_ASSET_PREFIX = "assets/blizzard-local/";
  * 滿了就不再收新的 —— ⛔ 不是踢掉舊的：舊的那一發正在響，換掉它會聽見斷音。
  */
 export const MAX_ACTIVE_LOOPS = 24;
+
+/**
+ * ⭐ GH#605 —— 同時最多預約幾發**落點音**。與 {@link MAX_ACTIVE_LOOPS} 同一個理由：
+ * 擋的是登記表本身無限長（12 個人同時放 radial×12 的技能），⛔ 不是音量。
+ * 滿了就不再收新的 —— ⛔ 不是踢掉舊的（舊的那一發的落點正要發生）。
+ */
+export const MAX_PENDING_ONE_SHOTS = 32;
+
+/** 一發排好時間的落點音。⭐ 絕對時間，⛔ 不是遞減計數器。 */
+interface PendingOneShot {
+  readonly atMs: number;
+  readonly key: string;
+  readonly entityId?: number;
+}
 
 /**
  * 一發正在跑的登記。
@@ -87,6 +109,8 @@ export class VfxSoundLayer {
   private map: AudioMap | null = null;
   private familyOf: (abilityId: string) => string | undefined = () => undefined;
   private readonly loops = new Map<number, ActiveLoop>();
+  /** ⭐ GH#605 —— 排好時間的落點音（`spawnModelFx.arriveSoundKey`）。 */
+  private readonly pending: PendingOneShot[] = [];
   /** 技能 id → 這一份設定下**准播**的層（GH#568）。每次換設定都清空。 */
   private readonly layerMemo = new Map<string, Set<CastSoundLayer>>();
 
@@ -177,15 +201,92 @@ export class VfxSoundLayer {
     const memoKey = abilityId ?? "";
     const memo = this.layerMemo.get(memoKey);
     if (memo) return memo;
+    const allowed = allowedCastLayers(this.presentLayers(abilityId), abilityId, this.cap());
+    this.layerMemo.set(memoKey, allowed);
+    return allowed;
+  }
+
+  /** 這支技能在**設定上**真的有東西的那幾層（⛔ 還沒過上限）。 */
+  private presentLayers(abilityId: string | undefined): CastSoundLayer[] {
     // 施法音**一定**在：`combatSfx` 的路由最後一格是 `abilityCast` 這個保證的退路，
     // 所以一支技能可以沒有特效音,⛔ 不可以無聲施放。它排在層序第一,永遠不被夾掉。
     const present: CastSoundLayer[] = ["施法音"];
     for (const which of ["launch", "impact", "loop", "dissipate"] as const) {
       if (this.resolveCue(abilityId, which)) present.push(VFX_CUE_LAYER[which]);
     }
-    const allowed = allowedCastLayers(present, abilityId, this.cap());
-    this.layerMemo.set(memoKey, allowed);
-    return allowed;
+    return present;
+  }
+
+  /**
+   * ⭐ GH#605 —— 層數上限，⭐ **算進技能節點自己填的那幾格聲音**。
+   *
+   * ⚠️ ⛔ 不可以直接用 {@link layersOf}：那一份的 `present` 只從
+   * `vfx-families.json` 推導，而 `spawnModelFx.soundKey` 住在**技能文件的效果節點**
+   * 上 —— 於是一支「家族沒綁任何特效音、但節點自己填了 soundKey」的技能會被算成
+   * 「這一層設定上不存在」而**永遠被夾掉**，而畫面上跟「owner 把上限調低了」一模一樣。
+   * ⛔ 記憶化也不適用（extra 逐次不同），但它一次施放只跑一次。
+   */
+  private allowedWith(
+    abilityId: string | undefined,
+    extra: readonly CastSoundLayer[],
+  ): Set<CastSoundLayer> {
+    if (extra.length === 0) return this.layersOf(abilityId);
+    return allowedCastLayers(
+      [...this.presentLayers(abilityId), ...extra],
+      abilityId,
+      this.cap(),
+    );
+  }
+
+  /**
+   * ⭐ GH#605 —— 一顆 `modelFxSpawn` 帶來的聲音：**發射那一發現在播**，
+   * **落點那一發排進登記表**（`update()` 到時間發出來）。
+   *
+   * ⛔ 它刻意**不經過** `resolveVfxSound`（家族表）：這兩格是**技能文件的效果節點**
+   * 自己填的 audio-map key，家族退回那一套在這裡沒有第二層可退。但 `serveable()`
+   * 仍然要問 —— 一個正式站取不到的 `wc3.*` key 要當成「這一格沒填」，⛔ 不是排一發
+   * 永遠不會響的預約去佔登記表。
+   */
+  modelFxCues(data: Record<string, unknown>, nowMs: number): VfxSoundHit[] {
+    const policy = this.modelFxPolicy();
+    if (!policy.enabled) return [];
+    const ev = readModelFxSoundEvent(data);
+    const launch = ev.soundKey !== undefined && this.serveable(ev.soundKey) ? ev.soundKey : null;
+    const arrive =
+      policy.arrive && ev.arriveSoundKey !== undefined && this.serveable(ev.arriveSoundKey)
+        ? ev.arriveSoundKey
+        : null;
+    if (launch === null && arrive === null) return [];
+    const abilityId = ev.origin !== undefined ? abilityIdOfOrigin(ev.origin) : undefined;
+    const extra: CastSoundLayer[] = [];
+    if (launch !== null) extra.push(MODEL_FX_LAUNCH_LAYER);
+    if (arrive !== null) extra.push(MODEL_FX_ARRIVE_LAYER);
+    const allowed = this.allowedWith(abilityId, extra);
+
+    const out: VfxSoundHit[] = [];
+    if (launch !== null && allowed.has(MODEL_FX_LAUNCH_LAYER)) {
+      out.push({ key: launch, gain: 1, ...(ev.caster !== undefined ? { entityId: ev.caster } : {}) });
+    }
+    if (
+      arrive !== null &&
+      allowed.has(MODEL_FX_ARRIVE_LAYER) &&
+      this.pending.length < MAX_PENDING_ONE_SHOTS
+    ) {
+      // ⭐ 絕對時間，⛔ 不是遞減計數器（同 `ActiveLoop.endMs` 的理由）。
+      this.pending.push({
+        atMs: nowMs + ev.arriveDelaySec * 1000,
+        key: arrive,
+        ...(ev.caster !== undefined ? { entityId: ev.caster } : {}),
+      });
+    }
+    return out;
+  }
+
+  /** 現在生效的 `spawnModelFx` 音效政策（`config.audio-map@1.modelFxSound`）。 */
+  private modelFxPolicy(): AudioModelFxSound {
+    return this.map?.modelFxSound
+      ? readModelFxSound(this.map.modelFxSound)
+      : DEFAULT_MODEL_FX_SOUND;
   }
 
   /** 兩段解析（逐支覆寫 → 家族退路），⛔ **沒有**上限那一關。 */
@@ -238,8 +339,20 @@ export class VfxSoundLayer {
    * 會決定誰吃到 SfxGate 那一格 —— 不排序的話同一場比賽兩次會不一樣。
    */
   update(nowMs: number): VfxSoundHit[] {
-    if (this.loops.size === 0) return [];
     const out: VfxSoundHit[] = [];
+    // ⭐ GH#605 —— 到期的落點音。⛔ **當場從登記表刪掉**（同 #259 的回收），
+    //    而且是**就地過濾**，不是留一個「已播過」的旗標。
+    if (this.pending.length > 0) {
+      for (let i = this.pending.length - 1; i >= 0; i--) {
+        const p = this.pending[i]!;
+        if (nowMs < p.atMs) continue;
+        this.pending.splice(i, 1);
+        out.push({ key: p.key, gain: 1, ...(p.entityId !== undefined ? { entityId: p.entityId } : {}) });
+      }
+      // 同一幀多發時播放順序不可以取決於陣列殘留的次序（決定性，同下面的 sort）。
+      out.sort((a, b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
+    }
+    if (this.loops.size === 0) return out;
     for (const id of [...this.loops.keys()].sort((a, b) => a - b)) {
       const loop = this.loops.get(id)!;
       if (nowMs >= loop.endMs) {
@@ -272,11 +385,19 @@ export class VfxSoundLayer {
   /** 回合切換 / teardown：一次清空，**不發任何消散音**（場景已經換了）。 */
   reset(): void {
     this.loops.clear();
+    // ⭐ GH#605 —— 排在飛的落點音也要清掉：回合已經換了，那一發再響就是
+    //    #429（燃燒床音被推進商店）的形狀。
+    this.pending.length = 0;
   }
 
   /** 診斷用（守衛讀它確認回收真的發生了）。 */
   get activeLoops(): number {
     return this.loops.size;
+  }
+
+  /** 診斷用 —— 還有幾發落點音排著（守衛讀它確認回收真的發生了）。 */
+  get pendingOneShots(): number {
+    return this.pending.length;
   }
 }
 
@@ -332,6 +453,16 @@ export function vfxSoundCues(
     // 持續型特效的底噪。掛在**施法者**身上，所以位置跟著他走、他死了就跟著回收。
     const caster = typeof ev.data.caster === "number" ? ev.data.caster : undefined;
     if (caster !== undefined) emit(layer.startLoop(caster, abilityId, nowMs));
+    return out;
+  }
+  // ⭐ GH#605 —— 【移動中的模型特效】自帶的音效。
+  //
+  // ⛔ 它刻意**不掛在 `VfxSystem` 的 `case "modelFxSpawn"` 裡**：那個 case 第一行
+  //    是 `if (!this.modelFx) break;` —— 一個**算繪**的前提（模型 rig 兩個內容接縫
+  //    都在才會被建）。把聲音掛在它後面，等於「模型檔沒進來 ⇒ 連聲音也一起消失」，
+  //    而那正是這張票在修的那種靜默（失敗形態②）。聲音走自己的路。
+  if (ev.type === "modelFxSpawn") {
+    for (const hit of layer.modelFxCues(ev.data as Record<string, unknown>, nowMs)) emit(hit);
     return out;
   }
   // ⭐ GH#440 —— `stopLoop()` 在這之前**全 repo 零呼叫端**：註解說它是給
