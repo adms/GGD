@@ -185,6 +185,8 @@ export type Page =
    * 另一邊不會有任何東西紅。
    */
   | "rangeGuide"
+  // GH#546 —— 開關型技能的「開啟中」外觀（圖示流轉）。owner:「圖示跟特效要明顯看出是開還是關狀態」
+  | "toggleAbility"
   /**
    * 競技場規則 (`config/arena-rules.json` 的八個一直調不到的區塊, GH#410):
    * 治療花 · 復活圈 · 守護塔 · 陣亡投幣 · 大絕／EX 解鎖回合 · 最後一回合 ·
@@ -667,6 +669,7 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "damageColors",
   // 範圍指引與預告 (GH#376): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "rangeGuide",
+  "toggleAbility",
   // 競技場規則 (GH#410): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "arenaTuning",
   // 護盾規則: 第四頁,同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`,所以

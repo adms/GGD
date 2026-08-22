@@ -2503,39 +2503,203 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   //
   // ⛔ 這四筆是 `landing` **不是** `default-live`：它們沒有任何 code 預設在跑,
   //    內容不填就是**什麼都不會發生**。30 天後要嘛有內容採用、要嘛承認是死機制。
-  "variant:abilities.effects[]#spawnModelFx": {
+  "enum:abilities.effects[]#floatingText.applyTo=victim": {
     status: "landing",
     since: "2026-08-22",
     why:
-      "移動中的**模型**特效（引擎那一半 2026-08-22 落地：路徑求值 + onTouch 逐段取樣 + onArrive 落點，" +
-      "班表推進既有的 SimWorld.delayed，⛔ 零個新排程器）。內容那一半是三支驗收技能（GH#543），" +
-      "由主 session 接 —— content/ 是單執行緒的領域。⚠️ 它與 `spawnVfx` **不是同一件事**：" +
-      "原作的翻滾光束是一隻**帶模型的 dummy 單位**沿路徑移動，⛔ 不是粒子發射器。",
+      "特效文字掛在**被打的那一個**身上。⛔ 首批內容（克勞德七連斬的 `{{i}}Hit` · " +
+      "理想鄉反彈的每刀火花）全部掛 `self` —— 原作 `CreateTextTagUnitBJ` 在那兩處也是" +
+      "掛在**施法者**的座標上跳字（war3map.j:33856 的 `udg_FF7_CastedUnit` 其實是被打的人，" +
+      "但 GGD 這一側 `self` 已經對得上畫面）。⭐ `victim` 為「傷害數字長在被打的人頭上」" +
+      "那一族留著 —— 那是一個**不同的**演出慣例，⛔ 不是同一件事的別名。",
   },
-  "variant:abilities.effects[]#screenFlash": {
+  // ── ⭐ 2026-08-22 —— 四個新 kind 的**選用參數**，首批 5 份內容還沒走到 ──────
+  //
+  // ⚠️ 這 22 列**不是** 22 個缺口:kind 本身已經被採用（三支驗收技能 + 理想鄉反彈），
+  //    ⛔ 沒被採用的是它們的**選用子欄位與 enum 成員**。三組：
+  //    ① `EFFECT_COMMON_SHAPE` 的公共外殼（condition/radius/side/maxTargets/shape）
+  //    ② `spawnModelFx` 自己的其餘路徑與選項（首批只用了 forward ×2 + radial ×1）
+  //    ③ `screenShake` 的對象（出貨是 `all`，owner 要「兩邊都感覺到」）
+  // ⭐ 全部 `landing` ⇒ 30 天後自動失效,逼人回來看「它到底有沒有人要」。
+  "field:abilities.effects[]#screenShake.condition": {
     status: "landing",
     since: "2026-08-22",
     why:
-      "全螢幕閃爍。owner 2026-08-22：「理想鄉被反彈的敵方單位⋯**畫面閃爍及震動 不然都不知道" +
-      "發生什麼事情有沒有反擊成功**」⇒ 它是一個**回饋**機制，⛔ 不是美術偏好。" +
-      "內容接在 GH#549（理想鄉反彈）。⚠️ 強度上限與 reduced-motion 由 config 管。",
+      "⭐ 這一格來自 `EFFECT_COMMON_SHAPE`（每一個 effect kind 都被迫帶著的公共外殼），"
+      + "⛔ 不是 `screenShake` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
+      + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
+      + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
+      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
   },
-  "variant:abilities.effects[]#screenShake": {
+  "field:abilities.effects[]#screenShake.radius": {
     status: "landing",
     since: "2026-08-22",
     why:
-      "全螢幕震動（同一句 owner 原話的另一半：「畫面閃爍**及震動**」）。⛔ 它與 `screenFlash` " +
-      "分成兩個 kind 是刻意的：閃爍是**瞬間的注意力**、震動是**重量感**，很多場合只要其中一個" +
-      "（擊殺閃、火圈點燃震），綁在一起就沒得選。⚠️ 必須吃 prefers-reduced-motion —— " +
-      "螢幕震動是無障礙上最容易致暈的一種。內容接在 GH#549（理想鄉反彈）。",
+      "⭐ 這一格來自 `EFFECT_COMMON_SHAPE`（每一個 effect kind 都被迫帶著的公共外殼），"
+      + "⛔ 不是 `screenShake` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
+      + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
+      + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
+      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
   },
-  "variant:abilities.effects[]#floatingText": {
+  "field:abilities.effects[]#screenShake.side": {
     status: "landing",
     since: "2026-08-22",
     why:
-      "特效文字（owner 點名：「別忘了還有**特效文字**」）。原作 `CreateTextTagUnitBJ` —— " +
-      "克勞德 01-04 每一刀冒 \"1Hit\"…\"7Hit\"（war3map.j:33856）。⭐ `{{i}}` 佔位符讓七段是" +
-      "**一個**節點而不是七個。內容接在 GH#543。",
+      "⭐ 這一格來自 `EFFECT_COMMON_SHAPE`（每一個 effect kind 都被迫帶著的公共外殼），"
+      + "⛔ 不是 `screenShake` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
+      + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
+      + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
+      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
+  },
+  "field:abilities.effects[]#screenShake.maxTargets": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "⭐ 這一格來自 `EFFECT_COMMON_SHAPE`（每一個 effect kind 都被迫帶著的公共外殼），"
+      + "⛔ 不是 `screenShake` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
+      + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
+      + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
+      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
+  },
+  "enum:abilities.effects[]#screenShake.shape=circle": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "⭐ E1 硬約束逼每一個 kind 帶 `shape`，而首批內容三支全部是 `single`。⚠️ `circle` 對 `screenShake` 要等到有一支技能真的需要「一圈各發一份」才會被用到。⛔ 零採用是**約束的形狀**，不是缺口。",
+  },
+  "field:abilities.effects[]#floatingText.condition": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "⭐ 這一格來自 `EFFECT_COMMON_SHAPE`（每一個 effect kind 都被迫帶著的公共外殼），"
+      + "⛔ 不是 `floatingText` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
+      + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
+      + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
+      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
+  },
+  "field:abilities.effects[]#floatingText.radius": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "⭐ 這一格來自 `EFFECT_COMMON_SHAPE`（每一個 effect kind 都被迫帶著的公共外殼），"
+      + "⛔ 不是 `floatingText` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
+      + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
+      + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
+      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
+  },
+  "field:abilities.effects[]#floatingText.side": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "⭐ 這一格來自 `EFFECT_COMMON_SHAPE`（每一個 effect kind 都被迫帶著的公共外殼），"
+      + "⛔ 不是 `floatingText` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
+      + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
+      + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
+      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
+  },
+  "field:abilities.effects[]#floatingText.maxTargets": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "⭐ 這一格來自 `EFFECT_COMMON_SHAPE`（每一個 effect kind 都被迫帶著的公共外殼），"
+      + "⛔ 不是 `floatingText` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
+      + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
+      + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
+      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
+  },
+  "enum:abilities.effects[]#floatingText.shape=circle": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "⭐ E1 硬約束逼每一個 kind 帶 `shape`，而首批內容三支全部是 `single`。⚠️ `circle` 對 `floatingText` 要等到有一支技能真的需要「一圈各發一份」才會被用到。⛔ 零採用是**約束的形狀**，不是缺口。",
+  },
+  "field:abilities.effects[]#spawnModelFx.condition": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "⭐ 這一格來自 `EFFECT_COMMON_SHAPE`（每一個 effect kind 都被迫帶著的公共外殼），"
+      + "⛔ 不是 `spawnModelFx` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
+      + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
+      + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
+      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
+  },
+  "field:abilities.effects[]#spawnModelFx.radius": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "⭐ 這一格來自 `EFFECT_COMMON_SHAPE`（每一個 effect kind 都被迫帶著的公共外殼），"
+      + "⛔ 不是 `spawnModelFx` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
+      + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
+      + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
+      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
+  },
+  "field:abilities.effects[]#spawnModelFx.side": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "⭐ 這一格來自 `EFFECT_COMMON_SHAPE`（每一個 effect kind 都被迫帶著的公共外殼），"
+      + "⛔ 不是 `spawnModelFx` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
+      + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
+      + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
+      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
+  },
+  "field:abilities.effects[]#spawnModelFx.maxTargets": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "⭐ 這一格來自 `EFFECT_COMMON_SHAPE`（每一個 effect kind 都被迫帶著的公共外殼），"
+      + "⛔ 不是 `spawnModelFx` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
+      + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
+      + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」"
+      + "的真實需求(例:只讓爆炸半徑內的人畫面震動) —— 那一天這一列就該刪掉。",
+  },
+  "enum:abilities.effects[]#spawnModelFx.shape=circle": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "⭐ E1 硬約束逼每一個 kind 帶 `shape`，而首批內容三支全部是 `single`。⚠️ `circle` 對 `spawnModelFx` 要等到有一支技能真的需要「一圈各發一份」才會被用到。⛔ 零採用是**約束的形狀**，不是缺口。",
+  },
+  "enum:abilities.effects[]#spawnModelFx.path=orbit": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "首批三支用的是 `forward`（龍破斬直線火球 · 約束勝利之劍翻滾光束）與 `radial`（世界終結圓周冰塊）。⭐ `orbit`（繞行）是為**環繞型**演出留的 —— 原作有這一族（繞著施法者轉的球體），而它們還沒被移植（見 #551 五軸普查的軸②：28 具會動 dummy 只接上 22%）。⚠️ 30 天後要嘛有內容採用、要嘛承認引擎多了一條沒人走的路。",
+  },
+  "enum:abilities.effects[]#spawnModelFx.path=toTarget": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "同上。`toTarget`（追著目標飛）是**指向型**演出 —— 首批三支都是地面推進或圓周擴散。⭐ 原作的追蹤型砲擊（小呆龍鬥氣砲那一族）就是它，接線排在 #551 的建議票裡。",
+  },
+  "enum:abilities.effects[]#spawnModelFx.touchSide=allies": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "路徑上碰到**友軍**才觸發。⛔ 首批三支都是攻擊技能（`enemies`）。⭐ 它為「掃過去幫隊友補血/加速」那一族留著 —— 那正是 owner 說的「模板」該吃得下的另一半。",
+  },
+  "field:abilities.effects[]#spawnModelFx.touchOncePerTarget": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "同一個目標在路徑上只被打一次。⛔ 首批三支都吃預設（一次），所以沒有人**顯式**寫它。⚠️ 這一格要等到有一支**穿透往返**的光束才會被顯式關掉。",
+  },
+  "field:abilities.effects[]#spawnModelFx.lifeSec": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "模型的硬壽命。⛔ 首批三支都給了 `distance`，走完就收 ⇒ 用不到獨立的壽命上限。⭐ 它為**沒有終點**的演出（繞行、常駐光柱）留著。",
+  },
+  "enum:abilities.effects[]#screenShake.applyTo=self": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "⭐ #549 的出貨用的是 `all` —— owner 的理由逐字：「**不然都不知道發生什麼事情有沒有反擊成功**」，⇒ **兩邊都要感覺到**。`self`（只有施法者自己）留給「不該讓對手知道」的那一族（潛行、埋伏），⛔ 而那一族今天還沒有內容。",
+  },
+  "enum:abilities.effects[]#screenShake.applyTo=victim": {
+    status: "landing",
+    since: "2026-08-22",
+    why:
+      "⭐ #549 的出貨用的是 `all` —— owner 的理由逐字：「**不然都不知道發生什麼事情有沒有反擊成功**」，⇒ **兩邊都要感覺到**。`victim`（只有被打的那一個）留給「不該讓對手知道」的那一族（潛行、埋伏），⛔ 而那一族今天還沒有內容。",
   },
   // ⭐ 2026-08-21 —— 耗魔級距（`config.mana-tiers@1`），五軸的**最後一軸**。
   // ⚠️ 它落地當天四格就有內容（極小 / 小 / 中 / 大 分佈在 204 支上），只有頂格是零。

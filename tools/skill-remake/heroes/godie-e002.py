@@ -103,6 +103,23 @@ A("20-002", "20-002 解放.約束勝利劍MAX", "self", [0], [0], 0,
   passive={"name": "20-002 解放.約束勝利劍MAX", "ranks": [{"hooks": [
       {"on": "onReflectSuccess", "target": "event", "internalCooldown": 1.0,
        "effects": [
+           # ⭐ GH#549 —— owner 2026-08-22 逐字：「理想鄉被反彈的敵方單位 身上要有明顯的
+           #    **七彩閃電爆炸 畫面閃爍及震動 不然都不知道發生什麼事情有沒有反擊成功**」。
+           # ⛔ 這四個在 2026-08-22 曾經被直接寫進 `content/abilities/godie-e002.ex.json`,
+           #    而**下一次 `skills:sync` 就把它們刪掉了**（52 行）—— 那個檔是這一支產生的。
+           #    ⇒ 產生器擁有的檔案要改**來源**（CLAUDE.md #500 的教訓）。
+           # ⭐ `at:"target"` 是承重的那一格:爆炸要長在**被反彈者**身上,
+           #    ⛔ 不是施法者腳下 —— 否則玩家看到的是自己在發光而不是對手被炸。
+           {"kind": "spawnVfx", "vfxId": "fx.avalon.reflect-burst", "at": "target"},
+           # ⭐ 兩發閃爍、兩種顏色:施法者看到**暖金**（我反擊成功了）,
+           #    被反彈者看到**紫**（我被反彈打到了）。⛔ 同一個顏色的話兩邊分不出誰做了什麼。
+           {"kind": "screenFlash", "shape": "single", "colorRgb": [255, 232, 160],
+            "peakAlpha": 0.45, "durationSec": 0.28, "applyTo": "self"},
+           {"kind": "screenFlash", "shape": "single", "colorRgb": [190, 120, 255],
+            "peakAlpha": 0.62, "durationSec": 0.34, "applyTo": "victim"},
+           # ⭐ 震動 `all` —— owner 的理由逐字是「不然都不知道發生什麼事情」,⇒ 兩邊都要感覺到。
+           {"kind": "screenShake", "shape": "single", "amplitude": 0.62,
+            "durationSec": 0.5, "applyTo": "all"},
            {"kind": "delayed", "shape": "single", "delaySec": 0.12, "count": 7, "intervalSec": 0.12,
             # ⭐「每次造成 **7 倍[反彈]**傷害」—— 出貨到今天是 ap=1.0，跟反彈毫無關係。
             #    ⚠️ 這一條要等 E1（delayed 繼承觸發脈絡）落地才有消費端，否則七刀靜默付 0。

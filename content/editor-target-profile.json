@@ -3,18 +3,18 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_3b1770b0e808",
+    "contentVersion": "cv_ff8e51c6b2b8",
     "collections": {
       "champions": {
-        "hash": "46b03961181d",
+        "hash": "f8431a62ed6b",
         "count": 71
       },
       "abilities": {
-        "hash": "c03a60d3abc6",
+        "hash": "8679f53f97d9",
         "count": 420
       },
       "items": {
-        "hash": "4425acbb1d71",
+        "hash": "2c62263f5f6b",
         "count": 142
       },
       "augments": {
@@ -42,23 +42,23 @@
         "count": 7
       },
       "config": {
-        "hash": "0a1e99b9e3ff",
-        "count": 82
+        "hash": "abd4fc9b59f8",
+        "count": 83
       },
       "models": {
         "hash": "38d96d54f6e6",
         "count": 124
       },
       "vfx": {
-        "hash": "979bf10d9d31",
-        "count": 640
+        "hash": "9c3c454b8edb",
+        "count": 642
       },
       "skins": {
         "hash": "3d1095f3da83",
         "count": 5
       },
       "ability-templates": {
-        "hash": "82ff33acd0a9",
+        "hash": "04aaae317a10",
         "count": 34
       }
     },
@@ -2606,7 +2606,7 @@
       "effectKindsSource": "runtimeCapabilities.effectKinds（⛔ 不在這裡重複一份）"
     },
     "vfx": {
-      "docCount": 640,
+      "docCount": 642,
       "keys": [
         "fx.barkskin",
         "fx.bramble-burst",
@@ -3677,5 +3677,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "87ff179ca63a"
+  "profileDigest": "ea6b3b964e03"
 }

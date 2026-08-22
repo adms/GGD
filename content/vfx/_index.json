@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "979bf10d9d31",
+  "hash": "9c3c454b8edb",
   "entries": [
     {
       "id": "attach.ex.midchilder-aura",
@@ -19,6 +19,18 @@
       "path": "vfx/attach.godie-u01u.poweraura.json",
       "hash": "3733ddecd305",
       "size": 500
+    },
+    {
+      "id": "fx.avalon.reflect-burst",
+      "path": "vfx/fx.avalon.reflect-burst.json",
+      "hash": "d38cb36756a4",
+      "size": 1091
+    },
+    {
+      "id": "fx.avalon.reflect-spark",
+      "path": "vfx/fx.avalon.reflect-spark.json",
+      "hash": "706ebf28b64d",
+      "size": 974
     },
     {
       "id": "fx.barkskin",

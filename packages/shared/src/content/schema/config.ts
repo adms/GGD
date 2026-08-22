@@ -230,6 +230,9 @@ import { zConfigOwnerKnobsDoc } from "./ownerKnobsDoc";
 // GH#546 —— 開關型技能的「開啟中」外觀。⚠️ 漏掉這一行 = toggle-ability.json 進了
 // content/ 之後整份載入失敗 → 骨架英雄,而網站看起來完全正常。
 import { zConfigToggleAbilityDoc } from "./toggleAbilityDoc";
+// GH#549 —— 畫面閃爍／震動／特效文字的**上限與無障礙**。⚠️ 漏掉這一行 =
+// screen-fx.json 進了 content/ 之後整份載入失敗 → 骨架英雄。
+import { zConfigScreenFxDoc } from "./screenFxDoc";
 // 嘲弄規則的上界 —— 定義在 sim/taunt.ts(sim 也夾同一個數字),schema 只是把它
 // 接上 Zod,所以兩層守的不可能是兩個數字。
 import {
@@ -8292,6 +8295,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigComboStrikesDoc,
   zConfigOwnerKnobsDoc,
   zConfigToggleAbilityDoc,
+  zConfigScreenFxDoc,
   zConfigAudioMapDoc,
   zConfigChampionVoicesDoc,
   zConfigUnitTintsDoc,

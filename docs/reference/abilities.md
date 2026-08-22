@@ -2,7 +2,7 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_3b1770b0e808`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 產生自 contentVersion **`cv_ff8e51c6b2b8`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
 > 資料列：**420**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-08-20T16:58:56.072938Z`）
 
 `content/abilities/*.json` 共 **420** 份，每個英雄每個 slot 一份：天生 PASSIVE 68　·　Q 71　·　W 71　·　E 71　·　R 71　·　EX 68。
@@ -50,7 +50,7 @@
 | `godie-e00l.w` | 20-01 風王結界 | W | 被動 | 20-01 | `godie-e00l` Saber | — | [切換] 開關型 · 冷卻 30 秒 · 開關本身不花半點法力 |
 | `godie-e00l.e` | 20-03 約束與勝利之劍 | E | 主動攻擊 | 20-03 | `godie-e00l` Saber | — | 集結了人們的意念而形成的星星的結晶。是一把精鍊的神造兵裝，被譽為「最強的幻想(Last Phantasm)」。 |
 | `godie-e00l.r` | 20-04 Avalon-永恆的理想鄉 | R | 輔助 | 20-04 | `godie-e00l` Saber | — | Saber手中握著的石中劍的劍鞘，可以發動傳說中EX級寶具Avalon－永恆的理想鄉，是個可以將任何魔法反彈的最強寶具，使… |
-| `godie-e00l.ex` | 20-002 解放.約束勝利劍MAX | EX | 被動 | 20-002 | `godie-e00l` Saber | — | 理想鄉發動期間如果受到傷害，且魔力高於70%時，能給予敵人連續七次斬擊，每次斬擊造成0.6倍理想鄉啟動瞬間Saber受到攻… |
+| `godie-e00l.ex` | 20-002 解放.約束勝利劍MAX | EX | 被動 | 20-002 | `godie-e00l` Saber | — | [被動][指向][範圍][反彈][反彈成功時][AP加成] |
 | `godie-e00n.passive` | 22-00 嗚鎖打! | PASSIVE | 天生·主動 | 22-00 | `godie-e00n` 龍宮禮奈 | — | [輔助][範圍] |
 | `godie-e00n.q` | 22-01 鬼隱之擊 | Q | 輔助 | 22-01 | `godie-e00n` 龍宮禮奈 | — | 隱形並在一定的時間內提昇50%速度以暗殺目標，當攻擊時隱形術即告失效，但是會造成額外100點的背刺傷害，持續12秒。 |
 | `godie-e00n.w` | 22-02 染血的柴刀 | W | 被動 | 22-02 | `godie-e00n` 龍宮禮奈 | — | 攻擊時有18%的機率可以使出會心一擊造成1.25倍的傷害。 |

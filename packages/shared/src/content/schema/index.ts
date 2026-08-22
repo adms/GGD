@@ -113,3 +113,4 @@ export * from "./abilityVfxBindings";
 export * from "./comboStrikesDoc";
 export * from "./ownerKnobsDoc";
 export * from "./toggleAbilityDoc";
+export * from "./screenFxDoc";

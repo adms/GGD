@@ -80,22 +80,6 @@
                       "maxChainDepth": 1,
                       "negateOriginal": true
                     }
-                  },
-                  {
-                    "kind": "spawnVfx",
-                    "vfxId": "fx.avalon.reflect-spark",
-                    "at": "target"
-                  },
-                  {
-                    "kind": "floatingText",
-                    "shape": "single",
-                    "text": "{{i}}Hit",
-                    "colorRgb": [
-                      255,
-                      246,
-                      210
-                    ],
-                    "applyTo": "victim"
                   }
                 ],
                 "finalEffects": [

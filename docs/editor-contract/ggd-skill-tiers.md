@@ -37,7 +37,7 @@ owner 2026-08-19（GH#438，這一份要涵蓋的**全部**軸）：
 | 位移 | `distanceTier` | `displacement-tiers.json` | 1 (0.2%) | `enabled: true` |
 | **傷害** | `damageTier` | `damage-tiers.json` | 204 (48.6%) | `enabled: true` |
 | **耗魔** | `manaCostTier` | `mana-tiers.json` | 204 (48.6%) | `enabled: true` |
-| **冷卻** | `cooldownTier` (+`cooldownShape`) | `cooldown-tiers.json` | 349 (83.1%) | `enabled: true` |
+| **冷卻** | `cooldownTier` (+`cooldownShape`) | `cooldown-tiers.json` | 348 (82.9%) | `enabled: true` |
 
 <sub>分母 = `content/abilities/` 的 420 份技能文件（含被動與 EX）。⚠️ 採用率**不是** 100% 不代表壞掉：手寫數字一直是合法的寫法，級距是**預設走的那條路**。</sub>
 
