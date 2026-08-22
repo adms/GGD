@@ -4,8 +4,12 @@
  * later without touching anything else.
  */
 import type { ArraySchema } from "@colyseus/schema";
-import { DuelState, ENTITY_FLAG, ENTITY_KIND, EntityState, GROWTH_TIER_STACKS, MatchState, OfferState, ROUND_OUTCOME, SEAT_COUNTER_MAX, SeatState, TeamState, formFlagsForIndex, teamOverrideFlagsFor } from "@ggd/shared/protocol/schema";
+import { DuelState, ENTITY_FLAG, ENTITY_KIND, EntityState, GROWTH_TIER_STACKS, MatchState, OfferState, ROUND_OUTCOME, SEAT_COUNTER_MAX, SeatState, TeamState, formFlagsForIndex, teamOverrideFlagsFor, toggleMaskWith } from "@ggd/shared/protocol/schema";
 import { forEachMark } from "@ggd/shared/sim/marks";
+// ⭐ GH#546 開關型技能的開/關。⛔ 這一行不在的話 `toggleMask` 恆 0 ——
+// 而「永遠關著」跟「這個技能沒有開關」在畫面上逐位元一模一樣（失敗形態②）。
+import { CASTABLE_SLOTS } from "@ggd/shared/sim/intents";
+import { isToggleOn } from "@ggd/shared/sim/abilities/toggle";
 import { clampMarkCount, markExpired } from "@ggd/shared/sim/markLimits";
 import { flightHoverHeight } from "@ggd/shared/sim/flight";
 import { championFormIndex } from "@ggd/shared/sim/systems/ChampionFormSystem";
@@ -285,6 +289,22 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
           ab.slots.E.cooldownRemainingTicks,
           ab.slots.R.cooldownRemainingTicks,
         ]);
+        // ⭐【開關型技能開著沒有】GH#546 —— 風王結界那一族。
+        //
+        // ⚠️ 在這一行存在之前，`SeatState.toggleMask` 的**寫端一個都沒有**：欄位在
+        // 線路上、`toggleMaskHas` 在客戶端讀、`abilityReadyFrame` 照著畫環，而
+        // 送出去的永遠是 0 ⇒ 玩家按下風王結界，圖示**不會有任何變化**。
+        // 那正是失敗形態②（算出來了但從沒送到客戶端），而且它比多數的更難看見：
+        // 「永遠關著」與「這支技能沒有開關」在畫面上**逐位元一模一樣**。
+        //
+        // ⛔ 不要在這裡手寫 `1 << i` —— `toggleMaskWith` 是全專案唯一的編碼器，
+        // 而 bit i ↔ `CASTABLE_SLOTS[i]` 的對應由 `abilityToggleWiring.test.ts`
+        // 的第一條對帳斷言釘住（有人加第七格時它會紅，⛔ 不是靜默截掉）。
+        let mask = 0;
+        for (let i = 0; i < CASTABLE_SLOTS.length; i++) {
+          if (isToggleOn(ab, CASTABLE_SLOTS[i]!)) mask = toggleMaskWith(mask, i, true);
+        }
+        ss.toggleMask = mask;
         // per-hero EX slot (5th ability). exAbilityId is set whenever the hero
         // HAS an EX (even locked), so the client can render the greyed button.
         if (ab.exSlot) {
