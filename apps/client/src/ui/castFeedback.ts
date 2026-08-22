@@ -60,6 +60,9 @@
  * Pure + node-testable: no React, no DOM, no audio calls. Callers play the SFX.
  */
 import type { ChampionAbilitySlot } from "@ggd/shared/sim/intents";
+// ⭐ GH#576 —— 被動觸發那一下閃多久是後台欄位（`config.ui-cues@1`），
+// ⛔ 不是這個檔裡的第三個 `*_FLASH_MS` 常數。
+import { uiCues } from "./uiCuesConfig";
 
 /**
  * Every reason a cast can be refused. Mirrors `CastResult` from
@@ -294,8 +297,14 @@ export function subscribeCastNotice(listener: NoticeListener): () => void {
 
 // -------------------------------------------------------------- flash store
 
-/** What one slot's button is doing right now. */
-export type CastFlashKind = "confirm" | "deny";
+/**
+ * What one slot's button is doing right now.
+ *
+ * ⭐ `"proc"`（GH#576）＝「這一格的**被動**剛剛作用了」。⛔ 它刻意不是 `"confirm"`：
+ * confirm 回答的是「我按的那一下出去了」，而被動沒有人按 —— 兩者同色會讓玩家
+ * 以為自己誤觸了一顆按不下去的按鈕。它的長度來自後台（`passiveFlashMs`）。
+ */
+export type CastFlashKind = "confirm" | "deny" | "proc";
 
 interface Flash {
   kind: CastFlashKind;
@@ -320,6 +329,17 @@ export function noteCastDenied(slot: ChampionAbilitySlot, nowMs: number): void {
   flashes.set(slot, { kind: "deny", startMs: nowMs });
 }
 
+/**
+ * ⭐ GH#576 —— 這一格的**被動**剛剛作用了（owner:「被動技 觸發作用的時候
+ * 還是要閃一下圖示」）。
+ *
+ * ⛔ 節流**不在這裡** —— 它在 `ui/passiveProc.notePassiveProc()`，因為節流的另一半
+ * （內部冷卻的起點）也在那裡，而兩件事必須用同一筆紀錄決定，⛔ 不是兩張表。
+ */
+export function notePassiveProcFlash(slot: ChampionAbilitySlot, nowMs: number): void {
+  flashes.set(slot, { kind: "proc", startMs: nowMs });
+}
+
 export interface CastFlashSample {
   readonly kind: CastFlashKind;
   /** 1 at the instant of the press, decaying to 0 at the end of the window */
@@ -334,7 +354,12 @@ export interface CastFlashSample {
 export function sampleCastFlash(slot: ChampionAbilitySlot, nowMs: number): CastFlashSample | null {
   const f = flashes.get(slot);
   if (!f) return null;
-  const window = f.kind === "deny" ? CAST_DENY_FLASH_MS : CAST_FLASH_MS;
+  const window =
+    f.kind === "deny"
+      ? CAST_DENY_FLASH_MS
+      : f.kind === "proc"
+        ? uiCues().passiveFlashMs // ⭐ 後台可調（GH#576）
+        : CAST_FLASH_MS;
   const elapsed = nowMs - f.startMs;
   if (elapsed < 0 || elapsed >= window) {
     flashes.delete(slot);

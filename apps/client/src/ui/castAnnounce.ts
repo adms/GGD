@@ -35,11 +35,13 @@ import {
   isChampionAbilitySlot,
   noteCastConfirmed,
   noteCastDenied,
+  notePassiveProcFlash,
   predictCastReject,
   pushCastNotice,
   type CastEventLike,
   type CastNotice,
 } from "./castFeedback";
+import { notePassiveProc, passiveHookIcdSeconds, passiveProcAbilityId } from "./passiveProc";
 import { INNATE_INERT_NOTE, passiveSlotView } from "./passiveSlot";
 import { stripAbilityNumber } from "./components/abilityText";
 
@@ -199,7 +201,12 @@ export function announceCastAttempt(slot: ChampionAbilitySlot): CastAnnouncement
  * private matter.
  */
 export function recordCastEvent(ev: CastEventLike, localEntityId: number | null, nowMs: number): void {
-  if (!isCastFeedbackEvent(ev.type) || localEntityId === null) return;
+  if (localEntityId === null) return;
+  // ⭐ GH#576 —— 被動觸發那一下，**在** `isCastFeedbackEvent` 的閘之前：被動不走
+  // castBegin/abilityCast，它藏在 `buffApply` / `damage` / `heal` … 的 `origin` 裡。
+  // ⛔ 放在閘後面等於這整條線一次都不會跑（失敗形態③：可以整段刪掉而測試全綠）。
+  recordPassiveProc(ev, localEntityId, nowMs);
+  if (!isCastFeedbackEvent(ev.type)) return;
   if (ev.type === "castRejected") {
     const slot = typeof ev.data.slot === "string" ? ev.data.slot : "";
     const name = isChampionAbilitySlot(slot) ? slotDisplayName(slot) : "";
@@ -216,6 +223,48 @@ export function recordCastEvent(ev: CastEventLike, localEntityId: number | null,
   const slot = typeof ev.data.slot === "string" ? ev.data.slot : "";
   if (!isChampionAbilitySlot(slot)) return;
   noteCastConfirmed(slot, nowMs);
+}
+
+/**
+ * ⭐ GH#576 —— 一個外送事件 → **我的哪一格被動剛剛作用了**（owner 2026-08-23：
+ * 「被動技 觸發作用的時候 還是要閃一下圖示」）。
+ *
+ * 三道閘，缺一就會閃錯格：
+ *  ① `origin` 認得出來是 hook 來的（`ui/passiveProc.passiveProcAbilityId`）——
+ *     主動施放的 `ability:<id>` 在那裡就被擋掉，⛔ 不會讓一次施放閃兩下；
+ *  ② 那一發是**我**發的（`source`/`caster` === 本機實體）—— 這些事件走的是共享
+ *     廣播通道，全場每一個人的 buffApply 都會流過這裡；
+ *  ③ 那支技能真的坐在我的某一格上 —— 一件道具／增益卡的 hook 也帶 `origin`，
+ *     而它沒有格子可閃。
+ */
+function recordPassiveProc(ev: CastEventLike, localEntityId: number, nowMs: number): void {
+  const abilityId = passiveProcAbilityId(ev.data.origin);
+  if (abilityId === null) return;
+  const owner = ev.data.source ?? ev.data.caster;
+  if (typeof owner !== "number" || owner !== localEntityId) return;
+  const hud = hudStore.getState();
+  const seat = hud.localSeatId === null ? null : hud.seats.find((s) => s.seatId === hud.localSeatId);
+  if (!seat || !seat.championId) return;
+  const champ = Champions.tryGet(seat.championId as ChampionId);
+  if (!champ) return;
+  const slot = slotOfAbility(seat, champ, abilityId);
+  if (slot === null) return;
+  const icdSec = passiveHookIcdSeconds(Abilities.tryGet(abilityId as AbilityId));
+  if (notePassiveProc(slot, icdSec, nowMs)) notePassiveProcFlash(slot, nowMs);
+}
+
+/** 這支技能坐在本機英雄的哪一格上，⛔ 不是我的就回 null（道具／增益卡沒有格子）。 */
+function slotOfAbility(
+  seat: SeatLike,
+  champ: ChampionLike,
+  abilityId: string,
+): ChampionAbilitySlot | null {
+  if (seat.exAbilityId === abilityId) return "EX";
+  if (passiveSlotView(seat.championId)?.id === abilityId) return "PASSIVE";
+  for (const slot of ["Q", "W", "E", "R"] as const) {
+    if (champ.abilities[slot]?.id === abilityId) return slot;
+  }
+  return null;
 }
 
 /** Display name for a slot on the LOCAL champion, or "" when unresolvable. */

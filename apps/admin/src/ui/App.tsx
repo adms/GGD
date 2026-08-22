@@ -346,6 +346,9 @@ export const NAV: NavItem[] = [
   // （我瞄得到多遠、那一圈是誰放的）。同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   { page: "rangeGuide", label: "範圍指引與預告", emoji: "🎯", section: SEC_SYS },
   { page: "toggleAbility", label: "開關型技能外觀", emoji: "🌀", section: SEC_SYS },
+  // 畫面提示 (GH#576/#573) —— 緊接在 範圍指引與預告 後面，因為兩頁都在回答
+  // 「畫面有沒有把剛剛發生的事說出來」。同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  { page: "uiCues", label: "畫面提示", emoji: "💬", section: SEC_SYS },
   // 混音 (owner 2026-08-17「其他角色語音應該是自己的一半」) —— 緊接在 傷害數字配色
   // 後面，因為兩頁問的是同一類問題的兩個感官：「打中的那一瞬間**看到**什麼／**聽到**
   // 什麼」。同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。

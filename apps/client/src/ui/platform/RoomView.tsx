@@ -33,6 +33,10 @@ import { memberSeatLabel, seatSum } from "./couch";
 import { connectedPadIndices, listPadSources } from "../../input/GamepadInput";
 import { Btn, TextInput, Panel, Badge, CodeBox, unescapeHtml, ACCENT, OK, DANGER } from "./widgets";
 import { rallyCountdown } from "./lobbyRally";
+// ⭐ GH#573 —— 「再等一下」的選項表與它的標籤（值住 `config.ui-cues@1`,
+// 標籤由秒數推導 —— 一個算得出來的字串⛔ 不可以有第二個住處,第〇·四守則）。
+import { rallyExtendLabel } from "@ggd/shared/content";
+import { uiCues } from "../uiCuesConfig";
 import { arenaLabel } from "./maps";
 import { GOLD, TEXT_DIM, TEXT_MAIN } from "../theme";
 
@@ -162,6 +166,9 @@ function RallyCountdownStrip(props: {
   waitSec: number;
   invited: number;
   onStartNow: () => void;
+  /** ⭐ GH#573 —— 「再等一下」的每一個選項（秒）。空 = 只剩「不等了」。 */
+  extendSeconds: readonly number[];
+  onExtend: (seconds: number) => void;
 }): React.JSX.Element {
   const [now, setNow] = useState(() => Date.now());
   useEffect(() => {
@@ -183,6 +190,15 @@ function RallyCountdownStrip(props: {
         <span style={{ flex: 1 }}>
           📣 已通知大廳 <b>{props.invited}</b> 人 —— <b>{cd.secondsLeft}</b> 秒後開打
         </span>
+        {/* ⭐ GH#573（owner 2026-08-23）—— 「除了可以等 10 秒、不等了以外，
+            **還可以選多等 1 分鐘**」。⭐ **有幾顆按鈕是資料**：
+            `config.ui-cues@1.rallyExtendSeconds`，下次要再加一個 5 秒＝加一列，
+            ⛔ 不是改這裡。按鈕上的字由秒數推導（`rallyExtendLabel`）。 */}
+        {props.extendSeconds.map((sec) => (
+          <Btn key={sec} small onClick={() => props.onExtend(sec)}>
+            {rallyExtendLabel(sec)}
+          </Btn>
+        ))}
         <Btn small kind="primary" onClick={props.onStartNow}>
           不等了
         </Btn>
@@ -221,6 +237,8 @@ export function RoomView(): React.JSX.Element | null {
   const rally = useApp((s) => s.rally);
   const beginRally = useApp((s) => s.beginRally);
   const startRallyNow = useApp((s) => s.startRallyNow);
+  // ⭐ GH#573 —— 「多等 1 分鐘」（owner 2026-08-23）。
+  const extendRally = useApp((s) => s.extendRally);
 
   useEffect(() => {
     const t = setInterval(() => void refreshRoom(), ROOM_POLL_MS);
@@ -346,6 +364,8 @@ export function RoomView(): React.JSX.Element | null {
               waitSec={rally.waitSec}
               invited={rally.invited}
               onStartNow={() => void startRallyNow()}
+              extendSeconds={uiCues().rallyExtendSeconds}
+              onExtend={(sec) => void extendRally(sec)}
             />
           )}
           {/* 沒有在集合時，主揪可以再喊一次（有人剛上線的時候）。 */}

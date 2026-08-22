@@ -354,7 +354,18 @@ export interface AppState {
    *
    * ⛔ 政策關掉（`enabled: false`）時它什麼都不做 —— 那是 owner 的一鍵 rollback。
    */
-  beginRally(roomId: string): Promise<void>;
+  beginRally(roomId: string, waitSecOverride?: number): Promise<void>;
+  /**
+   * ⭐ 主揪按「多等 1 分鐘」（GH#573，owner 2026-08-23 逐字：
+   * 「邀請朋友的部分 除了可以等 10 秒、不等了以外，**還可以選多等 1 分鐘**」）。
+   *
+   * ⛔ 它**不是**「把 expiresAt 加上 60 秒」：截止時間是**伺服器蓋的**，而大廳裡
+   * 每一台收到的視窗都從那個時間算。只在主揪這一台加時間，別人的視窗會照舊在
+   * 第 10 秒關掉 —— 於是「多等一分鐘」變成「多等一分鐘的空房」。
+   * ⇒ 它**重新喊一次**（同一條 `POST /rooms/{id}/rally`，只是 waitSec 不同），
+   * 所以剛剛按過「不要」的人也會再被問一次 —— 那正是「再等一下」的意思。
+   */
+  extendRally(seconds: number): Promise<void>;
   /** 主揪按「不等了，現在開始」/ 倒數到期 —— 兩個都走這一條。 */
   startRallyNow(): Promise<void>;
   dismissInvite(token: string): void;
@@ -1063,11 +1074,13 @@ export const appStore = createStore<AppState>()((set, get) => {
     // 正是不該把別人拉進去的那一間。⇒ 客戶端擁有的只有「什麼時候按下開始」，
     // 那本來就是它一直有的權力。
 
-    async beginRally(roomId) {
+    async beginRally(roomId, waitSecOverride) {
       const policy = activeLobbyRally();
       if (!policy.enabled) return; // ⛔ owner 的一鍵 rollback
       try {
-        const info = await apiFns.rallyRoom(roomId, policy.waitSeconds);
+        // ⭐ GH#573 —— `waitSecOverride` 是「多等 N」那一條路（`extendRally`）。
+        // 缺席 = 出貨的窗口，也就是這一行在此之前的行為，逐位元不變。
+        const info = await apiFns.rallyRoom(roomId, waitSecOverride ?? policy.waitSeconds);
         set({
           rally: {
             roomId,
@@ -1084,6 +1097,12 @@ export const appStore = createStore<AppState>()((set, get) => {
         setTimeout(() => {
           const cur = get().rally;
           if (!cur || cur.roomId !== roomId) return; // 已經離開/取消了
+          // ⭐ GH#573 —— **這一行是「多等 1 分鐘」的承重點**：再喊一次會留下上一次的
+          // 計時器，而它的 `roomId` 一模一樣。少了這個比對，按下「多等 1 分鐘」之後
+          // 原本那個 10 秒的計時器仍然會在第 10 秒把比賽開起來 —— 畫面上寫著還有
+          // 55 秒，而房間已經開打了。⭐ `expiresAt` 是伺服器蓋的，所以它是這一輪
+          // 集合令的身分。
+          if (cur.expiresAt !== info.expiresAt) return;
           void get().startRallyNow();
         }, delay);
       } catch (err) {
@@ -1091,6 +1110,13 @@ export const appStore = createStore<AppState>()((set, get) => {
         // 說出來（fail-loud），⛔ 不要靜靜地變成一間沒人被通知的房。
         set({ rally: null, lastError: errText(err) });
       }
+    },
+
+    async extendRally(seconds) {
+      const { rally, room } = get();
+      if (!rally || !room || room.room.id !== rally.roomId) return;
+      if (!(seconds > 0)) return;
+      await get().beginRally(rally.roomId, seconds);
     },
 
     async startRallyNow() {

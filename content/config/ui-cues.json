@@ -1,0 +1,11 @@
+{
+  "id": "ui-cues",
+  "schema": "config.ui-cues@1",
+  "note": "畫面回話（owner 2026-08-23 的三則 [優先]）。① 「施法範圍預覽可以參考 w3x 的白色魔法陣，今天有出現在我上傳依文世界終結的擷圖前幾張還沒施展生效的時候」⇒ telegraphRune：預告圈的填滿改畫成白色魔法陣。⚠️ 只有填滿變白，外圈永遠是通道色（敵/友/自己一眼分得出來是 #228 的第 4 條，不可以被這一格吃掉）。② 「被動技 觸發作用的時候 還是要閃一下圖示（例如初號機暴走都看不出來有沒有生效冷卻剩多少）」⇒ passiveFlashMs / passiveFlashThrottleMs / passiveIcdReadout 三格：閃一下 + 看得到內部冷卻。⚠️ 節流是承重的，不是體感微調：onDamageTaken 這一族被動一秒可以觸發十次，沒有節流的話圖示會變成閃爍燈。③ 「邀請朋友的部分 除了可以等 10 秒、不等了以外，還可以選多等 1 分鐘」⇒ rallyExtendSeconds：主揪倒數條上「再等一下」的選項表。⭐ 「有幾個選項」本身就是這個陣列 —— 下次要再加一個 5 秒＝加一個 5，⛔ 不是改程式；按鈕上的字是從秒數推導的（第〇·四守則）。⚠️ 後台『畫面提示』頁存的是耐久覆蓋層（data/），覆蓋層會蓋掉這一個檔案 —— 線上存過之後，改這裡不會生效。",
+  "telegraphRune": true,
+  "telegraphRuneAlpha": 0.85,
+  "passiveFlashMs": 420,
+  "passiveFlashThrottleMs": 800,
+  "passiveIcdReadout": true,
+  "rallyExtendSeconds": [60]
+}

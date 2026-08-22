@@ -34,6 +34,9 @@ import {
   type TelegraphPalette,
   type TelegraphRelation,
 } from "./telegraphChannel";
+// ⭐ owner 2026-08-23（[優先]）——「施法範圍預覽可以參考 w3x 的**白色魔法陣**」。
+// 值住 `config.ui-cues@1`（後台『畫面提示』頁），⛔ 不是這個檔裡的兩個字面值。
+import { uiCues } from "../ui/uiCuesConfig";
 
 const MAGIC_CIRCLE_URL = "/content/assets/textures/particles/magic_02.png";
 const SPIN_RAD_PER_MS = 0.0012;
@@ -41,6 +44,15 @@ const SPIN_RAD_PER_MS = 0.0012;
 /** Telegraph identity colors (kept from the pre-retune look). */
 const RING_TINT: Rgb = [0.95, 0.45, 0.2];
 const FILL_TINT: Rgb = [1.0, 0.55, 0.25];
+/**
+ * ⭐【白色魔法陣】的填滿色（owner 2026-08-23）。
+ *
+ * ⚠️ **只有填滿那一層變白，外圈永遠是通道色。** #228 的第 4 條（敵／友／自己一眼
+ * 分得出來）不可以被這一格吃掉 —— 一個滿地都是白圈的畫面，「來襲的 AoE」和
+ * 「我自己剛剛瞄的那一發」會長得一模一樣，而那正是 `range-guide.json` 的註解
+ * 特別記下「incoming 的紅刻意離兩組預覽色都很遠」的理由。
+ */
+const RUNE_TINT: Rgb = [1, 1, 1];
 /**
  * Exported so the cast-telegraph PILLAR can be asserted against the real
  * number rather than a copied literal: the ground ring is the "where does it
@@ -337,6 +349,15 @@ export class Telegraph {
   private readonly outlineOnly: boolean;
   private readonly quiet: boolean;
   /**
+   * ⭐【白色魔法陣】—— 填滿那一層的色與不透明度上限，在**建構時**從
+   * `config.ui-cues@1` 解析一次。
+   *
+   * ⛔ 不在 `update()` 裡每幀讀：一次施法的預告在它活著的期間不可以換樣式
+   * （後台存檔的那一刻剛好有一發在飛 = 一個變色到一半的圈）。
+   */
+  private readonly fillTint: Rgb;
+  private readonly fillAlphaScale: number;
+  /**
    * Externally-driven wind-up fraction (task #228). `null` = fall back to the
    * wall-clock `fillMs` timer, which is what the pre-#228 callers use.
    *
@@ -366,6 +387,10 @@ export class Telegraph {
     this.palette = opts.palette ?? LEGACY_PALETTE;
     this.outlineOnly = opts.outlineOnly === true;
     this.quiet = opts.quiet === true || this.outlineOnly;
+    // ⭐ owner 2026-08-23 —— 白色魔法陣。關掉就是 #228 的通道色填滿（rollback）。
+    const cues = uiCues();
+    this.fillTint = cues.telegraphRune ? RUNE_TINT : this.palette.fill;
+    this.fillAlphaScale = cues.telegraphRune ? cues.telegraphRuneAlpha : 1;
 
     // ---- outer ring (pooled per exact radius: thickness stays 0.12) ----
     let list = this.shared.rings.get(this.ringKey);
@@ -399,19 +424,33 @@ export class Telegraph {
       this.shared.fills.pop() ??
       MeshBuilder.CreatePlane("telegraph-fill", { size: 1, sideOrientation: 2 /* DOUBLESIDE */ }, scene);
     if (!this.fill.material) {
-      const mat = emissiveMat("telegraph-fill", scene, this.palette.fill);
+      const mat = emissiveMat("telegraph-fill", scene, this.fillTint);
       mat.emissiveTexture = this.shared.circleTex;
       mat.opacityTexture = this.shared.circleTex;
       this.fill.material = mat;
     }
-    tintOf(this.fill).set(this.palette.fill[0], this.palette.fill[1], this.palette.fill[2]);
-    (this.fill.material as StandardMaterial).alpha = telegraphAlpha(this.palette, 0);
+    // ⚠️ 和外圈同一個理由：**池子裡撿回來的** mesh 帶著上一次的材質，所以每一次
+    // 取用都要重寫一次色，⛔ 不能只在新建時寫。
+    tintOf(this.fill).set(this.fillTint[0], this.fillTint[1], this.fillTint[2]);
+    this.setFillAlpha(telegraphAlpha(this.palette, 0));
     this.fill.rotation.x = Math.PI / 2;
     this.fill.rotation.y = 0;
     this.fill.position.set(x, 0.05, z);
     this.fill.isPickable = false;
     this.fill.scaling.set(0.01, 0.01, 1);
     this.fill.setEnabled(true);
+  }
+
+  /**
+   * 寫填滿那一層的不透明度 —— **唯一**的寫入點。
+   *
+   * ⭐ 白色魔法陣的濃度上限（`telegraphRuneAlpha`）在這裡乘進去，⛔ 不是在三個
+   * 呼叫端各乘一次：漏掉其中一個的症狀是「圈在填滿的時候是對的，落地那一幀突然
+   * 變得刺眼」，而那看起來像特效壞了，不像少乘了一個數字。
+   */
+  private setFillAlpha(a: number): void {
+    if (!this.fill) return;
+    (this.fill.material as StandardMaterial).alpha = a * this.fillAlphaScale;
   }
 
   /**
@@ -534,7 +573,7 @@ export class Telegraph {
         // the #85 spectator desaturation, which flattens hue but not value.
         const a = telegraphAlpha(this.palette, t) * telegraphPulse(this.palette, t, nowMs);
         if (this.ring) (this.ring.material as StandardMaterial).alpha = a;
-        if (this.fill) (this.fill.material as StandardMaterial).alpha = a;
+        this.setFillAlpha(a);
         return;
       }
       // the AoE fires HERE — payoff pop exactly once, on the resolve frame
@@ -551,7 +590,7 @@ export class Telegraph {
       if (this.fill) {
         const d = this.radius * 2 * pop;
         this.fill.scaling.set(d, d, 1);
-        (this.fill.material as StandardMaterial).alpha = peakAlpha * eased;
+        this.setFillAlpha(peakAlpha * eased);
       }
       if (this.ring) (this.ring.material as StandardMaterial).alpha = peakAlpha * eased;
     } else {

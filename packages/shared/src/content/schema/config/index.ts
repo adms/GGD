@@ -129,6 +129,7 @@ import { zConfigRegenDoc } from "./regen";
 import { zConfigVictoryFxDoc } from "./victoryFx";
 import { zConfigItemCardDoc } from "./itemCard";
 import { zConfigUiLexiconDoc } from "./uiLexicon";
+import { zConfigUiCuesDoc } from "./uiCues";
 import { zConfigLobbyLayoutDoc } from "./lobbyLayout";
 import { zConfigLobbyRallyDoc } from "./lobbyRally";
 import { zConfigAdminFriendDoc } from "./adminFriend";
@@ -202,6 +203,7 @@ export * from "./statNormalization";
 export * from "./stealth";
 export * from "./store";
 export * from "./taunt";
+export * from "./uiCues";
 export * from "./uiLexicon";
 export * from "./unitTints";
 export * from "./valhallaSandbox";
@@ -321,6 +323,10 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   // owner 2026-08-16：介面用語進 JSON。⚠️ 漏了這一行 = 整份內容驗證失敗
   // → 退回 2 隻骨架英雄，而網站看起來完全正常（2026-08-02 的形狀）。
   zConfigUiLexiconDoc,
+  // 畫面回話（owner 2026-08-23 的三則 [優先]：白色魔法陣 / 被動閃圖示 / 多等 1 分鐘）。
+  // ⚠️ 漏掉這一行 = 一份 ui-cues.json 進了 content/ 之後整份內容驗證失敗
+  // → 退回 2 隻骨架英雄，而網站看起來完全正常（2026-08-02 的形狀）。
+  zConfigUiCuesDoc,
   // ── 2026-08-02 收尾:三個 lane 各自定義的欄位,三個落點一次接完 ───────────
   // ⚠️ **這三行是最重要的一步。** 新的 config 文件進了 `content/` 而 union 不認得
   // 它的 schema tag,`zConfigDoc` 就會拒絕整份文件 → ContentLoader 驗證失敗 →

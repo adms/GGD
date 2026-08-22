@@ -189,6 +189,13 @@ export type Page =
   // GH#546 —— 開關型技能的「開啟中」外觀（圖示流轉）。owner:「圖示跟特效要明顯看出是開還是關狀態」
   | "toggleAbility"
   /**
+   * 畫面提示 (`config/ui-cues.json`, GH#576/#573, owner 2026-08-23 三則 [優先]):
+   * 預告圈的白色魔法陣 · 被動觸發閃圖示（含節流與內部冷卻讀數）· 主揪「多等 1 分鐘」
+   * 的選項表。⚠️ 三格同一頁是刻意的:它們回答的是**同一個**問題 ——
+   * 「遊戲裡真的發生了一件事,畫面上有沒有東西說出來」。
+   */
+  | "uiCues"
+  /**
    * 競技場規則 (`config/arena-rules.json` 的八個一直調不到的區塊, GH#410):
    * 治療花 · 復活圈 · 守護塔 · 陣亡投幣 · 大絕／EX 解鎖回合 · 最後一回合 ·
    * bot 的商店行為 · #261 普通武器上不上架（GH#350）。
@@ -672,6 +679,8 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // 範圍指引與預告 (GH#376): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "rangeGuide",
   "toggleAbility",
+  // 畫面提示 (GH#576/#573): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  "uiCues",
   // 競技場規則 (GH#410): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "arenaTuning",
   // 護盾規則: 第四頁,同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`,所以

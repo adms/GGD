@@ -77,7 +77,8 @@ import {
 import { CooldownChrome } from "./CooldownChrome";
 import { AbilityConditionMark } from "./AbilityConditionMark";
 import { displayFinal, useDisplayEnv } from "../displayFinal";
-import { denyShakeOffset, sampleCastFlash } from "../castFeedback";
+import { denyShakeOffset, sampleCastFlash, type CastFlashKind } from "../castFeedback";
+import { passiveIcdSample } from "../passiveProc";
 import { INNATE_ACTIVE_CASTABLE } from "../castAnnounce";
 import {
   innateCastNote,
@@ -170,6 +171,12 @@ const WINDUP_FILL = "rgba(240,168,64,0.45)"; // basic-attack wind-up — orange
 const CONFIRM_RIM = "120, 220, 255";
 /** Refusal — red, and it MOVES (denyShakeOffset), so it survives a muted device. */
 const DENY_RIM = "255, 96, 96";
+/**
+ * ⭐ GH#576 被動觸發（owner 2026-08-23:「被動技 觸發作用的時候 還是要閃一下圖示」）。
+ * 紫 = `passiveSlot.PASSIVE_ACCENT` 那一族 —— ⛔ 刻意不是 confirm 的青：confirm 說的是
+ * 「我按的那一下出去了」，而被動沒有人按，同色會讓玩家以為自己誤觸了。
+ */
+const PROC_RIM = "169, 140, 240";
 
 /**
  * Paint one tile's press verdict for this frame. Split out and PURE-ish (it
@@ -179,7 +186,7 @@ const DENY_RIM = "255, 96, 96";
  */
 export function paintCastFlash(
   el: HTMLElement,
-  sample: { kind: "confirm" | "deny"; strength: number } | null,
+  sample: { kind: CastFlashKind; strength: number } | null,
 ): void {
   if (!sample) {
     el.style.boxShadow = "";
@@ -190,7 +197,8 @@ export function paintCastFlash(
     }
     return;
   }
-  const rgb = sample.kind === "deny" ? DENY_RIM : CONFIRM_RIM;
+  const rgb =
+    sample.kind === "deny" ? DENY_RIM : sample.kind === "proc" ? PROC_RIM : CONFIRM_RIM;
   const spread = (sample.kind === "deny" ? 9 : 12) * sample.strength;
   el.style.boxShadow = `0 0 ${spread.toFixed(1)}px ${(spread / 2).toFixed(1)}px rgba(${rgb},${(
     0.85 * sample.strength
@@ -201,6 +209,65 @@ export function paintCastFlash(
     el.style.transform = `translateX(${denyShakeOffset(sample.strength).toFixed(2)}px)`;
     el.dataset.castShake = "1";
   }
+}
+
+/**
+ * ⭐ GH#576 —— 被動**內部冷卻**的那一格讀數（owner 2026-08-23：
+ * 「例如初號機暴走都看不出來有沒有生效**冷卻剩多少**」）。
+ *
+ * ⚠️ 它刻意**不是** `CooldownChrome`：那一支畫的是伺服器送來的技能冷卻，而這個
+ * 是客戶端從「剛剛看到它觸發」推算的估計值（理由與殘差寫在 `ui/passiveProc` 的
+ * 檔頭）。兩個長得一樣會讓一個**估計值**冒充**權威值**——所以它是一條細的紫色
+ * 底條 + 一個小數字，⛔ 不是覆蓋整格的掃描。
+ *
+ * PURE-ish（只寫樣式），和 {@link paintCastFlash} 同一個理由：rAF 與測試都推得動。
+ */
+export function paintPassiveIcd(
+  el: HTMLElement,
+  sample: { secsLeft: number; maxSec: number } | null,
+): void {
+  if (!sample) {
+    el.style.opacity = "0";
+    el.textContent = "";
+    return;
+  }
+  el.style.opacity = "1";
+  // 整數秒；最後一秒進位成 1 而不是 0 —— 「0」看起來像已經好了。
+  el.textContent = `${Math.max(1, Math.ceil(sample.secsLeft))}`;
+  const frac = sample.maxSec > 0 ? Math.max(0, Math.min(1, sample.secsLeft / sample.maxSec)) : 1;
+  el.style.setProperty("--ggd-icd", `${(frac * 100).toFixed(1)}%`);
+}
+
+/**
+ * 被動內部冷卻的角標。⭐ 每一格都掛（⛔ 不是只有天生技那一格）——
+ * 59-00 暴走住在天生技上，而它的升級版 59-001 完全暴走住在 **EX** 那一格，
+ * 一堆 QWER 技能自己也帶 `passive.hooks`。只掛一格就是替 owner 的例子寫特例。
+ *
+ * `paintPassiveIcd` 在 rAF 裡填它；沒有東西在冷卻時 `opacity: 0`（⛔ 不 unmount，
+ * 那會讓每一次觸發都動到 React 樹）。
+ */
+function PassiveIcdChip(props: { slot: ChampionAbilitySlot; size: number }): React.JSX.Element {
+  return (
+    <div
+      data-passive-icd={props.slot}
+      style={{
+        position: "absolute",
+        left: 0,
+        right: 0,
+        bottom: 0,
+        height: props.size,
+        lineHeight: `${props.size}px`,
+        textAlign: "center",
+        fontSize: Math.max(8, Math.round(props.size * 0.72)),
+        fontWeight: 800,
+        color: "#e6dcff",
+        opacity: 0,
+        pointerEvents: "none",
+        // 底條的長度 = 還剩多少（`--ggd-icd`，由 rAF 寫入）。
+        background: `linear-gradient(to right, rgba(${PROC_RIM},0.55) var(--ggd-icd, 0%), rgba(0,0,0,0.35) var(--ggd-icd, 0%))`,
+      }}
+    />
+  );
 }
 
 /**
@@ -283,6 +350,14 @@ export function AbilityBar(): React.JSX.Element | null {
         const key = el.dataset.slotKey as ChampionAbilitySlot | undefined;
         if (!key) return;
         paintCastFlash(el, sampleCastFlash(key, now));
+      });
+      // ⭐ GH#576 第二半 —— 被動的**內部冷卻**（owner:「都看不出來有沒有生效
+      // 冷卻剩多少」）。⚠️ 和上面的閃爍走同一個 rAF：它是一個**客戶端本地**的
+      // 倒數（sim 從來沒有把 hook 的 ICD 送上線），⛔ 沒有快照會推動 React 重畫它。
+      root.querySelectorAll<HTMLDivElement>("[data-passive-icd]").forEach((el) => {
+        const key = el.dataset.passiveIcd as ChampionAbilitySlot | undefined;
+        if (!key) return;
+        paintPassiveIcd(el, passiveIcdSample(key, now));
       });
     };
     raf = requestAnimationFrame(frame);
@@ -457,6 +532,8 @@ export function AbilityBar(): React.JSX.Element | null {
                   surface wears (ui/components/CooldownChrome). Only an active
                   innate can ever be on cooldown. */}
               <CooldownChrome cd={innateCd} fontSize={m.s(20)} />
+              {/* ⭐ GH#576 —— 被動的內部冷卻讀數（rAF 填值，見 paintPassiveIcd）。 */}
+              <PassiveIcdChip slot={INNATE_SLOT} size={m.s(9)} />
               {/* ⭐ 三態框：開啟中 / 就緒 / 什麼都不畫（ui/abilityReadyFrame）。
                   被動永遠不亮就緒框（castableInnate=false 直接擋掉），但它**可以**
                   是開著的 —— 70-00 紮根就掛在天生技這一格上。 */}
@@ -575,6 +652,8 @@ export function AbilityBar(): React.JSX.Element | null {
               <AbilityConditionMark def={ability} />
               {/* cooldown chrome — radial wipe + legible number + ready bloom */}
               <CooldownChrome cd={cd} fontSize={m.s(20)} />
+              {/* ⭐ GH#576 —— 被動的內部冷卻讀數（rAF 填值，見 paintPassiveIcd）。 */}
+              <PassiveIcdChip slot={slot} size={m.s(9)} />
               {/* ⭐ 三態框。⚠️ `learned` 一定要傳：沒點的技能冷卻是 0、魔力也「夠」，
                   漏了它整排未學技能會亮著框說「可以放」。 */}
               <AbilityTileFrame
@@ -695,6 +774,8 @@ export function AbilityBar(): React.JSX.Element | null {
               <AbilityConditionMark def={exDef} />
               {/* cooldown chrome — radial wipe + legible number + ready bloom */}
               <CooldownChrome cd={cd} fontSize={m.s(20)} />
+              {/* ⭐ GH#576 —— 被動的內部冷卻讀數（rAF 填值，見 paintPassiveIcd）。 */}
+              <PassiveIcdChip slot={"EX"} size={m.s(9)} />
               {/* ⭐ 三態框（EX 金） */}
               <AbilityTileFrame
                 rgb={READY_RGB_EX}

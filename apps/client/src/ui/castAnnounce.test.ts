@@ -11,7 +11,9 @@ import { describe, it, expect, beforeAll, beforeEach } from "vitest";
 import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
 import type { AbilityId, ChampionId } from "@ggd/shared/ids";
 import type { AbilityDef, ChampionDef } from "@ggd/shared/sim/content/defs";
+import { abilityPassiveSourceId } from "@ggd/shared/sim/abilities/abilityPassives";
 import { hudStore } from "../net/RoomStore";
+import { resetPassiveProc } from "./passiveProc";
 import {
   INNATE_ACTIVE_CASTABLE,
   announceCastAttempt,
@@ -180,6 +182,7 @@ function seatLocal(over: SeatOver = {}, hud: { mana?: number; alive?: boolean } 
 
 beforeEach(() => {
   resetCastFeedback();
+  resetPassiveProc();
   hudStore.setState({ localSeatId: null, seats: [] } as never);
 });
 
@@ -356,5 +359,38 @@ describe("recordCastEvent — the server has the last word", () => {
     seatLocal();
     recordCastEvent({ type: "damage", data: { target: 7, amount: 50 } }, 7, 6000);
     expect(getCastNotice()).toBeNull();
+  });
+});
+
+/**
+ * ⭐ GH#576 —— owner 2026-08-23:「**被動技 觸發作用的時候 還是要閃一下圖示**」。
+ *
+ * 承重的那一行是 `recordCastEvent` 裡的 `recordPassiveProc(...)`，而它必須在
+ * `isCastFeedbackEvent` 的閘**之前** —— 被動不發 castBegin/abilityCast，它藏在
+ * `buffApply` 這一族的 `origin` 裡。拿掉那一行 ⇒ 下面第一條紅。
+ */
+describe("被動觸發也要閃一下圖示 (GH#576)", () => {
+  /** 逐字用 sim 那支函式產出的來源 id，⛔ 不是手打一個字面值（它會 drift）。 */
+  const origin = `hook:${abilityPassiveSourceId(`${CHAMP}.q`)}`;
+
+  it("我的被動作用時，那一格閃 proc（⛔ 不是 confirm —— 沒有人按過它）", () => {
+    seatLocal();
+    recordCastEvent({ type: "buffApply", data: { source: 7, target: 7, origin } }, 7, 9000);
+    expect(sampleCastFlash("Q", 9000)?.kind).toBe("proc");
+  });
+
+  it("別人的被動不會閃我的格子", () => {
+    seatLocal();
+    recordCastEvent({ type: "buffApply", data: { source: 42, target: 7, origin } }, 7, 9000);
+    expect(sampleCastFlash("Q", 9000)).toBeNull();
+  });
+
+  it("節流：同一格在窗口內連發十次只閃第一次", () => {
+    seatLocal();
+    const ev = { type: "buffApply", data: { source: 7, target: 7, origin } };
+    recordCastEvent(ev, 7, 9000);
+    resetCastFeedback(); // 忘掉第一次的閃，⇒ 下面若又閃就是節流沒生效
+    for (let i = 1; i <= 10; i++) recordCastEvent(ev, 7, 9000 + i * 20);
+    expect(sampleCastFlash("Q", 9300)).toBeNull();
   });
 });
