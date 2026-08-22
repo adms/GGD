@@ -12,7 +12,7 @@
  *    so it opens clear of the whole stack instead of a hard-coded offset.
  */
 import { useEffect, useState } from "react";
-import { perfBus, type ConnectionQuality } from "../perfBus";
+import { perfBus, type ConnectionQuality, type PerfBus } from "../perfBus";
 import { useSettings } from "./useSettings";
 import { hudTouch } from "./hud/HudSlot";
 import { HUD_Z, hudSlotHeight, hudSlotStyle } from "./hud/hudLayout";
@@ -42,6 +42,11 @@ interface Snap {
   entityCount: number;
   drawCount: number;
   particleCount: number;
+  /** ⭐ GH#609 —— 四格「有東西不對勁」的計數器（見 `healthWarnings`）。 */
+  renderLoopErrors: number;
+  orphanRooms: number;
+  foreignSnapshots: number;
+  unexpectedDisconnects: number;
 }
 
 function snapshot(): Snap {
@@ -65,6 +70,10 @@ function snapshot(): Snap {
     entityCount: perfBus.entityCount,
     drawCount: perfBus.drawCount,
     particleCount: perfBus.particleCount,
+    renderLoopErrors: perfBus.renderLoopErrors,
+    orphanRooms: perfBus.orphanRooms,
+    foreignSnapshots: perfBus.foreignSnapshots,
+    unexpectedDisconnects: perfBus.unexpectedDisconnects,
   };
 }
 
@@ -90,6 +99,33 @@ function fpsColor(fps: number): string {
   if (fps >= 55) return "#47cc6a";
   if (fps >= 30) return "#f2c637";
   return "#e5483f";
+}
+
+/**
+ * ⛔⛔ **健康度徽章** —— 四格「有東西不對勁」的計數器，**非零才出現**（GH#609）。
+ *
+ * ⚠️ 這一段補的是**我自己寫的一句謊**：`perfBus` 那四格的註解逐字寫著
+ * 「非零就要**畫在畫面上**，⛔ 不是一行沒有人讀的 console」——
+ * 而在 2026-08-23 之前 `apps/client/src/ui/` 底下**零個讀取端**（第一·五守則:
+ * 說了但不會發生的字）。
+ *
+ * ⭐ 而且它**刻意不掛在 `showPerfOverlay` 底下** —— 那一格出貨預設是 **false**，
+ * 掛上去等於「擋得掉」，而第二守則要的是「⛔ 擋不掉的東西說出來」。
+ * ⇒ 它住在**永遠可用**的 fps 藥丸旁邊，而且**只在非零時**佔位置
+ *（⛔ 正常情況下畫面上一個像素都不多）。
+ */
+export function healthWarnings(
+  snap: Pick<
+    PerfBus,
+    "renderLoopErrors" | "orphanRooms" | "foreignSnapshots" | "unexpectedDisconnects"
+  >,
+): string[] {
+  const out: string[] = [];
+  if (snap.renderLoopErrors > 0) out.push(`繪製例外 ${snap.renderLoopErrors}`);
+  if (snap.orphanRooms > 0) out.push(`孤兒房 ${snap.orphanRooms}`);
+  if (snap.foreignSnapshots > 0) out.push(`外來快照 ${snap.foreignSnapshots}`);
+  if (snap.unexpectedDisconnects > 0) out.push(`非預期斷線 ${snap.unexpectedDisconnects}`);
+  return out;
 }
 
 /** Compact FPS pill — always available (independent of the full overlay). */
@@ -135,6 +171,16 @@ export function FpsPill(): React.JSX.Element | null {
           background: CONN_COLOR[snap.connection],
         }}
       />
+      {/* ⭐ GH#609 —— 非零才出現。⛔ 不受 showPerfOverlay 管（那一格預設是關的）。 */}
+      {healthWarnings(snap).length > 0 && (
+        <span
+          data-testid="perf-health-warn"
+          title={healthWarnings(snap).join(" · ")}
+          style={{ color: "#ff8a5c", fontWeight: 700 }}
+        >
+          ⚠{healthWarnings(snap).length}
+        </span>
+      )}
     </div>
   );
 }
@@ -213,6 +259,10 @@ export function PerfOverlay(): React.JSX.Element | null {
         label="ent / draw / fx"
         value={`${snap.entityCount} / ${snap.drawCount} / ${snap.particleCount}`}
       />
+      {/* ⭐ 展開面板裡逐項列出來（藥丸只印一個數字）。⛔ 全部是 0 就整段不畫。 */}
+      {healthWarnings(snap).map((w) => (
+        <Row key={w} label="⚠" value={w} />
+      ))}
     </div>
   );
 }

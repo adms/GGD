@@ -100,6 +100,15 @@ export interface PerfBus {
    * ⚠️ 沙發連線一次斷線會記 N 筆 —— 這一格數的是**連線**，⛔ 不是斷線事件。
    */
   unexpectedDisconnects: number;
+  /**
+   * ⭐ GH#609 —— Babylon `runRenderLoop` 的某一幀擲了例外的次數。
+   *
+   * ⚠️ 沒有 `runRenderLoopSafely` 的話這一格不會存在，因為**根本不會有第二幀**：
+   * Babylon 的重排在 callback **之後**，例外逃出去 ⇒ `_frameHandler` 永遠停在 0
+   * ⇒ 整個場景凍住。⇒ 這一格是「我們把凍結換成掉幀」的**收據**。
+   * ⛔ 非零而沒有人看到 = 我們只是把當機藏起來了。
+   */
+  renderLoopErrors: number;
 }
 
 export const perfBus: PerfBus = {
@@ -121,6 +130,7 @@ export const perfBus: PerfBus = {
   orphanRooms: 0,
   foreignSnapshots: 0,
   unexpectedDisconnects: 0,
+  renderLoopErrors: 0,
   qualityLevel: 0,
   resolutionScale: 1,
   particleDensity: 1,

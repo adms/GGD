@@ -85,6 +85,7 @@ import {
 } from "./procedural/fx";
 import { menuFpsCap, minFrameMs } from "../frameCap";
 import { isTouchDevice, readTouchEnv } from "../../input/mobileDetect";
+import { runRenderLoopSafely } from "../safeRenderLoop";
 
 /**
  * Semi-realistic Western fire dragon (炎龍) served from the content mount:
@@ -757,7 +758,9 @@ export class LoginScene {
     if (this.disposed || this.running) return;
     this.running = true;
     this.lastFrameMs = null; // avoid a dt spike after a pause
-    this.engine.runRenderLoop(() => this.frame());
+    // ⭐ GH#609 —— ⛔ 不可以裸呼叫:Babylon 的重排在 callback **之後**,
+    //    一個 throw 就讓登入畫面**永久凍住**（探針實測 3 幀後死透）。
+    runRenderLoopSafely(this.engine, () => this.frame(), "login");
   }
 
   /** Pause the render loop without tearing anything down (idempotent). */

@@ -47,6 +47,7 @@ import { TARGET_HEIGHT, normalizedModelScale } from "./views/modelSizing";
 import { ENABLED_ONLY, applyHiddenPrimitives } from "./views/hiddenPrimitives";
 import { championTintForId } from "./views/championTint";
 import { applyModelTint, releaseModelTint } from "./views/modelTint";
+import { runRenderLoopSafely } from "./safeRenderLoop";
 
 /** The 3/4 hero-shot angle the stage always resolves to after framing. */
 const STORE_CAM_ALPHA = Math.PI / 2.6;
@@ -192,7 +193,8 @@ export class StorePreview {
 
     if (this.ownsScene) {
       // only drive the loop / resize when we own the engine (a canvas host)
-      this.engine.runRenderLoop(() => this.frame());
+      // ⭐ GH#609 —— 裸呼叫 = 一個 throw 凍住商店預覽。
+      runRenderLoopSafely(this.engine, () => this.frame(), "store-preview");
       if (host instanceof HTMLCanvasElement && typeof ResizeObserver !== "undefined") {
         const ro = new ResizeObserver(() => this.engine.resize());
         ro.observe(host);

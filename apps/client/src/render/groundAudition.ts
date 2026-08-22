@@ -32,6 +32,7 @@ import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { buildContactShadows, buildZoneGround } from "./ArenaGround";
 import { setupLighting } from "./Lighting";
 import { CAMERA_PITCH_RAD, DOLLY_MIN } from "./CameraRig";
+import { runRenderLoopSafely } from "./safeRenderLoop";
 
 /** Every shipped arena zone has this radius (content/arenas/*.json). */
 const R = 24;
@@ -104,7 +105,8 @@ export function startGroundAudition(canvas: HTMLCanvasElement): AuditionHandle {
   };
   place();
 
-  engine.runRenderLoop(() => scene.render());
+  // ⭐ GH#609 —— 開發工具也一樣:凍住的試看畫面看起來像「載入失敗」。
+  runRenderLoopSafely(engine, () => scene.render(), "ground-audition");
   const onResize = (): void => engine.resize();
   window.addEventListener("resize", onResize);
 

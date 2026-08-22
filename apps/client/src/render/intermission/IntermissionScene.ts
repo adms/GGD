@@ -113,6 +113,7 @@ import {
   layoutShelfGoods,
   type ShelfGoodInput,
 } from "./shelfDisplay";
+import { runRenderLoopSafely } from "../safeRenderLoop";
 
 /**
  * soft cap so a 120 Hz panel doesn't render a static market at 120 fps.
@@ -1186,7 +1187,8 @@ export class IntermissionScene {
     if (this.disposed || this.running) return;
     this.running = true;
     this.lastFrameMs = null; // avoid a dt spike after a pause
-    this.engine.runRenderLoop(() => this.frame());
+    // ⭐ GH#609 —— 同 LoginScene:裸呼叫 = 一個 throw 凍住整個回合間場。
+    runRenderLoopSafely(this.engine, () => this.frame(), "intermission");
   }
 
   /** Pause the render loop without tearing anything down (idempotent). */
