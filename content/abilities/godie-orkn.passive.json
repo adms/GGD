@@ -10,7 +10,7 @@
   "castType": "ground",
   "maxRank": 1,
   "cooldown": [
-    60.0
+    120.0
   ],
   "cooldownTier": "極大",
   "manaCost": [
@@ -33,7 +33,7 @@
       }
     }
   ],
-  "castTimeSec": 0.467,
+  "castTimeSec": 1.233,
   "rangeTier": "極大",
   "radius": 8.0,
   "radiusTier": "大"

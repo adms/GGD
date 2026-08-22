@@ -1278,7 +1278,7 @@
     "note": "出貨內容**實際用了**哪些值。⚠️ 與 runtimeCapabilities 不同：那一份說引擎做得到什麼，這一份說內容裡有哪些合法的 id。⛔ 填一個不在這裡的 vfxKey，技能照放但畫面上什麼都不會出現。",
     "ability": {
       "count": 420,
-      "fromTemplate": 95,
+      "fromTemplate": 93,
       "templates": [
         {
           "id": "tpl-barrier-domain",
@@ -3604,5 +3604,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "0bf7593e4103"
+  "profileDigest": "4addcfb937b3"
 }

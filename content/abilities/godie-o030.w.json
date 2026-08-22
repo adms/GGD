@@ -34,12 +34,18 @@
           }
         ]
       }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "alcohol-enema",
+      "duration": 8.0,
+      "moveSpeedMult": 0.9
     }
   ],
   "vfxKey": "fx.prim.nature.nova",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.667,
+  "castTimeSec": 0.767,
   "rangeTier": "極大",
   "range": 12
 }

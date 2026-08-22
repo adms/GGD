@@ -124,18 +124,32 @@ def audit(hid: str) -> list[tuple[str, bool, str]]:
     # forming exactly {00, 01, 02, 03, 04, 002}. It is deliberately NOT
     # "Q must be 01": the w3x's own ability ordering is preserved (faithful
     # import), so 賈修 Q is 05-01 while Saber Q is 20-02 and both are correct.
-    nums, codes, unparsed = set(), [], []
+    # ⭐ owner 2026-08-22（GH#137）逐字：「你忘記我的優先順序嗎 新說明>JASS>w3x說明」
+    #    ⇒ EX 那一格的尾碼**照技能自己的名字**走，⛔ 不為了讓這一列變綠去改內容。
+    #      w3x 原名裡本來就有 4 隻是 `-001`（59-001 完全暴走 / 82-001 / 03-001 /
+    #      33-001），而 `59-002` 在同一張圖上**已經是別支技能**（A0GE「59-002
+    #      暴走能力提升」）—— 覆寫成 002 會製造同一位英雄內的撞名。
+    #    ⇒ 這一列驗的是**規約**：五支主技剛好是 00/01/02/03/04，EX 是**一個**
+    #      3 碼尾碼。這與上架閘（`starter_content_test.go` 的 `wantLen = 3`）
+    #      和 TS 孿生 `championIdentity.ts` 的判準逐字一致，⛔ 不是第三套規則。
+    # ⚠️ 錨點 `\s` → `([^0-9]|$)`：Go/TS 兩個孿生正則都是後者，而 `\s` 讓
+    #    「39-002-紅王」（尾碼其實對，只是用連字號接下去）整支解析不出來。
+    nums, base_codes, ex_codes, unparsed = set(), [], [], []
     for s in SLOTS:
-        m = re.match(r"^(\d{2,3})-(\d{2,3})\s", abil.get(s, {}).get("name", ""))
+        m = re.match(r"^(\d{2,3})-(\d{2,3})([^0-9]|$)", abil.get(s, {}).get("name", ""))
         if not m:
             unparsed.append(s)
             continue
         nums.add(m.group(1))
-        codes.append(m.group(2))
+        (ex_codes if len(m.group(2)) == 3 else base_codes).append(m.group(2))
     row(
         "5 英雄編號規約",
-        len(nums) == 1 and not unparsed and sorted(codes) == sorted(["00", "01", "02", "03", "04", "002"]),
-        f"編號 {sorted(nums)}" + (f"，無法解析 {','.join(unparsed)}" if unparsed else ""),
+        len(nums) == 1
+        and not unparsed
+        and sorted(base_codes) == ["00", "01", "02", "03", "04"]
+        and len(ex_codes) == 1,
+        f"編號 {sorted(nums)} EX尾碼 {sorted(ex_codes)}"
+        + (f"，無法解析 {','.join(unparsed)}" if unparsed else ""),
     )
 
     # -- 6. JP name census ---------------------------------------------------

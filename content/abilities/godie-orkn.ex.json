@@ -3,7 +3,7 @@
   "name": "30-002 變態紳士",
   "icon": "assets/icons/abilities/godie-orkn.ex.webp",
   "provenance": "w3x-import",
-  "description": "[被動]\n0秒冷卻時間\n\n當臭作變態指數達到顛峰之時，攻擊身上有酒精灌腸效果的敵人將額外敵人現存瑪娜*20%的爆擊高潮撕裂傷。\n\n(據說這是因為臭作對於魔法少女有特殊癖好的強化執念？)",
+  "description": "[主動][變身][被動][普攻時][身上有某狀態時]\n{{cd}}秒冷卻時間\n\n變態指數達到顛峰，臭作化身為電車癡漢，持續 15 秒。\n並且[常駐]生效：攻擊身上有酒精灌腸效果的敵人將額外敵人現存瑪娜*20%的爆擊高潮撕裂傷。\n\n(據說這是因為臭作對於魔法少女有特殊癖好的強化執念？)",
   "slot": "EX",
   "castType": "self",
   "maxRank": 1,
@@ -15,24 +15,49 @@
     0.0
   ],
   "range": 0.0,
+  "targetsEnemies": false,
   "effects": [
     {
       "kind": "championForm",
       "to": "alternate",
       "durationSec": 15.0
-    },
-    {
-      "kind": "applyBuff",
-      "modifiers": [
-        {
-          "stat": "ad",
-          "op": "pctAdd",
-          "value": 0.35
-        }
-      ],
-      "duration": 6.0
     }
   ],
+  "passive": {
+    "name": "30-002 變態紳士",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "target": "event",
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "alcohol-enema"
+            },
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 0
+                },
+                "resourcePct": {
+                  "subject": "target",
+                  "resource": "mana",
+                  "basis": "current",
+                  "perRank": [
+                    0.2
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
   "vfxKey": "fx.prim.void.pulse-lg",
   "schema": "ability@1",
   "castTimeSec": 1.033

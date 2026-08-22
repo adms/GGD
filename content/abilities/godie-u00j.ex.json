@@ -3,32 +3,68 @@
   "name": "74-002 超新星",
   "icon": "assets/icons/abilities/godie-u00j.ex.webp",
   "provenance": "w3x-import",
-  "description": "[被動]\n0秒冷卻時間\n\n在八刀一閃施展後瞬間施展獄門，將會招喚超新星造成巨大的範圍1200傷害。",
+  "description": "[被動]\n{{cd}}秒冷卻時間\n\n在八刀一閃施展後瞬間施展獄門，將會招喚超新星造成{{radius}}範圍{{dmg}}傷害。",
   "slot": "EX",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    60.0
+    0.0
   ],
-  "cooldownTier": "極大",
   "manaCost": [
     0.0
   ],
   "range": 0.0,
+  "targetsEnemies": false,
   "effects": [],
-  "template": {
-    "ref": "tpl-buff-self",
-    "params": {
-      "duration": 6,
-      "modifiers": [
-        {
-          "stat": "ad",
-          "op": "pctAdd",
-          "value": 0.35
-        }
-      ],
-      "castTimeSec": 1.033
-    }
+  "passive": {
+    "name": "74-002 超新星",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "key": "octuple-slash-window",
+            "on": "onAbilityCast",
+            "abilitySlot": "W",
+            "target": "self",
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "octuple-slash-window",
+                "duration": 2.0,
+                "applyTo": "self"
+              }
+            ]
+          },
+          {
+            "key": "supernova",
+            "on": "onAbilityCast",
+            "abilitySlot": "Q",
+            "target": "self",
+            "condition": {
+              "kind": "status",
+              "subject": "self",
+              "statusId": "octuple-slash-window"
+            },
+            "effects": [
+              {
+                "kind": "damageArea",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "中"
+                },
+                "radius": 8.0,
+                "radiusTier": "大"
+              },
+              {
+                "kind": "spawnVfx",
+                "vfxId": "fx.prim.void.explosion-lg",
+                "at": "self"
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   "vfxKey": "fx.prim.void.explosion-lg",
   "vfxLayers": [
@@ -41,6 +77,5 @@
       "w3xScale": 1.435
     }
   ],
-  "schema": "ability@1",
-  "castTimeSec": 1.033
+  "schema": "ability@1"
 }

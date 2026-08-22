@@ -10,7 +10,7 @@
   "castType": "ground",
   "maxRank": 1,
   "cooldown": [
-    60.0
+    120.0
   ],
   "cooldownTier": "極大",
   "manaCost": [
@@ -29,10 +29,12 @@
       "modifiers": [],
       "duration": 30.0,
       "vision": {
-        "trueSightRadius": 24.0
+        "trueSightRadius": 8.0
       }
     }
   ],
-  "castTimeSec": 0.467,
-  "rangeTier": "極大"
+  "castTimeSec": 1.233,
+  "rangeTier": "極大",
+  "radius": 8.0,
+  "radiusTier": "大"
 }

@@ -15,6 +15,7 @@
     0.0
   ],
   "range": 0.0,
+  "targetsEnemies": false,
   "effects": [
     {
       "kind": "applyBuff",
@@ -28,6 +29,41 @@
       "duration": 6.0
     }
   ],
+  "passive": {
+    "name": "30-002 變態紳士",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "target": "event",
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "alcohol-enema"
+            },
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 0
+                },
+                "resourcePct": {
+                  "subject": "target",
+                  "resource": "mana",
+                  "basis": "current",
+                  "perRank": [
+                    0.2
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
   "vfxKey": "fx.prim.void.pulse-lg",
   "schema": "ability@1",
   "castTimeSec": 1.033

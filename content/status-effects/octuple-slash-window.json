@@ -1,0 +1,13 @@
+{
+  "id": "octuple-slash-window",
+  "schema": "status-effect@1",
+  "name": "八刀一閃 連段",
+  "description": "八刀一閃剛收招的那一小段時間 —— 在窗口還開著的時候接上 74-01 獄門，74-002 超新星就會被引下來。窗口只掛在有超新星的人身上，多久寫在 74-002 那張卡上，不在這裡。",
+  "polarity": "buff",
+  "tags": [
+    "octuple-slash-window",
+    "combo",
+    "timed-window",
+    "buff"
+  ]
+}

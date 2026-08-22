@@ -605,3 +605,82 @@ owner 2026-08-21 逐字：
 ⇒ 需要一份 body-only 的 `champion@1` + 它的 `model@1` + 圖示，
 並且要從選人畫面／白名單排除；`durationSec`（原作沒有這個數字）與
 `maxAlive` / `onCap` 是 owner 的平衡裁決。⛔ 本 lane 名下沒有這些檔案。
+
+---
+
+## GH#53 · GH#147 · 三支 EX 與一支大絕：被階梯判掉的那一半（2026-08-22）
+
+> owner 2026-08-22 逐字（兩則，同一條階梯）：
+>
+> 「我們的決策順序明明就是 **重製新說明 > JASS > w3x技能說明 > w3x技能設定**」
+>
+> 「那你作阿」（#53 三支 EX 的裁決權，⛔ 不要再問）
+
+⚠️ 這一節是**四筆**被取代的原作資料，⛔ 不是四個修好的缺陷。
+每一筆都附「怎麼退回」，因為第 3–5 層的知識**不可以無聲消失**。
+
+### ① `godie-e008.ex` — 21-002 天破壤碎：冷卻 **60 → 45**（GH#53 第 3 條之一）
+
+| | 內容 |
+|---|---|
+| **原作（w3a `A0FF`）** | 各等級冷卻 **{40, 35, 30}** 秒。EX 只有一階 ⇒ 依同批其餘 8 支一致的「取最高階值」規則，來源值是 **40 秒** |
+| **被取代的出貨值** | `cooldown [60.0]` / `cooldownTier "極大"` —— ⛔ 這**不是**任何人的決定，是 `tools/w3x-import/gen_ex_content.py:82` 的 `clean_scalar(cooldown, 1, 300, 60.0)` **fallback 預設**（那支匯入器的 `CURATED` 表只有 8 個 rawcode，⛔ 一個帶 cooldown 的都沒有 —— #53 body 已經推翻了「curated marquee」這個理由） |
+| **新值（贏）** | `cooldownTier "大"`（單體表 = **45 卡面秒**）/ `cooldown [45.0]` |
+| **為什麼是 45 而不是 40** | 第〇·四守則：冷卻是**五級距**（單體 6/15/30/45/60），⛔ 40 不在格點上。取**最近**的一格 —— 與 `lowDamageCells.cooldownTierForSeconds()` 同一條規則（40 距「大」5 秒、距「中」10 秒）。⛔ 不把 40 寫成字面值：那會是 `content/config/cooldown-tiers.json` 的第二個住處 |
+| **怎麼退回** | 把 `cooldownTier` 抄回 `"極大"`。⚠️ `cooldown` 那一格是**擺設** —— `resolveCooldownTier()` 在註冊時整條覆寫，級別永遠贏 |
+
+### ② `godie-orkn.ex` — 30-002 變態紳士：卡面那句話**第一次真的發生**（GH#53 第 3 條之二）
+
+⚠️ **這一支我第一版做錯了，記在這裡，⛔ 不要再犯**：我照票面把它整支改成純被動、
+砍掉 `championForm` —— 而 `championFormVisibility.test.ts` 的**空洞守衛**當場說話
+（可達的變身從 19 掉到 18）。⭐ 那個變身**不是**空的：`content/champions/godie-orkn.json`
+的 `transform.counterpartId` 指著 **`godie-o030`「電車癡漢 - 臭作」**，
+一整份英雄卡 + 模型 + 六支技能都在，而 **orkn.ex 是它唯一的入口**。
+⇒ 判準：**動一個 `championForm` 之前先問「那具身體存在嗎」**，⛔ 不是看 `forms` 欄位是不是 null。
+
+| | 內容 |
+|---|---|
+| **w3x 說明（第 4 層）** | 「**[被動]／0秒冷卻時間**⋯當臭作變態指數達到顛峰之時，攻擊身上有酒精灌腸效果的敵人將額外敵人現存瑪娜\*20%的爆擊高潮撕裂傷」 |
+| **w3x 設定（第 5 層）** | ⭐ **同一個編號底下有兩個 rawcode**：`A0YY`（EX_MAP 對到 orkn.ex 的那一支，`OBJECTS.json` 裡**沒有** cooldown / mana 欄位）與 **`A0YT`**（`transform.triggerAbility`，同名「30-002 變態紳士」，`durationSec 15`、`cooldownSec 60`）。出貨文件把兩支合成了一支 |
+| **被取代的出貨文件** | `effects = [championForm{to:"alternate", 15s}, **applyBuff{ad pctAdd 0.35, 6s}**]`，⛔ **沒有** `passive` —— 卡面那整句「攻擊身上有酒精灌腸效果的敵人⋯」逐位元組等於不存在 |
+| **新值（贏）** | `championForm` **原封不動留著**（它是 A0YT，第 5 層有它、而且它是 `godie-o030` 的唯一入口）＋ 新增 `passive.ranks[0].hooks[0] = { on:"onBasicAttack", target:"event", condition:{status, subject:"target", statusId:"alcohol-enema"}, effects:[damage{magic, amount{flat 0}, resourcePct{target/mana/current, 0.2}}] }` |
+| ⛔ **被拿掉的那一條：`applyBuff{ad +35%, 6s}`** | 它是 `tools/w3x-import/gen_ex_content.py:52` 的 `BUFF_DEFAULT` —— 一個**匯入器預設值**，⛔ 卡面從頭到尾沒有提過「攻擊力 +35%」。第一·五守則：卡片上沒有的東西不該在遊戲裡發生 |
+| **標籤照內文修正（owner 2026-08-12 細則①）** | 首行 `[被動]` 與內文的「變態指數達到顛峰」（＝變身）打架 ⇒ **以內文為主、用內文修正標籤**：改成 `[主動][變身][被動][普攻時][身上有某狀態時]`，`0秒冷卻時間` 換成 `{{cd}}秒冷卻時間`（＝ A0YT 的 60 秒，級別「中」·變身表） |
+| **同時落地的前置** | `godie-orkn.w`（30-02 酒精灌腸）在此之前**一個狀態都不掛**（`tpl-single-strike` 只有傷害）⇒ 上面那個 condition 會永遠不成立。W 因此 **eject 模板**，改成 `damage + applyStatus{alcohol-enema, 8s, moveSpeedMult 0.9}`，把它自己卡面上的「移動速度降低10%⋯可持續8秒」也一併變成真的 |
+| ⚠️ **一個誠實的落差** | 內文說的是「變態指數**達到顛峰之時**」＝ **變身期間**才吃得到那份追加傷害，而條件葉沒有「處於某個變身形態」這一顆（`zConditionLeaf` 只有 chance / stat / kind / status / equipment）⇒ 現在它是**常駐**的。做成「最接近的既有機制」並記下差在哪（GH#147 的同一條處置），⛔ 不是為了遷就引擎去改內文 |
+| ⚠️ **仍然沒做的那半句（誠實記著）** | W 的「有20%的機會在攻擊時失手」與「再受到火焰類攻擊時會著火」兩句仍是空的。前者引擎有【致盲】但那是另一份狀態，後者需要「某狀態下受某元素傷害時追加 DoT」這個**還不存在**的條件葉。⛔ 沒有順手做（第零守則⑧） |
+| **怎麼退回** | 把 `applyBuff{ad pctAdd 0.35, 6s}` 加回 `effects`、刪掉 `passive`，並把描述抄回舊的那一段 |
+| ⭐ **變身態 `godie-o030` 一起改了** | STRICT 鏡像 + `abilityCodeParityForms`：30-02 的 `applyStatus`、30-002 的 `passive`／`targetsEnemies`、以及 30-00 那三格（`effects` / `radius` / `radiusTier`，**上一個 commit `9c9243e3` 只改了本體**）都補上；兩支的 `castTimeSec` 依 `deriveCastTimes` 公式重推（30-00 → 1.233、30-02 → 0.767），30-00 的 `cooldown` 字面值 60 改成級別真正解出來的 **120**（範圍表·極大） |
+
+### ③ `godie-u00j.ex` — 74-002 超新星：主動 → **真被動（連段）**（GH#53 第 3 條之三）
+
+| | 內容 |
+|---|---|
+| **w3x 說明（第 4 層）** | 「**[被動]／0秒冷卻時間**⋯在八刀一閃施展後瞬間施展獄門，將會招喚超新星造成巨大的範圍**1200**傷害」 |
+| **w3x 設定（第 5 層）** | 同 ②：`A0U0` 沒有 cooldown / mana 欄位，出貨的 60 / 120 是匯入器硬編預設 |
+| **被取代的出貨文件** | `castType "self"` + `cooldown [60.0]` + `cooldownTier "極大"` + `template tpl-buff-self{ad pctAdd 0.35, 6s}` —— 一支 60 秒的主動增益，⛔ 與「超新星」毫無關係 |
+| **新值（贏）** | `cooldown [0.0]`（⛔ 拿掉 `cooldownTier`，形狀抄同樣是被動 EX 的 `godie-e00w.ex`）/ `effects []` / 兩條 hook：①`onAbilityCast` + `abilitySlot "W"` ⇒ 給自己掛 `octuple-slash-window` 2 秒；②`onAbilityCast` + `abilitySlot "Q"` + `condition{status, subject:"self", statusId:"octuple-slash-window"}` ⇒ `damageArea{magic, damageTier "中", radiusTier "大"}` + `spawnVfx` |
+| ⚠️ ⛔ `innateKind` 不可以填 | `zAbilityDoc` 的 refine：`innateKind is only meaningful on slot "PASSIVE"`。一支 `slot:"EX"` 的被動就是「有 `passive`、`effects` 空、`cooldown [0]`」，⛔ 沒有第二格宣告 |
+| **被取代的原作傷害數字** | **1200**。傷害五級距是 200/500/1000/1500/2000 ⇒ 1200 不在格點上，取**最近**的一格 = **中（1000）**（距中 200、距大 300，與 ① 同一條「取最近」規則）。⛔ 不把 1200 寫進 JSON，也 ⛔ 不留在卡面上 —— 描述那一句已經換成 `{{radius}}` / `{{dmg}}` 佔位符（第〇·四守則） |
+| **⭐ 連段窗口 2 秒是 GGD 的數字** | 原作 JASS 的「瞬間」沒有給秒數。2 秒的參考點是同一個機制的既有客戶 07-03 `moon-combo`（**1 秒**，對應 `udg_MoonCombo`）—— 這裡放寬到 2 秒是因為 74-01 獄門帶 **0.8 秒**前搖，1 秒的窗口會讓這條連段幾乎按不出來。⚠️ 它住在 `godie-u00j.ex.json` 的 hook 上，改它是改一格 JSON |
+| **怎麼退回** | 抄回上表「被取代的出貨文件」那一列，並刪掉 `content/status-effects/octuple-slash-window.json` |
+
+### ④ GH#147 —— 三條「描述↔JASS 衝突」在新階梯下的結論
+
+⚠️ 這張票的原始裁決是 owner **2026-07-26** 的「一律照 JASS 修」。
+owner **2026-08-22** 給了完整階梯（**重製新說明 > JASS > w3x說明 > w3x設定**），
+⇒ 只要那一支已經有**重製新說明**，第 1 層就贏過 JASS，⛔ 舊裁決不再適用於它。
+
+| rawcode | 技能 | 結論 | 被取代的 JASS 值（存檔） |
+|---|---|---|---|
+| `A0JD` | 77-00 浮雲‧旋一閃（`godie-e00w.passive`） | **新說明贏** ⇒ ⛔ 不加敏捷係數 | JASS j:49335 `250 + AGI×5`。新說明（`tools/skill-remake/heroes/godie-e00w.py`，`provenance: owner-spec`）逐字是「造成 {{dmg}}+**130% [AP]** 點傷害並[暈眩]2秒」—— ⛔ 一個字都沒提敏捷。⭐ 於是 #147 body 說的前置（`Stat` enum 沒有 `agi`）**整條不需要**了：那是為了服從第 3 層而生的工作量 |
+| `A091` | 05-03 及喀爾度（`godie-h021.e` / `godie-hblm.e`） | **OBSOLETE** | JASS j:28224-28233「吸引本體 + 2×等級錨點 + 250+100×等級 半徑」。⚠️ `godie-h021` 與 `godie-hblm` **都不在 49 位上架名單**（owner 常設：「沒有上架英雄的 issue 就關閉了」），且 `hblm` 已下架 ⇒ 不做 |
+| `A0L6` | 78-04 死亡噴射肘擊（`godie-u00v.r`） | **已於 `b38f4f34` 落地（PARTIAL）** | 見下一小節 |
+
+#### `A0L6` 的被取代值（由 `b38f4f34` 那條 lane 交接過來，這裡是它的家）
+
+| 原作（w3x / JASS） | 換算 | 新版（贏） |
+|---|---|---|
+| 擊退 **800** wc3u（j:50201/50202 的 20 × 40）⚠️ 卡面寫的是 **1000**，JASS 才是 800 | ≡ **14.67** GGD 單位 | `knockback{distanceTier:"極大"}` —— 距離住 `content/config/displacement-tiers.json`，⛔ 不烘進文件 |
+| `collideRadius` **300** wc3u（撞停時的 AoE 半徑） | ≡ **5.5** GGD 單位 | ⛔ **沒有落地** —— 引擎沒有「擊退撞停時觸發」這個掛鉤，要等 `grab-hurl` 整族模板 |
+| `collideDamage` **STR × 3** | — | ⛔ 同上。卡面那句「若受到撞擊停止，周圍敵人將會受到80% [AP]額外傷害」因此被改寫成講真話的那一句（第一·五守則），⛔ 不是刪掉 |
