@@ -43,21 +43,45 @@ def remade_prefixes() -> set[str]:
     return set(re.findall(r'"(godie-[a-z0-9]+)"', m.group(1)))
 
 
-def classify(path: str, prefixes: set[str]) -> str:
+def champion_heads() -> set[str]:
+    """出貨 champion 文件的 id —— ⭐ 「這支技能有沒有主人」的唯一答案。"""
+    d = os.path.join(ROOT, "content", "champions")
+    return {
+        f[: -len(".json")]
+        for f in os.listdir(d)
+        if f.endswith(".json") and not f.startswith("_")
+    }
+
+
+def classify(path: str, prefixes: set[str], champs: set[str] | None = None) -> str:
     base = os.path.basename(path)[: -len(".json")]
     head = base.split(".")[0]
-    return "owner-spec" if head in prefixes else "w3x-import"
+    if head in prefixes:
+        return "owner-spec"
+    # ⭐ 2026-08-23（GH#602）—— **沒有主人 ⇒ 原創 ⇒ 只可能是 owner 的規格**
+    # （w3x 裡沒有它的來源）。⚠️ 觸發它的是**殭屍王**：它是小怪，沒有 champion 文件,
+    # 而它的 [leap吸血] 是 owner 2026-08-23 逐字寫的新設計,⛔ 不是原作移植。
+    #
+    # ⛔ 在此之前這一支與 `abilityProvenance.test.ts` 的判準**分岔**：
+    # 守衛逐字寫著「沒有主人 ⇒ 原創 ⇒ 只可能是 owner 的規格」,而這裡只問了
+    # 「是不是重製名單上的英雄」⇒ 一份沒有主人的文件會被蓋成 `w3x-import` 而守衛紅,
+    # 而**跑蓋章器修不好它**（它每次都蓋回同一個錯的值）。
+    # ⭐ 兩邊現在是同一條規則。
+    if champs is not None and head not in champs:
+        return "owner-spec"
+    return "w3x-import"
 
 
 def main() -> int:
     check = "--check" in sys.argv
     prefixes = remade_prefixes()
+    champs = champion_heads()
     files = sorted(f for f in glob.glob(os.path.join(ABIL, "*.json"))
                    if not os.path.basename(f).startswith("_"))
     missing, wrong, wrote = [], [], 0
     for f in files:
         d = json.load(open(f, encoding="utf-8"))
-        want = classify(f, prefixes)
+        want = classify(f, prefixes, champs)
         have = d.get("provenance")
         if have is None:
             missing.append(os.path.basename(f))
@@ -95,7 +119,8 @@ def main() -> int:
         for slot, inner in ab.items():
             if not isinstance(inner, dict) or "id" not in inner:
                 continue
-            want = "owner-spec" if str(inner["id"]).split(".")[0] in prefixes else "w3x-import"
+            ih = str(inner["id"]).split(".")[0]
+            want = "owner-spec" if (ih in prefixes or ih not in champs) else "w3x-import"
             if inner.get("provenance") == want:
                 continue
             if check:
@@ -115,7 +140,7 @@ def main() -> int:
             open(cf, "a", encoding="utf-8").write("\n")
             wrote += 1
 
-    n_owner = sum(1 for f in files if classify(f, prefixes) == "owner-spec")
+    n_owner = sum(1 for f in files if classify(f, prefixes, champs) == "owner-spec")
     if check:
         if not missing and not wrong:
             print(f"provenance 齊了：{len(files)} 份（owner-spec {n_owner} / w3x-import {len(files)-n_owner}）")

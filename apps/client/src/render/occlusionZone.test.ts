@@ -17,6 +17,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { arenaDefFromDoc, type ObstacleBox, type ZoneDef } from "@ggd/shared/sim/world/ArenaDef";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
+import { DEFAULT_VISION_RULES, type VisionRules } from "@ggd/shared/sim/vision";
 import { stripComments } from "@ggd/shared/testkit/stripComments";
 import { occludeArgsFor } from "./occlusionZone";
 
@@ -52,23 +53,38 @@ function acrossWall(b: ObstacleBox): [Vec2, Vec2] {
       ];
 }
 
-describe("GH#421 遮蔽用的是觀看者那一區的牆", () => {
-  it.each([0, 1])("⭐ zone %i 的角色，真的被自己這一區的牆擋住", (z) => {
-    const [eye, foe] = acrossWall(innerWall(ARENA.zones[z]!));
-    const args = occludeArgsFor(ARENA.zones, z, eye);
-    expect(args, `zone ${z} 沒有遮蔽參數`).toBeDefined();
-    expect(args!.blocked(foe.x, foe.z)).toBe(true);
+/**
+ * ⭐ owner 2026-08-23 把預設換掉了：
+ * > 「**理論上這個地圖是全視野，就算牆後也看得到**，不然現在很奇怪，
+ * >  看到 bot 瘋狂隔牆打空氣敵人，但我卻看不到也打不到」
+ *
+ * ⇒ 出貨預設 `vision.fullVision: true` ⇒ **一格都不遮**。
+ * ⚠️ 依第〇·六守則「**預設值本身改變 ⇒ 測新的預設**」，下面每一條都改成驗**新的**那一邊。
+ * ⛔ 關掉開關的那一條路**不測**（同一條守則：「開關關掉的那一條（舊行為）⛔ 不測」）——
+ * 它存在是為了**回頭**，⛔ 不是一個要保證品質的功能。
+ *
+ * ⭐ 但 GH#421 的**取牆邏輯**仍然要被守著：它是 `fullVision` 關掉之後唯一的行為，
+ * 而「拿錯區的牆」那個缺陷會在關掉的那一天原封回來。⇒ 保留**一條**，顯式傳規則。
+ */
+const OCCLUDING: VisionRules = { ...DEFAULT_VISION_RULES, fullVision: false };
+
+describe("GH#606 全視野是出貨預設 —— 牆後也看得到", () => {
+  it.each([0, 1])("⭐ zone %i：出貨規則下**一格都不遮**（owner 2026-08-23）", (z) => {
+    const [eye] = acrossWall(innerWall(ARENA.zones[z]!));
+    expect(
+      occludeArgsFor(ARENA.zones, z, eye),
+      `zone ${z} 還在遮 —— 而 owner 要的是全視野`,
+    ).toBeUndefined();
   });
 
-  it("⛔ 拿錯區的牆＝什麼都擋不住（這就是 zone 1 半場遮蔽整個消失的原因）", () => {
+  it("⭐ 關掉開關之後 GH#421 的取牆邏輯仍然成立（⛔ 這是 rollback 的那條路）", () => {
     const [eye, foe] = acrossWall(innerWall(ARENA.zones[1]!));
-    // 缺陷原狀 `zones.find(rect)` 永遠回 zone 0，而它的牆在 48 單位外
-    expect(occludeArgsFor(ARENA.zones, 0, eye)!.blocked(foe.x, foe.z)).toBe(false);
-  });
-
-  it("⛔ 同一區、中間沒牆的敵人不會被遮 —— 證明上面不是「一律遮」", () => {
-    const [eye] = acrossWall(innerWall(ARENA.zones[1]!));
-    expect(occludeArgsFor(ARENA.zones, 1, eye)!.blocked(eye.x + 0.5, eye.z)).toBe(false);
+    // 同一區的牆會擋
+    expect(occludeArgsFor(ARENA.zones, 1, eye, OCCLUDING)!.blocked(foe.x, foe.z)).toBe(true);
+    // ⛔ 拿錯區的牆＝什麼都擋不住（zone 1 半場遮蔽整個消失的原因）
+    expect(occludeArgsFor(ARENA.zones, 0, eye, OCCLUDING)!.blocked(foe.x, foe.z)).toBe(false);
+    // ⛔ 同一區、中間沒牆的不會被遮 —— 證明上面不是「一律遮」
+    expect(occludeArgsFor(ARENA.zones, 1, eye, OCCLUDING)!.blocked(eye.x + 0.5, eye.z)).toBe(false);
   });
 
   it("⭐ 出貨的 GameApp 真的把『這雙眼睛在哪一區』餵進去", () => {

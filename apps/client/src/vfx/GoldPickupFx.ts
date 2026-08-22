@@ -143,6 +143,17 @@ export class GoldPickupFx {
    * 通常已經從快照裡消失了（sim 在同一個 tick `destroyAfterHooks`），
    * 於是 `entityPos()` 會回 null —— 沒有這張表的話，金幣會掉在原點或根本不掉。
    */
+  /**
+   * ⭐ GH#575 —— 這具身體**有沒有起點**（＝ `noteBody` 記過沒有）。
+   *
+   * ⛔ 只給守衛用。`spawn()` 自己讀 `lastBody`,而「**沒有起點 ⇒ 金幣不生**」
+   * 正是這個缺陷的定義 —— 把它變成一個可以問的問題,守衛才驗得到**機制**
+   * 而不必去驗「金幣飛多快」那種數字（第二守則）。
+   */
+  spawnFrom(id: number): Vec2 | null {
+    return this.lastBody.get(id) ?? null;
+  }
+
   noteBody(id: number, pos: Vec2): void {
     this.lastBody.set(id, { x: pos.x, z: pos.z });
     // 有界：屍體的位置只在死亡後那幾幀有用，⛔ 但不能無限長。

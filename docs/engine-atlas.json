@@ -1,12 +1,12 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "adca4dac",
+  "capabilityFingerprint": "9922e831",
   "counts": {
     "effectKinds": 46,
     "hookEvents": 33,
     "conditionLeafKinds": 5,
-    "templateFamilies": 17,
-    "effectFields": 236,
+    "templateFamilies": 18,
+    "effectFields": 240,
     "stats": 23,
     "combatEnvKeys": 38
   },
@@ -569,6 +569,7 @@
       "status"
     ],
     "templateFamilies": [
+      "beam-roll",
       "buff-self",
       "charge-push",
       "ground-nova",

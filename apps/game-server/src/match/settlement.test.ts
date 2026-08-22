@@ -252,7 +252,15 @@ describe("per-team elimination settlement (elimination-settlement, task #193 / G
     //    **4205 / 4213 / 4215 / 4221 / 4234 / 4253 / 4260 / 4265**，取最小的。
     //    ⭐ 判準不變：如果哪天掃 200 個 seed 一個都不重現，那就不是換 seed 的
     //    問題，是**淘汰這條路整個死了**。
-    const run = runFullMatch("elim1", 4205, matchDocWithCard(false));
+    // ⚠️ GH#607 —— seed 4205 換成 **4200**（第六次換，同一個理由）：
+    //    2026-08-23 把烘焙導航的 `nextHop` 修好了 —— 在此之前**24–36% 的下一跳
+    //    指向牆的另一邊**（無限城 36.1%），而 `steerAroundObstacles` 只認圓形障礙，
+    //    那六張場地的障礙物全是 `box` ⇒ 單位原地卡死。修後量到方向反轉
+    //    **305 → 10**、走不到 **32/280 → 0/280**、平均抵達 **147 → 108 tick**。
+    //    ⇒ bot 現在真的走得到目的地,整場的戰鬥軌跡因此改變。
+    //    ⛔ 這不是把測試調鬆 —— 掃 4200–4399，前八個重現的是
+    //    **4200 / 4217 / 4227 / 4247 / 4248 / 4256 / 4257 / 4259**，取最小的。
+    const run = runFullMatch("elim1", 4200, matchDocWithCard(false));
     // 這一條測的是 OFF 那一側 —— 而且是**經由內容文件**到達控制器的。
     expect(run.ctl.settlementCardOnHealthSpent).toBe(false);
 
@@ -279,7 +287,7 @@ describe("per-team elimination settlement (elimination-settlement, task #193 / G
   it("後台打開就退回舊行為 —— 這個功能是被關掉,不是被刪掉", () => {
     cover("elimination-settlement");
     // 同上，與 OFF 那一側用同一個 seed 才比得出「打開的代價」。
-    const run = runFullMatch("elim1", 4205, matchDocWithCard(true));
+    const run = runFullMatch("elim1", 4200, matchDocWithCard(true));
     expect(run.ctl.settlementCardOnHealthSpent).toBe(true);
 
     // 血歸零的隊伍**當場**拿到一張卡:不多不少就是那些隊伍，各一張。

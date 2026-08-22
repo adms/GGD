@@ -10,6 +10,7 @@
 
 from __future__ import annotations
 
+import json
 import math
 import os
 import re
@@ -228,6 +229,31 @@ def model_fx_segments(node: dict) -> int:
     return model_fx_instances(node) * model_fx_samples(node)
 
 
+_PRESET_MODEL_CACHE: dict[str, str] = {}
+
+
+def _preset_model_key(preset: str) -> str:
+    """`spawnModelFx.preset` → 那張模板宣告的 `modelKey` 預設值。
+
+    ⭐ 讀的是 `content/ability-templates/<preset>.json` 的 `params.modelKey.default`
+    —— **出貨的那張表本人**,⛔ 不是抄一份。
+    """
+    if preset in _PRESET_MODEL_CACHE:
+        return _PRESET_MODEL_CACHE[preset]
+    path = os.path.join(_REPO, "content", "ability-templates", f"{preset}.json")
+    val = ""
+    if os.path.exists(path):
+        try:
+            with open(path, encoding="utf-8") as fh:
+                doc = json.load(fh)
+            d = ((doc.get("params") or {}).get("modelKey") or {}).get("default")
+            if isinstance(d, str):
+                val = d
+        except Exception:
+            val = ""
+    _PRESET_MODEL_CACHE[preset] = val
+    return val
+
 def model_stems(effects, models: dict[str, dict]) -> set[str]:
     """`modelKey` → 它其實是哪一份原作模型（特效軸）。
 
@@ -238,6 +264,13 @@ def model_stems(effects, models: dict[str, dict]) -> set[str]:
     out: set[str] = set()
     for n in model_fx_nodes(effects):
         key = n.get("modelKey")
+        # ⭐ GH#555 —— `preset` 式的節點**不寫 modelKey**（演出參數由
+        # `modelFxPreset.ts` 在**載入時**補上,與 `resolveDamageTier` 同一個接縫)。
+        # ⛔ 這把尺讀的是**磁碟上的 JSON**,看不到載入時發生的事 ⇒ 要自己去問模板。
+        # ⚠️ 這正是第〇·四守則的代價:值住在共用表裡,所以**每一個讀磁碟的工具**
+        #    都要學會解析那張表。⛔ 不可以因此把值抄回技能文件（那就是第二個住處）。
+        if (not isinstance(key, str) or not key) and isinstance(n.get("preset"), str):
+            key = _preset_model_key(n["preset"])
         if not isinstance(key, str) or not key:
             continue
         doc = models.get(key) or {}

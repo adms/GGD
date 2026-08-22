@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "10d78589da2a",
+  "hash": "a41cf4a55598",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -41,14 +41,14 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "ee7345e5b2aa",
-      "size": 7800
+      "hash": "d53b89cfc86d",
+      "size": 8167
     },
     {
       "id": "audio-map",
       "path": "config/audio-map.json",
-      "hash": "17a1acf9fbee",
-      "size": 44283
+      "hash": "03860b74d68c",
+      "size": 44115
     },
     {
       "id": "audio-mix",
@@ -71,8 +71,8 @@
     {
       "id": "base-bonus",
       "path": "config/base-bonus.json",
-      "hash": "4bf362011f8d",
-      "size": 140
+      "hash": "3990a8e51493",
+      "size": 154
     },
     {
       "id": "berserk",
@@ -429,6 +429,12 @@
       "size": 1378
     },
     {
+      "id": "ui-cues",
+      "path": "config/ui-cues.json",
+      "hash": "c4cc81ffa104",
+      "size": 1579
+    },
+    {
       "id": "ui-lexicon",
       "path": "config/ui-lexicon.json",
       "hash": "4804e90cd0f5",
@@ -455,8 +461,8 @@
     {
       "id": "vfx-cleanup",
       "path": "config/vfx-cleanup.json",
-      "hash": "bae13330de93",
-      "size": 2872
+      "hash": "435873b5103a",
+      "size": 5845
     },
     {
       "id": "vfx-families",

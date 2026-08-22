@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "adca4dac",
+  "fingerprint": "9922e831",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -224,6 +224,7 @@
     "hpBasis",
     "hpMult",
     "hpPct",
+    "immobile",
     "impactPower",
     "includeNeutrals",
     "includeOrigin",
@@ -300,6 +301,8 @@
     "permanentScope",
     "polarity",
     "pools",
+    "preset",
+    "primaryAttribute",
     "projectileId",
     "radius",
     "radiusTier",
@@ -319,6 +322,7 @@
     "runOnEmptyHit",
     "scale",
     "scatterRadius",
+    "scripted",
     "shape",
     "side",
     "silenced",
@@ -405,6 +409,7 @@
     "radiusTier",
     "range",
     "rangeTier",
+    "rangeUnlimited",
     "recoveryRoots",
     "recoverySec",
     "rootWhileCasting",
@@ -580,6 +585,7 @@
       "radiusTier",
       "range",
       "rangeTier",
+      "rangeUnlimited",
       "recoveryRoots",
       "recoverySec",
       "rootWhileCasting",
@@ -702,6 +708,7 @@
     ]
   },
   "templateFamilies": [
+    "beam-roll",
     "buff-self",
     "charge-push",
     "ground-nova",

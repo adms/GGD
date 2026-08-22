@@ -122,6 +122,9 @@ export const SIM_WORLD_DIGEST_EXEMPT: Readonly<Record<string, string>> = {
   apDamageScaling: CONFIG,
   mitigationRules: CONFIG,
   stealthRules: CONFIG,
+  // ⭐ GH#606 —— 視野規則。和 `stealthRules` 完全同一格：它是**開場灌進來的設定**，
+  // ⛔ 不是每 tick 演化的狀態 ⇒ 不進 digest（重播用它自己那一份 config 重建）。
+  visionRules: CONFIG,
   berserkRules: CONFIG,
   flowerZones: CONFIG + "（開場由該回合的 pairings 決定，每個 replica 一樣）",
   mobZones: CONFIG + "（同 flowerZones，SimWorld.ts 自己的註解就是這樣寫的）",

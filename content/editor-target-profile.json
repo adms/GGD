@@ -3,15 +3,15 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_25c69162b991",
+    "contentVersion": "cv_9e1166771047",
     "collections": {
       "champions": {
-        "hash": "b34c42850f51",
+        "hash": "c2b3f410e8f1",
         "count": 71
       },
       "abilities": {
-        "hash": "2354b75bf5da",
-        "count": 420
+        "hash": "9ebd0553219a",
+        "count": 421
       },
       "items": {
         "hash": "2c62263f5f6b",
@@ -42,8 +42,8 @@
         "count": 7
       },
       "config": {
-        "hash": "10d78589da2a",
-        "count": 84
+        "hash": "a41cf4a55598",
+        "count": 85
       },
       "models": {
         "hash": "8af2c45f476f",
@@ -58,7 +58,7 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "90a3377a58e9",
+        "hash": "0d15778d6057",
         "count": 40
       }
     },
@@ -89,7 +89,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "adca4dac",
+    "fingerprint": "9922e831",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -313,6 +313,7 @@
       "hpBasis",
       "hpMult",
       "hpPct",
+      "immobile",
       "impactPower",
       "includeNeutrals",
       "includeOrigin",
@@ -389,6 +390,8 @@
       "permanentScope",
       "polarity",
       "pools",
+      "preset",
+      "primaryAttribute",
       "projectileId",
       "radius",
       "radiusTier",
@@ -408,6 +411,7 @@
       "runOnEmptyHit",
       "scale",
       "scatterRadius",
+      "scripted",
       "shape",
       "side",
       "silenced",
@@ -494,6 +498,7 @@
       "radiusTier",
       "range",
       "rangeTier",
+      "rangeUnlimited",
       "recoveryRoots",
       "recoverySec",
       "rootWhileCasting",
@@ -669,6 +674,7 @@
         "radiusTier",
         "range",
         "rangeTier",
+        "rangeUnlimited",
         "recoveryRoots",
         "recoverySec",
         "rootWhileCasting",
@@ -791,6 +797,7 @@
       ]
     },
     "templateFamilies": [
+      "beam-roll",
       "buff-self",
       "charge-push",
       "ground-nova",
@@ -1348,7 +1355,7 @@
   "contentVocabulary": {
     "note": "出貨內容**實際用了**哪些值。⚠️ 與 runtimeCapabilities 不同：那一份說引擎做得到什麼，這一份說內容裡有哪些合法的 id。⛔ 填一個不在這裡的 vfxKey，技能照放但畫面上什麼都不會出現。",
     "ability": {
-      "count": 420,
+      "count": 421,
       "fromTemplate": 89,
       "templates": [
         {
@@ -1360,11 +1367,21 @@
         {
           "id": "tpl-beam-roll",
           "family": "beam-roll",
-          "status": "draft",
+          "status": "enabled",
           "params": {
             "modelKey": {
               "type": "docRef",
               "default": "imported.netherstrike"
+            },
+            "path": {
+              "type": "enum",
+              "values": [
+                "forward",
+                "toTarget",
+                "orbit",
+                "radial"
+              ],
+              "default": "forward"
             },
             "speed": {
               "type": "number",
@@ -1397,6 +1414,15 @@
               "default": 1.5,
               "min": 0.5,
               "max": 12
+            },
+            "touchSide": {
+              "type": "enum",
+              "values": [
+                "enemies",
+                "allies"
+              ],
+              "default": "enemies",
+              "optional": true
             },
             "touchDamageTier": {
               "type": "enum",
@@ -3111,8 +3137,8 @@
         }
       ],
       "templateStatus": {
-        "draft": 23,
-        "enabled": 17
+        "draft": 22,
+        "enabled": 18
       },
       "innateKinds": [
         "active",
@@ -3260,6 +3286,7 @@
         "godie-tectonicfury-p0"
       ],
       "sfxKeys": [
+        "bossHorror",
         "wc3.akamapissed8",
         "wc3.altarofelderswhat1",
         "wc3.axemissilelaunch1",
@@ -3303,7 +3330,7 @@
         "wc3.trollwoodworkswhat1",
         "wc3.waygatewhat1"
       ],
-      "boundAbilities": 384,
+      "boundAbilities": 385,
       "danglingKeys": []
     },
     "item": {
@@ -3446,12 +3473,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "adca4dac",
+    "engineFingerprint": "9922e831",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 adca4dac —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 9922e831 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -4191,5 +4218,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "8995bdce3c12"
+  "profileDigest": "eb81e768efa8"
 }

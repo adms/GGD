@@ -2,14 +2,14 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_25c69162b991`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
-> 資料列：**420**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-08-20T16:58:56.072938Z`）
+> 產生自 contentVersion **`cv_9e1166771047`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 資料列：**421**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-08-20T16:58:56.072938Z`）
 
-`content/abilities/*.json` 共 **420** 份，每個英雄每個 slot 一份：天生 PASSIVE 68　·　Q 71　·　W 71　·　E 71　·　R 71　·　EX 68。
+`content/abilities/*.json` 共 **421** 份，每個英雄每個 slot 一份：天生 PASSIVE 69　·　Q 71　·　W 71　·　E 71　·　R 71　·　EX 68。
 
 > 本檔的數值是 `content/` 的**原始值**，未套用 `combat-env` 全域倍率（`content/config/combat-env.json`）。遊戲內顯示的一律是乘算後的最終值，所以畫面上的冷卻／傷害／生命與這裡不會相同 —— 那是預期行為，不是資料錯誤。
 >
-> **`slot` 有六種：`PASSIVE`（天生技）＋ Q／W／E／R／EX。** 天生技是 w3x 的 `NN-00`，**等級 1 就擁有**，doc id 是 `<championId>.passive`，由 champion doc 的 `passiveAbility` 指過來；共 **68** 份（35 份 `innateKind:passive` 純被動、33 份 `innateKind:active` 有冷卻的天生主動）。原本的匯入把這個 slot 整個漏掉了，這批是從原始地圖還原回來的。
+> **`slot` 有六種：`PASSIVE`（天生技）＋ Q／W／E／R／EX。** 天生技是 w3x 的 `NN-00`，**等級 1 就擁有**，doc id 是 `<championId>.passive`，由 champion doc 的 `passiveAbility` 指過來；共 **69** 份（35 份 `innateKind:passive` 純被動、34 份 `innateKind:active` 有冷卻的天生主動）。原本的匯入把這個 slot 整個漏掉了，這批是從原始地圖還原回來的。
 >
 > **不要跟 champion doc 上那個舊的 `passive` 區塊搞混**：那是掛在 QWER 技能上的被動型效果（`型態` 欄標「被動」的那些），跟天生技 slot 是兩回事。
 >
@@ -21,6 +21,7 @@
 
 | id | 名稱 | slot | 型態 | 編號 | 擁有者 | 開放 | 短效果 |
 |---|---|---|---|---|---|---|---|
+| `godie-zombieking.passive` | 殭屍王 - leap吸血 | PASSIVE | 天生·主動 | — | **（無主）** | — | [天生][主動][指定][無上限施法距離] |
 | `godie-e001.passive` | 22-00 嗚鎖打! | PASSIVE | 天生·主動 | 22-00 | `godie-e001` 龍宮禮奈 | — | [輔助][範圍] |
 | `godie-e001.q` | 22-01 鬼隱之擊 | Q | 輔助 | 22-01 | `godie-e001` 龍宮禮奈 | ✅ | 隱形並在一定的時間內提昇50%速度以暗殺目標，當攻擊時隱形術即告失效，但是會造成額外100點的背刺傷害，持續12秒。 |
 | `godie-e001.w` | 22-02 染血的柴刀 | W | 被動 | 22-02 | `godie-e001` 龍宮禮奈 | ✅ | 攻擊時有18%的機率可以使出會心一擊造成1.25倍的傷害。 |

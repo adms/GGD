@@ -153,13 +153,18 @@
   ],
   "structuralFacts": [
     {
-      "title": "殭屍身上吃不到 `applyBuff` / `grantAttribute`（`applyStatus` 可以）",
+      "title": "一般殭屍身上吃不到 `applyBuff` / `grantAttribute`（`applyStatus` 可以）—— ⭐ 殭屍王是**唯一**例外",
       "assert": {
         "file": "packages/shared/src/sim/mobs.ts",
-        "absent": "world.stats.set",
-        "reason": "owner 2026-08-04 裁決：建 StatusComp（A3a，已出貨）但**不建 StatsComp**（A3b/A3c 不做）。這一行一旦出現，下面整段就過期了"
+        "present": "if (world.mob.has(id)) continue;",
+        "reason": "owner 2026-08-04 裁決:一般殭屍建 StatusComp 但**不建 StatsComp**。⭐ 2026-08-23（GH#602）殭屍王成為**唯一**例外 —— `installKingKit()` 只掛在 `summonMobBoss()`（王進場的唯一一扇門）,⛔ 不在三種怪共用的 `spawnMobBody()`。⚠️ 所以這裡改成釘**那條例外自己帶的閘**（`BasicAttackSystem` 讓小怪走王的普攻路徑之外）—— 它不見了就代表有人把王的特例散進一般路徑,而那正是這條事實會過期的方式。⛔ 原本釘的是「整個檔沒有 world.stats.set」,太粗:它把「一般殭屍沒有」與「這個檔一行都沒有」混為一談,而王一落地就整支 throw。"
       },
       "body": [
+        "⭐ **2026-08-23 起有一個例外:殭屍王**（GH#602）。它拿得到 `StatsComp`",
+        "（`final: zeroStats()` · `dirty: false` · ⛔ **沒有 ChampionComp**）⇒ `recomputeStats` 早退,",
+        "所以王的吸血走技能自己的 `damage.refund`,⛔ 不是 `Stat.SpellVamp`。",
+        "⚠️ 例外的粒度是**一隻身體**,⛔ 不是一種怪:`installKingKit()` 只掛在 `summonMobBoss()`。",
+        "",
         "`sim/mobs.ts` 建的是 `transform` / `health` / `nav` / `team` / `mob`（＋ boss 的 `flight`）",
         "與 A3a 之後補的 `status`，⛔ **從不建 StatsComp**。後果逐條可驗：",
         "",

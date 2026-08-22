@@ -3777,6 +3777,19 @@ export class GameApp {
       // ⚠️ 變身**不換 entityId**（同一個座位換一張卡），所以這一行必須在 else 分支：
       //    寫在 spawn 裡的話紮根之後影子還帶著本體的卡，`immobile` 永遠看不到。
       this.prediction.setChampionId(seat?.championId ?? "");
+      // ⭐ GH#607 —— **道具／增益／變身**取得的飛行也要餵給影子。
+      //
+      // ⛔ 在此之前只有**天生技**的飛行預測得到（`predict/localFlight.ts` 的檔頭
+      // 逐字列了涵蓋範圍表），於是 77-03 有翼劍士那一族每一步都在拉扯:
+      // 影子撞牆停住、伺服器飛過去 ⇒ 每一次修正把角色拉回去
+      // ＝ owner 說的「**循環來回拉扯**」。
+      //
+      // ⭐ 判準用**快照上的懸浮高度**,⛔ 不是在客戶端重算一份「他身上掛了什麼」——
+      // 那會是第二個住處,而它與伺服器漂開的那天沒有東西會紅（失敗形態⑤）。
+      // ⚠️ `h > 0 && !airborne` 與 `ChampionView.applyAirborne` **同一個判準**:
+      // 飛行**刻意不點** `AIRBORNE`（那一格是跳躍的），所以兩者分得開。
+      const flying = es.h > 0 && (es.flags & ENTITY_FLAG.AIRBORNE) === 0;
+      this.prediction.setFlight(flying ? { hoverHeight: es.h } : null);
     }
   }
 

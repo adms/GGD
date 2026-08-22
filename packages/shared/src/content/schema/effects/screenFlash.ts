@@ -31,6 +31,27 @@ export const zScreenFlash = z
       .max(SCREEN_FLASH_MAX_ALPHA)
       .describe("最亮的那一刻有多不透明（0..1）。出貨強度由 config.screen-cues@1 再乘一次。"),
     durationSec: z.number().positive().max(SCREEN_FLASH_MAX_SEC),
+    /**
+     * ⭐ GH#602（owner 2026-08-23 裁決 (a)）—— **劇本指定的演出**豁免全域上限。
+     *
+     * > 「讓『**劇本指定的演出**』可以**豁免全域上限**（全域上限的本意是**防濫用**，
+     * >  ⛔ 不是防你自己寫的演出）」
+     *
+     * ⚠️ 觸發它的是殭屍王的「**全畫面變黑一秒漸變回復**」：出貨全域上限是
+     * `flashMaxAlpha 0.55 / flashMaxSec 0.6` ⇒ 那一秒的黑會被夾成**淡灰半秒**。
+     *
+     * ⛔ **它不是「無上限」** —— 仍然吃 `zScreenFlash` 自己的 `SCREEN_FLASH_MAX_*`
+     * （防 mis-parse 的柵欄）與**無障礙**那一格（`reducedFlashMult` 照樣乘）。
+     * ⭐ 它豁免的只有**營運端的全域上限**，而那一格的本意逐字是「一支寫了
+     * `peakAlpha: 1` 的技能不可以把畫面打成全白」—— ⛔ 那是防**內容作者濫用**，
+     * 而這一格正是內容作者**刻意**要的演出。
+     *
+     * ⚠️ 出貨預設 `false`：⭐ 豁免要是**顯式的一格**，⛔ 不是預設行為。
+     */
+    scripted: z
+      .boolean()
+      .optional()
+      .describe("劇本指定的演出：豁免 config.screen-fx@1 的全域上限（仍吃無障礙與 schema 硬上限）。"),
     applyTo: z
       .enum(["self", "victim", "all"])
       .optional()

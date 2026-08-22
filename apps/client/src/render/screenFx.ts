@@ -42,6 +42,12 @@ export interface ScreenFlashSpec {
   peakAlpha: number;
   durationSec: number;
   applyTo?: ScreenFxAudience;
+  /**
+   * ⭐ GH#602 —— **劇本指定的演出**豁免營運端的全域上限（owner 2026-08-23 裁決 (a)：
+   * 「全域上限的本意是**防濫用**，⛔ 不是防你自己寫的演出」）。
+   * ⛔ 它**不是無上限**：schema 的 `SCREEN_FLASH_MAX_*` 與**無障礙**那一格照樣管它。
+   */
+  scripted?: boolean;
 }
 
 export interface ScreenShakeSpec {
@@ -121,9 +127,16 @@ export function resolveScreenFlash(
   reducedMotion: boolean,
 ): ResolvedScreenFlash | null {
   const mult = reducedMotion ? clampTo(limits.reducedFlashMult, 0, 1) : 1;
-  const peak = clampTo(spec.peakAlpha, 0, limits.flashMaxAlpha) * mult;
+  // ⭐ GH#602 —— **劇本指定的演出**豁免營運端的全域上限（owner 2026-08-23 裁決 (a)：
+  // 「全域上限的本意是**防濫用**，⛔ 不是防你自己寫的演出」）。
+  // ⛔ 它**不是無上限**：`spec.peakAlpha` / `durationSec` 仍然被 schema 的
+  //    `SCREEN_FLASH_MAX_*` 夾過（防 mis-parse 的柵欄），而**無障礙那一格照樣乘**
+  //    —— ⭐ `reducedMotion` 的使用者不因為「這是劇本」就被閃。
+  const capA = spec.scripted === true ? 1 : limits.flashMaxAlpha;
+  const capS = spec.scripted === true ? Number.POSITIVE_INFINITY : limits.flashMaxSec;
+  const peak = clampTo(spec.peakAlpha, 0, capA) * mult;
   if (!(peak > 0)) return null;
-  const sec = clampTo(spec.durationSec, 0, limits.flashMaxSec);
+  const sec = clampTo(spec.durationSec, 0, capS);
   if (!(sec > 0)) return null;
   const [r, g, b] = spec.colorRgb;
   const ch = (v: number): number => Math.round(clampTo(v, 0, 255));
