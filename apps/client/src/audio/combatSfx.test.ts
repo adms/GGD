@@ -18,7 +18,6 @@ import {
   weaponAttackKey,
   castElementKey,
   wc3CastKey,
-  WC3_ABILITY_SFX,
   guardianRewardKey,
   setCombatSfxSeat,
   combatSfxSeat,
@@ -27,6 +26,7 @@ import {
   arrowsInFlight,
   CAST_CIRCLE_MIN_SEC,
 } from "./combatSfx";
+import { abilitySfxCueRegistry } from "./abilitySfxCues";
 
 const ev = (type: string, data: Record<string, unknown> = {}): EventMessage => ({
   type,
@@ -225,7 +225,10 @@ describe("combat SFX key selection (juice-sfx-key)", () => {
       const map = JSON.parse(
         readFileSync(join(HERE, "../../../../content/config/audio-map.json"), "utf8"),
       ) as { sfx: Record<string, { files?: string[] }> };
-      const unserved = [...WC3_ABILITY_SFX].filter((k) => {
+      // ⭐ GH#529 —— 名單搬進 `content/audio-manifests/ability-sfx-cues.json`；
+      // 這裡問**現行註冊表**，⛔ 不再問一個 TS 常數。
+      const declared = abilitySfxCueRegistry().cues;
+      const unserved = [...declared].filter((k) => {
         const files = map.sfx[k]?.files;
         return !files?.length || files.every((f) => f.startsWith("assets/blizzard-local/"));
       });
@@ -234,7 +237,7 @@ describe("combat SFX key selection (juice-sfx-key)", () => {
         "這些 cue 被宣告成「會播」，但正式 bundle 不供應它們的檔案 —— " +
           "casts 會靜靜退回通用音:\n  " + unserved.join("\n  "),
       ).toEqual([]);
-      expect(WC3_ABILITY_SFX.size).toBeGreaterThan(40);
+      expect(declared.size).toBeGreaterThan(40);
     });
 
     it("routes a full ability cast through a stock-MPQ cue", () => {

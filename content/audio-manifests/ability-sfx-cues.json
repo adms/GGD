@@ -1,0 +1,393 @@
+{
+  "id": "ability-sfx-cues",
+  "schema": "audio.ability-sfx-cues@1",
+  "note": "GH#529 —— 技能施法音的**唯一一份宣告**。⛔ 在這之前它是 `apps/client/src/audio/combatSfx.ts` 裡的一個 TypeScript `Set`（52 個字面值 + 52 行註解記著哪一支技能用哪一個），而 owner 2026-08-20 的守則逐字寫著「**特效音效綁定**⋯都請整理更新到 **JSON**」。住在 TS 裡的代價不是難看：改一個 cue = 重建 client 映像 + 一次完整部署。",
+  "source": "tools/w3x-import/out/GoDieEX22s-src/SFX_BINDINGS.json（原作 war3map.j 的 gg_snd 綁定掃描） × content/config/audio-map.json（哪些 clip 真的出貨） × content/abilities/*.json 的 `sfxKey`（哪一支技能綁哪一個 cue —— ⭐ **那才是綁定的家**，這份表⛔ 不重抄一份）",
+  "fields": {
+    "cues": "允許出現在 `ability@1.sfxKey` 的 cue 名單。鍵 = audio-map 的 SFX key；⛔ 不在這裡的字串一律退回元素 whoosh，⛔ 不會變成一次 audio-map miss",
+    "cues.*.ggSnd": "原作 war3map.j 裡的 gg_snd 變數名（出處，⛔ 不是執行期讀的東西）",
+    "cues.*.origin": "map-import = 原作者自己匯入的 mp3；stock-mpq = 暴雪零售 MPQ 的位元組（出處帳本 content/assets/audio/wc3/PROVENANCE.md）",
+    "cues.*.note": "人看的備註（哪一支技能、原作技能名）。⛔ 它不是資料 —— 「誰在用」由 content/abilities/*.json 的 sfxKey 推導",
+    "bindings": "⭐ **技能 id → cue 的覆蓋層**，給「技能文件上沒有 sfxKey、但我們想給它一個原作音」的情況。⛔ 一支技能不可以同時出現在這裡與自己的 `sfxKey`（守衛在擋）—— 兩個住處必然分岔",
+    "unmatched": "掃到了但**沒有**接上去的 gg_snd，每一列帶理由。⛔ 空著等於把知識丟掉（第一·五守則）"
+  },
+  "cues": {
+    "wc3.moongo": {
+      "ggSnd": "gg_snd_moongo",
+      "origin": "map-import",
+      "note": "godie-hpb1.w 者、皆、陣"
+    },
+    "wc3.moonjump": {
+      "ggSnd": "gg_snd_moonjump",
+      "origin": "map-import",
+      "note": "godie-hpb1.e 列、在、前"
+    },
+    "wc3.nocute": {
+      "ggSnd": "gg_snd_nocute",
+      "origin": "map-import",
+      "note": "godie-o00k.passive 裝可愛, godie-u00l.r / godie-umal.r ChangeDNA"
+    },
+    "wc3.akamapissed8": {
+      "ggSnd": "gg_snd_AkamaPissed8",
+      "origin": "stock-mpq",
+      "note": "godie-emfr.w 沉睡之霧"
+    },
+    "wc3.altarofelderswhat1": {
+      "ggSnd": "gg_snd_AltarOfEldersWhat1",
+      "origin": "stock-mpq",
+      "note": "godie-n00p.e / godie-nsjs.e 妖狐變化"
+    },
+    "wc3.axemissilelaunch1": {
+      "ggSnd": "gg_snd_AxeMissileLaunch1",
+      "origin": "stock-mpq",
+      "note": "godie-h00l.r 迴旋斬"
+    },
+    "wc3.chickenwhat1": {
+      "ggSnd": "gg_snd_ChickenWhat1",
+      "origin": "stock-mpq",
+      "note": "godie-obla.q 放山雞"
+    },
+    "wc3.darksummoninglaunch1": {
+      "ggSnd": "gg_snd_DarkSummoningLaunch1",
+      "origin": "stock-mpq",
+      "note": "godie-e00w.q / godie-e00x.q 百烈櫻華斬, godie-u010.q / godie-uvng.q 邪王炎殺劍"
+    },
+    "wc3.defendcaster": {
+      "ggSnd": "gg_snd_DefendCaster",
+      "origin": "stock-mpq",
+      "note": "godie-h01u.w 弒鬼神 / godie-h01u.r 赤兔咆哮, godie-o01z.q / godie-o02v.q Barrel Shot"
+    },
+    "wc3.demonhuntermissilehit3": {
+      "ggSnd": "gg_snd_DemonHunterMissileHit3",
+      "origin": "stock-mpq",
+      "note": "godie-u00n.e / godie-u00o.e 伸縮自如的槍亂打"
+    },
+    "wc3.dragonroostwhat1": {
+      "ggSnd": "gg_snd_DragonRoostWhat1",
+      "origin": "stock-mpq",
+      "note": "godie-u010.r / godie-uvng.r 黑龍波吸收"
+    },
+    "wc3.dragonyes2": {
+      "ggSnd": "gg_snd_DragonYes2",
+      "origin": "stock-mpq",
+      "note": "godie-u00h.r 金色的神風, godie-u00v.e 廬山昇龍破, godie-u010.e / godie-uvng.e 邪王炎殺黑龍波"
+    },
+    "wc3.druidofthetalonmissilelaunch2": {
+      "ggSnd": "gg_snd_DruidOfTheTalonMissileLaunch2",
+      "origin": "stock-mpq",
+      "note": "godie-h00l.q 科奇利族的迴旋鏢"
+    },
+    "wc3.eggsackdeath1": {
+      "ggSnd": "gg_snd_EggSackDeath1",
+      "origin": "stock-mpq",
+      "note": "godie-huth.w 把你變成餅乾"
+    },
+    "wc3.flaretarget2": {
+      "ggSnd": "gg_snd_FlareTarget2",
+      "origin": "stock-mpq",
+      "note": "godie-e00k.e / godie-e00z.e 瞬切百殺, godie-u00h.e 無名神風流-蛟龍"
+    },
+    "wc3.flaretarget3": {
+      "ggSnd": "gg_snd_FlareTarget3",
+      "origin": "stock-mpq",
+      "note": "godie-e008.q 拔焰刀, godie-o01z.w / godie-o02v.w Acxel Shooter"
+    },
+    "wc3.gluescreenmeteorhit1": {
+      "ggSnd": "gg_snd_GlueScreenMeteorHit1",
+      "origin": "stock-mpq",
+      "note": "godie-obla.e 地道突襲, godie-u00v.w 地走龍牙破"
+    },
+    "wc3.gruntpissed3": {
+      "ggSnd": "gg_snd_GruntPissed3",
+      "origin": "stock-mpq",
+      "note": "godie-u011.e / godie-u012.e 打屁股風林火豬"
+    },
+    "wc3.gruntyesattack1": {
+      "ggSnd": "gg_snd_GruntYesAttack1",
+      "origin": "stock-mpq",
+      "note": "godie-emns.q 死神之眼"
+    },
+    "wc3.gruntyesattack3": {
+      "ggSnd": "gg_snd_GruntYesAttack3",
+      "origin": "stock-mpq",
+      "note": "godie-emns.r 心臟麻痺"
+    },
+    "wc3.hcancelbuilding": {
+      "ggSnd": "gg_snd_HCancelBuilding",
+      "origin": "stock-mpq",
+      "note": "godie-u010.w / godie-uvng.w 邪王炎殺煉獄焦"
+    },
+    "wc3.headhunteryes4": {
+      "ggSnd": "gg_snd_HeadHunterYes4",
+      "origin": "stock-mpq",
+      "note": "godie-h00l.w 鎖鏈槍, godie-h02s.q / godie-h02z.q 死亡之握, godie-orkn.q 綁架"
+    },
+    "wc3.kaelyesattack3": {
+      "ggSnd": "gg_snd_KaelYesAttack3",
+      "origin": "stock-mpq",
+      "note": "godie-emns.ex 交換筆記本"
+    },
+    "wc3.markofchaos": {
+      "ggSnd": "gg_snd_MarkOfChaos",
+      "origin": "stock-mpq",
+      "note": "godie-e00r.r 野戰型陽電子砲, godie-o01z.e / godie-o02v.e Divine Buster"
+    },
+    "wc3.mercenarywhat1": {
+      "ggSnd": "gg_snd_MercenaryWhat1",
+      "origin": "stock-mpq",
+      "note": "godie-usyl.e 蛻變"
+    },
+    "wc3.mortarimpact": {
+      "ggSnd": "gg_snd_MortarImpact",
+      "origin": "stock-mpq",
+      "note": "godie-h02k.ex 俄羅斯輪盤"
+    },
+    "wc3.mortarteampissed9": {
+      "ggSnd": "gg_snd_MortarTeamPissed9",
+      "origin": "stock-mpq",
+      "note": "godie-u034 / godie-ucrl 山形修煉 whole kit (猜猜拳 gag)"
+    },
+    "wc3.nazgrelyes2": {
+      "ggSnd": "gg_snd_NazgrelYes2",
+      "origin": "stock-mpq",
+      "note": "godie-opgh.e 閃光龍牙"
+    },
+    "wc3.necropolisupgrade2": {
+      "ggSnd": "gg_snd_NecropolisUpgrade2",
+      "origin": "stock-mpq",
+      "note": "godie-e00t.w 驚駭"
+    },
+    "wc3.pandarenbrewmasterpissed8": {
+      "ggSnd": "gg_snd_PandarenBrewmasterPissed8",
+      "origin": "stock-mpq",
+      "note": "godie-h02k.w 憤怒的菊花"
+    },
+    "wc3.pandarenbrewmasterwarcry1": {
+      "ggSnd": "gg_snd_PandarenBrewmasterWarcry1",
+      "origin": "stock-mpq",
+      "note": "godie-h02k.e 憤怒的胸毛"
+    },
+    "wc3.pandarenbrewmasteryes1": {
+      "ggSnd": "gg_snd_PandarenBrewmasterYes1",
+      "origin": "stock-mpq",
+      "note": "godie-h02k.r 憤怒的簡諧運動"
+    },
+    "wc3.parasite": {
+      "ggSnd": "gg_snd_Parasite",
+      "origin": "stock-mpq",
+      "note": "godie-e00q.ex 固有結界-黑洞, godie-u00k.e 厄夜靈魂"
+    },
+    "wc3.peasantpissed3": {
+      "ggSnd": "gg_snd_PeasantPissed3",
+      "origin": "stock-mpq",
+      "note": "godie-nbst.ex 來~快點吃吧"
+    },
+    "wc3.peondeath": {
+      "ggSnd": "gg_snd_PeonDeath",
+      "origin": "stock-mpq",
+      "note": "godie-e015.q 北斗爆橘拳, godie-u00l.q / godie-umal.q 北斗懺悔拳"
+    },
+    "wc3.rokhanwhat2": {
+      "ggSnd": "gg_snd_RokhanWhat2",
+      "origin": "stock-mpq",
+      "note": "godie-emns.e 火車輾過"
+    },
+    "wc3.sealwhat2": {
+      "ggSnd": "gg_snd_SealWhat2",
+      "origin": "stock-mpq",
+      "note": "godie-obla.r 動物拳法"
+    },
+    "wc3.shadowhunterready1": {
+      "ggSnd": "gg_snd_ShadowHunterReady1",
+      "origin": "stock-mpq",
+      "note": "godie-ubal.r 魔界之王"
+    },
+    "wc3.shamanready1": {
+      "ggSnd": "gg_snd_ShamanReady1",
+      "origin": "stock-mpq",
+      "note": "godie-nman.r 地獄搖滾"
+    },
+    "wc3.snapdragonmissilelaunch1": {
+      "ggSnd": "gg_snd_SnapDragonMissileLaunch1",
+      "origin": "stock-mpq",
+      "note": "godie-u00j.w 八刀一閃"
+    },
+    "wc3.soulgem": {
+      "ggSnd": "gg_snd_SoulGem",
+      "origin": "stock-mpq",
+      "note": "godie-o01z.r / godie-o02v.r Starlight Breaker Plus"
+    },
+    "wc3.soulpreservation": {
+      "ggSnd": "gg_snd_SoulPreservation",
+      "origin": "stock-mpq",
+      "note": "godie-e008.r 討滅封絕"
+    },
+    "wc3.spellbreakerpissed4": {
+      "ggSnd": "gg_snd_SpellbreakerPissed4",
+      "origin": "stock-mpq",
+      "note": "godie-n00b.w 複製鏡"
+    },
+    "wc3.spiritofvengeanceyes3": {
+      "ggSnd": "gg_snd_SpiritOfVengeanceYes3",
+      "origin": "stock-mpq",
+      "note": "godie-n00p.w 寄生種子"
+    },
+    "wc3.stampedecaster1": {
+      "ggSnd": "gg_snd_StampedeCaster1",
+      "origin": "stock-mpq",
+      "note": "godie-nman.w 必殺！爆熱神音！"
+    },
+    "wc3.taunt": {
+      "ggSnd": "gg_snd_Taunt",
+      "origin": "stock-mpq",
+      "note": "godie-h02u.w / godie-h02v.w 狂草泥馬, godie-o00l.r 暴爆咒, godie-u00k.r 萬惡歸宗, godie-udea.e 魔法膨脹"
+    },
+    "wc3.thunderboltmissiledeath": {
+      "ggSnd": "gg_snd_ThunderBoltMissileDeath",
+      "origin": "stock-mpq",
+      "note": "godie-edem.r 哥哥"
+    },
+    "wc3.thunderclapcaster": {
+      "ggSnd": "gg_snd_ThunderClapCaster",
+      "origin": "stock-mpq",
+      "note": "godie-n01c.e / godie-nbbc.e 龍鬥氣砲咒文"
+    },
+    "wc3.treantready1": {
+      "ggSnd": "gg_snd_TreantReady1",
+      "origin": "stock-mpq",
+      "note": "godie-e00s.q 伸卡球"
+    },
+    "wc3.trollbatriderpissed2": {
+      "ggSnd": "gg_snd_TrollbatriderPissed2",
+      "origin": "stock-mpq",
+      "note": "godie-ubal.w 災難之牆"
+    },
+    "wc3.trollwoodworkswhat1": {
+      "ggSnd": "gg_snd_TrollWoodWorksWhat1",
+      "origin": "stock-mpq",
+      "note": "godie-u00n.passive / godie-u00o.passive 二檔"
+    },
+    "wc3.waygatewhat1": {
+      "ggSnd": "gg_snd_WayGateWhat1",
+      "origin": "stock-mpq",
+      "note": "godie-o00l.e 破法對咒, godie-o02s.r 破法對咒"
+    }
+  },
+  "bindings": {},
+  "unmatched": [
+    {
+      "ability": "godie-e008.r",
+      "ggSnd": "gg_snd_FlareTarget1",
+      "cue": "wc3.flaretarget1",
+      "reason": "一次施法只播**一個** cue，而 JASS 在這支技能上綁了不只一個 gg_snd；這是被丟掉的那一個（要播它需要**分層播放**這個機制，⛔ 不是一列綁定）"
+    },
+    {
+      "ability": "godie-emns.q",
+      "ggSnd": "gg_snd_FountainOfLifeWhat1",
+      "cue": "wc3.fountainoflifewhat1",
+      "reason": "一次施法只播**一個** cue，而 JASS 在這支技能上綁了不只一個 gg_snd；這是被丟掉的那一個（要播它需要**分層播放**這個機制，⛔ 不是一列綁定）"
+    },
+    {
+      "ability": "godie-h00l.q",
+      "ggSnd": "gg_snd_WitchDoctorCastAttack1",
+      "cue": "wc3.witchdoctorcastattack1",
+      "reason": "一次施法只播**一個** cue，而 JASS 在這支技能上綁了不只一個 gg_snd；這是被丟掉的那一個（要播它需要**分層播放**這個機制，⛔ 不是一列綁定）"
+    },
+    {
+      "ability": "godie-hpb1.w",
+      "ggSnd": "gg_snd_DarkSummoningLaunch1",
+      "cue": "wc3.darksummoninglaunch1",
+      "reason": "一次施法只播**一個** cue，而 JASS 在這支技能上綁了不只一個 gg_snd；這是被丟掉的那一個（要播它需要**分層播放**這個機制，⛔ 不是一列綁定）"
+    },
+    {
+      "ability": "godie-o02l.e",
+      "ggSnd": "gg_snd_sawch",
+      "cue": "wc3.sawch",
+      "reason": "⛔ 這個 clip 從來沒有被 extract 出來（`war3mapImported\\\\sawch.mp3`，audio-map 沒有這個 key）。綁上去只會換成一次 audio-map miss ⇒ 仍然靜音。補它要先跑 tools/w3x-import 的抽取，⛔ 不是改這份表"
+    },
+    {
+      "ability": "godie-ofar.e",
+      "ggSnd": "gg_snd_sawch",
+      "cue": "wc3.sawch",
+      "reason": "⛔ 這個 clip 從來沒有被 extract 出來（`war3mapImported\\\\sawch.mp3`，audio-map 沒有這個 key）。綁上去只會換成一次 audio-map miss ⇒ 仍然靜音。補它要先跑 tools/w3x-import 的抽取，⛔ 不是改這份表"
+    },
+    {
+      "ability": "godie-u00l.q",
+      "ggSnd": "gg_snd_GruntWhat2",
+      "cue": "wc3.gruntwhat2",
+      "reason": "一次施法只播**一個** cue，而 JASS 在這支技能上綁了不只一個 gg_snd；這是被丟掉的那一個（要播它需要**分層播放**這個機制，⛔ 不是一列綁定）"
+    },
+    {
+      "ability": "godie-u00l.q",
+      "ggSnd": "gg_snd_PeonWhat2",
+      "cue": "wc3.peonwhat2",
+      "reason": "一次施法只播**一個** cue，而 JASS 在這支技能上綁了不只一個 gg_snd；這是被丟掉的那一個（要播它需要**分層播放**這個機制，⛔ 不是一列綁定）"
+    },
+    {
+      "ability": "godie-u00n.e",
+      "ggSnd": "gg_snd_WaterElementalMissile3",
+      "cue": "wc3.waterelementalmissile3",
+      "reason": "一次施法只播**一個** cue，而 JASS 在這支技能上綁了不只一個 gg_snd；這是被丟掉的那一個（要播它需要**分層播放**這個機制，⛔ 不是一列綁定）"
+    },
+    {
+      "ability": "godie-u00o.e",
+      "ggSnd": "gg_snd_WaterElementalMissile3",
+      "cue": "wc3.waterelementalmissile3",
+      "reason": "一次施法只播**一個** cue，而 JASS 在這支技能上綁了不只一個 gg_snd；這是被丟掉的那一個（要播它需要**分層播放**這個機制，⛔ 不是一列綁定）"
+    },
+    {
+      "ability": "godie-u00v.w",
+      "ggSnd": "gg_snd_GlueScreenMeteorHit2",
+      "cue": "wc3.gluescreenmeteorhit2",
+      "reason": "一次施法只播**一個** cue，而 JASS 在這支技能上綁了不只一個 gg_snd；這是被丟掉的那一個（要播它需要**分層播放**這個機制，⛔ 不是一列綁定）"
+    },
+    {
+      "ability": "godie-u010.e",
+      "ggSnd": "gg_snd_ShimmeringPortalDeath",
+      "cue": "wc3.shimmeringportaldeath",
+      "reason": "一次施法只播**一個** cue，而 JASS 在這支技能上綁了不只一個 gg_snd；這是被丟掉的那一個（要播它需要**分層播放**這個機制，⛔ 不是一列綁定）"
+    },
+    {
+      "ability": "godie-u010.r",
+      "ggSnd": "gg_snd_FlashBack1Second",
+      "cue": "wc3.flashback1second",
+      "reason": "一次施法只播**一個** cue，而 JASS 在這支技能上綁了不只一個 gg_snd；這是被丟掉的那一個（要播它需要**分層播放**這個機制，⛔ 不是一列綁定）"
+    },
+    {
+      "ability": "godie-ubal.r",
+      "ggSnd": "gg_snd_TreantReady1",
+      "cue": "wc3.treantready1",
+      "reason": "一次施法只播**一個** cue，而 JASS 在這支技能上綁了不只一個 gg_snd；這是被丟掉的那一個（要播它需要**分層播放**這個機制，⛔ 不是一列綁定）"
+    },
+    {
+      "ability": "godie-ubal.w",
+      "ggSnd": "gg_snd_HCancelBuilding",
+      "cue": "wc3.hcancelbuilding",
+      "reason": "一次施法只播**一個** cue，而 JASS 在這支技能上綁了不只一個 gg_snd；這是被丟掉的那一個（要播它需要**分層播放**這個機制，⛔ 不是一列綁定）"
+    },
+    {
+      "ability": "godie-umal.q",
+      "ggSnd": "gg_snd_GruntWhat2",
+      "cue": "wc3.gruntwhat2",
+      "reason": "一次施法只播**一個** cue，而 JASS 在這支技能上綁了不只一個 gg_snd；這是被丟掉的那一個（要播它需要**分層播放**這個機制，⛔ 不是一列綁定）"
+    },
+    {
+      "ability": "godie-umal.q",
+      "ggSnd": "gg_snd_PeonWhat2",
+      "cue": "wc3.peonwhat2",
+      "reason": "一次施法只播**一個** cue，而 JASS 在這支技能上綁了不只一個 gg_snd；這是被丟掉的那一個（要播它需要**分層播放**這個機制，⛔ 不是一列綁定）"
+    },
+    {
+      "ability": "godie-uvng.e",
+      "ggSnd": "gg_snd_ShimmeringPortalDeath",
+      "cue": "wc3.shimmeringportaldeath",
+      "reason": "一次施法只播**一個** cue，而 JASS 在這支技能上綁了不只一個 gg_snd；這是被丟掉的那一個（要播它需要**分層播放**這個機制，⛔ 不是一列綁定）"
+    },
+    {
+      "ability": "godie-uvng.r",
+      "ggSnd": "gg_snd_FlashBack1Second",
+      "cue": "wc3.flashback1second",
+      "reason": "一次施法只播**一個** cue，而 JASS 在這支技能上綁了不只一個 gg_snd；這是被丟掉的那一個（要播它需要**分層播放**這個機制，⛔ 不是一列綁定）"
+    }
+  ]
+}

@@ -34,6 +34,30 @@ import { PERFORM_VOICE_CATEGORIES } from "./shopPerformVoice";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "../../../.."); // src/audio → apps/client → apps → repo root
 
+/**
+ * ⭐ GH#529 —— **真的會派送語音的檔案**，走出來的，⛔ 不是寫死的兩個檔名。
+ * 判準是「它 import 了 `playContextualVoice`」—— 那是全 app 唯一一道播出語音的縫，
+ * 所以一個新的呼叫端不可能繞過它而不被這裡看見。
+ * ⛔ 刻意不掃整棵 `src`：`"blind"`／`"love"`／`"watch"` 這種字在 UI 文案裡到處都是，
+ * 掃太寬會用**錯誤的訊息**紅（第二守則的失敗形態④）。
+ */
+function dispatchSiteFiles(root: string): string[] {
+  const out: string[] = [];
+  const walk = (dir: string): void => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const p = join(dir, e.name);
+      if (e.isDirectory()) {
+        if (e.name !== "node_modules") walk(p);
+      } else if (/\.tsx?$/.test(e.name) && !/\.test\.tsx?$/.test(e.name)) {
+        const src = readFileSync(p, "utf8");
+        if (src.includes("playContextualVoice")) out.push(p);
+      }
+    }
+  };
+  walk(root);
+  return out;
+}
+
 /** Every category the shipped voice pack can actually speak. */
 function manifestCategories(): string[] {
   const doc = JSON.parse(readFileSync(join(ROOT, "content", VOICE_PACK_MANIFEST_PATH), "utf8")) as {
@@ -178,11 +202,17 @@ describe("every voice category is classified (spatial-policy-voice)", () => {
     // watch / free-move）在表上全部寫著 `dispatched: false` —— 一份說謊的政策宣告，
     // 而守衛是綠的。⭐ 修法不是「再加一個檔名」：`PERFORM_VOICE_CATEGORIES` 是一張
     // **真的表**，直接讀它，⛔ 不要掃它的原始碼。
+    //
+    // ⭐ GH#529 —— 而「再加一個檔名」正是它第一次失效的方式：這一條在 2026-08-22
+    // 之前寫死 GameApp + AudioDirector 兩個檔，於是 `shopPerformVoice` 那六格說了
+    // 一年的謊。⇒ 檔案清單現在**推導**出來：`apps/client/src` 底下**每一個
+    // import 了語音派送入口（`playContextualVoice`）的模組**。第三個呼叫端出現時
+    // 它自動被掃到，⛔ 不必有人記得回來改這一行。
     const dispatchTables = new Set(Object.values(PERFORM_VOICE_CATEGORIES).flat());
-    const src = [
-      readFileSync(join(HERE, "../GameApp.ts"), "utf8"),
-      readFileSync(join(HERE, "../ui/AudioDirector.tsx"), "utf8"),
-    ]
+    const sites = dispatchSiteFiles(join(HERE, ".."));
+    expect(sites.length, "找不到任何語音派送點 —— 這條在測空氣").toBeGreaterThan(2);
+    const src = sites
+      .map((f) => readFileSync(f, "utf8"))
       .join("\n")
       .replace(/\/\*[\s\S]*?\*\//g, "")
       .replace(/\/\/[^\n]*/g, "");

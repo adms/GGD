@@ -55,6 +55,7 @@ import {
   sfxPreloadPolicyFromDoc,
   type SfxPreloadPolicy,
 } from "./sfxPreloadPolicy";
+import { ABILITY_SFX_CUES_PATH, applyAbilitySfxCuesDoc } from "./abilitySfxCues";
 import {
   EMPTY_AUDIO_MAP,
   audioMapFromDoc,
@@ -433,6 +434,7 @@ export class AudioSystem {
    */
   private preloadPolicy: SfxPreloadPolicy = DEFAULT_SFX_PRELOAD_POLICY;
   private preloadPolicyPromise: Promise<SfxPreloadPolicy> | null = null;
+  private abilitySfxCuesPromise: Promise<boolean> | null = null;
 
   constructor(opts: AudioSystemOptions = {}) {
     this.baseUrl = opts.baseUrl ?? AUDIO_CONTENT_BASE;
@@ -475,6 +477,10 @@ export class AudioSystem {
       // than awaited with it: the shipped defaults are already correct, so the
       // first warm never has to wait on it, and a 404 simply keeps them.
       void this.loadPreloadPolicy();
+      // ⭐ GH#529 —— 技能施法音的 cue 名單（`audio-manifests/ability-sfx-cues.json`）。
+      // 同樣不等它：拿不到就用 `abilitySfxCues` 從 SFX_REACHABILITY 推導的出貨退路，
+      // ⛔ 那是**推導**不是第二份名單，所以「fetch 失敗」與今天的行為逐位元相同。
+      void this.loadAbilitySfxCues();
       this.bootPromise = this.loadMap();
     }
     return this.bootPromise;
@@ -639,6 +645,27 @@ export class AudioSystem {
       })();
     }
     return this.preloadPolicyPromise;
+  }
+
+  /**
+   * Fetch the ability cast-cue registry (`content/audio-manifests/ability-sfx-cues.json`).
+   * Single-flight and never throws: a missing / malformed / 404 doc keeps the
+   * derived fallback, so the worst case is **today's behaviour**, never silence.
+   */
+  loadAbilitySfxCues(path: string = ABILITY_SFX_CUES_PATH): Promise<boolean> {
+    if (!this.abilitySfxCuesPromise) {
+      this.abilitySfxCuesPromise = (async () => {
+        try {
+          const res = await this.fetchFn(this.urlFor(path));
+          if (!res.ok) return false;
+          return applyAbilitySfxCuesDoc(await res.json());
+        } catch (err) {
+          this.warn(`ability sfx cues ${path} failed to load; using derived defaults`, err);
+          return false;
+        }
+      })();
+    }
+    return this.abilitySfxCuesPromise;
   }
 
   /**

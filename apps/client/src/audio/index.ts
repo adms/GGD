@@ -73,6 +73,7 @@ export * from "./contextualVoice";
 export * from "./roundEndVoice";
 export * from "./sfxManifest";
 export * from "./sfxPreloadPolicy";
+export * from "./abilitySfxCues";
 export * from "./spatial";
 export * from "./combatSfxSpatial";
 export * from "./SpatialSfxQueue";
