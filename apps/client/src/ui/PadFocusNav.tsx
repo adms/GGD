@@ -31,6 +31,16 @@
  * key hands it back. ⛔ combat was NOT taken out of COMBAT_LIVE_PHASES — the
  * default is still "the pad drives the hero". See ./hud/padHudFocus.
  *
+ * ⭐ …AND WHERE FOCUS CANNOT REACH, A CURSOR CAN (#502/K2). Stepping between
+ * focusables is the FAST path and stays the default, but a focus set can never
+ * cover everything (canvas hot-spots, hover-only affordances, anything nobody
+ * remembered to make focusable). One key (L3, a field) turns the left stick into
+ * a POINTER — the same escape hatch Steam Big Picture's mouse-region, the Wii U
+ * pointer and Xbox's "move pointer with stick" all ship. ⛔ It exists ONLY where
+ * this layer owns the pad, i.e. never in live combat: aiming a ground spell by
+ * dragging a pointer onto the floor is slower than the direct+soft-lock aim the
+ * champion already has. The rule lives in ./../input/padCursor.
+ *
  * IT DEFERS TO THE CHAMPION IN LIVE COMBAT. `focusNavActive` keeps this layer
  * OUT of `combat`/`resolution` (unless a modal is open over them), so the pad
  * still aims the hero there; everywhere else — auth, lobby, store, champ-select,
@@ -48,6 +58,7 @@ import {
   firstConnectedPad,
   focusNavActive,
   initialFocusIndex,
+  NAV_ACTIVATE_BTN,
   nextOptionIndex,
   nextRangeValue,
   padValueKind,
@@ -71,6 +82,15 @@ import { PAD_FOCUS_ATTR, applyPadFocus, clearPadFocus } from "./focusGlow";
 // GH#503/K1 — A 停在文字欄位上時開螢幕小鍵盤（見下面 activate 分支）。
 import { openPadKeyboard } from "./PadKeyboard";
 import { shouldOpenPadKeyboard } from "../input/padKeyboard";
+// GH#502/K2 — 虛擬游標。焦點導覽走不到的東西的**退路**，⛔ 只在選單場合。
+import {
+  padCursorHome,
+  padCursorNextMode,
+  padCursorTuning,
+  stepPadCursor,
+  type CursorPoint,
+} from "../input/padCursor";
+import { hidePadCursor, padCursorHit, padCursorPress, showPadCursor, syncPadCursor } from "./PadCursor";
 import { appStore } from "./platform/store";
 import { hudStore } from "../net/RoomStore";
 
@@ -312,6 +332,12 @@ export function PadFocusNav(): null {
     let hudMode = false;
     let prevToggle = false;
     let prevBack = false;
+    // GH#502/K2 — 虛擬游標模式（選單場合的退路；戰鬥中由 padCursorNextMode 強制關）。
+    let cursorMode = false;
+    let cursorPos: CursorPoint = { x: 0, y: 0 };
+    let prevCursorToggle = false;
+    let prevCursorA = false;
+    let lastCursorMs = 0;
 
     // a REAL mouse/keyboard interaction drops the pad ring — it is a pad-only
     // cue. Synthetic events WE dispatch (the activate click, the Start→Escape
@@ -361,7 +387,10 @@ export function PadFocusNav(): null {
         // `<input>` 只是把游標放進去，一個字元都產生不了，而全 repo 沒有任何
         // 輸入手段 ⇒ 登入 / 註冊 / 改密碼 / 房名 / 邀請碼 / 聊天 / 兩個搜尋框
         // 對純手把玩家全部是死的（16 個缺口，同一個根因）。
+        // ⚠️ `keyboardEnabled` 是一格後台開關（第一守則）：關掉之後 A 落回
+        // `cur.click()`（也就是 #503 之前的行為），⛔ 不是「按了沒反應」。
         if (
+          padCursorTuning().keyboardEnabled &&
           shouldOpenPadKeyboard({
             tag: cur.tagName,
             type: cur.getAttribute("type"),
@@ -428,6 +457,13 @@ export function PadFocusNav(): null {
         prevToggle = false;
         prevBack = false;
         landedScope = null;
+        // 手把拔掉了 —— 留著一支不會動的箭頭會蓋在真的滑鼠游標旁邊。
+        if (cursorMode) {
+          cursorMode = false;
+          hidePadCursor();
+        }
+        prevCursorToggle = false;
+        prevCursorA = false;
         return;
       }
       const scope = topScope();
@@ -440,6 +476,8 @@ export function PadFocusNav(): null {
       const tuning = padHudFocusTuning();
       const toggle = pad.buttons[tuning.toggleButton]?.pressed === true;
       const backBtn = pad.buttons[PAD_HUD_FOCUS_BACK_BTN]?.pressed === true;
+      // B 的邊緣要在 `prevBack` 被覆寫**之前**取，游標模式與 HUD 模式共用同一次。
+      const backEdge = backBtn && !prevBack;
       const wasHudMode = hudMode;
       hudMode = nextHudFocusMode(
         hudMode,
@@ -480,6 +518,71 @@ export function PadFocusNav(): null {
       }
       prevStart = start;
 
+      // ⭐ GH#502/K2 — 虛擬游標。owner：「類比搖桿可以代替對應滑鼠的功能」。
+      // 焦點導覽仍然是**主**路徑（一次跳一格、有 glow、比推游標快）；游標是
+      // 退路，因為有些控制項不可能全部收進焦點集合。⛔ 戰鬥中一律停用 ——
+      // 那條規則整個住在 `padCursorNextMode` 裡（它讀 `active`，也就是
+      // `focusNavActive()` 的答案），⛔ 這裡不重判一次「現在算不算戰鬥」。
+      const cursorCfg = padCursorTuning();
+      const cursorToggle = pad.buttons[cursorCfg.cursorToggleButton]?.pressed === true;
+      const wasCursor = cursorMode;
+      cursorMode = padCursorNextMode(cursorMode, {
+        enabled: cursorCfg.cursorEnabled,
+        menuOwnsPad: active,
+        togglePressed: cursorToggle && !prevCursorToggle,
+        backPressed: backEdge,
+      });
+      prevCursorToggle = cursorToggle;
+      const viewport = { w: window.innerWidth || 0, h: window.innerHeight || 0 };
+      if (cursorMode && !wasCursor) {
+        // 從畫面正中央開始，⛔ 不是上一次關掉的地方 —— 中間隔了一次換頁的話，
+        // 那個座標底下已經是別的東西了。
+        cursorPos = padCursorHome(viewport);
+        lastCursorMs = performance.now();
+        prevCursorA = true; // 切換鍵按下的這一幀 A 可能也是按著的，⛔ 不要當成點擊
+        clearPadFocus(); // 游標接手了，焦點環留著會有兩個「我在這裡」
+        showPadCursor(cursorPos);
+      } else if (!cursorMode && wasCursor) {
+        hidePadCursor();
+      }
+      if (cursorMode) {
+        const now = performance.now();
+        cursorPos = stepPadCursor(
+          cursorPos,
+          { x: pad.axes[0] ?? 0, y: pad.axes[1] ?? 0 },
+          now - lastCursorMs,
+          cursorCfg,
+          viewport,
+        );
+        lastCursorMs = now;
+        syncPadCursor(cursorPos);
+        const aBtn = pad.buttons[NAV_ACTIVATE_BTN]?.pressed === true;
+        if (aBtn && !prevCursorA) {
+          const hit = padCursorHit(cursorPos);
+          if (hit) {
+            // ⭐ 打到文字欄位時走的是**同一個**小鍵盤決定（GH#503），
+            // ⛔ 不是第二份判斷 —— 游標點進帳號欄一樣要能打字。
+            if (
+              cursorCfg.keyboardEnabled &&
+              shouldOpenPadKeyboard({
+                tag: hit.tagName,
+                type: hit.getAttribute("type"),
+                readOnly: (hit as HTMLInputElement).readOnly === true,
+              })
+            ) {
+              openPadKeyboard(hit as HTMLInputElement);
+            } else {
+              padCursorPress(hit, cursorPos);
+            }
+          }
+        }
+        prevCursorA = aBtn;
+        // 這一幀由游標接管：左搖桿在移動指標，⛔ 不可以同時把焦點也走掉。
+        nav.reset();
+        return;
+      }
+      prevCursorA = false;
+
       if (!active) {
         nav.reset();
         landedScope = null;
@@ -512,6 +615,7 @@ export function PadFocusNav(): null {
       setPadMenuCapture(false);
       setPadHudFocusMode(false);
       clearPadFocus();
+      hidePadCursor();
     };
   }, []);
 
