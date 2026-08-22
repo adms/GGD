@@ -223,6 +223,12 @@
               }
             }
           ]
+        },
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "preset": "tpl-beam-roll",
+          "path": "forward"
         }
       ],
       "vfxKey": "fx.prim.ki.beam-lg",

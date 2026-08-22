@@ -421,14 +421,8 @@
         {
           "kind": "spawnModelFx",
           "shape": "single",
-          "modelKey": "imported.netherstrike",
+          "preset": "tpl-beam-roll",
           "path": "forward",
-          "speed": 30.0,
-          "distance": 14.0,
-          "spinDegPerSec": 720.0,
-          "scale": 2.5,
-          "touchRadius": 1.5,
-          "touchSide": "enemies",
           "onTouch": [
             {
               "kind": "damage",

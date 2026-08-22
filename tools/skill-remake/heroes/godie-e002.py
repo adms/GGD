@@ -99,9 +99,16 @@ A("20-03", "20-03 約束與勝利之劍", "ground", [60, 60, 60, 60], [250, 350,
       {"kind": "floatingText", "shape": "single", "text": "約束與勝利之劍！",
        "colorRgb": [255, 224, 120], "sizeScale": 1.4, "riseSpeed": 2.0,
        "durationSec": 2.8, "applyTo": "self"},
-      {"kind": "spawnModelFx", "shape": "single", "modelKey": "imported.netherstrike",
-       "path": "forward", "speed": 30.0, "distance": 14.0, "spinDegPerSec": 720.0,
-       "scale": 2.5, "touchRadius": 1.5, "touchSide": "enemies",
+      # ⭐ 2026-08-23（owner：「這四個經典總是要看到**橫放的光束砲**吧」）——
+      #    七格演出幾何（modelKey / path / speed / distance / spinDegPerSec / scale /
+      #    touchRadius / touchSide）搬進**共用表**
+      #    `content/ability-templates/tpl-beam-roll.json`，這裡只留 `preset` 一格。
+      # ⛔ 在此之前它們是**逐支手寫**的，而出貨樹上有五份幾乎一模一樣的節點 ——
+      #    第零守則⑨的反面標記，也是第〇·四守則說的「同一個數字的第二個住處」。
+      # ⚠️ `onTouch` 仍然逐支寫：模板刻意**不**自動塞傷害（那會替每一支引用它的
+      #    技能加一份沒有人裁決過的數值，第一守則）。
+      {"kind": "spawnModelFx", "shape": "single", "preset": "tpl-beam-roll",
+       "path": "forward",
        "onTouch": [dmg("magic", dmg_tier="小")],
        "onArrive": [{"kind": "screenShake", "shape": "single", "amplitude": 0.6,
                      "durationSec": 0.8, "applyTo": "all"}]},

@@ -8,18 +8,65 @@
 from common import A, CD_ECHO, M, TIER_R, amt, buff, hook_icd, line, status
 
 
+# ⭐ GH#574 —— owner 2026-08-23 逐字：
+#    「初號機 **天生技暴走門檻 5->10%** 請你**測試確定真的會暴走 不能控制**
+#      並且身上要有**明顯冒煙特效**」
+#
+# 三件事，三個落點：
+#  ① 門檻：下面 `BERSERK_HP_PCT`（⛔ 不是散在條件葉裡的一個字面值）。
+#  ② 「真的不能控制」：`sim/berserk.ts::berserkDropsOrders` 早就在了 ——
+#     守衛在 `packages/shared/src/sim/berserkUncontrollable.test.ts`，它斷言的是
+#     **玩家的 order 真的被丟掉**（讀 `IntentFrame` 採納之後的結果），
+#     ⛔ 不是「旗標有沒有被設」。
+#  ③ 冒煙：下面 `berserk_smoke()`。
+#
+# ⚠️ ⛔ 這一格**不搬到** `content/config/berserk.json`：那份文件管的是
+#    「**主動**暴走可以按下去的門檻（`castHpPct`）」與暴走期間的冷卻倍率 ——
+#    ⭐ 這裡是**天生技自動觸發**的門檻，兩者是**兩個問題**，合成一格會讓
+#    「按得下去」與「自己會炸」再也分不開（59-001 完全暴走的 50% 是第三個值，
+#    它自己就證明了這一軸是**逐支技能**的，⛔ 不是一個全域常數）。
+#    ⇒ 它住在技能文件上（`condition.value`），而技能文件正是後台／Codex 編輯器
+#    改得到的地方（第一守則：可調 ✅）。
+BERSERK_HP_PCT = 0.10
+
+
+def berserk_smoke(duration, hz=4.0):
+    """⭐【明顯冒煙】暴走期間**跟著身體**的常駐煙柱。
+
+    ⛔ 為什麼不是 `persistentVfx`：那一格今天只算得出 `when` **缺席**的那一批
+       （客戶端刻意不重寫一份會跟 sim 漂開的條件求值器），而「暴走中」正是一個
+       `when` —— 加上去會讓 `persistentVfxClientCoverage.test.ts` 當場紅，
+       而且畫面上與「條件沒成立」長得一模一樣（失敗形態②）。
+    ⛔ 為什麼不是一發 `spawnVfx`：`vfxSpawn` 是**定點**一次性的（客戶端拿的是
+       世界座標），初號機一走開，煙就留在原地。
+
+    ⭐ 所以用既有的兩個零件組出來（第〇·五守則：⛔ 沒有為這一支寫任何新機制）：
+       `delayed` 排一串班表，每一發跑一顆 `spawnVfx at:"self"` ——
+       而 `spawnVfx` 的 `"self"` 是在**那一發到期的當下**才去讀施法者的座標，
+       ⇒ 煙一路跟著身體。`stopOnCasterDeath` 讓它在倒下的那一刻停。
+    """
+    count = int(round(duration * hz))
+    assert 1 <= count <= 32, f"delayed.count 上界是 32（DELAYED_MAX_COUNT），算出 {count}"
+    return {"kind": "delayed", "shape": "single",
+            "delaySec": 1.0 / hz, "count": count, "intervalSec": 1.0 / hz,
+            "effects": [{"kind": "spawnVfx",
+                         "vfxId": "fx.w3x.particle.flamessmoke.p00", "at": "self"}],
+            "stopOnCasterDeath": True}
+
+
 A("59-00", "59-00 暴走", "self", [150], [0], 0,
-  "[被動][暴走][迴避][吸血][受到傷害時][屬性門檻][機率]\n{{cd}}秒冷卻\n\n「吼！是誰踢掉插頭了！」\n生命降至5%時必定[暴走]，將[攻擊速度]提升100%，並獲得60%[吸血]與25%[迴避]，持續6秒。",
+  "[被動][暴走][迴避][吸血][受到傷害時][屬性門檻][機率]\n{{cd}}秒冷卻\n\n「吼！是誰踢掉插頭了！」\n生命降至10%時必定[暴走]，將[攻擊速度]提升100%，並獲得60%[吸血]與25%[迴避]，持續6秒。\n[暴走]期間**不受控制**：移動與攻擊指令全部失效，身體自己找最近的敵人打，身上並持續冒煙。",
   innate="passive",
   passive={"name": "59-00 暴走", "ranks": [{"hooks": [
       {"on": "onDamageTaken", "target": "self", "internalCooldown": 150.0,
        "condition": {"kind": "stat", "subject": "self", "stat": "hp",
-                     "mode": "percent", "op": "<=", "value": 0.05},
+                     "mode": "percent", "op": "<=", "value": BERSERK_HP_PCT},
        "effects": [buff([M("as", "pctAdd", 1.0), M("lifesteal", "flat", 0.6),
                          M("evasion", "flat", 0.25)], 6.0),
                    # ⭐ [暴走] 的機制本體：拿走方向盤 + 自動尋敵（sim/berserk.ts）。
                    #    上面那排是屬性，這一行才是「暴走」——少了它三個系統都不會動。
-                   status("berserk", 6.0, berserk=True, applyTo="self")]}]}]})
+                   status("berserk", 6.0, berserk=True, applyTo="self"),
+                   berserk_smoke(6.0)]}]}]})
 
 A("59-01", "59-01 吞噬", "self", [60, 60, 60, 60], [0, 0, 0, 0], 0,
   "[被動][週期][範圍][處決][吸血][吞噬][屬性門檻]\n{{cd}}秒冷卻\n有效範圍：{{radius}}\n\n「有一種餓是阿嬤覺得你餓」\n初號機**自動**[吞噬][周圍]範圍內生命剩餘3/5/7/9%的**任何敵方單位**（含殭屍與殭屍王），使其[立即死亡]，並[回復]等同其剩餘生命的生命值。\n(不必施放，也不耗魔；每次只吃最近的一個，兩次之間隔 {{cd}} 秒)",
@@ -155,11 +202,30 @@ A("59-03", "59-03 AT力場", "self", [0], [0], 0,
       for v in (150, 250, 350, 450)]})
 
 A("59-04", "59-04 野戰型陽電子砲", "ground", [90, 90, 90], [350, 500, 650], 8.25,
-  "[主動][指向][範圍][真傷]\n{{cd}}秒冷卻，吟唱3秒\n消耗MP{{mp}}\n施法距離：{{range}}\n\n「站著不要動，我...我要射了」\n對[前方][直線]敵人造成{{dmg}}點[真實傷害]。",
+  "[主動][指向][範圍][真傷]\n{{cd}}秒冷卻，吟唱3秒\n消耗MP{{mp}}\n施法距離：{{range}}\n\n「站著不要動，我...我要射了」\n對[前方][直線]敵人造成{{dmg}}點[真實傷害]，並額外造成目標[最大生命]10%的[真實傷害]。",
   maxRank=3, cast_time=3.0,
   # GH#375 —— `imported.wave.ki` 是純視覺（傷害在 damageLine 上）。
   cosmetic_projectile="imported.wave.ki",
-  effects=[line("true", length=8.25, width=2.2, per=[750, 1200, 1650])])
+  # ⭐ GH#578 —— owner 2026-08-23 逐字：「**初號雞 R 附帶 敵方單位最大生命10%真實傷害**」。
+  #    ⛔ 沒有新的 effect kind：`resourcePct` 是 damage / damageArea / damageLine / dot
+  #    四個 kind **同名同語意**的那一格（13-02 牙突 GH#459 就是這一格），
+  #    而 `damageType:"true"` 讓整包（基礎 + 百分比）一起走真傷 ——
+  #    `damageLine.ts` 是 `amount += resourcePctAmount(...)` 之後才送出一個封包，
+  #    ⛔ 不是兩發，所以百分比那一半不可能被減傷吃掉。
+  #    ⚠️ 逐階三格都是 0.10：owner 只給了一個數字，⛔ 我不替他編一條成長曲線。
+  effects=[line("true", length=8.25, width=2.2, per=[750, 1200, 1650],
+                res_pct={"subject": "target", "resource": "health",
+                         "basis": "max", "perRank": [0.10, 0.10, 0.10]}),
+           # ⭐ GH#555 —— owner 2026-08-23：「**初號機陽離子砲**…這四個經典總是要
+           #    看到**橫放的光束砲**吧」。演出幾何全部住共用表
+           #    `content/ability-templates/tpl-beam-roll.json`（第〇·四守則），
+           #    這裡只寫兩格「這一支自己的」：往哪去、走多遠。
+           # ⭐ `path:"toTarget"` 是**原作**：war3map.j:47756-47765（A0GI）生一隻光束
+           #    dummy `h01P` 於施法者身上並**面向目標點**，⛔ 不是沿著身體面向噴。
+           # ⭐ `distance` 逐字等於上面那條 damageLine 的長度（450 w3x u × 11/600），
+           #    所以**看得到的光束**與**真的會被打到的那條線**是同一段。
+           {"kind": "spawnModelFx", "shape": "single", "preset": "tpl-beam-roll",
+            "path": "toTarget", "distance": 8.25}])
 
 A("59-002", "59-001 完全暴走", "self", [150], [0], 0,
   "[被動][暴走][迴避][吸血][加速][屬性門檻]\n{{cd}}秒冷卻\n\n「什麼？竟然沒有世界末日嗎？」\n[暴走]的門檻降為低於自身[最大生命] 50%，[攻擊速度]提升至最上限 10，[吸血]120%、[迴避]50%，持續 12秒。",
@@ -174,4 +240,8 @@ A("59-002", "59-001 完全暴走", "self", [150], [0], 0,
                          M("lifesteal", "flat", 1.2), M("evasion", "flat", 0.5)], 12.0),
                    # ⭐ 同 59-00：這一行才是「暴走」，也是施法門檻認得出這支技能的憑據
                    #    （berserkRules.trigger = 'berserkGrantors'）。
-                   status("berserk", 12.0, berserk=True, applyTo="self")]}]}]})
+                   status("berserk", 12.0, berserk=True, applyTo="self"),
+                   # ⭐ 冒煙是**暴走這個狀態**的樣子，⛔ 不是天生技專屬的裝飾 ——
+                   #    兩支給同一個視覺，玩家才學得會「冒煙 = 它現在不聽指揮」。
+                   #    hz 調低是因為 12 秒 × 4Hz = 48 發，超過 DELAYED_MAX_COUNT(32)。
+                   berserk_smoke(12.0, hz=2.5)]}]}]})

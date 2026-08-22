@@ -38,8 +38,26 @@ export interface SpawnModelFxVariant {
   radius?: number;
   side?: "enemies" | "allies";
   maxTargets?: number;
-  /** `content/models` 的 id（例：`fx.w3x.locust.*` 那一族）。 */
-  modelKey: string;
+  /**
+   * ⭐【特效模板】一份 `ability-templates` 文件的 id（出貨的是 `tpl-beam-roll`
+   * 「橫放光束砲」）。**只在文件上有意義** —— `content/modelFxPreset.ts` 在
+   * **註冊時**就把它沒填的演出幾何從模板的 `params[*].default` 補齊，所以
+   * 這支 handler 看到的永遠是已經補完的節點。⛔ sim 不讀它。
+   *
+   * ⚠️ 它是第〇·四守則的落點：在它之前，「一道翻滾的橫躺光柱長什麼樣」在出貨樹上
+   * 有**五份幾乎一模一樣的手寫節點**。
+   */
+  preset?: string;
+  /**
+   * `content/models` 的 id（例：`fx.w3x.locust.*` 那一族）。
+   *
+   * ⚠️ 三格身分欄位（`modelKey` / `path` / `speed`）是 `?` 而**不是**必填,而那是
+   * `preset` 的代價,⛔ 不是放寬:引用模板的文件在**磁碟上**只寫 `preset`,由
+   * `content/modelFxPreset.ts` 在**註冊時**補齊。沒有 `preset` 的節點三格仍然必填
+   * (`zSpawnModelFx` 的 refine 在載入時擋)。⇒ handler 看到的永遠是補完的,
+   * 而 handler 開頭那道 fail-loud 的 guard 是「萬一沒有」的那一半。
+   */
+  modelKey?: string;
   /**
    * 路徑。**A DECISION POINT**，所以是一格下拉（第一守則）。
    *
@@ -48,9 +66,9 @@ export interface SpawnModelFxVariant {
    *   · `radial`   —— `count` 個實例**等分向外**發散（爆散型）
    *   · `orbit`    —— `count` 個實例在半徑 `distance` 的環上繞（護盾球體型）
    */
-  path: "forward" | "toTarget" | "orbit" | "radial";
+  path?: "forward" | "toTarget" | "orbit" | "radial";
   /** 世界單位/秒。 */
-  speed: number;
+  speed?: number;
   /**
    * 走多遠（`forward` / `radial` 必填；`toTarget` 省略 = 走到目標身上）。
    * ⚠️ `path:"orbit"` 時它是**環半徑**（模型繞著施法者跑的那個圈多大），

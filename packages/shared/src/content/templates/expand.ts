@@ -1400,6 +1400,55 @@ const FAMILIES: Readonly<Record<string, Family>> = {
   //     「扣血那一刻血條停在哪」（沒有它人就死了），後者是緊接著的回復。十二道
   //     試煉把前者設在 1%、後者 50%，所以畫面上是「剩一絲血 → 回到半血」。
   //     兩個都設 0.5 也是合法的（直接停在半血，不演那一下）。
+  // 18. 翻滾光束（橫放光束砲）—— 一具沿路徑硬推的模型，穿透式地掃過整條線。
+  //     20-03 約束與勝利之劍（A0D5）是 exemplar；59-04 陽電子砲 / 08-03 龍鬥氣砲
+  //     咒文 / 09-04 龜派氣功是同一個形狀（owner 2026-08-23 點名的四支經典）。
+  //
+  // ⭐ 這個家族存在的**第二個**理由，比「可以用它做一支新技能」更要緊：
+  //    `content/ability-templates/tpl-beam-roll.json` 同時是
+  //    `spawnModelFx.preset` 的**共用表**（第〇·四守則），而
+  //    `editorCapabilities.test.ts` 明文要求「被出貨內容真的引用的家族必須展開
+  //    得出來」—— 一份對外契約上不存在的家族，外部編輯器看不到它，
+  //    照著做的內容上線就是死的。⇒ 引用它就要能展開它，⛔ 不可以只放一張表。
+  //
+  // ⚠️ `castType: "ground"` 而不是 `"skillshot"`：這一族的四支出貨技能全部是
+  //    ground（59-04 / 20-03 是 `"ground"`，另外兩支是投射物 + 這道光束的疊加），
+  //    而 `path:"toTarget"` 需要一個落點才瞄得到。
+  "beam-roll": (t, p) => {
+    const path = str(t, p, "path");
+    if (path !== "forward" && path !== "toTarget" && path !== "orbit" && path !== "radial") {
+      throw new ExpandError(`template ${t.id}: param "path"="${path}" 不是合法的路徑`);
+    }
+    return {
+      castType: "ground",
+      targetsEnemies: true,
+      ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+      effects: [
+        {
+          kind: "spawnModelFx",
+          shape: "single",
+          modelKey: docRef(t, p, "modelKey"),
+          path,
+          speed: num(t, p, "speed"),
+          distance: num(t, p, "distance"),
+          ...(has(t, p, "spinDegPerSec") ? { spinDegPerSec: num(t, p, "spinDegPerSec") } : {}),
+          ...(has(t, p, "scale") ? { scale: num(t, p, "scale") } : {}),
+          // ⭐「沿路掃到人」才是翻滾光束與一發直線傷害的差別 —— 傷害走**級距**
+          //    （damageTier），⛔ 這裡不算出數字（第〇·四守則）。
+          onTouch: [
+            damageEffect(damageType(t, p, "damageType"), {
+              damageTier: str(t, p, "touchDamageTier"),
+            } as unknown as Scaling),
+          ],
+          touchRadius: num(t, p, "touchRadius"),
+          ...(has(t, p, "touchSide")
+            ? { touchSide: str(t, p, "touchSide") as "enemies" | "allies" }
+            : {}),
+        },
+      ],
+    };
+  },
+
   "mark-stacks": (t, p) => {
     const lethalOn = str(t, p, "lethalMode") === "save";
     let lethal: MarkLethalRule | undefined;

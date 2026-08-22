@@ -101,13 +101,28 @@ export function berserkDropsOrders(world: SimWorld, id: EntityId): boolean {
  *     自動選的目標**留著**:那本來就是系統自己挑的,重挑只會讓它每 tick 換
  *     一次目標(索敵有 leash / swap 遲滯,重置等於把遲滯關掉)。
  *
- * ⚠️ 不寫 `moveTarget`。追擊迴圈這一 tick 稍後就會依 `reachTo` 算出該停在哪,
- * 這裡先寫一個位置只會被覆蓋,而且會讓「停在攻擊距離內」的遲滯短路。
+ * ⚠️ 不寫 `moveTarget` 的**位置**。追擊迴圈這一 tick 稍後就會依 `reachTo` 算出
+ * 該停在哪,這裡先寫一個位置只會被覆蓋,而且會讓「停在攻擊距離內」的遲滯短路。
+ *
+ * ⭐ 但要**清掉**它(GH#574,2026-08-23 實測)。owner 的話是「請你**測試確定真的
+ * 會暴走 不能控制**」—— 而在這一行之前,答案是「會暴走,⛔ 但沒有真的不能控制」:
+ *
+ *   · `nav.order = null` 只丟掉**還沒被採納**的指令;
+ *   · 玩家暴走**前**點的那個路點已經住進 `nav.moveTarget`,而移動系統讀的是它。
+ *   ⇒ 實測(初號機 + 一個反方向的敵人,30 tick):`order` 全程是 `null`、
+ *     `attackTarget` 是 `null`,而身體**一路走到玩家點的座標然後停下**。
+ *     旗標亮著、狀態列寫著【暴走】、屬性全部到位 —— 而它在執行玩家的最後一道命令。
+ *     那是七種失敗形態⑦(掃屬性代替掃行為)的樣子,也是為什麼守衛要讀**座標**。
+ *
+ * ⛔ 這一行**不是**指派(它寫的是 `null`,⛔ 不是一個位置),所以上面那段「不要先
+ * 寫一個會被覆蓋的位置」的理由完全成立 —— 兩者說的是同一件事:方向由追擊迴圈決定,
+ * ⛔ 不由玩家十秒前的滑鼠決定。追擊迴圈這一 tick 稍後就會把它填回去。
  */
 export function berserkSeek(world: SimWorld, id: EntityId): void {
   const nav = world.nav.get(id);
   if (nav === undefined) return;
   nav.order = null;
+  nav.moveTarget = null;
   if (nav.attackTarget !== null && !nav.attackTargetAuto) {
     nav.attackTarget = null;
   }

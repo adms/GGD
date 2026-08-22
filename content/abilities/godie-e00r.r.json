@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "59-04 野戰型陽電子砲",
   "provenance": "owner-spec",
-  "description": "[主動][指向][範圍][真傷]\n{{cd}}秒冷卻，吟唱3秒\n消耗MP{{mp}}\n施法距離：{{range}}\n\n「站著不要動，我...我要射了」\n對[前方][直線]敵人造成{{dmg}}點[真實傷害]。",
+  "description": "[主動][指向][範圍][真傷]\n{{cd}}秒冷卻，吟唱3秒\n消耗MP{{mp}}\n施法距離：{{range}}\n\n「站著不要動，我...我要射了」\n對[前方][直線]敵人造成{{dmg}}點[真實傷害]，並額外造成目標[最大生命]10%的[真實傷害]。",
   "slot": "R",
   "castType": "ground",
   "maxRank": 3,
@@ -30,7 +30,24 @@
       "width": 2.2,
       "aim": "target",
       "fromCaster": true,
-      "includeOrigin": true
+      "includeOrigin": true,
+      "resourcePct": {
+        "subject": "target",
+        "resource": "health",
+        "basis": "max",
+        "perRank": [
+          0.1,
+          0.1,
+          0.1
+        ]
+      }
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-beam-roll",
+      "path": "toTarget",
+      "distance": 8.25
     },
     {
       "kind": "spawnVfx",

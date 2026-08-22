@@ -74,6 +74,7 @@ import {
   templateExpansionFailureSummary,
   type TemplateExpansionFailure,
 } from "./templates/failures";
+import { resolveModelFxPreset } from "./modelFxPreset";
 
 class ContentRegistry<V extends { id: string }> {
   private map = new Map<string, V>();
@@ -286,7 +287,15 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
       resolveCooldownTier(
         resolveDamageTier(
           resolveDisplacementTier(
-            resolveRangeTier(resolveRadiusTier(d as never, aoeTiers) as never, rangeTiers) as never,
+            resolveRangeTier(
+              // ⭐【橫放光束砲】特效模板（owner 2026-08-23）—— `spawnModelFx.preset`
+              // 在**最內層**解開：模板補的是演出幾何（modelKey/path/speed/distance/
+              // spin/scale/touch*），⛔ 沒有一格是級距的輸入，所以它與外面五層
+              // 順序無關；擺在最內層只是讓下游看到的永遠是**補完**的節點。
+              // 表住 `content/ability-templates/tpl-beam-roll.json`（第〇·四守則）。
+              resolveRadiusTier(resolveModelFxPreset(d, templates) as never, aoeTiers) as never,
+              rangeTiers,
+            ) as never,
             displacementTiers,
           ),
           damageTiers,

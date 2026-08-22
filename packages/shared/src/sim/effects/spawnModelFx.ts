@@ -140,6 +140,20 @@ export const spawnModelFxEffect: EffectKindSpec<"spawnModelFx"> = {
     const ct = world.transform.get(ctx.caster);
     if (ct === undefined) return; // 施法者已離場：沒有起點可言
     const origin: Vec2 = { x: ct.pos.x, z: ct.pos.z };
+    // ⭐【特效模板】三格身分欄位（`modelKey` / `path` / `speed`）在型別上是 `?`，
+    //    因為引用 `preset` 的文件在磁碟上沒有它們 —— `content/modelFxPreset.ts`
+    //    在**註冊時**補齊，而沒有 `preset` 的節點由 `zSpawnModelFx` 的 refine
+    //    在**載入時**擋下。⇒ 走到這裡還是 undefined 只有一種可能：那兩道閘之間
+    //    出現了第三條路（例如有人繞過註冊表直接餵 def）。
+    // ⛔ 靜靜退場的話，畫面上與「這支技能就是沒有光束」一模一樣（失敗形態②），
+    //    所以這裡 fail-loud：一次施放一行，而它指名是哪一格缺的。
+    if (e.speed === undefined || e.modelKey === undefined || e.path === undefined) {
+      console.error(
+        `[spawnModelFx] 節點缺 ${e.speed === undefined ? "speed" : e.modelKey === undefined ? "modelKey" : "path"}` +
+          `（preset=${String(e.preset)}）—— 模板沒有被解析，這一發不會有任何模型。`,
+      );
+      return;
+    }
     const speed = clamp(e.speed, 0, MODEL_FX_MAX_SPEED);
     const instances = modelFxInstances(e, ctx, origin);
     if (instances.length === 0) return;

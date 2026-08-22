@@ -56,6 +56,21 @@
                 "duration": 12.0,
                 "applyTo": "self",
                 "berserk": true
+              },
+              {
+                "kind": "delayed",
+                "shape": "single",
+                "delaySec": 0.4,
+                "count": 30,
+                "intervalSec": 0.4,
+                "effects": [
+                  {
+                    "kind": "spawnVfx",
+                    "vfxId": "fx.w3x.particle.flamessmoke.p00",
+                    "at": "self"
+                  }
+                ],
+                "stopOnCasterDeath": true
               }
             ],
             "internalCooldown": 150.0,
