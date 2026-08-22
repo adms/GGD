@@ -5,7 +5,7 @@
  */
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
-import type { CastableSlot, CoreAbilitySlot, CastTarget } from "../intents";
+import type { CastableSlot, CoreAbilitySlot, CastTarget, Order } from "../intents";
 import { Abilities } from "../content/registry";
 import { runEffects } from "../effects/effectRunner";
 import { fireHooks } from "../effects/hooks";
@@ -228,14 +228,302 @@ export type CastResult =
    * be able to say "you missed and you're still recovering", which is the whole
    * feedback loop that teaches the hit-cancel rule.
    */
-  | "recovery";
+  | "recovery"
+  /**
+   * ⭐ owner 2026-08-22:「超過施法距離人物不會走過去放技能（做成後台開關）」。
+   *
+   * 目標在射程外,而 `config.cast-approach@1` 開著 ⇒ **這不是一次失敗的施放**,
+   * 是一道接近指令:身體開始走,走進射程的那一 tick `castApproachSystem` 自動
+   * 再放一次。魔力與冷卻在**那一刻**才付,這裡一格都不動。
+   *
+   * ⛔ 它刻意**不是** `"ok"`:`"ok"` 的意思是「效果跑了、成本付了」,而這裡
+   * 兩件事都還沒發生。也刻意不是 `"out-of-range"`:那個字是「這一次按鍵沒有用」,
+   * 而這一次按鍵**有**用。
+   *
+   * ⚠️ `CommandSystem` 對任何非 `"ok"` 都會發 `castRejected` —— 對這一個成員
+   * 那是**誤報**(HUD 會閃「現在無法施放」)。客戶端 `ui/castFeedback.ts` 的
+   * `CastRejectReason` 是一份**本地**聯集(刻意的),所以舊客戶端只會退回通用句,
+   * ⛔ 不會型別錯誤。要那句專屬文案 / 要 CommandSystem 改成不發,見回報的
+   * needsOthers —— 那兩個檔在這一條 lane 的柵欄外。
+   */
+  | "approaching";
+
+/**
+ * `castAbility` 的可選旗標。目前只有一格,獨立成型別是為了讓下一個「只有內部
+ * 呼叫端要的行為」不必再加第六個位置參數。
+ */
+export interface CastOptions {
+  /**
+   * 距離不足時可不可以改發**接近指令**（出貨 true）。
+   *
+   * ⛔ `castApproachSystem` 走進射程後再呼叫這一支時**一定要傳 false**:
+   * 不然那一次「還差一點點」的浮點邊界會重新武裝一次接近,而那是一個**無限
+   * 迴圈**(每 tick 重新武裝、每 tick 重新檢查)。
+   */
+  allowApproach?: boolean;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 走過去放技能 (`config.cast-approach@1`, owner 2026-08-22)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** {@link zConfigCastApproachDoc} 解析後的樣子（語意寫在那份 schema 上）。 */
+export interface CastApproachRules {
+  /** 距離不足時要不要走過去。false = 2026-08-22 之前的行為（原地拒絕）。 */
+  enabled: boolean;
+  /** 走多遠就放棄（GGD 單位，從按鍵那一格量起），同時是一道事前閘。 */
+  maxApproachDistance: number;
+  /** 途中有別人接管移動通道時要不要放棄。 */
+  cancelOnNewOrder: boolean;
+}
+
+/**
+ * 出貨值。⚠️ 它與 `content/config/cast-approach.json` **逐字相同**是一條
+ * drift 測試在守的事(第一守則的三個住處),⛔ 不是巧合。
+ */
+export const DEFAULT_CAST_APPROACH: CastApproachRules = {
+  enabled: true,
+  maxApproachDistance: 24,
+  cancelOnNewOrder: true,
+};
+
+/**
+ * 這一場比賽的接近規則。
+ *
+ * ⚠️ `world.castApproach` 這個欄位**還不存在** —— `SimWorld` 與 content loader
+ * 都在這一條 lane 的柵欄外(見回報的 needsOthers)。所以這裡讀的是一個
+ * **選擇性**欄位:主 session 接上去的那一天,這一行不必改一個字就開始讀真的
+ * 文件;在那之前每一場都拿到出貨值。
+ *
+ * ⛔ 缺格時回**出貨表**而不是空表,理由與 `autoEngageRules` 逐字相同:空表的
+ * `enabled` 是 undefined,而 `if (!rules.enabled)` 會讓整條機制靜默消失。
+ */
+export function castApproachRules(world: SimWorld): CastApproachRules {
+  return (
+    (world as SimWorld & { readonly castApproach?: CastApproachRules }).castApproach ??
+    DEFAULT_CAST_APPROACH
+  );
+}
+
+/** 一份 `config.cast-approach@1` 文件 → 規則表。缺格逐欄退回出貨值。 */
+export function castApproachRulesFromDoc(doc: unknown): CastApproachRules {
+  const d = (doc ?? {}) as Partial<CastApproachRules>;
+  return {
+    enabled: typeof d.enabled === "boolean" ? d.enabled : DEFAULT_CAST_APPROACH.enabled,
+    maxApproachDistance:
+      typeof d.maxApproachDistance === "number" && Number.isFinite(d.maxApproachDistance)
+        ? d.maxApproachDistance
+        : DEFAULT_CAST_APPROACH.maxApproachDistance,
+    cancelOnNewOrder:
+      typeof d.cancelOnNewOrder === "boolean"
+        ? d.cancelOnNewOrder
+        : DEFAULT_CAST_APPROACH.cancelOnNewOrder,
+  };
+}
+
+/** 一次還沒放出去的施法：走到射程內就放。 */
+interface CastApproach {
+  slot: CastableSlot;
+  targetId: EntityId;
+  /** 按鍵那一格的施法者座標 —— `maxApproachDistance` 從這裡量起。 */
+  from: { x: number; z: number };
+  /**
+   * 我們寫進 `nav.moveTarget` 的**那一個物件**。
+   *
+   * ⭐ 它是一枚**身分權杖**,不只是一個座標:`OrderSystem` 每次套用一條新指令
+   * (玩家的走位、追擊、「卡住就接敵」)都會寫一個**新的**物件進去。所以
+   * `nav.moveTarget !== ours` 就是「移動通道被別人接管了」——
+   * ⛔ 不必去比對座標值(目標會動,值本來就每 tick 都不一樣)。
+   */
+  token: { x: number; z: number };
+  /** 同上，`nav.order` 的那一枚。 */
+  orderToken: Order;
+}
+
+/**
+ * 每一個世界自己的待辦接近。
+ *
+ * ⚠️ **它應該住在 `SimWorld` 上**(和 `walkStall` / `autoEngaging` /
+ * `suspendedOrder` 同一排),⛔ 這裡是 lane 柵欄的產物 —— `SimWorld.ts` 在
+ * 柵欄外。主 session 接線時請把它搬過去(見回報的 needsOthers)。
+ *
+ * 在那之前它是安全的:key 是世界本身(WeakMap,世界被回收就一起走),而下面
+ * 每一條路徑都會在施法者/目標消失時自己清掉,所以它不會單調長大。
+ * 客戶端的預測影子(`LocalPrediction`)從不跑 `commandSystem`,所以它的那一格
+ * 永遠是空的 ⇒ `castApproachSystem` 對它是嚴格 no-op。
+ */
+const CAST_APPROACHES = new WeakMap<SimWorld, Map<EntityId, CastApproach>>();
+
+function approachesOf(world: SimWorld): Map<EntityId, CastApproach> {
+  let m = CAST_APPROACHES.get(world);
+  if (!m) {
+    m = new Map<EntityId, CastApproach>();
+    CAST_APPROACHES.set(world, m);
+  }
+  return m;
+}
+
+/** 這個單位現在有沒有在「走過去放技能」（測試與 HUD 用）。 */
+export function pendingCastApproach(
+  world: SimWorld,
+  id: EntityId,
+): { slot: CastableSlot; targetId: EntityId } | undefined {
+  const p = CAST_APPROACHES.get(world)?.get(id);
+  return p ? { slot: p.slot, targetId: p.targetId } : undefined;
+}
+
+/**
+ * 把移動通道還回去 —— 但**只有在它還是我們的**時候。
+ *
+ * ⛔ 別人已經接管的時候一個字都不能碰:那一條走位是玩家剛下的,清掉它就是
+ * 「按了一個放不到的技能,結果連走都不走了」。
+ */
+function releaseApproachChannel(world: SimWorld, id: EntityId, p: CastApproach): void {
+  const nav = world.nav.get(id);
+  if (!nav) return;
+  if (nav.moveTarget === p.token) nav.moveTarget = null;
+  if (nav.order === p.orderToken) nav.order = null;
+}
+
+/**
+ * 武裝一次接近。回 false = 這一次按鍵仍然是 `"out-of-range"`（舊行為）。
+ *
+ * ⭐ **事前閘**:走不到的距離在按下去的當下就回絕,⛔ 不會先跑
+ * `maxApproachDistance` 再無聲停住 —— 那種「跑到一半自己停下來」比一個沒反應
+ * 的按鈕更難懂,而且它會把玩家送進敵方隊伍中間。
+ */
+function armCastApproach(
+  world: SimWorld,
+  caster: EntityId,
+  slot: CastableSlot,
+  targetId: EntityId,
+  t: { pos: { x: number; z: number } },
+  tgt: { pos: { x: number; z: number } },
+  range: number,
+): boolean {
+  const rules = castApproachRules(world);
+  if (!rules.enabled) return false;
+  const nav = world.nav.get(caster);
+  if (!nav) return false; // 沒有移動通道的東西(塔/花/投射物)走不過去
+  const reachable = range + rules.maxApproachDistance;
+  if (distSq(t.pos, tgt.pos) > reachable * reachable) return false;
+  const token = { x: tgt.pos.x, z: tgt.pos.z };
+  const orderToken: Order = { kind: "move", point: token };
+  // ⭐ `nav.order` 也要寫,⛔ 不是只寫 `moveTarget`:`OrderSystem` 的追擊迴圈
+  // 靠 `nav.order?.kind === "move" && moveTarget !== null` 決定要不要讓路
+  // (#274 的走位權)。少了這一行,一個已經自動索敵的英雄會在下一 tick 就被
+  // 追擊把 `moveTarget` 改寫回攻擊距離,而接近永遠到不了比攻擊距離短的射程。
+  nav.order = orderToken;
+  nav.moveTarget = token;
+  approachesOf(world).set(caster, {
+    slot,
+    targetId,
+    from: { x: t.pos.x, z: t.pos.z },
+    token,
+    orderToken,
+  });
+  return true;
+}
+
+/**
+ * 推進每一次待辦的接近 —— **走進射程就放**。
+ *
+ * 由 `MovementSystem` 在身體積分完的那一刻呼叫(⇒ 讀到的是這一 tick 的**新**
+ * 座標)。排在 movement 之前的話,「到了沒」問的是上一 tick 的位置,每一次接近
+ * 都會晚一個 tick 施放,而畫面上完全看不出來。
+ *
+ * 決定性:按 entity id 排序走訪(⛔ 不吃 Map 的插入序,`sim/purity` 的規矩)。
+ */
+export function castApproachSystem(world: SimWorld): void {
+  const pending = CAST_APPROACHES.get(world);
+  if (!pending || pending.size === 0) return; // 影子世界與 99% 的 tick 走這一行
+  const rules = castApproachRules(world);
+  const ids = [...pending.keys()].sort((a, b) => a - b);
+  for (const id of ids) {
+    const p = pending.get(id);
+    if (!p) continue;
+    const t = world.transform.get(id);
+    const hp = world.health.get(id);
+    const nav = world.nav.get(id);
+    // 施法者不見了/死了 ⇒ 丟掉。⛔ 不去還移動通道:身體都沒了。
+    if (!t || !nav || !hp?.alive) {
+      pending.delete(id);
+      continue;
+    }
+    const tgt = world.transform.get(p.targetId);
+    const tgtHp = world.health.get(p.targetId);
+    // 目標死了 / 消失 / 換了區域 ⇒ 放棄,並把移動通道還回去(否則角色會一路
+    // 走向一具已經不存在的屍體)。
+    if (!tgt || !tgtHp?.alive || tgt.zone !== t.zone) {
+      releaseApproachChannel(world, id, p);
+      pending.delete(id);
+      continue;
+    }
+    // 移動通道被別人接管了(玩家的新指令 / 追擊 / 卡住就接敵)。
+    // ⭐ `cancelOnNewOrder` 出貨 true = 交還方向盤,與 `respectLiveSteering`
+    // 同一個哲學。false 的那一邊**重新宣告**自己的目的地。
+    if (nav.moveTarget !== p.token) {
+      if (rules.cancelOnNewOrder) {
+        pending.delete(id); // ⛔ 不碰 nav:那條走位已經是別人的了
+        continue;
+      }
+    }
+    // 走太遠了 ⇒ 放棄。量的是「從按鍵那一格走了多遠」,⛔ 不是「離目標多遠」——
+    // owner 的字面意思是「走多遠就放棄」。
+    const max = rules.maxApproachDistance;
+    if (distSq(t.pos, p.from) > max * max) {
+      releaseApproachChannel(world, id, p);
+      pending.delete(id);
+      continue;
+    }
+    // 這一格技能還在不在(被重置/換形態/沒學了)?
+    const ab = world.abilities.get(id);
+    const inst = ab ? abilityInstanceFor(ab, p.slot) : undefined;
+    if (!inst || inst.rank <= 0) {
+      releaseApproachChannel(world, id, p);
+      pending.delete(id);
+      continue;
+    }
+    // ⭐ 射程走的是**同一個** `resolveAbilityRange` seam —— 抄一份距離比較在
+    // 這裡,就是讓「接近停下來」與「castAbility 放行」有兩個答案,而它們遲早
+    // 會差一個 ε:角色停在射程邊緣,每 tick 被拒絕一次,永遠放不出來。
+    const range = resolveAbilityRange(world, Abilities.get(inst.abilityId).range);
+    if (distSq(t.pos, tgt.pos) <= range * range) {
+      // 先還移動通道再施放:施放本身可能會寫 nav(位移類技能),順序反了會把
+      // 它剛寫好的衝刺目的地清掉。
+      releaseApproachChannel(world, id, p);
+      pending.delete(id);
+      const res = castAbility(
+        world,
+        id,
+        p.slot,
+        { type: "entity", entityId: p.targetId },
+        { allowApproach: false }, // ⛔ 見 CastOptions:再武裝一次就是無限迴圈
+      );
+      // 走到了才發現魔力被花掉/被沉默了 —— 那一次按鍵**現在**才收到答案,
+      // 而它欠玩家一個理由(`CommandSystem` 對即時失敗做的是同一件事)。
+      if (res !== "ok") world.emit("castRejected", { entity: id, slot: p.slot, reason: res });
+      continue;
+    }
+    // 還在路上:每 tick 重新指向目標(它會跑)。⭐ 換一個**新物件**,權杖跟著換 ——
+    // 這樣「別人接管」與「我們自己重指」永遠分得開。
+    const token = { x: tgt.pos.x, z: tgt.pos.z };
+    const orderToken: Order = { kind: "move", point: token };
+    nav.order = orderToken;
+    nav.moveTarget = token;
+    p.token = token;
+    p.orderToken = orderToken;
+  }
+}
 
 export function castAbility(
   world: SimWorld,
   caster: EntityId,
   slot: CastableSlot,
   target: CastTarget,
+  opts: CastOptions = {},
 ): CastResult {
+  const allowApproach = opts.allowApproach !== false;
   const ab = world.abilities.get(caster);
   const t = world.transform.get(caster);
   const hp = world.health.get(caster);
@@ -350,7 +638,18 @@ export function castAbility(
       }
       // combat-env `abilityRange` (task #136) shrinks the effective cast range
       const range = resolveAbilityRange(world, def.range);
-      if (distSq(t.pos, tgt.pos) > range * range) return "out-of-range";
+      if (distSq(t.pos, tgt.pos) > range * range) {
+        // ⭐ owner 2026-08-22:「超過施法距離人物不會走過去放技能（做成後台開關）」
+        // 距離不足**不是拒絕**,是一道接近指令(見 armCastApproach)。到不了 /
+        // 開關關著 → 才是舊行為的 `"out-of-range"`。
+        //
+        // ⚠️ 位置是刻意的:**在付出任何成本之前**,和其他每一道閘同一段。
+        // 接近期間魔力一點都不扣、冷卻一格都不轉 —— 成本在真的施放的那一 tick
+        // 才付,由 castApproachSystem 再走一次這整條驗證階梯。
+        return allowApproach && armCastApproach(world, caster, slot, target.entityId, t, tgt, range)
+          ? "approaching"
+          : "out-of-range";
+      }
       targets = [target.entityId];
       point = { x: tgt.pos.x, z: tgt.pos.z };
       direction = normalize(sub(tgt.pos, t.pos));

@@ -33,6 +33,9 @@ import { facingLockDir } from "../facingLock";
 import { movementHold } from "../movementHold";
 import { mobProfile } from "../mobs";
 import { isCarried } from "../carry";
+// 走過去放技能 (`config.cast-approach@1`)。⛔ 單向邊:`abilities/abilitySystem.ts`
+// 不 import 這個檔,所以不會成環。
+import { castApproachSystem } from "../abilities/abilitySystem";
 
 /** Fallback move speed (units/sec) for entities without a stats component. */
 const BASE_MOVE_SPEED = 6;
@@ -426,6 +429,19 @@ export function movementSystem(world: SimWorld): void {
     if (flightStaysInBoundary(world, id)) clampToBoundary(body, zone);
     t.pos = body.pos;
   }
+
+  // ⭐ 走過去放技能 (`config.cast-approach@1`, owner 2026-08-22:「超過施法距離
+  //    人物不會走過去放技能（做成後台開關）」)。
+  //
+  //    ⚠️ 位置是硬約束,而且**必須是這裡**:身體這一 tick 的最終座標(推出牆、
+  //    分離、邊界夾)剛剛才寫完。往前搬一格,「到射程了沒」問的就是上一 tick 的
+  //    位置 —— 每一次接近都晚一個 tick 施放,而畫面上完全看不出來。
+  //
+  //    ⛔ 它刻意**不是** `SimWorld.step` 的一個新槽位:接近的每一步都是移動,
+  //    而「走到了就放」是那一步的**終止條件**;拆成兩個槽位就多一個會漂走的
+  //    順序約束。沒有待辦接近時是嚴格 early return(客戶端的預測影子永遠走它),
+  //    所以每一份既有錄影逐位元不變。
+  castApproachSystem(world);
 }
 
 /**
