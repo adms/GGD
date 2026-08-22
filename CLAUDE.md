@@ -1098,6 +1098,25 @@ hosted 頁面**可以累積成歷史紀錄**，同一份計畫改版時重發同
   ⛔ **pathspec 保護不了它** —— `git commit --amend -- <逐檔列名>` 仍然改的是別人的 HEAD。
   ⇒ 要修剪就**再 commit 一次**，⛔ 不要改寫歷史。
 
+  ⭐ **併行時 commit 的唯一正解**（2026-08-22 踩了四次才寫下來）：
+
+  ```bash
+  # ⛔ 全程不 stage —— 連 `git add` 都不要
+  printf '%s\n' "$MSG" > /private/tmp/msg.txt
+  git commit -F /private/tmp/msg.txt -- <逐檔列名>
+  ```
+
+  ⚠️ **為什麼連 `git add` 都不行**：索引是**全域共用**的。
+  `git add` 與 `git commit` 之間哪怕只有幾十秒，別的 lane 的 `git commit`
+  就會把你 stage 的檔一起掃走 —— 程式不會遺失，**遺失的是票號與突變紀錄**。
+  ⭐ owner 那邊的另一個 session 把它講得最準：
+  **「pathspec 規則只擋得住我把別人的東西送上車，⛔ 擋不住別人把我的送上車。」**
+  ⇒ `git commit -- <pathspec>` 一步到位就沒有那個視窗。
+
+  ⚠️ 連帶：下一輪看到 `no changes added to commit` **不要浪費時間去查** ——
+  多半是別人已經把你的檔送上車了。⭐ 直接驗 **HEAD 的檔案內容**，
+  對了就把推理改貼到 issue 留言（⛔ 不要嘗試改寫歷史去「討回」那個 commit）。
+
 ---
 
 ## 🚀 部署協定（owner 2026-07-25 立，六步，缺一不可）
