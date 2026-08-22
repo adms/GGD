@@ -55,7 +55,7 @@ import { useEffect, useRef } from "react";
 import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
 import { isPassiveOnly } from "@ggd/shared/sim/abilities/abilityPassives";
 import type { AbilityId, ChampionId } from "@ggd/shared/ids";
-import type { ChampionAbilitySlot, CoreAbilitySlot } from "@ggd/shared/sim/intents";
+import { INNATE_SLOT, type ChampionAbilitySlot, type CoreAbilitySlot } from "@ggd/shared/sim/intents";
 import { useHud } from "../../net/RoomStore";
 import { frameBus } from "../../frameBus";
 import { hudActions } from "../actions";
@@ -67,9 +67,9 @@ import { prefersReducedMotion } from "../buttonSfx";
 import { exSlotView } from "../exSlot";
 import { cooldownView } from "../cooldownView";
 import {
-  abilityReadyFrameStyle,
   abilityTileCursor,
-  isAbilityTileReady,
+  AbilityTileFrame,
+  seatToggleOn,
   READY_RGB_ACTIVE,
   READY_RGB_EX,
   READY_RGB_PASSIVE,
@@ -453,12 +453,18 @@ export function AbilityBar(): React.JSX.Element | null {
                   surface wears (ui/components/CooldownChrome). Only an active
                   innate can ever be on cooldown. */}
               <CooldownChrome cd={innateCd} fontSize={m.s(20)} />
-              {/* ⭐ 就緒框 —— 被動永遠沒有（castableInnate=false 直接擋掉）。 */}
-              {isAbilityTileReady({
-                pressable: castableInnate,
-                offCooldown: !innateCd.onCd,
-                manaOk: localMana >= (innate.manaCost ?? 0),
-              }) && <div style={abilityReadyFrameStyle(READY_RGB_PASSIVE)} />}
+              {/* ⭐ 三態框：開啟中 / 就緒 / 什麼都不畫（ui/abilityReadyFrame）。
+                  被動永遠不亮就緒框（castableInnate=false 直接擋掉），但它**可以**
+                  是開著的 —— 70-00 紮根就掛在天生技這一格上。 */}
+              <AbilityTileFrame
+                rgb={READY_RGB_PASSIVE}
+                state={{
+                  pressable: castableInnate,
+                  offCooldown: !innateCd.onCd,
+                  manaOk: localMana >= (innate.manaCost ?? 0),
+                  toggleOn: seatToggleOn(seat, INNATE_SLOT),
+                }}
+              />
               {/* channel fill — index 5, matching CastTracker.SLOT_INDEX. Only
                   mounted for a castable innate: a tile that cannot cast must
                   never carry a cast surface that could half-paint. */}
@@ -561,14 +567,18 @@ export function AbilityBar(): React.JSX.Element | null {
               />
               {/* cooldown chrome — radial wipe + legible number + ready bloom */}
               <CooldownChrome cd={cd} fontSize={m.s(20)} />
-              {/* ⭐ 就緒框。⚠️ `learned` 一定要傳：沒點的技能冷卻是 0、魔力也「夠」，
+              {/* ⭐ 三態框。⚠️ `learned` 一定要傳：沒點的技能冷卻是 0、魔力也「夠」，
                   漏了它整排未學技能會亮著框說「可以放」。 */}
-              {isAbilityTileReady({
-                pressable: !passive,
-                offCooldown: !cd.onCd,
-                manaOk: localMana >= manaMeta,
-                learned,
-              }) && <div style={abilityReadyFrameStyle(READY_RGB_ACTIVE)} />}
+              <AbilityTileFrame
+                rgb={READY_RGB_ACTIVE}
+                state={{
+                  pressable: !passive,
+                  offCooldown: !cd.onCd,
+                  manaOk: localMana >= manaMeta,
+                  learned,
+                  toggleOn: seatToggleOn(seat, slot),
+                }}
+              />
               {/* cast-fill overlay (imperative; grows while this slot casts) */}
               <div
                 data-cast-slot={i}
@@ -675,12 +685,16 @@ export function AbilityBar(): React.JSX.Element | null {
               <TileName label={stripAbilityNumber(ex.name)} />
               {/* cooldown chrome — radial wipe + legible number + ready bloom */}
               <CooldownChrome cd={cd} fontSize={m.s(20)} />
-              {/* ⭐ 就緒框（EX 金） */}
-              {isAbilityTileReady({
-                pressable: !exPassive,
-                offCooldown: !cd.onCd,
-                manaOk: localMana >= (ex.manaCost ?? 0),
-              }) && <div style={abilityReadyFrameStyle(READY_RGB_EX)} />}
+              {/* ⭐ 三態框（EX 金） */}
+              <AbilityTileFrame
+                rgb={READY_RGB_EX}
+                state={{
+                  pressable: !exPassive,
+                  offCooldown: !cd.onCd,
+                  manaOk: localMana >= (ex.manaCost ?? 0),
+                  toggleOn: seatToggleOn(seat, "EX"),
+                }}
+              />
               <div
                 data-cast-slot={4}
                 style={{

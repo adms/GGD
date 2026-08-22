@@ -13,7 +13,7 @@ import { HUD_STAMP_BAND } from "./hud/hudLayout";
 import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
 import { isPassiveOnly } from "@ggd/shared/sim/abilities/abilityPassives";
 import type { AbilityId, ChampionId } from "@ggd/shared/ids";
-import type { CoreAbilitySlot } from "@ggd/shared/sim/intents";
+import { INNATE_SLOT, type CoreAbilitySlot } from "@ggd/shared/sim/intents";
 import {
   activeTouchController,
   touchFrame,
@@ -28,8 +28,8 @@ import { CooldownChrome } from "./components/CooldownChrome";
 import { displayFinal, useDisplayEnv } from "./displayFinal";
 import { innateKindLabel, passiveSlotView, PASSIVE_ACCENT, PASSIVE_SLOT_LABEL } from "./passiveSlot";
 import {
-  abilityReadyFrameStyle,
-  isAbilityTileReady,
+  AbilityTileFrame,
+  seatToggleOn,
   READY_RGB_ACTIVE,
   READY_RGB_EX,
   READY_RGB_PASSIVE,
@@ -390,13 +390,17 @@ export function TouchControls(): React.JSX.Element | null {
               </div>
               {/* cooldown chrome — the shared radial wipe + number + ready bloom */}
               <CooldownChrome cd={cd} fontSize={m.s(20)} />
-              {/* ⭐ 就緒框（owner 2026-08-13）—— 被動的 pressable 是 false ⇒ 永遠不亮 */}
-              {isAbilityTileReady({
-                pressable: !passive,
-                offCooldown: !cd.onCd,
-                manaOk: localMana >= (ability.manaCost[Math.max(0, rank - 1)] ?? 0),
-                learned,
-              }) && <div style={abilityReadyFrameStyle(READY_RGB_ACTIVE)} />}
+              {/* ⭐ 三態框 —— 被動的 pressable 是 false ⇒ 永遠不亮就緒框 */}
+              <AbilityTileFrame
+                rgb={READY_RGB_ACTIVE}
+                state={{
+                  pressable: !passive,
+                  offCooldown: !cd.onCd,
+                  manaOk: localMana >= (ability.manaCost[Math.max(0, rank - 1)] ?? 0),
+                  learned,
+                  toggleOn: seatToggleOn(seat, slot),
+                }}
+              />
             </div>
             {seat.unspentPoints > 0 && rank < ability.maxRank && (
               <SfxButton
@@ -487,12 +491,16 @@ export function TouchControls(): React.JSX.Element | null {
                 and NO NUMBER at all — the phone could see that the EX was down
                 but never how long for. Same component as every other tile. */}
             <CooldownChrome cd={cd} fontSize={m.s(20)} />
-            {/* ⭐ 就緒框（owner 2026-08-13）—— 被動的 pressable 是 false ⇒ 永遠不亮 */}
-            {isAbilityTileReady({
-              pressable: !exPassive,
-              offCooldown: !cd.onCd,
-              manaOk: localMana >= (ex.manaCost ?? 0),
-            }) && <div style={abilityReadyFrameStyle(READY_RGB_EX)} />}
+            {/* ⭐ 三態框 —— 被動的 pressable 是 false ⇒ 永遠不亮就緒框 */}
+            <AbilityTileFrame
+              rgb={READY_RGB_EX}
+              state={{
+                pressable: !exPassive,
+                offCooldown: !cd.onCd,
+                manaOk: localMana >= (ex.manaCost ?? 0),
+                toggleOn: seatToggleOn(seat, "EX"),
+              }}
+            />
           </div>
         );
       })()}
@@ -581,12 +589,16 @@ export function TouchControls(): React.JSX.Element | null {
                 its whole 40 s. Before #219 this tile showed the dark rect and
                 NO NUMBER; it now speaks the same language as every other. */}
             <CooldownChrome cd={cd} fontSize={m.s(20)} />
-            {/* ⭐ 就緒框（owner 2026-08-13）—— 被動的 pressable 是 false ⇒ 永遠不亮 */}
-            {isAbilityTileReady({
-              pressable: castable,
-              offCooldown: !cd.onCd,
-              manaOk: localMana >= (innate.manaCost ?? 0),
-            }) && <div style={abilityReadyFrameStyle(READY_RGB_PASSIVE)} />}
+            {/* ⭐ 三態框 —— 純被動不亮就緒框，但它**可以**是開著的（70-00 紮根） */}
+            <AbilityTileFrame
+              rgb={READY_RGB_PASSIVE}
+              state={{
+                pressable: castable,
+                offCooldown: !cd.onCd,
+                manaOk: localMana >= (innate.manaCost ?? 0),
+                toggleOn: seatToggleOn(seat, INNATE_SLOT),
+              }}
+            />
           </div>
         );
       })()}

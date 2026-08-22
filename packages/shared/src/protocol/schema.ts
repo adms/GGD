@@ -358,6 +358,40 @@ export class SeatState extends Schema {
    * !human → 天生 bot。
    */
   declare human: boolean;
+  /**
+   * ⭐【開關型技能現在開著沒有】—— 六格各一顆 bit（GH#546）。
+   *
+   * owner 2026-08-22:「**風王結界這種開關型按鈕 圖示跟特效要明顯看出是開還是關
+   * 狀態**（w3x會有特殊攻擊特效跟隨手部、**圖示也會有流轉作為打開中顯示**）」。
+   *
+   * ⛔ **在這一格存在之前，「開著」這件事根本不在線上。** `isToggleOn` 只活在
+   * `sim/abilities/toggle.ts`（伺服器記憶體裡的 `AbilitiesComp.toggles`），而
+   * `net/eventFanout.ts` 只送 `toggleEnter`/`toggleExit` 兩則**邊緣事件** ——
+   * 它自己的註解就寫著為什麼那不夠：「a toggle is STATE, not a moment…a client
+   * that only learns the EDGE is wrong for every late join, reconnect and
+   * spectator switch」。⇒ 這是**狀態複製**，⛔ 不是把事件再開一條線。
+   *
+   * ── 為什麼是 `SeatState` 的一格 uint8，⛔ 不是 `ENTITY_FLAG` 的六顆 bit ──
+   *
+   * ① **它是逐技能的**：六個槽位各自開關，所以一顆 bit 不夠。而
+   *    `ENTITY_FLAG_FREE_BITS` 只剩 11 格 —— 一次拿走 6 格（超過一半）去換一件
+   *    **只有自己那六顆按鈕會讀**的事，是把全域最稀缺的資源花在最局部的用途上。
+   * ② **它是逐座位的，不是逐實體的**：`EntityState.flags` 每一隻殭屍、每一顆
+   *    投射物都揹著它；切換態只對**有技能列的那幾個座位**有意義。這一格與
+   *    {@link cooldowns} / {@link statusIds} 同一種資料（「自己身上的」），
+   *    所以住在同一個地方。
+   * ③ **它換算得回來**：bit i = `CASTABLE_SLOTS[i]`（Q W E R EX PASSIVE），
+   *    與 {@link cooldowns} 的索引、`data-cast-slot`、`CastTracker.SLOT_INDEX`
+   *    是**同一套編號**。⛔ 不要為它發明第二套順序 —— 那正是 AbilityBar 檔頭
+   *    警告過的「螢幕順序 ≠ 線路順序」被人「順手整理」的形狀。
+   *
+   * uint8 裝得下六格還剩兩格。⛔ 不要因為「還有空位」就往裡面塞別的意思：
+   * 讀端是 {@link toggleMaskHas}，它只認槽位索引。
+   *
+   * 0 = 沒有任何技能開著，所以**舊的／還沒投影的快照讀成「全部關著」**，
+   * 也就是這一格出現之前畫面上唯一畫得出來的那個樣子。
+   */
+  declare toggleMask: number;
 
   constructor() {
     super();
@@ -401,6 +435,7 @@ export class SeatState extends Schema {
     this.itemRandom = new ArraySchema<boolean>();
     this.rating = 0;
     this.human = false;
+    this.toggleMask = 0;
   }
 }
 defineTypes(SeatState, {
@@ -467,7 +502,44 @@ defineTypes(SeatState, {
   // APPEND-ONLY (見上)：⭐【這個位子屬於一個人】GH#492。⛔ **最後一格**。
   // 理由寫在宣告上 —— 它擋的是「真人一斷線就從名冊上整列消失」。
   human: "boolean",
+  // APPEND-ONLY (見上)：⭐【開關型技能開著沒有】GH#546。⛔ **最後一格**。
+  // 為什麼是一格 uint8 而不是六顆 ENTITY_FLAG，寫在宣告上（三個理由）。
+  // 讀端一律走 `toggleMaskHas`，⛔ 不要在任何地方手寫 `1 << i`。
+  toggleMask: "uint8",
 });
+
+/**
+ * {@link SeatState.toggleMask} 裝得下幾個槽位 —— 也就是 `CASTABLE_SLOTS.length`。
+ *
+ * ⚠️ 這裡**刻意不 import `sim/intents`**：`protocol/` 是線路層，`sim/` 是規則層，
+ * 而這個檔今天一個 GGD 內部 import 都沒有。取而代之的是一條**對帳斷言**
+ * （`apps/client/src/ui/abilityToggleWiring.test.ts` 的第一條）真的把
+ * `TOGGLE_MASK_SLOTS` 與 `CASTABLE_SLOTS.length` 比在一起 —— 有人加第七格時它會紅，
+ * ⛔ 而不是靜默地把第七格截掉（那會是一個「按了沒反應、也沒有人報錯」的技能）。
+ */
+export const TOGGLE_MASK_SLOTS = 6;
+
+/**
+ * 這個座位的第 `slotIndex` 格技能**現在開著**嗎。
+ *
+ * ⭐ 全專案唯一的解碼器（寫端 `toggleMaskWith` 是唯一的編碼器）。理由與
+ * `formIndexFromFlags` 一字不差：位元運算寫在三個地方就會有三個地方各自漂，
+ * 而漂掉的那一份**不會報錯**，只是永遠回 false —— 而「永遠關著」跟
+ * 「這個技能沒開」在畫面上逐位元一模一樣。
+ *
+ * 界外的索引回 false（而不是丟例外）：一份舊的或投影不完整的快照必須讀成
+ * 「沒有東西開著」，那是這一格出現之前畫面唯一畫得出來的狀態。
+ */
+export function toggleMaskHas(mask: number, slotIndex: number): boolean {
+  if (!Number.isInteger(slotIndex) || slotIndex < 0 || slotIndex >= TOGGLE_MASK_SLOTS) return false;
+  return ((mask ?? 0) & (1 << slotIndex)) !== 0;
+}
+
+/** 寫端（`net/snapshot.ts` 的投影）。⛔ 界外的索引原封不動回傳，不會偷偷寫進第 7 顆。 */
+export function toggleMaskWith(mask: number, slotIndex: number, on: boolean): number {
+  if (!Number.isInteger(slotIndex) || slotIndex < 0 || slotIndex >= TOGGLE_MASK_SLOTS) return mask;
+  return on ? mask | (1 << slotIndex) : mask & ~(1 << slotIndex);
+}
 
 /**
  * 一個座位最多送幾筆具名計數器（GH#304）。理由與「超過怎麼辦」寫在

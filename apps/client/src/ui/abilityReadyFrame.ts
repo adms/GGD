@@ -25,7 +25,9 @@
  *    （狀態，常駐）。少了後者，玩家要盯著數字消失才知道能按；
  *    少了前者，回到可用的那一刻沒有任何提示。
  */
-import type { CSSProperties } from "react";
+import { createElement, type CSSProperties, type ReactElement } from "react";
+import { toggleMaskHas } from "@ggd/shared/protocol/schema";
+import { CASTABLE_SLOTS, type CastableSlot } from "@ggd/shared/sim/intents";
 import { prefersReducedMotion } from "./buttonSfx";
 import {
   ensureToggleKeyframes,
@@ -162,4 +164,66 @@ export function abilityToggleFrameStyle(
 export function abilityTileFrameStyle(rgb: string, t: AbilityTileState): CSSProperties | null {
   if (t.toggleOn === true && toggleAbility().enabled) return abilityToggleFrameStyle(rgb);
   return isAbilityTileReady(t) ? abilityReadyFrameStyle(rgb) : null;
+}
+
+/**
+ * 一個座位，**看得出是誰**，外加它（可能還沒被投影的）切換遮罩。
+ *
+ * ⚠️ `seatId` 是必要的，⛔ 不是裝飾：一個**每一格都可選**的型別在 TypeScript 裡是
+ * 「weak type」，於是傳一個完全不相干的物件進來也會過（`SeatView` 今天還沒有
+ * `toggleMask` 那一格 —— 見下）。留一格必填 = 只有真的座位進得來。
+ *
+ * ⚠️ `toggleMask` 是 optional，理由與 `SeatView.attrBonus` 一字不差：**缺席就是
+ * 「沒有任何技能開著」**，而那是這條線接起來之前畫面唯一畫得出來的狀態。
+ * ⇒ 舊快照、手刻夾具、以及 `net/RoomStore` 那一行還沒接上的那段時間，全部安全降級。
+ */
+export interface AbilityTileSeat {
+  readonly seatId: number;
+  /** 線路上的 `SeatState.toggleMask`；bit i = `CASTABLE_SLOTS[i]`。 */
+  readonly toggleMask?: number;
+}
+
+/**
+ * ⭐ **四個磚家族讀「這一格開著沒有」的唯一入口。**
+ *
+ * ⛔ 呼叫端不要自己 `seat.toggleMask & (1 << i)`：位元運算寫在六個地方就會有六個
+ * 地方各自漂，而漂掉的那一份**不會報錯**，只是永遠回 false —— 「永遠關著」與
+ * 「這支技能沒有開關」在畫面上逐位元一模一樣（失敗形態②）。
+ *
+ * ⭐ 它收的是**槽位的名字**（`"Q"` / `"EX"` / `INNATE_SLOT`），⛔ 不是數字：
+ * 位元編號 = `CASTABLE_SLOTS` 的索引（Q0 W1 E2 R3 EX4 天生技5），而那張表已經
+ * 存在了。收數字的話 EX 與天生技那兩格會在四份呼叫端各自寫一次 `4` / `5` ——
+ * 而 AbilityBar 的檔頭正是在警告「螢幕順序 ≠ 線路順序」被人順手整理的形狀。
+ */
+export function seatToggleOn(seat: AbilityTileSeat, slot: CastableSlot): boolean {
+  return toggleMaskHas(seat.toggleMask ?? 0, CASTABLE_SLOTS.indexOf(slot));
+}
+
+/**
+ * ⭐ **磚上那一圈框，四個家族共用的那一個元素。**
+ *
+ * ⛔ 它取代的形狀是這個 —— 六個算繪點各自寫過一次：
+ *
+ * ```tsx
+ * {isAbilityTileReady({…}) && <div style={abilityReadyFrameStyle(RGB)} />}
+ * ```
+ *
+ * 那個形狀有一個結構性的缺陷：**「畫哪一種框」的決定不在共用的地方**。
+ * `abilityTileFrameStyle()` 在 2026-08-22 就已經寫好了三態，而六個算繪點沒有
+ * 一個呼叫它 —— 出貨路徑上唯一的呼叫者是它自己的測試（失敗形態③：可以從渲染樹
+ * 刪掉而測試全綠）。⇒ 把「決定」與「畫出來」**合成一個東西**之後，一個算繪點
+ * 想畫框就非得經過三態不可，⛔ 它沒有辦法只畫就緒框。
+ *
+ * 回 `null` = 這一格現在不畫任何框（既沒開著、也還沒就緒）。
+ *
+ * ⚠️ 定義在 `.ts` 而不是 `.tsx` 是刻意的：這個模組的其餘部分（`isAbilityTileReady`
+ * / 兩支 style）是純函式，被 node env 的守衛直接呼叫，⛔ 不該為了一個 12 行的
+ * 元素把整支拆成兩個檔。`createElement` 不需要 JSX。
+ */
+export function AbilityTileFrame(props: {
+  readonly rgb: string;
+  readonly state: AbilityTileState;
+}): ReactElement | null {
+  const style = abilityTileFrameStyle(props.rgb, props.state);
+  return style === null ? null : createElement("div", { style });
 }

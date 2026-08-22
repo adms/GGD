@@ -27,6 +27,7 @@ import type {
   ConfigVictoryFxDoc,
   ConfigAudioMixDoc,
   ConfigUiLexiconDoc,
+  ConfigToggleAbilityDoc,
   FormVisual,
   AmbientVfxBinding,
   ArenaFire,
@@ -65,6 +66,7 @@ import { applyItemCardDoc } from "../ui/components/itemCardTheme";
 // 兩個圈的顏色/濃度、或「自己 vs 來襲」那三組樣式改了,地板上永遠是出貨值
 // (第②號故障)。傳 null(檔案不存在／schema 不合)= `DEFAULT_RANGE_GUIDE`。
 import { applyRangeGuideDoc } from "../ui/rangeGuideConfig";
+import { applyToggleAbilityDoc } from "../ui/toggleAbility";
 import { applyCombatEnvDoc } from "../ui/displayFinal";
 import { applyVictoryFxDoc } from "../vfx/victoryFxPolicy";
 // GH#339 混音表 (owner 2026-08-17「其他角色的語音音量應該減少一半」)。同一條縫、
@@ -303,6 +305,15 @@ export class ContentDb {
     );
     applyStealthDoc(this.configDoc<ConfigStealthDoc>("stealth", "config.stealth@1"));
     applyRangeGuideDoc(this.configDoc<ConfigRangeGuideDoc>("range-guide", "config.range-guide@1"));
+    // GH#546 —— 開關型技能「開啟中」的圖示流轉 (owner 2026-08-22:「風王結界這種
+    // 開關型按鈕 圖示跟特效要明顯看出是開還是關狀態…圖示也會有流轉作為打開中顯示」)。
+    // ⛔ 沒有這一行，`content/config/toggle-ability.json` 就是一份沒有人讀的檔案:
+    // 後台把流轉調快、調粗、換色、甚至整個關掉，場上一格都不會變 —— 而後台重整
+    // 還讀得回自己填的值，所以它看起來完全正常（失敗形態②）。
+    // 傳 null（檔案不存在／schema 不合）= `SHIPPED_TOGGLE_ABILITY`，⛔ 不是「看不出開關」。
+    applyToggleAbilityDoc(
+      this.configDoc<ConfigToggleAbilityDoc>("toggle-ability", "config.toggle-ability@1"),
+    );
     applyDamageColorsDoc(
       this.configDoc<ConfigDamageColorsDoc>("damage-colors", "config.damage-colors@1"),
     );
