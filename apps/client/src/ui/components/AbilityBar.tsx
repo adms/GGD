@@ -52,7 +52,7 @@
  * `data-slot-key` so the loop can find the one that was pressed.
  */
 import { useEffect, useRef } from "react";
-import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
+import { Abilities, Champions, championPassive } from "@ggd/shared/sim/content/registry";
 import { isPassiveOnly } from "@ggd/shared/sim/abilities/abilityPassives";
 import type { AbilityId, ChampionId } from "@ggd/shared/ids";
 import { INNATE_SLOT, type ChampionAbilitySlot, type CoreAbilitySlot } from "@ggd/shared/sim/intents";
@@ -75,6 +75,7 @@ import {
   READY_RGB_PASSIVE,
 } from "../abilityReadyFrame";
 import { CooldownChrome } from "./CooldownChrome";
+import { AbilityConditionMark } from "./AbilityConditionMark";
 import { displayFinal, useDisplayEnv } from "../displayFinal";
 import { denyShakeOffset, sampleCastFlash } from "../castFeedback";
 import { INNATE_ACTIVE_CASTABLE } from "../castAnnounce";
@@ -417,6 +418,9 @@ export function AbilityBar(): React.JSX.Element | null {
               <IconImg fill src={iconSrc(innate.icon)} alt={innate.name} />
               {/* name ON the tile, after the icon so it isn't painted over (#152) */}
               <TileName label={innate.displayName} />
+              {/* 條件角標（GH#556）。⭐ 天生技這一格最需要它 —— 獸矛那一族有 gate 的
+                  proc 幾乎全部住在天生技上。 */}
+              <AbilityConditionMark def={championPassive(seat.championId as ChampionId)} />
               {/* 「等級1就獲得」 stated ON the tile — the owner's whole point */}
               <div
                 style={{
@@ -526,8 +530,9 @@ export function AbilityBar(): React.JSX.Element | null {
         if (manaMeta > 0) meta.push({ label: "魔力", value: `${manaMeta}` });
         // ⛔ **觸發條件刻意不放在這裡**（owner 2026-08-22，他當場否決了我把它搬進來）：
         //    「不行 他實在**太佔空間**了，**要重新設計不要再放回去**」
-        // ⇒ 那一段資訊今天**沒有算繪處**（它跟著大橫幅一起退休了）。
-        //    ⚠️ 這是一個**已知的空缺**，⛔ 不是被遺忘 —— 重新設計開在 GH 票上。
+        // ⭐ 重新設計已經落地（GH#556）：它現在是 tile 右上角的 `AbilityConditionMark`
+        //    —— 零版面成本，句子掛在角標自己的 `title` 上，⛔ 一個字都沒有回到這排
+        //    meta chips 或 Tooltip 的 body 裡。
         return (
           <div key={slot} style={{ position: "relative", width: m.tile, textAlign: "center" }}>
             <Tooltip title={ability.name} body={docDescription(ability)} meta={meta} style={{ display: "block" }}>
@@ -565,6 +570,9 @@ export function AbilityBar(): React.JSX.Element | null {
                 label={stripAbilityNumber(ability.name)}
                 color={learned ? TEXT_MAIN : TEXT_DIM}
               />
+              {/* 條件角標（GH#556）—— ⚠️ 不看 `learned`：`abilityConditionLabels`
+                  走**每一階**，而「3 級才出現的 gate」正是點下去之前要知道的事。 */}
+              <AbilityConditionMark def={ability} />
               {/* cooldown chrome — radial wipe + legible number + ready bloom */}
               <CooldownChrome cd={cd} fontSize={m.s(20)} />
               {/* ⭐ 三態框。⚠️ `learned` 一定要傳：沒點的技能冷卻是 0、魔力也「夠」，
@@ -683,6 +691,8 @@ export function AbilityBar(): React.JSX.Element | null {
               <IconImg fill src={iconSrc(ex.icon)} alt={ex.name} />
               {/* EX name ON the button, after the icon so it isn't occluded (#152) */}
               <TileName label={stripAbilityNumber(ex.name)} />
+              {/* 條件角標（GH#556）—— EX 的 gate 住在 def 上，`exSlotView` 是投影。 */}
+              <AbilityConditionMark def={exDef} />
               {/* cooldown chrome — radial wipe + legible number + ready bloom */}
               <CooldownChrome cd={cd} fontSize={m.s(20)} />
               {/* ⭐ 三態框（EX 金） */}

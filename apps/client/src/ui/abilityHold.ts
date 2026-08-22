@@ -181,7 +181,12 @@ export interface HeldAbilityInfo {
    * 目標生命 < 35%」 — DERIVED by `abilityConditionLabels` from the very same
    * `condition` objects `effects/hooks.ts` gates on, never typed into a doc's
    * prose. Empty for every skill that has no gated hook, which is almost all of
-   * them, so the panel simply renders nothing extra.
+   * them, so a consumer simply renders nothing extra.
+   *
+   * ⚠️ **2026-08-22 起這個欄位在出貨樹上沒有消費端** —— 它唯一的算繪處是那個
+   * 退休的橫幅。玩家看得到的觸發條件走的是另一條路：
+   * `components/AbilityConditionMark`（技能格右上角的角標，GH#556），它從
+   * **同一支** `abilityConditionLabels()` 推導，⛔ 不經過這裡。
    *
    * WHY IT IS ITS OWN FIELD RATHER THAN APPENDED TO `body`. The body is the
    * IMPORTED WC3 prose (role markup, cooldown literals that `rescaleAbilityProse`
