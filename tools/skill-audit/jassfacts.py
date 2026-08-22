@@ -64,6 +64,18 @@ _PERIODIC = re.compile(r"TriggerRegisterTimerEventPeriodic\s*\(\s*\w+\s*,\s*([\d
 #: 一支技能演出幾個**姿勢**（而不是只有幾拍等待）。
 _ANIM = re.compile(r"\bSetUnitAnimation\w*\s*\(")
 
+#: ⭐【移動中的模型特效】原作側的證據（#543 · #551）。
+#:
+#: 原作把「一具會飛的模型」寫成一隻 locust dummy：`CreateUnit` → 迴圈裡
+#: `SetUnitPosition` / `SetUnitX` / `SetUnitY` 一格一格推 → `RemoveUnit`。
+#: 所以「這支技能有沒有一具沿路徑移動的模型」在 JASS 裡的痕跡就是**這個計數**
+#: （已乘上迴圈圈數）。
+#:
+#: ⚠️ 它 ⛔ **不等於**「有 dummy」：單獨一次 `SetUnitPosition` 是瞬移／擊退的
+#: 落點修正，那是另一件事。判準因此是 `> 1`（見 `audit.py` 的 `move` 軸）——
+#: **一段路徑**至少要兩次移動，⛔ 一次不算。
+_MOVE = re.compile(r"\b(?:SetUnitPosition|SetUnitX|SetUnitY)\w*\s*\(")
+
 #: ⭐⭐ trigger **鏈**。這是這支工具最重要的一條線。
 #:
 #: owner 對這張票的原話是「因為有一堆**時間序 JASS + w3x 效果演出**」——
@@ -91,6 +103,8 @@ class JassGroup:
     wait_beats: int = 0
     wait_values: list[float] = field(default_factory=list)
     anim_calls: int = 0
+    #: dummy 移動段數（`SetUnitPosition`/`SetUnitX`/`SetUnitY`,已乘上迴圈圈數）
+    move_calls: int = 0
     unbounded_loop: bool = False
     #: 這個群組 `EnableTrigger` 起來的下游群組名（見 `_ENABLE` 的註解）
     enables: set[str] = field(default_factory=set)
@@ -103,10 +117,20 @@ class JassGroup:
         ⚠️ war3map.j 裡有幾個群組是**表格**而不是演出 —— 例如 `AILearning`
         逐條列出每個英雄的加點順序，於是它一個人就提到了幾百個 rawcode。
         ⛔ 讓它參與 rawcode→技能的接合，會讓**每一支**技能都認領到同一個空群組。
-        ⇒ 判準是資料推導的：**一個字都沒演出（沒特效、沒傷害、沒等待、沒動畫）
-        的群組不算演出**，⛔ 不是「把 AILearning 寫進黑名單」。
+        ⇒ 判準是資料推導的：**一個字都沒演出（沒特效、沒傷害、沒等待、沒動畫、
+        沒推動任何一具模型）的群組不算演出**，⛔ 不是「把 AILearning 寫進黑名單」。
+
+        ⚠️ `move_calls` 是 #543 補上的第五項：**把一具模型沿路徑推出去就是演出**，
+        而在此之前一個「只推模型、不發特效也不直接扣血」的群組會被整個丟掉 ——
+        於是【移動中的模型特效】那一族在原作側**完全隱形**。
         """
-        return bool(self.sfx) or self.damage_calls > 0 or self.wait_beats > 0 or self.anim_calls > 0
+        return (
+            bool(self.sfx)
+            or self.damage_calls > 0
+            or self.wait_beats > 0
+            or self.anim_calls > 0
+            or self.move_calls > 0
+        )
 
     def as_dict(self) -> dict:
         return {
@@ -118,6 +142,7 @@ class JassGroup:
             "waitBeats": self.wait_beats,
             "waitValues": self.wait_values,
             "animCalls": self.anim_calls,
+            "moveCalls": self.move_calls,
             "unboundedLoop": self.unbounded_loop,
             "enables": sorted(self.enables),
             "periodic": self.periodic,
@@ -261,6 +286,7 @@ def parse_jass(path: str) -> dict[str, JassGroup]:
                         g.sfx[st] = g.sfx.get(st, 0) + k
             g.damage_calls += len(_DAMAGE.findall(ln)) * k
             g.anim_calls += len(_ANIM.findall(ln)) * k
+            g.move_calls += len(_MOVE.findall(ln)) * k
             for tgt in _ENABLE.findall(ln):
                 if tgt != base:
                     g.enables.add(tgt)

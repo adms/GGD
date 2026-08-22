@@ -1,0 +1,70 @@
+{
+  "id": "tpl-beam-roll",
+  "schema": "template@1",
+  "name": "翻滾光束",
+  "description": "一具帶骨架的 3D 模型沿面向直線推出去，一路自轉，穿透式地掃到路上的每一個人（同一個人只掃一次）。原作是 locust dummy 單位（CreateUnit → 每 tick SetUnitPosition → RemoveUnit），所以它既不是定點特效也不是會被擋下來的投射物。設計正典範例：20-03 約束與勝利之劍的翻滾光束。⚠️ 傷害走**級距**（damageTier），⛔ 這裡不填算好的數字；速度／距離／自轉／縮放是**演出幾何**，引擎的 spawnModelFx 只收數字、沒有對應的級距表，所以它們是本模板唯一的字面值欄位。",
+  "family": "beam-roll",
+  "status": "draft",
+  "params": {
+    "modelKey": {
+      "type": "docRef",
+      "default": "imported.netherstrike"
+    },
+    "speed": {
+      "type": "number",
+      "default": 30,
+      "min": 1,
+      "max": 200
+    },
+    "distance": {
+      "type": "number",
+      "default": 14,
+      "min": 1,
+      "max": 48
+    },
+    "spinDegPerSec": {
+      "type": "number",
+      "default": 720,
+      "min": -3600,
+      "max": 3600,
+      "optional": true
+    },
+    "scale": {
+      "type": "number",
+      "default": 2.5,
+      "min": 0.1,
+      "max": 20,
+      "optional": true
+    },
+    "touchRadius": {
+      "type": "number",
+      "default": 1.5,
+      "min": 0.5,
+      "max": 12
+    },
+    "touchDamageTier": {
+      "type": "enum",
+      "values": ["極小", "小", "中", "大", "極大"],
+      "default": "小"
+    },
+    "damageType": {
+      "type": "enum",
+      "values": ["magic", "physical", "true"],
+      "default": "magic"
+    },
+    "castTimeSec": {
+      "type": "number",
+      "default": 1,
+      "min": 0,
+      "max": 5,
+      "unit": "s",
+      "optional": true
+    }
+  },
+  "requires": ["modelFx"],
+  "gapScore": 8,
+  "exemplar": {
+    "skill": "20-03 約束與勝利之劍",
+    "jass": "A0D5"
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "id": "tpl-line-blast",
+  "schema": "template@1",
+  "name": "直線衝擊波",
+  "description": "一具模型沿面向推出去，路上穿透式地掃人（第一段傷害），飛完全程後在落點炸開一個範圍（第二段傷害）。⭐ 兩段是**兩串班表**而不是一串：合成一串的話，路上已經被掃到的人會被「一人一次」的過濾器擋在爆炸外面，而那不是任何一張卡的意思。設計正典範例：04-03 龍破斬。⚠️ 兩段傷害各走自己的**級距**（damageTier）、爆炸範圍走 AoE **級距**（radiusTier），⛔ 這裡一個算好的數字都沒有。",
+  "family": "line-blast",
+  "status": "draft",
+  "params": {
+    "modelKey": {
+      "type": "docRef",
+      "default": "imported.fireblast"
+    },
+    "speed": {
+      "type": "number",
+      "default": 27.5,
+      "min": 1,
+      "max": 200
+    },
+    "distance": {
+      "type": "number",
+      "default": 12,
+      "min": 1,
+      "max": 48
+    },
+    "spinDegPerSec": {
+      "type": "number",
+      "default": 360,
+      "min": -3600,
+      "max": 3600,
+      "optional": true
+    },
+    "scale": {
+      "type": "number",
+      "default": 4.5,
+      "min": 0.1,
+      "max": 20,
+      "optional": true
+    },
+    "touchRadius": {
+      "type": "number",
+      "default": 3.67,
+      "min": 0.5,
+      "max": 12
+    },
+    "touchDamageTier": {
+      "type": "enum",
+      "values": ["極小", "小", "中", "大", "極大"],
+      "default": "大"
+    },
+    "blastRadiusTier": {
+      "type": "enum",
+      "values": ["極小", "小", "中", "大", "極大"],
+      "default": "大"
+    },
+    "blastDamageTier": {
+      "type": "enum",
+      "values": ["極小", "小", "中", "大", "極大"],
+      "default": "大"
+    },
+    "blastApRatio": {
+      "type": "number",
+      "default": 1.8,
+      "min": 0,
+      "max": 10,
+      "unit": "ratio",
+      "optional": true
+    },
+    "damageType": {
+      "type": "enum",
+      "values": ["magic", "physical", "true"],
+      "default": "magic"
+    },
+    "castTimeSec": {
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 5,
+      "unit": "s",
+      "optional": true
+    }
+  },
+  "requires": ["modelFx"],
+  "gapScore": 8,
+  "exemplar": {
+    "skill": "04-03 龍破斬",
+    "jass": "A04R"
+  }
+}

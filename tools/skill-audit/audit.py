@@ -39,6 +39,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from axes import (  # noqa: E402
     ggd_counts,
+    model_fx_nodes,
+    model_stems,
     norm_stem,
     played_stems,
     promised_hits,
@@ -50,6 +52,7 @@ from jassfacts import closure, index_by_rawcode, parse_jass  # noqa: E402
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 ABILITIES = os.path.join(ROOT, "content", "abilities")
 TEMPLATES = os.path.join(ROOT, "content", "ability-templates")
+MODELS = os.path.join(ROOT, "content", "models")
 PROVENANCE = os.path.join(ROOT, "content", "assets", "vfx", "w3x-ability-provenance.json")
 WAR3MAP = os.path.join(ROOT, "tools", "w3x-import", "out", "GoDieEX22s-src", "raw", "war3map.j")
 DOC = os.path.join(ROOT, "docs", "技能模板驗收標準.md")
@@ -86,6 +89,7 @@ def audit_all() -> list[dict]:
     """421 支 × 三軸。回傳**已排序**的列（⛔ 不依賴 dict 走訪順序）。"""
     abilities = _load_dir(ABILITIES)
     templates = _load_dir(TEMPLATES)
+    models = _load_dir(MODELS)
     with open(PROVENANCE, encoding="utf-8") as fh:
         prov = json.load(fh)
     prov_ab = prov.get("abilities") or {}
@@ -107,6 +111,7 @@ def audit_all() -> list[dict]:
         src_damage = 0
         src_beats = 0
         src_anim = 0
+        src_moves = 0
         periodic = None
         unbounded = False
         for g in chain:
@@ -115,6 +120,7 @@ def audit_all() -> list[dict]:
             src_damage += g.damage_calls
             src_beats += g.wait_beats
             src_anim += g.anim_calls
+            src_moves += g.move_calls
             unbounded = unbounded or g.unbounded_loop
             if g.periodic is not None and (periodic is None or g.periodic < periodic):
                 periodic = g.periodic
@@ -134,7 +140,10 @@ def audit_all() -> list[dict]:
         tdoc = templates.get(tref) if tref else None
         counts = ggd_counts(doc.get("effects"), tdoc, binding.get("params"))
         key = doc.get("vfxKey")
-        played = played_stems(key)
+        fx_nodes = model_fx_nodes(doc.get("effects"))
+        # ⭐ 特效軸讀**兩個**來源：定點的 `vfxKey` ∪ 移動中的模型 `modelKey`。
+        #   在 #543 之前只讀前者 ⇒ 一支真的把原作模型推出去的技能被判成「一個都沒播」。
+        played = played_stems(key) | model_stems(doc.get("effects"), models)
 
         # ---- 三軸 ----------------------------------------------------------
         missing_art = sorted(authored - played)
@@ -142,6 +151,12 @@ def audit_all() -> list[dict]:
 
         ggd_beats = counts["beats"]
         anim_gap = max(0, src_beats - ggd_beats)
+
+        # ⭐ 動畫軸的第二個讀法：原作把一具模型**沿路徑**推出去（>1 次移動 = 一段路徑,
+        #   ⛔ 一次是瞬移/擊退的落點修正）而 GGD 這一側連一具都沒有 ⇒ 整個演出缺席。
+        #   ⚠️ 它是**機制**的有無（0/1）,⛔ 不是「段數差幾段」—— 段數取決於 tick 率,
+        #   那是一個會隨引擎設定飄的數字,拿它當缺口會讓表在調 TICK_HZ 的那天全部變色。
+        move_gap = 1 if (src_moves > 1 and counts["modelSegments"] == 0) else 0
 
         promised, evidence, rejected = promised_hits(doc.get("description") or "")
         ggd_hits = counts["damageLeaves"]
@@ -164,6 +179,7 @@ def audit_all() -> list[dict]:
                     "damageCalls": src_damage,
                     "beats": src_beats,
                     "animCalls": src_anim,
+                    "dummyMoves": src_moves,
                     "periodicSec": periodic,
                     "unboundedLoop": unbounded,
                 },
@@ -172,11 +188,13 @@ def audit_all() -> list[dict]:
                     "vfxFamily": vfx_family(key),
                     "damageLeaves": ggd_hits,
                     "beats": ggd_beats,
+                    "modelFx": len(fx_nodes),
+                    "modelSegments": counts["modelSegments"],
                     "template": tref,
                     "inertParams": counts["inert"],
                 },
                 "promised": {"hits": promised, "evidence": evidence, "rejected": rejected},
-                "gaps": {"vfx": vfx_gap, "anim": anim_gap, "dmg": dmg_gap},
+                "gaps": {"vfx": vfx_gap, "anim": anim_gap, "dmg": dmg_gap, "move": move_gap},
                 "missingArt": [authored_paths.get(s, s) for s in missing_art],
             }
         )
@@ -185,10 +203,11 @@ def audit_all() -> list[dict]:
     #    三軸誰重要是 owner 的決定，⛔ 不是這支工具的。
     rows.sort(
         key=lambda r: (
-            -(r["gaps"]["dmg"] + r["gaps"]["anim"] + r["gaps"]["vfx"]),
+            -(r["gaps"]["dmg"] + r["gaps"]["anim"] + r["gaps"]["vfx"] + r["gaps"]["move"]),
             -r["gaps"]["dmg"],
             -r["gaps"]["anim"],
             -r["gaps"]["vfx"],
+            -r["gaps"]["move"],
             r["id"],
         )
     )
@@ -225,17 +244,18 @@ def _row_line(r: dict) -> str:
     g = r["gaps"]
     src, ggd = r["src"], r["ggd"]
     return (
-        f"| {r['id']} | {r['name']} | {g['dmg']} | {g['anim']} | {g['vfx']} | "
+        f"| {r['id']} | {r['name']} | {g['dmg']} | {g['anim']} | {g['vfx']} | {g['move']} | "
         f"{src['damageCalls']} | {ggd['damageLeaves']} | "
         f"{r['promised']['hits'] if r['promised']['hits'] else '—'} | "
-        f"{src['beats']} | {ggd['beats']} | {ggd['vfxFamily']} |"
+        f"{src['beats']} | {ggd['beats']} | "
+        f"{src['dummyMoves']} | {ggd['modelSegments']} | {ggd['vfxFamily']} |"
     )
 
 
 _TABLE_HEAD = (
-    "| id | 技能 | 傷害缺 | 動畫缺 | 特效缺 | JASS 扣血 | GGD 扣血 | 卡面承諾 | "
-    "JASS 拍 | GGD 拍 | 特效家族 |\n"
-    "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|"
+    "| id | 技能 | 傷害缺 | 動畫缺 | 特效缺 | 移動模型缺 | JASS 扣血 | GGD 扣血 | 卡面承諾 | "
+    "JASS 拍 | GGD 拍 | JASS 推模型 | GGD 模型段 | 特效家族 |\n"
+    "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|"
 )
 
 
@@ -273,8 +293,12 @@ def render(rows: list[dict], abilities: dict[str, dict], templates: dict[str, di
     # ---- §1 量法 --------------------------------------------------------
     A("## §1 三軸怎麼量（Codex 可以照著自檢）")
     A("")
-    A("每一軸都輸出一個**計數**，⛔ 不是分數。三個計數不相加成一個判決 ——")
+    A("每一軸都輸出一個**計數**，⛔ 不是分數。計數不相加成一個判決 ——")
     A("它們只被拿來**排序**（差最多的排前面）。誰重要是 owner 的決定。")
+    A("")
+    A("⭐ 動畫軸有**兩個讀法**：拍數（時間上分得開的節拍）與**移動中的模型**")
+    A("（原作把一具 locust dummy 沿路徑推出去）。⛔ 兩者不可互相取代 ——")
+    A("一支「不等待、只把模型推過去」的技能拍數是 0，而它的演出整段都在移動上。")
     A("")
     A("| 軸 | 原作那一側怎麼數 | GGD 那一側怎麼數 | 缺口 |")
     A("|---|---|---|---|")
@@ -283,7 +307,9 @@ def render(rows: list[dict], abilities: dict[str, dict], templates: dict[str, di
         "`{jass-literal, w3a-override, w3h-override}` 的，∪ JASS 演出鏈裡 "
         "`AddSpecialEffect*` 逐字打出來的路徑。⛔ `stock-inherited` 不算 —— "
         "provenance 合約自己寫著它「NOT intent」 | `vfxKey` 反推：`fx.w3x.<類>.<stem>` "
-        "才對得上一份原作模型；`fx.prim.*` 是**通用原型**，一份都對不上 | "
+        "才對得上一份原作模型；`fx.prim.*` 是**通用原型**，一份都對不上。"
+        "⭐ **∪ `spawnModelFx.modelKey`** —— 移動中的那具模型也是播出來的原作美術，"
+        "stem 從模型文件的 `glbPath` 檔名推導 | "
         "指名過但播不出來的 stem 數 |"
     )
     A(
@@ -294,8 +320,19 @@ def render(rows: list[dict], abilities: dict[str, dict], templates: dict[str, di
         "`max(0, JASS 拍 − GGD 拍)` |"
     )
     A(
+        "| **動畫正確性②：移動中的模型** | 演出鏈裡 `SetUnitPosition`/`SetUnitX`/"
+        "`SetUnitY` 的呼叫次數（展開 `loop`）—— 那是 locust dummy 被一格一格推出去的"
+        "痕跡。⚠️ **>1 次才算一段路徑**，一次是瞬移／擊退的落點修正 | "
+        "`spawnModelFx` 的**段數** ＝ 實例數（`radial`/`orbit` 讀 `count`，直線恆為 1）"
+        "× 沿路取樣數（`onTouch` 才有，公式與 `sim/effects/spawnModelFx.ts` 同一條） | "
+        "原作推了模型而 GGD 一具都沒有 → 1，否則 0。⚠️ 它是**機制的有無**，"
+        "⛔ 不是段數差 —— 段數跟著 tick 率飄 |"
+    )
+    A(
         "| **傷害正確性** | 演出鏈裡 `UnitDamage*` 的呼叫次數（同樣展開 `loop`） | "
-        "扣血葉數：`kind` 以 `damage` 開頭、或帶 `damageType` 的節點；`dot` 按 tick 展開 | "
+        "扣血葉數：`kind` 以 `damage` 開頭、或帶 `damageType` 的節點；`dot` 按 tick 展開。"
+        "⭐ `spawnModelFx` 的 `onTouch`/`onArrive` 底下的葉子要**乘上實例數** —— "
+        "12 具各掃一次就是 12 次，⛔ 不是 1 次 | "
         "`max(卡面承諾 − GGD, JASS − GGD, 0)` |"
     )
     A("")
@@ -362,6 +399,51 @@ def render(rows: list[dict], abilities: dict[str, dict], templates: dict[str, di
                 A(f"| `{tid}` | `{pname}` | {pspec['inert']} |")
     A("")
 
+    # ---- §2.5 移動中的模型 ----------------------------------------------
+    A("## §2.5 移動中的模型（`spawnModelFx`）—— 原作的 locust dummy")
+    A("")
+    A("owner 2026-08-22 逐字：「**w3x jass + 球體 + 蝗蟲群單位 3d model 特效**")
+    A("(ex. Saber 約束勝利之劍的翻滾光束就是)」。")
+    A("")
+    A("⭐ 三個**模板家族**把這一族拆成可填的參數（`content/ability-templates/`）：")
+    A("")
+    A("| 模板 | 演出 | 狀態 | 範本 |")
+    A("|---|---|---|---|")
+    for tid in sorted(templates):
+        t = templates[tid]
+        if "modelFx" not in (t.get("requires") or []):
+            continue
+        A(
+            f"| `{tid}` | {t.get('name')} | `{t.get('status')}` | "
+            f"{t.get('exemplar', {}).get('skill', '')}（`{t.get('exemplar', {}).get('jass', '')}`） |"
+        )
+    A("")
+    fx_rows = [r for r in rows if r["ggd"]["modelFx"] > 0]
+    A(f"**出貨內容裡已經在用它的技能：{len(fx_rows)} 支**")
+    A("")
+    A("| id | 技能 | 具數 | 段數 | 傷害葉 |")
+    A("|---|---|---:|---:|---:|")
+    for r in sorted(fx_rows, key=lambda x: x["id"]):
+        A(
+            f"| {r['id']} | {r['name']} | {r['ggd']['modelFx']} | "
+            f"{r['ggd']['modelSegments']} | {r['ggd']['damageLeaves']} |"
+        )
+    A("")
+    move_rows = [r for r in rows if r["gaps"]["move"]]
+    A(f"⚠️ **原作把模型沿路徑推出去，而 GGD 一具都沒有：{len(move_rows)} 支**（缺口最大的排前面）")
+    A("")
+    A("| id | 技能 | JASS 推模型 | 傷害缺 | 動畫缺 | 特效缺 |")
+    A("|---|---|---:|---:|---:|---:|")
+    for r in move_rows:
+        A(
+            f"| {r['id']} | {r['name']} | {r['src']['dummyMoves']} | "
+            f"{r['gaps']['dmg']} | {r['gaps']['anim']} | {r['gaps']['vfx']} |"
+        )
+    A("")
+    A("⚠️ 這張表 ⛔ **不是一張待辦清單** —— `SetUnitPosition` 也可能是瞬移或擊退的")
+    A("落點修正。它說的是「**這裡值得去看一眼原作到底演了什麼**」。")
+    A("")
+
     # ---- §3 標本 --------------------------------------------------------
     A("## §3 三支校準標本（owner 點名的那三支）")
     A("")
@@ -382,11 +464,13 @@ def render(rows: list[dict], abilities: dict[str, dict], templates: dict[str, di
         A(
             f"- **原作**：扣血 {r['src']['damageCalls']} 次　·　等待 {r['src']['beats']} 拍"
             f"　·　動畫指令 {r['src']['animCalls']} 次"
+            f"　·　推模型 {r['src']['dummyMoves']} 次"
             + (f"　·　週期驅動 {per} 秒" if per is not None else "")
             + ("　·　⚠️ 有上界不明的 `loop`" if r["src"]["unboundedLoop"] else "")
         )
         A(
             f"- **GGD**：扣血葉 {r['ggd']['damageLeaves']}　·　節拍 {r['ggd']['beats']}"
+            f"　·　移動模型 {r['ggd']['modelFx']} 具／{r['ggd']['modelSegments']} 段"
             f"　·　`vfxKey` = `{r['ggd']['vfxKey']}`（{r['ggd']['vfxFamily']}）"
             + (f"　·　模板 `{r['ggd']['template']}`" if r["ggd"]["template"] else "")
         )
@@ -395,7 +479,7 @@ def render(rows: list[dict], abilities: dict[str, dict], templates: dict[str, di
             A(f"- **卡面承諾**：{pr['hits']} 次　·　佐證：`…{pr['evidence'].strip()}…`")
         A(
             f"- **缺口**：傷害 {r['gaps']['dmg']}　·　動畫 {r['gaps']['anim']}"
-            f"　·　特效 {r['gaps']['vfx']}"
+            f"　·　特效 {r['gaps']['vfx']}　·　移動模型 {r['gaps']['move']}"
         )
         if r["missingArt"]:
             A(f"- **指名過但播不出來的模型**：{', '.join('`%s`' % s for s in r['missingArt'])}")
@@ -480,6 +564,81 @@ def render(rows: list[dict], abilities: dict[str, dict], templates: dict[str, di
 
 
 # --------------------------------------------------------------------------
+# 守衛：這把尺**真的看得見**移動中的模型嗎（#543）
+# --------------------------------------------------------------------------
+
+def selftest(rows: list[dict]) -> list[str]:
+    """⭐ 一條薄守衛，量的是**機制**，⛔ 不是數字。
+
+    ⚠️ 它跑在**出貨的 421 列量測結果**上，⛔ 不是自己捏一份夾具 ——
+    「被測的不是出貨的那個」（失敗形態⑤）正是這支工具最容易犯的錯：
+    一份手寫的 `spawnModelFx` 夾具會在出貨內容改成別的形狀之後照樣全綠。
+
+    ⛔ 這裡一個技能 id、一個門檻數字都沒有：每一條都從資料自己推導。
+    ⚠️ 每一條都是「拿掉某一行實作就會紅」的形狀 —— 見報告裡的突變紀錄。
+    """
+    bad: list[str] = []
+    models = _load_dir(MODELS)
+    abilities = _load_dir(ABILITIES)
+    fx_rows = [r for r in rows if r["ggd"]["modelFx"] > 0]
+
+    # ⓪ 反空欄位：出貨內容裡一具移動模型都沒有的話，下面三條全部是**真空真理**。
+    if not fx_rows:
+        return ["⛔ 出貨內容裡找不到任何 spawnModelFx —— 底下三條守衛全部退化成空真理"]
+
+    for r in fx_rows:
+        nodes = model_fx_nodes((abilities.get(r["id"]) or {}).get("effects"))
+
+        # ① 傷害軸：`onTouch` 的葉子要**乘上實例數**。
+        #    ⛔ 拿掉乘數 ⇒ 12 具等分只算 1 次 ⇒ 這一條紅。
+        want_inst = sum(
+            axes_instances(n) for n in nodes if n.get("onTouch") and _has_damage(n.get("onTouch"))
+        )
+        if want_inst and r["ggd"]["damageLeaves"] < want_inst:
+            bad.append(
+                f"{r['id']}：{want_inst} 具模型各掛著一片 onTouch 傷害葉，"
+                f"而傷害軸只數到 {r['ggd']['damageLeaves']} —— 實例數沒有被乘進去"
+            )
+
+        # ② 動畫軸②：有模型就一定要有段數（段數 0 = 這具模型在尺上不存在）。
+        if r["ggd"]["modelSegments"] <= 0:
+            bad.append(f"{r['id']}：有 spawnModelFx 卻量到 0 段位移")
+
+        # ③ 特效軸：`modelKey` 指的模型要能解析成一個 stem，而且要**真的**進到
+        #    「播得出來」那個集合裡 —— ⛔ 不是「解析得出來」就算數。
+        stems = model_stems((abilities.get(r["id"]) or {}).get("effects"), models)
+        if not stems:
+            keys = sorted({n.get("modelKey") for n in nodes if n.get("modelKey")})
+            bad.append(f"{r['id']}：modelKey {keys} 一個都反推不出原作 stem")
+
+    # ④ 原作那一側：JASS 真的數得到「一段路徑」（>1 次移動）。
+    #    ⛔ 正則掛掉 ⇒ 全部是 0 ⇒ 移動軸永遠 0 缺口，而它看起來完全正常。
+    if not any(r["src"]["dummyMoves"] > 1 for r in rows):
+        bad.append("⛔ 421 支裡沒有任何一支的 JASS 推過模型 —— dummy 移動的正則失效了")
+
+    return bad
+
+
+def _has_damage(branch) -> bool:
+    from axes import _is_damage_node  # noqa: PLC0415 — 只有守衛需要它
+
+    def walk(n) -> bool:
+        if isinstance(n, dict):
+            return _is_damage_node(n) or any(walk(v) for v in n.values())
+        if isinstance(n, list):
+            return any(walk(v) for v in n)
+        return False
+
+    return walk(branch)
+
+
+def axes_instances(node: dict) -> int:
+    from axes import model_fx_instances  # noqa: PLC0415
+
+    return model_fx_instances(node)
+
+
+# --------------------------------------------------------------------------
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="技能模板驗收標準：三軸逐支量尺")
@@ -487,9 +646,26 @@ def main() -> int:
     ap.add_argument("--top", type=int, default=0, help="把前 N 列缺口表印到 stdout")
     ap.add_argument("--json", metavar="OUT", help="把完整量測寫成 JSON（`-` = stdout）")
     ap.add_argument("--id", metavar="ABILITY_ID", help="只看這一支")
+    ap.add_argument(
+        "--selftest",
+        action="store_true",
+        help="只跑守衛（⛔ 不重新產生文件）。`--check` 一定會連帶跑它",
+    )
     args = ap.parse_args()
 
     rows = audit_all()
+
+    # ⭐ 守衛跑在**全部 421 列**上，所以要在 `--id` 過濾之前。
+    if args.selftest or args.check:
+        problems = selftest(rows)
+        if problems:
+            print("⛔ 移動中的模型特效：這把尺量不到它了", file=sys.stderr)
+            for p in problems:
+                print(f"   · {p}", file=sys.stderr)
+            return 1
+        if args.selftest:
+            print(f"✅ selftest 通過（{sum(1 for r in rows if r['ggd']['modelFx'])} 支帶移動模型）")
+            return 0
 
     if args.id:
         rows = [r for r in rows if r["id"] == args.id]

@@ -11,7 +11,50 @@
 from __future__ import annotations
 
 import math
+import os
 import re
+
+# --------------------------------------------------------------------------
+# 出貨常數：⛔ 這裡一個字面值都沒有（第〇·四守則）
+# --------------------------------------------------------------------------
+
+_REPO = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+
+#: `export const NAME = <數字或另一個 NAME>;` —— 只認這一種形狀。
+_TS_CONST = re.compile(r"^export const (\w+)\s*=\s*([\w./ *+-]+?)\s*;", re.M)
+
+
+def _ts_consts(rel: str) -> dict[str, float]:
+    """把一份 TS 的 `export const <名> = <數>` 讀成表，並解開一層別名。
+
+    ⚠️ 這一段的存在理由就是第〇·四守則：`TICK_HZ` / `DELAYED_MAX_COUNT` /
+    `PULL_MAX_ANCHORS` 已經各有一個住處，這支工具再抄一份就是第二個住處 ——
+    而它會在別人調整之後**安靜地**開始量錯。⛔ 抄不得。
+    """
+    with open(os.path.join(_REPO, rel), encoding="utf-8") as fh:
+        text = fh.read()
+    raw = {m.group(1): m.group(2).strip() for m in _TS_CONST.finditer(text)}
+    out: dict[str, float] = {}
+    for name, expr in raw.items():
+        try:
+            out[name] = float(expr)
+        except ValueError:
+            alias = raw.get(expr)
+            if alias is not None:
+                try:
+                    out[name] = float(alias)
+                except ValueError:
+                    pass
+    return out
+
+
+_CONSTANTS = _ts_consts("packages/shared/src/constants.ts")
+_KIND_LIMITS = _ts_consts("packages/shared/src/sim/effects/kindLimits.ts")
+
+#: 模擬器每秒走幾格 —— `onTouch` 的取樣數是用它算出來的。
+TICK_HZ = _CONSTANTS["TICK_HZ"]
+#: 一具模型的 `onTouch` 最多取樣幾次（撞到上限時步距拉大，⛔ 不丟尾巴）。
+MODEL_FX_MAX_TOUCH_SAMPLES = _KIND_LIMITS["MODEL_FX_MAX_TOUCH_SAMPLES"]
 
 # --------------------------------------------------------------------------
 # 說明文字 → 承諾的次數
@@ -115,6 +158,97 @@ def _dot_ticks(node: dict) -> int:
     return 1
 
 
+# --------------------------------------------------------------------------
+# 【移動中的模型特效】`spawnModelFx` —— 原作的 locust dummy 單位
+# --------------------------------------------------------------------------
+#
+# ⭐ 這一族在三軸上**同時**留下痕跡，而在 #543 之前這支工具三軸都看不見它：
+#
+#   · 特效軸 —— 它播的是 `modelKey` 指的那一具**模型**，⛔ 不是 `vfxKey`。
+#                只讀 `vfxKey` 會把「有播原作模型」判成「一個都沒播」。
+#   · 動畫軸 —— 原作那一側是一段 `loop → SetUnitPosition → endloop`；
+#                GGD 這一側是 `count` 具實例 × 沿路的取樣班次。
+#   · 傷害軸 —— `onTouch` 掛的傷害葉是**每一具各結算一次**。⛔ 不乘上實例數，
+#                12 道寒冰會被算成 1 次，而卡面承諾 12 次 ⇒ 一個假的缺口 10。
+#
+# ⛔ 這裡沒有任何一支技能的 id（第〇·五守則）：三個讀法全部由 `path` 決定。
+
+
+def _num(node: dict, key: str, default: float = 0.0) -> float:
+    v = node.get(key)
+    return float(v) if isinstance(v, (int, float)) else default
+
+
+def model_fx_nodes(effects) -> list[dict]:
+    """走訪整棵 effect 樹，撈出每一個 `spawnModelFx`（含巢狀）。"""
+    found: list[dict] = []
+
+    def walk(n):
+        if isinstance(n, dict):
+            if n.get("kind") == "spawnModelFx":
+                found.append(n)
+            for v in n.values():
+                walk(v)
+        elif isinstance(n, list):
+            for v in n:
+                walk(v)
+
+    walk(effects or [])
+    return found
+
+
+def model_fx_instances(node: dict) -> int:
+    """幾具模型同時被推出去。⭐ `radial` / `orbit` 讀 `count`，直線路徑永遠是 1。
+
+    ⚠️ 這一行是傷害軸的**承重**：`onTouch` 的每一片葉子都要乘上它。
+    """
+    if node.get("path") in ("radial", "orbit"):
+        c = node.get("count")
+        return int(c) if isinstance(c, (int, float)) and c >= 1 else 1
+    return 1
+
+
+def model_fx_samples(node: dict) -> int:
+    """一具模型沿路被解算幾次 —— ⭐ 與 `sim/effects/spawnModelFx.ts` **同一條公式**。
+
+    ⚠️ 沒有 `onTouch` 就沒有沿路班表（只有抵達那一發），所以是 1。
+    ⚠️ 撞到上限時取樣點數**不變**、步距拉大 —— 所以這裡是 `min`，⛔ 不是截斷。
+    """
+    if not node.get("onTouch"):
+        return 1
+    speed, travel = _num(node, "speed"), _num(node, "distance")
+    if speed <= 0 or travel <= 0:
+        return 1
+    ticks = math.ceil(travel / (speed / TICK_HZ))
+    return int(max(1, min(MODEL_FX_MAX_TOUCH_SAMPLES, ticks + 1)))
+
+
+def model_fx_segments(node: dict) -> int:
+    """這一顆 `spawnModelFx` 總共演出幾段位移 —— 拿來對 JASS 的 dummy 移動段數。"""
+    return model_fx_instances(node) * model_fx_samples(node)
+
+
+def model_stems(effects, models: dict[str, dict]) -> set[str]:
+    """`modelKey` → 它其實是哪一份原作模型（特效軸）。
+
+    ⭐ stem 從模型文件的 `glbPath` 檔名推導，⛔ 不是把 id 的前綴切掉 ——
+    `imported.<stem>` 這個命名今天成立，而一份改了 id 卻沒改檔案的模型會讓
+    切前綴的寫法安靜地對不上。
+    """
+    out: set[str] = set()
+    for n in model_fx_nodes(effects):
+        key = n.get("modelKey")
+        if not isinstance(key, str) or not key:
+            continue
+        doc = models.get(key) or {}
+        path = doc.get("glbPath")
+        stem = os.path.splitext(os.path.basename(path))[0] if isinstance(path, str) else key.split(".")[-1]
+        s = norm_stem(stem)
+        if s:
+            out.add(s)
+    return out
+
+
 def ggd_counts(effects, template_doc: dict | None, bound_params: dict | None) -> dict:
     """走訪 effects（含 `onHit` / `onLand` / `delayed` 的巢狀），數出三件事。
 
@@ -125,25 +259,35 @@ def ggd_counts(effects, template_doc: dict | None, bound_params: dict | None) ->
     """
     damage_leaves = 0
     beats = 0
+    model_segments = 0
 
-    def walk(n):
-        nonlocal damage_leaves, beats
+    def walk(n, mult: int = 1):
+        nonlocal damage_leaves, beats, model_segments
         if isinstance(n, dict):
             k = n.get("kind")
+            if k == "spawnModelFx":
+                # ⭐ 一具模型 = 一個節拍（`count` 具是**同時**推出去的,⛔ 不是排隊）,
+                #    多出來的那一維是**空間**的,它住在 `modelSegments` 那一欄。
+                inst = model_fx_instances(n)
+                model_segments += model_fx_segments(n)
+                beats += 1
+                for branch in ("onTouch", "onArrive"):
+                    walk(n.get(branch) or [], mult * inst)
+                return
             if _is_damage_node(n):
                 if k == "dot":
                     t = _dot_ticks(n)
-                    damage_leaves += t
+                    damage_leaves += t * mult
                     beats += t
                 else:
-                    damage_leaves += 1
+                    damage_leaves += mult
             if k == "delayed":
                 beats += 1
             for v in n.values():
-                walk(v)
+                walk(v, mult)
         elif isinstance(n, list):
             for v in n:
-                walk(v)
+                walk(v, mult)
 
     walk(effects or [])
 
@@ -164,7 +308,12 @@ def ggd_counts(effects, template_doc: dict | None, bound_params: dict | None) ->
             if pspec.get("type") == "scaling" and "damage" in pname.lower():
                 damage_leaves += 1
 
-    return {"damageLeaves": damage_leaves, "beats": beats, "inert": inert}
+    return {
+        "damageLeaves": damage_leaves,
+        "beats": beats,
+        "modelSegments": model_segments,
+        "inert": inert,
+    }
 
 
 # --------------------------------------------------------------------------

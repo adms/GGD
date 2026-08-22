@@ -1,0 +1,77 @@
+{
+  "id": "tpl-radial-burst",
+  "schema": "template@1",
+  "name": "圓周噴發",
+  "description": "同一具模型等分成 count 個實例，從施法者身上同時朝四面八方推出去，每一具各自穿透式地掃人。等分方向讀的是引擎共用的單位旋轉常數表，⛔ 沒有第二份三角函式。設計正典範例：42-04 世界終結的十二道寒冰。⚠️ 傷害走**級距**（damageTier），⛔ 這裡不填算好的數字。⚠️ count 是**傷害次數的乘數**：12 具各掃一次 = 卡面承諾的 12 次，⛔ 不是 1 次。",
+  "family": "radial-burst",
+  "status": "draft",
+  "params": {
+    "modelKey": {
+      "type": "docRef",
+      "default": "imported.frostnova"
+    },
+    "count": {
+      "type": "number",
+      "default": 12,
+      "min": 2,
+      "max": 12,
+      "unit": "count"
+    },
+    "speed": {
+      "type": "number",
+      "default": 6,
+      "min": 1,
+      "max": 200
+    },
+    "distance": {
+      "type": "number",
+      "default": 4.5,
+      "min": 1,
+      "max": 48
+    },
+    "spinDegPerSec": {
+      "type": "number",
+      "default": 180,
+      "min": -3600,
+      "max": 3600,
+      "optional": true
+    },
+    "scale": {
+      "type": "number",
+      "default": 3,
+      "min": 0.1,
+      "max": 20,
+      "optional": true
+    },
+    "touchRadius": {
+      "type": "number",
+      "default": 2.5,
+      "min": 0.5,
+      "max": 12
+    },
+    "touchDamageTier": {
+      "type": "enum",
+      "values": ["極小", "小", "中", "大", "極大"],
+      "default": "極小"
+    },
+    "damageType": {
+      "type": "enum",
+      "values": ["magic", "physical", "true"],
+      "default": "magic"
+    },
+    "castTimeSec": {
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 5,
+      "unit": "s",
+      "optional": true
+    }
+  },
+  "requires": ["modelFx"],
+  "gapScore": 8,
+  "exemplar": {
+    "skill": "42-04 世界終結",
+    "jass": "A05D"
+  }
+}
