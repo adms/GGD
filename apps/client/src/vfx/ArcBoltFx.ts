@@ -30,14 +30,23 @@ import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { Constants } from "@babylonjs/core/Engines/constants";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { RawTexture } from "@babylonjs/core/Materials/Textures/rawTexture";
+import type { Texture } from "@babylonjs/core/Materials/Textures/texture";
+import { Engine } from "@babylonjs/core/Engines/engine";
 import {
   arcColorAt,
   arcForks,
+  arcGlowRamp,
+  arcRejitterStep,
   arcStripPaths,
+  ARC_BOLT_TUNING,
   buildArcPath,
   type ArcBoltSpec,
   type ArcEnd,
 } from "./arcBolt";
+
+/** 沿線發光貼圖的解析度（v 軸 = 弧帶寬度）。32 已經看不出階梯。 */
+const GLOW_RAMP_PX = 32;
 
 /**
  * 同時存在的弧帶上限（超過就搶最舊的那一條 —— 它已經是畫面上最暗的）。
@@ -57,11 +66,29 @@ interface Strip {
   bornMs: number;
   spec: ArcBoltSpec | null;
   active: boolean;
+  /** ⚡ 重算折線要的三樣東西 —— 兩端與種子。⛔ 端點永遠是出生時那一對。 */
+  from: ArcEnd;
+  to: ArcEnd;
+  seed: number;
+  /** 上一次重算用的是第幾步（`arcRejitterStep`）。⛔ 同一步不重算。 */
+  step: number;
 }
 
 export class ArcBoltFx {
   private readonly strips: Strip[] = [];
   private strikeCount = 0;
+  /**
+   * ⚡ **沿線發光貼圖，整個池子共用一份。**
+   *
+   * 一條 1×N 的 RGBA 直條（`arcGlowRamp`）：中央白熱、兩緣的 alpha 掉到 0。
+   * ⭐ 共用是刻意的 —— 貼圖描述的是「一道電弧的**橫截面**長什麼樣」，
+   * 那是這一族視覺的性質，⛔ 不是逐弧在變的東西（逐弧在變的是顏色與亮度，
+   * 那兩個住在**材質**上，而材質確實是每條 strip 一份）。
+   *
+   * ⚠️ `RawTexture` ⛔ 不是 `DynamicTexture`：後者要一個 2D canvas，而
+   * headless（NullEngine）沒有（同 `render/views/voxelSkinTexture.ts` 的理由）。
+   */
+  private glowTex: RawTexture | null = null;
 
   constructor(
     private readonly scene: Scene,
@@ -92,7 +119,7 @@ export class ArcBoltFx {
   strike(from: ArcEnd, to: ArcEnd, spec: ArcBoltSpec, nowMs: number, seed?: number): number {
     const s = seed ?? ++this.strikeCount;
     const points = buildArcPath(from, to, spec, s);
-    let drawn = this.draw(points, spec, nowMs) ? 1 : 0;
+    let drawn = this.draw(from, to, spec, nowMs, s) ? 1 : 0;
     for (const fork of arcForks(points, spec, s)) {
       // ⭐ 一岔 = 另一段弧,同一個單元。分岔比主幹細、更短命(半條命),
       // 所以它讀起來是「主幹的餘波」而不是第二條主幹。
@@ -102,16 +129,45 @@ export class ArcBoltFx {
         lifeMs: spec.lifeMs * 0.6,
         forks: 0, // ⛔ 分岔不再分岔 —— 否則是一棵沒有上界的樹
       };
-      const fp = buildArcPath(fork.from, fork.to, thin, s + 1);
-      if (this.draw(fp, thin, nowMs)) drawn++;
+      if (this.draw(fork.from, fork.to, thin, nowMs, s + 1)) drawn++;
     }
     return drawn;
   }
 
-  /** 一條折線 → 一條在場上發光的弧帶。 */
-  private draw(points: readonly [number, number, number][], spec: ArcBoltSpec, nowMs: number): boolean {
+  /** A → B → 一條在場上發光的弧帶（折線在這裡長出來）。 */
+  private draw(
+    from: ArcEnd,
+    to: ArcEnd,
+    spec: ArcBoltSpec,
+    nowMs: number,
+    seed: number,
+  ): boolean {
     const strip = this.take(nowMs);
     if (!strip) return false;
+    strip.from = { x: from.x, y: from.y, z: from.z };
+    strip.to = { x: to.x, y: to.y, z: to.z };
+    strip.seed = seed;
+    strip.spec = spec;
+    strip.bornMs = nowMs;
+    strip.step = 0;
+    strip.active = true;
+    this.reshape(strip, 0);
+    this.paint(strip, 0);
+    strip.mesh!.setEnabled(true);
+    return true;
+  }
+
+  /**
+   * ⚡ 用 `seed + step` 重算整條折線並就地更新網格。
+   *
+   * ⭐ **兩端不動**：`buildArcPath` 的端點是精確的（`taper` 在 i=0/n 歸零），
+   * 所以重算改的只有中段的抖動 —— 弧仍然釘在施法者與目標身上，
+   * ⛔ 不會因為「在抖」而脫靶。這正是 `#571` 驗收條件的兩半。
+   */
+  private reshape(strip: Strip, step: number): void {
+    const spec = strip.spec;
+    if (!spec) return;
+    const points = buildArcPath(strip.from, strip.to, spec, strip.seed + step);
     const n = points.length;
     this.ensureMesh(strip, n);
     const { left, right } = arcStripPaths(points, spec.halfWidth);
@@ -123,12 +179,7 @@ export class ArcBoltFx {
     }
     const mesh = strip.mesh!;
     CreateRibbon(mesh.name, { pathArray: [strip.left, strip.right], instance: mesh });
-    strip.spec = spec;
-    strip.bornMs = nowMs;
-    strip.active = true;
-    this.paint(strip, 0);
-    mesh.setEnabled(true);
-    return true;
+    strip.step = step;
   }
 
   /** 空的弧帶：先找閒置的，再長到上限，再搶最舊的。 */
@@ -160,7 +211,52 @@ export class ArcBoltFx {
     // `ALPHA_ADD` = (SRC_ALPHA, ONE),所以 `mat.alpha` 就是亮度旋鈕。
     mat.alphaMode = Constants.ALPHA_ADD;
     mat.alpha = 0;
-    return { mesh: null, mat, left: [], right: [], bornMs: -Infinity, spec: null, active: false };
+    // ⚡ 沿線發光貼圖(owner 2026-08-23「演算法**以及特效貼圖**」)。
+    // ⭐ 兩個插槽都要:`emissiveTexture` 給白熱核心的 RGB,`opacityTexture` 給
+    // 兩緣的柔邊 —— 加法混合只有 alpha 那一路縮得動亮度,少了後者邊緣仍然是硬的。
+    const glow = this.ensureGlowTexture();
+    if (glow) {
+      mat.emissiveTexture = glow as unknown as Texture;
+      mat.opacityTexture = glow as unknown as Texture;
+    }
+    return {
+      mesh: null,
+      mat,
+      left: [],
+      right: [],
+      bornMs: -Infinity,
+      spec: null,
+      active: false,
+      from: { x: 0, y: 0, z: 0 },
+      to: { x: 0, y: 0, z: 0 },
+      seed: 0,
+      step: 0,
+    };
+  }
+
+  /**
+   * 共用的沿線發光貼圖 —— 第一條 strip 建立時長出來，之後每一條都指同一份。
+   *
+   * ⚠️ `Engine.TEXTUREFORMAT_RGBA` + `TEXTURETYPE_UNSIGNED_INT`(= byte) 是
+   * `RawTexture` 的既定組合(`render/views/voxelSkin.ts` 用同一組)。
+   * 寬度 1、高度 `GLOW_RAMP_PX`:ribbon 的 v 軸橫跨弧帶寬度，u 軸沿著弧走 ——
+   * 所以「橫截面的漸層」只需要一個像素寬。
+   */
+  private ensureGlowTexture(): RawTexture | null {
+    if (this.glowTex) return this.glowTex;
+    const spec = ARC_BOLT_TUNING.glowCoreT;
+    this.glowTex = new RawTexture(
+      arcGlowRamp(GLOW_RAMP_PX, spec),
+      1,
+      GLOW_RAMP_PX,
+      Engine.TEXTUREFORMAT_RGBA,
+      this.scene,
+      false,
+      false,
+    );
+    this.glowTex.name = "vfx-arc-glow";
+    this.glowTex.hasAlpha = true;
+    return this.glowTex;
   }
 
   /**
@@ -201,11 +297,12 @@ export class ArcBoltFx {
     strip.mat.alpha = alpha;
   }
 
-  /** 每幀一次：推進亮度，壽命到了的還回 free-list。 */
+  /** 每幀一次：⚡ 重抖折線、推進亮度，壽命到了的還回 free-list。 */
   update(nowMs: number): void {
     for (const s of this.strips) {
       if (!s.active || !s.spec) continue;
-      const t = (nowMs - s.bornMs) / s.spec.lifeMs;
+      const ageMs = nowMs - s.bornMs;
+      const t = ageMs / s.spec.lifeMs;
       if (t >= 1) {
         s.active = false;
         s.spec = null;
@@ -213,6 +310,11 @@ export class ArcBoltFx {
         s.mesh?.setEnabled(false);
         continue;
       }
+      // ⚡ 「它真的在抖」—— 這一行拿掉,弧就變成一條畫好的亮線(#571)。
+      // 步進器是純函數且單調,所以同一步不會重算兩次,而 `rejitterHz: 0`
+      // 恆回 0 ⇒ 這一整條分支對舊行為是逐位元的 no-op。
+      const step = arcRejitterStep(s.spec, ageMs);
+      if (step !== s.step) this.reshape(s, step);
       this.paint(s, t);
     }
   }
@@ -254,5 +356,8 @@ export class ArcBoltFx {
       s.mat.dispose();
     }
     this.strips.length = 0;
+    // 共用貼圖也要還 —— 它是這個池子建的,⛔ 不是 scene 撿來的。
+    this.glowTex?.dispose();
+    this.glowTex = null;
   }
 }

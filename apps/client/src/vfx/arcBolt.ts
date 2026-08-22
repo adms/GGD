@@ -65,6 +65,25 @@ export interface ArcBoltSpec {
   forks: number;
   /** 分岔長度佔主幹全長的比例 */
   forkLength: number;
+  /**
+   * ⚡ **折線每秒重算幾次**（owner 2026-08-23 的參考圖：WoW 的鏈式閃電）。
+   *
+   * 0 = 這一段弧出生時抖一次就定住（`ArcBoltFx` 在這一格出現之前的行為）。
+   * > 0 = 活著的每一格時間窗各換一顆種子重算整條折線 ⇒ 它在**抖**，
+   * 而那正是「電」與「一條畫好的亮線」在畫面上的差別。
+   *
+   * ⛔ 不是 `Math.random`：步數由 `arcRejitterStep(age)` 算出來，種子是
+   * `seed + step`，所以同一場重播長出同一串折線（見檔頭「隨機是決定性的」）。
+   */
+  rejitterHz: number;
+  /**
+   * 弧帶**橫向**的白熱核心佔半寬的比例（0..1）—— 沿線發光貼圖的唯一參數。
+   *
+   * 這是 owner 說的「特效貼圖」那一層：一條等亮度的帶子讀起來是**膠帶**，
+   * 中間白熱、邊緣拖著輝光才讀得出「光」。⛔ 它是**空間**的漸層，
+   * 與 `stops`（**時間**的 ramp）是兩件不同的事，兩個都要才像閃電。
+   */
+  glowCoreT: number;
   /** 顏色 ramp（白熱 → 本色 → 冷卻 → 沒了） */
   stops: ColorStop[];
   blend: VfxBlendMode;
@@ -92,6 +111,11 @@ export const ARC_BOLT_TUNING = {
   holdT: 0.35,
   forks: 2,
   forkLength: 0.22,
+  // ⚡ 30 Hz —— 一段 130ms 的弧會被重算約 4 次。⛔ 不是每一幀（144Hz 螢幕上
+  // 那會變成一團噪訊而不是閃電），也⛔ 不是 0（那是一條畫好的亮線）。
+  rejitterHz: 30,
+  // 白熱核心佔半寬的 34%,其餘是外圍輝光。
+  glowCoreT: 0.34,
   blend: "additive" as VfxBlendMode,
 };
 
@@ -128,9 +152,59 @@ export function arcBoltSpec(tint: Rgb = ARC_TINTS.lightning, opts: ArcBoltOption
     holdT: clamp(opts.holdT ?? t.holdT, 0, 0.95),
     forks: Math.max(0, Math.round(opts.forks ?? t.forks * p)),
     forkLength: opts.forkLength ?? t.forkLength,
+    rejitterHz: Math.max(0, opts.rejitterHz ?? t.rejitterHz),
+    glowCoreT: clamp(opts.glowCoreT ?? t.glowCoreT, 0.02, 0.98),
     blend: opts.blend ?? t.blend,
     stops: hotToCoolStops(tint, { peakAlpha: opts.peakAlpha ?? 1, hotT: 0.12 }),
   };
+}
+
+/**
+ * ⚡ 這一刻該用**第幾顆**種子重算折線 —— 「它真的在抖」的那個時鐘。
+ *
+ * ⭐ 純函數、單調不減、⛔ 沒有 RNG：呼叫端把它加到 `seed` 上，於是同一段弧在
+ * 不同的時間窗長出不同的折線，而**同一場重播的同一毫秒永遠長出同一條**。
+ * `rejitterHz === 0` 恆回 0 ＝ 出生時抖一次就定住（這一格出現之前的行為）。
+ */
+export function arcRejitterStep(spec: ArcBoltSpec, ageMs: number): number {
+  if (!(spec.rejitterHz > 0) || !(ageMs > 0)) return 0;
+  return Math.floor((ageMs * spec.rejitterHz) / 1000);
+}
+
+/**
+ * ⚡ **沿線發光貼圖** —— 一條 `size` 像素高的 RGBA 直條，v 軸橫跨弧帶的寬度。
+ *
+ * 中心是白熱（RGB 全 1、alpha 1），往兩邊掉到 0；`coreT` 決定核心有多寬。
+ * ⭐ 回傳的是**位元組**，⛔ 不碰 Babylon —— 所以它測得起來（headless 沒有
+ * canvas，`DynamicTexture` 在那裡要 stub，`RawTexture` 不用；同
+ * `render/views/voxelSkinTexture.ts` 的立場）。
+ *
+ * ⚠️ alpha 通道是承重的那一個：材質走 `ALPHA_ADD`（`SRC_ALPHA, ONE`），
+ * 所以邊緣的柔邊**只能**從 alpha 出來，⛔ 不是把 RGB 調暗（那樣邊緣仍然是
+ * 一條硬邊，只是比較暗）。
+ */
+export function arcGlowRamp(size: number, coreT: number): Uint8Array {
+  const n = Math.max(2, Math.floor(size));
+  const core = coreT < 0.02 ? 0.02 : coreT > 0.98 ? 0.98 : coreT;
+  const out = new Uint8Array(n * 4);
+  for (let i = 0; i < n; i++) {
+    // 0 在正中央、1 在兩緣
+    const d = Math.abs((i + 0.5) / n - 0.5) * 2;
+    let a: number;
+    if (d <= core) {
+      a = 1;
+    } else {
+      const k = 1 - (d - core) / (1 - core);
+      a = k * k; // 二次衰減 = 外圍輝光,⛔ 不是線性(線性讀起來仍然是一條帶子)
+    }
+    const v = Math.round(255 * a);
+    const o = i * 4;
+    out[o] = 255;
+    out[o + 1] = 255;
+    out[o + 2] = 255;
+    out[o + 3] = v;
+  }
+  return out;
 }
 
 /** 決定性雜湊 → [-1, 1)。⛔ 不是 `Math.random`（見檔頭）。 */

@@ -1996,6 +1996,42 @@ export class VfxSystem {
         });
         break;
       }
+      // ⚡⚡ GH#571 —— 連鎖閃電那一束**真的畫出來**。
+      //
+      // owner 2026-08-23:「一堆閃電特效如**皮卡丘 飛鼠先生 雷神之槌** 等雷電特效
+      // **都沒有真的出現**」。⛔ 根因不是「沒有演算法」:`arcBolt` / `ArcBoltFx`
+      // 早就做完了(鋸齒折線 + 分岔 + 加法混合 + 決定性雜湊),而 sim 也早就
+      // `world.emit("chainLightning", { segments })` 並且過了 `eventFanout` 的白名單。
+      // ⭐ **兩半被接到兩個不同的事件名上**:客戶端唯一的入口是 `vfxArc`,
+      // 而**沒有任何東西發過 `vfxArc`** ⇒ 整族閃電逐位元組等於不存在(失敗形態②)。
+      // `eventFanout.ts` 自己的註解逐字記著這件事:「⚠️ **客戶端目前還沒有這個 case**」。
+      //
+      // CADENCE:sim 是**每一跳一則**(`chains`/`hits` 恆為 1、`segments` 恆為一段),
+      // 所以這裡不排任何時序 —— 逐跳各畫一段,間隔由 sim 的 `jumpIntervalSec` 決定。
+      // ⛔ 這裡沒有「鏈」的概念(第〇·五守則),`segments` 是一個陣列只是因為
+      // payload 保留了「一次送整段」的表達力。
+      case "chainLightning": {
+        const segs = ev.data.segments as
+          | readonly { x: number; z: number; x2: number; z2: number }[]
+          | undefined;
+        if (!segs || segs.length === 0) break;
+        // 每一跳一顆種子。⛔ 不是 `Math.random`,也⛔ 不是常數(常數 = 每一跳
+        // 長成同一條折線,讀起來是複製貼上)——tick + 跳序已經是決定性的。
+        const base = (ev.tick | 0) * 131 + ((ev.data.caster as number | undefined) ?? 0) * 17;
+        for (let i = 0; i < segs.length; i++) {
+          const s = segs[i]!;
+          this.strikeArc({ x: s.x, z: s.z }, { x: s.x2, z: s.z2 }, nowMs, {
+            tint: ARC_TINTS.lightning,
+            seed: base + i,
+          });
+          // ⭐ **兩端的爆點輝光**(owner 的參考圖第三層)。只打**落點**那一端:
+          // 一條鏈裡第 N 跳的起點就是第 N−1 跳的終點,所以每一個節點都會亮,
+          // 而整條鏈唯一沒有輝光的那個點是施法者自己 —— 那裡本來就有施法特效。
+          // ⛔ 兩端各放一顆 = 每個節點兩顆 HitSpark,而一次施放最多 320 跳。
+          this.layeredPop(s.x2, s.z2, nowMs, "light", ARC_TINTS.lightning, ARC_BODY_Y);
+        }
+        break;
+      }
       case "vfxArc": {
         const fx = ev.data.fromX as number | undefined;
         const fz = ev.data.fromZ as number | undefined;
