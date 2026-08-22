@@ -1,3 +1,5 @@
+import type { SourceGrantFields } from "../../stats/sourceGrants";
+
 /**
  * `EffectVariant` 的一格 —— 分片自 `sim/effects/effect.ts`（#467 ②）。
  * ⚠️ 對 `../effect` 的 import **一律 `import type`**：型別在編譯後整段消失，
@@ -16,7 +18,26 @@ import type { Stat } from "../../stats/statTypes";
  * that rank; the flat pair stays as the rank-1 fallback so existing docs and
  * hook-fired buffs (rank 1) are untouched.
  */
-export interface ApplyBuffVariant {
+/**
+ * ⛔⛔ **`extends SourceGrantFields`，⛔ 不是逐格手抄**（GH#608，2026-08-23）。
+ *
+ * 在此之前這個介面**手挑了 11 格裡的 2 格**（`flight` / `vision`），而下面那兩段
+ * 註解自己記錄了它會漂 ——「加一格授予時這四行要跟 `SourceGrantFields` 一起改」——
+ * 然後它漂了**兩次**：
+ *   · 2026-08-10 漏 `flight` ⇒ `authGatesWave1.test.ts` **編譯不過**，main 上 typecheck 紅
+ *   · 2026-08-23 量到又漏 **5 格**：`penetration` · `typeStreakImmunity` ·
+ *     `deathWard` · `immobile` · `primaryAttribute`
+ *
+ * ⚠️ **執行期它們是活的**（實測）：handler 兩條掛載路徑都寫 `...sourceGrants(e)`，
+ * 而那支逐格讀全部 11 格 —— TS 型別在執行期不存在。⇒ 代價**不是**玩家吃不到，
+ * 是**作者與測試在 TS 裡寫不出來**（`flight` 那次正是如此）。
+ *
+ * ⭐ `sim/content/defs.ts` 已經有三個授權面這樣做了（`AbilityPassiveRank` ·
+ * `ItemDef` · `AugmentDef`），而那裡的註解逐字寫著「下一個授予加進
+ * `SourceGrantFields` 一格，**三個授權面自動全部拿到**」。`applyBuff` 是第四個面。
+ * ⇒ 從現在起它也自動拿到，⛔ 沒有第 12 格要記得手抄。
+ */
+export interface ApplyBuffVariant extends SourceGrantFields {
   kind: "applyBuff";
   modifiers: StatModifier[];
   /**
@@ -200,27 +221,4 @@ export interface ApplyBuffVariant {
    */
   attributes?: import("../../stats/attributes").AttrGrant;
   damageTypeOverride?: import("../../combat/damageTypeOverride").DamageTypeOverride;
-  /**
-   * ⭐ 2026-08-09 (S11) —— 第五格授予：**限時飛行**。
-   *
-   * ⚠️ **這一行在 2026-08-10 之前漏了**，而上面那段註解逐字寫著「加一格授予時
-   * 這四行要跟 `SourceGrantFields` 一起改」—— 也就是那份鏡像自己記錄了它會
-   * 漂，然後它真的漂了：Zod 的 `SOURCE_GRANT_SHAPE` 有 `flight`、
-   * `sourceGrants()` 有 `flight`、`fieldAdoption` 有
-   * `field:abilities.effects[]#applyBuff.flight` 的豁免，只有這個型別鏡子沒有。
-   * 後果是 `packages/shared/src/sim/effects/authGatesWave1.test.ts` 那條「限時
-   * 飛行」的守衛**根本編譯不過**（`pnpm typecheck` 在 main 上就是紅的）。
-   */
-  flight?: import("../../stats/sourceGrants").SourceGrantFields["flight"];
-  /**
-   * ⭐ 2026-08-18 (GH#373) —— 第六格授予：**限時隱形 / 限時真視**。
-   *
-   * 53-00 空間穿梭「持續 20 秒」與 30-00 攝影機「可以看到隱形部隊」在此之前
-   * 寫不出來：`vision` 只掛得到道具（永久佩戴）與天生技 rank（rank>0 之後
-   * 永久），而這兩支是**主動**天生技。引擎那一半從 2026-07-30 就在
-   * （`sim/stealth.ts::syncVisionGrants` 掃 `StatsComp.sources`、不問 `kind`、
-   * 已經在跳過過期的 source），所以整條接線就是這一行 + `SOURCE_GRANT_SHAPE`
-   * 那一格 + `sourceGrants()` 的轉發。
-   */
-  vision?: import("../../stats/sourceGrants").SourceGrantFields["vision"];
 }
