@@ -1,0 +1,524 @@
+{
+  "models": {
+    "E00R.glb": {
+      "findings": [
+        {
+          "confidence": "confirmed",
+          "max": [
+            1.6413,
+            0.2601,
+            0.5023
+          ],
+          "min": [
+            -0.0246,
+            0.1194,
+            -0.4508
+          ],
+          "primitive": 2,
+          "signals": [
+            "gore-joint",
+            "offset-floor"
+          ],
+          "vertices": 53
+        }
+      ],
+      "primitiveCount": 3
+    },
+    "E00S.glb": {
+      "findings": [],
+      "primitiveCount": 14
+    },
+    "E00T.glb": {
+      "findings": [],
+      "primitiveCount": 5
+    },
+    "E00U.glb": {
+      "findings": [
+        {
+          "confidence": "confirmed",
+          "max": [
+            1.1292,
+            0.1679,
+            0.589
+          ],
+          "min": [
+            -0.3436,
+            0.039,
+            -0.8029
+          ],
+          "primitive": 2,
+          "signals": [
+            "gore-joint",
+            "floor-slab"
+          ],
+          "vertices": 53
+        }
+      ],
+      "primitiveCount": 3
+    },
+    "E00V.glb": {
+      "findings": [
+        {
+          "confidence": "confirmed",
+          "max": [
+            1.1123,
+            0.2168,
+            0.2754
+          ],
+          "min": [
+            -1.0028,
+            0.0605,
+            -0.9244
+          ],
+          "primitive": 2,
+          "signals": [
+            "gore-joint"
+          ],
+          "vertices": 80
+        }
+      ],
+      "primitiveCount": 3
+    },
+    "E015.glb": {
+      "findings": [],
+      "primitiveCount": 8
+    },
+    "Ecen.glb": {
+      "findings": [],
+      "primitiveCount": 14
+    },
+    "Efur.glb": {
+      "findings": [],
+      "primitiveCount": 14
+    },
+    "Ekee.glb": {
+      "findings": [
+        {
+          "confidence": "confirmed",
+          "max": [
+            0.6362,
+            0.2941,
+            0.4395
+          ],
+          "min": [
+            -1.3564,
+            0.0531,
+            -0.9902
+          ],
+          "primitive": 6,
+          "signals": [
+            "gore-joint",
+            "offset-floor"
+          ],
+          "vertices": 70
+        },
+        {
+          "confidence": "confirmed",
+          "max": [
+            1.1097,
+            0.1922,
+            0.2442
+          ],
+          "min": [
+            -0.7654,
+            0.0536,
+            -0.8195
+          ],
+          "primitive": 7,
+          "signals": [
+            "gore-joint"
+          ],
+          "vertices": 80
+        }
+      ],
+      "primitiveCount": 9
+    },
+    "H001.glb": {
+      "findings": [],
+      "primitiveCount": 8
+    },
+    "H021.glb": {
+      "findings": [
+        {
+          "confidence": "confirmed",
+          "max": [
+            0.1857,
+            0.4221,
+            0.9696
+          ],
+          "min": [
+            -1.6256,
+            -0.0626,
+            -0.905
+          ],
+          "primitive": 1,
+          "signals": [
+            "gore-joint"
+          ],
+          "vertices": 70
+        }
+      ],
+      "primitiveCount": 2
+    },
+    "H02K.glb": {
+      "findings": [],
+      "primitiveCount": 7
+    },
+    "H02N.glb": {
+      "findings": [],
+      "primitiveCount": 3
+    },
+    "H02S.glb": {
+      "findings": [],
+      "primitiveCount": 7
+    },
+    "H02Y.glb": {
+      "findings": [],
+      "primitiveCount": 5
+    },
+    "H02Z.glb": {
+      "findings": [],
+      "primitiveCount": 7
+    },
+    "Hapm.glb": {
+      "findings": [
+        {
+          "confidence": "confirmed",
+          "max": [
+            0.3842,
+            0.2157,
+            0.6842
+          ],
+          "min": [
+            -0.4755,
+            0.0226,
+            -0.3694
+          ],
+          "primitive": 2,
+          "signals": [
+            "gore-joint"
+          ],
+          "vertices": 62
+        }
+      ],
+      "primitiveCount": 3
+    },
+    "Harf.glb": {
+      "findings": [],
+      "primitiveCount": 3
+    },
+    "Hblm.glb": {
+      "findings": [
+        {
+          "confidence": "confirmed",
+          "max": [
+            0.1857,
+            0.4221,
+            0.9696
+          ],
+          "min": [
+            -1.6256,
+            -0.0626,
+            -0.905
+          ],
+          "primitive": 1,
+          "signals": [
+            "gore-joint"
+          ],
+          "vertices": 70
+        }
+      ],
+      "primitiveCount": 2
+    },
+    "Hpal.glb": {
+      "findings": [],
+      "primitiveCount": 17
+    },
+    "N00B.glb": {
+      "findings": [],
+      "primitiveCount": 10
+    },
+    "N01L.glb": {
+      "findings": [],
+      "primitiveCount": 7
+    },
+    "Nbst.glb": {
+      "findings": [],
+      "primitiveCount": 5
+    },
+    "Nman.glb": {
+      "findings": [],
+      "primitiveCount": 3
+    },
+    "O02O.glb": {
+      "findings": [
+        {
+          "confidence": "confirmed",
+          "max": [
+            0.8061,
+            0.3089,
+            0.2087
+          ],
+          "min": [
+            -0.6592,
+            0.0266,
+            -1.22
+          ],
+          "primitive": 2,
+          "signals": [
+            "gore-joint"
+          ],
+          "vertices": 144
+        }
+      ],
+      "primitiveCount": 3
+    },
+    "Obla.glb": {
+      "findings": [
+        {
+          "confidence": "confirmed",
+          "max": [
+            1.2544,
+            0.1991,
+            0.5314
+          ],
+          "min": [
+            -0.0349,
+            0.0462,
+            -0.5916
+          ],
+          "primitive": 4,
+          "signals": [
+            "gore-joint",
+            "floor-slab"
+          ],
+          "vertices": 45
+        }
+      ],
+      "primitiveCount": 5
+    },
+    "Ogld.glb": {
+      "findings": [
+        {
+          "confidence": "confirmed",
+          "max": [
+            0.5102,
+            0.2865,
+            0.9087
+          ],
+          "min": [
+            -0.6315,
+            0.03,
+            -0.4905
+          ],
+          "primitive": 2,
+          "signals": [
+            "gore-joint"
+          ],
+          "vertices": 62
+        }
+      ],
+      "primitiveCount": 3
+    },
+    "Orkn.glb": {
+      "findings": [],
+      "primitiveCount": 6
+    },
+    "Oshd.glb": {
+      "findings": [],
+      "primitiveCount": 8
+    },
+    "Othr.glb": {
+      "findings": [
+        {
+          "confidence": "confirmed",
+          "max": [
+            0.6734,
+            0.3781,
+            1.1992
+          ],
+          "min": [
+            -0.8334,
+            0.0396,
+            -0.6474
+          ],
+          "primitive": 2,
+          "signals": [
+            "gore-joint",
+            "floor-slab"
+          ],
+          "vertices": 62
+        }
+      ],
+      "primitiveCount": 4
+    },
+    "U00B.glb": {
+      "findings": [],
+      "primitiveCount": 5
+    },
+    "U00K.glb": {
+      "findings": [],
+      "primitiveCount": 4
+    },
+    "U012.glb": {
+      "findings": [],
+      "primitiveCount": 12
+    },
+    "U01F.glb": {
+      "findings": [
+        {
+          "confidence": "confirmed",
+          "max": [
+            0.6202,
+            0.3483,
+            1.1046
+          ],
+          "min": [
+            -0.7677,
+            0.0364,
+            -0.5963
+          ],
+          "primitive": 4,
+          "signals": [
+            "gore-joint"
+          ],
+          "vertices": 62
+        }
+      ],
+      "primitiveCount": 6
+    },
+    "Ubal.glb": {
+      "findings": [
+        {
+          "confidence": "confirmed",
+          "max": [
+            0.038,
+            0.1733,
+            0.4151
+          ],
+          "min": [
+            -1.2605,
+            -0.0355,
+            -0.7435
+          ],
+          "primitive": 5,
+          "signals": [
+            "gore-joint",
+            "floor-slab"
+          ],
+          "vertices": 62
+        }
+      ],
+      "primitiveCount": 6
+    },
+    "Ucrl.glb": {
+      "findings": [
+        {
+          "confidence": "confirmed",
+          "max": [
+            1.5583,
+            0.2047,
+            0.5175
+          ],
+          "min": [
+            -0.05,
+            0.0407,
+            -0.6712
+          ],
+          "primitive": 6,
+          "signals": [
+            "gore-joint",
+            "offset-floor"
+          ],
+          "vertices": 45
+        }
+      ],
+      "primitiveCount": 7
+    },
+    "Udea.glb": {
+      "findings": [],
+      "primitiveCount": 5
+    },
+    "Umal.glb": {
+      "findings": [
+        {
+          "confidence": "suspect",
+          "max": [
+            0.6516,
+            1.4396,
+            1.6622
+          ],
+          "min": [
+            0.1086,
+            -0.0097,
+            0.7866
+          ],
+          "primitive": 2,
+          "signals": [
+            "second-skeleton"
+          ],
+          "vertices": 107
+        },
+        {
+          "confidence": "confirmed",
+          "max": [
+            1.607,
+            0.2111,
+            0.5337
+          ],
+          "min": [
+            -0.0516,
+            0.042,
+            -0.6922
+          ],
+          "primitive": 4,
+          "signals": [
+            "gore-joint",
+            "floor-slab"
+          ],
+          "vertices": 49
+        }
+      ],
+      "primitiveCount": 5
+    },
+    "Usyl.glb": {
+      "findings": [
+        {
+          "confidence": "confirmed",
+          "max": [
+            1.9049,
+            0.182,
+            0.7077
+          ],
+          "min": [
+            -0.536,
+            -0.0326,
+            -0.6936
+          ],
+          "primitive": 2,
+          "signals": [
+            "gore-joint",
+            "floor-slab"
+          ],
+          "vertices": 69
+        }
+      ],
+      "primitiveCount": 3
+    },
+    "Uwar.glb": {
+      "findings": [],
+      "primitiveCount": 3
+    }
+  },
+  "note": "generated by tools/model-census/gore_geoset.py — ⛔ do not hand-edit",
+  "source": "data/blizzard-overlay/models (gitignored; task #10/#177)",
+  "thresholds": {
+    "detachGapOfHeight": 0.02,
+    "goreJointMarker": "gutz",
+    "goreWeightShare": 0.5,
+    "minVertices": 20,
+    "slabFootprintRatio": 1.5,
+    "slabThicknessOfHeight": 0.2,
+    "slabTopOfHeight": 0.35
+  }
+}

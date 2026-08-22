@@ -222,10 +222,12 @@ const fixture = JSON.parse(
   readFileSync(join(__dirname, "hiddenPrimitives.fixture.json"), "utf8"),
 ) as { models: Record<string, FixtureModel> };
 
-// ⚠️ 這份宣告的歸屬地是 content/models/_overlay-hidden-geometry.json;暫放在
-// 這裡是因為那需要 bundle.test.ts 的 KNOWN_SIDECARS 加一列(那張表刻意要求每個
-// 新 sidecar 都是被審過的新增),而那個檔不在本次範圍內。檔頭的 note 寫了全部
-// 兩步。搬家的時候只要改下面這一行路徑。
+// ⚠️ 這段註解以前寫著「暫放在這裡…搬家的時候只要改下面這一行路徑」——
+// **兩步在 v0.9.28 都做完了**（`KNOWN_SIDECARS.models` 有這一列、`overlayModelDoc`
+// 會注入），2026-08-22 GH#540 逐一查證過。⛔ 沒有「搬家」這件事待辦（第三守則）。
+//
+// ⚠️ 而這一支只問「**宣告的索引對不對**」——「有沒有一份帶血泥卻沒宣告的模型」
+// 它結構上問不到。反向那半在 `hiddenPrimitives.census.test.ts`。
 const overlayDecl = JSON.parse(
   readFileSync(join(__dirname, "../../../../../content/models/_overlay-hidden-geometry.json"), "utf8"),
 ) as { models: Record<string, { hiddenPrimitives: number[] }> };
