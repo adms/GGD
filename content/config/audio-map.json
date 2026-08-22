@@ -318,9 +318,7 @@
     },
     "abilityCast": {
       "files": [
-        "assets/audio/sfx/moongo.mp3",
-        "assets/audio/sfx/moonjump.mp3",
-        "assets/audio/sfx/nocute.mp3"
+        "assets/audio/sfx/fx/whiff.mp3"
       ],
       "gain": 0.6,
       "cooldownMs": 1200,
@@ -787,12 +785,7 @@
     },
     "kill": {
       "files": [
-        "assets/audio/sfx/pikakill.mp3",
-        "assets/audio/sfx/dorakill.mp3",
-        "assets/audio/sfx/even.mp3",
-        "assets/audio/sfx/bads.mp3",
-        "assets/audio/sfx/dogdie.mp3",
-        "assets/audio/sfx/ringnai.mp3"
+        "assets/audio/sfx/fx/chime_burst.mp3"
       ],
       "gain": 1.15,
       "cooldownMs": 900,
@@ -834,7 +827,7 @@
     },
     "champSelectConfirm": {
       "files": [
-        "assets/audio/sfx/pick.mp3"
+        "assets/audio/sfx/fx/draft-confirm.mp3"
       ],
       "gain": 1.2,
       "cooldownMs": 250,
@@ -1992,5 +1985,10 @@
       "cooldownMs": 1200,
       "maxConcurrent": 1
     }
+  },
+  "castLayerCap": {
+    "enabled": true,
+    "maxLayers": 5,
+    "whitelist": []
   }
 }

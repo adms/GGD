@@ -37,6 +37,42 @@ export const zAudioSfxEntry = z
   })
   .strict();
 
+/**
+ * ⭐ GH#568 —— 一次施法**最多疊幾層聲音**（owner 2026-08-23 的混合方案）。
+ *
+ * owner 逐字：「**設定上限**但同時也**讓我知道哪些碰到上限**，我可以**額外審查白名單**，
+ * 但**疊超過又不是白名單雖然不會砍但也不會播出來超過的音效**」。
+ *
+ * ⛔ 「不會砍」是這一格的重點：`content/vfx-families.json` 與逐支覆寫**一個位元組都不動**，
+ * 夾住只發生在**播放的那一刻**（`apps/client/src/audio/sfxLayerCap.ts`）。所以把 `enabled`
+ * 關掉、或把一支技能放進 `whitelist`，聲音**原封回來**，⛔ 不必重建任何內容。
+ *
+ * 層的順序是固定的（與 `tools/sfx-bind/usage_table.ts` 產的那張表同一份）：
+ * 施法音 → 特效發射 → 特效命中 → 特效循環 → 特效消散。超出上限的從**後面**開始不播，
+ * 所以被丟掉的永遠是最邊緣的那幾層（消散／循環），⛔ 不會是施法音本身。
+ */
+export const zAudioCastLayerCap = z
+  .object({
+    /** false = 一層都不夾（＝這一格出現之前的行為，逐位元不變）。 */
+    enabled: z.boolean(),
+    /**
+     * 一次施法最多播幾層。⚠️ 這是**同一次施法的整條生命週期**（發射／命中／循環／消散
+     * 不是同一瞬間），與那張產生的表用的是同一個數法。出貨分佈：1 層 212 支、2 層 42 支、
+     * 3 層 147 支、4 層 4 支、**5 層 15 支**。
+     *
+     * ⭐ 出貨值是 **5 ＝今天一層都不夾**（⛔ 我沒有替 owner 挑一個會當場砍掉聲音的
+     * 數字）。要真的變安靜就往下調：4 夾掉那 15 支的消散音、3 再夾掉循環音。
+     * 每一次調整都**只影響播放**，`content/vfx-families.json` ⛔ 一個位元組都不會動。
+     */
+    maxLayers: z.number().int().min(1).max(8),
+    /**
+     * ⭐ **owner 的白名單** —— 這幾支技能 id 不受上限限制（「我可以額外審查白名單」）。
+     * 值是 `ability@1.id`（例：`godie-e008.r`）。⛔ 不是英雄 id。
+     */
+    whitelist: z.array(z.string().min(1)).max(200),
+  })
+  .strict();
+
 export const zConfigAudioMapDoc = z
   .object({
     id: zId,
@@ -62,8 +98,17 @@ export const zConfigAudioMapDoc = z
     mapBgm: z.record(z.string().min(1), zAudioBgmTrack).optional(),
     /** event name -> SFX clip pool + throttling */
     sfx: z.record(z.string().min(1), zAudioSfxEntry),
+    /**
+     * ⭐ GH#568 —— 一次施法的音效層數上限（見 {@link zAudioCastLayerCap}）。
+     *
+     * ⚠️ OPTIONAL 是刻意的，理由與 `mapBgm` 那一格逐字相同：把它設成必填會讓十幾份
+     * 既有的 audio-map 夾具為了一個它們不在乎的欄位而變紅，而**只為了讓編譯器閉嘴而
+     * 改過的夾具，是沒有人重讀過的夾具**。缺這一格 = 走 `DEFAULT_CAST_LAYER_CAP`。
+     */
+    castLayerCap: zAudioCastLayerCap.optional(),
   })
   .strict();
 export type AudioBgmTrack = z.infer<typeof zAudioBgmTrack>;
 export type AudioSfxEntry = z.infer<typeof zAudioSfxEntry>;
+export type AudioCastLayerCap = z.infer<typeof zAudioCastLayerCap>;
 export type ConfigAudioMapDoc = z.infer<typeof zConfigAudioMapDoc>;

@@ -36,6 +36,13 @@ import type { EventMessage } from "@ggd/shared/protocol/messages";
 import { abilityIdOfOrigin } from "@ggd/shared/sim/combat/damage";
 import { spatialSourceFor } from "./spatialPolicy";
 import type { SpatialSource } from "./spatial";
+import {
+  DEFAULT_CAST_LAYER_CAP,
+  VFX_CUE_LAYER,
+  allowedCastLayers,
+  readCastLayerCap,
+  type CastSoundLayer,
+} from "./sfxLayerCap";
 import type { AudioMap } from "./types";
 
 /** overlay 專用資產的 URL 前綴 —— 正式站**刻意**不供應這個路徑（copyright gate）。 */
@@ -80,6 +87,8 @@ export class VfxSoundLayer {
   private map: AudioMap | null = null;
   private familyOf: (abilityId: string) => string | undefined = () => undefined;
   private readonly loops = new Map<number, ActiveLoop>();
+  /** 技能 id → 這一份設定下**准播**的層（GH#568）。每次換設定都清空。 */
+  private readonly layerMemo = new Map<string, Set<CastSoundLayer>>();
 
   /**
    * 技能 id → 它的家族原型 id。**由組合根注入**（`ContentDb` 用出貨的
@@ -88,11 +97,13 @@ export class VfxSoundLayer {
    */
   setFamilyResolver(fn: (abilityId: string) => string | undefined): void {
     this.familyOf = fn;
+    this.layerMemo.clear();
   }
 
   /** 後台那一份設定（`config.vfx-families@1`）。null = 這一層整個不出聲。 */
   setFamiliesDoc(doc: ConfigVfxFamiliesDoc | null): void {
     this.doc = doc;
+    this.layerMemo.clear();
   }
 
   /**
@@ -101,6 +112,15 @@ export class VfxSoundLayer {
    */
   setAudioMap(map: AudioMap | null): void {
     this.map = map;
+    // ⭐ GH#568 —— 層數上限**搭同一班車**（`config.audio-map@1.castLayerCap`）。
+    // ⛔ 刻意不開第二個注入點：一個「後台改了但客戶端沒收到」的旋鈕，畫面上跟
+    // 「owner 還沒改」長得一模一樣（失敗形態②）。
+    this.layerMemo.clear();
+  }
+
+  /** 現在生效的層數上限。map 沒帶這一格 = 出貨預設。 */
+  private cap(): typeof DEFAULT_CAST_LAYER_CAP {
+    return this.map?.castLayerCap ? readCastLayerCap(this.map.castLayerCap) : DEFAULT_CAST_LAYER_CAP;
   }
 
   /**
@@ -118,8 +138,19 @@ export class VfxSoundLayer {
     return !files.every((f) => typeof f === "string" && f.startsWith(OVERLAY_ASSET_PREFIX));
   }
 
-  /** 這個 build 有沒有掛 Blizzard overlay（`config/fullAssets`，由呼叫端注入）。 */
-  overlayEnabled = false;
+  /**
+   * 這個 build 有沒有掛 Blizzard overlay（`config/fullAssets`，由呼叫端注入）。
+   * ⚠️ 存取器而不是裸欄位，只為了一件事：它會改變 `serveable()` 的答案 ⇒
+   * 「哪幾層真的有聲音」也跟著變 ⇒ GH#568 的層數記憶要跟著失效。
+   */
+  get overlayEnabled(): boolean {
+    return this.overlayOn;
+  }
+  set overlayEnabled(on: boolean) {
+    this.overlayOn = on;
+    this.layerMemo.clear();
+  }
+  private overlayOn = false;
 
   /**
    * 一支技能的一個時機該播什麼，⛔ 或 null（＝這個時機刻意沒有聲音）。
@@ -129,6 +160,36 @@ export class VfxSoundLayer {
    * 開發／family build 聽得到原作那一發。⛔ 兩邊都不會是安靜。
    */
   cue(abilityId: string | undefined, which: VfxSoundCue): VfxSoundHit | null {
+    // ⭐ GH#568 —— 層數上限（owner 2026-08-23「疊超過又不是白名單⋯**也不會播出來
+    // 超過的音效**」）。⛔ 夾在**這裡**而不是在內容裡：`content/vfx-families.json`
+    // 一個位元組都沒動，所以白名單／上限一改，聲音逐位元回來。
+    if (!this.layersOf(abilityId).has(VFX_CUE_LAYER[which])) return null;
+    return this.resolveCue(abilityId, which);
+  }
+
+  /**
+   * 這支技能在**設定上**真的有東西的那幾層（⛔ 不是全部五層），已經過上限夾住。
+   * 記憶化：一次施法會問四次，而 `cue()` 每一次都要知道整條疊層長什麼樣。
+   * ⚠️ 每一個換設定的入口都 `clear()` 它 —— 一份過期的記憶會讓後台的改動看起來
+   * 「存了但沒生效」，而那個畫面跟「owner 還沒存」一模一樣。
+   */
+  private layersOf(abilityId: string | undefined): Set<CastSoundLayer> {
+    const memoKey = abilityId ?? "";
+    const memo = this.layerMemo.get(memoKey);
+    if (memo) return memo;
+    // 施法音**一定**在：`combatSfx` 的路由最後一格是 `abilityCast` 這個保證的退路，
+    // 所以一支技能可以沒有特效音,⛔ 不可以無聲施放。它排在層序第一,永遠不被夾掉。
+    const present: CastSoundLayer[] = ["施法音"];
+    for (const which of ["launch", "impact", "loop", "dissipate"] as const) {
+      if (this.resolveCue(abilityId, which)) present.push(VFX_CUE_LAYER[which]);
+    }
+    const allowed = allowedCastLayers(present, abilityId, this.cap());
+    this.layerMemo.set(memoKey, allowed);
+    return allowed;
+  }
+
+  /** 兩段解析（逐支覆寫 → 家族退路），⛔ **沒有**上限那一關。 */
+  private resolveCue(abilityId: string | undefined, which: VfxSoundCue): VfxSoundHit | null {
     const familyId = abilityId ? this.familyOf(abilityId) : undefined;
     const hit = resolveVfxSound(this.doc, familyId, abilityId, which);
     if (hit && this.serveable(hit.key)) return hit;

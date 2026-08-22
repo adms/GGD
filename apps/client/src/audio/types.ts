@@ -127,6 +127,20 @@ export interface AudioMap {
    */
   mapBgm?: Record<string, BgmTrack>;
   sfx: Record<string, SfxEntry>;
+  /**
+   * ⭐ GH#568 —— 一次施法最多疊幾層聲音（owner 2026-08-23 的混合方案）。
+   * 解讀與夾住住 `audio/sfxLayerCap.ts`；缺這一格 = `DEFAULT_CAST_LAYER_CAP`。
+   * ⚠️ OPTIONAL 的理由與 `mapBgm` 逐字相同（既有夾具不該為了一個它們不在乎的
+   * 欄位而變紅）。
+   */
+  castLayerCap?: CastLayerCapValue;
+}
+
+/** `config.audio-map@1.castLayerCap` 的執行期形狀（與 Zod 逐欄相同）。 */
+export interface CastLayerCapValue {
+  enabled: boolean;
+  maxLayers: number;
+  whitelist: string[];
 }
 
 /** The "no audio authored" map — every lookup misses and every play no-ops. */
@@ -150,5 +164,8 @@ export function audioMapFromDoc(doc: unknown): AudioMap | null {
     // must keep playing the shared combat bed rather than failing to parse.
     mapBgm: (d.mapBgm ?? {}) as Record<string, BgmTrack>,
     sfx: d.sfx as Record<string, SfxEntry>,
+    // ⭐ GH#568 —— 原封轉交，⛔ 這裡不解讀也不夾：`sfxLayerCap.readCastLayerCap`
+    // 是**唯一**的解讀點（一份被截斷的後台 override 要逐格降級，不是整份丟掉）。
+    castLayerCap: d.castLayerCap as CastLayerCapValue | undefined,
   };
 }

@@ -16,7 +16,14 @@
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { REPO, buildModel, crossCharacterRows, type Model } from "./ownership";
+import { REPO, buildModel, crossCharacterRows, isGenericCue, type Model } from "./ownership";
+import {
+  CAST_LAYER_ORDER,
+  allowedCastLayers,
+  cappedCastLayers,
+  readCastLayerCap,
+  type CastSoundLayer,
+} from "../../apps/client/src/audio/sfxLayerCap";
 
 const stamp = (): string => {
   const d = new Date();
@@ -25,6 +32,91 @@ const stamp = (): string => {
 };
 
 const clipName = (p: string): string => p.split("/").pop() ?? p;
+
+/**
+ * ⭐ owner 2026-08-23 混合方案的第二件事：「**讓我知道哪些碰到上限**」。
+ *
+ * ⛔ 這一節**不是**一行 console log —— 它是這份表的一節，因為 owner 要拿它去
+ * **審查白名單**。判斷用的層序與夾住的那一支是**同一份**
+ * （`apps/client/src/audio/sfxLayerCap.ts` 的 `CAST_LAYER_ORDER`），
+ * ⛔ 不是這裡再抄一份順序。
+ */
+function renderLayerCap(m: Model, nameOf: (cid: string) => string): string[] {
+  const L: string[] = [];
+  const raw = JSON.parse(
+    readFileSync(join(REPO, "content/config/audio-map.json"), "utf8"),
+  ) as { castLayerCap?: unknown };
+  const cap = readCastLayerCap(raw.castLayerCap);
+
+  L.push("## 🎚️ 五、碰到層數上限的技能（owner 審查白名單用）");
+  L.push("");
+  L.push("> owner 2026-08-23（逐字）：");
+  L.push("> 「音效層數：**混合 1+2**，**設定上限**但同時也**讓我知道哪些碰到上限**，");
+  L.push(">  我可以**額外審查白名單**，但**疊超過又不是白名單雖然不會砍但也不會播出來超過的音效**」");
+  L.push("");
+  L.push(
+    `出貨設定（\`content/config/audio-map.json\` 的 \`castLayerCap\`）：` +
+      `**${cap.enabled ? "啟用" : "關閉"}** · 上限 **${cap.maxLayers}** 層 · 白名單 **${cap.whitelist.length}** 支。`,
+  );
+  L.push("");
+  L.push(
+    "⭐ **設定一個位元組都沒有被砍**：`content/vfx-families.json` 與逐支覆寫原封不動，" +
+      "夾住只發生在**播放的那一刻**（`apps/client/src/audio/vfxSound.ts` 的 `cue()`）。" +
+      "⇒ 把上限調大、或把一支技能寫進 `whitelist`，那幾層聲音**逐位元回來**，⛔ 不必重建內容也⛔ 不必部署。",
+  );
+  L.push("");
+
+  // ⭐ owner 的句子分兩半，這張表也是：「**碰到**上限」（layers ≥ 上限，要他審）
+  // 與「**疊超過**」（layers > 上限 ⇒ 真的不播）。⛔ 兩者不是同一群技能。
+  const rows: { name: string; aid: string; n: number; kept: string[]; dropped: string[] }[] = [];
+  for (const [aid, stack] of m.castStack) {
+    if (stack.length < cap.maxLayers) continue;
+    const present = stack.map((x) => x.layer as CastSoundLayer);
+    const dropped = cappedCastLayers(present, aid, cap);
+    const allowed = allowedCastLayers(present, aid, cap);
+    const ab = m.abilities.find((a) => a.id === aid);
+    if (!ab) continue;
+    rows.push({
+      name: `${nameOf(ab.champion)} / ${ab.name}`,
+      aid,
+      n: stack.length,
+      kept: stack.filter((x) => allowed.has(x.layer as CastSoundLayer)).map((x) => `${x.layer}=\`${x.cue}\``),
+      dropped: stack.filter((x) => dropped.includes(x.layer as CastSoundLayer)).map((x) => `${x.layer}=\`${x.cue}\``),
+    });
+  }
+  rows.sort((a, b) => b.n - a.n || a.aid.localeCompare(b.aid));
+  const clipped = rows.filter((r) => r.dropped.length > 0);
+
+  if (rows.length === 0) {
+    L.push("✅ **這份設定下沒有一支技能碰到上限。**");
+    L.push("");
+    return L;
+  }
+
+  L.push(
+    `⇒ **${rows.length} 支**技能已經頂到 ${cap.maxLayers} 層（⭐ 這就是「碰到上限」那一份名單）；` +
+      `其中 **${clipped.length} 支**真的**超過**、因此有幾層現在不播。` +
+      (clipped.length === 0
+        ? " ⭐ 也就是說**今天一層都沒有被夾掉** —— 把上限往下調一格，下表最右欄那幾層就會安靜。"
+        : ""),
+  );
+  L.push("");
+  L.push("⭐ 要哪一支不受限，就把它的 id 貼進 `castLayerCap.whitelist`。");
+  L.push("");
+  L.push("| 技能 | 技能 id（貼進白名單用） | 層數 | ✅ 現在會播 | 🔇 上限再降一格就會安靜的（設定仍然保留） |");
+  L.push("|---|---|---:|---|---|");
+  for (const r of rows) {
+    const next = cappedCastLayers(
+      r.kept.map((_, i) => CAST_LAYER_ORDER[i]!),
+      undefined,
+      { ...cap, maxLayers: Math.max(1, cap.maxLayers - 1) },
+    );
+    const preview = r.dropped.length > 0 ? r.dropped : r.kept.slice(r.kept.length - next.length);
+    L.push(`| ${r.name} | \`${r.aid}\` | ${r.n} | ${r.kept.join(" · ")} | ${preview.join(" · ")} |`);
+  }
+  L.push("");
+  return L;
+}
 
 function render(m: Model): string {
   const L: string[] = [];
@@ -54,7 +146,15 @@ function render(m: Model): string {
   L.push("");
 
   // ── 結論 ────────────────────────────────────────────────────────────────
-  L.push("## ⭐ 一句話結論：根因是**通用退路的音效池裡混了角色專屬語音**");
+  // ⭐ 這一節的**措辭**是從量到的東西推導的，⛔ 不是寫死的一段話。
+  //    修好之後還印著「根因是通用池被污染」＝ 一份自己在說謊的報告（第三守則），
+  //    而它腐爛的時候不會有任何東西紅 —— 這份 .md 刻意沒有 `--check`。
+  const fixed = pools.length === 0;
+  L.push(
+    fixed
+      ? "## ✅ 一句話結論：三個通用退路的音效池**已經全部換成中性音效**"
+      : "## ⭐ 一句話結論：根因是**通用退路的音效池裡混了角色專屬語音**",
+  );
   L.push("");
   L.push(
     "⛔ **不是**「某一支技能的 `sfxKey` 指錯人」——" +
@@ -67,44 +167,47 @@ function render(m: Model): string {
   L.push("  abilitySfxCueForAbility(abilityId)   ← ability-sfx-cues.json 的 bindings 覆蓋層");
   L.push("?? wc3CastKey(sfxKey)                   ← 技能文件自己的 sfxKey");
   L.push("?? castElementKey(vfxKey)               ← 元素風聲（⚠️ 只認得 fire / ice / lightning）");
-  L.push('?? "abilityCast"                        ← ⭐ 通用退路 —— 問題在這一格');
+  L.push(
+    fixed
+      ? '?? "abilityCast"                        ← ⭐ 通用退路（中性音，⛔ 沒有主人）'
+      : '?? "abilityCast"                        ← ⭐ 通用退路 —— 問題在這一格',
+  );
   L.push("```");
   L.push("");
-  L.push(
-    `而 \`abilityCast\` 在 \`audio-map.json\` 裡不是一個檔，是一個 **${m.cueFiles.get("abilityCast")!.length} 個檔的隨機池**，` +
-      "而那三個檔**全部有主人**：",
-  );
-  L.push("");
-  for (const clip of m.cueFiles.get("abilityCast") ?? []) {
-    const o = m.clipOwners.get(clip);
+
+  /** 一個通用池現在長什麼樣 —— 每一個檔逐列印出它的主人（或「⛔ 無主」）。 */
+  const poolLines = (cue: string): void => {
+    const files = m.cueFiles.get(cue) ?? [];
     L.push(
-      `- \`${clipName(clip)}\` → **${(o?.champions ?? []).map(nameOf).join(" / ")}**` +
-        `（憑據：${(o?.via ?? []).join("；")}）`,
+      `\`${cue}\` 的池子有 **${files.length}** 個檔，` +
+        `其中 **${files.filter((f) => m.clipOwners.has(f)).length}** 個有主人：`,
     );
-  }
-  L.push("");
+    L.push("");
+    for (const clip of files) {
+      const o = m.clipOwners.get(clip);
+      L.push(
+        o
+          ? `- 🚨 \`${clipName(clip)}\` → **${o.champions.map(nameOf).join(" / ")}**（憑據：${o.via.join("；")}）`
+          : `- ✅ \`${clipName(clip)}\` → **無主（中性音效）**`,
+      );
+    }
+    L.push("");
+  };
+
+  poolLines("abilityCast");
   L.push(
     `⇒ ⭐ **${genericFallback.length} / ${m.abilities.length} 支技能**（${m.champions.size} 位英雄裡的絕大多數）` +
-      "沒有專屬施法音，所以每一次施法都在**隨機播蒼月潮或皮卡娘的聲音**。" +
-      "莉娜因巴斯的六支技能一支 `sfxKey` 都沒有 ⇒ owner 聽到的**逐字就是這個**" +
-      "（「皮卡皮卡」＝ `nocute` 皮卡娘、「男人喊叫聲」＝ `moongo`/`moonjump` 蒼月潮）。",
+      "沒有專屬施法音，所以**每一次施法都會走到這個退路** —— " +
+      (fixed
+        ? "而它現在是中性音，⛔ 場上沒有的角色不會再開口。" +
+          "⭐ 但**角色自己的語音仍然會講**（`skill-name.<slot>`，由施法者本人講，" +
+          "守衛 `apps/client/src/audio/castVoiceStillOwnVoice.test.ts`）——" +
+          "owner 2026-08-23：「雖然技能施展用中性音效，但施展技能時莉娜還是可以講話輔助吧，同理其他角色也是」。"
+        : "而池子裡是別位英雄的語音。莉娜因巴斯的六支技能一支 `sfxKey` 都沒有 ⇒ owner 聽到的逐字就是這個。"),
   );
   L.push("");
-  L.push("同一個形狀在擊殺音上更嚴重：");
-  L.push("");
-  const killClips = m.cueFiles.get("kill") ?? [];
-  L.push(`\`kill\`（每一次擊殺）的池子有 **${killClips.length}** 個檔，**${killClips.length} 個全部有主人**：`);
-  L.push("");
-  for (const clip of killClips) {
-    const o = m.clipOwners.get(clip);
-    L.push(`- \`${clipName(clip)}\` → **${(o?.champions ?? []).map(nameOf).join(" / ")}**`);
-  }
-  L.push("");
-  L.push(
-    "⇒ 打死任何一隻單位，都會隨機聽到皮卡丘／哆拉A夢／臭作／飛鼠先生／龍宮禮奈／依文潔琳其中一位的台詞 ——" +
-      "**不管場上有沒有那位英雄**。owner 的「打死敵人出現皮卡丘、臭作 get you」就是這一格。",
-  );
-  L.push("");
+  poolLines("kill");
+  poolLines("champSelectConfirm");
 
   // ── 「屬於誰」怎麼推導 ──────────────────────────────────────────────────
   L.push("## 📎 「這個音檔本來屬於誰」是**推導**的，⛔ 不是一張手寫名單");
@@ -139,25 +242,36 @@ function render(m: Model): string {
   L.push("");
 
   // ── 表 A：通用池 ────────────────────────────────────────────────────────
-  L.push("## 表 A —— 🚨 通用音效池（**根因**，每一位英雄身上都會響）");
+  // ⭐ 這一節列的是**每一個通用池**（⛔ 不只是被污染的那幾個）——否則修好之後
+  //    這張表會整個空掉，而一張空表看起來像「量錯了」，⛔ 不像「已經修好了」。
+  const genericCues = [...m.cueFiles.keys()]
+    .filter((cue) => isGenericCue(m.reach.get(cue)))
+    .sort();
+  L.push(
+    fixed
+      ? "## 表 A —— ✅ 通用音效池（每一位英雄身上都會響 —— 所以它們**必須無主**）"
+      : "## 表 A —— 🚨 通用音效池（**根因**，每一位英雄身上都會響）",
+  );
   L.push("");
   L.push(
     "⭐ 判準從出貨的註冊表推導：`apps/client/src/audio/sfxReachability.ts` 的 `combat` 列，" +
       "payload 裡**沒有** `sfxKey` ⇒ 這個 cue 誰觸發都一樣（＝通用）。⛔ 不是一張手寫的通用 cue 名單。",
   );
   L.push("");
-  L.push("| cue | 什麼時機 | 池子大小 | 有主人的檔 | 閘（gain / 冷卻 / 同時） |");
-  L.push("|---|---|---|---|---|");
-  for (const p of pools) {
-    const g = m.cueGate.get(p.cue)!;
+  L.push("| cue | 池子大小 | 有主人的檔 | 閘（gain / 冷卻 / 同時） |");
+  L.push("|---|---:|---|---|");
+  for (const cue of genericCues) {
+    const files = m.cueFiles.get(cue) ?? [];
+    const owned = files.filter((f) => m.clipOwners.has(f));
+    const g = m.cueGate.get(cue) ?? {};
     L.push(
-      `| \`${p.cue}\` | ${p.when} | ${p.files.length} | **${p.foreign.length} / ${p.files.length}** ` +
+      `| \`${cue}\` | ${files.length} | ${owned.length === 0 ? "✅ **0**" : `🚨 **${owned.length} / ${files.length}**`} ` +
         `| ${g.gain ?? "—"} / ${g.cooldownMs ?? "—"}ms / ${g.maxConcurrent ?? "—"} |`,
     );
   }
   L.push("");
   for (const p of pools) {
-    L.push(`### \`${p.cue}\``);
+    L.push(`### 🚨 \`${p.cue}\``);
     L.push("");
     L.push("| 音檔 | 本來屬於誰 |");
     L.push("|---|---|");
@@ -165,6 +279,14 @@ function render(m: Model): string {
       const o = m.clipOwners.get(f);
       L.push(`| \`${f}\` | ${o ? "🚨 " + o.champions.map(nameOf).join(" / ") : "✅ 無主（通用音效）"} |`);
     }
+    L.push("");
+  }
+  if (fixed) {
+    L.push(
+      `✅ **${genericCues.length} 個通用池，有主人的檔案總數 0** —— ` +
+        "⛔ 場上沒有的角色不會再從任何一個通用池裡開口。" +
+        "閘：`tools/sfx-bind/crossCharacterSfx.test.ts`（兩個方向都比對，多一個污染的池子就紅）。",
+    );
     L.push("");
   }
 
@@ -185,8 +307,10 @@ function render(m: Model): string {
   }
   L.push("");
 
-  // ── 表 C：吃到污染退路的技能 ────────────────────────────────────────────
-  L.push(`## 表 C —— 🚨 沒有專屬施法音、吃到污染退路的技能（${genericFallback.length} 支）`);
+  // ── 表 C：吃到通用退路的技能 ────────────────────────────────────────────
+  L.push(
+    `## 表 C —— ${fixed ? "✅" : "🚨"} 沒有專屬施法音、吃到**通用退路**的技能（${genericFallback.length} 支）`,
+  );
   L.push("");
   L.push("每一支的施法音都是 `abilityCast` 那個**混了蒼月潮＋皮卡娘**的隨機池。按英雄分組：");
   L.push("");
@@ -213,25 +337,52 @@ function render(m: Model): string {
   );
   L.push("");
 
-  // 🚨 有問題
+  // 🚨 有問題 —— ⭐ 這一節也是**推導**的：修好之後它會自己變成一張「已裁決」的表，
+  //    ⛔ 而不是繼續印著三個 owner 已經處理掉的選項（那會讓他以為還沒做）。
   L.push("## 🚨 一、有問題（跨角色誤用）");
   L.push("");
-  L.push("| # | 是什麼 | 影響 | 三個選項（⛔ 我沒有挑） |");
-  L.push("|---|---|---|---|");
-  L.push(
-    `| A1 | \`abilityCast\` 通用退路的 3 個檔**全部是角色語音**（蒼月潮 ×2、皮卡娘 ×1） ` +
-      `| **${genericFallback.length} 支技能 × ${m.champions.size} 位英雄**，每一次施法 ` +
-      "| (a) 換成無主的通用施法風聲（最小改動，一格 `audio-map`）<br>(b) 把三個檔還給本人：只留在 `wc3.moongo`/`wc3.moonjump`/`wc3.nocute`，退路改成中性音<br>(c) 逐支補 `sfxKey`（最貴，但最像原作） |",
-  );
-  L.push(
-    `| A2 | \`kill\` 擊殺池的 ${killClips.length} 個檔**全部是角色語音**（皮卡丘／哆拉A夢／臭作／飛鼠先生／龍宮禮奈／依文潔琳） ` +
-      "| 每一次擊殺，不管場上有沒有那位英雄 " +
-      "| (a) 整池換成中性擊殺音<br>(b) 改成**只在該英雄在場／就是他擊殺時**才播（要一個新機制：擊殺者身分 → 語音池）<br>(c) 保留（owner 覺得這是原作味道的一部分） |",
-  );
-  L.push(
-    "| A3 | `champSelectConfirm` 播 `pick.mp3`，而它是 `godie-h001` 的 select 語音 " +
-      "| 每一次鎖定英雄 | (a) 換成中性確認音<br>(b) 從 `champion-voices.godie-h001.select` 拿掉（＝宣告它其實是通用音效，不是誰的語音） |",
-  );
+  if (pools.length === 0) {
+    L.push("> owner 2026-08-23 逐字裁決：「**改成中性音效**」");
+    L.push("");
+    L.push("✅ **三個通用池全部落地了**，量到的污染數 = **0**：");
+    L.push("");
+    L.push("| # | 通用池 | 現在播什麼 | 為什麼確定它沒有主人 |");
+    L.push("|---|---|---|---|");
+    for (const [i, cue] of ["abilityCast", "kill", "champSelectConfirm"].entries()) {
+      const files = (m.cueFiles.get(cue) ?? []).map((f) => `\`${clipName(f)}\``).join(" · ");
+      L.push(
+        `| A${i + 1} | \`${cue}\` | ${files} | 自製合成音（\`content/assets/audio/sfx/fx/GENERATE.sh\`），` +
+          "⛔ 不是原作地圖匯入的 clip ⇒ `war3mapImported\\` 前綴推導不出主人，`champion-voices` 也沒有宣告它是誰的聲音 |",
+      );
+    }
+    L.push("");
+    L.push(
+      "⭐ **原本那些角色語音一個位元組都沒有被刪** —— 它們回到自己的主人身上：" +
+        "`moongo`/`moonjump`/`nocute` 仍然是 `wc3.*` 那三個 cue（蒼月潮與皮卡娘**自己技能**的施法音），" +
+        "六個擊殺語音與 `pick.mp3` 仍然是那幾位英雄在 `champion-voices.json` 的 select 語音。" +
+        "被取代的綁定另存在 `tools/sfx-bind/cross-character-ledger.json` 的 `resolved`（第一·五守則）。",
+    );
+    L.push("");
+    L.push(
+      "⚠️ ⭐ **中性化只動了「施法音」那一層，⛔ 沒有動「角色語音」那一層** —— " +
+        "owner 2026-08-23：「**雖然技能施展用中性音效，但施展技能時莉娜還是可以講話輔助吧，同理其他角色也是**」。" +
+        "施法時仍然由**施法者本人**講 `skill-name.<slot>`（`GameApp.dispatchContextualVoice` 的 abilityCast 分支），" +
+        "守衛 `apps/client/src/audio/castVoiceStillOwnVoice.test.ts`。",
+    );
+    L.push("");
+  } else {
+    L.push("| # | 通用池 | 影響 | 池子裡有主人的檔 |");
+    L.push("|---|---|---|---|");
+    for (const [i, cue] of ["abilityCast", "kill", "champSelectConfirm"].entries()) {
+      const owned = (m.cueFiles.get(cue) ?? []).filter((f) => m.clipOwners.has(f));
+      if (owned.length === 0) continue;
+      L.push(
+        `| A${i + 1} | \`${cue}\` | ${cue === "abilityCast" ? `${genericFallback.length} 支技能，每一次施法` : cue === "kill" ? "每一次擊殺" : "每一次鎖定英雄"} ` +
+          `| ${owned.map((f) => `\`${clipName(f)}\`（${(m.clipOwners.get(f)?.champions ?? []).map(nameOf).join("/")}）`).join("；")} |`,
+      );
+    }
+    L.push("");
+  }
   const famDup = cross.filter((r) => r.surface.includes("vfx-families"));
   if (famDup.length) {
     L.push(
@@ -346,6 +497,8 @@ function render(m: Model): string {
     "⚠️ 表裡有幾位英雄看起來重複（莉娜因巴斯、傑 富力士、魯夫⋯）——" +
       "那是 `content/champions/` 裡**同一位角色有兩個 id** 的既有狀況（新舊 rawcode），⛔ 不是這份表算了兩次。",
   );
+  L.push("");
+  L.push(...renderLayerCap(m, nameOf));
   L.push("");
 
   // 🔊 同時太多
@@ -486,7 +639,7 @@ function main(argv: string[]): number {
   console.log(`wrote ${out}`);
   console.log(
     `  ${m.clipOwners.size} 個有主人的 clip · ${cross.filter((r) => r.actor === "*").length} 個污染的通用池 · ` +
-      `${cross.length} 列跨角色誤用 · ${m.abilities.filter((a) => m.castStack.get(a.id)![0]!.cue === "abilityCast").length}/${m.abilities.length} 支技能吃到污染退路`,
+      `${cross.length} 列跨角色誤用 · ${m.abilities.filter((a) => m.castStack.get(a.id)![0]!.cue === "abilityCast").length}/${m.abilities.length} 支技能吃到通用退路`,
   );
   return 0;
 }

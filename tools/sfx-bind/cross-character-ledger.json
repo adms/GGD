@@ -3,18 +3,22 @@
   "note": "GH#568 —— ⭐ 這是一張**還沒修**的帳，⛔ 不是一張豁免表。每一列記著一個「通用音效池裡混了角色專屬語音」的事實：它現在出貨中、owner 還沒裁決要怎麼修。守衛 tools/sfx-bind/crossCharacterSfx.test.ts 兩個方向都比對這份宣告 —— 多出一個污染的池子會紅（新的錯用），修好了卻沒把這一列刪掉也會紅（宣告在說謊）。",
   "howOwnershipIsDerived": "content/config/champion-voices.json 的 select（內容自己的宣告）× SFX_BINDINGS.json 的 JASS 綁定（只認 war3mapImported\\ 前綴 —— 暴雪零售 MPQ 的音效沒有角色）。⛔ 這裡沒有任何一份手寫的「哪些是角色音」名單。",
   "ownerQuote": "owner 2026-08-23：「音效錯用: 莉娜施展技能 竟然出現皮卡丘 皮卡皮卡、男人喊叫聲，打死敵人出現皮卡丘、臭作 get you 音效等⋯明明場上沒有皮卡丘卻一直有皮卡丘、多拉A夢聲音」",
-  "contaminatedPools": {
+  "contaminatedPools": {},
+  "resolvedNote": "⭐ 2026-08-23：三個池子全部改成中性音效（owner 逐字裁決「改成中性音效」），所以 contaminatedPools 是空的 —— 從今天起**任何一個**通用池再混進角色語音都會讓守衛紅。⛔ 下面這一段是**另存**（第一·五守則：被取代的知識不可以無聲消失），⛔ 不是豁免表，守衛不讀它。",
+  "resolved": {
     "abilityCast": {
-      "clips": [
+      "was": [
         "assets/audio/sfx/moongo.mp3",
         "assets/audio/sfx/moonjump.mp3",
         "assets/audio/sfx/nocute.mp3"
       ],
+      "now": ["assets/audio/sfx/fx/whiff.mp3"],
       "why": "⭐ #568 的根因。這是**每一支沒有專屬施法音的技能**的退路（量到 297/420 支），而池子裡三個檔全部有主人：moongo/moonjump 是蒼月潮（godie-hpb1）的技能語音、nocute 是皮卡娘（godie-o00k）的。owner 聽到的「皮卡皮卡」＝ nocute、「男人喊叫聲」＝ moongo/moonjump。",
-      "status": "等 owner 裁決（表 A1 列了三個選項，⛔ 我沒有挑）"
+      "whyThisClip": "fx/whiff.mp3 是 `content/assets/audio/sfx/fx/GENERATE.sh` 自己合成的（雙重高通 900 Hz 粉紅噪音的空氣揮擊，0.22 秒）—— ⛔ 不是原作地圖匯入的 clip ⇒ 推導不出主人。⭐ 而且它在 audio-map 裡**沒有任何其他 cue 在用**（`whiff` 這個 cue 早就換成 lab/whiff-sword.mp3），所以它不會跟同一拍的任何一層撞成回音。",
+      "keptForOwner": "三個原本的檔**沒有被刪**：它們仍然是 wc3.moongo / wc3.moonjump / wc3.nocute 三個 cue，也就是蒼月潮與皮卡娘**自己技能**的施法音 —— 音效回到了它的主人身上。"
     },
     "kill": {
-      "clips": [
+      "was": [
         "assets/audio/sfx/bads.mp3",
         "assets/audio/sfx/dogdie.mp3",
         "assets/audio/sfx/dorakill.mp3",
@@ -22,13 +26,16 @@
         "assets/audio/sfx/pikakill.mp3",
         "assets/audio/sfx/ringnai.mp3"
       ],
+      "now": ["assets/audio/sfx/fx/chime_burst.mp3"],
       "why": "每一次擊殺隨機播六個角色台詞其中一個，**不管場上有沒有那位英雄**：臭作（bads）、飛鼠先生（dogdie）、哆拉A夢（dorakill）、依文潔琳（even）、皮卡丘（pikakill）、龍宮禮奈（ringnai）。owner 的「打死敵人出現皮卡丘、臭作 get you」逐字就是這一格。",
-      "status": "等 owner 裁決（表 A2）"
+      "whyThisClip": "fx/chime_burst.mp3 同樣是自製合成（A5+E6+A6 正弦花開 + 250ms 高頻閃粉，0.8 秒），MANIFEST 逐字寫它是「**the reward payoff**」—— 擊殺正是一個**獎勵**時刻（它會給金幣），而且這個音色與所有 hit/impact 都分得開，所以它讀起來是「確認擊殺」⛔ 不是「又打中一下」。",
+      "keptForOwner": "六個檔仍然是那六位英雄在 champion-voices.json 的 select 語音（他們自己的聲音），⛔ 一個位元組都沒有刪。"
     },
     "champSelectConfirm": {
-      "clips": ["assets/audio/sfx/pick.mp3"],
-      "why": "鎖定英雄的確認音是 pick.mp3，而 champion-voices 把它宣告成 godie-h001 的 select 語音 ⇒ 同一個檔同時是「某位英雄的聲音」與「所有人的 UI 音」。⚠️ 這一列有可能是**宣告錯**而不是綁定錯（它也許本來就是通用音效）—— 兩種修法在表 A3。",
-      "status": "等 owner 裁決（表 A3）"
+      "was": ["assets/audio/sfx/pick.mp3"],
+      "now": ["assets/audio/sfx/fx/draft-confirm.mp3"],
+      "why": "鎖定英雄的確認音是 pick.mp3，而 champion-voices 把它宣告成 godie-h001 的 select 語音 ⇒ 同一個檔同時是「某位英雄的聲音」與「所有人的 UI 音」。",
+      "whyThisClip": "fx/draft-confirm.mp3 是 task #110 三選一卡片的 LOCK-IN 音（自製合成，0.605 秒的科技機構就位聲）—— 語意上就是「你的選擇定案了」。它另一個用途 draftConfirm 在**局內**的增益抽卡畫面，⛔ 與選人畫面不會同時出現。"
     }
   }
 }
