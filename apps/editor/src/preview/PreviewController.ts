@@ -398,6 +398,40 @@ function effectLines(
         out.push({ depth, kind: e.kind, summary: `projectile ${e.projectileId}, on hit:` });
         effectLines(e.onHit, finalStats, attrs, maxRank, depth + 1, out);
         break;
+      // ⭐ GH#541 連段 —— 節奏可能住在**共用表**（`family` → `config.combo-strikes@1`），
+      // 所以預覽要說得出「幾段從哪裡來」，⛔ 不可以印一個編輯器自己算的假數字。
+      case "comboStrikes": {
+        const n =
+          e.steps !== undefined && e.steps.length > 0
+            ? `${e.steps.length} 段（不等間隔）`
+            : e.strikes !== undefined
+              ? `${e.strikes} 段${e.intervalSec !== undefined ? ` × ${e.intervalSec}s` : ""}`
+              : e.family !== undefined
+                ? `節奏由家族表 \`${e.family}\` 決定（載入時解析）`
+                : "⛔ 排不出班表（沒有 steps / strikes / family）";
+        out.push({ depth, kind: e.kind, summary: `連段 ${n}，每段：` });
+        effectLines(e.perStrike, finalStats, attrs, maxRank, depth + 1, out);
+        if (e.finisher !== undefined && e.finisher.length > 0) {
+          out.push({
+            depth,
+            kind: e.kind,
+            summary: `收尾${e.finisherDelaySec !== undefined ? `（+${e.finisherDelaySec}s）` : ""}：`,
+          });
+          effectLines(e.finisher, finalStats, attrs, maxRank, depth + 1, out);
+        }
+        break;
+      }
+      // ⭐ GH#147 吸引 —— `knockback` 的反向。三種落點,⛔ 不是一個 boolean。
+      case "pull": {
+        const dest =
+          e.destination === "anchorRing"
+            ? `等分錨點環（${e.anchorCount ?? "?"} 點 · 半徑 ${e.anchorRadius ?? "?"}）`
+            : e.destination === "point"
+              ? "這一次的落點"
+              : "施法者腳下";
+        out.push({ depth, kind: e.kind, summary: `吸引到${dest}，速度 ${e.speed}` });
+        break;
+      }
       // `restore` and `spawnVfx` used to fall through this switch silently, so an
       // ability made of them previewed as a BLANK effect list — the one place
       // 「表單看到的 == 遊戲跑的」 breaks is exactly where a designer trusts it.

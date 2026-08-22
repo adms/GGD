@@ -32,6 +32,29 @@ def fmt_secs(v: float) -> str:
     return s or "0"
 
 
+#: WC3 的 `TriggerSleepAction` 實測地板 —— 傳 0 或負數都不會真的是 0。
+#: ⚠️ 這是一個**引擎行為**不是我們的設定,所以它是常數,⛔ 不是後台欄位。
+JASS_SLEEP_FLOOR_SEC = 0.10
+
+_LINEAR_RE = re.compile(
+    r"TriggerSleepAction\(\s*\(?\s*([0-9.]+)\s*-\s*\(?\s*I2R\(\s*\w+\s*\)\s*\*\s*([0-9.]+)"
+)
+
+
+def loop_gap_series(sleep_src: str, count: int) -> list[float]:
+    """迴圈內的**運算式**等待 → 逐圈秒數。
+
+    ⭐ 今天只解一種形狀:`a - i*b`（克勞德 01-04 的 `1.00 - I2R(SupI)*0.50`）。
+    ⛔ 解不出來就回空陣列 —— 讓下游看得見「這一族的節奏抓不到」,
+    ⛔ 而不是拿迴圈**外面**那幾個字面 sleep 冒充它（那正是 2026-08-22 抓到的錯）。
+    """
+    m = _LINEAR_RE.search(sleep_src)
+    if not m or count <= 0:
+        return []
+    a, b = float(m.group(1)), float(m.group(2))
+    return [max(JASS_SLEEP_FLOOR_SEC, a - i * b) for i in range(1, count + 1)]
+
+
 @dataclass
 class Family:
     func: str
@@ -42,6 +65,15 @@ class Family:
     shape: str = "tail"
     seq: list[str] = field(default_factory=list)
     nonliteral_wait: bool = False
+    #: ⭐ 迴圈形的**真實刀數** —— `exitwhen <var> > N` 的 N。
+    #: ⛔ 迴圈形的刀數**不等於**字面 sleep 的數量:那些多半在迴圈**外面**
+    #: (克勞德 01-04 就是這樣 —— 迴圈跑 7 次,而迴圈裡的 sleep 是一個運算式
+    #: `1.00 - SupI*0.50`,字面 sleep 六個全在迴圈外)。
+    loop_count: int | None = None
+    #: 迴圈**本體內**有沒有等待(不管是不是字面值)。False = 上面的 waits 與這一族的節奏無關。
+    loop_has_wait: bool = False
+    #: 迴圈內那個**運算式**等待解出來的逐圈秒數(線性式 `a + b*i`)。空 = 解不出來。
+    loop_gaps: list[float] = field(default_factory=list)
     rawcodes: list[str] = field(default_factory=list)
     gates: list[str] = field(default_factory=list)
 
@@ -91,6 +123,29 @@ def scan(jass_text: str) -> list[Family]:
             continue
 
         loop = any(l.strip() == "loop" for l in body)
+        loop_count = None
+        loop_has_wait = False
+        loop_sleep_src = ""
+        if loop:
+            depth = 0
+            for l in body:
+                t = l.strip()
+                if t == "loop":
+                    depth += 1
+                elif t == "endloop":
+                    depth = max(0, depth - 1)
+                elif depth > 0:
+                    if loop_count is None:
+                        m = re.match(r"exitwhen\s+\w+\s*>\s*(\d+)\s*$", t)
+                        if m:
+                            loop_count = int(m.group(1))
+                    if "TriggerSleepAction" in t or "PolledWait" in t:
+                        loop_has_wait = True
+                        # ⛔ 只收**第一個解得出來的**運算式等待 —— 迴圈裡兩種都有
+                        # (克勞德 01-04 的迴圈同時有 `1.00 - i*0.50` 與幾個字面 sleep),
+                        # 後者會把前者蓋掉,而蓋掉之後這一族的節奏就抓不到了。
+                        if not loop_sleep_src and _LINEAR_RE.search(t):
+                            loop_sleep_src = t
         if loop:
             shape = "loop"
         elif n_dmg >= 2 and seq[0].startswith("W"):
@@ -115,6 +170,9 @@ def scan(jass_text: str) -> list[Family]:
                 waits=waits,
                 n_damage=n_dmg,
                 loop=loop,
+                loop_count=loop_count,
+                loop_has_wait=loop_has_wait,
+                loop_gaps=loop_gap_series(loop_sleep_src, loop_count or 0),
                 shape=shape,
                 seq=seq,
                 rawcodes=sorted(set(SPELL_ID_RE.findall(block))),

@@ -15,6 +15,7 @@
       "jassFunc": "Trig_TowerSP_Actions",
       "jassLine": 13141,
       "shape": "tail",
+      "rhythm": "literal-waits",
       "steps": [],
       "finisherDelaySec": 0.01,
       "seq": [
@@ -39,6 +40,7 @@
       "jassFunc": "Trig_FireLord_Actions",
       "jassLine": 25025,
       "shape": "tail",
+      "rhythm": "literal-waits",
       "steps": [],
       "finisherDelaySec": 0.2,
       "seq": [
@@ -65,6 +67,7 @@
       "jassFunc": "Trig_LokDeathEye_Actions",
       "jassLine": 25170,
       "shape": "tail",
+      "rhythm": "literal-waits",
       "steps": [],
       "finisherDelaySec": 1.0,
       "seq": [
@@ -93,17 +96,18 @@
       "jassFunc": "Trig_Stumble_Actions",
       "jassLine": 25196,
       "shape": "tail",
+      "rhythm": "literal-waits",
       "steps": [
+        0.0,
         0.2,
-        0.2,
-        0.2,
-        0.2,
-        0.2,
-        0.2,
-        0.1,
-        0.1,
-        0.1,
-        0.1
+        0.4,
+        0.6,
+        0.8,
+        1.0,
+        1.2,
+        1.3,
+        1.4,
+        1.5
       ],
       "finisherDelaySec": 1.0,
       "seq": [
@@ -142,14 +146,9 @@
       "jassFunc": "Trig_DragonTigerReady_Actions",
       "jassLine": 25704,
       "shape": "loop",
-      "steps": [
-        0.3,
-        0.05,
-        0.5,
-        0.05,
-        0.1,
-        0.05
-      ],
+      "rhythm": "loop-count-only",
+      "strikes": 5,
+      "rhythmUnknownWhy": "迴圈跑 5 次（`exitwhen > 5`），但迴圈**內**的等待不是字面值也解不成線性式 ⇒ ⛔ 拿迴圈外那幾個字面 sleep 冒充節奏就是說謊。⭐ 要反駁它：把那個運算式解出來（`scan.py::loop_gap_series` 今天只解 `a - i*b`）。",
       "finisherDelaySec": 0.5,
       "seq": [
         "W0.3",
@@ -183,23 +182,24 @@
       "jassFunc": "Trig_Near_To_Death_Actions",
       "jassLine": 25912,
       "shape": "per-step",
+      "rhythm": "literal-waits",
       "steps": [
+        0.0,
         1.0,
-        0.25,
-        0.25,
-        0.25,
-        0.25,
-        0.25,
-        0.25,
-        0.25,
-        0.25,
-        0.25,
-        0.25,
-        0.25,
-        0.25,
-        0.25,
-        0.25,
-        0.25
+        1.25,
+        1.5,
+        1.75,
+        2.0,
+        2.25,
+        2.5,
+        2.75,
+        3.0,
+        3.25,
+        3.5,
+        3.75,
+        4.0,
+        4.25,
+        4.5
       ],
       "finisherDelaySec": 0.25,
       "seq": [
@@ -259,8 +259,9 @@
       "jassFunc": "Trig_XHunterStone_Actions",
       "jassLine": 26960,
       "shape": "loop",
+      "rhythm": "literal-waits",
       "steps": [
-        0.5
+        0.0
       ],
       "finisherDelaySec": 2.0,
       "seq": [
@@ -296,6 +297,7 @@
       "jassFunc": "Trig_XHunter_Actions",
       "jassLine": 27230,
       "shape": "tail",
+      "rhythm": "literal-waits",
       "steps": [],
       "finisherDelaySec": 2.0,
       "seq": [
@@ -328,9 +330,10 @@
       "jassFunc": "Trig_plant_Actions",
       "jassLine": 27908,
       "shape": "per-step",
+      "rhythm": "literal-waits",
       "steps": [
-        0.01,
-        5.0
+        0.0,
+        0.01
       ],
       "finisherDelaySec": 2.0,
       "seq": [
@@ -367,9 +370,9 @@
       "jassFunc": "Trig_Romove_Actions",
       "jassLine": 29084,
       "shape": "loop",
-      "steps": [
-        0.5
-      ],
+      "rhythm": "loop-count-only",
+      "strikes": 6,
+      "rhythmUnknownWhy": "迴圈跑 6 次（`exitwhen > 6`），但迴圈**內**的等待不是字面值也解不成線性式 ⇒ ⛔ 拿迴圈外那幾個字面 sleep 冒充節奏就是說謊。⭐ 要反駁它：把那個運算式解出來（`scan.py::loop_gap_series` 今天只解 `a - i*b`）。",
       "finisherDelaySec": 0.5,
       "seq": [
         "W0.5",
@@ -398,8 +401,9 @@
       "jassFunc": "Trig_LinaS_Actions",
       "jassLine": 29777,
       "shape": "loop",
+      "rhythm": "literal-waits",
       "steps": [
-        0.5
+        0.0
       ],
       "finisherDelaySec": 0.5,
       "seq": [
@@ -434,6 +438,7 @@
       "jassFunc": "Trig_HolySword_Actions",
       "jassLine": 31224,
       "shape": "loop",
+      "rhythm": "literal-waits",
       "steps": [],
       "finisherDelaySec": 0.5,
       "seq": [
@@ -466,8 +471,9 @@
       "jassFunc": "Trig_Empty_Actions",
       "jassLine": 31457,
       "shape": "tail",
+      "rhythm": "literal-waits",
       "steps": [
-        0.5
+        0.0
       ],
       "finisherDelaySec": 1.0,
       "seq": [
@@ -500,12 +506,9 @@
       "jassFunc": "Trig_ExcaliburMAX_Actions",
       "jassLine": 32559,
       "shape": "loop",
-      "steps": [
-        0.1,
-        0.3,
-        0.2,
-        0.5
-      ],
+      "rhythm": "loop-count-only",
+      "strikes": 7,
+      "rhythmUnknownWhy": "迴圈跑 7 次（`exitwhen > 7`），但迴圈**內**的等待不是字面值也解不成線性式 ⇒ ⛔ 拿迴圈外那幾個字面 sleep 冒充節奏就是說謊。⭐ 要反駁它：把那個運算式解出來（`scan.py::loop_gap_series` 今天只解 `a - i*b`）。",
       "finisherDelaySec": 4.0,
       "seq": [
         "D",
@@ -541,8 +544,9 @@
       "jassFunc": "Trig_XFight_Actions",
       "jassLine": 33409,
       "shape": "tail",
+      "rhythm": "literal-waits",
       "steps": [
-        0.1
+        0.0
       ],
       "finisherDelaySec": 0.3,
       "seq": [
@@ -578,8 +582,9 @@
       "jassFunc": "Trig_Toro_Rotation_Actions",
       "jassLine": 33465,
       "shape": "tail",
+      "rhythm": "literal-waits",
       "steps": [
-        0.01
+        0.0
       ],
       "finisherDelaySec": 0.1,
       "seq": [
@@ -610,14 +615,16 @@
       "jassFunc": "Trig_SuperFF7_Actions",
       "jassLine": 33799,
       "shape": "loop",
+      "rhythm": "loop-expr",
       "steps": [
-        0.2,
+        0.0,
+        0.5,
         0.6,
-        0.4,
-        0.2,
-        0.5
+        0.7,
+        0.8,
+        0.9
       ],
-      "finisherDelaySec": 1.0,
+      "finisherDelaySec": 0.1,
       "seq": [
         "W0.2",
         "W0.6",
@@ -657,9 +664,10 @@
       "jassFunc": "Trig_Luf_Axe_Effect_Actions",
       "jassLine": 36342,
       "shape": "tail",
+      "rhythm": "literal-waits",
       "steps": [
-        0.15,
-        0.2
+        0.0,
+        0.15
       ],
       "finisherDelaySec": 0.05,
       "seq": [
@@ -690,8 +698,9 @@
       "jassFunc": "Trig_Luf_RockFire_D8_Actions",
       "jassLine": 36547,
       "shape": "tail",
+      "rhythm": "literal-waits",
       "steps": [
-        0.05
+        0.0
       ],
       "finisherDelaySec": 0.1,
       "seq": [
@@ -723,9 +732,10 @@
       "jassFunc": "Trig_Bleach_Rush_Actions",
       "jassLine": 37401,
       "shape": "per-step",
+      "rhythm": "literal-waits",
       "steps": [
-        0.1,
-        0.3
+        0.0,
+        0.1
       ],
       "finisherDelaySec": 0.3,
       "seq": [
@@ -763,6 +773,7 @@
       "jassFunc": "Trig_Bleach_Strike_Actions",
       "jassLine": 37471,
       "shape": "tail",
+      "rhythm": "literal-waits",
       "steps": [],
       "finisherDelaySec": 0.1,
       "seq": [
@@ -793,8 +804,9 @@
       "jassFunc": "Trig_YouDie_Actions",
       "jassLine": 38595,
       "shape": "per-step",
+      "rhythm": "literal-waits",
       "steps": [
-        1.0,
+        0.0,
         1.0
       ],
       "finisherDelaySec": 1.0,
@@ -832,8 +844,9 @@
       "jassFunc": "Trig_FlySwallow_Actions",
       "jassLine": 41663,
       "shape": "per-step",
+      "rhythm": "literal-waits",
       "steps": [
-        0.1
+        0.0
       ],
       "finisherDelaySec": 0.1,
       "seq": [
@@ -867,6 +880,7 @@
       "jassFunc": "Trig_Spell_Mark_Actions",
       "jassLine": 41715,
       "shape": "tail",
+      "rhythm": "literal-waits",
       "steps": [],
       "finisherDelaySec": 10.0,
       "seq": [
@@ -899,9 +913,10 @@
       "jassFunc": "Trig_LightCutRun_Actions",
       "jassLine": 41943,
       "shape": "loop",
+      "rhythm": "literal-waits",
       "steps": [
-        0.1,
-        2.0
+        0.0,
+        0.1
       ],
       "finisherDelaySec": 2.0,
       "seq": [
@@ -934,6 +949,7 @@
       "jassFunc": "Trig_MagicUp_Actions",
       "jassLine": 46924,
       "shape": "tail",
+      "rhythm": "literal-waits",
       "steps": [],
       "finisherDelaySec": 1.0,
       "seq": [
@@ -965,6 +981,7 @@
       "jassFunc": "Trig_MoriyaShadow_Actions",
       "jassLine": 47235,
       "shape": "tail",
+      "rhythm": "literal-waits",
       "steps": [],
       "finisherDelaySec": 0.5,
       "seq": [
@@ -994,10 +1011,9 @@
       "jassFunc": "Trig_Nine_Lives_Hits_Actions",
       "jassLine": 52140,
       "shape": "loop",
-      "steps": [
-        0.3,
-        0.4
-      ],
+      "rhythm": "loop-count-only",
+      "strikes": 10,
+      "rhythmUnknownWhy": "迴圈跑 10 次（`exitwhen > 10`），但迴圈**內**的等待不是字面值也解不成線性式 ⇒ ⛔ 拿迴圈外那幾個字面 sleep 冒充節奏就是說謊。⭐ 要反駁它：把那個運算式解出來（`scan.py::loop_gap_series` 今天只解 `a - i*b`）。",
       "finisherDelaySec": 0.6,
       "seq": [
         "D",
@@ -1027,6 +1043,7 @@
       "jassFunc": "Trig_Hundred_Sky_Actions",
       "jassLine": 54617,
       "shape": "tail",
+      "rhythm": "literal-waits",
       "steps": [],
       "finisherDelaySec": 0.0,
       "seq": [

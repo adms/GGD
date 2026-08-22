@@ -25,10 +25,12 @@
             "on": "onReflectSuccess",
             "effects": [
               {
-                "kind": "comboStrikes",
+                "kind": "delayed",
                 "shape": "single",
-                "family": "excaliburmax",
-                "perStrike": [
+                "delaySec": 0.12,
+                "count": 7,
+                "intervalSec": 0.12,
+                "effects": [
                   {
                     "kind": "damage",
                     "damageType": "magic",
@@ -44,7 +46,7 @@
                     }
                   }
                 ],
-                "finisher": [
+                "finalEffects": [
                   {
                     "kind": "damageLine",
                     "damageType": "magic",

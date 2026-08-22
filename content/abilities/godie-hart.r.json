@@ -50,11 +50,7 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "perRank": [
-              99.0,
-              149.0,
-              199.0
-            ]
+            "damageTier": "極小"
           }
         }
       ],
@@ -63,6 +59,7 @@
           "kind": "damage",
           "damageType": "physical",
           "amount": {
+            "damageTier": "極小",
             "ratios": [
               {
                 "stat": "ap",

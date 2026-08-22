@@ -137,6 +137,13 @@ describe("discriminated EffectDef union (editor-02)", () => {
         // ⛔ 這張清單是刻意寫死的（同 navSections 的 BASELINE_PAGES）——
         // 它的用意就是**逼加新 kind 的人在這裡留下痕跡**，⛔ 不要改成從 union 推導。
         "chainLightning",
+        // ── 2026-08-22 GH#541「連段→收尾」───────────────────────────────
+        // ⭐ owner:「克勞德很類似**龍虎亂舞類打打打最後大招**，是常用模板，
+        // 包含 SaberEX 的理想鄉也是此類模板」「JASS 裡面有**間隔時間給予多次傷害**
+        // 的都是這類家族技能模板」。⇒ 29 個 JASS 函式一個機制解決。
+        // ⛔ 它不是 `dot`：`dot` 沒有 N 次**獨立命中判定**、沒有 N 次演出、
+        // 沒有收尾那一發（Saber 卡面「最後施展約束與勝利之劍」是第八段，形狀不同）。
+        "comboStrikes",
         "convertTeam",
         // ── 2026-07-31 技能批次的四個新 kind ────────────────────────────
         // 這四個是**同一天**進來的，而這條釘子沒有跟上 —— 也就是說有四張卡
@@ -179,6 +186,11 @@ describe("discriminated EffectDef union (editor-02)", () => {
         "invulnerable", // lane P3 — 無敵
         "knockback", // lane P4 — 擊退
         "leap", // task #247
+        // ── 2026-08-22 GH#147 吸引（`A091` 及喀爾度的錨點環）──────────────
+        // ⛔ 與 `knockback` 是同一族的反向：knockback 把人推開、`pull` 把人
+        // 拉到落點或**等分錨點環**（一人一個點）。owner 2026-07-26 裁決
+        // 「三條描述↔JASS 衝突一律照 JASS 修」，而這一條之前卡在引擎沒有詞彙。
+        "pull",
         "restore",
         // 復活 —— 天生牙 godie-i031 「殺死任一個敵方英雄單位，將復活我方所有英雄」。
         // 它與 `PreviewController.effectLines` 的 case 同時進來,所以補 tag 不是

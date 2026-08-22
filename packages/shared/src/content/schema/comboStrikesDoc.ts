@@ -34,9 +34,37 @@ const zFamily = z
     jassFunc: z.string().min(1).describe("war3map.j 裡的函式名，⭐ 可以逐字回查。"),
     jassLine: z.number().int().positive().describe("那個函式在 war3map.j 的行號。"),
     shape: z.enum(COMBO_SHAPES),
+    /**
+     * ⭐ 這一族的節奏是怎麼來的 —— 三種，⛔ 不可以混為一談：
+     * · `literal-waits` 字面 `TriggerSleepAction` 序列（非迴圈形）
+     * · `loop-expr`     迴圈跑 N 次，而迴圈**內**的等待是一個解得出來的運算式
+     * · `loop-count-only` 只知道跑幾次，⛔ 節奏抓不到（帶 `rhythmUnknownWhy`）
+     */
+    rhythm: z.enum(["literal-waits", "loop-expr", "loop-count-only"]),
     steps: z
       .array(z.number().min(0).max(60))
-      .describe("除了最後一段以外的等待秒數，照原始碼順序。⚠️ 逐字抄，⛔ 沒有四捨五入、⛔ 沒有統一成 0.12。"),
+      .optional()
+      .describe(
+        "每一段**離施法那一刻**的秒數偏移，遞增。⚠️ ⛔ 不是逐段間隔 —— " +
+          "`sim/effects/comboStrikes.ts::comboStrikeOffsets` 讀的是絕對偏移，" +
+          "填成間隔會被「非遞增就推到下一 tick」的規則**靜靜抹平**成一串等距。" +
+          "⚠️ 逐字從 JASS 推，⛔ 沒有四捨五入、⛔ 沒有統一成 0.12。",
+      ),
+    strikes: z
+      .number()
+      .int()
+      .positive()
+      .max(64)
+      .optional()
+      .describe(
+        "⭐ 迴圈形的**真實刀數**（`exitwhen i > N` 的 N）。⛔ 它不等於字面 sleep 的數量 —— " +
+          "那些多半在迴圈**外面**（克勞德 01-04：迴圈跑 7 次，六個字面 sleep 全在迴圈外）。",
+      ),
+    rhythmUnknownWhy: z
+      .string()
+      .min(1)
+      .optional()
+      .describe("⭐ `loop-count-only` 專用：一個**能被反駁**的理由，⛔ 不是「還沒收」。"),
     finisherDelaySec: z.number().min(0).max(60).describe("最後一段等待秒數。steps + 這一格 = JASS 的完整等待序列。"),
     seq: z
       .array(z.string().min(1))

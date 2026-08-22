@@ -306,15 +306,32 @@ describe("GH#250 B — 01-04 超究武神霸斬 is seven slashes, not one packet
     expect(last, `hit7=${last.toFixed(1)} vs hit1=${h1!.toFixed(1)}`).toBeGreaterThan(h1! + 10);
   });
 
-  it("rank raises the per-hit number the way 49 + 50×rank says it should", () => {
-    const r1 = omnislash(1).hits[0]!;
-    const r2 = omnislash(2).hits[0]!;
-    const r3 = omnislash(3).hits[0]!;
-    // 99 : 149 : 199, so each step is +50 BEFORE mitigation. Mitigation is a
-    // single multiplicative factor here (same armour, same caster), so the
-    // RATIOS survive it exactly.
-    expect(r2 / r1).toBeCloseTo(149 / 99, 2);
-    expect(r3 / r1).toBeCloseTo(199 / 99, 2);
+  /**
+   * ⛔ 這一條在 2026-08-22 之前斷言 `r2/r1 = 149/99`、`r3/r1 = 199/99`
+   *    ——「逐階 +50」，逐字抄自 JASS 的 `49 + 50×rank`。
+   *
+   * ⚠️ **那個比例已經不存在了，而且不是這次改壞的**：owner 的**傷害五級距**
+   *    (`config.damage-tiers@1`) 是全專案的傷害語言 —— 量到的出貨內容是
+   *    **147 個傷害葉走 `damageTier`、只剩 6 個還帶 `perRank`**。
+   *    這一支之所以撐到今天才被發現，只是因為它以前掛在 `dot.amountPerTick` 上，
+   *    而 `apply_tiers.py` 不走那一格（＝ CLAUDE.md 記著的那個級距走訪缺口）。
+   *    改成 `comboStrikes` 之後它落在 `damage.amount`，級距當場接管。
+   *
+   * ⇒ 現在驗**還活著的那個機制**：每一刀的數字來自**共用的級距表**
+   *    （改表就會變），而 ⭐ **第七刀多帶一個力量項** —— 那正是 JASS
+   *    `if ( not ( udg_SupI >= 7 ) )` 分出來的那一發。
+   *    ⛔ 不驗任何字面數字（第二守則：出貨數值住 config，抄進測試就是第四個住處）。
+   */
+  it("每一刀走共用級距表，而第七刀（收尾）多帶力量項 —— JASS 的 `SupI >= 7`", () => {
+    const runs = [omnislash(1), omnislash(2), omnislash(3)];
+    for (const r of runs) {
+      expect(r.hits.length, "七刀").toBe(7);
+      // 前六刀同一個級距 ⇒ 彼此相等（⛔ 不問等於多少）
+      const flat = r.hits.slice(0, 6);
+      for (const h of flat) expect(h).toBeCloseTo(flat[0]!, 5);
+      // ⭐ 第七刀 = 同級距 + 力量項 ⇒ 嚴格更大。這是這支技能的**形狀**。
+      expect(r.hits[6]!, "第七刀要比前六刀重").toBeGreaterThan(flat[0]!);
+    }
   });
 });
 
@@ -375,6 +392,9 @@ describe("GH#250 C — both bodies are locked for the performance", () => {
       expect(held.map((e) => e.statusId), `${name} still locked`).toEqual([]);
     }
     // and the caster can act again — the strongest form of "not stuck".
-    expect(castAbility(world, cloud, "Q", { type: "entity", entityId: foe })).toBe("ok");
+    // ⚠️ ⛔ 不可以斷言 `"ok"`：七刀之後那位受害者多半**已經死了**，於是回傳
+    //    `"bad-target"` —— 而那與「施法者被卡住」一點關係都沒有。
+    //    ⭐ 這一條要驗的是**沒有被鎖住**，所以它問的是「不是 stunned」。
+    expect(castAbility(world, cloud, "Q", { type: "entity", entityId: foe })).not.toBe("stunned");
   });
 });

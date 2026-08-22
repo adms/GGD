@@ -68,9 +68,20 @@ export type ComboFamilyTable = Readonly<Record<string, ComboFamilyRow>>;
 export function normalizeComboTable(doc: unknown): ComboFamilyTable {
   if (doc === null || typeof doc !== "object") return {};
   const bag = doc as Record<string, unknown>;
-  const src =
-    bag["families"] !== null && typeof bag["families"] === "object"
-      ? (bag["families"] as Record<string, unknown>)
+  // ⭐ 出貨的 `families` 是一個**陣列**，每一列自己帶 `key`（`config.combo-strikes@1`）。
+  // ⛔ 在 2026-08-22 之前這裡只吃物件形，於是 `Object.keys(陣列)` 拿到的是索引
+  // `"0","1","2"…` —— 表「載入成功」而每一支技能的 `family` 都查不到，
+  // 結果是 11 條測試同時紅在「排不出班表」上。⭐ 三種外形都吃得下。
+  const famRaw = bag["families"];
+  const src: Record<string, unknown> = Array.isArray(famRaw)
+    ? Object.fromEntries(
+        famRaw
+          .filter((r): r is Record<string, unknown> => r !== null && typeof r === "object")
+          .map((r) => [String(r["key"] ?? ""), r] as const)
+          .filter(([k]) => k !== ""),
+      )
+    : famRaw !== null && typeof famRaw === "object"
+      ? (famRaw as Record<string, unknown>)
       : bag;
   const out: Record<string, ComboFamilyRow> = {};
   // Object.keys 已經是插入序（全序）；⛔ 這裡不迭代 Map。

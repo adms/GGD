@@ -1656,11 +1656,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // ══ 2026-08-22 · #541【連段】與 #147【吸引】═══════════════════════════════
   // 兩支都是**機制先落地、內容接在後面**的同一個形狀，而且兩支都有**點名的**
   // 技能在等（⛔ 不是「沒有人需要」）—— 那正是這條普查要的那種豁免理由。
-  "variant:abilities.effects[]#comboStrikes": {
-    status: "landing",
-    since: "2026-08-22",
-    why: "#541 落地的是**機制**（sim/effects/comboStrikes.ts：N 段各自結算、可省的收尾、不等間隔 steps[]、家族節奏表 config.combo-strikes@1 在載入時解析），內容那一半由主 session 接（content/ 是單執行緒的領域）。⛔ NOT 「沒有人需要」，而且這是**卡面已經承諾**的：01-04 超究武神霸斬 (godie-hart.r) 寫著「連斬七次，每一次斬擊皆造成極大傷害」而實作是 applyStatus×2 + invulnerable + dot×2；20-002 解放·約束勝利劍MAX (godie-e002.ex) 寫著「連續七次斬擊…最後施展約束與勝利之劍」而 `effects` 是**空陣列**。⇒ 這兩支正是第一·五守則「卡片上不可以有說了但不會發生的字」的原型，而這個 kind 是它們唯一的修法（`dot` 沒有 N 次獨立命中判定、沒有 N 次演出、沒有收尾）。接內容的做法寫在報告的『需要主 session 接線』：`config/combo-strikes.json` 的家族 key + 這兩支的 effects。機制本身由 sim/effects/comboAndPull.test.ts 用真的 SimWorld.step() 釘住（突變驗過：班表塞進同一個 tick → 紅）。",
-  },
   "variant:abilities.effects[]#pull": {
     status: "landing",
     since: "2026-08-22",
@@ -2472,13 +2467,31 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "⚠️ 這一格 GH#463 之前叫「大」—— 合併級距詞彙時挑了 owner 2026-08-11 的舊版（含「超大」），\n      而他同一天稍晚給冷卻級距時已經改口成 極小/小/中/大/極大；改回來是**純改名**，值一個都沒動。" +
       "零採用講的是內容排序（沒有一支這個距離的位移需要改用級別），⛔ 不是機制缺口。",
   },
-  "enum:abilities.effects[]#dash.distanceTier=大": {
+  // ⭐ 2026-08-22 —— #147 把唯一走「極大」的那一支照 JASS 降成「大」之後，頂格空了。
+  "enum:abilities.effects[]#dash.distanceTier=極大": {
     status: "landing",
-    since: "2026-08-19",
+    since: "2026-08-22",
     why:
-      "共用同一段查表的第四格。⚠️ 這一格的名字換過兩次：GH#414 併表時叫「超大」，" +
-      "而 GH#463 查出那是 owner 2026-08-11 的**舊版**詞彙（他同一天稍晚改口成 極小/小/中/大/極大），"
-      + "於是改成「大」。兩次改名都是**純改名**，值一個都沒動。零採用講的是內容排序，⛔ 不是機制缺口。",
+      "同一段查表的頂格。⚠️ 它在今天之前**有**採用（78-04 死亡噴射肘擊），" +
+      "而 #147 照 owner 2026-07-26 的裁決「三條描述↔JASS 衝突一律照 JASS 修」把它降成「大」：" +
+      "JASS `Trig_PowerKnockBack_Effect` 是 **20 步 × 40 = 800** wc3（÷128 = 6.25 世界單位），" +
+      "⛔ 不是描述寫的 1000。⇒ 零採用是**保真度修正的副作用**，⛔ 不是機制缺口 —— " +
+      "另外四格全部有內容在走，路是通的。⚠️ 30 天後要嘛有一支真的需要 8 世界單位的推力，" +
+      "要嘛承認這一格是空的並把它從梯子上拿掉。",
+  },
+  // ⭐ 2026-08-22 —— #539 常駐特效。standalone 那一半已經有內容（莉娜的兩份 EX），
+  //    champion **內嵌**那一半是零，而那是**外形**問題不是採用問題（見 why）。
+  "field:champions.abilities.*.persistentVfx": {
+    status: "schema-impossible",
+    since: "2026-08-22",
+    why:
+      "⭐ 常駐特效今天唯一的內容是 EX 技能（`godie-h020.ex` / `godie-hjai.ex`，原作 " +
+      "`MidchilderNanohaAura.mdx` 掛在 origin 而從來沒有 DestroyEffect），" +
+      "而 **EX 在英雄卡上是字串引用**（`exAbility: \"godie-h020.ex\"`）⛔ 不是內嵌物件 —— " +
+      "所以 `champions.abilities.*` 這條路上不可能出現它。standalone 那一半" +
+      "（`abilities.persistentVfx`）已經有兩份內容在走，客戶端兩條算繪路都接了" +
+      "（`attachment@1` → formAttachmentFor、`vfx@1`/`ribbon@1` → AmbientVfx）。" +
+      "⚠️ 哪天有一支 **Q/W/E/R** 技能帶常駐特效，這一列就該當場失效並改成 landing。",
   },
   // ⭐ 2026-08-21 —— 耗魔級距（`config.mana-tiers@1`），五軸的**最後一軸**。
   // ⚠️ 它落地當天四格就有內容（極小 / 小 / 中 / 大 分佈在 204 支上），只有頂格是零。

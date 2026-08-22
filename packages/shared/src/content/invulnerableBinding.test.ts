@@ -53,6 +53,7 @@ import { SimWorld } from "../sim/SimWorld";
 import { SKELETON_ARENA } from "../sim/world/ArenaDef";
 import { runEffects } from "../sim/effects/effectRunner";
 import { zEffectDefUnion } from "./schema/effect";
+import { normalizeComboTable, resolveComboFamilies } from "../sim/effects/comboFamilies";
 import type { EffectDef } from "../sim/effects/effect";
 import type { EntityId } from "../ids";
 import { asTeamId, asSeatId } from "../ids";
@@ -69,6 +70,13 @@ type Doc = { id?: string; name?: string; slot?: string; effects?: unknown[] };
 function readJson(p: string): Doc {
   return JSON.parse(readFileSync(p, "utf8")) as Doc;
 }
+
+/** 出貨的連段節奏表（`config.combo-strikes@1`）—— 與註冊表讀的是同一份檔。 */
+const COMBO_TABLE = normalizeComboTable(
+  JSON.parse(
+    readFileSync(join(dirname(fileURLToPath(import.meta.url)), "../../../../content/config/combo-strikes.json"), "utf8"),
+  ) as unknown,
+);
 
 /** Every shipping ability doc carrying an `invulnerable` effect — computed. */
 const BOUND: ReadonlyArray<{ file: string; doc: Doc; invuln: Record<string, unknown> }> =
@@ -135,7 +143,13 @@ function rig(): Rig {
  * game could not load can never make this suite green.
  */
 function castShippedAbility(r: Rig, doc: Doc): void {
-  const effects = (doc.effects ?? []).map((e) => zEffectDefUnion.parse(e) as EffectDef);
+  // ⭐ GH#541 —— 出貨的技能文件可能只寫 `family`,間隔序列住 `config.combo-strikes@1`
+  //    並在**載入時**被解析（第〇·四守則）。這一支直接讀 JSON 跑 `runEffects`,
+  //    所以要自己走一次那一步 —— ⛔ 少了它,`comboStrikes` 會擲「排不出班表」,
+  //    而那與這條測試要驗的無敵綁定一點關係都沒有。
+  const effects = (
+    resolveComboFamilies({ effects: doc.effects ?? [] }, COMBO_TABLE).effects as unknown[]
+  ).map((e) => zEffectDefUnion.parse(e) as EffectDef);
   runEffects(effects, {
     world: r.world,
     caster: r.caster,

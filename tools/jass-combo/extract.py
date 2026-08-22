@@ -200,13 +200,61 @@ def build() -> tuple[str, str]:
         seen_keys.add(key)
 
         note = SHAPE_NOTE[fam.shape].format(n=fam.n_damage, k=len(fam.waits))
+        # ⭐ `steps` 的語意是「**離施法那一刻**的秒數偏移」（見 comboStrikes 的 schema
+        #    與 `sim/effects/comboStrikes.ts::comboStrikeOffsets`），⛔ **不是**逐段間隔。
+        # ⛔ 2026-08-22 之前這裡填的是原始 wait 序列（逐段間隔）—— sim 會把它當成
+        #    絕對偏移讀，遇到非遞增就把那一段推到「前一段 +1 tick」⇒ **節奏被靜靜抹平**，
+        #    而段數守恆所以看起來完全正常。
+        def _cumulative(gaps: list[float]) -> list[float]:
+            out, t = [], 0.0
+            for g in gaps:
+                out.append(round(t, 4))
+                t += g
+            return out
+
+        # ⭐ 迴圈形：刀數在 `exitwhen i > N` 裡，⛔ **不等於**字面 sleep 的數量 ——
+        #    那些多半在迴圈**外面**（克勞德 01-04：迴圈跑 7 次，而迴圈裡的等待是
+        #    運算式 `1.00 - i*0.50`，六個字面 sleep 全在迴圈外）。
+        if fam.shape == "loop" and fam.loop_count:
+            if fam.loop_gaps:
+                # ⭐ N 圈 = N 發，而**最後一圈就是收尾**（克勞德 01-04 的 JASS 逐字：
+                #    `if ( not ( udg_SupI >= 7 ) )` —— 第 7 發多帶一個 STR 項）。
+                #    ⇒ 攤到 `comboStrikes` 的形狀是 `steps`（前 N−1 發的絕對偏移）
+                #    ＋ `finisherDelaySec`（最後一發距離前一發的間隔）。
+                # ⛔ 把 N 個偏移全放進 steps 再另外給 finisherDelaySec = N+1 發，
+                #    而卡面寫的是 N —— 那就是第一·五守則要防的那種多出來的一刀。
+                offsets = _cumulative(fam.loop_gaps)
+                steps = offsets[:-1]
+                finisher = round(offsets[-1] - offsets[-2], 4) if len(offsets) >= 2 else 0.0
+                rhythm = "loop-expr"
+            else:
+                steps = None
+                finisher = fam.waits[-1]
+                rhythm = "loop-count-only"
+        else:
+            steps = _cumulative(fam.waits[:-1])
+            finisher = fam.waits[-1]
+            rhythm = "literal-waits"
         entry = {
             "key": key,
             "jassFunc": fam.func,
             "jassLine": fam.line,
             "shape": fam.shape,
-            "steps": fam.waits[:-1],
-            "finisherDelaySec": fam.waits[-1],
+            "rhythm": rhythm,
+            **({"steps": steps} if steps is not None else {"strikes": fam.loop_count}),
+            **(
+                {}
+                if steps is not None
+                else {
+                    "rhythmUnknownWhy": (
+                        "迴圈跑 %d 次（`exitwhen > %d`），但迴圈**內**的等待不是字面值也解不成線性式 ⇒ "
+                        "⛔ 拿迴圈外那幾個字面 sleep 冒充節奏就是說謊。"
+                        "⭐ 要反駁它：把那個運算式解出來（`scan.py::loop_gap_series` 今天只解 `a - i*b`）。"
+                    )
+                    % (fam.loop_count, fam.loop_count)
+                }
+            ),
+            "finisherDelaySec": finisher,
             "seq": fam.seq,
             "damageCalls": fam.n_damage,
             "rawcodes": fam.rawcodes,
