@@ -91,7 +91,14 @@ export interface PerfBus {
    */
   orphanRooms: number;
   foreignSnapshots: number;
-  /** 非預期斷線（`RoomConnection.onDisconnect`，在此之前全 repo 零指派點）。 */
+  /**
+   * 非預期斷線（GH#596）—— **不是我叫的** `leave()` 而關掉的那些 socket。
+   *
+   * ⭐ 遞增點在 `net/RoomConnection.bind()` 的 `onLeave` 裡，⛔ **不是**在
+   * `onDisconnect` 的指派點上：fail-loud 不可以取決於「有沒有人記得指派」
+   *（那個回呼在 GH#596 之前全 repo **零指派點**，而這一格因此永遠是 0）。
+   * ⚠️ 沙發連線一次斷線會記 N 筆 —— 這一格數的是**連線**，⛔ 不是斷線事件。
+   */
   unexpectedDisconnects: number;
 }
 

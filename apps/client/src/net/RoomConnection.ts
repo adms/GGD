@@ -249,6 +249,19 @@ export class RoomConnection {
    */
   private disposed = false;
 
+  /**
+   * ⭐ GH#592 —— `bind()` 掛上去的東西，`leave()` 要**逐一**拆下來。
+   *
+   * ⛔ 在此之前 `leave()` 只送一個 `LEAVE_ROOM` 位元組就把 `this.room` 設成 null，
+   * 而那條 socket 上的 4 個 `onMessage` ＋ 1 個 `onLeave` **原封不動掛著** ——
+   * 真正清掉它們的是 colyseus.js `Room` 建構子那行 `onLeave(() => removeAllListeners())`，
+   * 也就是**伺服器真的回關閉之後**。探針量到 handler **4 → 8 → … → 32**（8 輪）。
+   *
+   * ⚠️ 既有的 `teardown.test.ts` 看不到它：那支的 `attach()` **直接指派 `conn.room`，
+   * 從不呼叫 `bind()`** —— 失敗形態⑤（被測的不是出貨的那條路）。
+   */
+  private readonly disposers: (() => void)[] = [];
+
   constructor(accountId?: string, displayName?: string) {
     this.accountId = accountId ?? `dev-${Math.random().toString(36).slice(2, 10)}`;
     this.displayNameOverride = sanitizeDisplayName(displayName ?? "");
@@ -350,6 +363,19 @@ export class RoomConnection {
    * code rather than two copies of it that drift.
    */
   private acceptEvent(ev: EventMessage): void {
+    // ⭐ GH#590 —— **在途封包不屬於任何一場**。
+    //
+    // `leave()` 之後 GH#592 已經把 5 個 handler 拆掉了，但那只關掉「之後才到的」；
+    // 一個**已經排進事件迴圈**的 socket callback 仍然會跑完，而它會寫進
+    // **模組層全域**的 `evadeSightings`（`recordEvade`,見這個檔開頭）。
+    // 那個緩衝的消費端 `ui/WorldAnchorLayer` 在大廳整棵 unmount ⇒ ⛔ 沒有人 drain
+    // ⇒ 那 0–3 筆會**活著進到下一場**，在不存在的座標上飄出 sighting 浮字。
+    // （⚠️ 這裡刻意不寫出那兩個詞：`net/*` 不擁有任何 UI 文案，而
+    //   `evadeSightings.test.ts` 是**整個檔的純文字掃描**，連註解都算。）
+    //
+    // ⚠️ 這是**縱深**那一層（與 `RoomStore.ownerMatchId` 同型）：⛔ 不是重複，
+    // 因為它擋的是「handler 拆掉的那一瞬間**已經在飛**」的那一顆。
+    if (this.room === null) return;
     this.queuedEvents.push(ev);
     if (this.queuedEvents.length > 512) this.queuedEvents.splice(0, this.queuedEvents.length - 512);
     // 迴避 also lands in its own buffer (see EvadeSighting above): the frame
@@ -383,26 +409,67 @@ export class RoomConnection {
       return;
     }
     this.room = room;
-    room.onMessage(MSG.EVENT, (ev: EventMessage) => this.acceptEvent(ev));
+    this.keepDisposer(room.onMessage(MSG.EVENT, (ev: EventMessage) => this.acceptEvent(ev)));
     // A whole tick's room-wide events in one message (net/eventBatch on the
     // server). Unpacked IN ORDER into the same queue, so the frame loop cannot
     // tell which wire shape delivered them. ⚠️ Losing this handler does not
     // error — colyseus.js silently drops messages with no registered type — it
     // makes combat MUTE (HP bars drain, no numbers, no animations), the S2
     // failure eventFanout.ts's header lists nine times over.
-    room.onMessage(MSG.EVENT_BATCH, (b: EventBatchMessage) => {
-      for (const ev of unpackEventBatch(b)) this.acceptEvent(ev);
-    });
-    room.onMessage(MSG.REJECT, (msg: { reason?: string } | undefined) => {
-      // surface the reason (e.g. a non-whitelisted champion pick) to the HUD
-      recordReject(typeof msg?.reason === "string" ? msg.reason : "rejected");
-    });
-    room.onMessage(MSG.PHASE, () => {
-      /* phase rides the schema; message is informational */
-    });
-    room.onLeave((code) => {
+    this.keepDisposer(
+      room.onMessage(MSG.EVENT_BATCH, (b: EventBatchMessage) => {
+        for (const ev of unpackEventBatch(b)) this.acceptEvent(ev);
+      }),
+    );
+    this.keepDisposer(
+      room.onMessage(MSG.REJECT, (msg: { reason?: string } | undefined) => {
+        if (this.room === null) return; // ⭐ GH#590 —— 同 `acceptEvent`：在途封包
+        // surface the reason (e.g. a non-whitelisted champion pick) to the HUD
+        recordReject(typeof msg?.reason === "string" ? msg.reason : "rejected");
+      }),
+    );
+    this.keepDisposer(
+      room.onMessage(MSG.PHASE, () => {
+        /* phase rides the schema; message is informational */
+      }),
+    );
+    /**
+     * ⭐ GH#596 —— **非預期斷線**要出聲。
+     *
+     * 進得到這裡而 `disposed` 還是 false ⇒ 這條 socket 不是我關的
+     *（`leave()` **第一行**就把 `disposed` 設成 true）。⛔ 在此之前
+     * `onDisconnect` 全 repo **零指派點**，於是非預期斷線唯一的訊號是
+     * `ui/pingReadout` 的「斷線 Ns 無封包」—— 一行沒有人會當成 bug 的字。
+     *
+     * ⚠️ 計數器**掛在這裡而不是掛在指派點上**是刻意的：fail-loud 不可以
+     * 取決於「有沒有人記得指派」（第二守則：fail-open 沒錯，**靜默**才是缺陷）。
+     * ⚠️ 沙發連線（`MultiSession`）一次斷線會記 N 筆 —— 這一格數的是**連線**，
+     * ⛔ 不是「幾次斷線事件」。
+     */
+    const onLeave = (code: number): void => {
+      if (this.disposed) return; // 我自己叫的 leave() —— ⛔ 不是非預期
+      perfBus.unexpectedDisconnects++;
       this.onDisconnect?.(code);
-    });
+    };
+    room.onLeave(onLeave);
+    // ⚠️ `onLeave` ⛔ 不回傳 unbind fn（colyseus `createSignal` 回傳的是
+    //    EventEmitter 本身）—— 拆它只有 `remove(cb)` 一條路，而那需要**具名** cb。
+    if (typeof room.onLeave.remove === "function") {
+      this.keepDisposer(() => room.onLeave.remove(onLeave));
+    }
+  }
+
+  /**
+   * 收下一個「拆掉它」的動作（`bind()` 專用）。
+   *
+   * ⚠️ `typeof` 這一層是給**測試替身**用的：出貨的 colyseus `Room.onMessage()`
+   * 一定回傳 nanoevents 的 unbind fn（`Room.js:onMessage` 直接 return
+   * `onMessageHandlers.on(...)`），而 repo 裡的 FakeRoom 多半回 undefined。
+   * ⛔ 不是「以防萬一」—— 少了它，既有的 `eventBatchClient.test.ts` 會在
+   * `leave()` 裡對 undefined 呼叫。
+   */
+  private keepDisposer(off: unknown): void {
+    if (typeof off === "function") this.disposers.push(off as () => void);
   }
 
   /** Drained once per frame at the top of the GameApp loop. */
@@ -433,6 +500,10 @@ export class RoomConnection {
     // 晚設就是留一個更小、但仍然存在的窗。
     this.disposed = true;
     void this.room?.leave(true);
+    // ⭐ GH#592 —— 逐一拆掉 `bind()` 掛上去的 5 個 handler。⛔ 不要等伺服器：
+    //    `leave(true)` 只是送出一個位元組，回關閉之前那條 socket 還會送資料上來。
+    for (const off of this.disposers) off();
+    this.disposers.length = 0;
     this.queuedEvents.length = 0;
     // …and the 迴避 buffer with them: a dodge that was never drained belongs to
     // a match that is over, and would otherwise be drawn over the next one.

@@ -55,6 +55,10 @@ describe("RoomConnection cheat + teardown", () => {
     const room = fakeRoom();
     attach(conn, room);
     (conn as unknown as { queuedEvents: EventMessage[] }).queuedEvents.push({ type: "x", tick: 0, data: {} });
+    // ⭐ GH#596 —— 先**真的指派**一個回呼再 leave()。在此之前這一行不存在，於是
+    // 下面那條 `toBeNull()` 斷言的其實是「全 repo 沒有人指派 onDisconnect」——
+    // 它在守一個缺陷，⛔ 不是在守 leave() 有沒有清掉它。
+    conn.onDisconnect = () => {};
     conn.leave();
     expect(room.left).toBe(true);
     expect(conn.room).toBeNull();
