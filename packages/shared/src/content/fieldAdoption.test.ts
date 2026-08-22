@@ -1034,11 +1034,9 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-10",
     why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
   },
-  "field:abilities.effects[]#dash.onEnd": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "S7 —— **衝刺結束那一刻**才跑的一段（52-04「向前衝刺 400 距離後揮出」）。⚠️ 沒有它那一刀是從**起點**揮的：實測三臂同 seed，dash 與 damageArea 寫在同一個 effects[] 裡時受害者掉血與「完全不放那個 AoE」逐字相同（43.47），而同一個 AoE 從終點放是 199.83。⭐ 選擇擴充既有的 dash 而不是開新 kind，是因為「衝刺結束了」這個真相只存在於 MovementSystem 的 override 迴圈裡，而且這樣不需要新的 step slot。",
-  },
+  // ⭐ 2026-08-23（GH#563）——「dash.onEnd 零採用」這一列**劃掉了**：74-02 八刀一閃
+  //    現在走 `dash{onEnd:[damageArea]}`（JASS `OneCutMove` 是先位移、抵達之後才對
+  //    落點 400×400 的敵人結算，war3map.j:48461-48470）。⛔ 不要把它加回來。
   "field:abilities.effects[]#dash.onEndOn": {
     status: "landing",
     since: "2026-08-10",
@@ -2683,20 +2681,10 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why:
       "⭐ #549 的出貨用的是 `all` —— owner 的理由逐字：「**不然都不知道發生什麼事情有沒有反擊成功**」，⇒ **兩邊都要感覺到**。`victim`（只有被打的那一個）留給「不該讓對手知道」的那一族（潛行、埋伏），⛔ 而那一族今天還沒有內容。",
   },
-  // ⭐ 2026-08-22 —— #147 的擊退還原之後，「大」這一格空了。
-  "enum:abilities.effects[]#dash.distanceTier=大": {
-    status: "landing",
-    since: "2026-08-22",
-    why:
-      "位移五級距的第四格。⚠️ 它在今天之內**進出過兩次**：我先照一個**錯的換算**" +
-      "（wc3÷128）把 78-04 死亡噴射肘擊從「極大」降成「大」，後來 #548 的稽核" +
-      "指出本 repo 的換算是 `GGD_PER_WC3 = 11/600`（`templates/expand.ts:50`）——" +
-      "JASS 的 800 wc3 其實是 **14.67** 世界單位而不是 6.25 ⇒ 已還原成「極大」。" +
-      "⭐ `push` 梯子的天花板是 **8.0**（`displacement-tiers.json` 的註解逐字說明" +
-      "兩條梯子刻意不重疊：dash 5.0–14.67 / knockback 2.0–6.0），" +
-      "所以最強的 JASS 擊退對到最強的 push 格是**設計映射**，⛔ 不是換算。" +
-      "⇒ 零採用是**還原的副作用**，另外四格都有內容在走。",
-  },
+  // ⭐ 2026-08-22 —— #147 的擊退還原之後，「大」這一格空了；
+  //    ⭐ 2026-08-23（GH#563）**又有內容了**，所以這一列劃掉：74-02 八刀一閃的衝刺
+  //    是 JASS `OneCutMove` 的 16 步 × 50 wc3 = **800 wc3**，照 `GGD_PER_WC3 = 11/600`
+  //    正是 **14.67** —— 逐位元等於 travel 梯的「大」。⛔ 不要把它加回來。
   // ⭐ 2026-08-21 —— 耗魔級距（`config.mana-tiers@1`），五軸的**最後一軸**。
   // ⚠️ 它落地當天四格就有內容（極小 / 小 / 中 / 大 分佈在 204 支上），只有頂格是零。
   "enum:abilities.manaCostTier=極大": {

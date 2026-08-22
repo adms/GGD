@@ -23,7 +23,7 @@
   "template": {
     "ref": "tpl-buff-self",
     "params": {
-      "duration": 3,
+      "duration": 6,
       "modifiers": [
         {
           "stat": "as",

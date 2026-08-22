@@ -136,12 +136,13 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0,
-        45.0,
-        45.0
+        90.0,
+        90.0,
+        90.0,
+        90.0,
+        90.0
       ],
+      "cooldownTier": "大",
       "manaCost": [
         144.0,
         144.0,
@@ -149,31 +150,41 @@
         144.0,
         144.0
       ],
-      "effects": [],
-      "template": {
-        "ref": "tpl-single-strike",
-        "params": {
-          "damage": {
-            "damageTier": "小",
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.8
-              }
-            ]
-          },
-          "damageType": "physical",
-          "castTimeSec": 0.667
+      "manaCostTier": "小",
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "forward",
+          "distanceTier": "大",
+          "speed": 16,
+          "maxDistance": 14.67,
+          "onEnd": [
+            {
+              "kind": "damageArea",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.8
+                  }
+                ]
+              },
+              "radius": 4.5,
+              "radiusTier": "小",
+              "includeOrigin": true
+            }
+          ]
         }
-      },
+      ],
       "vfxKey": "fx.prim.physical.slash",
       "sfxKey": "wc3.snapdragonmissilelaunch1",
       "targetsEnemies": true,
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.067,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "大",
-      "manaCostTier": "小"
+      "radiusTier": "小"
     },
     "E": {
       "id": "godie-u00j.e",

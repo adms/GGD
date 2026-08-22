@@ -259,6 +259,7 @@
         60.0,
         60.0
       ],
+      "cooldownTier": "極大",
       "manaCost": [
         0.0,
         0.0,
@@ -266,13 +267,10 @@
       ],
       "range": 0.0,
       "effects": [],
-      "vfxKey": "fx.prim.fire.explosion-lg",
-      "sfxKey": "wc3.soulpreservation",
-      "castTimeSec": 0.667,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
-          "duration": 3,
+          "duration": 6,
           "modifiers": [
             {
               "stat": "as",
@@ -283,7 +281,9 @@
           "castTimeSec": 0.667
         }
       },
-      "cooldownTier": "極大"
+      "vfxKey": "fx.prim.fire.explosion-lg",
+      "sfxKey": "wc3.soulpreservation",
+      "castTimeSec": 0.667
     }
   },
   "skillOrder": [
