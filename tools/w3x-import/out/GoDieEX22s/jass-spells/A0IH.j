@@ -1,34 +1,44 @@
 // rawcode: A0IH
-// hero: godie-n00p (slot E)  championDoc: content/champions/godie-n00p.json
-// nameZh: 妖狐變化
-// abilityDoc: content/abilities/godie-n00p.e.json
-// kind: active (spell-effect trigger)
-// handler: event=EVENT_PLAYER_UNIT_SPELL_EFFECT cond=dRv actions=dIv (trigger var qk)
+// nameZh: 18-03 妖狐變化
 // w3a base: AEIl  levels: 4
 // cooldown: {"1": 60.0, "2": 60.0, "3": 60.0, "4": 60.0}
-// mana: {"2": 300, "3": 400, "4": 500, "1": 200}
+// mana: {"1": 200, "2": 300, "3": 400, "4": 500}
 // duration: {"1": 0.0, "2": 0.0, "3": 0.0, "4": 0.0}
 // hero_duration: {"1": 8.0, "2": 12.0, "3": 16.0, "4": 20.0}
-// data[1] per level: {"1": "Nsjs", "2": "Nsjs", "3": "Nsjs", "4": "Nsjs"}
-// data[5] per level: {"1": 250.0, "2": 350.0, "3": 450.0, "4": 550.0}
-// slice tiers: core=['dRv', 'dIv'] depth1=[] depth2=[]
+// source: tools/w3x-import/out/GoDieEX22s-src/raw/war3map.j (CR-normalized line numbers)
+// generator: tools/w3x-import/extract_jass_spells.py
+// trigger families: Gorama
 
-// --- dRv (core, line 14176 in war3map.j) ---
-function dRv takes nothing returns boolean
-return(GetSpellAbilityId()=='A0IH')
+// === family Gorama (active) events=EVENT_PLAYER_UNIT_SPELL_EFFECT ===
+
+// --- Trig_Gorama_Conditions (family, line 28156) ---
+function Trig_Gorama_Conditions takes nothing returns boolean
+    if ( not ( GetSpellAbilityId() == 'A0IH' ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- dIv (core, line 14179 in war3map.j) ---
-function dIv takes nothing returns nothing
-set EX=GetTriggerUnit()
-call PlaySoundOnUnitBJ(Rd,100.,GetTriggerUnit())
-call MoveRectToLoc(YC,GetUnitLoc(GetTriggerUnit()))
-set bj_forLoopBIndex=1
-set bj_forLoopBIndexEnd=$A
-loop
-exitwhen bj_forLoopBIndex>bj_forLoopBIndexEnd
-call AddSpecialEffectLocBJ(GetRandomLocInRect(YC),"Abilities\\Spells\\Undead\\Unsummon\\UnsummonTarget.mdl")
-call DestroyEffect(bj_lastCreatedEffect)
-set bj_forLoopBIndex=bj_forLoopBIndex+1
-endloop
+// --- Trig_Gorama_Actions (family, line 28163) ---
+function Trig_Gorama_Actions takes nothing returns nothing
+    set udg_Fox_Unit = GetTriggerUnit()
+    call PlaySoundOnUnitBJ( gg_snd_AltarOfEldersWhat1, 100.00, GetTriggerUnit() )
+    call MoveRectToLoc( gg_rct_Gorama, GetUnitLoc(GetTriggerUnit()) )
+    set bj_forLoopBIndex = 1
+    set bj_forLoopBIndexEnd = 10
+    loop
+        exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
+        call AddSpecialEffectLocBJ( GetRandomLocInRect(gg_rct_Gorama), "Abilities\\Spells\\Undead\\Unsummon\\UnsummonTarget.mdl" )
+        call DestroyEffectBJ( GetLastCreatedEffectBJ() )
+        set bj_forLoopBIndex = bj_forLoopBIndex + 1
+    endloop
+endfunction
+
+// --- InitTrig_Gorama (family, line 28178) ---
+function InitTrig_Gorama takes nothing returns nothing
+    set gg_trg_Gorama = CreateTrigger(  )
+    call DisableTrigger( gg_trg_Gorama )
+    call TriggerRegisterAnyUnitEventBJ( gg_trg_Gorama, EVENT_PLAYER_UNIT_SPELL_EFFECT )
+    call TriggerAddCondition( gg_trg_Gorama, Condition( function Trig_Gorama_Conditions ) )
+    call TriggerAddAction( gg_trg_Gorama, function Trig_Gorama_Actions )
 endfunction

@@ -272,9 +272,9 @@ export const ATTR_STAT_SOURCE: Partial<Record<Stat, AttrStatSource>> = {
   //    「每一點**敏捷** 額外增加 **0.02% 迴避率**」
   // ⚠️ 兩格都是 0..1 的比率（0.001 = 0.1%），⛔ 不是百分點 —— 出貨係數住
   //    `content/config/combat-env.json`，這裡只宣告「哪個屬性餵哪個屬性值」。
+  [Stat.AttackSpeed]: { attr: "agi", key: "agiToAttackSpeed", mode: "scaleBase" },
   [Stat.CritChance]: { attr: "str", key: "strToCritChance", mode: "add" },
   [Stat.Evasion]: { attr: "agi", key: "agiToEvasion", mode: "add" },
-  [Stat.AttackSpeed]: { attr: "agi", key: "agiToAttackSpeed", mode: "scaleBase" },
   [Stat.MaxMana]: { attr: "int", key: "intToMaxMana", mode: "add" },
   [Stat.ManaRegen]: { attr: "int", key: "intToManaRegen", mode: "add" },
   [Stat.AbilityPower]: { attr: "int", key: "intToAbilityPower", mode: "add" },

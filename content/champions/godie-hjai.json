@@ -97,7 +97,7 @@
       ],
       "vfxKey": "fx.firestorm",
       "targetsEnemies": true,
-      "castTimeSec": 0.367,
+      "castTimeSec": 0.767,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "小",
@@ -139,13 +139,13 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.767
+          "castTimeSec": 1.433
         }
       },
       "vfxKey": "fx.prim.fire.bolt",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 0.767,
+      "castTimeSec": 1.433,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",
@@ -246,7 +246,7 @@
       ],
       "vfxKey": "fx.prim.holy.slash-lg",
       "targetsEnemies": true,
-      "castTimeSec": 1.5,
+      "castTimeSec": 2,
       "rangeTier": "小",
       "range": 4.5,
       "cooldownTier": "極大",

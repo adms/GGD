@@ -1,73 +1,90 @@
 // rawcode: A0HK
-// hero: godie-u00k (slot R)  championDoc: tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u00k.json
-// nameZh: 萬惡歸宗
-// abilityDoc: tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u00k.json#abilities.R
-// kind: active (spell-effect trigger)
-// handler: event=EVENT_PLAYER_UNIT_SPELL_EFFECT cond=zkv actions=zMv (trigger var MP)
+// nameZh: 71-04 萬惡歸宗
 // w3a base: AEsb  levels: 5
 // cooldown: {"1": 60.0, "2": 60.0, "3": 60.0, "4": 60.0, "5": 60.0}
-// mana: {"3": 350, "1": 150, "2": 250, "4": 450, "5": 550}
+// mana: {"1": 150, "2": 250, "3": 350, "4": 450, "5": 550}
 // area: {"1": 600.0, "2": 600.0, "3": 600.0, "4": 600.0, "5": 600.0}
 // duration: {"1": 2.0, "2": 2.0, "3": 2.0, "4": 2.0, "5": 2.0}
 // hero_duration: {"1": 2.0, "2": 2.0, "3": 2.0, "4": 2.0, "5": 2.0}
-// data[1] per level: {"2": 1.0, "3": 1.0, "1": 1.0, "4": 1.0, "5": 1.0}
-// data[3] per level: {"1": 0.0}
-// slice tiers: core=['zkv', 'zMv'] depth1=['gt', 'zlv', 'zmv'] depth2=['zKv', 'zLv']
+// source: tools/w3x-import/out/GoDieEX22s-src/raw/war3map.j (CR-normalized line numbers)
+// generator: tools/w3x-import/extract_jass_spells.py
+// trigger families: AllSinReturn
 
-// --- gt (depth1, line 2287 in war3map.j) ---
-function gt takes real At,location Ft returns group
-set et=CreateGroup()
-call GroupEnumUnitsInRangeOfLoc(et,Ft,At,ot)
-return et
+// === family AllSinReturn (active) events=EVENT_PLAYER_UNIT_SPELL_EFFECT ===
+
+// --- Trig_AllSinReturn_Conditions (family, line 48232) ---
+function Trig_AllSinReturn_Conditions takes nothing returns boolean
+    if ( not ( GetSpellAbilityId() == 'A0HK' ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- zkv (core, line 25030 in war3map.j) ---
-function zkv takes nothing returns boolean
-return(GetSpellAbilityId()=='A0HK')
+// --- Trig_AllSinReturn_Func004Func005C (family, line 48239) ---
+function Trig_AllSinReturn_Func004Func005C takes nothing returns boolean
+    if ( not ( IsPlayerEnemy(GetOwningPlayer(GetEnumUnit()), GetOwningPlayer(GetTriggerUnit())) == true ) ) then
+        return false
+    endif
+    if ( not ( IsUnitType(GetEnumUnit(), UNIT_TYPE_STRUCTURE) != true ) ) then
+        return false
+    endif
+    if ( not ( GetUnitTypeId(GetEnumUnit()) != 'Udea' ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- zKv (depth2, line 25033 in war3map.j) ---
-function zKv takes nothing returns boolean
-return((IsPlayerEnemy(GetOwningPlayer(GetEnumUnit()),GetOwningPlayer(GetTriggerUnit())))and(IsUnitType(GetEnumUnit(),UNIT_TYPE_STRUCTURE)!=true)and(GetUnitTypeId(GetEnumUnit())!='Udea'))!=null
+// --- Trig_AllSinReturn_Func004A (family, line 48252) ---
+function Trig_AllSinReturn_Func004A takes nothing returns nothing
+    set udg_SumOfSinMagic = ( udg_SumOfSinMagic + GetUnitStateSwap(UNIT_STATE_MANA, GetEnumUnit()) )
+    call SetUnitManaPercentBJ( GetEnumUnit(), 0.00 )
+    call AddSpecialEffectTargetUnitBJ( "chest", GetEnumUnit(), "Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl" )
+    call DestroyEffectBJ( GetLastCreatedEffectBJ() )
+    if ( Trig_AllSinReturn_Func004Func005C() ) then
+        call GroupAddUnitSimple( GetEnumUnit(), udg_DeathPowerUnitGroup )
+    else
+        call DoNothing(  )
+    endif
 endfunction
 
-// --- zlv (depth1, line 25036 in war3map.j) ---
-function zlv takes nothing returns nothing
-set po=(po+GetUnitStateSwap(UNIT_STATE_MANA,GetEnumUnit()))
-call SetUnitManaPercentBJ(GetEnumUnit(),.0)
-call AddSpecialEffectTargetUnitBJ("chest",GetEnumUnit(),"Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl")
-call DestroyEffect(bj_lastCreatedEffect)
-if(zKv())then
-call GroupAddUnit(Po,GetEnumUnit())
-endif
+// --- Trig_AllSinReturn_Func006Func002C (family, line 48264) ---
+function Trig_AllSinReturn_Func006Func002C takes nothing returns boolean
+    if ( not ( udg_IsDay == false ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- zLv (depth2, line 25045 in war3map.j) ---
-function zLv takes nothing returns boolean
-return(Lo==false)
+// --- Trig_AllSinReturn_Func006A (family, line 48271) ---
+function Trig_AllSinReturn_Func006A takes nothing returns nothing
+    call SetUnitAnimationWithRarity( GetEnumUnit(), "Death", RARITY_FREQUENT )
+    if ( Trig_AllSinReturn_Func006Func002C() ) then
+        call UnitDamageTargetBJ( udg_KingOfDeath, GetEnumUnit(), ( ( udg_SumOfSinMagic + 500.00 ) * ( I2R(GetUnitAbilityLevelSwapped('A0HK', GetTriggerUnit())) * 0.15 ) ), ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC )
+    else
+        call UnitDamageTargetBJ( udg_KingOfDeath, GetEnumUnit(), ( ( udg_SumOfSinMagic + 0.00 ) * ( I2R(GetUnitAbilityLevelSwapped('A0HK', GetTriggerUnit())) * 0.15 ) ), ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC )
+    endif
+    call PlaySoundOnUnitBJ( gg_snd_Taunt, 100, GetEnumUnit() )
+    call AddSpecialEffectTargetUnitBJ( "chest", GetEnumUnit(), "Objects\\Spawnmodels\\Undead\\UndeadDissipate\\UndeadDissipate.mdl" )
+    call DestroyEffectBJ( GetLastCreatedEffectBJ() )
+    call AddSpecialEffectTargetUnitBJ( "chest", GetEnumUnit(), "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl" )
+    call DestroyEffectBJ( GetLastCreatedEffectBJ() )
 endfunction
 
-// --- zmv (depth1, line 25048 in war3map.j) ---
-function zmv takes nothing returns nothing
-call SetUnitAnimationWithRarity(GetEnumUnit(),"Death",RARITY_FREQUENT)
-if(zLv())then
-call UnitDamageTargetBJ(mo,GetEnumUnit(),((po+500.)*(I2R(GetUnitAbilityLevelSwapped('A0HK',GetTriggerUnit()))*.15)),ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC)
-else
-call UnitDamageTargetBJ(mo,GetEnumUnit(),((po+.0)*(I2R(GetUnitAbilityLevelSwapped('A0HK',GetTriggerUnit()))*.15)),ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC)
-endif
-call PlaySoundOnUnitBJ(Gf,'d',GetEnumUnit())
-call AddSpecialEffectTargetUnitBJ("chest",GetEnumUnit(),"Objects\\Spawnmodels\\Undead\\UndeadDissipate\\UndeadDissipate.mdl")
-call DestroyEffect(bj_lastCreatedEffect)
-call AddSpecialEffectTargetUnitBJ("chest",GetEnumUnit(),"Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl")
-call DestroyEffect(bj_lastCreatedEffect)
+// --- Trig_AllSinReturn_Actions (family, line 48285) ---
+function Trig_AllSinReturn_Actions takes nothing returns nothing
+    set udg_KingOfDeath = GetTriggerUnit()
+    set udg_SumOfSinMagic = 0.00
+    call GroupClear( udg_DeathPowerUnitGroup )
+    call ForGroupBJ( GetUnitsInRangeOfLocAll(600.00, GetUnitLoc(GetTriggerUnit())), function Trig_AllSinReturn_Func004A )
+    call TriggerSleepAction( 1.00 )
+    call ForGroupBJ( udg_DeathPowerUnitGroup, function Trig_AllSinReturn_Func006A )
 endfunction
 
-// --- zMv (core, line 25061 in war3map.j) ---
-function zMv takes nothing returns nothing
-set mo=GetTriggerUnit()
-set po=.0
-call GroupClear(Po)
-call ForGroupBJ(gt(600.,GetUnitLoc(GetTriggerUnit())),function zlv)
-call TriggerSleepAction(1.)
-call ForGroupBJ(Po,function zmv)
+// --- InitTrig_AllSinReturn (family, line 48295) ---
+function InitTrig_AllSinReturn takes nothing returns nothing
+    set gg_trg_AllSinReturn = CreateTrigger(  )
+    call DisableTrigger( gg_trg_AllSinReturn )
+    call TriggerRegisterAnyUnitEventBJ( gg_trg_AllSinReturn, EVENT_PLAYER_UNIT_SPELL_EFFECT )
+    call TriggerAddCondition( gg_trg_AllSinReturn, Condition( function Trig_AllSinReturn_Conditions ) )
+    call TriggerAddAction( gg_trg_AllSinReturn, function Trig_AllSinReturn_Actions )
 endfunction

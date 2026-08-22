@@ -103,7 +103,7 @@ describe("combat-env doc parse + labels (adminui-combatenv)", () => {
     // added to the same table.
     // owner 2026-08-04 再加金錢發放倍率：回合／一般殭屍／特殊殭屍與王／英雄／任務 五格。
     // 2026-08-10 owner 再加三格:moveSpeedMelee / moveSpeedRanged / magicResistMult。
-    expect(COMBAT_ENV_KEYS).toHaveLength(36);
+    expect(COMBAT_ENV_KEYS).toHaveLength(38) /* 2026-08-22：+strToCritChance +agiToEvasion */;
     for (const k of COMBAT_ENV_KEYS) {
       expect(COMBAT_ENV_LABELS[k].zh, `label for ${k}`).toBeTruthy();
       expect(COMBAT_ENV_LABELS[k].note, `note for ${k}`).toBeTruthy();

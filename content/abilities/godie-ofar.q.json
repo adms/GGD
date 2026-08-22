@@ -38,14 +38,14 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.767
+      "castTimeSec": 1.433
     }
   },
   "vfxKey": "fx.prim.lightning.nova",
   "targetsEnemies": true,
   "schema": "ability@1",
   "radius": 6.0,
-  "castTimeSec": 0.767,
+  "castTimeSec": 1.433,
   "rangeTier": "極大",
   "range": 12,
   "radiusTier": "中"

@@ -147,7 +147,7 @@
       ],
       "vfxKey": "fx.prim.physical.beam",
       "targetsEnemies": true,
-      "castTimeSec": 0.367,
+      "castTimeSec": 0.767,
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "小",
@@ -265,7 +265,7 @@
       "vfxKey": "fx.prim.physical.shockwave-lg",
       "targetsEnemies": true,
       "radius": 6.97,
-      "castTimeSec": 1.5,
+      "castTimeSec": 2,
       "cooldownTier": "中",
       "manaCostTier": "小"
     }

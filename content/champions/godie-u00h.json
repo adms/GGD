@@ -99,7 +99,7 @@
       ],
       "vfxKey": "fx.prim.wind.slash",
       "targetsEnemies": true,
-      "castTimeSec": 0.367,
+      "castTimeSec": 0.767,
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "小",
@@ -140,14 +140,14 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 1.133
+          "castTimeSec": 1.233
         }
       },
       "vfxKey": "fx.prim.fire.slash",
       "targetsEnemies": true,
       "radius": 3.0,
       "icon": "assets/icons/abilities/godie-u00h.w.png",
-      "castTimeSec": 1.133,
+      "castTimeSec": 1.233,
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "小",
@@ -204,7 +204,7 @@
       ],
       "vfxKey": "fx.prim.ice.beam",
       "sfxKey": "wc3.flaretarget2",
-      "castTimeSec": 1.133,
+      "castTimeSec": 1.2,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",

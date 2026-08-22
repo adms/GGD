@@ -1,61 +1,115 @@
 // rawcode: A0GB
-// hero: godie-huth (slot Q)  championDoc: content/champions/godie-huth.json
-// nameZh: 吃掉你
-// abilityDoc: content/abilities/godie-huth.q.json
-// kind: active (spell-effect trigger)
-// handler: event=EVENT_PLAYER_UNIT_SPELL_EFFECT cond=qCv actions=qDv (trigger var zm)
-// handler: event=EVENT_PLAYER_UNIT_SPELL_CAST cond=qFv actions=qhv (trigger var Zm)
+// nameZh: 28-01 吃掉你
 // w3a base: ANtm  levels: 5
 // cooldown: {"1": 35.0, "2": 28.0, "3": 21.0, "4": 14.0, "5": 7.0}
 // mana: {"1": 30, "2": 50, "3": 70, "4": 90, "5": 110}
 // range: {"1": 200.0}
-// data[1] per level: {"1": 0.0, "2": 0.0, "3": 0.0, "4": 0.0, "5": 0.0}
-// data[3] per level: {"1": 9, "2": 9, "3": 9, "4": 9, "5": 9}
-// data[4] per level: {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0}
-// slice tiers: core=['qCv', 'qDv', 'qFv', 'qhv'] depth1=['qdv', 'qGv'] depth2=['qgv']
+// source: tools/w3x-import/out/GoDieEX22s-src/raw/war3map.j (CR-normalized line numbers)
+// generator: tools/w3x-import/extract_jass_spells.py
+// trigger families: Eat, NO_Eat
 
-// --- qCv (core, line 21088 in war3map.j) ---
-function qCv takes nothing returns boolean
-return(GetSpellAbilityId()=='A0GB')
+// === family Eat (active) events=EVENT_PLAYER_UNIT_SPELL_EFFECT ===
+
+// --- Trig_Eat_Conditions (family, line 40592) ---
+function Trig_Eat_Conditions takes nothing returns boolean
+    if ( not ( GetSpellAbilityId() == 'A0GB' ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- qdv (depth1, line 21091 in war3map.j) ---
-function qdv takes nothing returns boolean
-return(rX==6)
+// --- Trig_Eat_Func002C (family, line 40599) ---
+function Trig_Eat_Func002C takes nothing returns boolean
+    if ( not ( udg_Eat_Index == 6 ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- qDv (core, line 21094 in war3map.j) ---
-function qDv takes nothing returns nothing
-set rX=(rX+1)
-if(qdv())then
-set rX=0
-call ModifyHeroStat(0,GetTriggerUnit(),0,1)
-endif
+// --- Trig_Eat_Actions (family, line 40606) ---
+function Trig_Eat_Actions takes nothing returns nothing
+    set udg_Eat_Index = ( udg_Eat_Index + 1 )
+    if ( Trig_Eat_Func002C() ) then
+        set udg_Eat_Index = 0
+        call ModifyHeroStat( bj_HEROSTAT_STR, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, 1 )
+    else
+    endif
 endfunction
 
-// --- qFv (core, line 21101 in war3map.j) ---
-function qFv takes nothing returns boolean
-return(GetSpellAbilityId()=='A0GB')
+// --- InitTrig_Eat (family, line 40616) ---
+function InitTrig_Eat takes nothing returns nothing
+    set gg_trg_Eat = CreateTrigger(  )
+    call DisableTrigger( gg_trg_Eat )
+    call TriggerRegisterAnyUnitEventBJ( gg_trg_Eat, EVENT_PLAYER_UNIT_SPELL_EFFECT )
+    call TriggerAddCondition( gg_trg_Eat, Condition( function Trig_Eat_Conditions ) )
+    call TriggerAddAction( gg_trg_Eat, function Trig_Eat_Actions )
 endfunction
 
-// --- qgv (depth2, line 21104 in war3map.j) ---
-function qgv takes nothing returns boolean
-return(GetUnitTypeId(GetSpellTargetUnit())=='ebal')or(GetUnitTypeId(GetSpellTargetUnit())=='orai')or(GetUnitTypeId(GetSpellTargetUnit())=='n002')or(GetUnitTypeId(GetSpellTargetUnit())=='h01W')or(GetUnitTypeId(GetSpellTargetUnit())=='nshe')or(GetUnitTypeId(GetSpellTargetUnit())=='u001')or(GetUnitTypeId(GetSpellTargetUnit())=='u00D')or(GetUnitTypeId(GetSpellTargetUnit())=='u00E')
+// === family NO_Eat (active) events=EVENT_PLAYER_UNIT_SPELL_CAST ===
+
+// --- Trig_NO_Eat_Conditions (family, line 40627) ---
+function Trig_NO_Eat_Conditions takes nothing returns boolean
+    if ( not ( GetSpellAbilityId() == 'A0GB' ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- qGv (depth1, line 21107 in war3map.j) ---
-function qGv takes nothing returns boolean
-return(qgv())
+// --- Trig_NO_Eat_Func001Func007C (family, line 40634) ---
+function Trig_NO_Eat_Func001Func007C takes nothing returns boolean
+    if ( ( GetUnitTypeId(GetSpellTargetUnit()) == 'ebal' ) ) then
+        return true
+    endif
+    if ( ( GetUnitTypeId(GetSpellTargetUnit()) == 'orai' ) ) then
+        return true
+    endif
+    if ( ( GetUnitTypeId(GetSpellTargetUnit()) == 'n002' ) ) then
+        return true
+    endif
+    if ( ( GetUnitTypeId(GetSpellTargetUnit()) == 'h01W' ) ) then
+        return true
+    endif
+    if ( ( GetUnitTypeId(GetSpellTargetUnit()) == 'nshe' ) ) then
+        return true
+    endif
+    if ( ( GetUnitTypeId(GetSpellTargetUnit()) == 'u001' ) ) then
+        return true
+    endif
+    if ( ( GetUnitTypeId(GetSpellTargetUnit()) == 'u00D' ) ) then
+        return true
+    endif
+    if ( ( GetUnitTypeId(GetSpellTargetUnit()) == 'u00E' ) ) then
+        return true
+    endif
+    return false
 endfunction
 
-// --- qhv (core, line 21110 in war3map.j) ---
-function qhv takes nothing returns nothing
-if(qGv())then
-call IssueImmediateOrderById(GetTriggerUnit(),$D0004)
-call CreateTextTagUnitBJ("這個看起來不好吃...",GetTriggerUnit(),-30.,10.,90.,.0,.0,10.)
-call SetTextTagVelocityBJ(bj_lastCreatedTextTag,64.,90.)
-call SetTextTagPermanentBJ(bj_lastCreatedTextTag,false)
-call SetTextTagLifespanBJ(bj_lastCreatedTextTag,2.8)
-call SetTextTagFadepointBJ(bj_lastCreatedTextTag,1.5)
-endif
+// --- Trig_NO_Eat_Func001C (family, line 40662) ---
+function Trig_NO_Eat_Func001C takes nothing returns boolean
+    if ( not Trig_NO_Eat_Func001Func007C() ) then
+        return false
+    endif
+    return true
+endfunction
+
+// --- Trig_NO_Eat_Actions (family, line 40669) ---
+function Trig_NO_Eat_Actions takes nothing returns nothing
+    if ( Trig_NO_Eat_Func001C() ) then
+        call IssueImmediateOrderBJ( GetTriggerUnit(), "stop" )
+        call CreateTextTagUnitBJ( "TRIGSTR_1679", GetTriggerUnit(), -30.00, 10.00, 90.00, 0.00, 0.00, 10.00 )
+        call SetTextTagVelocityBJ( GetLastCreatedTextTag(), 64.00, 90.00 )
+        call SetTextTagPermanentBJ( GetLastCreatedTextTag(), false )
+        call SetTextTagLifespanBJ( GetLastCreatedTextTag(), 2.80 )
+        call SetTextTagFadepointBJ( GetLastCreatedTextTag(), 1.50 )
+    else
+    endif
+endfunction
+
+// --- InitTrig_NO_Eat (family, line 40682) ---
+function InitTrig_NO_Eat takes nothing returns nothing
+    set gg_trg_NO_Eat = CreateTrigger(  )
+    call DisableTrigger( gg_trg_NO_Eat )
+    call TriggerRegisterAnyUnitEventBJ( gg_trg_NO_Eat, EVENT_PLAYER_UNIT_SPELL_CAST )
+    call TriggerAddCondition( gg_trg_NO_Eat, Condition( function Trig_NO_Eat_Conditions ) )
+    call TriggerAddAction( gg_trg_NO_Eat, function Trig_NO_Eat_Actions )
 endfunction

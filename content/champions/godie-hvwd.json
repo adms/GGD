@@ -117,7 +117,7 @@
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.holy.pulse",
-      "castTimeSec": 0.167,
+      "castTimeSec": 0.267,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
@@ -129,7 +129,7 @@
               "value": 0.07
             }
           ],
-          "castTimeSec": 0.167
+          "castTimeSec": 0.267
         }
       },
       "cooldownTier": "極小"

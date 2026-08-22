@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_9df329798f27",
+    "contentVersion": "cv_f60b92f6a0c5",
     "collections": {
       "champions": {
-        "hash": "4bf749f842a6",
+        "hash": "153e13073e00",
         "count": 71
       },
       "abilities": {
-        "hash": "ed284093a51a",
+        "hash": "24a5785a150a",
         "count": 420
       },
       "items": {
@@ -42,23 +42,23 @@
         "count": 7
       },
       "config": {
-        "hash": "bd9f4d2b4028",
-        "count": 78
+        "hash": "a445f0e9f784",
+        "count": 80
       },
       "models": {
         "hash": "38d96d54f6e6",
         "count": 124
       },
       "vfx": {
-        "hash": "606af78050aa",
-        "count": 639
+        "hash": "979bf10d9d31",
+        "count": 640
       },
       "skins": {
         "hash": "3d1095f3da83",
         "count": 5
       },
       "ability-templates": {
-        "hash": "6635185a0fd5",
+        "hash": "82ff33acd0a9",
         "count": 34
       }
     },
@@ -89,7 +89,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "11464833",
+    "fingerprint": "7c6c67f6",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -97,6 +97,7 @@
       "carry",
       "chainLightning",
       "championForm",
+      "comboStrikes",
       "convertTeam",
       "cycleBuff",
       "damage",
@@ -119,6 +120,7 @@
       "manaBarrier",
       "modifyCooldown",
       "proxyCast",
+      "pull",
       "randomArea",
       "restore",
       "revive",
@@ -220,6 +222,8 @@
       "aim",
       "amount",
       "amountPerTick",
+      "anchorCount",
+      "anchorRadius",
       "apexHeight",
       "applyTo",
       "at",
@@ -260,6 +264,7 @@
       "deathWard",
       "decay",
       "delaySec",
+      "destination",
       "disarmed",
       "dispellable",
       "distance",
@@ -278,8 +283,11 @@
       "exclusiveOnExisting",
       "fallbackLevel",
       "falloff",
+      "family",
       "feared",
       "finalEffects",
+      "finisher",
+      "finisherDelaySec",
       "firstAtCast",
       "fixedRank",
       "flat",
@@ -364,6 +372,7 @@
       "perDamagePctOfMaxHealth",
       "perMana",
       "perRank",
+      "perStrike",
       "perTargetLevel",
       "permanent",
       "permanentScope",
@@ -399,9 +408,11 @@
       "stacks",
       "statusId",
       "steps",
+      "stopDistance",
       "stopOnCasterDeath",
       "stopShortUnits",
       "store",
+      "strikes",
       "stun",
       "subtractGap",
       "target",
@@ -458,6 +469,7 @@
       "maxRank",
       "name",
       "passive",
+      "persistentVfx",
       "provenance",
       "radius",
       "radiusTier",
@@ -632,6 +644,7 @@
         "maxRank",
         "name",
         "passive",
+        "persistentVfx",
         "provenance",
         "radius",
         "radiusTier",
@@ -788,7 +801,7 @@
         "available": true
       },
       "combo": {
-        "available": false
+        "available": true
       },
       "conditions": {
         "available": true
@@ -815,6 +828,9 @@
         "available": true
       },
       "projectile": {
+        "available": true
+      },
+      "pull": {
         "available": true
       },
       "summon": {
@@ -1136,6 +1152,18 @@
         "caveat": "⭐ 「這一發不會死」已經有兩條路：`invulnerable`（無條件擋，含真傷）與**免死**（`sim/marks.ts` 的 `lethal` 標記 + `combat/lethalSave.ts`，攔在護盾之後扣血之前）。⛔ 但引擎**沒有「死亡延後 N 秒」**：死亡是在同一 tick commit 的，⛔ 沒有一個「已經死了但還站著」的中間狀態。⇒ 「陣亡後 3 秒內仍可行動」這種卡片今天要改寫成「免死 + 一段短無敵」，⚠️ 而那兩者的**可被驅散性**與畫面表現都不一樣，⛔ 不是同一句話。⚠️ 免死的 `restoreMode` 預設是 `clamp`（見 `hook.on-lethal-damage@1`），⛔ 寫「留在 N% 生命」的卡片一定要填 `restore`。",
         "evidence": "packages/shared/src/sim/effects/invulnerable.ts + sim/combat/lethalSave.ts + sim/marks.ts",
         "nearestExisting": "⚠️ `revive` 是「死了之後再站起來」，時序在死亡**之後**；`delayDeath` 要的是死亡**之前**多出一段可以行動的時間。兩者在畫面上像，在狀態機上是相反的兩側。"
+      },
+      {
+        "key": "effect.combo-strikes@1",
+        "plan": "#541 —— 01-04 超究武神霸斬「連斬七次」· 20-002「連續七次斬擊…最後施展約束與勝利之劍」",
+        "state": "supported",
+        "evidence": "packages/shared/src/sim/effects/comboStrikes.ts —— 每一段是自己的一次 `runEffects`，所以各觸發一次 on-hit、各吃一次減傷、各記一次分。⭐ 節奏（幾段／間隔／收尾延遲）**在載入時**從 `config.combo-strikes@1` 解析（`sim/effects/comboFamilies.ts`），⛔ 不烘進技能 JSON；不等間隔用 `steps[]`。⚠️ 排程走的是**既有的** `SimWorld.delayed` 佇列與 `delayedSystem`，⛔ 不是第二個排程器。"
+      },
+      {
+        "key": "effect.pull@1",
+        "plan": "#147 —— A091 05-03 及喀爾度「2×等級 個錨點 + 250+100×等級 半徑」(war3map.j:28224-28233)",
+        "state": "supported",
+        "evidence": "packages/shared/src/sim/effects/pull.ts —— `destination` 三檔（caster / point / anchorRing）。⭐ 等分錨點環用一張**單位旋轉常數表**做（`RING_UNIT_ROTATION`），因為 `sim/**` 禁止三角函式（`sim/purity.test.ts`）。位移走的是 `knockback` 已經在用的 `nav.override` 地面滑行 + `world.knockdown` 行動鎖，⛔ 沒有第二套位移機制。"
       },
       {
         "key": "action.redirect-damage@1",
@@ -2535,7 +2563,7 @@
       "effectKindsSource": "runtimeCapabilities.effectKinds（⛔ 不在這裡重複一份）"
     },
     "vfx": {
-      "docCount": 639,
+      "docCount": 640,
       "keys": [
         "fx.barkskin",
         "fx.bramble-burst",
@@ -2861,12 +2889,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "11464833",
+    "engineFingerprint": "7c6c67f6",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 11464833 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 7c6c67f6 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -3378,12 +3406,12 @@
           }
         },
         "envMultipliers": {
-          "cooldown": 0.2,
-          "damageDealt": 1,
+          "cooldown": 0.4,
+          "damageDealt": 2.5,
           "defense": 1,
           "attackDamage": 1,
           "abilityPower": 1,
-          "maxHealth": 6,
+          "maxHealth": 8,
           "healthRegen": 1,
           "maxMana": 1,
           "manaRegen": 8,
@@ -3413,7 +3441,9 @@
           "goldQuest": 1,
           "moveSpeedMelee": 0.8,
           "moveSpeedRanged": 0.6,
-          "magicResistMult": 0.2
+          "magicResistMult": 0.2,
+          "strToCritChance": 0.001,
+          "agiToEvasion": 0.0002
         },
         "normalizedStats": [
           "ms",
@@ -3604,5 +3634,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "0829c65521ac"
+  "profileDigest": "56ad970dd0fc"
 }

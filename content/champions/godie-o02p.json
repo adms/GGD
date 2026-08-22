@@ -89,13 +89,13 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.767
+          "castTimeSec": 1.5
         }
       },
       "vfxKey": "fx.prim.sound.nova",
       "targetsEnemies": true,
       "radius": 8.0,
-      "castTimeSec": 0.767,
+      "castTimeSec": 1.5,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",

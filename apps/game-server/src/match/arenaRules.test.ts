@@ -464,8 +464,21 @@ describe("同一回合撞卡：聖杯願望贏、寶具讓路 (#340, arena-02, a
     //    ⚠️ **第五次**：owner 2026-08-22「不能把系統倍率乘進去再反推」⇒ 五級距
     //    600/1500/3000/4500/6000 → 200/500/1000/1500/2000,420 支技能的傷害同時變,
     //    骰子又落到別處。重掃 555–604 之後最小的是 **556**。
-    const ctl = makeArenaMatch(556);
-    runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === round);
+    // ⚠️ **第六次**：owner 2026-08-22 的四個數值（`maxHealth` 6→8、`cooldown`
+    //    0.2→0.4、力量→暴擊率、敏捷→迴避率）＋ `damageDealt` 1.0→2.5 ——
+    //    bot 打死人的 tick 又變了,骰子落在別處。
+    // ⭐ 這一次**不再手抄一個種子**：現場掃 555–604 取第一個可用的。
+    //    ⛔ 抄一個數字進來就是第七次、第八次 —— 而那個數字每一次都用
+    //    「撞卡壞了」這個錯誤訊息報「平衡數值被調過」（這個檔已經解釋過五次）。
+    const ctl = (() => {
+      for (let seed = 555; seed <= 604; seed++) {
+        const c = makeArenaMatch(seed);
+        runUntil(c, () => c.phase.phase === "intermission" && c.phase.round === round);
+        const alive = [...c.seats.values()].filter((s) => (c.lives.get(s.teamId) ?? 0) > 0);
+        if (alive.length > 0 && alive.every((s) => c.offers.get(`${round}:${s.seatId}`))) return c;
+      }
+      throw new Error("555–604 沒有一個種子能讓撞卡回合有活人拿到聖杯願望 —— 這一支要重寫");
+    })();
     let checked = 0;
     for (const seat of ctl.seats.values()) {
       if ((ctl.lives.get(seat.teamId) ?? 0) <= 0) continue;

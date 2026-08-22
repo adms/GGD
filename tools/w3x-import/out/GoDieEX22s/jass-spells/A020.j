@@ -1,273 +1,350 @@
 // rawcode: A020
-// hero: godie-u034 (slot E)  championDoc: content/champions/godie-u034.json
-// nameZh: 山形修煉-強
-// abilityDoc: content/abilities/godie-u034.e.json
-// kind: passive (referenced via GetUnitAbilityLevel/GetLearnedSkill in other triggers)
-// handler: event=EVENT_PLAYER_UNIT_SPELL_EFFECT cond=None actions=csv (trigger var dk)
-// handler: event=EVENT_PLAYER_UNIT_ATTACKED cond=None actions=c5v (trigger var fk)
-// w3a base: Aamk  levels: None
-// slice tiers: core=['csv', 'c5v'] depth1=['Ct', 'gt', 'Ht', 'cKv', 'clv', 'cmv', 'cMv', 'cpv', 'cPv', 'cqv', 'cQv', 'czv', 'c_v', 'c0v', 'c1v', 'c2v', 'c3v', 'c4v'] depth2=['cLv', 'cZv']
+// nameZh: 06-03 山形修煉-強
+// source: tools/w3x-import/out/GoDieEX22s-src/raw/war3map.j (CR-normalized line numbers)
+// generator: tools/w3x-import/extract_jass_spells.py
+// trigger families: XHunter, XHunterStone
 
-// --- Ct (depth1, line 2271 in war3map.j) ---
-function Ct takes rect r returns group
-set et=CreateGroup()
-call GroupEnumUnitsInRect(et,r,ot)
-return et
+// === family XHunter (passive) events=EVENT_PLAYER_UNIT_ATTACKED ===
+
+// --- Trig_XHunter_Conditions (family, line 27154) ---
+function Trig_XHunter_Conditions takes nothing returns boolean
+    if ( not ( GetUnitTypeId(GetAttacker()) == 'U034' ) ) then
+        return false
+    endif
+    if ( not ( IsUnitType(GetAttackedUnitBJ(), UNIT_TYPE_STRUCTURE) == false ) ) then
+        return false
+    endif
+    if ( not ( IsPlayerAlly(GetOwningPlayer(GetAttackedUnitBJ()), GetOwningPlayer(GetAttacker())) == false ) ) then
+        return false
+    endif
+    if ( not ( GetRandomInt(1, 5) == 3 ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- gt (depth1, line 2287 in war3map.j) ---
-function gt takes real At,location Ft returns group
-set et=CreateGroup()
-call GroupEnumUnitsInRangeOfLoc(et,Ft,At,ot)
-return et
+// --- Trig_XHunter_Func005Func016C (family, line 27170) ---
+function Trig_XHunter_Func005Func016C takes nothing returns boolean
+    if ( not ( IsUnitAlly(GetAttackedUnitBJ(), Player(PLAYER_NEUTRAL_AGGRESSIVE)) != true ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- Ht (depth1, line 2303 in war3map.j) ---
-function Ht takes player Dt,integer jt returns group
-set et=CreateGroup()
-set bj_groupEnumTypeId=jt
-call GroupEnumUnitsOfPlayer(et,Dt,filterGetUnitsOfPlayerAndTypeId)
-return et
+// --- Trig_XHunter_Func005Func018Func005Func001C (family, line 27177) ---
+function Trig_XHunter_Func005Func018Func005Func001C takes nothing returns boolean
+    if ( not ( IsUnitAliveBJ(GetEnumUnit()) == true ) ) then
+        return false
+    endif
+    if ( not ( IsUnitAlly(GetEnumUnit(), GetOwningPlayer(udg_JayUnit)) == false ) ) then
+        return false
+    endif
+    if ( not ( IsUnitType(GetEnumUnit(), UNIT_TYPE_STRUCTURE) == false ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- cKv (depth1, line 13464 in war3map.j) ---
-function cKv takes nothing returns boolean
-return(IsUnitAlly(GetSpellTargetUnit(),Player($C))!=true)
+// --- Trig_XHunter_Func005Func018Func005A (family, line 27190) ---
+function Trig_XHunter_Func005Func018Func005A takes nothing returns nothing
+    if ( Trig_XHunter_Func005Func018Func005Func001C() ) then
+        call UnitDamageTargetBJ( udg_JayUnit, GetEnumUnit(), udg_Gon_Stone_Damage, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC )
+    else
+    endif
 endfunction
 
-// --- clv (depth1, line 13467 in war3map.j) ---
-function clv takes nothing returns nothing
-call CameraSetEQNoiseForPlayer(GetOwningPlayer(GetEnumUnit()),12.)
+// --- Trig_XHunter_Func005Func018Func011C (family, line 27197) ---
+function Trig_XHunter_Func005Func018Func011C takes nothing returns boolean
+    if ( not ( udg_EX_Mode[GetConvertedPlayerId(GetOwningPlayer(udg_JayUnit))] == true ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- cLv (depth2, line 13470 in war3map.j) ---
-function cLv takes nothing returns boolean
-return(IsUnitAlly(GetEnumUnit(),GetOwningPlayer(Wi))==false)
+// --- Trig_XHunter_Func005Func018Func022C (family, line 27204) ---
+function Trig_XHunter_Func005Func018Func022C takes nothing returns boolean
+    if ( not ( udg_EX_Mode[GetConvertedPlayerId(GetOwningPlayer(udg_JayUnit))] == true ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- cmv (depth1, line 13473 in war3map.j) ---
-function cmv takes nothing returns nothing
-if(cLv())then
-call UnitDamageTargetBJ(Wi,GetEnumUnit(),wi,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC)
-endif
+// --- Trig_XHunter_Func005Func018C (family, line 27211) ---
+function Trig_XHunter_Func005Func018C takes nothing returns boolean
+    if ( not ( GetRandomInt(1, 2) == 1 ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- cMv (depth1, line 13478 in war3map.j) ---
-function cMv takes nothing returns boolean
-return(QR[(1+GetPlayerId(GetOwningPlayer(GetTriggerUnit())))])
+// --- Trig_XHunter_Func005C (family, line 27218) ---
+function Trig_XHunter_Func005C takes nothing returns boolean
+    if ( not ( GetRandomInt(1, 100) <= ( 5 + R2I(( I2R(GetHeroStatBJ(bj_HEROSTAT_AGI, GetAttacker(), true)) / 10.00 )) ) ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- cpv (depth1, line 13481 in war3map.j) ---
-function cpv takes nothing returns boolean
-return(QR[(1+GetPlayerId(GetOwningPlayer(GetTriggerUnit())))])
+// --- Trig_XHunter_Func009A (family, line 27225) ---
+function Trig_XHunter_Func009A takes nothing returns nothing
+    call KillUnit( GetEnumUnit() )
+    call RemoveUnit( GetEnumUnit() )
 endfunction
 
-// --- cPv (depth1, line 13484 in war3map.j) ---
-function cPv takes nothing returns boolean
-return(DistanceBetweenPoints(eB,xB)<=500.)
+// --- Trig_XHunter_Actions (family, line 27230) ---
+function Trig_XHunter_Actions takes nothing returns nothing
+    set udg_JayUnit = GetAttacker()
+    set udg_JayCastedUnit = GetAttackedUnitBJ()
+    set udg_Gon_P1 = GetUnitLoc(udg_JayUnit)
+    set udg_Gon_P2 = GetUnitLoc(udg_JayCastedUnit)
+    if ( Trig_XHunter_Func005C() ) then
+        // 石頭
+        set udg_Gon_Stone_Damage = ( 350.00 + ( 150.00 * I2R(GetUnitAbilityLevelSwapped('A020', udg_JayUnit)) ) )
+        set udg_KnockBack_Index = 0
+        set udg_KnockBack_Target = udg_JayCastedUnit
+        set udg_P1 = GetUnitLoc(udg_JayUnit)
+        set udg_P2 = GetUnitLoc(udg_JayCastedUnit)
+        set udg_KnockBack_Angle = AngleBetweenPoints(udg_P1, udg_P2)
+        call RemoveLocation( udg_P1 )
+        call RemoveLocation( udg_P2 )
+        call UnitDamageTargetBJ( udg_JayUnit, udg_JayCastedUnit, udg_Gon_Stone_Damage, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC )
+        call CreateTextTagUnitBJ( ( ( "石頭 " + I2S(R2I(udg_Gon_Stone_Damage)) ) + "!!" ), udg_JayUnit, -30.00, 10.00, 90.00, 0.00, 0.00, 10.00 )
+        call SetTextTagVelocityBJ( GetLastCreatedTextTag(), 64.00, 90.00 )
+        call SetTextTagPermanentBJ( GetLastCreatedTextTag(), false )
+        call SetTextTagLifespanBJ( GetLastCreatedTextTag(), 2.80 )
+        call SetTextTagFadepointBJ( GetLastCreatedTextTag(), 1.50 )
+        if ( Trig_XHunter_Func005Func016C() ) then
+            call EnableTrigger( gg_trg_XHunterStone_Effect )
+        else
+        endif
+        call PlaySoundOnUnitBJ( gg_snd_MortarTeamPissed9, 100.00, udg_JayUnit )
+    else
+        if ( Trig_XHunter_Func005Func018C() ) then
+            // 剪刀
+            set udg_Gon_Stone_Damage = ( 250.00 + ( 100.00 * I2R(GetUnitAbilityLevelSwapped('A08W', udg_JayUnit)) ) )
+            call AddSpecialEffectTargetUnitBJ( "chest", udg_JayCastedUnit, "HeroCloudCyd.mdx" )
+            call DestroyEffectBJ( GetLastCreatedEffectBJ() )
+            call UnitDamageTargetBJ( udg_JayUnit, udg_JayCastedUnit, udg_Gon_Stone_Damage, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC )
+            call CreateTextTagUnitBJ( ( ( "剪刀 " + I2S(R2I(udg_Gon_Stone_Damage)) ) + "!!" ), udg_JayUnit, -30.00, 10.00, 90.00, 0.00, 0.00, 10.00 )
+            call SetTextTagVelocityBJ( GetLastCreatedTextTag(), 64.00, 90.00 )
+            call SetTextTagPermanentBJ( GetLastCreatedTextTag(), false )
+            call SetTextTagLifespanBJ( GetLastCreatedTextTag(), 2.80 )
+            call SetTextTagFadepointBJ( GetLastCreatedTextTag(), 1.50 )
+            if ( Trig_XHunter_Func005Func018Func022C() ) then
+                call CreateNUnitsAtLocFacingLocBJ( 1, 'hfoo', GetOwningPlayer(udg_JayUnit), udg_Gon_P1, udg_Gon_P2 )
+                call ShowUnitHide( GetLastCreatedUnit() )
+                call UnitApplyTimedLifeBJ( 1.00, 'BTLF', GetLastCreatedUnit() )
+                call UnitAddAbilityBJ( 'A0NP', GetLastCreatedUnit() )
+                call IssueTargetOrderBJ( GetLastCreatedUnit(), "acidbomb", udg_JayCastedUnit )
+            else
+            endif
+        else
+            // 布
+            set udg_Gon_Stone_Damage = ( 225.00 + ( 75.00 * I2R(GetUnitAbilityLevelSwapped('A08X', udg_JayUnit)) ) )
+            call AddSpecialEffectLocBJ( udg_Gon_P2, "Units\\NightElf\\Wisp\\WispExplode.mdl" )
+            call DestroyEffectBJ( GetLastCreatedEffectBJ() )
+            call ForGroupBJ( GetUnitsInRangeOfLocAll(270.00, udg_Gon_P2), function Trig_XHunter_Func005Func018Func005A )
+            call CreateTextTagUnitBJ( ( ( "布 " + I2S(R2I(udg_Gon_Stone_Damage)) ) + "!!" ), GetTriggerUnit(), -30.00, 10.00, 90.00, 0.00, 0.00, 10.00 )
+            call SetTextTagVelocityBJ( GetLastCreatedTextTag(), 64.00, 90.00 )
+            call SetTextTagPermanentBJ( GetLastCreatedTextTag(), false )
+            call SetTextTagLifespanBJ( GetLastCreatedTextTag(), 2.80 )
+            call SetTextTagFadepointBJ( GetLastCreatedTextTag(), 1.50 )
+            if ( Trig_XHunter_Func005Func018Func011C() ) then
+                call CreateNUnitsAtLocFacingLocBJ( 1, 'hfoo', GetOwningPlayer(udg_JayUnit), udg_Gon_P2, udg_Gon_P1 )
+                call ShowUnitHide( GetLastCreatedUnit() )
+                call UnitApplyTimedLifeBJ( 1.00, 'BTLF', GetLastCreatedUnit() )
+                call UnitAddAbilityBJ( 'A04W', GetLastCreatedUnit() )
+                call IssueImmediateOrderBJ( GetLastCreatedUnit(), "thunderclap" )
+            else
+            endif
+        endif
+    endif
+    call RemoveLocation(udg_Gon_P1)
+    call RemoveLocation(udg_Gon_P2)
+    call TriggerSleepAction( 2 )
+    call ForGroupBJ( GetUnitsOfPlayerAndTypeId(GetOwningPlayer(udg_JayUnit), 'hfoo'), function Trig_XHunter_Func009A )
 endfunction
 
-// --- cqv (depth1, line 13487 in war3map.j) ---
-function cqv takes nothing returns boolean
-return(DistanceBetweenPoints(eB,xB)<=250.)
+// --- InitTrig_XHunter (family, line 27304) ---
+function InitTrig_XHunter takes nothing returns nothing
+    set gg_trg_XHunter = CreateTrigger(  )
+    call DisableTrigger( gg_trg_XHunter )
+    call TriggerRegisterAnyUnitEventBJ( gg_trg_XHunter, EVENT_PLAYER_UNIT_ATTACKED )
+    call TriggerAddCondition( gg_trg_XHunter, Condition( function Trig_XHunter_Conditions ) )
+    call TriggerAddAction( gg_trg_XHunter, function Trig_XHunter_Actions )
 endfunction
 
-// --- cQv (depth1, line 13490 in war3map.j) ---
-function cQv takes nothing returns nothing
-call KillUnit(GetEnumUnit())
-call RemoveUnit(GetEnumUnit())
+// === family XHunterStone (active) events=EVENT_PLAYER_UNIT_SPELL_EFFECT ===
+
+// --- Trig_XHunterStone_Conditions (family, line 26895) ---
+function Trig_XHunterStone_Conditions takes nothing returns boolean
+    if ( not ( GetSpellAbilityId() == 'A08Y' ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- csv (core, line 13494 in war3map.j) ---
-function csv takes nothing returns nothing
-set Wi=GetTriggerUnit()
-set yi=GetSpellTargetUnit()
-set eB=GetUnitLoc(GetTriggerUnit())
-set xB=GetUnitLoc(GetSpellTargetUnit())
-if(cqv())then
-set wi=(350.+(150.*I2R(GetUnitAbilityLevelSwapped('A020',GetTriggerUnit()))))
-set V=0
-set E=GetSpellTargetUnit()
-set n=GetUnitLoc(GetTriggerUnit())
-set O=GetUnitLoc(GetSpellTargetUnit())
-set X=AngleBetweenPoints(n,O)
-call RemoveLocation(n)
-call RemoveLocation(O)
-call UnitDamageTargetBJ(GetTriggerUnit(),yi,wi,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC)
-call CreateTextTagUnitBJ((("石頭 "+I2S(R2I(wi)))+"!!"),GetTriggerUnit(),-30.,10.,90.,.0,.0,10.)
-call SetTextTagVelocityBJ(bj_lastCreatedTextTag,64.,90.)
-call SetTextTagPermanentBJ(bj_lastCreatedTextTag,false)
-call SetTextTagLifespanBJ(bj_lastCreatedTextTag,2.8)
-call SetTextTagFadepointBJ(bj_lastCreatedTextTag,1.5)
-if(cKv())then
-call EnableTrigger(Dk)
-endif
-call PlaySoundOnUnitBJ(jD,100.,GetTriggerUnit())
-set bj_forLoopBIndex=1
-set bj_forLoopBIndexEnd=GetUnitAbilityLevelSwapped(GetSpellAbilityId(),GetTriggerUnit())
-loop
-exitwhen bj_forLoopBIndex>bj_forLoopBIndexEnd
-call ForGroupBJ(Ct(RectFromCenterSizeBJ(GetSpellTargetLoc(),1600.,1600.)),function clv)
-set bj_forLoopBIndex=bj_forLoopBIndex+1
-endloop
-call TriggerSleepAction(.5)
-set bj_forLoopBIndex=1
-set bj_forLoopBIndexEnd=$C
-loop
-exitwhen bj_forLoopBIndex>bj_forLoopBIndexEnd
-call CameraClearNoiseForPlayer(Player(-1+(bj_forLoopBIndex)))
-set bj_forLoopBIndex=bj_forLoopBIndex+1
-endloop
-else
-if(cPv())then
-set wi=(250.+(100.*I2R(GetUnitAbilityLevelSwapped('A08W',GetTriggerUnit()))))
-call AddSpecialEffectTargetUnitBJ("chest",yi,"HeroCloudCyd.mdx")
-call DestroyEffect(bj_lastCreatedEffect)
-call UnitDamageTargetBJ(GetTriggerUnit(),yi,wi,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC)
-call CreateTextTagUnitBJ((("剪刀 "+I2S(R2I(wi)))+"!!"),GetTriggerUnit(),-30.,10.,90.,.0,.0,10.)
-call SetTextTagVelocityBJ(bj_lastCreatedTextTag,64.,90.)
-call SetTextTagPermanentBJ(bj_lastCreatedTextTag,false)
-call SetTextTagLifespanBJ(bj_lastCreatedTextTag,2.8)
-call SetTextTagFadepointBJ(bj_lastCreatedTextTag,1.5)
-if(cpv())then
-call CreateNUnitsAtLocFacingLocBJ(1,'hfoo',GetOwningPlayer(Wi),eB,xB)
-call ShowUnitHide(bj_lastCreatedUnit)
-call UnitApplyTimedLifeBJ(1.,'BTLF',bj_lastCreatedUnit)
-call UnitAddAbility(bj_lastCreatedUnit,'A0NP')
-call IssueTargetOrderById(bj_lastCreatedUnit,$D02B6,yi)
-endif
-else
-set wi=(225.+(75.*I2R(GetUnitAbilityLevelSwapped('A08X',GetTriggerUnit()))))
-call AddSpecialEffectLocBJ(xB,"Units\\NightElf\\Wisp\\WispExplode.mdl")
-call DestroyEffect(bj_lastCreatedEffect)
-call ForGroupBJ(gt(270.,xB),function cmv)
-call CreateTextTagUnitBJ((("布 "+I2S(R2I(wi)))+"!!"),GetTriggerUnit(),-30.,10.,90.,.0,.0,10.)
-call SetTextTagVelocityBJ(bj_lastCreatedTextTag,64.,90.)
-call SetTextTagPermanentBJ(bj_lastCreatedTextTag,false)
-call SetTextTagLifespanBJ(bj_lastCreatedTextTag,2.8)
-call SetTextTagFadepointBJ(bj_lastCreatedTextTag,1.5)
-if(cMv())then
-call CreateNUnitsAtLocFacingLocBJ(1,'hfoo',GetOwningPlayer(Wi),xB,eB)
-call ShowUnitHide(bj_lastCreatedUnit)
-call UnitApplyTimedLifeBJ(1.,'BTLF',bj_lastCreatedUnit)
-call UnitAddAbility(bj_lastCreatedUnit,'A04W')
-call IssueImmediateOrderById(bj_lastCreatedUnit,$D0080)
-endif
-endif
-endif
-call RemoveLocation(eB)
-call RemoveLocation(xB)
-call TriggerSleepAction(2)
-call ForGroupBJ(Ht(GetOwningPlayer(Wi),'hfoo'),function cQv)
+// --- Trig_XHunterStone_Func005Func016C (family, line 26902) ---
+function Trig_XHunterStone_Func005Func016C takes nothing returns boolean
+    if ( not ( IsUnitAlly(GetSpellTargetUnit(), Player(PLAYER_NEUTRAL_AGGRESSIVE)) != true ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- czv (depth1, line 13637 in war3map.j) ---
-function czv takes nothing returns boolean
-return(IsUnitAlly(GetTriggerUnit(),Player($C))!=true)
+// --- Trig_XHunterStone_Func005Func018Func001A (family, line 26909) ---
+function Trig_XHunterStone_Func005Func018Func001A takes nothing returns nothing
+    call CameraSetEQNoiseForPlayer( GetOwningPlayer(GetEnumUnit()), 12.00 )
 endfunction
 
-// --- cZv (depth2, line 13640 in war3map.j) ---
-function cZv takes nothing returns boolean
-return((IsUnitAliveBJ(GetEnumUnit()))and(IsUnitAlly(GetEnumUnit(),GetOwningPlayer(Wi))==false)and(IsUnitType(GetEnumUnit(),UNIT_TYPE_STRUCTURE)==false))!=null
+// --- Trig_XHunterStone_Func005Func021Func005Func001C (family, line 26913) ---
+function Trig_XHunterStone_Func005Func021Func005Func001C takes nothing returns boolean
+    if ( not ( IsUnitAlly(GetEnumUnit(), GetOwningPlayer(udg_JayUnit)) == false ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- c_v (depth1, line 13643 in war3map.j) ---
-function c_v takes nothing returns nothing
-if(cZv())then
-call UnitDamageTargetBJ(Wi,GetEnumUnit(),wi,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC)
-endif
+// --- Trig_XHunterStone_Func005Func021Func005A (family, line 26920) ---
+function Trig_XHunterStone_Func005Func021Func005A takes nothing returns nothing
+    if ( Trig_XHunterStone_Func005Func021Func005Func001C() ) then
+        call UnitDamageTargetBJ( udg_JayUnit, GetEnumUnit(), udg_Gon_Stone_Damage, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC )
+    else
+    endif
 endfunction
 
-// --- c0v (depth1, line 13648 in war3map.j) ---
-function c0v takes nothing returns boolean
-return(QR[(1+GetPlayerId(GetOwningPlayer(Wi)))])
+// --- Trig_XHunterStone_Func005Func021Func011C (family, line 26927) ---
+function Trig_XHunterStone_Func005Func021Func011C takes nothing returns boolean
+    if ( not ( udg_EX_Mode[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))] == true ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- c1v (depth1, line 13651 in war3map.j) ---
-function c1v takes nothing returns boolean
-return(QR[(1+GetPlayerId(GetOwningPlayer(Wi)))])
+// --- Trig_XHunterStone_Func005Func021Func022C (family, line 26934) ---
+function Trig_XHunterStone_Func005Func021Func022C takes nothing returns boolean
+    if ( not ( udg_EX_Mode[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))] == true ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- c2v (depth1, line 13654 in war3map.j) ---
-function c2v takes nothing returns boolean
-return(GetRandomInt(1,2)==1)
+// --- Trig_XHunterStone_Func005Func021C (family, line 26941) ---
+function Trig_XHunterStone_Func005Func021C takes nothing returns boolean
+    if ( not ( DistanceBetweenPoints(udg_Gon_P1, udg_Gon_P2) <= 500.00 ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- c3v (depth1, line 13657 in war3map.j) ---
-function c3v takes nothing returns boolean
-return(GetRandomInt(1,'d')<=(5+R2I((I2R(GetHeroStatBJ(1,GetAttacker(),true))/ 10.))))
+// --- Trig_XHunterStone_Func005C (family, line 26948) ---
+function Trig_XHunterStone_Func005C takes nothing returns boolean
+    if ( not ( DistanceBetweenPoints(udg_Gon_P1, udg_Gon_P2) <= 250.00 ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- c4v (depth1, line 13660 in war3map.j) ---
-function c4v takes nothing returns nothing
-call KillUnit(GetEnumUnit())
-call RemoveUnit(GetEnumUnit())
+// --- Trig_XHunterStone_Func009A (family, line 26955) ---
+function Trig_XHunterStone_Func009A takes nothing returns nothing
+    call KillUnit( GetEnumUnit() )
+    call RemoveUnit( GetEnumUnit() )
 endfunction
 
-// --- c5v (core, line 13664 in war3map.j) ---
-function c5v takes nothing returns nothing
-set Wi=GetAttacker()
-set yi=GetTriggerUnit()
-set eB=GetUnitLoc(Wi)
-set xB=GetUnitLoc(yi)
-if(c3v())then
-set wi=(350.+(150.*I2R(GetUnitAbilityLevelSwapped('A020',Wi))))
-set V=0
-set E=yi
-set n=GetUnitLoc(Wi)
-set O=GetUnitLoc(yi)
-set X=AngleBetweenPoints(n,O)
-call RemoveLocation(n)
-call RemoveLocation(O)
-call UnitDamageTargetBJ(Wi,yi,wi,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC)
-call CreateTextTagUnitBJ((("石頭 "+I2S(R2I(wi)))+"!!"),Wi,-30.,10.,90.,.0,.0,10.)
-call SetTextTagVelocityBJ(bj_lastCreatedTextTag,64.,90.)
-call SetTextTagPermanentBJ(bj_lastCreatedTextTag,false)
-call SetTextTagLifespanBJ(bj_lastCreatedTextTag,2.8)
-call SetTextTagFadepointBJ(bj_lastCreatedTextTag,1.5)
-if(czv())then
-call EnableTrigger(Dk)
-endif
-call PlaySoundOnUnitBJ(jD,100.,Wi)
-else
-if(c2v())then
-set wi=(250.+(100.*I2R(GetUnitAbilityLevelSwapped('A08W',Wi))))
-call AddSpecialEffectTargetUnitBJ("chest",yi,"HeroCloudCyd.mdx")
-call DestroyEffect(bj_lastCreatedEffect)
-call UnitDamageTargetBJ(Wi,yi,wi,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC)
-call CreateTextTagUnitBJ((("剪刀 "+I2S(R2I(wi)))+"!!"),Wi,-30.,10.,90.,.0,.0,10.)
-call SetTextTagVelocityBJ(bj_lastCreatedTextTag,64.,90.)
-call SetTextTagPermanentBJ(bj_lastCreatedTextTag,false)
-call SetTextTagLifespanBJ(bj_lastCreatedTextTag,2.8)
-call SetTextTagFadepointBJ(bj_lastCreatedTextTag,1.5)
-if(c1v())then
-call CreateNUnitsAtLocFacingLocBJ(1,'hfoo',GetOwningPlayer(Wi),eB,xB)
-call ShowUnitHide(bj_lastCreatedUnit)
-call UnitApplyTimedLifeBJ(1.,'BTLF',bj_lastCreatedUnit)
-call UnitAddAbility(bj_lastCreatedUnit,'A0NP')
-call IssueTargetOrderById(bj_lastCreatedUnit,$D02B6,yi)
-endif
-else
-set wi=(225.+(75.*I2R(GetUnitAbilityLevelSwapped('A08X',Wi))))
-call AddSpecialEffectLocBJ(xB,"Units\\NightElf\\Wisp\\WispExplode.mdl")
-call DestroyEffect(bj_lastCreatedEffect)
-call ForGroupBJ(gt(270.,xB),function c_v)
-call CreateTextTagUnitBJ((("布 "+I2S(R2I(wi)))+"!!"),GetTriggerUnit(),-30.,10.,90.,.0,.0,10.)
-call SetTextTagVelocityBJ(bj_lastCreatedTextTag,64.,90.)
-call SetTextTagPermanentBJ(bj_lastCreatedTextTag,false)
-call SetTextTagLifespanBJ(bj_lastCreatedTextTag,2.8)
-call SetTextTagFadepointBJ(bj_lastCreatedTextTag,1.5)
-if(c0v())then
-call CreateNUnitsAtLocFacingLocBJ(1,'hfoo',GetOwningPlayer(Wi),xB,eB)
-call ShowUnitHide(bj_lastCreatedUnit)
-call UnitApplyTimedLifeBJ(1.,'BTLF',bj_lastCreatedUnit)
-call UnitAddAbility(bj_lastCreatedUnit,'A04W')
-call IssueImmediateOrderById(bj_lastCreatedUnit,$D0080)
-endif
-endif
-endif
-call RemoveLocation(eB)
-call RemoveLocation(xB)
-call TriggerSleepAction(2)
-call ForGroupBJ(Ht(GetOwningPlayer(Wi),'hfoo'),function c4v)
+// --- Trig_XHunterStone_Actions (family, line 26960) ---
+function Trig_XHunterStone_Actions takes nothing returns nothing
+    set udg_JayUnit = GetTriggerUnit()
+    set udg_JayCastedUnit = GetSpellTargetUnit()
+    set udg_Gon_P1 = GetUnitLoc(GetTriggerUnit())
+    set udg_Gon_P2 = GetUnitLoc(GetSpellTargetUnit())
+    if ( Trig_XHunterStone_Func005C() ) then
+        // 石頭
+        set udg_Gon_Stone_Damage = ( 350.00 + ( 150.00 * I2R(GetUnitAbilityLevelSwapped('A020', GetTriggerUnit())) ) )
+        set udg_KnockBack_Index = 0
+        set udg_KnockBack_Target = GetSpellTargetUnit()
+        set udg_P1 = GetUnitLoc(GetTriggerUnit())
+        set udg_P2 = GetUnitLoc(GetSpellTargetUnit())
+        set udg_KnockBack_Angle = AngleBetweenPoints(udg_P1, udg_P2)
+        call RemoveLocation( udg_P1 )
+        call RemoveLocation( udg_P2 )
+        call UnitDamageTargetBJ( GetTriggerUnit(), udg_JayCastedUnit, udg_Gon_Stone_Damage, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC )
+        call CreateTextTagUnitBJ( ( ( "石頭 " + I2S(R2I(udg_Gon_Stone_Damage)) ) + "!!" ), GetTriggerUnit(), -30.00, 10.00, 90.00, 0.00, 0.00, 10.00 )
+        call SetTextTagVelocityBJ( GetLastCreatedTextTag(), 64.00, 90.00 )
+        call SetTextTagPermanentBJ( GetLastCreatedTextTag(), false )
+        call SetTextTagLifespanBJ( GetLastCreatedTextTag(), 2.80 )
+        call SetTextTagFadepointBJ( GetLastCreatedTextTag(), 1.50 )
+        if ( Trig_XHunterStone_Func005Func016C() ) then
+            call EnableTrigger( gg_trg_XHunterStone_Effect )
+        else
+        endif
+        call PlaySoundOnUnitBJ( gg_snd_MortarTeamPissed9, 100.00, GetTriggerUnit() )
+        set bj_forLoopBIndex = 1
+        set bj_forLoopBIndexEnd = GetUnitAbilityLevelSwapped(GetSpellAbilityId(), GetTriggerUnit())
+        loop
+            exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
+            call ForGroupBJ( GetUnitsInRectAll(RectFromCenterSizeBJ(GetSpellTargetLoc(), 1600.00, 1600.00)), function Trig_XHunterStone_Func005Func018Func001A )
+            set bj_forLoopBIndex = bj_forLoopBIndex + 1
+        endloop
+        call TriggerSleepAction( 0.50 )
+        set bj_forLoopBIndex = 1
+        set bj_forLoopBIndexEnd = 12
+        loop
+            exitwhen bj_forLoopBIndex > bj_forLoopBIndexEnd
+            call CameraClearNoiseForPlayer( ConvertedPlayer(GetForLoopIndexB()) )
+            set bj_forLoopBIndex = bj_forLoopBIndex + 1
+        endloop
+    else
+        if ( Trig_XHunterStone_Func005Func021C() ) then
+            // 剪刀
+            set udg_Gon_Stone_Damage = ( 250.00 + ( 100.00 * I2R(GetUnitAbilityLevelSwapped('A08W', GetTriggerUnit())) ) )
+            call AddSpecialEffectTargetUnitBJ( "chest", udg_JayCastedUnit, "HeroCloudCyd.mdx" )
+            call DestroyEffectBJ( GetLastCreatedEffectBJ() )
+            call UnitDamageTargetBJ( GetTriggerUnit(), udg_JayCastedUnit, udg_Gon_Stone_Damage, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC )
+            call CreateTextTagUnitBJ( ( ( "剪刀 " + I2S(R2I(udg_Gon_Stone_Damage)) ) + "!!" ), GetTriggerUnit(), -30.00, 10.00, 90.00, 0.00, 0.00, 10.00 )
+            call SetTextTagVelocityBJ( GetLastCreatedTextTag(), 64.00, 90.00 )
+            call SetTextTagPermanentBJ( GetLastCreatedTextTag(), false )
+            call SetTextTagLifespanBJ( GetLastCreatedTextTag(), 2.80 )
+            call SetTextTagFadepointBJ( GetLastCreatedTextTag(), 1.50 )
+            if ( Trig_XHunterStone_Func005Func021Func022C() ) then
+                call CreateNUnitsAtLocFacingLocBJ( 1, 'hfoo', GetOwningPlayer(udg_JayUnit), udg_Gon_P1, udg_Gon_P2 )
+                call ShowUnitHide( GetLastCreatedUnit() )
+                call UnitApplyTimedLifeBJ( 1.00, 'BTLF', GetLastCreatedUnit() )
+                call UnitAddAbilityBJ( 'A0NP', GetLastCreatedUnit() )
+                call IssueTargetOrderBJ( GetLastCreatedUnit(), "acidbomb", udg_JayCastedUnit )
+            else
+            endif
+        else
+            // 布
+            set udg_Gon_Stone_Damage = ( 225.00 + ( 75.00 * I2R(GetUnitAbilityLevelSwapped('A08X', GetTriggerUnit())) ) )
+            call AddSpecialEffectLocBJ( udg_Gon_P2, "Units\\NightElf\\Wisp\\WispExplode.mdl" )
+            call DestroyEffectBJ( GetLastCreatedEffectBJ() )
+            call ForGroupBJ( GetUnitsInRangeOfLocAll(270.00, udg_Gon_P2), function Trig_XHunterStone_Func005Func021Func005A )
+            call CreateTextTagUnitBJ( ( ( "布 " + I2S(R2I(udg_Gon_Stone_Damage)) ) + "!!" ), GetTriggerUnit(), -30.00, 10.00, 90.00, 0.00, 0.00, 10.00 )
+            call SetTextTagVelocityBJ( GetLastCreatedTextTag(), 64.00, 90.00 )
+            call SetTextTagPermanentBJ( GetLastCreatedTextTag(), false )
+            call SetTextTagLifespanBJ( GetLastCreatedTextTag(), 2.80 )
+            call SetTextTagFadepointBJ( GetLastCreatedTextTag(), 1.50 )
+            if ( Trig_XHunterStone_Func005Func021Func011C() ) then
+                call CreateNUnitsAtLocFacingLocBJ( 1, 'hfoo', GetOwningPlayer(udg_JayUnit), udg_Gon_P2, udg_Gon_P1 )
+                call ShowUnitHide( GetLastCreatedUnit() )
+                call UnitApplyTimedLifeBJ( 1.00, 'BTLF', GetLastCreatedUnit() )
+                call UnitAddAbilityBJ( 'A04W', GetLastCreatedUnit() )
+                call IssueImmediateOrderBJ( GetLastCreatedUnit(), "thunderclap" )
+            else
+            endif
+        endif
+    endif
+    call RemoveLocation(udg_Gon_P1)
+    call RemoveLocation(udg_Gon_P2)
+    call TriggerSleepAction( 2 )
+    call ForGroupBJ( GetUnitsOfPlayerAndTypeId(GetOwningPlayer(udg_JayUnit), 'hfoo'), function Trig_XHunterStone_Func009A )
+endfunction
+
+// --- InitTrig_XHunterStone (family, line 27049) ---
+function InitTrig_XHunterStone takes nothing returns nothing
+    set gg_trg_XHunterStone = CreateTrigger(  )
+    call DisableTrigger( gg_trg_XHunterStone )
+    call TriggerRegisterAnyUnitEventBJ( gg_trg_XHunterStone, EVENT_PLAYER_UNIT_SPELL_EFFECT )
+    call TriggerAddCondition( gg_trg_XHunterStone, Condition( function Trig_XHunterStone_Conditions ) )
+    call TriggerAddAction( gg_trg_XHunterStone, function Trig_XHunterStone_Actions )
 endfunction

@@ -103,7 +103,7 @@
       ],
       "targetsEnemies": true,
       "radius": 4.5,
-      "castTimeSec": 0.767,
+      "castTimeSec": 1.233,
       "template": {
         "ref": "tpl-ground-nova",
         "params": {
@@ -118,7 +118,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.767
+          "castTimeSec": 1.233
         }
       },
       "cooldownTier": "極小",
@@ -158,7 +158,7 @@
       "vfxKey": "fx.prim.arcane.nova",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 0.767,
+      "castTimeSec": 1.233,
       "cooldownTier": "極小",
       "radiusTier": "中"
     },
@@ -238,11 +238,11 @@
             "damageTier": "大"
           },
           "damageType": "magic",
-          "castTimeSec": 1.5
+          "castTimeSec": 2.233
         }
       },
       "vfxKey": "fx.w3x.particle.supershinythingy.p00",
-      "castTimeSec": 1.5,
+      "castTimeSec": 2.233,
       "hitFeel": {
         "hitstopTicks": 4,
         "hitstunTicks": 7,

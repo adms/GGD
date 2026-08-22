@@ -90,7 +90,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.767,
+          "castTimeSec": 1.5,
           "statusId": "slow40",
           "statusDurationSec": 1.5
         }
@@ -98,7 +98,7 @@
       "vfxKey": "fx.prim.ice.shockwave",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 0.767,
+      "castTimeSec": 1.5,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",
@@ -187,7 +187,7 @@
         }
       ],
       "vfxKey": "fx.prim.ice.nova",
-      "castTimeSec": 1.133,
+      "castTimeSec": 1.633,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",

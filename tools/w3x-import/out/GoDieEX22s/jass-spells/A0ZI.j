@@ -1,34 +1,47 @@
 // rawcode: A0ZI
-// hero: godie-n01l (slot R)  championDoc: tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n01l.json
-// nameZh: 自在飛翔
-// abilityDoc: tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n01l.json#abilities.R
-// kind: passive (referenced via GetUnitAbilityLevel/GetLearnedSkill in other triggers)
-// handler: event=helper-ref; called from VGe (events: EVENT_UNIT_DAMAGED) cond=None actions=Vge (trigger var None)
+// nameZh: 98-04 自在飛翔
 // w3a base: AOr2  levels: 3
 // area: {"1": 100.0, "2": 100.0, "3": 100.0}
-// data[1] per level: {"1": 0.05000000074505806, "2": 0.10000000149011612, "3": 0.15000000596046448}
-// data[2] per level: {"1": 0.20000000298023224, "2": 0.4000000059604645, "3": 0.6000000238418579, "4": 0.800000011920929}
-// slice tiers: core=['Vge', 'VGe'] depth1=[] depth2=[]
+// source: tools/w3x-import/out/GoDieEX22s-src/raw/war3map.j (CR-normalized line numbers)
+// generator: tools/w3x-import/extract_jass_spells.py
+// trigger families: FlyAway
 
-// --- Vge (core, line 28592 in war3map.j) ---
-function Vge takes nothing returns boolean
-return(GetUnitAbilityLevelSwapped('A0ZI',GetTriggerUnit())>0)and(GetRandomInt(1,$A)==4)
+// === family FlyAway (passive) events=none ===
+
+// --- Trig_FlyAway_Actions (family, line 55179) ---
+function Trig_FlyAway_Actions takes nothing returns nothing
+    local unit RiderHideUnit
+
+    if ( JudgeFunc() ) then
+        set udg_Mentor_UnitPoint = GetUnitLoc(GetTriggerUnit())
+        call CreateNUnitsAtLoc( 1, 'hfoo', GetOwningPlayer(GetTriggerUnit()), udg_Mentor_UnitPoint, bj_UNIT_FACING )
+        set RiderHideUnit = GetLastCreatedUnit()
+        call UnitApplyTimedLifeBJ( 3.00, 'BTLF', RiderHideUnit )
+        call UnitAddItemByIdSwapped( 'will', RiderHideUnit )
+        call ShowUnitHide( RiderHideUnit )
+        call UnitUseItemTarget( RiderHideUnit, GetLastCreatedItem(), GetTriggerUnit() )
+        call RemoveLocation(udg_Mentor_UnitPoint)
+        call TriggerSleepAction( 1.00 )
+        call KillUnit( RiderHideUnit )
+        call RemoveUnit( RiderHideUnit )
+    else
+    endif
+
 endfunction
 
-// --- VGe (core, line 28595 in war3map.j) ---
-function VGe takes nothing returns nothing
-local unit mPv
-if(Vge())then
-set zB=GetUnitLoc(GetTriggerUnit())
-call CreateNUnitsAtLoc(1,'hfoo',GetOwningPlayer(GetTriggerUnit()),zB,bj_UNIT_FACING)
-set mPv=bj_lastCreatedUnit
-call UnitApplyTimedLifeBJ(3.,'BTLF',mPv)
-call UnitAddItemByIdSwapped('will',mPv)
-call ShowUnitHide(mPv)
-call UnitUseItemTarget(mPv,bj_lastCreatedItem,GetTriggerUnit())
-call RemoveLocation(zB)
-call TriggerSleepAction(1.)
-call KillUnit(mPv)
-call RemoveUnit(mPv)
-endif
+// --- InitTrig_FlyAway (family, line 55200) ---
+function InitTrig_FlyAway takes nothing returns nothing
+    set gg_trg_FlyAway = CreateTrigger(  )
+    call TriggerAddAction( gg_trg_FlyAway, function Trig_FlyAway_Actions )
+endfunction
+
+// --- JudgeFunc (helper, line 55168) ---
+function JudgeFunc takes nothing returns boolean
+    if ( not ( GetUnitAbilityLevelSwapped('A0ZI', GetTriggerUnit()) > 0 ) ) then
+        return false
+    endif
+    if ( not ( GetRandomInt(1, 10) == 4 ) ) then
+        return false
+    endif
+    return true
 endfunction

@@ -200,7 +200,7 @@
         }
       ],
       "vfxKey": "fx.root-snare",
-      "castTimeSec": 0.233,
+      "castTimeSec": 0.467,
       "provenance": "w3x-import",
       "rangeTier": "大",
       "range": 8
@@ -225,7 +225,7 @@
       "range": 1,
       "radius": 4.5,
       "targetsEnemies": true,
-      "castTimeSec": 1.767,
+      "castTimeSec": 1.833,
       "effects": [
         {
           "kind": "damage",

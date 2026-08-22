@@ -285,6 +285,9 @@ export const COMBAT_ENV_GROUPS: CombatEnvGroup[] = [
       "strToAttackDamage",
       "agiToArmor",
       "agiToAttackSpeed",
+      // owner 2026-08-22 —— 兩條**新的**屬性軸（力量→暴擊率 · 敏捷→迴避率）。
+      "strToCritChance",
+      "agiToEvasion",
       "intToMaxMana",
       "intToManaRegen",
       "intToAbilityPower",

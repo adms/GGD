@@ -125,7 +125,7 @@
         }
       ],
       "vfxKey": "fx.prim.blood.pulse-sm",
-      "castTimeSec": 0.167,
+      "castTimeSec": 0.267,
       "cooldownTier": "極小"
     },
     "E": {
@@ -172,7 +172,7 @@
       ],
       "vfxKey": "fx.prim.void.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.367,
+      "castTimeSec": 0.767,
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "小",

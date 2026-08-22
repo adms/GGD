@@ -1,46 +1,55 @@
 // rawcode: A0ZE
-// hero: godie-n01l (slot W)  championDoc: tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n01l.json
-// nameZh: 平易近人的笑容
-// abilityDoc: tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n01l.json#abilities.W
-// kind: passive (referenced via GetUnitAbilityLevel/GetLearnedSkill in other triggers)
-// handler: event=TimerEventPeriodic cond=VCe actions=Vfe (trigger var Ds)
-// handler: event=helper-ref; called from Vfe (events: TimerEventPeriodic) cond=None actions=VDe (trigger var None)
+// nameZh: 98-02 平易近人的笑容
 // w3a base: AEar  levels: 4
-// area: {"2": 350.0, "3": 350.0, "4": 350.0, "1": 350.0}
-// data[1] per level: {"1": 0.03999999910593033, "2": 0.07999999821186066, "3": 0.11999999731779099, "4": 0.1599999964237213}
-// data[2] per level: {"1": 1, "2": 1, "3": 1, "4": 1}
-// slice tiers: core=['VCe', 'Vfe', 'VDe'] depth1=['gt', 'Vde'] depth2=[]
+// area: {"1": 350.0, "2": 350.0, "3": 350.0, "4": 350.0}
+// source: tools/w3x-import/out/GoDieEX22s-src/raw/war3map.j (CR-normalized line numbers)
+// generator: tools/w3x-import/extract_jass_spells.py
+// trigger families: Smile
 
-// --- gt (depth1, line 2287 in war3map.j) ---
-function gt takes real At,location Ft returns group
-set et=CreateGroup()
-call GroupEnumUnitsInRangeOfLoc(et,Ft,At,ot)
-return et
+// === family Smile (passive) events=none ===
+
+// --- Trig_Smile_Conditions (family, line 55123) ---
+function Trig_Smile_Conditions takes nothing returns boolean
+    if ( not ( GetUnitAbilityLevelSwapped('A0ZE', udg_Mentor) > 0 ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- VCe (core, line 28573 in war3map.j) ---
-function VCe takes nothing returns boolean
-return(GetUnitAbilityLevelSwapped('A0ZE',WB)>0)
+// --- Trig_Smile_Func002Func001C (family, line 55130) ---
+function Trig_Smile_Func002Func001C takes nothing returns boolean
+    if ( not ( IsUnitAlly(GetEnumUnit(), GetOwningPlayer(udg_Mentor)) == true ) ) then
+        return false
+    endif
+    if ( not ( IsUnitAliveBJ(GetEnumUnit()) == true ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- Vde (depth1, line 28576 in war3map.j) ---
-function Vde takes nothing returns boolean
-return(IsUnitAlly(GetEnumUnit(),GetOwningPlayer(WB)))and(IsUnitAliveBJ(GetEnumUnit()))
+// --- Trig_Smile_Func002A (family, line 55140) ---
+function Trig_Smile_Func002A takes nothing returns nothing
+    if ( Trig_Smile_Func002Func001C() ) then
+        set udg_Mentor_HealthPoint = GetUnitLoc(GetEnumUnit())
+        call SetUnitLifeBJ( GetEnumUnit(), ( GetUnitStateSwap(UNIT_STATE_LIFE, GetEnumUnit()) + ( 100.00 * I2R(GetUnitAbilityLevelSwapped('A0ZE', udg_Mentor)) ) ) )
+        call AddSpecialEffectLocBJ( udg_Mentor_HealthPoint, "Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl" )
+        call DestroyEffectBJ( GetLastCreatedEffectBJ() )
+        call RemoveLocation(udg_Mentor_HealthPoint)
+    else
+    endif
 endfunction
 
-// --- VDe (core, line 28579 in war3map.j) ---
-function VDe takes nothing returns nothing
-if(Vde())then
-set ZB=GetUnitLoc(GetEnumUnit())
-call SetWidgetLife(GetEnumUnit(),(GetUnitStateSwap(UNIT_STATE_LIFE,GetEnumUnit())+(100.*I2R(GetUnitAbilityLevelSwapped('A0ZE',WB)))))
-call AddSpecialEffectLocBJ(ZB,"Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl")
-call DestroyEffect(bj_lastCreatedEffect)
-call RemoveLocation(ZB)
-endif
+// --- Trig_Smile_Actions (family, line 55151) ---
+function Trig_Smile_Actions takes nothing returns nothing
+    set udg_Mentor_UnitPoint = GetUnitLoc(udg_Mentor)
+    call ForGroupBJ( GetUnitsInRangeOfLocAll(300.00, udg_Mentor_UnitPoint), function Trig_Smile_Func002A )
 endfunction
 
-// --- Vfe (core, line 28588 in war3map.j) ---
-function Vfe takes nothing returns nothing
-set zB=GetUnitLoc(WB)
-call ForGroupBJ(gt(300.,zB),function VDe)
+// --- InitTrig_Smile (family, line 55157) ---
+function InitTrig_Smile takes nothing returns nothing
+    set gg_trg_Smile = CreateTrigger(  )
+    call DisableTrigger( gg_trg_Smile )
+    call TriggerRegisterTimerEventPeriodic( gg_trg_Smile, 30.00 )
+    call TriggerAddCondition( gg_trg_Smile, Condition( function Trig_Smile_Conditions ) )
+    call TriggerAddAction( gg_trg_Smile, function Trig_Smile_Actions )
 endfunction

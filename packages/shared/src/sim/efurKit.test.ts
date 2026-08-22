@@ -529,7 +529,12 @@ function heartPluck(opts: { seed: number; blind: boolean; ex: boolean; hpFrac: n
     // `world.status` 裡塞一筆 —— 手寫狀態的話 Q 的 `applyStatus` 被刪掉這裡
     // 還是全綠（失敗形態⑤）。
     expect(castAbility(r.world, r.efur, "Q", { type: "entity", entityId: r.foe })).toBe("ok");
-    step(r.world, 6);
+    // ⛔ 這裡以前是寫死的 `6` tick。⚠️ 吟唱長度是**從冷卻推導**的
+    //（`deriveCastTimes`），而 owner 2026-08-22 把系統冷卻倍率 0.2 → 0.4 之後
+    // Q 的 blink 還沒到就先斷言了 —— 訊息會說「致盲根本沒上身」,
+    // ⭐ 而真相只是**等太短**（第二守則：出貨數值住 config，⛔ 不要抄進測試）。
+    // ⇒ 等到致盲真的上身為止，設一個寬鬆的上限防無窮迴圈。
+    for (let i = 0; i < 240 && !isBlind(r.world, r.foe); i++) step(r.world, 1);
     // 前提條件自己先驗：0 次觸發如果是因為「致盲根本沒上身」，那下面那條
     // 「一次都不摘」會用錯誤的理由變綠。
     expect(isBlind(r.world, r.foe), "致盲根本沒上身 —— Q 的 onArrive 斷了").toBe(true);

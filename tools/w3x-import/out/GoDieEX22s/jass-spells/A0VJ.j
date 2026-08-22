@@ -1,29 +1,36 @@
 // rawcode: A0VJ
-// hero: godie-hapm (slot Q)  championDoc: content/champions/godie-hapm.json
-// nameZh: 狂戰士之怒
-// abilityDoc: content/abilities/godie-hapm.q.json
-// kind: active (spell-effect trigger)
-// handler: event=EVENT_PLAYER_UNIT_SPELL_EFFECT cond=ohe actions=oHe (trigger var xQ)
-// w3a base: ANbr  levels: None
+// nameZh: 52-01 狂戰士之怒
 // cooldown: {"1": 35.0, "2": 35.0, "3": 35.0, "4": 35.0, "5": 57.0}
-// mana: {"2": 110, "3": 160, "5": 175, "4": 210}
+// mana: {"2": 110, "3": 160, "4": 210, "5": 175}
 // area: {"1": 50.0, "2": 50.0, "3": 50.0, "4": 50.0, "5": 50.0}
 // duration: {"1": 12.0, "2": 12.0, "3": 12.0, "4": 12.0}
 // hero_duration: {"1": 12.0, "2": 12.0, "3": 12.0, "4": 12.0}
-// data[1] per level: {"5": 200.0, "1": 40.0, "2": 80.0, "3": 120.0, "4": 160.0}
-// data[2] per level: {"5": 5, "1": 4, "2": 8, "3": 12, "4": 16}
-// data[3] per level: {"5": -60.0, "1": 10.0, "2": 10.0, "3": 10.0, "4": 10.0}
-// data[4] per level: {"5": 0.009999999776482582}
-// slice tiers: core=['ohe', 'oHe'] depth1=[] depth2=[]
+// source: tools/w3x-import/out/GoDieEX22s-src/raw/war3map.j (CR-normalized line numbers)
+// generator: tools/w3x-import/extract_jass_spells.py
+// trigger families: berserker
 
-// --- ohe (core, line 26777 in war3map.j) ---
-function ohe takes nothing returns boolean
-return(GetSpellAbilityId()=='A0VJ')
+// === family berserker (active) events=EVENT_PLAYER_UNIT_SPELL_EFFECT ===
+
+// --- Trig_berserker_Conditions (family, line 51659) ---
+function Trig_berserker_Conditions takes nothing returns boolean
+    if ( not ( GetSpellAbilityId() == 'A0VJ' ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- oHe (core, line 26780 in war3map.j) ---
-function oHe takes nothing returns nothing
-call SetUnitAbilityLevelSwapped('A0VK',GetTriggerUnit(),(GetUnitAbilityLevelSwapped(GetSpellAbilityId(),GetTriggerUnit())+1))
-call SetUnitVertexColorBJ(Sn,'d',30.,30.,0)
-call EnableTrigger(oQ)
+// --- Trig_berserker_Actions (family, line 51666) ---
+function Trig_berserker_Actions takes nothing returns nothing
+    call SetUnitAbilityLevelSwapped( 'A0VK', GetTriggerUnit(), ( GetUnitAbilityLevelSwapped(GetSpellAbilityId(), GetTriggerUnit()) + 1 ) )
+    call SetUnitVertexColorBJ( udg_BerserkerUnit, 100, 30.00, 30.00, 0 )
+    call EnableTrigger( gg_trg_berserker_2 )
+endfunction
+
+// --- InitTrig_berserker (family, line 51673) ---
+function InitTrig_berserker takes nothing returns nothing
+    set gg_trg_berserker = CreateTrigger(  )
+    call DisableTrigger( gg_trg_berserker )
+    call TriggerRegisterAnyUnitEventBJ( gg_trg_berserker, EVENT_PLAYER_UNIT_SPELL_EFFECT )
+    call TriggerAddCondition( gg_trg_berserker, Condition( function Trig_berserker_Conditions ) )
+    call TriggerAddAction( gg_trg_berserker, function Trig_berserker_Actions )
 endfunction

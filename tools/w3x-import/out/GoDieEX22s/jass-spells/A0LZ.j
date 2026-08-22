@@ -1,45 +1,49 @@
 // rawcode: A0LZ
-// hero: godie-n01b (slot R)  championDoc: tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n01b.json
-// nameZh: 地獄搖滾
-// abilityDoc: tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n01b.json#abilities.R
-// kind: active (spell-effect trigger)
-// handler: event=EVENT_PLAYER_UNIT_SPELL_EFFECT cond=pVv actions=pEv (trigger var dm)
-// w3a base: ANcl  levels: None
+// nameZh: 40-04 地獄搖滾
 // cooldown: {"1": 60.0, "2": 60.0, "3": 60.0}
 // mana: {"1": 250, "2": 375, "3": 500}
 // range: {"1": 650.0, "2": 650.0, "3": 650.0}
 // area: {"1": 350.0, "2": 350.0, "3": 350.0}
-// data[1] per level: {"1": 0.0, "2": 0.0, "3": 0.0}
-// data[2] per level: {"1": 2, "2": 2, "3": 2}
-// data[3] per level: {"1": 3, "2": 3, "3": 3}
-// data[4] per level: {"1": 0.0, "2": 0.0, "3": 0.0}
-// data[5] per level: {"1": 0, "2": 0, "3": 0}
-// data[6] per level: {"1": "silence", "2": "silence", "3": "silence"}
-// slice tiers: core=['pVv', 'pEv'] depth1=[] depth2=[]
+// source: tools/w3x-import/out/GoDieEX22s-src/raw/war3map.j (CR-normalized line numbers)
+// generator: tools/w3x-import/extract_jass_spells.py
+// trigger families: Hell_Rock
 
-// --- pVv (core, line 20318 in war3map.j) ---
-function pVv takes nothing returns boolean
-return(GetSpellAbilityId()=='A0LZ')
+// === family Hell_Rock (active) events=EVENT_PLAYER_UNIT_SPELL_EFFECT ===
+
+// --- Trig_Hell_Rock_Conditions (family, line 39160) ---
+function Trig_Hell_Rock_Conditions takes nothing returns boolean
+    if ( not ( GetSpellAbilityId() == 'A0LZ' ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- pEv (core, line 20321 in war3map.j) ---
-function pEv takes nothing returns nothing
-set HV=GetTriggerUnit()
-set LV=GetSpellTargetLoc()
-set jV=AngleBetweenPoints(GetUnitLoc(HV),LV)
-set kV=DistanceBetweenPoints(GetUnitLoc(HV),LV)
-set lV=.0
-set kV=(kV/ 41.)
-set PV=GetUnitFacing(GetTriggerUnit())
-set TE=GetUnitAbilityLevelSwapped(GetSpellAbilityId(),GetTriggerUnit())
-set MV=I2R((((GetUnitAbilityLevelSwapped('A0LZ',GetTriggerUnit())*$C8)+350)+(3*GetHeroStatBJ(0,GetTriggerUnit(),true))))
-call PauseUnit(HV,true)
-call PlaySoundOnUnitBJ(af,100.,HV)
-call TriggerSleepAction(.3)
-call UnitAddAbility(HV,'A0FZ')
-call UnitAddAbility(HV,'Avul')
-call SetUnitPathing(HV,false)
-call SetUnitAnimation(HV,"attack slam")
-call SetUnitTimeScalePercent(HV,40.)
-call EnableTrigger(Dm)
+// --- Trig_Hell_Rock_Actions (family, line 39167) ---
+function Trig_Hell_Rock_Actions takes nothing returns nothing
+    set udg_HeavyTiger = GetTriggerUnit()
+    set udg_HellRockPoint = GetSpellTargetLoc()
+    set udg_HellRockAngle = AngleBetweenPoints(GetUnitLoc(udg_HeavyTiger), udg_HellRockPoint)
+    set udg_HellRockDistan = DistanceBetweenPoints(GetUnitLoc(udg_HeavyTiger), udg_HellRockPoint)
+    set udg_HellRockIndex = 0.00
+    set udg_HellRockDistan = ( udg_HellRockDistan / 41.00 )
+    set udg_HellRockCasterAngle = GetUnitFacing(GetTriggerUnit())
+    set udg_HellRockLevel = GetUnitAbilityLevelSwapped(GetSpellAbilityId(), GetTriggerUnit())
+    set udg_HellRockDamage = I2R(( ( ( GetUnitAbilityLevelSwapped('A0LZ', GetTriggerUnit()) * 200 ) + 350 ) + ( 3 * GetHeroStatBJ(bj_HEROSTAT_STR, GetTriggerUnit(), true) ) ))
+    call PauseUnitBJ( true, udg_HeavyTiger )
+    call PlaySoundOnUnitBJ( gg_snd_ShamanReady1, 100.00, udg_HeavyTiger )
+    call TriggerSleepAction( 0.30 )
+    call UnitAddAbilityBJ( 'A0FZ', udg_HeavyTiger )
+    call UnitAddAbilityBJ( 'Avul', udg_HeavyTiger )
+    call SetUnitPathing( udg_HeavyTiger, false )
+    call SetUnitAnimation( udg_HeavyTiger, "attack slam" )
+    call SetUnitTimeScalePercent( udg_HeavyTiger, 40.00 )
+    call EnableTrigger( gg_trg_Hell_Rock_Move )
+endfunction
+
+// --- InitTrig_Hell_Rock (family, line 39189) ---
+function InitTrig_Hell_Rock takes nothing returns nothing
+    set gg_trg_Hell_Rock = CreateTrigger(  )
+    call TriggerRegisterAnyUnitEventBJ( gg_trg_Hell_Rock, EVENT_PLAYER_UNIT_SPELL_EFFECT )
+    call TriggerAddCondition( gg_trg_Hell_Rock, Condition( function Trig_Hell_Rock_Conditions ) )
+    call TriggerAddAction( gg_trg_Hell_Rock, function Trig_Hell_Rock_Actions )
 endfunction

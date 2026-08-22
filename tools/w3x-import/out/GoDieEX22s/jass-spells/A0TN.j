@@ -1,63 +1,83 @@
 // rawcode: A0TN
-// hero: godie-h02k (slot E)  championDoc: tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-h02k.json
-// nameZh: 憤怒的胸毛
-// abilityDoc: tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-h02k.json#abilities.E
-// kind: passive (referenced via GetUnitAbilityLevel/GetLearnedSkill in other triggers)
-// handler: event=helper-ref; called from rwe (events: EVENT_PLAYER_UNIT_DEATH) cond=None actions=rue (trigger var None)
-// handler: event=helper-ref; called from rwe (events: EVENT_PLAYER_UNIT_DEATH) cond=None actions=rUe (trigger var None)
+// nameZh: 89-03 憤怒的胸毛
 // w3a base: AUau  levels: 4
-// area: {"2": 50.0, "3": 50.0, "4": 50.0, "1": 50.0}
-// data[1] per level: {"2": 0.05999999865889549, "3": 0.08999999612569809, "4": 0.11999999731779099, "1": 0.029999999329447746}
-// data[2] per level: {"1": 0.029999999329447746, "2": 0.029999999329447746, "3": 0.029999999329447746, "4": 0.029999999329447746}
-// data[3] per level: {"1": 1, "2": 1, "3": 1, "4": 1}
-// slice tiers: core=['rue', 'rwe', 'rUe'] depth1=['rTe', 'gt'] depth2=[]
+// area: {"1": 50.0, "2": 50.0, "3": 50.0, "4": 50.0}
+// source: tools/w3x-import/out/GoDieEX22s-src/raw/war3map.j (CR-normalized line numbers)
+// generator: tools/w3x-import/extract_jass_spells.py
+// trigger families: Saber_in_pandaDie
 
-// --- gt (depth1, line 2287 in war3map.j) ---
-function gt takes real At,location Ft returns group
-set et=CreateGroup()
-call GroupEnumUnitsInRangeOfLoc(et,Ft,At,ot)
-return et
+// === family Saber_in_pandaDie (passive) events=EVENT_PLAYER_UNIT_DEATH ===
+
+// --- Trig_Saber_in_pandaDie_Conditions (family, line 52608) ---
+function Trig_Saber_in_pandaDie_Conditions takes nothing returns boolean
+    if ( not ( GetUnitTypeId(GetTriggerUnit()) == 'H02K' ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- rTe (depth1, line 27312 in war3map.j) ---
-function rTe takes nothing returns boolean
-return((GetRandomInt(1,3)==2)and(IsPlayerAlly(GetOwningPlayer(GetEnumUnit()),GetOwningPlayer(GetTriggerUnit()))==false)and(IsUnitType(GetEnumUnit(),UNIT_TYPE_STRUCTURE)==false))!=null
+// --- Trig_Saber_in_pandaDie_Func001Func014Func001C (family, line 52615) ---
+function Trig_Saber_in_pandaDie_Func001Func014Func001C takes nothing returns boolean
+    if ( not ( GetRandomInt(1, 3) == 2 ) ) then
+        return false
+    endif
+    if ( not ( IsPlayerAlly(GetOwningPlayer(GetEnumUnit()), GetOwningPlayer(GetTriggerUnit())) == false ) ) then
+        return false
+    endif
+    if ( not ( IsUnitType(GetEnumUnit(), UNIT_TYPE_STRUCTURE) == false ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- rue (core, line 27315 in war3map.j) ---
-function rue takes nothing returns nothing
-if(rTe())then
-call UnitDamageTargetBJ(GetTriggerUnit(),GetEnumUnit(),(1000.*I2R(GetUnitAbilityLevelSwapped('A0TN',GetTriggerUnit()))),ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC)
-call AddSpecialEffectTargetUnitBJ("chest",GetEnumUnit(),"Units\\Undead\\Abomination\\AbominationExplosion.mdl")
-call DestroyEffect(bj_lastCreatedEffect)
-call AddSpecialEffectTargetUnitBJ("chest",GetEnumUnit(),"Objects\\Spawnmodels\\Other\\NeutralBuildingExplosion\\NeutralBuildingExplosion.mdl")
-call DestroyEffect(bj_lastCreatedEffect)
-endif
+// --- Trig_Saber_in_pandaDie_Func001Func014A (family, line 52628) ---
+function Trig_Saber_in_pandaDie_Func001Func014A takes nothing returns nothing
+    if ( Trig_Saber_in_pandaDie_Func001Func014Func001C() ) then
+        call UnitDamageTargetBJ( GetTriggerUnit(), GetEnumUnit(), ( 1000.00 * I2R(GetUnitAbilityLevelSwapped('A0TN', GetTriggerUnit())) ), ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC )
+        call AddSpecialEffectTargetUnitBJ( "chest", GetEnumUnit(), "Units\\Undead\\Abomination\\AbominationExplosion.mdl" )
+        call DestroyEffectBJ( GetLastCreatedEffectBJ() )
+        call AddSpecialEffectTargetUnitBJ( "chest", GetEnumUnit(), "Objects\\Spawnmodels\\Other\\NeutralBuildingExplosion\\NeutralBuildingExplosion.mdl" )
+        call DestroyEffectBJ( GetLastCreatedEffectBJ() )
+    else
+    endif
 endfunction
 
-// --- rUe (core, line 27324 in war3map.j) ---
-function rUe takes nothing returns boolean
-return(GetRandomInt(1,'d')<=(GetUnitAbilityLevelSwapped('A0TN',GetTriggerUnit())*4))
+// --- Trig_Saber_in_pandaDie_Func001C (family, line 52639) ---
+function Trig_Saber_in_pandaDie_Func001C takes nothing returns boolean
+    if ( not ( GetRandomInt(1, 100) <= ( GetUnitAbilityLevelSwapped('A0TN', GetTriggerUnit()) * 4 ) ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- rwe (core, line 27327 in war3map.j) ---
-function rwe takes nothing returns nothing
-if(rUe())then
-call ReviveHeroLoc(GetTriggerUnit(),GetUnitLoc(GetTriggerUnit()),true)
-call SetUnitLifePercentBJ(GetTriggerUnit(),'d')
-call PlaySoundOnUnitBJ(MD,'d',GetTriggerUnit())
-set BO=GetUnitLoc(GetTriggerUnit())
-call CreateNUnitsAtLoc(1,'oshm',GetOwningPlayer(GetTriggerUnit()),BO,bj_UNIT_FACING)
-call ShowUnitHide(bj_lastCreatedUnit)
-call UnitApplyTimedLifeBJ(1.,'BTLF',bj_lastCreatedUnit)
-call IssueTargetOrderById(bj_lastCreatedUnit,$D0085,GetTriggerUnit())
-call UnitAddAbility(bj_lastCreatedUnit,'A0SR')
-call IssueImmediateOrderById(bj_lastCreatedUnit,$D009F)
-call ModifyHeroStat(2,GetTriggerUnit(),0,GetRandomInt(0,1))
-call ModifyHeroStat(1,GetTriggerUnit(),0,GetRandomInt(0,1))
-call ModifyHeroStat(0,GetTriggerUnit(),0,GetRandomInt(0,1))
-call ForGroupBJ(gt(600.,GetUnitLoc(GetTriggerUnit())),function rue)
-endif
-set KI=0
-call SetUnitVertexColorBJ(GetDyingUnit(),100.,'d',100.,0)
+// --- Trig_Saber_in_pandaDie_Actions (family, line 52646) ---
+function Trig_Saber_in_pandaDie_Actions takes nothing returns nothing
+    if ( Trig_Saber_in_pandaDie_Func001C() ) then
+        call ReviveHeroLoc( GetTriggerUnit(), GetUnitLoc(GetTriggerUnit()), true )
+        call SetUnitLifePercentBJ( GetTriggerUnit(), 100 )
+        call PlaySoundOnUnitBJ( gg_snd_PandarenBrewmasterWarcry1, 100, GetTriggerUnit() )
+        set udg_Immediately_P1 = GetUnitLoc(GetTriggerUnit())
+        call CreateNUnitsAtLoc( 1, 'oshm', GetOwningPlayer(GetTriggerUnit()), udg_Immediately_P1, bj_UNIT_FACING )
+        call ShowUnitHide( GetLastCreatedUnit() )
+        call UnitApplyTimedLifeBJ( 1.00, 'BTLF', GetLastCreatedUnit() )
+        call IssueTargetOrderBJ( GetLastCreatedUnit(), "bloodlust", GetTriggerUnit() )
+        call UnitAddAbilityBJ( 'A0SR', GetLastCreatedUnit() )
+        call IssueImmediateOrderBJ( GetLastCreatedUnit(), "stomp" )
+        call ModifyHeroStat( bj_HEROSTAT_INT, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, GetRandomInt(0, 1) )
+        call ModifyHeroStat( bj_HEROSTAT_AGI, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, GetRandomInt(0, 1) )
+        call ModifyHeroStat( bj_HEROSTAT_STR, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, GetRandomInt(0, 1) )
+        call ForGroupBJ( GetUnitsInRangeOfLocAll(600.00, GetUnitLoc(GetTriggerUnit())), function Trig_Saber_in_pandaDie_Func001Func014A )
+    else
+    endif
+    set udg_Panda_AttackedTimes = 0
+    call SetUnitVertexColorBJ( GetDyingUnit(), 100.00, 100, 100.00, 0 )
+endfunction
+
+// --- InitTrig_Saber_in_pandaDie (family, line 52669) ---
+function InitTrig_Saber_in_pandaDie takes nothing returns nothing
+    set gg_trg_Saber_in_pandaDie = CreateTrigger(  )
+    call DisableTrigger( gg_trg_Saber_in_pandaDie )
+    call TriggerRegisterAnyUnitEventBJ( gg_trg_Saber_in_pandaDie, EVENT_PLAYER_UNIT_DEATH )
+    call TriggerAddCondition( gg_trg_Saber_in_pandaDie, Condition( function Trig_Saber_in_pandaDie_Conditions ) )
+    call TriggerAddAction( gg_trg_Saber_in_pandaDie, function Trig_Saber_in_pandaDie_Actions )
 endfunction

@@ -1,67 +1,80 @@
 // rawcode: A0G3
-// hero: godie-hpb1 (slot E)  championDoc: content/champions/godie-hpb1.json
-// nameZh: 列、在、前
-// abilityDoc: content/abilities/godie-hpb1.e.json
-// kind: active (spell-effect trigger)
-// handler: event=EVENT_PLAYER_UNIT_SPELL_EFFECT cond=juv actions=jWv (trigger var kl)
+// nameZh: 07-03 列、在、前
 // w3a base: ANcl  levels: 4
 // cooldown: {"1": 65.0, "2": 65.0, "3": 65.0, "4": 65.0}
 // mana: {"1": 220, "2": 250, "3": 280, "4": 310}
 // range: {"1": 800.0, "2": 800.0, "3": 800.0, "4": 800.0}
 // area: {"1": 300.0, "2": 300.0, "3": 300.0, "4": 300.0}
-// data[1] per level: {"1": 0.0, "2": 0.0, "3": 0.0, "4": 0.0}
-// data[2] per level: {"1": 2, "3": 2, "4": 2, "2": 2}
-// data[3] per level: {"1": 3, "3": 3, "2": 3, "4": 3}
-// data[4] per level: {"1": 0.0, "2": 0.0, "3": 0.0, "4": 0.0}
-// data[5] per level: {"1": 0, "2": 0, "3": 0, "4": 0}
-// data[6] per level: {"1": "silence", "2": "silence", "3": "silence", "4": "silence"}
-// slice tiers: core=['juv', 'jWv'] depth1=['jUv', 'jwv'] depth2=[]
+// source: tools/w3x-import/out/GoDieEX22s-src/raw/war3map.j (CR-normalized line numbers)
+// generator: tools/w3x-import/extract_jass_spells.py
+// trigger families: Jump_Start
 
-// --- juv (core, line 17635 in war3map.j) ---
-function juv takes nothing returns boolean
-return(GetSpellAbilityId()=='A0G3')
+// === family Jump_Start (active) events=EVENT_PLAYER_UNIT_SPELL_EFFECT ===
+
+// --- Trig_Jump_Start_Conditions (family, line 34174) ---
+function Trig_Jump_Start_Conditions takes nothing returns boolean
+    if ( not ( GetSpellAbilityId() == 'A0G3' ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- jUv (depth1, line 17638 in war3map.j) ---
-function jUv takes nothing returns boolean
-return(QR[(1+GetPlayerId(GetOwningPlayer(GetTriggerUnit())))]==false)
+// --- Trig_Jump_Start_Func017Func001C (family, line 34181) ---
+function Trig_Jump_Start_Func017Func001C takes nothing returns boolean
+    if ( not ( udg_EX_Mode[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))] == false ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- jwv (depth1, line 17641 in war3map.j) ---
-function jwv takes nothing returns boolean
-return(oo==2)
+// --- Trig_Jump_Start_Func017C (family, line 34188) ---
+function Trig_Jump_Start_Func017C takes nothing returns boolean
+    if ( not ( udg_MoonCombo == 2 ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- jWv (core, line 17644 in war3map.j) ---
-function jWv takes nothing returns nothing
-set Tx=.0
-set ux=GetTriggerUnit()
-set Ux=GetUnitLoc(GetTriggerUnit())
-set wx=GetSpellTargetLoc()
-set Wx=AngleBetweenPoints(Ux,wx)
-set yx=(DistanceBetweenPoints(Ux,wx)/ 41.)
-call CreateTextTagUnitBJ("列、在、前",GetTriggerUnit(),-30.,16.,100.,100.,100.,10.)
-call SetTextTagPermanentBJ(bj_lastCreatedTextTag,false)
-call SetTextTagLifespanBJ(bj_lastCreatedTextTag,3.)
-call SetTextTagFadepointBJ(bj_lastCreatedTextTag,1.5)
-call PauseUnit(GetTriggerUnit(),true)
-call SetUnitPathing(GetTriggerUnit(),false)
-call UnitAddAbility(GetTriggerUnit(),'A0FZ')
-call SetUnitTimeScalePercent(GetTriggerUnit(),40.)
-call SetUnitAnimation(GetTriggerUnit(),"attack slam")
-set eo=I2R((((GetHeroStatBJ(0,GetTriggerUnit(),true)*2)+(GetUnitAbilityLevelSwapped(GetSpellAbilityId(),GetTriggerUnit())*'d'))+350))
-if(jwv())then
-if(jUv())then
-set eo=((5.*I2R(GetHeroStatBJ(1,GetTriggerUnit(),true)))+eo)
-else
-set eo=((10.*I2R(GetHeroStatBJ(1,GetTriggerUnit(),true)))+eo)
-endif
-call CreateTextTagUnitBJ("連技！",GetTriggerUnit(),-30.,12.,'d',.0,.0,10.)
-call SetTextTagVelocityBJ(bj_lastCreatedTextTag,64.,GetUnitFacing(GetTriggerUnit()))
-call SetTextTagPermanentBJ(bj_lastCreatedTextTag,false)
-call SetTextTagLifespanBJ(bj_lastCreatedTextTag,2.8)
-call SetTextTagFadepointBJ(bj_lastCreatedTextTag,1.5)
-endif
-call PlaySoundBJ(hD)
-call EnableTrigger(Kl)
+// --- Trig_Jump_Start_Actions (family, line 34195) ---
+function Trig_Jump_Start_Actions takes nothing returns nothing
+    set udg_Jump_Index = 0.00
+    set udg_Jump_Caster = GetTriggerUnit()
+    set udg_P1_Moon = GetUnitLoc(GetTriggerUnit())
+    set udg_P2_Moon = GetSpellTargetLoc()
+    set udg_Jump_Angle = AngleBetweenPoints(udg_P1_Moon, udg_P2_Moon)
+    set udg_Jump_dDist = ( DistanceBetweenPoints(udg_P1_Moon, udg_P2_Moon) / 41.00 )
+    call CreateTextTagUnitBJ( "TRIGSTR_4804", GetTriggerUnit(), -30.00, 16.00, 100.00, 100.00, 100.00, 10.00 )
+    call SetTextTagPermanentBJ( GetLastCreatedTextTag(), false )
+    call SetTextTagLifespanBJ( GetLastCreatedTextTag(), 3.00 )
+    call SetTextTagFadepointBJ( GetLastCreatedTextTag(), 1.50 )
+    call PauseUnitBJ( true, GetTriggerUnit() )
+    call SetUnitPathing( GetTriggerUnit(), false )
+    call UnitAddAbilityBJ( 'A0FZ', GetTriggerUnit() )
+    call SetUnitTimeScalePercent( GetTriggerUnit(), 40.00 )
+    call SetUnitAnimation( GetTriggerUnit(), "attack slam" )
+    set udg_MoonDamage = I2R(( ( ( GetHeroStatBJ(bj_HEROSTAT_STR, GetTriggerUnit(), true) * 2 ) + ( GetUnitAbilityLevelSwapped(GetSpellAbilityId(), GetTriggerUnit()) * 100 ) ) + 350 ))
+    if ( Trig_Jump_Start_Func017C() ) then
+        if ( Trig_Jump_Start_Func017Func001C() ) then
+            set udg_MoonDamage = ( ( 5.00 * I2R(GetHeroStatBJ(bj_HEROSTAT_AGI, GetTriggerUnit(), true)) ) + udg_MoonDamage )
+        else
+            set udg_MoonDamage = ( ( 10.00 * I2R(GetHeroStatBJ(bj_HEROSTAT_AGI, GetTriggerUnit(), true)) ) + udg_MoonDamage )
+        endif
+        call CreateTextTagUnitBJ( "TRIGSTR_4805", GetTriggerUnit(), -30.00, 12.00, 100, 0.00, 0.00, 10.00 )
+        call SetTextTagVelocityBJ( GetLastCreatedTextTag(), 64.00, GetUnitFacing(GetTriggerUnit()) )
+        call SetTextTagPermanentBJ( GetLastCreatedTextTag(), false )
+        call SetTextTagLifespanBJ( GetLastCreatedTextTag(), 2.80 )
+        call SetTextTagFadepointBJ( GetLastCreatedTextTag(), 1.50 )
+    else
+    endif
+    call PlaySoundBJ( gg_snd_moonjump )
+    call EnableTrigger( gg_trg_Jump_Effect )
+endfunction
+
+// --- InitTrig_Jump_Start (family, line 34230) ---
+function InitTrig_Jump_Start takes nothing returns nothing
+    set gg_trg_Jump_Start = CreateTrigger(  )
+    call DisableTrigger( gg_trg_Jump_Start )
+    call TriggerRegisterAnyUnitEventBJ( gg_trg_Jump_Start, EVENT_PLAYER_UNIT_SPELL_EFFECT )
+    call TriggerAddCondition( gg_trg_Jump_Start, Condition( function Trig_Jump_Start_Conditions ) )
+    call TriggerAddAction( gg_trg_Jump_Start, function Trig_Jump_Start_Actions )
 endfunction

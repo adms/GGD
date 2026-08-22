@@ -1,79 +1,96 @@
 // rawcode: A116
-// hero: godie-o02p (slot Q)  championDoc: content/champions/godie-o02p.json
-// nameZh: 甩蔥歌
-// abilityDoc: content/abilities/godie-o02p.q.json
-// kind: passive (referenced via GetUnitAbilityLevel/GetLearnedSkill in other triggers)
-// handler: event=TimerEventPeriodic cond=None actions=Vae (trigger var Ns)
+// nameZh: 99-01 甩蔥歌
 // w3a base: AOcl  levels: 4
 // cooldown: {"1": 25.0, "2": 25.0, "3": 25.0, "4": 25.0}
 // mana: {"1": 75, "2": 105, "3": 135, "4": 165}
 // range: {"1": 550.0, "2": 550.0, "3": 550.0, "4": 550.0}
 // area: {"1": 400.0, "2": 400.0, "3": 400.0, "4": 400.0}
-// data[1] per level: {"4": 425.0, "1": 200.0, "2": 275.0, "3": 350.0}
-// data[2] per level: {"4": 6, "1": 6, "3": 6}
-// data[3] per level: {"1": 0.10000000149011612, "2": 0.10000000149011612, "3": 0.10000000149011612, "4": 0.10000000149011612}
-// slice tiers: core=['Vae'] depth1=['gt', 'Vie'] depth2=['nu', 'Voe', 'Vre']
+// source: tools/w3x-import/out/GoDieEX22s-src/raw/war3map.j (CR-normalized line numbers)
+// generator: tools/w3x-import/extract_jass_spells.py
+// trigger families: MikuNo1Effect
 
-// --- gt (depth1, line 2287 in war3map.j) ---
-function gt takes real At,location Ft returns group
-set et=CreateGroup()
-call GroupEnumUnitsInRangeOfLoc(et,Ft,At,ot)
-return et
+// === family MikuNo1Effect (passive) events=none ===
+
+// --- Trig_MikuNo1Effect_Conditions (family, line 54937) ---
+function Trig_MikuNo1Effect_Conditions takes nothing returns boolean
+    if ( not ( IsUnitAliveBJ(udg_Miku) == true ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- nu (depth2, line 3056 in war3map.j) ---
-function nu takes unit Vu,real vu,real Eu returns nothing
-local unit Xu=bj_lastCreatedUnit
-local real eu=bj_enumDestructableRadius
-local real Ou=bj_randomSubGroupChance
-set bj_lastCreatedUnit=Vu
-set bj_enumDestructableRadius=vu
-set bj_randomSubGroupChance=Eu
-call ExecuteFunc("xu")
-set bj_lastCreatedUnit=Xu
-set bj_enumDestructableRadius=eu
-set bj_randomSubGroupChance=Ou
+// --- Trig_MikuNo1Effect_Func006Func001Func001C (family, line 54944) ---
+function Trig_MikuNo1Effect_Func006Func001Func001C takes nothing returns boolean
+    if ( not ( udg_EX_Mode[GetConvertedPlayerId(GetOwningPlayer(udg_Miku))] == true ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- Voe (depth2, line 28488 in war3map.j) ---
-function Voe takes nothing returns boolean
-return(QR[(1+GetPlayerId(GetOwningPlayer(Hc)))])
+// --- Trig_MikuNo1Effect_Func006Func001C (family, line 54951) ---
+function Trig_MikuNo1Effect_Func006Func001C takes nothing returns boolean
+    if ( not ( IsUnitAlly(GetEnumUnit(), GetOwningPlayer(udg_Miku)) == true ) ) then
+        return false
+    endif
+    if ( not ( GetEnumUnit() != udg_Miku ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- Vre (depth2, line 28491 in war3map.j) ---
-function Vre takes nothing returns boolean
-return(IsUnitAlly(GetEnumUnit(),GetOwningPlayer(Hc)))and(GetEnumUnit()!=Hc)
+// --- Trig_MikuNo1Effect_Func006A (family, line 54961) ---
+function Trig_MikuNo1Effect_Func006A takes nothing returns nothing
+    if ( Trig_MikuNo1Effect_Func006Func001C() ) then
+        call CreateNUnitsAtLoc( 1, 'hfoo', GetOwningPlayer(udg_Miku), udg_MikuPoint, bj_UNIT_FACING )
+        call RemoveUnitSP( GetLastCreatedUnit() , 2 , 1)
+        call ShowUnitHide( GetLastCreatedUnit() )
+        call UnitAddAbilityBJ( 'A11E', GetLastCreatedUnit() )
+        call SetUnitAbilityLevelSwapped( 'A11E', GetLastCreatedUnit(), udg_MikuCount )
+        call SetUnitFacingToFaceUnitTimed( GetLastCreatedUnit(), GetEnumUnit(), 0 )
+        call IssueTargetOrderBJ( GetLastCreatedUnit(), "healingwave", GetEnumUnit() )
+    else
+        if ( Trig_MikuNo1Effect_Func006Func001Func001C() ) then
+            call CreateNUnitsAtLoc( 1, 'hfoo', GetOwningPlayer(udg_Miku), udg_MikuPoint, bj_UNIT_FACING )
+            call RemoveUnitSP( GetLastCreatedUnit() , 2 , 1)
+            call ShowUnitHide( GetLastCreatedUnit() )
+            call UnitAddAbilityBJ( 'A11D', GetLastCreatedUnit() )
+            call SetUnitAbilityLevelSwapped( 'A11D', GetLastCreatedUnit(), udg_MikuCount )
+            call SetUnitFacingToFaceUnitTimed( GetLastCreatedUnit(), GetEnumUnit(), 0 )
+            call IssueTargetOrderBJ( GetLastCreatedUnit(), "chainlightning", GetEnumUnit() )
+        else
+        endif
+    endif
 endfunction
 
-// --- Vie (depth1, line 28494 in war3map.j) ---
-function Vie takes nothing returns nothing
-if(Vre())then
-call CreateNUnitsAtLoc(1,'hfoo',GetOwningPlayer(Hc),jc,bj_UNIT_FACING)
-call nu(bj_lastCreatedUnit,2,1)
-call ShowUnitHide(bj_lastCreatedUnit)
-call UnitAddAbility(bj_lastCreatedUnit,'A11E')
-call SetUnitAbilityLevelSwapped('A11E',bj_lastCreatedUnit,Jc)
-call SetUnitFacingToFaceUnitTimed(bj_lastCreatedUnit,GetEnumUnit(),0)
-call IssueTargetOrderById(bj_lastCreatedUnit,$D0215,GetEnumUnit())
-else
-if(Voe())then
-call CreateNUnitsAtLoc(1,'hfoo',GetOwningPlayer(Hc),jc,bj_UNIT_FACING)
-call nu(bj_lastCreatedUnit,2,1)
-call ShowUnitHide(bj_lastCreatedUnit)
-call UnitAddAbility(bj_lastCreatedUnit,'A11D')
-call SetUnitAbilityLevelSwapped('A11D',bj_lastCreatedUnit,Jc)
-call SetUnitFacingToFaceUnitTimed(bj_lastCreatedUnit,GetEnumUnit(),0)
-call IssueTargetOrderById(bj_lastCreatedUnit,$D0097,GetEnumUnit())
-endif
-endif
+// --- Trig_MikuNo1Effect_Actions (family, line 54984) ---
+function Trig_MikuNo1Effect_Actions takes nothing returns nothing
+    set udg_MikuPoint = GetUnitLoc(udg_Miku)
+    set udg_MikuCount = GetUnitAbilityLevelSwapped('A116', udg_Miku)
+    set udg_MikuCount1 = GetUnitAbilityLevelSwapped('A118', udg_Miku)
+    set bj_wantDestroyGroup = true
+    call ForGroupBJ( GetUnitsInRangeOfLocAll(375.00, udg_MikuPoint), function Trig_MikuNo1Effect_Func006A )
+    call RemoveLocation( udg_MikuPoint )
 endfunction
 
-// --- Vae (core, line 28515 in war3map.j) ---
-function Vae takes nothing returns nothing
-set jc=GetUnitLoc(Hc)
-set Jc=GetUnitAbilityLevelSwapped('A116',Hc)
-set kc=GetUnitAbilityLevelSwapped('A118',Hc)
-set bj_wantDestroyGroup=true
-call ForGroupBJ(gt(375.,jc),function Vie)
-call RemoveLocation(jc)
+// --- InitTrig_MikuNo1Effect (family, line 54994) ---
+function InitTrig_MikuNo1Effect takes nothing returns nothing
+    set gg_trg_MikuNo1Effect = CreateTrigger(  )
+    call DisableTrigger( gg_trg_MikuNo1Effect )
+    call TriggerRegisterTimerEventPeriodic( gg_trg_MikuNo1Effect, 2.00 )
+    call TriggerAddCondition( gg_trg_MikuNo1Effect, Condition( function Trig_MikuNo1Effect_Conditions ) )
+    call TriggerAddAction( gg_trg_MikuNo1Effect, function Trig_MikuNo1Effect_Actions )
+endfunction
+
+// --- RemoveUnitSP (helper, line 4847) ---
+function RemoveUnitSP takes unit R_unit , real Life_Time , real Die_Time returns nothing
+    local unit Last = bj_lastCreatedUnit
+    local real Bj_Timer = bj_enumDestructableRadius
+    local real Bj_Rand = bj_randomSubGroupChance
+    set bj_lastCreatedUnit = R_unit
+    set bj_enumDestructableRadius = Life_Time
+    set bj_randomSubGroupChance = Die_Time
+    call ExecuteFunc("RemoveUnitSP_Action")
+    set bj_lastCreatedUnit = Last
+    set bj_enumDestructableRadius = Bj_Timer
+    set bj_randomSubGroupChance = Bj_Rand
 endfunction

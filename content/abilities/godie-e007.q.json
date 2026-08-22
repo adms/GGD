@@ -47,7 +47,7 @@
   "vfxKey": "fx.prim.ki.pulse-sm",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.167,
+  "castTimeSec": 0.3,
   "rangeTier": "小",
   "range": 4.5
 }

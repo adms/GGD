@@ -1,7 +1,13 @@
 {
   "collection": "config",
-  "hash": "bd9f4d2b4028",
+  "hash": "a445f0e9f784",
   "entries": [
+    {
+      "id": "ability-vfx-bindings",
+      "path": "config/ability-vfx-bindings.json",
+      "hash": "f25089b8de86",
+      "size": 36900
+    },
     {
       "id": "admin-friend",
       "path": "config/admin-friend.json",
@@ -113,14 +119,20 @@
     {
       "id": "combat-env",
       "path": "config/combat-env.json",
-      "hash": "dc4cd0fdf6d1",
-      "size": 984
+      "hash": "040c55a1631b",
+      "size": 1042
     },
     {
       "id": "combat-feel",
       "path": "config/combat-feel.json",
       "hash": "1342aeaf6452",
       "size": 829
+    },
+    {
+      "id": "combo-strikes",
+      "path": "config/combo-strikes.json",
+      "hash": "edc836479b25",
+      "size": 30364
     },
     {
       "id": "config.match",
@@ -173,8 +185,8 @@
     {
       "id": "damage-tiers",
       "path": "config/damage-tiers.json",
-      "hash": "821c20c28a84",
-      "size": 2997
+      "hash": "2a5fad92791d",
+      "size": 3188
     },
     {
       "id": "dispel",
@@ -203,8 +215,8 @@
     {
       "id": "gamepad",
       "path": "config/gamepad.json",
-      "hash": "6522a29e34db",
-      "size": 342
+      "hash": "93e063ded264",
+      "size": 467
     },
     {
       "id": "gore",
@@ -305,8 +317,8 @@
     {
       "id": "range-guide",
       "path": "config/range-guide.json",
-      "hash": "c0cc9ed5d4eb",
-      "size": 1421
+      "hash": "713850abf54f",
+      "size": 1450
     },
     {
       "id": "range-tiers",

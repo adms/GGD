@@ -96,7 +96,7 @@
       "sfxKey": "wc3.darksummoninglaunch1",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 0.767,
+      "castTimeSec": 0.8,
       "cooldownTier": "極小",
       "manaCostTier": "極小",
       "radiusTier": "中"
@@ -137,7 +137,7 @@
         }
       ],
       "vfxKey": "fx.prim.lightning.pulse-sm",
-      "castTimeSec": 0.167,
+      "castTimeSec": 0.267,
       "cooldownTier": "極小"
     },
     "E": {

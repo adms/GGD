@@ -1,71 +1,85 @@
 // rawcode: A0AF
-// hero: godie-u00l (slot Q)  championDoc: content/champions/godie-u00l.json
-// nameZh: 北斗懺悔拳
-// abilityDoc: content/abilities/godie-u00l.q.json
-// kind: active (spell-effect trigger)
-// handler: event=EVENT_PLAYER_UNIT_SPELL_EFFECT cond=MBv actions=Mdv (trigger var Em)
-// w3a base: ANcl  levels: None
+// nameZh: 25-01 北斗懺悔拳
 // cooldown: {"1": 25.0, "2": 25.0, "3": 25.0, "4": 25.0, "5": 8.0}
 // mana: {"1": 90, "2": 120, "3": 150, "4": 325, "5": 85}
-// range: {"2": 150.0, "3": 150.0, "4": 250.0, "5": 9999.0, "1": 150.0}
-// data[1] per level: {"1": 0.0, "2": 0.0, "3": 0.0, "4": 0.0, "5": 0.0}
-// data[2] per level: {"1": 1, "2": 1, "3": 1, "5": 3, "4": 1}
-// data[3] per level: {"1": 29, "2": 29, "3": 29, "5": 5, "4": 29}
-// data[4] per level: {"1": 0.0, "2": 0.0, "3": 0.0, "4": 0.0, "5": 0.0}
-// data[5] per level: {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0}
-// data[6] per level: {"1": "cripple", "2": "cripple", "3": "cripple", "4": "cripple", "5": "coldarrows"}
-// slice tiers: core=['MBv', 'Mdv'] depth1=['MCv'] depth2=['Mcv']
+// range: {"1": 150.0, "2": 150.0, "3": 150.0, "4": 250.0, "5": 9999.0}
+// source: tools/w3x-import/out/GoDieEX22s-src/raw/war3map.j (CR-normalized line numbers)
+// generator: tools/w3x-import/extract_jass_spells.py
+// trigger families: YouDie
 
-// --- MBv (core, line 20007 in war3map.j) ---
-function MBv takes nothing returns boolean
-return(GetSpellAbilityId()=='A0AF')
+// === family YouDie (active) events=EVENT_PLAYER_UNIT_SPELL_EFFECT ===
+
+// --- Trig_YouDie_Conditions (family, line 38571) ---
+function Trig_YouDie_Conditions takes nothing returns boolean
+    if ( not ( GetSpellAbilityId() == 'A0AF' ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- Mcv (depth2, line 20010 in war3map.j) ---
-function Mcv takes nothing returns boolean
-return(QR[(1+GetPlayerId(GetOwningPlayer(Hx)))])and(GetUnitTypeId(GetAttacker())=='U00L')
+// --- Trig_YouDie_Func028Func003C (family, line 38578) ---
+function Trig_YouDie_Func028Func003C takes nothing returns boolean
+    if ( not ( udg_EX_Mode[GetConvertedPlayerId(GetOwningPlayer(udg_YouDieKiller))] == true ) ) then
+        return false
+    endif
+    if ( not ( GetUnitTypeId(GetAttacker()) == 'U00L' ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- MCv (depth1, line 20013 in war3map.j) ---
-function MCv takes nothing returns boolean
-return(Mcv())
+// --- Trig_YouDie_Func028C (family, line 38588) ---
+function Trig_YouDie_Func028C takes nothing returns boolean
+    if ( not Trig_YouDie_Func028Func003C() ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- Mdv (core, line 20016 in war3map.j) ---
-function Mdv takes nothing returns nothing
-set hx=GetSpellTargetUnit()
-set Hx=GetTriggerUnit()
-call CreateTextTagUnitBJ("你還有 3 秒可以懺悔這輩子的罪孽",hx,0,10.,100.,50.,50.,0)
-call SetTextTagVelocityBJ(bj_lastCreatedTextTag,32.,90)
-call SetTextTagPermanentBJ(bj_lastCreatedTextTag,false)
-call SetTextTagLifespanBJ(bj_lastCreatedTextTag,2.8)
-call SetTextTagFadepointBJ(bj_lastCreatedTextTag,1.5)
-call TriggerSleepAction(1.)
-call PlaySoundOnUnitBJ(SD,100.,Hx)
-call CreateTextTagUnitBJ("2",hx,0,10.,100.,50.,50.,0)
-call SetTextTagVelocityBJ(bj_lastCreatedTextTag,32.,90)
-call SetTextTagPermanentBJ(bj_lastCreatedTextTag,false)
-call SetTextTagLifespanBJ(bj_lastCreatedTextTag,1.)
-call SetTextTagFadepointBJ(bj_lastCreatedTextTag,1.)
-call TriggerSleepAction(1.)
-call PlaySoundOnUnitBJ(eD,100.,Hx)
-call CreateTextTagUnitBJ("1",hx,0,10.,100.,50.,50.,0)
-call SetTextTagVelocityBJ(bj_lastCreatedTextTag,32.,90)
-call SetTextTagPermanentBJ(bj_lastCreatedTextTag,false)
-call SetTextTagLifespanBJ(bj_lastCreatedTextTag,1.)
-call SetTextTagFadepointBJ(bj_lastCreatedTextTag,1.)
-call TriggerSleepAction(1.)
-call PlaySoundOnUnitBJ(sD,100.,Hx)
-call AddSpecialEffectTargetUnitBJ("body",hx,"Objects\\Spawnmodels\\Orc\\OrcSmallDeathExplode\\OrcSmallDeathExplode.mdl")
-call DestroyEffect(bj_lastCreatedEffect)
-call CreateNUnitsAtLoc(1,'o001',GetOwningPlayer(Hx),GetUnitLoc(hx),bj_UNIT_FACING)
-call UnitApplyTimedLifeBJ(.8,'BTLF',bj_lastCreatedUnit)
-if(MCv())then
-call UnitDamageTargetBJ(bj_lastCreatedUnit,hx,((((I2R(GetUnitAbilityLevelSwapped('A0AF',Hx))*150.)+.0)+(I2R(GetHeroStatBJ(0,Hx,true))*9.))+.0),ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC)
-else
-call UnitDamageTargetBJ(bj_lastCreatedUnit,hx,((((I2R(GetUnitAbilityLevelSwapped('A0AF',Hx))*150.)+.0)+(I2R(GetHeroStatBJ(0,Hx,true))*3.))+.0),ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC)
-endif
-call AddSpecialEffectTargetUnitBJ("chest",hx,"Objects\\Spawnmodels\\Orc\\OrcSmallDeathExplode\\OrcSmallDeathExplode.mdl")
-call DestroyEffect(bj_lastCreatedEffect)
-call SetUnitAnimation(hx,"death")
+// --- Trig_YouDie_Actions (family, line 38595) ---
+function Trig_YouDie_Actions takes nothing returns nothing
+    set udg_YouDieUnit = GetSpellTargetUnit()
+    set udg_YouDieKiller = GetTriggerUnit()
+    call CreateTextTagUnitBJ( "TRIGSTR_5735", udg_YouDieUnit, 0, 10.00, 100.00, 50.00, 50.00, 0 )
+    call SetTextTagVelocityBJ( GetLastCreatedTextTag(), 32.00, 90 )
+    call SetTextTagPermanentBJ( GetLastCreatedTextTag(), false )
+    call SetTextTagLifespanBJ( GetLastCreatedTextTag(), 2.80 )
+    call SetTextTagFadepointBJ( GetLastCreatedTextTag(), 1.50 )
+    call TriggerSleepAction( 1.00 )
+    call PlaySoundOnUnitBJ( gg_snd_PeonWhat2, 100.00, udg_YouDieKiller )
+    call CreateTextTagUnitBJ( "TRIGSTR_5863", udg_YouDieUnit, 0, 10.00, 100.00, 50.00, 50.00, 0 )
+    call SetTextTagVelocityBJ( GetLastCreatedTextTag(), 32.00, 90 )
+    call SetTextTagPermanentBJ( GetLastCreatedTextTag(), false )
+    call SetTextTagLifespanBJ( GetLastCreatedTextTag(), 1.00 )
+    call SetTextTagFadepointBJ( GetLastCreatedTextTag(), 1.00 )
+    call TriggerSleepAction( 1.00 )
+    call PlaySoundOnUnitBJ( gg_snd_GruntWhat2, 100.00, udg_YouDieKiller )
+    call CreateTextTagUnitBJ( "TRIGSTR_5864", udg_YouDieUnit, 0, 10.00, 100.00, 50.00, 50.00, 0 )
+    call SetTextTagVelocityBJ( GetLastCreatedTextTag(), 32.00, 90 )
+    call SetTextTagPermanentBJ( GetLastCreatedTextTag(), false )
+    call SetTextTagLifespanBJ( GetLastCreatedTextTag(), 1.00 )
+    call SetTextTagFadepointBJ( GetLastCreatedTextTag(), 1.00 )
+    call TriggerSleepAction( 1.00 )
+    call PlaySoundOnUnitBJ( gg_snd_PeonDeath, 100.00, udg_YouDieKiller )
+    call AddSpecialEffectTargetUnitBJ( "body", udg_YouDieUnit, "Objects\\Spawnmodels\\Orc\\OrcSmallDeathExplode\\OrcSmallDeathExplode.mdl" )
+    call DestroyEffectBJ( GetLastCreatedEffectBJ() )
+    call CreateNUnitsAtLoc( 1, 'o001', GetOwningPlayer(udg_YouDieKiller), GetUnitLoc(udg_YouDieUnit), bj_UNIT_FACING )
+    call UnitApplyTimedLifeBJ( 0.80, 'BTLF', GetLastCreatedUnit() )
+    if ( Trig_YouDie_Func028C() ) then
+        call UnitDamageTargetBJ( GetLastCreatedUnit(), udg_YouDieUnit, ( ( ( ( I2R(GetUnitAbilityLevelSwapped('A0AF', udg_YouDieKiller)) * 150.00 ) + 0.00 ) + ( I2R(GetHeroStatBJ(bj_HEROSTAT_STR, udg_YouDieKiller, true)) * 9.00 ) ) + 0.00 ), ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC )
+    else
+        call UnitDamageTargetBJ( GetLastCreatedUnit(), udg_YouDieUnit, ( ( ( ( I2R(GetUnitAbilityLevelSwapped('A0AF', udg_YouDieKiller)) * 150.00 ) + 0.00 ) + ( I2R(GetHeroStatBJ(bj_HEROSTAT_STR, udg_YouDieKiller, true)) * 3.00 ) ) + 0.00 ), ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC )
+    endif
+    call AddSpecialEffectTargetUnitBJ( "chest", udg_YouDieUnit, "Objects\\Spawnmodels\\Orc\\OrcSmallDeathExplode\\OrcSmallDeathExplode.mdl" )
+    call DestroyEffectBJ( GetLastCreatedEffectBJ() )
+    call SetUnitAnimation( udg_YouDieUnit, "death" )
+endfunction
+
+// --- InitTrig_YouDie (family, line 38634) ---
+function InitTrig_YouDie takes nothing returns nothing
+    set gg_trg_YouDie = CreateTrigger(  )
+    call DisableTrigger( gg_trg_YouDie )
+    call TriggerRegisterAnyUnitEventBJ( gg_trg_YouDie, EVENT_PLAYER_UNIT_SPELL_EFFECT )
+    call TriggerAddCondition( gg_trg_YouDie, Condition( function Trig_YouDie_Conditions ) )
+    call TriggerAddAction( gg_trg_YouDie, function Trig_YouDie_Actions )
 endfunction

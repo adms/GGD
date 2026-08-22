@@ -35,13 +35,13 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 1.133
+      "castTimeSec": 1.433
     }
   },
   "vfxKey": "fx.prim.void.explosion",
   "targetsEnemies": true,
   "radius": 6.0,
-  "castTimeSec": 1.133,
+  "castTimeSec": 1.433,
   "rangeTier": "極大",
   "range": 12,
   "radiusTier": "中"

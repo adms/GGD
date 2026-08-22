@@ -1,36 +1,53 @@
 // rawcode: A08T
-// hero: godie-u00k (slot W)  championDoc: tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u00k.json
-// nameZh: 靈魂吸取
-// abilityDoc: tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u00k.json#abilities.W
-// kind: passive (referenced via GetUnitAbilityLevel/GetLearnedSkill in other triggers)
-// handler: event=EVENT_PLAYER_UNIT_DEATH cond=zPv actions=zQv (trigger var pP)
-// handler: event=EVENT_PLAYER_UNIT_DEATH cond=None actions=zQv (trigger var pP)
+// nameZh: 71-02 靈魂吸取
 // w3a base: Afrz  levels: 4
 // duration: {"1": 0.009999999776482582, "2": 0.009999999776482582, "3": 0.009999999776482582, "4": 0.009999999776482582}
 // hero_duration: {"1": 0.009999999776482582, "2": 0.009999999776482582, "3": 0.009999999776482582, "4": 0.009999999776482582}
-// slice tiers: core=['zPv', 'zQv'] depth1=['zqv'] depth2=[]
+// source: tools/w3x-import/out/GoDieEX22s-src/raw/war3map.j (CR-normalized line numbers)
+// generator: tools/w3x-import/extract_jass_spells.py
+// trigger families: SAIadd
 
-// --- zPv (core, line 25069 in war3map.j) ---
-function zPv takes nothing returns boolean
-return(GetKillingUnit()==mo)and(GetUnitAbilityLevelSwapped('A08T',mo)>0)
+// === family SAIadd (passive) events=EVENT_PLAYER_UNIT_DEATH ===
+
+// --- Trig_SAIadd_Conditions (family, line 48306) ---
+function Trig_SAIadd_Conditions takes nothing returns boolean
+    if ( not ( GetKillingUnitBJ() == udg_KingOfDeath ) ) then
+        return false
+    endif
+    if ( not ( GetUnitAbilityLevelSwapped('A08T', udg_KingOfDeath) > 0 ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- zqv (depth1, line 25072 in war3map.j) ---
-function zqv takes nothing returns boolean
-return(vO<=0)
+// --- Trig_SAIadd_Func006C (family, line 48316) ---
+function Trig_SAIadd_Func006C takes nothing returns boolean
+    if ( not ( udg_DiekingAcc <= 0 ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- zQv (core, line 25075 in war3map.j) ---
-function zQv takes nothing returns nothing
-set vO=(vO+1)
-set eO=(IMinBJ($A,vO)*GetUnitAbilityLevelSwapped('A08T',mo))
-call SetUnitAbilityLevelSwapped('A0RC',mo,eO)
-call TriggerSleepAction(20.)
-set vO=(vO-1)
-if(zqv())then
-set eO=0
-else
-set eO=(IMinBJ($A,vO)*GetUnitAbilityLevelSwapped('A08T',mo))
-endif
-call SetUnitAbilityLevelSwapped('A0RC',mo,eO)
+// --- Trig_SAIadd_Actions (family, line 48323) ---
+function Trig_SAIadd_Actions takes nothing returns nothing
+    set udg_DiekingAcc = ( udg_DiekingAcc + 1 )
+    set udg_DiekingLevel = ( IMinBJ(10, udg_DiekingAcc) * GetUnitAbilityLevelSwapped('A08T', udg_KingOfDeath) )
+    call SetUnitAbilityLevelSwapped( 'A0RC', udg_KingOfDeath, udg_DiekingLevel )
+    call TriggerSleepAction( 20.00 )
+    set udg_DiekingAcc = ( udg_DiekingAcc - 1 )
+    if ( Trig_SAIadd_Func006C() ) then
+        set udg_DiekingLevel = 0
+    else
+        set udg_DiekingLevel = ( IMinBJ(10, udg_DiekingAcc) * GetUnitAbilityLevelSwapped('A08T', udg_KingOfDeath) )
+    endif
+    call SetUnitAbilityLevelSwapped( 'A0RC', udg_KingOfDeath, udg_DiekingLevel )
+endfunction
+
+// --- InitTrig_SAIadd (family, line 48338) ---
+function InitTrig_SAIadd takes nothing returns nothing
+    set gg_trg_SAIadd = CreateTrigger(  )
+    call DisableTrigger( gg_trg_SAIadd )
+    call TriggerRegisterAnyUnitEventBJ( gg_trg_SAIadd, EVENT_PLAYER_UNIT_DEATH )
+    call TriggerAddCondition( gg_trg_SAIadd, Condition( function Trig_SAIadd_Conditions ) )
+    call TriggerAddAction( gg_trg_SAIadd, function Trig_SAIadd_Actions )
 endfunction

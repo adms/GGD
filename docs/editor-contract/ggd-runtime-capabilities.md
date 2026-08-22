@@ -1,6 +1,6 @@
 # GGD 遊戲端執行期能力清單（`ggd-runtime-capabilities@1`）
 
-**指紋 `11464833`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
+**指紋 `7c6c67f6`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
 
 ## 這份文件是什麼
 
@@ -64,6 +64,8 @@
 | `action.modify-resource-rule@1` | ⚠️ 部分支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「modifyResourceRule」 | ⭐ 兩個**具名的**規則改寫已經出貨：`swapResource`（原子交換雙方的 HP↔MP）與 `manaBarrier`（扣血之前先把傷害換成扣魔，44-00 機警）。`eventValueConversion` 再補一條「把這次事件的數值換成另一種資源」。⛔ 但它們是**三條寫死的路**，⛔ 不是「這個單位從現在起用怒氣代替魔力」那種一般化的規則層 ——資源條的種類今天是 HP / MP 兩根，內容側加不了第三根。 | packages/shared/src/sim/effects/swapResource.ts + manaBarrier.ts + eventValueConversion.ts |
 | `action.create-zone@1` | ⚠️ 部分支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「createZone」（票 body 的第 3 順位） | ⛔ **今天所有的「範圍」都是瞬間的**：`damageArea` / `damageLine` / `randomArea` 在結算的那一 tick 查一次重疊就結束。「留下一片持續 N 秒的區域」只能用 `delayed`（凍住名單）或 `randomArea`（到期用圓心重解）硬湊成 N 次脈衝，而且 ⚠️ **畫面上不會有那一圈** —— 沒有任何實體過網，玩家看不到自己站在裡面。⇒ 毒圈／治療圈／減速場這一整族的骨架今天寫不出來。 | packages/shared/src/sim/effects/randomArea.ts（draw 預算 2×count，到期走絕對 tick）+ delayed.ts（⛔ 與 randomArea 的差別是一句話：那邊到期用圓心重解，這邊用凍住的名單） |
 | `action.delay-death@1` | ⚠️ 部分支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「delayDeath」 | ⭐ 「這一發不會死」已經有兩條路：`invulnerable`（無條件擋，含真傷）與**免死**（`sim/marks.ts` 的 `lethal` 標記 + `combat/lethalSave.ts`，攔在護盾之後扣血之前）。⛔ 但引擎**沒有「死亡延後 N 秒」**：死亡是在同一 tick commit 的，⛔ 沒有一個「已經死了但還站著」的中間狀態。⇒ 「陣亡後 3 秒內仍可行動」這種卡片今天要改寫成「免死 + 一段短無敵」，⚠️ 而那兩者的**可被驅散性**與畫面表現都不一樣，⛔ 不是同一句話。⚠️ 免死的 `restoreMode` 預設是 `clamp`（見 `hook.on-lethal-damage@1`），⛔ 寫「留在 N% 生命」的卡片一定要填 `restore`。 | packages/shared/src/sim/effects/invulnerable.ts + sim/combat/lethalSave.ts + sim/marks.ts |
+| `effect.combo-strikes@1` | ✅ 支援 | #541 —— 01-04 超究武神霸斬「連斬七次」· 20-002「連續七次斬擊…最後施展約束與勝利之劍」 | — | packages/shared/src/sim/effects/comboStrikes.ts —— 每一段是自己的一次 `runEffects`，所以各觸發一次 on-hit、各吃一次減傷、各記一次分。⭐ 節奏（幾段／間隔／收尾延遲）**在載入時**從 `config.combo-strikes@1` 解析（`sim/effects/comboFamilies.ts`），⛔ 不烘進技能 JSON；不等間隔用 `steps[]`。⚠️ 排程走的是**既有的** `SimWorld.delayed` 佇列與 `delayedSystem`，⛔ 不是第二個排程器。 |
+| `effect.pull@1` | ✅ 支援 | #147 —— A091 05-03 及喀爾度「2×等級 個錨點 + 250+100×等級 半徑」(war3map.j:28224-28233) | — | packages/shared/src/sim/effects/pull.ts —— `destination` 三檔（caster / point / anchorRing）。⭐ 等分錨點環用一張**單位旋轉常數表**做（`RING_UNIT_ROTATION`），因為 `sim/**` 禁止三角函式（`sim/purity.test.ts`）。位移走的是 `knockback` 已經在用的 `nav.override` 地面滑行 + `world.knockdown` 行動鎖，⛔ 沒有第二套位移機制。 |
 | `action.redirect-damage@1` | ⛔ 不支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「redirectDamage —— 把即將落在 A 身上的傷害轉到 B」 | 傷害佇列今天只認得**一個**承受者（`combat/damage.ts` 的封包帶 target，沒有第二個座位）。「換一個人挨」要在扣血之前改寫封包的 target，而那一格是護盾／免死／無敵三道閘共用的輸入。 | — |
 | `action.store-damage@1` | ⛔ 不支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「storeDamage —— 把承受到的傷害存起來」 | 引擎有「記一個數字」的機制，但它的**存款來源只有一種**：`spendMana.bankAs` 記的是**這一次實際扣掉的法力**。⛔ 沒有任何一格讀得到「剛剛那一發打了我多少」再把它記下來 —— `HookDef` 的過濾器與 `condition@1` 的葉子都沒有那個數字（`extendBuff` 的檔頭逐條查過同一件事）。 | — |
 | `action.release-stored-damage@1` | ⛔ 不支援 | GH#354 owner 2026-08-17 的 Action 清單 —— 「releaseStoredDamage —— 把存起來的傷害一次放出去」 | 與 `action.store-damage@1` 是同一條路的兩端：沒有存款端就沒有支出端。⚠️ 兩者要一起做，⛔ 只做一半的話卡片會宣稱一個永遠是 0 的數字（第一·五守則的形狀）。 | — |
@@ -101,14 +103,14 @@
 
 這是引擎執行期**真的有處理器**的全部種類；不在這張表上的名稱一律會被拒絕。
 
-`applyBuff` · `applyStatus` · `blink` · `carry` · `chainLightning` · `championForm` · `convertTeam` · `cycleBuff` · `damage` · `damageArea` · `damageLine` · `dash` · `delayed` · `devour` · `dispel` · `dot` · `evasion` · `eventValueConversion` · `extendBuff` · `grantAttribute` · `grantGold` · `heal` · `invulnerable` · `knockback` · `leap` · `manaBarrier` · `modifyCooldown` · `proxyCast` · `randomArea` · `restore` · `revive` · `shield` · `shieldBreak` · `spawnProjectile` · `spawnVfx` · `spendMana` · `summon` · `swapResource` · `taunt` · `weightedBranch`
+`applyBuff` · `applyStatus` · `blink` · `carry` · `chainLightning` · `championForm` · `comboStrikes` · `convertTeam` · `cycleBuff` · `damage` · `damageArea` · `damageLine` · `dash` · `delayed` · `devour` · `dispel` · `dot` · `evasion` · `eventValueConversion` · `extendBuff` · `grantAttribute` · `grantGold` · `heal` · `invulnerable` · `knockback` · `leap` · `manaBarrier` · `modifyCooldown` · `proxyCast` · `pull` · `randomArea` · `restore` · `revive` · `shield` · `shieldBreak` · `spawnProjectile` · `spawnVfx` · `spendMana` · `summon` · `swapResource` · `taunt` · `weightedBranch`
 
 ⭐ **一個種類一個檔**（#467）—— 檔名恆等於上面那張清單裡的種類名：
 
 | 種類的哪一半 | 檔案 | 覆蓋 |
 |---|---|---|
-| 欄位與上下界 | `packages/shared/src/content/schema/effects/<種類>.ts` | 40 / 40 個種類有自己的檔 |
-| 型別 | `packages/shared/src/sim/effects/variants/<種類>.ts` | 40 / 40 個種類有自己的檔 |
+| 欄位與上下界 | `packages/shared/src/content/schema/effects/<種類>.ts` | 42 / 42 個種類有自己的檔 |
+| 型別 | `packages/shared/src/sim/effects/variants/<種類>.ts` | 42 / 42 個種類有自己的檔 |
 
 ⚠️ 右欄兩個數字是**每次匯出時數出來的**，⛔ 不是寫死的宣稱。分母是這一節上方那張
 清單的長度；分子是那個目錄裡真的存在的檔。兩者不相等就代表有種類還沒分出去。
@@ -130,7 +132,7 @@
 | `applyBuff` | ✅ | — |
 | `applyStatus` | ✅ | — |
 | `auras` | ✅ | — |
-| `combo` | ⛔ | — |
+| `combo` | ✅ | — |
 | `conditions` | ✅ | — |
 | `dash` | ✅ | — |
 | `hooks` | ✅ | — |
@@ -140,6 +142,7 @@
 | `marks` | ✅ | — |
 | `periodicDamage` | ✅ | — |
 | `projectile` | ✅ | — |
+| `pull` | ✅ | — |
 | `summon` | ✅ | 召喚物的擊殺歸屬 killCredit: "owner" 尚未實作（施放時會擲錯），其餘欄位皆可用 |
 | `travelingWave` | ✅ | — |
 
@@ -173,7 +176,7 @@
 
 | 寫在哪 | 欄位 |
 |---|---|
-| `ability@1` | `augment` · `castTimeSec` · `castType` · `cooldown` · `cooldownShape` · `cooldownTier` · `description` · `descriptionRoles` · `effects` · `hitFeel` · `icon` · `id` · `innateActivePassive` · `innateKind` · `interruptOn` · `manaCost` · `manaCostTier` · `marks` · `maxRank` · `name` · `passive` · `provenance` · `radius` · `radiusTier` · `range` · `rangeTier` · `recoveryRoots` · `recoverySec` · `rootWhileCasting` · `sfxKey` · `slot` · `targetsEnemies` · `template` · `toggle` · `vfxKey` · `vfxLayers` |
+| `ability@1` | `augment` · `castTimeSec` · `castType` · `cooldown` · `cooldownShape` · `cooldownTier` · `description` · `descriptionRoles` · `effects` · `hitFeel` · `icon` · `id` · `innateActivePassive` · `innateKind` · `interruptOn` · `manaCost` · `manaCostTier` · `marks` · `maxRank` · `name` · `passive` · `persistentVfx` · `provenance` · `radius` · `radiusTier` · `range` · `rangeTier` · `recoveryRoots` · `recoverySec` · `rootWhileCasting` · `sfxKey` · `slot` · `targetsEnemies` · `template` · `toggle` · `vfxKey` · `vfxLayers` |
 | `ability@1.marks[]` | `durationSec` · `initial` · `lethal` · `markId` · `max` · `perStackLost` · `resetOn` · `roundDelta` |
 | `projectile@1` | `flight` · `hitRadius` · `id` · `maxRange` · `meshShape` · `pierce` · `schema` · `speed` · `vfxKey` |
 | `status-effect@1` | `description` · `iconKey` · `id` · `name` · `polarity` · `schema` · `tags` |
@@ -189,9 +192,9 @@
 
 ⚠️ 下面每一族都是**所有分支的聯集** —— 一個名字出現在這裡代表「某一個 kind／某一顆條件葉收得下它」，⛔ 不代表每一個都收。哪一個 kind 配哪幾格、以及每一格的上下界與語意，看另一份文件。
 
-**effect 參數（所有 kind 的聯集）**（212）
+**effect 參數（所有 kind 的聯集）**（221）
 
-`abilityId` · `absorbs` · `addSec` · `advance` · `aim` · `amount` · `amountPerTick` · `apexHeight` · `applyTo` · `at` · `attr` · `attributes` · `autoTargetable` · `bankAs` · `bankedBonus` · `basis` · `berserk` · `block` · `blocksControl` · `blocksDamage` · `blocksTrueDamage` · `body` · `bountyGold` · `branches` · `breakOnDamage` · `breakOnDamageMin` · `buff` · `burnsInFireRing` · `canCrit` · `capScope` · `centre` · `championId` · `chance` · `clampMin` · `comboBonus` · `condition` · `count` · `countsForOriginalTeam` · `critStrike` · `cycleKey` · `damageMult` · `damageType` · `damageTypeOverride` · `damageTypes` · `deathWard` · `decay` · `delaySec` · `disarmed` · `dispellable` · `distance` · `distanceScale` · `distanceTier` · `dodgesAbilities` · `dodgesTrueDamage` · `dragToCaster` · `dropDeadTargets` · `duration` · `durationSec` · `effects` · `emitCastEvents` · `everyNth` · `exclusiveGroup` · `exclusiveOnExisting` · `fallbackLevel` · `falloff` · `feared` · `finalEffects` · `firstAtCast` · `fixedRank` · `flat` · `flight` · `forcedTarget` · `formation` · `from` · `fromCaster` · `getupTicks` · `healPct` · `healingTakenMult` · `healthPct` · `hitOncePerTarget` · `hookKey` · `hookScope` · `hooks` · `hpBasis` · `hpMult` · `hpPct` · `impactPower` · `includeNeutrals` · `includeOrigin` · `incomingPct` · `intervalSec` · `jumpIntervalSec` · `jumpRange` · `jumps` · `killCredit` · `kind` · `landRadius` · `launchDistance` · `launchHeight` · `length` · `level` · `lifestealMult` · `manaPct` · `manualTargetable` · `maxAlive` · `maxAttribute` · `maxAttributeBasis` · `maxDepth` · `maxDistance` · `maxHeld` · `maxRemainingSec` · `maxSourceTotal` · `maxSources` · `maxStacks` · `maxStat` · `maxTargets` · `maxTargetsCounts` · `maxTotalJumps` · `minManaReserve` · `missChance` · `mobLevelSource` · `mobTargetable` · `mode` · `modifiers` · `moveSpeedMult` · `onArrive` · `onCap` · `onCarrierDeath` · `onCasterDeath` · `onDevour` · `onDevourPer` · `onEnd` · `onEndOn` · `onEndWhenDead` · `onExisting` · `onHit` · `onHitTargets` · `onHitTargetsMode` · `onInvalidTarget` · `onLand` · `onOwnerDeath` · `oncePerRoundPerVictim` · `order` · `payCosts` · `pctCurrentMana` · `pctMaxMana` · `penetration` · `perDamageFlat` · `perDamagePctOfMaxHealth` · `perMana` · `perRank` · `perTargetLevel` · `permanent` · `permanentScope` · `polarity` · `pools` · `projectileId` · `radius` · `radiusTier` · `rankMode` · `ratio` · `refresh` · `refund` · `regenMult` · `requireLearned` · `resource` · `resourcePct` · `resourcePctPhase` · `respectCooldown` · `revisit` · `root` · `runOnEmptyHit` · `scatterRadius` · `shape` · `side` · `silenced` · `slot` · `source` · `speed` · `spread` · `stackKey` · `stackVisual` · `stacking` · `stacks` · `statusId` · `steps` · `stopOnCasterDeath` · `stopShortUnits` · `store` · `stun` · `subtractGap` · `target` · `targetMode` · `targetPriority` · `targetsAllies` · `team` · `teamCharge` · `thresholdPctOfMax` · `throughShields` · `throwDistance` · `tickOnApply` · `to` · `typeStreakImmunity` · `uncontrollable` · `untargetable` · `until` · `vfxId` · `victim` · `victimCondition` · `vision` · `who` · `width`
+`abilityId` · `absorbs` · `addSec` · `advance` · `aim` · `amount` · `amountPerTick` · `anchorCount` · `anchorRadius` · `apexHeight` · `applyTo` · `at` · `attr` · `attributes` · `autoTargetable` · `bankAs` · `bankedBonus` · `basis` · `berserk` · `block` · `blocksControl` · `blocksDamage` · `blocksTrueDamage` · `body` · `bountyGold` · `branches` · `breakOnDamage` · `breakOnDamageMin` · `buff` · `burnsInFireRing` · `canCrit` · `capScope` · `centre` · `championId` · `chance` · `clampMin` · `comboBonus` · `condition` · `count` · `countsForOriginalTeam` · `critStrike` · `cycleKey` · `damageMult` · `damageType` · `damageTypeOverride` · `damageTypes` · `deathWard` · `decay` · `delaySec` · `destination` · `disarmed` · `dispellable` · `distance` · `distanceScale` · `distanceTier` · `dodgesAbilities` · `dodgesTrueDamage` · `dragToCaster` · `dropDeadTargets` · `duration` · `durationSec` · `effects` · `emitCastEvents` · `everyNth` · `exclusiveGroup` · `exclusiveOnExisting` · `fallbackLevel` · `falloff` · `family` · `feared` · `finalEffects` · `finisher` · `finisherDelaySec` · `firstAtCast` · `fixedRank` · `flat` · `flight` · `forcedTarget` · `formation` · `from` · `fromCaster` · `getupTicks` · `healPct` · `healingTakenMult` · `healthPct` · `hitOncePerTarget` · `hookKey` · `hookScope` · `hooks` · `hpBasis` · `hpMult` · `hpPct` · `impactPower` · `includeNeutrals` · `includeOrigin` · `incomingPct` · `intervalSec` · `jumpIntervalSec` · `jumpRange` · `jumps` · `killCredit` · `kind` · `landRadius` · `launchDistance` · `launchHeight` · `length` · `level` · `lifestealMult` · `manaPct` · `manualTargetable` · `maxAlive` · `maxAttribute` · `maxAttributeBasis` · `maxDepth` · `maxDistance` · `maxHeld` · `maxRemainingSec` · `maxSourceTotal` · `maxSources` · `maxStacks` · `maxStat` · `maxTargets` · `maxTargetsCounts` · `maxTotalJumps` · `minManaReserve` · `missChance` · `mobLevelSource` · `mobTargetable` · `mode` · `modifiers` · `moveSpeedMult` · `onArrive` · `onCap` · `onCarrierDeath` · `onCasterDeath` · `onDevour` · `onDevourPer` · `onEnd` · `onEndOn` · `onEndWhenDead` · `onExisting` · `onHit` · `onHitTargets` · `onHitTargetsMode` · `onInvalidTarget` · `onLand` · `onOwnerDeath` · `oncePerRoundPerVictim` · `order` · `payCosts` · `pctCurrentMana` · `pctMaxMana` · `penetration` · `perDamageFlat` · `perDamagePctOfMaxHealth` · `perMana` · `perRank` · `perStrike` · `perTargetLevel` · `permanent` · `permanentScope` · `polarity` · `pools` · `projectileId` · `radius` · `radiusTier` · `rankMode` · `ratio` · `refresh` · `refund` · `regenMult` · `requireLearned` · `resource` · `resourcePct` · `resourcePctPhase` · `respectCooldown` · `revisit` · `root` · `runOnEmptyHit` · `scatterRadius` · `shape` · `side` · `silenced` · `slot` · `source` · `speed` · `spread` · `stackKey` · `stackVisual` · `stacking` · `stacks` · `statusId` · `steps` · `stopDistance` · `stopOnCasterDeath` · `stopShortUnits` · `store` · `strikes` · `stun` · `subtractGap` · `target` · `targetMode` · `targetPriority` · `targetsAllies` · `team` · `teamCharge` · `thresholdPctOfMax` · `throughShields` · `throwDistance` · `tickOnApply` · `to` · `typeStreakImmunity` · `uncontrollable` · `untargetable` · `until` · `vfxId` · `victim` · `victimCondition` · `vision` · `who` · `width`
 
 **條件葉種類**（5）
 
@@ -209,9 +212,9 @@
 
 `affects` · `hooks` · `includeSelf` · `key` · `lingerSec` · `modifiers` · `radius` · `scaleByNearby`
 
-**`ability@1` 頂層欄位**（36）
+**`ability@1` 頂層欄位**（37）
 
-`augment` · `castTimeSec` · `castType` · `cooldown` · `cooldownShape` · `cooldownTier` · `description` · `descriptionRoles` · `effects` · `hitFeel` · `icon` · `id` · `innateActivePassive` · `innateKind` · `interruptOn` · `manaCost` · `manaCostTier` · `marks` · `maxRank` · `name` · `passive` · `provenance` · `radius` · `radiusTier` · `range` · `rangeTier` · `recoveryRoots` · `recoverySec` · `rootWhileCasting` · `sfxKey` · `slot` · `targetsEnemies` · `template` · `toggle` · `vfxKey` · `vfxLayers`
+`augment` · `castTimeSec` · `castType` · `cooldown` · `cooldownShape` · `cooldownTier` · `description` · `descriptionRoles` · `effects` · `hitFeel` · `icon` · `id` · `innateActivePassive` · `innateKind` · `interruptOn` · `manaCost` · `manaCostTier` · `marks` · `maxRank` · `name` · `passive` · `persistentVfx` · `provenance` · `radius` · `radiusTier` · `range` · `rangeTier` · `recoveryRoots` · `recoverySec` · `rootWhileCasting` · `sfxKey` · `slot` · `targetsEnemies` · `template` · `toggle` · `vfxKey` · `vfxLayers`
 
 ## 10. ⭐ 一次產出很多支的時候 —— 一件事一份檔
 

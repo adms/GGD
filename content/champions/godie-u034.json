@@ -100,7 +100,7 @@
       ],
       "vfxKey": "fx.prim.ki.pulse-sm",
       "sfxKey": "wc3.mortarteampissed9",
-      "castTimeSec": 0.167,
+      "castTimeSec": 0.3,
       "cooldownTier": "極小",
       "manaCostTier": "極小"
     },
@@ -154,7 +154,7 @@
       ],
       "vfxKey": "fx.prim.ki.pulse-sm",
       "sfxKey": "wc3.mortarteampissed9",
-      "castTimeSec": 0.167,
+      "castTimeSec": 0.3,
       "cooldownTier": "極小",
       "manaCostTier": "極小"
     },
@@ -199,7 +199,7 @@
       "vfxKey": "fx.prim.earth.pulse-sm",
       "sfxKey": "wc3.mortarteampissed9",
       "targetsEnemies": true,
-      "castTimeSec": 0.167,
+      "castTimeSec": 0.3,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",

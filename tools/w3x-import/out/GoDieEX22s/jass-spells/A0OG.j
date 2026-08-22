@@ -1,46 +1,55 @@
 // rawcode: A0OG
-// hero: godie-u010 (slot Q)  championDoc: content/champions/godie-u010.json
-// nameZh: 邪王炎殺劍
-// abilityDoc: content/abilities/godie-u010.q.json
-// kind: active (spell-effect trigger)
-// handler: event=EVENT_PLAYER_UNIT_SPELL_EFFECT cond=Tcv actions=Tdv (trigger var ZM)
-// w3a base: ANcl  levels: None
+// nameZh: 38-01 邪王炎殺劍
 // cooldown: {"1": 45.0, "2": 45.0, "3": 45.0, "4": 50.0}
 // mana: {"1": 85, "2": 115, "3": 145, "4": 275}
-// range: {"2": 650.0, "3": 650.0, "4": 9999.0, "1": 650.0}
-// data[1] per level: {"1": 0.0, "2": 0.0, "3": 0.0, "4": 0.0}
-// data[2] per level: {"1": 2, "2": 2, "3": 2, "4": 2}
-// data[3] per level: {"1": 5, "2": 5, "3": 5, "4": 5}
-// data[4] per level: {"1": 0.0, "2": 0.0, "3": 0.0, "4": 0.0}
-// data[5] per level: {"1": 0, "2": 0, "3": 0, "4": 0}
-// data[6] per level: {"1": "coldarrows", "2": "coldarrows", "3": "coldarrows", "4": "coldarrows"}
-// slice tiers: core=['Tcv', 'Tdv'] depth1=['TCv'] depth2=[]
+// range: {"1": 650.0, "2": 650.0, "3": 650.0, "4": 9999.0}
+// source: tools/w3x-import/out/GoDieEX22s-src/raw/war3map.j (CR-normalized line numbers)
+// generator: tools/w3x-import/extract_jass_spells.py
+// trigger families: HehiSword
 
-// --- Tcv (core, line 22782 in war3map.j) ---
-function Tcv takes nothing returns boolean
-return(GetSpellAbilityId()=='A0OG')
+// === family HehiSword (active) events=EVENT_PLAYER_UNIT_SPELL_EFFECT ===
+
+// --- Trig_HehiSword_Conditions (family, line 43741) ---
+function Trig_HehiSword_Conditions takes nothing returns boolean
+    if ( not ( GetSpellAbilityId() == 'A0OG' ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- TCv (depth1, line 22785 in war3map.j) ---
-function TCv takes nothing returns boolean
-return(GetUnitTypeId(GetTriggerUnit())=='U010')
+// --- Trig_HehiSword_Func007C (family, line 43748) ---
+function Trig_HehiSword_Func007C takes nothing returns boolean
+    if ( not ( GetUnitTypeId(GetTriggerUnit()) == 'U010' ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- Tdv (core, line 22788 in war3map.j) ---
-function Tdv takes nothing returns nothing
-set yE=0
-set zE=GetTriggerUnit()
-set YE=GetUnitLoc(GetTriggerUnit())
-set ZE=GetUnitLoc(GetTriggerUnit())
-set vX=GetUnitFacing(GetTriggerUnit())
-if(TCv())then
-set oX=I2R((('d'*GetUnitAbilityLevelSwapped(GetSpellAbilityId(),GetTriggerUnit()))+($96+R2I(I2R((GetHeroStatBJ(1,GetTriggerUnit(),true)*3))))))
-else
-set oX=I2R((('d'*GetUnitAbilityLevelSwapped(GetSpellAbilityId(),GetTriggerUnit()))+($96+R2I(I2R(GetHeroStatBJ(1,GetTriggerUnit(),true))))))
-endif
-call UnitAddAbility(GetTriggerUnit(),'A0J6')
-call GroupClear(xX)
-call UnitAddAbility(GetTriggerUnit(),'Avul')
-call PlaySoundOnUnitBJ(hd,'d',GetTriggerUnit())
-call EnableTrigger(vp)
+// --- Trig_HehiSword_Actions (family, line 43755) ---
+function Trig_HehiSword_Actions takes nothing returns nothing
+    // 變數設定
+    set udg_HehiRush_IndexMoon = 0
+    set udg_HehiRush_Target = GetTriggerUnit()
+    set udg_HehiRush_P1 = GetUnitLoc(GetTriggerUnit())
+    set udg_HehiRush_P2 = GetUnitLoc(GetTriggerUnit())
+    set udg_HehiRush_Angle = GetUnitFacing(GetTriggerUnit())
+    if ( Trig_HehiSword_Func007C() ) then
+        set udg_HehiRush_Damage = I2R(( ( 100 * GetUnitAbilityLevelSwapped(GetSpellAbilityId(), GetTriggerUnit()) ) + ( 150 + R2I(I2R(( GetHeroStatBJ(bj_HEROSTAT_AGI, GetTriggerUnit(), true) * 3 ))) ) ))
+    else
+        set udg_HehiRush_Damage = I2R(( ( 100 * GetUnitAbilityLevelSwapped(GetSpellAbilityId(), GetTriggerUnit()) ) + ( 150 + R2I(I2R(GetHeroStatBJ(bj_HEROSTAT_AGI, GetTriggerUnit(), true))) ) ))
+    endif
+    call UnitAddAbilityBJ( 'A0J6', GetTriggerUnit() )
+    call GroupClear( udg_HehiRush_Group )
+    call UnitAddAbilityBJ( 'Avul', GetTriggerUnit() )
+    call PlaySoundOnUnitBJ( gg_snd_DarkSummoningLaunch1, 100, GetTriggerUnit() )
+    call EnableTrigger( gg_trg_HehiSwordEffect )
+endfunction
+
+// --- InitTrig_HehiSword (family, line 43775) ---
+function InitTrig_HehiSword takes nothing returns nothing
+    set gg_trg_HehiSword = CreateTrigger(  )
+    call DisableTrigger( gg_trg_HehiSword )
+    call TriggerRegisterAnyUnitEventBJ( gg_trg_HehiSword, EVENT_PLAYER_UNIT_SPELL_EFFECT )
+    call TriggerAddCondition( gg_trg_HehiSword, Condition( function Trig_HehiSword_Conditions ) )
+    call TriggerAddAction( gg_trg_HehiSword, function Trig_HehiSword_Actions )
 endfunction

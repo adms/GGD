@@ -122,7 +122,7 @@
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.wind.slash",
-      "castTimeSec": 0.167,
+      "castTimeSec": 0.267,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
@@ -134,7 +134,7 @@
               "value": 0.25
             }
           ],
-          "castTimeSec": 0.167
+          "castTimeSec": 0.267
         }
       },
       "cooldownTier": "極小"
@@ -174,12 +174,12 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.167
+          "castTimeSec": 0.3
         }
       },
       "vfxKey": "fx.prim.void.explosion",
       "targetsEnemies": true,
-      "castTimeSec": 0.167,
+      "castTimeSec": 0.3,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",

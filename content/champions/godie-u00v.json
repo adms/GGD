@@ -235,7 +235,8 @@
               "kind": "knockback",
               "distanceTier": "大",
               "speed": 16.0,
-              "from": "caster"
+              "from": "caster",
+              "distance": 6
             },
             {
               "kind": "applyStatus",

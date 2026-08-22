@@ -153,7 +153,7 @@
       "sfxKey": "wc3.hcancelbuilding",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 0.767,
+      "castTimeSec": 1.5,
       "hitFeel": {
         "hitstopTicks": 3,
         "hitstunTicks": 5,
@@ -218,7 +218,7 @@
       ],
       "vfxKey": "godie-tectonicfury-p0",
       "sfxKey": "wc3.dragonyes2",
-      "castTimeSec": 1.5,
+      "castTimeSec": 1.633,
       "hitFeel": {
         "hitstopTicks": 4,
         "hitstunTicks": 6,

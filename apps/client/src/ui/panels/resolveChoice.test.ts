@@ -127,14 +127,18 @@ describe("能力屬性強化 三選一 cards (#260)", () => {
 
   it("says WHICH stats the attribute feeds, from the shared 三圍 table", () => {
     cover("hud-draft-choice-icon");
-    // derived from ATTR_STAT_SOURCE, never re-typed — 力量 feeds three stats,
-    // 敏捷 two, 智慧 three, and a card that named the wrong ones would be worse
-    // than a card that named none.
+    // derived from ATTR_STAT_SOURCE, never re-typed — a card that named the
+    // wrong ones would be worse than a card that named none.
+    // ⭐ 2026-08-22 —— owner 加了兩條軸：力量→暴擊率、敏捷→迴避率。
+    //    ⇒ 力量餵四項、敏捷餵三項。⛔ 這一行**跟著那張表走**，
+    //    所以下一次加軸時它會自己對，⛔ 不會再變成一張說錯的卡。
     expect(resolveChoice(encodeAttrChoice("str", 5)).desc).toBe(
-      [Stat.MaxHealth, Stat.HealthRegen, Stat.AttackDamage].map(statLabel).join("・"),
+      [Stat.MaxHealth, Stat.HealthRegen, Stat.AttackDamage, Stat.CritChance]
+        .map(statLabel)
+        .join("・"),
     );
     expect(resolveChoice(encodeAttrChoice("agi", 5)).desc).toBe(
-      [Stat.Armor, Stat.AttackSpeed].map(statLabel).join("・"),
+      [Stat.Armor, Stat.AttackSpeed, Stat.Evasion].map(statLabel).join("・"),
     );
   });
 

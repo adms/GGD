@@ -95,7 +95,7 @@
       ],
       "vfxKey": "fx.prim.arcane.bolt",
       "sfxKey": "wc3.treantready1",
-      "castTimeSec": 0.767,
+      "castTimeSec": 0.833,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
@@ -137,7 +137,7 @@
         }
       ],
       "vfxKey": "fx.prim.earth.pulse-sm",
-      "castTimeSec": 0.167,
+      "castTimeSec": 0.267,
       "cooldownTier": "極小"
     },
     "E": {

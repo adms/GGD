@@ -1,66 +1,57 @@
 // rawcode: A0D3
-// hero: godie-emfr (slot Q)  championDoc: content/champions/godie-emfr.json
-// nameZh: 風精召喚
-// abilityDoc: content/abilities/godie-emfr.q.json
-// kind: active (spell-effect trigger)
-// handler: event=EVENT_PLAYER_UNIT_SPELL_EFFECT cond=Jsv actions=JSv (trigger var sl)
+// nameZh: 15-01 風精召喚
 // w3a base: ANcl  levels: 4
 // cooldown: {"1": 40.0, "2": 40.0, "3": 40.0, "4": 40.0}
-// mana: {"1": 75, "2": 125, "4": 225, "3": 175}
-// range: {"3": 550.0, "2": 450.0, "4": 650.0, "1": 350.0}
-// data[1] per level: {"1": 0.0, "2": 0.0, "3": 0.0, "4": 0.0}
-// data[2] per level: {"1": 3, "3": 3, "2": 3, "4": 3}
-// data[3] per level: {"1": 1, "2": 1, "3": 1, "4": 1}
-// data[4] per level: {"1": 0.0, "2": 0.0, "3": 0.0, "4": 0.0}
-// data[5] per level: {"1": 0, "3": 0, "2": 0, "4": 0}
-// data[6] per level: {"1": "shockwave", "2": "shockwave", "3": "shockwave", "4": "shockwave"}
-// slice tiers: core=['Jsv', 'JSv'] depth1=['nu'] depth2=['xu']
+// mana: {"1": 75, "2": 125, "3": 175, "4": 225}
+// range: {"1": 350.0, "2": 450.0, "3": 550.0, "4": 650.0}
+// source: tools/w3x-import/out/GoDieEX22s-src/raw/war3map.j (CR-normalized line numbers)
+// generator: tools/w3x-import/extract_jass_spells.py
+// trigger families: WindWizard
 
-// --- xu (depth2, line 3043 in war3map.j) ---
-function xu takes nothing returns nothing
-local unit ou=bj_lastCreatedUnit
-local real ru=bj_enumDestructableRadius
-local real iu=bj_randomSubGroupChance
-call it(ru)
-if(iu<.0)then
-call RemoveUnit(ou)
-else
-call KillUnit(ou)
-call it(iu)
-call RemoveUnit(ou)
-endif
+// === family WindWizard (active) events=EVENT_PLAYER_UNIT_SPELL_EFFECT ===
+
+// --- Trig_WindWizard_Conditions (family, line 34774) ---
+function Trig_WindWizard_Conditions takes nothing returns boolean
+    if ( not ( GetSpellAbilityId() == 'A0D3' ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-// --- nu (depth1, line 3056 in war3map.j) ---
-function nu takes unit Vu,real vu,real Eu returns nothing
-local unit Xu=bj_lastCreatedUnit
-local real eu=bj_enumDestructableRadius
-local real Ou=bj_randomSubGroupChance
-set bj_lastCreatedUnit=Vu
-set bj_enumDestructableRadius=vu
-set bj_randomSubGroupChance=Eu
-call ExecuteFunc("xu")
-set bj_lastCreatedUnit=Xu
-set bj_enumDestructableRadius=eu
-set bj_randomSubGroupChance=Ou
+// --- Trig_WindWizard_Actions (family, line 34781) ---
+function Trig_WindWizard_Actions takes nothing returns nothing
+    set udg_MT_WWP = GetUnitLoc(GetTriggerUnit())
+    set udg_MT_WWLv = GetUnitAbilityLevelSwapped('A0D3', GetTriggerUnit())
+    call CreateNUnitsAtLoc( 1, 'hfoo', GetOwningPlayer(GetTriggerUnit()), udg_MT_WWP, bj_UNIT_FACING )
+    call RemoveUnitSP( GetLastCreatedUnit() , 5 , 1)
+    call RemoveLocation(udg_MT_WWP)
+    set udg_MT_WWP = GetSpellTargetLoc()
+    call ShowUnitHide( GetLastCreatedUnit() )
+    call UnitAddAbilityBJ( 'A056', GetLastCreatedUnit() )
+    call SetUnitAbilityLevelSwapped( 'A056', GetLastCreatedUnit(), udg_MT_WWLv )
+    call IssuePointOrderLocBJ( GetLastCreatedUnit(), "stampede", udg_MT_WWP )
+    call RemoveLocation(udg_MT_WWP)
 endfunction
 
-// --- Jsv (core, line 17956 in war3map.j) ---
-function Jsv takes nothing returns boolean
-return(GetSpellAbilityId()=='A0D3')
+// --- InitTrig_WindWizard (family, line 34796) ---
+function InitTrig_WindWizard takes nothing returns nothing
+    set gg_trg_WindWizard = CreateTrigger(  )
+    call DisableTrigger( gg_trg_WindWizard )
+    call TriggerRegisterAnyUnitEventBJ( gg_trg_WindWizard, EVENT_PLAYER_UNIT_SPELL_EFFECT )
+    call TriggerAddCondition( gg_trg_WindWizard, Condition( function Trig_WindWizard_Conditions ) )
+    call TriggerAddAction( gg_trg_WindWizard, function Trig_WindWizard_Actions )
 endfunction
 
-// --- JSv (core, line 17959 in war3map.j) ---
-function JSv takes nothing returns nothing
-set ZN=GetUnitLoc(GetTriggerUnit())
-set vb=GetUnitAbilityLevelSwapped('A0D3',GetTriggerUnit())
-call CreateNUnitsAtLoc(1,'hfoo',GetOwningPlayer(GetTriggerUnit()),ZN,bj_UNIT_FACING)
-call nu(bj_lastCreatedUnit,5,1)
-call RemoveLocation(ZN)
-set ZN=GetSpellTargetLoc()
-call ShowUnitHide(bj_lastCreatedUnit)
-call UnitAddAbility(bj_lastCreatedUnit,'A056')
-call SetUnitAbilityLevelSwapped('A056',bj_lastCreatedUnit,vb)
-call IssuePointOrderByIdLoc(bj_lastCreatedUnit,$D0271,ZN)
-call RemoveLocation(ZN)
+// --- RemoveUnitSP (helper, line 4847) ---
+function RemoveUnitSP takes unit R_unit , real Life_Time , real Die_Time returns nothing
+    local unit Last = bj_lastCreatedUnit
+    local real Bj_Timer = bj_enumDestructableRadius
+    local real Bj_Rand = bj_randomSubGroupChance
+    set bj_lastCreatedUnit = R_unit
+    set bj_enumDestructableRadius = Life_Time
+    set bj_randomSubGroupChance = Die_Time
+    call ExecuteFunc("RemoveUnitSP_Action")
+    set bj_lastCreatedUnit = Last
+    set bj_enumDestructableRadius = Bj_Timer
+    set bj_randomSubGroupChance = Bj_Rand
 endfunction

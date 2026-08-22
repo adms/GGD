@@ -33,11 +33,11 @@
         "damageTier": "小"
       },
       "damageType": "magic",
-      "castTimeSec": 0.767
+      "castTimeSec": 0.833
     }
   },
   "vfxKey": "fx.prim.wind.beam",
-  "castTimeSec": 0.767,
+  "castTimeSec": 0.833,
   "targetsEnemies": true,
   "rangeTier": "大",
   "range": 8
