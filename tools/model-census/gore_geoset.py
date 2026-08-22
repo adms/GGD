@@ -32,6 +32,12 @@
   C. ``floor-slab``  —— 又扁又貼地又比身體還寬的板子
                         ⇒ 躺在腳邊的那攤血泥（``Umal.glb`` prim4：1.66×1.23u 的板子
                         壓在 y 0.04…0.21，而身體只有 0.53×1.08u 寬）
+  D. ``airborne-clone`` —— 2026-08-22 補（GH#540 的第二輪）。⭐ A/B/C 三條**全部**量
+                        bind pose，所以「分身**疊在頭頂正上方**」對它們結構上必然是
+                        綠的：XZ 完全重合 ⇒ B 的「不重疊」不成立，Y 又高得不可能是
+                        貼地板 ⇒ C 不成立。owner 看到的正是這一種：
+                        「揍敵客阿福3d modal 根本還沒修好 戰鬥中 一直看到一個分身
+                        飛上天的阿福」。⇒ 這一條改量**動畫中的 Y**（見 census_airborne）。
 
 ⚠️ 判定刻意**保守**：藏錯 = 英雄缺一塊，比屍體更嚴重。所以
   · A 是 ``confirmed``（名字與幾何互相佐證時）
@@ -48,7 +54,10 @@
 ----
     python3 tools/model-census/gore_geoset.py                 # 人看的表
     python3 tools/model-census/gore_geoset.py --json          # 機器讀的
+    python3 tools/model-census/gore_geoset.py --check         # 反向閘（pnpm models:check）
     python3 tools/model-census/gore_geoset.py --fixture PATH  # 寫 overlay 指紋
+        ⭐ 同一趟也會寫 tools/model-census/airborne.fixture.json（D 那一條的指紋，
+        ⛔ 路徑不可指定：它跟工具住在一起，⛔ 不與 C 的指紋共用一個檔）。
 
 ⛔ 無外部相依：直接讀 glTF 的 JSON + BIN chunk。
 """
@@ -93,6 +102,21 @@ MIN_VERTICES = 20
 SECOND_SKELETON_MIN_VERTICES = 100
 #: 而且它的骨架根底下至少要有這麼多個 joint 真的被動畫驅動。
 SECOND_SKELETON_MIN_ANIMATED_JOINTS = 2
+
+# ── 「分身飛上天」（GH#540）────────────────────────────────────────────────
+#: ⚠️ 上面 B（second-skeleton）要求 **XZ bbox 完全不重疊**，所以它對「分身**疊在
+#: 頭頂正上方**」結構上必然是綠的 —— XZ 完全重合。owner 2026-08-22 看到的正是這一種：
+#:「揍敵客阿福3d modal 根本還沒修好 戰鬥中 一直看到一個分身飛上天的阿福」。
+#: ⇒ 這一組判準改量**動畫中的 Y**，⛔ 不是 bind pose 的 bbox。
+#: 「整塊圖元的**最低**骨頭都高過身體頂端」才算飛 —— 舉高的手臂、揮起的武器不算。
+FLY_CLEARANCE_OF_HEIGHT = 0.25
+#: 太小的碎片不判（同 MIN_VERTICES 的理由）。
+FLY_MIN_VERTICES = 20
+#: 每個動作取樣幾個時間點（動作本身的關鍵影格，⛔ 不是等距時間）。
+FLY_SAMPLES_PER_CLIP = 6
+#: ⛔ `death` 不算：它播一次然後實體就消失了，而 owner 講的是「**一直**看到」。
+#: ⚠️ 這裡讀的是 clipMap 的 **key**，⛔ 不是動作名字 —— 名字是每顆模型自己的。
+FLY_SKIP_CLIP_ROLES = ("death",)
 
 _COMPONENT = {5120: ("b", 1), 5121: ("B", 1), 5122: ("h", 2), 5123: ("H", 2),
               5125: ("I", 4), 5126: ("f", 4)}
@@ -302,6 +326,183 @@ def census_one(path: str) -> dict:
     return out
 
 
+# ── 「分身飛上天」——————————————————————————————————————————————————
+def _quat_trs(t, r, s):
+    """(3x3, translation) —— glTF 的 TRS 攤成一個仿射轉換。"""
+    x, y, z, w = r
+    xx, yy, zz = x * x, y * y, z * z
+    m = ((1 - 2 * (yy + zz), 2 * (x * y - z * w), 2 * (x * z + y * w)),
+         (2 * (x * y + z * w), 1 - 2 * (xx + zz), 2 * (y * z - x * w)),
+         (2 * (x * z - y * w), 2 * (y * z + x * w), 1 - 2 * (xx + yy)))
+    return [[m[i][j] * s[j] for j in range(3)] for i in range(3)], list(t)
+
+
+def _compose(a, b):
+    ma, ta = a
+    mb, tb = b
+    return ([[ma[i][0] * mb[0][j] + ma[i][1] * mb[1][j] + ma[i][2] * mb[2][j]
+              for j in range(3)] for i in range(3)],
+            [ma[i][0] * tb[0] + ma[i][1] * tb[1] + ma[i][2] * tb[2] + ta[i] for i in range(3)])
+
+
+def played_clips() -> dict[str, set[str]]:
+    """glbPath → 遊戲**真的會一直播**的動作名。
+
+    ⭐ 從資料推導（出貨 model doc 的 `clipMap` + overlay `MANIFEST.json` 的 `clipMap`），
+    ⛔ 不在這裡抄一份動作名清單 —— 抄一份就是第二個住處，而每顆模型的動作名都不一樣
+    （`Stand -1` / `stand ready` / `Armature|Triceratops_Idle` 都在出貨資料裡）。
+    """
+    out: dict[str, set[str]] = {}
+
+    def take(glb, clip_map):
+        if not glb or not isinstance(clip_map, dict):
+            return
+        for role, name in clip_map.items():
+            if role in FLY_SKIP_CLIP_ROLES or not name:
+                continue
+            out.setdefault(glb, set()).add(str(name))
+
+    for name in sorted(os.listdir(MODELS_DIR)):
+        if not name.endswith(".json") or name.startswith("_"):
+            continue
+        doc = json.load(open(os.path.join(MODELS_DIR, name), encoding="utf-8"))
+        take(doc.get("glbPath"), doc.get("clipMap"))
+    manifest = os.path.join(REPO, "data", "blizzard-overlay", "MANIFEST.json")
+    if os.path.isfile(manifest):
+        for unit in json.load(open(manifest, encoding="utf-8")).get("units", {}).values():
+            take(unit.get("glb"), unit.get("clipMap"))
+    return out
+
+
+def census_airborne(path: str, clips: set[str]) -> list[dict]:
+    """一顆 .glb 裡「**整塊浮在身體上方**、而且掛在另一具會動的骨架上」的圖元。
+
+    ⚠️ 兩個條件缺一不可：
+      · **整塊**在上面（最低的骨頭都高過身體頂端）⇒ 舉高的手、揮起的劍不會中
+      · **另一具骨架**（沿用 B 的判準）⇒ 那是一個**分身**，不是身體的一部分
+    """
+    gltf, binc = read_glb(path)
+    nodes = gltf.get("nodes", [])
+    skins = gltf.get("skins", [])
+    anims = [a for a in gltf.get("animations", []) if a.get("name") in clips]
+    if not skins or not anims:
+        return []
+
+    parent: dict[int, int] = {}
+    for i, node in enumerate(nodes):
+        for child in node.get("children", []):
+            parent[child] = i
+    all_joints = {j for s in skins for j in s["joints"]}
+
+    def root_of(j: int) -> int:
+        cur = j
+        while parent.get(cur) in all_joints:
+            cur = parent[cur]
+        return cur
+
+    joint_root = {j: root_of(j) for j in all_joints}
+    driven = {ch["target"]["node"] for a in gltf.get("animations", [])
+              for ch in a.get("channels", []) if ch.get("target", {}).get("node") is not None}
+    animated_under = {r: sum(1 for j in all_joints if joint_root[j] == r and j in driven)
+                      for r in set(joint_root.values())}
+
+    prims: list[dict] = []
+    for node in nodes:
+        if "mesh" not in node:
+            continue
+        jl = skins[node["skin"]]["joints"] if node.get("skin") is not None else []
+        for pi, prim in enumerate(gltf["meshes"][node["mesh"]].get("primitives", [])):
+            attrs = prim["attributes"]
+            if "POSITION" not in attrs or not jl or "JOINTS_0" not in attrs:
+                continue
+            P = read_accessor(gltf, binc, attrs["POSITION"])
+            J = read_accessor(gltf, binc, attrs["JOINTS_0"])
+            W = read_accessor(gltf, binc, attrs["WEIGHTS_0"])
+            wnorm = {5121: 255.0, 5123: 65535.0}.get(
+                gltf["accessors"][attrs["WEIGHTS_0"]]["componentType"], 1.0)
+            used, by_root = set(), {}
+            for jv, wv in zip(J, W):
+                for k in range(4):
+                    w = wv[k] / wnorm
+                    if w <= 1e-4:
+                        continue
+                    gj = jl[jv[k]]
+                    by_root[joint_root[gj]] = by_root.get(joint_root[gj], 0.0) + w
+                    if w > 0.2:
+                        used.add(gj)
+            mn, mx = _bbox(P)
+            prims.append({"primitive": pi, "vertices": len(P), "min": mn, "max": mx,
+                          "joints": sorted(used), "alpha": _material_alpha(gltf, prim),
+                          "root": max(by_root, key=by_root.get) if by_root else None})
+    if len(prims) <= 1:
+        return []
+    body = max(prims, key=lambda p: p["vertices"])
+    height = max(body["max"][1] - body["min"][1], 1e-6)
+    if not body["joints"]:
+        return []
+
+    defaults = [(list(n.get("translation", [0, 0, 0])), list(n.get("rotation", [0, 0, 0, 1])),
+                 list(n.get("scale", [1, 1, 1]))) for n in nodes]
+    candidates = [p for p in prims
+                  if p is not body and p["joints"] and p["alpha"] > 0.0
+                  and p["vertices"] >= FLY_MIN_VERTICES and p["root"] is not None
+                  and p["root"] != body["root"]
+                  and animated_under.get(p["root"], 0) >= SECOND_SKELETON_MIN_ANIMATED_JOINTS]
+    if not candidates:
+        return []
+
+    hits: dict[int, dict] = {}
+    for anim in anims:
+        chans, stamps = [], set()
+        for ch in anim["channels"]:
+            tgt = ch.get("target", {}).get("node")
+            if tgt is None:
+                continue
+            smp = anim["samplers"][ch["sampler"]]
+            times = [v[0] for v in read_accessor(gltf, binc, smp["input"])]
+            chans.append((tgt, ch["target"]["path"], times,
+                          read_accessor(gltf, binc, smp["output"])))
+            stamps.update(times)
+        stamps = sorted(stamps)
+        if not stamps:
+            continue
+        for when in stamps[::max(1, len(stamps) // FLY_SAMPLES_PER_CLIP)]:
+            local = [(list(t), list(r), list(s)) for t, r, s in defaults]
+            for tgt, kind, times, values in chans:
+                idx = 0
+                for k, stamp in enumerate(times):
+                    if stamp <= when:
+                        idx = k
+                    else:
+                        break
+                v, (t, r, s) = list(values[idx]), local[tgt]
+                local[tgt] = (v, r, s) if kind == "translation" else \
+                    (t, v, s) if kind == "rotation" else (t, r, v)
+            cache: dict[int, tuple] = {}
+
+            def world(i: int):
+                got = cache.get(i)
+                if got is None:
+                    t, r, s = local[i]
+                    pa = parent.get(i)
+                    got = _quat_trs(t, r, s) if pa is None else _compose(world(pa), _quat_trs(t, r, s))
+                    cache[i] = got
+                return got
+
+            top = max(world(j)[1][1] for j in body["joints"])
+            for p in candidates:
+                clearance = (min(world(j)[1][1] for j in p["joints"]) - top) / height
+                if clearance <= FLY_CLEARANCE_OF_HEIGHT:
+                    continue
+                prev = hits.get(p["primitive"])
+                if prev is None or clearance > prev["clearance"]:
+                    hits[p["primitive"]] = {
+                        "primitive": p["primitive"], "vertices": p["vertices"],
+                        "signals": ["airborne-clone"], "confidence": "confirmed",
+                        "clip": anim.get("name"), "clearance": round(clearance, 2)}
+    return sorted(hits.values(), key=lambda f: f["primitive"])
+
+
 # ── 「誰真的會被 champion 掛上」———————————————————————————————————————
 def mounted_glbs() -> list[dict]:
     """[{glbPath, abs, declared, docs}] —— champion 真的會掛的每一顆 .glb。"""
@@ -341,11 +542,14 @@ def mounted_glbs() -> list[dict]:
 
 def scan() -> list[dict]:
     out = []
+    clips = played_clips()
     for row in mounted_glbs():
         try:
             c = census_one(row["abs"])
+            c["airborne"] = census_airborne(row["abs"], clips.get(row["glbPath"], set()))
         except Exception as exc:  # noqa: BLE001 —— 報告，⛔ 永遠不要中斷普查
-            c = {"file": os.path.basename(row["abs"]), "error": str(exc), "findings": []}
+            c = {"file": os.path.basename(row["abs"]), "error": str(exc),
+                 "findings": [], "airborne": []}
         c.update({k: row[k] for k in ("glbPath", "declared", "docs", "tree")})
         out.append(c)
     return out
@@ -361,6 +565,36 @@ def scan() -> list[dict]:
 #: 在 `_overlay-hidden-geometry.json`、`hero-turtle` 在它自己的 model doc）。
 #: 空表 = 這條閘現在真的攔得住下一顆帶血泥的新模型，⛔ 不是「先放著」。
 EXEMPT: dict[tuple[str, int], str] = {}
+
+#: 同一張表的「分身飛上天」版（GH#540）。⭐ 一樣要帶**能被反駁**的理由。
+FLY_EXEMPT: dict[tuple[str, int], str] = {
+    ("Efur.glb", 9): (
+        "靈魂分身的一小塊（34 頂點，掛在 Object49ArchDruid，跟 prim3–12 一起浮到 y≈4.45）。"
+        "⛔ 現在**不能**宣告：hiddenPrimitives.test.ts 的「宣告表不可以憑空多藏東西」只認"
+        "`hiddenPrimitives.fixture.json` 裡 **≥100 頂點**的骨架根當理由，而 Object49ArchDruid"
+        "只有 44 頂點 ⇒ 填進去那一條會紅。那兩個檔在本 lane 的柵欄外。"
+        "⭐ 反駁方式：主 session 把 airborne findings 也算進那份 justified 集合，"
+        "然後把 9（與同組的 13）移出這張表、填進 _overlay-hidden-geometry.json。"
+    ),
+    ("E00S.glb", 3): (
+        "白木老樹精(godie-e00s) —— 25 頂點，在遊戲會播的**每一個**動作裡都被 key 在 "
+        "y=26.55（身體頂端 7.14 的 3.7 倍），只有 WC3 的閒置動作 `Stand 4` 會把它從 11.13 "
+        "飛上去，而 GGD 的 clipMap idle 指的是 `Stand`，⛔ 從來不播 `Stand 4`。"
+        "⛔ 這是**另一位英雄**身上的同型缺陷，⛔ 不是本票（godie-efur）的範圍 —— "
+        "第零守則⑧：順手發現的缺陷開票給 owner 排，⛔ 不當場修。"
+        "⭐ 反駁方式：owner 說要一起修 ⇒ 移出這張表、填進 _overlay-hidden-geometry.json。"
+        "⚠️ 而且它的信心比阿福低：阿福有 64–100% 的頂點座標與本體重合可以證明是複本，"
+        "這兩顆球沒有 —— 先確認它們不是某個技能要用的投擲物再藏。"
+    ),
+    ("E00S.glb", 4): (
+        "同上（Sphere02，25 頂點，同樣停在 y≈26.55）。與 prim3 是同一組，同一張票一起處理。"
+    ),
+}
+
+#: overlay 樹是 gitignore 的 ⇒ CI 上唯一的依據是 commit 進來的指紋。
+#: ⛔ 刻意跟 `hiddenPrimitives.geometry.fixture.json` 分開兩個檔：那一份記的是
+#: 「bind pose 的殘留幾何」，這一份記的是「動畫中的離地分身」，兩支判準各自演進。
+FLY_FIXTURE = os.path.join(HERE, "airborne.fixture.json")
 
 #: 單圖元模型是**結構性**豁免，⛔ 不是逐筆豁免：藏掉唯一一塊 = 整隻英雄消失，
 #: 所以 `hiddenPrimitives` 對它們無能為力。真的有屍體時修法是**重新轉檔**
@@ -424,14 +658,57 @@ def check() -> int:
                         f"⛔ [指紋過期] {name}: 指紋 {a} ≠ 現場 {b} —— "
                         f"跑 `python3 tools/model-census/gore_geoset.py --fixture {fx_path}`")
 
+    # ── 分身飛上天（GH#540）——————————————————————————————————————
+    # ⚠️ 跟上面分開算：上面量 bind pose 的 bbox，這裡量**動畫中的 Y**。
+    flying_total = 0
+    for r in rows:
+        for f in r.get("airborne", []):
+            if f["primitive"] in r["declared"]:
+                flying_total += 1
+                continue
+            if (os.path.basename(r["glbPath"]), f["primitive"]) in FLY_EXEMPT:
+                continue
+            problems.append(
+                f"⛔ {r['glbPath']} prim{f['primitive']} ({f['vertices']}v) 在「{f['clip']}」"
+                f"整塊浮在身體上方 {f['clearance']} 個身高，而且掛在另一具會動的骨架上"
+                f" —— 沒有宣告（文件 {','.join(r['docs'])}）")
+
+    fly_fx = json.load(open(FLY_FIXTURE, encoding="utf-8")) if os.path.isfile(FLY_FIXTURE) else None
+    if fly_fx is None:
+        problems.append(f"⛔ 分身指紋不存在：{FLY_FIXTURE} —— 跑 --fixture 產生它")
+    else:
+        decl = (json.load(open(OVERLAY_DECL, encoding="utf-8")).get("models", {})
+                if os.path.isfile(OVERLAY_DECL) else {})
+        for name, m in fly_fx["models"].items():
+            glb = OVERLAY_GLB_PREFIX + name
+            declared = decl.get(glb, {}).get("hiddenPrimitives", [])
+            for f in m.get("airborne", []):
+                if f["primitive"] in declared:
+                    flying_total += 1
+                elif (name, f["primitive"]) not in FLY_EXEMPT:
+                    problems.append(
+                        f"⛔ [指紋] {glb} prim{f['primitive']} 在「{f['clip']}」浮在身體上方"
+                        f" {f['clearance']} 個身高 —— 沒有出現在 _overlay-hidden-geometry.json")
+            live = by_file.get(name)
+            if live is not None:
+                a = sorted(x["primitive"] for x in m.get("airborne", []))
+                b = sorted(x["primitive"] for x in live.get("airborne", []))
+                if a != b:
+                    problems.append(
+                        f"⛔ [分身指紋過期] {name}: 指紋 {a} ≠ 現場 {b} —— "
+                        f"跑 `python3 tools/model-census/gore_geoset.py --fixture {fx_path}`")
+
     # 前提：這條閘必須真的有東西可守。整棵樹哪天被修好/換掉，這裡先紅，
     # ⛔ 而不是讓它靜悄悄變成「什麼都沒驗」（失敗形態 ③）。
     if declared_total == 0:
         problems.append("⛔ 一處已宣告的殘留幾何都找不到 —— 這條閘變成 no-op 了")
+    if flying_total == 0:
+        problems.append("⛔ 一處已宣告的離地分身都找不到 —— 分身那條閘變成 no-op 了")
 
     for p in problems:
         print(p, file=sys.stderr)
-    print(f"check: {len(rows)} 顆 .glb、{declared_total} 處已宣告、{len(problems)} 個問題")
+    print(f"check: {len(rows)} 顆 .glb、{declared_total} 處已宣告、"
+          f"{flying_total} 處已宣告的離地分身、{len(problems)} 個問題")
     return 1 if problems else 0
 
 
@@ -462,6 +739,13 @@ def main() -> int:
               f"（confirmed {sum(1 for _, f in undeclared if f['confidence'] == 'confirmed')}）")
         single = [r for r in rows if r.get("singlePrimitive")]
         print(f"單圖元模型 {len(single)} 顆 —— hiddenPrimitives 對它們無能為力")
+        fly = [r for r in rows if r.get("airborne")]
+        print(f"\n離地分身（GH#540）：{len(fly)} 顆")
+        for r in sorted(fly, key=lambda r: r["glbPath"]):
+            for f in r["airborne"]:
+                mark = "✅已宣告" if f["primitive"] in r["declared"] else "⛔未宣告"
+                print(f"  {mark}  {r['glbPath']:52s} prim{f['primitive']:<2d} "
+                      f"{f['vertices']:4d}v  浮 {f['clearance']:>4} 個身高（{f['clip']}）")
 
     if args.fixture:
         overlay = [r for r in rows if r["tree"] == "overlay"]
@@ -487,6 +771,22 @@ def main() -> int:
             json.dump(payload, fh, ensure_ascii=False, indent=2, sort_keys=True)
             fh.write("\n")
         print(f"\n指紋 → {args.fixture}（{len(overlay)} 顆）")
+        fly_payload = {
+            "note": "generated by tools/model-census/gore_geoset.py — ⛔ do not hand-edit",
+            "source": "data/blizzard-overlay/models (gitignored; task #10/#177)",
+            "thresholds": {"clearanceOfHeight": FLY_CLEARANCE_OF_HEIGHT,
+                           "minVertices": FLY_MIN_VERTICES,
+                           "samplesPerClip": FLY_SAMPLES_PER_CLIP,
+                           "skipClipRoles": list(FLY_SKIP_CLIP_ROLES)},
+            # ⭐ 每一顆都寫（含空的）—— 漂移檢查只走指紋的 key，漏掉一顆
+            # 就等於那一顆「長出新的分身」時沒有人會紅。
+            "models": {os.path.basename(r["glbPath"]): {"airborne": r.get("airborne", [])}
+                       for r in overlay},
+        }
+        with open(FLY_FIXTURE, "w", encoding="utf-8") as fh:
+            json.dump(fly_payload, fh, ensure_ascii=False, indent=2, sort_keys=True)
+            fh.write("\n")
+        print(f"分身指紋 → {FLY_FIXTURE}（{len(fly_payload['models'])} 顆）")
     return 0
 
 

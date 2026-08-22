@@ -18,7 +18,13 @@
     "數字不是手打的：tools/w3x-import/gore_geoset_census.py（按 joint 名字）與",
     "tools/model-census/gore_geoset.py（按幾何：貼地扁板／另一具會動的骨架）各解一次，",
     "兩支互相對帳。⛔ 反向閘在 apps/client/src/render/views/hiddenPrimitives.census.test.ts",
-    "—— **帶殘留幾何卻沒宣告**的就紅，⛔ 不是只驗「有填的是對的」。"
+    "—— **帶殘留幾何卻沒宣告**的就紅，⛔ 不是只驗「有填的是對的」。",
+    "",
+    "⭐ 2026-08-22（GH#540）多了第三個訊號 `airborne-clone`：前兩個都量 **bind pose**，",
+    "所以「分身**疊在頭頂正上方**」對它們結構上必然是綠的（XZ 完全重合）。",
+    "第三個改量**動畫中的 Y** —— 只在遊戲真的會一直播的動作（clipMap 扣掉 death）裡，",
+    "整塊圖元的最低骨頭都高過身體頂端 0.25 個身高、而且掛在另一具會動的骨架上，才算。",
+    "⚠️ 這正是 owner 看到卻沒有任何閘會紅的那一種：`Efur.glb` 的靈魂分身。"
   ],
   "models": {
     "assets/blizzard-local/models/E00R.glb": {
@@ -41,6 +47,20 @@
       ],
       "champions": "百畝森林的霸主 - 維尼(godie-e00v)",
       "why": "prim2 = WC3 gutz08 血泥 geoset(80 頂點,權重 100%),#59 掉了 geoset 可見度動畫所以永遠畫得出來"
+    },
+    "assets/blizzard-local/models/Efur.glb": {
+      "hiddenPrimitives": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        11,
+        12
+      ],
+      "champions": "揍敵客大家長 - 揍敵客桀諾(godie-efur)",
+      "why": "⛔ 這一筆不是血泥,是**分身**(GH#540,owner 2026-08-22:「戰鬥中 一直看到一個分身飛上天的阿福」)。Efur.glb 有**兩具**各自被 8 個動畫驅動的骨架:本體 Bone_RootArchDruid(696 頂點,prim 0/1/2/10)與 Bone_Root01ArchDruid(532 頂點,55 個 joint 受驅動,prim 3/4/5/6/7/8/11/12)。第二具是本體的**逐頂點複本** —— prim8/prim12 有 100% 的頂點座標與本體重合,prim3 64%、prim4 69%(量法見 docs/_reports/540_temp_20260823-0100.md),⇒ 它是 WC3 英雄陣亡時升空的那具**靈魂**,而 #59 掉了 geoset 可見度動畫所以它永遠畫得出來。⭐ 關鍵是它在 **Walk** 這個動作裡被 key 在身體頂端**上方 1.3–2.3 個身高**(y≈4.9,身高 1.42) —— 所以 Stand 時它疊在身體裡看不見,英雄一移動就有第二個阿福浮在頭頂,正是 owner 描述的畫面。閘:tools/model-census/gore_geoset.py 的 airborne-clone。"
     },
     "assets/blizzard-local/models/Ekee.glb": {
       "hiddenPrimitives": [
