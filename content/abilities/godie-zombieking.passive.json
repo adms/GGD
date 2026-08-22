@@ -1,0 +1,96 @@
+{
+  "id": "godie-zombieking.passive",
+  "schema": "ability@1",
+  "name": "殭屍王 - leap吸血",
+  "icon": "assets/icons/abilities/godie-zombiex.passive.webp",
+  "provenance": "owner-spec",
+  "description": "[天生][主動][指定][無上限施法距離]\n{{cd}}秒冷卻\n\n生命低於 20% 時，殭屍王咆哮一聲、全場陷入黑暗，撲向全場血量最少的英雄咬一口：造成目標最大生命 10% 的真實傷害，並回復等同實際造成傷害的生命。若因此擊殺敵方英雄，追加回復自身最大生命的 50%。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "innateActivePassive": "attach",
+  "castType": "targeted",
+  "targetsEnemies": true,
+  "maxRank": 1,
+  "cooldown": [
+    30.0
+  ],
+  "cooldownTier": "中",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "rangeUnlimited": true,
+  "effects": [
+    {
+      "kind": "screenFlash",
+      "shape": "single",
+      "applyTo": "all",
+      "colorRgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "peakAlpha": 1.0,
+      "durationSec": 1.0
+    },
+    {
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "toPoint",
+      "apexHeight": 5.0,
+      "durationSec": 0.5,
+      "landRadius": 2.5,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "true",
+          "amount": {
+            "flat": 0
+          },
+          "resourcePct": {
+            "subject": "target",
+            "resource": "health",
+            "basis": "max",
+            "perRank": [
+              0.1
+            ]
+          },
+          "refund": {
+            "resource": "health",
+            "pct": 1.0
+          }
+        },
+        {
+          "kind": "spawnVfx",
+          "vfxId": "fx.prim.blood.nova-lg",
+          "at": "point",
+          "durationSec": 3.0
+        }
+      ]
+    }
+  ],
+  "passive": {
+    "name": "殭屍王 - leap吸血",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onKill",
+            "target": "self",
+            "victim": "enemyChampion",
+            "effects": [
+              {
+                "kind": "restore",
+                "applyTo": "self",
+                "healthPct": 0.5
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "vfxKey": "fx.prim.blood.nova",
+  "sfxKey": "bossHorror",
+  "castTimeSec": 0.267
+}

@@ -165,6 +165,17 @@ function seesTarget(world: SimWorld, zone: number, from: Vec2, to: Vec2): boolea
 
 export function basicAttackSystem(world: SimWorld): void {
   for (const [id, ab] of world.abilities) {
+    // ⭐ GH#577 —— 殭屍王從 2026-08-23 起**有** AbilitiesComp 與 StatsComp
+    // （`sim/mobs.ts::installKingKit`），於是它第一次落進這個迴圈。⛔ 但它的普攻
+    // 不走這裡：`MobSystem` 有自己那條「射程 + 冷卻 + 打就站定 → 推一發封包」的
+    // 簡化路徑，而王的傷害／射程／節奏全部來自 `MobRules`（`mobProfile`），
+    // ⛔ 不是 `sc.final`（王沒有 ChampionComp ⇒ `recomputeStats` 早退 ⇒ 那張表
+    // 整張是 0）。少了這一行，王會**同時**走兩條普攻路徑，而第二條每一刀是 0 傷害
+    // 加上一串 `attackWindup` 事件 —— 畫面上看起來只是「王在抽搐」。
+    //
+    // ⭐ 形狀與 `sim/flight.ts` 的 `if (world.mob.has(id)) continue;` 逐字相同，
+    // 而那一行的註解早就寫著它擋的就是「將來有人給怪加了 StatsComp」那一天。
+    if (world.mob.has(id)) continue;
     const t = world.transform.get(id);
     const hp = world.health.get(id);
     const sc = world.stats.get(id);

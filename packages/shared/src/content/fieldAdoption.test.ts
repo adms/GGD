@@ -266,6 +266,12 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-20",
     why: "同 `cooldownTier`。⚠️ 而且這一格**本來就預期是稀疏的**：出貨 `autoShape` 開著，只有自動判斷推錯的技能才需要手填 —— 內容改寫之後它的採用率仍然會遠低於 `cooldownTier`，屆時要改判成 `default-live`。",
   },
+  // ═══ GH#602 無上限施法距離 2026-08-23 ═════════════════════════════════════
+  "field:champions.abilities.*.rangeUnlimited": {
+    status: "landing",
+    since: "2026-08-23",
+    why: "「無上限施法距離」（owner 2026-08-23 的殭屍王 [leap吸血]）住在 **standalone** 技能文件上（`abilities.rangeUnlimited` 那一格已經被採用），而英雄內嵌的那一份鏡像只有 Q/W/E/R —— 今天沒有任何一位英雄的四格技能是「全場」的。⭐ 可反駁：哪一天有一支英雄大招真的是全場（原作那兩支 29.33 / 24 的候選就在 GH#310 的清單上），填上去這一列就會 stale 而紅。⛔ 不要為了讓它變綠去替某一支技能填這一格 —— 那會**改變每一場比賽**。",
+  },
   "field:champions.abilities.*.cooldownShape": {
     status: "landing",
     since: "2026-08-20",

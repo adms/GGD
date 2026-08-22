@@ -125,6 +125,19 @@ export function resolveRangeTier<T extends Record<string, unknown>>(def: T, tier
       const r = tiers.range[tier as RangeTierName];
       if (typeof r === "number") out["range"] = r;
     }
+    // ⭐ GH#602 —— **無上限施法距離**（owner 2026-08-23 的殭屍王 [leap吸血]）。
+    //
+    // ⚠️ 它刻意**不是第六個級別**：這一支檔頭自己寫著「上界 = 決鬥區半徑：大於它
+    // 的施法距離就是『全場』，那不是一個距離級別」。所以「無限」是一個**布林的
+    // 例外宣告**，而不是表裡多一格 —— 五級距那條梯子一格都沒被動到。
+    //
+    // ⭐ 但解析仍然在**這一支**：全專案唯一知道「級別／宣告怎麼變成 range 數字」
+    // 的地方（第〇·四守則）。放到 `castAbility` 裡等於第二個住處，而編輯器預覽
+    // 與後台試算讀的是註冊表，兩邊就會對同一支技能給出不同的射程。
+    //
+    // ⚠️ `enabled: false` 時整支 `resolveRangeTier` 早就 return 了 —— 那是刻意的：
+    // 那一格是「距離解析」的總閥，關掉它就該回到「文件寫什麼就是什麼」。
+    if (rec["rangeUnlimited"] === true) out["range"] = Number.POSITIVE_INFINITY;
     return out;
   }
 }

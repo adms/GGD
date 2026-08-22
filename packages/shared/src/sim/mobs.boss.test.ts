@@ -48,6 +48,7 @@ import {
   summonMobBoss,
   spawnMob,
   DIR_TABLE,
+  bossAttackCdTicks,
 } from "./mobs";
 import { splitBossBounty, bossSummonsAt } from "./mobBoss";
 import { beginCombatMobs, endCombatMobs, mobSystem } from "./systems/MobSystem";
@@ -788,7 +789,13 @@ describe("#262 is inert unless armed", () => {
     expect(r.boss!.lastHitMultiplier).toBe(2);
     expect(r.boss!.bountyGold).toBeGreaterThan(0);
     // seconds → ticks happened once, at arm time
-    expect(r.boss!.attackCdTicks).toBe(Math.round(DEFAULT_MOB_WAVES_CONFIG.boss!.attackCdSec / DT));
+    // ⚠️ 2026-08-23（GH#577）—— 這一行以前是 `attackCdSec / DT`，而現在王的節奏
+    //    還要吃 `king.attackSpeedFloor`（owner「攻速都是上限4起跳」）。⭐ 走的是
+    //    **出貨的那一支** `bossAttackCdTicks`，⛔ 不抄第二份算式：抄一份的話它
+    //    只會在下一次有人改公式時用「殭屍王攻擊間隔壞了」這種錯訊息紅。
+    expect(r.boss!.attackCdTicks).toBe(
+      bossAttackCdTicks(DEFAULT_MOB_WAVES_CONFIG.boss!, (sec) => Math.max(1, Math.round(sec / DT))),
+    );
     expect(r.special).not.toBeNull();
     // percent → fraction happened once, at arm time
     expect(r.special!.chance).toBeCloseTo(DEFAULT_MOB_WAVES_CONFIG.special!.chancePercent / 100, 12);

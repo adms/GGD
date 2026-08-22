@@ -318,6 +318,16 @@
       "healthBarAnchor": "top",
       "healthBarReveal": "summon",
       "settlementTitle": "殭屍王 分紅結算",
+      "king": {
+        "enabled": true,
+        "learnRank": 1,
+        "innateAbilityId": "godie-zombieking.passive",
+        "innateCastHpPct": 0.2,
+        "maxMana": 10000,
+        "manaRegenPerSec": 1000,
+        "attackSpeedFloor": 4,
+        "targetPreference": "players"
+      },
       "countsAsChampion": true
     },
     "special": {

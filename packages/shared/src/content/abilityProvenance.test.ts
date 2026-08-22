@@ -25,6 +25,27 @@ import { fileURLToPath } from "node:url";
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const ABIL = join(REPO, "content", "abilities");
 const GEN = join(REPO, "tools", "skill-remake", "batch1.py");
+const CHAMPS = join(REPO, "content", "champions");
+
+/**
+ * ⭐ 這一份技能文件的**主人**在不在英雄目錄裡。
+ *
+ * ⚠️ 2026-08-23（GH#602）—— 註冊表裡出現了第一支**沒有主人**的技能：
+ * 殭屍王的內建 [leap吸血]（`godie-zombieking.passive`）。它不是任何一位英雄的技能，
+ * 所以 w3x 裡**根本沒有它的來源**：把它標成 `w3x-import` 是一句謊話，
+ * 而那正是這整支守衛要消滅的東西（「兩份都長得像權威」）。
+ *
+ * ⭐ 判準是**推導**的（磁碟上查得到那張英雄卡就算有主人），⛔ 不是一張會腐爛的
+ * id 白名單 —— 哪天 `godie-zombieking` 真的變成一位可選英雄，這一支就會自動回到
+ * 上面那條 `prefixes` 的規則裡。
+ */
+function championHeads(): Set<string> {
+  return new Set(
+    readdirSync(CHAMPS)
+      .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+      .map((f) => f.replace(/\.json$/, "")),
+  );
+}
 
 interface Doc {
   readonly file: string;
@@ -64,11 +85,13 @@ describe("技能文件的來源層級（owner 2026-08-13「怎麼會搞混呢?�
     // 承重的一半：如果有人手改一份 w3x 文件並把它標成 owner-spec，
     // 或者產生器多/少管了一支，這一條會紅 —— 而那正是「兩份都長得像權威」的復發。
     const prefixes = remadePrefixes();
+    const champs = championHeads();
     const docs = shipped();
     const wrong = docs
       .filter((d) => {
         const head = d.file.replace(/\.json$/, "").split(".")[0]!;
-        const want = prefixes.has(head) ? "owner-spec" : "w3x-import";
+        // 沒有主人 ⇒ 原創 ⇒ 只可能是 owner 的規格（w3x 裡沒有它的來源）。
+        const want = prefixes.has(head) || !champs.has(head) ? "owner-spec" : "w3x-import";
         return d.provenance !== want;
       })
       .map((d) => `${d.file}: ${String(d.provenance)}`);

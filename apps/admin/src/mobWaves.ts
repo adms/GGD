@@ -251,6 +251,18 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     // #291 owner 2026-08-03「特殊殭屍 不應該用殭屍王 分紅結算畫面」——
     // 抬頭以前寫死在 ui/hud/mobBossModel.ts，一字不差搬進設定。
     settlementTitle: "殭屍王 分紅結算",
+    // ⭐ GH#577 / GH#602 owner 2026-08-23「殭屍王 應該要會自動學習所有技能並施展技能
+    // 並且攻速都是上限4起跳 並且優先攻擊玩家角色而非bot」+「回魔速度是每秒1000點」。
+    king: {
+      enabled: true,
+      learnRank: 1,
+      innateAbilityId: "godie-zombieking.passive",
+      innateCastHpPct: 0.2,
+      maxMana: 10000,
+      manaRegenPerSec: 1000,
+      attackSpeedFloor: 4,
+      targetPreference: "players",
+    },
   },
   special: {
     chancePercent: 1.25,
@@ -390,6 +402,14 @@ export type MobWavesFieldKey =
   | "boss.healthBarAnchor"
   | "boss.healthBarReveal"
   | "boss.settlementTitle"
+  | "boss.king.enabled"
+  | "boss.king.learnRank"
+  | "boss.king.innateAbilityId"
+  | "boss.king.innateCastHpPct"
+  | "boss.king.maxMana"
+  | "boss.king.manaRegenPerSec"
+  | "boss.king.attackSpeedFloor"
+  | "boss.king.targetPreference"
   // 特殊殭屍 (#262)
   | "special.chancePercent"
   | "special.hpMult"
@@ -554,6 +574,14 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   // #291 —— 分紅結算的字。排在長血條之後,因為它們回答的是同一種問題:
   // 「牠出現／死掉之後,畫面上要說什麼」。
   "boss.settlementTitle",
+  "boss.king.enabled",
+  "boss.king.learnRank",
+  "boss.king.innateAbilityId",
+  "boss.king.innateCastHpPct",
+  "boss.king.maxMana",
+  "boss.king.manaRegenPerSec",
+  "boss.king.attackSpeedFloor",
+  "boss.king.targetPreference",
   "special.chancePercent",
   "special.championSource",
   "special.championId",
@@ -1089,6 +1117,103 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     kind: "text",
     optional: true,
     emptyMeans: "留空 = 用出貨的「殭屍王 分紅結算」",
+  },
+  "boss.king.enabled": {
+    zh: "殭屍王會不會自己打架",
+    note:
+      "owner 2026-08-23：「殭屍王 應該要會自動學習所有技能並施展技能」。開 = 王進場時" +
+      "拿到技能欄與屬性表（一般殭屍與特殊殭屍**不會**，那是刻意的：第 3 場之後場上大多數" +
+      "敵人是它們）。關 = 王回到只會揮刀的舊行為，連內建的 [leap吸血] 也不會放",
+    unit: "",
+    kind: "bool",
+    optional: true,
+    boolLabels: { on: "會施法（出貨）", off: "只會揮刀（舊行為）" },
+    emptyMeans: "留空 = 整個「王會打架」的區塊不寫進設定檔 = 舊行為",
+  },
+  "boss.king.learnRank": {
+    zh: "└ 技能學到第幾階",
+    note:
+      "王戴哪張臉就學那張臉的 Q/W/E/R/EX 與天生技，這一格決定學到第幾階。" +
+      "1（出貨）＝ 每支都是第一階；0 ＝ 只留下面那支內建技。" +
+      "⚠️ 不要直接拉到滿階：王的攻擊力已經另外乘過「＝英雄的幾倍」，滿階大招是一發秒殺",
+    unit: "階",
+    kind: "num",
+    min: 0,
+    max: 6,
+    optional: true,
+    emptyMeans: "留空 = 1",
+  },
+  "boss.king.innateAbilityId": {
+    zh: "└ 內建技能（佔天生技槽）",
+    note:
+      "owner 2026-08-23：「殭屍王 內建 [leap吸血] 技能」。這支技能會**取代**王這一次戴的" +
+      "那張臉自己的天生技 —— 那支是那位英雄的，這一隻是殭屍王。清空 = 沒有內建技，" +
+      "王就用戴到的那張臉自己的天生技",
+    unit: "",
+    kind: "text",
+    optional: true,
+    emptyMeans: "留空 = godie-zombieking.passive（[leap吸血]）",
+  },
+  "boss.king.innateCastHpPct": {
+    zh: "└ 內建技的施放血量門檻",
+    note:
+      "owner 2026-08-23：「當殭屍王生命低於20%時」。王的生命比例低於這一格才按得下內建技；" +
+      "高於它連冷卻都不會轉。⚠️ 這一格必須在這裡而不是技能 JSON 裡：技能檔上只有觸發器" +
+      "（hook）有條件欄，主動技沒有任何欄位表達得出「血夠低才放得出來」。" +
+      "1 = 隨時放；0 = 永遠放不出來（看得出來它是關的）",
+    unit: "比例",
+    kind: "num",
+    min: 0,
+    max: 1,
+    optional: true,
+    emptyMeans: "留空 = 0.2（生命低於 20%）",
+  },
+  "boss.king.maxMana": {
+    zh: "└ 魔力池",
+    note:
+      "王的魔力上限，進場時滿的。⚠️ 這一格是 0 的話王會「學會了但一支都放不出來」——" +
+      "小怪的身體預設沒有魔力，而每一支要錢的技能都會被魔力不足擋掉，而且畫面上完全看不出來",
+    unit: "點",
+    kind: "num",
+    min: 0,
+    max: 1000000,
+    optional: true,
+    emptyMeans: "留空 = 10000",
+  },
+  "boss.king.manaRegenPerSec": {
+    zh: "└ 每秒回魔",
+    note: "owner 2026-08-23：「殭屍王回魔速度是每秒1000點，基本上不缺魔力」。王沒有屬性表可以走一般的回魔管線，所以這一格由殭屍波系統自己付",
+    unit: "點／秒",
+    kind: "num",
+    min: 0,
+    max: 1000000,
+    optional: true,
+    emptyMeans: "留空 = 1000",
+  },
+  "boss.king.attackSpeedFloor": {
+    zh: "└ 攻速下限",
+    note:
+      "owner 2026-08-23：「攻速都是上限4起跳」。王每秒至少揮這麼多刀 —— 它只會讓王變快，" +
+      "⛔ 不會把一隻本來就更快的王拖慢（取兩者之中比較快的那一個）。0 = 關掉，照上面那格「攻擊間隔」",
+    unit: "刀／秒",
+    kind: "num",
+    min: 0,
+    max: 20,
+    optional: true,
+    emptyMeans: "留空 = 4",
+  },
+  "boss.king.targetPreference": {
+    zh: "└ 先打誰",
+    note:
+      "owner 2026-08-23：「優先攻擊玩家角色而非bot」。「先打真人」= 場上還有活著的真人英雄時，" +
+      "王的索敵只在他們之間挑最近的；一個真人都沒有（或這一場全是 bot）才退回全體掃描。" +
+      "「誰近打誰」是這一格出現之前的行為。⚠️ 只有**王**吃這一格，一般殭屍照舊",
+    unit: "",
+    kind: "enum",
+    values: ["players", "nearest"],
+    valueLabels: { players: "先打真人（出貨）", nearest: "誰近打誰" },
+    optional: true,
+    emptyMeans: "留空 = 先打真人",
   },
   "boss.championSource": {
     zh: "殭屍王由誰擔任：指定還是隨機",
@@ -1742,6 +1867,14 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
       "boss.healthBarAnchor",
       "boss.healthBarReveal",
       "boss.settlementTitle",
+      "boss.king.enabled",
+      "boss.king.learnRank",
+      "boss.king.innateAbilityId",
+      "boss.king.innateCastHpPct",
+      "boss.king.maxMana",
+      "boss.king.manaRegenPerSec",
+      "boss.king.attackSpeedFloor",
+      "boss.king.targetPreference",
     ],
   },
   {
@@ -1996,6 +2129,22 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
     // #291 —— 空白 = 沒填 = 用出貨抬頭,和其他 optional 欄位同一條規則。
     case "boss.settlementTitle":
       return cfg.boss?.settlementTitle ?? "";
+    case "boss.king.enabled":
+      return cfg.boss?.king?.enabled === undefined ? "" : cfg.boss.king.enabled ? "1" : "0";
+    case "boss.king.learnRank":
+      return formatNum(cfg.boss?.king?.learnRank);
+    case "boss.king.innateAbilityId":
+      return cfg.boss?.king?.innateAbilityId ?? "";
+    case "boss.king.innateCastHpPct":
+      return formatNum(cfg.boss?.king?.innateCastHpPct);
+    case "boss.king.maxMana":
+      return formatNum(cfg.boss?.king?.maxMana);
+    case "boss.king.manaRegenPerSec":
+      return formatNum(cfg.boss?.king?.manaRegenPerSec);
+    case "boss.king.attackSpeedFloor":
+      return formatNum(cfg.boss?.king?.attackSpeedFloor);
+    case "boss.king.targetPreference":
+      return cfg.boss?.king?.targetPreference ?? "";
     case "boss.lastHitMode":
       // Absent in a doc authored before GH#206 — show the shipped default
       // rather than an empty box, because an empty box here reads as
@@ -2400,6 +2549,20 @@ export interface MobWavesErrors {
  * Without this, opening the page on a pre-#262 arena-rules doc would light up
  * twenty 必填 errors and gate Save on filling in a mechanic nobody asked for.
  */
+/** 「先打誰」的兩個值 —— 與 `zMobWavesConfig.boss.king.targetPreference` 同一組。 */
+export const KING_TARGET_PREFERENCES = ["players", "nearest"] as const;
+
+/**
+ * 王的「會打架」八格是不是全空。⭐ 與 {@link blockEmpty} 分開，因為它們回答不同的
+ * 問題：`blockEmpty("boss.")` 問「這一份設定檔有沒有殭屍王」，這一支問「那隻王會不會
+ * 自己打架」——⛔ 前者為 false 時後者仍然可以是 true（一隻只會揮刀的王）。
+ */
+export function kingBlockEmpty(form: MobWavesForm): boolean {
+  return MOB_WAVES_FIELD_ORDER.filter((k) => k.startsWith("boss.king.")).every(
+    (k) => form.fields[k].trim() === "",
+  );
+}
+
 export function blockEmpty(
   form: MobWavesForm,
   prefix: "boss." | "special." | "healthBar.",
@@ -2731,6 +2894,23 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
     // #291 —— OMITTED when blank: 清空抬頭 = 「用出貨的字」,不是「面板沒有抬頭」。
     const bst = optText("boss.settlementTitle");
     if (bst !== undefined) boss.settlementTitle = bst;
+    // ⭐ GH#577 / GH#602 —— 王的「會打架」區塊是**全有或全無**（`levelCurve` 同一條
+    // 規矩）：schema 上它是一個 `.strict()` 的物件，八格都是必填。八格全空 = 這一份
+    // 設定檔沒有這個區塊 = 王回到只會揮刀的舊行為；有任何一格填了，其餘用出貨值補齊。
+    if (!kingBlockEmpty(form)) {
+      const sk = SHIPPED_MOB_WAVES.boss!.king!;
+      boss.king = {
+        enabled: bool("boss.king.enabled", sk.enabled),
+        learnRank: num("boss.king.learnRank", sk.learnRank),
+        innateAbilityId: optText("boss.king.innateAbilityId") ?? sk.innateAbilityId,
+        innateCastHpPct: num("boss.king.innateCastHpPct", sk.innateCastHpPct),
+        maxMana: num("boss.king.maxMana", sk.maxMana),
+        manaRegenPerSec: num("boss.king.manaRegenPerSec", sk.manaRegenPerSec),
+        attackSpeedFloor: num("boss.king.attackSpeedFloor", sk.attackSpeedFloor),
+        targetPreference:
+          optEnum("boss.king.targetPreference", KING_TARGET_PREFERENCES) ?? sk.targetPreference,
+      };
+    }
     out.boss = boss;
   }
   if (!blockEmpty(form, "special.")) {

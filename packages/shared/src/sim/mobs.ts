@@ -39,7 +39,7 @@
  * and nothing per-mob knows what a round is, so there is no wall-clock or
  * client-state path in — exactly the shape `guardianHp(rules, round)` uses.
  */
-import type { ChampionId, EntityId, SeatId, TeamId } from "../ids";
+import type { AbilityId, ChampionId, EntityId, SeatId, TeamId } from "../ids";
 import { asSeatId, asTeamId } from "../ids";
 import type { SimWorld } from "./SimWorld";
 import type { MobKind } from "./components";
@@ -55,7 +55,10 @@ import { pointOnBoundary, spotIsClear, spotHasRoom, freeEdgeSpot } from "./map/b
 // enters the world, so it is the module that trips it. No cycle: fireRing.ts
 // imports only SimWorld/ids/vec2.
 import { extendRoundForBoss, fireRingIgnitionTick } from "./fireRing";
-import { Champions } from "./content/registry";
+import { Abilities, Champions } from "./content/registry";
+import { zeroStats } from "./stats/statTypes";
+import type { AbilityInstance } from "./stats/statsComp";
+import { syncAbilityPassives } from "./abilities/abilityPassives";
 import { Stat } from "./stats/statTypes";
 import { championStatBase } from "./stats/attributes";
 import { LEVEL_CAP } from "./economy/progression";
@@ -466,6 +469,20 @@ export interface MobRules {
    */
   boss: MobBossRules | null;
   /**
+   * ⭐ GH#577 —— 哪幾個座位是**真人**（owner 2026-08-23「優先攻擊玩家角色而非bot」）。
+   *
+   * ⚠️ 為什麼它在**規則表**上而不是 `SimWorld` 上：sim 從頭到尾沒有「誰是 bot」
+   * 這個概念 —— `world.step(intents)` 收到的 IntentFrame 對真人與 bot 逐位元
+   * 同型（`MatchController.stepSim`），而 `seat.humanSeat` 住在 host 的座位表上。
+   * 規則表是 host **每一場戰鬥開始**都會重新交給 sim 的東西，所以它是這份知識
+   * 唯一不需要新增協定欄位就進得來的門。
+   *
+   * ⚠️ **空集合 ⇒ 退回「誰近打誰」**（而不是「一個都不打」）：一場全 bot 的
+   * 練習賽、一份手搭的測試夾具、以及還沒接上 host 的那一版，行為都必須是
+   * 這一格出現之前的樣子。
+   */
+  humanSeats?: ReadonlySet<SeatId>;
+  /**
    * 特殊殭屍 (task #262). `null` = no special zombies AND — this is the part
    * that matters — no `world.rng` draw at all, so an arena that does not author
    * the block leaves the shared random stream (crits / evasion / the legendary
@@ -608,6 +625,36 @@ export interface MobBossRules {
   healthBar?: boolean;
   healthBarAnchor?: BossHealthBarAnchor;
   healthBarReveal?: BossHealthBarReveal;
+  /**
+   * ⭐ 殭屍王會自己打架（GH#577 / GH#602）。`null` / 缺席 = 這一格出現之前，
+   * 也就是「小怪在結構上不可能施法」對**每一隻**怪成立。
+   */
+  king?: MobKingRules | null;
+}
+
+/**
+ * 殭屍王的自主行為（GH#577 / GH#602）—— 逐格語意與上下界見
+ * `zMobWavesConfig.boss.king`。
+ *
+ * ⚠️ 這一份是「**這具身體**的資源與 AI 的按鈕」，⛔ 不是 [leap吸血] 的數值：
+ * 10% 真傷 / 回復 100% / 追加 50% / 30 秒冷卻全部住
+ * `content/abilities/godie-zombieking.passive.json`，理由與
+ * `abilities/berserkRules.ts` 檔頭逐字相同（內容表達得出來的就不要在 TS 裡再寫一次）。
+ */
+export interface MobKingRules {
+  enabled: boolean;
+  /** 六個槽全部發到第幾階。0 = 只留內建的天生技。 */
+  learnRank: number;
+  /** 內建技的文件 id（佔天生技槽）。`""` = 沒有內建技。 */
+  innateAbilityId: string;
+  /** 內建技的施法前生命門檻，0..1。 */
+  innateCastHpPct: number;
+  maxMana: number;
+  manaRegenPerSec: number;
+  /** 每秒幾刀的**下限**。0 = 關掉。 */
+  attackSpeedFloor: number;
+  /** 索敵偏好 —— `"players"` = 有真人英雄時只打真人。 */
+  targetPreference: "players" | "nearest";
 }
 
 /** 長血條畫在畫面哪裡 —— see `zMobWavesConfig.boss.healthBarAnchor`. */
@@ -1187,6 +1234,8 @@ export interface MobWavesConfigLike {
     healthBar?: boolean;
     healthBarAnchor?: BossHealthBarAnchor;
     healthBarReveal?: BossHealthBarReveal;
+    /** ⭐ GH#577 / GH#602 —— 王的自主行為。見 `zMobWavesConfig.boss.king`。 */
+    king?: MobKingRules;
   };
   /** 特殊殭屍 (#262); absent = no special zombies and no rng draw */
   special?: {
@@ -1745,6 +1794,26 @@ export function mobSpawnProfile(
  * `world.health` directly), so this argument exists only so a caller that HAS
  * a live table can stay consistent with it.
  */
+/**
+ * 王的揮刀節奏（tick），把 `king.attackSpeedFloor`（每秒幾刀的**下限**）折進去。
+ *
+ * ⭐ 純函式、只有一個住處：`mobRulesFromConfig` 呼叫它一次，`mobProfile` 之後
+ * 讀到的就是最終值。⛔ 不在 MobSystem 揮刀的那一行再夾一次 —— 兩處夾法遲早
+ * 會差一個 tick，而畫面上看不出來。
+ *
+ * `attackSpeedFloor <= 0` ⇒ 關掉，回 `attackCdSec` 換算的 tick 數（逐位元等於
+ * 這一格出現之前）。
+ */
+export function bossAttackCdTicks(
+  boss: { attackCdSec: number; king?: { attackSpeedFloor: number } },
+  ticks: (sec: number) => number,
+): number {
+  const base = ticks(boss.attackCdSec);
+  const floor = boss.king?.attackSpeedFloor ?? 0;
+  if (!(floor > 0)) return base;
+  return Math.min(base, ticks(1 / floor));
+}
+
 export function mobRulesFromConfig(
   cfg: MobWavesConfigLike,
   dt: number,
@@ -1760,6 +1829,13 @@ export function mobRulesFromConfig(
    * `MatchController.enterCombat`.
    */
   pickChampion?: MobChampionPicker,
+  /**
+   * ⭐ GH#577 —— 哪幾個座位是**真人**（owner 2026-08-23「優先攻擊玩家角色而非bot」）。
+   * 省略 ⇒ 空集合 ⇒ 索敵退回「誰近打誰」，也就是這一格出現之前的行為
+   * （客戶端的預測影子、重播的純函式重新武裝、以及每一份測試夾具全部走這一邊）。
+   * 唯一會傳它的正式呼叫端是 `MatchController.enterCombat`，理由見 `MobRules.humanSeats`。
+   */
+  humanSeats?: ReadonlySet<SeatId>,
 ): MobRules {
   const ticks = (sec: number): number => Math.max(1, Math.round(sec / dt));
   const level = mobLevelForRound(cfg, round);
@@ -1919,6 +1995,7 @@ export function mobRulesFromConfig(
     // happen ONCE, so no per-tick divide can round differently on another host.
     // An absent block stays `null` all the way down rather than becoming a
     // zeroed struct, so "off" is representable and testable.
+    ...(humanSeats === undefined ? {} : { humanSeats }),
     boss:
       cfg.boss === undefined
         ? null
@@ -1953,7 +2030,12 @@ export function mobRulesFromConfig(
                 ? cfg.boss.moveSpeed
                 : Math.max(0, mobMoveSpeed * cfg.boss.moveSpeedMult),
             attackRangeSq: cfg.boss.attackRange * cfg.boss.attackRange,
-            attackCdTicks: ticks(cfg.boss.attackCdSec),
+            // ⭐ 攻速下限（owner 2026-08-23「攻速都是**上限4起飛**」的字面意思是
+            // 「至少 4 刀/秒」）。取 **min** 的 tick 數 = 取 **max** 的攻速，所以
+            // 一隻本來就更快的王 ⛔ 不會被這一格拖慢。`attackSpeedFloor: 0` = 關掉。
+            // ⚠️ 算在**這裡**（arm time）而不是揮刀的那一行：`mobProfile` 是全專案
+            // 唯一回答「這隻怪的節奏是多少」的地方，在讀取端再夾一次就是第二個住處。
+            attackCdTicks: bossAttackCdTicks(cfg.boss, ticks),
             radius: cfg.boss.radius,
             ...(cfg.boss.countsAsChampion === undefined
               ? {}
@@ -2009,6 +2091,10 @@ export function mobRulesFromConfig(
             healthBar: cfg.boss.healthBar ?? DEFAULT_BOSS_HEALTH_BAR,
             healthBarAnchor: cfg.boss.healthBarAnchor ?? DEFAULT_BOSS_HEALTH_BAR_ANCHOR,
             healthBarReveal: cfg.boss.healthBarReveal ?? DEFAULT_BOSS_HEALTH_BAR_REVEAL,
+            // ⭐ GH#577 / GH#602 —— 王的自主行為。缺席 ⇒ `null` ⇒ 逐位元等於
+            // 這一格出現之前（沒有 AbilitiesComp、沒有 StatsComp、不回魔、
+            // 揮刀節奏就是 `attackCdSec`）。
+            king: cfg.boss.king === undefined ? null : { ...cfg.boss.king },
           },
     special:
       cfg.special === undefined
@@ -2613,6 +2699,8 @@ export function summonMobBoss(
   // it can never see this entry and delete it. `world.destroy` clears
   // `world.flight`, so the grant dies with the king.
   if (rules.boss.noClip) world.flight.set(id, rules.boss.noClip);
+  // ⭐ GH#577 / GH#602 —— 王會自己打架。**唯一**的例外，而且它是一個決定不是一個數字。
+  installKingKit(world, id, rules.boss);
   // #L1 — 「回合結束時間延長 3 分鐘(火圈時間也延後)」. AFTER the body exists, so a
   // summon that could not happen cannot move the clock, and BEFORE the event, so
   // the announcement carries the extension that is already in force rather than
@@ -2647,6 +2735,109 @@ export function summonMobBoss(
     fireRingStartTick: fireRingIgnitionTick(world),
   });
   return id;
+}
+
+/**
+ * ⭐ 殭屍王的「會打架套件」（GH#577 / GH#602）—— **唯一**一處把
+ * `AbilitiesComp` / `StatsComp` 交給一隻怪的地方。
+ *
+ * ════════════════════════════════════════════════════════════════════════════
+ * ⚠️ 這一段在推翻一條**寫在測試裡的結構性斷言**
+ *
+ * `mobs.control.test.ts`「小怪在結構上不可能施法：沒有 AbilitiesComp /
+ * StatsComp / ChampionComp」—— 那一條**對一般殭屍與特殊殭屍仍然成立**，
+ * 而且必須繼續成立（第 3 場之後場上大多數敵人是它們，給它們技能等於重寫整個
+ * PvE 難度）。⇒ 例外的粒度是 **`kind === "boss"` 這一隻身體**，
+ * ⛔ 不是「小怪可以有 AbilitiesComp」這條規則被放寬。
+ *
+ * 所以它寫在 `summonMobBoss` 裡（王進場的**唯一**一扇門），⛔ 不在
+ * `spawnMobBody`（三種怪共用的那一支）。一隻沒有走過這扇門的怪，
+ * 逐位元拿不到任何一個組件。
+ *
+ * ════════════════════════════════════════════════════════════════════════════
+ * ⛔ **刻意不給 `ChampionComp`。** 那不是省事，是三條線同時會壞：
+ *   · `deathSystem` 對 `world.champion.has()` 付擊殺金 + 一次性首殺賞金 ——
+ *     王已經有自己的**分紅獎池**（`payMobBounty`），兩份會同時發；
+ *   · 計分板 / 對決結算 / 名次全部 key 在同一個 store 上 ⇒ 王會變成第 13 個「英雄」；
+ *   · `recomputeStats` 的第一句是 `if (!sc || (!champ && !sm)) return;` ——
+ *     ⭐ 沒有 ChampionComp ⇒ 屬性管線對王是**早退**，於是它**不會**用英雄卡的
+ *     maxHealth 覆蓋掉 `heroHpMult` × `hpFlatBonus` 算出來的那條血條。
+ *     那正是我們要的：王的數字來源是 `MobRules`，⛔ 不是屬性管線。
+ *
+ * ⚠️ 代價寫在這裡，⛔ 不留給下一個人踩：`sc.final` 會維持 `zeroStats()`。
+ * ⇒ 走 `sc.final` 的那幾條（冷卻縮減、技能吸血、暴擊率）對王是 0。
+ * [leap吸血] 的吸血因此**不走** `Stat.SpellVamp`，而是走技能自己的
+ * `damage.refund`（封包上的指示，`combat/damage.ts` 在減免之後付款）——
+ * 那也是唯一算得出「**實際**造成多少」的位置。
+ *
+ * ⚠️ `flightSystem` 早就替這一天留好了門：`sim/flight.ts` 的
+ * `if (world.mob.has(id)) continue;`，所以王拿到 StatsComp 之後
+ * `syncFlightGrants` ⛔ 不會把 `noClip` 的授予刪掉（守衛：mobBossNoClip.test.ts）。
+ */
+export function installKingKit(world: SimWorld, id: EntityId, boss: MobBossRules): void {
+  const king = boss.king ?? null;
+  if (king === null || !king.enabled) return;
+
+  // ── 魔力池 ────────────────────────────────────────────────────────────────
+  // `spawnUnitBody` 給怪的 `maxMana` 是 0，而 `castAbility` 的 `hp.mana < mana`
+  // 會把每一支要錢的技能擋掉 —— 王會「學會了但一支都放不出來」，⛔ 而且沒有
+  // 任何錯誤訊息（失敗形態②）。滿魔進場：owner「基本上不缺魔力」。
+  const hp = world.health.get(id);
+  if (hp) {
+    hp.maxMana = king.maxMana;
+    hp.mana = king.maxMana;
+  }
+
+  // ── 屬性表 ────────────────────────────────────────────────────────────────
+  // `championId` 指向王這一次戴的那張臉（`boss.championId`），與召喚物同一個
+  // 形狀（StatsComp 有、ChampionComp 沒有）。`dirty: false` 是刻意的：沒有
+  // ChampionComp ⇒ `recomputeStats` 早退，留著 dirty 只會每 tick 白跑一次早退。
+  const championId = boss.championId;
+  if (championId === undefined) return;
+  world.stats.set(id, {
+    championId: championId as ChampionId,
+    final: zeroStats(),
+    dirty: false,
+    sources: [],
+  });
+
+  // ── 技能欄 ────────────────────────────────────────────────────────────────
+  // 「自動學習**所有**技能」（owner 2026-08-23）。⛔ 讀的是**註冊表裡那張卡**，
+  // 不是一張手抄的技能 id 表 —— 換一張臉（`championSource: "random"`）就換一組
+  // 技能，這一行不必知道是誰。
+  const def = Champions.tryGet(championId as ChampionId);
+  if (!def) return;
+  const rank = Math.max(0, Math.round(king.learnRank));
+  const slot = (abilityId: string): AbilityInstance => ({
+    abilityId: abilityId as AbilityId,
+    rank,
+    cooldownRemainingTicks: 0,
+  });
+  world.abilities.set(id, {
+    slots: {
+      Q: slot(def.abilities.Q.id),
+      W: slot(def.abilities.W.id),
+      E: slot(def.abilities.E.id),
+      R: slot(def.abilities.R.id),
+    },
+    exSlot: def.exAbility ? slot(def.exAbility) : null,
+    // ⭐ **內建** [leap吸血] 佔天生技槽 —— 「內建」在這個引擎裡就是天生技，
+    // 所以 ⛔ 不需要第七個槽位。它**取代**這張臉自己的天生技：那一支是那位英雄的，
+    // 而這一隻是殭屍王。永遠 rank 1（天生技的定義就是從第 1 級就擁有）。
+    passiveSlot:
+      king.innateAbilityId !== "" && Abilities.tryGet(king.innateAbilityId as AbilityId)
+        ? { abilityId: king.innateAbilityId as AbilityId, rank: 1, cooldownRemainingTicks: 0 }
+        : def.passiveAbility
+          ? { abilityId: def.passiveAbility, rank: 1, cooldownRemainingTicks: 0 }
+          : null,
+    basicAttackCdTicks: 0,
+    unspentPoints: 0,
+  });
+
+  // 天生技的 `passive` 區塊（[leap吸血] 的「擊殺英雄追加回復 50%」那一條 hook）
+  // 掛上去。⚠️ 主動型天生技預設**不掛** passive（`isActiveInnate` 那條閘），
+  // 所以那份文件填了 `innateActivePassive: "attach"` —— G13-1 就是為這一族開的。
+  syncAbilityPassives(world, id);
 }
 
 /**

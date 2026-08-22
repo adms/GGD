@@ -726,6 +726,26 @@ export const zAbilityDef = z
      */
     rangeTier: z.enum(RANGE_TIER_NAMES).optional(),
     /**
+     * ⭐ **無上限施法距離**（GH#602，owner 2026-08-23 對殭屍王 [leap吸血] 的逐字規格：
+     * 「殭屍王將會**無上限施法距離**跳躍到**全場血量最少的英雄**旁邊」）。
+     *
+     * ⚠️ 它**刻意不是第六個級別**。`content/rangeTiers.ts` 自己寫著：
+     * 「上界 = 決鬥區半徑：**大於它的施法距離就是「全場」，那不是一個距離級別**」——
+     * 一把量距離的尺量不出「不受距離限制」，硬塞一格「無限」進 `range-tiers.json`
+     * 會讓那五格從此不是一條梯子（而且後台那一格要填什麼數字？）。
+     * ⇒ 這是一個**布林的例外宣告**，級距系統一格都沒被動到。
+     *
+     * 解析在**載入時**（`content/rangeTiers.ts` 的 `resolveRangeTier`，全專案唯一的
+     * 查表處）：這一格為 true ⇒ `range` 變成 `Number.POSITIVE_INFINITY`，於是
+     * `castAbility` 的距離比較恆真、`castApproach` 永遠不會被武裝。
+     * ⛔ 文件裡的 `range` 請留 0 —— 寫一個大數字就是第二個住處（第〇·四守則），
+     * 而且它會被 `rangeTierAdoption` 的棘輪當成「有射程卻沒有級距」。
+     *
+     * ⛔ **與 `rangeTier` 互斥**（下面的 refine 擋著）：一支技能不可能既有距離級別
+     * 又不受距離限制，兩格都填時哪一個贏都是一個沒有人看得出來的決定。
+     */
+    rangeUnlimited: z.boolean().optional(),
+    /**
      * ⭐ 冷卻級別（GH#445，owner 2026-08-19 親自給了三張表）。
      *
      * 與 `radiusTier` / `rangeTier` 完全同一個形態：填了這一格就**不要**填
@@ -946,9 +966,32 @@ function refineInnate(
   }
 }
 
+/**
+ * ⭐ GH#602 —— 「無上限施法距離」與「距離級別」互斥。
+ *
+ * 兩格都填時**沒有一個好的贏家**：級別贏 ⇒ owner 寫的「無上限」靜默消失；
+ * 無限贏 ⇒ 後台那一格級別永遠不生效而畫面上看不出來（兩邊都是失敗形態②）。
+ * ⇒ 在載入時就擋下來，讓作者自己選一個。
+ */
+function refineUnlimitedRange(
+  doc: { rangeUnlimited?: boolean; rangeTier?: string },
+  ctx: z.RefinementCtx,
+): void {
+  if (doc.rangeUnlimited === true && doc.rangeTier !== undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["rangeUnlimited"],
+      message:
+        "rangeUnlimited 與 rangeTier 互斥 —— 一支技能不可能既有距離級別又不受距離限制。" +
+        "要「全場」就把 rangeTier 拿掉（range 留 0）",
+    });
+  }
+}
+
 export const zAbilityDoc = zAbilityDef
   .extend({ schema: z.literal("ability@1") })
   .strict()
-  .superRefine(refineInnate);
+  .superRefine(refineInnate)
+  .superRefine(refineUnlimitedRange);
 
 export type AbilityDoc = z.infer<typeof zAbilityDoc>;

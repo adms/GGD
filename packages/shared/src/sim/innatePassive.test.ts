@@ -129,7 +129,14 @@ beforeAll(async () => {
   const result = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load();
   registerAll(result.store);
   godieChampions = Champions.ids().filter((id) => id.startsWith("godie-"));
-  const innates = Abilities.all().filter((a) => a.slot === "PASSIVE");
+  // ⚠️ 只算**有主人**的天生技（`<championId>.passive`）。2026-08-23 起註冊表裡
+  //    多了一支沒有主人的：殭屍王的內建 [leap吸血]（`godie-zombieking.passive`，
+  //    GH#602）—— 它佔的是天生技槽，但它不屬於任何一張英雄卡，所以把它算進
+  //    「幾位英雄有天生技」那個等式裡會讓等式永遠差一。⭐ 判準是**推導**的
+  //    （查得到英雄卡就算），⛔ 不是一張會腐爛的 id 白名單。
+  const innates = Abilities.all().filter(
+    (a) => a.slot === "PASSIVE" && Champions.tryGet(a.id.replace(/\.passive$/, "") as ChampionId) !== undefined,
+  );
   passiveInnates = innates.filter(isPassiveInnate);
   activeInnates = innates.filter(isActiveInnate);
   liveNoInnate = NO_INNATE.filter((id) => Champions.tryGet(id as ChampionId) !== undefined);

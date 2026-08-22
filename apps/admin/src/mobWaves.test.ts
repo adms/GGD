@@ -165,6 +165,14 @@ const EVERY_FIELD: readonly MobWavesFieldKey[] = [
   "boss.healthBarReveal",
   // #291 分紅結算的字 (owner 2026-08-03「特殊殭屍 不應該用殭屍王 分紅結算畫面」)
   "boss.settlementTitle",
+  "boss.king.enabled",
+  "boss.king.learnRank",
+  "boss.king.innateAbilityId",
+  "boss.king.innateCastHpPct",
+  "boss.king.maxMana",
+  "boss.king.manaRegenPerSec",
+  "boss.king.attackSpeedFloor",
+  "boss.king.targetPreference",
   // 從英雄推導 (GH#206) — 生命與能力屬性 = 該設定英雄的 N 倍, +M, 移速 ×K, 等級 99
   "boss.heroHpMult",
   "boss.heroDamageMult",
@@ -392,6 +400,15 @@ describe("每一個欄位 are reachable and labelled", () => {
     // A distinct, legal value per field, so an omitted one cannot hide behind a
     // shared default. This is the 「算出來但沒送到端點」 guard.
     const edits: Record<MobWavesFieldKey, string> = {
+      // ⭐ GH#577 / GH#602 —— 殭屍王「會打架」的八格。
+      "boss.king.enabled": "0",
+      "boss.king.learnRank": "3",
+      "boss.king.innateAbilityId": "godie-zombieking.passive",
+      "boss.king.innateCastHpPct": "0.35",
+      "boss.king.maxMana": "12345",
+      "boss.king.manaRegenPerSec": "777",
+      "boss.king.attackSpeedFloor": "6",
+      "boss.king.targetPreference": "nearest",
       fromRound: "2",
       firstWaveSec: "4",
       waveIntervalSec: "5",

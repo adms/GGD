@@ -141,14 +141,30 @@ describe("喪標麥可小怪的控場量測 (#271)", () => {
     expect(freezeTicks).toBeGreaterThan(0);
   });
 
-  it("小怪在結構上不可能施法：沒有 AbilitiesComp / StatsComp / ChampionComp", () => {
+  /**
+   * ⚠️ 2026-08-23（GH#577 / GH#602）—— 這一條**開了一個例外，而且只開一隻**。
+   *
+   * owner：「殭屍王 應該要會**自動學習所有技能並施展技能**」。⇒ 王從此有
+   * `AbilitiesComp` + `StatsComp`（`sim/mobs.ts::installKingKit`，唯一的寫入處，
+   * 掛在 `summonMobBoss` 這扇唯一的門上）。
+   *
+   * ⭐ 但**一般殭屍與特殊殭屍必須繼續不可能施法**：第 3 場之後場上大多數敵人是
+   * 它們，給它們技能等於重寫整個 PvE 難度，而那不是 owner 說的話。
+   * ⇒ 例外的粒度是 `kind === "boss"` **這一隻身體**，⛔ 不是「小怪可以有
+   * AbilitiesComp」這條規則被放寬。
+   *
+   * ⚠️ 斷言因此是**兩個方向**，⛔ 不是把原本那一條的範圍縮小就算了：
+   * 只留「非王沒有」那一半的話，`installKingKit` 整支被刪掉也會全綠（失敗形態③）。
+   */
+  it("小怪在結構上不可能施法：沒有 AbilitiesComp / StatsComp / ChampionComp（⭐ 殭屍王除外）", () => {
     cover("mob-has-no-abilities");
     const { w } = zombieSiege(9, 99);
 
     let sawMob = false;
     for (let i = 0; i < TICK_HZ * 10; i++) {
       w.step(new Map());
-      for (const mobId of w.mob.keys()) {
+      for (const [mobId, mob] of w.mob) {
+        if (mob.kind === "boss") continue; // ⭐ 例外，由下面那一條正面釘住
         sawMob = true;
         // `castAbility` 的第一行就是 `world.abilities.get(caster)`，拿不到就回
         // "bad-target"。沒有 AbilitiesComp 的實體施法是型別以外的不可能。
@@ -156,7 +172,8 @@ describe("喪標麥可小怪的控場量測 (#271)", () => {
         expect(w.stats.has(mobId)).toBe(false);
         expect(w.champion.has(mobId)).toBe(false);
       }
-      // 這 10 秒內場上不存在任何一發 `abilityCast`（唯一的英雄不下任何指令）。
+      // 這 10 秒內場上不存在任何一發 `abilityCast`（唯一的英雄不下任何指令，
+      // 而這個夾具裡一隻王都沒有 —— 王要 100 個擊殺才會被召喚出來）。
       expect(w.events.some((e) => e.type === "abilityCast")).toBe(false);
     }
     expect(sawMob).toBe(true);

@@ -167,6 +167,15 @@ const LIVE_DOC = (): Record<string, unknown> => ({
  * the form fails on every line.
  */
 const TYPED: Record<MobWavesFieldKey, string> = {
+  // ⭐ GH#577 / GH#602 —— 殭屍王「會打架」的八格（同一條交接縫）。
+  "boss.king.enabled": "0",
+  "boss.king.learnRank": "3",
+  "boss.king.innateAbilityId": "godie-zombieking.passive",
+  "boss.king.innateCastHpPct": "0.35",
+  "boss.king.maxMana": "12345",
+  "boss.king.manaRegenPerSec": "777",
+  "boss.king.attackSpeedFloor": "6",
+  "boss.king.targetPreference": "nearest",
   fromRound: "2",
   firstWaveSec: "3.5",
   waveIntervalSec: "4.5",

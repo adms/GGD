@@ -67,6 +67,7 @@ import { creditKillCombo } from "../combat/killCombo";
 import { fireRingBurnMobs } from "../fireRing";
 import {
   type MobRules,
+  type MobKingRules,
   MONSTER_TEAM,
   spawnMob,
   summonMobBoss,
@@ -78,6 +79,12 @@ import type { MobKind } from "../components";
 import { bossSummonsAt, splitBossBounty, type BossDamageEntry, type BossBountyShare } from "../mobBoss";
 import { standstillBlocks } from "../combatFeel";
 import { forcedTargetOf, isMobTargetable } from "../targeting";
+// ⭐ GH#577 / GH#602 —— 王的自動施法走**出貨的**施法入口，⛔ 不是第二條路徑。
+import { castAbility } from "../abilities/abilitySystem";
+import { abilityInstanceFor } from "../abilities/innateActive";
+import { Abilities } from "../content/registry";
+import { INNATE_SLOT, type CastableSlot, type CastTarget } from "../intents";
+import type { SeatId } from "../../ids";
 
 export function mobSystem(world: SimWorld): void {
   const rules = world.mobRules;
@@ -185,8 +192,22 @@ export function mobSystem(world: SimWorld): void {
     // 主人**也算成敵人（同隊，但閘只擋 `MONSTER_TEAM`），也就是玩家花了一件
     // 寶具換來一隻立刻回頭打自己的王。
     const myTeam = world.team.get(mobId)?.teamId ?? MONSTER_TEAM;
+    // ⭐ GH#577 —— 「**優先攻擊玩家角色而非bot**」（owner 2026-08-23）。
+    //
+    // ⚠️ 只有**王**吃這一格：一般殭屍照舊誰近打誰（給整群殭屍裝上「無視擋在
+    // 面前的 bot 直奔真人」等於重寫整個 PvE 難度，而 owner 說的是殭屍王）。
+    //
+    // ⚠️ 兩趟，⛔ 不是一趟加權：第一趟只看真人，一個都沒有（全 bot 的練習賽、
+    // 真人全滅、或 host 還沒把座位表交進來）才跑第二趟的全體掃描。加權寫法在
+    // 「最近的真人在 20 格外、bot 貼臉」時會退化成打 bot，而那正是這一格要否決的。
+    const preferHumans = kingPrefersHumans(rules, mob.kind);
+    for (const pass of preferHumans ? [true, false] : [false]) {
+    if (pass === false && target !== -1) break; // 第一趟已經找到真人了
     for (const [cid, cteam] of world.team) {
       if (cteam.teamId === myTeam) continue; // never target its own side
+      // 第一趟：**只有真人座位**。`humanSeats` 由 host 每一場戰鬥開始交進規則表
+      // （`MobRules.humanSeats`）—— sim 自己沒有「誰是 bot」這個概念，理由寫在那裡。
+      if (pass && !isHumanSeatId(rules, cteam.seatId)) continue;
       // 英雄 + 召喚物。`isMobTargetable` (sim/targeting.ts) is THE predicate —
       // the bare `world.champion.has(cid)` that used to stand here is exactly
       // how 召喚物 ended up unhittable by the whole PvE side: a summon carries
@@ -206,6 +227,7 @@ export function mobSystem(world: SimWorld): void {
         bestD2 = d2;
         target = cid;
       }
+    }
     }
     // "nearestFirst": the taunter competes on distance like anybody else and
     // takes the tie (`<=`), which is the whole difference from "replace".
@@ -232,6 +254,12 @@ export function mobSystem(world: SimWorld): void {
     if (rules.hpRegenPerSec > 0) {
       mhp.hp = Math.min(mhp.maxHp, mhp.hp + rules.hpRegenPerSec * world.dt);
     }
+
+    // 3c) ⭐ 殭屍王的腦（GH#577 / GH#602）—— 回魔 + 自動施法。
+    //     ⚠️ 位置在 MELEE **之前**：一次成功的施法會寫 `nav.override`（[leap吸血]
+    //     的拋物線），而下面那一段揮刀只在「站定」時出手 —— 順序反了會讓王在
+    //     起跳的同一 tick 還揮一刀，而那一刀的目標可能在半個場外。
+    kingBrain(world, mobId, mob.kind, rules, target);
 
     // 4) MELEE — in range + cooldown ready + STANDING STILL → queue one packet;
     //    else age the cd.
@@ -615,3 +643,167 @@ export function endCombatMobs(world: SimWorld): void {
   world.mobRules = null;
   world.mobTicks = -1;
 }
+
+// ===========================================================================
+// ⭐ 殭屍王的腦 —— GH#577 / GH#602（owner 2026-08-23）
+// ===========================================================================
+//
+// owner 逐字：
+// > 「殭屍王 應該要會**自動學習所有技能並施展技能** 並且**攻速都是上限4起跳**
+// >  並且**優先攻擊玩家角色而非bot**」
+// > 「殭屍王 內建 **[leap吸血]** 技能，當殭屍王**生命低於20%**時，殭屍王將會
+// >  **無上限施法距離**跳躍**[leap]** 到**全場血量最少的英雄**旁邊咬一口⋯**冷卻30秒**」
+// > 「殭屍王**回魔速度是每秒1000點**，基本上不缺魔力」
+//
+// ⭐ 這一段是**AI**，⛔ 不是技能。[leap吸血] 的每一個效果（黑幕、拋物線、真傷、
+// 吸血、追加回復、冷卻）都住 `content/abilities/godie-zombieking.passive.json`，
+// 走的是**出貨的** `castAbility` → `runEffects` → `leapSystem`，一行技能專用的
+// 程式都沒有（第〇·五守則：引擎做機制、JSON 做技能）。
+// 這裡只回答兩個 AI 才回答得了的問題：**現在要不要按**，以及**按在誰身上**。
+//
+// ⚠️ 「HP 低於 X% 才放得出來」為什麼是 AI 而不是技能上的一格：
+// `zEffectDef` 只有 hook 有 `condition`，主動技**沒有任何欄位**表達得出施法前的
+// 生命門檻 —— 逐字同 `abilities/berserkRules.ts` 檔頭第 1 條（那條規則的另一個
+// 使用者是 EX 完全暴走）。寫進效果裡的話冷卻照轉、什麼都不會發生（失敗形態②）。
+
+/** 這一隻是不是一隻「會打架」的王。⛔ 一般殭屍與特殊殭屍永遠回 null。 */
+function kingRulesFor(rules: MobRules, kind: MobKind): MobKingRules | null {
+  if (kind !== "boss") return null;
+  const king = rules.boss?.king ?? null;
+  return king !== null && king.enabled ? king : null;
+}
+
+/** 王要不要走「先打真人」那一趟掃描。 */
+function kingPrefersHumans(rules: MobRules, kind: MobKind): boolean {
+  const king = kingRulesFor(rules, kind);
+  if (king === null || king.targetPreference !== "players") return false;
+  // ⚠️ **空集合 ⇒ false**（⛔ 不是「一個都不打」）：host 還沒交座位表、
+  // 一場全 bot 的練習賽、以及每一份手搭的測試夾具，行為都必須是這一格出現之前
+  // 的樣子。這一行就是那個承諾。
+  return (rules.humanSeats?.size ?? 0) > 0;
+}
+
+/** 這個座位是不是真人。 */
+function isHumanSeatId(rules: MobRules, seatId: number): boolean {
+  return rules.humanSeats?.has(seatId as SeatId) === true;
+}
+
+/**
+ * ⭐ **全場血量最少的英雄** —— [leap吸血] 的目標（owner 的字面規格）。
+ *
+ * ⚠️ 三個判準，⛔ 一個都不是「最近的」：
+ *   ① **英雄**（`world.champion.has`）—— ⛔ 不含召喚物、不含花、不含另一隻殭屍。
+ *      owner 寫的是「英雄」，而 `isMobTargetable` 那條謂詞是為**普攻索敵**寫的
+ *      （它刻意讓召喚物進得來）。
+ *   ② **同一個決鬥區**、活著、不同隊。
+ *   ③ **絕對血量最少**（⛔ 不是百分比）：owner 說的是「血量最少」。
+ *      平手時取**最小的 entity id** —— 決定性，與這支檔案每一處掃描同一個規矩。
+ *
+ * ⚠️ **不看距離** —— 那就是「無上限施法距離」在索敵這一側的樣子。
+ * （施法閘那一側由技能文件的 `rangeUnlimited: true` 負責。）
+ */
+export function lowestHealthEnemyChampion(
+  world: SimWorld,
+  seeker: EntityId,
+  zone: number,
+): EntityId | null {
+  const myTeam = world.team.get(seeker)?.teamId ?? MONSTER_TEAM;
+  let best: EntityId | null = null;
+  let bestHp = Infinity;
+  // ascending entity id (world.team is the ordered store) ⇒ ties break lowest id
+  for (const [cid, cteam] of world.team) {
+    if (cteam.teamId === myTeam) continue;
+    if (!world.champion.has(cid)) continue; // ① 英雄，⛔ 不是「任何打得到的東西」
+    const chp = world.health.get(cid);
+    const ct = world.transform.get(cid);
+    if (!chp?.alive || !ct || ct.zone !== zone) continue;
+    if (chp.hp < bestHp) {
+      bestHp = chp.hp;
+      best = cid;
+    }
+  }
+  return best;
+}
+
+/**
+ * 回魔 + 自動施法。每 tick 一次，在王的 AI 掃描之後、揮刀之前。
+ *
+ * `meleeTarget` 是這一 tick 掃描出來的普攻目標（`-1` = 沒有）——
+ * Q/W/E/R/EX 打它，[leap吸血] ⛔ 不打它（見 {@link lowestHealthEnemyChampion}）。
+ */
+function kingBrain(
+  world: SimWorld,
+  id: EntityId,
+  kind: MobKind,
+  rules: MobRules,
+  meleeTarget: EntityId | -1,
+): void {
+  const king = kingRulesFor(rules, kind);
+  if (king === null) return;
+  const hp = world.health.get(id);
+  if (!hp?.alive) return;
+
+  // ── 回魔 ────────────────────────────────────────────────────────────────
+  // 王沒有 ChampionComp ⇒ `recomputeStats` 早退 ⇒ `RegenSystem` 對它一格都不動，
+  // 所以回魔和上面那一段 hp 回復一樣由這裡付，用**同一個** `+ perSec * dt` 形狀。
+  if (king.manaRegenPerSec > 0 && hp.maxMana > 0) {
+    hp.mana = Math.min(hp.maxMana, hp.mana + king.manaRegenPerSec * world.dt);
+  }
+
+  const ab = world.abilities.get(id);
+  if (!ab) return;
+  // 正在施法 / 正在飛（[leap吸血] 的拋物線）⇒ 這一 tick 不下任何新指令。
+  // ⛔ 不是最佳化：`castAbility` 對 `ab.cast` 回 "cooldown"，而在空中再按一次
+  // 會把 `nav.override` 換成第二條弧線，王會在半空中改道。
+  if (ab.cast || world.nav.get(id)?.override) return;
+
+  // ── ⭐ [leap吸血]：**生命低於門檻**才按得下去 ──────────────────────────
+  // 順序是刻意的：它排在 Q/W/E/R 前面。owner 的規格是「當殭屍王生命低於20%時」，
+  // 那是一個**保命/處決**技，被一支剛好轉好的 Q 卡住一個 tick 都是錯的。
+  if (
+    king.innateAbilityId !== "" &&
+    ab.passiveSlot != null &&
+    ab.passiveSlot.abilityId === king.innateAbilityId &&
+    ab.passiveSlot.cooldownRemainingTicks <= 0 &&
+    hp.maxHp > 0 &&
+    hp.hp / hp.maxHp < king.innateCastHpPct
+  ) {
+    const victim = lowestHealthEnemyChampion(world, id, world.transform.get(id)?.zone ?? 0);
+    if (victim !== null) {
+      // ⛔ `allowApproach: false` —— 「無上限施法距離」的意思是**不必走過去**。
+      // 武裝一道接近指令會把王的移動通道搶走（而且它永遠到得了，因為射程是 ∞），
+      // 那是一個看起來像「王呆住不動」的 bug。
+      const res = castAbility(world, id, INNATE_SLOT, { type: "entity", entityId: victim }, {
+        allowApproach: false,
+      });
+      if (res === "ok") return; // 這一 tick 已經動用了，⛔ 不再疊一支 Q
+    }
+  }
+
+  // ── 自動施展**所有**技能 ────────────────────────────────────────────────
+  // 固定順序 R → EX → E → W → Q（大招優先），⛔ 不抽籤：sim 的每一格都必須是
+  // 決定性的（`sim/purity.test.ts`），而「王這一場放不放大招」不該取決於 rng。
+  if (meleeTarget === -1) return;
+  const tt = world.transform.get(meleeTarget);
+  if (!tt) return;
+  for (const slot of KING_CAST_ORDER) {
+    const inst = abilityInstanceFor(ab, slot);
+    if (!inst || inst.rank <= 0 || inst.cooldownRemainingTicks > 0) continue;
+    const def = Abilities.tryGet(inst.abilityId);
+    if (!def) continue;
+    // 目標形狀由**技能卡**決定，⛔ 不是這裡挑：指定技給實體，其餘給一個點
+    // （地面技會自己夾到射程內，方向技/衝刺技自己正規化成方向）。
+    const target: CastTarget =
+      def.castType === "targeted"
+        ? { type: "entity", entityId: meleeTarget }
+        : def.castType === "self"
+          ? { type: "entity", entityId: id }
+          : { type: "point", point: { x: tt.pos.x, z: tt.pos.z } };
+    // ⛔ `allowApproach: false` —— 接近指令會接管 `nav`，而王的走位歸 MobSystem
+    // 的追擊管（`nav.attackTarget`）。兩個東西同時寫同一個通道 = 王原地抖動。
+    if (castAbility(world, id, slot, target, { allowApproach: false }) === "ok") return;
+  }
+}
+
+/** 王試著施放的槽位順序 —— 大招優先，⛔ 不抽籤（決定性）。 */
+const KING_CAST_ORDER: readonly CastableSlot[] = ["R", "EX", "E", "W", "Q"];

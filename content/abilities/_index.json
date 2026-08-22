@@ -1,6 +1,6 @@
 {
   "collection": "abilities",
-  "hash": "2354b75bf5da",
+  "hash": "dc35f37e9fed",
   "entries": [
     {
       "id": "godie-e001.e",
@@ -2437,6 +2437,12 @@
       "path": "abilities/godie-uvng.w.json",
       "hash": "e2a3129340db",
       "size": 1431
+    },
+    {
+      "id": "godie-zombieking.passive",
+      "path": "abilities/godie-zombieking.passive.json",
+      "hash": "8716d10963c3",
+      "size": 2318
     },
     {
       "id": "godie-zombiex.e",

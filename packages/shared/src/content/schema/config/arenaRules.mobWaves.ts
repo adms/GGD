@@ -574,6 +574,89 @@ export const zMobWavesConfig = z
          */
         settlementTitle: z.string().min(1).max(24).optional(),
 
+        /**
+         * ⭐ **殭屍王會自己打架**（GH#577 / GH#602）。ABSENT ⇒ 逐位元等於這一格
+         * 出現之前：王沒有 AbilitiesComp / StatsComp，一發技能都放不出來。
+         *
+         * owner 2026-08-23（逐字）：
+         * > 「殭屍王 應該要會**自動學習所有技能並施展技能** 並且**攻速都是上限4起跳**
+         * >  並且**優先攻擊玩家角色而非bot**」
+         * > 「殭屍王 內建 **[leap吸血]** 技能，當殭屍王**生命低於20%**時…**冷卻30秒**」
+         * > 「殭屍王**回魔速度是每秒1000點**，基本上不缺魔力」
+         *
+         * ⚠️ 為什麼這一整塊是欄位而不是常數：它每一格都是 owner 已經改過方向的東西
+         * （攻速上限他改過三次 2.5→4→10），而王是 `content/` 這一側唯一 live
+         * bind-mount 得到的東西。寫死一個 4 = 他下次想改要重建映像（第一守則）。
+         *
+         * ⛔ **[leap吸血] 的三個數字（10% 真傷 · 回復 100% · 追加 50%）不在這裡** ——
+         * 它們住 `content/abilities/godie-zombieking.passive.json`，而那份文件本來就是
+         * 鑄技工坊直接編輯、存檔生效的東西。理由與 `abilities/berserkRules.ts` 檔頭
+         * 逐字相同：**內容表達得出來的就不要在 TS 裡再寫一次**，否則改文件不生效、
+         * 改常數要重新部署，而兩邊不一致時畫面上完全看不出來。
+         * 留在這裡的只有內容表達不出來的那三件事：**誰**是內建技（id）、
+         * **什麼時候**由 AI 按下去（`castHpPct`，主動技沒有施法前條件欄位）、
+         * 以及**這具身體**的資源（魔力池／回魔／攻速下限）。
+         */
+        king: z
+          .object({
+            /**
+             * 總閥。false ⇒ 王回到「結構上不可能施法」那條路（`spawnMobBody`
+             * 不寫 AbilitiesComp/StatsComp），⛔ 不是「有技能但不放」。
+             */
+            enabled: z.boolean(),
+            /**
+             * 自動學習所有技能：Q/W/E/R/EX/天生技全部發到這一階。
+             * 0 = 只有內建的 [leap吸血]（王仍然會施法，但只會那一支）。
+             * ⚠️ 上界 6 = `maxRank` 的上界（`zAbilityDef.maxRank.max(6)`），
+             * 超過的階數由 `abilityInstanceFor` 的欄位夾回去。
+             */
+            learnRank: z.number().int().min(0).max(6),
+            /**
+             * ⭐ 內建技能的文件 id（出貨 `godie-zombieking.passive`）。
+             * 它佔**天生技槽**（`passiveSlot`）—— 「內建」在這個引擎裡就是天生技，
+             * 所以不需要第七個槽位。⛔ 留空字串 = 沒有內建技。
+             */
+            innateAbilityId: z.string().max(64),
+            /**
+             * ⭐ 內建技的**施法前生命門檻**，0..1（出貨 0.2 = owner 的「生命低於20%」）。
+             * ⚠️ 這一格與 `abilities/berserkRules.ts` 的 `castHpPct` 是**同一種東西**、
+             * 同一個理由：`zEffectDef` 只有 hook 有 `condition`，**主動技沒有任何欄位
+             * 表達得出「HP 夠低才放得出來」**。寫進效果裡的話冷卻照轉、什麼都不會
+             * 發生（失敗形態②）。1 = 隨時放；0 = 永遠放不出來（看得見它是關的）。
+             */
+            innateCastHpPct: z.number().min(0).max(1),
+            /**
+             * 魔力池。⚠️ **非有不可**：`spawnUnitBody` 給小怪的 `maxMana` 是 0，
+             * 而 `castAbility` 的 `hp.mana < mana` 會把每一支要錢的技能擋掉 ——
+             * 王會「學會了但一支都放不出來」，而且沒有任何錯誤訊息。
+             */
+            maxMana: z.number().min(0).max(1000000),
+            /**
+             * 每秒回魔（出貨 1000 = owner「基本上不缺魔力」）。
+             * ⚠️ 王沒有 ChampionComp ⇒ `recomputeStats` 早退 ⇒ `RegenSystem` 對它
+             * 一格都不動，所以回魔和 `hpRegenPerSec` 一樣由 MobSystem 自己付。
+             */
+            manaRegenPerSec: z.number().min(0).max(1000000),
+            /**
+             * ⭐ 攻速**下限**（出貨 4 = owner「攻速都是上限4起跳」）—— 每秒幾刀。
+             * 王的揮刀節奏取 `min(attackCdSec, 1/attackSpeedFloor)`，所以它只會
+             * 讓王變快、⛔ 不會讓一隻本來就更快的王變慢。
+             * 上界 20 只擋多打一個零；下界 0 = 關掉（照 `attackCdSec`）。
+             */
+            attackSpeedFloor: z.number().min(0).max(20),
+            /**
+             * ⭐ **優先攻擊玩家角色而非 bot**（owner 2026-08-23）。
+             * `"players"`（出貨）= 場上還有活著的**真人**英雄時，索敵只在他們之間
+             * 挑最近的；一個真人都沒有才退回全體。`"nearest"` = 這一格出現之前的
+             * 行為（誰近打誰）。
+             * ⚠️ 判準是**座位有沒有綁到真人**（`world.botSeats`），⛔ 不是
+             * 「這個座位有沒有在下指令」—— 一個掛機的真人仍然是真人。
+             */
+            targetPreference: z.enum(["players", "nearest"]),
+          })
+          .strict()
+          .optional(),
+
         /* ── 從英雄推導的數值 (owner 2026-07-29, GH#206) ──────────────────
          *
          * 「生命與能力屬性倍數為**該設定英雄的** N 倍」。ABSENT ⇒ the pre-#206
@@ -1142,6 +1225,27 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     // #291 —— 這一串字以前寫死在 `ui/hud/mobBossModel.BOSS_SETTLEMENT_TITLE`。
     // 一字不差搬過來,所以出貨行為不變,而它現在是後台一格。
     settlementTitle: "殭屍王 分紅結算",
+    /**
+     * ⭐ 殭屍王會自己打架（GH#577 / GH#602，owner 2026-08-23）。
+     * 逐格的理由寫在 `zMobWavesConfig.boss.king` 上，這裡只是**出貨值**。
+     */
+    king: {
+      enabled: true,
+      // 「自動學習**所有**技能」—— 六個槽全部發到第 1 階（EX 與天生技本來就只有
+      // 一階；Q/W/E/R 給 1 階而不是滿階是刻意的：滿階的王配上 heroDamageMult 是
+      // 一發秒殺，而「會不會放」與「放得多痛」是兩件事，後者已經有自己的旋鈕）。
+      learnRank: 1,
+      innateAbilityId: "godie-zombieking.passive",
+      // owner:「當殭屍王**生命低於20%**時」
+      innateCastHpPct: 0.2,
+      maxMana: 10000,
+      // owner:「殭屍王**回魔速度是每秒1000點**，基本上不缺魔力」
+      manaRegenPerSec: 1000,
+      // owner:「並且**攻速都是上限4起跳**」
+      attackSpeedFloor: 4,
+      // owner:「並且**優先攻擊玩家角色而非bot**」
+      targetPreference: "players" as const,
+    },
     // #247 owner 2026-08-01 —— 「應該要可以無視碰撞穿透地形 不然被卡住永遠走不到」.
     // All three permissions ON, the boundary clamp STILL ON. The king is granted
     // the same `FlightGrant` a flying champion carries (sim/flight.ts), so

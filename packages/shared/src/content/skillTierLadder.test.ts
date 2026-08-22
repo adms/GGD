@@ -133,7 +133,13 @@ describe("③ content/ 裡不可以留下沒換算的 w3x 生值", () => {
       const d = a as { id: string; range?: number; radius?: number };
       for (const f of ["range", "radius"] as const) {
         const v = d[f];
-        if (typeof v === "number" && v > limit) bad.push(`${d.id}.${f} = ${v} > ${limit}`);
+        // ⚠️ `Infinity` **不是**一個沒換算的 w3x 生值 —— 它只可能來自技能文件上
+        //    那一格明示的 `rangeUnlimited: true`（GH#602 殭屍王 [leap吸血]，
+        //    owner 2026-08-23「無上限施法距離」），而那是一個**被宣告過的例外**，
+        //    ⛔ 不是一個忘了乘 11/600 的數字。這條守衛抓的是後者。
+        if (typeof v === "number" && Number.isFinite(v) && v > limit) {
+          bad.push(`${d.id}.${f} = ${v} > ${limit}`);
+        }
       }
     }
     expect(bad, "這幾個數字大到只可能是沒換算的 w3x 生值").toEqual([]);
