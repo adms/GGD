@@ -4,6 +4,7 @@
  * later without touching anything else.
  */
 import type { ArraySchema } from "@colyseus/schema";
+import { Encoder } from "@colyseus/schema";
 import { DuelState, ENTITY_FLAG, ENTITY_KIND, EntityState, GROWTH_TIER_STACKS, MatchState, OfferState, ROUND_OUTCOME, SEAT_COUNTER_MAX, SeatState, TeamState, formFlagsForIndex, teamOverrideFlagsFor, toggleMaskWith } from "@ggd/shared/protocol/schema";
 import { forEachMark } from "@ggd/shared/sim/marks";
 // ⭐ GH#546 開關型技能的開/關。⛔ 這一行不在的話 `toggleMask` 恆 0 ——
@@ -32,6 +33,67 @@ import type { ChampionId, EntityId } from "@ggd/shared/ids";
 import type { SimWorld } from "@ggd/shared/sim/SimWorld";
 import type { MatchController } from "../match/MatchController";
 import type { HumanDriver } from "../seat/HumanDriver";
+
+// ─────────────────────── 快照編碼緩衝區的大小（GH 殭屍波卡頓調查）────────────
+/**
+ * ⭐ 出貨的「一份完整快照」**塞不進 Colyseus 預設的編碼緩衝區**，而它不會報錯。
+ *
+ * `@colyseus/schema` 的 `Encoder.BUFFER_SIZE` 預設是 `Buffer.poolSize`＝**8 KB**，
+ * 而 `SchemaSerializer` 用同一個數字配 `fullEncodeBuffer`。量到的（2026-08-23，
+ * 真的跑 `MatchController` + `projectSnapshot` + `encodeAll`，⛔ 不是讀程式碼推論）：
+ *
+ * | 場上實體 | 一份**完整**快照 | 每 tick 的 delta |
+ * |---:|---:|---:|
+ * | 62（回合中段） | **10,053 B** | 1,379 B |
+ * | 112（`maxAlivePerZone: 50` × 2 區 + 12 位英雄，出貨第 9 回合的尖峰） | **15,062 B** | 2,781 B |
+ * | 412（把上限調到 200/區） | ≈ 42 KB | **9,987 B** ← 每一 tick 都爆 |
+ *
+ * 溢位的代價**不是**丟資料（那一段程式會重來），是每一次都：
+ * 整趟編碼作廢 → `Buffer.alloc(newSize, oldBuffer)`（歸零＋memcpy）→ **從頭再編一次**
+ * → 再往 stderr 印一段五行的 `console.warn`。而 `getFullState()` 走的正是
+ * `encodeAll` ⇒ **每一位玩家加入／重連都吃一次**（一場 12 個人就是 12 次），
+ * 而且它在 Docker 裡是一次**同步**的 stderr 寫入。
+ *
+ * ⚠️ 為什麼既有的守衛全是綠的：溢位路徑**功能上是正確的**（重配置再編一次），
+ * 所以線路上的位元組一個都沒錯 —— 壞掉的只有「多久」。這正是 fail-open 的形狀：
+ * ⛔ 沒有任何東西會紅，只有一行沒有人讀的 warn。
+ *
+ * ⭐ 這一格是**決策點**，所以它是一個旋鈕而不是一個常數（第一守則）：記憶體
+ * （每間房兩份緩衝區）換掉「加入時的一次卡頓 + 高上限回合的每 tick 雙倍編碼」。
+ * ⛔ 回頭的成本是一個環境變數 + 重啟，⛔ 不是一次 PR：`GGD_SNAPSHOT_BUFFER_KB=8`
+ * 就逐位元回到函式庫的預設值。
+ *
+ * ⚠️ 這是**純傳輸**，和 `config/snapshotRate.ts` 同一族：它只決定「已經算好的
+ * 狀態序列化進多大的一塊記憶體」，⛔ 不碰 sim 算什麼，所以決定性表面是零。
+ */
+export const SNAPSHOT_BUFFER_MIN_KB = 8;
+export const SNAPSHOT_BUFFER_MAX_KB = 1024;
+/**
+ * 出貨預設 64 KB —— 蓋得住「上限調到 200/區」那一欄的 42 KB 完整快照，
+ * ⛔ 不是剛好蓋住今天的 15 KB（`maxAlivePerZone` 是一格後台欄位，
+ * 一個剛好夠用的緩衝區會在 owner 調高它的那一天無聲地退回雙倍編碼）。
+ */
+export const SNAPSHOT_BUFFER_DEFAULT_KB = 64;
+
+/**
+ * 解析要配多大。純函式（env 明著傳進來），所以它測得到。
+ * 缺席／不是數字／超出上下界 ⇒ 出貨預設值（與 `resolveSnapshotHz` 同一個 fail-safe）。
+ */
+export function resolveSnapshotBufferBytes(env: NodeJS.ProcessEnv = process.env): number {
+  const raw = env.GGD_SNAPSHOT_BUFFER_KB;
+  if (raw === undefined || raw === "") return SNAPSHOT_BUFFER_DEFAULT_KB * 1024;
+  const n = Number(raw);
+  if (!Number.isFinite(n)) return SNAPSHOT_BUFFER_DEFAULT_KB * 1024;
+  if (n < SNAPSHOT_BUFFER_MIN_KB || n > SNAPSHOT_BUFFER_MAX_KB) {
+    return SNAPSHOT_BUFFER_DEFAULT_KB * 1024;
+  }
+  return Math.round(n) * 1024;
+}
+
+// ⭐ 這一行就是修法本身。位置在**模組載入時**是必要的,⛔ 不是「房間建立時」:
+// `SchemaSerializer` 的建構子當場就用 `Encoder.BUFFER_SIZE` 配 `fullEncodeBuffer`,
+// 而每一間房的 serializer 都在這個模組被 `MatchRoom` / `ReplayRoom` import 之後才生。
+Encoder.BUFFER_SIZE = resolveSnapshotBufferBytes();
 
 /** Replace an ArraySchema's contents (schema v3 lacks a compatible splice). */
 function setArray<T extends string | number | boolean>(arr: ArraySchema<T>, values: readonly T[]): void {
