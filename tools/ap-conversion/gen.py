@@ -48,15 +48,31 @@ OUT_CSV = "docs/_data/ap-conversion-plan.csv"
 
 LEVELS = (30, 50, 99)
 
-# ── 換算開關（stage 2 會搬進 content/config/ap-conversion.json） ─────────────
+# ── 換算開關 ────────────────────────────────────────────────────────────────
+# ⛔⛔ **一個字面值都不寫在這裡。** owner 2026-08-22（#544）：
+#   「別忘了現在所有技能力敏智屬性額外傷害都換算成AP, 公式你應該知道，
+#     **若無記得請寫在JSON, script**」
+#
+# ⚠️ 這一段在 2026-08-22 之前是**四個寫死的常數**，而 `apply.py` 讀的是
+#   `knobs.json` ⇒ 同一個 0.25 有**兩個住處**（第〇·四守則），中間沒有任何守衛：
+#   把 `knobs.json` 的 `apPerAttrPoint` 改成 0.3，`apconv:build` 會照 0.3 換算，
+#   而 `apconv:plan` 產出的計畫文件仍然印「屬性乘數 × 25%」—— 兩支都 EXIT 0，
+#   owner 讀到的那份對照表變成一份**看起來完全正常的謊話**。
+# ⇒ 現在唯一的住處是 `tools/ap-conversion/knobs.json`（`$formula` 那一格連
+#   公式的文字說明都住在裡面），這一支只是把它讀進來。
+KNOBS_PATH = "tools/ap-conversion/knobs.json"
+
+with open(os.path.join(ROOT, KNOBS_PATH), encoding="utf-8") as _f:
+    KNOBS = json.load(_f)
+
 #: ⭐ owner 的「1/4」：一點屬性 = 這麼多 AP 百分比。
-AP_PER_ATTR_POINT = 0.25
+AP_PER_ATTR_POINT = KNOBS["apPerAttrPoint"]
 #: ⭐ owner 的「取百分比整數 10/20/30…」：百分比的粒度。
-STEP_PCT = 10
+STEP_PCT = KNOBS["stepPct"]
 #: 取整方向。"halfUp"（出貨預設）/ "ceil" / "nearestEven"。
-ROUNDING = "halfUp"
+ROUNDING = KNOBS["rounding"]
 #: 換算後的下限 —— ⛔ 不讓任何一條宣稱被取整成 0（那就是第一·五守則的空宣稱）。
-MIN_PCT = 10
+MIN_PCT = KNOBS["minPct"]
 
 
 def round_pct(raw: float, rounding: str = ROUNDING, step: int = STEP_PCT) -> int:

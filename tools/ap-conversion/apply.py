@@ -56,7 +56,18 @@ import gen  # noqa: E402  —— 抽取器、取整規則、換算函式全部�
 ROOT = gen.ROOT
 KNOBS_PATH = "tools/ap-conversion/knobs.json"
 CLAIMS_PATH = "tools/ap-conversion/claims.json"
+EXEMPTIONS_PATH = "tools/ap-conversion/exemptions.json"
 MANIFEST_PATH = "docs/_data/ap-conversion-applied.json"
+
+#: 稽核掃哪幾個集合。⛔ `_legacy/` 不進來（那是退休區），⛔ `config/` 不進來
+#: （那裡提到 `attrRatios` 的是**規則的散文**，不是內容宣稱）。
+AUDIT_DIRS = (
+    "content/abilities",
+    "content/champions",
+    "content/items",
+    "content/augments",
+    "content/ability-templates",
+)
 
 #: ⭐ 卡面上「這一項是法強百分比」的**唯一**寫法。出貨內容早就在用
 #: （77-02 雷鳴劍「10% [AP]傷害」、77-01「50% [AD]」），⛔ 不要另發明一種。
@@ -307,6 +318,107 @@ def freeze() -> None:
     print(f"[apconv] 凍結 {len(table)} 支 → {CLAIMS_PATH}")
 
 
+# ── 稽核：⛔ 出貨內容不可以再出現「未換算的屬性額外傷害」 ────────────────────
+#
+# ⚠️ 為什麼這一條**不是** `--check` 的逐位元組比對就夠了：`--check` 只看得見
+#   `claims.json` 收進來的那 58 支。而 owner 的裁決是「**所有**技能」——
+#   一支沒進凍結表的技能，`--check` 對它是**永遠綠的**（它根本不在迴圈裡）。
+#   ⇒ 逐位元組比對驗的是「這 58 支有沒有被手改」，這一支驗的是「**還有誰沒被看過**」。
+#   兩個名詞的關係，⛔ 不是單一名詞（部署後置條件那一課）。
+def _iter_docs():
+    """(檔案相對路徑, 文件 id, 文件本體) —— 含 champion 卡裡的內嵌技能鏡射。"""
+    for d in AUDIT_DIRS:
+        base = rel(d)
+        if not os.path.isdir(base):
+            continue
+        for name in sorted(os.listdir(base)):
+            if not name.endswith(".json") or name.startswith("_"):
+                continue
+            path = os.path.join(base, name)
+            doc = json.load(open(path, encoding="utf-8"))
+            relpath = os.path.relpath(path, ROOT)
+            yield relpath, doc.get("id"), doc
+            # champion 卡把技能**再存一份**（鏡射模型）—— 出貨的是這一份，
+            # ⛔ 不掃它等於只驗了兩份副本的其中一份。
+            for slot, sub in sorted((doc.get("abilities") or {}).items()):
+                if isinstance(sub, dict):
+                    yield f"{relpath}#abilities.{slot}", sub.get("id"), sub
+
+
+def _unconverted_amounts(doc: dict) -> list[str]:
+    """還帶 `attrRatios` 而同一格沒有 `ap` 係數的酬載 —— 回傳它們在文件裡的路徑。
+
+    ⚠️ ⛔ 不走 `gen.damage_amounts()`：那一支只認 `doc["effects"]` 底下的
+      `damage`／`dot` 家族，而**道具**把 on-hit 的酬載掛在 `doc["passive"][].effects`
+      上（朗基努斯之槍 `godie-i018` 就是）—— 用它掃道具會逐份回 0 筆，
+      於是這條閘對整個 `content/items/**` **永遠是綠的**（失敗形態⑦：掃屬性代替掃行為）。
+    ⇒ 這裡走**整份文件**找 `attrRatios`，形狀無關。
+    """
+    bad: list[str] = []
+
+    def walk(node, path: str) -> None:
+        if isinstance(node, dict):
+            if node.get("attrRatios"):
+                if not any((r or {}).get("stat") == "ap" for r in (node.get("ratios") or [])):
+                    bad.append(path or "(root)")
+            for key, value in node.items():
+                walk(value, f"{path}.{key}")
+        elif isinstance(node, list):
+            for i, value in enumerate(node):
+                walk(value, f"{path}[{i}]")
+
+    walk(doc, "")
+    return bad
+
+
+def audit() -> list[str]:
+    """回傳問題清單（空 = 過）。⭐ 兩個軸：卡面的乘數宣稱 + JSON 的 `attrRatios`。"""
+    with open(rel(EXEMPTIONS_PATH), encoding="utf-8") as f:
+        table = json.load(f)["exemptions"]
+    required = ("id", "axis", "kind", "why", "refutedBy", "expiresWhen")
+    problems: list[str] = []
+    for row in table:
+        missing = [k for k in required if not str(row.get(k) or "").strip()]
+        if missing:
+            problems.append(
+                f"豁免 `{row.get('id')}` 少了 {missing} —— ⛔ 一筆沒有 `refutedBy` 的豁免"
+                "就是一段沒有人能反駁的散文，它會活得比它的理由久"
+            )
+    exempt = {(r["id"], a) for r in table for a in (("prose", "json") if r["axis"] == "both" else (r["axis"],))}
+    used: set[tuple[str, str]] = set()
+
+    offenders: list[str] = []
+    for where, doc_id, doc in _iter_docs():
+        for axis, detail in (
+            ("prose", lambda d=doc: gen.claims(d.get("description") or "")),
+            ("json", lambda d=doc: _unconverted_amounts(d)),
+        ):
+            hits = detail()
+            if not hits:
+                continue
+            if (doc_id, axis) in exempt:
+                used.add((doc_id, axis))
+                continue
+            offenders.append(f"{where} · {doc_id} · [{axis}] {hits}")
+
+    if offenders:
+        problems.append(
+            f"{len(offenders)} 處**未換算的屬性額外傷害**還在出貨內容裡"
+            "（owner 2026-08-22 #544：「所有技能力敏智屬性額外傷害都換算成AP」）：\n"
+            + "\n".join(f"    · {o}" for o in offenders)
+            + f"\n  → 換算規則寫在 `{KNOBS_PATH}` 的 `$formula`。真的不該換的，"
+              f"進 `{EXEMPTIONS_PATH}` 並寫下 `why` / `refutedBy` / `expiresWhen`。"
+        )
+    stale = sorted(exempt - used)
+    if stale:
+        problems.append(
+            f"{len(stale)} 筆豁免對不到任何東西（那一支已經換算完、或改名了）："
+            + "、".join(f"`{i}`[{a}]" for i, a in stale)
+            + f"\n  → 從 `{EXEMPTIONS_PATH}` 刪掉它。⛔ 過期的豁免是一句沒有人會發現的謊。"
+        )
+    return problems
+
+
 # ── 主流程 ──────────────────────────────────────────────────────────────────
 def main() -> int:
     ap = argparse.ArgumentParser()
@@ -325,7 +437,10 @@ def main() -> int:
 
     stale: list[str] = []
     behind: list[str] = []
-    manifest = {"knobs": k, "abilities": []}
+    # ⭐ 只記**生效的**開關，⛔ 不記 `$note` / `$fields` / `$formula` 那些散文 ——
+    #   否則改一個註解的錯字就會讓這份產物過期，而 `--check` 會用「產物過期」
+    #   這個看起來很嚴重的訊息紅（而真相是有人改了一個逗號）。
+    manifest = {"knobs": {kk: vv for kk, vv in k.items() if not kk.startswith("$")}, "abilities": []}
 
     for aid, entry in sorted(table.items()):
         path = rel(f"content/abilities/{aid}.json")
@@ -384,6 +499,9 @@ def main() -> int:
             + "\n".join(f"    · {b}" for b in behind)
             + "\n  → 去改那支 `.py` 的規格字串與 `ad=`／`ap=` 係數，然後 `pnpm skillremake:json`。"
         )
+
+    # ⭐ 稽核跑在**寫完之後**：它問的是「磁碟上還有誰沒換算」，⛔ 不是「這 58 支對不對」。
+    problems += audit()
 
     n = len(table)
     n_gen = sum(1 for a in manifest["abilities"] if a["owner"] == "generator")
