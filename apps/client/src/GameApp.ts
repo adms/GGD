@@ -281,6 +281,9 @@ export interface GameAppOptions {
   practice?: boolean;
 }
 
+/** ⭐ M1（GH#599）—— 沒有狀態時共用的空清單,⛔ 不要每幀 new 一個。 */
+const EMPTY_STATUS_IDS: readonly string[] = [];
+
 export class GameApp {
   private readonly renderer: Renderer;
   private readonly viewports: ViewportManager;
@@ -691,6 +694,18 @@ export class GameApp {
     // formAwareModelResolve.test.ts。
     this.championBody = championBodyHooks({
       championIdForSeat: (seatId) => this.championIdForSeat(seatId),
+      // ⭐ M1（GH#599）—— 變身外觀掛在**狀態**上的那一半。
+      // ⚠️ ⛔ 少了這一行,`statusIdsForSeat` 恆 `undefined` ⇒ M1 在客戶端是**死的**
+      //    （失敗形態③:整條可以刪掉而測試全綠）—— 今天已經抓到六次這個形狀。
+      // ⭐ 座位的 `statusIds` 是**全座位都送的**（`net/snapshot.ts` 的座位迴圈跑
+      //    `ctl.seats` 全部,而 `MatchState.seats` 沒有任何 Colyseus filter）,
+      //    所以這一行 ⛔ 不需要任何新的線路欄位、⛔ 不需要新的 `ENTITY_FLAG` bit
+      //    （那一格是不可逆的,剩 11 顆）、⛔ 也不需要動 `apps/game-server/**`。
+      statusIdsForSeat: (seatId) =>
+        seatId === undefined
+          ? EMPTY_STATUS_IDS
+          : (hudStore.getState().seats.find((s) => s.seatId === seatId)?.statusIds ??
+            EMPTY_STATUS_IDS),
       resolveModelKey: (key, seatId) => this.resolveModelKey(key, seatId),
       overlay: blizzardOverlayModels,
       content: {

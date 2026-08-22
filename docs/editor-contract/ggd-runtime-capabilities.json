@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "9922e831",
+  "fingerprint": "51cdba86",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -142,6 +142,7 @@
     "anchorRadius",
     "apexHeight",
     "applyTo",
+    "arriveSoundKey",
     "at",
     "attr",
     "attributes",
@@ -328,6 +329,7 @@
     "silenced",
     "sizeScale",
     "slot",
+    "soundKey",
     "source",
     "speed",
     "spinDegPerSec",

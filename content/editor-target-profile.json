@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_9e1166771047",
+    "contentVersion": "cv_3ffb7b0be2a2",
     "collections": {
       "champions": {
-        "hash": "c2b3f410e8f1",
+        "hash": "8be15e015cfb",
         "count": 71
       },
       "abilities": {
-        "hash": "9ebd0553219a",
+        "hash": "28d9fc00fba1",
         "count": 421
       },
       "items": {
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "a41cf4a55598",
+        "hash": "ab79e3fa376f",
         "count": 85
       },
       "models": {
@@ -89,7 +89,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "9922e831",
+    "fingerprint": "51cdba86",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -231,6 +231,7 @@
       "anchorRadius",
       "apexHeight",
       "applyTo",
+      "arriveSoundKey",
       "at",
       "attr",
       "attributes",
@@ -417,6 +418,7 @@
       "silenced",
       "sizeScale",
       "slot",
+      "soundKey",
       "source",
       "speed",
       "spinDegPerSec",
@@ -3473,12 +3475,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "9922e831",
+    "engineFingerprint": "51cdba86",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 9922e831 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 51cdba86 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -4218,5 +4220,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "eb81e768efa8"
+  "profileDigest": "d257af210f81"
 }
