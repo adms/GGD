@@ -1,0 +1,1057 @@
+{
+  "id": "combo-strikes",
+  "schema": "config.combo-strikes@1",
+  "note": "「連段→收尾」的 29 個 JASS 函式（GH#541，owner 2026-08-22：「開票記得要寫是哪 29 個技能喔」）。判準是 owner 逐字給的：函式裡**同時**有 `TriggerSleepAction|PolledWait` **且**有 `UnitDamageTarget|UnitDamagePoint|UnitDamageArea`；三種形狀都算 —— per-step 5 個、loop 9 個、tail 15 個。⭐ **間隔就是動畫節奏的來源**，所以 `steps` 是從 war3map.j **逐字抄**的，⛔ 沒有四捨五入、⛔ 沒有統一成 0.12。🔢 第〇·四守則：這份是**共用表** —— 技能 JSON 只引用 `key`，⛔ 不可以把 `steps` 抄一份進技能文件（抄進去的那一份必然過期，而且不會有任何東西紅）。⛔ 這份是 `python3 tools/jass-combo/extract.py` 產生的，不可以手改；`--check` 會逐位元組比對，過期就非零離開。",
+  "stepSplit": "`steps` = 這個函式裡**除了最後一段以外**的所有等待（照原始碼出現順序），`finisherDelaySec` = **最後一段**等待。兩者接起來逐字等於 JASS 裡的等待序列。⚠️ 它是**機械切分**，⛔ 不是語意判斷 —— 傷害落在哪一段之間要看 `seq`（`W<秒>` 是等待、`D` 是一次傷害呼叫，照原始碼順序）。",
+  "source": {
+    "jass": "tools/w3x-import/out/GoDieEX22s-src/raw/war3map.j",
+    "objects": "tools/w3x-import/out/GoDieEX22s-src/OBJECTS.json",
+    "provenance": "content/assets/vfx/w3x-ability-provenance.json",
+    "generator": "tools/jass-combo/extract.py"
+  },
+  "families": [
+    {
+      "key": "towersp",
+      "jassFunc": "Trig_TowerSP_Actions",
+      "jassLine": 13141,
+      "shape": "tail",
+      "steps": [],
+      "finisherDelaySec": 0.01,
+      "seq": [
+        "W0.01",
+        "D"
+      ],
+      "damageCalls": 1,
+      "rawcodes": [],
+      "ownerKind": "map-mechanic",
+      "ownerRawcodes": [],
+      "w3xNames": [],
+      "abilityIds": [],
+      "resolvedVia": "none",
+      "gates": [
+        "GetEventDamageSource"
+      ],
+      "note": "tail：先跑完 1 段等待，收尾才給傷害（龍虎亂舞那種）。⭐ 間隔就是動畫節奏的來源",
+      "unresolvedReason": "地圖防禦塔機制，⛔ 不是英雄技能：InitTrig_TowerSP@13153 把它直接註冊在 ~20 座具名塔單位（gg_unit_uzg1_0146 …）的 EVENT_UNIT_DAMAGED 上，傷害由 udg_AttackTowerUnit 發出、隨 udg_TowerCounter 疊加。整條鏈上沒有任何 GetSpellAbilityId，也沒有任何英雄綁定 ⇒ GGD 沒有對應的 ability。"
+    },
+    {
+      "key": "firelord",
+      "jassFunc": "Trig_FireLord_Actions",
+      "jassLine": 25025,
+      "shape": "tail",
+      "steps": [],
+      "finisherDelaySec": 0.2,
+      "seq": [
+        "W0.2",
+        "D"
+      ],
+      "damageCalls": 1,
+      "rawcodes": [],
+      "ownerKind": "item",
+      "ownerRawcodes": [
+        "I06I"
+      ],
+      "w3xNames": [
+        "炎神弩"
+      ],
+      "abilityIds": [],
+      "resolvedVia": "item:Trig_FireLord_Func014C@25003 要求 UnitHasItemOfTypeBJ(GetAttacker(),'I06I')",
+      "gates": [],
+      "note": "tail：先跑完 1 段等待，收尾才給傷害（龍虎亂舞那種）。⭐ 間隔就是動畫節奏的來源",
+      "unresolvedReason": "它是**道具**「炎神弩」（I06I ⇒ content/items/godie-i06i.json）的普攻觸發，⛔ 不是英雄技能 ⇒ 沒有 ability id。⭐ 它有 GGD 對應物，只是住在 items 不是 abilities。"
+    },
+    {
+      "key": "lokdeatheye",
+      "jassFunc": "Trig_LokDeathEye_Actions",
+      "jassLine": 25170,
+      "shape": "tail",
+      "steps": [],
+      "finisherDelaySec": 1.0,
+      "seq": [
+        "W1",
+        "D"
+      ],
+      "damageCalls": 1,
+      "rawcodes": [
+        "A0QR"
+      ],
+      "ownerKind": "unit",
+      "ownerRawcodes": [
+        "A0QR"
+      ],
+      "w3xNames": [
+        "CP-00 死神之眼"
+      ],
+      "abilityIds": [],
+      "resolvedVia": "conditions:GetSpellAbilityId()=='A0QR'（CP-00 死神之眼），技能表掛在單位 n012「路克」身上",
+      "gates": [],
+      "note": "tail：先跑完 1 段等待，收尾才給傷害（龍虎亂舞那種）。⭐ 間隔就是動畫節奏的來源",
+      "unresolvedReason": "A0QR 在 provenance 裡沒有 id，因為它的持有者是**非英雄單位** n012「路克」（OBJECTS.json units），而 GGD 的 71 位英雄名單裡沒有 godie-n012 ⇒ 沒有可以指的 ability id。⭐ 反駁法：哪天 content/champions/ 出現 godie-n012，這一筆就要改成 ability。"
+    },
+    {
+      "key": "stumble",
+      "jassFunc": "Trig_Stumble_Actions",
+      "jassLine": 25196,
+      "shape": "tail",
+      "steps": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.1,
+        0.1,
+        0.1,
+        0.1
+      ],
+      "finisherDelaySec": 1.0,
+      "seq": [
+        "W0.2",
+        "W0.2",
+        "W0.2",
+        "W0.2",
+        "W0.2",
+        "W0.2",
+        "W0.1",
+        "W0.1",
+        "W0.1",
+        "W0.1",
+        "D",
+        "W1"
+      ],
+      "damageCalls": 1,
+      "rawcodes": [
+        "AHtb"
+      ],
+      "ownerKind": "unit",
+      "ownerRawcodes": [
+        "AHtb"
+      ],
+      "w3xNames": [
+        "CP-摔技"
+      ],
+      "abilityIds": [],
+      "resolvedVia": "conditions:GetSpellAbilityId()=='AHtb'（CP-摔技），技能表掛在英雄 U01F「黑化張飛」身上",
+      "gates": [],
+      "note": "tail：先跑完 11 段等待，收尾才給傷害（龍虎亂舞那種）。⭐ 間隔就是動畫節奏的來源",
+      "unresolvedReason": "AHtb 的持有者是英雄 U01F「萬夫莫敵 黑化張飛」，而 GGD 目前 71 位英雄裡**沒有** godie-u01f ⇒ 沒有可以指的 ability id。⭐ 反駁法：這位英雄被移植進 content/champions/ 的那一天，這一筆就要改成 ability。"
+    },
+    {
+      "key": "dragontigerready",
+      "jassFunc": "Trig_DragonTigerReady_Actions",
+      "jassLine": 25704,
+      "shape": "loop",
+      "steps": [
+        0.3,
+        0.05,
+        0.5,
+        0.05,
+        0.1,
+        0.05
+      ],
+      "finisherDelaySec": 0.5,
+      "seq": [
+        "W0.3",
+        "W0.05",
+        "W0.5",
+        "W0.05",
+        "W0.1",
+        "W0.05",
+        "W0.5",
+        "D"
+      ],
+      "damageCalls": 1,
+      "rawcodes": [
+        "A0J2"
+      ],
+      "ownerKind": "map-mechanic",
+      "ownerRawcodes": [
+        "A0J2"
+      ],
+      "w3xNames": [
+        "00-00 龍虎亂舞"
+      ],
+      "abilityIds": [],
+      "resolvedVia": "conditions:GetSpellAbilityId()=='A0J2'（00-00 龍虎亂舞）",
+      "gates": [],
+      "note": "loop：等待與傷害寫在迴圈裡。⭐ 間隔就是動畫節奏的來源",
+      "unresolvedReason": "⛔ 它不屬於任何英雄：A0J2 只在 13868 / 13976 兩行被 UnitAddAbilityBJ 加給**遊戲結束時的終結者**（Trig_GameOver_Red/Green_Actions），tooltip 標籤是 [亂鬥]、編號寫成 00-00（＝無英雄）⇒ 它是**地圖模式的終局演出技**，不是技能表上的技能。"
+    },
+    {
+      "key": "near-to-death",
+      "jassFunc": "Trig_Near_To_Death_Actions",
+      "jassLine": 25912,
+      "shape": "per-step",
+      "steps": [
+        1.0,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ],
+      "finisherDelaySec": 0.25,
+      "seq": [
+        "W1",
+        "D",
+        "W0.25",
+        "D",
+        "W0.25",
+        "D",
+        "W0.25",
+        "D",
+        "W0.25",
+        "D",
+        "W0.25",
+        "D",
+        "W0.25",
+        "D",
+        "W0.25",
+        "D",
+        "W0.25",
+        "D",
+        "W0.25",
+        "D",
+        "W0.25",
+        "D",
+        "W0.25",
+        "D",
+        "W0.25",
+        "D",
+        "W0.25",
+        "D",
+        "W0.25",
+        "D",
+        "W0.25",
+        "D",
+        "W0.25"
+      ],
+      "damageCalls": 16,
+      "rawcodes": [
+        "A0AC"
+      ],
+      "ownerKind": "orphan",
+      "ownerRawcodes": [
+        "A0AC"
+      ],
+      "w3xNames": [
+        "Near to Death"
+      ],
+      "abilityIds": [],
+      "resolvedVia": "conditions:GetSpellAbilityId()=='A0AC'（Near to Death）",
+      "gates": [],
+      "note": "per-step：wait→傷害 反覆 16 次。⭐ 間隔就是動畫節奏的來源",
+      "unresolvedReason": "原作裡的**孤兒技能**：A0AC 在 OBJECTS.json 的 461 個單位 + 127 位英雄的技能表裡**一個都沒有**，war3map.j 裡也沒有任何 UnitAddAbility 授予它（全檔只出現在自己的 Conditions 那一行），而且 tooltip 還是未翻譯的英文（base=AHbn）⇒ 它是從別的地圖抄進來、**沒有接完**的殘留 ⇒ 沒有英雄可以歸屬。"
+    },
+    {
+      "key": "xhunterstone",
+      "jassFunc": "Trig_XHunterStone_Actions",
+      "jassLine": 26960,
+      "shape": "loop",
+      "steps": [
+        0.5
+      ],
+      "finisherDelaySec": 2.0,
+      "seq": [
+        "D",
+        "W0.5",
+        "D",
+        "W2"
+      ],
+      "damageCalls": 2,
+      "rawcodes": [
+        "A08Y"
+      ],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A08Y"
+      ],
+      "w3xNames": [
+        "06-00 猜猜拳"
+      ],
+      "abilityIds": [
+        "godie-u034.passive",
+        "godie-ucrl.passive"
+      ],
+      "resolvedVia": "conditions:GetSpellAbilityId",
+      "gates": [
+        "GetUnitAbilityLevel",
+        "udg_EX_Mode"
+      ],
+      "note": "loop：等待與傷害寫在迴圈裡。⭐ 間隔就是動畫節奏的來源"
+    },
+    {
+      "key": "xhunter",
+      "jassFunc": "Trig_XHunter_Actions",
+      "jassLine": 27230,
+      "shape": "tail",
+      "steps": [],
+      "finisherDelaySec": 2.0,
+      "seq": [
+        "D",
+        "D",
+        "W2"
+      ],
+      "damageCalls": 2,
+      "rawcodes": [],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A08Y"
+      ],
+      "w3xNames": [
+        "06-00 猜猜拳"
+      ],
+      "abilityIds": [
+        "godie-u034.passive",
+        "godie-ucrl.passive"
+      ],
+      "resolvedVia": "unit-type:Trig_XHunter_Conditions@27155 要求 GetUnitTypeId(GetAttacker())=='U034'（職業獵人 傑 富力士）；這是猜猜拳普攻被動的另一半，主體 Trig_XHunterStone 的 Conditions 直接指名 A08Y。石頭/剪刀/布 三支的傷害分別讀 A020 / A08W / A08X 的等級",
+      "gates": [
+        "GetUnitAbilityLevel",
+        "udg_EX_Mode"
+      ],
+      "note": "tail：先跑完 1 段等待，收尾才給傷害（龍虎亂舞那種）。⭐ 間隔就是動畫節奏的來源"
+    },
+    {
+      "key": "plant",
+      "jassFunc": "Trig_plant_Actions",
+      "jassLine": 27908,
+      "shape": "per-step",
+      "steps": [
+        0.01,
+        5.0
+      ],
+      "finisherDelaySec": 2.0,
+      "seq": [
+        "W0.01",
+        "D",
+        "W5",
+        "D",
+        "W2"
+      ],
+      "damageCalls": 2,
+      "rawcodes": [
+        "A0RV"
+      ],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A0RV"
+      ],
+      "w3xNames": [
+        "18-02 寄生種子"
+      ],
+      "abilityIds": [
+        "godie-n00p.w",
+        "godie-nsjs.w"
+      ],
+      "resolvedVia": "conditions:GetSpellAbilityId",
+      "gates": [
+        "GetUnitAbilityLevel",
+        "udg_EX_Mode"
+      ],
+      "note": "per-step：wait→傷害 反覆 2 次。⭐ 間隔就是動畫節奏的來源"
+    },
+    {
+      "key": "romove",
+      "jassFunc": "Trig_Romove_Actions",
+      "jassLine": 29084,
+      "shape": "loop",
+      "steps": [
+        0.5
+      ],
+      "finisherDelaySec": 0.5,
+      "seq": [
+        "W0.5",
+        "W0.5",
+        "D"
+      ],
+      "damageCalls": 1,
+      "rawcodes": [],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A06P"
+      ],
+      "w3xNames": [
+        "11-03 鬼氣九刀流-阿修羅壹霧銀"
+      ],
+      "abilityIds": [
+        "godie-u01u.e",
+        "godie-udre.e"
+      ],
+      "resolvedVia": "parent-trigger:Trig_Roaction_Actions@28990 於 29039 行 EnableTrigger(gg_trg_Romove)；傷害公式 28995 行讀 A06P 等級，28984 行要求 GetUnitTypeId(udg_RoMaster)=='U01U'（索隆）",
+      "gates": [],
+      "note": "loop：等待與傷害寫在迴圈裡。⭐ 間隔就是動畫節奏的來源"
+    },
+    {
+      "key": "linas",
+      "jassFunc": "Trig_LinaS_Actions",
+      "jassLine": 29777,
+      "shape": "loop",
+      "steps": [
+        0.5
+      ],
+      "finisherDelaySec": 0.5,
+      "seq": [
+        "D",
+        "D",
+        "W0.5",
+        "W0.5"
+      ],
+      "damageCalls": 2,
+      "rawcodes": [
+        "A07F"
+      ],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A07F"
+      ],
+      "w3xNames": [
+        "04-04 神滅斬"
+      ],
+      "abilityIds": [
+        "godie-h020.r",
+        "godie-hjai.r"
+      ],
+      "resolvedVia": "conditions:GetSpellAbilityId",
+      "gates": [
+        "GetUnitAbilityLevel"
+      ],
+      "note": "loop：等待與傷害寫在迴圈裡。⭐ 間隔就是動畫節奏的來源"
+    },
+    {
+      "key": "holysword",
+      "jassFunc": "Trig_HolySword_Actions",
+      "jassLine": 31224,
+      "shape": "loop",
+      "steps": [],
+      "finisherDelaySec": 0.5,
+      "seq": [
+        "D",
+        "W0.5"
+      ],
+      "damageCalls": 1,
+      "rawcodes": [
+        "A0OD"
+      ],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A0OD"
+      ],
+      "w3xNames": [
+        "23-04 雷焰聖劍"
+      ],
+      "abilityIds": [
+        "godie-ntin.r"
+      ],
+      "resolvedVia": "conditions:GetSpellAbilityId",
+      "gates": [
+        "GetUnitAbilityLevel",
+        "udg_EX_Mode"
+      ],
+      "note": "loop：等待與傷害寫在迴圈裡。⭐ 間隔就是動畫節奏的來源"
+    },
+    {
+      "key": "empty",
+      "jassFunc": "Trig_Empty_Actions",
+      "jassLine": 31457,
+      "shape": "tail",
+      "steps": [
+        0.5
+      ],
+      "finisherDelaySec": 1.0,
+      "seq": [
+        "W0.5",
+        "D",
+        "W1"
+      ],
+      "damageCalls": 1,
+      "rawcodes": [
+        "A044"
+      ],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A044"
+      ],
+      "w3xNames": [
+        "16-03 無無明亦無"
+      ],
+      "abilityIds": [
+        "godie-nplh.q"
+      ],
+      "resolvedVia": "conditions:GetSpellAbilityId",
+      "gates": [
+        "GetUnitAbilityLevel"
+      ],
+      "note": "tail：先跑完 2 段等待，收尾才給傷害（龍虎亂舞那種）。⭐ 間隔就是動畫節奏的來源"
+    },
+    {
+      "key": "excaliburmax",
+      "jassFunc": "Trig_ExcaliburMAX_Actions",
+      "jassLine": 32559,
+      "shape": "loop",
+      "steps": [
+        0.1,
+        0.3,
+        0.2,
+        0.5
+      ],
+      "finisherDelaySec": 4.0,
+      "seq": [
+        "D",
+        "W0.1",
+        "W0.3",
+        "W0.2",
+        "W0.5",
+        "W4"
+      ],
+      "damageCalls": 1,
+      "rawcodes": [],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A0CT"
+      ],
+      "w3xNames": [
+        "20-04 Avalon-永恆的理想鄉"
+      ],
+      "abilityIds": [
+        "godie-e002.r",
+        "godie-e00l.r"
+      ],
+      "resolvedVia": "global:udg_saber（31991 行由 Trig_Open_Skill_of_Saber_Actions 在 GetUnitTypeId=='E002' 時設定）+ udg_IsAvalonReady（32383 行由 Trig_avalonReady_Actions 設 true，其 Conditions@32375 要求 GetSpellAbilityId()=='A0CT'）⇒ 這是傷害事件觸發，⛔ 沒有自己的 GetSpellAbilityId",
+      "gates": [
+        "GetEventDamageSource",
+        "udg_EX_Mode",
+        "udg_IsAvalonReady"
+      ],
+      "note": "loop：等待與傷害寫在迴圈裡。⭐ 間隔就是動畫節奏的來源"
+    },
+    {
+      "key": "xfight",
+      "jassFunc": "Trig_XFight_Actions",
+      "jassLine": 33409,
+      "shape": "tail",
+      "steps": [
+        0.1
+      ],
+      "finisherDelaySec": 0.3,
+      "seq": [
+        "W0.1",
+        "D",
+        "W0.3"
+      ],
+      "damageCalls": 1,
+      "rawcodes": [
+        "A072",
+        "A0AZ"
+      ],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A072",
+        "A0AZ"
+      ],
+      "w3xNames": [
+        "01-01 凶斬",
+        "01-01r 囧斬"
+      ],
+      "abilityIds": [
+        "godie-hart.q"
+      ],
+      "resolvedVia": "conditions:GetSpellAbilityId",
+      "gates": [
+        "GetUnitAbilityLevel"
+      ],
+      "note": "tail：先跑完 2 段等待，收尾才給傷害（龍虎亂舞那種）。⭐ 間隔就是動畫節奏的來源"
+    },
+    {
+      "key": "toro-rotation",
+      "jassFunc": "Trig_Toro_Rotation_Actions",
+      "jassLine": 33465,
+      "shape": "tail",
+      "steps": [
+        0.01
+      ],
+      "finisherDelaySec": 0.1,
+      "seq": [
+        "W0.01",
+        "W0.1",
+        "D"
+      ],
+      "damageCalls": 1,
+      "rawcodes": [],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A000"
+      ],
+      "w3xNames": [
+        "01-03 畫龍點睛"
+      ],
+      "abilityIds": [
+        "godie-hart.e"
+      ],
+      "resolvedVia": "parent-trigger:Trig_Toro_Actions@33349 於 33366 行 EnableTrigger；Trig_Toro_Func006C@33329 要求 GetSpellAbilityId()=='A000'，本體用 udg_FF7_CloudUnit 綁克勞德",
+      "gates": [
+        "GetUnitAbilityLevel"
+      ],
+      "note": "tail：先跑完 2 段等待，收尾才給傷害（龍虎亂舞那種）。⭐ 間隔就是動畫節奏的來源"
+    },
+    {
+      "key": "superff7",
+      "jassFunc": "Trig_SuperFF7_Actions",
+      "jassLine": 33799,
+      "shape": "loop",
+      "steps": [
+        0.2,
+        0.6,
+        0.4,
+        0.2,
+        0.5
+      ],
+      "finisherDelaySec": 1.0,
+      "seq": [
+        "W0.2",
+        "W0.6",
+        "W0.4",
+        "W0.2",
+        "D",
+        "D",
+        "W0.5",
+        "W1"
+      ],
+      "damageCalls": 2,
+      "rawcodes": [
+        "A077",
+        "A0B1"
+      ],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A077",
+        "A0B1"
+      ],
+      "w3xNames": [
+        "01-04 超究武神霸斬",
+        "01-04r 超究武神霸斬 - 改"
+      ],
+      "abilityIds": [
+        "godie-hart.r"
+      ],
+      "resolvedVia": "conditions:GetSpellAbilityId",
+      "gates": [
+        "GetUnitAbilityLevel",
+        "udg_EX_Mode"
+      ],
+      "note": "loop：等待與傷害寫在迴圈裡。⭐ 間隔就是動畫節奏的來源"
+    },
+    {
+      "key": "luf-axe-effect",
+      "jassFunc": "Trig_Luf_Axe_Effect_Actions",
+      "jassLine": 36342,
+      "shape": "tail",
+      "steps": [
+        0.15,
+        0.2
+      ],
+      "finisherDelaySec": 0.05,
+      "seq": [
+        "W0.15",
+        "W0.2",
+        "W0.05",
+        "D"
+      ],
+      "damageCalls": 1,
+      "rawcodes": [],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A0IS"
+      ],
+      "w3xNames": [
+        "76-01 伸縮自如的橡膠戰斧"
+      ],
+      "abilityIds": [
+        "godie-u00n.q",
+        "godie-u00o.q"
+      ],
+      "resolvedVia": "parent-trigger:Trig_Luf_Axe_Actions@36256 於 36282 行 EnableTrigger；Trig_Luf_Axe_Func001C@36243 要求 GetSpellAbilityId()=='A0IS'",
+      "gates": [],
+      "note": "tail：先跑完 3 段等待，收尾才給傷害（龍虎亂舞那種）。⭐ 間隔就是動畫節奏的來源"
+    },
+    {
+      "key": "luf-rockfire-d8",
+      "jassFunc": "Trig_Luf_RockFire_D8_Actions",
+      "jassLine": 36547,
+      "shape": "tail",
+      "steps": [
+        0.05
+      ],
+      "finisherDelaySec": 0.1,
+      "seq": [
+        "W0.05",
+        "W0.1",
+        "D"
+      ],
+      "damageCalls": 1,
+      "rawcodes": [
+        "A0IP"
+      ],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A0IP"
+      ],
+      "w3xNames": [
+        "76-02 伸縮自如的橡膠火箭砲"
+      ],
+      "abilityIds": [
+        "godie-u00n.w",
+        "godie-u00o.w"
+      ],
+      "resolvedVia": "conditions:GetSpellAbilityId",
+      "gates": [],
+      "note": "tail：先跑完 2 段等待，收尾才給傷害（龍虎亂舞那種）。⭐ 間隔就是動畫節奏的來源"
+    },
+    {
+      "key": "bleach-rush",
+      "jassFunc": "Trig_Bleach_Rush_Actions",
+      "jassLine": 37401,
+      "shape": "per-step",
+      "steps": [
+        0.1,
+        0.3
+      ],
+      "finisherDelaySec": 0.3,
+      "seq": [
+        "W0.1",
+        "D",
+        "W0.3",
+        "D",
+        "D",
+        "W0.3",
+        "D"
+      ],
+      "damageCalls": 4,
+      "rawcodes": [
+        "A0RX"
+      ],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A0RX"
+      ],
+      "w3xNames": [
+        "79-01 瞬步"
+      ],
+      "abilityIds": [
+        "godie-h01n.q",
+        "godie-h01o.q"
+      ],
+      "resolvedVia": "conditions:GetSpellAbilityId",
+      "gates": [
+        "GetUnitAbilityLevel"
+      ],
+      "note": "per-step：wait→傷害 反覆 4 次。⭐ 間隔就是動畫節奏的來源"
+    },
+    {
+      "key": "bleach-strike",
+      "jassFunc": "Trig_Bleach_Strike_Actions",
+      "jassLine": 37471,
+      "shape": "tail",
+      "steps": [],
+      "finisherDelaySec": 0.1,
+      "seq": [
+        "W0.1",
+        "D"
+      ],
+      "damageCalls": 1,
+      "rawcodes": [],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A0LK"
+      ],
+      "w3xNames": [
+        "79-02 斬擊"
+      ],
+      "abilityIds": [
+        "godie-h01n.w",
+        "godie-h01o.w"
+      ],
+      "resolvedVia": "buff:Trig_Bleach_Strike_Conditions@37459 要求 UnitHasBuffBJ(GetAttacker(),'B02E') 且攻擊者 == udg_BleachUnit；本體讀 A0LK（79-02 斬擊）等級算傷害",
+      "gates": [
+        "GetUnitAbilityLevel"
+      ],
+      "note": "tail：先跑完 1 段等待，收尾才給傷害（龍虎亂舞那種）。⭐ 間隔就是動畫節奏的來源"
+    },
+    {
+      "key": "youdie",
+      "jassFunc": "Trig_YouDie_Actions",
+      "jassLine": 38595,
+      "shape": "per-step",
+      "steps": [
+        1.0,
+        1.0
+      ],
+      "finisherDelaySec": 1.0,
+      "seq": [
+        "W1",
+        "W1",
+        "W1",
+        "D",
+        "D"
+      ],
+      "damageCalls": 2,
+      "rawcodes": [
+        "A0AF"
+      ],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A0AF"
+      ],
+      "w3xNames": [
+        "25-01 北斗懺悔拳"
+      ],
+      "abilityIds": [
+        "godie-u00l.q",
+        "godie-umal.q"
+      ],
+      "resolvedVia": "conditions:GetSpellAbilityId",
+      "gates": [
+        "GetUnitAbilityLevel",
+        "udg_EX_Mode"
+      ],
+      "note": "per-step：wait→傷害 反覆 2 次。⭐ 間隔就是動畫節奏的來源"
+    },
+    {
+      "key": "flyswallow",
+      "jassFunc": "Trig_FlySwallow_Actions",
+      "jassLine": 41663,
+      "shape": "per-step",
+      "steps": [
+        0.1
+      ],
+      "finisherDelaySec": 0.1,
+      "seq": [
+        "W0.1",
+        "D",
+        "D",
+        "W0.1"
+      ],
+      "damageCalls": 2,
+      "rawcodes": [
+        "A030"
+      ],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A030"
+      ],
+      "w3xNames": [
+        "27-04 忍法暗殺奧義-飛燕閃"
+      ],
+      "abilityIds": [
+        "godie-naka.r"
+      ],
+      "resolvedVia": "conditions:GetSpellAbilityId",
+      "gates": [
+        "udg_EX_Mode"
+      ],
+      "note": "per-step：wait→傷害 反覆 2 次。⭐ 間隔就是動畫節奏的來源"
+    },
+    {
+      "key": "spell-mark",
+      "jassFunc": "Trig_Spell_Mark_Actions",
+      "jassLine": 41715,
+      "shape": "tail",
+      "steps": [],
+      "finisherDelaySec": 10.0,
+      "seq": [
+        "W10",
+        "D"
+      ],
+      "damageCalls": 1,
+      "rawcodes": [
+        "A04W"
+      ],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A08Y"
+      ],
+      "w3xNames": [
+        "06-00 猜猜拳"
+      ],
+      "abilityIds": [
+        "godie-u034.passive",
+        "godie-ucrl.passive"
+      ],
+      "resolvedVia": "sub-ability:掃到的 A04W（06-00x 布緩速）在 provenance 裡沒有自己的 id —— 它是猜猜拳「布」分支在 27291 行 UnitAddAbilityBJ 給 dummy 單位的子技能 ⇒ 歸屬 A08Y（06-00 猜猜拳）",
+      "gates": [
+        "GetUnitAbilityLevel"
+      ],
+      "note": "tail：先跑完 1 段等待，收尾才給傷害（龍虎亂舞那種）。⭐ 間隔就是動畫節奏的來源"
+    },
+    {
+      "key": "lightcutrun",
+      "jassFunc": "Trig_LightCutRun_Actions",
+      "jassLine": 41943,
+      "shape": "loop",
+      "steps": [
+        0.1,
+        2.0
+      ],
+      "finisherDelaySec": 2.0,
+      "seq": [
+        "D",
+        "D",
+        "W0.1",
+        "W2",
+        "W2"
+      ],
+      "damageCalls": 2,
+      "rawcodes": [],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A0IJ"
+      ],
+      "w3xNames": [
+        "45-03 千鳥"
+      ],
+      "abilityIds": [
+        "godie-edem.e"
+      ],
+      "resolvedVia": "parent-trigger:Trig_LightCut_Actions@41794 於 41823 行 EnableTrigger；Trig_LightCut_Conditions@41778 要求 GetSpellAbilityId()=='A0IJ'",
+      "gates": [
+        "GetUnitAbilityLevel"
+      ],
+      "note": "loop：等待與傷害寫在迴圈裡。⭐ 間隔就是動畫節奏的來源"
+    },
+    {
+      "key": "magicup",
+      "jassFunc": "Trig_MagicUp_Actions",
+      "jassLine": 46924,
+      "shape": "tail",
+      "steps": [],
+      "finisherDelaySec": 1.0,
+      "seq": [
+        "D",
+        "W1"
+      ],
+      "damageCalls": 1,
+      "rawcodes": [
+        "A0CH"
+      ],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A0CH"
+      ],
+      "w3xNames": [
+        "65-03 魔法膨脹"
+      ],
+      "abilityIds": [
+        "godie-udea.e"
+      ],
+      "resolvedVia": "conditions:GetSpellAbilityId",
+      "gates": [
+        "GetUnitAbilityLevel"
+      ],
+      "note": "tail：先跑完 1 段等待，收尾才給傷害（龍虎亂舞那種）。⭐ 間隔就是動畫節奏的來源"
+    },
+    {
+      "key": "moriyashadow",
+      "jassFunc": "Trig_MoriyaShadow_Actions",
+      "jassLine": 47235,
+      "shape": "tail",
+      "steps": [],
+      "finisherDelaySec": 0.5,
+      "seq": [
+        "D",
+        "W0.5"
+      ],
+      "damageCalls": 1,
+      "rawcodes": [],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A07W"
+      ],
+      "w3xNames": [
+        "75-02 幻影鬥氣"
+      ],
+      "abilityIds": [
+        "godie-u00b.w"
+      ],
+      "resolvedVia": "unit-type:Trig_MoriyaShadow_Conditions@47217 要求 GetUnitTypeId(GetAttacker())=='U00B'（飛鼠先生）；本體 47240 行讀 A07W（75-02 幻影鬥氣）等級算傷害",
+      "gates": [
+        "GetUnitAbilityLevel"
+      ],
+      "note": "tail：先跑完 1 段等待，收尾才給傷害（龍虎亂舞那種）。⭐ 間隔就是動畫節奏的來源"
+    },
+    {
+      "key": "nine-lives-hits",
+      "jassFunc": "Trig_Nine_Lives_Hits_Actions",
+      "jassLine": 52140,
+      "shape": "loop",
+      "steps": [
+        0.3,
+        0.4
+      ],
+      "finisherDelaySec": 0.6,
+      "seq": [
+        "D",
+        "W0.3",
+        "W0.4",
+        "D",
+        "W0.6"
+      ],
+      "damageCalls": 2,
+      "rawcodes": [],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A0U5"
+      ],
+      "w3xNames": [
+        "52-002 射殺百頭"
+      ],
+      "abilityIds": [
+        "godie-hapm.ex"
+      ],
+      "resolvedVia": "parent-trigger:Trig_Nine_Lives_EX_Actions@52057 於 52080 行 EnableTrigger；Trig_Nine_Lives_EX_Conditions@52051 要求 GetSpellAbilityId()=='A0U5'",
+      "gates": [],
+      "note": "loop：等待與傷害寫在迴圈裡。⭐ 間隔就是動畫節奏的來源"
+    },
+    {
+      "key": "hundred-sky",
+      "jassFunc": "Trig_Hundred_Sky_Actions",
+      "jassLine": 54617,
+      "shape": "tail",
+      "steps": [],
+      "finisherDelaySec": 0.0,
+      "seq": [
+        "W0",
+        "D"
+      ],
+      "damageCalls": 1,
+      "rawcodes": [
+        "A0Y9"
+      ],
+      "ownerKind": "ability",
+      "ownerRawcodes": [
+        "A0Y9"
+      ],
+      "w3xNames": [
+        "95-04 藍色戰氣一百重天"
+      ],
+      "abilityIds": [
+        "godie-e00j.r"
+      ],
+      "resolvedVia": "conditions:GetSpellAbilityId",
+      "gates": [
+        "GetUnitAbilityLevel"
+      ],
+      "note": "tail：先跑完 1 段等待，收尾才給傷害（龍虎亂舞那種）。⭐ 間隔就是動畫節奏的來源"
+    }
+  ]
+}

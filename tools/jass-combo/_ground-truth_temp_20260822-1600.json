@@ -1,0 +1,823 @@
+[
+ {
+  "func": "Trig_TowerSP_Actions",
+  "line": 13141,
+  "waits": [
+   0.01
+  ],
+  "nDamage": 1,
+  "loop": false,
+  "shape": "tail",
+  "seq": [
+   "W0.01",
+   "D"
+  ],
+  "rawcodes": [],
+  "gates": [
+   "GetEventDamageSource"
+  ],
+  "abilityIds": [],
+  "abilityNames": []
+ },
+ {
+  "func": "Trig_FireLord_Actions",
+  "line": 25025,
+  "waits": [
+   0.2
+  ],
+  "nDamage": 1,
+  "loop": false,
+  "shape": "tail",
+  "seq": [
+   "W0.2",
+   "D"
+  ],
+  "rawcodes": [],
+  "gates": [],
+  "abilityIds": [],
+  "abilityNames": []
+ },
+ {
+  "func": "Trig_LokDeathEye_Actions",
+  "line": 25170,
+  "waits": [
+   1.0
+  ],
+  "nDamage": 1,
+  "loop": false,
+  "shape": "tail",
+  "seq": [
+   "W1",
+   "D"
+  ],
+  "rawcodes": [
+   "A0QR"
+  ],
+  "gates": [],
+  "abilityIds": [],
+  "abilityNames": []
+ },
+ {
+  "func": "Trig_Stumble_Actions",
+  "line": 25196,
+  "waits": [
+   0.2,
+   0.2,
+   0.2,
+   0.2,
+   0.2,
+   0.2,
+   0.1,
+   0.1,
+   0.1,
+   0.1,
+   1.0
+  ],
+  "nDamage": 1,
+  "loop": false,
+  "shape": "tail",
+  "seq": [
+   "W0.2",
+   "W0.2",
+   "W0.2",
+   "W0.2",
+   "W0.2",
+   "W0.2",
+   "W0.1",
+   "W0.1",
+   "W0.1",
+   "W0.1",
+   "D",
+   "W1"
+  ],
+  "rawcodes": [
+   "AHtb"
+  ],
+  "gates": [],
+  "abilityIds": [],
+  "abilityNames": []
+ },
+ {
+  "func": "Trig_DragonTigerReady_Actions",
+  "line": 25704,
+  "waits": [
+   0.3,
+   0.05,
+   0.5,
+   0.05,
+   0.1,
+   0.05,
+   0.5
+  ],
+  "nDamage": 1,
+  "loop": true,
+  "shape": "loop",
+  "seq": [
+   "W0.3",
+   "W0.05",
+   "W0.5",
+   "W0.05",
+   "W0.1",
+   "W0.05",
+   "W0.5",
+   "D"
+  ],
+  "rawcodes": [
+   "A0J2"
+  ],
+  "gates": [],
+  "abilityIds": [],
+  "abilityNames": []
+ },
+ {
+  "func": "Trig_Near_To_Death_Actions",
+  "line": 25912,
+  "waits": [
+   1.0,
+   0.25,
+   0.25,
+   0.25,
+   0.25,
+   0.25,
+   0.25,
+   0.25,
+   0.25,
+   0.25,
+   0.25,
+   0.25,
+   0.25,
+   0.25,
+   0.25,
+   0.25,
+   0.25
+  ],
+  "nDamage": 16,
+  "loop": false,
+  "shape": "per-step",
+  "seq": [
+   "W1",
+   "D",
+   "W0.25",
+   "D",
+   "W0.25",
+   "D",
+   "W0.25",
+   "D",
+   "W0.25",
+   "D",
+   "W0.25",
+   "D",
+   "W0.25",
+   "D",
+   "W0.25",
+   "D",
+   "W0.25",
+   "D",
+   "W0.25",
+   "D",
+   "W0.25",
+   "D",
+   "W0.25",
+   "D",
+   "W0.25",
+   "D",
+   "W0.25",
+   "D",
+   "W0.25",
+   "D",
+   "W0.25",
+   "D",
+   "W0.25"
+  ],
+  "rawcodes": [
+   "A0AC"
+  ],
+  "gates": [],
+  "abilityIds": [],
+  "abilityNames": []
+ },
+ {
+  "func": "Trig_XHunterStone_Actions",
+  "line": 26960,
+  "waits": [
+   0.5,
+   2.0
+  ],
+  "nDamage": 2,
+  "loop": true,
+  "shape": "loop",
+  "seq": [
+   "D",
+   "W0.5",
+   "D",
+   "W2"
+  ],
+  "rawcodes": [
+   "A08Y"
+  ],
+  "gates": [
+   "GetUnitAbilityLevel",
+   "udg_EX_Mode"
+  ],
+  "abilityIds": [
+   "godie-u034.passive",
+   "godie-ucrl.passive"
+  ],
+  "abilityNames": [
+   "06-00 猜猜拳",
+   "06-00 猜猜拳"
+  ]
+ },
+ {
+  "func": "Trig_XHunter_Actions",
+  "line": 27230,
+  "waits": [
+   2.0
+  ],
+  "nDamage": 2,
+  "loop": false,
+  "shape": "tail",
+  "seq": [
+   "D",
+   "D",
+   "W2"
+  ],
+  "rawcodes": [],
+  "gates": [
+   "GetUnitAbilityLevel",
+   "udg_EX_Mode"
+  ],
+  "abilityIds": [],
+  "abilityNames": []
+ },
+ {
+  "func": "Trig_plant_Actions",
+  "line": 27908,
+  "waits": [
+   0.01,
+   5.0,
+   2.0
+  ],
+  "nDamage": 2,
+  "loop": false,
+  "shape": "per-step",
+  "seq": [
+   "W0.01",
+   "D",
+   "W5",
+   "D",
+   "W2"
+  ],
+  "rawcodes": [
+   "A0RV"
+  ],
+  "gates": [
+   "GetUnitAbilityLevel",
+   "udg_EX_Mode"
+  ],
+  "abilityIds": [
+   "godie-n00p.w",
+   "godie-nsjs.w"
+  ],
+  "abilityNames": [
+   "18-02 寄生種子",
+   "18-02 寄生種子"
+  ]
+ },
+ {
+  "func": "Trig_Romove_Actions",
+  "line": 29084,
+  "waits": [
+   0.5,
+   0.5
+  ],
+  "nDamage": 1,
+  "loop": true,
+  "shape": "loop",
+  "seq": [
+   "W0.5",
+   "W0.5",
+   "D"
+  ],
+  "rawcodes": [],
+  "gates": [],
+  "abilityIds": [],
+  "abilityNames": []
+ },
+ {
+  "func": "Trig_LinaS_Actions",
+  "line": 29777,
+  "waits": [
+   0.5,
+   0.5
+  ],
+  "nDamage": 2,
+  "loop": true,
+  "shape": "loop",
+  "seq": [
+   "D",
+   "D",
+   "W0.5",
+   "W0.5"
+  ],
+  "rawcodes": [
+   "A07F"
+  ],
+  "gates": [
+   "GetUnitAbilityLevel"
+  ],
+  "abilityIds": [
+   "godie-h020.r",
+   "godie-hjai.r"
+  ],
+  "abilityNames": [
+   "04-04 神滅斬",
+   "04-04 神滅斬"
+  ]
+ },
+ {
+  "func": "Trig_HolySword_Actions",
+  "line": 31224,
+  "waits": [
+   0.5
+  ],
+  "nDamage": 1,
+  "loop": true,
+  "shape": "loop",
+  "seq": [
+   "D",
+   "W0.5"
+  ],
+  "rawcodes": [
+   "A0OD"
+  ],
+  "gates": [
+   "GetUnitAbilityLevel",
+   "udg_EX_Mode"
+  ],
+  "abilityIds": [
+   "godie-ntin.r"
+  ],
+  "abilityNames": [
+   "?"
+  ]
+ },
+ {
+  "func": "Trig_Empty_Actions",
+  "line": 31457,
+  "waits": [
+   0.5,
+   1.0
+  ],
+  "nDamage": 1,
+  "loop": false,
+  "shape": "tail",
+  "seq": [
+   "W0.5",
+   "D",
+   "W1"
+  ],
+  "rawcodes": [
+   "A044"
+  ],
+  "gates": [
+   "GetUnitAbilityLevel"
+  ],
+  "abilityIds": [
+   "godie-nplh.q"
+  ],
+  "abilityNames": [
+   "?"
+  ]
+ },
+ {
+  "func": "Trig_ExcaliburMAX_Actions",
+  "line": 32559,
+  "waits": [
+   0.1,
+   0.3,
+   0.2,
+   0.5,
+   4.0
+  ],
+  "nDamage": 1,
+  "loop": true,
+  "shape": "loop",
+  "seq": [
+   "D",
+   "W0.1",
+   "W0.3",
+   "W0.2",
+   "W0.5",
+   "W4"
+  ],
+  "rawcodes": [],
+  "gates": [
+   "GetEventDamageSource",
+   "udg_EX_Mode",
+   "udg_IsAvalonReady"
+  ],
+  "abilityIds": [],
+  "abilityNames": []
+ },
+ {
+  "func": "Trig_XFight_Actions",
+  "line": 33409,
+  "waits": [
+   0.1,
+   0.3
+  ],
+  "nDamage": 1,
+  "loop": false,
+  "shape": "tail",
+  "seq": [
+   "W0.1",
+   "D",
+   "W0.3"
+  ],
+  "rawcodes": [
+   "A072",
+   "A0AZ"
+  ],
+  "gates": [
+   "GetUnitAbilityLevel"
+  ],
+  "abilityIds": [
+   "godie-hart.q"
+  ],
+  "abilityNames": [
+   "01-01 凶斬"
+  ]
+ },
+ {
+  "func": "Trig_Toro_Rotation_Actions",
+  "line": 33465,
+  "waits": [
+   0.01,
+   0.1
+  ],
+  "nDamage": 1,
+  "loop": false,
+  "shape": "tail",
+  "seq": [
+   "W0.01",
+   "W0.1",
+   "D"
+  ],
+  "rawcodes": [],
+  "gates": [
+   "GetUnitAbilityLevel"
+  ],
+  "abilityIds": [],
+  "abilityNames": []
+ },
+ {
+  "func": "Trig_SuperFF7_Actions",
+  "line": 33799,
+  "waits": [
+   0.2,
+   0.6,
+   0.4,
+   0.2,
+   0.5,
+   1.0
+  ],
+  "nDamage": 2,
+  "loop": true,
+  "shape": "loop",
+  "seq": [
+   "W0.2",
+   "W0.6",
+   "W0.4",
+   "W0.2",
+   "D",
+   "D",
+   "W0.5",
+   "W1"
+  ],
+  "rawcodes": [
+   "A077",
+   "A0B1"
+  ],
+  "gates": [
+   "GetUnitAbilityLevel",
+   "udg_EX_Mode"
+  ],
+  "abilityIds": [
+   "godie-hart.r"
+  ],
+  "abilityNames": [
+   "01-04 超究武神霸斬"
+  ]
+ },
+ {
+  "func": "Trig_Luf_Axe_Effect_Actions",
+  "line": 36342,
+  "waits": [
+   0.15,
+   0.2,
+   0.05
+  ],
+  "nDamage": 1,
+  "loop": false,
+  "shape": "tail",
+  "seq": [
+   "W0.15",
+   "W0.2",
+   "W0.05",
+   "D"
+  ],
+  "rawcodes": [],
+  "gates": [],
+  "abilityIds": [],
+  "abilityNames": []
+ },
+ {
+  "func": "Trig_Luf_RockFire_D8_Actions",
+  "line": 36547,
+  "waits": [
+   0.05,
+   0.1
+  ],
+  "nDamage": 1,
+  "loop": false,
+  "shape": "tail",
+  "seq": [
+   "W0.05",
+   "W0.1",
+   "D"
+  ],
+  "rawcodes": [
+   "A0IP"
+  ],
+  "gates": [],
+  "abilityIds": [
+   "godie-u00n.w",
+   "godie-u00o.w"
+  ],
+  "abilityNames": [
+   "76-02 伸縮自如的橡膠火箭砲",
+   "76-02 伸縮自如的橡膠火箭砲"
+  ]
+ },
+ {
+  "func": "Trig_Bleach_Rush_Actions",
+  "line": 37401,
+  "waits": [
+   0.1,
+   0.3,
+   0.3
+  ],
+  "nDamage": 4,
+  "loop": false,
+  "shape": "per-step",
+  "seq": [
+   "W0.1",
+   "D",
+   "W0.3",
+   "D",
+   "D",
+   "W0.3",
+   "D"
+  ],
+  "rawcodes": [
+   "A0RX"
+  ],
+  "gates": [
+   "GetUnitAbilityLevel"
+  ],
+  "abilityIds": [
+   "godie-h01n.q",
+   "godie-h01o.q"
+  ],
+  "abilityNames": [
+   "79-01 瞬步",
+   "79-01 瞬步"
+  ]
+ },
+ {
+  "func": "Trig_Bleach_Strike_Actions",
+  "line": 37471,
+  "waits": [
+   0.1
+  ],
+  "nDamage": 1,
+  "loop": false,
+  "shape": "tail",
+  "seq": [
+   "W0.1",
+   "D"
+  ],
+  "rawcodes": [],
+  "gates": [
+   "GetUnitAbilityLevel"
+  ],
+  "abilityIds": [],
+  "abilityNames": []
+ },
+ {
+  "func": "Trig_YouDie_Actions",
+  "line": 38595,
+  "waits": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "nDamage": 2,
+  "loop": false,
+  "shape": "per-step",
+  "seq": [
+   "W1",
+   "W1",
+   "W1",
+   "D",
+   "D"
+  ],
+  "rawcodes": [
+   "A0AF"
+  ],
+  "gates": [
+   "GetUnitAbilityLevel",
+   "udg_EX_Mode"
+  ],
+  "abilityIds": [
+   "godie-u00l.q",
+   "godie-umal.q"
+  ],
+  "abilityNames": [
+   "25-01 北斗懺悔拳",
+   "25-01 北斗懺悔拳"
+  ]
+ },
+ {
+  "func": "Trig_FlySwallow_Actions",
+  "line": 41663,
+  "waits": [
+   0.1,
+   0.1
+  ],
+  "nDamage": 2,
+  "loop": false,
+  "shape": "per-step",
+  "seq": [
+   "W0.1",
+   "D",
+   "D",
+   "W0.1"
+  ],
+  "rawcodes": [
+   "A030"
+  ],
+  "gates": [
+   "udg_EX_Mode"
+  ],
+  "abilityIds": [
+   "godie-naka.r"
+  ],
+  "abilityNames": [
+   "?"
+  ]
+ },
+ {
+  "func": "Trig_Spell_Mark_Actions",
+  "line": 41715,
+  "waits": [
+   10.0
+  ],
+  "nDamage": 1,
+  "loop": false,
+  "shape": "tail",
+  "seq": [
+   "W10",
+   "D"
+  ],
+  "rawcodes": [
+   "A04W"
+  ],
+  "gates": [
+   "GetUnitAbilityLevel"
+  ],
+  "abilityIds": [],
+  "abilityNames": []
+ },
+ {
+  "func": "Trig_LightCutRun_Actions",
+  "line": 41943,
+  "waits": [
+   0.1,
+   2.0,
+   2.0
+  ],
+  "nDamage": 2,
+  "loop": true,
+  "shape": "loop",
+  "seq": [
+   "D",
+   "D",
+   "W0.1",
+   "W2",
+   "W2"
+  ],
+  "rawcodes": [],
+  "gates": [
+   "GetUnitAbilityLevel"
+  ],
+  "abilityIds": [],
+  "abilityNames": []
+ },
+ {
+  "func": "Trig_MagicUp_Actions",
+  "line": 46924,
+  "waits": [
+   1.0
+  ],
+  "nDamage": 1,
+  "loop": false,
+  "shape": "tail",
+  "seq": [
+   "D",
+   "W1"
+  ],
+  "rawcodes": [
+   "A0CH"
+  ],
+  "gates": [
+   "GetUnitAbilityLevel"
+  ],
+  "abilityIds": [
+   "godie-udea.e"
+  ],
+  "abilityNames": [
+   "65-03 魔法膨脹"
+  ]
+ },
+ {
+  "func": "Trig_MoriyaShadow_Actions",
+  "line": 47235,
+  "waits": [
+   0.5
+  ],
+  "nDamage": 1,
+  "loop": false,
+  "shape": "tail",
+  "seq": [
+   "D",
+   "W0.5"
+  ],
+  "rawcodes": [],
+  "gates": [
+   "GetUnitAbilityLevel"
+  ],
+  "abilityIds": [],
+  "abilityNames": []
+ },
+ {
+  "func": "Trig_Nine_Lives_Hits_Actions",
+  "line": 52140,
+  "waits": [
+   0.3,
+   0.4,
+   0.6
+  ],
+  "nDamage": 2,
+  "loop": true,
+  "shape": "loop",
+  "seq": [
+   "D",
+   "W0.3",
+   "W0.4",
+   "D",
+   "W0.6"
+  ],
+  "rawcodes": [],
+  "gates": [],
+  "abilityIds": [],
+  "abilityNames": []
+ },
+ {
+  "func": "Trig_Hundred_Sky_Actions",
+  "line": 54617,
+  "waits": [
+   0.0
+  ],
+  "nDamage": 1,
+  "loop": false,
+  "shape": "tail",
+  "seq": [
+   "W0",
+   "D"
+  ],
+  "rawcodes": [
+   "A0Y9"
+  ],
+  "gates": [
+   "GetUnitAbilityLevel"
+  ],
+  "abilityIds": [
+   "godie-e00j.r"
+  ],
+  "abilityNames": [
+   "?"
+  ]
+ }
+]
