@@ -129,6 +129,12 @@ import { proxyCastEffect } from "./proxyCast"; // 終止性證明在該檔檔頭
 // ── 連鎖閃電 (2026-08-19, GH#451) —— 界共用 ./kindLimits.ts ────────────────
 import { chainLightningEffect } from "./chainLightning";
 
+// ── 連段 / 吸引 (2026-08-22, #541 / #147) —— 界共用 ./kindLimits.ts ─────────
+// ⚠️ `comboStrikes` **沒有自己的佇列**：它把班表推進 `SimWorld.delayed`，
+//    由同一支 `delayedSystem` 付款（第零守則⑨，見 ./comboStrikes.ts 檔頭②）。
+import { comboStrikesEffect } from "./comboStrikes";
+import { pullEffect } from "./pull";
+
 /**
  * kind → handler. The mapped type demands EVERY member of the `EffectDef`
  * union, so growing the union without landing a handler stops the build.
@@ -240,5 +246,13 @@ export const EFFECT_HANDLERS: EffectRegistry = {
   convertTeam: mindControlEffect, // L5 —— 【陣營轉換】(大師球)
   // GH#451 —— 「範圍內每一個單位各觸發一次連鎖」。⛔ 一個機制，不是兩支技能。
   chainLightning: chainLightningEffect,
+  // ⭐【連段】(#541) —— 「連斬七次，每一次斬擊皆造成極大傷害」。⛔ `dot` 不是
+  //    連段：N 次獨立的命中判定（各自的 on-hit / 減傷 / 記分）與收尾那一發，
+  //    `dot` 一樣都沒有。班表走**同一個**延遲佇列，見 ./comboStrikes.ts。
+  comboStrikes: comboStrikesEffect,
+  // ⭐【吸引】(#147) —— 把一組身體**搬到一個點**（施法者／落點／等分錨點環）。
+  //    ⛔ 與 `knockback` 的 `from:"pull"` 不同：那邊作者寫的是一段長度而且會走
+  //    GH#193 的距離減法（對拉是反的），這邊寫的是**落點**。見 ./pull.ts。
+  pull: pullEffect,
   // lane P6 — 護盾傷害類型過濾 is NOT a kind: it is `shield.absorbs`, see shield.ts
 };

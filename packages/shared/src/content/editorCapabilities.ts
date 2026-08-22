@@ -1474,6 +1474,36 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
       "⚠️ `revive` 是「死了之後再站起來」，時序在死亡**之後**；`delayDeath` 要的是死亡**之前**" +
       "多出一段可以行動的時間。兩者在畫面上像，在狀態機上是相反的兩側。",
   },
+  // ══ 2026-08-22 —— #541【連段】與 #147【吸引】═══════════════════════════
+  {
+    key: "effect.combo-strikes@1",
+    plan: "#541 —— 01-04 超究武神霸斬「連斬七次」· 20-002「連續七次斬擊…最後施展約束與勝利之劍」",
+    expected: "supported",
+    // ⛔ 只問 `comboStrikes` 這個名字不夠：一個**不能分別結算**的連段就是 `dot`
+    //    換一個名字，而外部編輯器分不出來。所以 probe 同時問「收尾那一格在不在」
+    //    —— `finisher` 是「N 段各自結算 + 最後一發不一樣」這件事的簽名欄位。
+    probe: (f) => f.effectKinds.has("comboStrikes") && f.effectFields.has("finisher"),
+    evidence:
+      "packages/shared/src/sim/effects/comboStrikes.ts —— 每一段是自己的一次 `runEffects`，" +
+      "所以各觸發一次 on-hit、各吃一次減傷、各記一次分。⭐ 節奏（幾段／間隔／收尾延遲）" +
+      "**在載入時**從 `config.combo-strikes@1` 解析（`sim/effects/comboFamilies.ts`），" +
+      "⛔ 不烘進技能 JSON；不等間隔用 `steps[]`。" +
+      "⚠️ 排程走的是**既有的** `SimWorld.delayed` 佇列與 `delayedSystem`，⛔ 不是第二個排程器。",
+  },
+  {
+    key: "effect.pull@1",
+    plan: "#147 —— A091 05-03 及喀爾度「2×等級 個錨點 + 250+100×等級 半徑」(war3map.j:28224-28233)",
+    expected: "supported",
+    // ⛔ 不可以只問 `knockback`：`from:"pull"` 是**一段長度**而且走 GH#193 的距離
+    //    減法（對拉是反的），它答不出「搬到哪」。`destination` 才是這件事的簽名欄位。
+    probe: (f) => f.effectKinds.has("pull") && f.effectFields.has("destination"),
+    evidence:
+      "packages/shared/src/sim/effects/pull.ts —— `destination` 三檔（caster / point / anchorRing）。" +
+      "⭐ 等分錨點環用一張**單位旋轉常數表**做（`RING_UNIT_ROTATION`），" +
+      "因為 `sim/**` 禁止三角函式（`sim/purity.test.ts`）。" +
+      "位移走的是 `knockback` 已經在用的 `nav.override` 地面滑行 + `world.knockdown` 行動鎖，" +
+      "⛔ 沒有第二套位移機制。",
+  },
   // ⭐ 12 個「引擎完全沒有」的 —— 一個模板 + 一張參數表（第零守則⑨），
   //    ⛔ 不是 12 段各自會腐爛的散文。表在 {@link OWNER_ACTIONS_ABSENT}。
   ...OWNER_ACTIONS_ABSENT.map(

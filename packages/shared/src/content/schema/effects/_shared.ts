@@ -262,7 +262,11 @@ export function refineDispelShape(
         | "convertTeam"
         // 連鎖閃電（2026-08-19，GH#451）：`shape` + `radius` 是**同一組**幾何欄位，
         // 所以走同一份檢查。⛔ 各寫一份的那一天它們會分岔，而每一份看起來都對。
-        | "chainLightning";
+        | "chainLightning"
+        // 連段 / 吸引（2026-08-22，#541 / #147）：同一組 shape + radius + side +
+        // maxTargets，所以走**同一份**檢查。
+        | "comboStrikes"
+        | "pull";
     }
   >,
   ctx: z.RefinementCtx,

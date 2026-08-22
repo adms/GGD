@@ -106,6 +106,17 @@ export interface DelayedStrike {
   /** **絕對** tick（不是剩餘 tick 數）。 */
   readonly atTick: number;
   readonly final: boolean;
+  /**
+   * ⭐ 這一發**只跑** `finalEffects`，不跑 `effects`（#541）。
+   *
+   * 它存在的唯一理由是【連段】的「七刀之後停半拍，**再**劈最後一發」：
+   * 收尾要有自己的落點時刻，而 `final: true` 那一發本來一定會連本體一起跑。
+   * ⛔ 不要用它來做「最後一發不打人」—— 那是把 `finalEffects` 當成
+   * `effects` 的替代品，而 `delayed` 的語意是「最後一發**額外**跑」。
+   *
+   * 省略 = false = 這一格出現以前每一份既有 wave 的行為（嚴格 no-op）。
+   */
+  readonly finisherOnly?: boolean;
 }
 
 /** 一次施放排出來的一整串。 */
@@ -335,7 +346,9 @@ export function delayedSystem(world: SimWorld): void {
       if (struck) for (const id of targets) struck.add(id);
 
       const ctx: EffectContext = { ...base, targets };
-      runEffects(wave.effects, ctx);
+      // ⭐ `finisherOnly` 的那一發跳過本體（#541 的「停半拍再劈最後一發」）。
+      // 缺席 = false，所以既有的每一份 wave 逐位元不變。
+      if (strike.finisherOnly !== true) runEffects(wave.effects, ctx);
       if (strike.final && wave.finalEffects) runEffects(wave.finalEffects, ctx);
     }
     if (wave.next >= wave.strikes.length) anyDone = true;

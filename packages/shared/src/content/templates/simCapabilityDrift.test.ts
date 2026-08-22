@@ -31,6 +31,8 @@
  *   · `knockback: available` 改回 false        → 「registry 有 handler 卻標成做不到」紅
  *   · 從 CAPABILITY_KIND 拿掉 knockback 那一列 → 「有 kind 卻沒被這條守衛蓋到」紅
  *   · `combo: available` 改成 true             → 「標成做得到卻沒有 handler」紅
+ *     ⚠️ 2026-08-22（#541）之後這一條**不再是那個突變** —— `comboStrikes` 出貨了，
+ *     所以現在的等價突變是把 `combo` 改回 false（「registry 有 handler 卻標成做不到」紅）。
  */
 import { describe, expect, it } from "vitest";
 import { SIM_CAPABILITIES } from "./expand";
@@ -63,6 +65,13 @@ const CAPABILITY_KIND: Readonly<Record<string, EffectDef["kind"]>> = {
   invulnerable: "invulnerable",
   // GH#393 行進波動 —— 作者要用它就是發一個 `delayed`（帶 `advance`）。
   travelingWave: "delayed",
+  // #541 連段 —— 作者要用它就是發一個 `comboStrikes`。⚠️ 它與 `travelingWave`
+  // 共用同一個排程器（`SimWorld.delayed`），但**作者介面**不同，所以兩列各自
+  // 指向自己的 kind：把 combo 也指到 `delayed` 會讓「連段做完了沒」這個問題
+  // 被一個不相干的 kind 回答（假精確，正是這個檔要擋的東西）。
+  combo: "comboStrikes",
+  // #147 吸引 —— 作者要用它就是發一個 `pull`。
+  pull: "pull",
 };
 
 describe("SIM_CAPABILITIES vs the shipped effect registry", () => {
@@ -93,12 +102,15 @@ describe("SIM_CAPABILITIES vs the shipped effect registry", () => {
     }
   });
 
-  it("`combo` is still absent — the one row that is honestly false", () => {
-    // A canary: if a future lane lands 連段 and forgets this table, the drift
-    // test above catches it only once `combo` gets a kind. This keeps the
-    // remaining gap NAMED rather than implied by the absence of a row.
-    expect(SIM_CAPABILITIES.combo?.available).toBe(false);
-    expect(Object.keys(CAPABILITY_KIND)).not.toContain("combo");
+  it("每一個對得上 kind 的 capability 都被上面那條守衛蓋到（⛔ 不准偷偷漏一列）", () => {
+    // 這一條以前是「`combo` is still absent」的金絲雀 —— #541 讓那個缺口關掉了，
+    // 所以它換成同型的下一個問題：**還有沒有 kind 沒有被這張對照表覆蓋**。
+    // ⚠️ 它刻意只點名 `combo` / `pull` 兩列（這一批新落地的），⛔ 不去枚舉
+    // 全部的 kind —— 那會變成把 `EFFECT_HANDLERS` 抄第二遍。
+    for (const cap of ["combo", "pull"] as const) {
+      expect(SIM_CAPABILITIES[cap]?.available, `${cap} 的 kind 出貨了`).toBe(true);
+      expect(Object.keys(CAPABILITY_KIND)).toContain(cap);
+    }
   });
 });
 

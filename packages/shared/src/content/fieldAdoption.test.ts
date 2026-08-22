@@ -1653,6 +1653,19 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-07-30",
     why: "GH#289 lane P5 landed the MECHANISM (sim/effects/evasion.ts + the DECISION-5 ability channel in combat/evasion.ts); the content half is a separate lane and content/ is a single-threaded domain this session. NOT 'nobody needs it' — the source map has named abilities waiting: the timed-dodge shape is 12-00 感應意脈 (+20% 迴避), 74-00 JENOVA (15%), 92-00 憂鬱的眼神 (18%). Note the STAT half is already adopted (13 content files author `stat: evasion` on 3 champion docs, 8 ability docs and the phantom-step augment), so what is unadopted is specifically the TIMED-GRANT effect variant, not the evasion axis. Resolve by porting one of those three onto an `evasion` effect with an explicit durationSec; the 30-day expiry is the reminder, because 'the primitive landed, the content did not' is exactly the S8 this census exists to catch.",
   },
+  // ══ 2026-08-22 · #541【連段】與 #147【吸引】═══════════════════════════════
+  // 兩支都是**機制先落地、內容接在後面**的同一個形狀，而且兩支都有**點名的**
+  // 技能在等（⛔ 不是「沒有人需要」）—— 那正是這條普查要的那種豁免理由。
+  "variant:abilities.effects[]#comboStrikes": {
+    status: "landing",
+    since: "2026-08-22",
+    why: "#541 落地的是**機制**（sim/effects/comboStrikes.ts：N 段各自結算、可省的收尾、不等間隔 steps[]、家族節奏表 config.combo-strikes@1 在載入時解析），內容那一半由主 session 接（content/ 是單執行緒的領域）。⛔ NOT 「沒有人需要」，而且這是**卡面已經承諾**的：01-04 超究武神霸斬 (godie-hart.r) 寫著「連斬七次，每一次斬擊皆造成極大傷害」而實作是 applyStatus×2 + invulnerable + dot×2；20-002 解放·約束勝利劍MAX (godie-e002.ex) 寫著「連續七次斬擊…最後施展約束與勝利之劍」而 `effects` 是**空陣列**。⇒ 這兩支正是第一·五守則「卡片上不可以有說了但不會發生的字」的原型，而這個 kind 是它們唯一的修法（`dot` 沒有 N 次獨立命中判定、沒有 N 次演出、沒有收尾）。接內容的做法寫在報告的『需要主 session 接線』：`config/combo-strikes.json` 的家族 key + 這兩支的 effects。機制本身由 sim/effects/comboAndPull.test.ts 用真的 SimWorld.step() 釘住（突變驗過：班表塞進同一個 tick → 紅）。",
+  },
+  "variant:abilities.effects[]#pull": {
+    status: "landing",
+    since: "2026-08-22",
+    why: "#147 落地的是**機制**（sim/effects/pull.ts：destination 三檔 caster / point / anchorRing，等分錨點環用單位旋轉常數表因為 sim/** 禁三角函式），內容那一半由主 session 接。⛔ NOT 「沒有人需要」：A091 05-03 及喀爾度（godie-h021.e / godie-hblm.e）的 JASS 白紙黑字是 `2×等級` 個錨點 + `250+100×等級` 半徑（war3map.j:28224-28233），而它今天寫不出來 —— `knockback` 的 from:\"pull\" 只推得動一段長度而且會走 GH#193 的距離減法（對拉是反過來的）。`content/ability-templates/tpl-pull-throw.json` 也還掛著 status:\"draft\" 等這一格。接內容的做法寫在報告的『需要主 session 接線』。機制由 sim/effects/comboAndPull.test.ts 釘住（兩具身體真的被搬到環上、而且去的是不同的錨點）。",
+  },
   "variant:abilities.effects[]#summon": {
     status: "landing",
     since: "2026-07-30",

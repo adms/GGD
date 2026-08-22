@@ -215,8 +215,14 @@ function tierDistance(
   return hit > 0 ? hit : 0;
 }
 
-/** `bumpFreeze` from combat/damage.ts, which is module-private there. Max-merge. */
-function lockOut(world: SimWorld, id: EntityId, ticks: number): void {
+/**
+ * `bumpFreeze` from combat/damage.ts, which is module-private there. Max-merge.
+ *
+ * ⭐ EXPORTED for `./pull.ts` (#147): 吸引與擊退共用**同一個**行動鎖通道
+ * (`world.knockdown`)，因為那是五個系統已經在讀的那一格。第二份 max-merge
+ * 會在其中一份被改的那一天分岔，而兩份看起來都對（第零守則⑨）。
+ */
+export function lockOut(world: SimWorld, id: EntityId, ticks: number): void {
   if (ticks <= 0) return;
   const cur = world.knockdown.get(id) ?? 0;
   if (ticks > cur) world.knockdown.set(id, ticks);

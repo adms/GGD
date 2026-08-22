@@ -36,12 +36,14 @@ type WrappedChainKey<T> = T extends unknown
 export const EFFECT_CHILD_CHAINS = [
   "effects", // randomArea · delayed
   "finalEffects", // delayed
+  "finisher", // comboStrikes —— 收尾那一發（#541）
   "onArrive", // blink
   "onDevour", // devour
   "onEnd", // dash
   "onHit", // spawnProjectile
   "onHitTargets", // damageArea · damageLine
   "onLand", // leap
+  "perStrike", // comboStrikes —— 每一段各跑一次的那一串（#541）
 ] as const;
 
 /** 包一層的子鏈（`{…, effects}` 的陣列）。 */

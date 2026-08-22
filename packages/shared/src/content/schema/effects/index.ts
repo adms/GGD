@@ -64,6 +64,8 @@ import { zExtendBuff, refine as refine_extendBuff } from "./extendBuff";
 import { zCarry, refine as refine_carry } from "./carry";
 import { zConvertTeam, refine as refine_convertTeam } from "./convertTeam";
 import { zChainLightning, refine as refine_chainLightning } from "./chainLightning";
+import { zComboStrikes, refine as refine_comboStrikes } from "./comboStrikes";
+import { zPull, refine as refine_pull } from "./pull";
 
 export const zEffectDefUnion = z.discriminatedUnion("kind", [
   zDamage,
@@ -106,6 +108,8 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   zCarry,
   zConvertTeam,
   zChainLightning,
+  zComboStrikes,
+  zPull,
 ]);
 
 /**
@@ -129,6 +133,7 @@ export const EFFECT_REFINERS: Partial<Record<EffectDef["kind"], (e: never, ctx: 
   blink: refine_blink,
   carry: refine_carry,
   chainLightning: refine_chainLightning,
+  comboStrikes: refine_comboStrikes,
   convertTeam: refine_convertTeam,
   damage: refine_damage,
   delayed: refine_delayed,
@@ -142,6 +147,7 @@ export const EFFECT_REFINERS: Partial<Record<EffectDef["kind"], (e: never, ctx: 
   manaBarrier: refine_manaBarrier,
   modifyCooldown: refine_modifyCooldown,
   proxyCast: refine_proxyCast,
+  pull: refine_pull,
   shield: refine_shield,
   shieldBreak: refine_shieldBreak,
   swapResource: refine_swapResource,

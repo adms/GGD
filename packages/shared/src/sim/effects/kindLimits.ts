@@ -364,3 +364,58 @@ export const DEFAULT_CHAIN_JUMP_INTERVAL_SEC = 0.05;
  * 是那一次施放**退回瞬發**（同一 tick 全部結算）：傷害一筆不少，失去的是時間差。
  */
 export const CHAIN_MAX_LIVE_STRANDS = 240;
+
+// ══ 連段 `comboStrikes`（#541）════════════════════════════════════════════════
+//
+// ⚠️ 這一族的上界**刻意與 `DELAYED_*` 共用同一組數量級**，因為它們是同一個
+// 排程器：`comboStrikes` 不是第二套佇列，它把自己的班表推進 `SimWorld.delayed`
+// （見 `sim/effects/comboStrikes.ts` 檔頭②）。兩邊的界分岔的那一天，一支
+// 合法的連段會在排程時被靜默截短，而卡面上寫的是完整的段數。
+
+/**
+ * 一次連段最多幾段。與 {@link DELAYED_MAX_COUNT} 同值**而且必須同值** ——
+ * 排程走的是同一個 `DelayedWave`，比它大的段數會在下游被截掉。
+ * 出貨最長的兩支是 01-04 超究武神霸斬（7 段）與 20-002（7 段 + 收尾）；
+ * 52-002「連續 100 下」超過這個界，⛔ 它要的是 `dot` 的密度不是連段的判定
+ * （100 次獨立命中判定 = 100 次 hook 扇出，那是效能問題不是表達力問題）。
+ */
+export const COMBO_MAX_STRIKES = DELAYED_MAX_COUNT;
+
+/** 兩段之間最多隔幾秒。 */
+export const COMBO_MAX_INTERVAL_SEC = DELAYED_MAX_INTERVAL_SEC;
+
+/**
+ * `steps[]` 裡任何一格的最大秒數（＝整段連段的最長跨度）。
+ * ⚠️ 它比 {@link COMBO_MAX_INTERVAL_SEC} 大，因為 `steps` 是**離施法那一刻的
+ * 絕對偏移**不是間隔：7 段每段 2 秒的班表最後一格就是 12。
+ */
+export const COMBO_MAX_STEP_SEC = 30;
+
+/** 收尾那一發等多久（`finisherDelaySec`）。 */
+export const COMBO_MAX_FINISHER_DELAY_SEC = DELAYED_MAX_DELAY_SEC;
+
+// ══ 吸引 `pull`（#147）══════════════════════════════════════════════════════
+//
+// ⚠️ 與 `knockbackLimits.ts` 是**兩份表而不是一份**，理由與位移級距的兩條梯子
+// 逐字相同：擊退回答「推多遠」（作者寫的是一段**長度**），吸引回答「搬到哪」
+// （作者寫的是一個**落點**，長度是算出來的）。硬把 `KB_MAX_DISTANCE` 套上來
+// 會讓「把 20 格外的人拉到腳邊」被夾成「拉 20 格然後停在半路」。
+
+/** 吸引的作用半徑上界，GGD 單位。與 `zAuraDef.radius` 同界（整個骨架區半徑 24）。 */
+export const PULL_MAX_RADIUS = 40;
+
+/** 被吸引的身體最多能被搬多遠。決鬥區直徑 48，跨場搬運已經是設計上的極限。 */
+export const PULL_MAX_TRAVEL = 48;
+
+/** 吸引的移動速度上界，GGD 單位/秒（與 `KB_MAX_SPEED` 同值同理由）。 */
+export const PULL_MAX_SPEED = 200;
+
+/**
+ * 錨點環最多幾個點。A091 05-03 及喀爾度是 `2 × 等級` ⇒ 4 階最多 **8** 個
+ * （war3map.j:28224）。12 留了頭，同時也是 {@link RING_UNIT_ROTATION} 那張
+ * 單位旋轉表的長度 —— ⛔ 兩者必須一起改。
+ */
+export const PULL_MAX_ANCHORS = 12;
+
+/** 錨點環的半徑上界，GGD 單位。A091 是 200 wc3 ≈ 3.67。 */
+export const PULL_MAX_ANCHOR_RADIUS = 20;

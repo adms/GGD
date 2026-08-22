@@ -223,7 +223,21 @@ export const SIM_CAPABILITIES: Readonly<Record<string, SimCapability>> = {
   // badge for a capability the sim has had all along. Found by building
   // tpl-lock-combo, whose 7-of-8 members all wear `Avul` for the whole 演出.
   invulnerable: { p: 3, available: true },
-  combo: { p: 3, available: false },
+  // ⭐ 2026-08-22 (#541) —— 這一列曾經是這張表裡**唯一誠實的 false**，現在它是
+  // true。`kind: "comboStrikes"` 出貨了：N 段各自結算（各自的命中判定、各自的
+  // on-hit 扇出、各自的減傷與記分）+ 可省的收尾 + 不等間隔 `steps[]` +
+  // 家族節奏表 `config.combo-strikes@1`（第〇·四守則）。
+  // ⚠️ 它**沒有自己的排程器**：班表推進 `SimWorld.delayed`，付款的是同一支
+  // `delayedSystem`（第零守則⑨）。⛔ 所以 `travelingWave` 那一列指向 `delayed`、
+  // 這一列指向 `comboStrikes` 並不矛盾 —— 兩個作者介面，一個引擎。
+  combo: { p: 3, available: true },
+  // ⭐ 2026-08-22 (#147) —— 【吸引】。⛔ 它**不是** `knockback` 的一個模式：
+  // 擊退的作者寫的是一段長度（而且走 GH#193 的距離減法，那對拉是反過來的），
+  // 吸引寫的是一個**落點**（施法者／落點／等分錨點環）。A091 05-03 及喀爾度
+  // 的「2×等級 個錨點 + 250+100×等級 半徑」用擊退寫不出來。
+  // ⚠️ 這一列在此之前**整列不存在**，而 `missingCaps` 把未知 key 當成缺失 ——
+  // 也就是 `invulnerable` 踩過的那個更糟的形狀（見它上面那一段）。
+  pull: { p: 2, available: true },
   // 具名標記 (2026-08-08). `SimWorld.marks` + `sim/marks.ts` 的 install/grant/
   // consume/reset + `combat/lethalSave.ts` 的免死攔截全部已經出貨。
   //

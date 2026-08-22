@@ -242,6 +242,8 @@ import type { ProxyCastVariant } from "./variants/proxyCast";
 import type { CarryVariant } from "./variants/carry";
 import type { ConvertTeamVariant } from "./variants/convertTeam";
 import type { ChainLightningVariant } from "./variants/chainLightning";
+import type { ComboStrikesVariant } from "./variants/comboStrikes";
+import type { PullVariant } from "./variants/pull";
 
 /**
  * ⭐ 2026-08-20（#467 ②）—— 這 40 格**搬到 `sim/effects/variants/<kind>.ts`** 了。
@@ -294,7 +296,10 @@ type EffectVariant =
   | ProxyCastVariant
   | CarryVariant
   | ConvertTeamVariant
-  | ChainLightningVariant;
+  | ChainLightningVariant
+  // ⭐ 2026-08-22 —— #541【連段】與 #147【吸引】。
+  | ComboStrikesVariant
+  | PullVariant;
 /**
  * ⭐ 每一個 effect kind **共有**的欄位。今天只有一格 —— `condition`。
  *

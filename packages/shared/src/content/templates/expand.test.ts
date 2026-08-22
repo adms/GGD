@@ -61,8 +61,14 @@ describe("SIM_CAPABILITIES + missingCaps", () => {
     // handler (see simCapabilityDrift.test.ts, which is the guard that makes a
     // stale row here go red instead of aging quietly).
     expect(missingCaps(["leap", "knockback", "summon", "periodicDamage"])).toEqual([]);
-    // `combo` is the one still genuinely absent: no EffectDef kind, no handler.
-    expect(missingCaps(["combo"])).toEqual(["combo"]);
+    // ⭐ 2026-08-22（#541 / #147）—— `combo` 與 `pull` 也翻了。`combo` 曾經是
+    // 這張表裡唯一誠實的 false（`comboStrikes` 出貨之後它就是謊了）；`pull`
+    // 在此之前**整列不存在**，而 `missingCaps` 把未知 key 當成缺失，所以任何
+    // `requires: ["pull"]` 的模板都會掛著一個假的紅徽章。
+    expect(missingCaps(["combo", "pull"])).toEqual([]);
+    // ⛔ 這一行不是裝飾：`missingCaps` 對**不存在的 key** 也回「缺失」，
+    // 所以上面那條在打錯字時一樣會綠。這一條問的是「這兩列真的在表上」。
+    expect(missingCaps(["definitely-not-a-capability"])).toEqual(["definitely-not-a-capability"]);
     // Indexed through the Record, so this also asserts the key EXISTS —
     // `SIM_CAPABILITIES.dash!.available` would have hidden a renamed key.
     expect(SIM_CAPABILITIES.dash?.available).toBe(true);
