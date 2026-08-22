@@ -19,6 +19,7 @@ import type { VfxDoc, VfxBlendMode, VfxOrient } from "@ggd/shared/content";
 import { addSwirl, orientAxis, orientDirection, orientIsIdentity } from "./orient";
 import { clampFadeOutTail } from "./fadeOut";
 import { vfxFadeOutMaxSec } from "./vfxCleanupPolicy";
+import { markVfxManaged, markVfxPersistent } from "./vfxHardCap";
 
 const CONTENT_BASE = "/content/";
 
@@ -90,6 +91,15 @@ export interface ToParticleSystemOptions {
    * 被回收），⛔ 而不是各讀各的。
    */
   fadeOutMaxSec?: number;
+  /**
+   * ⏳ GH#570 —— 這一份是**常駐**特效（跟著實體 / 整個回合活著），兜底不收它。
+   *
+   * ⚠️ 這是一格**顯式**旗標，⛔ 不是「剛好沒被掃到」：owner 的規定是「不管什麼
+   * 特效⋯三秒後一律強制清理回收」，所以豁免必須是有人**說出來**的。
+   * 出貨用它的是 `AmbientVfx`（跟著角色活）與 `FireRingFx`（整回合都在）；
+   * 文件自己寫 `vfx@1.ambient: true` 也算（那是同一句話的資料版本）。
+   */
+  persistent?: boolean;
 }
 
 /** Scaled burst count (mobile tier halves particle budgets; min 1). */
@@ -239,6 +249,12 @@ export function toParticleSystem(
   // 第〇·四守則點名的 O(N)。已經合規的文件回同一個物件,走一位元不差的舊路徑。
   const doc = clampFadeOutTail(rawDoc, o.fadeOutMaxSec ?? vfxFadeOutMaxSec());
   const ps = new ParticleSystem(o.name ?? `vfx-${doc.id}`, capacityFor(doc, scale), scene);
+  // ⏳ GH#570 —— 建立當下就決定它是「常駐」還是「該被兜底收掉」。這一行放在
+  // **這裡**的理由和上面那個夾子一樣:這支函式是整個 repo 把 vfx@1 變成 Babylon
+  // 粒子系統的**唯一**入口,所以⛔ 沒有任何一條路徑逃得掉,也⛔ 沒有「呼叫端忘了
+  // 註冊」這個失敗形態。實際的回收在 `vfxHardCap.sweepVfxHardCap()`。
+  if (o.persistent === true || doc.ambient === true) markVfxPersistent(ps);
+  else markVfxManaged(ps);
 
   if (doc.texture) {
     const url = (o.resolveTextureUrl ?? ((p: string): string => CONTENT_BASE + p))(doc.texture);

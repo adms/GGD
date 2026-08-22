@@ -426,7 +426,8 @@ export function startW3xEmitterAudition(canvas: HTMLCanvasElement): AuditionHand
   gm.specularColor = Color3.Black();
   ground.material = gm;
 
-  const rig = new W3xEmitterRig(scene, { maxEffectSec: 3600 });
+  // ⏳ GH#570 —— 試演頁**明著**繞過三秒兜底（它的用途就是把一支效果放著看完）。
+  const rig = new W3xEmitterRig(scene, { maxEffectSec: 3600, hardCapSec: Infinity });
 
   let stands: TransformNode[] = [];
   let handles: W3xEffectHandle[] = [];

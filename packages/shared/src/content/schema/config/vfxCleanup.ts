@@ -37,6 +37,19 @@ import { zId } from "../common";
  */
 export const VFX_FADE_OUT_MAX_SEC_BOUNDS = { min: 0.05, max: 3 } as const;
 
+/**
+ * ⏳ **終極**壽命上限的上下界（GH#570）。⭐ 同上，這是**唯一**的住處。
+ *
+ * 上界 30 秒不是建議值，是**止血閥的量級**：把它拉到 30 就等於「這道兜底
+ * 實際上不會叫」，而 owner 仍然看得到這一格存在、知道要調哪裡回來。
+ * 下界 0.5 秒＝比任何一次打擊感（0.6 秒餘燼）還短，再低就是把所有特效關掉。
+ */
+export const VFX_HARD_MAX_LIFE_SEC_BOUNDS = { min: 0.5, max: 30 } as const;
+
+/** 兜底掃描的涵蓋範圍（`vfxHardCapScope`）。 */
+export const VFX_HARD_CAP_SCOPES = ["scene", "managed", "off"] as const;
+export type VfxHardCapScope = (typeof VFX_HARD_CAP_SCOPES)[number];
+
 export const zConfigVfxCleanupDoc = z
   .object({
     id: zId,
@@ -215,6 +228,69 @@ export const zConfigVfxCleanupDoc = z
      * 消費端 `apps/client/src/vfx/CastPillarFx.ts`。
      */
     castMoteEmitShare: z.number().min(0).max(1).optional(),
+
+    /* ── ⏳ 終極壽命上限（owner 2026-08-23, GH#570）─────────────────────────────
+     *
+     * > 「我發現**還是有特效超過三秒以上停留在場上**（老毛病，**飛向天空的殘留
+     * >  半透明煙霧**），請妳作一個**終極限制，不管什麼特效，包含技能、場地特效等，
+     * >  產生後生命週期最多維持三秒，三秒後一律強制清理回收**」
+     *
+     * ⚠️ 上面那一格（`vfxFadeOutMaxSec`）夾的是**一顆粒子**的尾段；這一格夾的是
+     * **整個效果**在場上的總時間。兩者刻意不同，因為超標的路徑不是粒子壽命：
+     * 量到的是 `godie-u010.q/.r`（FlamesSmoke）—— 四支發射器，`p03` 是
+     * `smoke_07.png` × `alpha` × 近乎垂直的錐（`angleDeg: 1`）× 速度 2.2–6.7，
+     * 逐字就是 owner 說的「飛向天空的半透明煙霧」。它的單顆壽命被 #569 夾成
+     * 3.0 秒沒錯，⛔ 但**效果**是「發射 0.55 秒 → 排空 3.0 秒」＝ 3.55 秒，
+     * 而排空那一段完全在既有三道閘的外面。
+     *
+     * ⭐ 兜底落在**資源被建立出來的那一層**（⛔ 不是每一種特效各加一次）：
+     *   · `apps/client/src/vfx/vfxHardCap.ts`   一個掃描器（唯一的機制）
+     *   · `particleFactory.toParticleSystem()`  建立當下標記 managed / persistent
+     *   · `W3xEmitterRig`                       效果總壽命夾進這一格（真的回池）
+     *   · `ModelFxRig`                          `maxEffectSec` 由這一格供給
+     */
+
+    /**
+     * ⏳ 任何**非常駐**特效資源從產生到被強制回收的最長秒數（出貨 3 ＝ owner 的原話）。
+     *
+     * 「強制回收」= `stop()` + `reset()`（在飛的粒子直接丟掉）+ 把發射器與 mesh
+     * 還回池子，⛔ 不是「變透明後留在場上」。
+     *
+     * ⚠️ 它與 `vfxFadeOutMaxSec` / `oneShotMaxLifeSec` 是**疊在一起**的天花板，
+     * 比較嚴的那個贏。這一格是**最後一道**：即使某條路徑繞過了前面每一道，
+     * 它也會在這個秒數被收掉。
+     */
+    vfxHardMaxLifeSec: z
+      .number()
+      .min(VFX_HARD_MAX_LIFE_SEC_BOUNDS.min)
+      .max(VFX_HARD_MAX_LIFE_SEC_BOUNDS.max)
+      .optional(),
+
+    /**
+     * 兜底掃描涵蓋到哪裡。⭐ 出貨 `"scene"` ＝ owner 的「**不管什麼特效**」。
+     *
+     *   · `"scene"`   場景裡**每一個**粒子系統（含 `ArenaScene` 的場地火把這種
+     *                 不走 vfx 管線的），只有下面那張豁免表與程式標記過的常駐
+     *                 特效除外。
+     *   · `"managed"` 只掃 vfx 管線自己建的（`toParticleSystem`）。⛔ 場地特效
+     *                 不在內 —— 這是「兜底本身造成問題」時的中間檔位。
+     *   · `"off"`     完全不掃（回到 GH#570 之前的行為，**止血閥**）。
+     */
+    vfxHardCapScope: z.enum(VFX_HARD_CAP_SCOPES).optional(),
+
+    /**
+     * ⭐ **豁免表** —— 這些粒子系統是**刻意長命**的，兜底不碰它們。
+     * 比對的是 Babylon `ParticleSystem.name` 的**前綴**。
+     *
+     * ⚠️ 為什麼常駐特效的豁免要有**兩個**機制：走 vfx 管線建的東西可以在建立
+     * 當下用一格旗標說「我是常駐的」（`toParticleSystem` 的 `persistent`，
+     * 或文件自己的 `vfx@1.ambient`）—— 那是最好的形狀。⛔ 但場景裡有一整族
+     * 粒子系統**不走那條路**（場地火把、金幣/花的光點、投射物拖尾、復活圈餘燼、
+     * 登入頁），而 `"scene"` 模式的重點就是要掃到那一族。
+     * ⇒ 它們的豁免只能是**資料**，而這張表就是那格顯式旗標。
+     * ⛔ 沒有列在這裡也沒有被程式標記過的東西，就是「該被收掉的」。
+     */
+    vfxHardCapExemptPrefixes: z.array(z.string().min(1).max(48)).max(24).optional(),
   })
   .strict();
 export type ConfigVfxCleanupDoc = z.infer<typeof zConfigVfxCleanupDoc>;
@@ -251,4 +327,28 @@ export const DEFAULT_VFX_CLEANUP: ConfigVfxCleanupDoc = {
   vfxFadeOutMaxSec: 0.5,
   // owner 2026-08-23 GH#569 —— 「紅色粒子飄上天時間都要減半以上」＝生成窗口減半。
   castMoteEmitShare: 0.5,
+  // ⏳ owner 2026-08-23 GH#570 —— 「產生後生命週期最多維持三秒，三秒後一律強制
+  // 清理回收」。出貨值就是他說的那個數字，⛔ 不是我挑的。
+  vfxHardMaxLifeSec: 3,
+  // ⭐ 我挑的（owner 2026-08-23:「沒做完以前別問我了自己判斷 但是留後台開關可以
+  // 簡易 rollback」）：預設 `"scene"`，因為他的原話是「**不管什麼特效，包含技能、
+  // 場地特效等**」—— 場地火把不走 vfx 管線，只有 `"scene"` 掃得到它。
+  vfxHardCapScope: "scene",
+  // ⭐ 刻意長命的那一族（逐個查過出貨的 `new ParticleSystem(...)` 命名）：
+  //   torch-flame- ArenaScene 場地火把（常駐布景）
+  //   fire-ring-   火圈（整回合都在，`FireRingFx` 另外也用旗標標過）
+  //   revive-      復活圈餘燼（活到有人救起來為止，是伺服器決定的）
+  //   proj-        投射物拖尾（活到投射物落地）
+  //   coin- / flower-  地上的金幣/花的光點（活到被撿走）
+  //   login- / intermission-  登入頁與中場的背景粒子（不在對局場景裡）
+  vfxHardCapExemptPrefixes: [
+    "torch-flame-",
+    "fire-ring-",
+    "revive-",
+    "proj-",
+    "coin-",
+    "flower-",
+    "login-",
+    "intermission-",
+  ],
 };

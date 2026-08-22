@@ -78,7 +78,9 @@ import {
   oneShotEmitterCap,
   emitterSweepMs,
   purgeImpactPoolOnRoundEnd,
+  vfxHardMaxLifeSec,
 } from "./vfxCleanupPolicy";
+import { resetVfxHardCapClocks, sweepVfxHardCap } from "./vfxHardCap";
 import { TelegraphLayer } from "./TelegraphLayer";
 import { resolveTelegraphShape, type TelegraphAbilityLike } from "./telegraphShape";
 import type { TelegraphRelation } from "./telegraphChannel";
@@ -636,6 +638,20 @@ export class VfxSystem {
     return this.oneShotEvictions;
   }
 
+  /**
+   * ⏳ GH#570: 三秒兜底到目前為止強制回收了幾個粒子系統。
+   *
+   * 同上面那個計數器的理由（⛔ 一個靜默的夾子跟沒有夾子長得一模一樣）：
+   * 這個數字如果一直在爬，代表有一條路徑正在生產「沒有人收」的特效 ——
+   * 那是要去修的**根因**，⛔ 不是「兜底有在做事所以沒問題」。
+   */
+  private vfxHardCapReclaims = 0;
+
+  /** Particle systems force-reclaimed by the 3-second backstop (diagnostic). */
+  get vfxHardCapReclaimCount(): number {
+    return this.vfxHardCapReclaims;
+  }
+
   constructor(
     private readonly scene: Scene,
     private readonly ctx: VfxContext,
@@ -648,6 +664,10 @@ export class VfxSystem {
         ? new ModelFxRig(scene, {
             resolveModel: (k) => ctx.modelDocFor!(k),
             loadContainer: (p) => ctx.loadModelContainer!(p) as never,
+            // ⏳ GH#570 —— 「模型即特效」那條通道的硬壽命也吃**同一格**
+            // （它自己的出貨預設是 8 秒）。⛔ 不要在 `modelFxRig` 裡再抄一個
+            // 數字：那就是第〇·四守則說的第二個住處。
+            maxEffectSec: vfxHardMaxLifeSec(),
           })
         : null;
     // ⭐ GH#549 —— `config.screen-fx@1` 的**唯一** production 消費端。
@@ -2203,6 +2223,12 @@ export class VfxSystem {
     const dtMs = this.lastUpdateMs === null ? 0 : nowMs - this.lastUpdateMs;
     this.lastUpdateMs = nowMs;
     this.w3xCast.tick(dtMs, nowMs);
+    // ⏳ GH#570 —— **終極**三秒兜底。owner 2026-08-23:「不管什麼特效⋯產生後
+    // 生命週期最多維持三秒，三秒後一律強制清理回收」。
+    // ⭐ 它掃的是 `scene.particleSystems`（Babylon 自己維護的登錄表），所以
+    // ⛔ 沒有任何一條建立路徑逃得掉 —— 包含不走 vfx 管線的場地特效。
+    // 常駐特效靠兩格顯式旗標豁免，見 `vfxHardCap.ts` 的檔頭。
+    this.vfxHardCapReclaims += sweepVfxHardCap(this.scene, nowMs / 1000).reclaimed;
     // ⭐ 三個「演出」層也要推進 —— ⛔ 少了這三行,模型永遠停在起點、
     //    閃爍永遠不退、文字永遠不上浮（而且都不會有人報錯）。
     this.modelFx?.tick(dtMs);
@@ -2370,6 +2396,9 @@ export class VfxSystem {
     //     live on with the scene」。owner 量到的那 144 → 266 個發射器裡，
     //     粒子數最高的九列全部是這個池子。
     if (purgeImpactPoolOnRoundEnd(policy)) impactComposerFor(this.scene).purge();
+    // ⏳ GH#570 —— 碼表歸零。回合邊界剛把一堆池子還回去，留著上一回合的碼表
+    //     等於讓下一回合第一發特效繼承別人的年齡（⛔ 不會漏收，會**早收**）。
+    resetVfxHardCapClocks(this.scene);
     this.lastSweepMs = -Infinity; // 下一幀就掃一次，不必等滿一個間隔
 
     // 3) 上一回合的 per-entity 記憶。entity id 不會跨回合重用，留著只是

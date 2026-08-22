@@ -428,7 +428,13 @@ export class AmbientVfx {
     // weapon trails are retuned into the 刀光 budget before they are ever
     // built: clamped lifetime, live-count-capped rate, hot→cool ramp that
     // reaches alpha 0, pop-shrink sizes (see swingTrailMath)
-    const ps = toParticleSystem(shapeSwingTrailDoc(doc), this.scene, { scale: this.getScale() });
+    // ⏳ GH#570 —— `persistent: true` 是**顯式**豁免:這一族「跟著實體活著」的特效
+    // 正是 owner 說的常駐特效,⛔ 不可以被三秒兜底收掉。少了這一格,角色身上的
+    // 光暈/拖尾會每三秒斷一次(而且看起來像閃爍,不像被回收)。
+    const ps = toParticleSystem(shapeSwingTrailDoc(doc), this.scene, {
+      scale: this.getScale(),
+      persistent: true,
+    });
     ps.emitter = emitterMesh;
     return { ps, emitterMesh, baseRate: ps.emitRate };
   }

@@ -21,7 +21,10 @@ import {
   Configs,
   DEFAULT_VFX_CLEANUP,
   VFX_FADE_OUT_MAX_SEC_BOUNDS,
+  VFX_HARD_CAP_SCOPES,
+  VFX_HARD_MAX_LIFE_SEC_BOUNDS,
   type ConfigVfxCleanupDoc,
+  type VfxHardCapScope,
 } from "@ggd/shared/content";
 
 /**
@@ -161,4 +164,45 @@ export function castMoteEmitShare(policy: ConfigVfxCleanupDoc = vfxCleanupPolicy
   const fallback = DEFAULT_VFX_CLEANUP.castMoteEmitShare ?? 0.5;
   if (typeof v !== "number" || !Number.isFinite(v)) return fallback;
   return Math.min(1, Math.max(0, v));
+}
+
+// ---------------------------------------------------------------------------
+// ⏳ GH#570 —— **終極**壽命上限（owner 2026-08-23）
+// ---------------------------------------------------------------------------
+
+/**
+ * 任何**非常駐**特效資源從產生到被強制回收的最長秒數（出貨 3）。
+ *
+ * ⚠️ 同 `vfxFadeOutMaxSec`，這一格**不吃 `enabled`**：`enabled` 管的是「回合邊界
+ * 要不要回收池子」，而這一條是 owner 對**畫面**下的規定。要回頭的路是
+ * `vfxHardCapScope: "off"`，⛔ 不是順手把整個回收政策關掉。
+ */
+export function vfxHardMaxLifeSec(policy: ConfigVfxCleanupDoc = vfxCleanupPolicy()): number {
+  const v = policy.vfxHardMaxLifeSec;
+  const fallback = DEFAULT_VFX_CLEANUP.vfxHardMaxLifeSec ?? 3;
+  if (typeof v !== "number" || !Number.isFinite(v)) return fallback;
+  return Math.min(VFX_HARD_MAX_LIFE_SEC_BOUNDS.max, Math.max(VFX_HARD_MAX_LIFE_SEC_BOUNDS.min, v));
+}
+
+/** 兜底掃描的涵蓋範圍（出貨 `"scene"`）。認不得的值退回出貨值，⛔ 不是關掉。 */
+export function vfxHardCapScope(policy: ConfigVfxCleanupDoc = vfxCleanupPolicy()): VfxHardCapScope {
+  const v = policy.vfxHardCapScope;
+  const fallback = DEFAULT_VFX_CLEANUP.vfxHardCapScope ?? "scene";
+  return VFX_HARD_CAP_SCOPES.includes(v as VfxHardCapScope) ? (v as VfxHardCapScope) : fallback;
+}
+
+/**
+ * 常駐特效的豁免前綴（出貨那一族場地／實體綁定的粒子系統）。
+ *
+ * ⚠️ 讀不到／型別不對時回**出貨表**，⛔ 不是空陣列 —— 空陣列的意思是「什麼都
+ * 不豁免」，那會讓一份壞掉的 override 把場地火把跟金幣光點一起收掉。
+ */
+export function vfxHardCapExemptPrefixes(
+  policy: ConfigVfxCleanupDoc = vfxCleanupPolicy(),
+): readonly string[] {
+  const v = policy.vfxHardCapExemptPrefixes;
+  if (!Array.isArray(v) || v.some((s) => typeof s !== "string" || s.length === 0)) {
+    return DEFAULT_VFX_CLEANUP.vfxHardCapExemptPrefixes ?? [];
+  }
+  return v;
 }

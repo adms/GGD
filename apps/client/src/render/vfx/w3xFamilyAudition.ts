@@ -171,6 +171,8 @@ export function startW3xFamilyAudition(canvas: HTMLCanvasElement): FamilyAuditio
 
   const rig = new W3xEmitterRig(scene, {
     resolveTextureUrl: (p) => CONTENT + p,
+    // ⏳ GH#570 —— 試演頁**明著**繞過三秒兜底（它的用途就是把一支效果放著看完）。
+    hardCapSec: Infinity,
   });
 
   const champions: TransformNode[] = [];

@@ -43,7 +43,7 @@ import "@babylonjs/core/Shaders/particles.fragment";
 import type { VfxDoc } from "@ggd/shared/content";
 import { burstNow, toParticleSystem } from "../../vfx/particleFactory";
 import { clampFadeOutTail } from "../../vfx/fadeOut";
-import { vfxFadeOutMaxSec } from "../../vfx/vfxCleanupPolicy";
+import { vfxFadeOutMaxSec, vfxHardMaxLifeSec } from "../../vfx/vfxCleanupPolicy";
 import { resolveAttachment, type AttachResolution } from "./attachment";
 import { applyRateScale, planEffectBudget, type BudgetContext, type EffectBudgetPlan } from "./emitterBudget";
 import { sampleTrack, type W3xEmitterRuntimeFlags } from "./w3xEmitter";
@@ -97,6 +97,17 @@ export interface W3xEmitterRigOptions {
    * out explicitly by setting `ambient` on their docs.
    */
   maxEffectSec?: number;
+  /**
+   * ⏳ GH#570 —— **終極**上限的覆寫（秒）。省略 = 讀後台現在生效的那一格
+   * （`config.vfx-cleanup@1.vfxHardMaxLifeSec`，出貨 3）。
+   *
+   * ⚠️ 出貨路徑**永遠不傳它**。它存在只為了**試演頁**：
+   * `w3xEmitterAudition` / `w3xFamilyAudition` 的整個用途就是把一支效果放著看
+   * 完，三秒切掉會讓那兩頁沒有辦法用。⇒ 那兩頁傳 `Infinity`，也就是把
+   * 「我知道我在繞過那道兜底」**寫出來**（⛔ 不是靠 `maxEffectSec: 3600` 這種
+   * 看起來像數值調整的東西默默繞過去）。
+   */
+  hardCapSec?: number;
 }
 
 /** Default hard stop for a one-shot effect that nobody stopped. */
@@ -135,6 +146,12 @@ interface LiveEffect {
   /** longest particle lifetime, i.e. how long a drain takes */
   maxLifeSec: number;
   stopAtSec: number;
+  /**
+   * ⏳ GH#570 —— 這個效果從 `play()` 起最多活到第幾秒（含排空）。到期一律
+   * `release(hard)`：發射器與 mesh 真的回池、在飛的粒子整批丟掉。
+   * 常駐（`ambient`）效果是 `Infinity`。
+   */
+  hardCapSec: number;
   ambient: boolean;
   plan: EffectBudgetPlan;
   attach?: AttachResolution;
@@ -334,7 +351,14 @@ export class W3xEmitterRig {
       emitters.push(em);
     }
 
-    const maxEffect = this.opts.maxEffectSec ?? DEFAULT_MAX_EFFECT_SEC;
+    // ⏳ GH#570 —— owner 2026-08-23:「產生後生命週期最多維持三秒，三秒後一律
+    // 強制清理回收」。⚠️ 這裡夾的是**效果總時間**（發射 + 排空），⛔ 不是粒子
+    // 壽命 —— 那正是漏掉的那一層：`W3xCastFx` 只發射 0.55 秒，但 FlamesSmoke 的
+    // 排空要 3.0 秒，加起來 3.55 秒，而#569 的粒子夾子對此是綠的。
+    const hardCapSec = ambient ? Infinity : (this.opts.hardCapSec ?? vfxHardMaxLifeSec());
+    // 排空也不可以超過總上限（`stopAtSec` 之後還要跑 `maxLifeSec`）。
+    maxLifeSec = Math.min(maxLifeSec, hardCapSec);
+    const maxEffect = Math.min(this.opts.maxEffectSec ?? DEFAULT_MAX_EFFECT_SEC, hardCapSec);
     const effect: LiveEffect = {
       spec,
       emitters,
@@ -345,6 +369,7 @@ export class W3xEmitterRig {
       maxLifeSec,
       // ambient effects live with the entity; everything else has a hard stop
       stopAtSec: ambient ? Infinity : Math.min(spec.durationSec ?? maxEffect, maxEffect),
+      hardCapSec,
       ambient,
       plan,
       ...(attach ? { attach } : {}),
@@ -398,6 +423,15 @@ export class W3xEmitterRig {
       }
 
       effect.ageSec += dt;
+
+      // ⏳ GH#570 —— **終極**上限。⭐ 它在 `drainingSec` 的分支**外面**是刻意的:
+      // 排空那一段正是超標的那一段(0.55 發射 + 3.0 排空 = 3.55 秒),所以這道閘
+      // 必須管到整個效果的年齡,⛔ 不是只管發射窗口。`hard = true` ⇒ 在飛的粒子
+      // 整批丟掉、發射器與 mesh 回池(owner 的第二句話「強制清理回收」)。
+      if (effect.ageSec >= effect.hardCapSec) {
+        this.release(id, true);
+        continue;
+      }
 
       if (effect.drainingSec === null) {
         for (const em of effect.emitters) {

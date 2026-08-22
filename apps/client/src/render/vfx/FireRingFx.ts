@@ -427,10 +427,16 @@ export class FireRingFx {
       const docId = FLAME_DOC_IDS[i % FLAME_DOC_IDS.length]!;
       const doc = this.opts.vfxDocFor(docId);
       if (!doc) return; // unauthored layer — degrade to fewer flames, never throw
+      // ⏳ GH#570 —— `persistent: true` 是**顯式**豁免:火圈是**整個回合**都在的
+      // 場地特效(它是玩家判斷「哪裡還站得住」的讀數),⛔ 不是一次性效果。
+      // ⚠️ 名字前綴 `fire-ring-` 同時列在 `vfxHardCapExemptPrefixes` 裡 ——
+      // 那一份是給**不走這條路**的系統用的,這一格才是這裡的答案(兩格都有不是
+      // 重複,是「程式標記」與「資料豁免」各自蓋住不同的一半)。
       const ps = toParticleSystem(doc, this.scene, {
         scale: this.getScale(),
         name: `fire-ring-flame-${i}`,
         position: { x: 0, y: 0, z: 0 },
+        persistent: true,
       });
       // WORLD-ANCHORED (task #131): a Vector3 emitter, never a TransformNode
       // borrowed from a champion glb that may never load or may be disposed.
