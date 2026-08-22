@@ -1,0 +1,240 @@
+import { z } from "zod";
+import { zId } from "../common";
+// 手把自動瞄準的小怪讓路幅度（GH#315）—— 同一條規矩：上下界定在 sim，schema 只搬上 Zod。
+import { AIM_ASSIST_MOB_PENALTY_MAX, AIM_ASSIST_MOB_PENALTY_MIN } from "../../../sim/combatFeel";
+
+/**
+ * config.combat-feel@1 — 戰鬥手感 (`config/combat-feel.json`, GH#193):
+ * 擊退法則的三個參數 + 打就站定的開關與門檻。語意與出貨預設見 sim/combatFeel.ts。
+ *
+ * ⚠️ 為什麼又是一份自己的文件(現在 config 底下已經有四份「調參」文件):
+ *   · combat-env  每格是**倍率**(1.0 = 不變)
+ *   · base-bonus  每格是**加數**(0 = 沒有贈禮)
+ *   · stat-caps   每格是一對**天花板**
+ *   · combat-feel 每格是一條**規則的參數**(比例門檻 / 身位數 / 布林開關)
+ * 混在一起的話,操作者沒有任何線索分辨他填的 0.05 是「打五折」「+0.05 點」
+ * 「上限 0.05」還是「5% 的門檻」。
+ *
+ * **缺文件 = 出貨預設**(擊退 0.05/10/1.0、站定全開),不是空表。
+ */
+export const zConfigCombatFeelDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.combat-feel@1"),
+    knockback: z
+      .object({
+        /** 傷害 / 受傷單位最大生命 低於此比例 → 完全不擊退 */
+        minPct: z.number().min(0).max(1),
+        /** 一擊打掉 100% 生命時的擊退身位數 */
+        maxBodies: z.number().min(0).max(100),
+        /** 一個身位 = 多少 GGD 單位 */
+        bodyUnit: z.number().min(0).max(100),
+        /**
+         * 決策點:技能授權的位移(擊退/擊飛/衝刺)遇上傷害驅動的擊退時誰贏。
+         * ABSENT = 出貨預設 true(技能贏)。false = 傷害無條件蓋掉 —— 那是這條
+         * 缺陷被修之前的行為,而它讓每一支「又打又推」的技能的擊退全滅。
+         * 完整理由見 `sim/combatFeel.ts` 的 `damageShoveWins`。
+         */
+        authoredWins: z.boolean().optional(),
+        /**
+         * 決策點(只在 `authoredWins` 開著時有意義):傷害驅動的擊退推得更遠時
+         * 要不要接管。ABSENT = 出貨預設 false。
+         * ⚠️ true 那一側會讓拉近系(`from: "pull"`)的技能在傷害夠大時把目標
+         * 往反方向推出去。
+         */
+        longerDamageWins: z.boolean().optional(),
+        /**
+         * ⭐ 擊飛四檔落點(GH#301-1)的兩段長度 + 「到底部」指哪個邊緣。
+         * 語意與出貨預設(3 / 12 / true)全部寫在 `sim/combatFeel.ts` 的
+         * `KnockbackRules`。ABSENT = 出貨預設。
+         *
+         * ⛔ 它們**不可以**是 `effects/knockback.ts` 裡的常數:四檔是列舉(作者
+         * 選哪一檔),但一檔多遠是操作者每週會改的數字(第一守則)。
+         */
+        launchShortUnits: z.number().min(0).max(100).optional(),
+        launchLongUnits: z.number().min(0).max(100).optional(),
+        launchEdgeUsesFireRing: z.boolean().optional(),
+      })
+      .strict()
+      .optional(),
+    standstill: z
+      .object({
+        /** 總開關;false = 維持舊行為(邊走邊打) */
+        enabled: z.boolean(),
+        /** 「有在動」與「正在靠近」共用的速度門檻 (units/sec) */
+        walkEps: z.number().min(0).max(100),
+        /** 小怪(含殭屍王)是否同樣受約束 */
+        applyToMobs: z.boolean(),
+      })
+      .strict()
+      .optional(),
+    /**
+     * 玩家**自己點名**的攻擊目標，對上系統的自動索敵 (GH#266)。語意、量到的數字
+     * 與出貨預設全部寫在 `sim/combatFeel.ts` 的 `ManualOrderRules`。
+     *
+     * ⚠️ 為什麼是欄位不是一行修正：#274 的「地面指令取代攻擊指令」在**滑鼠**上
+     * 是對的（WC3 / LoL 都這樣），右鍵一次點擊只送一條指令。壞掉的是把同一條規則
+     * 套到**連續轉向**上 —— 搖桿每一拍都送一條 `move`，那不是「我要取消攻擊」而是
+     * 「我正在走路」，於是手選目標的壽命是 1 tick（33 ms）。sim 分不出這兩者，
+     * 所以選擇權交給 owner。
+     *
+     * ABSENT ⇒ `DEFAULT_MANUAL_ORDER`（撐得過移動指令、不限制牽引距離）——
+     * 也就是 owner 2026-08-03 明說的那一側，**不是**今天的行為。
+     */
+    manualOrder: z
+      .object({
+        /**
+         * true（出貨）= 玩家點名的那一隻撐得過一條移動指令：走位照走，打的還是
+         * 他指的那一個。false = #274 的原行為（右鍵地面取消攻擊指令）。
+         * 只管 `kind:"move"`；A 移動（attackMove）兩側都一律取代手選目標。
+         */
+        survivesGroundMove: z.boolean(),
+        /**
+         * 手選目標的**牽引距離**（單位）；`0`（出貨）= 不限制，對應 owner 的
+         * 「永遠」。競技場半徑 24，所以 24 以上實務上等同不限制；上界 200 純粹
+         * 是擋「24 打成 2400」那種手滑 —— 一個荒謬的牽引距離不會有任何錯誤訊息，
+         * 只會讓這一格看起來沒作用（#277 的形狀）。
+         */
+        leashUnits: z.number().min(0).max(200),
+      })
+      .strict()
+      .optional(),
+    /**
+     * 手把／觸控的**自動**瞄準：一堆殭屍擋在敵方英雄前面時該鎖誰（GH#315）。
+     *
+     * ⚠️ 這是 2026-08-11 那個 T0 的另一半。修好「殭屍點得到」之後，同一份可點選
+     * 清單也餵給 `pickNearestUnit` —— 少了這個懲罰，貼臉的殭屍會把瞄準從敵方
+     * 英雄身上搶走，那是把一個缺陷換成另一個。
+     *
+     * ⛔ **只有自動索敵讀它。** 滑鼠直接點刻意不讀 —— 點到誰就是誰。
+     * 語意與出貨預設寫在 `sim/combatFeel.ts` 的 `AimAssistRules`。
+     */
+    aimAssist: z
+      .object({
+        /**
+         * 小怪被扣的「等效距離」（單位）。出貨 **6** =「殭屍要比英雄近 6 個單位
+         * 以上才搶得走瞄準」。0 = 不讓路（＝GH#315 修好之前那個被殭屍海淹沒的
+         * 行為）。上界 24 = 決鬥區半徑，再高等於「小怪永遠不會被自動瞄準」。
+         */
+        mobPenalty: z
+          .number()
+          .min(AIM_ASSIST_MOB_PENALTY_MIN)
+          .max(AIM_ASSIST_MOB_PENALTY_MAX),
+      })
+      .strict()
+      .optional(),
+    /**
+     * 面向鎖的窗口長度 (#264 / #275 / #280)。語意與出貨預設見
+     * `sim/combatFeel.ts` 的 `FacingRules`。
+     *
+     * ⚠️ 這裡**沒有** `aimHoldTicks`,那是刻意的 —— 見 `sim/aimHold.ts` 檔頭:
+     * 客戶端預測沒有任何 config 通道,把瞄準沿用窗口做成可調會讓預測與權威用
+     * 不同的窗口,自己的角色面向會和伺服器長期不同意。
+     */
+    /**
+     * ⭐ 預測影子的**扣留**旗標 (GH#370)。語意、量到的數字（影子最大領先
+     * 2.14 單位 / 66 次 reconcile）與出貨預設全部寫在 `sim/predictionHold.ts`。
+     *
+     * ⚠️ 它修的是「放完技能之後原地小步來回」——⛔ 那**不是** sim 的問題
+     * （伺服器座標 180 tick 反轉 0 次），是客戶端影子看不到施法鎖。
+     * ABSENT ⇒ `DEFAULT_PREDICTION_HOLD`（六顆全開）。
+     */
+    predictionHold: z
+      .object({
+        /** 止血閥；false = 回到這條缺陷被修之前的行為。 */
+        enabled: z.boolean(),
+        flags: z
+          .object({
+            /** 施法鎖 —— 隕石擊那 26 個 tick 就是這一顆 */
+            casting: z.boolean(),
+            /** 引導 */
+            channelling: z.boolean(),
+            /** 位移中（leap / dash），路徑由伺服器算 */
+            dashing: z.boolean(),
+            /** 滯空（擊飛），落點由伺服器算 */
+            airborne: z.boolean(),
+            /** 定身：能轉身能出手但不能移動 */
+            rooted: z.boolean(),
+            /** 暈眩 */
+            stunned: z.boolean(),
+          })
+          .strict()
+          .optional(),
+      })
+      .strict()
+      .optional(),
+    facing: z
+      .object({
+        /** 出手後的收招餘韻 tick 數 (30 tick = 1 秒) */
+        followThroughTicks: z.number().int().min(0).max(300),
+        /** 瞬發技的最低鎖定 tick 數 */
+        instantCastTicks: z.number().int().min(0).max(300),
+      })
+      .strict()
+      .optional(),
+    /**
+     * 卡住就接敵 (GH#216)。語意與出貨預設見 `sim/combatFeel.ts` 的
+     * `AutoEngageRules` —— 那裡有量到的數字(近戰索敵 6 / 射程 1.6 的四倍落差、
+     * 右鍵點進柱子之後 |v| = 0.00 連續 2,240 tick)。
+     *
+     * ⚠️ `seekRadius` **不是平常的索敵半徑**。把它當成「自動攻擊範圍」調大並不會
+     * 讓**走得動**的玩家自動衝過去 —— 那條路徑一格都沒有被動到(見
+     * `systems/OrderSystem.ts` 的 `autoEngageActive`)。
+     *
+     * ⚠️ 它現在有**兩個**入口(2026-07-31):走位卡住(一直都有),以及站著不動
+     * (`idleSeeks`,出貨關著)。所以「只在走位卡住時生效」這句話只在
+     * `idleSeeks: false` 時才成立 —— 那是出貨值。
+     */
+    autoEngage: z
+      .object({
+        /** 總開關;false = 移動指令期間絕不接手(#274 的行為) */
+        enabled: z.boolean(),
+        /** 連續幾個 tick 走不動才算卡住 (30 tick = 1 秒) */
+        stallTicks: z.number().int().min(1).max(600),
+        /** 「走不動」的速度門檻 (units/sec),和 standstill.walkEps 同一個量 */
+        stallSpeed: z.number().min(0).max(100),
+        /** 卡住之後的索敵半徑(單位);bot 的 AI_ENGAGE_RANGE 是 48 */
+        seekRadius: z.number().min(0).max(200),
+        /**
+         * **決策點**(2026-07-31 W4):站著不動的玩家要不要也吃 `seekRadius`。
+         *
+         * 出貨 `false` = 今天的行為。索敵半徑目前是**不對稱**的 ——「走位卡住」
+         * 的人吃 `seekRadius`(48),「完全站著不動」的人只吃近戰地板 6,也就是
+         * 卡住比站著更容易索到敵。實測 `autoAcquireWhileMoving.test.ts` 的
+         * `[idle]` 情境:整場 2,410 tick 沒有任何敵方英雄靠到 14.95 單位以內,
+         * 所以那個座位 0 次索敵、0 次揮擊。
+         *
+         * `true` = 站著不動的人也吃 `seekRadius`,手感等同全員預設 A 移動:
+         * 什麼都不按也會自己走過去打人,代價是玩家放手時方向盤不在他手上。
+         * 這是**平衡決策不是缺陷修正**,所以預設留在今天那一側,由 owner 決定。
+         *
+         * ⚠️ 需要總開關 `enabled` 也開著 —— `enabled: false` 承諾的是「完全回到
+         * #274 的行為」,獨立生效會讓那句話變成謊話。
+         */
+        idleSeeks: z.boolean(),
+        /**
+         * true(出貨)= 玩家每送出一條新的移動指令,走位權當場還給他。
+         * 搖桿/虛擬搖桿每一拍都送一條,所以推著搖桿的人永遠不會被接管;
+         * 滑鼠右鍵一次只送一條,點進柱子之後才會觸發接敵。
+         * 關掉會回到「上鎖之後不放手」的行為(實測 86.6% 的走位 tick 被搶走)。
+         */
+        respectLiveSteering: z.boolean(),
+        /**
+         * true(出貨)= 硬控(定身/昏迷/擊倒/施法鎖/hitstop)的 tick **不算**
+         * 走位卡住,計數凍結在原地。
+         *
+         * 掃出貨內容量到:86 支帶 root/stun 的 `applyStatus`,其中 47 支持續
+         * ≥ 1 秒,最長 4 秒 = 120 tick —— 是 `stallTicks` 的四倍。關掉這一格,
+         * 一個被定身 1 秒以上的玩家會被判定成「走位卡住」,走位權被追擊搶走,
+         * 解控之後角色往反方向跑。
+         *
+         * ⚠️ 不要用「把 stallTicks 調大到 120」代替它:那會讓真的卡在柱子上的
+         * 玩家等四秒才被救。
+         */
+        ccPausesStall: z.boolean(),
+      })
+      .strict()
+      .optional(),
+  })
+  .strict();
+export type ConfigCombatFeelDoc = z.infer<typeof zConfigCombatFeelDoc>;
