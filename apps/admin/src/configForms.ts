@@ -100,6 +100,9 @@ import {
   // `export * from "./config"`），同 zConfigGoreDoc 那一族。
   zConfigRangeGuideDoc,
   zConfigUiCuesDoc,
+  // 世界演出（2026-08-23 稽核）—— 六則「某個東西在某個座標出現／消失／掃過」
+  // 的事件合成兩個模板 + 一張表。走 barrel，同上面那一族。
+  zConfigWorldCuesDoc,
   // 競技場規則（GH#410）—— 走 barrel，同上面那一族。⚠️ 這一份是全 repo 唯一一份
   // 被四頁共同編輯的 config，所以它是唯一用得到 `ConfigDocSpec.elsewhere` 的。
   zConfigArenaRulesDoc,
@@ -613,6 +616,215 @@ const VFX_CLEANUP_SPEC: ConfigDocSpec = {
       why: "⏳ 三秒終極上限的**常駐特效豁免表**（比對粒子系統名稱前綴）：torch-flame-（場地火把）、fire-ring-（火圈，整回合都在）、revive-（復活圈餘燼，活到有人救起來）、proj-（投射物拖尾）、coin- / flower-（地上的金幣與花的光點，活到被撿走）、login- / intermission-（登入頁與中場背景）。通用表單引擎畫不了字串陣列，所以這一頁不編輯它，但每次儲存都必須原封不動帶著走 —— 掉了的話上面那格「掃到哪裡」設成 scene 時，場地火把與地上的金幣光點會每三秒被收掉一次。要改它請走內容覆蓋層。⚠️ 走特效管線建立的常駐特效（角色身上的光暈、拖尾、火圈）**不必列在這張表**：它們在建立當下就被程式標成常駐了，這張表只是給那一族「直接 new 出來、不走管線」的系統用的。",
     },
   ],
+};
+
+// ───────────────────────────────────── 世界演出 (config/world-cues, 2026-08-23) ─
+
+const WORLD_CUES_SPEC: ConfigDocSpec = {
+  page: "worldCues",
+  collection: "config",
+  docId: "world-cues",
+  schemaTag: "config.world-cues@1",
+  zod: zConfigWorldCuesDoc,
+  title: "世界演出",
+  intro: [
+    "⚠️ 這一頁修的是**六件在遊戲裡看不見的事**。2026-08-23 的窮舉稽核（把伺服器發出的每一則事件對客戶端逐一比對）抓到七則事件：伺服器每次都算、每次都送到玩家的瀏覽器，而畫面上**一次都沒有發生過**。殭屍憑空出現、召喚物憑空出現又憑空消失、暗夜旗插下去沒有任何動靜、守護者睡著了沒有人知道、荊棘的鞭子從來沒被畫出來過。傷害照樣掉血，所以它看起來完全正常。",
+    "六則接上去了，而且**不是六段程式** —— 它們在做同一件事（「某個東西在某個座標出現／消失／掃過了」），所以是**兩個模板 + 這一張表**：點（一個座標上的一次性爆發，5 列）與線（兩端之間的一道掃過，1 列）。要加第七則不必改程式，只要多一列。",
+    "第七則（守護者出現）**刻意沒有接** —— 雕像是開場就站在那裡的實體，身體本來就畫得出來，而玩家真正要看的那一拍是它**甦醒**，那一則早就有畫。理由與「什麼時候這條理由會失效」寫在程式裡的豁免表，並且有一條測試在守：一則送到客戶端的事件要嘛有人畫、要嘛在豁免表上帶著理由，兩者皆非就紅。",
+    "⛔ 這一頁沒有一格會改變任何傷害、任何一塊錢、任何一個實體的存在。每一列的第一格關掉，畫面就逐位元回到這一版之前。",
+  ],
+  consumer:
+    "apps/client/src/vfx/worldCues.ts 的 worldCues() → worldCuePoint() / worldCueLine()，由 VfxSystem.handleEvent 的世界演出模板呼叫（點走 layeredPop，線走 strikeArc）",
+  effect:
+    "玩家**下一次重新整理遊戲頁面**時生效（客戶端開機時載內容覆蓋層）。⛔ 不必重開一場。",
+  fields: [
+    {
+      path: "point.mobSpawn.enabled",
+      zh: "殭屍破土：畫不畫",
+      note: "殭屍在生怪點冒出來的那一瞬間。⭐ 在這一版之前這一則事件過線了但**沒有人畫它** —— 殭屍是憑空出現的。關掉＝逐位元回到這一版之前（事件照樣送、實體照樣在、傷害照樣結算，只是那一團不畫）。⭐ 這一格是這一列的一鍵 rollback。",
+    },
+    {
+      path: "point.mobSpawn.heavy",
+      zh: "殭屍破土：用重版",
+      note: "關＝輕版（小、短、不搶戲）；開＝重版（大、亮、看得到）。⚠️ 沒有第三檔 —— 最亮的那一檔是死亡與 EX 施法在用的，這一頁的六件事沒有一件該跟它們一樣響。",
+    },
+    {
+      path: "point.mobSpawn.heightY",
+      zh: "殭屍破土：離地多高",
+      note: "這一團從離地幾個世界單位的地方冒出來。0＝貼地，1 以上＝身體中段。⚠️ 綁錯高度的特效不是「醜」，是**看不見** —— 埋進地板下或飄在頭頂外。",
+    },
+    {
+      path: "point.mobSpawn.tintR",
+      zh: "殭屍破土：紅",
+      note: "這一團顏色的紅成分（0–1）。三格一起看：殭屍破土的出貨配色是刻意跟它旁邊會發生的事分開的，改成跟傷害數字同色會讓玩家誤讀成一次打擊。",
+    },
+    {
+      path: "point.mobSpawn.tintG",
+      zh: "殭屍破土：綠",
+      note: "這一團顏色的綠成分（0–1）。三格一起決定它在戰場上一眼分不分得出來 —— 跟地板、血條或傷害數字同色的演出，等於沒畫。",
+    },
+    {
+      path: "point.mobSpawn.tintB",
+      zh: "殭屍破土：藍",
+      note: "這一團顏色的藍成分（0–1）。⚠️ 三格全部調到 0 不會關掉這一團，只會讓它變成黑的（黑色的加色特效在畫面上幾乎看不見）。要關請用第一格。",
+    },
+    {
+      path: "point.summonSpawn.enabled",
+      zh: "召喚物成形：畫不畫",
+      note: "召喚物（96-04 獨孤九劍的九柄劍魂、91-002 亡靈大軍的食屍鬼）成形的那一下。同樣是在這一版之前完全沒有人畫。關掉＝逐位元回到這一版之前（事件照樣送、實體照樣在、傷害照樣結算，只是那一團不畫）。⭐ 這一格是這一列的一鍵 rollback。",
+    },
+    {
+      path: "point.summonSpawn.heavy",
+      zh: "召喚物成形：用重版",
+      note: "關＝輕版（小、短、不搶戲）；開＝重版（大、亮、看得到）。⚠️ 沒有第三檔 —— 最亮的那一檔是死亡與 EX 施法在用的，這一頁的六件事沒有一件該跟它們一樣響。",
+    },
+    {
+      path: "point.summonSpawn.heightY",
+      zh: "召喚物成形：離地多高",
+      note: "這一團從離地幾個世界單位的地方冒出來。0＝貼地，1 以上＝身體中段。⚠️ 綁錯高度的特效不是「醜」，是**看不見** —— 埋進地板下或飄在頭頂外。",
+    },
+    {
+      path: "point.summonSpawn.tintR",
+      zh: "召喚物成形：紅",
+      note: "這一團顏色的紅成分（0–1）。三格一起看：召喚物成形的出貨配色是刻意跟它旁邊會發生的事分開的，改成跟傷害數字同色會讓玩家誤讀成一次打擊。",
+    },
+    {
+      path: "point.summonSpawn.tintG",
+      zh: "召喚物成形：綠",
+      note: "這一團顏色的綠成分（0–1）。三格一起決定它在戰場上一眼分不分得出來 —— 跟地板、血條或傷害數字同色的演出，等於沒畫。",
+    },
+    {
+      path: "point.summonSpawn.tintB",
+      zh: "召喚物成形：藍",
+      note: "這一團顏色的藍成分（0–1）。⚠️ 三格全部調到 0 不會關掉這一團，只會讓它變成黑的（黑色的加色特效在畫面上幾乎看不見）。要關請用第一格。",
+    },
+    {
+      path: "point.summonDespawn.enabled",
+      zh: "召喚物消散：畫不畫",
+      note: "召喚物到期／被殺／主人死了／被新的擠掉時消失的那一下。關掉＝逐位元回到這一版之前（事件照樣送、實體照樣在、傷害照樣結算，只是那一團不畫）。⭐ 這一格是這一列的一鍵 rollback。",
+    },
+    {
+      path: "point.summonDespawn.heavy",
+      zh: "召喚物消散：用重版",
+      note: "關＝輕版（小、短、不搶戲）；開＝重版（大、亮、看得到）。⚠️ 沒有第三檔 —— 最亮的那一檔是死亡與 EX 施法在用的，這一頁的六件事沒有一件該跟它們一樣響。",
+    },
+    {
+      path: "point.summonDespawn.heightY",
+      zh: "召喚物消散：離地多高",
+      note: "這一團從離地幾個世界單位的地方冒出來。0＝貼地，1 以上＝身體中段。⚠️ 綁錯高度的特效不是「醜」，是**看不見** —— 埋進地板下或飄在頭頂外。",
+    },
+    {
+      path: "point.summonDespawn.tintR",
+      zh: "召喚物消散：紅",
+      note: "這一團顏色的紅成分（0–1）。三格一起看：召喚物消散的出貨配色是刻意跟它旁邊會發生的事分開的，改成跟傷害數字同色會讓玩家誤讀成一次打擊。",
+    },
+    {
+      path: "point.summonDespawn.tintG",
+      zh: "召喚物消散：綠",
+      note: "這一團顏色的綠成分（0–1）。三格一起決定它在戰場上一眼分不分得出來 —— 跟地板、血條或傷害數字同色的演出，等於沒畫。",
+    },
+    {
+      path: "point.summonDespawn.tintB",
+      zh: "召喚物消散：藍",
+      note: "這一團顏色的藍成分（0–1）。⚠️ 三格全部調到 0 不會關掉這一團，只會讓它變成黑的（黑色的加色特效在畫面上幾乎看不見）。要關請用第一格。",
+    },
+    {
+      path: "point.deathWardSpawn.enabled",
+      zh: "死亡遺留插旗：畫不畫",
+      note: "71-00 暗夜契約的暗夜旗在英雄倒下的地方豎起來的那一下。⭐ **黑圈本身不在這一頁** —— 那是一個實體，半徑是伺服器權威的；這裡只管插旗的那一瞬間。關掉＝逐位元回到這一版之前（事件照樣送、實體照樣在、傷害照樣結算，只是那一團不畫）。⭐ 這一格是這一列的一鍵 rollback。",
+    },
+    {
+      path: "point.deathWardSpawn.heavy",
+      zh: "死亡遺留插旗：用重版",
+      note: "關＝輕版（小、短、不搶戲）；開＝重版（大、亮、看得到）。⚠️ 沒有第三檔 —— 最亮的那一檔是死亡與 EX 施法在用的，這一頁的六件事沒有一件該跟它們一樣響。",
+    },
+    {
+      path: "point.deathWardSpawn.heightY",
+      zh: "死亡遺留插旗：離地多高",
+      note: "這一團從離地幾個世界單位的地方冒出來。0＝貼地，1 以上＝身體中段。⚠️ 綁錯高度的特效不是「醜」，是**看不見** —— 埋進地板下或飄在頭頂外。",
+    },
+    {
+      path: "point.deathWardSpawn.tintR",
+      zh: "死亡遺留插旗：紅",
+      note: "這一團顏色的紅成分（0–1）。三格一起看：死亡遺留插旗的出貨配色是刻意跟它旁邊會發生的事分開的，改成跟傷害數字同色會讓玩家誤讀成一次打擊。",
+    },
+    {
+      path: "point.deathWardSpawn.tintG",
+      zh: "死亡遺留插旗：綠",
+      note: "這一團顏色的綠成分（0–1）。三格一起決定它在戰場上一眼分不分得出來 —— 跟地板、血條或傷害數字同色的演出，等於沒畫。",
+    },
+    {
+      path: "point.deathWardSpawn.tintB",
+      zh: "死亡遺留插旗：藍",
+      note: "這一團顏色的藍成分（0–1）。⚠️ 三格全部調到 0 不會關掉這一團，只會讓它變成黑的（黑色的加色特效在畫面上幾乎看不見）。要關請用第一格。",
+    },
+    {
+      path: "point.guardianSleep.enabled",
+      zh: "守護者重新睡著：畫不畫",
+      note: "守護者久沒被打就回到休眠。這是「威脅解除」的訊號 —— 不知道它睡了的隊伍會繼續繞路。⚠️ 這一則事件的資料**只有一個 id**，位置是客戶端從那具身體現在站的地方讀來的。關掉＝逐位元回到這一版之前（事件照樣送、實體照樣在、傷害照樣結算，只是那一團不畫）。⭐ 這一格是這一列的一鍵 rollback。",
+    },
+    {
+      path: "point.guardianSleep.heavy",
+      zh: "守護者重新睡著：用重版",
+      note: "關＝輕版（小、短、不搶戲）；開＝重版（大、亮、看得到）。⚠️ 沒有第三檔 —— 最亮的那一檔是死亡與 EX 施法在用的，這一頁的六件事沒有一件該跟它們一樣響。",
+    },
+    {
+      path: "point.guardianSleep.heightY",
+      zh: "守護者重新睡著：離地多高",
+      note: "這一團從離地幾個世界單位的地方冒出來。0＝貼地，1 以上＝身體中段。⚠️ 綁錯高度的特效不是「醜」，是**看不見** —— 埋進地板下或飄在頭頂外。",
+    },
+    {
+      path: "point.guardianSleep.tintR",
+      zh: "守護者重新睡著：紅",
+      note: "這一團顏色的紅成分（0–1）。三格一起看：守護者重新睡著的出貨配色是刻意跟它旁邊會發生的事分開的，改成跟傷害數字同色會讓玩家誤讀成一次打擊。",
+    },
+    {
+      path: "point.guardianSleep.tintG",
+      zh: "守護者重新睡著：綠",
+      note: "這一團顏色的綠成分（0–1）。三格一起決定它在戰場上一眼分不分得出來 —— 跟地板、血條或傷害數字同色的演出，等於沒畫。",
+    },
+    {
+      path: "point.guardianSleep.tintB",
+      zh: "守護者重新睡著：藍",
+      note: "這一團顏色的藍成分（0–1）。⚠️ 三格全部調到 0 不會關掉這一團，只會讓它變成黑的（黑色的加色特效在畫面上幾乎看不見）。要關請用第一格。",
+    },
+    {
+      path: "line.damageLine.enabled",
+      zh: "荊棘直線：畫不畫",
+      note: "18-00 薔薇荊棘之刃（妖狐藏馬）每一次普攻掃出去的那條直線。⛔ 在這一版之前，被打到的人只看得到自己莫名其妙掉血 —— 寫這個效果的人自己留了一句「玩家必須**看見**那一鞭，而不只是被它打到」，而那條線一次都沒有被畫出來過。關掉＝回到那個狀態。",
+    },
+    {
+      path: "line.damageLine.power",
+      zh: "荊棘直線：多粗多炸",
+      note: "0.4＝一絲細線；2＝又粗又炸（粗細與分岔一起放大）。⚠️ 它與傷害無關 —— 打多痛是技能設定的事，這一格只決定看起來多痛。",
+    },
+    {
+      path: "line.damageLine.lifeMs",
+      zh: "荊棘直線：留幾毫秒",
+      note: "太短＝眨眼就錯過（等於沒畫）；太長＝這支英雄**每一次普攻**都會掃一條，畫面會被塗滿。出貨值刻意偏短，因為它是普攻觸發而不是技能觸發。",
+    },
+    {
+      path: "line.damageLine.heightY",
+      zh: "荊棘直線：離地多高",
+      note: "這條線畫在離地幾個世界單位。太低會沉進地板、太高會從敵人頭上飛過去 —— 兩種都會讓玩家覺得「明明沒打到我」。",
+    },
+    {
+      path: "line.damageLine.tintR",
+      zh: "荊棘直線：紅",
+      note: "線的紅成分（0–1）。三格一起看：出貨配色是荊棘綠，刻意跟傷害數字的紅／紫分開 —— 同色會讓玩家把這條線讀成一次打擊而不是一道範圍。",
+    },
+    {
+      path: "line.damageLine.tintG",
+      zh: "荊棘直線：綠",
+      note: "線的綠成分（0–1）。三格一起決定這條鞭子在戰場上一眼分不分得出來 —— 跟地板或血條同色的線，等於沒畫。",
+    },
+    {
+      path: "line.damageLine.tintB",
+      zh: "荊棘直線：藍",
+      note: "線的藍成分（0–1）。⚠️ 三格全部調到 0 不會關掉這條線，只會讓它變成黑的（幾乎看不見）。要關請用第一格。",
+    },
+  ],
+  preserved: [],
 };
 
 // ───────────────────────────────────────────── 爽度特效 (config/feel-fx) ───
@@ -4744,7 +4956,7 @@ const UI_CUES_SPEC: ConfigDocSpec = {
     "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/ui-cues.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
   ],
   consumer:
-    "apps/client/src/ui/uiCuesConfig.ts 的 uiCues()（懶讀 Configs，⛔ 沒有第二個必須記得的接線點）→ vfx/Telegraph.ts 的建構子讀白色魔法陣那兩格、ui/castFeedback.ts 的 sampleCastFlash() 與 ui/passiveProc.ts 讀被動那三格、ui/platform/RoomView.tsx 的 RallyCountdownStrip 讀「再等一下」那一張表",
+    "apps/client/src/ui/uiCuesConfig.ts 的 uiCues()（懶讀 Configs，⛔ 沒有第二個必須記得的接線點）→ vfx/Telegraph.ts 的建構子讀白色魔法陣那兩格、ui/castFeedback.ts 的 sampleCastFlash() 與 ui/passiveProc.ts 讀被動那三格、ui/platform/RoomView.tsx 的 RallyCountdownStrip 讀「再等一下」那一張表、ui/coinThrow.ts 的 coinThrowGreysWhenPoor() 讀陣亡投幣那一格（消費端是 ui/HudRoot.tsx 的觀戰橫幅按鈕與 ui/TouchControls.tsx 的中央大鈕）",
   effect:
     "玩家**下一次重新整理遊戲頁面**時生效（客戶端開機載內容時把文件放進登錄表）。已經畫在地上的預告圈不會中途換色 —— 樣式是在起手那一刻決定的。",
   fields: [
@@ -4752,6 +4964,15 @@ const UI_CUES_SPEC: ConfigDocSpec = {
       path: "telegraphRune",
       zh: "預告圈的填滿畫成白色魔法陣",
       note: "owner 2026-08-23 要的那個 w3x look：吟唱期間腳下那一圈的**填滿**改成白色的魔法陣貼圖。關掉＝回到 #228 的通道色填滿（橘／藍／紅跟著外圈走）。⚠️ 不論開關，**外圈永遠是通道色** —— 這一格動不到「這一發是誰放的」那個資訊。",
+    },
+    {
+      path: "telegraphGroundShape",
+      zh: "地面技能帶「直線傷害」時，預告畫哪個形狀",
+      optionLabels: {
+        line: "line 膠囊（畫真的會打到人的那條線）",
+        circle: "circle 圓圈（#228 的舊行為，rollback）",
+      },
+      note: "⚠️ **這一格不是外觀，是玩家會不會往錯的方向閃。** 7 支地面指定技能（重生之炎、鬼神烈戟、天下無雙…）的傷害判定是一條**膠囊**（`damageLine`），而它們的圓圈只負責**挑人**、決定那條線往哪指 —— 真正挨打的是線上那一條帶。⇒ 畫圓圈等於告訴玩家「往旁邊跑沒有用」，而往旁邊跑正好是唯一躲得掉的方向。`line`（出貨）＝畫真的會打到人的那條膠囊，長寬逐格取自技能自己的資料；`circle`＝一律畫圓圈（#228 落地時的行為）。⭐ `circle` 是 **rollback**，⛔ 不是一個對等的選項：它會畫回一個和判定不一致的形狀。⚠️ 沒有 `damageLine` 的地面技能不受這一格影響，照舊畫圓圈。",
     },
     {
       path: "telegraphRuneAlpha",
@@ -4772,6 +4993,15 @@ const UI_CUES_SPEC: ConfigDocSpec = {
       path: "passiveIcdReadout",
       zh: "在圖示上畫被動的內部冷卻",
       note: "owner 的「冷卻剩多少」那一半：技能格底部一條紫色底條 + 剩餘秒數。⚠️ 它是**客戶端推算的估計值**（見上面的說明），刻意畫得和伺服器送來的冷卻掃描不一樣，免得一個估計值冒充權威值。關掉＝只閃不畫冷卻。",
+    },
+    {
+      path: "coinThrowButtonMode",
+      zh: "陣亡投幣：金幣不足時那顆按鈕的樣子",
+      optionLabels: {
+        "always-enabled": "always-enabled 照亮照可點，被拒時說明原因（出貨）",
+        "grey-when-poor": "grey-when-poor 客戶端預測不足就變灰（rollback）",
+      },
+      note: "⚠️ **這一格管不到「有沒有回饋」** —— 被拒的每一次都會在畫面上說出原因（金幣不足／次數用完／還活著…），那是修好，⛔ 不是選項。這一格只管**要不要先把按鈕變灰**。`always-enabled`（出貨）＝照亮、照可點，丟出去讓伺服器裁決，被拒時畫面說明原因 —— 選它的理由是客戶端手上的金幣是快照投影（有延遲），拿它擋按鈕會在邊界產生「明明有錢卻按不下去」，而那比「按了被拒」更難查。`grey-when-poor`＝客戶端預測金幣不足就直接變灰、按不下去（rollback 用）。⚠️ 不論選哪一個，鍵盤 **G** 與觸控那顆仍然送得出去（sim 才是權威），所以那條路照樣會拿到那句話 —— 變灰只是提早講。",
     },
   ],
   preserved: [
@@ -4892,6 +5122,11 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   // 一起才到得了操作者手上：store.ts 的 `Page` union + `SESSION_REQUIRED_PAGES`、
   // App.tsx 的導覽列一列、以及 `content/config/ui-cues.json` 出貨檔。
   UI_CUES_SPEC,
+  // 世界演出（2026-08-23 稽核）。⚠️ 同 AUDIO_MIX_SPEC 那一段：這一列要跟 store.ts 的
+  // `Page` union + `SESSION_REQUIRED_PAGES`、App.tsx 的導覽列一列，以及
+  // `content/config/world-cues.json` 出貨檔一起，才到得了操作者手上
+  // （少了出貨檔 `configForms.test.ts` 直接紅 —— 它對每一個 spec 都 readFileSync 那份 JSON）。
+  WORLD_CUES_SPEC,
 ];
 
 export function specForPage(page: string): ConfigDocSpec | null {

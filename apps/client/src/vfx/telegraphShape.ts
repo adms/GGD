@@ -25,6 +25,9 @@
  *     `abilitySystem.ts` `enemiesInCircle(..., resolveAbilityRadius(world,
  *     def.radius ?? 1))` and re-applied in `CastResolveSystem.ts`. The old
  *     `?? 1.2` in VfxSystem matched nothing in the sim.
+ *     ⭐ EXCEPT when the ability carries a `damageLine` — see the next block.
+ *   • `ground` + `damageLine` → LINE. See `groundLashGeometry` below; this is
+ *     the one place where the castType alone is NOT the whole answer.
  *   • `targeted` → LOCK: an arc at the victim's feet + a tether back to the
  *     caster. The sim hits exactly ONE entity, so there is no area to draw and
  *     a circle would teach a dodge that does not exist. The arc is the body
@@ -47,7 +50,21 @@
  *
  * A PASSIVE-ONLY ability is never cast, therefore never telegraphs; it is
  * reported as PASSIVE by the audit rather than MISSING.
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⚠️ THE ONE REGISTRY READ (`uiCues()`), AND WHY THE SWEEP STILL RUNS HEADLESS
+ *
+ * The header above used to claim "no registry lookups". There is now exactly
+ * one: `uiCues().telegraphGroundShape`, the rollback knob for the ground-lash
+ * rule below (第一守則 — a decision point is a field, not a literal). It goes
+ * through `ui/uiCuesConfig`, which is a LAZY `Configs.tryGet()` with a pure
+ * shipped-default fallback, so in a node test with no content registered it
+ * returns `DEFAULT_UI_CUES` and the whole-roster sweep still works — no
+ * Babylon, no DOM, no `ContentLoader` boot required.
  */
+
+import { clampSpreadRadius } from "@ggd/shared/sim/effects/spreadLimits";
+import { uiCues } from "../ui/uiCuesConfig";
 
 /** castType values, mirrored from `@ggd/shared/sim/content/defs` CastType. */
 export type TelegraphCastType = "targeted" | "skillshot" | "ground" | "self" | "dash";
@@ -106,6 +123,17 @@ export interface TelegraphEffectLike {
   readonly path?: string;
   readonly distance?: number;
   readonly touchRadius?: number;
+  /**
+   * ⭐ `damageLine` 的膠囊 —— `length` 往前多遠、`width` 是**全寬**（⛔ 不是半徑，
+   * sim 自己也寫 `capsule(start, end, width / 2)`），`fromCaster` 省略 = 從施法者
+   * 身上出發。三格逐字對到 `sim/effects/variants/damageLine.ts` 的同名欄位。
+   *
+   * ⚠️ `length` / `width` 寫成 optional 是**結構性**的，⛔ 不是偷懶：這個介面要
+   * 收得下整個 `EffectDef` union，而 union 裡只有 `damageLine` 這一個成員有這兩格。
+   */
+  readonly length?: number;
+  readonly width?: number;
+  readonly fromCaster?: boolean;
 }
 
 export interface TelegraphProjectileLike {
@@ -170,6 +198,66 @@ function firstEffect(
 }
 
 /**
+ * ⭐ A `ground` cast that carries a `damageLine` hits a CAPSULE, not the disc.
+ *
+ * ── 這不是裝飾問題，是「玩家被教錯閃避方向」 ────────────────────────────────
+ * `castType: "ground"` 的圓盤（`abilitySystem.groundAoeTargets` 的
+ * `resolveAbilityRadius(def.radius ?? 1)`）在這一族技能上**只負責挑人**：它算出
+ * `ctx.targets`，而 `damageLine` 拿 `ctx.targets[0]` 只做一件事 —— 決定這條線
+ * **往哪指**（`effectCommon.aimDirection`）。真正決定誰挨打的是
+ * `sim/effects/damageLine.ts` 的 `queryOverlap(world, capsule(start, end, width / 2))`。
+ *
+ * ⇒ 畫圓盤等於在說「**往旁邊跑沒有用**」，而往旁邊跑正好是**唯一有用**的那個
+ * 方向。owner 給這個 kind 的原始設計逐字說的就是這件事（`damageLine.ts` 檔頭）：
+ * 一個以受害者為心的圓「也會打到站在他**背後**與**旁邊**的人，於是『站在他背後』
+ * 就不再是對他的答案」。錄影回放讀同一支函式，所以它一樣是瞎的。
+ *
+ * ── ⛔ 長寬**不**乘 `abilityRange` ────────────────────────────────────────────
+ * skillshot 的走廊乘、`delayed.advance` 乘、`spawnModelFx` 乘 —— 因為 sim 對那
+ * 三條真的套了 `resolveAbilityRadius` / `resolveAbilityRange`。`damageLine`
+ * **沒有**，而且那是刻意的（`sim/effects/damageLine.ts` 檔頭：「⚠️ NO
+ * `combatEnv.abilityRange` FACTOR, deliberately」）。乘進去會讓走廊窄 1/0.6 ≈ 1.67 倍，
+ * 也就是把一個「畫錯形狀」換成一個「形狀對但尺寸說謊」。
+ *
+ * ⭐ `clampSpreadRadius` 是**同一支函式**（⛔ 不是抄一個 24）：後台的覆蓋層寫入
+ * 路徑今天不跑 Zod（見 `sim/effects/spreadLimits.ts` 檔頭），所以一份 `length: 500`
+ * 真的進得了登錄表 —— sim 會夾到 24，而沒有夾的預告會畫 500。
+ *
+ * ── `fromCaster: false` 為什麼退回圓盤 ──────────────────────────────────────
+ * 那種形狀的膠囊從**受害者**身上起算（`damageLine.ts` 的 `start = tt.pos`），而
+ * 客戶端在起手那一刻還不知道受害者是誰。`TelegraphGeometry` 的 `line` 只錨在
+ * 施法者身上 ⇒ 畫出來會是一條起點錯的線，那比圓盤更糟。出貨內容一支都沒有用它。
+ *
+ * 回 `null` = 這一支不走膠囊那條路（呼叫端接著畫圓盤），⛔ 不是「畫不出來」。
+ */
+function groundLashGeometry(def: TelegraphAbilityLike): TelegraphGeometry | null {
+  // 第一守則 —— 「圓盤還是膠囊」是一個決策點,所以它是後台『畫面提示』頁的一格
+  // 下拉,⛔ 不是這裡的一句 if。`"circle"` = rollback 到 #228 落地時的行為。
+  if (uiCues().telegraphGroundShape !== "line") return null;
+  const lash = firstEffect(
+    def,
+    (e) =>
+      e.kind === "damageLine" &&
+      typeof e.length === "number" &&
+      e.length > 0 &&
+      typeof e.width === "number" &&
+      e.width > 0 &&
+      e.fromCaster !== false,
+  );
+  if (!lash) return null;
+  const length = clampSpreadRadius(lash.length as number);
+  const width = clampSpreadRadius(lash.width as number);
+  if (!(length >= MIN_EXTENT) || !(width >= MIN_EXTENT)) return null;
+  return {
+    kind: "line",
+    length,
+    width,
+    anchor: "caster",
+    source: `damageLine length ${length} × width ${width} (sim applies no abilityRange) — the capsule the damage query tests`,
+  };
+}
+
+/**
  * Derive the ability's telegraph GEOMETRY from its own content, post-#136
  * multiplier. Returns null when the shape is NOT derivable — the single failure
  * mode, asserted against by `telegraphCoverage.test.ts`. There is deliberately
@@ -185,6 +273,9 @@ export function deriveTelegraphGeometry(
 
   switch (def.castType) {
     case "ground": {
+      // ⭐ 膠囊優先於圓盤:圓盤挑人,膠囊打人 —— 見 `groundLashGeometry` 檔頭。
+      const lash = groundLashGeometry(def);
+      if (lash) return lash;
       const raw = typeof def.radius === "number" && def.radius > 0 ? def.radius : SIM_GROUND_DEFAULT_RADIUS;
       const radius = raw * mult;
       if (!(radius >= MIN_EXTENT)) return null;

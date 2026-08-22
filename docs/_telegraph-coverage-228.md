@@ -22,7 +22,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | `self` | 93 | self marker at the caster's feet |
 | `targeted` | 72 | lock (arc at the victim + tether to the caster) — walking does not help |
 | `—` | 58 | not cast |
-| `ground` | 53 | circle — the real `enemiesInCircle` disc; you can walk out |
+| `ground` | 53 | circle — the real `enemiesInCircle` disc; you can walk out. ⭐ WITH a `damageLine` node: line — the capsule the damage query tests (step sideways) |
 | `skillshot` | 15 | line — the projectile's corridor; step sideways |
 | `dash` | 2 | line — the sweep of the dash body |
 
@@ -39,7 +39,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 亞瑟王 - Saber `godie-e002` | PASSIVE | 20-00 銀色甲胄 | `—` | — | 🟣 PASSIVE | never cast |
 | 亞瑟王 - Saber `godie-e002` | Q | 20-02 感知能力 | `—` | — | 🟣 PASSIVE | never cast |
 | 亞瑟王 - Saber `godie-e002` | W | 20-01 風王結界 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 亞瑟王 - Saber `godie-e002` | E | 20-03 約束與勝利之劍 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 亞瑟王 - Saber `godie-e002` | E | 20-03 約束與勝利之劍 | `ground` | line 14.00×2.00u | 🟡 AMBIGUOUS | damageLine length 14 × width 2 (sim applies no abilityRange) — the capsule the damage query tests |
 | 亞瑟王 - Saber `godie-e002` | R | 20-04 Avalon-永恆的理想鄉 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 亞瑟王 - Saber `godie-e002` | EX | 20-002 解放.約束勝利劍MAX | `—` | — | 🟣 PASSIVE | never cast |
 | 火霧戰士 - 夏娜 `godie-e008` | PASSIVE | 21-00 灼眼 | `—` | — | 🟣 PASSIVE | never cast |
@@ -52,7 +52,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 最終泛用人型決戰兵器 - 初號機 `godie-e00r` | Q | 59-01 吞噬 | `—` | — | 🟣 PASSIVE | never cast |
 | 最終泛用人型決戰兵器 - 初號機 `godie-e00r` | W | 59-02 高週波短刀 | `—` | — | 🟣 PASSIVE | never cast |
 | 最終泛用人型決戰兵器 - 初號機 `godie-e00r` | E | 59-03 AT力場 | `—` | — | 🟣 PASSIVE | never cast |
-| 最終泛用人型決戰兵器 - 初號機 `godie-e00r` | R | 59-04 野戰型陽電子砲 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 最終泛用人型決戰兵器 - 初號機 `godie-e00r` | R | 59-04 野戰型陽電子砲 | `ground` | line 8.25×2.20u | 🟡 AMBIGUOUS | damageLine length 8.25 × width 2.2 (sim applies no abilityRange) — the capsule the damage query tests |
 | 最終泛用人型決戰兵器 - 初號機 `godie-e00r` | EX | 59-001 完全暴走 | `—` | — | 🟣 PASSIVE | never cast |
 | 白木老樹精 - 白木卡迪那 `godie-e00s` | PASSIVE | 70-00 紮根 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 白木老樹精 - 白木卡迪那 `godie-e00s` | Q | 70-01 伸卡球 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
@@ -69,7 +69,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 寫輪眼復仇者 - 宇智波佐助 `godie-edem` | PASSIVE | 45-00 寫輪眼 | `—` | — | 🟣 PASSIVE | never cast |
 | 寫輪眼復仇者 - 宇智波佐助 `godie-edem` | Q | 45-01 火遁-豪火龍之術 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
 | 寫輪眼復仇者 - 宇智波佐助 `godie-edem` | W | 45-02 千鳥流 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 寫輪眼復仇者 - 宇智波佐助 `godie-edem` | E | 45-03 千鳥 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 寫輪眼復仇者 - 宇智波佐助 `godie-edem` | E | 45-03 千鳥 | `ground` | line 12.83×12.00u | 🟡 AMBIGUOUS | damageLine length 12.83 × width 12 (sim applies no abilityRange) — the capsule the damage query tests |
 | 寫輪眼復仇者 - 宇智波佐助 `godie-edem` | R | 45-04 哥哥 | `—` | — | 🟣 PASSIVE | never cast |
 | 寫輪眼復仇者 - 宇智波佐助 `godie-edem` | EX | 45-002 天照 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | PASSIVE | 13-00 念。攻防轉換 | `—` | — | 🟣 PASSIVE | never cast |
@@ -79,7 +79,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | R | 13-04 龍星群 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | EX | 13-002 絕。暗殺奧義 | `—` | — | 🟣 PASSIVE | never cast |
 | 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | PASSIVE | 15-00 真·不死不滅 | `—` | — | 🟣 PASSIVE | never cast |
-| 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | Q | 15-01 雷神槍「巨神殺手」 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | Q | 15-01 雷神槍「巨神殺手」 | `ground` | line 6.42×1.60u | 🟡 AMBIGUOUS | damageLine length 6.42 × width 1.6 (sim applies no abilityRange) — the capsule the damage query tests |
 | 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | W | 15-02 疾風迅雷 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | E | 15-03 獄炎煉我 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | R | 15-04 雷天大壯。貳式 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
@@ -111,13 +111,13 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 開外掛的死神 - 黑崎一護 `godie-h01n` | PASSIVE | 79-00 靈壓 | `—` | — | 🟣 PASSIVE | never cast |
 | 開外掛的死神 - 黑崎一護 `godie-h01n` | Q | 79-01 瞬步 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
 | 開外掛的死神 - 黑崎一護 `godie-h01n` | W | 79-02 月牙斬擊 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 開外掛的死神 - 黑崎一護 `godie-h01n` | E | 79-03 月牙天衝 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 開外掛的死神 - 黑崎一護 `godie-h01n` | E | 79-03 月牙天衝 | `ground` | line 11.00×2.00u | 🟡 AMBIGUOUS | damageLine length 11 × width 2 (sim applies no abilityRange) — the capsule the damage query tests |
 | 開外掛的死神 - 黑崎一護 `godie-h01n` | R | 79-04 卍解 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 開外掛的死神 - 黑崎一護 `godie-h01n` | EX | 79-002 虛化 | `—` | — | 🟣 PASSIVE | never cast |
 | 亂世癿王者 - 呂布奉先 `godie-h01u` | PASSIVE | 80-00 飛將神弓 | `—` | — | 🟣 PASSIVE | never cast |
 | 亂世癿王者 - 呂布奉先 `godie-h01u` | Q | 80-01 天下無雙 | `—` | — | 🟣 PASSIVE | never cast |
 | 亂世癿王者 - 呂布奉先 `godie-h01u` | W | 80-02 弒鬼神 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 亂世癿王者 - 呂布奉先 `godie-h01u` | E | 80-03 鬼神烈戟 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 亂世癿王者 - 呂布奉先 `godie-h01u` | E | 80-03 鬼神烈戟 | `ground` | line 10.00×2.00u | 🟡 AMBIGUOUS | damageLine length 10 × width 2 (sim applies no abilityRange) — the capsule the damage query tests |
 | 亂世癿王者 - 呂布奉先 `godie-h01u` | R | 80-04 赤兔咆哮 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 亂世癿王者 - 呂布奉先 `godie-h01u` | EX | 80-002 戰無不勝 | `—` | — | 🟣 PASSIVE | never cast |
 | 國寶級的畜生 - 熊貓 `godie-h02k` | PASSIVE | 89-00 憤怒的門牙 | `—` | — | 🟣 PASSIVE | never cast |

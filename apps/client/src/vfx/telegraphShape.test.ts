@@ -49,11 +49,29 @@
  * would both have passed while silently drifting apart, which is precisely the
  * divergence GH#458 shipped (破法對咒 shielding the enemy team).
  */
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeAll } from "vitest";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
+import { ContentLoader } from "@ggd/shared/content/loader";
+import { FsContentSource } from "@ggd/shared/content/node/FsContentSource";
+import {
+  Arenas,
+  Configs,
+  Models,
+  StatusEffects,
+  VfxDefs,
+  registerAll,
+} from "@ggd/shared/content/registries";
+import {
+  Abilities,
+  Augments,
+  Champions,
+  Items,
+  LootTables,
+  Projectiles,
+} from "@ggd/shared/sim/content/registry";
 import {
   BODY_RADIUS,
   SIM_GROUND_DEFAULT_RADIUS,
@@ -240,6 +258,61 @@ describe("telegraph geometry is derived from content, at the SIM's own size", ()
       false,
     );
     expect(isPassiveOnlyAbility(ability({}))).toBe(false);
+  });
+});
+
+/**
+ * ⭐ THE GROUND LASH — a `castType: "ground"` ability whose damage is a CAPSULE.
+ *
+ * WHY THE SAMPLE COMES OUT OF THE REGISTRY, not a hand-written fixture: the
+ * whole failure being locked here is "the drawn shape disagrees with the shape
+ * the sim tests", and a fixture I wrote agrees with whatever I believed while
+ * writing it (失敗形態⑤). So the sweep runs over the SHIPPED abilities, after
+ * `registerAll` has expanded templates and resolved the tier fields.
+ *
+ * The multiplier is deliberately NOT 1: `damageLine` is the one corridor the
+ * sim does not scale (`sim/effects/damageLine.ts`: 「⚠️ NO
+ * `combatEnv.abilityRange` FACTOR, deliberately」), so a derivation that
+ * multiplied it would come out 2× narrow here and go red.
+ */
+describe("a ground cast carrying a damageLine draws the CAPSULE, not the picker disc", () => {
+  const REPO = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..", "..");
+  const lashEnv: TelegraphEnv = { abilityRange: 0.5, projectile: () => null };
+
+  beforeAll(async () => {
+    for (const r of [Champions, Abilities, Items, Augments, Projectiles, LootTables]) r.clear();
+    for (const r of [Arenas, Configs, Models, VfxDefs, StatusEffects]) r.clear();
+    registerAll((await new ContentLoader(new FsContentSource(join(REPO, "content"))).load()).store);
+  });
+
+  it("every shipped one derives a LINE whose length/width are the node's own", () => {
+    cover("telegraph-shape-derivation");
+    const swept: string[] = [];
+    for (const id of Abilities.ids()) {
+      const def = Abilities.get(id) as unknown as TelegraphAbilityLike;
+      if (def.castType !== "ground") continue;
+      const lash = def.effects.find((e) => e.kind === "damageLine") as
+        | { length: number; width: number }
+        | undefined;
+      if (!lash) continue;
+      const g = deriveTelegraphGeometry(def, lashEnv);
+      // circle = "you are safe outside this disc", which is the opposite of true:
+      // the disc only picks who triggers the lash, the capsule is what cuts.
+      expect(g?.kind, `${id} drew ${g?.kind} — the sim hits a capsule`).toBe("line");
+      const line = g as { length: number; width: number };
+      expect(line.width, `${id} width`).toBeCloseTo(lash.width, 6);
+      expect(line.length, `${id} length`).toBeCloseTo(lash.length, 6);
+      swept.push(id);
+    }
+    // a sweep that found nothing is a green test that proves nothing (#128)
+    expect(swept.length, "no shipped ground+damageLine ability was swept").toBeGreaterThan(0);
+  });
+
+  it("a ground ability with NO damageLine still draws the enemiesInCircle disc", () => {
+    cover("telegraph-shape-derivation");
+    // the knob only re-shapes the lash family; it must not swallow the other 70-odd
+    const g = deriveTelegraphGeometry(ability({ castType: "ground", radius: 4 }), lashEnv);
+    expect(g?.kind).toBe("circle");
   });
 });
 

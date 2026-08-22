@@ -41,6 +41,24 @@ export const zConfigUiCuesDoc = z
      */
     telegraphRune: z.boolean(),
     /**
+     * ⭐ **一支 `castType: "ground"` 的技能帶著 `damageLine` 時，地上畫哪一個形狀。**
+     *
+     * ⚠️ 這一格不是外觀，是**戰鬥正確性**。`ground` 的圓盤
+     *（`groundAoeTargets` 的 `def.radius ?? 1`）只**挑人**：它決定 `ctx.targets`，
+     * 而 `ctx.targets` 只被 `damageLine` 拿去決定「這條線往哪指」。真正決定
+     * 誰挨打的是 `sim/effects/damageLine.ts` 的**膠囊**
+     *（`capsule(start, end, width / 2)`）。⇒ 畫圓盤等於告訴玩家「往旁邊跑」
+     * 是躲不掉的，而那正好是**唯一躲得掉**的方向（owner 的原始設計逐字：
+     * 「一個以受害者為心的圓也會打到站在他**背後**的人，於是『站在他背後』
+     * 就不再是答案」）。
+     *
+     * · `"line"`（出貨）—— 有 `damageLine` 就畫那條膠囊，長寬**逐格取自那個節點**。
+     *   沒有 `damageLine` 的 `ground` 技能照舊畫圓盤，⛔ 這一格動不到它們。
+     * · `"circle"` —— 一律畫圓盤（#228 落地時的行為）。**這是 rollback**，
+     *   ⛔ 不是一個對等的選項：它會畫回一個和判定不一致的形狀。
+     */
+    telegraphGroundShape: z.enum(["line", "circle"]),
+    /**
      * 白色魔法陣那一層的不透明度上限。
      *
      * 太低 = 白圈在亮色地板上看不見（等於這一格沒開）；太高 = 它蓋掉腳下的模型，
@@ -85,6 +103,25 @@ export const zConfigUiCuesDoc = z
      * （倒數條那一行放得下的按鈕數）。空陣列 = 只剩「不等了」。
      */
     rallyExtendSeconds: z.array(z.number().int().min(1).max(120)).max(4),
+    /**
+     * ⭐ **陣亡投幣：金幣不足的時候，那顆按鈕長什麼樣。**
+     *
+     * ⚠️ 這一格**不管「有沒有回饋」** —— 被拒的每一次都會說出原因（`ui/coinThrow`），
+     * 那是第一·五守則，⛔ 不是一個選項。這一格只管**要不要先把按鈕變灰**。
+     *
+     * 為什麼它是一個決策點：出貨經濟保證每個玩家每一場都會撞到 ——
+     * `goldDrop.coinValue × goldDrop.coinsPerRound` 遠大於 `config@1 match.startingGold`，
+     * 所以一毛不花也只供得起其中一部分投幣次數。
+     *
+     * · `"always-enabled"`（出貨）—— 按鈕照亮、照可點，⭐ **權威側說了算**：
+     *   丟出去、伺服器拒絕、畫面說出「金幣不足」。⭐ 選它的理由是客戶端的
+     *   `seat.gold` 是快照投影（有延遲），拿它擋按鈕會在邊界產生
+     *   「明明有錢卻按不下去」，而那比「按了會被拒」更難查。
+     * · `"grey-when-poor"` —— 客戶端預測金幣不足就把按鈕變灰、不可按。
+     *   ⚠️ 鍵盤 **G** 與觸控那顆**仍然送得出去**（sim 才是權威），所以那條路
+     *   照樣會拿到那句話 —— 變灰只是提早講。
+     */
+    coinThrowButtonMode: z.enum(["always-enabled", "grey-when-poor"]),
   })
   .strict();
 
@@ -101,11 +138,15 @@ export type UiCuesDoc = Omit<ConfigUiCuesDoc, "id" | "schema" | "note">;
  */
 export const DEFAULT_UI_CUES: UiCuesDoc = {
   telegraphRune: true,
+  // ⭐ 預設就是「畫真的會打到人的那個形狀」（第〇·六守則：優先權大的更新預設啟動）。
+  telegraphGroundShape: "line",
   telegraphRuneAlpha: 0.85,
   passiveFlashMs: 420,
   passiveFlashThrottleMs: 800,
   passiveIcdReadout: true,
   rallyExtendSeconds: [60],
+  // ⭐ 權威側說了算（第〇·六守則：優先權大的更新預設啟動）。變灰那一條是 rollback。
+  coinThrowButtonMode: "always-enabled",
 };
 
 /**
@@ -119,11 +160,13 @@ export function resolveUiCues(doc: ConfigUiCuesDoc | null | undefined): UiCuesDo
   if (!doc) return DEFAULT_UI_CUES;
   return {
     telegraphRune: doc.telegraphRune,
+    telegraphGroundShape: doc.telegraphGroundShape,
     telegraphRuneAlpha: doc.telegraphRuneAlpha,
     passiveFlashMs: doc.passiveFlashMs,
     passiveFlashThrottleMs: doc.passiveFlashThrottleMs,
     passiveIcdReadout: doc.passiveIcdReadout,
     rallyExtendSeconds: [...doc.rallyExtendSeconds],
+    coinThrowButtonMode: doc.coinThrowButtonMode,
   };
 }
 

@@ -270,6 +270,12 @@ describe("every enabled ability resolves to a telegraph (task #228)", () => {
     for (const c of cells) {
       if (c.castType !== "ground" || c.verdict === "PASSIVE") continue;
       const def = abilityDocFor(c);
+      // ⭐ A ground cast carrying a `damageLine` hits a CAPSULE — its disc only
+      // SELECTS who triggers the lash (`groundAoeTargets` → `ctx.targets[0]` →
+      // which way the line points). Those cells are swept by the case below, at
+      // the lash's own raw length × width; asserting a circle on them is what
+      // shipped the wrong dodge in the first place.
+      if (def.effects.some((e) => e.kind === "damageLine")) continue;
       const g = deriveTelegraphGeometry(def, env)!;
       const simRadius = (typeof def.radius === "number" && def.radius > 0
         ? def.radius
@@ -357,7 +363,9 @@ function renderReport(): string {
   lines.push("| castType | cells | shape language |");
   lines.push("| --- | ---: | --- |");
   const LANGUAGE: Record<string, string> = {
-    ground: "circle — the real `enemiesInCircle` disc; you can walk out",
+    ground:
+      "circle — the real `enemiesInCircle` disc; you can walk out. " +
+      "⭐ WITH a `damageLine` node: line — the capsule the damage query tests (step sideways)",
     targeted: "lock (arc at the victim + tether to the caster) — walking does not help",
     skillshot: "line — the projectile's corridor; step sideways",
     dash: "line — the sweep of the dash body",

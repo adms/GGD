@@ -1,11 +1,13 @@
 {
   "id": "ui-cues",
   "schema": "config.ui-cues@1",
-  "note": "畫面回話（owner 2026-08-23 的三則 [優先]）。① 「施法範圍預覽可以參考 w3x 的白色魔法陣，今天有出現在我上傳依文世界終結的擷圖前幾張還沒施展生效的時候」⇒ telegraphRune：預告圈的填滿改畫成白色魔法陣。⚠️ 只有填滿變白，外圈永遠是通道色（敵/友/自己一眼分得出來是 #228 的第 4 條，不可以被這一格吃掉）。② 「被動技 觸發作用的時候 還是要閃一下圖示（例如初號機暴走都看不出來有沒有生效冷卻剩多少）」⇒ passiveFlashMs / passiveFlashThrottleMs / passiveIcdReadout 三格：閃一下 + 看得到內部冷卻。⚠️ 節流是承重的，不是體感微調：onDamageTaken 這一族被動一秒可以觸發十次，沒有節流的話圖示會變成閃爍燈。③ 「邀請朋友的部分 除了可以等 10 秒、不等了以外，還可以選多等 1 分鐘」⇒ rallyExtendSeconds：主揪倒數條上「再等一下」的選項表。⭐ 「有幾個選項」本身就是這個陣列 —— 下次要再加一個 5 秒＝加一個 5，⛔ 不是改程式；按鈕上的字是從秒數推導的（第〇·四守則）。⚠️ 後台『畫面提示』頁存的是耐久覆蓋層（data/），覆蓋層會蓋掉這一個檔案 —— 線上存過之後，改這裡不會生效。",
+  "note": "畫面回話（owner 2026-08-23 的三則 [優先]）。① 「施法範圍預覽可以參考 w3x 的白色魔法陣，今天有出現在我上傳依文世界終結的擷圖前幾張還沒施展生效的時候」⇒ telegraphRune：預告圈的填滿改畫成白色魔法陣。⚠️ 只有填滿變白，外圈永遠是通道色（敵/友/自己一眼分得出來是 #228 的第 4 條，不可以被這一格吃掉）。② 「被動技 觸發作用的時候 還是要閃一下圖示（例如初號機暴走都看不出來有沒有生效冷卻剩多少）」⇒ passiveFlashMs / passiveFlashThrottleMs / passiveIcdReadout 三格：閃一下 + 看得到內部冷卻。⚠️ 節流是承重的，不是體感微調：onDamageTaken 這一族被動一秒可以觸發十次，沒有節流的話圖示會變成閃爍燈。③ 「邀請朋友的部分 除了可以等 10 秒、不等了以外，還可以選多等 1 分鐘」⇒ rallyExtendSeconds：主揪倒數條上「再等一下」的選項表。⭐ 「有幾個選項」本身就是這個陣列 —— 下次要再加一個 5 秒＝加一個 5，⛔ 不是改程式；按鈕上的字是從秒數推導的（第〇·四守則）。⚠️ 後台『畫面提示』頁存的是耐久覆蓋層（data/），覆蓋層會蓋掉這一個檔案 —— 線上存過之後，改這裡不會生效。 ④ 施法預告的形狀（2026-08-23）：`castType:\"ground\"` 帶 `damageLine` 的技能，判定是一條**膠囊**（`sim/effects/damageLine.ts` 的 `capsule(start,end,width/2)`），而 `ground` 的圓盤只負責**挑人**（`groundAoeTargets`）。畫圓盤會教玩家往旁邊躲沒用 —— 而那正好是唯一躲得掉的方向。⇒ telegraphGroundShape：`line`（出貨）＝畫那條膠囊；`circle`＝一律畫圓盤（#228 的舊行為，rollback 用，⛔ 不是對等選項）。 ⑤ 陣亡投幣被拒的回話（2026-08-23）：出貨經濟保證每個玩家每一場都撞得到（goldDrop.coinValue × goldDrop.coinsPerRound 遠大於 config@1 match.startingGold），而在此之前那顆按鈕照亮照可點、每一次都被 sim 拒掉且**畫面一個字都沒有**（coinDropRejected 在客戶端零個消費端）。⇒ 回饋本身是修好，⛔ 不是選項；coinThrowButtonMode 只管要不要**先**把按鈕變灰：`always-enabled`（出貨）＝權威側說了算，`grey-when-poor`＝客戶端預測金幣不足就變灰（rollback）。",
   "telegraphRune": true,
+  "telegraphGroundShape": "line",
   "telegraphRuneAlpha": 0.85,
   "passiveFlashMs": 420,
   "passiveFlashThrottleMs": 800,
   "passiveIcdReadout": true,
-  "rallyExtendSeconds": [60]
+  "rallyExtendSeconds": [60],
+  "coinThrowButtonMode": "always-enabled"
 }
