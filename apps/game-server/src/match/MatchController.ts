@@ -183,6 +183,7 @@ import {
   endCombatDeathWards,
 } from "@ggd/shared/sim/deathWard";
 import { beginCombatMobs, endCombatMobs } from "@ggd/shared/sim/systems/MobSystem";
+import { endCombatChampionForms } from "@ggd/shared/sim/systems/ChampionFormSystem";
 import {
   anyMobsAlive,
   anyMobsAliveOfKinds,
@@ -3009,6 +3010,14 @@ export class MatchController {
     endCombatCoins(this.world); // …and every unclaimed coin BURNS — no carry into the next round (#191)
     endCombatDeathWards(this.world); // …and every 死亡遺留物 + 其加成 clears (71-00 暗夜旗)
     endCombatMobs(this.world); // …and every mob despawns — no post-round PvE farming (#215)
+    // …and every 變身 reverts (GH#579). A form is WITHIN-ROUND state — the next
+    // round starts from the picked hero — but until this line the module's own
+    // design note said so while NOBODY called it: 8 shipped `{"to":"toggle"}`
+    // forms never expire (兩支是 passive，玩家連按第二次都沒有), so they rode
+    // through the intermission into a fresh duel with the transformed model,
+    // 技能組 and 屬性. Idempotent, and MUST stay ahead of `restoreForNextRound`
+    // — reverting moves `maxHp`, and the refill has to use the restored number.
+    endCombatChampionForms(this.world);
     // PER-ROUND SNAPSHOT — must run BEFORE settleRound(). settleRound is where
     // a team can be ELIMINATED, and an elimination there immediately builds a
     // #193 settlement for the knocked-out players. Recording afterwards would
