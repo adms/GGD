@@ -59,6 +59,8 @@ export interface ModelFxRigOptions {
   maxLive?: number;
   /** 每個 modelKey 的 free-list 上界 */
   maxPooledPerModel?: number;
+  /** ⭐ 所有 free-list 加起來的上界（⛔ 沒有它，per-key 上限乘上無界的 key 數 = 無界） */
+  maxPooledTotal?: number;
   /** 任何實例的硬壽命上限（秒）。忘了收也會死 */
   maxEffectSec?: number;
 }
@@ -66,6 +68,18 @@ export interface ModelFxRigOptions {
 /** 出貨預設 —— ⚠️ 這幾格是**預算**不是平衡值，所以住這裡是對的（第〇·四守則的豁免）。 */
 const DEFAULT_MAX_LIVE = 48;
 const DEFAULT_MAX_POOLED_PER_MODEL = 12;
+/**
+ * ⭐ free-list 的**全域**上界（GH#429）。
+ *
+ * ⚠️ `maxPooledPerModel` 看起來像一個上界，⛔ 但它不是 —— 那正是 GH#270 逐字
+ * 記下來的教訓（`VfxSystem.resetForRound` 的註解）：
+ * 「**per-key 上限只有在 key 的數量有上界時才構成上界**」。
+ * 而 modelKey 的數量在一場比賽裡是**一直增加**的：英雄升級解鎖 R/EX、第 3 回合起
+ * 殭屍加入、每回合換地圖（#145）。實測（`modelFxRoundGrowth.test.ts` 的前身探針，
+ * 每回合 3 個新 modelKey、8 個回合）：場景裡的 `modelfx-*` TransformNode 是
+ * **72 → 144 → 216 → … → 576**，逐回合 +72，而且回合邊界一個都沒還回去。
+ */
+const DEFAULT_MAX_POOLED_TOTAL = 48;
 const DEFAULT_MAX_EFFECT_SEC = 8;
 
 /**
@@ -109,7 +123,11 @@ export class ModelFxRig {
 
   private readonly maxLive: number;
   private readonly maxPooledPerModel: number;
+  private readonly maxPooledTotal: number;
   private readonly maxEffectSec: number;
+  /** ⚠️ 單調遞增的流水號。⛔ 不可以用 `born.length` —— 回收會把它縮回去，於是
+   *  兩個同時活著的節點會拿到**同一個名字**，而守衛正是照名字在場景上數的。 */
+  private serial = 0;
 
   constructor(
     private readonly scene: Scene,
@@ -117,6 +135,7 @@ export class ModelFxRig {
   ) {
     this.maxLive = opts.maxLive ?? DEFAULT_MAX_LIVE;
     this.maxPooledPerModel = opts.maxPooledPerModel ?? DEFAULT_MAX_POOLED_PER_MODEL;
+    this.maxPooledTotal = opts.maxPooledTotal ?? DEFAULT_MAX_POOLED_TOTAL;
     this.maxEffectSec = opts.maxEffectSec ?? DEFAULT_MAX_EFFECT_SEC;
   }
 
@@ -218,6 +237,25 @@ export class ModelFxRig {
     this.live.length = 0;
   }
 
+  /**
+   * 回合邊界:把**所有** free-list 加起來修剪到 `cap`（GH#429）。
+   *
+   * ⭐ 這是 `AmbientVfx.drainPools()` 與 `VfxSystem` 的 `pool.clear()` 同一件事:
+   * 「只會長不會縮的池子在回合邊界整個還回去」。⛔ 少了它，上一回合那幾支技能的
+   * modelKey 會**永遠**各留 `maxPooledPerModel` 個帶著 glb 幾何的隱藏節點在場上。
+   *
+   * `cap` 由呼叫端從 `vfxCleanupPolicy` 推導（`Infinity` = 完全不修剪，止血閥），
+   * ⛔ 不在這裡讀 config —— 這一層不知道內容從哪來（同 `resolveModel` 的立場）。
+   */
+  trimPoolTo(cap: number): void {
+    if (this.disposed || Number.isNaN(cap)) return;
+    for (const [key, free] of [...this.pool]) {
+      while (this.pooledCount > cap && free.length > 0) this.retire(free.pop()!.root);
+      // ⛔ 空的 free-list 也要除名:`pool` 的 key 數本身就是那個無界的東西。
+      if (free.length === 0) this.pool.delete(key);
+    }
+  }
+
   /** 收掉這個 rig 造過的**每一個**節點與容器。 */
   dispose(): void {
     if (this.disposed) return;
@@ -273,7 +311,7 @@ export class ModelFxRig {
     const reused = free?.pop();
     if (reused) return reused;
 
-    const serial = this.born.length;
+    const serial = this.serial++;
     const root = new TransformNode(`modelfx-${modelKey}-${serial}`, this.scene);
     this.born.push(root);
     // ⭐ 內層 = 長軸修正。⚠️ 它是**節點**不是一次性的旋轉:實例會被回收重用,
@@ -304,12 +342,19 @@ export class ModelFxRig {
     // ⭐ 上界:free-list 滿了就**真的收掉**這一個,並且從 `born` 裡除名。
     // ⛔ 不可以只是「不放回池子」—— 那個節點會變成沒有人指得到的孤兒,
     //    活到 dispose() 為止,而一場 20 分鐘的比賽會積出幾百個(#131 的慢動作版)。
-    if (free.length < this.maxPooledPerModel) {
+    // ⭐ **兩**道閘。⚠️ 只有 per-model 那一道是不夠的（GH#429）——
+    //    見 `DEFAULT_MAX_POOLED_TOTAL` 的註解與量到的 72/回合。
+    if (free.length < this.maxPooledPerModel && this.pooledCount < this.maxPooledTotal) {
       free.push({ root: item.root, axis: item.axis });
       return;
     }
-    const at = this.born.indexOf(item.root);
+    this.retire(item.root);
+  }
+
+  /** 真的收掉一個實例節點並從 `born` 除名（⛔ 不可以只是「不放回池子」—— 那是孤兒）。 */
+  private retire(root: TransformNode): void {
+    const at = this.born.indexOf(root);
     if (at >= 0) this.born.splice(at, 1);
-    item.root.dispose(false, true);
+    root.dispose(false, true);
   }
 }

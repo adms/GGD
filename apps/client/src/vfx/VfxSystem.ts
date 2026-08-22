@@ -2233,6 +2233,12 @@ export class VfxSystem {
     // ⚡ 電弧的網格 free-list 走**同一格政策** —— 它和預告圈是同一種東西
     // （閒置的池化網格 + 每個自帶一份材質），⛔ 不需要第二個寫死的上限。
     this.arcs.trimTo(ringCapForRoundBoundary(policy));
+    // ⭐ GH#429 —— 移動模型特效的 free-list **也**走同一格政策。它與預告圈/電弧
+    //    是同一種東西（閒置的池化節點，每個帶著一份 glb 實例）。⚠️ 它自己的
+    //    `maxPooledPerModel` **不是**上界：modelKey 的數量在一場比賽裡無界，
+    //    而 12 × 無界 = 無界（GH#270 逐字記過的同一個錯，換一層再犯一次）。
+    //    實測：每回合 3 個新 modelKey ⇒ 場上的 `modelfx-*` 節點 72/回合線性成長。
+    this.modelFx?.trimPoolTo(ringCapForRoundBoundary(policy));
     // 2c) GH#270 —— 打擊感的共用池（`vfx-preset-*`）。它掛在 per-Scene 的
     //     WeakMap 上，所以上面那一輪 `this.pool` / rig 的回收一個都沒碰到它，
     //     而 `for (const s of this.sparks) s.dispose()` 只是把**每一拳的把手**
