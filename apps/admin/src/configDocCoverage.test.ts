@@ -183,6 +183,9 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // 2026-08-22：24 → 25。`damage-tier-exemptions`（#534）以 OWN_PAGE 進場 ——
     // 它是**警告頁**不是編輯頁（owner：「作為例外在後台跳出警告就好」），
     // 而通用引擎畫不動它的 `rules` 陣列。到期條件寫在那一列的 expiresWhen。
+    // 2026-08-22（同日稍晚）：29 → 29。⚠️ **總數不動不代表沒事** —— 這一次是一次
+    // **交換**：`toggle-ability` 的 KNOWN_GAP 被付掉（走進通用引擎），而
+    // `screen-fx`（GH#549）以 DEFERRED 進場。逐類的那三行才看得出方向。
     expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(29); // 2026-08-22：25 → 27（#529 ability-vfx-bindings · #541 combo-strikes，兩份都是產生器擁有的推導表）
     // 2026-08-17：13 → 14。`roster`（英雄上下架）**往下走了一格** —— 它從
     // KNOWN_GAP 變成 OWN_PAGE，因為 ui/RosterPage.tsx 做出來了。⚠️ 這是這張表
@@ -199,7 +202,10 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // 2026-08-03：5 → 4。victory-podium **往下走了一格**:客戶端接上了消費端,
     // 於是它從「做了一半」變成一頁真的後台（VICTORY_PODIUM_SPEC）。
     // ⚠️ 這個數字往上長 = 「做了一半」的份數變多,所以它必須是一個看得見的 diff。
-    expect(byKind("DEFERRED")).toHaveLength(4);
+    // 2026-08-22：4 → 5。`screen-fx`（GH#549）—— 出貨值從客戶端常數搬進了
+    // content/，但 `ScreenFxLayer.setLimits()` 還沒有任何 production 呼叫端，
+    // 所以現在給它一頁就是 round-grade 那種自我一致的謊言。
+    expect(byKind("DEFERRED")).toHaveLength(5);
     // ⚠️ KNOWN_GAP 是**帳單**：audio-map（混音表）、origin-routes（出身×路線文案）
     // 與 per-level-bonus（record 型欄位，通用引擎走不動）。這個數字往上長就是欠債
     // 變多，而它變多的那一刻要有人按下同意。
@@ -218,10 +224,13 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // 2026-08-22：5 → 6。`toggle-ability`（GH#546「開關型按鈕看不出開/關」）——
     // 圖示流轉的顏色/速度/開關是 owner 會調的東西,文件與 Zod 落地了而那一頁還沒做。
     // ⛔ 帳單,⛔ 不是特權。
+    // 2026-08-22（同日稍晚）：6 → 5。`toggle-ability` 的帳單付掉了 ——
+    // `TOGGLE_ABILITY_SPEC` 進了 `CONFIG_DOC_SPECS`（通用引擎），而一份文件
+    // 同時在註冊表與豁免表上會被 `verdict.duplicated` 抓到 ⇒ 這一列**必須**刪。
+    // ⭐ 這是這張表最健康的移動方向（帳單被付掉，總列數變少）。
     expect(byKind("KNOWN_GAP").map((e) => e.docId)).toEqual([
       "per-level-bonus",
       "vfx-ability-art",
-      "toggle-ability",
       "audio-map",
       "origin-routes",
     ]);

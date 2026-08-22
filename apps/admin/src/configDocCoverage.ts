@@ -281,15 +281,23 @@ export const CONFIG_DOC_EXEMPTIONS: readonly ConfigDocExemption[] = [
     expiresWhen: "owner 明說他要在後台自己維護這張授權表時失效。⛔ 引擎開始讀它（＝它變成一份真的設定）也要當場重新分類。",
   },
 
-  {
-    docId: "toggle-ability",
-    kind: "KNOWN_GAP",
-    issue: "GH#546",
-    why: "開關型技能的「開啟中」視覺（圖示流轉的顏色/速度/開關）。文件與 Zod 剛落地，後台那一頁還沒做 —— ⛔ 這是一筆**帳單**不是特權：owner 2026-08-22 明說「圖示跟特效要明顯看出是開還是關狀態」，而顏色與速度正是他會想調的東西。",
-    expiresWhen: "GH#546 收尾時補一頁（或併進『範圍指引與預告』那一頁）。⛔ 不要讓它一直掛在帳單上。",
-  },
+  // ⚠️ `toggle-ability` 那一列 KNOWN_GAP 在 2026-08-22 **到期並被刪掉** ——
+  // `TOGGLE_ABILITY_SPEC` 進了 `CONFIG_DOC_SPECS`（通用引擎），而
+  // 「同時在註冊表與豁免表上」會被 `verdict.duplicated` 抓到。
+  // ⛔ 這一列的帳單**沒有全部付清**：`ContentDb.load()` 那一行
+  // `applyToggleAbilityDoc(...)` 還沒接，所以那一頁目前是「存了不生效」。
+  // 那筆帳現在記在 `TOGGLE_ABILITY_SPEC.consumer` 與 `intro` 上（操作者看得到），
+  // ⛔ 不是記在這張只有工程師會讀的豁免表上。
 
   // ── ③ DEFERRED：今天做了會是一句自我一致的謊言，綁到期條件 ──────────────
+  {
+    docId: "screen-fx",
+    kind: "DEFERRED",
+    issue: "GH#549",
+    why: "畫面閃爍／震動／特效文字的**上限與無障礙**（`config.screen-fx@1`）。刻意不掛，理由是 configForms.ts 檔頭第 1 條（只掛有真消費端的文件）：`apps/client/src/vfx/ScreenFxLayer.ts` 的 `setLimits()` 在整個 repo 只有測試在呼叫，沒有任何一條 production 路徑把這份文件餵給它。掛上去就是製造「操作者存了值、重整讀得回來、遊戲一輩子看不到」的自我一致謊言 —— 與 `round-grade` 那一列同型。⭐ 出貨值先落進 `content/config/screen-fx.json` 是有意義的：它把上限從**客戶端常數**（改一次 = 一次完整部署）搬進了內容層，而 `reducedMotionMode` 那一格的三選一正在等 owner 裁決。",
+    expiresWhen:
+      "`ScreenFxLayer.setLimits()` 有第一個 production 呼叫端的那一刻（＝ `ContentDb.load()` 或 `RoundFx` 把 `resolveScreenFx(doc)` 餵進去）—— 那時這一列必須當場被刪掉並補一頁。`configDocCoverage.test.ts` 的 `productionCallSites` 真的去數呼叫端，所以它會自己紅。",
+  },
   {
     docId: "round-grade",
     kind: "DEFERRED",

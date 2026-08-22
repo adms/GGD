@@ -197,6 +197,12 @@ import {
 // 一次，所以這裡走 package.json 的 `"./*"` 子路徑。`laneConfigDocs.test.ts` 走的是
 // 同一條。
 import { zConfigVictoryPodiumDoc } from "@ggd/shared/content/schema/victoryPodium";
+// 開關型技能的「開啟中」圖示外觀（GH#546）。深路徑同上：Zod 住自己的檔，
+// `content/schema/index.ts` 沒有再匯出一次。
+import {
+  TOGGLE_ABILITY_DOC_ID,
+  zConfigToggleAbilityDoc,
+} from "@ggd/shared/content/schema/toggleAbilityDoc";
 // 創建新英雄的警示開關（GH#480）—— 深路徑：這一份的 Zod 與**規則清單本體**住同一個
 // 檔（schema 的 `rules` 物件是從 `NEW_HERO_WARN_RULES` 推導的），⛔ 拆開就會 drift。
 import {
@@ -2783,6 +2789,11 @@ const VICTORY_PODIUM_SPEC: ConfigDocSpec = {
       },
     },
     {
+      path: "podiumSpacing",
+      zh: "三張卡散多開",
+      note: "1 ＝ 三張卡把**整個視窗寬度**均分，也就是這一格出現之前逐字的行為；越小三個人越往中間靠。⚠️ 卡片的寬度是由視窗**高度**決定的（`min(vh, vw)`），而間距是視窗**寬度**的百分比 —— 兩者單位不同，所以同一個數字在 16:9 桌機上是「相隔約 3.1 個卡片寬」（owner 看到的那個），在直式手機上只隔 1.1 個。⇒ 往下調的時候**先看手機那一側**，桌機還很鬆的時候手機可能已經疊住了。填 1 就是一鍵回到舊畫面。",
+    },
+    {
       path: "roundCardCollapsed",
       zh: "成績卡預設收合",
       note: "回合結算那張成績卡（右上角的評價／建議／團隊積分）一開始**只留一條卡頭**，還是整張攤開。⚠️ 攤開的那張 340 寬、停在右上角 slot 欄的內側，而頒獎台是「銀左·金中·銅右」—— 也就是說攤開的成績卡正好蓋住**站在畫面右邊的銅牌那一位**的 3D 模型（owner 2026-08-22：「回合結算的成績會檔到右邊勝利第三人的3d model 最好做成可以摺疊展開」）。出貨 true ＝ 收合，因為那是「不擋到模型」的那一邊；收合仍然看得到大字母等第與標題，玩家按卡頭右邊的摺疊鈕（手把也按得到）就展開，而展開狀態**每一回合重置回這一格**。",
@@ -4047,6 +4058,64 @@ const RANGE_GUIDE_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
+// ──────────────────────────── 開關型技能的開啟中外觀 (config/toggle-ability) ─
+//
+// GH#546。⚠️ 這一列要跟**四件事**一起才到得了操作者手上，四件都不在這條 lane 手上：
+//   ① `apps/client/src/content/ContentDb.ts` 的 `applyToggleAbilityDoc(...)` 一行
+//      —— ⛔ **少了它這一頁就是「存了不生效」**：`applyToggleAbilityDoc` 目前
+//      全 repo 零 production 呼叫端，值永遠來自 `ui/toggleAbility.ts` 的
+//      `SHIPPED_TOGGLE_ABILITY`（`range-guide` 有 `applyRangeGuideDoc(...)` 那一行，
+//      這一份沒有）。這是 `configForms.ts` 檔頭第 1 條真正在講的那件事。
+//   ② `store.ts` 的 `Page` union ＋ `SESSION_REQUIRED_PAGES`
+//   ③ `App.tsx` 的導覽列一列
+//   ④ `navSections.test.ts` 的基準線一列
+const TOGGLE_ABILITY_SPEC: ConfigDocSpec = {
+  page: "toggleAbility",
+  collection: "config",
+  docId: TOGGLE_ABILITY_DOC_ID,
+  schemaTag: "config.toggle-ability@1",
+  zod: zConfigToggleAbilityDoc,
+  title: "開關型技能外觀",
+  intro: [
+    "owner 2026-08-22：「風王結界這種**開關型按鈕** 圖示跟特效**要明顯看出是開還是關狀態**（w3x 會有特殊攻擊特效跟隨手部、**圖示也會有流轉**作為打開中顯示）」。這一頁就是那個「流轉」——技能格上那一圈會繞著跑的光。",
+    "⚠️ **這一頁只管圖示那一半。** owner 那句話的另一半（跟隨手部的特殊攻擊特效）是**內容**不是設定：它走 `ability@1.persistentVfx` ＋ `attach` 字串，逐支技能在內容編輯器裡填。在這裡開一格「手部特效開關」會是一格沒有人讀的欄位。",
+    "⚠️ **為什麼「開著」和「冷卻好了」會混在一起。** 技能格本來就有一圈 ready 框，而開關型技能開著的期間**它自己也在冷卻**，所以兩個框在出貨內容上不可能同時亮 —— 也就是說玩家看到一圈光時，唯一能分辨「這是開著」還是「這是好了」的線索就是**它有沒有在流轉**。⇒ 關掉這一頁的總開關，等於把 owner 回報的那個問題原封放回去。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/toggle-ability.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "apps/client/src/ui/toggleAbility.ts 的 applyToggleAbilityDoc()（把文件解成模組級現值）→ toggleAbility() → ui/abilityReadyFrame.ts 的 abilityToggleFrameStyle()，也就是技能列上那一格磚每次重繪讀到的 CSS。⚠️ 這條鏈的第一環（ContentDb.load() 裡那一行 applyToggleAbilityDoc）**在 GH#546 收尾之前還沒接**——在那一行落地之前，這一頁存得起來、讀得回來，而遊戲讀的仍然是 SHIPPED_TOGGLE_ABILITY。",
+  effect:
+    "玩家**下一次重新整理遊戲頁面**時生效（內容登錄表是開機時載入的），之後每一次技能格重繪都吃新的值。不需要重開 game-server —— 這一整層活在客戶端 HUD。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "開啟中流轉總開關",
+      note: "關掉之後，開著的開關型技能和「冷卻剛好」長得**一模一樣** —— 那正是 owner 回報的狀況。留著這一格是為了能一鍵回到那個舊畫面（例如流轉在某個瀏覽器上掉幀時），⛔ 不是為了觀望。",
+    },
+    {
+      path: "sweepMs",
+      zh: "流轉掃一圈幾毫秒",
+      note: "光點繞技能格一圈的時間。⚠️ **兩端都會弄壞它想傳達的訊息**：太快（幾百毫秒）會從「在流轉」變成「在閃爍」，而高頻閃爍是光敏性癲癇的直接誘因；太慢（好幾秒）則在一場交戰的視線停留時間內看起來根本沒動，玩家仍然分不出開還是關。",
+    },
+    {
+      path: "rimPx",
+      zh: "流轉光邊粗細（px）",
+      note: "那一圈光本身有多寬。技能格在手機上只有幾十 px，所以這一格調大的代價不是「更明顯」而是「蓋住圖示」——圖示看不見的話，玩家知道有東西開著卻不知道是哪一個。",
+    },
+    {
+      path: "glowPx",
+      zh: "外溢輝光半徑（px）",
+      note: "光邊往外暈開多遠。0 ＝ 只有一條硬邊（最省，也最不會糊到隔壁那一格）。技能列是六格並排的，這一格調大時**相鄰兩格的光會互相溢進去**，於是「哪一格開著」又變得要猜。",
+    },
+    {
+      path: "color",
+      zh: "流轉顏色",
+      note: "留**空**＝用技能自己那一族的顏色（主動／EX／被動各有一個），也就是不在畫面上多出一個與技能種類無關的新色。填 `#rrggbb` 則是**所有**開關型技能共用同一個顏色。⚠️ 填的時候要和 ready 框那個顏色**在明度或飽和度上分得開** —— 兩個顏色太近的話，這一整頁想解決的「開著 vs 冷卻好了」就又混回去了。",
+    },
+  ],
+  preserved: [],
+};
+
 // ─────────────────────────────── 競技場規則 (config/arena-rules) — GH#410 ──
 //
 // ⚠️ 這一份是全 repo **唯一**一份被四頁共同編輯的 config 文件，而 GH#410 量到的
@@ -4631,6 +4700,10 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   // 操作者手上；而且要跟 `apps/client/src/content/ContentDb.ts` 的
   // `applyRangeGuideDoc(...)` 那一行一起，才到得了**地板上**。
   RANGE_GUIDE_SPEC,
+  // 開關型技能外觀（GH#546，owner 2026-08-22）。⚠️ 這一列的四個前置條件寫在
+  // TOGGLE_ABILITY_SPEC 上面 —— 其中 ① `ContentDb.load()` 的 applyToggleAbilityDoc
+  // 那一行是**功能性的**（少了它這一頁存了不生效），另外三個是「操作者點不點得到」。
+  TOGGLE_ABILITY_SPEC,
   SHIELD_SPEC,
   BLOCK_SPEC,
   CRIT_SPEC,

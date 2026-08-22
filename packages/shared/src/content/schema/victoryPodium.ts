@@ -167,6 +167,27 @@ export const VICTORY_WINNER_SCALE_MAX = 3.0;
 export const VICTORY_ROUND_PRESENT_SEC_MIN = 0.5;
 export const VICTORY_ROUND_PRESENT_SEC_MAX = 15;
 
+/**
+ * ⭐ 三張卡橫向間距的**倍率**上下界 (GH#545)。
+ *
+ * 語意：`1` ＝ 三張卡把整個視窗寬度均分（2026-08-22 之前逐字的行為，也就是
+ * 「回到舊畫面」的那一格）；`0.5` ＝ 只用一半的節距，三個人往中間靠。
+ * 算式住 `RoundWinnerStage.podiumSlotCentrePct`：`pitch = (100 / n) * spacing`。
+ *
+ * ⚠️ **上界不是裝飾**（同 `podiumSize` / `winnerScale`，#277）：節距是
+ * 百分比的乘數，`1.5` 已經讓兩側那兩張卡各自跑到視窗外緣；再大就是「頒獎台上
+ * 只看得到中間那一位」，而畫面上不會有任何錯誤訊息。
+ * ⚠️ **下界也不是裝飾**：`0` 會讓三張卡**逐像素疊成一張**，於是「三個人站上台」
+ * 這件事在螢幕上看起來像「只有一個人贏了」—— 而那正是這一格要修的相反面。
+ *
+ * ⚠️ 這兩個常數在 `apps/client/src/render/RoundWinnerStage.ts` 有一份同值的
+ * `PODIUM_SPACING_MIN/MAX`，那一份是**夾**（clamp），這一份是**拒**（Zod reject）。
+ * 兩層都要（CLAUDE.md 第一守則）——⛔ 但它不該是兩份手抄的字面值，
+ * 接手的人請讓客戶端那兩個常數改成 `import` 這裡（見 GH#545 的報告）。
+ */
+export const VICTORY_PODIUM_SPACING_MIN = 0.2;
+export const VICTORY_PODIUM_SPACING_MAX = 1.5;
+
 export const zConfigVictoryPodiumDoc = z
   .object({
     id: z.string().min(1),
@@ -232,6 +253,24 @@ export const zConfigVictoryPodiumDoc = z
      * 線上已經有耐久覆蓋層,少了必填欄會讓整份內容被 Zod 退回)。
      */
     roundCardCollapsed: z.boolean().optional(),
+    /**
+     * ⭐ 三張卡的橫向間距倍率 (GH#545，owner 2026-08-22：頒獎台三個人在寬螢幕上
+     * 「散得太開」)。
+     *
+     * ⚠️ 這一格在落進來之前住 `RoundWinnerStage.PODIUM_SPACING_FALLBACK` ——
+     * 一個**客戶端常數**，也就是「改一次間距 = 一次完整部署」（第一守則）。
+     * 那個常數現在只剩「內容載不到」那條 fail-open 路會用到。
+     *
+     * `.optional()` 的理由和上面三格一模一樣：線上已經有存過的耐久覆蓋層，
+     * 而那些覆蓋層沒有這個 key —— 設成必填會讓它們整份 `safeParse` 失敗 →
+     * 內容載入整棵退回骨架（2026-08-02 事故的形狀）。
+     * 缺席 ⇒ `DEFAULT_VICTORY_PODIUM.podiumSpacing`。
+     */
+    podiumSpacing: z
+      .number()
+      .min(VICTORY_PODIUM_SPACING_MIN)
+      .max(VICTORY_PODIUM_SPACING_MAX)
+      .optional(),
   })
   .strict();
 
@@ -253,6 +292,8 @@ export interface VictoryPodiumPolicy {
   roundPresentSec: number;
   /** 回合結算成績卡一開始收合(true,出貨)還是展開。收合＝不擋到銅牌那位的模型。 */
   roundCardCollapsed: boolean;
+  /** 三張卡的橫向間距倍率。1 ＝ 均分整個視窗寬度(舊行為)，越小越靠中間。 */
+  podiumSpacing: number;
 }
 
 /**
@@ -291,6 +332,10 @@ export const DEFAULT_VICTORY_PODIUM: VictoryPodiumPolicy = {
   // 兩者在 `resolution` 同時在畫面上。預設選「不擋到模型」的那一邊
   // (第〇·六守則:優先權大的更新後都是預設啟動)。
   roundCardCollapsed: true,
+  // ⭐ GH#545。1 ＝ 三張卡均分整個視窗寬度，也就是 owner 在 16:9 桌機上看到的
+  // 「相隔約 3.1 個卡片寬」。0.5 把節距對折，三個人讀起來是**一組**而不是三個
+  // 各自站在畫面角落的人。⛔ 這個值以前是 `RoundWinnerStage` 的客戶端常數。
+  podiumSpacing: 0.5,
 };
 
 /**
@@ -332,6 +377,7 @@ export function resolveVictoryPodium(
     podiumZoneSource: doc.podiumZoneSource ?? DEFAULT_VICTORY_PODIUM.podiumZoneSource,
     roundPresentSec: doc.roundPresentSec ?? DEFAULT_VICTORY_PODIUM.roundPresentSec,
     roundCardCollapsed: doc.roundCardCollapsed ?? DEFAULT_VICTORY_PODIUM.roundCardCollapsed,
+    podiumSpacing: doc.podiumSpacing ?? DEFAULT_VICTORY_PODIUM.podiumSpacing,
   };
 }
 
@@ -433,6 +479,15 @@ export const VICTORY_PODIUM_FIELDS = [
     min: VICTORY_ROUND_PRESENT_SEC_MIN,
     max: VICTORY_ROUND_PRESENT_SEC_MAX,
     help: "回合結束後三位模型加灰幕佔著螢幕幾秒,時間到就收掉、進商店。⚠️ 這一格已經不會切掉嘲諷語音了(畫面收掉、聲音自己講完),所以它純粹是「你想看模型看多久」;調大只是延後進商店,不會延長回合結算(那是戰鬥系統的 resolutionSec)。",
+  },
+  {
+    key: "podiumSpacing",
+    label: "三張卡的間距",
+    group: "頒獎台",
+    kind: "number" as const,
+    min: VICTORY_PODIUM_SPACING_MIN,
+    max: VICTORY_PODIUM_SPACING_MAX,
+    help: "1 = 三張卡均分整個視窗寬度(這是 2026-08-22 之前的行為,寬螢幕上三個人相隔約 3.1 個卡片寬);越小越往中間靠。⚠️ 卡片寬度是由視窗高度決定的,所以同一個值在 16:9 桌機與直式手機上疏密不同 —— 調緊時手機那一側會先擠在一起。",
   },
   {
     key: "roundCardCollapsed",

@@ -1,0 +1,15 @@
+{
+  "id": "screen-fx",
+  "schema": "config.screen-fx@1",
+  "note": "GH#549 全螢幕閃爍／相機震動／特效文字的上限與無障礙。owner 2026-08-22:「畫面閃爍及震動 不然都不知道發生什麼事情」——重點是**資訊**不是華麗:一個大招在畫面外命中、一個爆擊落在腳下,在這一層出現之前兩者在螢幕上是同一件事(什麼都沒有)。⚠️ 這一份的每一格都是**所有**技能共用的天花板,⛔ 不是一個效果:一支寫了 peakAlpha:1 的技能不可以把畫面打成全白 —— 420 支技能各自守規矩是判準,一格全域上限是閘。⚠️ 為什麼上限不可以住在客戶端:client 是 build 時烘進映像的,只有 content/ 是 live bind-mount ⇒ 「畫面閃太亮」這種一定會被回報、一定要當場調的東西,寫死一次要重建映像 + 重啟容器;而它同時是一格無障礙設定,⛔ 讓一個會誘發癲癇的參數只能靠部署來調是不對的。⚠️ reducedMotionMode 與 reducedFlashMult / reducedShakeMult **不是兩個住處**(第〇·四守則):模式選哪一條路,乘數只參數化 weaken 那一條 —— off ⇒ 兩邊歸零、ignore ⇒ 兩邊 1、weaken ⇒ 讀那兩格。解析在**載入時**(resolveScreenFx / screenFxReducedMultipliers),⛔ 不是把 0/1 抄進 JSON。⚠️ reducedShakeMult 出貨 0 是刻意的(相機位移沒有「弱一點的版本」,對會暈的人來說它要嘛動要嘛不動),而 reducedFlashMult ⛔ 不是 0 —— owner 要的是「知道發生什麼事情」,所以 reduced-motion 的人也要拿得到那個資訊,只是換成一層不閃的淡色壓底。⭐ reducedMotionMode 的出貨值 weaken 是**開發者挑的,不是 owner 裁決過的**,三選一的取捨列在 GH#549 的報告裡等他決定。⚠️ 值的唯一真相是 packages/shared/src/content/schema/screenFxDoc.ts 的 DEFAULT_SCREEN_FX,而它逐格等於 apps/client/src/render/screenFx.ts 的 DEFAULT_SCREEN_FX_LIMITS。⛔ 這一份目前**還沒有 production 消費端**:ScreenFxLayer.setLimits() 在整個 repo 只有測試在呼叫,所以改這裡還不會改變畫面 —— 那筆帳誠實地記在 apps/admin/src/configDocCoverage.ts 的 screen-fx DEFERRED 那一列,接上去的那一刻它會被守衛強迫刪掉並補一頁後台。",
+  "enabled": true,
+  "flashMaxAlpha": 0.55,
+  "flashMaxSec": 0.6,
+  "shakeMaxAmplitude": 0.45,
+  "shakeMaxSec": 0.9,
+  "reducedMotionMode": "weaken",
+  "reducedFlashMult": 0.3,
+  "reducedShakeMult": 0,
+  "floatingTextScale": 1,
+  "floatingTextMaxOnScreen": 40
+}
