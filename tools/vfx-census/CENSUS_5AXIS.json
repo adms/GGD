@@ -1,0 +1,2691 @@
+{
+ "axis1": {
+  "attachPointRawVariants": 19,
+  "attachPointTypos": [
+   "chest ",
+   "orgin"
+  ],
+  "attachPoints": [
+   [
+    "chest",
+    147
+   ],
+   [
+    "overhead",
+    83
+   ],
+   [
+    "weapon",
+    25
+   ],
+   [
+    "origin",
+    21
+   ],
+   [
+    "hand",
+    9
+   ],
+   [
+    "head",
+    7
+   ],
+   [
+    "foot",
+    4
+   ],
+   [
+    "weapon, right",
+    4
+   ],
+   [
+    "body",
+    3
+   ],
+   [
+    "orgin",
+    3
+   ],
+   [
+    "hand, right",
+    2
+   ],
+   [
+    "handright",
+    2
+   ],
+   [
+    "handleft",
+    1
+   ],
+   [
+    "hand,left",
+    1
+   ],
+   [
+    "lefthand",
+    1
+   ],
+   [
+    "righthand",
+    1
+   ],
+   [
+    "hand,right",
+    1
+   ],
+   [
+    "right foot",
+    1
+   ]
+  ],
+  "callSites": 557,
+  "distinctModels": 115,
+  "importedModels": 14,
+  "locCalls": 241,
+  "rows": [
+   {
+    "calls": 76,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\nightelf\\\\blink\\\\blinktarget.mdl",
+    "stem": "blinktarget"
+   },
+   {
+    "calls": 62,
+    "form": "blizzard-stock",
+    "ggdDocs": [
+     "fx.w3x.stock.warstompcaster.p00"
+    ],
+    "ggdDocsConsumed": [
+     "fx.w3x.stock.warstompcaster.p00"
+    ],
+    "model": "abilities\\\\spells\\\\orc\\\\warstomp\\\\warstompcaster.mdl",
+    "stem": "warstompcaster"
+   },
+   {
+    "calls": 56,
+    "form": "blizzard-stock",
+    "ggdDocs": [
+     "fx.w3x.stock.thunderclapcaster.p00"
+    ],
+    "ggdDocsConsumed": [
+     "fx.w3x.stock.thunderclapcaster.p00"
+    ],
+    "model": "abilities\\\\spells\\\\human\\\\thunderclap\\\\thunderclapcaster.mdl",
+    "stem": "thunderclapcaster"
+   },
+   {
+    "calls": 26,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\other\\\\stampede\\\\stampedemissiledeath.mdl",
+    "stem": "stampedemissiledeath"
+   },
+   {
+    "calls": 22,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "objects\\\\spawnmodels\\\\undead\\\\impaletargetdust\\\\impaletargetdust.mdl",
+    "stem": "impaletargetdust"
+   },
+   {
+    "calls": 13,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\human\\\\flamestrike\\\\flamestriketarget.mdl",
+    "stem": "flamestriketarget"
+   },
+   {
+    "calls": 13,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "objects\\\\spawnmodels\\\\other\\\\neutralbuildingexplosion\\\\neutralbuildingexplosion.mdl",
+    "stem": "neutralbuildingexplosion"
+   },
+   {
+    "calls": 13,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\orc\\\\mirrorimage\\\\mirrorimagecaster.mdl",
+    "stem": "mirrorimagecaster"
+   },
+   {
+    "calls": 13,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "objects\\\\spawnmodels\\\\undead\\\\undeaddissipate\\\\undeaddissipate.mdl",
+    "stem": "undeaddissipate"
+   },
+   {
+    "calls": 11,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\nightelf\\\\blink\\\\blinkcaster.mdl",
+    "stem": "blinkcaster"
+   },
+   {
+    "calls": 11,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\other\\\\monsoon\\\\monsoonbolttarget.mdl",
+    "stem": "monsoonbolttarget"
+   },
+   {
+    "calls": 10,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\human\\\\resurrect\\\\resurrecttarget.mdl",
+    "stem": "resurrecttarget"
+   },
+   {
+    "calls": 10,
+    "form": "map-imported",
+    "ggdDocs": [
+     "fx.w3x.orb.bloodbreathstream.p00",
+     "fx.w3x.orb.bloodbreathstream.p01",
+     "fx.w3x.orb.bloodbreathstream.p02",
+     "godie-bloodbreathstream-p0",
+     "godie-bloodbreathstream-p1",
+     "godie-bloodbreathstream-p2"
+    ],
+    "ggdDocsConsumed": [],
+    "model": "bloodbreathstream.mdx",
+    "stem": "bloodbreathstream"
+   },
+   {
+    "calls": 9,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\weapons\\\\steamtank\\\\steamtankimpact.mdl",
+    "stem": "steamtankimpact"
+   },
+   {
+    "calls": 9,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "objects\\\\spawnmodels\\\\naga\\\\nagadeath\\\\nagadeath.mdl",
+    "stem": "nagadeath"
+   },
+   {
+    "calls": 9,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "objects\\\\spawnmodels\\\\human\\\\humanblood\\\\herobloodelfblood.mdl",
+    "stem": "herobloodelfblood"
+   },
+   {
+    "calls": 8,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "objects\\\\spawnmodels\\\\human\\\\hcanceldeath\\\\hcanceldeath.mdl",
+    "stem": "hcanceldeath"
+   },
+   {
+    "calls": 7,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\human\\\\markofchaos\\\\markofchaostarget.mdl",
+    "stem": "markofchaostarget"
+   },
+   {
+    "calls": 7,
+    "form": "map-imported",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "herocloudcyd.mdx",
+    "stem": "herocloudcyd"
+   },
+   {
+    "calls": 7,
+    "form": "map-imported",
+    "ggdDocs": [
+     "fx.w3x.locust.boomnl.p00",
+     "fx.w3x.locust.boomnl.p01",
+     "fx.w3x.locust.boomnl.p02",
+     "fx.w3x.locust.boomnl.p03",
+     "fx.w3x.locust.boomnl.p04",
+     "godie-boomnl-p0",
+     "godie-boomnl-p1",
+     "godie-boomnl-p2",
+     "godie-boomnl-p3",
+     "godie-boomnl-p4"
+    ],
+    "ggdDocsConsumed": [
+     "fx.w3x.locust.boomnl.p00",
+     "fx.w3x.locust.boomnl.p01",
+     "fx.w3x.locust.boomnl.p02",
+     "fx.w3x.locust.boomnl.p03",
+     "fx.w3x.locust.boomnl.p04"
+    ],
+    "model": "boomnl.mdx",
+    "stem": "boomnl"
+   },
+   {
+    "calls": 7,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\weapons\\\\phoenixmissile\\\\phoenix_missile_mini.mdl",
+    "stem": "phoenix_missile_mini"
+   },
+   {
+    "calls": 5,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\other\\\\doom\\\\doomdeath.mdl",
+    "stem": "doomdeath"
+   },
+   {
+    "calls": 4,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\human\\\\massteleport\\\\massteleportcaster.mdl",
+    "stem": "massteleportcaster"
+   },
+   {
+    "calls": 4,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "units\\\\nightelf\\\\wisp\\\\wispexplode.mdl",
+    "stem": "wispexplode"
+   },
+   {
+    "calls": 4,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "doodads\\\\terrain\\\\rockchunks\\\\rockchunks3.mdl",
+    "stem": "rockchunks3"
+   },
+   {
+    "calls": 4,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "objects\\\\spawnmodels\\\\nightelf\\\\nedeathsmall\\\\nedeathsmall.mdl",
+    "stem": "nedeathsmall"
+   },
+   {
+    "calls": 4,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\human\\\\flamestrike\\\\flamestrike1.mdl",
+    "stem": "flamestrike1"
+   },
+   {
+    "calls": 4,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\other\\\\ansa\\\\ansatarget.mdl",
+    "stem": "ansatarget"
+   },
+   {
+    "calls": 4,
+    "form": "map-imported",
+    "ggdDocs": [
+     "fx.w3x.particle.supershinythingy.p00",
+     "fx.w3x.particle.supershinythingy.p01",
+     "fx.w3x.particle.supershinythingy.p02",
+     "godie-supershinythingy-p0",
+     "godie-supershinythingy-p1",
+     "godie-supershinythingy-p2",
+     "godie-supershinythingy-r0",
+     "godie-supershinythingy-r1",
+     "godie-supershinythingy-r2"
+    ],
+    "ggdDocsConsumed": [
+     "fx.w3x.particle.supershinythingy.p00",
+     "fx.w3x.particle.supershinythingy.p01",
+     "fx.w3x.particle.supershinythingy.p02"
+    ],
+    "model": "supershinythingy.mdx",
+    "stem": "supershinythingy"
+   },
+   {
+    "calls": 4,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "units\\\\undead\\\\abomination\\\\abominationexplosion.mdl",
+    "stem": "abominationexplosion"
+   },
+   {
+    "calls": 4,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "objects\\\\spawnmodels\\\\orc\\\\orcsmalldeathexplode\\\\orcsmalldeathexplode.mdl",
+    "stem": "orcsmalldeathexplode"
+   },
+   {
+    "calls": 3,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\undead\\\\unsummon\\\\unsummontarget.mdl",
+    "stem": "unsummontarget"
+   },
+   {
+    "calls": 3,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\other\\\\volcano\\\\volcanodeath.mdl",
+    "stem": "volcanodeath"
+   },
+   {
+    "calls": 3,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\nightelf\\\\starfall\\\\starfallcaster.mdl",
+    "stem": "starfallcaster"
+   },
+   {
+    "calls": 3,
+    "form": "map-imported",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "midchildernanohaaura.mdx",
+    "stem": "midchildernanohaaura"
+   },
+   {
+    "calls": 3,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\undead\\\\deathpact\\\\deathpactcaster.mdl",
+    "stem": "deathpactcaster"
+   },
+   {
+    "calls": 3,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\human\\\\massteleport\\\\massteleporttarget.mdl",
+    "stem": "massteleporttarget"
+   },
+   {
+    "calls": 3,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\demon\\\\darkportal\\\\darkportaltarget.mdl",
+    "stem": "darkportaltarget"
+   },
+   {
+    "calls": 3,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\weapons\\\\phoenixmissile\\\\phoenix_missile.mdl",
+    "stem": "phoenix_missile"
+   },
+   {
+    "calls": 3,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "objects\\\\spawnmodels\\\\critters\\\\albatross\\\\critterbloodalbatross.mdl",
+    "stem": "critterbloodalbatross"
+   },
+   {
+    "calls": 3,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\other\\\\levelup\\\\levelupcaster.mdl",
+    "stem": "levelupcaster"
+   },
+   {
+    "calls": 2,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\items\\\\tomeofretraining\\\\tomeofretrainingcaster.mdl",
+    "stem": "tomeofretrainingcaster"
+   },
+   {
+    "calls": 2,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "doodads\\\\barrens\\\\rocks\\\\barrensfissure\\\\barrensfissure1.mdl",
+    "stem": "barrensfissure1"
+   },
+   {
+    "calls": 2,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "doodads\\\\outland\\\\plants\\\\outland_plant\\\\outland_plant1.mdl",
+    "stem": "outland_plant1"
+   },
+   {
+    "calls": 2,
+    "form": "map-imported",
+    "ggdDocs": [
+     "godie-aquaspikeversion2-p0",
+     "godie-aquaspikeversion2-p1",
+     "godie-aquaspikeversion2-p10",
+     "godie-aquaspikeversion2-p11",
+     "godie-aquaspikeversion2-p2",
+     "godie-aquaspikeversion2-p3",
+     "godie-aquaspikeversion2-p4",
+     "godie-aquaspikeversion2-p5",
+     "godie-aquaspikeversion2-p6",
+     "godie-aquaspikeversion2-p7",
+     "godie-aquaspikeversion2-p8",
+     "godie-aquaspikeversion2-p9"
+    ],
+    "ggdDocsConsumed": [
+     "godie-aquaspikeversion2-p0"
+    ],
+    "model": "aquaspikeversion2.mdx",
+    "stem": "aquaspikeversion2"
+   },
+   {
+    "calls": 2,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\other\\\\incinerate\\\\firelorddeathexplode.mdl",
+    "stem": "firelorddeathexplode"
+   },
+   {
+    "calls": 2,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\weapons\\\\illidanmissile\\\\illidanmissile.mdl",
+    "stem": "illidanmissile"
+   },
+   {
+    "calls": 2,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\other\\\\charm\\\\charmtarget.mdl",
+    "stem": "charmtarget"
+   },
+   {
+    "calls": 2,
+    "form": "map-imported",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "love2.mdx",
+    "stem": "love2"
+   },
+   {
+    "calls": 2,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\demon\\\\darkconversion\\\\zombifytarget.mdl",
+    "stem": "zombifytarget"
+   },
+   {
+    "calls": 2,
+    "form": "map-imported",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "herofatezemberformbig.mdx",
+    "stem": "herofatezemberformbig"
+   },
+   {
+    "calls": 2,
+    "form": "map-imported",
+    "ggdDocs": [
+     "fx.w3x.orb.magical-sword.p00",
+     "godie-magical-sword-p0"
+    ],
+    "ggdDocsConsumed": [],
+    "model": "magical_sword.mdx",
+    "stem": "magical_sword"
+   },
+   {
+    "calls": 2,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\orc\\\\purge\\\\purgebufftarget.mdl",
+    "stem": "purgebufftarget"
+   },
+   {
+    "calls": 2,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\other\\\\talktome\\\\talktome.mdl",
+    "stem": "talktome"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "doodads\\\\outland\\\\rocks\\\\outland_magmarock\\\\outland_magmarock1.mdl",
+    "stem": "outland_magmarock1"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\weapons\\\\ancientprotectormissile\\\\ancientprotectormissile.mdl",
+    "stem": "ancientprotectormissile"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\other\\\\drain\\\\manadraintarget.mdl",
+    "stem": "manadraintarget"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "objects\\\\spawnmodels\\\\undead\\\\ucanceldeath\\\\ucanceldeath.mdl",
+    "stem": "ucanceldeath"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\human\\\\holybolt\\\\holyboltspecialart.mdl",
+    "stem": "holyboltspecialart"
+   },
+   {
+    "calls": 1,
+    "form": "map-imported",
+    "ggdDocs": [
+     "fx.w3x.orb.divinering.p00",
+     "fx.w3x.orb.divinering.p01",
+     "fx.w3x.orb.divinering.p02",
+     "fx.w3x.orb.divinering.p03",
+     "fx.w3x.orb.divinering.p04",
+     "fx.w3x.orb.divinering.p05",
+     "fx.w3x.orb.divinering.p06",
+     "fx.w3x.orb.divinering.p07",
+     "fx.w3x.orb.divinering.p08",
+     "fx.w3x.orb.divinering.p09",
+     "fx.w3x.orb.divinering.p10",
+     "fx.w3x.orb.divinering.p11",
+     "fx.w3x.orb.divinering.p12",
+     "fx.w3x.orb.divinering.p13",
+     "fx.w3x.orb.divinering.p14",
+     "fx.w3x.orb.divinering.p15",
+     "fx.w3x.orb.divinering.p16",
+     "fx.w3x.orb.divinering.p17",
+     "fx.w3x.orb.divinering.p18",
+     "fx.w3x.orb.divinering.p19",
+     "godie-divinering-p0",
+     "godie-divinering-p1",
+     "godie-divinering-p10",
+     "godie-divinering-p11",
+     "godie-divinering-p12",
+     "godie-divinering-p13",
+     "godie-divinering-p14",
+     "godie-divinering-p15",
+     "godie-divinering-p16",
+     "godie-divinering-p17",
+     "godie-divinering-p18",
+     "godie-divinering-p19",
+     "godie-divinering-p2",
+     "godie-divinering-p3",
+     "godie-divinering-p4",
+     "godie-divinering-p5",
+     "godie-divinering-p6",
+     "godie-divinering-p7",
+     "godie-divinering-p8",
+     "godie-divinering-p9"
+    ],
+    "ggdDocsConsumed": [],
+    "model": "divinering.mdx",
+    "stem": "divinering"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "doodads\\\\cinematic\\\\firepillarmedium\\\\firepillarmedium.mdl",
+    "stem": "firepillarmedium"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "doodads\\\\outland\\\\rocks\\\\outland_magmarock\\\\outland_magmarock0.mdl",
+    "stem": "outland_magmarock0"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "doodads\\\\cityscape\\\\props\\\\magicrunes\\\\magicrunes2.mdl",
+    "stem": "magicrunes2"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "environment\\\\largebuildingfire\\\\largebuildingfire1.mdl",
+    "stem": "largebuildingfire1"
+   },
+   {
+    "calls": 1,
+    "form": "map-imported",
+    "ggdDocs": [
+     "fx.w3x.locust.frostnova.p00",
+     "fx.w3x.locust.frostnova.p01",
+     "fx.w3x.locust.frostnova.p02",
+     "fx.w3x.locust.frostnova.p03",
+     "godie-frostnova-p0",
+     "godie-frostnova-p1",
+     "godie-frostnova-p2",
+     "godie-frostnova-p3"
+    ],
+    "ggdDocsConsumed": [
+     "fx.w3x.locust.frostnova.p00",
+     "fx.w3x.locust.frostnova.p01",
+     "fx.w3x.locust.frostnova.p02",
+     "fx.w3x.locust.frostnova.p03"
+    ],
+    "model": "frostnova.mdx",
+    "stem": "frostnova"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\undead\\\\replenishmana\\\\spirittouchtarget.mdl",
+    "stem": "spirittouchtarget"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\weapons\\\\gryphonridermissile\\\\gryphonridermissiletarget.mdl",
+    "stem": "gryphonridermissiletarget"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\other\\\\monsoon\\\\monsoonrain.mdl",
+    "stem": "monsoonrain"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\human\\\\feedback\\\\spellbreakerattack.mdl",
+    "stem": "spellbreakerattack"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\orc\\\\reincarnation\\\\reincarnationtarget.mdl",
+    "stem": "reincarnationtarget"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\weapons\\\\zigguratmissile\\\\zigguratmissile.mdl",
+    "stem": "zigguratmissile"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\weapons\\\\ancestralguardianmissile\\\\ancestralguardianmissile.mdl",
+    "stem": "ancestralguardianmissile"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\human\\\\heal\\\\healtarget.mdl",
+    "stem": "healtarget"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\nightelf\\\\targetartlumber\\\\targetartlumber.mdl",
+    "stem": "targetartlumber"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "objects\\\\spawnmodels\\\\orc\\\\orclargedeathexplode\\\\orclargedeathexplode.mdl",
+    "stem": "orclargedeathexplode"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "objects\\\\spawnmodels\\\\demon\\\\demonlargedeathexplode\\\\demonlargedeathexplode.mdl",
+    "stem": "demonlargedeathexplode"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\weapons\\\\flyingmachine\\\\flyingmachineimpact.mdl",
+    "stem": "flyingmachineimpact"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "objects\\\\spawnmodels\\\\human\\\\humanblood\\\\humanbloodpriest.mdl",
+    "stem": "humanbloodpriest"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\other\\\\doom\\\\doomtarget.mdl",
+    "stem": "doomtarget"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\undead\\\\deathpact\\\\deathpacttarget.mdl",
+    "stem": "deathpacttarget"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\weapons\\\\bolt\\\\boltimpact.mdl",
+    "stem": "boltimpact"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\orc\\\\earthquake\\\\earthquaketarget.mdl",
+    "stem": "earthquaketarget"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\items\\\\aivi\\\\aivitarget.mdl",
+    "stem": "aivitarget"
+   },
+   {
+    "calls": 1,
+    "form": "map-imported",
+    "ggdDocs": [
+     "fx.w3x.particle.holyawakening.p00",
+     "fx.w3x.particle.holyawakening.p01",
+     "fx.w3x.particle.holyawakening.p02",
+     "fx.w3x.particle.holyawakening.p03",
+     "fx.w3x.particle.holyawakening.p04",
+     "fx.w3x.particle.holyawakening.p05",
+     "godie-holyawakening-p0",
+     "godie-holyawakening-p1",
+     "godie-holyawakening-p2",
+     "godie-holyawakening-p3",
+     "godie-holyawakening-p4",
+     "godie-holyawakening-p5",
+     "godie-holyawakening-r0",
+     "godie-holyawakening-r1",
+     "godie-holyawakening-r2",
+     "godie-holyawakening-r3",
+     "godie-holyawakening-r4",
+     "godie-holyawakening-r5",
+     "godie-holyawakening-r6",
+     "godie-holyawakening-r7"
+    ],
+    "ggdDocsConsumed": [
+     "fx.w3x.particle.holyawakening.p00",
+     "fx.w3x.particle.holyawakening.p01",
+     "fx.w3x.particle.holyawakening.p02",
+     "fx.w3x.particle.holyawakening.p03",
+     "fx.w3x.particle.holyawakening.p04",
+     "fx.w3x.particle.holyawakening.p05"
+    ],
+    "model": "holyawakening.mdx",
+    "stem": "holyawakening"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "objects\\\\spawnmodels\\\\orc\\\\orcblood\\\\battrollblood.mdl",
+    "stem": "battrollblood"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\weapons\\\\waterelementalmissile\\\\waterelementalmissile.mdl",
+    "stem": "waterelementalmissile"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "objects\\\\spawnmodels\\\\human\\\\humanblood\\\\humanbloodpeasant.mdl",
+    "stem": "humanbloodpeasant"
+   },
+   {
+    "calls": 1,
+    "form": "map-imported",
+    "ggdDocs": [
+     "fx.w3x.orb.herocloudkfksword.p00",
+     "godie-herocloudkfksword-p0"
+    ],
+    "ggdDocsConsumed": [
+     "fx.w3x.orb.herocloudkfksword.p00"
+    ],
+    "model": "herocloudkfksword.mdx",
+    "stem": "herocloudkfksword"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "objects\\\\spawnmodels\\\\nightelf\\\\entbirthtarget\\\\entbirthtarget.mdl",
+    "stem": "entbirthtarget"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\human\\\\flakcannons\\\\flaktarget.mdl",
+    "stem": "flaktarget"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\orc\\\\stasistrap\\\\stasistotemtarget.mdl",
+    "stem": "stasistotemtarget"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\undead\\\\impale\\\\impalehittarget.mdl",
+    "stem": "impalehittarget"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\human\\\\flare\\\\flarecaster.mdl",
+    "stem": "flarecaster"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\undead\\\\darksummoning\\\\darksummontarget.mdl",
+    "stem": "darksummontarget"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\undead\\\\deathcoil\\\\deathcoilmissile.mdl",
+    "stem": "deathcoilmissile"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\orc\\\\feralspirit\\\\feralspiritdone.mdl",
+    "stem": "feralspiritdone"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\other\\\\healingspray\\\\healbottlemissile.mdl",
+    "stem": "healbottlemissile"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\weapons\\\\zigguratfrostmissile\\\\zigguratfrostmissile.mdl",
+    "stem": "zigguratfrostmissile"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "environment\\\\nightelfbuildingfire\\\\elflargebuildingfire2.mdl",
+    "stem": "elflargebuildingfire2"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\weapons\\\\wingedserpentmissile\\\\wingedserpentmissile.mdl",
+    "stem": "wingedserpentmissile"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "ui\\\\feedback\\\\goldcredit\\\\goldcredit.mdl",
+    "stem": "goldcredit"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "objects\\\\spawnmodels\\\\other\\\\toonboom\\\\toonboom.mdl",
+    "stem": "toonboom"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "objects\\\\spawnmodels\\\\undead\\\\udeathsmall\\\\udeathsmall.mdl",
+    "stem": "udeathsmall"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "doodads\\\\cinematic\\\\firerocksmall\\\\firerocksmall.mdl",
+    "stem": "firerocksmall"
+   },
+   {
+    "calls": 1,
+    "form": "map-imported",
+    "ggdDocs": [
+     "godie-bladestorm-swordeffect-p0"
+    ],
+    "ggdDocsConsumed": [
+     "godie-bladestorm-swordeffect-p0"
+    ],
+    "model": "bladestorm_swordeffect.mdx",
+    "stem": "bladestorm_swordeffect"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\weapons\\\\catapult\\\\catapultmissile.mdl",
+    "stem": "catapultmissile"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\nightelf\\\\shadowstrike\\\\shadowstrike.mdl",
+    "stem": "shadowstrike"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\weapons\\\\demolisherfiremissile\\\\demolisherfiremissile.mdl",
+    "stem": "demolisherfiremissile"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\weapons\\\\glaivemissile\\\\glaivemissiletarget.mdl",
+    "stem": "glaivemissiletarget"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "objects\\\\spawnmodels\\\\demon\\\\demonsmalldeathexplode\\\\demonsmalldeathexplode.mdl",
+    "stem": "demonsmalldeathexplode"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "objects\\\\spawnmodels\\\\naga\\\\nagablood\\\\nagabloodwindserpent.mdl",
+    "stem": "nagabloodwindserpent"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\undead\\\\animatedead\\\\animatedeadtarget.mdl",
+    "stem": "animatedeadtarget"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "objects\\\\spawnmodels\\\\human\\\\humanblood\\\\humanbloodfootman.mdl",
+    "stem": "humanbloodfootman"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\human\\\\avatar\\\\avatarcaster.mdl",
+    "stem": "avatarcaster"
+   },
+   {
+    "calls": 1,
+    "form": "blizzard-stock",
+    "ggdDocs": [],
+    "ggdDocsConsumed": [],
+    "model": "abilities\\\\spells\\\\human\\\\resurrect\\\\resurrectcaster.mdl",
+    "stem": "resurrectcaster"
+   }
+  ],
+  "stockModels": 101,
+  "targetCalls": 316
+ },
+ "axis2": {
+  "byVfxStatus": {
+   "EXISTING": 50,
+   "NEW": 25,
+   "STOCK": 191
+  },
+  "coveragePct": 22,
+  "dummyUnits": 266,
+  "ggdLocustDocs": [
+   "fx.w3x.locust.boomnl.p00",
+   "fx.w3x.locust.boomnl.p01",
+   "fx.w3x.locust.boomnl.p02",
+   "fx.w3x.locust.boomnl.p03",
+   "fx.w3x.locust.boomnl.p04",
+   "fx.w3x.locust.darkraor.p00",
+   "fx.w3x.locust.darkraor.p01",
+   "fx.w3x.locust.darkraor.p02",
+   "fx.w3x.locust.frostnova.p00",
+   "fx.w3x.locust.frostnova.p01",
+   "fx.w3x.locust.frostnova.p02",
+   "fx.w3x.locust.frostnova.p03"
+  ],
+  "ggdLocustDocsConsumed": [
+   "fx.w3x.locust.boomnl.p00",
+   "fx.w3x.locust.boomnl.p01",
+   "fx.w3x.locust.boomnl.p02",
+   "fx.w3x.locust.boomnl.p03",
+   "fx.w3x.locust.boomnl.p04",
+   "fx.w3x.locust.frostnova.p00",
+   "fx.w3x.locust.frostnova.p01",
+   "fx.w3x.locust.frostnova.p02",
+   "fx.w3x.locust.frostnova.p03"
+  ],
+  "locustFlagged": 215,
+  "moving": 28,
+  "movingByModel": [
+   [
+    "ailbspecialart",
+    4
+   ],
+   [
+    "rockchunks0",
+    4
+   ],
+   [
+    "darkportaltarget",
+    2
+   ],
+   [
+    "resurrectcaster",
+    2
+   ],
+   [
+    "shockwavemissile",
+    2
+   ],
+   [
+    "tomeofretrainingcaster",
+    2
+   ],
+   [
+    "felgaurdblue",
+    2
+   ],
+   [
+    "fireblast",
+    1
+   ],
+   [
+    "herosaber",
+    1
+   ],
+   [
+    "herocloudstrife",
+    1
+   ],
+   [
+    "roarcaster",
+    1
+   ],
+   [
+    "warstompcaster",
+    1
+   ],
+   [
+    "revivehuman",
+    1
+   ],
+   [
+    "fragdriller",
+    1
+   ],
+   [
+    "stampedemissiledeath",
+    1
+   ],
+   [
+    "thunderclapcaster",
+    1
+   ],
+   [
+    "blinktarget",
+    1
+   ]
+  ],
+  "movingEffects": 22,
+  "movingHeroes": [
+   "Rider",
+   "SABER",
+   "berserker",
+   "克勞德",
+   "宇志波佐助",
+   "牧太郎",
+   "監獄兔",
+   "索龍",
+   "莉娜",
+   "蒼月潮",
+   "飛鼠先生",
+   "麻倉葉"
+  ],
+  "movingRows": [
+   {
+    "hero": null,
+    "instances": 4,
+    "model": "ailbspecialart",
+    "placeholders": [],
+    "status": "STOCK",
+    "trigger": "DragonTigerReady",
+    "unitName": "閃電"
+   },
+   {
+    "hero": "牧太郎",
+    "instances": 2,
+    "model": "rockchunks0",
+    "placeholders": [],
+    "status": "STOCK",
+    "trigger": "GaiaAngre",
+    "unitName": "大地之怒"
+   },
+   {
+    "hero": "監獄兔",
+    "instances": 2,
+    "model": "rockchunks0",
+    "placeholders": [],
+    "status": "STOCK",
+    "trigger": "GroundAttack",
+    "unitName": "大地之怒"
+   },
+   {
+    "hero": "berserker",
+    "instances": 2,
+    "model": "felgaurdblue",
+    "placeholders": [],
+    "status": "STOCK",
+    "trigger": "Nine_Lives_Hits",
+    "unitName": "B叔殘影"
+   },
+   {
+    "hero": "莉娜",
+    "instances": 1,
+    "model": "fireblast",
+    "placeholders": [],
+    "status": "EXISTING",
+    "trigger": "DragonSlaveMove",
+    "unitName": "新龍破斬1"
+   },
+   {
+    "hero": "SABER",
+    "instances": 1,
+    "model": "herosaber",
+    "placeholders": [],
+    "status": "EXISTING",
+    "trigger": "ExcaliburMAX",
+    "unitName": "Saber殘影"
+   },
+   {
+    "hero": "克勞德",
+    "instances": 1,
+    "model": "herocloudstrife",
+    "placeholders": [],
+    "status": "EXISTING",
+    "trigger": "SuperFF7",
+    "unitName": "幻影"
+   },
+   {
+    "hero": null,
+    "instances": 1,
+    "model": "roarcaster",
+    "placeholders": [],
+    "status": "STOCK",
+    "trigger": "DragonTigerReady",
+    "unitName": "龍虎-昇龍拳"
+   },
+   {
+    "hero": null,
+    "instances": 1,
+    "model": "warstompcaster",
+    "placeholders": [],
+    "status": "STOCK",
+    "trigger": "DragonTigerReady",
+    "unitName": "動地剁"
+   },
+   {
+    "hero": "索龍",
+    "instances": 1,
+    "model": "darkportaltarget",
+    "placeholders": [],
+    "status": "STOCK",
+    "trigger": "Romove",
+    "unitName": "九刀流特效"
+   },
+   {
+    "hero": "麻倉葉",
+    "instances": 1,
+    "model": "resurrectcaster",
+    "placeholders": [],
+    "status": "STOCK",
+    "trigger": "Soul_Shock",
+    "unitName": "靈魂衝擊"
+   },
+   {
+    "hero": "麻倉葉",
+    "instances": 1,
+    "model": "shockwavemissile",
+    "placeholders": [],
+    "status": "STOCK",
+    "trigger": "Soul_Shock",
+    "unitName": "Holy Strike Missile"
+   },
+   {
+    "hero": "麻倉葉",
+    "instances": 1,
+    "model": "resurrectcaster",
+    "placeholders": [],
+    "status": "STOCK",
+    "trigger": "GDD",
+    "unitName": "靈魂衝擊"
+   },
+   {
+    "hero": "麻倉葉",
+    "instances": 1,
+    "model": "shockwavemissile",
+    "placeholders": [],
+    "status": "STOCK",
+    "trigger": "GDD",
+    "unitName": "Holy Strike Missile"
+   },
+   {
+    "hero": "SABER",
+    "instances": 1,
+    "model": "darkportaltarget",
+    "placeholders": [],
+    "status": "STOCK",
+    "trigger": "ExcaliburMAX",
+    "unitName": "安云衝刺"
+   },
+   {
+    "hero": "SABER",
+    "instances": 1,
+    "model": "revivehuman",
+    "placeholders": [],
+    "status": "STOCK",
+    "trigger": "ExcaliburMAX",
+    "unitName": "勝利劍"
+   },
+   {
+    "hero": "SABER",
+    "instances": 1,
+    "model": "fragdriller",
+    "placeholders": [],
+    "status": "STOCK",
+    "trigger": "ExcaliburMAX",
+    "unitName": "特效三號"
+   },
+   {
+    "hero": "蒼月潮",
+    "instances": 1,
+    "model": "stampedemissiledeath",
+    "placeholders": [
+     "godie-hpb1.w"
+    ],
+    "status": "STOCK",
+    "trigger": "MoonKnock",
+    "unitName": "蒼月道術特效"
+   },
+   {
+    "hero": "Rider",
+    "instances": 1,
+    "model": "tomeofretrainingcaster",
+    "placeholders": [],
+    "status": "STOCK",
+    "trigger": "RidermovelineDam",
+    "unitName": "騎英之守綱(特效)"
+   },
+   {
+    "hero": "宇志波佐助",
+    "instances": 1,
+    "model": "thunderclapcaster",
+    "placeholders": [],
+    "status": "STOCK",
+    "trigger": "LightCutRun",
+    "unitName": "雷切"
+   },
+   {
+    "hero": "飛鼠先生",
+    "instances": 1,
+    "model": "tomeofretrainingcaster",
+    "placeholders": [],
+    "status": "STOCK",
+    "trigger": "HeroCome",
+    "unitName": "王者之笛"
+   },
+   {
+    "hero": null,
+    "instances": 1,
+    "model": "blinktarget",
+    "placeholders": [],
+    "status": "STOCK",
+    "trigger": "Move_Effect",
+    "unitName": "雷光劍"
+   }
+  ],
+  "spawnModelFxAbilities": [
+   "godie-e002.e",
+   "godie-e00l.e",
+   "godie-h020.e",
+   "godie-hjai.e",
+   "godie-n01g.r"
+  ],
+  "spawnModelFxUsages": 5,
+  "spawnProjectileUsages": 22,
+  "spawnVfxUsages": 22,
+  "stationary": 238
+ },
+ "axis3": {
+  "aimYaw": [
+   "fx.prim.holy.beam-flat",
+   "fx.prim.lightning.beam-flat"
+  ],
+  "artBindings": 437,
+  "byFamily": {
+   "fx.*（手寫）": {
+    "consumed": 14,
+    "total": 14
+   },
+   "fx.fam.*": {
+    "consumed": 13,
+    "total": 79
+   },
+   "fx.prim.*": {
+    "consumed": 119,
+    "total": 143
+   },
+   "fx.w3x.*": {
+    "consumed": 2,
+    "total": 2
+   },
+   "fx.w3x.locust.*": {
+    "consumed": 9,
+    "total": 12
+   },
+   "fx.w3x.orb.*": {
+    "consumed": 6,
+    "total": 40
+   },
+   "fx.w3x.particle.*": {
+    "consumed": 24,
+    "total": 66
+   },
+   "godie-*": {
+    "consumed": 24,
+    "total": 228
+   }
+  },
+  "consumed": 211,
+  "families": [
+   [
+    "shockwaveRing",
+    91
+   ],
+   [
+    "burst",
+    34
+   ],
+   [
+    "resurrect",
+    17
+   ],
+   [
+    "flamePillar",
+    15
+   ],
+   [
+    "mark",
+    13
+   ],
+   [
+    "mirrorImage",
+    13
+   ],
+   [
+    "blink",
+    12
+   ],
+   [
+    "dissipate",
+    10
+   ],
+   [
+    "lightColumn",
+    9
+   ],
+   [
+    "cloud",
+    6
+   ],
+   [
+    "boltStrike",
+    6
+   ],
+   [
+    "groundDust",
+    5
+   ],
+   [
+    "tornado",
+    5
+   ],
+   [
+    "shine",
+    4
+   ],
+   [
+    "missile",
+    4
+   ],
+   [
+    "breath",
+    4
+   ],
+   [
+    "portal",
+    4
+   ],
+   [
+    "levelUp",
+    3
+   ],
+   [
+    "uncategorised",
+    3
+   ]
+  ],
+  "flatOrient": [
+   "fx.prim.holy.beam-flat",
+   "fx.prim.lightning.beam-flat"
+  ],
+  "importedArtRows": 91,
+  "importedArtStillPrimitive": 57,
+  "importedArtStillPrimitiveByModel": [
+   [
+    "earthtornado2",
+    10
+   ],
+   [
+    "herocloudcyd",
+    9
+   ],
+   [
+    "purplecoat",
+    9
+   ],
+   [
+    "grandundeadaura",
+    7
+   ],
+   [
+    "divinering",
+    4
+   ],
+   [
+    "bloodbreathstream",
+    4
+   ],
+   [
+    "midchildernanohaaura",
+    4
+   ],
+   [
+    "minitypeflame",
+    3
+   ],
+   [
+    "heroshanawingsmall",
+    3
+   ],
+   [
+    "ne-shield",
+    3
+   ],
+   [
+    "crescent",
+    3
+   ],
+   [
+    "holyawakening",
+    2
+   ],
+   [
+    "lightningtornado",
+    2
+   ],
+   [
+    "heroluffeattack",
+    2
+   ],
+   [
+    "katana",
+    2
+   ],
+   [
+    "enchant",
+    1
+   ],
+   [
+    "war3mapimported-poweraura",
+    1
+   ],
+   [
+    "doom",
+    1
+   ],
+   [
+    "flash",
+    1
+   ],
+   [
+    "heronarutos4effect",
+    1
+   ],
+   [
+    "love2",
+    1
+   ],
+   [
+    "sonicbreathstream",
+    1
+   ],
+   [
+    "wuqi",
+    1
+   ],
+   [
+    "awing",
+    1
+   ]
+  ],
+  "orphansByFamily": {
+   "fx.fam.*": [
+    "fx.fam.blink.arcane.s65",
+    "fx.fam.blink.arcane.s90",
+    "fx.fam.blink.lightning.s90",
+    "fx.fam.bolt-strike.lightning.s345",
+    "fx.fam.breath.blood.s110",
+    "fx.fam.breath.nature.s110",
+    "fx.fam.burst.fire.s100",
+    "fx.fam.burst.fire.s105",
+    "fx.fam.burst.physical.s100",
+    "fx.fam.burst.physical.s105",
+    "fx.fam.burst.w3x-646464.s100",
+    "fx.fam.burst.w3x-646464.s150",
+    "fx.fam.burst.w3x-ff0000.s170",
+    "fx.fam.burst.w3x-ffaaaa.s100",
+    "fx.fam.cloud.physical.s120",
+    "fx.fam.cloud.void.s180",
+    "fx.fam.cloud.wind.s120",
+    "fx.fam.dissipate.physical.s125",
+    "fx.fam.dissipate.void.s85",
+    "fx.fam.dissipate.w3x-0a0a0a.s100",
+    "fx.fam.dissipate.w3x-ff0000.s85",
+    "fx.fam.ground-dust.earth.s80",
+    "fx.fam.ground-dust.nature.s80",
+    "fx.fam.level-up.holy.s90",
+    "fx.fam.level-up.ki.s65",
+    "fx.fam.light-column.arcane.s100",
+    "fx.fam.light-column.arcane.s240",
+    "fx.fam.light-column.holy.s100",
+    "fx.fam.light-column.holy.s150",
+    "fx.fam.light-column.ice.s100",
+    "fx.fam.light-column.w3x-00ffff.s150",
+    "fx.fam.light-column.w3x-ff00ff.s205",
+    "fx.fam.mark.w3x-ff6400.s125",
+    "fx.fam.mark.w3x-ff6400.s85",
+    "fx.fam.mirror-image.arcane.s100",
+    "fx.fam.mirror-image.holy.s150",
+    "fx.fam.mirror-image.physical.s100",
+    "fx.fam.mirror-image.physical.s150",
+    "fx.fam.mirror-image.void.s100",
+    "fx.fam.missile.fire.s205",
+    "fx.fam.portal.holy.s160",
+    "fx.fam.portal.void.s160",
+    "fx.fam.resurrect.fire.s95",
+    "fx.fam.resurrect.holy.s95",
+    "fx.fam.resurrect.lightning.s95",
+    "fx.fam.resurrect.sound.s95",
+    "fx.fam.resurrect.w3x-ff0000.s170",
+    "fx.fam.shine.nature.s150",
+    "fx.fam.shockwave-ring.arcane.s100",
+    "fx.fam.shockwave-ring.arcane.s150",
+    "fx.fam.shockwave-ring.earth.s100",
+    "fx.fam.shockwave-ring.fire.s100",
+    "fx.fam.shockwave-ring.holy.s150",
+    "fx.fam.shockwave-ring.lightning.s100",
+    "fx.fam.shockwave-ring.lightning.s150",
+    "fx.fam.shockwave-ring.physical.s100",
+    "fx.fam.shockwave-ring.physical.s150",
+    "fx.fam.shockwave-ring.void.s100",
+    "fx.fam.shockwave-ring.void.s150",
+    "fx.fam.shockwave-ring.void.s70",
+    "fx.fam.shockwave-ring.w3x-00ffff.s100",
+    "fx.fam.shockwave-ring.w3x-00ffff.s150",
+    "fx.fam.tornado.w3x-9696ff.s135",
+    "fx.fam.tornado.w3x-c86464.s170",
+    "fx.fam.tornado.wind.s100",
+    "fx.fam.tornado.wind.s150"
+   ],
+   "fx.prim.*": [
+    "fx.prim.arcane.bolt-lg",
+    "fx.prim.arcane.slash-lg",
+    "fx.prim.arcane.summon-lg",
+    "fx.prim.blood.summon",
+    "fx.prim.earth.beam",
+    "fx.prim.fire.pulse-sm",
+    "fx.prim.fire.slash-lg",
+    "fx.prim.holy.dash",
+    "fx.prim.ice.bolt-lg",
+    "fx.prim.ice.explosion-lg",
+    "fx.prim.ice.pulse-sm",
+    "fx.prim.ki.explosion-lg",
+    "fx.prim.ki.nova-lg",
+    "fx.prim.lightning.nova-lg",
+    "fx.prim.nature.beam-lg",
+    "fx.prim.physical.beam-lg",
+    "fx.prim.physical.nova-lg",
+    "fx.prim.sound.nova-lg",
+    "fx.prim.sound.pulse-sm",
+    "fx.prim.void.beam-lg",
+    "fx.prim.void.bolt-lg",
+    "fx.prim.void.summon",
+    "fx.prim.wind.pulse-sm",
+    "fx.prim.wind.summon-lg"
+   ],
+   "fx.w3x.locust.*": [
+    "fx.w3x.locust.darkraor.p00",
+    "fx.w3x.locust.darkraor.p01",
+    "fx.w3x.locust.darkraor.p02"
+   ],
+   "fx.w3x.orb.*": [
+    "fx.w3x.orb.1hswd-01.p00",
+    "fx.w3x.orb.1hswd-01.p01",
+    "fx.w3x.orb.1hswd-01.p02",
+    "fx.w3x.orb.bloodbreathstream.p00",
+    "fx.w3x.orb.bloodbreathstream.p01",
+    "fx.w3x.orb.bloodbreathstream.p02",
+    "fx.w3x.orb.demonfilth.p00",
+    "fx.w3x.orb.demonfilth.p01",
+    "fx.w3x.orb.demonfilth.p02",
+    "fx.w3x.orb.demonfilth.p03",
+    "fx.w3x.orb.demonfilth.p04",
+    "fx.w3x.orb.divinering.p00",
+    "fx.w3x.orb.divinering.p01",
+    "fx.w3x.orb.divinering.p02",
+    "fx.w3x.orb.divinering.p03",
+    "fx.w3x.orb.divinering.p04",
+    "fx.w3x.orb.divinering.p05",
+    "fx.w3x.orb.divinering.p06",
+    "fx.w3x.orb.divinering.p07",
+    "fx.w3x.orb.divinering.p08",
+    "fx.w3x.orb.divinering.p09",
+    "fx.w3x.orb.divinering.p10",
+    "fx.w3x.orb.divinering.p11",
+    "fx.w3x.orb.divinering.p12",
+    "fx.w3x.orb.divinering.p13",
+    "fx.w3x.orb.divinering.p14",
+    "fx.w3x.orb.divinering.p15",
+    "fx.w3x.orb.divinering.p16",
+    "fx.w3x.orb.divinering.p17",
+    "fx.w3x.orb.divinering.p18",
+    "fx.w3x.orb.divinering.p19",
+    "fx.w3x.orb.herosaber.p00",
+    "fx.w3x.orb.herosaber.p01",
+    "fx.w3x.orb.magical-sword.p00"
+   ],
+   "fx.w3x.particle.*": [
+    "fx.w3x.particle.babyface.p00",
+    "fx.w3x.particle.blackhole.p00",
+    "fx.w3x.particle.blackhole.p01",
+    "fx.w3x.particle.blackhole.p02",
+    "fx.w3x.particle.blackhole.p03",
+    "fx.w3x.particle.blackhole.p04",
+    "fx.w3x.particle.blackhole.p05",
+    "fx.w3x.particle.blackhole.p06",
+    "fx.w3x.particle.blackhole1.p00",
+    "fx.w3x.particle.blackhole1.p01",
+    "fx.w3x.particle.blackhole1.p02",
+    "fx.w3x.particle.enchant.p02",
+    "fx.w3x.particle.enchant.p03",
+    "fx.w3x.particle.enchant.p04",
+    "fx.w3x.particle.flash.p00",
+    "fx.w3x.particle.flash.p01",
+    "fx.w3x.particle.heronarutos4effect.p02",
+    "fx.w3x.particle.heronarutos4effect.p03",
+    "fx.w3x.particle.heronarutos4effect.p04",
+    "fx.w3x.particle.heroraichus3.p00",
+    "fx.w3x.particle.heroraichus3.p01",
+    "fx.w3x.particle.lasercannonfinalred.p00",
+    "fx.w3x.particle.lasercannonfinalred.p01",
+    "fx.w3x.particle.lasercannonfinalred.p02",
+    "fx.w3x.particle.lasercannonfinalred.p03",
+    "fx.w3x.particle.lasercannonfinalred.p04",
+    "fx.w3x.particle.lasercannonfinalred.p05",
+    "fx.w3x.particle.lasercannonfinalred.p06",
+    "fx.w3x.particle.lasercannonfinalred.p07",
+    "fx.w3x.particle.musiccast.p00",
+    "fx.w3x.particle.musiccast.p01",
+    "fx.w3x.particle.oblivionaura.p00",
+    "fx.w3x.particle.sephboom.p00",
+    "fx.w3x.particle.sephboom.p01",
+    "fx.w3x.particle.sephboom.p02",
+    "fx.w3x.particle.sephboom.p03",
+    "fx.w3x.particle.sephboom.p04",
+    "fx.w3x.particle.sephboom.p05",
+    "fx.w3x.particle.sephboom.p06",
+    "fx.w3x.particle.sonicbreathstream.p00",
+    "fx.w3x.particle.sonicbreathstream.p01",
+    "fx.w3x.particle.sonicbreathstream.p02"
+   ],
+   "godie-*": [
+    "godie-1hswd-01-p0",
+    "godie-1hswd-01-p1",
+    "godie-1hswd-01-p2",
+    "godie-aquaspikeversion2-p1",
+    "godie-aquaspikeversion2-p10",
+    "godie-aquaspikeversion2-p11",
+    "godie-aquaspikeversion2-p2",
+    "godie-aquaspikeversion2-p3",
+    "godie-aquaspikeversion2-p4",
+    "godie-aquaspikeversion2-p5",
+    "godie-aquaspikeversion2-p6",
+    "godie-aquaspikeversion2-p7",
+    "godie-aquaspikeversion2-p8",
+    "godie-aquaspikeversion2-p9",
+    "godie-babyface-p0",
+    "godie-billy-p0",
+    "godie-blackhole-p0",
+    "godie-blackhole-p1",
+    "godie-blackhole-p2",
+    "godie-blackhole-p3",
+    "godie-blackhole-p4",
+    "godie-blackhole-p5",
+    "godie-blackhole-p6",
+    "godie-blackhole1-p0",
+    "godie-blackhole1-p1",
+    "godie-blackhole1-p2",
+    "godie-bloodbreathstream-p0",
+    "godie-bloodbreathstream-p1",
+    "godie-bloodbreathstream-p2",
+    "godie-boomnl-p0",
+    "godie-boomnl-p1",
+    "godie-boomnl-p2",
+    "godie-boomnl-p3",
+    "godie-boomnl-p4",
+    "godie-bulbasaur-p0",
+    "godie-cloud-p0",
+    "godie-darkbreathdamage-p0",
+    "godie-darkraor-p0",
+    "godie-darkraor-p1",
+    "godie-darkraor-p2",
+    "godie-demonfilth-p0",
+    "godie-demonfilth-p1",
+    "godie-demonfilth-p2",
+    "godie-demonfilth-p3",
+    "godie-demonfilth-p4",
+    "godie-divinering-p0",
+    "godie-divinering-p1",
+    "godie-divinering-p10",
+    "godie-divinering-p11",
+    "godie-divinering-p12",
+    "godie-divinering-p13",
+    "godie-divinering-p14",
+    "godie-divinering-p15",
+    "godie-divinering-p16",
+    "godie-divinering-p17",
+    "godie-divinering-p18",
+    "godie-divinering-p19",
+    "godie-divinering-p2",
+    "godie-divinering-p3",
+    "godie-divinering-p4",
+    "godie-divinering-p5",
+    "godie-divinering-p6",
+    "godie-divinering-p7",
+    "godie-divinering-p8",
+    "godie-divinering-p9",
+    "godie-earthtornado2-p10",
+    "godie-earthtornado2-p11",
+    "godie-earthtornado2-p12",
+    "godie-earthtornado2-p3",
+    "godie-earthtornado2-p4",
+    "godie-earthtornado2-p5",
+    "godie-earthtornado2-p6",
+    "godie-earthtornado2-p7",
+    "godie-earthtornado2-p8",
+    "godie-enchant-p0",
+    "godie-enchant-p1",
+    "godie-enchant-p2",
+    "godie-enchant-p3",
+    "godie-enchant-p4",
+    "godie-flamessmoke-p0",
+    "godie-flamessmoke-p1",
+    "godie-flamessmoke-p2",
+    "godie-flamessmoke-p3",
+    "godie-flash-p0",
+    "godie-flash-p1",
+    "godie-fox-p0",
+    "godie-fox2-p0",
+    "godie-frostnova-p0",
+    "godie-frostnova-p1",
+    "godie-frostnova-p2",
+    "godie-frostnova-p3",
+    "godie-gumdam-p1",
+    "godie-gumdam-p3",
+    "godie-gumdam-p4",
+    "godie-gx-p0",
+    "godie-gxhuge-p0",
+    "godie-herobuu-p0",
+    "godie-herocloudkfksword-p0",
+    "godie-herocloudstrife-p0",
+    "godie-herocloudstrife-p1",
+    "godie-heroeva01s2-p0",
+    "godie-heroeva01s2-p1",
+    "godie-herofate-p0",
+    "godie-herofate-p1",
+    "godie-herohanzouhattori-p0",
+    "godie-herohehi-p0",
+    "godie-herohimurakenshin-p0",
+    "godie-herohimurakenshin-p1",
+    "godie-heroichigo-p0",
+    "godie-herokyo-p0",
+    "godie-heroluffeattack-p0",
+    "godie-heromiku-p0",
+    "godie-heromiku-p1",
+    "godie-heromusashimiyamoto-p0",
+    "godie-heronarutos4effect-p0",
+    "godie-heronarutos4effect-p1",
+    "godie-heronarutos4effect-p2",
+    "godie-heronarutos4effect-p3",
+    "godie-heronarutos4effect-p4",
+    "godie-heronarutos4effect-p5",
+    "godie-herooichi-p0",
+    "godie-herooichi-p1",
+    "godie-heroraichus3-p0",
+    "godie-heroraichus3-p1",
+    "godie-heroryuk-p0",
+    "godie-herosaber-p0",
+    "godie-herosaber-p1",
+    "godie-herosasuke-p0",
+    "godie-herosasuke-p1",
+    "godie-herosasuke-p2",
+    "godie-herosasuke-p3",
+    "godie-herosephiroth-p0",
+    "godie-herotoshiiemaeda-p0",
+    "godie-heroxelloss-p0",
+    "godie-heroxelloss-p1",
+    "godie-holyawakening-p0",
+    "godie-holyawakening-p1",
+    "godie-holyawakening-p2",
+    "godie-holyawakening-p3",
+    "godie-holyawakening-p4",
+    "godie-holyawakening-p5",
+    "godie-horse-p0",
+    "godie-lasercannonfinalred-p0",
+    "godie-lasercannonfinalred-p1",
+    "godie-lasercannonfinalred-p2",
+    "godie-lasercannonfinalred-p3",
+    "godie-lasercannonfinalred-p4",
+    "godie-lasercannonfinalred-p5",
+    "godie-lasercannonfinalred-p6",
+    "godie-lasercannonfinalred-p7",
+    "godie-lavabreathdamage-p0",
+    "godie-lightningnova-p0",
+    "godie-lightningnova-p1",
+    "godie-lightningtornado-p1",
+    "godie-lightningtornado-p10",
+    "godie-lightningtornado-p11",
+    "godie-lightningtornado-p12",
+    "godie-lightningtornado-p13",
+    "godie-lightningtornado-p2",
+    "godie-lightningtornado-p3",
+    "godie-lightningtornado-p4",
+    "godie-lightningtornado-p5",
+    "godie-lightningtornado-p6",
+    "godie-lightningtornado-p7",
+    "godie-lightningtornado-p8",
+    "godie-lightningtornado-p9",
+    "godie-linainvers-p0",
+    "godie-linainvers-p1",
+    "godie-linainvers-p2",
+    "godie-lubu-p0",
+    "godie-lubu-p1",
+    "godie-lubu-p2",
+    "godie-ma-p0",
+    "godie-ma-p1",
+    "godie-magical-sword-p0",
+    "godie-meteor-p0",
+    "godie-meteor-p1",
+    "godie-meteor-p2",
+    "godie-meteor-p3",
+    "godie-meteor-p4",
+    "godie-meteor-p5",
+    "godie-meteor-p6",
+    "godie-meteor-p7",
+    "godie-minitypeflame-p0",
+    "godie-minitypeflame-p1",
+    "godie-negi-p0",
+    "godie-negi-p1",
+    "godie-netherstrike-p0",
+    "godie-netherstrike-p1",
+    "godie-netherstrike-p2",
+    "godie-netherstrike-p3",
+    "godie-netherstrike-p4",
+    "godie-niya-p0",
+    "godie-niya-p1",
+    "godie-oblivionaura-p0",
+    "godie-renaryugu2-p0",
+    "godie-renaryugu2-p1",
+    "godie-sesshomaru-p0",
+    "godie-sonicbreathstream-p0",
+    "godie-sonicbreathstream-p1",
+    "godie-sonicbreathstream-p2",
+    "godie-supershinythingy-p0",
+    "godie-supershinythingy-p1",
+    "godie-supershinythingy-p2"
+   ]
+  },
+  "primitives": [
+   [
+    "pulse",
+    84
+   ],
+   [
+    "beam",
+    57
+   ],
+   [
+    "explosion",
+    53
+   ],
+   [
+    "nova",
+    41
+   ],
+   [
+    "slash",
+    35
+   ],
+   [
+    "shockwave",
+    25
+   ],
+   [
+    "swarm",
+    19
+   ],
+   [
+    "tornado",
+    6
+   ],
+   [
+    "dash",
+    3
+   ],
+   [
+    "bolt",
+    2
+   ]
+  ],
+  "total": 584,
+  "w3xCensus": {
+   "abilitySlots": 668,
+   "extractionSupply": {
+    "boundAsVfxKey": 12,
+    "fxW3xLayers": 118,
+    "unused": 106
+   },
+   "statusTotals": {
+    "LEGACY-KEY": 17,
+    "NO-CAST": 47,
+    "NO-SOURCE": 162,
+    "PRIMITIVE-NECESSARY": 388,
+    "PRIMITIVE-SUBSTITUTE": 20,
+    "TRUE-PORT": 34
+   },
+   "vfxKeyTotals": {
+    "<none>": 47,
+    "fx.prim.*": 570,
+    "fx.w3x.*": 29,
+    "godie-*": 5,
+    "legacy/other": 17
+   }
+  },
+  "withOrient": 9
+ },
+ "axis4": {
+  "ambientModelBindings": 11,
+  "boundViaAmbient": [
+   "godie-heromusashimiyamoto-r0",
+   "godie-heromusashimiyamoto-r1",
+   "godie-mfls-r0",
+   "godie-mfls-r1",
+   "godie-renaryugu2-r0",
+   "godie-sd2-r0",
+   "godie-sd2-r1",
+   "godie-sd2-r2",
+   "godie-sd2-r3",
+   "godie-sesshomaru-r0"
+  ],
+  "consumed": 10,
+  "orphans": [
+   "fx.ribbon-slash",
+   "godie-blackhole-r0",
+   "godie-blackhole-r1",
+   "godie-cloud-r0",
+   "godie-deathwave-r0",
+   "godie-deathwave-r1",
+   "godie-deathwave-r2",
+   "godie-gx-r0",
+   "godie-gxhuge-r0",
+   "godie-herocloudstrife-r0",
+   "godie-herofate-r0",
+   "godie-herogirl-r0",
+   "godie-herogirl-r1",
+   "godie-herohanzouhattori-r0",
+   "godie-herohehi-r0",
+   "godie-herohimurakenshin-r0",
+   "godie-heroichigo-r0",
+   "godie-heroichigo-r1",
+   "godie-herokunoichi-r0",
+   "godie-herokunoichi-r1",
+   "godie-herokyo-r0",
+   "godie-herosaber-r0",
+   "godie-herosasuke-r0",
+   "godie-herosasuke-r1",
+   "godie-herosephiroth-r0",
+   "godie-heroshana-r0",
+   "godie-herotoshiiemaeda-r0",
+   "godie-holyawakening-r0",
+   "godie-holyawakening-r1",
+   "godie-holyawakening-r2",
+   "godie-holyawakening-r3",
+   "godie-holyawakening-r4",
+   "godie-holyawakening-r5",
+   "godie-holyawakening-r6",
+   "godie-holyawakening-r7",
+   "godie-lubu-r0",
+   "godie-niya-r0",
+   "godie-picacugy-r0",
+   "godie-supershinythingy-r0",
+   "godie-supershinythingy-r1",
+   "godie-supershinythingy-r2",
+   "godie-windmissle-r0",
+   "godie-windmissle-r1",
+   "godie-windmissle-r2",
+   "godie-ye-wuqi1-r0"
+  ],
+  "sourceRibbonEmitters": 56,
+  "total": 55
+ },
+ "axis5": {
+  "ambientModelBindings": 11,
+  "ambientVfxRefs": 21,
+  "attachmentDocs": 3,
+  "attachmentDocsConsumed": 3,
+  "attachmentIds": [
+   "attach.ex.midchilder-aura",
+   "attach.godie-e00x.awing",
+   "attach.godie-u01u.poweraura"
+  ],
+  "sourceOrbAmbient": 32,
+  "sourceOrbAttachPoints": [
+   [
+    "chest",
+    150
+   ],
+   [
+    "overhead",
+    83
+   ],
+   [
+    "weapon",
+    29
+   ],
+   [
+    "origin",
+    24
+   ],
+   [
+    "hand",
+    9
+   ],
+   [
+    "head",
+    7
+   ],
+   [
+    "hand right",
+    6
+   ],
+   [
+    "foot",
+    5
+   ],
+   [
+    "hand left",
+    3
+   ]
+  ],
+  "sourceOrbCalls": 316,
+  "sourceOrbCustomByModel": [
+   [
+    "bloodbreathstream",
+    8
+   ],
+   [
+    "herocloudcyd",
+    6
+   ],
+   [
+    "supershinythingy",
+    4
+   ],
+   [
+    "boomnl",
+    3
+   ],
+   [
+    "magical-sword",
+    2
+   ],
+   [
+    "love2",
+    2
+   ],
+   [
+    "herofatezemberformbig",
+    2
+   ],
+   [
+    "midchildernanohaaura",
+    1
+   ],
+   [
+    "holyawakening",
+    1
+   ],
+   [
+    "herocloudkfksword",
+    1
+   ],
+   [
+    "bladestorm-swordeffect",
+    1
+   ]
+  ],
+  "sourceOrbCustomModel": 31,
+  "sourceOrbTimed": 284,
+  "sphereCounts": {
+   "attachmentInstances": 22,
+   "byBodySource": {
+    "content": 15,
+    "overlay": 5,
+    "standin": 2
+   },
+   "byCategory": {
+    "alt-form": 1,
+    "blizzard-vfx": 13,
+    "disabled-by-author": 2,
+    "never-bake-aura": 2,
+    "real-part": 4
+   },
+   "byDecision": {
+    "ALREADY-SHIPPED": 1,
+    "BAKEABLE-NOW": 2,
+    "BLOCKED-OVERLAY": 1,
+    "DEFER-TO-TRANSFORM": 1,
+    "DO-NOT-BAKE": 2,
+    "NO-OP": 2,
+    "OUT-OF-SCOPE": 13
+   },
+   "distinctAttachModels": 18,
+   "distinctChampions": 18,
+   "distinctW3xBodies": 17,
+   "heroAbilityPairs": 22,
+   "rowsShippedLoaderMisses": 2,
+   "rowsShippedLoaderSees": 20,
+   "sphereAbilitiesDirectBaseAsph": 76,
+   "sphereAbilitiesTransitiveRootAsph": 76
+  }
+ },
+ "batches": [
+  {
+   "files": "`content/vfx/fx.*.json` · `content/config/vfx-ability-art.json` · `content/config/ability-vfx-bindings.json` · `apps/client/scripts/gen-w3x-families.ts`",
+   "lane": "A",
+   "tickets": "**方位接線 ＋ 地圖自帶模型粒子回填**",
+   "why": "⛔ **這兩票不可以分開** —— 都在改「這支技能指到哪一份 vfx」，分兩條 lane 就是兩邊寫同一個 `vfx-ability-art.json`"
+  },
+  {
+   "files": "`content/abilities/*.json` · `content/config/model-fx-map.json`（新）",
+   "lane": "B",
+   "tickets": "`spawnModelFx` 接線",
+   "why": "唯一會大量改技能 JSON 的一條 ⇒ 獨佔 `content/abilities/`"
+  },
+  {
+   "files": "`packages/shared/src/content/schema/ability.ts` · `content/vfx/attach.*.json`",
+   "lane": "C",
+   "tickets": "技能級緞帶／掛件（schema 那一半）",
+   "why": "唯一動 schema 的一條 ⇒ 獨佔 `ability.ts`。⚠️ **技能側接線要等 B 收工**（同樣寫 `content/abilities/`）"
+  },
+  {
+   "files": "`tools/w3x-import/dummy_orb_scan.py` · `content/champions/*.json` · `content/models/*.json`",
+   "lane": "D",
+   "tickets": "掛點名正規化 ＋ 替身骨架回收",
+   "why": "只動匯入工具與模型指派，⛔ 完全不碰 `content/vfx/`"
+  }
+ ],
+ "ownerExamples": {
+  "champions": 71,
+  "importedModelDocs": 111,
+  "rows": [
+   {
+    "ability": "godie-e002.e",
+    "abilityName": "20-03 約束與勝利之劍",
+    "abilityVfx": [
+     "fx.prim.holy.beam-flat",
+     "fx.thorn",
+     "fx.w3x.particle.holyawakening.p04"
+    ],
+    "ambient": [],
+    "axis": "②⑤",
+    "champion": "godie-e002",
+    "championName": "亞瑟王 - Saber",
+    "hasModelFx": true,
+    "modelIsStandin": false,
+    "modelKey": "imported.herosaber",
+    "said": "Saber 約束勝利之劍"
+   },
+   {
+    "ability": "godie-nbbc.e",
+    "abilityName": "08-03 龍鬥氣砲咒文",
+    "abilityVfx": [
+     "fx.prim.ki.bolt"
+    ],
+    "ambient": [
+     "godie-sd2-r0",
+     "godie-sd2-r1",
+     "godie-sd2-r2",
+     "godie-sd2-r3"
+    ],
+    "axis": "②",
+    "champion": "godie-nbbc",
+    "championName": "傳說的龍騎士 - 勇者小呆",
+    "hasModelFx": false,
+    "modelIsStandin": false,
+    "modelKey": "imported.sd2",
+    "said": "小呆龍鬥氣砲"
+   },
+   {
+    "ability": "godie-e00r.r",
+    "abilityName": "59-04 野戰型陽電子砲",
+    "abilityVfx": [
+     "fx.prim.ki.beam-lg",
+     "fx.prim.ki.bolt",
+     "fx.prim.lightning.beam-flat"
+    ],
+    "ambient": [],
+    "axis": "②",
+    "champion": "godie-e00r",
+    "championName": "最終泛用人型決戰兵器 - 初號機",
+    "hasModelFx": false,
+    "modelIsStandin": true,
+    "modelKey": "champ.skin.rogue",
+    "said": "初號機陽電子砲"
+   },
+   {
+    "ability": "godie-o00x.r",
+    "abilityName": "09-04 龜派氣功",
+    "abilityVfx": [
+     "fx.prim.ki.beam-lg"
+    ],
+    "ambient": [],
+    "axis": "②③",
+    "champion": "godie-o00x",
+    "championName": "超級賽亞人 - 悟空",
+    "hasModelFx": false,
+    "modelIsStandin": false,
+    "modelKey": "imported.goku",
+    "said": "衝擊波特效橫放 beam"
+   },
+   {
+    "ability": null,
+    "abilityName": null,
+    "abilityVfx": [],
+    "ambient": [],
+    "axis": "⑤",
+    "champion": "godie-o00x",
+    "championName": "超級賽亞人 - 悟空",
+    "hasModelFx": false,
+    "modelIsStandin": false,
+    "modelKey": "imported.goku",
+    "said": "悟空超3 頭／手的衝擊波"
+   },
+   {
+    "ability": null,
+    "abilityName": null,
+    "abilityVfx": [],
+    "ambient": [],
+    "axis": "⑤",
+    "champion": "godie-e002",
+    "championName": "亞瑟王 - Saber",
+    "hasModelFx": false,
+    "modelIsStandin": false,
+    "modelKey": "imported.herosaber",
+    "said": "Saber 持有武器金粉閃爍粒子"
+   },
+   {
+    "ability": null,
+    "abilityName": null,
+    "abilityVfx": [],
+    "ambient": [],
+    "axis": "④⑤",
+    "champion": "godie-efur",
+    "championName": "揍敵客大家長 - 揍敵客桀諾",
+    "hasModelFx": false,
+    "modelIsStandin": true,
+    "modelKey": "champ.sela",
+    "said": "揍敵客拖曳緞帶"
+   }
+  ],
+  "standins": [
+   {
+    "id": "godie-e00r",
+    "modelKey": "champ.skin.rogue",
+    "name": "最終泛用人型決戰兵器 - 初號機"
+   },
+   {
+    "id": "godie-e00s",
+    "modelKey": "champ.sela",
+    "name": "白木老樹精 - 白木卡迪那"
+   },
+   {
+    "id": "godie-e010",
+    "modelKey": "champ.sela",
+    "name": "白木老樹精 - 白木卡迪那"
+   },
+   {
+    "id": "godie-efur",
+    "modelKey": "champ.sela",
+    "name": "揍敵客大家長 - 揍敵客桀諾"
+   },
+   {
+    "id": "godie-h02k",
+    "modelKey": "champ.skin.barbarian",
+    "name": "國寶級的畜生 - 熊貓"
+   },
+   {
+    "id": "godie-hapm",
+    "modelKey": "champ.thorne",
+    "name": "海克力斯 - Berserker"
+   },
+   {
+    "id": "godie-n00b",
+    "modelKey": "champ.sela",
+    "name": "小叮噹 - 哆拉A夢"
+   },
+   {
+    "id": "godie-o030",
+    "modelKey": "champ.sela",
+    "name": "電車癡漢 - 臭作"
+   },
+   {
+    "id": "godie-ogld",
+    "modelKey": "champ.sela",
+    "name": "美白大法師 - 黑人牙膏"
+   },
+   {
+    "id": "godie-orkn",
+    "modelKey": "champ.sela",
+    "name": "電車癡漢 - 臭作"
+   },
+   {
+    "id": "godie-u00k",
+    "modelKey": "champ.sela",
+    "name": "邪惡意念集合體 - 死之王"
+   },
+   {
+    "id": "godie-ubal",
+    "modelKey": "champ.skin.barbarian",
+    "name": "魔界霸主 - 巴恩大魔王"
+   },
+   {
+    "id": "godie-ucrl",
+    "modelKey": "champ.thorne",
+    "name": "職業獵人 - 傑 富力士"
+   },
+   {
+    "id": "godie-udea",
+    "modelKey": "champ.thorne",
+    "name": "至尊學長 - 飛鼠先生"
+   },
+   {
+    "id": "godie-umal",
+    "modelKey": "champ.skin.barbarian",
+    "name": "北斗神拳掌門人 - 拳四郎"
+   }
+  ]
+ },
+ "summary": {
+  "axis1Consumed": 23,
+  "headlines": [
+   "⛔ **軸②接上率 22%** —— 原作 28 具**會移動**的模型 dummy（收斂成 22 個特效），GGD 用 `spawnModelFx` 的技能 **5 支**。",
+   "⛔ **57 支 beam 技能裡只有 2 份 vfx 會朝瞄準方向噴** —— 其餘每次施法都噴向世界座標的同一個方向（owner 的「橫放 beam」正是這一格）。",
+   "⭐ **57 個技能欄位**的原作藝術是地圖自帶模型（在 repo、⛔ 無授權問題），卻還掛在 `fx.prim.*` 替身上 —— 純資料就能回填。",
+   "⭐ 已抽出 118 層 w3x 粒子，**106 層沒有任何消費端**。",
+   "⛔ `ribbon@1` 55 份只接上 10 份、`attachment@1` 只有 3 份，而原作有 31 次自帶模型掛件 —— **缺的不是資料，是「技能級」的消費路徑**。",
+   "⚠️ **15 位英雄掛在替身骨架上**（`champ.sela` / `champ.thorne` / `champ.skin.*`）—— owner 點名的**初號機**與**揍敵客**都在其中。⛔ 掛點特效綁在替身骨架上是綁到別人身上，軸⑤在他們身上**做不出來**。"
+  ]
+ },
+ "tickets": [
+  {
+   "blocks": "**119 支**（beam 57 · slash 35 · shockwave 25 · bolt 2）",
+   "files": "`content/vfx/fx.prim.*.json` · `apps/client/scripts/gen-w3x-families.ts` · `content/config/vfx-ability-art.json`",
+   "knobs": [
+    [
+     "`vfxOrient.aimFollowsCaster`",
+     "boolean",
+     "—",
+     "特效朝向跟隨瞄準",
+     "關掉＝退回世界座標方位（舊行為）。⭐ 預設 **on**（第〇·六守則：高層級贏的預設啟動）"
+    ],
+    [
+     "`vfxOrient.defaultPitchDeg`",
+     "number",
+     "0–90",
+     "有方向特效的預設仰角",
+     "0＝完全橫放（owner 要的「橫放 beam」）；90＝直立柱狀（舊行為）"
+    ]
+   ],
+   "shape": "產生器替每一個有方向的 primitive 補一份 `yawFrom:\"aim\"` 變體，`vfx-ability-art` 的 `beam`/`slash`/`shockwave` 一律指到它。⛔ 不要逐支技能改 —— 那是第〇·五守則的「為某支技能寫 if」。",
+   "what": "**方位接線** —— `orient.yawFrom:\"aim\"` 變成有方向形狀的預設",
+   "why": "schema 已經有 `orient`，出貨只有 2 份在用 —— **零新程式**，改的是資料。CP 值最高。"
+  },
+  {
+   "blocks": "**還剩 17 個原作特效**（22 個中已接 5 個）",
+   "files": "`content/abilities/*.json` · `content/models/_index.json` · `content/config/`（新的 dummy→modelKey 對照表）",
+   "knobs": [
+    [
+     "`modelFx.enabled`",
+     "boolean",
+     "—",
+     "移動模型特效總開關",
+     "關掉＝退回粒子替身，用來一鍵 rollback"
+    ],
+    [
+     "`modelFx.maxConcurrent`",
+     "int",
+     "1–64",
+     "同場最多幾具移動模型",
+     "上界防「一場 200 具模型」把客戶端拖垮；⛔ 不是只有下界"
+    ]
+   ],
+   "shape": "一張 **dummy 模型 → `modelKey` 的對照表**（`content/config/`）＋技能 JSON 填 `path` / `speed` / `distance` / `spinDegPerSec`。⭐ 它們只差參數 ⇒ **一個模板 + 一張表**，⛔ 不是一支一輪。",
+   "what": "**`spawnModelFx` 接線** —— 把剩下會動的 dummy 變成內容",
+   "why": "引擎剛落地、接上率 **22%** —— 這正是 owner 點名的「3d model 蝗蟲群／砲擊」，而剩下的是主體。"
+  },
+  {
+   "blocks": "緞帶 45 份孤兒 + 原作 31 次自帶模型掛件",
+   "files": "`packages/shared/src/content/schema/ability.ts`（`persistentVfx` 旁邊）· `content/abilities/*.json` · `content/vfx/attach.*.json`",
+   "knobs": [
+    [
+     "`attachVfx.maxPerEntity`",
+     "int",
+     "1–12",
+     "單一單位最多幾個掛件特效",
+     "上界；超過就丟最舊的，⛔ 不是靜默疊加"
+    ]
+   ],
+   "shape": "`ability@1` 加一格 `attachVfx`（掛點 + vfx id + 存活條件），沿用 `persistentVfx` 已經有的條件常駐機制。⛔ 不要新開一套生命週期。",
+   "what": "**技能級緞帶／掛件** —— `ribbon@1` 與 `attachment@1` 的第二個消費端",
+   "why": "owner 逐字點名兩個（揍敵客拖曳緞帶、Saber 武器金粉）—— 而目前唯一的路是「綁在**模型**上」，做不出「這**支技能**／這**把武器**」。"
+  },
+  {
+   "blocks": "**57 個技能欄位**（原作藝術在 repo，⛔ 沒有授權問題）",
+   "files": "`content/config/vfx-ability-art.json` · `content/vfx/fx.w3x.*.json` · `content/config/ability-vfx-bindings.json`",
+   "knobs": [],
+   "shape": "從 `CENSUS.json` 的 `map-imported` 列自動產生綁定，⛔ 不要手挑 —— 手挑的那一份下次重抽就過期。",
+   "what": "**地圖自帶模型的粒子回填** —— 把 `fx.prim.*` 替身換回原作粒子",
+   "why": "已抽出 118 層、只綁了 12 層 —— **106 層抽了沒人用**。純資料。"
+  },
+  {
+   "blocks": "**15 位英雄**的整個軸⑤（含 owner 點名的初號機、揍敵客）",
+   "files": "`content/champions/*.json`（`modelKey`）· `content/models/*.json`",
+   "knobs": [],
+   "shape": "逐位比對 `content/models/imported.*` 有沒有對應的角色模型（例：`imported.heroeva01s2` 已經在 repo，而初號機掛的是 `champ.skin.rogue`）。⛔ 沒有對應模型的維持替身並記錄理由。",
+   "what": "**替身骨架回收**（軸⑤的前置條件，⛔ 不做就沒有掛點可綁）",
+   "why": "掛點（`chest` / `weapon` / `head`）綁在 `champ.sela` 上是綁到**別人的骨架**。⭐ 這一票**不做特效**，它只是讓其他三票在這些英雄身上有東西可綁。"
+  },
+  {
+   "blocks": "軸① 全部 316 次掛件呼叫的下游",
+   "files": "`tools/w3x-import/dummy_orb_scan.py` · `content/config/`（掛點別名表）",
+   "knobs": [],
+   "shape": "一張別名表（`content/config/`）＋一條守衛：任何原始掛點字串都必須解析到列舉裡的一個值，⛔ 不可以靜默 fallback。",
+   "what": "**掛點名正規化** —— 原作 19 種寫法收斂成一組列舉",
+   "why": "`orgin` / `chest ` / `hand,right` / `handright` 都是原作真的寫進去的 —— 任何逐字比對都會靜默漏掉，而**漏掉長得跟正常一模一樣**。"
+  }
+ ]
+}
