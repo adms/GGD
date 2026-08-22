@@ -90,6 +90,33 @@ owner 2026-08-22:「一堆**攻擊投射物 衝擊波特效**都沒移植 請儘
 `imported.wave` 被 5 支技能共用,而它們的原作飛彈分別是三個不同模型。
 表是 `abilityId → 一組 emitter`,而 `ProjectileView` 手上只有 `projectileId`。
 ⇒ 結論寫進 `projectile@1.vfxKey`,由**同一支腳本**產生、`--check` 一起驗。
+
+⭐ #547 第三輪 —— 量到的結論是「⛔ 這不是綁定的洞」
+------------------------------------------------------------------
+owner 第三次提「一堆攻擊投射物都沒移植」。這一輪把它**量完**(2026-08-22):
+
+| | 量到的 |
+|---|---:|
+| 活著的技能 | **420** |
+| 其中**真的射出投射物**的 | **22** |
+| 原作地圖裡**作者自己設過飛彈美術**的活技能 | **76** |
+| ⭐ 有飛彈美術意圖、卻**根本沒射投射物** | **68** |
+| 出貨的 `content/projectiles/*.json` | **21** 份 |
+| 其中美術指向原作的 | **1** 份 |
+
+⇒ ⭐ **缺的不是綁定,是投射物本身沒被移植。** 68 支技能在原作裡射一發飛彈,
+在 GGD 裡整個 `spawnProjectile` 都不存在 —— 綁定表再怎麼推導都碰不到它們,
+因為 `_projectile_users()` 找不到任何人射那顆子彈。
+
+⚠️ 而**剩下的綁定頭寸只有 1 顆**:15 對「技能↔投射物」有飛彈證據,其中 12 對點名
+**暴雪零售模型**(`MISSING_BLIZZARD_STOCK`),而 `extract_stock_vfx.py` 到今天只抽過
+**2 個** stem(`warstompcaster` / `thunderclapcaster`),**一個飛彈都沒有**。
+⇒ 這支腳本現在把那份**採購清單**印出來(`--report` 的 `WANT` 段),
+⛔ 不是一句「抽不出 emitter 文件」的死路。
+
+⭐ 源 C 因此多一條路:`art:missile` 抽不到地圖自帶模型時,改試**零售 stock 家族**
+(`fx.w3x.stock.<stem>.p*`,與源 B 同一條**命名規則**)。⇒ 抽取器哪天多收一個飛彈
+模型,覆蓋率**自己長出來**,⛔ 不必回來改這支腳本(第〇·四守則)。
 """
 from __future__ import annotations
 
@@ -108,6 +135,7 @@ VFX_DIR = os.path.join(REPO, "content", "vfx")
 ABILITY_DIR = os.path.join(REPO, "content", "abilities")
 ABILITY_ART = os.path.join(REPO, "content", "config", "vfx-ability-art.json")
 PROJECTILE_DIR = os.path.join(REPO, "content", "projectiles")
+AUGMENT_DIR = os.path.join(REPO, "content", "augments")
 OUT = os.path.join(REPO, "content", "config", "ability-vfx-bindings.json")
 
 SCHEMA_TAG = "config.ability-vfx-bindings@1"
@@ -232,23 +260,42 @@ def _projectile_docs() -> dict[str, dict]:
     return out
 
 
-def _projectile_users(live: dict[str, dict]) -> dict[str, list[str]]:
-    """`projectileId` → 射出它的技能。⚠️ 深走整份文件:它藏在 effect 樹的任一層。"""
-    out: dict[str, set[str]] = {}
+def _projectile_users(live: dict[str, dict]) -> dict[str, list[tuple[str, str]]]:
+    """
+    `projectileId` → **射出它的東西**,`(種類, id)`。⚠️ 深走整份文件:它藏在 effect
+    樹的任一層。
 
-    def walk(node: Any, aid: str) -> None:
+    ⚠️ **增益卡也射投射物**,而在此之前這裡只走 `content/abilities/` ——
+    於是 `grail.projection-bolt` / `grail.tracking-bolt` 被判成「沒有任何活著的技能
+    射這顆投射物(它是備用原型)」,⛔ **而那句話是假的**:`grail-c-20` 與 `grail-c-16`
+    正在射它們(第三守則 —— 一句自洽的假話比沒有話更貴)。
+    ⭐ 它們仍然綁不上(增益卡不在 w3x provenance 檔裡),但理由要說**真正**的那一個。
+
+    ⛔ **champion 不算第二個使用者**:`content/champions/*.json` 內嵌的是**同一支**
+    技能文件的鏡像(mirror authority model),數進去會讓每一顆投射物都變成「共用」,
+    於是閘 1 永遠不過 —— 一個看起來很嚴謹、實際上把功能整個關掉的閘。
+    """
+    out: dict[str, set[tuple[str, str]]] = {}
+
+    def walk(node: Any, who: tuple[str, str]) -> None:
         if isinstance(node, dict):
             pid = node.get("projectileId")
             if isinstance(pid, str):
-                out.setdefault(pid, set()).add(aid)
+                out.setdefault(pid, set()).add(who)
             for v in node.values():
-                walk(v, aid)
+                walk(v, who)
         elif isinstance(node, list):
             for v in node:
-                walk(v, aid)
+                walk(v, who)
 
     for aid, doc in live.items():
-        walk(doc, aid)
+        walk(doc, ("ability", aid))
+    if os.path.isdir(AUGMENT_DIR):
+        for f in sorted(os.listdir(AUGMENT_DIR)):
+            if not f.endswith(".json") or f.startswith("_"):
+                continue
+            doc = _load_json(os.path.join(AUGMENT_DIR, f))
+            walk(doc, ("augment", doc.get("id") or f[:-5]))
     return {k: sorted(v) for k, v in out.items()}
 
 
@@ -270,6 +317,7 @@ def derive_projectiles() -> tuple[dict[str, str], list[dict[str, str]]]:
     shipped = _shipped_vfx_ids()
     live = _live_abilities()
     users = _projectile_users(live)
+    stock_fams = _stock_families(shipped)
     bound: dict[str, str] = {}
     why: list[dict[str, str]] = []
 
@@ -279,24 +327,33 @@ def derive_projectiles() -> tuple[dict[str, str], list[dict[str, str]]]:
     for pid in sorted(_projectile_docs()):
         us = users.get(pid, [])
         if len(us) == 0:
-            skip(pid, "閘1 專屬 —— 沒有任何活著的技能射這顆投射物(它是備用原型,或引用它的技能已退休)")
+            skip(pid, "閘1 專屬 —— 沒有任何活著的技能或增益卡射這顆投射物(它是備用原型,或引用它的東西已退休)")
             continue
         if len(us) > 1:
             skip(
                 pid,
-                f"閘1 專屬 —— {len(us)} 支活著的技能共用這顆投射物({', '.join(us)})。"
+                f"閘1 專屬 —— {len(us)} 個活著的來源共用這顆投射物({', '.join(f'{k}:{i}' for k, i in us)})。"
                 "⭐ 一顆投射物只有一份美術,綁上任何一支的原作飛彈,"
-                "另外那幾支就會在畫面上看到**別支技能**的飛彈 —— 比通用原型更糟",
+                "另外那幾支就會在畫面上看到**別支技能**的飛彈 —— 比通用原型更糟。"
+                "⇒ 修法是**把投射物拆開**(一支一顆),⛔ 不是在這裡放寬閘",
             )
             continue
-        aid = us[0]
-        rec = abilities.get(aid)
+        kind, aid = us[0]
+        rec = abilities.get(aid) if kind == "ability" else None
         if not rec:
-            skip(pid, f"閘2 證據 —— 唯一射它的技能 `{aid}` 在 w3x provenance 檔裡沒有紀錄(它是 GGD 原創,⛔ 不是移植的)")
+            noun = "增益卡" if kind == "augment" else "技能"
+            skip(pid, f"閘2 證據 —— 唯一射它的{noun} `{aid}` 在 w3x provenance 檔裡沒有紀錄(它是 GGD 原創,⛔ 不是移植的)")
             continue
         if rec.get("joinConfidence") != "CONFIRMED":
             skip(pid, f"閘2 join —— `{aid}` 的 rawcode↔技能 join 是 {rec.get('joinConfidence')},接上去可能是**別支技能**的飛彈")
             continue
+
+        # 閘 3 美術 —— 兩條路,順序固定。
+        # ① 地圖作者**自己匯入**的飛彈模型(`extractions`)—— 最貼近那一支的身分
+        # ② ⭐ 零售 stock 家族(`fx.w3x.stock.<stem>.p*`)—— 與源 B 同一條**命名規則**,
+        #    ⛔ 不是一張手抄清單:`extract_stock_vfx.py` 多抽一個飛彈模型,
+        #    這裡的覆蓋率自己長出來(第〇·四守則)
+        named = [r for r in rec.get("realArt", []) if r.get("channel") == "art:missile"]
         ex = next(
             (
                 e
@@ -305,29 +362,47 @@ def derive_projectiles() -> tuple[dict[str, str], list[dict[str, str]]]:
             ),
             None,
         )
+        stem = ex.get("stem") if ex else None
+        docs = list(ex.get("layerDocIds") or []) if ex else []
         if ex is None:
-            named = [
-                r
-                for r in rec.get("realArt", [])
-                if r.get("channel") == "art:missile"
-            ]
+            for r in named:
+                if r.get("provenance") not in INTENT_PROVENANCE:
+                    continue
+                fam = stock_fams.get(r.get("stem") or "")
+                if fam:
+                    stem, docs = r.get("stem"), list(fam)
+                    break
+
+        if not docs:
             if not named:
                 skip(pid, f"閘3 美術 —— `{aid}` 在原作地圖裡**沒有設飛彈美術**(w3a 的 art:missile 是空的)")
             else:
                 r = named[0]
+                intent = r.get("provenance") in INTENT_PROVENANCE
+                # ⭐ 這一句是**採購清單**,⛔ 不是死路:`MISSING_BLIZZARD_STOCK` 的
+                # 唯一缺口是那個模型還沒被 `extract_stock_vfx.py` 抽出來,
+                # 而那支腳本已經在 repo 裡(它抽過 warstompcaster / thunderclapcaster)。
+                fix = (
+                    f"⇒ 跑 `extract_stock_vfx.py` 收 `{r.get('stem')}`,產出 "
+                    f"`fx.w3x.stock.{r.get('stem')}.p00`,這顆子彈**自己就會接上**"
+                    if intent and r.get("assetStatus") == "MISSING_BLIZZARD_STOCK"
+                    else "⛔ 這不是「還沒收」:"
+                    + (
+                        "provenance 不是作者意圖(暴雪內建繼承),接上去不代表原作長那樣"
+                        if not intent
+                        else "`IN_REPO_MESH_ONLY` = 網格有、但整個模型一顆 PRE2/RIBB emitter 都沒有,沒有東西可以播"
+                    )
+                )
                 skip(
                     pid,
                     f"閘3 美術 —— `{aid}` 的原作飛彈是 `{r.get('stem')}`,"
-                    f"狀態 {r.get('assetStatus')} / provenance {r.get('provenance')} ⇒ 抽不出 emitter 文件。"
-                    "⭐ `MISSING_BLIZZARD_STOCK` = 那是暴雪零售模型,不在這個 repo 裡(#81/#116);"
-                    "`IN_REPO_MESH_ONLY` = 網格有、但整個模型一顆 PRE2/RIBB emitter 都沒有,沒有東西可以播",
+                    f"狀態 {r.get('assetStatus')} / provenance {r.get('provenance')}。{fix}",
                 )
             continue
-        docs = list(ex.get("layerDocIds") or [])
         if len(docs) != PROJECTILE_TRAIL_DOCS:
             skip(
                 pid,
-                f"閘3 拖尾 —— `{ex.get('stem')}` 這一族有 {len(docs)} 份 emitter 文件,"
+                f"閘3 拖尾 —— `{stem}` 這一族有 {len(docs)} 份 emitter 文件,"
                 f"而一顆飛行中的投射物在畫面上只有**一條**拖尾(`projectile@1.vfxKey` 也只收一份)。"
                 "⭐ 要從中挑一顆主 emitter 就是猜,⛔ 不是推導",
             )
@@ -337,6 +412,56 @@ def derive_projectiles() -> tuple[dict[str, str], list[dict[str, str]]]:
             continue
         bound[pid] = docs[0]
     return bound, why
+
+
+def missile_wantlist() -> list[dict[str, Any]]:
+    """
+    ⭐ #547 的**採購清單** —— 「一堆攻擊投射物都沒移植」量出來到底是什麼。
+
+    ⛔ 這不是綁定的洞:活著的 420 支技能裡只有 ~22 支**真的射出投射物**,而原作地圖
+    裡作者自己設過飛彈美術的有 76 支。⇒ 差額那 ~68 支的洞在**內容**(整個
+    `spawnProjectile` 不存在),⛔ 不在這張表 —— 綁定推導永遠碰不到它們,因為
+    `_projectile_users()` 找不到任何人射那顆子彈。
+
+    這裡把差額**依模型 stem 聚合**並分兩類,讓下一步有明確的收件人:
+      · `READY`   資產已經在 repo 裡 ⇒ 缺的只是投射物文件 + 技能去射它(內容側)
+      · `EXTRACT` 是暴雪零售模型 ⇒ 先跑 `extract_stock_vfx.py` 收這個 stem
+    """
+    prov = _load_json(PROVENANCE)
+    abilities: dict[str, dict] = prov["abilities"]
+    live = _live_abilities()
+    shooters = {i for us in _projectile_users(live).values() for k, i in us if k == "ability"}
+
+    agg: dict[str, dict[str, Any]] = {}
+    for aid in sorted(abilities):
+        if aid not in live or aid in shooters:
+            continue  # 已經在射投射物的不算「沒移植」
+        if abilities[aid].get("joinConfidence") != "CONFIRMED":
+            continue
+        for r in abilities[aid].get("realArt", []):
+            if r.get("channel") != "art:missile" or r.get("provenance") not in INTENT_PROVENANCE:
+                continue
+            stem = r.get("stem") or "?"
+            row = agg.setdefault(
+                stem,
+                {"stem": stem, "assetStatus": r.get("assetStatus"), "abilities": []},
+            )
+            row["abilities"].append(aid)
+            break
+    # ⚠️ `assetStatus` **一個人回答不了這一格**:它是 IMMUTABLE ARCHAEOLOGY,只知道
+    # 地圖自帶的模型,⛔ 不知道 `extract_stock_vfx.py` 後來從零售 MPQ 抽了什麼。
+    # 照它分類會把已經抽好的 `warstompcaster` / `thunderclapcaster` 報成「還要去抽」——
+    # 一句自洽的假話(第三守則)。⇒ ⭐ 問**出貨的 content/vfx/**,那是唯一的事實。
+    stock_fams = _stock_families(_shipped_vfx_ids())
+    out = list(agg.values())
+    for row in out:
+        row["need"] = (
+            "READY"
+            if row["stem"] in stock_fams or row["assetStatus"] != "MISSING_BLIZZARD_STOCK"
+            else "EXTRACT"
+        )
+    out.sort(key=lambda r: (-len(r["abilities"]), r["stem"]))
+    return out
 
 
 def derive(notes: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -658,6 +783,21 @@ def main() -> int:
             print(f"  DECIDE {stem} —— {len(rows)} 支在非落點通道點名它:{', '.join(rows)}")
         for aid in notes.get("stockShadowed") or []:
             print(f"  SHADOW {aid} —— 有落點證據,但技能文件自己寫了 vfxLayers / 原作 vfxKey ⇒ 這一列永遠不會生效,⛔ 不收")
+        # ⭐ #547 的採購清單 —— 「一堆攻擊投射物都沒移植」量出來是**內容**的洞,
+        # ⛔ 不是綁定的洞。READY = 資產在 repo,缺的只是投射物文件;
+        # EXTRACT = 先跑 `tools/w3x-import/extract_stock_vfx.py` 收這個 stem。
+        want = missile_wantlist()
+        if want:
+            n = sum(len(r["abilities"]) for r in want)
+            print(
+                f"  ---- #547 採購清單:{n} 支活著的技能在原作裡射一發飛彈,"
+                f"但在 GGD 裡**整個投射物都不存在**({len(want)} 個模型 stem)"
+            )
+            for r in want:
+                print(
+                    f"  WANT  [{r['need']:7s}] {r['stem']:26s} {len(r['abilities']):2d} 支 "
+                    f"({r['assetStatus']}) 例:{', '.join(r['abilities'][:4])}"
+                )
 
     if args.check:
         if not os.path.exists(OUT):
