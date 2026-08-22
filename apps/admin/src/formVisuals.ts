@@ -49,12 +49,14 @@ export const FORM_VISUALS_SCHEMA = "config.form-visuals@1";
  */
 export const SHIPPED_FORM_VISUALS: ConfigFormVisualsDoc = DEFAULT_FORM_VISUALS;
 
-/** 全域旋鈕的四個 key —— 順序就是面板上的順序。 */
+/** 全域旋鈕的五個 key —— 順序就是面板上的順序。 */
 export const FORM_VISUAL_GLOBAL_FIELDS = [
   "enabled",
   "tintStrength",
   "scaleStrength",
   "attachmentsEnabled",
+  // ⭐ M1（GH#599）—— 狀態外觀那一半的濃度，也是它的一鍵 rollback。
+  "statusStrength",
 ] as const;
 export type FormVisualGlobalField = (typeof FORM_VISUAL_GLOBAL_FIELDS)[number];
 
@@ -76,6 +78,7 @@ export const FORM_VISUAL_GLOBAL_LABEL: Record<FormVisualGlobalField, string> = {
   tintStrength: "顏色濃度",
   scaleStrength: "大小濃度",
   attachmentsEnabled: "球體掛件",
+  statusStrength: "狀態外觀濃度",
 };
 
 export const FORM_VISUAL_GLOBAL_HINT: Record<FormVisualGlobalField, string> = {
@@ -83,6 +86,8 @@ export const FORM_VISUAL_GLOBAL_HINT: Record<FormVisualGlobalField, string> = {
   tintStrength: "0 = 不上色，1 = 完全照下表的顏色。插的是「離白色多遠」，所以 0 是關掉、不是變黑",
   scaleStrength: "0 = 不縮放，1 = 完全照下表的倍率。插的是「離 1.0 多遠」",
   attachmentsEnabled: "球體掛件要多載一顆 glb；低階機器可以只留顏色與大小",
+  statusStrength:
+    "下面〈狀態外觀〉那一區的濃度。0 = 整區關掉（回到只有變身態才改外觀），1 = 完全照它寫的值。它讓「掛著某個狀態」也能改顏色／大小／掛件，所以變身態可以退場而畫面不掉東西",
 };
 
 export const FORM_VISUAL_ROW_LABEL: Record<FormVisualRowField, string> = {
@@ -190,15 +195,26 @@ export function validateFormVisualInput(field: FormVisualRowField, text: string)
   return "";
 }
 
+/** 這一格全域旋鈕是核取方塊還是數字框 —— 面板與驗證共用同一個答案。 */
+export function isFormVisualBooleanGlobal(field: FormVisualGlobalField): boolean {
+  return field === "enabled" || field === "attachmentsEnabled";
+}
+
+/** 數值型全域旋鈕的上下界,和 Zod 是同一份數字。 */
+const GLOBAL_BOUNDS: Record<string, readonly [number, number]> = {
+  tintStrength: FORM_VISUAL_BOUNDS.tintStrength,
+  scaleStrength: FORM_VISUAL_BOUNDS.scaleStrength,
+  statusStrength: FORM_VISUAL_BOUNDS.statusStrength,
+};
+
 /** 全域旋鈕的驗證(布林欄位永遠合法,由核取方塊產生)。 */
 export function validateFormVisualGlobal(field: FormVisualGlobalField, text: string): string {
-  if (field === "enabled" || field === "attachmentsEnabled") return "";
+  if (isFormVisualBooleanGlobal(field)) return "";
+  const [min, max] = GLOBAL_BOUNDS[field]!;
   const t = text.trim();
-  if (t === "") return "請輸入 0 ~ " + (field === "tintStrength" ? "1" : "2");
+  if (t === "") return `請輸入 ${min} ~ ${max}`;
   const n = Number(t);
   if (!Number.isFinite(n)) return "必須是數字";
-  const [min, max] =
-    field === "tintStrength" ? FORM_VISUAL_BOUNDS.tintStrength : FORM_VISUAL_BOUNDS.scaleStrength;
   if (n < min) return `不能小於 ${min}`;
   if (n > max) return `不能大於 ${max}`;
   return "";
@@ -291,12 +307,70 @@ export function setFormGlobal(
   if (field === "enabled") return { ...doc, enabled: value === true };
   if (field === "attachmentsEnabled") return { ...doc, attachmentsEnabled: value === true };
   const n = typeof value === "number" && Number.isFinite(value) ? value : 1;
-  const [min, max] =
-    field === "tintStrength" ? FORM_VISUAL_BOUNDS.tintStrength : FORM_VISUAL_BOUNDS.scaleStrength;
+  const [min, max] = GLOBAL_BOUNDS[field]!;
   const clamped = n < min ? min : n > max ? max : n;
-  return field === "tintStrength"
-    ? { ...doc, tintStrength: clamped }
-    : { ...doc, scaleStrength: clamped };
+  return { ...doc, [field]: clamped };
+}
+
+// ------------------------------------------------- ⭐ M1：狀態外觀那一張表 ----
+
+/** 面板〈狀態外觀〉一列 = 一個**狀態 id**。 */
+export interface StatusVisualRow {
+  /** 狀態 id —— 這一列的 key */
+  readonly statusId: string;
+  /** 操作者填的那一格 */
+  readonly authored: FormVisualEntry;
+  /** 套完全域濃度之後,遊戲**真的**會用的那個東西 */
+  readonly effective: FormVisual | null;
+}
+
+/**
+ * 文件裡已經有的每一格狀態外觀,依 id 排序。
+ *
+ * ⚠️ 和 `formVisualRows` 不同,這裡**不預先列出全部候選** —— 狀態 id 是開放集合
+ * (28 份 `status-effect@1` 文件,而且隨時會多),把它們全列出來會變成一面牆。
+ * 新增走 `setStatusEntry`(面板上是一個「＋ 新增狀態外觀」的輸入框)。
+ */
+export function statusVisualRows(doc: ConfigFormVisualsDoc | null): StatusVisualRow[] {
+  const src = doc?.statuses ?? {};
+  return Object.keys(src)
+    .sort()
+    .map((statusId) => ({
+      statusId,
+      authored: src[statusId]!,
+      effective: resolveFormVisual(doc, statusId),
+    }));
+}
+
+/**
+ * 把一格狀態外觀寫回文件。`entry === undefined` = 把這一格拿掉。
+ *
+ * ⚠️ 和 `setFormEntry` 的 `isAlternateForm` 檢查同一個理由,方向相反:這裡擋的是
+ * **把 championId 填進狀態表**。兩個鍵空間分開才會有「後台顯示得好好的、
+ * 遊戲永遠不採用」以外的行為 —— 而 Zod 那一層也會再拒絕一次(schema `.refine`)。
+ */
+export function setStatusEntry(
+  doc: ConfigFormVisualsDoc,
+  statusId: string,
+  entry: FormVisualEntry | undefined,
+): ConfigFormVisualsDoc {
+  const id = statusId.trim();
+  if (id === "") return doc;
+  if (CHAMPION_FORM_PAIRS.some((p) => p.alternateId === id || p.baseId === id)) return doc;
+  const statuses = { ...(doc.statuses ?? {}) };
+  if (entry === undefined) delete statuses[id];
+  else statuses[id] = entry;
+  return { ...doc, statuses };
+}
+
+/** 新增一格狀態外觀之前的 id 驗證,回中文訊息或 ""(合法)。 */
+export function validateStatusVisualId(text: string): string {
+  const t = text.trim();
+  if (t === "") return "請輸入狀態 id";
+  if (!/^[a-z0-9][a-z0-9._-]*$/.test(t)) return "只能用小寫英數與 . _ -";
+  if (CHAMPION_FORM_PAIRS.some((p) => p.alternateId === t || p.baseId === t))
+    return "這是變身態的 championId,請填到上面那張表";
+  return "";
 }
 
 /** 面板標題列的一句話摘要。 */

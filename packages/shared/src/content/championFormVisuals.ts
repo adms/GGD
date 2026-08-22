@@ -95,6 +95,8 @@ export const FORM_VISUAL_BOUNDS = {
   scaleMult: [0.2, 3],
   tintStrength: [0, 1],
   scaleStrength: [0, 2],
+  /** ⭐ M1 —— 狀態外觀那一半的濃度。0 = 整區關掉(一鍵 rollback)。 */
+  statusStrength: [0, 1],
   attachScale: [0.01, 10],
   attachOffsetY: [-5, 5],
 } as const;
@@ -112,28 +114,43 @@ function finite(v: number | undefined, fallback: number): number {
 }
 
 /**
- * 這一個 championId 在**變身態**時要長什麼樣,或 null。
+ * 這一個 **key** 要長什麼樣,或 null。
  *
- * `null` 有四個來源,而且刻意不區分 —— 呼叫端的動作都是「什麼都不做」:
- * 總開關關著、這個 id 根本不是變身態、文件裡沒有這一格、或三個欄位算完都中性。
+ * ⭐ M1(GH#599)—— `key` 有**兩種**,而它們走同一份解析:
+ *
+ *   · 變身態的 championId(`Emeu` 那一半)→ 查 `forms`
+ *   · **狀態 id** → 查 `statuses`,並且再乘上 `statusStrength` 這一格濃度
+ *
+ * 分辨的方式是 `isAlternateForm(key)`,⛔ 不是「先查 forms 查不到再查 statuses」——
+ * 後者會讓一個打錯邊的 key 安靜地在另一張表裡命中,而 schema 已經把兩個鍵空間
+ * 分開了(`statuses` 的 key 不可以是變身對的任何一半)。
+ *
+ * `null` 有五個來源,而且刻意不區分 —— 呼叫端的動作都是「什麼都不做」:
+ * 總開關關著、這個 id 既不是變身態也不在狀態表裡、文件裡沒有這一格、
+ * 狀態濃度被轉到 0、或三個欄位算完都中性。
  *
  * @param doc 後台文件;`null`/`undefined` = 讀出貨預設(不是「空表」)。
  *            這一點和 `baseBonusFromDoc` 一致:缺文件不等於全部關掉。
  */
 export function resolveFormVisual(
   doc: ConfigFormVisualsDoc | null | undefined,
-  championId: string | null | undefined,
+  key: string | null | undefined,
 ): FormVisual | null {
-  if (!championId) return null;
-  // 資料層防線:只有 `Emeu` 那一半有外觀。基本型永遠拿不到掛件。
-  if (!isAlternateForm(championId)) return null;
+  if (!key) return null;
   const cfg = doc ?? DEFAULT_FORM_VISUALS;
   if (!cfg.enabled) return null;
-  const entry: FormVisualEntry | undefined = cfg.forms[championId];
+  // 資料層防線:`forms` 只有 `Emeu` 那一半有外觀,基本型永遠拿不到掛件。
+  // 不是變身態的 key 一律走**狀態**那一張表(它的鍵空間與 championId 不相交)。
+  const fromForm = isAlternateForm(key);
+  const entry: FormVisualEntry | undefined = fromForm ? cfg.forms[key] : cfg.statuses?.[key];
   if (!entry) return null;
+  // ⭐ 狀態那一半多吃一格濃度 —— 0 就是 M1 的一鍵 rollback。它乘進 tint/scale 的
+  // 濃度、並且直接關掉掛件,所以「轉到 0」與「這一格不存在」逐位元同義。
+  const statusStrength = fromForm ? 1 : clamp(finite(cfg.statusStrength, 1), 0, 1);
+  if (statusStrength === 0) return null;
 
-  const tintStrength = clamp(finite(cfg.tintStrength, 1), 0, 1);
-  const scaleStrength = clamp(finite(cfg.scaleStrength, 1), 0, 2);
+  const tintStrength = clamp(finite(cfg.tintStrength, 1), 0, 1) * statusStrength;
+  const scaleStrength = clamp(finite(cfg.scaleStrength, 1), 0, 2) * statusStrength;
 
   const authoredTint = entry.tint;
   const tint: [number, number, number] | null = authoredTint
@@ -175,4 +192,56 @@ export function authoredFormVisual(
   championId: string,
 ): FormVisualEntry | null {
   return (doc ?? DEFAULT_FORM_VISUALS).forms[championId] ?? null;
+}
+
+/** 同上,但讀 ⭐ M1 的**狀態**那一張表。 */
+export function authoredStatusVisual(
+  doc: ConfigFormVisualsDoc | null | undefined,
+  statusId: string,
+): FormVisualEntry | null {
+  return (doc ?? DEFAULT_FORM_VISUALS).statuses?.[statusId] ?? null;
+}
+
+/**
+ * ⭐ M1(GH#599)—— 一具身體**最後**的變身外觀:形態那一份 × 狀態那幾份。
+ *
+ * ---------------------------------------------------------------------------
+ * ⛔ 為什麼狀態命中時**不與形態相乘**
+ * ---------------------------------------------------------------------------
+ * 兩張表記的是**同一件事**(「這具身體現在的變身外觀」),`statuses` 是 `forms` 的
+ * 後繼者。遷移期間同一對會**兩邊都有**(形態還在、狀態也掛上了),那時相乘等於把
+ * 同一個外觀套兩次 —— Saber 的青白會變成青青白白、×1.04 會變成 ×1.08。
+ *
+ * ⇒ 規則是**取代**:只要有任何一格狀態外觀命中,形態那一份就整份讓位。於是
+ * 「遷移中」與「退場後」畫面**逐位元相同**,而那正是這條規則要買的東西。
+ *
+ * ---------------------------------------------------------------------------
+ * 多格狀態同時命中
+ * ---------------------------------------------------------------------------
+ * 顏色與大小**相乘**(兩層濾鏡,`[1,1,1]`/`1` 是單位元,和 `composeFormTint` 同一個
+ * 論證)。⚠️ 掛件只有一格,所以**第一格贏** —— 呼叫端要餵**排序過**的清單,不然
+ * 兩個客戶端會看到不同的頭。第二顆以上的掛件請走 `attachment@1` + `ambient-vfx`
+ * 那條路(它本來就吃得下多顆)。
+ */
+export function composeBodyVisual(
+  fromForm: FormVisual | null,
+  fromStatuses: readonly FormVisual[],
+): FormVisual | null {
+  if (fromStatuses.length === 0) return fromForm;
+  if (fromStatuses.length === 1) return fromStatuses[0]!;
+  let tint: [number, number, number] | null = null;
+  let scaleMult = 1;
+  let attachment: FormAttachment | null = null;
+  for (const v of fromStatuses) {
+    if (v.tint) {
+      const t: readonly [number, number, number] = tint ?? FORM_TINT_NEUTRAL;
+      tint = [t[0] * v.tint[0], t[1] * v.tint[1], t[2] * v.tint[2]];
+    }
+    scaleMult *= v.scaleMult;
+    attachment ??= v.attachment;
+  }
+  const effectiveTint = tint && !isNeutral(tint) ? tint : null;
+  const effectiveScale = Math.abs(scaleMult - 1) < EPSILON ? 1 : scaleMult;
+  if (effectiveTint === null && effectiveScale === 1 && attachment === null) return null;
+  return { tint: effectiveTint, scaleMult: effectiveScale, attachment };
 }

@@ -148,6 +148,8 @@ export {
 export {
   resolveFormVisual,
   authoredFormVisual,
+  authoredStatusVisual,
+  composeBodyVisual,
   NEUTRAL_FORM_VISUAL,
   FORM_TINT_NEUTRAL,
   FORM_ATTACH_DEFAULT_BONE,

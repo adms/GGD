@@ -125,6 +125,7 @@
  * `defaultPrefersVoxelBody` 逐具跑出來，不是抄在註解裡的。
  */
 import type { ModelDoc, FormVisual } from "@ggd/shared/content";
+import { composeBodyVisual } from "@ggd/shared/content";
 import type { VoxelSkinOverride, VoxelSkinRecipe } from "@ggd/shared/content/voxelSkin";
 import { formIndexFromFlags } from "@ggd/shared/protocol/schema";
 import {
@@ -147,8 +148,15 @@ export interface ChampionBodyContent {
   standinOverrideFor(championId: string): ModelDocOverride | null;
   /** hand-authored voxel-skin sidecar + the operator's body choice */
   voxelSkinOverrideFor(championId: string): VoxelSkinOverride | null;
-  /** 變身外觀（顏色／大小／掛件）—— 只有 `Emeu` 那一半有 */
-  formVisualFor(alternateChampionId: string | null): FormVisual | null;
+  /**
+   * 變身外觀（顏色／大小／掛件）。
+   *
+   * ⭐ M1（GH#599）—— `key` 有**兩種**，而它們共用這一個查詢：變身態的
+   * championId（`Emeu` 那一半 → `config.form-visuals@1.forms`）與**狀態 id**
+   * （→ 同一份文件的 `statuses`）。`resolveFormVisual` 自己分辨，所以這條縫
+   * ⛔ 不需要第二個 hook、⛔ ContentDb 也一個字都不用改。
+   */
+  formVisualFor(key: string | null): FormVisual | null;
 }
 
 /** The one method these hooks need off `BlizzardOverlayModels` (injected so a test drives the REAL class). */
@@ -167,6 +175,20 @@ export interface ChampionBodyDeps {
    * job and must not be pre-applied by the caller, or the two would drift.
    */
   championIdForSeat(seatId: number | undefined): string | null;
+  /**
+   * ⭐ M1（GH#599）—— 這個座位身上**現在**掛著的狀態 id（`SeatState.statusIds`）。
+   *
+   * ⚠️ 它是**每一個座位都送**的：`net/snapshot.ts` 的座位迴圈跑 `ctl.seats` 全部，
+   * 而 `MatchState.seats` 沒有任何 Colyseus filter ⇒ 客戶端手上已經有全場十二具
+   * 身體的狀態清單（`RoomStore` 也早就逐座位收進 `SeatView.statusIds`）。
+   * ⛔ 所以 M1 **不需要**新的線路欄位、不需要新的 ENTITY_FLAG bit、
+   * 也不需要動 `apps/game-server/**`。
+   *
+   * OPTIONAL：缺席 = 一個狀態都沒有 ⇒ 這個模組逐位元退回 M1 之前的行為。
+   * 理由和 `EntityViewState.isLocal` 一字不差 —— seat 表只有合成根（GameApp）
+   * 拿得到，而 render/** 對 HUD store 是封閉的（client-08）。
+   */
+  statusIdsForSeat?(seatId: number | undefined): readonly string[];
   /** equipped-skin substitution (LOCAL seat only) — modelKey → modelKey */
   resolveModelKey(modelKey: string, seatId: number | undefined): string;
   content: ChampionBodyContent;
@@ -184,7 +206,13 @@ export interface ChampionBodyHooks {
    * 兩邊各寫一次就是兩份會漂移的實作（失敗形態 ⑤）。
    */
   bodyChampionIdFor(e: EntityViewState): string | null;
-  /** 這具身體的變身外觀，或 null（基本型一律 null）。 */
+  /**
+   * 這具身體的變身外觀，或 null。
+   *
+   * ⭐ M1（GH#599）起它有**兩個來源**：形態（`Emeu` 那一半的 championId）與
+   * **狀態**（`statusIdsForSeat`）。基本型 ＋ 身上沒有任何帶外觀的狀態 ⇒ null，
+   * 也就是 M1 之前的全部行為。
+   */
   formVisualFor(e: EntityViewState): FormVisual | null;
   /**
    * 這具身體的 w3x 頂點色 × 變身色（#49 × #249）。
@@ -233,8 +261,34 @@ export function championBodyHooks(deps: ChampionBodyDeps): ChampionBodyHooks {
   const bodyChampionIdFor = (e: EntityViewState): string | null =>
     idForSeatForm(e.seatId, formIndexFromFlags(e.flags ?? 0));
 
-  const formVisualFor = (e: EntityViewState): FormVisual | null =>
-    content.formVisualFor(bodyChampionIdFor(e));
+  /**
+   * ⭐ M1（GH#599）—— 這具身體最後的變身外觀 = 形態那一份 **×** 狀態那幾份。
+   *
+   * 它是 M1 的**全部接線**：`formVisualFor` 已經是三個旋鈕的共同上游
+   * （顏色 → `championTintFor`、大小 → `modelOverrideFor`、掛件 → GameApp 的
+   * `formAttachmentFor`），所以狀態一旦餵進這一行，三樣**同時**活過來。
+   * ⛔ 沒有第二處要改，也沒有第二份「哪一個旋鈕從哪裡來」的規則。
+   *
+   * 排序：多格狀態同時命中時掛件是「第一格贏」，而狀態在線路上的順序是施加順序
+   * ⇒ 兩個客戶端可能不同。所以**命中超過一格才排序**（今天出貨 `statuses` 是空的，
+   * 這一段每一幀的成本是一次長度檢查）。
+   */
+  const formVisualFor = (e: EntityViewState): FormVisual | null => {
+    const fromForm = content.formVisualFor(bodyChampionIdFor(e));
+    const ids = deps.statusIdsForSeat?.(e.seatId);
+    if (!ids || ids.length === 0) return fromForm;
+    let hits: { id: string; v: FormVisual }[] | null = null;
+    for (const id of ids) {
+      const v = content.formVisualFor(id);
+      if (v) (hits ??= []).push({ id, v });
+    }
+    if (hits === null) return fromForm;
+    if (hits.length > 1) hits.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+    return composeBodyVisual(
+      fromForm,
+      hits.map((h) => h.v),
+    );
+  };
 
   const modelDocFor = (modelKey: string, seatId?: number, formIndex = 0): ModelDoc | null => {
     const resolved = deps.resolveModelKey(modelKey, seatId);

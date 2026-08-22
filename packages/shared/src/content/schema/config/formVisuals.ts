@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { zId } from "../common";
+import { CHAMPION_FORM_PAIRS } from "../../championForms";
 
 /**
  * config.form-visuals@1 — 變身「看得出來」的三個旋鈕 (`config/form-visuals.json`,
@@ -46,7 +47,28 @@ import { zId } from "../common";
  *   · `scaleStrength`      0..2,對「大小偏離 1.0 的量」的濃度。0 = 不縮放。
  *   · `attachmentsEnabled` 球體掛件的獨立開關(掛件要多載一個 glb,所以低階
  *                          機器可以只留顏色與大小)。
+ *   · `statusStrength`     ⭐ M1:`statuses` 那一半的濃度,0 = 逐位元回到
+ *                          M1 之前(**一鍵 rollback**)。
+ *
+ * ---------------------------------------------------------------------------
+ * ⭐ M1(GH#599)—— 為什麼同一張表要有**兩種鍵**
+ * ---------------------------------------------------------------------------
+ * 這三個旋鈕本來只認得「變身態的 championId」,於是它們的存在**依賴**那份變身態
+ * champion doc 活著。而 owner 2026-08-22 要的正好相反:「變身帶來許多問題,因此我
+ * 想要開啟變身態盡可能下架」。
+ *
+ * 七軸量測的結論是:5 對變身在畫面上的全部差別**就是這三個旋鈕**。所以只要它們
+ * 認得**狀態 id**,那 5 對就可以退掉整份 champion doc 而畫面一個像素都不掉 ——
+ * 這就是 `statuses` 那一格。⛔ 它不是第二套機制,是同一張表的第二種鍵。
  */
+/**
+ * 變身對的**兩半**（base ＋ alternate）的 championId。⭐ M1 用它把 `statuses`
+ * 的鍵空間和 `forms` 的鍵空間**分開**——理由寫在 `statuses` 那一格。
+ */
+const FORM_PAIR_IDS: ReadonlySet<string> = new Set(
+  CHAMPION_FORM_PAIRS.flatMap((p) => [p.baseId, p.alternateId]),
+);
+
 export const zFormVisualEntry = z
   .object({
     /** 這一格是怎麼來的 —— w3x 事實 or 美術決定,寫給下一個人看 */
@@ -112,6 +134,45 @@ export const zConfigFormVisualsDoc = z
      * 任何外觀 —— 這正是「基本型悟空不可以長出超三的頭」的資料層防線。
      */
     forms: z.record(zId, zFormVisualEntry),
+    /**
+     * ⭐ M1(GH#599)—— **狀態 id** -> 帶著這個狀態的身體長什麼樣。
+     *
+     * `forms` 與這一格是**同一張表的兩種鍵**,值的形狀逐位元相同(`zFormVisualEntry`)。
+     * 差別只有「誰決定它成不成立」:
+     *
+     *   · `forms`    —— 身體換成了 `Emeu` 那一半(⇒ 變身態 champion doc 必須存在)
+     *   · `statuses` —— 身體**沒有換**,只是掛著某一個狀態
+     *
+     * ⚠️ 這一格存在的理由是**退場**:七軸量測(`docs/_reports/變身態退場評估v2_*`)
+     * 量到 5 對變身在畫面上的全部差別就是這三個旋鈕(Saber 青白 ×1.04、白木 矮 9%、
+     * 悟空 金色＋超三頭、臭作 ×1.56、索隆 全身黃色氣場)。把旋鈕搬到狀態上之後,
+     * 那 5 對就可以退掉整份變身態 champion doc 而**畫面一個像素都不掉**。
+     *
+     * ⛔ key 不可以是任何一半的 championId(base 或 alternate)。兩個原因:
+     *   ① 那是 `forms` 的鍵空間,寫錯邊會得到一個「後台顯示得好好的、遊戲永遠不採用」
+     *      的格子 —— 這一類是最難查的;
+     *   ② 基本型的 id 若能從這裡拿到外觀,「基本型悟空不可以長出超三的頭」那條
+     *      資料層防線就從 `isAlternateForm` 底下被繞過去了。
+     */
+    statuses: z
+      .record(zId, zFormVisualEntry)
+      .default({})
+      .refine(
+        (m) => Object.keys(m).every((k) => !FORM_PAIR_IDS.has(k)),
+        "statuses 的 key 是**狀態 id**,不可以是變身對的任何一半 championId(那是 forms 的鍵空間)",
+      ),
+    /**
+     * 0..1 —— `statuses` 那一半的濃度,也是 **M1 的一鍵 rollback**。
+     *
+     * 0 = 狀態外觀整個關掉(逐位元回到 M1 之前:只有 `forms` 那一半算數),
+     * 1 = 完全照 `statuses[]` 寫的值。中間值和 `tintStrength` 一樣,插的是
+     * 「離中性有多遠」,⛔ 不是直接相乘(直接乘會讓 0 變成全黑)。
+     *
+     * ⚠️ 它是**數值**而不是布林,和 `tintStrength`/`scaleStrength` 同型 —— 後台
+     * 那一頁的布林格與數值格是兩種控制項,共用同一組欄位定義,所以同型的新欄位
+     * 不需要動任何一行版面程式。
+     */
+    statusStrength: z.number().min(0).max(1).default(1),
   })
   .strict();
 export type FormVisualEntry = z.infer<typeof zFormVisualEntry>;
@@ -132,6 +193,11 @@ export const DEFAULT_FORM_VISUALS: ConfigFormVisualsDoc = {
   tintStrength: 1,
   scaleStrength: 1,
   attachmentsEnabled: true,
+  // ⭐ M1(GH#599)—— 出貨**空的**,而那是刻意的:owner 還沒勾哪幾對要退場
+  // (`docs/_reports/M1_temp_*` 的勾選表),而在他勾之前先寫進去 = 我替他下架。
+  // 後台「變身外觀」那一頁的〈狀態外觀〉區塊是它的編輯入口。
+  statuses: {},
+  statusStrength: 1,
   forms: {
     // 09 悟空 → 超級賽亞人。掛件是 w3x 事實(A0MJ 球體(悟空超3) = Goku3head.mdx);
     // 金色與 +8% 身高是美術決定(w3u 兩半的 tint/usca 完全相同)。

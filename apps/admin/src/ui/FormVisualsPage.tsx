@@ -28,10 +28,14 @@ import {
   formVisualRows,
   formVisualSummary,
   formVisualsDocFor,
+  isFormVisualBooleanGlobal,
   setFormEntry,
   setFormGlobal,
+  setStatusEntry,
+  statusVisualRows,
   validateFormVisualGlobal,
   validateFormVisualInput,
+  validateStatusVisualId,
   type FormVisualDraft,
   type FormVisualRow,
   type FormVisualRowField,
@@ -51,6 +55,9 @@ export function FormVisualsPage(): JSX.Element {
   const [apiErr, setApiErr] = useState<string | null>(null);
   const [flash, setFlash] = useState<string | null>(null);
   const [confirmRevert, setConfirmRevert] = useState(false);
+  // ⭐ M1（GH#599）—— 狀態外觀那一區的草稿與「新增」輸入框。
+  const [statusDrafts, setStatusDrafts] = useState<Record<string, FormVisualDraft>>({});
+  const [newStatusId, setNewStatusId] = useState("");
 
   const load = async (): Promise<void> => {
     try {
@@ -75,6 +82,8 @@ export function FormVisualsPage(): JSX.Element {
 
   const rows = useMemo(() => formVisualRows(doc), [doc]);
   const summary = useMemo(() => formVisualSummary(rows), [rows]);
+  const statusRows = useMemo(() => statusVisualRows(doc), [doc]);
+  const newStatusErr = validateStatusVisualId(newStatusId);
 
   const write = async (next: ConfigFormVisualsDoc, id: string, msg: string): Promise<void> => {
     setBusy(id);
@@ -142,7 +151,10 @@ export function FormVisualsPage(): JSX.Element {
       {/* ---- 全域旋鈕 ---- */}
       <div style={{ display: "grid", gap: 6, marginBottom: 16 }}>
         {FORM_VISUAL_GLOBAL_FIELDS.map((f) => {
-          const isBool = f === "enabled" || f === "attachmentsEnabled";
+          // ⛔ 這裡以前寫死 `f === "enabled" || f === "attachmentsEnabled"` —— 一份
+          // 手抄的欄位分類，而它會在下一次加欄位時把數字框畫成核取方塊（M1 的
+          // `statusStrength` 就是下一次）。判斷收在 formVisuals.ts，和驗證共用一份。
+          const isBool = isFormVisualBooleanGlobal(f);
           const cur = doc ? doc[f] : SHIPPED_FORM_VISUALS[f];
           const text = String(cur ?? "");
           const err = validateFormVisualGlobal(f, text);
@@ -307,6 +319,140 @@ export function FormVisualsPage(): JSX.Element {
             </div>
           );
         })}
+      </div>
+
+      {/* ---- ⭐ M1（GH#599）：狀態外觀 —— 同三個旋鈕，但鍵是**狀態 id** ---- */}
+      <h3 style={{ color: TEXT_MAIN, fontSize: 14, margin: "20px 0 6px" }}>狀態外觀</h3>
+      <p style={{ color: TEXT_DIM, fontSize: 12, lineHeight: 1.7, margin: "0 0 10px" }}>
+        同樣三個旋鈕，但成立條件是「<b style={{ color: GOLD }}>身上掛著這個狀態</b>」而不是
+        「身體換成了變身態」。⭐ 這是<b style={{ color: TEXT_MAIN }}>變身態退場</b>要用的那一格：
+        七軸量測顯示 <code>e00l</code>／<code>e010</code>／<code>o00x</code>／<code>o030</code>／
+        <code>u01u</code> 五對變身在畫面上的<b style={{ color: TEXT_MAIN }}>全部差別就是這三樣</b>，
+        搬到狀態上之後那五份變身態文件可以整份退掉而畫面一個像素都不掉。
+        上面的「狀態外觀濃度」轉到 <b style={{ color: TEXT_MAIN }}>0</b> 就是這一整區的一鍵 rollback。
+      </p>
+      <div style={{ display: "grid", gap: 8 }}>
+        {statusRows.map((r) => {
+          const draft = statusDrafts[r.statusId] ?? draftFromEntry(r.authored);
+          const errs = FORM_VISUAL_ROW_FIELDS.map((f) =>
+            validateFormVisualInput(f, draft[f] ?? ""),
+          ).filter((m) => m !== "");
+          const valid = errs.length === 0;
+          return (
+            <div
+              key={r.statusId}
+              data-testid={`formvis-status-${r.statusId}`}
+              style={{
+                padding: "8px 10px",
+                border: `1px solid ${valid ? PANEL_BORDER : DANGER}`,
+                borderLeft: `3px solid ${r.effective !== null ? GOLD : PANEL_BORDER}`,
+                borderRadius: 4,
+                fontSize: 13,
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
+                <code style={{ color: TEXT_MAIN, minWidth: 150 }}>{r.statusId}</code>
+                <span style={{ flex: 1 }} />
+                <Btn
+                  dataField={`formvis-status-save-${r.statusId}`}
+                  disabled={!doc || !valid || busy !== null}
+                  onClick={() => {
+                    if (!doc) return;
+                    void write(
+                      setStatusEntry(doc, r.statusId, entryFromDraft(draft, r.authored.note)),
+                      r.statusId,
+                      `已更新 ${r.statusId}`,
+                    );
+                  }}
+                >
+                  儲存
+                </Btn>
+                <Btn
+                  dataField={`formvis-status-clear-${r.statusId}`}
+                  disabled={!doc || busy !== null}
+                  onClick={() => {
+                    if (!doc) return;
+                    void write(
+                      setStatusEntry(doc, r.statusId, undefined),
+                      r.statusId,
+                      `已移除 ${r.statusId} 的外觀`,
+                    );
+                  }}
+                >
+                  移除外觀
+                </Btn>
+              </div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                {FORM_VISUAL_ROW_FIELDS.map((f) => {
+                  const v = draft[f] ?? "";
+                  const err = validateFormVisualInput(f, v);
+                  return (
+                    <label
+                      key={f}
+                      style={{ display: "flex", alignItems: "center", gap: 4, color: TEXT_DIM, fontSize: 11 }}
+                      title={FORM_VISUAL_ROW_HINT[f]}
+                    >
+                      {FORM_VISUAL_ROW_LABEL[f]}
+                      <input
+                        aria-label={`${r.statusId} ${FORM_VISUAL_ROW_LABEL[f]}`}
+                        data-field={`formvis-status-${r.statusId}-${f}`}
+                        aria-invalid={err === "" ? undefined : true}
+                        value={v}
+                        onChange={(e) =>
+                          setStatusDrafts({
+                            ...statusDrafts,
+                            [r.statusId]: { ...draft, [f]: e.target.value },
+                          })
+                        }
+                        style={{
+                          width: NARROW.includes(f) ? 62 : 150,
+                          padding: "3px 5px",
+                          background: "transparent",
+                          color: err === "" ? TEXT_MAIN : DANGER,
+                          border: `1px solid ${err === "" ? PANEL_BORDER : DANGER}`,
+                          borderRadius: 3,
+                          textAlign: NARROW.includes(f) ? "right" : "left",
+                        }}
+                      />
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+        <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12 }}>
+          <input
+            aria-label="新增狀態外觀"
+            data-field="formvis-status-new"
+            placeholder="狀態 id（例：bankai）"
+            value={newStatusId}
+            onChange={(e) => setNewStatusId(e.target.value)}
+            style={{
+              width: 220,
+              padding: "4px 6px",
+              background: "transparent",
+              color: newStatusErr === "" ? TEXT_MAIN : DANGER,
+              border: `1px solid ${newStatusErr === "" ? PANEL_BORDER : DANGER}`,
+              borderRadius: 3,
+            }}
+          />
+          <Btn
+            dataField="formvis-status-add"
+            disabled={!doc || newStatusErr !== "" || busy !== null}
+            onClick={() => {
+              if (!doc) return;
+              const id = newStatusId.trim();
+              void write(setStatusEntry(doc, id, { scaleMult: 1 }), id, `已新增 ${id}`);
+              setNewStatusId("");
+            }}
+          >
+            ＋ 新增狀態外觀
+          </Btn>
+          {newStatusErr !== "" && newStatusId !== "" && (
+            <span style={{ color: DANGER }}>{newStatusErr}</span>
+          )}
+        </div>
       </div>
 
       <div style={{ marginTop: 16 }}>
