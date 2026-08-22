@@ -79,6 +79,12 @@ function duel(capsRaisedTo: number | null): Duel {
   return { world, attacker, dummy };
 }
 
+/**
+ * 攻速長凳專用的 chip 傷害 —— `combat/damage.ts` 的 `HITSTOP_MIN_IMPACT` 是 12,
+ * 低於它的一擊兩邊都不凍。⛔ 不是出貨值,只需要小於那道 chip 門檻。
+ */
+const CHIP_AD = 1;
+
 /** 揮出去、而且**真的結算**的刀數(`basicAttack` 只在傷害點發出)。 */
 function swingsIn(d: Duel, ticks: number): number {
   let swings = 0;
@@ -89,6 +95,14 @@ function swingsIn(d: Duel, ticks: number): number {
     hp.hp = hp.maxHp;
     d.world.transform.get(d.dummy)!.pos = { ...dummyPos };
     d.world.nav.get(d.attacker)!.attackTarget = d.dummy;
+    // ⭐ 檔頭寫「**唯一**決定他揮幾刀的東西就是上限」—— 要讓那句話成立,傷害必須是
+    //    chip。hitstop 的長度是**傷害的函式**,而攻擊者自己也被凍
+    //    (`BasicAttackSystem`:`if (hitstop > 0) continue`)。
+    //    2026-08-23 owner 把初始 AD +32 之後,解鎖側從 30 刀掉到 18 —— 上限一格都沒動,
+    //    紅的訊息卻說「上限沒有變成更多刀」。⛔ 修法不是調 1.75 那個門檻,是把
+    //    「傷害多大」這個變數從一張量節奏的長凳上拿掉。
+    d.world.stats.get(d.attacker)!.final[Stat.AttackDamage] = CHIP_AD;
+    d.world.stats.get(d.dummy)!.final[Stat.AttackDamage] = CHIP_AD;
     d.world.step(NO_INTENTS);
     for (const e of d.world.events) {
       if (e.type === "basicAttack" && e.data.source === d.attacker) swings++;

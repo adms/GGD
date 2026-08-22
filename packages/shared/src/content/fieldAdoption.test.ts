@@ -2656,6 +2656,68 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why:
       "⭐ E1 硬約束逼每一個 kind 帶 `shape`，而首批內容三支全部是 `single`。⚠️ `circle` 對 `floatingText` 要等到有一支技能真的需要「一圈各發一份」才會被用到。⛔ 零採用是**約束的形狀**，不是缺口。",
   },
+  // ⭐ `screenFlash` 與上面兩族（`screenShake` / `floatingText`）是**同一種東西**：
+  //    一個畫面層的提示。它 2026-08-23 落地時帶著 3 份出貨文件，於是同一族的
+  //    公共外殼欄位從「整族零採用」浮出來變成單獨的零採用鍵。理由逐字沿用。
+  "field:abilities.effects[]#screenFlash.condition": {
+    status: "landing",
+    since: "2026-08-23",
+    why:
+      "⭐ 這一格來自 `EFFECT_COMMON_SHAPE`（每一個 effect kind 都被迫帶著的公共外殼），"
+      + "⛔ 不是 `screenFlash` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
+      + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
+      + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個閃光要按半徑挑對象」"
+      + "的真實需求(例:只讓爆炸半徑內的人畫面閃白) —— 那一天這一列就該刪掉。",
+  },
+  "field:abilities.effects[]#screenFlash.radius": {
+    status: "landing",
+    since: "2026-08-23",
+    why:
+      "⭐ 這一格來自 `EFFECT_COMMON_SHAPE`（每一個 effect kind 都被迫帶著的公共外殼），"
+      + "⛔ 不是 `screenFlash` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
+      + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
+      + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個閃光要按半徑挑對象」"
+      + "的真實需求(例:只讓爆炸半徑內的人畫面閃白) —— 那一天這一列就該刪掉。",
+  },
+  "field:abilities.effects[]#screenFlash.side": {
+    status: "landing",
+    since: "2026-08-23",
+    why:
+      "⭐ 這一格來自 `EFFECT_COMMON_SHAPE`（每一個 effect kind 都被迫帶著的公共外殼），"
+      + "⛔ 不是 `screenFlash` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
+      + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
+      + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個閃光要按半徑挑對象」"
+      + "的真實需求(例:只讓爆炸半徑內的人畫面閃白) —— 那一天這一列就該刪掉。",
+  },
+  "field:abilities.effects[]#screenFlash.maxTargets": {
+    status: "landing",
+    since: "2026-08-23",
+    why:
+      "⭐ 這一格來自 `EFFECT_COMMON_SHAPE`（每一個 effect kind 都被迫帶著的公共外殼），"
+      + "⛔ 不是 `screenFlash` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` "
+      + "語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。"
+      + "⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個閃光要按半徑挑對象」"
+      + "的真實需求(例:只讓爆炸半徑內的人畫面閃白) —— 那一天這一列就該刪掉。",
+  },
+  "enum:abilities.effects[]#screenFlash.shape=circle": {
+    status: "landing",
+    since: "2026-08-23",
+    why:
+      "⭐ E1 硬約束逼每一個 kind 帶 `shape`，而首批內容三支全部是 `single`。⚠️ `circle` 對 `screenFlash` 要等到有一支技能真的需要「一圈各發一份」才會被用到。⛔ 零採用是**約束的形狀**，不是缺口。",
+  },
+  "field:abilities.effects[]#screenFlash.scripted": {
+    status: "debt",
+    why:
+      "⛔ 這一格與上面五格**不同型**：它不是公共外殼，它是 `screenFlash` **為了一支特定技能**才存在的逃生門，"
+      + "而那支技能沒有打開它。`schema/effects/screenFlash.ts` 的欄位說明逐字寫著「⚠️ 觸發它的是殭屍王的"
+      + "**全畫面變黑一秒漸變回復**」，而出貨的 `content/abilities/godie-zombieking.passive.json` 的 "
+      + "`screenFlash`（`colorRgb [0,0,0]` / `peakAlpha 1.0` / `durationSec 1.0`）**沒有** `scripted: true`。"
+      + "⇒ 在出貨的 `config.screen-fx@1` 上限（`flashMaxAlpha 0.55` / `flashMaxSec 0.6`）下，"
+      + "卡片上寫的「全場陷入黑暗」實際畫出來是**淡灰半秒** —— 每一個零件都對，組合起來是空的。"
+      + "⭐ 標 `debt` 而不是 `landing`：它不會過期成沉默，它會每一輪印在橫幅上。"
+      + "⛔ 這一列**不是我這條 lane 的東西**（內容檔在柵欄外，2026-08-23 由數字漂移 lane 回報給 owner）——"
+      + "修法是在那份文件上補一格 `scripted: true`（或由 owner 裁決淡灰才是要的），補上的那一天刪掉這一列。",
+  },
   "field:abilities.effects[]#spawnModelFx.condition": {
     status: "landing",
     since: "2026-08-22",

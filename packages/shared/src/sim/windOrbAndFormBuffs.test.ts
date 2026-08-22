@@ -49,6 +49,7 @@ import { attachSource } from "./stats/statPipeline";
 import { championFormIndex } from "./systems/ChampionFormSystem";
 import { ModOp } from "./stats/modifiers";
 import { Stat } from "./stats/statTypes";
+import { baseBonusFor } from "./baseBonus";
 import { asSeatId, asTeamId, type ChampionId, type EntityId, type SeatId } from "../ids";
 import type { IntentFrame } from "./intents";
 
@@ -578,8 +579,12 @@ describe("11-002 武裝色霸氣 —— 防禦 +15 / 魔抗 50% / AD ×1.5，15 
     const after = { ...w.stats.get(zoro)!.final };
     const alt = altFormSheet(ZORO_HAKI, LEVEL);
 
-    expect(after[Stat.AttackDamage], "攻擊力 = 霸氣形態攻擊力 ×1.5").toBeCloseTo(
-      alt[Stat.AttackDamage]! * 1.5,
+    // ⭐ ×1.5 乘的是**倍率空間**：`finalizeStat` 把 `config/base-bonus.json` 的贈禮
+    //    加在倍率**之後**，所以兩邊都要先扣掉它，這條驗的才是那個 1.5 倍率本身。
+    //    ⛔ 不抄那個數字（2026-08-23 owner 給了 `ad: +32`，抄了下次還會再紅）。
+    const adGift = baseBonusFor(w.baseBonus, Stat.AttackDamage);
+    expect(after[Stat.AttackDamage]! - adGift, "攻擊力 = 霸氣形態攻擊力 ×1.5").toBeCloseTo(
+      (alt[Stat.AttackDamage]! - adGift) * 1.5,
       6,
     );
     expect(after[Stat.AttackDamage]!, "而且比本體高").toBeGreaterThan(before[Stat.AttackDamage]!);

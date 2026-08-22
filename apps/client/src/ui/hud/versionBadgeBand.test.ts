@@ -586,8 +586,8 @@ const BAND_LEDGER: readonly LedgerRow[] = [
   {
     file: "components/AbilityBar.tsx",
     value: "0",
-    count: 5,
-    why: "tile-internal chrome — the name strip, the 被動/主動 pill and the cast fills — each absolutely positioned inside its own ~52px ability tile. The BAR's own viewport offset is `bottom: 14`, asserted numerically above",
+    count: 6,
+    why: "tile-internal chrome — the name strip, the 被動/主動 pill, the passive-ICD chip (GH#573, 2026-08-23: the countdown that paints inside a passive's own tile while its internal cooldown runs) and the three cast fills — each absolutely positioned inside its own ~52px ability tile. The BAR's own viewport offset is `bottom: 14`, asserted numerically above",
   },
   {
     file: "components/CouchHudGrid.tsx",

@@ -9,6 +9,7 @@ import { asSeatId, asTeamId, type EntityId, type SeatId, type ItemId, type Augme
 import { DEFAULT_STAT_CAPS, capFor } from "./statCaps";
 import { Stat, STAT_CLAMPS } from "./stats/statTypes";
 import { ATTRIBUTE_ENV_DEFAULTS } from "./combatEnv";
+import { baseBonusFor } from "./baseBonus";
 import { ModOp } from "./stats/modifiers";
 import { attachSource, detachSource, recomputeStats } from "./stats/statPipeline";
 import { buyItem, sellItem, rollItemReward } from "./economy/shop";
@@ -80,8 +81,16 @@ describe("stat pipeline", () => {
       modifiers: [{ stat: Stat.AttackDamage, op: ModOp.PercentMult, value: 0.5 }],
     });
     recomputeStats(world, sela);
-    // (52+48) * 1.1 * 1.5 = 165
-    expect(world.stats.get(sela)!.final[Stat.AttackDamage]).toBeCloseTo((base + 48) * 1.1 * 1.5, 6);
+    // ⭐ 基礎加成(`content/config/base-bonus.json`)坐在 `finalizeStat` 的**倍率之後**,
+    //    所以它**不參與** pctAdd / pctMult。把它從兩邊拿掉,這條斷言驗的才是
+    //    「flat → pctAdd → pctMult」這個**分層順序**本身,⛔ 不是某一天的出貨數字。
+    //    ⛔ 不要把它抄成字面值 —— owner 隨時會再調 `ad` 那一格(2026-08-23 +32)。
+    const gift = baseBonusFor(world.baseBonus, Stat.AttackDamage);
+    // (base' + 48) * 1.1 * 1.5，再把倍率外的贈禮加回來
+    expect(world.stats.get(sela)!.final[Stat.AttackDamage]).toBeCloseTo(
+      (base - gift + 48) * 1.1 * 1.5 + gift,
+      6,
+    );
 
     attachSource(world, sela, {
       id: "t:override",
@@ -89,7 +98,10 @@ describe("stat pipeline", () => {
       modifiers: [{ stat: Stat.AttackDamage, op: ModOp.Override, value: 1 }],
     });
     recomputeStats(world, sela);
-    expect(world.stats.get(sela)!.final[Stat.AttackDamage]).toBe(1);
+    // Override 贏過整條 modifier 鏈 —— 但它贏的是**倍率空間**那一段。
+    // 基礎贈禮坐在 `finalizeStat` 的更後面，所以它仍然加得上去（⭐ 這正是
+    // 「加成與倍率完全無關」那條守則的樣子）。⛔ 不抄 33 這個數字。
+    expect(world.stats.get(sela)!.final[Stat.AttackDamage]).toBe(1 + gift);
   });
 
   it("`stacks` scales every scalable op the same way (GH#286)", () => {
@@ -635,7 +647,12 @@ describe("economy", () => {
     expect(applyAugmentPick(world, offer, "bloodlust" as AugmentId)).toBe(true);
     expect(applyAugmentPick(world, offer, "bloodlust" as AugmentId)).toBe(false); // already picked
     world.step(new Map());
-    expect(world.stats.get(sela)!.final[Stat.AttackDamage]).toBeCloseTo(adBefore * 1.15, 4);
+    // +15% 乘的是**倍率空間**裡的 AD;基礎加成坐在倍率之後,所以兩邊都要先扣掉它。
+    const adGift = baseBonusFor(world.baseBonus, Stat.AttackDamage);
+    expect(world.stats.get(sela)!.final[Stat.AttackDamage]).toBeCloseTo(
+      (adBefore - adGift) * 1.15 + adGift,
+      4,
+    );
 
     // (2) ability-mod augment: Chill Touch -> Q hit slows
     const goldOffer = offerAugments(world, sela, "gold");

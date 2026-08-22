@@ -95,6 +95,7 @@ import { spawnChampion } from "./spawnChampion";
 import { activeAuraSources } from "./aura/aura";
 import { canSee, isHidden } from "./stealth";
 import { Stat } from "./stats/statTypes";
+import { baseBonusFor } from "./baseBonus";
 import { asSeatId, asTeamId, type ChampionId, type EntityId, type SeatId } from "../ids";
 import type { IntentFrame } from "./intents";
 
@@ -155,6 +156,14 @@ function reiatsuAsPct(): number {
 const GIAN_AD_PCT = -0.19;
 /** w3a `Apiv` `Dur1`/`HeroDur1` as overridden by the map. */
 const FADE_SEC = 4;
+
+/**
+ * AD **在倍率空間裡**的值。`finalizeStat` 把 `config/base-bonus.json` 的贈禮加在
+ * **倍率之後**,所以光環的 −19% 乘不到它 —— 兩邊都扣掉它,比的才是那條光環。
+ * ⛔ 不抄那個數字(2026-08-23 owner 給了 `ad: +32`,抄了下次還會再紅一遍)。
+ */
+const adInBoostSpace = (world: SimWorld, id: EntityId): number =>
+  world.stats.get(id)!.final[Stat.AttackDamage] - baseBonusFor(world.baseBonus, Stat.AttackDamage);
 
 /**
  * Docs BY PATH, not through `ContentLoader` — the same choice
@@ -322,8 +331,8 @@ describe("G-AURA — 天生技 that project an enemy aura", () => {
     ]);
     idle(world, held, 2);
 
-    const nearAd = world.stats.get(near)!.final[Stat.AttackDamage];
-    const farAd = world.stats.get(far)!.final[Stat.AttackDamage];
+    const nearAd = adInBoostSpace(world, near);
+    const farAd = adInBoostSpace(world, far);
     expect(farAd).toBeGreaterThan(0);
     expect(nearAd).toBeCloseTo(farAd * (1 + GIAN_AD_PCT), 6);
     expect(activeAuraSources(world, near).length).toBe(1);
@@ -347,8 +356,8 @@ describe("G-AURA — 天生技 that project an enemy aura", () => {
       ]),
       2,
     );
-    const nearAd = world.stats.get(near)!.final[Stat.AttackDamage];
-    const farAd = world.stats.get(far)!.final[Stat.AttackDamage];
+    const nearAd = adInBoostSpace(world, near);
+    const farAd = adInBoostSpace(world, far);
     expect(nearAd).toBeCloseTo(farAd * (1 + GIAN_AD_PCT), 6);
   });
 });

@@ -54,6 +54,7 @@ import { castAbility, rankUpAbility } from "../sim/abilities/abilitySystem";
 import { championFormIndex } from "../sim/systems/ChampionFormSystem";
 import { championStatBase } from "../sim/stats/attributes";
 import { Stat } from "../sim/stats/statTypes";
+import { baseBonusFor } from "../sim/baseBonus";
 import { asSeatId, asTeamId, type ChampionId, type EntityId, type SeatId } from "../ids";
 import type { IntentFrame } from "../sim/intents";
 
@@ -164,6 +165,19 @@ function armE(world: SimWorld, id: EntityId): void {
 }
 
 const adOf = (world: SimWorld, id: EntityId): number => world.stats.get(id)!.final[Stat.AttackDamage];
+
+/**
+ * AD **在倍率空間裡**的值 —— 把 `finalizeStat` 加在**倍率之後**的基礎贈禮
+ * (`content/config/base-bonus.json` 的 `ad`) 扣掉。
+ *
+ * ⭐ 09-002a 指令靈氣的「×1.25」乘的是**這個**空間,⛔ 不是最終面板值。
+ *   2026-08-23 owner 給了英雄專屬初始 AD +32(GH#598),於是
+ *   `最終 = 1.25 × 倍率空間 + 32`，而 `1.25 × 最終` 會多算 0.25×32 = 8 ——
+ *   這三條就是這樣紅的（訊息卻說「變身沒有 +25%」）。
+ * ⛔ 不要把 32 抄進來:它從 `world.baseBonus` 讀,owner 下次再調也不會紅。
+ */
+const adBoostSpaceOf = (world: SimWorld, id: EntityId): number =>
+  adOf(world, id) - baseBonusFor(world.baseBonus, Stat.AttackDamage);
 
 /**
  * 按下 E 並讓 0.3 s 的施法時間跑完。
@@ -353,7 +367,7 @@ describe("09-03 超級賽亞人：按下去真的變身，而且 +25% 只活在�
     world.step(NO_INTENTS);
 
     const before = {
-      ad: adOf(world, goku),
+      ad: adBoostSpaceOf(world, goku),
       as: world.stats.get(goku)!.final[Stat.AttackSpeed],
       ms: world.stats.get(goku)!.final[Stat.MoveSpeed],
     };
@@ -365,8 +379,8 @@ describe("09-03 超級賽亞人：按下去真的變身，而且 +25% 只活在�
     expect(championFormIndex(world, goku), "身體換過去了").toBe(1);
     expect(world.champion.get(goku)!.championId, "ChampionComp 的 id").toBe(SSJ);
     expect(world.stats.get(goku)!.championId, "StatsComp 的 id（決定數值的那個）").toBe(SSJ);
-    // 09-002a 指令靈氣 —— 這一格就是 A0SI 的 0.25。
-    expect(adOf(world, goku)).toBeCloseTo(before.ad * 1.25, 4);
+    // 09-002a 指令靈氣 —— 這一格就是 A0SI 的 0.25。（兩邊都在倍率空間裡比，見 `adBoostSpaceOf`）
+    expect(adBoostSpaceOf(world, goku)).toBeCloseTo(before.ad * 1.25, 4);
     // 🔴 2026-08-13 owner 裁決之後，這兩條**不再是「變大」而是「跟著身體走」**：
     //
     //   「請把變身也排除考慮行列，我決定**變身所有的屬性改變都用技能標籤組合到
@@ -404,11 +418,12 @@ describe("09-03 超級賽亞人：按下去真的變身，而且 +25% 只活在�
     const goku = spawn(world, BASE, 0, 0);
     world.step(NO_INTENTS);
     const baseAd = adOf(world, goku);
+    const baseAdBoostSpace = adBoostSpaceOf(world, goku);
 
     armE(world, goku);
     pressE(world, goku);
     expect(championFormIndex(world, goku)).toBe(1);
-    expect(adOf(world, goku)).toBeCloseTo(baseAd * 1.25, 4);
+    expect(adBoostSpaceOf(world, goku)).toBeCloseTo(baseAdBoostSpace * 1.25, 4);
 
     // 1 級 `ahdu` = 8 秒；跑到過期為止（上限寬鬆，免得被時間常數綁死）。
     for (let i = 0; i < 60 * 30 && championFormIndex(world, goku) === 1; i++) {
@@ -472,18 +487,18 @@ describe("09-03 超級賽亞人：按下去真的變身，而且 +25% 只活在�
     world.combatActive = true;
     const goku = spawn(world, BASE, 0, 0);
     world.step(NO_INTENTS);
-    const baseAd = adOf(world, goku);
+    const baseAd = adBoostSpaceOf(world, goku);
 
     armE(world, goku);
     pressE(world, goku);
-    expect(adOf(world, goku)).toBeCloseTo(baseAd * 1.25, 4);
+    expect(adBoostSpaceOf(world, goku)).toBeCloseTo(baseAd * 1.25, 4);
 
     // 冷卻歸零 + 補魔，重按。`stackKey` + `maxStacks: 1` 就是為了這一格。
     world.abilities.get(goku)!.slots.E.cooldownRemainingTicks = 0;
     armE(world, goku);
     pressE(world, goku);
     expect(championFormIndex(world, goku)).toBe(1);
-    expect(adOf(world, goku), "還是 +25%").toBeCloseTo(baseAd * 1.25, 4);
+    expect(adBoostSpaceOf(world, goku), "還是 +25%").toBeCloseTo(baseAd * 1.25, 4);
   });
 });
 

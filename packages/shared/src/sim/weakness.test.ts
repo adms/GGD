@@ -29,6 +29,7 @@ import { Statuses } from "./content/registry";
 import { spawnChampion } from "./spawnChampion";
 import { runEffects } from "./effects/effectRunner";
 import { asSeatId, asTeamId, type EntityId, type StatusId } from "../ids";
+import { Stat } from "./stats/statTypes";
 
 const TAG = "weakness-mechanic";
 /** 夾具：一份帶著虛弱分類的狀態，一份不帶。兩個都不是出貨 id。 */
@@ -69,8 +70,8 @@ function stage(): { world: SimWorld; hero: EntityId; foe: EntityId } {
 }
 
 /** 走出貨的 `applyStatus` 把一份狀態掛到 `who` 身上。 */
-function mark(world: SimWorld, who: EntityId, statusId: StatusId): void {
-  runEffects([{ kind: "applyStatus", statusId, duration: 30 }], {
+function mark(world: SimWorld, who: EntityId, statusId: StatusId, duration = 30): void {
+  runEffects([{ kind: "applyStatus", statusId, duration }], {
     world,
     caster: who,
     rank: 1,
@@ -98,14 +99,30 @@ function nuke(weakenWho: "attacker" | "victim" | "nobody", statusId: StatusId = 
   return before - s.world.health.get(s.foe)!.hp;
 }
 
+/** 這段窗口有多長。狀態的持續時間跟著它走 —— ⛔ 不可以讓減益中途過期。 */
+const WINDOW_TICKS = 120;
+/**
+ * chip 傷害 —— `combat/damage.ts` 的 `HITSTOP_MIN_IMPACT` 是 12,低於它的一擊
+ * 兩邊都不凍。⛔ 不是出貨值,只需要小於那道 chip 門檻。
+ */
+const CHIP_AD = 1;
+
 /** 讓 hero 自動打 foe N tick，數真的揮了幾次。 */
 function swings(weakened: boolean): number {
   const s = stage();
-  if (weakened) mark(s.world, s.hero, WEAK);
+  // ⚠️ 持續時間必須蓋滿整段窗口。原本是 30 tick(1 秒)而窗口是 120 tick ——
+  //    也就是四分之三的量測是在**沒有虛弱**的狀態下做的,差距被稀釋成「6 對 5」。
+  if (weakened) mark(s.world, s.hero, WEAK, WINDOW_TICKS + 30);
   s.world.nav.get(s.hero)!.attackTarget = s.foe;
   let n = 0;
-  for (let i = 0; i < 120; i++) {
+  for (let i = 0; i < WINDOW_TICKS; i++) {
     s.world.nav.get(s.hero)!.attackTarget = s.foe;
+    // ⭐ 這一條量的是**攻速**那一半;傷害那一半是 ① 與 ②。而 hitstop 的長度是
+    //    傷害的函式、且攻擊者自己也被凍,所以不釘 chip 的話「虛弱讓傷害變少」會
+    //    **反過來**讓他揮得比較快,把要驗的效果抵銷掉。
+    //    2026-08-23 owner 把初始 AD +32 之後這條就紅成「5 不小於 5」。
+    s.world.stats.get(s.hero)!.final[Stat.AttackDamage] = CHIP_AD;
+    s.world.stats.get(s.foe)!.final[Stat.AttackDamage] = CHIP_AD;
     s.world.step(new Map());
     if (s.world.events.some((e) => e.type === "basicAttack")) n += 1;
   }

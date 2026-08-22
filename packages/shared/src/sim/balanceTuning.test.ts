@@ -116,23 +116,30 @@ describe("#265 初始生命加成:進 BASE 之外、倍率之外 (balance-265-ba
     expect(delta(7.5)).toBeCloseTo(300, 6);
   });
 
-  it("出貨預設只有生命／魔力／回魔三項 —— 其餘 13 項都是 0", () => {
+  it("拿到贈禮的那一圈就是出貨內容檔列的那一圈 —— 其餘每一項都是乾淨的 0", () => {
     cover("balance-265-default-table");
-    // ⚠️ 2026-08-12 從「只有生命」變成「生命 + 魔力」。owner：「統一全英雄初始
-    //    MP +600（後台倍率預設值可改），連帶熊貓+1000 也被回歸校正用統一做法就好」。
-    // ⚠️ 2026-08-20 再多一項 `manaRegen`（GH#446）。owner：「智慧影響回魔可以增加
-    //    更多、**初始回魔也增加少許**」—— 另一半（「增加更多」）是 combat-env 的
-    //    `intToManaRegen` 0.07→0.21，⛔ 不在這張表上。
-    //    ⭐ 這條守衛的牙齒**不在**那三個數字上，在「**其餘全部是 0**」那一圈 ——
-    //    它擋的是「有人順手在這張表上多塞一項全域加成而沒有人發現」。
-    // 寫死數字:引用常數的話,把常數改成 0 的變異會讓期望值跟著溜走。
-    expect(baseBonusFor(DEFAULT_BASE_BONUS, Stat.MaxHealth)).toBe(650);
-    expect(baseBonusFor(DEFAULT_BASE_BONUS, Stat.MaxMana)).toBe(600);
-    expect(baseBonusFor(DEFAULT_BASE_BONUS, Stat.ManaRegen)).toBe(10);
-    const granted = new Set<Stat>([Stat.MaxHealth, Stat.MaxMana, Stat.ManaRegen]);
+    // ⚠️ 這張表 owner 每隔幾週就動一格：2026-07-30 `maxHealth` 300→650、
+    //    2026-08-12 加 `maxMana`（「統一全英雄初始 MP +600」）、
+    //    2026-08-20 加 `manaRegen`（GH#446「初始回魔也增加少許」）、
+    //    2026-08-23 加 `ad` +32（GH#598「英雄專屬的初始 AD⋯+32」）。
+    // ⛔ 所以這裡**一個出貨數字都不抄** —— 抄了就是第四個住處,它一定會過期,
+    //    而且會用「ad 不該有加成」這種**指錯方向**的訊息紅（那正是 2026-08-23 發生的）。
+    // ⭐ 牙齒在兩件事上,兩件都與「數字是多少」無關：
+    //    ① 拿到贈禮的**那一圈**，就是出貨內容檔列的那一圈（多一項少一項都紅）
+    //    ② 其餘每一條 `ALL_STATS` 都乾乾淨淨地回 **0** —— ⛔ 不是 undefined、
+    //       ⛔ 不是 NaN。`toEqual` 比不到不存在的 key，只有這一圈比得到。
+    const doc = JSON.parse(
+      readFileSync(join(__dirname, "../../../../content/config/base-bonus.json"), "utf8"),
+    ) as { bonus: Record<string, number> };
+    const granted = new Set<string>(Object.keys(doc.bonus));
+    expect(granted.size, "出貨內容檔一項贈禮都沒有 —— 空集合會讓下面那一圈變成廢話").toBeGreaterThan(0);
     for (const stat of ALL_STATS) {
-      if (granted.has(stat)) continue;
-      expect(baseBonusFor(DEFAULT_BASE_BONUS, stat), `${stat} 不該有加成`).toBe(0);
+      const gift = baseBonusFor(DEFAULT_BASE_BONUS, stat);
+      if (granted.has(stat)) {
+        expect(gift, `${stat} 應該拿到內容檔上的那一份贈禮`).toBe(doc.bonus[stat]);
+      } else {
+        expect(gift, `${stat} 不該有加成`).toBe(0);
+      }
     }
   });
 
@@ -315,6 +322,12 @@ describe("#265 初始生命加成:進 BASE 之外、倍率之外 (balance-265-ba
  */
 describe("攻速:面板寫多少就給多少 (balance-267-melee-as)", () => {
   /**
+   * 攻速長凳專用的「chip 傷害」。`combat/damage.ts` 的 `HITSTOP_MIN_IMPACT` 是 12,
+   * 所以任何低於它的一擊**兩邊都不凍** —— 這一格把「傷害多大」整個變數從節奏量測裡
+   * 拿掉。⛔ 不是出貨值,⛔ 也不釘任何出貨值:它只需要小於那道 chip 門檻。
+   */
+  const CHIP_AD = 1;
+  /**
    * 真實揮擊速率:把攻速**寫進 `sc.final`**(那正是 BasicAttackSystem 讀的欄位),
    * 打一個不還手、不會死、不會動的木樁 10 秒,數 `damage`(origin=basic) 事件。
    * 直接寫 final 而不是掛 modifier,是為了問「假設面板是 X,管線給得出多少」——
@@ -331,6 +344,15 @@ describe("攻速:面板寫多少就給多少 (balance-267-melee-as)", () => {
     let hits = 0;
     for (let i = 0; i < 300; i++) {
       sc.final[Stat.AttackSpeed] = sheetAs;
+      // ⭐ 這張長凳量的是**節奏**,⛔ 不是傷害。而 hitstop 的長度是**傷害的函式**
+      //    (`combat/damage.ts`:impact < 12 = chip 完全不凍;之後每 55 點多凍 1 tick,
+      //    而攻擊者自己也被凍 —— `BasicAttackSystem` 的 `if (hitstop > 0) continue`)。
+      //    ⇒ 不把傷害釘成 chip 的話,這裡量到的是「AD 現在是多少」,⛔ 不是攻速。
+      //    2026-08-23 owner 把初始 AD +32,實測面板 3.0 從 3.0 掉到 2.8 —— 而測試
+      //    紅的訊息說「攻速壞了」。⛔ 修法不是放寬 0.15,是把那個變數拿掉:
+      //    兩邊都釘 chip 之後,誤差**真的**只剩註解宣稱的 tick 量化。
+      sc.final[Stat.AttackDamage] = CHIP_AD;
+      bagSc.final[Stat.AttackDamage] = CHIP_AD;
       bagHp.hp = bagHp.maxHp;
       bagSc.final[Stat.MoveSpeed] = 0;
       step(w);
@@ -389,6 +411,9 @@ describe("攻速:面板寫多少就給多少 (balance-267-melee-as)", () => {
     let hits = 0;
     for (let i = 0; i < 300; i++) {
       sc.final[Stat.AttackSpeed] = 3.0;
+      // 同上:節奏長凳把傷害釘成 chip,否則量到的是 hitstop 而不是前搖。
+      sc.final[Stat.AttackDamage] = CHIP_AD;
+      bagSc.final[Stat.AttackDamage] = CHIP_AD;
       bagHp.hp = bagHp.maxHp;
       bagSc.final[Stat.MoveSpeed] = 0;
       step(w);

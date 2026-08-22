@@ -24,6 +24,7 @@ import { grantCapstone } from "@ggd/shared/sim/economy/statPath";
 import { ALL_STATS, Stat, type StatBlock } from "@ggd/shared/sim/stats/statTypes";
 import { ModOp } from "@ggd/shared/sim/stats/modifiers";
 import { normalizeCombatEnv, type CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
+import { baseBonusFor } from "@ggd/shared/sim/baseBonus";
 import type { AbilityDef, ChampionDef, ItemDef } from "@ggd/shared/sim/content/defs";
 import {
   asSeatId,
@@ -203,7 +204,14 @@ describe("statPreview — predict, buy, confirm equal", () => {
 
     const { preview, after } = predictThenBuy(world, id, "tp-pct-ad");
     // +50% AD must scale the CURRENT ad (base+40), so delta ≈ 0.5 * adWithItem
-    expect(preview.deltas[Stat.AttackDamage]).toBeCloseTo(0.5 * adWithItem, 6);
+    // ⭐ …but ONLY the part of it that lives in the multiplier space. `finalizeStat`
+    //    adds `config/base-bonus.json`'s gift AFTER the multipliers, so the pct
+    //    never touches it and it cancels out of the delta.
+    //    ⛔ Do not hard-code the gift (owner set `ad: +32` on 2026-08-23; the next
+    //    tune would rot this line again, and it would go red saying "the shop
+    //    preview lies" when the preview is in fact correct).
+    const adGift = baseBonusFor(world.baseBonus, Stat.AttackDamage);
+    expect(preview.deltas[Stat.AttackDamage]).toBeCloseTo(0.5 * (adWithItem - adGift), 6);
     expectBlocksEqual(preview.after, after);
   });
 

@@ -134,11 +134,42 @@ function collectLeaps(effects: unknown, where: string, reach: number, out: Conte
   }
 }
 
+/**
+ * The ids that have a champion doc — DERIVED from `content/champions/`, never a
+ * hand-written exclusion list.
+ *
+ * ⭐ WHY THIS FILTER EXISTS. The contract in the header is "the leaper YOU ARE
+ * WATCHING stays on screen" — follow-lock on the flying body — and it already
+ * says a leap by someone the camera is NOT following "can be anywhere on or off
+ * screen for reasons that have nothing to do with its apex". A MOB is that case
+ * by definition: the player camera follows the player's champion, never a boss.
+ * Measuring a mob's arc through a rig that is glued to it measures a shot the
+ * game never takes.
+ *
+ * ⚠️ This mattered for the first time on 2026-08-23, when `godie-zombieking`
+ * (a mob — there is no `content/champions/godie-zombieking.json`) got a leap
+ * with a hand-authored `apexHeight: 5.0`. Both assertions in this file went red
+ * for it; neither red was about a champion leap.
+ * ⛔ Do NOT read this as "the boss's leap is fine" — nobody has measured how it
+ * frames from the PLAYER's camera, and that is a different rig (GH: reported by
+ * the number-drift lane, 2026-08-23).
+ */
+function championDocIds(): ReadonlySet<string> {
+  return new Set(
+    readdirSync(contentDir("champions"))
+      .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+      .map((f) => f.replace(/\.json$/, "")),
+  );
+}
+
 function harvestContentLeaps(): ContentLeap[] {
   const out: ContentLeap[] = [];
+  const champs = championDocIds();
   const abilityDir = contentDir("abilities");
   for (const f of readdirSync(abilityDir)) {
     if (!f.endsWith(".json") || f.startsWith("_")) continue;
+    // `godie-hpb1.e` → owner `godie-hpb1`. No champion doc ⇒ nobody follows it.
+    if (!champs.has(f.replace(/\.json$/, "").split(".")[0]!)) continue;
     const doc = JSON.parse(readFileSync(`${abilityDir}/${f}`, "utf8")) as Json;
     const reach = num(doc, "range") ?? num(doc, "radius") ?? 0;
     collectLeaps(doc["effects"], f.replace(/\.json$/, ""), reach, out);
@@ -413,9 +444,13 @@ describe("#247b leap framing — every leap in content stays on screen", () => {
     // `toApex(0) === 0`,所以 0 仍然在同一個換算家族裡 —— 少了這一項,
     // 任何一支貼地位移都會被這條斷言誤判成缺陷。
     expect(toApex(0)).toBe(0);
+    // ⭐ The family is DERIVED from the raw w3x `DataA` values above through the
+    //    one factor — ⛔ not a second, already-multiplied copy of it. A copy is a
+    //    fourth home for the same number and it rots the moment the factor moves.
+    const JASS_FAMILY = [0, 250, 300, 400, 600, 1000].map(toApex);
     const shipped = harvestContentLeaps().map((l) => l.apexHeight);
     for (const a of shipped) {
-      expect([0, 1.2, 2.4, 4.0], `apex ${a} is not a JASS-family value`).toContain(a);
+      expect(JASS_FAMILY, `apex ${a} is not a JASS-family value`).toContain(a);
     }
   });
 });
