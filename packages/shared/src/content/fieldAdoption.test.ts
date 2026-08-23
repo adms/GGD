@@ -2561,16 +2561,13 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   //
   // ⛔ 這四筆是 `landing` **不是** `default-live`：它們沒有任何 code 預設在跑,
   //    內容不填就是**什麼都不會發生**。30 天後要嘛有內容採用、要嘛承認是死機制。
-  "enum:abilities.effects[]#floatingText.applyTo=victim": {
-    status: "landing",
-    since: "2026-08-22",
-    why:
-      "特效文字掛在**被打的那一個**身上。⛔ 首批內容（克勞德七連斬的 `{{i}}Hit` · " +
-      "理想鄉反彈的每刀火花）全部掛 `self` —— 原作 `CreateTextTagUnitBJ` 在那兩處也是" +
-      "掛在**施法者**的座標上跳字（war3map.j:33856 的 `udg_FF7_CastedUnit` 其實是被打的人，" +
-      "但 GGD 這一側 `self` 已經對得上畫面）。⭐ `victim` 為「傷害數字長在被打的人頭上」" +
-      "那一族留著 —— 那是一個**不同的**演出慣例，⛔ 不是同一件事的別名。",
-  },
+  // ⭐ 2026-08-23 —— `floatingText.applyTo=victim` 的豁免**在這裡被刪掉了**，
+  //    ⛔ 不是被放寬：它不再是零採用。上一版的理由寫著「首批內容全部掛 `self` ⋯
+  //    `udg_FF7_CastedUnit` 其實是被打的人，但 GGD 這一側 `self` 已經對得上畫面」
+  //    —— 而那句話在克勞德真的長出七連斬的特效文字之後就不成立了：
+  //    施法者站在原地、目標最遠 8 格，`self` 會把「1Hit…7Hit」冒在**離戰鬥現場
+  //    八格外的施法者頭上**。⇒ 三支連段技（`godie-hart.r` · `godie-e002.ex` ·
+  //    `godie-e00l.ex`）照 JASS 掛 `victim`，這一列於是 stale 而被移除。
   // ── ⭐ 2026-08-22 —— 四個新 kind 的**選用參數**，首批 5 份內容還沒走到 ──────
   //
   // ⚠️ 這 22 列**不是** 22 個缺口:kind 本身已經被採用（三支驗收技能 + 理想鄉反彈），

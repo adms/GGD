@@ -52,6 +52,25 @@
           "amount": {
             "damageTier": "極小"
           }
+        },
+        {
+          "kind": "spawnVfx",
+          "vfxId": "fx.w3x.stock.thunderclapcaster.p00",
+          "at": "target"
+        },
+        {
+          "kind": "floatingText",
+          "shape": "single",
+          "text": "{{i}}Hit",
+          "applyTo": "victim",
+          "colorRgb": [
+            255,
+            255,
+            255
+          ],
+          "sizeScale": 1.2,
+          "riseSpeed": 1.6,
+          "durationSec": 1.1
         }
       ],
       "finisher": [
@@ -67,6 +86,44 @@
               }
             ]
           }
+        },
+        {
+          "kind": "spawnVfx",
+          "vfxId": "fx.w3x.stock.warstompcaster.p00",
+          "at": "target"
+        },
+        {
+          "kind": "floatingText",
+          "shape": "single",
+          "text": "{{i}}Hit",
+          "applyTo": "victim",
+          "colorRgb": [
+            255,
+            236,
+            168
+          ],
+          "sizeScale": 1.8,
+          "riseSpeed": 1.6,
+          "durationSec": 1.4
+        },
+        {
+          "kind": "screenFlash",
+          "shape": "single",
+          "colorRgb": [
+            217,
+            235,
+            255
+          ],
+          "peakAlpha": 0.5,
+          "durationSec": 0.3,
+          "applyTo": "all"
+        },
+        {
+          "kind": "screenShake",
+          "shape": "single",
+          "amplitude": 0.55,
+          "durationSec": 0.45,
+          "applyTo": "all"
         }
       ]
     }

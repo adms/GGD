@@ -180,6 +180,75 @@ def _num(node: dict, key: str, default: float = 0.0) -> float:
     return float(v) if isinstance(v, (int, float)) else default
 
 
+# --------------------------------------------------------------------------
+# 【連段】`comboStrikes` —— 「放招之後自動打打打打最後一個重招結尾」
+# --------------------------------------------------------------------------
+#
+# ⭐ owner 2026-08-23 逐字：「**龍虎亂舞是這個模板的俗稱**⋯放招之後自動打打打打
+#    最後一個重招或大招結尾」。⇒ 它是一個**家族**，⛔ 不是一支缺的技能。
+#
+# ⚠️ 在這一段之前，這把尺對這一族**永遠說謊**：`comboStrikes` 的節拍與段數住在
+#    共用表 `config.combo-strikes@1`（第〇·四守則），技能 JSON 只寫 `family` ——
+#    而這把尺讀的是**磁碟上的 JSON**，看不到 `resolveComboFamilies` 在**載入時**
+#    做的事。於是 01-04 超究武神霸斬（卡面「連斬七次」）被數成 **2 個扣血葉**
+#    （perStrike 一葉 + finisher 一葉），憑空長出一個 **5 的假缺口**。
+#
+# ⭐ 這與 `spawnModelFx.preset` 是**同一個接縫、同一個修法**：值住共用表，所以
+#    每一個讀磁碟的工具都要學會解析那張表。⛔ 不可以因此把 steps 抄回技能文件
+#    ——那就是第二個住處。
+#
+# ⚠️ 解析順序**逐字比照** `sim/effects/comboFamilies.ts::resolveComboFamilies`
+#    ＋ `sim/effects/comboStrikes.ts::comboStrikeOffsets`：
+#      · 表裡查得到 `family` ⇒ **表贏**（載入期整組換掉手寫值）
+#      · 否則 `steps` 贏過 `strikes`（schema 的 refine 也是這樣判的）
+#    ⛔ 這裡沒有第三種規則 —— 兩邊分岔的那一天，這把尺就會用一個錯的數字說話。
+
+_COMBO_TABLE_CACHE: dict[str, dict] | None = None
+
+
+def _combo_table() -> dict[str, dict]:
+    """`config.combo-strikes@1` 的 family key → 那一列（⛔ 讀出貨的那一份本人）。"""
+    global _COMBO_TABLE_CACHE
+    if _COMBO_TABLE_CACHE is not None:
+        return _COMBO_TABLE_CACHE
+    out: dict[str, dict] = {}
+    path = os.path.join(_REPO, "content", "config", "combo-strikes.json")
+    try:
+        with open(path, encoding="utf-8") as fh:
+            doc = json.load(fh)
+        for row in doc.get("families") or []:
+            key = row.get("key")
+            if isinstance(key, str) and key:
+                out[key] = row
+    except Exception:
+        out = {}
+    _COMBO_TABLE_CACHE = out
+    return out
+
+
+def combo_strike_count(node: dict) -> int:
+    """這一顆 `comboStrikes` 排得出幾段本體（⛔ 不含收尾那一發）。"""
+    row = _combo_table().get(node.get("family")) if isinstance(node.get("family"), str) else None
+    for src in (row, node):
+        if not isinstance(src, dict):
+            continue
+        steps = src.get("steps")
+        if isinstance(steps, list) and steps:
+            return len(steps)
+        strikes = src.get("strikes")
+        if isinstance(strikes, (int, float)) and strikes >= 1:
+            return int(strikes)
+    # ⛔ 排不出班表：出貨 handler 在這種情況**擲一個指名 family 的錯誤**
+    #    （`sim/effects/comboStrikes.ts` 檔頭③），所以 0 才是誠實的答案 ——
+    #    ⛔ 回 1 會讓一支場上一刀都不會劈的技能在表上看起來像少一刀。
+    return 0
+
+
+def combo_beats(node: dict) -> int:
+    """整段連段有幾個**時間上分得開**的節拍 = 本體段數 ＋ 收尾那一發（若有）。"""
+    return combo_strike_count(node) + (1 if node.get("finisher") else 0)
+
+
 def model_fx_nodes(effects) -> list[dict]:
     """走訪整棵 effect 樹，撈出每一個 `spawnModelFx`（含巢狀）。"""
     found: list[dict] = []
@@ -306,6 +375,14 @@ def ggd_counts(effects, template_doc: dict | None, bound_params: dict | None) ->
                 beats += 1
                 for branch in ("onTouch", "onArrive"):
                     walk(n.get(branch) or [], mult * inst)
+                return
+            if k == "comboStrikes":
+                # ⭐ 承重：`perStrike` 的每一片葉子**乘上段數**。少了這一行，
+                #    「連斬七次」會被數成 1 次而卡面承諾 7 次 ⇒ 一個假的缺口 6。
+                strikes = combo_strike_count(n)
+                beats += combo_beats(n)
+                walk(n.get("perStrike") or [], mult * strikes)
+                walk(n.get("finisher") or [], mult)
                 return
             if _is_damage_node(n):
                 if k == "dot":
