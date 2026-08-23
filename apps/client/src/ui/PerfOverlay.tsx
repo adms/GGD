@@ -14,6 +14,11 @@
 import { useEffect, useState } from "react";
 import { perfBus, type ConnectionQuality, type PerfBus } from "../perfBus";
 import { lifecycleLedger } from "../render/lifecycleLedger";
+// 🩺 owner 2026-08-23「監控 LAG 縮小找 root cause⋯**之前應該有做類似功能請整合起來**」——
+//    import 這一支同時做兩件事：註冊 `__ggdDiag()`，並把 longtask/凍結量表接上
+//    ⭐ **這一班既有的 4 Hz 計時器**（⛔ 不新增任何計時器、⛔ 不碰 rAF）。
+import { diagSnapshot, diagWarnings } from "../perf/diag";
+import { perfWatch } from "../perf/longTasks";
 import { useSettings } from "./useSettings";
 import { hudTouch } from "./hud/HudSlot";
 import { HUD_Z, hudSlotHeight, hudSlotStyle } from "./hud/hudLayout";
@@ -51,10 +56,28 @@ interface Snap {
   /** 🔬 生命週期登記表：現在有幾類東西「還在長」＋最嚴重的那一類。 */
   lifecycleGrowth: number;
   lifecycleWorst: string;
+  /**
+   * 🩺 幀外開銷 —— ⭐ **wall − rAF 工作 − 上限刻意閒置**（`perf/diag.frameBudget`）。
+   * ⚠️ `AdaptiveQuality` 只讀 `workMs`，所以**這一段再大它也不會降畫質** ——
+   * 「fps 儀表很好看卻很卡」就住在這一格。⛔ 可以是負的（兩個滾動視窗不同步）。
+   */
+  unaccountedMs: number;
+  /** 🩺 4Hz 取樣計時器實測的最長凍結（ms）—— ⭐ **沒有夾**，`minFps` 說不出這個數字。 */
+  stallMs: number;
+  /** 🩺 近 10 秒每秒被 >50ms 的 task 吃掉幾 ms；⛔ **-1 = 瀏覽器不支援**，不是 0。 */
+  longTaskMsPerSec: number;
+  /** 🩺 `perf/diag.diagWarnings()` —— 凍結／長任務／幀外開銷的門檻警報。 */
+  diagWarn: readonly string[];
 }
 
 function snapshot(): Snap {
+  const d = diagSnapshot(globalThis.performance?.now() ?? 0);
   return {
+    unaccountedMs: d.budget.unaccountedMs,
+    stallMs: d.stalls.worstMs,
+    // ⛔ 不支援回 **-1**：「這個瀏覽器量不到」與「完全沒有長任務」在 0 上長得一模一樣。
+    longTaskMsPerSec: d.longTasks.supported ? d.longTasks.msPerSec : -1,
+    diagWarn: diagWarnings(d),
     fps: perfBus.fps,
     avgFps: perfBus.avgFps,
     minFps: perfBus.minFps,
@@ -92,7 +115,13 @@ function usePerfSample(active: boolean): Snap {
       // ⭐ 生命週期普查搭這一班車（4 Hz），⛔ **不掛在 rAF 迴圈上** ——
       //    儀表自己不可以變成成本。`tick()` 內部再節流到 `lifecycleSampleSec`
       //    （出貨 2 秒），關掉時是一個 boolean 判斷就返回。
-      lifecycleLedger.tick(performance.now() / 1000);
+      const nowMs = performance.now();
+      // 🩺 ⭐ **同一班車**（owner：「整合起來」）。這一行有兩個作用：掛上 longtask
+      //    觀察者（冪等），並且把**這個計時器自己晚了多久**記下來 ——
+      //    ⭐ 那就是誠實的凍結長度，而 `perfBus.minFps` 因為 dt 被夾在 100ms
+      //    永遠 ≥ 10 fps，⛔ 說不出 2 秒凍結與 300ms 卡頓的差別。
+      perfWatch.note(nowMs, SAMPLE_MS);
+      lifecycleLedger.tick(nowMs / 1000);
       setSnap(snapshot());
     }, SAMPLE_MS);
     return () => clearInterval(id);
@@ -135,9 +164,15 @@ export function healthWarnings(
     | "unexpectedDisconnects"
     | "lifecycleGrowth"
     | "lifecycleWorst"
-  >,
+  > & {
+    /**
+     * 🩺 `perf/diag.diagWarnings()` 的結果（凍結／長任務／幀外開銷）。
+     * ⭐ **選填**：這一支的既有呼叫端全部只給 perfBus 那六格，⛔ 不必為了整合而改它們。
+     */
+    readonly diagWarn?: readonly string[];
+  },
 ): string[] {
-  const out: string[] = [];
+  const out: string[] = [...(snap.diagWarn ?? [])];
   if (snap.renderLoopErrors > 0) out.push(`繪製例外 ${snap.renderLoopErrors}`);
   if (snap.orphanRooms > 0) out.push(`孤兒房 ${snap.orphanRooms}`);
   if (snap.foreignSnapshots > 0) out.push(`外來快照 ${snap.foreignSnapshots}`);
@@ -278,10 +313,23 @@ export function PerfOverlay(): React.JSX.Element | null {
         label="particles"
         value={`${Math.round(snap.particleDensity * 100)}%${snap.shadows ? " +sh" : ""}`}
       />
+      {/* ⚠️ 標籤從 `ent / draw / fx` 改成誠實的名字（owner 2026-08-23 點名的儀表謊言）：
+          `drawCount` 是 `scene.meshes.length`（含 disabled／池子裡的），⛔ **不是 draw call**；
+          `particleCount` 是**系統數**，⛔ 不是活粒子數。⭐ 真的那兩個數字在 `__ggdDiag()` 第④節，
+          ⛔ 這裡不覆寫 perfBus（那兩格有自己的消費端與守衛）。 */}
       <Row
-        label="ent / draw / fx"
+        label="ent / mesh / psys"
         value={`${snap.entityCount} / ${snap.drawCount} / ${snap.particleCount}`}
       />
+      {/* 🩺 ⭐ 幀外開銷 —— wall − rAF 工作 − 上限刻意閒置。這一段沒有任何既有儀表看得到，
+          而 AdaptiveQuality 只讀 workMs ⇒ 它再大也不會降畫質。 */}
+      <Row label="幀外開銷" value={`${snap.unaccountedMs.toFixed(1)} ms`} />
+      <Row
+        label="長任務"
+        value={snap.longTaskMsPerSec < 0 ? "不支援" : `${Math.round(snap.longTaskMsPerSec)} ms/s`}
+      />
+      {/* ⚠️ 上面那個 min fps 永遠 ≥ 10（dt 被夾在 100ms）；這一格**沒有夾**。 */}
+      <Row label="最長凍結" value={`${Math.round(snap.stallMs)} ms`} />
       {/* ⭐ 展開面板裡逐項列出來（藥丸只印一個數字）。⛔ 全部是 0 就整段不畫。 */}
       {healthWarnings(snap).map((w) => (
         <Row key={w} label="⚠" value={w} />

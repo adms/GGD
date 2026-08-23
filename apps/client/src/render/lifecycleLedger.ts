@@ -70,6 +70,16 @@ import { perfBus } from "../perfBus";
 export interface LedgerNamed {
   readonly name?: string;
   readonly id?: string;
+  /**
+   * Babylon `AbstractMesh.isEnabled()` —— 有才讀（⛔ 這裡刻意不 import Babylon）。
+   * ⚠️ 用來拆穿 `perfBus.drawCount` 那條謊，見 `sceneTruth()`。
+   */
+  readonly isEnabled?: () => boolean;
+  /**
+   * Babylon `IParticleSystem.getActiveCount()` —— ⭐ **這一刻真的活著的粒子數**，
+   * ⛔ 不是「有幾個粒子系統」（那正是 `perfBus.particleCount` 在說的東西）。
+   */
+  readonly getActiveCount?: () => number;
 }
 
 export interface LedgerScene {
@@ -79,6 +89,42 @@ export interface LedgerScene {
   readonly particleSystems: readonly LedgerNamed[];
   readonly transformNodes: readonly LedgerNamed[];
   readonly geometries?: readonly LedgerNamed[];
+  /**
+   * Babylon `Scene.getActiveMeshes()` —— 上一幀**真的送去畫**的那些。
+   * ⭐ 這才是 draw call 的量級；`scene.meshes.length` 連 disabled 與池子裡的都算。
+   */
+  readonly getActiveMeshes?: () => { readonly length: number };
+}
+
+/**
+ * ⭐ **拆穿三條儀表謊言**用的誠實普查（owner 2026-08-23「監控 LAG 縮小找 root cause」）。
+ *
+ * ⚠️ 已量到的：`perfBus.drawCount = scene.meshes.length` —— 含 **disabled**、
+ * 含**池子裡待命的**，所以它在「回收有沒有生效」這個問題上**結構上失明**：
+ * 一個被還回 free-list 的 mesh 在它眼裡跟一個正在畫的 mesh 一模一樣。
+ * `perfBus.particleCount = scene.particleSystems.length` 同理 —— 那是**系統數**，
+ * 而「粒子太多」問的是**顆數**（owner 線上量到的是「2,819 顆 → 5,975 顆」）。
+ *
+ * ⇒ 這裡把兩對數字**並排**吐出來。⛔ 不覆寫 `perfBus`（那兩格有自己的消費端與守衛），
+ * ⭐ 而是讓 `__ggdDiag()` 把「總數 vs 真的在畫」印在同一行，差額一眼就看得到。
+ */
+export interface SceneTruth {
+  /** ⛔ 沒有綁場景 ⇒ 下面每一格都不可信（⛔ 不可以看起來像「場上很乾淨」）。 */
+  bound: boolean;
+  /** `scene.meshes.length` —— 就是 `perfBus.drawCount` 的那個數字。 */
+  meshesTotal: number;
+  /** 其中 `isEnabled()` 為真的（讀不到 `isEnabled` 就等於 total）。 */
+  meshesEnabled: number;
+  /** ⭐ 上一幀真的送去畫的（`getActiveMeshes()`）。**-1 = 讀不到**，⛔ 不是 0。 */
+  meshesActive: number;
+  /** `scene.particleSystems.length` —— 就是 `perfBus.particleCount` 的那個數字。 */
+  particleSystems: number;
+  /** ⭐ 真的活著的粒子**顆數**。**-1 = 讀不到**，⛔ 不是 0。 */
+  particlesLive: number;
+  materials: number;
+  textures: number;
+  transformNodes: number;
+  geometries: number;
 }
 
 export interface KindStat {
@@ -303,6 +349,48 @@ export class LifecycleLedger {
 
   latest(): LifecycleSample | null {
     return this.last;
+  }
+
+  /**
+   * ⭐ 誠實普查（見 `SceneTruth`）—— `__ggdDiag()` 用它把「總數 vs 真的在畫」並排。
+   * ⛔ 讀不到的欄位回 **-1**，⛔ 不是 0：「這台瀏覽器沒給我這個數字」與
+   * 「場上一顆粒子都沒有」是兩件完全不同的事，而它們在 0 上長得一模一樣。
+   */
+  sceneTruth(): SceneTruth {
+    const s = this.sceneRef?.deref();
+    if (!s) {
+      return {
+        bound: false, meshesTotal: 0, meshesEnabled: 0, meshesActive: -1,
+        particleSystems: 0, particlesLive: -1, materials: 0, textures: 0,
+        transformNodes: 0, geometries: 0,
+      };
+    }
+    let enabled = 0;
+    for (const m of s.meshes) if (!m.isEnabled || m.isEnabled()) enabled++;
+    let live = -1;
+    for (const ps of s.particleSystems) {
+      const n = ps.getActiveCount?.();
+      if (typeof n === "number" && Number.isFinite(n)) live = (live < 0 ? 0 : live) + n;
+    }
+    let active = -1;
+    try {
+      const am = s.getActiveMeshes?.();
+      if (am && typeof am.length === "number") active = am.length;
+    } catch {
+      active = -1; // ⛔ 量表自己壞了要看得見（同 `take()` 的 gauge 迴圈）
+    }
+    return {
+      bound: true,
+      meshesTotal: s.meshes.length,
+      meshesEnabled: enabled,
+      meshesActive: active,
+      particleSystems: s.particleSystems.length,
+      particlesLive: live,
+      materials: s.materials.length,
+      textures: s.textures.length,
+      transformNodes: s.transformNodes.length,
+      geometries: s.geometries?.length ?? 0,
+    };
   }
 
   history(): readonly LifecycleSample[] {
