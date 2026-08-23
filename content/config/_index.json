@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "d4dde9bfda66",
+  "hash": "eb123ea98e02",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -17,8 +17,8 @@
     {
       "id": "ambient-vfx",
       "path": "config/ambient-vfx.json",
-      "hash": "19f97af51bdd",
-      "size": 3036
+      "hash": "082b457bd80f",
+      "size": 4229
     },
     {
       "id": "aoe-tiers",
@@ -41,14 +41,14 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "d53b89cfc86d",
-      "size": 8167
+      "hash": "e8844295a30b",
+      "size": 8263
     },
     {
       "id": "audio-map",
       "path": "config/audio-map.json",
-      "hash": "7c36e7b8548d",
-      "size": 44208
+      "hash": "53f5d3149cc2",
+      "size": 44549
     },
     {
       "id": "audio-mix",
@@ -161,8 +161,8 @@
     {
       "id": "cooldown-tiers",
       "path": "config/cooldown-tiers.json",
-      "hash": "fb196faad125",
-      "size": 2035
+      "hash": "46868e5860ae",
+      "size": 1273
     },
     {
       "id": "crit",
@@ -191,8 +191,8 @@
     {
       "id": "damage-tiers",
       "path": "config/damage-tiers.json",
-      "hash": "2a5fad92791d",
-      "size": 3188
+      "hash": "390d9efadb31",
+      "size": 2979
     },
     {
       "id": "dispel",
@@ -467,8 +467,8 @@
     {
       "id": "vfx-families",
       "path": "config/vfx-families.json",
-      "hash": "a80362f00e38",
-      "size": 37189
+      "hash": "d3bec0b157da",
+      "size": 37225
     },
     {
       "id": "victory-fx",
