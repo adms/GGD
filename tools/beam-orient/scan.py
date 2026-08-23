@@ -21,22 +21,46 @@ beam-orient —— 從**真的 .glb 位元組**推導每一份 `model@1` 的**�
   · glTF 載入器那個 X 鏡射（`__root__` 180° + scale(1,1,−1)）不影響結論；
   · ⛔ 不需要 `modelFacing.test.ts` 那一套骨架對稱性／腳尖偏移的前後線索。
 
-── ⛔ 兩條**拒絕提案**的規則（都是量出來的，不是保守） ─────────────────────────
+── ⛔ 三條**拒絕提案**的規則（都是量出來的，不是保守） ─────────────────────────
 ① **會走路的模型不可以被放倒。** glb 裡有 `walk`/`run` 動畫 ⇒ 它是站著的東西。
    實測：`imported.herocloudstrife`（克勞德幻影）、`imported.azunyan`、`imported.ritsu`
    這一族長軸全是 Y 且都被當成「移動的模型 dummy」用過 —— 把它們的長軸對齊行進方向
    就是**把一個角色摔在地上**，⛔ 不是做出一道光束。
 ② **`z` 不寫進文件。** Babylon 的前方就是 +Z ⇒ `"z"` 是恆等變換，寫了是一句
    「說了但不會發生」的宣稱（第一·五守則）。ABSENT 已經是它的意思。
+③ ⭐ **旋轉對稱的網格沒有長軸**（`imported.frostnova`：一個 14 邊形圓環，
+   ±9.36 × 0 × ±9.60，完全置中）。bbox 會硬選一軸（z，只贏 2.6%），⛔ 但那不是
+   「長軸」而是取樣雜訊 —— 一個圓盤怎麼繞 Y 轉都一樣。⇒ 不提案，也**不算缺口**。
+
+── ⭐ 為什麼 bbox 之外還要量「偏心」（2026-08-23 加的第二個訊號）──────────────
+`imported.darkraor`（38-03 邪王炎殺黑龍波的龍頭）三邊是 2.532 × 2.496 × 2.167：
+**最長只贏第二長 1.4%**，拿 bbox 排名去挑等於擲硬幣，而規則是「⛔ 不要猜一個軸」。
+⇒ 再問一句「網格往哪一邊**長出去**」：一具沿自己某軸建的飛行物，幾何會**偏**在
+那一軸的正端（頭在前面），⛔ 不會置中。實測（兩支已裁決的正好對上）：
+
+    netherstrike  offsetFrac y=0.844  ← 宣告 y ✅      fireblast  x=0.649 ← 宣告 x ✅
+    darkraor      offsetFrac x=0.567（y 0.285 · z 0.038）⇒ x，⛔ 不是擲硬幣
+    frostnova     offsetFrac 全 0.000 ⇒ 旋轉對稱，沒有長軸（規則③）
+
+⚠️ 兩個訊號**打架**時（bbox 說 A、偏心說 B，而且 bbox 是平手）⇒ ⛔ 不提案，
+`--check` 紅並要求人去看。`imported.tectonicfury` 就是這一種（bbox z、偏心 x）。
 
 用法
     python3 tools/beam-orient/scan.py                # 印普查表
     python3 tools/beam-orient/scan.py --json         # 重寫 census.json
     python3 tools/beam-orient/scan.py --write        # 把提案寫進 content/models/*.json
-    python3 tools/beam-orient/scan.py --check        # 出貨文件 vs 現場重解（閘，非零離開）
+    python3 tools/beam-orient/scan.py --check        # 兩個方向的閘（非零離開）
 
-⚠️ `--write` 預設**只動正在被 `spawnModelFx` 引用的模型**（今天 3 份）——
-一個沒有人用的欄位就是一句沒有人驗過的宣稱。`--all` 才會寫進每一個提案。
+⚠️ `--write` 預設**只動被「會動的」`spawnModelFx` 節點引用的模型** ——
+`path:"orbit"` 的節點 sim 送的是 `dx=dz=0`（客戶端用它分辨動／不動），所以替它們
+宣告長軸是一句「說了但不會發生」。`--all` 才會寫進每一個提案。
+
+── ⭐ `--check` 有**兩個方向**（第二個是 2026-08-23 補的）────────────────────
+① 宣告了的對不對（出貨文件 vs 現場重解）
+② ⭐ **在用的有沒有宣告** —— 「有在用 · 會動 · 而沒有結論」逐支指名。
+   ⚠️ 在此之前只有方向①，所以它**結構上叫不出**「這一支從來沒被提案過」：
+   `--write` 的名單來自 `usedBy`，而 `usedBy` 只認**字面** `modelKey` ⇒ 走 `preset`
+   的節點對它完全隱形 ⇒ owner 點名的四支經典從來沒進過提案名單，而閘是綠的。
 """
 from __future__ import annotations
 
@@ -57,6 +81,35 @@ CENSUS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "census.json")
 #: ⚠️ 它**不是**「夠不夠細長」的門檻(那會把 netherstrike 27×31×27 這種
 #: 「粗但真的是立著的」柱子誤殺),只是「這個排名穩不穩」的提醒。
 AMBIGUOUS_RATIO = 1.20
+
+#: 幾何中心離原點多遠（佔那一軸半邊長的比例）才算「這一軸上明顯偏心」。
+#: ⭐ 這是 bbox 排名平手時的第二個訊號 —— 見檔頭。實測門檻兩側差很遠
+#: （darkraor x=0.567 / y=0.285，netherstrike y=0.844 / z=0.014），⛔ 不是踩線調出來的。
+OFF_CENTER_MIN = 0.25
+#: 低於這個值算「置中」。圓盤／圓環／球那一族**三軸全是 0.000**。
+CENTERED_MAX = 0.05
+
+#: `path:"orbit"` 的實例 sim 送 `dx=dz=0`（`sim/effects/spawnModelFx.ts` 的
+#: 「⚠️ `dx=dz=0` = sim 說這一具**不動**」）⇒ 長軸修正對它逐位元沒有效果。
+STATIONARY_PATHS = {"orbit"}
+
+#: ⛔ 豁免表：**有在用、會動、而永遠不會有長軸**的模型。
+#: ⚠️ 每一列都要帶一個**能被反駁**的理由，而且 `expect` 會被逐次重解 ——
+#: 那份 .glb 哪天被重匯出成別的樣子，這一列自己就過期並紅（⛔ 不是靜靜地繼續豁免）。
+EXEMPT: dict[str, dict[str, str]] = {
+    "imported.blackhole": {
+        "expect": "no-mesh",
+        "why": (
+            "這一份 .glb 的 `meshes` 是**空陣列** —— 10 個節點全是 Dummy/Bone"
+            "（Sphere01 · Plane01 · Plane02 · Dummy01…05 · Armature）。原作"
+            "`BlackHole.mdl` 的可見部分是**粒子發射器**，mdx→glb 沒有帶過來。"
+            "⇒ 沒有任何幾何可以對齊，宣告哪一軸都是一句「說了但不會發生」。"
+            "⚠️ 它同時是一個**更大的**缺陷（38-03 邪王炎殺黑龍波的「龍身」在畫面上"
+            "一個像素都沒有，而 fxTint 還替它填了純黑）—— ⛔ 那不歸這支工具修，"
+            "要嘛重匯出、要嘛改指 `imported.blackhole1`（那一份有 7.11×0.56×7.11 的圓盤）。"
+        ),
+    },
+}
 
 LOCOMOTION = re.compile(r"walk|run|move", re.I)
 IDENT4 = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
@@ -163,19 +216,68 @@ def champion_body_keys() -> set[str]:
     return keys
 
 
-def spawn_model_fx_keys() -> dict[str, list[str]]:
-    """modelKey → 引用它的技能文件（`spawnModelFx` 節點）。"""
-    used: dict[str, list[str]] = {}
-    for path in glob.glob(os.path.join(ROOT, "content", "abilities", "*.json")):
+def ability_template_slots() -> dict[str, dict[str, str]]:
+    """
+    `template@1` id → 它替 `spawnModelFx` 補的那兩格（`params[k].default`）。
+
+    ⭐ 為什麼一定要展開 `preset`：`content/modelFxPreset.ts` 在**載入時**把
+    `params[*].default` 逐格補進節點（節點自己寫下的值永遠贏）。所以一個只寫
+    `{"kind":"spawnModelFx","preset":"tpl-beam-roll"}` 的節點，跑起來用的是
+    `imported.netherstrike` —— 而只認字面 `modelKey` 的掃描器**看不到它**。
+    ⚠️ 2026-08-23 量到的代價：owner 點名的四支經典（59-04 陽電子砲 · 20-03
+    約束與勝利之劍 · 08-03 龍鬥氣砲咒文 · 09-04 龜派氣功）全部走 preset，於是
+    普查表上沒有「★使用中」⇒ `--write` 從來不會替它們提案，而 `--check` 是綠的。
+    """
+    slots: dict[str, dict[str, str]] = {}
+    for path in sorted(glob.glob(os.path.join(ROOT, "content", "ability-templates", "*.json"))):
         if os.path.basename(path).startswith("_"):
             continue
         with open(path, encoding="utf-8") as fh:
             doc = json.load(fh)
+        params = doc.get("params") or {}
+        row: dict[str, str] = {}
+        for key in ("modelKey", "path"):
+            slot = params.get(key)
+            if isinstance(slot, dict) and isinstance(slot.get("default"), str):
+                row[key] = slot["default"]
+        if row:
+            slots[doc["id"]] = row
+    return slots
+
+
+def spawn_model_fx_uses() -> dict[str, list[dict]]:
+    """
+    modelKey → 每一個引用它的 `spawnModelFx` 節點（**已經展開 preset**）。
+
+    每一筆：`{"ability", "path", "via"}`。`via` 是 `"literal"` 或 `"preset:<id>"`。
+    """
+    slots = ability_template_slots()
+    used: dict[str, list[dict]] = {}
+    for path in sorted(glob.glob(os.path.join(ROOT, "content", "abilities", "*.json"))):
+        if os.path.basename(path).startswith("_"):
+            continue
+        with open(path, encoding="utf-8") as fh:
+            doc = json.load(fh)
+        aid = os.path.basename(path)[:-5]
 
         def walk(node):
             if isinstance(node, dict):
-                if node.get("kind") == "spawnModelFx" and isinstance(node.get("modelKey"), str):
-                    used.setdefault(node["modelKey"], []).append(os.path.basename(path)[:-5])
+                if node.get("kind") == "spawnModelFx":
+                    preset = node.get("preset") if isinstance(node.get("preset"), str) else None
+                    filled = slots.get(preset) or {} if preset else {}
+                    key = node.get("modelKey")
+                    via = "literal"
+                    if not isinstance(key, str):
+                        key, via = filled.get("modelKey"), f"preset:{preset}"
+                    hop = node.get("path")
+                    if not isinstance(hop, str):
+                        hop = filled.get("path")
+                    if isinstance(key, str):
+                        # ⛔ 解不出 path 時**當成會動的** —— fail-loud 那一邊
+                        # （沉默地當成 orbit 正是這一次的缺陷形狀）。
+                        used.setdefault(key, []).append(
+                            {"ability": aid, "path": hop or "?", "via": via}
+                        )
                 for value in node.values():
                     walk(value)
             elif isinstance(node, list):
@@ -187,7 +289,7 @@ def spawn_model_fx_keys() -> dict[str, list[str]]:
 
 
 def survey() -> list[dict]:
-    bodies, used = champion_body_keys(), spawn_model_fx_keys()
+    bodies, used = champion_body_keys(), spawn_model_fx_uses()
     rows: list[dict] = []
     for path in sorted(glob.glob(os.path.join(MODELS, "*.json"))):
         if os.path.basename(path).startswith("_"):
@@ -196,11 +298,17 @@ def survey() -> list[dict]:
             doc = json.load(fh)
         mid = doc["id"]
         glb = os.path.join(ROOT, "content", doc["glbPath"])
+        uses = used.get(mid, [])
+        moving = [u for u in uses if u["path"] not in STATIONARY_PATHS]
         row: dict = {
             "id": mid,
             "glbPath": doc["glbPath"],
             "declared": doc.get("fxLongAxis"),
-            "usedBy": used.get(mid, []),
+            # ⚠️ `usedBy` 保留成一串技能 id（census 的既有形狀）；
+            # 真正說話的是 `uses`（帶 path/via）與 `movingUses`。
+            "usedBy": sorted({u["ability"] for u in uses}),
+            "uses": uses,
+            "movingUses": [f"{u['ability']}[{u['path']}·{u['via']}]" for u in moving],
             "proposed": None,
             "skip": None,
         }
@@ -218,15 +326,63 @@ def survey() -> list[dict]:
         lo, hi = box
         ext = [round(hi[k] - lo[k], 4) for k in range(3)]
         order = sorted(range(3), key=lambda k: -ext[k])
+        # ⭐ 第二個訊號:幾何往哪一邊長出去(佔半邊長的比例)。見檔頭。
+        frac = [
+            round(abs((hi[k] + lo[k]) / 2) / (ext[k] / 2), 3) if ext[k] > 1e-9 else 0.0
+            for k in range(3)
+        ]
+        lead = max(range(3), key=lambda k: frac[k])
         row["extents"] = ext
         row["ratio"] = round(ext[order[0]] / ext[order[1]], 3) if ext[order[1]] > 1e-9 else None
         row["longAxis"] = "xyz"[order[0]]
         row["ambiguous"] = row["ratio"] is not None and row["ratio"] < AMBIGUOUS_RATIO
+        row["offsetFrac"] = frac
+        row["offsetAxis"] = "xyz"[lead] if frac[lead] >= OFF_CENTER_MIN else None
+        # ⭐ 規則③:排名平手 **而且**網格完全置中 ⇒ 旋轉對稱(圓盤/圓環/球),
+        # 沒有一條長軸可以對齊 —— bbox 硬選的那一軸是取樣雜訊,⛔ 不是答案。
+        row["noLongAxis"] = bool(row["ambiguous"]) and max(frac) < CENTERED_MAX
+        # ⚠️ 兩個訊號打架(bbox 平手 + 偏心指向別的軸) ⇒ ⛔ 不猜。
+        row["conflict"] = bool(
+            row["ambiguous"] and row["offsetAxis"] and row["offsetAxis"] != row["longAxis"]
+        )
         if glb_walks(glb):
             row["skip"] = "walks"         # ⛔ 會走路的東西不可以被放倒
             continue
+        if row["noLongAxis"] or row["conflict"]:
+            continue
         row["proposed"] = row["longAxis"]
     return rows
+
+
+def unresolved(row: dict) -> str | None:
+    """
+    ⭐ `--check` 方向②：這一份模型**有在用、會動**，而它有沒有一個結論？
+
+    回傳 `None` ＝ 有結論（宣告了／規則拒絕／旋轉對稱／本來就對齊 +Z），
+    回傳一句話 ＝ ⛔ 沒有結論，要紅。
+    """
+    if row["declared"]:
+        return None                                   # 方向①去驗它對不對
+    if row["skip"] in ("walks", "body"):
+        return None                                   # 規則①：⛔ 不可以被放倒
+    if row["id"] in EXEMPT:
+        return None                                   # 豁免（新鮮度由 cmd_check 驗）
+    if row["skip"]:
+        return f"這一份被判為 `{row['skip']}` 而**不在豁免表**上 ⇒ 要嘛修模型、要嘛寫下為什麼它不該有長軸"
+    if row["noLongAxis"]:
+        return None                                   # 規則③：旋轉對稱，沒有長軸
+    if row["conflict"]:
+        return (
+            f"量不出來：bbox 排名說 {row['longAxis']}（只贏 {row['ratio']}×）而偏心說 "
+            f"{row['offsetAxis']}（offsetFrac={row['offsetFrac']}）⇒ ⛔ 不要猜，人去看一次"
+        )
+    if row["longAxis"] == "z":
+        return None                                   # 規則②：+Z 就是行進軸，恆等
+    return (
+        f"沒有宣告 `fxLongAxis`，而 .glb 現場重解是 {row['longAxis']} "
+        f"(extents={row['extents']}, offsetFrac={row['offsetFrac']}) ⇒ 長軸**恆**垂直於"
+        f"行進方向（偏航轉不動它）。跑 `--write`"
+    )
 
 
 # ── 三種模式 ───────────────────────────────────────────────────────────────────
@@ -235,22 +391,46 @@ def cmd_print(rows: list[dict]) -> int:
     for row in sorted(rows, key=lambda r: (r["skip"] is not None, -(r.get("ratio") or 0))):
         ext = row.get("extents")
         ext_s = "(%7.2f,%7.2f,%7.2f)" % tuple(ext) if ext else ""
-        note = row["skip"] or ("★ 使用中: " + ", ".join(row["usedBy"]) if row["usedBy"] else "")
-        if row.get("ambiguous") and not row["skip"]:
+        note = row["skip"] or ""
+        if row["movingUses"]:
+            note = (note + " ★ 會動: " + ", ".join(row["movingUses"])).strip()
+        elif row["usedBy"]:
+            note = (note + " · 定點(orbit): " + ", ".join(row["usedBy"])).strip()
+        if row.get("noLongAxis"):
+            note = ("⭕ 旋轉對稱,沒有長軸 " + note).strip()
+        elif row.get("conflict"):
+            note = (f"⚠️ 兩個訊號打架(bbox {row['longAxis']} / 偏心 {row['offsetAxis']}) " + note).strip()
+        elif row.get("ambiguous") and not row["skip"]:
             note = ("⚠️ 長軸接近平手 " + note).strip()
         print(
             f"{row['id']:38s} {str(row.get('longAxis') or '-'):4s} "
             f"{(row.get('ratio') or 0):6.2f}  {ext_s:26s} {note}"
         )
     props = [r for r in rows if r["proposed"] and r["proposed"] != "z"]
+    moving = [r for r in rows if r["movingUses"]]
     print(f"\n提案 {len(props)} / 量到 {len([r for r in rows if r.get('extents')])} / 總數 {len(rows)}")
-    print("使用中: " + ", ".join(f"{r['id']}→{r['proposed'] or r['longAxis']}" for r in rows if r["usedBy"]))
+    print(
+        f"會動的節點用到 {len(moving)} 份模型: "
+        + ", ".join(f"{r['id']}→{r['declared'] or r['proposed'] or '—'}" for r in moving)
+    )
     return 0
 
 
 def cmd_json(rows: list[dict]) -> int:
     with open(CENSUS, "w", encoding="utf-8") as fh:
-        json.dump({"ambiguousRatio": AMBIGUOUS_RATIO, "rows": rows}, fh, ensure_ascii=False, indent=1)
+        json.dump(
+            {
+                "ambiguousRatio": AMBIGUOUS_RATIO,
+                "offCenterMin": OFF_CENTER_MIN,
+                "centeredMax": CENTERED_MAX,
+                "stationaryPaths": sorted(STATIONARY_PATHS),
+                "exempt": EXEMPT,
+                "rows": rows,
+            },
+            fh,
+            ensure_ascii=False,
+            indent=1,
+        )
         fh.write("\n")
     print(f"wrote {CENSUS}")
     return 0
@@ -260,8 +440,10 @@ def cmd_write(rows: list[dict], every: bool) -> int:
     changed = 0
     for row in rows:
         want = row["proposed"]
-        # ⛔ `z` 是恆等 ⇒ 不寫(第一·五守則);⛔ 沒有人用的模型不寫(除非 --all)
-        if not want or want == "z" or (not every and not row["usedBy"]):
+        # ⛔ `z` 是恆等 ⇒ 不寫(第一·五守則);
+        # ⛔ 沒有**會動的**節點在用的模型不寫(除非 --all)——`path:"orbit"` 的實例
+        #    sim 送 dx=dz=0,替它宣告長軸是一句「說了但不會發生」。
+        if not want or want == "z" or (not every and not row["movingUses"]):
             continue
         if row["declared"] == want:
             continue
@@ -269,8 +451,14 @@ def cmd_write(rows: list[dict], every: bool) -> int:
         with open(path, encoding="utf-8") as fh:
             doc = json.load(fh)
         doc["fxLongAxis"] = want
+        with open(path, encoding="utf-8") as fh:
+            had_newline = fh.read().endswith("\n")
         with open(path, "w", encoding="utf-8") as fh:
             json.dump(doc, fh, ensure_ascii=False, indent=2)
+            # ⛔ 不要順手改結尾換行 —— 這支工具只加一格,一個看不見的位元組差異
+            # 會讓 diff 變成「整份重寫」而把那一格藏起來。
+            if had_newline:
+                fh.write("\n")
         print(f"{row['id']}: fxLongAxis = {want}")
         changed += 1
     print(f"changed {changed}")
@@ -278,6 +466,15 @@ def cmd_write(rows: list[dict], every: bool) -> int:
 
 
 def cmd_check(rows: list[dict]) -> int:
+    """
+    兩個方向的閘。
+
+    ① **宣告了的對不對** —— 出貨文件 vs .glb 現場重解。
+    ② ⭐ **在用的有沒有宣告** —— 「有在用 · 會動 · 而沒有結論」逐支指名。
+       ⚠️ 少了②的那一版**結構上叫不出** #607 的形狀：`--write` 的提案名單來自
+       `usedBy`，而 `usedBy` 只認字面 `modelKey` ⇒ 走 `preset` 的節點隱形 ⇒
+       四支經典從來沒被提案過，而①永遠是綠的（它只問「宣告的那兩份對不對」）。
+    """
     bad = []
     for row in rows:
         declared = row["declared"]
@@ -290,10 +487,42 @@ def cmd_check(rows: list[dict]) -> int:
                 f"{row['id']}: 宣告 {declared}，.glb 現場重解是 {row['longAxis']} "
                 f"(extents={row['extents']}) ⇒ 模型重匯出過了，跑 --write"
             )
+
+    # ── 方向② ─────────────────────────────────────────────────────────────────
+    by_id = {r["id"]: r for r in rows}
+    gaps = 0
+    for row in rows:
+        if not row["movingUses"]:
+            continue
+        why = unresolved(row)
+        if why is None:
+            continue
+        gaps += 1
+        bad.append(
+            f"{row['id']}: {why}\n"
+            f"        ⇒ {len(row['movingUses'])} 個會動的節點在用它："
+            + "、".join(row["movingUses"])
+        )
+
+    # ⛔ 豁免的理由要保鮮:那份 .glb 重匯出成別的樣子 ⇒ 這一列自己過期並紅。
+    for mid, ex in sorted(EXEMPT.items()):
+        row = by_id.get(mid)
+        if row is None:
+            bad.append(f"{mid}: 豁免表上有它，但 content/models/ 裡沒有這份文件 ⇒ 刪掉那一列")
+        elif row["skip"] != ex["expect"]:
+            bad.append(
+                f"{mid}: 豁免的理由過期了 —— 當初記的是 `{ex['expect']}`，現在重解是 "
+                f"`{row['skip'] or '有幾何'}` ⇒ 重新裁決一次（理由：{ex['why']}）"
+            )
+
     for line in bad:
         print("⛔ " + line, file=sys.stderr)
     declared_n = len([r for r in rows if r["declared"]])
-    print(f"beam-orient --check: {declared_n} 份宣告，{len(bad)} 份對不上")
+    moving_n = len([r for r in rows if r["movingUses"]])
+    print(
+        f"beam-orient --check: ①{declared_n} 份宣告 · ②{moving_n} 份被會動的節點引用"
+        f"（{gaps} 份沒有結論）· 共 {len(bad)} 條"
+    )
     return 1 if bad else 0
 
 
