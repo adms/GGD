@@ -1123,6 +1123,20 @@ export interface ModifierSource {
    * 讀它的只有 `stats/statPipeline.ts::sourcePrimaryAttribute`（最後掛上的贏）。
    */
   primaryAttribute?: import("./attributes").PrimaryAttributeGrant;
+  /**
+   * ⭐ M4(2026-08-23) —— **攻擊型態覆寫**（近戰 ↔ 遠程）。第十二格。
+   *
+   * `Stat` 上同樣沒有「這具身體是近戰還是遠程」這個數字，而且⛔ 不可以從射程
+   * 反推（射程會被道具動到）；在這一格之前它**只住在英雄卡上**，所以
+   * `godie-n00p` 妖狐 melee→ranged 與 `godie-o02l` 皮卡 ranged→melee
+   * 只有**換一整份英雄卡**（＝變身）做得到。
+   *
+   * ⚠️ 讀它的有**兩個**消費端，而且共用同一支
+   * `stats/sourceGrants.ts::sourceAttackType`：`systems/BasicAttackSystem.ts`
+   * （揮刀還是射一發）與 `stats/statPipeline.ts`（`byAttackType` 的環境倍率）。
+   * ⛔ 只接一個 = 「揮的是刀、吃的是遠程倍率」。
+   */
+  attackType?: import("./sourceGrants").AttackTypeGrant;
 }
 
 /**

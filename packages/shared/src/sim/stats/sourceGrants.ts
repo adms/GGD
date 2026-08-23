@@ -37,6 +37,8 @@
  * 這支照抄同一個形狀，所以既有來源的物件形狀逐鍵不變。
  */
 import type { BlockGrant } from "../combat/block";
+import type { ChampionDef } from "../content/defs";
+import type { ModifierSource } from "./modifiers";
 import type { DeathWardGrant } from "../deathWard";
 import type { CritStrikeGrant } from "../combat/critStrike";
 import type { DamageTypeOverride } from "../combat/damageTypeOverride";
@@ -157,6 +159,68 @@ export interface SourceGrantFields {
    * Q/W/E/R→EX→天生技）。
    */
   primaryAttribute?: PrimaryAttributeGrant;
+  /**
+   * ⭐ M4(2026-08-23) —— **攻擊型態覆寫**（近戰 ↔ 遠程）。**第十二格。**
+   *
+   * owner 2026-08-22:「變身帶來許多問題，因此我想要**開啟變身態盡可能下架**項目群組」。
+   * 19 對變身逐對量下來，有 **2 對**的差別裡包含「這具身體是近戰還是遠程」——
+   * `godie-n00p` 妖狐 melee→ranged 與 `godie-o02l` 皮卡 ranged→melee ——
+   * 而在這一格出現之前，`attackType` **只住在英雄卡上**（`ChampionDef` 的必填欄位）
+   * ⇒「變成遠程」結構性地只有**換一整份英雄卡**（＝變身）做得到。
+   *
+   * ⛔ 它**不是**一條 `Stat`：`Stat` 上沒有「這具身體是近戰還是遠程」這個數字，
+   * 而且它也不可以從射程反推 —— `statPipeline.ts` 已經逐字寫下理由：
+   * 射程是會被道具／體型／`attackRange` 倍率動到的**衍生值**，用它反推身分
+   * 等於讓一件裝備把近戰變成遠程。
+   *
+   * ⚠️ 消費端有**兩個**，⛔ 只接一個會得到「打得到人但吃錯環境倍率」（或反過來）：
+   *   · `sim/systems/BasicAttackSystem.ts` —— 揮刀還是射一發（`resolveAttack` 的
+   *     投射物分支、傷害點預設、`weaponClassOf` 的武器音效與揮擊軌跡）
+   *   · `sim/stats/statPipeline.ts` —— `STAT_ENV_CHAIN` 的 `byAttackType` 那一格
+   *     （近戰吃 `moveSpeedMelee`、遠程吃 `moveSpeedRanged`）
+   * 兩者共用同一支 {@link sourceAttackType}，⛔ 不是兩份各自的摺疊。
+   *
+   * ⚠️ **刻意不含**第三個讀 `attackType` 的地方：`economy/offerEligibility.ts`
+   * 的 `championAttackType`（`item@1.requiresAttackType` 的商店過濾）。理由是
+   * 那一支回答的是「**這位英雄**該被推薦什麼裝備」，那是選角時就定下來的身分；
+   * 讓一份 6 秒的 buff 去改它，商店的可選清單會在變身進出時整排跳動，
+   * 而已經買下的裝備**沒有任何東西會重新檢查**（那份檔頭自己寫著這件事）。
+   *
+   * ⚠️ 多份來源同時覆寫時**最後掛上的贏**（照 `damageTypeOverride` /
+   * `primaryAttribute` 的同一條規矩），而 `sources` 的順序是決定性的。
+   */
+  attackType?: AttackTypeGrant;
+}
+
+/**
+ * 覆寫值的詞彙 —— ⭐ 從 {@link ChampionDef} 那一格**推導**，⛔ 不是第二份字面值。
+ * 它的語意就是「蓋掉英雄卡上宣告的那一格」，所以兩邊永遠不可能漂
+ * （英雄卡哪天多出第三種攻擊型態，這一格自動跟著寬）。
+ */
+export type AttackTypeGrant = ChampionDef["attackType"];
+
+/**
+ * ⭐ M4 —— 身上有沒有一份來源**改寫**了攻擊型態。沒有 = `undefined`
+ * = 照英雄卡上那一格（逐位元不變，出貨 0 份文件填它）。
+ *
+ * ⚠️ 形狀與 `statPipeline.ts::sourcePrimaryAttribute` 逐行相同（最後掛上的贏、
+ * 跳過已過期的來源），⛔ 但它住在**這裡**而不是那裡：M4 有**兩個**消費端，
+ * 而其中一個（`BasicAttackSystem`）根本不經過統計管線。兩邊各寫一次摺疊
+ * 就是兩份會漂移的實作（失敗形態⑤），而漂掉的症狀是「揮的是刀、吃的是遠程倍率」。
+ *
+ * ⚠️ 純函式、無 `Math.random` / `Date.now` / 三角函式 / `**`（`sim/purity.test.ts`）。
+ */
+export function sourceAttackType(
+  sources: readonly ModifierSource[],
+  tick: number,
+): AttackTypeGrant | undefined {
+  let out: AttackTypeGrant | undefined;
+  for (const src of sources) {
+    if (src.attackType === undefined) continue;
+    if (src.expiresAtTick !== undefined && src.expiresAtTick <= tick) continue;
+    out = src.attackType;
+  }
+  return out;
 }
 
 /**
@@ -185,6 +249,7 @@ export function sourceGrants(from: SourceGrantFields): SourceGrantFields {
     ...(from.primaryAttribute !== undefined
       ? { primaryAttribute: from.primaryAttribute }
       : {}),
+    ...(from.attackType !== undefined ? { attackType: from.attackType } : {}),
   };
 }
 
@@ -209,6 +274,7 @@ export function hasSourceGrant(from: SourceGrantFields): boolean {
     from.vision !== undefined ||
     from.deathWard !== undefined ||
     from.immobile !== undefined ||
-    from.primaryAttribute !== undefined
+    from.primaryAttribute !== undefined ||
+    from.attackType !== undefined
   );
 }

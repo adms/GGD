@@ -74,6 +74,19 @@ export interface FormVisual {
   readonly scaleMult: number;
   /** 球體掛件;null = 沒有(或後台把掛件關掉了)。 */
   readonly attachment: FormAttachment | null;
+  /**
+   * ⭐ M3(2026-08-23)—— **整具身體換成這一份模型**(`models/` 的文件 id)。
+   * 缺席 = 身體不換。語意、四對名單與優先序寫在
+   * `schema/config/formVisuals.ts` 的 `zFormVisualEntry.modelKey`。
+   *
+   * ⛔ 與 {@link FormAttachment.modelKey} 是**兩件事**:那一格是**多掛**一份 glb
+   * (悟空超三的頭),這一格是本體**換掉**(拳四郎 barbarian → heropikachu)。
+   *
+   * ⚠️ 刻意是 `optional` 而不是 `string | null`:既有呼叫端對 `FormVisual` 做
+   * 物件比對的斷言(以及 {@link NEUTRAL_FORM_VISUAL} 這種常數)在「沒有這一格」
+   * 的時候逐鍵不變 —— 多一個永遠是 `null` 的鍵會讓那些比對全部要跟著改。
+   */
+  readonly modelKey?: string;
 }
 
 /** 執行期掛在 ChampionView 上的第二個 glb。 */
@@ -173,10 +186,35 @@ export function resolveFormVisual(
         }
       : null;
 
+  /**
+   * ⭐ M3(2026-08-23)—— 身體換模型那一格。它**沒有濃度**可以插值(一份模型不是
+   * 一個可以「套 40%」的量),所以它只吃兩道全有全無的閘,而那兩道上面都已經
+   * early-return 過了:總開關 `enabled`,以及狀態那一半的 `statusStrength === 0`
+   * (＝ M1/M3 共用的一鍵 rollback)。
+   *
+   * ⛔ 它**不吃** `attachmentsEnabled`:那一格的存在理由是「低階機器可以不要多載
+   * 一份 glb」,而換身體**不會多**一份 —— 它換的是本來就要載的那一份。
+   */
+  const modelKey = entry.modelKey;
+
   const effectiveTint = tint && !isNeutral(tint) ? tint : null;
   const effectiveScale = Math.abs(scaleMult - 1) < EPSILON ? 1 : scaleMult;
-  if (effectiveTint === null && effectiveScale === 1 && attachment === null) return null;
-  return { tint: effectiveTint, scaleMult: effectiveScale, attachment };
+  // ⚠️ `modelKey` 也要算進「這一態到底改不改東西」——⛔ 少了它,一格**只**換模型
+  // 的狀態會在這裡被判成中性而回 null,於是 schema 收得下、後台畫得出來、
+  // 遊戲裡什麼都不發生(第一·五守則點名的那個形狀)。
+  if (
+    effectiveTint === null &&
+    effectiveScale === 1 &&
+    attachment === null &&
+    modelKey === undefined
+  )
+    return null;
+  return {
+    tint: effectiveTint,
+    scaleMult: effectiveScale,
+    attachment,
+    ...(modelKey !== undefined ? { modelKey } : {}),
+  };
 }
 
 function clamp(v: number, lo: number, hi: number): number {
@@ -232,6 +270,10 @@ export function composeBodyVisual(
   let tint: [number, number, number] | null = null;
   let scaleMult = 1;
   let attachment: FormAttachment | null = null;
+  // ⭐ M3 —— 身體只有一具,所以和掛件同一條規矩:**第一格贏**(呼叫端餵排序過的
+  // 清單,否則兩個客戶端會看到不同的身體)。⛔ 不相乘、⛔ 不合併 —— 兩份模型
+  // 之間沒有「中間值」這種東西。
+  let modelKey: string | undefined;
   for (const v of fromStatuses) {
     if (v.tint) {
       const t: readonly [number, number, number] = tint ?? FORM_TINT_NEUTRAL;
@@ -239,9 +281,21 @@ export function composeBodyVisual(
     }
     scaleMult *= v.scaleMult;
     attachment ??= v.attachment;
+    modelKey ??= v.modelKey;
   }
   const effectiveTint = tint && !isNeutral(tint) ? tint : null;
   const effectiveScale = Math.abs(scaleMult - 1) < EPSILON ? 1 : scaleMult;
-  if (effectiveTint === null && effectiveScale === 1 && attachment === null) return null;
-  return { tint: effectiveTint, scaleMult: effectiveScale, attachment };
+  if (
+    effectiveTint === null &&
+    effectiveScale === 1 &&
+    attachment === null &&
+    modelKey === undefined
+  )
+    return null;
+  return {
+    tint: effectiveTint,
+    scaleMult: effectiveScale,
+    attachment,
+    ...(modelKey !== undefined ? { modelKey } : {}),
+  };
 }

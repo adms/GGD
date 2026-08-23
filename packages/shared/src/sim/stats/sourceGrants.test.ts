@@ -212,6 +212,10 @@ describe("格擋 / 暴擊的授權格 —— 四種來源同一條路", () => {
         //    （＝變身）才拿得到。同上，這兩行就是維護點。
         immobile: true,
         primaryAttribute: "INT",
+        // ⭐ M4(2026-08-23)：【攻擊型態覆寫】是第十二格 —— 「這具身體現在是近戰
+        //    還是遠程」在此之前只住在英雄卡上，所以妖狐 melee→ranged 與皮卡
+        //    ranged→melee 只有換一整份英雄卡（＝變身）做得到。同上，這一行是維護點。
+        attackType: "ranged",
       }),
     ).sort();
     expect(forwarded).toEqual(Object.keys(SOURCE_GRANT_SHAPE).sort());

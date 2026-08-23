@@ -231,6 +231,33 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why: "同 `augments.immobile` —— 一份轉發表落在四個授權面上，增益卡這一面等內容。",
   },
 
+  // ═══ 2026-08-23 · M4 攻擊型態覆寫（同一批「變身態退場」的擋路機制）═════════
+  // ⭐ 第十二格授予。逐對量下來有 **2 對**變身的差別裡包含「這具身體是近戰還是
+  //    遠程」（`godie-n00p` 妖狐 melee→ranged · `godie-o02l` 皮卡 ranged→melee），
+  //    而 `attackType` 在此之前是 `ChampionDef` 的**必填欄位** ⇒「變成遠程」
+  //    結構性地只有換一整份英雄卡（＝變身）做得到。
+  // ⛔ 那 2 對**同時**還缺 M3（身體換模型），所以它們的內容要等兩個機制都在 ——
+  //    ⭐ 這一批做的就是那兩個機制，⛔ 內容（哪一支技能填哪一格）是 M1 那一批
+  //    在 `content/config/form-visuals.json` 與技能 JSON 上填的東西。
+  // ⚠️ 用 `landing` ⛔ 不是 `default-live`：出貨英雄卡上的 `attackType` **不是**
+  //    這一格的預設值 —— 它是「沒有人覆寫」時的答案，而覆寫本身零採用就是零。
+  //    30 天後再紅一次是對的：那時要嘛 M1 那一批填了它，要嘛它該被承認為死機制。
+  "field:abilities.effects[]#applyBuff.attackType": {
+    status: "landing",
+    since: "2026-08-23",
+    why: "M4【攻擊型態覆寫】的機制剛落地（GH#599）。⭐ 內容由 **M1 那一批**填（`godie-n00p` 妖狐 melee→ranged 與 `godie-o02l` 皮卡 ranged→melee 的變身技能），⛔ 不是「還沒收」：那 2 對同時還需要 M3（一格狀態換 modelKey），兩個機制都在了才動得了它們，而動一支出貨技能會改變那一場比賽 —— 排序是 owner 的權力（第零守則⑧）。`applyBuff` 這一面是「大招期間變成遠程 8 秒」唯一寫得出來的形狀，到期由那份 buff 自己收掉。",
+  },
+  "field:abilities.passive.ranks[].attackType": {
+    status: "landing",
+    since: "2026-08-23",
+    why: "同上，天生技 rank 那一面 —— 一份 `sourceGrants()` 轉發落在四個授權面上，⛔ 不是四份程式。妖狐／皮卡那兩對如果做成「變身狀態常駐」而不是限時 buff，寫的就是這一格。內容由 M1 那一批填。",
+  },
+  "field:augments.attackType": {
+    status: "landing",
+    since: "2026-08-23",
+    why: "同上，三選一增益卡那一面。「這一場你的普攻變成遠程」是一張顯而易見的卡而且零程式；今天沒有任何一張三選一卡用它，與上面兩格同進退。",
+  },
+
   // ═══ 2026-08-22 · `condition.is` 的三個實體類別（機制先落地）═══════════════
   // ⭐ 這三格是**條件葉**的實體類別（守衛塔／小怪／召喚物），機制在引擎上已經通了，
   //    ⛔ 但出貨內容裡還沒有一支技能寫「只對守衛塔／只對小怪／只對召喚物」。

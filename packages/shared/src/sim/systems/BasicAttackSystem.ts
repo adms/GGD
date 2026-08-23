@@ -20,6 +20,7 @@ import type { SimWorld } from "../SimWorld";
 import type { StatsComp } from "../stats/statsComp";
 import type { ChampionDef } from "../content/defs";
 import { Stat } from "../stats/statTypes";
+import { sourceAttackType } from "../stats/sourceGrants";
 import { Champions } from "../content/registry";
 import { distSq, normalize, sub, lenSq, type Vec2 } from "../math/vec2";
 import { hasLineOfSight } from "../map/lineOfSight";
@@ -274,7 +275,13 @@ export function basicAttackSystem(world: SimWorld): void {
 
     const champ = world.champion.get(id);
     const cdef = champ ? Champions.tryGet(champ.championId as ChampionId) : undefined;
-    const attackType = cdef?.attackType ?? "melee";
+    // ⭐ M4(2026-08-23) —— **攻擊型態覆寫**是這一行，⛔ 不是英雄卡那一格獨大。
+    // 一份掛在身上的來源（`applyBuff` 的限時 buff / 天生技 rank / 道具 / 增益卡）
+    // 可以把這具身體從近戰翻成遠程，於是 `godie-n00p` 妖狐 melee→ranged 與
+    // `godie-o02l` 皮卡 ranged→melee ⛔ 不必再換一整份英雄卡（＝變身）。
+    // ⚠️ 這是**兩個**消費端之一 —— 另一個是 `stats/statPipeline.ts` 的
+    // `byAttackType` 環境倍率。⛔ 只接這一個 = 「射得出去但吃近戰的移速倍率」。
+    const attackType = sourceAttackType(sc.sources, world.tick) ?? cdef?.attackType ?? "melee";
 
     // ---- advance an in-progress wind-up ----
     if (ab.windup) {

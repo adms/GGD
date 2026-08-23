@@ -18,6 +18,7 @@ import { finalizeStat } from "../baseBonus";
 import { attackRangeScaleFactor } from "../bodyScale";
 import { addAttrGrants, championStatBase } from "./attributes";
 import { sourceAttrGrants } from "./attrSources";
+import { sourceAttackType } from "./sourceGrants";
 import { liveResource } from "./resourceStats";
 import { ModOp, type ModifierSource } from "./modifiers";
 // ⭐ G5 —— 百分比式解鎖要讀「這條屬性的一般上限」。⛔ 一份讀取器，不是在這裡
@@ -147,7 +148,17 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
    * 召喚物同樣走這裡：它沒有 `ChampionComp` 但 `sc.championId` 指的就是一張真的
    * 英雄卡，所以它跟著本體的攻擊型態 —— 和它讀 `championStatBase` 的理由一致。
    */
-  const envSubject = { attackType: def.attackType };
+  /**
+   * ⭐ M4(2026-08-23) —— 一份掛在身上的來源可以**覆寫**攻擊型態
+   * （`SourceGrantFields.attackType`，第十二格授予）。沒有 = 照英雄卡上那一格
+   * （逐位元不變，出貨 0 份文件填它）。
+   *
+   * ⚠️ 這是**兩個**消費端之一 —— 另一個是 `systems/BasicAttackSystem.ts`
+   * （揮刀還是射一發）。⛔ 只接那一個 = 「射得出去但吃近戰的移速倍率」，
+   * ⛔ 只接這一個 = 「移速換了但人還是走過去揮刀」。兩邊共用同一支
+   * `sourceAttackType`，⛔ 不是兩份各自的摺疊。
+   */
+  const envSubject = { attackType: sourceAttackType(sc.sources, world.tick) ?? def.attackType };
 
   /**
    * 算一條屬性的最終值。`derivedFlat` 是 `ModOp.PercentOf` 在**第二趟**才算得

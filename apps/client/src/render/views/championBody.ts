@@ -273,9 +273,12 @@ export function championBodyHooks(deps: ChampionBodyDeps): ChampionBodyHooks {
    * ⇒ 兩個客戶端可能不同。所以**命中超過一格才排序**（今天出貨 `statuses` 是空的，
    * 這一段每一幀的成本是一次長度檢查）。
    */
-  const formVisualFor = (e: EntityViewState): FormVisual | null => {
-    const fromForm = content.formVisualFor(bodyChampionIdFor(e));
-    const ids = deps.statusIdsForSeat?.(e.seatId);
+  const visualForSeatForm = (
+    seatId: number | undefined,
+    formIndex: number,
+  ): FormVisual | null => {
+    const fromForm = content.formVisualFor(idForSeatForm(seatId, formIndex));
+    const ids = deps.statusIdsForSeat?.(seatId);
     if (!ids || ids.length === 0) return fromForm;
     let hits: { id: string; v: FormVisual }[] | null = null;
     for (const id of ids) {
@@ -290,10 +293,37 @@ export function championBodyHooks(deps: ChampionBodyDeps): ChampionBodyHooks {
     );
   };
 
+  const formVisualFor = (e: EntityViewState): FormVisual | null =>
+    visualForSeatForm(e.seatId, formIndexFromFlags(e.flags ?? 0));
+
+  /**
+   * ⭐ M3（GH#599）—— 這個座位**現在**該穿哪一具身體，或 null（＝穿 `e.key`）。
+   *
+   * ⚠️ 它和 `formVisualFor` 走的是**同一份**解析（`visualForSeatForm`），⛔ 不是
+   * 第二條「哪一格贏」的規則 —— 顏色、大小、掛件、身體四樣一起從那一份出來，
+   * 所以「多格狀態同時命中」的排序與「狀態取代形態」的取捨只有一個住處。
+   *
+   * ⚠️ 之所以吃 `(seatId, formIndex)` 而不是 `EntityViewState`：`modelDocFor` 是
+   * registry 用 `(e.key, e.seatId, formIndex)` 三個純量呼叫的，它手上根本沒有
+   * entity —— 那正是 #223 那個「箭頭函式把第三個引數靜靜吃掉」的介面。
+   */
+  const bodyModelKeyFor = (seatId: number | undefined, formIndex: number): string | null =>
+    visualForSeatForm(seatId, formIndex)?.modelKey ?? null;
+
   const modelDocFor = (modelKey: string, seatId?: number, formIndex = 0): ModelDoc | null => {
-    const resolved = deps.resolveModelKey(modelKey, seatId);
+    // ⭐ M3（GH#599）—— **狀態可以把整具身體換掉**（拳四郎大絕招變大型皮卡丘、
+    // 妖狐 fox2→fox、皮卡→picacugy、傑富力士→herobiggon：量到的 4 對）。在這一行
+    // 之前，換身體**只有**換一整份變身態 champion doc 做得到，於是 owner 2026-08-22
+    // 要的「開啟變身態盡可能下架」對那 4 對結構性地不成立。
+    //
+    // ⚠️ 它餵的是 `resolveModelKey` 的**輸入**，⛔ 不是加一條 if：裝備造型表查不到
+    // 這個新的 key ⇒ 原樣回傳 ⇒「變身贏過造型」是自然結果而不是第二條規則。
+    // 而下面那行 `resolved !== modelKey` 的早退因此**同時**涵蓋兩種明寫的選擇
+    // （造型替換與身體覆寫）—— 兩者都不該再讓 overlay 去 w3u 借一具。
+    const overrideKey = bodyModelKeyFor(seatId, formIndex);
+    const resolved = deps.resolveModelKey(overrideKey ?? modelKey, seatId);
     const doc = content.modelFor(resolved);
-    if (resolved !== modelKey) return doc; // equipped skin is an explicit choice
+    if (resolved !== modelKey) return doc; // equipped skin / 身體覆寫 is an explicit choice
     // WHICH BODY IS ON SCREEN, not which hero the seat picked. `inheritFrom`
     // is the base id: a 變身態 with no overlay unit of its own keeps the model
     // the player was looking at one second ago instead of dropping to a
@@ -340,7 +370,8 @@ export function championBodyHooks(deps: ChampionBodyDeps): ChampionBodyHooks {
     // relativeScale rather than replacing it, so a hero that is already an
     // exception (小叮噹 0.65) transforms to 0.65 × mult. A mult of 1 makes this
     // whole branch a no-op.
-    const formScale = formScaleMultiplier(formVisualFor(e));
+    const visual = formVisualFor(e);
+    const formScale = formScaleMultiplier(visual);
     const base: ModelDocOverride | null =
       formScale === 1
         ? shipped
@@ -348,7 +379,14 @@ export function championBodyHooks(deps: ChampionBodyDeps): ChampionBodyHooks {
     // #226: 44 champions share four generated blocky meshes, so the per-champion
     // LOOK is seeded from the championId here — the one place that can resolve
     // entity → champion. An imported champion wears its own art and gets none.
-    const archetype = ARCHETYPE_BY_MODEL_KEY[e.key];
+    //
+    // ⭐ M3（GH#599）—— 問的是**現在螢幕上那一具**的 modelKey，⛔ 不是 `e.key`。
+    // `e.key` 是伺服器從座位選的英雄算出來的；狀態把身體換掉之後，方塊人外觀
+    // （調色盤／臉／服裝）必須跟著**新的**那一具走 —— 否則會出現「身體換成了
+    // 另一個 archetype，卻還戴著上一具的臉」，而那是**兩條算繪路只改一條**的
+    // 標準症狀（⚠️ 今天在 EX 魔法陣那一題已經踩過同型：粒子等解鎖、模型從出生
+    // 就掛著）。⛔ 這一行與 `modelDocFor` 那一行必須同進退。
+    const archetype = ARCHETYPE_BY_MODEL_KEY[visual?.modelKey ?? e.key];
     if (!archetype) return base;
     return { ...(base ?? {}), voxel: voxelLookFor(championId, archetype) };
   };

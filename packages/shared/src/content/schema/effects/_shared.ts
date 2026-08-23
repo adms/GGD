@@ -860,6 +860,27 @@ export const SOURCE_GRANT_SHAPE = {
         "影響「每級主屬性加成 / 非主屬性加成」那兩種成長模式。留空 = 照英雄卡。",
     )
     .optional(),
+  /**
+   * ⭐ M4(2026-08-23) —— **攻擊型態覆寫**（近戰 ↔ 遠程）。第十二格授予。
+   *
+   * 同前十一格：擋住它的**只有**這一格 schema 與 `sourceGrants()` 的轉發 ——
+   * 兩個消費端（`systems/BasicAttackSystem.ts` 與 `stats/statPipeline.ts`）都走
+   * `StatsComp.sources` 而**不問 `kind`**，所以掛在 `applyBuff` 生出來的限時來源上
+   * 就是「接下來 8 秒你的普攻是遠程」，到期由那份 source 自己的 `expiresAtTick`
+   * 收掉，⛔ 不需要第二支掃描器。
+   *
+   * ⚠️ 詞彙刻意與英雄卡上那一格相同（`champion@1.attackType`），因為它的語意
+   * 就是覆寫那一格。⛔ 它與 `item@1.requiresAttackType`（商店的推薦過濾）**不共用**
+   * 讀取路徑 —— 理由寫在 `sim/stats/sourceGrants.ts` 的 `attackType` 那一格。
+   */
+  attackType: z
+    .enum(["melee", "ranged"])
+    .describe(
+      "持有這份來源期間，把這具身體的**攻擊型態**改成這一個（蓋掉英雄卡上宣告的那一格）。" +
+        "近戰＝走到身邊揮擊；遠程＝射出一發普攻投射物。也會換掉移動速度吃的環境倍率" +
+        "（近戰 `moveSpeedMelee` / 遠程 `moveSpeedRanged`）。留空 = 照英雄卡。",
+    )
+    .optional(),
 } as const;
 
 /**
