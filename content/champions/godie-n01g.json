@@ -335,7 +335,9 @@
               "duration": 2.0,
               "moveSpeedMult": 0.5
             }
-          ]
+          ],
+          "soundKey": "magicIce",
+          "arriveSoundKey": "wc3.gluescreenmeteorhit1"
         }
       ],
       "targetsEnemies": true,
