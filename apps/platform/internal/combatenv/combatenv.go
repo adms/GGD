@@ -91,6 +91,7 @@ const (
 var Keys = []string{
 	"cooldown",
 	"damageDealt",
+	"abilityDamage", // 系統技能倍率（僅 ability 起源）— owner 2026-08-23
 	"defense",
 	"attackDamage",
 	"abilityPower",

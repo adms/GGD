@@ -40,6 +40,7 @@
     "moveSpeedRanged": 0.6,
     "magicResistMult": 0.2,
     "strToCritChance": 0.0025,
-    "agiToEvasion": 0.002
+    "agiToEvasion": 0.002,
+    "abilityDamage": 0.3
   }
 }

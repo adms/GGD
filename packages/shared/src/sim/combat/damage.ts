@@ -23,6 +23,7 @@ import {
   applyDamageConversion,
   impactGateTypeOf,
   resolveDamageConversion,
+  originInScope,
 } from "./damageTypeOverride";
 import { apDamageMult } from "./apDamageScaling";
 import { mitigationMult, resistAfterPenetration, resolvePenetration } from "./penetration";
@@ -969,6 +970,11 @@ export function combatResolveSystem(world: SimWorld): void {
       // 反彈就會被乘第二次(比例變成 `pct × k`)。整段推導寫在 `DamagePacket`
       // 那個欄位上,開關是 `incomingPct.applyGlobalDamageMult`。
       if (pkt.skipGlobalDamageMult !== true) pkt.amount *= world.combatEnv.damageDealt;
+      // ⚖️ 系統技能倍率（owner 2026-08-23「系統技能倍率設定成 0.3」）——
+      // ⛔ 只乘技能（ability: 起源）,普攻/火圈/守衛塔/hook 的 proc 都不吃。
+      // 與 `damageDealt` 疊乘、同一個 `skipGlobalDamageMult` 豁免。
+      if (pkt.skipGlobalDamageMult !== true && originInScope(pkt.origin ?? "", "ability"))
+        pkt.amount *= world.combatEnv.abilityDamage;
 
       // ⭐ AP 傷害加成 —— 「AP 變為**原本傷害的額外加成**」（owner 2026-08-21：
       // 「技能傷害都套用公式 (1+AP*1%)⋯=> **預設 0.5%**」）。

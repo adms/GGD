@@ -192,6 +192,11 @@
       "value": 0.2,
       "quote": "⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。",
       "on": "未授權"
+    },
+    "abilityDamage": {
+      "value": 0.3,
+      "quote": "系統技能倍率設定成 0.3",
+      "on": "2026-08-23"
     }
   }
 }

@@ -236,6 +236,12 @@ export const COMBAT_ENV_KEYS = [
   // the Go mirror, `content/config/combat-env.json` and `apps/admin`; do not
   // rely on ordering being protected, because it is not.
   "intToMagicResist",
+  // ⚖️ **系統技能倍率**（owner 2026-08-23 逐字：「**系統技能倍率設定成 0.3**」）。
+  // 只乘 **ability: 起源**的傷害封包（originInScope 的 ability 範圍 —— 與 AP 乘法層
+  // 同一套字彙）⇒ ⛔ 普攻、火圈、守衛塔、道具 proc（hook:）都不吃它。
+  // ⛔ 為什麼不是調 `damageDealt`：那格是**全傷害**，把普攻一起砍到 0.3 不是他說的話。
+  // Appended at the END（membership 閘：Go 鏡像 `combatenv.Keys` + keysync_test.go）。
+  "abilityDamage",
   // ── 金錢發放倍率 ×5 (owner 2026-08-04「金錢發放有點太浮濫了…分為 回合發放倍率,
   //    打殭屍發放倍率, 擊敗英雄發放倍率, 完成任務發放倍率」+ 同日追加
   //    「普通殭屍 的確也可以單獨倍率, 預設改成 0.5」) ──────────────────────────

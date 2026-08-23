@@ -153,6 +153,13 @@ export const COMBAT_ENV_LABELS: Record<CombatEnvKey, CombatEnvLabel> = {
   defense: { zh: "防禦力", note: "護甲與魔法抗性" },
   attackDamage: { zh: "物理攻擊力", note: "AD" },
   abilityPower: { zh: "法術強度", note: "AP" },
+  abilityDamage: {
+    zh: "系統技能倍率",
+    note:
+      "⚖️ **只乘技能傷害**（ability 起源的封包）—— 普攻、火圈、守衛塔、道具觸發（hook）都不吃它。" +
+      "與「造成傷害」那格疊乘。⛔ **這是 owner 的人工旋鈕**（2026-08-23：「系統技能倍率設定成 0.3」）" +
+      "—— 改它之前要引用得到 owner 的一句原話，否則 `ownerKnobs.test.ts` 會紅。",
+  },
   maxHealth: { zh: "生命上限", note: "最大生命值（現有百分比不變）。⛔ **這是 owner 的人工旋鈕** —— 它刻意**不在**傷害五級距的推導鏈裡（owner 2026-08-22：「不能把系統倍率乘進去再反推啊，這樣我用系統倍率就沒意義了」）。⭐ 那條規則就是它**轉得動**的原因：2026-08-22 之前它被乘進推導，於是 4.0 / 6.0 / 7.2 三個值實測都落在 **51% 左右** —— 一格轉不動任何東西。守衛 `pnpm echoloop:check`。" },
   healthRegen: { zh: "生命回復", note: "每秒回血" },
   maxMana: { zh: "魔力上限", note: "最大魔力值（現有百分比不變）" },
@@ -253,7 +260,7 @@ export interface CombatEnvGroup {
 export const COMBAT_ENV_GROUPS: CombatEnvGroup[] = [
   {
     title: "輸出 · 傷害與技能",
-    keys: ["damageDealt", "cooldown", "itemCooldown", "attackDamage", "abilityPower", "abilityRange"],
+    keys: ["damageDealt", "abilityDamage", "cooldown", "itemCooldown", "attackDamage", "abilityPower", "abilityRange"],
   },
   {
     // magicResistMult 排在 defense 後面,因為它是**疊在 defense 之上**的第二格,
