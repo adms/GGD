@@ -75,6 +75,9 @@ import {
 // ⭐ GH#610 第二批 —— 天氣（濕地面／積水）。⚠️ `setWeatherArena` 同時是**推進
 // store 的唯一入口**：`Lighting` 的霧與雷擊補光靠它才知道這一場是哪一張圖。
 import { prefersReducedMotion, setWeatherArena, weatherPolicy } from "./weather";
+// ⭐ GH#610 —— 飄過去的那一片霧（局部層）。⚠️ 它吃的正是下面那個 `weather` 物件，
+// ⛔ 不是第二份設定 —— `FogBankInput` 結構上等於 `WeatherGroundInput`。
+import { buildFogBanks } from "./weatherFogBanks";
 
 /**
  * ⭐ GH#362 —— `scenery.palette` 的地板／牆兩格 → 渲染層要的 0..1 rgb。
@@ -436,6 +439,15 @@ export function buildArena(
       });
     });
   });
+
+  // ⭐ GH#610 —— **飄過去的那一片霧**。owner 2026-08-23：
+  // 「**不是全場地都霧喔，而是像真實一樣會有一片飄過去，隨機產生不規則形狀霧**」。
+  // ⚠️ 一定要在 zone 迴圈**之後**：霧片的互斥車道寬度是從**整張圖的佔地**反推的，
+  //    ⛔ 不是逐 zone 各分一次（逐 zone 分的話兩個 zone 的霧會在中線重疊）。
+  // ⚠️ 它與 `Lighting.write()` 的全域霧是**同一個機制的兩層** —— 同一格開關、
+  //    同一個權重、同一條玩法界線。完整推導在 `render/weatherFogBanks.ts` 的檔頭。
+  const fogBanks = buildFogBanks(scene, root, arena.id, arena.zones, weather);
+  if (fogBanks) handles.materials.push(fogBanks.material);
 
   return handles;
 }

@@ -13,7 +13,12 @@
   "lightningKeyBoost": 1.7,
   "lightningFillBoost": 1.25,
   "lightningFogBoost": 1.5,
-  "fogDensityAtFull": 0.005,
+  "fogDensityAtFull": 0.0025,
+  "fogBankCount": 4,
+  "fogBankAlpha": 0.1,
+  "fogBankLaneFill": 0.85,
+  "fogBankDriftSec": 90,
+  "fogBankHeight": 1.2,
   "arenas": {
     "arena.castle": "indoor-dry",
     "arena.colosseum": "clear",

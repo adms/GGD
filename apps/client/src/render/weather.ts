@@ -14,6 +14,22 @@
  * | **霧濃度** | ⭐ **零個額外 pass**（`scene.fog` EXP2 —— 空氣漫反射已經在跑的那一顆） | ⇒ 起霧＝**同一顆旋鈕轉大**，⛔ 不是第二套 fog |
  * | **積水** | 每 zone `puddleCount` 顆小 mesh ＋ alpha blend | 最貴的一項 ⇒ 梯子上最早被關掉 |
  *
+ * ⭐⭐ **而「霧濃度」那一列在 2026-08-23 被 owner 推翻了一半**（逐字）：
+ *
+ * > 「⭐ 起霧＝空氣漫反射同一顆旋鈕轉大
+ * >  => **不是全場地都霧喔，而是像真實一樣會有一片飄過去，隨機產生不規則形狀霧**」
+ *
+ * ⇒ 霧從此是**兩層**，而它們共用**同一格開關（`graphics.weatherFog`）**、
+ * **同一個級別權重**、**同一條玩法界線**（⛔ 所以它仍然是「同一顆旋鈕」）：
+ *
+ * | 層 | 誰畫 | 成本 |
+ * |---|---|---|
+ * | ① 空氣（全場均勻） | `Lighting.write()` 的 `scene.fog` | 零個額外 pass |
+ * | ② ⭐ 飄過去的那一片 | `render/weatherFogBanks.ts`（`ArenaScene.buildArena` 建） | **1 個 draw call**／整張圖 |
+ *
+ * ⚠️ 兩層由**同一支** `weatherLookFor()` 解析（`fogDensity` 與 `fogBanks` 一起出來）
+ * ⇒ ⛔ 不可能出現「全域說沒霧、局部飄了一片」。完整推導在 `weatherFogBanks.ts` 的檔頭。
+ *
  * ════════════════════════════════════════════════════════════════════════════
  * ⛔ 積水為什麼**不是** `MirrorTexture`，也**不是** `ScreenSpaceReflection`
  * ════════════════════════════════════════════════════════════════════════════
@@ -85,8 +101,13 @@ export const WET_GROUND_MAX_LEVEL: number = ADAPTIVE_LADDER.reduce(
 export const PUDDLE_MAX_LEVEL: number = AIR_SCATTER_MAX_LEVEL;
 
 /**
- * 霧濃度撐到哪一階。⭐ 它**就是**空氣漫反射那一顆 `scene.fog` ⇒ 同一階，
- * ⛔ 不是巧合也不是抄的：兩格轉的是同一個旋鈕。
+ * 霧撐到哪一階（**兩層一起**）。⭐ 第①層就**是**空氣漫反射那一顆 `scene.fog`
+ * ⇒ 同一階，⛔ 不是巧合也不是抄的：兩格轉的是同一個旋鈕。
+ *
+ * ⚠️ 第②層（飄過去的那一片）**不是**零成本：它是 1 個 draw call ＋ 幾片透明填充率。
+ * ⭐ 但它仍然跟第①層同一階，而且**刻意**沒有第五格開關 —— 判準是它與積水同級
+ * （`PUDDLE_MAX_LEVEL` 也等於這一階）：兩者都是「一顆 mesh ＋ thin instances ＋
+ * alpha blend」，⛔ 沒有理由讓同一種成本吃兩條不同的梯子。
  */
 export const WEATHER_FOG_MAX_LEVEL: number = AIR_SCATTER_MAX_LEVEL;
 
