@@ -11,6 +11,14 @@
 import { describe, expect, it } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
+import { AssetContainer } from "@babylonjs/core/assetContainer";
+import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
+import "@babylonjs/core/Meshes/Builders/boxBuilder";
+import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
+import { Color3 } from "@babylonjs/core/Maths/math.color";
+import { readFileSync, readdirSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 import { ModelFxRig } from "./modelFxRig";
 import type { ModelFxSpawnEvent } from "./modelFxPath";
 import { ScreenFxLayer } from "../vfx/ScreenFxLayer";
@@ -85,5 +93,76 @@ describe("floating text", () => {
     for (let i = 0; i < 40; i++) fx.tick(100);
     expect(fx.liveCount).toBe(0);
     expect(fx.entries).toHaveLength(poolSize); // 池是固定的，⛔ 沒有長大
+  });
+});
+
+/**
+ * ⭐【顏色】`model@1.fxTint` —— owner 2026-08-23 逐字：「作為**翻轉角度的蝗蟲群單位**
+ * **通常大小跟顏色都有再做調整**，務必檢查，**避免出現很小顏色又不對的氣功砲**」。
+ *
+ * 兩條，⛔ 都不驗「顏色等於某個 RGB」（第二守則：驗機制不驗數字）：
+ *  ① **著色真的到得了畫面** —— 讀**最終**素材物件（clone 之後指回去的那一份），
+ *     ⛔ 不讀我們餵進去的那一份（`views/mobTint.test.ts` 檔頭記的那個陷阱）。
+ *  ② **每一個出貨的 `fxTint` 都引用得到來源** —— 逐份比對原作普查
+ *     `UNIT_TINTS.json`（w3u → 基底 → `UnitUI.slk` 解出來的頂點色）。
+ *     ⛔ 沒有這一條，任何人都可以挑一個好看的 RGB 塞進出貨文件。
+ *
+ * ── 突變紀錄（一批一條，挑最承重的那一行）────────────────────────────────
+ *  · ⭐ 承重線 —— `modelFxRig.ts::acquire()` 拿掉 `if (doc.fxTint) applyFxTint(...)`
+ *      → 紅：「fxTint 沒有到達畫面」。⇒ 沒有它，38-002「黑」龍波就不是黑的，
+ *      而 `content:build` 與每一條既有守衛**全綠**（第一·五守則的形狀）。
+ */
+describe("model fx tint", () => {
+  it("① 著色乘進最終素材（⛔ 不是我們餵進去的那一份）", async () => {
+    const scene = new Scene(new NullEngine());
+    const src = new StandardMaterial("src", scene);
+    src.diffuseColor = new Color3(1, 1, 1);
+    const mesh = MeshBuilder.CreateBox("body", { size: 1 }, scene);
+    mesh.material = src;
+    const container = new AssetContainer(scene);
+    container.meshes.push(mesh);
+    container.rootNodes.push(mesh);
+
+    const rig = new ModelFxRig(scene, {
+      resolveModel: () => ({ glbPath: "assets/models/x.glb", scale: 1, fxTint: [0, 0, 0] }),
+      loadContainer: () => Promise.resolve(container),
+    });
+    // ⚠️ 第一發只是把載入踢起來 —— `ensureContainer` 走 promise，所以這一具是空的。
+    // ⭐ 它**永遠**是空的（節點回收進 free-list 之後不會被補上幾何）：那是一個既有缺陷，
+    //    ⛔ 不是這條守衛要驗的東西，所以這裡刻意讓第二發**超過池子**去造新的。
+    rig.spawn({ ...WIRE, instances: [WIRE.instances[0]!] });
+    await new Promise((r) => setTimeout(r, 0));
+    rig.tick(2000);
+    expect(rig.spawn(WIRE)).toBe(3);
+
+    // ⭐ 從**出貨的場景樹**上撈，⛔ 不是靠一個只有測試會呼叫的存取器（失敗形態⑤）。
+    const painted = scene.meshes.filter((m) => m !== mesh && m.material);
+    expect(painted.length, "一具著色過的網格都沒有進場景樹").toBeGreaterThan(0);
+    for (const m of painted) {
+      const c = (m.material as StandardMaterial).diffuseColor;
+      expect([c.r, c.g, c.b], "fxTint 沒有到達畫面").toEqual([0, 0, 0]);
+    }
+    // ⛔ 原始素材不可以被就地改掉（它是整個容器共用的）。
+    expect([src.diffuseColor.r, src.diffuseColor.g, src.diffuseColor.b]).toEqual([1, 1, 1]);
+    rig.dispose();
+  });
+
+  it("② 每一個出貨 fxTint 都引用得到原作普查的一列", () => {
+    const root = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
+    const census: Record<string, { tint: number[]; model: string }> = JSON.parse(
+      readFileSync(join(root, "tools/w3x-import/out/GoDieEX22s-src/UNIT_TINTS.json"), "utf8"),
+    ).units;
+    const known = new Set(Object.values(census).map((u) => JSON.stringify(u.tint.map(Number))));
+    const dir = join(root, "content/models");
+    let checked = 0;
+    for (const f of readdirSync(dir).filter((n) => n.endsWith(".json") && !n.startsWith("_"))) {
+      const doc = JSON.parse(readFileSync(join(dir, f), "utf8")) as { fxTint?: number[] };
+      if (!doc.fxTint) continue;
+      checked++;
+      expect(known, `${f} 的 fxTint 不在原作普查裡 —— ⛔ 出貨顏色不可以自己挑`).toContain(
+        JSON.stringify(doc.fxTint.map(Number)),
+      );
+    }
+    expect(checked, "沒有任何一份文件宣告 fxTint —— 這一格是死的").toBeGreaterThan(0);
   });
 });

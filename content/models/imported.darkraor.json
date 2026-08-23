@@ -11,5 +11,10 @@
     "cast": "stand - 1",
     "hurt": "stand - 1",
     "death": "Death"
-  }
+  },
+  "fxTint": [
+    0,
+    0,
+    0
+  ]
 }

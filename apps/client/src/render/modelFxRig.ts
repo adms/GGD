@@ -55,6 +55,56 @@ export interface ModelFxModelDoc {
   fxLongAxis?: ModelFxLongAxis;
   /** ⭐ 移動特效離地多高（`model@1.fxSpawnHeight`）。缺席 ⇒ 0 ＝ 今天的行為。 */
   fxSpawnHeight?: number;
+  /**
+   * ⭐ 這一份外觀的頂點著色（`model@1.fxTint`，線性 RGB 各 0…1）。缺席 ⇒ ⛔ 不著色。
+   * ⚠️ 原作把它掛在 locust dummy 的**單位型別**上（w3u `Art - Vertex Colour`
+   * ＋ `SetUnitVertexColor`），而 GGD 這一側在 2026-08-23 之前**整格不存在** ——
+   * 於是 38-002 究極暴走黑龍波的兩具 dummy（原作 `[0,0,0]` 純黑）以素材原色出場。
+   */
+  fxTint?: readonly [number, number, number];
+}
+
+/**
+ * 把 `fxTint` 乘進這一棵子樹上每一份素材的**漫反射/反照率**。
+ *
+ * ⚠️ ⭐ **一定要先 clone 素材。** `instantiateModelsToScene({doNotInstantiate:true})`
+ * 複製的是節點，⛔ 不是素材 —— 同一個 `AssetContainer` 出來的每一具共用同一個
+ * `Material` 物件。⛔ 就地改它 = 這個 modelKey 的**每一具**（含未來別的技能引用它時）
+ * 一起變色，而且 `dispose()` 之後那份污染還留在容器裡。
+ *
+ * ⚠️ ⭐ **⛔ 不動自發光（emissive）與 alpha。** 原作的 `SetUnitVertexColor` 在
+ * 純黑（`[0,0,0]`）時畫出來的是**黑色剪影**，⛔ 不是「消失」。把 0 乘進加法混合的
+ * 自發光層會讓整具模型從畫面上不見 —— 那是失敗形態①（算出來了但畫在看不見的地方），
+ * 而且它與「顏色正確」在測試上長得一模一樣。
+ *
+ * ⚠️ 斷言要讀**最終**物件：這裡把 clone 指回 `mesh.material`，所以任何對**原始**
+ * 素材物件寫的斷言，不管有沒有生效都會過（見 `views/mobTint.test.ts` 的檔頭）。
+ */
+export function applyFxTint(root: TransformNode, tint: readonly [number, number, number]): number {
+  let painted = 0;
+  for (const mesh of root.getChildMeshes(false)) {
+    const mat = (mesh as { material?: unknown }).material as
+      | { clone?: (n: string) => unknown; name?: string }
+      | null
+      | undefined;
+    if (!mat || typeof mat.clone !== "function") continue;
+    const copy = mat.clone(`${mat.name ?? "mat"}-fxtint`) as
+      | (Record<string, unknown> & { name?: string })
+      | null;
+    if (!copy) continue;
+    // ⭐ 兩種素材各自的漫反射欄位名（StandardMaterial / PBRMaterial）。⛔ 不碰
+    //    `emissiveColor` 與 `alpha` —— 見上面的註解。
+    for (const key of ["diffuseColor", "albedoColor"] as const) {
+      const c = copy[key] as { r: number; g: number; b: number } | undefined;
+      if (!c) continue;
+      c.r *= tint[0];
+      c.g *= tint[1];
+      c.b *= tint[2];
+    }
+    (mesh as { material?: unknown }).material = copy;
+    painted++;
+  }
+  return painted;
 }
 
 /**
@@ -211,7 +261,7 @@ export class ModelFxRig {
     for (let i = 0; i < n; i++) {
       const inst = ev.instances[i];
       if (!inst) break;
-      const nodes = this.acquire(ev.modelKey);
+      const nodes = this.acquire(ev.modelKey, doc);
       if (!nodes) break;
       const { root, axis } = nodes;
       root.scaling.setAll((doc.scale ?? 1) * (ev.scale ?? 1));
@@ -344,7 +394,7 @@ export class ModelFxRig {
    * 幾何晚幾幀補進來。⛔ 反過來(等載入完再生)會讓技能的第一次施放沒有特效,
    * 而那正是玩家最會注意的那一次。
    */
-  private acquire(modelKey: string): ModelFxNodes | null {
+  private acquire(modelKey: string, doc: ModelFxModelDoc): ModelFxNodes | null {
     const free = this.pool.get(modelKey);
     const reused = free?.pop();
     if (reused) return reused;
@@ -366,6 +416,10 @@ export class ModelFxRig {
         { doNotInstantiate: true },
       );
       for (const node of inst.rootNodes) node.parent = axis;
+      // ⭐ 頂點著色：原作把顏色掛在 dummy 的**單位型別**上，這裡是它的對應物。
+      // ⚠️ 掛在 `acquire` 而⛔ 不是 `spawn`，因為素材 clone 是**每一具一次**的成本，
+      //    而實例會被回收重用 —— 放進 `spawn` 就是每一次施放都重新 clone 一批素材。
+      if (doc.fxTint) applyFxTint(axis, doc.fxTint);
     }
     return { root, axis };
   }
