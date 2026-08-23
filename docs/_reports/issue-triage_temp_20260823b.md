@@ -264,3 +264,85 @@ gh issue close 599 --comment '✅ CLOSE —— 交付物是**報告**，兩份�
 
 ⇒ ⭐ 修法就是票裡寫的那一句：**改成從出貨內容推導** —— `content/config/*.json` 的每一個 `schema` tag 都必須在 union 裡。
 那是「兩個名詞的**關係**」，⛔ 不是「這個資料夾裡的檔有沒有進 union」這種單一名詞。
+
+---
+
+## §8 ⭐ 唯讀複驗 #2 —— HEAD `522e7aa3` → **`b7f05033`**（13 個 commit 之後）
+
+> 2026-08-23 稍晚，同一條 lane（C1）重跑一次。⛔ 仍然一次 gh 寫入都沒做。
+> ⭐ 只列**判定改變**的與**證據需要更新**的；其餘 37 張 KEEP 逐項重量過，一張都沒動。
+
+### 8-A ⬆️ 兩張從 KEEP 升級成 ✅ CLOSE-DONE
+
+| # | 原判定 | ⭐ 新判定 | 證據（今天重量，⛔ 不是讀 commit 訊息） |
+|---|---|---|---|
+| **#616** AP 自洽複驗：三個沒有閘的缺口 | KEEP（「未見對應守衛」） | ✅ **CLOSE-DONE** | commit `6fe0c8c8`。三個缺口逐個有閘：① `tools/balance-alert/echoLoop.ts` 的 `measure(env)` 每次重量母體（⛔ 不再吃 `docs/平衡錨點量測.md` 正則出來的 `baseHp` 常數）＋ **失明閘** `mustSee` 從 `STAT_ENV_CHAIN`＋`ATTR_STAT_SOURCE` **推導**；看得見的旋鈕 2 → 5 ② `content/config/owner-knobs.json` 12/38 → **38/38**（26 格標 `未授權`＝**被改動時**紅，⛔ 不是存在時紅），守衛 `packages/shared/src/ops/ownerKnobs.test.ts` 名單從 `COMBAT_ENV_KEYS` 推導 ③ 相稱性補上限：`packages/shared/src/content/proportionality.ts`（新檔）＋ `skillCostTiers.test.ts` |
+| **#543** 三支驗收技能的動畫特效 | KEEP（「世界終結只做在變身態上」） | ✅ **CLOSE-DONE** | commit `7f2d36fe`。⭐ **本體**逐支重量（`content/abilities/*.json`，⛔ 不是變身態）：`godie-e002.e` 約束勝利之劍 `spawnModelFx 1 · floatingText 1`／`godie-hjai.e` 龍破斬 `1 · 5`／**`godie-n003.r` 世界終結 `1 · 4`** ⇒ 08-23 早上那條「本體是 0」的複驗留言**已經不成立**。owner 點名的四樣交付物齊：**技能模板**（三家族收成一支 `modelFxFamily`，差異由「模板宣告了哪幾格 params」推導）· **特效模板**（`tpl-line-blast` draft → enabled）· ⭐ **檢查 script** → `packages/shared/src/content/schema/effects/animationFxTemplate.test.ts`（問三件事：同一個數字有沒有第二個住處／參數在不在界內／特效文字的節奏）· **特效文字** 逐支有 |
+
+### 8-B 🔧 一張證據要更新（判定仍是 KEEP）
+
+| # | 變了什麼 |
+|---|---|
+| **#558** | ⭐ **③ union 覆蓋率盲區已修** —— commit `b7f05033`：`configUnionCoversDirectory.test.ts` 的 `tagsOnDisk()` 改成**遞迴掃整個 `schema/` 樹**（鍵用相對路徑 `config/x.ts` vs `x.ts`），17 個檔 / 18 個 tag 的盲區關掉。⛔ **但 ① 與 ② 沒動**：`ModelFxRig.dispose()` 仍會 dispose 它不擁有的 `AssetContainer`、`E00S.glb` 的 prim3/prim4 浮空未修。⇒ **KEEP**，⚠️ 但**票的 body 要改**（⛔ 不是留言）把 ③ 劃掉，否則下一輪會再查一次一個已經修好的東西 |
+
+### 8-C ⛔ 逐項重量，**一張都沒改變**（抽驗到的硬數字）
+
+| # | 今天（HEAD `b7f05033`）量到 |
+|---|---|
+| **#607** | ⭐ 展開 `content/abilities/*.json` 全樹：**`onArrive` 節點 14 個，含 `spawnVfx`／`spawnModelFx` 的 0 個**。四支經典光束砲仍然飛到底就消失（`godie-e002.e`/`godie-e00l.e`/`godie-uvng.e`/`godie-u010.e` 的 `onArrive` 只有 `screenShake`） |
+| **#554** | **72 / 422** 有 `sfxKey`（票寫 72/420）⇒ ⛔ 一支都沒補 |
+| **#425** | 五組共用逐字重現：`fx.prim.arcane.bolt`←4 份 · `fx.prim.ki.bolt` · `fx.prim.lightning.bolt` · `fx.prim.void.bolt` · `fx.thorn` |
+| **#565** | `schema/effects/spawnVfx.ts` 對 `bone` **0 命中** |
+| **#566** | `content/refs.ts` 對 `persistentVfx` **0 命中** |
+| **#561** | `groundTextureCacheMax` 在 `content/` ＋ `packages/shared/src` ＋ `apps/` 合計 **0 命中**（三個住處零） |
+| **#473** | admin 全樹 `auditOnPublish`／`onEnableAudit` **0 命中** |
+| **#452** | `content/arenas/*.json` 共 **14** 份，含 `backdrop` 的 **9** 份 |
+| **#563** | `packages/shared/scripts/buildIndexes.ts`（`content:build` 唯一入口）對空陣列／`isPassiveOnly` **0 命中** ⇒ owner「要放在 build 裡面硬卡關」的裁決仍未落地 |
+| **#611** | `tools/editor-contract/gen_contract_numbers.py:61` 的 `BLOCKS` 仍含 `contract-env`；`docs/技能編輯器引擎須知 20260811.md` 的「全域倍率」仍有 **6** 處 |
+| **#612** | `package.json` 只有 `archetypes:build`（:86），⛔ 沒有 `archetypes:check`；而 `skills:sync`（:94）含它 |
+| **#613** | 假 tag `config.screen-cues@1` 全 repo **25 處**（來源 + 產物） |
+| **#588** | `roomMaxMinutes`／任何「進入戰鬥後 30 分鐘」欄位 **0 命中** ⇒ owner 追加的第 4 項仍未做 |
+| **#397** | `packages/shared/src/map/merge.ts:39 mergeWalls()` 仍完全不知道 gate 存在（整支只讀 `WALL`）；`compile.ts:263-279` 的 `allSame` 原封不動 |
+| **#417** | `abilityCodeParity.ts` 的橫向守衛**已經建好**（檔頭逐字掛 GH#417），⛔ 但棘輪基準線 `abilityCodeParity.baseline/` **20 個分片 · 318 個鍵**仍在等 owner 逐組裁決 ⇒ 守衛做完了，**裁決沒有** |
+| **#325 · #327 · #330 · #348 · #354 · #368 · #372 · #382 · #401 · #409 · #423 · #429 · #441 · #443 · #444 · #448 · #453 · #457 · #502 · #509 · #511 · #529 · #538 · #547 · #560 · #600(新票側) · #614** | §4 的證據逐條重驗，**一條都沒有失效** |
+
+### 8-D ⭐ 更新後的判定總表
+
+| 判定 | 原 | ⭐ 現在 |
+|---|---:|---:|
+| ✅ CLOSE-DONE | 11 | **13** |
+| 🟡 CLOSE + 開新票 | 3 | 3 |
+| ⛔ KEEP | 41 | **39** |
+| 🔁 重複 | 0 | 0 |
+
+⚠️ ⭐ **可關的票去重之後是 14 張**：`#599 #600 #601 #610 #614 #615 #616 #617 #618 #619 #620 #621 #622 #543`
+（§2 與 §3 的表在 #600/#601 上重疊，原文的「11 + 3」⛔ 不是 14）。
+⚠️ 其中 **#614 仍建議等 owner 一句「第七回合不卡了」再關**（理由見 §6-C，⛔ 沒有變）。
+
+### 8-E 追加的兩條 `gh` 指令（接在 §6-A 後面）
+
+```bash
+gh issue close 616 --comment '✅ CLOSE-DONE — commit `6fe0c8c8`（唯讀複驗 2026-08-23，HEAD b7f05033）。
+你點名的「AP加成額外技能傷害」與「每等級+1AP的基礎提升」都補進了推導鏈，⭐ 而三個缺口各有一道**會紅的閘**：
+① `echoloop:check` 在此之前是**瞎的** —— `measure()` 吃一個從 `docs/平衡錨點量測.md` 正則出來的 `baseHp` 常數，換掉 env 一個位元都不會動 ⇒ 38 格系統倍率裡只看得見 2 格。改成每次重量母體（走出貨的 `championStatBase`，⛔ 沒有重寫任何公式）⇒ 看得見的旋鈕 **2 → 5**。順帶補一道**失明閘**：`mustSee` 從 `STAT_ENV_CHAIN` + `ATTR_STAT_SOURCE` **推導**，少看到一格就非零離開並指名它（在此之前「沒有 ALERT」同時是「沒有回音迴圈」與「這支什麼都看不到」）。
+② `content/config/owner-knobs.json` 從 **12/38 補到 38/38**。⛔ 我沒有替你填任何一句原話：26 格標 `未授權`，語意是**被改動時**紅（⛔ 不是存在時紅 —— 那會讓整份表開工就紅，而開工就紅的閘會被關掉）。
+③ 相稱性在此之前只有下限沒有上限，而梯子的正當性是「嚴格成正比」＝**等式**。新增 `packages/shared/src/content/proportionality.ts` + `skillCostTiers.test.ts`。
+⛔ 一個出貨傷害／冷卻數值都沒有動。'
+
+gh issue close 543 --comment '✅ CLOSE-DONE — commit `7f2d36fe`（唯讀複驗 2026-08-23，HEAD b7f05033）。
+你點名的三支，⭐ 逐支量**本體文件**（⛔ 不是變身態）：
+· 約束勝利之劍 `godie-e002.e` → spawnModelFx 1 · 特效文字 1
+· 龍破斬 `godie-hjai.e` → spawnModelFx 1 · 特效文字 5
+· 世界終結 `godie-n003.r` → spawnModelFx 1 · 特效文字 4　⭐ 早上複驗時本體還是 0（只做在變身態上），現在補齊了
+四樣交付物齊：**技能模板**（三個家族收成一支 `modelFxFamily`，差異全部由「模板宣告了哪幾格 params」推導，⛔ 沒有一個 `if (family === …)`）· **特效模板**（`tpl-line-blast` draft → enabled）· **檢查 script** → `packages/shared/src/content/schema/effects/animationFxTemplate.test.ts` · **特效文字**。
+⭐ 一開就抓到 12 筆真的重複（龍破斬的八格幾何與 `tpl-line-blast.json` 的 `default` 逐格相同，而那份模板從來沒有被引用過 ⇒ 兩個住處各自漂）。
+⛔ 落點大爆炸沒有新 effect kind —— 用既有的 `spawnModelFx.onArrive` + `damageArea`，兩段傷害走級距。'
+```
+
+### 8-F ⚠️ 一張要改 **body**（⛔ 不是留言）
+
+```
+#558 —— ③ union 覆蓋率盲區已由 commit b7f05033 修掉（tagsOnDisk 改成遞迴掃整個 schema/ 樹）。
+     ⇒ 請把 body 第 ③ 條劃掉並註明 commit，只留 ① ModelFxRig.dispose() 與 ② E00S.glb prim3/prim4。
+     ⛔ 不要用留言 —— 「只活在留言裡的更正等於不存在」（#423 / #448 / #441 都栽在這一條）。
+```
