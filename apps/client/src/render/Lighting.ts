@@ -19,7 +19,7 @@
  * pass，這個開關仍然只是把主光調暗、補光補回來一點。它現在是**乘在**場景亮度
  * 上的倍率而不是絕對值，所以預設場地的數字仍然逐字是 0.9 / 0.25 與 0.75 / 0.95。
  */
-import type { Scene } from "@babylonjs/core/scene";
+import { Scene } from "@babylonjs/core/scene";
 import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
 import { DirectionalLight } from "@babylonjs/core/Lights/directionalLight";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
@@ -33,6 +33,8 @@ import {
   type SceneryLighting,
   type SceneryPalette,
 } from "@ggd/shared/content";
+import { airScatterFog } from "./airScatter";
+import { qualityController } from "./QualityController";
 
 /** 關掉「陰影」時主光剩多少（0.25 / 0.9 —— 出貨值的比例，逐字保留）。 */
 const SHADOWS_OFF_KEY_MUL = 0.25 / 0.9;
@@ -63,6 +65,13 @@ export function setupLighting(scene: Scene): LightingHandle {
    *  否則光會跳回 0 那一幀（雷雨場地會突然閃一下白）。 */
   let lastT = 0;
 
+  /**
+   * ⭐ GH#610 空氣漫反射開不開。⚠️ 讀的是**解析過後**的那一格
+   * （設定 × 畫質預設 × 適應梯子，判準全在 `render/airScatter.ts`），
+   * ⛔ 不是玩家設定裡的三態原值。
+   */
+  let scatter = qualityController.getParams().airScatter;
+
   /** 把「這一刻的光」寫進兩盞燈。⚠️ 唯一寫燈的地方 —— 兩處寫會互相蓋掉。 */
   const write = (tSec: number): void => {
     const s = sceneryLightAt(lighting, animated ? tSec : 0);
@@ -70,6 +79,17 @@ export function setupLighting(scene: Scene): LightingHandle {
     sun.diffuse = new Color3(s.key.r, s.key.g, s.key.b);
     sun.direction.set(s.dir.x, s.dir.y, s.dir.z);
     hemi.intensity = s.fillIntensity * (shadows ? 1 : SHADOWS_OFF_FILL_MUL);
+    // ⭐ 空氣跟燈**同一個寫入點**：它的顏色就是這一刻的天光＋主光，所以分開寫
+    // 一定會漂（雷雨閃一下，而空氣還是上一秒的顏色）。⚠️ `.set()` ⛔ 不是
+    // `new Color3` —— 這一行每幀都會跑。
+    if (scatter) {
+      const fog = airScatterFog(palette, s);
+      scene.fogMode = Scene.FOGMODE_EXP2;
+      scene.fogDensity = fog.density;
+      scene.fogColor.set(fog.r, fog.g, fog.b);
+    } else {
+      scene.fogMode = Scene.FOGMODE_NONE;
+    }
   };
 
   const applyPalette = (): void => {
@@ -85,6 +105,18 @@ export function setupLighting(scene: Scene): LightingHandle {
 
   applyPalette();
   write(0);
+
+  // 玩家在設定頁改「空氣漫反射」、或適應梯子降階 ⇒ 這一場立刻生效（同 shadows
+  // 的待遇，⛔ 不用重開一場）。⚠️ `LightingHandle` 沒有 dispose 入口（拿著它的
+  // 是 GameApp 的建構子），所以訂閱掛在 **scene 自己的生命週期**上 ——
+  // ⛔ 少了下面那一行，每一場比賽都會多留一個指著已經 dispose 的 scene 的
+  // listener，而它每次設定變動都會往一個死掉的場景寫霧。
+  const offParams = qualityController.subscribe((p) => {
+    if (p.airScatter === scatter) return;
+    scatter = p.airScatter;
+    write(lastT);
+  });
+  scene.onDisposeObservable.addOnce(() => offParams());
 
   return {
     setShadowsEnabled(on: boolean): void {

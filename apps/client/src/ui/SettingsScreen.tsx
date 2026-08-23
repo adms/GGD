@@ -13,6 +13,7 @@ import {
   detectEnv,
   INTERP_MIN_DELAY_MS,
   INTERP_MAX_DELAY_MS,
+  type AirScatterSetting,
   type CombatTextScope,
   type FpsCap,
   type GoreSetting,
@@ -76,6 +77,16 @@ const GORE_STYLE_OPTIONS: { value: GoreSetting; label: string }[] = [
   { value: "blood", label: "Blood" },
   { value: "stylized", label: "Stylized" },
   { value: "off", label: "Off" },
+];
+
+/**
+ * 空氣漫反射（GH#610）。⭐ 三格，中間那格是出貨值 —— owner 說的是「規格高的
+ * 環境**還可以**加上」，那是一個條件而不是一個布林（見 render/airScatter.ts）。
+ */
+const AIR_SCATTER_OPTIONS: { value: AirScatterSetting; label: string }[] = [
+  { value: "off", label: "Off" },
+  { value: "auto", label: "Auto" },
+  { value: "on", label: "On" },
 ];
 
 const FPS_CAPS: { value: FpsCap; label: string }[] = [
@@ -434,6 +445,30 @@ export function SettingsScreen({ onClose }: { onClose: () => void }): React.JSX.
           />
           <Toggle on={g.antialias} onChange={(v) => store.patchGraphics({ antialias: v })} text="Antialiasing" />
           <div style={{ color: TEXT_DIM, fontSize: 10 }}>Antialiasing applies on the next match.</div>
+          <div>
+            {label("空氣漫反射 (Air scatter)")}
+            <div style={{ marginTop: 4 }}>
+              <Segmented
+                options={AIR_SCATTER_OPTIONS}
+                value={g.airScatter}
+                onPick={(v) => store.patchGraphics({ airScatter: v })}
+              />
+            </div>
+          </div>
+          {/* ⚠️ 這一段是承重的：`Auto` 在低／中畫質預設上是**關**的,少了這句話
+              設定頁就會「顯示他選的那個、而它不生效」—— 這個 repo 自己列為
+              最糟的設定行為（同 hudScale 退檔那一行）。 */}
+          <div style={{ color: TEXT_DIM, fontSize: 10 }}>
+            遠處的東西被空氣散射的光洗淡，⛔ 不影響玩法（看得到的距離仍然是上面的 Draw
+            distance）。
+            {g.airScatter === "auto"
+              ? g.qualityPreset === "high" || g.qualityPreset === "auto"
+                ? "　Auto：這個畫質預設會開，掉幀時自動關掉。"
+                : "　Auto：Low / Medium 預設下不開 —— 想要就選 On。"
+              : g.airScatter === "on"
+                ? "　On：一律開著（掉幀時也不會自己關）。"
+                : "　Off：完全關閉。"}
+          </div>
           <div>
             {label("Gore")}
             <div style={{ marginTop: 4 }}>

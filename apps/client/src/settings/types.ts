@@ -41,6 +41,19 @@ export type CombatTextScope = "off" | "self" | "team" | "all";
 
 const COMBAT_TEXT_SCOPES: readonly CombatTextScope[] = ["off", "self", "team", "all"];
 
+/**
+ * 空氣漫反射（GH#610）。owner 2026-08-23：「如果**規格高的客戶端環境**，還可以
+ * 加上**空氣漫反射的效果，增加質感**（**可開關**）」。
+ *
+ * ⚠️ 三態不是兩態：「規格高的環境**還可以**加上」講的是一個**條件**，⛔ 不是一個
+ * 布林 —— 出貨值 `auto` 就是那個條件（畫質預設 high/auto 且適應梯子還沒開始割
+ * 解析度）。`on` / `off` 是玩家把它講死。判準與梯子那一階住在
+ * `render/airScatter.ts`，⛔ 這裡不抄第二份。
+ */
+export type AirScatterSetting = "off" | "auto" | "on";
+
+export const AIR_SCATTER_SETTINGS: readonly AirScatterSetting[] = ["off", "auto", "on"];
+
 export interface GraphicsSettings {
   qualityPreset: QualityPreset;
   /** 0.5–1.0 — render-buffer scale (→ Engine.setHardwareScalingLevel). */
@@ -76,6 +89,12 @@ export interface GraphicsSettings {
   damageNumberCap: number;
   /** how much of the fight is numbered (see CombatTextScope). */
   combatTextScope: CombatTextScope;
+  /**
+   * 空氣漫反射：遠處被空氣散射的光洗淡（GH#610）。⭐ 純質感，⛔ 不影響玩法 ——
+   * 它只改**看起來**多遠，⛔ 不改 `drawDistance`（那一格才是真的看不看得到）。
+   * 出貨 `auto` = 只有規格高的環境才開；見 `render/airScatter.ts`。
+   */
+  airScatter: AirScatterSetting;
   /** 濺血 spray style; "default" follows content/config/gore.json. */
   goreStyle: GoreSetting;
   /** 0–1 multiplier on the content doc's spray intensity (1 = as authored). */
@@ -214,6 +233,9 @@ export const DEFAULT_GRAPHICS: GraphicsSettings = {
   fpsCapFollowsPreset: false,
   damageNumberCap: 48,
   combatTextScope: "team",
+  // ⭐ owner 說的是「規格高的環境**還可以**加上」⇒ 出貨值是那個**條件**本身,
+  // ⛔ 不是無條件開、⛔ 也不是關著等人去找。低階機器上梯子會自己把它關掉。
+  airScatter: "auto",
   goreStyle: "default",
   goreIntensity: 1,
 };
@@ -282,6 +304,10 @@ export function clampGraphics(g: GraphicsSettings): GraphicsSettings {
     // a corrupt value falls back to "team" (the default), never to "off" —
     // silently killing the feature would read as a bug, not as a setting
     combatTextScope: COMBAT_TEXT_SCOPES.includes(g.combatTextScope) ? g.combatTextScope : "team",
+    // 舊的 blob 沒有這一格 → 落在出貨值 `auto`（＝ owner 的那個條件）。
+    // ⛔ 壞掉的值不可以退回 `on`：那會在一台不合格的機器上憑空多一層霧，
+    // 而那讀起來是缺陷不是設定（同 showVfxDebug 的方向）。
+    airScatter: AIR_SCATTER_SETTINGS.includes(g.airScatter) ? g.airScatter : "auto",
     goreStyle: GORE_SETTINGS.includes(g.goreStyle) ? g.goreStyle : "default",
     // a corrupt value must fall back to "as authored", NOT to 0 — silently
     // disabling the spray would read as a bug, not as a setting

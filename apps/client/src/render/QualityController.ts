@@ -21,6 +21,7 @@ import {
   type FrameStats,
 } from "./AdaptiveQuality";
 import { lodTierForPreset, subscribeModelLodPolicy, type ModelLodTier } from "./modelLod";
+import { airScatterEnabled } from "./airScatter";
 
 export interface RenderParams {
   resolutionScale: number;
@@ -46,6 +47,12 @@ export interface RenderParams {
    * network fetch rather than a per-frame GPU knob (see render/modelLod.ts).
    */
   modelLod: ModelLodTier;
+  /**
+   * 空氣漫反射開不開（GH#610）。⭐ 這是**解析過後**的布林，⛔ 不是設定裡那一格
+   * 三態的原值 —— 畫質預設與適應梯子都有一票（判準在 `render/airScatter.ts`），
+   * 而 `Lighting` 只想知道「這一幀要不要有空氣」。
+   */
+  airScatter: boolean;
   /** current adaptive ladder index (for the perf overlay). */
   adaptiveLevel: number;
   /** whether the adaptive manager is currently in control of quality. */
@@ -162,6 +169,14 @@ export class QualityController {
       // showing the player their own damage.
       combatTextScope: g.combatTextScope,
       modelLod: lodTierForPreset(g.qualityPreset),
+      // ⚠️ 梯子沒在管事的時候（固定預設 + 關掉動態解析度）要餵 0,⛔ 不是
+      // `this.adaptive.level` —— 那個值會停在上一次它還在管事時的那一階,
+      // 於是玩家把動態解析度關掉之後,空氣就被一個**沒有人在更新**的數字關著。
+      airScatter: airScatterEnabled(
+        g.airScatter,
+        g.qualityPreset,
+        adaptiveActive ? this.adaptive.level : 0,
+      ),
       adaptiveLevel: this.adaptive.level,
       adaptiveActive,
     };
