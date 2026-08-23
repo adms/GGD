@@ -110,7 +110,7 @@
       "name": "58-02 鋼鐵尾巴",
       "icon": "assets/icons/abilities/godie-ofar.w.webp",
       "provenance": "w3x-import",
-      "description": "[被動]\n0秒冷卻時間\n\n揮動鋼鐵尾巴可以讓皮卡在攻擊時有10%機率增加75點破壞力，並有機會將敵人震昏0.01秒。",
+      "description": "[被動]\n{{cd}}秒冷卻時間\n\n揮動鋼鐵尾巴可以讓皮卡在攻擊時有10%機率增加75點破壞力，並有機會將敵人震昏0.01秒。",
       "slot": "W",
       "castType": "self",
       "maxRank": 5,

@@ -8,12 +8,11 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    6.0,
-    6.0,
-    6.0,
-    6.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "cooldownTier": "極小",
   "manaCost": [
     0.0,
     0.0,
@@ -21,20 +20,68 @@
     0.0
   ],
   "range": 0.0,
-  "effects": [
-    {
-      "kind": "applyBuff",
-      "modifiers": [
-        {
-          "stat": "critChance",
-          "op": "flat",
-          "value": 0.25
-        }
-      ],
-      "duration": 6.0
-    }
-  ],
-  "vfxKey": "fx.prim.blood.pulse-sm",
+  "effects": [],
+  "vfxKey": "fx.prim.blood.slash",
   "schema": "ability@1",
-  "castTimeSec": 0.233
+  "passive": {
+    "name": "22-02 染血的柴刀",
+    "ranks": [
+      {
+        "modifiers": [
+          {
+            "stat": "critChance",
+            "op": "flat",
+            "value": 0.18
+          },
+          {
+            "stat": "critDamage",
+            "op": "override",
+            "value": 1.25
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "critChance",
+            "op": "flat",
+            "value": 0.16
+          },
+          {
+            "stat": "critDamage",
+            "op": "override",
+            "value": 2.0
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "critChance",
+            "op": "flat",
+            "value": 0.14
+          },
+          {
+            "stat": "critDamage",
+            "op": "override",
+            "value": 2.75
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "critChance",
+            "op": "flat",
+            "value": 0.12
+          },
+          {
+            "stat": "critDamage",
+            "op": "override",
+            "value": 3.5
+          }
+        ]
+      }
+    ]
+  }
 }

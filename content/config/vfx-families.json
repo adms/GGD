@@ -379,6 +379,9 @@
         100
       ]
     },
+    "godie-e00n.w": {
+      "pitchDeg": 66
+    },
     "godie-e00q.e": {
       "family": "burst",
       "soundLaunch": "wc3.markofchaos"
@@ -1868,7 +1871,7 @@
     }
   },
   "soundEnabled": true,
-  "castArcs": false,
+  "castArcs": true,
   "impactRingAlpha": 0.35,
   "impactRingRadius": 1.0,
   "impactRingLife": 0.55,
