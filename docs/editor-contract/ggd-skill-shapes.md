@@ -27,7 +27,7 @@ owner 技能模板群組 **⑨** 逐字：
 | | |
 |---|---:|
 | 掃到的技能 | **421** |
-| 不同的形狀（群） | **34** |
+| 不同的形狀（群） | **33** |
 | 已經接上模板的技能 | **88**（20%） |
 | ⛔ 還沒接模板的技能 | **333** |
 | 模板文件總數 | **41** |
@@ -39,40 +39,39 @@ owner 技能模板群組 **⑨** 逐字：
 
 | # | 形狀（軸的組合） | 支數 | 已接模板 | 實測產出這個形狀的模板 | 建議 |
 |---:|---|---:|---:|---|---|
-| 1 | 持續 | **183** | 39 | tpl-buff-self・tpl-proxy-cast | 沿用（144 支還沒接） |
-| 2 | （無時序形狀） | **109** | 41 | tpl-instant-blast・tpl-single-strike | ⛔ 逐支確認是**真的沒有**還是**沒實作**（見第 2 節差集） |
+| 1 | 持續 | **179** | 39 | tpl-buff-self・tpl-proxy-cast | 沿用（140 支還沒接） |
+| 2 | （無時序形狀） | **108** | 41 | tpl-instant-blast・tpl-single-strike | ⛔ 逐支確認是**真的沒有**還是**沒實作**（見第 2 節差集） |
 | 3 | 路徑 | **25** | 2 | tpl-single-strike | 沿用（23 支還沒接） |
-| 4 | 持續＋續效特效 | **15** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-proxy-fanout |
-| 5 | 持續＋路徑 | **11** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-leap-strike・tpl-mark-stacks（另有 2 份較不貼合） |
-| 6 | 等待＋持續＋續效特效＋多段＋路徑 | **8** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-dragon-quake（另有 11 份較不貼合） |
+| 4 | 等待＋持續＋續效特效＋多段＋路徑 | **17** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-dragon-quake（另有 11 份較不貼合） |
+| 5 | 持續＋續效特效 | **15** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-proxy-fanout |
+| 6 | 持續＋路徑 | **11** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-leap-strike・tpl-mark-stacks（另有 2 份較不貼合） |
 | 7 | 持續＋多段 | **6** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-proxy-fanout |
-| 8 | 續效特效 | **5** | 1 | tpl-single-strike | 沿用（4 支還沒接） |
-| 9 | 續效特效＋路徑 | **5** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-blink-strike |
-| 10 | 多段＋路徑 | **4** | 3 | tpl-line-sweep・tpl-orbit-array | 沿用（1 支還沒接） |
-| 11 | 持續＋續效特效＋路徑 | **4** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-leap-strike・tpl-mark-stacks（另有 2 份較不貼合） |
-| 12 | 等待＋續效特效 | **4** | 1 | tpl-ground-nova | 沿用（3 支還沒接） |
-| 13 | 等待＋路徑 | **4** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-charge-push・tpl-teleport（另有 1 份較不貼合） |
-| 14 | 等待＋迴圈＋續效特效 | **4** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-periodic-field |
-| 15 | 等待＋多段＋路徑 | **3** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-charge-push・tpl-teleport（另有 1 份較不貼合） |
+| 8 | 續效特效＋路徑 | **5** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-blink-strike |
+| 9 | 持續＋續效特效＋路徑 | **4** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-leap-strike・tpl-mark-stacks（另有 2 份較不貼合） |
+| 10 | 等待＋續效特效 | **4** | 1 | tpl-ground-nova | 沿用（3 支還沒接） |
+| 11 | 等待＋路徑 | **4** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-charge-push・tpl-teleport（另有 1 份較不貼合） |
+| 12 | 等待＋迴圈＋持續＋續效特效＋多段＋路徑 | **4** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-dragon-quake（另有 15 份較不貼合） |
+| 13 | 等待＋迴圈＋續效特效 | **4** | 0 | — | 併進既有模板的參數 |
+| 14 | 續效特效 | **4** | 1 | tpl-single-strike | 沿用（3 支還沒接） |
+| 15 | 多段＋路徑 | **3** | 3 | tpl-line-sweep・tpl-orbit-array | ✅ 全部接上了 |
 | 16 | 等待＋持續＋續效特效＋路徑 | **3** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-beam-roll・tpl-line-blast（另有 6 份較不貼合） |
 | 17 | 等待＋持續＋路徑 | **3** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-charge-push・tpl-leap-strike・tpl-mark-stacks（另有 3 份較不貼合） |
-| 18 | 迴圈＋持續＋多段 | **3** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-random-barrage（另有 2 份較不貼合） |
+| 18 | 等待＋多段＋路徑 | **2** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-charge-push・tpl-teleport（另有 1 份較不貼合） |
 | 19 | 等待＋持續＋續效特效 | **2** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-proxy-fanout |
 | 20 | 等待＋續效特效＋路徑 | **2** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-beam-roll・tpl-line-blast（另有 3 份較不貼合） |
-| 21 | 等待＋迴圈 | **2** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-periodic-field |
-| 22 | 等待＋迴圈＋持續＋續效特效＋多段 | **2** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-combo-finisher（另有 3 份較不貼合） |
-| 23 | 等待＋迴圈＋持續＋續效特效＋多段＋路徑 | **2** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-dragon-quake（另有 15 份較不貼合） |
-| 24 | 迴圈＋持續＋多段＋路徑 | **2** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-lock-combo（另有 6 份較不貼合） |
-| 25 | 持續＋續效特效＋多段 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-combo-finisher（另有 1 份較不貼合） |
-| 26 | 持續＋續效特效＋多段＋路徑 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-combo-finisher（另有 4 份較不貼合） |
-| 27 | 等待＋持續＋多段＋路徑 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-charge-push・tpl-leap-strike・tpl-mark-stacks（另有 3 份較不貼合） |
-| 28 | 等待＋迴圈＋多段 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-random-barrage（另有 1 份較不貼合） |
-| 29 | 等待＋迴圈＋多段＋路徑 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-lock-combo（另有 5 份較不貼合） |
-| 30 | 等待＋迴圈＋持續＋多段 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-random-barrage（另有 2 份較不貼合） |
-| 31 | 等待＋迴圈＋持續＋多段＋路徑 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-lock-combo（另有 8 份較不貼合） |
-| 32 | 迴圈 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-periodic-field |
-| 33 | 迴圈＋多段 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-random-barrage（另有 1 份較不貼合） |
-| 34 | 迴圈＋續效特效＋多段＋路徑 | **1** | 1 | tpl-traveling-wave | ✅ 全部接上了 |
+| 21 | 等待＋迴圈 | **2** | 0 | — | 併進既有模板的參數 |
+| 22 | 等待＋迴圈＋持續＋續效特效＋多段 | **2** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-combo-finisher・tpl-periodic-field（另有 2 份較不貼合） |
+| 23 | 迴圈＋持續＋多段＋路徑 | **2** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-lock-combo（另有 5 份較不貼合） |
+| 24 | 持續＋續效特效＋多段＋路徑 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-combo-finisher（另有 4 份較不貼合） |
+| 25 | 等待＋持續＋多段＋路徑 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-charge-push・tpl-leap-strike・tpl-mark-stacks（另有 3 份較不貼合） |
+| 26 | 等待＋迴圈＋多段 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-random-barrage |
+| 27 | 等待＋迴圈＋多段＋路徑 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-lock-combo（另有 4 份較不貼合） |
+| 28 | 等待＋迴圈＋持續＋多段 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-random-barrage（另有 1 份較不貼合） |
+| 29 | 等待＋迴圈＋持續＋多段＋路徑 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-lock-combo（另有 7 份較不貼合） |
+| 30 | 迴圈 | **1** | 0 | — | 併進既有模板的參數 |
+| 31 | 迴圈＋多段 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-random-barrage |
+| 32 | 迴圈＋持續＋多段 | **1** | 0 | — | ⚠️ 模板已在、**0 支使用**：tpl-random-barrage（另有 1 份較不貼合） |
+| 33 | 迴圈＋續效特效＋多段＋路徑 | **1** | 1 | tpl-traveling-wave | ✅ 全部接上了 |
 
 ## 2. ⭐ 宣稱 vs 實作 —— 有幾支技能在等一個不存在的模板
 
@@ -81,12 +80,12 @@ owner 技能模板群組 **⑨** 逐字：
 
 | 軸 | 說明宣稱 | JSON 實作 | ⛔ 宣稱了但沒實作 | 這一格擋住的是什麼 |
 |---|---:|---:|---:|---|
-| 等待 | 20 | 44 | **14** | 延遲結算／吟唱／飛行時間 —— 躲不躲得掉 |
+| 等待 | 20 | 54 | **14** | 延遲結算／吟唱／飛行時間 —— 躲不躲得掉 |
 | 迴圈 | 55 | 22 | **44** | 每隔 T 秒重複 —— 排程與終止條件 |
-| 持續 | 144 | 249 | **39** | 有期間的狀態，到期自己收掉 |
-| 續效特效 | 9 | 59 | **0** | 特效自己的壽命／掛載／分層（⚠️ 宣稱側很弱，差集不計） |
-| 多段 | 9 | 39 | **6** | 一次施放拆成多下（連段／連鎖） |
-| 路徑 | 42 | 81 | **18** | 效果沿著空間移動 |
+| 持續 | 144 | 253 | **39** | 有期間的狀態，到期自己收掉 |
+| 續效特效 | 9 | 68 | **0** | 特效自己的壽命／掛載／分層（⚠️ 宣稱側很弱，差集不計） |
+| 多段 | 9 | 45 | **6** | 一次施放拆成多下（連段／連鎖） |
+| 路徑 | 42 | 90 | **17** | 效果沿著空間移動 |
 
 ⇒ ⭐ **最擋人的一條軸是「迴圈」，44 支技能的說明宣稱它而 JSON 裡沒有。**
 
@@ -225,12 +224,11 @@ owner 技能模板群組 **⑨** 逐字：
 
 </details>
 
-<details><summary>「路徑」缺口逐支（18 支）</summary>
+<details><summary>「路徑」缺口逐支（17 支）</summary>
 
 | 技能 | 名稱 | 已接模板 | 目前形狀 |
 |---|---|---|---|
 | `godie-e00w.e` | 77-03 GLADIARIA ALAT | — | 持續 |
-| `godie-e00x.q` | 77-01 百烈櫻華斬 | — | 持續 |
 | `godie-e010.w` | 70-02 大怒石 | — | 持續 |
 | `godie-h020.passive` | 04-00 翔封界 | — | （無時序形狀） |
 | `godie-h02r.e` | 90-03 藤鞭 | — | （無時序形狀） |
@@ -266,7 +264,7 @@ owner 技能模板群組 **⑨** 逐字：
 | `tpl-orbit-array` | 環形放射陣 | enabled | 7 | 1 | 迴圈＋多段＋路徑 | 多段＋路徑×1 |
 | `tpl-traveling-wave` | 行進波動 | enabled | 9 | 1 | 迴圈＋續效特效＋多段＋路徑 | 迴圈＋續效特效＋多段＋路徑×1 |
 | `tpl-barrier-domain` | 結界領域 | draft | 0 | **0** | — | — |
-| `tpl-beam-roll` | 翻滾光束（橫放光束砲） | enabled | 11 | **0** | 等待＋續效特效＋路徑 | — |
+| `tpl-beam-roll` | 翻滾光束（橫放光束砲） | enabled | 13 | **0** | 等待＋續效特效＋路徑 | — |
 | `tpl-blink-strike` | 瞬移突斬 | draft | 0 | **0** | 路徑 | — |
 | `tpl-channel-beam` | 引導通魔 | draft | 0 | **0** | — | — |
 | `tpl-charge-push` | 衝鋒推撞 | enabled | 11 | **0** | 等待＋路徑 | — |
@@ -286,7 +284,7 @@ owner 技能模板群組 **⑨** 逐字：
 | `tpl-mark-stacks` | 具名標記-層數與免死 | enabled | 20 | **0** | 持續＋路徑 | — |
 | `tpl-on-attack` | 攻擊觸發 | enabled | 6 | **0** | — | — |
 | `tpl-on-hit-react` | 受擊反應 | enabled | 5 | **0** | — | — |
-| `tpl-periodic-field` | 週期領域 | draft | 0 | **0** | 迴圈 | — |
+| `tpl-periodic-field` | 週期領域 | draft | 9 | **0** | 迴圈＋持續＋續效特效 | — |
 | `tpl-proxy-fanout` | 範圍逐一施法 | enabled | 6 | **0** | 持續 | — |
 | `tpl-pull-throw` | 拉扯投擲 | draft | 0 | **0** | — | — |
 | `tpl-pure-cosmetic` | 純演出物件資料 | draft | 0 | **0** | — | — |
@@ -308,12 +306,12 @@ CLAUDE.md 第〇·五守則：「⛔ **不要逐支實作。** 按**擋住的支
 |---|---:|---|---|---|
 | 迴圈 | **44** | `tpl-traveling-wave` | draft・enabled | ⭐ **模板已在、而且真的跑出這條軸** ⇒ 把這 44 支接上去（改內容，⛔ 不必動引擎） |
 | 持續 | **39** | `tpl-buff-self`・`tpl-proxy-cast` | draft・enabled | ⭐ **模板已在、而且真的跑出這條軸** ⇒ 把這 39 支接上去（改內容，⛔ 不必動引擎） |
-| 路徑 | **18** | `tpl-line-sweep`・`tpl-orbit-array` | draft・enabled | ⭐ **模板已在、而且真的跑出這條軸** ⇒ 把這 18 支接上去（改內容，⛔ 不必動引擎） |
+| 路徑 | **17** | `tpl-line-sweep`・`tpl-orbit-array` | draft・enabled | ⭐ **模板已在、而且真的跑出這條軸** ⇒ 把這 17 支接上去（改內容，⛔ 不必動引擎） |
 | 等待 | **14** | `tpl-beam-roll`・`tpl-charge-push` | draft・enabled | ⚠️ **模板做好了卻 0 支使用** ⇒ 先驗一支，再把這 14 支接上去 |
 | 多段 | **6** | `tpl-line-sweep`・`tpl-orbit-array` | draft・enabled | ⭐ **模板已在、而且真的跑出這條軸** ⇒ 把這 6 支接上去（改內容，⛔ 不必動引擎） |
 
-⚠️ **另一個方向的浪費**：有 **16** 份模板參數面已經做好（≥5 格參數）卻**一支技能都沒引用** ——
-　`tpl-beam-roll`(11格/enabled)・`tpl-charge-push`(11格/enabled)・`tpl-combo-finisher`(13格/draft)・`tpl-dragon-quake`(12格/draft)・`tpl-dragon-serpent`(12格/draft)・`tpl-dragon-shockwave`(9格/draft)・`tpl-leap-strike`(8格/enabled)・`tpl-line-blast`(15格/enabled)・`tpl-lock-combo`(10格/enabled)・`tpl-mark-stacks`(20格/enabled)・`tpl-on-attack`(6格/enabled)・`tpl-on-hit-react`(5格/enabled)・`tpl-proxy-fanout`(6格/enabled)・`tpl-radial-burst`(12格/enabled)・`tpl-random-barrage`(9格/enabled)・`tpl-teleport`(6格/enabled)
+⚠️ **另一個方向的浪費**：有 **17** 份模板參數面已經做好（≥5 格參數）卻**一支技能都沒引用** ——
+　`tpl-beam-roll`(13格/enabled)・`tpl-charge-push`(11格/enabled)・`tpl-combo-finisher`(13格/draft)・`tpl-dragon-quake`(12格/draft)・`tpl-dragon-serpent`(12格/draft)・`tpl-dragon-shockwave`(9格/draft)・`tpl-leap-strike`(8格/enabled)・`tpl-line-blast`(15格/enabled)・`tpl-lock-combo`(10格/enabled)・`tpl-mark-stacks`(20格/enabled)・`tpl-on-attack`(6格/enabled)・`tpl-on-hit-react`(5格/enabled)・`tpl-periodic-field`(9格/draft)・`tpl-proxy-fanout`(6格/enabled)・`tpl-radial-burst`(12格/enabled)・`tpl-random-barrage`(9格/enabled)・`tpl-teleport`(6格/enabled)
 
 ⛔ 它們與上表是**同一個問題的兩半**：一邊有技能在等機制，一邊有機制在等技能。
 

@@ -170,7 +170,7 @@
       "ringRadius": "幾何", "scatterRadius": "幾何", "scatterBox": "幾何",
       "segmentAoe": "幾何", "anchor": "錨點選擇（幾何）", "applyTo": "落在誰身上",
       "blastApRatio": "係數", "blastDamageTier": "級距名", "blastRadiusTier": "級距名",
-      "touchDamageTier": "級距名", "restoreHealthPct": "比例", "surviveHpPct": "比例",
+      "touchDamageTier": "級距名", "damageTier": "級距名", "radiusTier": "級距名", "restoreHealthPct": "比例", "surviveHpPct": "比例",
       "perStackLost": "比例", "chance": "機率", "max": "上限", "initial": "起始值",
       "internalCooldown": "冷卻 —— 是**下一次**能不能觸發，⛔ 不是這一次的時序",
       "condition": "條件", "event": "觸發事件名", "trigger": "觸發事件名",
@@ -181,7 +181,9 @@
       "modifiers": "屬性加成清單（期間住在 duration）", "mode": "模式列舉",
       "hitText": "浮動文字內容", "hitTextRiseSpeed": "文字自己的動畫",
       "hitTextSizeGrowth": "文字自己的動畫", "hitTextSizeScale": "字級",
-      "finisherFlashAlpha": "透明度", "finisherShakeAmplitude": "震幅", "shakeAmplitude": "震幅"
+      "finisherFlashAlpha": "透明度", "finisherShakeAmplitude": "震幅", "shakeAmplitude": "震幅",
+      "soundKey": "音效**綁定** —— owner ④ 的範圍（特效音效綁定），⛔ 不是⑨的時序軸:一個聲音鍵沒有壽命、沒有間隔、也不移動",
+      "arriveSoundKey": "同 soundKey —— 落點音效的綁定，⛔ 不是「落點要等多久」（那一格是 speed／distance）"
     }
   },
 

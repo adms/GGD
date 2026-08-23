@@ -30,16 +30,22 @@
  *   pnpm ship:check --only-sync # 只跑 ①
  *   pnpm ship:check --suites packages/shared,apps/client   # ⭐ 只跑這幾包 vitest
  *   pnpm ship:check --no-typecheck
+ *   pnpm ship:check --sync-base <ref>   # ⭐ skills:sync 只跑「會因為這批改動而過期」的那幾支
+ *   pnpm ship:check --sync-paths a.json,b.ts
+ *   pnpm ship:check --list              # 只印這一次會跑哪幾支,⛔ 一支都不跑
+ *
+ * ⭐ 計畫本身可以單獨看: `pnpm sync:plan --base HEAD~5`（`tools/parallel-gates/syncPlan.mjs`）。
  *
  * ⚠️ ⭐ **後兩個旗標是給 `pnpm ship`（自動分級）用的,⛔ 不是給人手打的。**
  * 誰該跑由 `tools/deploy-timing/shipPlan.mjs` 從**路徑集合**推導 ——
  * 而**預設（不帶旗標）永遠是全跑**：一支「預設就在打折」的閘等於沒有閘。
  * ⛔ 認不得的包名一律回非零,⛔ 不靜默略過(那會變成「我以為它跑了」)。
  */
-import { spawn } from "node:child_process";
+import { execFileSync, spawn } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { cpus } from "node:os";
 import { packagesWithVitest } from "./packages.mjs";
+import { planFromPaths } from "./syncPlan.mjs";
 import { appendStage } from "../deploy-timing/run.mjs";
 
 const HERE = new URL(".", import.meta.url).pathname;
@@ -91,8 +97,83 @@ const FORKS_PER_SUITE = Math.max(
   Math.floor((cpus().length * 2) / Math.max(1, Math.min(SHIP_LIMIT, SUITE_COUNT))),
 );
 
+/**
+ * ⭐⭐ **序列段的 `skills:sync` 會按改動裁剪** —— owner 2026-08-23 逐字：
+ *
+ * > 「**為什麼我要全跑 skills 產生器，即使我沒有做技能更動或小範圍更動也需要全跑嗎
+ * >   可以用旗標註明是否有改動需要跑哪支就好？**」
+ *
+ * 計畫由 `syncPlan.mjs` **推導**（量到的 I/O ＋ 產生器原始碼裡的路徑字面值 ＋ 拓撲閉包），
+ * ⛔ 這裡一行手寫的「這支吃哪些檔」都沒有。
+ *
+ * ── ⛔ fail-closed 是硬要求：**三個入口全部往「全跑」倒** ─────────────────
+ *   ① 沒有人告訴我這一次的路徑集合 ⇒ 全跑（⛔ 不是推論成「那就沒改」）
+ *   ② 計畫自己說 `full`（路徑對不到輸入表 / `sync-io.json` 的 chain 過期）⇒ 全跑
+ *   ③ 算計畫時擲例外 ⇒ 全跑
+ *
+ * ── 路徑集合從哪來（⭐ 三條，⛔ 沒有一條是猜的）────────────────────────────
+ *   `--sync-paths a,b`   直接給
+ *   `--sync-base <ref>`  `git diff --name-only <ref>`（含工作樹）＋未追蹤檔
+ *   `GGD_DEPLOYED_REF`   ⭐ `pnpm ship` 的 `pipeline.mjs` 讀的**同一個**環境變數，
+ *                        而它是用 `spawn` 起我的 ⇒ 那個起點**自動**流到這裡。
+ *                        ⚠️ 用 `--stamp`／`--deployed` 旗標而不設這個環境變數時，
+ *                        我看不到起點 ⇒ 落回①**全跑**（⛔ 安全的那一邊）。
+ *
+ * ⚠️ `content:build` **一律留在最前面**（即使計畫沒點它）：它是 bundle 新鮮度那一條的
+ * 前置，多跑一次只是慢 12 秒，⛔ 漏跑就是 2026-08-01 那次「過期 bundle 全綠上線」。
+ */
+const optArg = (k) => {
+  const i = argv.indexOf(k);
+  return i >= 0 ? argv[i + 1] : undefined;
+};
+const syncPaths = (() => {
+  const csv = optArg("--sync-paths");
+  if (csv) return csv.split(",").map((s) => s.trim()).filter(Boolean);
+  const base = (optArg("--sync-base") ?? process.env.GGD_DEPLOYED_REF ?? "").trim().split(/\s+/)[0];
+  if (!base) return null;
+  try {
+    // ⚠️ `-c core.quotepath=false`:⛔ 少了它 CJK 檔名會變成加引號的跳脫字串而對不到任何輸入表
+    //    ⇒ 每一次動到中文檔名的改動都會被誤判成 fail-closed 全跑。
+    const g = (a) =>
+      execFileSync("git", ["-c", "core.quotepath=false", ...a], {
+        cwd: REPO,
+        encoding: "utf8",
+        maxBuffer: 1 << 26,
+        // ⚠️ 認不得的 ref 時 git 會在 stderr 印一大段;那不是**我們**要說的話 ——
+        //    我們要說的是下面 syncTrim 的「⇒ 全跑」。
+        stdio: ["ignore", "pipe", "ignore"],
+      })
+        .split("\n")
+        .filter(Boolean);
+    // ⭐ `<base>`（⛔ 不是 `<base>..HEAD`）⇒ 連**還沒 commit** 的工作樹改動都算進來。
+    return [...g(["diff", "--name-only", base]), ...g(["ls-files", "--others", "--exclude-standard"])];
+  } catch {
+    return null; // ⇒ ① 全跑
+  }
+})();
+const syncTrim = (() => {
+  if (!syncPaths) return { steps: null, why: "⛔ 不知道這一次改了哪些路徑 ⇒ **全跑**(⛔ 不是「那就沒改」)" };
+  try {
+    const p = planFromPaths(syncPaths, REPO);
+    if (p.full) return { steps: null, why: `⛔ **fail-closed 全跑** —— ${p.fullReason}` };
+    return {
+      steps: p.steps,
+      why:
+        `⭐ ${syncPaths.length} 個路徑 ⇒ 只跑 ${p.steps.length}/${p.steps.length + p.skipped.length} 支` +
+        `（估 ${(p.ms / 1000).toFixed(1)}s，全跑 ${(p.msAll / 1000).toFixed(1)}s）\n` +
+        `      ⏭ 不用跑: ${p.skipped.join(" · ") || "(無)"}`,
+    };
+  } catch (e) {
+    return { steps: null, why: `⛔ 算不出計畫(${String(e)}) ⇒ **全跑**` };
+  }
+})();
+
 /** 序列段:全域鎖。⛔ 順序有意義（`contract:numbers` 在 `content:build` 之後）。 */
-const SERIAL = ["content:build", "skills:sync"];
+// ⚠️⚠️ ⛔ **不可以**把計畫裡的 `content:build` 濾掉再靠開頭那一支頂替 ——
+//    開頭那一支跑在 `tiers:apply`／`skillremake:json` **之前**,它讀到的是**還沒被重寫**
+//    的 `content/abilities/**` ⇒ `bundle.json` 會停在舊的那一天而每一支自己都說 OK
+//    （＝2026-08-01 事故的形狀）。⭐ 原本的 `skills:sync` 本來就會跑它兩次,這裡逐字保留。
+const SERIAL = syncTrim.steps ? ["content:build", ...syncTrim.steps] : ["content:build", "skills:sync"];
 
 /**
  * 並行段。⭐ 每一格是「一件會回非零的事」,⛔ 不是「一個資料夾」。
@@ -156,6 +237,7 @@ const T0 = Date.now();
 
 // ── ① 序列段 ───────────────────────────────────────────────────────────
 if (!noSync) {
+  console.log(`🔒 序列段 ${SERIAL.length} 支（全域鎖）· skills:sync 裁剪: ${syncTrim.why}`);
   for (const s of SERIAL) {
     process.stdout.write(`🔒 ${s} …`);
     const r = await run(s, "pnpm", [s]);
