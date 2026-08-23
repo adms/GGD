@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "5bd6fc41e9ba",
+  "hash": "ce32be9dcb6a",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -65,8 +65,8 @@
     {
       "id": "authoring-rules",
       "path": "config/authoring-rules.json",
-      "hash": "2170bb01c930",
-      "size": 4300
+      "hash": "a1cc3c7188f5",
+      "size": 5434
     },
     {
       "id": "base-bonus",
@@ -293,8 +293,8 @@
     {
       "id": "model-lod",
       "path": "config/model-lod.json",
-      "hash": "f62fe1b47808",
-      "size": 459
+      "hash": "1a982fa20301",
+      "size": 490
     },
     {
       "id": "new-hero-checks",
@@ -311,8 +311,8 @@
     {
       "id": "owner-knobs",
       "path": "config/owner-knobs.json",
-      "hash": "c19bbde277ef",
-      "size": 2559
+      "hash": "ba59a7d6ce66",
+      "size": 13784
     },
     {
       "id": "per-level-bonus",
@@ -467,8 +467,8 @@
     {
       "id": "vfx-families",
       "path": "config/vfx-families.json",
-      "hash": "5c8b4ca806d1",
-      "size": 37393
+      "hash": "155afa7fb019",
+      "size": 37355
     },
     {
       "id": "victory-fx",
