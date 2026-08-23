@@ -251,10 +251,11 @@
           "kind": "spawnModelFx",
           "shape": "single",
           "modelKey": "imported.tectonicfury",
-          "path": "radial",
+          "path": "orbit",
           "count": 12,
           "distance": 6.42,
           "speed": 30.0,
+          "lifeSec": 3.0,
           "scale": 1.0,
           "soundKey": "guardianSlam"
         }

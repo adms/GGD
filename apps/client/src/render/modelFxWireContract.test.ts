@@ -1,31 +1,33 @@
 /**
- * ⛔⛔ GH#606 —— **sim 送的酬載，客戶端真的畫得出來**（跨 sim／client 邊界的一條線）。
+ * ⛔⛔ GH#606 / GH#607 —— **sim 送的酬載，客戶端真的畫得出來，而且擺得對**。
  *
- * ── 為什麼舊守衛是綠的 ──────────────────────────────────────────────────────
- * `modelFxRig.test.ts` 一直在跑 `rig.spawn(SPEC, AT)` —— 一個**它自己造的**
- * `ModelFxMotionSpec`。而出貨路徑從來沒有那樣呼叫過：sim 送
- * `{ caster, modelKey, instances, … }`，客戶端讀 `ev.data.spec`（零個寫入端）。
- * ⇒ 兩邊從第一天起就對不上，而守衛驗的是**第三種**形狀（第二守則失敗形態⑤：
- * 被測的不是出貨的那個）。同期的 `performanceEventsHaveConsumers` 也是綠的，
- * 因為它只問「這個事件有沒有一個 `case`」—— 有；⛔ 它不問那個 case 的**第一行**
- * 會不會立刻 `break`。
+ * ── 為什麼舊守衛是綠的（兩次）──────────────────────────────────────────────
+ * ① #606 之前：`modelFxRig.test.ts` 跑的是**它自己造的** `ModelFxMotionSpec`，
+ *    而出貨路徑送的是 `{ caster, modelKey, instances, … }`（失敗形態⑤）。
+ * ② ⭐ #607 之前：**這一支自己**注入了 `resolveModel: () => ({ glbPath: "x.glb" })`
+ *    —— 一份測試手寫的模型文件。於是「出貨的 `modelDocFor` 把 `fxLongAxis` /
+ *    `fxSpawnHeight` 挑掉了」在這裡**不可能被看見**：被測的還是不是出貨的那個。
+ *    量到的後果：owner 逐字要的「**90 度橫放的 beam**」從第一天起就沒有生效過。
  *
- * ⇒ 這一條**只驗一件事**：跑**出貨的**技能 → 拿**真的** `modelFxSpawn` 事件 →
- * 餵進**真的** `ModelFxRig` → **有模型生出來，而且它沿著 sim 算的那條線走**。
- * ⛔ 一個座標、一個秒數、一個出貨數值都不抄（第二守則：驗機制不驗數字）。
+ * ⇒ 這一條**整條線都用出貨的東西**：出貨內容 → 出貨技能 → 真的 `modelFxSpawn`
+ *   → **出貨的 `modelDocFor` 接縫**（`modelFxDocFor` ⊕ 出貨的 `Models` 登錄表）
+ *   → 真的 `VfxSystem`（⛔ 不是直接戳 rig —— 那會跳過 `VfxContext` 的投影）
+ *   → **出貨的場景樹**上量姿態。
+ *   ⛔ 一個座標、一個角度、一個出貨數值都不抄（第二守則：驗機制不驗數字）。
  *
  * ── 突變紀錄（一批一條，挑最承重的那一行）───────────────────────────────────
- *  · ⭐ 承重線 —— 把 `VfxSystem.ts` 的消費端改回舊寫法
- *    （`const p = ev.data.spec as …; if (!p) break;`）等價的形狀：
- *    在 rig 這一側把 `spawn()` 的 `ev.instances` 換成 `(ev as {spec?:never}).spec`
- *      → 紅：「⛔ 一具模型都沒生出來 —— 這正是 #606 的形狀: expected 0 to be
- *        greater than 0」
+ *  · ⭐ 承重線 —— 把 `GameApp.ts` 的接縫改回舊寫法
+ *    （`{ glbPath: doc.glbPath, scale: doc.scale }`）等價的形狀：在這裡把
+ *    `modelFxDocFor(d)` 換成 `{ glbPath: d.glbPath, scale: d.scale }`
+ *      → 紅：「⛔ 長軸沒有被擺到行進方向上 —— 這正是 #607 的形狀:
+ *        expected 0.00000 to be close to 1」
  */
 import { beforeAll, describe, expect, it } from "vitest";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
+import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { ContentLoader } from "@ggd/shared/content/loader";
 import { FsContentSource } from "@ggd/shared/content/node/FsContentSource";
 import { Arenas, Configs, Models, StatusEffects, VfxDefs, registerAll } from "@ggd/shared/content/registries";
@@ -36,14 +38,22 @@ import { spawnChampion } from "@ggd/shared/sim/spawnChampion";
 import { runEffects } from "@ggd/shared/sim/effects/effectRunner";
 import type { EffectContext, EffectDef } from "@ggd/shared/sim/effects/effect";
 import type { ModelFxSpawnEvent } from "@ggd/shared/sim/effects/spawnModelFx";
+import type { EventMessage } from "@ggd/shared/protocol/messages";
 import { asSeatId, asTeamId, type AbilityId, type ChampionId } from "@ggd/shared/ids";
-import { ModelFxRig } from "./modelFxRig";
+import { VfxSystem } from "../vfx/VfxSystem";
+import { modelFxDocFor } from "./modelFxRig";
+import type { ModelFxLongAxis } from "./modelFxPath";
 
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
 const C = SKELETON_ARENA.zones[0]!.center;
 // 悟空 09-04 龜派氣功 —— owner 2026-08-22 逐字點名的四支經典橫放光束砲之一。
 const CASTER = "godie-ogrh" as ChampionId;
 const SUBJECT = "godie-ogrh.r";
+const LOCAL: Record<ModelFxLongAxis, Vector3> = {
+  x: new Vector3(1, 0, 0),
+  y: new Vector3(0, 1, 0),
+  z: new Vector3(0, 0, 1),
+};
 
 beforeAll(async () => {
   for (const r of [Champions, Abilities, Items, Augments, Projectiles, LootTables]) r.clear();
@@ -70,31 +80,50 @@ function realWirePayload(): ModelFxSpawnEvent {
   return ev!.data as unknown as ModelFxSpawnEvent;
 }
 
-describe("modelFxSpawn 的線路契約（GH#606）", () => {
-  it("sim 送的那一份，客戶端真的生得出模型而且沿它自己算的線走", () => {
+describe("modelFxSpawn 的線路契約（GH#606 · GH#607）", () => {
+  it("出貨接縫餵出貨模型：模型生得出來、沿 sim 的線走、而且長軸躺在行進方向上", () => {
     const wire = realWirePayload();
-    const rig = new ModelFxRig(new Scene(new NullEngine()), {
-      resolveModel: () => ({ glbPath: "x.glb" }),
-      loadContainer: () => Promise.resolve(null),
+    const scene = new Scene(new NullEngine());
+    // ⭐ **出貨的那一個 `modelDocFor`**（`GameApp.ts` 逐字同一個運算式），
+    //    ⛔ 不是測試手寫的一份文件 —— 那正是這一支上一版看不見 #607 的原因。
+    const vfx = new VfxSystem(scene, {
+      entityPos: () => null,
+      modelDocFor: (k) => modelFxDocFor(Models.tryGet(k)),
+      loadModelContainer: () => Promise.resolve(null),
     });
+    vfx.handleEvent({ type: "modelFxSpawn", data: wire } as unknown as EventMessage, 0);
 
-    const made = rig.spawn(wire);
-    expect(made, "⛔ 一具模型都沒生出來 —— 這正是 #606 的形狀").toBeGreaterThan(0);
-    expect(made).toBe(wire.instances.length);
+    const axisNode = scene.transformNodes.find((n) => n.name.startsWith("modelfx-axis-"));
+    expect(axisNode, "⛔ 一具模型都沒生出來 —— 這正是 #606 的形狀").toBeDefined();
 
-    // ⭐ 「有沒有沿著 sim 那條線走」，⛔ 不問走到哪一格：
-    //    起點必須**逐位元**等於 sim 給的起點（客戶端不可以自己從施法者重算），
-    //    而推進之後必須離起點更遠 —— 位移方向與 sim 的 (dx,dz) 同號。
     const inst = wire.instances[0]!;
-    const node = rig.livePositions()[0]!;
-    expect(node.x).toBe(inst.x);
-    expect(node.z).toBe(inst.z);
+    const declared = Models.tryGet(wire.modelKey)?.fxLongAxis;
+    expect(declared, `${wire.modelKey} 沒有宣告 fxLongAxis —— 標本失效了`).toBeDefined();
+    // ⭐ 「烘出來的長軸躺在行進方向上了嗎」。⛔ 不驗正負號（長軸是**線**不是箭頭），
+    //    ⛔ 也不驗角度數字 —— 缺陷是 |cos| 恆等於 0，機制在不在一眼看得出來。
+    const world = Vector3.TransformNormal(
+      LOCAL[declared as ModelFxLongAxis],
+      axisNode!.computeWorldMatrix(true),
+    ).normalize();
+    const along = new Vector3(inst.dx, 0, inst.dz).normalize();
+    expect(
+      Math.abs(Vector3.Dot(world, along)),
+      "⛔ 長軸沒有被擺到行進方向上 —— 這正是 #607 的形狀（fxLongAxis 在接縫上被挑掉）",
+    ).toBeCloseTo(1, 5);
 
-    rig.tick((inst.durationSec * 1000) / 2);
-    const mid = rig.livePositions()[0]!;
-    expect(Math.sign(mid.x - inst.x) || 0).toBe(Math.sign(inst.dx) || 0);
-    expect(Math.sign(mid.z - inst.z) || 0).toBe(Math.sign(inst.dz) || 0);
+    vfx.dispose();
+  });
 
-    rig.dispose();
+  it("接縫⛔ 不投影：進去哪一份 model@1，出來就是**同一份**", () => {
+    // ⚠️ `fxSpawnHeight` 出貨樹目前一份都沒填（ABSENT = 0 = 今天的行為），所以它
+    //    沒有辦法用畫面驗 —— 而它與 `fxLongAxis` 是**同一個**缺陷（接縫挑欄位）。
+    // ⇒ 這一條釘的是「⛔ 不要有投影」本身：一份新的 fx 欄位加進 `model@1` 時，
+    //    接縫**零行接線**就該讓它走到播放端。同一性一旦被換成手抄的字面值就紅。
+    const doc = Models.all()[0];
+    expect(doc, "出貨樹一份 model@1 都沒有 —— 內容載入失敗了").toBeDefined();
+    expect(
+      modelFxDocFor(doc!),
+      "⛔ 接縫又開始挑欄位了 —— #607 的形狀（那一次挑掉的是 fxLongAxis/fxSpawnHeight）",
+    ).toBe(doc);
   });
 });

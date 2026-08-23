@@ -30,6 +30,7 @@
  * sim 的延遲班表 ⇒ **特效與傷害在同一 tick 同一點**。客戶端再排一次是第二個
  * 住處,而且會跟傷害差幾幀（第〇·四／第〇·五守則）。
  */
+import type { ModelDoc } from "@ggd/shared/content";
 import type { Scene } from "@babylonjs/core/scene";
 import type { AssetContainer } from "@babylonjs/core/assetContainer";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
@@ -54,6 +55,29 @@ export interface ModelFxModelDoc {
   fxLongAxis?: ModelFxLongAxis;
   /** ⭐ 移動特效離地多高（`model@1.fxSpawnHeight`）。缺席 ⇒ 0 ＝ 今天的行為。 */
   fxSpawnHeight?: number;
+}
+
+/**
+ * ⛔⛔ **出貨路徑上「`model@1` → 這個 rig」的唯一接縫**（GH#607）。
+ *
+ * ── 它為什麼是一個具名函式而不是一段 inline lambda ──────────────────────────
+ * 2026-08-23 量到：`GameApp.ts` 的 `modelDocFor` 接縫**手挑欄位**
+ * （`{ glbPath: doc.glbPath, scale: doc.scale }`）⇒ `fxLongAxis` /
+ * `fxSpawnHeight` 在那一行被丟掉。於是 owner 逐字要的「**90 度橫放的 beam**」
+ * 軸修正**從第一天起就沒有生效過**，而且每一具移動模型都貼在 y=0 拖行。
+ *
+ * ⚠️ **每一個零件都是對的**（第一·五守則的形狀）：`model@1` 兩格都存了
+ * （`imported.netherstrike` 宣告 `fxLongAxis:"y"`、`imported.fireblast` 宣告
+ * `"x"`）、`spawn()` 兩格都讀了、`modelFxAxis.test.ts` 兩格都驗了 ——
+ * 缺的只有**中間那一段**，而它是一個沒有人測過的投影（失敗形態⑧）。
+ *
+ * ⭐ 所以修法⛔ 不是「把那兩格補進那個字面值」——下一格照樣會漏。
+ * 修法是**不要投影**：整份文件走過去，「rig 讀得到哪幾格」由
+ * {@link ModelFxModelDoc} 這個**子集型別**說了算，⛔ 不由呼叫端各自抄一份。
+ * ⇒ 之後在 `model@1` 上加第三格 fx 欄位時，**零行接線**。
+ */
+export function modelFxDocFor(doc: ModelDoc | null | undefined): ModelFxModelDoc | null {
+  return doc ?? null;
 }
 
 export interface ModelFxRigOptions {

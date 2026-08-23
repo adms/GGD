@@ -102,6 +102,14 @@ import { RoundWinnerStage, planRoundWinnerShow, victoryPodiumPolicy } from "./re
 import type { CameraRig } from "./render/CameraRig";
 import { mayGoTo, ownDuelDecided, pickSpectateZone, spectateRelease, type DuelView } from "./render/spectateFocus";
 import { ViewportManager } from "./render/ViewportManager";
+// 🖥️🖥️ GH#612 —— 分割畫面的螢幕演出：每一格自己一份。組裝在 `installScreenCues()`。
+import { cssRects } from "./render/viewportRects";
+import {
+  dispatchScreenCue,
+  installSplitScreenCueRouter,
+  screenCuePolicyFromContent,
+} from "./render/screenFx";
+import { ScreenFxLayer } from "./vfx/ScreenFxLayer";
 import { AssetManager } from "./render/AssetManager";
 import {
   EntityViewRegistry,
@@ -121,6 +129,7 @@ import type { FormAttachmentSpec } from "./render/views/ChampionView";
 import { bodyRelativeScale } from "./render/views/modelSizing";
 import { entityTintFor } from "./render/views/mobTint";
 import { mobRingDiameterFor } from "./render/views/mobGroundRing";
+import { modelFxDocFor } from "./render/modelFxRig";
 import { persistentVfxKeysFor } from "./render/views/persistentVfx";
 import {
   MOB_VISUAL_DEFAULT,
@@ -141,6 +150,7 @@ import {
 import { anchorDrawable } from "./render/anchorBounds";
 import { occludeArgsFor } from "./render/occlusionZone";
 import { qualityController, type RenderParams } from "./render/QualityController";
+import { feedAdaptiveFrame } from "./render/AdaptiveQuality";
 import { driveFrame, FrameDelta, type FrameWork } from "./render/frameCap";
 import { FrameRateMeter } from "./render/fpsMeter";
 import { RoundVfxLifecycle } from "./render/roundVfxLifecycle";
@@ -313,6 +323,19 @@ type SeatedChampionBodyDeps = ChampionBodyDeps &
 export class GameApp {
   private readonly renderer: Renderer;
   private readonly viewports: ViewportManager;
+  /**
+   * 🖥️🖥️ GH#612 —— **每一格 viewport 自己一層**螢幕閃爍。
+   *
+   * ⛔ 在此之前只有一層 `position:fixed;inset:0` 的全螢幕 overlay（住 `VfxSystem`），
+   * 於是指名 player 0 的那一發**蓋住全部四格**；而觀眾判定只拿 player 0 的 entity，
+   * 於是指名沙發玩家 2/3/4 的那一發**整發丟掉**。⭐ 兩個方向同一個根因：
+   * 沙發模式的「本機觀眾」是一個**集合**。
+   */
+  private readonly cueLayers: ScreenFxLayer[] = [];
+  /** 逐格 overlay 的容器（`contain:paint` ⇒ 子層的 `position:fixed` 被夾在這一格裡）。 */
+  private cueHost: HTMLDivElement | null = null;
+  /** 上一幀的 phase —— 換回合就把每一格的殘留閃爍收乾淨。 */
+  private cuePhase = "";
   private readonly views: EntityViewRegistry;
   /**
    * #223 —— 「這個 entity 現在穿的是哪一具身體」以及由它決定的三條渲染縫。
@@ -864,10 +887,14 @@ export class GameApp {
         // ⛔ 少了這兩行,`VfxSystem` 的 `modelFx` 永遠是 null ⇒ 四支技能的
         //    JSON 有 `spawnModelFx`、傷害照樣掉血、⛔ 而畫面上一條光束都沒有
         //    （失敗形態②,而且它看起來完全正常）。
-        modelDocFor: (modelKey) => {
-          const doc = this.contentDb.modelFor(modelKey);
-          return doc?.glbPath ? { glbPath: doc.glbPath, scale: doc.scale } : null;
-        },
+        // ⛔⛔ GH#607 —— 這四行以前**手挑欄位**（`{ glbPath, scale }`），於是
+        //    `fxLongAxis` / `fxSpawnHeight` 在這一步就被丟掉 ⇒ owner 要的
+        //    「**90 度橫放的 beam**」軸修正**從來沒有生效過**，移動模型一律貼地
+        //    y=0。⚠️ `modelFxRig` 兩格都讀了、`model@1` 兩格都存了、
+        //    `modelFxAxis.test.ts` 也綠著 —— 缺的只有**這一段的中間**。
+        // ⭐ 修法不是「把兩格補進那個字面值」（下一格照樣會漏），是**不要投影**：
+        //    `modelFxDocFor` 整份文件走過去，rig 讀得到哪幾格由 rig 自己說了算。
+        modelDocFor: (modelKey) => modelFxDocFor(this.contentDb.modelFor(modelKey)),
         loadModelContainer: (glbPath) => this.assets.load(glbPath),
         // floating combat text (task #92) is coloured by RELATIONSHIP to the
         // local player, so the vfx layer needs the same seat→team table the
@@ -931,7 +958,11 @@ export class GameApp {
     //    要求 GameApp 裡**只能有一個** addShake 呼叫點（防「同一次命中震兩下」）。
     //    ⭐ 走同一個漏斗才是對的:作者寫的 `screenShake` 也應該吃到那條路上的
     //    人群預算（`frameKicks`）與 EX 抑制,⛔ 不是繞過它們自己震一次。
-    this.vfx.installShakeSink((amp, ms) => this.queueAuthoredShake(amp, ms));
+    //    ⚠️ 這一條是**全螢幕那一層**的出口（單人/沒安裝逐格路由時才會響）——
+    //    分割畫面走 `installScreenCues()` 建的逐格 sink，見那裡。
+    this.vfx.installShakeSink((amp, ms) => this.queueAuthoredShake(0, amp, ms));
+    // 🖥️🖥️ GH#612 —— 逐格螢幕演出。⛔ 必須在 `this.vfx` 之後（它要同一份上界）。
+    this.installScreenCues(playerCount);
     this.ambient = roundFx.ambient;
     this.whirlwind = roundFx.whirlwind;
     this.fireRing = roundFx.fireRing;
@@ -1340,6 +1371,13 @@ export class GameApp {
     this.boundRoom = null;
     this.sessions.dispose(); // leave every room + drop input sinks
     this.vfx.dispose();
+    // 🖥️🖥️ GH#612 —— 逐格 overlay 與它的路由旗標一起收（⛔ 留著旗標 = 下一場
+    //    全螢幕那一層也被關掉,而逐格那一層已經不在了 ⇒ 畫面上一發都沒有）。
+    installSplitScreenCueRouter(false);
+    for (const l of this.cueLayers) l.dispose();
+    this.cueLayers.length = 0;
+    this.cueHost?.remove();
+    this.cueHost = null;
     this.ambient.dispose();
     this.whirlwind.dispose();
     this.postFx.dispose();
@@ -1702,6 +1740,8 @@ export class GameApp {
     // 邊界那一幀的事件屬於「新的那一側」—— 進 combat 的第一幀帶的是開場特效，
     // 出 combat 的那一幀帶的是收尾事件。先清再 drain，兩邊都不會被自己清掉。
     this.roundVfx.sync(state?.phase ?? "");
+    // 🖥️🖥️ GH#612 —— 逐格閃爍的推進與回合清場（⛔ 不留一層淡紅到下一回合）。
+    this.tickScreenCues(dtMs, state?.phase ?? "");
 
     // Keep the imperative displayFinal singleton current with the live wire
     // combat-env EVERY frame (idempotent — no-ops when the JSON is unchanged),
@@ -2105,6 +2145,9 @@ export class GameApp {
     nowMs: number,
   ): void {
     this.vfx.handleEvent(ev, nowMs); // particles + damage numbers
+    // 🖥️🖥️ GH#612 —— 螢幕演出**逐格**派送。⛔ 必須在 `applyCombatFeedback` 之前:
+    //    它把這一格的震動排進 `authoredShake[p]`，而那個漏斗在下面第四行收走。
+    if (ev.type === "screenFlash" || ev.type === "screenShake") this.routeScreenCue(ev);
     this.views.handleEvent(ev, nowMs); // anim pulses + hit flash + hitstop
     this.casts.handleEvent(ev, nowMs); // cast/windup timing → cast bars
     this.applyCombatFeedback(ev, localId, nowMs); // camera kick/punch-in + vignette
@@ -2227,10 +2270,18 @@ export class GameApp {
     // 一顆 4.4 ms 的幀在 pill 上寫成「228 fps」。見 render/fpsMeter.ts 檔頭。
     this.frameRate.sample(dtMs);
 
-    // adaptive: workMs is the pre-cap cost → capability signal. May recompute
-    // renderParams synchronously (via the qualityController subscription).
-    qualityController.sample(workMs, nowMs);
-    const stats = qualityController.frameStats();
+    // ⭐ 階梯吃的是**整幀**成本,⛔ 不是 rAF 自己頭尾相減的 workMs
+    //（見 render/AdaptiveQuality.ts 檔頭)。只讀 workMs 的時候,瀏覽器合成 /
+    // reflow / GC / shader 編譯 / React reconcile 這一段**再大階梯也不會降**,
+    // 而那正是「fps 儀表很好看卻很卡」的形狀。
+    // ⚠️ `feed.work` 是**誠實的 workMs 視窗**,與階梯的視窗刻意分開 ——
+    // `perfBus.workMs` / `capabilityFps` 回答的是「這台機器畫得動幾張」,
+    // 而 perf/diag.ts 的 `unaccountedMs` 是拿它相減出來的。
+    const feed = feedAdaptiveFrame(workMs, dtMs, this.renderParams.fpsCap);
+    // May recompute renderParams synchronously (via the qualityController
+    // subscription), so `this.renderParams` is read AFTER this line.
+    qualityController.sample(feed.costMs, nowMs);
+    const stats = feed.work;
     const p = this.renderParams;
     const cs = this.connStats.sample(nowMs);
     const rstats = this.renderer.stats();
@@ -2257,8 +2308,11 @@ export class GameApp {
     perfBus.adaptiveActive = p.adaptiveActive;
     perfBus.entityCount =
       this.views.championCount + this.views.projectileCount + this.views.flowerCount;
-    perfBus.drawCount = rstats.meshes;
-    perfBus.particleCount = rstats.particleSystems;
+    // ⭐ 誠實的名字（見 perfBus.ts）：這兩個是**場景上有幾個**,⛔ 不是
+    // 「畫了幾次」也⛔ 不是「幾顆粒子」。舊名字 drawCount / particleCount
+    // 現在是同一個數字的 getter,所以⛔ 不可能有第二份會漂走的副本。
+    perfBus.sceneMeshes = rstats.meshes;
+    perfBus.particleSystems = rstats.particleSystems;
   }
 
   // ------------------------------------------------------------- helpers --
@@ -2987,19 +3041,117 @@ export class GameApp {
    * ⚠️ 只留**一發**（取最大）：一次施法可能同時發好幾個 cue，而相機只有一個。
    * ⛔ 不排隊 —— 一個遲到的震動比沒有更糟（它會在事情結束之後才抖）。
    */
-  private authoredShake: { amp: number; durationMs: number } | null = null;
+  /**
+   * ⭐ GH#612 —— **一格一發**（⛔ 不是全域一發）。
+   *
+   * ⛔ 在此之前這是一個純量,而它與「震動只進 `viewports.primary`」是同一個缺陷的
+   * 兩半:一發指名沙發玩家 2 的震動,不只走錯了格子 —— 它會在**第一格**抖起來,
+   * 而第一格的玩家沒有被打到。
+   */
+  private readonly authoredShake: ({ amp: number; durationMs: number } | null)[] = [];
 
-  private queueAuthoredShake(amp: number, durationMs: number): void {
+  private queueAuthoredShake(player: number, amp: number, durationMs: number): void {
     if (!(amp > 0) || !(durationMs > 0)) return;
-    if (!this.authoredShake || amp > this.authoredShake.amp) {
-      this.authoredShake = { amp, durationMs };
-    }
+    const p = Math.max(0, Math.min(player | 0, this.viewports.count - 1));
+    const cur = this.authoredShake[p];
+    if (!cur || amp > cur.amp) this.authoredShake[p] = { amp, durationMs };
   }
 
-  private drainAuthoredShake(): { amp: number; durationMs: number } | null {
-    const s = this.authoredShake;
-    this.authoredShake = null;
+  private drainAuthoredShake(player: number): { amp: number; durationMs: number } | null {
+    const s = this.authoredShake[player] ?? null;
+    this.authoredShake[player] = null;
     return s;
+  }
+
+  // ══════════════════════════════════════════════════════════════════════════
+  //  🖥️🖥️ GH#612 —— 分割畫面的螢幕演出（閃爍 + 震動），**每一格各自解算**
+  // ══════════════════════════════════════════════════════════════════════════
+
+  /**
+   * 逐格 overlay 與逐格 sink 的組裝點。
+   *
+   * ⚠️ ⭐ **為什麼 `contain: paint`**：`ScreenFxLayer` 的 overlay 是
+   * `position:fixed; inset:0`（那是對的 —— 單畫面時它就該是整個螢幕）。
+   * `contain:paint` 讓這一格的容器成為 fixed 子孫的**包含塊**並夾住溢出，
+   * ⇒ 同一個圖層類別在分割畫面下只畫**自己那一格**，⛔ 不必抄一份合成邏輯。
+   *
+   * ⚠️ 上界（`config.screen-fx@1`）在**載入時**解析一次（第〇·四守則），
+   * ⛔ 不是每一發特效都去查一次登錄表 —— 與 `VfxSystem` 同一份政策。
+   */
+  private installScreenCues(playerCount: number): void {
+    const limits = screenCuePolicyFromContent().limits;
+    const doc = typeof document !== "undefined" ? document : null;
+    if (doc) {
+      const host = doc.createElement("div");
+      host.className = "ggd-screen-cues";
+      host.style.cssText = "position:fixed;inset:0;pointer-events:none;z-index:60";
+      doc.body.appendChild(host);
+      this.cueHost = host;
+    }
+    const rects = cssRects(playerCount);
+    for (let p = 0; p < rects.length; p++) {
+      const r = rects[p]!;
+      let cell: HTMLDivElement | null = null;
+      if (doc && this.cueHost) {
+        cell = doc.createElement("div");
+        cell.style.cssText =
+          `position:absolute;left:${r.left}%;top:${r.top}%;width:${r.w}%;height:${r.h}%;` +
+          // ⛔ 兩個都要:`contain:paint` 是主力,`transform` 是它落地前的舊瀏覽器保險
+          //    —— 兩者都會建立 fixed 子孫的包含塊。
+          "overflow:hidden;pointer-events:none;contain:paint;transform:translateZ(0)";
+        this.cueHost.appendChild(cell);
+      }
+      const layer = new ScreenFxLayer({
+        host: cell,
+        limits,
+        // ⭐ 震動走**這一格自己的**相機,⛔ 不是 `viewports.primary`。
+        //    它仍然匯進 `applyCombatFeedback` 的單一漏斗（人群預算 + 防震兩下）。
+        addShake: (amp, ms) => this.queueAuthoredShake(p, amp, ms),
+      });
+      this.cueLayers.push(layer);
+    }
+    // ⭐ 裝上之後,全螢幕那一層就沒有觀眾了（`screenCueIsForViewer` 一律 false）。
+    //    ⛔ 少了這一行 = 同一發演出出現兩次(全螢幕一次 + 這一格一次)。
+    installSplitScreenCueRouter(this.cueLayers.length > 0);
+  }
+
+  /**
+   * 每一格**現在的主角** —— 沒有主角的那一格是 `null`（還在選人／已離席）。
+   *
+   * ⚠️ 逐格解析與 `burnTintFrame` / `updateSpectatorCam` 用的是同一條規則
+   *（player 0 走 HUD store，其餘走 `localPlayers`），⛔ 不是第二份座位真相。
+   */
+  private screenCueViewers(): (number | null)[] {
+    const out: (number | null)[] = [];
+    for (let p = 0; p < this.cueLayers.length; p++) {
+      out.push(p === 0 ? hudStore.getState().localEntityId : (this.playerView(p)?.entityId ?? null));
+    }
+    return out;
+  }
+
+  /**
+   * 一發 `screenFlash` / `screenShake` → 逐格派送。
+   *
+   * ⛔ 派送迴圈本身住 `render/screenFx.ts`（`dispatchScreenCue`）——
+   * GameApp 在測試裡建構不出來,寫在這裡的決策沒有守衛（見這個檔案 #223 那一段）。
+   */
+  private routeScreenCue(ev: EventMessage): void {
+    if (this.cueLayers.length === 0) return;
+    dispatchScreenCue(
+      ev.type as "screenFlash" | "screenShake",
+      ev.data as unknown as { broadcast: boolean; subjects: readonly number[] } & Record<string, unknown>,
+      this.screenCueViewers(),
+      this.cueLayers,
+    );
+  }
+
+  /** 每幀推進每一格的閃爍；換 phase 就把殘留收乾淨（⛔ 不留一層淡紅到下一回合）。 */
+  private tickScreenCues(dtMs: number, phase: string): void {
+    if (phase !== this.cuePhase) {
+      this.cuePhase = phase;
+      for (const l of this.cueLayers) l.resetForRound();
+    }
+    for (const l of this.cueLayers) l.tick(dtMs);
   }
 
   private applyCombatFeedback(ev: EventMessage, localId: number | null, nowMs: number): void {
@@ -3013,19 +3165,29 @@ export class GameApp {
     });
     // ⭐ GH#549 —— 作者寫的 `screenShake` 先排進佇列,在**這裡**與命中反應合流:
     //    取兩者較大的那一發（⛔ 不是各震一次 —— 那正是這條線在防的「震兩下」）。
-    const authored = this.drainAuthoredShake();
+    // ⭐ GH#612 —— 每一格各自收自己的那一發：第一格與命中反應合流（取較大的一發），
+    //    其餘各格照它自己的 cue 抖。⛔ 全部倒進 `viewports.primary` 是舊行為。
+    const omni = (a: { amp: number; durationMs: number }) =>
+      // ⚠️ 作者寫的 cue **沒有方向**（它是螢幕層的提示，⛔ 不是某一次命中的反衝）
+      //    ⇒ `dir: undefined` ⇒ `CameraRig` 走 omni（全向抖）那一條路。
+      ({ amp: a.amp, durationMs: a.durationMs, dir: undefined, style: "omni" as const, kick: 0 });
+    const authored = this.drainAuthoredShake(0);
     const kick =
       reaction.kick && (!authored || reaction.kick.amp >= authored.amp)
         ? reaction.kick
         : authored
-          ? // ⚠️ 作者寫的 cue **沒有方向**（它是螢幕層的提示，⛔ 不是某一次命中的反衝）
-            //    ⇒ `dir: undefined` ⇒ `CameraRig` 走 omni（全向抖）那一條路。
-            { amp: authored.amp, durationMs: authored.durationMs, dir: undefined, style: "omni" as const, kick: 0 }
+          ? omni(authored)
           : null;
-    if (kick) {
-      const k = kick;
-      this.frameKicks++; // only a kick that actually fired spends crowd budget
-      this.cameraRig.addShake(k.amp, k.durationMs, { dir: k.dir, style: k.style, kick: k.kick });
+    // ⛔ **只能有一個 `.addShake(` 呼叫點**（`combatCameraWiring.test.ts` 在守，
+    //    防「同一次命中震兩下」）⇒ 逐格的那幾發也走這一個迴圈。
+    for (let p = 0; p < Math.max(1, this.viewports.count); p++) {
+      const cue = p === 0 ? null : this.drainAuthoredShake(p);
+      const k = p === 0 ? kick : cue ? omni(cue) : null;
+      if (!k) continue;
+      // crowd budget 是**第一格**的概念（planCameraReaction 只替 player 0 排隊）
+      if (p === 0) this.frameKicks++;
+      const cameraRig = this.viewports.rigFor(p);
+      cameraRig.addShake(k.amp, k.durationMs, { dir: k.dir, style: k.style, kick: k.kick });
     }
     if (reaction.exPunch) {
       this.lastExPunchMs = nowMs;
