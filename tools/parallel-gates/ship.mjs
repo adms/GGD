@@ -38,15 +38,17 @@
  *
  * ⚠️ ⭐ **suites／typecheck 的旗標是給 `pnpm ship`（自動分級）用的,⛔ 不是給人手打的。**
  * 誰該跑由 `tools/deploy-timing/shipPlan.mjs` 從**路徑集合**推導 ——
- * 而**並行段的預設（不帶旗標）永遠是全跑**：一支「預設就在打折」的閘等於沒有閘。
+ * 而**不知道路徑集合時永遠是全跑**：一支「預設就在打折」的閘等於沒有閘。
+ * ⭐ vitest 也讀**同一份**路徑集合按 package.json 依賴閉包裁包（`suiteTrim`）——
+ * 對不到規則的任何一條路徑 ⇒ 全包,判準逐字不動,裁的只有「跑不跑」。
  * ⭐ 序列段的 `--sync-base` 例外地**有預設**（`origin/main`,理由寫在 syncBase 那一段）——
  * 那⛔ 不是打折:裁剪只裁「跑不跑」,每一支的判準逐字不動,而且五道 fail-closed 全往「全跑」倒。
  * ⛔ 認不得的包名一律回非零,⛔ 不靜默略過(那會變成「我以為它跑了」)。
  */
 import { execFileSync, spawn } from "node:child_process";
-import { mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { cpus } from "node:os";
-import { packagesWithVitest } from "./packages.mjs";
+import { packagesWithVitest, suitesForPaths } from "./packages.mjs";
 import { planFromPaths } from "./syncPlan.mjs";
 import { appendStage } from "../deploy-timing/run.mjs";
 
@@ -59,45 +61,8 @@ const onlySync = argv.includes("--only-sync");
 const noTypecheck = argv.includes("--no-typecheck");
 
 const ALL_SUITES = packagesWithVitest(REPO);
-/** `--suites a,b` ⇒ 只跑這幾包。⛔ 不給就是**全部**(⛔ 預設不打折)。 */
-const wantSuites = (() => {
-  const i = argv.indexOf("--suites");
-  if (i < 0) return ALL_SUITES;
-  const want = (argv[i + 1] ?? "").split(",").map((s) => s.trim()).filter(Boolean);
-  const bad = want.filter((s) => !ALL_SUITES.includes(s));
-  if (!want.length || bad.length) {
-    // ⛔ fail-closed:認不得的名字**不可以**被當成「那就不跑」——
-    //    包改名之後那一包會靜默消失,而出貨前它一次都不會紅。
-    console.error(`⛔ --suites 認不得: ${bad.join(",") || "(空的)"}\n   有 vitest 的包: ${ALL_SUITES.join(" · ")}`);
-    process.exit(2);
-  }
-  return want;
-})();
-
-/**
- * 每一包 vitest 分到幾個 fork。⭐ 從**核數**與**同時在跑幾包**推導,
- * ⛔ 不是抄各自 config 裡的 16（那個數字是「單獨跑這一包」時才對）。
- */
-const SUITE_COUNT = wantSuites.length;
 const SHIP_LIMIT = Number(process.env.GGD_SHIP_CONCURRENCY ?? Math.max(2, cpus().length - 2));
-/**
- * ⭐ **兩倍超訂**（`cpus × 2 ÷ 包數`），⛔ 不是 `cpus ÷ 包數`。
- *
- * 三個量到的點（2026-08-23，18 核）決定了這個係數：
- *   · **不設限**（每包照自己 config 的 16）⇒ 112 fork 搶 18 核 ⇒ 並行段 wall **218.8s**，
- *     ⛔ 但 `mobWavesSave` 從 885ms 飄到 **5472ms** 撞破 5 秒額度
- *   · **`cpus ÷ 包數 = 2`** ⇒ 逐包序列化，`packages/shared` 光自己就要 ≈730 CPU-秒 ÷ 2
- *     ⇒ 並行段會**比不設限還久**
- *   · ⇒ **×2 超訂 = 每包 5** —— vitest 的 fork 多數時間在等 I/O 與 transform，
- *     超訂拿得到吞吐，而 5 × 7 = 35 個 fork 對 18 核不會把單條測試餓到破額度
- *
- * ⛔ 覆寫 `minForks` 是必要的：各包 config 寫 `minForks: 4`，而
- * `min > max` 會讓 vitest 直接 `RangeError` 收工（⛔ 不是慢，是一條測試都不跑）。
- */
-const FORKS_PER_SUITE = Math.max(
-  4,
-  Math.floor((cpus().length * 2) / Math.max(1, Math.min(SHIP_LIMIT, SUITE_COUNT))),
-);
+// ⭐ vitest 選哪幾包（`suiteTrim`）住在 syncPaths **之後** —— 它讀同一份路徑集合。
 
 /**
  * ⭐⭐ **序列段的 `skills:sync` 會按改動裁剪** —— owner 2026-08-23 逐字：
@@ -230,6 +195,68 @@ const syncTrim = (() => {
   }
 })();
 
+/**
+ * ⭐⭐ **vitest 按依賴方向裁包** —— 七包全跑 237s,而依賴方向是**單向**的:
+ * apps/* 依賴 packages/shared,⛔ 反過來沒有 ⇒ 只動 apps/client 時,
+ * 其他包**結構上不可能**被它弄壞,跑它們是純等待（owner 北極星:3 分鐘出貨）。
+ *
+ * ── 誰贏 ────────────────────────────────────────────────────────────────
+ *   `--suites a,b`       pipeline(shipPlan)算好的 ⇒ 照單全收（fail-closed 驗名字）
+ *   沒旗標＋有路徑集合    ⭐ `suitesForPaths()`（packages.mjs）—— 依賴邊逐份讀
+ *                        package.json 的 dependencies 取**遞移閉包**,⛔ 沒有手寫表
+ *   沒旗標＋沒路徑集合    ⛔ **全包**（⛔ 不知道改了什麼就不打折）
+ *
+ * ⛔ 裁的只有「跑不跑」:每一包 vitest 的指令、判準、離開碼逐字不動;
+ * fail-closed 的每一個入口（content/ · 對不到 package · 對不到規則 · 擲例外）
+ * 全部往「全包」倒 —— 理由逐條寫在 `suitesForPaths` 檔頭。
+ */
+const suiteTrim = (() => {
+  const i = argv.indexOf("--suites");
+  if (i >= 0) {
+    const want = (argv[i + 1] ?? "").split(",").map((s) => s.trim()).filter(Boolean);
+    const bad = want.filter((s) => !ALL_SUITES.includes(s));
+    if (!want.length || bad.length) {
+      // ⛔ fail-closed:認不得的名字**不可以**被當成「那就不跑」——
+      //    包改名之後那一包會靜默消失,而出貨前它一次都不會紅。
+      console.error(`⛔ --suites 認不得: ${bad.join(",") || "(空的)"}\n   有 vitest 的包: ${ALL_SUITES.join(" · ")}`);
+      process.exit(2);
+    }
+    return { suites: want, extras: [], why: "--suites 指定(pipeline 算好的)" };
+  }
+  if (!syncPaths) return { suites: ALL_SUITES, extras: [], why: "⛔ 不知道這一次改了哪些路徑 ⇒ 全包" };
+  try {
+    const p = suitesForPaths(syncPaths, REPO);
+    if (!p.suites) return { suites: ALL_SUITES, extras: [], why: `⛔ 全包 —— ${p.why}` };
+    return { suites: p.suites, extras: p.extras, why: `⭐ ${p.why}` };
+  } catch (e) {
+    return { suites: ALL_SUITES, extras: [], why: `⛔ 算不出依賴閉包(${String(e)}) ⇒ 全包` };
+  }
+})();
+const wantSuites = suiteTrim.suites;
+
+/**
+ * 每一包 vitest 分到幾個 fork。⭐ 從**核數**與**同時在跑幾包**推導,
+ * ⛔ 不是抄各自 config 裡的 16（那個數字是「單獨跑這一包」時才對）。
+ *
+ * ⭐ **兩倍超訂**（`cpus × 2 ÷ 包數`），⛔ 不是 `cpus ÷ 包數`。
+ *
+ * 三個量到的點（2026-08-23，18 核）決定了這個係數：
+ *   · **不設限**（每包照自己 config 的 16）⇒ 112 fork 搶 18 核 ⇒ 並行段 wall **218.8s**，
+ *     ⛔ 但 `mobWavesSave` 從 885ms 飄到 **5472ms** 撞破 5 秒額度
+ *   · **`cpus ÷ 包數 = 2`** ⇒ 逐包序列化，`packages/shared` 光自己就要 ≈730 CPU-秒 ÷ 2
+ *     ⇒ 並行段會**比不設限還久**
+ *   · ⇒ **×2 超訂 = 每包 5** —— vitest 的 fork 多數時間在等 I/O 與 transform，
+ *     超訂拿得到吞吐，而 5 × 7 = 35 個 fork 對 18 核不會把單條測試餓到破額度
+ *
+ * ⛔ 覆寫 `minForks` 是必要的：各包 config 寫 `minForks: 4`，而
+ * `min > max` 會讓 vitest 直接 `RangeError` 收工（⛔ 不是慢，是一條測試都不跑）。
+ */
+const SUITE_COUNT = wantSuites.length;
+const FORKS_PER_SUITE = Math.max(
+  4,
+  Math.floor((cpus().length * 2) / Math.max(1, Math.min(SHIP_LIMIT, SUITE_COUNT))),
+);
+
 /** 序列段:全域鎖。⛔ 順序有意義（`contract:numbers` 在 `content:build` 之後）。 */
 // ⚠️⚠️ ⛔ **不可以**把計畫裡的 `content:build` 濾掉再靠開頭那一支頂替 ——
 //    開頭那一支跑在 `tiers:apply`／`skillremake:json` **之前**,它讀到的是**還沒被重寫**
@@ -265,6 +292,17 @@ const PARALLEL = [
     cmd: ["npx", ["vitest", "run", "--root", r, "--poolOptions.forks.maxForks", String(FORKS_PER_SUITE),
       "--poolOptions.forks.minForks", "1"]],
   })),
+  // ⭐ 被改到的 tool **自己的測試**（`suitesForPaths` 的 extras）——
+  //    tools/ 不在上面那份掃描裡,⛔ 不跑它們就是「動了產生器而它的守衛一次都不會紅」。
+  //    有 package.json 的用 `--root`（findUp 會撿到它自己的 config）,沒有的走根 config。
+  ...suiteTrim.extras
+    .filter((d) => d !== "tools/deploy-timing") // 上面那格永遠在跑,⛔ 不重複
+    .map((d) => ({
+      name: `vitest ${d}`,
+      cmd: existsSync(`${REPO}${d}/package.json`)
+        ? ["npx", ["vitest", "run", "--root", d]]
+        : ["npx", ["vitest", "run", d]],
+    })),
 ];
 
 // ⭐ `--list` 印出**這一次真的會跑哪幾支**然後收工（⛔ 一支都不跑）。
@@ -321,7 +359,7 @@ if (!noSync) {
 if (!onlySync) {
   const limit = SHIP_LIMIT;
   console.log(
-    `⚡ 並行段 ${PARALLEL.length} 支 · 上限 ${limit} · 每包 ${FORKS_PER_SUITE} forks（${cpus().length} 核 ÷ ${SUITE_COUNT} 包）· ⛔ 不 fail-fast`,
+    `⚡ 並行段 ${PARALLEL.length} 支 · 上限 ${limit} · 每包 ${FORKS_PER_SUITE} forks（${cpus().length} 核 ÷ ${SUITE_COUNT} 包）· ⛔ 不 fail-fast\n   vitest 裁包: ${suiteTrim.why}`,
   );
   const queue = [...PARALLEL];
   const workers = Array.from({ length: Math.min(limit, queue.length) }, async () => {

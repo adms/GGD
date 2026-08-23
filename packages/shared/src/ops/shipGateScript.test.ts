@@ -16,7 +16,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
-import { packagesWithVitest } from "../../../../tools/parallel-gates/packages.mjs";
+import { packagesWithVitest, suitesForPaths } from "../../../../tools/parallel-gates/packages.mjs";
 
 const REPO = join(__dirname, "../../../..");
 const code = readFileSync(join(REPO, "tools/parallel-gates/ship.mjs"), "utf8");
@@ -95,7 +95,9 @@ describe("pnpm ship:check", () => {
     () => {
       // ⭐ 跑**出貨的那一支**（`--list` 只印決定,一支閘都不跑）,⛔ 不是 regex 掃原始碼
       //（失敗形態⑥）。stdout 是給機器逐行 parse 的名單,裁剪的決定印在 stderr。
-      const env = { ...process.env, GGD_SYNC_FETCH_TIMEOUT_MS: "8000" };
+      // ⚠️ 型別要標回 ProcessEnv:這一版 TS 的 spread 會把 index signature 掉掉,
+      //    下一行的 `delete env.GGD_DEPLOYED_REF` 就 TS2339 —— 全 repo typecheck 一起紅。
+      const env: NodeJS.ProcessEnv = { ...process.env, GGD_SYNC_FETCH_TIMEOUT_MS: "8000" };
       delete env.GGD_DEPLOYED_REF; // 這一條測的正是「什麼都沒給」的預設
       const r = spawnSync("node", ["tools/parallel-gates/ship.mjs", "--list"], {
         cwd: REPO,
@@ -118,6 +120,57 @@ describe("pnpm ship:check", () => {
     },
     30000,
   );
+
+  it("★ vitest 按依賴方向裁包 —— 依賴邊從 package.json 推導,⛔ 不是手寫表", () => {
+    // ⭐ 跑**出貨的那一支**推導器（失敗形態⑤），斷言的是「關係」⛔ 不是包名清單。
+    const all: string[] = packagesWithVitest(REPO);
+    const pkgOf = (dir: string) =>
+      JSON.parse(readFileSync(join(REPO, dir, "package.json"), "utf8")) as {
+        name: string;
+        dependencies?: Record<string, string>;
+        devDependencies?: Record<string, string>;
+      };
+    // 測試自己**獨立**重推一份遞移依賴（兩份推導必須相等,任何一邊手寫都會在這裡撞牆）
+    const depends = (dir: string, target: string, seen = new Set<string>()): boolean => {
+      if (seen.has(dir)) return false;
+      seen.add(dir);
+      const deps = Object.keys({ ...pkgOf(dir).dependencies, ...pkgOf(dir).devDependencies });
+      if (deps.includes(target)) return true;
+      return all.some((d) => deps.includes(pkgOf(d).name) && depends(d, target, seen));
+    };
+
+    // ① 只動一個 app ⇒ 回來的每一包,要嘛是它自己,要嘛(遞移)依賴它 —— 其餘結構上不可能被弄壞
+    const app = all.find((d) => d.startsWith("apps/"))!;
+    const solo = suitesForPaths([`${app}/src/whatever.ts`], REPO);
+    expect(solo.suites, `fail-closed 全包了: ${solo.why}`).not.toBeNull();
+    expect(solo.suites).toContain(app);
+    for (const s of solo.suites!.filter((s) => s !== app)) {
+      expect(depends(s, pkgOf(app).name), `${s} 不依賴 ${pkgOf(app).name} 卻被排進來`).toBe(true);
+    }
+
+    // ② 動一個被依賴的包 ⇒ **每一個**遞移依賴它的 vitest 包都要在場（漏一包＝它的紅燈出貨前不會出現）
+    const lib = all.find((d) => d.startsWith("packages/"))!;
+    const up = suitesForPaths([`${lib}/src/whatever.ts`], REPO);
+    for (const s of all) {
+      if (s === lib || depends(s, pkgOf(lib).name)) {
+        expect(up.suites === null || up.suites.includes(s), `${s} 依賴 ${lib} 卻被裁掉了`).toBe(true);
+      }
+    }
+
+    // ③ fail-closed:content/（每個 runtime 載入時吃）與對不到規則的路徑 ⇒ 全包
+    expect(suitesForPaths(["content/config/x.json"], REPO).suites).toBeNull();
+    expect(suitesForPaths(["scripts/release.sh"], REPO).suites).toBeNull();
+    expect(suitesForPaths([`${app}/src/a.ts`, "content/config/b.json"], REPO).suites).toBeNull();
+
+    // ④ tools/ ⇒ ops 守衛的宿主（推導:有 src/ops 的包）,⛔ 不是空集合
+    const tool = suitesForPaths(["tools/parallel-gates/ship.mjs"], REPO);
+    expect(tool.suites!.length).toBeGreaterThan(0);
+    for (const s of tool.suites!) expect(existsSync(join(REPO, s, "src/ops"))).toBe(true);
+
+    // ⑤ ship.mjs 真的用它,而且沒路徑集合時落回全包（⛔ 預設不打折）
+    expect(/suitesForPaths\(syncPaths, REPO\)/.test(code)).toBe(true);
+    expect(/不知道這一次改了哪些路徑 ⇒ 全包/.test(code)).toBe(true);
+  });
 
   it("`pnpm ship:check` 這個入口真的存在", () => {
     const pkg = JSON.parse(readFileSync(join(REPO, "package.json"), "utf8")) as {

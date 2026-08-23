@@ -29,3 +29,109 @@ export function packagesWithVitest(repo) {
   }
   return out;
 }
+
+/** dir 底下有沒有 vitest 認得的測試檔（⛔ 不掃 node_modules／out／dist —— w3x-import 的傾印有十萬行）。 */
+function hasTestFiles(dir, depth = 0) {
+  if (depth > 3 || !existsSync(dir)) return false;
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    if (e.isFile() && /\.(test|spec)\.[cm]?[jt]sx?$/.test(e.name)) return true;
+    if (
+      e.isDirectory() &&
+      !["node_modules", "out", "dist", ".git"].includes(e.name) &&
+      hasTestFiles(`${dir}/${e.name}`, depth + 1)
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * ⭐⭐ **「這批路徑可能弄壞哪幾包 vitest」—— 依賴方向從 package.json 推導。**
+ *
+ * 七包全跑 237s,而依賴方向是**單向**的:apps/* 依賴 packages/shared,⛔ 反過來沒有。
+ * ⇒ 只動 apps/client 時,其他包**結構上不可能**被它弄壞 —— 跑它們是純等待。
+ *
+ * ⛔ **這裡一行手寫的「誰依賴誰」都沒有**:依賴邊逐份讀 package.json 的
+ * dependencies/devDependencies/peerDependencies,取**遞移閉包** ——
+ * 手寫那張表在包搬家／加依賴的那一天就開始說謊,而且⛔ 不會有東西紅。
+ *
+ * ── fail-closed:四個入口全部往「全包」（`suites: null`）倒 ─────────────────
+ *   · `content/` 動了            —— 每一個 runtime 都在載入時吃它,package.json 看不見這條邊
+ *   · apps/／packages/ 底下對不到任何 package 的路徑
+ *   · `tools/` 動了但掃不到 ops 守衛的宿主
+ *   · 任何其他對不到規則的路徑（docs/·scripts/·根設定…）
+ *
+ * @param {string[]} paths git diff 的路徑集合（repo 相對）
+ * @param {string} repo repo 根
+ * @returns {{suites: string[]|null, extras: string[], why: string}}
+ *   `suites: null` = 全包（fail-closed）。`extras` = 被改到、而且自己有測試檔的 tools/ 目錄。
+ */
+export function suitesForPaths(paths, repo) {
+  const base = repo.endsWith("/") ? repo : `${repo}/`;
+  const all = packagesWithVitest(repo);
+  // 名字↔目錄與**直接**依賴邊,全部從 package.json 讀出來
+  const byDir = new Map();
+  for (const r of ["apps", "packages"]) {
+    const root = `${base}${r}`;
+    if (!existsSync(root)) continue;
+    for (const name of readdirSync(root).sort()) {
+      const p = `${root}/${name}/package.json`;
+      if (!existsSync(p)) continue;
+      const j = JSON.parse(readFileSync(p, "utf8"));
+      const deps = new Set();
+      for (const k of ["dependencies", "devDependencies", "peerDependencies"])
+        for (const d of Object.keys(j[k] ?? {})) deps.add(d);
+      byDir.set(`${r}/${name}`, { name: j.name, deps });
+    }
+  }
+  const dirOfName = new Map([...byDir].map(([dir, v]) => [v.name, dir]));
+  /** dir 是否（遞移地）依賴叫 targetName 的包 */
+  const dependsOn = (dir, targetName, seen = new Set()) => {
+    if (seen.has(dir)) return false;
+    seen.add(dir);
+    const v = byDir.get(dir);
+    if (!v) return false;
+    if (v.deps.has(targetName)) return true;
+    for (const d of v.deps) {
+      const dd = dirOfName.get(d);
+      if (dd && dependsOn(dd, targetName, seen)) return true;
+    }
+    return false;
+  };
+  // ⭐ 「ops 守衛住在哪」也是推導的:有 `src/ops` 的那（幾）包,⛔ 不寫包名字面值
+  const opsHosts = all.filter((d) => existsSync(`${base}${d}/src/ops`));
+
+  const need = new Set();
+  const extras = new Set();
+  for (const p of paths) {
+    if (p.startsWith("content/")) {
+      return { suites: null, extras: [], why: `content/ 動了(${p}) ⇒ 每一個 runtime 都在載入時吃它 ⇒ 全包` };
+    }
+    const m = /^(apps|packages)\/([^/]+)\//.exec(p);
+    if (m) {
+      const dir = `${m[1]}/${m[2]}`;
+      const v = byDir.get(dir);
+      if (!v) return { suites: null, extras: [], why: `${p} 對不到任何 package ⇒ 全包(fail-closed)` };
+      if (all.includes(dir)) need.add(dir);
+      for (const s of all) if (dependsOn(s, v.name)) need.add(s); // ⭐ 遞移依賴它的每一包
+      continue;
+    }
+    const t = /^tools\/([^/]+)\//.exec(p);
+    if (t) {
+      // ops 守衛（shipGateScript / hostDeployScript 那一族）驗的正是 tools/ 裡的腳本
+      if (!opsHosts.length) return { suites: null, extras: [], why: "掃不到 src/ops 的宿主 ⇒ 全包(fail-closed)" };
+      for (const h of opsHosts) need.add(h);
+      const tdir = `tools/${t[1]}`;
+      if (hasTestFiles(`${base}${tdir}`)) extras.add(tdir); // ＋該 tool 自己的測試
+      continue;
+    }
+    return { suites: null, extras: [], why: `${p} 對不到任何規則(${p.split("/")[0]}) ⇒ 全包(fail-closed)` };
+  }
+  const suites = [...need].sort();
+  return {
+    suites,
+    extras: [...extras].sort(),
+    why: `${paths.length} 個路徑 ⇒ 依賴閉包裁到 ${suites.length}/${all.length} 包${extras.size ? `＋tool 測試 ${[...extras].join(",")}` : ""}`,
+  };
+}
