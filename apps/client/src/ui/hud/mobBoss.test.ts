@@ -28,7 +28,7 @@
  */
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { describe, expect, it, beforeEach } from "vitest";
+import { describe, expect, it, beforeEach, vi } from "vitest";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { MOB_BOSS_SLAIN_EVENT, MOB_BOSS_SPAWN_EVENT } from "@ggd/shared/sim/mobBoss";
@@ -37,16 +37,15 @@ import { MOB_BOSS_SLAIN_EVENT, MOB_BOSS_SPAWN_EVENT } from "@ggd/shared/sim/mobB
 import { Configs } from "@ggd/shared/content";
 import { FANNED_OUT_EVENT_TYPES } from "../../../../game-server/src/net/eventFanout";
 import {
-  BOSS_BANNER_MS,
   BOSS_BANNER_TITLE,
   BOSS_COMPACT_H,
-  BOSS_EXIT_MS,
   BOSS_LAST_HIT_TAG,
   BOSS_MIN_W,
-  BOSS_SETTLEMENT_MS,
   BOSS_SETTLEMENT_TITLE,
+  DEFAULT_BOSS_FADE_MS,
   bossFullHeight,
   bossLifetime,
+  mobBossFade,
   bossRuleNote,
   bossRuleNoteShort,
   bossSettlementLayout,
@@ -101,6 +100,19 @@ import {
   type HudViewport,
 } from "./hudLayout";
 import { ABILITY_CLUSTER_H, ABILITY_CLUSTER_W } from "../controlLegendModel";
+
+/**
+ * #642 —— 出貨的 world-cues（半秒淡入／半秒淡出那兩格住在 `hud` 塊），餵給
+ * 出貨的 resolver。失敗形態⑤的守衛：被測的時間軸就是出貨 JSON 推出來的那一份，
+ * ⛔ 不是測試自己手寫的 500。
+ */
+const SHIPPED_WORLD_CUES = JSON.parse(
+  readFileSync(join(__dirname, "..", "..", "..", "..", "..", "content/config/world-cues.json"), "utf8"),
+) as Record<string, unknown>;
+
+/** 出貨時間軸的三個關鍵瞬間（全部從 config 推導，⛔ 不抄字面值）。 */
+const FADE = mobBossFade(SHIPPED_WORLD_CUES);
+const FADE_TOTAL_MS = FADE.fadeInMs + FADE.fadeOutMs;
 
 /**
  * The guard viewports, mirrored from hudLayout.test.ts / killCombo.test.ts —
@@ -437,26 +449,35 @@ describe("the wire → the store", () => {
  * ② LIFETIME  (failure ④: assert the NULL)
  * ═══════════════════════════════════════════════════════════════════════════ */
 
-describe("how long each beat stays up", () => {
+describe("how long each beat stays up (#642 半秒淡入半秒淡出)", () => {
   const spawn = (atMs: number) => parseMobBossEvent(spawnEv(), 2, atMs, 1)!;
   const slain = (atMs: number) => parseMobBossEvent(slainEv(), 2, atMs, 1)!;
 
-  it("the banner covers its own SOUND — a cue outliving its banner is the defect", () => {
-    // The owner asked for a 3-5 s horror cue and the shipped clip is 4.40 s.
-    // The banner must not vanish while the drone is still playing, so the hold
-    // is asserted against the FILE's measured duration, not against a comment.
-    expect(BOSS_BANNER_MS).toBeGreaterThanOrEqual(4400);
-    expect(BOSS_SETTLEMENT_MS).toBeGreaterThanOrEqual(6000);
+  // ⚠️ 2026-08-24 之前這裡有一條「橫幅要蓋住自己的 4.40s 音效」的守衛。
+  // owner #642「太佔螢幕 說明半秒淡出半秒就好」取代了它：音效照播，
+  // 畫面刻意不再陪它到底。被取代的規則記在 mobBossModel.ts 的檔頭。
+
+  it("fades IN, fades OUT, then is GONE — both edges come off world-cues", () => {
+    // ⛔ 不釘 0.5 這個數字（那是 owner 的旋鈕）—— 邊界從出貨 config 推導。
+    expect(FADE_TOTAL_MS).toBeGreaterThan(0);
+    expect(bossLifetime(spawn(0), 0, FADE)!.phase).toBe("in");
+    expect(bossLifetime(spawn(0), FADE.fadeInMs - 1, FADE)!.phase).toBe("in");
+    expect(bossLifetime(spawn(0), FADE.fadeInMs + 1, FADE)!.phase).toBe("out");
+    expect(bossLifetime(spawn(0), FADE_TOTAL_MS + 1, FADE)).toBeNull();
+    // 結算面板吃**同一對**旋鈕 —— owner 那句話點名的是兩張橫幅
+    expect(bossLifetime(slain(0), FADE.fadeInMs + 1, FADE)!.phase).toBe("out");
+    expect(bossLifetime(slain(0), FADE_TOTAL_MS + 1, FADE)).toBeNull();
   });
 
-  it("holds, then exits, then is GONE (the null is the assertion)", () => {
-    expect(bossLifetime(spawn(0), 0)!.phase).toBe("live");
-    expect(bossLifetime(spawn(0), BOSS_BANNER_MS - 1)!.phase).toBe("live");
-    expect(bossLifetime(spawn(0), BOSS_BANNER_MS + 1)!.phase).toBe("out");
-    expect(bossLifetime(spawn(0), BOSS_BANNER_MS + BOSS_EXIT_MS + 1)).toBeNull();
-    // the settlement holds longer than the banner — two different beats
-    expect(bossLifetime(slain(0), BOSS_BANNER_MS + BOSS_EXIT_MS + 1)!.phase).toBe("live");
-    expect(bossLifetime(slain(0), BOSS_SETTLEMENT_MS + BOSS_EXIT_MS + 1)).toBeNull();
+  it("opacity 兩段斜坡：掛載 0 → 中點半亮 → 終點 0", () => {
+    expect(bossLifetime(spawn(0), 0, FADE)!.opacity).toBe(0);
+    const midIn = bossLifetime(spawn(0), FADE.fadeInMs / 2, FADE)!;
+    expect(midIn.opacity).toBeGreaterThan(0.4);
+    expect(midIn.opacity).toBeLessThan(0.6);
+    const midOut = bossLifetime(spawn(0), FADE.fadeInMs + FADE.fadeOutMs / 2, FADE)!;
+    expect(midOut.opacity).toBeGreaterThan(0.4);
+    expect(midOut.opacity).toBeLessThan(0.6);
+    expect(bossLifetime(spawn(0), FADE_TOTAL_MS, FADE)!.opacity).toBe(0);
   });
 
   it("a backwards clock shows NOTHING rather than a stuck panel", () => {
@@ -464,11 +485,12 @@ describe("how long each beat stays up", () => {
     expect(bossLifetime(null, 0)).toBeNull();
   });
 
-  it("the exit fades to zero and never below it", () => {
-    const half = bossLifetime(spawn(0), BOSS_BANNER_MS + BOSS_EXIT_MS / 2)!;
-    expect(half.opacity).toBeGreaterThan(0.4);
-    expect(half.opacity).toBeLessThan(0.6);
-    expect(bossLifetime(spawn(0), BOSS_BANNER_MS + BOSS_EXIT_MS)!.opacity).toBe(0);
+  it("兩格都 0 ＝ 一鍵關（什麼都不畫，⛔ 不是除以零）；resolver 缺格退回出貨、界外夾回", () => {
+    expect(bossLifetime(spawn(0), 0, { fadeInMs: 0, fadeOutMs: 0 })).toBeNull();
+    expect(mobBossFade(undefined)).toEqual(DEFAULT_BOSS_FADE_MS);
+    const clamped = mobBossFade({ hud: { mobBossFadeInSec: 99, mobBossFadeOutSec: -3 } });
+    expect(clamped.fadeInMs).toBe(10000);
+    expect(clamped.fadeOutMs).toBe(0);
   });
 });
 
@@ -747,10 +769,35 @@ describe("the mounted HUD really paints it", () => {
   });
 
   it("the container RETIRES a stale beat (it asks the clock, every poll)", () => {
-    beat(slainEv(), BOSS_SETTLEMENT_MS + BOSS_EXIT_MS + 500);
+    beat(slainEv(), FADE_TOTAL_MS + 500);
     expect(renderOverlay()).toBe("");
     beat(slainEv(), 0);
     expect(visibleText(renderOverlay())).toContain(BOSS_SETTLEMENT_TITLE);
+  });
+
+  it("#642 掛載→淡出的時序 — fake timers 走一遍出貨容器的整條時間軸", () => {
+    // ⚠️ THE MUTATION（一批一條）：bossLifetime 裡 `if (age > inMs + outMs …)
+    //    return null` 那一行拿掉 → 最後一個斷言紅（橫幅永遠掛著 ——
+    //    owner 抱怨「太佔螢幕」的極端型）。改壞淡入斜坡則死在 opacity 斷言。
+    Configs.register(SHIPPED_WORLD_CUES as never); // 出貨 JSON 進真的 registry
+    const opacityOf = (html: string): number =>
+      Number(/opacity:([\d.]+)/.exec(html)?.[1] ?? NaN);
+    vi.useFakeTimers({ toFake: ["performance"] });
+    try {
+      inCombat();
+      beat(spawnEv()); // 掛載：fake 時鐘凍住，age = 0
+      const at0 = renderOverlay();
+      expect(at0).toContain('data-mob-boss="banner"');
+      expect(opacityOf(at0)).toBe(0); // 淡入從全透明開始
+      vi.advanceTimersByTime(FADE.fadeInMs / 2);
+      expect(opacityOf(renderOverlay())).toBeCloseTo(0.5, 1); // 淡入中
+      vi.advanceTimersByTime(FADE.fadeInMs / 2 + FADE.fadeOutMs / 2);
+      expect(opacityOf(renderOverlay())).toBeCloseTo(0.5, 1); // 已在淡出
+      vi.advanceTimersByTime(FADE.fadeOutMs / 2 + 1);
+      expect(renderOverlay()).toBe(""); // 淡完就走 —— 「太佔螢幕」的修法本體
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it("combat ONLY — a live beat paints in no other phase", () => {
@@ -958,7 +1005,7 @@ describe("only YOUR arena's king reaches your screen", () => {
     // rest of the match, and nothing noticed.
     inCombat({ localSeatId: 2, killCombo: { count: 5, atMs: comboNowMs(), seq: 1 } });
     atViewport(812, 375, () => {
-      beat(spawnEv({ zone: 0 }), BOSS_BANNER_MS + BOSS_EXIT_MS + 5000);
+      beat(spawnEv({ zone: 0 }), FADE_TOTAL_MS + 5000);
       expect(renderCombo(), "a long-dead king still owns the corridor").not.toBe("");
       beat(spawnEv({ zone: 0 }), 0);
       expect(renderCombo()).toBe(""); // …and a LIVE one still does take it

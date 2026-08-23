@@ -125,11 +125,42 @@ const zLineCue = z
   })
   .strict();
 
+/**
+ * **HUD 橫幅**的時間包絡 —— ⛔ 不是世界座標上的一團，是螢幕上那兩張橫幅
+ * （殭屍王降臨 / 分紅結算面板）「多快出現、多快離開」。
+ *
+ * owner 2026-08-24（GH#642，逐字）：
+ * > 「殭屍王介紹 特殊殭屍結算 太佔螢幕 說明半秒淡出半秒就好」
+ *
+ * ⭐ 所以**淡入＋淡出就是橫幅的全部壽命** —— 中間沒有「停住」的一段。
+ * 這推翻了 2026-07-28 的「橫幅要蓋住 4.4 秒恐怖音效」規則（音效照播，
+ * 畫面刻意不再陪它到底）—— 被取代的理由留在 `mobBossModel.ts` 的檔頭。
+ */
+const zHudCues = z
+  .object({
+    /**
+     * 兩張橫幅從透明淡入到全亮要幾**秒**。0 = 一出現就全亮。
+     * ⚠️ 兩格都是 0 ⇒ 橫幅完全不畫（獎金照發、事件照送，只是沒有畫面說明）。
+     */
+    mobBossFadeInSec: z.number().min(0).max(10),
+    /** 兩張橫幅從全亮淡回透明要幾**秒**。玩家能讀字的時間大約就在這一段。 */
+    mobBossFadeOutSec: z.number().min(0).max(10),
+  })
+  .strict();
+
 export const zConfigWorldCuesDoc = z
   .object({
     id: zId,
     schema: z.literal("config.world-cues@1"),
     note: z.string().optional(),
+    /**
+     * HUD 橫幅的淡入／淡出（見 {@link zHudCues}）。
+     * ⚠️ **optional 是刻意的**：`apps/client/src/vfx/worldCues.ts` 的
+     * `readWorldCues` 只重建 `point`/`line`（世界演出那條路），這一塊由
+     * `mobBossModel.mobBossFade()` 自己逐格讀、缺格退回 `DEFAULT_WORLD_CUES` ——
+     * 舊的後台 override 少了這一塊也不會把整份表拖下水。
+     */
+    hud: zHudCues.optional(),
     /**
      * 一個座標上的一次性爆發。**鍵就是事件名**，逐字等於 sim `world.emit` 的
      * 第一個參數 —— ⛔ 不是一個要再對照一次的代號。
@@ -180,6 +211,9 @@ export type WorldPointCue = z.infer<typeof zPointCue>;
 /** 一列線演出。 */
 export type WorldLineCue = z.infer<typeof zLineCue>;
 
+/** HUD 橫幅的淡入／淡出兩格（GH#642）。 */
+export type WorldHudCues = z.infer<typeof zHudCues>;
+
 /**
  * 出貨預設 —— `content/config/world-cues.json` 讀不到（舊部署／內容掛掉／被存壞的
  * override）時 `readWorldCues` 回退到的就是這一份。
@@ -191,9 +225,12 @@ export type WorldLineCue = z.infer<typeof zLineCue>;
  * 實體。它只決定「那一刻看不看得見」。讀不到內容就靜音掉整批演出，是把一個內容
  * 故障翻譯成「這七件事又回到不存在」—— 而那正是這一版在修的東西。
  */
-export const DEFAULT_WORLD_CUES: ConfigWorldCuesDoc = {
+export const DEFAULT_WORLD_CUES: ConfigWorldCuesDoc & { hud: WorldHudCues } = {
   id: "world-cues",
   schema: "config.world-cues@1",
+  // GH#642 owner 2026-08-24「說明半秒淡出半秒就好」—— 半秒淡入＋半秒淡出，
+  // 淡完就退場（沒有停住的一段）。兩格都住後台「世界演出」頁。
+  hud: { mobBossFadeInSec: 0.5, mobBossFadeOutSec: 0.5 },
   point: {
     // 破土：貼地、土色、輕。一波 20 隻同時冒出來，重版會變成一堵牆。
     // ⛔⛔ 2026-08-23 出貨改 `false`（owner 逐字「**請你預設關閉**」）——

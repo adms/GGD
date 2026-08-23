@@ -104,6 +104,7 @@ import { legendObstacleRects } from "./killComboModel";
 import { Configs } from "@ggd/shared/content";
 import {
   DEFAULT_MOB_SETTLEMENT_WORDING,
+  DEFAULT_WORLD_CUES,
   mobSettlementWordingFromDoc,
   type MobSettlementMode,
   type MobSettlementWording,
@@ -117,39 +118,76 @@ export type { MobSettlementMode, MobSettlementWording };
  * ═══════════════════════════════════════════════════════════════════════════ */
 
 /**
- * How long the 降臨 banner holds, in ms.
+ * ⛔⛔ **這一段在 2026-08-24（GH#642）被 owner 的一句話整個換掉了**：
  *
- * PINNED TO THE SOUND, not picked: the owner asked for a 3-5 second horror cue
- * and the shipped clip is 4.40 s (content/assets/audio/sfx/fx/boss-horror.mp3).
- * A banner shorter than its own sound leaves the last second of dread playing
- * over an empty screen, which reads as a stray sound rather than as an event.
- * `bossSfxDuration.test.ts` measures the mp3 and this is asserted to cover it.
+ * > 「殭屍王介紹 特殊殭屍結算 太佔螢幕 說明半秒淡出半秒就好」
+ *
+ * 在此之前這裡是兩個 hold 常數：橫幅 4,600ms（釘在 4.40s 恐怖音效上 ——
+ * 「a banner shorter than its own sound leaves the last second of dread playing
+ * over an empty screen」）與結算 8,200ms（讓表比 6.00s 中獎音效多活兩秒），
+ * 加一段 480ms 的退場。⭐ 那條「橫幅要蓋住自己的音效」規則**被 #642 取代**
+ * （第〇·六守則：新版說明贏；被取代的知識留在這裡，⛔ 不無聲消失）——
+ * 音效照播 4.4s，畫面刻意不再陪它到底。
+ *
+ * 現在的時間軸只有兩段，**兩格都是後台欄位**（`world-cues` 的 `hud` 塊，
+ * 三住處：`content/config/world-cues.json` ＋ `DEFAULT_WORLD_CUES` ＋
+ * 後台「世界演出」頁）：
+ *
+ *   [0, fadeIn)              phase "in"  — opacity 0 → 1
+ *   [fadeIn, fadeIn+fadeOut) phase "out" — opacity 1 → 0
+ *   之後                     null（消失；⭐ 過期的 null 是承重斷言）
+ *
+ * ⭐ **淡入＋淡出就是全部壽命** —— 沒有「停住」的一段。owner 嫌太佔螢幕的正是
+ * 停住的那一段。想要舊的存在感，後台把淡出調大就是了（一格下拉，不用部署）。
+ * ⚠️ 兩格都調 0 ⇒ 整個演出不畫（獎金照發）—— 那是一鍵關，不是缺陷。
  */
-export const BOSS_BANNER_MS = 4600;
-
-/**
- * How long the 分紅結算 panel holds. The jackpot cue is 6.00 s and the panel
- * is a TABLE the player has to read mid-fight, so it outlives the sound by a
- * couple of seconds rather than vanishing on the last chord.
- */
-export const BOSS_SETTLEMENT_MS = 8200;
-
-/** Shrink-and-fade exit, after the hold. Same idea as KILL_COMBO_EXIT_MS. */
-export const BOSS_EXIT_MS = 480;
 
 /** How often the container re-asks 「am I still up?」 (no per-frame stream). */
 export const BOSS_POLL_MS = 100;
 
-export type BossPhase = "live" | "out";
+export type BossPhase = "in" | "out";
 
-/** The hold window for a beat — exported so the test cannot restate it. */
-export function bossHoldMs(kind: MobBossView["kind"]): number {
-  return kind === "spawn" ? BOSS_BANNER_MS : BOSS_SETTLEMENT_MS;
+/** `world-cues` 這份 config 文件的 id（後台「世界演出」頁編輯的那一份）。 */
+export const WORLD_CUES_DOC_ID = "world-cues";
+
+/** 兩張橫幅的淡入／淡出，毫秒。 */
+export interface BossFadeMs {
+  fadeInMs: number;
+  fadeOutMs: number;
+}
+
+/** 出貨預設（秒 → 毫秒）—— 讀不到 `world-cues` 時退回的那一份。 */
+export const DEFAULT_BOSS_FADE_MS: BossFadeMs = {
+  fadeInMs: Math.round(DEFAULT_WORLD_CUES.hud.mobBossFadeInSec * 1000),
+  fadeOutMs: Math.round(DEFAULT_WORLD_CUES.hud.mobBossFadeOutSec * 1000),
+};
+
+/**
+ * #642 —— 生效中的淡入／淡出：後台 overlay ?? `content/config/world-cues.json`
+ * ?? {@link DEFAULT_BOSS_FADE_MS}。走 `Configs`（開機灌進去的那一份，和
+ * {@link mobSettlementWording} 同一條路），所以後台改完、玩家重新整理就換。
+ *
+ * ⚠️ **逐格 typeof，⛔ 不整份 parse** —— 理由與 `mobSettlementWordingFromDoc`
+ * 一字不差：world-cues 別的 block（點／線演出）有一格不合，不可以把這兩格
+ * 拖回出貨值。每格在這裡夾回 schema 的 0–10 秒（`tryGet` 走寬鬆路徑，沒跑 Zod）。
+ */
+export function mobBossFade(doc: unknown = Configs.tryGet(WORLD_CUES_DOC_ID)): BossFadeMs {
+  const dig = (obj: unknown, key: string): unknown =>
+    typeof obj === "object" && obj !== null ? (obj as Record<string, unknown>)[key] : undefined;
+  const hud = dig(doc, "hud");
+  const sec = (v: unknown, fallbackMs: number): number =>
+    typeof v === "number" && Number.isFinite(v)
+      ? Math.round(Math.min(10, Math.max(0, v)) * 1000)
+      : fallbackMs;
+  return {
+    fadeInMs: sec(dig(hud, "mobBossFadeInSec"), DEFAULT_BOSS_FADE_MS.fadeInMs),
+    fadeOutMs: sec(dig(hud, "mobBossFadeOutSec"), DEFAULT_BOSS_FADE_MS.fadeOutMs),
+  };
 }
 
 export interface BossLifetime {
   phase: BossPhase;
-  /** 0..1 — 1 while live, ramping to 0 across the exit */
+  /** 0..1 — ramping up across the fade-in, back down across the fade-out */
   opacity: number;
 }
 
@@ -159,17 +197,30 @@ export interface BossLifetime {
  * The expiry is the half that must never silently stop working: without it the
  * last king's settlement would sit over the rest of the match. So every expiry
  * test asserts the NULL, not the value.
+ *
+ * `fade` 預設讀生效中的 config —— 呼叫端（容器與 `KillCombo` 的讓位）不帶參數
+ * 就拿到同一份時間軸，⛔ 兩邊不可能算出不同的答案。
  */
-export function bossLifetime(view: MobBossView | null, nowMs: number): BossLifetime | null {
+export function bossLifetime(
+  view: MobBossView | null,
+  nowMs: number,
+  fade: BossFadeMs = mobBossFade(),
+): BossLifetime | null {
   if (!view) return null;
   const age = nowMs - view.atMs;
   // a clock that ran backwards shows nothing, never a stuck panel
   if (age < 0) return null;
-  const hold = bossHoldMs(view.kind);
-  if (age > hold + BOSS_EXIT_MS) return null;
-  const out = age > hold;
-  const exited = out ? (age - hold) / BOSS_EXIT_MS : 0;
-  return { phase: out ? "out" : "live", opacity: Math.max(0, Math.min(1, 1 - exited)) };
+  const inMs = Math.max(0, fade.fadeInMs);
+  const outMs = Math.max(0, fade.fadeOutMs);
+  // both zero = the owner turned the pair of banners OFF — draw nothing
+  if (age > inMs + outMs || inMs + outMs <= 0) return null;
+  if (age < inMs) {
+    return { phase: "in", opacity: Math.max(0, Math.min(1, age / Math.max(1, inMs))) };
+  }
+  return {
+    phase: "out",
+    opacity: Math.max(0, Math.min(1, 1 - (age - inMs) / Math.max(1, outMs))),
+  };
 }
 
 /**
@@ -182,7 +233,7 @@ export function bossLifetime(view: MobBossView | null, nowMs: number): BossLifet
  * here the wrong ARENA would」 — and the screen owes the same courtesy for a
  * strictly larger reason: this overlay eats the centre corridor AND the 連殺
  * counter yields to it. Un-gated, six players in arena B lose their counter and
- * a strip of HUD for 4.6 s + 8.2 s, to be told about a monster they cannot see,
+ * a strip of HUD for two full beats, to be told about a monster they cannot see,
  * cannot fight, and will never be paid by — with no sound, because the sound
  * was gated and the picture was not.
  *
@@ -496,7 +547,7 @@ export interface BossPlacementOpts {
   /**
    * #247 —— 殭屍王長血條 while it is up (`bossHealthBarModel.bossHealthBarSpec`), or
    * null. THE BAR OUTRANKS THIS OVERLAY: the bar is PERSISTENT (it lives as long
-   * as the king does) and this banner/panel is a 4.6 s / 8.2 s beat, so the
+   * as the king does) and this banner/panel is a ~1 s fade beat (#642), so the
    * transient yields — the same precedence, and the same mechanism, this file
    * already applies to the 連殺 counter one level down (`bossRect`).
    *
@@ -663,7 +714,7 @@ export function mobBossOverlayRect(
      *
      * ⚠️ 它在**這裡**而不是在元件裡分岐，因為連殺計數器的讓位
      * （`killComboRect({ bossRect })`）讀的是這一支的結果：`"off"` 的時候要真的
-     * 回 `null`，否則走廊被一個沒有人畫的矩形佔著，連殺計數器白白讓位 8 秒。
+     * 回 `null`，否則走廊被一個沒有人畫的矩形佔著，連殺計數器白白讓位一整拍。
      */
     settlementMode?: MobSettlementMode;
   },

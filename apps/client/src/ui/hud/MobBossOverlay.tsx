@@ -90,6 +90,10 @@ function shell(rect: HudRect, life: BossLifetime, accent: string): React.CSSProp
     boxShadow: `0 0 22px ${accent}66, 0 4px 14px rgba(0,0,0,0.6)`,
     opacity: life.opacity,
     transform: `scale(${life.phase === "out" ? 0.94 + 0.06 * life.opacity : 1})`,
+    // #642 —— 壽命縮成 ~1s 之後，100ms 的 poll 會讓淡入淡出變成 5 格階梯；
+    // 一段跟 poll 同長的 transition 把相鄰兩格補成連續。初次掛載不會閃：
+    // 第一次 render 的 inline opacity 已經是 ~0（phase "in" 的起點）。
+    transition: `opacity ${BOSS_POLL_MS}ms linear, transform ${BOSS_POLL_MS}ms linear`,
     transformOrigin: "50% 0%",
     overflow: "hidden",
     userSelect: "none",
@@ -422,8 +426,8 @@ export function MobBossOverlay(): React.JSX.Element | null {
   const wording = mobSettlementWording();
   const settlementMode = bossSettlementMode(boss, wording);
   // #247 —— 長血條 owns the top of this corridor while the king is alive, and it
-  // is PERSISTENT while this banner/panel is a 4.6 s / 8.2 s beat, so this one
-  // yields. Same one entry point the bar draws from.
+  // is PERSISTENT while this banner/panel is a ~1 s fade beat (#642: 半秒淡入
+  // 半秒淡出), so this one yields. Same one entry point the bar draws from.
   const rect = mobBossOverlayRect(boss, viewport, {
     touch: hudTouch(),
     legendUp,
