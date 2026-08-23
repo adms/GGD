@@ -652,6 +652,21 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
           if (e.moveSpeedMult !== undefined && e.moveSpeedMult < 1) flags |= ENTITY_FLAG.SLOWED;
         }
       }
+      // ⛔⛔ **擊倒是一個真的「動不了」狀態，而它的位元從來沒有亮過**（GH#631）。
+      //
+      // > owner 2026-08-23：「被普攻的時候好像會被角色黏住走不了⋯
+      // >  **如果是特殊狀態 要讓角色頭上有明顯圖示**」
+      //
+      // `world.knockdown` 是**它自己的表**（14 tick 的 root + stun），⛔ 不住 `status`
+      // ⇒ 上面那個迴圈看不到它 ⇒ ROOTED / STUNNED 兩顆位元對擊倒**永遠是 0**。
+      // 後果有兩個，而且都是玩家看得到的：
+      //   ① 頭上**沒有圖示** —— 你被擊倒而畫面上沒有任何東西說明為什麼走不了
+      //   ② 客戶端**預測不到** —— 影子照走，然後每 50 ms 被 reconcile 拉回
+      //      （GH#370「原地小步來回」逐字同一個形狀）
+      //
+      // ⭐ 一行同時修好兩個。⛔ 而它**不是**新的協定欄位：那兩顆位元早就在線上，
+      //   只是從來沒有人替擊倒點亮過。
+      if (world.knockdown?.get(id)) flags |= ENTITY_FLAG.ROOTED | ENTITY_FLAG.STUNNED;
       // #195: outside the fire ring THIS tick → the seat's own screen washes
       // translucent red. Composed from the sim's burn predicate itself, so the
       // wash and the damage can never disagree.
