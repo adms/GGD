@@ -235,10 +235,12 @@ def parse_jass(path: str) -> dict[str, JassGroup]:
     # ② 切函式。
     funcs: list[tuple[str, int, str]] = []
     starts = [(m.start(), m.group(1)) for m in _FUNC.finditer(src)]
+    prev_pos, line_no = 0, 1
     for idx, (pos, name) in enumerate(starts):
         end = _ENDFUNC.search(src, pos)
         stop = end.end() if end else (starts[idx + 1][0] if idx + 1 < len(starts) else len(src))
-        line_no = src.count("\n", 0, pos) + 1
+        line_no += src.count("\n", prev_pos, pos)
+        prev_pos = pos
         funcs.append((name, line_no, src[pos:stop]))
 
     groups: dict[str, JassGroup] = {}
