@@ -6,10 +6,10 @@ owner 技能模板群組 **⑨** 逐字：
 
 ```bash
 # 產生那張表
-python3 tools/skill-templates/scan_shapes.py --out docs/_reports/b5-skill-shapes_temp_20260823b.md
+python3 tools/skill-templates/scan_shapes.py --out docs/editor-contract/ggd-skill-shapes.md
 
 # 閘（唯讀）：欄位覆蓋 + 產物新鮮度。紅了跑上面那行然後 git add
-python3 tools/skill-templates/scan_shapes.py --check --out docs/_reports/b5-skill-shapes_temp_20260823b.md
+python3 tools/skill-templates/scan_shapes.py --check --out docs/editor-contract/ggd-skill-shapes.md
 
 # 掃描器自己的守衛（對白剝除 / conditional / 覆蓋閘沒瞎）
 python3 tools/skill-templates/scan_shapes.py --selftest
@@ -47,15 +47,36 @@ python3 tools/skill-templates/scan_shapes.py --selftest
 同 `caps:export` / `spec:build` 的理由：任何隨時鐘變動的欄位都會讓逐位元組比對永遠不相等，
 於是 `--check` 只能被放寬成模糊比對 —— 而一條被放寬的閘等於沒有閘。
 
-## 還沒接上的三條線（⛔ 主 session 做，它們在本 lane 的柵欄外）
+## 還沒接上的兩條線（⛔ 主 session 做，它們在本 lane 的柵欄外）
 
 owner ④ 逐字：「記得最後還要將**技能機制模板、效果模板、特效模板**更新到 JSON, script,
-**codex編輯器契約與文件**」。這一輪做完了「JSON（兩份表）＋ script（掃描器）」，
-剩下**契約與文件**那一段需要動本 lane 柵欄外的檔：
+**codex編輯器契約與文件**」。JSON（兩份表）· script（掃描器）· **契約文件**
+（`docs/editor-contract/ggd-skill-shapes.md`）都已落地，剩下把它接進聚合指令：
 
-1. `docs/editor-contract/ggd-skill-shapes.md` —— 把 `--out` 指到那裡，這份表就成為對外契約的一部分
-   （外部編輯器才知道「這個形狀有沒有模板」）。⛔ 手改那份文件是越線 —— 它的**來源**是這支掃描器。
-2. `package.json` 加一支 `shapes:check`（＝上面第二行指令）。
-3. `pnpm skills:check` 的聚合清單收編它 —— 否則
-   `packages/shared/src/ops/skillsSyncCoversGenerators.test.ts` 會紅（它要求
-   package.json 裡**每一支** `*:check` 要嘛在聚合裡、要嘛在豁免表裡帶著一個能被反駁的理由）。
+```jsonc
+// package.json "scripts" —— ⭐ 這兩行要在**同一個 commit** 落地
+"shapes:build": "python3 tools/skill-templates/scan_shapes.py --out docs/editor-contract/ggd-skill-shapes.md",
+"shapes:check": "python3 tools/skill-templates/scan_shapes.py --check --out docs/editor-contract/ggd-skill-shapes.md",
+```
+
+1. `skills:sync` 尾巴接 `&& pnpm shapes:build`
+2. `skills:check` 尾巴接 `&& pnpm shapes:check`
+
+⚠️ **只加 `shapes:check` 而不收進 `skills:check` 會紅** ——
+`packages/shared/src/ops/skillsSyncCoversGenerators.test.ts` 要求 package.json 裡
+**每一支** `*:check` 要嘛在聚合裡、要嘛在豁免表裡帶著一個能被反駁的理由。
+⭐ 那條紅**是對的**，它正是那道閘在做它的工作。
+
+⭐ `shapes:build` 只**讀** `content/`，⛔ 不寫 `bundle.json` ⇒ 它不吃 `skills:sync` 的全域鎖，
+排在 `content:build` 前後都對。
+
+## ⛔ 產生器印出來的數字要是**算的**，不可以是**打的**
+
+2026-08-23 第二輪抓到：`render()` 的散文裡手打了三個數字（`41 份文件` · `421 支裡的 361 支` ·
+`22 個 draft`），⭐ 而 **`22` 當天就是假的（真值 21）**。
+
+⚠️ 新鮮度閘對它**結構性失明**：`--check` 比對的是「產生器現在會吐什麼」對「檔案裡是什麼」，
+而產生器吐的就是那句手打的散文 ⇒ **產物抄產生器，自己跟自己永遠對得上**。
+
+⇒ ⭐ **「這份文件是產生的」不保證它是真的。** 加新的散文時，凡是句子裡有數字，
+一律從 `rows` / `templates` 當場算（見 `unused_draft` / `would_hit` 那兩處）。

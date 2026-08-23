@@ -211,7 +211,7 @@
     "template": "模板綁定（覆蓋率那一欄自己讀它）", "passive": "被動容器（passive 那一節讀它）",
     "innateKind": "天生技分類", "innateActivePassive": "天生技分類", "augment": "增益卡綁定",
     "hitFeel": "打擊感預設（畫面回饋強度），⛔ 不帶壽命",
-    "castTimeSec": "⭐ **量過才拿掉的**：352/421 支都有它，25 個相異值連續分布在 0.067–3.0 秒 —— 它是**每一支技能都有的前搖動畫**（多半是 w3x 匯進來的施法動作長度），⛔ 不是作者寫下的機制。把它算成一條軸，『等待』會在 421 支裡命中 361 支，於是這條軸分不出任何一群（實測分群後最大的一群就是「只有 castTimeSec」的 125 支）。真正**寫下來的**等待是 delaySec / firstAtCast / vfxLayers[].delayMs / recoverySec / interruptOn / 飛行時間(speed)。⇒ 它的統計單獨列在報表第 2 節的註腳，⛔ 不進形狀。",
+    "castTimeSec": "⭐ **量過才拿掉的**：絕大多數技能都有它，而它的值是一段連續分布 —— 它是**每一支技能都有的前搖動畫**（多半是 w3x 匯進來的施法動作長度），⛔ 不是作者寫下的機制。把它算成一條軸，『等待』會命中幾乎每一支，於是這條軸分不出任何一群。真正**寫下來的**等待是 delaySec / firstAtCast / vfxLayers[].delayMs / recoverySec / interruptOn / 飛行時間(speed)。⇒ 它的統計單獨列在報表第 2 節的註腳（⭐ 那裡的數字是**當場算的**，⛔ 這裡不複述 —— 複述的那一份必然過期，而它過期時 `--check` 仍然是綠的，因為產物抄的是產生器），⛔ 不進形狀。",
     "amount": "純數值", "damageType": "傷害型別", "damageTypes": "傷害型別",
     "canCrit": "暴擊資格", "comboBonus": "連段加成係數", "refund": "回收比例",
     "incomingPct": "受傷比例項", "resourcePct": "資源比例項", "resourcePctPhase": "資源比例項的取樣時點",

@@ -302,9 +302,22 @@ def render(data: dict) -> str:
     A("# 全技能形狀掃描 —— 群 → 支數 → 有沒有模板 → 建議")
     A("")
     A("> ⛔ **這一份是產生的**（`tools/skill-templates/scan_shapes.py`）。手改會被下一次掃描寫回去。")
+    A("> 重生成：`python3 tools/skill-templates/scan_shapes.py --out docs/editor-contract/ggd-skill-shapes.md`")
     A("> 知識住在 `tools/skill-templates/shape_axes.json`（實作側）與 `prose_markers.json`（宣稱側）。")
     A("> ⚠️ 刻意沒有產生日期 —— 帶時鐘的欄位會逼 `--check` 從逐位元組比對被放寬成模糊比對，")
     A("> 而一條被放寬的閘等於沒有閘。")
+    A("")
+    A("## 這一份在編輯器契約裡回答哪一題")
+    A("")
+    A("| 契約文件 | 回答 |")
+    A("|---|---|")
+    A("| `ggd-runtime-capabilities.md` | 這個**名字**存不存在（effect kind / hook event 有沒有處理器） |")
+    A("| `docs/技能標記機制與效果規則.md` | 它**怎麼用**（參數、上下界、範例） |")
+    A("| ⭐ **這一份** | 一支技能的**形狀**是什麼，那個形狀**有沒有模板**，以及**還有幾支在等它** |")
+    A("")
+    A("⇒ 外部編輯器要做一支新技能時，先在第 1 節找到它的形狀那一列：")
+    A("有模板就沿用（`實測產出這個形狀的模板` 那一欄），沒有就看第 4 節那條軸擋住幾支。")
+    A("⛔ 支數是**唯一的排序依據**（CLAUDE.md 第〇·五守則：按擋住的支數做機制，不是按技能順序做技能）。")
     A("")
     A("owner 技能模板群組 **⑨** 逐字：")
     A("")
@@ -400,10 +413,17 @@ def render(data: dict) -> str:
     cts = sorted(r["castTimeSec"] for r in rows if isinstance(r["castTimeSec"], (int, float)))
     if cts:
         med = cts[len(cts) // 2]
+        # ⭐ 這一句以前寫死著「421 支裡的 361 支」。⛔ 兩個數字都是**算得出來的**,
+        #    而寫死的那一份必然過期（第〇·四守則）—— 而且它過期時 `--check` 是**綠的**,
+        #    因為產物抄的是產生器,自己跟自己永遠對得上。
+        would_hit = sum(
+            1 for r in rows
+            if isinstance(r["castTimeSec"], (int, float)) or "等待" in r["implemented"]
+        )
         A(f"⚠️ **前搖（`castTimeSec`）不在上表**：{len(cts)}/{total} 支有它，"
           f"{len(set(cts))} 個相異值連續分布在 {cts[0]}–{cts[-1]} 秒，中位數 {med} 秒。")
         A("它是**每一支技能都有的施法動作長度**（多半是 w3x 匯進來的），⛔ 不是作者寫下的機制 ——")
-        A("算進「等待」軸的話這條軸會命中 421 支裡的 361 支，於是它分不出任何一群。")
+        A(f"算進「等待」軸的話這條軸會命中 {total} 支裡的 {would_hit} 支，於是它分不出任何一群。")
         A("")
 
     for a in AXIS_ORDER:
@@ -421,9 +441,12 @@ def render(data: dict) -> str:
         A("")
 
     # ── 3 模板覆蓋 ──
-    A("## 3. 模板覆蓋 —— 41 份文件，實際被引用的有幾份")
+    # ⭐ 同上：份數與 draft 支數以前是寫死的（`41` / `22`），而量的當下 draft 其實是 21 ——
+    #    ⛔ 一份**產生的對外契約**在自己的第一天就說了謊，而閘全綠。
+    unused_draft = sum(1 for t in templates if t["id"] not in referenced and t["status"] == "draft")
+    A(f"## 3. 模板覆蓋 —— {len(templates)} 份文件，實際被引用的有幾份")
     A("")
-    A("`宣告形狀` = 這份模板的**參數槽**與 `requires` 加起來寫得出什麼（22 個 draft 一支技能都沒接，")
+    A(f"`宣告形狀` = 這份模板的**參數槽**與 `requires` 加起來寫得出什麼（{unused_draft} 個 draft 一支技能都沒接，")
     A("實測形狀算不出來 —— 這一欄是它們唯一的聲音）。`實測形狀` = 引用它的技能真的落在哪一群。")
     A("")
     A("| 模板 | 名稱 | 狀態 | 參數格 | 引用支數 | 宣告形狀 | 實測形狀 |")

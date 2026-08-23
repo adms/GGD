@@ -1,7 +1,11 @@
 # B5 技能模板⑨ —— 全技能重新掃描套用（lane 完整報告）
 
-**日期** 2026-08-23 · **柵欄** `tools/skill-templates/**`（新）· `docs/_reports/`
-**產出的那張表** → [`docs/_reports/b5-skill-shapes_temp_20260823b.md`](./b5-skill-shapes_temp_20260823b.md)
+**日期** 2026-08-23 · **柵欄** `tools/skill-templates/**`（新）· `docs/_reports/` · `docs/editor-contract/ggd-skill-shapes.md`（產生器的產物）
+**產出的那張表** → [`docs/editor-contract/ggd-skill-shapes.md`](../editor-contract/ggd-skill-shapes.md)
+
+⭐ **第二輪（同日）補完的**：那張表從 `docs/_reports/` 的 `_temp_` 檔**搬進對外契約目錄**
+（owner ④ 逐字要的「codex編輯器契約與文件」那一段），⛔ 並把 `_temp_` 那一份**移除** ——
+留著就是同一份知識的**第二個住處**，而只有 `--out` 指的那一份吃新鮮度閘（第〇·四守則）。
 
 owner 技能模板群組 **⑨** 逐字：
 
@@ -109,6 +113,27 @@ owner 技能模板群組 **⑨** 逐字：
 而它唯一的使用者**沒有填那一格** ⇒ 實測那一群裡沒有迴圈。
 報表把「宣告形狀」與「實測形狀」分成兩欄就是為了看得見這種。
 
+### ④ ⭐（第二輪）**產生器自己在散文裡寫死了三個算得出來的數字，而其中一個當天就是假的**
+
+第一版的 `render()` 有三處手打的數字：
+
+| 寫死在散文裡 | 真值（算出來的） | |
+|---|---|---|
+| 「模板覆蓋 —— **41** 份文件」 | `len(templates)` = 41 | 目前巧合相等 |
+| 「命中 **421** 支裡的 **361** 支」 | 421 / 361 | 目前巧合相等 |
+| 「**22** 個 draft 一支技能都沒接」 | **21** | ⛔ **已經是假的** |
+
+⇒ ⭐ **一份「產生的對外契約」在它存在的第一天就說了謊，而 `--check` 全綠** ——
+因為新鮮度閘比對的是「產生器現在會吐什麼」對「檔案裡是什麼」，
+而**產生器吐的就是那句手打的散文**：⛔ 產物抄產生器，自己跟自己永遠對得上。
+
+⚠️ 這正是 CLAUDE.md 第〇·四守則的形狀（「烘進去的那一份必然過期」），
+只是這次它躲在**產生器的字串常數**裡，而不是資料檔裡 —— 所以「文件是產生的」這個事實
+本身**不保證**文件是真的。⭐ 判準：**產生器印出來的每一個數字都要是算的，⛔ 不可以是打的。**
+
+三處都改成從 `rows` / `templates` 當場算；`shape_axes.json` 的 `ignored.castTimeSec`
+也把複述的 `352/421`、`361` 拿掉（那是同一份知識的第二個住處），改成指向報表註腳。
+
 ---
 
 ## 4. 閘（⛔ 不是判準）
@@ -155,11 +180,23 @@ owner ④ 逐字：「記得最後還要將技能機制模板、效果模板、�
 **codex編輯器契約與文件**」。這一輪落地了 **JSON（兩份表）＋ script（掃描器）**；
 **契約與文件**那一段要動本 lane 柵欄外的檔：
 
-| # | 要做什麼 | 為什麼本 lane 不能做 |
+| # | 要做什麼 | 狀態 |
 |---:|---|---|
-| 1 | `--out` 指到 `docs/editor-contract/ggd-skill-shapes.md`，讓這張表成為對外契約 | `docs/editor-contract/` 在柵欄外，而且是產生器擁有的目錄 |
-| 2 | `package.json` 加一支 `shapes:check` | `package.json` 是全域共用檔 |
-| 3 | 把 `shapes:check` 收進 `pnpm skills:check` | 否則 `skillsSyncCoversGenerators.test.ts` 會紅（它要求每一支 `*:check` 要嘛在聚合裡、要嘛在豁免表裡帶理由）——⭐ 這條紅**是對的**，它正是那道閘在做它的工作 |
+| 1 | `--out` 指到 `docs/editor-contract/ggd-skill-shapes.md`，讓這張表成為對外契約 | ✅ **這一輪做掉了**（產物由掃描器寫，⛔ 沒有手改） |
+| 2 | `package.json` 加一支 `shapes:check` | ⛔ 仍留給主 session —— `package.json` 是全域共用檔 |
+| 3 | 把 `shapes:check` 收進 `pnpm skills:check` | ⛔ 仍留給主 session。⚠️ **② 與 ③ 必須同一個 commit**：只加 ② 會讓 `skillsSyncCoversGenerators.test.ts` 立刻紅（它要求每一支 `*:check` 要嘛在聚合裡、要嘛在豁免表裡帶理由）——⭐ 那條紅**是對的**，它正是那道閘在做它的工作 |
+
+⭐ 主 session 要貼的兩行（逐字）：
+
+```jsonc
+// package.json "scripts"
+"shapes:build": "python3 tools/skill-templates/scan_shapes.py --out docs/editor-contract/ggd-skill-shapes.md",
+"shapes:check": "python3 tools/skill-templates/scan_shapes.py --check --out docs/editor-contract/ggd-skill-shapes.md",
+```
+
+⇒ 然後 `skills:sync` 尾巴接 `&& pnpm shapes:build`、`skills:check` 尾巴接 `&& pnpm shapes:check`。
+⚠️ `shapes:build` 只讀 `content/`，⛔ 不寫 `bundle.json` ⇒ 它**不吃** `skills:sync` 的全域鎖，
+排在 `content:build` 之前或之後都對。
 
 ⚠️ 另外：本輪**沒有跑** `content:build` / `skills:sync`（全域鎖，主 session 統一跑）。
 掃描器只讀 `content/`，⛔ 沒有寫入。
