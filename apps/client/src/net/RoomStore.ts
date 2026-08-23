@@ -739,6 +739,35 @@ let seatsCacheKey = "";
 let teamsCacheKey = "";
 let duelsCacheKey = "";
 let localsCacheKey = "";
+
+/**
+ * ⭐ GH#618 —— **`offers` 的身分要跟著內容走，⛔ 不跟著快照走。**
+ *
+ * 這個檔的檔頭逐字承諾「Every write is change-guarded so snapshot patches that
+ * don't alter HUD-visible values cause zero re-renders」，而 `seats` 那道
+ * change-guard 只保護**整個陣列**：它的快取鍵含 `cooldowns` / `mana` /
+ * `statusRemainTicks`，中場每一張快照都在動 ⇒ `patch.seats` 每張都換一次身分，
+ * 於是**巢狀在裡面的 `offers` 也每張換一次**。
+ *
+ * ⚠️ 對只讀純量的消費端無所謂（`IntermissionStage` 的 `offerCount`、
+ * `PrepClock` 都刻意只取數字並逐字寫下理由），但 `AugmentDraftPanel` 訂的是
+ * **陣列本身** —— 那是全 client 唯一一個 ⇒ 三選一子樹從卡片出現到玩家選完為止，
+ * **每一張快照重跑一次 React**（量到：20 張快照 = 20 次 commit）。
+ *
+ * ⭐ 修在**來源**而不是那個面板上：這樣任何未來訂 `offers` 的消費端都免疫，
+ * 而且「這一份 offer 有沒有變」只有一個住處。
+ * ⛔ 不可以用 `seatsCacheKey` 代替 —— 它含每幀都在動的欄位，永遠不相等。
+ */
+const offersCache = new Map<number, { key: string; view: OfferView[] }>();
+
+/** 同一個座位、同樣的三張牌 ⇒ 回**上一次那一個陣列**（身分不變）。 */
+function stableOffers(seatId: number, next: OfferView[]): OfferView[] {
+  const key = JSON.stringify(next);
+  const hit = offersCache.get(seatId);
+  if (hit && hit.key === key) return hit.view;
+  offersCache.set(seatId, { key, view: next });
+  return next;
+}
 /** couch accountIds of this machine, index = local player (0 = primary) */
 let localAccounts: string[] = [];
 
@@ -751,6 +780,9 @@ export function resetHudStore(): void {
   teamsCacheKey = "";
   duelsCacheKey = "";
   localsCacheKey = "";
+  // ⛔ 換場了就丟掉 offer 的身分快取 —— 留著會讓下一場「同一個座位、同一組牌」
+  //    拿到**上一場**那個陣列（同型於上面那條 matchId）。
+  offersCache.clear();
   localAccounts = [];
   shopEventSeq = 0;
 }
@@ -908,11 +940,15 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
       // reads as 「還沒殺過」 — the same degradation every other appended field
       // gets here.
       mobKills: ss.mobKills ?? 0,
-      offers: ss.offers.map((o) => ({
-        offerId: o.offerId,
-        tier: o.tier,
-        choices: [...o.choices],
-      })),
+      // ⭐ GH#618 —— 內容沒變就回**同一個陣列**（見 `stableOffers` 的宣告）。
+      offers: stableOffers(
+        ss.seatId,
+        ss.offers.map((o) => ({
+          offerId: o.offerId,
+          tier: o.tier,
+          choices: [...o.choices],
+        })),
+      ),
     });
   });
   seats.sort((a, b) => a.seatId - b.seatId);
