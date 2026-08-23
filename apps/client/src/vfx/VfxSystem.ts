@@ -122,7 +122,7 @@ import { StatusAuraFx } from "./StatusAuraFx";
 import { CastPillarFx } from "./CastPillarFx";
 import { ArcBoltFx } from "./ArcBoltFx";
 import { GoldPickupFx } from "./GoldPickupFx";
-import { arcBoltSpec, ARC_TINTS, type ArcBoltOptions } from "./arcBolt";
+import { arcBoltSpec, arcCastPlan, ARC_TINTS, type ArcBoltOptions } from "./arcBolt";
 import { pillarPalette, pillarTintFromRamp, type PillarPalette } from "./castPillar";
 import { severityForHit, sprayDirection, damageScale, type Vec2 } from "./bloodPresets";
 import { goreConfig, resolveGore } from "./goreConfig";
@@ -1478,6 +1478,34 @@ export class VfxSystem {
           // GH#392 —— 施法者。帶掛點的技能靠它找到 `champ-<id>` 節點。
           typeof caster === "number" ? caster : undefined,
         );
+        // ⚡⚡ GH#571 —— **雷神之槌／皮卡丘那一族的閃電**。
+        //
+        // 上一輪接上的是「鏈」那一種（`case "chainLightning"`），而**只有兩支**
+        // 技能在用它（86-04 打雷絕招 / 65-04 天譴＝飛鼠先生）。帶著
+        // `fx.prim.lightning.*` 的技能有 **28 支**，它們的「閃電」逐字只是一份
+        // **粒子預設** —— 粒子做不出一道有分岔的鋸齒電弧。
+        // ⇒ owner 點名的三個例子裡有兩個（皮卡丘 58-xx、雷神之槌 15-01）到這一行
+        //   出現之前仍然沒有電弧。這一行接上 **28/28**（11 道直擊 + 17 道爆散）。
+        //
+        // ⭐ 一條**家族規則**，⛔ 不是 26 個 `if` 也⛔ 不是 26 份 JSON：
+        //   決定權在 `arcCastPlan` 的那張表（`arcBolt.ts`），這裡只負責把
+        //   「這次施法用到哪幾個 vfxKey」與兩個世界座標交給它。
+        //   ⚠️ 26 份 JSON 那條路本來就走不通 —— 其中 8 份（含雷神之槌）是
+        //   `tools/skill-remake/batch1.py` 的產物，手改會被下一次 sync 覆寫。
+        //
+        // 種子與 `chainLightning` 同一條公式（tick + 施法者）：決定性，
+        // 所以同一場重播長出同一條折線，⛔ 而且這裡沒有 `Math.random`。
+        const arcKeys: (string | null | undefined)[] = layers ? layers.map((l) => l.vfxKey) : [];
+        arcKeys.push(vfxSrc?.vfxKey);
+        const arcSeed = ((ev.tick | 0) * 131 + (typeof caster === "number" ? caster : 0) * 17) | 0;
+        for (const req of arcCastPlan(arcKeys, pos, point, arcSeed, ARC_BODY_Y)) {
+          this.strikeArc(req.from, req.to, nowMs, {
+            tint: req.tint,
+            power: req.power,
+            forks: req.forks,
+            seed: req.seed,
+          });
+        }
         // GROUND SCORCH (task #147): stamp a fading dark mark where the ability
         // lands (its ground `point` when it targets the floor) or, failing that,
         // under the caster — so a cast scars the arena instead of leaving it
@@ -2163,6 +2191,12 @@ export class VfxSystem {
         }
         break;
       }
+      // ⚠️ `vfxArc` —— **今天 sim 端零個發射者**（`eventFanout` 的白名單也沒有它）。
+      // 它留著是因為它是「sim 自己算出兩個端點」那一類機制未來唯一的入口
+      // （牽引光束、鎖鏈、雷擊補刀）。⛔ 但在有人發它之前，它對玩家不存在 ——
+      // 所以⛔ 不要因為「這個 case 在」就以為某支技能的電弧是從這裡來的：
+      // 出貨的兩條真路是 `case "chainLightning"`（連鎖）與 `abilityCast` 裡的
+      // `arcCastPlan`（施法電弧）。
       case "vfxArc": {
         const fx = ev.data.fromX as number | undefined;
         const fz = ev.data.fromZ as number | undefined;

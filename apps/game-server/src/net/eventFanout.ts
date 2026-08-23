@@ -421,12 +421,19 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   //                     per cast, so bounded by CASTS. The four booleans travel
   //                     because 無敵 / 魔法免疫 / 免控 must look different — a
   //                     golden shell and a blue ward are not the same promise.
-  //   immune          — `{ x, z, source, target, amount, type, dmgType, origin }`.
+  //   immune          — `{ x, z, source, target, amount, dmgType, origin }`.
   //                     The per-REFUSAL beat: the 免疫 float + the ping. Bounded
   //                     by incoming attack rate exactly like `evade`, which it
-  //                     is modelled on (same payload shape, same x/z-on-the
-  //                     -victim reason), and it can only fire at all while a
-  //                     grant is live.
+  //                     is modelled on (same x/z-on-the-victim reason), and it
+  //                     can only fire at all while a grant is live.
+  //                     ⚠️ 這一行在 2026-08-23 之前多列了一個 `type` 欄位並宣稱
+  //                     payload「same shape as evade」——**兩句都是假的**（第一·五
+  //                     守則：⛔ 不放任何無效說明）。真正的 emit 在
+  //                     `sim/combat/damage.ts` 的 `world.emit("immune", …)`：
+  //                     傷害型別的欄位名是 **`dmgType`**，⛔ 沒有 `type`；而
+  //                     `evade` 與它**只是欄位重疊**，⛔ 不是同一個形狀。
+  //                     一個讀 `data.type` 的客戶端會拿到 `undefined`，
+  //                     然後把每一次免疫都畫成同一種顏色 —— 而它看起來完全正常。
   //   immuneControl   — `{ target, source, statusId, origin }`. The CC half, and
   //                     it needs its own name precisely because 免控 and 免傷 are
   //                     separate axes: 07-01 臨、兵、鬥 refuses stuns while its
@@ -434,14 +441,18 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   //                     would conclude the ward had done nothing. Bounded by
   //                     enemy CC casts.
   //
-  // ⚠️ THE CLIENT HANDLER IS NOT WIRED YET, and that is stated rather than left
-  // to be discovered. `evade` needed four call sites — `net/RoomConnection.ts`,
-  // `frameBus.ts`, `GameApp.ts`, `ui/combatText.ts` — and all four sit in the
-  // client-render lane that is running concurrently with P3. Listing the names
-  // HERE first is deliberately the safe order: an unclassified emit is a red
-  // test, and a whitelisted event with no handler is inert, whereas a handler
-  // with no whitelist entry is the silent S2 failure this whole file was
-  // written to stop.
+  // ⚠️ 這一段在 2026-08-23 之前寫著「THE CLIENT HANDLER IS NOT WIRED YET」——
+  // **對三則裡的一則已經是假的**（第三守則）。今天的真相是**兩半**：
+  //   · `immune`   ✅ **接上了** —— `net/RoomConnection.ts` 的
+  //                `else if (ev.type === "immune") recordEvade(ev.data, "immune")`
+  //                → `GameApp.ts` 的迴避／免疫合流 → 打擊點的文字。
+  //   · `immunityGranted` / `immuneControl` ⛔ **仍然零消費端**，而且那是一個
+  //                **寫下來的**決定，⛔ 不是遺漏：兩則都在
+  //                `apps/client/src/vfx/worldCues.ts` 的 `WORLD_CUE_OUT_OF_SCOPE`
+  //                （理由：它們要的是打擊點的回饋 + 文字，⛔ 不是一個座標上的爆發）。
+  // 先掛白名單再接客戶端仍然是**安全的順序**：一個沒被分類的 emit 是紅測試，
+  // 一個沒有消費端的白名單項目是惰性的，而一個沒進白名單的 handler 才是這整個
+  // 檔案存在要擋的那種靜默 S2 故障。
   "immunityGranted",
   "immune",
   "immuneControl",

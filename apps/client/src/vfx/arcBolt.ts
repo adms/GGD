@@ -127,6 +127,207 @@ export const ARC_TINTS = {
   arcane: [0.76, 0.6, 1],
 } as const satisfies Record<string, Rgb>;
 
+// ═══════════════════════════════════════════════════════════════════════════
+//  ⚡⚡ 施法電弧 —— 「電系技能施法時，除了粒子之外**再打一道真的電弧**」
+// ═══════════════════════════════════════════════════════════════════════════
+//
+// owner 2026-08-23（逐字）：
+// > 「你需要**認真找一個演算法以及特效貼圖**來做出閃電的效果 一堆閃電特效
+// >   如**皮卡丘 飛鼠先生 雷神之槌** 等雷電特效 **都沒有真的出現**」
+//
+// ── 上一輪修好的只有「鏈」那一種 ──────────────────────────────────────────
+// `chainLightning` 那條線在 2026-08-23 已經接上了，但它只有**兩支**技能在用
+// （`grep -l chainLightning content/abilities/`：86-04 打雷絕招 / 65-04 天譴
+// ＝**飛鼠先生**）。而帶著 `fx.prim.lightning.*` 的技能有 **28 支** ——
+// 那 28 支的「閃電」逐字只是一份**粒子預設**，而粒子做不出「一道有分岔的
+// 鋸齒電弧」。⇒ 皮卡丘（58-xx / `godie-ofar`）與雷神之槌（15-01 雷神槍
+// 「巨神殺手」）到今天為止仍然沒有電弧。
+//
+// ── 為什麼這是一條**家族規則**，⛔ 不是 26 份 JSON ────────────────────────
+// ⭐ 第〇·五守則：引擎做機制、⛔「為某支技能寫一個 if」就是越線。
+//    26 個 `if`、或 26 份各自填一格的 JSON，都是同一件事抄 26 次。
+// ⭐ 而且**那 26 份有 8 份改不動**：`godie-emfr.*`（雷神之槌！）/ `godie-e00w.*`
+//    / `godie-edem.*` / `godie-e00r.*` 是 `tools/skill-remake/batch1.py` 的
+//    **產物**（`--check` 逐位元組比對，手改會在下一次 `skills:sync` 被無聲覆寫）。
+//    ⇒ 走 JSON 那條路，owner 點名的三個例子裡**最主要的那一個永遠修不好**。
+//
+// ⇒ 規則掛在**已經存在的命名慣例**上：`fx.prim.<element>.<shape>`。
+//   ⭐ 這不是我發明的鍵 —— `sim/abilities/abilitySystem.ts` 的 emit 註解逐字
+//   寫著它把 `vfxKey` 送上線就是為了讓客戶端「play the ELEMENT whoosh
+//   (fire/ice/lightning)」。**音效那一層早就照這個 token 路由了**，
+//   視覺這一層照同一個 token 路由，⛔ 不是第二套判斷。
+//
+// ── 一張表，兩個模板（第零守則⑨：N 個同型 = K 個模板 + 一張表） ──────────
+//   · `strike` —— 施法者 → 落點的一道（`beam` / `bolt` / `slash` / `dash`）
+//   · `burst`  —— 從身上往外炸開的 N 道（`nova` / `explosion` / `pulse`）
+// 出貨盤點（2026-08-23 量的，⛔ 不是估的）：28 支裡**形狀 token** 是 strike 的
+// 有 16 支、burst 的 12 支；再套下面那條「自身型沒有落點就退回 burst」之後，
+// **實際畫出來是 strike 11 支 / burst 17 支**。⛔ 沒有第三種。
+
+/** 一種施法電弧的完整參數。**每一個數字只住在這張表一份**。 */
+export interface ArcCastShape {
+  /** `strike` = 施法者 → 落點的一道；`burst` = 從中心往外炸開的 N 道 */
+  mode: "strike" | "burst";
+  /** `burst` 打幾道（`strike` 恆為 1） */
+  count: number;
+  /** `burst` 每一道有多長（world units）；`strike` 用不到（它的長度是落點決定的） */
+  reach: number;
+  /** 這一族的粗細／分岔強度（餵給 `arcBoltSpec` 的 `power`） */
+  power: number;
+  /** 每一道的分岔數。⚠️ `burst` 壓低 —— N 道 ×(1 + 分岔) 會吃光弧帶池（`MAX_ARC_STRIPS`） */
+  forks: number;
+}
+
+/**
+ * ⭐ **形狀 token → 一種電弧。** 出貨的 `fx.prim.lightning.*` 只有這七個字根
+ * （`beam` `bolt` `slash` `dash` `nova` `explosion` `pulse`），⛔ 表以外的字根
+ * 不畫電弧 —— 沉默地猜一個模式，等於在畫面上加一個沒有人決定過的東西。
+ */
+export const ARC_CAST_SHAPES: Readonly<Record<string, ArcCastShape>> = {
+  beam: { mode: "strike", count: 1, reach: 0, power: 1.25, forks: 2 },
+  bolt: { mode: "strike", count: 1, reach: 0, power: 1.5, forks: 3 },
+  slash: { mode: "strike", count: 1, reach: 0, power: 1, forks: 1 },
+  dash: { mode: "strike", count: 1, reach: 0, power: 0.9, forks: 1 },
+  nova: { mode: "burst", count: 6, reach: 2.4, power: 1, forks: 1 },
+  explosion: { mode: "burst", count: 8, reach: 3, power: 1.2, forks: 1 },
+  pulse: { mode: "burst", count: 5, reach: 1.6, power: 0.85, forks: 0 },
+};
+
+/**
+ * `-lg` / `-sm` 這一層**只縮放強度與長度**，⛔ 不改模式。
+ * 表以外的後綴（出貨有一個 `beam-flat`）= 1 ＝ 不縮放，⛔ 不是「不畫」。
+ */
+export const ARC_CAST_SIZES: Readonly<Record<string, number>> = { lg: 1.35, sm: 0.7 };
+
+/**
+ * ⭐ **哪些元素會長出電弧** —— 出貨只開 `lightning` 一列。
+ *
+ * ⚠️ `ARC_TINTS` 有四個顏色，但「有顏色」⛔ 不等於「該畫弧」：把 `holy` 打開
+ * 會一次改掉上百支技能的畫面，而 owner 這一票問的是**閃電**。
+ * ⭐ 之後要開一族（鎖鏈／牽引／聖光落雷）就是**加一列**，⛔ 不必動任何程式。
+ */
+export const ARC_CAST_ELEMENTS: Readonly<Record<string, Rgb>> = {
+  lightning: ARC_TINTS.lightning,
+};
+
+/**
+ * `strike` 的落點太近時，那一道弧的長度趨近 0 —— 畫面上是一個亮點，
+ * 讀不出「閃電」。低於這條線就退回 `burst`（從身上炸開）。
+ * ⚠️ 這條線是**必要的**：出貨有 `castType: "ground"` 而 `range: 0` 的技能
+ * （86-04 打雷絕招），它的落點就是施法者自己。
+ */
+export const ARC_CAST_MIN_STRIKE_LEN = 0.6;
+
+/** `strike` 退回 `burst` 時用的長度／道數 —— 自身型的「電流爬滿全身」。 */
+export const ARC_CAST_SELF_REACH = 1.8;
+export const ARC_CAST_SELF_COUNT = 5;
+
+/** 一次施法要打的**一段**弧（世界座標 + 這一段自己的參數）。 */
+export interface ArcCastRequest {
+  from: ArcEnd;
+  to: ArcEnd;
+  tint: Rgb;
+  power: number;
+  forks: number;
+  seed: number;
+}
+
+/**
+ * `fx.prim.<element>.<shape>[-<size>]` → 三個 token。
+ *
+ * ⛔ 其他任何命名一律回 `null`（w3x 匯入的 `fx.w3x.particle.*`、手寫的
+ * `fx.ember-bolt`…）—— 猜一個元素出來畫弧，就是在畫面上加一個沒有來源的東西。
+ */
+export function parsePrimFxKey(
+  key: string | null | undefined,
+): { element: string; shape: string; size: string | null } | null {
+  if (!key) return null;
+  const p = key.split(".");
+  if (p.length !== 4 || p[0] !== "fx" || p[1] !== "prim") return null;
+  const element = p[2]!;
+  const token = p[3]!;
+  const dash = token.indexOf("-");
+  if (!element || !token) return null;
+  return dash < 0
+    ? { element, shape: token, size: null }
+    : { element, shape: token.slice(0, dash), size: token.slice(dash + 1) };
+}
+
+/**
+ * 從一個中心往外的 N 個端點 —— `burst` 的幾何。
+ *
+ * ⭐ **均分一圈再各自抖一點**，⛔ 不是「N 顆雜湊當方向」：純雜湊會結塊，
+ * 而結塊的放電讀起來是「往那邊噴了一坨」而不是「電流炸開」。
+ * 三角函數在這裡是合法的 —— 這是**客戶端**（`sim/purity.test.ts` 管的是
+ * `packages/shared/src/sim/**`），而電弧的幾何本來就全部在客戶端算。
+ */
+export function arcRadiateEnds(
+  centre: ArcEnd,
+  count: number,
+  reach: number,
+  seed: number,
+): ArcEnd[] {
+  const n = Math.max(1, Math.floor(count));
+  const out: ArcEnd[] = new Array<ArcEnd>(n);
+  for (let i = 0; i < n; i++) {
+    // 均分 + 半格以內的抖動 ⇒ 每一道都落在自己的扇區裡，⛔ 不會兩道疊在一起
+    const a = ((i + 0.5) / n + arcNoise(seed, i * 3 + 1) * (0.5 / n)) * Math.PI * 2;
+    const r = reach * (0.72 + Math.abs(arcNoise(seed, i * 3 + 2)) * 0.28);
+    out[i] = {
+      x: centre.x + Math.cos(a) * r,
+      y: centre.y + arcNoise(seed, i * 3 + 3) * ARC_BOLT_TUNING.jitterY * 2,
+      z: centre.z + Math.sin(a) * r,
+    };
+  }
+  return out;
+}
+
+/**
+ * ⚡ **這一次施法要打哪幾道弧。** 純函數 —— 它不認識 Babylon、不認識技能，
+ * 只認識「這次施法用到的那幾個 `vfxKey`、施法者在哪、落點在哪」。
+ *
+ * ⭐ **第一個認得的元素說了算**：一次施法最多**一組**弧。一支技能可以疊好幾層
+ * 特效（15-01 雷神槍的主層是龍捲風、閃電在第二層），但兩組弧疊在同一個位置
+ * 只是兩倍的網格與同一個畫面。
+ */
+export function arcCastPlan(
+  keys: readonly (string | null | undefined)[],
+  caster: { x: number; z: number },
+  point: { x: number; z: number } | null | undefined,
+  seed: number,
+  bodyY: number,
+): ArcCastRequest[] {
+  for (const key of keys) {
+    const p = parsePrimFxKey(key);
+    if (!p) continue;
+    const tint = ARC_CAST_ELEMENTS[p.element];
+    const shape = ARC_CAST_SHAPES[p.shape];
+    if (!tint || !shape) continue;
+    const scale = (p.size !== null ? ARC_CAST_SIZES[p.size] : undefined) ?? 1;
+    const power = shape.power * scale;
+    const from: ArcEnd = { x: caster.x, y: bodyY, z: caster.z };
+    if (shape.mode === "strike" && point && Number.isFinite(point.x) && Number.isFinite(point.z)) {
+      const d = Math.hypot(point.x - caster.x, point.z - caster.z);
+      if (d >= ARC_CAST_MIN_STRIKE_LEN) {
+        return [
+          { from, to: { x: point.x, y: bodyY, z: point.z }, tint, power, forks: shape.forks, seed },
+        ];
+      }
+    }
+    // 落點不存在（self / dash）或太近（`range: 0`）⇒ 從身上炸開。
+    // ⛔ 不是「不畫」——那正是 owner 回報的症狀（12 支自身型雷電技能一道弧都沒有）。
+    const burst = shape.mode === "burst";
+    const ends = arcRadiateEnds(
+      from,
+      burst ? shape.count : ARC_CAST_SELF_COUNT,
+      (burst ? shape.reach : ARC_CAST_SELF_REACH) * scale,
+      seed,
+    );
+    return ends.map((to, i) => ({ from, to, tint, power, forks: shape.forks, seed: seed + i + 1 }));
+  }
+  return [];
+}
+
 /** 逐次覆寫。`power` 是「這一段有多重」的單一旋鈕（粗細 + 分岔一起動）。 */
 export interface ArcBoltOptions extends Partial<Omit<ArcBoltSpec, "stops">> {
   /** 整體強度，0.4–2（粗細與分岔數一起放大） */
