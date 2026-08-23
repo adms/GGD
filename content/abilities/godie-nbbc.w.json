@@ -27,7 +27,14 @@
       "shape": "single",
       "to": "targetUnit",
       "applyTo": "self",
-      "stopShortUnits": 1.8
+      "stopShortUnits": 1.8,
+      "onArrive": [
+        {
+          "kind": "spawnVfx",
+          "vfxId": "fx.prim.lightning.slash",
+          "at": "point"
+        }
+      ]
     }
   ],
   "template": {

@@ -1211,3 +1211,118 @@ overwrite_temp_20260824-032558	Write	SKIP(git 有)	content/abilities/godie-e00l.
 overwrite_temp_20260824-034449	Bash	repo 外	/private/tmp/tc2.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260824-034449/tc2.log
 overwrite_temp_20260824-034519	Bash	repo 外	/private/tmp/tc3.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260824-034519/tc3.log
 overwrite_temp_20260824-034533	Bash	repo 外	/private/tmp/shared2.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260824-034533/shared2.log
+overwrite_temp_20260824-040949	Bash	SKIP(git 有)	/Users/Takuro/GGD/scripts/watchdog.sh	
+overwrite_temp_20260824-040949	Bash	SKIP(git 有)	/Users/Takuro/GGD/scripts/preserve-before-overwrite.py	
+overwrite_temp_20260824-042326	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/platform/internal/combatenv/combatenv.go	
+overwrite_temp_20260824-042329	Edit	SKIP(git 有)	/Users/Takuro/GGD/scripts/preserve-before-overwrite.py	
+overwrite_temp_20260824-042336	Edit	有未提交改動	/Users/Takuro/GGD/scripts/preserve-before-overwrite.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042336/scripts/preserve-before-overwrite.py
+overwrite_temp_20260824-042346	Edit	有未提交改動	/Users/Takuro/GGD/apps/platform/internal/combatenv/combatenv.go	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042346/apps/platform/internal/combatenv/combatenv.go
+overwrite_temp_20260824-042353	Edit	有未提交改動	/Users/Takuro/GGD/scripts/preserve-before-overwrite.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042353/scripts/preserve-before-overwrite.py
+overwrite_temp_20260824-042355	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/platform/internal/combatenv/keysync_test.go	
+overwrite_temp_20260824-042432	Write	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/content/abilityPressPayload.test.ts	
+overwrite_temp_20260824-042436	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/scripts/buildIndexes.ts	
+overwrite_temp_20260824-042446	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/scripts/buildIndexes.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042446/packages/shared/scripts/buildIndexes.ts
+overwrite_temp_20260824-042453	Bash	repo 外	/private/tmp/m3-orig.go	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260824-042453/m3-orig.go
+overwrite_temp_20260824-042453	Bash	有未提交改動	/Users/Takuro/GGD/apps/platform/internal/combatenv/combatenv.go	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042453/apps/platform/internal/combatenv/combatenv.go
+overwrite_temp_20260824-042502	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/scripts/buildIndexes.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042502/packages/shared/scripts/buildIndexes.ts
+overwrite_temp_20260824-042510	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/map/compile.ts	
+overwrite_temp_20260824-042519	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/map/compile.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042519/packages/shared/src/map/compile.ts
+overwrite_temp_20260824-042521	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/content/schema/config/vfxCleanup.ts	
+overwrite_temp_20260824-042522	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/map/compile.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042522/packages/shared/src/map/compile.ts
+overwrite_temp_20260824-042534	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/sim/world/ArenaDef.ts	
+overwrite_temp_20260824-042542	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/content/schema/config/vfxCleanup.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042542/packages/shared/src/content/schema/config/vfxCleanup.ts
+overwrite_temp_20260824-042546	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/sim/world/ArenaDef.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042546/packages/shared/src/sim/world/ArenaDef.ts
+overwrite_temp_20260824-042551	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/sim/world/ArenaDef.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042551/packages/shared/src/sim/world/ArenaDef.ts
+overwrite_temp_20260824-042552	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/content/schema/config/vfxCleanup.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042552/packages/shared/src/content/schema/config/vfxCleanup.ts
+overwrite_temp_20260824-042558	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/sim/SimWorld.ts	
+overwrite_temp_20260824-042559	Bash	repo 外	/private/tmp/mut.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260824-042559/mut.log
+overwrite_temp_20260824-042600	Edit	SKIP(git 有)	/Users/Takuro/GGD/content/config/vfx-cleanup.json	
+overwrite_temp_20260824-042604	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/sim/SimWorld.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042604/packages/shared/src/sim/SimWorld.ts
+overwrite_temp_20260824-042609	Edit	SKIP(git 有)	/Users/Takuro/GGD/CLAUDE.md	
+overwrite_temp_20260824-042609	Edit	SKIP(git 有)	/Users/Takuro/GGD/.claude/worktrees/lane-m6probe/CLAUDE.md	
+overwrite_temp_20260824-042613	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/sim/SimWorld.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042613/packages/shared/src/sim/SimWorld.ts
+overwrite_temp_20260824-042621	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/sim/map/gates.ts	
+overwrite_temp_20260824-042621	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/content/buildIndexesValidates.test.ts	
+overwrite_temp_20260824-042633	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/map/validate.ts	
+overwrite_temp_20260824-042638	Edit	未追蹤	/Users/Takuro/GGD/tools/parallel-gates/worktree.mjs	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042638/tools/parallel-gates/worktree.mjs
+overwrite_temp_20260824-042644	Edit	未追蹤	/Users/Takuro/GGD/tools/parallel-gates/worktree.mjs	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042644/tools/parallel-gates/worktree.mjs
+overwrite_temp_20260824-042647	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/admin/src/configForms.ts	
+overwrite_temp_20260824-042653	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/vfx/vfxCleanupPolicy.ts	
+overwrite_temp_20260824-042710	Edit	SKIP(git 有)	/Users/Takuro/GGD/tools/hero-archetypes/build.ts	
+overwrite_temp_20260824-042711	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/vfx/vfxCleanupPolicy.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042711/apps/client/src/vfx/vfxCleanupPolicy.ts
+overwrite_temp_20260824-042725	Edit	有未提交改動	/Users/Takuro/GGD/tools/hero-archetypes/build.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042725/tools/hero-archetypes/build.ts
+overwrite_temp_20260824-042741	Edit	有未提交改動	/Users/Takuro/GGD/tools/hero-archetypes/build.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042741/tools/hero-archetypes/build.ts
+overwrite_temp_20260824-042744	Edit	有未提交改動	/Users/Takuro/GGD/tools/hero-archetypes/build.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042744/tools/hero-archetypes/build.ts
+overwrite_temp_20260824-042746	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/render/groundTextureCache.ts	
+overwrite_temp_20260824-042749	Edit	有未提交改動	/Users/Takuro/GGD/tools/hero-archetypes/build.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042749/tools/hero-archetypes/build.ts
+overwrite_temp_20260824-042752	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/render/groundTextureCache.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042752/apps/client/src/render/groundTextureCache.ts
+overwrite_temp_20260824-042755	Edit	SKIP(git 有)	/Users/Takuro/GGD/package.json	
+overwrite_temp_20260824-042758	Edit	有未提交改動	/Users/Takuro/GGD/package.json	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042758/package.json
+overwrite_temp_20260824-042808	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/render/groundTextureCache.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042808/apps/client/src/render/groundTextureCache.ts
+overwrite_temp_20260824-042812	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/ops/skillsSyncCoversGenerators.test.ts	
+overwrite_temp_20260824-042814	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/render/groundTextureCache.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042814/apps/client/src/render/groundTextureCache.ts
+overwrite_temp_20260824-042824	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/render/groundTextureCache.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042824/apps/client/src/render/groundTextureCache.ts
+overwrite_temp_20260824-042824	Edit	有未提交改動	/Users/Takuro/GGD/scripts/preserve-before-overwrite.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042824/scripts/preserve-before-overwrite.py
+overwrite_temp_20260824-042830	Edit	git 讀不到	/var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/ggd-lane-rdGGae/docs/技能標記機制與效果規則.md	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260824-042830/技能標記機制與效果規則.md
+overwrite_temp_20260824-042832	Bash	repo 外	/private/tmp/sb2.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260824-042832/sb2.log
+overwrite_temp_20260824-042834	Edit	有未提交改動	/Users/Takuro/GGD/scripts/preserve-before-overwrite.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042834/scripts/preserve-before-overwrite.py
+overwrite_temp_20260824-042849	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/render/roundVfxLifecycle.ts	
+overwrite_temp_20260824-042856	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/content/editorCapabilities.ts	
+overwrite_temp_20260824-042857	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/sim/world/ArenaDef.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042857/packages/shared/src/sim/world/ArenaDef.ts
+overwrite_temp_20260824-042907	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/render/roundVfxLifecycle.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042907/apps/client/src/render/roundVfxLifecycle.ts
+overwrite_temp_20260824-042910	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/sim/world/ArenaDef.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042910/packages/shared/src/sim/world/ArenaDef.ts
+overwrite_temp_20260824-042919	Edit	未追蹤	/Users/Takuro/GGD/packages/shared/src/map/gateWiring.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042919/packages/shared/src/map/gateWiring.test.ts
+overwrite_temp_20260824-042940	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/render/roundFxRegistry.ts	
+overwrite_temp_20260824-042955	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/render/roundFxRegistry.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-042955/apps/client/src/render/roundFxRegistry.ts
+overwrite_temp_20260824-043004	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/render/roundFxRegistry.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043004/apps/client/src/render/roundFxRegistry.ts
+overwrite_temp_20260824-043004	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/content/refs.ts	
+overwrite_temp_20260824-043015	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/content/refs.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043015/packages/shared/src/content/refs.ts
+overwrite_temp_20260824-043024	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/render/roundFxRegistry.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043024/apps/client/src/render/roundFxRegistry.ts
+overwrite_temp_20260824-043040	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/GameApp.ts	
+overwrite_temp_20260824-043049	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/GameApp.roundFxWiring.test.ts	
+overwrite_temp_20260824-043115	Edit	未追蹤	/Users/Takuro/GGD/tools/sfx-bind/suggest_keys.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043115/tools/sfx-bind/suggest_keys.py
+overwrite_temp_20260824-043119	Edit	未追蹤	/Users/Takuro/GGD/tools/sfx-bind/suggest_keys.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043119/tools/sfx-bind/suggest_keys.py
+overwrite_temp_20260824-043124	Edit	未追蹤	/Users/Takuro/GGD/tools/sfx-bind/suggest_keys.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043124/tools/sfx-bind/suggest_keys.py
+overwrite_temp_20260824-043131	Edit	未追蹤	/Users/Takuro/GGD/tools/sfx-bind/suggest_keys.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043131/tools/sfx-bind/suggest_keys.py
+overwrite_temp_20260824-043133	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/render/roundFxRegistry.test.ts	
+overwrite_temp_20260824-043143	Bash	有未提交改動	/Users/Takuro/GGD/content/abilities/godie-hjai.e.json	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043143/content/abilities/godie-hjai.e.json
+overwrite_temp_20260824-043143	Edit	SKIP(git 有)	/Users/Takuro/GGD/tools/sfx-bind/build_bindings.py	
+overwrite_temp_20260824-043145	Edit	有未提交改動	/Users/Takuro/GGD/packages/shared/src/content/editorCapabilities.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043145/packages/shared/src/content/editorCapabilities.ts
+overwrite_temp_20260824-043147	Edit	有未提交改動	/Users/Takuro/GGD/tools/sfx-bind/build_bindings.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043147/tools/sfx-bind/build_bindings.py
+overwrite_temp_20260824-043150	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/render/roundFxRegistry.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043150/apps/client/src/render/roundFxRegistry.test.ts
+overwrite_temp_20260824-043202	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/vfx/roundGrowthIsBounded.test.ts	
+overwrite_temp_20260824-043214	Edit	SKIP(git 有)	/Users/Takuro/GGD/apps/client/src/render/groundTextureCache.test.ts	
+overwrite_temp_20260824-043226	Bash	repo 外	/private/tmp/tc.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260824-043226/tc.log
+overwrite_temp_20260824-043229	Edit	未追蹤	/Users/Takuro/GGD/tools/sfx-bind/suggest_keys.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043229/tools/sfx-bind/suggest_keys.py
+overwrite_temp_20260824-043230	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/render/groundTextureCache.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043230/apps/client/src/render/groundTextureCache.test.ts
+overwrite_temp_20260824-043248	Edit	未追蹤	/Users/Takuro/GGD/tools/sfx-bind/suggest_keys.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043248/tools/sfx-bind/suggest_keys.py
+overwrite_temp_20260824-043305	Edit	SKIP(git 有)	/Users/Takuro/GGD/tools/editor-contract/gen_contract_numbers.py	
+overwrite_temp_20260824-043310	Bash	repo 外	/private/tmp/g1.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260824-043310/g1.log
+overwrite_temp_20260824-043310	Bash	repo 外	/private/tmp/g2.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260824-043310/g2.log
+overwrite_temp_20260824-043310	Bash	repo 外	/private/tmp/g3.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260824-043310/g3.log
+overwrite_temp_20260824-043310	Bash	repo 外	/private/tmp/g4.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260824-043310/g4.log
+overwrite_temp_20260824-043322	Edit	有未提交改動	/Users/Takuro/GGD/tools/editor-contract/gen_contract_numbers.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043322/tools/editor-contract/gen_contract_numbers.py
+overwrite_temp_20260824-043323	Bash	repo 外	/private/tmp/b1.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260824-043323/b1.log
+overwrite_temp_20260824-043337	Edit	有未提交改動	/Users/Takuro/GGD/tools/editor-contract/gen_contract_numbers.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043337/tools/editor-contract/gen_contract_numbers.py
+overwrite_temp_20260824-043339	Bash	未追蹤	/Users/Takuro/GGD/tools/sfx-bind/suggest_keys.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043339/tools/sfx-bind/suggest_keys.py
+overwrite_temp_20260824-043355	Edit	有未提交改動	/Users/Takuro/GGD/tools/editor-contract/gen_contract_numbers.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043355/tools/editor-contract/gen_contract_numbers.py
+overwrite_temp_20260824-043402	Edit	有未提交改動	/Users/Takuro/GGD/tools/sfx-bind/build_bindings.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043402/tools/sfx-bind/build_bindings.py
+overwrite_temp_20260824-043410	Edit	有未提交改動	/Users/Takuro/GGD/tools/editor-contract/gen_contract_numbers.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043410/tools/editor-contract/gen_contract_numbers.py
+overwrite_temp_20260824-043416	Edit	有未提交改動	/Users/Takuro/GGD/tools/editor-contract/gen_contract_numbers.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043416/tools/editor-contract/gen_contract_numbers.py
+overwrite_temp_20260824-043423	Edit	有未提交改動	/Users/Takuro/GGD/apps/admin/src/configForms.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043423/apps/admin/src/configForms.ts
+overwrite_temp_20260824-043424	Edit	有未提交改動	/Users/Takuro/GGD/tools/editor-contract/gen_contract_numbers.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043424/tools/editor-contract/gen_contract_numbers.py
+overwrite_temp_20260824-043431	Edit	有未提交改動	/Users/Takuro/GGD/tools/editor-contract/gen_contract_numbers.py	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043431/tools/editor-contract/gen_contract_numbers.py
+overwrite_temp_20260824-043454	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/render/groundTextureCache.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043454/apps/client/src/render/groundTextureCache.ts
+overwrite_temp_20260824-043515	Edit	有未提交改動	/Users/Takuro/GGD/apps/client/src/render/groundTextureCache.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043515/apps/client/src/render/groundTextureCache.ts
+overwrite_temp_20260824-043527	Edit	SKIP(git 有)	/Users/Takuro/GGD/tools/skill-spec/gen_spec.ts	
+overwrite_temp_20260824-043548	Edit	有未提交改動	/Users/Takuro/GGD/tools/skill-spec/gen_spec.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043548/tools/skill-spec/gen_spec.ts
+overwrite_temp_20260824-043820	Edit	SKIP(git 有)	/Users/Takuro/GGD/packages/shared/src/ops/codexContractNumbers.test.ts	
+overwrite_temp_20260824-043844	Edit	未追蹤	/Users/Takuro/GGD/packages/shared/src/content/beamArriveVfx.test.ts	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043844/packages/shared/src/content/beamArriveVfx.test.ts
+overwrite_temp_20260824-043949	Edit	未追蹤	/Users/Takuro/GGD/docs/_reports/M1_temp_20260824m.md	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-043949/docs/_reports/M1_temp_20260824m.md
+overwrite_temp_20260824-044007	Edit	未追蹤	/Users/Takuro/GGD/docs/_reports/M1_temp_20260824m.md	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-044007/docs/_reports/M1_temp_20260824m.md
+overwrite_temp_20260824-044029	Edit	未追蹤	/Users/Takuro/GGD/docs/_reports/M1_temp_20260824m.md	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-044029/docs/_reports/M1_temp_20260824m.md
+overwrite_temp_20260824-044044	Edit	未追蹤	/Users/Takuro/GGD/docs/_reports/M1_temp_20260824m.md	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-044044/docs/_reports/M1_temp_20260824m.md
+overwrite_temp_20260824-044058	Bash	repo 外	/private/tmp/tc2.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260824-044058/tc2.log
+overwrite_temp_20260824-044127	Edit	未追蹤	/Users/Takuro/GGD/docs/_reports/M1_temp_20260824m.md	/Users/Takuro/GGD/docs/legacy/_overwrites/overwrite_temp_20260824-044127/docs/_reports/M1_temp_20260824m.md
+overwrite_temp_20260824-045449	Bash	repo 外	/private/tmp/sr.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260824-045449/sr.log
+overwrite_temp_20260824-045534	Bash	repo 外	/private/tmp/sr2.log	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260824-045534/sr2.log

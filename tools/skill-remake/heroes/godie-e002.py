@@ -124,7 +124,13 @@ A("20-03", "20-03 約束與勝利之劍", "ground", [60, 60, 60, 60], [250, 350,
       {"kind": "spawnModelFx", "shape": "single", "preset": "tpl-beam-roll",
        "path": "forward",
        "onTouch": [dmg("magic", dmg_tier="小")],
-       "onArrive": [{"kind": "screenShake", "shape": "single", "amplitude": 0.6,
+       # ⭐ GH#607 —— 落點要炸開。在此之前 `onArrive` 只有震動 ⇒ 光束飛到底
+       #    **憑空消失**。⚠️ 而 `tpl-beam-roll` 的家族預設早就宣告了 `arriveSoundKey`
+       #    ⇒ 聲音說爆炸、畫面什麼都沒有（第一·五守則:說了但不會發生）。
+       # ⚠️ 這一發要與變身態雙胞胎 `godie-e00l.e` **一模一樣** —— 編號 20-03 是
+       #    JASS 對照的 join key,兩份不同就會被 abilityCodeParity 棘輪擋下。
+       "onArrive": [{"kind": "spawnVfx", "vfxId": "fx.prim.holy.explosion", "at": "point"},
+                    {"kind": "screenShake", "shape": "single", "amplitude": 0.6,
                      "durationSec": 0.8, "applyTo": "all"}]},
   ])
 

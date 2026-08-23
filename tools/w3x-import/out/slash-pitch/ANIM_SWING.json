@@ -213,6 +213,18 @@
    "pitchDeg": 75,
    "attackClipPitchDeg": 23
   },
+  "godie-n01c.w": {
+   "champion": "godie-n01c",
+   "championName": "傳說的龍騎士 - 勇者小呆",
+   "ability": "08-02 萊丁快速劍",
+   "modelKey": "imported.sd2",
+   "clip": "Spell",
+   "blade": "Bone_Weapon_heart←Bone_hand_alternate_left",
+   "sweptDeg": 90.5,
+   "planarity": 0.987,
+   "pitchDeg": 75,
+   "attackClipPitchDeg": 23
+  },
   "godie-nbbc.r": {
    "champion": "godie-nbbc",
    "championName": "傳說的龍騎士 - 勇者小呆",

@@ -322,8 +322,14 @@ A("59-04", "59-04 野戰型陽電子砲", "ground", [90, 90, 90], [350, 500, 650
            #    dummy `h01P` 於施法者身上並**面向目標點**，⛔ 不是沿著身體面向噴。
            # ⭐ `distance` 逐字等於上面那條 damageLine 的長度（450 w3x u × 11/600），
            #    所以**看得到的光束**與**真的會被打到的那條線**是同一段。
+           # ⭐ GH#607 —— `tpl-beam-roll` 的家族預設宣告了 `arriveSoundKey`,
+           #    而這個節點沒有落點畫面 ⇒ 聲音說爆炸、螢幕上什麼都沒有。
+           #    ki 系（初號機的陽電子砲同族）⇒ 用既有的 `fx.prim.ki.explosion-lg`,
+           #    ⛔ 零新資產。
            {"kind": "spawnModelFx", "shape": "single", "preset": "tpl-beam-roll",
-            "path": "toTarget", "distance": 8.25}])
+            "path": "toTarget", "distance": 8.25,
+            "onArrive": [{"kind": "spawnVfx", "vfxId": "fx.prim.ki.explosion-lg",
+                          "at": "point"}]}])
 
 A("59-002", "59-001 完全暴走", "self", [150], [0], 0,
   "[被動][暴走][迴避][吸血][免疫][加速][屬性門檻]\n{{cd}}秒冷卻\n\n「什麼？竟然沒有世界末日嗎？」\n[暴走]的門檻降為低於自身[最大生命] 50%，[攻擊速度]提升至最上限 10，[吸血]400%、[迴避]50%，持續 12秒。\n[暴走]期間[免疫]所有負面效果，冒著煙並拖曳光束。",

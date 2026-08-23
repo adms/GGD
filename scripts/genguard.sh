@@ -6,27 +6,41 @@
 #
 # 用法：bash scripts/genguard.sh <path...>
 #   擁有者查 tools/parallel-gates/sync-io.json 的 writes（⭐ 量出來的表，⛔ 不是手寫）。
-#   有擁有者 ⇒ exit 1 並指名「改 <來源> 然後跑 <指令>」；沒有 ⇒ exit 0。
+#   **作者**擁有 ⇒ exit 1 並指名「改 <來源> 然後跑 <指令>」；
+#   只有**正規化器**（tiers:apply 那一族，就地改欄位⛔不產生檔案）⇒ exit 0 + 提醒；
+#   沒有擁有者 ⇒ exit 0。⭐ 與 PreToolUse hook 同一套裁決。
 set -o pipefail
 cd "$(dirname "$0")/.."
 RC=0
 for p in "$@"; do
-  OWNER=$(node -e '
-const io=require("/dev/stdin");' 2>/dev/null)
   OWNER=$(node --input-type=module -e "
 import { readFileSync } from 'node:fs';
+// ⭐ 2026-08-24 —— 這一段必須與 PreToolUse hook（scripts/preserve-before-overwrite.py）
+//    的裁決**逐字一致**:hook 放行而這支說「擋」，就是散文在說謊（第三守則）。
+//    **正規化器 ≠ 作者**:tiers:apply 讀 530 寫 401，它是就地改欄位，⛔ 不產生那些檔。
+const NORMALIZERS = new Set(['tiers:apply', 'apconv:build', 'apdmg:build', 'prose:apply']);
 const io=JSON.parse(readFileSync('tools/parallel-gates/sync-io.json','utf8'));
 const p=process.argv[1];
+const hit=[];
 for (const s of io.steps ?? []) {
   for (const w of s.writes ?? []) {
-    if (p===w || (w.endsWith('/') && p.startsWith(w))) { console.log(s.name); process.exit(0); }
+    if (p===w || (w.endsWith('/') && p.startsWith(w))) { if(!hit.includes(s.name)) hit.push(s.name); break; }
   }
 }
+if (hit.length) {
+  const authors = hit.filter((n) => !NORMALIZERS.has(n));
+  console.log((authors.length ? 'AUTHOR' : 'NORMALIZER') + '\t' + (authors[0] ?? hit[0]));
+}
 " "$p" 2>/dev/null)
-  if [ -n "$OWNER" ]; then
-    echo "🚫 $p 是產生器 **$OWNER** 的產物 —— ⛔ 直接改它,下一次 sync 就打回來。"
+  KIND=${OWNER%%$'\t'*}
+  NAME=${OWNER#*$'\t'}
+  if [ "$KIND" = "AUTHOR" ]; then
+    echo "🚫 $p 是產生器 **$NAME** 的產物 —— ⛔ 直接改它,下一次 sync 就打回來。"
     echo "   ⇒ 改它的**來源**(tools/ 或 content/ 的上游),然後跑該產生器重生成。"
     RC=1
+  elif [ "$KIND" = "NORMALIZER" ]; then
+    echo "⚠️ $p 會被**正規化器** $NAME 就地改欄位,⛔ 但它不是那支的產物 ⇒ **可以手改**。"
+    echo "   ⚠️ 改完請跑一次 \`pnpm $NAME\`,讓級距/換算欄位跟著新內容重算。"
   else
     echo "✓ $p 沒有產生器擁有者,可以手改。"
   fi

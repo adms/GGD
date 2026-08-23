@@ -1,24 +1,24 @@
 {
   "collection": "maps",
-  "hash": "ae7c671b9102",
+  "hash": "51237ab2fd5f",
   "entries": [
     {
       "id": "map.frieren",
       "path": "maps/map.frieren.json",
-      "hash": "a4ce0e6ee400",
-      "size": 12086
+      "hash": "da5eb7e02e68",
+      "size": 12289
     },
     {
       "id": "map.heavens-arena",
       "path": "maps/map.heavens-arena.json",
-      "hash": "95f9412ac5dd",
+      "hash": "6e721f678378",
       "size": 11394
     },
     {
       "id": "map.holy-grail",
       "path": "maps/map.holy-grail.json",
-      "hash": "900e7cfb2823",
-      "size": 11317
+      "hash": "c3a395bf33e3",
+      "size": 11180
     },
     {
       "id": "map.infinity-castle",
@@ -35,14 +35,14 @@
     {
       "id": "map.shiganshina",
       "path": "maps/map.shiganshina.json",
-      "hash": "e4d0d870c984",
-      "size": 11590
+      "hash": "d43101b342da",
+      "size": 11793
     },
     {
       "id": "map.world-tree",
       "path": "maps/map.world-tree.json",
-      "hash": "7c032b7c4420",
-      "size": 12089
+      "hash": "6ac71111deea",
+      "size": 11952
     }
   ]
 }

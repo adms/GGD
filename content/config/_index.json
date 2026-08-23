@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "c9a17a0e9257",
+  "hash": "ec7539214f35",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -275,8 +275,8 @@
     {
       "id": "map-report",
       "path": "config/map-report.json",
-      "hash": "095f60e73b3b",
-      "size": 4774
+      "hash": "2c4746142fec",
+      "size": 4944
     },
     {
       "id": "map-spec",
@@ -461,14 +461,14 @@
     {
       "id": "vfx-cleanup",
       "path": "config/vfx-cleanup.json",
-      "hash": "0c1b233ec010",
-      "size": 8122
+      "hash": "3da2883722c5",
+      "size": 10309
     },
     {
       "id": "vfx-families",
       "path": "config/vfx-families.json",
-      "hash": "339a63e2a64b",
-      "size": 37404
+      "hash": "43a13fe4e838",
+      "size": 37426
     },
     {
       "id": "victory-fx",
