@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-08-23 14:27 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-08-23 17:12 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.25.5 · 資料截至 2026-08-23 14:27 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-23 14:27 (GMT+8)</h1><div class="meta"><span>帳本 <b>5</b> 份</span><span>點名票號 <b>202</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.25.6 · 資料截至 2026-08-23 17:12 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-23 17:12 (GMT+8)</h1><div class="meta"><span>帳本 <b>5</b> 份</span><span>點名票號 <b>197</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -155,94 +155,6 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <p class="li"><code>python3 tools/icon-console/emit_style_spec.py</code> —— 等 <code>prompt.py</code> 定稿</p>
 <p class="li"><code>pnpm exec tsx tools/model-budget/emit_report.ts</code> —— <code>report.json</code> 現在就過期，而<b>沒有守衛會說</b></p>
 <p class="li"><code>eventFanout.ts:114</code> 的註解已成假話（線路成本從「施放次數」變成「跳數」）</p></section>
-<section><p class="eyebrow">這一版（08-20）</p><h2>🧾 逐句對票 · 這一版（08-20）</h2><blockquote><b>來源與計算基礎（⛔ 不可以省略這一段）</b></blockquote>
-<blockquote>主來源＝<code>docs/_daily/2026-08-21.md</code> 的「逐則對票」表（<code>scripts/message-ledger.sh</code> 從</blockquote>
-<blockquote>session transcript 逐則撈出來對帳，⛔ 不是我寫的摘要）。</blockquote>
-<blockquote>那張表有 <b>83 列</b> = <b>52 列 owner 原文</b>（transcript）＋ <b>31 列裁決回寫</b>（<code>scripts/ruling.sh</code>）。</blockquote>
-<p>&gt;</p>
-<blockquote>⚠️ <b><code>pnpm msgledger:check</code> 在起草當下是 EXIT=1</b>，指名漏了 <b>2 則</b>（19:28 · 19:31）——</blockquote>
-<blockquote>已照 CLAUDE.md 部署協定第 1 步的 python 直接從 transcript 補撈，列在下表最後兩列。</blockquote>
-<blockquote>⛔ 這正是 2026-08-19「我猜你掉了超多」的那個形態，所以<b>閘紅了就去補，⛔ 不是繞過</b>。</blockquote>
-<p>&gt;</p>
-<blockquote><b>下表 65 列</b> = 54 則 owner 原文（52 + 補撈 2）＋ 11 則「只存在於裁決回寫」的裁決</blockquote>
-<blockquote>（那 11 則的 owner 原話被包在更長的訊息裡或被打斷，<code>ruling.sh</code> 當下逐字存了下來）。</blockquote>
-<blockquote>20 則裁決回寫已經<b>併回</b>它對應的原文列（±3 分鐘內），所以 65 + 20 = 85 = 83 + 2。✅ 零遺漏。</blockquote>
-<p>&gt;</p>
-<blockquote>「owner 逐字」那一欄<b>取自那兩個來源，⛔ 沒有改寫</b>（過長處截斷，全文在</blockquote>
-<blockquote><code>docs/_daily/ledger-source_temp_20260821.md</code>）。</blockquote>
-<div class="scroll"><table><tr><th>#</th><th>時間</th><th>owner 逐字（截斷）</th><th>票</th><th>狀態</th></tr>
-<tr><td>1</td><td>00:32</td><td>「B：先去量 AP 到底貢獻多少，再決定要不要動 =&gt; <b>暫時這樣吧</b>」／「應該是用<b>我們算出來的 600/1500/3000/4500/6000 作為基礎來算</b>吧，記得要 <b>script 自動化</b>」／「C 上下限」／「附錄 A =&gt; <b>yes, yes</b>」</td><td>#433 #445 #446 #447 #464</td><td>✅ 四題全落地；界線改成<b>逐支推導</b>（傷害級距 vs 冷卻級距），⛔ 廢掉「全庫中位」</td></tr>
-<tr><td>2</td><td>00:35</td><td>「14-04 聖夜降臨 14-00 召喚式神 的木乃香 應該整支都下架移到 legacy 了吧 <b>為何又出現在 平衡數值決策建議</b>？Scorch Ring」</td><td>#472 #485</td><td>✅ 根因＝母體用了檔案數 71；改成 <b>49 位可選本體</b></td></tr>
-<tr><td>3</td><td>00:37</td><td>「我們應該討論過<b>上架英雄還剩哪些</b>吧 你查就知道」</td><td>#485</td><td>✅ 已列（線上 59 = 49 本體 + 10 變身態）</td></tr>
-<tr><td>4</td><td>00:39</td><td>「<b>錯誤的母體資料 下架沒使用的英雄 技能 說明 道具 請都整理到 legacy</b> 好嗎」</td><td>#447 #472 #479 #485</td><td>✅ 走 A：<b>保留內容、只從白名單拔掉</b>（B/C 已量到會炸：60 份技能失效 · 80 份出貨檔斷引用）</td></tr>
-<tr><td>5</td><td>00:54</td><td>「並且我們<b>查所有屬性級距等 都是不考慮變身態的</b>」</td><td>#445 #446 #447 #485</td><td>✅ <b>全部</b>量測母體改 49（anchors / mana / lowdmg / statCaps / newhero / archetypes 一律）</td></tr>
-<tr><td>6</td><td>00:55</td><td>「<b>上架不能包含變身態 我們討論過了 之前就是這樣才沒改到正確的英雄技能</b>」</td><td>#447 #472 #479 #485</td><td>✅ #486 一鍵清理（<code>f0779b70</code>）；⭐ 已驗證變身<b>不會壞</b></td></tr>
-<tr><td>7</td><td>00:59</td><td>「好 <b>請你做 A</b> 之後<b>重算 全部重新檢查 重新生成</b> 後更新 <b>GGD作戰表 對話開票 及 平衡數值決策建議</b>」</td><td>#414 #447 #472 #479 #485</td><td>✅ 三份全部重生成</td></tr>
-<tr><td>8</td><td>01:17</td><td>*（我的稽核回寫）*「420 支全轉五級距」的前提是錯的 —— <code>content/abilities/</code> 是產生器輸出、<code>enabled:false</code> 是止血閥</td><td>#445 #447 #463</td><td>✅ 停手等裁決 → owner 01:32 逐條裁決</td></tr>
-<tr><td>9</td><td>01:32</td><td>「<b>我們也有升階公式討論過不是嗎 除了冷卻以外 傷害跟耗魔是一起變動的</b>…比較接近 <b>B 全轉</b>」／「<b>這個我們討論過了 請你把 json 填 12</b> 你是不是<b>沒用對話開票 記錄跟解</b>」／「<b>那就不要調耗魔阿</b>」／「<b>不對 有些被動是有冷卻的 例如 初號機吞噬</b>」／「這什麼鬼阿 太誇張了吧」</td><td>#414 #445 #447 #463 #485</td><td>✅ 六件全落地。⚠️ 「你是不是沒用對話開票」＝ <b>第零守則的裁決落地閘</b>被我破過一次</td></tr>
-<tr><td>10</td><td>01:48</td><td>屬性上限 →「<b>[v] A 維持現狀</b>」</td><td>#447 #485</td><td>✅ ⛔ 七條上限一格未動</td></tr>
-<tr><td>11</td><td>01:50</td><td>「請你更新 GGD作戰版 跟 平衡數值決策建議，<b>我已經被搞倒好亂了</b>，我想看到<b>乾淨的五級距、公式及範例</b>…<b>別忘了 對話開票</b>」</td><td>#447 #484</td><td>✅ 兩份重生成 + 逐則對票</td></tr>
-<tr><td>12</td><td>02:15</td><td>*（我的範例回寫）* 五支真的出貨的技能：相稱下限 vs 實際傷害</td><td>#447</td><td>✅ 導出 02:19 的 B</td></tr>
-<tr><td>13</td><td>02:16</td><td>「<b>我們架構已經改過了 你要同步開最大限度工作流來檢查跟更新</b> 應該沒問題吧」</td><td>#414 #445 #447 #485</td><td>✅ 核准平行工作流；⭐ 也解掉了 A/B/C 的僵局（靠攏在<b>註冊時</b>＝開關可回頭）</td></tr>
-<tr><td>14</td><td>02:19</td><td>「<b>[v] B 全部拉到下限</b>…<b>放心，實際上我們還有魔抗、生命倍率可以平衡，但至少可以跟普通攻擊抗衡了</b>…考慮到<b>風險期望值</b>」</td><td>#445 #447</td><td>✅ 76 支拉到相稱下限。⭐ 「跟普攻抗衡」＝ §5 那張比值表的<b>驗收條件</b></td></tr>
-<tr><td>15</td><td>02:21</td><td>「如果有<b>施法範圍極小</b>的技能列給我看，傷害也列出來是哪個級距？」</td><td>#447 #451 #469</td><td>✅ 已列</td></tr>
-<tr><td>16</td><td>02:31</td><td>「<b>千年練成 跟 龍星群 都是多個小範圍 其實應該被視為大範圍</b>才對…應該不是極小」</td><td>#447 #484</td><td>✅ 02:37 裁決 A</td></tr>
-<tr><td>17</td><td>02:36</td><td>「[v] A <b>只改分級定義（總計/有效覆蓋）</b>，4 支自動落到正確級距，⛔ 不動任何數值」／「<b>飛鼠先生本來就會變成隱藏角色，所以強一點合理</b>…算是<b>有額外條件風險</b>」</td><td>#445 #447 #451 #465 #469</td><td>✅ 4 支自動落位；天譴<b>不壓</b>，理由寫進豁免（⛔ 不是一張沒有理由的名單）</td></tr>
-<tr><td>18</td><td>02:38</td><td>「你檢查過所有技能說明的 冷卻 耗魔 傷害 距離 範圍 都已經<b>正規化 五級距</b>…<b>都一致了嗎</b>？如果是的話 可以 <b>PUSH NOTE DEPLOY</b>」</td><td>#447 #484</td><td>⏳ 本文件是 <b>NOTE</b> 那一步。⛔ 本 session <b>不 push、不 deploy</b></td></tr>
-<tr><td>19</td><td>02:45</td><td>「請思考<b>盡量同個檔案一次改完</b>…<b>不要重複測試跟讀取浪費 token</b>」／「<b>順便也請你對照檢查技能說明與 JSON 是否都有比對正確實作</b>」／「盡量寫 <b>script 自動化</b>」／⭐「<b>有需要決策…不要停下來，盡量做下去，把決策點做成後台開關</b>，但 <b>note 要記錄詳實有這個開關來妥協預設你的建議</b>」</td><td>#414 #445 #446 #447</td><td>✅ <b>§3 開關總表就是這一則的產物</b>。本版<b>一次都沒有停下來問</b></td></tr>
-<tr><td>20</td><td>03:21</td><td>*（JASS 調查回寫）* 換算 <code>GGD = WC3 × 11/600</code>（26 支逐位吻合）· <code>STOCK_ABILITIES.json</code> 缺 Rng/Area · <b>吞噬根本還沒變成被動</b></td><td>#268 #414 #419 #433</td><td>✅ 導出 #489（<code>3c066f2b</code>）；#268 的病根另記</td></tr>
-<tr><td>21</td><td>12:28</td><td>「我發現<b>有許多地圖的牆 瞬移過去</b> 例如<b>無限城</b>等」／「請你給我<b>移動速度及攻擊速度 每級成長五級距</b>」／「<b>幫我後台跳出一鍵清理變身態的按鈕</b>」</td><td>#414 #433 #485 #486 #487 #488</td><td>✅ <b>三件全落地</b>（<code>5ea04900</code> · <code>bedfcfc5</code> · <code>f0779b70</code>）</td></tr>
-<tr><td>22</td><td>12:35</td><td>「<b>你確定</b> 你上次給我／屬性 極小 小 中 大 極大 上限 解鎖上限／移速 2.5 4 5 6.25 10 10 12／攻速 1 1.6 2 2.5 4 4 10」</td><td>#486 #487 #488</td><td>✅ 逐格比對回覆</td></tr>
-<tr><td>23</td><td>12:38</td><td>「等等 你的意思是 <b>十出身 十一屬性 都沒上線嗎</b>？請你重新列給我」</td><td>#486 #487 #488</td><td>✅ 出身<b>矩陣</b>確實沒落地（<code>origin-routes.json</code> 只有路線描述）</td></tr>
-<tr><td>24</td><td>12:40</td><td>「我上次記錄的如下，請你告訴我<b>與系統生效的是否有差異</b>」（貼上十出身 × 十一屬性完整表）</td><td>#486 #487 #488</td><td>✅ 11 格裡 <b>9 格逐位相同</b>；2 格是抄寫差（法強極大 337 vs 出貨 377、生命回復極大 33.77 vs 33.7）</td></tr>
-<tr><td>25</td><td>12:45</td><td>「等等 <b>屬性五級距 出身這些我們討論完在座</b>」</td><td>#414 #447 #485</td><td>⏸ 暫停</td></tr>
-<tr><td>26</td><td>12:47</td><td>「<b>十出身跟十一屬性五級距全部都先停下來</b>」</td><td>#414 #485 #486 #487 #488</td><td>⏸ 暫停 → <b>15:32 被 owner 自己的新裁決解除</b></td></tr>
-<tr><td>27</td><td>12:52</td><td>「<code>heroForge.ts:369 normalizedPreview()</code> <code>const n = DEFAULT_STAT_NORMALIZATION</code> <b>這個是什麼完全看不懂</b>」／「<code>statNormalizationFromDoc</code> 是逐格 fallback =&gt; <b>哪裡會少一格?</b>」</td><td>— 不需開票</td><td>✅ 修掉（<code>00935377</code>）—— 後台改級距，鑄技工坊預覽現在會跟著變</td></tr>
-<tr><td>28</td><td>12:56</td><td>「<b>fix first</b>」／「請你將<b>十一屬性+五級距 這張表 加上 30/50/99 試算</b>給我」</td><td>#414 #485</td><td>✅ fix 已落地；30/50/99 試算進 Excel（<code>af5e3f94</code>）</td></tr>
-<tr><td>29</td><td>13:06</td><td>「① 吞噬的裁決從來沒有落地」「<b>翔封界 等飛行效果實作</b>」「有許多地圖的牆 瞬移過去」「一鍵清理變身態」「<code>heroForge.ts:369</code>」／「<b>以上這些先請你修好 開好票 修好也註記並關票</b>」</td><td>#479 #485</td><td>✅ <b>#486–#490 五票全開全關</b>（GitHub 上皆 CLOSED）</td></tr>
-<tr><td>30</td><td>13:13</td><td>「這些數值怎麼那麼誇張 <b>你不要亂乘上倍率 我只要看原始阿</b>」</td><td>#414 #485</td><td>✅ 全部改成<b>不含系統倍率</b>的原始值</td></tr>
-<tr><td>31</td><td>13:25</td><td>「<b>那我要每級成長阿 你怎麼給錯了</b> 並且我們還有 <b>智慧 力量 敏捷 三屬性 怎麼辦</b>？」</td><td>#414 #485</td><td>✅ 這一則<b>直接導出 15:32 的架構裁決</b></td></tr>
-<tr><td>32</td><td>13:34</td><td>「<b>三主屬性如何影響其他屬性？</b>」</td><td>#414 #485</td><td>✅ 已回覆（三層加法律 + 五個係數）</td></tr>
-<tr><td>33</td><td>13:37</td><td>「我覺得目前<b>有十出身已經夠了</b>…<b>不要數值膨脹 要容易平衡的新數值成長系統 建議三個方案給我</b>」</td><td>#414 #485</td><td>✅ 三方案已提；owner 15:32 選了 🅲 的變形</td></tr>
-<tr><td>34</td><td>14:48</td><td>「<b>遊戲中 屬性能力總共有多少個？</b>」＋重貼四件清單＋「<b>修好了嗎</b>」</td><td>#479 #485</td><td>✅ 已回覆</td></tr>
-<tr><td>35</td><td>15:32</td><td>⭐「我決定<b>廢掉三屬性 純用十出身的五級距表來代表每級屬性成長</b>就好／我所謂的廢掉指的是 <b>所有角色的 力敏智成長都歸 0 不是真的沒作用</b>，不然<b>隨機能力那些都要大改太麻煩</b>」／「我們<b>計算的時候都不考慮任何系統倍率</b>」／四個 sheet 的 EXCEL「<b>都是從系統讀取的 JSON 來</b>」</td><td>#414 #485</td><td>✅ 49 位可選本體歸 0 + <b>20 個變身態補完</b>（<code>7bfd74bb</code>）；Excel 四 sheet（<code>af5e3f94</code>）。⚠️ <b>後果見 §4</b></td></tr>
-<tr><td>36</td><td>15:43</td><td>「<b>備份壓縮放到 legacy 後，全部套用新的</b>」</td><td>#414 #485 #490</td><td>✅ 先備份再套用 → <code>docs/legacy/_attr-growth-zeroed-superseded.md</code>（⭐ 知識不無聲消失）</td></tr>
-<tr><td>37</td><td>15:55</td><td>⭐ 兩處<b>更正我的說法</b>：「…=&gt; <b>照規則就好不要例外</b>」／（零平衡改動的前提沒了）=&gt;「<b>我沒這樣說過</b>」</td><td>#485 #487 #490</td><td>✅ 兩處都照更正走。⭐ 第二處是 <b>§4 整節的依據</b></td></tr>
-<tr><td>38</td><td>15:57</td><td>⭐「<b>飛行就是可以穿牆 跟 無視所有人碰撞 但地圖標界還是要遵守</b>」</td><td>#487 #490</td><td>✅ 三個方向的守衛（<code>efdf4bce</code> + <code>095e27fe</code>）</td></tr>
-<tr><td>39</td><td>16:02</td><td>「既然我們大改了 所有屬性成長 30/50/99 我們得來看看<b>我們最近做的技能傷害公式與成長是否合理，是否還能與普通攻擊抗衡</b>」／（平衡差異清單）「<b>這是啥</b>」</td><td>#414 #485 #490</td><td>✅ 已量測 → 導出 17:18 的公式。⭐ <b>「這是啥」＝ §4 必須誠實寫的理由</b></td></tr>
-<tr><td>40</td><td>16:12</td><td>「不是吧 <b>我們也有設計出身對應 AP 五級距成長阿 怎麼不會成長？</b>」／「我們之前有說過<b>所有技能本來吃 智慧力量敏捷額外傷害 現在全部改為 AP 額外傷害</b>阿」</td><td>#414 #485 #490</td><td>✅ <code>ec5196d0</code>（335 份技能 JSON，⛔ 一份都不是手改的）</td></tr>
-<tr><td>41</td><td>16:50</td><td>「<b>先 commit 一板</b>」＋六個裁決：①<code>intToAbilityPower = 6.5 =&amp;gt; 10</code> ②「原本有屬性額外傷害的部分<b>都換成 AP</b>，<b>乘數幾倍屬性 變成 1/4 百分比</b>…取<b>百分比整數</b>」③「<b>請你照出身表的規劃來設定就好</b>」④⑤「<b>照出身表套用不行嗎 有什麼例外的原因？</b>…請將<b>舊規則及文件打包移到 legacy</b>」⑥「請記得<b>全部都要用 script 推導生成 JSON</b>」</td><td>#244 #248 #414 #447 #485</td><td>①🔴 <b>被 17:19 覆蓋 → 已改 4</b>（<code>373b3065</code>）②✅ ③✅ <b><code>as</code> 進 appliesTo</b>（⚠️ 後果見 §4）④⑤✅ legacy 已打包 ⑥✅ 全部走 <code>*:build</code>／<code>*:check</code></td></tr>
-<tr><td>42</td><td>17:00</td><td>「<b>現在還有不是照出身表五級距的地方嗎</b>」／「=&gt; <b>我們只換掉 智慧 敏捷 力量 三屬性的技能額外加成</b>」／「請你<b>重新給法強 五級距的建議</b>」</td><td>#414 #447</td><td>✅ <code>ad</code> 那 <b>43 處確認一格未動</b>（收 lane 時逐處比對過）</td></tr>
-<tr><td>43</td><td>17:13</td><td>「5 個屬性完全沒有五級距（暴擊率·暴擊傷害·冷卻縮減·吸血·迴避）=&gt; <b>不需要</b>」／「<b>AP 也有不同出身的成長五級距吧 怎麼會沒有成長呢？</b>」／⭐「我有個更好的建議，就是**技能傷害都套用公式 (1+AP\*1%)<b>…</b>AP 變為原本傷害的額外加成**」</td><td>#414 #447</td><td>✅ <code>785a585c</code> —— ⛔ 五個屬性照他說的<b>不做</b></td></tr>
-<tr><td>44</td><td>17:18</td><td>「=&gt; <b>預設 0.5%</b> 並且<b>後台、script, JSON, 文件檔、codex 技能編輯器契約、文件等都要一起更新</b>關於<b>十出身十一屬性的新規則與參數</b>、<b>技能五級距的傷害、冷卻、耗魔各種新模板與參數</b>」</td><td>#414 #447 #485</td><td>✅ <code>rate: 0.005</code> 出貨；六個擴散目標<b>全部完成</b>（<code>3c4ce3a0</code> 補上 codex 契約最後兩段）</td></tr>
-<tr><td>45</td><td>17:19</td><td>「<code>intToAbilityPower</code> 維持 6.5 =&gt; <b>調整到 4</b>」</td><td>#414 #447</td><td>✅ <code>373b3065</code> —— HEAD 是 <b>4</b>（⛔ 不是 6.5、⛔ 不是 10）</td></tr>
-<tr><td>46</td><td>17:22</td><td>「請你評估<b>盡量多開平行獨立工作流</b> 不衝突的完成／全部做完後，可以整理 <b>對話開單到 GGD 作戰板 push note deploy</b>」</td><td>— 不需開票</td><td>⏳ 本文件是 NOTE</td></tr>
-<tr><td>47</td><td>17:38</td><td>*（與 17:22 逐字相同的重送）*</td><td>— 不需開票</td><td>同上</td></tr>
-<tr><td>48</td><td>17:48</td><td>「那『隱藏』與『可選』是不是互斥 =&gt; <b>可以重複獨立</b>」</td><td>#469</td><td>✅ <code>fcd51d7c</code> —— 四位隱藏英雄落地，⛔ 不管在不在上架名單裡</td></tr>
-<tr><td>49</td><td>18:02</td><td>①「=&gt; <b>不用因為只是暫時的</b>」②「<b>創建房間後底下有個選單 充滿一堆 id 那是什麼不明的東西？沒用的話請拿掉</b>」③「<b>創建房間最重要的就是拉人進來</b>…<b>最多等 10 秒</b>…<b>包含 vs bot</b>…<b>明顯提示姓名與積分、所選英雄</b>，<b>每回合結算也都要特別再提示一次</b>」④「<b>後台左邊選單點選後，右邊自動回到最上面</b>…<b>超過一個螢幕畫面長度外會被吃掉</b>」⑤「<b>原本技能裡面有額外 AP 傷害都要保留一起加總後，被乘新的技能 AP 額外傷害吧</b>」</td><td>#336 #447 #469 #491 #492 #493</td><td>②✅<code>dfa09b66</code> ③✅<code>15877dff</code> ④✅<code>4f70d015</code> ⑤✅ <code>apRatioMode: &amp;quot;stack&amp;quot;</code> 確認</td></tr>
-<tr><td>50</td><td>18:05</td><td>*（與 18:02 逐字相同的重送）*</td><td>#336</td><td>同上</td></tr>
-<tr><td>51</td><td>18:11</td><td>「⭐ 大廳全員邀請 + 10 秒（含 vs bot）+ 對手資訊 =&gt; <b>改成五秒</b>」</td><td>#492</td><td>✅ <code>waitSeconds: 5</code>（<code>50cf594a</code>）—— ⛔ 覆蓋他更早的 10 秒</td></tr>
-<tr><td>52</td><td>18:15</td><td>「幫我開一張票 <b>殭屍死掉後 掉落小金幣 停留 1秒後 動畫效果軌跡(貝茲曲線加速)吸回到擊殺的英雄 搭配輕音效 提高爽度 模仿肉鴿遊戲的氛圍感</b>」</td><td>#494</td><td>✅ <code>274945b0</code></td></tr>
-<tr><td>53</td><td>18:22</td><td>「我記得還有一個系統倍率 是<b>每等級 +1 ap</b>, 所以 <b>LV99 未必沒用</b>」／<code>per-level-bonus.ap</code> 三選一 =&gt;「<b>C · 維持現狀</b>／反正我玩過以後 不行從後台手動調整就好」</td><td>#414 #447 #495</td><td>✅ ⛔ 一格未動。⭐ 他是對的：<code>per-level-bonus</code> 是<b>唯一在 LV99 真的推得動 AP 的旋鈕</b>（+98）</td></tr>
-<tr><td>54</td><td>18:26</td><td>「連擊也會有像 <b>candy crush 類似連段音階升高的音效</b>刺激玩家帶來獎勵感」／「放心 要<b>同時殺死 60 個殭屍 也沒那麼容易 這太極端</b>」</td><td>#494 #495</td><td>✅ 音階做了；⭐ 節流<b>只做最簡單的</b>（上限 32 + 55ms），⛔ 沒有為 60 隻同時死加架構</td></tr>
-<tr><td>55</td><td>18:30</td><td>「你在<b>施展技能的時候會釋放一個粒子特效，最後會飄散到天空</b>，這個<b>特效存活時間真的太長了，請你砍半，不需要後半段飄到天空</b>」</td><td>#494</td><td>✅ 壽命砍半（0.35–0.7 → <b>0.175–0.35</b>）<b>且</b>上升在壽命結束前就停住（<code>gravityY</code> 7.5→3 · <code>drag</code> 0.86→0.7）</td></tr>
-<tr><td>56</td><td>18:34</td><td>「清理變身態、通過邀請碼審查、上下架角色道具 等常用批核，應該都要在 <b>[Quick Approval]</b> 這邊簡易一鍵批核通過吧？」</td><td>#495</td><td>✅ <code>375660ac</code></td></tr>
-<tr><td>57</td><td>18:47</td><td>「後台 <b>戰鬥回放 出現的是 localhost 無法觀看</b>」／「英雄上下架 及 免費解鎖名單 <b>英雄ID以外還要有英雄名稱</b>…<b>變身態的話也要註明</b>」／「對戰錄影 超過幾天的錄影一律刪掉 <b>預設不刪除</b>」</td><td>— 不需開票</td><td>✅ 三件全落地（<code>cd348023</code> · <code>98902435</code>）；開了 #496 #497 #498</td></tr>
-<tr><td>58</td><td>18:48</td><td>*（18:02 ③ 的重送，逐字）*</td><td>#492</td><td>✅ 同 49 ③</td></tr>
-<tr><td>59</td><td>18:49</td><td>「<b>你還有多久可以做完 然後 push note deploy?</b>」</td><td>— 不需開票</td><td>✅ 已回覆</td></tr>
-<tr><td>60</td><td>18:53</td><td>「<b>盡量多開工作流 最大效率完成吧</b>」</td><td>— 不需開票</td><td>✅</td></tr>
-<tr><td>61</td><td>19:19</td><td>「<b>所有人預設都會加</b>」</td><td>— 不需開票</td><td>⏳ opt-out 反轉<b>在工作區、未 commit</b>（見 §6）</td></tr>
-<tr><td>62</td><td>19:21</td><td>⭐「你說的是對的，<b>預設是加入，五秒是讓人按否定的</b>」</td><td>#492</td><td>⏳ 同上 —— <code>joinMode: &amp;quot;opt-out&amp;quot;</code> 已寫好但<b>未 commit</b></td></tr>
-<tr><td>63</td><td>19:25</td><td>「做成後台一格 adminAccountId =&gt; <b>yes, 如果只有一個就預設那一個</b>」／「<b>管理員是強制雙向 不必請求 每個人創號自動預設有管理員好友</b>」</td><td>#499</td><td>⏳ #499 <b>OPEN</b>，⛔ 不在本版範圍</td></tr>
-<tr><td>64</td><td>19:28</td><td>「<b>分析一下你現在工作流卡在哪裡 還能不能更加速</b>」</td><td>— 不需開票</td><td>✅ 已回覆（⚠️ <b><code>msgledger</code> 漏撈的兩則之一</b>）</td></tr>
-<tr><td>65</td><td>19:31</td><td>「請你評估<b>如果沒有什麼嚴重副作用 就照你說的四種做法加速吧</b>」</td><td>— 不需開票</td><td>✅ 已照做（⚠️ 同上）</td></tr>
-</table></div>
-<p><b>統計（計算基礎＝上面那 65 列）</b>：</p>
-<p>✅ 已落地 <b>57</b> · ⏳ 在飛／不在本版 <b>5</b>（#61 #62 #63 · #46 #47 是 NOTE 這一步本身） ·</p>
-<p>⏸ 被 owner 自己解除的暫停 <b>2</b>（#25 #26）· 🔴 與裁決不符 <b>0</b>。</p>
-<p>⚠️ <b>owner 逐字重送過三次</b>（17:38 = 17:22 · 18:05 = 18:02 · 18:48 = 18:02③）。</p>
-<p>⭐ 重送<b>不是雜訊，是訊號</b> —— 第零守則「owner 一回答，當下就寫進票」的每一次失效，</p>
-<p>在 transcript 上長的就是這個樣子。三次全部已對票。</p></section>
 <section><p class="eyebrow">的每一句話在哪張票上</p><h2>🧾 逐則對票 · owner 的每一句話在哪張票上</h2><h3>08-18</h3>
 <div class="scroll"><table><tr><th>#</th><th>時間</th><th>owner 說了什麼</th><th>落到哪</th><th>狀態</th></tr>
 <tr><td>1</td><td>03:48</td><td>魔抗百分比要實作，避免數字誤差及過期</td><td>已實作（三張卡真值回寫）</td><td>✅</td></tr>
@@ -642,6 +554,14 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>14:12</td><td>s</td><td>— 單一字元（誤觸/中斷的訊息），⛔ 沒有內容可以對票</td></tr>
 <tr><td>14:14</td><td>[緊急] 1. 你是不要又改到技能傷害倍率把生命倍率算進去了，現在技能兩三發就會死 2. 又變得lag了，這次更糟第一回合就開始lag，請你也觀察server本身狀況</td><td>#614 #615</td></tr>
 <tr><td>14:27</td><td>幫我調整後台系統倍率：英雄登場初始等級設定為6, 生命+1200, 初始魔抗+20%</td><td>#615</td></tr>
+<tr><td>15:29</td><td>[重要] 跑太久了吧 已經超過一小時 改一個小地方 上線成本這麼高 請你深入分析檢討是否有更好做法 不然這樣無法邊測試邊玩邊改，或是其他輕量級動態線上上架方式 (hotfix, patch) 設計與建議 ⛔ 「兩三發就死」—— 公式沒有被污染 ⭐ 自洽，而且是在「不考慮生命倍率」的純基礎空間自洽（你自己的規定）。真正的落差是： 五級距 固定值 —— 極大永遠 2000 血量 ⭐ 隨等級成長 =&gt; 你的公式有算上 AP加成額外技能傷害嗎，以及每等級+1AP的基礎提升，如果沒有你不是真的自洽，而這些都不是系統倍率 ⭐ 起霧＝空氣漫反射同一顆旋鈕轉大=&gt; 不是全場地都霧喔，而是像真實一樣會有一片飄過…</td><td>#300 #799 #599</td></tr>
+<tr><td>15:45</td><td>剛進商店 介面有些部分會黑閃爍 選完隨機三選一又回復正常 這版改完還是LAG 一定有地方有問題 客戶端移動還是非常不順 常常有回溯的部分 是不是移動速度客戶端跟伺服器端其實不匹配？ 地上常出現一堆亮藍色往外擴散的圈圈特效 應該不是w3x原始特效 或是做的太不像 我感覺是硬加的 太亮太搶眼不好看 請改善 而我還要查一件你順口帶出的：「每等級 +1 AP」今天真的生效嗎 =&gt; 這是之前就有的設定，後台也應該可以設定 飄動霧 應該要很淡 不影響任何戰局只是裝飾 不計入也不影響重播</td><td>#617 #618 #620 #610 · 移動不匹配已修（predictedStats + moveSpeedParity 守衛）</td></tr>
+<tr><td>15:55</td><td>我的本地端機器是M5 Max 128G 非常高效能，請你盡量壓榨多執行緒跟記憶體在本地端最大加速完成任務</td><td>— 本機加速,無需開票（forks 16 已落地 commit fd1c66c8;內容樹單次載入與 suite 並行進行中）</td></tr>
+<tr><td>16:14</td><td>[重要] 跑太久了吧 已經超過一小時 改一個小地方 上線成本這麼高 請你深入分析檢討是否有更好做法 不然這樣無法邊測試邊玩邊改，或是其他輕量級動態線上上架方式 (hotfix, patch) 設計與建議 上線成本 ⭐ 先量七次部署的每一段（我懷疑大宗其實在本機的 skills:sync + 四閘，⛔ 不是遠端 build），再設計分級的 hotfix 路。⛔ 不會提任何削弱既有閘的東西 —— 08-01／08-02 兩次「全綠而線上整個掛掉」 =&gt; 本機端的部分也盡量平行化多工作流多執行緒同步測試加速完成 ① worker 數：forks 16，⛔ 不要 threads ② ⭐⭐ 真正的大招：…</td><td>#621 部署計時帳本與分級上架路 · #614 LAG · #619 · #620</td></tr>
+<tr><td>16:23</td><td>ImpactComposer 的 ShockwaveRing 散開速度感要夠快，這樣才會有力量感，目前太慢存活時間也太長</td><td>#617</td></tr>
+<tr><td>16:31</td><td>[優先]ImpactComposer 的 ShockwaveRing 散開速度感要夠快、半透明淡出更快衰減，這樣才會有力量感，目前太慢存活時間也太長(0.8秒內，根據傷害五級距越大速度越快)</td><td>#617</td></tr>
+<tr><td>17:05</td><td>我將會把server升級，別擔心</td><td>#618（4 vCPU/15GB 的更正已記錄，擴機由 owner 處理）</td></tr>
+<tr><td>17:12</td><td>你是不是可以先整理一個段落 push note deploy 我覺得你越改越深了 但是客戶端跟伺服器端移動路徑衝突跟其他已經做好的功能跟修正 應該對目前玩家很有用了 你deploy完再繼續也可以</td><td>— 這是發版指示本身,不需要開票（切成 v0.26.0）</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

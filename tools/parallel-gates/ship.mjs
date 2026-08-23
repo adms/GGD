@@ -42,6 +42,31 @@ const argv = process.argv.slice(2);
 const noSync = argv.includes("--no-sync");
 const onlySync = argv.includes("--only-sync");
 
+/**
+ * 每一包 vitest 分到幾個 fork。⭐ 從**核數**與**同時在跑幾包**推導,
+ * ⛔ 不是抄各自 config 裡的 16（那個數字是「單獨跑這一包」時才對）。
+ */
+const SUITE_COUNT = packagesWithVitest(REPO).length;
+const SHIP_LIMIT = Number(process.env.GGD_SHIP_CONCURRENCY ?? Math.max(2, cpus().length - 2));
+/**
+ * ⭐ **兩倍超訂**（`cpus × 2 ÷ 包數`），⛔ 不是 `cpus ÷ 包數`。
+ *
+ * 三個量到的點（2026-08-23，18 核）決定了這個係數：
+ *   · **不設限**（每包照自己 config 的 16）⇒ 112 fork 搶 18 核 ⇒ 並行段 wall **218.8s**，
+ *     ⛔ 但 `mobWavesSave` 從 885ms 飄到 **5472ms** 撞破 5 秒額度
+ *   · **`cpus ÷ 包數 = 2`** ⇒ 逐包序列化，`packages/shared` 光自己就要 ≈730 CPU-秒 ÷ 2
+ *     ⇒ 並行段會**比不設限還久**
+ *   · ⇒ **×2 超訂 = 每包 5** —— vitest 的 fork 多數時間在等 I/O 與 transform，
+ *     超訂拿得到吞吐，而 5 × 7 = 35 個 fork 對 18 核不會把單條測試餓到破額度
+ *
+ * ⛔ 覆寫 `minForks` 是必要的：各包 config 寫 `minForks: 4`，而
+ * `min > max` 會讓 vitest 直接 `RangeError` 收工（⛔ 不是慢，是一條測試都不跑）。
+ */
+const FORKS_PER_SUITE = Math.max(
+  4,
+  Math.floor((cpus().length * 2) / Math.max(1, Math.min(SHIP_LIMIT, SUITE_COUNT))),
+);
+
 /** 序列段:全域鎖。⛔ 順序有意義（`contract:numbers` 在 `content:build` 之後）。 */
 const SERIAL = ["content:build", "skills:sync"];
 
@@ -64,20 +89,10 @@ const PARALLEL = [
     // ⛔ 那時候**最不該做的事是調高那一條的 timeout** —— 那會把「機器很忙」
     // 永久靜音,而下一個真的變慢的東西就再也沒有人會發現。
     // ⭐ 正解是讓並行段**自己知道它切了幾刀**：核數 ÷ 同時在跑的包數。
-    cmd: ["npx", ["vitest", "run", "--root", r, "--poolOptions.forks.maxForks", String(FORKS_PER_SUITE)]],
+    cmd: ["npx", ["vitest", "run", "--root", r, "--poolOptions.forks.maxForks", String(FORKS_PER_SUITE),
+      "--poolOptions.forks.minForks", "1"]],
   })),
 ];
-
-/**
- * 每一包 vitest 分到幾個 fork。⭐ 從**核數**與**同時在跑幾包**推導,
- * ⛔ 不是抄各自 config 裡的 16（那個數字是「單獨跑這一包」時才對）。
- */
-const SUITE_COUNT = packagesWithVitest(REPO).length;
-const SHIP_LIMIT = Number(process.env.GGD_SHIP_CONCURRENCY ?? Math.max(2, cpus().length - 2));
-const FORKS_PER_SUITE = Math.max(
-  2,
-  Math.floor(cpus().length / Math.max(1, Math.min(SHIP_LIMIT, SUITE_COUNT))),
-);
 
 const LOGDIR = process.env.GGD_SHIP_LOGDIR ?? "/private/tmp/ggd-ship";
 mkdirSync(LOGDIR, { recursive: true });
@@ -158,7 +173,7 @@ console.log(
     (noSync ? "" : ` （其中全域鎖 ${(serialMs / 1000).toFixed(1)}s **不可分拆**）`) +
     `\n   並行段累計 CPU ${(parMs / 1000).toFixed(1)}s ⇒ 平行度 ${(parMs / 1000 / Math.max(0.001, wall - serialMs / 1000)).toFixed(1)}×` +
     `\n   最慢五支: ${slowest.map((r) => `${r.name} ${(r.ms / 1000).toFixed(1)}s`).join(" · ")}` +
-    `\n   ⭐ 時間帳本: docs/_data/deploy-timings.json（與 `tools/deploy-timing` 同一份）`,
+    `\n   ⭐ 時間帳本: docs/_data/deploy-timings.json（與 tools/deploy-timing 同一份）`,
 );
 
 if (failed.length === 0) {

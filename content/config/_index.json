@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "3f6452ea1a84",
+  "hash": "5bd6fc41e9ba",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -461,14 +461,14 @@
     {
       "id": "vfx-cleanup",
       "path": "config/vfx-cleanup.json",
-      "hash": "f54c279a654a",
-      "size": 6157
+      "hash": "0c1b233ec010",
+      "size": 8122
     },
     {
       "id": "vfx-families",
       "path": "config/vfx-families.json",
-      "hash": "12f900f5424f",
-      "size": 37226
+      "hash": "5c8b4ca806d1",
+      "size": 37393
     },
     {
       "id": "victory-fx",
@@ -509,14 +509,14 @@
     {
       "id": "weather",
       "path": "config/weather.json",
-      "hash": "531969eb34cf",
-      "size": 830
+      "hash": "3e946696c38f",
+      "size": 951
     },
     {
       "id": "world-cues",
       "path": "config/world-cues.json",
-      "hash": "e0a4f29a2c4d",
-      "size": 2060
+      "hash": "d99a0512a442",
+      "size": 3274
     },
     {
       "id": "wounds",
