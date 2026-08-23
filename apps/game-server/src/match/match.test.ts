@@ -310,7 +310,11 @@ describe("driver seam (match-05, match-06)", () => {
     //    ⛔ 兩個數字都不寫死：座位數從 `ctl.seats` 讀，登場等級從出貨的
     //    `config.match` 解析（`MatchController` 用的同一支）。
     const baseRanks = ctl.seats.size; // Q starts learned at rank 1 on every seat
-    const spawnLevels = ctl.seats.size * heroStartLevel(Configs.tryGet("config.match"));
+    const startLevel = heroStartLevel(Configs.tryGet("config.match"));
+    const spawnLevels = ctl.seats.size * startLevel;
+    // ⭐ GH#622：登場等級 > 1 現在**連技能點一起發**（`spawnChampion`，每級一點，
+    //    LV1 的那一點就是出生的 Q）⇒ 開場就有 `座位數 × (登場等級 − 1)` 點在場上。
+    const spawnPoints = ctl.seats.size * (startLevel - 1);
     expect(at2.levels).toBeGreaterThanOrEqual(spawnLevels);
 
     // 跑到**第一次升級真的落地**、再走完那一次中場為止 —— ⛔ 不是跑到某個
@@ -328,7 +332,8 @@ describe("driver seam (match-05, match-06)", () => {
     const after = tally();
     expect(after.levels, "整場沒有任何人升級 —— 這條在空轉").toBeGreaterThan(spawnLevels);
     expect(after.unspent, "中場過完了還有沒花掉的技能點 —— AI 沒在加點").toBe(0);
-    expect(after.ranked).toBe(baseRanks + (after.levels - spawnLevels));
+    // 守恆律：已加的技能等級 == 出生免費的 Q + 登場等級份的點 + 升級拿到的點。
+    expect(after.ranked).toBe(baseRanks + spawnPoints + (after.levels - spawnLevels));
   });
 });
 

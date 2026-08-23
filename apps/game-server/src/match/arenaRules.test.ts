@@ -326,10 +326,17 @@ describe("arena round grants (arena-01, arena-04, arena-05)", () => {
       expect(ab.slots.W.rank).toBeGreaterThanOrEqual(1);
       expect(ab.slots.E.rank).toBeGreaterThanOrEqual(1);
       expect(ab.slots.R.rank).toBe(0); // ult still locked in round 1
-      // 自動學習把 grantLevels 發下來的點**全部**用掉（Q 出生就是 rank 1，
-      // W/E 各吃一點）⇒ 中場開始時手上不該還留著點。
-      // ⛔ 不寫「總共幾點」：那是 `grantLevels` 的值，它住在 arena-rules.json。
-      expect(ab.unspentPoints).toBe(0);
+      // ⭐ 技能點的**守恆律**（GH#622）：發出去的點 == 花掉的 + 手上剩的。
+      //    發出去 = 登場等級每級一點（`spawnChampion`，LV1 的那一點是出生的
+      //    Q 所以是 `等級 - 1`）+ 第 1 回合 `grantLevels` 每級一點（`grantXp`）。
+      //    花掉 = 四格加起來的 rank 減掉出生免費的那一階 Q。
+      // ⚠️ 這一行原本是 `toBe(0)`，而那**碰巧**成立：登場等級 1 ⇒ 出生零點，
+      //    於是「grantLevels 的點剛好被 W/E 的自動學習吃光」看起來像個契約。
+      //    owner 把登場等級調成 6、GH#622 把那 5 點真的發下來之後它就變成謊話。
+      // ⛔ 不寫死任何一個數字 —— 兩份出貨文件各出一半，改哪一份都自己跟上。
+      const pointsGranted = startLevel() - 1 + (ARENA.rounds.get(1)?.grantLevels ?? 0);
+      const pointsSpent = ab.slots.Q.rank + ab.slots.W.rank + ab.slots.E.rank + ab.slots.R.rank - 1;
+      expect(ab.unspentPoints + pointsSpent, "技能點漏了或多長出來了").toBe(pointsGranted);
       // EX is locked far from its round-5 unlock (heroes that have one)
       if (ab.exSlot) expect(ab.exSlot.rank).toBe(0);
     }
@@ -395,15 +402,19 @@ describe("arena round grants (arena-01, arena-04, arena-05)", () => {
     // let a champion keep auto-attacking while it walks, so bots now trade
     // while they kite and retreat, and every seat is level 6-7 by round 3).
     // The subject here is the GATE, not the level curve.
-    const below = [...ctl.seats.values()].find(
-      (s) => ctl.world.abilities.get(s.entityId!)!.slots.R.rank === 0,
-    );
-    expect(below).toBeDefined();
-    const belowChamp = ctl.world.champion.get(below!.entityId!)!;
+    // ⚠️ GH#622 —— 「**找一個** R 還沒學的座位」也是同一個病，只是晚了一步發作：
+    //    它讓這條測試依賴「某一場模擬到第 3 回合剛好還有人沒點 R」。英雄登場
+    //    現在帶著等級份的技能點（LV6 ⇒ 5 點），bot 一進中場就把 R 點掉了 ⇒
+    //    `find` 回 undefined，而**閘一行都沒壞**。
+    // ⇒ 主體是**閘**，所以三個前提全部**設定**而不是搜尋：R 未學、等級在古典
+    //    門檻以下、手上有一點可用。⛔ 一個都不從那一場比賽的分布裡撈。
+    const below = [...ctl.seats.values()][0]!;
+    const belowChamp = ctl.world.champion.get(below.entityId!)!;
     belowChamp.level = 5;
-    const ab = ctl.world.abilities.get(below!.entityId!)!;
+    const ab = ctl.world.abilities.get(below.entityId!)!;
+    ab.slots.R.rank = 0;
     ab.unspentPoints = Math.max(1, ab.unspentPoints);
-    expect(rankUpAbility(ctl.world, below!.entityId!, "R")).toBe(true);
+    expect(rankUpAbility(ctl.world, below.entityId!, "R")).toBe(true);
     expect(ab.slots.R.rank).toBe(1);
   });
 

@@ -36,7 +36,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { ClientArray } from "@colyseus/core";
-import { MSG } from "@ggd/shared/protocol/messages";
+import { MSG, unpackEventBatch, type EventBatchMessage } from "@ggd/shared/protocol/messages";
 import { TICK_MS } from "@ggd/shared/constants";
 import type { SimEvent } from "@ggd/shared/sim/SimWorld";
 import { MatchRoom, type MatchRoomOptions } from "../rooms/MatchRoom";
@@ -81,9 +81,37 @@ class FakeClient {
     this.inbox.push({ type, message: message as Delivered["message"] });
   }
   leave(): void {}
-  /** every MSG.EVENT this client saw, in arrival order */
+  /**
+   * Every sim event this client saw, in arrival order — **BOTH channels**.
+   *
+   * ⚠️ GH#622: this used to read `MSG.EVENT` only, and that was a hole the
+   * whole file could see through. Room-wide events go out through
+   * `EventBatcher`, which sends a LONE event on `MSG.EVENT` but wraps two or
+   * more into one `MSG.EVENT_BATCH` (`minBatchSize: 2`). So a counter that
+   * reads one channel is measuring *how busy the tick happened to be*, not
+   * what the player received — it reported 0 for an event that did arrive.
+   *
+   * It stayed green for months because the only case that reads a ROOM-WIDE
+   * rejection is the kill-switch case below, and in its 4-tick window the
+   * rejection was the only event in flight ⇒ batch of 1 ⇒ plain `MSG.EVENT`.
+   * The moment champions started spawning with skill points (bots rank up ⇒
+   * more casts ⇒ ≥2 events per tick) the same delivery became a batch and the
+   * counter went blind. Failure ⑧: the consumer existed and could not consume.
+   *
+   * ⭐ Unpacked with the SHIPPED `unpackEventBatch` — the same call the real
+   * client drain uses, ⛔ not a second reader written here.
+   */
   events(): Delivered["message"][] {
-    return this.inbox.filter((d) => d.type === MSG.EVENT).map((d) => d.message);
+    const out: Delivered["message"][] = [];
+    for (const d of this.inbox) {
+      if (d.type === MSG.EVENT) out.push(d.message);
+      else if (d.type === MSG.EVENT_BATCH) {
+        for (const ev of unpackEventBatch(d.message as unknown as EventBatchMessage)) {
+          out.push(ev as unknown as Delivered["message"]);
+        }
+      }
+    }
+    return out;
   }
   countOf(evType: string): number {
     return this.events().filter((m) => m.type === evType).length;

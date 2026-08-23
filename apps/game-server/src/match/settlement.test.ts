@@ -270,7 +270,13 @@ describe("per-team elimination settlement (elimination-settlement, task #193 / G
     //    **4212 / 4214 / 4218 / 4226 / 4229 / 4230 / 4235 / 4237**，取最小的。
     //    ⭐ 判準不變：如果哪天掃 200 個 seed 一個都不重現，那就不是換 seed 的
     //    問題，是**淘汰這條路整個死了**。
-    const run = runFullMatch("elim1", 4212, matchDocWithCard(false));
+    // ⚠️ GH#622 —— seed 4212 換成 **4209**（第八次換，同一天之內的第二次）：
+    //    `spawnChampion` 現在**連登場等級份的技能點一起發**（LV6 ⇒ 5 點），
+    //    12 個 bot 一進第一次中場就多點了 60 級技能 ⇒ 整場的傷害輸出、
+    //    誰先被打光、決賽是誰又全部改變，4212 那一場冠軍（隊伍 1）不再被打光過。
+    //    ⛔ 掃 4200–4399 共 200 個 seed：**24 個**冠軍本人也歸零過，前八個是
+    //    **4209 / 4211 / 4213 / 4222 / 4240 / 4251 / 4267 / 4277**，取最小的。
+    const run = runFullMatch("elim1", 4209, matchDocWithCard(false));
     // 這一條測的是 OFF 那一側 —— 而且是**經由內容文件**到達控制器的。
     expect(run.ctl.settlementCardOnHealthSpent).toBe(false);
 
@@ -297,7 +303,7 @@ describe("per-team elimination settlement (elimination-settlement, task #193 / G
   it("後台打開就退回舊行為 —— 這個功能是被關掉,不是被刪掉", () => {
     cover("elimination-settlement");
     // 同上，與 OFF 那一側用同一個 seed 才比得出「打開的代價」。
-    const run = runFullMatch("elim1", 4212, matchDocWithCard(true));
+    const run = runFullMatch("elim1", 4209, matchDocWithCard(true));
     expect(run.ctl.settlementCardOnHealthSpent).toBe(true);
 
     // 血歸零的隊伍**當場**拿到一張卡:不多不少就是那些隊伍，各一張。
