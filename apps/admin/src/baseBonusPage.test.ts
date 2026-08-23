@@ -14,6 +14,7 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { createElement } from "react";
 import { cover } from "@ggd/shared/testkit/cover";
 import { Stat } from "@ggd/shared/sim/stats/statTypes";
+import { DEFAULT_BASE_BONUS, baseBonusFor } from "@ggd/shared/sim/baseBonus";
 import { BaseBonusPage } from "./ui/BaseBonusPage";
 import { BONUS_COLLECTION, BONUS_DOC_ID } from "./baseBonus";
 import { mount, textOf, type HostNode } from "./testkit/headlessUi";
@@ -75,6 +76,16 @@ beforeEach(() => {
   bus.generation = 0;
   bus.overlayDoc = LIVE_DOC();
 });
+
+/**
+ * 出貨預設的生命加成,**從 `DEFAULT_BASE_BONUS` 推導**,⛔ 不抄字面值。
+ *
+ * ⚠️ 這三處在此之前寫死 650(頁面文案的正則、還原後的欄位值、一句註解),
+ * 而 owner 2026-08-23 把它改成 1200(GH#615)之後三條一起紅,訊息卻說
+ * 「基礎加成頁壞了」—— CLAUDE.md 第二守則的「第四個住處」正是這個形狀。
+ * ⭐ 頁面本身早就是推導的(`BaseBonusPage` 印的是 `r.shipped`),說謊的只有測試。
+ */
+const SHIPPED_HP = baseBonusFor(DEFAULT_BASE_BONUS, Stat.MaxHealth);
 
 async function open(): Promise<ReturnType<typeof mount>> {
   const h = mount(createElement(BaseBonusPage));
@@ -178,12 +189,14 @@ describe("基礎加成頁 —— clamp 會吃掉數字這件事有講出來 (bas
 });
 
 describe("基礎加成頁 —— 「清除」的語意 (basebonus-page-zero)", () => {
-  it("按一下不會直接寫入 —— 先問「歸零後是 0,不是出貨預設 650」", async () => {
+  it("按一下不會直接寫入 —— 先問「歸零後是 0,不是出貨預設 X」", async () => {
     cover("basebonus-page-zero");
     const h = await open();
     press(h, `zero-${Stat.MaxHealth}`);
     expect(bus.puts, "第一下就寫進去了,沒有確認").toHaveLength(0);
-    expect(h.text()).toMatch(/歸零後這一列是 0,不是出貨預設 650/);
+    // ⭐ 確認句裡的數字要**真的是出貨預設**,⛔ 不是「有一個數字」——
+    //    印成 0（或印成覆蓋層現在的值）正是這顆破壞性按鈕最會說的謊。
+    expect(h.text()).toContain(`歸零後這一列是 0,不是出貨預設 ${SHIPPED_HP}`);
     // 按鈕的字說的是它真正做的事,不是「清除」
     expect(h.text()).not.toContain("清除");
   });
@@ -220,17 +233,19 @@ describe("基礎加成頁 —— 「回到預設」接的是平台的 revert (ba
     press(h, "revert-confirm");
     await h.flush();
     expect(bus.reverts).toEqual([{ collection: BONUS_COLLECTION, id: BONUS_DOC_ID }]);
-    // 關鍵鑑別:還原**不是** PUT 一份 bonus:{} —— 那會讓生命加成變 0 而不是 650
+    // 關鍵鑑別:還原**不是** PUT 一份 bonus:{} —— 那會讓生命加成變 0 而不是出貨預設
     expect(bus.puts, "還原被實作成寫入一份空文件").toHaveLength(0);
   });
 
-  it("還原之後畫面回到出貨預設 650,不是 0", async () => {
+  it("還原之後畫面回到出貨預設,不是 0", async () => {
     cover("basebonus-page-revert");
     const h = await open();
     press(h, "revert");
     press(h, "revert-confirm");
     await h.flush();
     // 覆蓋層沒了 → 重新載入時讀不到任何文件 → 每一格顯示出貨預設
-    expect(h.field(`bonus-${Stat.MaxHealth}`).props["value"]).toBe("650");
+    // ⭐ 出貨預設**不是 0**（否則這一條和「變成 0」分不開）—— 先把前提釘住。
+    expect(SHIPPED_HP, "出貨預設是 0 的話,這一條就分不出兩個結果了").not.toBe(0);
+    expect(h.field(`bonus-${Stat.MaxHealth}`).props["value"]).toBe(String(SHIPPED_HP));
   });
 });

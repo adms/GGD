@@ -112,7 +112,11 @@ export const MATCH_CONSOLE_MAX: Readonly<Record<string, number>> = Object.freeze
   "economy.roundLoseGold": 100000,
   // `LEVEL_CAP` 是 99；填得比它大不會多出任何一級。
   "progression.levelCap": 99,
-  "progression.heroStartLevel": 6,
+  // ⚠️ `progression.heroStartLevel` **不在這張表裡**（2026-08-23 加進來又拿掉）：
+  // 它的上下界寫在 Zod（`.int().min(1).max(99)`），而 `boundsFor` 以 schema 優先
+  // ⇒ 在這裡再寫一份是**第二個住處，而且是一格死的**。那一格當時填的是 `6`
+  // （owner 要的**出貨值**，不是上界）—— 假如哪天 Zod 那邊的上界被拿掉，
+  // 這張表就會接手，把後台的上限靜靜夾成 6，而畫面上看不出來。
   "progression.xpBase": 100000,
   "progression.xpPerLevel": 100000,
   "progression.xpKill": 100000,
@@ -438,8 +442,15 @@ export const MATCH_FIELD_INFO: Readonly<Record<string, MatchFieldInfo>> = Object
   "progression.heroStartLevel": {
     zh: "⭐ 英雄登場初始等級",
     note: "owner 2026-08-23 逐字：「**英雄登場初始等級設定為 6**」。⚠️ 在這一格出現之前這個數字**不存在** —— `spawnChampion` 的 `level: args.level ?? 1` 是一個**寫死的預設**，而 `MatchController` 從來沒傳過 `level` ⇒ 每一場都從 LV1 開始、⛔ 而後台調不到（第一守則）。⭐ 為什麼它重要（2026-08-23 量到的）：五級距是**固定值**（極大 2000），而血量隨等級成長 ⇒ **同一發極大在 LV1 佔 41.7%、在 LV99 佔 3.0%，差 14 倍**。owner 回報「技能兩三發就會死」的位置正是 LV1–LV5，而抬高登場等級**直接**把那一段的血條墊厚。⇒ 調小＝開場更脆、調大＝開場更耐打（也更快接近等級上限）。",
-    live: null,
-    realHome: "apps/game-server/src/match/MatchController.ts 的 spawnChampion({ level })",
+    // ⭐ 它**真的有消費端**（`isEditable` 就是問這件事）：
+    //    `MatchController.ts:1470` 每一次 `spawnChampion` 都讀
+    //    `heroStartLevel(Configs.tryGet("config.match"))`。
+    // ⚠️ 這一格加進來的時候寫的是 `live: null` ⇒ 畫面上被畫成 **disabled**，
+    //    也就是 owner 2026-08-23 明說要調的那一格，後台**點不動** ——
+    //    比寫死更糟的「半套可調欄位」（同這個檔在布林那一段記的教訓）。
+    //    `matchConfig.test.ts` 的「19 格唯讀」與 `matchConfigSave.test.ts` 的
+    //    「唯讀都是 disabled」兩條同時紅，正是抓到它。
+    live: "apps/game-server/src/match/MatchController.ts → spawnChampion({ level })",
   },
   "progression.xpBase": {
     zh: "升級經驗基底",
@@ -549,6 +560,16 @@ export const MATCH_GROUPS: readonly MatchGroup[] = [
     ],
   },
   {
+    key: "progression",
+    title: "英雄登場（可調）",
+    intro:
+      "英雄第一次站上場地時的起點。⭐ 這一組目前只有一格 —— **登場初始等級**，" +
+      "`MatchController` 每一次 `spawnChampion` 都真的讀它（owner 2026-08-23「英雄登場初始等級設定為 6」）。" +
+      "⚠️ 底下那一組（唯讀）裡的等級上限與經驗欄位**不在這裡**：那些的數字住在程式常數，" +
+      "調了不會生效 —— 兩組的差別就是「有沒有人讀」。",
+    paths: ["progression.heroStartLevel"],
+  },
+  {
     key: "dead",
     title: "⚠️ 唯讀 · 這些格子沒有任何消費端",
     intro:
@@ -569,7 +590,6 @@ export const MATCH_GROUPS: readonly MatchGroup[] = [
       "economy.sellRefund",
       "economy.inventorySlots",
       "progression.levelCap",
-      "progression.heroStartLevel",
       "progression.xpBase",
       "progression.xpPerLevel",
       "progression.xpKill",

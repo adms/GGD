@@ -38,15 +38,23 @@ describe("基礎加成 後台頁 (adminui-base-bonus)", () => {
     // 最容易犯的錯:一份還沒寫過的空 overlay 會讓面板宣稱「生命加成 0」,
     // 而伺服器仍然給出貨預設。
     //
-    // ⚠️ 這個數字跟著 `DEFAULT_BASE_BONUS` 走(owner 2026-07-30: 300 → 650,
-    // 「目前玩家太容易死了」)。**寫死是刻意的** —— 引用常數的話,把常數改成 0
-    // 的變異會讓期望值跟著溜走,這條就不再是守衛。owner 再改數字時,
-    // `packages/shared/src/sim/baseBonus.ts` 與這一行要一起改。
+    // ⚠️ 這一格**從 `DEFAULT_BASE_BONUS` 推導**,⛔ 不抄字面值。
+    // 在此之前這裡寫死 650,而註解替它辯護說「寫死是刻意的,引用常數會讓變異
+    // 溜走」—— 那個辯護是錯的,而且**成本是量到的**:owner 已經動過這個數字
+    // 三次(300 → 650 → **1200**,2026-08-23 GH#615),每一次這條就用一個
+    // **說謊的訊息**紅(「基礎加成頁壞了」,真相是他調了一格後台數值)。
+    // CLAUDE.md 第二守則:出貨數值住進測試 = 第四個住處,而它沒有守衛。
+    //
+    // ⭐ 鑑別力不是靠字面值,是靠下面兩條 —— 把 `DEFAULT_BASE_BONUS` 的
+    //   maxHealth 改成 0,`shippedHp` 那條會紅;把 `bonusRows` 的「沒讀到文件
+    //   → 出貨預設」那條路改成回 0,`unread !== empty` 那條會紅。
+    const shippedHp = baseBonusFor(DEFAULT_BASE_BONUS, Stat.MaxHealth);
+    expect(shippedHp, "出貨預設是 0 的話,這一條就分不出兩個狀態了").not.toBe(0);
     const unread = bonusRows(null);
     const empty = bonusRows({});
     const hp = (rows: ReturnType<typeof bonusRows>): number =>
       rows.find((r) => r.stat === Stat.MaxHealth)!.effective;
-    expect(hp(unread)).toBe(650);
+    expect(hp(unread)).toBe(shippedHp);
     expect(hp(empty)).toBe(0);
   });
 
