@@ -1,0 +1,119 @@
+{
+  "schema": "ggd-deploy-tiers@1",
+  "_": [
+    "⭐ 分級的**唯一**判準:一次上架涵蓋的 git diff **路徑集合**(＋ config 的 key 集合)。",
+    "⛔ 不是「我覺得這次只是小改」——那是判準,而 CLAUDE.md 記著判準 0/4 全破。",
+    "",
+    "⚠️ 三條讓它**不削弱既有的閘**的規則(⛔ 改這個檔之前先讀):",
+    "  ① 比對的起點是**線上正在服務的那個 commit**,⛔ 不是「我這次改了什麼」。",
+    "     2026-08-02 的事故就是:那一次 push 裡 content 與 schema 都動了,",
+    "     而只有 content 被送上去。用累計 diff 判,那一次會落在 T3(必須重建)。",
+    "  ② 沒有規則吃到的路徑 ⇒ **落到 unknownTier**(預設 T3,全量重建)。",
+    "     ⛔ 新開一個頂層目錄不可以靜默被當成「只有內容」——",
+    "     那正是 configUnionCoversDirectory 那次差點造成線上事故的形狀。",
+    "  ③ ⛔ **每一級都跑同一套後置驗證**(量到只要 ~9 秒)。分級省的是 build,",
+    "     ⛔ 不是驗證。⛔ 沒有任何一級可以少驗一項。",
+    "",
+    "級別的秒數與逐段量測住在 docs/_reports/deploy-cost_temp_20260823-1547.md。"
+  ],
+  "unknownTier": "T3",
+  "order": ["NOOP", "T0", "T1", "T2", "T3"],
+  "rules": [
+    { "tier": "T3", "prefix": "packages/shared/src/protocol/", "why": "協定 —— Colyseus defineTypes 是 APPEND-ONLY、ENTITY_FLAG 是 uint32;欄位錯位不報錯,舊分頁靜默 desync", "protocol": true },
+
+    { "tier": "T3", "prefix": "packages/shared/", "why": "Zod union / 內容 schema / sim —— 映像裡的程式要能解析 bind-mount 上的內容(2026-08-02)" },
+    { "tier": "T3", "prefix": "apps/game-server/", "why": "game shard 的程式烘在 ggd-game 映像裡" },
+    { "tier": "T3", "prefix": "apps/platform/", "why": "Go 平台烘在 ggd-platform 映像裡" },
+    { "tier": "T3", "prefix": "apps/client/", "why": "客戶端 bundle 烘在 ggd-edge 映像裡(⛔ 目前不是靜態上傳,理由見報告 §T1)" },
+    { "tier": "T3", "prefix": "apps/admin/", "why": "後台 bundle 同上 —— 而**後台沒有那一格,T0/T1 就走不了**" },
+    { "tier": "T3", "prefix": "apps/editor/", "why": "編輯器同上" },
+    { "tier": "T3", "prefix": "apps/content-api/", "why": "同上" },
+    { "tier": "T3", "prefix": "docker/", "why": "映像的建法本身變了" },
+    { "tier": "T3", "prefix": "nginx/", "why": "edge 設定烘在 ggd-edge 映像裡" },
+    { "tier": "T3", "prefix": "tools/deploy/", "why": "ggd-assets.sh 被 COPY 進 edge 映像" },
+    { "tier": "T3", "path": "pnpm-lock.yaml", "why": "相依樹變了 ⇒ 三個映像的 pnpm install 層全部失效" },
+    { "tier": "T3", "path": "package.json", "why": "workspace 根,同上" },
+    { "tier": "T3", "path": "pnpm-workspace.yaml", "why": "同上" },
+    { "tier": "T3", "path": "tsconfig.base.json", "why": "edge.Dockerfile 明確 COPY 它,少了 client build 當場死" },
+
+    { "tier": "T2", "prefix": "content/", "why": "content/ 是 live bind-mount ⇒ pull 完重啟 game shard 就生效(--content-only)" },
+
+    { "tier": "NOOP", "prefix": "docs/", "why": "不進任何映像也不被執行期讀" },
+    { "tier": "NOOP", "prefix": "scripts/", "why": "只在本機/host 上被人叫" },
+    { "tier": "NOOP", "prefix": "tools/", "why": "產生器與工具,⛔ 不進映像(tools/deploy/ 例外,已在上面)" },
+    { "tier": "NOOP", "prefix": "deploy/", "why": "k8s / helm,這台走 compose" },
+    { "tier": "NOOP", "prefix": ".github/", "why": "CI" },
+    { "tier": "NOOP", "prefix": ".claude/", "why": "本機設定" },
+    { "tier": "NOOP", "path": "CLAUDE.md", "why": "開發守則" },
+    { "tier": "NOOP", "path": "README.md", "why": "說明" },
+    { "tier": "NOOP", "path": "Makefile", "why": "host 上沒有 make(CLAUDE.md 地雷 ②)" },
+    { "tier": "NOOP", "path": ".gitignore", "why": "版控設定" }
+  ],
+
+  "_downgrade": [
+    "⭐ T2 還可以**再往下降兩級**,但只在下面這兩組條件都成立時 —— 而且它們**機械可判**:",
+    "  · 改到的 content 檔全部是 `content/config/*.json`(產生的索引/bundle 不算數)",
+    "  · 且**每一份的 key 集合逐一相同**(只有值變)⇒ 後台那一格畫得出來、schema 不必動",
+    "⛔ key 集合只要多一個 ⇒ 留在 T2(⛔ 不是紅,是走 --content-only)。",
+    "⛔ 有任何非 config 的 content(技能/英雄/道具 JSON)⇒ 留在 T2。"
+  ],
+  "downgrade": {
+    "configPrefix": "content/config/",
+    "generated": ["content/bundle.json", "content/manifest.json"],
+    "generatedSuffix": "/_index.json",
+    "busDocs": ["combat-env"],
+    "toTierWhenBusOnly": "T0",
+    "toTierWhenValuesOnly": "T1"
+  },
+
+  "plans": {
+    "NOOP": {
+      "label": "沒有任何會影響出貨的檔案改動",
+      "remote": "(⛔ 不必部署)",
+      "seconds": 0,
+      "skips": ["整條路"],
+      "keeps": []
+    },
+    "T0": {
+      "label": "content-bus 旋鈕 —— 後台存檔,下一場生效",
+      "remote": "後台「戰鬥系統」頁存檔 → Redis chan:content → 跑著的 shard 重抓",
+      "seconds": 10,
+      "skips": ["docker build ×3(191s)", "docker compose up -d", "shard 重啟", "git push"],
+      "keeps": [
+        "驗 /healthz 的 platform.content.documents[combat-env].refreshes 有 +1 且 lastRefreshOk",
+        "⚠️ 事後仍要把同一個值寫回 content/config/ 並 push —— ⛔ 否則 repo 與線上兩份真相"
+      ]
+    },
+    "T1": {
+      "label": "durable overlay —— 後台存檔 + 重啟 shard",
+      "remote": "後台對應頁存檔 → putOverlayDoc → docker restart ggd-game-1 → host-deploy.sh --verify-only",
+      "seconds": 30,
+      "skips": ["docker build ×3(191s)", "docker compose up -d"],
+      "keeps": [
+        "五項後置驗證全部(--verify-only)",
+        "玩家要重整分頁(client 每次載入都抓 overlay)",
+        "⚠️ 同上:值要寫回 content/config/ 並 push"
+      ]
+    },
+    "T2": {
+      "label": "content/ 進 git —— live bind-mount,⛔ 不重建映像",
+      "remote": "bash scripts/host-deploy.sh --content-only",
+      "seconds": 30,
+      "skips": ["docker build ×3(191s,其中 game 的 pnpm deploy /out 一支就佔 119.7s)"],
+      "keeps": ["五項後置驗證全部", "煙霧測試(新分頁讀 console 那一行)"]
+    },
+    "T3": {
+      "label": "完整重建 —— 程式 / Zod schema / client / admin / docker",
+      "remote": "bash scripts/host-deploy.sh",
+      "seconds": 191,
+      "skips": [],
+      "keeps": ["全部"]
+    }
+  },
+  "protocolRider": [
+    "⚠️ 這一批動到 packages/shared/src/protocol/ ⇒ T3 之外還有三條**不可逆**的加碼:",
+    "  ⛔ 絕對不可以用 --content-only(欄位錯位不報錯,舊分頁靜默 desync)",
+    "  ⛔ 煙霧測試一律開**全新分頁**(本來就是規定,這一級是硬性)",
+    "  ⚠️ defineTypes 只能 append;ENTITY_FLAG 第 32 顆(2^31)永遠不要用"
+  ]
+}
