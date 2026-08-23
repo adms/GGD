@@ -244,10 +244,10 @@ function damageTiersJson(): string {
     `換成 **${pop.length} 位對戰可選英雄**（${BALANCE_POPULATION_PROVENANCE}）。變身態是同一位英雄的第二張卡，放進去就是重複計數。` +
     `⭐ 推導鏈（三個輸入全部在別處，這裡一個字面值都沒有）：\`（純基礎中位 ${baseHp[SHIPPED_ANCHOR_LEVEL]} ＋ 初始加成 ${HP_BONUS}）÷ ${KILL_CASTS_REF} 發\` ` +
     `= ${((baseHp[SHIPPED_ANCHOR_LEVEL]! + HP_BONUS) / KILL_CASTS_REF).toFixed(1)} → 進位到 ${tierStep()}（「使五格皆整數的最小單位」${minTierStep()} 的整數倍）⇒ **${SMALLEST}**。` +
-    `⚠️ ⛔ **推導鏈裡一個系統倍率都沒有**（owner 2026-08-22：「不能把系統倍率乘進去再反推，這樣我用系統倍率就沒意義了」）—— \`maxHealth ${HP_MULT}\` 只在**引擎最終血量**那一欄出現，⛔ 不在級距的來源裡。` +
+    `⚠️ owner 2026-08-22 逐字：「不能把系統倍率乘進去再反推，這樣我用系統倍率就沒意義了」⇒ 推導鏈的三個輸入全部是**純基礎**資料。` +
     `② 其餘四格 ＝ 極小 × 單體冷卻比（${DAMAGE_TIER_NAMES.map((n) => RATIOS[n]).join(" : ")}），**與冷卻表嚴格成正比** —— 那正是 owner Q4「已經有傷害相應的冷卻跟耗魔做限制」的意思。` +
     `⇒ 五格 **${ladder}**，五格全整數。⭐ 三個錨點的達成率（打死該級中位英雄要幾發極小，門檻 ${KILL_CASTS_REF} 發，分母是**純基礎＋加成** ${BALANCE_ANCHOR_LEVELS.map((lv) => baseHp[lv]! + HP_BONUS).join(" / ")}——⛔ 不是引擎最終血量，那是另一個問題）：${rates}。` +
-    `⚠️ LV50/LV99 的缺口**不是這張表調得掉的**：血量比傷害長得快，那要動的是成長曲線。⭐ 玩家**實際**要打幾發（含 \`maxHealth ${HP_MULT}\`）是設計承諾的 ${HP_MULT} 倍——那正是系統倍率該有的樣子。` +
+    `⚠️ LV50/LV99 的缺口**不是這張表調得掉的**：血量比傷害長得快，那要動的是成長曲線。` +
     `⚠️ 天花板 ${CEILING} ＝ LV${SHIPPED_ANCHOR_LEVEL} 的引擎最終中位血量 —— 一發不可以秒殺 hard limit 那一級的中位英雄；極大 ${DAMAGE[DAMAGE_TIER_NAMES[DAMAGE_TIER_NAMES.length - 1]!]} 是它的 ` +
     `${((DAMAGE[DAMAGE_TIER_NAMES[DAMAGE_TIER_NAMES.length - 1]!] / CEILING) * 100).toFixed(0)}%。` +
     `⭐ 只有**一張**表：形狀的代價整個住在冷卻軸上（範圍表比單體貴 2–5×），再在傷害軸打一次折就是同一個懲罰收兩次。` +

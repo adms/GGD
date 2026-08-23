@@ -354,6 +354,10 @@ async function build(): Promise<string> {
   p("⭐ **一條梯子，多個視窗。** 五個級距名全專案只有一份（`packages/shared/src/content/skillTiers.ts`");
   p("的 `SKILL_TIER_NAMES`），⛔ 沒有任何一軸可以自己再宣告一組。");
   p();
+  p("⭐ **這份契約只描述原始資料。** 下面每一張表就是技能 JSON 那一格級別解析出來的值；");
+  p("玩家看到的秒數／距離／傷害由**遊戲主程式在執行期產生**，⛔ 編輯器不換算，");
+  p("⛔ 也不需要知道怎麼換算（owner 2026-08-23 的裁決，見 `knobValueNotRestated.test.ts`）。");
+  p();
   p("### ① 幾何三軸（長度，單位是 GGD 距離）");
   p();
   p("| 軸 | " + SKILL_TIER_NAMES.join(" | ") + " | 出處 |");
@@ -362,8 +366,6 @@ async function build(): Promise<string> {
   p("| **施法範圍 (AoE)** `radiusTier` | " + SKILL_TIER_NAMES.map((t) => num(aoe.radius[t])).join(" | ") + " | `config/aoe-tiers.json` |");
   p("| **位移 · 衝刺** `distanceTier` | " + SKILL_TIER_NAMES.map((t) => num(disp.travel[t].distance)).join(" | ") + " | `config/displacement-tiers.json` |");
   p("| **位移 · 擊退** `distanceTier` | " + SKILL_TIER_NAMES.map((t) => num(disp.push[t].distance)).join(" | ") + " | `config/displacement-tiers.json` |");
-  p();
-  p("⚠️ 這些是**卡面值**。玩家實際吃到的是它再乘「戰鬥系統」頁的 `abilityRange`（出貨 0.8）。");
   p();
   p("### ② 回報一軸：傷害（GH#447）");
   p();
@@ -394,9 +396,6 @@ async function build(): Promise<string> {
   p();
   p("⚠️ 形狀的定義是 owner 更正過的（U3）：「**單體還是範圍並不是看實際傷害到的個數**，");
   p("而是**施展技能的命中率難易度及傷害效率轉換**」⇒ 看 `castType`，⛔ 不是看 `maxTargets` 或半徑。");
-  p();
-  p("⚠️ 冷卻是**卡面秒**（owner 對 Q6 的回答）。實際等待 = 卡面 × `combatEnv.cooldown`，");
-  p("再被 `config.cooldown-rules@1` 的 `minSeconds` 夾一次。⛔ 不計入系統倍率與減 CD 效果。");
   p();
   p("### ④ 是級距 config，但**不是技能的一軸**");
   p();

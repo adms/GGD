@@ -1,25 +1,27 @@
 /**
- * ⛔⛔ **owner 旋鈕的值，⛔ 不准在散文裡被抄第二份**（2026-08-23）。
+ * ⛔⛔ **對外編輯器契約裡不可以出現系統倍率**（owner 2026-08-23 的裁決）。
  *
- * ── 為什麼這條閘必須存在 ────────────────────────────────────────────────────
- * owner 2026-08-22 逐字：「**系統冷卻倍率0.2->0.4**」。他轉了那一格，而
- * `content/config/cooldown-tiers.json` 的 `note` 裡寫死著「出貨 0.2 ⇒ 單體·極小
- * 6 卡面秒 = **1.2 實際秒**」—— 真值是 **2.4**。
+ * owner 逐字：
+ * > 「編輯器**只編輯原始資料（五級距）**，**根本不需要知道系統倍率**，
+ * >  **避免雙重編輯**，而說明裡面的數值**本來就是遊戲主程式動態產生**，
+ * >  根本就沒差，整體這樣才會**設計輕量化容易維護**」
  *
- * ⚠️ 而那段 `note` **就是產生器的來源**：`docs/editor-contract/ggd-skill-tiers.md`
- * （**給外部編輯器的對外契約**）逐字貼著它。⇒ 我們對 Codex 說了一個差兩倍的謊。
- * ⭐ 而 `pnpm tiers:check` 是**綠的** —— 它比對產物與來源，而兩邊抄的是同一句話，
- * 自己跟自己永遠對得上（第二守則失敗形態⑥的近親：閘量的是複製，不是真相）。
+ * ── 前身 ──────────────────────────────────────────────────────────────────
+ * 2026-08-23 早上抓到 `cooldown-tiers.json` 的 `note` 寫死著「出貨 0.2 ⇒ 單體·極小
+ * 6 卡面秒 = **1.2 實際秒**」—— owner 2026-08-22 已把那格轉成 **0.4**（真值 2.4），
+ * 而那段 note **就是** `ggd-skill-tiers.md` 的來源 ⇒ 對 Codex 說了差兩倍的謊，
+ * 而 `tiers:check` 是**綠的**（產物抄來源，自己跟自己永遠對得上）。第一版因此只驗
+ * 「**值**不可以被複述」；owner 的裁決更徹底：**那一整段換算解釋根本不該在契約裡**。
  *
- * ── 判準：**引用**可以，**複述**不行 ────────────────────────────────────────
- * 一段文字提到 `combatEnv.cooldown` 完全沒問題（那是引用）。
- * ⛔ 不可以的是在它附近寫一個**數字**當成那一格的值 —— 那是第二個住處，
- * 而它沒有守衛，所以它必然過期，而且**用最貴的方式過期**（對外契約說謊）。
+ * ⛔ 掃面只有 `docs/editor-contract/**`。內部程式註解、`docs/平衡錨點量測.md`、
+ * 後台欄位說明**不在**掃面 —— 引擎與 owner 自己當然要知道倍率。
+ * ⭐ 旋鈕名單**從出貨 config 推導**（`combat-env.json` 的 `multipliers`），⛔ 沒有手抄。
+ * ⭐ 先剝 `「…」`（owner 的**逐字原話**，第〇·六守則第 1 層，⛔ 不可改寫）；
+ * ⚠️ 但 `combatEnv.<名>` **不吃這個豁免** —— 程式識別字不會是他說出口的話。
  *
- * ⭐ 兩邊都從出貨的東西推導：旋鈕名與值讀 `content/config/owner-knobs.json`，
- * 掃描面是**真的**出貨檔。⛔ 沒有手抄的名單。
- *
- * 突變紀錄：把 `cooldown-tiers.json` 的 note 改回「出貨 0.2」 → 紅並指名那個檔。
+ * 突變（2026-08-23）：把「實際等待 = 卡面 × `combatEnv.cooldown`」加回
+ * `ggd-skill-tiers.md` → 紅並指名該檔、該行、與要跑哪一支重生成；
+ * 把這一輪的刪除套上去模擬重生成後的文字 → 0 命中（⇒ ⛔ 不誤報）。
  */
 import { describe, expect, it } from "vitest";
 import { readFileSync, readdirSync } from "node:fs";
@@ -27,75 +29,64 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
-const CONFIG_DIR = join(ROOT, "content/config");
+const CONTRACT = join(ROOT, "docs/editor-contract");
 
-interface Knob {
-  value: number;
-  quote: string;
-}
+/** 紅了要跑哪一支 —— ⛔ 改產物等於沒改（下一次重生成會寫回去）。 */
+const REBUILD: Readonly<Record<string, string>> = {
+  "ggd-skill-tiers.md": "pnpm tiers:build（§二那幾段 note 的來源是 pnpm anchors:build）",
+  "ggd-runtime-capabilities.md": "pnpm caps:export",
+  "ggd-runtime-capabilities.json": "pnpm caps:export",
+  "ap-damage-scaling.md": "pnpm apdmg:build",
+  "ggd-ability-prose.json": "pnpm spec:build",
+};
 
-/**
- * 這一格的值在散文裡被抄了一份的樣子 —— ⭐ 只抓**緊接在旋鈕名之後**的那一個。
- *
- * ⚠️ 窗口刻意很窄（{@link NEAR}）：同一段文字裡常常還有**別的欄位自己的**出貨值
- * （例如 `cooldown-rules.json` 的「出貨 0 = 沒有地板」講的是 `hookMinSeconds`）。
- * ⛔ 寬窗口會把那些一起抓進來 —— 而一條會誤報的閘會被人放寬，
- * 而被放寬的閘等於沒有閘。
- */
-const RESTATE = /^[^。\n]{0,28}?出貨\s*\**\s*(-?\d+(?:\.\d+)?)/;
-/** 從旋鈕名往後看多少字。⭐ 只夠涵蓋「（出貨 X）」與「，出貨 X）」這種緊鄰的寫法。 */
-const NEAR = 40;
-
-function knobs(): Record<string, Knob> {
-  const raw = JSON.parse(readFileSync(join(CONFIG_DIR, "owner-knobs.json"), "utf8")) as {
-    doc?: { knobs?: Record<string, Knob> };
-    knobs?: Record<string, Knob>;
+/** 出貨的系統倍率名單（⛔ 不是手抄的）。 */
+function multiplierNames(): string[] {
+  const raw = JSON.parse(readFileSync(join(ROOT, "content/config/combat-env.json"), "utf8")) as {
+    multipliers?: Record<string, number>;
   };
-  return raw.doc?.knobs ?? raw.knobs ?? {};
+  return Object.keys(raw.multipliers ?? {});
 }
 
-/** 掃描面：出貨 config ＋ owner 自己會讀的後台欄位說明。 */
-function scanned(): { path: string; text: string }[] {
-  const out: { path: string; text: string }[] = [];
-  for (const f of readdirSync(CONFIG_DIR)) {
-    if (!f.endsWith(".json") || f === "owner-knobs.json") continue;
-    out.push({ path: `content/config/${f}`, text: readFileSync(join(CONFIG_DIR, f), "utf8") });
-  }
-  const admin = join(ROOT, "apps/admin/src/configForms.ts");
-  out.push({ path: "apps/admin/src/configForms.ts", text: readFileSync(admin, "utf8") });
-  return out;
-}
+/** 「系統倍率」「全域傷害倍率」… —— 這是**詞彙**規則，⛔ 不是一份值的名單。 */
+const TERM = /(系統|全域)[^，。\n]{0,8}倍率/;
 
-describe("owner 旋鈕的值不可以在散文裡被複述", () => {
-  it("⛔ 沒有任何一段說明抄了一個過期的旋鈕值", () => {
-    const ks = knobs();
-    expect(Object.keys(ks).length, "owner-knobs.json 讀不到 knobs —— 檔案形狀變了").toBeGreaterThan(0);
-
-    const lies: string[] = [];
-    for (const { path, text } of scanned()) {
-      for (const [name, knob] of Object.entries(ks)) {
-        // 提到這一格的每一個位置
-        for (const hit of text.matchAll(new RegExp(`combatEnv\\.${name}`, "g"))) {
-          const from = hit.index ?? 0;
-          const window = text.slice(from + hit[0].length, from + hit[0].length + NEAR);
-          const m = RESTATE.exec(window);
-          if (m === null) continue;
-          const said = Number(m[1]);
-          if (said !== knob.value) {
-            lies.push(
-              `${path}：combatEnv.${name} 後面緊跟著「出貨 ${said}」，` +
-                `而出貨值是 ${knob.value}（owner 的原話：「${knob.quote}」）`,
-            );
-          }
-        }
+/** 逐行掃一份契約。回傳「檔:行 —— 為什麼」。 */
+export function scanContract(files: readonly { name: string; text: string }[]): string[] {
+  const names = multiplierNames();
+  const bad: string[] = [];
+  for (const { name, text } of files) {
+    text.split("\n").forEach((raw, i) => {
+      const said = raw.replace(/「[^」]*」/g, ""); // owner 的逐字原話豁免
+      const why =
+        names.map((n) => `combatEnv.${n}`).find((r) => raw.includes(r)) ??
+        TERM.exec(said)?.[0] ??
+        names.find((n) => new RegExp("`" + n + "[` ]{0,2}[^`]{0,12}?\\d").test(said));
+      if (why !== undefined) {
+        bad.push(`${name}:${i + 1} 出現「${why}」 → 拿掉整段，然後跑 ${REBUILD[name] ?? "對應的產生器"}`);
       }
-    }
+    });
+  }
+  return bad;
+}
+
+describe("編輯器契約只描述原始資料", () => {
+  it("⛔ docs/editor-contract 裡一處系統倍率都不可以有", () => {
+    const files = readdirSync(CONTRACT).map((name) => ({
+      name,
+      text: readFileSync(join(CONTRACT, name), "utf8"),
+    }));
+    // 夾具前提：掃到 0 份 = 這條閘永遠綠（失敗形態③）。
+    expect(files.length, "docs/editor-contract 讀不到檔 —— 掃面壞了").toBeGreaterThan(3);
+    expect(multiplierNames().length, "combat-env.json 讀不到 multipliers").toBeGreaterThan(10);
 
     expect(
-      lies,
-      "⛔ owner 轉了旋鈕，而這幾段散文還抄著舊值 —— ⭐ 修法是**把數字拿掉**改成引用" +
-        "（`content/config/owner-knobs.json` 是唯一住處），⛔ 不是把數字改成新的" +
-        "（那只是把下一次過期往後推）。⚠️ 這些文字有些是**產生器的來源** ⇒ 它同時是對外契約。",
+      scanContract(files),
+      "⛔ 編輯器契約裡出現了系統倍率。owner 2026-08-23：「編輯器只編輯原始資料（五級距），" +
+        "根本不需要知道系統倍率，避免雙重編輯」⇒ ⭐ 修法是**把那一整段拿掉**，" +
+        "⛔ 不是把數字改成新的、⛔ 也不是改成指向 owner-knobs.json 的引用。" +
+        "⚠️ 這些檔是**產生的** —— 改**來源**（tools/ 或 content/config/ 的 note）再重生成。",
     ).toEqual([]);
   });
 });
+

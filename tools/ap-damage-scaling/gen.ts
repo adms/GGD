@@ -253,14 +253,13 @@ function contractMd(): string {
   L.push("");
   L.push("⚠️ **反彈封包不吃**（不論 `scope` 填什麼）：一發反彈的量是「剛剛打中我的那一下」的百分比，");
   L.push("而那三個讀數已經吃過**攻擊者**的乘數 —— 反彈者再乘一次自己的，反彈比例就不等於卡面寫的百分比。");
-  L.push("它與全域傷害倍率共用同一個旗標 `DamagePacket.skipGlobalDamageMult`，⛔ 沒有第二個開關。");
   L.push("");
   L.push("---");
   L.push("");
   L.push("## ⚠️ 給外部編輯器 / Codex：作者填的數字是**乘之前**的");
   L.push("");
   L.push("一支技能 JSON 裡的 `amount.flat` / `amount.perRank` / `amount.ratios` 全部是**基礎傷害**。");
-  L.push("玩家看到的數字是它再乘上這一層（以及全域傷害倍率、虛弱、輸出倍率）之後的結果。");
+  L.push("玩家看到的數字由**遊戲主程式在執行期產生**（這一層只是其中一道）。");
   L.push("⛔ **不要**把這一層預先算進卡面的數字裡 —— 那會讓它被乘兩次，而且 owner 調 `rate` 時那一支不會跟著動。");
   L.push("");
   L.push("---");
