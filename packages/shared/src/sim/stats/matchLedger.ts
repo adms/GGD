@@ -783,3 +783,78 @@ export function gradeRoundRecord(
   if (rec.bye) return null;
   return gradeRound(rec, ctx, cfg);
 }
+
+// ───────────────────────────────────────────────────────────────────────────
+// 傷害排行榜 (#636) —— 一場的「top 單發」
+// ───────────────────────────────────────────────────────────────────────────
+
+/**
+ * 排行榜的一列(sim 側的純推導 —— **沒有** ts / version,那兩格是 host 才知道
+ * 的事,由 game-server 的 stats/damageBoard.ts 補上;這裡補會破 sim 純度)。
+ */
+export interface TopDamageCast {
+  round: number;
+  seatId: number;
+  /** 從 picks 解析;該座位沒有選角紀錄時是 ""(fail-open,不丟資料) */
+  championId: string;
+  abilityId: string;
+  /** "Q" / "W" / "E" / "R" / "EX" / "passive" / "basic" */
+  slot: string;
+  /** damageToHeroes + damageToMobs —— 這一次施放打出的總傷害 */
+  damage: number;
+  /** 施放的絕對 tick */
+  tick: number;
+  /** 帳本內單調序號 —— 讓 (matchId, castId) 成為全域唯一鍵 */
+  castId: number;
+  /** 施放當下持有的道具(buy/grant − sell,tick ≤ 施放 tick,升冪排序) */
+  items: string[];
+}
+
+/**
+ * 一場的 top 單發傷害 —— 依 (damage 降冪, castId 升冪) 取前 `limit` 筆。
+ *
+ * 「單發」的單位是**一次施放**(`AbilityCastRecord`),不是一個傷害封包:
+ * 封包沒有 abilityId 可歸因(`largestSingleHit` 只是極值,不知道是哪一招),
+ * 而 owner 要的正是「被哪個人**哪招**傷害最高」。
+ *
+ * 決定性:輸入同一份快照永遠得到同一個輸出 —— 排序的 tie-break 是 castId
+ * (單調序號),items 依 itemId 升冪,沒有時鐘、沒有 Map 迭代順序。
+ */
+export function topDamageCasts(snap: MatchLedgerSnapshot, limit: number): TopDamageCast[] {
+  if (limit <= 0) return [];
+  const champBySeat = new Map<number, string>();
+  for (const p of snap.picks) champBySeat.set(p.seatId, p.championId);
+  const damageOf = (c: AbilityCastRecord): number => c.damageToHeroes + c.damageToMobs;
+  return snap.casts
+    .filter((c) => damageOf(c) > 0)
+    .sort((a, b) => (damageOf(b) !== damageOf(a) ? damageOf(b) - damageOf(a) : a.castId - b.castId))
+    .slice(0, limit)
+    .map((c) => ({
+      round: c.round,
+      seatId: c.seatId,
+      championId: champBySeat.get(c.seatId) ?? "",
+      abilityId: c.abilityId,
+      slot: c.slot,
+      damage: damageOf(c),
+      tick: c.tick,
+      castId: c.castId,
+      items: itemsOwnedAt(snap.itemTxns, c.seatId, c.tick),
+    }));
+}
+
+/**
+ * 某座位在某個 tick 當下持有的道具(重複持有就出現兩次)。
+ * `sell` 減一份、`buy`/`grant` 加一份 —— 與 ItemTxnRecord 的三種 kind 一一對應。
+ */
+function itemsOwnedAt(txns: readonly ItemTxnRecord[], seatId: number, tick: number): string[] {
+  const counts = new Map<string, number>();
+  for (const t of txns) {
+    if (t.seatId !== seatId || t.tick > tick) continue;
+    counts.set(t.itemId, (counts.get(t.itemId) ?? 0) + (t.kind === "sell" ? -1 : 1));
+  }
+  const out: string[] = [];
+  for (const [id, n] of [...counts.entries()].sort((a, b) => (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0))) {
+    for (let i = 0; i < n; i += 1) out.push(id);
+  }
+  return out;
+}
