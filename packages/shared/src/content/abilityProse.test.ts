@@ -18,7 +18,7 @@ import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ContentLoader } from "./loader";
-import { FsContentSource } from "./node/FsContentSource";
+import { shippedContentSource } from "./__fixtures__/shippedContent";
 import { Arenas, Configs, Models, StatusEffects, VfxDefs, registerAll } from "./registries";
 import { Abilities, Augments, Champions, Items, LootTables, Projectiles } from "../sim/content/registry";
 import { aoeTiersFromDoc } from "./aoeTiers";
@@ -109,7 +109,7 @@ describe("技能說明從 JSON 推導（說明推導（票號待開））", () =
   beforeAll(async () => {
     for (const r of [Champions, Abilities, Items, Augments, Projectiles, LootTables]) r.clear();
     for (const r of [Arenas, Configs, Models, VfxDefs, StatusEffects]) r.clear();
-    registerAll((await new ContentLoader(new FsContentSource(CONTENT)).load()).store);
+    registerAll((await new ContentLoader(shippedContentSource(CONTENT)).load()).store);
 
     const cfgs = Configs.all() as unknown as { schema?: string }[];
     const disp = displacementTiersFromDoc(

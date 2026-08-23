@@ -89,7 +89,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ContentLoader } from "./loader";
-import { FsContentSource } from "./node/FsContentSource";
+import { shippedContentSource } from "./__fixtures__/shippedContent";
 import {
   censusAdoption,
   formatCensus,
@@ -2896,7 +2896,7 @@ let census: Census;
 let store: ContentStore;
 
 beforeAll(async () => {
-  const result = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load();
+  const result = await new ContentLoader(shippedContentSource(CONTENT_DIR)).load();
   store = result.store;
   census = censusAdoption(store);
 }, 60_000);

@@ -18,7 +18,7 @@ import { describe, it, expect, beforeAll } from "vitest";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ContentLoader } from "./loader";
-import { FsContentSource } from "./node/FsContentSource";
+import { shippedContentSource } from "./__fixtures__/shippedContent";
 import { Arenas, Configs, Models, StatusEffects, VfxDefs, registerAll } from "./registries";
 import { Abilities, Augments, Champions, Items, LootTables, Projectiles } from "../sim/content/registry";
 import { SimWorld } from "../sim/SimWorld";
@@ -32,7 +32,7 @@ const C = SKELETON_ARENA.zones[0]!.center;
 beforeAll(async () => {
   for (const r of [Champions, Abilities, Items, Augments, Projectiles, LootTables]) r.clear();
   for (const r of [Arenas, Configs, Models, VfxDefs, StatusEffects]) r.clear();
-  registerAll((await new ContentLoader(new FsContentSource(CONTENT)).load()).store);
+  registerAll((await new ContentLoader(shippedContentSource(CONTENT)).load()).store);
 });
 
 /** 施法者 + 一排敵對的身體，都在圈內，彼此夠近讓鏈跳得動。 */

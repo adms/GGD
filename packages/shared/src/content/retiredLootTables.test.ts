@@ -60,7 +60,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ContentLoader } from "./loader";
-import { FsContentSource } from "./node/FsContentSource";
+import { shippedContentSource } from "./__fixtures__/shippedContent";
 import { ContentStore } from "./store";
 import {
   retiredLootTables,
@@ -75,7 +75,7 @@ const CONTENT_DIR = join(dirname(fileURLToPath(import.meta.url)), "../../../../c
 let SHIPPED: ConfigArenaRulesDoc;
 
 beforeAll(async () => {
-  const loaded = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load();
+  const loaded = await new ContentLoader(shippedContentSource(CONTENT_DIR)).load();
   SHIPPED = loaded.store.get<ConfigArenaRulesDoc>("config", "arena-rules");
   expect(SHIPPED.schema).toBe("config.arena-rules@1");
 });
@@ -142,7 +142,7 @@ describe("① 出貨樹:quest-rewards 退場了,而且是**宣告**的不是漏�
     const declared = [...retiredLootTables(SHIPPED)].sort();
     expect(declared.length, "一張退場宣告都沒有 —— 這條守衛在空轉").toBeGreaterThan(0);
 
-    const loaded = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load();
+    const loaded = await new ContentLoader(shippedContentSource(CONTENT_DIR)).load();
     for (const id of declared) {
       // ① 封存品還在(退場 ≠ 刪除;知識不可以無聲消失)
       const archived = join(CONTENT_DIR, "_legacy", "loot-tables", `${id}.json`);
@@ -185,7 +185,7 @@ describe("② 有人把退場的表排回某回合 → 紅", () => {
       ...SHIPPED,
       rounds: { ...SHIPPED.rounds, "2": { ...SHIPPED.rounds["2"], weaponLootTable: "quest-rewards" } },
     };
-    const src = new FsContentSource(CONTENT_DIR);
+    const src = shippedContentSource(CONTENT_DIR);
     const patched: typeof src = Object.create(Object.getPrototypeOf(src) as object) as typeof src;
     Object.assign(patched, src);
     patched.readObject = async (collection, entry) =>
@@ -255,7 +255,7 @@ describe("④ 回合指到一張**不存在**的表 → 紅(以前完全沒有�
       ...SHIPPED,
       rounds: { ...SHIPPED.rounds, "5": { ...SHIPPED.rounds["5"], weaponLootTable: "legendary-weapon" } },
     };
-    const src = new FsContentSource(CONTENT_DIR);
+    const src = shippedContentSource(CONTENT_DIR);
     const patched: typeof src = Object.create(Object.getPrototypeOf(src) as object) as typeof src;
     Object.assign(patched, src);
     patched.readObject = async (collection, entry) =>

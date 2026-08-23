@@ -14,8 +14,10 @@
  * such a doc today, so the blast radius grows with template adoption.
  *
  * WHY THIS FILE USES THE REAL PIPELINE (失敗形態 ⑤「被測的不是出貨的那個」).
- * Every case below loads `content/` off disk through the real `ContentLoader` +
- * `FsContentSource`, breaks ONE doc, and calls the REAL `registerAll` — then
+ * Every case below loads the SHIPPED `content/` through the real `ContentLoader`
+ * (via `shippedContentSource()` — the same one-file路徑瀏覽器端在跑的
+ * `BundleContentSource`，見 `__fixtures__/shippedContent.ts`), breaks ONE doc,
+ * and calls the REAL `registerAll` — then
  * reads the REAL `Champions` / `Abilities` registries the sim reads. A
  * hand-rolled fixture store would prove the fixture works; the previous round's
  * `stack.test.ts` was caught claiming a registry path it never imported.
@@ -37,8 +39,8 @@ import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ContentLoader } from "./loader";
+import { shippedContentSource } from "./__fixtures__/shippedContent";
 import { ContentStore } from "./store";
-import { FsContentSource } from "./node/FsContentSource";
 import { COLLECTION_NAMES } from "./schema/index";
 import {
   Arenas,
@@ -90,7 +92,7 @@ let victimChampionId: ChampionId;
 let victimAbilityId: AbilityId;
 
 beforeAll(async () => {
-  const res = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load();
+  const res = await new ContentLoader(shippedContentSource(CONTENT_DIR)).load();
   pristine = res.store;
   const champ = pristine
     .all<ChampionDef>("champions")

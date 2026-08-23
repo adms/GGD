@@ -38,7 +38,7 @@ import { describe, it, expect, beforeAll } from "vitest";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ContentLoader } from "./loader";
-import { FsContentSource } from "./node/FsContentSource";
+import { shippedContentSource } from "./__fixtures__/shippedContent";
 import { registerAll } from "./registries";
 import { Champions } from "../sim/content/registry";
 import type { ContentStore } from "./store";
@@ -78,7 +78,7 @@ const NORMALIZED_AXES: readonly (typeof SPEED_GROWTH_AXES)[number][] = SPEED_GRO
 );
 
 beforeAll(async () => {
-  store = (await new ContentLoader(new FsContentSource(CONTENT)).load()).store;
+  store = (await new ContentLoader(shippedContentSource(CONTENT)).load()).store;
   registerAll(store);
   shipped = speedGrowthTiersFromDoc(store.get("config", "speed-growth-tiers"));
   table = speedGrowthTableOf({ ...shipped, growth: DEFAULT_SPEED_GROWTH_TIERS.growth });

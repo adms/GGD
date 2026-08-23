@@ -28,7 +28,7 @@ import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../testkit/cover";
 import { ContentLoader } from "./loader";
-import { FsContentSource } from "./node/FsContentSource";
+import { shippedContentSource } from "./__fixtures__/shippedContent";
 import { registerAll, Configs } from "./registries";
 import { Champions } from "../sim/content/registry";
 import { championStatBase } from "../sim/stats/attributes";
@@ -70,7 +70,7 @@ function unlockLevels(rules: unknown): UnlockLevels {
 describe("技能在解鎖等級付得起（GH#314）", () => {
   it("⭐ 沒有任何一格的首階 MP 超過持有者當時的魔力池 —— 超過 = 那顆鈕永遠按不下去", async () => {
     cover("ability-affordable-at-unlock");
-    const loaded = await new ContentLoader(new FsContentSource(CONTENT)).load();
+    const loaded = await new ContentLoader(shippedContentSource(CONTENT)).load();
     registerAll(loaded.store);
 
     const rules = Configs.tryGet("arena-rules");

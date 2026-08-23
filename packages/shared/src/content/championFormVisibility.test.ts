@@ -49,9 +49,11 @@
  * never drift into decoration.
  */
 import { describe, it, expect } from "vitest";
+import { shippedDocs } from "./__fixtures__/shippedContent";
+import type { CollectionName } from "./schema/index";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { readdirSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { cover } from "../../testkit/cover";
 import { retiredChampionIdsFromDoc } from "./championRetirement";
 import {
@@ -66,10 +68,8 @@ const CONTENT_DIR = join(HERE, "../../../../content");
 type Doc = Record<string, unknown>;
 
 function docs(collection: string): Doc[] {
-  return readdirSync(join(CONTENT_DIR, collection))
-    .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
-    .sort()
-    .map((f) => JSON.parse(readFileSync(join(CONTENT_DIR, collection, f), "utf-8")) as Doc);
+  // 一次從 content/bundle.json 讀（bundle 過期時自動退回檔案樹）—— __fixtures__/shippedContent.ts
+  return shippedDocs<Doc>(collection as CollectionName);
 }
 
 /**

@@ -27,7 +27,7 @@ import { fileURLToPath } from "node:url";
 import { dirname } from "node:path";
 import { cover } from "../../testkit/cover";
 import { ContentLoader } from "./loader";
-import { FsContentSource } from "./node/FsContentSource";
+import { shippedContentSource } from "./__fixtures__/shippedContent";
 import { registerAll, Arenas } from "./registries";
 import { Abilities, Champions } from "../sim/content/registry";
 
@@ -38,7 +38,7 @@ describe("AoE 半徑不得超過決鬥區（GH#310）", () => {
     cover("ability-radius-within-zone");
     // ⚠️ `load()` 回的是 `{ store, … }`，不是 store 本身 —— 直接餵進去會
     //    `store.all is not a function`（castTimeCoverage.test.ts:110-111 是對的樣板）。
-    const loaded = await new ContentLoader(new FsContentSource(CONTENT)).load();
+    const loaded = await new ContentLoader(shippedContentSource(CONTENT)).load();
     registerAll(loaded.store);
 
     const zoneRadii = Arenas.all().flatMap((a) => a.zones.map((z) => z.boundaryRadius));

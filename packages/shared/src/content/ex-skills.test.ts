@@ -19,7 +19,7 @@ import { fileURLToPath } from "node:url";
 import { existsSync, readFileSync } from "node:fs";
 import { cover } from "../../testkit/cover";
 import { ContentLoader } from "./loader";
-import { FsContentSource } from "./node/FsContentSource";
+import { shippedContentSource } from "./__fixtures__/shippedContent";
 import { Arenas, Configs, Models, StatusEffects, VfxDefs, registerAll } from "./registries";
 import { Abilities, Augments, Champions, Items, LootTables, Projectiles } from "../sim/content/registry";
 import type { LoadResult } from "./loader";
@@ -51,7 +51,7 @@ describe("EX 技能 per-hero ability (ex-skills)", () => {
   beforeAll(async () => {
     for (const r of [Champions, Abilities, Items, Augments, Projectiles, LootTables]) r.clear();
     for (const r of [Arenas, Configs, Models, VfxDefs, StatusEffects]) r.clear();
-    result = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load();
+    result = await new ContentLoader(shippedContentSource(CONTENT_DIR)).load();
     registerAll(result.store);
     exmap = JSON.parse(readFileSync(EX_MAP_PATH, "utf-8")) as ExMap;
   });

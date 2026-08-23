@@ -36,7 +36,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { readdirSync } from "node:fs";
 import { ContentLoader } from "./loader";
-import { FsContentSource } from "./node/FsContentSource";
+import { shippedContentSource } from "./__fixtures__/shippedContent";
 import { registerAll } from "./registries";
 import { Abilities } from "../sim/content/registry";
 import type { AbilityDef } from "../sim/content/defs";
@@ -56,7 +56,7 @@ let all: AbilityDef[];
 let cdMult: number;
 
 beforeAll(async () => {
-  const result = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load();
+  const result = await new ContentLoader(shippedContentSource(CONTENT_DIR)).load();
   registerAll(result.store);
   all = Abilities.all();
   const env = result.store.tryGet<{ multipliers: Record<string, number> }>("config", "combat-env");

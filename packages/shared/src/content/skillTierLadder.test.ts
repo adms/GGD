@@ -13,7 +13,7 @@ import { describe, it, expect, beforeAll } from "vitest";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ContentLoader } from "./loader";
-import { FsContentSource } from "./node/FsContentSource";
+import { shippedContentSource } from "./__fixtures__/shippedContent";
 import { registerAll, Arenas, Configs } from "./registries";
 import { Abilities, Champions } from "../sim/content/registry";
 import { aoeTiersFromDoc } from "./aoeTiers";
@@ -25,7 +25,7 @@ const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../conte
 
 let zoneRadius = 0;
 beforeAll(async () => {
-  const loaded = await new ContentLoader(new FsContentSource(CONTENT)).load();
+  const loaded = await new ContentLoader(shippedContentSource(CONTENT)).load();
   registerAll(loaded.store);
   zoneRadius = Math.min(...Arenas.all().flatMap((a) => a.zones.map((z) => z.boundaryRadius)));
   expect(zoneRadius, "夾具前提：讀不到 zone 就等於在測空集合").toBeGreaterThan(0);
@@ -179,7 +179,7 @@ describe("④ 級距解析真的接到註冊表上（⛔ 不是掃字串）", ()
   it("⭐ 接線：`withTiers` 真的把 rangeTier 一起走了（⛔ 這條才擋得住漏接）", async () => {
     // 真的重跑一次 `registerAll`，但先把 `rangeTier` 種到一份技能文件上 ——
     // 那是唯一能證明「registries 有呼叫 resolveRangeTier」的做法。
-    const loaded = await new ContentLoader(new FsContentSource(CONTENT)).load();
+    const loaded = await new ContentLoader(shippedContentSource(CONTENT)).load();
     const abilities = loaded.store.all<{ id: string; range?: number }>("abilities");
     const victim = abilities.find((a) => typeof a.range === "number" && a.range > 0);
     expect(victim, "夾具前提：找不到帶 range 的技能").toBeDefined();

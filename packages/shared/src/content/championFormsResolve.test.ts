@@ -42,9 +42,8 @@
  * registration into the registry the sim reads.
  */
 import { describe, it, expect, beforeAll } from "vitest";
-import { readdirSync, readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { shippedDocFiles } from "./__fixtures__/shippedContent";
+import type { CollectionName } from "./schema/index";
 import { cover } from "../../testkit/cover";
 import { ContentStore } from "./store";
 import { registerAll } from "./registries";
@@ -66,21 +65,10 @@ import {
   splitFormPairsByShipping,
 } from "../../testkit/formPairShipping";
 
-const HERE = dirname(fileURLToPath(import.meta.url));
-const CONTENT_DIR = join(HERE, "../../../../content");
 
-/** Every doc in a collection, straight off disk (index-independent). */
+/** Every doc in a collection（一次從 bundle 讀；過期時自動退回逐檔 —— __fixtures__/shippedContent.ts）。 */
 function docs(collection: string): Array<{ file: string; doc: Record<string, unknown> }> {
-  return readdirSync(join(CONTENT_DIR, collection))
-    .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
-    .sort()
-    .map((f) => ({
-      file: f,
-      doc: JSON.parse(readFileSync(join(CONTENT_DIR, collection, f), "utf-8")) as Record<
-        string,
-        unknown
-      >,
-    }));
+  return shippedDocFiles<Record<string, unknown>>(collection as CollectionName);
 }
 
 /** Schema errors found while building the store, asserted as its own case. */

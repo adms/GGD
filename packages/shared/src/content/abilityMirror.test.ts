@@ -27,21 +27,19 @@
  * The assertion collects EVERY violation before failing. A bare `expect` inside
  * the loop would have reported 1 failure for 192 defects.
  *
- * IMPORTANT: like icons.test.ts and standinRoster.test.ts, this suite reads docs
- * by DIRECT file path rather than through FsContentSource/ContentLoader, so it
- * does not depend on `content:build` having been run. It must stay green both
- * before and after a reindex.
+ * IMPORTANT: 這一支不依賴 `content:build` 有沒有跑過 —— 它必須在 reindex 前後
+ * 都是綠的。⭐ 2026-08-23 之後這件事由 `__fixtures__/shippedContent.ts` 保證：
+ * 它先做一次 11 ms 的 mtime 掃描，bundle 比每一份來源都新才走 bundle，
+ * 有任何一份來源比 bundle 新就**自動退回逐檔讀**（fail-slow，⛔ 不是 fail-open）。
+ * 兩條路逐份相同由 `__fixtures__/shippedContent.test.ts` 守著。
  */
 import { describe, it, expect } from "vitest";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
-import { readdirSync, readFileSync } from "node:fs";
+import { shippedDocFiles } from "./__fixtures__/shippedContent";
+import type { CollectionName } from "./schema/index";
 import { cover } from "../../testkit/cover";
 import { ContentStore } from "./store";
 import { auditAbilityMirrorDrift, type AbilityMirrorDrift } from "./registries";
 
-const HERE = dirname(fileURLToPath(import.meta.url));
-const CONTENT_DIR = join(HERE, "../../../../content");
 const SLOTS = ["Q", "W", "E", "R"] as const;
 
 /**
@@ -63,13 +61,8 @@ const STANDALONE_ONLY_OK = new Set(["schema"]);
 type Doc = Record<string, unknown>;
 
 function docs(collection: string): Array<{ file: string; doc: Doc }> {
-  return readdirSync(join(CONTENT_DIR, collection))
-    .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
-    .sort()
-    .map((f) => ({
-      file: f,
-      doc: JSON.parse(readFileSync(join(CONTENT_DIR, collection, f), "utf-8")) as Doc,
-    }));
+  // 一次從 content/bundle.json 讀（bundle 過期時自動退回檔案樹）—— __fixtures__/shippedContent.ts
+  return shippedDocFiles<Doc>(collection as CollectionName);
 }
 
 /** The real content tree as a ContentStore, so the SHIPPING audit runs on it. */

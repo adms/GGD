@@ -38,7 +38,9 @@
  * `hitFeel` 欄位（失敗形態 ⑦：掃屬性代替掃行為）。
  */
 import { describe, it, expect, beforeAll } from "vitest";
-import { readdirSync, readFileSync } from "node:fs";
+import { shippedDocs } from "./__fixtures__/shippedContent";
+import type { CollectionName } from "./schema/index";
+import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../testkit/cover";
@@ -113,16 +115,8 @@ function championDoc(id: string): ReturnType<typeof zChampionDoc.parse> {
 
 /** 依檔案路徑載入，跟 icons/abilityMirror 一樣 —— 不依賴 `content:build` 有沒有跑過。 */
 function docs(collection: string): Record<string, unknown>[] {
-  return readdirSync(join(CONTENT_DIR, collection))
-    .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
-    .sort()
-    .map(
-      (f) =>
-        JSON.parse(readFileSync(join(CONTENT_DIR, collection, f), "utf-8")) as Record<
-          string,
-          unknown
-        >,
-    );
+  // 一次從 content/bundle.json 讀（bundle 過期時自動退回檔案樹）—— __fixtures__/shippedContent.ts
+  return shippedDocs<Record<string, unknown>>(collection as CollectionName);
 }
 
 beforeAll(() => {

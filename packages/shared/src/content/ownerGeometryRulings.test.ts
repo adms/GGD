@@ -34,7 +34,7 @@ import { execFileSync } from "node:child_process";
 import { join, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ContentLoader } from "./loader";
-import { FsContentSource } from "./node/FsContentSource";
+import { shippedContentSource } from "./__fixtures__/shippedContent";
 import { Arenas, Configs, Models, StatusEffects, VfxDefs, registerAll } from "./registries";
 import { Abilities, Augments, Champions, Items, LootTables, Projectiles } from "../sim/content/registry";
 import { aoeTiersFromDoc } from "./aoeTiers";
@@ -62,7 +62,7 @@ let table: Record<"range" | "radius", Readonly<Record<SkillTierName, number>>>;
 beforeAll(async () => {
   for (const r of [Champions, Abilities, Items, Augments, Projectiles, LootTables]) r.clear();
   for (const r of [Arenas, Configs, Models, VfxDefs, StatusEffects]) r.clear();
-  registerAll((await new ContentLoader(new FsContentSource(CONTENT)).load()).store);
+  registerAll((await new ContentLoader(shippedContentSource(CONTENT)).load()).store);
   table = {
     range: rangeTiersFromDoc(Configs.get("range-tiers")).range,
     radius: aoeTiersFromDoc(Configs.get("aoe-tiers")).radius,
