@@ -185,7 +185,21 @@ CSV 上一次產生是 **2026-07-25**（commit `d93508dd`），從那天起沒�
 | # | 突變 | 期望 | 結果 |
 |---|---|---|---|
 | M1 | 把 `templates:build` / `templates:check` **兩支腳本連同 `skills:sync`/`skills:check` 的引用整個刪掉**（＝回到「零腳本的產生器」那個狀態） | 新那條 `it` 紅並指名 `tools/ability-templates/` | ⛔ **第一次是綠的** |
-| M1b | 同上，修好偵測（字面值串接）後 | 同上 | ✅ 見下 |
+| M1b | 同上，修好偵測（字面值串接 ＋ file-level 規則）後 | 同上 | ✅ 見下 |
+| M2 | commit 之後重做 M1（此時 `gen.py` 已被 git 追蹤） | 紅並指名 | ✅ **EXIT 1**，訊息逐字如下 |
+
+```
+× 每一支寫 docs/ 或 content/ 產物的產生器,目錄都在聚合指令的視野裡
+  → 這幾個目錄在寫 git 追蹤的產物,卻**沒有任何 `*:check` 在聚合指令裡看得到它們:
+  tools/ability-templates/  ← tools/ability-templates/gen.py → docs/ability-templates.csv
+→ 給它一支 *:build/*:check 並接進 package.json 的 skills:sync / skills:check,
+  或在 GENERATOR_NO_CHECK 裡寫下**為什麼它的產物不會過期**（要能被反駁）。
+  expected [ 'ability-templates' ] to deeply equal []
+```
+
+⚠️ M1 與 M2 是**同一個突變**，差別只在 `gen.py` 有沒有進 git ——
+⭐ 順帶證明了這條閘的範圍是 **`git ls-files`**（＝出貨的那一份），
+⛔ 不是工作區（同 `shippedBundleHasTrackedSources.test.ts` 的立場）。
 
 ⭐ **M1 綠掉是這次最有價值的一件事**：偵測只認 `"docs/x.csv"` 這種**單一**字面值，
 而 `gen.py` 寫的是 `ROOT / "docs" / "ability-templates.csv"`（三個字面值）
