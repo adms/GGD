@@ -49,23 +49,25 @@ import { formAttachmentSpecFor } from "./formVisual";
  *   ② 它是 base（`Eme1`）那一半 —— 整組斷言因此同時證明 ⛔ **沒有換 championId**。
  */
 const BASE_ID = "godie-ucrl";
-const STATUS = "m1-guard-status";
 /** 出貨 `_standin-overrides.json` 用得到的倍率，拿來證明 scaleMult 是**相乘**。 */
 const SHIPPED_REL_SCALE = 0.65;
 const ATTACH_GLB = "assets/models/goku3head.glb";
 
-const STATUS_ENTRY = {
-  tint: [1.45, 1.3, 0.55] as [number, number, number],
-  scaleMult: 1.08,
-  attachModelKey: "imported.goku3head",
-  attachBone: "origin",
-  attachScale: 0.4161,
-};
+/**
+ * ⭐ `content/config/form-visuals.json` **本人**，⛔ 不是為這條測試捏的一份。
+ *
+ * ⚠️ 這一行是 2026-08-23 稽核的結論之一：機制全鏈都在，而出貨表是空的 ——
+ * 「⛔ 出貨零採用」。所以這一組現在讀出貨檔：owner 把〈狀態外觀〉整區關掉
+ * （`statusStrength: 0`）或刪掉那一格，它就會紅，而那是正確的（功能真的沒了）。
+ */
+const SHIPPED = readContentJson<ConfigFormVisualsDoc>("config/form-visuals.json");
+/** 09-03 超級賽亞人 —— 出貨五格裡**三樣旋鈕都帶**的那一格（顏色＋大小＋掛件）。 */
+const STATUS = "super-saiyan";
+const STATUS_ENTRY = SHIPPED.statuses![STATUS]!;
 
-/** 出貨解析器 ＋ 一份帶 `statuses` 的真文件。⛔ 測試不自己算外觀。 */
+/** 出貨解析器 ＋ 出貨文件。⛔ 測試不自己算外觀、也不自己填表。 */
 const cfg = (over: Partial<ConfigFormVisualsDoc> = {}): ConfigFormVisualsDoc => ({
-  ...DEFAULT_FORM_VISUALS,
-  statuses: { [STATUS]: STATUS_ENTRY },
+  ...SHIPPED,
   ...over,
 });
 
@@ -113,13 +115,13 @@ describe("M1 變身外觀掛在狀態上 (status-form-visual)", () => {
     const litTint = on.championTintFor(e)!.tint!;
     expect(baseTint[1]).toBeGreaterThan(baseTint[0]); // 出貨的傑桑本來就是綠的
     for (let i = 0; i < 3; i++) {
-      expect(litTint[i]!).toBeCloseTo(baseTint[i]! * STATUS_ENTRY.tint[i]!, 5);
+      expect(litTint[i]!).toBeCloseTo(baseTint[i]! * STATUS_ENTRY.tint![i]!, 5);
     }
 
     // ② 大小 —— 疊在出貨 relativeScale 之上（相乘），⛔ 不是覆蓋。
     expect(relScaleOf(off.modelOverrideFor(e))).toBeCloseTo(SHIPPED_REL_SCALE, 5);
     expect(relScaleOf(on.modelOverrideFor(e))).toBeCloseTo(
-      SHIPPED_REL_SCALE * STATUS_ENTRY.scaleMult,
+      SHIPPED_REL_SCALE * STATUS_ENTRY.scaleMult!,
       5,
     );
 
@@ -129,7 +131,7 @@ describe("M1 變身外觀掛在狀態上 (status-form-visual)", () => {
     const spec = formAttachmentSpecFor(on.formVisualFor(e), glbPathOf)!;
     expect(spec.glbPath).toBe(ATTACH_GLB);
     expect(spec.bone).toBe(STATUS_ENTRY.attachBone);
-    expect(spec.scale).toBeCloseTo(STATUS_ENTRY.attachScale, 5);
+    expect(spec.scale).toBeCloseTo(STATUS_ENTRY.attachScale!, 5);
   });
 
   it("後台把〈狀態外觀濃度〉轉到 0 ⇒ 逐位元回到 M1 之前（一鍵 rollback）", () => {
@@ -139,5 +141,37 @@ describe("M1 變身外觀掛在狀態上 (status-form-visual)", () => {
     expect(rolled.formVisualFor(e)).toBeNull();
     expect(relScaleOf(rolled.modelOverrideFor(e))).toBeCloseTo(relScaleOf(off.modelOverrideFor(e)), 5);
     expect(rolled.championTintFor(e)!.tint).toEqual(off.championTintFor(e)!.tint);
+  });
+
+  /**
+   * ⭐ **出貨採用** —— 2026-08-23 的稽核對 M1 的判決是「機制全鏈都在，⛔ 出貨零採用」：
+   * 那時 `content/config/form-visuals.json` 連 `statuses` 這個鍵都沒有，於是整條機制
+   * 在出貨設定下**一個像素都不影響**。這一條就是那個判決的閘。
+   *
+   * ⛔ 它驗的是「這一格算不算得出外觀」，⛔ 不是「顏色是多少」（第二守則：驗機制不驗
+   * 數字 —— 那五組值是 owner 的內容，`statusStrength` 是它的旋鈕）。
+   */
+  it("⭐ 出貨的每一格〈狀態外觀〉在出貨設定下真的算得出外觀（⛔ 不是一格永遠 null 的擺設）", () => {
+    const ids = Object.keys(SHIPPED.statuses ?? {});
+    expect(ids.length, "出貨 statuses 是空的 ⇒ M1 在出貨設定下零採用").toBeGreaterThan(0);
+    for (const id of ids) {
+      const v = resolveFormVisual(SHIPPED, id);
+      expect(v, `${id}：出貨解析器對這一格回 null（三樣旋鈕算完都中性？）`).not.toBeNull();
+      expect(
+        v!.tint !== null || v!.scaleMult !== 1 || v!.attachment !== null,
+        `${id}：解析出來的外觀三樣都是中性值`,
+      ).toBe(true);
+    }
+  });
+
+  /**
+   * 第三個住處的 drift —— `championFormVisuals.test.ts` 的既有 drift 斷言只比對
+   * `forms`，所以 `statuses` 這一半在它底下是**沒有人看的**。後台的
+   * `SHIPPED_FORM_VISUALS` 直接就是 `DEFAULT_FORM_VISUALS`，所以這一條同時守住
+   * 「後台顯示的出貨值 = 玩家那一場載入的出貨值」。
+   */
+  it("Zod 的 DEFAULT_FORM_VISUALS.statuses 與出貨 JSON 一字不差", () => {
+    expect(DEFAULT_FORM_VISUALS.statuses).toEqual(SHIPPED.statuses);
+    expect(DEFAULT_FORM_VISUALS.statusStrength).toBe(SHIPPED.statusStrength);
   });
 });

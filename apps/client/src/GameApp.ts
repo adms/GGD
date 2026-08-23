@@ -107,7 +107,11 @@ import {
   type EntityViewState,
 } from "./render/EntityViewRegistry";
 import { blizzardOverlayModels } from "./render/views/blizzardOverlay";
-import { championBodyHooks, type ChampionBodyHooks } from "./render/views/championBody";
+import {
+  championBodyHooks,
+  type ChampionBodyDeps,
+  type ChampionBodyHooks,
+} from "./render/views/championBody";
 import { formAttachmentSpecFor, wornAttachmentSpec } from "./render/views/formVisual";
 // GH#392 —— `attachment@1`(穿在骨頭上的模型)的解析層。純函式,住在 shared,
 // 所以後台預覽/守衛/客戶端讀到的是同一條規則。
@@ -284,6 +288,26 @@ export interface GameAppOptions {
 
 /** ⭐ M1（GH#599）—— 沒有狀態時共用的空清單,⛔ 不要每幀 new 一個。 */
 const EMPTY_STATUS_IDS: readonly string[] = [];
+
+/**
+ * ⭐ M1（GH#599）—— **`statusIdsForSeat` 在這個組裝點是必填的。**
+ *
+ * `ChampionBodyDeps.statusIdsForSeat` 本身是 `?`（`render/**` 對 HUD store 是
+ * 封閉的，所以那個模組必須能在沒有座位表的測試裡建構）。而**出貨的組裝點只有
+ * 這一個**，漏掉它的後果是：`statusIdsForSeat` 恆 `undefined` ⇒ 狀態外觀那一半
+ * 整個是死的，⛔ 而畫面上跟「這幾對本來就沒有變身外觀」一模一樣
+ * （第二守則失敗形態③：整行可以刪掉而測試全綠）。
+ *
+ * ⇒ 這個別名讓 **`tsc` 擋住忘記**，⛔ 不是寫一條「要記得注入」的散文 ——
+ * 與 `render/roundFxRegistry.ts` 的 `RoundFxDeps.ambientToggleMask`
+ * （同一天、同一族、同一個修法）逐字同一個做法。
+ *
+ * ⚠️ 它寫在這裡而不是把 `ChampionBodyDeps` 上的 `?` 直接拿掉，是因為
+ * `render/views/championBody.ts` 這一輪在另一條 lane 的檔案柵欄裡。
+ * 那個 `?` 拿掉之後，這個別名就可以整段刪除（它會變成 `ChampionBodyDeps` 本身）。
+ */
+type SeatedChampionBodyDeps = ChampionBodyDeps &
+  Required<Pick<ChampionBodyDeps, "statusIdsForSeat">>;
 
 export class GameApp {
   private readonly renderer: Renderer;
@@ -698,6 +722,8 @@ export class GameApp {
       // ⭐ M1（GH#599）—— 變身外觀掛在**狀態**上的那一半。
       // ⚠️ ⛔ 少了這一行,`statusIdsForSeat` 恆 `undefined` ⇒ M1 在客戶端是**死的**
       //    （失敗形態③:整條可以刪掉而測試全綠）—— 今天已經抓到六次這個形狀。
+      // ⭐ 所以它現在**刪掉會 tsc 紅**:上面那個 `satisfies SeatedChampionBodyDeps`
+      //    把這一格變成必填(⛔ 不是一條「要記得注入」的散文)。
       // ⭐ 座位的 `statusIds` 是**全座位都送的**（`net/snapshot.ts` 的座位迴圈跑
       //    `ctl.seats` 全部,而 `MatchState.seats` 沒有任何 Colyseus filter）,
       //    所以這一行 ⛔ 不需要任何新的線路欄位、⛔ 不需要新的 `ENTITY_FLAG` bit
@@ -715,7 +741,9 @@ export class GameApp {
         voxelSkinOverrideFor: (championId) => this.contentDb.voxelSkinOverrideFor(championId),
         formVisualFor: (championId) => this.contentDb.formVisualFor(championId),
       },
-    });
+      // ⭐ `satisfies` 而不是型別註記：物件字面值的推論型別要原封不動交給
+      //    `championBodyHooks`，同時 `statusIdsForSeat` 少一行就 tsc 紅。
+    } satisfies SeatedChampionBodyDeps);
     this.views = new EntityViewRegistry(this.renderer.scene, this.assets, {
       // THE THREE FORM-AWARE HOOKS, taken WHOLE from the factory — never
       // re-wrapped in an arrow here. A wrapper is exactly how the arity bug

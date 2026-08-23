@@ -85,6 +85,55 @@ export const zFormVisualEntry = z
      * 下界 0.2 以下就小到看不見了,那不叫變身。
      */
     scaleMult: z.number().min(0.2).max(3).optional(),
+    /**
+     * ⭐ M3(2026-08-23)—— **整具身體換一份模型**（`models/` 的文件 id，
+     * 例:`imported.picacugy`）。省略 = 身體不換，只套顏色/大小/掛件。
+     *
+     * ─────────────────────────────────────────────────────────────────────
+     * ⛔ 它與 `attachModelKey` 是**兩件事**，⛔ 不是同一格的兩種寫法
+     * ─────────────────────────────────────────────────────────────────────
+     *   · `attachModelKey` —— **多**掛一份 glb 在本體上（悟空超三的頭）
+     *   · `modelKey`（這一格）—— 本體**換掉**（拳四郎 barbarian → heropikachu）
+     * 兩者可以同時填，⛔ 但填錯格的症狀完全不同：拿這一格去掛頭，本體會直接
+     * 變成一顆頭。
+     *
+     * ─────────────────────────────────────────────────────────────────────
+     * 為什麼這一格要存在（量到的，⛔ 不是假設）
+     * ─────────────────────────────────────────────────────────────────────
+     * owner 2026-08-22:「變身帶來許多問題，因此我想要**開啟變身態盡可能下架**」。
+     * 19 對變身逐對量下來，有 **4 對**的差別裡包含「身體真的換了一具模型」：
+     *
+     *   · `godie-n00p` 妖狐    fox2 → fox
+     *   · `godie-o02l` 皮卡    picacugy
+     *   · `godie-u034` 傑富力士 champ.thorne（共用替身）→ imported.herobiggon
+     *   · `godie-u00l` 拳四郎   champ.skin.barbarian → **imported.heropikachu**
+     *
+     * ⭐ 最後那一對是**刻意的惡搞**，⛔ 不是資料錯誤 —— owner 2026-08-22 逐字：
+     * 「這是對的，這是因為要**惡搞**他大絕招是變身大型皮卡丘」。
+     *
+     * 在這一格之前，`config.form-visuals@1` 只調得動顏色/大小/掛件 ⇒ 那 4 對
+     * 的變身態 champion doc **不能退場**（退了身體就換不回去）。
+     *
+     * ─────────────────────────────────────────────────────────────────────
+     * ⚠️ 與既有兩條解析路的**優先序**（寫在這裡，因為它是資料層的承諾）
+     * ─────────────────────────────────────────────────────────────────────
+     *   1. **這一格贏過 `e.key`** —— `e.key` 是伺服器每 tick 從
+     *      `Champions.get(championId).modelKey` 重算的，也就是「這個座位選了誰」；
+     *      這一格說的是「這具身體**現在**穿什麼」，那是更晚的一句話。
+     *   2. **這一格贏過裝備造型替換**（`resolveModelKey`）—— 造型是本體的化妝，
+     *      而這一格是「本體不是那個東西了」。落地方式是把它餵成
+     *      `resolveModelKey` 的**輸入**（⛔ 不是加一條 if）：造型表查不到這個新
+     *      的 key，於是原樣回傳，「變身贏」就是這件事的自然結果。
+     *   3. **它繞過 `blizzardOverlay.resolve`** —— overlay 的工作是「這個
+     *      championId 沒有自己的模型時去 w3u 借一具」，而這一格是操作者**明寫**
+     *      的選擇，和裝備造型同一個待遇（`modelDocFor` 那條 `resolved !== modelKey`
+     *      的早退就是它）。
+     *
+     * ⚠️ 上界 64 與 `attachModelKey` 對齊；⛔ 這裡不驗「這份 models 文件存不存在」
+     * —— 那是 `contentRefs` 那一族的工作，而寫死一張名單會讓新增一份模型就要改
+     * schema。查不到的 key ⇒ `modelFor` 回 null ⇒ 退回體素身體（⛔ 不丟例外）。
+     */
+    modelKey: z.string().min(1).max(64).optional(),
     /** 掛件的 models/ 文件 id(例:`imported.goku3head`)。省略 = 沒有掛件。 */
     attachModelKey: z.string().min(1).optional(),
     /**
@@ -148,6 +197,18 @@ export const zConfigFormVisualsDoc = z
      * 悟空 金色＋超三頭、臭作 ×1.56、索隆 全身黃色氣場)。把旋鈕搬到狀態上之後,
      * 那 5 對就可以退掉整份變身態 champion doc 而**畫面一個像素都不掉**。
      *
+     * ⭐ 出貨五格(owner 2026-08-23「照你提的逐對建議」):`super-saiyan` ·
+     * `invisible-air` · `armament-haki` · `perverted-gentleman` · `taproot`。
+     * 前兩格與 `forms` 的對應格**逐位元同值**,那是遷移期的關鍵性質:
+     * `composeBodyVisual` 的規則是「狀態命中 ⇒ 形態那一份整份讓位」,兩邊同值
+     * ⇒ 「形態還在」與「形態退場了」畫面一個像素都不差。⛔ 不要把其中一邊調成
+     * 「差不多」的值 —— 那會讓退場那一天冒出一個沒有人改過的視覺變化。
+     *
+     * ⚠️ 這張表只是**視覺的那一半**:狀態要真的掛到身上,觸發變身的技能才是寫入者
+     * (`applyBuff.statusId` / `applyStatus.statusId` → `world.status` →
+     * `net/snapshot.ts` 的 `SeatState.statusIds`)。⛔ `applyBuff.stackKey` 不算,
+     * 它不上線。每一格的 `note` 各自寫了缺的是哪一支技能。
+     *
      * ⛔ key 不可以是任何一半的 championId(base 或 alternate)。兩個原因:
      *   ① 那是 `forms` 的鍵空間,寫錯邊會得到一個「後台顯示得好好的、遊戲永遠不採用」
      *      的格子 —— 這一類是最難查的;
@@ -193,10 +254,54 @@ export const DEFAULT_FORM_VISUALS: ConfigFormVisualsDoc = {
   tintStrength: 1,
   scaleStrength: 1,
   attachmentsEnabled: true,
-  // ⭐ M1(GH#599)—— 出貨**空的**,而那是刻意的:owner 還沒勾哪幾對要退場
-  // (`docs/_reports/M1_temp_*` 的勾選表),而在他勾之前先寫進去 = 我替他下架。
-  // 後台「變身外觀」那一頁的〈狀態外觀〉區塊是它的編輯入口。
-  statuses: {},
+  // ⭐ M1(GH#599)—— **owner 2026-08-23 已經勾了**:「照你提的逐對建議」
+  // (對著 🟢 可退場 9 · 🟡 要先做一個機制 6 · 🔴 不建議退場 4 · ⚪ 兩邊都沒接 1
+  // 那張表)。⛔ 在那之前這一格是空的,理由是「他還沒勾,先寫進去 = 我替他下架」;
+  // 那句理由現在過期了,所以它被換掉而不是留著(第三守則:過期的理由會被下一輪引用)。
+  //
+  // ⚠️ 這五格是**視覺的那一半**。要在遊戲裡看得到,觸發變身的那支技能還要把
+  // 對應的 `statusId` 掛上去(每一格的 `note` 各自寫了是哪一支);⛔ 只有 `stackKey`
+  // 不算 —— 線上送的是 `world.status` 的 `statusId`(`net/snapshot.ts`)。
+  // 後台「變身外觀」那一頁的〈狀態外觀〉區塊是它的編輯入口,
+  // `statusStrength` 轉到 0 是整區的一鍵 rollback。
+  statuses: {
+    // 11-002 武裝色霸氣 —— 兩半同模型同色同大小,唯一的差別是氣場球體。
+    // attachScale 0.4204 = 0.01168 / 0.02778(`models_report.json` 的兩個
+    // scale_factor),算法與 `godie-o00x` 那一格逐字相同。
+    "armament-haki": {
+      note: "11-002 武裝色霸氣(godie-udre ⇄ godie-u01u)。七軸量測:兩半同模型 imported.heromusashimiyamoto、同色、同大小 —— 唯一看得出來的是全身氣場球體。attachScale 0.4204 = 0.01168 ÷ 0.02778(models_report.json 的兩個 scale_factor:HeroMusashiMiyamoto.mdx ÷ war3mapImported__poweraura.MDX),算法與 godie-o00x 那一格逐字相同。⚠️ 這一格要在遊戲裡生效,godie-udre.ex 的 applyBuff 還要帶 statusId:\"armament-haki\" —— 那半個檔案這一輪在別條 lane 的柵欄裡。",
+      attachModelKey: "imported.war3mapimported-poweraura",
+      attachBone: "origin",
+      attachScale: 0.4204,
+    },
+    // 20-01 風王結界 —— ⭐ 值與 `forms["godie-e00l"]` 逐位元相同(見下面那段
+    // 「為什麼兩邊同值」)。
+    "invisible-air": {
+      note: '20-01 風王結界(godie-e002 ⇄ godie-e00l)。⭐ 值與上面 forms.godie-e00l **逐位元相同**,那是刻意的:composeBodyVisual 的規則是「狀態命中就取代形態」,兩邊同值 ⇒ 遷移中與退場後畫面一個像素都不差。w3x 兩半無任何視覺差(同模型/同色/同 usca 1.10),所以這是美術決定。⚠️ 要生效還需要 godie-e002.w 的切換在開啟時掛上 statusId:"invisible-air"(切換技,所以是開/關兩個出口,⛔ 不是一個時鐘)。',
+      tint: [0.72, 0.92, 1.35],
+      scaleMult: 1.04,
+    },
+    // 30-002 變態紳士 —— ⚠️ 帶著一個**已知的**渲染缺口,寫在 note 裡。
+    "perverted-gentleman": {
+      note: "30-002 變態紳士(godie-orkn ⇄ godie-o030)。1.5609 = o030 的 relativeScale 3.0 ÷ orkn 的 1.922(content/models/_standin-overrides.json),⛔ 不是地圖的 usca 3.0 —— 兩半共用 champ.sela,身高正規化之後只有比值有意義。⚠️⚠️ 已知缺口:orkn 那一筆帶 standinRelativeScale:1,而 championBody.modelOverrideFor 只把變身倍率乘進 relativeScale、**沒有**乘進 standinRelativeScale(standinScale.ts 檔頭自己寫著這條縫)。⇒ 退場之後,只有在真的載入 Orkn.glb 時看得到這個 1.56 倍;回退到方塊人時它會被吃掉。修法是那一行乘法,⛔ 不是改這個數字。",
+      scaleMult: 1.5609,
+    },
+    // 09-03 超級賽亞人 —— ⭐ 值與 `forms["godie-o00x"]` 逐位元相同。
+    "super-saiyan": {
+      note: '09-03 超級賽亞人(godie-ogrh ⇄ godie-o00x)。⭐ 值與上面 forms.godie-o00x **逐位元相同**(理由同 invisible-air)。掛件是真的 w3x 事實(A0MJ 球體(悟空超3) = Goku3head.mdx @ origin),金色與 +8% 身高是美術決定。⚠️ 要生效還需要 godie-ogrh.e 的 applyBuff 帶 statusId:"super-saiyan"(它今天只有 stackKey,而 stackKey ⛔ 不會出現在 SeatState.statusIds 上)。',
+      tint: [1.45, 1.3, 0.55],
+      scaleMult: 1.08,
+      attachModelKey: "imported.goku3head",
+      attachBone: "origin",
+      attachScale: 0.4161,
+      attachOffsetY: 0,
+    },
+    // 70-00 紮根 —— 地圖自己把紮根形態縮小(usca 1.10 → 1.00)。
+    taproot: {
+      note: '70-00 紮根(godie-e00s ⇄ godie-e010)。0.9091 = e010 的 relativeScale 1.0 ÷ e00s 的 1.1 —— 地圖自己把紮根形態**縮小**(usca 1.10 → 1.00),那是這支切換技唯一的視覺。⭐ 這一對的另一半(走不動)已經不需要換英雄卡了:M5 的 SourceGrantFields.immobile 掛在一份 whileStatus 閘住的天生技 rank 上就夠(守衛 sim/immobileGrant.test.ts)。⚠️ 要生效還需要 godie-e00s.passive 在開啟時掛上 statusId:"taproot"。',
+      scaleMult: 0.9091,
+    },
+  },
   statusStrength: 1,
   forms: {
     // 09 悟空 → 超級賽亞人。掛件是 w3x 事實(A0MJ 球體(悟空超3) = Goku3head.mdx);

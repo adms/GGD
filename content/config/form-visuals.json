@@ -1,10 +1,11 @@
 {
   "id": "form-visuals",
   "schema": "config.form-visuals@1",
-  "note": "變身「看得出來」的三個旋鈕。key 一律是變身態(Emeu)的 championId —— 基本型填在這裡也不會生效(resolveFormVisual 會擋)。tint 是乘法(和 #49 同一條管線),scaleMult 疊在 #150 身高正規化之上,attachModelKey 是執行期掛的第二個 glb(不可以烘進本體,悟空兩態共用 imported.goku)。",
+  "note": "變身「看得出來」的三個旋鈕。⭐ 兩種鍵:`forms` 的 key 是變身態(Emeu)的 championId(基本型填在這裡也不會生效,resolveFormVisual 會擋);`statuses` 的 key 是**狀態 id**,那一半是變身態**退場**用的(GH#599 M1)。tint 是乘法(和 #49 同一條管線),scaleMult 疊在 #150 身高正規化之上,attachModelKey 是執行期掛的第二個 glb(不可以烘進本體,悟空兩態共用 imported.goku)。",
   "enabled": true,
   "tintStrength": 1,
   "scaleStrength": 1,
+  "statusStrength": 1,
   "attachmentsEnabled": true,
   "forms": {
     "godie-o00x": {
@@ -20,6 +21,36 @@
       "note": "w3x 完全沒有視覺差:E002/E00L 同 HeroSaber.mdl、同 tint [1,1,1]、同 usca 1.10,E00L 多的 A05M/A0M3 都沒有 art,A0DZ 觸發也不改顏色。青白光暈與 1.04 倍身高皆為美術決定",
       "tint": [0.72, 0.92, 1.35],
       "scaleMult": 1.04
+    }
+  },
+  "statuses": {
+    "armament-haki": {
+      "note": "11-002 武裝色霸氣(godie-udre ⇄ godie-u01u)。七軸量測:兩半同模型 imported.heromusashimiyamoto、同色、同大小 —— 唯一看得出來的是全身氣場球體。attachScale 0.4204 = 0.01168 ÷ 0.02778(models_report.json 的兩個 scale_factor:HeroMusashiMiyamoto.mdx ÷ war3mapImported__poweraura.MDX),算法與 godie-o00x 那一格逐字相同。⚠️ 這一格要在遊戲裡生效,godie-udre.ex 的 applyBuff 還要帶 statusId:\"armament-haki\" —— 那半個檔案這一輪在別條 lane 的柵欄裡。",
+      "attachModelKey": "imported.war3mapimported-poweraura",
+      "attachBone": "origin",
+      "attachScale": 0.4204
+    },
+    "invisible-air": {
+      "note": "20-01 風王結界(godie-e002 ⇄ godie-e00l)。⭐ 值與上面 forms.godie-e00l **逐位元相同**,那是刻意的:composeBodyVisual 的規則是「狀態命中就取代形態」,兩邊同值 ⇒ 遷移中與退場後畫面一個像素都不差。w3x 兩半無任何視覺差(同模型/同色/同 usca 1.10),所以這是美術決定。⚠️ 要生效還需要 godie-e002.w 的切換在開啟時掛上 statusId:\"invisible-air\"(切換技,所以是開/關兩個出口,⛔ 不是一個時鐘)。",
+      "tint": [0.72, 0.92, 1.35],
+      "scaleMult": 1.04
+    },
+    "perverted-gentleman": {
+      "note": "30-002 變態紳士(godie-orkn ⇄ godie-o030)。1.5609 = o030 的 relativeScale 3.0 ÷ orkn 的 1.922(content/models/_standin-overrides.json),⛔ 不是地圖的 usca 3.0 —— 兩半共用 champ.sela,身高正規化之後只有比值有意義。⚠️⚠️ 已知缺口:orkn 那一筆帶 standinRelativeScale:1,而 championBody.modelOverrideFor 只把變身倍率乘進 relativeScale、**沒有**乘進 standinRelativeScale(standinScale.ts 檔頭自己寫著這條縫)。⇒ 退場之後,只有在真的載入 Orkn.glb 時看得到這個 1.56 倍;回退到方塊人時它會被吃掉。修法是那一行乘法,⛔ 不是改這個數字。",
+      "scaleMult": 1.5609
+    },
+    "super-saiyan": {
+      "note": "09-03 超級賽亞人(godie-ogrh ⇄ godie-o00x)。⭐ 值與上面 forms.godie-o00x **逐位元相同**(理由同 invisible-air)。掛件是真的 w3x 事實(A0MJ 球體(悟空超3) = Goku3head.mdx @ origin),金色與 +8% 身高是美術決定。⚠️ 要生效還需要 godie-ogrh.e 的 applyBuff 帶 statusId:\"super-saiyan\"(它今天只有 stackKey,而 stackKey ⛔ 不會出現在 SeatState.statusIds 上)。",
+      "tint": [1.45, 1.3, 0.55],
+      "scaleMult": 1.08,
+      "attachModelKey": "imported.goku3head",
+      "attachBone": "origin",
+      "attachScale": 0.4161,
+      "attachOffsetY": 0
+    },
+    "taproot": {
+      "note": "70-00 紮根(godie-e00s ⇄ godie-e010)。0.9091 = e010 的 relativeScale 1.0 ÷ e00s 的 1.1 —— 地圖自己把紮根形態**縮小**(usca 1.10 → 1.00),那是這支切換技唯一的視覺。⭐ 這一對的另一半(走不動)已經不需要換英雄卡了:M5 的 SourceGrantFields.immobile 掛在一份 whileStatus 閘住的天生技 rank 上就夠(守衛 sim/immobileGrant.test.ts)。⚠️ 要生效還需要 godie-e00s.passive 在開啟時掛上 statusId:\"taproot\"。",
+      "scaleMult": 0.9091
     }
   }
 }
