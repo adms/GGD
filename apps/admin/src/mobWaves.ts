@@ -143,6 +143,9 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     yOffset: 0.35,
     showThreshold: 1,
   },
+  // GH#647 普通殭屍腳下影子:不畫(owner 2026-08-24「節省效能」)。
+  // MUST stay equal to `DEFAULT_MOB_WAVES_CONFIG.normalMobShadow`。
+  normalMobShadow: false,
   schedule: [
     { round: 6, mobsPerWaveCap: 10, maxAlivePerZone: 20 },
     { round: 7, mobsPerWaveCap: 15, maxAlivePerZone: 30 },
@@ -338,6 +341,8 @@ export type MobWavesFieldKey =
   | "healthBar.barHeight"
   | "healthBar.yOffset"
   | "healthBar.showThreshold"
+  // GH#647 普通殭屍腳下影子
+  | "normalMobShadow"
   | "mob.maxHp"
   | "mob.attackDamage"
   | "mob.moveSpeed"
@@ -507,6 +512,7 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "healthBar.barHeight",
   "healthBar.yOffset",
   "healthBar.showThreshold",
+  "normalMobShadow",
   "mob.championSource",
   "mob.championId",
   "mob.modelKey",
@@ -755,6 +761,18 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     max: 1,
     optional: true,
     emptyMeans: "留空 = 1.0（全程顯示）",
+  },
+  normalMobShadow: {
+    zh: "普通殭屍腳下要不要畫陰影",
+    note:
+      "GH#647(owner:「普通殭屍不必畫血條跟陰影 節省效能」)。R7 波峰一區 30 隻 × 2 區 = 60 顆半透明陰影圓盤," +
+      "每顆是一次 draw call 加一層地板 overdraw。**精英(特殊殭屍 + 殭屍王)不吃這一格** —— 牠們的影子照畫," +
+      "因為體型 2×/5× 的讀感主要靠影子。打開 = 回到舊行為(普通殭屍也有影子)",
+    unit: "",
+    kind: "bool",
+    boolLabels: { on: "畫（舊行為）", off: "不畫（出貨，省效能）" },
+    optional: true,
+    emptyMeans: "留空 = 不畫（出貨）",
   },
   "mob.championSource": {
     zh: "殭屍由誰擔任：指定還是隨機",
@@ -1834,6 +1852,9 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
       "healthBar.barHeight",
       "healthBar.yOffset",
       "healthBar.showThreshold",
+      // GH#647 —— 跟血條同一組:owner 的同一句話管這兩件事
+      // (「普通殭屍不必畫血條跟陰影 節省效能」),放一起才找得到。
+      "normalMobShadow",
     ],
   },
   {
@@ -2043,6 +2064,8 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return formatNum(cfg.healthBar?.yOffset);
     case "healthBar.showThreshold":
       return formatNum(cfg.healthBar?.showThreshold);
+    case "normalMobShadow":
+      return cfg.normalMobShadow === undefined ? "" : cfg.normalMobShadow ? "1" : "0";
     case "mob.maxHp":
       return formatNum(cfg.mob.maxHp);
     case "mob.attackDamage":
@@ -2836,6 +2859,10 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
     ...(optBool("stopSpawnOnTeamWipe") === undefined
       ? {}
       : { stopSpawnOnTeamWipe: optBool("stopSpawnOnTeamWipe") }),
+    // GH#647 —— 同一條 optional 規矩:空白 = 沿用出貨預設(不畫),不是 false。
+    ...(optBool("normalMobShadow") === undefined
+      ? {}
+      : { normalMobShadow: optBool("normalMobShadow") }),
     ...(form.fields["roundHoldMobKinds"].trim()
       ? {
           roundHoldMobKinds: form.fields["roundHoldMobKinds"].trim() as NonNullable<

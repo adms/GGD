@@ -129,6 +129,7 @@ import type { FormAttachmentSpec } from "./render/views/ChampionView";
 import { bodyRelativeScale } from "./render/views/modelSizing";
 import { entityTintFor } from "./render/views/mobTint";
 import { mobRingDiameterFor } from "./render/views/mobGroundRing";
+import { mobShadowSuppressedFor } from "./render/views/mobShadow";
 import { modelFxDocFor } from "./render/modelFxRig";
 import { persistentVfxKeysFor } from "./render/views/persistentVfx";
 import {
@@ -815,6 +816,9 @@ export class GameApp {
       // MOBS ONLY: a champion keeps `ChampionView`'s own ring, which is the
       // team-identity affordance #231 flags as the highest-risk surface to touch.
       groundRingDiameterFor: (e) => mobRingDiameterFor(e, this.mobVisual),
+      // GH#647 「普通殭屍不必畫血條跟陰影 節省效能」—— same seam, same reason.
+      // 後台開關 `mobWaves.normalMobShadow` 騎在 `this.mobVisual` 上(出貨 false)。
+      mobShadowSuppressedFor: (e) => mobShadowSuppressedFor(e, this.mobVisual),
       // #249 GH#288 —— 變身球體掛件(悟空的超三頭)。同一條 entity → championId
       // 縫,經由 championBody 的 `formVisualFor`(它自己就是形態感知的)。
       // #249 GH#288 變身球體掛件 + ⭐ GH#392 **內容驅動的骨頭掛件**。

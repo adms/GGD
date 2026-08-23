@@ -324,6 +324,12 @@ export class ChampionView {
   private readonly ownedMaterials: StandardMaterial[] = [];
   private readonly teamRing: Mesh;
   private readonly blobShadow: Mesh;
+  /**
+   * GH#647 —— force-off latch for the blob shadow(普通殭屍不畫影子省效能)。
+   * true 時每一個會把影子打開的 writer 都變成 no-op;false 時影子交還給
+   * 既有 writer(死亡/隱形/飛行),下一幀 `update()` 自己會把它畫回來。
+   */
+  private shadowSuppressed = false;
   /** The generated voxel skin this figure was built with (task #231), if any. */
   private readonly skin: VoxelSkinRecipe | null = null;
   /** championId whose cached atlas this view holds a reference to (or null). */
@@ -798,6 +804,19 @@ export class ChampionView {
    * writers on one node is how a mud-tier swell silently reverts a ring change.
    * NOTHING here touches a collision radius — the client has none to touch.
    */
+  /**
+   * GH#647 —— 普通殭屍的腳下影子壓掉(owner:「普通殭屍不必畫血條跟陰影
+   * 節省效能」)。誰該壓由 `views/mobShadow.mobShadowSuppressedFor` 決定,
+   * registry 每次 sync 都寫(這裡 early-return,所以每幀成本是一個布林比較)。
+   * 解除壓制時不在這裡打開 —— `update()` 的既有 writer(死亡/隱形判斷)下一幀
+   * 會把它接回去,這樣「該不該亮」永遠只有一組 writer,不會打架。
+   */
+  setShadowSuppressed(off: boolean): void {
+    if (this.disposed || off === this.shadowSuppressed) return;
+    this.shadowSuppressed = off;
+    if (off) this.blobShadow.setEnabled(false);
+  }
+
   setGroundRingDiameter(diameter: number | null): void {
     if (this.disposed) return;
     const d = diameter === null || !Number.isFinite(diameter) || diameter <= 0
@@ -1466,7 +1485,7 @@ export class ChampionView {
     if (this.vanishedFlag) {
       this.setBodyVisible(true, 0);
       this.teamRing.setEnabled(true);
-      this.blobShadow.setEnabled(true);
+      this.blobShadow.setEnabled(!this.shadowSuppressed);
       if (this.growthTier >= 2) this.mudRing?.setEnabled(true);
     }
   }
@@ -1512,7 +1531,7 @@ export class ChampionView {
       // would silently undo it).
       const shown = !dead && this.stealthAlpha > 0;
       this.teamRing.setEnabled(shown);
-      this.blobShadow.setEnabled(shown);
+      this.blobShadow.setEnabled(shown && !this.shadowSuppressed);
       this.applyFlash(nowMs);
       return;
     }
@@ -1559,7 +1578,7 @@ export class ChampionView {
     this.bodyRoot.position.y = -this.deathT * 0.35;
     const ringShown = this.deathT < 0.5 && this.stealthAlpha > 0;
     this.teamRing.setEnabled(ringShown);
-    this.blobShadow.setEnabled(ringShown);
+    this.blobShadow.setEnabled(ringShown && !this.shadowSuppressed);
 
     const k = 1 - Math.pow(0.5, dtMs / 40); // limb smoothing
     this.armL.rotation.x += (armL - this.armL.rotation.x) * k;

@@ -198,6 +198,8 @@ const TYPED: Record<MobWavesFieldKey, string> = {
   "healthBar.barHeight": "9",
   "healthBar.yOffset": "1.25",
   "healthBar.showThreshold": "0.4",
+  // GH#647 —— 出貨是 "0"(不畫);打 "1" 才證明是操作者的值到了 payload,不是預設
+  "normalMobShadow": "1",
   "mob.maxHp": "111",
   "mob.attackDamage": "2.5",
   "mob.moveSpeed": "3.75",

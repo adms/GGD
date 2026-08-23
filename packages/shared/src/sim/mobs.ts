@@ -396,6 +396,17 @@ export interface MobRules {
   eliteHealthBar?: EliteHealthBarRules;
 
   /**
+   * GH#647 —— 普通(非精英)殭屍**腳下的陰影圓盤**要不要畫。owner 2026-08-24:
+   * 「殭屍波的普通殭屍不必畫血條跟陰影 節省效能」⇒ 出貨 **false**(不畫)。
+   * true = 舊行為(rollback 開關)。精英與王不吃這一格 —— 牠們的影子照畫。
+   *
+   * ⚠️ 純畫面 —— sim 一個 tick 都不讀它;它存在的唯一理由是
+   * {@link mobVisualJson} 要把它送到客戶端(和 `eliteHealthBar` 同一條線)。
+   * ABSENT ⇒ {@link DEFAULT_NORMAL_MOB_SHADOW}(=false,owner 的裁決是預設)。
+   */
+  normalMobShadow?: boolean;
+
+  /**
    * The mob's EFFECTIVE LEVEL this round (task #217). Derived ONCE at arm time
    * from the ROUND — `baseLevel + levelPerRound * (round - fromRound)` — because
    * the round number lives on the host, never in the sim. Carried here (not on
@@ -744,6 +755,15 @@ export const DEFAULT_ELITE_HEALTH_BAR: EliteHealthBarRules = {
   yOffset: 0.35,
   showThreshold: 1,
 };
+
+/**
+ * GH#647 —— 普通殭屍腳下影子的出貨值:**不畫**(owner 2026-08-24「普通殭屍
+ * 不必畫血條跟陰影 節省效能」)。true = 舊行為,留給後台一鍵 rollback。
+ * 三個住處:`content/config/arena-rules.json` 的 `mobWaves.normalMobShadow`、
+ * 這裡 + `schema/config` 的 `DEFAULT_MOB_WAVES_CONFIG`、
+ * `apps/admin/src/mobWaves.ts` 的 `SHIPPED_MOB_WAVES`。
+ */
+export const DEFAULT_NORMAL_MOB_SHADOW = false;
 
 /** 上下界 —— 和 `zMobWavesConfig.healthBar` 的 Zod 一字不差。 */
 const ELITE_BAR_LIMITS = {
@@ -1152,6 +1172,8 @@ export interface MobWavesConfigLike {
   roundHoldMobKinds?: RoundHoldMobKinds;
   /** GH#268 精英小怪頭上的小血條。ABSENT ⇒ {@link DEFAULT_ELITE_HEALTH_BAR}。 */
   healthBar?: Partial<EliteHealthBarRules>;
+  /** GH#647 普通殭屍腳下影子。ABSENT ⇒ {@link DEFAULT_NORMAL_MOB_SHADOW}(=false)。 */
+  normalMobShadow?: boolean;
   /**
    * per-round overrides (owner 2026-07-27); absent ⇒ authored caps everywhere.
    * `championId` (GH#191) is 「這一回合由誰擔任」 and, since GH#192, decides the
@@ -2009,6 +2031,9 @@ export function mobRulesFromConfig(
     // 填了 `showThreshold` 的 config 必須保住其他四格的出貨值,整塊退回會把
     // 操作者剛剛存的那一格靜默丟掉。
     eliteHealthBar: eliteHealthBarRules(cfg.healthBar),
+    // GH#647 —— 普通殭屍腳下影子。ABSENT ⇒ 出貨值 false(不畫),不是「舊行為」:
+    // 一份沒有這一格的舊 config 拿到的是 owner 現在要的行為。
+    normalMobShadow: cfg.normalMobShadow ?? DEFAULT_NORMAL_MOB_SHADOW,
     level,
     maxHp,
     hpRegenPerSec,
@@ -2239,6 +2264,16 @@ export interface MobVisualTable {
   mobHealthBarHeight: number;
   mobHealthBarYOffset: number;
   mobHealthBarShowThreshold: number;
+
+  /**
+   * GH#647 —— 普通(非精英)殭屍腳下的陰影圓盤。false(出貨)= 不畫。
+   *
+   * ⚠️ **key 的名字是客戶端訂的,不可以改。**
+   * `apps/client/src/render/views/mobShadow.mobShadowSuppressedFor` 讀的正是
+   * `normalMobShadow` 這個字面 —— 逐欄位降級,改名 = 客戶端靜默退回出貨值
+   * (不畫)而且全綠(失敗形態 ③)。
+   */
+  normalMobShadow: boolean;
 }
 
 /** The shipped fallback — 「no tint」 is NOT what a missing/blank field means. */
@@ -2254,6 +2289,7 @@ export const MOB_VISUAL_DEFAULT: MobVisualTable = {
   mobHealthBarHeight: DEFAULT_ELITE_HEALTH_BAR.barHeight,
   mobHealthBarYOffset: DEFAULT_ELITE_HEALTH_BAR.yOffset,
   mobHealthBarShowThreshold: DEFAULT_ELITE_HEALTH_BAR.showThreshold,
+  normalMobShadow: DEFAULT_NORMAL_MOB_SHADOW,
 };
 
 /** Serialize the armed rules' visual half for `MatchState.mobVisualJson`. */
@@ -2279,6 +2315,9 @@ export function mobVisualJson(rules: MobRules | null): string {
           mobHealthBarYOffset: (rules.eliteHealthBar ?? DEFAULT_ELITE_HEALTH_BAR).yOffset,
           mobHealthBarShowThreshold: (rules.eliteHealthBar ?? DEFAULT_ELITE_HEALTH_BAR)
             .showThreshold,
+          // GH#647 —— 普通殭屍腳下影子。少了這一行,後台把開關翻成 true 也到不了
+          // 客戶端(失敗形態 ②),而畫面上看起來跟出貨值一模一樣。
+          normalMobShadow: rules.normalMobShadow ?? DEFAULT_NORMAL_MOB_SHADOW,
         };
   return JSON.stringify(table);
 }
@@ -2343,6 +2382,9 @@ export function parseMobVisualJson(json: string | null | undefined): MobVisualTa
       1,
       DEFAULT_ELITE_HEALTH_BAR.showThreshold,
     ),
+    // GH#647 —— 同一條「每一格自己降級」:舊 shard 的表沒有這個 key,客戶端拿到
+    // 的是出貨值 false(不畫)—— 那正是 owner 要的方向,不是把功能靜默打開。
+    normalMobShadow: bool(o.normalMobShadow, DEFAULT_NORMAL_MOB_SHADOW),
   };
 }
 

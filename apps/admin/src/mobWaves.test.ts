@@ -102,6 +102,8 @@ const EVERY_FIELD: readonly MobWavesFieldKey[] = [
   "healthBar.barHeight",
   "healthBar.yOffset",
   "healthBar.showThreshold",
+  // GH#647 普通殭屍腳下影子(owner:「不必畫血條跟陰影 節省效能」)
+  "normalMobShadow",
   "mob.maxHp",
   "mob.attackDamage",
   "mob.moveSpeed",
@@ -430,6 +432,8 @@ describe("每一個欄位 are reachable and labelled", () => {
       "healthBar.barHeight": "9",
       "healthBar.yOffset": "1.25",
       "healthBar.showThreshold": "0.4",
+      // GH#647 —— 出貨 "0"(不畫);填 "1" 讓「漏送」藏不進共用預設
+      "normalMobShadow": "1",
       "mob.maxHp": "111",
       "mob.attackDamage": "2.5",
       "mob.moveSpeed": "4.5",

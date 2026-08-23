@@ -216,6 +216,22 @@ export const zMobWavesConfig = z
       .strict()
       .optional(),
     /**
+     * GH#647 —— 普通(非精英)殭屍**腳下的陰影圓盤**要不要畫。
+     *
+     * owner 2026-08-24:「殭屍波的普通殭屍不必畫血條跟陰影 節省效能」⇒
+     * 出貨 **false**(不畫)。R7 一區 30 隻 × 2 區 = 60 顆 alpha 圓盤,每顆是
+     * 一次 draw call + 一層地板 overdraw。true = 舊行為(一鍵 rollback)。
+     *
+     * 精英(特殊殭屍 + 殭屍王)**不吃這一格** —— 牠們體型 2×/5×、數量少,影子
+     * 正是體型讀感的來源。判準與小血條同一個:`ENTITY_FLAG.MOB_ELITE`。
+     * 走 `MatchState.mobVisualJson` 既有頻道(`sim/mobs.ts` MobVisualTable),
+     * 客戶端讀取器 `render/views/mobShadow.ts` 逐欄位降級。
+     *
+     * ABSENT ⇒ false(出貨值)—— 一份沒有這格的舊 arena 文件拿到的是 owner
+     * 現在要的行為,不是把 60 顆圓盤靜默畫回來。
+     */
+    normalMobShadow: z.boolean().optional(),
+    /**
      * LATE-MATCH SCHEDULE (owner, 2026-07-27) — a per-round OVERRIDE of the two
      * caps above, for the escalation into the finale:
      *
@@ -1074,6 +1090,10 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     yOffset: 0.35,
     showThreshold: 1,
   },
+  // GH#647 —— 普通殭屍腳下影子:不畫(owner 2026-08-24「節省效能」)。
+  // MUST stay equal to `SHIPPED_MOB_WAVES.normalMobShadow` 與
+  // `content/config/arena-rules.json`(三處漂移 = 後台顯示的和實戰跑的不同)。
+  normalMobShadow: false,
   // owner, 2026-07-27 (second pass — the ramp now starts at round 6 and climbs
   // by +5 alive a round instead of doubling). Round 10 is EMPTY: 乾淨總決賽.
   //

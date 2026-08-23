@@ -272,6 +272,19 @@ export interface ViewContentHooks {
    * reaches `MobRules.radius` / `boss.radius`.
    */
   groundRingDiameterFor?(e: EntityViewState): number | null | undefined;
+
+  /**
+   * GH#647 —— 這具身體的腳下影子要不要**壓掉**(不畫)。`true` = 不畫。
+   * absent/`false`/`undefined` = 照 `ChampionView` 自己的規則畫,which is
+   * every champion。
+   *
+   * A SEAM AND NOT A CALCULATION HERE, for the same client-08 reason
+   * `groundRingDiameterFor` is one: the answer needs `MatchState.mobVisualJson`
+   * (後台開關 `mobWaves.normalMobShadow` 騎在上面),which lives in the net
+   * layer render/** is walled off from. GameApp supplies
+   * `mobShadowSuppressedFor(e, this.mobVisual)` (render/views/mobShadow.ts).
+   */
+  mobShadowSuppressedFor?(e: EntityViewState): boolean | undefined;
 }
 
 /**
@@ -986,6 +999,10 @@ export class EntityViewRegistry {
       // early-returns when the number has not moved), so a king whose
       // `mobVisualJson` arrives a frame after its entity still gets its ring.
       view.setGroundRingDiameter(this.content.groundRingDiameterFor?.(e) ?? null);
+      // GH#647 —— 普通殭屍不畫腳下影子(省 60 顆 alpha 圓盤)。每次 sync 都寫
+      // (setter early-returns on no change),所以一隻普通殭屍升格/後台翻開關,
+      // 下一幀就生效,不用等重建 view。
+      view.setShadowSuppressed(this.content.mobShadowSuppressedFor?.(e) === true);
       // #268 「自己角色更顯眼」 — the halo + caret that say WHICH of the twelve
       // bodies is yours. Driven by a flag on the entity rather than resolved
       // here: `localEntityId` lives in the HUD store that render/** is walled
