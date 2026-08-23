@@ -75,8 +75,33 @@ export interface PerfBus {
   adaptiveActive: boolean;
 
   entityCount: number;
-  drawCount: number;
-  particleCount: number;
+
+  /* --- ⭐ 場上有多少東西：**誠實的名字**（2026-08-23） -----------------------
+   * 這兩格的舊名字（`drawCount` / `particleCount`）說的是它們**沒有在量**的
+   * 東西，而 `render/lifecycleLedger.sceneTruth()` 已經量到差額有多大：
+   *
+   * | 舊名字 | 它其實是 | 它**不是** |
+   * |---|---|---|
+   * | `drawCount` | `scene.meshes.length`（含 disabled、含池子裡待命的） | draw call 數 |
+   * | `particleCount` | `scene.particleSystems.length`（**系統**數） | 活著的粒子**顆**數 |
+   *
+   * ⚠️ 這不是潔癖：一個被還回 free-list 的 mesh 在 `drawCount` 眼裡跟一個正在
+   * 畫的 mesh **一模一樣**，所以它在「回收有沒有生效」這個問題上結構性失明 ——
+   * 而那正是 owner「到第七回合就很難動作」時大家會去看的第一格。
+   * 真正的兩個數字在 `__ggdDiag()` 第④節（`meshesActive` / `particlesLive`）。
+   *
+   * ⭐ 舊名字保留成**衍生的 getter**（⛔ 不是第二個欄位）—— 一份知識一個住處
+   * （第〇·四守則），所以它們不可能漂走；消費端（`ui/PerfOverlay`）換名字之後
+   * 直接刪掉那兩個 getter 即可。
+   */
+  /** `scene.meshes.length` —— ⛔ **不是** draw call 數。 */
+  sceneMeshes: number;
+  /** `scene.particleSystems.length` —— ⛔ **不是**活粒子顆數。 */
+  particleSystems: number;
+  /** @deprecated 名字說謊 —— 用 `sceneMeshes`（同一個數字，衍生的）。 */
+  readonly drawCount: number;
+  /** @deprecated 名字說謊 —— 用 `particleSystems`（同一個數字，衍生的）。 */
+  readonly particleCount: number;
 
   /**
    * ⭐ GH#570 —— **拆不乾淨的計數器**。⛔ 不是「效能」，是「有沒有東西沒收乾淨」。
@@ -153,6 +178,13 @@ export const perfBus: PerfBus = {
   shadows: true,
   adaptiveActive: false,
   entityCount: 0,
-  drawCount: 0,
-  particleCount: 0,
+  sceneMeshes: 0,
+  particleSystems: 0,
+  // ⭐ 衍生，⛔ 不是欄位 —— 見上面那段：一份知識一個住處，舊名字不可能漂走。
+  get drawCount(): number {
+    return this.sceneMeshes;
+  },
+  get particleCount(): number {
+    return this.particleSystems;
+  },
 };

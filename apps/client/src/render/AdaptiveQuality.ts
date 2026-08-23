@@ -9,6 +9,38 @@
  * window we step UP. A neutral hysteresis band + a minimum dwell time keep it
  * from thrashing on noisy input. The ladder degrades in a fixed order:
  * resolution → particles → shadows → draw distance.
+ *
+ * ---------------------------------------------------------------------------
+ * ⭐ 2026-08-23 —— 階梯吃的是**整幀**成本，⛔ 不再只是 rAF 的 `workMs`
+ * ---------------------------------------------------------------------------
+ * A5 lane 量到（逐字）：
+ *
+ * > 「AdaptiveQuality **只讀 `workMs`** ⇒ 瀏覽器合成／reflow／GC／shader 編譯／
+ * >  React reconcile **這一段再大它也不會降畫質** —— 「fps 好看卻很卡」
+ * >  有了可指名的解釋」
+ *
+ * `workMs` 是 rAF 回呼自己頭尾相減的數字，所以它**結構上**看不見迴圈外面的
+ * 一切。一台真的在掉幀的機器（合成吃掉 8 ms／幀）在它眼裡是
+ * 「4 ms 工作 ⇒ 250 fps 的餘裕」⇒ 階梯不但不降，還會**往上爬**。
+ *
+ * ⚠️ 但是**不可以**直接把 `wallMs` 塞進來取代 `workMs`：牆上間隔的下界是
+ * 「fps 上限」與「面板更新率」兩者的較大值，所以一台健康的機器**永遠**只會
+ * 量到 60 —— 而爬上去的門檻是 `target + upMargin = 72`。⇒ 階梯一旦降下去就
+ * **再也回不來**（`stepAdaptive` 的中性帶會把它永遠鎖在那一級）。
+ *
+ * ⭐ 所以規則是**一個判斷、兩種回報**（`adaptiveFrameCostMs`）：
+ *
+ * | 這一幀 | 回報什麼 | 為什麼 |
+ * |---|---|---|
+ * | **準時**（`wallMs ≤ 期限 × 容忍`） | `workMs` —— **餘裕** | 準時的時候「還有多少空間」才是唯一有資訊量的問題 |
+ * | **遲到** | `wallMs` —— **整幀** | 遲到的那一幀⛔ 沒有閒置過，⛔ 不可以扣掉一段沒發生的「上限閒置」 |
+ *
+ * ⇒ 健康的機器行為與 2026-08-23 之前**逐位元相同**（準時 ⇒ 只看 workMs），
+ * 而合成／GC／reflow 吃掉的那一段第一次進得了決策。
+ *
+ * ⚠️ ⛔ **`perfBus.workMs` / `capabilityFps` 不可以跟著換意思** —— 那兩格回答的是
+ * 「這台機器畫得動幾張」，而 `perf/diag.ts` 的 `unaccountedMs` 是用它們相減出來的。
+ * 所以誠實的 `workMs` 滾動視窗留在 `frameWorkWindow`，⛔ 不是跟階梯共用一個。
  */
 
 /** One rung of the degradation ladder (index 0 = best quality). */
@@ -244,4 +276,158 @@ export class AdaptiveManager {
     this.state = decision.state;
     return decision.change !== 0;
   }
+}
+
+/* ========================================================================== *
+ * ⭐ 整幀成本（見檔頭）—— 純函式 + 一格可以一鍵回頭的開關
+ * ========================================================================== */
+
+/**
+ * 階梯讀哪一個數字。
+ *
+ * | | |
+ * |---|---|
+ * | `"frame"` ⭐ **出貨預設** | 整幀（遲到的幀回報 `wallMs`）—— 合成／GC／reflow 進得了決策 |
+ * | `"work"` | ⛔ **止血閥**：逐位元回到 2026-08-23 之前（只讀 `workMs`） |
+ */
+export type AdaptiveCostMode = "frame" | "work";
+
+export const DEFAULT_ADAPTIVE_COST_MODE: AdaptiveCostMode = "frame";
+
+/**
+ * 「遲到」的容忍倍率。rAF 的間隔本來就會抖（`FRAME_CAP_SLACK_MS` 存在的同一個
+ * 理由），15% 在 60 fps 上是 2.5 ms —— 足以吸收抖動，⛔ 又遠小於「掉一張」的
+ * 16.7 ms，所以真的漏掉一張 vsync 一定會被判成遲到。
+ */
+export const FRAME_MISS_TOLERANCE = 1.15;
+
+/** 沒有 fps 上限時階梯瞄準的幀率（＝ `QualityController.targetFor` 的另一半）。 */
+export const ADAPTIVE_UNCAPPED_TARGET_FPS = 60;
+
+/** 階梯的目標 fps：上限本身，或無上限時 60。 */
+export function adaptiveTargetFps(fpsCap: number): number {
+  return fpsCap > 0 ? fpsCap : ADAPTIVE_UNCAPPED_TARGET_FPS;
+}
+
+export interface FrameCostInput {
+  /** rAF 回呼自己頭尾相減的成本（ms）。 */
+  workMs: number;
+  /** 這一幀與上一幀之間**真的**過了多久（`FrameDelta.take()`，夾在 1..100）。 */
+  wallMs: number;
+  /** 目前生效的 fps 上限；0 = 無上限。 */
+  fpsCap: number;
+  mode?: AdaptiveCostMode;
+}
+
+/**
+ * ⭐ **這一幀要餵給階梯的成本**（純函式，見檔頭那張表）。
+ *
+ * ⛔ 刻意**不**用 `wallMs − 上限閒置`：那個「閒置」是一個**模型**
+ * （`1000/cap − workMs`），而遲到的那一幀根本沒有閒置過 —— 減掉它會把
+ * 一幀 24.7 ms（真實 40 fps）算成 12 ms（83 fps），於是階梯反而往上爬。
+ */
+export function adaptiveFrameCostMs(i: FrameCostInput): number {
+  const workMs = Number.isFinite(i.workMs) && i.workMs > 0 ? i.workMs : 0;
+  if ((i.mode ?? DEFAULT_ADAPTIVE_COST_MODE) === "work") return workMs;
+  const wallMs = i.wallMs;
+  if (!Number.isFinite(wallMs) || wallMs <= 0) return workMs;
+  const deadlineMs = 1000 / adaptiveTargetFps(i.fpsCap);
+  // 準時 ⇒ 回報餘裕；遲到 ⇒ 回報整幀（⛔ 不可以比 workMs 還小）。
+  return wallMs > deadlineMs * FRAME_MISS_TOLERANCE ? Math.max(wallMs, workMs) : workMs;
+}
+
+/**
+ * 一個只會算平均的滾動視窗。⭐ 它存在的**唯一**理由是把「階梯吃的東西」與
+ * 「儀表上那個能力值」分開 —— 兩者以前共用 `AdaptiveManager.stats()`，
+ * 而階梯改吃整幀成本之後，共用會讓 `perfBus.workMs` 悄悄變成別的意思
+ * （⇒ `perf/diag.ts` 的 `unaccountedMs` 會塌成 0，整份 LAG 診斷跟著失效）。
+ */
+export class RollingMs {
+  private readonly times: number[] = [];
+
+  constructor(private readonly window = WINDOW) {}
+
+  push(ms: number): void {
+    if (!Number.isFinite(ms) || ms < 0) return;
+    this.times.push(ms);
+    if (this.times.length > this.window) this.times.shift();
+  }
+
+  stats(): FrameStats {
+    return frameStats(this.times);
+  }
+
+  reset(): void {
+    this.times.length = 0;
+  }
+}
+
+/** ⭐ 誠實的 `workMs` 視窗 —— `perfBus.workMs` / `capabilityFps` 的來源。 */
+export const frameWorkWindow = new RollingMs();
+
+/* ------------------------------- 開關本體 ------------------------------- */
+
+const COST_MODE_KEY = "ggd.adaptiveCostMode";
+
+function readStoredCostMode(): AdaptiveCostMode | null {
+  try {
+    const v = globalThis.localStorage?.getItem(COST_MODE_KEY);
+    return v === "work" || v === "frame" ? v : null;
+  } catch {
+    return null; // Safari 私密模式 / 沙箱 iframe：讀不到就是預設，⛔ 不擲例外
+  }
+}
+
+let costMode: AdaptiveCostMode = readStoredCostMode() ?? DEFAULT_ADAPTIVE_COST_MODE;
+
+export function adaptiveCostMode(): AdaptiveCostMode {
+  return costMode;
+}
+
+/**
+ * ⭐ **一鍵 rollback**（owner 2026-08-23：「留後台開關可以簡易 rollback」）。
+ * 主控台輸入 `__ggdAdaptiveCost("work")` 就回到只讀 `workMs` 的舊行為，
+ * 而且**跨重整**（localStorage）—— ⛔ 不需要重新部署。
+ * 掛在 `globalThis` 的理由與 `__ggdDiag()` / `__ggdLifecycle()` 同一個：
+ * 回報卡頓的當下手上有的是 F12。
+ */
+export function setAdaptiveCostMode(mode: AdaptiveCostMode): AdaptiveCostMode {
+  costMode = mode === "work" ? "work" : "frame";
+  try {
+    globalThis.localStorage?.setItem(COST_MODE_KEY, costMode);
+  } catch {
+    /* 存不進去就只影響這一場，⛔ 不影響這一次切換本身 */
+  }
+  return costMode;
+}
+
+(globalThis as { __ggdAdaptiveCost?: (m?: AdaptiveCostMode) => string }).__ggdAdaptiveCost = (
+  m?: AdaptiveCostMode,
+) => {
+  if (m) setAdaptiveCostMode(m);
+  return `[ggd] AdaptiveQuality 讀「${adaptiveCostMode() === "work" ? "只有 rAF workMs（舊行為）" : "整幀 wallMs（預設）"}」 —— 切換：__ggdAdaptiveCost("work") / ("frame")`;
+};
+
+export interface AdaptiveFeed {
+  /** 餵給 `AdaptiveManager.sample()` 的成本。 */
+  costMs: number;
+  /** ⭐ 誠實的 `workMs` 視窗統計 —— `perfBus.workMs` / `capabilityFps` 用這個。 */
+  work: FrameStats;
+}
+
+/**
+ * 出貨迴圈的**單一入口**（`GameApp.samplePerf`）：推一筆 workMs 進誠實視窗，
+ * 並算出這一幀要餵給階梯的成本。⭐ 兩件事綁在一起，所以⛔ 不可能只做一半。
+ */
+export function feedAdaptiveFrame(
+  workMs: number,
+  wallMs: number,
+  fpsCap: number,
+  mode: AdaptiveCostMode = adaptiveCostMode(),
+): AdaptiveFeed {
+  frameWorkWindow.push(workMs);
+  return {
+    costMs: adaptiveFrameCostMs({ workMs, wallMs, fpsCap, mode }),
+    work: frameWorkWindow.stats(),
+  };
 }
