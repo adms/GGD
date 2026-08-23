@@ -18,6 +18,7 @@ import {
   championPassive,
 } from "@ggd/shared/sim/content/registry";
 import { Stat } from "@ggd/shared/sim/stats/statTypes";
+import { predictedMoveSpeed } from "./predict/predictedStats";
 import { ModOp } from "@ggd/shared/sim/stats/modifiers";
 import {
   DEFAULT_COMBAT_ENV,
@@ -3875,21 +3876,14 @@ export class GameApp {
   }
 
   /** base + flat item bonuses (authoritative reconcile absorbs the rest). */
+  /**
+   * ⭐ 影子的移速。⛔ **本體抽到 `predict/predictedStats.ts`** —— 唯一的理由是
+   * 「守衛要跑得到出貨的那一支」：`GameApp` 沒辦法 headless 建，於是任何
+   * 守衛都只能自己重寫一份（失敗形態⑤）。⚠️ 2026-08-23 我就這樣寫過一條
+   * **假的**守衛：把出貨路徑改回錯的版本，它照樣綠。
+   */
   private computeMoveSpeed(championId: string, items: string[]): number {
-    const def = Champions.tryGet(championId as ChampionId);
-    let ms = def?.baseStats[Stat.MoveSpeed] ?? 6.6;
-    for (const itemId of items) {
-      if (!itemId) continue;
-      const item = Items.tryGet(itemId as ItemId);
-      for (const mod of item?.modifiers ?? []) {
-        if (mod.stat === Stat.MoveSpeed && mod.op === ModOp.Flat) ms += mod.value;
-      }
-    }
-    // SERVER PARITY: the sim multiplies Stat.MoveSpeed by the combat-env
-    // factor in recomputeStats (before the [2,14] clamp) — mirror both here
-    // or prediction diverges the moment an admin sets moveSpeed != 1.
-    ms *= this.combatEnv.moveSpeed;
-    return Math.max(2, Math.min(14, ms));
+    return predictedMoveSpeed(championId, items, this.combatEnv);
   }
 
   /**

@@ -27,6 +27,7 @@
  * ⇒ **紅**，逐名指出 7 位體型 ≠ 1 的英雄（`godie-o030` 6.396 vs 4.920）。
  */
 import { beforeAll, describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ContentLoader } from "@ggd/shared/content/loader";
@@ -170,5 +171,36 @@ describe("預測屬性與伺服器的一致性（GH#616）", () => {
       .map((c) => Champions.tryGet(c)?.bodyScale)
       .filter((b): b is number => typeof b === "number" && b !== 1);
     expect(scaled.length, "沒有任何英雄的 bodyScale ≠ 1 ⇒ 漏掉 rangeScale 的實作也會綠").toBeGreaterThan(0);
+  });
+});
+
+/**
+ * 🚨 **接線那一行** —— 2026-08-23 這一條是被踩出來的。
+ *
+ * 抽出 `predictedMoveSpeed()` 之後，上面那幾條全綠 —— ⛔ **而出貨的 `GameApp`
+ * 還在用它自己那份舊公式**。守衛驗的是那支被抽出來的函式，⛔ 不是玩家走的路
+ *（失敗形態⑤：被測的不是出貨的那個），於是「移動不匹配」在 git 裡**根本沒被修**。
+ *
+ * ⚠️ `GameApp` 沒辦法 headless 建（Babylon + DOM + 房間連線），所以這一條退而
+ * 讀原始碼 —— ⭐ 但它讀的是**唯一那條會出錯的線**：`computeMoveSpeed` 的函式體
+ * 裡有沒有自己算。做法照抄同一個資料夾的 `gameAppFacingWiring.test.ts`。
+ */
+describe("GH#616 接線", () => {
+  const SRC = readFileSync(new URL("../GameApp.ts", import.meta.url), "utf8");
+
+  it("★ GameApp.computeMoveSpeed 走的是**共用的**那一支，⛔ 不是自己再算一份", () => {
+    const at = SRC.indexOf("private computeMoveSpeed(");
+    expect(at, "找不到 computeMoveSpeed —— 改名了就把這條一起更新").toBeGreaterThan(-1);
+    const body = SRC.slice(at, SRC.indexOf("\n  }", at));
+    expect(
+      body.includes("predictedMoveSpeed("),
+      "computeMoveSpeed 沒有呼叫共用的 predictedMoveSpeed —— " +
+        "那 parity 守衛驗的就不是玩家走的那條路（2026-08-23 真的發生過：守衛全綠而出貨路徑沒修）。",
+    ).toBe(true);
+    // 而且⛔ 不可以又在裡面自己乘一次倍率（那就是兩個住處）。
+    expect(
+      /combatEnv\.moveSpeed/.test(body),
+      "computeMoveSpeed 自己又乘了一次 moveSpeed 倍率 —— 那是第二個住處。",
+    ).toBe(false);
   });
 });
