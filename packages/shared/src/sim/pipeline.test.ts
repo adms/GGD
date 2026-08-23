@@ -409,8 +409,17 @@ describe("abilities", () => {
     // mr became 32 + 0.6×INT 14 = 40.4 and this expectation was off by 4.45
     // damage while still LOOKING derived. Any future retune of `intToMagicResist`
     // or of thorne's card now flows through instead of going stale.
+    // ⚠️ 2026-08-23：**第三層**又冒出來 —— 基礎加成的 `mr` 贈禮（owner
+    // 「初始魔抗+20%」，`content/config/base-bonus.json`）。它坐在 `finalizeStat`
+    // 的倍率**之後**，所以它是一個獨立的加項。⭐ 同樣是**讀**不是寫：抄成 25 的
+    // 那一份下一次調整就會用「技能投射物的傷害壞了」這個錯誤的訊息紅。
     const thorneMr = world.stats.get(thorne)!.final[Stat.MagicResist];
-    expect(thorneMr).toBeCloseTo(32 + ATTRIBUTE_ENV_DEFAULTS.intToMagicResist * 14, 6);
+    expect(thorneMr).toBeCloseTo(
+      32 +
+        ATTRIBUTE_ENV_DEFAULTS.intToMagicResist * 14 +
+        baseBonusFor(world.baseBonus, Stat.MagicResist),
+      6,
+    );
     // ⚠️ 2026-08-13：AP 那一項以前寫成字面值 `26`（＝ sela INT 26 × 當時的
     // `intToAbilityPower` 1）。owner 那天把係數調成 4（「技能傷害跟普通攻擊傷害
     // 落差實在太大了」），於是這一條也用**錯誤的訊息**紅了：它說「技能投射物的

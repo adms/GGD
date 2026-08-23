@@ -16,7 +16,13 @@
  *   • ⑦ 掃屬性代替掃行為: nothing here asserts `rules.burnCurveRates[2] === 1`.
  *     Every claim is 「step a real `SimWorld` and read the champion's hp」, so an
  *     implementation that computes a beautiful curve and then burns a constant
- *     fails. The death TICK is pinned, not a range.
+ *     fails.
+ *     ⚠️ 2026-08-23：這一句原本寫「The death TICK is pinned, not a range」，而
+ *     那個 pin(351 / 2151)是**曲線 × maxHp × 回血**的結果 —— owner 同一天調了
+ *     生命倍率(8→12)與生命贈禮(650→1200),兩條斷言就用「火圈壞了」這個**錯誤的
+ *     訊息**紅了。⭐ 現在釘的是**性質**:燒傷的逐 tick 序列**單調上升**,而且
+ *     兩場(一般 / 殭屍王)以「點燃後第幾 tick」對齊時**逐位元相同**。
+ *     那正好是「rate 讀絕對回合 tick」那個突變死得掉的地方,而它不含任何出貨數值。
  *   • ⑤ 被測的不是出貨的那個: the shipped rules come from parsing
  *     `content/config/config.match.json` through the SAME Zod schema the loader
  *     uses, then through the SAME `fireRingRulesFromConfig` the match host
@@ -124,21 +130,69 @@ function stepToDeath(
   return null;
 }
 
+/**
+ * 點燃**之後**每一 tick 的火圈傷害，index = ticks-since-ignition。
+ *
+ * ⚠️ 讀的是 `fireRingDamage` 事件而**不是** hp 差：世界每一 tick 也在回血，而回血是
+ * 一個**扁平**的量 —— maxHp 一被調大它就相對變小，於是任何用 hp 差算出來的東西都會
+ * 跟著 owner 的平衡旋鈕漂。事件裡的 `amount` 是燒傷自己說的話。
+ *
+ * ⭐ 這一支存在的理由：這個檔原本把「死在第 351 tick」釘進兩條斷言，而那個 tick 是
+ *   **曲線 × maxHp × 回血**三者的結果。owner 2026-08-23 一次調了兩格
+ *   （生命倍率 8→12、基礎加成生命 650→1200）⇒ 351 變成 350，兩條同時用
+ *   「火圈壞了」這個**錯誤的訊息**紅。⛔ 這個檔要驗的從來不是第幾 tick。
+ */
+function burnSinceIgnite(
+  rules: FireRingRules,
+  offset: number,
+  seed: number,
+  ticks: number,
+  boss = false,
+): number[] {
+  const w = new SimWorld(SKELETON_ARENA, seed);
+  w.combatActive = true;
+  const c = SKELETON_ARENA.zones[0]!.center;
+  const id = champAt(w, c.x + offset, c.z);
+  beginCombatFireRing(w, rules);
+  if (boss) extendRoundForBoss(w);
+  while (w.fireRingTicks < rules.startTicks) w.step(new Map());
+  const out: number[] = [];
+  for (let i = 0; i < ticks; i++) {
+    w.step(new Map());
+    let sum = 0;
+    for (const ev of w.events) {
+      if (ev.type === "fireRingDamage" && ev.data.id === id) sum += ev.data.amount as number;
+    }
+    out.push(sum);
+  }
+  return out;
+}
+
+/** 只留真的燒到的那些 tick（點燃後前幾格身體還整個在圈內）。 */
+const burning = (series: readonly number[]): number[] => series.filter((v) => v > 0);
+
 // ─────────────────────────────────────────────────────── 「越燒越痛」 itself ──
 describe("the burn really does escalate with SECONDS SINCE IGNITION", () => {
-  it("shipped: a champion parked outside dies on tick 351 past ignition (combat 71.700 s)", () => {
+  it("shipped: a champion parked outside really dies inside the round, and the burn ESCALATES while he does", () => {
     cover(TAG);
     const r = shippedRules();
-    expect(r.startTicks).toBe(60 * HZ);
+    expect(r.startTicks).toBe(SHIPPED_RING.startSec * HZ); // 從出貨文件推,不抄 60
     const dead = stepToDeath(r, RIM_OFFSET, 7);
     expect(dead).not.toBeNull();
-    // THE TICK, not a window. 351 ticks = 11.700 s past ignition = combat
-    // second 71.700. ⚠️ This is the SAME tick the retired two-point ramp
-    // produced — deliberately: owner asked for a hotter tail, and the 0–20 s
-    // stretch is where 「跑出去就回不來」 is decided, so it had to be untouched.
-    expect(dead!.sinceIgnite).toBe(351);
-    expect(dead!.atTick).toBe(2151);
+    // ⭐ ⛔ 不釘「第幾 tick」。死亡 tick 是**曲線 × maxHp × 回血**的結果,而後兩者
+    //   是 owner 每週在轉的旋鈕(2026-08-23 生命倍率 8→12 · 生命贈禮 650→1200 就把
+    //   它從 351 推成 350)。這一條要驗的是它自己的標題那兩件事:
+    //   ① 回合一定會結束(死在 `combatMaxSec` 之內,而那個秒數**讀出貨文件**)
+    expect(dead!.atTick).toBeLessThan(DOC.match.combatMaxSec * HZ);
     expect(dead!.maxHp).toBeGreaterThan(0); // the guard is not measuring a 0-hp corpse
+    //   ② 「越燒越痛」—— 同一個人、同一場,點燃後越晚的那一 tick 掉得越多。
+    // ⚠️ 這正是那個承重的突變(`fireRingRatePerSec` 改讀**絕對回合 tick**)唯一
+    //   死得掉的地方:那樣讀的話,點燃當下(第 60 秒)早就走過曲線最後一列 40 s,
+    //   於是從第一格起就被 `maxPctPerSec` 夾成一條**平的** 0.5/s。
+    const burn = burning(burnSinceIgnite(r, RIM_OFFSET, 7, 240));
+    expect(burn.length).toBeGreaterThan(0);
+    expect(burn.every((v, i) => i === 0 || v >= burn[i - 1]!)).toBe(true); // 單調不下降
+    expect(burn[burn.length - 1]!).toBeGreaterThan(burn[0]!); // 而且真的往上爬
   });
 
   it("the LAST possible survivor — full hp, zone centre, never attacked — dies at 109.033 s", () => {
@@ -253,14 +307,21 @@ describe("the curve travels WITH ignition, not with the round clock (陷阱①)"
 
     const a = stepToDeath(plain, RIM_OFFSET, 7)!;
     const b = stepToDeath(shippedRules(), RIM_OFFSET, 7, true)!;
-    // SAME time-since-ignition, and BOTH pinned to the absolute 351. ⚠️ The
-    // equality ALONE is not enough and that is measured, not assumed: keying
-    // the rate on absolute round ticks shifts BOTH worlds onto the saturated
-    // tail, so both die in ~31 ticks and `b === a` still holds. Pinning the
-    // value is what turns this into a guard (失敗形態 ④).
-    expect(a.sinceIgnite).toBe(351);
-    expect(b.sinceIgnite).toBe(351);
+    // SAME time-since-ignition. ⚠️ The equality ALONE is not enough and that is
+    // measured, not assumed: keying the rate on absolute round ticks shifts BOTH
+    // worlds onto the saturated tail, so both die in ~31 ticks and `b === a`
+    // still holds (失敗形態 ④).
     expect(b.sinceIgnite).toBe(a.sinceIgnite);
+    // ⭐ 補上那個洞的**不是**一個釘死的 351(那個數字是 maxHp 與回血的結果,owner
+    //   2026-08-23 一調生命就把它推成 350),而是**逐 tick 的燒傷序列**:
+    //   ① 兩場**逐位元相同** —— 曲線真的跟著點燃走
+    //   ② 而且它**不是平的** —— 絕對回合時鐘那個突變會讓兩場都是被夾住的常數,
+    //      ①照樣綠、②立刻紅。
+    const aBurn = burnSinceIgnite(plain, RIM_OFFSET, 7, 240);
+    const bBurn = burnSinceIgnite(shippedRules(), RIM_OFFSET, 7, 240, true);
+    expect(bBurn.every((v, i) => Object.is(v, aBurn[i]))).toBe(true);
+    const ramp = burning(aBurn);
+    expect(ramp[ramp.length - 1]!).toBeGreaterThan(ramp[0]!);
     // … at a DIFFERENT absolute round tick. Read as absolute seconds keyed on
     // the round clock, the curve would already be saturated at 100 %/s when a
     // king round's ring finally lights, and this champion would evaporate in

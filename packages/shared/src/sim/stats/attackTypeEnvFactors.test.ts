@@ -28,8 +28,9 @@ import { SKELETON_ARENA } from "../world/ArenaDef";
 import { registerSkeletonContent, THORNE } from "../content/skeleton";
 import { registerChampion } from "../content/registry";
 import { spawnChampion } from "../spawnChampion";
-import { asSeatId, asTeamId, type ChampionId } from "../../ids";
+import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../../ids";
 import { Stat } from "./statTypes";
+import { baseBonusFor } from "../baseBonus";
 import { normalizeCombatEnv, defaultForKey, type CombatEnvKey } from "../combatEnv";
 
 const Z0 = SKELETON_ARENA.zones[0]!;
@@ -43,8 +44,8 @@ beforeAll(() => {
   registerChampion({ ...THORNE, id: RANGED, attackType: "ranged" });
 });
 
-/** 生一個英雄，回它算完的那條屬性。 */
-function statOf(championId: ChampionId, stat: Stat, env: Partial<Record<CombatEnvKey, number>>): number {
+/** 生一個英雄，回這個世界與它。 */
+function spawn(championId: ChampionId, env: Partial<Record<CombatEnvKey, number>>): { world: SimWorld; id: EntityId } {
   const world = new SimWorld(SKELETON_ARENA, 7);
   world.combatEnv = normalizeCombatEnv(env);
   const id = spawnChampion(world, {
@@ -54,7 +55,30 @@ function statOf(championId: ChampionId, stat: Stat, env: Partial<Record<CombatEn
     pos: { x: Z0.center.x, z: Z0.center.z },
     zone: 0,
   });
+  return { world, id };
+}
+
+/** 生一個英雄，回它算完的那條屬性。 */
+function statOf(championId: ChampionId, stat: Stat, env: Partial<Record<CombatEnvKey, number>>): number {
+  const { world, id } = spawn(championId, env);
   return world.stats.get(id)!.final[stat] as number;
+}
+
+/**
+ * 同上，但**扣掉基礎加成的贈禮**，也就是這條屬性在**倍率空間**裡的值。
+ *
+ * ⚠️ 倍率的比值只在倍率空間裡成立：`finalizeStat` 是
+ * `(倍率鏈) + 贈禮`，贈禮加在**外面**，所以把它留在分子分母裡的話
+ * `both / plain` 會隨著**另一頁**的一格漂。owner 2026-08-23 把
+ * `content/config/base-bonus.json` 的 `mr` 從 0 開到 25（「初始魔抗+20%」），
+ * 當天這兩條就用「魔抗倍率沒疊上去」這個**錯誤的訊息**紅了 —— 而倍率一直是對的。
+ *
+ * ⛔ 贈禮**讀世界自己那張表**，不抄字面值也不抄第二份常數。
+ * ⚠️ 移速的贈禮是 0，所以移速那幾條用 `statOf` 或這一支逐位元相同。
+ */
+function multSpaceOf(championId: ChampionId, stat: Stat, env: Partial<Record<CombatEnvKey, number>>): number {
+  const { world, id } = spawn(championId, env);
+  return (world.stats.get(id)!.final[stat] as number) - baseBonusFor(world.baseBonus, stat);
 }
 
 describe("近戰/遠程移速倍率 + 魔抗專屬倍率 (owner 2026-08-10)", () => {
@@ -83,8 +107,8 @@ describe("近戰/遠程移速倍率 + 魔抗專屬倍率 (owner 2026-08-10)", ()
 
   it("magicResistMult 疊在 defense 之上（相乘，不是取代）", () => {
     cover("combat-env-magic-resist-mult");
-    const plain = statOf(MELEE, Stat.MagicResist, {});
-    const both = statOf(MELEE, Stat.MagicResist, { defense: 2, magicResistMult: 3 });
+    const plain = multSpaceOf(MELEE, Stat.MagicResist, {});
+    const both = multSpaceOf(MELEE, Stat.MagicResist, { defense: 2, magicResistMult: 3 });
     // 取代的話會是 3×；只吃 defense 的話會是 2×。乘積才是 6×。
     expect(both / plain).toBeCloseTo(6, 10);
   });
@@ -99,6 +123,8 @@ describe("近戰/遠程移速倍率 + 魔抗專屬倍率 (owner 2026-08-10)", ()
     // 兩個斷言都會紅。
     const old = { defense: 2 };
     expect(statOf(MELEE, Stat.MoveSpeed, old)).toBe(statOf(RANGED, Stat.MoveSpeed, old));
-    expect(statOf(MELEE, Stat.MagicResist, old) / statOf(MELEE, Stat.MagicResist, {})).toBeCloseTo(2, 10);
+    expect(
+      multSpaceOf(MELEE, Stat.MagicResist, old) / multSpaceOf(MELEE, Stat.MagicResist, {}),
+    ).toBeCloseTo(2, 10);
   });
 });

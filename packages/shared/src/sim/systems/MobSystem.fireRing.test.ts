@@ -176,9 +176,11 @@ const BOSS_RULES: MobRules = {
 function world(): SimWorld {
   const w = new SimWorld(OPEN_ARENA, 99);
   w.combatActive = true;
-  // The SHIPPED maxHealth multiplier (#153) — see FireRingSystem.test.ts for
-  // why: at the neutral 1.0 table a champion's flat healthRegen visibly bends
-  // the closed form the burn arithmetic is compared against.
+  // ⭐ 一個**刻意挑的夾具值**,⛔ 不是出貨值。理由只有一個:血條要夠厚,厚到英雄
+  // 那份**扁平**的每秒回血彎不動下面那條燒傷算式(中性 1.0 的表就彎得動)。
+  // ⚠️ 這一行原本註解寫「The SHIPPED maxHealth multiplier (#153)」,而出貨值
+  // 2026-08-23 已經是 12(owner「生命倍率x12」)—— 抄出貨值進夾具就是第四個住處,
+  // 而這個測試根本不在乎它是多少,只在乎它夠大。
   w.combatEnv = normalizeCombatEnv({ maxHealth: 8.0 });
   return w;
 }
@@ -300,10 +302,11 @@ describe("百分比真實傷害:王和英雄走同一個時鐘 (firering-mob-per
 
     const heroMax = w.health.get(hero)!.maxHp;
     const kingMax = w.health.get(king)!.maxHp;
-    // The premise of the whole guard: the king really is ~two orders of
-    // magnitude fatter. If content ever makes these comparable the test below
-    // stops meaning anything, so it is asserted rather than assumed.
-    expect(kingMax / heroMax).toBeGreaterThan(50);
+    // The premise of the whole guard: the king really is much fatter. If content
+    // ever makes these comparable the test below stops meaning anything, so it is
+    // asserted rather than assumed — but only the DIRECTION is asserted here；
+    // 「夠不夠遠」那一半在下面**從容差推導**。
+    expect(kingMax).toBeGreaterThan(heroMax);
 
     let heroDeath = -1;
     let kingDeath = -1;
@@ -317,6 +320,13 @@ describe("百分比真實傷害:王和英雄走同一個時鐘 (firering-mob-per
     }
     expect(heroDeath).toBeGreaterThan(0);
     expect(kingDeath).toBeGreaterThan(0);
+    // ⭐ 這條守衛非空的**前提**,⛔ 不是一個手挑的 50 倍。扁平傷害的實作會讓王
+    //   花上 `heroDeath × kingMax/heroMax` tick 才死;那個「本來會差多少」必須
+    //   遠遠超過下面那半秒的容差,否則兩具身體差得不夠遠、這條測試對扁平實作也綠。
+    //   ⚠️ 原本寫的是 `kingMax / heroMax > 50`,而分母是**英雄的血量** ——
+    //   owner 2026-08-23 把生命贈禮 650→1200 就把它推到 46.65,於是它用
+    //   「王沒有比較胖」這個錯誤的訊息紅了,而王和贈禮都好好的。
+    expect(heroDeath * (kingMax / heroMax - 1)).toBeGreaterThan(HZ / 2);
     // ∫(0.04 + 0.008t)dt = 1 at t ≈ 11.58 s for BOTH, because both burns are a
     // fraction of the victim's OWN maxHealth. Half a second of slack absorbs the
     // champion's (tiny) flat regen; a flat-damage implementation would miss by

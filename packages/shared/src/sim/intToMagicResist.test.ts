@@ -60,6 +60,7 @@ import {
   normalizeCombatEnv,
 } from "./combatEnv";
 import { ATTR_STAT_SOURCE } from "./stats/attributes";
+import { baseBonusFor } from "./baseBonus";
 import { recomputeStats } from "./stats/statPipeline";
 import { Stat } from "./stats/statTypes";
 import type { DamageType } from "./effects/effect";
@@ -141,10 +142,16 @@ describe("GH#221 智慧 → 魔抗 (the ninth 三圍 coefficient)", () => {
     const w = newWorld({ intToMagicResist: 0.6 });
     const id = champ(w);
 
-    // thorne ships mr 32 and INT 14, so his level-1 魔抗 is already
-    // 32 + 0.6×14 = 40.4 — the innate half of the same axis.
+    // thorne ships mr 32 and INT 14, so the 倍率空間 half of his level-1 魔抗 is
+    // 32 + 0.6×14 = 40.4 — the innate half of the same axis. On top of it sits
+    // 基礎加成 (`content/config/base-bonus.json` 的 `mr`), which `finalizeStat`
+    // adds AFTER every multiplier.
+    // ⭐ 贈禮**讀出貨表**，⛔ 不抄字面值：owner 2026-08-23 才剛把 `mr` 從 0 開到
+    //   25（「初始魔抗+20%」），而抄進來的那一份會用「智慧→魔抗壞了」這個
+    //   **錯誤的訊息**紅 —— 真相只是另一頁的一格被調過。
+    const gift = baseBonusFor(w.baseBonus, Stat.MagicResist);
     const innate = mrOf(w, id);
-    expect(innate).toBeCloseTo(32 + 0.6 * 14, 9);
+    expect(innate).toBeCloseTo(32 + 0.6 * 14 + gift, 9);
 
     buyInt(w, id, 100);
     // The DELTA is the assertion, so a future 基礎加成 grant or a `defense`
@@ -192,10 +199,14 @@ describe("GH#221 智慧 → 魔抗 (the ninth 三圍 coefficient)", () => {
     // ② …by EXACTLY the shipped curve, so「有差」不能是任何隨機差異
     expect(lostPlain).toBeCloseTo(afterResist(AMOUNT, mrPlain), 6);
     expect(lostSmart).toBeCloseTo(afterResist(AMOUNT, mrSmart), 6);
-    // ③ and the gap is worth caring about: 60 魔抗 on top of thorne's 40.4 is a
-    //    28.9% cut. Pinned as a floor so a coefficient collapse reads as a
-    //    behaviour change, not a rounding wobble.
-    expect((lostPlain - lostSmart) / lostPlain).toBeGreaterThan(0.25);
+    // ③ and the gap is EXACTLY 「60 魔抗 買到多少減傷」—— `60/(100+mrSmart)`,
+    //    the same curve read from the coefficient's side instead of from two
+    //    absolute damage numbers. A coefficient collapse makes it 0 and this
+    //    goes red.
+    //    ⭐ 這裡原本是一個手挑的下界 `> 0.25`，而那個比例**會隨別頁的旋鈕縮小**：
+    //      owner 2026-08-23 把基礎加成的 `mr` 從 0 開到 25，它就從 28.9% 掉到
+    //      26.6% —— 再調一次就會用「係數塌了」這個錯誤的訊息紅。⛔ 不留字面值。
+    expect((lostPlain - lostSmart) / lostPlain).toBeCloseTo(60 / (100 + mrSmart), 9);
   });
 
   it("REVERSE GUARD — 物理傷害不吃魔抗", () => {
