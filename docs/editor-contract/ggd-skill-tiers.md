@@ -33,11 +33,11 @@ owner 2026-08-19（GH#438，這一份要涵蓋的**全部**軸）：
 | 軸 | JSON 欄位 | 出貨 config | 幾支技能填了 | 開關 |
 |---|---|---|---:|---|
 | 施法距離 | `rangeTier` | `range-tiers.json` | 192 (45.6%) | `enabled: true` |
-| 施法範圍 | `radiusTier` | `aoe-tiers.json` | 91 (21.6%) | `enabled: true` |
+| 施法範圍 | `radiusTier` | `aoe-tiers.json` | 93 (22.1%) | `enabled: true` |
 | 位移 | `distanceTier` | `displacement-tiers.json` | 2 (0.5%) | `enabled: true` |
 | **傷害** | `damageTier` | `damage-tiers.json` | 204 (48.5%) | `enabled: true` |
 | **耗魔** | `manaCostTier` | `mana-tiers.json` | 203 (48.2%) | `enabled: true` |
-| **冷卻** | `cooldownTier` (+`cooldownShape`) | `cooldown-tiers.json` | 353 (83.8%) | `enabled: true` |
+| **冷卻** | `cooldownTier` (+`cooldownShape`) | `cooldown-tiers.json` | 348 (82.7%) | `enabled: true` |
 
 <sub>分母 = `content/abilities/` 的 421 份技能文件（含被動與 EX）。⚠️ 採用率**不是** 100% 不代表壞掉：手寫數字一直是合法的寫法，級距是**預設走的那條路**。</sub>
 

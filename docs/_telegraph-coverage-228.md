@@ -8,20 +8,20 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | verdict | cells | meaning |
 | --- | ---: | --- |
-| ✅ OK | 219 | shape derived from the ability's own authored data |
+| ✅ OK | 221 | shape derived from the ability's own authored data |
 | 🟡 AMBIGUOUS | 16 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
 | ❌ MISSING | 0 | no derivable shape — **fails the test** |
-| 🟣 PASSIVE | 58 | permanent WC3 passive, never cast, nothing to warn about |
+| 🟣 PASSIVE | 56 | permanent WC3 passive, never cast, nothing to warn about |
 
-**235 / 235 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
+**237 / 237 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
 
 ## By castType
 
 | castType | cells | shape language |
 | --- | ---: | --- |
-| `self` | 93 | self marker at the caster's feet |
+| `self` | 95 | self marker at the caster's feet |
 | `targeted` | 72 | lock (arc at the victim + tether to the caster) — walking does not help |
-| `—` | 58 | not cast |
+| `—` | 56 | not cast |
 | `ground` | 53 | circle — the real `enemiesInCircle` disc; you can walk out. ⭐ WITH a `damageLine` node: line — the capsule the damage query tests (step sideways) |
 | `skillshot` | 15 | line — the projectile's corridor; step sideways |
 | `dash` | 2 | line — the sweep of the dash body |
@@ -32,7 +32,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | --- | --- | --- | --- | --- | --- | --- |
 | 蟬在叫人壞掉 - 龍宮禮奈 `godie-e001` | PASSIVE | 22-00 嗚鎖打! | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 蟬在叫人壞掉 - 龍宮禮奈 `godie-e001` | Q | 22-01 鬼隱之擊 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 蟬在叫人壞掉 - 龍宮禮奈 `godie-e001` | W | 22-02 染血的柴刀 | `—` | — | 🟣 PASSIVE | never cast |
+| 蟬在叫人壞掉 - 龍宮禮奈 `godie-e001` | W | 22-02 染血的柴刀 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 蟬在叫人壞掉 - 龍宮禮奈 `godie-e001` | E | 22-03 五吋釘 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 蟬在叫人壞掉 - 龍宮禮奈 `godie-e001` | R | 22-04 雛見澤症候群L5 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 蟬在叫人壞掉 - 龍宮禮奈 `godie-e001` | EX | 22-002 月光下的決鬥者 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
@@ -224,7 +224,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 夢幻之星 - 初音 `godie-o02p` | EX | 99-002 把你給MikuMiku掉 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 神奇寶貝兒 - 皮卡丘 `godie-ofar` | PASSIVE | 58-00 電光一閃 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
 | 神奇寶貝兒 - 皮卡丘 `godie-ofar` | Q | 58-01 十萬伏特 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
-| 神奇寶貝兒 - 皮卡丘 `godie-ofar` | W | 58-02 鋼鐵尾巴 | `—` | — | 🟣 PASSIVE | never cast |
+| 神奇寶貝兒 - 皮卡丘 `godie-ofar` | W | 58-02 鋼鐵尾巴 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 神奇寶貝兒 - 皮卡丘 `godie-ofar` | E | 58-03 就決定是你了!小智 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 神奇寶貝兒 - 皮卡丘 `godie-ofar` | R | 58-04 瘋狂皮卡丘 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 神奇寶貝兒 - 皮卡丘 `godie-ofar` | EX | 58-002 打雷絕招 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |

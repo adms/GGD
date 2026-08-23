@@ -117,15 +117,15 @@
       "name": "77-02 雷鳴劍",
       "icon": "assets/icons/abilities/godie-e00x.w.webp",
       "provenance": "w3x-import",
-      "description": "[被動]\n0秒冷卻時間\n\n攻擊時有10%的機率可以使出會心一擊造成1.5倍的傷害，並且有10%的機率掉下一條落雷，造成範圍內部隊50點傷害。",
+      "description": "[被動][普攻時][機率][暴擊][範圍][AP加成]\n\n「雷鳴。會心」\n[攻擊時]有10%的[機率]可以使出[會心一擊]造成1.5倍的[暴擊]傷害，並且附加落雷，造成[範圍內]敵方10% [AP]傷害。",
       "slot": "W",
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        6.0,
-        6.0,
-        6.0,
-        6.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
         0.0,
@@ -134,22 +134,45 @@
         0.0
       ],
       "range": 0.0,
-      "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [
-            {
-              "stat": "critChance",
-              "op": "flat",
-              "value": 0.25
-            }
-          ],
-          "duration": 6.0
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.lightning.pulse-sm",
       "castTimeSec": 0.233,
-      "cooldownTier": "極小"
+      "passive": {
+        "name": "77-02 雷鳴劍",
+        "ranks": [
+          {
+            "critStrike": {
+              "chance": 0.1,
+              "damageMult": 1.5,
+              "lifestealFraction": 0.0
+            },
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damageArea",
+                    "damageType": "magic",
+                    "amount": {
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.1
+                        }
+                      ]
+                    },
+                    "radius": 3.0,
+                    "radiusTier": "極小"
+                  }
+                ],
+                "chance": 0.1,
+                "target": "event"
+              }
+            ]
+          }
+        ]
+      },
+      "targetsEnemies": false
     },
     "E": {
       "id": "godie-e00x.e",

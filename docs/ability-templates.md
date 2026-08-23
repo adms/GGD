@@ -173,7 +173,7 @@
 | 80-03 鬼神烈戟 | 亂世癿王者 - 呂布奉先(E) | 5 | AoE 530 around caster; dmg 150+200×lvl+3×STR; plus 3 dummy ' | instant | 無 (caster stationary; stampede missiles  | j:50390-50442 (3× CreateNUnits 'o01X' +  |
 | 86-04 打雷絕招 | 傲嬌電氣老鼠 - 皮卡娘(R) | 8 | 施法者為圓心: 半徑 100+200×技能等級; 英雄等級≥30 追加第二圈 600+200×技能等級; 每個圈內單位一 | instant 齊發 → sleep 4s 清理 | 無 | war3map.j:40445-40514 (Conditions A0C0 j |
 | 92-02 狂草泥馬 | 看似憂鬱的神獸 - 草泥馬(W); 看似憂鬱的神獸 - 草泥馬(W) | 5 | 開技: 以自身金錢 10%×lvl 為傷害(上限 400×lvl), 500 半徑對所有敵人 + 嘲諷 dummy 'o | 開技 instant; 攻擊 rider 為 EVENT_PLAYER_UNIT | 無 | j:45350-45406 (cond A0WB j:45351, 金錢傷害 j |
-| 92-03 消化液 | 看似憂鬱的神獸 - 草泥馬(E); 看似憂鬱的神獸 - 草泥馬(E) | 8 | 開技: 以自身金錢 10%×lvl 為傷害(上限 400×lvl), 500 半徑對所有敵人 + 嘲諷 dummy 'o | 開技 instant; 攻擊 rider 為 EVENT_PLAYER_UNIT | 無 | j:45350-45406 (cond A0WB j:45351, 金錢傷害 j |
+| 92-03 狂草泥馬 | 看似憂鬱的神獸 - 草泥馬(E); 看似憂鬱的神獸 - 草泥馬(E) | 8 | 開技: 以自身金錢 10%×lvl 為傷害(上限 400×lvl), 500 半徑對所有敵人 + 嘲諷 dummy 'o | 開技 instant; 攻擊 rider 為 EVENT_PLAYER_UNIT | 無 | j:45350-45406 (cond A0WB j:45351, 金錢傷害 j |
 
 ## 行進波動
 

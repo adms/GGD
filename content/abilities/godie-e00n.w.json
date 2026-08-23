@@ -3,7 +3,7 @@
   "name": "22-02 染血的柴刀",
   "icon": "assets/icons/abilities/godie-e00n.w.webp",
   "provenance": "w3x-import",
-  "description": "[被動]\n0秒冷卻時間\n\n攻擊時有18%的機率可以使出會心一擊造成1.25倍的傷害。",
+  "description": "[被動]\n{{cd}}秒冷卻時間\n\n攻擊時有18%的機率可以使出會心一擊造成1.25倍的傷害。",
   "slot": "W",
   "castType": "self",
   "maxRank": 4,

@@ -320,17 +320,34 @@ if (argv.includes("--list")) {
 const LOGDIR = process.env.GGD_SHIP_LOGDIR ?? "/private/tmp/ggd-ship";
 mkdirSync(LOGDIR, { recursive: true });
 
-function run(name, bin, args) {
+/**
+ * ⏲️ **逐 suite 看門狗**（owner 2026-08-24：「工作流跑超過5分鐘,你應該要去看
+ * 是不會陷入loop了」）—— 2026-08-23 實測 `packages/shared` 的 vitest 在併行負載下
+ * **worker 卡死（0% CPU）**,而沒有看門狗的那一版等了 11 分鐘。
+ * 逾時 = max(5 分鐘, 帳本估時×3) → SIGKILL → 記成紅並在訊息裡寫「hung」,
+ * ⛔ 不是永遠等。被殺的那一支單獨重跑幾乎都會過（單獨跑沒有撞車）。
+ */
+const WATCHDOG_FLOOR_MS = 5 * 60 * 1000;
+
+function run(name, bin, args, estMs = 0) {
   return new Promise((res) => {
     const t = Date.now();
     const log = `${LOGDIR}/${name.replace(/[^a-z0-9]+/gi, "_")}.log`;
     const out = [];
     const p = spawn(bin, args, { cwd: REPO, env: process.env });
+    const limit = Math.max(WATCHDOG_FLOOR_MS, estMs * 3);
+    let hung = false;
+    const dog = setTimeout(() => {
+      hung = true;
+      out.push(Buffer.from(`\n⏲️ 看門狗:${name} 超過 ${(limit / 60000).toFixed(1)} 分鐘 —— 判定 hung,SIGKILL。單獨重跑通常會過(併行撞車)。\n`));
+      p.kill("SIGKILL");
+    }, limit);
     p.stdout.on("data", (d) => out.push(d));
     p.stderr.on("data", (d) => out.push(d));
     p.on("close", (code) => {
+      clearTimeout(dog);
       writeFileSync(log, Buffer.concat(out));
-      res({ name, code: code ?? 1, ms: Date.now() - t, log });
+      res({ name: hung ? `${name}（hung,看門狗殺的）` : name, code: hung ? 1 : (code ?? 1), ms: Date.now() - t, log });
     });
   });
 }
