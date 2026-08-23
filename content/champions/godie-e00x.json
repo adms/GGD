@@ -90,6 +90,16 @@
           "statusId": "burnstun",
           "duration": 0.8,
           "stun": true
+        },
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "modelKey": "imported.earthtornado2",
+          "path": "orbit",
+          "count": 1,
+          "distance": 0.1,
+          "speed": 1.0,
+          "lifeSec": 2.5
         }
       ],
       "vfxKey": "fx.prim.nature.slash",

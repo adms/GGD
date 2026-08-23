@@ -39,6 +39,16 @@
       "kind": "spawnVfx",
       "vfxId": "godie-deathwave-p0",
       "at": "target"
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "modelKey": "imported.deathwave",
+      "path": "orbit",
+      "count": 1,
+      "distance": 0.1,
+      "speed": 1.0,
+      "lifeSec": 2.5
     }
   ],
   "vfxKey": "fx.prim.void.dash",

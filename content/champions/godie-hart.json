@@ -399,6 +399,13 @@
               "applyTo": "all"
             }
           ]
+        },
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "modelKey": "imported.herocloudstrife",
+          "path": "toTarget",
+          "speed": 30.0
         }
       ],
       "vfxKey": "fx.w3x.orb.herocloudkfksword.p00",

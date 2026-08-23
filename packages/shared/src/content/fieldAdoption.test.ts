@@ -2794,23 +2794,11 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why:
       "⭐ E1 硬約束逼每一個 kind 帶 `shape`，而首批內容三支全部是 `single`。⚠️ `circle` 對 `spawnModelFx` 要等到有一支技能真的需要「一圈各發一份」才會被用到。⛔ 零採用是**約束的形狀**，不是缺口。",
   },
-  "enum:abilities.effects[]#spawnModelFx.path=orbit": {
-    status: "landing",
-    since: "2026-08-22",
-    why:
-      "首批三支用的是 `forward`（龍破斬直線火球 · 約束勝利之劍翻滾光束）與 `radial`（世界終結圓周冰塊）。⭐ `orbit`（繞行）是為**環繞型**演出留的 —— 原作有這一族（繞著施法者轉的球體），而它們還沒被移植（見 #551 五軸普查的軸②：28 具會動 dummy 只接上 22%）。⚠️ 30 天後要嘛有內容採用、要嘛承認引擎多了一條沒人走的路。",
-  },
   "enum:abilities.effects[]#spawnModelFx.touchSide=allies": {
     status: "landing",
     since: "2026-08-22",
     why:
       "路徑上碰到**友軍**才觸發。⛔ 首批三支都是攻擊技能（`enemies`）。⭐ 它為「掃過去幫隊友補血/加速」那一族留著 —— 那正是 owner 說的「模板」該吃得下的另一半。",
-  },
- "field:abilities.effects[]#spawnModelFx.lifeSec": {
-    status: "landing",
-    since: "2026-08-22",
-    why:
-      "模型的硬壽命。⛔ 首批三支都給了 `distance`，走完就收 ⇒ 用不到獨立的壽命上限。⭐ 它為**沒有終點**的演出（繞行、常駐光柱）留著。",
   },
   "enum:abilities.effects[]#screenShake.applyTo=self": {
     status: "landing",

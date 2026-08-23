@@ -69,6 +69,16 @@
           }
         }
       ]
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "modelKey": "imported.deathwave",
+      "path": "orbit",
+      "count": 1,
+      "distance": 0.1,
+      "speed": 1.0,
+      "lifeSec": 2.5
     }
   ],
   "icon": "assets/icons/abilities/godie-h01n.e.webp",
