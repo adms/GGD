@@ -79,6 +79,11 @@
           "stopShortUnits": 1.8,
           "onArrive": [
             {
+              "kind": "spawnVfx",
+              "vfxId": "fx.fam.blink.arcane.s65",
+              "at": "point"
+            },
+            {
               "kind": "damage",
               "damageType": "magic",
               "amount": {
@@ -100,6 +105,11 @@
           "applyTo": "self",
           "stopShortUnits": 1.8,
           "onArrive": [
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.fam.blink.arcane.s65",
+              "at": "point"
+            },
             {
               "kind": "damage",
               "damageType": "magic",

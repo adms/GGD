@@ -502,7 +502,14 @@
           "shape": "single",
           "preset": "tpl-beam-roll",
           "path": "toTarget",
-          "distance": 8.25
+          "distance": 8.25,
+          "onArrive": [
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.ki.explosion-lg",
+              "at": "point"
+            }
+          ]
         },
         {
           "kind": "spawnVfx",

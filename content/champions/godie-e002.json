@@ -434,6 +434,11 @@
           ],
           "onArrive": [
             {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.holy.explosion",
+              "at": "point"
+            },
+            {
               "kind": "screenShake",
               "shape": "single",
               "amplitude": 0.6,

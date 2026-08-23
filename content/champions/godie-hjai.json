@@ -278,6 +278,11 @@
           "preset": "tpl-line-blast",
           "onArrive": [
             {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.fire.explosion-lg",
+              "at": "point"
+            },
+            {
               "kind": "damageArea",
               "damageType": "magic",
               "amount": {

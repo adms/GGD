@@ -127,6 +127,11 @@
           "stopShortUnits": 1.8,
           "onArrive": [
             {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.lightning.slash",
+              "at": "point"
+            },
+            {
               "kind": "damage",
               "damageType": "physical",
               "amount": {
@@ -190,7 +195,14 @@
           "shape": "single",
           "preset": "tpl-beam-roll",
           "path": "forward",
-          "scale": 4.5
+          "scale": 4.5,
+          "onArrive": [
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.fire.explosion-lg",
+              "at": "point"
+            }
+          ]
         }
       ],
       "vfxKey": "fx.prim.fire.beam",
@@ -228,6 +240,11 @@
           "applyTo": "self",
           "stopShortUnits": 1.8,
           "onArrive": [
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.physical.slash",
+              "at": "point"
+            },
             {
               "kind": "damage",
               "damageType": "physical",

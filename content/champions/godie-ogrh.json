@@ -225,7 +225,14 @@
           "kind": "spawnModelFx",
           "shape": "single",
           "preset": "tpl-beam-roll",
-          "path": "forward"
+          "path": "forward",
+          "onArrive": [
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.ki.explosion-lg",
+              "at": "point"
+            }
+          ]
         }
       ],
       "vfxKey": "fx.prim.ki.beam-lg",

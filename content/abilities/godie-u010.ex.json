@@ -40,7 +40,14 @@
       "speed": 7.7,
       "spinDegPerSec": 240.0,
       "scale": 2.4,
-      "arriveSoundKey": "explosion"
+      "arriveSoundKey": "explosion",
+      "onArrive": [
+        {
+          "kind": "spawnVfx",
+          "vfxId": "fx.prim.void.explosion-lg",
+          "at": "point"
+        }
+      ]
     },
     {
       "kind": "spawnModelFx",

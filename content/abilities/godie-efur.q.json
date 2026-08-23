@@ -30,6 +30,11 @@
       "stopShortUnits": 1.0,
       "onArrive": [
         {
+          "kind": "spawnVfx",
+          "vfxId": "fx.prim.ki.nova",
+          "at": "point"
+        },
+        {
           "kind": "applyStatus",
           "statusId": "blind",
           "duration": 1.0,

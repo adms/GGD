@@ -108,4 +108,39 @@ describe("pnpm content:build 先驗證再寫入 (build-indexes-validates)", () =
 
     writeFileSync(victim, JSON.stringify({ ...doc, authoringNote: original }, null, 2) + "\n");
   });
+
+  /**
+   * ⭐ owner 2026-08-23（GH#563，逐字）：
+   *
+   * > 應該要有**空陣列檢查放在 build 裡面硬卡關** => effects 是空陣列的上架技能要在
+   * > content:build 就被擋下來，**⛔ 不是一條事後才紅的測試**
+   *
+   * ⚠️ 這一條與 `abilityPressPayload.test.ts` **不重複**：那一支問「出貨樹乾不乾淨」，
+   * 這一支問「**這個規則有沒有真的接在 build 上**」。規則抽成共用函式之後，
+   * 只有這一條會在「函式還在、但沒有人在 build 裡呼叫它」時紅。
+   *
+   * 突變點就是 `buildIndexes.ts` 那一段 `registerAll` + `unknownPressPayloadHits`：
+   * 拿掉它，這一行會拿到 0。
+   */
+  it("★ 上架技能的 effects 空了會讓 build 失敗,而且訊息指名那一支", () => {
+    cover("build-indexes-validates");
+    const bundle = join(sandbox, "bundle.json");
+    const before = readFileSync(bundle, "utf8");
+    // 34-04 奧義˙蒼龍破:卡面 [主動攻擊],效果全部住在 `template.ref` 裡。
+    // 拿掉那條連結 ⇒ 展開後 effects 真的是空的 —— 票上宣稱的那個形狀。
+    const victim = join(sandbox, "abilities/godie-osam.r.json");
+    const original = readFileSync(victim, "utf8");
+    const doc = JSON.parse(original) as Record<string, unknown>;
+    delete doc["template"];
+    writeFileSync(victim, JSON.stringify(doc, null, 2) + "\n");
+
+    const r = runBuild(sandbox);
+    expect(r.code, "effects 空掉了而 content:build 仍然回報成功").not.toBe(0);
+    expect(r.out).toContain("godie-osam.r");
+    expect(r.out).toContain("主動攻擊");
+    // 與上面同一個理由:先寫入再抱怨 = 把一支按下去什麼都不發生的技能送進容器。
+    expect(readFileSync(bundle, "utf8"), "被擋下了,bundle 還是被重寫了").toBe(before);
+
+    writeFileSync(victim, original);
+  });
 });

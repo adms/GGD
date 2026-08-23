@@ -28,6 +28,11 @@
       "stopShortUnits": 1.8,
       "onArrive": [
         {
+          "kind": "spawnVfx",
+          "vfxId": "fx.prim.physical.slash",
+          "at": "point"
+        },
+        {
           "kind": "damage",
           "damageType": "physical",
           "amount": {

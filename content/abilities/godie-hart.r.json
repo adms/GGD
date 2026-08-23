@@ -132,7 +132,14 @@
       "shape": "single",
       "modelKey": "imported.herocloudstrife",
       "path": "toTarget",
-      "speed": 30.0
+      "speed": 30.0,
+      "onArrive": [
+        {
+          "kind": "spawnVfx",
+          "vfxId": "fx.prim.physical.explosion-lg",
+          "at": "point"
+        }
+      ]
     }
   ],
   "vfxKey": "fx.w3x.orb.herocloudkfksword.p00",

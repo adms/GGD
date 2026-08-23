@@ -16,6 +16,12 @@ import { bundlePath, rebuildAllIndexes } from "../src/content/node/index";
 import { COLLECTION_NAMES } from "../src/content/schema/index";
 import { ContentLoader } from "../src/content/loader";
 import { FsContentSource } from "../src/content/node/FsContentSource";
+import { registerAll } from "../src/content/registries";
+import {
+  findActiveCardsWithNoPayload,
+  pressPayloadFailureReport,
+  unknownPressPayloadHits,
+} from "../src/content/abilityPressPayload";
 
 const CONTENT_DIR = process.env.GGD_CONTENT_DIR ?? join(__dirname, "../../../content");
 
@@ -54,13 +60,14 @@ if (!existsSync(CONTENT_DIR)) {
  * into the bundle is how an unloadable doc reaches a container.
  * ─────────────────────────────────────────────────────────────────────────────
  */
+let loaded: Awaited<ReturnType<ContentLoader["load"]>>;
 try {
   // ⛔ **一定要 `fail-closed`**（GH#326）。執行期的出貨政策是 `quarantine`
   //    ——「玩家已經在等了，少一份設定好過整站退回骨架」——但**產出期沒有玩家
   //    在等**：這裡靜默地隔離一份文件，換來的是一個「bundle 有、來源缺一塊」
   //    的產物被 commit 出貨，而那正是 2026-08-01 / 08-02 兩次事故的形狀。
   //    ⚠️ 隔離在執行期是止血，在這裡是**製造**出血。
-  await new ContentLoader(new FsContentSource(CONTENT_DIR)).load({ policy: "fail-closed" });
+  loaded = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load({ policy: "fail-closed" });
 } catch (err) {
   const errors = (err as { errors?: unknown[] }).errors ?? [err];
   console.error(`\n✖ content 驗證失敗 —— ${errors.length} 個問題，索引與 bundle 都沒有重建：\n`);
@@ -70,6 +77,36 @@ try {
       "\n而不是幾分鐘後在某條無關的測試裡以「別的道具參照不到」的形式爆出來。\n",
   );
   process.exit(1);
+}
+
+/**
+ * ─────────────────────────────────────────────────────── 空 effects 硬卡關 ──
+ * ⭐ owner 2026-08-23（逐字）：
+ *
+ * > 應該要有**空陣列檢查放在 build 裡面硬卡關** => effects 是空陣列的上架技能要在
+ * > content:build 就被擋下來，**⛔ 不是一條事後才紅的測試**
+ *
+ * 在此之前這條規則只住在 `abilityPressPayload.test.ts`。那是一條**事後**才紅的
+ * 測試：存了一支「卡面說主動、按下去什麼都不發生」的技能 ⇒ `content:build`
+ * **EXIT 0** ⇒ 它被烘進 `bundle.json` ⇒ 要等到有人剛好跑那一支 vitest 才知道。
+ * ⇒ 現在規則住 `src/content/abilityPressPayload.ts`，兩邊讀**同一支函式**。
+ *
+ * ⚠️ 一定要在 `rebuildAllIndexes` **之前** —— 與上面那一關同一個理由：
+ * 先寫入再抱怨，等於把一支按下去什麼都不會發生的技能烘進 bundle 送進容器。
+ *
+ * ⚠️ 必須先 `registerAll` 才問得到答案：磁碟上的 `effects: []` 是**模板慣用法**
+ * （出貨樹上 69 支如此，全部帶 `passive`/`marks` payload）。掃磁碟 JSON 會得到
+ * 69 個幽靈空技能 —— 失敗形態⑤「被測的不是出貨的那個」。
+ * ⛔ `onTemplateFailure` 刻意用出貨預設 `"degrade"`：這樣「模板展開失敗」也會
+ * 走到這裡被指名，⛔ 而不是換成另一種訊息的例外。
+ */
+registerAll(loaded.store);
+{
+  const offenders = unknownPressPayloadHits(findActiveCardsWithNoPayload());
+  if (offenders.length > 0) {
+    console.error(pressPayloadFailureReport(offenders));
+    process.exit(1);
+  }
 }
 
 const manifest = rebuildAllIndexes(CONTENT_DIR);

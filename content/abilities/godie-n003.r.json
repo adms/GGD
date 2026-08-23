@@ -122,6 +122,11 @@
       "preset": "tpl-radial-burst",
       "onArrive": [
         {
+          "kind": "spawnVfx",
+          "vfxId": "fx.prim.ice.nova",
+          "at": "point"
+        },
+        {
           "kind": "screenShake",
           "shape": "single",
           "amplitude": 0.8,
