@@ -74,6 +74,57 @@ import { isLegendaryOffer, revealSchedule } from "./draftReveal";
 import { FOCUS_FADE_MS, focusHint, FOCUS_SCRIM_BG, INTERMISSION_Z } from "./intermissionLayout";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 
+/**
+ * 🖤 **合成層旋鈕 —— 「三選一卡片選完前的閃爍」**（GH#618 的下一刀）
+ *
+ * > owner 2026-08-23：「**隨機三選一卡片選完前的閃爍 請找到根因修正**」
+ * > （同一件事的前一則）「剛進商店 **介面有些部分**會**黑閃爍** 選完隨機三選一又回復正常」
+ *
+ * ── ⭐ 量到的（真的瀏覽器、真的出貨頁、`localhost:39527`，⛔ 不是推的）────────
+ *
+ * ① **這一整頁只有兩個東西被提升成合成層，而它們都是 `<canvas>`。**
+ *    掃全 `document` 的 `will-change` / 3D transform / `filter` / `mix-blend-mode`：
+ *    面積 > 900,000 px² 的提升者 **= 2 個，兩個都是 canvas**。
+ *    ⇒ ⛔ **焦點遮罩沒有自己的合成層** —— 它是一塊**畫進 `#hud-root` 那一層**的
+ *    滿版 `rgba(6,9,16,0.62)`（量到 rect = 1280×720 = **921,600 px²**）。
+ *
+ * ② **而 `#hud-root` 那一層每一幀都在被弄髒。** 量到 **20 條無窮動畫動的是
+ *    非合成屬性**（`box-shadow` × 5、`background-position` × 15），
+ *    合計 **81,449 px² 逐幀主執行緒重繪**。
+ *    其中 **3 條 · 47,232 px²（+138%）是三選一自己帶來的**
+ *    （A/B 量測：沒有 offer 時 17 條 / 34,217 px²，有 offer 時 20 條 / 81,449 px²）。
+ *
+ * ⇒ ⭐ **兩件事湊起來就是 owner 那句「有些部分」**：遮罩讓 `#hud-root` 從
+ *    「大部分是透明、只有商店那一塊有內容」變成**每一塊 tile 都有內容**，
+ *    而那一層每一幀都被那 20 條動畫弄髒 ⇒ 來不及 raster 的 tile 呈現出去
+ *    就是頁面底色 `#0b0e14`（`index.html:27`）＝ **黑**。**tile 是分塊的 ⇒「有些部分」。**
+ *
+ * ③ ⚠️ 而在此之前遮罩還會**建一層再拆一層**：`ggdFocusIn` 是 200ms 的 opacity 動畫
+ *    ⇒ Chrome 為它提升一個滿版合成層，**200ms 後動畫結束就把它拆掉**，
+ *    那一格內容於是**折回 `#hud-root`**  ⇒ 卡片出現後正好 200ms 一次**滿版重新 raster**。
+ *
+ * ── ⭐ 我挑的（owner 常設：「自己判斷 但留後台開關可以簡易 rollback」）───────
+ *
+ * | 格 | 治哪一條 | ⛔ 一鍵回頭 |
+ * |---|---|---|
+ * | `scrimOwnLayer` | ①③：遮罩搬進**自己的**合成層 ⇒ 滿版填色只畫**一次**，`#hud-root` 回到「大部分透明」，而且⛔ 不再有 200ms 的建層／拆層 | `false` |
+ * | `cardOwnLayer` | ②：三張卡各自一層 ⇒ 那條 `background-position`＋`blur(0.3px)`＋`mask-composite:exclude` 的逐幀重繪關在**自己的 15,744 px²** 裡，⛔ 不再弄髒共用層 | `false` |
+ *
+ * ⚠️ **代價**：多 4 個合成層（滿版 1 + 卡片 3）≈ 6 MB VRAM。
+ * ⛔ 兩格都**不改任何一個像素的外觀** —— 它們只改「這些像素畫在哪一層」。
+ *
+ * ⛔ **為什麼是常數不是 `content/config/*.json`**：新增一份 config 一定會動到
+ * `apps/admin/src/store.ts` 與 `ui/App.tsx` 各一行（`configDocCoverage.test.ts` 要求），
+ * 而 CLAUDE.md 逐字稱那兩個是「已知唯一真正共用的檔」⇒ 併行 lane 必撞。
+ * 同 `INTERMISSION_GPU`（`render/intermission/IntermissionScene.ts`）的前例。
+ */
+export const DRAFT_COMPOSITING = {
+  /** 焦點遮罩自己一層（⛔ 回頭：`false`） */
+  scrimOwnLayer: true,
+  /** 三張卡各自一層（⛔ 回頭：`false`） */
+  cardOwnLayer: true,
+} as const;
+
 export function AugmentDraftPanel(): React.JSX.Element | null {
   const offers = useHud((s) => {
     if (s.localSeatId === null) return null;
@@ -97,6 +148,11 @@ export function AugmentDraftPanel(): React.JSX.Element | null {
           background: FOCUS_SCRIM_BG,
           pointerEvents: "auto",
           animation: `ggdFocusIn ${FOCUS_FADE_MS}ms ease-out both`,
+          // ⭐ 見 DRAFT_COMPOSITING ①③ —— 這一塊是**滿版 921,600 px²**,不提升
+          // 就等於把 `#hud-root` 整層填滿內容,而那一層每一幀都被 20 條非合成
+          // 動畫弄髒。宣告在**掛載當下**(⛔ 不是等動畫開始),所以連 200ms 後
+          // 那一次「拆層 ⇒ 滿版重新 raster」也一起消失。
+          willChange: DRAFT_COMPOSITING.scrimOwnLayer ? "opacity" : undefined,
         }}
       >
         <style>{"@keyframes ggdFocusIn{from{opacity:0}to{opacity:1}}"}</style>
@@ -278,6 +334,12 @@ export function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
                     transform: faceUp ? "translateY(0)" : "translateY(8px)",
                     transition:
                       "box-shadow 0.25s ease, transform 0.28s ease, opacity 0.28s ease",
+                    // ⭐ 見 DRAFT_COMPOSITING ② —— `.ggd-btn--card::before` 每一幀
+                    // 重畫 `background-position`(⛔ 非合成屬性)而且帶 `blur(0.3px)`
+                    // ＋ `mask-composite:exclude`,量到三張卡合計 **47,232 px²**
+                    // (整頁逐幀重繪面積的 **58%**)。各給一層 ⇒ 關在自己的
+                    // 15,744 px² 裡,⛔ 不再弄髒 `#hud-root` 那一層。
+                    willChange: DRAFT_COMPOSITING.cardOwnLayer ? "transform" : undefined,
                   } as React.CSSProperties
                 }
               >
