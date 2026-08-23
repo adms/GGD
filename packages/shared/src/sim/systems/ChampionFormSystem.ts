@@ -190,6 +190,18 @@ function destinationFor(
   if (index === 1) return { nextId: champ.championId, nextIndex: 1 };
   const counterpart = Champions.tryGet(champ.championId)?.transform?.counterpartId;
   if (counterpart === undefined) return undefined;
+  // ⛔⛔ **下架的變身態進不去**（2026-08-23）—— owner 2026-08-22：
+  //    「變身帶來許多問題，因此我想要**開啟變身態盡可能下架**」。
+  //
+  // ⚠️ 在這一行之前，`roster.json` 的 `retiredChampions` 只擋**選人**，
+  //    而變身態本來就 `role:"alternate"` 不可被選 ⇒ 對那 5 個而言下架是 **no-op**，
+  //    入口一直開著（實測仍有 4 支技能變得進去）。`roster.json` 的 note
+  //    自己寫著「接線點只有一處、一行」—— ⭐ 就是這一行。
+  //
+  // ⭐ 退場方式與其他四種 miss **逐字相同**（回 `undefined` = 拒絕並且什麼都不碰），
+  //    ⛔ 不是靜默地變成半個變身態。呼叫端因此不會 emit `championForm`，
+  //    也不會動 FORM bits ⇒ 客戶端逐位元組看不到任何變化。
+  if (world.retiredChampionIds.has(counterpart)) return undefined;
   return Champions.tryGet(counterpart) === undefined
     ? undefined
     : { nextId: counterpart, nextIndex: 1 };

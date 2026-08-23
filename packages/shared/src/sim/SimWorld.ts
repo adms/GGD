@@ -137,6 +137,9 @@ export interface SimEvent {
   data: Record<string, unknown>;
 }
 
+/** 空的下架清單 —— ⛔ 每個 world 共用同一份，不要每次 new 一個 Set。 */
+const EMPTY_RETIRED: ReadonlySet<string> = new Set();
+
 export class SimWorld {
   tick = 0;
   readonly rng: Rng;
@@ -1273,6 +1276,31 @@ export class SimWorld {
    * 「全視野」打開的是**牆**,⛔ 不是隱形。守衛 `fullVision.test.ts` 兩個方向一起讀。
    */
   visionRules: VisionRules = DEFAULT_VISION_RULES;
+
+  /**
+   * ⛔⛔ **已下架的英雄 id** —— owner 2026-08-22:「變身帶來許多問題，
+   * 因此我想要**開啟變身態盡可能下架**項目群組」。
+   *
+   * ── 為什麼這一格必須存在（2026-08-23 稽核抓到的）────────────────────────
+   * `content/config/roster.json` 的 `retiredChampions` 有 5 個**變身態**，
+   * 而它的消費端**只有選人那一半**（`Whitelist.allowsChampion` ＋ 四個選人面板）。
+   * ⭐ 而變身態本來就 `role:"alternate"` **不可被選** ⇒ 對它們而言下架是 **no-op**。
+   *
+   * ⛔ **入口從來沒有被關過**：{@link destinationFor} 只問 `transform.counterpartId`
+   * ＋ `Champions.tryGet`。實測**仍有 4 支技能變得進去**（92-01 臥草泥馬 →
+   * `godie-h02u`、04-002 惡夢魔王的碎片 → `godie-h020`、08-002 龍魔人 →
+   * `godie-n01c`、38-00 邪眼全開 → `godie-u010`）。
+   * ⚠️ `roster.json` 的 `note` **自己承認了**：「⏸ 入口那一半還沒接線⋯
+   * ⛔ championForm 入口仍然開著。接線點只有一處、一行」。
+   *
+   * ── 形狀與 {@link visionRules} 逐字相同 ─────────────────────────────────
+   * 一份**空的**預設住在 `sim/`（⇒ 這個檔對 `content/registries` 零依賴），
+   * 實際值由 host 在開場從 `config.roster@1` 灌進來。
+   * ⚠️ **缺文件 = 空集合 = 沒有人下架**，方向與 `retiredChampionIdsFromDoc`
+   * 一致：讀不到時 fail-open 的代價是「一隻該退場的變身態還變得出來」（可回復），
+   * fail-closed 的代價是「全部變身一起消失」——那是高一個量級的事故。
+   */
+  retiredChampionIds: ReadonlySet<string> = EMPTY_RETIRED;
 
   /**
    * 暴走規則 (`config.berserk@1`, see abilities/berserkRules.ts) —— 主動暴走的

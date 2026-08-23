@@ -11,6 +11,7 @@ import {
   TICK_HZ,
 } from "@ggd/shared/constants";
 import { visionRulesFromDoc } from "@ggd/shared/sim/vision";
+import { retiredChampionIds } from "@ggd/shared/content/championRetirement";
 import { asSeatId, asTeamId, type AugmentId, type ChampionId, type EntityId, type ItemId, type SeatId, type StatusId, type TeamId } from "@ggd/shared/ids";
 import { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
@@ -1191,6 +1192,10 @@ export class MatchController {
     //    ⛔ 但少了它,後台的 `vision.wallBlocksBasicAttack` 那一格是**死的** ——
     //    存了檔、畫面上有、而遊戲裡什麼都不會變（第一·五守則的形狀）。
     this.world.visionRules = visionRulesFromDoc(Configs.tryGet("arena-rules"));
+    // ⛔ 變身入口的下架清單（owner 2026-08-22「開啟變身態盡可能下架」）。
+    //    ⚠️ 在這一行之前 `retiredChampions` 只擋選人，而變身態本來就選不到
+    //    ⇒ 那 5 個變身態的下架是 no-op，入口一直開著。
+    this.world.retiredChampionIds = retiredChampionIds();
     // 嘲弄規則 (`config.taunt@1`) —— 同樣在 tick 0 之前定格。
     this.world.tauntRules = tauntRules;
     // 身體放大倍數 → 攻擊距離 (`config.body-scale@1`, GH#252) —— tick 0 之前定格。
