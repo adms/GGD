@@ -355,6 +355,88 @@
           "forksPerSuite": 5
         }
       ]
+    },
+    {
+      "id": "2026-08-23/v0.25.6-25-g1f4e6965-dirty",
+      "at": "2026-08-23T09:51",
+      "ref": "v0.25.6-25-g1f4e6965-dirty",
+      "stages": [
+        {
+          "name": "ship:content:build",
+          "ms": 10697,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:skills:sync",
+          "ms": 64644,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:vitest apps/test-dashboard",
+          "ms": 4848,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/content-api",
+          "ms": 12437,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:skills:check",
+          "ms": 14924,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/admin",
+          "ms": 50118,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/editor",
+          "ms": 83680,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:typecheck",
+          "ms": 125607,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/game-server",
+          "ms": 147899,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest packages/shared",
+          "ms": 209918,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/client",
+          "ms": 222443,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:total",
+          "ms": 297791,
+          "code": 0,
+          "phase": "summary",
+          "serialSec": 75.3,
+          "parallelCpuSec": 871.9,
+          "forksPerSuite": 5
+        }
+      ]
     }
   ]
 }
