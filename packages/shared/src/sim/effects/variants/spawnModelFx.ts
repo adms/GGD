@@ -65,8 +65,21 @@ export interface SpawnModelFxVariant {
    *   · `toTarget` —— 朝目標直線推進（約束勝利之劍的翻滾光束）
    *   · `radial`   —— `count` 個實例**等分向外**發散（爆散型）
    *   · `orbit`    —— `count` 個實例在半徑 `distance` 的環上繞（護盾球體型）
+   *   · `static`   —— ⭐ #649 類④：**一具定點擺著播動畫**，活 `lifeSec`，
+   *                  ⛔ 不位移（原作 266 具 dummy 有 238 具站著不動 —— 89%）
    */
-  path?: "forward" | "toTarget" | "orbit" | "radial";
+  path?: "forward" | "toTarget" | "orbit" | "radial" | "static";
+  /**
+   * ⭐ `path:"static"` 的**錨點**（#649）：這一具擺在哪。
+   *
+   *   · `self`   —— 施法者腳下（原作 `hero-attached-aura` 那一族）
+   *   · `point`  —— 施放的地板點（原作 `world-point` 那一族）
+   *   · `target` —— 目標腳下（解不到目標時退化到 `point`，再退化到施法者）
+   *
+   * **省略 = `self`**。⛔ 只有 `static` 讀得到 —— 移動路徑的起點永遠是施法者
+   * （`zSpawnModelFx` 的 refine 在載入時擋）。
+   */
+  anchor?: "self" | "point" | "target";
   /** 世界單位/秒。 */
   speed?: number;
   /**
@@ -82,8 +95,8 @@ export interface SpawnModelFxVariant {
   /** 模型縮放。純視覺，⛔ sim 不讀它。 */
   scale?: number;
   /**
-   * 活多久。`orbit` 必填（那是它唯一的終止條件）；直線路徑省略 = 走完 `distance`。
-   * 兩者都給時取**先到的那一個**。
+   * 活多久。`orbit` / `static` 必填（那是它們唯一的終止條件）；
+   * 直線路徑省略 = 走完 `distance`。兩者都給時取**先到的那一個**。
    */
   lifeSec?: number;
   /**

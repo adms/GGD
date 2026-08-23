@@ -82,8 +82,8 @@ interface Instance {
 
 /**
  * 把 `path` 翻成一組實例。⭐ 這是這支 handler 唯一「決定路徑」的地方 ——
- * ⛔ 沒有一行是為某支技能寫的 if（第〇·五守則）：四個分支是**四種路徑**，
- * 而技能在 JSON 裡挑一個。
+ * ⛔ 沒有一行是為某支技能寫的 if（第〇·五守則）：五個分支是**五種路徑**
+ * （含 #649 的 `static` 定點），而技能在 JSON 裡挑一個。
  */
 /**
  * ⛔⛔ **`modelFxSpawn` 事件的酬載型別 —— 這是 sim 與客戶端之間的契約本身。**
@@ -145,7 +145,7 @@ export interface ModelFxSpawnInstance {
   durationSec: number;
 }
 
-export type ModelFxPathName = "forward" | "toTarget" | "orbit" | "radial";
+export type ModelFxPathName = "forward" | "toTarget" | "orbit" | "radial" | "static";
 
 export function modelFxInstances(e: ModelFx, ctx: EffectContext, origin: Vec2): Instance[] {
   const spread = e.path === "radial" || e.path === "orbit";
@@ -154,6 +154,26 @@ export function modelFxInstances(e: ModelFx, ctx: EffectContext, origin: Vec2): 
     : 1;
   const far = clamp(e.distance ?? 0, 0, MODEL_FX_MAX_DISTANCE);
 
+  if (e.path === "static") {
+    // ⭐【定點 3D 模型】#649 類④ —— 原作 266 具 dummy 有 238 具（89%）站著不動：
+    // `CreateUnit` → `AddSpecialEffect` → `UnitApplyTimedLife`，⛔ 一次
+    // `SetUnitPosition` 都沒有。⇒ 一具、travel 0、終點只有 `lifeSec`。
+    // 線路形狀與 orbit 的環上一點**逐位元同族**（`dx=dz=0`），所以客戶端
+    // `modelFxPoseFromWire` 的「不動」分支照畫，⛔ 零行新客戶端數學。
+    //
+    // 錨點解析：target → point → self 逐層退化 —— 錨解不出來時退到施法者腳下，
+    // ⛔ 不是整支消失（一支安靜什麼都不做的技能是失敗形態②）。
+    let at: Vec2 | undefined;
+    if (e.anchor === "target") {
+      const tid = shapeTargets(e, ctx)[0];
+      at = tid !== undefined ? ctx.world.transform.get(tid)?.pos : undefined;
+      at ??= ctx.point;
+    } else if (e.anchor === "point") {
+      at = ctx.point;
+    }
+    const p = at ?? origin;
+    return [{ origin: { x: p.x, z: p.z }, travel: 0 }];
+  }
   if (e.path === "orbit") {
     // 環上 `count` 個等分位置。⛔ 不做線性推進 —— 繞圈的終點是 `lifeSec`。
     return ringPoints(origin, far, count).map((p) => ({ origin: p, travel: 0 }));
@@ -209,14 +229,20 @@ export const spawnModelFxEffect: EffectKindSpec<"spawnModelFx"> = {
     //    出現了第三條路（例如有人繞過註冊表直接餵 def）。
     // ⛔ 靜靜退場的話，畫面上與「這支技能就是沒有光束」一模一樣（失敗形態②），
     //    所以這裡 fail-loud：一次施放一行，而它指名是哪一格缺的。
-    if (e.speed === undefined || e.modelKey === undefined || e.path === undefined) {
+    // ⭐ `static`（#649）不位移 ⇒ `speed` 不是它的身分欄位（schema 反過來禁填）。
+    if (
+      e.modelKey === undefined ||
+      e.path === undefined ||
+      (e.speed === undefined && e.path !== "static")
+    ) {
       console.error(
-        `[spawnModelFx] 節點缺 ${e.speed === undefined ? "speed" : e.modelKey === undefined ? "modelKey" : "path"}` +
+        `[spawnModelFx] 節點缺 ${e.modelKey === undefined ? "modelKey" : e.path === undefined ? "path" : "speed"}` +
           `（preset=${String(e.preset)}）—— 模板沒有被解析，這一發不會有任何模型。`,
       );
       return;
     }
-    const speed = clamp(e.speed, 0, MODEL_FX_MAX_SPEED);
+    const speed =
+      e.path === "static" || e.speed === undefined ? 0 : clamp(e.speed, 0, MODEL_FX_MAX_SPEED);
     const instances = modelFxInstances(e, ctx, origin);
     if (instances.length === 0) return;
 

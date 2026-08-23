@@ -60,10 +60,25 @@ export const zSpawnModelFx = z
         "模型 id（`content/models`）。這是一具有骨架的模型，⛔ 不是粒子貼圖。有 `preset` 時可省略（從模板補）。",
       ),
     path: z
-      .enum(["forward", "toTarget", "orbit", "radial"])
+      .enum(["forward", "toTarget", "orbit", "radial", "static"])
       .optional()
       .describe(
-        "路徑：forward（沿面向直線）／toTarget（朝目標直線）／radial（count 個等分向外發散）／orbit（count 個在半徑 distance 的環上繞）。有 `preset` 時可省略（從模板補）。",
+        "路徑：forward（沿面向直線）／toTarget（朝目標直線）／radial（count 個等分向外發散）／orbit（count 個在半徑 distance 的環上繞）／static（⭐ 定點擺一具播動畫，活 lifeSec，不位移）。有 `preset` 時可省略（從模板補）。",
+      ),
+    /**
+     * ⭐【定點 3D 模型】`path:"static"` 的錨點（#649 類④）。
+     *
+     * 原作 266 具 dummy 有 **238 具站著不動**（89%）—— `CreateUnit` →
+     * `AddSpecialEffect` → `UnitApplyTimedLife`，⛔ 一次 `SetUnitPosition`
+     * 都沒有。它們分成兩族，正好是這一格的兩個值：
+     * `hero-attached-aura`（87 具）→ `self`；`world-point`（151 具）→ `point`。
+     * ⛔ 不新開 effect kind —— 那會讓「一具 3D 模型的演出」有兩個住處（第〇·五）。
+     */
+    anchor: z
+      .enum(["self", "point", "target"])
+      .optional()
+      .describe(
+        'path:"static" 的錨點：self＝施法者腳下／point＝施放的地板點／target＝目標腳下（解不到就退化 point→self）。省略 = self。⛔ 只有 static 讀得到。',
       ),
     speed: z
       .number()
@@ -98,7 +113,9 @@ export const zSpawnModelFx = z
       .positive()
       .max(MODEL_FX_MAX_LIFE_SEC)
       .optional()
-      .describe("活多久。orbit 必填（那是它唯一的終止條件）；與 distance 都給時取先到的那一個。"),
+      .describe(
+        "活多久。orbit／static 必填（那是它們唯一的終止條件）；與 distance 都給時取先到的那一個。",
+      ),
     onArrive: z
       .array(zEffectDef)
       .min(1)
@@ -179,6 +196,8 @@ export const refine = (
   // 都沒有（七種失敗形態②）。所以缺席在**編輯發生的當下**就喊。
   if (e.preset === undefined) {
     for (const k of ["modelKey", "path", "speed"] as const) {
+      // ⭐ `static` 不位移 ⇒ `speed` 在這個分支**不是**身分欄位（下面反過來禁填它）。
+      if (k === "speed" && e.path === "static") continue;
       if (e[k] === undefined) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
@@ -215,7 +234,35 @@ export const refine = (
       message: 'path:"orbit" 一定要有 lifeSec —— 繞圈沒有終點，缺了它這一具模型當場就消失',
     });
   }
-  if (!fromPreset && e.distance === undefined && e.path !== "toTarget") {
+  // ⭐【定點 3D 模型】#649：`static` 沒有「走完」可言 ⇒ `lifeSec` 是唯一的終止
+  // 條件（必填）；`speed`／`distance` 在這個分支**沒有人讀** ⇒ 禁填（一格看起來
+  // 有設、其實沒有人讀的數字，正是這張 refine 表整篇在擋的形狀）。
+  if (e.path === "static") {
+    if (e.lifeSec === undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["lifeSec"],
+        message: 'path:"static" 一定要有 lifeSec —— 定點模型沒有「走完」可言，缺了它這一具當場就消失',
+      });
+    }
+    for (const k of ["speed", "distance"] as const) {
+      if (e[k] !== undefined) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: [k],
+          message: `path:"static" 沒有人讀 ${k} —— 定點模型不位移，這一格是一個看起來有設、其實沒有人讀的數字`,
+        });
+      }
+    }
+  }
+  if (e.anchor !== undefined && e.path !== "static") {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["anchor"],
+      message: '只有 path:"static" 讀得到 anchor —— 移動路徑的起點永遠是施法者',
+    });
+  }
+  if (!fromPreset && e.distance === undefined && e.path !== "toTarget" && e.path !== "static") {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["distance"],
