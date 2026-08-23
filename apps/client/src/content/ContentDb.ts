@@ -85,6 +85,7 @@ import { vfxSoundLayer } from "../audio/vfxSound";
 import { resolveFamilyArt } from "../render/vfx/familyTuning";
 import { setMaxAbilityVfxLayers } from "../render/vfx/abilityLayers";
 import { setOneShotMaxLifeSec } from "../vfx/oneShotLife";
+import { setCastArcsEnabled } from "../vfx/arcBolt";
 import { setCastHeightSource } from "../render/vfx/familyCastHeight";
 import { setFamilyPitchDefaults } from "../render/vfx/familyOrient";
 import { setProjectileTuning } from "../render/views/projectileArt";
@@ -387,6 +388,8 @@ export class ContentDb {
     // 同樣是第②號故障的位置:少了這一行,後台把 0.6 調成 2.0 之後 schema 收下了、
     // 頁面顯示 2.0、而 `VfxSystem` 仍然照 0.6 夾。傳 undefined = 出貨的 0.6。
     setOneShotMaxLifeSec(vfxFamiliesDoc?.oneShotMaxLifeSec);
+    // ⚡ GH#571 —— 施法電弧的總開關（同一份文件、同一條路）。
+    setCastArcsEnabled(vfxFamiliesDoc?.castArcs);
     // #251 owner「衝擊波特效沒有真實套用」—— 施法高度模式。同一個位置、同一種
     // 第②號故障:少了這一行,後台把模式切回 `flat` 之後場上仍然貼地。
     setCastHeightSource(vfxFamiliesDoc?.castHeightSource);

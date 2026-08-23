@@ -356,6 +356,10 @@ export const GLOBAL_CHOICE_FIELDS = [
   "castHeightSource",
   "projectileArtFromDoc",
   "familyPitchDefaults",
+  // ⚡ GH#571 —— 施法電弧的總開關。⭐ 預設**開**（第〇·六守則：優先權大的
+  // 更新後都是預設啟動）。owner 2026-08-22 [優先]：「一堆閃電特效 如皮卡丘
+  // 飛鼠先生 雷神之槌 等雷電特效 都沒有真的出現」。
+  "castArcs",
   // GH#390 —— 特效自帶音效的總開關。⭐ 預設**開**（第〇·六守則：優先權大的
   // 更新後都是預設啟動；開關存在是為了一鍵回頭，不是為了觀望）。
   "soundEnabled",
@@ -374,6 +378,10 @@ export const GLOBAL_CHOICE_OPTIONS: Readonly<
   projectileArtFromDoc: [
     { value: "1", label: "開：彈道套用自己的特效文件（出貨）" },
     { value: "0", label: "關：固定彗星，只換顏色（升級前）" },
+  ],
+  castArcs: [
+    { value: "1", label: "開：雷電技能畫出鋸齒電弧（出貨）" },
+    { value: "0", label: "關：只有粒子，回到 2026-08-23 之前" },
   ],
   familyPitchDefaults: [
     { value: "1", label: "開：有方向的形狀躺下來並朝目標（出貨）" },
@@ -439,6 +447,7 @@ export const FIELD_LABEL: Readonly<Record<string, string>> = {
   projectileArtFromDoc: "彈道套用特效文件",
   projectileRadiusGain: "彈道大小跟半徑",
   projectileFlyHeightY: "彈道飛行高度",
+  castArcs: "施法電弧（雷電技能的鋸齒閃電）",
   familyPitchDefaults: "有方向的特效躺下來",
   beamPitchDeg: "光束仰角",
   slashPitchDeg: "斬擊仰角",
@@ -502,6 +511,14 @@ export const FIELD_HINT: Readonly<Record<string, string>> = {
     "所以特效只會更靠近地板、不可能飛出畫面上緣；" +
     "每個家族都用自己的高度 = 連往上那一半也照做（會改到 200 多支技能的構圖，先看過畫面再開）；" +
     "全部固定在胸口 = 升級前的行為，改壞了用這一格退回去，不用重新出 client",
+  castArcs:
+    "雷電技能施放時，除了粒子之外再畫一道**有分岔的鋸齒電弧**。" +
+    "⚠️ 這一格治的不是「特效不好看」，是 owner 2026-08-22 說的「一堆閃電特效" +
+    "（皮卡丘／飛鼠先生／雷神之槌）都沒有真的出現」—— 演算法（ArcBoltFx）早就在，" +
+    "但只有 2 支技能走得到它，而帶 fx.prim.lightning.* 的有 28 支。" +
+    "開＝那 28 支全部接上（11 道直擊 + 17 道爆散）。" +
+    "關＝逐位元回到只有粒子。⚠️ 低冷卻的爆散型（例：十萬伏特）每次施法會生 5–8 條弧帶，" +
+    "覺得太吵先關這一格看差異，再決定要不要調整",
   projectileArtFromDoc:
     "飛在空中的子彈要不要真的套用它自己那份特效文件（大小／壽命／密度／混色）。" +
     "2026-08-01 實測：把文件的顆數 40→200、大小→9、壽命→3 秒、混色→alpha 全部改掉，" +
@@ -691,6 +708,7 @@ export function familiesDocFor(doc: ConfigVfxFamiliesDoc): ConfigVfxFamiliesDoc 
     // round-trip 守衛涵蓋 `GLOBAL_FIELDS` + `GLOBAL_CHOICE_FIELDS` 兩張表。
     castHeightSource: doc.castHeightSource,
     projectileArtFromDoc: doc.projectileArtFromDoc,
+    castArcs: doc.castArcs,
     projectileRadiusGain: doc.projectileRadiusGain,
     projectileFlyHeightY: doc.projectileFlyHeightY,
     // ⚠️ GH#379 —— 同樣的六行。少寫任何一行，操作者把某個家族的仰角調完按存檔，

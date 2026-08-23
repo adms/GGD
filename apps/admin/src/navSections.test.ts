@@ -133,6 +133,9 @@ const BASELINE_PAGES: readonly Page[] = [
   // 誤報成分類重編出錯。它留在「系統」，因為 owner 核准的四個新分類沒有點名它。
   "victoryPodium",
   "vfxForge",
+  // ⭐ 2026-08-23 新增（GH#571 那一批的世界演出表）—— 這一列不是「搬丟了」，
+  //    是**新頁**：基準線與 NAV 一起長，否則這條守衛就沒有比較對象。
+  "worldCues",
   "mobWaves",
   "bossIntro",
   "itemDraft",

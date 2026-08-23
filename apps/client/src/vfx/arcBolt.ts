@@ -36,6 +36,7 @@
 import type { VfxBlendMode } from "@ggd/shared/content";
 import { hotToCoolStops, type ColorStop, type Rgb } from "./vfxPresets";
 import { sampleColorStops, type Vec3Triple } from "./ribbonMath";
+import { DEFAULT_CAST_ARCS } from "@ggd/shared/content/schema/vfx";
 
 /** 世界座標的一端（電弧兩頭都是點，⛔ 不是實體 —— 實體會死掉，點不會）。 */
 export interface ArcEnd {
@@ -216,6 +217,26 @@ export const ARC_CAST_ELEMENTS: Readonly<Record<string, Rgb>> = {
  * ⚠️ 這條線是**必要的**：出貨有 `castType: "ground"` 而 `range: 0` 的技能
  * （86-04 打雷絕招），它的落點就是施法者自己。
  */
+/**
+ * ⚡ 施法電弧的**總開關**（`config.vfx-families@1.castArcs`，GH#571）。
+ *
+ * ⭐ 樣板逐字照 `vfx/oneShotLife.ts::setOneShotMaxLifeSec` —— 由
+ * `ContentDb.load()` 呼叫，所以**後台存檔 → 下一次載入內容就生效**，
+ * ⛔ 不必重建映像（`content/` 是 live bind-mount）。
+ *
+ * ⚠️ 它擋的是**要不要有這個機制**，⛔ 不是品質降級（那是 `AdaptiveQuality`）。
+ * 轉成 `false` ⇒ 28 支雷電技能逐位元組回到 2026-08-23 之前。
+ */
+let arcCastEnabled: boolean = DEFAULT_CAST_ARCS;
+
+export function setCastArcsEnabled(v: boolean | undefined): void {
+  arcCastEnabled = v ?? DEFAULT_CAST_ARCS;
+}
+
+export function castArcsEnabled(): boolean {
+  return arcCastEnabled;
+}
+
 export const ARC_CAST_MIN_STRIKE_LEN = 0.6;
 
 /** `strike` 退回 `burst` 時用的長度／道數 —— 自身型的「電流爬滿全身」。 */
@@ -297,6 +318,10 @@ export function arcCastPlan(
   seed: number,
   bodyY: number,
 ): ArcCastRequest[] {
+  // ⭐ 總開關（`config.vfx-families@1.castArcs`）。⛔ 閘在**這裡**而不是呼叫端：
+  //    呼叫端只有一個今天，明天可能有第二個，而一個只擋住第一個入口的開關
+  //    是一句「說了但不會發生」的宣稱（第一·五守則）。
+  if (!arcCastEnabled) return [];
   for (const key of keys) {
     const p = parsePrimFxKey(key);
     if (!p) continue;

@@ -153,6 +153,8 @@ export function VfxForgePage(): React.JSX.Element {
   const [famPitch, setFamPitch] = useState("");
   // GH#390 —— 特效自帶音效的總開關。留白 = 沒說過 = 用出貨預設（開）。
   const [vfxSound, setVfxSound] = useState("");
+  // ⚡ GH#571 —— 施法電弧的總開關（留白 = 沒說 = 用出貨預設 true）。
+  const [castArcs, setCastArcs] = useState("");
   const [famDrafts, setFamDrafts] = useState<Record<string, FamilyDraft>>({});
   const [abDrafts, setAbDrafts] = useState<Record<string, AbilityDraft>>({});
   const [removals, setRemovals] = useState<string[]>([]);
@@ -216,6 +218,9 @@ export function VfxForgePage(): React.JSX.Element {
         );
         setFamPitch(
           parsed.familyPitchDefaults === undefined ? "" : parsed.familyPitchDefaults ? "1" : "0",
+        );
+        setCastArcs(
+          parsed.castArcs === undefined ? "" : parsed.castArcs ? "1" : "0",
         );
         setVfxSound(
           parsed.soundEnabled === undefined ? "" : parsed.soundEnabled ? "1" : "0",
@@ -343,6 +348,7 @@ export function VfxForgePage(): React.JSX.Element {
       castHeightSource: _droppedHeight,
       projectileArtFromDoc: _droppedArt,
       familyPitchDefaults: _droppedPitchOn,
+      castArcs: _droppedArcs,
       soundEnabled: _droppedSound,
       beamPitchDeg: _droppedBeam,
       slashPitchDeg: _droppedSlash,
@@ -366,6 +372,7 @@ export function VfxForgePage(): React.JSX.Element {
       ...(castHeight === "" ? {} : { castHeightSource: castHeight as "flat" | "ground" | "family" }),
       ...(projArt === "" ? {} : { projectileArtFromDoc: projArt === "1" }),
       ...(famPitch === "" ? {} : { familyPitchDefaults: famPitch === "1" }),
+      ...(castArcs === "" ? {} : { castArcs: castArcs === "1" }),
       ...(vfxSound === "" ? {} : { soundEnabled: vfxSound === "1" }),
       ...pitchPatch,
       enabled,
@@ -386,7 +393,7 @@ export function VfxForgePage(): React.JSX.Element {
       next = b ? setAbilityBinding(next, id, b) : clearAbilityBinding(next, id);
     }
     return familiesDocFor(next);
-  }, [doc, globals, enabled, castHeight, projArt, famPitch, vfxSound, famDrafts, abDrafts, removals]);
+  }, [doc, globals, enabled, castHeight, projArt, famPitch, castArcs, vfxSound, famDrafts, abDrafts, removals]);
 
   const dirty = useMemo(
     () => (doc && pending ? JSON.stringify(pending) !== JSON.stringify(familiesDocFor(doc)) : false),
@@ -398,12 +405,14 @@ export function VfxForgePage(): React.JSX.Element {
     castHeightSource: castHeight,
     projectileArtFromDoc: projArt,
     familyPitchDefaults: famPitch,
+    castArcs,
     soundEnabled: vfxSound,
   };
   const choiceSetter: Record<GlobalChoiceField, (v: string) => void> = {
     castHeightSource: setCastHeight,
     projectileArtFromDoc: setProjArt,
     familyPitchDefaults: setFamPitch,
+    castArcs: setCastArcs,
     soundEnabled: setVfxSound,
   };
 

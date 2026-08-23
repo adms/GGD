@@ -451,6 +451,11 @@ export type AnyVfxDoc = z.infer<typeof zVfxCollectionDoc>;
  * 層寫 `timeScale: 4` 拿到的仍然是 0.6 秒(往下變短完全生效,往上飽和)。
  */
 export const DEFAULT_ONE_SHOT_MAX_LIFE_SEC = 0.6;
+/**
+ * ⚡ 施法電弧（`config.vfx-families@1.castArcs`）的出貨預設。
+ * ⭐ `true` ＝ owner 2026-08-22 那句 [優先] 的結果預設啟動；`false` 一鍵回頭。
+ */
+export const DEFAULT_CAST_ARCS = true;
 
 /**
  * 下界。手機出貨是 30 fps(#274),0.1 秒 = **3 張畫面** —— 再低於這條線,一次
@@ -1044,6 +1049,26 @@ export const zConfigVfxFamiliesDoc = z
     projectileRadiusGain: z.number().min(0).max(3).optional(),
     /** 彈道飛在離地多高。上下界 0.2/4 是 `MIN_/MAX_PROJECTILE_FLY_HEIGHT_Y`。 */
     projectileFlyHeightY: z.number().min(0.2).max(4).optional(),
+    /**
+     * ⚡ GH#571 —— **施法電弧**（`fx.prim.<element>.<shape>` 這條家族規則）。
+     *
+     * owner 2026-08-22（逐字，[優先]）：「一堆閃電特效 如**皮卡丘 飛鼠先生
+     * 雷神之槌** 等雷電特效 **都沒有真的出現**」。⛔ 根因不是「沒有演算法」
+     * （`ArcBoltFx` 早就做完了），是**只有 2 支**技能走得到它，而帶
+     * `fx.prim.lightning.*` 的有 **28 支**。
+     *
+     * ⭐ 這一格是那條家族規則的**總開關**：轉成 `false` ⇒ 逐位元組回到
+     * 2026-08-23 之前（28 支回到只有粒子）。⛔ 它**不是**品質階梯的一環 ——
+     * 品質降級走 `AdaptiveQuality`，這一格是**要不要有這個機制**。
+     *
+     * ⚠️ 為什麼是 OPTIONAL：與上面五格逐字同一個理由 —— 線上**已經存過**的
+     * 耐久覆蓋層沒有這個 key，設成必填會讓那些 overlay 整份 `safeParse` 失敗
+     * ⇒ `extractFamiliesDoc` 回 null ⇒ **整個家族層一起消失**。
+     *
+     * 省略 = `DEFAULT_CAST_ARCS`（true，＝我挑的那一邊；第〇·六守則：
+     * 優先權大的更新預設啟動）。
+     */
+    castArcs: z.boolean().optional(),
     /**
      * GH#379 —— 有方向的五個形狀要不要套用**家族仰角預設**(見
      * `DEFAULT_FAMILY_PITCH_DEG`)。省略 = `DEFAULT_FAMILY_PITCH_DEFAULTS_ENABLED`

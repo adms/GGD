@@ -113,6 +113,19 @@ const BASE_TUNING: VfxFamilyTuning = {
   heightY: 0.15,
 };
 
+/**
+ * 這一格在**出貨的 Zod** 裡是不是布林（剝掉 `.optional()` 那一層）。
+ * ⛔ 不是一張手打的名單 —— 那張名單在 2026-08-23 漏掉第四格。
+ */
+function isBooleanField(field: string): boolean {
+  const shape = (zConfigVfxFamiliesDoc as unknown as { shape?: Record<string, unknown> }).shape;
+  let node = shape?.[field] as { _def?: { typeName?: string; innerType?: unknown } } | undefined;
+  while (node?._def?.typeName === "ZodOptional" || node?._def?.typeName === "ZodDefault") {
+    node = node._def.innerType as typeof node;
+  }
+  return node?._def?.typeName === "ZodBoolean";
+}
+
 describe("鑄技工坊 · 欄位清單來自 shared 的 schema (adminui-vfx-forge-schema)", () => {
   it("家族 / 形狀 / 元素三個列舉是執行期從 Zod 讀出來的，不是手抄的第二份", () => {
     cover("adminui-vfx-forge-schema");
@@ -385,6 +398,8 @@ describe("鑄技工坊 · 存得進去讀得回來 (adminui-vfx-forge-roundtrip)
       familyPitchDefaults: false,
       // GH#390 —— 同上，出貨是 true（特效音效預設開），哨兵值必須是 false。
       soundEnabled: false,
+      // ⚡ GH#571 —— 同上，出貨是 true（施法電弧預設開），哨兵值必須是 false。
+      castArcs: false,
     };
     const withSentinels = { ...BASE_DOC() } as Record<string, unknown>;
     for (const f of GLOBAL_CHOICE_FIELDS) withSentinels[f] = SENT_CHOICE[f];
@@ -404,10 +419,11 @@ describe("鑄技工坊 · 存得進去讀得回來 (adminui-vfx-forge-roundtrip)
       for (const opt of GLOBAL_CHOICE_OPTIONS[f]) {
         expect(validateGlobalChoiceField(f, opt.value), `${f}=${opt.value}`).toBe("");
         // 布林欄位的下拉用 "1"/"0"；字串列舉直接照抄。
-        const raw =
-          f === "projectileArtFromDoc" || f === "familyPitchDefaults" || f === "soundEnabled"
-            ? opt.value === "1"
-            : opt.value;
+        // ⭐ 2026-08-23：這一行原本是**三個手打的名字**，而加第四格（GH#571 的
+        //    `castArcs`）時它靜靜地把 `"1"` 當字串餵進 Zod ⇒ 紅在一個與根因無關的
+        //    地方。⇒ 改成**問出貨的 schema**「這一格是不是布林」（第〇·四守則：
+        //    同一份知識不可以有第二個住處）。加第五格不必動這裡一個字。
+        const raw = isBooleanField(f) ? opt.value === "1" : opt.value;
         expect(
           zConfigVfxFamiliesDoc.safeParse({ ...BASE_DOC(), [f]: raw }).success,
           `${f} 的下拉選項 ${opt.value} 被 shared 的 Zod 擋下來`,
