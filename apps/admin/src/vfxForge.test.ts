@@ -350,6 +350,14 @@ describe("鑄技工坊 · 存得進去讀得回來 (adminui-vfx-forge-roundtrip)
       boltPitchDeg: -8,
       dashPitchDeg: 6,
       tornadoPitchDeg: 80,
+      // 🔵 GH#617 —— 衝擊波環三格。⚠️ 每一格都在 Zod 的上下界內而且 ≠ 出貨值
+      //（0.35 / 1 / 0.55 / 3 / 0.8 / 1.8），⛔ 否則「掉了之後補回預設」會蒙混過關。
+      impactRingAlpha: 0.62,
+      impactRingRadius: 1.4,
+      impactRingLife: 0.9,
+      impactRingFadePow: 2.5,
+      impactRingMaxLifeSec: 1.25,
+      impactRingTierSpeed: 2.4,
       // GH#456 —— 錐角五格。哨兵值刻意都 ≠ 出貨值，才驗得到「真的往返」。
       beamAngleDeg: 14,
       slashAngleDeg: 61,
