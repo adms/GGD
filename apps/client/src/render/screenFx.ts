@@ -124,13 +124,132 @@ export function screenFxAudienceAllows(
  * 而 `as never` 讓 tsc 完全沉默。
  */
 
-/** 這一發演出輪不輪得到本機看。⭐ 觀眾規則只有一份，住在 sim。 */
+/** 分割畫面接管旗標 —— 定義與理由在下面「分割畫面」那一節。 */
+let splitRouterInstalled = false;
+
+/**
+ * 這一發演出輪不輪得到**全螢幕那一層**看。⭐ 觀眾規則只有一份，住在 sim。
+ *
+ * ⚠️ ⭐ **分割畫面下它一律回 false** —— 見下面 {@link installSplitScreenCueRouter}：
+ * 沙發模式一個畫面上有 2–4 格，「全螢幕」不屬於任何一位玩家，所以那一層沒有觀眾，
+ * 由 {@link dispatchScreenCue} 逐格派送。⛔ 少了這一行，player 0 的**指名**閃爍
+ * 會蓋住全部四格（＝「不該收的收到了」）。
+ */
 export function screenCueIsForViewer(
   cue: { broadcast: boolean; subjects: readonly number[] },
   localId: number | null,
 ): boolean {
+  if (splitRouterInstalled) return false;
   if (cue.broadcast) return true;
   return localId !== null && (cue.subjects ?? []).some((id) => id === localId);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  🖥️🖥️ 分割畫面 —— **每一格各自解算一次**（GH#612）
+// ═══════════════════════════════════════════════════════════════════════════
+/**
+ * ⛔⛔ 在此之前這一層**只認得 player 0**，而它同時錯了**兩個方向**：
+ *
+ * | 方向 | 舊行為 | 玩家看到 |
+ * |---|---|---|
+ * | 該收的收不到 | 觀眾判定只拿 `hudStore.localEntityId`（＝第一格的主角） | ⭐ 沙發玩家 2/3/4 是主角時**整發丟掉** |
+ * | 不該收的收到了 | 閃爍是一層 `position:fixed;inset:0`、震動只進 `viewports.primary` | ⭐ 指名 player 0 的那一發**蓋住全部四格** |
+ *
+ * ⚠️ 兩個方向是**同一個根因**：「本機觀眾」在沙發模式下是一個**集合**，⛔ 不是一個 id。
+ * ⇒ 這一節把它做成「viewers 陣列 → 遮罩 → 逐格 sink」，⛔ 不是在呼叫端補一個 if。
+ */
+
+/** sim 解算完的收件人（`sim/effects/clientCues.ts` 的 `ScreenCueRecipients`）。 */
+export interface ScreenCueRecipients {
+  broadcast: boolean;
+  subjects: readonly number[];
+}
+
+/**
+ * 一格 viewport 的螢幕演出出口。
+ *
+ * ⭐ 結構型別 —— 出貨接的是 `vfx/ScreenFxLayer`，⛔ 但這一層不認識它
+ *（這個檔的檔頭：沒有 DOM、沒有 Babylon）。守衛餵的也是**真的** `ScreenFxLayer`，
+ * ⛔ 不是一個手搭的假 sink（第二守則失敗形態⑤）。
+ */
+export interface ScreenCueSink {
+  flash(spec: ScreenFlashSpec, viewer: { isCaster: boolean; isVictim: boolean }): boolean;
+  shake(spec: ScreenShakeSpec, viewer: { isCaster: boolean; isVictim: boolean }): boolean;
+}
+
+/** 觀眾已經由遮罩判完 ⇒ 圖層那一層一律「看得到」（`applyTo` 缺席 = `"all"`）。 */
+const SEEN = { isCaster: true, isVictim: true } as const;
+
+/**
+ * ⭐ GameApp（**唯一**知道有幾格 viewport 的地方）安裝／拆除逐格路由。
+ *
+ * ⚠️ 它是一個模組旗標而不是一個參數，因為**要被關掉的那個呼叫端在別的檔**
+ *（`VfxSystem` 的 `case "screenFlash"`）—— 而「同一發演出出現兩次」比丟掉它更糟。
+ * ⛔ 沒有安裝（headless 測試、還沒進場）⇒ 完全是舊行為，全螢幕那一層照常。
+ */
+export function installSplitScreenCueRouter(on: boolean): void {
+  splitRouterInstalled = on;
+}
+
+export function splitScreenCueRouterInstalled(): boolean {
+  return splitRouterInstalled;
+}
+
+/**
+ * ⭐ **每一格各自解算一次**：回傳長度＝`viewers` 的遮罩。
+ *
+ * ⛔ ⚠️ `broadcast` 是「全場」⇒ 每一格都要 ——**包含還沒有主角的那一格**
+ *（`null`）：那一格畫的是一場真的在發生的比賽，⛔ 不是一塊黑幕。
+ */
+export function screenCueViewportMask(
+  cue: ScreenCueRecipients,
+  viewers: readonly (number | null)[],
+): boolean[] {
+  const subjects = cue.subjects ?? [];
+  return viewers.map((id) =>
+    cue.broadcast ? true : id !== null && subjects.some((s) => s === id),
+  );
+}
+
+/**
+ * ⭐ 一發 `screenFlash` / `screenShake` → **逐格**派送。回傳哪幾格真的動了。
+ *
+ * ⛔ 派送迴圈住在**這裡**而不是 GameApp，理由與 {@link screenFlashSpecFromEvent}
+ * 一字不差：`GameApp` 在測試裡建構不出來（`new Engine(canvas)` 要真的 WebGL），
+ * 所以寫在那個檔裡的決策**沒有守衛** —— 而這一支餵 4 個真的 `ScreenFxLayer`
+ * 就跑得起來（`splitScreenCues.test.ts`）。
+ */
+export function dispatchScreenCue(
+  type: "screenFlash" | "screenShake",
+  data: ScreenCueRecipients & Record<string, unknown>,
+  viewers: readonly (number | null)[],
+  sinks: readonly ScreenCueSink[],
+): boolean[] {
+  const mask = screenCueViewportMask(data, viewers);
+  const fired: boolean[] = mask.map(() => false);
+  for (let p = 0; p < mask.length; p++) {
+    if (!mask[p]) continue;
+    const sink = sinks[p];
+    if (!sink) continue;
+    fired[p] =
+      type === "screenFlash"
+        ? sink.flash(
+            screenFlashSpecFromEvent(
+              data as unknown as {
+                colorRgb: [number, number, number];
+                peakAlpha: number;
+                durationSec: number;
+                scripted?: boolean;
+              },
+            ),
+            SEEN,
+          )
+        : sink.shake(
+            screenShakeSpecFromEvent(data as unknown as { amplitude: number; durationSec: number }),
+            SEEN,
+          );
+  }
+  return fired;
 }
 
 export function screenFlashSpecFromEvent(p: {
