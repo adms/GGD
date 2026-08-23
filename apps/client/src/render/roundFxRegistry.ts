@@ -32,24 +32,34 @@ import { FireRingFx, type FireRingFxOptions } from "./vfx/FireRingFx";
 import { VictoryFireworks, type VictoryFireworksOptions } from "../vfx/VictoryFireworks";
 import { vfxSoundLayer } from "../audio/vfxSound";
 import { lifecycleLedger } from "./lifecycleLedger";
-import type { RoundEdge, RoundVfxTarget } from "./roundVfxLifecycle";
+import { CLEANUP_EDGES, type CleanupEdge, type RoundEdge, type RoundVfxTarget } from "./roundVfxLifecycle";
 
-export type { RoundEdge };
+export type { RoundEdge, CleanupEdge };
 
-/** 一個「知道自己在回合邊界該收什麼」的特效層。 */
+/** 一個「知道自己在清理邊界該收什麼」的特效層。 */
 export interface RoundFxOwner {
-  resetForRound(edge: RoundEdge): void;
+  resetForRound(edge: CleanupEdge): void;
 }
 
-/** 兩側都清 —— 大部分的池子屬於這一類。 */
-const BOTH_EDGES: readonly RoundEdge[] = ["enter", "leave"];
-/** 只在開打那一幀清（勝利煙火:它在 `leave` 那一幀才剛出生）。 */
-const ENTER_ONLY: readonly RoundEdge[] = ["enter"];
+/**
+ * ⭐ GH#560 —— **預設**：四個邊界全跑（owner：「寧願多次清理乾淨開始回合
+ * 也不要漏清到」）。⛔ 少跑才是那個要寫理由的例外，⛔ 不是反過來。
+ */
+const ALL_EDGES: readonly CleanupEdge[] = CLEANUP_EDGES;
 
 interface RoundFxEntry {
   readonly name: string;
-  readonly edges: readonly RoundEdge[];
-  readonly reset: (edge: RoundEdge) => void;
+  readonly edges: readonly CleanupEdge[];
+  /** ⛔ 只跑部分邊界的那一列必須寫得出理由；四個都跑的是空字串。 */
+  readonly why: string;
+  readonly reset: (edge: CleanupEdge) => void;
+}
+
+/** 守衛讀的那一份（⛔ 不是掃原始碼字串：這是真的註冊表本身）。 */
+export interface RoundFxScopedEntry {
+  readonly name: string;
+  readonly edges: readonly CleanupEdge[];
+  readonly why: string;
 }
 
 /**
@@ -58,19 +68,63 @@ interface RoundFxEntry {
  */
 export class RoundFxRegistry implements RoundVfxTarget {
   private readonly entries: RoundFxEntry[] = [];
+  private errors = 0;
+  private lastError = "";
 
   /** 註冊過的名字（守衛比對用；順序 = 清場順序）。 */
   get names(): readonly string[] {
     return this.entries.map((e) => e.name);
   }
 
-  add(name: string, edges: readonly RoundEdge[], reset: (edge: RoundEdge) => void): this {
-    this.entries.push({ name, edges, reset });
+  /** 每一列在哪幾個邊界跑、以及（少跑時）為什麼（守衛用）。 */
+  get roster(): readonly RoundFxScopedEntry[] {
+    return this.entries.map(({ name, edges, why }) => ({ name, edges, why }));
+  }
+
+  /**
+   * ⭐ 扇出時擲例外的次數。⚠️ fail-open 沒錯，**靜默**才是缺陷（第二守則）——
+   * 一列擲例外不可以帶走它後面**每一列**的回收，但它也不可以安靜地消失。
+   */
+  get errorCount(): number {
+    return this.errors;
+  }
+  get lastErrorText(): string {
+    return this.lastError;
+  }
+
+  /** ⭐ 四個邊界全跑（預設，⛔ 不必也不可以寫理由）。 */
+  add(name: string, reset: (edge: CleanupEdge) => void): this {
+    this.entries.push({ name, edges: ALL_EDGES, why: "", reset });
     return this;
   }
 
-  resetForRound(edge: RoundEdge): void {
-    for (const e of this.entries) if (e.edges.includes(edge)) e.reset(edge);
+  /**
+   * 只在某幾個邊界跑 —— `why` 是**必填**（tsc 擋住「一個沒有理由的例外」，
+   * 而那正是 GH#560 之前那兩份手抄清單的形狀）。
+   */
+  addScoped(
+    name: string,
+    edges: readonly CleanupEdge[],
+    why: string,
+    reset: (edge: CleanupEdge) => void,
+  ): this {
+    this.entries.push({ name, edges, why, reset });
+    return this;
+  }
+
+  resetForRound(edge: CleanupEdge): void {
+    for (const e of this.entries) {
+      if (!e.edges.includes(edge)) continue;
+      try {
+        e.reset(edge);
+      } catch (err) {
+        // ⛔ 一列壞掉不可以吃掉後面每一列的回收（那會讓一個小缺陷長成
+        //    「這一版回合邊界什麼都沒清」）——但它要**被說出來**：第一次印一行。
+        this.errors++;
+        this.lastError = `${e.name}@${edge}: ${String(err)}`;
+        if (this.errors === 1) console.warn(`[roundFx] ⛔ 清理邊界擲例外 ${this.lastError}`);
+      }
+    }
   }
 }
 
@@ -143,15 +197,20 @@ export function createRoundFx(scene: Scene, deps: RoundFxDeps): RoundFx {
 
   const registry = new RoundFxRegistry()
     // 一次性效果 + per-doc-id 的池子 + 預告圈/打擊感共用池（#259 / #262 / GH#270）
-    .add("vfx", BOTH_EDGES, () => vfx.resetForRound())
+    .add("vfx", () => vfx.resetForRound())
     // 沒有主人的常駐特效 free-list（⛔ 活著的英雄身上那些不動）
-    .add("ambient", BOTH_EDGES, () => ambient.resetForRound())
+    .add("ambient", () => ambient.resetForRound())
     // 漏斗殼 free-list（同上,活著的不動）
-    .add("whirlwind", BOTH_EDGES, () => whirlwind.resetForRound())
+    .add("whirlwind", () => whirlwind.resetForRound())
     // 火圈:停掉樂隊與鑲邊火焰。它的資源是有界且重用的,所以是 hide 不是 dispose
-    .add("fireRing", BOTH_EDGES, () => fireRing.hide())
+    .add("fireRing", () => fireRing.hide())
     // ⭐ 只有 enter —— 見 VictoryFireworks.resetForRound 的註解（leave 清它 = 刪掉 #235）
-    .add("victoryFx", ENTER_ONLY, (edge) => victoryFx.resetForRound(edge))
+    .addScoped(
+      "victoryFx",
+      ["enter"],
+      "⛔ `leave` 清它等於刪掉 #235：回合勝利煙火正是在 combat→resolution 的那一幀發射的，在 `leave` 清 = 在它出生的同一幀殺掉它,而畫面上跟「煙火壞了」一模一樣。⛔ `entry`/`exit` 也不必:進場時場上還沒有煙火,離場走 `GameApp.dispose()` 的 `victoryFx.dispose()`(⭐ 那是真的釋放,比 reset 更徹底)。",
+      (edge) => victoryFx.resetForRound(edge as RoundEdge),
+    )
     // ⭐ GH#580 —— 特效循環音的登記表。⚠️ 這一格在此之前**只有 `GameApp.dispose()`**
     //   （＝離開房間）碰得到,回合邊界的這張表上沒有它 ⇒ 上一回合龍捲風／火柱／吐息的
     //   循環音會在**商店畫面裡繼續響 8 秒**,踩到 `fireRingLoop`(素材 60.09s)那一發時
@@ -162,7 +221,7 @@ export function createRoundFx(scene: Scene, deps: RoundFxDeps): RoundFx {
     //   GH#594 那個洞。⭐ BOTH_EDGES —— owner:「寧願多次清理乾淨開始回合 也不要漏清到」。
     //   ⚠️ 順序是對的:`GameApp` 的 `roundVfx.sync()` 在 step 0,比 step 5b 的
     //   `vfxLoopPushes` 早,所以清完當幀不會再推。
-    .add("vfxSoundLayer", BOTH_EDGES, () => (deps.sound ?? vfxSoundLayer).reset())
+    .add("vfxSoundLayer", () => (deps.sound ?? vfxSoundLayer).reset())
     // ── 🔬 生命週期登記表（owner 2026-08-23「到第七回合就很難動作⋯累積」）───────
     // ⛔ 它**不清任何東西** —— 上面每一列都是回收動作,這一列是**量測**:在回合邊界
     // 把「每一類物件現在有幾個 / 最老的至少活了幾秒」記一筆,於是「越玩越 lag」會
@@ -170,11 +229,22 @@ export function createRoundFx(scene: Scene, deps: RoundFxDeps): RoundFx {
     // **前**、`enter` 是清場**後**,兩側混在同一條序列裡等於拿蘋果跟橘子算成長。
     // ⚠️ 它必須排在**最後** —— 前面那幾列才剛把池子還回去,量在它們之前得到的是
     // 上一回合的殘影(而那正是這條 lane 要抓的東西,量錯就等於沒量)。
-    .add("lifecycleLedger", ENTER_ONLY, () => lifecycleLedger.markRound(performance.now() / 1000));
+    .addScoped(
+      "lifecycleLedger",
+      ["enter"],
+      "⛔ 它一個東西都不收(是**量測**,不是回收)。只取 `enter`:`leave` 是清場**前**、`enter` 是清場**後**,兩側混在同一條序列裡等於拿蘋果跟橘子算成長;`entry`/`exit` 各只會發生一次,記進逐回合序列只會製造一個假的 R1/末列。",
+      () => lifecycleLedger.markRound(performance.now() / 1000),
+    );
 
   // ⭐ 綁在**唯一的組裝點**:這裡是 GameApp 建 Babylon 場景型 FX 的地方,
   //   所以「要普查哪一個 scene」不會有第二個答案(也不必在 GameApp 接一行)。
   lifecycleLedger.bindScene(scene);
+
+  // ⭐ GH#560 —— **入口**（owner:「不管是出口還是**入口**還是每回合進商店前」)。
+  //   進一場比賽／進練習模式時,場上可能還留著上一個場景沒收乾淨的東西(⚠️ 那一族
+  //   正是 module 單例:`vfxSoundLayer` 的循環音登記表跨場景活著)。⛔ 這不是形式:
+  //   owner 的原話裡「離開 到 進練習模式 也是有問題」講的就是這一格。
+  registry.resetForRound("entry");
 
   return { registry, vfx, ambient, whirlwind, fireRing, victoryFx };
 }

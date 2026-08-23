@@ -26,8 +26,8 @@ import { Scene } from "@babylonjs/core/scene";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { VfxDoc } from "@ggd/shared/content";
 import type { EventMessage } from "@ggd/shared/protocol/messages";
-import { createRoundFx, type RoundFx } from "./roundFxRegistry";
-import { RoundVfxLifecycle } from "./roundVfxLifecycle";
+import { createRoundFx, RoundFxRegistry, type RoundFx } from "./roundFxRegistry";
+import { CLEANUP_EDGES, RoundVfxLifecycle } from "./roundVfxLifecycle";
 
 let engine: NullEngine;
 let scene: Scene;
@@ -161,5 +161,59 @@ describe("回合邊界對整張註冊表扇出 (round-vfx-cleanup)", () => {
 
     life.sync("combat"); // 下一回合開打 —— 上一回合的殘火在這裡收
     expect(fx.victoryFx.active).toBe(false);
+  });
+});
+
+/**
+ * ⭐ GH#560 —— owner 2026-08-22：「不管是**出口**還是**入口**還是**每回合進商店前**」
+ * 「你**寧願多次清理乾淨開始回合 也不要漏清到**」。
+ *
+ * 在此之前只有中間那兩個邊界，而出口走的是 `GameApp.dispose()` 裡**另一份手抄的
+ * 清單**（20 幾項 vs 註冊表 5 項）—— 差集就是「每回合沒有人清」的那一批。
+ */
+describe("GH#560 四個清理邊界走同一份清單 (round-vfx-cleanup)", () => {
+  it("⭐ 預設四個邊界全跑；只跑部分邊界的每一列都寫得出理由", () => {
+    cover("round-vfx-cleanup");
+    const roster = makeFx().registry.roster;
+    const everywhere = roster.filter((e) => e.edges.length === CLEANUP_EDGES.length);
+    // 承重的那一批共用池真的四個邊界都跑（⛔ 少一個 = 那個邊界沒有人清）
+    expect(everywhere.map((e) => e.name)).toEqual(
+      expect.arrayContaining(["vfx", "ambient", "whirlwind", "fireRing", "vfxSoundLayer"]),
+    );
+    for (const e of roster) {
+      // ⛔ 一列沒有理由的例外，跟 GH#560 之前那兩份手抄清單是同一件事
+      if (e.edges.length < CLEANUP_EDGES.length) {
+        expect(e.why.length, `${e.name} 少跑邊界卻沒有寫理由`).toBeGreaterThan(20);
+      } else {
+        expect(e.why, `${e.name} 四個邊界都跑就不必寫理由`).toBe("");
+      }
+    }
+  });
+
+  it("⭐ 出口（離場）真的把共用池還回去 —— ⛔ 不是只有回合邊界", () => {
+    cover("round-vfx-cleanup");
+    const fx = makeFx();
+    const life = new RoundVfxLifecycle(fx.registry);
+    life.sync("combat");
+    playRound(fx, 1, 1000);
+    const during = load();
+    life.exit(); // ＝ `GameApp.dispose()` 裡的那一行
+    expect(during.systems, "離場沒有把發射器還回去").toBeGreaterThan(load().systems);
+    expect(fx.registry.errorCount, fx.registry.lastErrorText).toBe(0);
+  });
+
+  it("一列擲例外不會帶走它後面每一列，但**會被數出來**（⛔ 靜默才是缺陷）", () => {
+    cover("round-vfx-cleanup");
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const ran: string[] = [];
+    const r = new RoundFxRegistry()
+      .add("boom", () => {
+        throw new Error("x");
+      })
+      .add("after", () => ran.push("after"));
+    r.resetForRound("exit");
+    expect(ran).toEqual(["after"]);
+    expect(r.errorCount).toBe(1);
+    warn.mockRestore();
   });
 });

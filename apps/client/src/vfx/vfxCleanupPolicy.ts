@@ -20,6 +20,7 @@
 import {
   Configs,
   DEFAULT_VFX_CLEANUP,
+  GROUND_TEX_CACHE_BOUNDS,
   VFX_FADE_OUT_MAX_SEC_BOUNDS,
   VFX_HARD_CAP_SCOPES,
   VFX_HARD_MAX_LIFE_SEC_BOUNDS,
@@ -182,6 +183,39 @@ export function vfxHardMaxLifeSec(policy: ConfigVfxCleanupDoc = vfxCleanupPolicy
   const fallback = DEFAULT_VFX_CLEANUP.vfxHardMaxLifeSec ?? 3;
   if (typeof v !== "number" || !Number.isFinite(v)) return fallback;
   return Math.min(VFX_HARD_MAX_LIFE_SEC_BOUNDS.max, Math.max(VFX_HARD_MAX_LIFE_SEC_BOUNDS.min, v));
+}
+
+// ---------------------------------------------------------------------------
+// 🖼 GH#561 —— 地面貼圖跨回合快取的上限
+// ---------------------------------------------------------------------------
+
+/**
+ * 同時保留幾**組**地面貼圖（一組 = albedo/normal/orm/macro 四張）。
+ *
+ * ⚠️ 同 `vfxFadeOutMaxSec`，這一格**不吃 `enabled`**：`enabled` 管的是「回合邊界
+ * 要不要回收特效池子」，而這一條是**顯示記憶體預算**。把它綁在特效回收總開關上
+ * 等於「有人為了查一個池子問題關掉 enabled」就順手把 VRAM 上限也拿掉了。
+ * 要回頭（完全不淘汰）就把它拉到上界 64。
+ *
+ * ⛔ 讀不到／界外的數字在這裡夾回上下界，⛔ 不是在消費端 —— 消費端有兩個
+ * （`acquireGroundTextures` 與 `warmGroundTextures`），夾在兩邊就是兩份會各自腐爛
+ * 的規則。⚠️ 而**夾的下界是 4**：低於「同一張場地同時要用的鍵數」會讓建場自己把
+ * 正掛在材質上的那一組淘汰掉 ⇒ GH#536 的地板全黑。
+ */
+export function groundTextureCacheMax(
+  mobile: boolean,
+  policy: ConfigVfxCleanupDoc = vfxCleanupPolicy(),
+): number {
+  const v = mobile ? policy.groundTextureCacheMaxMobile : policy.groundTextureCacheMax;
+  const fallback =
+    (mobile
+      ? DEFAULT_VFX_CLEANUP.groundTextureCacheMaxMobile
+      : DEFAULT_VFX_CLEANUP.groundTextureCacheMax) ?? GROUND_TEX_CACHE_BOUNDS.min;
+  if (typeof v !== "number" || !Number.isFinite(v)) return fallback;
+  return Math.min(
+    GROUND_TEX_CACHE_BOUNDS.max,
+    Math.max(GROUND_TEX_CACHE_BOUNDS.min, Math.floor(v)),
+  );
 }
 
 /** 兜底掃描的涵蓋範圍（出貨 `"scene"`）。認不得的值退回出貨值，⛔ 不是關掉。 */

@@ -31,24 +31,48 @@
 export const COMBAT_PHASE = "combat";
 
 /**
- * 這一次清場站在戰鬥的哪一側（GH#337）。
+ * ⭐ GH#560 —— **四個**清理邊界，一份共用的清單。
+ *
+ * owner 2026-08-22（逐字）：
+ * > 「所以**離開** 到 **進練習模式** 也是有問題 沒清理乾淨 因為這都是**獨立該檢查
+ * >  清乾淨的地方** 不管是**出口**還是**入口**還是**每回合進商店前**」
+ * > 「你**寧願多次清理乾淨開始回合 也不要漏清到**」
+ *
+ * | 邊界 | 什麼時候 | owner 的話 |
+ * |---|---|---|
+ * | `entry` | 場景型 FX 組裝完（進一場比賽／進練習模式）| **入口** |
+ * | `enter` | 開打那一幀（`* → combat`）| —— |
+ * | `leave` | 進商店那一幀（`combat → *`）| **每回合進商店前** |
+ * | `exit`  | 離場（`GameApp.dispose()`）| **出口** |
+ *
+ * ⚠️ 在此之前只有中間兩個，而且兩份清單（回合邊界 5 項 vs `dispose()` 20 幾項）
+ * 是**各自手抄**的 —— 差集就是「每回合沒有人清」的那一批，靠人記得維持。
+ * ⇒ 現在是**同一份**（`RoundFxRegistry`），而預設是**四個邊界全跑**：
+ * 只在某幾個邊界跑才需要理由（`addScoped`，`why` 是必填，tsc 擋住沒有理由的例外）。
+ */
+export const CLEANUP_EDGES = ["entry", "enter", "leave", "exit"] as const;
+export type CleanupEdge = (typeof CLEANUP_EDGES)[number];
+
+/**
+ * 這一次清場站在戰鬥的哪一側（GH#337）——「回合」那兩個邊界，也就是
+ * `RoundVfxLifecycle` **唯一**發得出來的兩個。
  *
  * ⚠️ 兩邊分開**不是潔癖**，是必要條件：回合勝利煙火正是在 combat → resolution
  * 的那一幀發射的。如果 `leave` 也把煙火清掉，#235 那個功能會整個消失，而畫面上
  * 它跟「煙火壞了」長得一模一樣（沒有任何錯誤、沒有任何 log）。所以每一個
  * 註冊進來的特效自己說它要在哪幾個邊界被清。
  */
-export type RoundEdge = "enter" | "leave";
+export type RoundEdge = Extract<CleanupEdge, "enter" | "leave">;
 
 export interface RoundVfxTarget {
   /**
    * 把這一回合的一次性特效與只增不減的池子全部收回。
    *
-   * `edge` 是這一幀站在戰鬥的哪一側。⚠️ 參數是**可選的**（實作可以整個不宣告
-   * 它）—— `VfxSystem.resetForRound()` 兩邊做的事完全一樣，逼它接一個用不到的
-   * 參數只會多一個會腐爛的名字。
+   * `edge` 是這一次站在哪一個邊界。⚠️ 參數是**可選的**（實作可以整個不宣告
+   * 它）—— `VfxSystem.resetForRound()` 每一個邊界做的事完全一樣，逼它接一個
+   * 用不到的參數只會多一個會腐爛的名字。
    */
-  resetForRound(edge: RoundEdge): void;
+  resetForRound(edge: CleanupEdge): void;
 }
 
 export class RoundVfxLifecycle {
@@ -61,6 +85,21 @@ export class RoundVfxLifecycle {
   /** 這個 lifecycle 到目前為止清過幾次（測試/診斷用）。 */
   get resetCount(): number {
     return this.resets;
+  }
+
+  /**
+   * ⭐ GH#560 —— **出口**（`GameApp.dispose()`：離開房間／回大廳／收掉練習模式）。
+   *
+   * owner 2026-08-22：「不管是**出口**還是入口還是每回合進商店前」——
+   * 三個都是「獨立該檢查清乾淨的地方」，而在此之前出口走的是 `GameApp.dispose()`
+   * 裡**另一份手抄的清單**。走這裡等於出口與回合邊界從**同一份**清單扇出。
+   *
+   * ⚠️ 它刻意**不**更新 `prev`：出口之後沒有下一幀，而一個被改過的 `prev` 只會
+   * 讓「同一個 GameApp 被 dispose 兩次」變成一次真的清場。
+   */
+  exit(): void {
+    this.target.resetForRound("exit");
+    this.resets++;
   }
 
   /**

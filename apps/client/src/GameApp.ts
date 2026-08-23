@@ -1375,6 +1375,12 @@ export class GameApp {
     this.boundRoom?.onStateChange.remove(this.onPatch);
     this.boundRoom = null;
     this.sessions.dispose(); // leave every room + drop input sinks
+    // ⭐ GH#560 —— **出口**也走**同一份**清單（owner 2026-08-22:「不管是**出口**
+    //    還是入口還是每回合進商店前」「寧願多次清理乾淨 也不要漏清到」）。
+    //    ⚠️ 它必須在下面那一長串 `dispose()` **之前**：那些是釋放,而這一行是把
+    //    共用池子與 module 單例（`vfxSoundLayer` 的循環音登記表）先還回去 ——
+    //    倒過來的話這一行拿到的是一堆已經 dispose 的物件。
+    this.roundVfx.exit();
     this.vfx.dispose();
     // 🖥️🖥️ GH#612 —— 逐格 overlay 與它的路由旗標一起收（⛔ 留著旗標 = 下一場
     //    全螢幕那一層也被關掉,而逐格那一層已經不在了 ⇒ 畫面上一發都沒有）。

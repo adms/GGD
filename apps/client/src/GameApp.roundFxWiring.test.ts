@@ -80,8 +80,12 @@ describe("GH#337 回合邊界的清單與 teardown 的清單對得起來 (round-
     expect(disposed.size, "一個收尾呼叫都沒抓到 —— 抽取壞了").toBeGreaterThan(5);
 
     const registry = read("./render/roundFxRegistry.ts");
+    // ⭐ GH#560 —— 兩種註冊都要抓：`add()`（四個邊界全跑，預設）與
+    //    `addScoped()`（只跑某幾個邊界，`why` 必填）。⛔ 只認 `.add(` 的話，
+    //    改成 scoped 的那幾列會**從這張表上消失**而斷言照樣綠 —— 那正是這條
+    //    測試存在的理由（兩份清單沒有人比對）換一層再犯。
     const registered = new Set(
-      [...registry.matchAll(/\.add\(\s*"([^"]+)"/g)].map((m) => m[1]!),
+      [...registry.matchAll(/\.add(?:Scoped)?\(\s*"([^"]+)"/g)].map((m) => m[1]!),
     );
     expect(registered.size, "roundFxRegistry 一個註冊都沒抓到 —— 抽取壞了").toBeGreaterThan(3);
     // GH#580 —— 特效循環音（龍捲風／火柱／吐息／傳送門,28 支技能覆寫）真的在表上。

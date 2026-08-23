@@ -68,12 +68,24 @@ const makeFx = (): RoundFx =>
     whirlwind: { createTexture: () => null },
   });
 
-/** 每幀成本代理量：這一幀 Babylon 要走訪幾個東西。 */
+/**
+ * 每幀成本代理量：這一幀 Babylon 要走訪幾個東西。
+ *
+ * ⭐ GH#560 —— **逐個計數器列出來**，⛔ 不是挑三個看起來會動的。
+ * owner 的 issue 逐字：「守衛要**逐個計數器**列出來 —— GH#559 的教訓正是
+ * 『只數了三個，而漏的是第四個』」。GH#559 那次 `mesh / node / particleSystem`
+ * 三個全部乾淨，而在長的是**沒有人在數的** `scene.materials`（孤兒 tint clone），
+ * ⇒ 每一條既有守衛都是綠的。所以這裡是場景**自己**的六份清單，⛔ 一份都不挑。
+ */
 const load = (): Record<string, number> => ({
   modelFxNodes: scene.transformNodes.filter((n) => n.name.startsWith("modelfx-")).length,
   systems: scene.particleSystems.length,
   meshes: scene.meshes.length,
   materials: scene.materials.length,
+  // ── ⭐ GH#560 補上的三個（在此之前沒有人數它們）───────────────────────────
+  textures: scene.textures.length,
+  nodes: scene.transformNodes.length,
+  geometries: scene.geometries.length,
 });
 
 /** 跑一個回合。⚠️ `syncAmbient` 是 GameApp **每一幀**跑的，extras 每次都是新陣列。 */

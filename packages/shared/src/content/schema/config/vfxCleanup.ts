@@ -50,6 +50,18 @@ export const VFX_HARD_MAX_LIFE_SEC_BOUNDS = { min: 0.5, max: 30 } as const;
 export const VFX_HARD_CAP_SCOPES = ["scene", "managed", "off"] as const;
 export type VfxHardCapScope = (typeof VFX_HARD_CAP_SCOPES)[number];
 
+/**
+ * 🖼 地面貼圖快取的「同時留幾**組**」上下界（GH#561）。⭐ 同上，這是**唯一**的住處。
+ *
+ * ⚠️ **下界是 4，⛔ 不是 1**，而且那是一個正確性下界不是品味：一張場地有兩個區，
+ * 兩個區的 `boundaryRadius` 不同時會是**兩個不同的快取鍵**（鍵含 uv scale）。
+ * 上限低於「同一張場地同時要用的鍵數」的話，建場的第二次 `acquire` 會把第一次
+ * 那一組淘汰掉 —— 而那一組**正掛在材質上** ⇒ 逐位元回到 GH#536 的**地板全黑**。
+ * 4 = 兩個區 × 一倍餘裕。上界 64 遠高於出貨 13 張場地能產生的鍵數，
+ * 打錯一個 0 不會靜默通過（#277 的形狀）。
+ */
+export const GROUND_TEX_CACHE_BOUNDS = { min: 4, max: 64 } as const;
+
 export const zConfigVfxCleanupDoc = z
   .object({
     id: zId,
@@ -336,6 +348,53 @@ export const zConfigVfxCleanupDoc = z
      * 0 = 不標記。出貨 180 秒 ≈ 兩個回合，所以被標到的東西一定跨過回合邊界活著。
      */
     lifecycleMaxAgeSec: z.number().min(0).max(3600).optional(),
+
+    /* ── 🖼 地面貼圖跨回合快取的上限（GH#561）────────────────────────────────
+     *
+     * GH#536「地板全黑」的正解是**貼圖跨回合留著**（`render/groundTextureCache`
+     * 的 per-Scene `WeakMap`），⭐ 那是對的設計 —— ⛔ 但它**沒有上限**。
+     *
+     * 量到的（8 個回合逐輪換出貨場地）：`scene.textures` = 5 → 9 → 13 → 13 →
+     * 17 → 21 → 21 → **25**（碰到重複的風格會持平 ⇒ 它**有界**，界是「不同的
+     * `style@uvScale` 組數」）。出貨 13 張場地 ⇒ 上界約 13 組 × 4 張 = **52 張**
+     * 512² 地面 PNG 常駐（含 mipmap ≈ 5.6 MB / 組 ⇒ **≈ 73 MB VRAM**）。
+     * ⚠️ 而「商店階段預熱」（`warmGroundTextures`）會在**第一個中場**就把每一種
+     * 風格都抓進來 —— 也就是說那 52 張在第一個商店就全部到位，
+     * 而 `AdaptiveQuality` 的降級階梯**碰不到它**。
+     *
+     * ⇒ 這兩格就是那個降級階梯。**組數**上限（⛔ 不是張數：一組必然是四張，
+     * 用張數當單位會讓「3 張」這種畫不出來的數字通過）。
+     * 超出時淘汰**最久沒有被建場用過的那一組**（LRU），⛔ 而預熱**永遠不淘汰**
+     * 任何東西 —— 它只在還沒滿的時候補，滿了就不再預熱（⛔ 不是抓下來再丟掉）。
+     *
+     * ⚠️ 兩格都 `.optional()`，理由同上面每一族：線上已經有耐久 override，
+     * 少一個必填欄會讓整份 config 被 Zod 退回 → 內容載入失敗 → 退回骨架。
+     */
+
+    /**
+     * 🖼 桌機：同時保留幾**組**地面貼圖（一組＝albedo/normal/orm/macro 四張）。
+     *
+     * 調小＝省 VRAM，代價是換到一張被淘汰過的場地時，那幾幀地板是**平色**
+     * （⛔ 不是黑的 —— 平色退場是 GH#536 一起做的漸進式增強）。
+     * 調大＝換圖無縫，代價是記憶體。
+     */
+    groundTextureCacheMax: z
+      .number()
+      .int()
+      .min(GROUND_TEX_CACHE_BOUNDS.min)
+      .max(GROUND_TEX_CACHE_BOUNDS.max)
+      .optional(),
+    /**
+     * 🖼 手機／低畫質：同時保留幾組。⭐ 這一格存在的理由就是 issue 的那句話 ——
+     * 「⚠️ 手機／內顯上這可能是致命的，而降級階梯碰不到它」。
+     * 讀的是 `effectiveQuality() === "mobile"`（含 auto 判定成 mobile 的內顯）。
+     */
+    groundTextureCacheMaxMobile: z
+      .number()
+      .int()
+      .min(GROUND_TEX_CACHE_BOUNDS.min)
+      .max(GROUND_TEX_CACHE_BOUNDS.max)
+      .optional(),
   })
   .strict();
 export type ConfigVfxCleanupDoc = z.infer<typeof zConfigVfxCleanupDoc>;
@@ -405,4 +464,14 @@ export const DEFAULT_VFX_CLEANUP: ConfigVfxCleanupDoc = {
   lifecycleRoundHistory: 16,
   lifecycleGrowthMinDelta: 8,
   lifecycleMaxAgeSec: 180,
+  // 🖼 GH#561 —— ⭐ 兩格都是**我挑的**（owner 2026-08-23:「沒做完以前別問我了
+  // 自己判斷 但是留後台開關可以簡易 rollback」）。⛔ 他沒有給任何數字。
+  //   · 桌機 8 組（≈45 MB）：出貨只有 7 種地面風格,8 組表示「同一種風格的兩個
+  //     半徑變體」也還放得下 ⇒ 正常一場比賽**幾乎不會淘汰**,而 13 張場地能長到
+  //     的 13 組被擋在 8 ⇒ 上界從 ≈73 MB 降到 ≈45 MB。
+  //   · 手機 4 組（≈22 MB）＝下界：一張場地最多兩個鍵,4 組 = 當前那一張 + 上一張,
+  //     所以「上一回合剛打過的那張」重播時仍然是零抓取。
+  // 要一鍵回到 GH#561 之前（完全不淘汰）就把兩格都拉到上界 64。
+  groundTextureCacheMax: 8,
+  groundTextureCacheMaxMobile: 4,
 };

@@ -54,10 +54,35 @@
  * `detailUvScale(boundaryRadius)` 寫在 **Texture 物件**上（`uScale`/`vScale`），
  * 所以兩個半徑不同的區不能共用同一顆。出貨的 13 張圖每張的兩個區同半徑，
  * 所以實務上一種 style 就是一格。
+ *
+ * ---------------------------------------------------------------------------
+ * 🖼 GH#561 —— ⭐ 它現在**有上限**（在此之前沒有）
+ * ---------------------------------------------------------------------------
+ * 上面那個設計是對的，⛔ 但「跨回合留著」在此之前是**無條件**的：實測 8 個回合
+ * 逐輪換出貨場地，`scene.textures` = 5 → 9 → 13 → 13 → 17 → 21 → 21 → **25**
+ * （碰到重複的風格會持平 ⇒ 它有界，界是「不同的 `style@uvScale` 組數」），
+ * 出貨 13 張場地 ⇒ 上界 ≈ **13 組 × 4 張 = 52 張** 512² PNG 常駐
+ * （含 mipmap ≈ 5.6 MB/組 ⇒ **≈ 73 MB VRAM**）。而**商店預熱**會在第一個中場
+ * 就把每一種風格都抓進來 —— 也就是說那 52 張在第一個商店就全部到位，
+ * 而 `AdaptiveQuality` 的降級階梯**碰不到它**。
+ *
+ * 上限住 `config.vfx-cleanup@1` 的 `groundTextureCacheMax` /
+ * `groundTextureCacheMaxMobile`（第一守則：這是取捨，取捨要可調）。兩條規矩：
+ *
+ *   ① **淘汰的是最久沒有被建場用過的那一組**（LRU）。⭐ 只有
+ *      `acquireGroundTextures`（= 真的在建場）會更新「最近用過」——
+ *      ⛔ 預熱**不更新**，否則預熱一輪就會把**正掛在材質上**的那一組推成 LRU，
+ *      下一次淘汰就把它 dispose 掉 ⇒ 逐位元回到 GH#536 的地板全黑。
+ *   ② **預熱永遠不淘汰任何東西**：滿了就不再預熱（⛔ 不是抓下來再丟掉 ——
+ *      那樣網路與解碼成本一毛都沒省，只省了 VRAM）。
+ *
+ * ⚠️ 而「剛拿到的那一組永遠不會被這一次淘汰掉」是寫死在 `evictTo` 裡的
+ * （`keep` 參數），⛔ 不是靠上限夠大這種假設。
  */
 import type { Scene } from "@babylonjs/core/scene";
 import { Texture } from "@babylonjs/core/Materials/Textures/texture";
 import { effectiveQuality } from "./RenderConfig";
+import { groundTextureCacheMax } from "../vfx/vfxCleanupPolicy";
 import { detailUvScale, groundTextureUrls, type GroundTextureSet } from "./groundMaterials";
 import { lifecycleLedger } from "./lifecycleLedger";
 
@@ -86,7 +111,15 @@ export interface GroundTextures {
 
 interface Entry extends GroundTextures {
   readonly key: string;
+  /**
+   * 🖼 GH#561 —— 最後一次**被建場用到**的序號（⛔ 不是被預熱到）。
+   * `0` = 只被預熱過、還沒有任何一場用它 ⇒ 淘汰時第一個走。
+   */
+  usedAt: number;
 }
+
+/** 單調遞增的用量時鐘（⛔ 不是 `Date.now()`：這裡只需要順序，不需要時間）。 */
+let useClock = 0;
 
 /** scene → (style@uvScale) → the four textures. See the header for the lifetime. */
 const perScene = new WeakMap<Scene, Map<string, Entry>>();
@@ -169,6 +202,7 @@ function build(scene: Scene, set: GroundTextureSet, key: string, scale: number):
 
   return {
     key,
+    usedAt: 0,
     albedo: a.tex,
     normal: n.tex,
     orm: o.tex,
@@ -176,6 +210,38 @@ function build(scene: Scene, set: GroundTextureSet, key: string, scale: number):
     isReady: () => all.every((x) => x.tex.isReady()),
     whenReady: () => settled,
   };
+}
+
+/** 這台裝置現在的上限（組數）。畫質是 `auto` 時 `effectiveQuality()` 已經判過了。 */
+function capNow(): number {
+  return groundTextureCacheMax(effectiveQuality() === "mobile");
+}
+
+/**
+ * 🖼 GH#561 —— 把快取修剪回 `cap` 組，淘汰**最久沒有被建場用過**的那一組。
+ *
+ * ⚠️ `keep` 是**剛剛拿到的那一組**，它永遠不會被這一次淘汰掉 —— 那不是保險，
+ * 那是正確性：它下一行就要被掛上材質，dispose 它 = 地板全黑（GH#536）。
+ * 找不到別的可淘汰對象時就**停手**（寧可超出上限，⛔ 也不要弄黑一片地板）。
+ */
+function evictTo(cache: Map<string, Entry>, cap: number, keep: string): void {
+  while (cache.size > cap) {
+    let victim: string | null = null;
+    let oldest = Infinity;
+    for (const [k, e] of cache) {
+      if (k === keep) continue;
+      if (e.usedAt < oldest) {
+        oldest = e.usedAt;
+        victim = k;
+      }
+    }
+    if (victim === null) return;
+    const e = cache.get(victim)!;
+    cache.delete(victim);
+    // ⭐ 真的 dispose —— 只從 Map 拿掉的話 `scene.textures` 一格都不會少，
+    //    而那正是這條 issue 要修的東西（VRAM，⛔ 不是 Map 的筆數）。
+    for (const t of [e.albedo, e.normal, e.orm, e.macro]) t.dispose();
+  }
 }
 
 /**
@@ -198,6 +264,9 @@ export function acquireGroundTextures(
     entry = build(scene, set, key, scale);
     cache.set(key, entry);
   }
+  // 🖼 GH#561 —— ⭐ **只有這條路**更新「最近用過」（預熱不更新，見檔頭 ①）。
+  entry.usedAt = ++useClock;
+  evictTo(cache, capNow(), key);
   return entry;
 }
 
@@ -211,13 +280,27 @@ export function acquireGroundTextures(
  * floor for a few frames and no transition at all.
  *
  * Idempotent: a second call is a map lookup per style.
+ *
+ * 🖼 GH#561 —— ⭐ 預熱**吃上限**，而且它有兩條**與建場不同**的規矩：
+ *   ① 已經在快取裡的那一組：⛔ **不更新「最近用過」** —— 預熱一輪就把正掛在
+ *      材質上的那一組推成 LRU 的話，下一次淘汰會 dispose 它 ⇒ 地板全黑。
+ *   ② 快取已經滿了：**直接不抓**（⛔ 不是抓下來再淘汰掉 —— 那樣網路與解碼的
+ *      成本一毛都沒省，只省了 VRAM，而 owner 的原始症狀正是「讀取不夠快」）。
  */
 export function warmGroundTextures(
   scene: Scene,
   sets: readonly GroundTextureSet[],
   boundaryRadius: number,
 ): void {
-  for (const set of sets) acquireGroundTextures(scene, set, boundaryRadius);
+  const scale = detailUvScale(boundaryRadius);
+  const cache = cacheFor(scene);
+  const cap = capNow();
+  for (const set of sets) {
+    const key = `${set}@${scale.toFixed(4)}`;
+    if (cache.has(key)) continue; // ①
+    if (cache.size >= cap) return; // ②
+    cache.set(key, build(scene, set, key, scale)); // usedAt = 0 ⇒ 淘汰時第一個走
+  }
 }
 
 /** Which (style@scale) keys this scene currently holds. Diagnostics + guards. */
