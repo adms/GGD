@@ -8,6 +8,8 @@ import { PAGE_SIZE } from "./ranking";
 import type {
   AccountPublic,
   Catalog,
+  ChampionUsageResp,
+  ChampionUsageRow,
   FriendsList,
   LeaderboardResp,
   MyChampionRow,
@@ -418,6 +420,16 @@ export async function championBoard(championId: string, limit = PAGE_SIZE, offse
 export async function myChampions(): Promise<MyChampionRow[]> {
   const resp = await api.request<MyChampionsResp>("/ranking/me/champions");
   return resp.champions ?? [];
+}
+
+/**
+ * GET /ranking/champion-usage — 英雄被選用次數榜 (GH#645). Rows arrive sorted
+ * picks-desc from the platform; no selection or auth needed (the whole point:
+ * the lobby 英雄榜 renders without picking a champion first).
+ */
+export async function championUsage(): Promise<ChampionUsageRow[]> {
+  const resp = await api.request<ChampionUsageResp>("/ranking/champion-usage", { auth: false });
+  return resp.rows ?? [];
 }
 
 // -------------------------------------------------------- wallet/store ----

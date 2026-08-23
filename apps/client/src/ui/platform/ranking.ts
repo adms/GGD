@@ -46,6 +46,7 @@ export type RankPanelAction =
   | { type: "setTab"; tab: RankTab }
   | { type: "setChampionView"; view: ChampionView }
   | { type: "selectChampion"; championId: string }
+  | { type: "clearChampion" }
   | { type: "togglePicker" }
   | { type: "setPicker"; open: boolean };
 
@@ -69,6 +70,12 @@ export function rankPanelReducer(state: RankPanelState, action: RankPanelAction)
         championView: "board",
         pickerOpen: false,
       };
+    // GH#645: the champion board no longer NEEDS a selection (it lands on the
+    // pick-count usage board); a selection is a drill-down, and this is the
+    // way back up to the usage board.
+    case "clearChampion":
+      if (state.selectedChampionId === null) return state;
+      return { ...state, selectedChampionId: null, pickerOpen: false };
     case "togglePicker":
       return { ...state, pickerOpen: !state.pickerOpen };
     case "setPicker":
@@ -166,6 +173,18 @@ export function sortMyChampions(rows: readonly MyChampionRow[]): MyChampionRow[]
     if (a.rank !== b.rank) return a.rank - b.rank;
     return a.championId.localeCompare(b.championId);
   });
+}
+
+// ------------------------------------------------- champion usage board ----
+
+/**
+ * 勝率 cell of the 英雄榜 (GH#645): "33%", or "—" when the champion has no
+ * completed picks (a 0/0 winrate rendered as "0%" would read as "always
+ * loses" — a said-but-not-true label, 第一·五守則).
+ */
+export function formatUsageWinRate(row: { picks: number; winRate: number }): string {
+  if (row.picks <= 0) return "—";
+  return `${Math.round(row.winRate * 100)}%`;
 }
 
 // -------------------------------------------------- post-match rank delta ----

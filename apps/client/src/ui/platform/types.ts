@@ -198,6 +198,24 @@ export interface MyChampionsResp {
 }
 
 /**
+ * One row of GET /ranking/champion-usage — the lobby 英雄榜 (GH#645, owner
+ * 2026-08-24): champions ranked by how many times human players PICKED them
+ * (the sort key); `winRate` (0..1, wins/picks over completed matches) rides
+ * along as the auxiliary column. Rows arrive already sorted picks-desc.
+ */
+export interface ChampionUsageRow {
+  championId: string;
+  picks: number;
+  wins: number;
+  winRate: number;
+}
+
+/** Envelope for GET /ranking/champion-usage — `{rows}`. */
+export interface ChampionUsageResp {
+  rows: ChampionUsageRow[];
+}
+
+/**
  * One row of GET /ranking/me/nemesis — 宿敵排行榜 (GH#454), always stated with
  * the CALLER as the subject: `wins` is 「我贏他幾場」.
  *

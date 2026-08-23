@@ -2,8 +2,12 @@
  * LeaderboardPanel — the ranked ladder (task #37). TWO boards keyed off
  * cumulative season points (hidden MMR stays for matchmaking only):
  *   玩家  — the player board (one row per account) + a pinned "you" row.
- *   英雄  — a champion board (pick a champion → its board) plus 我的英雄, the
- *           caller's per-champion tiers sorted by points.
+ *   英雄  — the champion USAGE board (GH#645, owner 2026-08-24: 「英雄被選用
+ *           次數來排序的排行榜，只是額外會顯示勝率，所以不用選英雄來顯示」)
+ *           — every champion ranked by pick count with winrate riding along,
+ *           shown with NO selection gate; tapping a row (or the picker) drills
+ *           into that champion's per-account points board — plus 我的英雄,
+ *           the caller's per-champion tiers sorted by points.
  * Every standing renders through <TierBadge> (EXACT Chinese labels + LoL crest).
  * All non-trivial logic lives in ./ranking + ../components/tier (unit-tested);
  * this file is the JSX + data-fetch shell, matching the store/api conventions.
@@ -22,13 +26,15 @@ import { useEffect, useMemo, useReducer, useState } from "react";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import { useApp } from "./store";
 import { useContentReady } from "./ContentGate";
-import { championBoard, myChampions as fetchMyChampions } from "./api";
+import { championBoard, championUsage as fetchChampionUsage, myChampions as fetchMyChampions } from "./api";
+import type { ChampionUsageRow } from "./types";
 import {
   appendPage,
   buildChampionOptions,
   championInitial,
   computeRankDelta,
   formatPointsDelta,
+  formatUsageWinRate,
   hasMore,
   initialRankPanelState,
   isMeRow,
@@ -300,12 +306,36 @@ function ChampionTab(props: {
   const selected = props.state.selectedChampionId;
   const pickerOpen = props.state.pickerOpen;
   const [board, setBoard] = useState<BoardState>(EMPTY_BOARD);
+  // GH#645: the tab LANDS on this — every champion by pick count, no gate.
+  const [usage, setUsage] = useState<{ rows: ChampionUsageRow[]; loading: boolean; error: boolean; loaded: boolean }>({
+    rows: [],
+    loading: false,
+    error: false,
+    loaded: false,
+  });
   const [mine, setMine] = useState<{ rows: MyChampionRow[]; loading: boolean; error: boolean; loaded: boolean }>({
     rows: [],
     loading: false,
     error: false,
     loaded: false,
   });
+
+  // fetch the usage board once, the first time the ungated board view shows
+  useEffect(() => {
+    if (view !== "board" || selected || usage.loaded || usage.loading) return;
+    let cancelled = false;
+    setUsage((u) => ({ ...u, loading: true, error: false }));
+    fetchChampionUsage()
+      .then((rows) => {
+        if (!cancelled) setUsage({ rows, loading: false, error: false, loaded: true });
+      })
+      .catch(() => {
+        if (!cancelled) setUsage({ rows: [], loading: false, error: true, loaded: true });
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [view, selected, usage.loaded, usage.loading]);
 
   // fetch the selected champion's board (first page)
   useEffect(() => {
@@ -364,43 +394,93 @@ function ChampionTab(props: {
         onSelect={(k) => props.dispatch({ type: "setChampionView", view: k as "board" | "mine" })}
       />
 
-      {view === "board" ? (
+      {view === "board" && !selected ? (
+        /* GH#645 —— the tab LANDS here: every champion ranked by 被選用次數
+           (the sort key, owner 2026-08-24), 勝率 riding along. ⛔ No selection
+           gate — a row tap drills into that champion's per-account board. */
+        <div {...padFocusLanding()} style={{ flex: 1, overflowY: "auto", minHeight: 0 }}>
+          <Hint>依被選用次數排序，勝率為參考；點一列看該英雄的玩家榜。</Hint>
+          {usage.loading && <Hint>載入中…</Hint>}
+          {usage.error && <Hint>載入失敗，稍後再試。</Hint>}
+          {usage.loaded && !usage.error && usage.rows.length === 0 && <Hint>還沒有對戰紀錄。</Hint>}
+          {usage.rows.map((r, i) => {
+            const opt = props.optionsById.get(r.championId);
+            return (
+              <SfxButton
+                key={r.championId}
+                className="ggd-rank-row"
+                onClick={() => pick(r.championId)}
+                title={opt?.name ?? r.championId}
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "3px 4px",
+                  fontSize: 12,
+                  borderRadius: 6,
+                  cursor: "pointer",
+                  textAlign: "left",
+                  background: "transparent",
+                  border: "none",
+                  color: TEXT_MAIN,
+                }}
+              >
+                <span style={{ width: 26, color: i < 3 ? GOLD : TEXT_DIM, fontWeight: 700 }}>#{i + 1}</span>
+                <ChampGlyph id={r.championId} icon={opt?.icon ?? null} name={opt?.name ?? r.championId} size={22} />
+                <span style={{ flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  {opt?.name ?? r.championId}
+                </span>
+                <span style={{ color: TEXT_DIM, width: 40, textAlign: "right" }}>{formatUsageWinRate(r)}</span>
+                <span style={{ color: ACCENT, fontWeight: 600, width: 56, textAlign: "right" }}>
+                  {r.picks.toLocaleString()} 次
+                </span>
+              </SfxButton>
+            );
+          })}
+        </div>
+      ) : view === "board" ? (
         <>
-          <SfxButton
-            className="ggd-rank-pick"
-            onClick={() => props.dispatch({ type: "setPicker", open: true })}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              padding: "6px 10px",
-              marginBottom: 8,
-              borderRadius: 8,
-              cursor: "pointer",
-              textAlign: "left",
-              background: "#171d2b",
-              border: `1px solid ${selected ? ACCENT : "#2c3448"}`,
-              color: TEXT_MAIN,
-            }}
-          >
-            {selectedOpt ? (
-              <>
-                <ChampGlyph id={selectedOpt.id} icon={selectedOpt.icon} name={selectedOpt.name} size={24} />
-                <span style={{ flex: 1, fontSize: 13, fontWeight: 600 }}>{selectedOpt.name}</span>
-              </>
-            ) : (
-              <span style={{ flex: 1, fontSize: 13, color: TEXT_DIM }}>選擇英雄查看排行…</span>
-            )}
-            <span style={{ color: TEXT_DIM, fontSize: 11 }}>▾</span>
-          </SfxButton>
+          <div style={{ display: "flex", gap: 6, marginBottom: 8 }}>
+            {/* GH#645 — the way back up to the usage board */}
+            <Btn small onClick={() => props.dispatch({ type: "clearChampion" })}>
+              ←
+            </Btn>
+            <SfxButton
+              className="ggd-rank-pick"
+              onClick={() => props.dispatch({ type: "setPicker", open: true })}
+              style={{
+                flex: 1,
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                padding: "6px 10px",
+                borderRadius: 8,
+                cursor: "pointer",
+                textAlign: "left",
+                background: "#171d2b",
+                border: `1px solid ${ACCENT}`,
+                color: TEXT_MAIN,
+              }}
+            >
+              {selectedOpt ? (
+                <>
+                  <ChampGlyph id={selectedOpt.id} icon={selectedOpt.icon} name={selectedOpt.name} size={24} />
+                  <span style={{ flex: 1, fontSize: 13, fontWeight: 600 }}>{selectedOpt.name}</span>
+                </>
+              ) : (
+                <span style={{ flex: 1, fontSize: 13, color: TEXT_DIM }}>{selected}</span>
+              )}
+              <span style={{ color: TEXT_DIM, fontSize: 11 }}>▾</span>
+            </SfxButton>
+          </div>
 
           {/* GH#514 —— 名次列是純 div，「載入更多」只有還有下一頁時才在 ⇒
               沒有落點的時候手把捲不動這一格。 */}
           <div {...padFocusLanding()} style={{ flex: 1, overflowY: "auto", minHeight: 0 }}>
-            {!selected && <Hint>挑一位英雄，看看誰在這個英雄上分數最高。</Hint>}
             {board.loading && <Hint>載入中…</Hint>}
             {board.error && <Hint>載入失敗，稍後再試。</Hint>}
-            {selected && !board.loading && !board.error && board.rows.length === 0 && (
+            {!board.loading && !board.error && board.rows.length === 0 && (
               <Hint>這個英雄還沒有排位分數。</Hint>
             )}
             {board.rows.map((r) => (

@@ -553,6 +553,10 @@ func (s *Server) buildRouter(templates *room.Templates) {
 		// Public.
 		auth.NewHandlers(s.Auth).Mount(api)
 		ranking.NewHandlers(s.Ranking).MountPublic(api)
+		// GH#645 大廳英雄榜：被選用次數排序（勝率附帶）。Aggregated off the
+		// durable match records gamelink owns, so it mounts from gamelink,
+		// not ranking. No names in the payload → public like /ranking/player.
+		gamelink.NewChampionUsage(s.Store).MountPublic(api)
 		admin.NewHandlers(s.Admin).MountPublic(api) // active announcement feed
 		// content whitelist: public read (game-server + client), admin writes
 		curation.NewHandlers(s.Curation, s.Admin.AdminOnly).MountPublic(api)
