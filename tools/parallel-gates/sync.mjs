@@ -6,6 +6,8 @@
  * 只並行無依賴的那幾支**,⛔ 不是把 32 支一起丟出去」。
  *
  *   node tools/parallel-gates/sync.mjs --plan          # 只印排程,⛔ 不跑(先看它想做什麼)
+ *   node tools/parallel-gates/sync.mjs --since HEAD~3  # ⭐ **只跑會過期的那幾支**(裁剪)
+ *   node tools/parallel-gates/sync.mjs --since HEAD    # 同上,base = 工作樹 vs HEAD
  *   node tools/parallel-gates/sync.mjs --check-graph   # 閘:圖過期 or 已知那條邊消失 → 非零
  *   node tools/parallel-gates/sync.mjs                 # 真的跑
  *
@@ -29,10 +31,27 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
 import { cpus } from "node:os";
 import { buildGraph, layers, priorities, loadIo } from "./graph.mjs";
+import { planFromPaths } from "./syncPlan.mjs";
+import { execFileSync } from "node:child_process";
 
 const argv = process.argv.slice(2);
 const PLAN = argv.includes("--plan");
 const CHECK = argv.includes("--check-graph");
+/**
+ * ⭐⭐ **裁剪** —— owner 2026-08-23:「**為什麼我要全跑 skills 產生器,即使我沒有做
+ * 技能更動或小範圍更動也需要全跑嗎 可以用旗標註明是否有改動需要跑哪支就好？**」
+ *
+ * `--since <ref>` ⇒ 用 `syncPlan` 從 `git diff` 算出「這批改動真的會讓哪幾支過期」,
+ * 其餘**當成已經是最新的**(⛔ 不是「跳過」——它們的產物本來就沒過期,
+ * 下游要用它們的輸出,所以要標成 done ⛔ 不是 skipped)。
+ *
+ * ⛔⛔ **三道 fail-closed 全部往「多跑」倒**(`syncPlan` 自己實作,這裡只轉發):
+ *   ① 改動路徑對不到任何產生器的輸入表 ⇒ 全跑
+ *   ② `sync-io.json` 的 chain 跟 package.json 對不上 ⇒ 全跑
+ *   ③ 探針全空的那幾支 ⇒ 一律跑
+ * ⚠️ 而**裁掉了哪幾支一定要印出來** —— 一個靜默的上限讀起來會像「全部都跑過了」。
+ */
+const SINCE = argv.indexOf("--since") >= 0 ? (argv[argv.indexOf("--since") + 1] ?? "HEAD") : null;
 
 const ROOT = new URL("../../", import.meta.url).pathname;
 const pkg = JSON.parse(readFileSync(`${ROOT}package.json`, "utf8"));
@@ -106,6 +125,38 @@ if (PLAN || CHECK) {
   process.exit(0);
 }
 
+// ── ⭐ 裁剪(--since)────────────────────────────────────────────────────────
+/** 這一輪**當成已經最新**的那幾支（⛔ 空集合 = 全跑）。 */
+const prune = new Set();
+if (SINCE) {
+  // ⚠️ `core.quotepath=false` 是必要的:預設 git 會把 CJK 路徑印成 C 風格跳脫 ＋ 雙引號
+  //   （`"docs/\346\212\200..."`）⇒ 對不到任何輸入表 ⇒ fail-closed 全跑。
+  //   而 `docs/技能標記機制與效果規則.md` 這一族遍佈全樹 —— 那會讓裁剪永遠不生效。
+  const gitOut = (a) =>
+    execFileSync("git", ["-c", "core.quotepath=false", ...a], { cwd: ROOT, encoding: "utf8" })
+      .split("\n")
+      .filter(Boolean);
+  const paths = [
+    ...gitOut(["diff", "--name-only", SINCE]),
+    ...gitOut(["ls-files", "--others", "--exclude-standard"]),
+  ];
+  const plan = planFromPaths(paths);
+  if (plan.full) {
+    console.log(`\n⛔ **fail-closed 全跑** —— ${plan.fullReason}`);
+  } else {
+    for (const n of plan.skipped) {
+      const i = idx(n);
+      if (i >= 0) prune.add(i);
+    }
+    // ⭐ 印出來 —— 一個**靜默**的上限讀起來會像「全部都跑過了」（第零守則）。
+    console.log(
+      `\n⭐ 裁剪（--since ${SINCE}）—— 改動 ${paths.length} 個路徑\n` +
+        `   要跑 ${g.steps.length - prune.size}/${g.steps.length} 支 · ` +
+        `⏭ 當成已最新 ${prune.size} 支: ${[...prune].map((i) => names[i]).sort().join(" · ") || "（無）"}`,
+    );
+  }
+}
+
 // ── 執行 ───────────────────────────────────────────────────────────────────
 const LIMIT = Number(process.env.GGD_GATE_CONCURRENCY ?? Math.max(2, Math.min(16, cpus().length - 2)));
 const done = new Array(g.steps.length).fill(false);
@@ -133,6 +184,13 @@ function launch(i, next) {
   // ⚠️ `pump()` 會**重入**(跳過的分支是同步的),而外層的 while 還握著舊的 ready 清單
   //    ⇒ 這一格擋住「同一支被送兩次」。
   if (started[i] || skipped.has(i)) return;
+  // ⭐ **裁掉的當成已完成**(⛔ 不是 skipped):它的產物沒過期,下游要用它的輸出。
+  //   標 skipped 會讓整條下游被當成「輸入是壞的」而一起跳過 —— 那就不是裁剪,是漏跑。
+  if (prune.has(i)) {
+    started[i] = true;
+    done[i] = true;
+    return next();
+  }
   // ⭐ 前置有人紅了 ⇒ 這一支的輸入是壞的 ⇒ 跳過(⛔ 不要拿壞產物往下蓋)
   if ([...deps[i]].some((d) => failed.has(d) || skipped.has(d))) {
     skipped.add(i);
