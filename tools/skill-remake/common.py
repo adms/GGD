@@ -1368,6 +1368,15 @@ def build(e):
         assert e["cooldown_shape"] in ("單體", "範圍", "變身"), \
             f"{num}: cooldown_shape 只能是 單體/範圍/變身"
         doc["cooldownShape"] = e["cooldown_shape"]
+    # ── 常駐特效（`persistent_vfx=`）——「這支技能在身上就一直掛著」那一族 ──────
+    # ⭐ GH#649：Saber 持劍的金粉閃爍。機制（`ability@1.persistentVfx`，GH#539）與
+    #    客戶端（persistentVfxKeysFor → AmbientVfx.buildItem，vfx@1 也收）都已在線上，
+    #    缺的只是**表格出口**：90 支重製稿在此之前沒有任何一格寫得出常駐特效。
+    # ⛔ 同 vfx_key / cooldown_shape：這是一格**表格欄位**，不是「if 這支技能」
+    #    （第〇·五守則）。⚠️ 位置在 A-6 setdefault **之前**：表格填了就贏，
+    #    沒填則沿用舊文件的（vfxKey / sfxKey 那一族美術綁定的既定規矩）。
+    if e.get("persistent_vfx"):
+        doc["persistentVfx"] = e["persistent_vfx"]
     # ── A-6：denylist —— 規格沒有重新定義的欄位，一律原樣保留 ──────────────
     for k, v in prev.items():
         if k in SPEC_OWNED:

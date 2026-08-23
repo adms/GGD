@@ -84,6 +84,12 @@
       "at": "point"
     }
   ],
+  "persistentVfx": [
+    {
+      "vfxKey": "fx.saber.gold-dust",
+      "attach": "hand,right"
+    }
+  ],
   "icon": "assets/icons/abilities/godie-e002.e.webp",
   "vfxKey": "fx.w3x.particle.holyawakening.p04",
   "hitFeel": {

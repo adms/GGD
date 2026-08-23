@@ -94,6 +94,20 @@ A("20-03", "20-03 約束與勝利之劍", "ground", [60, 60, 60, 60], [250, 350,
   #       打 E 是舊的直線傷害,一條光束都沒有**,而全套測試是綠的。
   #    ⭐ `spinDegPerSec: 720` 就是「翻滾」;`touchRadius/touchSide` 讓光束**沿路掃到人**,
   #       ⛔ 不是只在終點結算 —— 那正是「翻滾光束」與一發直線傷害的差別。
+  # ⭐ GH#649 —— 「Saber 持有武器**金粉閃爍粒子特效**」。原作逐字
+  #    （war3map.j:32306，Trig_Excalibur_Actions）：第一次施放 E 時
+  #    `AddSpecialEffectTargetUnitBJ("handright", u, "Magical_Sword.mdx")`，
+  #    掛上之後**從不 DestroyEffect**（udg_winSword 只設不清）⇒ 常駐的武器金粉。
+  #    GGD 側走 `persistentVfx`（GH#539）且 `when` 缺席 ＝「E 學到（rank>0）就掛著」
+  #    （GH#603 的學習閘），與原作「第一次放 E 起永遠在」同一個量級。
+  # ⚠️ 粒子路徑的實際掛點由 vfx 文件自己的 `anchorBone`（Bone_Hand_R）決定
+  #    （AmbientVfx.buildItem）；`attach` 這一格記 WC3 掛點的正典寫法 "hand,right"
+  #    （JASS 原文是無逗號的 "handright"），兩邊都是持劍那隻右手 —— ⛔ 不要改成
+  #    兩個不同的掛點（zPersistentVfx 檔頭那句「兩個住處會漂」）。
+  # ⚠️ `fx.saber.gold-dust` 刻意**不帶** `ambient: true`：ambient+continuous+
+  #    anchorBone 三件齊 = isSwingTrailDoc ⇒ 刀光預算的**揮劍閘**會把站著不動的
+  #    金粉壓到近零 —— 而那與「沒做」在畫面上長得一模一樣（失敗形態②）。
+  persistent_vfx=[{"vfxKey": "fx.saber.gold-dust", "attach": "hand,right"}],
   effects=[
       line("magic", length=14, width=2.0, per=[350, 550, 750, 950], ap=1.0),
       {"kind": "floatingText", "shape": "single", "text": "約束與勝利之劍！",
