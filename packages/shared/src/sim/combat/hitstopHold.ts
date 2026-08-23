@@ -61,6 +61,11 @@
  */
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
+// 保險絲要問「他是不是被**設計**按住的」—— 讀既有的唯一判準,⛔ 不抄第二份。
+import { movementHold, type MovementHold } from "../movementHold";
+// 釋放的可見回饋走 `floatingText` 這條**既有**的事件路（型別在 emit 站旁邊,
+// GH#571 修好的那條）。`import type` —— 零 runtime 相依,不成環。
+import type { FloatingTextEvent } from "../effects/clientCues";
 
 export interface HitstopRules {
   /**
@@ -77,6 +82,74 @@ export interface HitstopRules {
    *              而「揮中的那一下雙方一起頓一格」是 #133 的節拍。
    */
   holdsAttackerWalk: boolean;
+  /**
+   * ⭐ 黏住累積**保險絲**（owner 2026-08-23：「請你最大程度解決黏住這個問題，
+   * 包括有一個累積值，黏超過 2秒一定可以離開之類，這些機制做成後台開關」）。
+   *
+   * 選用的理由與 `CombatFeelRules.facing` 逐字相同（手寫半張表的既有測試）。
+   * 讀的時候一律走 `stuckGuardRules(world)`。語意見 {@link StuckGuardRules}。
+   */
+  stuckGuard?: StuckGuardRules;
+}
+
+/**
+ * ⭐ 黏住累積保險絲 —— 上面那兩格開關治的是「hitstop 該不該按腳」，這一格治的是
+ * 「**不管誰在按**，挨打型的凍結累積超過門檻就一定放人」。
+ *
+ * ── 界線（⛔ 這是設計決定，寫清楚讓 owner 可以推翻）─────────────────────────
+ *   · **治**：hitstop victim-hold（`holdsVictimWalk: true` 回開時）＋ 擊倒
+ *     （`world.knockdown`）的 root 部分 —— 兩者都是「挨打」的副產品，沒有圖示、
+ *     沒有狀態、玩家看不見。
+ *   · **⛔ 不治**：stun／root／施法自鎖／recovery 鎖 —— 硬控是**設計**，有狀態、
+ *     有圖示、可被【淨化】。保險絲只治「被普攻黏住」這一族。
+ *   · 累積也只數**治得了的** tick：一個同時被 stun 按住的 tick 不數 ——
+ *     數了只會在放不了人的時候喊「掙脫」。
+ *
+ * ── 累積語意（全部絕對 tick，決定性）────────────────────────────────────────
+ *   「想動」（nav 有 moveTarget）而被挨打型凍結按住的 tick → `held + 1`；
+ *   自由的 tick → `freeRun + 1`，連續自由滿 `windowSec` 就把 `held` 歸零。
+ *   ⇒ 連段（打 5 tick、放 2 tick、再打…）**跨 gap 累積**，正常走路（偶爾挨一下）
+ *   很快歸零。`held ≥ thresholdSec` ⇒ 釋放 `releaseSec`，並在頭上冒「掙脫」。
+ */
+export interface StuckGuardRules {
+  /** 總開關。false = 保險絲整個不存在（回到 G1 之前的行為）。 */
+  enabled: boolean;
+  /** 累積黏住幾秒就放人。owner 的數字：2。 */
+  thresholdSec: number;
+  /** 連續自由走滿幾秒，累積歸零重數（0 = 一個自由 tick 就歸零 = 只認連續黏住）。 */
+  windowSec: number;
+  /** 釋放窗長度：這段期間挨打型凍結不按腳（0 = 只累積不放人 = 等於關）。 */
+  releaseSec: number;
+}
+
+/**
+ * 出貨值。⭐ owner 2026-08-23「沒做完以前別問我了自己判斷 但是留後台開關可以
+ * 簡易 rollback」—— `thresholdSec: 2` 是他的原話（「黏超過 2秒一定可以離開」），
+ * 其餘三格是**我挑的**，回頭的路就是後台那四格（戰鬥手感 → 命中定格）。
+ */
+export const DEFAULT_STUCK_GUARD: StuckGuardRules = Object.freeze({
+  enabled: true,
+  thresholdSec: 2,
+  windowSec: 0.5,
+  releaseSec: 1.5,
+});
+
+/** 正規化。夾限 0..10 與 Zod 的上下界**逐字相同**（admin 的鏡射測試會比對）。 */
+export function normalizeStuckGuardRules(raw: unknown): StuckGuardRules {
+  const r = (raw && typeof raw === "object" && !Array.isArray(raw) ? raw : {}) as Record<
+    string,
+    unknown
+  >;
+  const num = (v: unknown, fallback: number): number => {
+    if (typeof v !== "number" || !Number.isFinite(v)) return fallback;
+    return v < 0 ? 0 : v > 10 ? 10 : v;
+  };
+  return Object.freeze({
+    enabled: typeof r.enabled === "boolean" ? r.enabled : DEFAULT_STUCK_GUARD.enabled,
+    thresholdSec: num(r.thresholdSec, DEFAULT_STUCK_GUARD.thresholdSec),
+    windowSec: num(r.windowSec, DEFAULT_STUCK_GUARD.windowSec),
+    releaseSec: num(r.releaseSec, DEFAULT_STUCK_GUARD.releaseSec),
+  });
 }
 
 /**
@@ -87,6 +160,7 @@ export interface HitstopRules {
 export const DEFAULT_HITSTOP: HitstopRules = Object.freeze({
   holdsVictimWalk: false,
   holdsAttackerWalk: true,
+  stuckGuard: DEFAULT_STUCK_GUARD,
 });
 
 /** 正規化操作者/文件給的表 —— 缺格一律回出貨預設。 */
@@ -102,6 +176,7 @@ export function normalizeHitstopRules(raw: unknown): HitstopRules {
       typeof r.holdsAttackerWalk === "boolean"
         ? r.holdsAttackerWalk
         : DEFAULT_HITSTOP.holdsAttackerWalk,
+    stuckGuard: normalizeStuckGuardRules(r.stuckGuard),
   });
 }
 
@@ -124,5 +199,159 @@ export function hitstopHoldsBody(world: SimWorld, id: EntityId): boolean {
   // 位移覆寫（擊退／衝刺）一律照舊定格：那一段位移不是玩家的方向盤。
   if (world.nav.get(id)?.override != null) return true;
   const rules = hitstopRules(world);
-  return (world.hitstun.get(id) ?? 0) > 0 ? rules.holdsVictimWalk : rules.holdsAttackerWalk;
+  if ((world.hitstun.get(id) ?? 0) > 0) {
+    // 挨打的那一方：保險絲的釋放窗內**不按**（挨打型凍結正是它治的東西）。
+    return rules.holdsVictimWalk && !stuckReleaseActive(world, id);
+  }
+  return rules.holdsAttackerWalk;
+}
+
+// ═════════════════════════ 黏住累積保險絲（I1, owner 2026-08-23）═════════════
+
+/** 這一份世界的保險絲規則。⛔ 不要直接讀 `world.combatFeel.hitstop!.stuckGuard!`。 */
+export function stuckGuardRules(world: SimWorld): StuckGuardRules {
+  return hitstopRules(world).stuckGuard ?? DEFAULT_STUCK_GUARD;
+}
+
+interface StuckState {
+  /** 累積的「想動但被挨打型凍結按住」tick 數。 */
+  held: number;
+  /** 連續自由 tick 數 —— 滿 `windowSec` 就把 `held` 歸零。 */
+  freeRun: number;
+  /** 釋放窗的到期 tick（絕對 tick；0 = 沒有釋放窗）。 */
+  releaseUntil: number;
+  /** 上一次記帳的 tick —— 斷帳（死亡/被背走）超過 1 tick 就重數。 */
+  lastTick: number;
+}
+
+/**
+ * 逐 world 的保險絲狀態。WeakMap → 世界被丟掉時狀態跟著走；只做 key 存取，
+ * ⛔ 永不迭代 ⇒ 決定性與 purity 都不受影響。刻意**不進 digest**：它是由同一串
+ * 決定性輸入推導出來的，兩份重播必然算出同一份。
+ */
+const stuckStates = new WeakMap<SimWorld, Map<EntityId, StuckState>>();
+
+function stuckState(world: SimWorld, id: EntityId): StuckState {
+  let per = stuckStates.get(world);
+  if (per === undefined) {
+    per = new Map();
+    stuckStates.set(world, per);
+  }
+  let st = per.get(id);
+  if (st === undefined) {
+    st = { held: 0, freeRun: 0, releaseUntil: 0, lastTick: world.tick };
+    per.set(id, st);
+  }
+  return st;
+}
+
+/** 這一 tick，這具身體在保險絲的**釋放窗**內嗎？ */
+export function stuckReleaseActive(world: SimWorld, id: EntityId): boolean {
+  if (!stuckGuardRules(world).enabled) return false;
+  const st = stuckStates.get(world)?.get(id);
+  return st !== undefined && world.tick < st.releaseUntil;
+}
+
+/**
+ * 「把擊倒遮掉之後，設計硬控（root/stun/施法鎖…）還按著他嗎？」
+ *
+ * ⚠️ 用「暫時 delete → 問 `movementHold` → set 回去」的方式遮，⛔ 不抄第二份
+ * root 判斷 —— `movementHold` 是唯一判準（它的檔頭自己這麼說），抄一份就是兩份
+ * 會漂走的程式。delete/set 在同一個同步區塊內完成；`world.knockdown` 只被逐 key
+ * 讀（decay 的迭代逐條獨立，順序無關），插入序的擾動沒有任何讀者。
+ */
+function heldByDesignSansKnockdown(world: SimWorld, id: EntityId): boolean {
+  const kd = world.knockdown.get(id);
+  if (kd === undefined) return movementHold(world, id).rooted;
+  world.knockdown.delete(id);
+  const rooted = movementHold(world, id).rooted;
+  world.knockdown.set(id, kd);
+  return rooted;
+}
+
+/**
+ * `MovementSystem` 讀移動限制的入口 —— 釋放窗內把**擊倒的 root 部分**遮掉
+ * （stun／root／施法鎖原封不動），其餘時刻與 `movementHold` 逐位元相同。
+ */
+export function movementHoldWithStuckRelease(world: SimWorld, id: EntityId): MovementHold {
+  if ((world.knockdown.get(id) ?? 0) > 0 && stuckReleaseActive(world, id)) {
+    const kd = world.knockdown.get(id)!;
+    world.knockdown.delete(id);
+    const hold = movementHold(world, id);
+    world.knockdown.set(id, kd);
+    return hold;
+  }
+  return movementHold(world, id);
+}
+
+/**
+ * 保險絲的逐 tick 記帳。`MovementSystem` 在 hitstop 的 `continue` **之前**呼叫
+ * （被按住的 tick 正是要數的那些）。`wantsMove` = nav 有 moveTarget。
+ *
+ * ⛔ 只看英雄（`world.stats` —— 小怪刻意沒有 StatsComp，見 MovementSystem）：
+ * 保險絲救的是**玩家的方向盤**，而且 1,000 隻殭屍逐 tick 各問一次 movementHold
+ * 是每 tick 白燒的錢。
+ */
+export function stuckGuardTick(world: SimWorld, id: EntityId, wantsMove: boolean): void {
+  const rules = stuckGuardRules(world);
+  if (!rules.enabled) return;
+  if (!world.stats.has(id)) return;
+  const st = stuckState(world, id);
+  if (world.tick - st.lastTick > 1) {
+    // 斷帳（死亡那幾 tick / 被背走）→ 重數,別讓上一條命的累積借給這一條。
+    st.held = 0;
+    st.freeRun = 0;
+  }
+  st.lastTick = world.tick;
+  if (world.tick < st.releaseUntil) return; // 釋放窗內不累積
+
+  const overridden = world.nav.get(id)?.override != null; // 位移中 = 在動,不是黏住
+  const hs = hitstopRules(world);
+  const beatenHeld =
+    !overridden &&
+    ((world.knockdown.get(id) ?? 0) > 0 ||
+      ((world.hitstop.get(id) ?? 0) > 0 && (world.hitstun.get(id) ?? 0) > 0 && hs.holdsVictimWalk));
+
+  if (wantsMove && beatenHeld) {
+    // 設計硬控同時在按的 tick：不累積也不歸零 —— 保險絲治不了它,數了只會在
+    // 放不了人的時候喊「掙脫」。
+    if (heldByDesignSansKnockdown(world, id)) return;
+    st.held += 1;
+    st.freeRun = 0;
+    const thresholdTicks = Math.max(1, Math.round(rules.thresholdSec / world.dt));
+    const releaseTicks = Math.round(rules.releaseSec / world.dt);
+    if (st.held >= thresholdTicks && releaseTicks > 0) {
+      st.releaseUntil = world.tick + releaseTicks;
+      st.held = 0;
+      st.freeRun = 0;
+      emitStuckRelease(world, id);
+    }
+    return;
+  }
+  // 自由（或根本沒想動）的 tick：連續滿 windowSec 就把累積翻頁歸零。
+  st.freeRun += 1;
+  if (st.freeRun > Math.round(rules.windowSec / world.dt)) {
+    st.held = 0;
+    st.freeRun = 0;
+  }
+}
+
+/**
+ * 釋放的可見回饋 —— 頭上冒「掙脫」。走 `floatingText` 這條**既有**的事件路
+ * （typed payload + fanout 已放行 + 客戶端 `FloatingTextFx` 真的在畫），
+ * ⛔ 不開新協定欄位。
+ */
+function emitStuckRelease(world: SimWorld, id: EntityId): void {
+  const t = world.transform.get(id);
+  if (t === undefined) return;
+  const payload: FloatingTextEvent = {
+    text: "掙脫",
+    colorRgb: [150, 230, 255],
+    sizeScale: 1.2,
+    durationSec: 1,
+    subjects: [{ id, x: t.pos.x, z: t.pos.z }],
+    caster: id,
+    zone: t.zone,
+  };
+  world.emit("floatingText", payload as unknown as Record<string, unknown>);
 }

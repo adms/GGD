@@ -30,8 +30,11 @@ import { walkWaypoint, navRules } from "../navRoute";
 import { activeObstacles, heldGates } from "../map/gates";
 import { Stat } from "../stats/statTypes";
 import { facingLockDir } from "../facingLock";
-import { movementHold } from "../movementHold";
-import { hitstopHoldsBody } from "../combat/hitstopHold";
+import {
+  hitstopHoldsBody,
+  stuckGuardTick,
+  movementHoldWithStuckRelease,
+} from "../combat/hitstopHold";
 import { mobProfile } from "../mobs";
 import { isCarried } from "../carry";
 // 走過去放技能 (`config.cast-approach@1`)。⛔ 單向邊:`abilities/abilitySystem.ts`
@@ -100,6 +103,12 @@ export function movementSystem(world: SimWorld): void {
     //    而且身上一筆狀態都沒有、快照裡也沒有位元 ⇒ 客戶端影子照走、每 50 ms
     //    被 `reconcile` 拉回來一次。量到的數字、保留下來的那一半、以及那一格
     //    後台開關全部在 `combat/hitstopHold.ts` 的檔頭。
+    // ⭐ I1 黏住累積保險絲（owner 2026-08-23:「黏超過 2秒一定可以離開」）——
+    //    記帳**必須在** hitstop 的 continue 之前:被按住的 tick 正是要數的那些,
+    //    放在後面的話保險絲只數得到自由的 tick,永遠不會跳。語意、界線與後台
+    //    四格全部在 `combat/hitstopHold.ts` 的 `StuckGuardRules`。
+    stuckGuardTick(world, id, nav.moveTarget !== null);
+
     if (hitstopHoldsBody(world, id)) {
       t.vel = { x: 0, z: 0 };
       continue;
@@ -136,7 +145,9 @@ export function movementSystem(world: SimWorld): void {
     // 問題:「這個單位走不動,是被硬控按住的,還是撞到幾何?」。抄一份過去的話
     // 兩份會漂走,而漂走的那天不會有任何測試紅 —— 只有被定身的玩家會發現解控
     // 之後角色往反方向跑。所以兩邊讀的是同一個函式。
-    const { speedMult, rooted, stunned } = movementHold(world, id);
+    // ⭐ 保險絲的釋放窗內,**擊倒的 root 部分**被遮掉(stun/root/施法鎖照舊 ——
+    //    硬控是設計);其餘時刻與 `movementHold` 逐位元相同。
+    const { speedMult, rooted, stunned } = movementHoldWithStuckRelease(world, id);
 
     const zone = world.arena.zones[t.zone] ?? world.arena.zones[0]!;
 

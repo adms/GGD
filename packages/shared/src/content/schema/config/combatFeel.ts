@@ -178,6 +178,28 @@ export const zConfigCombatFeelDoc = z
         holdsVictimWalk: z.boolean().optional(),
         /** 出手的一方在定格期間走不走得動。true = 出貨（走不動；他本來就得站定）。 */
         holdsAttackerWalk: z.boolean().optional(),
+        /**
+         * ⭐ 黏住累積**保險絲**（owner 2026-08-23：「有一個累積值，黏超過 2秒
+         * 一定可以離開之類，這些機制做成後台開關」）。語意、界線（治 hitstop
+         * victim-hold + 擊倒的 root 部分，⛔ 不治 stun/施法自鎖 —— 硬控是設計）
+         * 與出貨預設全部在 `sim/combat/hitstopHold.ts` 的 `StuckGuardRules`。
+         *
+         * ⚠️ 夾限 0..10 秒與 `normalizeStuckGuardRules` **逐字相同** ——
+         * admin 的鏡射測試逐格比對兩邊的上下界。ABSENT = 出貨預設（開）。
+         */
+        stuckGuard: z
+          .object({
+            /** 總開關；false = 保險絲整個不存在。 */
+            enabled: z.boolean().optional(),
+            /** 累積黏住幾秒就放人（owner 的數字：2）。 */
+            thresholdSec: z.number().min(0).max(10).optional(),
+            /** 連續自由走滿幾秒，累積歸零重數（0 = 只認連續黏住）。 */
+            windowSec: z.number().min(0).max(10).optional(),
+            /** 釋放窗長度：這段期間挨打型凍結不按腳（0 = 只累積不放人）。 */
+            releaseSec: z.number().min(0).max(10).optional(),
+          })
+          .strict()
+          .optional(),
       })
       .strict()
       .optional(),
