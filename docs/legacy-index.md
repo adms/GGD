@@ -23,11 +23,11 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 875 個檔案**，分佈在 2 個隔離區。
+**目前共 891 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
-| [`docs/legacy/`](legacy-index.md#docslegacy) | 435 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
+| [`docs/legacy/`](legacy-index.md#docslegacy) | 451 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
 | [`content/_legacy/`](legacy-index.md#contentlegacy) | 440 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
@@ -35,7 +35,7 @@ owner 2026-08-13：
 
 ---
 
-## `docs/legacy/` —— 435 檔
+## `docs/legacy/` —— 451 檔
 
 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）
 
@@ -440,6 +440,22 @@ owner 2026-08-13：
 | `_overwrites/overwrite_temp_20260823-171116/tools/parallel-gates/graph.mjs` | （.mjs 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260823-171441/packages/shared/src/ops/shipGateScript.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260823-171656/docs/_reports/L5_temp_20260823.md` | L5 —— 內容樹只載入一次 —— 日期** 2026-08-23 · **柵欄** `packages/shared/src/content/` | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260823-181000/tools/balance-alert/echoLoop.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260823-181407/apps/client/src/ui/PerfOverlay.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260823-181651/packages/shared/src/content/cache/fingerprint.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260823-181939/content/abilities/godie-h020.e.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260823-182026/packages/shared/src/content/authoringRules.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260823-182152/tools/skill-templates/shapes.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260823-182551/packages/shared/src/content/cache/contentCache.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260823-183401/tools/content-cache/_bench_gen_temp.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260823-184132/docs/_reports/A3_jassfacts-quadratic_temp_20260823b.patch` | （.patch 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260823-184810/tools/skill-templates/shape_axes.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260823-184958/packages/shared/src/sim/effects/periodicFieldAnchor.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260823-192034/apps/client/src/ui/panels/augmentDraftNoReconcile.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260823-192335/apps/client/src/ui/panels/augmentDraftNoReconcile.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260823-200149/packages/shared/src/sim/combat/_measure_temp_20260823f.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260823-200246/packages/shared/src/sim/combat/_measure_temp_20260823f.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260823-200348/packages/shared/src/sim/combat/_measure_temp_20260823f.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/04.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/06.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/08.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |

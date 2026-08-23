@@ -246,7 +246,22 @@ describe("skills:sync / skills:check 涵蓋所有產生器", () => {
       // ⭐ 純守衛(沒有產物,所以沒有「重生成」這回事)。⛔ 這裡是**帶理由的表**,
       //    ⛔ 不是一串 `if (base === "…")` —— 一個沒有理由的例外過幾個月就沒有人敢動它。
       if (base in NO_ARTIFACT) return false;
-      return !(base in s || `${base}:build` in s || `${base}:export` in s);
+      /**
+       * ⭐ `:write` 是第三種合法的「重生成辦法」，⛔ 而它與 `:build` 的差別是**語意的**：
+       *
+       * | | |
+       * |---|---|
+       * | `:build` / `:export` | **重生成** —— 同樣的輸入必得同樣的輸出 ⇒ 進得了 `skills:sync` |
+       * | `:write` | **提案** —— 它替人做一個判斷 ⇒ ⛔ **不可以**進 `skills:sync` |
+       *
+       * ⚠️ 前例 `beam:write`：它從幾何推「哪一軸是長軸」，而 `imported.tectonicfury`
+       * 的 bbox 與偏心**指向不同的軸** ⇒ 那一支它刻意不提案並要求人去看。
+       * 把它丟進 `skills:sync` 等於讓產生器替內容做設計決定。
+       *
+       * ⇒ 這條閘要的是「**紅了跑什麼**」，而 `pnpm beam:write` 就是答案 ——
+       * ⛔ 它只是不能自動跑。
+       */
+      return !(base in s || `${base}:build` in s || `${base}:export` in s || `${base}:write` in s);
     });
     expect(
       unbuildable,
