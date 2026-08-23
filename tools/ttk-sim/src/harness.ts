@@ -37,9 +37,9 @@
  */
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { ContentLoader, registerAll, Models } from "@ggd/shared/content";
+import { registerAll, Models } from "@ggd/shared/content";
 import type { FireRingConfig } from "@ggd/shared/content";
-import { FsContentSource } from "@ggd/shared/content/node";
+import { loadContentCached } from "@ggd/shared/content/cache/index";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import { normalizeCombatEnv, type CombatEnvKey } from "@ggd/shared/sim/combatEnv";
 import { TICK_HZ } from "@ggd/shared/constants";
@@ -187,7 +187,7 @@ let cachedRoster: string[] | null = null;
  */
 export async function loadRoster(contentDir: string = CONTENT_DIR): Promise<string[]> {
   if (cachedRoster) return cachedRoster;
-  const res = await new ContentLoader(new FsContentSource(contentDir)).load();
+  const res = await loadContentCached({ rootDir: contentDir });
   registerAll(res.store);
   cachedRoster = Champions.ids().filter((c) => Models.tryGet(Champions.get(c).modelKey) !== undefined);
   return cachedRoster;

@@ -34,8 +34,7 @@ import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { ContentLoader } from "../../packages/shared/src/content/loader";
-import { FsContentSource } from "../../packages/shared/src/content/node/FsContentSource";
+import { loadContentCached } from "../../packages/shared/src/content/cache/index";
 import { Arenas, Configs, registerAll } from "../../packages/shared/src/content/registries";
 import { Abilities } from "../../packages/shared/src/sim/content/registry";
 import { aoeTiersFromDoc } from "../../packages/shared/src/content/aoeTiers";
@@ -104,7 +103,7 @@ async function build(): Promise<{
   md: string;
   problems: string[];
 }> {
-  const loaded = await new ContentLoader(new FsContentSource(CONTENT)).load();
+  const loaded = await loadContentCached({ rootDir: CONTENT });
   registerAll(loaded.store);
 
   const cfgs = Configs.all() as unknown as { schema?: string }[];

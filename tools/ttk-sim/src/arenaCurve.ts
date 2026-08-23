@@ -20,8 +20,8 @@
  * were derived from.
  */
 import { join } from "node:path";
-import { ContentLoader, registerAll, Models, Configs } from "@ggd/shared/content";
-import { FsContentSource } from "@ggd/shared/content/node";
+import { registerAll, Models, Configs } from "@ggd/shared/content";
+import { loadContentCached } from "@ggd/shared/content/cache/index";
 import { Champions, Augments } from "@ggd/shared/sim/content/registry";
 import { normalizeCombatEnv } from "@ggd/shared/sim/combatEnv";
 import { MatchController, type SeatSpec } from "@ggd/game-server/src/match/MatchController";
@@ -246,7 +246,7 @@ export function runMatch(seed: number, roster: readonly string[], startingTeamHe
 }
 
 async function main(): Promise<void> {
-  const res = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load();
+  const res = await loadContentCached({ rootDir: CONTENT_DIR });
   registerAll(res.store);
   const roster = Champions.ids().filter((c) => Models.tryGet(Champions.get(c).modelKey) !== undefined);
 

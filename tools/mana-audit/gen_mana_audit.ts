@@ -41,8 +41,7 @@ import {
   balancePopulationIds,
 } from "../../packages/shared/testkit/balancePopulation";
 
-import { ContentLoader } from "../../packages/shared/src/content/loader";
-import { FsContentSource } from "../../packages/shared/src/content/node/FsContentSource";
+import { loadContentCached } from "../../packages/shared/src/content/cache/index";
 import { registerAll, Configs } from "../../packages/shared/src/content/registries";
 import { Champions } from "../../packages/shared/src/sim/content/registry";
 import {
@@ -96,7 +95,7 @@ interface Row {
 }
 
 async function build(): Promise<string> {
-  const loaded = await new ContentLoader(new FsContentSource(CONTENT)).load();
+  const loaded = await loadContentCached({ rootDir: CONTENT });
   registerAll(loaded.store);
 
   const envDoc = Configs.tryGet("combat-env") as { multipliers?: Record<string, number> } | undefined;

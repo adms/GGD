@@ -96,8 +96,7 @@ import { zChampionDoc } from "../../packages/shared/src/content/schema/champion"
 import { zTemplateDoc } from "../../packages/shared/src/content/schema/template";
 import { Stat } from "../../packages/shared/src/sim/stats/statTypes";
 import { ModOp } from "../../packages/shared/src/sim/stats/modifiers";
-import { ContentLoader } from "../../packages/shared/src/content/loader";
-import { FsContentSource } from "../../packages/shared/src/content/node/FsContentSource";
+import { loadContentCached } from "../../packages/shared/src/content/cache/index";
 import { registerAll } from "../../packages/shared/src/content/registries";
 import { Abilities } from "../../packages/shared/src/sim/content/registry";
 // ⭐ 說明推導（票號待開） —— 佔位符詞彙**只有一份**（`abilityProse.ts`），文件從它長出來。
@@ -2225,7 +2224,7 @@ async function main(argv: readonly string[]): Promise<number> {
 
   const md = buildSpecMarkdown();
   // ⭐ 算繪好的說明要走**註冊表**（模板展開 + 級距解析之後），⛔ 不是磁碟原文。
-  registerAll((await new ContentLoader(new FsContentSource(join(REPO, "content"))).load()).store);
+  registerAll((await loadContentCached({ rootDir: join(REPO, "content") })).store);
   const proseJson = buildProseJson();
 
   if (proseOut !== undefined) {

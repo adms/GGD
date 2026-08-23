@@ -30,8 +30,7 @@ import { readFileSync, readdirSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { ContentLoader } from "../../packages/shared/src/content/loader";
-import { FsContentSource } from "../../packages/shared/src/content/node/FsContentSource";
+import { loadContentCached } from "../../packages/shared/src/content/cache/index";
 import { Arenas, Configs, registerAll } from "../../packages/shared/src/content/registries";
 import { Abilities, Champions } from "../../packages/shared/src/sim/content/registry";
 import { aoeTiersFromDoc } from "../../packages/shared/src/content/aoeTiers";
@@ -120,7 +119,7 @@ function spliceDescription(raw: string, oldLit: string, newLit: string, anchor: 
 /* ──────────────────────────────── main ──────────────────────────────── */
 
 async function main(): Promise<void> {
-  registerAll((await new ContentLoader(new FsContentSource(CONTENT)).load()).store);
+  registerAll((await loadContentCached({ rootDir: CONTENT })).store);
   const tables = tablesFromRegistries();
   const q = quantitiesById(tables);
 
