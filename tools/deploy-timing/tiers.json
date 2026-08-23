@@ -66,10 +66,65 @@
     "toTierWhenValuesOnly": "T1"
   },
 
+  "_gatePlan": [
+    "⭐ **級別只決定「跑不跑」,⛔ 不改任何一支閘的判準。** 每一支閘的指令、",
+    "   斷言、離開碼逐字不動 —— 08-01／08-02 兩次「全綠而線上掛掉」的教訓是",
+    "   **閘不夠**,⛔ 不是閘太多。",
+    "",
+    "⚠️ ⭐ 這一塊的判準**不是級別**,是**這次的路徑集合碰得到誰**。",
+    "   級別回答「要不要重建映像」,閘要回答「這次的改動可能弄壞誰」——",
+    "   ⛔ 兩個問題不一樣:一次 `content/` + `tools/` 的改動是 T2(不重建映像),",
+    "   而它照樣會讓 36 支產生器閘全部過期。",
+    "",
+    "⛔ 三條 fail-closed:",
+    "  ① 路徑集合裡**有任何一條沒被 rules 吃到** ⇒ 全部的閘都跑(⛔ 不猜)。",
+    "  ② `packages/shared` 的 vitest **永遠跑** —— `src/ops/` 那一族讀的是",
+    "     `scripts/`、`CLAUDE.md`、`apps/admin/`、`docs/`,它是跨全 repo 的閘。",
+    "  ③ 認不得的 suite 名 ⇒ ship.mjs 直接回非零,⛔ 不靜默略過。"
+  ],
+  "gatePlan": {
+    "syncInputs": [
+      "content/",
+      "tools/",
+      "docs/",
+      "scripts/",
+      "packages/shared/",
+      "apps/admin/",
+      "CLAUDE.md",
+      "README.md",
+      "package.json"
+    ],
+    "globalInputs": [
+      "content/",
+      "packages/shared/",
+      "package.json",
+      "pnpm-lock.yaml",
+      "tsconfig.base.json",
+      "vitest.config.ts",
+      "vitest.shared.ts"
+    ],
+    "alwaysSuites": ["packages/shared"],
+    "typecheckExts": [".ts", ".tsx", ".mts", ".cts", ".d.ts", ".json"],
+    "ownGuards": "tools/deploy-timing"
+  },
+
+  "_deploy": [
+    "⚠️ 這三格是**部署協定的機器可讀版**,而散文版住 CLAUDE.md「部署指令只有一條」。",
+    "   ⛔ 兩份會漂 ⇒ `shipPlan.test.mjs` 真的去讀 CLAUDE.md 那一行並比對,",
+    "   任何一邊改了另一邊沒改就會紅(同 ENTITY_FLAG 那條守衛的形狀)。"
+  ],
+  "deploy": {
+    "sshTarget": "can@34.81.104.163",
+    "remoteDir": "/home/can/GGD",
+    "targetEnv": "GGD_DEPLOY_SSH"
+  },
+
   "plans": {
     "NOOP": {
       "label": "沒有任何會影響出貨的檔案改動",
       "remote": "(⛔ 不必部署)",
+      "rebuild": false,
+      "ssh": false,
       "seconds": 0,
       "skips": ["整條路"],
       "keeps": []
@@ -77,6 +132,8 @@
     "T0": {
       "label": "content-bus 旋鈕 —— 後台存檔,下一場生效",
       "remote": "後台「戰鬥系統」頁存檔 → Redis chan:content → 跑著的 shard 重抓",
+      "rebuild": false,
+      "ssh": false,
       "seconds": 10,
       "skips": ["docker build ×3(191s)", "docker compose up -d", "shard 重啟", "git push"],
       "keeps": [
@@ -87,6 +144,8 @@
     "T1": {
       "label": "durable overlay —— 後台存檔 + 重啟 shard",
       "remote": "後台對應頁存檔 → putOverlayDoc → docker restart ggd-game-1 → host-deploy.sh --verify-only",
+      "rebuild": false,
+      "ssh": true,
       "seconds": 30,
       "skips": ["docker build ×3(191s)", "docker compose up -d"],
       "keeps": [
@@ -98,6 +157,8 @@
     "T2": {
       "label": "content/ 進 git —— live bind-mount,⛔ 不重建映像",
       "remote": "bash scripts/host-deploy.sh --content-only",
+      "rebuild": false,
+      "ssh": true,
       "seconds": 30,
       "skips": ["docker build ×3(191s,其中 game 的 pnpm deploy /out 一支就佔 119.7s)"],
       "keeps": ["五項後置驗證全部", "煙霧測試(新分頁讀 console 那一行)"]
@@ -105,6 +166,8 @@
     "T3": {
       "label": "完整重建 —— 程式 / Zod schema / client / admin / docker",
       "remote": "bash scripts/host-deploy.sh",
+      "rebuild": true,
+      "ssh": true,
       "seconds": 191,
       "skips": [],
       "keeps": ["全部"]

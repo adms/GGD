@@ -36,9 +36,22 @@ const TIERS = JSON.parse(readFileSync(new URL("./tiers.json", import.meta.url), 
 /** ⭐ 帳本只留最近 N 次 —— 它是累積的,但⛔ 不是無上限的。 */
 const KEEP_RUNS = Number(process.env.GGD_DEPLOY_KEEP_RUNS ?? 60);
 
+/**
+ * ⚠️⭐ **`-c core.quotepath=false` 不是潔癖,它是這支工具的正確性條件。**
+ *
+ * git 預設把非 ASCII 路徑印成 **C 風格跳脫並加上雙引號**:
+ *   `"docs/\346\212\200\350\203\275…​.md"`
+ * ⇒ 那條字串**對不到 `tiers.json` 的任何一條規則**（連開頭的 `docs/` 都不是,
+ *   因為第一個字元是 `"`）⇒ fail-closed 落 **T3**。
+ *
+ * 方向是安全的（往上倒），⛔ 但後果是這支工具在**這個 repo 上等於沒用**:
+ * `docs/技能標記機制與效果規則.md` 這一族 CJK 檔名遍佈全樹,
+ * 於是**一次純文件改動也會被判成「完整重建 191s」**。
+ * 量到（2026-08-23，v0.25.6..v0.25.7 的 142 個檔）:1 條路徑因此變成 unknown。
+ */
 const git = (...a) => {
   try {
-    return execFileSync("git", a, { cwd: ROOT, encoding: "utf8" }).trim();
+    return execFileSync("git", ["-c", "core.quotepath=false", ...a], { cwd: ROOT, encoding: "utf8" }).trim();
   } catch {
     return "";
   }
@@ -119,7 +132,10 @@ export function tierOf(path, tiers = TIERS) {
     if (r.path && path === r.path) return { tier: r.tier, why: r.why, isProtocol: !!r.protocol };
     if (r.prefix && path.startsWith(r.prefix)) return { tier: r.tier, why: r.why, isProtocol: !!r.protocol };
   }
-  return { tier: tiers.unknownTier, why: "⛔ 沒有任何規則吃到這條路徑 ⇒ fail-closed 落到全量重建" };
+  // ⭐ `unknown` 是**旗標**,⛔ 不是「why 字串裡有沒有那幾個字」——
+  //    下游（`shipPlan.mjs` 的閘選擇）要靠它 fail-closed,而字串比對會被一次
+  //    文案潤飾靜默關掉（＝ CLAUDE.md 失敗形態⑥:掃字串代替行為）。
+  return { tier: tiers.unknownTier, why: "⛔ 沒有任何規則吃到這條路徑 ⇒ fail-closed 落到全量重建", unknown: true };
 }
 
 /** 一組路徑 → 最高級別(order 越後面越高)。 */

@@ -25,9 +25,16 @@
  *    的教訓是**閘不夠**,⛔ 不是閘太多。
  *
  * 用法:
- *   pnpm ship:check          # ①＋②(預設)
+ *   pnpm ship:check          # ①＋②(預設 ＝ **全部**)
  *   pnpm ship:check --no-sync   # 只跑 ② (內容沒動過時)
  *   pnpm ship:check --only-sync # 只跑 ①
+ *   pnpm ship:check --suites packages/shared,apps/client   # ⭐ 只跑這幾包 vitest
+ *   pnpm ship:check --no-typecheck
+ *
+ * ⚠️ ⭐ **後兩個旗標是給 `pnpm ship`（自動分級）用的,⛔ 不是給人手打的。**
+ * 誰該跑由 `tools/deploy-timing/shipPlan.mjs` 從**路徑集合**推導 ——
+ * 而**預設（不帶旗標）永遠是全跑**：一支「預設就在打折」的閘等於沒有閘。
+ * ⛔ 認不得的包名一律回非零,⛔ 不靜默略過(那會變成「我以為它跑了」)。
  */
 import { spawn } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -41,12 +48,29 @@ const REPO = new URL("../../", import.meta.url).pathname;
 const argv = process.argv.slice(2);
 const noSync = argv.includes("--no-sync");
 const onlySync = argv.includes("--only-sync");
+const noTypecheck = argv.includes("--no-typecheck");
+
+const ALL_SUITES = packagesWithVitest(REPO);
+/** `--suites a,b` ⇒ 只跑這幾包。⛔ 不給就是**全部**(⛔ 預設不打折)。 */
+const wantSuites = (() => {
+  const i = argv.indexOf("--suites");
+  if (i < 0) return ALL_SUITES;
+  const want = (argv[i + 1] ?? "").split(",").map((s) => s.trim()).filter(Boolean);
+  const bad = want.filter((s) => !ALL_SUITES.includes(s));
+  if (!want.length || bad.length) {
+    // ⛔ fail-closed:認不得的名字**不可以**被當成「那就不跑」——
+    //    包改名之後那一包會靜默消失,而出貨前它一次都不會紅。
+    console.error(`⛔ --suites 認不得: ${bad.join(",") || "(空的)"}\n   有 vitest 的包: ${ALL_SUITES.join(" · ")}`);
+    process.exit(2);
+  }
+  return want;
+})();
 
 /**
  * 每一包 vitest 分到幾個 fork。⭐ 從**核數**與**同時在跑幾包**推導,
  * ⛔ 不是抄各自 config 裡的 16（那個數字是「單獨跑這一包」時才對）。
  */
-const SUITE_COUNT = packagesWithVitest(REPO).length;
+const SUITE_COUNT = wantSuites.length;
 const SHIP_LIMIT = Number(process.env.GGD_SHIP_CONCURRENCY ?? Math.max(2, cpus().length - 2));
 /**
  * ⭐ **兩倍超訂**（`cpus × 2 ÷ 包數`），⛔ 不是 `cpus ÷ 包數`。
@@ -76,8 +100,14 @@ const SERIAL = ["content:build", "skills:sync"];
  */
 const PARALLEL = [
   { name: "skills:check", cmd: ["node", [`${HERE}run.mjs`, "skills:check"]] },
-  { name: "typecheck", cmd: ["pnpm", ["typecheck"]] },
-  ...packagesWithVitest(REPO).map((r) => ({
+  ...(noTypecheck ? [] : [{ name: "typecheck", cmd: ["pnpm", ["typecheck"]] }]),
+  // ⭐ **這條管線自己的守衛**（分級表 + 閘選擇 + 部署步驟）。
+  // ⚠️ 它在此之前**沒有被任何閘跑到**:`pnpm test` 是 `pnpm -r`（逐 package）,
+  //    而 `tools/deploy-timing/` 不是一個 workspace package ⇒ `tier.test.mjs`
+  //    只有人手打 `npx vitest run` 時才跑。一支決定「哪些閘可以不跑」的程式
+  //    自己沒有閘,是這整條路上最不能接受的洞。
+  { name: "vitest tools/deploy-timing", cmd: ["npx", ["vitest", "run", "tools/deploy-timing"]] },
+  ...wantSuites.map((r) => ({
     name: `vitest ${r}`,
     // ⛔⛔ **分核預算,⛔ 不是「每一包都開 16 forks」。**
     //
@@ -93,6 +123,15 @@ const PARALLEL = [
       "--poolOptions.forks.minForks", "1"]],
   })),
 ];
+
+// ⭐ `--list` 印出**這一次真的會跑哪幾支**然後收工（⛔ 一支都不跑）。
+// ⚠️ 它存在的理由是守衛:`pnpm ship` 的分級只有透過這幾個旗標才會變成
+//    「少跑一包」,而**旗標接錯線不會紅** —— 那一包只是安靜地不見了
+//    （CLAUDE.md 失敗形態③:可以從樹上刪掉而測試全綠）。
+if (argv.includes("--list")) {
+  console.log([...(noSync ? [] : SERIAL), ...(onlySync ? [] : PARALLEL.map((j) => j.name))].join("\n"));
+  process.exit(0);
+}
 
 const LOGDIR = process.env.GGD_SHIP_LOGDIR ?? "/private/tmp/ggd-ship";
 mkdirSync(LOGDIR, { recursive: true });
