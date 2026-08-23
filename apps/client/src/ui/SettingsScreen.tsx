@@ -17,6 +17,7 @@ import {
   type CombatTextScope,
   type FpsCap,
   type GoreSetting,
+  type GraphicsSettings,
   type QualityPreset,
 } from "../settings";
 import { lodTierForPreset, type ModelLodTier } from "../render/modelLod";
@@ -87,6 +88,41 @@ const AIR_SCATTER_OPTIONS: { value: AirScatterSetting; label: string }[] = [
   { value: "off", label: "Off" },
   { value: "auto", label: "Auto" },
   { value: "on", label: "On" },
+];
+
+/**
+ * ⭐ GH#610 第二批（owner 2026-08-23「do it, 但有開關」）—— 天氣的四格。
+ *
+ * ⚠️ **四格而不是一格**：它們的成本差三個數量級（濕地面是三個材質常數、
+ * 積水是每 zone 一顆 mesh + 透明混合），綁在一起等於讓玩家沒辦法只留便宜的那些。
+ * ⛔ 這四格**不決定「這張圖有沒有天氣」** —— 那是內容（`config/weather.json`），
+ * 室內圖不下雨那一格就在那裡。
+ */
+const WEATHER_ROWS: {
+  key: "wetGround" | "puddles" | "lightningFlash" | "weatherFog";
+  label: string;
+  note: string;
+}[] = [
+  {
+    key: "wetGround",
+    label: "濕地面 (Wet ground)",
+    note: "地板變深、變滑、反光。⭐ 四格裡最划算的一格（地板佔畫面八成，而它是三個材質常數＝零成本）。⚠️ 改這一格**下一回合**換圖時才看得到。",
+  },
+  {
+    key: "puddles",
+    label: "積水 (Puddles)",
+    note: "地上幾片會反光的薄水窪。⚠️ 四格裡唯一真的多畫東西的一格，所以掉幀時它最早被自動關掉。同樣是下一回合生效。",
+  },
+  {
+    key: "lightningFlash",
+    label: "雷擊補光 (Lightning)",
+    note: "雷雨場地閃電那一瞬間整個場景真的變亮。⚠️ 系統開了「減少動態」時這一格會被**強制關閉**（全螢幕級的閃光是光敏性癲癇的誘因）。立即生效。",
+  },
+  {
+    key: "weatherFog",
+    label: "天氣霧 (Weather fog)",
+    note: "起霧的場地加在上面那顆空氣漫反射上的額外濃度。⛔ 不是第二套霧，關掉它空氣漫反射還在。⭐ 濃度有上界，霧**永遠不會**讓你看不到該看到的敵人。立即生效。",
+  },
 ];
 
 const FPS_CAPS: { value: FpsCap; label: string }[] = [
@@ -469,6 +505,31 @@ export function SettingsScreen({ onClose }: { onClose: () => void }): React.JSX.
                 ? "　On：一律開著（掉幀時也不會自己關）。"
                 : "　Off：完全關閉。"}
           </div>
+          {/* ⭐ GH#610 第二批 —— 天氣四格。⚠️ 每一格都配一句「Auto 在這個預設下
+              到底開不開」，理由與上面那一段一模一樣：一個顯示著玩家選擇卻不生效的
+              開關，是這個 repo 自己列為最糟的設定行為。 */}
+          {WEATHER_ROWS.map((row) => (
+            <div key={row.key}>
+              {label(row.label)}
+              <div style={{ marginTop: 4 }}>
+                <Segmented
+                  options={AIR_SCATTER_OPTIONS}
+                  value={g[row.key]}
+                  onPick={(v) => store.patchGraphics({ [row.key]: v } as Partial<GraphicsSettings>)}
+                />
+              </div>
+              <div style={{ color: TEXT_DIM, fontSize: 10, marginTop: 2 }}>
+                {row.note}
+                {g[row.key] === "auto"
+                  ? g.qualityPreset === "high" || g.qualityPreset === "auto"
+                    ? "　Auto：這個畫質預設會開，掉幀時自動關掉。"
+                    : "　Auto：Low / Medium 預設下不開 —— 想要就選 On。"
+                  : g[row.key] === "on"
+                    ? "　On：一律開著（掉幀時也不會自己關）。"
+                    : "　Off：完全關閉。"}
+              </div>
+            </div>
+          ))}
           <div>
             {label("Gore")}
             <div style={{ marginTop: 4 }}>

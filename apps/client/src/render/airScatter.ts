@@ -62,10 +62,30 @@ export function airScatterEnabled(
   preset: QualityPreset,
   adaptiveLevel: number,
 ): boolean {
+  return qualityTriStateEnabled(setting, preset, adaptiveLevel, AIR_SCATTER_MAX_LEVEL);
+}
+
+/**
+ * ⭐ GH#610 第二批 —— 上面那三行**判準**被四格畫質三態共用（空氣漫反射 ＋
+ * 濕地面／積水／霧濃度），所以它抽在這裡。
+ *
+ * ⛔ 抽出來不是為了少打字，是為了讓「`on` 不受梯子管」這件事**只有一個住處**：
+ * 四份各抄一次的話，其中一份哪天漏掉那一行 `if (setting === "on") return true;`
+ * 會變成「玩家明確打開了、而畫面上沒有」，⛔ 而且四格長得一模一樣沒有人看得出來。
+ *
+ * `maxLevel` 是**每一格自己的**梯子上限（越貴的效果越早被關掉），
+ * 因為只有那一格知道自己多貴。
+ */
+export function qualityTriStateEnabled(
+  setting: AirScatterSetting,
+  preset: QualityPreset,
+  adaptiveLevel: number,
+  maxLevel: number,
+): boolean {
   if (setting === "off") return false;
   if (setting === "on") return true;
   if (preset !== "high" && preset !== "auto") return false;
-  return adaptiveLevel <= AIR_SCATTER_MAX_LEVEL;
+  return adaptiveLevel <= maxLevel;
 }
 
 /**

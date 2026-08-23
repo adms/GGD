@@ -22,6 +22,7 @@ import {
 } from "./AdaptiveQuality";
 import { lodTierForPreset, subscribeModelLodPolicy, type ModelLodTier } from "./modelLod";
 import { airScatterEnabled } from "./airScatter";
+import { setWeatherToggles, weatherToggles, type WeatherRenderToggles } from "./weather";
 
 export interface RenderParams {
   resolutionScale: number;
@@ -53,6 +54,14 @@ export interface RenderParams {
    * 而 `Lighting` 只想知道「這一幀要不要有空氣」。
    */
   airScatter: boolean;
+  /**
+   * ⭐ GH#610 第二批 —— 天氣四格**解析過後**的布林（設定 × 畫質預設 × 適應梯子
+   * × `prefers-reduced-motion`）。判準全在 `render/weather.ts`。
+   *
+   * ⚠️ 它同時被 `setWeatherToggles()` 推進那個檔的 store —— 因為兩個消費端
+   * （`ArenaGround` 的材質、`Lighting` 的燈與霧）拿不到同一組輸入，見那個檔的檔頭。
+   */
+  weather: WeatherRenderToggles;
   /** current adaptive ladder index (for the perf overlay). */
   adaptiveLevel: number;
   /** whether the adaptive manager is currently in control of quality. */
@@ -152,6 +161,17 @@ export class QualityController {
       resolutionScale = fixedPresetResolution(g.resolutionScale, rung.resolutionScale);
     }
 
+    // ⭐ 與 `airScatter` 同一組輸入（見那一行下面的註解：梯子沒在管事時要餵 0）。
+    const weather = weatherToggles(
+      g,
+      g.qualityPreset,
+      adaptiveActive ? this.adaptive.level : 0,
+    );
+    // ⛔ 這一行是**功能性**的，不是快取：`ArenaGround` 與 `Lighting` 兩個接縫都
+    // 不經過 `RenderParams`（一個在建材質的當下、一個沒有 arena.id），少了它
+    // 四格開關就是「後台看得到、場上一格都不動」（失敗形態②）。
+    setWeatherToggles(weather);
+
     return {
       resolutionScale,
       particleDensity,
@@ -177,6 +197,7 @@ export class QualityController {
         g.qualityPreset,
         adaptiveActive ? this.adaptive.level : 0,
       ),
+      weather,
       adaptiveLevel: this.adaptive.level,
       adaptiveActive,
     };

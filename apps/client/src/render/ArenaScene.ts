@@ -69,8 +69,12 @@ import {
   detachGroundTextures,
   type ContactShadow,
   type GroundPalette,
+  type WeatherGroundInput,
   type ZoneGround,
 } from "./ArenaGround";
+// ⭐ GH#610 第二批 —— 天氣（濕地面／積水）。⚠️ `setWeatherArena` 同時是**推進
+// store 的唯一入口**：`Lighting` 的霧與雷擊補光靠它才知道這一場是哪一張圖。
+import { prefersReducedMotion, setWeatherArena, weatherPolicy } from "./weather";
 
 /**
  * ⭐ GH#362 —— `scenery.palette` 的地板／牆兩格 → 渲染層要的 0..1 rgb。
@@ -304,6 +308,14 @@ export function buildArena(
   const palette = groundPaletteOf(scenery);
   // ⭐ GH#345 —— 場上矮台（牆）的顏色，一次算好給所有 zone 用。
   const wallTint = wallTintOf(scenery, groundStyle);
+  // ⭐ GH#610 第二批 —— 這張圖是什麼天氣。**這裡是整個渲染側唯一拿得到 `arena.id`
+  // 的地方**（`Lighting.applyScenery()` 只拿得到 scenery），所以由它推進 store，
+  // 燈與霧那一側用 `subscribeWeather()` 接。見 `render/weather.ts` 的檔頭。
+  const weather: WeatherGroundInput = {
+    policy: weatherPolicy(),
+    look: setWeatherArena(arena.id),
+    reducedMotion: prefersReducedMotion(),
+  };
   const root = new TransformNode(`arena-root-${arena.id}`, scene);
   const handles: ArenaHandles = {
     root,
@@ -316,7 +328,7 @@ export function buildArena(
   };
 
   arena.zones.forEach((zone, zi) => {
-    handles.grounds.push(buildZoneGround(scene, root, zone, zi, groundStyle, palette));
+    handles.grounds.push(buildZoneGround(scene, root, zone, zi, groundStyle, palette, weather));
 
     // ⭐ GH#345 —— 牆色從場地讀，⛔ 不是寫死的水泥灰。見 `wallTintOf()`。
     const obstacleMat = new StandardMaterial(`zone-${zi}-obstacle-mat`, scene);

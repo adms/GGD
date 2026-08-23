@@ -131,6 +131,9 @@ import { zConfigItemCardDoc } from "./itemCard";
 import { zConfigUiLexiconDoc } from "./uiLexicon";
 import { zConfigUiCuesDoc } from "./uiCues";
 import { zConfigWorldCuesDoc } from "./worldCues";
+// GH#610 第二批 —— 逐場地的天氣觀感（濕地面／積水／霧濃度）。⚠️ 漏掉這一行 =
+// weather.json 進了 content/ 之後整份內容驗證失敗 → 退回 2 隻骨架英雄。
+import { zConfigWeatherDoc } from "./weather";
 import { zConfigLobbyLayoutDoc } from "./lobbyLayout";
 import { zConfigLobbyRallyDoc } from "./lobbyRally";
 import { zConfigAdminFriendDoc } from "./adminFriend";
@@ -216,6 +219,7 @@ export * from "./voxelBodies";
 export * from "./weakness";
 export * from "./wounds";
 export * from "./worldCues";
+export * from "./weather";
 
 
 /** The `config` collection accepts all variants (discriminated on `schema`). */
@@ -333,6 +337,10 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   // 事件合成兩個模板 + 一張表。⚠️ 漏掉這一行 = 一份 world-cues.json 進了 content/
   // 之後整份內容驗證失敗 → 退回 2 隻骨架英雄，而網站看起來完全正常。
   zConfigWorldCuesDoc,
+  // 天氣觀感（GH#610 第二批，owner 2026-08-23「do it, 但有開關」）：逐場地的
+  // 濕地面／積水／霧濃度，外加室內圖「⛔ 不要下雨」的那一格。
+  // ⚠️ 漏掉這一行 = weather.json 進了 content/ 之後整份驗證失敗 → 骨架英雄。
+  zConfigWeatherDoc,
   // ── 2026-08-02 收尾:三個 lane 各自定義的欄位,三個落點一次接完 ───────────
   // ⚠️ **這三行是最重要的一步。** 新的 config 文件進了 `content/` 而 union 不認得
   // 它的 schema tag,`zConfigDoc` 就會拒絕整份文件 → ContentLoader 驗證失敗 →

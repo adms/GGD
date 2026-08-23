@@ -29,12 +29,24 @@ import {
   DEFAULT_SCENERY_PALETTE,
   hexToRgb01,
   sceneryLightAt,
+  sceneryWave,
   type ArenaScenery,
   type SceneryLighting,
   type SceneryPalette,
+  type WeatherLook,
 } from "@ggd/shared/content";
 import { airScatterFog } from "./airScatter";
 import { qualityController } from "./QualityController";
+// ⭐ GH#610 第二批 —— 雷擊補光與場地霧濃度。⚠️ 這個檔拿不到 `arena.id`
+// （`applyScenery` 的呼叫端在 `GameApp.ts`），所以天氣是**訂閱**來的，
+// ⛔ 不是參數。完整理由在 `render/weather.ts` 的檔頭。
+import {
+  currentWeather,
+  lightningEnabled,
+  lightningStrike,
+  subscribeWeather,
+  weatherPolicy,
+} from "./weather";
 
 /** 關掉「陰影」時主光剩多少（0.25 / 0.9 —— 出貨值的比例，逐字保留）。 */
 const SHADOWS_OFF_KEY_MUL = 0.25 / 0.9;
@@ -72,21 +84,52 @@ export function setupLighting(scene: Scene): LightingHandle {
    */
   let scatter = qualityController.getParams().airScatter;
 
+  /** ⭐ GH#610 第二批 —— 這一場的天氣（訂閱來的；⛔ 這個檔拿不到 arena.id）。 */
+  let weather: WeatherLook = currentWeather();
+
+  const clamp01 = (v: number): number => (v < 0 ? 0 : v > 1 ? 1 : v);
+
   /** 把「這一刻的光」寫進兩盞燈。⚠️ 唯一寫燈的地方 —— 兩處寫會互相蓋掉。 */
   const write = (tSec: number): void => {
-    const s = sceneryLightAt(lighting, animated ? tSec : 0);
-    sun.intensity = s.keyIntensity * (shadows ? 1 : SHADOWS_OFF_KEY_MUL);
+    const t = animated ? tSec : 0;
+    const s = sceneryLightAt(lighting, t);
+    // ⭐ 雷擊補光。⛔ 「這張圖有沒有雷」**不是**天氣文件的欄位 —— 它是場地自己
+    // 宣告的 `scenery.lighting.wave === "storm"`（GH#362 就有了）。在天氣文件裡
+    // 再開一格就是第二個住處，而它們一定會互相打架（「天氣說沒雷、燈在閃」）。
+    // ⚠️ 只取波的正半邊：storm 波長時間貼在 −1（陰暗），負的那一半是「比平常更暗」，
+    //    ⛔ 不是「往下閃」。
+    const strike =
+      lighting.wave === "storm" && lightningEnabled()
+        ? lightningStrike(sceneryWave("storm", t, lighting.periodSec))
+        : 0;
+    const p = weatherPolicy();
+    const keyFlash = 1 + (p.lightningKeyBoost - 1) * strike;
+    // ⚠️ 補光跟得比主光少 —— 兩盞同幅度一起爆＝整個畫面在調亮度，那看起來像
+    //    螢幕壞了，⛔ 不像「有一道光打進來」（同 `sceneryLightAt` 的 ×0.5）。
+    const fillFlash = 1 + (p.lightningFillBoost - 1) * strike;
+    sun.intensity = s.keyIntensity * (shadows ? 1 : SHADOWS_OFF_KEY_MUL) * keyFlash;
     sun.diffuse = new Color3(s.key.r, s.key.g, s.key.b);
     sun.direction.set(s.dir.x, s.dir.y, s.dir.z);
-    hemi.intensity = s.fillIntensity * (shadows ? 1 : SHADOWS_OFF_FILL_MUL);
+    hemi.intensity = s.fillIntensity * (shadows ? 1 : SHADOWS_OFF_FILL_MUL) * fillFlash;
     // ⭐ 空氣跟燈**同一個寫入點**：它的顏色就是這一刻的天光＋主光，所以分開寫
     // 一定會漂（雷雨閃一下，而空氣還是上一秒的顏色）。⚠️ `.set()` ⛔ 不是
     // `new Color3` —— 這一行每幀都會跑。
-    if (scatter) {
-      const fog = airScatterFog(palette, s);
+    //
+    // ⭐ GH#610 第二批 —— **起霧是同一顆旋鈕轉大，⛔ 不是第二套 fog**：
+    // 濃度 = 空氣漫反射的基礎值（玩家那一格）＋ 這張圖的天氣加成（內容那一格）。
+    // ⇒ 兩格各自關得掉，而 `scene.fog` 只有一顆。
+    const fog = airScatterFog(palette, s);
+    const density = (scatter ? fog.density : 0) + weather.fogDensity;
+    if (density > 0) {
+      // 空氣被閃電照亮的那一半 —— 光在霧裡才看得見，少了它閃電會像一個沒有體積的濾鏡。
+      const fogFlash = 1 + (p.lightningFogBoost - 1) * strike;
       scene.fogMode = Scene.FOGMODE_EXP2;
-      scene.fogDensity = fog.density;
-      scene.fogColor.set(fog.r, fog.g, fog.b);
+      scene.fogDensity = density;
+      scene.fogColor.set(
+        clamp01(fog.r * fogFlash),
+        clamp01(fog.g * fogFlash),
+        clamp01(fog.b * fogFlash),
+      );
     } else {
       scene.fogMode = Scene.FOGMODE_NONE;
     }
@@ -117,6 +160,15 @@ export function setupLighting(scene: Scene): LightingHandle {
     write(lastT);
   });
   scene.onDisposeObservable.addOnce(() => offParams());
+
+  // ⭐ GH#610 第二批 —— 換場地（`ArenaScene` 推 arena.id 進 store）或玩家改四格
+  // 天氣開關時，這一場立刻生效。⚠️ 訂閱同樣掛在 **scene 的生命週期**上 ——
+  // ⛔ 少了下面那一行，每一場比賽都會多留一個往死掉的場景寫霧的 listener。
+  const offWeather = subscribeWeather((w) => {
+    weather = w;
+    write(lastT);
+  });
+  scene.onDisposeObservable.addOnce(() => offWeather());
 
   return {
     setShadowsEnabled(on: boolean): void {

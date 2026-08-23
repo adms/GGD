@@ -50,9 +50,23 @@ const COMBAT_TEXT_SCOPES: readonly CombatTextScope[] = ["off", "self", "team", "
  * 解析度）。`on` / `off` 是玩家把它講死。判準與梯子那一階住在
  * `render/airScatter.ts`，⛔ 這裡不抄第二份。
  */
-export type AirScatterSetting = "off" | "auto" | "on";
+export type AirScatterSetting = QualityTriState;
+
+/**
+ * ⭐ GH#610 第二批 —— 「關／自動／開」是這一族畫質質感開關**共用**的形狀
+ * （空氣漫反射 ＋ 濕地面 ＋ 積水 ＋ 雷擊補光 ＋ 霧濃度）。
+ *
+ * ⛔ 五個各自宣告一次 `"off" | "auto" | "on"` 不是打字多，是**五份會各自漂**的
+ * 知識：哪天多一個 `"low"` 檔位，漏掉的那一格會靜靜地把它 clamp 回 `auto`，
+ * 而畫面上看起來完全正常。`auto` 的判準只有一個住處（`render/airScatter.ts` 的
+ * `qualityTriStateEnabled`），這裡是它的型別那一半。
+ */
+export type QualityTriState = "off" | "auto" | "on";
 
 export const AIR_SCATTER_SETTINGS: readonly AirScatterSetting[] = ["off", "auto", "on"];
+
+/** 同 {@link AIR_SCATTER_SETTINGS} —— 三態一律走這一份（clamp 用）。 */
+export const QUALITY_TRI_STATES: readonly QualityTriState[] = AIR_SCATTER_SETTINGS;
 
 export interface GraphicsSettings {
   qualityPreset: QualityPreset;
@@ -95,6 +109,29 @@ export interface GraphicsSettings {
    * 出貨 `auto` = 只有規格高的環境才開；見 `render/airScatter.ts`。
    */
   airScatter: AirScatterSetting;
+  /**
+   * ⭐ GH#610 第二批（owner 2026-08-23「do it, 但有開關」）—— 天氣的**四格**。
+   * ⚠️ 刻意**分開四格**而不是一格「天氣」：它們的成本差三個數量級（濕地面是三個
+   * 材質常數、積水是每 zone 好幾顆 mesh），綁在一起等於讓玩家沒辦法只留便宜的那些。
+   * ⛔ 這四格**不決定「這張圖有沒有天氣」** —— 那是內容事實，住
+   * `content/config/weather.json`（室內圖不下雨那一格就在那裡）。
+   *
+   * 濕地面：地板變深、變滑、反光。⭐ 四格裡最划算的一格（地面佔畫面八成而它零成本）。
+   */
+  wetGround: QualityTriState;
+  /** 積水：地上幾片低粗糙度的薄水窪。⚠️ 四格裡**唯一**真的多畫東西的一格。 */
+  puddles: QualityTriState;
+  /**
+   * 雷擊補光：雷雨場地（`scenery.lighting.wave = storm`）閃電那一瞬間主光真的變亮。
+   * ⚠️ 系統開了「減少動態」時這一格會被**強制關掉** —— 全螢幕級的閃光是光敏性
+   * 癲癇的直接誘因，而那不是效能取捨（見 `render/weather.ts`）。
+   */
+  lightningFlash: QualityTriState;
+  /**
+   * 霧濃度：場地天氣加在**空氣漫反射那一顆** `scene.fog` 上的額外濃度。
+   * ⛔ 不是第二套霧 —— 一格機制、兩個來源。關掉它，空氣漫反射那一層仍然在。
+   */
+  weatherFog: QualityTriState;
   /** 濺血 spray style; "default" follows content/config/gore.json. */
   goreStyle: GoreSetting;
   /** 0–1 multiplier on the content doc's spray intensity (1 = as authored). */
@@ -236,6 +273,12 @@ export const DEFAULT_GRAPHICS: GraphicsSettings = {
   // ⭐ owner 說的是「規格高的環境**還可以**加上」⇒ 出貨值是那個**條件**本身,
   // ⛔ 不是無條件開、⛔ 也不是關著等人去找。低階機器上梯子會自己把它關掉。
   airScatter: "auto",
+  // ⭐ 四格全部 `auto` —— 與 airScatter 同一個理由（owner 的「規格高的環境**還可以**
+  // 加上」是一個**條件**）。低階機器上梯子會自己把貴的那兩格關掉，而濕地面撐最久。
+  wetGround: "auto",
+  puddles: "auto",
+  lightningFlash: "auto",
+  weatherFog: "auto",
   goreStyle: "default",
   goreIntensity: 1,
 };
@@ -279,6 +322,10 @@ const clamp = (v: number, lo: number, hi: number): number =>
 
 const FPS_CAPS: readonly FpsCap[] = [0, 30, 60, 120];
 
+/** 缺席 / 壞掉的三態一律回 `auto`（＝出貨值）。見 `clampGraphics` 裡那一段註解。 */
+const triState = (v: QualityTriState | undefined): QualityTriState =>
+  v !== undefined && QUALITY_TRI_STATES.includes(v) ? v : "auto";
+
 /** Clamp/normalize graphics values into their valid ranges. */
 export function clampGraphics(g: GraphicsSettings): GraphicsSettings {
   const preset: QualityPreset =
@@ -308,6 +355,13 @@ export function clampGraphics(g: GraphicsSettings): GraphicsSettings {
     // ⛔ 壞掉的值不可以退回 `on`：那會在一台不合格的機器上憑空多一層霧，
     // 而那讀起來是缺陷不是設定（同 showVfxDebug 的方向）。
     airScatter: AIR_SCATTER_SETTINGS.includes(g.airScatter) ? g.airScatter : "auto",
+    // 舊的 blob 沒有這四格 → 落在出貨值 `auto`（同 airScatter 那一行的理由）。
+    // ⛔ 壞掉的值同樣不可以退回 `on`：在一台不合格的機器上憑空多出積水，
+    // 讀起來是缺陷不是設定。
+    wetGround: triState(g.wetGround),
+    puddles: triState(g.puddles),
+    lightningFlash: triState(g.lightningFlash),
+    weatherFog: triState(g.weatherFog),
     goreStyle: GORE_SETTINGS.includes(g.goreStyle) ? g.goreStyle : "default",
     // a corrupt value must fall back to "as authored", NOT to 0 — silently
     // disabling the spray would read as a bug, not as a setting

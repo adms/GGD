@@ -1,0 +1,32 @@
+{
+  "id": "weather",
+  "schema": "config.weather@1",
+  "enabled": true,
+  "wetAlbedoMul": 0.62,
+  "wetRoughnessMul": 0.45,
+  "wetSpecular": 0.85,
+  "puddleCoverage": 0.17,
+  "puddleCount": 5,
+  "puddleAlpha": 0.72,
+  "puddleRoughness": 0.06,
+  "puddleSheenAmp": 0.3,
+  "lightningKeyBoost": 1.7,
+  "lightningFillBoost": 1.25,
+  "lightningFogBoost": 1.5,
+  "fogDensityAtFull": 0.005,
+  "arenas": {
+    "arena.castle": "indoor-dry",
+    "arena.colosseum": "clear",
+    "arena.dota": "clear",
+    "arena.frieren": "fog",
+    "arena.godie": "clear",
+    "arena.heavens-arena": "clear",
+    "arena.holy-grail": "indoor-damp",
+    "arena.infinity-castle": "indoor-dry",
+    "arena.nazarick": "indoor-dry",
+    "arena.royale": "storm",
+    "arena.shiganshina": "rain",
+    "arena.skeleton": "clear",
+    "arena.world-tree": "clear"
+  }
+}

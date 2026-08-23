@@ -161,6 +161,12 @@ export type Page =
   | "newHeroChecks"
   /** 畫質分級 (`config/model-lod.json`): 四個畫質 preset 各自抓哪一階 .glb。 */
   | "modelLod"
+  /**
+   * 場地天氣 (`config/weather.json`, GH#610 第二批): 逐場地的濕地面／積水／霧濃度，
+   * 以及 owner 2026-08-23「有些場景是**室內**，請**不要下雨**」的那一格。
+   * ⛔ 沒有一格會改變任何碰撞、視野或傷害 —— 積水沒有實體，霧的上界由玩法界線反解。
+   */
+  | "weather"
   /** 特效回收 (`config/vfx-cleanup.json`): 回合邊界把共用特效池回收到什麼程度。 */
   | "vfxCleanup"
   /**
@@ -676,6 +682,8 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // 新英雄檢查警示 (GH#480): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "newHeroChecks",
   "modelLod",
+  // 場地天氣 (GH#610 第二批): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  "weather",
   "vfxCleanup",
   // 爽度特效 (GH#494): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "feelFx",

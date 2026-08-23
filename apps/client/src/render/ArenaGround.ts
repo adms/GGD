@@ -57,6 +57,10 @@ import { Matrix, Vector3 } from "@babylonjs/core/Maths/math.vector";
 import "@babylonjs/core/Meshes/thinInstanceMesh";
 import { GROUND_BLEND_LEVELS, groundTextureSet, TILE_WORLD_SIZE } from "./groundMaterials";
 import { acquireGroundTextures, type GroundTextures } from "./groundTextureCache";
+// ⭐ GH#610 第二批 —— 濕地面／積水。⚠️ 單向：`weather.ts` ⛔ 不 import 這個檔
+// （乾的鏡面強度由這裡**傳進去**，見 `wetGroundParams` 的第三個參數）。
+import { puddleSheen, wetGroundParams, WET_GROUND_DRY, type WetGroundParams } from "./weather";
+import type { WeatherLook, WeatherPolicy } from "@ggd/shared/content";
 
 // ---------------------------------------------------------------------------
 // heights — every one of these is measured from the walkable plane at y = 0
@@ -73,6 +77,18 @@ export const FLOOR_TOP_Y = -0.01;
  * `fullHideReach(0.42) === 0` keeps the #29 guarantee exactly intact.
  */
 export const KERB_TOP_Y = 0.42;
+
+/**
+ * ⭐ GH#610 —— 積水貼在地板上方多高。⚠️ 比接觸陰影（`FLOOR_TOP_Y + 0.012`）**再高
+ * 一點**：兩者都是貼地的透明片，共面就會互相閃（同一個 z-fight 的家族）。
+ */
+const PUDDLE_Y = FLOOR_TOP_Y + 0.02;
+
+/** 決定性雜湊 → [0,1)。⚠️ 與 `kerbCrestOffset` / `expandSceneryProps` 同一個手法。 */
+function hash01(a: number, b: number): number {
+  const x = Math.sin(a * 127.1 + b * 311.7) * 43758.5453;
+  return x - Math.floor(x);
+}
 
 /** How far inward from the boundary the floor's baked contact-AO band reaches. */
 const KERB_AO_REACH = 1.3;
@@ -268,17 +284,40 @@ export interface GroundPalette {
   wall: { r: number; g: number; b: number };
 }
 
-/** Common PBR setup for both ground materials. The maps are NOT bound here —
- *  see {@link dressWhenReady} for why binding is deferred until they decode. */
-function baseGroundMaterial(name: string, scene: Scene): PBRMaterial {
+/**
+ * 乾地板的鏡面強度（dielectric sheen；這是泥土與石頭，⛔ 不是拋光地板）。
+ *
+ * ⭐ 它是**匯出**的，因為濕地面把它當**起點**內插到 `weather.wetSpecular`：
+ * 兩份各抄一次 0.35 的話，哪天調乾的那一顆，濕的那一端會靜靜地從錯的地方起跳。
+ */
+export const GROUND_SPECULAR_DRY = 0.35;
+
+/**
+ * Common PBR setup for both ground materials. The maps are NOT bound here —
+ * see {@link dressWhenReady} for why binding is deferred until they decode.
+ *
+ * ⭐ GH#610 第二批 —— `wet` 是**乘在**這一組出貨常數上的（⛔ 不是取代它）：
+ * `roughness` 乘下去（低粗糙度 = 一條長高光 = 看起來濕），`specularIntensity`
+ * 從 {@link GROUND_SPECULAR_DRY} 內插上去。
+ *
+ * ⚠️ 乘 `roughness` 對**貼好圖之後**仍然有效：ORM 那張圖走
+ * `useRoughnessFromMetallicTextureGreen`，而 babylon 的 PBR 是
+ * `metallicRoughness.g *= orm.g` —— 材質常數是那個**乘數**，⛔ 不是被覆蓋掉。
+ * （這正是為什麼濕地面可以是零成本：⛔ 沒有第二張貼圖、⛔ 沒有第二顆材質。）
+ */
+function baseGroundMaterial(
+  name: string,
+  scene: Scene,
+  wet: WetGroundParams = { ...WET_GROUND_DRY, specular: GROUND_SPECULAR_DRY },
+): PBRMaterial {
   const mat = new PBRMaterial(name, scene);
   mat.metallic = 0;
-  mat.roughness = 0.9;
+  mat.roughness = 0.9 * wet.roughnessMul;
   // No IBL in this scene — the hemispheric fill plus the directional key are
   // the whole light rig (render/Lighting.ts), so direct light carries the image
   // and the environment term is left ready for an IBL rather than faked.
   mat.environmentIntensity = 0;
-  mat.specularIntensity = 0.35; // damp dielectric sheen; this is dirt and stone
+  mat.specularIntensity = wet.specular;
   mat.backFaceCulling = true;
   return mat;
 }
@@ -366,13 +405,18 @@ function createFloorMaterial(
   tex: GroundTextures | null,
   fallback: Color3,
   palette?: GroundPalette,
+  wet: WetGroundParams = { ...WET_GROUND_DRY, specular: GROUND_SPECULAR_DRY },
 ): PBRMaterial {
-  const mat = baseGroundMaterial(name, scene);
+  const mat = baseGroundMaterial(name, scene, wet);
   // ⚠️ 斷言要讀**這一顆最終物件**：染色是乘進 `albedoColor` 的，⛔ 不是換掉貼圖 ——
   //    對 `albedoTexture` 寫的斷言不管有沒有染色都會過（`views/mobTint.test.ts` 檔頭）。
-  const tint = palette
+  // ⭐ GH#610 —— 濕度也走**同一顆** `albedoColor`：它必須乘進 `tint` 而不是乘在
+  //    材質上，因為 `dressWhenReady` 在貼圖解碼之後會**整個覆寫** albedoColor
+  //    （失敗形態⑤：寫在別的地方的濕度會在貼圖載完的那一瞬間憑空消失）。
+  const tint = (palette
     ? new Color3(palette.floor.r, palette.floor.g, palette.floor.b)
-    : Color3.White();
+    : Color3.White()
+  ).scale(wet.albedoMul);
   // Frame 0 wears the FLAT colour. `dressWhenReady` swaps it to `White × tint`
   // the moment the maps decode — so there is never a frame with a texture slot
   // pointing at babylon's 1×1 black stand-in.
@@ -394,11 +438,14 @@ function createRimMaterial(
   tex: GroundTextures | null,
   fallback: Color3,
   palette?: GroundPalette,
+  wet: WetGroundParams = { ...WET_GROUND_DRY, specular: GROUND_SPECULAR_DRY },
 ): PBRMaterial {
-  const mat = baseGroundMaterial(name, scene);
-  const wall = palette ? new Color3(palette.wall.r, palette.wall.g, palette.wall.b) : KERB_TINT;
+  const mat = baseGroundMaterial(name, scene, wet);
+  const wall = (
+    palette ? new Color3(palette.wall.r, palette.wall.g, palette.wall.b) : KERB_TINT
+  ).scale(wet.albedoMul);
   mat.albedoColor = fallback.multiply(wall);
-  mat.roughness = 0.95;
+  mat.roughness = 0.95 * wet.roughnessMul;
   // NO detail map on the rim — see this function's docstring.
   dressWhenReady(mat, tex, false, wall.clone());
   return mat;
@@ -534,6 +581,27 @@ function buildRimMesh(scene: Scene, name: string, boundaryRadius: number, seed: 
 export interface ZoneGround {
   floor: Mesh;
   rim: Mesh;
+  /**
+   * ⭐ GH#610 第二批 —— 這個 zone 的積水（**一顆** mesh + thin instances，
+   * 所以 N 片水窪是 **1 個 draw call**，同 `buildContactShadows` 的手法）。
+   * `null` = 這張圖沒有天氣、或玩家把積水關掉了。
+   */
+  puddles?: Mesh | null;
+}
+
+/**
+ * ⭐ GH#610 第二批 —— 建地板的當下要知道的天氣。
+ *
+ * ⚠️ 它必須在**建材質的當下**就決定（同 `palette` 的理由）：濕度是乘進
+ * `albedoColor` / `roughness` 的常數，⛔ 不是每幀寫的東西。
+ * ⇒ 玩家在打到一半改「濕地面」那一格，**下一回合**（＝下一次換圖，#145 每回合換）
+ * 才會看到；霧與雷擊補光則是**立即**生效（它們在 `Lighting.write()` 裡）。
+ */
+export interface WeatherGroundInput {
+  policy: WeatherPolicy;
+  look: WeatherLook;
+  /** 系統的「減少動態」。⚠️ 只關掉積水的**微光**，⛔ 不關積水本身（它是靜態的）。 */
+  reducedMotion: boolean;
 }
 
 /**
@@ -603,6 +671,8 @@ function buildRectGround(
   palette: GroundPalette | undefined,
   /** {@link zoneTextureRadius} — passed in so the warm and the build agree. */
   texRadius: number,
+  weather: WeatherGroundInput | undefined,
+  wet: WetGroundParams,
 ): ZoneGround {
   const tex = groundStyle
     ? acquireGroundTextures(scene, groundTextureSet(groundStyle), texRadius)
@@ -623,12 +693,16 @@ function buildRectGround(
   };
 
   const floor = quad(`zone-${zoneIndex}-floor`, bounds.halfW, bounds.halfD);
-  floor.material = createFloorMaterial(scene, `zone-${zoneIndex}-floor-mat`, tex, fallback, palette);
+  floor.material = createFloorMaterial(
+    scene, `zone-${zoneIndex}-floor-mat`, tex, fallback, palette, wet,
+  );
 
   // 裙邊：比可玩範圍大一圈的暗色平面，讓邊界看起來有厚度而不是憑空切斷。
   const APRON = 3;
   const rim = quad(`zone-${zoneIndex}-rim`, bounds.halfW + APRON, bounds.halfD + APRON);
-  rim.material = createRimMaterial(scene, `zone-${zoneIndex}-rim-mat`, tex, fallback, palette);
+  rim.material = createRimMaterial(
+    scene, `zone-${zoneIndex}-rim-mat`, tex, fallback, palette, wet,
+  );
 
   // ⭐ GH#363 —— 地板頂面是 `FLOOR_TOP_Y`（−0.01），⛔ **不是 0**。
   //
@@ -655,7 +729,105 @@ function buildRectGround(
     mesh.parent = parent;
     mesh.freezeWorldMatrix();
   }
-  return { floor, rim };
+  const puddles = weather
+    ? buildPuddles(scene, parent, center, Math.min(bounds.halfW, bounds.halfD), zoneIndex, weather)
+    : null;
+  return { floor, rim, puddles: puddles?.mesh ?? null };
+}
+
+/**
+ * ⭐ GH#610 第二批 —— 積水。**一顆 mesh + thin instances**（同接觸陰影的手法）。
+ *
+ * ⛔ 為什麼**不是** `MirrorTexture`、也**不是** `ScreenSpaceReflection`：兩個都被
+ * **分割畫面**否決（鏡子的反射矩陣只對 `scene.activeCamera` 正確 ⇒ 四人分割時對
+ * 三個人是錯的；post-process 是逐相機掛的 ⇒ ×4）。完整推導在 `render/weather.ts`
+ * 的檔頭。⇒ 這裡走**材質**：一片低粗糙度、比地板深、半透明的薄圓盤，
+ * 它的「鏡面」是主光／閃電在水上的那一道高光，⭐ 而那是零個額外 render pass。
+ *
+ * ⚠️ 邊緣的淡出住在**頂點 alpha**，⛔ 不是貼圖：不必抓檔、不必進圖集，
+ * 而一圈環對一片水窪已經夠軟了（同 `buildContactShadows` 的理由）。
+ */
+function buildPuddles(
+  scene: Scene,
+  parent: TransformNode,
+  center: { x: number; z: number },
+  spread: number,
+  zoneIndex: number,
+  weather: WeatherGroundInput,
+): { mesh: Mesh; mat: PBRMaterial } | null {
+  const { policy, look } = weather;
+  const count = Math.round(policy.puddleCount * look.puddle);
+  if (count <= 0 || policy.puddleCoverage <= 0 || policy.puddleAlpha <= 0) return null;
+
+  const rings = [0, 0.45, 0.75, 1];
+  const segments = 16;
+  const positions: number[] = [0, 0, 0];
+  const colors: number[] = [1, 1, 1, 1];
+  const indices: number[] = [];
+  for (let ri = 1; ri < rings.length; ri++) {
+    const t = rings[ri]!;
+    for (let s = 0; s < segments; s++) {
+      const theta = (s / segments) * Math.PI * 2;
+      positions.push(Math.cos(theta) * t, 0, Math.sin(theta) * t);
+      // 中央實、外緣散 —— 一個硬邊的圓盤看起來是硬幣不是水。
+      colors.push(1, 1, 1, (1 - t) * (1 - t));
+    }
+  }
+  for (let s = 0; s < segments; s++) indices.push(0, 1 + ((s + 1) % segments), 1 + s);
+  for (let ri = 1; ri < rings.length - 1; ri++) {
+    const a = 1 + (ri - 1) * segments;
+    const b = a + segments;
+    for (let s = 0; s < segments; s++) {
+      const s1 = (s + 1) % segments;
+      indices.push(a + s, b + s1, b + s);
+      indices.push(a + s, a + s1, b + s1);
+    }
+  }
+
+  const mesh = new Mesh(`zone-${zoneIndex}-puddles`, scene);
+  const data = new VertexData();
+  data.positions = positions;
+  data.colors = colors;
+  data.indices = indices;
+  data.normals = Array.from({ length: positions.length }, (_, i) => (i % 3 === 1 ? 1 : 0));
+  data.applyToMesh(mesh);
+
+  const mat = new PBRMaterial(`zone-${zoneIndex}-puddle-mat`, scene);
+  mat.metallic = 0;
+  mat.roughness = policy.puddleRoughness;
+  mat.environmentIntensity = 0;
+  // ⭐ 這一格才是「像鏡子」的來源：沒有 IBL，所以水面上會發生的是**主光**
+  // （雷雨場地就是那道閃電）的高光 —— 而它會隨著 `Lighting` 每幀改的光一起動。
+  mat.specularIntensity = 1;
+  mat.albedoColor = new Color3(0.05, 0.06, 0.08);
+  mat.alpha = policy.puddleAlpha * puddleSheen(policy.puddleSheenAmp, 0, weather.reducedMotion);
+  // 水窪會互相重疊；不關深度寫入的話它們會在深度緩衝裡互相打洞（同接觸陰影）。
+  mat.disableDepthWrite = true;
+  mat.backFaceCulling = true;
+  mesh.material = mat;
+  mesh.useVertexColors = true;
+  // 這一行**單獨**就把 mesh 丟進透明佇列（`needAlphaBlendingForMesh` 先看它）。
+  mesh.hasVertexAlpha = true;
+  mesh.isPickable = false;
+  mesh.parent = parent;
+
+  const matrices = new Float32Array(count * 16);
+  const at = new Vector3();
+  for (let i = 0; i < count; i++) {
+    // 決定性擺放（同 `expandSceneryProps`：等分 + 抖動）—— ⛔ 不用亂數：
+    // 同一張圖每一回合的水窪要在同一個地方，否則它看起來像在閃。
+    const theta = ((i + 0.5) / count + hash01(zoneIndex * 7.7 + 3, i) * 0.6) * Math.PI * 2;
+    const rad = (0.25 + 0.6 * hash01(zoneIndex * 3.3 + 11, i * 2 + 1)) * spread;
+    const size = spread * policy.puddleCoverage * (0.6 + 0.8 * hash01(zoneIndex + 5, i * 3 + 2));
+    const m = Matrix.Scaling(size, 1, size * 0.78);
+    // ⚠️ 比接觸陰影再高一點點：兩者都貼在地板上，共面就會閃。
+    m.setTranslation(at.set(center.x + Math.cos(theta) * rad, PUDDLE_Y, center.z + Math.sin(theta) * rad));
+    m.copyToArray(matrices, i * 16);
+  }
+  mesh.thinInstanceSetBuffer("matrix", matrices, 16, true);
+  mesh.thinInstanceRefreshBoundingInfo();
+  mesh.alwaysSelectAsActiveMesh = true;
+  return { mesh, mat };
 }
 
 export function buildZoneGround(
@@ -670,7 +842,18 @@ export function buildZoneGround(
   groundStyle: string | undefined,
   /** ⭐ GH#362 —— 這張場地的地板／牆壁染色。省略 = 出貨前的樣子（逐像素不變）。 */
   palette?: GroundPalette,
+  /**
+   * ⭐ GH#610 第二批 —— 這張場地的天氣。省略 = **乾的地板、沒有積水**，
+   * 也就是這一版之前的樣子（逐像素不變）。⚠️ 省略是**安全**的方向：忘了接線的
+   * 結果是「沒有天氣」，⛔ 不是「憑空下雨」。
+   */
+  weather?: WeatherGroundInput,
 ): ZoneGround {
+  // 濕度乘進材質常數。⚠️ `look.wet === 0` 時它逐位元等於乾的那一組
+  // （`wetGroundParams` 的第一行 early-return），⛔ 不是「乘 1.0 之後很接近」。
+  const wet = weather
+    ? wetGroundParams(weather.policy, weather.look.wet, GROUND_SPECULAR_DRY)
+    : { ...WET_GROUND_DRY, specular: GROUND_SPECULAR_DRY };
   // ⭐ GH#324 —— **矩形場地要畫矩形地板。**
   //
   // ⚠️ 這不是美觀問題：矩形場地的 `boundaryRadius` 是**外接圓**（24×18 格 ⇒ 30），
@@ -681,6 +864,7 @@ export function buildZoneGround(
   if (rectBounds !== null) {
     return buildRectGround(
       scene, parent, zone.center, rectBounds, zoneIndex, groundStyle, palette, texRadius,
+      weather, wet,
     );
   }
   const r = zone.boundaryRadius;
@@ -688,9 +872,11 @@ export function buildZoneGround(
   const fallback = GROUND_BASE[groundStyle ?? "stone"] ?? GROUND_BASE.stone!;
 
   const floor = buildFloorMesh(scene, `zone-${zoneIndex}-floor`, r);
-  floor.material = createFloorMaterial(scene, `zone-${zoneIndex}-floor-mat`, tex, fallback, palette);
+  floor.material = createFloorMaterial(
+    scene, `zone-${zoneIndex}-floor-mat`, tex, fallback, palette, wet,
+  );
   const rim = buildRimMesh(scene, `zone-${zoneIndex}-rim`, r, zoneIndex + 1);
-  rim.material = createRimMaterial(scene, `zone-${zoneIndex}-rim-mat`, tex, fallback, palette);
+  rim.material = createRimMaterial(scene, `zone-${zoneIndex}-rim-mat`, tex, fallback, palette, wet);
 
   for (const mesh of [floor, rim]) {
     mesh.position.set(zone.center.x, 0, zone.center.z);
@@ -698,7 +884,10 @@ export function buildZoneGround(
     mesh.parent = parent;
     mesh.freezeWorldMatrix();
   }
-  return { floor, rim };
+  const puddles = weather
+    ? buildPuddles(scene, parent, zone.center, r * 0.82, zoneIndex, weather)
+    : null;
+  return { floor, rim, puddles: puddles?.mesh ?? null };
 }
 
 // ---------------------------------------------------------------------------

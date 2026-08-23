@@ -331,6 +331,10 @@ export const NAV: NavItem[] = [
   // 畫質分級/特效回收一樣是「一份 config 文件 = 一頁」的同一個引擎。
   { page: "replayPolicy", label: "對戰錄影", emoji: "🎬", section: SEC_SYS },
   { page: "modelLod", label: "畫質分級", emoji: "🪄", section: SEC_SYS },
+  // 場地天氣 (GH#610 第二批, owner 2026-08-23「do it, 但有開關」／「有些場景是
+  // 室內，請不要下雨」) —— 緊接在 畫質分級 後面，因為兩頁問的是同一類問題：
+  // 「這台機器／這張圖，畫面上該出現多少東西」。⛔ 這一頁沒有一格會改變碰撞或視野。
+  { page: "weather", label: "場地天氣", emoji: "🌧️", section: SEC_SYS },
   { page: "vfxCleanup", label: "特效回收", emoji: "🧹", section: SEC_SYS },
   // 爽度特效 (GH#494, owner 2026-08-21「提高爽度 模仿肉鴿遊戲的氛圍感」) —— 緊接在
   // 特效回收 後面，因為它是同一個引擎的另一半：一個管「留多少在記憶體裡」，
