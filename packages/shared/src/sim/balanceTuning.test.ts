@@ -238,7 +238,12 @@ describe("#265 初始生命加成:進 BASE 之外、倍率之外 (balance-265-ba
       readFileSync(join(__dirname, "../../../../content/config/base-bonus.json"), "utf8"),
     ) as { schema: string; bonus: Record<string, number> };
     expect(doc.schema).toBe("config.base-bonus@1");
-    expect(doc.bonus.maxHealth).toBe(650);
+    // ⭐ 2026-08-23：這一行原本寫死 **650**，而 owner 那天把它調成 1200
+    //    ⇒ 它就是 CLAUDE.md 第二守則說的**第四個住處**（出貨值已經有三個家，
+    //    而測試裡這一份沒有守衛 ⇒ 必然過期，而且會用**錯誤的訊息**紅）。
+    //    ⇒ 改成從 `DEFAULT_BASE_BONUS` 推導。它驗的仍然是同一件事：
+    //    **內容檔與程式預設是同一個數字**（下面那一行驗整張表）。
+    expect(doc.bonus.maxHealth).toBe(baseBonusFor(DEFAULT_BASE_BONUS, Stat.MaxHealth));
     // 內容檔與程式預設必須一致 —— 否則後台顯示的、和沒設定過時實際生效的,
     // 會是兩個不同的數字,而且沒有任何地方會說。
     expect(normalizeBaseBonus(doc.bonus)).toEqual(DEFAULT_BASE_BONUS);
@@ -250,7 +255,10 @@ describe("#265 初始生命加成:進 BASE 之外、倍率之外 (balance-265-ba
     // 「缺文件 = 0」看起來是安全的保守選擇,實際上是把 owner 設定過的東西
     // 在內容載入失敗的那一台機器上靜默拿掉,而面板還是照樣顯示 300。
     for (const junk of [undefined, null, {}, "nope", { schema: "config.combat-env@1" }]) {
-      expect(baseBonusFor(baseBonusFromDoc(junk), Stat.MaxHealth), String(junk)).toBe(650);
+      // ⭐ 同上：⛔ 不抄字面值，問出貨預設。
+      expect(baseBonusFor(baseBonusFromDoc(junk), Stat.MaxHealth), String(junk)).toBe(
+        baseBonusFor(DEFAULT_BASE_BONUS, Stat.MaxHealth),
+      );
     }
     // 但一份 SCHEMA 正確、內容真的是空的文件,是操作者的明確意思:全部歸零。
     expect(

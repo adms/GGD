@@ -127,7 +127,22 @@ describe("演出事件的客戶端消費端 (GH#551/#543/#549 + 2026-08-23 稽�
 
     // ⭐ 行為：走**出貨的**模板（⛔ 不是重寫一份），每一列都要解出一份「要畫什麼」。
     //    座標來源的兩條路都走到：payload 帶 x/z，以及只有 id（guardianSleep）。
-    const cues = DEFAULT_WORLD_CUES;
+    //
+    // ⚠️ ⭐ **每一列都先打開**（2026-08-23）：owner 當天把 `mobSpawn` 那一列的出貨值
+    //    轉成 `enabled: false`（「第一回合就開始 lag」，而伺服器實測完全沒事 ⇒
+    //    成本在客戶端；那一列是**每一隻小怪各一發**，一波 20 隻 = 20 發）。
+    // ⭐ 這條守衛驗的是「**模板解得出東西**」——⛔ 不是「這一列今天開著」。
+    //    ⛔ 少了這一行，任何一列被關掉就會讓這條紅，於是下一個人會**放寬它**，
+    //    而被放寬的閘等於沒有閘。出貨值本身由 `worldCuesKnobs.test.ts` 那一族守。
+    const cues = {
+      ...DEFAULT_WORLD_CUES,
+      point: Object.fromEntries(
+        Object.entries(DEFAULT_WORLD_CUES.point).map(([k, v]) => [k, { ...v, enabled: true }]),
+      ) as typeof DEFAULT_WORLD_CUES.point,
+      line: Object.fromEntries(
+        Object.entries(DEFAULT_WORLD_CUES.line).map(([k, v]) => [k, { ...v, enabled: true }]),
+      ) as typeof DEFAULT_WORLD_CUES.line,
+    };
     const entityPos = (id: number) => (id === 7 ? { x: 3, z: 4 } : null);
     const unresolved: string[] = [];
     for (const t of Object.keys(cues.point)) {

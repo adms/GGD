@@ -12,6 +12,7 @@ import {
 } from "@ggd/shared/constants";
 import { visionRulesFromDoc } from "@ggd/shared/sim/vision";
 import { retiredChampionIds } from "@ggd/shared/content/championRetirement";
+import { heroStartLevel } from "@ggd/shared/content/schema/config/match";
 import { asSeatId, asTeamId, type AugmentId, type ChampionId, type EntityId, type ItemId, type SeatId, type StatusId, type TeamId } from "@ggd/shared/ids";
 import { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
@@ -1460,6 +1461,13 @@ export class MatchController {
         teamId: seat.teamId,
         pos: spawn,
         zone,
+        // ⭐ owner 2026-08-23：「**英雄登場初始等級設定為 6**」。
+        // ⚠️ 在這一行之前這裡**沒有傳 `level`** ⇒ 走 `spawnChampion` 寫死的
+        //    `?? 1`，於是每一場都從 LV1 開始，⛔ 而那一格後台調不到（第一守則）。
+        // ⭐ 為什麼它重要（2026-08-23 量到的）：五級距是**固定值**（極大 2000），
+        //    而血量隨等級成長 ⇒ 同一發極大在 LV1 佔 41.7%、LV99 佔 3.0%。
+        //    owner 回報的「技能兩三發就會死」位置正是 LV1–LV5。
+        level: heroStartLevel(Configs.tryGet("config.match")),
       });
       this.applyShopPriceMult(seat);
       // #207 選角紀錄。寫在這裡而不是 `selectChampion`,因為這裡才是**每一個

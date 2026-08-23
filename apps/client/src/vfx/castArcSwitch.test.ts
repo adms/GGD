@@ -27,17 +27,22 @@ const POINT = { x: 12, z: 4 };
 afterEach(() => setCastArcsEnabled(undefined));
 
 describe("施法電弧的總開關（GH#571）", () => {
-  it("⭐ 出貨預設是開的 —— owner 的 [優先] 結果預設啟動", () => {
+  it("⛔ 出貨預設是**關**的（owner 2026-08-23「請你預設關閉」）", () => {
+    // ⚠️ 這一條在 2026-08-23 之前斷言的是「預設**開**」。owner 當天回報
+    //    「第一回合就開始 lag」，而伺服器實測完全沒事（sim tick p99 2.8ms /
+    //    預算 33.3ms、shedEvents 0、主機 load 0.24）⇒ 成本在客戶端。
+    //    ⭐ 出貨預設翻面時，測試要跟著驗**新的預設**（第〇·六守則）。
     expect(castArcsEnabled()).toBe(DEFAULT_CAST_ARCS);
-    expect(arcCastPlan(KEYS, CASTER, POINT, 7, 1).length).toBeGreaterThan(0);
+    expect(DEFAULT_CAST_ARCS, "出貨預設應該是關的").toBe(false);
+    expect(arcCastPlan(KEYS, CASTER, POINT, 7, 1)).toEqual([]);
   });
 
-  it("⛔ 轉成 false 之後一道都不生（⇒ 它不是死旋鈕）", () => {
-    setCastArcsEnabled(false);
+  it("⭐ 後台轉開就真的生得出來（⇒ 它不是一格死旋鈕）", () => {
+    setCastArcsEnabled(true);
     expect(
-      arcCastPlan(KEYS, CASTER, POINT, 7, 1),
-      "關掉之後照樣生電弧 ⇒ 那一格存得起來、讀得回來、遊戲一輩子看不到",
-    ).toEqual([]);
+      arcCastPlan(KEYS, CASTER, POINT, 7, 1).length,
+      "轉開了還是一道都不生 ⇒ 那一格存得起來、讀得回來、遊戲一輩子看不到",
+    ).toBeGreaterThan(0);
   });
 
   it("後台留白（undefined）= 回到出貨預設，⛔ 不是關掉", () => {

@@ -152,7 +152,23 @@ A("20-002", "20-002 解放.約束勝利劍MAX", "self", [0], [0], 0,
             # ⚠️ maxChainDepth 1 **不是選配**：onReflectSuccess 帶進來的封包
             #    reflectDepth 已經是 1，而預設上界是 0 ⇒ 少了它七刀一樣付 0。
             "effects": [dmg("magic", flat=0,
-                            inc_pct={"perRank": [7.0], "maxChainDepth": 1})],
+                            inc_pct={"perRank": [7.0], "maxChainDepth": 1}),
+                        # ⭐ GH#549 第 2 項（owner:「⭐ 別忘了還有**特效文字**」）——
+                        #    七刀各一顆火花 + 一個 `{{i}}Hit`。⭐ **一個節點**,
+                        #    ⛔ 不是七個:`resolveCueText` 把 `{{i}}` 換成
+                        #    「這是序列裡的第幾段」,而 `delayed count:7` 天生就會
+                        #    跑七次 ⇒ 自然得到 1Hit…7Hit（`sim/effects/clientCues.ts`）。
+                        # ⛔ 這兩個在 2026-08-23 曾經被直接寫進
+                        #    `content/abilities/godie-e002.ex.json`,而下一次
+                        #    `skills:sync` 又把它們刪掉了 —— 同一個檔、同一個坑,
+                        #    第二次。⇒ 產生器擁有的檔案要改**來源**。
+                        # ⚠️ `spawnVfx` ⛔ 不收 `shape`（Zod strict 會擋）——
+                        #    它的作用範圍由 `at` 決定,⛔ 不是幾何。
+                        {"kind": "spawnVfx", "vfxId": "fx.avalon.reflect-spark",
+                         "at": "target"},
+                        {"kind": "floatingText", "shape": "single", "text": "{{i}}Hit",
+                         "colorRgb": [255, 240, 190], "sizeScale": 1.2,
+                         "riseSpeed": 1.6, "durationSec": 1.1, "applyTo": "victim"}],
             # ⭐ owner 規格逐字：「（[現存魔力]+[AP]）×7倍傷害」。
          #    ⚠️ 上一版**只寫了 AP 那一半** —— 現存魔力那一項整個不見了，
          #    而「有傷害」跟「傷害少一半」在畫面上長得一模一樣（失敗形態②）。
@@ -171,4 +187,17 @@ A("20-002", "20-002 解放.約束勝利劍MAX", "self", [0], [0], 0,
                                #    完全不報錯（失敗形態②）。
                                # ⛔ 這裡要明填而不是靠 `_own_area()` 的規則：那支 walker
                                #    只走 `doc["effects"]`，這一發住在 `doc["passive"]` 底下。
-                               includeOrigin=True)]}]}]}]})
+                               includeOrigin=True),
+                          # ⭐ GH#549 —— **收尾那一下**要看得出來是收尾（owner 的
+                          #    「不然都不知道發生什麼事情有沒有反擊成功」對整段成立,
+                          #    ⛔ 不只對第一下）。⇒ 收尾三件套:爆炸落在被反彈者身上、
+                          #    全場閃一下、全場震一下。
+                          # ⚠️ `screenFlash` 這裡是 `applyTo:"all"`（⛔ 不是 self/victim）:
+                          #    七刀已經逐刀給了施法者與受害者各自的訊號,收尾這一下是
+                          #    **給全場看的**「這一輪結束了」。
+                          {"kind": "spawnVfx", "vfxId": "fx.avalon.reflect-burst", "at": "target"},
+                          {"kind": "screenFlash", "shape": "single",
+                           "colorRgb": [255, 232, 160], "peakAlpha": 0.55,
+                           "durationSec": 0.34, "applyTo": "all"},
+                          {"kind": "screenShake", "shape": "single", "amplitude": 0.6,
+                           "durationSec": 0.5, "applyTo": "all"}]}]}]}]})

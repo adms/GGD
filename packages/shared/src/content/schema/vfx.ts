@@ -453,9 +453,14 @@ export type AnyVfxDoc = z.infer<typeof zVfxCollectionDoc>;
 export const DEFAULT_ONE_SHOT_MAX_LIFE_SEC = 0.6;
 /**
  * ⚡ 施法電弧（`config.vfx-families@1.castArcs`）的出貨預設。
- * ⭐ `true` ＝ owner 2026-08-22 那句 [優先] 的結果預設啟動；`false` 一鍵回頭。
+ * ⛔⛔ **2026-08-23 改成 `false`** —— owner 當天回報「又變得 lag 了，這次更糟**第一回合就開始** lag」，
+ * 而伺服器實測完全沒事（sim tick p99 **2.8ms** / 預算 33.3ms、**shedEvents 0**、主機 load **0.24**）
+ * ⇒ 那是**客戶端**的成本。⭐ 這一族**爆散型每次施法生 5–8 條弧帶**，而低冷卻的
+ * `nova`（例：58-01 十萬伏特）在第一回合就會不停施放。
+ * owner 逐字：「**請你預設關閉**」。
+ * ⇒ ⭐ 想看電弧就在後台鑄技工坊把它轉開（`content/` 是 live bind-mount，存檔就生效）。
  */
-export const DEFAULT_CAST_ARCS = true;
+export const DEFAULT_CAST_ARCS = false;
 
 /**
  * 下界。手機出貨是 30 fps(#274),0.1 秒 = **3 張畫面** —— 再低於這條線,一次

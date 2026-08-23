@@ -329,7 +329,7 @@ export const DEFAULT_VFX_CLEANUP: ConfigVfxCleanupDoc = {
   castMoteEmitShare: 0.5,
   // ⏳ owner 2026-08-23 GH#570 —— 「產生後生命週期最多維持三秒，三秒後一律強制
   // 清理回收」。出貨值就是他說的那個數字，⛔ 不是我挑的。
-  vfxHardMaxLifeSec: 3,
+  vfxHardMaxLifeSec: 5,
   // ⭐ 我挑的（owner 2026-08-23:「沒做完以前別問我了自己判斷 但是留後台開關可以
   // 簡易 rollback」）：預設 `"scene"`，因為他的原話是「**不管什麼特效，包含技能、
   // 場地特效等**」—— 場地火把不走 vfx 管線，只有 `"scene"` 掃得到它。

@@ -300,6 +300,25 @@ export const DEFAULT_FIRE_RING_CONFIG: FireRingConfig = {
   boss: { extendCombatSec: 180, delayFireRingSec: 180 },
 };
 
+/**
+ * 英雄登場時的等級（`config.match@1.progression.heroStartLevel`）。
+ * ⭐ owner 2026-08-23 逐字:「英雄登場初始等級設定為 6」。
+ * ⚠️ 在此之前是 `spawnChampion` 裡寫死的 `?? 1`,而那一格後台調不到。
+ */
+export const DEFAULT_HERO_START_LEVEL = 6;
+
+/**
+ * 從一份 `config.match@1` 讀出英雄登場等級（讀不到 ⇒ 出貨預設）。
+ *
+ * ⚠️ **缺文件 = 出貨預設**，⛔ 不是 1 —— 讀不到時退回 1 等於「內容一出問題
+ * 全場退回最脆弱的狀態」，而那正是 owner 今天在抱怨的東西。
+ */
+export function heroStartLevel(doc: unknown): number {
+  const p = (doc as { progression?: { heroStartLevel?: unknown } } | null | undefined)?.progression;
+  const v = p?.heroStartLevel;
+  return typeof v === "number" && Number.isFinite(v) && v >= 1 ? Math.floor(v) : DEFAULT_HERO_START_LEVEL;
+}
+
 export const zConfigMatchDoc = z
   .object({
     id: zId,
@@ -602,6 +621,23 @@ export const zConfigMatchDoc = z
     progression: z
       .object({
         levelCap: z.number().int().min(1),
+        /**
+         * ⭐ **英雄登場時的等級**（owner 2026-08-23：「英雄登場初始等級設定為 **6**」）。
+         *
+         * ⚠️ 在此之前這個數字**不存在** —— `spawnChampion` 的 `level: args.level ?? 1`
+         * 是一個**寫死的預設**，而 `MatchController` 從來沒有傳過 `level`
+         * ⇒ 每一場都從 LV1 開始，⛔ 而那一格後台調不到（第一守則）。
+         *
+         * ⭐ 它為什麼重要（2026-08-23 量到的）：五級距是**固定值**（極大 2000），
+         * 而血量隨等級成長 ⇒ 同一發極大在 **LV1 佔 41.7%**、在 LV99 佔 3.0%。
+         * owner 回報「技能兩三發就會死」的位置正是 **LV1–LV5**。
+         * ⇒ 抬高登場等級**直接**把那一段的血條墊厚。
+         *
+         * ⛔ OPTIONAL：線上存過的耐久覆蓋層沒有這個 key，設成必填會讓整份
+         * `safeParse` 失敗 ⇒ 內容載入整份掛掉（2026-08-02 事故的形狀）。
+         * 省略 = `DEFAULT_HERO_START_LEVEL`。
+         */
+        heroStartLevel: z.number().int().min(1).max(99).optional(),
         /** xpToNext(level) = xpBase + xpPerLevel * (level - 1) */
         xpBase: z.number().int().positive(),
         xpPerLevel: z.number().int().min(0),

@@ -112,6 +112,7 @@ export const MATCH_CONSOLE_MAX: Readonly<Record<string, number>> = Object.freeze
   "economy.roundLoseGold": 100000,
   // `LEVEL_CAP` 是 99；填得比它大不會多出任何一級。
   "progression.levelCap": 99,
+  "progression.heroStartLevel": 6,
   "progression.xpBase": 100000,
   "progression.xpPerLevel": 100000,
   "progression.xpKill": 100000,
@@ -434,6 +435,12 @@ export const MATCH_FIELD_INFO: Readonly<Record<string, MatchFieldInfo>> = Object
     live: null,
     realHome: "packages/shared/src/sim/economy/progression.ts 的 LEVEL_CAP",
   },
+  "progression.heroStartLevel": {
+    zh: "⭐ 英雄登場初始等級",
+    note: "owner 2026-08-23 逐字：「**英雄登場初始等級設定為 6**」。⚠️ 在這一格出現之前這個數字**不存在** —— `spawnChampion` 的 `level: args.level ?? 1` 是一個**寫死的預設**，而 `MatchController` 從來沒傳過 `level` ⇒ 每一場都從 LV1 開始、⛔ 而後台調不到（第一守則）。⭐ 為什麼它重要（2026-08-23 量到的）：五級距是**固定值**（極大 2000），而血量隨等級成長 ⇒ **同一發極大在 LV1 佔 41.7%、在 LV99 佔 3.0%，差 14 倍**。owner 回報「技能兩三發就會死」的位置正是 LV1–LV5，而抬高登場等級**直接**把那一段的血條墊厚。⇒ 調小＝開場更脆、調大＝開場更耐打（也更快接近等級上限）。",
+    live: null,
+    realHome: "apps/game-server/src/match/MatchController.ts 的 spawnChampion({ level })",
+  },
   "progression.xpBase": {
     zh: "升級經驗基底",
     note: "沒有消費端。`xpToNext(level) = xpBase + xpPerLevel × (level − 1)` 的第一項。",
@@ -562,6 +569,7 @@ export const MATCH_GROUPS: readonly MatchGroup[] = [
       "economy.sellRefund",
       "economy.inventorySlots",
       "progression.levelCap",
+      "progression.heroStartLevel",
       "progression.xpBase",
       "progression.xpPerLevel",
       "progression.xpKill",

@@ -90,7 +90,6 @@
                     "kind": "floatingText",
                     "shape": "single",
                     "text": "{{i}}Hit",
-                    "applyTo": "victim",
                     "colorRgb": [
                       255,
                       240,
@@ -98,7 +97,8 @@
                     ],
                     "sizeScale": 1.2,
                     "riseSpeed": 1.6,
-                    "durationSec": 1.1
+                    "durationSec": 1.1,
+                    "applyTo": "victim"
                   }
                 ],
                 "finalEffects": [

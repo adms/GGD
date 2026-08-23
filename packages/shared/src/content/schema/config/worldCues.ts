@@ -196,7 +196,12 @@ export const DEFAULT_WORLD_CUES: ConfigWorldCuesDoc = {
   schema: "config.world-cues@1",
   point: {
     // 破土：貼地、土色、輕。一波 20 隻同時冒出來，重版會變成一堵牆。
-    mobSpawn: { enabled: true, heavy: false, heightY: 0.15, tintR: 0.55, tintG: 0.42, tintB: 0.28 },
+    // ⛔⛔ 2026-08-23 出貨改 `false`（owner 逐字「**請你預設關閉**」）——
+    //    他回報「第一回合就開始 lag」，而伺服器實測完全沒事（sim tick p99 **2.8ms**
+    //    / 預算 33.3ms、**shedEvents 0**、主機 load **0.24**）⇒ 成本在客戶端，
+    //    ⭐ 而這一列是**每一隻小怪各一發**（一波 20 隻 = 20 發）。
+    //    ⇒ 想開回來就在後台「世界演出」轉開（`content/` 是 live bind-mount，存檔就生效）。
+    mobSpawn: { enabled: false, heavy: false, heightY: 0.15, tintR: 0.55, tintG: 0.42, tintB: 0.28 },
     // 成形：術式紫、重。一次施放才一批，而「憑空多出一個打手」值得被看到。
     summonSpawn: { enabled: true, heavy: true, heightY: 0.9, tintR: 0.62, tintG: 0.48, tintB: 1 },
     // 消散：同色系但輕 —— 消失不該比出現更響。

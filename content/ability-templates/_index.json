@@ -1,6 +1,6 @@
 {
   "collection": "ability-templates",
-  "hash": "0d15778d6057",
+  "hash": "720235a51ca0",
   "entries": [
     {
       "id": "tpl-barrier-domain",
@@ -37,6 +37,12 @@
       "path": "ability-templates/tpl-charge-push.json",
       "hash": "ee4e26d179d0",
       "size": 2182
+    },
+    {
+      "id": "tpl-combo-finisher",
+      "path": "ability-templates/tpl-combo-finisher.json",
+      "hash": "4b889b172cc6",
+      "size": 5953
     },
     {
       "id": "tpl-data-no-trigger",
@@ -185,8 +191,8 @@
     {
       "id": "tpl-radial-burst",
       "path": "ability-templates/tpl-radial-burst.json",
-      "hash": "8bc5b26edae4",
-      "size": 1949
+      "hash": "e583171260e6",
+      "size": 3257
     },
     {
       "id": "tpl-random-barrage",

@@ -61,6 +61,7 @@
   },
   "progression": {
     "levelCap": 99,
+    "heroStartLevel": 6,
     "xpBase": 100,
     "xpPerLevel": 80,
     "xpKill": 120,

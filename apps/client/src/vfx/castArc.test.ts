@@ -37,7 +37,7 @@ import { Abilities } from "@ggd/shared/sim/content/registry";
 import type { AbilityId } from "@ggd/shared/ids";
 import type { EventMessage } from "@ggd/shared/protocol/messages";
 import { VfxSystem } from "./VfxSystem";
-import { ARC_CAST_SHAPES } from "./arcBolt";
+import { setCastArcsEnabled, ARC_CAST_SHAPES } from "./arcBolt";
 
 /** 出貨的那一份 JSON，⛔ 不是我在這裡重打一份。 */
 function shipped(id: string): void {
@@ -56,9 +56,17 @@ let fx: VfxSystem;
 beforeEach(() => {
   engine = new NullEngine();
   scene = new Scene(engine);
+  // ⚠️ ⭐ **明確打開**（2026-08-23）：owner 當天把 `config.vfx-families@1.castArcs`
+  //    的出貨值轉成 **false**（「第一回合就開始 lag」，而伺服器實測完全沒事 ⇒
+  //    成本在客戶端；爆散型每次施法生 5–8 條弧帶，低冷卻的 nova 不停施放）。
+  // ⭐ 這一族的守衛驗的是「**機制做得出電弧**」——⛔ 不是「它今天開著」。
+  //    出貨預設本身由 `castArcSwitch.test.ts` 驗（那一條斷言的正是**關**）。
+  //    ⛔ 少了這一行，這三條會因為一個**出貨值**而紅，於是下一個人會刪掉它們。
+  setCastArcsEnabled(true);
   fx = new VfxSystem(scene, { entityPos: (id) => (id === CASTER ? AT : null) });
 });
 afterEach(() => {
+  setCastArcsEnabled(undefined);
   fx.dispose();
   scene.dispose();
   engine.dispose();

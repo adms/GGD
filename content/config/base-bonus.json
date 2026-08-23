@@ -2,9 +2,10 @@
   "id": "base-bonus",
   "schema": "config.base-bonus@1",
   "bonus": {
-    "maxHealth": 650,
+    "maxHealth": 1200,
     "maxMana": 600,
     "manaRegen": 10,
-    "ad": 32
+    "ad": 32,
+    "mr": 25
   }
 }

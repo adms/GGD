@@ -398,8 +398,11 @@ describe("鑄技工坊 · 存得進去讀得回來 (adminui-vfx-forge-roundtrip)
       familyPitchDefaults: false,
       // GH#390 —— 同上，出貨是 true（特效音效預設開），哨兵值必須是 false。
       soundEnabled: false,
-      // ⚡ GH#571 —— 同上，出貨是 true（施法電弧預設開），哨兵值必須是 false。
-      castArcs: false,
+      // ⚡ GH#571 —— ⛔ **出貨在 2026-08-23 翻成 `false`**（owner「請你預設關閉」，
+      //    第一回合就 lag 而伺服器實測完全沒事 ⇒ 成本在客戶端）
+      //    ⇒ 哨兵值必須跟著翻成 **true**：⛔ 哨兵與出貨值相同的話，
+      //    「存檔時把這一格掉了、讀回來補上出貨預設」會蒙混過關。
+      castArcs: true,
     };
     const withSentinels = { ...BASE_DOC() } as Record<string, unknown>;
     for (const f of GLOBAL_CHOICE_FIELDS) withSentinels[f] = SENT_CHOICE[f];

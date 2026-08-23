@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "eb123ea98e02",
+  "hash": "3f6452ea1a84",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -71,8 +71,8 @@
     {
       "id": "base-bonus",
       "path": "config/base-bonus.json",
-      "hash": "3990a8e51493",
-      "size": 154
+      "hash": "77ad44a246fd",
+      "size": 169
     },
     {
       "id": "berserk",
@@ -125,8 +125,8 @@
     {
       "id": "combat-env",
       "path": "config/combat-env.json",
-      "hash": "e1e65c5c91dd",
-      "size": 1042
+      "hash": "abbf0ca3dfff",
+      "size": 1041
     },
     {
       "id": "combat-feel",
@@ -143,8 +143,8 @@
     {
       "id": "config.match",
       "path": "config/config.match.json",
-      "hash": "74daf8aed682",
-      "size": 1503
+      "hash": "6e5c466ce0bc",
+      "size": 1528
     },
     {
       "id": "content-load",
@@ -191,8 +191,8 @@
     {
       "id": "damage-tiers",
       "path": "config/damage-tiers.json",
-      "hash": "390d9efadb31",
-      "size": 2979
+      "hash": "2ab18789d37c",
+      "size": 2980
     },
     {
       "id": "dispel",
@@ -215,8 +215,8 @@
     {
       "id": "form-visuals",
       "path": "config/form-visuals.json",
-      "hash": "7f927eb2fbf0",
-      "size": 1764
+      "hash": "b0c96c9b51df",
+      "size": 5131
     },
     {
       "id": "gamepad",
@@ -311,8 +311,8 @@
     {
       "id": "owner-knobs",
       "path": "config/owner-knobs.json",
-      "hash": "5f2436d36828",
-      "size": 2466
+      "hash": "c19bbde277ef",
+      "size": 2559
     },
     {
       "id": "per-level-bonus",
@@ -461,14 +461,14 @@
     {
       "id": "vfx-cleanup",
       "path": "config/vfx-cleanup.json",
-      "hash": "435873b5103a",
-      "size": 5845
+      "hash": "f54c279a654a",
+      "size": 6157
     },
     {
       "id": "vfx-families",
       "path": "config/vfx-families.json",
-      "hash": "d3bec0b157da",
-      "size": 37225
+      "hash": "12f900f5424f",
+      "size": 37226
     },
     {
       "id": "victory-fx",
@@ -507,10 +507,16 @@
       "size": 560
     },
     {
+      "id": "weather",
+      "path": "config/weather.json",
+      "hash": "531969eb34cf",
+      "size": 830
+    },
+    {
       "id": "world-cues",
       "path": "config/world-cues.json",
-      "hash": "271b22195446",
-      "size": 1567
+      "hash": "e0a4f29a2c4d",
+      "size": 2060
     },
     {
       "id": "wounds",

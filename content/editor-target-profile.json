@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_10fb4779ed89",
+    "contentVersion": "cv_56ed0105b674",
     "collections": {
       "champions": {
-        "hash": "8be15e015cfb",
+        "hash": "44cc3c8ba06b",
         "count": 71
       },
       "abilities": {
-        "hash": "6e5d94bc32c9",
+        "hash": "1c23b1246e16",
         "count": 421
       },
       "items": {
@@ -42,8 +42,8 @@
         "count": 7
       },
       "config": {
-        "hash": "eb123ea98e02",
-        "count": 86
+        "hash": "3f6452ea1a84",
+        "count": 87
       },
       "models": {
         "hash": "8af2c45f476f",
@@ -58,8 +58,8 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "0d15778d6057",
-        "count": 40
+        "hash": "720235a51ca0",
+        "count": 41
       }
     },
     "collectionCount": 14
@@ -89,7 +89,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "b8a9739b",
+    "fingerprint": "52cf9d09",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -233,6 +233,7 @@
       "applyTo",
       "arriveSoundKey",
       "at",
+      "attackType",
       "attr",
       "attributes",
       "autoTargetable",
@@ -813,6 +814,7 @@
       "orbit-array",
       "proxy-cast",
       "proxy-fanout",
+      "radial-burst",
       "random-barrage",
       "single-strike",
       "teleport",
@@ -1213,8 +1215,8 @@
         "key": "effect.floating-text@1",
         "plan": "#549 —— owner 2026-08-22「別忘了還有特效文字」（原作 `CreateTextTagUnitBJ`）",
         "state": "partial",
-        "caveat": "⭐ `text` 支援佔位符 **`{{i}}`**（這一次執行是序列裡的第幾段，1 起算），所以「1Hit…7Hit」是 `comboStrikes.perStrike` 裡的**一個**節點寫 `\"{{i}}Hit\"`，⛔ 不是七個各寫死一個數字的節點。段號來自 `EffectContext.sequenceIndex`（由 `delayedSystem` 填），不在序列裡時解析成 **1**。⛔ **缺的兩件**：① 客戶端把 `floatingText` 事件畫成一段會往上飄、會淡出的字；② 該事件進 `eventFanout.ts` 的白名單。⚠️ 它 ⛔ **不是傷害數字**（那一族由 `damage` 事件在客戶端自己算），也 ⛔ 不是 UI 字串 —— 它掛在一個**身體**上（所以 `applyTo` 沒有 `all`）。",
-        "evidence": "packages/shared/src/sim/effects/clientCues.ts::resolveCueText + sim/effects/delayed.ts（`sequenceIndex: index + 1`，⛔ 這是 `{{i}}` 唯一的來源）",
+        "caveat": "⭐ `text` 支援佔位符 **`{{i}}`**（這一次執行是序列裡的第幾段，1 起算），所以「1Hit…7Hit」是 `comboStrikes.perStrike` 裡的**一個**節點寫 `\"{{i}}Hit\"`，⛔ 不是七個各寫死一個數字的節點。段號來自 `EffectContext.sequenceIndex`（由 `delayedSystem` 填），不在序列裡時解析成 **1**。⭐ 2026-08-23：**整條線已經接通** —— 客戶端會把它畫成一段往上飄、到 55% 壽命開始淡出的字（`FloatingTextFx`），事件也在 `eventFanout.ts` 的白名單裡。⚠️ 這一格在 2026-08-22–23 之間寫著「⛔ 缺的兩件：客戶端沒畫、白名單沒進」，而那兩件在 `77773e73` / `c49b04a1` 就做完了 —— 對外契約說謊會讓作者**白白繞路**（檔頭 ② 的兩個過期方向之一）。⛔ **仍然存在的三個限制**（這才是它是 `partial` 的理由）：① `applyTo` 只有 `self` / `victim`，⛔ **沒有 `all`** —— 字要有一個身體當錨；② 同時最多幾段字由 `config.screen-fx@1.floatingTextMaxOnScreen` 決定（出貨 48，上下界 1..200），⭐ 它在**建構時**吃掉，所以後台改了要玩家重新整理才生效；滿了會**擠掉剩餘壽命最短的那一段**，⛔ 不是排隊；③ 同一個錨點最多同時掛 **8** 段（第 9 段直接丟掉），同一幀落在同一點的多發每段往後推 90ms（原作 `0.2f * i` 的縮版）。⚠️ 它 ⛔ **不是傷害數字**（那一族由 `damage` 事件在客戶端自己算），也 ⛔ 不是 UI 字串。",
+        "evidence": "packages/shared/src/sim/effects/clientCues.ts::resolveCueText + sim/effects/delayed.ts（`sequenceIndex: index + 1`，⛔ 這是 `{{i}}` 唯一的來源）；渲染那一半 apps/client/src/vfx/FloatingTextFx.ts（`MAX_PER_ANCHOR` / `STAGGER_MS` / `FADE_FROM`）＋ VfxSystem.ts 的 `case \"floatingText\"`；上線那一半 apps/game-server/src/net/eventFanout.ts 的 `FANNED_OUT_EVENT_TYPES`",
         "nearestExisting": "⚠️ 引擎裡最接近的是 `damage` 事件驅動的浮動傷害數字，⛔ 但那是客戶端自己從數值算出來的，作者寫不出「這一刀要冒什麼字」。"
       },
       {
@@ -1358,7 +1360,7 @@
     "note": "出貨內容**實際用了**哪些值。⚠️ 與 runtimeCapabilities 不同：那一份說引擎做得到什麼，這一份說內容裡有哪些合法的 id。⛔ 填一個不在這裡的 vfxKey，技能照放但畫面上什麼都不會出現。",
     "ability": {
       "count": 421,
-      "fromTemplate": 89,
+      "fromTemplate": 88,
       "templates": [
         {
           "id": "tpl-barrier-domain",
@@ -1589,6 +1591,97 @@
               "min": 0,
               "max": 5,
               "unit": "s"
+            }
+          }
+        },
+        {
+          "id": "tpl-combo-finisher",
+          "family": "combo-finisher",
+          "status": "draft",
+          "params": {
+            "comboFamily": {
+              "type": "docRef",
+              "default": "superff7"
+            },
+            "hitVfx": {
+              "type": "docRef",
+              "default": "fx.w3x.stock.thunderclapcaster.p00"
+            },
+            "hitText": {
+              "type": "enum",
+              "values": [
+                "{{i}}Hit",
+                "{{i}} HIT",
+                "{{i}}連擊",
+                "{{i}}段"
+              ],
+              "default": "{{i}}Hit"
+            },
+            "hitTextSizeScale": {
+              "type": "number",
+              "default": 1.2,
+              "min": 0.1,
+              "max": 8
+            },
+            "hitTextRiseSpeed": {
+              "type": "number",
+              "default": 1.6,
+              "min": 0,
+              "max": 20
+            },
+            "hitTextDurationSec": {
+              "type": "number",
+              "default": 1.1,
+              "min": 0.1,
+              "max": 10,
+              "unit": "s"
+            },
+            "hitTextSizeGrowth": {
+              "type": "number",
+              "default": 4,
+              "min": 0,
+              "max": 20,
+              "inert": "原作的字級是 `udg_SupI * 4 + 6`（每一刀的字比上一刀大一點，war3map.j 的 CreateTextTagUnitBJ），而 `floatingText.sizeScale` 是**一個**數字 —— 段號只解析得進 `text` 的 {{i}}，⛔ 解析不進字級。要它就得讓 sizeScale 也吃佔位符（一次 schema 改動），⛔ 不是在這裡填一個沒有人讀的數字。"
+            },
+            "finisherVfx": {
+              "type": "docRef",
+              "default": "fx.w3x.stock.warstompcaster.p00"
+            },
+            "finisherFlashAlpha": {
+              "type": "number",
+              "default": 0.5,
+              "min": 0.01,
+              "max": 1
+            },
+            "finisherFlashSec": {
+              "type": "number",
+              "default": 0.3,
+              "min": 0.01,
+              "max": 5,
+              "unit": "s"
+            },
+            "finisherShakeAmplitude": {
+              "type": "number",
+              "default": 0.55,
+              "min": 0.01,
+              "max": 1,
+              "unit": "ratio"
+            },
+            "finisherShakeSec": {
+              "type": "number",
+              "default": 0.45,
+              "min": 0.01,
+              "max": 5,
+              "unit": "s"
+            },
+            "damageType": {
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ],
+              "default": "physical"
             }
           }
         },
@@ -2804,11 +2897,21 @@
         {
           "id": "tpl-radial-burst",
           "family": "radial-burst",
-          "status": "draft",
+          "status": "enabled",
           "params": {
             "modelKey": {
               "type": "docRef",
               "default": "imported.frostnova"
+            },
+            "path": {
+              "type": "enum",
+              "values": [
+                "forward",
+                "toTarget",
+                "orbit",
+                "radial"
+              ],
+              "default": "radial"
             },
             "count": {
               "type": "number",
@@ -2849,6 +2952,15 @@
               "min": 0.5,
               "max": 12
             },
+            "touchSide": {
+              "type": "enum",
+              "values": [
+                "enemies",
+                "allies"
+              ],
+              "default": "enemies",
+              "optional": true
+            },
             "touchDamageTier": {
               "type": "enum",
               "values": [
@@ -2871,7 +2983,7 @@
             },
             "castTimeSec": {
               "type": "number",
-              "default": 0,
+              "default": 1.233,
               "min": 0,
               "max": 5,
               "unit": "s",
@@ -3140,7 +3252,7 @@
       ],
       "templateStatus": {
         "draft": 22,
-        "enabled": 18
+        "enabled": 19
       },
       "innateKinds": [
         "active",
@@ -3474,12 +3586,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "b8a9739b",
+    "engineFingerprint": "52cf9d09",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 b8a9739b —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 52cf9d09 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -3996,7 +4108,7 @@
           "defense": 1,
           "attackDamage": 1,
           "abilityPower": 1,
-          "maxHealth": 8,
+          "maxHealth": 12,
           "healthRegen": 1,
           "maxMana": 1,
           "manaRegen": 8,
@@ -4219,5 +4331,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "18c3a2f7dce0"
+  "profileDigest": "2c43ab166934"
 }
