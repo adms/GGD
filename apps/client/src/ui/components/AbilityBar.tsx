@@ -60,6 +60,12 @@ import { useHud } from "../../net/RoomStore";
 import { frameBus } from "../../frameBus";
 import { hudActions } from "../actions";
 import { setHeldAbility } from "../abilityHold";
+import {
+  cancelTwoStageCast,
+  getTwoStageArmedSlot,
+  mouseCastTilePress,
+  type TwoStageCastType,
+} from "../../input/mouseTwoStageCast";
 import { hoverGuideEnter, hoverGuideLeave, pressGuide } from "../abilityRangeGuide";
 import { abilityActivationCue } from "../abilityCue";
 import { rangeGuide } from "../rangeGuideConfig";
@@ -133,9 +139,15 @@ function holdProps(
   slot: ChampionAbilitySlot,
   cue: { denied?: boolean; passive?: boolean },
   pressable = true,
+  castType?: TwoStageCastType,
 ): React.DOMAttributes<HTMLDivElement> {
   return {
-    onPointerEnter: () => hoverGuideEnter(slot),
+    onPointerEnter: () => {
+      // 二段瞄準中掃過**別格**不可以搶走地板圈 (GH#639)：圈正釘在武裝那一格上，
+      // hover 換圈會讓「畫的是 W、放出去的是 Q」同時成立。
+      const armed = getTwoStageArmedSlot();
+      if (armed === null || armed === slot) hoverGuideEnter(slot);
+    },
     onPointerDown: (e) => {
       // a real press outranks the pending hover timer — drop it so it cannot
       // fire later and DOWNGRADE this full hold back to an aim-only one
@@ -148,6 +160,16 @@ function holdProps(
       setHeldAbility(slot, "aim");
       abilityActivationCue(slot, cue);
       if (pressable) pressVisualDown(e.currentTarget);
+      // 純滑鼠二段施放 (GH#639，owner:「純滑鼠操作直接按技能按鈕應該要能二段
+      // 選擇後施放才對」)：主鍵＝進入/取消瞄準（`self` 型沒有可瞄的東西 → 直接
+      // 施放）；非主鍵（右鍵按在格上）＝取消。鍵盤/觸控/手把的施放路一格不動。
+      if (e.button !== 0) {
+        cancelTwoStageCast();
+        return;
+      }
+      if (pressable && mouseCastTilePress(slot, castType) === "castSelf") {
+        hudActions.sendCommand({ kind: "castAbility", slot, target: { type: "self" } });
+      }
     },
     onPointerUp: (e) => {
       // still hovering → keep the RANGE guide, close the description banner
@@ -155,11 +177,12 @@ function holdProps(
       pressVisualClear(e.currentTarget);
     },
     onPointerLeave: (e) => {
-      hoverGuideLeave(slot);
+      // 武裝中的那一格，圈要在游標走向場景的路上**持續存在** (GH#639)。
+      if (getTwoStageArmedSlot() !== slot) hoverGuideLeave(slot);
       pressVisualClear(e.currentTarget);
     },
     onPointerCancel: (e) => {
-      hoverGuideLeave(slot);
+      if (getTwoStageArmedSlot() !== slot) hoverGuideLeave(slot);
       pressVisualClear(e.currentTarget);
     },
   };
@@ -458,6 +481,7 @@ export function AbilityBar(): React.JSX.Element | null {
                 "PASSIVE",
                 castableInnate ? { denied: innateCd.onCd } : { passive: true },
                 castableInnate,
+                innate.castType,
               )}
               style={{
                 position: "relative",
@@ -615,7 +639,7 @@ export function AbilityBar(): React.JSX.Element | null {
             <Tooltip title={ability.name} body={docDescription(ability)} meta={meta} style={{ display: "block" }}>
             <div
               data-slot-key={slot}
-              {...holdProps(slot, { denied: !learned || cd.onCd, passive }, !passive)}
+              {...holdProps(slot, { denied: !learned || cd.onCd, passive }, !passive, ability.castType)}
               style={{
                 position: "relative",
                 width: m.tile,
@@ -748,7 +772,7 @@ export function AbilityBar(): React.JSX.Element | null {
             <Tooltip title={ex.name} body={ex.description} meta={exMeta} style={{ display: "block" }}>
             <div
               data-slot-key="EX"
-              {...holdProps("EX", { denied: cd.onCd, passive: exPassive }, !exPassive)}
+              {...holdProps("EX", { denied: cd.onCd, passive: exPassive }, !exPassive, ex.castType)}
               style={{
                 position: "relative",
                 width: m.tile,

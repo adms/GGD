@@ -22,6 +22,7 @@ import { abilityActivationCue } from "../ui/abilityCue";
 import { clearHeldAbility, setHeldAbility } from "../ui/abilityHold";
 import { rangeGuide } from "../ui/rangeGuideConfig";
 import { buildCastCommand, type AimAbility } from "./AimResolver";
+import { cancelTwoStageCast, getTwoStageArmedSlot } from "./mouseTwoStageCast";
 
 /** Right-click: attack the hovered enemy, otherwise move to the point. */
 export function mapRightClick(ground: Vec2, hoveredEnemyId: number | null): Order {
@@ -187,6 +188,8 @@ export class InputCapture {
     on(this.el, "contextmenu", (ev: MouseEvent) => {
       ev.preventDefault();
       this.trackCursor(ev);
+      // 二段施放瞄準中 → 右鍵是「取消」(GH#639)，⛔ 不是移動/攻擊指令。
+      if (cancelTwoStageCast()) return;
       const ground = this.ground(ev);
       if (!ground) return;
       this.setAttackArmed(false);
@@ -196,6 +199,9 @@ export class InputCapture {
     on(this.el, "pointerdown", (ev: PointerEvent) => {
       this.trackCursor(ev);
       if (ev.button !== 0) return;
+      // 二段施放的第二下 (GH#639)：瞄準中的場景左鍵就是「施放」，⛔ 永遠不落到
+      // 自選／攻擊移動那條路（吃掉這一下，不論解析成不成功）。
+      if (this.castTwoStage(ev)) return;
       const armed = this.attackMoveArmed;
       this.setAttackArmed(false);
       const ground = this.ground(ev);
@@ -241,6 +247,47 @@ export class InputCapture {
     this.setAttackArmed(false);
     // …and the same for a key still held at the moment the match tears down.
     if (this.heldKeySlot) this.releaseHeldKey(this.heldKeySlot);
+    // 瞄準到一半拆場 —— 武裝狀態是模組級的，留著會漏進下一場 (GH#639)。
+    cancelTwoStageCast();
+  }
+
+  /**
+   * 二段施放的**第二段** (GH#639)。回傳 true = 這一下已被瞄準模式吃掉。
+   *
+   * 解析走**同一支** `buildCastCommand` —— 與鍵盤 quick-cast 完全同一條路，
+   * 所以「圈畫在哪」與「技能落在哪」永遠是同一個答案（GH#415 的那條規矩）。
+   *
+   *   · 點在世界外（screenToGround 落空）→ 吞掉這一下，**維持瞄準**
+   *   · `targeted` 而點下處沒有目標／方向零向量 → 拒絕音，**維持瞄準**
+   *     （玩家還沒施放；取消是他自己的手勢：再點鈕或右鍵）
+   *   · 解析成功 → 送出 command、解除瞄準（伺服器的 castBegin/castRejected
+   *     照舊走 `ui/castFeedback` 那條回饋線）
+   */
+  private castTwoStage(ev: PointerEvent): boolean {
+    const slot = getTwoStageArmedSlot();
+    if (slot === null) return false;
+    const ground = this.ground(ev);
+    if (!ground) return true;
+    const ability = this.deps.getAbility(slot);
+    const selfPos = this.deps.getSelfPos();
+    if (!ability || !selfPos) {
+      abilityActivationCue(slot, { denied: true });
+      cancelTwoStageCast();
+      return true;
+    }
+    const cmd = buildCastCommand(slot, ability, {
+      selfPos,
+      cursorGround: ground,
+      hoveredEntityId: this.deps.pickEnemy(ground),
+    });
+    if (!cmd) {
+      abilityActivationCue(slot, { denied: true });
+      return true;
+    }
+    this.deps.onCommand(cmd);
+    abilityActivationCue(slot, {});
+    cancelTwoStageCast();
+    return true;
   }
 
   /** Retract our stake in the shared held-ability store — never anyone else's. */
@@ -256,6 +303,9 @@ export class InputCapture {
 
     const slot = SLOT_BY_CODE[ev.code];
     if (slot && !ev.repeat) {
+      // 鍵盤 quick-cast 立即出手 ⇒ 任何還掛著的滑鼠二段瞄準就過時了 (GH#639)。
+      // ⚠️ 只清瞄準狀態，quick-cast 自身的流程一格不動。
+      cancelTwoStageCast();
       // quick-cast at the current cursor position
       const ability = this.deps.getAbility(slot);
       const selfPos = this.deps.getSelfPos();
