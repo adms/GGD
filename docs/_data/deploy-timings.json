@@ -627,6 +627,46 @@
           "forksPerSuite": 5
         }
       ]
+    },
+    {
+      "id": "2026-08-23/v0.25.8-4-g6e08affa-dirty",
+      "at": "2026-08-23T13:52",
+      "ref": "v0.25.8-4-g6e08affa-dirty",
+      "stages": [
+        {
+          "name": "ship:vitest tools/deploy-timing",
+          "ms": 6668,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:skills:check",
+          "ms": 12472,
+          "code": 1,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:typecheck",
+          "ms": 45539,
+          "code": 1,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/client",
+          "ms": 79905,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:total",
+          "ms": 79911,
+          "code": 1,
+          "phase": "summary",
+          "serialSec": 0,
+          "parallelCpuSec": 144.6,
+          "forksPerSuite": 36
+        }
+      ]
     }
   ]
 }

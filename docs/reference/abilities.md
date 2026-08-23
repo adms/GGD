@@ -2,7 +2,7 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_b31ebdac6242`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 產生自 contentVersion **`cv_4bbc40746ca3`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
 > 資料列：**421**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-08-20T16:58:56.072938Z`）
 
 `content/abilities/*.json` 共 **421** 份，每個英雄每個 slot 一份：天生 PASSIVE 69　·　Q 71　·　W 71　·　E 71　·　R 71　·　EX 68。
@@ -213,7 +213,7 @@
 | `godie-huth.e` | 28-03 分身 | E | 輔助 | 28-03 | `godie-huth` 魔人普烏 | ✅ | 創造出2個普烏的實體來攻擊敵人，具有30%攻擊力，並除掉身上的所有法術效果，可持續10秒。 |
 | `godie-huth.r` | 28-04 破滅能量彈 | R | 主動攻擊 | 28-04 | `godie-huth` 魔人普烏 | ✅ | 指定一區域給予強大的重力能量彈，造成該區域單位行動速度降低35%，並且每秒受到500點傷害，持續5秒。 |
 | `godie-huth.ex` | 28-002 純粹魔人普烏 | EX | 強化 | 28-002 | `godie-huth` 魔人普烏 | ✅ | 普烏被逼至絕境時的最終手段——捨棄圓潤外型，回歸最純粹兇暴的原初魔人。（機制沿用原 w3x 28-002，數值待對帳補述） |
-| `godie-hvsh.passive` | 48-00 石化之眼 | PASSIVE | 天生·主動 | 48-00 | `godie-hvsh` Rider | — | 開啟石化之眼，將Rider附近小範圍的部隊予以石化，持續4秒。 |
+| `godie-hvsh.passive` | 48-00 石化之眼 | PASSIVE | 天生·主動 | 48-00 | `godie-hvsh` Rider | — | 開啟石化之眼，將Rider附近小範圍的部隊予以石化，持續2秒。 |
 | `godie-hvsh.q` | 48-01 魔法鎖鏈 | Q | 主動攻擊 | 48-01 | `godie-hvsh` Rider | ✅ | 使用鎖鏈將路線上的部隊拉回自己身旁，並受到150的傷害。 |
 | `godie-hvsh.w` | 48-02 心眼 | W | 被動 | 48-02 | `godie-hvsh` Rider | ✅ | 心眼讓梅杜莎有12%的機會閃避攻擊。 |
 | `godie-hvsh.e` | 48-03 鮮血神殿 | E | 主動 | 48-03 | `godie-hvsh` Rider | ✅ | [主動][自身][範圍][持續傷害][減速][回復][屬性成長] |
