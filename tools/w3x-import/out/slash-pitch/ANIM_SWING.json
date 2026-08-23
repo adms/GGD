@@ -33,6 +33,18 @@
    "pitchDeg": 64,
    "attackClipPitchDeg": 64
   },
+  "godie-e00n.w": {
+   "champion": "godie-e00n",
+   "championName": "蟬在叫人壞掉 - 龍宮禮奈",
+   "ability": "22-02 染血的柴刀",
+   "modelKey": "imported.renaryugu2",
+   "clip": "Spell",
+   "blade": "Weapon←Bone_Hand_R",
+   "sweptDeg": 92.8,
+   "planarity": 0.995,
+   "pitchDeg": 66,
+   "attackClipPitchDeg": 67
+  },
   "godie-e00r.w": {
    "champion": "godie-e00r",
    "championName": "最終泛用人型決戰兵器 - 初號機",

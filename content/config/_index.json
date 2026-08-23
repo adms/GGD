@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "31f6e2923391",
+  "hash": "c9a17a0e9257",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -41,8 +41,8 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "e8844295a30b",
-      "size": 8263
+      "hash": "85dfd655cc98",
+      "size": 8386
     },
     {
       "id": "audio-map",
@@ -131,8 +131,8 @@
     {
       "id": "combat-feel",
       "path": "config/combat-feel.json",
-      "hash": "517d723e209b",
-      "size": 1032
+      "hash": "14edd57451c3",
+      "size": 1151
     },
     {
       "id": "combo-strikes",
@@ -431,8 +431,8 @@
     {
       "id": "ui-cues",
       "path": "config/ui-cues.json",
-      "hash": "0c8c8a6e7eae",
-      "size": 2740
+      "hash": "e1e9640fe82e",
+      "size": 2777
     },
     {
       "id": "ui-lexicon",
@@ -515,8 +515,8 @@
     {
       "id": "world-cues",
       "path": "config/world-cues.json",
-      "hash": "d99a0512a442",
-      "size": 3274
+      "hash": "937b1c925963",
+      "size": 3727
     },
     {
       "id": "wounds",

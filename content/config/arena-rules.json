@@ -8,6 +8,7 @@
   "bothDraftsExtraSec": 10,
   "botOnlyRingAccelSec": 10,
   "botOnlyRingAccelEnabled": true,
+  "postMatchLingerSec": 120,
   "draftConflict": "round-roll",
   "grailDraft": {
     "eligibilityEnabled": true,
@@ -172,7 +173,7 @@
   },
   "reviveCircles": {
     "channelSec": 5,
-    "radius": 2,
+    "radius": 4,
     "decayMult": 2,
     "revivesPerTeamPerRound": 1,
     "reviveHpPctMax": 0.5,

@@ -28,7 +28,7 @@ import { zeroAttrBonus } from "../stats/attributes";
 import type { AbilitiesComp } from "../stats/statsComp";
 import type { IntentFrame } from "../intents";
 import { mobRulesFromConfig, type MobWavesConfigLike } from "../mobs";
-import { DEFAULT_MANUAL_ORDER } from "../combatFeel";
+import { DEFAULT_AUTO_ENGAGE, DEFAULT_MANUAL_ORDER, type ManualOrderRules } from "../combatFeel";
 import { TICK_HZ } from "../../constants";
 import * as V from "../math/vec2";
 
@@ -66,11 +66,24 @@ function spawnFighter(w: SimWorld, seat: number, team: number, pos: V.Vec2, spee
 }
 
 /** 真人名單走 GH#577 開的那扇門(MobRules.humanSeats);mobZones 不開,不生怪。 */
-function world(humanSeats: ReadonlySet<SeatId>): SimWorld {
+function world(humanSeats: ReadonlySet<SeatId>, lolModel = false): SimWorld {
   const w = new SimWorld(SKELETON_ARENA, 11);
   w.combatActive = true;
   const cfg = (JSON.parse(readFileSync(join(CONTENT, "config/arena-rules.json"), "utf8")) as { mobWaves: MobWavesConfigLike }).mobWaves;
   w.mobRules = mobRulesFromConfig(cfg, w.dt, 1, undefined, undefined, humanSeats);
+  // ⭐ GH#652：出貨的指令模型是 `"lol"`，而 LoL 的英雄**根本不會自動索敵** ——
+  // 於是「點地板不搶指揮權」這件事在 lol 模型下**沒有東西可以搶**。
+  // ⇒ 這一支的三條原案在 `"assist"` 模型下跑（那是這格開關存在的理由），
+  //   最後一條專門驗 `"lol"` 模型讓整個問題消失。⛔ 不是「測 rollback 那條路」——
+  //   是 #637 這個機制**只在 assist 模型下存在**，測它就得在它存在的地方測。
+  // ⚠️ `combatFeel.manualOrder` 是 optional（半張手寫表的既有夾具靠它編得過），
+  // 所以 spread 出來的型別每一格都是 optional ⇒ 用出貨預設補齊再覆蓋那一格。
+  const mo: ManualOrderRules = {
+    ...DEFAULT_MANUAL_ORDER,
+    ...(w.combatFeel.manualOrder ?? {}),
+    lolControlModel: lolModel,
+  };
+  w.combatFeel = Object.freeze({ ...w.combatFeel, manualOrder: Object.freeze(mo) });
   return w;
 }
 
@@ -106,6 +119,76 @@ describe("GH#637 點地板 1 秒不搶指揮權(打帶跑)", () => {
     // 窗口過了:站在點的地方(距敵 5 < 近戰索敵地板 6),索敵恢復。
     for (let k = 0; k < 10; k++) w.step(NO_INTENTS);
     expect(w.nav.get(me)!.attackTarget, "窗口過了卻沒有恢復自動索敵").toBe(enemy);
+  });
+
+  it("⭐ 走位還在走 ⇒ 撐過秒數窗口也不轉頭(owner:「直到 我走到目的地」)", () => {
+    // owner 2026-08-24（追加，逐字）:「如果我按了某個地板移動過去**到目的地前**
+    // 我是不會被其他東西所吸引 除非嘲諷技能等 **就算敵人打我 我也不會被拉走**
+    // 直到 我走到目的地」。⇒ 窗口的長度**不再是那個秒數**。
+    // 驗機制⛔不驗數字:目的地距離挑成「走完一定比 WINDOW 久」,而 WINDOW 從
+    // 出貨預設推導。敵人擺在終點旁(距終點 4 < 近戰索敵地板 6),所以「抵達之後
+    // 恢復」也量得到 —— 少了這一半，一條「永遠不恢復」的實作也會過。
+    const w = world(new Set([asSeatId(0)]));
+    const me = spawnFighter(w, 0, 0, at(0));
+    const enemy = spawnFighter(w, 1, 1, at(10), 1e-9);
+    const clicked = w.tick;
+    w.step(move(at(14)));
+    let sawTarget = false;
+    // 跑到「秒數窗口早就過期」之後仍在走的那一段。
+    while (w.tick < clicked + WINDOW * 2) {
+      hitBy(w, me, enemy); // 整段都在被打 —— owner:「就算敵人打我 我也不會被拉走」
+      w.step(NO_INTENTS);
+      if (w.nav.get(me)!.attackTarget !== null) sawTarget = true;
+    }
+    expect(w.tick, "測試前提壞了:這條走位在秒數窗口內就走完了").toBeGreaterThan(clicked + WINDOW);
+    expect(w.nav.get(me)!.order?.kind, "測試前提壞了:還沒抵達就沒有指令了").toBe("move");
+    expect(sawTarget, "秒數過了就被拉走 —— 窗口沒有撐到抵達").toBe(false);
+    // 抵達之後恢復（⛔ 不是永遠關掉自動攻擊）。
+    for (let k = 0; k < 200 && w.nav.get(me)!.order !== null; k++) w.step(NO_INTENTS);
+    for (let k = 0; k < 10; k++) w.step(NO_INTENTS);
+    expect(w.nav.get(me)!.attackTarget, "走到目的地了卻沒有恢復自動索敵").toBe(enemy);
+  });
+
+  it("⛔ 走位空轉(終點到不了)⇒ 放手,自動攻擊不會被關掉整個回合(#274)", () => {
+    // 點在到不了的地方時，「撐到抵達」等於「永遠」。判準是**行為**:身體連續
+    // stallTicks 個 tick 沒真的走出去 ⇒ 放手。這裡用速度≈0 製造空轉。
+    const w = world(new Set([asSeatId(0)]));
+    const me = spawnFighter(w, 0, 0, at(0), 1e-9);
+    const enemy = spawnFighter(w, 1, 1, at(3), 1e-9);
+    w.step(move(at(-14)));
+    const budget = WINDOW + DEFAULT_AUTO_ENGAGE.stallTicks + 20;
+    for (let k = 0; k < budget; k++) w.step(NO_INTENTS);
+    expect(w.nav.get(me)!.order?.kind, "測試前提壞了:它其實走到了").toBe("move");
+    expect(w.nav.get(me)!.attackTarget, "走位空轉卻沒有放手 —— 自動攻擊被關掉整個回合").toBe(enemy);
+  });
+
+  it("⭐ 出貨的 lol 模型:沒有下令就**從頭到尾**不出手（#637 的問題整個消失）", () => {
+    // owner 2026-08-24:「請你**完整拆解 LOL 的英雄控制指令與移動、攻擊、反擊邏輯**，
+    // 現在玩 LOL 人數最多，最容易被接受」。LoL 的英雄**沒有 idle auto-acquire、
+    // 也不會自動反擊** ⇒ 站著、走著、挨打，都不會自己挑一個目標。
+    const w = world(new Set([asSeatId(0)]), true);
+    const me = spawnFighter(w, 0, 0, at(0));
+    const enemy = spawnFighter(w, 1, 1, at(3), 1e-9);
+    // ① 站著不動 + 一直被打 ⇒ 一次都不出手（assist 模型下這裡會咬住敵人）。
+    for (let k = 0; k < WINDOW * 2; k++) {
+      hitBy(w, me, enemy);
+      w.step(NO_INTENTS);
+      expect(w.nav.get(me)!.attackTarget, "lol 模型下站著挨打卻自己找上了目標").toBe(null);
+    }
+    // ② 走位中也一樣。
+    w.step(move(at(-2)));
+    for (let k = 0; k < WINDOW; k++) {
+      hitBy(w, me, enemy);
+      w.step(NO_INTENTS);
+      expect(w.nav.get(me)!.attackTarget, "lol 模型下走位中自己找上了目標").toBe(null);
+    }
+    // ③ ⭐ 但玩家**下令要打**（A 鍵 attackMove）就照打 —— ⛔ 不是把自動攻擊拔掉。
+    const aClick = new Map([
+      [asSeatId(0), { order: { kind: "attackMove" as const, point: at(3) }, commands: [] }],
+    ]);
+    w.step(aClick);
+    for (let k = 0; k < 10; k++) w.step(NO_INTENTS);
+    expect(w.nav.get(me)!.attackTarget, "A 鍵下了 attackMove 卻還是不出手").toBe(enemy);
   });
 
   it("非真人座位:同一套指令一格都不變(bot 不受影響,#274 走位中索敵照常)", () => {

@@ -175,7 +175,8 @@ export type ReviveCircleConfig = z.infer<typeof zReviveCircleConfig>;
 /** Contract defaults for the reviveCircles block (dev cheats / fallbacks). */
 export const DEFAULT_REVIVE_CIRCLE_CONFIG: ReviveCircleConfig = {
   channelSec: 5, // task #206: 5s accumulate threshold (REVIVE_CHANNEL_SEC)
-  radius: 2,
+  // ⭐ owner 2026-08-24 逐字:「隊友死亡的復活火圈 **可以再大一倍**」⇒ 2 → 4。
+  radius: 4,
   decayMult: 2,
   revivesPerTeamPerRound: 1,
   reviveHpPctMax: 0.5,
@@ -791,6 +792,17 @@ export const DEFAULT_BOTH_DRAFTS_EXTRA_SEC = 10;
  * 消費端：`apps/game-server/src/match/MatchController.ts::accelFireRingForBotOnly`。
  */
 export const DEFAULT_BOT_ONLY_RING_ACCEL_SEC = 10;
+/**
+ * GH#651 —— 一場打完之後，房間還留著幾秒讓大家看戰績。
+ *
+ * ⭐ owner 2026-08-24 逐字：
+ * > 「與伺服器連線中斷 代碼4000 也太快出現把人踢出房間了 **至少留兩分鐘給我看戰績阿**」
+ *
+ * ⚠️ 這一格在此之前是 `MatchRoom.finishMatch()` 裡**寫死的 10_000**（第一守則的
+ * 反例：它從第一天起就該是一格欄位）。10 秒 ⇒ 結算畫面在第 10 秒被 Colyseus
+ * 的主動收房（客戶端看到的就是那個 **4000**）蓋掉。
+ */
+export const DEFAULT_POST_MATCH_LINGER_SEC = 120;
 
 /**
  * GH#643 的開關。預設**啟動**（第〇·六守則：優先權大的更新預設 on）；
@@ -1038,6 +1050,23 @@ export const zConfigArenaRulesDoc = z
      * 多一個必填欄會讓整份 config 被 Zod 退回 → 內容載入失敗 → 骨架英雄
      * （2026-08-02 事故的形狀）。
      */
+    /**
+     * GH#651 一場打完之後房間還留著幾秒。省略 = {@link DEFAULT_POST_MATCH_LINGER_SEC}。
+     * ⚠️ 必須 `.optional()`：同下，線上耐久覆蓋層相容（2026-08-02 事故的形狀）。
+     */
+    postMatchLingerSec: z
+      .number()
+      .min(0)
+      .max(600)
+      .optional()
+      .describe(
+        "一場結束之後，房間還留著幾秒讓玩家看戰績（出貨 120）。owner GH#651：" +
+          "「與伺服器連線中斷 代碼4000 也太快出現把人踢出房間了 至少留兩分鐘給我看戰績阿」。" +
+          "時間到才主動收房（客戶端看到的 4000 就是它）。⛔ 它不影響結算計算、" +
+          "獎勵發放、平台回呼 —— 那些在這之前就跑完了，這一格只管「房間還活著多久」。" +
+          "⚠️ 上界 600 秒是**成本**上界：房間活著就佔一個 shard 槽位，而一台 shard 的" +
+          "房間數是有限的（`maxRooms`）—— 調到很大 = 打完的房間會把新的房間擠掉。",
+      ),
     botOnlyRingAccelSec: z
       .number()
       .min(0)

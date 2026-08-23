@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "b593edb99112",
+  "hash": "1cc3b9c39fb6",
   "entries": [
     {
       "id": "attach.ex.midchilder-aura",
@@ -1429,6 +1429,12 @@
       "path": "vfx/fx.root-snare.json",
       "hash": "879f106439f5",
       "size": 1051
+    },
+    {
+      "id": "fx.saber.gold-dust",
+      "path": "vfx/fx.saber.gold-dust.json",
+      "hash": "f5cd50e894f4",
+      "size": 658
     },
     {
       "id": "fx.scorch-ring",

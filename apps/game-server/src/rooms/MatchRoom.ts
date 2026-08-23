@@ -1215,8 +1215,16 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
     }
 
     await this.settleToPlatform();
-    // let clients read the final state, then dispose
-    this.clock.setTimeout(() => this.disconnect(), 10_000);
+    // ⭐ GH#651 —— 讓大家把戰績看完再收房。owner 2026-08-24 逐字：
+    // 「與伺服器連線中斷 代碼4000 也太快出現把人踢出房間了 **至少留兩分鐘給我看戰績阿**」
+    // ⚠️ 這裡在此之前是**寫死的 10_000**（第一守則的反例）。`disconnect()` 是
+    // Colyseus 的主動收房 ⇒ 客戶端拿到的就是那個 4000，所以這個數字決定的正是
+    // 「結算畫面被中斷訊息蓋掉的那一刻」。⛔ 它不影響結算計算與獎勵發放
+    // （`settleToPlatform()` 已經在上面 await 完了）。
+    this.clock.setTimeout(
+      () => this.disconnect(),
+      Math.max(0, this.ctl.rules.postMatchLingerSec) * 1000,
+    );
   }
 
   /**

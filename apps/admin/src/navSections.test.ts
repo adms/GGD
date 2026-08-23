@@ -36,6 +36,9 @@ const BASELINE_PAGES: readonly Page[] = [
   "players",
   "matches",
   "replays",
+  // #636 傷害排行榜 —— 2026-08-24 新增的一頁（owner:「排名可以容納十萬筆」）。
+  // ⭐ 基準線跟著 NAV 在**同一個 commit** 裡動,那正是這條守衛要的東西。
+  "damageBoard",
   "announcements",
   "mcoinGrant",
   "invites",

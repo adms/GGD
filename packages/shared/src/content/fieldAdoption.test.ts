@@ -180,6 +180,49 @@ interface Exemption {
  * Sorted by key, matching the census output order.
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
+  "field:abilities.effects[]#spawnModelFx.anchor": {
+    status: "landing",
+    since: "2026-08-24",
+    why: "`path:\"static\"` 的錨點（self / point / target）—— 與那一格 enum 同一批、同一個理由：機制先行，60 支的內容批在 GH#649 第 2 批。⚠️ 它**只有** static 路徑讀得到（schema refine 綁著），所以它的採用率必然等於那一格 enum 的採用率 —— 一起紅、一起解。",
+  },
+  "field:abilities.effects[]#spawnVfx.attach": {
+    status: "landing",
+    since: "2026-08-24",
+    why: "`at:\"bone\"` 的掛點字串（hand,right / chest / weapon…）—— 同上，schema refine 把它與那一格 enum 綁成**成對**（缺一半就是第一·五守則的「說了但不會發生」），所以兩列必然同進同出。43 支的內容批在 GH#649 第 2 批。",
+  },
+  "field:abilities.persistentVfx[].scale": {
+    status: "landing",
+    since: "2026-08-24",
+    why: "常駐特效的尺寸覆寫。同 `alpha` 的理由：四份在用的內容都讓粒子文件自己決定大小（第〇·四守則）。⭐ 可反駁：哪天同一份粒子要在兩支技能上有不同大小，填上去這一列就 stale 而紅。",
+  },
+  "field:abilities.persistentVfx[].when": {
+    status: "landing",
+    since: "2026-08-24",
+    why: "常駐特效的**掛載條件**。四份內容都刻意缺席 —— 缺席逐字等於「這一格技能學到了（rank>0）就一直掛著」，而那正是這四份要的語意（Saber 的金粉在她拿著劍的時候一直閃、南方之月的光環在 EX 學到之後一直在）。⭐ 可反駁：哪天有一支要「只在某個狀態下才掛」（例如變身態才有的拖曳緞帶），填上去這一列就 stale 而紅。⚠️ ⛔ 不要為了讓它變綠去替某一支填 `when` —— 那會**改變畫面上看得到的東西**。",
+  },
+  "field:abilities.persistentVfx[].alpha": {
+    status: "landing",
+    since: "2026-08-24",
+    why: "常駐特效的整體透明度覆寫。三份在用常駐特效的內容（`godie-h020.ex` / `godie-hjai.ex` / 新的 `godie-e002.e` 金粉）都讓粒子文件自己決定 alpha —— ⭐ 那是**對的預設**（第〇·四守則：值住一個地方）。這一格是給「同一份粒子文件要在兩支技能上有不同濃度」用的出口，今天沒有那個案例。⚠️ 下界刻意是 0.05 ⛔ 不是 0（`alpha: 0` ＝「看不見但還在算粒子」，正是 #262 要禁的那件事）。⭐ 可反駁：哪天有一支技能真的要調淡它的常駐特效，填上去這一列就 stale 而紅。",
+  },
+  // ═══ GH#649 球體/蝗蟲群 第 1 批 · 2026-08-24 —— **機制先行，內容在第 2 批** ═══
+  // ⭐ 這兩格是這一批**刻意**的形狀（第〇·五守則：引擎做機制、JSON 做技能）：
+  //    原作 823 列特效證據裡，238 具 dummy 是「定點不動播動畫」（擋 60 支）、
+  //    285 次掛件是「掛在施法者骨頭上」（擋 43 支）。⇒ 先做兩個機制，
+  //    ⛔ 不逐支改內容（那是 103 支的內容批，排在 #649 的第 2 批）。
+  // ⚠️ 用 `landing` 而不是 `default-live` 是刻意的:30 天後它會**再紅一次** ——
+  //    第 2 批沒做完的話，這條線不可以安靜地消失。
+  // ⭐ 可反駁：第 2 批一落地，這兩列就會 stale 而紅，⇒ 刪掉它們就是那時候的修法。
+  "enum:abilities.effects[]#spawnModelFx.path=static": {
+    status: "landing",
+    since: "2026-08-24",
+    why: "定點模型特效（`6e4ae847`）—— 機制＋守衛已出貨（真 Zod → 真 SimWorld → 真事件 → 真 rig → 世界矩陣），內容 0 支是**這一批的邊界**，⛔ 不是漏做。60 支的內容批在 GH#649 第 2 批。",
+  },
+  "enum:abilities.effects[]#spawnVfx.at=bone": {
+    status: "landing",
+    since: "2026-08-24",
+    why: "一次性掛骨頭（`90fb4167`）—— 同上：機制＋出貨鏈守衛已在（含「替身骨架沒有那根骨 ⇒ 退回胸口仍然畫」那一格），43 支的內容批在 GH#649 第 2 批。",
+  },
   // ═══ 2026-08-23 · M2 狀態閘 + M5 紮根/主屬性覆寫（變身態退場的前提）═══════
   // ⭐ 這三格（`whileStatus` / `immobile` / `primaryAttribute`）是 GH#599「變身態
   //    退場」量出來的**擋路機制**：19 對變身裡有 4 對的全部差別住在
@@ -288,11 +331,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   //    （第零守則⑧：排序是 owner 的權力），⛔ 不是這一批順手做掉。
   // ⚠️ 用 `landing` 而不是 `default-live` 是刻意的：30 天後它會**再紅一次**，
   //    而那正是我們要的 —— 這一批不做完，這條線不可以安靜地消失。
-  "field:abilities.cooldownShape": {
-    status: "landing",
-    since: "2026-08-20",
-    why: "同 `cooldownTier`。⚠️ 而且這一格**本來就預期是稀疏的**：出貨 `autoShape` 開著，只有自動判斷推錯的技能才需要手填 —— 內容改寫之後它的採用率仍然會遠低於 `cooldownTier`，屆時要改判成 `default-live`。",
-  },
   // ═══ GH#602 無上限施法距離 2026-08-23 ═════════════════════════════════════
   "field:champions.abilities.*.rangeUnlimited": {
     status: "landing",
@@ -338,11 +376,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "在編輯器填一個數字就好，⛔ 不需要一次部署。\n" +
       "⭐ 可反駁：哪一天有人**量了** beam 的胸口高度並填進 `imported.netherstrike` 那一族，" +
       "這一列就該刪掉（它會從 0 筆變成有採用，理由自動失效）。",
-  },
-  "field:champions.abilities.*.cooldownShape": {
-    status: "landing",
-    since: "2026-08-20",
-    why: "同 `abilities.cooldownShape` —— 英雄內嵌的那一條路走同一個 `withTiers` 接縫，所以它與 standalone 那一格是同一件事的兩個落點。⚠️ 這一格本來就預期稀疏：`autoShape` 出貨開著，只有自動判斷推錯的技能才需要手填。",
   },
   // ⚠️ 前綴 `#chainLightning.amount.*` 會騙人 —— `amount` 是共用的 `zScaling`，
   //    普查給共用子樹的命名是「字母序第一個宣告它的 effect kind」。理由完整
@@ -2591,18 +2624,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   },
   // ⭐ 2026-08-22 —— #539 常駐特效。standalone 那一半已經有內容（莉娜的兩份 EX），
   //    champion **內嵌**那一半是零，而那是**外形**問題不是採用問題（見 why）。
-  "field:champions.abilities.*.persistentVfx": {
-    status: "schema-impossible",
-    since: "2026-08-22",
-    why:
-      "⭐ 常駐特效今天唯一的內容是 EX 技能（`godie-h020.ex` / `godie-hjai.ex`，原作 " +
-      "`MidchilderNanohaAura.mdx` 掛在 origin 而從來沒有 DestroyEffect），" +
-      "而 **EX 在英雄卡上是字串引用**（`exAbility: \"godie-h020.ex\"`）⛔ 不是內嵌物件 —— " +
-      "所以 `champions.abilities.*` 這條路上不可能出現它。standalone 那一半" +
-      "（`abilities.persistentVfx`）已經有兩份內容在走，客戶端兩條算繪路都接了" +
-      "（`attachment@1` → formAttachmentFor、`vfx@1`/`ribbon@1` → AmbientVfx）。" +
-      "⚠️ 哪天有一支 **Q/W/E/R** 技能帶常駐特效，這一列就該當場失效並改成 landing。",
-  },
   // ── ⭐ 2026-08-22 GH#551/#543/#549 —— 四個新 kind，機制落地當天內容是 0 ──────
   //
   // owner 逐字：「Saber約束勝利之劍(**翻滾光束**), 依文世界終結(**圓周噴發大冰塊**),

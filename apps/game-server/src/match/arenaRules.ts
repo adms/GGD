@@ -23,6 +23,7 @@ import {
   DEFAULT_FINAL_ROUND,
   DEFAULT_BOTH_DRAFTS_EXTRA_SEC,
   DEFAULT_BOT_ONLY_RING_ACCEL_SEC,
+  DEFAULT_POST_MATCH_LINGER_SEC,
   DEFAULT_BOT_ONLY_RING_ACCEL_ENABLED,
   DEFAULT_BOT_SHOP,
   DEFAULT_DISADVANTAGE_WEIGHTS,
@@ -161,6 +162,8 @@ export interface ArenaRules {
   botOnlyRingAccelEnabled: boolean;
   /** GH#643 的秒數（出貨 10）。0 = 人類全滅的下一個 tick 就點火。 */
   botOnlyRingAccelSec: number;
+  /** GH#651 打完之後房間還留著幾秒（讓玩家看戰績）。 */
+  postMatchLingerSec: number;
   /** ⭐ bot 怎麼花錢（owner 2026-08-18：買隨機寶具、半價）。 */
   botShop: BotShopConfig;
   /**
@@ -249,6 +252,7 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
   // 另有「0 個 humanSeat 不觸發」那一關，所以既有 all-bot 測試逐位元不變。
   botOnlyRingAccelEnabled: DEFAULT_BOT_ONLY_RING_ACCEL_ENABLED,
   botOnlyRingAccelSec: DEFAULT_BOT_ONLY_RING_ACCEL_SEC,
+  postMatchLingerSec: DEFAULT_POST_MATCH_LINGER_SEC,
   botShop: DEFAULT_BOT_SHOP,
   disadvantageWeights: DEFAULT_DISADVANTAGE_WEIGHTS,
   rounds: new Map(
@@ -349,6 +353,7 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
     // 出貨預設（開、10 秒），⛔ 不是靜靜地把 GH#643 關掉。
     botOnlyRingAccelEnabled: doc.botOnlyRingAccelEnabled ?? DEFAULT_BOT_ONLY_RING_ACCEL_ENABLED,
     botOnlyRingAccelSec: doc.botOnlyRingAccelSec ?? DEFAULT_BOT_ONLY_RING_ACCEL_SEC,
+    postMatchLingerSec: doc.postMatchLingerSec ?? DEFAULT_POST_MATCH_LINGER_SEC,
     botShop: doc.botShop ?? DEFAULT_BOT_SHOP,
     disadvantageWeights: doc.disadvantageWeights ?? DEFAULT_DISADVANTAGE_WEIGHTS,
     rounds,

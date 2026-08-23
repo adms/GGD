@@ -202,7 +202,13 @@ interface Result {
   frozenTicks: number;
 }
 
-function runMatch(feed: Feed, seed = SEED): Result {
+/**
+ * `hitstopScale` ⛔ 不是參數化測試的糖 —— 它是這一支唯一能同時問兩個問題的方式：
+ * 出貨值是 **0**（GH#646，owner:「hitstop 先設定為 0 求順暢為主」），所以「凍住走路」
+ * 這件事在出貨設定下**本來就不該發生**。⇒ 傳 `undefined` 走出貨值（驗新的預設），
+ * 傳 1 把那個機制打開（驗「儀器還在、而且它量到的東西與搶方向盤是兩回事」）。
+ */
+function runMatch(feed: Feed, seed = SEED, hitstopScale?: number): Result {
   const cfg = {
     champSelectTicks: 2,
     intermissionTicks: 3,
@@ -224,6 +230,21 @@ function runMatch(feed: Feed, seed = SEED): Result {
   const human = new HumanDriver();
   ctl.seats.get(asSeatId(0))!.setDriver(human);
   while (ctl.phase.phase !== "combat") ctl.tick();
+
+  // 覆蓋在**進入 combat 之後**：世界已經照出貨內容建好，這裡只換那一格。
+  // ⚠️ `combatFeel` 那一族是 `Object.freeze` 的（規則表刻意不可變，免得某條系統
+  // 在半場中途改了規則）⇒ ⛔ 不能就地寫，要換上一份新的凍結物件。
+  if (hitstopScale !== undefined) {
+    const cf = ctl.world.combatFeel;
+    if (cf.hitstop) {
+      // ⚠️ `combatFeel` **與它的每一個子表**都是 `Object.freeze` 的（規則表刻意
+      // 不可變，免得某條系統在半場中途改了規則）⇒ 兩層都要換成新的凍結物件。
+      ctl.world.combatFeel = Object.freeze({
+        ...cf,
+        hitstop: Object.freeze({ ...cf.hitstop, scale: hitstopScale }),
+      });
+    }
+  }
 
   const meSeat = ctl.seats.get(asSeatId(0))!;
   const me = meSeat.entityId as EntityId | null;
@@ -682,10 +703,25 @@ describe("#274 the movement budget: hit-feel may cost the walk, but only a littl
     // Stated as an assertion because the batch conflated them: a chase that
     // re-points the walk and a freeze that suspends it are separate failures,
     // and only one of them was instrumented.
-    const r = runMatch("stick");
-    expect(r.hijackedTicks, "the chase must still never re-point the walk").toBe(0);
+    //
+    // ⭐ GH#646 之後這條要問**兩次**，因為出貨的 `hitstop.scale` 是 0
+    // （owner 2026-08-24:「hitstop 先設定為 0 求順暢為主」）：
+    //   ① 出貨設定 ⇒ 兩個指標都是 0 —— 那正是 owner 要的「一格都不凍」，
+    //      而如果只留這一句，`frozenTicks` 這支儀器壞掉也不會有人知道。
+    //   ② 把那一格轉開 ⇒ 凍住回來了，而搶方向盤**仍然**是 0。
+    // ⇒ 兩句合起來才證明「這兩支儀器量的是不同的東西」，⛔ 而且第二句不是在測
+    //    rollback 那條路的行為（第〇·六守則），它測的是**儀器本身**還活著。
+    const shipped = runMatch("stick");
+    expect(shipped.hijackedTicks, "the chase must still never re-point the walk").toBe(0);
     expect(
-      r.frozenTicks,
+      shipped.frozenTicks,
+      "出貨 hitstopScale=0 ⇒ 挨打不該讓走路停住哪怕一個 tick（GH#646）",
+    ).toBe(0);
+
+    const frozen = runMatch("stick", SEED, 1);
+    expect(frozen.hijackedTicks, "the chase must still never re-point the walk").toBe(0);
+    expect(
+      frozen.frozenTicks,
       "…yet the walk IS interrupted, which is exactly what hijackedTicks cannot see",
     ).toBeGreaterThan(0);
   });

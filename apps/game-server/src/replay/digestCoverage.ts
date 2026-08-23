@@ -161,6 +161,12 @@ export const SIM_WORLD_DIGEST_EXEMPT: Readonly<Record<string, string>> = {
   facingLock: "面向鎖：它唯一的效果就是 `Transform.facing`，而 facing 每 tick 被 hash —— 分岔當 tick 就說話",
   aimTick: "同 facingLock：效果落在 facing 上，而 facing 被 hash",
   walkStall: "卡住計數：效果是「要不要自動接敵」，而接敵的結果（nav.attackTarget + 位置）被 hash",
+  moveOrderNoAggroUntil:
+    "打帶跑窗口的到期 tick（GH#637）：與 `walkStall` 逐字同型 —— 它決定的是「要不要自動接敵」，" +
+    "而接敵的**結果**（nav.attackTarget ＋ 位置）已經被 hash。⇒ 分岔在下一 tick 就從已被 hash 的欄位說出來。",
+  lastMoveOrderTick:
+    "上一次移動指令的 tick（GH#637 的搖桿流判準）：純粹的去抖動輔助，它唯一的效果是決定 " +
+    "`moveOrderNoAggroUntil` 要不要被重寫 —— 同上一格的理由。",
   autoEngaging: "同 walkStall：效果是 nav.attackTarget 與位置，兩個都被 hash",
   suspendedOrder: "被暫存的指令：它生效的那一刻就變成 nav 的內容，而 nav.attackTarget 與位置被 hash",
 };

@@ -7,8 +7,10 @@
  * disc and was invisible from the fixed top-down camera. This ring is built to
  * be unmistakable at the camera's DEFAULT (closest) zoom before anything else:
  *
- *   • a team-tinted ground ring at the authoritative `radius` (2.0u — 1.7x a
- *     champion's own diameter, so it is never a pixel-hunt),
+ *   • a team-tinted ground ring at the authoritative `radius` (⭐ 出貨 **4.0u**
+ *     自 2026-08-24 起 —— owner 逐字:「隊友死亡的復活火圈 **可以再大一倍**」,
+ *     從 2.0u 翻倍;⛔ 這裡不寫死它,環的幾何是在 radius 1 上做的再照線上值縮放,
+ *     所以後台改一個數字這一整套演出跟著變),
  *   • a crown of RISING FLAME TONGUES around that ring: the tongues light up
  *     in order, so the ring visibly FILLS as the channel progresses. This is
  *     the world-space progress read the brief demands — the channeller AND the

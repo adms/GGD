@@ -744,14 +744,47 @@ function autoAcquirePass(
     {
       const noAggroUntil = world.moveOrderNoAggroUntil.get(id);
       if (noAggroUntil !== undefined) {
-        if (world.tick < noAggroUntil && forcedTargetOf(world, id) === null) {
+        // ⭐ owner 2026-08-24（GH#637 追加，逐字）：
+        // > 「如果我按了某個地板移動過去**到目的地前** 我是不會被其他東西所吸引
+        // >  除非嘲諷技能等 **就算敵人打我 我也不會被拉走** 直到 我走到目的地」
+        //
+        // ⇒ 窗口的長度**不再是那個秒數**：只要這條走位還在走（`nav.order` 還是
+        //    move —— 抵達時 ARRIVE_EPS 會把它清成 null，非 move 指令會在上面那個
+        //    switch 之前作廢窗口），指揮權就一直是玩家的。秒數退化成**下限**
+        //    （點在腳邊那種一 tick 就到站的走位仍然有一小段保護）。
+        //
+        // ⚠️ **空轉時放手**：`walkIsStalled` = 有指令、卻連續 stallTicks 個 tick
+        //    沒真的走出去（點在柱子中心那種永遠到不了的終點）。少了這一條，
+        //    自動攻擊會被關掉**整個回合** —— 那正是 #274 修掉的災難。
+        //    ⭐ 判準是**行為**（身體有沒有在前進），⛔ 不是再加一個秒數上限。
+        //
+        // ⚠️ 嘲弄照舊贏過窗口（owner:「除非嘲諷技能等」）。
+        // ⛔⛔ **搖桿流不可以走這條路**。#274 的災難是「推著搖桿 = 永久關掉自動
+        //    攻擊」,而搖桿每一拍都送一條 move ⇒ `nav.order` 永遠是 move ⇒
+        //    只看 order 的話「撐到抵達」對搖桿玩家等於「撐到天荒地老」。
+        //    ⭐ 判準用**武裝時的同一把尺**(`MOVE_ORDER_STREAM_GAP_TICKS`):
+        //    最近一條移動指令已經隔了 ≥3 tick ⇒ 這是一次**離散點擊**之後的走位;
+        //    流的話 `lastMoveOrderTick` 每 tick 都在動 ⇒ 退回秒數窗口(舊行為)。
+        //    ⚠️ 這一條的守衛就是同一支測試裡的「搖桿流」那一案 —— 它在我第一版
+        //    漏掉這個條件時**當場紅了**。
+        const lastOrderTick = world.lastMoveOrderTick.get(id);
+        const discreteWalk =
+          lastOrderTick === undefined ||
+          world.tick - lastOrderTick >= MOVE_ORDER_STREAM_GAP_TICKS;
+        const stillWalking =
+          mo.moveOrderNoAggroUntilArrival &&
+          discreteWalk &&
+          nav.order?.kind === "move" &&
+          !walkIsStalled(world, id, ae);
+        const holds = world.tick < noAggroUntil || stillWalking;
+        if (holds && forcedTargetOf(world, id) === null) {
           if (nav.attackTargetAuto) {
             nav.attackTarget = null;
             nav.attackTargetAuto = false;
           }
           continue;
         }
-        if (world.tick >= noAggroUntil) world.moveOrderNoAggroUntil.delete(id);
+        if (!holds) world.moveOrderNoAggroUntil.delete(id);
       }
     }
 
@@ -786,6 +819,41 @@ function autoAcquirePass(
     // 迴圈上面那個先抓下來的 `order` —— 走完的走位在上面那個 switch 裡已經被
     // 消耗成 null,那種人也是站著不動的人。`hold` 不受影響(它先被三元的第一
     // 支接走,而且 `nav.order` 非 null)。
+    // ══════════════════════════════════════════════════════════════════════
+    // ⭐⭐ LoL 指令模型（GH#652）—— owner 2026-08-24 逐字：
+    // 「這個操作要請你**完整拆解 LOL 的英雄控制指令與移動、攻擊、反擊邏輯**，
+    //  現在玩 LOL 人數最多，**最容易被接受**」
+    //
+    // LoL 的一句話規格：**英雄的每一次出手都是玩家下的。** 逐條對照：
+    //   · 右鍵地板（move）      → 走過去。⛔ 路上不出手、⛔ 被打不反擊
+    //   · 右鍵敵人（attackTarget）→ 追著打他（GGD 的 `nav.attackTarget` 非 auto）
+    //   · A + 地板（attackMove）→ 走過去**並打路上遇到的**  ← 唯一「自動」的入口
+    //   · H（hold）             → 原地不動，只打射程內的
+    //   · S（stop）             → 停手；⭐ 之後**站著不動不會自己找架打**
+    //   · 沒有任何指令（idle）  → ⛔ 不索敵（LoL 英雄沒有 idle auto-acquire）
+    //
+    // ⇒ 整個模型在這裡收斂成**一個閘**：真人座位在 `"lol"` 模型下，只有
+    //   attackMove / hold 這兩種「玩家說了要打」的指令才進索敵。
+    //   已握的**手選**目標不受影響（下面 `!attackTargetAuto` 那條路），
+    //   嘲弄照舊贏過一切（`forcedTargetOf`）。
+    //
+    // ⚠️ **只管真人**（GH#577 的 `humanSeats` 同一扇門）：bot 靠 `acquireTarget`
+    //    打架，一起關掉等於整場沒有人動手。
+    // ⚠️ 關掉（輔助模型）= 這一版之前的 GGD 行為（站著自動索敵、被打自動反擊、
+    //    走位卡住自動接敵）⇒ 後台一格切回去就是完整 rollback。
+    // ══════════════════════════════════════════════════════════════════════
+    if (mo.lolControlModel && nav.attackTarget === null) {
+      const seat = world.team.get(id)?.seatId;
+      const isHuman = seat !== undefined && world.mobRules?.humanSeats?.has(seat) === true;
+      const orderedToFight = order?.kind === "attackMove" || holdPosition;
+      if (isHuman && !orderedToFight && forcedTargetOf(world, id) === null) {
+        // 玩家沒有下「打」的指令 ⇒ 這一 tick 不索敵。⭐ 走位、追擊、施法、
+        // 已承諾的前搖全部不受影響 —— 這裡只決定「要不要自己挑一個新目標」。
+        world.autoEngaging.delete(id);
+        continue;
+      }
+    }
+
     const engaging = autoEngageActive(world, id, ae);
     const idleSeeking = ae.enabled && ae.idleSeeks && nav.order === null;
     const nearRadius = acquireRadius(sc, t.radius);

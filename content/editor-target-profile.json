@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_cec903c51bf9",
+    "contentVersion": "cv_7e68c9c193b7",
     "collections": {
       "champions": {
-        "hash": "ce6dd3ee2c92",
+        "hash": "883aac05d371",
         "count": 71
       },
       "abilities": {
-        "hash": "cb6055a7eb57",
+        "hash": "380b2e33c998",
         "count": 421
       },
       "items": {
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "31f6e2923391",
+        "hash": "c9a17a0e9257",
         "count": 87
       },
       "models": {
@@ -50,8 +50,8 @@
         "count": 124
       },
       "vfx": {
-        "hash": "b593edb99112",
-        "count": 643
+        "hash": "1cc3b9c39fb6",
+        "count": 644
       },
       "skins": {
         "hash": "3d1095f3da83",
@@ -89,7 +89,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "f27f2c03",
+    "fingerprint": "a0385f89",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -234,6 +234,7 @@
       "applyTo",
       "arriveSoundKey",
       "at",
+      "attach",
       "attackType",
       "attr",
       "attributes",
@@ -3372,7 +3373,7 @@
       "effectKindsSource": "runtimeCapabilities.effectKinds（⛔ 不在這裡重複一份）"
     },
     "vfx": {
-      "docCount": 643,
+      "docCount": 644,
       "keys": [
         "fx.barkskin",
         "fx.bramble-burst",
@@ -3697,12 +3698,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "f27f2c03",
+    "engineFingerprint": "a0385f89",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 f27f2c03 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 a0385f89 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -4491,5 +4492,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "b967c289b238"
+  "profileDigest": "3f02ba3136e4"
 }

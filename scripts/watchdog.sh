@@ -29,8 +29,31 @@ while kill -0 "$PID" 2>/dev/null; do
     echo "⏲️ 看門狗：超過 ${LIMIT_MIN} 分鐘 —— SIGKILL（wall 逾時）" >&2
     pkill -KILL -P "$PID" 2>/dev/null; kill -KILL "$PID" 2>/dev/null; wait "$PID" 2>/dev/null; exit 124
   fi
-  # ② 0% CPU 偵測：本體 + 全部子孫的 %CPU 總和
-  CPU=$(ps -o pcpu= -p "$PID" $(pgrep -P "$PID" | tr '\n' ' ') 2>/dev/null | awk '{s+=$1} END{printf "%d", s*10}')
+  # ② 0% CPU 偵測：本體 + **全部子孫**的 %CPU 總和
+  #
+  # ⛔⛔ 2026-08-24 修的一個會**砍掉健康工作**的 bug：這裡原本是 `pgrep -P "$PID"`,
+  #     而那只拿得到**直接子行程**。`pnpm ship:check` 的行程樹是
+  #     watchdog → pnpm → node ship.mjs → pnpm(逐 suite) → vitest → **worker forks**,
+  #     真正在燒 CPU 的是**孫輩以下** ⇒ 這個總和永遠讀到 ~0% ⇒ 90 秒後把一個
+  #     滿載 800% CPU 的 build 當成「卡死」砍掉。⭐ 連砍三次(三次都在同一支閘上),
+  #     而 CLAUDE.md 第零守則⏲️ 說得很清楚:同一個閘紅第三次 = 迴圈,要找結構性根因。
+  # ⚠️ 而上面那行註解**本來就寫著「全部子孫」** —— 散文說的是對的，程式做的是另一件事
+  #     （第三守則:註解會說謊，去驗證）。
+  # ⇒ 現在真的走整棵樹:一次 `ps -eo pid,ppid,pcpu`，從 $PID 做 BFS 把後代全部收進來。
+  CPU=$(ps -eo pid=,ppid=,pcpu= 2>/dev/null | awk -v root="$PID" '
+    { pid[NR]=$1; ppid[NR]=$2; cpu[NR]=$3; n=NR }
+    END {
+      want[root]=1
+      # 樹最深不會超過 n 層;逐層擴散直到沒有新成員(⛔ awk 沒有遞迴，用固定點迭代)
+      changed=1
+      while (changed) {
+        changed=0
+        for (i=1;i<=n;i++) if (!want[pid[i]] && want[ppid[i]]) { want[pid[i]]=1; changed=1 }
+      }
+      s=0
+      for (i=1;i<=n;i++) if (want[pid[i]]) s+=cpu[i]
+      printf "%d", s*10
+    }')
   if [ "${CPU:-0}" -lt 5 ]; then IDLE=$((IDLE+5)); else IDLE=0; fi
   if [ "$IDLE" -ge 90 ]; then
     echo "⏲️ 看門狗：連續 90 秒 CPU 0% —— worker 卡死,SIGKILL。單獨重跑通常會過。" >&2

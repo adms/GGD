@@ -298,6 +298,12 @@
           "vfxKey": "fx.prim.holy.beam-flat",
           "attachTo": "point"
         }
+      ],
+      "persistentVfx": [
+        {
+          "vfxKey": "fx.saber.gold-dust",
+          "attach": "hand,right"
+        }
       ]
     },
     "R": {

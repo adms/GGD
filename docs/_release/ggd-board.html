@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-08-23 23:42 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-08-24 02:35 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.25.8 · 資料截至 2026-08-23 23:42 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-23 23:42 (GMT+8)</h1><div class="meta"><span>帳本 <b>5</b> 份</span><span>點名票號 <b>210</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.26.0 · 資料截至 2026-08-24 02:35 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-24 02:35 (GMT+8)</h1><div class="meta"><span>帳本 <b>6</b> 份</span><span>點名票號 <b>214</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -155,6 +155,27 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <p class="li"><code>python3 tools/icon-console/emit_style_spec.py</code> —— 等 <code>prompt.py</code> 定稿</p>
 <p class="li"><code>pnpm exec tsx tools/model-budget/emit_report.ts</code> —— <code>report.json</code> 現在就過期，而<b>沒有守衛會說</b></p>
 <p class="li"><code>eventFanout.ts:114</code> 的註解已成假話（線路成本從「施放次數」變成「跳數」）</p></section>
+<section><p class="eyebrow">這一版（08-20）</p><h2>🧾 逐句對票 · 這一版（08-20）</h2><div class="scroll"><table><tr><th>你說的</th><th>票</th><th>狀態</th></tr>
+<tr><td>「傷害排名：每回合誰的哪一招單次最高 + 比例分布，後台顯示」→「可以用 <b>Redis</b> 做，排名可以容納<b>十萬筆</b>，並且記錄第幾回合、英雄、裝備、技能、傷害、時間戳記、版本」</td><td>#636</td><td>✅ 七格全在 · ZSET cap 100,000 · 後台前 1000 筆三格過濾</td></tr>
+<tr><td>「點地板後 1 秒不搶指揮權（打帶跑）」</td><td>#637</td><td>✅ 1.0 秒可調，被打反擊接管也停</td></tr>
+<tr><td>「另一個場地的聲音/語音/震動/閃爍不可漏到目前場地」</td><td>#638</td><td>✅ 四條全補；⭐ 觀戰跟著<b>你正在看</b>的那一區</td></tr>
+<tr><td>「純滑鼠按技能鈕 → 二段選擇後施放（例：陽電子砲）」</td><td>#639</td><td>✅ 點格→點場景→（再點格/右鍵取消）</td></tr>
+<tr><td>「選人畫面左邊技能說明滑不下去」</td><td>#640</td><td>✅ 根因是 <b>27px 的縫</b>（沒地板），⛔ 不是捲動壞掉</td></tr>
+<tr><td>「幻之匕首似乎沒有 20% 傷害」→「目前上架道具都是我重製過的，<b>直接檢查是否實作如說明就好</b>」</td><td>#641</td><td>✅ 對帳完成：<b>機制無缺口</b>，是 3% 機率讓你看不到</td></tr>
+<tr><td>「殭屍王介紹/特殊殭屍結算太佔螢幕 —— 半秒淡入半秒淡出」</td><td>#642</td><td>✅ 淡完就走，⛔ 沒有停住的一段</td></tr>
+<tr><td>「只剩 bot 存活 → 回合縮到 10 秒後縮火圈」</td><td>#643</td><td>✅ 每 tick 冪等夾；⛔ 不動回合硬底線</td></tr>
+<tr><td>「初號機 AT力場…<b>除了護盾以外，追加</b>…」「暴走免疫負面+吸血100%+EX400%+拖曳光束」「吞噬單體冷卻 6 秒」「暴走狀態 吞噬門檻提升 2x，<b>請記得改說明跟實際效果</b>」</td><td>#644</td><td>✅ 四項全落地，⛔ 零新機制</td></tr>
+<tr><td>「初號機 AT力場應該要有特效 <b>這個之前回報過了啊</b>」</td><td>#650</td><td>⚠️ <b>未落地</b> → 開票：BlockGrant 缺一道特效軸（見下）</td></tr>
+<tr><td>「大廳英雄排行榜改為被選用次數排序」</td><td>#645</td><td>✅ 勝率附帶，⛔ 不用先選英雄</td></tr>
+<tr><td>「hitstop 歸零開關 —— 求順暢為主」</td><td>#646</td><td>✅ 出貨 <b>0</b>，rollback＝調回 1</td></tr>
+<tr><td>「殭屍波的普通殭屍不必畫血條跟陰影 節省效能」</td><td>#647</td><td>✅ 壓掉 60 顆 alpha 圓盤</td></tr>
+<tr><td>「你已經犯過<b>數十次</b>一樣的錯，請你一定要<b>寫成 script 擋住先檢查</b>」</td><td>—</td><td>✅ genguard 進 PreToolUse hook：手改產生器產物<b>當場 exit 2</b></td></tr>
+<tr><td>「什麼時候才會補完<b>球體跟蝗蟲群特效</b> 進度表持續開票更新？」</td><td>#649</td><td>✅ 第 1 批落地（下面那節）＋ 進度表寫在票 body</td></tr>
+<tr><td>「⛔ 44 支等 tpl-periodic-field 內容批 =&gt;<b>在哪？</b>」</td><td>#648</td><td>✅ 清單開票（43 支逐支列名）＋先導驗證</td></tr>
+<tr><td>「戰情版的 對話開票要追到<b>三天前</b>的所有記錄」</td><td>—</td><td>✅ 199 列逐則帳本折進戰情版</td></tr>
+<tr><td>「你給我的 excel 是用什麼排序？」→「沒關係 只要<b>同個英雄順序</b>就好」</td><td>—</td><td>✅ 422 支照技能編號排（英雄分組、槽位 00→01..04→002）</td></tr>
+<tr><td>「3 分鐘出貨 已經實現了嗎」</td><td>—</td><td>⚠️ T0/T0.5（只改內容/設定）<b>已實現 ~1–2 分</b>；動到程式的那條還是 ~4.5 分（剩下的槓桿是 Dockerfile 層序，單獨做）</td></tr>
+</table></div></section>
 <section><p class="eyebrow">的每一句話在哪張票上</p><h2>🧾 逐則對票 · owner 的每一句話在哪張票上</h2><h3>08-18</h3>
 <div class="scroll"><table><tr><th>#</th><th>時間</th><th>owner 說了什麼</th><th>落到哪</th><th>狀態</th></tr>
 <tr><td>1</td><td>03:48</td><td>魔抗百分比要實作，避免數字誤差及過期</td><td>已實作（三張卡真值回寫）</td><td>✅</td></tr>
@@ -571,6 +592,24 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>22:16</td><td>系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3 =&gt; abilityDamage 回 1.0、cooldown 0.4→0.3（皆已帶原話進 owner-knobs）</td><td>#615</td></tr>
 <tr><td>22:14</td><td>手把根本無法從到大廳一路到遊戲回合操作阿</td><td>#634</td></tr>
 <tr><td>23:42</td><td>[重要] 如果工作流跑超過10分鐘，你應該要去看是不會陷入loop了，並記錄如何改善 顯示被哪個人哪招傷害最高 比例分布 並在後台顯示，量測每一回合有沒有單次傷害是哪個角色哪個技能第幾回合 的傷害排名 我如果點了地板作為目標 要有1秒冷卻不能跑去打任何目標（自動攻擊） 讓我可以連續移動不被干擾來達成打帶跑（像是被打不能跟我搶指揮權跑去打人） 另外一個場地的聲音、語音、震動、閃爍等畫面不應該影響到目前場地 純滑鼠操作直接按技能按鈕應該要能二段選擇後施放才對，例如初號機陽離子砲 選人畫面左邊技能說明那邊滑不下去 幻之匕首似乎沒有20%傷害 殭屍王介紹 特殊殭屍結算 太佔螢幕 說明半秒淡出半秒就好…</td><td>#636 #637 #638 #639 #640 #641 #642 #643 #644 #645 #646 #634（16 項逐項開票;5分鐘規則進 CLAUDE.md + ship.mjs 看門狗）</td></tr>
+</table></div>
+<p># 2026-08-24</p>
+<blockquote>⭐ 這張表由 <code>scripts/message-ledger.sh</code> 從 session transcript <b>逐則</b>撈出來對帳，</blockquote>
+<blockquote><code>scripts/ruling.sh</code> 收到裁決時也寫進同一張表。</blockquote>
+<blockquote>表格那一格是<b>截斷</b>過的；⛔ 全文沒有被壓縮取代，它在 <code>ledger-source_temp_*.md</code>。</blockquote>
+<blockquote>票號那一格 ⛔ 不可以留空：對不到票就寫 <code>⏸ 未對票</code>，<code>--check</code> 會紅。</blockquote>
+<div class="scroll"><table><tr><th>時間</th><th>owner 說了什麼（逐字）</th><th>票</th></tr>
+<tr><td>01:23</td><td>幻之匕首似乎沒有20%傷害 =&gt; 目前上架道具都是我重製過的，直接檢查是否實作如說明就好 沒有就補正 （⇒ 對照基準是 owner 的說明文字，⛔ 不是 JASS 原作）</td><td>#641</td></tr>
+<tr><td>00:36</td><td>初號機 AT力場應該要有特效 這個之前回報過了啊</td><td>#650</td></tr>
+<tr><td>00:38</td><td>[重要] 如果工作流跑超過5分鐘，你應該要去看是不會陷入loop了，並記錄如何改善、斷點回報或拆分任務 =&gt; 這應該是 script 吧 請你整理對話開票進 GGD戰情版 跟 GGD平行批次盤 issue 及 技能模板群組 issue 以上都做完並註解 github issues close 3 分鐘出貨 已經實現了嗎</td><td>— 已落地為 <code>scripts/watchdog.sh</code> + <code>ship.mjs</code> 逐 suite 看門狗，並寫進 CLAUDE.md 第零守則⏲️（規則本身不需要票）</td></tr>
+<tr><td>01:04</td><td>戰情版的 對話開票要追到三天前的所有記錄喔</td><td>— 已折進 <code>docs/_release/戰情版-20260824.md</code>（199 列逐則帳本）</td></tr>
+<tr><td>01:10</td><td>你給我的excel是用什麼排序 ?</td><td>— 已回答：照技能編號（英雄分組、槽位 00→01..04→002）</td></tr>
+<tr><td>01:11</td><td>沒關係 只要同個英雄順序就好</td><td>— 確認現況即符合，無需改動</td></tr>
+<tr><td>01:14</td><td>3 分鐘出貨 已經實現了嗎</td><td>— 已回答：T0/T0.5 ~1–2 分已達成；程式路徑 ~4.5 分，剩餘槓桿是 Dockerfile 層序（收斂後單獨做）</td></tr>
+<tr><td>01:20</td><td>循环成因：产生器占有配对中的一边，无论我改哪边下次同步都会被打回来。接下来我会依产生器指示从根源重生成，再把非产生器那一边对齐一次。=&gt; 你已經犯過數十次一樣的錯，請你一定要寫成script擋住先檢查，並且寫到開放守則 &lt;技能模板群組issue&gt; 1~9目前進度到哪？ 幻之匕首似乎沒有20%傷害 ＝&gt; 目前上架道具都是我重製過的，直接檢查是否實作如說明就好 沒有就補正 /goal 請你整理對話開票進 GGD戰情版(md) 跟 GGD平行批次盤 issue 及 技能模板群組 issue 以上都做完並註解 github issues close 才 push note deploy 沒做完以前別問…</td><td>#300 #799</td></tr>
+<tr><td>01:31</td><td>什麼時候才會補完球體跟蝗蟲群特效 進度表持續開票更新？</td><td>#649</td></tr>
+<tr><td>02:22</td><td>please get all back and go on</td><td>— 指示：救回被額度砍斷的三條 lane（已全數落地 <code>90fb4167</code> <code>a9cf7187</code> <code>51abf9b9</code>）</td></tr>
+<tr><td>02:35</td><td>如果我按了某個地板移動過去到目的地前 我是不會被其他東西所吸引 除非嘲諷技能等 就算敵人打我 我也不會被拉走 直到 我走到目的地</td><td>#637</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

@@ -424,6 +424,13 @@ export interface ManualOrderRules {
    * 再長等於「點一下地板就把自動攻擊關掉一輩子」,那是一個看起來像壞掉的值。
    */
   moveOrderNoAggroSec: number;
+  /** GH#637 追加：窗口撐到抵達（出貨 true），⛔ 不是固定秒數。false = 回到秒數。 */
+  moveOrderNoAggroUntilArrival: boolean;
+  /**
+   * GH#652 指令模型。**true（出貨）＝ LoL** —— 沒有下令就不會自己出手；
+   * **false ＝ 輔助** —— 這一版之前的 GGD 行為（站著會自動索敵、被打會自動反擊）。
+   */
+  lolControlModel: boolean;
 }
 
 export interface CombatFeelRules {
@@ -560,6 +567,10 @@ export const DEFAULT_MANUAL_ORDER: ManualOrderRules = Object.freeze({
   leashUnits: 0,
   // owner 2026-08-24 直接給的數字(「要有1秒冷卻」)。
   moveOrderNoAggroSec: 1.0,
+  // ⭐ owner 2026-08-24「直到 我走到目的地」⇒ 預設就是新的那一邊（第〇·六守則）。
+  moveOrderNoAggroUntilArrival: true,
+  // ⭐ owner 2026-08-24:「現在玩 LOL 人數最多，最容易被接受」⇒ 預設就是 LoL 語意。
+  lolControlModel: true,
 });
 
 /**
@@ -749,6 +760,14 @@ export function normalizeManualOrderRules(raw: unknown): ManualOrderRules {
       0,
       10,
     ),
+    moveOrderNoAggroUntilArrival:
+      typeof r.moveOrderNoAggroUntilArrival === "boolean"
+        ? r.moveOrderNoAggroUntilArrival
+        : DEFAULT_MANUAL_ORDER.moveOrderNoAggroUntilArrival,
+    lolControlModel:
+      typeof r.lolControlModel === "boolean"
+        ? r.lolControlModel
+        : DEFAULT_MANUAL_ORDER.lolControlModel,
   });
 }
 

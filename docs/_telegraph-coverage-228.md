@@ -8,20 +8,20 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | verdict | cells | meaning |
 | --- | ---: | --- |
-| ✅ OK | 221 | shape derived from the ability's own authored data |
+| ✅ OK | 220 | shape derived from the ability's own authored data |
 | 🟡 AMBIGUOUS | 16 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
 | ❌ MISSING | 0 | no derivable shape — **fails the test** |
-| 🟣 PASSIVE | 56 | permanent WC3 passive, never cast, nothing to warn about |
+| 🟣 PASSIVE | 57 | permanent WC3 passive, never cast, nothing to warn about |
 
-**237 / 237 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
+**236 / 236 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
 
 ## By castType
 
 | castType | cells | shape language |
 | --- | ---: | --- |
-| `self` | 95 | self marker at the caster's feet |
+| `self` | 94 | self marker at the caster's feet |
 | `targeted` | 72 | lock (arc at the victim + tether to the caster) — walking does not help |
-| `—` | 56 | not cast |
+| `—` | 57 | not cast |
 | `ground` | 53 | circle — the real `enemiesInCircle` disc; you can walk out. ⭐ WITH a `damageLine` node: line — the capsule the damage query tests (step sideways) |
 | `skillshot` | 15 | line — the projectile's corridor; step sideways |
 | `dash` | 2 | line — the sweep of the dash body |
@@ -32,7 +32,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | --- | --- | --- | --- | --- | --- | --- |
 | 蟬在叫人壞掉 - 龍宮禮奈 `godie-e001` | PASSIVE | 22-00 嗚鎖打! | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 蟬在叫人壞掉 - 龍宮禮奈 `godie-e001` | Q | 22-01 鬼隱之擊 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 蟬在叫人壞掉 - 龍宮禮奈 `godie-e001` | W | 22-02 染血的柴刀 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 蟬在叫人壞掉 - 龍宮禮奈 `godie-e001` | W | 22-02 染血的柴刀 | `—` | — | 🟣 PASSIVE | never cast |
 | 蟬在叫人壞掉 - 龍宮禮奈 `godie-e001` | E | 22-03 五吋釘 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 蟬在叫人壞掉 - 龍宮禮奈 `godie-e001` | R | 22-04 雛見澤症候群L5 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 蟬在叫人壞掉 - 龍宮禮奈 `godie-e001` | EX | 22-002 月光下的決鬥者 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |

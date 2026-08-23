@@ -111,18 +111,45 @@ def targets(tool: str, ti: dict, cwd: Path) -> list[Path]:
 #    產生器自己寫檔走 python/node 的檔案 API,⛔ 不經過 Write/Edit/shell 重導。
 #    逃生口:GGD_GENGUARD_OFF=1（用過要在 commit 訊息裡說為什麼）。
 
-def _generator_owner(p: Path) -> str | None:
+#: ⭐⭐ **正規化器 ≠ 作者**（2026-08-24 主 session 裁決，L6 lane 點名要的那一條）。
+#:
+#: sync-io.json 是**量出來的**寫入表,所以它只知道「誰寫過這個檔」,⛔ 不知道
+#: 「誰**擁有**這個檔」。而有一族步驟是**就地改欄位**的正規化器 ——
+#: `tiers:apply` 讀 530 個檔、寫 401 個檔,它做的事情是把五級距重新解析回每一份
+#: 技能文件,⛔ 它**不產生**那些檔案(檔案裡 99% 的內容不是它寫的)。
+#:
+#: ⛔ 把它當成作者的後果是**封死唯一的合法路**:出貨的 401 支技能文件裡有 39 支
+#: 是直接編 JSON 的(沒有 `tools/skill-remake/heroes/*.py` 來源),於是
+#: 「改來源再重生成」對它們**不存在** —— GH#648 的內容批就是卡在這裡。
+#:
+#: ⇒ 判準改成:**只有正規化器認領** ⇒ 警告(放行);**有作者認領** ⇒ 照舊擋下。
+#: ⚠️ 放行之後**仍然要跑一次那個正規化器**,不然級距欄位會與新內容不一致 ——
+#: 訊息會這麼說。嚴格模式 `GGD_GENGUARD_NORMALIZER_STRICT=1` 可以把它變回擋。
+NORMALIZER_STEPS = frozenset({"tiers:apply", "apconv:build", "apdmg:build", "prose:apply"})
+
+
+def _generator_owner(p: Path) -> tuple[str, bool] | None:
+    """`(步驟名, 是不是只有正規化器認領)`;沒有人認領回 None。"""
     try:
         io_path = REPO / "tools/parallel-gates/sync-io.json"
         data = json.loads(io_path.read_text(encoding="utf-8"))
         rel = str(p.resolve()).replace(str(REPO) + "/", "")
+        claimants: list[str] = []
         for step in data.get("steps", []):
             for w in step.get("writes", []):
                 if rel == w or (w.endswith("/") and rel.startswith(w)):
-                    return step.get("name")
+                    name = step.get("name") or "?"
+                    if name not in claimants:
+                        claimants.append(name)
+                    break
+        if not claimants:
+            return None
+        authors = [c for c in claimants if c not in NORMALIZER_STEPS]
+        if authors:
+            return (authors[0], False)
+        return (claimants[0], True)
     except Exception:
         return None  # 表讀不到 ⇒ 不擋(⛔ hook 自身故障不可以癱瘓所有編輯)
-    return None
 
 
 def main() -> int:
@@ -136,9 +163,21 @@ def main() -> int:
     # 🚫 genguard:只攔 Write/Edit(手改)與 Bash 重導 —— 產生器不走這些路
     import os as _os
     if _os.environ.get("GGD_GENGUARD_OFF") != "1":
+        strict_norm = _os.environ.get("GGD_GENGUARD_NORMALIZER_STRICT") == "1"
         for p in targets(tool, ti, cwd):
-            owner = _generator_owner(p)
-            if owner:
+            hit = _generator_owner(p)
+            if hit:
+                owner, only_normalizer = hit
+                if only_normalizer and not strict_norm:
+                    # ⭐ 只有**正規化器**認領 ⇒ 這個檔不是它產生的,它只是就地改欄位。
+                    #    放行,但要求改完跑一次那支(不然級距欄位與新內容不一致)。
+                    print(
+                        f"⚠️ genguard:{p} 會被正規化器 **{owner}** 就地改欄位,"
+                        f"⛔ 但它不是那支產生器的產物 ⇒ **放行**。\n"
+                        f"   ⚠️ 改完請跑一次 `pnpm {owner}`,讓級距/換算欄位跟著新內容重算。",
+                        file=sys.stderr,
+                    )
+                    continue
                 print(
                     f"🚫 genguard:{p} 是產生器 **{owner}** 的產物 —— 手改會在下一次 "
                     f"skills:sync 被打回來(2026-08-23 一晚中三次的錯)。\n"

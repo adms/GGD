@@ -18,7 +18,9 @@
   "manualOrder": {
     "survivesGroundMove": true,
     "leashUnits": 0,
-    "moveOrderNoAggroSec": 1.0
+    "moveOrderNoAggroSec": 1.0,
+    "moveOrderNoAggroUntilArrival": true,
+    "lolControlModel": true
   },
   "autoEngage": {
     "enabled": true,

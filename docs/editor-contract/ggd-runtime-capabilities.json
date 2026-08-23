@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "f27f2c03",
+  "fingerprint": "a0385f89",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -145,6 +145,7 @@
     "applyTo",
     "arriveSoundKey",
     "at",
+    "attach",
     "attackType",
     "attr",
     "attributes",
