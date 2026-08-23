@@ -1449,6 +1449,63 @@ const FAMILIES: Readonly<Record<string, Family>> = {
     };
   },
 
+  // 19. 圓周噴發（大冰塊）—— 同一具模型等分成 `count` 具，從施法者身上**同時**朝
+  //     四面八方推出去，每一具各自穿透式地掃過自己那條線。
+  //     42-04 世界終結（A05D，十二道寒冰）是 exemplar；owner 2026-08-23 逐字點名
+  //     「依文世界終結(圓周噴發大冰塊)」為三支驗收技能之一。
+  //
+  // ⭐ 它與上面那一族（翻滾光束）**共用同一個機制**，差別只有兩個參數：`path`
+  //    （`radial` vs `forward`）與 `count`（等分幾具）。等分角度讀的是引擎共用的
+  //    單位旋轉常數表（`sim/effects/spawnModelFx.ts`），⛔ 沒有第二份三角函式，
+  //    也⛔ 沒有第二個 effect kind —— 第〇·五守則的形狀：機制在引擎、技能是資料。
+  //
+  // ⭐ 這一族存在的**第二個**理由與 beam-roll 逐字相同，而且它是硬的：
+  //    `content/ability-templates/tpl-radial-burst.json` 同時是 `spawnModelFx.preset`
+  //    的**共用表**（第〇·四守則），而 `editorCapabilities.test.ts` 明文要求
+  //    「被出貨內容真的引用的家族必須展開得出來」。⇒ 出貨內容一引用它，這個家族就
+  //    必須存在、必須進 `FAMILY_PROBE_LIST`。⛔ 不可以只放一張表。
+  //
+  // ⚠️ `count` 是**傷害次數的乘數**，⛔ 不是一個純視覺的數字：十二具各掃一次 =
+  //    卡面承諾的「隨機12次區域傷害」。把它調小，那一支的總輸出跟著掉。
+  //
+  // ⚠️ `castType: "skillshot"` 而不是 `"ground"`：這一族從**施法者身上**往外炸，
+  //    ⛔ 沒有落點可以瞄（`path:"radial"` 根本不讀目標點）。出貨的 42-04 兩份抄本
+  //    也都是 `skillshot`。
+  "radial-burst": (t, p) => {
+    const path = str(t, p, "path");
+    if (path !== "forward" && path !== "toTarget" && path !== "orbit" && path !== "radial") {
+      throw new ExpandError(`template ${t.id}: param "path"="${path}" 不是合法的路徑`);
+    }
+    return {
+      castType: "skillshot",
+      targetsEnemies: true,
+      ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+      effects: [
+        {
+          kind: "spawnModelFx",
+          shape: "single",
+          modelKey: docRef(t, p, "modelKey"),
+          path,
+          speed: num(t, p, "speed"),
+          distance: num(t, p, "distance"),
+          count: num(t, p, "count"),
+          ...(has(t, p, "spinDegPerSec") ? { spinDegPerSec: num(t, p, "spinDegPerSec") } : {}),
+          ...(has(t, p, "scale") ? { scale: num(t, p, "scale") } : {}),
+          // ⭐「沿路掃到人」走**級距**（damageTier），⛔ 這裡不算出數字（第〇·四守則）。
+          onTouch: [
+            damageEffect(damageType(t, p, "damageType"), {
+              damageTier: str(t, p, "touchDamageTier"),
+            } as unknown as Scaling),
+          ],
+          touchRadius: num(t, p, "touchRadius"),
+          ...(has(t, p, "touchSide")
+            ? { touchSide: str(t, p, "touchSide") as "enemies" | "allies" }
+            : {}),
+        },
+      ],
+    };
+  },
+
   "mark-stacks": (t, p) => {
     const lethalOn = str(t, p, "lethalMode") === "save";
     let lethal: MarkLethalRule | undefined;

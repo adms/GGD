@@ -19,28 +19,140 @@
  * （`VfxSystem.playCastVfx` 的四級階梯 + `primitiveFallbackFor`），因為家族文件是
  * 產生內容，`content:build` 沒跑就解不出來。⭐ 真正該問的是**這一次施法會播什麼**，
  * 也就是 `w3xArtFor()` 解出來的那一份。
+ *
+ * ── ⭐ 2026-08-23：名單改成**與另一份驗收產物逐字同一份**，而且全部是本體 ──────
+ *
+ * owner 2026-08-23 逐字（三支動畫特效，也是這一批的題目）：
+ * > 「Saber約束勝利之劍(翻滾光束), 依文世界終結(圓周噴發大冰塊), 莉娜龍破斬
+ * >  (一直線火球衝擊波後目的地火焰大爆炸) 都是動畫特效」
+ *
+ * ⛔ 在此之前**兩份驗收產物指著不同的文件**，而「驗收過了」這句話因此沒有意義：
+ *   · 這一份： `godie-hjai.e` / `godie-n003.r` / `godie-hart.r`
+ *   · `tools/skill-audit/audit.py` 的 `CALIBRATION`：`godie-h020.e` / `godie-h020.r` /
+ *     `godie-n01g.r` / `godie-hart.r` —— ⚠️ **前三個沒有一個在白名單上**
+ *     （`godie-h020` 逐字寫在 `roster.json` 的 `retiredChampions` 裡）。
+ * ⇒ 兩邊現在都是 `godie-e002.e` / `godie-n003.r` / `godie-hjai.e`。
+ *
+ * ⚠️ 拿掉的那一支知識不會消失：01-04 超究武神霸斬 的本體是 `godie-hart.r`，
+ * 它**本來就是本體**（只是不在 owner 這一次點名的三支裡），而它的特效文件仍然被
+ * `w3xAbilityArt.test.ts` **逐列**驗（那一支跑遍每一列晉升，⛔ 不是只驗這三支）。
+ *
+ * ── ⭐ 第三條斷言：**畫面上真的有東西** ────────────────────────────────────
+ * 前兩條問的都是「文件對不對」，而 2026-08-23 量到的缺陷前兩條**全部是綠的**：
+ * 本體 `godie-n003.r` 的 `spawnModelFx` 與 `floatingText` 都是 **0**，圓周噴發的
+ * 大冰塊只長在變身態 `godie-n01g.r` 上 ⇒ ⭐ **玩家選依文潔琳按下 R 什麼都看不到，
+ * 要變身之後才有。** 身分對、特效文件對、schema 對、`content:build` 全綠（第一·五
+ * 守則的形狀）。⇒ 第三條跑**出貨的**技能（`ContentLoader` + `registerAll` + 真的
+ * `SimWorld` + 真的事件，⛔ 不是手寫夾具＝失敗形態⑤），只問兩件事：
+ * **有模型出場嗎、有浮動文字嗎**。
+ *
+ * ⛔ 一個座標、一個秒數、一個出貨數值都不抄（第二守則：驗機制不驗數字）——
+ * 「幾具冰塊」只斷言 **> 1**，⛔ 不是 12：等分有沒有發生是機制，十二是內容值。
+ *
+ * ── 突變紀錄（一批一條，挑最承重的那一行）───────────────────────────────────
+ *  · ⭐ 承重線 —— `content/modelFxPreset.ts` 的 `PRESET_FIELDS` 拿掉 `"count"`
+ *    （＝引用模板的節點補不到等分數，`spawnModelFx` 退化成**一具**，而畫面上
+ *    「一顆大冰塊」與「十二顆」都看得到東西 ⇒ 前兩條與 `modelFxSpawn` 那條全綠）
+ *      → 紅：「42-04 世界終結 只生出一具模型 —— 圓周噴發退化成一具:
+ *        expected 1 to be greater than 1」
  */
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeAll } from "vitest";
 // GH#384 —— 逐技能特效綁定住在 content/；⛔ 少了這一行從 repo 根跑單檔會看到空的綁定。
 import "./shippedAbilityArt.testkit";
 import { readFileSync, existsSync } from "node:fs";
+import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { zVfxDoc } from "@ggd/shared/content";
+import { ContentLoader } from "@ggd/shared/content/loader";
+import { FsContentSource } from "@ggd/shared/content/node/FsContentSource";
+import {
+  Arenas,
+  Configs,
+  Models,
+  StatusEffects,
+  VfxDefs,
+  registerAll,
+} from "@ggd/shared/content/registries";
+import {
+  Abilities,
+  Augments,
+  Champions,
+  Items,
+  LootTables,
+  Projectiles,
+} from "@ggd/shared/sim/content/registry";
+import { SimWorld } from "@ggd/shared/sim/SimWorld";
+import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
+import { spawnChampion } from "@ggd/shared/sim/spawnChampion";
+import { runEffects } from "@ggd/shared/sim/effects/effectRunner";
+import type { EffectContext, EffectDef } from "@ggd/shared/sim/effects/effect";
+import type { ModelFxSpawnEvent } from "@ggd/shared/sim/effects/spawnModelFx";
+import { asSeatId, asTeamId, type AbilityId, type ChampionId } from "@ggd/shared/ids";
 import { w3xArtFor } from "./w3xAbilityArt";
 
 const root = (p: string): string => fileURLToPath(new URL(`../../../../../${p}`, import.meta.url));
+const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../../content");
+const C = SKELETON_ARENA.zones[0]!.center;
 
-/** owner 逐字點名的三支。`code` 是 w3x 編號（JASS 對照的 join key，⛔ 不可浮動）。 */
+/**
+ * owner 逐字點名的三支。`code` 是 w3x 編號（JASS 對照的 join key，⛔ 不可浮動）。
+ * ⭐ 三支**全部是本體**，⛔ 沒有一支是變身態或下架抄本 —— 見檔頭。
+ */
 const ACCEPTANCE = [
-  { id: "godie-hjai.e", code: "04-03", label: "莉娜因巴斯 龍破斬" },
+  { id: "godie-e002.e", code: "20-03", label: "Saber 約束與勝利之劍" },
   { id: "godie-n003.r", code: "42-04", label: "依文潔琳 世界終結" },
-  { id: "godie-hart.r", code: "01-04", label: "克勞德 超究武神霸斬" },
+  { id: "godie-hjai.e", code: "04-03", label: "莉娜因巴斯 龍破斬" },
 ] as const;
 
 const whitelist = new Set<string>(
   (JSON.parse(readFileSync(root("data/curation/whitelist.json"), "utf8")) as { champions: string[] })
     .champions,
 );
+
+beforeAll(async () => {
+  for (const r of [Champions, Abilities, Items, Augments, Projectiles, LootTables]) r.clear();
+  for (const r of [Arenas, Configs, Models, VfxDefs, StatusEffects]) r.clear();
+  registerAll((await new ContentLoader(new FsContentSource(CONTENT)).load()).store);
+});
+
+/** 施放**出貨的**那一支，回傳這一次施放送上線的每一則事件（含延遲那幾則）。 */
+function castShipped(id: string): { type: string; data: Record<string, unknown> }[] {
+  const world = new SimWorld(SKELETON_ARENA, 1);
+  const caster = spawnChampion(world, {
+    championId: id.split(".")[0] as ChampionId,
+    seatId: asSeatId(0),
+    teamId: asTeamId(0),
+    pos: { x: C.x, z: C.z },
+    zone: 0,
+  });
+  const body = spawnChampion(world, {
+    championId: id.split(".")[0] as ChampionId,
+    seatId: asSeatId(1),
+    teamId: asTeamId(1),
+    pos: { x: C.x + 3, z: C.z },
+    zone: 0,
+  });
+  world.step(new Map());
+  world.transform.get(caster)!.facing = { x: 1, z: 0 };
+  const def = Abilities.tryGet(id as AbilityId);
+  expect(def, `${id} 不在註冊表裡 —— 標本被改名或內容載入失敗了`).toBeDefined();
+  runEffects((def!.effects ?? []) as EffectDef[], {
+    world,
+    caster,
+    rank: 1,
+    targets: [body],
+    origin: `ability:${id}`,
+    rng: world.rng,
+  } satisfies EffectContext);
+  // ⚠️ `step()` 第一行清空 `events`，所以每一 tick 都要當場收走。延遲那幾句台詞
+  //    （42-04 的四句排在 0.35 / 0.7 / 1.05 秒）要跑完才收得到。
+  const out = [...world.events];
+  for (let t = 0; t < 60; t++) {
+    world.step(new Map());
+    out.push(...world.events);
+  }
+  return out;
+}
 
 describe("owner 驗收的三支技能特效", () => {
   it("量的是白名單上那一份抄本，而且編號沒被換掉", () => {
@@ -77,6 +189,25 @@ describe("owner 驗收的三支技能特效", () => {
         expect(existsSync(p), `${label}: ${docId} 這份 vfx 文件不存在`).toBe(true);
         expect(zVfxDoc.parse(JSON.parse(readFileSync(p, "utf8"))).id).toBe(docId);
       }
+    }
+  });
+
+  it("★ 每一支放出來，畫面上真的有模型出場、也真的有特效文字", () => {
+    for (const { id, label } of ACCEPTANCE) {
+      const events = castShipped(id);
+      const models = events.filter((e) => e.type === "modelFxSpawn");
+      expect(
+        models.length,
+        `${label}: 一具模型都沒出場 —— 這一招在本體身上是看不見的（${id}）`,
+      ).toBeGreaterThan(0);
+      expect(
+        events.filter((e) => e.type === "floatingText").length,
+        `${label}: 一個特效文字都沒有 —— owner 逐字要的「別忘了還有特效文字」（${id}）`,
+      ).toBeGreaterThan(0);
+      // ⭐ 圓周噴發是「一圈」，⛔ 不是一具。等分數本身是內容值，所以只問 **> 1**。
+      if (id !== "godie-n003.r") continue;
+      const inst = (models[0]!.data as unknown as ModelFxSpawnEvent).instances;
+      expect(inst.length, `${label}: 只生出一具模型 —— 圓周噴發退化成一具`).toBeGreaterThan(1);
     }
   });
 });

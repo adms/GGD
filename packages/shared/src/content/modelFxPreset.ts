@@ -1,5 +1,9 @@
 /**
- * ⭐【橫放光束砲】的**特效模板**解析器 —— `spawnModelFx.preset` → 演出幾何。
+ * ⭐【移動模型特效】的**特效模板**解析器 —— `spawnModelFx.preset` → 演出幾何。
+ *
+ * ⚠️ 出貨的表現在有**兩張**：`tpl-beam-roll`（橫放光束砲，四支經典）與
+ * `tpl-radial-burst`（圓周噴發大冰塊，42-04 世界終結的本體與變身態）。
+ * 這支解析器對它們**一視同仁** —— ⛔ 沒有任何一行認得表的名字（第〇·五守則）。
  *
  * owner 2026-08-23（逐字）：
  * > 「**最基本的 初號機陽離子砲、SABER約束勝利之劍、小呆龍鬥氣砲、悟空龜派氣功
@@ -31,12 +35,28 @@
  */
 import type { TemplateDoc } from "./schema/template";
 
-/** 這一格由誰補：模板 `params` 的鍵 → 效果節點上的欄位（同名，⛔ 不做重新命名）。 */
+/**
+ * 這一格由誰補：模板 `params` 的鍵 → 效果節點上的欄位（同名，⛔ 不做重新命名）。
+ *
+ * ⚠️ `count`（等分幾具）在 2026-08-23 之前**不在這張表上**，而那讓
+ * `tpl-radial-burst`「只能被抄不能被引用」：一個 `path:"radial"` 的節點少了 `count`
+ * 就退化成一具（`zSpawnModelFx.refine` 的原話：「缺了它整組等分退化成 1 具，而那
+ * 看起來就跟 `path:"forward"` 一模一樣」），所以每一支圓周噴發只能把十二這個數字
+ * **再抄一份**進自己的 JSON —— 第〇·四守則說的第二個住處。
+ *
+ * ⚠️ 補得進去是因為 `path` 本身也在這張表上：refine 只在**節點自己寫下**
+ * `path:"radial"|"orbit"` 時才要求 `count`，而引用模板的節點兩格都留白 ⇒ 載入時
+ * 一起補上，⛔ 沒有一格是「填了卻沒有人讀」。
+ *
+ * ⚠️ 模板沒有這一格時（`tpl-beam-roll` 就沒有）`slotDefault` 回 `undefined`，
+ * 節點逐位元不變 —— ⛔ 加進這張表不會讓直線光束長出一個讀不到的 `count`。
+ */
 const PRESET_FIELDS = [
   "modelKey",
   "path",
   "speed",
   "distance",
+  "count",
   "spinDegPerSec",
   "scale",
 ] as const;

@@ -204,11 +204,13 @@
         60.0,
         60.0
       ],
+      "cooldownTier": "極大",
       "manaCost": [
         576.0,
         576.0,
         576.0
       ],
+      "manaCostTier": "大",
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -309,13 +311,7 @@
         {
           "kind": "spawnModelFx",
           "shape": "single",
-          "modelKey": "imported.frostnova",
-          "path": "radial",
-          "speed": 6.0,
-          "distance": 4.5,
-          "count": 12,
-          "spinDegPerSec": 180.0,
-          "scale": 3.0,
+          "preset": "tpl-radial-burst",
           "onArrive": [
             {
               "kind": "screenShake",
@@ -339,11 +335,10 @@
               "duration": 2.0,
               "moveSpeedMult": 0.5
             }
-          ],
-          "touchRadius": 2.5,
-          "touchSide": "enemies"
+          ]
         }
       ],
+      "targetsEnemies": true,
       "vfxKey": "fx.w3x.locust.frostnova.p01",
       "castTimeSec": 1.233,
       "hitFeel": {
@@ -361,9 +356,7 @@
         "camKick": 0.466
       },
       "rangeTier": "大",
-      "range": 8,
-      "cooldownTier": "極大",
-      "manaCostTier": "大"
+      "range": 8
     }
   },
   "skillOrder": [

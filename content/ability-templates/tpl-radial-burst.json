@@ -1,14 +1,24 @@
 {
   "id": "tpl-radial-burst",
   "schema": "template@1",
-  "name": "圓周噴發",
-  "description": "同一具模型等分成 count 個實例，從施法者身上同時朝四面八方推出去，每一具各自穿透式地掃人。等分方向讀的是引擎共用的單位旋轉常數表，⛔ 沒有第二份三角函式。設計正典範例：42-04 世界終結的十二道寒冰。⚠️ 傷害走**級距**（damageTier），⛔ 這裡不填算好的數字。⚠️ count 是**傷害次數的乘數**：12 具各掃一次 = 卡面承諾的 12 次，⛔ 不是 1 次。",
+  "name": "圓周噴發（大冰塊）",
+  "description": "⭐ 這一份同時是兩件事。①【行為模板】同一具帶骨架的 3D 模型等分成 count 具，從施法者身上同時朝四面八方推出去，每一具各自穿透式地掃過自己那條線（同一個人被同一具只掃一次）。等分方向讀的是引擎共用的單位旋轉常數表，⛔ 沒有第二份三角函式。②【特效預設表】`spawnModelFx` 的 `preset` 欄位**逐格讀這裡的 `params[*].default`**（`content/modelFxPreset.ts`，在載入時解析）—— 也就是說「一圈噴發的大冰塊長什麼樣」只住在這一份文件裡，⛔ 不是散在每一支技能的 JSON 節點上。改這裡的一個數字，42-04 世界終結的**本體與變身態**一起變。設計正典範例：42-04 世界終結的十二道寒冰。⚠️ 傷害走**級距**（damageTier），⛔ 這裡不填算好的數字；速度／距離／自轉／縮放／等分數是**演出幾何**，引擎的 spawnModelFx 只收數字、沒有對應的級距表，所以它們是本模板唯一的字面值欄位。⚠️ count 是**傷害次數的乘數**：12 具各掃一次 = 卡面承諾的 12 次，⛔ 不是 1 次。⚠️ `preset` **只供演出幾何**，⛔ 不自動塞傷害：那會替每一支引用它的技能各加一份沒有人裁決過的傷害。要沿路掃傷害的技能自己寫 `onTouch`。",
   "family": "radial-burst",
-  "status": "draft",
+  "status": "enabled",
   "params": {
     "modelKey": {
       "type": "docRef",
       "default": "imported.frostnova"
+    },
+    "path": {
+      "type": "enum",
+      "values": [
+        "forward",
+        "toTarget",
+        "orbit",
+        "radial"
+      ],
+      "default": "radial"
     },
     "count": {
       "type": "number",
@@ -49,19 +59,38 @@
       "min": 0.5,
       "max": 12
     },
+    "touchSide": {
+      "type": "enum",
+      "values": [
+        "enemies",
+        "allies"
+      ],
+      "default": "enemies",
+      "optional": true
+    },
     "touchDamageTier": {
       "type": "enum",
-      "values": ["極小", "小", "中", "大", "極大"],
+      "values": [
+        "極小",
+        "小",
+        "中",
+        "大",
+        "極大"
+      ],
       "default": "極小"
     },
     "damageType": {
       "type": "enum",
-      "values": ["magic", "physical", "true"],
+      "values": [
+        "magic",
+        "physical",
+        "true"
+      ],
       "default": "magic"
     },
     "castTimeSec": {
       "type": "number",
-      "default": 0,
+      "default": 1.233,
       "min": 0,
       "max": 5,
       "unit": "s",
