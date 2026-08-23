@@ -1369,6 +1369,80 @@
    "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> volume +2.30 dB -> libmp3lame 192 kbps CBR mono",
    "suggestedGain": 0.6,
    "gainAnchor": "basicAttackHit / sfx/fx/thud.mp3"
+  },
+  {
+   "file": "zombie-roar.mp3",
+   "sourceFile": "zombie-voice3.mp3",
+   "sourcePage": "https://soundeffect-lab.info/sound/battle/battle2.html",
+   "sourceUrl": "https://soundeffect-lab.info/sound/battle/mp3/zombie-voice3.mp3",
+   "sourceTitle": "ゾンビの声3",
+   "sourceDesc": "動物的",
+   "sourceBytes": 42004,
+   "sourceCategory": "戦闘 / ホラー",
+   "category": "magic",
+   "ggdEvent": "zombieRoar",
+   "note": "wave4（2026-08-23）—— 殭屍王 [leap吸血] 的**咆哮**。owner 的規格逐字：「跳躍前播放**殭屍咆哮音效**全畫面變黑一秒漸變回復正常」。ホラー 區三支 ゾンビの声 裡取 3（サイトの説明「動物的」= 獣の咆哮に最も近い）；1 と 2 はうめき声寄りで咆哮にならない。綁在 vfx-families.json 的 `abilities['godie-zombieking.passive'].soundLaunch`（騎 abilityCast）。",
+   "pre": {
+    "sampleRate": 44100,
+    "channels": 2,
+    "durationSec": 1.696,
+    "meanDb": -22.4,
+    "peakDb": -6.6
+   },
+   "post": {
+    "codec": "mp3",
+    "sampleRate": 44100,
+    "channels": 1,
+    "durationSec": 1.522,
+    "bitRate": 192000,
+    "meanDb": -17.9,
+    "peakDb": -2.9,
+    "bytes": 38287
+   },
+   "gainAppliedDb": 1.4,
+   "normalisation": "peak -3.0 dBFS (matches sfx/fx/*.wav)",
+   "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> volume +1.40 dB -> libmp3lame 192 kbps CBR mono",
+   "suggestedGain": 1.23,
+   "gainAnchor": "bossHorror / sfx/fx/boss-horror.mp3",
+   "shippedGain": 0.95,
+   "shippedGainNote": "audio-map 那一格是 0.95，⛔ 不是 suggestedGain 的 1.23 —— 因為 vfx-families 的 `abilities['godie-zombieking.passive'].soundGain` 已經是 **1.3**（出貨值，⛔ 這一批沒有動它）。0.95 × 1.3 = 1.235 ≈ 等響度錨點。⇒ 改那一格之前先看這裡，⛔ 不要把兩層各自當成全部。"
+  },
+  {
+   "file": "zombie-bite.mp3",
+   "sourceFile": "zombie-beat1.mp3",
+   "sourcePage": "https://soundeffect-lab.info/sound/battle/battle2.html",
+   "sourceUrl": "https://soundeffect-lab.info/sound/battle/mp3/zombie-beat1.mp3",
+   "sourceTitle": "ゾンビに体をえぐられる",
+   "sourceDesc": "グロテスクなシーン",
+   "sourceBytes": 30528,
+   "sourceCategory": "戦闘 / ホラー",
+   "category": "magic",
+   "ggdEvent": "zombieBite",
+   "note": "wave4（2026-08-23）—— 殭屍王 [leap吸血] 的**撕咬**。owner 的規格逐字：「跳躍後播放**殭屍撕咬音效**跟持續大量範圍噴血特效」。同區的『ゾンビの食事』(zombie-meal1) 是 18.4 秒的**咀嚼床**，落地那一瞬間的一口咬下去要的是 1.2 秒的『えぐられる』。綁在 `abilities['godie-zombieking.passive'].soundImpact`（騎落地那一發 damage）。",
+   "pre": {
+    "sampleRate": 48000,
+    "channels": 2,
+    "durationSec": 1.213,
+    "meanDb": -20.9,
+    "peakDb": -6.5
+   },
+   "post": {
+    "codec": "mp3",
+    "sampleRate": 44100,
+    "channels": 1,
+    "durationSec": 1.196,
+    "bitRate": 192000,
+    "meanDb": -17.8,
+    "peakDb": -3.0,
+    "bytes": 30137
+   },
+   "gainAppliedDb": 1.4,
+   "normalisation": "peak -3.0 dBFS (matches sfx/fx/*.wav)",
+   "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> volume +1.40 dB -> libmp3lame 192 kbps CBR mono",
+   "suggestedGain": 0.92,
+   "gainAnchor": "hit-heavy / sfx/fx/hit-heavy.mp3（它就是被換掉的那一個替身）",
+   "shippedGain": 0.71,
+   "shippedGainNote": "0.71 × 1.3（ability soundGain）= 0.923 ≈ suggestedGain。⚠️ `maxConcurrent: 2` / `cooldownMs: 200` 是必要的：落地圈 `landRadius 2.5` 會對圈內每一個目標各發一顆 damage ⇒ 沒有 gate 的話一次落地會疊好幾口咬。"
   }
  ]
 }

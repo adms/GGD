@@ -1321,6 +1321,22 @@
       "cooldownMs": 4000,
       "maxConcurrent": 1
     },
+    "zombieRoar": {
+      "files": [
+        "assets/audio/sfx/lab/zombie-roar.mp3"
+      ],
+      "gain": 0.95,
+      "cooldownMs": 2000,
+      "maxConcurrent": 1
+    },
+    "zombieBite": {
+      "files": [
+        "assets/audio/sfx/lab/zombie-bite.mp3"
+      ],
+      "gain": 0.71,
+      "cooldownMs": 200,
+      "maxConcurrent": 2
+    },
     "wc3.ancestralspirit": {
       "files": [
         "assets/audio/wc3/ancestralspirit.wav"

@@ -1139,7 +1139,7 @@ code path plays them; every row below says which is which, and the in-game
   no video that showcases the sound effects one by one (a normal gameplay
   trailer is fine).
 
-### Usage ledger — SFX (`audio/sfx/lab/`, 46 clips)
+### Usage ledger — SFX (`audio/sfx/lab/`, 48 clips)
 
 | # | staged file | 原始素材（効果音ラボ 標題 / 檔名） | source page | GGD 用途 | audio-map event | processing | dur / size |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -1190,10 +1190,12 @@ code path plays them; every row below says which is which, and the in-game
 | 41 | `reviveChannel.mp3` | オーラ1 / `aura1.mp3` | https://soundeffect-lab.info/sound/battle/mp3/aura1.mp3 | 隊友復活詠唱進行中（循環） | `reviveChannel` | 未記錄（ledger 未載明處理步驟） | — / 223 KB |
 | 42 | `reviveComplete.mp3` | 回復魔法4 / `magic-cure4.mp3` | https://soundeffect-lab.info/sound/battle/mp3/magic-cure4.mp3 | 復活完成 | `reviveComplete` | 未記錄（ledger 未載明處理步驟） | — / 40 KB |
 | 43 | `respawn.mp3` | ニュッ1 / `nyu1.mp3` | https://soundeffect-lab.info/sound/anime/mp3/nyu1.mp3 | 重生、重新進場 | `respawn` | 未記錄（ledger 未載明處理步驟） | — / 7 KB |
+| 44 | `zombie-roar.mp3` | ゾンビの声3 / `zombie-voice3.mp3` | https://soundeffect-lab.info/sound/battle/mp3/zombie-voice3.mp3 | 殭屍王 [leap吸血] 起跳前的咆哮（全畫面轉黑那一秒） | `zombieRoar` | 單聲道 44.1 kHz、去頭尾靜音、+1.40 dB → MP3 192k | 1.52 s / 37 KB |
+| 45 | `zombie-bite.mp3` | ゾンビに体をえぐられる / `zombie-beat1.mp3` | https://soundeffect-lab.info/sound/battle/mp3/zombie-beat1.mp3 | 殭屍王 [leap吸血] 落地咬下去的那一口 | `zombieBite` | 單聲道 44.1 kHz、去頭尾靜音、+1.40 dB → MP3 192k | 1.20 s / 29 KB |
 | | **環境音** | | | | | | |
-| 44 | `fireRingLoop.mp3` | たき火 / `fire1.mp3` | https://soundeffect-lab.info/sound/environment/mp3/fire1.mp3 | 火環收縮的燃燒床音（循環） | `fireRingLoop` | 未記錄（ledger 未載明處理步驟） | — / 1412 KB |
-| 45 | `arenaAmbience.mp3` | 風に揺れる草木1 / 原始檔名未留存 | https://soundeffect-lab.info/sound/environment/ （僅頁面層級來源，原始檔名未留存） | 競技場環境音床（循環） | `arenaAmbience` | 未記錄（ledger 未載明處理步驟） | — / 890 KB |
-| 46 | `merchantAmbience.mp3` | スーパーマーケット1 / `supermarket1.mp3` | https://soundeffect-lab.info/sound/environment/mp3/supermarket1.mp3 | 中場市集人聲床（循環） | `merchantAmbience` | 未記錄（ledger 未載明處理步驟） | — / 1179 KB |
+| 46 | `fireRingLoop.mp3` | たき火 / `fire1.mp3` | https://soundeffect-lab.info/sound/environment/mp3/fire1.mp3 | 火環收縮的燃燒床音（循環） | `fireRingLoop` | 未記錄（ledger 未載明處理步驟） | — / 1412 KB |
+| 47 | `arenaAmbience.mp3` | 風に揺れる草木1 / 原始檔名未留存 | https://soundeffect-lab.info/sound/environment/ （僅頁面層級來源，原始檔名未留存） | 競技場環境音床（循環） | `arenaAmbience` | 未記錄（ledger 未載明處理步驟） | — / 890 KB |
+| 48 | `merchantAmbience.mp3` | スーパーマーケット1 / `supermarket1.mp3` | https://soundeffect-lab.info/sound/environment/mp3/supermarket1.mp3 | 中場市集人聲床（循環） | `merchantAmbience` | 未記錄（ledger 未載明處理步驟） | — / 1179 KB |
 
 ### Usage ledger — 声素材 voice (`audio/voice-jp/`, 8 clips)
 

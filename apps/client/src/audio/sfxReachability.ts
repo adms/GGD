@@ -509,6 +509,13 @@ export const SFX_REACHABILITY: readonly SfxReachRow[] = [
   // ⭐ 綁在 `families[]` 上,所以它替**整個家族**出聲(出貨 91 筆綁定,其中 66 筆原本
   // 指向 `warstompcaster`),⛔ 不是逐支技能各填一次。
   { key: "wc3.warstomp", kind: "combat", site: VFX_SOUND_SITE, events: ["damage"], payload: { damage: ["origin"] } },
+  // ⭐ 殭屍王 [leap吸血] 的**兩個時機**（owner 的規格逐字：「跳躍前播放殭屍咆哮音效⋯
+  // 跳躍後播放殭屍撕咬音效」）。它們是同一支技能的兩格，而**兩格騎的是不同的事件** ——
+  // 咆哮騎 `abilityCast`（施法committed 的那一刻），撕咬騎落地那一發 `damage`
+  // （`LeapSystem.detonate` 的 `runEffects(onLand, { origin })`）。
+  // ⛔ 在此之前那一格是替身：`soundImpact: "hit-heavy"`，而**咆哮那一格根本不存在**。
+  { key: "zombieRoar", kind: "combat", site: VFX_SOUND_SITE, events: ["abilityCast"], payload: { abilityCast: ["abilityId", "caster"] } },
+  { key: "zombieBite", kind: "combat", site: VFX_SOUND_SITE, events: ["damage"], payload: { damage: ["origin"] } },
 
   // ⚠️ **收錄了但沒有人引用**的 68 個。owner 2026-08-19 把 133 個原作音效搬進版控
   // （出處帳本 `content/assets/audio/wc3/PROVENANCE.md`），其中 mdx `SNDx` 事件軌

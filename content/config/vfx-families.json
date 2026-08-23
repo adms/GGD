@@ -1863,7 +1863,8 @@
       "family": "burst"
     },
     "godie-zombieking.passive": {
-      "soundImpact": "hit-heavy",
+      "soundLaunch": "zombieRoar",
+      "soundImpact": "zombieBite",
       "soundGain": 1.3
     }
   },
