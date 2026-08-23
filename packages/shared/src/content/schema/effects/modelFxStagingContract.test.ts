@@ -28,7 +28,7 @@ import { describe, it, expect, beforeAll } from "vitest";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ContentLoader } from "../../loader";
-import { shippedContentSource } from "../../__fixtures__/shippedContent";
+import { shippedContentSource, shippedDocFiles } from "../../__fixtures__/shippedContent";
 import { Arenas, Configs, Models, StatusEffects, VfxDefs, registerAll } from "../../registries";
 import { Abilities, Augments, Champions, Items, LootTables, Projectiles } from "../../../sim/content/registry";
 import { SimWorld } from "../../../sim/SimWorld";
@@ -93,13 +93,16 @@ describe("① 落點環真的站成一圈（orbit ≠ radial）", () => {
 });
 
 /**
- * ⛔ 42-04 世界終結（`godie-n003.r` / `godie-n01g.r`，圓周噴發 12 具大冰塊）今天
- * 完全無聲，而**理由不是「還沒排到」**：它們是 `R` 槽 ⇒ 同時鏡射進
- * `content/champions/*.json`，而 champions 不在這條 lane 的檔案柵欄裡。
- * ⭐ 反駁法：補上聲音的那一天，下面第二條斷言會紅並要求把這兩列刪掉 ——
- * ⛔ 一個沒有到期日的豁免就是一張永久許可證。
+ * ⭐ **豁免清單現在是空的，而它是被自己的到期日清空的。**
+ *
+ * 上一輪（#553）這裡有 `godie-n003.r` / `godie-n01g.r`（42-04 世界終結，圓周噴發
+ * 12 具大冰塊），理由是「它們是 `R` 槽 ⇒ 鏡射進 champions ⇒ 不在那條 lane 的柵欄裡」，
+ * 並且寫著「補上聲音的那一天下面第二條斷言會紅並要求把這兩列刪掉」。
+ * **那一天就是今天**：另一條 lane 給了它們 `soundKey: "magicIce"` ＋
+ * `arriveSoundKey: "wc3.gluescreenmeteorhit1"`，`stale` 斷言逐字點名了這兩列。
+ * ⇒ ⭐ 一個**帶到期日**的豁免會自己回收，⛔ 一個沒有到期日的就是永久許可證。
  */
-const FENCED_OUT = new Set(["godie-n003.r", "godie-n01g.r"]);
+const FENCED_OUT = new Set<string>([]);
 
 describe("② 每一支帶多實例演出的技能都出得了聲", () => {
   it("owner：「跟相關的音效要播出來」（豁免要寫得出理由，補齊了就要刪）", () => {
@@ -128,5 +131,105 @@ describe("② 每一支帶多實例演出的技能都出得了聲", () => {
     }
     expect(silent, "多實例演出整支無聲 —— 十幾具模型同時出場而喇叭一點反應都沒有").toEqual([]);
     expect(stale, "這幾支已經有聲音了 —— 把 FENCED_OUT 裡的那一列刪掉").toEqual([]);
+  });
+});
+
+/** 一份文件裡每一個「引用了特效模板」的 `spawnModelFx` 節點。 */
+function presetNodes(doc: Record<string, unknown>): Record<string, unknown>[] {
+  const out: Record<string, unknown>[] = [];
+  const walk = (n: unknown): void => {
+    if (Array.isArray(n)) return void n.forEach(walk);
+    if (n === null || typeof n !== "object") return;
+    const r = n as Record<string, unknown>;
+    if (r["kind"] === "spawnModelFx" && typeof r["preset"] === "string") out.push(r);
+    Object.values(r).forEach(walk);
+  };
+  walk(doc["effects"]);
+  walk(doc["passive"]);
+  return out;
+}
+
+/**
+ * ⛔ `tpl-line-blast`（04-03 龍破斬）還沒有 `soundKey` 這一格，而**理由不是
+ * 「還沒排到」**：這條 lane 的檔案柵欄只含 `tpl-beam-roll.json`。機制本身
+ * （`content/modelFxPreset.ts` 的 SOUND_FIELDS）已經對**所有**模板生效 ⇒ 補齊的
+ * 動作是在那份模板加兩格 param，⛔ 不是再寫一次程式。
+ * ⭐ 反駁法：它長出聲音鍵的那一天，第二條斷言會紅並要求刪掉這一列。
+ * （`tpl-radial-burst` ⛔ 不在這張表上：42-04 世界終結那兩份文件**自己的節點**
+ *   已經帶了聲音鍵，所以它從第一條斷言的角度看已經是好的。）
+ */
+const SOUNDLESS_TEMPLATES = new Set(["tpl-line-blast"]);
+
+/**
+ * ⛔ `tpl-beam-roll` 的 `modelKey` 預設（模板 exemplar 是 20-03 約束與勝利之劍的
+ * `imported.netherstrike`）把**四支不同英雄的招式**收斂成同一具模型 —— 陽電子砲、
+ * 龜派氣功、龍鬥氣砲在畫面上與 Saber 逐像素相同。
+ * ⚠️ 修法是逐支填自己的 `modelKey`，而那要同時改 `content/abilities/*.json` **與**
+ * 它們鏡射進 `content/champions/*.json` 的副本（`abilityMirror.test.ts` 逐欄比對
+ * `effects`），而 champions 不在這條 lane 的檔案柵欄裡。
+ * ⭐ 反駁法：任一支填了自己的 `modelKey`，第二條斷言會紅並要求刪掉那一列；
+ * ⛔ 新技能一律不得加進這張表 —— 它是一份會過期的紀錄，不是一張許可證。
+ */
+const SHARED_MODEL_FENCED_OUT = new Set([
+  "20-03 約束與勝利之劍",
+  "59-04 野戰型陽電子砲",
+  "08-03 龍鬥氣砲咒文",
+  "09-04 龜派氣功",
+]);
+
+describe("④ 引用特效模板的演出：出得了聲，而且保得住自己的身分", () => {
+  it("★ 每一個引用模板的節點在**載入後**都帶著聲音鍵（家族級預設，⛔ 不是逐支填）", () => {
+    const silent: string[] = [];
+    const stale: string[] = [];
+    for (const def of Abilities.all() as unknown as Record<string, unknown>[]) {
+      for (const n of presetNodes(def)) {
+        const tpl = String(n["preset"]);
+        const audible =
+          typeof n["soundKey"] === "string" || typeof n["arriveSoundKey"] === "string";
+        if (SOUNDLESS_TEMPLATES.has(tpl)) {
+          if (audible) stale.push(tpl);
+        } else if (!audible) silent.push(`${String(def["id"])} → ${tpl}`);
+      }
+    }
+    expect(
+      silent,
+      "引用特效模板的演出整族無聲 —— 模型飛出去而喇叭一點反應都沒有；" +
+        "聲音要住模板的 params（一格解整族），⛔ 不是逐支寫進技能 JSON",
+    ).toEqual([]);
+    expect(stale, "這幾張模板已經有聲音格了 —— 把 SOUNDLESS_TEMPLATES 裡的那一列刪掉").toEqual([]);
+  });
+
+  it("★ 同一張模板不可以把兩支不同的技能收斂成同一具模型", () => {
+    const byTemplate = new Map<string, Set<string>>();
+    const stale: string[] = [];
+    for (const { doc } of shippedDocFiles<Record<string, unknown>>("abilities")) {
+      const name = String(doc["name"] ?? doc["id"]);
+      for (const n of presetNodes(doc)) {
+        // ⚠️ 讀的是**出貨原文**，⛔ 不是註冊後的：註冊時模板已經把 modelKey 補上，
+        //    問「作者有沒有自己填」只有在解析之前問得到。
+        if (typeof n["modelKey"] === "string") {
+          if (SHARED_MODEL_FENCED_OUT.has(name)) stale.push(name);
+          continue;
+        }
+        const tpl = String(n["preset"]);
+        if (!byTemplate.has(tpl)) byTemplate.set(tpl, new Set());
+        byTemplate.get(tpl)!.add(name);
+      }
+    }
+    const collapsed: string[] = [];
+    for (const [tpl, names] of [...byTemplate].sort((a, b) => a[0].localeCompare(b[0]))) {
+      // 只有一支技能靠模板預設 = 那具模型就是它的身分，⛔ 不是收斂。
+      if (names.size < 2) continue;
+      const open = [...names].filter((n) => !SHARED_MODEL_FENCED_OUT.has(n)).sort();
+      if (open.length > 0) collapsed.push(`${tpl}: ${open.join(" / ")}`);
+    }
+    expect(
+      collapsed,
+      "這幾支共用了模板的 modelKey 預設 —— 模板擁有的是**演出幾何**，" +
+        "⛔ 不是招式的身分：不填就會長成 exemplar 那一支的樣子（第二守則失敗形態⑦）",
+    ).toEqual([]);
+    expect(stale, "這幾支已經有自己的模型了 —— 把 SHARED_MODEL_FENCED_OUT 裡的那一列刪掉").toEqual(
+      [],
+    );
   });
 });

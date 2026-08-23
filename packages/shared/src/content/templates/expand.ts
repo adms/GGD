@@ -580,6 +580,13 @@ const modelFxFamily: Family = (t, p) => {
         ...(has(t, p, "count") ? { count: num(t, p, "count") } : {}),
         ...(has(t, p, "spinDegPerSec") ? { spinDegPerSec: num(t, p, "spinDegPerSec") } : {}),
         ...(has(t, p, "scale") ? { scale: num(t, p, "scale") } : {}),
+        // ⭐ 聲音跟著模板走（`content/modelFxPreset.ts` 的 SOUND_FIELDS 是同一件
+        //    事的另一半）。⛔ 漏掉這兩行 = 表單上有一格 soundKey、展開出來的技能
+        //    卻是啞的 —— 那正是這一批要修的那個病，只是換到編輯器那條路上。
+        ...(has(t, p, "soundKey") ? { soundKey: docRef(t, p, "soundKey") } : {}),
+        ...(has(t, p, "arriveSoundKey")
+          ? { arriveSoundKey: docRef(t, p, "arriveSoundKey") }
+          : {}),
         // ⭐「沿路掃到人」才是這一族與一發直線傷害的差別 —— 傷害走**級距**
         //    （damageTier），⛔ 這裡不算出數字（第〇·四守則）。
         onTouch: [

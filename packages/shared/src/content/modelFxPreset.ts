@@ -70,6 +70,27 @@ const PRESET_FIELDS = [
  */
 const TOUCH_FIELDS = ["touchRadius", "touchSide"] as const;
 
+/**
+ * ⭐【聲音也是家族的】`soundKey`（發射）與 `arriveSoundKey`（落點）。
+ *
+ * ⚠️ 這兩格在 2026-08-23 之前**不在任何一張表上**，於是引用模板的每一個節點
+ * 都繼承了「無聲」：量到的是 `content/abilities/` 底下 **23 個 `spawnModelFx`
+ * 節點**，而引用 `tpl-beam-roll` 的那 **7 個**（＝四支經典 × 本體/變身態）
+ * 一個聲音鍵都沒有，而**沒有任何一條守衛紅** —— `performanceEventsHaveConsumers` 問的是
+ * 「`modelFxSpawn` 有沒有消費端」，而它有（畫模型那一半）。「它應該也要出聲」
+ * 從來不是任何斷言的反面（第一·五守則：說了但不會發生 / 第二守則失敗形態②）。
+ *
+ * ⭐ 補在**這裡**而不是逐支填，是第〇·五守則逐字的那件事：一格解掉整族，
+ * 而不是四份會各自腐爛的 JSON。⛔ 也不是「順手做完整」—— 逐支填會在
+ * `content/champions/*.json` 的鏡射副本上再產生四份第二住處。
+ *
+ * ⚠️ 無條件補（⛔ 不像 {@link TOUCH_FIELDS} 那樣看 `onTouch`）：`arriveSoundKey`
+ * 的時機是「抵達／壽命到」，而那對**每一具**模型都必然發生一次，⛔ 不依賴
+ * `onArrive` 有沒有掛效果。一鍵 rollback 是 `config/audio-map.json` 的
+ * `modelFxSound.enabled` / `.arrive`（既有的三住處開關，⛔ 這裡不再開一格）。
+ */
+const SOUND_FIELDS = ["soundKey", "arriveSoundKey"] as const;
+
 /** 模板文件裡一格參數的出貨預設值（`params[k].default`）。 */
 function slotDefault(t: TemplateDoc, key: string): unknown {
   const slot = t.params[key];
@@ -86,7 +107,7 @@ function slotDefault(t: TemplateDoc, key: string): unknown {
  */
 function fillOne(node: Record<string, unknown>, t: TemplateDoc): Record<string, unknown> {
   const out: Record<string, unknown> = { ...node };
-  for (const k of PRESET_FIELDS) {
+  for (const k of [...PRESET_FIELDS, ...SOUND_FIELDS]) {
     if (out[k] === undefined) {
       const v = slotDefault(t, k);
       if (v !== undefined) out[k] = v;

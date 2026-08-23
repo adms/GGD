@@ -2,7 +2,7 @@
   "id": "tpl-beam-roll",
   "schema": "template@1",
   "name": "翻滾光束（橫放光束砲）",
-  "description": "⭐ 這一份同時是兩件事。①【行為模板】一具帶骨架的 3D 模型沿面向直線推出去，一路自轉，穿透式地掃到路上的每一個人（同一個人只掃一次）。原作是 locust dummy 單位（CreateUnit → 每 tick SetUnitPosition → RemoveUnit），所以它既不是定點特效也不是會被擋下來的投射物。②【特效預設表】`spawnModelFx` 的 `preset` 欄位**逐格讀這裡的 `params[*].default`**（`content/modelFxPreset.ts`，在載入時解析）—— 也就是說「一道橫放的光束砲長什麼樣」只住在這一份文件裡，⛔ 不是散在每一支技能的 JSON 節點上。改這裡的一個數字，四支經典（59-04 陽電子砲 · 20-03 約束與勝利之劍 · 08-03 龍鬥氣砲咒文 · 09-04 龜派氣功）一起變。⚠️ 傷害走**級距**（damageTier），⛔ 這裡不填算好的數字；速度／距離／自轉／縮放是**演出幾何**，引擎的 spawnModelFx 只收數字、沒有對應的級距表，所以它們是本模板唯一的字面值欄位。⚠️ `preset` **只供演出幾何**（模型／路徑／速度／距離／自轉／縮放／碰觸半徑與陣營），⛔ 不自動塞傷害：那會替四支技能各加一份沒有人裁決過的傷害。要沿路掃傷害的技能自己寫 `onTouch`。",
+  "description": "⭐ 這一份同時是兩件事。①【行為模板】一具帶骨架的 3D 模型沿面向直線推出去，一路自轉，穿透式地掃到路上的每一個人（同一個人只掃一次）。原作是 locust dummy 單位（CreateUnit → 每 tick SetUnitPosition → RemoveUnit），所以它既不是定點特效也不是會被擋下來的投射物。②【特效預設表】`spawnModelFx` 的 `preset` 欄位**逐格讀這裡的 `params[*].default`**（`content/modelFxPreset.ts`，在載入時解析）—— 也就是說「一道橫放的光束砲長什麼樣」只住在這一份文件裡，⛔ 不是散在每一支技能的 JSON 節點上。改這裡的一個數字，四支經典（59-04 陽電子砲 · 20-03 約束與勝利之劍 · 08-03 龍鬥氣砲咒文 · 09-04 龜派氣功）一起變。⚠️ 傷害走**級距**（damageTier），⛔ 這裡不填算好的數字；速度／距離／自轉／縮放是**演出幾何**，引擎的 spawnModelFx 只收數字、沒有對應的級距表，所以它們是本模板唯一的字面值欄位。⚠️ `preset` **只供演出幾何**（模型／路徑／速度／距離／自轉／縮放／碰觸半徑與陣營），⛔ 不自動塞傷害：那會替四支技能各加一份沒有人裁決過的傷害。要沿路掃傷害的技能自己寫 `onTouch`。⭐【聲音也住這裡】`soundKey`（發射）與 `arriveSoundKey`（落點）是**家族級預設**：在 2026-08-23 之前這一族**整族無聲** —— 四支經典的 spawnModelFx 節點一個聲音鍵都沒有，而 `performanceEventsHaveConsumers` 是綠的（`modelFxSpawn` 確實有消費端，只是那一半只畫模型）。⇒ 補在這裡**一格解四支**，⛔ 不是逐支填（第〇·五守則：按擋住的支數做機制）。一鍵 rollback 住 `content/config/audio-map.json` 的 `modelFxSound.enabled` / `.arrive`。⚠️ `modelKey` 是**身分**不是幾何：它有預設值是為了讓稀疏文件載得起來，⛔ 不是為了讓四支不同英雄的招式長成同一具模型 —— 守衛在 `schema/effects/modelFxStagingContract.test.ts` ⑤。",
   "family": "beam-roll",
   "status": "enabled",
   "params": {
@@ -87,6 +87,16 @@
       "min": 0,
       "max": 5,
       "unit": "s",
+      "optional": true
+    },
+    "soundKey": {
+      "type": "docRef",
+      "default": "wc3.crushingwavecaster1",
+      "optional": true
+    },
+    "arriveSoundKey": {
+      "type": "docRef",
+      "default": "explosion",
       "optional": true
     }
   },
