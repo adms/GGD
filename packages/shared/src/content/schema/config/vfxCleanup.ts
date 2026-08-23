@@ -291,6 +291,51 @@ export const zConfigVfxCleanupDoc = z
      * ⛔ 沒有列在這裡也沒有被程式標記過的東西，就是「該被收掉的」。
      */
     vfxHardCapExemptPrefixes: z.array(z.string().min(1).max(48)).max(24).optional(),
+
+    /* ── 🔬 生命週期登記表（owner 2026-08-23）────────────────────────────────
+     *
+     * > 「這版改完**還是 LAG** 一定有地方有問題, **到第七回合就很難動作**，
+     * >  可能其中一個原因也是**累積，沒清理到殘留物**
+     * >  請你要**設計一個機制捕捉與監控每個物件的生命週期及存活時間限制**，
+     * >  才可以**精準縮小範圍來除錯**」
+     *
+     * ⛔ 上面每一格都在**回收**；這五格是**量測** —— 它一個東西都不收，只回答
+     * 「到第七回合，哪一類東西沒有回到第一回合的水準」。
+     * 消費端 `apps/client/src/render/lifecycleLedger.ts`。
+     *
+     * ⚠️ 五格全部 `.optional()`，理由同上面每一族：線上已經有耐久 override，
+     * 少一個必填欄會讓整份 config 被 Zod 退回 → 內容載入失敗 → 退回骨架。
+     */
+
+    /**
+     * 總開關。⭐ 出貨 **true** —— owner 現在正在 lag，一個預設關掉的儀表對他
+     * 沒有任何用處（他要先知道有這個東西、還要先去後台打開，而那正是他回報
+     * 問題的那一刻做不到的事）。關掉 = 普查完全不跑（**止血閥**）。
+     */
+    lifecycleLedgerEnabled: z.boolean().optional(),
+    /**
+     * 多久普查一次（秒）。普查 = 走一次場景的六份清單，成本與**一幀**要走訪的
+     * 東西同一個數量級，而它跑在 UI 的取樣計時器上（⛔ 不在 rAF 迴圈裡），
+     * 所以 2 秒一次對畫面是量不到的。調大 = 更省，代價是「最老活了幾秒」更粗。
+     */
+    lifecycleSampleSec: z.number().min(0.25).max(60).optional(),
+    /**
+     * 記幾個回合的快照。⭐ 這是**登記表自己的上限** —— 一個沒有上限的登記表
+     * 就是下一個洩漏，所以它是環狀緩衝，滿了就把最舊的擠掉。
+     * 調大 = 看得到更長的趨勢，代價是那幾份快照一直留在記憶體裡。
+     */
+    lifecycleRoundHistory: z.number().int().min(2).max(64).optional(),
+    /**
+     * 一類東西**多長幾個**才算「還在長」。⭐ 這是警報的門檻，⛔ 不是清理的門檻。
+     * 調小 = 更敏感（也更容易被正常的暖機波動觸發）；調大 = 只抓大魚。
+     */
+    lifecycleGrowthMinDelta: z.number().int().min(1).max(4096).optional(),
+    /**
+     * 一類東西裡最老的那個活超過幾秒，就在匯出的表上標成「超齡」。
+     * ⛔ **它不會把任何東西收掉** —— 收的是 `vfxHardMaxLifeSec` 那一格。
+     * 0 = 不標記。出貨 180 秒 ≈ 兩個回合，所以被標到的東西一定跨過回合邊界活著。
+     */
+    lifecycleMaxAgeSec: z.number().min(0).max(3600).optional(),
   })
   .strict();
 export type ConfigVfxCleanupDoc = z.infer<typeof zConfigVfxCleanupDoc>;
@@ -351,4 +396,13 @@ export const DEFAULT_VFX_CLEANUP: ConfigVfxCleanupDoc = {
     "login-",
     "intermission-",
   ],
+  // 🔬 owner 2026-08-23「設計一個機制捕捉與監控每個物件的生命週期及存活時間限制」。
+  // ⭐ 五格都是**我挑的**（owner 2026-08-23:「沒做完以前別問我了自己判斷 但是留
+  // 後台開關可以簡易 rollback」）—— 他只說了要有這個機制，⛔ 沒有給任何數字。
+  // 出貨 true 的理由：他**現在**正在 lag，一個要先去後台打開的儀表幫不到那一刻。
+  lifecycleLedgerEnabled: true,
+  lifecycleSampleSec: 2,
+  lifecycleRoundHistory: 16,
+  lifecycleGrowthMinDelta: 8,
+  lifecycleMaxAgeSec: 180,
 };

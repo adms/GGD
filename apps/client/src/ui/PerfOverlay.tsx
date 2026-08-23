@@ -13,6 +13,7 @@
  */
 import { useEffect, useState } from "react";
 import { perfBus, type ConnectionQuality, type PerfBus } from "../perfBus";
+import { lifecycleLedger } from "../render/lifecycleLedger";
 import { useSettings } from "./useSettings";
 import { hudTouch } from "./hud/HudSlot";
 import { HUD_Z, hudSlotHeight, hudSlotStyle } from "./hud/hudLayout";
@@ -47,6 +48,9 @@ interface Snap {
   orphanRooms: number;
   foreignSnapshots: number;
   unexpectedDisconnects: number;
+  /** 🔬 生命週期登記表：現在有幾類東西「還在長」＋最嚴重的那一類。 */
+  lifecycleGrowth: number;
+  lifecycleWorst: string;
 }
 
 function snapshot(): Snap {
@@ -74,6 +78,8 @@ function snapshot(): Snap {
     orphanRooms: perfBus.orphanRooms,
     foreignSnapshots: perfBus.foreignSnapshots,
     unexpectedDisconnects: perfBus.unexpectedDisconnects,
+    lifecycleGrowth: perfBus.lifecycleGrowth,
+    lifecycleWorst: perfBus.lifecycleWorst,
   };
 }
 
@@ -82,7 +88,13 @@ function usePerfSample(active: boolean): Snap {
   const [snap, setSnap] = useState<Snap>(snapshot);
   useEffect(() => {
     if (!active) return;
-    const id = setInterval(() => setSnap(snapshot()), SAMPLE_MS);
+    const id = setInterval(() => {
+      // ⭐ 生命週期普查搭這一班車（4 Hz），⛔ **不掛在 rAF 迴圈上** ——
+      //    儀表自己不可以變成成本。`tick()` 內部再節流到 `lifecycleSampleSec`
+      //    （出貨 2 秒），關掉時是一個 boolean 判斷就返回。
+      lifecycleLedger.tick(performance.now() / 1000);
+      setSnap(snapshot());
+    }, SAMPLE_MS);
     return () => clearInterval(id);
   }, [active]);
   return snap;
@@ -117,7 +129,12 @@ function fpsColor(fps: number): string {
 export function healthWarnings(
   snap: Pick<
     PerfBus,
-    "renderLoopErrors" | "orphanRooms" | "foreignSnapshots" | "unexpectedDisconnects"
+    | "renderLoopErrors"
+    | "orphanRooms"
+    | "foreignSnapshots"
+    | "unexpectedDisconnects"
+    | "lifecycleGrowth"
+    | "lifecycleWorst"
   >,
 ): string[] {
   const out: string[] = [];
@@ -125,6 +142,12 @@ export function healthWarnings(
   if (snap.orphanRooms > 0) out.push(`孤兒房 ${snap.orphanRooms}`);
   if (snap.foreignSnapshots > 0) out.push(`外來快照 ${snap.foreignSnapshots}`);
   if (snap.unexpectedDisconnects > 0) out.push(`非預期斷線 ${snap.unexpectedDisconnects}`);
+  // 🔬 owner 2026-08-23「到第七回合就很難動作⋯累積，沒清理到殘留物」——
+  //    ⭐ 把**最嚴重的那一類的名字**印出來，⛔ 不是只印一個總數：
+  //    他要的逐字是「精準縮小範圍」，而 `__ggdLifecycle()` 給整張表。
+  if (snap.lifecycleGrowth > 0) {
+    out.push(`殘留累積 ${snap.lifecycleGrowth} 類${snap.lifecycleWorst ? `（${snap.lifecycleWorst}）` : ""}`);
+  }
   return out;
 }
 

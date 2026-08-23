@@ -109,6 +109,20 @@ export interface PerfBus {
    * ⛔ 非零而沒有人看到 = 我們只是把當機藏起來了。
    */
   renderLoopErrors: number;
+
+  /**
+   * 🔬 **生命週期登記表**（owner 2026-08-23「到第七回合就很難動作⋯累積，沒清理到
+   * 殘留物」）—— 現在有**幾類**物件「還在長」（逐回合單調不減、增量達標、而且
+   * 最後一段仍然在增）。⛔ 不是「幾個物件」：一個總數指不出兇手，⭐ 而 owner 要的
+   * 逐字是「**精準縮小範圍**」。
+   *
+   * ⚠️ 非零就要**畫在畫面上**（`healthWarnings()`），⛔ 不是一行沒有人讀的
+   * console —— 這一族計數器的存在理由就是「fail-open 沒錯，**靜默**才是缺陷」。
+   * 產生端 `render/lifecycleLedger.ts`；完整的表用 `__ggdLifecycle()` 匯出。
+   */
+  lifecycleGrowth: number;
+  /** 最嚴重的那一類的名字（例 `tex:ground`）。空字串 = 沒有。 */
+  lifecycleWorst: string;
 }
 
 export const perfBus: PerfBus = {
@@ -131,6 +145,8 @@ export const perfBus: PerfBus = {
   foreignSnapshots: 0,
   unexpectedDisconnects: 0,
   renderLoopErrors: 0,
+  lifecycleGrowth: 0,
+  lifecycleWorst: "",
   qualityLevel: 0,
   resolutionScale: 1,
   particleDensity: 1,

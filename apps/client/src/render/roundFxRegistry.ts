@@ -31,6 +31,7 @@ import { WhirlwindFx, type WhirlwindFxOptions } from "../vfx/WhirlwindFx";
 import { FireRingFx, type FireRingFxOptions } from "./vfx/FireRingFx";
 import { VictoryFireworks, type VictoryFireworksOptions } from "../vfx/VictoryFireworks";
 import { vfxSoundLayer } from "../audio/vfxSound";
+import { lifecycleLedger } from "./lifecycleLedger";
 import type { RoundEdge, RoundVfxTarget } from "./roundVfxLifecycle";
 
 export type { RoundEdge };
@@ -161,7 +162,19 @@ export function createRoundFx(scene: Scene, deps: RoundFxDeps): RoundFx {
     //   GH#594 那個洞。⭐ BOTH_EDGES —— owner:「寧願多次清理乾淨開始回合 也不要漏清到」。
     //   ⚠️ 順序是對的:`GameApp` 的 `roundVfx.sync()` 在 step 0,比 step 5b 的
     //   `vfxLoopPushes` 早,所以清完當幀不會再推。
-    .add("vfxSoundLayer", BOTH_EDGES, () => (deps.sound ?? vfxSoundLayer).reset());
+    .add("vfxSoundLayer", BOTH_EDGES, () => (deps.sound ?? vfxSoundLayer).reset())
+    // ── 🔬 生命週期登記表（owner 2026-08-23「到第七回合就很難動作⋯累積」）───────
+    // ⛔ 它**不清任何東西** —— 上面每一列都是回收動作,這一列是**量測**:在回合邊界
+    // 把「每一類物件現在有幾個 / 最老的至少活了幾秒」記一筆,於是「越玩越 lag」會
+    // 顯示成一條**上升的線**而不是一種感覺。⭐ 只取 `enter` 那一側:`leave` 是清場
+    // **前**、`enter` 是清場**後**,兩側混在同一條序列裡等於拿蘋果跟橘子算成長。
+    // ⚠️ 它必須排在**最後** —— 前面那幾列才剛把池子還回去,量在它們之前得到的是
+    // 上一回合的殘影(而那正是這條 lane 要抓的東西,量錯就等於沒量)。
+    .add("lifecycleLedger", ENTER_ONLY, () => lifecycleLedger.markRound(performance.now() / 1000));
+
+  // ⭐ 綁在**唯一的組裝點**:這裡是 GameApp 建 Babylon 場景型 FX 的地方,
+  //   所以「要普查哪一個 scene」不會有第二個答案(也不必在 GameApp 接一行)。
+  lifecycleLedger.bindScene(scene);
 
   return { registry, vfx, ambient, whirlwind, fireRing, victoryFx };
 }
