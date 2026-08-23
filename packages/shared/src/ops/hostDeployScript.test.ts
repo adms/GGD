@@ -281,9 +281,22 @@ describe("scripts/host-deploy.sh —— 部署程序是程式，不是要人記�
     //    這台的 data-root 是 /data/docker（sdb），而 / 是另一顆。2026-08-16 我第一次
     //    回報就讀了 `/` —— 那顆碟從頭到尾都是 11%，於是我對 owner 講了一個假的根因。
     //    ⭐ 突變點：把 `$DOCKER_ROOT` 換成 `/` 這一條就要紅。
+    // ⚠️ GH#618 —— 這一條在 2026-08-23 之前只驗 `DockerRootDir`，**而那還是量錯了一顆碟**：
+    //    Docker 29 的 containerd image store 把位元組放在 `/var/lib/containerd`，
+    //    而 `DockerRootDir` 指的是 `/data/docker`。實測 291G 可用 vs **33G 可用**
+    //    ⇒ 閘每次都綠，會滿的是另一顆。⭐ 同一個故障形態、同一支腳本、第二次。
+    //    ⇒ 判準改成「**不要猜哪一顆**」：把每一個 docker 會寫的路徑都量一遍，取最緊的。
+    expect(/DockerRootDir/.test(code), "沒有問 docker 自己的 data-root。").toBe(true);
     expect(
-      /DockerRootDir/.test(code) && /df\s+-Pk\s+"\$DOCKER_ROOT"/.test(code),
-      "剩餘空間量的不是 docker 的 data-root —— 量錯一顆碟等於沒量。",
+      /\/var\/lib\/containerd/.test(code),
+      "沒有量 containerd 的 image store —— Docker 29 的位元組住在那裡，" +
+        "而 DockerRootDir 指向另一顆碟（實測 291G vs 33G）。量錯一顆碟等於沒量。",
+    ).toBe(true);
+    // ⭐ 承重點：要取**最小**的那一顆，⛔ 不是「多量幾顆然後用第一顆」。
+    //    突變點：把 `-lt` 改成 `-gt` 這一條就要紅。
+    expect(
+      /-lt\s+"\$FREE_GB"[\s\S]{0,120}TIGHT_PATH/.test(code),
+      "量了多顆碟卻沒有取最緊的那一顆 —— 那等於閘在看一顆不會滿的碟。",
     ).toBe(true);
 
     // ③ ⭐ 閘在 **pull 之前**。這一條是這整段的承重點：

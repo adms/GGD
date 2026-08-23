@@ -155,15 +155,41 @@ if [ "$MODE" = full ]; then
   # ——⛔ 不可以靜默略過，那就等於這個閘不存在（fail-open 必須有人聽得見）。
   if docker builder prune -f --max-used-space "$BUILD_CACHE_CAP" >/dev/null 2>&1; then
     ok "build cache 夾到 $BUILD_CACHE_CAP（LRU）"
+    # ⚠️ GH#618 —— containerd store 上，**懸空的映像層不歸 builder prune 管**。
+    # `image prune -f` 只刪沒有 tag 也沒有容器在用的那些 ⇒ ⛔ 不會碰到 :prev
+    #（回滾落腳點有 tag），⛔ 不會碰到 volume（玩家資料）。
+    docker image prune -f >/dev/null 2>&1 || true
   else
     docker builder prune -f --filter "until=168h" >/dev/null 2>&1 || true
     warn "這台 docker 沒有 --max-used-space，退回 until=168h —— 那只是時間假設，擋不住一天多版"
   fi
-  # docker 的資料**不一定**在 /：這台就是 /data/docker（sdb）。
-  # 量錯一顆碟等於沒量（2026-08-16 我第一次回報就讀了 / 而不是 /data）。
+  # ⛔⛔ docker 的位元組**不一定只住一個地方**,而且 `DockerRootDir` 會說謊。
+  #
+  # 2026-08-23 實測（GH#618）：這台 Docker **29.6.2 用 containerd image store**
+  # （`DriverStatus` 裡的 `driver-type: io.containerd.snapshotter.v1`），
+  # 於是映像層與 build cache 真正住在 **`/var/lib/containerd`（sda1）**：
+  #     DockerRootDir = /data/docker  →  /data  (sdb)  291G 可用   ⇐ 閘量的是這顆
+  #     /var/lib/containerd = 57G     →  /      (sda1)  33G 可用   ⇐ 會滿的是這顆
+  # ⇒ **閘每次都綠，而快滿的是另一顆。** 那正是 2026-08-16 那次事故的形狀
+  #   （快取塞爆 → build 死在半路 → edge 容器消失 → 網站 502）。
+  #
+  # ⭐ 修法是**不要猜哪一顆** —— 把每一個 docker 會寫位元組的路徑都量一遍，
+  #   閘取**最緊的那一顆**。⛔ 不要寫死 `/var/lib/containerd`：下一版 docker
+  #   換一個 store 位置，寫死的那一行就會變成第三次同型故障。
   DOCKER_ROOT=$(docker info --format '{{.DockerRootDir}}' 2>/dev/null || echo /var/lib/docker)
-  FREE_GB=$(df -Pk "$DOCKER_ROOT" 2>/dev/null | awk 'NR==2{printf "%d", $4/1048576}')
-  [ -n "$FREE_GB" ] || die "量不到 $DOCKER_ROOT 的剩餘空間 —— 拒絕在不知道有沒有空間的情況下 build"
+  DISK_PATHS="$DOCKER_ROOT"
+  for p in /var/lib/containerd /var/lib/docker "$(pwd)"; do
+    [ -d "$p" ] && DISK_PATHS="$DISK_PATHS $p"
+  done
+  # 逐路徑量 → 取最小 → 記住是哪一顆（訊息要指名它，⛔ 不然沒有人知道要清哪裡）
+  FREE_GB=""; TIGHT_PATH=""
+  for p in $DISK_PATHS; do
+    g=$(df -Pk "$p" 2>/dev/null | awk 'NR==2{printf "%d", $4/1048576}')
+    [ -n "$g" ] || continue
+    if [ -z "$FREE_GB" ] || [ "$g" -lt "$FREE_GB" ]; then FREE_GB="$g"; TIGHT_PATH="$p"; fi
+  done
+  DOCKER_ROOT="$TIGHT_PATH"
+  [ -n "$FREE_GB" ] || die "量不到任何 docker 路徑的剩餘空間 —— 拒絕在不知道有沒有空間的情況下 build"
   [ "$FREE_GB" -ge "$MIN_FREE_GB" ] 2>/dev/null || die "磁碟不夠建這一版。
      $DOCKER_ROOT 只剩 ${FREE_GB}G，需要 ≥ ${MIN_FREE_GB}G。
 

@@ -1573,19 +1573,34 @@ client 每次載入都重抓 `bundle.json`，所以不必重建映像，只要�
 再讓 build 死在沒空間 = 「新內容 + 舊映像」——那正是 2026-08-02 的生產故障組合。
 磁碟不夠的時候，線上那一版必須**一個位元組都沒被動到**。
 
-⚠️ **量的是 `docker info --format '{{.DockerRootDir}}'`，不是 `/`。**
-這台的 data-root 是 **`/data/docker`（sdb）**，而 `/`（sda1，99G）是另一顆、
-從頭到尾都在 11%。2026-08-16 我第一次回報就讀了 `/`，於是對 owner 講了一個假的根因。
+⛔⛔ **量哪一顆碟：`DockerRootDir` 會說謊，而且它已經騙過兩次。**
 
-| 碟 | 掛載 | 大小 | 裝什麼 |
-|---|---|---|---|
-| sda1 | `/` | 99G | 只有作業系統 |
-| **sdb** | **`/data`** | **300G**（owner 2026-08-16 從 100G 擴充） | docker 全部 + GGD repo（`/home/can/GGD` 是 symlink → `/data/GGD`） |
+⚠️ **這一段在 2026-08-23 之前寫著「sda1 只有作業系統、從頭到尾 11%」—— 那句話當時就要過期了**
+（第三守則的形狀：一個被散文守著的數字活過了它的保存期限，而**沒有任何東西變紅**）。
+2026-08-23 實測（GH#618）：
 
-實測（2026-08-16，擴充後）：`FREE_GB = 292`，穩態 docker 只吃 2.7G，
-所以 40G 快取上限的穩態約 43G / 295G。
+| 碟 | 掛載 | 大小 | 實際 | 裝什麼 |
+|---|---|---|---|---|
+| sda1 | `/` | 99G | ⛔ **已用 65%，只剩 33G** | 作業系統 **＋ `/var/lib/containerd` 57G** |
+| **sdb** | **`/data`** | **295G** | 已用 2%，剩 291G | `DockerRootDir`（3.9G）+ GGD repo（`/home/can/GGD` → `/data/GGD`） |
+
+⭐ **根因：Docker 29 用 containerd image store**（`driver-type: io.containerd.snapshotter.v1`）
+⇒ 映像層與 build cache 真正住 **`/var/lib/containerd`**，⛔ 不在 `DockerRootDir`。
+⇒ 舊的閘量 `/data`（291G 可用）**每一次都綠**，而快滿的是 `/`（33G）——
+那正是 2026-08-16 那次 502 的形狀，**同一支腳本、同一個故障、第二次**。
+
+⭐ **修法不是換一個路徑，是不要猜**：把每一個 docker 會寫位元組的路徑
+（`DockerRootDir` · `/var/lib/containerd` · `/var/lib/docker` · repo 所在）都量一遍，
+閘取**最緊的那一顆**並在訊息裡指名它。⛔ 寫死 `/var/lib/containerd` 會變成第三次
+—— 下一版 docker 換一個 store 位置，那一行就又是一句過期的散文。
+
 兩個門檻可用 `GGD_BUILD_CACHE_CAP` / `GGD_MIN_FREE_GB` 覆寫。
-守衛：`hostDeployScript.test.ts` 的「磁碟閘」（突變：把 `$DOCKER_ROOT` 換成 `/` → 紅）。
+守衛：`hostDeployScript.test.ts` 的「磁碟閘」（突變：把取最小的 `-lt` 改成 `-gt` → 紅）。
+
+⚠️ 同一天一起更正的另一件事：**這台是 4 vCPU / 15GB**，
+⛔ 不是我在記憶與 commit 訊息裡寫了很多次的「24 核 / 128GB」。
+（`nproc` = 4、`docker info NCPU` = 4。「伺服器完全閒置」的結論仍然成立 ——
+p99 2.8ms vs 33.3ms 預算 —— ⛔ 但那句「load 0.24 於 24 核」的分母是錯的。）
 
 ⚠️ **2026-08-02 的教訓：把地雷寫成清單是不夠的。** 那天同一次部署踩中了 3 與 4，
 而這份清單是同一個人幾小時前寫的。散文治不了「憑記憶重新推導一個五步序列」，
