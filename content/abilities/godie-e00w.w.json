@@ -8,10 +8,10 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    6.0,
-    6.0,
-    6.0,
-    6.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
   "manaCost": [
     0.0,
@@ -21,19 +21,7 @@
   ],
   "range": 0.0,
   "targetsEnemies": false,
-  "effects": [
-    {
-      "kind": "applyBuff",
-      "modifiers": [
-        {
-          "stat": "critChance",
-          "op": "flat",
-          "value": 0.25
-        }
-      ],
-      "duration": 6.0
-    }
-  ],
+  "effects": [],
   "passive": {
     "name": "77-02 雷鳴劍",
     "ranks": [
@@ -71,6 +59,5 @@
   },
   "icon": "assets/icons/abilities/godie-e00w.w.webp",
   "vfxKey": "fx.prim.lightning.beam",
-  "castTimeSec": 0.233,
   "cooldownTier": "極小"
 }

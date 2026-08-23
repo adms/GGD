@@ -13,6 +13,7 @@
     6.0,
     6.0
   ],
+  "cooldownTier": "極小",
   "manaCost": [
     0.0,
     0.0,
@@ -96,6 +97,5 @@
       }
     ]
   },
-  "castTimeSec": 0.233,
-  "cooldownTier": "極小"
+  "castTimeSec": 0.233
 }

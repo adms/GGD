@@ -117,10 +117,10 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        6.0,
-        6.0,
-        6.0,
-        6.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
         0.0,
@@ -130,19 +130,7 @@
       ],
       "range": 0.0,
       "targetsEnemies": false,
-      "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [
-            {
-              "stat": "as",
-              "op": "flat",
-              "value": 0.25
-            }
-          ],
-          "duration": 3.0
-        }
-      ],
+      "effects": [],
       "passive": {
         "name": "70-02 大怒石",
         "ranks": [
@@ -250,8 +238,7 @@
       },
       "icon": "assets/icons/abilities/godie-e00s.w.webp",
       "vfxKey": "fx.prim.earth.pulse-sm",
-      "cooldownTier": "極小",
-      "castTimeSec": 0.233
+      "cooldownTier": "極小"
     },
     "E": {
       "id": "godie-e00s.e",

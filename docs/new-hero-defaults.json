@@ -412,7 +412,7 @@
       "description": "朝指定方向發射，施法距離 {{range}}，範圍 {{radius}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
       "cooldown": {
         "value": 60,
-        "sample": 40,
+        "sample": 42,
         "basis": "slot",
         "liftedFromMedian": 30
       },
@@ -473,8 +473,8 @@
       "castType": "self",
       "description": "對自身，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
       "cooldown": {
-        "value": 45,
-        "sample": 11,
+        "value": 30,
+        "sample": 13,
         "basis": "slot+castType"
       },
       "manaCost": {
@@ -504,7 +504,7 @@
       "description": "朝指定方向突進，施法距離 {{range}}，造成 {{dmg}} 點傷害。冷卻 {{cd}} 秒，消耗[MP] {{mp}}。",
       "cooldown": {
         "value": 30,
-        "sample": 40,
+        "sample": 42,
         "basis": "slot"
       },
       "manaCost": {

@@ -25,18 +25,18 @@ owner 2026-08-19（GH#438，這一份要涵蓋的**全部**軸）：
 04-02 炸彈陣 w3a 300 → 5.5 落「大」，04-03 龍破斬 w3a 450 → 8.25 落「超大」——
 **剛好高一級**，正是 owner 說的「龍破斬應該高一級」。⇒ 係數不動。
 
-這一份最早（GH#414）只回答了**幾何**那三軸；缺的是施法距離從來沒有表 —— 量到 195 支帶施法距離的技能，各自帶一個從 w3a 換算來的自由數字，最大 Infinity，而決鬥區半徑只有 24。
+這一份最早（GH#414）只回答了**幾何**那三軸；缺的是施法距離從來沒有表 —— 量到 194 支帶施法距離的技能，各自帶一個從 w3a 換算來的自由數字，最大 Infinity，而決鬥區半徑只有 24。
 
 **六個視窗現在全部有表了**（GH#438 點名的四軸 = 幾何三軸 + 傷害/耗魔/冷卻），
 而且每一軸都住在 `content/config/*-tiers.json`（＝後台在改的那一份）：
 
 | 軸 | JSON 欄位 | 出貨 config | 幾支技能填了 | 開關 |
 |---|---|---|---:|---|
-| 施法距離 | `rangeTier` | `range-tiers.json` | 193 (45.8%) | `enabled: true` |
+| 施法距離 | `rangeTier` | `range-tiers.json` | 192 (45.6%) | `enabled: true` |
 | 施法範圍 | `radiusTier` | `aoe-tiers.json` | 91 (21.6%) | `enabled: true` |
 | 位移 | `distanceTier` | `displacement-tiers.json` | 2 (0.5%) | `enabled: true` |
 | **傷害** | `damageTier` | `damage-tiers.json` | 204 (48.5%) | `enabled: true` |
-| **耗魔** | `manaCostTier` | `mana-tiers.json` | 204 (48.5%) | `enabled: true` |
+| **耗魔** | `manaCostTier` | `mana-tiers.json` | 203 (48.2%) | `enabled: true` |
 | **冷卻** | `cooldownTier` (+`cooldownShape`) | `cooldown-tiers.json` | 353 (83.8%) | `enabled: true` |
 
 <sub>分母 = `content/abilities/` 的 421 份技能文件（含被動與 EX）。⚠️ 採用率**不是** 100% 不代表壞掉：手寫數字一直是合法的寫法，級距是**預設走的那條路**。</sub>
@@ -180,7 +180,7 @@ owner 2026-08-19：「**JASS 的部分優先權大於 w3x 技能設定**，因�
 |---|---:|---|
 | **JASS**（第 3 層） | 26 | JASS 明確寫了 `AoE <數字>`，用它 |
 | **w3a**（第 5 層） | 137 | JASS 沒寫幾何，退回 w3a 的 `area` / `cast_range` 欄位 |
-| — | 74 | 對不到原作（GGD 原創、EX、或編號不在 w3x 裡） |
+| — | 73 | 對不到原作（GGD 原創、EX、或編號不在 w3x 裡） |
 
 ⚠️ 「w3a」那一列**不代表已經驗證過** —— 它代表**沒有人去 JASS 確認過**。
 `JASS_BEHAVIOR.json` 的 `geometry` 是稽核欄，只有 35 支寫了明確的 AoE 數字。
@@ -227,7 +227,7 @@ owner 2026-08-19：「**JASS 的部分優先權大於 w3x 技能設定**，因�
 
 ---
 
-## 五 · 逐支對照（全部 237 支）
+## 五 · 逐支對照（全部 236 支）
 
 `原作` = 依上面的優先序取到的 WC3 值。`引擎` = 真的跑過 `registerAll()` 之後註冊表裡的數字。
 `→級` = 用出貨級距表就近收之後會落在哪一級（⛔ 尚未寫回技能 JSON）。
@@ -301,7 +301,6 @@ owner 2026-08-19：「**JASS 的部分優先權大於 w3x 技能設定**，因�
 | 90-01 飛葉快刀 | `godie-h02r.q` | w3a | 225 | 4.5 | 小 | — | — | — |
 | 90-04 陽光烈焰 | `godie-h02r.r` | JASS | 280 | — | — | 900 | 12 | 極大 |
 | 90-02 麻痺粉 | `godie-h02r.w` | — | — | 6 | 中 | — | — | — |
-| 92-03 消化液 | `godie-h02u.e` | — | — | — | — | — | 12 | 極大 |
 | 92-02 狂草泥馬 | `godie-h02u.w` | — | — | — | — | — | 8 | 大 |
 | 92-04 馬勒戈壁 | `godie-h02v.r` | w3a | 1 | 8 | 大 | — | — | — |
 | 52-002 射殺百頭 | `godie-hapm.ex` | w3a | — | — | — | 450 | 6 | 中 |

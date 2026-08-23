@@ -1,9 +1,9 @@
 {
   "id": "godie-h02u.e",
-  "name": "92-03 消化液",
+  "name": "92-03 狂草泥馬",
   "icon": "assets/icons/abilities/godie-h02u.e.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n羊駝在驚嚇或憤怒的時候，會從嘴巴裡噴出消化液攻擊敵人，造成範圍內敵人減少3點防禦、20%攻速、5%跑速，每秒受到{{dmg}}點傷害，持續7秒。",
+  "description": "[被動][屬性門檻][普攻時][吞噬][層數累積]\n\n「平常吃草，發瘋時吃人」\n當草泥馬生命降低到 30%時，普通 [攻擊時] 附加 [吞噬] 生命低於 3/4/5/6% 的敵方單位，並且永久增加1點 [AP]。",
   "slot": "E",
   "castType": "self",
   "maxRank": 4,
@@ -20,13 +20,10 @@
     0.0,
     0.0
   ],
-  "manaCostTier": "小",
   "effects": [],
   "vfxKey": "fx.prim.nature.nova",
   "targetsEnemies": false,
   "schema": "ability@1",
-  "castTimeSec": 1.033,
-  "rangeTier": "極大",
   "range": 0.0,
   "passive": {
     "name": "92-03 狂草泥馬",
