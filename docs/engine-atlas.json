@@ -1,12 +1,12 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "52cf9d09",
+  "capabilityFingerprint": "f27f2c03",
   "counts": {
     "effectKinds": 46,
     "hookEvents": 33,
     "conditionLeafKinds": 5,
-    "templateFamilies": 19,
-    "effectFields": 243,
+    "templateFamilies": 20,
+    "effectFields": 244,
     "stats": 23,
     "combatEnvKeys": 38
   },
@@ -193,7 +193,7 @@
     },
     {
       "key": "maxHealth",
-      "value": "×12",
+      "value": "×9",
       "from": "shipped",
       "note": "作用於屬性：maxHealth"
     },
@@ -575,6 +575,7 @@
       "ground-nova",
       "instant-blast",
       "leap-strike",
+      "line-blast",
       "line-sweep",
       "lock-combo",
       "mark-stacks",

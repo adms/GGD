@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "ce32be9dcb6a",
+  "hash": "983b51d3c753",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -125,8 +125,8 @@
     {
       "id": "combat-env",
       "path": "config/combat-env.json",
-      "hash": "abbf0ca3dfff",
-      "size": 1041
+      "hash": "c587be211e92",
+      "size": 1040
     },
     {
       "id": "combat-feel",
@@ -191,7 +191,7 @@
     {
       "id": "damage-tiers",
       "path": "config/damage-tiers.json",
-      "hash": "2ab18789d37c",
+      "hash": "1b0cb62abad5",
       "size": 2980
     },
     {
@@ -311,8 +311,8 @@
     {
       "id": "owner-knobs",
       "path": "config/owner-knobs.json",
-      "hash": "ba59a7d6ce66",
-      "size": 13784
+      "hash": "c3f91c6dd8bf",
+      "size": 13690
     },
     {
       "id": "per-level-bonus",

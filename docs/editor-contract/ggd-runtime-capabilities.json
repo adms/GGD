@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "52cf9d09",
+  "fingerprint": "f27f2c03",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -138,6 +138,7 @@
     "amount",
     "amountPerTick",
     "amplitude",
+    "anchor",
     "anchorCount",
     "anchorRadius",
     "apexHeight",
@@ -717,6 +718,7 @@
     "ground-nova",
     "instant-blast",
     "leap-strike",
+    "line-blast",
     "line-sweep",
     "lock-combo",
     "mark-stacks",

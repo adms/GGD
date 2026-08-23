@@ -62,16 +62,6 @@
           "stacking": "refresh"
         }
       ]
-    },
-    {
-      "kind": "spawnModelFx",
-      "shape": "single",
-      "modelKey": "imported.netherstrike",
-      "path": "orbit",
-      "count": 1,
-      "distance": 0.1,
-      "speed": 1.0,
-      "lifeSec": 2.5
     }
   ],
   "icon": "assets/icons/abilities/godie-edem.ex.webp",

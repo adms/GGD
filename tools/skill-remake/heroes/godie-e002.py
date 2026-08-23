@@ -122,7 +122,37 @@ A("20-04", "20-04 Avalon-永恆的理想鄉", "self", [60, 60, 60], [150, 250, 3
   effects=[buff([], 2.0, hooks=[
       {"on": "onDamageTaken", "target": "event", "damageType": "magic",
        "effects": [dmg("magic", flat=0, ap=3.0,
-                       inc_pct={"perRank": [3.0, 5.0, 7.0]})]}])])
+                       inc_pct={"perRank": [3.0, 5.0, 7.0]})]},
+      # ⭐⭐ GH#549 —— **反彈成功的回饋住這裡，⛔ 不是 20-002。**
+      #
+      # owner 2026-08-22 逐字：「理想鄉被反彈的敵方單位 身上要有明顯的
+      # **七彩閃電爆炸 畫面閃爍及震動 不然都不知道發生什麼事情有沒有反擊成功**」
+      #
+      # ⛔ 這一組在 2026-08-23 被**直接寫進 `content/abilities/godie-e002.r.json`**
+      #    （commit daf72473，44 行），而**下一次 `skills:sync` 就把它刪掉了** ——
+      #    那是這一支產生器的產物。⭐ 這已經是同一個檔案上的**第二次**
+      #    （20-002 那一組的註解記著 2026-08-22 的第一次，52 行）。
+      #    ⇒ 產生器擁有的檔案要改**來源**（第零守則：改產物等於沒改）。
+      #
+      # ⭐ 為什麼掛在 20-04 而不是 20-002：**反彈是 R 做的**。
+      #    20-002 只有在反彈成功之後才追打 —— 把回饋掛在它身上，等於
+      #    「沒學 EX 的人反彈成功時什麼都看不到」。
+      {"on": "onReflectSuccess", "target": "event", "internalCooldown": 1.0,
+       "effects": [
+           # ⭐ `at:"target"` 是承重的那一格：爆炸要長在**被反彈者**身上，
+           #    ⛔ 不是施法者腳下 —— 否則玩家看到的是自己在發光而不是對手被炸。
+           {"kind": "spawnVfx", "vfxId": "fx.avalon.reflect-burst", "at": "target"},
+           # ⭐ 兩發閃爍、兩種顏色：施法者看到**暖金**（我反擊成功了），
+           #    被反彈者看到**紫**（我被反彈打到了）。⛔ 同色的話兩邊分不出誰做了什麼。
+           {"kind": "screenFlash", "shape": "single", "colorRgb": [255, 232, 160],
+            "peakAlpha": 0.45, "durationSec": 0.28, "applyTo": "self"},
+           {"kind": "screenFlash", "shape": "single", "colorRgb": [190, 120, 255],
+            "peakAlpha": 0.62, "durationSec": 0.34, "applyTo": "victim", "scripted": True},
+           # ⭐ 震動 `all` —— owner 的理由逐字是「不然都不知道發生什麼事情」⇒ 兩邊都要感覺到。
+           {"kind": "screenShake", "shape": "single", "amplitude": 0.62,
+            "durationSec": 0.5, "applyTo": "all"},
+       ]},
+  ])])
 
 A("20-002", "20-002 解放.約束勝利劍MAX", "self", [0], [0], 0,
   "[被動][指向][範圍][反彈][反彈成功時][AP加成]\n{{cd}}秒冷卻\n\n「在這個空間所有魔法都被遮斷」\n「永恆的理想鄉」[反彈]成功時發動，給予敵人連續七次斬擊，每次造成7倍[反彈]傷害；最後施展「約束與勝利之劍」，對[前方][直線]敵人造成（[現存魔力]+[AP]）×7倍傷害。",

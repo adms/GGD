@@ -99,16 +99,6 @@
               "from": "caster"
             }
           ]
-        },
-        {
-          "kind": "spawnModelFx",
-          "shape": "single",
-          "modelKey": "imported.earthtornado2",
-          "path": "orbit",
-          "count": 1,
-          "distance": 0.1,
-          "speed": 1.0,
-          "lifeSec": 2.5
         }
       ],
       "icon": "assets/icons/abilities/godie-e00w.q.webp",

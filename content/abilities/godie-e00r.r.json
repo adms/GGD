@@ -47,8 +47,7 @@
       "shape": "single",
       "preset": "tpl-beam-roll",
       "path": "toTarget",
-      "distance": 8.25,
-      "scale": 1.2
+      "distance": 8.25
     },
     {
       "kind": "spawnVfx",

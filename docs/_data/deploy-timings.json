@@ -437,6 +437,108 @@
           "forksPerSuite": 5
         }
       ]
+    },
+    {
+      "id": "2026-08-23/v0.25.7-37-gda3d6dd8-dirty",
+      "at": "2026-08-23T11:02",
+      "ref": "v0.25.7-37-gda3d6dd8-dirty",
+      "stages": [
+        {
+          "name": "ship:gates",
+          "ms": 11067,
+          "code": 1,
+          "tier": "T3",
+          "suites": 7
+        }
+      ]
+    },
+    {
+      "id": "2026-08-23/v0.25.7-47-g2137843b-dirty",
+      "at": "2026-08-23T12:05",
+      "ref": "v0.25.7-47-g2137843b-dirty",
+      "stages": [
+        {
+          "name": "ship:content:build",
+          "ms": 10976,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:skills:sync",
+          "ms": 63695,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:vitest apps/test-dashboard",
+          "ms": 6027,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest tools/deploy-timing",
+          "ms": 8545,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/content-api",
+          "ms": 14208,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:skills:check",
+          "ms": 14255,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/admin",
+          "ms": 51017,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/editor",
+          "ms": 92859,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:typecheck",
+          "ms": 132791,
+          "code": 1,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/game-server",
+          "ms": 155457,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest packages/shared",
+          "ms": 223172,
+          "code": 1,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/client",
+          "ms": 236822,
+          "code": 1,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:total",
+          "ms": 311509,
+          "code": 1,
+          "phase": "summary",
+          "serialSec": 74.7,
+          "parallelCpuSec": 935.2,
+          "forksPerSuite": 5
+        }
+      ]
     }
   ]
 }
