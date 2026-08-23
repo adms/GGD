@@ -1,0 +1,6716 @@
+{
+ "abilities": [
+  {
+   "id": "godie-e001.e",
+   "name": "22-03 五吋釘",
+   "slot": "E",
+   "castTimeSec": 0.767,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e001.ex",
+   "name": "22-002 月光下的決鬥者",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e001.passive",
+   "name": "22-00 嗚鎖打!",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.833,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續＋多段"
+  },
+  {
+   "id": "godie-e001.q",
+   "name": "22-01 鬼隱之擊",
+   "slot": "Q",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e001.r",
+   "name": "22-04 雛見澤症候群L5",
+   "slot": "R",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e001.w",
+   "name": "22-02 染血的柴刀",
+   "slot": "W",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-e002.e",
+   "name": "20-03 約束與勝利之劍",
+   "slot": "E",
+   "castTimeSec": 1,
+   "template": null,
+   "implemented": [
+    "持續",
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [
+    "等待"
+   ],
+   "gap": [
+    "等待"
+   ],
+   "signature": "持續＋續效特效＋路徑"
+  },
+  {
+   "id": "godie-e002.ex",
+   "name": "20-002 解放.約束勝利劍MAX",
+   "slot": "EX",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續",
+    "等待",
+    "續效特效",
+    "路徑",
+    "迴圈"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "等待＋迴圈＋持續＋續效特效＋多段＋路徑"
+  },
+  {
+   "id": "godie-e002.passive",
+   "name": "20-00 銀色甲胄",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-e002.q",
+   "name": "20-02 感知能力",
+   "slot": "Q",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-e002.r",
+   "name": "20-04 Avalon-永恆的理想鄉",
+   "slot": "R",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e002.w",
+   "name": "20-01 風王結界",
+   "slot": "W",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "續效特效"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e007.e",
+   "name": "12-03 破凰之心-徒手空破山",
+   "slot": "E",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-e007.ex",
+   "name": "12-002 仙氣發勁",
+   "slot": "EX",
+   "castTimeSec": 1.5,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e007.passive",
+   "name": "12-00 感應意脈",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-e007.q",
+   "name": "12-01 鬥仙術",
+   "slot": "Q",
+   "castTimeSec": 0.3,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e007.r",
+   "name": "12-04 龍氣爆發",
+   "slot": "R",
+   "castTimeSec": 2.033,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "等待",
+    "迴圈"
+   ],
+   "gap": [
+    "等待",
+    "迴圈"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-e007.w",
+   "name": "12-02 仙氣．採藥",
+   "slot": "W",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-e008.e",
+   "name": "21-03 赤焰爆發",
+   "slot": "E",
+   "castTimeSec": 1,
+   "template": null,
+   "implemented": [
+    "持續",
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續＋續效特效＋路徑"
+  },
+  {
+   "id": "godie-e008.ex",
+   "name": "21-002 天破壤碎",
+   "slot": "EX",
+   "castTimeSec": 1.833,
+   "template": null,
+   "implemented": [
+    "等待",
+    "迴圈"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "等待＋迴圈"
+  },
+  {
+   "id": "godie-e008.passive",
+   "name": "21-00 灼眼",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-e008.q",
+   "name": "21-02 拔焰刀",
+   "slot": "Q",
+   "castTimeSec": 0.5,
+   "template": null,
+   "implemented": [
+    "持續",
+    "等待",
+    "續效特效"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "等待＋持續＋續效特效"
+  },
+  {
+   "id": "godie-e008.r",
+   "name": "21-04 討滅封絕",
+   "slot": "R",
+   "castTimeSec": 0.667,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續",
+    "續效特效"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e008.w",
+   "name": "21-01 火羽",
+   "slot": "W",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e00l.e",
+   "name": "20-03 約束與勝利之劍",
+   "slot": "E",
+   "castTimeSec": 1,
+   "template": null,
+   "implemented": [
+    "持續",
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [
+    "等待"
+   ],
+   "gap": [
+    "等待"
+   ],
+   "signature": "持續＋續效特效＋路徑"
+  },
+  {
+   "id": "godie-e00l.ex",
+   "name": "20-002 解放.約束勝利劍MAX",
+   "slot": "EX",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續",
+    "等待",
+    "續效特效",
+    "路徑",
+    "迴圈"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "等待＋迴圈＋持續＋續效特效＋多段＋路徑"
+  },
+  {
+   "id": "godie-e00l.passive",
+   "name": "20-00 銀色甲胄",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e00l.q",
+   "name": "20-02 感知能力",
+   "slot": "Q",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-e00l.r",
+   "name": "20-04 Avalon-永恆的理想鄉",
+   "slot": "R",
+   "castTimeSec": 1.633,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-e00l.w",
+   "name": "20-01 風王結界",
+   "slot": "W",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-e00n.e",
+   "name": "22-03 五吋釘",
+   "slot": "E",
+   "castTimeSec": 0.767,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e00n.ex",
+   "name": "22-002 月光下的決鬥者",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e00n.passive",
+   "name": "22-00 嗚鎖打!",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.833,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續＋多段"
+  },
+  {
+   "id": "godie-e00n.q",
+   "name": "22-01 鬼隱之擊",
+   "slot": "Q",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e00n.r",
+   "name": "22-04 雛見澤症候群L5",
+   "slot": "R",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e00n.w",
+   "name": "22-02 染血的柴刀",
+   "slot": "W",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e00r.e",
+   "name": "59-03 AT力場",
+   "slot": "E",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e00r.ex",
+   "name": "59-001 完全暴走",
+   "slot": "EX",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續",
+    "等待",
+    "續效特效",
+    "迴圈"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "等待＋迴圈＋持續＋續效特效＋多段"
+  },
+  {
+   "id": "godie-e00r.passive",
+   "name": "59-00 暴走",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續",
+    "等待",
+    "續效特效",
+    "迴圈"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "等待＋迴圈＋持續＋續效特效＋多段"
+  },
+  {
+   "id": "godie-e00r.q",
+   "name": "59-01 吞噬",
+   "slot": "Q",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e00r.r",
+   "name": "59-04 野戰型陽電子砲",
+   "slot": "R",
+   "castTimeSec": 3,
+   "template": null,
+   "implemented": [
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [
+    "等待"
+   ],
+   "gap": [
+    "等待"
+   ],
+   "signature": "續效特效＋路徑"
+  },
+  {
+   "id": "godie-e00r.w",
+   "name": "59-02 高週波短刀",
+   "slot": "W",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e00s.e",
+   "name": "70-03 木束縛之術",
+   "slot": "E",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續＋多段"
+  },
+  {
+   "id": "godie-e00s.ex",
+   "name": "70-002 樹海降臨",
+   "slot": "EX",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-e00s.passive",
+   "name": "70-00 紮根",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-e00s.q",
+   "name": "70-01 伸卡球",
+   "slot": "Q",
+   "castTimeSec": 0.833,
+   "template": null,
+   "implemented": [
+    "續效特效"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "續效特效"
+  },
+  {
+   "id": "godie-e00s.r",
+   "name": "70-04 千年練成",
+   "slot": "R",
+   "castTimeSec": 1.233,
+   "template": null,
+   "implemented": [
+    "等待",
+    "續效特效",
+    "迴圈"
+   ],
+   "declared": [
+    "續效特效"
+   ],
+   "gap": [],
+   "signature": "等待＋迴圈＋續效特效"
+  },
+  {
+   "id": "godie-e00s.w",
+   "name": "70-02 大怒石",
+   "slot": "W",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-e00w.e",
+   "name": "77-03 GLADIARIA ALAT",
+   "slot": "E",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "路徑"
+   ],
+   "gap": [
+    "路徑"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e00w.ex",
+   "name": "77-002 御雷劍",
+   "slot": "EX",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "持續"
+   ],
+   "gap": [
+    "持續"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-e00w.passive",
+   "name": "77-00 浮雲-旋一閃",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e00w.q",
+   "name": "77-01 百烈櫻華斬",
+   "slot": "Q",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "多段",
+    "等待",
+    "路徑"
+   ],
+   "declared": [
+    "路徑"
+   ],
+   "gap": [],
+   "signature": "等待＋多段＋路徑"
+  },
+  {
+   "id": "godie-e00w.r",
+   "name": "77-04 真-雷光劍",
+   "slot": "R",
+   "castTimeSec": 2,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-e00w.w",
+   "name": "77-02 雷鳴劍",
+   "slot": "W",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-e00x.e",
+   "name": "77-03 GLADIARIA ALAT",
+   "slot": "E",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "持續"
+   ],
+   "gap": [
+    "持續"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-e00x.ex",
+   "name": "77-002 御雷劍",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e00x.passive",
+   "name": "77-00 浮雲-旋一閃",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.467,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-e00x.q",
+   "name": "77-01 百烈櫻華斬",
+   "slot": "Q",
+   "castTimeSec": 0.8,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "路徑"
+   ],
+   "gap": [
+    "路徑"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e00x.r",
+   "name": "77-04 真-雷光劍",
+   "slot": "R",
+   "castTimeSec": 1.233,
+   "template": null,
+   "implemented": [
+    "續效特效"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "續效特效"
+  },
+  {
+   "id": "godie-e00x.w",
+   "name": "77-02 雷鳴劍",
+   "slot": "W",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e010.e",
+   "name": "70-03 木束縛之術",
+   "slot": "E",
+   "castTimeSec": 0.833,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e010.passive",
+   "name": "70-00 紮根",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-e010.q",
+   "name": "70-01 伸卡球",
+   "slot": "Q",
+   "castTimeSec": 0.833,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-e010.r",
+   "name": "70-04 千年練成",
+   "slot": "R",
+   "castTimeSec": 1.233,
+   "template": null,
+   "implemented": [
+    "等待",
+    "續效特效",
+    "迴圈"
+   ],
+   "declared": [
+    "續效特效"
+   ],
+   "gap": [],
+   "signature": "等待＋迴圈＋續效特效"
+  },
+  {
+   "id": "godie-e010.w",
+   "name": "70-02 大怒石",
+   "slot": "W",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "路徑"
+   ],
+   "gap": [
+    "路徑"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-edem.e",
+   "name": "45-03 千鳥",
+   "slot": "E",
+   "castTimeSec": 2,
+   "template": null,
+   "implemented": [
+    "等待",
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [
+    "等待",
+    "路徑"
+   ],
+   "gap": [],
+   "signature": "等待＋續效特效＋路徑"
+  },
+  {
+   "id": "godie-edem.ex",
+   "name": "45-002 天照",
+   "slot": "EX",
+   "castTimeSec": 1.633,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續",
+    "迴圈"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [],
+   "signature": "迴圈＋持續＋多段"
+  },
+  {
+   "id": "godie-edem.passive",
+   "name": "45-00 寫輪眼",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-edem.q",
+   "name": "45-01 火遁-豪火龍之術",
+   "slot": "Q",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續",
+    "迴圈"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [],
+   "signature": "迴圈＋持續＋多段"
+  },
+  {
+   "id": "godie-edem.r",
+   "name": "45-04 哥哥",
+   "slot": "R",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-edem.w",
+   "name": "45-02 千鳥流",
+   "slot": "W",
+   "castTimeSec": 0.833,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續＋多段"
+  },
+  {
+   "id": "godie-efur.e",
+   "name": "13-03 龍頭戲畫。布陣",
+   "slot": "E",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "等待",
+    "續效特效"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "等待＋續效特效"
+  },
+  {
+   "id": "godie-efur.ex",
+   "name": "13-002 絕。暗殺奧義",
+   "slot": "EX",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "等待",
+    "續效特效"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "等待＋續效特效"
+  },
+  {
+   "id": "godie-efur.passive",
+   "name": "13-00 念。攻防轉換",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "等待",
+    "續效特效",
+    "迴圈"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "持續"
+   ],
+   "signature": "等待＋迴圈＋續效特效"
+  },
+  {
+   "id": "godie-efur.q",
+   "name": "13-01 暗步。極限之圓",
+   "slot": "Q",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續",
+    "等待",
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [
+    "持續",
+    "路徑"
+   ],
+   "gap": [],
+   "signature": "等待＋持續＋續效特效＋路徑"
+  },
+  {
+   "id": "godie-efur.r",
+   "name": "13-04 龍星群",
+   "slot": "R",
+   "castTimeSec": 0.6,
+   "template": null,
+   "implemented": [
+    "等待",
+    "續效特效",
+    "迴圈"
+   ],
+   "declared": [
+    "等待",
+    "迴圈"
+   ],
+   "gap": [],
+   "signature": "等待＋迴圈＋續效特效"
+  },
+  {
+   "id": "godie-efur.w",
+   "name": "13-02 龍頭戲畫。牙突",
+   "slot": "W",
+   "castTimeSec": 0.467,
+   "template": null,
+   "implemented": [
+    "等待",
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [
+    "路徑"
+   ],
+   "gap": [],
+   "signature": "等待＋續效特效＋路徑"
+  },
+  {
+   "id": "godie-emfr.e",
+   "name": "15-03 獄炎煉我",
+   "slot": "E",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-emfr.ex",
+   "name": "15-002 敵彈吸收陣。太陰道",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續",
+    "等待"
+   ],
+   "gap": [
+    "等待"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-emfr.passive",
+   "name": "15-00 真·不死不滅",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-emfr.q",
+   "name": "15-01 雷神槍「巨神殺手」",
+   "slot": "Q",
+   "castTimeSec": 0.467,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續",
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續＋續效特效＋多段＋路徑"
+  },
+  {
+   "id": "godie-emfr.r",
+   "name": "15-04 雷天大壯。貳式",
+   "slot": "R",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "持續",
+    "續效特效"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續＋續效特效"
+  },
+  {
+   "id": "godie-emfr.w",
+   "name": "15-02 疾風迅雷",
+   "slot": "W",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-emns.e",
+   "name": "44-03 火車輾過",
+   "slot": "E",
+   "castTimeSec": 0.833,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-emns.ex",
+   "name": "44-002 交換筆記本",
+   "slot": "EX",
+   "castTimeSec": 2,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "等待"
+   ],
+   "gap": [
+    "等待"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-emns.passive",
+   "name": "44-00 機警",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-emns.q",
+   "name": "44-01 死神之眼",
+   "slot": "Q",
+   "castTimeSec": 2,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "等待"
+   ],
+   "gap": [
+    "等待"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-emns.r",
+   "name": "44-04 心臟麻痺",
+   "slot": "R",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-emns.w",
+   "name": "44-02 死神的規則",
+   "slot": "W",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-etyr.e",
+   "name": "14-02 式神炸裂",
+   "slot": "E",
+   "castTimeSec": 1.433,
+   "template": "tpl-orbit-array",
+   "implemented": [
+    "多段",
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "多段＋路徑"
+  },
+  {
+   "id": "godie-etyr.ex",
+   "name": "14-002 魔力激發",
+   "slot": "EX",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-etyr.passive",
+   "name": "14-00 召喚式神",
+   "slot": "PASSIVE",
+   "castTimeSec": 1.433,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "持續"
+   ],
+   "gap": [
+    "持續"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-etyr.q",
+   "name": "14-01 東風繪扇、南風末廣",
+   "slot": "Q",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-etyr.r",
+   "name": "14-04 聖夜降臨",
+   "slot": "R",
+   "castTimeSec": 0.3,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [
+    "持續"
+   ],
+   "gap": [
+    "持續"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-etyr.w",
+   "name": "14-03 魔力應援",
+   "slot": "W",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-ewar.e",
+   "name": "12-03 破凰之心。空破山",
+   "slot": "E",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-ewar.ex",
+   "name": "12-002 仙氣發勁",
+   "slot": "EX",
+   "castTimeSec": 2,
+   "template": null,
+   "implemented": [
+    "等待",
+    "路徑"
+   ],
+   "declared": [
+    "等待",
+    "路徑"
+   ],
+   "gap": [],
+   "signature": "等待＋路徑"
+  },
+  {
+   "id": "godie-ewar.passive",
+   "name": "12-00 感應意脈",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-ewar.q",
+   "name": "12-01 鬥仙術",
+   "slot": "Q",
+   "castTimeSec": 0.3,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-ewar.r",
+   "name": "12-04 龍氣爆發",
+   "slot": "R",
+   "castTimeSec": 2,
+   "template": null,
+   "implemented": [
+    "多段",
+    "迴圈"
+   ],
+   "declared": [
+    "等待"
+   ],
+   "gap": [
+    "等待"
+   ],
+   "signature": "迴圈＋多段"
+  },
+  {
+   "id": "godie-ewar.w",
+   "name": "12-02 仙氣．採藥",
+   "slot": "W",
+   "castTimeSec": 3,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "等待",
+    "迴圈"
+   ],
+   "gap": [
+    "等待",
+    "迴圈"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-h00l.e",
+   "name": "60-03 三角神力．勇氣",
+   "slot": "E",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h00l.ex",
+   "name": "60-002 勇者意志",
+   "slot": "EX",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h00l.passive",
+   "name": "60-00 大師之劍",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-h00l.q",
+   "name": "60-01 旋風斬",
+   "slot": "Q",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "多段",
+    "等待",
+    "路徑"
+   ],
+   "declared": [
+    "路徑"
+   ],
+   "gap": [],
+   "signature": "等待＋多段＋路徑"
+  },
+  {
+   "id": "godie-h00l.r",
+   "name": "60-04 完美盾反",
+   "slot": "R",
+   "castTimeSec": 2,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續",
+    "等待",
+    "路徑"
+   ],
+   "declared": [
+    "持續",
+    "等待",
+    "路徑"
+   ],
+   "gap": [],
+   "signature": "等待＋持續＋多段＋路徑"
+  },
+  {
+   "id": "godie-h00l.w",
+   "name": "60-02 鎖鏈槍",
+   "slot": "W",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "持續",
+    "路徑"
+   ],
+   "declared": [
+    "路徑"
+   ],
+   "gap": [],
+   "signature": "持續＋路徑"
+  },
+  {
+   "id": "godie-h01n.e",
+   "name": "79-03 月牙天衝",
+   "slot": "E",
+   "castTimeSec": 0.467,
+   "template": null,
+   "implemented": [
+    "多段",
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "多段＋路徑"
+  },
+  {
+   "id": "godie-h01n.ex",
+   "name": "79-002 虛化",
+   "slot": "EX",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-h01n.passive",
+   "name": "79-00 靈壓",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h01n.q",
+   "name": "79-01 瞬步",
+   "slot": "Q",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續",
+    "等待",
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [
+    "持續",
+    "路徑"
+   ],
+   "gap": [],
+   "signature": "等待＋持續＋續效特效＋多段＋路徑"
+  },
+  {
+   "id": "godie-h01n.r",
+   "name": "79-04 卍解",
+   "slot": "R",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h01n.w",
+   "name": "79-02 月牙斬擊",
+   "slot": "W",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-h01o.e",
+   "name": "79-03 月牙天衝",
+   "slot": "E",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "續效特效"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "續效特效"
+  },
+  {
+   "id": "godie-h01o.ex",
+   "name": "79-002 虛化",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h01o.passive",
+   "name": "79-00 靈壓",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h01o.q",
+   "name": "79-01 瞬步",
+   "slot": "Q",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [
+    "等待"
+   ],
+   "gap": [
+    "等待"
+   ],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-h01o.r",
+   "name": "79-04 卍解",
+   "slot": "R",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h01o.w",
+   "name": "79-02 斬擊",
+   "slot": "W",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-h01u.e",
+   "name": "80-03 鬼神烈戟",
+   "slot": "E",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [
+    "多段",
+    "等待",
+    "路徑"
+   ],
+   "declared": [
+    "路徑"
+   ],
+   "gap": [],
+   "signature": "等待＋多段＋路徑"
+  },
+  {
+   "id": "godie-h01u.ex",
+   "name": "80-002 戰無不勝",
+   "slot": "EX",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-h01u.passive",
+   "name": "80-00 飛將神弓",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h01u.q",
+   "name": "80-01 天下無雙",
+   "slot": "Q",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續",
+    "續效特效"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續＋續效特效"
+  },
+  {
+   "id": "godie-h01u.r",
+   "name": "80-04 赤兔咆哮",
+   "slot": "R",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "持續",
+    "續效特效"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續＋續效特效"
+  },
+  {
+   "id": "godie-h01u.w",
+   "name": "80-02 弒鬼神",
+   "slot": "W",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續",
+    "等待",
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [
+    "持續",
+    "路徑"
+   ],
+   "gap": [],
+   "signature": "等待＋持續＋續效特效＋多段＋路徑"
+  },
+  {
+   "id": "godie-h020.e",
+   "name": "04-03 龍破斬",
+   "slot": "E",
+   "castTimeSec": 1.233,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續",
+    "等待",
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "等待＋持續＋續效特效＋多段＋路徑"
+  },
+  {
+   "id": "godie-h020.ex",
+   "name": "04-002 惡夢魔王的碎片",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續",
+    "續效特效"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續＋續效特效"
+  },
+  {
+   "id": "godie-h020.passive",
+   "name": "04-00 翔封界",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "路徑"
+   ],
+   "gap": [
+    "路徑"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-h020.q",
+   "name": "04-01 火球術",
+   "slot": "Q",
+   "castTimeSec": 0.767,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h020.r",
+   "name": "04-04 神滅斬",
+   "slot": "R",
+   "castTimeSec": 2,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h020.w",
+   "name": "04-02 炸彈陣",
+   "slot": "W",
+   "castTimeSec": 1.433,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "持續",
+    "迴圈"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-h02k.e",
+   "name": "89-03 憤怒的胸毛",
+   "slot": "E",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h02k.ex",
+   "name": "89-002 俄羅斯輪盤",
+   "slot": "EX",
+   "castTimeSec": 0.3,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h02k.passive",
+   "name": "89-00 憤怒的門牙",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h02k.q",
+   "name": "89-01 憤怒的頭槌",
+   "slot": "Q",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h02k.r",
+   "name": "89-04 憤怒的簡諧運動",
+   "slot": "R",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續",
+    "等待",
+    "路徑"
+   ],
+   "declared": [
+    "持續",
+    "路徑"
+   ],
+   "gap": [],
+   "signature": "等待＋持續＋路徑"
+  },
+  {
+   "id": "godie-h02k.w",
+   "name": "89-02 憤怒的菊花",
+   "slot": "W",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續＋多段"
+  },
+  {
+   "id": "godie-h02r.e",
+   "name": "90-03 藤鞭",
+   "slot": "E",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "等待",
+    "路徑"
+   ],
+   "gap": [
+    "等待",
+    "路徑"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-h02r.ex",
+   "name": "90-002 超進化! 妙蛙花",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h02r.passive",
+   "name": "90-00 寄生種子",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "持續",
+    "迴圈"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-h02r.q",
+   "name": "90-01 飛葉快刀",
+   "slot": "Q",
+   "castTimeSec": 1.233,
+   "template": null,
+   "implemented": [
+    "等待",
+    "續效特效"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "持續",
+    "迴圈"
+   ],
+   "signature": "等待＋續效特效"
+  },
+  {
+   "id": "godie-h02r.r",
+   "name": "90-04 陽光烈焰",
+   "slot": "R",
+   "castTimeSec": 2.233,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-h02r.w",
+   "name": "90-02 麻痺粉",
+   "slot": "W",
+   "castTimeSec": 1.233,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h02u.e",
+   "name": "92-03 消化液",
+   "slot": "E",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h02u.ex",
+   "name": "92-002 最終戈壁",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h02u.passive",
+   "name": "92-00 憂鬱的眼神",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h02u.q",
+   "name": "92-01 臥草泥馬",
+   "slot": "Q",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h02u.r",
+   "name": "92-04 馬勒戈壁",
+   "slot": "R",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h02u.w",
+   "name": "92-02 狂草泥馬",
+   "slot": "W",
+   "castTimeSec": 1.633,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h02v.e",
+   "name": "92-02 消化液",
+   "slot": "E",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續",
+    "路徑",
+    "迴圈"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [],
+   "signature": "迴圈＋持續＋多段＋路徑"
+  },
+  {
+   "id": "godie-h02v.ex",
+   "name": "92-002 最終戈壁",
+   "slot": "EX",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "多段",
+    "等待",
+    "迴圈"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "持續"
+   ],
+   "signature": "等待＋迴圈＋多段"
+  },
+  {
+   "id": "godie-h02v.passive",
+   "name": "92-00 憂鬱的眼神",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-h02v.q",
+   "name": "92-01 臥草泥馬",
+   "slot": "Q",
+   "castTimeSec": 0.833,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續",
+    "等待",
+    "迴圈"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [],
+   "signature": "等待＋迴圈＋持續＋多段"
+  },
+  {
+   "id": "godie-h02v.r",
+   "name": "92-04 馬勒戈壁",
+   "slot": "R",
+   "castTimeSec": 1.433,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續＋多段"
+  },
+  {
+   "id": "godie-h02v.w",
+   "name": "92-03 狂草泥馬",
+   "slot": "W",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-hapm.e",
+   "name": "52-03 無銘斧劍",
+   "slot": "E",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-hapm.ex",
+   "name": "52-002 射殺百頭",
+   "slot": "EX",
+   "castTimeSec": 2,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續",
+    "等待",
+    "路徑",
+    "迴圈"
+   ],
+   "declared": [
+    "多段",
+    "等待",
+    "路徑"
+   ],
+   "gap": [],
+   "signature": "等待＋迴圈＋持續＋多段＋路徑"
+  },
+  {
+   "id": "godie-hapm.passive",
+   "name": "52-00 十二道試煉",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "路徑"
+   ],
+   "gap": [
+    "路徑"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-hapm.q",
+   "name": "52-01 狂戰士之怒",
+   "slot": "Q",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-hapm.r",
+   "name": "52-04 巨神一擊",
+   "slot": "R",
+   "castTimeSec": 2,
+   "template": null,
+   "implemented": [
+    "等待",
+    "路徑"
+   ],
+   "declared": [
+    "等待",
+    "路徑"
+   ],
+   "gap": [],
+   "signature": "等待＋路徑"
+  },
+  {
+   "id": "godie-hapm.w",
+   "name": "52-02 蹂躪編年史",
+   "slot": "W",
+   "castTimeSec": 1,
+   "template": null,
+   "implemented": [
+    "持續",
+    "路徑"
+   ],
+   "declared": [
+    "持續",
+    "等待"
+   ],
+   "gap": [
+    "等待"
+   ],
+   "signature": "持續＋路徑"
+  },
+  {
+   "id": "godie-hart.e",
+   "name": "01-03 畫龍點睛",
+   "slot": "E",
+   "castTimeSec": 1.433,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-hart.ex",
+   "name": "01-002 究極魔劍",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-hart.passive",
+   "name": "01-00 怒斬",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-hart.q",
+   "name": "01-01 凶斬",
+   "slot": "Q",
+   "castTimeSec": 0.767,
+   "template": null,
+   "implemented": [
+    "持續",
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續＋路徑"
+  },
+  {
+   "id": "godie-hart.r",
+   "name": "01-04 超究武神霸斬",
+   "slot": "R",
+   "castTimeSec": 1.833,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續",
+    "續效特效"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續＋續效特效＋多段"
+  },
+  {
+   "id": "godie-hart.w",
+   "name": "01-02 隕石擊",
+   "slot": "W",
+   "castTimeSec": 1.5,
+   "template": null,
+   "implemented": [
+    "持續",
+    "路徑"
+   ],
+   "declared": [
+    "路徑"
+   ],
+   "gap": [],
+   "signature": "持續＋路徑"
+  },
+  {
+   "id": "godie-hgam.e",
+   "name": "90-03 藤鞭",
+   "slot": "E",
+   "castTimeSec": 0.667,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [
+    "等待",
+    "路徑"
+   ],
+   "gap": [
+    "等待",
+    "路徑"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-hgam.ex",
+   "name": "90-002 超進化! 妙蛙花",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-hgam.passive",
+   "name": "90-00 寄生種子",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "持續",
+    "迴圈"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-hgam.q",
+   "name": "90-01 飛葉快刀",
+   "slot": "Q",
+   "castTimeSec": 1.233,
+   "template": "tpl-ground-nova",
+   "implemented": [
+    "等待",
+    "續效特效"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "持續",
+    "迴圈"
+   ],
+   "signature": "等待＋續效特效"
+  },
+  {
+   "id": "godie-hgam.r",
+   "name": "90-04 陽光烈焰",
+   "slot": "R",
+   "castTimeSec": 2.233,
+   "template": "tpl-line-sweep",
+   "implemented": [
+    "多段",
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "多段＋路徑"
+  },
+  {
+   "id": "godie-hgam.w",
+   "name": "90-02 麻痺粉",
+   "slot": "W",
+   "castTimeSec": 1.233,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-hjai.e",
+   "name": "04-03 龍破斬",
+   "slot": "E",
+   "castTimeSec": 1.233,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續",
+    "等待",
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "等待＋持續＋續效特效＋多段＋路徑"
+  },
+  {
+   "id": "godie-hjai.ex",
+   "name": "04-002 惡夢魔王的碎片",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續",
+    "續效特效"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續＋續效特效"
+  },
+  {
+   "id": "godie-hjai.passive",
+   "name": "04-00 翔封界",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "路徑"
+   ],
+   "gap": [
+    "路徑"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-hjai.q",
+   "name": "04-01 火球術",
+   "slot": "Q",
+   "castTimeSec": 0.767,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-hjai.r",
+   "name": "04-04 神滅斬",
+   "slot": "R",
+   "castTimeSec": 2,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-hjai.w",
+   "name": "04-02 炸彈陣",
+   "slot": "W",
+   "castTimeSec": 1.433,
+   "template": "tpl-instant-blast",
+   "implemented": [],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "持續",
+    "迴圈"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-hpb1.e",
+   "name": "07-03 列、在、前",
+   "slot": "E",
+   "castTimeSec": 1.433,
+   "template": null,
+   "implemented": [
+    "持續",
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續＋路徑"
+  },
+  {
+   "id": "godie-hpb1.ex",
+   "name": "07-002 獸矛持有者",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-hpb1.passive",
+   "name": "07-00 獸化心靈",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "迴圈"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "迴圈"
+  },
+  {
+   "id": "godie-hpb1.q",
+   "name": "07-01 臨、兵、鬥",
+   "slot": "Q",
+   "castTimeSec": 0.067,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-hpb1.r",
+   "name": "07-04 神聖結界",
+   "slot": "R",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續",
+    "續效特效"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-hpb1.w",
+   "name": "07-02 者、皆、陣",
+   "slot": "W",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "路徑"
+   ],
+   "gap": [
+    "路徑"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-huth.e",
+   "name": "28-03 分身",
+   "slot": "E",
+   "castTimeSec": 0.667,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [
+    "持續"
+   ],
+   "gap": [
+    "持續"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-huth.ex",
+   "name": "28-002 純粹魔人普烏",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-huth.passive",
+   "name": "28-00 無限再生",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-huth.q",
+   "name": "28-01 吃掉你",
+   "slot": "Q",
+   "castTimeSec": 0.3,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-huth.r",
+   "name": "28-04 破滅能量彈",
+   "slot": "R",
+   "castTimeSec": 1.433,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-huth.w",
+   "name": "28-02 把你變成餅乾",
+   "slot": "W",
+   "castTimeSec": 0.3,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-hvsh.e",
+   "name": "48-03 鮮血神殿",
+   "slot": "E",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續",
+    "迴圈"
+   ],
+   "declared": [
+    "持續",
+    "續效特效",
+    "迴圈"
+   ],
+   "gap": [],
+   "signature": "迴圈＋持續＋多段"
+  },
+  {
+   "id": "godie-hvsh.ex",
+   "name": "48-002 騎英之疆繩MAX",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-hvsh.passive",
+   "name": "48-00 石化之眼",
+   "slot": "PASSIVE",
+   "castTimeSec": 2.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-hvsh.q",
+   "name": "48-01 魔法鎖鏈",
+   "slot": "Q",
+   "castTimeSec": 0.667,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-hvsh.r",
+   "name": "48-04 騎英之疆繩",
+   "slot": "R",
+   "castTimeSec": 1.233,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-hvsh.w",
+   "name": "48-02 心眼",
+   "slot": "W",
+   "castTimeSec": 0.267,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-hvwd.e",
+   "name": "02-03 魂飛魄散",
+   "slot": "E",
+   "castTimeSec": 0.667,
+   "template": "tpl-single-strike",
+   "implemented": [
+    "續效特效"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "續效特效"
+  },
+  {
+   "id": "godie-hvwd.ex",
+   "name": "02-002 神通眼",
+   "slot": "EX",
+   "castTimeSec": 1.833,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-hvwd.passive",
+   "name": "02-00 淨化",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.833,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-hvwd.q",
+   "name": "02-01 破魔之箭",
+   "slot": "Q",
+   "castTimeSec": 0.067,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-hvwd.r",
+   "name": "02-04 死魂蟲",
+   "slot": "R",
+   "castTimeSec": 1.233,
+   "template": null,
+   "implemented": [
+    "續效特效"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [
+    "持續"
+   ],
+   "signature": "續效特效"
+  },
+  {
+   "id": "godie-hvwd.w",
+   "name": "02-02 明鏡止水",
+   "slot": "W",
+   "castTimeSec": 0.267,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-n003.e",
+   "name": "42-03 暗夜吹雪",
+   "slot": "E",
+   "castTimeSec": 1.633,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-n003.ex",
+   "name": "42-002 魔力印章",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-n003.passive",
+   "name": "42-00 魔法障壁",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-n003.q",
+   "name": "42-01 凍結的大地",
+   "slot": "Q",
+   "castTimeSec": 1.5,
+   "template": "tpl-proxy-cast",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-n003.r",
+   "name": "42-04 世界終結",
+   "slot": "R",
+   "castTimeSec": 1.233,
+   "template": null,
+   "implemented": [
+    "持續",
+    "等待",
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [
+    "多段"
+   ],
+   "gap": [
+    "多段"
+   ],
+   "signature": "等待＋持續＋續效特效＋路徑"
+  },
+  {
+   "id": "godie-n003.w",
+   "name": "42-02 吸血祭品",
+   "slot": "W",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-n00b.e",
+   "name": "57-02 任意門",
+   "slot": "E",
+   "castTimeSec": 0.467,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-n00b.ex",
+   "name": "57-002 時光機",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-n00b.passive",
+   "name": "57-00 四次元口袋",
+   "slot": "PASSIVE",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續",
+    "續效特效"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續＋續效特效"
+  },
+  {
+   "id": "godie-n00b.q",
+   "name": "57-01 空氣砲",
+   "slot": "Q",
+   "castTimeSec": 0.833,
+   "template": "tpl-line-sweep",
+   "implemented": [
+    "多段",
+    "路徑"
+   ],
+   "declared": [
+    "路徑"
+   ],
+   "gap": [],
+   "signature": "多段＋路徑"
+  },
+  {
+   "id": "godie-n00b.r",
+   "name": "57-04 竹蜻蜓",
+   "slot": "R",
+   "castTimeSec": 1,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-n00b.w",
+   "name": "57-03 複製鏡",
+   "slot": "W",
+   "castTimeSec": 0.667,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [
+    "持續"
+   ],
+   "gap": [
+    "持續"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-n00p.e",
+   "name": "18-03 妖狐變化",
+   "slot": "E",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "持續"
+   ],
+   "gap": [
+    "持續"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-n00p.ex",
+   "name": "18-002 魔界吸血植物",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-n00p.passive",
+   "name": "18-00 薔薇荊棘之刃",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [
+    "多段",
+    "路徑"
+   ],
+   "gap": [
+    "多段"
+   ],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-n00p.q",
+   "name": "18-01 風華圓舞陣",
+   "slot": "Q",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "持續"
+   ],
+   "gap": [
+    "持續"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-n00p.r",
+   "name": "18-04 億年樹",
+   "slot": "R",
+   "castTimeSec": 1.233,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "持續",
+    "迴圈"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-n00p.w",
+   "name": "18-02 寄生種子",
+   "slot": "W",
+   "castTimeSec": 0.833,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "持續",
+    "迴圈"
+   ],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-n01c.e",
+   "name": "08-03 龍鬥氣砲咒文",
+   "slot": "E",
+   "castTimeSec": 0.833,
+   "template": null,
+   "implemented": [
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "續效特效＋路徑"
+  },
+  {
+   "id": "godie-n01c.ex",
+   "name": "08-002 龍魔人",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-n01c.passive",
+   "name": "08-00 龍紋記憶",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續",
+    "續效特效"
+   ],
+   "declared": [
+    "續效特效",
+    "路徑"
+   ],
+   "gap": [
+    "路徑"
+   ],
+   "signature": "持續＋續效特效"
+  },
+  {
+   "id": "godie-n01c.q",
+   "name": "08-01 雙龍紋",
+   "slot": "Q",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "持續"
+   ],
+   "gap": [
+    "持續"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-n01c.r",
+   "name": "08-04 阿邦快速劍X",
+   "slot": "R",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-n01c.w",
+   "name": "08-02 萊丁快速劍",
+   "slot": "W",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-n01g.e",
+   "name": "42-03 暗夜吹雪",
+   "slot": "E",
+   "castTimeSec": 1.633,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-n01g.ex",
+   "name": "42-002 魔力印章",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-n01g.passive",
+   "name": "42-00 魔法障壁",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-n01g.q",
+   "name": "42-01 凍結的大地",
+   "slot": "Q",
+   "castTimeSec": 1.5,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-n01g.r",
+   "name": "42-04 世界終結",
+   "slot": "R",
+   "castTimeSec": 1.233,
+   "template": null,
+   "implemented": [
+    "持續",
+    "等待",
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [
+    "多段"
+   ],
+   "gap": [
+    "多段"
+   ],
+   "signature": "等待＋持續＋續效特效＋路徑"
+  },
+  {
+   "id": "godie-n01g.w",
+   "name": "42-02 吸血祭品",
+   "slot": "W",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-nbbc.e",
+   "name": "08-03 龍鬥氣砲咒文",
+   "slot": "E",
+   "castTimeSec": 0.833,
+   "template": null,
+   "implemented": [
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "續效特效＋路徑"
+  },
+  {
+   "id": "godie-nbbc.ex",
+   "name": "08-002 龍魔人",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-nbbc.passive",
+   "name": "08-00 龍紋記憶",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續",
+    "續效特效"
+   ],
+   "declared": [
+    "續效特效",
+    "路徑"
+   ],
+   "gap": [
+    "路徑"
+   ],
+   "signature": "持續＋續效特效"
+  },
+  {
+   "id": "godie-nbbc.q",
+   "name": "08-01 雙龍紋",
+   "slot": "Q",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "持續"
+   ],
+   "gap": [
+    "持續"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-nbbc.r",
+   "name": "08-04 阿邦快速劍X",
+   "slot": "R",
+   "castTimeSec": 1.233,
+   "template": "tpl-single-strike",
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-nbbc.w",
+   "name": "08-02 萊丁快速劍",
+   "slot": "W",
+   "castTimeSec": 0.667,
+   "template": "tpl-single-strike",
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-nsjs.e",
+   "name": "18-03 妖狐變化",
+   "slot": "E",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-nsjs.ex",
+   "name": "18-002 魔界吸血植物",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-nsjs.passive",
+   "name": "18-00 薔薇荊棘之刃",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [
+    "多段",
+    "路徑"
+   ],
+   "gap": [
+    "多段"
+   ],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-nsjs.q",
+   "name": "18-01 風華圓舞陣",
+   "slot": "Q",
+   "castTimeSec": 0.667,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [
+    "持續"
+   ],
+   "gap": [
+    "持續"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-nsjs.r",
+   "name": "18-04 億年樹",
+   "slot": "R",
+   "castTimeSec": 1.233,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "持續",
+    "迴圈"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-nsjs.w",
+   "name": "18-02 寄生種子",
+   "slot": "W",
+   "castTimeSec": 0.833,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "持續",
+    "迴圈"
+   ],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-o00k.e",
+   "name": "86-03 神鳴",
+   "slot": "E",
+   "castTimeSec": 2.633,
+   "template": "tpl-instant-blast",
+   "implemented": [],
+   "declared": [
+    "路徑"
+   ],
+   "gap": [
+    "路徑"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-o00k.ex",
+   "name": "86-002 雷電萌神",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-o00k.passive",
+   "name": "86-00 裝可愛",
+   "slot": "PASSIVE",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續",
+    "續效特效"
+   ],
+   "declared": [
+    "持續",
+    "路徑"
+   ],
+   "gap": [
+    "路徑"
+   ],
+   "signature": "持續＋續效特效"
+  },
+  {
+   "id": "godie-o00k.q",
+   "name": "86-01 十萬伏特",
+   "slot": "Q",
+   "castTimeSec": 1.433,
+   "template": "tpl-instant-blast",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-o00k.r",
+   "name": "86-04 打雷絕招",
+   "slot": "R",
+   "castTimeSec": 0.5,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續",
+    "路徑",
+    "迴圈"
+   ],
+   "declared": [
+    "多段",
+    "路徑",
+    "迴圈"
+   ],
+   "gap": [],
+   "signature": "迴圈＋持續＋多段＋路徑"
+  },
+  {
+   "id": "godie-o00k.w",
+   "name": "86-02 電光一閃",
+   "slot": "W",
+   "castTimeSec": 0.467,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-o00l.e",
+   "name": "53-03 破法對咒",
+   "slot": "E",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續",
+    "續效特效"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-o00l.ex",
+   "name": "53-002 恐懼力量",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-o00l.passive",
+   "name": "53-00 空間穿梭",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續",
+    "續效特效"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續＋續效特效"
+  },
+  {
+   "id": "godie-o00l.q",
+   "name": "53-01 獸王牙操彈",
+   "slot": "Q",
+   "castTimeSec": 0.833,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-o00l.r",
+   "name": "53-04 暴爆咒",
+   "slot": "R",
+   "castTimeSec": 1.233,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-o00l.w",
+   "name": "53-02 強化炸彈陣",
+   "slot": "W",
+   "castTimeSec": 1.233,
+   "template": "tpl-instant-blast",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-o00x.e",
+   "name": "09-03 超級賽亞人",
+   "slot": "E",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "持續"
+   ],
+   "gap": [
+    "持續"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-o00x.ex",
+   "name": "09-002 十倍龜派氣功",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-o00x.passive",
+   "name": "09-00 賽亞人的血脈",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-o00x.q",
+   "name": "09-01 界王拳",
+   "slot": "Q",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "持續",
+    "迴圈"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-o00x.r",
+   "name": "09-04 龜派氣功",
+   "slot": "R",
+   "castTimeSec": 1.233,
+   "template": null,
+   "implemented": [
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "續效特效＋路徑"
+  },
+  {
+   "id": "godie-o00x.w",
+   "name": "09-02 瞬間移動",
+   "slot": "W",
+   "castTimeSec": 0.467,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-o02l.e",
+   "name": "58-03 就決定是你了!小智",
+   "slot": "E",
+   "castTimeSec": 0.5,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-o02l.ex",
+   "name": "58-002 打雷絕招",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-o02l.passive",
+   "name": "58-00 電光一閃",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.467,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-o02l.q",
+   "name": "58-01 十萬伏特",
+   "slot": "Q",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-o02l.r",
+   "name": "58-04 瘋狂皮卡丘",
+   "slot": "R",
+   "castTimeSec": 1.233,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "持續"
+   ],
+   "gap": [
+    "持續"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-o02l.w",
+   "name": "58-02 鋼鐵尾巴",
+   "slot": "W",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-o02p.e",
+   "name": "99-03 初音未來的消失",
+   "slot": "E",
+   "castTimeSec": 0.267,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-o02p.ex",
+   "name": "99-002 把你給MikuMiku掉",
+   "slot": "EX",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "持續"
+   ],
+   "gap": [
+    "持續"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-o02p.passive",
+   "name": "99-00 可愛就是正義",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-o02p.q",
+   "name": "99-01 甩蔥歌",
+   "slot": "Q",
+   "castTimeSec": 1.5,
+   "template": "tpl-instant-blast",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-o02p.r",
+   "name": "99-04 世界第一的公主殿下",
+   "slot": "R",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "持續",
+    "迴圈"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-o02p.w",
+   "name": "99-02 最初的聲音",
+   "slot": "W",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-o030.e",
+   "name": "30-03 痴漢火焰",
+   "slot": "E",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "持續",
+    "迴圈"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-o030.ex",
+   "name": "30-002 變態紳士",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-o030.passive",
+   "name": "30-00 攝影機",
+   "slot": "PASSIVE",
+   "castTimeSec": 1.233,
+   "template": null,
+   "implemented": [
+    "持續",
+    "續效特效"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續＋續效特效"
+  },
+  {
+   "id": "godie-o030.q",
+   "name": "30-01 綁架",
+   "slot": "Q",
+   "castTimeSec": 0.767,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-o030.r",
+   "name": "30-04 電車之狼衝擊",
+   "slot": "R",
+   "castTimeSec": 1.2,
+   "template": null,
+   "implemented": [
+    "持續",
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續＋路徑"
+  },
+  {
+   "id": "godie-o030.w",
+   "name": "30-02 酒精灌腸",
+   "slot": "W",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-ofar.e",
+   "name": "58-03 就決定是你了!小智",
+   "slot": "E",
+   "castTimeSec": 0.5,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-ofar.ex",
+   "name": "58-002 打雷絕招",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-ofar.passive",
+   "name": "58-00 電光一閃",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.467,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-ofar.q",
+   "name": "58-01 十萬伏特",
+   "slot": "Q",
+   "castTimeSec": 1.433,
+   "template": "tpl-instant-blast",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-ofar.r",
+   "name": "58-04 瘋狂皮卡丘",
+   "slot": "R",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-ofar.w",
+   "name": "58-02 鋼鐵尾巴",
+   "slot": "W",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-ogld.e",
+   "name": "72-03 超亮白",
+   "slot": "E",
+   "castTimeSec": 0.667,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [
+    "持續"
+   ],
+   "gap": [
+    "持續"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-ogld.ex",
+   "name": "72-002 億萬衛星殞落",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "等待",
+    "迴圈"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "持續"
+   ],
+   "signature": "等待＋迴圈"
+  },
+  {
+   "id": "godie-ogld.q",
+   "name": "72-01洗刷刷",
+   "slot": "Q",
+   "castTimeSec": 0.667,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [
+    "持續"
+   ],
+   "gap": [
+    "持續"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-ogld.r",
+   "name": "72-04 黑化",
+   "slot": "R",
+   "castTimeSec": 0.8,
+   "template": "tpl-proxy-cast",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-ogld.w",
+   "name": "72-02 黑人牙菌斑",
+   "slot": "W",
+   "castTimeSec": 0.667,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "持續",
+    "迴圈"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-ogrh.e",
+   "name": "09-03 超級賽亞人",
+   "slot": "E",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-ogrh.ex",
+   "name": "09-002 十倍龜派氣功",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-ogrh.passive",
+   "name": "09-00 賽亞人的血脈",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-ogrh.q",
+   "name": "09-01 界王拳",
+   "slot": "Q",
+   "castTimeSec": 0.667,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "持續",
+    "迴圈"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-ogrh.r",
+   "name": "09-04 龜派氣功",
+   "slot": "R",
+   "castTimeSec": 1.233,
+   "template": null,
+   "implemented": [
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "續效特效＋路徑"
+  },
+  {
+   "id": "godie-ogrh.w",
+   "name": "09-02 瞬間移動",
+   "slot": "W",
+   "castTimeSec": 0.467,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-orkn.e",
+   "name": "30-03 痴漢火焰",
+   "slot": "E",
+   "castTimeSec": 0.667,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "持續",
+    "迴圈"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-orkn.ex",
+   "name": "30-002 變態紳士",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-orkn.passive",
+   "name": "30-00 攝影機",
+   "slot": "PASSIVE",
+   "castTimeSec": 1.233,
+   "template": null,
+   "implemented": [
+    "持續",
+    "續效特效"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續＋續效特效"
+  },
+  {
+   "id": "godie-orkn.q",
+   "name": "30-01 綁架",
+   "slot": "Q",
+   "castTimeSec": 0.767,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-orkn.r",
+   "name": "30-04 電車之狼衝擊",
+   "slot": "R",
+   "castTimeSec": 1.2,
+   "template": null,
+   "implemented": [
+    "持續",
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續＋路徑"
+  },
+  {
+   "id": "godie-orkn.w",
+   "name": "30-02 酒精灌腸",
+   "slot": "W",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-osam.e",
+   "name": "34-03 爆碎牙",
+   "slot": "E",
+   "castTimeSec": 0.3,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-osam.ex",
+   "name": "34-002 冥道殘月破",
+   "slot": "EX",
+   "castTimeSec": 2.233,
+   "template": "tpl-instant-blast",
+   "implemented": [],
+   "declared": [
+    "等待"
+   ],
+   "gap": [
+    "等待"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-osam.passive",
+   "name": "34-00 靈魂吞噬",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-osam.q",
+   "name": "34-01 毒華爪",
+   "slot": "Q",
+   "castTimeSec": 0.067,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-osam.r",
+   "name": "34-04 奧義˙蒼龍破",
+   "slot": "R",
+   "castTimeSec": 0.833,
+   "template": "tpl-traveling-wave",
+   "implemented": [
+    "多段",
+    "續效特效",
+    "路徑",
+    "迴圈"
+   ],
+   "declared": [
+    "路徑"
+   ],
+   "gap": [],
+   "signature": "迴圈＋續效特效＋多段＋路徑"
+  },
+  {
+   "id": "godie-osam.w",
+   "name": "34-02 閃光鞭",
+   "slot": "W",
+   "castTimeSec": 0.267,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u00h.e",
+   "name": "39-03 無明神風流-蛟龍",
+   "slot": "E",
+   "castTimeSec": 1.2,
+   "template": null,
+   "implemented": [
+    "持續",
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續＋路徑"
+  },
+  {
+   "id": "godie-u00h.ex",
+   "name": "39-002 紅王",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u00h.passive",
+   "name": "39-00 無明神風流-玄武",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u00h.q",
+   "name": "39-01 無明神風流-白虎",
+   "slot": "Q",
+   "castTimeSec": 0.767,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u00h.r",
+   "name": "39-04 祕奧義．金色的神風",
+   "slot": "R",
+   "castTimeSec": 0.8,
+   "template": "tpl-proxy-cast",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u00h.w",
+   "name": "39-02 無明神風流-朱雀",
+   "slot": "W",
+   "castTimeSec": 1.233,
+   "template": "tpl-instant-blast",
+   "implemented": [],
+   "declared": [
+    "路徑"
+   ],
+   "gap": [
+    "路徑"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-u00j.e",
+   "name": "74-03 闇之天使",
+   "slot": "E",
+   "castTimeSec": 1.433,
+   "template": "tpl-instant-blast",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-u00j.ex",
+   "name": "74-002 超新星",
+   "slot": "EX",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續",
+    "等待",
+    "續效特效"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "等待＋持續＋續效特效"
+  },
+  {
+   "id": "godie-u00j.passive",
+   "name": "74-00 JENOVA",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-u00j.q",
+   "name": "74-01 獄門",
+   "slot": "Q",
+   "castTimeSec": 0.8,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u00j.r",
+   "name": "74-04 最終殞落星",
+   "slot": "R",
+   "castTimeSec": 1.233,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-u00j.w",
+   "name": "74-02 八刀一閃",
+   "slot": "W",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [
+    "等待",
+    "路徑"
+   ],
+   "declared": [
+    "路徑"
+   ],
+   "gap": [],
+   "signature": "等待＋路徑"
+  },
+  {
+   "id": "godie-u00k.e",
+   "name": "71-03 厄夜靈魂",
+   "slot": "E",
+   "castTimeSec": 0.667,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-u00k.ex",
+   "name": "71-002 夜之主",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u00k.passive",
+   "name": "71-00 暗夜契約",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續",
+    "續效特效"
+   ],
+   "declared": [
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "持續＋續效特效"
+  },
+  {
+   "id": "godie-u00k.q",
+   "name": "71-01 死亡隕落",
+   "slot": "Q",
+   "castTimeSec": 1.433,
+   "template": "tpl-instant-blast",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-u00k.r",
+   "name": "71-04 萬惡歸宗",
+   "slot": "R",
+   "castTimeSec": 1.233,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-u00k.w",
+   "name": "71-02 靈魂吸取",
+   "slot": "W",
+   "castTimeSec": 0.3,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-u00l.e",
+   "name": "25-03 北斗百裂拳",
+   "slot": "E",
+   "castTimeSec": 1.433,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-u00l.ex",
+   "name": "25-002 喔拉喔拉喔拉喔拉",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u00l.passive",
+   "name": "25-00 北斗暗殺拳",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u00l.q",
+   "name": "25-01 北斗懺悔拳",
+   "slot": "Q",
+   "castTimeSec": 0.667,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-u00l.r",
+   "name": "25-04 ChangeDNA",
+   "slot": "R",
+   "castTimeSec": 1.233,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "多段",
+    "持續"
+   ],
+   "gap": [
+    "多段",
+    "持續"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-u00l.w",
+   "name": "25-02 北斗神拳秘訣轉龍呼吸法",
+   "slot": "W",
+   "castTimeSec": 0.3,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-u00n.e",
+   "name": "76-03 伸縮自如的槍亂打",
+   "slot": "E",
+   "castTimeSec": 0.833,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-u00n.ex",
+   "name": "76-002 霸王色",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u00n.passive",
+   "name": "76-00 二檔",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u00n.q",
+   "name": "76-01 伸縮自如的橡膠戰斧",
+   "slot": "Q",
+   "castTimeSec": 0.3,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u00n.r",
+   "name": "76-04 三檔.巨人迴旋彈",
+   "slot": "R",
+   "castTimeSec": 2,
+   "template": null,
+   "implemented": [
+    "持續",
+    "路徑"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續＋路徑"
+  },
+  {
+   "id": "godie-u00n.w",
+   "name": "76-02 伸縮自如的橡膠火箭砲",
+   "slot": "W",
+   "castTimeSec": 0.767,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "路徑"
+   ],
+   "gap": [
+    "路徑"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u00o.e",
+   "name": "76-03 伸縮自如的槍亂打",
+   "slot": "E",
+   "castTimeSec": 0.833,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-u00o.ex",
+   "name": "76-002 霸王色",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u00o.passive",
+   "name": "76-00 二檔",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u00o.q",
+   "name": "76-01 伸縮自如的橡膠戰斧",
+   "slot": "Q",
+   "castTimeSec": 0.3,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u00o.r",
+   "name": "76-04 三檔.巨人迴旋彈",
+   "slot": "R",
+   "castTimeSec": 2,
+   "template": null,
+   "implemented": [
+    "持續",
+    "路徑"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續＋路徑"
+  },
+  {
+   "id": "godie-u00o.w",
+   "name": "76-02 伸縮自如的橡膠火箭砲",
+   "slot": "W",
+   "castTimeSec": 0.767,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "路徑"
+   ],
+   "gap": [
+    "路徑"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u00v.e",
+   "name": "78-03 廬山昇龍破",
+   "slot": "E",
+   "castTimeSec": 0.8,
+   "template": "tpl-proxy-cast",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u00v.ex",
+   "name": "78-002 加速爆體",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u00v.passive",
+   "name": "78-00 銅皮鐵骨",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-u00v.q",
+   "name": "78-01 斬鐵拳",
+   "slot": "Q",
+   "castTimeSec": 0.067,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u00v.r",
+   "name": "78-04 死亡噴射肘擊",
+   "slot": "R",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "持續",
+    "等待",
+    "路徑"
+   ],
+   "declared": [
+    "路徑"
+   ],
+   "gap": [],
+   "signature": "等待＋持續＋路徑"
+  },
+  {
+   "id": "godie-u00v.w",
+   "name": "78-02 地走龍牙破",
+   "slot": "W",
+   "castTimeSec": 0.833,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-u010.e",
+   "name": "38-03 邪王炎殺黑龍波",
+   "slot": "E",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續",
+    "等待",
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "等待＋持續＋續效特效＋多段＋路徑"
+  },
+  {
+   "id": "godie-u010.ex",
+   "name": "38-002 究極暴走黑龍波",
+   "slot": "EX",
+   "castTimeSec": 2.233,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續",
+    "等待",
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "等待＋持續＋續效特效＋多段＋路徑"
+  },
+  {
+   "id": "godie-u010.passive",
+   "name": "38-00 邪眼全開",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u010.q",
+   "name": "38-01 邪王炎殺劍",
+   "slot": "Q",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續",
+    "路徑"
+   ],
+   "gap": [
+    "路徑"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u010.r",
+   "name": "38-04 黑龍波吸收",
+   "slot": "R",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u010.w",
+   "name": "38-02 邪王炎殺煉獄焦",
+   "slot": "W",
+   "castTimeSec": 1.5,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u01u.e",
+   "name": "11-03 鬼氣九刀流-阿修羅壹霧銀",
+   "slot": "E",
+   "castTimeSec": 1,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u01u.ex",
+   "name": "11-002 武裝色霸氣",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u01u.passive",
+   "name": "11-00 三刀流",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u01u.q",
+   "name": "11-01 燒鬼斬",
+   "slot": "Q",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u01u.r",
+   "name": "11-04 三千世界",
+   "slot": "R",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u01u.w",
+   "name": "11-02 虎狩獵",
+   "slot": "W",
+   "castTimeSec": 0.8,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u034.e",
+   "name": "06-03 山形修煉-強",
+   "slot": "E",
+   "castTimeSec": 0.3,
+   "template": null,
+   "implemented": [],
+   "declared": [
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-u034.ex",
+   "name": "06-002 殺意",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u034.passive",
+   "name": "06-00 猜猜拳",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-u034.q",
+   "name": "06-01 山形修煉-放",
+   "slot": "Q",
+   "castTimeSec": 0.3,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u034.r",
+   "name": "06-04 傑桑變化",
+   "slot": "R",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-u034.w",
+   "name": "06-02 山形修煉-變",
+   "slot": "W",
+   "castTimeSec": 0.3,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-ubal.e",
+   "name": "37-02 黑核晶",
+   "slot": "E",
+   "castTimeSec": 0.3,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-ubal.ex",
+   "name": "37-002 真‧黑核晶",
+   "slot": "EX",
+   "castTimeSec": 1.5,
+   "template": "tpl-instant-blast",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-ubal.passive",
+   "name": "37-00 鬼眼",
+   "slot": "PASSIVE",
+   "castTimeSec": 1.433,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-ubal.q",
+   "name": "37-01 凱薩之鷹",
+   "slot": "Q",
+   "castTimeSec": 0.667,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-ubal.r",
+   "name": "37-04 魔界之王",
+   "slot": "R",
+   "castTimeSec": 1.233,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [
+    "持續"
+   ],
+   "gap": [
+    "持續"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-ubal.w",
+   "name": "37-03 災難之牆",
+   "slot": "W",
+   "castTimeSec": 0.667,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "持續",
+    "迴圈"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-ucrl.e",
+   "name": "06-03 山形修煉-強",
+   "slot": "E",
+   "castTimeSec": 0.3,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-ucrl.ex",
+   "name": "06-002 殺意",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-ucrl.passive",
+   "name": "06-00 猜猜拳",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-ucrl.q",
+   "name": "06-01 山形修煉-放",
+   "slot": "Q",
+   "castTimeSec": 0.3,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-ucrl.r",
+   "name": "06-04 傑桑變化",
+   "slot": "R",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-ucrl.w",
+   "name": "06-02 山形修煉-變",
+   "slot": "W",
+   "castTimeSec": 0.3,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-udea.e",
+   "name": "65-03 魔法膨脹",
+   "slot": "E",
+   "castTimeSec": 0.767,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-udea.ex",
+   "name": "65-002 永恆的愚蠢鄉",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-udea.passive",
+   "name": "65-00 古老智慧",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-udea.q",
+   "name": "65-01 神出鬼沒",
+   "slot": "Q",
+   "castTimeSec": 0.467,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "路徑"
+  },
+  {
+   "id": "godie-udea.r",
+   "name": "65-04 天譴",
+   "slot": "R",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [
+    "多段",
+    "等待",
+    "路徑",
+    "迴圈"
+   ],
+   "declared": [
+    "多段",
+    "路徑",
+    "迴圈"
+   ],
+   "gap": [],
+   "signature": "等待＋迴圈＋多段＋路徑"
+  },
+  {
+   "id": "godie-udea.w",
+   "name": "65-02 寒冰破碎",
+   "slot": "W",
+   "castTimeSec": 0.667,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-udre.e",
+   "name": "11-03 鬼氣九刀流-阿修羅壹霧銀",
+   "slot": "E",
+   "castTimeSec": 1,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-udre.ex",
+   "name": "11-002 武裝色霸氣",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-udre.passive",
+   "name": "11-00 三刀流",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續",
+    "迴圈"
+   ],
+   "gap": [
+    "迴圈"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-udre.q",
+   "name": "11-01 燒鬼斬",
+   "slot": "Q",
+   "castTimeSec": 0.067,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-udre.r",
+   "name": "11-04 三千世界",
+   "slot": "R",
+   "castTimeSec": 0.667,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-udre.w",
+   "name": "11-02 虎狩獵",
+   "slot": "W",
+   "castTimeSec": 0.8,
+   "template": "tpl-proxy-cast",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-umal.e",
+   "name": "25-03 北斗百裂拳",
+   "slot": "E",
+   "castTimeSec": 1.433,
+   "template": "tpl-instant-blast",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-umal.ex",
+   "name": "25-002 喔拉喔拉喔拉喔拉",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-umal.passive",
+   "name": "25-00 北斗暗殺拳",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-umal.q",
+   "name": "25-01 北斗懺悔拳",
+   "slot": "Q",
+   "castTimeSec": 0.667,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-umal.r",
+   "name": "25-04 ChangeDNA",
+   "slot": "R",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "多段",
+    "持續"
+   ],
+   "gap": [
+    "多段"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-umal.w",
+   "name": "25-02 北斗神拳秘訣轉龍呼吸法",
+   "slot": "W",
+   "castTimeSec": 0.3,
+   "template": "tpl-single-strike",
+   "implemented": [],
+   "declared": [],
+   "gap": [],
+   "signature": "（無時序形狀）"
+  },
+  {
+   "id": "godie-uvng.e",
+   "name": "38-03 邪王炎殺黑龍波",
+   "slot": "E",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續",
+    "等待",
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "等待＋持續＋續效特效＋多段＋路徑"
+  },
+  {
+   "id": "godie-uvng.ex",
+   "name": "38-002 究極暴走黑龍波",
+   "slot": "EX",
+   "castTimeSec": 2.233,
+   "template": null,
+   "implemented": [
+    "多段",
+    "持續",
+    "等待",
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "等待＋持續＋續效特效＋多段＋路徑"
+  },
+  {
+   "id": "godie-uvng.passive",
+   "name": "38-00 邪眼全開",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-uvng.q",
+   "name": "38-01 邪王炎殺劍",
+   "slot": "Q",
+   "castTimeSec": 0.667,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續",
+    "路徑"
+   ],
+   "gap": [
+    "路徑"
+   ],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-uvng.r",
+   "name": "38-04 黑龍波吸收",
+   "slot": "R",
+   "castTimeSec": 0.667,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-uvng.w",
+   "name": "38-02 邪王炎殺煉獄焦",
+   "slot": "W",
+   "castTimeSec": 1.5,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [
+    "持續"
+   ],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-zombieking.passive",
+   "name": "殭屍王 - leap吸血",
+   "slot": "PASSIVE",
+   "castTimeSec": 0.267,
+   "template": null,
+   "implemented": [
+    "持續",
+    "續效特效",
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續＋續效特效＋路徑"
+  },
+  {
+   "id": "godie-zombiex.e",
+   "name": "100-03 咕咕嘎嘎",
+   "slot": "E",
+   "castTimeSec": 1,
+   "template": "tpl-proxy-cast",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-zombiex.ex",
+   "name": "100-002 此世全部之咖哩・バタンキュー",
+   "slot": "EX",
+   "castTimeSec": 1.033,
+   "template": "tpl-buff-self",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-zombiex.passive",
+   "name": "100-00 黑泥吞噬",
+   "slot": "PASSIVE",
+   "castTimeSec": null,
+   "template": null,
+   "implemented": [
+    "持續",
+    "續效特效"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續＋續效特效"
+  },
+  {
+   "id": "godie-zombiex.q",
+   "name": "100-01 肝泥抹德",
+   "slot": "Q",
+   "castTimeSec": 1.433,
+   "template": "tpl-proxy-cast",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-zombiex.r",
+   "name": "100-04 百式・哈基米",
+   "slot": "R",
+   "castTimeSec": 1.5,
+   "template": "tpl-proxy-cast",
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "godie-zombiex.w",
+   "name": "100-02 黑天覆七重咖哩・硬啦",
+   "slot": "W",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [
+    "持續",
+    "等待",
+    "路徑"
+   ],
+   "declared": [
+    "路徑"
+   ],
+   "gap": [],
+   "signature": "等待＋持續＋路徑"
+  },
+  {
+   "id": "sela.e",
+   "name": "Scorch Ring",
+   "slot": "E",
+   "castTimeSec": 0.4,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "sela.q",
+   "name": "Ember Bolt",
+   "slot": "Q",
+   "castTimeSec": 0.2,
+   "template": null,
+   "implemented": [
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "路徑"
+  },
+  {
+   "id": "sela.r",
+   "name": "Firestorm",
+   "slot": "R",
+   "castTimeSec": 0.767,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "sela.w",
+   "name": "Cinder Ward",
+   "slot": "W",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "thorne.e",
+   "name": "Root Snare",
+   "slot": "E",
+   "castTimeSec": 0.467,
+   "template": null,
+   "implemented": [
+    "持續",
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續＋路徑"
+  },
+  {
+   "id": "thorne.q",
+   "name": "Thorn Lash",
+   "slot": "Q",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [
+    "等待",
+    "路徑"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "等待＋路徑"
+  },
+  {
+   "id": "thorne.r",
+   "name": "Bramble Burst",
+   "slot": "R",
+   "castTimeSec": 1.833,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  },
+  {
+   "id": "thorne.w",
+   "name": "Barkskin Bulwark",
+   "slot": "W",
+   "castTimeSec": 0.067,
+   "template": null,
+   "implemented": [
+    "持續"
+   ],
+   "declared": [],
+   "gap": [],
+   "signature": "持續"
+  }
+ ],
+ "templates": [
+  {
+   "id": "tpl-barrier-domain",
+   "name": "結界領域",
+   "status": "draft",
+   "requires": [],
+   "requiresAxes": [],
+   "declaredAxes": [],
+   "params": 0,
+   "gapScore": 2
+  },
+  {
+   "id": "tpl-beam-roll",
+   "name": "翻滾光束（橫放光束砲）",
+   "status": "enabled",
+   "requires": [
+    "modelFx"
+   ],
+   "requiresAxes": [
+    "續效特效",
+    "路徑"
+   ],
+   "declaredAxes": [
+    "等待",
+    "續效特效",
+    "路徑"
+   ],
+   "params": 11,
+   "gapScore": 8
+  },
+  {
+   "id": "tpl-blink-strike",
+   "name": "瞬移突斬",
+   "status": "draft",
+   "requires": [
+    "dash"
+   ],
+   "requiresAxes": [
+    "路徑"
+   ],
+   "declaredAxes": [
+    "路徑"
+   ],
+   "params": 0,
+   "gapScore": 5
+  },
+  {
+   "id": "tpl-buff-self",
+   "name": "變身強化-數值面",
+   "status": "enabled",
+   "requires": [],
+   "requiresAxes": [],
+   "declaredAxes": [
+    "持續"
+   ],
+   "params": 3,
+   "gapScore": 6
+  },
+  {
+   "id": "tpl-channel-beam",
+   "name": "引導通魔",
+   "status": "draft",
+   "requires": [],
+   "requiresAxes": [],
+   "declaredAxes": [],
+   "params": 0,
+   "gapScore": 5
+  },
+  {
+   "id": "tpl-charge-push",
+   "name": "衝鋒推撞",
+   "status": "enabled",
+   "requires": [
+    "leap",
+    "knockback"
+   ],
+   "requiresAxes": [
+    "路徑"
+   ],
+   "declaredAxes": [
+    "等待",
+    "路徑"
+   ],
+   "params": 11,
+   "gapScore": 5
+  },
+  {
+   "id": "tpl-combo-finisher",
+   "name": "龍虎亂舞（自動連段→收尾重招）",
+   "status": "draft",
+   "requires": [
+    "combo",
+    "invulnerable",
+    "applyStatus"
+   ],
+   "requiresAxes": [
+    "多段"
+   ],
+   "declaredAxes": [
+    "多段",
+    "持續",
+    "續效特效"
+   ],
+   "params": 13,
+   "gapScore": 8
+  },
+  {
+   "id": "tpl-data-no-trigger",
+   "name": "無觸發（路由桶，不是機器）",
+   "status": "draft",
+   "requires": [],
+   "requiresAxes": [],
+   "declaredAxes": [],
+   "params": 0,
+   "gapScore": 0
+  },
+  {
+   "id": "tpl-death-mechanic",
+   "name": "死亡機制",
+   "status": "draft",
+   "requires": [],
+   "requiresAxes": [],
+   "declaredAxes": [],
+   "params": 0,
+   "gapScore": 2
+  },
+  {
+   "id": "tpl-dragon-quake",
+   "name": "動地剁落點環",
+   "status": "draft",
+   "requires": [],
+   "requiresAxes": [],
+   "declaredAxes": [
+    "多段",
+    "持續",
+    "等待",
+    "續效特效",
+    "路徑"
+   ],
+   "params": 12,
+   "gapScore": 8
+  },
+  {
+   "id": "tpl-dragon-serpent",
+   "name": "多實例龍形推進",
+   "status": "draft",
+   "requires": [],
+   "requiresAxes": [],
+   "declaredAxes": [
+    "多段",
+    "等待",
+    "續效特效",
+    "路徑"
+   ],
+   "params": 12,
+   "gapScore": 6
+  },
+  {
+   "id": "tpl-dragon-shockwave",
+   "name": "沿路衝擊波",
+   "status": "draft",
+   "requires": [],
+   "requiresAxes": [],
+   "declaredAxes": [
+    "等待",
+    "續效特效",
+    "路徑",
+    "迴圈"
+   ],
+   "params": 9,
+   "gapScore": 5
+  },
+  {
+   "id": "tpl-drain-leech",
+   "name": "汲取吸附",
+   "status": "draft",
+   "requires": [],
+   "requiresAxes": [],
+   "declaredAxes": [],
+   "params": 0,
+   "gapScore": 4
+  },
+  {
+   "id": "tpl-global-rule",
+   "name": "全場規則",
+   "status": "draft",
+   "requires": [],
+   "requiresAxes": [],
+   "declaredAxes": [],
+   "params": 0,
+   "gapScore": 1
+  },
+  {
+   "id": "tpl-ground-nova",
+   "name": "原地震波",
+   "status": "enabled",
+   "requires": [],
+   "requiresAxes": [],
+   "declaredAxes": [],
+   "params": 4,
+   "gapScore": 8
+  },
+  {
+   "id": "tpl-growth-charge",
+   "name": "成長蓄能",
+   "status": "draft",
+   "requires": [],
+   "requiresAxes": [],
+   "declaredAxes": [],
+   "params": 0,
+   "gapScore": 4
+  },
+  {
+   "id": "tpl-instant-blast",
+   "name": "瞬發點爆",
+   "status": "enabled",
+   "requires": [],
+   "requiresAxes": [],
+   "declaredAxes": [],
+   "params": 4,
+   "gapScore": 8
+  },
+  {
+   "id": "tpl-leap-strike",
+   "name": "跳躍落地",
+   "status": "enabled",
+   "requires": [
+    "leap"
+   ],
+   "requiresAxes": [
+    "路徑"
+   ],
+   "declaredAxes": [
+    "持續",
+    "路徑"
+   ],
+   "params": 8,
+   "gapScore": 5
+  },
+  {
+   "id": "tpl-life-manipulate",
+   "name": "生命操作",
+   "status": "draft",
+   "requires": [],
+   "requiresAxes": [],
+   "declaredAxes": [],
+   "params": 0,
+   "gapScore": 3
+  },
+  {
+   "id": "tpl-line-blast",
+   "name": "直線衝擊波（落點大爆炸）",
+   "status": "enabled",
+   "requires": [
+    "modelFx"
+   ],
+   "requiresAxes": [
+    "續效特效",
+    "路徑"
+   ],
+   "declaredAxes": [
+    "等待",
+    "續效特效",
+    "路徑"
+   ],
+   "params": 15,
+   "gapScore": 8
+  },
+  {
+   "id": "tpl-line-sweep",
+   "name": "直線分段掃擊",
+   "status": "enabled",
+   "requires": [
+    "projectile"
+   ],
+   "requiresAxes": [
+    "路徑"
+   ],
+   "declaredAxes": [
+    "多段",
+    "路徑"
+   ],
+   "params": 6,
+   "gapScore": 7
+  },
+  {
+   "id": "tpl-lock-combo",
+   "name": "鎖定連段",
+   "status": "enabled",
+   "requires": [
+    "periodicDamage",
+    "invulnerable",
+    "applyStatus",
+    "leap"
+   ],
+   "requiresAxes": [
+    "路徑",
+    "迴圈"
+   ],
+   "declaredAxes": [
+    "多段",
+    "路徑",
+    "迴圈"
+   ],
+   "params": 10,
+   "gapScore": 6
+  },
+  {
+   "id": "tpl-mark-stacks",
+   "name": "具名標記-層數與免死",
+   "status": "enabled",
+   "requires": [
+    "marks",
+    "invulnerable",
+    "knockback",
+    "applyStatus"
+   ],
+   "requiresAxes": [
+    "路徑"
+   ],
+   "declaredAxes": [
+    "持續",
+    "路徑"
+   ],
+   "params": 20,
+   "gapScore": 8
+  },
+  {
+   "id": "tpl-on-attack",
+   "name": "攻擊觸發",
+   "status": "enabled",
+   "requires": [
+    "hooks",
+    "conditions"
+   ],
+   "requiresAxes": [],
+   "declaredAxes": [],
+   "params": 6,
+   "gapScore": 9
+  },
+  {
+   "id": "tpl-on-hit-react",
+   "name": "受擊反應",
+   "status": "enabled",
+   "requires": [
+    "hooks"
+   ],
+   "requiresAxes": [],
+   "declaredAxes": [],
+   "params": 5,
+   "gapScore": 7
+  },
+  {
+   "id": "tpl-orbit-array",
+   "name": "環形放射陣",
+   "status": "enabled",
+   "requires": [
+    "periodicDamage"
+   ],
+   "requiresAxes": [
+    "迴圈"
+   ],
+   "declaredAxes": [
+    "多段",
+    "路徑",
+    "迴圈"
+   ],
+   "params": 7,
+   "gapScore": 6
+  },
+  {
+   "id": "tpl-periodic-field",
+   "name": "週期領域",
+   "status": "draft",
+   "requires": [
+    "periodicDamage"
+   ],
+   "requiresAxes": [
+    "迴圈"
+   ],
+   "declaredAxes": [
+    "迴圈"
+   ],
+   "params": 0,
+   "gapScore": 5
+  },
+  {
+   "id": "tpl-proxy-cast",
+   "name": "代理錨點施法",
+   "status": "enabled",
+   "requires": [
+    "applyStatus"
+   ],
+   "requiresAxes": [],
+   "declaredAxes": [
+    "多段",
+    "持續"
+   ],
+   "params": 8,
+   "gapScore": 6
+  },
+  {
+   "id": "tpl-proxy-fanout",
+   "name": "範圍逐一施法",
+   "status": "enabled",
+   "requires": [
+    "applyStatus"
+   ],
+   "requiresAxes": [],
+   "declaredAxes": [
+    "持續"
+   ],
+   "params": 6,
+   "gapScore": 8
+  },
+  {
+   "id": "tpl-pull-throw",
+   "name": "拉扯投擲",
+   "status": "draft",
+   "requires": [],
+   "requiresAxes": [],
+   "declaredAxes": [],
+   "params": 0,
+   "gapScore": 3
+  },
+  {
+   "id": "tpl-pure-cosmetic",
+   "name": "純演出物件資料",
+   "status": "draft",
+   "requires": [],
+   "requiresAxes": [],
+   "declaredAxes": [],
+   "params": 0,
+   "gapScore": 7
+  },
+  {
+   "id": "tpl-radial-burst",
+   "name": "圓周噴發（大冰塊）",
+   "status": "enabled",
+   "requires": [
+    "modelFx"
+   ],
+   "requiresAxes": [
+    "續效特效",
+    "路徑"
+   ],
+   "declaredAxes": [
+    "多段",
+    "等待",
+    "續效特效",
+    "路徑"
+   ],
+   "params": 12,
+   "gapScore": 8
+  },
+  {
+   "id": "tpl-random-barrage",
+   "name": "亂數彈幕轟炸",
+   "status": "enabled",
+   "requires": [
+    "periodicDamage"
+   ],
+   "requiresAxes": [
+    "迴圈"
+   ],
+   "declaredAxes": [
+    "多段",
+    "迴圈"
+   ],
+   "params": 9,
+   "gapScore": 6
+  },
+  {
+   "id": "tpl-range-gamble",
+   "name": "距離博弈",
+   "status": "draft",
+   "requires": [],
+   "requiresAxes": [],
+   "declaredAxes": [],
+   "params": 0,
+   "gapScore": 3
+  },
+  {
+   "id": "tpl-resource-ops",
+   "name": "資源運營",
+   "status": "draft",
+   "requires": [],
+   "requiresAxes": [],
+   "declaredAxes": [],
+   "params": 0,
+   "gapScore": 2
+  },
+  {
+   "id": "tpl-single-strike",
+   "name": "單體斬擊",
+   "status": "enabled",
+   "requires": [],
+   "requiresAxes": [],
+   "declaredAxes": [],
+   "params": 3,
+   "gapScore": 9
+  },
+  {
+   "id": "tpl-strip-transform",
+   "name": "剝奪變化",
+   "status": "draft",
+   "requires": [],
+   "requiresAxes": [],
+   "declaredAxes": [],
+   "params": 0,
+   "gapScore": 2
+  },
+  {
+   "id": "tpl-summon-agent",
+   "name": "召喚代理",
+   "status": "draft",
+   "requires": [
+    "summon"
+   ],
+   "requiresAxes": [],
+   "declaredAxes": [],
+   "params": 0,
+   "gapScore": 4
+  },
+  {
+   "id": "tpl-team-synergy",
+   "name": "隊伍協同",
+   "status": "draft",
+   "requires": [],
+   "requiresAxes": [],
+   "declaredAxes": [],
+   "params": 0,
+   "gapScore": 2
+  },
+  {
+   "id": "tpl-teleport",
+   "name": "瞬移貼身",
+   "status": "enabled",
+   "requires": [
+    "leap"
+   ],
+   "requiresAxes": [
+    "路徑"
+   ],
+   "declaredAxes": [
+    "等待",
+    "路徑"
+   ],
+   "params": 6,
+   "gapScore": 7
+  },
+  {
+   "id": "tpl-traveling-wave",
+   "name": "行進波動",
+   "status": "enabled",
+   "requires": [
+    "travelingWave"
+   ],
+   "requiresAxes": [
+    "路徑"
+   ],
+   "declaredAxes": [
+    "多段",
+    "續效特效",
+    "路徑",
+    "迴圈"
+   ],
+   "params": 9,
+   "gapScore": 7
+  }
+ ],
+ "unknownFields": {}
+}

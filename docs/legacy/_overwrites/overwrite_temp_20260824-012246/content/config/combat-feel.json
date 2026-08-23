@@ -1,0 +1,57 @@
+{
+  "id": "combat-feel",
+  "schema": "config.combat-feel@1",
+  "knockback": {
+    "minPct": 0.05,
+    "maxBodies": 10,
+    "bodyUnit": 1.0
+  },
+  "standstill": {
+    "enabled": true,
+    "walkEps": 0.5,
+    "applyToMobs": true
+  },
+  "facing": {
+    "followThroughTicks": 3,
+    "instantCastTicks": 6
+  },
+  "manualOrder": {
+    "survivesGroundMove": true,
+    "leashUnits": 0,
+    "moveOrderNoAggroSec": 0.0
+  },
+  "autoEngage": {
+    "enabled": true,
+    "stallTicks": 30,
+    "stallSpeed": 0.5,
+    "seekRadius": 48,
+    "idleSeeks": false,
+    "respectLiveSteering": true,
+    "ccPausesStall": true
+  },
+  "aimAssist": {
+    "mobPenalty": 6
+  },
+  "hitstop": {
+    "holdsVictimWalk": false,
+    "holdsAttackerWalk": true,
+    "scale": 0,
+    "stuckGuard": {
+      "enabled": true,
+      "thresholdSec": 2,
+      "windowSec": 0.5,
+      "releaseSec": 1.5
+    }
+  },
+  "predictionHold": {
+    "enabled": true,
+    "flags": {
+      "casting": true,
+      "channelling": true,
+      "dashing": true,
+      "airborne": true,
+      "rooted": true,
+      "stunned": true
+    }
+  }
+}
