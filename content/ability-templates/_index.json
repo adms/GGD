@@ -1,6 +1,6 @@
 {
   "collection": "ability-templates",
-  "hash": "720235a51ca0",
+  "hash": "c553dd438e68",
   "entries": [
     {
       "id": "tpl-barrier-domain",
@@ -11,8 +11,8 @@
     {
       "id": "tpl-beam-roll",
       "path": "ability-templates/tpl-beam-roll.json",
-      "hash": "ba201bbe5593",
-      "size": 3122
+      "hash": "80a1476a22e0",
+      "size": 5794
     },
     {
       "id": "tpl-blink-strike",
@@ -119,8 +119,8 @@
     {
       "id": "tpl-line-blast",
       "path": "ability-templates/tpl-line-blast.json",
-      "hash": "2d8a21ffdc1e",
-      "size": 2311
+      "hash": "4fb339866e26",
+      "size": 3923
     },
     {
       "id": "tpl-line-sweep",
@@ -161,8 +161,8 @@
     {
       "id": "tpl-periodic-field",
       "path": "ability-templates/tpl-periodic-field.json",
-      "hash": "b37fc5902f9a",
-      "size": 329
+      "hash": "e8a289b6d60b",
+      "size": 2279
     },
     {
       "id": "tpl-proxy-cast",

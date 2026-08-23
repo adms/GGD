@@ -3,18 +3,18 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_504a982679dc",
+    "contentVersion": "cv_4bbc40746ca3",
     "collections": {
       "champions": {
-        "hash": "44cc3c8ba06b",
+        "hash": "e81af4d4e9e1",
         "count": 71
       },
       "abilities": {
-        "hash": "1c23b1246e16",
+        "hash": "6789acdedd16",
         "count": 421
       },
       "items": {
-        "hash": "2c62263f5f6b",
+        "hash": "0178f480bcd1",
         "count": 142
       },
       "augments": {
@@ -42,11 +42,11 @@
         "count": 7
       },
       "config": {
-        "hash": "5bd6fc41e9ba",
+        "hash": "983b51d3c753",
         "count": 87
       },
       "models": {
-        "hash": "8af2c45f476f",
+        "hash": "58652094c57c",
         "count": 124
       },
       "vfx": {
@@ -58,7 +58,7 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "720235a51ca0",
+        "hash": "c553dd438e68",
         "count": 41
       }
     },
@@ -89,7 +89,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "52cf9d09",
+    "fingerprint": "f27f2c03",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -227,6 +227,7 @@
       "amount",
       "amountPerTick",
       "amplitude",
+      "anchor",
       "anchorCount",
       "anchorRadius",
       "apexHeight",
@@ -806,6 +807,7 @@
       "ground-nova",
       "instant-blast",
       "leap-strike",
+      "line-blast",
       "line-sweep",
       "lock-combo",
       "mark-stacks",
@@ -1454,6 +1456,16 @@
               "min": 0,
               "max": 5,
               "unit": "s",
+              "optional": true
+            },
+            "soundKey": {
+              "type": "docRef",
+              "default": "wc3.crushingwavecaster1",
+              "optional": true
+            },
+            "arriveSoundKey": {
+              "type": "docRef",
+              "default": "explosion",
               "optional": true
             }
           }
@@ -2139,11 +2151,21 @@
         {
           "id": "tpl-line-blast",
           "family": "line-blast",
-          "status": "draft",
+          "status": "enabled",
           "params": {
             "modelKey": {
               "type": "docRef",
               "default": "imported.fireblast"
+            },
+            "path": {
+              "type": "enum",
+              "values": [
+                "forward",
+                "toTarget",
+                "orbit",
+                "radial"
+              ],
+              "default": "forward"
             },
             "speed": {
               "type": "number",
@@ -2177,6 +2199,15 @@
               "min": 0.5,
               "max": 12
             },
+            "touchSide": {
+              "type": "enum",
+              "values": [
+                "enemies",
+                "allies"
+              ],
+              "default": "enemies",
+              "optional": true
+            },
             "touchDamageTier": {
               "type": "enum",
               "values": [
@@ -2187,6 +2218,12 @@
                 "極大"
               ],
               "default": "大"
+            },
+            "blastRadius": {
+              "type": "number",
+              "default": 8,
+              "min": 0.5,
+              "max": 24
             },
             "blastRadiusTier": {
               "type": "enum",
@@ -2229,7 +2266,7 @@
             },
             "castTimeSec": {
               "type": "number",
-              "default": 0,
+              "default": 1.233,
               "min": 0,
               "max": 5,
               "unit": "s",
@@ -2747,7 +2784,81 @@
           "id": "tpl-periodic-field",
           "family": "periodic-field",
           "status": "draft",
-          "params": {}
+          "params": {
+            "intervalSec": {
+              "type": "number",
+              "default": 1,
+              "min": 0.034,
+              "max": 10,
+              "unit": "s"
+            },
+            "durationSec": {
+              "type": "number",
+              "default": 5,
+              "min": 0.1,
+              "max": 60,
+              "unit": "s"
+            },
+            "radiusTier": {
+              "type": "enum",
+              "values": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ],
+              "default": "中"
+            },
+            "anchor": {
+              "type": "enum",
+              "values": [
+                "point",
+                "caster"
+              ],
+              "default": "caster"
+            },
+            "applyTo": {
+              "type": "enum",
+              "values": [
+                "enemies",
+                "allies"
+              ],
+              "default": "enemies"
+            },
+            "damageTier": {
+              "type": "enum",
+              "values": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ],
+              "default": "極小"
+            },
+            "damageType": {
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ],
+              "default": "magic"
+            },
+            "hitVfx": {
+              "type": "docRef",
+              "optional": true
+            },
+            "castTimeSec": {
+              "type": "number",
+              "optional": true,
+              "default": 0,
+              "min": 0,
+              "max": 5,
+              "unit": "s"
+            }
+          }
         },
         {
           "id": "tpl-proxy-cast",
@@ -3251,8 +3362,8 @@
         }
       ],
       "templateStatus": {
-        "draft": 22,
-        "enabled": 19
+        "draft": 21,
+        "enabled": 20
       },
       "innateKinds": [
         "active",
@@ -3586,12 +3697,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "52cf9d09",
+    "engineFingerprint": "f27f2c03",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 52cf9d09 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 f27f2c03 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -3778,6 +3889,54 @@
           "field": "damageTier",
           "unit": "none",
           "note": "冷卻級距「極大」的**範圍**技能，傷害級距至少要「極大」。⭐ 這一格是**推導**出來的（owner 2026-08-20：「30/6秒=5⋯可能位於 2 個人的命中範圍，所以再除 2⋯約等於 **2.5 倍**」）：要求傷害 ＝ 單位輸出率 × 這一格的卡面冷卻 ÷ 期望命中人數，⛔ 不是有人手填的。 —— 付得多、打得少、傷害又低的那些格子沒有人會選，而一個死格比不存在更糟：它佔著一個標籤，作者會填它，然後那些技能上線就是弱的。⚠️ 違反只**警告**。",
+          "source": "admin-config",
+          "configDoc": "config.authoring-rules@1"
+        },
+        {
+          "id": "principle.proportionality-max.單體.極小",
+          "field": "damageTier",
+          "unit": "none",
+          "note": "冷卻級距「極小」的**單體**技能，傷害級距最多到「小」。⭐ 這一格是**推導**出來的：最低要求（同一條公式）再加上後台的「傷害級距最多高出幾格」（出貨 1）。⛔ 不是有人手填的。 —— 級距梯子的正當性是「傷害與冷卻**嚴格成正比**」，而成正比是一個**等式**：冷卻只付得起這一格、傷害卻填到頂的技能，破壞的是同一條規則的另一邊，而在 2026-08-23 之前這一側一格閘都沒有。⚠️ 違反只**警告**。",
+          "source": "admin-config",
+          "configDoc": "config.authoring-rules@1"
+        },
+        {
+          "id": "principle.proportionality-max.單體.小",
+          "field": "damageTier",
+          "unit": "none",
+          "note": "冷卻級距「小」的**單體**技能，傷害級距最多到「中」。⭐ 這一格是**推導**出來的：最低要求（同一條公式）再加上後台的「傷害級距最多高出幾格」（出貨 1）。⛔ 不是有人手填的。 —— 級距梯子的正當性是「傷害與冷卻**嚴格成正比**」，而成正比是一個**等式**：冷卻只付得起這一格、傷害卻填到頂的技能，破壞的是同一條規則的另一邊，而在 2026-08-23 之前這一側一格閘都沒有。⚠️ 違反只**警告**。",
+          "source": "admin-config",
+          "configDoc": "config.authoring-rules@1"
+        },
+        {
+          "id": "principle.proportionality-max.單體.中",
+          "field": "damageTier",
+          "unit": "none",
+          "note": "冷卻級距「中」的**單體**技能，傷害級距最多到「大」。⭐ 這一格是**推導**出來的：最低要求（同一條公式）再加上後台的「傷害級距最多高出幾格」（出貨 1）。⛔ 不是有人手填的。 —— 級距梯子的正當性是「傷害與冷卻**嚴格成正比**」，而成正比是一個**等式**：冷卻只付得起這一格、傷害卻填到頂的技能，破壞的是同一條規則的另一邊，而在 2026-08-23 之前這一側一格閘都沒有。⚠️ 違反只**警告**。",
+          "source": "admin-config",
+          "configDoc": "config.authoring-rules@1"
+        },
+        {
+          "id": "principle.proportionality-max.範圍.極小",
+          "field": "damageTier",
+          "unit": "none",
+          "note": "冷卻級距「極小」的**範圍**技能，傷害級距最多到「中」。⭐ 這一格是**推導**出來的：最低要求（同一條公式）再加上後台的「傷害級距最多高出幾格」（出貨 1）。⛔ 不是有人手填的。 —— 級距梯子的正當性是「傷害與冷卻**嚴格成正比**」，而成正比是一個**等式**：冷卻只付得起這一格、傷害卻填到頂的技能，破壞的是同一條規則的另一邊，而在 2026-08-23 之前這一側一格閘都沒有。⚠️ 違反只**警告**。",
+          "source": "admin-config",
+          "configDoc": "config.authoring-rules@1"
+        },
+        {
+          "id": "principle.proportionality-max.範圍.小",
+          "field": "damageTier",
+          "unit": "none",
+          "note": "冷卻級距「小」的**範圍**技能，傷害級距最多到「大」。⭐ 這一格是**推導**出來的：最低要求（同一條公式）再加上後台的「傷害級距最多高出幾格」（出貨 1）。⛔ 不是有人手填的。 —— 級距梯子的正當性是「傷害與冷卻**嚴格成正比**」，而成正比是一個**等式**：冷卻只付得起這一格、傷害卻填到頂的技能，破壞的是同一條規則的另一邊，而在 2026-08-23 之前這一側一格閘都沒有。⚠️ 違反只**警告**。",
+          "source": "admin-config",
+          "configDoc": "config.authoring-rules@1"
+        },
+        {
+          "id": "principle.proportionality-max.範圍.中",
+          "field": "damageTier",
+          "unit": "none",
+          "note": "冷卻級距「中」的**範圍**技能，傷害級距最多到「大」。⭐ 這一格是**推導**出來的：最低要求（同一條公式）再加上後台的「傷害級距最多高出幾格」（出貨 1）。⛔ 不是有人手填的。 —— 級距梯子的正當性是「傷害與冷卻**嚴格成正比**」，而成正比是一個**等式**：冷卻只付得起這一格、傷害卻填到頂的技能，破壞的是同一條規則的另一邊，而在 2026-08-23 之前這一側一格閘都沒有。⚠️ 違反只**警告**。",
           "source": "admin-config",
           "configDoc": "config.authoring-rules@1"
         }
@@ -4108,7 +4267,7 @@
           "defense": 1,
           "attackDamage": 1,
           "abilityPower": 1,
-          "maxHealth": 12,
+          "maxHealth": 9,
           "healthRegen": 1,
           "maxMana": 1,
           "manaRegen": 8,
@@ -4331,5 +4490,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "009868c7e41b"
+  "profileDigest": "9bf27ac39404"
 }

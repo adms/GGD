@@ -80,12 +80,23 @@ describe("橫放光束砲的特效模板 (beam-roll preset)", () => {
       const beam = beams[0]!;
       // ⭐ 承重：模板補上的每一格都在，而且**逐格等於表上的值**。
       //    ⛔ 這裡沒有任何字面值 —— 表改了它跟著改，表沒被讀它就紅。
-      for (const k of ["modelKey", "speed", "spinDegPerSec", "scale"] as const) {
+      for (const k of ["modelKey", "speed", "spinDegPerSec"] as const) {
         expect(beam[k], `${id} 的 ${k} 沒有從 ${PRESET_ID} 補上`).toBe(fromTable(k));
       }
-      // `distance` 允許逐支覆寫（59-04 的光束只走它自己那條線的長度），所以這裡
-      // 只要求它**是一個真的數字** —— 缺了它模型走 0 格，畫面上什麼都不會發生。
+      // ⭐ `distance` 與 `scale` **允許逐支覆寫**，所以這兩格只要求它們是真的數字。
+      //
+      //  · `distance` —— 59-04 的光束只走它自己那條線的長度。
+      //  · `scale` —— ⭐ 2026-08-23 量到的：owner 說「作為翻轉角度的**蝗蟲群單位
+      //    通常大小跟顏色都有再做調整**，避免出現**很小顏色又不對**的氣功砲」，
+      //    而原作這四支是**五具不同的 dummy**、大小各自不同
+      //    （h01P `120+lvl*30` · h000 `counter*450` · h00S `250+lvl*15` …）。
+      //    ⇒ 逐支從 JASS 取值是**正確的**，⛔ 強迫它們等於表上的 2.5 才是缺陷
+      //    （那正是 owner 看到的「四支長得一模一樣」）。
+      //
+      // ⚠️ 而承重的那一半沒有變：`modelKey` / `speed` / `spinDegPerSec` 三格仍然
+      //    逐格對表 ⇒ 「表沒有被讀」照樣會紅。
       expect(typeof beam["distance"], `${id} 的 distance 不是數字 ⇒ 光束走 0 格`).toBe("number");
+      expect(typeof beam["scale"], `${id} 的 scale 不是數字 ⇒ 模型大小未定義`).toBe("number");
     }
   });
 
