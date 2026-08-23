@@ -25,7 +25,7 @@
  *        （path=radial）—— 那是腳下噴發，⛔ 不是地面被剁開一圈」
  */
 import { describe, it, expect, beforeAll } from "vitest";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ContentLoader } from "../../loader";
@@ -345,13 +345,11 @@ describe("⑤ 單具演出：原作模型自己會出聲的，接上去就不可
  *  · 把 `imported.netherstrike` 從 `ZERO_PIXEL_FX_MODELS` 拿掉
  *      → 紅：「這幾具移動模型特效畫不出任何像素…imported.netherstrike（0/5 primitive）」
  */
-const ZERO_PIXEL_FX_MODELS = new Set([
-  "imported.netherstrike", // 四支經典氣功砲（tpl-beam-roll 預設）—— 5 個 prim 全部 alpha 0
-  "imported.fireblast", // 04-03 龍破斬（tpl-line-blast 預設）
-  "imported.blackhole", // 38-002／邪王炎殺黑龍波 —— ⛔ 連 primitive 都是 0 個
-  "imported.deathwave", // godie-h01o.e
-  "imported.oblivionaura", // godie-etyr.q
-]);
+// 2026-08-24 重烘落地（GH#649）：gltf.py 把「無 alpha 的加法輝光」改成 luma-key、
+// 零幾何的純 emitter 模型烘出佔位輝光面片 ⇒ 28 份零像素 .glb 剩 3 份
+// （collision 一家 —— 來源 MDX 逐位元是空的：0 geoset、0 emitter、0 texture，
+// 而且沒有任何 spawnModelFx 指到它）。五列豁免全部到期，照上面的規矩刪掉。
+const ZERO_PIXEL_FX_MODELS = new Set<string>([]);
 
 /** 這一份 .glb 有幾個 primitive 真的會被畫出來（材質 alpha > 0）。 */
 function visiblePrimitives(glbPath: string): { visible: number; total: number } {
@@ -423,5 +421,70 @@ describe("⑥ 移動模型特效指到的模型，要真的畫得出像素", () 
         "（0 像素的東西沒有大小也沒有顏色）—— 修法是重烘 .glb 或讓加法輝光走 ALPHA_ADD",
     ).toEqual([]);
     expect(stale, "這幾具已經畫得出來了 —— 把 ZERO_PIXEL_FX_MODELS 裡的那一列刪掉").toEqual([]);
+  });
+});
+
+/**
+ * ⭐⑦【出貨的 imported .glb 一份都不可以是「零個可畫 primitive」】—— GH#649。
+ *
+ * ⚠️ ⑥ 只掃**被 `spawnModelFx` 指到**的 modelKey，所以它對兩件事結構上失明：
+ *   · 一具零像素的 .glb 只要**還沒有**技能指過去，⑥ 是綠的 —— 而它會在某一支
+ *     技能接上去的那一刻變成「技能放得出來、畫面什麼都沒有」，⛔ 那時候查的人
+ *     會去查技能而不是查模型；
+ *   · 別的消費端（`spawnModelFx` 以外的擺設／掛件／道具模型）它一律看不到。
+ * ⇒ 這一條把柵欄拉到**整個出貨資料夾**：`content/assets/models/imported/*.glb`
+ *   每一份都必須至少有 1 個畫得出來的 primitive。
+ *
+ * ⛔ 豁免要帶**能被反駁的理由**，⛔ 不是「還沒收」：唯一合法的理由是
+ * 「**來源 MDX 裡沒有任何東西可以轉**」—— 那時候烤一個面片出來是**捏造幾何**，
+ * ⛔ 不是轉檔。量到的（`tools/w3x-import/reconvert_zero_pixel.py` 的 UNFIXABLE）：
+ * `collision.mdx` 是 1188 位元組的純骨架 —— 0 geoset · 0 頂點 · 0 PRE2 emitter ·
+ * 0 貼圖，而且它在原作就是**看不見的碰撞體積輔助模型**，畫不出東西才是對的。
+ *
+ * ── 突變紀錄（一批一條，承重線）──────────────────────────────────────────
+ *  · 把 `collision` 從 `EMPTY_SOURCE_GLBS` 拿掉
+ *      → 紅：「這幾份出貨的 imported .glb 畫不出任何 primitive…collision（0/0）」
+ */
+const EMPTY_SOURCE_GLBS = new Map<string, string>([
+  [
+    "collision",
+    "來源 collision.mdx 是 1188 位元組的純骨架：0 geoset／0 頂點／0 PRE2 emitter／" +
+      "0 貼圖。luma-key 需要一份材質、emitter 烤面片需要一顆 emitter，兩條修法各缺一半的" +
+      "輸入 ⇒ 沒有東西可以轉；而且它是原作的隱形碰撞體積輔助模型，畫不出東西才是對的。",
+  ],
+  ["collision-mid", "collision 的 LOD 階，來源同一份空的 collision.mdx。"],
+  ["collision-small", "collision 的 LOD 階，來源同一份空的 collision.mdx。"],
+]);
+
+describe("⑦ 出貨的 imported .glb 都要畫得出至少一個 primitive", () => {
+  it("★ 零像素只准在「來源真的是空的」時候豁免（豁免表帶理由，補好了就要刪）", () => {
+    const dir = join(CONTENT, "assets/models/imported");
+    const names = readdirSync(dir)
+      .filter((f) => f.endsWith(".glb"))
+      .map((f) => f.slice(0, -4))
+      .sort();
+    expect(names.length, "出貨的 imported 資料夾是空的 —— 這條斷言是真空綠的").toBeGreaterThan(100);
+
+    const blank: string[] = [];
+    const stale: string[] = [];
+    for (const name of names) {
+      const { visible, total } = visiblePrimitives(join(dir, `${name}.glb`));
+      if (visible === 0) {
+        if (!EMPTY_SOURCE_GLBS.has(name)) blank.push(`${name}（${visible}/${total}）`);
+      } else if (EMPTY_SOURCE_GLBS.has(name)) {
+        stale.push(`${name}（${visible}/${total}）`);
+      }
+    }
+    expect(
+      blank,
+      "這幾份出貨的 imported .glb 畫不出任何 primitive —— 材質 alpha 全是 0（加法輝光被軟刪除）" +
+        "或者整份沒有 mesh（純 emitter 模型被匯出成空殼）。⛔ 調 scale／fxTint 治不了 0 像素：" +
+        "修法是重烘（`python3 tools/w3x-import/reconvert_zero_pixel.py`），" +
+        "⛔ 真的無解才進 EMPTY_SOURCE_GLBS 並寫下來源為什麼是空的",
+    ).toEqual([]);
+    expect(
+      stale,
+      "這幾份已經畫得出來了 —— 把 EMPTY_SOURCE_GLBS 裡的那一列刪掉（豁免帶到期日，⛔ 不是許可證）",
+    ).toEqual([]);
   });
 });

@@ -21,7 +21,7 @@ import re
 
 from .blp import decode_blp
 from .gltf import convert
-from .mdx import parse_mdx
+from .mdx import Geoset, Layer, Material, parse_mdx
 from .mpq import W3XArchive
 
 DEFAULT_SCALE = 1.0 / 36.0
@@ -417,6 +417,78 @@ def bake_attachments(model, raw_dir: str, entry: dict,
     return baked, skipped
 
 
+def bake_emitter_quads(model, raw_bytes: bytes) -> list[dict]:
+    """Give a geometry-less MDX (pure particle-emitter effect model) SOME
+    visible mesh: one geoset of three orthogonal quads per PRE2 emitter, at
+    the emitter's pivot, sized from its particle scaling, textured with the
+    emitter's own texture through an additive (fm 3) layer — which the
+    exporter luma-keys, so black backgrounds vanish and the glow shows.
+
+    Why: the .glb pipeline exports meshes only; a WC3 effect that is nothing
+    but emitters (BlackHole, DivineRing, LasercannonfinalRED …) converted to
+    an EMPTY .glb — 13 shipped effect models drew zero pixels while abilities
+    pointed at them (GH#649). A static glow sprite per emitter is a knowingly
+    crude stand-in, but it is visible, keeps the emitter layout (DivineRing's
+    20 emitters still draw a ring), and follows the emitter's parent bone.
+
+    Mutates `model` (geosets + materials). Returns a summary for the report;
+    [] when the model already has geometry or has no usable emitters.
+    """
+    if any(g.vertices for g in model.geosets):
+        return []
+    try:
+        from .particles import parse_particles
+        pm = parse_particles(raw_bytes)
+    except Exception:
+        return []
+    baked: list[dict] = []
+    # ONE geoset (= one draw call) per distinct texture: an MDX geoset carries
+    # per-vertex matrix-group indices, so quads bound to different parent
+    # bones can still share a geoset (DivineRing: 20 emitters → 2 draws).
+    by_tex: dict[int, Geoset] = {}
+    for em in pm.emitters2[:24]:
+        if em.replaceable_id:
+            continue  # team colour/glow billboard — same policy as gltf.py
+        size = max([*em.segment_scaling, em.width, em.length, 0.0])
+        if size <= 0:
+            continue
+        h = max(15.0, min(size, 300.0)) / 2.0
+        tid = em.texture_id if 0 <= em.texture_id < len(model.textures) else -1
+        geo = by_tex.get(tid)
+        if geo is None:
+            mat_id = len(model.materials)
+            model.materials.append(Material(layers=[
+                Layer(filter_mode=3, shading_flags=0x10,
+                      texture_id=(tid if tid >= 0 else 0), alpha=1.0),
+            ]))
+            geo = Geoset(vertices=[], normals=[], uvs=[], faces=[],
+                         vertex_groups=[], matrix_groups=[],
+                         material_id=mat_id)
+            by_tex[tid] = geo
+            model.geosets.append(geo)
+        grp = len(geo.matrix_groups)
+        geo.matrix_groups.append(
+            [em.parent_id] if em.parent_id in model.nodes else [])
+        px, py, pz = em.pivot
+        quads = (
+            (((-h, -h, 0), (h, -h, 0), (h, h, 0), (-h, h, 0)), (0, 0, 1)),
+            (((-h, 0, -h), (h, 0, -h), (h, 0, h), (-h, 0, h)), (0, 1, 0)),
+            (((0, -h, -h), (0, h, -h), (0, h, h), (0, -h, h)), (1, 0, 0)),
+        )
+        for corners, n in quads:
+            base = len(geo.vertices)
+            for cx, cy, cz in corners:
+                geo.vertices.append((px + cx, py + cy, pz + cz))
+                geo.normals.append(n)
+                geo.vertex_groups.append(grp)
+            geo.uvs += [(0.0, 0.0), (1.0, 0.0), (1.0, 1.0), (0.0, 1.0)]
+            geo.faces += [base, base + 1, base + 2, base, base + 2, base + 3]
+        baked.append({"emitter": em.name, "texture": tid,
+                      "half_size": round(h, 1),
+                      "pivot": [round(p, 1) for p in em.pivot]})
+    return baked
+
+
 def default_sphere_table(raw_dir: str) -> dict:
     """Locate the two object-data datasets next to `raw_dir` and build the
     permanent-sphere-attachment table (task #267). Missing files → {}."""
@@ -428,27 +500,33 @@ def default_sphere_table(raw_dir: str) -> dict:
 
 
 def convert_all(raw_dir: str, glb_dir: str, tex_dir: str,
-                sphere_table: dict | None = None) -> list[dict]:
+                sphere_table: dict | None = None,
+                only: set[str] | None = None) -> list[dict]:
+    """`only`: restrict to the .mdx files whose slug is in the set (targeted
+    re-conversion, e.g. GH#649's 26 zero-pixel effect models); None = all."""
     if sphere_table is None:
         sphere_table = default_sphere_table(raw_dir)
     try:
-        return _convert_all(raw_dir, glb_dir, tex_dir, sphere_table)
+        return _convert_all(raw_dir, glb_dir, tex_dir, sphere_table, only)
     finally:
         close_stock_archives()
 
 
 def _convert_all(raw_dir: str, glb_dir: str, tex_dir: str,
-                 sphere_table: dict | None = None) -> list[dict]:
+                 sphere_table: dict | None = None,
+                 only: set[str] | None = None) -> list[dict]:
     os.makedirs(glb_dir, exist_ok=True)
     os.makedirs(tex_dir, exist_ok=True)
     report = []
     files = sorted(
         f for f in os.listdir(raw_dir) if f.lower().endswith(".mdx")
+        and (only is None or slug(f[:-4]) in only)
     )
     for fname in files:
         entry = {"source": fname}
         try:
-            model = parse_mdx(open(os.path.join(raw_dir, fname), "rb").read())
+            raw_bytes = open(os.path.join(raw_dir, fname), "rb").read()
+            model = parse_mdx(raw_bytes)
             kind = classify(model)
             entry["kind"] = kind
             entry["sequences"] = [s.name for s in model.sequences]
@@ -458,6 +536,12 @@ def _convert_all(raw_dir: str, glb_dir: str, tex_dir: str,
             # collection so their textures load too.
             bake_attachments(model, raw_dir, entry,
                              sphere_table=sphere_table, source=fname)
+
+            # geometry-less emitter-only effects: bake placeholder glow quads
+            # so the .glb is never a zero-pixel empty shell (GH#649)
+            equads = bake_emitter_quads(model, raw_bytes)
+            if equads:
+                entry["emitter_quads"] = equads
 
             textures_png: dict[int, bytes] = {}
             tex_alpha: dict[int, str] = {}

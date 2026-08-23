@@ -1,0 +1,269 @@
+{
+ "baselineFrom": "git HEAD (see module docstring)",
+ "targets": [
+  {
+   "name": "awing",
+   "cause": "A: luma-key",
+   "baseline@HEAD": "0/1 visible prims, 1 anims",
+   "rebuilt": "1/1 visible prims, 1 anims",
+   "glb_size": 21340,
+   "emitter_quads": 0,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "babyface",
+   "cause": "B: emitter-bake",
+   "baseline@HEAD": "0/0 visible prims, 0 anims",
+   "rebuilt": "1/1 visible prims, 0 anims",
+   "glb_size": 28124,
+   "emitter_quads": 1,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "blackhole",
+   "cause": "B: emitter-bake",
+   "baseline@HEAD": "0/0 visible prims, 2 anims",
+   "rebuilt": "5/5 visible prims, 2 anims",
+   "glb_size": 118820,
+   "emitter_quads": 7,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "boomnl",
+   "cause": "B: emitter-bake",
+   "baseline@HEAD": "0/0 visible prims, 0 anims",
+   "rebuilt": "1/1 visible prims, 0 anims",
+   "glb_size": 76352,
+   "emitter_quads": 5,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "bwing",
+   "cause": "A: luma-key",
+   "baseline@HEAD": "0/1 visible prims, 1 anims",
+   "rebuilt": "1/1 visible prims, 1 anims",
+   "glb_size": 21144,
+   "emitter_quads": 0,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "darkbreathdamage",
+   "cause": "B: emitter-bake",
+   "baseline@HEAD": "0/0 visible prims, 0 anims",
+   "rebuilt": "1/1 visible prims, 0 anims",
+   "glb_size": 104040,
+   "emitter_quads": 1,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "deathwave",
+   "cause": "A: luma-key",
+   "baseline@HEAD": "0/2 visible prims, 3 anims",
+   "rebuilt": "2/2 visible prims, 3 anims",
+   "glb_size": 26008,
+   "emitter_quads": 0,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "demonfilth",
+   "cause": "B: emitter-bake",
+   "baseline@HEAD": "0/0 visible prims, 0 anims",
+   "rebuilt": "3/3 visible prims, 0 anims",
+   "glb_size": 188036,
+   "emitter_quads": 5,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "divinering",
+   "cause": "B: emitter-bake",
+   "baseline@HEAD": "0/0 visible prims, 1 anims",
+   "rebuilt": "3/3 visible prims, 1 anims",
+   "glb_size": 26264,
+   "emitter_quads": 20,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "enchant",
+   "cause": "B: emitter-bake",
+   "baseline@HEAD": "0/0 visible prims, 1 anims",
+   "rebuilt": "1/1 visible prims, 1 anims",
+   "glb_size": 18292,
+   "emitter_quads": 5,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "fireblast",
+   "cause": "A: luma-key",
+   "baseline@HEAD": "0/1 visible prims, 3 anims",
+   "rebuilt": "1/1 visible prims, 3 anims",
+   "glb_size": 22460,
+   "emitter_quads": 0,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "flash",
+   "cause": "A: luma-key",
+   "baseline@HEAD": "0/3 visible prims, 1 anims",
+   "rebuilt": "3/3 visible prims, 1 anims",
+   "glb_size": 23980,
+   "emitter_quads": 0,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "gx",
+   "cause": "A: luma-key",
+   "baseline@HEAD": "0/3 visible prims, 3 anims",
+   "rebuilt": "3/3 visible prims, 3 anims",
+   "glb_size": 14284,
+   "emitter_quads": 0,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "gxhuge",
+   "cause": "A: luma-key",
+   "baseline@HEAD": "0/3 visible prims, 3 anims",
+   "rebuilt": "3/3 visible prims, 3 anims",
+   "glb_size": 14300,
+   "emitter_quads": 0,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "heroluffeattack",
+   "cause": "A: luma-key",
+   "baseline@HEAD": "0/3 visible prims, 3 anims",
+   "rebuilt": "3/3 visible prims, 3 anims",
+   "glb_size": 45632,
+   "emitter_quads": 0,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "heronarutos4effect",
+   "cause": "B: emitter-bake",
+   "baseline@HEAD": "0/0 visible prims, 3 anims",
+   "rebuilt": "1/1 visible prims, 3 anims",
+   "glb_size": 23192,
+   "emitter_quads": 6,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "lasercannonfinalred",
+   "cause": "B: emitter-bake",
+   "baseline@HEAD": "0/0 visible prims, 0 anims",
+   "rebuilt": "6/6 visible prims, 0 anims",
+   "glb_size": 50664,
+   "emitter_quads": 8,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "lavabreathdamage",
+   "cause": "B: emitter-bake",
+   "baseline@HEAD": "0/0 visible prims, 0 anims",
+   "rebuilt": "1/1 visible prims, 0 anims",
+   "glb_size": 3744,
+   "emitter_quads": 1,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "lightningnova",
+   "cause": "A: luma-key",
+   "baseline@HEAD": "0/3 visible prims, 1 anims",
+   "rebuilt": "3/3 visible prims, 1 anims",
+   "glb_size": 56144,
+   "emitter_quads": 0,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "love2",
+   "cause": "A: luma-key",
+   "baseline@HEAD": "0/1 visible prims, 1 anims",
+   "rebuilt": "1/1 visible prims, 1 anims",
+   "glb_size": 5024,
+   "emitter_quads": 0,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "midchildernanohaaura",
+   "cause": "A: luma-key",
+   "baseline@HEAD": "0/2 visible prims, 1 anims",
+   "rebuilt": "2/2 visible prims, 1 anims",
+   "glb_size": 154872,
+   "emitter_quads": 0,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "netherstrike",
+   "cause": "A: luma-key",
+   "baseline@HEAD": "0/5 visible prims, 1 anims",
+   "rebuilt": "5/5 visible prims, 1 anims",
+   "glb_size": 117224,
+   "emitter_quads": 0,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "oblivionaura",
+   "cause": "A: luma-key",
+   "baseline@HEAD": "0/3 visible prims, 1 anims",
+   "rebuilt": "3/3 visible prims, 1 anims",
+   "glb_size": 78668,
+   "emitter_quads": 0,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "sonicbreathstream",
+   "cause": "A: luma-key",
+   "baseline@HEAD": "0/1 visible prims, 1 anims",
+   "rebuilt": "1/1 visible prims, 1 anims",
+   "glb_size": 11316,
+   "emitter_quads": 0,
+   "missing_textures": [],
+   "verdict": "fixed"
+  },
+  {
+   "name": "supershinythingy",
+   "cause": "A: luma-key",
+   "baseline@HEAD": "0/6 visible prims, 1 anims",
+   "rebuilt": "6/6 visible prims, 1 anims",
+   "glb_size": 70192,
+   "emitter_quads": 0,
+   "missing_textures": [],
+   "verdict": "fixed"
+  }
+ ],
+ "unfixable": [
+  {
+   "name": "collision",
+   "reason": "MEASURED: collision.mdx is 1188 bytes of pure skeleton — 0 geosets, 0 vertices, 0 PRE2 emitters, 0 textures, 1 sequence. Cause-A repair needs a material and cause-B repair needs an emitter; neither exists, so there is nothing to convert and a baked quad would be invented geometry, not a conversion. Drawing nothing is also CORRECT here: this is WC3's invisible collision-volume helper, and no spawnModelFx node points at it."
+  },
+  {
+   "name": "collision-mid",
+   "reason": "LOD tier derived from collision.mdx (same empty source)"
+  },
+  {
+   "name": "collision-small",
+   "reason": "LOD tier derived from collision.mdx (same empty source)"
+  }
+ ]
+}

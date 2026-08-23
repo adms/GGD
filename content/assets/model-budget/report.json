@@ -1,27 +1,27 @@
 {
  "schema": "model-budget@1",
- "sourcesDigest": "516eba598f64b065",
+ "sourcesDigest": "f29194ed9e161b30",
  "generatedBy": "tools/model-budget/emit_report.ts (task #99)",
  "sources": [
   {
    "path": "content/models/_index.json",
-   "sha256": "dc20d995ac6b2d40",
+   "sha256": "200b5d1396da027d",
    "bytes": 17832
   },
   {
    "path": "content/arenas/_index.json",
-   "sha256": "ff5ee9eb750f1fd1",
+   "sha256": "a9a956a548113adb",
    "bytes": 1875
   },
   {
    "path": "content/champions/_index.json",
-   "sha256": "ba478c3b45d9163a",
-   "bytes": 9377
+   "sha256": "b7143bbb1dbb2688",
+   "bytes": 9384
   },
   {
    "path": "apps/client/src/render/ArenaGround.ts",
-   "sha256": "098a3a6287fa1dbd",
-   "bytes": 33087
+   "sha256": "3769df733ade9b6e",
+   "bytes": 44711
   },
   {
    "path": "apps/client/src/render/intermission/layout.ts",
@@ -3995,7 +3995,7 @@
    "clips": 1,
    "animChannels": 4,
    "textureCount": 1,
-   "textureBytes": 9260,
+   "textureBytes": 10054,
    "vramBytes": 87381,
    "maxTextureEdge": 128,
    "textures": [
@@ -4003,10 +4003,10 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 9260
+     "diskBytes": 10054
     }
    ],
-   "fileBytes": 20540,
+   "fileBytes": 21340,
    "worstCount": 1,
    "usedBy": [],
    "broken": "near-zero",
@@ -4058,25 +4058,32 @@
    "group": "imported",
    "shipping": true,
    "role": "unused",
-   "triangles": 0,
-   "vertices": 0,
-   "drawCalls": 0,
-   "materials": 0,
+   "triangles": 6,
+   "vertices": 12,
+   "drawCalls": 1,
+   "materials": 1,
    "skins": 0,
    "joints": 0,
    "clips": 0,
    "animChannels": 0,
-   "textureCount": 0,
-   "textureBytes": 0,
-   "vramBytes": 0,
-   "maxTextureEdge": 0,
-   "textures": [],
-   "fileBytes": 288,
+   "textureCount": 1,
+   "textureBytes": 26245,
+   "vramBytes": 87381,
+   "maxTextureEdge": 128,
+   "textures": [
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 26245
+    }
+   ],
+   "fileBytes": 28124,
    "worstCount": 1,
    "usedBy": [],
-   "broken": "zero-geometry",
+   "broken": "near-zero",
    "verdicts": {},
-   "note": "0 個 primitive —— mdx 粒子發射器沒有轉出任何幾何（#98）。它不是便宜的資產，它是壞的。"
+   "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
   },
   {
    "id": "imported.bahamut",
@@ -4150,25 +4157,56 @@
    "group": "imported",
    "shipping": true,
    "role": "unused",
-   "triangles": 0,
-   "vertices": 0,
-   "drawCalls": 0,
-   "materials": 0,
+   "triangles": 42,
+   "vertices": 84,
+   "drawCalls": 5,
+   "materials": 5,
    "skins": 1,
    "joints": 9,
    "clips": 2,
    "animChannels": 8,
-   "textureCount": 0,
-   "textureBytes": 0,
-   "vramBytes": 0,
-   "maxTextureEdge": 0,
-   "textures": [],
-   "fileBytes": 8384,
+   "textureCount": 5,
+   "textureBytes": 98491,
+   "vramBytes": 535209,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1540
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 10673
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 11718
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1762
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 72798
+    }
+   ],
+   "fileBytes": 118820,
    "worstCount": 1,
    "usedBy": [],
-   "broken": "zero-geometry",
+   "broken": "",
    "verdicts": {},
-   "note": "0 個 primitive —— mdx 粒子發射器沒有轉出任何幾何（#98）。它不是便宜的資產，它是壞的。"
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "imported.blackhole1",
@@ -4293,25 +4331,32 @@
    "group": "imported",
    "shipping": true,
    "role": "unused",
-   "triangles": 0,
-   "vertices": 0,
-   "drawCalls": 0,
-   "materials": 0,
+   "triangles": 30,
+   "vertices": 60,
+   "drawCalls": 1,
+   "materials": 1,
    "skins": 0,
    "joints": 0,
    "clips": 0,
    "animChannels": 0,
-   "textureCount": 0,
-   "textureBytes": 0,
-   "vramBytes": 0,
-   "maxTextureEdge": 0,
-   "textures": [],
-   "fileBytes": 288,
+   "textureCount": 1,
+   "textureBytes": 72798,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 72798
+    }
+   ],
+   "fileBytes": 76352,
    "worstCount": 1,
    "usedBy": [],
-   "broken": "zero-geometry",
+   "broken": "near-zero",
    "verdicts": {},
-   "note": "0 個 primitive —— mdx 粒子發射器沒有轉出任何幾何（#98）。它不是便宜的資產，它是壞的。"
+   "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
   },
   {
    "id": "imported.boxcat",
@@ -4424,7 +4469,7 @@
    "clips": 1,
    "animChannels": 4,
    "textureCount": 1,
-   "textureBytes": 9105,
+   "textureBytes": 9860,
    "vramBytes": 87381,
    "maxTextureEdge": 128,
    "textures": [
@@ -4432,10 +4477,10 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 9105
+     "diskBytes": 9860
     }
    ],
-   "fileBytes": 20392,
+   "fileBytes": 21144,
    "worstCount": 1,
    "usedBy": [],
    "broken": "near-zero",
@@ -4621,25 +4666,32 @@
    "group": "imported",
    "shipping": true,
    "role": "unused",
-   "triangles": 0,
-   "vertices": 0,
-   "drawCalls": 0,
-   "materials": 0,
+   "triangles": 6,
+   "vertices": 12,
+   "drawCalls": 1,
+   "materials": 1,
    "skins": 0,
    "joints": 0,
    "clips": 0,
    "animChannels": 0,
-   "textureCount": 0,
-   "textureBytes": 0,
-   "vramBytes": 0,
-   "maxTextureEdge": 0,
-   "textures": [],
-   "fileBytes": 288,
+   "textureCount": 1,
+   "textureBytes": 102155,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 102155
+    }
+   ],
+   "fileBytes": 104040,
    "worstCount": 1,
    "usedBy": [],
-   "broken": "zero-geometry",
+   "broken": "near-zero",
    "verdicts": {},
-   "note": "0 個 primitive —— mdx 粒子發射器沒有轉出任何幾何（#98）。它不是便宜的資產，它是壞的。"
+   "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
   },
   {
    "id": "imported.darkraor",
@@ -4701,7 +4753,7 @@
    "clips": 3,
    "animChannels": 5,
    "textureCount": 2,
-   "textureBytes": 7513,
+   "textureBytes": 7798,
    "vramBytes": 92842,
    "maxTextureEdge": 128,
    "textures": [
@@ -4709,16 +4761,16 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 6084
+     "diskBytes": 6258
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1429
+     "diskBytes": 1540
     }
    ],
-   "fileBytes": 25720,
+   "fileBytes": 26008,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -4731,25 +4783,44 @@
    "group": "imported",
    "shipping": true,
    "role": "unused",
-   "triangles": 0,
-   "vertices": 0,
-   "drawCalls": 0,
-   "materials": 0,
+   "triangles": 30,
+   "vertices": 60,
+   "drawCalls": 3,
+   "materials": 3,
    "skins": 0,
    "joints": 0,
    "clips": 0,
    "animChannels": 0,
-   "textureCount": 0,
-   "textureBytes": 0,
-   "vramBytes": 0,
-   "maxTextureEdge": 0,
-   "textures": [],
-   "fileBytes": 288,
+   "textureCount": 3,
+   "textureBytes": 182330,
+   "vramBytes": 786431,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 115815
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 51279
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 15236
+    }
+   ],
+   "fileBytes": 188036,
    "worstCount": 1,
    "usedBy": [],
-   "broken": "zero-geometry",
+   "broken": "near-zero",
    "verdicts": {},
-   "note": "0 個 primitive —— mdx 粒子發射器沒有轉出任何幾何（#98）。它不是便宜的資產，它是壞的。"
+   "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
   },
   {
    "id": "imported.divinering",
@@ -4757,25 +4828,44 @@
    "group": "imported",
    "shipping": true,
    "role": "unused",
-   "triangles": 0,
-   "vertices": 0,
-   "drawCalls": 0,
-   "materials": 0,
+   "triangles": 120,
+   "vertices": 240,
+   "drawCalls": 3,
+   "materials": 3,
    "skins": 1,
    "joints": 1,
    "clips": 1,
    "animChannels": 1,
-   "textureCount": 0,
-   "textureBytes": 0,
-   "vramBytes": 0,
-   "maxTextureEdge": 0,
-   "textures": [],
-   "fileBytes": 1020,
+   "textureCount": 3,
+   "textureBytes": 6880,
+   "vramBytes": 32767,
+   "maxTextureEdge": 64,
+   "textures": [
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 3022
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1980
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1878
+    }
+   ],
+   "fileBytes": 26264,
    "worstCount": 1,
    "usedBy": [],
-   "broken": "zero-geometry",
+   "broken": "",
    "verdicts": {},
-   "note": "0 個 primitive —— mdx 粒子發射器沒有轉出任何幾何（#98）。它不是便宜的資產，它是壞的。"
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "imported.doom",
@@ -4855,25 +4945,32 @@
    "group": "imported",
    "shipping": true,
    "role": "unused",
-   "triangles": 0,
-   "vertices": 0,
-   "drawCalls": 0,
-   "materials": 0,
+   "triangles": 30,
+   "vertices": 60,
+   "drawCalls": 1,
+   "materials": 1,
    "skins": 1,
    "joints": 1,
    "clips": 1,
    "animChannels": 3,
-   "textureCount": 0,
-   "textureBytes": 0,
-   "vramBytes": 0,
-   "maxTextureEdge": 0,
-   "textures": [],
-   "fileBytes": 5536,
+   "textureCount": 1,
+   "textureBytes": 7742,
+   "vramBytes": 21845,
+   "maxTextureEdge": 64,
+   "textures": [
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 7742
+    }
+   ],
+   "fileBytes": 18292,
    "worstCount": 1,
    "usedBy": [],
-   "broken": "zero-geometry",
+   "broken": "near-zero",
    "verdicts": {},
-   "note": "0 個 primitive —— mdx 粒子發射器沒有轉出任何幾何（#98）。它不是便宜的資產，它是壞的。"
+   "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
   },
   {
    "id": "imported.fireblast",
@@ -4890,7 +4987,7 @@
    "clips": 3,
    "animChannels": 4,
    "textureCount": 1,
-   "textureBytes": 1634,
+   "textureBytes": 1863,
    "vramBytes": 5461,
    "maxTextureEdge": 32,
    "textures": [
@@ -4898,10 +4995,10 @@
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1634
+     "diskBytes": 1863
     }
    ],
-   "fileBytes": 22228,
+   "fileBytes": 22460,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -4989,7 +5086,7 @@
    "clips": 1,
    "animChannels": 1,
    "textureCount": 3,
-   "textureBytes": 15739,
+   "textureBytes": 16962,
    "vramBytes": 49151,
    "maxTextureEdge": 64,
    "textures": [
@@ -4997,22 +5094,22 @@
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1770
+     "diskBytes": 1878
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 7502
+     "diskBytes": 8166
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 6467
+     "diskBytes": 6918
     }
    ],
-   "fileBytes": 22748,
+   "fileBytes": 23980,
    "worstCount": 1,
    "usedBy": [],
    "broken": "near-zero",
@@ -5427,7 +5524,7 @@
    "clips": 3,
    "animChannels": 1,
    "textureCount": 2,
-   "textureBytes": 3004,
+   "textureBytes": 3315,
    "vramBytes": 49152,
    "maxTextureEdge": 128,
    "textures": [
@@ -5435,16 +5532,16 @@
      "w": 128,
      "h": 64,
      "format": "png",
-     "diskBytes": 1575
+     "diskBytes": 1775
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1429
+     "diskBytes": 1540
     }
    ],
-   "fileBytes": 13968,
+   "fileBytes": 14284,
    "worstCount": 1,
    "usedBy": [],
    "broken": "near-zero",
@@ -5466,7 +5563,7 @@
    "clips": 3,
    "animChannels": 1,
    "textureCount": 2,
-   "textureBytes": 3004,
+   "textureBytes": 3315,
    "vramBytes": 49152,
    "maxTextureEdge": 128,
    "textures": [
@@ -5474,16 +5571,16 @@
      "w": 128,
      "h": 64,
      "format": "png",
-     "diskBytes": 1575
+     "diskBytes": 1775
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1429
+     "diskBytes": 1540
     }
    ],
-   "fileBytes": 13980,
+   "fileBytes": 14300,
    "worstCount": 1,
    "usedBy": [],
    "broken": "near-zero",
@@ -6288,7 +6385,7 @@
    "clips": 3,
    "animChannels": 9,
    "textureCount": 1,
-   "textureBytes": 15363,
+   "textureBytes": 17561,
    "vramBytes": 87381,
    "maxTextureEdge": 128,
    "textures": [
@@ -6296,10 +6393,10 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 15363
+     "diskBytes": 17561
     }
    ],
-   "fileBytes": 43424,
+   "fileBytes": 45632,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -6414,25 +6511,32 @@
    "group": "imported",
    "shipping": true,
    "role": "unused",
-   "triangles": 0,
-   "vertices": 0,
-   "drawCalls": 0,
-   "materials": 0,
+   "triangles": 36,
+   "vertices": 72,
+   "drawCalls": 1,
+   "materials": 1,
    "skins": 1,
    "joints": 1,
    "clips": 3,
    "animChannels": 1,
-   "textureCount": 0,
-   "textureBytes": 0,
-   "vramBytes": 0,
-   "maxTextureEdge": 0,
-   "textures": [],
-   "fileBytes": 1900,
+   "textureCount": 1,
+   "textureBytes": 15541,
+   "vramBytes": 87381,
+   "maxTextureEdge": 128,
+   "textures": [
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 15541
+    }
+   ],
+   "fileBytes": 23192,
    "worstCount": 1,
    "usedBy": [],
-   "broken": "zero-geometry",
+   "broken": "",
    "verdicts": {},
-   "note": "0 個 primitive —— mdx 粒子發射器沒有轉出任何幾何（#98）。它不是便宜的資產，它是壞的。"
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "imported.herooichi",
@@ -7442,25 +7546,62 @@
    "group": "imported",
    "shipping": true,
    "role": "unused",
-   "triangles": 0,
-   "vertices": 0,
-   "drawCalls": 0,
-   "materials": 0,
+   "triangles": 48,
+   "vertices": 96,
+   "drawCalls": 6,
+   "materials": 6,
    "skins": 0,
    "joints": 0,
    "clips": 0,
    "animChannels": 0,
-   "textureCount": 0,
-   "textureBytes": 0,
-   "vramBytes": 0,
-   "maxTextureEdge": 0,
-   "textures": [],
-   "fileBytes": 288,
+   "textureCount": 6,
+   "textureBytes": 40475,
+   "vramBytes": 245758,
+   "maxTextureEdge": 128,
+   "textures": [
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 10381
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 9683
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 3472
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 2012
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 10156
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 4771
+    }
+   ],
+   "fileBytes": 50664,
    "worstCount": 1,
    "usedBy": [],
-   "broken": "zero-geometry",
+   "broken": "",
    "verdicts": {},
-   "note": "0 個 primitive —— mdx 粒子發射器沒有轉出任何幾何（#98）。它不是便宜的資產，它是壞的。"
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "assets/models/imported/lavabreathdamage.glb",
@@ -7468,25 +7609,32 @@
    "group": "imported",
    "shipping": true,
    "role": "unused",
-   "triangles": 0,
-   "vertices": 0,
-   "drawCalls": 0,
-   "materials": 0,
+   "triangles": 6,
+   "vertices": 12,
+   "drawCalls": 1,
+   "materials": 1,
    "skins": 0,
    "joints": 0,
    "clips": 0,
    "animChannels": 0,
-   "textureCount": 0,
-   "textureBytes": 0,
-   "vramBytes": 0,
-   "maxTextureEdge": 0,
-   "textures": [],
-   "fileBytes": 288,
+   "textureCount": 1,
+   "textureBytes": 1863,
+   "vramBytes": 5461,
+   "maxTextureEdge": 32,
+   "textures": [
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1863
+    }
+   ],
+   "fileBytes": 3744,
    "worstCount": 1,
    "usedBy": [],
-   "broken": "zero-geometry",
+   "broken": "near-zero",
    "verdicts": {},
-   "note": "0 個 primitive —— mdx 粒子發射器沒有轉出任何幾何（#98）。它不是便宜的資產，它是壞的。"
+   "note": "幾何近乎為零，但仍然吃掉 draw call 與材質 —— 純開銷（#98）。"
   },
   {
    "id": "imported.lgcr",
@@ -7536,7 +7684,7 @@
    "clips": 1,
    "animChannels": 10,
    "textureCount": 2,
-   "textureBytes": 34559,
+   "textureBytes": 37994,
    "vramBytes": 109226,
    "maxTextureEdge": 256,
    "textures": [
@@ -7544,16 +7692,16 @@
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 9349
+     "diskBytes": 10599
     },
     {
      "w": 256,
      "h": 64,
      "format": "png",
-     "diskBytes": 25210
+     "diskBytes": 27395
     }
    ],
-   "fileBytes": 52700,
+   "fileBytes": 56144,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -7761,7 +7909,7 @@
    "clips": 1,
    "animChannels": 1,
    "textureCount": 1,
-   "textureBytes": 1300,
+   "textureBytes": 1533,
    "vramBytes": 5461,
    "maxTextureEdge": 32,
    "textures": [
@@ -7769,10 +7917,10 @@
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1300
+     "diskBytes": 1533
     }
    ],
-   "fileBytes": 4788,
+   "fileBytes": 5024,
    "worstCount": 1,
    "usedBy": [],
    "broken": "near-zero",
@@ -8091,7 +8239,7 @@
    "clips": 1,
    "animChannels": 2,
    "textureCount": 2,
-   "textureBytes": 120781,
+   "textureBytes": 140324,
    "vramBytes": 699050,
    "maxTextureEdge": 256,
    "textures": [
@@ -8099,16 +8247,16 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 93944
+     "diskBytes": 109306
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 26837
+     "diskBytes": 31018
     }
    ],
-   "fileBytes": 135316,
+   "fileBytes": 154872,
    "worstCount": 1,
    "usedBy": [],
    "broken": "near-zero",
@@ -8265,7 +8413,7 @@
    "clips": 1,
    "animChannels": 5,
    "textureCount": 1,
-   "textureBytes": 68848,
+   "textureBytes": 72727,
    "vramBytes": 349525,
    "maxTextureEdge": 256,
    "textures": [
@@ -8273,10 +8421,10 @@
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 68848
+     "diskBytes": 72727
     }
    ],
-   "fileBytes": 113324,
+   "fileBytes": 117224,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -8331,7 +8479,7 @@
    "clips": 1,
    "animChannels": 6,
    "textureCount": 2,
-   "textureBytes": 46849,
+   "textureBytes": 53583,
    "vramBytes": 109226,
    "maxTextureEdge": 128,
    "textures": [
@@ -8339,16 +8487,16 @@
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 5954
+     "diskBytes": 6688
     },
     {
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 40895
+     "diskBytes": 46895
     }
    ],
-   "fileBytes": 71932,
+   "fileBytes": 78668,
    "worstCount": 1,
    "usedBy": [],
    "broken": "near-zero",
@@ -8742,7 +8890,7 @@
    "clips": 1,
    "animChannels": 1,
    "textureCount": 1,
-   "textureBytes": 8304,
+   "textureBytes": 7968,
    "vramBytes": 87381,
    "maxTextureEdge": 128,
    "textures": [
@@ -8750,10 +8898,10 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 8304
+     "diskBytes": 7968
     }
    ],
-   "fileBytes": 11648,
+   "fileBytes": 11316,
    "worstCount": 1,
    "usedBy": [],
    "broken": "near-zero",
@@ -8808,7 +8956,7 @@
    "clips": 1,
    "animChannels": 45,
    "textureCount": 4,
-   "textureBytes": 18443,
+   "textureBytes": 19864,
    "vramBytes": 136532,
    "maxTextureEdge": 128,
    "textures": [
@@ -8816,28 +8964,28 @@
      "w": 128,
      "h": 128,
      "format": "png",
-     "diskBytes": 6223
+     "diskBytes": 6417
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 4510
+     "diskBytes": 4771
     },
     {
      "w": 64,
      "h": 64,
      "format": "png",
-     "diskBytes": 6187
+     "diskBytes": 6917
     },
     {
      "w": 32,
      "h": 32,
      "format": "png",
-     "diskBytes": 1523
+     "diskBytes": 1759
     }
    ],
-   "fileBytes": 68752,
+   "fileBytes": 70192,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -15781,12 +15929,12 @@
  "totals": {
   "files": 275,
   "shipping": 235,
-  "triangles": 198721,
-  "shippingTriangles": 174605,
-  "textureBytes": 51710368,
-  "vramBytes": 413928669,
-  "zeroGeometry": 11,
-  "nearZero": 33,
+  "triangles": 199075,
+  "shippingTriangles": 174959,
+  "textureBytes": 52305903,
+  "vramBytes": 416429952,
+  "zeroGeometry": 1,
+  "nearZero": 39,
   "unused": 117
  }
 }

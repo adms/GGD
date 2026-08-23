@@ -21,6 +21,7 @@ keys are resampled at 30 fps to LINEAR. Global-sequence tracks are left static
 
 from __future__ import annotations
 
+import io
 import json
 import math
 import struct
@@ -368,6 +369,38 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
         tex_to_gltf[tex_id] = len(gltf["textures"]) - 1
         return tex_to_gltf[tex_id]
 
+    luma_to_gltf: dict[int, int] = {}
+
+    def gltf_texture_luma(tex_id: int) -> int:
+        """Additive-glow art with no alpha channel gets one derived from its
+        own luminance (alpha := max(R,G,B)): black background -> transparent,
+        bright glow -> visible. This approximates WC3 additive blending in
+        plain glTF BLEND — the scene has no bloom/GlowLayer, so the previous
+        policy (baseColorFactor [0,0,0,0], "drop the quad") left 28 shipped
+        effect .glbs drawing ZERO pixels (GH#649). Cached separately from
+        gltf_texture: other materials may still want the original image."""
+        if tex_id in luma_to_gltf:
+            return luma_to_gltf[tex_id]
+        from PIL import Image, ImageChops  # local: PIL already required by blp.py
+        png = textures_png.get(tex_id)
+        if png is not None:
+            img = Image.open(io.BytesIO(png)).convert("RGBA")
+        else:
+            # texture genuinely unresolvable -> soft gray placeholder so the
+            # geometry is at least visible (never zero pixels again)
+            img = Image.new("RGBA", (8, 8), (150, 150, 150, 255))
+        r, g, b, _a = img.split()
+        img.putalpha(ImageChops.lighter(ImageChops.lighter(r, g), b))
+        out = io.BytesIO()
+        img.save(out, "PNG")
+        view = buf.add_blob(out.getvalue())
+        gltf["images"].append({"bufferView": view, "mimeType": "image/png"})
+        gltf["textures"].append(
+            {"source": len(gltf["images"]) - 1, "sampler": 0}
+        )
+        luma_to_gltf[tex_id] = len(gltf["textures"]) - 1
+        return luma_to_gltf[tex_id]
+
     mat_index: dict[int, int] = {}
 
     def _rid(l) -> int:
@@ -403,20 +436,23 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
             if fm >= 3 and not has_opaque_base:
                 # glow GEOMETRY (energy blade / orb): emissive so it reads as
                 # light, never an opaque black quad.
-                tix = gltf_texture(disp.texture_id)
+                if hint == "opaque":
+                    # solid bright-on-black glow: no alpha channel to key on.
+                    # Derive one from luminance instead of dropping the quad —
+                    # the drop policy made 28 shipped effect .glbs (beam
+                    # cannons, novas, auras) draw zero pixels (GH#649).
+                    tix = gltf_texture_luma(disp.texture_id)
+                    res.notes.append(
+                        f"mat{mid}: additive glow w/o alpha → luma-keyed")
+                else:
+                    tix = gltf_texture(disp.texture_id)
                 mat["emissiveTexture"] = {"index": tix}
                 mat["emissiveFactor"] = [1.0, 1.0, 1.0]
                 mat["extensions"] = {"KHR_materials_emissive_strength":
                                      {"emissiveStrength": 2.0}}
                 used_ext.add("KHR_materials_emissive_strength")
                 mat["alphaMode"] = "BLEND"
-                if hint == "opaque":
-                    # solid bright-on-black glow: no alpha to key on → drop the
-                    # quad rather than paint a black slab.
-                    pbr["baseColorFactor"] = [0, 0, 0, 0]
-                    res.notes.append(f"mat{mid}: additive glow w/o alpha → dropped")
-                else:
-                    pbr["baseColorTexture"] = {"index": tix}
+                pbr["baseColorTexture"] = {"index": tix}
             else:
                 pbr["baseColorTexture"] = {"index": gltf_texture(disp.texture_id)}
                 if has_opaque_base:
