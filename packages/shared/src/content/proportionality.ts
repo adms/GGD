@@ -359,6 +359,108 @@ export function describeProportionalityModels(
   );
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+ * ⭐【GH#616】**上限** —— 這條原則在此之前只有下限，而級距梯子是**雙向**的
+ * ══════════════════════════════════════════════════════════════════════════ */
+
+/**
+ * ⚠️ 級距梯子的正當性是 owner Q4 的「**傷害與冷卻嚴格成正比**」——
+ * `damageTiers.ts` 的五格逐字就是「極小 × 單體冷卻比」。⭐ **成正比是一個等式，
+ * ⛔ 不是一個不等式**：一支冷卻只值「小」而傷害填「極大」的技能，違反的是
+ * **同一條**原則，方向相反 —— 而在 2026-08-23 之前這一側**一格閘都沒有**。
+ *
+ * 量到的（2026-08-23，出貨 217 個有卡面冷卻的傷害節點，走出貨的
+ * `cooldownShapeOf` / `cooldownTierForSeconds` / `deriveMinDamageTier`）：
+ *
+ * | 高出最低要求幾級 | 節點數 |
+ * |---:|---:|
+ * | ≤ 0（含偏低的那一大群） | 193 |
+ * | **+1** | 22 |
+ * | **+2** | 2 |
+ * | +3 以上 | 0 |
+ *
+ * ⇒ 每卡面秒輸出的中位是錨點的 **0.333×**，最大 **2.500×**。
+ *
+ * ── ⭐ 我挑了 **1**（owner 常設：「沒做完以前別問我了自己判斷 但是留後台開關」）──
+ * ⛔ **不是** 0：下限那一側用的是 {@link tierAtLeast}（**無條件進位**到下一格），
+ *   所以一個**恰好滿足**公式的節點本來就會落在原始要求之上最多一整級。
+ *   帶寬 0 會把「完全照公式填」的節點判成違規 —— 那是結構性的錯，⛔ 不是嚴格。
+ * ⛔ **不是** 2 以上：那會讓這條規則**今天一格都指不到**，
+ *   而這份 repo 反覆記錄的結論是「一個永遠不會紅的閘等於沒有閘」。
+ * ⭐ **1** ＝ 帶寬兩格（最低、最低+1），出貨 217 個節點裡 **215 個在界內**，
+ *   點名 **2 個**。它是一道**天花板**，⛔ 不是一張要重填的清單
+ *   （⛔ 這一批沒有動任何一個出貨的傷害或冷卻數值）。
+ *
+ * ⚠️ 與下限同一層：**只警告不擋**（`authoringRules.ts` 的 `principle` 一族）。
+ */
+export const DEFAULT_MAX_TIERS_ABOVE_MIN = 1;
+
+/** 下界 0 ＝ 傷害級距必須**正好**等於冷卻推出來的那一格。 */
+export const MAX_TIERS_ABOVE_MIN_MIN = 0;
+/**
+ * 上界 ＝ 整條梯子的長度 − 1。⭐ 填這個值 ＝ **把上限整個關掉**
+ * （最低那一格再加滿一條梯子必然是最高格 ⇒ 不排除任何東西）＝ 一鍵 rollback。
+ * ⛔ 刻意不是一個字面值：梯子加一格，這個上界自己跟著動。
+ */
+export const MAX_TIERS_ABOVE_MIN_MAX = DAMAGE_TIER_NAMES.length - 1;
+
+/**
+ * 從**生效中的**最低表推出**最高表** —— ⭐ 吃的是 {@link tableForModel} 的輸出，
+ * 所以四個模型（含 `custom` 的單格破例）自動都有上限，⛔ 不必各自再推一次。
+ *
+ * ⚠️ `expectedHits <= 0` 的形狀（出貨「變身」）**整列豁免** ⇒ 回最高格
+ * ＝ 不構成限制。⛔ 這一格不可以省：那些形狀的最低是「極小」，
+ * 加上帶寬會長出一個「變身技傷害不可以超過小」的規則，而它的回報軸根本不是傷害。
+ */
+export function maxFromMin(
+  min: Readonly<Record<CooldownShape, Readonly<Record<SkillTierName, DamageTierName>>>>,
+  hits: ExpectedHits,
+  slack: number = DEFAULT_MAX_TIERS_ABOVE_MIN,
+): Record<CooldownShape, Record<SkillTierName, DamageTierName>> {
+  const top = DAMAGE_TIER_NAMES.length - 1;
+  const n = Math.min(Math.max(Math.round(slack), MAX_TIERS_ABOVE_MIN_MIN), MAX_TIERS_ABOVE_MIN_MAX);
+  const out = {} as Record<CooldownShape, Record<SkillTierName, DamageTierName>>;
+  for (const shape of COOLDOWN_SHAPES) {
+    const row = {} as Record<SkillTierName, DamageTierName>;
+    const exempt = !((hits[shape] ?? 0) > 0);
+    for (const tier of SKILL_TIER_NAMES) {
+      const i = DAMAGE_TIER_NAMES.indexOf(min[shape]?.[tier] as DamageTierName);
+      row[tier] = exempt || i < 0
+        ? DAMAGE_TIER_NAMES[top]!
+        : DAMAGE_TIER_NAMES[Math.min(i + n, top)]!;
+    }
+    out[shape] = row;
+  }
+  return out;
+}
+
+/** 一格 `maxTiersAboveMin` 的正規化。認不得 → 出貨值；超界 → 夾住。 */
+export function maxTiersAboveMinFromDoc(raw: unknown): number {
+  if (typeof raw !== "number" || !Number.isFinite(raw)) return DEFAULT_MAX_TIERS_ABOVE_MIN;
+  return Math.min(Math.max(Math.round(raw), MAX_TIERS_ABOVE_MIN_MIN), MAX_TIERS_ABOVE_MIN_MAX);
+}
+
+/** 上限那一格的後台／契約說明 —— ⛔ 十格從表推，⛔ 不抄字面值。 */
+export function describeProportionalityCeiling(
+  seconds: CooldownTiers["seconds"],
+  damage: DamageTiers["damage"],
+  hits: ExpectedHits,
+  risk: AimRiskMult,
+  slack: number = DEFAULT_MAX_TIERS_ABOVE_MIN,
+): string {
+  const min = deriveMinDamageTier(seconds, damage, hits, risk);
+  const max = maxFromMin(min, hits, slack);
+  const rows = COOLDOWN_SHAPES.filter((s) => (hits[s] ?? 0) > 0);
+  const band = rows
+    .map((s) => `${s}＝${SKILL_TIER_NAMES.map((t) => `${min[s][t]}~${max[s][t]}`).join("/")}`)
+    .join("　");
+  return (
+    `⭐ 生效中的帶寬（順序＝${SKILL_TIER_NAMES.join("/")}）：${band}。` +
+    `⛔ 填 ${MAX_TIERS_ABOVE_MIN_MAX}（＝整條梯子）等於**把上限整個關掉**。` +
+    `⚠️ 違反一律只**警告不擋**，與最低那一側同一層。`
+  );
+}
+
 /** 一份 `expectedHits` 的正規化。認不得的形狀／值 → 出貨值。 */
 export function expectedHitsFromDoc(raw: unknown): ExpectedHits {
   const rec = (raw ?? {}) as Record<string, unknown>;

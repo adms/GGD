@@ -200,6 +200,8 @@ import {
   PROPORTIONALITY_MODELS,
   describeProportionalityModels,
   tableForModel,
+  DEFAULT_MAX_TIERS_ABOVE_MIN,
+  describeProportionalityCeiling,
 } from "@ggd/shared/content/proportionality";
 // ⚠️ 深路徑 import：`config.victory-podium@1` 的 Zod 住在自己的檔案裡（欄位的理由
 // 很長，而且客戶端 render/** 直接吃它），`content/schema/index.ts` **沒有**再匯出
@@ -1580,6 +1582,27 @@ const AUTHORING_RULES_SPEC: ConfigDocSpec = {
           "單位輸出率 × 這一格的卡面冷卻 ÷「期望命中人數」。",
       })),
     ),
+    // ⭐ GH#616 —— 相稱性的**另一半**。⛔ 在此之前這條原則只有下限。
+    {
+      path: "proportionality.maxTiersAboveMin",
+      zh: "傷害級距最多高出最低要求幾格",
+      note:
+        "**上限。** 級距梯子的正當性是 owner Q4 的「傷害與冷卻**嚴格成正比**」—— " +
+        "那是一個**等式**，⛔ 不是不等式。一支冷卻只值「小」而傷害填「極大」的技能，" +
+        "破壞的是**同一條**原則的另一邊，而在 2026-08-23 之前這一側**一格閘都沒有**。" +
+        "⭐ **出貨 {{出貨值}} 是 Claude 挑的，⛔ 不是 owner 的裁決**（他的常設指令是" +
+        "「沒做完以前別問我了自己判斷 但是留後台開關可以簡易 rollback」）：量到出貨 217 個" +
+        "有卡面冷卻的傷害節點，高出 ≤0 級 193 個、**+1 級 22 個**、**+2 級 2 個**、+3 以上 0 個。" +
+        "⛔ 不挑 0（最低那一側是無條件**進位**的，帶寬 0 會把「完全照公式填」的節點判成違規）；" +
+        "⛔ 不挑 2 以上（今天一格都指不到 ＝ 永遠不會紅的閘）。" +
+        describeProportionalityCeiling(
+          DEFAULT_COOLDOWN_TIERS.seconds,
+          DEFAULT_DAMAGE_TIERS.damage,
+          DEFAULT_EXPECTED_HITS,
+          DEFAULT_AIM_RISK_MULT,
+          DEFAULT_MAX_TIERS_ABOVE_MIN,
+        ),
+    },
   ],
   preserved: [],
 };

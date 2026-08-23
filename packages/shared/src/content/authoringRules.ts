@@ -44,9 +44,12 @@ import { damageTiersFromDoc } from "./damageTiers";
 import {
   aimRiskFromDoc,
   expectedHitsFromDoc,
+  maxFromMin,
+  maxTiersAboveMinFromDoc,
   proportionalityModelFromDoc,
   tableForModel,
 } from "./proportionality";
+import { DAMAGE_TIER_NAMES } from "./damageTiers";
 import { SKILL_TIER_NAMES } from "./skillTiers";
 // ⭐ GH#445 —— 「傷害相對冷卻偏低」的推導。⛔ 這裡只呼叫，判斷與文案都在那一支裡。
 import { ANCHOR_SHAPE, ANCHOR_TIER, lowDamageCells } from "./lowDamageCells";
@@ -295,6 +298,73 @@ function proportionalityRules(
   return out;
 }
 
+/**
+ * ⭐【GH#616】相稱性的**另一半**：上限。
+ *
+ * ⚠️ 在 2026-08-23 之前這條原則只有 {@link proportionalityRules}（下限）——
+ * 而級距梯子的正當性是 owner Q4 的「傷害與冷卻**嚴格成正比**」，那是一個
+ * **等式**：一支冷卻只值「小」而傷害填「極大」的技能違反的是**同一條**原則。
+ *
+ * ⛔ 只發出**真的構成限制**的那幾格（上限 < 傷害軸的最後一格）——
+ * 同 {@link proportionalityRules} 的理由：「最多可以到極大」不排除任何東西，
+ * 發出去只會讓對方的清單多幾條沒有內容的字。
+ */
+function proportionalityCeilingRules(
+  table: Readonly<Record<string, Readonly<Record<string, string>>>>,
+  slack: number,
+): AuthoringRule[] {
+  const top = DAMAGE_TIER_NAMES[DAMAGE_TIER_NAMES.length - 1]!;
+  const out: AuthoringRule[] = [];
+  for (const shape of Object.keys(table).sort()) {
+    const row = table[shape]!;
+    for (const tier of SKILL_TIER_NAMES) {
+      const cap = row[tier];
+      if (typeof cap !== "string" || cap === top) continue;
+      out.push({
+        id: `principle.proportionality-max.${shape}.${tier}`,
+        field: "damageTier",
+        unit: "none",
+        note:
+          `冷卻級距「${tier}」的**${shape}**技能，傷害級距最多到「${cap}」。` +
+          "⭐ 這一格是**推導**出來的：最低要求（同一條公式）再加上後台的" +
+          `「傷害級距最多高出幾格」（出貨 ${slack}）。⛔ 不是有人手填的。` +
+          " —— 級距梯子的正當性是「傷害與冷卻**嚴格成正比**」，而成正比是一個**等式**：" +
+          "冷卻只付得起這一格、傷害卻填到頂的技能，破壞的是同一條規則的另一邊，" +
+          "而在 2026-08-23 之前這一側一格閘都沒有。⚠️ 違反只**警告**。",
+        source: "admin-config",
+        configDoc: "config.authoring-rules@1",
+      });
+    }
+  }
+  return out;
+}
+
+/**
+ * 下限 + 上限，⭐ 從**同一張**最低表推 —— ⛔ 不推兩次。
+ * ⚠️ 兩張級距表讀的是**現在這一刻**的 config，⛔ 不是 DEFAULT_*。
+ */
+function proportionalityBand(
+  read: ConfigReader,
+  principles: ConfigAuthoringRulesDoc,
+): AuthoringRule[] {
+  const hits = expectedHitsFromDoc(principles.proportionality.expectedHits);
+  const min = tableForModel(
+    proportionalityModelFromDoc(principles.proportionality.model),
+    cooldownTiersFromDoc(read("cooldown-tiers")).seconds,
+    damageTiersFromDoc(read("damage-tiers")).damage,
+    hits,
+    aimRiskFromDoc(principles.proportionality.aimRiskMult),
+    principles.proportionality.minDamageTier,
+  );
+  const slack = maxTiersAboveMinFromDoc(
+    (principles.proportionality as { maxTiersAboveMin?: unknown }).maxTiersAboveMin,
+  );
+  return [
+    ...proportionalityRules(min),
+    ...proportionalityCeilingRules(maxFromMin(min, hits, slack), slack),
+  ];
+}
+
 export function buildAuthoringRules(read: ConfigReader): AuthoringRulesManifest {
   const castTime = pick(read, "cast-time", DEFAULT_CAST_TIME_DOC as never) as typeof DEFAULT_CAST_TIME_DOC;
   const cooldown = pick(read, "cooldown-rules", DEFAULT_COOLDOWN_RULES_DOC as never) as typeof DEFAULT_COOLDOWN_RULES_DOC;
@@ -434,18 +504,7 @@ export function buildAuthoringRules(read: ConfigReader): AuthoringRulesManifest 
     //    「說了但不會發生」的話（第一·五守則），而每一個零件看起來都對。
     // ⚠️ 兩張級距表讀的是**現在這一刻**的 config，⛔ 不是 DEFAULT_* ——
     //    owner 改了冷卻／傷害級距，相稱性要跟著動，不然它會拿舊表發警告。
-    ...(principles.proportionality.enabled
-      ? proportionalityRules(
-          tableForModel(
-            proportionalityModelFromDoc(principles.proportionality.model),
-            cooldownTiersFromDoc(read("cooldown-tiers")).seconds,
-            damageTiersFromDoc(read("damage-tiers")).damage,
-            expectedHitsFromDoc(principles.proportionality.expectedHits),
-            aimRiskFromDoc(principles.proportionality.aimRiskMult),
-            principles.proportionality.minDamageTier,
-          ),
-        )
-      : []),
+    ...(principles.proportionality.enabled ? proportionalityBand(read, principles) : []),
   ];
 
   // ⭐ GH#480 —— 六條警示 × 它們現在的開關。⛔ 讀不到文件就是出貨值（全部 on），

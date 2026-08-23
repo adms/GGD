@@ -24,6 +24,9 @@ import {
   OWNER_20260819_CELL,
   deriveMinDamageTier,
   requiredDamage,
+  DEFAULT_MAX_TIERS_ABOVE_MIN,
+  MAX_TIERS_ABOVE_MIN_MAX,
+  maxFromMin,
 } from "./proportionality";
 import { SKILL_TIER_NAMES } from "./skillTiers";
 import {
@@ -229,8 +232,11 @@ describe("相稱性 (GH#465)", () => {
         expectedHits: typeof H;
         aimRiskMult: unknown;
         minDamageTier: unknown;
+        maxTiersAboveMin: unknown;
       };
     };
+    // ⭐ GH#616 上限也是三個住處（⛔ 少了這一行，出貨 JSON 漏填會靜靜退回預設）。
+    expect(doc.proportionality.maxTiersAboveMin).toBe(DEFAULT_MAX_TIERS_ABOVE_MIN);
     // ⭐ 逐軸用容差比 —— ⛔ 不是 toEqual。`H` 是**現算**的浮點（級距 ÷ 級距），
     // 出貨 JSON 存的是它被序列化過的樣子，兩者可以差一個 ULP：
     // 2026-08-22 級距換算之後真的出現 3 vs 2.9999999999999996，
@@ -324,6 +330,47 @@ describe("相稱性 (GH#465)", () => {
     // 照抄那十五格會發出**全部**十五條；現推只發公式那一份 ⇒ 兩者數量都不一樣。
     expect(ids).toEqual(fromFormula);
     expect(ids.length).toBeLessThan(COOLDOWN_SHAPES.length * SKILL_TIER_NAMES.length);
+  });
+
+  // ══ ⭐【GH#616】相稱性的**另一半**：上限 ═══════════════════════════════════
+  // ⚠️ 在 2026-08-23 之前這條原則只有下限，而梯子的正當性是「嚴格成正比」——
+  //    一個**等式**。「冷卻只值小、傷害填極大」違反同一條規則而**沒有任何閘**。
+  it("⭐ 上限真的發成對外規則，⛔ 不是一格存得起來卻什麼都不做的欄位", () => {
+    // ⚠️ 承重的那一條線：拿掉 `authoringRules` 的 `proportionalityCeilingRules(...)`，
+    //    後台那一格就是「說了但不會發生」（第一·五守則），而每個零件看起來都對。
+    const read = (id: string): unknown => (id === "authoring-rules" ? shipped(id) : undefined);
+    const top = DAMAGE_TIER_NAMES[DAMAGE_TIER_NAMES.length - 1]!;
+    const ids = buildAuthoringRules(read)
+      .principle.filter((r) => r.id.startsWith("principle.proportionality-max."))
+      .map((r) => r.id);
+    const cap = maxFromMin(deriveMinDamageTier(S, D, H), H, DEFAULT_MAX_TIERS_ABOVE_MIN);
+    const expected = COOLDOWN_SHAPES.slice()
+      .sort()
+      .flatMap((s) =>
+        SKILL_TIER_NAMES.filter((t) => cap[s][t] !== top).map(
+          (t) => `principle.proportionality-max.${s}.${t}`,
+        ),
+      );
+    expect(ids).toEqual(expected);
+    expect(expected.length).toBeGreaterThan(0); // ⛔ 一格都不發 = 這條原則不存在
+    // ⛔ 豁免的形狀（期望命中人數 0）⛔ 不可以長出上限 —— 它的回報軸不是傷害。
+    expect(ids.some((id) => id.includes("變身"))).toBe(false);
+  });
+
+  it("⭐ 填「整條梯子」＝ 一鍵關掉上限（⛔ rollback 不是形式）", () => {
+    const off = {
+      ...DEFAULT_AUTHORING_PRINCIPLES,
+      proportionality: {
+        ...DEFAULT_AUTHORING_PRINCIPLES.proportionality,
+        maxTiersAboveMin: MAX_TIERS_ABOVE_MIN_MAX,
+      },
+    };
+    const read = (id: string): unknown => (id === "authoring-rules" ? off : undefined);
+    expect(
+      buildAuthoringRules(read).principle.filter((r) =>
+        r.id.startsWith("principle.proportionality-max."),
+      ),
+    ).toEqual([]);
   });
 
   it("關掉總開關 = 這一族完全不出現在對外契約裡", () => {

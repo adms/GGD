@@ -7,7 +7,7 @@ import { COOLDOWN_SHAPES, COOLDOWN_TIER_NAMES, DEFAULT_COOLDOWN_TIERS } from "..
 import { DAMAGE_TIER_NAMES, DEFAULT_DAMAGE_TIERS } from "../../damageTiers";
 // ⭐ GH#465 相稱性 —— 公式與 owner 的係數住在 content/proportionality.ts，
 //    schema 這一層只是把它搬上 Zod（⛔ 不在這裡再算一次）。
-import { AIM_RISK_MAX, AIM_RISK_MIN, DEFAULT_AIM_RISK_MULT, DEFAULT_EXPECTED_HITS, DEFAULT_PROPORTIONALITY_MODEL, EXPECTED_HITS_MAX, EXPECTED_HITS_MIN, PROPORTIONALITY_MODELS, describeProportionalityModels, tableForModel } from "../../proportionality";
+import { AIM_RISK_MAX, AIM_RISK_MIN, DEFAULT_AIM_RISK_MULT, DEFAULT_EXPECTED_HITS, DEFAULT_MAX_TIERS_ABOVE_MIN, DEFAULT_PROPORTIONALITY_MODEL, EXPECTED_HITS_MAX, EXPECTED_HITS_MIN, MAX_TIERS_ABOVE_MIN_MAX, MAX_TIERS_ABOVE_MIN_MIN, PROPORTIONALITY_MODELS, describeProportionalityCeiling, describeProportionalityModels, tableForModel } from "../../proportionality";
 
 // ---------------------------------------------------------------- #327 ----
 /**
@@ -169,6 +169,37 @@ const zProportionality = z
         >,
       )
       .strict(),
+    /**
+     * ⭐【GH#616】**上限** —— 傷害級距最多可以比推導出來的最低值高幾格。
+     *
+     * ⚠️ 在 2026-08-23 之前這條原則**只有下限**，而級距梯子的正當性是
+     * owner Q4 的「傷害與冷卻**嚴格成正比**」—— 那是一個**等式**，⛔ 不是不等式。
+     * ⇒ 一支冷卻只值「小」而傷害填「極大」的技能違反的是**同一條**原則，
+     * 而在此之前一格閘都沒有。
+     *
+     * ⭐ 出貨 **1**（⛔ 不是 0：最低那一側是無條件**進位**的，帶寬 0 會把
+     * 「完全照公式填」的節點判成違規；⛔ 也不是 2 以上：那會讓這條規則今天
+     * 一格都指不到，而永遠不會紅的閘等於沒有閘）。
+     * 推導、量到的分佈與「為什麼是 1」寫在 `content/proportionality.ts`。
+     *
+     * ⭐ 填 {@link MAX_TIERS_ABOVE_MIN_MAX}（＝整條梯子）＝ **一鍵關掉上限**。
+     * ⚠️ 與最低那一側同一層：違反只**警告不擋**。
+     */
+    maxTiersAboveMin: z
+      .number()
+      .int()
+      .min(MAX_TIERS_ABOVE_MIN_MIN)
+      .max(MAX_TIERS_ABOVE_MIN_MAX)
+      .describe(
+        "傷害級距最多可以比「最低傷害級距」高幾格。" +
+          describeProportionalityCeiling(
+            DEFAULT_COOLDOWN_TIERS.seconds,
+            DEFAULT_DAMAGE_TIERS.damage,
+            DEFAULT_EXPECTED_HITS,
+            DEFAULT_AIM_RISK_MULT,
+            DEFAULT_MAX_TIERS_ABOVE_MIN,
+          ),
+      ),
   })
   .strict();
 
@@ -198,6 +229,9 @@ export const DEFAULT_AUTHORING_PRINCIPLES = {
     expectedHits: DEFAULT_EXPECTED_HITS,
     aimRiskMult: DEFAULT_AIM_RISK_MULT,
     minDamageTier: shippedMinDamageTier(),
+    // ⭐ GH#616 —— 上限。⛔ 我挑的（owner 常設：「沒做完以前別問我了自己判斷
+    //    但是留後台開關可以簡易 rollback」）；理由與量到的分佈在 proportionality.ts。
+    maxTiersAboveMin: DEFAULT_MAX_TIERS_ABOVE_MIN,
   },
 } as const;
 

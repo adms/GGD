@@ -1,10 +1,10 @@
 {
   "id": "owner-knobs",
   "schema": "config.owner-knobs@1",
-  "note": "⭐ **系統倍率是 owner 的人工旋鈕** —— 他刻意把它們排除在任何推導公式之外。\nowner 2026-08-22 逐字：「你的傷害要從生命反推我沒意見，但**不能把系統倍率乘進去再反推**啊，這樣我用系統倍率就沒意義了」「技能↔普攻 跟 生命 之間的相對關係，都跟**系統倍率無關**喔」「對 我說過**這是我人工的旋鈕**，並沒有放在公式裡」。\n⇒ 這張表是那句話的**另一半**：⛔ 不只是「倍率不可以進公式」，還有「**倍率不是我能轉的**」。\n⚠️ 每一格的值只有在 owner 給了一句原話時才可以改，而那句原話要**逐字**寫進 `quote`。\n⛔ 沒有 quote 就改 ⇒ `packages/shared/src/ops/ownerKnobs.test.ts` 會紅並指名那一格。",
+  "note": "⭐ **系統倍率是 owner 的人工旋鈕** —— 他刻意把它們排除在任何推導公式之外。\nowner 2026-08-22 逐字：「你的傷害要從生命反推我沒意見，但**不能把系統倍率乘進去再反推**啊，這樣我用系統倍率就沒意義了」「技能↔普攻 跟 生命 之間的相對關係，都跟**系統倍率無關**喔」「對 我說過**這是我人工的旋鈕**，並沒有放在公式裡」。\n⇒ 這張表是那句話的**另一半**：⛔ 不只是「倍率不可以進公式」，還有「**倍率不是我能轉的**」。\n⚠️ 每一格的值只有在 owner 給了一句原話時才可以改，而那句原話要**逐字**寫進 `quote`。\n⛔ 沒有 quote 就改 ⇒ `packages/shared/src/ops/ownerKnobs.test.ts` 會紅並指名那一格。\n\n⭐ **2026-08-23（GH#616 複驗）：這張表在此之前只覆蓋 12 / 38 格** —— 另外 26 格(其中 **17 格是非中性值**,含 `intToAbilityPower` 與 `strToMaxHealth`)⛔ 不在表上,於是**我今天轉了它們不會有任何東西紅**。授權表漏一格 = 那一格根本沒有守衛。\n⇒ 補齊成 **38 / 38**,而 ⛔ **我沒有替 owner 填任何一句原話**：找不到原話的那 26 格 `on` 一律標 **`未授權`**,`quote` 寫的是「這一列是基準線,⛔ 不是授權」。\n⚠️ **`未授權` 的語意是「被改動時才紅」,⛔ 不是「存在就紅」** —— 存在就紅會讓整份表一開始就是紅的,而一條開工就紅的閘會被關掉,那等於沒有閘。\n⇒ 要動一格 `未授權`：先去 `packages/shared/src/sim/combatEnv.ts` 的 `ATTRIBUTE_ENV_DEFAULTS` 註解與 `docs/_daily/` 找 owner 的逐字原話 —— 找到就把這一列改成帶日期的授權列,⛔ 找不到就不要動。",
   "knobs": {
     "maxHealth": {
-      "value": 12.0,
+      "value": 12,
       "quote": "幫我調整後台系統倍率：英雄登場初始等級設定為6, 生命+1200, 初始魔抗+20%, 生命倍率x12",
       "on": "2026-08-23"
     },
@@ -14,42 +14,42 @@
       "on": "2026-08-22"
     },
     "damageDealt": {
-      "value": 1.0,
+      "value": 1,
       "quote": "對 我說過這是我人工的旋鈕，並沒有放在公式裡，我們上次已經釐清過",
       "on": "2026-08-22"
     },
     "attackDamage": {
-      "value": 1.0,
+      "value": 1,
       "quote": "attackDamage可以調回 1.0",
       "on": "2026-08-22"
     },
     "abilityPower": {
-      "value": 1.0,
+      "value": 1,
       "quote": "（出貨中性值，owner 從未改過）",
       "on": "—"
     },
     "defense": {
-      "value": 1.0,
+      "value": 1,
       "quote": "（出貨中性值，owner 從未改過）",
       "on": "—"
     },
     "healing": {
-      "value": 1.0,
+      "value": 1,
       "quote": "（出貨中性值，owner 從未改過）",
       "on": "—"
     },
     "shield": {
-      "value": 1.0,
+      "value": 1,
       "quote": "（出貨中性值，owner 從未改過）",
       "on": "—"
     },
     "moveSpeed": {
-      "value": 1.0,
+      "value": 1,
       "quote": "（出貨中性值，owner 從未改過）",
       "on": "—"
     },
     "attackSpeed": {
-      "value": 1.0,
+      "value": 1,
       "quote": "（出貨中性值，owner 從未改過）",
       "on": "—"
     },
@@ -62,6 +62,136 @@
       "value": 0.002,
       "quote": "每點敏捷 +0.2% 迴避率\t\"agiToEvasion\"",
       "on": "2026-08-22"
+    },
+    "healthRegen": {
+      "value": 1,
+      "quote": "⛔ 未授權 —— 出貨值是中性值,owner 從未提過這一格。⚠️ 這一列是**基準線**,⛔ 不是授權：改動它就要先補上他的逐字原話。",
+      "on": "未授權"
+    },
+    "maxMana": {
+      "value": 1,
+      "quote": "⛔ 未授權 —— 出貨值是中性值,owner 從未提過這一格。⚠️ 這一列是**基準線**,⛔ 不是授權：改動它就要先補上他的逐字原話。",
+      "on": "未授權"
+    },
+    "manaRegen": {
+      "value": 8,
+      "quote": "⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。",
+      "on": "未授權"
+    },
+    "critChance": {
+      "value": 1,
+      "quote": "⛔ 未授權 —— 出貨值是中性值,owner 從未提過這一格。⚠️ 這一列是**基準線**,⛔ 不是授權：改動它就要先補上他的逐字原話。",
+      "on": "未授權"
+    },
+    "critDamage": {
+      "value": 1,
+      "quote": "⛔ 未授權 —— 出貨值是中性值,owner 從未提過這一格。⚠️ 這一列是**基準線**,⛔ 不是授權：改動它就要先補上他的逐字原話。",
+      "on": "未授權"
+    },
+    "lifesteal": {
+      "value": 1,
+      "quote": "⛔ 未授權 —— 出貨值是中性值,owner 從未提過這一格。⚠️ 這一列是**基準線**,⛔ 不是授權：改動它就要先補上他的逐字原話。",
+      "on": "未授權"
+    },
+    "attackRange": {
+      "value": 0.6,
+      "quote": "⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。",
+      "on": "未授權"
+    },
+    "abilityRange": {
+      "value": 0.8,
+      "quote": "⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。",
+      "on": "未授權"
+    },
+    "itemCooldown": {
+      "value": 1,
+      "quote": "⛔ 未授權 —— 出貨值是中性值,owner 從未提過這一格。⚠️ 這一列是**基準線**,⛔ 不是授權：改動它就要先補上他的逐字原話。",
+      "on": "未授權"
+    },
+    "strToMaxHealth": {
+      "value": 23,
+      "quote": "⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。",
+      "on": "未授權"
+    },
+    "strToHealthRegen": {
+      "value": 0.04,
+      "quote": "⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。",
+      "on": "未授權"
+    },
+    "strToAttackDamage": {
+      "value": 0.24,
+      "quote": "⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。",
+      "on": "未授權"
+    },
+    "agiToArmor": {
+      "value": 0.3,
+      "quote": "⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。",
+      "on": "未授權"
+    },
+    "agiToAttackSpeed": {
+      "value": 0.01,
+      "quote": "⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。",
+      "on": "未授權"
+    },
+    "intToMaxMana": {
+      "value": 15,
+      "quote": "⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。",
+      "on": "未授權"
+    },
+    "intToManaRegen": {
+      "value": 0.21,
+      "quote": "⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。",
+      "on": "未授權"
+    },
+    "intToAbilityPower": {
+      "value": 4,
+      "quote": "⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。",
+      "on": "未授權"
+    },
+    "intToMagicResist": {
+      "value": 0,
+      "quote": "⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。",
+      "on": "未授權"
+    },
+    "goldRoundPayout": {
+      "value": 1,
+      "quote": "⛔ 未授權 —— 出貨值是中性值,owner 從未提過這一格。⚠️ 這一列是**基準線**,⛔ 不是授權：改動它就要先補上他的逐字原話。",
+      "on": "未授權"
+    },
+    "goldMobKill": {
+      "value": 0.5,
+      "quote": "⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。",
+      "on": "未授權"
+    },
+    "goldEliteKill": {
+      "value": 0.1,
+      "quote": "⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。",
+      "on": "未授權"
+    },
+    "goldHeroKill": {
+      "value": 1,
+      "quote": "⛔ 未授權 —— 出貨值是中性值,owner 從未提過這一格。⚠️ 這一列是**基準線**,⛔ 不是授權：改動它就要先補上他的逐字原話。",
+      "on": "未授權"
+    },
+    "goldQuest": {
+      "value": 1,
+      "quote": "⛔ 未授權 —— 出貨值是中性值,owner 從未提過這一格。⚠️ 這一列是**基準線**,⛔ 不是授權：改動它就要先補上他的逐字原話。",
+      "on": "未授權"
+    },
+    "moveSpeedMelee": {
+      "value": 0.8,
+      "quote": "⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。",
+      "on": "未授權"
+    },
+    "moveSpeedRanged": {
+      "value": 0.6,
+      "quote": "⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。",
+      "on": "未授權"
+    },
+    "magicResistMult": {
+      "value": 0.2,
+      "quote": "⛔ 未授權 —— 出貨值不是中性值,而 2026-08-23 補齊授權表時在 repo 裡找不到 owner 對這一格的逐字原話。⚠️ 這一列是**基準線**,⛔ 不是授權。要動它:先去 packages/shared/src/sim/combatEnv.ts 的 ATTRIBUTE_ENV_DEFAULTS 註解與 docs/_daily/ 找他的原話,找到就改成帶日期的授權列;找不到就⛔ 不要動。",
+      "on": "未授權"
     }
   }
 }
