@@ -10,6 +10,7 @@
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
@@ -24,6 +25,7 @@ const { planFromPaths, planFor, inputTable, readScripts } = (await import(
   readScripts: (r: string) => unknown;
 };
 const io = JSON.parse(readFileSync(join(REPO, "tools/parallel-gates/sync-io.json"), "utf8"));
+const tracked = execFileSync("git", ["ls-files", "content"], { cwd: REPO, encoding: "utf8" }).split("\n").filter(Boolean);
 const step = (n: string) => io.steps.find((s: { name: string }) => s.name === n);
 /** 量到的讀裡有這個前綴的那幾支 —— ⭐ 期望值也是**推導**的,⛔ 不是抄一張名單。 */
 const readers = (prefix: string): string[] =>
@@ -60,6 +62,30 @@ describe("skills:sync 按改動裁剪", () => {
     expect(downstream.length).toBeGreaterThan(5);
     const missing = downstream.filter((n: string) => !p.steps.includes(n));
     expect(missing, `這幾支吃 tiers:apply 的產物卻沒被排進來:\n  ${missing.join("\n  ")}`).toEqual([]);
+  });
+
+  /**
+   * ⭐⭐ 這一條打的是①**看不到**的那一半。
+   * ①的期望值從 `reads` 推導,而 `merge-io.mjs` 只留「有人寫過」的讀 ⇒ 一整個沒有產生器
+   * 在寫的集合(status-effects 等)對每一支的 `reads` 都是空的 ⇒ ①對它結構性失明。
+   * ⇒ 這裡改從**產物**那一端問:寫了 `<dir>/_index.json` 的那一支必然列舉過 `<dir>`。
+   */
+  it("⑥ 索引的擁有者 —— 改集合裡的來源文件,寫那份 _index.json 的產生器一定在計畫裡", () => {
+    const owners = io.steps.flatMap((s: { name: string; writes: string[] }) =>
+      s.writes.filter((w) => w.endsWith("/_index.json")).map((w) => ({ step: s.name, dir: dirname(w) })),
+    );
+    expect(owners.length, "沒有任何一支寫 _index.json ⇒ 這條斷言量錯了東西").toBeGreaterThan(5);
+    const miss: string[] = [];
+    for (const { step, dir } of owners) {
+      const src = tracked.find((f) => f.startsWith(`${dir}/`) && !f.endsWith("_index.json"));
+      if (!src) continue;
+      const p = planFromPaths([src], REPO);
+      if (!p.full && !p.steps.includes(step)) miss.push(`${src} ⇒ 少了 ${step}`);
+    }
+    expect(
+      miss,
+      `這幾支寫了那個集合的 _index.json,卻沒被排進來 ⇒ 產物(含 bundle.json)會停在舊的那一天:\n  ${miss.join("\n  ")}`,
+    ).toEqual([]);
   });
 
   it("④ 拓撲 —— contract:numbers 一定排在 content:build 後面", () => {

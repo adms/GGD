@@ -169,7 +169,32 @@ export function inputTable(repo, io, scripts) {
       t.dirs.add(dirname(r));
       note(r);
     }
-    for (const w of io1?.writes ?? []) note(w);
+    /**
+     * ⭐⭐ **第 ④ 個來源:寫出去的地方回推它讀過的目錄。**
+     *
+     * ⚠️ 這一條是**量到的洞**,⛔ 不是保險:`merge-io.mjs` 的 `reads` 刻意只留
+     * 「有人寫過」的檔(否則 20KB→2.5MB)。⇒ 一整個**沒有任何產生器在寫**的集合
+     * (status-effects · maps · arenas · projectiles · skins · loot-tables)
+     * 對每一支的 `reads` 都是**空的** —— 實測 `content:build` 真的讀 8,944 個檔,
+     * 而表上只剩 563,其中 `content/status-effects/` **一個都沒有**。
+     * ⇒ 改一份狀態效果文件,計畫只挑 3 支而 ⛔ **`content:build` 不在裡面**,
+     * 於是 `bundle.json` 停在舊的那一天 —— ⭐ 那正是 2026-08-01 事故的形狀
+     * (過期的 bundle 帶著全綠的測試上線,選人畫面整個空掉)。
+     *
+     * ⭐ 而**證據就在它自己的產物上**:它寫了 `content/status-effects/_index.json`,
+     * 而一份索引**不可能**在沒有列舉那個目錄的情況下產生出來。
+     * ⇒ 「寫進 `<dir>/` ⇒ 讀過 `<dir>/`」對索引/打包型的產生器是**推導**,
+     * 對其餘的是**保守的上界**(多算 ⇒ 多跑一支,⛔ 不會漏掉一支)——
+     * 與 `graph.mjs` 對「就地改寫型」的處理是同一個方向。
+     *
+     * ⚠️ depth-1 的裸 root(`content`/`docs`)仍然**只**算宇宙:`content:build` 也寫
+     * `docs/`,而把 `docs` 當成它的前綴會讓每一次文件改動都拖著它跑(⛔ 它不讀 docs)。
+     */
+    for (const w of io1?.writes ?? []) {
+      note(w);
+      const d = dirname(w);
+      if (d.includes("/")) t.prefixes.add(d);
+    }
     for (const entry of entryFiles(scripts, name)) {
       note(entry);
       // ⭐ `tools/<dir>/` 整棵算它的；`scripts/x.sh` 這種就只算那一個檔
