@@ -228,7 +228,7 @@ import { applyAttrPick, rollAttrChoices, ATTR_OFFER_TIER } from "@ggd/shared/sim
 import type { AugmentTier } from "@ggd/shared/sim/content/defs";
 import { rankUpAbility, learnEx, castAbility } from "@ggd/shared/sim/abilities/abilitySystem";
 // ── 練習面板（GH#365）的屬性 / 狀態分頁 ──────────────────────────────────────
-import { attachSource } from "@ggd/shared/sim/stats/statPipeline";
+import { attachSource, statRecomputeSystem } from "@ggd/shared/sim/stats/statPipeline";
 import { ATTR_KEYS, type AttrKey } from "@ggd/shared/sim/stats/attributes";
 import { liveAttribute } from "@ggd/shared/sim/stats/attrSources";
 import { ModOp } from "@ggd/shared/sim/stats/modifiers";
@@ -4475,6 +4475,31 @@ export class MatchController {
     if (at >= 0) mods[at]!.value = value;
     else mods.push({ stat: stat as Stat, op: ModOp.Override, value });
     sc.dirty = true;
+    // ⛔⛔ **`Override` 不等於「最後就是這個數字」**（GH#619）。
+    //
+    // `finalizeStat` 在 modifier 管線**之後**還會做三件事：`× 環境倍率鏈`、
+    // `+ baseBonus`、`+ perLevelBonus`。所以 `Override = 777` 出來的 final
+    // 是 `777 × k + c`，⛔ 不是 777。
+    //
+    // ⚠️ 這個缺陷**在 2026-08-23 之前是隱形的**：`heroStartLevel` 是 1
+    // ⇒ `perLevelBonus = amount × (level − 1) = 0`，而 AP 在 `DEFAULT_BASE_BONUS`
+    // 裡沒有贈禮 ⇒ `k = 1, c = 0` ⇒ 剛好逐位元正確，測試一直是綠的。
+    // owner 把登場等級調成 6 之後 `c = 5` ⇒ 面板寫「設成 777」而實際是 **782**。
+    //
+    // ⭐ 修法**不重算一份公式**（那是第二個住處，而管線每個月都在長）——
+    // 管線對這一格是**仿射的**（`final = k·x + c`），所以「跑一次、量誤差、
+    // 補回去」一步就精確，而且它用的是**出貨的那一支** `statRecomputeSystem`。
+    // ⛔ 只補一次是刻意的：第二次補不會再改變任何東西（仿射），多跑只是浪費。
+    const target = value;
+    statRecomputeSystem(this.world);
+    const got = this.world.stats.get(entity)?.final[stat as Stat];
+    if (typeof got === "number" && Number.isFinite(got) && got !== target) {
+      const idx = mods.findIndex((m) => m.stat === (stat as Stat) && m.op === ModOp.Override);
+      if (idx >= 0) {
+        mods[idx]!.value = value + (target - got);
+        sc.dirty = true;
+      }
+    }
     return true;
   }
 
