@@ -165,11 +165,16 @@ const SOUNDLESS_TEMPLATES = new Set(["tpl-line-blast"]);
  * ⛔ `tpl-beam-roll` 的 `modelKey` 預設（模板 exemplar 是 20-03 約束與勝利之劍的
  * `imported.netherstrike`）把**四支不同英雄的招式**收斂成同一具模型 —— 陽電子砲、
  * 龜派氣功、龍鬥氣砲在畫面上與 Saber 逐像素相同。
- * ⚠️ 修法是逐支填自己的 `modelKey`，而那要同時改 `content/abilities/*.json` **與**
- * 它們鏡射進 `content/champions/*.json` 的副本（`abilityMirror.test.ts` 逐欄比對
- * `effects`），而 champions 不在這條 lane 的檔案柵欄裡。
- * ⭐ 反駁法：任一支填了自己的 `modelKey`，第二條斷言會紅並要求刪掉那一列；
- * ⛔ 新技能一律不得加進這張表 —— 它是一份會過期的紀錄，不是一張許可證。
+ *
+ * ⭐ **2026-08-23 換掉了這張表的理由**（舊理由「champions 不在柵欄裡」已經不成立 ——
+ * 這一輪就改得到）。新的、⭐ **會過期**的理由是 ⑥ 量到的東西：
+ * `netherstrike.glb` 的 5 個 primitive **全部** alpha 0 ⇒ 這四支**一個像素都沒畫過**。
+ * ⇒ ⛔ 現在把它們拆成四個 `modelKey`，只會得到**四份指向同一具零像素模型的複本**
+ * （＝同一個事實的第二個住處，第〇·四守則），而畫面上逐位元不變 —— ⭐ 身分在
+ * 「看得見」之前是**不可觀測**的。原作的五具 dummy（`ReviveHuman` / `Awaken` /
+ * `ParasiteMissile`）三份 .glb **repo 裡都沒有**，所以拆開也接不到自己的模型。
+ * ⭐ 反駁法：`ZERO_PIXEL_FX_MODELS` 少掉 `imported.netherstrike` 的那一天（重烘落地），
+ * 這四支就該各自接上自己的模型並刪掉這裡的四列；⛔ 新技能一律不得加進來。
  */
 const SHARED_MODEL_FENCED_OUT = new Set([
   "20-03 約束與勝利之劍",
@@ -307,5 +312,116 @@ describe("⑤ 單具演出：原作模型自己會出聲的，接上去就不可
         "聲音鍵要從 `VFX_SOUND_JOIN.modelBoundSoundsets` 那一列的 wav 檔名推出來" +
         "（`wc3.<檔名小寫>`），⛔ 不要挑一個好聽的",
     ).toEqual([]);
+  });
+});
+
+/**
+ * ⭐⑥【它畫不畫得出任何像素】—— owner 2026-08-23 逐字：「**最基本的 初號機陽離子砲、
+ * SABER約束勝利之劍、小呆龍鬥氣砲、悟空龜派氣功 這四個經典總是要看到橫放的光束砲吧**」、
+ * 「作為翻轉角度的蝗蟲群單位 通常大小跟顏色都有再做調整，務必檢查，
+ *  **避免出現很小顏色又不對的氣功砲**」。
+ *
+ * ⚠️ ⭐ 「務必檢查」的結果（**直接讀 .glb 位元組**，⛔ 不是推測）：
+ * `imported.netherstrike` 的 **5 個 primitive 全部**帶 `baseColorFactor:[0,0,0,0]`
+ * ＋ `alphaMode:"BLEND"`，而戰鬥場景 ⛔ **沒有 GlowLayer／bloom**
+ * （`render/views/CoinView.ts` 與 `vfx/GoldPickupFx.ts` 的檔頭逐字寫著這件事）。
+ * ⇒ ⭐⭐ **四支經典氣功砲從第一天起一個像素都沒有畫出來過** —— 它⛔ 不是「很小」，
+ * 是**不存在**。同一個形狀在移動模型特效這一族命中 6 個 modelKey（下表）。
+ *
+ * ⭐ 它是**轉檔器刻意的軟刪除**，⛔ 不是資料壞掉：`tools/w3x-import/w3xlib/gltf.py`
+ * 的 `fm >= 3 and not has_opaque_base` 分支逐字是「solid bright-on-black glow: no
+ * alpha to key on → drop the quad rather than paint a black slab」。netherstrike 的
+ * 四張貼圖在 `models_report.json` 裡全部列在 `missing_textures` ⇒ alpha 提示退回
+ * "opaque" ⇒ 五張材質**全部**走進那個分支。
+ *
+ * ⛔ **既有的每一條守衛對它結構上是綠的**：①②④⑤ 問的是「有沒有多實例／有沒有聲音／
+ * 身分有沒有分開」，`modelFxWireContract` 問的是「事件送不送得出去」——
+ * **沒有一條問過「那具模型畫不畫得出東西」**（第二守則失敗形態①：算出來了但畫在看不見的地方）。
+ *
+ * ⚠️ 豁免表帶**到期日**，⛔ 不是許可證：重烘（或客戶端讓加法輝光走 ALPHA_ADD）之後
+ * 那一列會變 stale 並要求刪掉。⛔ 新的 modelKey 一律不得加進來。
+ *
+ * ── 突變紀錄（一批一條，承重線）──────────────────────────────────────────
+ *  · 把 `imported.netherstrike` 從 `ZERO_PIXEL_FX_MODELS` 拿掉
+ *      → 紅：「這幾具移動模型特效畫不出任何像素…imported.netherstrike（0/5 primitive）」
+ */
+const ZERO_PIXEL_FX_MODELS = new Set([
+  "imported.netherstrike", // 四支經典氣功砲（tpl-beam-roll 預設）—— 5 個 prim 全部 alpha 0
+  "imported.fireblast", // 04-03 龍破斬（tpl-line-blast 預設）
+  "imported.blackhole", // 38-002／邪王炎殺黑龍波 —— ⛔ 連 primitive 都是 0 個
+  "imported.deathwave", // godie-h01o.e
+  "imported.oblivionaura", // godie-etyr.q
+]);
+
+/** 這一份 .glb 有幾個 primitive 真的會被畫出來（材質 alpha > 0）。 */
+function visiblePrimitives(glbPath: string): { visible: number; total: number } {
+  const buf = readFileSync(glbPath);
+  let off = 12; // glTF 檔頭
+  let json: Record<string, never[]> | undefined;
+  while (off + 8 <= buf.length) {
+    const len = buf.readUInt32LE(off);
+    const type = buf.readUInt32LE(off + 4);
+    off += 8;
+    if (type === 0x4e4f534a) json = JSON.parse(buf.subarray(off, off + len).toString("utf8"));
+    off += len;
+  }
+  const g = (json ?? {}) as unknown as {
+    materials?: { pbrMetallicRoughness?: { baseColorFactor?: number[]; baseColorTexture?: unknown } }[];
+    meshes?: { primitives?: { material?: number }[] }[];
+  };
+  const lit = new Set<number>();
+  (g.materials ?? []).forEach((m, i) => {
+    const pbr = m.pbrMetallicRoughness ?? {};
+    // ⚠️ 貼圖自己帶 alpha ⇒ 畫得出來；⛔ 沒有 baseColorFactor 是 glTF 的預設不透明白。
+    if (pbr.baseColorTexture !== undefined || pbr.baseColorFactor === undefined) lit.add(i);
+    else if ((pbr.baseColorFactor[3] ?? 1) > 0) lit.add(i);
+  });
+  let visible = 0;
+  let total = 0;
+  for (const mesh of g.meshes ?? [])
+    for (const p of mesh.primitives ?? []) {
+      total += 1;
+      if (p.material === undefined || lit.has(p.material)) visible += 1;
+    }
+  return { visible, total };
+}
+
+describe("⑥ 移動模型特效指到的模型，要真的畫得出像素", () => {
+  it("★ owner：「這四個經典總是要看到橫放的光束砲吧」（豁免帶到期日，補好了就要刪）", () => {
+    // ⭐ 讀**註冊後**的技能：`preset` 已經把 modelKey 補上，所以模板預設也在射程內。
+    const keys = new Set<string>();
+    for (const def of Abilities.all() as unknown as Record<string, unknown>[]) {
+      const walk = (n: unknown): void => {
+        if (Array.isArray(n)) return void n.forEach(walk);
+        if (n === null || typeof n !== "object") return;
+        const r = n as Record<string, unknown>;
+        if (r["kind"] === "spawnModelFx" && typeof r["modelKey"] === "string")
+          keys.add(r["modelKey"]);
+        Object.values(r).forEach(walk);
+      };
+      walk(def["effects"]);
+      walk(def["passive"]);
+    }
+    expect(keys.size, "沒有任何 spawnModelFx 節點解析出 modelKey —— 這條斷言是真空綠的").toBeGreaterThan(0);
+
+    const blank: string[] = [];
+    const stale: string[] = [];
+    for (const key of [...keys].sort()) {
+      const doc = Models.tryGet(key);
+      expect(doc, `${key} 不在模型註冊表裡 —— 移動模型特效指向一個不存在的 modelKey`).toBeDefined();
+      const { visible, total } = visiblePrimitives(join(CONTENT, doc!.glbPath));
+      if (visible === 0) {
+        if (!ZERO_PIXEL_FX_MODELS.has(key)) blank.push(`${key}（0/${total} primitive）`);
+      } else if (ZERO_PIXEL_FX_MODELS.has(key)) {
+        stale.push(`${key}（${visible}/${total} primitive）`);
+      }
+    }
+    expect(
+      blank,
+      "這幾具移動模型特效畫不出任何像素 —— 材質 alpha 全是 0 而場景沒有 GlowLayer／bloom：" +
+        "技能放得出來、傷害照打、畫面上什麼都沒有。⛔ 調 scale 與 fxTint 都治不了它" +
+        "（0 像素的東西沒有大小也沒有顏色）—— 修法是重烘 .glb 或讓加法輝光走 ALPHA_ADD",
+    ).toEqual([]);
+    expect(stale, "這幾具已經畫得出來了 —— 把 ZERO_PIXEL_FX_MODELS 裡的那一列刪掉").toEqual([]);
   });
 });

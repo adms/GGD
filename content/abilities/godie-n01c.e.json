@@ -39,7 +39,8 @@
       "kind": "spawnModelFx",
       "shape": "single",
       "preset": "tpl-beam-roll",
-      "path": "forward"
+      "path": "forward",
+      "scale": 4.5
     }
   ],
   "vfxKey": "fx.prim.fire.beam",
