@@ -42,6 +42,7 @@ import {
   champSelectSkillSeat,
   championDescription,
   parseDescriptionSections,
+  profileScrollContract,
 } from "./championProfile";
 import { playstyleForChampion } from "./playstyle";
 import { originBadgeForChampion, ORIGIN_ACCENT, ORIGIN_CAPTION } from "./originBadge";
@@ -375,6 +376,9 @@ export function ChampionProfile({
   }
 
   const { title, fullName } = splitChampionName(def.name);
+  // #640 — the desktop scroll chain (tab-body floor → stage shrink → column
+  // scroll), pure and guard-tested in championProfile.ts.
+  const scroll = profileScrollContract(compact);
   const standIn = isStandInModel(def.modelKey);
   const rows = skillRows(champSelectSkillSeat(def));
   const quote = quoteEntryFor(quotes, def.id);
@@ -388,12 +392,16 @@ export function ChampionProfile({
         display: "flex",
         flexDirection: "column",
         // compact (phone): flow at natural height so the OUTER container scrolls;
-        // desktop: fill the fixed-height card and scroll the tab body internally.
-        ...(compact ? {} : { height: "100%", minHeight: 0 }),
+        // desktop: fill the fixed-height card; the tab body scrolls internally,
+        // and on a SHORT window the column itself scrolls (#640 — see
+        // profileScrollContract) so the description is never stranded off-card.
+        ...scroll.root,
       }}
     >
       {/* ── 3D stage ─────────────────────────────────────────────────────── */}
-      <div style={{ position: "relative", height: stageHeight, flexShrink: 0 }}>
+      {/* #640: desktop lets the stage YIELD height (down to its contract floor)
+          before the column scrolls — same trade the phone layout makes. */}
+      <div style={{ position: "relative", height: stageHeight, ...scroll.stage }}>
         {/* NOT keyed: StorePreviewCanvas swaps the model in the SAME Babylon
             engine on a modelKey change, so a hover preview never re-creates the
             WebGL context (only the model reloads). */}
@@ -494,8 +502,11 @@ export function ChampionProfile({
 
       {/* ── tab body ─────────────────────────────────────────────────────── */}
       {/* compact (phone): flow at natural height, the outer panel scrolls;
-          desktop: a bounded, internally-scrolling region under the fixed stage. */}
-      <div style={compact ? { paddingRight: 4 } : { flex: 1, minHeight: 0, overflowY: "auto", paddingRight: 4 }}>
+          desktop: a bounded, internally-scrolling region under the stage, with
+          a MINIMUM height (#640 — `minHeight: 0` let the fixed stage + the
+          grown identity header squeeze this to a 27px strip on short windows,
+          which read as 「技能說明滑不下去」). */}
+      <div style={{ paddingRight: 4, ...scroll.tabBody }}>
         {tab === "skills" &&
           (rows.length === 0 ? (
             <div style={{ fontSize: 12, color: TEXT_DIM }}>此英雄沒有技能資料</div>

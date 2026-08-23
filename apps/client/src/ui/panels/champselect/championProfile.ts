@@ -126,6 +126,64 @@ export function champSelectProfileLayout(opts: {
 }
 
 // ---------------------------------------------------------------------------
+// desktop scroll contract for the profile column (#640)
+// ---------------------------------------------------------------------------
+
+/**
+ * Floor for the tab body (技能/數值/玩法/故事 內文) on desktop, in px.
+ *
+ * ⚠️ #640 「選人畫面左邊技能說明滑不下去」— MEASURED, not theorised: on a
+ * 1280×720 viewport the card is ~596px tall while the FIXED parts above the tab
+ * body (3D stage 300 + identity header ~200 with the 出身×路線 lines and the
+ * quote block + tabs ~43) left the skills text a 27px strip. `flex:1 minHeight:0`
+ * happily collapses to that — technically scrollable, unreadable in practice,
+ * and the wheel over the stage/header (where the player actually points) moved
+ * nothing. This floor is what "the description is usable" means in px.
+ */
+export const PROFILE_TAB_BODY_MIN_PX = 160;
+
+/**
+ * How far the 3D stage may SHRINK (from its 300px desktop height) before the
+ * whole column starts scrolling — the same trade the phone layout already
+ * makes (champSelectProfileLayout shrinks the stage to 168/220), applied
+ * progressively on short desktop windows: text first, podium second.
+ */
+export const PROFILE_STAGE_MIN_PX = 180;
+
+/** Style fragments ProfileBlock spreads onto the three scroll-critical nodes. */
+export interface ProfileScrollContract {
+  /** the 3D stage wrapper (position/height stay the caller's). */
+  stage: { flexShrink: number; minHeight?: number };
+  /** the profile root column. */
+  root: { height?: string; minHeight?: number; overflowY?: "auto" };
+  /** the tab body under the tabs row. */
+  tabBody: { flex?: number; minHeight?: number; overflowY?: "auto" };
+}
+
+/**
+ * The scroll chain for the profile column, pure so #640's fix is a testable
+ * contract instead of literals buried in JSX:
+ *
+ *   compact (phone)  — everything flows at natural height; the OUTER stacked
+ *                      column owns the one scrollbar (#107). Unchanged.
+ *   desktop          — three stages of yielding, in order:
+ *                      ① tab body scrolls internally (flex:1, overflowY auto)
+ *                        but never below PROFILE_TAB_BODY_MIN_PX;
+ *                      ② the stage gives up height down to PROFILE_STAGE_MIN_PX;
+ *                      ③ past that the ROOT column itself scrolls (overflowY
+ *                        auto), so no window height can strand the description
+ *                        out of reach — which is exactly what #640 was.
+ */
+export function profileScrollContract(compact: boolean): ProfileScrollContract {
+  if (compact) return { stage: { flexShrink: 0 }, root: {}, tabBody: {} };
+  return {
+    stage: { flexShrink: 1, minHeight: PROFILE_STAGE_MIN_PX },
+    root: { height: "100%", minHeight: 0, overflowY: "auto" },
+    tabBody: { flex: 1, minHeight: PROFILE_TAB_BODY_MIN_PX, overflowY: "auto" },
+  };
+}
+
+// ---------------------------------------------------------------------------
 // a champ-select seat for skillRows (no entity yet → rank-1 preview values)
 // ---------------------------------------------------------------------------
 
