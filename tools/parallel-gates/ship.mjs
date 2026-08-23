@@ -36,9 +36,11 @@
  *
  * ⭐ 計畫本身可以單獨看: `pnpm sync:plan --base HEAD~5`（`tools/parallel-gates/syncPlan.mjs`）。
  *
- * ⚠️ ⭐ **後兩個旗標是給 `pnpm ship`（自動分級）用的,⛔ 不是給人手打的。**
+ * ⚠️ ⭐ **suites／typecheck 的旗標是給 `pnpm ship`（自動分級）用的,⛔ 不是給人手打的。**
  * 誰該跑由 `tools/deploy-timing/shipPlan.mjs` 從**路徑集合**推導 ——
- * 而**預設（不帶旗標）永遠是全跑**：一支「預設就在打折」的閘等於沒有閘。
+ * 而**並行段的預設（不帶旗標）永遠是全跑**：一支「預設就在打折」的閘等於沒有閘。
+ * ⭐ 序列段的 `--sync-base` 例外地**有預設**（`origin/main`,理由寫在 syncBase 那一段）——
+ * 那⛔ 不是打折:裁剪只裁「跑不跑」,每一支的判準逐字不動,而且五道 fail-closed 全往「全跑」倒。
  * ⛔ 認不得的包名一律回非零,⛔ 不靜默略過(那會變成「我以為它跑了」)。
  */
 import { execFileSync, spawn } from "node:child_process";
@@ -106,18 +108,19 @@ const FORKS_PER_SUITE = Math.max(
  * 計畫由 `syncPlan.mjs` **推導**（量到的 I/O ＋ 產生器原始碼裡的路徑字面值 ＋ 拓撲閉包），
  * ⛔ 這裡一行手寫的「這支吃哪些檔」都沒有。
  *
- * ── ⛔ fail-closed 是硬要求：**三個入口全部往「全跑」倒** ─────────────────
- *   ① 沒有人告訴我這一次的路徑集合 ⇒ 全跑（⛔ 不是推論成「那就沒改」）
- *   ② 計畫自己說 `full`（路徑對不到輸入表 / `sync-io.json` 的 chain 過期）⇒ 全跑
- *   ③ 算計畫時擲例外 ⇒ 全跑
+ * ── ⛔ fail-closed 是硬要求：**五道全部往「全跑」倒**（⛔ 一道都不減）─────────
+ *   ① 預設 base 立不起來（fetch 失敗/逾時 · `origin/main` 解析不到 · 落後本地過多）⇒ 全跑
+ *   ② 給了明確 base 但 `git diff` 吃不下它 ⇒ 全跑（⛔ 不是推論成「那就沒改」）
+ *   ③ 計畫自己說 `full`（路徑對不到輸入表 / `sync-io.json` 的 chain 過期）⇒ 全跑
+ *   ④ 算計畫時擲例外 ⇒ 全跑
+ *   ⑤ `--no-sync` 以外任何看不懂的狀態 ⇒ 全跑
  *
- * ── 路徑集合從哪來（⭐ 三條，⛔ 沒有一條是猜的）────────────────────────────
+ * ── 路徑集合從哪來（⭐ 四條，⛔ 沒有一條是猜的）────────────────────────────
  *   `--sync-paths a,b`   直接給
  *   `--sync-base <ref>`  `git diff --name-only <ref>`（含工作樹）＋未追蹤檔
  *   `GGD_DEPLOYED_REF`   ⭐ `pnpm ship` 的 `pipeline.mjs` 讀的**同一個**環境變數，
  *                        而它是用 `spawn` 起我的 ⇒ 那個起點**自動**流到這裡。
- *                        ⚠️ 用 `--stamp`／`--deployed` 旗標而不設這個環境變數時，
- *                        我看不到起點 ⇒ 落回①**全跑**（⛔ 安全的那一邊）。
+ *   （都沒有）           ⭐⭐ **預設 `origin/main`** —— 理由與守門寫在下面 syncBase。
  *
  * ⚠️ `content:build` **一律留在最前面**（即使計畫沒點它）：它是 bundle 新鮮度那一條的
  * 前置，多跑一次只是慢 12 秒，⛔ 漏跑就是 2026-08-01 那次「過期 bundle 全綠上線」。
@@ -126,40 +129,99 @@ const optArg = (k) => {
   const i = argv.indexOf(k);
   return i >= 0 ? argv[i + 1] : undefined;
 };
+// ⚠️ `-c core.quotepath=false`:⛔ 少了它 CJK 檔名會變成加引號的跳脫字串而對不到任何輸入表
+//    ⇒ 每一次動到中文檔名的改動都會被誤判成 fail-closed 全跑。
+// ⚠️ stderr 丟掉:認不得的 ref 時 git 會印一大段;那不是**我們**要說的話 ——
+//    我們要說的是 syncTrim 的「⇒ 全跑」。
+const syncGit = (a, extra = {}) =>
+  execFileSync("git", ["-c", "core.quotepath=false", ...a], {
+    cwd: REPO,
+    encoding: "utf8",
+    maxBuffer: 1 << 26,
+    stdio: ["ignore", "pipe", "ignore"],
+    ...extra,
+  });
+
+/**
+ * ⭐⭐ **base 沒人給的時候,預設 `origin/main`** —— ＝上一次 push ＝上一次部署
+ * （這個 repo 的部署協定就是 push 之後遠端 `git pull`,所以 origin/main 就是線上那一版）。
+ *
+ * 🚨 為什麼要有預設（2026-08-23 量到的）：裁剪引擎（A4）做好**當天**,5 次跑閘
+ * **裁剪 0 次生效** —— 沒有人帶 `--sync-base`,每一次都落進「不知道改了哪些路徑 ⇒ 全跑」。
+ * 一個要人記得帶旗標才會生效的裁剪,等於沒有（元規則:閘不是判準）。
+ *
+ * ⛔ 這**不是**削弱閘:裁掉的只有「輸入自上一次部署起一個位元組都沒動」的產生器,
+ * 每一支的判準逐字不動;而「上一次部署」這個假設本身有三道守門,全部往「全跑」倒:
+ *   · `git fetch` 失敗/逾時 ⇒ 全跑（本機的 origin/main 可能過期,拿過期的 base 裁剪不可信）
+ *   · `origin/main` 解析不到 ⇒ 全跑
+ *   · origin/main 有本地沒有的 commit,或落後本地超過 `GGD_SYNC_BASE_MAX_BEHIND`（預設 100）
+ *     ⇒ **有別的東西先 push 了／base 過舊**,「origin/main ＝ 上一次部署」不可信 ⇒ 全跑並印原因
+ * ⚠️ 明確給了 `--sync-base`／`--sync-paths`／`GGD_DEPLOYED_REF` 時**不碰網路**——
+ *    那是 `pnpm ship` 算好的起點,fetch 只會拖慢它;`--no-sync` 時序列段根本不跑,也不 fetch。
+ */
+const syncBase = (() => {
+  if (optArg("--sync-paths")) return { ref: null, why: null, label: "(--sync-paths)" };
+  const explicit = (optArg("--sync-base") ?? process.env.GGD_DEPLOYED_REF ?? "").trim().split(/\s+/)[0];
+  if (explicit) return { ref: explicit, why: null, label: explicit };
+  if (noSync) return { ref: null, why: null, label: null }; // 序列段不跑 ⇒ ⛔ 不必為它 fetch
+  const BASE = "origin/main";
+  try {
+    syncGit(["fetch", "--quiet", "origin", "main"], {
+      timeout: Number(process.env.GGD_SYNC_FETCH_TIMEOUT_MS ?? 10000),
+    });
+  } catch {
+    return { ref: null, why: `⛔ git fetch 失敗/逾時 ⇒ 本機的 ${BASE} 可能過期,拿它裁剪不可信 ⇒ **全跑**`, label: null };
+  }
+  let behind;
+  let aheadRemote;
+  try {
+    behind = Number(syncGit(["rev-list", "--count", `${BASE}..HEAD`]).trim());
+    aheadRemote = Number(syncGit(["rev-list", "--count", `HEAD..${BASE}`]).trim());
+  } catch {
+    return { ref: null, why: `⛔ ${BASE} 解析不到 ⇒ **全跑**`, label: null };
+  }
+  const MAX = Number(process.env.GGD_SYNC_BASE_MAX_BEHIND ?? 100);
+  if (!Number.isFinite(behind) || !Number.isFinite(aheadRemote) || behind > MAX || aheadRemote > 0) {
+    return {
+      ref: null,
+      why:
+        `⛔ ${BASE} 與本地的距離不對勁（落後本地 ${behind} commits,上限 ${MAX};` +
+        `遠端多出 ${aheadRemote} commits）⇒ 有別的東西先 push 了／base 過舊,` +
+        `「${BASE} ＝ 上一次部署」不可信 ⇒ **全跑**`,
+      label: null,
+    };
+  }
+  return { ref: BASE, why: null, label: `${BASE}(預設＝上一次 push)` };
+})();
+
 const syncPaths = (() => {
   const csv = optArg("--sync-paths");
   if (csv) return csv.split(",").map((s) => s.trim()).filter(Boolean);
-  const base = (optArg("--sync-base") ?? process.env.GGD_DEPLOYED_REF ?? "").trim().split(/\s+/)[0];
-  if (!base) return null;
+  if (!syncBase.ref) return null;
   try {
-    // ⚠️ `-c core.quotepath=false`:⛔ 少了它 CJK 檔名會變成加引號的跳脫字串而對不到任何輸入表
-    //    ⇒ 每一次動到中文檔名的改動都會被誤判成 fail-closed 全跑。
-    const g = (a) =>
-      execFileSync("git", ["-c", "core.quotepath=false", ...a], {
-        cwd: REPO,
-        encoding: "utf8",
-        maxBuffer: 1 << 26,
-        // ⚠️ 認不得的 ref 時 git 會在 stderr 印一大段;那不是**我們**要說的話 ——
-        //    我們要說的是下面 syncTrim 的「⇒ 全跑」。
-        stdio: ["ignore", "pipe", "ignore"],
-      })
-        .split("\n")
-        .filter(Boolean);
+    const lines = (a) => syncGit(a).split("\n").filter(Boolean);
     // ⭐ `<base>`（⛔ 不是 `<base>..HEAD`）⇒ 連**還沒 commit** 的工作樹改動都算進來。
-    return [...g(["diff", "--name-only", base]), ...g(["ls-files", "--others", "--exclude-standard"])];
+    return [
+      ...lines(["diff", "--name-only", syncBase.ref]),
+      ...lines(["ls-files", "--others", "--exclude-standard"]),
+    ];
   } catch {
-    return null; // ⇒ ① 全跑
+    return null; // ⇒ 全跑
   }
 })();
 const syncTrim = (() => {
-  if (!syncPaths) return { steps: null, why: "⛔ 不知道這一次改了哪些路徑 ⇒ **全跑**(⛔ 不是「那就沒改」)" };
+  if (!syncPaths) {
+    // ⭐ base 那一層自己說得出原因（fetch 失敗/落後過多…）就用它的 —— 靜默的 fallback
+    //    讀起來會像「全部都跑過了」（第零守則:裁掉了什麼、為什麼沒裁,都要印）。
+    return { steps: null, why: syncBase.why ?? "⛔ 不知道這一次改了哪些路徑 ⇒ **全跑**(⛔ 不是「那就沒改」)" };
+  }
   try {
     const p = planFromPaths(syncPaths, REPO);
     if (p.full) return { steps: null, why: `⛔ **fail-closed 全跑** —— ${p.fullReason}` };
     return {
       steps: p.steps,
       why:
-        `⭐ ${syncPaths.length} 個路徑 ⇒ 只跑 ${p.steps.length}/${p.steps.length + p.skipped.length} 支` +
+        `⭐ base ${syncBase.label} · ${syncPaths.length} 個路徑 ⇒ 只跑 ${p.steps.length}/${p.steps.length + p.skipped.length} 支` +
         `（估 ${(p.ms / 1000).toFixed(1)}s，全跑 ${(p.msAll / 1000).toFixed(1)}s）\n` +
         `      ⏭ 不用跑: ${p.skipped.join(" · ") || "(無)"}`,
     };
@@ -210,6 +272,9 @@ const PARALLEL = [
 //    「少跑一包」,而**旗標接錯線不會紅** —— 那一包只是安靜地不見了
 //    （CLAUDE.md 失敗形態③:可以從樹上刪掉而測試全綠）。
 if (argv.includes("--list")) {
+  // ⭐ 裁剪的決定印到 **stderr** —— stdout 是給機器逐行 parse 的名單
+  //   （`shipPlan.test.mjs` 就在讀它),⛔ 不可以混進去。
+  if (!noSync) console.error(`# skills:sync 裁剪: ${syncTrim.why}`);
   console.log([...(noSync ? [] : SERIAL), ...(onlySync ? [] : PARALLEL.map((j) => j.name))].join("\n"));
   process.exit(0);
 }

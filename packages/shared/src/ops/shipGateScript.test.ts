@@ -11,6 +11,7 @@
  * ⚠️ 它驗的是**關係**⛔ 不是名詞（2026-08-02 的教訓：只驗名詞的後置條件在相容性
  * 故障面前必然是綠的）。
  */
+import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -88,6 +89,35 @@ describe("pnpm ship:check", () => {
       "沒有把分到的核數交給 vitest —— 那七包會各自開滿，timeout 會開始飄。",
     ).toBe(true);
   });
+
+  it(
+    "★ 什麼旗標都不帶 ⇒ base 預設 origin/main,裁剪引擎**真的**被呼叫（2026-08-23:5 次跑閘裁剪 0 次生效）",
+    () => {
+      // ⭐ 跑**出貨的那一支**（`--list` 只印決定,一支閘都不跑）,⛔ 不是 regex 掃原始碼
+      //（失敗形態⑥）。stdout 是給機器逐行 parse 的名單,裁剪的決定印在 stderr。
+      const env = { ...process.env, GGD_SYNC_FETCH_TIMEOUT_MS: "8000" };
+      delete env.GGD_DEPLOYED_REF; // 這一條測的正是「什麼都沒給」的預設
+      const r = spawnSync("node", ["tools/parallel-gates/ship.mjs", "--list"], {
+        cwd: REPO,
+        encoding: "utf8",
+        env,
+        timeout: 25000,
+      });
+      expect(r.status).toBe(0);
+      const why = String(r.stderr);
+      expect(why).toContain("skills:sync 裁剪");
+      // 🚨 突變目標:把預設 base 拿掉,就會回到當天 5 次全 miss 的那一句 ⇒ 這裡紅。
+      expect(
+        why,
+        "落進「不知道改了哪些路徑」—— 預設 base 沒接上,裁剪永遠不生效（A4 白做）。",
+      ).not.toContain("不知道這一次改了哪些路徑");
+      // 而且結果必須**指名原因**:要嘛裁剪真的算過（base＝預設）,要嘛 fail-closed 說得出為什麼。
+      expect(why).toMatch(
+        /origin\/main\(預設＝上一次 push\)|fail-closed 全跑|算不出計畫|git fetch 失敗|解析不到|距離不對勁/,
+      );
+    },
+    30000,
+  );
 
   it("`pnpm ship:check` 這個入口真的存在", () => {
     const pkg = JSON.parse(readFileSync(join(REPO, "package.json"), "utf8")) as {
