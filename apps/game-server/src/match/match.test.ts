@@ -2,6 +2,8 @@ import { describe, it, expect } from "vitest";
 import { cover } from "../../../../packages/shared/testkit/cover";
 import { asSeatId, asTeamId, type TeamId } from "@ggd/shared/ids";
 import { Champions } from "@ggd/shared/sim/content/registry";
+import { Configs } from "@ggd/shared/content";
+import { heroStartLevel } from "@ggd/shared/content/schema/config/match";
 import { MatchController, type SeatSpec } from "./MatchController";
 import { PhaseMachine } from "./PhaseMachine";
 import { pairTeams, livesLost, teamHealthLost, FINAL_ROUND, HIGH_STAKES_REWARD } from "./PairedDuels";
@@ -274,21 +276,59 @@ describe("driver seam (match-05, match-06)", () => {
     while (!(ctl.phase.phase === "combat" && ctl.phase.round >= 2) && guard++ < 20000) ctl.tick();
     expect(ctl.phase.round).toBeGreaterThanOrEqual(2);
 
-    let anyItems = 0;
-    let anyAugments = 0;
-    let anyRanked = 0;
-    for (const seat of ctl.seats.values()) {
-      const champ = ctl.world.champion.get(seat.entityId!)!;
-      anyItems += champ.items.filter((i) => i !== null).length;
-      anyAugments += champ.augments.length;
-      const ab = ctl.world.abilities.get(seat.entityId!)!;
-      anyRanked += ab.slots.Q.rank + ab.slots.W.rank + ab.slots.E.rank + ab.slots.R.rank;
-    }
-    expect(anyItems).toBeGreaterThan(0); // round-2 gacha + any affordable buys
-    expect(anyAugments).toBeGreaterThan(0); // round-1 silver offers were picked
-    expect(anyRanked).toBeGreaterThan(12); // Q starts learned (12) + level-up points spent
+    /** 全座位加總：道具數 / 聖杯數 / 已加的技能等級 / 手上還沒花的點 / 總等級。 */
+    const tally = (): { items: number; augments: number; ranked: number; unspent: number; levels: number } => {
+      const t = { items: 0, augments: 0, ranked: 0, unspent: 0, levels: 0 };
+      for (const seat of ctl.seats.values()) {
+        const champ = ctl.world.champion.get(seat.entityId!)!;
+        t.items += champ.items.filter((i) => i !== null).length;
+        t.augments += champ.augments.length;
+        t.levels += champ.level;
+        const ab = ctl.world.abilities.get(seat.entityId!)!;
+        t.ranked += ab.slots.Q.rank + ab.slots.W.rank + ab.slots.E.rank + ab.slots.R.rank;
+        t.unspent += ab.unspentPoints;
+      }
+      return t;
+    };
+
+    const at2 = tally();
+    expect(at2.items).toBeGreaterThan(0); // round-2 gacha + any affordable buys
+    expect(at2.augments).toBeGreaterThan(0); // round-1 silver offers were picked
     // offers consumed at combat start
     expect(ctl.offers.size).toBe(0);
+
+    // ── 加點 ────────────────────────────────────────────────────────────────
+    // ⚠️ 這一段 2026-08-23 重寫過（GH#615，owner 把登場等級 1 → **6**）。
+    //    舊斷言是 `anyRanked > 12`（12 = 每個座位出生就會的 Q），而它其實在
+    //    問「到第 2 回合為止有沒有人升過級」—— 那是**升級曲線**的性質，⛔ 不是
+    //    「AI 會不會加點」。登場等級抬高之後 `xpToNext(6)` 也跟著抬高，第 2 回合
+    //    誰都還沒升級 ⇒ 它紅了，而 AI 的加點邏輯一行都沒壞。
+    //
+    // ⭐ 真正要守的機制是**「AI 拿到點就會花掉」**，所以改成從**升了幾級**推導：
+    //    每一級發一點（`grantXp`），AI 在中場把點花光 ⇒ 下一次開戰時
+    //    `已加的技能等級 == 座位數(出生的 Q) + 升級數`，而且**手上一點都不剩**。
+    //    ⛔ 兩個數字都不寫死：座位數從 `ctl.seats` 讀，登場等級從出貨的
+    //    `config.match` 解析（`MatchController` 用的同一支）。
+    const baseRanks = ctl.seats.size; // Q starts learned at rank 1 on every seat
+    const spawnLevels = ctl.seats.size * heroStartLevel(Configs.tryGet("config.match"));
+    expect(at2.levels).toBeGreaterThanOrEqual(spawnLevels);
+
+    // 跑到**第一次升級真的落地**、再走完那一次中場為止 —— ⛔ 不是跑到某個
+    // 寫死的回合（那又會被下一次曲線調整弄紅）。
+    let guard2 = 0;
+    while (tally().levels === spawnLevels && ctl.phase.phase !== "matchEnd" && guard2++ < 40000) ctl.tick();
+    const roundAtFirstLevel = ctl.phase.round;
+    while (
+      !(ctl.phase.phase === "combat" && ctl.phase.round > roundAtFirstLevel) &&
+      ctl.phase.phase !== "matchEnd" &&
+      guard2++ < 40000
+    )
+      ctl.tick();
+
+    const after = tally();
+    expect(after.levels, "整場沒有任何人升級 —— 這條在空轉").toBeGreaterThan(spawnLevels);
+    expect(after.unspent, "中場過完了還有沒花掉的技能點 —— AI 沒在加點").toBe(0);
+    expect(after.ranked).toBe(baseRanks + (after.levels - spawnLevels));
   });
 });
 

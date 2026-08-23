@@ -260,7 +260,17 @@ describe("per-team elimination settlement (elimination-settlement, task #193 / G
     //    ⇒ bot 現在真的走得到目的地,整場的戰鬥軌跡因此改變。
     //    ⛔ 這不是把測試調鬆 —— 掃 4200–4399，前八個重現的是
     //    **4200 / 4217 / 4227 / 4247 / 4248 / 4256 / 4257 / 4259**，取最小的。
-    const run = runFullMatch("elim1", 4200, matchDocWithCard(false));
+    // ⚠️ GH#615 —— seed 4200 換成 **4212**（第七次換，同一個理由）：
+    //    owner 2026-08-23「**英雄登場初始等級設定為 6**」——
+    //    `config.match@1.progression.heroStartLevel` 從 1 變 6，血量隨等級成長
+    //    ⇒ 每一場的血條、誰先被打光、決賽是誰全部改變，4200 那一場冠軍
+    //    （隊伍 3）不再被打光過（`spent` 只剩隊伍 0）。
+    //    ⛔ 這不是把測試調鬆 —— 掃 4200–4399 共 200 個 seed：**200 個全部**
+    //    有隊伍歸零、其中 **40 個**冠軍本人也歸零過，前八個是
+    //    **4212 / 4214 / 4218 / 4226 / 4229 / 4230 / 4235 / 4237**，取最小的。
+    //    ⭐ 判準不變：如果哪天掃 200 個 seed 一個都不重現，那就不是換 seed 的
+    //    問題，是**淘汰這條路整個死了**。
+    const run = runFullMatch("elim1", 4212, matchDocWithCard(false));
     // 這一條測的是 OFF 那一側 —— 而且是**經由內容文件**到達控制器的。
     expect(run.ctl.settlementCardOnHealthSpent).toBe(false);
 
@@ -287,7 +297,7 @@ describe("per-team elimination settlement (elimination-settlement, task #193 / G
   it("後台打開就退回舊行為 —— 這個功能是被關掉,不是被刪掉", () => {
     cover("elimination-settlement");
     // 同上，與 OFF 那一側用同一個 seed 才比得出「打開的代價」。
-    const run = runFullMatch("elim1", 4200, matchDocWithCard(true));
+    const run = runFullMatch("elim1", 4212, matchDocWithCard(true));
     expect(run.ctl.settlementCardOnHealthSpent).toBe(true);
 
     // 血歸零的隊伍**當場**拿到一張卡:不多不少就是那些隊伍，各一張。
@@ -438,11 +448,18 @@ describe("per-ROUND kill/death tallies (round-mvp-tally)", () => {
 
   it("survives the whole resolution beat, then clears on the next round", () => {
     cover("round-mvp-tally");
-    const ctl = new MatchController("mvp2", 4242, allBots(), FAST);
+    // ⚠️ GH#615 —— seed 4242 換成 **4243**（同一個理由，換 seed ⛔ 不是調鬆）：
+    //    owner 2026-08-23 把登場等級調成 6 ⇒ 第 1 回合的血條厚了一大截，
+    //    4242 那一場第 1 回合**一個人頭都沒有**，於是下面那條「有人殺人」的
+    //    前提消失（而它正是這條測試不空轉的證據）。
+    //    ⛔ 掃 4242–4341 共 100 個 seed：**95 個**第 1 回合就有人頭，
+    //    前八個是 **4243 / 4244 / 4245 / 4246 / 4247 / 4248 / 4249 / 4251**，取最小的。
+    const ctl = new MatchController("mvp2", 4243, allBots(), FAST);
     const seatIds = [...ctl.seats.keys()];
     tickUntil(ctl, "combat");
     tickUntil(ctl, "resolution");
     const atRoundEnd = seatIds.map((s) => ctl.roundKills.get(s) ?? 0);
+    // ⚠️ 這一行紅了不要刪：它的意思是這個 seed 的第 1 回合不再有人頭，要換一個會的。
     expect(atRoundEnd.some((k) => k > 0)).toBe(true);
 
     // the winner presentation reads these all through `resolution` — the reset

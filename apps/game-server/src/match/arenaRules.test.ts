@@ -15,11 +15,13 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../../../packages/shared/testkit/cover";
 import {
+  Configs,
   ContentLoader,
   zConfigArenaRulesDoc,
   DEFAULT_DRAFT_CONFLICT,
   type ConfigArenaRulesDoc,
 } from "@ggd/shared/content";
+import { heroStartLevel } from "@ggd/shared/content/schema/config/match";
 import { FsContentSource } from "@ggd/shared/content/node";
 import { registerAll } from "@ggd/shared/content";
 import { Augments, Champions, Items, LootTables } from "@ggd/shared/sim/content/registry";
@@ -67,6 +69,16 @@ beforeAll(async () => {
 function makeArenaMatch(seed: number): MatchController {
   return new MatchController(`arena-${seed}`, seed, allBots(), FAST, 3, ARENA);
 }
+
+/**
+ * 英雄**登場等級** —— 從出貨的 `config.match@1` 解析，⛔ 不抄字面值。
+ *
+ * ⚠️ owner 2026-08-23（GH#615）把它從 1 調成 **6**，而這底下用的是
+ * `MatchController.spawnChampion` 呼叫的**同一支**解析函式 ⇒ 他下一次再調，
+ * 這幾條斷言自己跟著動。第二守則：出貨數值住進測試就是**第四個住處**，
+ * 而那一份沒有守衛，所以它一定會過期、而且用錯誤的訊息紅。
+ */
+const startLevel = (): number => heroStartLevel(Configs.tryGet("config.match"));
 
 function runUntil(ctl: MatchController, cond: () => boolean, maxTicks = 60000): void {
   let n = 0;
@@ -136,8 +148,17 @@ describe("config doc + rules resolution (arena-06)", () => {
     const ctl = new MatchController("legacy", 31, allBots(), FAST);
     runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 1);
     expect(ctl.world.ultGateOverride).toBe(false);
+    // ⚠️ 「沒有 doc」在這條測試裡指的是**競技場規則文件**，⛔ 不是 `config.match`
+    //    —— 登場等級是另一根軸，它住在 `config.match@1.progression.heroStartLevel`
+    //    而且**不管有沒有規則文件都一樣**。所以這裡守的是「⛔ 一級都沒有被
+    //    grant 出去」（＝登場等級原封不動），⛔ 不是「等級剛好是 1」。
+    //    ⭐ owner 2026-08-23（GH#615）把登場等級調成 6 之後這兩者才分家；在此
+    //    之前它們碰巧都是 1，所以這一行看起來像在守 legacy，其實只是重合。
     for (const seat of ctl.seats.values()) {
-      expect(ctl.world.champion.get(seat.entityId!)!.level).toBe(1);
+      expect(
+        ctl.world.champion.get(seat.entityId!)!.level,
+        "沒有規則文件卻長了等級 —— 有 grant 漏進來了",
+      ).toBe(startLevel());
       expect(ctl.world.abilities.get(seat.entityId!)!.slots.W.rank).toBe(0); // Q-only start
     }
     // ⚠️ GH#357 —— 排定的 `silver` 現在是**地板**：`augmentTiers` 會照劣勢值把它
@@ -290,19 +311,25 @@ describe("weapon-draft loot tables (arena-07)", () => {
 });
 
 describe("arena round grants (arena-01, arena-04, arena-05)", () => {
-  it("round 1: level 3, Q+W+E auto-learned rank 1, R locked, silver augment offer", () => {
+  it("round 1: 登場等級 + grantLevels, Q+W+E auto-learned rank 1, R locked, silver augment offer", () => {
     cover("arena-round1-qwe");
     const ctl = makeArenaMatch(1234);
     runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 1);
+    // 登場等級（`config.match`）+ 第 1 回合排的 grantLevels（`arena-rules`）——
+    // **兩份出貨文件各出一半**，⛔ 兩個數字都不抄進來。
+    const expectedLevel = startLevel() + (ARENA.rounds.get(1)?.grantLevels ?? 0);
     for (const seat of ctl.seats.values()) {
       const champ = ctl.world.champion.get(seat.entityId!)!;
       const ab = ctl.world.abilities.get(seat.entityId!)!;
-      expect(champ.level).toBe(3); // 1 + grantLevels 2
+      expect(champ.level).toBe(expectedLevel);
       expect(ab.slots.Q.rank).toBeGreaterThanOrEqual(1);
       expect(ab.slots.W.rank).toBeGreaterThanOrEqual(1);
       expect(ab.slots.E.rank).toBeGreaterThanOrEqual(1);
       expect(ab.slots.R.rank).toBe(0); // ult still locked in round 1
-      expect(ab.unspentPoints).toBe(0); // exactly the 3-points-total budget
+      // 自動學習把 grantLevels 發下來的點**全部**用掉（Q 出生就是 rank 1，
+      // W/E 各吃一點）⇒ 中場開始時手上不該還留著點。
+      // ⛔ 不寫「總共幾點」：那是 `grantLevels` 的值，它住在 arena-rules.json。
+      expect(ab.unspentPoints).toBe(0);
       // EX is locked far from its round-5 unlock (heroes that have one)
       if (ab.exSlot) expect(ab.exSlot.rank).toBe(0);
     }
