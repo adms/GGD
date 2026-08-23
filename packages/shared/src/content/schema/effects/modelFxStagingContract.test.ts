@@ -25,6 +25,7 @@
  *        （path=radial）—— 那是腳下噴發，⛔ 不是地面被剁開一圈」
  */
 import { describe, it, expect, beforeAll } from "vitest";
+import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ContentLoader } from "../../loader";
@@ -231,5 +232,80 @@ describe("④ 引用特效模板的演出：出得了聲，而且保得住自己
     expect(stale, "這幾支已經有自己的模型了 —— 把 SHARED_MODEL_FENCED_OUT 裡的那一列刪掉").toEqual(
       [],
     );
+  });
+});
+
+/**
+ * ⭐⑤【原作那一具自己會出聲，而我們這一具不會】—— ⛔ 這裡的判準**不是我挑的**。
+ *
+ * owner 2026-08-23：「**開票快接，並且別忘了特效音效也要接上**」。
+ * ⚠️ ② 只問「`count ≥ 2` 的多實例演出」，④ 只問「引用模板的節點」——
+ * ⇒ **單具、字面 `modelKey`** 的那一族（D6 接上的 11 支正是這一族）**沒有人問過**。
+ *
+ * ⭐ 而「它該不該有聲音」有一個**推導得出來的**答案：`.mdx` 自己會把音效事件
+ * （`SNDX****`）烘在動畫軌上。`tools/w3x-import/out/VFX_SOUND_JOIN.json` 的
+ * `modelBoundSoundsets.byModel` 就是那一份普查（132 顆掃過、65 顆有事件）。
+ * ⇒ ⭐ 原作那一具**真的會響**的模型，我們接上去卻無聲 = 還原掉了一半。
+ * ⛔ 反過來，沒有事件的模型（`herocloudcyd` / `herocloudstrife` / `blackhole` /
+ *    `oblivionaura` / `magical-sword`）這條**不叫** —— 給它們聲音是**設計**不是還原，
+ *    ⛔ 不由這條守衛替 owner 決定。
+ *
+ * ⭐ 名單**從普查推導**，⛔ 不抄字面值：哪天多抽出一顆帶音效事件的模型，
+ * 這條自己就會開始問它，⛔ 不必改測試。
+ *
+ * ── 突變紀錄（一批一條）─────────────────────────────────────────────
+ *  · 拿掉 `content/abilities/godie-u01u.r.json` 那一格 `"soundKey"`（與
+ *    `arriveSoundKey` 一起）→ 紅，訊息逐字指名
+ *    `godie-u01u.r → imported.heromusashimiyamoto`。
+ */
+const SOUND_JOIN = join(CONTENT, "../tools/w3x-import/out/VFX_SOUND_JOIN.json");
+
+/** `imported.<stem>` —— 原作 `.mdx` 自己帶著 `SNDX` 音效事件的那幾顆。 */
+function modelsThatSoundInW3x(): Set<string> {
+  const raw = JSON.parse(readFileSync(SOUND_JOIN, "utf8")) as {
+    modelBoundSoundsets?: { byModel?: Record<string, unknown[]> };
+  };
+  return new Set(
+    Object.entries(raw.modelBoundSoundsets?.byModel ?? {})
+      .filter(([, ev]) => Array.isArray(ev) && ev.length > 0)
+      .map(([stem]) => `imported.${stem}`),
+  );
+}
+
+describe("⑤ 單具演出：原作模型自己會出聲的，接上去就不可以無聲", () => {
+  it("★ owner：「別忘了特效音效也要接上」（名單從 w3x 普查推導，⛔ 不是一張手打的表）", () => {
+    const audible = modelsThatSoundInW3x();
+    expect(audible.size, "VFX_SOUND_JOIN 讀不到任何帶音效事件的模型 —— 母體是空的").toBeGreaterThan(0);
+
+    const silent: string[] = [];
+    let checked = 0;
+    for (const def of Abilities.all() as unknown as Record<string, unknown>[]) {
+      const walk = (n: unknown): void => {
+        if (Array.isArray(n)) return void n.forEach(walk);
+        if (n === null || typeof n !== "object") return;
+        const r = n as Record<string, unknown>;
+        // ⚠️ 引用模板的節點歸 ④ 管（聲音住模板的 params，⛔ 不逐支填）。
+        if (r["kind"] === "spawnModelFx" && r["preset"] === undefined) {
+          const key = typeof r["modelKey"] === "string" ? r["modelKey"] : "";
+          if (audible.has(key)) {
+            checked += 1;
+            if (typeof r["soundKey"] !== "string" && typeof r["arriveSoundKey"] !== "string") {
+              silent.push(`${String(def["id"])} → ${key}`);
+            }
+          }
+        }
+        Object.values(r).forEach(walk);
+      };
+      walk(def["effects"]);
+      walk(def["passive"]);
+    }
+
+    expect(checked, "沒有任何出貨節點引用到會出聲的原作模型 —— 這條斷言是真空綠的").toBeGreaterThan(0);
+    expect(
+      silent,
+      "原作那一具 `.mdx` 自己烘著音效事件，而我們接上去的這一具無聲 —— " +
+        "聲音鍵要從 `VFX_SOUND_JOIN.modelBoundSoundsets` 那一列的 wav 檔名推出來" +
+        "（`wc3.<檔名小寫>`），⛔ 不要挑一個好聽的",
+    ).toEqual([]);
   });
 });
