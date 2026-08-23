@@ -163,6 +163,24 @@ export const zConfigCombatFeelDoc = z
       })
       .strict()
       .optional(),
+    /**
+     * ⭐ 命中定格（hitstop）要不要連**腳步**一起按住 —— owner 2026-08-23
+     * 「被普攻的時候好像會被角色黏住走不了」的那一格。
+     *
+     * 量到的數字（被八個人圍住、攻速 2：100 tick 裡 **39 tick 完全動不了**，
+     * 而身上一筆狀態都沒有）與兩格的完整語意全部在
+     * `sim/combat/hitstopHold.ts`。ABSENT ⇒ `DEFAULT_HITSTOP`
+     * （挨打者不按、出手者按）。
+     */
+    hitstop: z
+      .object({
+        /** 挨打的一方在定格期間走不走得動。false = 出貨（走得動）。 */
+        holdsVictimWalk: z.boolean().optional(),
+        /** 出手的一方在定格期間走不走得動。true = 出貨（走不動；他本來就得站定）。 */
+        holdsAttackerWalk: z.boolean().optional(),
+      })
+      .strict()
+      .optional(),
     facing: z
       .object({
         /** 出手後的收招餘韻 tick 數 (30 tick = 1 秒) */

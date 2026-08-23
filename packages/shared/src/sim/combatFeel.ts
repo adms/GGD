@@ -52,6 +52,11 @@ import {
   normalizePredictionHold,
   type PredictionHoldRules,
 } from "./predictionHold";
+import {
+  DEFAULT_HITSTOP,
+  normalizeHitstopRules,
+  type HitstopRules,
+} from "./combat/hitstopHold";
 import { dot, lenSq, normalize, sub, type Vec2 } from "./math/vec2";
 
 /** 擊退規則(全部後台可調)。 */
@@ -436,6 +441,12 @@ export interface CombatFeelRules {
    * `apps/client/src/predict/predictionHold.ts` 的現值（算好的遮罩）。
    */
   predictionHold?: PredictionHoldRules;
+  /**
+   * ⭐ 命中定格（hitstop）要不要連**脚步**一起按住。選用的理由與 `facing` 逐字相同。
+   * 語意、量到的數字（被圍住時 39/100 tick 完全動不了）與出貨預設全部在
+   * `sim/combat/hitstopHold.ts`。讀的時候一律走那支的 `hitstopRules(world)`。
+   */
+  hitstop?: HitstopRules;
 }
 
 /**
@@ -584,6 +595,7 @@ export const DEFAULT_COMBAT_FEEL: CombatFeelRules = Object.freeze({
   standstill: DEFAULT_STANDSTILL,
   facing: DEFAULT_FACING,
   predictionHold: DEFAULT_PREDICTION_HOLD,
+  hitstop: DEFAULT_HITSTOP,
   autoEngage: DEFAULT_AUTO_ENGAGE,
   manualOrder: DEFAULT_MANUAL_ORDER,
   aimAssist: DEFAULT_AIM_ASSIST,
@@ -723,6 +735,7 @@ export function combatFeelFromDoc(doc: unknown): CombatFeelRules {
     manualOrder?: unknown;
     aimAssist?: unknown;
     predictionHold?: unknown;
+    hitstop?: unknown;
   };
   if (d.schema !== COMBAT_FEEL_SCHEMA) return DEFAULT_COMBAT_FEEL;
   return Object.freeze({
@@ -733,6 +746,7 @@ export function combatFeelFromDoc(doc: unknown): CombatFeelRules {
     manualOrder: normalizeManualOrderRules(d.manualOrder),
     aimAssist: normalizeAimAssistRules(d.aimAssist),
     predictionHold: normalizePredictionHold(d.predictionHold),
+    hitstop: normalizeHitstopRules(d.hitstop),
   });
 }
 

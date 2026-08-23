@@ -184,29 +184,35 @@ describe("rich damage event (the sim<->client seam)", () => {
 
 // ------------------------------------------------------------------ HITSTOP --
 describe("hitstop", () => {
-  it("freezes BOTH attacker and victim for exactly N ticks", () => {
+  it("freezes BOTH fighters for exactly N ticks — but only the ATTACKER's feet", () => {
     cover("cj-hitstop-ticks");
     cover("cj-hitstop-both");
     const world = makeWorld();
     const a = spawnDummy(world, 0, 0, { x: ZC.x, z: Y });
     // impact 50 (<70) → hitstop but NO knockback, so movement isolation is clean.
     const b = spawnDummy(world, 1, 1, { x: ZC.x + 3, z: Y });
-    world.nav.get(b)!.moveTarget = { x: ZC.x + 18, z: Y }; // walking +x
+    world.nav.get(a)!.moveTarget = { x: ZC.x - 18, z: Y }; // attacker walking −x
+    world.nav.get(b)!.moveTarget = { x: ZC.x + 18, z: Y }; // victim walking +x
 
     pushHit(world, a, b, 50, "true");
     world.step(empty()); // hit LANDS this tick (both freeze starting next tick)
 
-    // both the attacker and the victim are frozen for N = 2 ticks
+    // the FREEZE ITSELF is unchanged: both fighters carry N = 2 ticks of it.
     expect(world.hitstop.get(a)).toBe(2);
     expect(world.hitstop.get(b)).toBe(2);
 
-    const frozenX = world.transform.get(b)!.pos.x;
+    // ⭐ 2026-08-23 —— 只有**出手的那一方**的腳被按住(`combat/hitstopHold.ts`)。
+    // owner:「被普攻的時候好像會被角色黏住走不了」⇒ 挨打的那一方照走。
+    const heldX = world.transform.get(a)!.pos.x;
+    const victimX = world.transform.get(b)!.pos.x;
     world.step(empty()); // frozen tick 1
-    expect(world.transform.get(b)!.pos.x).toBe(frozenX);
+    expect(world.transform.get(a)!.pos.x).toBe(heldX); // 出手方:定住
+    expect(world.transform.get(b)!.pos.x).toBeGreaterThan(victimX); // 挨打方:照走
     world.step(empty()); // frozen tick 2
-    expect(world.transform.get(b)!.pos.x).toBe(frozenX);
-    world.step(empty()); // freeze over → moves again
-    expect(world.transform.get(b)!.pos.x).toBeGreaterThan(frozenX);
+    expect(world.transform.get(a)!.pos.x).toBe(heldX);
+    world.step(empty()); // freeze over → the attacker moves again too
+    expect(world.transform.get(a)!.pos.x).toBeLessThan(heldX);
+    expect(world.hitstop.get(a)).toBeUndefined();
     expect(world.hitstop.get(b)).toBeUndefined();
   });
 

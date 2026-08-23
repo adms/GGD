@@ -31,6 +31,7 @@ import { activeObstacles, heldGates } from "../map/gates";
 import { Stat } from "../stats/statTypes";
 import { facingLockDir } from "../facingLock";
 import { movementHold } from "../movementHold";
+import { hitstopHoldsBody } from "../combat/hitstopHold";
 import { mobProfile } from "../mobs";
 import { isCarried } from "../carry";
 // 走過去放技能 (`config.cast-approach@1`)。⛔ 單向邊:`abilities/abilitySystem.ts`
@@ -89,10 +90,17 @@ export function movementSystem(world: SimWorld): void {
       continue;
     }
 
-    // Combat-juice HITSTOP: freeze the whole body — including any dash/knockback
-    // override — for the freeze window, so the on-impact "hold" reads before the
-    // knockback slide plays out. Deterministic (see SimWorld.hitstop docs).
-    if ((world.hitstop.get(id) ?? 0) > 0) {
+    // Combat-juice HITSTOP: freeze the body for the freeze window — including any
+    // dash/knockback override, so the on-impact "hold" reads before the knockback
+    // slide plays out. Deterministic (see SimWorld.hitstop docs).
+    //
+    // ⭐ 2026-08-23 —— 「**被普攻的時候好像會被角色黏住走不了**」(owner)。
+    //    這一行在此之前是無條件的，而它正是那個症狀：一發普攻凍 2–8 tick、
+    //    每一發傷害重新上值 ⇒ 被一群人貼身時**近四成的 tick 方向盤被拔掉**，
+    //    而且身上一筆狀態都沒有、快照裡也沒有位元 ⇒ 客戶端影子照走、每 50 ms
+    //    被 `reconcile` 拉回來一次。量到的數字、保留下來的那一半、以及那一格
+    //    後台開關全部在 `combat/hitstopHold.ts` 的檔頭。
+    if (hitstopHoldsBody(world, id)) {
       t.vel = { x: 0, z: 0 };
       continue;
     }
