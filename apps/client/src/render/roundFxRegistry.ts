@@ -77,6 +77,21 @@ export class RoundFxRegistry implements RoundVfxTarget {
 export interface RoundFxDeps {
   vfx: VfxContext;
   ambient: AmbientContentHooks;
+  /**
+   * ⭐ GH#546 —— 「這個實體現在哪幾格開關技能是開著的」。
+   *
+   * ⛔ **必須從外面注入**：`architecture.test.ts` 的 client-08 閘禁止
+   * `render/**` 與 `vfx/**` import `RoomStore`（逐幀資料不可以穿過 React state），
+   * 而這一層正在那兩層裡面。⇒ 只轉發，⛔ 不自己讀。
+   *
+   * ⭐⭐ **刻意是必填（⛔ 不是 `?`）**：它是一條「忘了就靜靜失效」的接線 ——
+   * 少了它，開關型技能的手部特效不掛、`toggleMask` 恆為 0，⛔ 而畫面上跟
+   * 「這支技能本來就沒特效」一模一樣（第二守則失敗形態③）。
+   * ⇒ 讓 **`tsc` 擋住忘記**，⛔ 不是寫一條「要記得注入」的散文。
+   * ⚠️ 2026-08-23 的稽核逐字點名同一族的另一條（`GameApp.statusIdsForSeat`）
+   * 「刪掉它 M1 客戶端全死而測試全綠」—— 那一條至今仍是選配的。
+   */
+  ambientToggleMask: (entityId: number) => number;
   fireRing: FireRingFxOptions;
   victory?: VictoryFireworksOptions;
   /** 測試 seam:`createTexture: () => null` 讓 headless 不去解圖。 */
@@ -116,7 +131,11 @@ export interface RoundFx {
  */
 export function createRoundFx(scene: Scene, deps: RoundFxDeps): RoundFx {
   const vfx = new VfxSystem(scene, deps.vfx);
-  const ambient = new AmbientVfx(scene, deps.ambient);
+  const ambient = new AmbientVfx(
+    scene,
+    deps.ambient,
+    { getToggleMask: deps.ambientToggleMask },
+  );
   const whirlwind = new WhirlwindFx(scene, deps.whirlwind ?? {});
   const fireRing = new FireRingFx(scene, deps.fireRing);
   const victoryFx = new VictoryFireworks(scene, deps.victory ?? {});

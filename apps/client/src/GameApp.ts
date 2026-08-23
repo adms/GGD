@@ -869,6 +869,15 @@ export class GameApp {
         vfxDocFor: (id) => this.contentDb.vfxFor(id),
         ribbonDocFor: (id) => this.contentDb.ribbonFor(id),
       },
+      // ⭐ GH#546 —— 風王結界那一族「開著的時候手上要有跟隨特效」的閘。
+      // ⛔ 這一行**只能住這裡**：`architecture.test.ts` 的 client-08 禁止
+      // `render/**` 與 `vfx/**` import `RoomStore`（逐幀資料不可以穿過
+      // React state），而 `GameApp` 在那兩層之外。少了它 ⇒ 一律回 0 ⇒
+      // 那幾列不掛（fail-closed，⛔ 不是崩潰）。
+      // ⚠️ 用 `entityId` 找座位（`SeatView.entityId`），⛔ 不是 seatId ——
+      // `attach()` 只拿得到實體；小怪／替身找不到座位 ⇒ 0。
+      ambientToggleMask: (entityId) =>
+        hudStore.getState().seats.find((s) => s.entityId === entityId)?.toggleMask ?? 0,
       // THE FIRE RING (task #195). ⚠️ 它現在在這裡建，比 `burnTint` 早 —— 那個
       // 「burnTint 先建所以先掛」的順序講的是**同一台相機上的 post-process 掛載
       // 順序**（burnTint 之於 deathFocus），火圈不是 post-process，不在那條線上。

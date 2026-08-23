@@ -25,6 +25,12 @@ const NOT_KEYED_BY_ENTITY: Readonly<Record<string, string>> = {
   mobZones: "元素 = zone index",
   settledZones: "元素 = zone index",
   spawnHaltedZones: "元素 = zone index",
+  // ⭐ 2026-08-23（GH#599）—— 元素 = **championId 字串**，⛔ 不是 EntityId。
+  //    它是 host 在開場灌進來的**設定**（形狀逐字照 `visionRules`），
+  //    整場不變、與任何一個實體無關 ⇒ `destroy(id)` 不該碰它。
+  //    ⭐ 可反駁：哪一天它變成「這一場誰被禁用」這種**逐實體**的東西，
+  //    這一列就該刪掉（而這條閘會立刻叫）。
+  retiredChampionIds: "元素 = championId 字串（host 灌進來的設定，非逐實體）",
 };
 
 it("SimWorld.destroy 清乾淨每一個 per-entity store (GH#308)", () => {

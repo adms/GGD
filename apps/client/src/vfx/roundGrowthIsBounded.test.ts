@@ -61,6 +61,9 @@ const makeFx = (): RoundFx =>
       vfxDocFor: (id) => (/^(amb|pv)\./.test(id) ? doc(id, "continuous") : null),
       ribbonDocFor: () => null,
     },
+    // 必填（GH#546）—— 這兩支不驗開關視覺，回 0 = 一律關。
+    // ⭐ 它刻意是必填:少了它「開關型技能的手部特效不掛」會靜靜發生。
+    ambientToggleMask: () => 0,
     fireRing: { vfxDocFor: () => null },
     whirlwind: { createTexture: () => null },
   });

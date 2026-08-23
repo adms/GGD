@@ -134,7 +134,19 @@ describe("開關型技能：開著與關著在畫面上不一樣 (GH#546)", () =
 
   it("⭐ 手部那一半 —— 開著才掛，關掉**真的被拆掉**", () => {
     const root = new TransformNode(`champ-${ENTITY_ID}`, scene);
-    const ambient = new AmbientVfx(scene, HOOKS, { getScale: () => 1 });
+    // ⭐ 注入的形狀與 `GameApp` 那一行**逐字相同**（2026-08-23）——
+    //    `AmbientVfx` 自己**不可以** import `RoomStore`（`architecture.test.ts`
+    //    的 client-08：逐幀資料不可以穿過 React state），所以預設是「一律關」。
+    //    ⛔ 這不是手刻夾具：上面那一段仍然走**出貨的** snapshot → 投影 → hudStore，
+    //    這裡只是把 `GameApp` 做的那一次注入照抄過來。
+    //    ⚠️ 而「GameApp 真的有注入」由 `RoundFxDeps.ambientToggleMask` **必填**
+    //    這件事保證（tsc 擋），⛔ 不是靠這條測試。
+    const toggleMaskOf = (entityId: number): number =>
+      hudStore.getState().seats.find((x) => x.entityId === entityId)?.toggleMask ?? 0;
+    const ambient = new AmbientVfx(scene, HOOKS, {
+      getScale: () => 1,
+      getToggleMask: toggleMaskOf,
+    });
 
     serverSays(false);
     ambient.attach(ENTITY_ID, "imported.herosaber", root);

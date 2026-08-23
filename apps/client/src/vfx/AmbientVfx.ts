@@ -31,7 +31,6 @@ import type { ParticleSystem } from "@babylonjs/core/Particles/particleSystem";
 import type { VfxDoc, RibbonDoc } from "@ggd/shared/content";
 import { toggleMaskHas } from "@ggd/shared/protocol/schema";
 import { CASTABLE_SLOTS, type CastableSlot } from "@ggd/shared/sim/intents";
-import { hudStore } from "../net/RoomStore";
 import { particleBudgetScale } from "../render/RenderConfig";
 import { qualityController } from "../render/QualityController";
 import { scaledBurstCount, toParticleSystem } from "./particleFactory";
@@ -185,10 +184,14 @@ export class AmbientVfx {
       ((): number => particleBudgetScale(qualityController.getParams().particleDensity));
     // ⭐ GH#546 —— 座位是用 `entityId` 找的（`SeatView.entityId`），⛔ 不是 seatId：
     // `attach()` 只拿得到實體。小怪／替身找不到座位 ⇒ 0 ⇒ 帶條件的那幾列不掛。
-    this.getToggleMask =
-      opts.getToggleMask ??
-      ((entityId: number): number =>
-        hudStore.getState().seats.find((s) => s.entityId === entityId)?.toggleMask ?? 0);
+    //
+    // ⛔⛔ **預設值刻意是「一律關」，⛔ 不是去讀 `hudStore`**（2026-08-23）。
+    // `apps/client/src/architecture.test.ts` 的 client-08 閘逐字禁止
+    // `render/**` 與 `vfx/**` import `RoomStore` —— 理由是**逐幀資料不可以穿過
+    // React state**。⇒ 這一格與上面的 `getScale` 一樣是**注入**的，
+    // 而唯一的注入點在 `GameApp`（它在那兩層之外）。
+    // ⚠️ 沒注入 = 開關型技能的手部特效不掛（fail-closed，⛔ 不是崩潰）。
+    this.getToggleMask = opts.getToggleMask ?? ((): number => 0);
   }
 
   has(entityId: number): boolean {
