@@ -26,6 +26,7 @@
  * the React controller (ui/PadFocusNav) owns the DOM (querying focusables,
  * moving focus, the ring) and calls into this.
  */
+import { Configs, GAMEPAD_DOC_ID } from "@ggd/shared/content";
 import type { PadInfo } from "./gamepadDetect";
 
 export type NavDir = "up" | "down" | "left" | "right";
@@ -252,6 +253,55 @@ export function backControlIndex(labels: readonly string[]): number {
   return -1;
 }
 
+// ------------------------------------------- menu-nav tuning (GH#634) --------
+
+/**
+ * The two GH#634 behaviour fixes, each with the rollback switch the owner's
+ * standing instruction requires (「自己判斷 但是留後台開關可以簡易 rollback」).
+ * Both live as OPTIONAL keys on `config.gamepad@1` — the same home and the same
+ * handoff as the pad-cursor keys (see padCursor.ts: the client resolver reads
+ * them the moment they land in the JSON/schema; until then the shipped default
+ * applies). Defaults are the FIXED behaviour (第〇·六守則: 優先權大的預設啟動).
+ */
+export interface PadMenuNavTuning {
+  /** span-aware cross-axis distance in {@link pickSpatial} (false = 舊的中心點算法). */
+  menuNavSpanCross: boolean;
+  /** may the menu focus ring land on `<canvas>`? A canvas has no A action, and the
+   * full-screen game canvas sat in the focus set (it carries a tabindex for the
+   * keyboard), so HUD focus mode's first landing ringed the ENTIRE SCREEN. */
+  menuNavFocusCanvas: boolean;
+}
+
+export const PAD_MENU_NAV_FIELDS: readonly {
+  key: keyof PadMenuNavTuning;
+  label: string;
+}[] = [
+  { key: "menuNavSpanCross", label: "選單焦點導覽用「跨到邊」的十字距離（關＝回到舊的中心點算法）" },
+  { key: "menuNavFocusCanvas", label: "選單焦點環可不可以落在 canvas 畫布上（按 A 不會有任何反應）" },
+];
+
+export const SHIPPED_PAD_MENU_NAV: PadMenuNavTuning = {
+  menuNavSpanCross: true,
+  menuNavFocusCanvas: false,
+};
+
+/** Config doc (or admin override) → the effective values; non-booleans fall back. */
+export function resolvePadMenuNavTuning(partial: unknown): PadMenuNavTuning {
+  const out: PadMenuNavTuning = { ...SHIPPED_PAD_MENU_NAV };
+  if (!partial || typeof partial !== "object") return out;
+  const bag = partial as Record<string, unknown>;
+  for (const spec of PAD_MENU_NAV_FIELDS) {
+    const raw = bag[spec.key];
+    if (typeof raw === "boolean") out[spec.key] = raw;
+  }
+  return out;
+}
+
+/** Live values — re-read per call so an admin save lands on the next reload. */
+export function padMenuNavTuning(): PadMenuNavTuning {
+  return resolvePadMenuNavTuning(Configs.tryGet(GAMEPAD_DOC_ID));
+}
+
 function center(r: FocusRect): { x: number; y: number } {
   return { x: r.x + r.w / 2, y: r.y + r.h / 2 };
 }
@@ -284,18 +334,46 @@ export function initialFocusIndex(candidates: readonly FocusRect[]): number {
  * lowest weighted-Manhattan score wins: distance along the travel axis plus the
  * cross-axis offset weighted ×3, which keeps focus in the same row/column unless
  * nothing there qualifies.
+ *
+ * ⭐ THE CROSS-AXIS DISTANCE IS SPAN-AWARE (GH#634), NOT CENTRE-TO-CENTRE.
+ * A candidate whose cross-axis SPAN contains the from-centre costs 0; otherwise
+ * the distance to its NEAREST EDGE. Centre-to-centre punished every wide or
+ * off-centre control by half its own width ×3, and that arithmetic — measured
+ * live on the shipped auth screen, 2026-08-23 — made the ENTIRE sign-in column
+ * (username / password / Sign in / 用手機登入, all centred at x≈640 between the
+ * tab row and the wider bottom row) unreachable from every direction: five
+ * separate pad walks skipped all four controls, so a pad-only player with an
+ * account could never reach the lobby. Same bug skipped champ-select's wide
+ * 鎖定英雄 Lock In bar when stepping up out of the champion grid. `spanCross:
+ * false` restores the old centre math (the rollback the owner asked every
+ * judgment call to keep — see PAD_MENU_NAV_FIELDS).
  */
-export function pickSpatial(from: FocusRect, candidates: readonly FocusRect[], dir: NavDir): number {
+export function pickSpatial(
+  from: FocusRect,
+  candidates: readonly FocusRect[],
+  dir: NavDir,
+  spanCross = true,
+): number {
   const f = center(from);
   const horizontal = dir === "left" || dir === "right";
   const sign = dir === "right" || dir === "down" ? 1 : -1;
   let best = -1;
   let bestScore = Infinity;
   for (let i = 0; i < candidates.length; i++) {
-    const c = center(candidates[i]!);
+    const r = candidates[i]!;
+    const c = center(r);
     const primary = horizontal ? (c.x - f.x) * sign : (c.y - f.y) * sign;
     if (primary <= 1) continue; // not on the requested side
-    const cross = horizontal ? Math.abs(c.y - f.y) : Math.abs(c.x - f.x);
+    const fc = horizontal ? f.y : f.x;
+    const lo = horizontal ? r.y : r.x;
+    const hi = horizontal ? r.y + r.h : r.x + r.w;
+    const cross = spanCross
+      ? fc < lo
+        ? lo - fc
+        : fc > hi
+          ? fc - hi
+          : 0
+      : Math.abs((horizontal ? c.y : c.x) - fc);
     const score = primary + cross * 3;
     if (score < bestScore) {
       bestScore = score;

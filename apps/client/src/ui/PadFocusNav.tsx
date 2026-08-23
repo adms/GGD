@@ -48,6 +48,15 @@
  * DOM. While it owns pad 0 it raises `setPadMenuCapture`, so the combat pad
  * system stops feeding player 0's champion off the same sticks/buttons.
  *
+ * ⚠️ "MOUNTED EVERYWHERE" NEVER MEANT "EVERYTHING WAS REACHABLE" (GH#634).
+ * The owner could not get a pad from the lobby into a match, and a live walk
+ * (fake-pad seam, 2026-08-23) found the layer alive on every page while
+ * pickSpatial's centre-to-centre cross penalty made the auth sign-in column
+ * unreachable from every direction and left lobby focus bouncing between the
+ * hero-preview canvas and empty scroll panes. The fixes live in
+ * input/padFocusNav (span-aware cross) and getFocusables below (no canvases),
+ * each behind a rollback field — see PAD_MENU_NAV_FIELDS.
+ *
  * The node test env has no DOM, so the geometry/edge/repeat logic is proven in
  * input/padFocusNav.test.ts; this file is the thin, browser-only wiring.
  */
@@ -61,6 +70,7 @@ import {
   NAV_ACTIVATE_BTN,
   nextOptionIndex,
   nextRangeValue,
+  padMenuNavTuning,
   padValueKind,
   PadMenuNav,
   pickSpatial,
@@ -162,8 +172,21 @@ function topScope(): HTMLElement | null {
   return best;
 }
 
+/**
+ * ⛔ `<canvas>` IS EXCLUDED (GH#634, measured live 2026-08-23). Canvases carry a
+ * tabindex for the KEYBOARD, so the selector's `[tabindex]` clause swept them in
+ * — and the full-screen game canvas (0,0,100vw,100vh) then sat in the middle of
+ * every focus walk: HUD focus mode's first landing ringed the ENTIRE SCREEN, and
+ * the lobby's hero-preview canvas was a dead stop A could do nothing with. A
+ * canvas has no click semantics for the pad; the pad's route to canvas hot-spots
+ * is the virtual cursor (GH#502), not the focus ring. `menuNavFocusCanvas` is
+ * the rollback switch.
+ */
 function getFocusables(root: ParentNode): HTMLElement[] {
-  return Array.from(root.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)).filter(isVisible);
+  const allowCanvas = padMenuNavTuning().menuNavFocusCanvas;
+  return Array.from(root.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)).filter(
+    (el) => (allowCanvas || el.tagName !== "CANVAS") && isVisible(el),
+  );
 }
 
 function setFocus(el: HTMLElement): void {
@@ -433,7 +456,7 @@ export function PadFocusNav(): null {
       const focusables = getFocusables(root);
       const idx = focusables.indexOf(cur);
       const others = focusables.filter((_, i) => i !== idx);
-      const pick = pickSpatial(rectOf(cur), others.map(rectOf), ev);
+      const pick = pickSpatial(rectOf(cur), others.map(rectOf), ev, padMenuNavTuning().menuNavSpanCross);
       if (pick >= 0) {
         setFocus(others[pick]!);
         return;
@@ -586,6 +609,10 @@ export function PadFocusNav(): null {
       if (!active) {
         nav.reset();
         landedScope = null;
+        // the ring must not outlive the layer (GH#634): exiting HUD focus mode
+        // left [data-pad-focused] painted on a HUD button through live combat —
+        // a control A can no longer press, glowing as if it could.
+        clearPadFocus();
         return;
       }
       const root: ParentNode = scope ?? document.body;
