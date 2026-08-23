@@ -140,6 +140,23 @@ export interface SeatView {
    */
   passiveCooldown: number;
   /**
+   * ⭐【開關型技能現在開著沒有】—— 六格各一顆 bit（GH#546）。
+   * bit i = `CASTABLE_SLOTS[i]`（Q W E R EX PASSIVE），與 `cooldowns` 的索引同一套。
+   *
+   * ⛔ **讀端一律走 `ui/abilityReadyFrame.ts::seatToggleOn`**，⛔ 不要自己 `& (1 << i)`。
+   *
+   * ⚠️ 這一格在 2026-08-23 之前**不存在，而下游全都寫好了**：`SeatState.toggleMask`
+   * 在線路上、`toggleMaskHas` 是唯一解碼器、`seatToggleOn` 是唯一讀端、六個算繪點
+   * 全部呼叫 `AbilityTileFrame` —— 而這一行不在，於是 `seat.toggleMask ?? 0` 永遠是
+   * 0，六個算繪點一輩子畫不出開啟框。**消費端存在，但它消費不到**（失敗形態⑧）。
+   * ⛔ 而且它連型別都紅不了：唯一的守衛用的是 `{…} as unknown as SeatView` 手刻夾具
+   * （失敗形態⑤），所以夾具裡填得進去、出貨路徑上填不進去，兩件事互相看不見。
+   *
+   * OPTIONAL 的理由與 `attrBonus` 一字不差：省略的夾具就是在斷言「沒有任何技能
+   * 開著」，而那正是這一格出現之前畫面上唯一畫得出來的狀態。
+   */
+  toggleMask?: number;
+  /**
    * 能力屬性強化 progress (task #82). `statStacks` is the CONSECUTIVE stat-tick
    * count the shop renders as "N / 20"; it drops to 0 the moment the player
    * buys any real item, so the shop MUST be able to warn before that click.
@@ -864,6 +881,11 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
       exRank: ss.exRank,
       exCooldown: ss.exCooldown,
       passiveCooldown: ss.passiveCooldown,
+      // ⭐【開關型技能開著沒有】GH#546 —— 這一行是「開著」這件事到得了螢幕的**全部**。
+      // ⛔ 少了它，`seatToggleOn()` 永遠回 false，而「永遠關著」與「這支技能沒有
+      // 開關」在畫面上逐位元一模一樣（宣告上寫著為什麼型別層也擋不住）。
+      // `?? 0` 覆蓋舊/未投影的快照 —— 讀成「沒有任何技能開著」。
+      toggleMask: ss.toggleMask ?? 0,
       statStacks: ss.statStacks,
       statCapstonePct: ss.statCapstonePct,
       attrBonus: [...(ss.attrBonus ?? [])],

@@ -29,6 +29,9 @@ import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import type { ParticleSystem } from "@babylonjs/core/Particles/particleSystem";
 import type { VfxDoc, RibbonDoc } from "@ggd/shared/content";
+import { toggleMaskHas } from "@ggd/shared/protocol/schema";
+import { CASTABLE_SLOTS, type CastableSlot } from "@ggd/shared/sim/intents";
+import { hudStore } from "../net/RoomStore";
 import { particleBudgetScale } from "../render/RenderConfig";
 import { qualityController } from "../render/QualityController";
 import { scaledBurstCount, toParticleSystem } from "./particleFactory";
@@ -40,9 +43,22 @@ const BONE_RESCAN_MS = 500;
 /** give up re-scanning after this long and stay parented to the root */
 const BONE_RESCAN_MAX_MS = 15000;
 
+/**
+ * 一列 ambient 綁定，**照 `config.ambient-vfx@1` 的形狀**（GH#546 起多了兩格）。
+ * ⛔ 這裡不 import `AmbientVfxBinding`：這個檔只讀它認得的那幾格，多出來的欄位
+ * （未來的）由 schema 管，⛔ 不該逼這支跟著改型別。
+ */
+export interface AmbientBinding {
+  readonly vfx: string;
+  /** 缺席 = `true`。`false` = 這一列完全不掛（後台一鍵 rollback）。 */
+  readonly enabled?: boolean;
+  /** 缺席 = 無條件。填了 = 只在該座位這一格開關技**開著**的時候掛。 */
+  readonly whileToggle?: string;
+}
+
 export interface AmbientContentHooks {
   /** ambient bindings for a modelKey ([] when none / config not loaded) */
-  bindingsFor(modelKey: string): readonly { vfx: string }[];
+  bindingsFor(modelKey: string): readonly AmbientBinding[];
   vfxDocFor(id: string): VfxDoc | null;
   ribbonDocFor(id: string): RibbonDoc | null;
 }
@@ -50,6 +66,49 @@ export interface AmbientContentHooks {
 export interface AmbientVfxOptions {
   /** quality-tier particle budget multiplier (default: live quality params) */
   getScale?: () => number;
+  /**
+   * ⭐ GH#546 —— 這個實體所屬座位的 `SeatState.toggleMask`（哪幾格開關技開著）。
+   *
+   * 預設讀 `hudStore`，⚠️ 形狀刻意逐字照抄上面的 `getScale`：一個**模組級的活值**
+   * 加上一個注入點，於是出貨路徑零接線（⛔ GameApp 不必多傳一個參數），而守衛
+   * 仍然可以不碰 store 直接餵一個遮罩進來。
+   *
+   * ⛔ 不是「找不到座位就當作全開」：找不到＝小怪／替身／seat 還沒同步，
+   * 一律回 0 = **全部關著**，也就是這條線出現之前畫面上唯一畫得出來的狀態。
+   */
+  getToggleMask?: (entityId: number) => number;
+}
+
+/**
+ * 這一列現在該不該存在。
+ *
+ * ⭐ 位元由 `toggleMaskHas` 解，⛔ 不在這裡寫 `1 << i` —— 它是全專案唯一的解碼器，
+ * 而漂掉的那一份**不會報錯**，只是永遠回 false（「條件沒成立」與「引擎不支援」
+ * 在畫面上逐位元一模一樣）。
+ */
+export function ambientBindingOpen(binding: AmbientBinding, toggleMask: number): boolean {
+  if (binding.enabled === false) return false;
+  if (binding.whileToggle === undefined) return true;
+  return toggleMaskHas(toggleMask, CASTABLE_SLOTS.indexOf(binding.whileToggle as CastableSlot));
+}
+
+/**
+ * 「這一輪的閘開成什麼樣」的簽章 —— `attach()` 靠它決定要不要**重掛**。
+ *
+ * ⭐ 它刻意**只看帶 `whileToggle` 的那幾列**：整個遮罩直接進簽章的話，玩家開關
+ * 任何一支這具身體不在乎的技能都會把整組 ambient 特效拆掉重建（每一次都閃一下）。
+ * 沒有任何一列帶條件（今天絕大多數身體）→ `undefined` = 與這一格出現之前逐字相同。
+ */
+export function ambientGateSig(
+  bindings: readonly AmbientBinding[],
+  toggleMask: number,
+): string | undefined {
+  let sig: string | undefined;
+  for (const b of bindings) {
+    if (b.whileToggle === undefined) continue;
+    sig = `${sig ?? ""}${b.whileToggle}${ambientBindingOpen(b, toggleMask) ? "+" : "-"}`;
+  }
+  return sig;
 }
 
 interface PooledEmitter {
@@ -85,6 +144,12 @@ interface Attachment {
    * ⛔ 而不是等下一次換模型才生效。
    */
   extrasSig?: string;
+  /**
+   * ⭐ GH#546 —— 這一次掛上去時，帶 `whileToggle` 的那幾列各自開著沒有。
+   * 它與 `extrasSig` 是同一個機制：簽章變了 → 重掛，⛔ 而不是等下一次換模型
+   * 才生效（那會讓玩家關掉風王結界之後手上還噴到死）。
+   */
+  gateSig?: string;
   modelKey: string;
   root: TransformNode;
   items: AmbientItem[];
@@ -107,6 +172,7 @@ export class AmbientVfx {
   /** shared cap on CONCURRENT swing trails (task #37 overdraw discipline) */
   private readonly ribbonBudget = new RibbonBudget();
   private readonly getScale: () => number;
+  private readonly getToggleMask: (entityId: number) => number;
   private disposed = false;
 
   constructor(
@@ -117,6 +183,12 @@ export class AmbientVfx {
     this.getScale =
       opts.getScale ??
       ((): number => particleBudgetScale(qualityController.getParams().particleDensity));
+    // ⭐ GH#546 —— 座位是用 `entityId` 找的（`SeatView.entityId`），⛔ 不是 seatId：
+    // `attach()` 只拿得到實體。小怪／替身找不到座位 ⇒ 0 ⇒ 帶條件的那幾列不掛。
+    this.getToggleMask =
+      opts.getToggleMask ??
+      ((entityId: number): number =>
+        hudStore.getState().seats.find((s) => s.entityId === entityId)?.toggleMask ?? 0);
   }
 
   has(entityId: number): boolean {
@@ -143,19 +215,28 @@ export class AmbientVfx {
   ): void {
     if (this.disposed) return;
     const extrasSig = extraVfxIds && extraVfxIds.length > 0 ? extraVfxIds.join("|") : undefined;
+    // ⭐ GH#546 —— 開關型技能的閘。⛔ 這兩行不在的話，`whileToggle` 是一格填了
+    // 沒人讀的欄位：手部特效要嘛從出生就一直噴、要嘛一輩子不出現，而兩種都與
+    // 「開著沒有」無關（失敗形態②）。
+    const bindings = this.hooks.bindingsFor(modelKey);
+    const gateSig = ambientGateSig(bindings, this.getToggleMask(entityId));
     const existing = this.attachments.get(entityId);
     if (
       existing &&
       existing.modelKey === modelKey &&
       existing.root === rootNode &&
-      existing.extrasSig === extrasSig
+      existing.extrasSig === extrasSig &&
+      existing.gateSig === gateSig
     ) {
       return;
     }
     if (existing) this.detach(entityId);
 
+    const toggleMask = this.getToggleMask(entityId);
     const items: AmbientItem[] = [];
-    for (const binding of this.hooks.bindingsFor(modelKey)) {
+    for (const binding of bindings) {
+      // ⭐ 關掉的那一刻**真的被拆掉**（上面的 detach），⛔ 不是 alpha 0。
+      if (!ambientBindingOpen(binding, toggleMask)) continue;
       const vfxDoc = this.hooks.vfxDocFor(binding.vfx);
       const ribbonDoc = vfxDoc ? null : this.hooks.ribbonDocFor(binding.vfx);
       if (!vfxDoc && !ribbonDoc) continue; // unauthored id — degrade to no-op
@@ -206,6 +287,7 @@ export class AmbientVfx {
       root: rootNode,
       items,
       ...(extrasSig === undefined ? {} : { extrasSig }),
+      ...(gateSig === undefined ? {} : { gateSig }),
     });
   }
 

@@ -101,6 +101,11 @@
       },
       {
         "vfx": "fx.w3x.orb.herosaber.p01"
+      },
+      {
+        "vfx": "godie-herosaber-p1",
+        "whileToggle": "W",
+        "note": "⭐ GH#546 —— 20-01 風王結界【開著】的手部特效。owner 2026-08-22:「風王結界這種開關型按鈕 圖示跟特效要明顯看出是開還是關狀態（w3x會有特殊攻擊特效跟隨手部、圖示也會有流轉作為打開中顯示）」。⭐ 為什麼挑 godie-herosaber-p1 而不是同一具身體上已經綁著的 fx.w3x.orb.herosaber.p01:兩份逐欄相同，只差後者帶 ambient:true —— 而 ambient:true 會讓 isSwingTrailDoc() 認得它，於是它變成**刀光**(揮劍才噴、站著只剩餘燼)。GH#564 為了無條件綁定刻意挑了帶 ambient 的那一份，理由逐字是「⛔ 挑錯那一份，金粉會變成站著不動也一直噴的常速粒子流」。⭐ 而這一列要的正好是那個被否決的行為:開著就一直噴、關掉就沒有——它是「開著沒有」這件事本身的顯示，⛔ 不是揮劍的表演。⚠️ 綁 modelKey 而不是 championId,因為 imported.herosaber 只有 godie-e002(亞瑟王-Saber)在穿;哪天有第二位英雄共用這具身體而他的切換技不在 W,要改綁 championId。"
       }
     ],
     "imported.heroichigo": [

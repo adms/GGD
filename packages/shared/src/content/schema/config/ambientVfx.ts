@@ -9,10 +9,57 @@ import { zId } from "../common";
  * the vfx/ribbon doc itself, not the binding. Consumed by the client's
  * AmbientVfx channel; unknown modelKeys/doc ids degrade to no-ops.
  */
+/**
+ * ⭐【只在某一格開關技開著的時候戴】—— `whileToggle` 的合法值（GH#546）。
+ *
+ * owner 2026-08-22：
+ * > 「**風王結界這種開關型按鈕 圖示跟特效要明顯看出是開還是關狀態**
+ * >  （w3x會有**特殊攻擊特效跟隨手部**、圖示也會有流轉作為打開中顯示）」
+ *
+ * ⭐ 這一格逐字等於 `sim/intents.ts` 的 `CASTABLE_SLOTS`，而它**刻意不 import 它**：
+ * `content/schema/` 是文件層、`sim/` 是規則層，理由與 `protocol/schema.ts` 的
+ * `TOGGLE_MASK_SLOTS` 一字不差。取而代之的是一條**對帳斷言**
+ * （`apps/client/src/vfx/ambientToggleGate.test.ts` 的第一條）真的把兩張表比在一起
+ * —— 有人加第七個槽位時它會紅，⛔ 而不是讓那一格永遠讀成「關著」。
+ */
+export const AMBIENT_TOGGLE_SLOTS = ["Q", "W", "E", "R", "EX", "PASSIVE"] as const;
+
 export const zAmbientVfxBinding = z
   .object({
     /** vfx-or-ribbon doc id in the vfx collection (SOFT: may be unauthored) */
     vfx: z.string().min(1),
+    /**
+     * 這一列**為什麼在這裡**。⛔ 不被任何程式讀 —— 它存在是因為一列綁定的理由
+     * （為什麼挑這一份 vfx 文件、為什麼綁 modelKey 而不是 championId）今天只活在
+     * commit message 與 `docs/_reports/` 裡，而下一輪讀 JSON 的人看不到那些。
+     */
+    note: z.string().max(2000).optional(),
+    /**
+     * ⭐【這一列的開關】（GH#546）。`false` = 這一列**完全不掛**，⛔ 但那一行著作
+     * 還在文件裡。
+     *
+     * ⚠️ 它存在的理由是**回頭的成本**：把一列拿掉要編一個 record-of-array 並且
+     * 把那一行知識丟掉（第零守則：知識不可以無聲消失），而把它關掉是一格布林。
+     * 缺席 = `true` = 這一列照掛 —— 也就是這一格出現之前 1,900 份綁定的行為逐字。
+     */
+    enabled: z.boolean().optional(),
+    /**
+     * ⭐【只在這一格開關技**開著**的時候才掛】（GH#546 —— 20-01 風王結界的手部特效）。
+     *
+     * 缺席 = 無條件（今天每一列都是這樣）。填了 = 這一列只在該座位的
+     * `SeatState.toggleMask` 對應位元亮著的時候存在，關掉的那一刻**真的被拆掉**
+     * （⛔ 不是 alpha 0 —— 那是 #262 的特效洩漏形狀）。
+     *
+     * ⚠️ **為什麼是這裡而不是 `ability@1.persistentVfx`**：那一格的條件語意逐字是
+     * 「這支技能**在身上／已解鎖**就掛著」（`GetUnitAbilityLevel > 0`），而一支切換技
+     * 學會之後**永遠**在身上 —— 寫在那裡的手部特效會從學會 W 的那一刻永久噴到
+     * 比賽結束，⛔ 而 owner 要的正好相反：它就是「**開著**」這件事本身的顯示。
+     *
+     * ⚠️ 綁在 modelKey 上就是綁在**這具身體**上。一具身體被多位英雄共用而他們的
+     * 切換技在**不同槽位**時，改綁 championId（`bindingsFor` 的鍵兩種都收，
+     * 見 `GameApp.formAttachmentFor` 的雙鍵查表）。
+     */
+    whileToggle: z.enum(AMBIENT_TOGGLE_SLOTS).optional(),
   })
   .strict();
 
