@@ -2,8 +2,14 @@
  * 英雄「出身」對照表產生器 —— 一支腳本產出兩份東西，⛔ 不手寫任何一份。
  *
  * 產出：
- *   · docs/hero-archetypes.json  —— 逐英雄的出身/初始/成長（審查與工具用）
- *   · docs/hero-archetypes.md    —— 同一份資料的 markdown 表（貼進計畫書）
+ *   · docs/hero-archetypes.json      —— 逐英雄的出身/初始/成長（審查與工具用）
+ *   · docs/英雄定位與屬性總表.md      —— 同一份資料的 markdown 表（貼進計畫書）
+ *
+ * ⚠️ 上面第二行在 2026-08-24 之前寫著 `docs/hero-archetypes.md` —— **那個檔不存在**
+ * （第三守則：註解會說謊，去驗證）。⇒ 順手更正，⛔ 不是新增落點。
+ *
+ *   pnpm archetypes:build     # 寫入
+ *   pnpm archetypes:check     # 唯讀：產物是不是最新（逐位元組），過期就回非零
  *
  * ⚠️ 這份 JSON **不是第四個住處**。權威資料仍然是：
  *   ① content/config/stat-normalization.json  —— 出身 × 屬性的級距表（引擎載入）
@@ -12,9 +18,15 @@
  *
  * ⚠️ 這裡在 2026-08-21 之前寫著「守衛 tools/hero-archetypes/build.test.ts 會重跑這支
  * 腳本並比對，過期就紅」——**那個檔案不存在**（第三守則：註解會說謊，去驗證）。
- * ⇒ 實際上這份 JSON 從 2026-08-11 起**沒有任何新鮮度閘**。現在有兩個：
+ * ⇒ 實際上這份 JSON 從 2026-08-11 起**沒有任何新鮮度閘**。現在有三個：
  *   · `pnpm archetypes:build` 進了 `skills:sync`（改一支技能／一位英雄就重生成）
  *   · `pnpm roster:check` 的「產出文件的母體 ↔ 名單長度」會讀這份 JSON 裡印的母體
+ *   · ⭐ `pnpm archetypes:check` 進了 `skills:check`（GH#612）—— **逐位元組**比對。
+ *     ⚠️ 在此之前 `skills:sync` **重生成得了**它，而 `skills:check` **問不到**它是不是
+ *     最新的 ⇒ 產物可以無聲過期。上面那兩條都不是新鮮度閘：第一條只在有人跑 sync 時
+ *     才動，第二條只問母體長度（改一位英雄的三圍不會讓它紅）。
+ *     ⛔ 這支刻意**沒有任何時鐘欄位**（`SPEC_DATE` 是寫死的常數）—— 一個會隨時間變的
+ *     欄位會讓逐位元組比對永遠不相等，於是 `--check` 只能被放寬，而被放寬的閘等於沒有閘。
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -31,6 +43,33 @@ import {
 } from "../../packages/shared/testkit/balancePopulation";
 
 const ROOT = join(__dirname, "../..");
+
+/**
+ * ⭐ GH#612 —— `--check` 是**唯讀**的：逐位元組比對，⛔ 一個位元都不寫。
+ *
+ * ⚠️ 兩份產物**都**比對完才回報，⛔ 不是第一份不合就退出 —— 只報第一份會讓下一個人
+ * 修完再跑一次又紅一次，而他不知道還有第二份（同 `contract:numbers` 的理由）。
+ */
+const CHECK = process.argv.includes("--check");
+const STALE: string[] = [];
+
+/** 寫入，或（`--check`）逐位元組比對並記下不合的那一份。 */
+function emit(rel: string, text: string): void {
+  const path = join(ROOT, rel);
+  if (!CHECK) {
+    writeFileSync(path, text);
+    return;
+  }
+  let current: string;
+  try {
+    current = readFileSync(path, "utf-8");
+  } catch {
+    STALE.push(`${rel}（⛔ 不存在）`);
+    return;
+  }
+  if (current !== text) STALE.push(rel);
+}
+
 const T = JSON.parse(readFileSync(join(ROOT, "docs/hero-stat-tiers.json"), "utf-8")) as {
   population: { rows: { id: string; name: string; group: string; attackType: string; bodyScale: number; reachability: string; counterpartId: string | null }[] };
 };
@@ -195,7 +234,7 @@ const out = {
   },
   champions: rows,
 };
-writeFileSync(join(ROOT, "docs/hero-archetypes.json"), JSON.stringify(out, null, 2) + "\n");
+emit("docs/hero-archetypes.json", JSON.stringify(out, null, 2) + "\n");
 
 /**
  * ⭐ owner 2026-08-13：「你**計算的位數太多了**，我建議**最多取小數點兩位**就好」
@@ -540,7 +579,18 @@ ${ARC_ORDER.flatMap((a) =>
 `,
 ].join("\n");
 
-writeFileSync(join(ROOT, "docs/英雄定位與屬性總表.md"), doc);
+emit("docs/英雄定位與屬性總表.md", doc);
+
+if (CHECK) {
+  if (STALE.length) {
+    console.error(
+      `⛔ 產物過期了 —— 跑 \`pnpm archetypes:build\` 然後 git add：\n   ${STALE.join("\n   ")}`,
+    );
+    process.exit(1);
+  }
+  console.log(`✅ 兩份產物都是最新的（母體 ${rows.length} 位）。`);
+  process.exit(0);
+}
 
 console.log(`✓ docs/hero-archetypes.json (${rows.length} 位)  ·  docs/英雄定位與屬性總表.md`);
 if (flags.length) {

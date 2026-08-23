@@ -18,8 +18,10 @@
 所以這三張表不再由人打，改成從**出貨設定**產生，寫進標記區塊：
 
     <!-- BEGIN GENERATED:contract-caps -->      … <!-- END GENERATED:contract-caps -->
-    <!-- BEGIN GENERATED:contract-env -->       … <!-- END GENERATED:contract-env -->
     <!-- BEGIN GENERATED:contract-range -->     … <!-- END GENERATED:contract-range -->
+
+⭐ 2026-08-24（GH#611）—— `contract-env`（全域倍率）**退場了**，見 `RETIRED`。
+owner 2026-08-23：「編輯器只編輯原始資料（五級距），根本不需要知道系統倍率」。
 
 ⭐ 它現在也管**第二份**文件：`docs/效果標籤詞彙表v2.md`（GH#381）。那份是退役告示牌，
 整份的論點就是「手寫的能力清單會過期而沒有東西會紅」——然後它自己用一個手打的
@@ -58,10 +60,27 @@ DOC = REPO / "docs" / "技能編輯器引擎須知 20260811.md"
 VOCAB_DOC = REPO / "docs" / "效果標籤詞彙表v2.md"
 CMD = "pnpm contract:numbers"
 
-BLOCKS = ("contract-caps", "contract-env", "contract-ap-damage", "contract-range",
+BLOCKS = ("contract-caps", "contract-ap-damage", "contract-range",
           "contract-normalized", "contract-bands", "contract-tiers",
           "contract-effects", "contract-sharding")
 VOCAB_BLOCKS = ("vocab-kind-count",)
+
+# ⭐⭐ GH#611 —— **退場**的區塊。owner 2026-08-23 逐字：
+#
+#   「編輯器**只編輯原始資料（五級距）**，**根本不需要知道系統倍率**，
+#    **避免雙重編輯**，而說明裡面的數值**本來就是遊戲主程式動態產生**，
+#    根本就沒差，整體這樣才會**設計輕量化容易維護**」
+#
+# ⛔ 「把它從 BLOCKS 拿掉」是**不夠的**,而且比不動還糟:那樣只會把一張**會過期**的表
+#    留在文件裡變成**手寫散文** —— 正是這支產生器存在的理由的反面(檔頭那四個假數字
+#    就是這樣長出來的)。
+# ⇒ ⭐ **退場也是產生器的工作**:`retire()` 刪掉**整章**(標記所在的那個 `##` 標題,
+#    到下一個 `##` 標題之前),連同目錄裡指向它的那一行。
+# ⭐ 它是**冪等**的 —— 刪過之後再跑找不到標記就什麼都不做,所以 `--check` 在退場
+#    完成之後是綠的,⛔ 不會每一次都喊 stale。
+RETIRED = {
+    "contract-env": "§八「全域倍率」—— owner 2026-08-23：編輯器根本不需要知道系統倍率",
+}
 
 # 哪一份文件裡有哪些產生區塊。⛔ 不要把它攤平成一份清單 —— `splice()` 的每一個
 # 錯誤訊息都要指名是哪一份文件被手改了。
@@ -163,6 +182,31 @@ def splice(text, name, body, doc):
     return text[:i] + block + text[j + len(end):], "replaced"
 
 
+def retire(text, name, doc):
+    """把標記**所在的那一整章**刪掉（GH#611）。找不到標記 → 什麼都不做（冪等）。
+
+    ⚠️ 刪的範圍刻意是「`##` 標題 → 下一個 `##` 標題之前」而 ⛔ 不是「兩個標記之間」：
+    只刪表格會留下一個標題與一段介紹它的散文在講一張不存在的表 —— 那比留著還糟。
+    ⚠️ 目錄那一行也要拿掉，⛔ 否則會留下一個指向不存在錨點的**斷鏈**。
+    """
+    begin, end = markers(name)
+    if begin not in text and end not in text:
+        return text, None
+    i, j = text.index(begin), text.index(end)
+    head = text.rfind("\n## ", 0, i)
+    if head < 0:
+        sys.exit(f"{doc.name}: '{name}' 上面找不到 `## ` 標題 —— 退場要刪的範圍不明,⛔ 不猜")
+    start = head + 1
+    line_end = text.index("\n", start)
+    label = text[start:line_end][3:].split("、", 1)[-1].strip()
+    nxt = text.find("\n## ", j)
+    stop = (nxt + 1) if nxt >= 0 else len(text)
+    text = text[:start] + text[stop:]
+    # 目錄那一行 = 同時含錨點連結與**逐字**的章節標題 ⇒ 精確比對，⛔ 不做模糊猜測。
+    kept = [ln for ln in text.split("\n") if not ("](#" in ln and label and label in ln)]
+    return "\n".join(kept), f"{name}(retired)"
+
+
 # ---------------------------------------------------------------------------
 # 三張表
 # ---------------------------------------------------------------------------
@@ -185,20 +229,10 @@ CAP_NOTES = {
     "range": "⚠️ 這是**硬上限**；實際射程由出身的級距決定，見第七節",
 }
 
-ENV_ROWS = [
-    ("maxHealth", "生命上限（另外 base-bonus 再加一次）"),
-    ("magicResistMult", "魔抗（在 `defense` 之後再乘一次）"),
-    ("attackRange", "英雄攻擊距離"),
-    ("abilityRange", "技能射程與 AoE 半徑"),
-    ("cooldown", "所有冷卻"),
-    ("manaRegen", "魔力回復"),
-    ("damageDealt", "傷害"),
-    ("moveSpeedMelee", "移動速度（近戰）"),
-    ("moveSpeedRanged", "移動速度（遠程）"),
-    ("agiToAttackSpeed", "每點敏捷給多少攻速"),
-    ("intToAbilityPower", "每點智慧給多少法強"),
-    ("intToMagicResist", "每點智慧給多少魔抗"),
-]
+# ⛔ `ENV_ROWS` 與 `table_env()` 在 2026-08-24（GH#611）**整個刪掉** —— 它們是
+#   §八「全域倍率」那張表的來源，而 owner 裁決那一章不該在對外契約裡。
+#   ⭐ 刪掉是必要的:留著一支沒有人呼叫的產生函式，下一個人只要把名字加回 `BLOCKS`
+#   就把整章復活了，而 ⛔ 沒有任何東西會紅。退場的紀錄住 `RETIRED`。
 
 
 def table_caps():
@@ -253,35 +287,6 @@ def table_caps():
         for key in uncapped:
             if key in CAP_NOTES:
                 out.append(f"- `{key}` —— {CAP_NOTES[key]}")
-    return "\n".join(out)
-
-
-def table_env():
-    env = cfg("combat-env")
-    mult = env.get("multipliers", env)
-    out = ["| 旋鈕 | 出貨值 | 影響 |", "|---|---:|---|"]
-    for key, note in ENV_ROWS:
-        if key not in mult:
-            continue
-        out.append(f"| `{key}` | **{num(mult[key])}** | {note} |")
-    # ⭐ 2026-08-21 —— 這一句在此之前是**散文**，而它寫著「`manaRegen ×16`」而出貨是 8。
-    #   ⛔ 一句手打的倍率沒有任何東西在對帳（正是這支產生器存在的理由），所以它進區塊。
-    out += [
-        "",
-        f"⭐ **`cooldown ×{num(mult['cooldown'])}` 與 `manaRegen ×{num(mult['manaRegen'])}` "
-        "一起造成一個必須知道的後果**：**MP 現在根本不是成本** —— 見第九節。",
-    ]
-    # ⭐ 智慧 → 法強那一格現在**同時**是傷害公式的輸入（第一之二節），所以它的沿革要講：
-    #   ⛔ 一個只讀這張表的人會以為調它就是「技能強不強」，而那已經不成立。
-    out += [
-        "",
-        f"⚠️ **`intToAbilityPower` 現在是傷害公式的輸入之一** —— 出貨 "
-        f"**{num(mult['intToAbilityPower'])}**（沿革 1 → 4 → 6.5 → 10 → "
-        f"**{num(mult['intToAbilityPower'])}**，owner 2026-08-21 定案）。"
-        "⛔ 它**不是**「技能有多強」的旋鈕：法強在等級 99 的終值由出身級距（第七之二節）"
-        "釘住，這一格只決定那個終值在升級曲線上**怎麼分配**。真正決定技能強度的是"
-        "**第一之二節**那一乘。",
-    ]
     return "\n".join(out)
 
 
@@ -1158,7 +1163,6 @@ COLS = 5
 
 BODIES = {
     "contract-caps": table_caps,
-    "contract-env": table_env,
     "contract-ap-damage": table_ap_damage,
     "contract-normalized": table_normalized,
     "contract-range": table_range,
@@ -1230,6 +1234,11 @@ def main():
         text = original
         actions = []
         total += len(names)
+        # ⭐ GH#611 —— 退場先跑：一個已經退場的區塊 ⛔ 不可以被下面的 splice 重新長回來。
+        for name in RETIRED:
+            text, how = retire(text, name, doc)
+            if how:
+                actions.append(how)
         for name in names:
             text, how = splice(text, name, render(name), doc)
             actions.append(f"{name}({how})")

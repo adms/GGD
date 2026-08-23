@@ -82,11 +82,10 @@ const GENERATOR_NO_CHECK: Record<string, string> = {
     "（`ship.mjs` 必須 import 這一支的 `appendStage`，⛔ 不可以自己寫檔）——" +
     "我第一版真的開了第二份同名不同義的，那條守衛就是為此而立。",
   "vfx-census": "⭐ 它**自己的檔頭**逐字寫著「⛔ 這不是新鮮度閘，⛔ 沒有 `--check`：它是一份會隨內容成長的普查」—— 理由已經被寫下並且可以被反駁",
-  // ⚠️ ⛔ 這一列**不是**豁免,是一個**量到的洞** —— 留在這裡是為了它有名字,⛔ 不是為了它沒事。
-  "hero-archetypes":
-    "⛔ **真的洞（待補 `--check`）**:`archetypes:build` 在 `skills:sync` 裡、寫 `docs/hero-archetypes.json` 與 " +
-    "`docs/英雄定位與屬性總表.md`,而 `build.ts` **沒有 `--check` 模式** ⇒ 產物過期不會紅。" +
-    "補它要改 `tools/hero-archetypes/build.ts`（2026-08-23 P4 lane 的檔案柵欄外）。",
+  // ⭐ 2026-08-24 GH#612 —— `hero-archetypes` 那一列**刪掉了**,因為那個洞補起來了:
+  //    `tools/hero-archetypes/build.ts` 有了 `--check`(逐位元組、零時鐘欄位),
+  //    `archetypes:check` 接進了 `skills:check`。⛔ 留著一列說「這是個洞」的豁免,
+  //    下一個人讀到的是「這裡沒事」——而那正是這張表要防的東西。
 };
 
 const EXEMPT: Record<string, string> = {

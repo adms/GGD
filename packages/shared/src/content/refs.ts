@@ -42,6 +42,29 @@ function effectRefs(effects: readonly EffectDef[] | undefined, base: string, out
       out.push({ field: `${p}.statusId`, targetCollection: "status-effects", targetId: e.statusId, soft: true });
     } else if (e.kind === "spawnVfx") {
       out.push({ field: `${p}.vfxId`, targetCollection: "vfx", targetId: e.vfxId, soft: true });
+    } else if (e.kind === "spawnModelFx") {
+      // GH#566 —— 這兩格在 2026-08-24 之前**不在這張表裡**,於是一個打錯字的
+      // `modelKey` 或 `preset` 在載入時**一個字都不會說**。理由和 champions.modelKey
+      // 同一條(失敗形態 ②):畫面上「指到一具不存在的模型」與「這支技能本來就沒有
+      // 模型特效」長得一模一樣。
+      //
+      // ⚠️ 兩格都是 **HARD**,而且 ⛔ 不對稱地只驗一格是不夠的:
+      //   · `modelKey` 缺席時由 `preset` 的模板預設補(`spawnModelFx.ts` 的 refine),
+      //     所以指不到模板 = 連「該用哪一具模型」都問不出來。
+      //   · 出貨語料量到 9 個字面 `modelKey` + 3 個 `preset`,dangling **0** ——
+      //     ⭐ 這條閘是在**現況已經乾淨**的時候關上的,⛔ 不是拿它去追既有的債。
+      // ⭐ 註冊之後才被模板補上的那些 modelKey 由 `modelFxStagingContract.test.ts`
+      //   的第 ⑥ 條驗(它讀**註冊後**的技能);這裡驗的是**作者寫下的**那一份。
+      if (e.modelKey !== undefined) {
+        out.push({ field: `${p}.modelKey`, targetCollection: "models", targetId: e.modelKey });
+      }
+      if (e.preset !== undefined) {
+        out.push({
+          field: `${p}.preset`,
+          targetCollection: "ability-templates",
+          targetId: e.preset,
+        });
+      }
     }
   });
 }
@@ -72,6 +95,18 @@ function abilityRefs(a: Omit<AbilityDoc, "schema">, base: string, out: RefEdge[]
       soft: true,
     });
   }
+  // GH#566 —— `ability@1.persistentVfx[].vfxKey` 在 schema 裡**已經宣告**成
+  // `zRef("vfx", { soft: true })`(GH#539),⛔ 但這張表從來沒有把它抽出來 ⇒ 那個宣告
+  // 對載入期是**裝飾**。⭐ SOFT(只 warn),與 `ability.vfxKey` 同一個規矩:內容可以先
+  // 寫名字、美術後補。
+  (a.persistentVfx ?? []).forEach((pv, i) =>
+    out.push({
+      field: base ? `${base}.persistentVfx.${i}.vfxKey` : `persistentVfx.${i}.vfxKey`,
+      targetCollection: "vfx",
+      targetId: pv.vfxKey,
+      soft: true,
+    }),
+  );
 }
 
 /** REFERENCES: per-collection reference extractors. */

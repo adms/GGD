@@ -1121,7 +1121,7 @@
       "key": "effect.screen-feedback@1",
       "plan": "#543 —— owner 2026-08-22「畫面閃爍及震動 不然都不知道發生什麼事情」",
       "state": "partial",
-      "caveat": "⭐ sim 這一半只負責**什麼時候發、發給誰**（`applyTo`：self／victim／all，三個 kind 共用同一支解析器）。⛔ **畫面那一半不在 `packages/shared` 裡**，而且有三件事必須到齊：① 客戶端把 `screenFlash` / `screenShake` 畫出來；② 兩個事件進 `apps/game-server/src/net/eventFanout.ts` 的白名單（⚠️ 白名單靜默失敗）；③ ⭐ **`prefers-reduced-motion` 與後台強度上限**（`config.screen-cues@1`）—— `amplitude` 是一個 **0..1 的正規化強度，⛔ 不是像素**，真正的位移量由那份 config 乘出來。⇒ 寫卡片時 ⛔ 不要假設 `amplitude: 1` 在每一台機器上都會震同樣多；它是「這一發相對於全域上限有多用力」，而不是一個絕對值。",
+      "caveat": "⭐ sim 這一半只負責**什麼時候發、發給誰**（`applyTo`：self／victim／all，三個 kind 共用同一支解析器）。⭐ **2026-08-23 整條線已經接通**（`c49b04a1` / GH#608，同一批把兩個 kind 從**擲 TypeError** 修成真的畫得出來）：客戶端有 `VfxSystem` 的 `case \"screenFlash\"` / `case \"screenShake\"`（→ `apps/client/src/render/screenFx.ts`），兩個事件也都在 `apps/game-server/src/net/eventFanout.ts` 的白名單裡。⚠️ 這一筆在 2026-08-24 之前寫著「缺的兩件：① 客戶端沒畫 ② 沒進白名單」——**兩件都做完了**。⇒ 剩下的是**三個真的限制**：① `amplitude` / `peakAlpha` 是 **0..1 的正規化強度，⛔ 不是像素、⛔ 不是絕對不透明度**——真正的位移量由後台那份**全域上限**（`config.screen-fx@1`，⭐ `content/config/screen-fx.json`）乘出來；② 它同時吃 `prefers-reduced-motion`，而出貨的相機位移對那些玩家是**整個關掉**的（震動沒有「弱一點的版本」）⇒ ⛔ 不可以把「畫面會震」當成技能邏輯的一部分；③ 上限與無障礙都在**載入時**解析一次 ⇒ 後台改完要玩家重新整理才生效。⇒ 寫卡片時 ⛔ 不要假設 `amplitude: 1` 在每一台機器上都會震同樣多；它是「這一發相對於全域上限有多用力」，而不是一個絕對值。",
       "evidence": "packages/shared/src/sim/effects/clientCues.ts（三個 kind 共用 `cueRecipients`）",
       "nearestExisting": "⚠️ `spawnVfx` 是**世界裡**的一個定點演出 —— 玩家把鏡頭轉開就看不到，而「我剛剛被打了」這件事不可以取決於鏡頭朝哪。⛔ 兩者不能互相代替。"
     },

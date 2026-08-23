@@ -97,11 +97,23 @@ describe("Codex 合約散文裡的數字", () => {
     // ⭐ `contract-ap-damage` / `contract-normalized`（2026-08-21）：兩節在此之前是**散文**
     //    或**根本不存在**，而散文那一半已經量到過期（`manaRegen ×16` vs 出貨 8、
     //    「攻速不在 `appliesTo`」vs 它已經在）。⛔ 標記被刪掉就退回同一個形狀。
-    for (const name of ["contract-caps", "contract-env", "contract-ap-damage", "contract-range",
+    for (const name of ["contract-caps", "contract-ap-damage", "contract-range",
                         "contract-normalized", "contract-bands", "contract-tiers",
                         "contract-effects", "contract-sharding"]) {
       expect(`${name}:${doc.includes(`<!-- BEGIN GENERATED:${name} -->`)}`).toBe(`${name}:true`);
     }
+    // ⭐⭐ GH#611 —— `contract-env`（§八「全域倍率」）**退場了**，所以這一條的方向
+    //    對它是**反過來的**：它在上面那張名單裡消失還不夠，⛔ 還要有人守著它
+    //    **不會被加回來**。owner 2026-08-23 逐字：「編輯器只編輯原始資料（五級距），
+    //    根本不需要知道系統倍率，避免雙重編輯」。
+    // ⚠️ 只把名字從名單裡刪掉 = 這一章可以被任何人默默加回來而沒有東西會紅 ——
+    //    那正是這份檔頭在講的失敗形態③。
+    expect(
+      doc.includes("<!-- BEGIN GENERATED:contract-env -->"),
+      "⛔ §八「全域倍率」被加回契約了。owner 2026-08-23：「編輯器根本不需要知道系統倍率」" +
+        "⇒ 退場的機制住 `tools/editor-contract/gen_contract_numbers.py` 的 `RETIRED`，" +
+        "⛔ 不是把它從 BLOCKS 拿掉（那只會把一張會過期的表變成手寫散文）。",
+    ).toBe(false);
     // ⭐ GH#381 —— 同一支產生器現在也管退役告示牌上那一句「實測引擎現在有 N 個」。
     //    ⚠️ 少了這一條，把標記刪掉 + 手打一個數字會讓上面那條 `--check` **永遠綠**
     //    （`splice()` 找不到標記是附加在檔尾，於是文件中段那句手打的又沒人看了）。

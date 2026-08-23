@@ -1548,11 +1548,17 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
     probe: (f) => f.effectKinds.has("screenFlash") && f.effectKinds.has("screenShake"),
     caveat:
       "⭐ sim 這一半只負責**什麼時候發、發給誰**（`applyTo`：self／victim／all，三個 kind 共用" +
-      "同一支解析器）。⛔ **畫面那一半不在 `packages/shared` 裡**，而且有三件事必須到齊：" +
-      "① 客戶端把 `screenFlash` / `screenShake` 畫出來；" +
-      "② 兩個事件進 `apps/game-server/src/net/eventFanout.ts` 的白名單（⚠️ 白名單靜默失敗）；" +
-      "③ ⭐ **`prefers-reduced-motion` 與後台強度上限**（`config.screen-cues@1`）—— " +
-      "`amplitude` 是一個 **0..1 的正規化強度，⛔ 不是像素**，真正的位移量由那份 config 乘出來。" +
+      "同一支解析器）。⭐ **2026-08-23 整條線已經接通**（`c49b04a1` / GH#608，同一批把兩個 kind " +
+      "從**擲 TypeError** 修成真的畫得出來）：客戶端有 `VfxSystem` 的 `case \"screenFlash\"` / " +
+      "`case \"screenShake\"`（→ `apps/client/src/render/screenFx.ts`），兩個事件也都在 " +
+      "`apps/game-server/src/net/eventFanout.ts` 的白名單裡。" +
+      "⚠️ 這一筆在 2026-08-24 之前寫著「缺的兩件：① 客戶端沒畫 ② 沒進白名單」——**兩件都做完了**。" +
+      "⇒ 剩下的是**三個真的限制**：" +
+      "① `amplitude` / `peakAlpha` 是 **0..1 的正規化強度，⛔ 不是像素、⛔ 不是絕對不透明度**——" +
+      "真正的位移量由後台那份**全域上限**（`config.screen-fx@1`，⭐ `content/config/screen-fx.json`）乘出來；" +
+      "② 它同時吃 `prefers-reduced-motion`，而出貨的相機位移對那些玩家是**整個關掉**的" +
+      "（震動沒有「弱一點的版本」）⇒ ⛔ 不可以把「畫面會震」當成技能邏輯的一部分；" +
+      "③ 上限與無障礙都在**載入時**解析一次 ⇒ 後台改完要玩家重新整理才生效。" +
       "⇒ 寫卡片時 ⛔ 不要假設 `amplitude: 1` 在每一台機器上都會震同樣多；" +
       "它是「這一發相對於全域上限有多用力」，而不是一個絕對值。",
     evidence: "packages/shared/src/sim/effects/clientCues.ts（三個 kind 共用 `cueRecipients`）",
@@ -1579,8 +1585,10 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
       "**白白繞路**（檔頭 ② 的兩個過期方向之一）。" +
       "⛔ **仍然存在的三個限制**（這才是它是 `partial` 的理由）：" +
       "① `applyTo` 只有 `self` / `victim`，⛔ **沒有 `all`** —— 字要有一個身體當錨；" +
-      "② 同時最多幾段字由 `config.screen-fx@1.floatingTextMaxOnScreen` 決定（出貨 48，" +
-      "上下界 1..200），⭐ 它在**建構時**吃掉，所以後台改了要玩家重新整理才生效；" +
+      "② 同時最多幾段字由 `config.screen-fx@1.floatingTextMaxOnScreen` 決定" +
+      "（⚠️ 這裡刻意**不複述它的出貨值** —— 這一句在 2026-08-24 之前寫著「出貨 48」而" +
+      "出貨是 **40**：一個抄進契約的數字就是第二個住處，owner 在後台轉一格它就開始說謊。" +
+      "⇒ 要知道現在是多少就讀那一格），⭐ 它在**建構時**吃掉，所以後台改了要玩家重新整理才生效；" +
       "滿了會**擠掉剩餘壽命最短的那一段**，⛔ 不是排隊；" +
       "③ 同一個錨點最多同時掛 **8** 段（第 9 段直接丟掉），同一幀落在同一點的多發" +
       "每段往後推 90ms（原作 `0.2f * i` 的縮版）。" +
