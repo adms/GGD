@@ -63,6 +63,34 @@ describe("spawnVfx effectRunner (do-runner-emit)", () => {
     }
   });
 
+  /**
+   * ⭐ GH#649/#565 —— `at:"bone"` 的**出貨鏈**守衛：出貨 schema 收（含 refine 的
+   * 成對檢查）→ 真的 effectRunner 跑 → 事件帶 `attach` 過線（客戶端據此解析骨頭）。
+   * ⛔ 不自造 payload 餵消費端（失敗形態⑤）—— 斷言的是 sim 真的送出的那一則。
+   * 突變驗證：把 emitter 的 `attach` spread 拿掉 → 本條紅（見 commit message）。
+   */
+  it('at:"bone" ships attach over the wire, and schema pairs at:"bone" with attach', async () => {
+    cover("do-runner-emit");
+    const { zEffectDef } = await import("../../content/schema/effect");
+    // 出貨 schema：成對才收 —— attach 落單或 at:"bone" 缺 attach 都要被拒
+    const node = { kind: "spawnVfx", vfxId: "fx.w3x.orb.herocloudkfksword.p00", at: "bone", attach: "weapon" };
+    expect(zEffectDef.safeParse(node).success).toBe(true);
+    expect(zEffectDef.safeParse({ ...node, attach: undefined }).success).toBe(false);
+    expect(zEffectDef.safeParse({ ...node, at: "self" }).success).toBe(false);
+    // 真的 runner：座標＝施法者腳下（替身退路），attach 原樣過線
+    const { world, caster, target } = makeWorld();
+    runEffects([node as EffectDef], ctxOf(world, caster, target));
+    const ev = world.events.filter((e) => e.type === "vfxSpawn");
+    expect(ev).toHaveLength(1);
+    expect(ev[0]!.data).toMatchObject({
+      vfxId: "fx.w3x.orb.herocloudkfksword.p00",
+      x: 3,
+      z: 7,
+      caster,
+      attach: "weapon",
+    });
+  });
+
   it("defaults `at` to self and forwards durationSec only when present", () => {
     cover("do-runner-emit");
     const { world, caster, target } = makeWorld();

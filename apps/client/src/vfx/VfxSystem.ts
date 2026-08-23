@@ -52,7 +52,11 @@ import type { EventMessage } from "@ggd/shared/protocol/messages";
 import { Abilities, Projectiles } from "@ggd/shared/sim/content/registry";
 import type { AbilityId, ProjectileId } from "@ggd/shared/ids";
 import type { VfxDoc } from "@ggd/shared/content";
+// ⭐ GH#649/#565 —— vfxSpawn 的酬載型別住在 sim 的 emit 站旁邊（GH#608 的規矩）
+import type { VfxSpawnEvent } from "@ggd/shared/sim/effects/spawnVfx";
 import { TICK_MS } from "@ggd/shared/constants";
+// GH#649/#565 —— WC3 掛點字串 → glb 骨頭節點（正規化＋fallback 鏈，#98 的那一半）
+import { resolveAttachment } from "../render/vfx/attachment";
 import { frameBus, pushCombatText } from "../frameBus";
 import type { CombatTextRelation } from "../ui/combatText";
 import { envFactor } from "../ui/displayFinal";
@@ -1012,6 +1016,62 @@ export class VfxSystem {
     if (!attach || casterId === undefined) return null;
     const root = this.scene.getTransformNodeByName(`champ-${casterId}`);
     return root ? { root, attach } : null;
+  }
+
+  /** 已經警告過的掛點退路（key = `attach|落點`）—— log 一次就夠，⛔ 不是每發一次。 */
+  private readonly boneFallbackWarned = new Set<string>();
+
+  /**
+   * ⭐ GH#649/#565 —— `spawnVfx at:"bone"` 的骨頭解析：一次性特效掛在
+   * **施法者模型**的骨頭上（chest / hand / weapon / …）。
+   *
+   * 回傳的是**世界座標**（骨頭節點此刻的絕對位置），⛔ 不是把 pooled
+   * ParticleSystem 認父到節點 —— 這條路上的每一份 doc 都被 `frontLoadDoc`
+   * 壓成「所有粒子誕生在同一幀」的 one-shot，所以「掛著跟隨」與「在骨頭
+   * 此刻的位置爆開」逐位元等價，而 pool 的 `(ps.emitter as Vector3).set`
+   * 契約不必被打破（emitter 換成節點後，下一次複用就是一次 TypeError）。
+   *
+   * 退路階梯（⚠️ 每一格都**畫**，差別只有落點；記 log，⛔ 不吞）：
+   *   1. 掛點字串正規化＋WC3 fallback 鏈（`resolveAttachment`）命中節點 → 節點位置
+   *   2. 模型在、鏈上一根都沒有（替身骨架）→ **模型根 + 胸口高度**，log 一次
+   *   3. 連 `champ-<id>` 節點都沒有（體素替身、模型還在載）→ 事件座標 + 胸口高度，log 一次
+   */
+  private boneSpawnPos(
+    attach: string,
+    casterId: number | undefined,
+    fallbackX: number,
+    fallbackZ: number,
+  ): { x: number; y: number; z: number } {
+    const warnOnce = (key: string, msg: string): void => {
+      if (this.boneFallbackWarned.has(key)) return;
+      this.boneFallbackWarned.add(key);
+      console.warn(`[vfx] bone anchor "${attach}": ${msg}`);
+    };
+    const root = casterId !== undefined ? this.scene.getTransformNodeByName(`champ-${casterId}`) : null;
+    if (!root || root.isDisposed()) {
+      warnOnce(`${attach}|no-model`, "施法者無模型節點（替身/載入中）→ 退回胸口高度");
+      return { x: fallbackX, y: ARC_BODY_Y, z: fallbackZ };
+    }
+    const nodes = root.getChildTransformNodes(false);
+    const res = resolveAttachment(attach, [root.name, ...nodes.map((n) => n.name)]);
+    let node: TransformNode | null = null;
+    if (res.node !== null) {
+      const want = res.node;
+      if (root.name === want) node = root;
+      if (!node) for (const n of nodes) if (n.name === want) { node = n; break; }
+      // glb 實例化會給節點加前綴（`"7-Hand Right Ref"`）—— 與 findBoneNode 同一招
+      if (!node) for (const n of nodes) if (n.name.endsWith(want)) { node = n; break; }
+    }
+    if (!node) {
+      warnOnce(`${attach}|no-bone|${root.name}`, `模型上沒有對應骨（${res.reason}）→ 退回胸口`);
+      root.computeWorldMatrix(true);
+      const p = root.getAbsolutePosition();
+      return { x: p.x, y: p.y + ARC_BODY_Y, z: p.z };
+    }
+    if (!res.exact) warnOnce(`${attach}|chain|${res.matched}`, res.reason);
+    node.computeWorldMatrix(true);
+    const p = node.getAbsolutePosition();
+    return { x: p.x, y: p.y, z: p.z };
   }
 
   private playCastVfx(
@@ -2059,14 +2119,26 @@ export class VfxSystem {
       // WC3 dummy-effect-unit one-shots (task #9): the sim's spawnVfx effect
       // emits a world point + a vfx@1 doc id — play the doc there (HitSpark as
       // the doc-less fallback, matching projectileHit).
+      //
+      // ⭐ GH#649/#565 —— `attach` 有值（`at:"bone"`）時改掛**施法者模型的骨頭**：
+      //    `resolveAttachment` 走 WC3 的正規化＋fallback 鏈（hand→weapon→chest→
+      //    origin），所以 19 種原始寫法都解得開。⚠️ 替身骨架（體素替身、模型還在
+      //    載）沒有對應骨 ⇒ **退回胸口高度並記 log**，⛔ 不是不畫。
+      //    payload 型別＝sim emit 站旁邊的 `VfxSpawnEvent`（GH#608），
+      //    ⛔ 這裡不 `as` 任何 sim 沒送過的欄位（失敗形態⑧）。
       case "vfxSpawn": {
-        const x = ev.data.x as number | undefined;
-        const z = ev.data.z as number | undefined;
+        const data = ev.data as Partial<VfxSpawnEvent>;
+        const x = data.x;
+        const z = data.z;
         if (x === undefined || z === undefined || !isFinitePos({ x, z })) break; // #131
-        const vfxId = ev.data.vfxId as string | undefined;
+        const vfxId = data.vfxId;
         const doc = this.doc(vfxId);
-        if (doc) this.play(doc, x, z, nowMs);
-        else this.sparks.push(new HitSpark(this.scene, x, z, nowMs));
+        const anchor =
+          typeof data.attach === "string"
+            ? this.boneSpawnPos(data.attach, data.caster, x, z)
+            : { x, y: 1.0, z };
+        if (doc) this.play(doc, anchor.x, anchor.z, nowMs, anchor.y);
+        else this.sparks.push(new HitSpark(this.scene, anchor.x, anchor.z, nowMs));
         // ⚡🌈 GH#549 —— 「**反彈成功**」那一族的**真的電弧**（owner 2026-08-22：
         //    「被反彈的敵方單位 身上要有明顯的**七彩閃電爆炸**」）。
         // ⛔ 這裡沒有任何技能 id 的 if：`reflectArcBurstPlan` 查的是**演出文件的

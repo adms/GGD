@@ -41,7 +41,7 @@ import { zLeap } from "./leap";
 import { zBlink, refine as refine_blink } from "./blink";
 import { zChampionForm } from "./championForm";
 import { zSpawnProjectile } from "./spawnProjectile";
-import { zSpawnVfx } from "./spawnVfx";
+import { zSpawnVfx, refine as refine_spawnVfx } from "./spawnVfx";
 import { zDot, refine as refine_dot } from "./dot";
 import { zSummon } from "./summon";
 import { zInvulnerable } from "./invulnerable";
@@ -162,6 +162,7 @@ export const EFFECT_REFINERS: Partial<Record<EffectDef["kind"], (e: never, ctx: 
   shield: refine_shield,
   shieldBreak: refine_shieldBreak,
   spawnModelFx: refine_spawnModelFx,
+  spawnVfx: refine_spawnVfx,
   swapResource: refine_swapResource,
   weightedBranch: refine_weightedBranch,
 };
