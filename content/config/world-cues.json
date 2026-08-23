@@ -1,7 +1,7 @@
 {
   "id": "world-cues",
   "schema": "config.world-cues@1",
-  "note": "世界演出表（2026-08-23 窮舉稽核）。七則過線但客戶端零消費端的事件，六則在這裡接成**兩個模板 + 一張表**（點 5 列 / 線 1 列），第七則 guardianSpawn 是一列帶理由的豁免（住 apps/client/src/vfx/worldCues.ts 的 WORLD_CUE_EXEMPTIONS）。⛔ 這份文件裡沒有一格會改變任何傷害、任何一塊錢、任何一個實體 —— 它只決定那一刻看不看得見。每一列的 enabled 關掉 ⇒ 畫面逐位元回到這一版之前。 ⛔⛔ 2026-08-23（同日）owner:「請你**預設關閉**」—— `mobSpawn` 那一列出貨改成 `enabled:false`。理由是他回報「第一回合就開始 lag」而伺服器實測完全沒事（sim tick p99 2.8ms/預算 33.3ms、shedEvents 0、主機 load 0.24）⇒ 成本在客戶端，而這一列是**每一隻小怪各一發**（一波 20 隻 = 20 發）。⭐ 想開回來就在後台「世界演出」把那一格轉開，`content/` 是 live bind-mount ⇒ 存檔就生效。",
+  "note": "世界演出表（2026-08-23 窮舉稽核）。七則過線但客戶端零消費端的事件，六則在這裡接成**兩個模板 + 一張表**（點 5 列 / 線 1 列），第七則 guardianSpawn 是一列帶理由的豁免（住 apps/client/src/vfx/worldCues.ts 的 WORLD_CUE_EXEMPTIONS）。⛔ 這份文件裡沒有一格會改變任何傷害、任何一塊錢、任何一個實體 —— 它只決定那一刻看不看得見。每一列的 enabled 關掉 ⇒ 畫面逐位元回到這一版之前。 ⛔⛔ 2026-08-23（同日）owner:「請你**預設關閉**」—— `mobSpawn` 那一列出貨改成 `enabled:false`。理由是他回報「第一回合就開始 lag」而伺服器實測完全沒事（sim tick p99 2.8ms/預算 33.3ms、shedEvents 0、主機 load 0.24）⇒ 成本在客戶端，而這一列是**每一隻小怪各一發**（一波 20 隻 = 20 發）。⭐ 想開回來就在後台「世界演出」把那一格轉開，`content/` 是 live bind-mount ⇒ 存檔就生效。 ⛔⛔ 2026-08-23（同日,第二則）owner:「地上常出現**一堆亮藍色往外擴散的圈圈特效** 應該不是 w3x 原始特效 或是做的太不像 我感覺是**硬加的 太亮太搶眼不好看** 請改善」—— `summonSpawn` 這一列的 `heavy:true` 正是那個形狀:重版會多畫一圈 `ImpactComposer` 的**地面衝擊波環**(`apps/client/src/vfx/vfxPresets.ts` 的 `ShockwaveRing`,不吃燈的 emissive torus、alpha 0.8、0.3→1.7 世界單位往外擴),而召喚物是**一次好幾隻**⇒ 一次好幾圈。 ⇒ 出貨改成 `heavy:false`(輕版**沒有**那一圈,閃光與火星仍在)。⛔ tint **一格都沒動** —— 那是「成形」與「消散」分得開的唯一線索(消散是 0.5/0.42/0.75),而太亮的是那一圈不吃燈的環,⛔ 不是顏色。⭐ **一鍵 rollback**:後台「世界演出」把 `summonSpawn` 的「重版」轉回開。⚠️ **這一列不是唯一的來源** —— 同一個環在**每一次魔法傷害**都會畫(`hitFeel.ts:170` type==='magic' → sparkKind 'magic' → `VfxSystem.ts:453` intensity 'heavy' → tint `IMPACT_TINTS.magic` [0.68,0.5,1]),而那一段**烘在 TS 裡、沒有任何 config 住處**,要另外開票。",
   "point": {
     "mobSpawn": {
       "enabled": false,
@@ -13,7 +13,7 @@
     },
     "summonSpawn": {
       "enabled": true,
-      "heavy": true,
+      "heavy": false,
       "heightY": 0.9,
       "tintR": 0.62,
       "tintG": 0.48,

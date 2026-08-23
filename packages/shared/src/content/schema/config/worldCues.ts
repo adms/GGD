@@ -202,8 +202,23 @@ export const DEFAULT_WORLD_CUES: ConfigWorldCuesDoc = {
     //    ⭐ 而這一列是**每一隻小怪各一發**（一波 20 隻 = 20 發）。
     //    ⇒ 想開回來就在後台「世界演出」轉開（`content/` 是 live bind-mount，存檔就生效）。
     mobSpawn: { enabled: false, heavy: false, heightY: 0.15, tintR: 0.55, tintG: 0.42, tintB: 0.28 },
-    // 成形：術式紫、重。一次施放才一批，而「憑空多出一個打手」值得被看到。
-    summonSpawn: { enabled: true, heavy: true, heightY: 0.9, tintR: 0.62, tintG: 0.48, tintB: 1 },
+    // 成形：術式紫。「憑空多出一個打手」值得被看到，⛔ 但不值得**一次好幾圈**。
+    // ⛔⛔ 2026-08-23 出貨從 `heavy:true` 改成 `false`（owner 逐字：
+    //    「地上常出現**一堆亮藍色往外擴散的圈圈特效**⋯
+    //    我感覺是**硬加的 太亮太搶眼不好看** 請改善」）。
+    //    ⭐ 根因不是顏色，是 `heavy` 這一格：重版會多畫一圈 `ImpactComposer` 的
+    //    **地面衝擊波環**（`apps/client/src/vfx/vfxPresets.ts` 的 `ShockwaveRing` ——
+    //    不吃燈的 emissive torus、alpha 0.8、0.3→1.7 世界單位往外擴），
+    //    而召喚是**一次好幾隻** ⇒ 一次好幾圈，正是他說的「一堆」。
+    //    ⇒ 輕版沒有那一圈，閃光與火星仍在（「憑空多出一個打手」照樣看得到）。
+    //    ⛔ tint **一格都沒動**：那是「成形」與「消散」（0.5/0.42/0.75）分得開的唯一
+    //    線索，而太亮的是那一圈不吃燈的環，⛔ 不是顏色。
+    //    ⭐ 一鍵 rollback：後台「世界演出」把「成形：用重版」轉回開。
+    //    ⚠️ 這一列**不是唯一的來源** —— 同一個環在**每一次魔法傷害**都會畫
+    //    （`sim/combat/hitFeel.ts:170` → `VfxSystem.ts:453` intensity `heavy`
+    //    ＋ `IMPACT_TINTS.magic` [0.68,0.5,1]），而那一段烘在 TS 裡、
+    //    **沒有任何 config 住處**（第〇·四守則的違反樣本），要另外開票。
+    summonSpawn: { enabled: true, heavy: false, heightY: 0.9, tintR: 0.62, tintG: 0.48, tintB: 1 },
     // 消散：同色系但輕 —— 消失不該比出現更響。
     summonDespawn: { enabled: true, heavy: false, heightY: 0.9, tintR: 0.5, tintG: 0.42, tintB: 0.75 },
     // 插旗：貼地、暗夜紫、重。一回合最多 12 次（英雄死亡數），⛔ 不是每 tick。
