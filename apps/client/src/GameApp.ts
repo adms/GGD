@@ -213,7 +213,7 @@ import { voicePlayOptions, voiceSpatialMix } from "./audio/voiceSpatial";
 import { combatSfxKey } from "./audio/combatSfx";
 import { resolveSpatial } from "./audio/combatSfxSpatial";
 import { vfxLoopPushes, vfxSoundCues, vfxSoundLayer } from "./audio/vfxSound";
-import { spatialSourceFor } from "./audio/spatialPolicy";
+import { cueEventZone, spatialSourceFor, zoneAllowsCue } from "./audio/spatialPolicy";
 import type { SpatialSource } from "./audio/spatial";
 import { abilityIdOfOrigin } from "@ggd/shared/sim/combat/damage";
 import { fullAssetsEnabled } from "./config/fullAssets";
@@ -2147,7 +2147,14 @@ export class GameApp {
     this.vfx.handleEvent(ev, nowMs); // particles + damage numbers
     // 🖥️🖥️ GH#612 —— 螢幕演出**逐格**派送。⛔ 必須在 `applyCombatFeedback` 之前:
     //    它把這一格的震動排進 `authoredShake[p]`，而那個漏斗在下面第四行收走。
-    if (ev.type === "screenFlash" || ev.type === "screenShake") this.routeScreenCue(ev);
+    //    K3 GH#638 —— zone 判準是**逐格**的（觀戰格跟著觀看目標），在 routeScreenCue 裡。
+    if (ev.type === "screenFlash" || ev.type === "screenShake") this.routeScreenCue(ev, state);
+    // K3 GH#638 —— 另一場地的演出不可外漏（owner：「另外一個場地的聲音、語音、
+    // 震動、閃爍等畫面不應該影響到目前場地」）。事件歸得了戶（payload 的 `zone`
+    // 或空間表的實體欄位）而那個 zone 不在本地觀看集合 ⇒ 音效／特效音／語音三條
+    // 全部丟棄。⭐ `visibleZones` 跟著 #269 的觀戰目標走（⛔ 不是寫死本地），
+    // 歸不了戶 = 放行（fail-open：最壞情況是照舊，⛔ 不是資訊不見）。
+    const zoneOk = zoneAllowsCue(cueEventZone(ev.type, ev.data, this.zoneOfEntity), this.visibleZones);
     this.views.handleEvent(ev, nowMs); // anim pulses + hit flash + hitstop
     this.casts.handleEvent(ev, nowMs); // cast/windup timing → cast bars
     this.applyCombatFeedback(ev, localId, nowMs); // camera kick/punch-in + vignette
@@ -2162,7 +2169,7 @@ export class GameApp {
     // or its position is not resolvable this frame, and a null source plays
     // exactly as it does today. Only `spatialMix` (inside the flush) decides
     // that something is out of range and must not play at all.
-    const sfxKey = combatSfxKey(ev);
+    const sfxKey = zoneOk ? combatSfxKey(ev) : null;
     if (sfxKey) {
       // GH#440 —— 連這一條也走政策表。這裡它幾乎總是恆等式（combatSfxKey 的 key
       // 與事件是一對一的），⛔ 但「幾乎」不是守衛：入口只有一個，才不會有第二條路。
@@ -2176,12 +2183,13 @@ export class GameApp {
     // ⛔ 它不是 `combatSfxKey` 的一個分支:那一支回的是「這顆事件本身叫什麼」,
     // 而這裡問的是「這一招的**特效**帶了什麼聲音」—— 兩者是不同的軸,同一顆
     // `abilityCast` 兩邊都會出聲(一個是技能身分,一個是特效自己那一份)。
-    this.pushVfxSound(ev, localId, nowMs);
+    if (zoneOk) this.pushVfxSound(ev, localId, nowMs);
     // CONTEXTUAL VOICE (client-only cosmetic, owner directive 2026-07-25):
     // event → the champion's own cloned line. Rides audioSystem.playClip inside
     // contextualVoice, so all mixer gates + the per-category throttle apply;
     // heroes without a pack no-op. Never touches sim / world.rng.
-    this.dispatchContextualVoice(ev, localId);
+    // K3 GH#638 —— 另一場地的語音同樣丟棄（狀態語音走實體迴圈，L3 cull 已經擋掉）。
+    if (zoneOk) this.dispatchContextualVoice(ev, localId);
     if (ev.type === "death" && state) {
       recordDeathEvent(ev, state);
       // task #85: the ONLY signal that means "you died", as opposed to the
@@ -2615,6 +2623,15 @@ export class GameApp {
 
   private readonly audioEntityPos = (id: number): { x: number; z: number } | null =>
     this.views.posOf(id) ?? this.schemaPos(id);
+
+  /**
+   * K3 GH#638 —— 這個實體現在站在哪個 duel zone。歸不了戶（實體已消失／zone
+   * 是負數）= null = 放行，與 `VisibleZones` 同一個安全的失效方向。
+   */
+  private readonly zoneOfEntity = (id: number): number | null => {
+    const es = this.conn.room?.state.entities.get(String(id));
+    return es && Number.isInteger(es.zone) && es.zone >= 0 ? es.zone : null;
+  };
 
   private readonly audioTeamOf = (id: number): number | null => this.teamOfEntity(id);
 
@@ -3135,14 +3152,28 @@ export class GameApp {
    * ⛔ 派送迴圈本身住 `render/screenFx.ts`（`dispatchScreenCue`）——
    * GameApp 在測試裡建構不出來,寫在這裡的決策沒有守衛（見這個檔案 #223 那一段）。
    */
-  private routeScreenCue(ev: EventMessage): void {
+  private routeScreenCue(ev: EventMessage, state: MatchState | null): void {
     if (this.cueLayers.length === 0) return;
     dispatchScreenCue(
       ev.type as "screenFlash" | "screenShake",
       ev.data as unknown as { broadcast: boolean; subjects: readonly number[] } & Record<string, unknown>,
       this.screenCueViewers(),
       this.cueLayers,
+      this.screenCueViewerZones(state),
     );
+  }
+
+  /**
+   * K3 GH#638 —— 每一格**正在觀看**的 zone：#269 觀戰把鏡頭送去的那一區優先
+   * （⭐ 觀戰模式 = 跟著觀看的 zone，⛔ 不是寫死本地），沒在觀戰才是自己英雄
+   * 站的那一區。算不出來（還沒選角／快照未到）= null = 放行。
+   */
+  private screenCueViewerZones(state: MatchState | null): (number | null)[] {
+    const out: (number | null)[] = [];
+    for (let p = 0; p < this.cueLayers.length; p++) {
+      out.push(this.spectateZoneByPlayer.get(p) ?? (state ? this.ownZoneOf(p, state) : null));
+    }
+    return out;
   }
 
   /** 每幀推進每一格的閃爍；換 phase 就把殘留收乾淨（⛔ 不留一層淡紅到下一回合）。 */

@@ -397,3 +397,54 @@ export function spatialSourceFor(key: string, source: SpatialSource | null): Spa
   if (!source) return null;
   return sfxKeyPolicy(key) === "world" ? source : null;
 }
+
+// ───────────────────────────────────────────────────────────────────────────
+// K3 GH#638 —— 另一場地的演出不可外漏（owner：「另外一個場地的聲音、語音、震動、
+// 閃爍等畫面不應該影響到目前場地」）
+// ───────────────────────────────────────────────────────────────────────────
+
+/**
+ * 這一顆事件發生在哪個 duel zone。
+ *
+ * 順序：payload 自帶的 `zone`（sim 的 `screenFlash`/`screenShake` 真的送這一格，
+ * `sim/effects/clientCues.ts` 的 `ScreenCueRecipients`）→ 空間表
+ * （{@link EVENT_SPATIAL}）登記的實體欄位逐一問 `zoneOfEntity`。
+ *
+ * ⭐ 刻意**不**做泛用欄位猜測：不在空間表上的事件（`guardianSlain` / `rankUp` /
+ * `coinPickedUp` 那一族）是 seat-gated 的 HUD 節拍，本來就只屬於本地玩家 ——
+ * 替它們猜 zone 只會把「你分到了金幣」錯丟掉。
+ *
+ * null = 歸不了戶 ⇒ 呼叫端**放行**（fail-open，與 `VisibleZones` 同一個失效方向：
+ * 最壞情況是照舊多播一聲，⛔ 不是資訊不見）。
+ */
+export function cueEventZone(
+  type: string,
+  data: Record<string, unknown>,
+  zoneOfEntity: (id: number) => number | null,
+): number | null {
+  const z = data["zone"];
+  if (typeof z === "number" && Number.isInteger(z) && z >= 0) return z;
+  const spec = EVENT_SPATIAL[type];
+  if (!spec) return null;
+  for (const field of spec.entityFallback) {
+    const id = data[field];
+    if (typeof id !== "number" || !Number.isFinite(id)) continue;
+    const ez = zoneOfEntity(id);
+    if (ez !== null) return ez;
+  }
+  return null;
+}
+
+/**
+ * 這一發（音效／語音／震動／閃爍）輪不輪得到本地聽或看。
+ *
+ * `viewing` = 本地正在觀看的 zone 集合 —— ⭐ 觀戰時它**跟著觀看目標走**
+ * （`GameApp.refreshVisibleZones` 把 #269 的觀戰 zone 一起加進去），
+ * ⛔ 不是寫死本地。歸不了戶（null）= 放行。
+ */
+export function zoneAllowsCue(
+  eventZone: number | null,
+  viewing: { has(zone: number): boolean },
+): boolean {
+  return eventZone === null || viewing.has(eventZone);
+}

@@ -163,6 +163,11 @@ export function screenCueIsForViewer(
 export interface ScreenCueRecipients {
   broadcast: boolean;
   subjects: readonly number[];
+  /**
+   * K3 GH#638 —— 這一發**發生在**哪個 duel zone（sim 真的送這一格）。
+   * 缺席／負數 = 歸不了戶 = 不做 zone 過濾（fail-open，與 `VisibleZones` 同向）。
+   */
+  zone?: number;
 }
 
 /**
@@ -204,11 +209,22 @@ export function splitScreenCueRouterInstalled(): boolean {
 export function screenCueViewportMask(
   cue: ScreenCueRecipients,
   viewers: readonly (number | null)[],
+  /**
+   * K3 GH#638 —— 每一格**正在觀看**的 zone（觀戰 = 跟著觀看目標，⛔ 不是寫死本地；
+   * `null` = 算不出來 = 放行）。省略 = 不做 zone 過濾（GH#612 的舊行為）。
+   */
+  viewerZones?: readonly (number | null)[],
 ): boolean[] {
   const subjects = cue.subjects ?? [];
-  return viewers.map((id) =>
-    cue.broadcast ? true : id !== null && subjects.some((s) => s === id),
-  );
+  const cueZone =
+    typeof cue.zone === "number" && Number.isInteger(cue.zone) && cue.zone >= 0 ? cue.zone : null;
+  return viewers.map((id, p) => {
+    // K3 GH#638 —— zone 判準在觀眾判定**之前**：另一場地的演出連 broadcast 也不進來
+    // （owner：「另外一個場地的聲音、語音、震動、閃爍等畫面不應該影響到目前場地」）。
+    const vz = viewerZones?.[p] ?? null;
+    if (cueZone !== null && vz !== null && vz !== cueZone) return false;
+    return cue.broadcast ? true : id !== null && subjects.some((s) => s === id);
+  });
 }
 
 /**
@@ -224,8 +240,10 @@ export function dispatchScreenCue(
   data: ScreenCueRecipients & Record<string, unknown>,
   viewers: readonly (number | null)[],
   sinks: readonly ScreenCueSink[],
+  /** K3 GH#638 —— 每一格正在觀看的 zone；省略 = 不做 zone 過濾（舊行為）。 */
+  viewerZones?: readonly (number | null)[],
 ): boolean[] {
-  const mask = screenCueViewportMask(data, viewers);
+  const mask = screenCueViewportMask(data, viewers, viewerZones);
   const fired: boolean[] = mask.map(() => false);
   for (let p = 0; p < mask.length; p++) {
     if (!mask[p]) continue;
