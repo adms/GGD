@@ -114,6 +114,7 @@ import {
   type ShelfGoodInput,
 } from "./shelfDisplay";
 import { runRenderLoopSafely } from "../safeRenderLoop";
+import { perfBus } from "../../perfBus";
 
 /**
  * soft cap so a 120 Hz panel doesn't render a static market at 120 fps.
@@ -130,6 +131,49 @@ const minFrameMsNow = (): number => minFrameMs(menuFpsCap(isTouchDevice(readTouc
 const MAX_DT = 0.1;
 
 const color3 = (c: Rgb): Color3 => new Color3(c.r, c.g, c.b);
+
+/** `Rgb`(0..1) → CSS `#rrggbb`. ⛔ 沒有第二份字面值 —— 顏色只住 `ATMOSPHERE`。 */
+const cssHex = (c: Rgb): string =>
+  `#${[c.r, c.g, c.b]
+    .map((v) => Math.round(Math.min(Math.max(v, 0), 1) * 255).toString(16).padStart(2, "0"))
+    .join("")}`;
+
+/**
+ * 🖤 **商店黑閃爍的三格一鍵回頭旋鈕**（owner 2026-08-23:
+ * 「剛進商店 介面有些部分會黑閃爍 選完隨機三選一又回復正常」）。
+ *
+ * ⚠️ **這三格治的是「畫面上會不會出現黑」,⛔ 不是「這一幀為什麼沒畫出來」。**
+ * 中場是全站唯一一個「兩顆 WebGL context 同時活著」的畫面(競技場 `Renderer.ts:35`
+ * 一顆、這裡一顆),而**任何一種**「這一幀沒有呈現」——context 被瀏覽器遷移/收走、
+ * `engine.resize()` 剛把 backbuffer 重新配置、`safeRenderLoop` 接住的那一幀、
+ * 主執行緒塞住害 raster 來不及——在此之前**看起來一模一樣:黑**。
+ * ⭐ 因為 `<canvas>` 沒有 CSS 背景 ⇒ 沒呈現＝透出去＝黑。
+ *
+ * ⛔ **這不是猜哪一個原因** —— 三格各自關掉一條會產生黑的路,而且每一格都能一行轉回去。
+ */
+export const INTERMISSION_GPU = {
+  /**
+   * ⭐ **預設 false（出貨前是 true）**。`powerPreference: "low-power"` 會向瀏覽器
+   * 要**另一顆** GPU,而競技場那顆 context 用的是預設值 ⇒ 雙 GPU 的 macOS 上這是
+   * 全站唯一一次「兩顆 context 指名不同 GPU」,瀏覽器可能為此遷移其中一顆。
+   * ⚠️ 代價:筆電上中場不再刻意省電。**一鍵回頭 = 設回 `true`。**
+   */
+  lowPowerGpu: false,
+  /**
+   * ⭐ **預設 true（出貨前是 false，即 `doNotHandleContextLost: true`）**。
+   * 在此之前 context 一掉,Babylon **不會**救 ⇒ 那張 canvas 就**永遠**是黑的。
+   * ⚠️ 代價:Babylon 要留一份 buffer 資料才救得回來(記憶體)。**一鍵回頭 = 設回 `false`。**
+   */
+  restoreContextLoss: true,
+  /**
+   * ⭐ **預設 true**。把 `<canvas>` 的 CSS 背景漆成**場景自己的 clearColor**
+   * (`ATMOSPHERE.clearColor`,⛔ 不是另抄一個字面值)。
+   * ⇒ 任何一幀沒呈現時,玩家看到的是市集的靛色天空,⛔ 不是黑。
+   * ⚠️ 這一格**只治症狀**,而那正是它的用途:它讓「黑閃」這個**外觀**消失,
+   * 而 `webglcontextlost` 那條 log 讓**原因**仍然說得出來(⛔ 不是靜默 fail-open)。
+   */
+  canvasBackfill: true,
+} as const;
 
 export interface IntermissionSceneOptions {
   /** swap in a NullEngine for headless tests; defaults to a real WebGL Engine */
@@ -275,7 +319,37 @@ export class IntermissionScene {
   private disposed = false;
   private built = false;
 
-  private readonly onResize = (): void => this.engine.resize();
+  /** the host <canvas> — kept so dispose can take its listeners back off */
+  private canvas: HTMLCanvasElement | null = null;
+
+  /**
+   * ⚠️ `engine.resize()` **重新配置 backbuffer,而重新配置過的 backbuffer 是空的**。
+   * ⛔ 在此之前那一幀有可能被下面的 fps 上限吞掉(`t - lastRenderMs < 13.67ms`)
+   * ⇒ 呈現出去的就是一張**清空過的畫面**。把 `lastRenderMs` 歸零 =
+   * 「resize 之後的下一幀一定要畫」,⛔ 不是等預算。
+   */
+  private readonly onResize = (): void => {
+    this.engine.resize();
+    this.lastRenderMs = 0;
+  };
+  /**
+   * ⛔ **fail-open 沒錯,靜默才是缺陷（第二守則）**。context 掉了現在會被救回來
+   * （`INTERMISSION_GPU.restoreContextLoss`）—— 而「被救回來」與「從來沒掉過」
+   * 在畫面上一模一樣。⇒ 它同時記進 `perfBus.renderLoopErrors`,那一格非零時
+   * `ui/PerfOverlay.tsx` 的健康度徽章會畫在**永遠可用**的 fps 藥丸旁邊
+   * （⛔ 不受 `showPerfOverlay` 那個預設關掉的開關管）。
+   * ⭐ 這是「嫌疑犯 🅰 到底是不是真的」下一次可以**被量到**而不是再猜一輪的那條線。
+   */
+  private readonly onContextLost = (): void => {
+    perfBus.renderLoopErrors++;
+    // eslint-disable-next-line no-console
+    console.error("[render:intermission] WebGL context lost —— 中場那張 canvas 這幾幀是空的");
+  };
+  private readonly onContextRestored = (): void => {
+    this.lastRenderMs = 0; // 別讓上限吞掉重建之後的第一幀
+    // eslint-disable-next-line no-console
+    console.warn("[render:intermission] WebGL context restored");
+  };
   private readonly onVisibility = (): void => {
     if (typeof document === "undefined") return;
     if (document.hidden) this.stop();
@@ -290,7 +364,15 @@ export class IntermissionScene {
 
     this.engine = opts.engineFactory
       ? opts.engineFactory(canvas)
-      : new Engine(canvas, true, { stencil: false, doNotHandleContextLost: true, powerPreference: "low-power" });
+      : new Engine(canvas, true, {
+          stencil: false,
+          // ⭐ 兩格都是 INTERMISSION_GPU 的一鍵回頭旋鈕（見它的檔頭）
+          doNotHandleContextLost: !INTERMISSION_GPU.restoreContextLoss,
+          ...(INTERMISSION_GPU.lowPowerGpu ? { powerPreference: "low-power" as const } : {}),
+        });
+    this.canvas = canvas;
+    this.paintCanvasBackfill();
+    this.watchContextLoss();
     this.applyHardwareScaling();
 
     this.scene = new Scene(this.engine);
@@ -351,6 +433,30 @@ export class IntermissionScene {
       if (typeof window !== "undefined") window.addEventListener("resize", this.onResize);
       if (typeof document !== "undefined") document.addEventListener("visibilitychange", this.onVisibility);
     }
+  }
+
+  /**
+   * ⭐ 把 `<canvas>` 的 CSS 背景漆成**場景自己的** clearColor。
+   *
+   * ⛔ 一張沒有 CSS 背景的 `<canvas>` 在「這一幀沒有呈現」時是**透明的** ——
+   * 透出去就是頁面底色/上一張競技場畫面 ＝ 玩家看到的**黑閃**。漆上之後,
+   * 同一個失敗看起來就是市集的天空,⛔ 而不是一個缺陷。
+   * ⚠️ 顏色從 `ATMOSPHERE.clearColor` **算**出來(`cssHex`),⛔ 不是抄一份 ——
+   * 第〇·四守則:同一個值不可以有第二個住處。
+   */
+  private paintCanvasBackfill(): void {
+    if (!INTERMISSION_GPU.canvasBackfill) return;
+    const style = this.canvas?.style;
+    if (!style) return; // headless / stub canvas
+    style.backgroundColor = cssHex(ATMOSPHERE.clearColor);
+  }
+
+  /** 掛上 context lost/restored 的觀測（⛔ 只記帳,不改行為）。 */
+  private watchContextLoss(): void {
+    const canvas = this.canvas;
+    if (!canvas || typeof canvas.addEventListener !== "function") return;
+    canvas.addEventListener("webglcontextlost", this.onContextLost);
+    canvas.addEventListener("webglcontextrestored", this.onContextRestored);
   }
 
   /** Cap the render buffer at ~1.25× device pixels — crisp enough, cheap fill. */
@@ -1221,6 +1327,11 @@ export class IntermissionScene {
     }
     if (typeof window !== "undefined") window.removeEventListener("resize", this.onResize);
     if (typeof document !== "undefined") document.removeEventListener("visibilitychange", this.onVisibility);
+    if (this.canvas && typeof this.canvas.removeEventListener === "function") {
+      this.canvas.removeEventListener("webglcontextlost", this.onContextLost);
+      this.canvas.removeEventListener("webglcontextrestored", this.onContextRestored);
+    }
+    this.canvas = null;
     this.engine.stopRenderLoop();
     for (const ps of this.particles) ps.dispose();
     this.particles.length = 0;
