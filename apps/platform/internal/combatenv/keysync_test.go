@@ -1,6 +1,7 @@
 package combatenv_test
 
 import (
+	"encoding/json"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -146,7 +147,18 @@ func TestAttributeDefaultsMatchTheSharedSimTable(t *testing.T) {
 		require.NoError(t, convErr)
 		shared[string(p[1])] = v
 	}
-	require.Len(t, shared, 9, "expected the nine 三圍/派生 coefficients, parsed %d from %s", len(shared), path)
+	// ⛔ NO LITERAL COUNT HERE. It used to say `require.Len(shared, 9)` and that
+	// line is exactly why this guard was useless on 2026-08-24 (GH#633): shared
+	// had grown to eleven coefficients, so the test died on the COUNT before it
+	// ever compared a single value, reporting "should have 9 items" — an error
+	// with nothing to do with the actual defect (intToManaRegen 0.07 vs 0.21,
+	// intToAbilityPower 6.5 vs 4). A hardcoded 9 is a FOURTH home for a table
+	// that already has three, and it aged the same way every copy does.
+	//
+	// NotEmpty is the whole vacuity check that is needed: if the regex matched
+	// but parsed nothing (or stopped early), assert.Equal below names precisely
+	// which keys are missing, which is the message a reader actually wants.
+	require.NotEmpty(t, shared, "parsed no coefficients from %s — the guard would be vacuous", path)
 
 	assert.Equal(t, shared, combatenv.AttrDefaults,
 		"combatenv.AttrDefaults has drifted from ATTRIBUTE_ENV_DEFAULTS in %s", path)
@@ -215,4 +227,46 @@ func TestFactorCeilingMatchesTheTypeScriptSides(t *testing.T) {
 	assert.Equal(t, combatenv.MaxFactor, admin,
 		"admin's MAX_FACTOR and this package's MaxFactor disagree — the input box "+
 			"would accept a number the PUT then answers 400 on")
+}
+
+// combatenv-attr-defaults-in-sync: the COMPILED map must never be what an
+// operator sees. content/config/combat-env.json must carry an entry for every
+// 三圍 coefficient, because that file is the base `Service.baseDoc` overlays on
+// top of `DefaultFor` — and `Replace` is complete-desired-state, so an OMITTED
+// key resets to that base.
+//
+// ⭐ This is the `ggd-pairwise-postconditions` shape, and it is the structural
+// half of GH#633. Asserting the two tables' VALUES against each other would be
+// wrong — they legitimately differ (content overrides the sim fallback:
+// strToAttackDamage 0.4 -> 0.24, agiToArmor 0.15 -> 0.3). What must hold is the
+// RELATIONSHIP: content has an OPINION on every coefficient. The moment it does
+// not, the operator's 重設 / omitted-key path silently serves the compiled
+// number instead of the owner's — which is exactly how 0.07 and 6.5 became the
+// numbers the 戰鬥系統 page would have restored.
+//
+// Assert MEMBERSHIP only. This deliberately copies no value: a guard that
+// re-states the numbers would become the fifth home for them.
+func TestContentConfigCoversEveryAttributeCoefficient(t *testing.T) {
+	testkit.Cover(t, "combatenv-attr-defaults-in-sync")
+
+	root, err := filepath.Abs(filepath.Join("..", "..", "..", ".."))
+	require.NoError(t, err)
+	path := filepath.Join(root, "content", "config", "combat-env.json")
+	raw, err := os.ReadFile(path)
+	require.NoError(t, err, "the shipped combat-env table must be readable at %s", path)
+
+	var doc struct {
+		Multipliers map[string]float64 `json:"multipliers"`
+	}
+	require.NoError(t, json.Unmarshal(raw, &doc))
+	require.NotEmpty(t, doc.Multipliers, "parsed an empty multiplier table from %s", path)
+
+	for k := range combatenv.AttrDefaults {
+		_, ok := doc.Multipliers[k]
+		assert.True(t, ok,
+			"%s is a 三圍 coefficient but %s has no entry for it — the console's base "+
+				"(and every omitted key on a PUT) would fall back to the COMPILED "+
+				"combatenv.AttrDefaults value, which is a mirror of the sim fallback, "+
+				"not of the owner's shipped tuning", k, path)
+	}
 }

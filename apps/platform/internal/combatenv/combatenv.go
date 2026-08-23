@@ -228,11 +228,11 @@ var AttrDefaults = map[string]float64{
 	"strToAttackDamage": 0.4,  // owner 2026-08-13 從 1 調降（原 war3mapMisc.txt StrAttackBonus 1.0）
 	"agiToArmor":        0.15,
 	"strToCritChance":   0,
-	"agiToEvasion":      0, // war3mapMisc.txt AgiDefenseBonus   (Blizzard 0.30)
+	"agiToEvasion":      0,    // war3mapMisc.txt AgiDefenseBonus   (Blizzard 0.30)
 	"agiToAttackSpeed":  0.01, // ⚠️ 這一格是 MULTIPLICATIVE —— 見 shared 的說明
 	"intToMaxMana":      15,   // war3mapMisc.txt IntManaBonus      (Blizzard 15)
-	"intToManaRegen":    0.07, // war3mapMisc.txt IntRegenBonus     (Blizzard 0.05)
-	"intToAbilityPower": 6.5,  // OWNER'S DESIGN — no WC3 source exists
+	"intToManaRegen":    0.21, // war3mapMisc.txt IntRegenBonus 0.07 ×3（owner 2026-08-20, GH#446）
+	"intToAbilityPower": 4,    // OWNER'S DESIGN — no WC3 source exists
 	"intToMagicResist":  0,    // ⭐ owner 2026-08-16「**拆掉智慧→魔抗**」（屬性表第二版）
 }
 
@@ -247,6 +247,20 @@ var AttrDefaults = map[string]float64{
 // ⭐ 這跟同一天的英雄名單事故是**同一種病**：一張表兩份抄寫，分開看兩邊都「對」，
 // 只有**比對**看得出來。抓到它的正是那個比對（`keysync_test.go`）——
 // ⇒ 它紅的時候不要改測試，去看 shared 那一份寫什麼。
+//
+// ⚠️ 2026-08-24（GH#633）—— 又漂了兩格，⛔ 同樣是**跟著 shared 改的**：
+//
+//	intToManaRegen  0.07 → 0.21   （owner 2026-08-20「智慧影響回魔可以增加更多」GH#446）
+//	intToAbilityPower 6.5 → 4     （2026-08-22 系統倍率折進基礎層那一批）
+//
+// ⭐ 而那個**比對這一次沒有叫** —— 它先撞死在自己的 `require.Len(shared, 9)` 上：
+// shared 早就長到 11 格，所以測試在還沒比對任何一個「值」之前就 FAIL 了，
+// 而它報的是「應該有 9 個」這種與缺陷無關的訊息（第二守則失敗形態④）。
+// ⇒ 那個字面 `9` 就是這張表的**第四個住處**。已經拆掉，見 keysync_test.go。
+//
+// ⚠️ 而且 `go test` **不在 `pnpm ship:check` 裡**（它只跑 vitest suites），
+// 所以這條紅了幾天沒有人看見。`tools/testrunner/suites.yaml` 的 `platform-go`
+// 是 enabled 的，但那是另一支 runner。⇒ 要不要把它接進出貨閘是主 session 的決定。
 
 // IsAttrCoef reports whether k is one of the eight 三圍 coefficients.
 func IsAttrCoef(k string) bool {
