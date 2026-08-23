@@ -43,22 +43,54 @@ PATTERNS = [
 ]
 
 
-def git(*a: str) -> tuple[int, str]:
-    r = subprocess.run(("git", *a), cwd=REPO, capture_output=True, text=True)
+def git(*a: str, cwd: Path | None = None) -> tuple[int, str]:
+    r = subprocess.run(("git", *a), cwd=cwd or REPO, capture_output=True, text=True)
     return r.returncode, r.stdout.strip()
+
+
+# ── ⛔⛔ **worktree 感知**（GH#625，2026-08-24 量到的）────────────────────────
+#
+# 在此之前這支腳本把 `REPO` 寫死成主樹,而**兩半都因此在 worktree 裡失效**:
+#
+#   · genguard —— `rel` 算成 `.claude/worktrees/lane-x/docs/…`,對不到 sync-io.json
+#     的 `docs/…` ⇒ **一個字都不擋**。實測同一份產生器產物:
+#         主樹     `EXIT=2`（擋下）
+#         worktree `EXIT=0`（**放行**）
+#   · 備份 —— `git status` 在主樹跑,而 `.claude/worktrees/` 在 `.git/info/exclude`
+#     裡 ⇒ 每一個 lane 檔都被判成「未追蹤」⇒ 明明 git 有副本卻照樣備份(legacy 會爆)。
+#
+# ⭐ 這正是失敗形態⑧:hook 有掛、有跑、exit 0,而它**什麼都沒保護**。
+# ⚠️ 而它的殺傷力隨著 GH#625 放大 —— 那張票要把**每一條 lane 都搬進 worktree**。
+#
+# ⇒ 判準改成「這個檔屬於**哪一棵**樹」,⛔ 不是「repo 根寫死是哪裡」。
+def tree_root(p: Path) -> Path:
+    """`p` 所在的 **worktree 根**（主樹或某條 lane 的樹）。走不到就退回 REPO。
+
+    ⭐ 由**檔案系統**推導（往上找 `.git`,worktree 的 `.git` 是一個**檔案**不是目錄），
+    ⛔ 不呼叫 git —— 這支 hook 在每一次 Write/Edit/Bash 前都跑,不可以再多開行程。
+    """
+    try:
+        d = (p if p.is_dir() else p.parent).resolve()
+    except OSError:
+        return REPO
+    for cand in (d, *d.parents):
+        if (cand / ".git").exists():
+            return cand
+    return REPO
 
 
 def needs_backup(p: Path) -> str | None:
     """回傳理由字串代表要備份;None 代表 git 已經有一份。"""
+    root = tree_root(p)
     try:
-        rel = p.resolve().relative_to(REPO)
+        rel = p.resolve().relative_to(root)
     except (ValueError, OSError):
         return "repo 外"
-    code, out = git("status", "--porcelain", "--", str(rel))
+    code, out = git("status", "--porcelain", "--", str(rel), cwd=root)
     if code != 0:
         return "git 讀不到"
     if not out:
-        code, _ = git("ls-files", "--error-unmatch", str(rel))
+        code, _ = git("ls-files", "--error-unmatch", str(rel), cwd=root)
         return None if code == 0 else "未追蹤"
     return "未追蹤" if out.startswith("??") else "有未提交改動"
 
@@ -131,9 +163,12 @@ NORMALIZER_STEPS = frozenset({"tiers:apply", "apconv:build", "apdmg:build", "pro
 def _generator_owner(p: Path) -> tuple[str, bool] | None:
     """`(步驟名, 是不是只有正規化器認領)`;沒有人認領回 None。"""
     try:
+        # ⭐ 表讀主樹那一份(lane 的樹上可能還沒有),但 `rel` **一定要對 p 自己的樹算**
+        #    —— 否則 lane 檔會算成 `.claude/worktrees/…/docs/x`,對不到任何 writes ⇒ 靜默放行。
         io_path = REPO / "tools/parallel-gates/sync-io.json"
         data = json.loads(io_path.read_text(encoding="utf-8"))
-        rel = str(p.resolve()).replace(str(REPO) + "/", "")
+        root = tree_root(p)
+        rel = str(p.resolve()).replace(str(root) + "/", "")
         claimants: list[str] = []
         for step in data.get("steps", []):
             for w in step.get("writes", []):
@@ -152,6 +187,28 @@ def _generator_owner(p: Path) -> tuple[str, bool] | None:
         return None  # 表讀不到 ⇒ 不擋(⛔ hook 自身故障不可以癱瘓所有編輯)
 
 
+# ── 🔒 全域鎖:產生器鏈**只能在主樹跑**（GH#625）─────────────────────────────
+#
+# `pnpm skills:sync` 寫 `bundle.json` ⇒ CLAUDE.md 逐字:「**同一時間只能有一條工作流跑它**」。
+# 在 lane 的 worktree 裡跑它更糟 —— 產物落在**那棵樹**,主樹永遠看不到,
+# 而 lane 收斂時那些產物會被 merge 進 main ⇒ 主樹的 `--check` 說 stale,
+# 而「誰寫的」已經查不出來了。
+#
+# ⛔ 這是**閘不是判準**:lane 的 prompt 裡已經寫了「禁止跑」,而散文治不了(這份
+#    文件記錄了五次判準失效)。⇒ 在**指令送出之前**擋下,並指名去主樹跑。
+LOCKED_SCRIPTS = ("content:build", "skills:sync", "spec:build", "ship:check")
+_LOCKED_RE = re.compile(
+    r"\b(?:pnpm|npm|yarn)\s+(?:run\s+)?(" + "|".join(re.escape(s) for s in LOCKED_SCRIPTS) + r")\b"
+)
+
+
+def lane_marker(cwd: Path) -> Path | None:
+    """cwd 是不是一條 lane 的 worktree(由 `worktree.mjs new` 放的標記推導)。"""
+    root = tree_root(cwd)
+    m = root / ".ggd-lane.json"
+    return m if root != REPO and m.exists() else None
+
+
 def main() -> int:
     try:
         ev = json.load(sys.stdin)
@@ -160,6 +217,17 @@ def main() -> int:
     tool = ev.get("tool_name", "")
     ti = ev.get("tool_input") or {}
     cwd = Path(ev.get("cwd") or REPO)
+    if tool == "Bash" and os.environ.get("GGD_LANE_LOCK_OFF") != "1":
+        hit = _LOCKED_RE.search(ti.get("command") or "")
+        if hit and lane_marker(cwd):
+            print(
+                f"🔒 全域鎖:`pnpm {hit.group(1)}` ⛔ 不可以在 lane 的 worktree 裡跑。\n"
+                f"   它寫 bundle.json/產生器產物 —— 落在這棵樹上主樹看不到,\n"
+                f"   而 merge 回 main 之後主樹的 --check 會說 stale 且查不出是誰寫的。\n"
+                f"   ⇒ 去**主樹** {REPO} 跑,或由主 session 收斂時統一跑一次。",
+                file=sys.stderr,
+            )
+            return 2
     # 🚫 genguard:只攔 Write/Edit(手改)與 Bash 重導 —— 產生器不走這些路
     import os as _os
     if _os.environ.get("GGD_GENGUARD_OFF") != "1":
