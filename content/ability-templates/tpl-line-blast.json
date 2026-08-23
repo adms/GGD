@@ -1,14 +1,19 @@
 {
   "id": "tpl-line-blast",
   "schema": "template@1",
-  "name": "直線衝擊波",
-  "description": "一具模型沿面向推出去，路上穿透式地掃人（第一段傷害），飛完全程後在落點炸開一個範圍（第二段傷害）。⭐ 兩段是**兩串班表**而不是一串：合成一串的話，路上已經被掃到的人會被「一人一次」的過濾器擋在爆炸外面，而那不是任何一張卡的意思。設計正典範例：04-03 龍破斬。⚠️ 兩段傷害各走自己的**級距**（damageTier）、爆炸範圍走 AoE **級距**（radiusTier），⛔ 這裡一個算好的數字都沒有。",
+  "name": "直線衝擊波（落點大爆炸）",
+  "description": "⭐ 這一份同時是兩件事。①【行為模板】一具帶骨架的 3D 模型沿面向推出去，路上穿透式地掃人（第一段傷害），飛完全程後在落點炸開一個範圍（第二段傷害）。⭐ 兩段是**兩串班表**而不是一串：合成一串的話，路上已經被掃到的人會被「一人一次」的過濾器擋在爆炸外面，而那不是任何一張卡的意思。②【特效預設表】`spawnModelFx` 的 `preset` 欄位**逐格讀這裡的 `params[*].default`**（`content/modelFxPreset.ts`，在載入時解析）—— 也就是說「一發直線推進的火球衝擊波長什麼樣」只住在這一份文件裡，⛔ 不是散在每一支技能的 JSON 節點上。改這裡的一個數字，04-03 龍破斬的**本體與變身態**一起變。設計正典範例：04-03 龍破斬（owner 2026-08-22 逐字：「莉娜龍破斬(一直線火球衝擊波後目的地火焰大爆炸)」）。⚠️ 兩段傷害各走自己的**級距**（damageTier）、爆炸範圍走 AoE **級距**（radiusTier），⛔ 這裡一個算好的傷害數字都沒有。⚠️ `blastRadius` 是 Zod 逼出來的**退路值**（`zDamageArea.radius` 是必填），真正說話的是 `blastRadiusTier` —— `resolveRadiusTier` 在載入時把它蓋掉。留著它是因為 AoE 級距表被關掉（`enabled:false`）的那天，一個 0 半徑的爆炸與「這支技能沒有爆炸」在畫面上一模一樣。⚠️ `preset` **只供演出幾何**（模型／路徑／速度／距離／自轉／縮放／碰觸半徑與陣營），⛔ 不自動塞傷害：那會替每一支引用它的技能加一份沒有人裁決過的數值。要沿路掃傷害與落點爆炸的技能自己寫 `onTouch` / `onArrive`。",
   "family": "line-blast",
-  "status": "draft",
+  "status": "enabled",
   "params": {
     "modelKey": {
       "type": "docRef",
       "default": "imported.fireblast"
+    },
+    "path": {
+      "type": "enum",
+      "values": ["forward", "toTarget", "orbit", "radial"],
+      "default": "forward"
     },
     "speed": {
       "type": "number",
@@ -42,10 +47,22 @@
       "min": 0.5,
       "max": 12
     },
+    "touchSide": {
+      "type": "enum",
+      "values": ["enemies", "allies"],
+      "default": "enemies",
+      "optional": true
+    },
     "touchDamageTier": {
       "type": "enum",
       "values": ["極小", "小", "中", "大", "極大"],
       "default": "大"
+    },
+    "blastRadius": {
+      "type": "number",
+      "default": 8,
+      "min": 0.5,
+      "max": 24
     },
     "blastRadiusTier": {
       "type": "enum",
@@ -72,7 +89,7 @@
     },
     "castTimeSec": {
       "type": "number",
-      "default": 0,
+      "default": 1.233,
       "min": 0,
       "max": 5,
       "unit": "s",

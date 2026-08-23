@@ -491,6 +491,114 @@ function procPassive(hook: HookDef): AbilityPassive {
 
 type Family = (t: TemplateDoc, p: Record<string, unknown>) => ExpandResult;
 
+/**
+ * ⭐【動畫特效家族】—— owner 2026-08-22 逐字點名的三支驗收技能共用的**一個**建構器：
+ *
+ * > 「**Saber約束勝利之劍(翻滾光束), 依文世界終結(圓周噴發大冰塊),
+ * >  莉娜龍破斬(一直線火球衝擊波後目的地火焰大爆炸) 都是動畫特效**，
+ * >  產出**技能與特效模板**還有**檢查script**，別忘了還有**特效文字**」
+ *
+ * 三支的共同形狀是同一句話：**沿路徑推進的模型 · 沿途掃到人 · 到點爆發**。
+ * ⇒ 它們是**一個機制的三組參數**，⛔ 不是三份程式（CLAUDE.md 第〇·五守則）。
+ *
+ * ── ⛔ 為什麼這支函式存在（第零守則⑨）────────────────────────────────────────
+ * 在它之前 `beam-roll` 與 `radial-burst` 是**兩段幾乎逐字相同**的分支，差別只有
+ * 兩處：`castType` 與有沒有 `count`。再抄第三份（`line-blast`）就是那條規則
+ * 逐字說的反面標記：「⛔ 如果我要寫的第二個東西跟第一個只差**參數**，停手，
+ * 先抽模板」。⇒ 三個家族鍵指向**同一個** `Family`，差異全部由**模板宣告了哪幾格
+ * params** 決定，⛔ 沒有一個 `if (t.family === …)`（那正是第〇·五說的越線）。
+ *
+ * ── 每一格差異怎麼被**推導**出來，⛔ 而不是被寫死 ────────────────────────────
+ * | 差異 | 從哪裡推導 | ⛔ 不是 |
+ * |---|---|---|
+ * | `castType` | `path` —— `radial`/`orbit` 從施法者身上往外炸 ⇒ **沒有落點可以瞄** ⇒ `skillshot`；`forward`/`toTarget` 需要一個落點 ⇒ `ground` | 一張 family→castType 的手寫表 |
+ * | `count`（等分幾具） | 模板有沒有宣告 `count` 這一格 | `family === "radial-burst"` |
+ * | 落點大爆炸 | 模板有沒有宣告 `blastDamageTier` 這一格 | `family === "line-blast"` |
+ *
+ * ⚠️ 推導出來的 `castType` 與改動前**逐位元相同**：`tpl-beam-roll` 的 `path`
+ * 預設是 `forward` ⇒ `ground`（原本寫死 `ground`）；`tpl-radial-burst` 的預設是
+ * `radial` ⇒ `skillshot`（原本寫死 `skillshot`）。
+ *
+ * ── ⭐ 這一族存在的**第二個**理由，比「可以用它做一支新技能」更要緊 ──────────
+ * 這三份 `content/ability-templates/tpl-*.json` **同時**是 `spawnModelFx.preset`
+ * 的共用表（第〇·四守則，解析在 `content/modelFxPreset.ts`），而
+ * `editorCapabilities.test.ts` 明文要求「**被出貨內容真的引用的家族必須展開得
+ * 出來**」—— 一份對外契約上不存在的家族，外部編輯器看不到它，照著做的內容上線
+ * 就是死的。⇒ 引用它就要能展開它，⛔ 不可以只放一張表。
+ * ⚠️ 所以新增一份 fx 模板時**三件事一起做**：模板文件 · 這裡的家族鍵 ·
+ * `editorCapabilities.ts` 的 `FAMILY_PROBE_LIST`。漏第三件 → 那條守衛紅。
+ *
+ * ── ⛔ 它不產生「傷害數字」──────────────────────────────────────────────────
+ * 兩段傷害都走**級距**（`touchDamageTier` / `blastDamageTier`），爆炸範圍走 AoE
+ * **級距**（`blastRadiusTier`）。⛔ 這裡一個算好的數字都沒有（第〇·四守則）。
+ */
+const modelFxFamily: Family = (t, p) => {
+  const path = str(t, p, "path");
+  if (path !== "forward" && path !== "toTarget" && path !== "orbit" && path !== "radial") {
+    throw new ExpandError(`template ${t.id}: param "path"="${path}" 不是合法的路徑`);
+  }
+  // ⭐「往哪裡去」決定「要不要瞄」：radial/orbit 從施法者身上往外，⛔ 根本不讀
+  //    目標點；forward/toTarget 需要一個落點。⇒ castType 是 path 的函數。
+  const castType = path === "radial" || path === "orbit" ? "skillshot" : "ground";
+  // 落點大爆炸 —— ⭐ 由「模板宣告了 blastDamageTier 沒有」決定，⛔ 不是家族名。
+  // ⚠️ `radius` 是 `zDamageArea` 的**必填**格，而真正說話的是 `radiusTier`
+  //    （`resolveRadiusTier` 在載入時把 radius 蓋掉）。留著它是因為 AoE 級距表
+  //    被關掉的那天，一個 0 半徑的爆炸與「這支技能沒有爆炸」長得一模一樣。
+  const blast: EffectDef[] | undefined = has(t, p, "blastDamageTier")
+    ? [
+        {
+          kind: "damageArea",
+          damageType: damageType(t, p, "damageType"),
+          amount: {
+            damageTier: str(t, p, "blastDamageTier"),
+            ...(has(t, p, "blastApRatio")
+              ? { ratios: [{ stat: "ap", coeff: num(t, p, "blastApRatio") }] }
+              : {}),
+          } as unknown as Scaling,
+          radius: num(t, p, "blastRadius"),
+          radiusTier: str(t, p, "blastRadiusTier"),
+          // ⭐ 爆炸要打到站在落點上的那個人。⛔ 省略它 = 震央本人不吃這一發，
+          //    而「打到了但少一個人」在畫面上看不出來（失敗形態②）。
+          includeOrigin: true,
+        } as unknown as EffectDef,
+      ]
+    : undefined;
+  return {
+    castType,
+    targetsEnemies: true,
+    ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+    effects: [
+      {
+        kind: "spawnModelFx",
+        shape: "single",
+        modelKey: docRef(t, p, "modelKey"),
+        path,
+        speed: num(t, p, "speed"),
+        distance: num(t, p, "distance"),
+        // ⚠️ `count` 是**傷害次數的乘數**，⛔ 不是一個純視覺的數字：十二具各掃
+        //    一次 = 42-04 卡面承諾的「隨機12次區域傷害」。調小它總輸出跟著掉。
+        ...(has(t, p, "count") ? { count: num(t, p, "count") } : {}),
+        ...(has(t, p, "spinDegPerSec") ? { spinDegPerSec: num(t, p, "spinDegPerSec") } : {}),
+        ...(has(t, p, "scale") ? { scale: num(t, p, "scale") } : {}),
+        // ⭐「沿路掃到人」才是這一族與一發直線傷害的差別 —— 傷害走**級距**
+        //    （damageTier），⛔ 這裡不算出數字（第〇·四守則）。
+        onTouch: [
+          damageEffect(damageType(t, p, "damageType"), {
+            damageTier: str(t, p, "touchDamageTier"),
+          } as unknown as Scaling),
+        ],
+        touchRadius: num(t, p, "touchRadius"),
+        ...(has(t, p, "touchSide")
+          ? { touchSide: str(t, p, "touchSide") as "enemies" | "allies" }
+          : {}),
+        // ⭐ 到點爆發 —— 與 `onTouch` 是**兩串班表**而不是一串：合成一串的話，
+        //    路上已經被掃到的人會被「一人一次」的過濾器擋在爆炸外面。
+        ...(blast !== undefined ? { onArrive: blast } : {}),
+      },
+    ],
+  };
+};
+
 const FAMILIES: Readonly<Record<string, Family>> = {
   // 1. 單體斬擊 — one targeted magic strike. IMPURE-EXEMPLAR: 菲特 23-04 also
   // self-buffs + execute-gates; only the numeric core is seeded here.
@@ -1414,40 +1522,9 @@ const FAMILIES: Readonly<Record<string, Family>> = {
   // ⚠️ `castType: "ground"` 而不是 `"skillshot"`：這一族的四支出貨技能全部是
   //    ground（59-04 / 20-03 是 `"ground"`，另外兩支是投射物 + 這道光束的疊加），
   //    而 `path:"toTarget"` 需要一個落點才瞄得到。
-  "beam-roll": (t, p) => {
-    const path = str(t, p, "path");
-    if (path !== "forward" && path !== "toTarget" && path !== "orbit" && path !== "radial") {
-      throw new ExpandError(`template ${t.id}: param "path"="${path}" 不是合法的路徑`);
-    }
-    return {
-      castType: "ground",
-      targetsEnemies: true,
-      ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
-      effects: [
-        {
-          kind: "spawnModelFx",
-          shape: "single",
-          modelKey: docRef(t, p, "modelKey"),
-          path,
-          speed: num(t, p, "speed"),
-          distance: num(t, p, "distance"),
-          ...(has(t, p, "spinDegPerSec") ? { spinDegPerSec: num(t, p, "spinDegPerSec") } : {}),
-          ...(has(t, p, "scale") ? { scale: num(t, p, "scale") } : {}),
-          // ⭐「沿路掃到人」才是翻滾光束與一發直線傷害的差別 —— 傷害走**級距**
-          //    （damageTier），⛔ 這裡不算出數字（第〇·四守則）。
-          onTouch: [
-            damageEffect(damageType(t, p, "damageType"), {
-              damageTier: str(t, p, "touchDamageTier"),
-            } as unknown as Scaling),
-          ],
-          touchRadius: num(t, p, "touchRadius"),
-          ...(has(t, p, "touchSide")
-            ? { touchSide: str(t, p, "touchSide") as "enemies" | "allies" }
-            : {}),
-        },
-      ],
-    };
-  },
+  //     ⇒ 三支共用 `modelFxFamily`（宣告在 FAMILIES 上面），差異全部由模板
+  //       宣告了哪幾格 params 推導。⛔ 這裡沒有第二份程式。
+  "beam-roll": modelFxFamily,
 
   // 19. 圓周噴發（大冰塊）—— 同一具模型等分成 `count` 具，從施法者身上**同時**朝
   //     四面八方推出去，每一具各自穿透式地掃過自己那條線。
@@ -1471,40 +1548,21 @@ const FAMILIES: Readonly<Record<string, Family>> = {
   // ⚠️ `castType: "skillshot"` 而不是 `"ground"`：這一族從**施法者身上**往外炸，
   //    ⛔ 沒有落點可以瞄（`path:"radial"` 根本不讀目標點）。出貨的 42-04 兩份抄本
   //    也都是 `skillshot`。
-  "radial-burst": (t, p) => {
-    const path = str(t, p, "path");
-    if (path !== "forward" && path !== "toTarget" && path !== "orbit" && path !== "radial") {
-      throw new ExpandError(`template ${t.id}: param "path"="${path}" 不是合法的路徑`);
-    }
-    return {
-      castType: "skillshot",
-      targetsEnemies: true,
-      ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
-      effects: [
-        {
-          kind: "spawnModelFx",
-          shape: "single",
-          modelKey: docRef(t, p, "modelKey"),
-          path,
-          speed: num(t, p, "speed"),
-          distance: num(t, p, "distance"),
-          count: num(t, p, "count"),
-          ...(has(t, p, "spinDegPerSec") ? { spinDegPerSec: num(t, p, "spinDegPerSec") } : {}),
-          ...(has(t, p, "scale") ? { scale: num(t, p, "scale") } : {}),
-          // ⭐「沿路掃到人」走**級距**（damageTier），⛔ 這裡不算出數字（第〇·四守則）。
-          onTouch: [
-            damageEffect(damageType(t, p, "damageType"), {
-              damageTier: str(t, p, "touchDamageTier"),
-            } as unknown as Scaling),
-          ],
-          touchRadius: num(t, p, "touchRadius"),
-          ...(has(t, p, "touchSide")
-            ? { touchSide: str(t, p, "touchSide") as "enemies" | "allies" }
-            : {}),
-        },
-      ],
-    };
-  },
+  "radial-burst": modelFxFamily,
+
+  // 20. 直線衝擊波（落點大爆炸）—— 同一個機制的第三組參數：沿面向推一具模型，
+  //     路上穿透式掃人，飛完全程後在**落點**炸開一個範圍。
+  //     04-03 龍破斬（A04R）是 exemplar；owner 2026-08-22 逐字點名
+  //     「莉娜龍破斬(一直線火球衝擊波後**目的地火焰大爆炸**)」為三支驗收技能之一。
+  //
+  // ⭐ 它與上面兩族的差別**只有一格**：模板宣告了 `blastDamageTier`
+  //    ⇒ `modelFxFamily` 自動掛上 `onArrive` 的 `damageArea`。
+  //    ⛔ 沒有 `if (family === "line-blast")`，也⛔ 沒有第二個 effect kind ——
+  //    落點爆炸用的是既有的 `spawnModelFx.onArrive` + `damageArea`（第〇·五守則）。
+  //
+  // ⚠️ `onArrive` 與 `onTouch` 是**兩串**班表：合成一串的話，路上已經被掃到的人
+  //    會被「一人一次」的過濾器擋在爆炸外面 —— 而卡面承諾的是兩段。
+  "line-blast": modelFxFamily,
 
   "mark-stacks": (t, p) => {
     const lethalOn = str(t, p, "lethalMode") === "save";

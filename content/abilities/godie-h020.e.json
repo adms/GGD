@@ -123,12 +123,7 @@
     {
       "kind": "spawnModelFx",
       "shape": "single",
-      "modelKey": "imported.fireblast",
-      "path": "forward",
-      "speed": 27.5,
-      "distance": 12.0,
-      "spinDegPerSec": 360.0,
-      "scale": 4.5,
+      "preset": "tpl-line-blast",
       "onArrive": [
         {
           "kind": "damageArea",
@@ -170,9 +165,7 @@
             "damageTier": "大"
           }
         }
-      ],
-      "touchRadius": 3.67,
-      "touchSide": "enemies"
+      ]
     }
   ],
   "vfxKey": "fx.prim.fire.beam",

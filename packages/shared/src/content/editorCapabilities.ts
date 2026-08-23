@@ -2161,7 +2161,14 @@ const FAMILY_PROBE_LIST: readonly string[] = [
   "growth-charge", "instant-blast", "leap-strike", "life-manipulate", "line-sweep",
   "lock-combo", "mark-stacks", "on-attack", "on-hit-react", "orbit-array",
   "periodic-field", "proxy-cast", "proxy-fanout", "pull-throw", "pure-cosmetic",
-  "radial-burst",
+  // ⭐【動畫特效三支】owner 2026-08-22 點名的三支驗收技能，三個家族共用
+  //    `expand.ts` 的 `modelFxFamily` 一支建構器：
+  //    beam-roll（20-03 翻滾光束）· radial-burst（42-04 圓周噴發）·
+  //    line-blast（04-03 直線衝擊波 + 落點大爆炸）。
+  // ⚠️ 三份 `tpl-*.json` 同時是 `spawnModelFx.preset` 的共用表，而
+  //    `editorCapabilities.test.ts`「被出貨內容真的引用的家族」那一條會逐份比對
+  //    ⇒ 漏列一個，外部編輯器就看不到它。
+  "radial-burst", "line-blast",
   "random-barrage", "range-gamble", "resource-ops", "single-strike", "strip-transform",
   "summon-agent", "team-synergy", "teleport", "traveling-wave",
 ];
