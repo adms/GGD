@@ -42,8 +42,8 @@ function ringOf(amount?: number): {
 
 /** 出貨的五格門檻 —— ⛔ 從共用表讀，不抄字面值（第〇·四守則）。 */
 const TIERS = DEFAULT_DAMAGE_TIERS.damage;
-const SMALLEST = TIERS[DAMAGE_TIER_NAMES[0]];
-const BIGGEST = TIERS[DAMAGE_TIER_NAMES[DAMAGE_TIER_NAMES.length - 1]];
+const SMALLEST = Math.min(...DAMAGE_TIER_NAMES.map((n) => TIERS[n]));
+const BIGGEST = Math.max(...DAMAGE_TIER_NAMES.map((n) => TIERS[n]));
 
 describe("GH#617 衝擊波環的三格倍率", () => {
   it("轉到 1/1/1 = 逐位元回到 2026-08-23 之前（開關是為了回頭）", () => {
