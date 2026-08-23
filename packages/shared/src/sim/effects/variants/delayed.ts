@@ -72,6 +72,15 @@ export interface DelayedVariant {
     dir?: "facing" | "target";
   };
   /**
+   * ⭐【週期領域】圓心釘住還是跟著施法者走。省略 = `"point"` = 釘住 =
+   * 這一格出現以前每一份文件的行為（嚴格 no-op）。
+   *
+   * ⚠️ 與 `targetMode` 是兩件事：`reresolve` 決定「重新算誰在圈裡」，
+   * 這一格決定「**那個圈在哪裡**」。⇒「每秒對**附近**的敵人造成傷害」
+   *（90-01 飛葉快刀 · 92-04 馬勒戈壁 · 99-04）要的是 `"caster"`。
+   */
+  anchor?: "point" | "caster";
+  /**
    * 同一個人整串只吃一次。省略 = `false` = 這一格出現以前的行為。
    * ⭐ 原作三支自己帶著它（11-04 `ThworldGroup` / 27-01 `safe-group` /
    * 60-01 `SafeTargets`）—— 一條掃過去的線，卡片寫的是**一次**的傷害。

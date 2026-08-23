@@ -83,6 +83,33 @@
  * 而卡片上寫的是一次的數字（第一·五守則：卡片上不可以有說了但不會發生的字 ——
  * 這裡是它的鏡像，發生了但沒說）。預設 **false** = 這一格出現以前每一份既有
  * 文件的行為，嚴格 no-op。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⑥ ⭐【週期領域】`anchor: "caster"`（2026-08-23，B5 掃描器量到的 44 支）
+ *
+ * B5 的全技能形狀掃描量到：**44 支技能的說明宣稱「迴圈」，而它們的 JSON 裡一格
+ * 迴圈機制都沒有**。逐支讀完之後，那 44 支**不是同一個形狀** ——
+ * 絕大多數要的是既有的 `dot`（目標身上每秒燒）或既有的 `delayed`（排好的 N 發）。
+ * ⛔ 真正**引擎裡沒有**的只有一種：
+ *
+ *   > 「每秒對**附近**的敵人造成傷害」——90-01 飛葉快刀 · 92-04 馬勒戈壁
+ *   > 「每秒奪取**周圍**英雄的黃金」· 99-04「在初音**週遭**的部隊每秒受到傷害」
+ *
+ * ⭐ 那三句話的主詞是**施法者本人**，⛔ 不是地上的一個點。而在這一格出現以前，
+ * `targetMode: "reresolve"` 重解的圓**永遠釘在施放那一刻的落點**：玩家走兩步，
+ * 卡片上那句話就不再發生 —— 而它看起來完全正常（第一·五守則）。
+ *
+ * ⇒ ⭐ 這**不是一個新 kind**（第零守則⑨：第二個東西只差參數就停手抽模板）。
+ * `delayed` 已經有 count / intervalSec / reresolve / 圓 / 陣營 / 去重 /
+ * 分區結算 / bake 的**全部**，缺的只有「那個圈在哪裡」這**一格**。
+ *
+ * | 想要的 | 怎麼填 |
+ * |---|---|
+ * | 地上的傷害場（火柱、火牆） | `reresolve` + `circle`（`anchor` 省略 = 釘住） |
+ * | ⭐ 跟著人走的傷害場（週期領域） | `reresolve` + `circle` + `anchor: "caster"` |
+ * | 一條**跟著人走**的掃線 | 再加 `advance`（推進疊在當下的圓心上） |
+ *
+ * 守衛 `periodicFieldAnchor.test.ts`（跑真的 `SimWorld`）。
  */
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
@@ -152,6 +179,11 @@ export interface DelayedWave {
   reresolve?: ShapedEffect;
   /** 重解的圓心 / 巢狀效果的落點（施放那一刻的錨點）。 */
   point?: Vec2;
+  /**
+   * ⭐【週期領域】圓心跟著施法者走（檔頭⑥）。缺席 = 釘在 {@link point} =
+   * 這一格出現以前的每一份 wave（嚴格 no-op）。
+   */
+  followCaster?: boolean;
   /**
    * ⭐【沿向量分段推進】施放那一刻凍住的**單位方向**與步距（檔頭⑤）。
    * 缺席 = 整串在 {@link point} 原地落下 = 這一格出現以前的每一份文件。
@@ -243,6 +275,8 @@ export const delayedEffect: EffectKindSpec<"delayed"> = {
           }
         : {}),
       ...(anchor !== undefined ? { point: { x: anchor.x, z: anchor.z } } : {}),
+      // ⭐【週期領域】只有明說 `"caster"` 才跟著走 —— 省略／`"point"` 都退回釘住。
+      ...(e.anchor === "caster" ? { followCaster: true } : {}),
       ...(dir && e.advance
         ? {
             advance: {
@@ -306,17 +340,27 @@ export function delayedSystem(world: SimWorld): void {
       const index = wave.next;
       wave.next++;
 
+      // ⭐【週期領域】承重的一行：`followCaster` 時**這一發**的圓心是施法者
+      // **當下**的位置，⛔ 不是施放那一刻凍住的那一點。少了它，「每秒對附近的
+      // 敵人造成傷害」會變成「在我剛才站的地方每秒打一次」—— 卡片上寫的那句話
+      // 在玩家走開之後就不再發生（第一·五守則）。
+      // ⚠️ 施法者離場時退回錨點（⛔ 不是整串消失 —— 失敗形態②）。
+      const origin =
+        wave.followCaster === true
+          ? (world.transform.get(wave.caster)?.pos ?? wave.point)
+          : wave.point;
       // ⭐【沿向量分段推進】承重的一行：第 i 發的落點 = 錨點 + 方向 ×
       // (start + i × step)。⛔ 這是**絕對**位移（乘上 index），不是「每 tick 把
       // 上一發的落點再往前推一點」的累加器 —— 累加器在錯過一個 tick 時會落後，
       // 而絕對式的到期時刻與落點都只依賴 `index`（同「到期一律用絕對 tick」）。
+      // ⚠️ 推進疊在 `origin` 上：兩格一起填 = 一條**跟著人走**的線。
       const point =
-        wave.advance && wave.point
+        wave.advance && origin
           ? {
-              x: wave.point.x + wave.advance.dir.x * (wave.advance.start + index * wave.advance.step),
-              z: wave.point.z + wave.advance.dir.z * (wave.advance.start + index * wave.advance.step),
+              x: origin.x + wave.advance.dir.x * (wave.advance.start + index * wave.advance.step),
+              z: origin.z + wave.advance.dir.z * (wave.advance.start + index * wave.advance.step),
             }
-          : wave.point;
+          : origin;
 
       const base: EffectContext = {
         world,
