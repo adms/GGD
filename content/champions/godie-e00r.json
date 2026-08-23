@@ -57,15 +57,15 @@
       "id": "godie-e00r.q",
       "name": "59-01 吞噬",
       "provenance": "owner-spec",
-      "description": "[被動][週期][範圍][處決][吸血][吞噬][屬性門檻]\n{{cd}}秒冷卻\n有效範圍：{{radius}}\n\n「有一種餓是阿嬤覺得你餓」\n初號機**自動**[吞噬][周圍]範圍內生命剩餘3/5/7/9%的**任何敵方單位**（含殭屍與殭屍王），使其[立即死亡]，並[回復]等同其剩餘生命的生命值。\n(不必施放，也不耗魔；每次只吃最近的一個，兩次之間隔 {{cd}} 秒)",
+      "description": "[被動][週期][範圍][處決][吸血][吞噬][屬性門檻]\n{{cd}}秒冷卻\n有效範圍：{{radius}}\n\n「有一種餓是阿嬤覺得你餓」\n初號機**自動**[吞噬][周圍]範圍內生命剩餘3/5/7/9%的**任何敵方單位**（含殭屍與殭屍王），使其[立即死亡]，並[回復]等同其剩餘生命的生命值。\n[暴走]期間門檻加倍：6/10/14/18%。\n(不必施放，也不耗魔；每次只吃最近的一個，兩次之間隔 {{cd}} 秒)",
       "slot": "Q",
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
         0.0,
@@ -104,19 +104,80 @@
                       {
                         "kind": "applyStatus",
                         "statusId": "devour-cooldown",
-                        "duration": 18.0,
-                        "applyTo": "self"
+                        "duration": 1.8,
+                        "applyTo": "self",
+                        "dispellable": false
                       }
                     ]
                   }
                 ],
-                "internalCooldown": 1.8,
+                "internalCooldown": 0.9,
                 "condition": {
-                  "not": {
-                    "kind": "status",
-                    "subject": "self",
-                    "statusId": "devour-cooldown"
+                  "all": [
+                    {
+                      "not": {
+                        "kind": "status",
+                        "subject": "self",
+                        "statusId": "devour-cooldown"
+                      }
+                    },
+                    {
+                      "not": {
+                        "kind": "status",
+                        "subject": "self",
+                        "statusId": "berserk"
+                      }
+                    }
+                  ]
+                },
+                "target": "self"
+              },
+              {
+                "on": "onInterval",
+                "effects": [
+                  {
+                    "kind": "devour",
+                    "shape": "circle",
+                    "radius": 12.0,
+                    "radiusTier": "極大",
+                    "side": "enemies",
+                    "maxTargets": 1,
+                    "thresholdPctOfMax": [
+                      0.06,
+                      0.1,
+                      0.14,
+                      0.18
+                    ],
+                    "healPct": 1.0,
+                    "victim": "any",
+                    "throughShields": true,
+                    "onDevour": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "devour-cooldown",
+                        "duration": 1.8,
+                        "applyTo": "self",
+                        "dispellable": false
+                      }
+                    ]
                   }
+                ],
+                "internalCooldown": 0.9,
+                "condition": {
+                  "all": [
+                    {
+                      "not": {
+                        "kind": "status",
+                        "subject": "self",
+                        "statusId": "devour-cooldown"
+                      }
+                    },
+                    {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "berserk"
+                    }
+                  ]
                 },
                 "target": "self"
               }
@@ -124,9 +185,10 @@
           }
         ]
       },
+      "cooldownShape": "單體",
       "icon": "assets/icons/abilities/godie-e00r.q.webp",
       "vfxKey": "fx.prim.void.explosion",
-      "cooldownTier": "中"
+      "cooldownTier": "極小"
     },
     "W": {
       "id": "godie-e00r.w",
@@ -247,7 +309,7 @@
       "id": "godie-e00r.e",
       "name": "59-03 AT力場",
       "provenance": "owner-spec",
-      "description": "[被動][週期][護盾]\n\n「所謂的心之壁，就是我不想跟你講話的意思」\n每8秒生成一個可抵擋150/250/350/450點魔法([AP])傷害的[護盾]，[護盾]不會疊加。",
+      "description": "[被動][週期][護盾][機率][格擋]\n\n「所謂的心之壁，就是我不想跟你講話的意思」\n每8秒生成一個可抵擋150/250/350/450點魔法([AP])傷害的[護盾]，[護盾]不會疊加。\nAT力場並有10/15/20/25%[機率][格擋]50%物理([AD])傷害（真實傷害無法格擋）。",
       "slot": "E",
       "castType": "self",
       "maxRank": 4,
@@ -286,7 +348,14 @@
                 "internalCooldown": 8.0,
                 "target": "self"
               }
-            ]
+            ],
+            "block": {
+              "damageTypes": [
+                "physical"
+              ],
+              "chance": 0.1,
+              "fraction": 0.5
+            }
           },
           {
             "hooks": [
@@ -305,7 +374,14 @@
                 "internalCooldown": 8.0,
                 "target": "self"
               }
-            ]
+            ],
+            "block": {
+              "damageTypes": [
+                "physical"
+              ],
+              "chance": 0.15,
+              "fraction": 0.5
+            }
           },
           {
             "hooks": [
@@ -324,7 +400,14 @@
                 "internalCooldown": 8.0,
                 "target": "self"
               }
-            ]
+            ],
+            "block": {
+              "damageTypes": [
+                "physical"
+              ],
+              "chance": 0.2,
+              "fraction": 0.5
+            }
           },
           {
             "hooks": [
@@ -343,7 +426,14 @@
                 "internalCooldown": 8.0,
                 "target": "self"
               }
-            ]
+            ],
+            "block": {
+              "damageTypes": [
+                "physical"
+              ],
+              "chance": 0.25,
+              "fraction": 0.5
+            }
           }
         ]
       },

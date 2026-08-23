@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "59-001 完全暴走",
   "provenance": "owner-spec",
-  "description": "[被動][暴走][迴避][吸血][加速][屬性門檻]\n{{cd}}秒冷卻\n\n「什麼？竟然沒有世界末日嗎？」\n[暴走]的門檻降為低於自身[最大生命] 50%，[攻擊速度]提升至最上限 10，[吸血]120%、[迴避]50%，持續 12秒。",
+  "description": "[被動][暴走][迴避][吸血][免疫][加速][屬性門檻]\n{{cd}}秒冷卻\n\n「什麼？竟然沒有世界末日嗎？」\n[暴走]的門檻降為低於自身[最大生命] 50%，[攻擊速度]提升至最上限 10，[吸血]400%、[迴避]50%，持續 12秒。\n[暴走]期間[免疫]所有負面效果，冒著煙並拖曳光束。",
   "slot": "EX",
   "castType": "self",
   "maxRank": 1,
@@ -40,7 +40,12 @@
                   {
                     "stat": "lifesteal",
                     "op": "flat",
-                    "value": 1.2
+                    "value": 4.0
+                  },
+                  {
+                    "stat": "lifesteal",
+                    "op": "capRaise",
+                    "value": 4.0
                   },
                   {
                     "stat": "evasion",
@@ -48,7 +53,49 @@
                     "value": 0.5
                   }
                 ],
-                "duration": 12.0
+                "duration": 12.0,
+                "hooks": [
+                  {
+                    "on": "onStatusApplied",
+                    "effects": [
+                      {
+                        "kind": "dispel",
+                        "shape": "single",
+                        "pools": {
+                          "status": true,
+                          "dot": true,
+                          "buffs": true
+                        },
+                        "polarity": "debuff"
+                      }
+                    ],
+                    "target": "self"
+                  },
+                  {
+                    "on": "onInterval",
+                    "effects": [
+                      {
+                        "kind": "dispel",
+                        "shape": "single",
+                        "pools": {
+                          "status": true,
+                          "dot": true,
+                          "buffs": true
+                        },
+                        "polarity": "debuff"
+                      }
+                    ],
+                    "internalCooldown": 1.0,
+                    "target": "self"
+                  }
+                ]
+              },
+              {
+                "kind": "invulnerable",
+                "durationSec": 12.0,
+                "applyTo": "self",
+                "blocksDamage": "none",
+                "blocksControl": true
               },
               {
                 "kind": "applyStatus",
@@ -67,6 +114,21 @@
                   {
                     "kind": "spawnVfx",
                     "vfxId": "fx.w3x.particle.flamessmoke.p00",
+                    "at": "self"
+                  }
+                ],
+                "stopOnCasterDeath": true
+              },
+              {
+                "kind": "delayed",
+                "shape": "single",
+                "delaySec": 0.4,
+                "count": 30,
+                "intervalSec": 0.4,
+                "effects": [
+                  {
+                    "kind": "spawnVfx",
+                    "vfxId": "fx.prim.ki.beam",
                     "at": "self"
                   }
                 ],

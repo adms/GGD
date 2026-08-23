@@ -212,6 +212,10 @@ SPEC_OWNED = frozenset({
     #    ⛔ 不要改成「在 hero 檔裡順便寫 rangeTier」—— 那是把一個壞掉的接縫
     #    繞過去，下一支照樣踩。
     "cooldown", "manaCost", "range", "rangeTier", "innateKind", "radiusTier",
+    # ⭐ `cooldownShape` 2026-08-24 補進來（GH#644 59-01 吞噬）。⚠️ 理由與 rangeTier
+    #    同型：不進這張表的欄位會被 A-6 從舊文件救回來，而這一格是**規格**在說
+    #    「查哪一張冷卻表」—— 舊值贏過規格就是 tierize 拿錯格線。
+    "cooldownShape",
     "targetsEnemies", "effects", "passive", "marks", "toggle", "augment",
 })
 
@@ -1354,6 +1358,16 @@ def build(e):
     #    已經存在的鍵，所以先填就是贏；放到迴圈後面則永遠是舊值贏（靜默失效）。
     if e.get("vfx_key"):
         doc["vfxKey"] = e["vfx_key"]
+    # ── 冷卻查表的**明示形狀**（`cooldown_shape=`）──────────────────────────
+    # ⭐ GH#644：59-01 吞噬帶著 devour 的 radius/radiusTier，`tierize` 的推導
+    #    （逐字照抄引擎 `cooldownTiers.ts::cooldownShapeOf`）必然判成「範圍」——
+    #    而 owner 2026-08-24 裁決它吃**單體**表的 6 秒。兩邊（產生器 tierize 與
+    #    引擎 resolve）都以「手填 > 推導」為第一優先，所以出口只需要這一格欄位。
+    # ⛔ 同 vfx_key：這是一格**表格欄位**，不是「if 這支技能」（第〇·五守則）。
+    if e.get("cooldown_shape"):
+        assert e["cooldown_shape"] in ("單體", "範圍", "變身"), \
+            f"{num}: cooldown_shape 只能是 單體/範圍/變身"
+        doc["cooldownShape"] = e["cooldown_shape"]
     # ── A-6：denylist —— 規格沒有重新定義的欄位，一律原樣保留 ──────────────
     for k, v in prev.items():
         if k in SPEC_OWNED:

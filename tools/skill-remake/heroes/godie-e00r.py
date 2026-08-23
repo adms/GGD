@@ -54,23 +54,140 @@ def berserk_smoke(duration, hz=4.0):
             "stopOnCasterDeath": True}
 
 
+# ═════════════════════════════════════════════════════════════════════════════
+# ⭐ GH#644 —— owner 2026-08-24 四則逐字（⛔ 不要再問）：
+#  ①「AT力場效果及說明**除了護盾以外，追加** 10/15/20/25%機率格擋50%物理傷害」
+#  ②「暴走狀態免疫所有負面 buff，吸血提升到100%, EX提升到400%
+#     暴走狀態追加身體移動拖曳光束特效」
+#  ③「吞噬 應該改為單體的冷卻 6秒才符合五級距」
+#  ④「暴走狀態 吞噬門檻提升2x，請記得改說明跟實際效果」
+# ═════════════════════════════════════════════════════════════════════════════
+
+
+def berserk_beam_trail(duration, hz=4.0):
+    """⭐【拖曳光束】暴走期間跟著移動路徑落下的光束（GH#644 ②）。
+
+    與 {@link berserk_smoke} 是**同一個組合**（第〇·五守則：⛔ 沒有新機制）：
+    `delayed` 排一串班表，每一發 `spawnVfx at:"self"` 在**到期的當下**才讀
+    施法者座標 —— 身體一路移動，光束就一發一發落在走過的位置上，
+    畫面上是一條拖在身後的光束尾跡；站著不動就是原地的光柱。
+    `stopOnCasterDeath` 讓它在倒下那一刻停。
+    """
+    count = int(round(duration * hz))
+    assert 1 <= count <= 32, f"delayed.count 上界是 32（DELAYED_MAX_COUNT），算出 {count}"
+    return {"kind": "delayed", "shape": "single",
+            "delaySec": 1.0 / hz, "count": count, "intervalSec": 1.0 / hz,
+            "effects": [{"kind": "spawnVfx",
+                         "vfxId": "fx.prim.ki.beam", "at": "self"}],
+            "stopOnCasterDeath": True}
+
+
+def _debuff_dispel():
+    """一發「把身上的負面全部拔掉」——【暴走】免疫組合的下半身（GH#644 ②）。
+
+    ⚠️ `polarity:"debuff"` 是承重的：`berserk` 狀態文件自己是 polarity:"buff"、
+    `devour-cooldown` 由 59-01 明寫 `dispellable:false` —— 兩者都拔不到，
+    所以這一發可以放心地掛在「每一次狀態落地」與每秒的掃描上。
+    `count` 刻意省略 ＝ 跟著後台 `dispelRules.maxCountCap` 走（⛔ 不要寫數字）。
+    """
+    return {"kind": "dispel", "shape": "single",
+            "pools": {"status": True, "dot": True, "buffs": True},
+            "polarity": "debuff"}
+
+
+def berserk_package(dur, mods, hz=4.0):
+    """【暴走】的完整效果包 —— 59-00 與 59-001 只差參數（第零守則⑨）。
+
+    「免疫所有負面 buff」由**兩個既有零件**組出來（⛔ 沒有為它寫任何新機制）：
+      · `invulnerable {blocksDamage:"none", blocksControl:true}` ——
+        CC 那一族（暈眩/纏繞/減速/恐懼/繳械）在**掛上之前**就被拒絕，
+        並發 `immuneControl` 讓玩家看見（07-01 臨、兵、鬥 的同一格先例）。
+      · 增益自帶兩條 hook：`onStatusApplied` 一落地就拔（非 CC 的負面**狀態**，
+        例如詛咒/破甲/禁療），`onInterval` 每秒補掃（DoT 與減益型 buff ——
+        它們不走 `applyStatus`，上一條聽不到）。增益到期 hook 跟著消失，
+        所以「免疫」精確地只活在暴走期間。
+    """
+    return [buff(mods, dur, hooks=[
+                {"on": "onStatusApplied", "target": "self",
+                 "effects": [_debuff_dispel()]},
+                {"on": "onInterval", "target": "self", "internalCooldown": 1.0,
+                 "effects": [_debuff_dispel()]}]),
+            {"kind": "invulnerable", "durationSec": float(dur), "applyTo": "self",
+             "blocksDamage": "none", "blocksControl": True},
+            # ⭐ [暴走] 的機制本體：拿走方向盤 + 自動尋敵（sim/berserk.ts）。
+            #    上面那包是屬性與免疫，這一行才是「暴走」——少了它三個系統都不會動。
+            status("berserk", dur, berserk=True, applyTo="self"),
+            berserk_smoke(dur, hz=hz),
+            berserk_beam_trail(dur, hz=hz)]
+
+
 A("59-00", "59-00 暴走", "self", [150], [0], 0,
-  "[被動][暴走][迴避][吸血][受到傷害時][屬性門檻][機率]\n{{cd}}秒冷卻\n\n「吼！是誰踢掉插頭了！」\n生命降至10%時必定[暴走]，將[攻擊速度]提升100%，並獲得60%[吸血]與25%[迴避]，持續6秒。\n[暴走]期間**不受控制**：移動與攻擊指令全部失效，身體自己找最近的敵人打，身上並持續冒煙。",
+  "[被動][暴走][迴避][吸血][免疫][受到傷害時][屬性門檻][機率]\n{{cd}}秒冷卻\n\n「吼！是誰踢掉插頭了！」\n生命降至10%時必定[暴走]，將[攻擊速度]提升100%，並獲得100%[吸血]與25%[迴避]，持續6秒。\n[暴走]期間[免疫]所有負面效果、**不受控制**：移動與攻擊指令全部失效，身體自己找最近的敵人打，冒著煙並拖曳光束。",
   innate="passive",
   passive={"name": "59-00 暴走", "ranks": [{"hooks": [
       {"on": "onDamageTaken", "target": "self", "internalCooldown": 150.0,
        "condition": {"kind": "stat", "subject": "self", "stat": "hp",
                      "mode": "percent", "op": "<=", "value": BERSERK_HP_PCT},
-       "effects": [buff([M("as", "pctAdd", 1.0), M("lifesteal", "flat", 0.6),
-                         M("evasion", "flat", 0.25)], 6.0),
-                   # ⭐ [暴走] 的機制本體：拿走方向盤 + 自動尋敵（sim/berserk.ts）。
-                   #    上面那排是屬性，這一行才是「暴走」——少了它三個系統都不會動。
-                   status("berserk", 6.0, berserk=True, applyTo="self"),
-                   berserk_smoke(6.0)]}]}]})
+       # ⭐ GH#644 ②：吸血 0.6 → 1.0（「吸血提升到100%」）。1.0 在 base cap 2.0
+       #    之內，⛔ 不補 capRaise —— 寫了就是逐位元不改變任何數字的空 modifier
+       #    （第一·五守則，noOpModifierClaims.test.ts 會紅）。
+       "effects": berserk_package(6.0, [M("as", "pctAdd", 1.0),
+                                        M("lifesteal", "flat", 1.0),
+                                        M("evasion", "flat", 0.25)])}]}]})
 
-A("59-01", "59-01 吞噬", "self", [60, 60, 60, 60], [0, 0, 0, 0], 0,
-  "[被動][週期][範圍][處決][吸血][吞噬][屬性門檻]\n{{cd}}秒冷卻\n有效範圍：{{radius}}\n\n「有一種餓是阿嬤覺得你餓」\n初號機**自動**[吞噬][周圍]範圍內生命剩餘3/5/7/9%的**任何敵方單位**（含殭屍與殭屍王），使其[立即死亡]，並[回復]等同其剩餘生命的生命值。\n(不必施放，也不耗魔；每次只吃最近的一個，兩次之間隔 {{cd}} 秒)",
+# ⭐ GH#644 ③ —— owner 2026-08-24 逐字：「吞噬 應該改為單體的冷卻 6秒才符合五級距」
+#    ＝ 單體五級距 6/15/30/45/60 的**極小**格。⚠️ devour 帶著 radius/radiusTier，
+#    tierize 的推導（逐字照抄引擎 cooldownTiers.ts）必然判成「範圍」（極小 = 30），
+#    所以 `cooldown_shape="單體"` 是**承重的** —— 兩邊（產生器與引擎）都是手填贏。
+DEVOUR_CD_CARD = 6
+# ⭐ GH#644 ④ —— owner 2026-08-24 逐字：「暴走狀態 吞噬門檻提升2x，請記得改說明跟實際效果」
+DEVOUR_THRESHOLDS = [0.03, 0.05, 0.07, 0.09]
+DEVOUR_THRESHOLDS_BERSERK = [round(t * 2, 4) for t in DEVOUR_THRESHOLDS]
+
+
+def _devour_hook(thresholds, berserk):
+    """59-01 的一條掃描 hook —— 平時與[暴走]兩態**只差門檻**（第零守則⑨）。
+
+    兩條 hook 的條件互斥（berserk 有／無），所以任何一刻只有一條會發射；
+    `devour-cooldown` 那一格是共用的 —— 暴走中吃掉一個，退暴走後照樣要等。
+
+    ⚠️ 掃描節奏 = 冷卻的一半（3 卡面秒 → 實際秒由 hook_icd 換算）。
+       ⛔ 不再用 hook_icd() 的表格預設：單體·極小（6）現在**就是**這一支的冷卻，
+       掃描節奏若等於兩餐間隔，取樣週期會蓋掉冷卻本身
+       （devourPassiveIcd.test.ts ② 的閘：scanSec < mealSec）。
+    """
+    cond_cd = {"not": {"kind": "status", "subject": "self",
+                       "statusId": "devour-cooldown"}}
+    cond_bz = {"kind": "status", "subject": "self", "statusId": "berserk"}
+    return {"on": "onInterval", "target": "self",
+            "internalCooldown": hook_icd(seconds=DEVOUR_CD_CARD / 2),
+            "condition": {"all": [cond_cd, cond_bz if berserk else {"not": cond_bz}]},
+            # ⚠️ 鍵序 = Zod 宣告序（`schema/effects/devour.ts`）。
+            "effects": [{"kind": "devour", "shape": "circle",
+                         # ⚠️ `shape:"circle"` 的 `radius` 是**必填**（refineDispelShape），
+                         #    真正生效的仍是 `radiusTier`（註冊時 resolveRadiusTier 覆蓋，
+                         #    級別贏）—— 同 92-002 的先例。
+                         "radius": TIER_R["極大"], "radiusTier": "極大",
+                         "side": "enemies",
+                         # ⭐ 一次只吃**最近的一個**（`shapeTargets` 已經排好序）。
+                         "maxTargets": 1,
+                         "thresholdPctOfMax": list(thresholds),
+                         "healPct": 1.0, "victim": "any", "throughShields": True,
+                         # ⭐ **真的吞掉了才跑**（`sim/effects/devour.ts` 的
+                         #    `devouredIds`）—— 這一行就是「兩餐之間」的整個實作。
+                         # ⚠️ `dispellable:false` 是 GH#644 ② 的連帶：暴走的免疫
+                         #    每秒拔一次 debuff，而 devour-cooldown 的狀態文件
+                         #    polarity 是 debuff —— 沒有這一格，暴走中的初號機會
+                         #    自己拔掉兩餐之間的冷卻，變成每次掃描都吃一個。
+                         #    （內部冷卻記帳本來就不該被任何淨化拔掉。）
+                         "onDevour": [status("devour-cooldown", CD_ECHO,
+                                             applyTo="self", dispellable=False)]}]}
+
+
+A("59-01", "59-01 吞噬", "self", [DEVOUR_CD_CARD] * 4, [0, 0, 0, 0], 0,
+  "[被動][週期][範圍][處決][吸血][吞噬][屬性門檻]\n{{cd}}秒冷卻\n有效範圍：{{radius}}\n\n「有一種餓是阿嬤覺得你餓」\n初號機**自動**[吞噬][周圍]範圍內生命剩餘3/5/7/9%的**任何敵方單位**（含殭屍與殭屍王），使其[立即死亡]，並[回復]等同其剩餘生命的生命值。\n[暴走]期間門檻加倍：6/10/14/18%。\n(不必施放，也不耗魔；每次只吃最近的一個，兩次之間隔 {{cd}} 秒)",
   maxRank=4,
+  cooldown_shape="單體",
   # ─────────────────────────────────────────────────────────────────────────
   # ⭐ owner 2026-08-19（GH#489 裁決，逐字）：
   #      「①**59-01 吞噬**（godie-e00r.q，初號機）=> **改成被動 自動發生
@@ -90,69 +207,40 @@ A("59-01", "59-01 吞噬", "self", [60, 60, 60, 60], [0, 0, 0, 0], 0,
   #    ③ 留在 Q 還買到一件必要的東西：**它仍然吃技能點、仍然 1→4 階**，
   #       而 owner 的 3/5/7/9% 逐階門檻正是掛在那個階上的。
   #
-  # ⭐ 冷卻仍然填 60 —— 那是**卡面秒**，兩個消費者：`{{cd}}` 印它，
-  #    `CD_ECHO` 把它換算成**實際秒**（60 × 0.2 = 12）。⛔ 12 不是手打的。
+  # ⭐ 冷卻填 DEVOUR_CD_CARD（6）—— 那是**卡面秒**，兩個消費者：`{{cd}}` 印它，
+  #    `CD_ECHO` 把它換算成**實際秒**（× combatEnv.cooldown）。⛔ 實際秒不手打。
   #
   # ⭐ 耗魔歸 0：owner 2026-08-21「若不是主動傷害技能 就免魔力吧 乾脆點」。
   #    （`tierize()` 的⑦本來就會把它壓成 0 —— 這裡寫 0 是讓表格自己說出這件事，
   #     ⛔ 不是靠一個看不見的後處理。）
   #
   # ─────────────────────────────────────────────────────────────────────────
-  # ⚠️⚠️ 為什麼「12 秒」**不是**填在 `internalCooldown` 上（量過的，不是偏好）
+  # ⚠️⚠️ 為什麼「兩餐之間」**不是**填在 `internalCooldown` 上（量過的，不是偏好）
   #
   # `fireHooks` 在**條件通過的那一刻**就蓋 `hookLastFired`（`effects/hooks.ts`），
-  # ⛔ 它不知道底下那顆 `devour` 有沒有真的吃到人。⇒ 把 12 填進 `internalCooldown`
-  # 得到的**不是**「兩餐之間隔 12 秒」，而是「**每 12 秒抽查一次**」：那一瞬間場上
-  # 剛好沒有人低於門檻，就再等 12 秒。一個處決線是**瞬間**成立的條件，用 12 秒的
-  # 取樣週期去抓它，實際命中率遠低於卡面讀起來的樣子 —— 那正是第二守則失敗形態②
-  #（schema 收得下、卡片寫得出、遊戲裡幾乎不發生）。
+  # ⛔ 它不知道底下那顆 `devour` 有沒有真的吃到人。⇒ 把冷卻填進 `internalCooldown`
+  # 得到的**不是**「兩餐之間有間隔」，而是「**每隔那麼久抽查一次**」：那一瞬間場上
+  # 剛好沒有人低於門檻，就整段重等。一個處決線是**瞬間**成立的條件，用冷卻當
+  # 取樣週期去抓它，實際命中率遠低於卡面讀起來的樣子 —— 第二守則失敗形態②。
   #
-  # ⇒ 兩個數字，各自回答一個問題，**兩個都是推導的**：
-  #      · `internalCooldown` = `hook_icd()` = **掃描節奏**（單體·極小 6 卡面秒
-  #        × 0.2 = 1.2 實際秒）。它同時是那顆圓形範圍查詢的成本上限，也是
-  #        92-03 狂草泥馬用的同一格。
-  #      · `devour-cooldown` 這個狀態的 `duration` = `CD_ECHO` = **兩餐之間**
-  #        （＝這一支當主動時的實際冷卻，12 秒）。真的吃到人才掛上去，
-  #        掛著的時候上面那個條件不成立 ⇒ ⛔ 吃不到第二個。
+  # ⇒ 兩個數字，各自回答一個問題，**兩個都是推導的**（見 `_devour_hook`）：
+  #      · `internalCooldown` = 掃描節奏 = 冷卻的一半（hook_icd 換算實際秒）。
+  #      · `devour-cooldown` 狀態的 `duration` = `CD_ECHO` = 兩餐之間
+  #        （＝這一支當主動時的實際冷卻）。真的吃到人才掛上去。
   #
   # ⭐ 這**沒有新機制**（第〇·五守則）：`onInterval` + `internalCooldown` +
-  #    `condition.not(status)` + `devour.onDevour` + `applyStatus` 五個零件全部
-  #    是出貨就有的。⛔ 也沒有為這一支寫任何 if。
+  #    `condition` + `devour.onDevour` + `applyStatus` 五個零件全部是出貨就有的。
   # ⭐ 而且它把冷卻**畫到 HUD 上**：被動沒有技能鈕可以轉圈，那顆狀態圖示就是玩家
   #    唯一看得到的倒數。
   passive={"name": "59-01 吞噬", "ranks": [
       # ⭐ **一個** rank 區塊，⛔ 不是四個。逐階那一維走 `thresholdPctOfMax`，
       #    由 `fireHooks` 的 `rank: src.grantRank` 挑格（`effects/hooks.ts:541`）。
-      #    ⛔ 抄四份只為了換裡面那個數字＝抄寫稅，而抄漏一階不會紅。
+      # ⭐ GH#644 ④：兩條 hook ＝ 平時／[暴走] 兩態，條件互斥、只差門檻
+      #    （`_devour_hook`，⛔ 不是抄兩份 devour）。
       {"hooks": [
-          # 「**自動發生**」＝ 每 tick 掃一次、由 internalCooldown 定節奏
-          #  （`systems/IntervalHookSystem.ts` 決策 1）。⛔ 不是 onDamageDealt：
-          #  那會變成「要先打他一下才吃得到」，而規格說的是低於門檻就直接吃掉。
-          {"on": "onInterval", "target": "self",
-           "internalCooldown": hook_icd(),
-           # 「上一餐的冷卻還在」→ 這一輪整條不成立（⛔ 也因此不燒掃描節奏的額度）。
-           "condition": {"not": {"kind": "status", "subject": "self",
-                                 "statusId": "devour-cooldown"}},
-           # ⚠️ 鍵序 = Zod 宣告序（`schema/effects/devour.ts`）。
-           "effects": [{"kind": "devour", "shape": "circle",
-                        # ⚠️ `shape:"circle"` 的 `radius` 是**必填**（refineDispelShape），
-                        #    真正生效的仍是 `radiusTier`（註冊時 resolveRadiusTier 覆蓋，
-                        #    級別贏）—— 同 92-002 的先例。
-                        #    ⭐ 極大 = 12，逐位元等於它當主動時的施法距離 11→12 那一格，
-                        #    也就是**手感沒有變**，變的只是誰按下去。
-                        "radius": TIER_R["極大"], "radiusTier": "極大",
-                        "side": "enemies",
-                        # ⭐ 一次只吃**最近的一個**（`shapeTargets` 已經排好序）。
-                        #    ⛔ 不吃滿場：一次清空整波殭屍 + 回滿血是另一支技能。
-                        #    這是一格 JSON 數字（第一守則：可調），⛔ 不是一個寫死的選擇。
-                        "maxTargets": 1,
-                        "thresholdPctOfMax": [0.03, 0.05, 0.07, 0.09],
-                        "healPct": 1.0, "victim": "any", "throughShields": True,
-                        # ⭐ **真的吞掉了才跑**（`sim/effects/devour.ts` 的
-                        #    `devouredIds`）—— 這一行就是「兩餐之間 12 秒」的整個
-                        #    實作。⛔ 沒吃到人時它不跑，所以空手而回不會浪費冷卻。
-                        "onDevour": [status("devour-cooldown", CD_ECHO,
-                                            applyTo="self")]}]}]}]},
+          _devour_hook(DEVOUR_THRESHOLDS, berserk=False),
+          _devour_hook(DEVOUR_THRESHOLDS_BERSERK, berserk=True),
+      ]}]},
   #
   # ⭐ owner 2026-08-19（GH#408 裁決，⛔ 被動化沒有動到它）：
   #    「he can kill enemy below 3% hp left, **including zombies. boss**」
@@ -192,14 +280,24 @@ A("59-02", "59-02 高週波短刀", "self", [0], [0], 0,
                                                        "becomes": "true"})]}]}
       for c in (0.10, 0.15, 0.20, 0.25)]})
 
+# ⭐ GH#644 ① —— owner 2026-08-24 逐字：
+#    「AT力場效果及說明**除了護盾以外，追加** 10/15/20/25%機率格擋50%物理傷害」
+#    ⇒ 護盾 hook **一格不動**，rank 上多一份 `block`（BlockGrant 的第四個授權面，
+#      同 79-002 虛化 / 20-00 銀色甲胄的先例）。fraction 0.5 = 擋掉這一發的一半，
+#      chance 逐階 10/15/20/25%。真傷不在 damageTypes 裡 ＝ 擋不住（欄位說的，不是 if）。
+# ⚠️ 觸發特效：owner 要「橘色力場面一閃」**取代**預設 block 火花。格擋今天的
+#    可見回饋是引擎級的（blocked → guard 浮字 + block 火花 + 格擋語音），
+#    ⛔ BlockGrant 沒有 per-source 特效軸，內容側寫不出「這一次格擋長什麼樣」——
+#    需要引擎補一格（BlockGrant.vfxId + damage.ts 發射 + 客戶端消費），已回報主 session。
 A("59-03", "59-03 AT力場", "self", [0], [0], 0,
-  "[被動][週期][護盾]\n\n「所謂的心之壁，就是我不想跟你講話的意思」\n每8秒生成一個可抵擋150/250/350/450點魔法([AP])傷害的[護盾]，[護盾]不會疊加。",
+  "[被動][週期][護盾][機率][格擋]\n\n「所謂的心之壁，就是我不想跟你講話的意思」\n每8秒生成一個可抵擋150/250/350/450點魔法([AP])傷害的[護盾]，[護盾]不會疊加。\nAT力場並有10/15/20/25%[機率][格擋]50%物理([AD])傷害（真實傷害無法格擋）。",
   innate="passive", maxRank=4,
   passive={"name": "59-03 AT力場", "ranks": [
       {"hooks": [{"on": "onInterval", "internalCooldown": 8.0, "target": "self",
                   "effects": [{"kind": "shield", "amount": amt(flat=v),
-                               "duration": 8.0, "absorbs": "magic"}]}]}
-      for v in (150, 250, 350, 450)]})
+                               "duration": 8.0, "absorbs": "magic"}]}],
+       "block": {"damageTypes": ["physical"], "chance": c, "fraction": 0.5}}
+      for v, c in zip((150, 250, 350, 450), (0.10, 0.15, 0.20, 0.25))]})
 
 A("59-04", "59-04 野戰型陽電子砲", "ground", [90, 90, 90], [350, 500, 650], 8.25,
   "[主動][指向][範圍][真傷]\n{{cd}}秒冷卻，吟唱3秒\n消耗MP{{mp}}\n施法距離：{{range}}\n\n「站著不要動，我...我要射了」\n對[前方][直線]敵人造成{{dmg}}點[真實傷害]，並額外造成目標[最大生命]10%的[真實傷害]。",
@@ -228,20 +326,19 @@ A("59-04", "59-04 野戰型陽電子砲", "ground", [90, 90, 90], [350, 500, 650
             "path": "toTarget", "distance": 8.25}])
 
 A("59-002", "59-001 完全暴走", "self", [150], [0], 0,
-  "[被動][暴走][迴避][吸血][加速][屬性門檻]\n{{cd}}秒冷卻\n\n「什麼？竟然沒有世界末日嗎？」\n[暴走]的門檻降為低於自身[最大生命] 50%，[攻擊速度]提升至最上限 10，[吸血]120%、[迴避]50%，持續 12秒。",
+  "[被動][暴走][迴避][吸血][免疫][加速][屬性門檻]\n{{cd}}秒冷卻\n\n「什麼？竟然沒有世界末日嗎？」\n[暴走]的門檻降為低於自身[最大生命] 50%，[攻擊速度]提升至最上限 10，[吸血]400%、[迴避]50%，持續 12秒。\n[暴走]期間[免疫]所有負面效果，冒著煙並拖曳光束。",
   passive={"name": "59-001 完全暴走", "ranks": [{"hooks": [
       {"on": "onDamageTaken", "target": "self", "internalCooldown": 150.0,
        "condition": {"kind": "stat", "subject": "self", "stat": "hp",
                      "mode": "percent", "op": "<=", "value": 0.5},  # ⭐ owner 2026-08-22:「暴走EX血量門檻降到50%」(20%→50%)
-       # ⚠️ ⛔ 這裡**不要**補 lifesteal capRaise:owner 2026-08-22 把 base 抬到 2.0(200%)
-       #    之後 1.2 已經在上限內,再寫一條 capRaise 就是**逐位元不會改變任何數字**的
-       #    空 modifier（第一·五守則,noOpModifierClaims.test.ts 會紅）。
-       "effects": [buff([M("as", "capRaise", 10.0), M("as", "pctAdd", 4.0),
-                         M("lifesteal", "flat", 1.2), M("evasion", "flat", 0.5)], 12.0),
-                   # ⭐ 同 59-00：這一行才是「暴走」，也是施法門檻認得出這支技能的憑據
-                   #    （berserkRules.trigger = 'berserkGrantors'）。
-                   status("berserk", 12.0, berserk=True, applyTo="self"),
-                   # ⭐ 冒煙是**暴走這個狀態**的樣子，⛔ 不是天生技專屬的裝飾 ——
-                   #    兩支給同一個視覺，玩家才學得會「冒煙 = 它現在不聽指揮」。
-                   #    hz 調低是因為 12 秒 × 4Hz = 48 發，超過 DELAYED_MAX_COUNT(32)。
-                   berserk_smoke(12.0, hz=2.5)]}]}]})
+       # ⭐ GH#644 ②：吸血 1.2 → 4.0（「EX提升到400%」）。⚠️ 4.0 **超過** base cap
+       #    2.0（config/stat-caps.json），所以這一次 capRaise 是**承重的**，⛔ 不是
+       #    空 modifier —— capRaise 的值是**絕對高度**（statPipeline 取 max），
+       #    4.0 ≤ unlocked 20 有空間（noOpModifierClaims 從 stat-caps 推導放行）。
+       #    （2026-08-22 那一版 1.2 在 cap 內所以不寫 capRaise —— 那條理由隨著
+       #     400% 失效，⛔ 不要把它抄回來。）
+       # ⭐ 冒煙／光束 hz 調低：12 秒 × 4Hz = 48 發，超過 DELAYED_MAX_COUNT(32)。
+       "effects": berserk_package(
+           12.0, [M("as", "capRaise", 10.0), M("as", "pctAdd", 4.0),
+                  M("lifesteal", "flat", 4.0), M("lifesteal", "capRaise", 4.0),
+                  M("evasion", "flat", 0.5)], hz=2.5)}]}]})
