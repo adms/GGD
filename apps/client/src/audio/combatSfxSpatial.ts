@@ -138,6 +138,21 @@ export const EVENT_SPATIAL: Readonly<Record<string, EventSpatialSpec>> = {
   // relation resolves to "third" like the flowers and the guardian — correct: it
   // is nobody's ally.
   mobBossSpawn: { cls: "focus", entityFallback: ["id"], actorField: null, victimField: null },
+
+  // --- 【移動中的模型特效】自帶的音效 (GH#605) -------------------------------
+  // ⛔ 這一列**不是** `combatSfxKey` 的一個 case。這一族的聲音走的是**第二條路**
+  // （`audio/vfxSound.vfxSoundCues` → `spawnModelFx` 節點自己填的 `soundKey` /
+  // `arriveSoundKey`），⛔ 不是事件名對到 audio-map key 那條。
+  //
+  // 但**位置**仍然由這張表決定：`GameApp.pushVfxSound` 餵給 `vfxSoundCues` 的
+  // source 就是 `resolveSpatial(ev, …)`。少了這一列 ⇒ 動地剁的 12 發、三條黑龍、
+  // 四支橫放光束砲的發射音全部**播在你正中央**，而畫面上它們在別的地方。
+  //
+  // payload 真的帶 `x`/`z`（施放當下施法者的位置 —— `sim/effects/spawnModelFx.ts`
+  // 的 `ModelFxSpawnEvent` 逐字寫著那兩格是「除錯與**空間音場**用」），所以
+  // entityFallback 的 `caster` 只是保險。`focus`：它是一次會打到人的演出，
+  // 與 `explosion` / `abilityCast` 同一類，⛔ 不可以在混戰裡被限流器先丟掉。
+  modelFxSpawn: { cls: "focus", entityFallback: ["caster"], actorField: "caster", victimField: null },
 };
 
 /**
@@ -153,7 +168,11 @@ export const CENTRED_EVENTS: Readonly<Record<string, string>> = {
   guardianSlain: "seat-gated gold reward chime — a HUD beat, not a world event",
   // your own ability rank-up. The event carries the entity id, so it COULD be
   // placed; it should not be — it is your own progression UI.
-  rankUp: "local progression cue",
+  // ⭐ GH#605 lane D —— 在此之前這一行是**半句謊話**：它說「你自己的」，而
+  // `rankUp` 是廣播的，所以六個人每按一次 Q 你都聽得到一次升級鈴。現在
+  // `combatSfx.rankUpKey` 真的把它夾成本人的（`config.audio-map@1.rankUpAudience`
+  // 可以一鍵改回 `"all"`），於是這一行才變成真的。
+  rankUp: "local progression cue — gated to the local hero by combatSfx.rankUpKey",
   // the fire ring is the whole arena boundary closing in. It has no direction
   // by nature, and panning it would imply one.
   fireRingStart: "non-directional by nature — the ring surrounds you",

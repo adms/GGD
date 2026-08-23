@@ -56,6 +56,7 @@ import {
   type SfxPreloadPolicy,
 } from "./sfxPreloadPolicy";
 import { ABILITY_SFX_CUES_PATH, applyAbilitySfxCuesDoc } from "./abilitySfxCues";
+import { setRankUpAudience } from "./combatSfx";
 import {
   EMPTY_AUDIO_MAP,
   audioMapFromDoc,
@@ -576,7 +577,18 @@ export class AudioSystem {
   }
 
   setMap(map: AudioMap): void {
-    this.map = { bgm: map.bgm ?? {}, mapBgm: map.mapBgm ?? {}, sfx: map.sfx ?? {} };
+    // ⭐⭐ `...map` FIRST（lane D 2026-08-23）—— ⛔ 在此之前這一行**重建**了物件，
+    // 只留 bgm/mapBgm/sfx，於是 `audioMapFromDoc` 好不容易轉交過來的**政策欄位
+    // 全部被丟掉**：`sfxMap` 是 `vfxSoundLayer.setAudioMap()` 的唯一來源
+    // （`GameApp` 那一行），所以 GH#568 的 `castLayerCap` 與 GH#605 的
+    // `modelFxSound` 兩格後台旋鈕在正式站上**逐位元等於不存在** ——
+    // 兩支測試都自己 `layer.setAudioMap(fixture)`，⛔ 測的不是出貨的那條路
+    // （第二守則失敗形態⑤）。⭐ 三格出貨值都等於程式預設，所以修好它**不改變
+    // 今天的聲音**，只是讓那三格真的轉得動。
+    this.map = { ...map, bgm: map.bgm ?? {}, mapBgm: map.mapBgm ?? {}, sfx: map.sfx ?? {} };
+    // 技能升級鈴要播誰的 —— 交給那個純映射的模組持有（與 `setCombatSfxSeat`
+    // 由 AudioDirector 發布是同一個形狀：純規則住 `combatSfx`，⛔ 它不去讀狀態）。
+    setRankUpAudience(map.rankUpAudience);
     // a map swap can change the current scene's file — restart the bed
     if (this.unlocked && this.currentScene) {
       const track = this.trackFor(this.currentScene);

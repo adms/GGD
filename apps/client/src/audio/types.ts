@@ -140,7 +140,16 @@ export interface AudioMap {
    * `DEFAULT_MODEL_FX_SOUND`（兩半都開）。OPTIONAL 的理由同 `castLayerCap`。
    */
   modelFxSound?: ModelFxSoundValue;
+  /**
+   * ⭐ 技能升級鈴（`rankUp`）播誰的。解讀住 `audio/combatSfx.rankUpKey`；
+   * 缺這一格 = `DEFAULT_RANK_UP_AUDIENCE`（＝ `"self"`，只播本人的）。
+   * OPTIONAL 的理由同 `castLayerCap`。
+   */
+  rankUpAudience?: RankUpAudienceValue;
 }
+
+/** `config.audio-map@1.rankUpAudience` 的執行期形狀（與 Zod 逐字相同）。 */
+export type RankUpAudienceValue = "self" | "all";
 
 /** `config.audio-map@1.modelFxSound` 的執行期形狀（與 Zod 逐欄相同）。 */
 export interface ModelFxSoundValue {
@@ -181,5 +190,7 @@ export function audioMapFromDoc(doc: unknown): AudioMap | null {
     castLayerCap: d.castLayerCap as CastLayerCapValue | undefined,
     // ⭐ GH#605 —— 同上，原封轉交（`modelFxSound.readModelFxSound` 是唯一解讀點）。
     modelFxSound: d.modelFxSound as ModelFxSoundValue | undefined,
+    // ⭐ 同上（`combatSfx.setRankUpAudience` 是唯一解讀點）。
+    rankUpAudience: d.rankUpAudience as RankUpAudienceValue | undefined,
   };
 }

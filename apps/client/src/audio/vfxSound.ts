@@ -473,7 +473,17 @@ export function vfxSoundCues(
     if (typeof who === "number") emit(layer.stopLoop(who));
     return out;
   }
-  if (ev.type !== "damage" && ev.type !== "projectileHit") return out;
+  // ⭐ 命中音**只騎 `damage`**（GH#440 的宣告更正，lane D 2026-08-23）。
+  //
+  // ⛔ 這一行曾經是 `ev.type !== "damage" && ev.type !== "projectileHit"`，而那半條
+  //   路**一發都沒響過**：`ProjectileSystem` 送的是 `{ id, owner, target, projectileId }`
+  //   —— ⛔ 沒有 `origin`，所以下面那行 `abilityIdOfOrigin("")` 每一次都回 undefined。
+  // ⭐ 而**補上去是錯的**：同一次命中的 `runEffects(onHit)` 會掉血 ⇒ 一顆帶著
+  //   `origin` 的 `damage` 事件，命中音本來就是從那裡出來的。兩條都收 = 同一下響兩發
+  //   （`sfxReachability` 裡 `basicAttackHit` 被刻意遮蔽，逐字同一個理由）。
+  // ⚠️ 哪天 sim 真的把 `origin` 蓋到 `projectileHit` 上，要回來重新決定的是「哪一顆
+  //   事件擁有命中音」，⛔ 不是「順手把這一行加回去」。
+  if (ev.type !== "damage") return out;
   // 每一條技能傷害路徑都蓋 `origin = "ability:<id>"`（instant / cast-time /
   // projectile onHit 三條都一樣，見 sim/combat/damage.ts 的 `abilityIdOfOrigin`）。
   // 普攻 / DoT / 道具 proc 沒有這個前綴 ⇒ 這裡直接回，⛔ 不會替它們亂編一個家族。

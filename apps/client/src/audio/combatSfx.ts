@@ -45,6 +45,10 @@
  *     `abilityRankUp` cue: the sim event and the audio key disagree, so it is a
  *     rename rather than a passthrough. Wired off #51's staged `ability-rank-up`
  *     clip (task-#51 ledger, previously authored-but-silent).
+ *     ⭐ AND it is **本人限定** ({@link rankUpKey}): the event is broadcast and
+ *     names people by ENTITY id, so without a gate every one of the other five
+ *     champions' skill points rang your own progression chime. Back-office
+ *     rollback lives in `config.audio-map@1.rankUpAudience`.
  *   • `fireRingStart` (#132) renames to the `fireRingLoop` closing-ring bed: the
  *     FireRingSystem emits the event once as the ring begins to tighten, and the
  *     long crackle-burn clip plays under the accelerating finish. (No true SFX
@@ -438,6 +442,62 @@ export function bossJackpotKey(ev: EventMessage, seatId: number | null): string 
 }
 
 /**
+ * 技能升級鈴（`rankUp`）**播誰的** —— `config.audio-map@1.rankUpAudience`。
+ *
+ * `"self"`（出貨）＝ 只有本人升級才響；`"all"` ＝ 逐位元回到夾之前（全場都響）。
+ * ⛔ 沒有第三個值：見 schema 那一段（今天沒有 per-event 音量的縫，所以「別人的
+ * 播小聲一點」收進來會是一個設定得起來、遊戲裡什麼都不發生的值）。
+ */
+export type RankUpAudience = "self" | "all";
+
+/**
+ * ⭐ 出貨預設 —— 這是**我挑的**（owner 2026-08-23 常設指令：「沒做完以前別問我了
+ * 自己判斷 但是留後台開關可以簡易 rollback」），⛔ 不是他說過的數字。
+ *
+ * 挑 `"self"` 的三個理由，⛔ 都不是偏好：
+ *  ① `eventFanout.ts` 的 `rankUp` 那一列**自己寫著**「`id` 是 ENTITY 不是 seat，
+ *     所以只該替本地英雄響的提示**必須自己夾**（就像 guardianRewardKey 夾賞金）」
+ *     —— 那句話從第一天就在，只是沒有人做那個夾。
+ *  ② `combatSfxSpatial.CENTRED_EVENTS` 也寫著它是「你自己的進度 UI」，而它一直
+ *     替**六個人**響 ⇒ 兩份宣告都是半句謊話（第一·五守則）。
+ *  ③ 同一族（`guardianSlain` 賞金鈴 / `coinPickedUp` 撿錢 / `mobBossSlain` 中獎）
+ *     全部是 seat-gated 的 HUD 節拍 —— 升級鈴不夾才是那一族裡的例外。
+ */
+export const DEFAULT_RANK_UP_AUDIENCE: RankUpAudience = "self";
+
+let rankUpAudience: RankUpAudience = DEFAULT_RANK_UP_AUDIENCE;
+
+/**
+ * 發布後台那一格（`AudioSystem.setMap` 擁有這個呼叫，同 `setCombatSfxSeat`）。
+ * ⚠️ 未知值／缺值一律降級成出貨預設，⛔ 不是丟例外：一份存了一半的 override
+ * 不可以讓升級鈴變成未定義行為。
+ */
+export function setRankUpAudience(v: unknown): void {
+  rankUpAudience = v === "all" ? "all" : DEFAULT_RANK_UP_AUDIENCE;
+}
+
+/** 現在生效的那一格（測試/除錯讀回用）。 */
+export function rankUpAudienceNow(): RankUpAudience {
+  return rankUpAudience;
+}
+
+/**
+ * 技能升級鈴 (#51)，或 null。
+ *
+ * `rankUp` 廣播給全場，而它的酬載只用 **entity id** 指人（`{ id, slot, rank }`），
+ * 所以這裡比對的是 `localEntityId` 而**不是** seat —— 與 `guardianRewardKey` 是
+ * 同一條規矩、不同的軸。⚠️ **認不出自己就播**（`localEntityId` 還沒到／已經死了）：
+ * 一個進度提示寧可多響一次，也不該被一次查表失敗吃掉。
+ */
+export function rankUpKey(ev: EventMessage, localEntityId: number | null): string | null {
+  if (rankUpAudience === "all") return "abilityRankUp";
+  if (localEntityId === null) return "abilityRankUp";
+  const who = ev.data.id;
+  if (typeof who !== "number") return "abilityRankUp";
+  return who === localEntityId ? "abilityRankUp" : null;
+}
+
+/**
  * The SFX-map key an event should play, or null for silence. Reads the enriched
  * `damage` payload names from the contract (dmgType/blocked/crit/killingBlow),
  * falling back to the sim's raw `type` field if `dmgType` is absent.
@@ -460,8 +520,11 @@ export function combatSfxKey(
   ev: EventMessage,
   seatId: number | null = localSeatId,
   phase: string = hudStore.getState().phase,
+  // `rankUp` 只用 entity id 指人（seat 認不出它），所以升級鈴要的是這一格。
+  // 與 `phase` 同一個形狀：hot-path 呼叫端不傳，測試可以釘。
+  localEntityId: number | null = hudStore.getState().localEntityId,
 ): string | null {
-  return gateCombatBed(combatSfxKeyUngated(ev, seatId, phase), phase);
+  return gateCombatBed(combatSfxKeyUngated(ev, seatId, phase, localEntityId), phase);
 }
 
 /**
@@ -469,7 +532,12 @@ export function combatSfxKey(
  * `combatSfxKey` has one place to apply the gate instead of one per `return`.
  * Not exported: every caller must go through the gated form.
  */
-function combatSfxKeyUngated(ev: EventMessage, seatId: number | null, phase: string): string | null {
+function combatSfxKeyUngated(
+  ev: EventMessage,
+  seatId: number | null,
+  phase: string,
+  localEntityId: number | null,
+): string | null {
   const d = ev.data;
   switch (ev.type) {
     case "damage": {
@@ -534,7 +602,9 @@ function combatSfxKeyUngated(ev: EventMessage, seatId: number | null, phase: str
     case "whiff":
       return "whiff";
     case "rankUp":
-      return "abilityRankUp"; // 技能升級 — sim event ≠ map key, so a rename
+      // 技能升級 — sim event ≠ map key, so a rename. ⭐ 而且是**本人限定**
+      // （`rankUpKey`；`config.audio-map@1.rankUpAudience` 一格改回 `"all"`）。
+      return rankUpKey(ev, localEntityId);
     case "fireRingStart":
       // 火環收縮 (#132) — sim event ≠ map key, so a rename.
       //

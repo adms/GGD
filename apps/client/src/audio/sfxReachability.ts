@@ -54,7 +54,13 @@
  *     renaming an emit site turns the page red instead of leaving a stale claim;
  *   • every `events` name must be in the game-server's `FANNED_OUT_EVENT_TYPES`,
  *     which is what the original 19 silent keys actually tripped on;
- *   • every `payload` field must appear at the sim emit site for that event.
+ *   • every `payload` field must appear IN THE PAYLOAD OBJECT of a sim
+ *     `emit("<event>", { … })` call — ⛔ not merely somewhere in the file that
+ *     emits it. That distinction is not pedantry: it is the whole difference
+ *     between a green guard and the `projectileHit: ["origin"]` claim that sat
+ *     here for months while `ProjectileSystem.ts` emitted
+ *     `{ id, owner, target, projectileId }` and mentioned `proj.origin` on the
+ *     next line (see the hit-light/medium/heavy block below).
  *
  * THE ASYMMETRY IS DELIBERATE. The positive claim ("this clip is audible") is
  * the one the page makes and the one the owner's condition rests on, so it is
@@ -397,29 +403,43 @@ export const SFX_REACHABILITY: readonly SfxReachRow[] = [
   // `spatialPolicy.test.ts` 的兩條窮盡性測試都寫 `if (row.kind !== …) continue;`
   // —— 一個被標成 unreachable 的 key 會**從兩張表的守備範圍消失**，於是它零宣告
   // 就被空間化。這三列改回 combat 之後，它們的政策由自己所騎的事件推導
-  // （damage / projectileHit 都是 EVENT_SPATIAL ⇒ world），⛔ 不再是「沒有人反對過」。
+  // （`damage` 是 EVENT_SPATIAL ⇒ world），⛔ 不再是「沒有人反對過」。
+  //
+  // ⛔⛔ 這一批**曾經**寫著 `events: ["damage", "projectileHit"]` ＋
+  // `payload: { …, projectileHit: ["origin"] }`，而那**是一句謊話**（第一·五守則）：
+  // `ProjectileSystem.ts` 送的是 `{ id, owner, target, projectileId }` ——
+  // ⛔ **一個 `origin` 都沒有**。於是 `vfxSound` 那一條 `projectileHit` 的路
+  // 每一次都在 `abilityIdOfOrigin("")` 上回頭，一發都沒響過。
+  // ⭐ 今天玩家零損失：同一次命中的 `runEffects(onHit)` 會掉血 ⇒ 一顆 `damage`
+  //   事件，而**那一顆帶著 `origin`**，所以命中音本來就是從 `damage` 出來的。
+  // ⚠️ 所以正解**不是**把 `origin` 補上 `projectileHit` —— 那會讓同一次命中響
+  //   兩發（正是 `basicAttackHit` 那一列刻意被遮蔽的同一個理由）。正解是把宣告
+  //   改成只講真的會發生的事：**命中音只騎 `damage`**。
+  // ⚠️ 為什麼守衛沒喊：`sfxReachability.test.ts` 舊版問的是「**那個檔案**有沒有提到
+  //   `origin`」，而 `ProjectileSystem.ts` 滿篇都是 `proj.origin`。現在它改成**逐
+  //   emit-site 抽 payload 物件**，同一句謊話會當場紅。
   {
     key: "hit-light",
     kind: "combat",
     site: VFX_SOUND_SITE,
-    events: ["damage", "projectileHit"],
-    payload: { damage: ["origin"], projectileHit: ["origin"] },
+    events: ["damage"],
+    payload: { damage: ["origin"] },
     note: "families.breath.soundImpact — 4 支。",
   },
   {
     key: "hit-medium",
     kind: "combat",
     site: VFX_SOUND_SITE,
-    events: ["damage", "projectileHit"],
-    payload: { damage: ["origin"], projectileHit: ["origin"] },
+    events: ["damage"],
+    payload: { damage: ["origin"] },
     note: "families.tornado / lightColumn 的 soundImpact — 14 支。",
   },
   {
     key: "hit-heavy",
     kind: "combat",
     site: VFX_SOUND_SITE,
-    events: ["damage", "projectileHit"],
-    payload: { damage: ["origin"], projectileHit: ["origin"] },
+    events: ["damage"],
+    payload: { damage: ["origin"] },
     // ⚠️ `families.blood.soundLaunch` 也填著這個 key，但**沒有任何技能的 family 是
     // `blood`**（同型空綁定，見 GH#440）—— 所以這一列刻意**不**宣稱它騎 abilityCast：
     // 那會是一個沒有乘客的宣稱。blood 真的被綁上技能的那天要回來補 abilityCast。
@@ -474,21 +494,21 @@ export const SFX_REACHABILITY: readonly SfxReachRow[] = [
   { key: "wc3.blinkbirth1", kind: "combat", site: VFX_SOUND_SITE, events: ["abilityCast"], payload: { abilityCast: ["abilityId", "caster"] } },
   { key: "wc3.coldarrow1", kind: "combat", site: VFX_SOUND_SITE, events: ["abilityCast"], payload: { abilityCast: ["abilityId", "caster"] } },
   { key: "wc3.flaretarget1", kind: "combat", site: VFX_SOUND_SITE, events: ["abilityCast"], payload: { abilityCast: ["abilityId", "caster"] } },
-  { key: "wc3.flashback1second", kind: "combat", site: VFX_SOUND_SITE, events: ["damage", "projectileHit"], payload: { damage: ["origin"], projectileHit: ["origin"] } },
+  { key: "wc3.flashback1second", kind: "combat", site: VFX_SOUND_SITE, events: ["damage"], payload: { damage: ["origin"] } },
   { key: "wc3.fountainoflifewhat1", kind: "combat", site: VFX_SOUND_SITE, events: ["abilityCast"], payload: { abilityCast: ["abilityId", "caster"] } },
-  { key: "wc3.gluescreenmeteorhit2", kind: "combat", site: VFX_SOUND_SITE, events: ["damage", "projectileHit"], payload: { damage: ["origin"], projectileHit: ["origin"] } },
+  { key: "wc3.gluescreenmeteorhit2", kind: "combat", site: VFX_SOUND_SITE, events: ["damage"], payload: { damage: ["origin"] } },
   { key: "wc3.gruntwhat2", kind: "combat", site: VFX_SOUND_SITE, events: ["abilityCast"], payload: { abilityCast: ["abilityId", "caster"] } },
   { key: "wc3.invisibilitytarget", kind: "combat", site: VFX_SOUND_SITE, events: ["abilityCast"], payload: { abilityCast: ["abilityId", "caster"] } },
-  { key: "wc3.keeperofthegrovemissilehit1", kind: "combat", site: VFX_SOUND_SITE, events: ["damage", "projectileHit"], payload: { damage: ["origin"], projectileHit: ["origin"] } },
-  { key: "wc3.shimmeringportaldeath", kind: "combat", site: VFX_SOUND_SITE, events: ["damage", "projectileHit"], payload: { damage: ["origin"], projectileHit: ["origin"] } },
-  { key: "wc3.stasistotem", kind: "combat", site: VFX_SOUND_SITE, events: ["damage", "projectileHit"], payload: { damage: ["origin"], projectileHit: ["origin"] } },
-  { key: "wc3.wandofneutralization", kind: "combat", site: VFX_SOUND_SITE, events: ["damage", "projectileHit"], payload: { damage: ["origin"], projectileHit: ["origin"] } },
-  { key: "wc3.waterelementalmissile3", kind: "combat", site: VFX_SOUND_SITE, events: ["damage", "projectileHit"], payload: { damage: ["origin"], projectileHit: ["origin"] } },
-  { key: "wc3.witchdoctorcastattack1", kind: "combat", site: VFX_SOUND_SITE, events: ["damage", "projectileHit"], payload: { damage: ["origin"], projectileHit: ["origin"] } },
+  { key: "wc3.keeperofthegrovemissilehit1", kind: "combat", site: VFX_SOUND_SITE, events: ["damage"], payload: { damage: ["origin"] } },
+  { key: "wc3.shimmeringportaldeath", kind: "combat", site: VFX_SOUND_SITE, events: ["damage"], payload: { damage: ["origin"] } },
+  { key: "wc3.stasistotem", kind: "combat", site: VFX_SOUND_SITE, events: ["damage"], payload: { damage: ["origin"] } },
+  { key: "wc3.wandofneutralization", kind: "combat", site: VFX_SOUND_SITE, events: ["damage"], payload: { damage: ["origin"] } },
+  { key: "wc3.waterelementalmissile3", kind: "combat", site: VFX_SOUND_SITE, events: ["damage"], payload: { damage: ["origin"] } },
+  { key: "wc3.witchdoctorcastattack1", kind: "combat", site: VFX_SOUND_SITE, events: ["damage"], payload: { damage: ["origin"] } },
   // GH#439 —— `shockwaveRing` 家族的**落地那一下**（原作 `Units\Orc\Tauren\Warstomp.wav`）。
   // ⭐ 綁在 `families[]` 上,所以它替**整個家族**出聲(出貨 91 筆綁定,其中 66 筆原本
   // 指向 `warstompcaster`),⛔ 不是逐支技能各填一次。
-  { key: "wc3.warstomp", kind: "combat", site: VFX_SOUND_SITE, events: ["damage", "projectileHit"], payload: { damage: ["origin"], projectileHit: ["origin"] } },
+  { key: "wc3.warstomp", kind: "combat", site: VFX_SOUND_SITE, events: ["damage"], payload: { damage: ["origin"] } },
 
   // ⚠️ **收錄了但沒有人引用**的 68 個。owner 2026-08-19 把 133 個原作音效搬進版控
   // （出處帳本 `content/assets/audio/wc3/PROVENANCE.md`），其中 mdx `SNDx` 事件軌

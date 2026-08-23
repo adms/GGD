@@ -94,6 +94,23 @@ export const zAudioModelFxSound = z
   })
   .strict();
 
+/**
+ * ⭐ 技能升級鈴（`rankUp`）**播誰的**的回頭開關（lane D 2026-08-23）。
+ *
+ * ⚠️ `rankUp` 是**廣播**事件（`eventFanout.ts` 的註解逐字寫著「`id` 是 ENTITY，
+ * 不是 seat，所以只該替本人響的客戶端提示**必須自己夾**」）—— 而在此之前沒有人夾，
+ * 於是六個人每按一次 Q，你就聽見一次自己的升級鈴。
+ *
+ * owner 2026-08-23 的常設指令：「沒做完以前別問我了自己判斷 但是**留後台開關可以
+ * 簡易 rollback**」⇒ 出貨值是我挑的 `"self"`；`"all"` 逐位元回到夾之前的行為。
+ *
+ * ⛔ 刻意**只有兩個值**：稽核提過第三種「別人的播小聲一點」，而今天的
+ * `combatSfxKey` 只回一個 key、沒有任何 per-event 音量的縫（音量在 audio-map 的
+ * `sfx[key].gain`，那是逐 key 不是逐事件）。⇒ 收一個做不到的值進來，就是第一·五
+ * 守則點名的那種「設定得起來、遊戲裡什麼都不會發生」。
+ */
+export const zAudioRankUpAudience = z.enum(["self", "all"]);
+
 export const zConfigAudioMapDoc = z
   .object({
     id: zId,
@@ -132,10 +149,16 @@ export const zConfigAudioMapDoc = z
      * ⚠️ OPTIONAL 的理由與 `castLayerCap` / `mapBgm` 逐字相同。缺這一格 = 出貨預設。
      */
     modelFxSound: zAudioModelFxSound.optional(),
+    /**
+     * ⭐ 技能升級鈴要播誰的（見 {@link zAudioRankUpAudience}）。
+     * ⚠️ OPTIONAL 的理由與 `castLayerCap` / `mapBgm` 逐字相同。缺這一格 = `"self"`。
+     */
+    rankUpAudience: zAudioRankUpAudience.optional(),
   })
   .strict();
 export type AudioBgmTrack = z.infer<typeof zAudioBgmTrack>;
 export type AudioSfxEntry = z.infer<typeof zAudioSfxEntry>;
 export type AudioCastLayerCap = z.infer<typeof zAudioCastLayerCap>;
 export type AudioModelFxSound = z.infer<typeof zAudioModelFxSound>;
+export type AudioRankUpAudience = z.infer<typeof zAudioRankUpAudience>;
 export type ConfigAudioMapDoc = z.infer<typeof zConfigAudioMapDoc>;

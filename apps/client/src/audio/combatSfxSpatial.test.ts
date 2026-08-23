@@ -23,6 +23,18 @@ import { spatialMix, type SpatialListener } from "./spatial";
 
 const REPO = resolve(__dirname, "../../../..");
 const COMBAT_SFX_SRC = readFileSync(join(REPO, "apps/client/src/audio/combatSfx.ts"), "utf8");
+const VFX_SOUND_SRC = readFileSync(join(REPO, "apps/client/src/audio/vfxSound.ts"), "utf8");
+
+/**
+ * ⭐ GH#605 —— **第二條發聲路徑**。`vfxSound.vfxSoundCues` 自己 dispatch 事件型別
+ * （`ev.type === "modelFxSpawn"` …），播的是**技能節點/家族綁的 key**，⛔ 不經過
+ * `combatSfxKey`。它拿的位置一樣是 `resolveSpatial(ev)`，所以那些事件**也**需要
+ * 這張表的一列 —— 而「沒有死列」那一條的 `voiced` 必須看得到它們，否則一列真的
+ * 有人用的 spec 會被當成死列。
+ */
+function vfxVoicedEventTypes(): string[] {
+  return [...VFX_SOUND_SRC.matchAll(/ev\.type [!=]== "([a-zA-Z]+)"/g)].map((m) => m[1]!);
+}
 
 /**
  * Every sim event type `combatSfxKey` can turn into a sound, read off the file
@@ -77,9 +89,9 @@ describe("combatSfxSpatial coverage — every voiced event is classified", () =>
 
   it("declares no spec for anything the mapper cannot voice (no dead rows)", () => {
     cover("audio-spatial-callsite-coverage");
-    const voiced = new Set(voicedEventTypes());
+    const voiced = new Set([...voicedEventTypes(), ...vfxVoicedEventTypes()]);
     const dead = [...Object.keys(EVENT_SPATIAL), ...Object.keys(CENTRED_EVENTS)].filter((t) => !voiced.has(t));
-    expect(dead, `classified but never voiced by combatSfx.ts: ${dead.join(", ")}`).toEqual([]);
+    expect(dead, `classified but never voiced by combatSfx.ts / vfxSound.ts: ${dead.join(", ")}`).toEqual([]);
   });
 
   it("NEVER spatialises a UI / HUD / announcer / BGM key", () => {

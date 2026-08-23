@@ -13,7 +13,10 @@
  *     renaming an emit site goes red instead of leaving a stale claim;
  *   • each `events` name is in the game-server's FANNED_OUT_EVENT_TYPES — this
  *     is the exact trapdoor that left five "complete" cues silent for months;
- *   • each `payload` field appears at the sim emit site for its event.
+ *   • each `payload` field appears IN THE PAYLOAD OBJECT of an `emit()` call for
+ *     its event — ⛔ not merely somewhere in the file that emits it. See
+ *     {@link emitPayloads}: the file-level version of this check is what let
+ *     `projectileHit: ["origin"]` claim a cue that could never fire.
  *
  * NEGATIVE claims are held to a weaker standard on purpose: an `unreachable`
  * row only has to carry a stated reason. It understates, so its failure mode is
@@ -82,6 +85,38 @@ function simFiles(): string[] {
   return out;
 }
 
+/**
+ * Every `emit("<ev>", { … })` PAYLOAD OBJECT in one source file, brace-matched.
+ *
+ * ⛔ The old check asked whether the emitting FILE contained the field name
+ * anywhere, and that is not the same question. `ProjectileSystem.ts` emits
+ * `projectileHit` with `{ id, owner, target, projectileId }` and says
+ * `proj.origin` five lines later — so `projectileHit: ["origin"]` was green for
+ * months while the routing that reads it could never fire once.
+ */
+function emitPayloads(src: string, ev: string): string[] {
+  const out: string[] = [];
+  const marker = `emit("${ev}"`;
+  for (let at = src.indexOf(marker); at >= 0; at = src.indexOf(marker, at + 1)) {
+    const open = src.indexOf("{", at + marker.length);
+    if (open < 0) continue;
+    let depth = 0;
+    for (let i = open; i < src.length; i++) {
+      if (src[i] === "{") depth++;
+      else if (src[i] === "}" && --depth === 0) {
+        out.push(src.slice(open, i + 1));
+        break;
+      }
+    }
+  }
+  return out;
+}
+
+/** Does this payload object literal carry `field` as a key (or shorthand)? */
+function namesField(payload: string, field: string): boolean {
+  return new RegExp(`(^|[{,\\s])${field}\\s*[:,}]`).test(payload);
+}
+
 describe("sfxReachability (credits-data)", () => {
   it("classifies EVERY audio-map key exactly once — no key is left uncounted", () => {
     cover("credits-data");
@@ -125,19 +160,21 @@ describe("sfxReachability (credits-data)", () => {
     }
   });
 
-  it("proves every payload field the routing reads is on the sim emit site", () => {
+  it("proves every payload field the routing reads is IN the emit call's own payload", () => {
     cover("credits-data");
     const files = simFiles().map((p) => ({ p, src: readFileSync(p, "utf8") }));
     for (const row of SFX_REACHABILITY) {
       if (!row.payload) continue;
       for (const [ev, fields] of Object.entries(row.payload)) {
         expect(row.events, `${row.key} declares payload for "${ev}" but does not ride it`).toContain(ev);
-        const emitters = files.filter((f) => f.src.includes(`emit("${ev}"`));
-        expect(emitters.length, `no sim emit site found for "${ev}" (needed by ${row.key})`).toBeGreaterThan(0);
+        const payloads = files.flatMap((f) => emitPayloads(f.src, ev));
+        expect(payloads.length, `no sim emit site found for "${ev}" (needed by ${row.key})`).toBeGreaterThan(0);
         for (const field of fields) {
           expect(
-            emitters.some((f) => f.src.includes(field)),
-            `"${row.key}" reads \`${field}\` off "${ev}", but no file emitting that event mentions it`,
+            payloads.some((obj) => namesField(obj, field)),
+            `"${row.key}" reads \`${field}\` off "${ev}", but NO emit site puts that field on the ` +
+              `event. (This is the shape that let projectileHit:["origin"] stand for months: the ` +
+              `file mentions the word, the payload does not carry it.)`,
           ).toBe(true);
         }
       }

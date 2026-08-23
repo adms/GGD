@@ -25,8 +25,13 @@ import {
   resetProjectileSfx,
   arrowsInFlight,
   CAST_CIRCLE_MIN_SEC,
+  setRankUpAudience,
+  rankUpAudienceNow,
+  DEFAULT_RANK_UP_AUDIENCE,
 } from "./combatSfx";
 import { abilitySfxCueRegistry } from "./abilitySfxCues";
+import { AudioSystem } from "./AudioSystem";
+import { audioMapFromDoc } from "./types";
 
 const ev = (type: string, data: Record<string, unknown> = {}): EventMessage => ({
   type,
@@ -386,6 +391,57 @@ describe("combat SFX key selection (juice-sfx-key)", () => {
   it("rankUp renames to the abilityRankUp cue (#51 staged clip)", () => {
     cover("juice-sfx-key");
     expect(combatSfxKey(ev("rankUp", { id: 1, slot: "Q", rank: 2 }))).toBe("abilityRankUp");
+  });
+
+  describe("rankUp is 本人限定, and the back-office knob really turns it", () => {
+    afterEach(() => setRankUpAudience(undefined));
+
+    it("plays MY rank-up and drops the other five champions'", () => {
+      cover("juice-sfx-key");
+      const mine = ev("rankUp", { id: 42, slot: "Q", rank: 2 });
+      const theirs = ev("rankUp", { id: 7, slot: "R", rank: 1 });
+      expect(combatSfxKey(mine, null, "combat", 42)).toBe("abilityRankUp");
+      expect(combatSfxKey(theirs, null, "combat", 42)).toBeNull();
+      // 認不出自己（還沒收到快照）⇒ 播，⛔ 不是被一次查表失敗吃掉
+      expect(combatSfxKey(theirs, null, "combat", null)).toBe("abilityRankUp");
+    });
+
+    it("rolls back to the pre-gate behaviour on `rankUpAudience: \"all\"`", () => {
+      cover("juice-sfx-key");
+      const theirs = ev("rankUp", { id: 7, slot: "R", rank: 1 });
+      setRankUpAudience("all");
+      expect(combatSfxKey(theirs, null, "combat", 42)).toBe("abilityRankUp");
+      // 亂填的 override 降級成出貨預設，⛔ 不是未定義行為
+      setRankUpAudience("everyone-please");
+      expect(rankUpAudienceNow()).toBe(DEFAULT_RANK_UP_AUDIENCE);
+      expect(combatSfxKey(theirs, null, "combat", 42)).toBeNull();
+    });
+
+    /**
+     * ⭐ 這一條驗的是**出貨的那條路**（失敗形態②/⑤）：doc → `audioMapFromDoc` →
+     * `AudioSystem.setMap` → 政策真的到得了。⛔ 在此之前 `setMap` 重建物件只留
+     * bgm/mapBgm/sfx，所以 `castLayerCap`（GH#568）與 `modelFxSound`（GH#605）
+     * 兩格後台旋鈕在正式站上逐位元不存在 —— 而它們各自的測試都自己餵夾具進
+     * `layer.setAudioMap()`，繞過了這條路。
+     */
+    it("carries the policy fields all the way from the doc through setMap", () => {
+      cover("juice-sfx-key");
+      const map = audioMapFromDoc({
+        id: "audio-map",
+        schema: "config.audio-map@1",
+        bgm: {},
+        sfx: {},
+        castLayerCap: { enabled: true, maxLayers: 3, whitelist: [] },
+        modelFxSound: { enabled: false, arrive: false },
+        rankUpAudience: "all",
+      })!;
+      const sys = new AudioSystem({ silent: true });
+      sys.setMap(map);
+      expect(rankUpAudienceNow()).toBe("all");
+      // `sfxMap` 是 `vfxSoundLayer.setAudioMap()` 的唯一來源（GameApp 那一行）
+      expect(sys.sfxMap.castLayerCap?.maxLayers).toBe(3);
+      expect(sys.sfxMap.modelFxSound?.enabled).toBe(false);
+    });
   });
 
   it("timing-only + tally-owned events are silent (no double sound)", () => {
