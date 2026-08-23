@@ -115,11 +115,11 @@
       "castType": "self",
       "maxRank": 5,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        6.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
         0.0,
@@ -129,7 +129,19 @@
         0.0
       ],
       "range": 0.0,
-      "effects": [],
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 3.0
+        }
+      ],
       "vfxKey": "fx.prim.physical.slash",
       "passive": {
         "name": "58-02 鋼鐵尾巴",
@@ -250,7 +262,9 @@
             ]
           }
         ]
-      }
+      },
+      "cooldownTier": "極小",
+      "castTimeSec": 0.233
     },
     "E": {
       "id": "godie-ofar.e",

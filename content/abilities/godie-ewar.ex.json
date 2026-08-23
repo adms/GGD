@@ -11,7 +11,7 @@
     30.0
   ],
   "manaCost": [
-    576.0
+    288.0
   ],
   "range": 3.0,
   "targetsEnemies": true,
@@ -20,26 +20,26 @@
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "damageTier": "極大",
+        "damageTier": "小",
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 6.0
+            "coeff": 0.7
           }
         ]
       }
     },
     {
-      "kind": "knockback",
-      "distance": 6.0,
-      "speed": 16,
-      "from": "caster"
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 3.0,
+      "moveSpeedMult": 0.6
     }
   ],
   "icon": "assets/icons/abilities/godie-ewar.ex.webp",
   "vfxKey": "fx.w3x.particle.supershinythingy.p00",
   "cooldownTier": "中",
-  "manaCostTier": "大",
+  "manaCostTier": "中",
   "rangeTier": "極小",
-  "castTimeSec": 2
+  "castTimeSec": 1.133
 }

@@ -33,11 +33,11 @@ owner 2026-08-19（GH#438，這一份要涵蓋的**全部**軸）：
 | 軸 | JSON 欄位 | 出貨 config | 幾支技能填了 | 開關 |
 |---|---|---|---:|---|
 | 施法距離 | `rangeTier` | `range-tiers.json` | 193 (45.8%) | `enabled: true` |
-| 施法範圍 | `radiusTier` | `aoe-tiers.json` | 90 (21.4%) | `enabled: true` |
+| 施法範圍 | `radiusTier` | `aoe-tiers.json` | 91 (21.6%) | `enabled: true` |
 | 位移 | `distanceTier` | `displacement-tiers.json` | 2 (0.5%) | `enabled: true` |
-| **傷害** | `damageTier` | `damage-tiers.json` | 205 (48.7%) | `enabled: true` |
+| **傷害** | `damageTier` | `damage-tiers.json` | 204 (48.5%) | `enabled: true` |
 | **耗魔** | `manaCostTier` | `mana-tiers.json` | 204 (48.5%) | `enabled: true` |
-| **冷卻** | `cooldownTier` (+`cooldownShape`) | `cooldown-tiers.json` | 349 (82.9%) | `enabled: true` |
+| **冷卻** | `cooldownTier` (+`cooldownShape`) | `cooldown-tiers.json` | 353 (83.8%) | `enabled: true` |
 
 <sub>分母 = `content/abilities/` 的 421 份技能文件（含被動與 EX）。⚠️ 採用率**不是** 100% 不代表壞掉：手寫數字一直是合法的寫法，級距是**預設走的那條路**。</sub>
 
@@ -375,7 +375,7 @@ owner 2026-08-19：「**JASS 的部分優先權大於 w3x 技能設定**，因�
 | 09-02 瞬間移動 | `godie-o00x.w` | — | — | — | — | — | 12 | 極大 |
 | 58-03 就決定是你了!小智 | `godie-o02l.e` | — | — | — | — | — | 12 | 極大 |
 | 58-00 電光一閃 | `godie-o02l.passive` | — | — | — | — | — | 12 | 極大 |
-| 58-01 十萬伏特 | `godie-o02l.q` | w3a | 350 | — | — | — | 12 | 極大 |
+| 58-01 十萬伏特 | `godie-o02l.q` | w3a | 350 | 6 | 中 | — | 12 | 極大 |
 | 58-04 瘋狂皮卡丘 | `godie-o02l.r` | — | — | — | — | — | 12 | 極大 |
 | 99-002 把你給MikuMiku掉 | `godie-o02p.ex` | w3a | — | — | — | 600 | 12 | 極大 |
 | 99-00 可愛就是正義 | `godie-o02p.passive` | w3a | 600 | 12 | 極大 | — | — | — |

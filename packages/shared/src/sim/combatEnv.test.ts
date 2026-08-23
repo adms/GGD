@@ -126,6 +126,9 @@ describe("combat-env stat multipliers (env-01)", () => {
     const nonStat = COMBAT_ENV_KEYS.filter((k) => !STAT_ENV_CHAIN_KEYS.has(k));
     expect(nonStat.sort()).toEqual(
       [
+        // ⚖️ 2026-08-23 —— 系統技能倍率:formula-site（damage.ts 只乘 ability 起源),
+        // 與 damageDealt 同型,⛔ 不是屬性倍率。
+        "abilityDamage",
         "cooldown",
         // #189 — item passive ICD seconds (effects/hooks.ts). A formula-site
         // key like `cooldown`, not a stat multiplier.

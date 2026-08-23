@@ -23,11 +23,11 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 893 個檔案**，分佈在 2 個隔離區。
+**目前共 892 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
-| [`docs/legacy/`](legacy-index.md#docslegacy) | 453 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
+| [`docs/legacy/`](legacy-index.md#docslegacy) | 452 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
 | [`content/_legacy/`](legacy-index.md#contentlegacy) | 440 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
@@ -35,7 +35,7 @@ owner 2026-08-13：
 
 ---
 
-## `docs/legacy/` —— 453 檔
+## `docs/legacy/` —— 452 檔
 
 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）
 
@@ -309,7 +309,6 @@ owner 2026-08-13：
 | `_overwrites/overwrite_temp_20260820-014449/content/abilities/godie-e010.r.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260820-020339/packages/shared/src/content/descriptionClaims.baseline/godie-zzzz.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260820-020813/tools/skill-remake/heroes/godie-e002.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
-| `_overwrites/overwrite_temp_20260820-021833/packages/shared/tsconfig.tsbuildinfo` | （.tsbuildinfo 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260820-021858/packages/shared/src/content/schema/effect.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260820-021858/packages/shared/src/sim/effects/effect.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260820-021858/packages/shared/src/sim/effects/effectRegistry.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |

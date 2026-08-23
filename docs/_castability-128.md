@@ -21,7 +21,7 @@
 ## 總計
 
 - **格數**：51 英雄 × 7 槽 = **357**
-- **✅ PASS：292 / 357**（81.8%）　🟣 PASSIVE：59　🟡 只有特效：0　❌ FAIL：1　— 無此格：5
+- **✅ PASS：296 / 357**（82.9%）　🟣 PASSIVE：55　🟡 只有特效：0　❌ FAIL：1　— 無此格：5
 - 把「正確的永久被動」算進可接受行為：**351 / 357**（98.3%）如預期運作，真正的缺口是 **1** 格（❌ 1 ＋ 🟡 0），另有 **0** 格 🔵 本次未量測（形態閘）。
 - **閘 3 在看的那個數字**（只算版控首發名單那 49 人、扣掉「無此格」）：**341 / 342 = 99.71%**（棘輪下限 100.00%）。
 - 英雄生成失敗：**0**（無）
@@ -39,7 +39,7 @@
 | 頻道 | PASS 格數 |
 | --- | --: |
 | damage | 180 |
-| buff | 62 |
+| buff | 66 |
 | projectile | 14 |
 | status | 8 |
 | heal | 8 |
@@ -55,12 +55,12 @@
 
 | 英雄 | ID | 型 | Q | W | E | R | EX | 天生技 | 普攻 |
 | --- | --- | --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| 蟬在叫人壞掉 - 龍宮禮奈 | `godie-e001` | 近 | ✅ | 🟣 | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 蟬在叫人壞掉 - 龍宮禮奈 | `godie-e001` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 亞瑟王 - Saber | `godie-e002` | 近 | 🟣 | ✅ | ✅ | ✅ | 🟣 | 🟣 | ✅ |
 | 火霧戰士 - 夏娜 | `godie-e008` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | 最終泛用人型決戰兵器 - 初號機 | `godie-e00r` | 近 | 🟣 | 🟣 | 🟣 | ✅ | 🟣 | 🟣 | ✅ |
-| 白木老樹精 - 白木卡迪那 | `godie-e00s` | 遠 | ✅ | 🟣 | ✅ | ✅ | 🟣 | ✅ | ✅ |
-| 神鳴流劍士 - 櫻綻剎那 | `godie-e00w` | 近 | ✅ | 🟣 | ✅ | ✅ | 🟣 | 🟣 | ✅ |
+| 白木老樹精 - 白木卡迪那 | `godie-e00s` | 遠 | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ | ✅ |
+| 神鳴流劍士 - 櫻綻剎那 | `godie-e00w` | 近 | ✅ | ✅ | ✅ | ✅ | 🟣 | 🟣 | ✅ |
 | 寫輪眼復仇者 - 宇智波佐助 | `godie-edem` | 近 | ✅ | ✅ | ✅ | 🟣 | ✅ | 🟣 | ✅ |
 | 揍敵客大家長 - 揍敵客桀諾 | `godie-efur` | 近 | ✅ | ✅ | ✅ | ✅ | 🟣 | 🟣 | ✅ |
 | 魔法老師 - 涅吉。史普林。菲爾德 | `godie-emfr` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
@@ -87,7 +87,7 @@
 | 傲嬌電氣老鼠 - 皮卡娘 | `godie-o00k` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 獸神官 - 傑洛士 | `godie-o00l` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 夢幻之星 - 初音 | `godie-o02p` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
-| 神奇寶貝兒 - 皮卡丘 | `godie-ofar` | 遠 | ✅ | 🟣 | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 神奇寶貝兒 - 皮卡丘 | `godie-ofar` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 美白大法師 - 黑人牙膏 | `godie-ogld` | 遠 | ✅ | ✅ | ✅ | ✅ | ❌ | — | ✅ |
 | 賽亞人 - 悟空 | `godie-ogrh` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | 電車癡漢 - 臭作 | `godie-orkn` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
@@ -142,7 +142,6 @@
 
 | 英雄 | ID | 槽 | 掛載 |
 | --- | --- | --- | --- |
-| 蟬在叫人壞掉 - 龍宮禮奈 | `godie-e001` | W | passive:modifiers |
 | 亞瑟王 - Saber | `godie-e002` | Q | passive:modifiers |
 | 亞瑟王 - Saber | `godie-e002` | EX | passive:hooks |
 | 亞瑟王 - Saber | `godie-e002` | PASSIVE | passive:hooks |
@@ -152,9 +151,7 @@
 | 最終泛用人型決戰兵器 - 初號機 | `godie-e00r` | E | passive:hooks |
 | 最終泛用人型決戰兵器 - 初號機 | `godie-e00r` | EX | passive:hooks |
 | 最終泛用人型決戰兵器 - 初號機 | `godie-e00r` | PASSIVE | passive:hooks |
-| 白木老樹精 - 白木卡迪那 | `godie-e00s` | W | passive:hooks |
 | 白木老樹精 - 白木卡迪那 | `godie-e00s` | EX | passive:hooks |
-| 神鳴流劍士 - 櫻綻剎那 | `godie-e00w` | W | passive:hooks |
 | 神鳴流劍士 - 櫻綻剎那 | `godie-e00w` | EX | passive:hooks |
 | 神鳴流劍士 - 櫻綻剎那 | `godie-e00w` | PASSIVE | passive:modifiers |
 | 寫輪眼復仇者 - 宇智波佐助 | `godie-edem` | R | passive:hooks |
@@ -193,7 +190,6 @@
 | 傳說的龍騎士 - 勇者小呆 | `godie-nbbc` | PASSIVE | passive:hooks |
 | 妖狐藏馬 - 南野秀一 | `godie-nsjs` | PASSIVE | passive:hooks |
 | 夢幻之星 - 初音 | `godie-o02p` | PASSIVE | passive:hooks |
-| 神奇寶貝兒 - 皮卡丘 | `godie-ofar` | W | passive:hooks |
 | 賽亞人 - 悟空 | `godie-ogrh` | PASSIVE | passive:hooks |
 | 神性的流失 - 賽菲洛斯 | `godie-u00j` | EX | passive:hooks |
 | 神性的流失 - 賽菲洛斯 | `godie-u00j` | PASSIVE | passive:modifiers |

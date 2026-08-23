@@ -324,6 +324,14 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "⭐ 可反駁：那 44 支接上去之後這一列就會有採用而自動失效；" +
       "⛔ 而如果三個月後它還在 0 筆，那代表那個機制沒有人要，該刪的是機制不是這一列。",
   },
+  "enum:abilities.effects[]#chainLightning.amount.damageTier=極大": {
+    status: "default-live",
+    why:
+      "連鎖閃電的傷害級距是**五選一的詞彙**（鏡射 damage-tiers）,而出貨的連鎖閃電技能" +
+      "沒有一支落在極大 —— 這是**量到的內容分佈**,⛔ 不是漏接。" +
+      "⭐ 可反駁:哪天有一支極大級的連鎖閃電進 content,這一列自動失效。" +
+      "⛔ 不要為了讓它變綠去把某支技能抬到極大 —— 那會改變那支技能的每一場比賽。",
+  },
   // ═══ GH#606 移動特效離地高度 2026-08-23 ═══════════════════════════════════
   "field:models.fxSpawnHeight": {
     status: "default-live",

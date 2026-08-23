@@ -8,10 +8,10 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    6.0,
+    6.0,
+    6.0,
+    6.0
   ],
   "manaCost": [
     0.0,
@@ -20,7 +20,19 @@
     0.0
   ],
   "range": 0.0,
-  "effects": [],
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "critChance",
+          "op": "flat",
+          "value": 0.25
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
   "vfxKey": "fx.prim.blood.slash",
   "schema": "ability@1",
   "passive": {
@@ -83,5 +95,7 @@
         ]
       }
     ]
-  }
+  },
+  "castTimeSec": 0.233,
+  "cooldownTier": "極小"
 }

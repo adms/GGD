@@ -155,10 +155,10 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
         0.0,
@@ -167,7 +167,19 @@
         0.0
       ],
       "range": 0.0,
-      "effects": [],
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "critChance",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 6.0
+        }
+      ],
       "vfxKey": "fx.prim.blood.slash",
       "passive": {
         "name": "22-02 染血的柴刀",
@@ -229,7 +241,9 @@
             ]
           }
         ]
-      }
+      },
+      "cooldownTier": "極小",
+      "castTimeSec": 0.233
     },
     "E": {
       "id": "godie-e001.e",
