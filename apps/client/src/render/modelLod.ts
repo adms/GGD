@@ -203,6 +203,8 @@ export function getModelLodPolicy(): ConfigModelLodDoc {
  * a policy, so "unreadable" must mean "the shipped policy", never "no LOD" and
  * never a half-applied mix of the two.
  */
+import { setAdaptiveCostModeFromPolicy } from "./AdaptiveQuality";
+
 export function applyModelLodPolicy(doc: unknown): void {
   const d = doc as ConfigModelLodDoc | null | undefined;
   const isTier = (v: unknown): v is ModelLodTier =>
@@ -218,6 +220,12 @@ export function applyModelLodPolicy(doc: unknown): void {
     isTier(d.presetTiers.high) &&
     isTier(d.presetTiers.auto);
   policy = ok ? d : DEFAULT_MODEL_LOD;
+  // ⭐ GH#D5 —— 自適應階梯讀哪一個成本，同一份文件、同一條路。
+  // ⛔ 少了這一行，後台那一格就是失敗形態②：schema 收得下、頁面顯示 frame，
+  //    而階梯仍然照 localStorage（或出貨常數）走。
+  // ⚠️ 主控台的 `__ggdAdaptiveCost()` 仍然贏 —— 它是**回報卡頓的當下**手上唯一的
+  //    工具（F12），而後台那一格要重新整理才拿得到。兩者的優先序刻意如此。
+  setAdaptiveCostModeFromPolicy(policy.adaptiveCostMode);
   for (const fn of policyListeners) fn();
 }
 

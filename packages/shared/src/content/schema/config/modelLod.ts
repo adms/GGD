@@ -41,6 +41,22 @@ export const zConfigModelLodDoc = z
         auto: zModelLodTier,
       })
       .strict(),
+    /**
+     * ⭐ **自適應階梯讀哪一個成本**（GH#D5）。
+     *
+     * `frame`（出貨）＝ **整幀**：準時的幀回報 `workMs`、**遲到的幀回報 `wallMs`**。
+     * ⛔ 在此之前它只讀 rAF 迴圈自己的 `workMs` ⇒ 瀏覽器合成、強制回流、GC、
+     * shader 編譯、React reconcile **這一段再大它也不會降畫質**
+     * —— 那就是「fps 好看卻很卡」的機制。
+     *
+     * `work` ＝ **止血閥**，逐位元回到 2026-08-23 之前的行為。
+     *
+     * ⚠️ ⛔ **不可以直接改成無條件讀 `wallMs`**（量過會做出更糟的缺陷）：
+     * 牆上間隔的下界是「fps 上限」與「面板更新率」的較大值 ⇒ 健康機器**永遠**
+     * 只量得到 60，而往上爬的門檻是 72 ⇒ **階梯一旦降下去就再也回不來**。
+     * ⇒ 規則是「一個判斷、兩種回報」：`wallMs ≤ 1000/target × 1.15` 算準時。
+     */
+    adaptiveCostMode: z.enum(["frame", "work"]).default("frame"),
   })
   .strict();
 export type ModelLodTierName = z.infer<typeof zModelLodTier>;
@@ -55,9 +71,13 @@ export type ConfigModelLodDoc = z.infer<typeof zConfigModelLodDoc>;
  * `packages/shared/src/content/modelLodConfig.test.ts` 的 drift 斷言在守。
  * 兩份存在的理由不同:JSON 是**出貨值**(操作者會改),這份是**程式的保險絲**。
  */
+/** 自適應階梯的成本來源出貨值（GH#D5）。`work` = 逐位元回到 2026-08-23 之前。 */
+export const DEFAULT_ADAPTIVE_COST_MODE = "frame" as const;
+
 export const DEFAULT_MODEL_LOD: ConfigModelLodDoc = {
   id: "model-lod",
   schema: "config.model-lod@1",
   enabled: true,
   presetTiers: { low: "small", medium: "mid", high: "high", auto: "high" },
+  adaptiveCostMode: DEFAULT_ADAPTIVE_COST_MODE,
 };

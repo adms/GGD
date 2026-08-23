@@ -8,5 +8,6 @@
     "medium": "mid",
     "high": "high",
     "auto": "high"
-  }
+  },
+  "adaptiveCostMode": "frame"
 }

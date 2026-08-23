@@ -43,6 +43,11 @@
  * 所以誠實的 `workMs` 滾動視窗留在 `frameWorkWindow`，⛔ 不是跟階梯共用一個。
  */
 
+// ⛔ 出貨預設只有一個住處 —— `config.model-lod@1` 的 Zod schema（第〇·四守則）。
+//    ⚠️ 這是這個檔唯一的 import：它是純決策邏輯，⛔ 不碰 Babylon。
+import { DEFAULT_ADAPTIVE_COST_MODE } from "@ggd/shared/content/schema/config/modelLod";
+
+
 /** One rung of the degradation ladder (index 0 = best quality). */
 export interface AdaptiveLevel {
   resolutionScale: number;
@@ -292,7 +297,12 @@ export class AdaptiveManager {
  */
 export type AdaptiveCostMode = "frame" | "work";
 
-export const DEFAULT_ADAPTIVE_COST_MODE: AdaptiveCostMode = "frame";
+/**
+ * ⛔ **出貨預設只有一個住處** —— `config.model-lod@1` 的 Zod schema
+ *（`packages/shared/.../config/modelLod.ts`）。第〇·四守則：
+ * 在這裡再寫一次 `"frame"` 就是第二個住處，而它會在 owner 改後台之後靜靜漂開。
+ */
+export { DEFAULT_ADAPTIVE_COST_MODE };
 
 /**
  * 「遲到」的容忍倍率。rAF 的間隔本來就會抖（`FRAME_CAP_SLACK_MS` 存在的同一個
@@ -398,6 +408,19 @@ export function setAdaptiveCostMode(mode: AdaptiveCostMode): AdaptiveCostMode {
   } catch {
     /* 存不進去就只影響這一場，⛔ 不影響這一次切換本身 */
   }
+  return costMode;
+}
+
+/**
+ * ⭐ **後台那一格**（`config.model-lod@1.adaptiveCostMode`）—— 由 `applyModelLodPolicy()` 呼叫。
+ *
+ * ⚠️ ⛔ **主控台的選擇贏過它**：`__ggdAdaptiveCost()` 寫進 localStorage，而那是
+ * **回報卡頓的當下**手上唯一的工具（F12）；後台那一格要重新整理才拿得到。
+ * ⇒ 有 localStorage 就不動（⛔ 不是「後台永遠贏」，那會讓止血閥在下一次重整時失效）。
+ */
+export function setAdaptiveCostModeFromPolicy(mode: AdaptiveCostMode | undefined): AdaptiveCostMode {
+  if (readStoredCostMode() !== null) return costMode;
+  costMode = mode === "work" ? "work" : "frame";
   return costMode;
 }
 
