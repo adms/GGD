@@ -57,4 +57,26 @@ describe("scripts/tune.sh", () => {
     expect(/pnpm -s typecheck|pnpm typecheck/.test(code), "T0 路跑了 typecheck").toBe(false);
     expect(/vitest run --root apps\//.test(code), "T0 路跑了 apps 的 vitest").toBe(false);
   });
+
+  it("★ T0.5：六個內容集合放行，且閘子集升一級（鏡像/編號對位兩支單檔 vitest）", () => {
+    // owner 2026-08-23：「改暈眩只要改共享的 JSON 就好，哪裡來那麼多毛病」
+    for (const c of ["abilities", "items", "champions", "vfx", "models", "ability-templates"]) {
+      expect(code.includes(`content/${c}/*.json`), `T0.5 白名單少了 content/${c}`).toBe(true);
+    }
+    expect(/abilityMirror\.test\.ts/.test(code), "T0.5 沒跑 abilityMirror").toBe(true);
+    expect(/abilityCodeParityForms\.test\.ts/.test(code), "T0.5 沒跑 abilityCodeParityForms").toBe(
+      true,
+    );
+  });
+
+  it("★ T0.5：anchors/echoloop 是條件式 —— 有 tier 欄位偵測，且純 T0 仍然全跑", () => {
+    // ⛔ 「條件式」只裁跑不跑；偵測不存在 ⇒ 要嘛永遠跑（浪費）要嘛永遠不跑（漏閘）。
+    expect(/damageTier\|cooldownTier/.test(code), "沒有 damage/cooldown tier 欄位偵測").toBe(true);
+    expect(
+      /T05_PATHS\[@\]\}" -eq 0 \] \|\| \[ "\$CONFIG_TOUCHED" -eq 1 \] \|\| tier_fields_touched/.test(
+        code,
+      ),
+      "純 T0（config）不再無條件跑 anchors/echoloop —— 那是削弱既有的閘",
+    ).toBe(true);
+  });
 });

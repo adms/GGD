@@ -20,8 +20,20 @@
 #  ③ 動到 owner 的系統倍率那一族 ⇒ `ownerKnobs.test.ts` 要綠
 #     （每一格都要引用得到他的一句原話）。
 #
+# ── ⭐ T0.5（2026-08-23 加）：技能/道具側的內容 JSON ────────────────────────
+# owner 逐字：「**改暈眩只要改共享的 JSON 就好，哪裡來那麼多毛病**，
+#              又不是增加新技能效果或標籤」
+# ⇒ `content/{abilities,items,champions,vfx,models,ability-templates}/*.json` 也放行，
+#   但閘子集**升一級**（⛔ 只裁「跑不跑」，⛔ 不改任何一支閘的判準）：
+#     · content:build 嚴格 Zod（跟 T0 一樣）
+#     · skillnorm:check + prose:check（卡面↔JSON 一致 —— 石化之眼那次抓到真謊話，⛔ 不可省）
+#     · abilityMirror + abilityCodeParityForms 兩支**單檔** vitest（鏡像/編號對位）
+#     · 動到 damage/cooldown 級距欄位 ⇒ 再加 anchors:check + echoloop:check
+#   ⛔ 仍然不跑 typecheck／七包 vitest —— 一行程式都沒動。
+#   ⛔ 三道 fail-closed 原封不動；混到任何程式/schema 路徑 ⇒ 照樣拒絕走全量。
+#
 # 用法：
-#   bash scripts/tune.sh                       # 看這次改動能不能走 T0
+#   bash scripts/tune.sh                       # 看這次改動能不能走 T0 / T0.5
 #   bash scripts/tune.sh --deploy "說明"        # 驗過就直接上（--content-only）
 # ⚠️ ⛔ 不設 `-u`:bash 3.2 對空陣列的 `${arr[@]}` 會當成 unbound。
 set -o pipefail
@@ -57,26 +69,37 @@ done < <(
 
 say "改動 ${#PATHS[@]} 個路徑"
 
-# ⭐ 允許的落點：只有設定檔與它的產物。⛔ 其餘一律出局。
+# ⭐ 允許的落點：設定檔（T0）、技能/道具側內容（T0.5）、與它們的產物。⛔ 其餘一律出局。
+CONFIG_TOUCHED=0
+T05_PATHS=()
 OUTSIDE=()
 for p in "${PATHS[@]}"; do
   case "$p" in
-    content/config/*.json) ;;
     content/bundle.json|content/manifest.json|content/*/_index.json) ;;   # content:build 的產物
+    content/editor-target-profile.json) ;;                                # 同上(外部編輯器契約,帶 digest)
+    content/config/*.json) CONFIG_TOUCHED=1 ;;
+    content/abilities/*.json|content/items/*.json|content/champions/*.json|content/vfx/*.json|content/models/*.json|content/ability-templates/*.json)
+      T05_PATHS+=("$p") ;;                                                # ⭐ T0.5:技能/道具側
+    docs/技能標記機制與效果規則.md|docs/固有能力及寶具總覽.md) ;;             # content:build 的產物(spec/overview)
+    docs/editor-contract/ggd-skill-tiers.md|docs/editor-contract/ggd-ability-prose.json) ;; # 同上(tiers/prose)
     docs/_daily/*|docs/_release/*|docs/_reports/*) ;;                     # 帳本/報告,不進映像
     *) OUTSIDE+=("$p") ;;
   esac
 done
 
 if [ "${#OUTSIDE[@]}" -gt 0 ]; then
-  bad "這些改動**不是**純數值：" >&2
+  bad "這些改動**不是**純內容調整：" >&2
   printf '     %s\n' "${OUTSIDE[@]}" >&2
-  die "⇒ T0 走不了。跑 ${BOLD}pnpm ship${OFF}${RED}（全量：程式／schema／映像一起）。
+  die "⇒ T0/T0.5 走不了。跑 ${BOLD}pnpm ship${OFF}${RED}（全量：程式／schema／映像一起）。
    ⭐ 這一道刻意 fail-closed —— 2026-08-02 那次就是 content 與 schema 都動了
       而只有 content 被送上去 ⇒ 舊映像的 Zod 不認得新欄位 ⇒ 退回骨架英雄，
       ⛔ 而網站看起來完全正常。"
 fi
-ok "改動全部落在 content/config/ 與它的產物裡"
+if [ "${#T05_PATHS[@]}" -gt 0 ]; then
+  ok "T0.5：含 ${#T05_PATHS[@]} 個技能/道具側 JSON（閘子集升一級）"
+else
+  ok "改動全部落在 content/config/ 與它的產物裡"
+fi
 
 # ── ② 嚴格 Zod（content:build 自己會擋界外值）────────────────────────────
 say "content:build（嚴格 Zod 驗證 → 重建索引與 bundle）"
@@ -98,10 +121,31 @@ if printf '%s\n' "${PATHS[@]}" | grep -qE 'content/config/(combat-env|owner-knob
   fi
 fi
 
-# ⭐ 內容相關的閘（⛔ 不是全部 36 支）：只有真的會因為 config 改動而過期的那幾支。
-say "內容側的閘（⛔ 不跑 typecheck／vitest —— 一行程式都沒動）"
+# ⭐ T0.5 的平衡閘是**條件式**的：anchors/echoloop 驗的是 damage/cooldown 級距的
+#    推導鏈 —— 沒動到那兩族欄位就不必跑（⛔ 只裁跑不跑，兩支閘的判準一個字都沒動）。
+#    純 T0（config）維持四支全跑：系統倍率/公式正是它們要抓的。
+tier_fields_touched() {
+  [ "${#T05_PATHS[@]}" -gt 0 ] || return 1
+  git -c core.quotepath=false diff HEAD -- "${T05_PATHS[@]}" 2>/dev/null \
+    | grep -qE '"(damageTier|cooldownTier)"' && return 0
+  local f
+  for f in "${T05_PATHS[@]}"; do
+    git ls-files --error-unmatch -- "$f" >/dev/null 2>&1 && continue  # 已追蹤 ⇒ 上面的 diff 已涵蓋
+    [ -f "$f" ] && grep -qE '"(damageTier|cooldownTier)"' "$f" && return 0
+  done
+  return 1
+}
+
+# ⭐ 內容相關的閘（⛔ 不是全部 36 支）：只有真的會因為這次改動而過期的那幾支。
+GATES=(skillnorm:check prose:check)
+if [ "${#T05_PATHS[@]}" -eq 0 ] || [ "$CONFIG_TOUCHED" -eq 1 ] || tier_fields_touched; then
+  GATES+=(anchors:check echoloop:check)
+else
+  warn "T0.5 沒動到 damage/cooldown 級距欄位 ⇒ 跳過 anchors:check + echoloop:check"
+fi
+say "內容側的閘（⛔ 不跑 typecheck／七包 vitest —— 一行程式都沒動）：${GATES[*]}"
 FAILED=()
-for g in skillnorm:check prose:check anchors:check echoloop:check; do
+for g in "${GATES[@]}"; do
   if pnpm -s "$g" > "/private/tmp/tune-$( echo "$g" | tr ':' '_' ).log" 2>&1; then
     ok "$g"
   else
@@ -109,6 +153,20 @@ for g in skillnorm:check prose:check anchors:check echoloop:check; do
     FAILED+=("$g")
   fi
 done
+
+# ⭐ T0.5 加的一級：鏡像與編號對位（兩支**單檔**，一次 vitest 啟動）。
+#    石化之眼那次教訓：卡面說一套、JSON 做一套 —— 這兩支就是抓這種謊話的。
+if [ "${#T05_PATHS[@]}" -gt 0 ]; then
+  say "T0.5 一致性閘（abilityMirror + abilityCodeParityForms —— 單檔 vitest）"
+  if npx vitest run --root packages/shared \
+      src/content/abilityMirror.test.ts src/content/abilityCodeParityForms.test.ts \
+      > /private/tmp/tune-t05-vitest.log 2>&1; then
+    ok "abilityMirror + abilityCodeParityForms"
+  else
+    bad "abilityMirror/abilityCodeParityForms → /private/tmp/tune-t05-vitest.log"
+    FAILED+=("t05-vitest")
+  fi
+fi
 [ "${#FAILED[@]}" -eq 0 ] || die "${#FAILED[@]} 支內容閘紅了 —— ⛔ 一次列完了，逐支修完再跑。"
 
 printf '\n%s\n' "${GRN}${BOLD}✅ T0 可行 —— 這一次改動不需要重建映像。${OFF}"
@@ -122,9 +180,14 @@ fi
 [ -n "$NOTE" ] || die "--deploy 要帶一句說明（它會進 commit 訊息）。"
 
 say "commit（⛔ 逐檔 pathspec —— index 是全 repo 共用的）"
-printf 'chore(tune): %s\n\n⭐ 純數值調整,走 T0（`scripts/tune.sh`）—— ⛔ 沒有重建映像。\n三道 fail-closed 全過:只碰 content/config · 嚴格 Zod · owner 授權表。\n' \
-  "$NOTE" > /private/tmp/tune-msg.txt
-git commit -F /private/tmp/tune-msg.txt -- content/config content/bundle.json content/manifest.json content/*/_index.json \
+TIER=T0; [ "${#T05_PATHS[@]}" -gt 0 ] && TIER=T0.5
+printf 'chore(tune): %s\n\n⭐ 純內容調整,走 %s（`scripts/tune.sh`）—— ⛔ 沒有重建映像。\n三道 fail-closed 全過:只碰 content 白名單 · 嚴格 Zod · owner 授權表。\n' \
+  "$NOTE" "$TIER" > /private/tmp/tune-msg.txt
+git commit -F /private/tmp/tune-msg.txt -- \
+  content/config content/abilities content/items content/champions content/vfx content/models content/ability-templates \
+  content/bundle.json content/manifest.json content/*/_index.json content/editor-target-profile.json \
+  docs/技能標記機制與效果規則.md docs/固有能力及寶具總覽.md \
+  docs/editor-contract/ggd-skill-tiers.md docs/editor-contract/ggd-ability-prose.json \
   || die "commit 失敗（多半是沒有東西變 —— 產物已經是最新的？）"
 git push origin HEAD || die "push 失敗"
 ok "已推上去"
