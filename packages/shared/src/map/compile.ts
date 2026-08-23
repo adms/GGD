@@ -35,6 +35,7 @@ import { DEFAULT_STAGE1_RADIUS, fireRingSafeAt } from "../sim/fireRing";
 import type { ZoneDef } from "../sim/world/ArenaDef";
 import { bakeNav, isWalkable, pickNodes, type GridPos, type TileGrid } from "./graph";
 import { mergeWalls, rectToBox, tileCenter } from "./merge";
+import { FLOOR, WALL } from "./templates";
 import { DUEL_ZONES_PER_MAP_MIN } from "./spec";
 import { validateMap, type MapReport } from "./validate";
 
@@ -239,7 +240,6 @@ export function compileMap(
   // ⛔ 不是沿用 —— 沿用會讓 content:build 直接拒收。
   const arenaId = doc.id.startsWith("map.") ? `arena.${doc.id.slice(4)}` : `arena.${doc.id}`;
 
-  const wallRects = mergeWalls(g);
   const spawnTiles = pickSpawns(g, ts, halfW, halfD, pocketRadius, spec.spawn);
   const must = spawnTiles.flat().concat(doc.interactions.map((i) => i.at));
   const nav = bakeNav(g, pickNodes(g, must, MAX_NAV_NODES));
@@ -249,36 +249,73 @@ export function compileMap(
     for (const t of grp.tiles) gateOf.set(`${t.row},${t.col}`, grp.id);
   }
 
+  // ⭐ GH#397／#624 —— gate 的障礙物**自己一個來源**，⛔ 不從牆格推。
+  //
+  // ⚠️ 這一段在 2026-08-24 之前是這樣寫的：牆格合併成矩形之後，若「整塊矩形
+  //    都屬於同一個 gate 群組」才給它 `gateGroup`。那個形狀對**兩個方向**都失效：
+  //
+  //    ① 門在基礎格網裡是**地板**（`.`）—— 七張圖有六張這樣寫，而那是對的：
+  //       基礎格網＝「全部的門都開著」，驗證器的 `gateTrapsPlayers` 也正是把
+  //       關上的門**畫成 `#`** 再驗連通。⇒ 合併牆格時它根本不存在 ⇒ 產出 0 個。
+  //    ② 門若真的寫成 `#` 又貼著一堵長牆，`mergeWalls` 會把它**吞進同一個盒**
+  //       ⇒ `allSame` 為 false ⇒ 一樣產出 0 個。
+  //
+  //    ⇒ 兩個方向都得到「宣告 N 道門、產出 0 個 gateGroup」，而每一條既有守衛
+  //    都是綠的（失敗形態⑧：宣告在、消費端拿不到）。實測 6/7 張圖是 0。
+  //
+  // ⭐ 現在的規則只有一條：**gate 格由 gateGroups 決定，與 tiles 無關**。
+  //    永久牆先把 gate 格挖掉（⛔ 免得一堵長牆把門吞進同一個盒），
+  //    gate 的盒再逐群組各自合併。守衛 `gateWiring.test.ts` 逐圖比對數量。
+  const permGrid: TileGrid =
+    gateOf.size === 0
+      ? g
+      : {
+          cols: g.cols,
+          rows: g.rows,
+          tiles: g.tiles.map((row, r) =>
+            [...row].map((ch, c) => (gateOf.has(`${r},${c}`) ? FLOOR : ch)).join(""),
+          ),
+        };
+  const wallRects = mergeWalls(permGrid);
+  // ⚠️ 順序＝`gateGroups` 的文件序 × `mergeWalls` 的掃描序 ⇒ 決定性（`--check` 靠它）。
+  const gateRects = doc.gimmick.gateGroups.map((grp) => ({
+    id: grp.id,
+    rects: mergeWalls({
+      cols: g.cols,
+      rows: g.rows,
+      tiles: Array.from({ length: g.rows }, (_, r) =>
+        Array.from({ length: g.cols }, (_, c) =>
+          gateOf.get(`${r},${c}`) === grp.id ? WALL : FLOOR,
+        ).join(""),
+      ),
+    }),
+  }));
+
   const zones = [];
   for (let zi = 0; zi < duelZones; zi++) {
     // 分區沿 +x 排開；地圖的 tile(0,0) 左上角落在 origin。
     const centerX = zi * doc.grid.cols * ts * ZONE_GAP_FACTOR;
     const origin = { x: centerX - halfW, z: -halfD };
 
-    const obstacles = wallRects.map((rc) => {
-      const box = rectToBox(rc, ts, origin);
-      // 一個牆矩形若**整塊**屬於同一個 gate 群組，才帶 gateGroup ——
-      // ⚠️ 半塊屬於 gate 是資料錯誤，讓它保持永遠擋路（安全的那一邊）。
-      let gg: string | undefined;
-      let allSame = true;
-      for (let r = rc.row; r < rc.row + rc.h && allSame; r++) {
-        for (let c = rc.col; c < rc.col + rc.w; c++) {
-          const here = gateOf.get(`${r},${c}`);
-          if (gg === undefined) gg = here;
-          if (here !== gg) {
-            allSame = false;
-            break;
-          }
-        }
-      }
-      return {
-        kind: "box" as const,
-        center: box.center,
-        halfW: box.halfW,
-        halfD: box.halfD,
-        ...(allSame && gg !== undefined ? { gateGroup: gg } : {}),
-      };
-    });
+    const obstacles = [
+      ...wallRects.map((rc) => {
+        const box = rectToBox(rc, ts, origin);
+        return { kind: "box" as const, center: box.center, halfW: box.halfW, halfD: box.halfD };
+      }),
+      // ⭐ 門：`gateGroup` 有值 ⇒ `activeObstacles` 只在該組**關上**的 tick 留下它。
+      ...gateRects.flatMap((gr) =>
+        gr.rects.map((rc) => {
+          const box = rectToBox(rc, ts, origin);
+          return {
+            kind: "box" as const,
+            center: box.center,
+            halfW: box.halfW,
+            halfD: box.halfD,
+            gateGroup: gr.id,
+          };
+        }),
+      ),
+    ];
 
     zones.push({
       id: `${arenaId}-z${zi}`,

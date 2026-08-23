@@ -82,7 +82,7 @@ import type { TriggerDamage } from "./effects/effect";
 import type { KillComboState } from "./combat/killCombo";
 import { SpatialHash } from "./collision/spatialHash";
 import type { ArenaDef } from "./world/ArenaDef";
-import type { GateSchedule } from "./map/gates";
+import { gateScheduleOf, type GateSchedule } from "./map/gates";
 import { TICK_MS } from "../constants";
 import { orderSystem } from "./systems/OrderSystem";
 import { movementSystem } from "./systems/MovementSystem";
@@ -1331,6 +1331,7 @@ export class SimWorld {
 
   constructor(arena: ArenaDef, seed: number) {
     this.arena = arena;
+    this.gateSchedule = gateScheduleOf(arena);
     this.rng = new Rng(seed);
   }
 
@@ -1341,6 +1342,10 @@ export class SimWorld {
    */
   setArena(arena: ArenaDef): void {
     this.arena = arena;
+    // ⭐ GH#397 —— 排程跟著場地一起換。⛔ 少了這一行，`gateSchedule` 的寫入端
+    //    是**零個**（宣告成 `undefined` 之後全 repo 沒有人指派它），於是
+    //    `activeObstacles` 一律走「沒有排程 ⇒ 原樣回傳」那條路 ⇒ 門永遠關著。
+    this.gateSchedule = gateScheduleOf(arena);
   }
 
   spawn(): EntityId {

@@ -27,6 +27,23 @@ export interface GateSchedule {
 }
 
 /**
+ * 一張場地的 gate 排程 —— ⭐ `SimWorld` 的 `gateSchedule` **唯一**的來源（GH#397）。
+ *
+ * ⚠️ 產生器把**同一份**排程逐字寫進每一個 zone（一張 map = N 個對戰分區的
+ * 同一份地形），所以第一個帶排程的 zone 就是答案。沒有任何 zone 帶排程
+ * ⇒ `undefined` ⇒ 既有 6 張手寫場地零成本、零行為改變。
+ *
+ * ⛔ 不要讓呼叫端自己寫 `arena.zones[0]?.gates` —— 那會變成第二個住處，
+ * 而 `zones[0]` 剛好沒有排程的那一天它會靜靜地回 undefined。
+ */
+export function gateScheduleOf(arena: {
+  zones: readonly { gates?: GateSchedule }[];
+}): GateSchedule | undefined {
+  for (const z of arena.zones) if (z.gates !== undefined) return z.gates;
+  return undefined;
+}
+
+/**
  * 在 `tick` 這一刻，哪些 gateGroup 是**關上的**（＝擋路）。
  *
  * ⚠️ 回傳排序過的陣列 —— 呼叫端可能拿它做集合比對，未排序會讓兩邊「內容一樣、

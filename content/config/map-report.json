@@ -44,11 +44,11 @@
       "worldW": 48,
       "worldD": 36,
       "regions": 5,
-      "walkableTiles": 336,
+      "walkableTiles": 338,
       "disconnectedAreas": 1,
       "deadEnds": 0,
       "loops": 4,
-      "chokepoints": 2,
+      "chokepoints": 0,
       "shortcuts": 2,
       "interactions": 8,
       "avgShortestPath": 14.4,
@@ -57,7 +57,14 @@
       "duelZones": 2,
       "unreachableObjects": [],
       "invalidSpawns": [],
-      "issues": [],
+      "issues": [
+        {
+          "kind": "soft",
+          "check": "chokepoints",
+          "severity": "warn",
+          "message": "0 個瓶頸（規格 2–3）"
+        }
+      ],
       "ok": true
     },
     {

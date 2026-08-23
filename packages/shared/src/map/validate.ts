@@ -191,6 +191,27 @@ export function validateMap(
   // ── gate 的每一個組態都不可以把玩家關起來（⛔ 正確性）────────────────────
   // ⭐ 這是「永不困住玩家」的**唯一**實作處。⛔ 它不是 runtime 的 if ——
   //    runtime 只查 (doc, tick) 的純函式；「不會困住人」是**這裡**保證的。
+  // ⭐ GH#624 —— gate 格在**基礎格網**裡必須是地板。
+  //
+  // 語意只有一種：基礎格網＝「所有的門都開著」，關上的門由 `activeObstacles`
+  // 在那一 tick 補回一個障礙物（下面的連通性檢查也正是把關上的門畫成 `#`）。
+  // ⇒ 把門寫成 `#` 就是**兩個真相**：導航／出生點以為那裡永遠是牆，而門開著時
+  // 它其實可以走 —— 而且合併牆格會讓它被吞進隔壁的長牆裡。實測 heavens-arena
+  // 有 2 格這樣寫，它的四道門因此只有一半產得出 `gateGroup`。
+  const gateOnWall: string[] = [];
+  for (const grp of doc.gimmick.gateGroups) {
+    for (const t of grp.tiles) {
+      if (!isWalkable(g, t.col, t.row)) gateOnWall.push(`${grp.id}(${t.row},${t.col})`);
+    }
+  }
+  hard(
+    issues,
+    "gateTileNotFloor",
+    gateOnWall.length > 0,
+    `gate 格在基礎格網裡不是地板：${gateOnWall.join(" / ")} —— ` +
+      `⛔ 基礎格網代表「門全開」，門要寫成 "."，關上時才由 gate 補一個障礙物。`,
+  );
+
   if (doc.gimmick.schedule !== undefined && doc.gimmick.gateGroups.length > 0) {
     const gateTiles = new Map<string, { col: number; row: number }[]>();
     for (const grp of doc.gimmick.gateGroups) gateTiles.set(grp.id, grp.tiles);

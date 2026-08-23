@@ -4,6 +4,7 @@
  * the map editor and validated by the content pipeline.
  */
 import type { Vec2 } from "../math/vec2";
+import type { GateSchedule } from "../map/gates";
 
 /**
  * ⭐ GH#324 —— 可開關的幾何。省略 = 這個障礙物永遠擋路（既有內容的行為）。
@@ -108,6 +109,14 @@ export interface ZoneDef {
   nav?: NavTable;
   gateHolds?: GateHold[];
   interactions?: MapInteraction[];
+  /**
+   * ⭐ GH#397／#624 —— gate 排程。**在此之前這一格不存在**，於是
+   * `arena@1` 文件裡的 `zone.gates`（產生器逐字寫進去的）在 `arenaDefFromDoc()`
+   * 的逐欄位重建裡被靜靜丟掉，而 `world.gateSchedule` 的**寫入端是零個** ⇒
+   * `activeObstacles(obstacles, undefined, tick)` 原樣回傳 ⇒ **每一道門永遠關著**。
+   * ⛔ 而 tsc 綠、每一條既有守衛綠（失敗形態⑧）。
+   */
+  gates?: GateSchedule;
 }
 
 export interface ArenaDef {
@@ -171,6 +180,8 @@ export function arenaDefFromDoc(doc: {
       ...(z.nav === undefined ? {} : { nav: z.nav }),
       ...(z.gateHolds === undefined ? {} : { gateHolds: z.gateHolds }),
       ...(z.interactions === undefined ? {} : { interactions: z.interactions }),
+      // ⭐ GH#397 —— 排程也要過河。⛔ 少了這一行，門的幾何過得去、開關過不去。
+      ...(z.gates === undefined ? {} : { gates: z.gates }),
     })),
   };
 }

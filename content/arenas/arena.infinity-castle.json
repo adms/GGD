@@ -154,6 +154,26 @@
           },
           "halfW": 22,
           "halfD": 1
+        },
+        {
+          "kind": "box",
+          "center": {
+            "x": -11,
+            "z": -1
+          },
+          "halfW": 1,
+          "halfD": 1,
+          "gateGroup": "west_door"
+        },
+        {
+          "kind": "box",
+          "center": {
+            "x": 7,
+            "z": -1
+          },
+          "halfW": 1,
+          "halfD": 1,
+          "gateGroup": "east_door"
         }
       ],
       "spawns": [
@@ -4094,6 +4114,26 @@
           },
           "halfW": 22,
           "halfD": 1
+        },
+        {
+          "kind": "box",
+          "center": {
+            "x": 61,
+            "z": -1
+          },
+          "halfW": 1,
+          "halfD": 1,
+          "gateGroup": "west_door"
+        },
+        {
+          "kind": "box",
+          "center": {
+            "x": 79,
+            "z": -1
+          },
+          "halfW": 1,
+          "halfD": 1,
+          "gateGroup": "east_door"
         }
       ],
       "spawns": [

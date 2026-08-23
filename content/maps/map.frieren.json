@@ -288,20 +288,32 @@
     "kind": "routeSwap",
     "gateGroups": [
       {
-        "id": "magic_door_n",
+        "id": "magic_door_w",
         "tiles": [
           {
-            "col": 12,
-            "row": 2
+            "col": 1,
+            "row": 8
+          },
+          {
+            "col": 2,
+            "row": 8
+          },
+          {
+            "col": 3,
+            "row": 8
           }
         ]
       },
       {
-        "id": "magic_door_s",
+        "id": "magic_door_e",
         "tiles": [
           {
-            "col": 12,
-            "row": 15
+            "col": 21,
+            "row": 8
+          },
+          {
+            "col": 22,
+            "row": 8
           }
         ]
       }
@@ -312,10 +324,10 @@
       "telegraphTicks": 60,
       "configurations": [
         [
-          "magic_door_n"
+          "magic_door_w"
         ],
         [
-          "magic_door_s"
+          "magic_door_e"
         ]
       ]
     }

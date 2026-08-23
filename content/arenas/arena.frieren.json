@@ -73,6 +73,26 @@
           },
           "halfW": 22,
           "halfD": 1
+        },
+        {
+          "kind": "box",
+          "center": {
+            "x": -19,
+            "z": -1
+          },
+          "halfW": 3,
+          "halfD": 1,
+          "gateGroup": "magic_door_w"
+        },
+        {
+          "kind": "box",
+          "center": {
+            "x": 20,
+            "z": -1
+          },
+          "halfW": 2,
+          "halfD": 1,
+          "gateGroup": "magic_door_e"
         }
       ],
       "spawns": [
@@ -3316,10 +3336,10 @@
         "telegraphTicks": 60,
         "configurations": [
           [
-            "magic_door_n"
+            "magic_door_w"
           ],
           [
-            "magic_door_s"
+            "magic_door_e"
           ]
         ]
       },
@@ -3468,6 +3488,26 @@
           },
           "halfW": 22,
           "halfD": 1
+        },
+        {
+          "kind": "box",
+          "center": {
+            "x": 53,
+            "z": -1
+          },
+          "halfW": 3,
+          "halfD": 1,
+          "gateGroup": "magic_door_w"
+        },
+        {
+          "kind": "box",
+          "center": {
+            "x": 92,
+            "z": -1
+          },
+          "halfW": 2,
+          "halfD": 1,
+          "gateGroup": "magic_door_e"
         }
       ],
       "spawns": [
@@ -6711,10 +6751,10 @@
         "telegraphTicks": 60,
         "configurations": [
           [
-            "magic_door_n"
+            "magic_door_w"
           ],
           [
-            "magic_door_s"
+            "magic_door_e"
           ]
         ]
       },
