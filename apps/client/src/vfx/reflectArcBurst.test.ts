@@ -4,8 +4,11 @@
  * owner 2026-08-22:「理想鄉被反彈的敵方單位 身上要有明顯的**七彩閃電爆炸**⋯
  * 不然都不知道發生什麼事情**有沒有反擊成功**」。
  *
- * ⭐ 讀的是**出貨的那一份** `content/abilities/godie-e002.ex.json`（失敗形態⑤）——
+ * ⭐ 讀的是**出貨的那一份** `content/abilities/godie-e002.**r**.json`（失敗形態⑤）——
  * 夾具自己手寫一個 vfxId 的話，出貨 JSON 改指到別份文件它照樣是綠的。
+ * ⚠️ 2026-08-23 從 `.ex` 換成 `.r`：反彈是 **R**（20-04 永恆的理想鄉）做的，
+ *   回饋跟著反彈走，⛔ 不跟著「反彈成功之後那一支追打技能」走
+ *   —— 否則 EX 沒解鎖的那一整場，反彈成功與失敗在畫面上一模一樣。
  * ⛔ 沒有一個顏色值／長度／道數進斷言（第二守則：驗機制不驗數字）。
  *
  * 突變（一批一條，最承重）：`VfxSystem` 的 `case "vfxSpawn"` 裡那個
@@ -26,17 +29,19 @@ import { VertexBuffer } from "@babylonjs/core/Buffers/buffer";
 import { VfxSystem } from "./VfxSystem";
 import { reflectArcBurstPlan, REFLECT_ARC_CUES } from "./reflectArcBurst";
 
-const EX_PATH = join(
+const R_PATH = join(
   dirname(fileURLToPath(import.meta.url)),
-  "../../../../content/abilities/godie-e002.ex.json",
+  "../../../../content/abilities/godie-e002.r.json",
 );
 
 /** 出貨文件的 `onReflectSuccess` 頂層那一發 `spawnVfx` 的 id（⛔ 不是字面值）。 */
 function shippedBurstVfxId(): string {
-  const doc = JSON.parse(readFileSync(EX_PATH, "utf8")) as {
-    passive: { ranks: { hooks: { on: string; effects: { kind: string; vfxId?: string }[] }[] }[] };
+  const doc = JSON.parse(readFileSync(R_PATH, "utf8")) as {
+    effects: { hooks?: { on: string; effects: { kind: string; vfxId?: string }[] }[] }[];
   };
-  const hook = doc.passive.ranks[0]!.hooks.find((h) => h.on === "onReflectSuccess")!;
+  const hook = doc.effects
+    .flatMap((e) => e.hooks ?? [])
+    .find((h) => h.on === "onReflectSuccess")!;
   const spawn = hook.effects.find((e) => e.kind === "spawnVfx");
   expect(spawn?.vfxId, "出貨的反彈成功不再噴任何演出文件").toBeTruthy();
   return spawn!.vfxId!;
