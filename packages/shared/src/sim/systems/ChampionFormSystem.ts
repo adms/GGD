@@ -261,10 +261,16 @@ function setBody(
   else world.championForm.set(id, { index: 1, baseId, expiresTick });
   // 形態閘 (AbilityPassiveRank.whileForm) — a passive authored 「只在變身時」 has
   // to be ATTACHED and DETACHED by something, and this is the only honest
-  // place: `setBody` is the sole writer of the body (see the module header), so
-  // routing the re-sync through it means the cast, the timed expiry, the death
-  // revert, `revertToBaseForm` and `endCombatChampionForms` all inherit it
-  // without a single one of them knowing the gate exists.
+  // place for the BODY half: `setBody` is the sole writer of the body (see the
+  // module header), so routing the re-sync through it means the cast, the timed
+  // expiry, the death revert, `revertToBaseForm` and `endCombatChampionForms`
+  // all inherit it without a single one of them knowing the gate exists.
+  //
+  // ⚠️ ⭐ M2(2026-08-23)：這一行從「唯一」變成「**其中一個**」。形態閘的答案現在
+  // 是 OR（`sim/formGate.ts`：換了身體算，**或**身上帶著一份 tags 有 "form" 的
+  // 狀態也算），而狀態沒有唯一的寫入者 ⇒ 另一半由 `sim/statusGatedPassives.ts`
+  // 每 tick 對帳。⛔ 不要因此把這一行拿掉：它仍然是**換身體**那條路上唯一的
+  // 重新求值點，而且它是同一 tick 立刻生效的那一條（對帳那一支最快下一 tick）。
   //
   // ORDER IS LOAD-BEARING: it runs AFTER `world.championForm` is written,
   // because `rankBlock` reads that map to decide. Called before the emit so an

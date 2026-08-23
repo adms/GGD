@@ -30,6 +30,8 @@ import { attachSource, detachSource } from "../stats/statPipeline";
 import { hasSourceGrant, sourceGrants } from "../stats/sourceGrants";
 // ⛔ 不要在這裡再寫一次「他身上還有沒有這個狀態」—— 見 `rankBlock` 裡狀態閘那一段。
 import { hasStatus } from "../effects/effectCommon";
+// ⭐ M2 —— 形態閘的唯一答案（身體 OR 帶著 "form" 標籤的狀態）。⛔ 不要在這裡展開。
+import { formGatePasses } from "../formGate";
 import {
   applyAugmentToCritStrike,
   applyAugmentToHooks,
@@ -134,17 +136,15 @@ function rankBlock(
   // 形態閘 (task #249). Absent / "any" = attached in both bodies, which is every
   // passive authored before the field existed.
   //
-  // Read STRAIGHT off `world.championForm` rather than through
-  // `ChampionFormSystem.championFormIndex`: that module imports THIS one (its
-  // `setBody` calls `syncAbilityPassives`, which is what makes this gate live),
-  // and importing back would close a genuine runtime cycle. The expression is
-  // the same one-liner that helper is, and `championForm.test.ts` pins the
-  // contract that absence means the base body.
-  const want = block.whileForm ?? "any";
-  if (want !== "any") {
-    const inAlternate = (world.championForm.get(id)?.index ?? 0) === 1;
-    if ((want === "alternate") !== inAlternate) return null;
-  }
+  // ⭐ M2(2026-08-23)：這一句的答案改由 `sim/formGate.ts` 給 —— 它是 **OR**
+  // （換了身體算，或身上帶著一份 tags 有 "form" 的狀態也算），所以「變身」可以
+  // 只是一個狀態 + 一套視覺，⛔ 不必換 championId。這 7 個寫著
+  // `whileForm:"alternate"` 的 rank 區塊**一個字都沒改**（相容層，⛔ 不是遷移）。
+  //
+  // ⛔ 仍然**不**經過 `ChampionFormSystem.championFormIndex`：那個模組 import
+  // 這一支（它的 `setBody` 呼叫 `syncAbilityPassives`），反向 import 會關成一個
+  // 真的執行期循環。`formGate.ts` 是一個葉子模組，兩邊都可以指向它。
+  if (!formGatePasses(world, id, block.whileForm)) return null;
   // ⭐ M2(2026-08-23) 狀態閘 —— 同一顆閘的**第二種來源**：「我帶著這個具名狀態
   // 的時候才掛上」。缺席 = 不問（1,900 份既有文件逐位元不變）；兩格都填 = AND。
   //

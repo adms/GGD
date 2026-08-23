@@ -21,7 +21,8 @@
  * 所以這一支的整個重點就是那個 `!==`。
  *
  * ── 成本 ────────────────────────────────────────────────────────────────────
- * 出貨 0 份文件填 `whileStatus`，所以今天它的成本是每位英雄每 tick 六次
+ * 出貨 0 份文件填 `whileStatus`，⭐ 但 M2 第二半之後**形態閘也算活的**
+ * （出貨 7 個 rank 區塊、4 份文件），所以今天它的成本是每位英雄每 tick 六次
  * {@link usesStatusGate}，而那一支的答案被 `WeakMap` 記在**技能定義物件**上
  * （註冊表的那一份，整場不變）⇒ 第二次之後是一次 map lookup。
  * ⛔ 記在 `WeakMap` 是**純函式的備忘**，不是狀態：同一份 def 永遠給同一個答案，
@@ -44,13 +45,24 @@ import {
   syncAbilityPassives,
 } from "./abilities/abilityPassives";
 import { isToggleOn } from "./abilities/toggle";
+import { isLiveFormGate } from "./formGate";
 
-/** 這份 payload 有沒有任何一階用了狀態閘。備忘見檔頭（純函式，⛔ 不是狀態）。 */
+/**
+ * 這份 payload 有沒有任何一階掛著**活的**閘 —— 也就是「該不該掛」的答案會在
+ * 同一具身體上翻面。備忘見檔頭（純函式，⛔ 不是狀態）。
+ *
+ * ⭐ M2 第二半（2026-08-23）：**形態閘也算**。在此之前 `whileForm` 只由
+ * `ChampionFormSystem.setBody` 重新求值，那在「變身＝換 championId」的世界裡是
+ * 對的；而 `sim/formGate.ts` 把它改成 OR（帶著 tags 有 "form" 的狀態也算）之後，
+ * 它的答案可以在**沒有任何 setBody** 的情況下改變。
+ * ⛔ 少了這一半，一次「只有狀態、不換身體」的變身會讓那 7 個
+ * `whileForm:"alternate"` 的 rank 區塊永遠掛不上 —— 而畫面上跟正常一模一樣。
+ */
 const GATED = new WeakMap<AbilityPassive, boolean>();
 function usesStatusGate(p: AbilityPassive): boolean {
   let hit = GATED.get(p);
   if (hit === undefined) {
-    hit = p.ranks.some((r) => r.whileStatus !== undefined);
+    hit = p.ranks.some((r) => r.whileStatus !== undefined || isLiveFormGate(r.whileForm));
     GATED.set(p, hit);
   }
   return hit;
