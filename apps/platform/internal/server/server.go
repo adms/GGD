@@ -636,6 +636,10 @@ func (s *Server) buildRouter(templates *room.Templates) {
 			// game server's private recording API through the admin gate, because
 			// recordings carry player names. AdminOnly inside.
 			gamelink.NewReplayHandlers(s.Gamelink, s.Admin.AdminOnly).Mount(pr)
+			// #636 /admin/damage-board — top single-cast damage board (Redis,
+			// written by the game shard at match close). Read-only proxy,
+			// AdminOnly inside.
+			gamelink.NewDamageBoardHandlers(s.Gamelink, s.Admin.AdminOnly).Mount(pr)
 			// #243 /admin/platform-archive/* — the whole-platform ZIP
 			// export/import. AdminOnly inside, and the two dangerous verbs
 			// (export, commit) additionally re-confirm the caller's OWN

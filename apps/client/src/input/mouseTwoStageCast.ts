@@ -24,6 +24,7 @@
  * 技能格、InputCapture 的場景點擊），⛔ 不走 React state（client-08）。
  */
 import type { CastableSlot } from "@ggd/shared/sim/intents";
+import { uiCues } from "../ui/uiCuesConfig";
 import { clearHeldAbility, setHeldAbility } from "../ui/abilityHold";
 import type { AimAbility } from "./AimResolver";
 
@@ -38,8 +39,8 @@ export function getTwoStageArmedSlot(): CastableSlot | null {
   return armed;
 }
 
-/** 技能格按下（主鍵）之後，這一下的意思。 */
-export type TilePressAction = "armed" | "cancelled" | "castSelf";
+/** 技能格按下（主鍵）之後，這一下的意思。`"disabled"` = 後台開關關著（#639 rollback）。 */
+export type TilePressAction = "armed" | "cancelled" | "castSelf" | "disabled";
 
 /**
  * 第一段：主鍵按在技能格上。
@@ -48,6 +49,12 @@ export type TilePressAction = "armed" | "cancelled" | "castSelf";
  *   · 其餘 → 武裝這一格並把地板圈釘住（換格武裝時先收掉舊格的圈）
  */
 export function mouseCastTilePress(slot: CastableSlot, castType?: TwoStageCastType): TilePressAction {
+  // 後台「畫面提示」的一格 rollback（GH#639）：關掉 = 回到 #639 之前 ——
+  // 技能格按下只亮範圍圈，滑鼠不武裝、不施放。鍵盤/觸控/手把本來就不走這裡。
+  if (!uiCues().mouseTwoStageCast) {
+    cancelTwoStageCast();
+    return "disabled";
+  }
   if (armed === slot) {
     cancelTwoStageCast();
     return "cancelled";

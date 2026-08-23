@@ -162,6 +162,14 @@ export const zConfigWorldCuesDoc = z
      */
     hud: zHudCues.optional(),
     /**
+     * K3 GH#638 —— 「另一場地的聲音／語音／震動／閃爍不得外漏」的總開關。
+     * true（出貨）＝演出歸得了戶就按 zone 過濾（歸不了戶照樣放行，fail-open）；
+     * false ＝ 一鍵 rollback 到 GH#638 之前（跨 zone 演出全部放行）。
+     * ⚠️ **optional 是刻意的**（同 `hud` 那格的理由）：舊的後台 override 少了
+     * 這一格不該把整份表拖下水；缺格＝出貨預設 true。
+     */
+    zoneIsolation: z.boolean().optional(),
+    /**
      * 一個座標上的一次性爆發。**鍵就是事件名**，逐字等於 sim `world.emit` 的
      * 第一個參數 —— ⛔ 不是一個要再對照一次的代號。
      */
@@ -231,6 +239,8 @@ export const DEFAULT_WORLD_CUES: ConfigWorldCuesDoc & { hud: WorldHudCues } = {
   // GH#642 owner 2026-08-24「說明半秒淡出半秒就好」—— 半秒淡入＋半秒淡出，
   // 淡完就退場（沒有停住的一段）。兩格都住後台「世界演出」頁。
   hud: { mobBossFadeInSec: 0.5, mobBossFadeOutSec: 0.5 },
+  // K3 GH#638：另一場地的演出不得外漏。false = 一鍵回到 #638 之前。
+  zoneIsolation: true,
   point: {
     // 破土：貼地、土色、輕。一波 20 隻同時冒出來，重版會變成一堵牆。
     // ⛔⛔ 2026-08-23 出貨改 `false`（owner 逐字「**請你預設關閉**」）——

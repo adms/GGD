@@ -18,6 +18,7 @@ import { QuickApprovalPage } from "./QuickApprovalPage";
 import { PlayersPage } from "./PlayersPage";
 import { MatchesPage } from "./MatchesPage";
 import { ReplaysPage } from "./ReplaysPage";
+import { DamageBoardPage } from "../damageBoardPage";
 import { AnnouncementsPage } from "./AnnouncementsPage";
 import { CurationPage } from "./CurationPage";
 import { ContentOverlayPage } from "./ContentOverlayPage";
@@ -173,6 +174,7 @@ export const NAV: NavItem[] = [
   // 因為它調的就是那一頁每一列產出的東西。
   { page: "ranking", label: "排名獎勵", emoji: "🏅", section: SEC_OPS },
   { page: "replays", label: "對戰回放", emoji: "🎞️", section: SEC_OPS },
+  { page: "damageBoard", label: "傷害排行榜", emoji: "💥", section: SEC_OPS },
   { page: "announcements", label: "Announcements", emoji: "📢", section: SEC_OPS },
   { page: "mcoinGrant", label: "M幣 發放", emoji: "🪙", section: SEC_OPS },
   // #174: the private deploy's front door — mint a code, see who used it.
@@ -1072,6 +1074,7 @@ export function Console(): React.JSX.Element {
             {page === "players" && <PlayersPage />}
             {page === "matches" && <MatchesPage />}
             {page === "replays" && <ReplaysPage />}
+            {page === "damageBoard" && <DamageBoardPage />}
             {page === "announcements" && <AnnouncementsPage />}
             {page === "curation" && <CurationPage />}
             {page === "contentOverlay" && <ContentOverlayPage />}

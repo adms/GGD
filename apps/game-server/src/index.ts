@@ -36,6 +36,8 @@ import { tickHealth } from "./match/tickHealth";
 import { recordQuarantine } from "./contentHealth";
 import { ReplayRoom } from "./rooms/ReplayRoom";
 import { handleInternalReplays } from "./replay/http";
+import { serveDamageBoard } from "./stats/damageBoard";
+import { verify as verifyInternalHmac } from "./auth/hmac";
 import { setActiveContentVersion } from "./replay/Player";
 import { liveRecordingIds } from "./replay/Recorder";
 import { probeReplayDirWritable, pruneReplays, replayDir } from "./replay/store";
@@ -287,6 +289,27 @@ const httpServer = createServer((req, res) => {
           res.end(JSON.stringify({ error: { code: "internal", message: "error" } }));
         }
       });
+    });
+    return;
+  }
+  // DAMAGE BOARD (#636). Same posture as /_internal/replays: not a public
+  // route, reached only through the platform's admin-authenticated proxy.
+  // Read-only; serveDamageBoard never 5xxes (empty board over a red page).
+  if (req.url?.startsWith("/_internal/damage-board")) {
+    // Same HMAC posture as /_internal/replays (GET ⇒ signed over the empty body).
+    if (SHARED_SECRET) {
+      const ts = String(req.headers["x-internal-timestamp"] ?? "");
+      const auth = String(req.headers["x-internal-auth"] ?? "");
+      if (!verifyInternalHmac(SHARED_SECRET, ts, "", auth)) {
+        res.writeHead(401, { "content-type": "application/json" });
+        res.end(JSON.stringify({ error: { code: "unauthorized", message: "bad hmac" } }));
+        return;
+      }
+    }
+    const u = new URL(req.url, "http://internal");
+    void serveDamageBoard(res, {
+      offset: Number(u.searchParams.get("offset") ?? 0) || 0,
+      count: Number(u.searchParams.get("count") ?? 0) || undefined,
     });
     return;
   }

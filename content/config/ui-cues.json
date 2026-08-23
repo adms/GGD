@@ -8,6 +8,9 @@
   "passiveFlashMs": 420,
   "passiveFlashThrottleMs": 800,
   "passiveIcdReadout": true,
-  "rallyExtendSeconds": [60],
-  "coinThrowButtonMode": "always-enabled"
+  "rallyExtendSeconds": [
+    60
+  ],
+  "coinThrowButtonMode": "always-enabled",
+  "mouseTwoStageCast": true
 }

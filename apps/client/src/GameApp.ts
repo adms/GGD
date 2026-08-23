@@ -215,6 +215,7 @@ import { combatSfxKey } from "./audio/combatSfx";
 import { resolveSpatial } from "./audio/combatSfxSpatial";
 import { vfxLoopPushes, vfxSoundCues, vfxSoundLayer } from "./audio/vfxSound";
 import { cueEventZone, spatialSourceFor, zoneAllowsCue } from "./audio/spatialPolicy";
+import { zoneCueIsolationOn } from "./vfx/worldCues";
 import type { SpatialSource } from "./audio/spatial";
 import { abilityIdOfOrigin } from "@ggd/shared/sim/combat/damage";
 import { fullAssetsEnabled } from "./config/fullAssets";
@@ -2158,7 +2159,9 @@ export class GameApp {
     // 或空間表的實體欄位）而那個 zone 不在本地觀看集合 ⇒ 音效／特效音／語音三條
     // 全部丟棄。⭐ `visibleZones` 跟著 #269 的觀戰目標走（⛔ 不是寫死本地），
     // 歸不了戶 = 放行（fail-open：最壞情況是照舊，⛔ 不是資訊不見）。
-    const zoneOk = zoneAllowsCue(cueEventZone(ev.type, ev.data, this.zoneOfEntity), this.visibleZones);
+    const zoneOk =
+      !zoneCueIsolationOn() ||
+      zoneAllowsCue(cueEventZone(ev.type, ev.data, this.zoneOfEntity), this.visibleZones);
     this.views.handleEvent(ev, nowMs); // anim pulses + hit flash + hitstop
     this.casts.handleEvent(ev, nowMs); // cast/windup timing → cast bars
     this.applyCombatFeedback(ev, localId, nowMs); // camera kick/punch-in + vignette
@@ -3163,7 +3166,8 @@ export class GameApp {
       ev.data as unknown as { broadcast: boolean; subjects: readonly number[] } & Record<string, unknown>,
       this.screenCueViewers(),
       this.cueLayers,
-      this.screenCueViewerZones(state),
+      // 開關關掉 ⇒ 不傳 viewerZones ＝ 舊行為（#638 之前，跨 zone 全放行）。
+      zoneCueIsolationOn() ? this.screenCueViewerZones(state) : undefined,
     );
   }
 

@@ -122,6 +122,13 @@ export const zConfigUiCuesDoc = z
      *   照樣會拿到那句話 —— 變灰只是提早講。
      */
     coinThrowButtonMode: z.enum(["always-enabled", "grey-when-poor"]),
+    /**
+     * GH#639 純滑鼠二段施放的總開關：點技能格＝進瞄準、點場景＝施放、
+     * 再點同格/右鍵＝取消。false ＝ 一鍵回到 #639 之前（技能格按下只亮範圍圈，
+     * 滑鼠不能從格子直接施放；鍵盤/觸控/手把不受這一格影響）。
+     * ⚠️ **optional 是刻意的**：舊的後台 override 少這一格不該整份被 strict Zod 拒。
+     */
+    mouseTwoStageCast: z.boolean().optional(),
   })
   .strict();
 
@@ -147,6 +154,8 @@ export const DEFAULT_UI_CUES: UiCuesDoc = {
   rallyExtendSeconds: [60],
   // ⭐ 權威側說了算（第〇·六守則：優先權大的更新預設啟動）。變灰那一條是 rollback。
   coinThrowButtonMode: "always-enabled",
+  // GH#639 純滑鼠二段施放（第〇·六守則：優先權大的更新預設啟動）。false = rollback。
+  mouseTwoStageCast: true,
 };
 
 /**
@@ -167,6 +176,7 @@ export function resolveUiCues(doc: ConfigUiCuesDoc | null | undefined): UiCuesDo
     passiveIcdReadout: doc.passiveIcdReadout,
     rallyExtendSeconds: [...doc.rallyExtendSeconds],
     coinThrowButtonMode: doc.coinThrowButtonMode,
+    mouseTwoStageCast: doc.mouseTwoStageCast ?? true,
   };
 }
 

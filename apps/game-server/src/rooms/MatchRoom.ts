@@ -43,6 +43,7 @@ import { HumanDriver } from "../seat/HumanDriver";
 import type { Seat } from "../seat/Seat";
 import type { SimEvent } from "@ggd/shared/sim/SimWorld";
 import { projectSnapshot } from "../net/snapshot";
+import { publishMatchDamageBoard } from "../stats/damageBoard";
 import { sign, verifyTicket } from "../auth/hmac";
 import { Whitelist, WHITELIST_BYPASS, sharedWhitelistCache } from "../curation/whitelist";
 import { Ownership } from "../curation/ownership";
@@ -1195,6 +1196,11 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
         console.error(`[match-stats] failed to seal the record for ${this.ctl.matchId}`, err);
       }
     }
+
+    // #636 傷害排行榜:fire-and-forget 一行。fail-open 全在 publishMatchDamageBoard
+    // 自己身上(自帶 5s deadline、永不 throw);⛔ 不 await —— Redis 掛掉的等待
+    // 不該推遲下面的 settlement 廣播。回傳值刻意不讀(不准影響比賽流程)。
+    void publishMatchDamageBoard(this.ctl.ledger.snapshot());
 
     // victory settlement → clients (per-player scoreboard + grade + rank +
     // winner). Rides the MSG.EVENT channel; the client renders the settlement

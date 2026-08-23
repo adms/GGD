@@ -541,6 +541,11 @@ export type Page =
    */
   | "replays"
   /**
+   * 傷害排行榜 (#636) — top 單發傷害(Redis zset,game shard 收場時寫入)。
+   * 唯讀報表;platform-admin proxy 供資料,所以 session-gated。
+   */
+  | "damageBoard"
+  /**
    * 資料搬遷 (task #243) — the whole-platform ZIP export/import. SHIPS IN
    * PRODUCTION and is session-gated below, both for the same reason: a
    * migration tool that only works on localhost cannot migrate a host, and one
@@ -806,6 +811,7 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "mcoinGrant",
   "invites",
   "replays",
+  "damageBoard",
   // #243: the archive page. NOT reachable through the loopback drop-in — its
   // export and commit both re-confirm the caller's OWN password against their
   // account, so there is nothing to check without a real session. This is not a

@@ -170,7 +170,13 @@ export function readWorldCues(doc: unknown): ConfigWorldCuesDoc {
   for (const key of Object.keys(D.line) as (keyof ConfigWorldCuesDoc["line"])[]) {
     line[key] = readLine(l[key], D.line[key]);
   }
-  return { id: D.id, schema: "config.world-cues@1", point, line };
+  return {
+    id: D.id,
+    schema: "config.world-cues@1",
+    zoneIsolation: typeof d.zoneIsolation === "boolean" ? d.zoneIsolation : (D.zoneIsolation ?? true),
+    point,
+    line,
+  };
 }
 
 /**
@@ -282,4 +288,16 @@ export function worldCueLine(
 /** 表上所有事件名（點 + 線）。守衛與 `VfxSystem` 都從這裡拿，⛔ 不重打一次。 */
 export function worldCueEventNames(cues: ConfigWorldCuesDoc = DEFAULT_WORLD_CUES): string[] {
   return [...Object.keys(cues.point), ...Object.keys(cues.line)];
+}
+
+/**
+ * K3 GH#638 的總開關 —— 後台「世界演出」的「跨場地演出隔離」那一格。
+ * true（出貨）＝歸得了戶的演出按 zone 過濾；false ＝ 一鍵 rollback 到 #638 之前
+ * （跨 zone 演出全部放行）。缺格／讀不到內容 ＝ true（跟著出貨預設走）。
+ */
+export function zoneCueIsolationOn(
+  read: () => unknown = () => Configs.tryGet("world-cues"),
+): boolean {
+  const d = read() as { zoneIsolation?: unknown } | null | undefined;
+  return typeof d?.zoneIsolation === "boolean" ? d.zoneIsolation : true;
 }
