@@ -86,7 +86,7 @@
       ],
       "vfxKey": "fx.prim.void.pulse-sm",
       "sfxKey": "wc3.headhunteryes4",
-      "castTimeSec": 0.767,
+      "castTimeSec": 0.567,
       "cooldownTier": "小",
       "rangeTier": "中",
       "targetsEnemies": true
@@ -228,7 +228,7 @@
         }
       ],
       "vfxKey": "fx.prim.physical.shockwave-lg",
-      "castTimeSec": 1.2,
+      "castTimeSec": 1.133,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",

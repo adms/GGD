@@ -218,7 +218,7 @@
       "vfxKey": "fx.prim.holy.explosion",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 1.433,
+      "castTimeSec": 1.133,
       "template": {
         "ref": "tpl-orbit-array",
         "params": {
@@ -235,7 +235,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.433
+          "castTimeSec": 1.133
         }
       },
       "cooldownTier": "極小",
@@ -282,7 +282,7 @@
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "極小",
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.233,
       "manaCostTier": "小"
     }
   },

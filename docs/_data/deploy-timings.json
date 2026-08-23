@@ -667,6 +667,94 @@
           "forksPerSuite": 36
         }
       ]
+    },
+    {
+      "id": "2026-08-23/v0.25.8-8-g15da0a92-dirty",
+      "at": "2026-08-23T14:16",
+      "ref": "v0.25.8-8-g15da0a92-dirty",
+      "stages": [
+        {
+          "name": "ship:content:build",
+          "ms": 10590,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:skills:sync",
+          "ms": 61579,
+          "code": 0,
+          "phase": "serial"
+        },
+        {
+          "name": "ship:vitest apps/test-dashboard",
+          "ms": 5329,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest tools/deploy-timing",
+          "ms": 7506,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:skills:check",
+          "ms": 11588,
+          "code": 1,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/content-api",
+          "ms": 13034,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/admin",
+          "ms": 49537,
+          "code": 1,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/editor",
+          "ms": 87410,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:typecheck",
+          "ms": 106066,
+          "code": 1,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/game-server",
+          "ms": 144293,
+          "code": 1,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest packages/shared",
+          "ms": 206892,
+          "code": 1,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:vitest apps/client",
+          "ms": 218378,
+          "code": 0,
+          "phase": "parallel"
+        },
+        {
+          "name": "ship:total",
+          "ms": 290555,
+          "code": 1,
+          "phase": "summary",
+          "serialSec": 72.2,
+          "parallelCpuSec": 850,
+          "forksPerSuite": 5
+        }
+      ]
     }
   ]
 }

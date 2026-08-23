@@ -40,7 +40,7 @@
   "vfxKey": "fx.prim.void.explosion",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.3,
+  "castTimeSec": 0.233,
   "rangeTier": "大",
   "range": 8
 }

@@ -36,14 +36,14 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 1.233
+      "castTimeSec": 1.133
     }
   },
   "vfxKey": "fx.prim.fire.explosion",
   "targetsEnemies": true,
   "radius": 3.0,
   "schema": "ability@1",
-  "castTimeSec": 1.233,
+  "castTimeSec": 1.133,
   "rangeTier": "極大",
   "range": 12,
   "radiusTier": "極小"

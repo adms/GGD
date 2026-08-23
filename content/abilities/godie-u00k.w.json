@@ -36,12 +36,12 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.233
     }
   },
   "vfxKey": "fx.prim.void.beam",
   "targetsEnemies": true,
-  "castTimeSec": 0.3,
+  "castTimeSec": 0.233,
   "rangeTier": "極大",
   "range": 12
 }

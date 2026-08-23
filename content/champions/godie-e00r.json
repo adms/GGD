@@ -104,13 +104,13 @@
                       {
                         "kind": "applyStatus",
                         "statusId": "devour-cooldown",
-                        "duration": 24.0,
+                        "duration": 18.0,
                         "applyTo": "self"
                       }
                     ]
                   }
                 ],
-                "internalCooldown": 2.4,
+                "internalCooldown": 1.8,
                 "condition": {
                   "not": {
                     "kind": "status",

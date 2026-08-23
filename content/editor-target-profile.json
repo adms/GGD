@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_4bbc40746ca3",
+    "contentVersion": "cv_015d77c89d11",
     "collections": {
       "champions": {
-        "hash": "e81af4d4e9e1",
+        "hash": "ce8b95cef441",
         "count": 71
       },
       "abilities": {
-        "hash": "6789acdedd16",
+        "hash": "511257aed2b6",
         "count": 421
       },
       "items": {
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "983b51d3c753",
+        "hash": "9cf06c566ace",
         "count": 87
       },
       "models": {
@@ -4262,7 +4262,7 @@
           }
         },
         "envMultipliers": {
-          "cooldown": 0.4,
+          "cooldown": 0.3,
           "damageDealt": 1,
           "defense": 1,
           "attackDamage": 1,
@@ -4290,6 +4290,7 @@
           "intToManaRegen": 0.21,
           "intToAbilityPower": 4,
           "intToMagicResist": 0,
+          "abilityDamage": 1,
           "goldRoundPayout": 1,
           "goldMobKill": 0.5,
           "goldEliteKill": 0.1,
@@ -4490,5 +4491,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "9bf27ac39404"
+  "profileDigest": "ebcb327e3585"
 }

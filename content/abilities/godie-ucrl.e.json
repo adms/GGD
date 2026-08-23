@@ -37,14 +37,14 @@
         ]
       },
       "damageType": "physical",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.233
     }
   },
   "vfxKey": "fx.prim.earth.pulse-sm",
   "sfxKey": "wc3.mortarteampissed9",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.3,
+  "castTimeSec": 0.233,
   "rangeTier": "極大",
   "range": 12
 }

@@ -420,30 +420,30 @@
       "medianAp": 135.3,
       "medianAd": 194.6,
       "medianAs": 0.906,
-      "medianSkillDps": 25.2,
+      "medianSkillDps": 33.6,
       "medianAutoDps": 178.7,
-      "medianRatio": 0.17,
-      "meanRatio": 0.26
+      "medianRatio": 0.23,
+      "meanRatio": 0.35
     },
     {
       "level": 50,
       "medianAp": 178.8,
       "medianAd": 299.7,
       "medianAs": 1.107,
-      "medianSkillDps": 40.2,
+      "medianSkillDps": 53.7,
       "medianAutoDps": 333.9,
-      "medianRatio": 0.16,
-      "meanRatio": 0.22
+      "medianRatio": 0.21,
+      "meanRatio": 0.3
     },
     {
       "level": 99,
       "medianAp": 333.6,
       "medianAd": 557.0,
       "medianAs": 1.6,
-      "medianSkillDps": 89.0,
+      "medianSkillDps": 118.7,
       "medianAutoDps": 891.2,
-      "medianRatio": 0.13,
-      "meanRatio": 0.19
+      "medianRatio": 0.17,
+      "meanRatio": 0.25
     }
   ],
   "whatIfIntToAp": [
@@ -453,24 +453,24 @@
       "byLevel": {
         "30": {
           "medianAp": 135.3,
-          "medianSkillDps": 24.4,
+          "medianSkillDps": 32.6,
           "medianAutoDps": 178.7,
-          "medianRatio": 0.16,
-          "meanRatio": 0.25
+          "medianRatio": 0.21,
+          "meanRatio": 0.33
         },
         "50": {
           "medianAp": 178.8,
-          "medianSkillDps": 40.2,
+          "medianSkillDps": 53.7,
           "medianAutoDps": 333.9,
-          "medianRatio": 0.14,
-          "meanRatio": 0.21
+          "medianRatio": 0.18,
+          "meanRatio": 0.28
         },
         "99": {
           "medianAp": 333.6,
-          "medianSkillDps": 96.4,
+          "medianSkillDps": 128.6,
           "medianAutoDps": 891.2,
-          "medianRatio": 0.11,
-          "meanRatio": 0.18
+          "medianRatio": 0.15,
+          "meanRatio": 0.24
         }
       },
       "growthApZeroed": 0,
@@ -482,24 +482,24 @@
       "byLevel": {
         "30": {
           "medianAp": 135.3,
-          "medianSkillDps": 25.2,
+          "medianSkillDps": 33.6,
           "medianAutoDps": 178.7,
-          "medianRatio": 0.17,
-          "meanRatio": 0.26
+          "medianRatio": 0.23,
+          "meanRatio": 0.35
         },
         "50": {
           "medianAp": 178.8,
-          "medianSkillDps": 40.2,
+          "medianSkillDps": 53.7,
           "medianAutoDps": 333.9,
-          "medianRatio": 0.16,
-          "meanRatio": 0.22
+          "medianRatio": 0.21,
+          "meanRatio": 0.3
         },
         "99": {
           "medianAp": 333.6,
-          "medianSkillDps": 89.0,
+          "medianSkillDps": 118.7,
           "medianAutoDps": 891.2,
-          "medianRatio": 0.13,
-          "meanRatio": 0.19
+          "medianRatio": 0.17,
+          "meanRatio": 0.25
         }
       },
       "growthApZeroed": 0,
@@ -511,24 +511,24 @@
       "byLevel": {
         "30": {
           "medianAp": 165.2,
-          "medianSkillDps": 30.8,
+          "medianSkillDps": 41.1,
           "medianAutoDps": 178.7,
-          "medianRatio": 0.21,
-          "meanRatio": 0.32
+          "medianRatio": 0.28,
+          "meanRatio": 0.43
         },
         "50": {
           "medianAp": 209.1,
-          "medianSkillDps": 46.0,
+          "medianSkillDps": 61.3,
           "medianAutoDps": 333.9,
-          "medianRatio": 0.16,
-          "meanRatio": 0.25
+          "medianRatio": 0.22,
+          "meanRatio": 0.33
         },
         "99": {
           "medianAp": 333.6,
-          "medianSkillDps": 96.4,
+          "medianSkillDps": 128.6,
           "medianAutoDps": 891.2,
-          "medianRatio": 0.11,
-          "meanRatio": 0.18
+          "medianRatio": 0.15,
+          "meanRatio": 0.24
         }
       },
       "growthApZeroed": 2,
@@ -540,24 +540,24 @@
       "byLevel": {
         "30": {
           "medianAp": 165.2,
-          "medianSkillDps": 33.2,
+          "medianSkillDps": 44.2,
           "medianAutoDps": 178.7,
-          "medianRatio": 0.22,
-          "meanRatio": 0.34
+          "medianRatio": 0.3,
+          "meanRatio": 0.46
         },
         "50": {
           "medianAp": 209.1,
-          "medianSkillDps": 46.0,
+          "medianSkillDps": 61.3,
           "medianAutoDps": 333.9,
-          "medianRatio": 0.17,
-          "meanRatio": 0.26
+          "medianRatio": 0.23,
+          "meanRatio": 0.35
         },
         "99": {
           "medianAp": 333.6,
-          "medianSkillDps": 89.0,
+          "medianSkillDps": 118.7,
           "medianAutoDps": 891.2,
-          "medianRatio": 0.13,
-          "meanRatio": 0.19
+          "medianRatio": 0.17,
+          "meanRatio": 0.25
         }
       },
       "growthApZeroed": 2,

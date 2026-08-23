@@ -134,12 +134,12 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.667
+          "castTimeSec": 0.567
         }
       },
       "vfxKey": "fx.prim.void.swarm",
       "targetsEnemies": true,
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.567,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "小",

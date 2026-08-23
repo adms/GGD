@@ -8,7 +8,7 @@
     "templateFamilies": 20,
     "effectFields": 244,
     "stats": 23,
-    "combatEnvKeys": 38
+    "combatEnvKeys": 39
   },
   "stacking": [
     {
@@ -163,7 +163,7 @@
   "env": [
     {
       "key": "cooldown",
-      "value": "×0.4",
+      "value": "×0.3",
       "from": "shipped",
       "note": "公式格（不直接乘任何一條屬性）"
     },
@@ -326,6 +326,12 @@
     {
       "key": "intToMagicResist",
       "value": "×0",
+      "from": "shipped",
+      "note": "公式格（不直接乘任何一條屬性）"
+    },
+    {
+      "key": "abilityDamage",
+      "value": "×1",
       "from": "shipped",
       "note": "公式格（不直接乘任何一條屬性）"
     },

@@ -112,7 +112,7 @@
       ],
       "targetsEnemies": true,
       "radius": 4.5,
-      "castTimeSec": 1.233,
+      "castTimeSec": 1.133,
       "cooldownTier": "極小",
       "manaCostTier": "極小",
       "radiusTier": "小"
@@ -150,7 +150,7 @@
       "vfxKey": "fx.prim.nature.swarm",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 1.233,
+      "castTimeSec": 1.133,
       "cooldownTier": "極小",
       "radiusTier": "中"
     },

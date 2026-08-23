@@ -91,13 +91,13 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.433
+          "castTimeSec": 1.133
         }
       },
       "vfxKey": "fx.prim.lightning.nova",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 1.433,
+      "castTimeSec": 1.133,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",
@@ -177,13 +177,13 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 2.633
+          "castTimeSec": 2.267
         }
       },
       "vfxKey": "fx.prim.lightning.nova",
       "targetsEnemies": true,
       "radius": 8.0,
-      "castTimeSec": 2.633,
+      "castTimeSec": 2.267,
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "中",

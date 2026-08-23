@@ -60,7 +60,7 @@
                 ]
               }
             ],
-            "internalCooldown": 2.4,
+            "internalCooldown": 1.8,
             "condition": {
               "kind": "stat",
               "subject": "self",
@@ -108,7 +108,7 @@
                 ]
               }
             ],
-            "internalCooldown": 2.4,
+            "internalCooldown": 1.8,
             "condition": {
               "kind": "stat",
               "subject": "self",
@@ -156,7 +156,7 @@
                 ]
               }
             ],
-            "internalCooldown": 2.4,
+            "internalCooldown": 1.8,
             "condition": {
               "kind": "stat",
               "subject": "self",
@@ -204,7 +204,7 @@
                 ]
               }
             ],
-            "internalCooldown": 2.4,
+            "internalCooldown": 1.8,
             "condition": {
               "kind": "stat",
               "subject": "self",

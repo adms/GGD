@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-08-23 20:53 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-08-23 22:16 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.25.7 · 資料截至 2026-08-23 20:53 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-23 20:53 (GMT+8)</h1><div class="meta"><span>帳本 <b>5</b> 份</span><span>點名票號 <b>198</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.25.8 · 資料截至 2026-08-23 22:16 (GMT+8)</p><h1>GGD 戰情版 · 2026-08-23 22:16 (GMT+8)</h1><div class="meta"><span>帳本 <b>5</b> 份</span><span>點名票號 <b>199</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -564,6 +564,12 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>17:12</td><td>你是不是可以先整理一個段落 push note deploy 我覺得你越改越深了 但是客戶端跟伺服器端移動路徑衝突跟其他已經做好的功能跟修正 應該對目前玩家很有用了 你deploy完再繼續也可以</td><td>— 這是發版指示本身,不需要開票（切成 v0.26.0）</td></tr>
 <tr><td>20:30</td><td>被動暈眩不能超過0.1秒，如果有的話請你列出來給我審查 不論是技能還是道具 =&gt; 裁決（逐格新值）： godie-hvsh.passive 48-00 石化之眼 4.0 → 2.0 godie-e00w.passive 77-00 浮雲-旋一閃 2.0 → 1.0 godie-h02k.q 89-01 憤怒的頭槌 1.0 → 0.4（四階全部） godie-h02k.r 89-04 憤怒的簡諧運動 1.0 → 0.4（三階全部） godie-i06j 獸人船長十字鎬 1.0 → 0.1 godie-e001/e00n.passive 22-00 嗚鎖打! 0.5 → 0.1 godie-hapm.passive 52-00 十二道試煉 0.5（不變） godie-hart.passive 01-00 怒斬 0.5 → 0.1 =&gt; 更正我的掃描：「我說過是被動不是主動技，並且沒上架的不必列，洞爺湖那是冷卻不是暈」</td><td>#631</td></tr>
 <tr><td>20:53</td><td>正在跑最後一次四閘 =&gt; 四閘是什麼 為什麼跑那麼久？ 橫放 beam 從未生效 在飛 GameApp modelDocFor · modelFxRig modelDocFor 投影成 {glbPath,scale}，丟掉 fxLongAxis ⇒ owner 要的軸修正從未生效。 =&gt;太扯了 這一版一定要上線 而且作為翻轉角度的蝗蟲群單位 通常大小跟顏色都有再做調整，務必檢查，避免出現很小顏色又不對的氣功砲 12 條 lane 已經在跑，逐條對到你剛才點名的： lane 你說的 A1 「輕量級 hotfix 能自動化判斷執行」+「全部規則轉成自動化指令」→ pnpm ship 自動分級（fa…</td><td>#300 #799 #599</td></tr>
+<tr><td>21:37</td><td>89-02 憤怒的菊花 1 秒麻痺要不要一起壓到 0.4 =&gt; NO（⛔ 不動） 出貨目標：最多3分鐘(包含來回改錯)就一定要 push note deploy =&gt; 改個技能暈眩時間、改個系統倍率就要半小時起跳，太扯不合理；特別需要同步拆分、優化資料結構、甚至用 go 改寫來做 benchmark、大量重複讀寫 cache、或是簡化遊戲架構的可能性深度思考</td><td>#631</td></tr>
+<tr><td>21:31</td><td>你到底什麼時候要出貨？你的目標是最多3分鐘(包含來回改錯)就一定要 push note deploy ，請問你要如何做到？許多測試應該平常寫的時候就要簡單測試吧？打包的時候才累積測試？小地方就重複測試全部大範圍也很蠢，你要如何改善？ # 閘 秒 它擋什麼 可平行？ 1 content:build + skills:sync 75 產物過期就上線（08-01 事故：過期 bundle ⇒ 選人畫面空掉） ⛔ 全域鎖 2 skills:check（36 支唯讀） 15 文件／契約／級距與內容不同步 ✅ 自己再並行 15.4× 3 typecheck 130 型別錯 ✅ 4 vitest × 7 包…</td><td>#300 #799 #599</td></tr>
+<tr><td>21:53</td><td>你可以先 push note deploy 一板嗎</td><td>— 發版指示本身（v0.25.9 進行中）</td></tr>
+<tr><td>22:03</td><td>系統技能倍率設定成 0.3</td><td>#615（abilityDamage 新格 → owner 更正還原 1x，cooldown 0.3）</td></tr>
+<tr><td>22:16</td><td>系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3 =&gt; abilityDamage 回 1.0、cooldown 0.4→0.3（皆已帶原話進 owner-knobs）</td><td>#615</td></tr>
+<tr><td>22:14</td><td>手把根本無法從到大廳一路到遊戲回合操作阿</td><td>#634</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

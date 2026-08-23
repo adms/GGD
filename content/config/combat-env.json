@@ -3,7 +3,7 @@
   "schema": "config.combat-env@1",
   "version": 9,
   "multipliers": {
-    "cooldown": 0.4,
+    "cooldown": 0.3,
     "damageDealt": 1.0,
     "defense": 1.0,
     "attackDamage": 1.0,
@@ -41,6 +41,6 @@
     "magicResistMult": 0.2,
     "strToCritChance": 0.0025,
     "agiToEvasion": 0.002,
-    "abilityDamage": 0.3
+    "abilityDamage": 1.0
   }
 }

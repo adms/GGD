@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "44e2dc157750",
+  "hash": "9cf06c566ace",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -125,14 +125,14 @@
     {
       "id": "combat-env",
       "path": "config/combat-env.json",
-      "hash": "764dfd61df7a",
+      "hash": "bd6d1cfb0661",
       "size": 1066
     },
     {
       "id": "combat-feel",
       "path": "config/combat-feel.json",
-      "hash": "1342aeaf6452",
-      "size": 829
+      "hash": "517d723e209b",
+      "size": 1032
     },
     {
       "id": "combo-strikes",
@@ -311,8 +311,8 @@
     {
       "id": "owner-knobs",
       "path": "config/owner-knobs.json",
-      "hash": "c2ba1df60d79",
-      "size": 13815
+      "hash": "39ed843cec9a",
+      "size": 13905
     },
     {
       "id": "per-level-bonus",

@@ -153,7 +153,7 @@
       "sfxKey": "wc3.hcancelbuilding",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 1.5,
+      "castTimeSec": 1.133,
       "hitFeel": {
         "hitstopTicks": 3,
         "hitstunTicks": 5,

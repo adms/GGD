@@ -32,14 +32,14 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.667
+      "castTimeSec": 0.567
     }
   },
   "vfxKey": "fx.prim.void.beam",
   "targetsEnemies": true,
   "schema": "ability@1",
   "icon": "assets/icons/abilities/godie-ubal.q.png",
-  "castTimeSec": 0.667,
+  "castTimeSec": 0.567,
   "rangeTier": "中",
   "range": 6
 }

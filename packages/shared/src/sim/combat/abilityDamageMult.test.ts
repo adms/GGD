@@ -12,9 +12,9 @@ import { registerSkeletonContent } from "../content/skeleton";
 import { spawnChampion } from "../spawnChampion";
 import { normalizeCombatEnv } from "../combatEnv";
 import { combatResolveSystem } from "./damage";
-import { asSeatId, asTeamId, type ChampionId } from "../../ids";
+import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../../ids";
 
-function world(mult: number): { w: SimWorld; a: number; b: number } {
+function world(mult: number): { w: SimWorld; a: EntityId; b: EntityId } {
   registerSkeletonContent();
   const w = new SimWorld(SKELETON_ARENA, 7);
   w.combatEnv = normalizeCombatEnv({ abilityDamage: mult });
@@ -24,7 +24,7 @@ function world(mult: number): { w: SimWorld; a: number; b: number } {
 }
 
 /** 打一發,回傳實際掉血。 */
-function hit(w: SimWorld, from: number, to: number, origin: string): number {
+function hit(w: SimWorld, from: EntityId, to: EntityId, origin: string): number {
   const before = w.health.get(to)!.hp;
   w.damageQueue.push({ source: from, target: to, amount: 100, type: "true", crit: false, origin });
   combatResolveSystem(w);
