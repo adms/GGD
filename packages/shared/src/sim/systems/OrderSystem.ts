@@ -58,6 +58,54 @@ export function manualOrderRules(world: SimWorld): ManualOrderRules {
 }
 
 /**
+ * ⭐ 打帶跑 (GH#637) —— 「這一條 move 是**離散的點擊**還是**搖桿流的一拍**」的
+ * 分界(tick)。上一條 move 距今 **< 這個數** = 流(不武裝冷卻窗口);**≥** = 點擊。
+ *
+ * 為什麼是 3(100ms):搖桿/虛擬搖桿每一拍送一條(理想間隔 1),網路抖動把兩則
+ * 訊息擠進同一 tick 時會出現間隔 2 —— 3 把這兩種都收進「流」。而人手的連點
+ * 要**持續** 10Hz 以上才會被誤判成流,那不是一個人做得到的節奏。誤判的代價也
+ * 不對稱:把流誤判成點擊只是多一段 1 秒不索敵(推著搖桿時追擊本來就讓路、
+ * standstill 也不讓走動中出手,幾乎看不到);把點擊誤判成流才是機制消失。
+ * ⛔ 不做成後台欄位:它是「同一根搖桿」的物理判定,不是 owner 會調的手感。
+ */
+const MOVE_ORDER_STREAM_GAP_TICKS = 3;
+
+/**
+ * 玩家點了地板 ⇒ 武裝「不搶指揮權」窗口 (GH#637)。
+ *
+ * owner 2026-08-24:「我如果點了地板作為目標 要有1秒冷卻不能跑去打任何目標
+ * (自動攻擊)讓我可以連續移動不被干擾來達成打帶跑(像是被打不能跟我搶指揮權
+ * 跑去打人)」。窗口的**消費端**在 `autoAcquirePass`(不索新目標、反擊接管不生效、
+ * 放下已握的自動目標);這裡只負責「什麼時候武裝」,三道閘缺一不可:
+ *
+ *   1. **真人座位** —— `MobRules.humanSeats`(GH#577 開的同一扇門:sim 對真人與
+ *      bot 的 IntentFrame 逐位元同型,「誰是玩家」只有 host 每場戰鬥交進規則表
+ *      這一條路)。缺席/空集合 ⇒ 永不武裝 ⇒ 舊行為逐位元不變 —— 每一份手搭
+ *      夾具、客戶端預測影子、重播的純函式重新武裝,都刻意走那一邊(和 mobs.ts
+ *      的 fallback 契約同一句話)。bot 因此一格都不受影響(#274 的 IDLE 守衛)。
+ *   2. **離散的點擊** —— 搖桿流的每一拍都武裝的話,推著搖桿 = 永久關掉自動攻擊,
+ *      那正是 #274 修掉的災難(它的 STICK 守衛就在量這個)。
+ *   3. **機制開著** —— `moveOrderNoAggroSec: 0` 是 owner 的一鍵 rollback。
+ *
+ * ⚠️ 只管 `kind:"move"`。attackMove / attackTarget / stop / hold 是玩家自己下的
+ * 戰鬥決策,不但不武裝,還會**作廢**現有窗口(呼叫端的 switch 前那一行)。
+ */
+function armMoveOrderNoAggro(
+  world: SimWorld,
+  id: EntityId,
+  seatId: SeatId,
+  mo: ManualOrderRules,
+): void {
+  const windowTicks = Math.round(mo.moveOrderNoAggroSec / world.dt);
+  if (windowTicks <= 0) return;
+  if (world.mobRules?.humanSeats?.has(seatId) !== true) return;
+  const last = world.lastMoveOrderTick.get(id);
+  world.lastMoveOrderTick.set(id, world.tick);
+  if (last !== undefined && world.tick - last < MOVE_ORDER_STREAM_GAP_TICKS) return;
+  world.moveOrderNoAggroUntil.set(id, world.tick + windowTicks);
+}
+
+/**
  * 這一 tick 更新一個單位的「走位卡住了幾個 tick」。
  *
  * 讀的是 `Transform.vel` —— movementSystem 上一 tick **實際**走出去的位移/dt,
@@ -190,6 +238,9 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
       const order = frame.order;
       if (!order) continue;
       nav.order = order;
+      // GH#637 —— 任何**非 move** 的新指令(A移動/點名目標/S/H)都是玩家自己
+      // 選擇開戰或停手:點地板的冷卻窗口當場作廢(他要打,就讓他打)。
+      if (order.kind !== "move") world.moveOrderNoAggroUntil.delete(id);
       switch (order.kind) {
         case "move":
         case "attackMove":
@@ -247,6 +298,10 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
             world.walkStall.set(id, 0);
             world.autoEngaging.delete(id);
           }
+          // ---- GH#637: 打帶跑 —— 點地板 ⇒ 武裝「不搶指揮權」窗口 ----
+          // 只有 `kind:"move"`(`attackMove` 是玩家自己下的戰鬥決策,上面那行
+          // 已經把窗口作廢了)。三道閘(真人座位/離散點擊/機制開著)在函式裡。
+          if (order.kind === "move") armMoveOrderNoAggro(world, id, seatId, mo);
           break;
         case "attackTarget": {
           // 召喚物該不該被玩家手動點選 —— a DECISION POINT (sim/summonRules.ts),
@@ -669,6 +724,34 @@ function autoAcquirePass(
         case "hold":
           holdPosition = true;
           break;
+      }
+    }
+
+    // ---- GH#637: 打帶跑 —— 點地板後的冷卻窗口,自動索敵整段停擺 ----
+    // owner 2026-08-24:「點了地板…要有1秒冷卻不能跑去打任何目標(自動攻擊)…
+    // 像是被打不能跟我搶指揮權跑去打人」。窗口內(絕對 tick,exclusive):
+    //   · 不索**新的**自動目標(下面的 acquireTarget/fill 整段跳過)——
+    //     「誰在打我」的威脅鍵與 `shouldSwapAutoTarget` 的反擊接管都住在那一段,
+    //     所以「被打反擊」跟著一起停,這正是 owner 點名的那一半;
+    //   · 已握的**自動**目標當場放下 —— 少了這一下,點地板前就咬住的目標會在
+    //     走位一結束時讓追擊接手(「跑去打人」的另一條路);
+    //   · 玩家**自己點名**的目標一格都不動(`!attackTargetAuto` 那一側:那是
+    //     他的指令,survivesGroundMove 的語意照舊)。
+    // ⚠️ 嘲弄贏過窗口:`forcedTargetOf` 非 null 時窗口讓路 —— 被嘲弄就是被嘲弄,
+    // 它連玩家自己的手選指令都能接管(tauntRules),沒有理由輸給一次點地板。
+    // ⚠️ 前搖中的那一刀不歸這裡管:上面的 windup 守衛先 continue,已承諾的攻擊
+    // 照舊收完(既有語意:不在前搖中改指向),下一 tick 才輪到這裡放下目標。
+    {
+      const noAggroUntil = world.moveOrderNoAggroUntil.get(id);
+      if (noAggroUntil !== undefined) {
+        if (world.tick < noAggroUntil && forcedTargetOf(world, id) === null) {
+          if (nav.attackTargetAuto) {
+            nav.attackTarget = null;
+            nav.attackTargetAuto = false;
+          }
+          continue;
+        }
+        if (world.tick >= noAggroUntil) world.moveOrderNoAggroUntil.delete(id);
       }
     }
 

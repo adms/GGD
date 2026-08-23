@@ -404,6 +404,26 @@ export interface ManualOrderRules {
    * 目標用的,故意沒有套在手選目標上。
    */
   leashUnits: number;
+  /**
+   * ⭐ 打帶跑 (GH#637)：玩家**點地板**之後,自動索敵冷卻幾秒。
+   *
+   * owner 2026-08-24:「我如果點了地板作為目標 要有1秒冷卻不能跑去打任何目標
+   * (自動攻擊)讓我可以連續移動不被干擾來達成打帶跑(像是被打不能跟我搶指揮權
+   * 跑去打人)」。
+   *
+   * 窗口內:不索**新的**自動目標、「誰在打我」的反擊接管也不生效、已握的
+   * **自動**目標當場放下。⛔ 三樣東西刻意不受影響:玩家**自己點名**的目標
+   * (那是他的指令,不是系統的)、嘲弄的強制目標(`forcedTargetOf`,被嘲弄
+   * 就是被嘲弄)、以及前搖中已承諾的那一刀(既有語意:不在前搖中改指向)。
+   *
+   * ⚠️ 只有**離散的點擊**會武裝它 —— 搖桿/虛擬搖桿每一拍送一條 move 的**流**
+   * 不會(否則推著搖桿 = 永久關掉自動攻擊,正是 #274 修掉的災難)。分辨法與
+   * 「只跟著真人座位」的閘都在 `systems/OrderSystem.ts` 的 `armMoveOrderNoAggro`。
+   *
+   * `0` = 整條機制關閉(#637 之前的行為,owner 的一鍵 rollback)。上界 10 秒:
+   * 再長等於「點一下地板就把自動攻擊關掉一輩子」,那是一個看起來像壞掉的值。
+   */
+  moveOrderNoAggroSec: number;
 }
 
 export interface CombatFeelRules {
@@ -538,6 +558,8 @@ export const DEFAULT_AUTO_ENGAGE: AutoEngageRules = Object.freeze({
 export const DEFAULT_MANUAL_ORDER: ManualOrderRules = Object.freeze({
   survivesGroundMove: true,
   leashUnits: 0,
+  // owner 2026-08-24 直接給的數字(「要有1秒冷卻」)。
+  moveOrderNoAggroSec: 1.0,
 });
 
 /**
@@ -721,6 +743,12 @@ export function normalizeManualOrderRules(raw: unknown): ManualOrderRules {
         ? r.survivesGroundMove
         : DEFAULT_MANUAL_ORDER.survivesGroundMove,
     leashUnits: num(r.leashUnits, DEFAULT_MANUAL_ORDER.leashUnits, 0, 200),
+    moveOrderNoAggroSec: num(
+      r.moveOrderNoAggroSec,
+      DEFAULT_MANUAL_ORDER.moveOrderNoAggroSec,
+      0,
+      10,
+    ),
   });
 }
 

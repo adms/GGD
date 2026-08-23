@@ -478,6 +478,23 @@ export class SimWorld {
   readonly autoEngaging = new Set<EntityId>();
 
   /**
+   * ⭐ 打帶跑 (GH#637) —— entity → 自動索敵冷卻到哪一個**絕對 tick**(exclusive:
+   * `tick < 值` 才算窗口內)。玩家**點地板**(一次離散的 move 指令,⛔ 不是搖桿流)
+   * 落地時由 `OrderSystem.armMoveOrderNoAggro` 寫入;窗口內 `autoAcquirePass`
+   * 不索新目標、「誰在打我」的反擊接管不生效、已握的**自動**目標當場放下。
+   * 只有 `MobRules.humanSeats` 裡的座位會被寫(bot 一格都不受影響),
+   * `manualOrder.moveOrderNoAggroSec` 為 0 時沒有任何寫入端(機制關閉)。
+   * 絕對 tick,不是遞減計數器(到期規則);只做 get/set/delete,從不迭代。
+   */
+  readonly moveOrderNoAggroUntil = new Map<EntityId, number>();
+  /**
+   * GH#637 —— entity → 上一條 move 指令**落地**的 tick。唯一用途:分辨「離散的
+   * 點擊」(間隔 ≥ 幾個 tick)與「搖桿每一拍送一條的流」(間隔 1)。只記
+   * `humanSeats` 的英雄;讀寫都在 `OrderSystem.armMoveOrderNoAggro` 一個地方。
+   */
+  readonly lastMoveOrderTick = new Map<EntityId, number>();
+
+  /**
    * AIRBORNE RENDER STATE (task #247) — entity → { y: GGD units above the arena
    * floor }. ABSENT = grounded.
    *
@@ -1445,6 +1462,10 @@ export class SimWorld {
     // 否則新單位一生出來就會被判定成卡了一秒、直接把走位權交給追擊。
     this.walkStall.delete(id);
     this.autoEngaging.delete(id);
+    // GH#637: 回收的 entityId 不得繼承上一個單位的「點地板冷卻」——否則新單位
+    // 一生出來就帶著別人點的那 1 秒不索敵。
+    this.moveOrderNoAggroUntil.delete(id);
+    this.lastMoveOrderTick.delete(id);
     // task #249: nor a stale 變身 form — a recycled id that inherited one would
     // be dragged back to a PREVIOUS unit's base champion on the next tick.
     this.championForm.delete(id);
