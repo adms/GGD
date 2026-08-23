@@ -135,3 +135,106 @@ owner 群組②的原話裡的「**還有檢查 script**」在群組⑧這一側
 這一輪動了 `content/abilities/*.json` ⇒ **`bundle.json` 現在過期**，
 `shippedBundleIsCurrent.test.ts` 會紅。`pnpm content:build` 是全域鎖，
 ⛔ 這條 lane 不能跑 —— **請主 session 跑一次 `pnpm content:build` 並 `git add content/`。**
+
+---
+---
+
+# 第二輪（同一天，接在 `fcabd849` 之後）
+
+## 0. 一句話結論
+
+上一輪修好了**動地剁畫在哪裡**（`radial` → `orbit`），這一輪量到的是同一族的另一半：
+**它們畫多久。** 38-002 的三條黑龍與衝擊波飛完全程只要 **0.267 秒** ——
+原作 A09I 是 **1.04 秒**（`countGates.below = 14` × `periodicSec = 0.08`）。
+⭐ 而 `speed: 30` **不是筆誤**：`1625 wc3u/s × 11/600 = 29.8` 是**逐字忠實**的換算。
+壞的是把**速度**搬過來、卻把**距離**縮成小競技場的尺寸 —— 那等於把整段演出加速 4 倍。
+
+## 1. ⭐ 最重要的發現：小競技場會把「忠實的速度」變成「看不見的演出」
+
+| | 原作 A09I | GGD 出貨（改之前） |
+|---|---:|---:|
+| 距離 | 1690 wc3u ＝ **30.98** GGD 格 | **8** 格（設計：小競技場，第〇·六階梯第 1 層贏） |
+| 速度 | 1625 wc3u/s ＝ **29.8** GGD 格/秒 | **30**（逐字忠實） |
+| ⇒ 停留時間 | **1.04 秒** | ⛔ **0.267 秒** |
+
+⚠️ 換算係數 `GGD_PER_WC3 = 11/600` 是既有的（`tools/engine-atlas/atlas.ts:252`）；
+用同一個係數驗過動地剁的環半徑：`350 wc3u × 11/600 = 6.417` ＝ 出貨的 `6.42` ✅，
+所以係數本身沒有爭議。
+
+⭐ **「距離縮 4 倍、速度照抄」是一個會重複發生的形狀**，⛔ 不是這一支的筆誤：
+記憶裡的地圖鐵則逐字是「**24×18 的小競技場，只是看起來像無限城**」。
+每一次把 w3x 的距離壓進這個場地，**時間就被一起壓掉了**，而沒有任何東西會紅。
+
+## 2. 落地（全部在柵欄內）
+
+### 2.1 `content/abilities/godie-u010.ex.json` · `godie-uvng.ex.json`
+
+| 節點 | 改動 | 依據 |
+|---|---|---|
+| 三條黑龍 `imported.darkraor` (`radial` ×3) | `speed: 30.0` → **`7.7`** | 保留**原作的停留時間**而不是原作的速度：`8 格 ÷ 1.04 秒 = 7.69`。1.04 秒有**兩個獨立來源**都指向它 —— `countGates.below=14 × periodicSec=0.08` 與 `travel 1690 ÷ speed 1625` |
+| 衝擊波 `imported.blackhole` (`radial` ×3) | 同上 | `tpl-dragon-shockwave` 逐字：「**跟著主體一起推進**的第二具模型」⇒ 它必須跟黑龍同速，⛔ 否則尾流會跑到龍前面 |
+| 動地剁 `imported.tectonicfury` (`orbit` ×12) | ⛔ **不動** | `orbit` 的 `travel` 是 0 ⇒ `speed` 這一格**沒有人讀**（`modelFxInstances` 回 `travel: 0`，`ticks = lifeTicks`）。動它只是製造雜訊 |
+
+⚠️ ⛔ **一個傷害／平衡欄位都沒動。** 38-002 的三條黑龍**沒有 `onTouch`**（沿路不造成傷害，
+傷害全部來自那一顆 `damage` 節點）⇒ 改速度**逐位元不影響任何一次結算**，純演出。
+⭐ **為什麼是 `.ex` 而不是 `.e`**：`exAbility` 在 champion 文件裡是一個 **id 字串**
+（`content/champions/godie-u010.json:351`），⛔ 而 `.e` 是 Q/W/E/R 鏡射槽，
+改它一定要連 champions 一起改（不在柵欄裡）。
+
+⭐ **rollback 那一格**：`content/` 是線上 live bind-mount ⇒ owner 在後台「內容管理」
+把那兩個 `speed` 改回 `30` 就回到原狀，⛔ 不需要重建映像也不需要部署。
+
+### 2.2 `packages/shared/src/content/schema/effects/modelFxStagingDuration.test.ts`（新檔）
+
+**一條承重的守衛** —— 「多實例演出要在畫面上停得夠久」：
+掃出貨註冊表裡每一支帶 `count ≥ 2` 的 `spawnModelFx`，用**真的** `SimWorld` 施放，
+讀 sim **真的送上線**的 `instances[].durationSec`，取最短的那一具比對門檻。
+
+⭐ **門檻不是我挑的字面值**：它從 `content/ability-templates/tpl-radial-burst.json`
+的 `distance / speed` 推導（＝ 42-04 世界終結那十二顆大冰塊的停留時間 **0.75 秒**，
+一份**出貨且已經被接受**的多實例演出）。⛔ 模板調了門檻自己跟著動（第〇·四守則）。
+⛔ 也不用 `distance/speed` 自己再算一次 —— 那會是第二份算式。
+
+⛔ **為什麼它是一個新檔，而不是加進 `modelFxStagingContract.test.ts`**：
+寫的當下那個檔的工作區同時有**另外兩條 lane** 的未提交改動（一個新的 describe ④、
+以及一支新的無聲多實例技能）。同一個檔的 hunk 分不開 ⇒ 把守衛塞進去等於把別人
+沒做完的東西送上我的 commit（CLAUDE.md 併行 lane 那一節）。
+
+### 2.3 ⭐ 豁免清單**兩次**被它自己的到期日清空 —— 這一輪最值得記下來的方法論證據
+
+| 清單 | 寫的時候的理由 | 到期的方式 |
+|---|---|---|
+| `FENCED_OUT = {godie-n003.r, godie-n01g.r}`（上一輪，42-04 世界終結無聲） | 「`R` 槽 ⇒ 鏡射進 champions ⇒ 不在柵欄裡」 | 另一條 lane 給了 `soundKey: "magicIce"` ＋ `arriveSoundKey: "wc3.gluescreenmeteorhit1"` ⇒ `stale` 斷言**逐字點名這兩列** |
+| `TOO_FAST_FENCED_OUT = {godie-u010.e, godie-uvng.e}`（這一輪，38-03 動地剁 0.214 秒） | 同上（`E` 是鏡射槽） | ⭐ **寫下來的當天**另一條 lane 連 champion 鏡射一起把它改成 `orbit` ＋ `lifeSec: 3.0` ⇒ 清單當場變成空的 |
+
+⇒ ⭐ **帶到期日的豁免會自己回收，⛔ 沒有到期日的就是一張永久許可證。**
+
+⚠️ 上面第一列的修法（`FENCED_OUT` 改成空集合）**留在 `modelFxStagingContract.test.ts`
+的工作區，⛔ 這條 lane 沒有 commit 它** —— 那個檔同時載著另外兩條 lane 的改動。
+⭐ 主 session／下一個 commit 那個檔的人要**連這一行一起帶走**，否則 ② 會紅在
+「這幾支已經有聲音了」。
+
+## 3. 突變紀錄（一批一條，最承重的那一行）
+
+`content/abilities/godie-u010.ex.json` 的三條黑龍 `"speed": 7.7` 改回 `30.0`
+→ 紅：「多實例演出一閃就沒了 —— 十幾具模型在四分之一秒內出現又消失，
+在畫面上跟『這支技能沒有特效』分不出來（第二守則失敗形態②）」。
+還原用 `Edit` 改回那一行，⛔ 不是 `git checkout`。
+
+驗證：新守衛 1/1 綠 · `dragonStaging` · `abilityMirror` · `comboFinisherShowcase` ·
+`noOpModifierClaims` 合計 19/19 綠 · `pnpm typecheck` EXIT=0。
+⚠️ `modelFxStagingContract.test.ts` 現在是紅的，而**紅的不是這條 lane 的東西**：
+另一條 lane 的工作區加了一支多實例但無聲的 `godie-etyr.q`（describe ②）。
+
+## 4. ⛔ 柵欄外，交給主 session（上一輪四項仍然成立，這裡只補新的）
+
+| # | 是什麼 | 為什麼我沒有動 |
+|---|---|---|
+| **⑤** | **38-03 的黑龍本體 `forward` 14／30 ＝ 0.467 秒**（原作 1.04 秒）。⭐ 上一輪的第 ① 項（動地剁 `radial`→`orbit`）**已經被另一條 lane 修掉了**，⛔ 這一項不是它 | `E` 是鏡射槽，要連 `content/champions/*.json` 一起改；而且單實例的直線推進不在這一輪那條守衛的範圍內（它只問多實例那一族） |
+| **⑥** | ⭐ **`tpl-dragon-serpent` 的 `spreadDeg` 標成「引擎做不到」，而正確的標籤是「設計取代」** —— 原作三條龍是 `facing ±45°`（`geometry.polarProjections` 逐字），GGD 的 `radial` 是**相位鎖在世界 +x 的 360° 星爆**，⇒ 三條龍飛哪與玩家瞄哪**完全無關**。但 38-002 的出貨說明寫的是「造成**大範圍**傷害」⇒ 依第〇·六階梯**第 1 層（新版說明）贏第 3 層（JASS）**，星爆才是對的答案 | `content/ability-templates/` 不在柵欄裡 |
+| **⑦** | ⭐ `path:"orbit"` 的 `speed` 是一格**沒有人讀**的必填欄位（`refine` 要求它、`modelFxInstances` 回 `travel:0` 從此不讀）。⛔ 不能只放寬 schema —— `sim/effects/spawnModelFx.ts` 對 `speed === undefined` 會 `console.error` 並整段 `return`，兩邊要一起改 | `sim/effects/` 不在柵欄裡 |
+
+## 5. ⚠️ 主 session 要接的一步（與上一輪同）
+
+動了 `content/abilities/*.json` ⇒ `bundle.json` 過期。
+`pnpm content:build` 是全域鎖，⛔ 這條 lane 不能跑 —— 請主 session 跑一次並 `git add content/`。
