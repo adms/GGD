@@ -173,7 +173,53 @@ export const INTERMISSION_GPU = {
    * 而 `webglcontextlost` 那條 log 讓**原因**仍然說得出來(⛔ 不是靜默 fail-open)。
    */
   canvasBackfill: true,
+  /**
+   * ⭐ **預設 true（出貨前是 false，即 Babylon 的預設 `alpha: true`）。**
+   * 把中場那張 `<canvas>` 的 WebGL context 開成**不透明**（`alpha: false`）。
+   *
+   * ── ⭐ 量到的（真的瀏覽器 · 真的出貨頁 · 真的商店三選一狀態，⛔ 不是推的）──
+   * `getContextAttributes()` = `{ alpha: true, premultipliedAlpha: true,
+   * preserveDrawingBuffer: false }`，而引擎的 fps 上限是 60、合成器跑 120
+   * ⇒ 逐幀取樣 16 次，drawing buffer **完美地一幀有一幀無**：
+   * `nz=3600 / alpha=255` ↔ `nz=0 / **alpha=0**`。
+   * ⚠️ **alpha=0 是「透明」，⛔ 不是「黑」** —— 那一半的幀，這張 canvas 對合成器
+   * 而言是一塊**要混合**的透明層，而不是一塊蓋住底下的不透明層。
+   *
+   * ⇒ ⭐ 這一格是 owner 三次描述的**共同**機制：
+   * 「透出去的是頁面底色」＝**黑**（L1／F3 看到的）；
+   * 「透出去的是一份半寫入的 premultiplied buffer」＝**破圖**（owner 看到的）。
+   * ⛔ 兩者不是兩個缺陷，是**同一塊 alpha 合成層**的兩種樣子 ——
+   * 而看到哪一種取決於 GPU/驅動怎麼處理「這一幀沒有新內容」，
+   * 這正是它在我機器上不重現、在他機器上重現的原因。
+   *
+   * ⚠️ ⛔ **它不改任何一個像素的外觀**：場景的 `clearColor` 本來就是 alpha=1，
+   * 中場也刻意蓋住底下的競技場（`setArenaRenderSuppressed`）—— 這一格只改
+   * 「這張 canvas 在合成器眼裡是不是要混合」。
+   * **一鍵回頭 = 設回 `false`。**
+   */
+  opaqueCanvas: true,
 } as const;
+
+/**
+ * ⭐ 中場引擎的 WebGL context 選項 —— **一個純函式，⛔ 不是散在建構子裡的字面值**。
+ * 抽出來的唯一理由是它要**驗得到**：`engineFactory`（測試用的 NullEngine）會整個
+ * 繞過建構子那一行，所以「出貨真的送了 `alpha:false` 嗎」在此之前**沒有任何守衛
+ * 看得到**（失敗形態⑤：被測的不是出貨的那個）。
+ */
+export function intermissionEngineOptions(): {
+  stencil: boolean;
+  alpha: boolean;
+  doNotHandleContextLost: boolean;
+  powerPreference?: "low-power";
+} {
+  return {
+    stencil: false,
+    // ⭐ 見 INTERMISSION_GPU.opaqueCanvas —— 破圖／黑閃的共同根因
+    alpha: !INTERMISSION_GPU.opaqueCanvas,
+    doNotHandleContextLost: !INTERMISSION_GPU.restoreContextLoss,
+    ...(INTERMISSION_GPU.lowPowerGpu ? { powerPreference: "low-power" as const } : {}),
+  };
+}
 
 export interface IntermissionSceneOptions {
   /** swap in a NullEngine for headless tests; defaults to a real WebGL Engine */
@@ -364,12 +410,8 @@ export class IntermissionScene {
 
     this.engine = opts.engineFactory
       ? opts.engineFactory(canvas)
-      : new Engine(canvas, true, {
-          stencil: false,
-          // ⭐ 兩格都是 INTERMISSION_GPU 的一鍵回頭旋鈕（見它的檔頭）
-          doNotHandleContextLost: !INTERMISSION_GPU.restoreContextLoss,
-          ...(INTERMISSION_GPU.lowPowerGpu ? { powerPreference: "low-power" as const } : {}),
-        });
+      // ⭐ 三格都是 INTERMISSION_GPU 的一鍵回頭旋鈕（見 intermissionEngineOptions）
+      : new Engine(canvas, true, intermissionEngineOptions());
     this.canvas = canvas;
     this.paintCanvasBackfill();
     this.watchContextLoss();
