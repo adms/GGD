@@ -123,6 +123,7 @@ import { CastPillarFx } from "./CastPillarFx";
 import { ArcBoltFx } from "./ArcBoltFx";
 import { GoldPickupFx } from "./GoldPickupFx";
 import { arcBoltSpec, arcCastPlan, ARC_TINTS, type ArcBoltOptions } from "./arcBolt";
+import { reflectArcBurstPlan } from "./reflectArcBurst";
 import { pillarPalette, pillarTintFromRamp, type PillarPalette } from "./castPillar";
 import { severityForHit, sprayDirection, damageScale, type Vec2 } from "./bloodPresets";
 import { goreConfig, resolveGore } from "./goreConfig";
@@ -2062,9 +2063,28 @@ export class VfxSystem {
         const x = ev.data.x as number | undefined;
         const z = ev.data.z as number | undefined;
         if (x === undefined || z === undefined || !isFinitePos({ x, z })) break; // #131
-        const doc = this.doc(ev.data.vfxId as string | undefined);
+        const vfxId = ev.data.vfxId as string | undefined;
+        const doc = this.doc(vfxId);
         if (doc) this.play(doc, x, z, nowMs);
         else this.sparks.push(new HitSpark(this.scene, x, z, nowMs));
+        // ⚡🌈 GH#549 —— 「**反彈成功**」那一族的**真的電弧**（owner 2026-08-22：
+        //    「被反彈的敵方單位 身上要有明顯的**七彩閃電爆炸**」）。
+        // ⛔ 這裡沒有任何技能 id 的 if：`reflectArcBurstPlan` 查的是**演出文件的
+        //    id**，所以護盾反射／格擋反擊指到同一份文件就共用同一套演出
+        //    （第〇·五守則 + 第零守則⑨：K 個模板 + 一張表）。
+        // ⚠️ 粒子那一份文件做不出「一道有分岔的鋸齒電弧」，而 `colorStops` 的
+        //    上界是 4 ⇒ 七個顏色也寫不進一份文件裡。兩件事都在這一層解決。
+        // ⭐ 種子＝tick + 施法者（與 `chainLightning` 同一個做法）⇒ 決定性，
+        //    ⛔ 不是 `Math.random`，也⛔ 不是常數（常數 = 每一發長成同一朵）。
+        const rSeed = (ev.tick | 0) * 149 + ((ev.data.caster as number | undefined) ?? 0) * 31;
+        for (const req of reflectArcBurstPlan(vfxId, { x, z }, rSeed, ARC_BODY_Y)) {
+          this.strikeArc(req.from, req.to, nowMs, {
+            tint: req.tint,
+            power: req.power,
+            forks: req.forks,
+            seed: req.seed,
+          });
+        }
         break;
       }
 
