@@ -643,6 +643,39 @@ owner 哪天替某一條開了空間，守衛自動放行，⛔ 不必改測試�
 | ⑤ | **被測的不是出貨的那個** | 變身重建測試自己手寫 `e.flags = FORM_A`，而出貨的 snapshot 從不寫它 |
 | ⑥ | 用掃原始碼字串代替行為 | 掃 `grep championForm` 而不是跑真的 registry |
 | ⑦ | 掃屬性代替掃行為 | 「三個 kind 解析出三個 modelKey」是屬性，不是「畫面上不一樣大」 |
+| ⑧ | ⭐ **消費端存在，但它消費不到** | 事件有 `case`、`eventFanout` 放行、tsc 綠 —— 而那個 case 的**第一行**讀一個**零寫入端**的欄位然後 `break`（或擲例外） |
+
+### ⛔⛔ 形態⑧：一天之內中了**五次**，而每一條既有守衛都是綠的
+
+2026-08-23 量到（GH#606 / #608 / #571 / lane A / lane C）：
+
+| 事件 | 客戶端讀 | sim 有沒有送 | 下場 |
+|---|---|---|---|
+| `modelFxSpawn` | `ev.data.spec` | ⛔ | 第一行 `break` ⇒ **四支經典光束砲一具模型都沒畫出來過** |
+| `screenFlash` / `screenShake` | `ev.data.spec` | ⛔ | **擲 TypeError** ⇒ 帶走同一批後面**每一個**事件 |
+| `floatingText` | `ev.data.at` | ⛔ | **全遊戲每一個浮動文字**都沒出現過 |
+| `immune` | （沒有座標） | ⛔ | 「免疫」兩個字在 **5/13 張地圖**上一個像素都沒有 |
+| `vfxArc` | —— | ⛔ **零個 emitter** | 28 支雷電技能裡 26 支走不到電弧 |
+
+⭐ **根因不是誰粗心，是型別逼出來的**：`SimWorld.emit(type: string, data: Record<string, unknown>)`
+與 `EventMessage.data` 都**沒有型別** ⇒ 消費端**想讀任何欄位就非 `as` 不可**，
+而每一個 `as never` / `as unknown as X` 都是一個**靜默的洞**。
+
+**⛔ 而四種守衛對它結構性失明：**
+
+| 守衛的形狀 | 它其實在問什麼 |
+|---|---|
+| 「這個事件有沒有一個 `case`」（grep 字串） | **它有。** ⛔ 不問那個 case 的第一個 `if` |
+| 「Zod 推導的型別 assignable to TS union」 | TS 的結構指派**允許多餘屬性**，反方向少一個 **optional** 也可指派 ⇒ **兩個方向都放行** |
+| 測試**自己造**一份 payload 餵進消費端 | 形態⑤ —— 它量的是一個**虛構通道**（2026-08-23 抓到三份夾具，其中一份的欄位 `motion` 全 repo 不存在） |
+| 「那個檔案有沒有提到 `origin`」 | 下一行就是 `proj.origin` ⇒ 永遠綠 |
+
+⭐ **要驗就跑真的東西**：載入**出貨內容** → 跑**出貨的**那一支 → 拿**真的**事件 →
+餵進**真的**消費端。前例 `modelFxWireContract.test.ts` / `screenCueContract.test.ts`。
+
+⭐ **而根治是讓契約變成 `tsc` 的紅**：payload 型別住 emit 站旁邊，兩邊 import 同一個
+（`ModelFxSpawnEvent` / `ScreenFlashEvent`…）。⚠️ 2026-08-23 量到全 repo
+**118 個事件名 · 159 個 emit 呼叫點，而 payload 介面只有 4 個 = 3.4%**。
 
 ### ⚠️ fail-open 沒錯，**靜默**才是缺陷
 
