@@ -22,6 +22,8 @@ import {
   DEFAULT_AUGMENT_TIERS,
   DEFAULT_FINAL_ROUND,
   DEFAULT_BOTH_DRAFTS_EXTRA_SEC,
+  DEFAULT_BOT_ONLY_RING_ACCEL_SEC,
+  DEFAULT_BOT_ONLY_RING_ACCEL_ENABLED,
   DEFAULT_BOT_SHOP,
   DEFAULT_DISADVANTAGE_WEIGHTS,
 } from "@ggd/shared/content";
@@ -149,6 +151,16 @@ export interface ArenaRules {
   finalRound: number;
   /** ⭐ 真的兩張都發出去的回合，中場多給幾秒。 */
   bothDraftsExtraSec: number;
+  /**
+   * ⭐ GH#643 —— 還在打的 zone 裡沒有活著的人類時，火圈點火夾到「現在＋幾秒」。
+   * ⚠️ 舊錄影的表頭沒有這兩格（`rebuildRules` 直接 spread）⇒ 執行期是
+   * `undefined`；消費端（`accelFireRingForBotOnly`）用 `!== true` / `undefined`
+   * 判讀成「機制關著」—— 那正是錄影當時真的發生的行為。型別上宣告成必填
+   * 是為了強迫新的建構點想一次（同 `maxRounds` 的理由）。
+   */
+  botOnlyRingAccelEnabled: boolean;
+  /** GH#643 的秒數（出貨 10）。0 = 人類全滅的下一個 tick 就點火。 */
+  botOnlyRingAccelSec: number;
   /** ⭐ bot 怎麼花錢（owner 2026-08-18：買隨機寶具、半價）。 */
   botShop: BotShopConfig;
   /**
@@ -232,6 +244,11 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
   augmentTiers: DEFAULT_AUGMENT_TIERS,
   finalRound: DEFAULT_FINAL_ROUND,
   bothDraftsExtraSec: DEFAULT_BOTH_DRAFTS_EXTRA_SEC,
+  // ⭐ GH#643 —— 引用 shared 的常數，⛔ 不重打（重打就是第四個住處）。預設**開**
+  // （第〇·六守則），所以連骨架/單元測試的預設也走 owner 的裁決；全 bot 沙盒
+  // 另有「0 個 humanSeat 不觸發」那一關，所以既有 all-bot 測試逐位元不變。
+  botOnlyRingAccelEnabled: DEFAULT_BOT_ONLY_RING_ACCEL_ENABLED,
+  botOnlyRingAccelSec: DEFAULT_BOT_ONLY_RING_ACCEL_SEC,
   botShop: DEFAULT_BOT_SHOP,
   disadvantageWeights: DEFAULT_DISADVANTAGE_WEIGHTS,
   rounds: new Map(
@@ -328,6 +345,10 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
     augmentTiers: doc.augmentTiers ?? DEFAULT_AUGMENT_TIERS,
     finalRound: doc.finalRound ?? DEFAULT_FINAL_ROUND,
     bothDraftsExtraSec: doc.bothDraftsExtraSec ?? DEFAULT_BOTH_DRAFTS_EXTRA_SEC,
+    // ⚠️ `??` 同上：線上耐久覆蓋層那份文件是這兩格出現之前存的，缺席拿到的是
+    // 出貨預設（開、10 秒），⛔ 不是靜靜地把 GH#643 關掉。
+    botOnlyRingAccelEnabled: doc.botOnlyRingAccelEnabled ?? DEFAULT_BOT_ONLY_RING_ACCEL_ENABLED,
+    botOnlyRingAccelSec: doc.botOnlyRingAccelSec ?? DEFAULT_BOT_ONLY_RING_ACCEL_SEC,
     botShop: doc.botShop ?? DEFAULT_BOT_SHOP,
     disadvantageWeights: doc.disadvantageWeights ?? DEFAULT_DISADVANTAGE_WEIGHTS,
     rounds,

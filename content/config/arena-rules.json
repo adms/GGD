@@ -6,6 +6,8 @@
   "offerCount": 3,
   "finalRound": 10,
   "bothDraftsExtraSec": 10,
+  "botOnlyRingAccelSec": 10,
+  "botOnlyRingAccelEnabled": true,
   "draftConflict": "round-roll",
   "grailDraft": {
     "eligibilityEnabled": true,
@@ -224,6 +226,7 @@
       "yOffset": 0.35,
       "showThreshold": 1
     },
+    "normalMobShadow": false,
     "schedule": [
       {
         "round": 6,

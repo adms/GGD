@@ -4050,6 +4050,7 @@ export class MatchController {
         // ⛔ 不可以改成「把 checkCombatEnd 的結束條件放寬」：那會動到**每一場**比賽
         // 的結束判定。這裡擋的是這一間房的相位推進，正式賽一個字都沒碰到。
         if (this.practice?.endlessCombat) break;
+        this.accelFireRingForBotOnly(); // GH#643 —— 只剩 bot 在打就提前縮火圈
         if (this.checkCombatEnd(this.combatTimeUp(expired))) {
           this.concludeCombat(); // despawn flowers + settle + maybe latch freeze
           this.phase.advance(); // -> resolution
@@ -4108,6 +4109,65 @@ export class MatchController {
    * there is no sim clock to read and the phase countdown remains the only
    * answer, byte-identical to the pre-#L2 behaviour.
    */
+  /**
+   * GH#643 —— owner：「如果現場只剩 bot 存活，回合時間縮減到10秒後就縮火圈
+   * 不要平白浪玩家等待」。
+   *
+   * 判準：**還在打的 zone 裡**活著的人類 = 0 ⇒ 火圈點火時間夾到
+   * min(現值, now + `botOnlyRingAccelSec`)。「人類」用 `seat.humanSeat` ——
+   * GH#577 的同一個身分（⛔ 不是 `driverKind`：斷線的真人 driver 是 "ai"，
+   * 而他仍然是玩家，GH#492 逐字記過）。夾的是 `FireRingRules.startTicks`，
+   * 與殭屍王延長動的是**同一個數字**，所以二段制的 gap、燃燒曲線整個形狀
+   * 跟著平移（fireRing.ts 的 THE ROUND CLOCK）。
+   *
+   * ── 與殭屍王延長（#L1）／`roundHoldMobKinds` 的共存（K8 的裁決，寫清楚）──
+   * ⭐ **bot-only 贏，⛔ 不是取先到者**。這裡每個 combat tick 都重新夾，所以
+   * 人類全滅**之後**才進場的殭屍王把 `startTicks` 推遠 180 秒，下一個 tick
+   * 就被夾回 now+10s —— 延長的存在理由是「王必須打得成」（fireRing.ts 逐字），
+   * 而 zone 裡已經沒有玩家在打它；讓 bot 對王多耗三分鐘正是 owner 點名的
+   * 「平白浪費玩家等待」。`combatMaxTicks`（回合硬底線）刻意**不動**：這一格
+   * 只提前火圈，回合結束仍由火圈燒完／`checkCombatEnd` 判定；`roundHoldMobKinds`
+   * 也照舊 —— hold 擋的是「勝負記錄」，而火圈的 %HP 真傷（含 `fireRingBurnMobs`
+   * 的保底）本來就是 hold 的出口，兩者各管一半、不打架。
+   *
+   * ── 為什麼是每 tick 夾、而且夾了不回頭 ─────────────────────────────────
+   * 「人類全滅」沒有單一事件點（擊殺／火圈／cheat 走不同路），而夾是冪等的：
+   * 夾過之後 `startTicks <= cap` 第一個比較就 return。⚠️ 回合內**單向**：
+   * 人類在 10 秒窗內被復活圈救起也不還原 —— 還原要記住「本來的點火時間」，
+   * 那個複雜度買到的只是一個邊角；下一回合 `beginCombatFireRing` 重新武裝，
+   * 自然歸零。已結算 zone 裡站著的活人**不擋**加速（他在等，火圈也跳過
+   * settled zone，燒不到他）；輪空的人類在 park-dead 那一段本來就 alive:false。
+   *
+   * 全 bot 沙盒（0 個 humanSeat）刻意不觸發：沒有玩家在等，而「活著的人類=0」
+   * 對空集合恆真 —— 少這一關，每一條既有 all-bot 測試的火圈時序都會被改寫
+   * （`resolveVsBotPacing` 的同一個理由）。舊錄影的表頭沒有這兩格 ⇒
+   * `undefined` ⇒ 機制關著 ＝ 錄影當時真的發生的行為。
+   */
+  private accelFireRingForBotOnly(): void {
+    const sec = this.rules.botOnlyRingAccelSec;
+    if (this.rules.botOnlyRingAccelEnabled !== true || sec === undefined) return;
+    const ring = this.world.fireRingRules;
+    if (!ring || this.world.fireRingTicks < 0) return;
+    const cap = this.world.fireRingTicks + Math.round(sec * TICK_HZ);
+    if (ring.startTicks <= cap) return; // 已經更早（或已夾過）—— 冪等出口
+    let anyHuman = false;
+    for (const seat of this.seats.values()) {
+      if (!seat.humanSeat) continue;
+      anyHuman = true;
+      if (seat.entityId === null) continue;
+      const hp = this.world.health.get(seat.entityId);
+      if (!hp?.alive) continue;
+      const zone = this.world.transform.get(seat.entityId)?.zone;
+      if (zone === undefined) continue;
+      const contested = this.royale
+        ? this.royale.zone === zone && this.royaleWinner === null
+        : this.pairings.some((p) => p.zone === zone && !this.duelWinners.has(p.zone));
+      if (contested) return; // 有人類還在打 —— 不加速
+    }
+    if (!anyHuman) return; // 全 bot 沙盒：沒有玩家在等
+    ring.startTicks = cap; // ⭐ 這一行就是 GH#643 的全部行為
+  }
+
   private combatTimeUp(phaseExpired: boolean): boolean {
     if (!Number.isFinite(combatDeadlineTick(this.world))) return phaseExpired;
     // Hand the phase countdown the SAME ticks the sim deadline just gained, once

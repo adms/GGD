@@ -782,6 +782,24 @@ export const DEFAULT_FINAL_ROUND = 10;
 export const DEFAULT_BOTH_DRAFTS_EXTRA_SEC = 10;
 
 /**
+ * ⭐ **GH#643 只剩 bot 在打時的火圈加速**（owner 2026-08-24：
+ * 「如果現場只剩 bot 存活，回合時間縮減到10秒後就縮火圈 不要平白浪玩家等待」）。
+ *
+ * 判準是「還在打的 zone 裡活著的**人類**（`humanSeat`）＝0」；成立時把火圈點火
+ * 時間夾到 min(現值, now + 這格秒數)。夾的是 `FireRingRules.startTicks` ——
+ * 與殭屍王延長動的是同一個數字，所以二段制／燃燒曲線整個形狀跟著平移。
+ * 消費端：`apps/game-server/src/match/MatchController.ts::accelFireRingForBotOnly`。
+ */
+export const DEFAULT_BOT_ONLY_RING_ACCEL_SEC = 10;
+
+/**
+ * GH#643 的開關。預設**啟動**（第〇·六守則：優先權大的更新預設 on）；
+ * 關掉＝一鍵回到「bot 互毆也照原點火時間等」的舊行為（owner 常設：
+ * 「自己判斷 但是留後台開關可以簡易 rollback」）。
+ */
+export const DEFAULT_BOT_ONLY_RING_ACCEL_ENABLED = true;
+
+/**
  * ⭐ **bot 的商店行為**（owner 2026-08-18：「一樣花錢買隨機寶具，
  * 只是消耗金錢是半價」）。
  *
@@ -1011,6 +1029,39 @@ export const zConfigArenaRulesDoc = z
         "賽制的最後一回合 —— 打完就全部結算，而且這一回合是**全員同一張地圖的大亂鬥**。" +
           "⚠️ 它與房間設定的 `maxRounds` 是兩件事：那一格只能把一場**縮短**，兩條是 OR、先到的贏。" +
           "⛔ 改大之前先確認回合表排到那一回合，否則後面幾回合會落到 overflow 規則上。",
+      ),
+    /**
+     * ⭐ **GH#643 只剩 bot 在打時，火圈點火提前到「現在＋幾秒」**。
+     * 省略 = {@link DEFAULT_BOT_ONLY_RING_ACCEL_SEC}。
+     *
+     * ⚠️ 必須 `.optional()`：線上已經有 `config.arena-rules@1` 的耐久覆蓋層，
+     * 多一個必填欄會讓整份 config 被 Zod 退回 → 內容載入失敗 → 骨架英雄
+     * （2026-08-02 事故的形狀）。
+     */
+    botOnlyRingAccelSec: z
+      .number()
+      .min(0)
+      .max(120)
+      .optional()
+      .describe(
+        "還在打的場地裡一個活著的人類都不剩（全滅、輪空、或人類的場已分出勝負）時，" +
+          "火圈點火時間被夾到「現在＋這格秒數」（出貨 10）。owner GH#643：" +
+          "「如果現場只剩 bot 存活，回合時間縮減到10秒後就縮火圈 不要平白浪玩家等待」。" +
+          "調小＝bot 互毆收得更快；0＝立刻點火。⛔ 它只提前點火，不動回合硬底線，" +
+          "也⛔ 不會把已經更早的點火時間往後推。",
+      ),
+    /**
+     * GH#643 的開關。省略 = {@link DEFAULT_BOT_ONLY_RING_ACCEL_ENABLED}（開）。
+     * ⚠️ 必須 `.optional()`：同上，耐久覆蓋層相容。
+     */
+    botOnlyRingAccelEnabled: z
+      .boolean()
+      .optional()
+      .describe(
+        "「只剩 bot 在打就提前縮火圈」整個機制的開關（出貨開）。關掉＝回到舊行為：" +
+          "就算場上只剩 bot 互毆，火圈也照原本的點火時間等。" +
+          "⚠️ 殭屍王延長與它同場時，這格開著的話 bot-only 贏（人都不在了，" +
+          "王的延長沒有觀眾）—— 關掉這格就是把裁決整個讓回給殭屍王延長。",
       ),
     /**
      * ⭐ **bot 的商店行為**（owner 2026-08-18）。省略 = {@link DEFAULT_BOT_SHOP}。
