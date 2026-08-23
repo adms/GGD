@@ -462,6 +462,19 @@ export const DEFAULT_ONE_SHOT_MAX_LIFE_SEC = 0.6;
  */
 export const DEFAULT_CAST_ARCS = false;
 
+/** 衝擊波環的亮度倍率出貨值（GH#617，owner「太亮太搶眼」）。1 = 回到 2026-08-23 之前。 */
+export const DEFAULT_IMPACT_RING_ALPHA = 0.35;
+/** 同上,大小倍率。 */
+export const DEFAULT_IMPACT_RING_RADIUS = 1;
+/** 衝擊波環的壽命倍率出貨值（GH#617,owner「散開速度感要夠快⋯太慢存活時間也太長」)。 */
+export const DEFAULT_IMPACT_RING_LIFE = 0.55;
+/** 淡出指數出貨值（owner「半透明淡出更快衰減」）。 */
+export const DEFAULT_IMPACT_RING_FADE_POW = 3;
+/** ⛔ 硬天花板（秒）—— owner 逐字「0.8秒內」。 */
+export const DEFAULT_IMPACT_RING_MAX_LIFE_SEC = 0.8;
+/** 極大比極小快幾倍（owner「五級距越大速度越快」）。 */
+export const DEFAULT_IMPACT_RING_TIER_SPEED = 1.8;
+
 /**
  * 下界。手機出貨是 30 fps(#274),0.1 秒 = **3 張畫面** —— 再低於這條線,一次
  * 命中在手機上就等於沒有畫過,而操作者只會看到「特效不見了」。
@@ -1074,6 +1087,56 @@ export const zConfigVfxFamiliesDoc = z
      * 優先權大的更新預設啟動）。
      */
     castArcs: z.boolean().optional(),
+
+    /**
+     * ⛔⛔ **衝擊波環的亮度與大小倍率**（GH#617）—— owner 2026-08-23 逐字：
+     * 「地上常出現**一堆亮藍色往外擴散的圈圈特效**⋯**我感覺是硬加的 太亮太搶眼不好看**」
+     *
+     * ⭐ 他兩件都說對了（查證過）：它是一顆 `CreateTorus`，⛔ **不是** `vfx@1` 文件、
+     * ⛔ 不在任何 w3x 綁定表 ⇒ **結構上不可能有原作對應**；而它
+     * `disableLighting = true` ＋ emissive ⇒ ⛔ 不吃場景光，在哪都一樣刺眼。
+     * ⚠️ 而它**每一次魔法傷害各一發** ⇒ 一場團戰就是「一堆」。
+     *
+     * ⭐ 出貨 `0.35` / `0.7`（≈ 原本的三分之一亮、七成大）。**轉回 `1` 逐位元組
+     * 回到 2026-08-23 之前** —— ⛔ 這一格是為了「回頭」，不是為了觀望。
+     * ⚠️ OPTIONAL 的理由與同一份文件的其他格逐字相同：線上存過的耐久覆蓋層
+     * 沒有這個 key，必填會讓整份 `safeParse` 失敗 ⇒ 整個家族層一起消失。
+     */
+    impactRingAlpha: z.number().min(0).max(1).optional(),
+    impactRingRadius: z.number().min(0.1).max(3).optional(),
+
+    /**
+     * ⛔ **衝擊波環的壽命倍率**（GH#617 第二則）—— owner 2026-08-23 逐字：
+     *
+     * > 「ImpactComposer 的 ShockwaveRing **散開速度感要夠快**，這樣才會有**力量感**，
+     * >  目前**太慢存活時間也太長**」
+     *
+     * ⭐ 這一格與上面兩格**方向相反**，所以刻意分開：
+     * 亮度要**降**（太搶眼），⛔ 但半徑**不可以降** —— 環的擴散速度是
+     * `endRadius / lifeMs`，縮半徑等於**再慢一次**，⛔ 正好殺掉他要的力量感。
+     * ⇒ 出貨 `impactRingRadius = 1`（不動），⭐ 力量感全部由這一格出：
+     * `0.45` ⇒ heavy 240ms→108ms、擴散 7.1→15.7 u/s（**2.22× 快**）。
+     */
+    impactRingLife: z.number().min(0.1).max(2).optional(),
+
+    /**
+     * **淡出曲線的指數** —— owner 2026-08-23：「**半透明淡出更快衰減**」。
+     * `alpha × (1−t)^n`。2 = 2026-08-23 之前；3 = 出貨（前半段就掉掉七成八）。
+     */
+    impactRingFadePow: z.number().min(1).max(6).optional(),
+    /**
+     * ⛔ **硬天花板（秒）** —— owner 2026-08-23 逐字括號：「（**0.8秒內**，
+     * 根據傷害五級距越大速度越快）」。⭐ 它夾的是**三格相乘之後**的結果，
+     * ⛔ 不是任何一格自己的上界 —— 後台把壽命倍率拉到 2 也不會超過這裡。
+     */
+    impactRingMaxLifeSec: z.number().min(0.05).max(3).optional(),
+    /**
+     * ⭐ **極大級距比極小快幾倍** —— owner 2026-08-23：「根據**傷害五級距越大速度越快**」。
+     * 五格線性內插（極小 1× → 極大 這一格）。1 = 五格一樣快（2026-08-23 之前）。
+     * ⚠️ 分級用 shared 的 `damageTierIndexOf`，門檻只有一個住處
+     *（`config.damage-tiers`）⇒ owner 跑 `pnpm anchors:build` 之後自動跟上。
+     */
+    impactRingTierSpeed: z.number().min(1).max(4).optional(),
     /**
      * GH#379 —— 有方向的五個形狀要不要套用**家族仰角預設**(見
      * `DEFAULT_FAMILY_PITCH_DEG`)。省略 = `DEFAULT_FAMILY_PITCH_DEFAULTS_ENABLED`

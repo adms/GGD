@@ -1724,7 +1724,19 @@ export class VfxSystem {
         const isBlock = kind === "block" || Boolean(ev.data.blocked);
         const { tint, intensity } = sparkStyleFor(kind, dmgType);
         this.sparks.push(
-          new HitSpark(this.scene, contact.x, contact.z, nowMs, intensity, 260, tint, CONTACT_Y),
+          // 🔵 GH#617 —— **最後那個 `amount` 是承重的**:少了它,五級距加速逐位元
+          //    等於不存在(失敗形態②:算出來了但從沒送到播放端)。
+          new HitSpark(
+            this.scene,
+            contact.x,
+            contact.z,
+            nowMs,
+            intensity,
+            260,
+            tint,
+            CONTACT_Y,
+            amount,
+          ),
         );
         // BLOCKED (task #39): a guard is metal on metal — the cool-white spark
         // above PLUS a spark fan REBOUNDING at the attacker, and NO blood.

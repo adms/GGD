@@ -86,6 +86,8 @@ import { resolveFamilyArt } from "../render/vfx/familyTuning";
 import { setMaxAbilityVfxLayers } from "../render/vfx/abilityLayers";
 import { setOneShotMaxLifeSec } from "../vfx/oneShotLife";
 import { setCastArcsEnabled } from "../vfx/arcBolt";
+import { setImpactRingScale, setImpactRingTiers } from "../vfx/vfxPresets";
+import { damageTiersFromDoc } from "@ggd/shared/content/damageTiers";
 import { setCastHeightSource } from "../render/vfx/familyCastHeight";
 import { setFamilyPitchDefaults } from "../render/vfx/familyOrient";
 import { setProjectileTuning } from "../render/views/projectileArt";
@@ -390,6 +392,21 @@ export class ContentDb {
     setOneShotMaxLifeSec(vfxFamiliesDoc?.oneShotMaxLifeSec);
     // ⚡ GH#571 —— 施法電弧的總開關（同一份文件、同一條路）。
     setCastArcsEnabled(vfxFamiliesDoc?.castArcs);
+    // 🔵 GH#617 —— 衝擊波環的亮度/大小（同一份文件、同一條路）。
+    setImpactRingScale(
+      vfxFamiliesDoc?.impactRingAlpha,
+      vfxFamiliesDoc?.impactRingRadius,
+      vfxFamiliesDoc?.impactRingLife,
+      vfxFamiliesDoc?.impactRingFadePow,
+      vfxFamiliesDoc?.impactRingMaxLifeSec,
+      vfxFamiliesDoc?.impactRingTierSpeed,
+    );
+    // ⭐ 五級距的門檻**從共用表灌進來**（第〇·四守則：值只有一個住處）。
+    // ⛔ 少了這一行,「越大越快」會退回用 shared 的出貨預設表 —— 那在 owner
+    //    跑過 `anchors:build` 之後就是**過期的門檻**（而畫面上看不出來）。
+    setImpactRingTiers(
+      damageTiersFromDoc(this.configDoc<{ schema: string }>("damage-tiers", "config.damage-tiers@1")).damage,
+    );
     // #251 owner「衝擊波特效沒有真實套用」—— 施法高度模式。同一個位置、同一種
     // 第②號故障:少了這一行,後台把模式切回 `flat` 之後場上仍然貼地。
     setCastHeightSource(vfxFamiliesDoc?.castHeightSource);

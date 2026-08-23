@@ -358,6 +358,31 @@ function clampDamage(v: unknown, fallback: number): number {
 }
 
 /** 把一份 `config.damage-tiers@1` 文件正規化成級距表。認不得 → 出貨值。 */
+/**
+ * ⭐ **一個傷害量落在五級距的哪一格**（回傳 0…4，⛔ 找不到就是 0）。
+ *
+ * owner 2026-08-23 逐字：「ImpactComposer 的 ShockwaveRing 散開速度感要夠快⋯
+ * **根據傷害五級距越大速度越快**」⇒ 播放端要知道「這一發是幾級」。
+ *
+ * ⚠️ 它住 shared 是**第〇·四守則**：門檻只有一個住處（`config.damage-tiers`），
+ * ⛔ 客戶端不可以自己抄一份 `>= 500 就算小` —— 那是第二個住處，而 owner
+ * 每次跑 `pnpm anchors:build` 五格都會重算。
+ *
+ * ⚠️ 比的是**卡面基礎**級距值，而實際落在身上的數字含 AP／防禦／系統倍率
+ * ⇒ 這是一個**視覺分級**，⛔ 不是傷害計算，⛔ 不可以拿去反推平衡。
+ */
+export function damageTierIndexOf(
+  amount: number,
+  damage: DamageTiers["damage"] = DEFAULT_DAMAGE_TIERS.damage,
+): number {
+  if (!Number.isFinite(amount) || amount <= 0) return 0;
+  let idx = 0;
+  DAMAGE_TIER_NAMES.forEach((name, i) => {
+    if (amount >= damage[name]) idx = i;
+  });
+  return idx;
+}
+
 export function damageTiersFromDoc(doc: unknown): DamageTiers {
   const d = doc as
     | { schema?: string; enabled?: unknown; damage?: Record<string, unknown> }

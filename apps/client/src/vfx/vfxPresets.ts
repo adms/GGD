@@ -40,6 +40,11 @@ import type { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { clampOneShotLife } from "./oneShotLife";
 import type { VfxBlendMode } from "@ggd/shared/content";
+import {
+  DAMAGE_TIER_NAMES,
+  damageTierIndexOf,
+  type DamageTiers,
+} from "@ggd/shared/content/damageTiers";
 import { blendModeFor, type ColorStop, type SizeStop } from "./particleFactory";
 
 export type { ColorStop, SizeStop };
@@ -499,15 +504,27 @@ export interface RingSpec {
   lifeMs: number;
   /** starting alpha (fades to 0) */
   alpha: number;
+  /**
+   * ⭐ 淡出曲線的指數（`alpha × (1−t)^fadePow`）。owner 2026-08-23：
+   * 「**半透明淡出更快衰減**，這樣才會有力量感」。
+   * 2 = 2026-08-23 之前；越大 = 前段掉得越兇（尾巴更短）。⛔ 留白 = 2（不變）。
+   */
+  fadePow?: number;
 }
 
-/** Pure ring shape at normalized time t: ease-out radius, (1-t)² alpha. */
+/**
+ * Pure ring shape at normalized time t: ease-out radius, `(1−t)^fadePow` alpha.
+ *
+ * ⚠️ 半徑用 ease-out（**一開始最快**）是刻意的 —— owner 要的「力量感」正是
+ * 前幾張畫面就衝出去，⛔ 不是等速膨脹。淡出指數由 `spec.fadePow` 給（預設 2）。
+ */
 export function ringShape(t: number, spec: RingSpec): { radius: number; alpha: number } {
   const k = Math.min(Math.max(t, 0), 1);
   const easeOut = 1 - (1 - k) * (1 - k);
+  const pow = typeof spec.fadePow === "number" && spec.fadePow > 0 ? spec.fadePow : 2;
   return {
     radius: spec.startRadius + (spec.endRadius - spec.startRadius) * easeOut,
-    alpha: spec.alpha * (1 - k) * (1 - k),
+    alpha: spec.alpha * Math.pow(1 - k, pow),
   };
 }
 
@@ -596,6 +613,111 @@ export const IMPACT_TINTS = {
 } as const satisfies Record<string, Rgb>;
 
 /** Per-intensity tuning: counts/lifetimes/sizes per the AAA-target ranges. */
+/**
+ * ⛔⛔ **衝擊波環的強度旋鈕**（GH#617）—— owner 2026-08-23 逐字：
+ *
+ * > 「地上常出現**一堆亮藍色往外擴散的圈圈特效** 應該不是 w3x 原始特效
+ * >  或是做的太不像 **我感覺是硬加的 太亮太搶眼不好看** 請改善」
+ *
+ * ⭐ 他說對了兩件事，而兩件都被查證過：
+ *   ① **它確實是我們自己加的** —— `ShockwaveRing` 是一顆 `CreateTorus`，
+ *      ⛔ **不是** `vfx@1` 文件、⛔ 不在 `content/vfx/`、⛔ 不在任何 w3x 綁定表
+ *      ⇒ 它**結構上不可能**有原作對應。
+ *   ② **它很亮** —— `disableLighting = true` ＋ emissive ⇒ ⛔ 不吃場景光，
+ *      在任何亮度的場地上都一樣刺眼。
+ *
+ * ⚠️ **而它每一次魔法傷害各放一發**（`hitFeel.ts` 的 `type==='magic'` → `heavy`），
+ * 所以一場團戰就是「一堆」。
+ *
+ * ── ⛔ 為什麼是倍率而不是直接改常數 ────────────────────────────────────────
+ * 直接把 0.8 改成 0.3 是**第二個住處**（第一守則：寫死才需要理由），
+ * 而 owner 每週都在調這種東西。⇒ 一格倍率，出貨值住 `content/config/vfx-families.json`，
+ * ⭐ 轉回 **1** 逐位元組回到 2026-08-23 之前。
+ */
+let ringAlphaScale = 1;
+let ringRadiusScale = 1;
+/**
+ * ⭐ **壽命倍率 —— 這一格才是「力量感」那一格。** owner 2026-08-23 逐字：
+ *
+ * > 「ImpactComposer 的 ShockwaveRing **散開速度感要夠快**，這樣才會有**力量感**，
+ * >  目前**太慢存活時間也太長**」
+ *
+ * ⚠️ 環的擴散速度 = `endRadius / lifeMs`。⛔ 所以「把環縮小」會**再慢一次**，
+ * 正好是他要的相反方向 ⇒ 半徑那一格出貨維持 1，速度全部由這一格出。
+ */
+let ringLifeScale = 1;
+/** 淡出指數（owner 2026-08-23「半透明淡出更快衰減」）。 */
+let ringFadePow = 2;
+/** ⛔ 硬天花板（秒）—— owner 2026-08-23 逐字括號裡的「**0.8秒內**」。 */
+let ringMaxLifeSec = 999;
+/**
+ * ⭐ **極大級距比極小快幾倍**（owner 2026-08-23：「**根據傷害五級距越大速度越快**」）。
+ * 1 = 五格一樣快（2026-08-23 之前）。
+ */
+let ringTierSpeed = 1;
+/** 五級距的**卡面基礎**門檻,由 `ContentDb.load()` 從 `config.damage-tiers` 灌進來。 */
+let ringTierTable: DamageTiers["damage"] | undefined;
+
+/** 由 `ContentDb.load()` 呼叫（樣板逐字照 `vfx/oneShotLife.ts::setOneShotMaxLifeSec`）。 */
+export function setImpactRingScale(
+  alpha: number | undefined,
+  radius: number | undefined,
+  life?: number | undefined,
+  fadePow?: number | undefined,
+  maxLifeSec?: number | undefined,
+  tierSpeed?: number | undefined,
+): void {
+  ringFadePow = typeof fadePow === "number" && Number.isFinite(fadePow) && fadePow > 0 ? fadePow : 2;
+  ringMaxLifeSec =
+    typeof maxLifeSec === "number" && Number.isFinite(maxLifeSec) && maxLifeSec > 0
+      ? maxLifeSec
+      : 999;
+  ringTierSpeed =
+    typeof tierSpeed === "number" && Number.isFinite(tierSpeed) && tierSpeed >= 1 ? tierSpeed : 1;
+  ringAlphaScale = typeof alpha === "number" && Number.isFinite(alpha) && alpha >= 0 ? alpha : 1;
+  ringRadiusScale = typeof radius === "number" && Number.isFinite(radius) && radius > 0 ? radius : 1;
+  ringLifeScale = typeof life === "number" && Number.isFinite(life) && life > 0 ? life : 1;
+}
+
+/** 現在生效的兩格（守衛用）。 */
+export function impactRingScale(): {
+  alpha: number;
+  radius: number;
+  life: number;
+  fadePow: number;
+  maxLifeSec: number;
+  tierSpeed: number;
+} {
+  return {
+    alpha: ringAlphaScale,
+    radius: ringRadiusScale,
+    life: ringLifeScale,
+    fadePow: ringFadePow,
+    maxLifeSec: ringMaxLifeSec,
+    tierSpeed: ringTierSpeed,
+  };
+}
+
+/**
+ * 五級距的門檻表（`config.damage-tiers` 的 `damage`）。
+ * ⛔ 客戶端**不自己抄門檻**（第〇·四守則）—— 分級用的是 shared 的
+ * `damageTierIndexOf`，門檻只有一個住處，owner 跑 `anchors:build` 之後自動跟上。
+ */
+export function setImpactRingTiers(damage: DamageTiers["damage"] | undefined): void {
+  ringTierTable = damage;
+}
+
+/**
+ * 這一發（傷害量 `amount`）的環要快幾倍。
+ * 極小 → 1×，極大 → `ringTierSpeed`×，中間線性。⛔ `amount` 不給就是 1×。
+ */
+export function ringTierSpeedFor(amount: number | undefined): number {
+  if (ringTierSpeed <= 1 || typeof amount !== "number" || !Number.isFinite(amount)) return 1;
+  const idx = damageTierIndexOf(amount, ringTierTable);
+  const last = DAMAGE_TIER_NAMES.length - 1;
+  return 1 + (ringTierSpeed - 1) * (last > 0 ? idx / last : 0);
+}
+
 const IMPACT_TUNING = {
   // light = the plain melee auto, the MOST COMMON hit. Retuned brighter/bigger
   // (task #147): the playtest read basic hits as having no spark at all. The
@@ -612,7 +734,12 @@ const IMPACT_TUNING = {
  * All energy lands at t=0 (manual bursts), lifetimes are short, gradients
  * are hot→cool with pop-shrink sizes — fewer/bigger/brighter/shorter.
  */
-export function impactRecipe(intensity: ImpactIntensity, tint: Rgb): ImpactRecipe {
+export function impactRecipe(
+  intensity: ImpactIntensity,
+  tint: Rgb,
+  /** 這一發的傷害量 —— 用來查五級距（owner：越大速度越快）。⛔ 留白 = 不加速。 */
+  amount?: number,
+): ImpactRecipe {
   const t = IMPACT_TUNING[intensity];
   return {
     flash: {
@@ -650,7 +777,27 @@ export function impactRecipe(intensity: ImpactIntensity, tint: Rgb): ImpactRecip
       emitterRadius: 0.35,
       texture: "assets/textures/particles/smoke_05.png",
     },
-    ring: t.ring,
+    // ⭐ GH#617 —— 三格倍率在**這裡**套用（⛔ 不在 `fireRing()`）:
+    //    recipe 是**唯一**產生 ring 規格的地方,而 `fireRing()` 有第二個呼叫端
+    //    （池子重用）。⛔ 套在呼叫端 = 下一個入口出現時它就漏掉了。
+    // ⚠️ `alpha` 夾在 [0,1]:一個 >1 的 alpha 在 Babylon 上是**未定義行為**,
+    //    而後台上界擋得住手滑,⛔ 但擋不住兩格相乘。
+    ring:
+      t.ring === undefined
+        ? undefined
+        : {
+            ...t.ring,
+            alpha: Math.max(0, Math.min(1, t.ring.alpha * ringAlphaScale)),
+            startRadius: t.ring.startRadius * ringRadiusScale,
+            endRadius: t.ring.endRadius * ringRadiusScale,
+            // ⭐ 三段依序:①後台的壽命倍率 ②五級距加速（越大越短＝越快）
+            //    ③⛔ owner 的硬天花板「0.8 秒內」。
+            lifeMs: Math.min(
+              (t.ring.lifeMs * ringLifeScale) / ringTierSpeedFor(amount),
+              ringMaxLifeSec * 1000,
+            ),
+            fadePow: ringFadePow,
+          },
   };
 }
 
@@ -686,12 +833,12 @@ export class ImpactComposer {
     x: number,
     z: number,
     nowMs: number,
-    opts: { tint?: Rgb; y?: number; scale?: number } = {},
+    opts: { tint?: Rgb; y?: number; scale?: number; amount?: number } = {},
   ): ParticleSystem[] {
     const tint = opts.tint ?? IMPACT_TINTS.physical;
     const y = opts.y ?? 1.0;
     const scale = opts.scale ?? 1;
-    const recipe = impactRecipe(intensity, tint);
+    const recipe = impactRecipe(intensity, tint, opts.amount);
     // pool key bakes intensity + tint: gradients are baked per system
     const keyBase = `${intensity}/${tint[0]},${tint[1]},${tint[2]}`;
     const used = [

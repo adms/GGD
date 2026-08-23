@@ -272,6 +272,15 @@ export const GLOBAL_BOUNDS: Readonly<Record<string, ForgeBound>> = {
   // `MIN_/MAX_ONE_SHOT_MAX_LIFE_SEC` 的註解裡(3 秒 = 12 人混戰會吃掉九成畫面
   // 粒子預算的那條線;0.1 秒 = 手機 30fps 的 3 張畫面)。
   oneShotMaxLifeSec: { min: 0.1, max: 3 },
+  // 🔵 GH#617 —— 衝擊波環的三格。上下界逐字照 `zVfxFamilies` 的三行。
+  // ⚠️ `impactRingLife` 的下界 0.1 不是隨便訂的:heavy 出貨 240ms × 0.1 = 24ms,
+  //    在 60fps 上只有 **1.4 張畫面** —— 再低就是「閃一下就不見」而不是「快」。
+  impactRingAlpha: { min: 0, max: 1 },
+  impactRingRadius: { min: 0.1, max: 3 },
+  impactRingLife: { min: 0.1, max: 2 },
+  impactRingFadePow: { min: 1, max: 6 },
+  impactRingMaxLifeSec: { min: 0.05, max: 3 },
+  impactRingTierSpeed: { min: 1, max: 4 },
   // #251 owner「投射物特效沒有真實套用」—— 彈道體積跟 `hitRadius` 走多少。
   // 上下界 0/3 是 `MIN_/MAX_PROJECTILE_RADIUS_GAIN`,推導寫在那兩個常數上面
   // (上界 3 擋的是「內容側把 hitRadius 寫大」被畫面再放大三次)。
@@ -327,6 +336,13 @@ export const GLOBAL_FIELDS = [
   "scaleMax",
   "maxAbilityVfxLayers",
   "oneShotMaxLifeSec",
+  // 🔵 GH#617 —— 三格連著放:操作者調的是**同一顆環**的三個面。
+  "impactRingAlpha",
+  "impactRingRadius",
+  "impactRingLife",
+  "impactRingFadePow",
+  "impactRingMaxLifeSec",
+  "impactRingTierSpeed",
   "projectileRadiusGain",
   "projectileFlyHeightY",
   // GH#379 —— 一格一個有方向的家族。⛔ 不是 126 支技能各一格。
@@ -443,6 +459,12 @@ export const FIELD_LABEL: Readonly<Record<string, string>> = {
   scaleMax: "縮放上限",
   maxAbilityVfxLayers: "單技能特效層數上限",
   oneShotMaxLifeSec: "餘燼壽命上限（秒）",
+  impactRingAlpha: "衝擊波環亮度倍率",
+  impactRingRadius: "衝擊波環大小倍率",
+  impactRingLife: "衝擊波環壽命倍率（越小越快）",
+  impactRingFadePow: "衝擊波環淡出指數（越大衰減越快）",
+  impactRingMaxLifeSec: "衝擊波環壽命硬上限（秒）",
+  impactRingTierSpeed: "衝擊波環：極大級距快幾倍",
   castHeightSource: "施法特效高度",
   projectileArtFromDoc: "彈道套用特效文件",
   projectileRadiusGain: "彈道大小跟半徑",
@@ -503,6 +525,35 @@ export const FIELD_HINT: Readonly<Record<string, string>> = {
     "⚠️ 上限 3 秒不是隨便訂的：12 個人各疊 5 層、每層 80 顆、平均兩秒放一招，" +
     "3 秒壽命就會吃掉整個畫面 8,000 顆粒子預算的九成 —— 那就是畫面變成霧的那條線。" +
     "另外這一格只會往下夾，不會把短的特效拉長：原本 0.3 秒的爆炸不會因為調大而變長",
+  impactRingAlpha:
+    "每一次**魔法傷害**都會在地上放一圈往外擴散的環（ImpactComposer 的 ShockwaveRing），" +
+    "這一格是它的亮度倍率。⚠️ 它 disableLighting + emissive ⇒ 不吃場景光，" +
+    "在多亮的場地上都一樣刺眼，而團戰時是每一次命中各一發 —— 那就是 owner 2026-08-23 " +
+    "說的「一堆亮藍色圈圈、太亮太搶眼」。0.35 = 出貨；1 = 逐位元回到 2026-08-23 之前；" +
+    "0 = 環完全不畫（其餘打擊感層不受影響）",
+  impactRingRadius:
+    "同一顆環的大小倍率（起始與結束半徑一起乘）。" +
+    "⚠️ 調小它**同時會讓環變慢** —— 擴散速度 = 結束半徑 ÷ 壽命，所以想要「更快更有力」" +
+    "請調下面那一格，⛔ 不是這一格。出貨 1（不縮），因為力量感需要射程",
+  impactRingLife:
+    "同一顆環活多久的倍率 —— **這一格才是「力量感」那一格**。" +
+    "owner 2026-08-23：「散開速度感要夠快，這樣才會有力量感，目前太慢存活時間也太長」。" +
+    "0.45 = 出貨（heavy 240ms→108ms，擴散 7.1→15.7 世界單位／秒，2.22 倍快）；" +
+    "1 = 逐位元回到 2026-08-23 之前；" +
+    "⚠️ 下界 0.1（24ms ≈ 60fps 的 1.4 張畫面）再低就是「閃一下」不是「快」",
+  impactRingFadePow:
+    "環的半透明怎麼衰減（alpha × (1−t)^n）。owner 2026-08-23：「半透明淡出更快衰減，這樣才會有力量感」。" +
+    "2 = 2026-08-23 之前（線性感的尾巴）；3 = 出貨——走到一半就只剩 12.5% 的亮度，" +
+    "所以看起來是「打出去就散掉」而不是「慢慢淡」。調大到 5–6 會變成幾乎只有起手那一下",
+  impactRingMaxLifeSec:
+    "環最久活多久的**硬天花板**（秒）。owner 2026-08-23 逐字要求「0.8 秒內」。" +
+    "⭐ 它夾的是壽命倍率 × 五級距加速**之後**的結果，所以把上面那格拉到 2 也不會超過這裡——" +
+    "這一格是防手滑的柵欄，⛔ 不是調手感的地方（調手感請用壽命倍率與下面那格）",
+  impactRingTierSpeed:
+    "傷害越大的技能，環散得越快幾倍。owner 2026-08-23：「根據傷害五級距越大速度越快」。" +
+    "1 = 五格一樣快（2026-08-23 之前）；1.8 = 出貨（極小 1×、極大 1.8×，中間線性）。" +
+    "⚠️ 五格的門檻讀的是「傷害五級距」那份設定，所以你按 anchors 重算之後這裡自動跟上，" +
+    "⛔ 不需要回來改任何數字",
   castHeightSource:
     "施法特效要不要用家族自己算出來的高度。" +
     "2026-08-01 實測：91 支「衝擊波環」畫出 105 個發射器，世界高度全部是 1.0（胸口），" +
@@ -703,6 +754,14 @@ export function familiesDocFor(doc: ConfigVfxFamiliesDoc): ConfigVfxFamiliesDoc 
     // ⚠️ 同上 —— 少寫這一行,操作者按存檔就會把餘燼壽命上限從文件裡刪掉,
     // 而畫面上那一格還好好地填著 2.0。round-trip 守衛盯著每一個 GLOBAL_FIELD。
     oneShotMaxLifeSec: doc.oneShotMaxLifeSec,
+    // ⚠️ 🔵 GH#617 —— 同樣的三行。少寫任何一行，操作者按存檔就把那一格從文件裡刪掉，
+    // 而畫面上那一格還好好地填著值。round-trip 守衛盯著每一個 GLOBAL_FIELD。
+    impactRingAlpha: doc.impactRingAlpha,
+    impactRingRadius: doc.impactRingRadius,
+    impactRingLife: doc.impactRingLife,
+    impactRingFadePow: doc.impactRingFadePow,
+    impactRingMaxLifeSec: doc.impactRingMaxLifeSec,
+    impactRingTierSpeed: doc.impactRingTierSpeed,
     // ⚠️ #251 —— 同樣的四行。少寫任何一行，操作者按存檔就把那一格從文件裡刪掉，
     // 而畫面上還好好地顯示著他選的值（下一次載入才會發現變回出貨預設）。
     // round-trip 守衛涵蓋 `GLOBAL_FIELDS` + `GLOBAL_CHOICE_FIELDS` 兩張表。
@@ -840,6 +899,15 @@ function checkNumber(bound: ForgeBound, text: string, optional: boolean): string
 export const OPTIONAL_GLOBAL_FIELDS: ReadonlySet<string> = new Set([
   "maxAbilityVfxLayers",
   "oneShotMaxLifeSec",
+  // 🔵 GH#617 —— 同一條規則:schema 上是 optional。
+  // ⚠️ 這三格尤其不可以幫忙填預設:`Number("")` 是 **0**,而 0 對
+  //    `impactRingRadius`/`impactRingLife` 是**界外**(下界 0.1)⇒ 存檔整份被拒。
+  "impactRingAlpha",
+  "impactRingRadius",
+  "impactRingLife",
+  "impactRingFadePow",
+  "impactRingMaxLifeSec",
+  "impactRingTierSpeed",
   // #251 —— 同一條規則：schema 上是 optional，所以留白必須合法，否則舊 overlay
   // 一打開就是 dirty。留白 = 不寫這個 key = 用出貨預設。
   "projectileRadiusGain",

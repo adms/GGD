@@ -1869,5 +1869,11 @@
     }
   },
   "soundEnabled": true,
-  "castArcs": false
+  "castArcs": false,
+  "impactRingAlpha": 0.35,
+  "impactRingRadius": 1.0,
+  "impactRingLife": 0.55,
+  "impactRingFadePow": 3,
+  "impactRingMaxLifeSec": 0.8,
+  "impactRingTierSpeed": 1.8
 }
