@@ -38,6 +38,7 @@ import { breakStatusesOnDamage } from "../statusBreak";
 import { woundMult } from "../grievousWounds";
 import { weaknessMult } from "../weakness";
 import { outputMult } from "../stats/outputMult";
+import { scaleHitstopTicks } from "./hitstopHold";
 import {
   deriveCosmetics,
   mergeCosmetics,
@@ -508,6 +509,10 @@ function applyImpact(
   if (hf?.hitstopTicks !== undefined) {
     hitstopTicks = Math.min(HITSTOP_OVERRIDE_MAX, Math.max(0, Math.floor(hf.hitstopTicks)));
   }
+  // GH#646 owner:「hitstop 先設定為0 求順暢為主」— 全域定格時長倍率,乘在衝擊
+  // 推導與內容授權**之後**:0(出貨,combat-feel.hitstop.scale)= 攻守全不凍且
+  // hitstun 不生成;1 = 逐位元舊節拍(後台一格,一鍵 rollback)。
+  hitstopTicks = scaleHitstopTicks(world, hitstopTicks);
 
   // ---- HITSTUN — a victim-ONLY action-lock that outlasts the shared freeze:
   // the attacker recovers first (frame advantage), the defender is rooted out of

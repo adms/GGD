@@ -96,6 +96,16 @@ export const zConfigCombatFeelDoc = z
          * 只會讓這一格看起來沒作用（#277 的形狀）。
          */
         leashUnits: z.number().min(0).max(200),
+        /**
+         * ⭐ 打帶跑 (GH#637)：玩家**點地板**之後，自動索敵冷卻幾秒（owner
+         * 2026-08-24:「要有1秒冷卻不能跑去打任何目標」）。窗口內不索新目標、
+         * 「誰在打我」的反擊接管不生效、已握的**自動**目標當場放下；手選目標、
+         * 嘲弄、前搖中的那一刀都不受影響。⚠️ 只有**離散的點擊**會武裝它，
+         * 搖桿每拍一條的流不會（否則推搖桿＝永久關掉自動攻擊，#274 的災難）。
+         * `0` = 機制關閉（#637 之前的行為）；上界 10 秒：再長等於「點一下地板
+         * 就把自動攻擊關掉一輩子」，一個看起來像壞掉的值。
+         */
+        moveOrderNoAggroSec: z.number().min(0).max(10),
       })
       .strict()
       .optional(),
@@ -178,6 +188,15 @@ export const zConfigCombatFeelDoc = z
         holdsVictimWalk: z.boolean().optional(),
         /** 出手的一方在定格期間走不走得動。true = 出貨（走不動；他本來就得站定）。 */
         holdsAttackerWalk: z.boolean().optional(),
+        /**
+         * ⭐ 定格**時長**倍率（GH#646）。owner：「hitstop 先設定為0 求順暢為主」
+         * —— 出貨 **0**（攻守雙方都零凍結 tick，hitstun 一併歸零）；1 = #133 的
+         * 完整定格節拍（一鍵 rollback 就是把這一格調回 1）。乘在衝擊推導值
+         * **與內容授權的 `hitFeel.hitstopTicks` 之後**，所以 0 連授權的定格也
+         * 一併關掉。ABSENT ⇒ 1（舊行為 —— 沒寫過這一格的舊文件不會突然變順）。
+         * ⚠️ 夾限 0..1 與 `normalizeHitstopRules` **逐字相同**（admin 鏡射測試比對）。
+         */
+        scale: z.number().min(0).max(1).optional(),
         /**
          * ⭐ 黏住累積**保險絲**（owner 2026-08-23：「有一個累積值，黏超過 2秒
          * 一定可以離開之類，這些機制做成後台開關」）。語意、界線（治 hitstop

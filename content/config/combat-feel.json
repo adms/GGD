@@ -17,7 +17,8 @@
   },
   "manualOrder": {
     "survivesGroundMove": true,
-    "leashUnits": 0
+    "leashUnits": 0,
+    "moveOrderNoAggroSec": 1.0
   },
   "autoEngage": {
     "enabled": true,
@@ -34,6 +35,7 @@
   "hitstop": {
     "holdsVictimWalk": false,
     "holdsAttackerWalk": true,
+    "scale": 0,
     "stuckGuard": {
       "enabled": true,
       "thresholdSec": 2,

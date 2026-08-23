@@ -83,6 +83,20 @@ export interface HitstopRules {
    */
   holdsAttackerWalk: boolean;
   /**
+   * ⭐ 定格**時長**倍率 0..1（GH#646, owner：「hitstop 先設定為0 求順暢為主」）。
+   *
+   * 上面兩格管「定格期間**誰的腳**被按住」，這一格管「定格**存不存在**」——
+   * `combat/damage.ts` 在衝擊推導＋內容授權（`hf.hitstopTicks`）之後把
+   * `hitstopTicks` 乘上它（`scaleHitstopTicks`）。0（出貨）= 攻守雙方都
+   * **零凍結 tick**（hitstun 隨之歸零 —— 它只在 hitstop > 0 時才生成）；
+   * 1 = #133 的完整節拍，逐位元舊行為（一鍵 rollback）。
+   *
+   * 選用的理由與 `stuckGuard` 逐字相同（手寫半張表的既有測試）；
+   * ABSENT ⇒ 1 —— 舊文件與測試夾具不會突然失去定格。讀一律走
+   * `hitstopScaleOf(world)`，⛔ 不要直接讀這一格。
+   */
+  scale?: number;
+  /**
    * ⭐ 黏住累積**保險絲**（owner 2026-08-23：「請你最大程度解決黏住這個問題，
    * 包括有一個累積值，黏超過 2秒一定可以離開之類，這些機制做成後台開關」）。
    *
@@ -160,6 +174,14 @@ export function normalizeStuckGuardRules(raw: unknown): StuckGuardRules {
 export const DEFAULT_HITSTOP: HitstopRules = Object.freeze({
   holdsVictimWalk: false,
   holdsAttackerWalk: true,
+  /**
+   * ⚠️ 程式 fallback 是 **1**（舊行為），⛔ 不是出貨值 —— 出貨的 **0** 住在
+   * `content/config/combat-feel.json`（真的被載入的那一份）。理由：這個常數
+   * 只有「沒有 config 的世界」（＝測試夾具）讀得到，而既有的定格守衛
+   * （`attackStickiness` 的儀器、`combatJuice` 的「先定格再滑出去」）全靠
+   * 預設世界仍有定格才量得到機制還活著。
+   */
+  scale: 1,
   stuckGuard: DEFAULT_STUCK_GUARD,
 });
 
@@ -176,6 +198,15 @@ export function normalizeHitstopRules(raw: unknown): HitstopRules {
       typeof r.holdsAttackerWalk === "boolean"
         ? r.holdsAttackerWalk
         : DEFAULT_HITSTOP.holdsAttackerWalk,
+    // ⚠️ 夾限 0..1 與 Zod 的上下界**逐字相同**（admin 的鏡射測試逐格比對）。
+    scale:
+      typeof r.scale === "number" && Number.isFinite(r.scale)
+        ? r.scale < 0
+          ? 0
+          : r.scale > 1
+            ? 1
+            : r.scale
+        : DEFAULT_HITSTOP.scale,
     stuckGuard: normalizeStuckGuardRules(r.stuckGuard),
   });
 }
@@ -186,6 +217,32 @@ export function normalizeHitstopRules(raw: unknown): HitstopRules {
  */
 export function hitstopRules(world: SimWorld): HitstopRules {
   return world.combatFeel.hitstop ?? DEFAULT_HITSTOP;
+}
+
+/**
+ * 這一份世界的定格時長倍率 0..1（GH#646）。手寫的半張 `hitstop` 表（既有測試
+ * 夾具）沒有這一格 ⇒ 回 1（舊行為），⛔ 不是回出貨值 —— 出貨值住在 config 文件。
+ */
+export function hitstopScaleOf(world: SimWorld): number {
+  const s = hitstopRules(world).scale;
+  if (typeof s !== "number" || !Number.isFinite(s)) return 1;
+  return s < 0 ? 0 : s > 1 ? 1 : s;
+}
+
+/**
+ * 把一發命中的 `hitstopTicks` 乘上世界的定格倍率 —— `combat/damage.ts` 在
+ * 衝擊推導＋內容授權之後、寫進 `world.hitstop`/組 ImpactProfile **之前**呼叫。
+ *
+ * scale 1 走 early-return ⇒ **逐位元**舊行為（不經過浮點乘法）；
+ * scale 0 ⇒ 0 ⇒ `damage.ts` 的 `if (hitstopTicks > 0)` 整段跳過 ——
+ * 攻守都不凍、hitstun 也不生成（owner：「hitstop 先設定為0 求順暢為主」）。
+ */
+export function scaleHitstopTicks(world: SimWorld, ticks: number): number {
+  if (ticks <= 0) return 0;
+  const s = hitstopScaleOf(world);
+  if (s >= 1) return ticks;
+  if (s <= 0) return 0;
+  return Math.round(ticks * s);
 }
 
 /**
