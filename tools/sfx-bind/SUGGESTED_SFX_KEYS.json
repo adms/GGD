@@ -1,0 +1,4259 @@
+{
+  "id": "suggested-sfx-keys",
+  "schema": "ggd-sfx-key-suggestions@1",
+  "generator": "tools/sfx-bind/suggest_keys.py",
+  "note": "GH#554② —— ⛔ **這份檔案是產生的**，不要手改。它是一張**建議表**：只有 `applicable: true` 的那幾列可以被下一批機械寫進 content/abilities/*.json 的 `sfxKey`，其餘每一列都帶一個可以被反駁的理由。⚠️ 套用之前先看 `needsCueDeclaration` —— 那個 key 沒進 ability-sfx-cues.json 的 `cues` 名單的話，執行期會退回元素／通用音，⇒ 套了等於沒套。",
+  "source": "content/abilities/*.json（今天有沒有 sfxKey / vfxKey） × tools/w3x-import/out/GoDieEX22s-src/SFX_BINDINGS.json（war3map.j 的 gg_snd） × content/config/vfx-families.json（逐支與家族的 soundLaunch） × content/assets/audio/wc3/PROVENANCE.json（clip 的主人） × tools/w3x-import/out/stock/STOCK_ART.json（base 技能的暴雪 effectsound 標籤） × content/config/audio-map.json（哪些 clip 真的出貨 + 重播會不會被丟掉）",
+  "fields": {
+    "census": "⭐ 今天**每一支技能實際走哪一條路**（與 combatSfx.ts 的 abilityCast 分支同一條規則，閘直接 import 出貨的 castElementKey 重算）。generic = 落到 `abilityCast` 隨機池 ＝ GH#568 的跨角色音效污染面",
+    "suggestions.*.tier": "證據強度；定義見 tiers",
+    "suggestions.*.applicable": "⭐ true = 可以機械套用（證據指名這一支技能）。false = 需要 owner 或 reserved.json 裁決",
+    "suggestions.*.needsCueDeclaration": "這個 key 還不在 ability-sfx-cues.json 的 cues 名單裡 ⇒ 套用前要先讓它進名單，否則執行期直接退回",
+    "suggestions.*.repeatDropped": "audio-map 對這個 key 宣告 maxConcurrent=1 ⇒ 同一次施法的第二次播放會被丟掉（＝把它同時掛在施法層與特效層**不會**變成兩聲）",
+    "suggestions.*.sharedWithChampions": "⚠️ 這個 clip 也被別的英雄用著 ⇒ 綁上去仍然是「跨角色共用音」，只是不再是 GH#568 那個隨機池",
+    "suggestions.*.todayPlays": "⛔ 套用之前它今天播的是什麼",
+    "noSuggestion.*.cause": "推不出來的**機制**（守衛驗這個），定義見 causes"
+  },
+  "tiers": {
+    "A-jass-direct": "⭐ 原作 war3map.j 替**這一支**綁了恰好一個已出貨的 clip ⇒ 這就是它的原音。可以機械寫進 sfxKey",
+    "A-vfx-owned": "⭐ 特效層已經在播一個**逐支指名**的 clip（content/config/vfx-families.json 的 abilities[id].soundLaunch，來源是模型 SNDx 事件軌／gg_snd）。把同一個 key 寫進 sfxKey ⇒ 施法層不再落到通用池（＝別人的角色音），而 audio-map 的 maxConcurrent/cooldownMs 會把同一拍的第二次播放丟掉（逐列記在 repeatDropped）",
+    "B-jass-multi": "⚠️ 原作替這一支綁了**不只一個** clip ⇒ 哪一個是施法音是**設計選擇**，要進 tools/sfx-bind/reserved.json 帶一個理由，⛔ 產生器不挑",
+    "C-family-generic": "⚠️ 只有**特效家族原型**的 soundLaunch（＝通用音，⛔ 不是這一支的原音）。把它寫進 sfxKey 等於選了 #554③ 的「配通用」——那是 owner 的裁決，⛔ 不是產生器的"
+  },
+  "causes": {
+    "element-whoosh-already": "執行期已經走元素風聲（vfxKey 是 fx.prim.<fire|ice|lightning>.*）⇒ 它**不在**通用池上，綁一個 sfxKey 不會改變任何一個位元組",
+    "clip-not-extracted": "原作有替它綁 clip，但那份位元組還沒進 content/config/audio-map.json ⇒ 綁上去只會換成一次 audio-map miss（＝靜音）。要先跑 tools/w3x-import/extract_stock_sfx.py",
+    "stock-label-only": "暴雪的 base 技能宣告了 effectsound 標籤（Units/*AbilityFunc.txt），但那個 soundset 的位元組不在版控裡 ⇒ 知道它**叫什麼**，⛔ 沒有它的聲音",
+    "no-source-audio": "⭐ **原作自己就沒有替它配音效** —— war3map.j 沒綁 gg_snd，base 技能也沒有 effectsound。⇒ 這不是我們欠的帳，要不要配是 #554③ 的 owner 裁決"
+  },
+  "summary": {
+    "abilities": 421,
+    "census": {
+      "overlay": 0,
+      "sfxKey": 72,
+      "element": 51,
+      "generic": 298
+    },
+    "suggested": 105,
+    "applicable": 15,
+    "byTier": {
+      "A-vfx-owned": 15,
+      "C-family-generic": 90
+    },
+    "noSuggestion": 244,
+    "byCause": {
+      "element-whoosh-already": 49,
+      "no-source-audio": 185,
+      "source-map-silent": 2,
+      "stock-label-only": 8
+    }
+  },
+  "suggestions": [
+    {
+      "ability": "godie-e001.passive",
+      "name": "22-00 嗚鎖打!",
+      "champion": "godie-e001",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-e001.r",
+      "name": "22-04 雛見澤症候群L5",
+      "champion": "godie-e001",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "explosion",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "burst",
+        "familySoundLaunch": "explosion"
+      }
+    },
+    {
+      "ability": "godie-e002.e",
+      "name": "20-03 約束與勝利之劍",
+      "champion": "godie-e002",
+      "todayPlays": "abilityCast",
+      "tier": "A-vfx-owned",
+      "sfxKey": "wc3.markofchaos",
+      "applicable": true,
+      "needsCueDeclaration": false,
+      "repeatDropped": true,
+      "sharedWithChampions": [
+        "godie-e00l",
+        "godie-e00q",
+        "godie-e00r",
+        "godie-o01z",
+        "godie-o02v"
+      ],
+      "evidence": {
+        "vfxSoundLaunch": "wc3.markofchaos",
+        "vfxFamily": "burst"
+      }
+    },
+    {
+      "ability": "godie-e002.q",
+      "name": "20-02 感知能力",
+      "champion": "godie-e002",
+      "todayPlays": "abilityCast",
+      "tier": "A-vfx-owned",
+      "sfxKey": "wc3.markofchaos",
+      "applicable": true,
+      "needsCueDeclaration": false,
+      "repeatDropped": true,
+      "sharedWithChampions": [
+        "godie-e00l",
+        "godie-e00q",
+        "godie-e00r",
+        "godie-o01z",
+        "godie-o02v"
+      ],
+      "evidence": {
+        "vfxSoundLaunch": "wc3.markofchaos",
+        "vfxFamily": null
+      }
+    },
+    {
+      "ability": "godie-e002.w",
+      "name": "20-01 風王結界",
+      "champion": "godie-e002",
+      "todayPlays": "abilityCast",
+      "tier": "A-vfx-owned",
+      "sfxKey": "wc3.markofchaos",
+      "applicable": true,
+      "needsCueDeclaration": false,
+      "repeatDropped": true,
+      "sharedWithChampions": [
+        "godie-e00l",
+        "godie-e00q",
+        "godie-e00r",
+        "godie-o01z",
+        "godie-o02v"
+      ],
+      "evidence": {
+        "vfxSoundLaunch": "wc3.markofchaos",
+        "vfxFamily": null
+      }
+    },
+    {
+      "ability": "godie-e007.ex",
+      "name": "12-002 仙氣發勁",
+      "champion": "godie-e007",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicBolt",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "dissipate",
+        "familySoundLaunch": "magicBolt"
+      }
+    },
+    {
+      "ability": "godie-e007.r",
+      "name": "12-04 龍氣爆發",
+      "champion": "godie-e007",
+      "todayPlays": "abilityCast",
+      "tier": "A-vfx-owned",
+      "sfxKey": "wc3.invisibilitytarget",
+      "applicable": true,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [
+        "godie-ewar",
+        "godie-h02r",
+        "godie-hgam"
+      ],
+      "evidence": {
+        "vfxSoundLaunch": "wc3.invisibilitytarget",
+        "vfxFamily": "shine"
+      }
+    },
+    {
+      "ability": "godie-e008.e",
+      "name": "21-03 赤焰爆發",
+      "champion": "godie-e008",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-e00l.e",
+      "name": "20-03 約束與勝利之劍",
+      "champion": "godie-e00l",
+      "todayPlays": "abilityCast",
+      "tier": "A-vfx-owned",
+      "sfxKey": "wc3.markofchaos",
+      "applicable": true,
+      "needsCueDeclaration": false,
+      "repeatDropped": true,
+      "sharedWithChampions": [
+        "godie-e002",
+        "godie-e00q",
+        "godie-e00r",
+        "godie-o01z",
+        "godie-o02v"
+      ],
+      "evidence": {
+        "vfxSoundLaunch": "wc3.markofchaos",
+        "vfxFamily": "burst"
+      }
+    },
+    {
+      "ability": "godie-e00l.q",
+      "name": "20-02 感知能力",
+      "champion": "godie-e00l",
+      "todayPlays": "abilityCast",
+      "tier": "A-vfx-owned",
+      "sfxKey": "wc3.markofchaos",
+      "applicable": true,
+      "needsCueDeclaration": false,
+      "repeatDropped": true,
+      "sharedWithChampions": [
+        "godie-e002",
+        "godie-e00q",
+        "godie-e00r",
+        "godie-o01z",
+        "godie-o02v"
+      ],
+      "evidence": {
+        "vfxSoundLaunch": "wc3.markofchaos",
+        "vfxFamily": null
+      }
+    },
+    {
+      "ability": "godie-e00l.w",
+      "name": "20-01 風王結界",
+      "champion": "godie-e00l",
+      "todayPlays": "abilityCast",
+      "tier": "A-vfx-owned",
+      "sfxKey": "wc3.markofchaos",
+      "applicable": true,
+      "needsCueDeclaration": false,
+      "repeatDropped": true,
+      "sharedWithChampions": [
+        "godie-e002",
+        "godie-e00q",
+        "godie-e00r",
+        "godie-o01z",
+        "godie-o02v"
+      ],
+      "evidence": {
+        "vfxSoundLaunch": "wc3.markofchaos",
+        "vfxFamily": null
+      }
+    },
+    {
+      "ability": "godie-e00n.passive",
+      "name": "22-00 嗚鎖打!",
+      "champion": "godie-e00n",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-e00n.r",
+      "name": "22-04 雛見澤症候群L5",
+      "champion": "godie-e00n",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "explosion",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "burst",
+        "familySoundLaunch": "explosion"
+      }
+    },
+    {
+      "ability": "godie-e00r.q",
+      "name": "59-01 吞噬",
+      "champion": "godie-e00r",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-e00x.e",
+      "name": "77-03 GLADIARIA ALAT",
+      "champion": "godie-e00x",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "reviveChannel",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "resurrect",
+        "familySoundLaunch": "reviveChannel"
+      }
+    },
+    {
+      "ability": "godie-edem.ex",
+      "name": "45-002 天照",
+      "champion": "godie-edem",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-etyr.e",
+      "name": "14-02 式神炸裂",
+      "champion": "godie-etyr",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicBolt",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "lightColumn",
+        "familySoundLaunch": "magicBolt"
+      }
+    },
+    {
+      "ability": "godie-etyr.q",
+      "name": "14-01 東風繪扇、南風末廣",
+      "champion": "godie-etyr",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "reviveChannel",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "resurrect",
+        "familySoundLaunch": "reviveChannel"
+      }
+    },
+    {
+      "ability": "godie-etyr.r",
+      "name": "14-04 聖夜降臨",
+      "champion": "godie-etyr",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "reviveChannel",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "resurrect",
+        "familySoundLaunch": "reviveChannel"
+      }
+    },
+    {
+      "ability": "godie-etyr.w",
+      "name": "14-03 魔力應援",
+      "champion": "godie-etyr",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicBolt",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "lightColumn",
+        "familySoundLaunch": "magicBolt"
+      }
+    },
+    {
+      "ability": "godie-ewar.ex",
+      "name": "12-002 仙氣發勁",
+      "champion": "godie-ewar",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicBolt",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "dissipate",
+        "familySoundLaunch": "magicBolt"
+      }
+    },
+    {
+      "ability": "godie-ewar.r",
+      "name": "12-04 龍氣爆發",
+      "champion": "godie-ewar",
+      "todayPlays": "abilityCast",
+      "tier": "A-vfx-owned",
+      "sfxKey": "wc3.invisibilitytarget",
+      "applicable": true,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [
+        "godie-e007",
+        "godie-h02r",
+        "godie-hgam"
+      ],
+      "evidence": {
+        "vfxSoundLaunch": "wc3.invisibilitytarget",
+        "vfxFamily": "shine"
+      }
+    },
+    {
+      "ability": "godie-h01n.ex",
+      "name": "79-002 虛化",
+      "champion": "godie-h01n",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "buffApply",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "mark",
+        "familySoundLaunch": "buffApply"
+      }
+    },
+    {
+      "ability": "godie-h01n.q",
+      "name": "79-01 瞬步",
+      "champion": "godie-h01n",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-h01n.r",
+      "name": "79-04 卍解",
+      "champion": "godie-h01n",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "reviveChannel",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "resurrect",
+        "familySoundLaunch": "reviveChannel"
+      }
+    },
+    {
+      "ability": "godie-h01n.w",
+      "name": "79-02 月牙斬擊",
+      "champion": "godie-h01n",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicFire",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "flamePillar",
+        "familySoundLaunch": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-h01o.ex",
+      "name": "79-002 虛化",
+      "champion": "godie-h01o",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "buffApply",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "mark",
+        "familySoundLaunch": "buffApply"
+      }
+    },
+    {
+      "ability": "godie-h01o.q",
+      "name": "79-01 瞬步",
+      "champion": "godie-h01o",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-h01o.r",
+      "name": "79-04 卍解",
+      "champion": "godie-h01o",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "reviveChannel",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "resurrect",
+        "familySoundLaunch": "reviveChannel"
+      }
+    },
+    {
+      "ability": "godie-h01o.w",
+      "name": "79-02 斬擊",
+      "champion": "godie-h01o",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicFire",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "flamePillar",
+        "familySoundLaunch": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-h01u.e",
+      "name": "80-03 鬼神烈戟",
+      "champion": "godie-h01u",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "explosion",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "burst",
+        "familySoundLaunch": "explosion"
+      }
+    },
+    {
+      "ability": "godie-h020.r",
+      "name": "04-04 神滅斬",
+      "champion": "godie-h020",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicIce",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "cloud",
+        "familySoundLaunch": "magicIce"
+      }
+    },
+    {
+      "ability": "godie-h02r.q",
+      "name": "90-01 飛葉快刀",
+      "champion": "godie-h02r",
+      "todayPlays": "abilityCast",
+      "tier": "A-vfx-owned",
+      "sfxKey": "wc3.blademasterwhirlwind",
+      "applicable": true,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [
+        "godie-h00l",
+        "godie-hgam",
+        "godie-o00k",
+        "godie-osam"
+      ],
+      "evidence": {
+        "vfxSoundLaunch": "wc3.blademasterwhirlwind",
+        "vfxFamily": null
+      }
+    },
+    {
+      "ability": "godie-h02r.r",
+      "name": "90-04 陽光烈焰",
+      "champion": "godie-h02r",
+      "todayPlays": "abilityCast",
+      "tier": "A-vfx-owned",
+      "sfxKey": "wc3.invisibilitytarget",
+      "applicable": true,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [
+        "godie-e007",
+        "godie-ewar",
+        "godie-hgam"
+      ],
+      "evidence": {
+        "vfxSoundLaunch": "wc3.invisibilitytarget",
+        "vfxFamily": "shine"
+      }
+    },
+    {
+      "ability": "godie-h02r.w",
+      "name": "90-02 麻痺粉",
+      "champion": "godie-h02r",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "footstep",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "groundDust",
+        "familySoundLaunch": "footstep"
+      }
+    },
+    {
+      "ability": "godie-h02u.r",
+      "name": "92-04 馬勒戈壁",
+      "champion": "godie-h02u",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicFire",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "flamePillar",
+        "familySoundLaunch": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-h02v.r",
+      "name": "92-04 馬勒戈壁",
+      "champion": "godie-h02v",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicFire",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "flamePillar",
+        "familySoundLaunch": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-hart.e",
+      "name": "01-03 畫龍點睛",
+      "champion": "godie-hart",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicIce",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "tornado",
+        "familySoundLaunch": "magicIce"
+      }
+    },
+    {
+      "ability": "godie-hart.q",
+      "name": "01-01 凶斬",
+      "champion": "godie-hart",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-hart.r",
+      "name": "01-04 超究武神霸斬",
+      "champion": "godie-hart",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-hgam.q",
+      "name": "90-01 飛葉快刀",
+      "champion": "godie-hgam",
+      "todayPlays": "abilityCast",
+      "tier": "A-vfx-owned",
+      "sfxKey": "wc3.blademasterwhirlwind",
+      "applicable": true,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [
+        "godie-h00l",
+        "godie-h02r",
+        "godie-o00k",
+        "godie-osam"
+      ],
+      "evidence": {
+        "vfxSoundLaunch": "wc3.blademasterwhirlwind",
+        "vfxFamily": null
+      }
+    },
+    {
+      "ability": "godie-hgam.r",
+      "name": "90-04 陽光烈焰",
+      "champion": "godie-hgam",
+      "todayPlays": "abilityCast",
+      "tier": "A-vfx-owned",
+      "sfxKey": "wc3.invisibilitytarget",
+      "applicable": true,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [
+        "godie-e007",
+        "godie-ewar",
+        "godie-h02r"
+      ],
+      "evidence": {
+        "vfxSoundLaunch": "wc3.invisibilitytarget",
+        "vfxFamily": "shine"
+      }
+    },
+    {
+      "ability": "godie-hgam.w",
+      "name": "90-02 麻痺粉",
+      "champion": "godie-hgam",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "footstep",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "groundDust",
+        "familySoundLaunch": "footstep"
+      }
+    },
+    {
+      "ability": "godie-hjai.e",
+      "name": "04-03 龍破斬",
+      "champion": "godie-hjai",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicBolt",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "dissipate",
+        "familySoundLaunch": "magicBolt"
+      }
+    },
+    {
+      "ability": "godie-hjai.q",
+      "name": "04-01 火球術",
+      "champion": "godie-hjai",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicBolt",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "dissipate",
+        "familySoundLaunch": "magicBolt"
+      }
+    },
+    {
+      "ability": "godie-hjai.r",
+      "name": "04-04 神滅斬",
+      "champion": "godie-hjai",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicIce",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "cloud",
+        "familySoundLaunch": "magicIce"
+      }
+    },
+    {
+      "ability": "godie-huth.e",
+      "name": "28-03 分身",
+      "champion": "godie-huth",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "castCircle",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "mirrorImage",
+        "familySoundLaunch": "castCircle"
+      }
+    },
+    {
+      "ability": "godie-hvsh.passive",
+      "name": "48-00 石化之眼",
+      "champion": "godie-hvsh",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicBolt",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "lightColumn",
+        "familySoundLaunch": "magicBolt"
+      }
+    },
+    {
+      "ability": "godie-hvsh.r",
+      "name": "48-04 騎英之疆繩",
+      "champion": "godie-hvsh",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-hvwd.ex",
+      "name": "02-002 神通眼",
+      "champion": "godie-hvwd",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicBolt",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "lightColumn",
+        "familySoundLaunch": "magicBolt"
+      }
+    },
+    {
+      "ability": "godie-n00b.e",
+      "name": "57-02 任意門",
+      "champion": "godie-n00b",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicBolt",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "blink",
+        "familySoundLaunch": "magicBolt"
+      }
+    },
+    {
+      "ability": "godie-n00b.r",
+      "name": "57-04 竹蜻蜓",
+      "champion": "godie-n00b",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicIce",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "tornado",
+        "familySoundLaunch": "magicIce"
+      }
+    },
+    {
+      "ability": "godie-n01c.r",
+      "name": "08-04 阿邦快速劍X",
+      "champion": "godie-n01c",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "castCircle",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "mirrorImage",
+        "familySoundLaunch": "castCircle"
+      }
+    },
+    {
+      "ability": "godie-n01g.ex",
+      "name": "42-002 魔力印章",
+      "champion": "godie-n01g",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "buffApply",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "mark",
+        "familySoundLaunch": "buffApply"
+      }
+    },
+    {
+      "ability": "godie-nbbc.ex",
+      "name": "08-002 龍魔人",
+      "champion": "godie-nbbc",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "buffApply",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "mark",
+        "familySoundLaunch": "buffApply"
+      }
+    },
+    {
+      "ability": "godie-nbbc.q",
+      "name": "08-01 雙龍紋",
+      "champion": "godie-nbbc",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "reviveChannel",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "resurrect",
+        "familySoundLaunch": "reviveChannel"
+      }
+    },
+    {
+      "ability": "godie-nbbc.r",
+      "name": "08-04 阿邦快速劍X",
+      "champion": "godie-nbbc",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "castCircle",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "mirrorImage",
+        "familySoundLaunch": "castCircle"
+      }
+    },
+    {
+      "ability": "godie-nsjs.w",
+      "name": "18-02 寄生種子",
+      "champion": "godie-nsjs",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicFire",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "breath",
+        "familySoundLaunch": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-o00k.e",
+      "name": "86-03 神鳴",
+      "champion": "godie-o00k",
+      "todayPlays": "magicLightning",
+      "tier": "A-vfx-owned",
+      "sfxKey": "wc3.blademasterwhirlwind",
+      "applicable": true,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [
+        "godie-h00l",
+        "godie-h02r",
+        "godie-hgam",
+        "godie-osam"
+      ],
+      "evidence": {
+        "vfxSoundLaunch": "wc3.blademasterwhirlwind",
+        "vfxFamily": "shockwaveRing"
+      }
+    },
+    {
+      "ability": "godie-o00l.q",
+      "name": "53-01 獸王牙操彈",
+      "champion": "godie-o00l",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "explosion",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "burst",
+        "familySoundLaunch": "explosion"
+      }
+    },
+    {
+      "ability": "godie-o00x.e",
+      "name": "09-03 超級賽亞人",
+      "champion": "godie-o00x",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-o00x.q",
+      "name": "09-01 界王拳",
+      "champion": "godie-o00x",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "explosion",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "burst",
+        "familySoundLaunch": "explosion"
+      }
+    },
+    {
+      "ability": "godie-o00x.r",
+      "name": "09-04 龜派氣功",
+      "champion": "godie-o00x",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "explosion",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "burst",
+        "familySoundLaunch": "explosion"
+      }
+    },
+    {
+      "ability": "godie-o00x.w",
+      "name": "09-02 瞬間移動",
+      "champion": "godie-o00x",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicBolt",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "blink",
+        "familySoundLaunch": "magicBolt"
+      }
+    },
+    {
+      "ability": "godie-o02l.r",
+      "name": "58-04 瘋狂皮卡丘",
+      "champion": "godie-o02l",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-o02p.e",
+      "name": "99-03 初音未來的消失",
+      "champion": "godie-o02p",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "reviveChannel",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "resurrect",
+        "familySoundLaunch": "reviveChannel"
+      }
+    },
+    {
+      "ability": "godie-ogld.r",
+      "name": "72-04 黑化",
+      "champion": "godie-ogld",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-ogrh.e",
+      "name": "09-03 超級賽亞人",
+      "champion": "godie-ogrh",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-ogrh.q",
+      "name": "09-01 界王拳",
+      "champion": "godie-ogrh",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "explosion",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "burst",
+        "familySoundLaunch": "explosion"
+      }
+    },
+    {
+      "ability": "godie-ogrh.r",
+      "name": "09-04 龜派氣功",
+      "champion": "godie-ogrh",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "explosion",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "burst",
+        "familySoundLaunch": "explosion"
+      }
+    },
+    {
+      "ability": "godie-ogrh.w",
+      "name": "09-02 瞬間移動",
+      "champion": "godie-ogrh",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicBolt",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "blink",
+        "familySoundLaunch": "magicBolt"
+      }
+    },
+    {
+      "ability": "godie-orkn.ex",
+      "name": "30-002 變態紳士",
+      "champion": "godie-orkn",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "buffApply",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "mark",
+        "familySoundLaunch": "buffApply"
+      }
+    },
+    {
+      "ability": "godie-orkn.r",
+      "name": "30-04 電車之狼衝擊",
+      "champion": "godie-orkn",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-osam.ex",
+      "name": "34-002 冥道殘月破",
+      "champion": "godie-osam",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-osam.passive",
+      "name": "34-00 靈魂吞噬",
+      "champion": "godie-osam",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicBolt",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "dissipate",
+        "familySoundLaunch": "magicBolt"
+      }
+    },
+    {
+      "ability": "godie-osam.r",
+      "name": "34-04 奧義˙蒼龍破",
+      "champion": "godie-osam",
+      "todayPlays": "abilityCast",
+      "tier": "A-vfx-owned",
+      "sfxKey": "wc3.blademasterwhirlwind",
+      "applicable": true,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [
+        "godie-h00l",
+        "godie-h02r",
+        "godie-hgam",
+        "godie-o00k"
+      ],
+      "evidence": {
+        "vfxSoundLaunch": "wc3.blademasterwhirlwind",
+        "vfxFamily": "shockwaveRing"
+      }
+    },
+    {
+      "ability": "godie-u00h.passive",
+      "name": "39-00 無明神風流-玄武",
+      "champion": "godie-u00h",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicFire",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "flamePillar",
+        "familySoundLaunch": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-u00j.e",
+      "name": "74-03 闇之天使",
+      "champion": "godie-u00j",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicFire",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "flamePillar",
+        "familySoundLaunch": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-u00j.ex",
+      "name": "74-002 超新星",
+      "champion": "godie-u00j",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "explosion",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "burst",
+        "familySoundLaunch": "explosion"
+      }
+    },
+    {
+      "ability": "godie-u00j.q",
+      "name": "74-01 獄門",
+      "champion": "godie-u00j",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-u00l.e",
+      "name": "25-03 北斗百裂拳",
+      "champion": "godie-u00l",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-u00l.ex",
+      "name": "25-002 喔拉喔拉喔拉喔拉",
+      "champion": "godie-u00l",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-u00n.ex",
+      "name": "76-002 霸王色",
+      "champion": "godie-u00n",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-u00n.q",
+      "name": "76-01 伸縮自如的橡膠戰斧",
+      "champion": "godie-u00n",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "castCircle",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "mirrorImage",
+        "familySoundLaunch": "castCircle"
+      }
+    },
+    {
+      "ability": "godie-u00n.r",
+      "name": "76-04 三檔.巨人迴旋彈",
+      "champion": "godie-u00n",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "castCircle",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "mirrorImage",
+        "familySoundLaunch": "castCircle"
+      }
+    },
+    {
+      "ability": "godie-u00n.w",
+      "name": "76-02 伸縮自如的橡膠火箭砲",
+      "champion": "godie-u00n",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-u00o.ex",
+      "name": "76-002 霸王色",
+      "champion": "godie-u00o",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-u00o.q",
+      "name": "76-01 伸縮自如的橡膠戰斧",
+      "champion": "godie-u00o",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "castCircle",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "mirrorImage",
+        "familySoundLaunch": "castCircle"
+      }
+    },
+    {
+      "ability": "godie-u00o.r",
+      "name": "76-04 三檔.巨人迴旋彈",
+      "champion": "godie-u00o",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "castCircle",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "mirrorImage",
+        "familySoundLaunch": "castCircle"
+      }
+    },
+    {
+      "ability": "godie-u00o.w",
+      "name": "76-02 伸縮自如的橡膠火箭砲",
+      "champion": "godie-u00o",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-u00v.r",
+      "name": "78-04 死亡噴射肘擊",
+      "champion": "godie-u00v",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-u01u.e",
+      "name": "11-03 鬼氣九刀流-阿修羅壹霧銀",
+      "champion": "godie-u01u",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "castCircle",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "mirrorImage",
+        "familySoundLaunch": "castCircle"
+      }
+    },
+    {
+      "ability": "godie-u01u.ex",
+      "name": "11-002 武裝色霸氣",
+      "champion": "godie-u01u",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "buffApply",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "mark",
+        "familySoundLaunch": "buffApply"
+      }
+    },
+    {
+      "ability": "godie-u01u.r",
+      "name": "11-04 三千世界",
+      "champion": "godie-u01u",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "castCircle",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "mirrorImage",
+        "familySoundLaunch": "castCircle"
+      }
+    },
+    {
+      "ability": "godie-u01u.w",
+      "name": "11-02 虎狩獵",
+      "champion": "godie-u01u",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-ubal.e",
+      "name": "37-02 黑核晶",
+      "champion": "godie-ubal",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-udea.q",
+      "name": "65-01 神出鬼沒",
+      "champion": "godie-udea",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "magicBolt",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "blink",
+        "familySoundLaunch": "magicBolt"
+      }
+    },
+    {
+      "ability": "godie-udea.r",
+      "name": "65-04 天譴",
+      "champion": "godie-udea",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-udre.e",
+      "name": "11-03 鬼氣九刀流-阿修羅壹霧銀",
+      "champion": "godie-udre",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "castCircle",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "mirrorImage",
+        "familySoundLaunch": "castCircle"
+      }
+    },
+    {
+      "ability": "godie-udre.ex",
+      "name": "11-002 武裝色霸氣",
+      "champion": "godie-udre",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "buffApply",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "mark",
+        "familySoundLaunch": "buffApply"
+      }
+    },
+    {
+      "ability": "godie-udre.r",
+      "name": "11-04 三千世界",
+      "champion": "godie-udre",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "castCircle",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "mirrorImage",
+        "familySoundLaunch": "castCircle"
+      }
+    },
+    {
+      "ability": "godie-udre.w",
+      "name": "11-02 虎狩獵",
+      "champion": "godie-udre",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-umal.e",
+      "name": "25-03 北斗百裂拳",
+      "champion": "godie-umal",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-umal.ex",
+      "name": "25-002 喔拉喔拉喔拉喔拉",
+      "champion": "godie-umal",
+      "todayPlays": "abilityCast",
+      "tier": "C-family-generic",
+      "sfxKey": "guardianSlam",
+      "applicable": false,
+      "needsCueDeclaration": true,
+      "repeatDropped": false,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxFamily": "shockwaveRing",
+        "familySoundLaunch": "guardianSlam"
+      }
+    },
+    {
+      "ability": "godie-zombieking.passive",
+      "name": "殭屍王 - leap吸血",
+      "champion": "godie-zombieking",
+      "todayPlays": "abilityCast",
+      "tier": "A-vfx-owned",
+      "sfxKey": "zombieRoar",
+      "applicable": true,
+      "needsCueDeclaration": true,
+      "repeatDropped": true,
+      "sharedWithChampions": [],
+      "evidence": {
+        "vfxSoundLaunch": "zombieRoar",
+        "vfxFamily": null
+      }
+    }
+  ],
+  "noSuggestion": [
+    {
+      "ability": "godie-e001.e",
+      "name": "22-03 五吋釘",
+      "champion": "godie-e001",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEsh"
+      }
+    },
+    {
+      "ability": "godie-e001.ex",
+      "name": "22-002 月光下的決鬥者",
+      "champion": "godie-e001",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-e001.q",
+      "name": "22-01 鬼隱之擊",
+      "champion": "godie-e001",
+      "todayPlays": "abilityCast",
+      "cause": "stock-label-only",
+      "evidence": {
+        "base": "AOwk",
+        "effectSound": "WindWalk"
+      }
+    },
+    {
+      "ability": "godie-e001.w",
+      "name": "22-02 染血的柴刀",
+      "champion": "godie-e001",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AOcr"
+      }
+    },
+    {
+      "ability": "godie-e002.ex",
+      "name": "20-002 解放.約束勝利劍MAX",
+      "champion": "godie-e002",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aegr"
+      }
+    },
+    {
+      "ability": "godie-e002.passive",
+      "name": "20-00 銀色甲胄",
+      "champion": "godie-e002",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aegr"
+      }
+    },
+    {
+      "ability": "godie-e002.r",
+      "name": "20-04 Avalon-永恆的理想鄉",
+      "champion": "godie-e002",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEtq"
+      }
+    },
+    {
+      "ability": "godie-e007.e",
+      "name": "12-03 破凰之心-徒手空破山",
+      "champion": "godie-e007",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEIl"
+      }
+    },
+    {
+      "ability": "godie-e007.passive",
+      "name": "12-00 感應意脈",
+      "champion": "godie-e007",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEev"
+      }
+    },
+    {
+      "ability": "godie-e007.q",
+      "name": "12-01 鬥仙術",
+      "champion": "godie-e007",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANsb"
+      }
+    },
+    {
+      "ability": "godie-e007.w",
+      "name": "12-02 仙氣．採藥",
+      "champion": "godie-e007",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AIre"
+      }
+    },
+    {
+      "ability": "godie-e008.ex",
+      "name": "21-002 天破壤碎",
+      "champion": "godie-e008",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-e008.passive",
+      "name": "21-00 灼眼",
+      "champion": "godie-e008",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANtr"
+      }
+    },
+    {
+      "ability": "godie-e008.w",
+      "name": "21-01 火羽",
+      "champion": "godie-e008",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-e00l.ex",
+      "name": "20-002 解放.約束勝利劍MAX",
+      "champion": "godie-e00l",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aegr"
+      }
+    },
+    {
+      "ability": "godie-e00l.passive",
+      "name": "20-00 銀色甲胄",
+      "champion": "godie-e00l",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aegr"
+      }
+    },
+    {
+      "ability": "godie-e00l.r",
+      "name": "20-04 Avalon-永恆的理想鄉",
+      "champion": "godie-e00l",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEtq"
+      }
+    },
+    {
+      "ability": "godie-e00n.e",
+      "name": "22-03 五吋釘",
+      "champion": "godie-e00n",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEsh"
+      }
+    },
+    {
+      "ability": "godie-e00n.ex",
+      "name": "22-002 月光下的決鬥者",
+      "champion": "godie-e00n",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-e00n.q",
+      "name": "22-01 鬼隱之擊",
+      "champion": "godie-e00n",
+      "todayPlays": "abilityCast",
+      "cause": "stock-label-only",
+      "evidence": {
+        "base": "AOwk",
+        "effectSound": "WindWalk"
+      }
+    },
+    {
+      "ability": "godie-e00n.w",
+      "name": "22-02 染血的柴刀",
+      "champion": "godie-e00n",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AOcr"
+      }
+    },
+    {
+      "ability": "godie-e00r.e",
+      "name": "59-03 AT力場",
+      "champion": "godie-e00r",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Assk"
+      }
+    },
+    {
+      "ability": "godie-e00r.ex",
+      "name": "59-001 完全暴走",
+      "champion": "godie-e00r",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AIev"
+      }
+    },
+    {
+      "ability": "godie-e00r.passive",
+      "name": "59-00 暴走",
+      "champion": "godie-e00r",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Asal"
+      }
+    },
+    {
+      "ability": "godie-e00r.w",
+      "name": "59-02 高週波短刀",
+      "champion": "godie-e00r",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AHbh"
+      }
+    },
+    {
+      "ability": "godie-e00s.e",
+      "name": "70-03 木束縛之術",
+      "champion": "godie-e00s",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AOvd"
+      }
+    },
+    {
+      "ability": "godie-e00s.ex",
+      "name": "70-002 樹海降臨",
+      "champion": "godie-e00s",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEev"
+      }
+    },
+    {
+      "ability": "godie-e00s.passive",
+      "name": "70-00 紮根",
+      "champion": "godie-e00s",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Asal"
+      }
+    },
+    {
+      "ability": "godie-e00s.r",
+      "name": "70-04 千年練成",
+      "champion": "godie-e00s",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANr3"
+      }
+    },
+    {
+      "ability": "godie-e00s.w",
+      "name": "70-02 大怒石",
+      "champion": "godie-e00s",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AHbh"
+      }
+    },
+    {
+      "ability": "godie-e00w.e",
+      "name": "77-03 GLADIARIA ALAT",
+      "champion": "godie-e00w",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-e00w.ex",
+      "name": "77-002 御雷劍",
+      "champion": "godie-e00w",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-e00w.passive",
+      "name": "77-00 浮雲-旋一閃",
+      "champion": "godie-e00w",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Absk"
+      }
+    },
+    {
+      "ability": "godie-e00w.r",
+      "name": "77-04 真-雷光劍",
+      "champion": "godie-e00w",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-e00w.w",
+      "name": "77-02 雷鳴劍",
+      "champion": "godie-e00w",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-e00x.ex",
+      "name": "77-002 御雷劍",
+      "champion": "godie-e00x",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-e00x.passive",
+      "name": "77-00 浮雲-旋一閃",
+      "champion": "godie-e00x",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Absk"
+      }
+    },
+    {
+      "ability": "godie-e00x.r",
+      "name": "77-04 真-雷光劍",
+      "champion": "godie-e00x",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-e00x.w",
+      "name": "77-02 雷鳴劍",
+      "champion": "godie-e00x",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-e010.e",
+      "name": "70-03 木束縛之術",
+      "champion": "godie-e010",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-e010.passive",
+      "name": "70-00 紮根",
+      "champion": "godie-e010",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-e010.r",
+      "name": "70-04 千年練成",
+      "champion": "godie-e010",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-e010.w",
+      "name": "70-02 大怒石",
+      "champion": "godie-e010",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-edem.e",
+      "name": "45-03 千鳥",
+      "champion": "godie-edem",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-edem.passive",
+      "name": "45-00 寫輪眼",
+      "champion": "godie-edem",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-edem.q",
+      "name": "45-01 火遁-豪火龍之術",
+      "champion": "godie-edem",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-edem.w",
+      "name": "45-02 千鳥流",
+      "champion": "godie-edem",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-efur.e",
+      "name": "13-03 龍頭戲畫。布陣",
+      "champion": "godie-efur",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEtq"
+      }
+    },
+    {
+      "ability": "godie-efur.ex",
+      "name": "13-002 絕。暗殺奧義",
+      "champion": "godie-efur",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AHbh"
+      }
+    },
+    {
+      "ability": "godie-efur.passive",
+      "name": "13-00 念。攻防轉換",
+      "champion": "godie-efur",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Auhf"
+      }
+    },
+    {
+      "ability": "godie-efur.q",
+      "name": "13-01 暗步。極限之圓",
+      "champion": "godie-efur",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEer"
+      }
+    },
+    {
+      "ability": "godie-efur.r",
+      "name": "13-04 龍星群",
+      "champion": "godie-efur",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AOcr"
+      }
+    },
+    {
+      "ability": "godie-efur.w",
+      "name": "13-02 龍頭戲畫。牙突",
+      "champion": "godie-efur",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AChx"
+      }
+    },
+    {
+      "ability": "godie-emfr.e",
+      "name": "15-03 獄炎煉我",
+      "champion": "godie-emfr",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-emfr.ex",
+      "name": "15-002 敵彈吸收陣。太陰道",
+      "champion": "godie-emfr",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ACmo"
+      }
+    },
+    {
+      "ability": "godie-emfr.passive",
+      "name": "15-00 真·不死不滅",
+      "champion": "godie-emfr",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aspb"
+      }
+    },
+    {
+      "ability": "godie-emfr.q",
+      "name": "15-01 雷神槍「巨神殺手」",
+      "champion": "godie-emfr",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANcl"
+      }
+    },
+    {
+      "ability": "godie-emfr.r",
+      "name": "15-04 雷天大壯。貳式",
+      "champion": "godie-emfr",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-emns.passive",
+      "name": "44-00 機警",
+      "champion": "godie-emns",
+      "todayPlays": "abilityCast",
+      "cause": "stock-label-only",
+      "evidence": {
+        "base": "ANms",
+        "effectSound": "ManaShieldCastSound"
+      }
+    },
+    {
+      "ability": "godie-emns.w",
+      "name": "44-02 死神的規則",
+      "champion": "godie-emns",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aamk"
+      }
+    },
+    {
+      "ability": "godie-etyr.ex",
+      "name": "14-002 魔力激發",
+      "champion": "godie-etyr",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AHab"
+      }
+    },
+    {
+      "ability": "godie-etyr.passive",
+      "name": "14-00 召喚式神",
+      "champion": "godie-etyr",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ACtn"
+      }
+    },
+    {
+      "ability": "godie-ewar.e",
+      "name": "12-03 破凰之心。空破山",
+      "champion": "godie-ewar",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEIl"
+      }
+    },
+    {
+      "ability": "godie-ewar.passive",
+      "name": "12-00 感應意脈",
+      "champion": "godie-ewar",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEev"
+      }
+    },
+    {
+      "ability": "godie-ewar.q",
+      "name": "12-01 鬥仙術",
+      "champion": "godie-ewar",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANsb"
+      }
+    },
+    {
+      "ability": "godie-ewar.w",
+      "name": "12-02 仙氣．採藥",
+      "champion": "godie-ewar",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AIre"
+      }
+    },
+    {
+      "ability": "godie-h00l.e",
+      "name": "60-03 三角神力．勇氣",
+      "champion": "godie-h00l",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Adef"
+      }
+    },
+    {
+      "ability": "godie-h00l.ex",
+      "name": "60-002 勇者意志",
+      "champion": "godie-h00l",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AHbh"
+      }
+    },
+    {
+      "ability": "godie-h00l.passive",
+      "name": "60-00 大師之劍",
+      "champion": "godie-h00l",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ACds"
+      }
+    },
+    {
+      "ability": "godie-h01n.e",
+      "name": "79-03 月牙天衝",
+      "champion": "godie-h01n",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANcl"
+      }
+    },
+    {
+      "ability": "godie-h01n.passive",
+      "name": "79-00 靈壓",
+      "champion": "godie-h01n",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-h01o.e",
+      "name": "79-03 月牙天衝",
+      "champion": "godie-h01o",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANcl"
+      }
+    },
+    {
+      "ability": "godie-h01o.passive",
+      "name": "79-00 靈壓",
+      "champion": "godie-h01o",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-h01u.ex",
+      "name": "80-002 戰無不勝",
+      "champion": "godie-h01u",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Ansk"
+      }
+    },
+    {
+      "ability": "godie-h01u.passive",
+      "name": "80-00 飛將神弓",
+      "champion": "godie-h01u",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANde"
+      }
+    },
+    {
+      "ability": "godie-h01u.q",
+      "name": "80-01 天下無雙",
+      "champion": "godie-h01u",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AOcr"
+      }
+    },
+    {
+      "ability": "godie-h020.e",
+      "name": "04-03 龍破斬",
+      "champion": "godie-h020",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-h020.ex",
+      "name": "04-002 惡夢魔王的碎片",
+      "champion": "godie-h020",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEIl"
+      }
+    },
+    {
+      "ability": "godie-h020.passive",
+      "name": "04-00 翔封界",
+      "champion": "godie-h020",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANss"
+      }
+    },
+    {
+      "ability": "godie-h020.q",
+      "name": "04-01 火球術",
+      "champion": "godie-h020",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-h020.w",
+      "name": "04-02 炸彈陣",
+      "champion": "godie-h020",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-h02k.passive",
+      "name": "89-00 憤怒的門牙",
+      "champion": "godie-h02k",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AOcr"
+      }
+    },
+    {
+      "ability": "godie-h02k.q",
+      "name": "89-01 憤怒的頭槌",
+      "champion": "godie-h02k",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AHbh"
+      }
+    },
+    {
+      "ability": "godie-h02r.e",
+      "name": "90-03 藤鞭",
+      "champion": "godie-h02r",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANhs"
+      }
+    },
+    {
+      "ability": "godie-h02r.ex",
+      "name": "90-002 超進化! 妙蛙花",
+      "champion": "godie-h02r",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEme"
+      }
+    },
+    {
+      "ability": "godie-h02r.passive",
+      "name": "90-00 寄生種子",
+      "champion": "godie-h02r",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEsh"
+      }
+    },
+    {
+      "ability": "godie-h02u.e",
+      "name": "92-03 狂草泥馬",
+      "champion": "godie-h02u",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANab"
+      }
+    },
+    {
+      "ability": "godie-h02u.ex",
+      "name": "92-002 最終戈壁",
+      "champion": "godie-h02u",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEev"
+      }
+    },
+    {
+      "ability": "godie-h02u.passive",
+      "name": "92-00 憂鬱的眼神",
+      "champion": "godie-h02u",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEev"
+      }
+    },
+    {
+      "ability": "godie-h02u.q",
+      "name": "92-01 臥草泥馬",
+      "champion": "godie-h02u",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEme"
+      }
+    },
+    {
+      "ability": "godie-h02v.e",
+      "name": "92-02 消化液",
+      "champion": "godie-h02v",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANab"
+      }
+    },
+    {
+      "ability": "godie-h02v.ex",
+      "name": "92-002 最終戈壁",
+      "champion": "godie-h02v",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEev"
+      }
+    },
+    {
+      "ability": "godie-h02v.passive",
+      "name": "92-00 憂鬱的眼神",
+      "champion": "godie-h02v",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEev"
+      }
+    },
+    {
+      "ability": "godie-h02v.q",
+      "name": "92-01 臥草泥馬",
+      "champion": "godie-h02v",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEme"
+      }
+    },
+    {
+      "ability": "godie-hapm.e",
+      "name": "52-03 無銘斧劍",
+      "champion": "godie-hapm",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aven"
+      }
+    },
+    {
+      "ability": "godie-hapm.ex",
+      "name": "52-002 射殺百頭",
+      "champion": "godie-hapm",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-hapm.passive",
+      "name": "52-00 十二道試煉",
+      "champion": "godie-hapm",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AOr3"
+      }
+    },
+    {
+      "ability": "godie-hapm.q",
+      "name": "52-01 狂戰士之怒",
+      "champion": "godie-hapm",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANbr"
+      }
+    },
+    {
+      "ability": "godie-hapm.r",
+      "name": "52-04 巨神一擊",
+      "champion": "godie-hapm",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AHbz"
+      }
+    },
+    {
+      "ability": "godie-hapm.w",
+      "name": "52-02 蹂躪編年史",
+      "champion": "godie-hapm",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AOcl"
+      }
+    },
+    {
+      "ability": "godie-hart.ex",
+      "name": "01-002 究極魔劍",
+      "champion": "godie-hart",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Amgl"
+      }
+    },
+    {
+      "ability": "godie-hart.passive",
+      "name": "01-00 怒斬",
+      "champion": "godie-hart",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANb2"
+      }
+    },
+    {
+      "ability": "godie-hart.w",
+      "name": "01-02 隕石擊",
+      "champion": "godie-hart",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-hgam.e",
+      "name": "90-03 藤鞭",
+      "champion": "godie-hgam",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-hgam.ex",
+      "name": "90-002 超進化! 妙蛙花",
+      "champion": "godie-hgam",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEme"
+      }
+    },
+    {
+      "ability": "godie-hgam.passive",
+      "name": "90-00 寄生種子",
+      "champion": "godie-hgam",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEsh"
+      }
+    },
+    {
+      "ability": "godie-hjai.ex",
+      "name": "04-002 惡夢魔王的碎片",
+      "champion": "godie-hjai",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEIl"
+      }
+    },
+    {
+      "ability": "godie-hjai.passive",
+      "name": "04-00 翔封界",
+      "champion": "godie-hjai",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANss"
+      }
+    },
+    {
+      "ability": "godie-hjai.w",
+      "name": "04-02 炸彈陣",
+      "champion": "godie-hjai",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-hpb1.ex",
+      "name": "07-002 獸矛持有者",
+      "champion": "godie-hpb1",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEev"
+      }
+    },
+    {
+      "ability": "godie-hpb1.passive",
+      "name": "07-00 獸化心靈",
+      "champion": "godie-hpb1",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Atru"
+      }
+    },
+    {
+      "ability": "godie-hpb1.q",
+      "name": "07-01 臨、兵、鬥",
+      "champion": "godie-hpb1",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANss"
+      }
+    },
+    {
+      "ability": "godie-hpb1.r",
+      "name": "07-04 神聖結界",
+      "champion": "godie-hpb1",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-huth.ex",
+      "name": "28-002 純粹魔人普烏",
+      "champion": "godie-huth",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aspy"
+      }
+    },
+    {
+      "ability": "godie-huth.passive",
+      "name": "28-00 無限再生",
+      "champion": "godie-huth",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Assk"
+      }
+    },
+    {
+      "ability": "godie-huth.q",
+      "name": "28-01 吃掉你",
+      "champion": "godie-huth",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANtm"
+      }
+    },
+    {
+      "ability": "godie-huth.r",
+      "name": "28-04 破滅能量彈",
+      "champion": "godie-huth",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AOeq"
+      }
+    },
+    {
+      "ability": "godie-hvsh.e",
+      "name": "48-03 鮮血神殿",
+      "champion": "godie-hvsh",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AChw"
+      }
+    },
+    {
+      "ability": "godie-hvsh.ex",
+      "name": "48-002 騎英之疆繩MAX",
+      "champion": "godie-hvsh",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aegr"
+      }
+    },
+    {
+      "ability": "godie-hvsh.q",
+      "name": "48-01 魔法鎖鏈",
+      "champion": "godie-hvsh",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANcl"
+      }
+    },
+    {
+      "ability": "godie-hvsh.w",
+      "name": "48-02 心眼",
+      "champion": "godie-hvsh",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEev"
+      }
+    },
+    {
+      "ability": "godie-hvwd.e",
+      "name": "02-03 魂飛魄散",
+      "champion": "godie-hvwd",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ACsh"
+      }
+    },
+    {
+      "ability": "godie-hvwd.passive",
+      "name": "02-00 淨化",
+      "champion": "godie-hvwd",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aprg"
+      }
+    },
+    {
+      "ability": "godie-hvwd.q",
+      "name": "02-01 破魔之箭",
+      "champion": "godie-hvwd",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-hvwd.r",
+      "name": "02-04 死魂蟲",
+      "champion": "godie-hvwd",
+      "todayPlays": "abilityCast",
+      "cause": "stock-label-only",
+      "evidence": {
+        "base": "AOls",
+        "effectSound": "LocustSwarmLoop"
+      }
+    },
+    {
+      "ability": "godie-hvwd.w",
+      "name": "02-02 明鏡止水",
+      "champion": "godie-hvwd",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEar"
+      }
+    },
+    {
+      "ability": "godie-n003.e",
+      "name": "42-03 暗夜吹雪",
+      "champion": "godie-n003",
+      "todayPlays": "magicIce",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicIce"
+      }
+    },
+    {
+      "ability": "godie-n003.ex",
+      "name": "42-002 魔力印章",
+      "champion": "godie-n003",
+      "todayPlays": "magicIce",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicIce"
+      }
+    },
+    {
+      "ability": "godie-n003.passive",
+      "name": "42-00 魔法障壁",
+      "champion": "godie-n003",
+      "todayPlays": "magicIce",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicIce"
+      }
+    },
+    {
+      "ability": "godie-n003.q",
+      "name": "42-01 凍結的大地",
+      "champion": "godie-n003",
+      "todayPlays": "magicIce",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicIce"
+      }
+    },
+    {
+      "ability": "godie-n003.r",
+      "name": "42-04 世界終結",
+      "champion": "godie-n003",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANcs"
+      }
+    },
+    {
+      "ability": "godie-n003.w",
+      "name": "42-02 吸血祭品",
+      "champion": "godie-n003",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AUdr"
+      }
+    },
+    {
+      "ability": "godie-n00b.ex",
+      "name": "57-002 時光機",
+      "champion": "godie-n00b",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aspb"
+      }
+    },
+    {
+      "ability": "godie-n00b.passive",
+      "name": "57-00 四次元口袋",
+      "champion": "godie-n00b",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Atau"
+      }
+    },
+    {
+      "ability": "godie-n00b.q",
+      "name": "57-01 空氣砲",
+      "champion": "godie-n00b",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AOsh"
+      }
+    },
+    {
+      "ability": "godie-n00p.ex",
+      "name": "18-002 魔界吸血植物",
+      "champion": "godie-n00p",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aegr"
+      }
+    },
+    {
+      "ability": "godie-n00p.passive",
+      "name": "18-00 薔薇荊棘之刃",
+      "champion": "godie-n00p",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Asal"
+      }
+    },
+    {
+      "ability": "godie-n00p.q",
+      "name": "18-01 風華圓舞陣",
+      "champion": "godie-n00p",
+      "todayPlays": "abilityCast",
+      "cause": "stock-label-only",
+      "evidence": {
+        "base": "AOls",
+        "effectSound": "LocustSwarmLoop"
+      }
+    },
+    {
+      "ability": "godie-n00p.r",
+      "name": "18-04 億年樹",
+      "champion": "godie-n00p",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AUin"
+      }
+    },
+    {
+      "ability": "godie-n01c.ex",
+      "name": "08-002 龍魔人",
+      "champion": "godie-n01c",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-n01c.passive",
+      "name": "08-00 龍紋記憶",
+      "champion": "godie-n01c",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aegr"
+      }
+    },
+    {
+      "ability": "godie-n01c.q",
+      "name": "08-01 雙龍紋",
+      "champion": "godie-n01c",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-n01c.w",
+      "name": "08-02 萊丁快速劍",
+      "champion": "godie-n01c",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-n01g.e",
+      "name": "42-03 暗夜吹雪",
+      "champion": "godie-n01g",
+      "todayPlays": "magicIce",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicIce"
+      }
+    },
+    {
+      "ability": "godie-n01g.passive",
+      "name": "42-00 魔法障壁",
+      "champion": "godie-n01g",
+      "todayPlays": "magicIce",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicIce"
+      }
+    },
+    {
+      "ability": "godie-n01g.q",
+      "name": "42-01 凍結的大地",
+      "champion": "godie-n01g",
+      "todayPlays": "magicIce",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicIce"
+      }
+    },
+    {
+      "ability": "godie-n01g.r",
+      "name": "42-04 世界終結",
+      "champion": "godie-n01g",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANcs"
+      }
+    },
+    {
+      "ability": "godie-n01g.w",
+      "name": "42-02 吸血祭品",
+      "champion": "godie-n01g",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AUdr"
+      }
+    },
+    {
+      "ability": "godie-nbbc.passive",
+      "name": "08-00 龍紋記憶",
+      "champion": "godie-nbbc",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aegr"
+      }
+    },
+    {
+      "ability": "godie-nbbc.w",
+      "name": "08-02 萊丁快速劍",
+      "champion": "godie-nbbc",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-nsjs.ex",
+      "name": "18-002 魔界吸血植物",
+      "champion": "godie-nsjs",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aegr"
+      }
+    },
+    {
+      "ability": "godie-nsjs.passive",
+      "name": "18-00 薔薇荊棘之刃",
+      "champion": "godie-nsjs",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Asal"
+      }
+    },
+    {
+      "ability": "godie-nsjs.q",
+      "name": "18-01 風華圓舞陣",
+      "champion": "godie-nsjs",
+      "todayPlays": "abilityCast",
+      "cause": "stock-label-only",
+      "evidence": {
+        "base": "AOls",
+        "effectSound": "LocustSwarmLoop"
+      }
+    },
+    {
+      "ability": "godie-nsjs.r",
+      "name": "18-04 億年樹",
+      "champion": "godie-nsjs",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AUin"
+      }
+    },
+    {
+      "ability": "godie-o00k.ex",
+      "name": "86-002 雷電萌神",
+      "champion": "godie-o00k",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-o00k.q",
+      "name": "86-01 十萬伏特",
+      "champion": "godie-o00k",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-o00k.r",
+      "name": "86-04 打雷絕招",
+      "champion": "godie-o00k",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-o00k.w",
+      "name": "86-02 電光一閃",
+      "champion": "godie-o00k",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-o00l.ex",
+      "name": "53-002 恐懼力量",
+      "champion": "godie-o00l",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aamk"
+      }
+    },
+    {
+      "ability": "godie-o00l.passive",
+      "name": "53-00 空間穿梭",
+      "champion": "godie-o00l",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aivs"
+      }
+    },
+    {
+      "ability": "godie-o00l.w",
+      "name": "53-02 強化炸彈陣",
+      "champion": "godie-o00l",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-o00x.ex",
+      "name": "09-002 十倍龜派氣功",
+      "champion": "godie-o00x",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Awar"
+      }
+    },
+    {
+      "ability": "godie-o00x.passive",
+      "name": "09-00 賽亞人的血脈",
+      "champion": "godie-o00x",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Awar"
+      }
+    },
+    {
+      "ability": "godie-o02l.e",
+      "name": "58-03 就決定是你了!小智",
+      "champion": "godie-o02l",
+      "todayPlays": "abilityCast",
+      "cause": "source-map-silent",
+      "evidence": {
+        "ggSnds": [
+          "gg_snd_sawch"
+        ]
+      }
+    },
+    {
+      "ability": "godie-o02l.ex",
+      "name": "58-002 打雷絕招",
+      "champion": "godie-o02l",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-o02l.passive",
+      "name": "58-00 電光一閃",
+      "champion": "godie-o02l",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-o02l.q",
+      "name": "58-01 十萬伏特",
+      "champion": "godie-o02l",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-o02l.w",
+      "name": "58-02 鋼鐵尾巴",
+      "champion": "godie-o02l",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AHbh"
+      }
+    },
+    {
+      "ability": "godie-o02p.ex",
+      "name": "99-002 把你給MikuMiku掉",
+      "champion": "godie-o02p",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AUfa"
+      }
+    },
+    {
+      "ability": "godie-o02p.passive",
+      "name": "99-00 可愛就是正義",
+      "champion": "godie-o02p",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AUau"
+      }
+    },
+    {
+      "ability": "godie-o02p.q",
+      "name": "99-01 甩蔥歌",
+      "champion": "godie-o02p",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AOcl"
+      }
+    },
+    {
+      "ability": "godie-o02p.r",
+      "name": "99-04 世界第一的公主殿下",
+      "champion": "godie-o02p",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AOww"
+      }
+    },
+    {
+      "ability": "godie-o02p.w",
+      "name": "99-02 最初的聲音",
+      "champion": "godie-o02p",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AOhw"
+      }
+    },
+    {
+      "ability": "godie-o030.e",
+      "name": "30-03 痴漢火焰",
+      "champion": "godie-o030",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-o030.ex",
+      "name": "30-002 變態紳士",
+      "champion": "godie-o030",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-o030.passive",
+      "name": "30-00 攝影機",
+      "champion": "godie-o030",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-o030.r",
+      "name": "30-04 電車之狼衝擊",
+      "champion": "godie-o030",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-o030.w",
+      "name": "30-02 酒精灌腸",
+      "champion": "godie-o030",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-ofar.e",
+      "name": "58-03 就決定是你了!小智",
+      "champion": "godie-ofar",
+      "todayPlays": "magicLightning",
+      "cause": "source-map-silent",
+      "evidence": {
+        "ggSnds": [
+          "gg_snd_sawch"
+        ]
+      }
+    },
+    {
+      "ability": "godie-ofar.ex",
+      "name": "58-002 打雷絕招",
+      "champion": "godie-ofar",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-ofar.passive",
+      "name": "58-00 電光一閃",
+      "champion": "godie-ofar",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-ofar.q",
+      "name": "58-01 十萬伏特",
+      "champion": "godie-ofar",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-ofar.r",
+      "name": "58-04 瘋狂皮卡丘",
+      "champion": "godie-ofar",
+      "todayPlays": "magicLightning",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicLightning"
+      }
+    },
+    {
+      "ability": "godie-ofar.w",
+      "name": "58-02 鋼鐵尾巴",
+      "champion": "godie-ofar",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AHbh"
+      }
+    },
+    {
+      "ability": "godie-ogld.e",
+      "name": "72-03 超亮白",
+      "champion": "godie-ogld",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Afae"
+      }
+    },
+    {
+      "ability": "godie-ogld.ex",
+      "name": "72-002 億萬衛星殞落",
+      "champion": "godie-ogld",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEsb"
+      }
+    },
+    {
+      "ability": "godie-ogld.q",
+      "name": "72-01洗刷刷",
+      "champion": "godie-ogld",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANmo"
+      }
+    },
+    {
+      "ability": "godie-ogld.w",
+      "name": "72-02 黑人牙菌斑",
+      "champion": "godie-ogld",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-ogrh.ex",
+      "name": "09-002 十倍龜派氣功",
+      "champion": "godie-ogrh",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Awar"
+      }
+    },
+    {
+      "ability": "godie-ogrh.passive",
+      "name": "09-00 賽亞人的血脈",
+      "champion": "godie-ogrh",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Awar"
+      }
+    },
+    {
+      "ability": "godie-orkn.e",
+      "name": "30-03 痴漢火焰",
+      "champion": "godie-orkn",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-orkn.passive",
+      "name": "30-00 攝影機",
+      "champion": "godie-orkn",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aesr"
+      }
+    },
+    {
+      "ability": "godie-orkn.w",
+      "name": "30-02 酒精灌腸",
+      "champion": "godie-orkn",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANdh"
+      }
+    },
+    {
+      "ability": "godie-osam.e",
+      "name": "34-03 爆碎牙",
+      "champion": "godie-osam",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANb2"
+      }
+    },
+    {
+      "ability": "godie-osam.q",
+      "name": "34-01 毒華爪",
+      "champion": "godie-osam",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANca"
+      }
+    },
+    {
+      "ability": "godie-osam.w",
+      "name": "34-02 閃光鞭",
+      "champion": "godie-osam",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AOcr"
+      }
+    },
+    {
+      "ability": "godie-u00h.ex",
+      "name": "39-002 紅王",
+      "champion": "godie-u00h",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-u00h.q",
+      "name": "39-01 無明神風流-白虎",
+      "champion": "godie-u00h",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANsb"
+      }
+    },
+    {
+      "ability": "godie-u00h.w",
+      "name": "39-02 無明神風流-朱雀",
+      "champion": "godie-u00h",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-u00j.passive",
+      "name": "74-00 JENOVA",
+      "champion": "godie-u00j",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANdb"
+      }
+    },
+    {
+      "ability": "godie-u00j.r",
+      "name": "74-04 最終殞落星",
+      "champion": "godie-u00j",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANr3"
+      }
+    },
+    {
+      "ability": "godie-u00k.ex",
+      "name": "71-002 夜之主",
+      "champion": "godie-u00k",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aegr"
+      }
+    },
+    {
+      "ability": "godie-u00k.passive",
+      "name": "71-00 暗夜契約",
+      "champion": "godie-u00k",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aegr"
+      }
+    },
+    {
+      "ability": "godie-u00k.q",
+      "name": "71-01 死亡隕落",
+      "champion": "godie-u00k",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANin"
+      }
+    },
+    {
+      "ability": "godie-u00k.w",
+      "name": "71-02 靈魂吸取",
+      "champion": "godie-u00k",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Afrz"
+      }
+    },
+    {
+      "ability": "godie-u00l.passive",
+      "name": "25-00 北斗暗殺拳",
+      "champion": "godie-u00l",
+      "todayPlays": "abilityCast",
+      "cause": "stock-label-only",
+      "evidence": {
+        "base": "AOwk",
+        "effectSound": "WindWalk"
+      }
+    },
+    {
+      "ability": "godie-u00l.w",
+      "name": "25-02 北斗神拳秘訣轉龍呼吸法",
+      "champion": "godie-u00l",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANdb"
+      }
+    },
+    {
+      "ability": "godie-u00v.ex",
+      "name": "78-002 加速爆體",
+      "champion": "godie-u00v",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aegr"
+      }
+    },
+    {
+      "ability": "godie-u00v.passive",
+      "name": "78-00 銅皮鐵骨",
+      "champion": "godie-u00v",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Assk"
+      }
+    },
+    {
+      "ability": "godie-u00v.q",
+      "name": "78-01 斬鐵拳",
+      "champion": "godie-u00v",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AHbh"
+      }
+    },
+    {
+      "ability": "godie-u010.ex",
+      "name": "38-002 究極暴走黑龍波",
+      "champion": "godie-u010",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aegr"
+      }
+    },
+    {
+      "ability": "godie-u010.passive",
+      "name": "38-00 邪眼全開",
+      "champion": "godie-u010",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEme"
+      }
+    },
+    {
+      "ability": "godie-u01u.passive",
+      "name": "11-00 三刀流",
+      "champion": "godie-u01u",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANht"
+      }
+    },
+    {
+      "ability": "godie-u01u.q",
+      "name": "11-01 燒鬼斬",
+      "champion": "godie-u01u",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AHbh"
+      }
+    },
+    {
+      "ability": "godie-u034.ex",
+      "name": "06-002 殺意",
+      "champion": "godie-u034",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Amgl"
+      }
+    },
+    {
+      "ability": "godie-u034.r",
+      "name": "06-04 傑桑變化",
+      "champion": "godie-u034",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEme"
+      }
+    },
+    {
+      "ability": "godie-ubal.ex",
+      "name": "37-002 真‧黑核晶",
+      "champion": "godie-ubal",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ACmo"
+      }
+    },
+    {
+      "ability": "godie-ubal.passive",
+      "name": "37-00 鬼眼",
+      "champion": "godie-ubal",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Scri"
+      }
+    },
+    {
+      "ability": "godie-ubal.q",
+      "name": "37-01 凱薩之鷹",
+      "champion": "godie-ubal",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ACsh"
+      }
+    },
+    {
+      "ability": "godie-ucrl.ex",
+      "name": "06-002 殺意",
+      "champion": "godie-ucrl",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Amgl"
+      }
+    },
+    {
+      "ability": "godie-ucrl.r",
+      "name": "06-04 傑桑變化",
+      "champion": "godie-ucrl",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEme"
+      }
+    },
+    {
+      "ability": "godie-udea.ex",
+      "name": "65-002 永恆的愚蠢鄉",
+      "champion": "godie-udea",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "AEtq"
+      }
+    },
+    {
+      "ability": "godie-udea.passive",
+      "name": "65-00 古老智慧",
+      "champion": "godie-udea",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aegr"
+      }
+    },
+    {
+      "ability": "godie-udea.w",
+      "name": "65-02 寒冰破碎",
+      "champion": "godie-udea",
+      "todayPlays": "magicIce",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicIce"
+      }
+    },
+    {
+      "ability": "godie-udre.passive",
+      "name": "11-00 三刀流",
+      "champion": "godie-udre",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANht"
+      }
+    },
+    {
+      "ability": "godie-udre.q",
+      "name": "11-01 燒鬼斬",
+      "champion": "godie-udre",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-umal.passive",
+      "name": "25-00 北斗暗殺拳",
+      "champion": "godie-umal",
+      "todayPlays": "abilityCast",
+      "cause": "stock-label-only",
+      "evidence": {
+        "base": "AOwk",
+        "effectSound": "WindWalk"
+      }
+    },
+    {
+      "ability": "godie-umal.w",
+      "name": "25-02 北斗神拳秘訣轉龍呼吸法",
+      "champion": "godie-umal",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "ANdb"
+      }
+    },
+    {
+      "ability": "godie-uvng.ex",
+      "name": "38-002 究極暴走黑龍波",
+      "champion": "godie-uvng",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": "Aegr"
+      }
+    },
+    {
+      "ability": "godie-uvng.passive",
+      "name": "38-00 邪眼全開",
+      "champion": "godie-uvng",
+      "todayPlays": "magicFire",
+      "cause": "element-whoosh-already",
+      "evidence": {
+        "elementCue": "magicFire"
+      }
+    },
+    {
+      "ability": "godie-zombiex.e",
+      "name": "100-03 咕咕嘎嘎",
+      "champion": "godie-zombiex",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-zombiex.ex",
+      "name": "100-002 此世全部之咖哩・バタンキュー",
+      "champion": "godie-zombiex",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-zombiex.passive",
+      "name": "100-00 黑泥吞噬",
+      "champion": "godie-zombiex",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-zombiex.q",
+      "name": "100-01 肝泥抹德",
+      "champion": "godie-zombiex",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-zombiex.r",
+      "name": "100-04 百式・哈基米",
+      "champion": "godie-zombiex",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "godie-zombiex.w",
+      "name": "100-02 黑天覆七重咖哩・硬啦",
+      "champion": "godie-zombiex",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "sela.e",
+      "name": "Scorch Ring",
+      "champion": "sela",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "sela.q",
+      "name": "Ember Bolt",
+      "champion": "sela",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "sela.r",
+      "name": "Firestorm",
+      "champion": "sela",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "sela.w",
+      "name": "Cinder Ward",
+      "champion": "sela",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "thorne.e",
+      "name": "Root Snare",
+      "champion": "thorne",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "thorne.q",
+      "name": "Thorn Lash",
+      "champion": "thorne",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "thorne.r",
+      "name": "Bramble Burst",
+      "champion": "thorne",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    },
+    {
+      "ability": "thorne.w",
+      "name": "Barkskin Bulwark",
+      "champion": "thorne",
+      "todayPlays": "abilityCast",
+      "cause": "no-source-audio",
+      "evidence": {
+        "base": null
+      }
+    }
+  ]
+}

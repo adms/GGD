@@ -53,6 +53,9 @@ import json
 import os
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import suggest_keys  # noqa: E402  （同目錄，⛔ 不是套件）
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
 
@@ -294,6 +297,10 @@ def main(argv: list[str]) -> int:
     check = "--check" in argv
     doc_out, ledger_out = build()
     stale = []
+    # GH#554② —— 建議表跟這一支共用同一個閘（⛔ 不是第 15 支要記得跑的產生器）。
+    suggestion_stale = suggest_keys.run(check)
+    if suggestion_stale:
+        stale.append(suggestion_stale)
     for path, text in ((OUT, dumps(doc_out)), (LEDGER, dumps(ledger_out))):
         current = None
         if os.path.exists(path):
@@ -320,7 +327,10 @@ def main(argv: list[str]) -> int:
         )
         return 1
     if check:
-        print("ability-sfx-cues.json / UNPORTED_SFX_LEDGER.json 都是最新的")
+        print(
+            "ability-sfx-cues.json / UNPORTED_SFX_LEDGER.json / "
+            "SUGGESTED_SFX_KEYS.json 都是最新的"
+        )
     print(
         f"  {len(doc_out['cues'])} cues · {len(doc_out['bindings'])} bindings · "
         f"{len(doc_out['unmatched'])} unmatched · {len(ledger_out['abilities'])} unported"
