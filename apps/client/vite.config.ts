@@ -613,6 +613,14 @@ export default defineConfig({
   test: {
     environment: "node",
     include: ["src/**/*.test.ts"],
+    // ⚡ owner 2026-08-23「盡量壓榨多執行緒跟記憶體在本地端最大加速」+「forks 16,
+    // ⛔ 不要 threads」→「以上都同意」。⛔ threads 會炸 —— 而這個套件正是理由本身:
+    // Babylon 的 headless mock 與 CJS/ESM 混用都住在這裡。forks 也是 vitest 2.x
+    // 預設,明寫是為了讓換掉它變成一個看得見的決定。
+    // ⚠️ 這一格住在 `vite.config.ts` 而不是 `vitest.config.ts`,是刻意的:新開一份
+    // `vitest.config.ts` 會**取代**這個檔,連帶弄丟下面那行 setupFiles(GH#384)。
+    pool: "forks",
+    poolOptions: { forks: { maxForks: 16, minForks: 4 } },
     // GH#384 —— 逐技能特效綁定住在 `content/`，所以測試也要有人把它交進來
     //（線上交它的是 `ContentDb.load()`）。理由寫在那支檔頭。
     setupFiles: ["./src/testSetup.vfxContent.ts"],

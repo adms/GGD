@@ -48,5 +48,14 @@ export default defineConfig({
     // 明寫出來，不是靠 vitest 預設 —— 這個套件是純邏輯（sim / content / ops），
     // 任何人想在這裡開 jsdom 都應該是一個看得見的決定。
     environment: "node",
+    // ⚡ owner 2026-08-23：「我的本地端機器是 M5 Max 128G 非常高效能，請你盡量壓榨
+    // 多執行緒跟記憶體在本地端最大加速完成任務」，並對「worker 數：forks 16，
+    // ⛔ 不要 threads」回覆「以上都同意」。
+    //
+    // ⛔ `threads` 會炸：這個 repo 有 Babylon 的 headless mock 與 CJS/ESM 混用。
+    // `forks` 剛好也是 vitest 2.x 的預設 pool —— 明寫出來是為了讓「有人把它換成
+    // threads」變成一個看得見的決定，而不是一次沉默的預設漂移（同上一格的理由）。
+    pool: "forks",
+    poolOptions: { forks: { maxForks: 16, minForks: 4 } },
   },
 });
