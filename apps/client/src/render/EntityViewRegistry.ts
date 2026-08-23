@@ -36,6 +36,7 @@ import {
   planImpactFeedback,
 } from "./combatFeedback";
 import { TELEPORT_STEP_UNITS } from "./math/motion";
+import { lifecycleLedger } from "./lifecycleLedger";
 
 /** Per-champion vertex-tint bookkeeping (task #49). */
 interface TintState {
@@ -488,7 +489,30 @@ export class EntityViewRegistry {
     private readonly scene: Scene,
     private readonly assets: AssetManager,
     private readonly content: ViewContentHooks = {},
-  ) {}
+  ) {
+    // 🔬 GH#610 —— 一行接上生命週期登記表。⭐ 這一整族容器在**場景上看不見**
+    // （它們裝的是 view 物件與 per-entity 狀態，⛔ 不是 mesh），所以普查
+    // `scene.meshes` 抓不到它們的成長 —— 而「實體走了但這裡沒刪掉」正是
+    // 「到第七回合就很難動作」最典型的形狀（每一格都掛著一個活的 view）。
+    // ⛔ 沒有對應的 `release()`：讀的是容器**當下**的大小，所以「忘了刪」
+    // 這件事本身就是被量的東西，⛔ 不是一個要記得配對的呼叫。
+    lifecycleLedger.gaugeContainers("view", {
+      champions: this.champions,
+      projectiles: this.projectiles,
+      projPool: this.pool,
+      flowers: this.flowers,
+      guardians: this.guardians,
+      revives: this.reviveCircles,
+      nightFlags: this.nightFlags,
+      coins: this.coins,
+      lastPos: this.lastPos,
+      speedEma: this.speedEma,
+      culled: this.culled,
+      occluded: this.occludedIds,
+      tinted: this.tinted,
+      builtForm: this.builtForm,
+    });
+  }
 
   get championCount(): number {
     return this.champions.size;

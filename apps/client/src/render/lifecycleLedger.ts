@@ -179,6 +179,24 @@ export function ledgerSlug(raw: string): string {
 /** 場景以外的東西（free-list 池 / Map 快取）用的拉取式量表。 */
 export type LedgerGauge = () => number;
 
+/**
+ * ⭐ **接線成本＝一行**（owner 的第一個必要條件）。
+ * `Map` / `Set` 有 `size`、陣列有 `length` —— 幾乎每一個「會長大的東西」在這個
+ * repo 裡都是這兩種之一，所以呼叫端不必寫任何讀取函式，把容器本身交出來就好。
+ */
+export type LedgerContainer = { readonly size: number } | { readonly length: number };
+
+const containerSize = (c: LedgerContainer): number => {
+  const v = "size" in c ? c.size : c.length;
+  return typeof v === "number" && Number.isFinite(v) ? v : -1;
+};
+
+/** `WeakRef` 有就用（見 `bindScene` 的同一個理由）。 */
+function weakly<T extends object>(o: T): { deref(): T | undefined } {
+  const W = (globalThis as { WeakRef?: new (o: T) => { deref(): T | undefined } }).WeakRef;
+  return W ? new W(o) : { deref: () => o };
+}
+
 export class LifecycleLedger {
   /** ⭐ `WeakRef` ⇒ 登記表**結構上**留不住一個已經被丟掉的場景。 */
   private sceneRef: { deref(): LedgerScene | undefined } | null = null;
@@ -193,21 +211,54 @@ export class LifecycleLedger {
   private nextSampleSec = -Infinity;
   private roundNo = 0;
   private announced = false;
+  /** 因為超過 `MAX_KINDS` 而沒接上的量表數（⛔ 不可以靜靜消失，見 `gauge`）。 */
+  private droppedGauges = 0;
 
   /** 綁上要普查的場景（`createRoundFx` 在唯一的組裝點呼叫）。 */
   bindScene(scene: LedgerScene): void {
-    const W = (globalThis as { WeakRef?: new (o: object) => { deref(): LedgerScene | undefined } })
-      .WeakRef;
-    this.sceneRef = W ? new W(scene) : { deref: () => scene };
+    this.sceneRef = weakly(scene);
     this.reset();
   }
 
   /**
    * 註冊一格拉取式量表（池子大小、快取筆數…）。同名覆蓋 ⇒ 這張表的大小
    * = 類別數，⛔ 不隨物件數成長。
+   *
+   * ⚠️ 量表數**也有上限**（同 `MAX_KINDS`）：溢位的那些被丟掉但**數出來**，
+   * `report()` 會把數量印出來 —— ⛔ 「量表自己爆掉」不可以是一個安靜的 0。
    */
   gauge(kind: string, read: LedgerGauge): void {
+    if (!this.gauges.has(kind) && this.gauges.size >= MAX_KINDS) {
+      this.droppedGauges++;
+      return;
+    }
     this.gauges.set(kind, read);
+  }
+
+  /**
+   * ⭐ **一行接上一整組容器**（owner：「接線成本要低到會被用」）。
+   *
+   * 每一個 `Map` / `Set` / 陣列變成一格 `<prefix>:<name>` 的量表，⛔ 呼叫端不必寫
+   * 任何讀取函式、⛔ 不必記得在任何地方 `release()` —— 讀的是容器**當下**的大小，
+   * 所以「忘了從 Map 刪掉」這件事**本身**就是它要抓的東西。
+   *
+   * ⚠️ 容器**弱參照**（`WeakRef`）：一個已經被丟掉的 registry / 已經 dispose 的
+   * 場景快取，⛔ 不可以因為登記表拿著它而活下來 —— 那會讓這支偵測器**自己變成
+   * 那個洩漏**。物件走了之後那一格自動退場。
+   */
+  gaugeContainers(prefix: string, bag: Readonly<Record<string, LedgerContainer>>): void {
+    for (const [name, c] of Object.entries(bag)) {
+      const kind = `${prefix}:${name}`;
+      const ref = weakly(c);
+      this.gauge(kind, () => {
+        const live = ref.deref();
+        if (!live) {
+          this.gauges.delete(kind);
+          return 0;
+        }
+        return containerSize(live);
+      });
+    }
   }
 
   /** 丟掉歷史與碼表分類（⛔ 不解綁場景、⛔ 不動量表註冊）。 */
@@ -322,6 +373,7 @@ export class LifecycleLedger {
         ? "⭐ 沒有一類還在長（單調不減 且 增量達標 且 最後一段仍在增）"
         : `⛔ 還在長：${sus.map((s) => `${s.kind} ${s.first}→${s.last}(+${s.delta})`).join(" · ")}`,
       this.overdue().length === 0 ? "" : `⏱ 超齡：${this.overdue().slice(0, 8).join(" · ")}`,
+      this.droppedGauges === 0 ? "" : `⚠️ 量表溢位 ×${this.droppedGauges}（超過 ${MAX_KINDS} 格）`,
     ].filter((l) => l !== "");
     return ["[lifecycle] 逐回合 × 逐類別（live 數；最右一欄＝最老的至少活了幾秒）", head, ...body, ...tail].join("\n");
   }

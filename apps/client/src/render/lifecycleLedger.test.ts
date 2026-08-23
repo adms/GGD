@@ -8,12 +8,18 @@
  * ── 突變紀錄（實跑）──────────────────────────────────────────────────────
  * M1 `roundFxRegistry.createRoundFx` 拿掉 `lifecycleLedger.bindScene(scene)`
  *    → FAIL：「出貨的組裝點要綁場景」，`kinds` 是 `[]`。改回來 → 綠。
+ * M2 `EntityViewRegistry` 建構子拿掉 `gaugeContainers("view", …)`
+ *    → FAIL：`view:champions` 不在被指名的名單裡（那一格從帳本上整個消失）。
+ *    ⭐ 這是承重的那一條：接線在**出貨的建構子**裡，⛔ 不是測試自己註冊一格量表
+ *    （失敗形態⑤ —— 那樣量到的是一個虛構通道）。
  */
 import { describe, it, expect, beforeEach } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { LifecycleLedger, lifecycleLedger, type LedgerScene } from "./lifecycleLedger";
 import { createRoundFx } from "./roundFxRegistry";
+import { EntityViewRegistry, type EntityViewState } from "./EntityViewRegistry";
+import { AssetManager } from "./AssetManager";
 import { RoundVfxLifecycle } from "./roundVfxLifecycle";
 import { healthWarnings } from "../ui/PerfOverlay";
 import { perfBus } from "../perfBus";
@@ -78,5 +84,27 @@ describe("🔬 生命週期登記表", () => {
       "殘留累積 2 類（ps:leak）",
     ]);
     expect(healthWarnings({ ...perfBus, lifecycleGrowth: 0 })).toEqual([]);
+  });
+
+  it("⭐ 一行接線：登記了但**沒回收**的容器，帳本要指名它（⛔ 不是自製夾具）", () => {
+    const engine = new NullEngine();
+    const scene = new Scene(engine);
+    lifecycleLedger.reset();
+    // ⭐ 出貨的 registry —— 接線住在**它的建構子**裡，所以這條線量的是真的通道
+    const reg = new EntityViewRegistry(scene, new AssetManager(scene));
+    const pose = (e: EntityViewState) => ({ x: e.x, z: e.z, fx: e.fx, fz: e.fz });
+    const ents: EntityViewState[] = [];
+    let id = 0;
+    for (let r = 1; r <= 4; r++) {
+      // 每回合再進 10 個，而且**一個都沒有離場** ⇒ champions 只增不減＝「累積」
+      for (let i = 0; i < 10; i++)
+        ents.push({ id: ++id, kind: 0, seatId: 0, key: "champ.sela", teamId: 1,
+          x: 0, z: 0, fx: 1, fz: 0, alive: true });
+      reg.sync({ entities: ents, poseFor: pose, nowMs: r * 16, dtMs: 16, loadModels: false });
+      lifecycleLedger.markRound(r);
+    }
+    expect(lifecycleLedger.suspects().map((s) => s.kind)).toContain("view:champions");
+    scene.dispose();
+    engine.dispose();
   });
 });

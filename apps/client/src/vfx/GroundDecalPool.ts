@@ -25,6 +25,7 @@ import type { BaseTexture } from "@babylonjs/core/Materials/Textures/baseTexture
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { decalFade, type DecalSpec } from "./bloodPresets";
 import type { PresetSystemOptions } from "./vfxPresets";
+import { lifecycleLedger } from "../render/lifecycleLedger";
 
 /** Hard ceiling on concurrent ground decals (LRU-stolen beyond). */
 export const MAX_DECALS = 20;
@@ -55,7 +56,12 @@ export class GroundDecalPool {
   constructor(
     private readonly scene: Scene,
     private readonly opts: PresetSystemOptions & { maxDecals?: number } = {},
-  ) {}
+  ) {
+    // 🔬 GH#610 —— 一行接上生命週期登記表。⭐ 這一格是**對照組**:它有硬上限
+    //（`cap`）,所以長到頂就會平掉 ⇒ 警報第三條件（最後一段仍在增）會讓它熄燈。
+    // 一個「本來就該平掉的池子」持續被指名,代表警報條件寫錯了,⛔ 不是它洩漏。
+    lifecycleLedger.gaugeContainers("decal", { pool: this.decals, textures: this.textures });
+  }
 
   /** Splats currently visible (test/observability seam). */
   get activeCount(): number {

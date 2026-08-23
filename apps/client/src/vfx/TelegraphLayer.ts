@@ -61,6 +61,7 @@ import {
   type TelegraphTier,
 } from "./telegraphChannel";
 import type { TelegraphShape } from "./telegraphShape";
+import { lifecycleLedger } from "../render/lifecycleLedger";
 
 /** Corridor sits just under the ring (0.06) and over the cast scorch (0.035). */
 const CORRIDOR_Y = 0.052;
@@ -119,7 +120,12 @@ export class TelegraphLayer {
   constructor(
     private readonly scene: Scene,
     private readonly ctx: TelegraphLayerCtx,
-  ) {}
+  ) {
+    // 🔬 GH#610 —— 一行接上生命週期登記表。⚠️ 這正是 GH#262 那個池子：
+    //「每個 Scene 共用、以半徑為 key」的 free-list,實測 60 個不同半徑打完之後
+    // 連 dispose() 都還留著 72 mesh / 73 material。`quadPool` 只增不減就是那個形狀。
+    lifecycleLedger.gaugeContainers("telegraph", { live: this.live, quadPool: this.quadPool });
+  }
 
   /** Number of telegraphs currently on the floor (test/observability seam). */
   get activeCount(): number {

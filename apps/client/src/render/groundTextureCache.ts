@@ -59,6 +59,7 @@ import type { Scene } from "@babylonjs/core/scene";
 import { Texture } from "@babylonjs/core/Materials/Textures/texture";
 import { effectiveQuality } from "./RenderConfig";
 import { detailUvScale, groundTextureUrls, type GroundTextureSet } from "./groundMaterials";
+import { lifecycleLedger } from "./lifecycleLedger";
 
 /** Anisotropy for the tiling detail maps on desktop (mobile keeps the default). */
 export const GROUND_ANISOTROPY_DESKTOP = 8;
@@ -95,6 +96,10 @@ function cacheFor(scene: Scene): Map<string, Entry> {
   if (!m) {
     m = new Map();
     perScene.set(scene, m);
+    // 🔬 GH#610 —— 一行接上生命週期登記表。⭐ 它**看不見**這一格:貼圖跨回合
+    // 刻意留著（見檔頭），所以 `scene.textures` 的成長分不出「快取正常暖機」與
+    // 「每回合又新建一組」。快取的**筆數**分得出來:出貨 style 數封頂 ⇒ 會平掉。
+    lifecycleLedger.gaugeContainers("cache", { groundTex: m });
   }
   return m;
 }
