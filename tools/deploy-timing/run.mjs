@@ -63,7 +63,13 @@ function readLedger() {
   }
 }
 
-function appendStage(name, ms, code, extra = {}) {
+/**
+ * ⭐ **匯出的理由**（GH#621）：`tools/parallel-gates/ship.mjs` 也要記時,
+ * 而它第一版自己寫了一份 `deploy-timings.json` —— **同一份知識兩個住處、
+ * 兩個不相容的 schema**（第〇·四守則）。⇒ 它改成 import 這一支。
+ * ⚠️ 這個檔在被 import 時什麼都不做（`__lib__` 那一支），所以 import 是安全的。
+ */
+export function appendStage(name, ms, code, extra = {}) {
   const led = readLedger();
   const id = runId();
   let run = led.runs.find((r) => r.id === id);

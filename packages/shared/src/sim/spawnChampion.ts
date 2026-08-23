@@ -71,7 +71,19 @@ export function spawnChampion(world: SimWorld, args: SpawnChampionArgs): EntityI
       ? { abilityId: def.passiveAbility, rank: 1, cooldownRemainingTicks: 0 }
       : null,
     basicAttackCdTicks: 0,
-    unspentPoints: 0,
+    // ⛔⛔ **登場等級 > 1 就要一起發技能點**（GH#622）。
+    //
+    // ⚠️ 這一行在 2026-08-23 之前寫死 `0`，而那**碰巧是對的** —— 出生等級一直是 1，
+    // 而 LV1 的那一點就是上面 `Q: rank 1` 那一格（⛔ 不走 `unspentPoints`）。
+    // owner 2026-08-23「英雄登場初始等級設定為**6**」之後它就變成謊話：
+    // 英雄**帶著 LV6 的血量與屬性登場，卻只有出生的 Q 一點可用** ——
+    // 升到 6 級該有的 5 點從來沒發過。
+    //
+    // ⭐ 每級一點的規則只有一個住處：`progression.ts` 的 `grantXp`
+    //（每升一級 `ab.unspentPoints++`）。這裡逐字沿用它 —— ⛔ 不是抄一個 `- 1`
+    // 上來當第二個住處：`level` 是 1 就是 0 點，是 6 就是 5 點，
+    // 而那正是玩家從 LV1 打到 LV6 會拿到的數量。
+    unspentPoints: Math.max(0, (args.level ?? 1) - 1),
   });
   world.stats.set(id, {
     championId: args.championId,

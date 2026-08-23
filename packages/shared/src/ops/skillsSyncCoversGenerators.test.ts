@@ -74,6 +74,13 @@ const GENERATOR_NO_CHECK: Record<string, string> = {
   "voice-gen": "`index-lines.mjs` 索引的是**已經錄好的語音檔** —— MANIFEST 隨音檔增減而變,⛔ 不隨技能數值或說明變",
   "legendary-status": "一份**當時做到哪**的進度報告,⛔ 逐位元組比對對它不成立（它本來就該停在寫下的那一天）",
   "ttk-sim": "產物是**實驗報告**（`docs/_ttk-retune.md` / `_ttk-experiment-153.md`）—— 它記的是那一次掃描的結果,重跑本來就會不一樣",
+  "deploy-timing":
+    "⭐ 產物是**計時帳本**（`docs/_data/deploy-timings.json`）—— 它記的是「這一次跑了幾秒」，" +
+    "⛔ 逐位元組比對對它不成立（同一份程式碼重跑本來就會是不同的秒數）。" +
+    "它與 `ttk-sim` 同一類：**量測紀錄**，⛔ 不是從內容推導出來的產物。" +
+    "⚠️ 它真正該有的閘是「**不可以有第二份帳本**」，而那一條住 `shipGateScript.test.ts`" +
+    "（`ship.mjs` 必須 import 這一支的 `appendStage`，⛔ 不可以自己寫檔）——" +
+    "我第一版真的開了第二份同名不同義的，那條守衛就是為此而立。",
   "vfx-census": "⭐ 它**自己的檔頭**逐字寫著「⛔ 這不是新鮮度閘，⛔ 沒有 `--check`：它是一份會隨內容成長的普查」—— 理由已經被寫下並且可以被反駁",
   // ⚠️ ⛔ 這一列**不是**豁免,是一個**量到的洞** —— 留在這裡是為了它有名字,⛔ 不是為了它沒事。
   "hero-archetypes":
@@ -93,6 +100,11 @@ const EXEMPT: Record<string, string> = {
   "scenerycc0:check": "把 CC0 資產的 bbox 最低點推到 y=0 —— 讀 GLB 位元組，不讀技能",
   "map:check": "競技場**幾何**產生器 —— 讀地圖模板與圖論規則，不讀 abilities/vfx/級距",
   "budget:check": "模型多邊形**預算**閘 —— 它不是新鮮度閘（超標才紅，不是過期才紅）",
+  // ⭐ GH#621 —— `ship:check` 是**聚合指令自己**（它跑 content:build + skills:sync
+  // + skills:check + typecheck + 每一包 vitest）。把它放進 `skills:check` 會變成
+  // ⛔ **無窮遞迴**（skills:check → ship:check → skills:check）。
+  // 它自己的閘是 `shipGateScript.test.ts`（驗「每一包 vitest 都在裡面」等三個關係）。
+  "ship:check": "**出貨聚合指令本身** —— 它*跑* skills:check，放進去會遞迴；它自己的閘是 shipGateScript.test.ts",
 };
 
 /**

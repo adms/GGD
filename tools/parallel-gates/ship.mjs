@@ -30,14 +30,13 @@
  *   pnpm ship:check --only-sync # 只跑 ①
  */
 import { spawn } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname } from "node:path";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { cpus } from "node:os";
 import { packagesWithVitest } from "./packages.mjs";
+import { appendStage } from "../deploy-timing/run.mjs";
 
 const HERE = new URL(".", import.meta.url).pathname;
 const REPO = new URL("../../", import.meta.url).pathname;
-const LEDGER = `${REPO}docs/_data/deploy-timings.json`;
 
 const argv = process.argv.slice(2);
 const noSync = argv.includes("--no-sync");
@@ -55,9 +54,30 @@ const PARALLEL = [
   { name: "typecheck", cmd: ["pnpm", ["typecheck"]] },
   ...packagesWithVitest(REPO).map((r) => ({
     name: `vitest ${r}`,
-    cmd: ["npx", ["vitest", "run", "--root", r]],
+    // ⛔⛔ **分核預算,⛔ 不是「每一包都開 16 forks」。**
+    //
+    // ⚠️ 這是我這支腳本第一版的真缺陷（2026-08-23 當場量到）：
+    // 7 包 vitest 同時跑,每一包照自己 config 的 `maxForks: 16`
+    // ⇒ **112 個 fork 搶 N 顆核** ⇒ `mobWavesSave.test.ts` 從單獨跑的
+    // **885ms** 飄到 **5472ms** 而撞破 5 秒額度。
+    //
+    // ⛔ 那時候**最不該做的事是調高那一條的 timeout** —— 那會把「機器很忙」
+    // 永久靜音,而下一個真的變慢的東西就再也沒有人會發現。
+    // ⭐ 正解是讓並行段**自己知道它切了幾刀**：核數 ÷ 同時在跑的包數。
+    cmd: ["npx", ["vitest", "run", "--root", r, "--poolOptions.forks.maxForks", String(FORKS_PER_SUITE)]],
   })),
 ];
+
+/**
+ * 每一包 vitest 分到幾個 fork。⭐ 從**核數**與**同時在跑幾包**推導,
+ * ⛔ 不是抄各自 config 裡的 16（那個數字是「單獨跑這一包」時才對）。
+ */
+const SUITE_COUNT = packagesWithVitest(REPO).length;
+const SHIP_LIMIT = Number(process.env.GGD_SHIP_CONCURRENCY ?? Math.max(2, cpus().length - 2));
+const FORKS_PER_SUITE = Math.max(
+  2,
+  Math.floor(cpus().length / Math.max(1, Math.min(SHIP_LIMIT, SUITE_COUNT))),
+);
 
 const LOGDIR = process.env.GGD_SHIP_LOGDIR ?? "/private/tmp/ggd-ship";
 mkdirSync(LOGDIR, { recursive: true });
@@ -98,8 +118,10 @@ if (!noSync) {
 
 // ── ② 並行段 ───────────────────────────────────────────────────────────
 if (!onlySync) {
-  const limit = Number(process.env.GGD_SHIP_CONCURRENCY ?? Math.max(2, cpus().length - 2));
-  console.log(`⚡ 並行段 ${PARALLEL.length} 支 · 上限 ${limit} · ⛔ 不 fail-fast`);
+  const limit = SHIP_LIMIT;
+  console.log(
+    `⚡ 並行段 ${PARALLEL.length} 支 · 上限 ${limit} · 每包 ${FORKS_PER_SUITE} forks（${cpus().length} 核 ÷ ${SUITE_COUNT} 包）· ⛔ 不 fail-fast`,
+  );
   const queue = [...PARALLEL];
   const workers = Array.from({ length: Math.min(limit, queue.length) }, async () => {
     for (;;) {
@@ -114,21 +136,20 @@ if (!onlySync) {
 }
 
 // ── 帳本 ───────────────────────────────────────────────────────────────
+// ⭐ 寫進**同一份** `docs/_data/deploy-timings.json`,用 `tools/deploy-timing`
+//    的 `ggd-deploy-timings@1` schema —— ⛔ 不是自己再開一份。
+// ⚠️ 我第一版真的自己寫了一份同名不同義的帳本（第〇·四守則的反例：
+//    同一份知識兩個住處,之後各自漂）。
 const wall = (Date.now() - T0) / 1000;
 const serialMs = results.filter((r) => r.phase === "serial").reduce((s, r) => s + r.ms, 0);
 const parMs = results.filter((r) => r.phase === "parallel").reduce((s, r) => s + r.ms, 0);
-mkdirSync(dirname(LEDGER), { recursive: true });
-const prev = existsSync(LEDGER) ? JSON.parse(readFileSync(LEDGER, "utf8")) : { runs: [] };
-prev.runs = [
-  ...(prev.runs ?? []),
-  {
-    wallSec: Number(wall.toFixed(1)),
-    serialSec: Number((serialMs / 1000).toFixed(1)),
-    parallelCpuSec: Number((parMs / 1000).toFixed(1)),
-    steps: results.map((r) => ({ name: r.name, sec: Number((r.ms / 1000).toFixed(1)), code: r.code })),
-  },
-].slice(-60);
-writeFileSync(LEDGER, `${JSON.stringify(prev, null, 2)}\n`);
+for (const r of results) appendStage(`ship:${r.name}`, r.ms, r.code, { phase: r.phase });
+appendStage("ship:total", Math.round(wall * 1000), results.some((r) => r.code !== 0) ? 1 : 0, {
+  phase: "summary",
+  serialSec: Number((serialMs / 1000).toFixed(1)),
+  parallelCpuSec: Number((parMs / 1000).toFixed(1)),
+  forksPerSuite: FORKS_PER_SUITE,
+});
 
 const failed = results.filter((r) => r.code !== 0);
 const slowest = [...results].sort((a, b) => b.ms - a.ms).slice(0, 5);
@@ -137,7 +158,7 @@ console.log(
     (noSync ? "" : ` （其中全域鎖 ${(serialMs / 1000).toFixed(1)}s **不可分拆**）`) +
     `\n   並行段累計 CPU ${(parMs / 1000).toFixed(1)}s ⇒ 平行度 ${(parMs / 1000 / Math.max(0.001, wall - serialMs / 1000)).toFixed(1)}×` +
     `\n   最慢五支: ${slowest.map((r) => `${r.name} ${(r.ms / 1000).toFixed(1)}s`).join(" · ")}` +
-    `\n   ⭐ 時間帳本: docs/_data/deploy-timings.json`,
+    `\n   ⭐ 時間帳本: docs/_data/deploy-timings.json（與 `tools/deploy-timing` 同一份）`,
 );
 
 if (failed.length === 0) {

@@ -64,6 +64,31 @@ describe("pnpm ship:check", () => {
     expect(/序列段紅了就停/.test(code)).toBe(true);
   });
 
+  it("★ 時間帳本只有**一份** —— ⛔ 不是自己再開一份同名不同義的", () => {
+    // ⚠️ 我第一版真的自己寫了一份 `deploy-timings.json`，schema 與
+    // `tools/deploy-timing` 的 `ggd-deploy-timings@1` 不相容 ——
+    // 同一份知識兩個住處，之後各自漂（第〇·四守則的反例）。
+    expect(
+      /from "\.\.\/deploy-timing\/run\.mjs"/.test(code),
+      "ship.mjs 沒有用 tools/deploy-timing 的寫入函式 —— 那就是第二份帳本。",
+    ).toBe(true);
+    expect(
+      /writeFileSync\([^)]*deploy-timings/.test(code),
+      "ship.mjs 自己在寫帳本檔 —— 帳本只能有一個寫入者。",
+    ).toBe(false);
+  });
+
+  it("★ 並行段要**分核**，⛔ 不是每包都開滿", () => {
+    // 量到的：7 包 × 各自 maxForks 16 = 112 個 fork 搶 18 核
+    // ⇒ mobWavesSave 從 885ms 飄到 5472ms 而撞破 5 秒額度。
+    // ⛔ 那時候最不該做的是調高那一條的 timeout（把「機器很忙」永久靜音）。
+    expect(/FORKS_PER_SUITE/.test(code)).toBe(true);
+    expect(
+      /--poolOptions\.forks\.maxForks/.test(code),
+      "沒有把分到的核數交給 vitest —— 那七包會各自開滿，timeout 會開始飄。",
+    ).toBe(true);
+  });
+
   it("`pnpm ship:check` 這個入口真的存在", () => {
     const pkg = JSON.parse(readFileSync(join(REPO, "package.json"), "utf8")) as {
       scripts?: Record<string, string>;
