@@ -124,7 +124,8 @@
     "shapes:build": "python3 tools/skill-templates/scan_shapes.py --out docs/editor-contract/ggd-skill-shapes.md",
     "shapes:check": "python3 tools/skill-templates/scan_shapes.py --check --out docs/editor-contract/ggd-skill-shapes.md",
     "shapes:selftest": "python3 tools/skill-templates/scan_shapes.py --selftest",
-    "sync:plan": "node tools/parallel-gates/syncPlan.mjs"
+    "sync:plan": "node tools/parallel-gates/syncPlan.mjs",
+    "sync:since": "node tools/parallel-gates/sync.mjs --since"
   },
   "devDependencies": {
     "@eslint/js": "^10",
