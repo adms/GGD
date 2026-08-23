@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_3ffb7b0be2a2",
+    "contentVersion": "cv_e6a687452570",
     "collections": {
       "champions": {
         "hash": "8be15e015cfb",
         "count": 71
       },
       "abilities": {
-        "hash": "28d9fc00fba1",
+        "hash": "ef3b2c9955d7",
         "count": 421
       },
       "items": {
@@ -42,8 +42,8 @@
         "count": 7
       },
       "config": {
-        "hash": "ab79e3fa376f",
-        "count": 85
+        "hash": "772eba110a1b",
+        "count": 86
       },
       "models": {
         "hash": "8af2c45f476f",
@@ -89,7 +89,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "51cdba86",
+    "fingerprint": "b8a9739b",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -1196,8 +1196,8 @@
       {
         "key": "effect.spawn-model-fx@1",
         "plan": "#551 —— owner 2026-08-22「w3x jass + 球體 + 蝗蟲群單位 3d model 特效(ex. Saber 約束勝利之劍的翻滾光束就是)」",
-        "state": "partial",
-        "caveat": "⭐ **玩法那一半已經全部落地**：路徑求值、`onTouch` 的逐段取樣（穿透式、預設一人一次）、`onArrive` 的落點結算，全部在 sim 裡，而且班表推進**既有的** `SimWorld.delayed`。⛔ **還缺兩件，兩件都不在 `packages/shared` 裡**：① 客戶端要真的把 `modelFxSpawn` 這個事件畫成一具會走、會自轉的模型（`spinDegPerSec` / `scale` / `modelKey` 是**純視覺**參數，sim 一個字都不讀）；② 那個事件要進 `apps/game-server/src/net/eventFanout.ts` 的白名單 —— ⚠️ 白名單是**靜默**的，少一行就是「做完、測過、出貨，遊戲裡不存在」。⇒ 在那兩件到齊之前，用這個 kind 寫出來的技能**傷害會發生、畫面上什麼都沒有**。",
+        "state": "supported",
+        "caveat": "⭐ **兩半都到齊了（2026-08-23，GH#606）**：玩法那一半（路徑求值、`onTouch` 的逐段取樣、`onArrive` 的落點結算，班表推進**既有的** `SimWorld.delayed`）在 sim 裡，視覺那一半在 `apps/client/src/render/modelFxRig.ts`，事件也在 `eventFanout` 白名單上。⚠️ **在 2026-08-23 之前這一格的 caveat 是對的而我們自己不知道**：sim 送 `{ caster, modelKey, instances, … }`,客戶端讀 `ev.data.spec` —— 零個寫入端 ⇒ 消費端第一行就 `break`,整族在畫面上一具模型都沒出現過。⭐ 根治不是改欄位名（下一個欄位照樣會歪）,是**兩邊 import 同一個型別** `ModelFxSpawnEvent`（住 `sim/effects/spawnModelFx.ts`）。⛔ **落點特效不由客戶端排**:寫在技能 JSON 的 `onArrive: [{ kind: \"spawnVfx\" }]`,它走 sim 的延遲班表 ⇒ 特效與傷害同 tick 同點。客戶端再排一次會差幾幀。⚠️ 模型離地高度是 `model@1.fxSpawnHeight`（缺席 = 貼地),⛔ 不是技能的欄位 —— 「這根東西該飛多高」是網格自己的性質,同 `fxLongAxis`。",
         "evidence": "packages/shared/src/sim/effects/spawnModelFx.ts —— ⭐ 等分角度讀的是 `pull.ts` 的`ringPoints` / `RING_UNIT_ROTATION`（單位旋轉常數表），因為 `sim/**` 禁止三角函式（`sim/purity.test.ts`）。⭐ `onTouch` 與 `onArrive` 是**兩串**佇列而不是一串：`delayedSystem` 的 `struck` 過濾同時套用在 `effects` 與 `finalEffects` 上，掛成同一串會讓「被光束掃到的人不會被落點爆炸打到」。",
         "nearestExisting": "⚠️ `spawnVfx` 是**定點**演出（不動、不打人）；`spawnProjectile` 是會被碰撞擋下來、**命中即消失**的實體。原作那一族兩者都不是：它是一隻帶 Locust 的 dummy 單位，每 tick 硬推固定距離、穿過身體不消失。"
       },
@@ -3475,12 +3475,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "51cdba86",
+    "engineFingerprint": "b8a9739b",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 51cdba86 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 b8a9739b —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -4220,5 +4220,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "d257af210f81"
+  "profileDigest": "d245e18d151a"
 }

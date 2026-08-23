@@ -1,6 +1,6 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "51cdba86",
+  "capabilityFingerprint": "b8a9739b",
   "counts": {
     "effectKinds": 46,
     "hookEvents": 33,
@@ -967,8 +967,8 @@
     {
       "key": "effect.spawn-model-fx@1",
       "plan": "#551 —— owner 2026-08-22「w3x jass + 球體 + 蝗蟲群單位 3d model 特效(ex. Saber 約束勝利之劍的翻滾光束就是)」",
-      "state": "partial",
-      "caveat": "⭐ **玩法那一半已經全部落地**：路徑求值、`onTouch` 的逐段取樣（穿透式、預設一人一次）、`onArrive` 的落點結算，全部在 sim 裡，而且班表推進**既有的** `SimWorld.delayed`。⛔ **還缺兩件，兩件都不在 `packages/shared` 裡**：① 客戶端要真的把 `modelFxSpawn` 這個事件畫成一具會走、會自轉的模型（`spinDegPerSec` / `scale` / `modelKey` 是**純視覺**參數，sim 一個字都不讀）；② 那個事件要進 `apps/game-server/src/net/eventFanout.ts` 的白名單 —— ⚠️ 白名單是**靜默**的，少一行就是「做完、測過、出貨，遊戲裡不存在」。⇒ 在那兩件到齊之前，用這個 kind 寫出來的技能**傷害會發生、畫面上什麼都沒有**。",
+      "state": "supported",
+      "caveat": "⭐ **兩半都到齊了（2026-08-23，GH#606）**：玩法那一半（路徑求值、`onTouch` 的逐段取樣、`onArrive` 的落點結算，班表推進**既有的** `SimWorld.delayed`）在 sim 裡，視覺那一半在 `apps/client/src/render/modelFxRig.ts`，事件也在 `eventFanout` 白名單上。⚠️ **在 2026-08-23 之前這一格的 caveat 是對的而我們自己不知道**：sim 送 `{ caster, modelKey, instances, … }`,客戶端讀 `ev.data.spec` —— 零個寫入端 ⇒ 消費端第一行就 `break`,整族在畫面上一具模型都沒出現過。⭐ 根治不是改欄位名（下一個欄位照樣會歪）,是**兩邊 import 同一個型別** `ModelFxSpawnEvent`（住 `sim/effects/spawnModelFx.ts`）。⛔ **落點特效不由客戶端排**:寫在技能 JSON 的 `onArrive: [{ kind: \"spawnVfx\" }]`,它走 sim 的延遲班表 ⇒ 特效與傷害同 tick 同點。客戶端再排一次會差幾幀。⚠️ 模型離地高度是 `model@1.fxSpawnHeight`（缺席 = 貼地),⛔ 不是技能的欄位 —— 「這根東西該飛多高」是網格自己的性質,同 `fxLongAxis`。",
       "evidence": "packages/shared/src/sim/effects/spawnModelFx.ts —— ⭐ 等分角度讀的是 `pull.ts` 的`ringPoints` / `RING_UNIT_ROTATION`（單位旋轉常數表），因為 `sim/**` 禁止三角函式（`sim/purity.test.ts`）。⭐ `onTouch` 與 `onArrive` 是**兩串**佇列而不是一串：`delayedSystem` 的 `struck` 過濾同時套用在 `effects` 與 `finalEffects` 上，掛成同一串會讓「被光束掃到的人不會被落點爆炸打到」。",
       "nearestExisting": "⚠️ `spawnVfx` 是**定點**演出（不動、不打人）；`spawnProjectile` 是會被碰撞擋下來、**命中即消失**的實體。原作那一族兩者都不是：它是一隻帶 Locust 的 dummy 單位，每 tick 硬推固定距離、穿過身體不消失。"
     },

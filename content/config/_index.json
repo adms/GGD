@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "ab79e3fa376f",
+  "hash": "772eba110a1b",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -47,8 +47,8 @@
     {
       "id": "audio-map",
       "path": "config/audio-map.json",
-      "hash": "fa8e7db82985",
-      "size": 44180
+      "hash": "7c36e7b8548d",
+      "size": 44208
     },
     {
       "id": "audio-mix",
@@ -155,14 +155,14 @@
     {
       "id": "cooldown-rules",
       "path": "config/cooldown-rules.json",
-      "hash": "ccf51245c066",
-      "size": 1351
+      "hash": "fc0a73ab9351",
+      "size": 1531
     },
     {
       "id": "cooldown-tiers",
       "path": "config/cooldown-tiers.json",
-      "hash": "efbff5761e8a",
-      "size": 1556
+      "hash": "fb196faad125",
+      "size": 2035
     },
     {
       "id": "crit",
@@ -431,8 +431,8 @@
     {
       "id": "ui-cues",
       "path": "config/ui-cues.json",
-      "hash": "c4cc81ffa104",
-      "size": 1579
+      "hash": "0c8c8a6e7eae",
+      "size": 2740
     },
     {
       "id": "ui-lexicon",
@@ -467,8 +467,8 @@
     {
       "id": "vfx-families",
       "path": "config/vfx-families.json",
-      "hash": "16e3c287d0aa",
-      "size": 37071
+      "hash": "142be3d9c212",
+      "size": 37169
     },
     {
       "id": "victory-fx",
@@ -505,6 +505,12 @@
       "path": "config/weakness.json",
       "hash": "0b3229cb05e5",
       "size": 560
+    },
+    {
+      "id": "world-cues",
+      "path": "config/world-cues.json",
+      "hash": "271b22195446",
+      "size": 1567
     },
     {
       "id": "wounds",
