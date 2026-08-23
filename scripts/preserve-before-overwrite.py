@@ -82,7 +82,7 @@ def preserve(p: Path, why: str, stamp: str, actor: str) -> str:
 
 def targets(tool: str, ti: dict, cwd: Path) -> list[Path]:
     out: list[Path] = []
-    if tool == "Write":
+    if tool in ("Write", "Edit"):
         fp = ti.get("file_path")
         if fp:
             out.append(Path(fp))
@@ -99,6 +99,32 @@ def targets(tool: str, ti: dict, cwd: Path) -> list[Path]:
     return out
 
 
+# ── 🚫 genguard —— 產生器的產物不准手改（owner 2026-08-24:「你已經犯過**數十次**
+#    一樣的錯,請你一定要**寫成script擋住先檢查**,並且寫到開發守則」）─────────
+#
+# 錯的形狀:直接改產生器的產物 ⇒ 下一次 skills:sync 打回來,而那個「又紅了」
+# 看起來像**新的**錯（2026-08-23 一晚在 godie-e002.r 上中兩次、49 檔一次）。
+#
+# ⭐ 擁有者表從 `tools/parallel-gates/sync-io.json` 的 writes **推導**（量出來的,
+#    ⛔ 不是手寫）。⚠️ 這一段與備份那一半哲學不同:備份**永遠不擋**（擋人的備份
+#    hook 會被關掉）,genguard **要擋** —— 因為「改產物」沒有任何合法情境:
+#    產生器自己寫檔走 python/node 的檔案 API,⛔ 不經過 Write/Edit/shell 重導。
+#    逃生口:GGD_GENGUARD_OFF=1（用過要在 commit 訊息裡說為什麼）。
+
+def _generator_owner(p: Path) -> str | None:
+    try:
+        io_path = REPO / "tools/parallel-gates/sync-io.json"
+        data = json.loads(io_path.read_text(encoding="utf-8"))
+        rel = str(p.resolve()).replace(str(REPO) + "/", "")
+        for step in data.get("steps", []):
+            for w in step.get("writes", []):
+                if rel == w or (w.endswith("/") and rel.startswith(w)):
+                    return step.get("name")
+    except Exception:
+        return None  # 表讀不到 ⇒ 不擋(⛔ hook 自身故障不可以癱瘓所有編輯)
+    return None
+
+
 def main() -> int:
     try:
         ev = json.load(sys.stdin)
@@ -107,6 +133,20 @@ def main() -> int:
     tool = ev.get("tool_name", "")
     ti = ev.get("tool_input") or {}
     cwd = Path(ev.get("cwd") or REPO)
+    # 🚫 genguard:只攔 Write/Edit(手改)與 Bash 重導 —— 產生器不走這些路
+    import os as _os
+    if _os.environ.get("GGD_GENGUARD_OFF") != "1":
+        for p in targets(tool, ti, cwd):
+            owner = _generator_owner(p)
+            if owner:
+                print(
+                    f"🚫 genguard:{p} 是產生器 **{owner}** 的產物 —— 手改會在下一次 "
+                    f"skills:sync 被打回來(2026-08-23 一晚中三次的錯)。\n"
+                    f"   ⇒ 改它的**來源**(tools/ 或上游 content),然後跑 pnpm {owner.replace(':check',':build')} 重生成。\n"
+                    f"   真的要改產物(極罕見):GGD_GENGUARD_OFF=1,並在 commit 訊息裡說為什麼。",
+                    file=sys.stderr,
+                )
+                return 2
     # ⭐ 命名慣例 `{用途}_temp_{時間戳}`（owner 2026-08-20）——
     # 清理 docs/ 的時候一眼就看得出「這是暫存的，過時了可以進 legacy」。
     stamp = "overwrite_temp_" + time.strftime("%Y%m%d-%H%M%S")
