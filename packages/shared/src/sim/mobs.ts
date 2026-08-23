@@ -645,6 +645,11 @@ export interface MobKingRules {
   enabled: boolean;
   /** 六個槽全部發到第幾階。0 = 只留內建的天生技。 */
   learnRank: number;
+  /**
+   * ⭐ 學到第幾階怎麼決定（owner 2026-08-23:「自己原本的技能都要**學好學滿**」）。
+   * ABSENT ⇒ {@link DEFAULT_KING_LEARN_RANK_MODE}。
+   */
+  learnRankMode?: MobKingLearnRankMode;
   /** 內建技的文件 id（佔天生技槽）。`""` = 沒有內建技。 */
   innateAbilityId: string;
   /** 內建技的施法前生命門檻，0..1。 */
@@ -655,7 +660,37 @@ export interface MobKingRules {
   attackSpeedFloor: number;
   /** 索敵偏好 —— `"players"` = 有真人英雄時只打真人。 */
   targetPreference: "players" | "nearest";
+  /**
+   * ⭐ 「**根據情況放（最近的敵人單體或多人範圍）**」（owner 2026-08-23）的總開關。
+   * ABSENT ⇒ {@link DEFAULT_KING_SITUATIONAL_AIMING}。
+   * false ⇒ 逐位元回到這一格出現之前：每一支都瞄索敵掃描挑出來的那一個。
+   */
+  situationalAiming?: boolean;
+  /**
+   * 範圍技要**打得到幾個人**才值得挪落點。ABSENT ⇒
+   * {@link DEFAULT_KING_AREA_MIN_TARGETS}（owner 的「**多人**」＝ 2）。
+   */
+  areaMinTargets?: number;
 }
+
+/**
+ * 王的六個槽學到第幾階。
+ *
+ * · `"max"`（出貨）—— 每一支各學到**它自己的** `maxRank`。owner 2026-08-23
+ *   「至少殭屍王角色**自己原本的技能都要學好學滿、放好放滿**」。
+ * · `"fixed"` —— 照 `learnRank` 那個數字（＝ 這一格出現之前的行為，一鍵 rollback）。
+ *
+ * ⚠️ 兩種模式下 `learnRank: 0` 都仍然是「**只留內建技**」—— 那個出口寫在後台的
+ * 說明裡，⛔ 不可以被新的預設值靜默拿掉。
+ */
+export type MobKingLearnRankMode = "max" | "fixed";
+
+/** {@link MobKingRules.learnRankMode} 缺席時的答案。 */
+export const DEFAULT_KING_LEARN_RANK_MODE: MobKingLearnRankMode = "max";
+/** {@link MobKingRules.situationalAiming} 缺席時的答案。 */
+export const DEFAULT_KING_SITUATIONAL_AIMING = true;
+/** {@link MobKingRules.areaMinTargets} 缺席時的答案（owner 的「多人」）。 */
+export const DEFAULT_KING_AREA_MIN_TARGETS = 2;
 
 /** 長血條畫在畫面哪裡 —— see `zMobWavesConfig.boss.healthBarAnchor`. */
 export type BossHealthBarAnchor = "top" | "bottom";
@@ -2807,10 +2842,25 @@ export function installKingKit(world: SimWorld, id: EntityId, boss: MobBossRules
   // 技能，這一行不必知道是誰。
   const def = Champions.tryGet(championId as ChampionId);
   if (!def) return;
-  const rank = Math.max(0, Math.round(king.learnRank));
+  // ⭐ 「自己原本的技能都要**學好學滿**」（owner 2026-08-23）——
+  // `learnRankMode: "max"`（出貨）⇒ 每一支各學到**它自己的** `maxRank`。
+  //
+  // ⛔ 為什麼不能是一個共用的數字：`maxRank` 逐支不同（1..6），所以一個寫死的
+  // 階數對一半的技能是「沒學滿」，對另一半是**陣列越界** —— `castAbility` 讀
+  // `def.cooldown[rank-1]`，越界得到 `undefined`，冷卻算出 NaN，而 `NaN > 0`
+  // 是 false ⇒ 那一支從此每個 tick 都放得出來，⛔ 而且沒有任何東西會紅。
+  // ⇒ 兩種模式都夾在該支自己的 `maxRank` 以內。
+  const authored = Math.max(0, Math.round(king.learnRank));
+  const mode = king.learnRankMode ?? DEFAULT_KING_LEARN_RANK_MODE;
+  const rankOf = (abilityId: string): number => {
+    // 0 = 「只留內建技」。⭐ 兩種模式都保住這個出口（後台的說明寫著它）。
+    if (authored <= 0) return 0;
+    const maxRank = Abilities.tryGet(abilityId as AbilityId)?.maxRank ?? authored;
+    return mode === "fixed" ? Math.min(authored, maxRank) : maxRank;
+  };
   const slot = (abilityId: string): AbilityInstance => ({
     abilityId: abilityId as AbilityId,
-    rank,
+    rank: rankOf(abilityId),
     cooldownRemainingTicks: 0,
   });
   world.abilities.set(id, {

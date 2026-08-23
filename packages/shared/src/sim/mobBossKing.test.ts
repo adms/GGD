@@ -26,7 +26,9 @@ import { Abilities, Augments, Champions, Items, LootTables, Projectiles } from "
 import { spawnChampion } from "./spawnChampion";
 import { asSeatId, asTeamId, type ChampionId, type EntityId, type SeatId } from "../ids";
 import { mobRulesFromConfig, summonMobBoss, type MobRules, type MobWavesConfigLike } from "./mobs";
-import { beginCombatMobs } from "./systems/MobSystem";
+import { beginCombatMobs, kingCastTarget } from "./systems/MobSystem";
+import { resolveAbilityRadius, resolveAbilityRange } from "./abilities/abilitySystem";
+import type { AbilityDef } from "./content/defs";
 import { TICK_HZ } from "../constants";
 
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
@@ -180,5 +182,97 @@ describe("殭屍王 [leap吸血] + 自動施法 (GH#577 / GH#602)", () => {
     const g = kingField();
     g.w.step(new Map());
     expect(g.w.mob.get(g.boss)!.target).toBe(g.near);
+  });
+
+  /**
+   * ⭐ owner 2026-08-23（逐字）：
+   * > 「**QWEREX都要學起來根據情況放**（**最近的敵人單體或多人範圍**），
+   * >  至少殭屍王角色**自己原本的技能都要學好學滿、放好放滿**，
+   * >  額外追加 leap吸血 是給殭屍王一點額外優勢**不會單方面被打太無聊**而已」
+   *
+   * ⛔ 一個數字都沒有被斷言（第二守則）：階數從**那支技能自己的** `maxRank` 讀，
+   * 幾何從**出貨的**級距表經 `resolveAbilityRange` / `resolveAbilityRadius` 算 ——
+   * owner 改級距表、換一張臉、調 `combatEnv.abilityRange`，這兩條都不必動。
+   */
+  it("⭐ 學好學滿：每一支都學到**它自己的**最高階，⛔ 不是一個共用的數字", () => {
+    cover("mob-king-learn-max-rank");
+    const f = kingField();
+    const ab = f.w.abilities.get(f.boss)!;
+    const learned = [ab.slots.Q, ab.slots.W, ab.slots.E, ab.slots.R, ab.exSlot].filter(
+      (s): s is NonNullable<typeof s> => s != null,
+    );
+    expect(learned.length, "王一個槽都沒有 —— 這條失去對象").toBeGreaterThan(0);
+    let sawMultiRank = false;
+    for (const inst of learned) {
+      const def = Abilities.get(inst.abilityId);
+      expect(inst.rank, `${inst.abilityId} 沒有學滿`).toBe(def.maxRank);
+      if (def.maxRank > 1) sawMultiRank = true;
+    }
+    // 對照組：這張臉每一支都只有 1 階的話，「學滿」與舊的「一律第 1 階」逐位元相同,
+    // 上面那條對壞掉的實作也會過（失敗形態④）。
+    expect(sawMultiRank, "這張臉的技能全部只有 1 階 —— 測不出「學滿」").toBe(true);
+  });
+
+  it("⭐ 根據情況放：範圍技落在**打得到最多人**的那一點，單體技照樣打最近的那一個", () => {
+    cover("mob-king-situational-aim");
+    const f = kingField();
+    const kingRules = f.rules.boss!.king!;
+    const ab = f.w.abilities.get(f.boss)!;
+    // 標本是**王自己學到的那幾支**（⛔ 不是手搭的 def，也⛔ 不是寫死的技能 id）：
+    // 範圍 = 有打擊半徑而且射程放得到那一團；單體 = 沒有打擊半徑的那一支。
+    const defs = [ab.slots.Q, ab.slots.W, ab.slots.E, ab.slots.R]
+      .filter((s): s is NonNullable<typeof s> => s != null)
+      .map((s) => Abilities.get(s.abilityId));
+    const areaDef = defs
+      .filter((d) => (d.radius ?? 0) > 0 && d.targetsEnemies !== false && d.castType !== "self")
+      .filter((d) => resolveAbilityRange(f.w, d.range) > resolveAbilityRadius(f.w, d.radius!) + 1)
+      .sort((a, b) => resolveAbilityRange(f.w, b.range) - resolveAbilityRange(f.w, a.range))[0];
+    const singleDef = defs.filter((d) => (d.radius ?? 0) <= 0)[0];
+    expect(areaDef, "這張臉沒有一支放得到遠處的範圍技 —— 這條失去對象").toBeDefined();
+    expect(singleDef, "這張臉沒有一支單體技 —— 對照組是空的").toBeDefined();
+
+    const R = resolveAbilityRadius(f.w, (areaDef as AbilityDef).radius!);
+    const RANGE = resolveAbilityRange(f.w, (areaDef as AbilityDef).range);
+    // 貼臉那位在一邊，三個人擠成一團在**相反**方向而且遠一點 ——
+    // 任何「一律打最近的」實作在這裡都會挑到貼臉那位。
+    const nearPos = { x: ZC.x + RANGE * 0.1, z: ZC.z };
+    const clusterPos = { x: ZC.x - RANGE * 0.9, z: ZC.z };
+    f.w.transform.get(f.near)!.pos = { ...nearPos };
+    const cluster = [f.weak];
+    for (const seat of [2, 3]) {
+      cluster.push(
+        spawnChampion(f.w, {
+          championId: "thorne" as ChampionId,
+          seatId: asSeatId(seat),
+          teamId: asTeamId(0),
+          pos: { x: clusterPos.x, z: clusterPos.z + (seat - 2.5) * R * 0.3 },
+          zone: 0,
+        }),
+      );
+    }
+    f.w.transform.get(f.weak)!.pos = { ...clusterPos };
+    f.w.step(new Map()); // 讓寬相位格重建，否則圓形查詢問到的是搬家以前的位置
+
+    const areaTarget = kingCastTarget(f.w, f.boss, areaDef as AbilityDef, f.near, kingRules);
+    expect(areaTarget?.type, "範圍技沒有拿到一個落點").toBe("point");
+    const p = (areaTarget as { type: "point"; point: { x: number; z: number } }).point;
+    const cp = f.w.transform.get(f.weak)!.pos;
+    expect(
+      Math.hypot(p.x - cp.x, p.z - cp.z),
+      "範圍技的落點不在那一團上",
+    ).toBeLessThan(R * 0.5);
+    const np = f.w.transform.get(f.near)!.pos;
+    expect(
+      Math.hypot(p.x - np.x, p.z - np.z),
+      "範圍技還是落在貼臉那位身上 —— 「多人範圍」沒有生效",
+    ).toBeGreaterThan(R);
+
+    // 對照組 ——「單體」那一半：沒有打擊半徑的技能仍然打**最近的**那一個。
+    const single = kingCastTarget(f.w, f.boss, singleDef as AbilityDef, f.near, kingRules);
+    const sp =
+      single?.type === "entity"
+        ? f.w.transform.get(single.entityId)!.pos
+        : (single as { type: "point"; point: { x: number; z: number } }).point;
+    expect(Math.hypot(sp.x - np.x, sp.z - np.z), "單體技沒有打最近的那一個").toBeLessThan(0.01);
   });
 });

@@ -167,12 +167,16 @@ const EVERY_FIELD: readonly MobWavesFieldKey[] = [
   "boss.settlementTitle",
   "boss.king.enabled",
   "boss.king.learnRank",
+  "boss.king.learnRankMode",
   "boss.king.innateAbilityId",
   "boss.king.innateCastHpPct",
   "boss.king.maxMana",
   "boss.king.manaRegenPerSec",
   "boss.king.attackSpeedFloor",
   "boss.king.targetPreference",
+  // ⭐ owner 2026-08-23「QWEREX都要學起來根據情況放（最近的敵人單體或多人範圍）」
+  "boss.king.situationalAiming",
+  "boss.king.areaMinTargets",
   // 從英雄推導 (GH#206) — 生命與能力屬性 = 該設定英雄的 N 倍, +M, 移速 ×K, 等級 99
   "boss.heroHpMult",
   "boss.heroDamageMult",
@@ -400,15 +404,18 @@ describe("每一個欄位 are reachable and labelled", () => {
     // A distinct, legal value per field, so an omitted one cannot hide behind a
     // shared default. This is the 「算出來但沒送到端點」 guard.
     const edits: Record<MobWavesFieldKey, string> = {
-      // ⭐ GH#577 / GH#602 —— 殭屍王「會打架」的八格。
+      // ⭐ GH#577 / GH#602 —— 殭屍王「會打架」那一整塊（含 2026-08-23 的學好學滿／根據情況放）。
       "boss.king.enabled": "0",
       "boss.king.learnRank": "3",
+      "boss.king.learnRankMode": "fixed",
       "boss.king.innateAbilityId": "godie-zombieking.passive",
       "boss.king.innateCastHpPct": "0.35",
       "boss.king.maxMana": "12345",
       "boss.king.manaRegenPerSec": "777",
       "boss.king.attackSpeedFloor": "6",
       "boss.king.targetPreference": "nearest",
+      "boss.king.situationalAiming": "0",
+      "boss.king.areaMinTargets": "4",
       fromRound: "2",
       firstWaveSec: "4",
       waveIntervalSec: "5",

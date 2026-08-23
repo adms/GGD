@@ -325,12 +325,15 @@
       "king": {
         "enabled": true,
         "learnRank": 1,
+        "learnRankMode": "max",
         "innateAbilityId": "godie-zombieking.passive",
         "innateCastHpPct": 0.2,
         "maxMana": 10000,
         "manaRegenPerSec": 1000,
         "attackSpeedFloor": 4,
-        "targetPreference": "players"
+        "targetPreference": "players",
+        "situationalAiming": true,
+        "areaMinTargets": 2
       },
       "countsAsChampion": true
     },

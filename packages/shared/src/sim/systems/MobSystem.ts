@@ -68,6 +68,8 @@ import { fireRingBurnMobs } from "../fireRing";
 import {
   type MobRules,
   type MobKingRules,
+  DEFAULT_KING_AREA_MIN_TARGETS,
+  DEFAULT_KING_SITUATIONAL_AIMING,
   MONSTER_TEAM,
   spawnMob,
   summonMobBoss,
@@ -80,9 +82,10 @@ import { bossSummonsAt, splitBossBounty, type BossDamageEntry, type BossBountySh
 import { standstillBlocks } from "../combatFeel";
 import { forcedTargetOf, isMobTargetable } from "../targeting";
 // ⭐ GH#577 / GH#602 —— 王的自動施法走**出貨的**施法入口，⛔ 不是第二條路徑。
-import { castAbility } from "../abilities/abilitySystem";
+import { castAbility, groundAoeTargets, resolveAbilityRange } from "../abilities/abilitySystem";
 import { abilityInstanceFor } from "../abilities/innateActive";
 import { Abilities } from "../content/registry";
+import type { AbilityDef } from "../content/defs";
 import { INNATE_SLOT, type CastableSlot, type CastTarget } from "../intents";
 import type { SeatId } from "../../ids";
 
@@ -655,6 +658,13 @@ export function endCombatMobs(world: SimWorld): void {
 // >  **無上限施法距離**跳躍**[leap]** 到**全場血量最少的英雄**旁邊咬一口⋯**冷卻30秒**」
 // > 「殭屍王**回魔速度是每秒1000點**，基本上不缺魔力」
 //
+// ⭐ 同日補的裁決（逐字）——「額外」與「本體」是**兩件事，並存**：
+// > 「**QWEREX都要學起來根據情況放**（**最近的敵人單體或多人範圍**），
+// >  至少殭屍王角色**自己原本的技能都要學好學滿、放好放滿**，
+// >  額外追加 leap吸血 是給殭屍王一點額外優勢**不會單方面被打太無聊**而已」
+// ⇒ 「學好學滿」＝ `learnRankMode: "max"`（`sim/mobs.ts::installKingKit`）；
+//    「根據情況放」＝ `kingCastTarget` / `kingAimAnchor`（本檔下方）。
+//
 // ⭐ 這一段是**AI**，⛔ 不是技能。[leap吸血] 的每一個效果（黑幕、拋物線、真傷、
 // 吸血、追加回復、冷卻）都住 `content/abilities/godie-zombieking.passive.json`，
 // 走的是**出貨的** `castAbility` → `runEffects` → `leapSystem`，一行技能專用的
@@ -784,25 +794,114 @@ function kingBrain(
   // 固定順序 R → EX → E → W → Q（大招優先），⛔ 不抽籤：sim 的每一格都必須是
   // 決定性的（`sim/purity.test.ts`），而「王這一場放不放大招」不該取決於 rng。
   if (meleeTarget === -1) return;
-  const tt = world.transform.get(meleeTarget);
-  if (!tt) return;
+  if (!world.transform.get(meleeTarget)) return;
   for (const slot of KING_CAST_ORDER) {
     const inst = abilityInstanceFor(ab, slot);
     if (!inst || inst.rank <= 0 || inst.cooldownRemainingTicks > 0) continue;
     const def = Abilities.tryGet(inst.abilityId);
     if (!def) continue;
-    // 目標形狀由**技能卡**決定，⛔ 不是這裡挑：指定技給實體，其餘給一個點
-    // （地面技會自己夾到射程內，方向技/衝刺技自己正規化成方向）。
-    const target: CastTarget =
-      def.castType === "targeted"
-        ? { type: "entity", entityId: meleeTarget }
-        : def.castType === "self"
-          ? { type: "entity", entityId: id }
-          : { type: "point", point: { x: tt.pos.x, z: tt.pos.z } };
+    const target = kingCastTarget(world, id, def, meleeTarget, king);
+    if (target === null) continue;
     // ⛔ `allowApproach: false` —— 接近指令會接管 `nav`，而王的走位歸 MobSystem
     // 的追擊管（`nav.attackTarget`）。兩個東西同時寫同一個通道 = 王原地抖動。
     if (castAbility(world, id, slot, target, { allowApproach: false }) === "ok") return;
   }
+}
+
+/**
+ * ⭐ **「根據情況放（最近的敵人單體或多人範圍）」**（owner 2026-08-23 逐字）——
+ * 這一支技能這一次瞄準誰／哪裡。
+ *
+ * owner 只給了兩條，所以這裡也只有兩條：
+ *   · **單體型** ⇒ 打**最近的敵人**。那正是索敵掃描已經挑好的 `mob.target`
+ *     （它同時吃「先打真人」那一格），⛔ 不在這裡重掃一次距離。
+ *   · **範圍型** ⇒ 挪到**打得到最多人**的那一個敵人身上。
+ *
+ * ⚠️ 目標的**形狀**仍然由技能卡決定，⛔ 不是這裡挑：指定技給實體，其餘給一個點
+ * （地面技會自己夾到射程內，方向技／衝刺技自己正規化成方向）。
+ *
+ * 回 `null` = 這一支這一 tick 沒有合法目標 ⇒ 換下一個槽位（⛔ 不是整個 tick 放棄）。
+ */
+export function kingCastTarget(
+  world: SimWorld,
+  id: EntityId,
+  def: AbilityDef,
+  primary: EntityId,
+  king: MobKingRules,
+): CastTarget | null {
+  const t = world.transform.get(id);
+  if (!t) return null;
+  // 自我施法 —— 「打誰」這個問題不存在。
+  if (def.castType === "self") return { type: "entity", entityId: id };
+  // ⭐ 增益／治療型（`targetsEnemies: false`）的對象是**自己人**。指定技給自己、
+  // 其餘給自己腳下。⛔ 瞄敵人的話 `castAbility` 回 "bad-target"，於是那一支
+  // 技能王一整場放不出來，而且畫面上完全看不出來（失敗形態②）——
+  // 「放好放滿」少掉的正是這一族。
+  if (def.targetsEnemies === false) {
+    return def.castType === "targeted"
+      ? { type: "entity", entityId: id }
+      : { type: "point", point: { x: t.pos.x, z: t.pos.z } };
+  }
+  const anchor = kingAimAnchor(world, id, def, primary, king);
+  const at = world.transform.get(anchor);
+  if (!at) return null;
+  return def.castType === "targeted"
+    ? { type: "entity", entityId: anchor }
+    : { type: "point", point: { x: at.pos.x, z: at.pos.z } };
+}
+
+/**
+ * 範圍技要落在**誰**身上；單體技回 `primary`（＝最近的那一個）。
+ *
+ * ⭐ 「單體 vs 範圍」是**推導**的，⛔ 不是一張「哪幾支是範圍」的名單
+ * （第〇·四守則）—— 那張名單換一張臉就過期，而王每一場戴的臉是**抽**的
+ * （`boss.championSource: "random"`）。
+ * 判準是 `def.radius`：`radiusTier` 在**載入時**就由 `resolveRadiusTier` 翻成
+ * 這個數字，而且它正是**引擎自己**問「這個圈打得到誰」時讀的那一格
+ * （`groundAoeTargets`）⇒ AI 眼中的「範圍」與引擎眼中的逐位元是同一個。
+ *
+ * ⭐ 「打得到幾個人」也不在這裡算：直接問 `groundAoeTargets`，⛔ 不重寫一份
+ * 圓形查詢（它還要吃 `combatEnv.abilityRadius` 與 `targetsEnemies` 的側別，
+ * 重寫一份必然漂掉，而且漂掉的樣子是「王站在人堆外面放大絕」）。
+ *
+ * 候選點**落在敵人身上**（⛔ 不是掃網格）：保證至少打中那一個，
+ * 而且逐 tick 決定性（`world.team` 是 id 遞增的有序表，平手取先看到的）。
+ */
+function kingAimAnchor(
+  world: SimWorld,
+  id: EntityId,
+  def: AbilityDef,
+  primary: EntityId,
+  king: MobKingRules,
+): EntityId {
+  if ((king.situationalAiming ?? DEFAULT_KING_SITUATIONAL_AIMING) === false) return primary;
+  if ((def.radius ?? 0) <= 0) return primary; // 單體 ⇒ 最近的敵人
+  const t = world.transform.get(id);
+  if (!t) return primary;
+  // ⛔ 射程怎麼算不在這裡重寫：`resolveAbilityRange` 是全專案唯一的答案
+  // （它還要乘 `combatEnv.abilityRange`）。放不到的位置不算候選 —— 地面技會被
+  // 夾回射程內（於是圈心根本不在那裡），指定技則直接被拒。
+  // ⚠️ 「無上限施法距離」是 `Infinity`，比較恆真，所以那一族全部進得來。
+  const range = resolveAbilityRange(world, def.range);
+  const myTeam = world.team.get(id)?.teamId ?? MONSTER_TEAM;
+  let best = primary;
+  let bestHits = 0;
+  for (const [cid, cteam] of world.team) {
+    if (cteam.teamId === myTeam) continue;
+    if (!isMobTargetable(world, cid, id)) continue;
+    const chp = world.health.get(cid);
+    const ct = world.transform.get(cid);
+    if (!chp?.alive || !ct || ct.zone !== t.zone) continue;
+    if (distSq(t.pos, ct.pos) > range * range) continue;
+    const hits = groundAoeTargets(world, id, def, ct.pos).length;
+    if (hits > bestHits) {
+      bestHits = hits;
+      best = cid;
+    }
+  }
+  // ⭐ 「**多人**」才值得挪落點。連 `areaMinTargets` 個都打不到 ⇒ 回到最近的那一個
+  // （⛔ 不是「不放」—— owner 要的是「放好放滿」）。
+  return bestHits >= (king.areaMinTargets ?? DEFAULT_KING_AREA_MIN_TARGETS) ? best : primary;
 }
 
 /** 王試著施放的槽位順序 —— 大招優先，⛔ 不抽籤（決定性）。 */

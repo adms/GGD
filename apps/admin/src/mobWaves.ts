@@ -253,15 +253,21 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     settlementTitle: "殭屍王 分紅結算",
     // ⭐ GH#577 / GH#602 owner 2026-08-23「殭屍王 應該要會自動學習所有技能並施展技能
     // 並且攻速都是上限4起跳 並且優先攻擊玩家角色而非bot」+「回魔速度是每秒1000點」。
+    // ⭐ owner 2026-08-23 補的裁決（逐字）：「QWEREX都要學起來根據情況放（最近的敵人
+    // 單體或多人範圍），至少殭屍王角色自己原本的技能都要學好學滿、放好放滿，額外追加
+    // leap吸血 是給殭屍王一點額外優勢不會單方面被打太無聊而已」。
     king: {
       enabled: true,
       learnRank: 1,
+      learnRankMode: "max",
       innateAbilityId: "godie-zombieking.passive",
       innateCastHpPct: 0.2,
       maxMana: 10000,
       manaRegenPerSec: 1000,
       attackSpeedFloor: 4,
       targetPreference: "players",
+      situationalAiming: true,
+      areaMinTargets: 2,
     },
   },
   special: {
@@ -404,12 +410,15 @@ export type MobWavesFieldKey =
   | "boss.settlementTitle"
   | "boss.king.enabled"
   | "boss.king.learnRank"
+  | "boss.king.learnRankMode"
   | "boss.king.innateAbilityId"
   | "boss.king.innateCastHpPct"
   | "boss.king.maxMana"
   | "boss.king.manaRegenPerSec"
   | "boss.king.attackSpeedFloor"
   | "boss.king.targetPreference"
+  | "boss.king.situationalAiming"
+  | "boss.king.areaMinTargets"
   // 特殊殭屍 (#262)
   | "special.chancePercent"
   | "special.hpMult"
@@ -576,12 +585,15 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "boss.settlementTitle",
   "boss.king.enabled",
   "boss.king.learnRank",
+  "boss.king.learnRankMode",
   "boss.king.innateAbilityId",
   "boss.king.innateCastHpPct",
   "boss.king.maxMana",
   "boss.king.manaRegenPerSec",
   "boss.king.attackSpeedFloor",
   "boss.king.targetPreference",
+  "boss.king.situationalAiming",
+  "boss.king.areaMinTargets",
   "special.chancePercent",
   "special.championSource",
   "special.championId",
@@ -1133,15 +1145,30 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
   "boss.king.learnRank": {
     zh: "└ 技能學到第幾階",
     note:
+      "⚠️ **只有下一格選「照這個數字」時才會讀這一格**（出貨是「學好學滿」，這一格被忽略）。" +
       "王戴哪張臉就學那張臉的 Q/W/E/R/EX 與天生技，這一格決定學到第幾階。" +
-      "1（出貨）＝ 每支都是第一階；0 ＝ 只留下面那支內建技。" +
-      "⚠️ 不要直接拉到滿階：王的攻擊力已經另外乘過「＝英雄的幾倍」，滿階大招是一發秒殺",
+      "0 ＝ 只留下面那支內建技（兩種模式都保留這個出口）",
     unit: "階",
     kind: "num",
     min: 0,
     max: 6,
     optional: true,
     emptyMeans: "留空 = 1",
+  },
+  "boss.king.learnRankMode": {
+    zh: "└ 學到第幾階怎麼決定",
+    note:
+      "owner 2026-08-23：「至少殭屍王角色自己原本的技能都要**學好學滿**、放好放滿」。" +
+      "「學好學滿」＝ 每一支各學到**它自己的**最高階（每支技能的最高階本來就不一樣，1～6 階都有）。" +
+      "「照上面那個數字」＝ 這一格出現之前的行為，一鍵回頭。" +
+      "⚠️ ⛔ 不要改用「把上面那格填 6」代替：只有 3 階的技能會讀到不存在的第 6 階，" +
+      "冷卻算出來是 NaN，結果那一支變成每個 tick 都放得出來，而且畫面上完全看不出來",
+    unit: "",
+    kind: "enum",
+    values: ["max", "fixed"],
+    valueLabels: { max: "學好學滿（出貨）", fixed: "照上面那個數字" },
+    optional: true,
+    emptyMeans: "留空 = 學好學滿",
   },
   "boss.king.innateAbilityId": {
     zh: "└ 內建技能（佔天生技槽）",
@@ -1214,6 +1241,34 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     valueLabels: { players: "先打真人（出貨）", nearest: "誰近打誰" },
     optional: true,
     emptyMeans: "留空 = 先打真人",
+  },
+  "boss.king.situationalAiming": {
+    zh: "└ 技能要不要看情況瞄",
+    note:
+      "owner 2026-08-23：「QWEREX都要學起來**根據情況放（最近的敵人單體或多人範圍）**」。" +
+      "開（出貨）＝ **單體型**技能打最近的那一個敵人（也就是上一格挑出來的索敵目標）；" +
+      "**範圍型**技能改落在「打得到最多人」的那一個敵人身上。" +
+      "關 ＝ 每一支都瞄同一個索敵目標（這一格出現之前的行為）。" +
+      "⚠️ 「單體還是範圍」是從技能自己的**打擊半徑**推出來的，⛔ 不是一張寫死的名單 ——" +
+      "王每一場戴的臉是抽的，名單隔一場就過期",
+    unit: "",
+    kind: "bool",
+    optional: true,
+    boolLabels: { on: "看情況瞄（出貨）", off: "全部瞄索敵目標" },
+    emptyMeans: "留空 = 看情況瞄",
+  },
+  "boss.king.areaMinTargets": {
+    zh: "└ 範圍技至少要打到幾個人才挪落點",
+    note:
+      "owner 那句話裡的「**多人**」是幾個人。範圍技找得到的最好落點打不到這個數時，" +
+      "就退回打最近的那一個 —— ⚠️ **不是不放**（owner 要的是「放好放滿」）。" +
+      "1 ＝ 永遠挪到人最多的那一點；填大 ＝ 王會比較保守地照打最近的",
+    unit: "人",
+    kind: "num",
+    min: 1,
+    max: 50,
+    optional: true,
+    emptyMeans: "留空 = 2",
   },
   "boss.championSource": {
     zh: "殭屍王由誰擔任：指定還是隨機",
@@ -1869,12 +1924,15 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
       "boss.settlementTitle",
       "boss.king.enabled",
       "boss.king.learnRank",
+      "boss.king.learnRankMode",
       "boss.king.innateAbilityId",
       "boss.king.innateCastHpPct",
       "boss.king.maxMana",
       "boss.king.manaRegenPerSec",
       "boss.king.attackSpeedFloor",
       "boss.king.targetPreference",
+      "boss.king.situationalAiming",
+      "boss.king.areaMinTargets",
     ],
   },
   {
@@ -2145,6 +2203,16 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return formatNum(cfg.boss?.king?.attackSpeedFloor);
     case "boss.king.targetPreference":
       return cfg.boss?.king?.targetPreference ?? "";
+    case "boss.king.learnRankMode":
+      return cfg.boss?.king?.learnRankMode ?? "";
+    case "boss.king.situationalAiming":
+      return cfg.boss?.king?.situationalAiming === undefined
+        ? ""
+        : cfg.boss.king.situationalAiming
+          ? "1"
+          : "0";
+    case "boss.king.areaMinTargets":
+      return formatNum(cfg.boss?.king?.areaMinTargets);
     case "boss.lastHitMode":
       // Absent in a doc authored before GH#206 — show the shipped default
       // rather than an empty box, because an empty box here reads as
@@ -2551,9 +2619,11 @@ export interface MobWavesErrors {
  */
 /** 「先打誰」的兩個值 —— 與 `zMobWavesConfig.boss.king.targetPreference` 同一組。 */
 export const KING_TARGET_PREFERENCES = ["players", "nearest"] as const;
+/** 「學到第幾階」的兩個值 —— 與 `zMobWavesConfig.boss.king.learnRankMode` 同一組。 */
+export const KING_LEARN_RANK_MODES = ["max", "fixed"] as const;
 
 /**
- * 王的「會打架」八格是不是全空。⭐ 與 {@link blockEmpty} 分開，因為它們回答不同的
+ * 王的「會打架」那一整塊是不是全空。⭐ 與 {@link blockEmpty} 分開，因為它們回答不同的
  * 問題：`blockEmpty("boss.")` 問「這一份設定檔有沒有殭屍王」，這一支問「那隻王會不會
  * 自己打架」——⛔ 前者為 false 時後者仍然可以是 true（一隻只會揮刀的王）。
  */
@@ -2895,8 +2965,11 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
     const bst = optText("boss.settlementTitle");
     if (bst !== undefined) boss.settlementTitle = bst;
     // ⭐ GH#577 / GH#602 —— 王的「會打架」區塊是**全有或全無**（`levelCurve` 同一條
-    // 規矩）：schema 上它是一個 `.strict()` 的物件，八格都是必填。八格全空 = 這一份
-    // 設定檔沒有這個區塊 = 王回到只會揮刀的舊行為；有任何一格填了，其餘用出貨值補齊。
+    // 規矩）：schema 上它是一個 `.strict()` 的物件。⚠️ 2026-08-23 之後**不是每一格
+    // 都必填** —— 「學好學滿／根據情況放」那三格是 `.optional()`，理由是後台存過的
+    // 舊 override 少了它們仍然必須驗得過（否則整份 arena 設定被拒 ⇒ 退回骨架）。
+    // 這一塊全空 = 這一份設定檔沒有這個區塊 = 王回到只會揮刀的舊行為；
+    // 有任何一格填了，其餘用出貨值補齊。
     if (!kingBlockEmpty(form)) {
       const sk = SHIPPED_MOB_WAVES.boss!.king!;
       boss.king = {
@@ -2907,6 +2980,10 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
         maxMana: num("boss.king.maxMana", sk.maxMana),
         manaRegenPerSec: num("boss.king.manaRegenPerSec", sk.manaRegenPerSec),
         attackSpeedFloor: num("boss.king.attackSpeedFloor", sk.attackSpeedFloor),
+        learnRankMode:
+          optEnum("boss.king.learnRankMode", KING_LEARN_RANK_MODES) ?? sk.learnRankMode,
+        situationalAiming: bool("boss.king.situationalAiming", sk.situationalAiming!),
+        areaMinTargets: num("boss.king.areaMinTargets", sk.areaMinTargets!),
         targetPreference:
           optEnum("boss.king.targetPreference", KING_TARGET_PREFERENCES) ?? sk.targetPreference,
       };

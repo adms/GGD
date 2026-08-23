@@ -607,10 +607,26 @@ export const zMobWavesConfig = z
             /**
              * 自動學習所有技能：Q/W/E/R/EX/天生技全部發到這一階。
              * 0 = 只有內建的 [leap吸血]（王仍然會施法，但只會那一支）。
-             * ⚠️ 上界 6 = `maxRank` 的上界（`zAbilityDef.maxRank.max(6)`），
-             * 超過的階數由 `abilityInstanceFor` 的欄位夾回去。
+             * ⚠️ 上界 6 = `maxRank` 的上界（`zAbilityDef.maxRank.max(6)`）。
+             * ⭐ 只有 `learnRankMode: "fixed"` 會讀這一格（見下一格）。
              */
             learnRank: z.number().int().min(0).max(6),
+            /**
+             * ⭐ 學到第幾階怎麼決定。owner 2026-08-23（逐字）：
+             * > 「至少殭屍王角色**自己原本的技能都要學好學滿、放好放滿**」
+             *
+             * · `"max"`（出貨）—— 每一支各學到**它自己的** `maxRank`。
+             * · `"fixed"` —— 照上面那個數字（＝ 這一格出現之前的行為，一鍵 rollback）。
+             *
+             * ⚠️ 兩種模式下 `learnRank: 0` 都仍然是「只留內建技」。
+             * ⚠️ ⛔ 不可以用「把 learnRank 填 6」代替 `"max"`：`maxRank` **逐支不同**
+             * （1..6），填 6 對只有 3 階的技能是**陣列越界** —— `cooldown[5]` 讀到
+             * undefined ⇒ 冷卻算出 NaN ⇒ `NaN > 0` 恆假 ⇒ 那一支每個 tick 都放得
+             * 出來，而且沒有任何東西會紅。解析在 `sim/mobs.ts::installKingKit`。
+             *
+             * ABSENT ⇒ `"max"`（`DEFAULT_KING_LEARN_RANK_MODE`）。
+             */
+            learnRankMode: z.enum(["max", "fixed"]).optional(),
             /**
              * ⭐ 內建技能的文件 id（出貨 `godie-zombieking.passive`）。
              * 它佔**天生技槽**（`passiveSlot`）—— 「內建」在這個引擎裡就是天生技，
@@ -653,6 +669,33 @@ export const zMobWavesConfig = z
              * 「這個座位有沒有在下指令」—— 一個掛機的真人仍然是真人。
              */
             targetPreference: z.enum(["players", "nearest"]),
+            /**
+             * ⭐ **「根據情況放」的總開關**。owner 2026-08-23（逐字）：
+             * > 「**QWEREX都要學起來根據情況放**（**最近的敵人單體或多人範圍**）」
+             *
+             * true（出貨）⇒ **單體型**技能打**最近的敵人**（＝索敵掃描挑出來的
+             * 那一個，含「先打真人」那一格）；**範圍型**技能挪到**打得到最多人**
+             * 的那一個敵人身上。
+             * false ⇒ 逐位元回到這一格出現之前：每一支都瞄同一個索敵目標。
+             *
+             * ⚠️ 「單體 vs 範圍」是從技能自己的 `radius` **推導**的，
+             * ⛔ 不是一張名單（第〇·四守則）—— 王每一場戴的臉是抽的
+             * （`championSource: "random"`），名單隔一場就過期。
+             *
+             * ABSENT ⇒ true（`DEFAULT_KING_SITUATIONAL_AIMING`）。
+             */
+            situationalAiming: z.boolean().optional(),
+            /**
+             * 範圍技要**打得到幾個人**才值得把落點從「最近的敵人」挪開。
+             * 出貨 2 = owner 那句話裡的「**多人**」。
+             *
+             * ⚠️ 打不到這個數 ⇒ 回到最近的那一個，⛔ **不是「不放」**——
+             * owner 要的是「放好放滿」。1 = 永遠挪到最多人的那一點；
+             * 上界 50 只擋多打一個零（一個決鬥區的敵方單位遠少於這個數）。
+             *
+             * ABSENT ⇒ 2（`DEFAULT_KING_AREA_MIN_TARGETS`）。
+             */
+            areaMinTargets: z.number().int().min(1).max(50).optional(),
           })
           .strict()
           .optional(),
@@ -1231,10 +1274,13 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
      */
     king: {
       enabled: true,
-      // 「自動學習**所有**技能」—— 六個槽全部發到第 1 階（EX 與天生技本來就只有
-      // 一階；Q/W/E/R 給 1 階而不是滿階是刻意的：滿階的王配上 heroDamageMult 是
-      // 一發秒殺，而「會不會放」與「放得多痛」是兩件事，後者已經有自己的旋鈕）。
+      // 「自動學習**所有**技能」—— ⭐ 出貨走 `learnRankMode: "max"`（下一格），
+      // 所以這個數字**平常不會被讀到**：owner 2026-08-23「自己原本的技能都要
+      // **學好學滿**」推翻了原本「Q/W/E/R 給 1 階」那個折衷。留著 1 是為了
+      // 「照這個數字」那條 rollback 路上的預設值仍然是舊行為。
       learnRank: 1,
+      // owner 2026-08-23:「至少殭屍王角色自己原本的技能都要**學好學滿**、放好放滿」
+      learnRankMode: "max",
       innateAbilityId: "godie-zombieking.passive",
       // owner:「當殭屍王**生命低於20%**時」
       innateCastHpPct: 0.2,
@@ -1245,6 +1291,10 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
       attackSpeedFloor: 4,
       // owner:「並且**優先攻擊玩家角色而非bot**」
       targetPreference: "players" as const,
+      // ⭐ owner 2026-08-23:「**QWEREX都要學起來根據情況放（最近的敵人單體或多人範圍）**」
+      situationalAiming: true,
+      // owner 那句話裡的「**多人**」
+      areaMinTargets: 2,
     },
     // #247 owner 2026-08-01 —— 「應該要可以無視碰撞穿透地形 不然被卡住永遠走不到」.
     // All three permissions ON, the boundary clamp STILL ON. The king is granted
