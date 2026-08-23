@@ -91,8 +91,8 @@
     "apconv:build": "python3 tools/ap-conversion/apply.py",
     "apconv:check": "python3 tools/ap-conversion/apply.py --check",
     "apconv:freeze": "python3 tools/ap-conversion/apply.py --freeze",
-    "skills:sync": "pnpm skillremake:json && pnpm apconv:build && pnpm tiers:apply && pnpm skillremake:provenance && pnpm grail:wishes && pnpm pitch:build && pnpm anchors:build && pnpm statcaps:build && pnpm apconv:plan && pnpm apdmg:build && pnpm content:build && pnpm audit:build && pnpm mana:audit && pnpm caps:export && pnpm skillremake:docs && pnpm contract:numbers && pnpm atlas:build && pnpm treasure:csv && pnpm docs:readme && pnpm docs:status && pnpm newhero:build && pnpm lowdmg:build && pnpm archetypes:build && pnpm msgledger:build && pnpm board:build && pnpm skillnorm:build && pnpm jasscombo:build && pnpm vfxbind:build && pnpm speedtiers:build && pnpm roster:check",
-    "skills:check": "pnpm tiers:apply:check && pnpm spec:check && pnpm overview:check && pnpm tiers:check && pnpm mana:audit:check && pnpm caps:check && pnpm skillremake:docs:check && pnpm skillremake:json:check && pnpm skillremake:provenance:check && pnpm grail:wishes:check && pnpm contract:numbers:check && pnpm atlas:check && pnpm treasure:csv:check && pnpm docs:readme:check && pnpm docs:status:check && pnpm roster:check && pnpm pitch:check && pnpm newhero:check && pnpm lowdmg:check && pnpm anchors:check && pnpm statcaps:check && pnpm apconv:plan:check && pnpm apconv:check && pnpm apdmg:check && pnpm board:check && pnpm msgledger:check && pnpm skillnorm:check && pnpm speedtiers:check && pnpm jasscombo:check && pnpm vfxbind:check && pnpm models:check && pnpm audit:check && pnpm echoloop:check",
+    "skills:sync": "pnpm skillremake:json && pnpm apconv:build && pnpm tiers:apply && pnpm skillremake:provenance && pnpm grail:wishes && pnpm pitch:build && pnpm anchors:build && pnpm statcaps:build && pnpm apconv:plan && pnpm apdmg:build && pnpm content:build && pnpm audit:build && pnpm mana:audit && pnpm caps:export && pnpm skillremake:docs && pnpm contract:numbers && pnpm atlas:build && pnpm treasure:csv && pnpm docs:readme && pnpm docs:status && pnpm newhero:build && pnpm lowdmg:build && pnpm archetypes:build && pnpm templates:build && pnpm msgledger:build && pnpm board:build && pnpm skillnorm:build && pnpm jasscombo:build && pnpm vfxbind:build && pnpm sfxbind:build && pnpm speedtiers:build && pnpm roster:check",
+    "skills:check": "pnpm tiers:apply:check && pnpm spec:check && pnpm overview:check && pnpm tiers:check && pnpm mana:audit:check && pnpm caps:check && pnpm skillremake:docs:check && pnpm skillremake:json:check && pnpm skillremake:provenance:check && pnpm grail:wishes:check && pnpm contract:numbers:check && pnpm atlas:check && pnpm treasure:csv:check && pnpm docs:readme:check && pnpm docs:status:check && pnpm roster:check && pnpm pitch:check && pnpm newhero:check && pnpm lowdmg:check && pnpm anchors:check && pnpm statcaps:check && pnpm apconv:plan:check && pnpm apconv:check && pnpm apdmg:check && pnpm board:check && pnpm msgledger:check && pnpm skillnorm:check && pnpm speedtiers:check && pnpm jasscombo:check && pnpm vfxbind:check && pnpm models:check && pnpm audit:check && pnpm echoloop:check && pnpm templates:check && pnpm prose:check && pnpm sfxbind:check",
     "pitch:build": "python3 tools/w3x-import/build_pitch.py",
     "pitch:check": "python3 tools/w3x-import/build_pitch.py --check",
     "skillplan": "tsx tools/skill-normalize/plan.ts",
@@ -112,7 +112,13 @@
     "echoloop": "tsx tools/balance-alert/echoLoop.ts",
     "echoloop:check": "tsx tools/balance-alert/echoLoop.ts --check",
     "msgledger:build": "bash scripts/message-ledger.sh",
-    "msgledger:check": "bash scripts/message-ledger.sh --check"
+    "msgledger:check": "bash scripts/message-ledger.sh --check",
+    "templates:build": "python3 tools/ability-templates/gen.py",
+    "templates:check": "python3 tools/ability-templates/gen.py --check",
+    "prose:build": "tsx tools/card-prose/apply_placeholders.ts",
+    "prose:check": "tsx tools/card-prose/apply_placeholders.ts --check",
+    "sfxbind:build": "python3 tools/sfx-bind/build_bindings.py",
+    "sfxbind:check": "python3 tools/sfx-bind/build_bindings.py --check"
   },
   "devDependencies": {
     "@eslint/js": "^10",

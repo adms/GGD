@@ -1572,13 +1572,26 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
       "「1Hit…7Hit」是 `comboStrikes.perStrike` 裡的**一個**節點寫 `\"{{i}}Hit\"`，" +
       "⛔ 不是七個各寫死一個數字的節點。段號來自 `EffectContext.sequenceIndex`" +
       "（由 `delayedSystem` 填），不在序列裡時解析成 **1**。" +
-      "⛔ **缺的兩件**：① 客戶端把 `floatingText` 事件畫成一段會往上飄、會淡出的字；" +
-      "② 該事件進 `eventFanout.ts` 的白名單。" +
+      "⭐ 2026-08-23：**整條線已經接通** —— 客戶端會把它畫成一段往上飄、到 55% 壽命開始" +
+      "淡出的字（`FloatingTextFx`），事件也在 `eventFanout.ts` 的白名單裡。" +
+      "⚠️ 這一格在 2026-08-22–23 之間寫著「⛔ 缺的兩件：客戶端沒畫、白名單沒進」，" +
+      "而那兩件在 `77773e73` / `c49b04a1` 就做完了 —— 對外契約說謊會讓作者" +
+      "**白白繞路**（檔頭 ② 的兩個過期方向之一）。" +
+      "⛔ **仍然存在的三個限制**（這才是它是 `partial` 的理由）：" +
+      "① `applyTo` 只有 `self` / `victim`，⛔ **沒有 `all`** —— 字要有一個身體當錨；" +
+      "② 同時最多幾段字由 `config.screen-fx@1.floatingTextMaxOnScreen` 決定（出貨 48，" +
+      "上下界 1..200），⭐ 它在**建構時**吃掉，所以後台改了要玩家重新整理才生效；" +
+      "滿了會**擠掉剩餘壽命最短的那一段**，⛔ 不是排隊；" +
+      "③ 同一個錨點最多同時掛 **8** 段（第 9 段直接丟掉），同一幀落在同一點的多發" +
+      "每段往後推 90ms（原作 `0.2f * i` 的縮版）。" +
       "⚠️ 它 ⛔ **不是傷害數字**（那一族由 `damage` 事件在客戶端自己算），" +
-      "也 ⛔ 不是 UI 字串 —— 它掛在一個**身體**上（所以 `applyTo` 沒有 `all`）。",
+      "也 ⛔ 不是 UI 字串。",
     evidence:
       "packages/shared/src/sim/effects/clientCues.ts::resolveCueText + " +
-      "sim/effects/delayed.ts（`sequenceIndex: index + 1`，⛔ 這是 `{{i}}` 唯一的來源）",
+      "sim/effects/delayed.ts（`sequenceIndex: index + 1`，⛔ 這是 `{{i}}` 唯一的來源）；" +
+      "渲染那一半 apps/client/src/vfx/FloatingTextFx.ts（`MAX_PER_ANCHOR` / `STAGGER_MS` / " +
+      "`FADE_FROM`）＋ VfxSystem.ts 的 `case \"floatingText\"`；" +
+      "上線那一半 apps/game-server/src/net/eventFanout.ts 的 `FANNED_OUT_EVENT_TYPES`",
     nearestExisting:
       "⚠️ 引擎裡最接近的是 `damage` 事件驅動的浮動傷害數字，⛔ 但那是客戶端自己從" +
       "數值算出來的，作者寫不出「這一刀要冒什麼字」。",
@@ -2148,6 +2161,7 @@ const FAMILY_PROBE_LIST: readonly string[] = [
   "growth-charge", "instant-blast", "leap-strike", "life-manipulate", "line-sweep",
   "lock-combo", "mark-stacks", "on-attack", "on-hit-react", "orbit-array",
   "periodic-field", "proxy-cast", "proxy-fanout", "pull-throw", "pure-cosmetic",
+  "radial-burst",
   "random-barrage", "range-gamble", "resource-ops", "single-strike", "strip-transform",
   "summon-agent", "team-synergy", "teleport", "traveling-wave",
 ];

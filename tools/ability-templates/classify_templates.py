@@ -25,12 +25,20 @@ docs/ability-templates.csv with the full parameter surface per row.
   自體強化型 applyBuff self, not 變身
   其他       anything left (effects [] with no passive, utility …)
 
-Regenerate: python3 tools/ability-templates/classify_templates.py
+⭐ 這一支現在只**算**,⛔ 不寫檔 —— 唯一的入口是 `pnpm templates:build`
+（`tools/ability-templates/gen.py`）。理由寫在 gen.py 的檔頭：分三支各自寫同一份
+CSV 的話,先跑的那一支會把後跑的那一支的欄位**整欄洗掉**（實際發生過:
+`實作落差分` / `落差說明` / 七個 `行為*` 欄在這支單獨重跑時會消失）。
+
+⭐ 七個 `行為*` 欄（`JASS行為模板` / `行為原標` / `行為幾何` / `行為時序` /
+`位移語意` / `行為證據` / `行為備註`）在 2026-08-23 之前**只住在產物 CSV 裡** ——
+這一支不產生它們,而它會覆寫 CSV ⇒ 跑一次就永久失去 309 筆 JASS 細讀記錄。
+現在它們**從證據推導**:原標與五個描述欄 ← `JASS_BEHAVIOR.json`,
+原標→模板的聚類定案 ← `behavior_clusters.json`（第〇·四守則:知識不住產物裡）。
 """
 
 from __future__ import annotations
 
-import csv
 import json
 import re
 from pathlib import Path
@@ -40,6 +48,19 @@ ABIL = ROOT / "content" / "abilities"
 CHAMPS = ROOT / "content" / "champions"
 SRC = ROOT / "tools" / "w3x-import" / "out" / "GoDieEX22s-src"
 OUT = ROOT / "docs" / "ability-templates.csv"
+CLUSTERS = Path(__file__).resolve().parent / "behavior_clusters.json"
+BEHAVIOR = SRC / "JASS_BEHAVIOR.json"
+
+# ── 行為欄 (CSV 欄名 ↔ JASS_BEHAVIOR.json 的欄名) ──
+BEHAVIOR_COLS = (
+    ("行為原標", "template"),
+    ("行為幾何", "geometry"),
+    ("行為時序", "timing"),
+    ("位移語意", "movement"),
+    ("行為證據", "evidence"),
+    ("行為備註", "notes"),
+)
+NO_TRIGGER = "物件資料技能(無觸發)"
 
 champ_names = {
     p.stem: json.loads(p.read_text()).get("name", p.stem) for p in CHAMPS.glob("godie-*.json")
@@ -266,16 +287,45 @@ def skill_no_key(r):
 
 
 rows.sort(key=skill_no_key)
-OUT.parent.mkdir(exist_ok=True)
-with OUT.open("w", newline="", encoding="utf-8-sig") as f:  # BOM: Excel 中文
-    w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
-    w.writeheader()
-    w.writerows(rows)
 
-from collections import Counter
 
-counts = Counter(r["分類"] for r in rows)
-print(f"{len(rows)} abilities -> {OUT.relative_to(ROOT)}")
-for c in order:
-    if counts[c]:
-        print(f"  {c}: {counts[c]}")
+# ── 行為模板: JASS_BEHAVIOR.json (309 筆細讀) × behavior_clusters.json (聚類定案) ──
+# ⚠️ join 有兩條路,順序固定: ① rawcode ② 技能編號 NN-XX 前綴。
+#    ⛔ 兩條都要 —— 258 筆裡有 36 筆的 rawcode 在細讀記錄裡是空的(觸發器叢集找得到、
+#    物件編輯器對不上),只靠 rawcode 會靜默漏掉它們並把那 36 支誤判成「無觸發」。
+def _num_key(name: str) -> str | None:
+    m = re.match(r"^(\d{2})-(\d{2,3})(?!\d)", name or "")
+    return m.group(0) if m else None
+
+
+def _attach_behavior(rows: list[dict]) -> None:
+    clusters = json.loads(CLUSTERS.read_text(encoding="utf-8"))["clusters"]
+    by_raw: dict[str, dict] = {}
+    by_num: dict[str, dict] = {}
+    for s in json.loads(BEHAVIOR.read_text(encoding="utf-8"))["skills"]:
+        if s.get("rawcode"):
+            by_raw.setdefault(s["rawcode"], s)
+        k = _num_key(s.get("skill_name", ""))
+        if k:
+            by_num.setdefault(k, s)
+    for r in rows:
+        s = by_raw.get(r["rawcode"]) if r["rawcode"] else None
+        if s is None:
+            s = by_num.get(_num_key(r["技能名"]) or "")
+        r["JASS行為模板"] = clusters.get((s or {}).get("template", ""), NO_TRIGGER)
+        for col, key in BEHAVIOR_COLS:
+            r[col] = (s or {}).get(key) or ""
+
+
+_attach_behavior(rows)
+
+
+def build_rows() -> list[dict]:
+    """CSV 的第 1–40 欄（分類 → 行為備註）。⛔ 落差分那兩欄是 score_gap 的。"""
+    return rows
+
+
+if __name__ == "__main__":  # pragma: no cover —— 單獨跑會洗掉別的欄, 一律走 gen.py
+    from gen import main
+
+    raise SystemExit(main())

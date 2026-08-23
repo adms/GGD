@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""emit_templates_md.py — 從 ability-templates.csv 產出 docs/ability-templates.md
-(30 類 JASS 行為模板的介紹說明 + 各類技能清單, 依技能編號排序)。
-重生成: python3 tools/ability-templates/emit_templates_md.py"""
-import csv, re
-from pathlib import Path
+"""emit_templates_md.py — 技能行為模板總覽 md
+(29 類 JASS 行為模板的介紹說明 + 各類技能清單, 依技能編號排序)。
 
-ROOT = Path(__file__).resolve().parents[2]
-rows = list(csv.DictReader(open(ROOT / "docs/ability-templates.csv", encoding="utf-8-sig")))
+⭐ 這一支現在只**算**, ⛔ 不讀 CSV 也不寫 md —— 唯一的入口是 `pnpm templates:build`
+(`tools/ability-templates/gen.py`)。⛔ 讀產物的那一版有一個沉默的洞: md 會描述
+**上一次**的 CSV, 所以 classify 改了而它沒跑, 兩份產物就各說各話而沒有東西會紅。
+"""
+import re
 
 # 類別 → (一句定義, 機制特徵, 範本, 移植備註)
 DESC = {
@@ -45,42 +45,47 @@ def no_key(name):
     m = re.match(r"^(\d{2})-(\d{2,3})(?!\d)", name)
     return (0, int(m.group(1)), len(m.group(2)), int(m.group(2))) if m else (1, 999, 9, 999)
 
-from collections import defaultdict
-groups = defaultdict(list)
-for r in rows:
-    groups[r["JASS行為模板"]].append(r)
-order = sorted(groups, key=lambda k: (-len(groups[k]), k))
-# 無觸發大宗放最後
-order = [k for k in order if k != "物件資料技能(無觸發)"] + ["物件資料技能(無觸發)"]
+def render(rows) -> str:
+    """rows (classify+score 之後) → docs/ability-templates.md 的完整文字。"""
+    from collections import defaultdict
+    groups = defaultdict(list)
+    for r in rows:
+        groups[r["JASS行為模板"]].append(r)
+    order = sorted(groups, key=lambda k: (-len(groups[k]), k))
+    # 無觸發大宗放最後
+    order = [k for k in order if k != "物件資料技能(無觸發)"] + ["物件資料技能(無觸發)"]
 
-L = []
-L.append("# GGD 技能行為模板總覽\n")
-L.append("> 產生器: `tools/ability-templates/emit_templates_md.py` · 資料源: `docs/ability-templates.csv` (JASS 三軸稽核 + 12 代理細讀 90 英雄觸發器群, 309 筆行為記錄)\n")
-L.append(f"> {len(rows)} 個獨立技能 · {len(order)} 類行為模板 · 分類依 owner 指示「全部看過再決定」由下而上聚類定案\n")
-L.append("\n## 分類總表\n")
-L.append("| 行為模板 | 技能數 | 平均落差分 | 一句定義 |")
-L.append("|---|---|---|---|")
-for k in order:
-    L.append(f"| [{k}](#{k.replace('/','').replace('(','').replace(')','')}) | {len(groups[k])} | {(sum(int(r.get('實作落差分') or 0) for r in groups[k])/len(groups[k])):.1f} | {DESC.get(k,('',))[0]} |")
-for k in order:
-    d = DESC.get(k, ("", "", "", ""))
-    L.append(f"\n## {k}\n")
-    L.append(f"**定義**: {d[0]}  ")
-    L.append(f"**機制特徵**: {d[1]}  ")
-    L.append(f"**範本**: {d[2]}  ")
-    L.append(f"**移植備註**: {d[3]}\n")
-    skl = sorted(groups[k], key=lambda r: no_key(r["技能名"]))
-    if k == "物件資料技能(無觸發)":
-        L.append("| 技能 | 英雄 | 落差分 | WC3基底 | 傷害perRank | 特殊機制 |")
-        L.append("|---|---|---|---|---|---|")
-        for r in skl:
-            L.append(f"| {r['技能名']} | {r['英雄'][:40]} | {r.get('實作落差分','')} | {r['WC3基底']} | {r['傷害perRank']} | {r['特殊機制']} |")
-    else:
-        L.append("| 技能 | 英雄 | 落差分 | 行為幾何 | 行為時序 | 位移語意 | 證據 |")
-        L.append("|---|---|---|---|---|---|---|")
-        for r in skl:
-            L.append(f"| {r['技能名']} | {r['英雄'][:40]} | {r.get('實作落差分','')} | {r['行為幾何'][:60]} | {r['行為時序'][:40]} | {r['位移語意'][:40]} | {r['行為證據'][:40]} |")
+    L = []
+    L.append("# GGD 技能行為模板總覽\n")
+    L.append("> 產生器: `tools/ability-templates/emit_templates_md.py` · 資料源: `docs/ability-templates.csv` (JASS 三軸稽核 + 12 代理細讀 90 英雄觸發器群, 309 筆行為記錄)\n")
+    L.append(f"> {len(rows)} 個獨立技能 · {len(order)} 類行為模板 · 分類依 owner 指示「全部看過再決定」由下而上聚類定案\n")
+    L.append("\n## 分類總表\n")
+    L.append("| 行為模板 | 技能數 | 平均落差分 | 一句定義 |")
+    L.append("|---|---|---|---|")
+    for k in order:
+        L.append(f"| [{k}](#{k.replace('/','').replace('(','').replace(')','')}) | {len(groups[k])} | {(sum(int(r.get('實作落差分') or 0) for r in groups[k])/len(groups[k])):.1f} | {DESC.get(k,('',))[0]} |")
+    for k in order:
+        d = DESC.get(k, ("", "", "", ""))
+        L.append(f"\n## {k}\n")
+        L.append(f"**定義**: {d[0]}  ")
+        L.append(f"**機制特徵**: {d[1]}  ")
+        L.append(f"**範本**: {d[2]}  ")
+        L.append(f"**移植備註**: {d[3]}\n")
+        skl = sorted(groups[k], key=lambda r: no_key(r["技能名"]))
+        if k == "物件資料技能(無觸發)":
+            L.append("| 技能 | 英雄 | 落差分 | WC3基底 | 傷害perRank | 特殊機制 |")
+            L.append("|---|---|---|---|---|---|")
+            for r in skl:
+                L.append(f"| {r['技能名']} | {r['英雄'][:40]} | {r.get('實作落差分','')} | {r['WC3基底']} | {r['傷害perRank']} | {r['特殊機制']} |")
+        else:
+            L.append("| 技能 | 英雄 | 落差分 | 行為幾何 | 行為時序 | 位移語意 | 證據 |")
+            L.append("|---|---|---|---|---|---|---|")
+            for r in skl:
+                L.append(f"| {r['技能名']} | {r['英雄'][:40]} | {r.get('實作落差分','')} | {r['行為幾何'][:60]} | {r['行為時序'][:40]} | {r['位移語意'][:40]} | {r['行為證據'][:40]} |")
+    return "\n".join(L) + "\n"
 
-out = ROOT / "docs/ability-templates.md"
-out.write_text("\n".join(L) + "\n", encoding="utf-8")
-print(f"wrote {out.relative_to(ROOT)}: {len(order)} 類 / {len(rows)} 技能")
+
+if __name__ == "__main__":  # pragma: no cover —— 一律走 gen.py
+    from gen import main
+
+    raise SystemExit(main())

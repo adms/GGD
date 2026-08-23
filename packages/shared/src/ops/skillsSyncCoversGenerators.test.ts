@@ -45,6 +45,43 @@ const NO_ARTIFACT: Record<string, string> = {
     "⭐ 自動填的那一版會把「幾何很像屍體」直接當成「就是屍體」—— 那正是這條閘的反面。",
 };
 
+/**
+ * ⭐⭐ 2026-08-23 —— 上面那條閘**自己有一個洞**:它列舉的是 `*:check` **腳本名**。
+ *
+ * ⇒ 一支**連腳本都沒有**的產生器對它是**不存在的**。量到的實例:
+ * `tools/ability-templates/` 三支 python 產出 `docs/ability-templates.{csv,md}`
+ * （模板總類表,owner 點名要更新的那一份），`grep '"[a-z]+:[a-z]+".*template' package.json`
+ * → **0 筆**。⇒ 它從 2026-07-25 起漂了一個月:654 份技能剩 413 份,而產物停在舊的那一天,
+ * ⛔ 沒有任何東西會紅。
+ *
+ * ⇒ 下面這一條從**產物**那一端問同一個問題:
+ * 「有沒有一支 tools/ 底下的程式在寫 git 追蹤的 `docs/` 或 `content/` 檔,
+ *   而它的目錄**完全不在**聚合指令的視野裡?」
+ *
+ * ⚠️ ⛔ 不可以誤報 —— 一條會誤報的閘會被人放寬。所以偵測是**保守**的:
+ *   · 路徑字面值要**真的**對得上一個 git 追蹤的檔或目錄（⛔ 不是任何看起來像路徑的字串）
+ *   · 同一行要有**寫入**呼叫,或這一行把路徑綁到一個名字而那個名字出現在寫入呼叫裡
+ *   · python 的 `open()` 要真的帶 `"w"`/`"a"` 模式（⛔ 否則 `DictReader(open(…))` 會被誤判）
+ *   · 一次性的報告落點（`docs/_reports/` · `docs/_daily/` · 任何 `_temp_`）不算產物
+ * 2026-08-23 實測:21 個產生器目錄、11 個沒被涵蓋,逐支分類後 6 支進豁免、2 支補了腳本。
+ */
+const GENERATOR_NO_CHECK: Record<string, string> = {
+  "bgm-gen": "產物是**渲染出來的音樂**與它的 MANIFEST —— 輸入是取樣器與曲式,技能改動不會動到任何一個位元組",
+  "icon-gen": "產物是**圖示點陣圖**（本機擴散模型跑出來的 PNG）。它的可審查那一半是提示詞常數,而那一半已經有 `iconstyle:check`",
+  "item-csv": "owner 的 CSV **往返編輯**流程（export → 他填三欄 → import）。⛔ `items.csv` 不在 repo 裡,沒有一份會過期的產物",
+  "champion-csv": "同 `item-csv` —— `champions.csv` 是 owner 的編輯載體,⛔ 不是 repo 裡的產物",
+  "augment-csv": "同 `item-csv` —— 增益卡的 CSV 往返,⛔ 沒有一份被 commit 的產物會過期",
+  "voice-gen": "`index-lines.mjs` 索引的是**已經錄好的語音檔** —— MANIFEST 隨音檔增減而變,⛔ 不隨技能數值或說明變",
+  "legendary-status": "一份**當時做到哪**的進度報告,⛔ 逐位元組比對對它不成立（它本來就該停在寫下的那一天）",
+  "ttk-sim": "產物是**實驗報告**（`docs/_ttk-retune.md` / `_ttk-experiment-153.md`）—— 它記的是那一次掃描的結果,重跑本來就會不一樣",
+  "vfx-census": "⭐ 它**自己的檔頭**逐字寫著「⛔ 這不是新鮮度閘，⛔ 沒有 `--check`：它是一份會隨內容成長的普查」—— 理由已經被寫下並且可以被反駁",
+  // ⚠️ ⛔ 這一列**不是**豁免,是一個**量到的洞** —— 留在這裡是為了它有名字,⛔ 不是為了它沒事。
+  "hero-archetypes":
+    "⛔ **真的洞（待補 `--check`）**:`archetypes:build` 在 `skills:sync` 裡、寫 `docs/hero-archetypes.json` 與 " +
+    "`docs/英雄定位與屬性總表.md`,而 `build.ts` **沒有 `--check` 模式** ⇒ 產物過期不會紅。" +
+    "補它要改 `tools/hero-archetypes/build.ts`（2026-08-23 P4 lane 的檔案柵欄外）。",
+};
+
 const EXEMPT: Record<string, string> = {
   "voxel:check": "體素**角色身體**產生器 —— 讀的是英雄外觀，不讀 abilities/vfx/級距",
   "voxel:build:check": "同上，只是驗產物",
@@ -70,15 +107,99 @@ const EXEMPT: Record<string, string> = {
  */
 function scripts(): Record<string, string> {
   const read = (p: string) => (JSON.parse(readFileSync(p, "utf8")).scripts ?? {}) as Record<string, string>;
-  const paths = execFileSync("git", ["ls-files", "package.json", "**/package.json"], {
-    cwd: REPO,
-    encoding: "utf8",
-  })
-    .split("\n")
-    .filter((p) => p && !p.includes("node_modules"));
+  const paths = pkgJsonPaths();
   const all: Record<string, string> = {};
   for (const p of paths.filter((p) => p !== "package.json")) Object.assign(all, read(join(REPO, p)));
   return { ...all, ...read(join(REPO, "package.json")) };
+}
+
+const ls = (args: string[]) =>
+  execFileSync("git", ["ls-files", ...args], { cwd: REPO, encoding: "utf8" })
+    .split("\n")
+    .filter((p) => p && !p.includes("node_modules"));
+const pkgJsonPaths = () => ls(["package.json", "**/package.json"]);
+
+/**
+ * 每個腳本名住在**哪幾份** package.json。
+ * ⚠️ 一定要是多對一:`voxel:check` 在 root 與 `tools/voxel-gen/package.json` **各有一份**
+ * （root 那一支只是 `pnpm --filter` 轉發）。只留最後一份的話,`tools/voxel-gen/` 就變成
+ * 「零腳本」而被誤報 —— 而誤報會讓人去放寬這條閘。
+ */
+function scriptHomes(): Record<string, string[]> {
+  const homes: Record<string, string[]> = {};
+  for (const p of pkgJsonPaths()) {
+    for (const k of Object.keys(JSON.parse(readFileSync(join(REPO, p), "utf8")).scripts ?? {})) {
+      homes[k] = [...(homes[k] ?? []), p];
+    }
+  }
+  return homes;
+}
+
+/** `tools/<dir>` → 它寫出去的 git 追蹤產物（保守偵測，見 {@link GENERATOR_NO_CHECK} 的檔頭）。 */
+function generatorDirs(): Map<string, string[]> {
+  const tracked = ls(["docs", "content"]);
+  const trackedFiles = new Set(tracked);
+  const known = new Set(tracked);
+  for (const f of tracked) {
+    const seg = f.split("/");
+    for (let i = 1; i < seg.length; i++) known.add(seg.slice(0, i).join("/"));
+  }
+  const WRITE =
+    /open\([^)]*["'][wa]\+?b?["']|write_text\(|write_bytes\(|writeFileSync|DictWriter|writeFile\(|mkdirSync|makedirs\(/;
+  const LIT = /["'`]([A-Za-z0-9_./*+-]*)["'`]/g;
+  /**
+   * 一行裡所有**串得起來**的 docs//content/ 路徑。
+   * ⚠️ 一定要串:出貨的產生器有兩種寫法，而只認第一種的偵測**看不到第二種** ——
+   *   `ROOT / "docs/x.csv"`            ← 一個字面值
+   *   `ROOT / "docs" / "x.csv"`        ← 三個字面值（`join(REPO, "docs", "x.csv")` 同理）
+   * 2026-08-23 實測:只認第一種時，這支閘對它自己剛剛接上的 `tools/ability-templates/gen.py`
+   * 是**瞎的**（突變沒紅）。⛔ 一個只看得到一半的閘，紅不起來的那一半才是它要防的東西。
+   */
+  const pathsOn = (line: string, known: ReadonlySet<string>): string[] => {
+    const lits = [...line.matchAll(LIT)].map((m) => m[1]!.replace(/^(\.\.\/)+/, ""));
+    const found: string[] = [];
+    for (let i = 0; i < lits.length; i++) {
+      if (!/^(docs|content)(\/|$)/.test(lits[i]!)) continue;
+      let acc = lits[i]!;
+      for (let j = i; j < lits.length; j++) {
+        if (j > i) acc += `/${lits[j]}`;
+        if (known.has(acc)) found.push(acc);
+      }
+    }
+    return found;
+  };
+  const out = new Map<string, string[]>();
+  for (const f of ls(["tools"])) {
+    if (!/\.(py|ts|tsx|mjs)$/.test(f) || f.includes("/out/") || /\.test\./.test(f)) continue;
+    const text = readFileSync(join(REPO, f), "utf8");
+    if (!WRITE.test(text)) continue;
+    const lines = text.split("\n");
+    for (const [i, line] of lines.entries()) {
+      for (const p of pathsOn(line, known)) {
+        // ⛔ 一次性的報告落點不是產物（CLAUDE.md 的 `_temp_` 命名慣例就是為了這個）
+        if (/_temp_|^docs\/(_reports|_daily)\//.test(p)) continue;
+        // ⭐ 指名一份**追蹤中的檔** + 這支檔案有寫入呼叫 ⇒ 它是那份產物的產生器。
+        //    ⚠️ 這一格是必要的:出貨的產生器多半把落點寫成一個模組級常數,再在別的地方
+        //    透過**別的名字**（迴圈變數、dict 的鍵）寫出去 —— 逐行追名字追不到它。
+        let writes = trackedFiles.has(p);
+        if (!writes) writes = WRITE.test(line);
+        if (!writes) {
+          const bind = line.match(/^\s*(?:export\s+)?(?:const|let|var)?\s*([A-Za-z_]\w*)\s*[:=]/);
+          if (bind) {
+            const use = new RegExp(
+              `(?:open|writeFileSync|writeFile|mkdirSync)\\(\\s*${bind[1]}\\b|${bind[1]}\\.(?:write_text|open|write)\\(`,
+            );
+            writes = lines.some((l, j) => j !== i && use.test(l));
+          }
+        }
+        if (writes) {
+          const dir = f.split("/")[1]!;
+          out.set(dir, [...(out.get(dir) ?? []), `${f} → ${p}`]);
+        }
+      }
+    }
+  }
+  return out;
 }
 
 describe("skills:sync / skills:check 涵蓋所有產生器", () => {
@@ -118,6 +239,32 @@ describe("skills:sync / skills:check 涵蓋所有產生器", () => {
     expect(
       unbuildable,
       `這幾支驗得到卻**重生成不了** —— 閘紅了沒有人知道要跑什麼:\n  ${unbuildable.join("\n  ")}`,
+    ).toEqual([]);
+  });
+
+  // ⭐⭐ 上面兩條看的是**腳本名**;這一條從**產物**那一端看,補的是「連腳本都沒有的產生器」那個洞。
+  it("每一支寫 docs/ 或 content/ 產物的產生器,目錄都在聚合指令的視野裡", () => {
+    const s = scripts();
+    const homes = scriptHomes();
+    const aggregate = s["skills:check"] ?? "";
+    const gens = generatorDirs();
+    expect(gens.size, "產生器掃描回空的 —— 偵測壞了,⛔ 不是真的沒有產生器").toBeGreaterThan(10);
+
+    const blind = [...gens.keys()].sort().filter((dir) => {
+      if (dir in GENERATOR_NO_CHECK) return false;
+      const refs = Object.entries(s)
+        .filter(([k, v]) => v.includes(`tools/${dir}/`) || (homes[k] ?? []).includes(`tools/${dir}/package.json`))
+        .map(([k]) => k);
+      // ⭐ 「在視野裡」= 有一支 `*:check` 被 skills:check 跑到,或那一支已經帶著理由被豁免。
+      return !refs.some((k) => k.endsWith(":check") && (aggregate.includes(k) || k in EXEMPT));
+    });
+
+    expect(
+      blind,
+      `這幾個目錄在寫 git 追蹤的產物,卻**沒有任何 `+"`*:check`"+` 在聚合指令裡看得到它們:\n` +
+        blind.map((d) => `  tools/${d}/  ← ${gens.get(d)![0]}`).join("\n") +
+        `\n→ 給它一支 *:build/*:check 並接進 package.json 的 skills:sync / skills:check,` +
+        `\n  或在 GENERATOR_NO_CHECK 裡寫下**為什麼它的產物不會過期**（要能被反駁）。`,
     ).toEqual([]);
   });
 });
