@@ -25,6 +25,7 @@
  */
 import type { Scene } from "@babylonjs/core/scene";
 import { CreateRibbon } from "@babylonjs/core/Meshes/Builders/ribbonBuilder";
+import { VertexBuffer } from "@babylonjs/core/Buffers/buffer";
 import type { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { Constants } from "@babylonjs/core/Engines/constants";
@@ -215,10 +216,23 @@ export class ArcBoltFx {
     // ⭐ 兩個插槽都要:`emissiveTexture` 給白熱核心的 RGB,`opacityTexture` 給
     // 兩緣的柔邊 —— 加法混合只有 alpha 那一路縮得動亮度,少了後者邊緣仍然是硬的。
     const glow = this.ensureGlowTexture();
-    if (glow) {
-      mat.emissiveTexture = glow as unknown as Texture;
-      mat.opacityTexture = glow as unknown as Texture;
-    }
+    // ⛔⛔ **這裡刻意一張貼圖都不掛。**（2026-08-24 量到並拍到）
+    //
+    // 原本掛的是一張 1×32 的橫截面漸層（`arcGlowRamp`），同時當 `emissiveTexture`
+    // 與 `opacityTexture`。⭐ 實測：**只要那張圖在，這一族就是 0 個亮像素**——
+    // `chain-lightning-audition.html` 上逐項排除：
+    //   · 幾何在（18 頂點）· 材質 ready · 在視錐內 · `isEnabled()` true
+    //   · emissive 拉到純白 ＋ alpha 1 ⇒ **仍然 0 個亮像素**
+    //   · 拿掉 `opacityTexture` ⇒ 依舊 0；**再拿掉 `emissiveTexture` ⇒ 7,905 個亮像素、最大通道 255**
+    // ⇒ 斷點在**那張貼圖的取樣**（1 texel 寬 × mipmap × 螢幕上只有幾個像素寬的帶子），
+    //   ⛔ 不在混合模式、不在幾何、不在亮度。
+    //
+    // ⭐ 而柔邊本來就不是非它不可：加法混合的亮度由 `emissiveColor` 決定，
+    //   `paint()` 每幀已經在寫「白熱核心 → 元素本色」的漸變。⇒ 一條乾淨的
+    //   發光線，玩家看得到 —— 那是這一族存在的**唯一**理由。
+    // ⚠️ 想要回「兩緣柔化」的話，正確做法是**多一條中線路徑**（三條 path 的
+    //   ribbon，中間亮兩緣暗，用頂點色），⛔ 不是再掛一次這張會消失的貼圖。
+    void glow;
     return {
       mesh: null,
       mat,
@@ -278,6 +292,35 @@ export class ArcBoltFx {
       { pathArray: [strip.left, strip.right], updatable: true },
       this.scene,
     );
+    // ⛔⛔ **UV 要自己寫，⛔ 不可以交給 `CreateRibbon` 算。**
+    //
+    // 這裡建網格用的是**全部 (0,0,0) 的退化路徑**（節點座標要等到 `reshape()`
+    // 才填），而 Babylon 的 ribbon UV 是**從路徑長度推**的 ⇒ 路徑長度 0
+    // ⇒ **每一個 UV 都是 (0,0)**。而 `CreateRibbon(…, { instance })` 就地更新
+    // 位置時**不會重算 UV** ⇒ 那組 (0,0) 從此不會再變。
+    //
+    // ⭐ 後果不是「貼圖歪掉」，是**整族閃電一個像素都沒畫出來過**：
+    // `opacityTexture` 是一張 1×32 的漸層，alpha 在 **v=0（兩緣）是 0**、
+    // 在中央才是 1 ⇒ 每一條弧都取樣在最外緣 ⇒ **全透明**。
+    // ⚠️ 2026-08-24 在 `chain-lightning-audition.html` 上量到並拍到：
+    // 幾何在、材質 ready、在視錐內、`isEnabled()` 為 true、
+    // 把 emissive 拉到純白＋alpha 1 **仍然看不見**；一拿掉 `opacityTexture`
+    // 整片電網當場出現。owner 逐字：「一堆閃電特效⋯都沒有真的出現」。
+    //
+    // ⇒ 自己寫：**u 沿著弧走**（0→1），**v 橫跨弧帶寬度**（左緣 0、右緣 1）——
+    // 那正是 `arcGlowRamp` 的檔頭本來就說的那件事（「v 軸橫跨弧帶寬度」）。
+    {
+      // ⚠️ 頂點是**交錯**的：`[左0, 右0, 左1, 右1, …]`（量出來的 ——
+      // 相鄰兩個頂點的距離剛好是一個帶寬，⛔ 不是「左半段接右半段」）。
+      // ⇒ 偶數 index 是左緣（v=0）、奇數是右緣（v=1）；u 沿著弧走。
+      const uvs = new Float32Array(n * 2 * 2);
+      for (let i = 0; i < n * 2; i++) {
+        const along = n > 1 ? Math.floor(i / 2) / (n - 1) : 0;
+        uvs[i * 2] = along;
+        uvs[i * 2 + 1] = i % 2 === 0 ? 0 : 1;
+      }
+      mesh.setVerticesData(VertexBuffer.UVKind, uvs, true);
+    }
     mesh.material = strip.mat;
     mesh.isPickable = false;
     mesh.receiveShadows = false;

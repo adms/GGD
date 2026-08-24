@@ -423,12 +423,22 @@ export function arcGlowRamp(size: number, coreT: number): Uint8Array {
       const k = 1 - (d - core) / (1 - core);
       a = k * k; // 二次衰減 = 外圍輝光,⛔ 不是線性(線性讀起來仍然是一條帶子)
     }
+    // ⛔⛔ **柔邊烘進 RGB，⛔ 不是 alpha。**（2026-08-24，量到並拍到）
+    //
+    // 在這一行之前，RGB 是平的 255、形狀住在 **alpha** 裡，而材質把同一張圖
+    // 掛成 `opacityTexture` ⇒ 一條 0.17 世界單位寬的弧在螢幕上只有幾個像素，
+    // 而那幾個像素取樣到的 alpha 幾乎都在兩緣（≈0）⇒ **整族閃電一個像素都沒畫出來過**。
+    // ⭐ 實測（`chain-lightning-audition.html`）：把 `opacityTexture` 拿掉的那一刻
+    //    整片電網當場出現；把 UV 的 v 全部強制成 0.5（漸層正中央）也一樣
+    //    ——亮像素 0 → 7,991、最大通道 44 → 255。
+    // ⇒ 加法混合的亮度本來就由 **RGB** 決定：把形狀寫進 RGB、alpha 留滿，
+    //   柔邊一樣在，⛔ 而且不再有「取樣到邊緣就整條消失」這個懸崖。
     const v = Math.round(255 * a);
     const o = i * 4;
-    out[o] = 255;
-    out[o + 1] = 255;
-    out[o + 2] = 255;
-    out[o + 3] = v;
+    out[o] = v;
+    out[o + 1] = v;
+    out[o + 2] = v;
+    out[o + 3] = 255;
   }
   return out;
 }
