@@ -380,6 +380,16 @@ export class ModelFxRig {
           return;
         }
         this.containers.set(modelKey, c);
+        // ⭐ GH#673-①c —— 首發那幾具是在容器**之前**生的空殼,現在補幾何。
+        //    ⛔ 不補的話「第一次施放沒有特效」,而那正是玩家最會注意的那一次
+        //    (acquire 檔頭的承諾在此之前沒有任何人兌現)。
+        if (c) {
+          for (const item of this.live) {
+            if (item.modelKey !== modelKey || item.axis.getChildren().length > 0) continue;
+            const doc = this.opts.resolveModel(modelKey);
+            if (doc) this.fillGeometry(modelKey, item.axis, doc);
+          }
+        }
       })
       .catch(() => {
         this.loading.delete(modelKey);
@@ -394,10 +404,39 @@ export class ModelFxRig {
    * 幾何晚幾幀補進來。⛔ 反過來(等載入完再生)會讓技能的第一次施放沒有特效,
    * 而那正是玩家最會注意的那一次。
    */
+  /**
+   * ⭐ GH#673-① —— 把容器的幾何灌進一個(還)空的實例。
+   *
+   * 三個呼叫端,三種時機同一份程式:
+   *   a. `acquire` 造新節點且容器已載 —— 原本唯一會發生的那條路
+   *   b. `acquire` 從池子撈到**空殼** —— 首發造出的空節點被 release 進池子之後,
+   *      每一次重用都還是空的(⚠️ 2026-08-24 量到:第 2 發、glb 已載 6 秒,照樣整發
+   *      看不見)。「幾何晚幾幀補進來」那句註解在此之前**是假的** —— 沒有任何
+   *      程式碼做補這件事(第三守則)。
+   *   c. 容器**載完的當下**回填還活著的空實例 —— 首發那一具就是在這裡補的。
+   */
+  private fillGeometry(modelKey: string, axis: TransformNode, doc: ModelFxModelDoc): boolean {
+    const container = this.containers.get(modelKey);
+    if (!container) return false;
+    const serial = this.serial++;
+    const inst = container.instantiateModelsToScene(
+      (n) => `modelfx-${serial}-${n}`,
+      false,
+      { doNotInstantiate: true },
+    );
+    for (const node of inst.rootNodes) node.parent = axis;
+    if (doc.fxTint) applyFxTint(axis, doc.fxTint);
+    return true;
+  }
+
   private acquire(modelKey: string, doc: ModelFxModelDoc): ModelFxNodes | null {
     const free = this.pool.get(modelKey);
     const reused = free?.pop();
-    if (reused) return reused;
+    if (reused) {
+      // ⭐ GH#673-①b —— 池子裡的可能是首發留下的空殼:現在容器到了就補。
+      if (reused.axis.getChildren().length === 0) this.fillGeometry(modelKey, reused.axis, doc);
+      return reused;
+    }
 
     const serial = this.serial++;
     const root = new TransformNode(`modelfx-${modelKey}-${serial}`, this.scene);
@@ -408,19 +447,9 @@ export class ModelFxRig {
     // ⛔ 不是靠一個只有測試會呼叫的存取器(失敗形態⑤)。
     const axis = new TransformNode(`modelfx-axis-${modelKey}-${serial}`, this.scene);
     axis.parent = root;
-    const container = this.containers.get(modelKey);
-    if (container) {
-      const inst = container.instantiateModelsToScene(
-        (n) => `modelfx-${serial}-${n}`,
-        false,
-        { doNotInstantiate: true },
-      );
-      for (const node of inst.rootNodes) node.parent = axis;
-      // ⭐ 頂點著色：原作把顏色掛在 dummy 的**單位型別**上，這裡是它的對應物。
-      // ⚠️ 掛在 `acquire` 而⛔ 不是 `spawn`，因為素材 clone 是**每一具一次**的成本，
-      //    而實例會被回收重用 —— 放進 `spawn` 就是每一次施放都重新 clone 一批素材。
-      if (doc.fxTint) applyFxTint(axis, doc.fxTint);
-    }
+    // 容器還在串流時 fillGeometry 回 false —— 空節點照樣回去(特效準時出現在
+    // 正確位置),⭐ 但幾何**真的**會晚幾幀補進來:容器載完的 callback 會回填(①c)。
+    this.fillGeometry(modelKey, axis, doc);
     return { root, axis };
   }
 

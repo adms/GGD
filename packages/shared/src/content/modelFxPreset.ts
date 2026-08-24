@@ -59,6 +59,11 @@ const PRESET_FIELDS = [
   "count",
   "spinDegPerSec",
   "scale",
+  // ⭐ GH#673-② —— static/orbit 的**唯一終止條件**。2026-08-24 之前不在這張表:
+  //    模板寫了 lifeSec:2 而它**從未到達出貨節點** ⇒ 光束靠 vfxHardMaxLifeSec=5
+  //    兜底活 4.97 秒、落點爆炸在施放瞬間就響(arriveDelaySec 用 travel=0 算成 0)。
+  //    BA lane 的連續擷圖抓到的(docs/_reports/beam_visual-proof_20260824-2240)。
+  "lifeSec",
 ] as const;
 
 /**
