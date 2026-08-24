@@ -132,14 +132,14 @@ export function FriendsPanel(): React.JSX.Element {
                     title="邀請進我的房間 —— 和我同一隊"
                     onClick={() => void createInvite(f.id, f.username || f.id, "ally")}
                   >
-                    同隊
+                    友方
                   </Btn>
                   <Btn
                     small
                     title="邀請進我的房間 —— 坐到對面"
                     onClick={() => void createInvite(f.id, f.username || f.id, "enemy")}
                   >
-                    對面
+                    敵對
                   </Btn>
                 </>
               )}
