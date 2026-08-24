@@ -370,10 +370,10 @@ if (!noSync) {
   //    解鎖）⇒ 這裡也要解鎖。⛔ 不鎖回去交給 sync.mjs 的 exit handler /
   //    下面的 finally —— 兩邊都鎖是冪等的,少一邊才是洞。
   try {
-    execFileSync("bash", ["scripts/product-quarantine.sh", "unlock"], { cwd: ROOT, stdio: "inherit" });
+    execFileSync("bash", ["scripts/product-quarantine.sh", "unlock"], { cwd: REPO, stdio: "inherit" });
   } catch (e) { console.error(`⚠️ 隔離區 unlock 失敗(不擋): ${String(e)}`); }
   process.on("exit", () => {
-    try { execFileSync("bash", ["scripts/product-quarantine.sh", "lock"], { cwd: ROOT, stdio: "ignore" }); }
+    try { execFileSync("bash", ["scripts/product-quarantine.sh", "lock"], { cwd: REPO, stdio: "ignore" }); }
     catch { /* 鎖不回去不擋出貨 */ }
   });
   for (const s of SERIAL) {
