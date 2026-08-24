@@ -790,8 +790,18 @@ export const DEFAULT_BOTH_DRAFTS_EXTRA_SEC = 10;
  * 時間夾到 min(現值, now + 這格秒數)。夾的是 `FireRingRules.startTicks` ——
  * 與殭屍王延長動的是同一個數字，所以二段制／燃燒曲線整個形狀跟著平移。
  * 消費端：`apps/game-server/src/match/MatchController.ts::accelFireRingForBotOnly`。
+ *
+ * ⭐ **GH#659 把出貨值從 10 改成 0**（owner 2026-08-24 逐字，這是對 #643 的更正）：
+ * > 「場地只剩 bot 的話 **不管有沒有殭屍王** 火圈**都會立即出現縮圈**」
+ *
+ * 0 ⇒ cap ＝ `world.fireRingTicks`（現在），而 `fireRingActive` 的判準是
+ * `fireRingTicks >= startTicks` ⇒ **同一個 tick 就點火**，⛔ 不再等 10 秒。
+ * 「不管有沒有殭屍王」那一半本來就成立（每個 combat tick 重新夾，王把
+ * `startTicks` 推遠 180 秒也會在下一個 tick 被夾回來）—— #659 要求把它
+ * **驗一次**而不是相信 commit 訊息，守衛在 `botOnlyRingAccel.test.ts`。
+ * ⭐ rollback ＝ 把這一格調回 10（v0.26.1 的行為），⛔ 不必改程式。
  */
-export const DEFAULT_BOT_ONLY_RING_ACCEL_SEC = 10;
+export const DEFAULT_BOT_ONLY_RING_ACCEL_SEC = 0;
 /**
  * GH#651 —— 一場打完之後，房間還留著幾秒讓大家看戰績。
  *
@@ -1074,10 +1084,10 @@ export const zConfigArenaRulesDoc = z
       .optional()
       .describe(
         "還在打的場地裡一個活著的人類都不剩（全滅、輪空、或人類的場已分出勝負）時，" +
-          "火圈點火時間被夾到「現在＋這格秒數」（出貨 10）。owner GH#643：" +
-          "「如果現場只剩 bot 存活，回合時間縮減到10秒後就縮火圈 不要平白浪玩家等待」。" +
-          "調小＝bot 互毆收得更快；0＝立刻點火。⛔ 它只提前點火，不動回合硬底線，" +
-          "也⛔ 不會把已經更早的點火時間往後推。",
+          "火圈點火時間被夾到「現在＋這格秒數」。owner GH#659（對 #643 的更正）：" +
+          "「場地只剩 bot 的話 不管有沒有殭屍王 火圈都會立即出現縮圈」 ⇒ 出貨值是零秒＝立刻點火。" +
+          "調大＝bot 互毆多打幾秒才收（調成十秒就是 v0.26.1 的行為）。" +
+          "⛔ 它只提前點火，不動回合硬底線，也⛔ 不會把已經更早的點火時間往後推。",
       ),
     /**
      * GH#643 的開關。省略 = {@link DEFAULT_BOT_ONLY_RING_ACCEL_ENABLED}（開）。
@@ -1090,7 +1100,8 @@ export const zConfigArenaRulesDoc = z
         "「只剩 bot 在打就提前縮火圈」整個機制的開關（出貨開）。關掉＝回到舊行為：" +
           "就算場上只剩 bot 互毆，火圈也照原本的點火時間等。" +
           "⚠️ 殭屍王延長與它同場時，這格開著的話 bot-only 贏（人都不在了，" +
-          "王的延長沒有觀眾）—— 關掉這格就是把裁決整個讓回給殭屍王延長。",
+          "王的延長沒有觀眾）—— owner GH#659 逐字：「場地只剩 bot 的話 不管有沒有殭屍王 " +
+          "火圈都會立即出現縮圈」。關掉這格就是把裁決整個讓回給殭屍王延長。",
       ),
     /**
      * ⭐ **bot 的商店行為**（owner 2026-08-18）。省略 = {@link DEFAULT_BOT_SHOP}。

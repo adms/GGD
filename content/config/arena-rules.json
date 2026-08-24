@@ -6,7 +6,7 @@
   "offerCount": 3,
   "finalRound": 10,
   "bothDraftsExtraSec": 10,
-  "botOnlyRingAccelSec": 10,
+  "botOnlyRingAccelSec": 0,
   "botOnlyRingAccelEnabled": true,
   "postMatchLingerSec": 120,
   "draftConflict": "round-roll",

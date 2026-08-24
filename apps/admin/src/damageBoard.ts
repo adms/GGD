@@ -10,7 +10,43 @@
  * ⚠️ 佔比的計算基礎:**目前過濾結果內**的傷害總和(不是全 zset)——
  * 頁面上要把這句話印出來(CLAUDE.md:百分比一定要標出計算基礎)。
  */
-import { api } from "./api";
+import { DEFAULT_ONE_SHOT_PCT_OF_MAX_HP } from "@ggd/shared/content";
+import { api, getOverlayDoc, getShippedDoc } from "./api";
+
+/** GH#658 的門檻住在這一份 config 的這一格。 */
+export const DAMAGE_RULES_DOC_ID = "damage-rules";
+const ONE_SHOT_FIELD = "oneShotPctOfMaxHp";
+
+/** 一份 `config.damage-rules@1` 文件裡的門檻;讀不到回 `null`(⛔ 不是出貨值)。 */
+export function readOneShotThreshold(doc: unknown): number | null {
+  if (typeof doc !== "object" || doc === null) return null;
+  const v = (doc as Record<string, unknown>)[ONE_SHOT_FIELD];
+  return typeof v === "number" && Number.isFinite(v) && v > 0 ? v : null;
+}
+
+/**
+ * 目前**生效**的門檻:耐久覆蓋層 → repo 的出貨檔 → 程式裡的出貨常數。
+ *
+ * ⚠️ 順序就是 config 的生效順序(覆蓋層蓋掉 `content/config/`)——
+ * 後台那一頁標紅的界線必須和 owner 在「傷害規則」那一頁看到的是同一個數字,
+ * ⛔ 不可以自己抄一份(第〇·四守則)。三層都讀不到就退回出貨常數並繼續 ——
+ * 一頁唯讀報表不該因為一個設定端點慢了就整頁爆紅。
+ */
+export async function fetchOneShotThreshold(): Promise<number> {
+  try {
+    const ov = readOneShotThreshold(await getOverlayDoc("config", DAMAGE_RULES_DOC_ID));
+    if (ov !== null) return ov;
+  } catch {
+    /* fail-open —— 見上面 */
+  }
+  try {
+    const sh = readOneShotThreshold((await getShippedDoc("config", DAMAGE_RULES_DOC_ID)).doc);
+    if (sh !== null) return sh;
+  } catch {
+    /* fail-open */
+  }
+  return DEFAULT_ONE_SHOT_PCT_OF_MAX_HP;
+}
 
 /** 與 game-server `DamageBoardEntry` 同形(wire 契約;多餘欄位忽略)。 */
 export interface DamageBoardRow {
@@ -25,6 +61,25 @@ export interface DamageBoardRow {
   version: string;
   matchId: string;
   seatId: number;
+  /**
+   * ⭐ GH#658 —— 這一次施放打在**單一英雄**身上的最大一擊。
+   * `null` = 這一筆是 #658 之前寫進 zset 的舊資料(⛔ 不是 0 傷害)。
+   */
+  victimDamage: number | null;
+  /** 那一擊命中當下,該目標的最大生命。`null` = 不知道(同上)。 */
+  victimMaxHp: number | null;
+}
+
+/**
+ * GH#658 —— 「這一發佔了目標多少血」。**推導**,⛔ 不存第二份(第〇·四守則)。
+ *
+ * ⚠️ 回 `null` 而不是 0:舊資料沒有這兩格。0 是一個**真的**百分比,
+ * 拿它代表「不知道」會讓每一筆舊列看起來都像沒打到人(#658 逐字點名的坑)。
+ */
+export function pctOfMaxHp(r: Pick<DamageBoardRow, "victimDamage" | "victimMaxHp">): number | null {
+  const { victimDamage: d, victimMaxHp: m } = r;
+  if (d === null || m === null || !(m > 0) || !(d > 0)) return null;
+  return d / m;
 }
 
 export interface DamageBoardResp {
@@ -60,6 +115,9 @@ export function normalizeDamageBoard(v: unknown): DamageBoardResp {
       version: typeof e.version === "string" ? e.version : "",
       matchId: typeof e.matchId === "string" ? e.matchId : "",
       seatId: typeof e.seatId === "number" ? e.seatId : -1,
+      // ⚠️ 缺席 → `null`(不知道),⛔ 不是 0 —— 見 {@link pctOfMaxHp}。
+      victimDamage: typeof e.victimDamage === "number" && Number.isFinite(e.victimDamage) ? e.victimDamage : null,
+      victimMaxHp: typeof e.victimMaxHp === "number" && Number.isFinite(e.victimMaxHp) ? e.victimMaxHp : null,
     });
   }
   return out;
@@ -71,23 +129,35 @@ export async function fetchDamageBoard(count = 1_000): Promise<DamageBoardResp> 
   return normalizeDamageBoard(raw);
 }
 
-/** 三格過濾器 —— "" = 不過濾。 */
+/** 過濾器 —— "" = 不過濾。 */
 export interface DamageBoardFilter {
   championId: string;
   abilityId: string;
   version: string;
+  /**
+   * ⭐ GH#658「只看一擊超過門檻的」。0 = 不過濾。
+   * ⚠️ 門檻本身是 `config.damage-rules@1` 的 `oneShotPctOfMaxHp`(後台可調),
+   * ⛔ 這裡不寫死 —— 頁面把當下生效的值填進來。
+   */
+  minPctOfMaxHp: number;
 }
 
 export function filterDamageRows(
   rows: readonly DamageBoardRow[],
   f: DamageBoardFilter,
 ): DamageBoardRow[] {
-  return rows.filter(
-    (r) =>
-      (f.championId === "" || r.championId === f.championId) &&
-      (f.abilityId === "" || r.abilityId === f.abilityId) &&
-      (f.version === "" || r.version === f.version),
-  );
+  return rows.filter((r) => {
+    if (f.championId !== "" && r.championId !== f.championId) return false;
+    if (f.abilityId !== "" && r.abilityId !== f.abilityId) return false;
+    if (f.version !== "" && r.version !== f.version) return false;
+    if (f.minPctOfMaxHp > 0) {
+      const p = pctOfMaxHp(r);
+      // ⚠️ 不知道的那些**被濾掉**,⛔ 不是當成 0 也⛔ 不是通通留下 ——
+      // 這個過濾器問的是「有沒有超過門檻」,而舊資料回答不了。
+      if (p === null || p < f.minPctOfMaxHp) return false;
+    }
+    return true;
+  });
 }
 
 /** 一隻英雄在目前過濾結果內的佔比。 */

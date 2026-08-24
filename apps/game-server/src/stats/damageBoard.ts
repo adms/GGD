@@ -58,6 +58,15 @@ export interface DamageBoardEntry {
   castId: number;
   /** 施放的絕對 tick(事後對 replay 用) */
   tick: number;
+  /**
+   * ⭐ GH#658 —— 這一次施放打在**單一英雄**身上的最大一擊。
+   * ⚠️ **可缺席**:#658 之前寫進 zset 的每一筆都沒有這兩格,而那些 member
+   * 仍然要讀得出來(`isDamageBoardEntry` 因此**不**檢查它們)。後台看到缺席
+   * 要畫「—」,⛔ 不是 0 —— 0 是一個真的百分比。
+   */
+  victimDamage?: number;
+  /** 上面那一擊命中當下,那個目標的最大生命。缺席/0 = 不知道。 */
+  victimMaxHp?: number;
 }
 
 /** 全域排行榜的 zset key。改 schema 就 bump 版本後綴,舊 key 自然老死。 */
@@ -104,6 +113,9 @@ export function buildDamageBoardEntries(
     seatId: c.seatId,
     castId: c.castId,
     tick: c.tick,
+    // GH#658 —— 兩個**原始事實**;百分比由後台推導(`pctOfVictimMaxHp`)。
+    victimDamage: c.victimDamage,
+    victimMaxHp: c.victimMaxHp,
   }));
 }
 

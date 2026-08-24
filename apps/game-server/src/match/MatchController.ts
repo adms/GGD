@@ -246,6 +246,7 @@ import {
 } from "@ggd/shared/sim/economy/progression";
 import { Seat, type SeatDriver } from "../seat/Seat";
 import { AIDriver } from "../ai/Tier0Brain";
+import { DummyDriver } from "./DummyDriver";
 import { Whitelist } from "../curation/whitelist";
 import { Ownership } from "../curation/ownership";
 // 隱藏英雄（彩蛋，owner 2026-08-17「隱藏角色可以隨機到 但不能選到」）。
@@ -481,6 +482,18 @@ export function settlementCardOnHealthSpentFromDoc(doc: unknown): boolean {
  */
 const PRACTICE_TEAM: TeamId = asTeamId(0);
 const PRACTICE_ZONE = 0;
+
+/**
+ * 練習靶坐哪裡（GH#657）—— 從 {@link PRACTICE_TEAM} 的**下一個**座位開始，
+ * 一路往上數 `dummyCount` 個。⭐ 它是**推導**出來的，⛔ 不是第二張手寫的表：
+ * 座位↔隊伍的關係全 repo 只有一條（`teamId = floor(seatId / TEAM_SIZE)`），
+ * 所以靶子只要占用「玩家那一隊之後的那幾個座位」就自然落在敵隊。
+ *
+ * ⚠️ 上界 5（`PRACTICE_DUMMY_MAX`）> `TEAM_SIZE`，所以第 4、5 個靶會落到
+ * **第二支**敵隊。那不是缺陷：練習房沒有配對，「哪一隊」在這間房裡只回答
+ * 「誰是敵人」，而 1 隊與 2 隊對玩家（0 隊）都是敵人。
+ */
+const PRACTICE_DUMMY_FIRST_SEAT = (PRACTICE_TEAM + 1) * TEAM_SIZE;
 
 // ── 練習面板（GH#365）的常數 ─────────────────────────────────────────────────
 
@@ -1417,7 +1430,14 @@ export class MatchController {
       // 被藏起來、不是被調弱、也不是開場就被殺掉，而是從來沒有進過這個世界。
       // 所有以 `entityId !== null` 過濾的下游（計分板、決鬥判定、帳本、快照）因此
       // 天生就看不到它們，不需要一處一處記得跳過。
-      if (this.practice && seat.teamId !== PRACTICE_TEAM) continue;
+      // ⭐ GH#657 —— 靶子是這條規則的**唯一**例外：它們是敵隊座位，而且它們
+      // **真的要進這個世界**（owner:「對方三個英雄」）。其餘敵隊座位照舊一個都不生。
+      const isDummy = this.isPracticeDummySeat(seat);
+      if (this.practice && seat.teamId !== PRACTICE_TEAM && !isDummy) continue;
+      // 靶子的英雄可以被釘死在一隻（`dummyChampionId`），用來把血量／護甲放在一個
+      // 已知的基準上量傷害。⛔ 空字串／不存在的 id **不是錯誤** —— 下面那一行的
+      // `lockedManually` 會判它不可生成，於是照常隨機抽，練習房不會開不起來。
+      if (isDummy && this.practice?.dummyChampionId) seat.championId = this.practice.dummyChampionId;
       // AUTO-ASSIGN (the 隨機英雄 path): a seat with no pick, or one carrying a
       // champion that is no longer enabled / no longer a valid model-backed
       // champion / not owned by this account, gets a random champion at lock-in.
@@ -1469,6 +1489,11 @@ export class MatchController {
         //    owner 回報的「技能兩三發就會死」位置正是 LV1–LV5。
         level: heroStartLevel(Configs.tryGet("config.match")),
       });
+      // ⭐ GH#657 —— 靶子的 driver 在**英雄定案的同一點**換掉，⛔ 不是在建構子
+      // （那時候 `this.practice` 還沒被 MatchRoom 交下來）。`dummyFightsBack`
+      // 開著就**不換** ⇒ 它留著建構子給的 `AIDriver` ⇒ 逐位元等於今天的 vs bot
+      // 行為，也就是這一格的 rollback 語意。
+      if (isDummy && !this.practice?.dummyFightsBack) seat.setDriver(new DummyDriver());
       this.applyShopPriceMult(seat);
       // #207 選角紀錄。寫在這裡而不是 `selectChampion`,因為這裡才是**每一個
       // 座位的英雄定案**的唯一一點:沒選的、選了但被白名單/擁有權擋掉的、
@@ -2368,7 +2393,12 @@ export class MatchController {
         // GH#343 —— 練習房把「排程波次要不要自己來」蓋上去。這是**唯一**一格穿進
         // sim 的練習設定，而且它是 `MobRules` 上的一個布林，⛔ 不是 `SimWorld` 上
         // 的一個新欄位：規則表本來就每回合重建，所以它跟著回合走、不會有殘留。
-        this.practice ? { ...mobRules, autoWaves: this.practice.autoMobWaves } : mobRules,
+        // ⭐ GH#657 —— `inertSeats` 走**同一扇門**（`humanSeats` 的那一扇，理由逐字
+        // 寫在 `MobRules.humanSeats` 上）：規則表本來就每一回合重建並交進 sim，
+        // 所以「哪幾個座位是靶子」不需要在協定上開第二個欄位。
+        this.practice
+          ? { ...mobRules, autoWaves: this.practice.autoMobWaves, inertSeats: this.inertSeatIds() }
+          : mobRules,
         this.activeZones(),
       );
     } else {
@@ -2387,19 +2417,57 @@ export class MatchController {
   private placePractice(fighters: EntityId[]): void {
     const zoneDef = this.arena.zones[PRACTICE_ZONE] ?? this.arena.zones[0]!;
     let slot = 0;
+    let dummySlot = 0;
     for (const seat of this.seats.values()) {
-      if (seat.entityId === null || seat.teamId !== PRACTICE_TEAM) continue;
+      if (seat.entityId === null) continue;
+      // ⭐ GH#657 —— 靶子走**同一段**擺位（位置／分區／面向／新身體），只是站
+      // 對面那一側（`spawns[1]`）並且面向玩家。⛔ 不另開一條出生流程：少呼叫一次
+      // `restoreForNextRound`，上一回合打殘的靶子就會帶著殘血進下一場練習。
+      const dummy = this.isPracticeDummySeat(seat);
+      if (!dummy && seat.teamId !== PRACTICE_TEAM) continue;
+      const side = dummy ? 1 : 0;
       const t = this.world.transform.get(seat.entityId)!;
-      const spawn = zoneDef.spawns[0]![slot % TEAM_SIZE]!;
+      const spawn = zoneDef.spawns[side]![(dummy ? dummySlot : slot) % TEAM_SIZE]!;
       t.pos = { x: spawn.x, z: spawn.z };
       t.zone = PRACTICE_ZONE;
-      t.facing = { x: 1, z: 0 };
+      t.facing = { x: dummy ? -1 : 1, z: 0 };
       restoreForNextRound(this.world, seat.entityId);
       fighters.push(seat.entityId);
-      slot++;
+      if (dummy) dummySlot++;
+      else slot++;
     }
     // ⛔ 刻意**不**寫 `roundOutcome`：練習房不結算，而 FOUGHT 會讓帳本把一段練習
     // 記成一場真的對局。留在 NONE（＝輪空）是這件事最誠實的表示法。
+    // ⚠️ 靶子也一樣 —— 它們站在場上，但這一「回合」仍然沒有勝負。
+  }
+
+  /**
+   * 這個座位在這間房裡是不是**練習靶**（GH#657）。
+   *
+   * ⭐ 三個條件缺一不可，而且刻意都在**一支**函式裡（同 `resolvePracticeRules`
+   * 的理由）：擺位、生成、driver、索敵四個地方各自判一次，就會出現
+   * 「生了但沒擺位」「擺了位但還是拿 bot 大腦」那種半開狀態。
+   */
+  private isPracticeDummySeat(seat: Seat): boolean {
+    if (!this.practice) return false;
+    const slot = seat.seatId - PRACTICE_DUMMY_FIRST_SEAT;
+    return slot >= 0 && slot < this.practice.dummyCount;
+  }
+
+  /**
+   * 靶子的座位號（GH#657）—— 交給 sim 的 `MobRules.inertSeats`。
+   *
+   * ⚠️ `dummyFightsBack` 開著時回**空集合**：那一格的意思是「靶子拿一般 bot
+   * 大腦」，而一顆會走位會施法卻永遠索不到敵的 bot 是第三種行為，⛔ 不是
+   * owner 要的兩種之一。
+   */
+  private inertSeatIds(): ReadonlySet<SeatId> {
+    const out = new Set<SeatId>();
+    if (!this.practice || this.practice.dummyFightsBack) return out;
+    for (const seat of this.seats.values()) {
+      if (this.isPracticeDummySeat(seat)) out.add(seat.seatId);
+    }
+    return out;
   }
 
   /**
@@ -3687,6 +3755,12 @@ export class MatchController {
           // `killingBlow` 是 damage packet 自己標的「這一發把血打到 0」——
           // 從 `death` 事件反推的話拿不到是哪一支技能收的尾。
           heroKills: targetIsHero && data.killingBlow === true ? 1 : 0,
+          // ⭐ GH#658 —— 這一發打在**這一個英雄**身上多少、他當下有多厚。
+          // ⚠️ `maxHp` 要在**這裡**讀:它是那一刻的值(補品/寶具/強化都會動它),
+          // 事後從 snapshot 反推得到的是**回合結束時**的血量上限,那是另一個數字。
+          heroHit: targetIsHero
+            ? { damage: amount, victimMaxHp: this.world.health.get(target)?.maxHp ?? 0 }
+            : undefined,
         });
         return;
       }

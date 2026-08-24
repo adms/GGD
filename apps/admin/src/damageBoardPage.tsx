@@ -14,23 +14,36 @@ import {
   championShares,
   distinctValues,
   fetchDamageBoard,
+  fetchOneShotThreshold,
   filterDamageRows,
   pageOf,
+  pctOfMaxHp,
   type DamageBoardFilter,
   type DamageBoardRow,
 } from "./damageBoard";
+import { DEFAULT_ONE_SHOT_PCT_OF_MAX_HP } from "@ggd/shared/content";
 
 const PER_PAGE = 50;
 
 const fmtTs = (ms: number): string => (ms > 0 ? new Date(ms).toLocaleString("zh-TW", { hour12: false }) : "—");
 const fmtDmg = (n: number): string => Math.round(n).toLocaleString("en-US");
+/** 佔目標血量 —— ⚠️ 不知道就是「—」,⛔ 不是 0%(GH#658)。 */
+const fmtPct = (p: number | null): string => (p === null ? "—" : `${(p * 100).toFixed(0)}%`);
 
 export function DamageBoardPage(): JSX.Element {
   const [rows, setRows] = useState<DamageBoardRow[] | null>(null);
   const [total, setTotal] = useState(0);
   const [err, setErr] = useState<string | null>(null);
-  const [filter, setFilter] = useState<DamageBoardFilter>({ championId: "", abilityId: "", version: "" });
+  const [filter, setFilter] = useState<DamageBoardFilter>({
+    championId: "",
+    abilityId: "",
+    version: "",
+    minPctOfMaxHp: 0,
+  });
   const [page, setPage] = useState(1);
+  // GH#658 —— 標記/過濾的門檻,從 config 讀(覆蓋層 → 出貨檔 → 出貨常數)。
+  const [threshold, setThreshold] = useState(DEFAULT_ONE_SHOT_PCT_OF_MAX_HP);
+  const [onlyOneShot, setOnlyOneShot] = useState(false);
 
   useEffect(() => {
     let live = true;
@@ -43,18 +56,30 @@ export function DamageBoardPage(): JSX.Element {
       .catch((e: unknown) => {
         if (live) setErr(String(e));
       });
+    void fetchOneShotThreshold().then((t) => {
+      if (live) setThreshold(t);
+    });
     return () => {
       live = false;
     };
   }, []);
 
-  const filtered = useMemo(() => (rows ? filterDamageRows(rows, filter) : []), [rows, filter]);
+  // ⚠️ 門檻是**非同步**載進來的,所以勾選框只存布林、界線在這裡才合成 ——
+  // 存成數字的話,先勾再載完會留下一個過期的界線。
+  const filtered = useMemo(
+    () =>
+      rows
+        ? filterDamageRows(rows, { ...filter, minPctOfMaxHp: onlyOneShot ? threshold : 0 })
+        : [],
+    [rows, filter, onlyOneShot, threshold],
+  );
   const shares = useMemo(() => championShares(filtered), [filtered]);
   const pages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
   const pageRows = pageOf(filtered, Math.min(page, pages), PER_PAGE);
   const topShare = shares[0]?.sharePct ?? 0;
 
-  const sel = (key: keyof DamageBoardFilter, label: string, options: string[]): JSX.Element => (
+  type SelKey = "championId" | "abilityId" | "version";
+  const sel = (key: SelKey, label: string, options: string[]): JSX.Element => (
     <label style={{ color: TEXT_DIM, fontSize: 13, marginRight: 14 }}>
       {label}{" "}
       <select
@@ -91,7 +116,26 @@ export function DamageBoardPage(): JSX.Element {
             {sel("championId", "英雄", distinctValues(rows, "championId"))}
             {sel("abilityId", "技能", distinctValues(rows, "abilityId"))}
             {sel("version", "版本", distinctValues(rows, "version"))}
+            {/* ⭐ GH#658 —— 門檻**不寫死**:它是「傷害規則」那一頁的 oneShotPctOfMaxHp。 */}
+            <label style={{ color: TEXT_DIM, fontSize: 13, marginRight: 14 }}>
+              <input
+                type="checkbox"
+                checked={onlyOneShot}
+                onChange={(e) => {
+                  setOnlyOneShot(e.target.checked);
+                  setPage(1);
+                }}
+                style={{ marginRight: 4 }}
+              />
+              只看一擊 ≥ {fmtPct(threshold)} 目標血量
+            </label>
             <span style={{ color: TEXT_DIM, fontSize: 13 }}>符合 {filtered.length} 筆</span>
+          </div>
+          <div style={{ color: TEXT_DIM, fontSize: 12, marginBottom: 10 }}>
+            「佔目標血量」＝ 這一次施放打在<strong>單一英雄</strong>身上的最大一擊 ÷ 那個人
+            <strong>命中當下</strong>的最大生命(⛔ 不是這一列的總傷害 ÷ 誰的血量 —— AoE 的總傷害
+            沒有落在任何一個人身上)。門檻 {fmtPct(threshold)} 在「傷害規則」那一頁調,改完這一頁跟著變。
+            <strong>「—」＝ 這筆是本功能上線前寫進榜的舊資料</strong>,⛔ 不是 0%。
           </div>
 
           {shares.length > 0 && (
@@ -126,7 +170,7 @@ export function DamageBoardPage(): JSX.Element {
             <table style={{ borderCollapse: "collapse", width: "100%", fontSize: 13 }}>
               <thead>
                 <tr style={{ color: TEXT_DIM, textAlign: "left" }}>
-                  {["#", "傷害", "英雄", "技能", "槽位", "回合", "裝備", "版本", "時間"].map((h) => (
+                  {["#", "傷害", "佔目標血量", "英雄", "技能", "槽位", "回合", "裝備", "版本", "時間"].map((h) => (
                     <th key={h} style={{ borderBottom: PANEL_BORDER, padding: "6px 8px" }}>
                       {h}
                     </th>
@@ -134,10 +178,20 @@ export function DamageBoardPage(): JSX.Element {
                 </tr>
               </thead>
               <tbody>
-                {pageRows.map((r, i) => (
-                  <tr key={`${r.matchId}-${r.seatId}-${r.ts}-${i}`} style={{ color: TEXT_MAIN }}>
+                {pageRows.map((r, i) => {
+                  const pct = pctOfMaxHp(r);
+                  const oneShot = pct !== null && pct >= threshold;
+                  return (
+                  <tr
+                    key={`${r.matchId}-${r.seatId}-${r.ts}-${i}`}
+                    style={{ color: TEXT_MAIN, background: oneShot ? "rgba(255,64,64,0.14)" : undefined }}
+                  >
                     <td style={{ padding: "5px 8px", color: TEXT_DIM }}>{(Math.min(page, pages) - 1) * PER_PAGE + i + 1}</td>
                     <td style={{ padding: "5px 8px", color: GOLD }}>{fmtDmg(r.damage)}</td>
+                    <td style={{ padding: "5px 8px", color: oneShot ? DANGER : TEXT_DIM, whiteSpace: "nowrap" }}>
+                      {fmtPct(pct)}
+                      {oneShot && <strong style={{ marginLeft: 6 }}>☠ 一擊</strong>}
+                    </td>
                     <td style={{ padding: "5px 8px" }}>{r.championId || "—"}</td>
                     <td style={{ padding: "5px 8px" }}>{r.abilityId}</td>
                     <td style={{ padding: "5px 8px", color: TEXT_DIM }}>{r.slot}</td>
@@ -148,7 +202,8 @@ export function DamageBoardPage(): JSX.Element {
                     <td style={{ padding: "5px 8px", color: TEXT_DIM }}>{r.version}</td>
                     <td style={{ padding: "5px 8px", color: TEXT_DIM }}>{fmtTs(r.ts)}</td>
                   </tr>
-                ))}
+                  );
+                })}
               </tbody>
             </table>
           </div>

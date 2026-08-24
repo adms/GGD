@@ -9,6 +9,8 @@ import {
   filterDamageRows,
   normalizeDamageBoard,
   pageOf,
+  pctOfMaxHp,
+  readOneShotThreshold,
   type DamageBoardRow,
 } from "./damageBoard";
 
@@ -23,6 +25,9 @@ const row = (over: Partial<DamageBoardRow>): DamageBoardRow => ({
   version: "v1",
   matchId: "m",
   seatId: 0,
+  // GH#658 —— 預設 null ＝「這一筆是舊資料」,⛔ 不是 0(見 pctOfMaxHp)。
+  victimDamage: null,
+  victimMaxHp: null,
   ...over,
 });
 
@@ -34,7 +39,7 @@ describe("damage board admin page logic", () => {
       row({ championId: "b", damage: 100, version: "v1" }),
       row({ championId: "c", damage: 9_999, version: "v2" }), // 被過濾掉,不可以進分母
     ];
-    const filtered = filterDamageRows(rows, { championId: "", abilityId: "", version: "v1" });
+    const filtered = filterDamageRows(rows, { championId: "", abilityId: "", version: "v1", minPctOfMaxHp: 0 });
     const shares = championShares(filtered);
     expect(shares.map((s) => s.championId)).toEqual(["a", "b"]);
     expect(shares[0]?.sharePct).toBeCloseTo(60);
@@ -53,5 +58,28 @@ describe("damage board admin page logic", () => {
     const many = Array.from({ length: 120 }, (_, i) => row({ damage: i, championId: i % 2 ? "a" : "b" }));
     expect(pageOf(many, 3, 50)).toHaveLength(20);
     expect(distinctValues(many, "championId")).toEqual(["a", "b"]);
+  });
+
+  // ⭐ GH#658 —— 舊資料是「—」不是 0%,而門檻是**讀出來的**不是寫死的。
+  it("一擊佔比:舊資料回 null,門檻改了標記範圍就跟著改", () => {
+    const big = row({ championId: "a", victimDamage: 900, victimMaxHp: 1000 }); // 九成
+    const mid = row({ championId: "b", victimDamage: 600, victimMaxHp: 1000 }); // 六成
+    const old = row({ championId: "c" }); // #658 之前寫進榜的
+    expect(pctOfMaxHp(big)).toBeCloseTo(0.9);
+    expect(pctOfMaxHp(old)).toBeNull(); // ⛔ 不是 0 —— 0 是一個真的百分比
+    // 缺席的欄位在正規化時就變成 null,⛔ 不是 0。
+    expect(normalizeDamageBoard({ total: 1, rows: [{ ...old, victimMaxHp: undefined }] }).rows[0]?.victimMaxHp)
+      .toBeNull();
+
+    const base = { championId: "", abilityId: "", version: "" };
+    const at = (t: number): string[] =>
+      filterDamageRows([big, mid, old], { ...base, minPctOfMaxHp: t }).map((r) => r.championId);
+    expect(at(0)).toEqual(["a", "b", "c"]); // 不過濾
+    expect(at(0.8)).toEqual(["a"]); // 門檻八成
+    expect(at(0.5)).toEqual(["a", "b"]); // 調成五成 ⇒ 範圍跟著變,⛔ 不必改程式
+
+    // 門檻從**文件**讀(覆蓋層/出貨檔同一支);讀不到回 null 讓呼叫端退回出貨常數。
+    expect(readOneShotThreshold({ oneShotPctOfMaxHp: 0.5 })).toBe(0.5);
+    expect(readOneShotThreshold({ defaultAbilityDamageType: "magic" })).toBeNull();
   });
 });

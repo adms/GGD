@@ -1,25 +1,42 @@
 /**
- * botOnlyRingAccel.test.ts — GH#643 (K8)。owner：
+ * botOnlyRingAccel.test.ts — GH#643 (K8) ＋ **GH#659 的更正**。owner：
  *
- *   「如果現場只剩 bot 存活，回合時間縮減到10秒後就縮火圈 不要平白浪玩家等待」
+ *   #643「如果現場只剩 bot 存活，回合時間縮減到10秒後就縮火圈 不要平白浪玩家等待」
+ *   #659「場地只剩 bot 的話 **不管有沒有殭屍王** 火圈**都會立即出現縮圈**」
  *
  * 真 MatchController（⛔ 不是手餵 world）：出貨形狀的 fireRing 60s 點火，
- * 傷害歸零讓「誰活著」完全由測試控制。三個方向：
+ * 傷害歸零讓「誰活著」完全由測試控制。四個方向：
  *   1. 人類活著 → 點火時間**一格都不動**（1800 ticks）。
  *   2. 人類全滅（隊上 bot 還活著，zone 未結算）→ 下一個 tick 點火被夾到
- *      now + 10s（`botOnlyRingAccelSec` 出貨值，DEFAULT_ARENA_RULES 同源）。
- *   3. 全 bot 沙盒（0 個 humanSeat）→ 永遠不加速 —— 沒有玩家在等，
+ *      now + `DEFAULT_BOT_ONLY_RING_ACCEL_SEC`（⛔ 不抄字面值 —— 那是第四個住處）。
+ *   3. ⭐ #659：**殭屍王已經把點火推遠 180 秒**時，人類全滅仍然在下一個 tick
+ *      夾回來，而且火圈**真的開始縮**（半徑 < 場地邊界）—— 驗的是機制不是數字，
+ *      所以出貨值調回 10 秒它照樣綠，改壞 `ring.startTicks = cap` 才紅。
+ *   4. 全 bot 沙盒（0 個 humanSeat）→ 永遠不加速 —— 沒有玩家在等，
  *      這一關也是「每一條既有 all-bot 測試逐位元不變」的證明。
  *
- * 突變驗證（2026-08-24）：註解掉 `ring.startTicks = cap` 那一行 → 第 2 條紅
- * （expected 1801 + 300, received 1800→仍 1800）→ 改回來綠。
+ * 突變驗證（2026-08-24）：註解掉 `ring.startTicks = cap` 那一行 → 第 2、3 條紅
+ * （半徑停在邊界 24，點火時間停在王推遠後的 7200）→ 改回來綠。
  */
 import { describe, it, expect } from "vitest";
 import { cover } from "../../../../packages/shared/testkit/cover";
 import { normalizeCombatEnv } from "@ggd/shared/sim/combatEnv";
 import type { FireRingConfig } from "@ggd/shared/content";
+import { DEFAULT_BOT_ONLY_RING_ACCEL_SEC } from "@ggd/shared/content";
+import { currentFireRingRadius, extendRoundForBoss } from "@ggd/shared/sim/fireRing";
 import { TICK_HZ } from "@ggd/shared/constants";
 import { MatchController, type SeatSpec } from "./MatchController";
+
+/** 出貨的加速秒數換算成 ticks —— 從 shared 的常數推導，⛔ 不抄 10 也不抄 0。 */
+const ACCEL_TICKS = Math.round(DEFAULT_BOT_ONLY_RING_ACCEL_SEC * TICK_HZ);
+
+/** 殺掉唯一的人類座位（隊上兩個 bot 還活著 ⇒ zone 未結算、回合繼續打）。 */
+function killTheHuman(ctl: MatchController): void {
+  const human = [...ctl.seats.values()].find((s) => s.humanSeat)!;
+  const hp = ctl.world.health.get(human.entityId!)!;
+  hp.alive = false;
+  hp.hp = 0;
+}
 
 /** seat 0 是人類（humanSeat = !isBot），其餘 11 個 bot；4 隊各 3 人。 */
 const withHuman = (): SeatSpec[] =>
@@ -47,7 +64,7 @@ function toCombat(specs: SeatSpec[]): MatchController {
     specs,
     CFG,
     undefined,
-    undefined, // DEFAULT_ARENA_RULES —— 出貨預設就是「開、10 秒」
+    undefined, // DEFAULT_ARENA_RULES —— 出貨預設就是「開、DEFAULT_BOT_ONLY_RING_ACCEL_SEC」
     undefined,
     undefined,
     normalizeCombatEnv({ damageDealt: 0 }), // 誰死掉由測試決定，不是互毆
@@ -59,7 +76,7 @@ function toCombat(specs: SeatSpec[]): MatchController {
   return ctl;
 }
 
-describe("GH#643 只剩 bot 在打 → 火圈點火夾到 now+10s", () => {
+describe("GH#643 只剩 bot 在打 → 火圈點火夾到「現在＋出貨秒數」", () => {
   it("人類活著點火不動；人類全滅的下一個 tick 就夾下去", () => {
     cover("botonly-ring-accel");
     const ctl = toCombat(withHuman());
@@ -69,15 +86,37 @@ describe("GH#643 只剩 bot 在打 → 火圈點火夾到 now+10s", () => {
     for (let i = 0; i < 30; i++) ctl.tick();
     expect(ctl.world.fireRingRules!.startTicks).toBe(authored);
 
-    // ② 殺掉唯一的人類（隊上兩個 bot 還活著 ⇒ zone 未結算、回合繼續打）。
-    const human = [...ctl.seats.values()].find((s) => s.humanSeat)!;
-    const hp = ctl.world.health.get(human.entityId!)!;
-    hp.alive = false;
-    hp.hp = 0;
+    // ②
+    killTheHuman(ctl);
     ctl.tick(); // advancePhase 的 combat 分支跑 accelFireRingForBotOnly
-    const cap = ctl.world.fireRingTicks + Math.round(10 * TICK_HZ);
-    expect(ctl.world.fireRingRules!.startTicks).toBe(cap); // 夾到 now+10s
+    const cap = ctl.world.fireRingTicks + ACCEL_TICKS;
+    expect(ctl.world.fireRingRules!.startTicks).toBe(cap); // 夾到「現在＋出貨秒數」
     expect(ctl.world.fireRingRules!.startTicks).toBeLessThan(authored);
+  });
+
+  it("⭐ GH#659 殭屍王把點火推遠了也一樣 —— 火圈立刻開始縮", () => {
+    cover("botonly-ring-accel-boss");
+    const ctl = toCombat(withHuman());
+    for (let i = 0; i < 30; i++) ctl.tick();
+    const zone = ctl.world.transform.get(
+      [...ctl.seats.values()].find((s) => s.humanSeat)!.entityId!,
+    )!.zone;
+    const boundary = ctl.world.arena.zones[zone]!.boundaryRadius;
+
+    // 走**真的**那一條路：`summonMobBoss` 呼叫的同一支，把點火推遠三分鐘。
+    extendRoundForBoss(ctl.world);
+    const pushedOut = ctl.world.fireRingRules!.startTicks;
+    expect(pushedOut).toBeGreaterThan(ctl.world.fireRingTicks); // 王確實延後了點火
+    expect(currentFireRingRadius(ctl.world, zone)).toBe(boundary); // 還沒縮
+
+    killTheHuman(ctl);
+    ctl.tick();
+    // 夾回來了 —— ⛔ 不是「等王打完」，也⛔ 不是「取先到者」。
+    expect(ctl.world.fireRingRules!.startTicks).toBe(ctl.world.fireRingTicks + ACCEL_TICKS);
+    expect(ctl.world.fireRingRules!.startTicks).toBeLessThan(pushedOut);
+    // ⭐ 而且火圈**真的在縮**（機制，⛔ 不是數字）：再跑一秒，半徑掉離邊界。
+    for (let i = 0; i < TICK_HZ + ACCEL_TICKS; i++) ctl.tick();
+    expect(currentFireRingRadius(ctl.world, zone)).toBeLessThan(boundary);
   });
 
   it("全 bot 沙盒（0 個 humanSeat）永遠不加速 —— 沒有玩家在等", () => {

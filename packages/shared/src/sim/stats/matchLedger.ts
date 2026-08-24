@@ -143,6 +143,25 @@ export interface AbilityCastCredit {
 }
 
 /**
+ * ⭐ **GH#658 —— 一個「打在單一英雄身上」的傷害封包**。owner 2026-08-24：
+ *
+ *   > 「後台單次傷害排行榜（**另外標記該傷害是否一擊超過英雄目標 80% 生命傷害**）」
+ *
+ * ⚠️ 為什麼要**逐目標**記，而不是拿榜上那一列的 `damage`（＝這次施放打出的
+ * **總**傷害）去除以某個最大生命：AoE 打三個人各 1000 的話總傷害是 3000，
+ * 而**沒有任何一個人**掉了 3000 —— 用總傷害算出來的百分比會在卡面上印一句
+ * 不會發生的話（第一·五守則）。所以帳本存的是「這一次施放對**單一**目標的
+ * 最大一擊」與**那個人當下的最大生命**兩個原始事實，百分比在後台推導
+ * （第〇·四守則：能算出來的不要存第二份）。
+ */
+export interface HeroHitSample {
+  /** 這一個封包對那個英雄打出的傷害 */
+  damage: number;
+  /** 命中**當下**那個英雄的最大生命；≤0 = 不知道（呼叫端讀不到 Health） */
+  victimMaxHp: number;
+}
+
+/**
  * 一次技能施放。
  *
  * ⚠️ 為什麼是「一次施放」而不是「每個技能一列」:傷害是**之後**才到的(投射
@@ -160,6 +179,13 @@ export interface AbilityCastRecord extends AbilityCastCredit {
   abilityId: string;
   /** "Q" / "W" / "E" / "R" / "EX" / "passive" / "basic" */
   slot: string;
+  /**
+   * GH#658 —— 這一次施放打在**單一英雄**身上的最大一擊（取 max，⛔ 不是累加）。
+   * 0 = 這次施放一個英雄都沒打到（只打小怪 / 只治療 / 只上控）。
+   */
+  topHeroHit: number;
+  /** 上面那一擊命中當下，**那個目標**的最大生命。0 = 不知道（見 {@link HeroHitSample}）。 */
+  topHeroHitMaxHp: number;
 }
 
 /** {@link MatchLedger.beginCast} 回傳的 handle。 */
@@ -506,6 +532,8 @@ export class MatchLedger {
       healingDone: 0,
       ccTicksApplied: 0,
       heroKills: 0,
+      topHeroHit: 0,
+      topHeroHitMaxHp: 0,
     });
     return castId;
   }
@@ -513,8 +541,15 @@ export class MatchLedger {
   /**
    * 把後到的效益掛到某一次施放上。未知 handle 是 no-op —— 一顆在回合結束後才
    * 落地的投射物不應該讓 host 爆掉。
+   *
+   * ⚠️ `heroHit`（GH#658）與其他每一格**不同方向**：其餘是累加，它是**取最大**
+   * —— 它回答的是「這一次施放最狠的那一下打在誰身上、他有多厚」，累加會把
+   * AoE 的三個人加成一個不存在的目標。
    */
-  creditCast(handle: CastHandle, credit: Partial<AbilityCastCredit>): void {
+  creditCast(
+    handle: CastHandle,
+    credit: Partial<AbilityCastCredit> & { heroHit?: HeroHitSample },
+  ): void {
     const rec = this.casts[handle];
     if (!rec || rec.castId !== handle) return;
     rec.heroHits += credit.heroHits ?? 0;
@@ -524,6 +559,11 @@ export class MatchLedger {
     rec.healingDone += credit.healingDone ?? 0;
     rec.ccTicksApplied += credit.ccTicksApplied ?? 0;
     rec.heroKills += credit.heroKills ?? 0;
+    const hit = credit.heroHit;
+    if (hit !== undefined && hit.damage > rec.topHeroHit) {
+      rec.topHeroHit = hit.damage;
+      rec.topHeroHitMaxHp = hit.victimMaxHp > 0 ? hit.victimMaxHp : 0;
+    }
   }
 
   // ── 道具 ──────────────────────────────────────────────────────────────
@@ -808,6 +848,30 @@ export interface TopDamageCast {
   castId: number;
   /** 施放當下持有的道具(buy/grant − sell,tick ≤ 施放 tick,升冪排序) */
   items: string[];
+  /**
+   * GH#658 —— 這一次施放打在**單一英雄**身上的最大一擊。0 = 沒打到任何英雄。
+   */
+  victimDamage: number;
+  /**
+   * 上面那一擊命中當下,**那個目標**的最大生命。0 = 不知道 ——
+   * ⛔ 消費端要顯示「—」,⛔ 不可以當成 0(那會讓每一列看起來都是 0%)。
+   */
+  victimMaxHp: number;
+}
+
+/**
+ * GH#658 —— 「這一發佔了目標多少血」。**推導**,⛔ 不存第二份(第〇·四守則)。
+ *
+ * 回 `null` 而不是 0 表示「不知道」:舊資料沒有這兩格、或這次施放一個英雄都
+ * 沒打到。⚠️ 0 是一個**真的百分比**,拿它代表「不知道」會讓舊列全部看起來
+ * 像沒傷害(#658 逐字點名的那個坑)。
+ */
+export function pctOfVictimMaxHp(c: {
+  victimDamage: number;
+  victimMaxHp: number;
+}): number | null {
+  if (!(c.victimMaxHp > 0) || !(c.victimDamage > 0)) return null;
+  return c.victimDamage / c.victimMaxHp;
 }
 
 /**
@@ -839,6 +903,8 @@ export function topDamageCasts(snap: MatchLedgerSnapshot, limit: number): TopDam
       tick: c.tick,
       castId: c.castId,
       items: itemsOwnedAt(snap.itemTxns, c.seatId, c.tick),
+      victimDamage: c.topHeroHit,
+      victimMaxHp: c.topHeroHitMaxHp,
     }));
 }
 
