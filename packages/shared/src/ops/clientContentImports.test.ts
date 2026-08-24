@@ -46,7 +46,14 @@ describe("客戶端跨界 import 進 content/ 的檔案（GH#437）", () => {
       // content/」（我第一版就漏了這一步，三個誤報）。
       for (const m of src.matchAll(/from\s+"((?:\.\.\/)+[^"]+)"/g)) {
         const abs = resolve(dirname(f), m[1]!);
-        if (abs.startsWith(join(REPO, "content") + "/")) {
+        // ⭐ 2026-08-25:`tools/` 也算 —— lane L 的 SkillListsPage 靜態 import
+        //    `tools/skill-lists/lists.json`,而這條閘當時只掃 content/ ⇒ 綠著上線,
+        //    死在正式 build 的 rollup(v0.26.4 部署第一次失敗的根因)。
+        //    跨出 apps/**+packages/** 的靜態 import 一律要有成對的 COPY。
+        if (
+          abs.startsWith(join(REPO, "content") + "/") ||
+          abs.startsWith(join(REPO, "tools") + "/")
+        ) {
           imported.add(abs.slice(REPO.length + 1));
         }
       }
@@ -54,7 +61,7 @@ describe("客戶端跨界 import 進 content/ 的檔案（GH#437）", () => {
     // ② Dockerfile 真的 COPY 了哪幾份（⛔ 只認指名到檔案的那種，目錄式的不算）
     const dockerfile = readFileSync(join(REPO, "docker/edge.Dockerfile"), "utf8");
     const copied = new Set<string>();
-    for (const m of dockerfile.matchAll(/^COPY\s+(content\/\S+\.\w+)\s+\S+$/gm)) {
+    for (const m of dockerfile.matchAll(/^COPY\s+((?:content|tools)\/\S+\.\w+)\s+\S+$/gm)) {
       copied.add(m[1]!);
     }
 

@@ -74,6 +74,10 @@ COPY apps/admin/ apps/admin/
 # 閘：`packages/shared/src/ops/clientContentImports.test.ts` 逐一比對兩邊。
 # ⛔ 想再加一份之前先問：它是不是該用 `contentAssetUrl` 在**執行期**抓？
 COPY content/assets/audio/wc3/PROVENANCE.json content/assets/audio/wc3/
+# ---- tools/ 的跨界 import（GH#682/#683,2026-08-25）--------------------------
+# SkillListsPage 靜態 import 產生器的 lists.json（md 與後台頁**同一份**資料 ——
+# 第〇·四守則的單一住處,所以它非在建置脈絡不可）。同一條閘現在也掃 tools/。
+COPY tools/skill-lists/lists.json tools/skill-lists/
 # ---- THE FULL-ASSET BUILD FLAG (task #176) ---------------------------------
 # apps/client/src/config/fullAssets.ts reads VITE_GGD_FULL_ASSETS and falls back
 # to import.meta.env.DEV, which is constant-folded to `false` in every
