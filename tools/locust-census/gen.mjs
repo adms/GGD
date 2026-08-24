@@ -28,7 +28,7 @@
  *   · GetTriggerUnit()/GetDyingUnit() 這族 → event-unit（事件目標不是生成的 dummy）
  *   · 其餘 → unresolved，誠實標出來
  */
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, chmodSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -519,14 +519,13 @@ if (check) {
   }
   console.log(`locust:check OK（${outputs.length} 份產物皆最新）`);
 } else {
-  try {
-    for (const [p, body] of outputs) writeFileSync(p, body);
-  } catch (e) {
-    if (e.code === "EACCES") {
-      console.error(`⛔ 產物在隔離區鎖著 —— 用 bash scripts/genrun.sh locust:build（${e.path}）`);
-      process.exit(1);
-    }
-    throw e;
+  // ⭐ 產生器對**自己的產物**自行解鎖再寫（隔離區要擋的是**非產生器**的直寫）。
+  //    ⛔ 不要改回「鎖著就拒跑」：那個自檢在 trace 的沙盒裡拒寫 ⇒ trace 量到
+  //    0 個產物 ⇒ sync-io 永遠不認識這支的輸出 ⇒ unlock 永遠跳過它 —— 一個
+  //    毒掉自己戶籍的自檢（2026-08-25 真的發生,雞生蛋第二形態）。
+  for (const [p, body] of outputs) {
+    if (existsSync(p)) chmodSync(p, 0o644);
+    writeFileSync(p, body);
   }
   const c = meta.counts;
   console.log(
