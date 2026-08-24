@@ -23,10 +23,9 @@
  * ⭐ 量尺自驗（取代突變）：測試內自造三份**必不可見**的文件，斷言檢查器抓得到 ——
  * 「量尺先被驗過」寫成程式，⛔ 不是一次性的手動突變。
  *
- * ⚠️ KNOWN_INVISIBLE 是**真缺陷名單**，⛔ 不是豁免：w3x 匯入把 alpha 烘成 0 /
- * 帶寬烘成 0 的 8 份出貨文件。本 lane 依約不動 content/（修內容是主 session 的事，
- * 已列在 docs/_reports/r3_temp_20260824r.md）。名單有過期偵測：哪天有人修好其中
- * 一份，這裡會紅著要求把那一列刪掉 —— 名單只能縮小，不能安靜地變成垃圾桶。
+ * ⚠️ KNOWN_INVISIBLE 是**真缺陷名單**，⛔ 不是豁免。名單有過期偵測：哪天有人修好
+ * 其中一份，這裡會紅著要求把那一列刪掉 —— 名單只能縮小，不能安靜地變成垃圾桶。
+ * ⭐ 上線第一天抓到的那 8 份已於 GH#665 修在**來源側**並清空（見名單處的說明）。
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync, readdirSync } from "node:fs";
@@ -105,19 +104,17 @@ export function birthVisibilityDefects(doc: Vfxish): string[] {
 }
 
 /**
- * ⛔ 真缺陷名單（⛔ 不是豁免；本 lane 依約不改 content/，主 session 修）。
- * 值 = 病型摘要，讓修的人不用重掃。修好一份 ⇒ 過期偵測會紅著要求刪掉那一列。
+ * ⛔ 真缺陷名單（⛔ 不是豁免）。值 = 病型摘要，讓修的人不用重掃。
+ * 修好一份 ⇒ 過期偵測會紅著要求刪掉那一列 —— 名單只能縮小。
+ *
+ * ⭐ 2026-08-24（GH#665）：**清空**。上線第一天抓到的 8 份全部修在來源側 ——
+ * `tools/w3x-import/extract_particles.py` 的 LUMA-KEY（additive/modulate 在 WC3
+ * 根本不取樣 alpha ⇒ 原作把 alpha 寫 0 是免費的，而我們的管線會照著乘）
+ * 與 KRHA/KRHB 峰值回退（SD2 的帶寬整個住在動畫軌上），
+ * 加上兩份手寫的 `fx.w3x.particle.holyawakening.p0*` 比照套上同一組值。
+ * ⛔ 新增內容不可以往這裡塞 —— 這一格是給既有 w3x 匯入債的，而它已經還完了。
  */
-const KNOWN_INVISIBLE: Record<string, string> = {
-  "fx.w3x.particle.holyawakening.p00": "w3x 匯入把每個 colorStop 的 alpha 烘成 0",
-  "fx.w3x.particle.holyawakening.p01": "w3x 匯入把每個 colorStop 的 alpha 烘成 0",
-  "godie-holyawakening-p0": "w3x 匯入把每個 colorStop 的 alpha 烘成 0",
-  "godie-holyawakening-p1": "w3x 匯入把每個 colorStop 的 alpha 烘成 0",
-  "godie-deathwave-r0": "ribbon color alpha=0（additive）",
-  "godie-deathwave-r1": "ribbon color alpha=0（additive）",
-  "godie-deathwave-r2": "ribbon color alpha=0（additive）",
-  "godie-sd2-r0": "widthAbove=0 + widthBelow=0 —— 零寬帶",
-};
+const KNOWN_INVISIBLE: Record<string, string> = {};
 
 function loadShippedDocs(): Vfxish[] {
   const docs: Vfxish[] = [];

@@ -123,6 +123,38 @@ def clamp01(x: float) -> float:
 
 
 # ---------------------------------------------------------------------------
+# LUMA-KEY: the blend modes WC3 renders WITHOUT reading alpha (GH#665)
+# ---------------------------------------------------------------------------
+#
+# WC3's Additive (ONE, ONE) and Modulate (DST_COLOR, ZERO) never sample the
+# alpha channel, so authoring alpha 0 on such an emitter costs the original map
+# NOTHING — the shape is entirely in RGB x texture. GGD's renderer is not so
+# forgiving: Babylon's particle path multiplies by vColor.a and RibbonTrail's
+# `premultiplied` fade scales RGB by it, so a faithful 0 transcribes into a
+# permanently blank effect. Measured on the shipped corpus: 2 PRE2 emitters
+# (HolyAwakening p0/p1, modulate) and 3 RIBB (DeathWave r0..r2, additive) —
+# 5 of the 8 docs vfxDocsBirthVisibility.test.ts flagged as unable to draw a
+# single pixel in any scene.
+#
+# This is the SAME defect family, and the same remedy, as the 28 zero-pixel
+# effect .glbs (GH#649): w3xlib/gltf.py's `gltf_texture_luma` derives an alpha
+# channel from luminance (`alpha := max(R,G,B)`) when an additive glow material
+# has no usable alpha, instead of dropping the quad. Keeping the two rules
+# literally the same sentence is deliberate — the alternative is two policies
+# that drift.
+#
+# Deliberately NARROW: it fires only when the emitter carries no alpha
+# information at all (every stop exactly 0). A partial fade (0 -> 200 -> 0,
+# e.g. HolyAwakening p2) is real authoring and is left alone.
+ALPHA_BLIND_BLENDS = ("additive", "modulate")
+
+
+def luma_key_alpha(rgb) -> float:
+    """`alpha := max(R,G,B)` — see ALPHA_BLIND_BLENDS. Black stays invisible."""
+    return clamp01(max(rgb))
+
+
+# ---------------------------------------------------------------------------
 # PRE2 geometry: the ONE reading of `width`/`length` this repo is allowed to have
 # ---------------------------------------------------------------------------
 
@@ -330,13 +362,22 @@ def visible_ratio(track) -> float:
 def build_p2_doc(doc_id, em, model, scale, tex: TextureResolver, is_hero, notes,
                  density: float = 1.0):
     life = max(0.05, float(em.lifespan))
+    blend = P2_BLEND.get(em.filter_mode, "alpha")
+    # An emitter whose blend mode never samples alpha may carry alpha 0 on every
+    # segment and still be fully visible in WC3 — the shape is in RGB. Key the
+    # alpha off luminance instead of shipping a blank effect (GH#665).
+    alpha_blind = (blend in ALPHA_BLIND_BLENDS and max(em.segment_alpha) == 0)
     # colors: 3 segment stops at t=0 / mid / 1 (PRE2 `time` = mid-stop position)
     mid_t = em.time if 0.0 < em.time < 1.0 else 0.5
     stops = []
     for i, t in enumerate((0.0, round(mid_t, 3), 1.0)):
         r, g, b = (clamp01(c) for c in em.segment_color[i])
-        a = clamp01(em.segment_alpha[i] / 255.0)
+        a = (luma_key_alpha((r, g, b)) if alpha_blind
+             else clamp01(em.segment_alpha[i] / 255.0))
         stops.append([t, [r3(r), r3(g), r3(b), r3(a)]])
+    if alpha_blind:
+        notes.append(f"{doc_id}: {blend} emitter with segmentAlpha 0/0/0 — "
+                     "alpha luma-keyed from RGB (GH#665)")
     sizes = [max(0.0, s * scale) for s in em.segment_scaling]
 
     # speed: WC3 `variation` is a fraction of speed; negative speed (inward
@@ -397,7 +438,7 @@ def build_p2_doc(doc_id, em, model, scale, tex: TextureResolver, is_hero, notes,
     doc["colorStops"] = stops
     doc["sizeStops"] = [[0, r3(max(0.01, sizes[0]))], [round(mid_t, 3), r3(sizes[1])],
                         [1, r3(sizes[2])]]
-    doc["blendMode"] = P2_BLEND.get(em.filter_mode, "alpha")
+    doc["blendMode"] = blend
 
     ptex = model.texture_for(em.texture_id)
     path, from_map = tex.resolve(ptex.path if ptex else "",
@@ -508,11 +549,34 @@ def build_ribbon_doc(doc_id, rb, model, scale, tex: TextureResolver, notes,
     # That is why there is no /2 here and MUST NOT BE ONE: copying the
     # emission_disc_radius fix onto this path would invent a new 2x-too-small
     # bug. See emission_disc_radius() for the reading that does need it.
-    above = r3(max(0.0, rb.height_above * scale))
-    below = r3(max(0.0, rb.height_below * scale))
+    raw_above, raw_below = rb.height_above, rb.height_below
+    # A ribbon whose whole expression lives in its KRHA/KRHB tracks reads as
+    # ZERO-SIZED from the fixed block alone (SD2 r0: 0/0 static, 24/36 animated).
+    # Same shape as the KP2E emissionRate fallback above — take the track peak
+    # rather than shipping a band with no area (GH#665).
+    if raw_above <= 0 and raw_below <= 0:
+        ka, kb = rb.tracks.get("KRHA"), rb.tracks.get("KRHB")
+        peak_a = ka.max_value if ka is not None else 0.0
+        peak_b = kb.max_value if kb is not None else 0.0
+        if max(peak_a, peak_b) > 0:
+            raw_above, raw_below = peak_a, peak_b
+            notes.append(f"{doc_id}: static heightAbove/Below 0/0, used "
+                         f"KRHA/KRHB peak {r3(peak_a)}/{r3(peak_b)}")
+    above = r3(max(0.0, raw_above * scale))
+    below = r3(max(0.0, raw_below * scale))
     life = r3(max(0.05, rb.lifespan))
     if trail_budget:
         above, below, life = ribbon_trail_budget(above, below, life)
+    rgb = (clamp01(rb.color[0]), clamp01(rb.color[1]), clamp01(rb.color[2]))
+    # Additive/modulate ribbons never sample alpha in WC3, so alpha 0 is free
+    # there and fatal here (RibbonTrail's premultiplied fade scales RGB by it).
+    # Luma-key it, exactly as gltf.py does for alpha-less additive glow (GH#665).
+    if rb.alpha <= 0 and blend in ALPHA_BLIND_BLENDS:
+        alpha = luma_key_alpha(rgb)
+        notes.append(f"{doc_id}: {blend} ribbon with alpha 0 — alpha "
+                     "luma-keyed from RGB (GH#665)")
+    else:
+        alpha = clamp01(rb.alpha)
     doc = {
         "id": doc_id,
         "schema": "ribbon@1",
@@ -520,8 +584,7 @@ def build_ribbon_doc(doc_id, rb, model, scale, tex: TextureResolver, notes,
         "widthAbove": above,
         "widthBelow": below,
         "lifespanSec": life,
-        "color": [r3(clamp01(rb.color[0])), r3(clamp01(rb.color[1])),
-                  r3(clamp01(rb.color[2])), r3(clamp01(rb.alpha))],
+        "color": [r3(rgb[0]), r3(rgb[1]), r3(rgb[2]), r3(alpha)],
         "blendMode": blend,
     }
     parent = model.node_name(rb.parent_id) if rb.parent_id >= 0 else None
