@@ -42,9 +42,13 @@ cat > "$BODY" <<'TPL'
 <哪支測試·突變哪一行·量什麼數字;畫面類要 @visual-proof>
 
 ---
-[思考策略] <盤點→按擋住支數排序 / 五層根因 / 兩個名詞的關係 / 閘不是判準 / 量到再說 / 玩家看得到才算做完 / 值只有一個住處 / 先上線後否決>
-[解決模板] <三個住處開關 / 條件葉 / 產生器+--check閘 / 承重守衛+突變 / HITL分層漏斗 / N同型=K模板+一張表 / audition+連續擷圖 / 後台唯讀清單頁 / payload型別住emit站旁 / 門面+閘拆檔>
+[思考策略] <__STRATS__>
+[解決模板] <__TPLS__>
 TPL
+# ⭐ 選項清單從 catalog 動態長出（單一住處,⛔ 不在這裡再抄一份）
+STRATS=$(python3 -c "import json;print(' / '.join(s['name'] for s in json.load(open('tools/ticket-templates/catalog.json'))['strategies']))")
+TPLS=$(python3 -c "import json;print(' / '.join(t['name'] for t in json.load(open('tools/ticket-templates/catalog.json'))['templates']))")
+sed -i '' -e "s|__STRATS__|$STRATS|" -e "s|__TPLS__|$TPLS|" "$BODY"
 if [ "${2:-}" = "--dry" ]; then
   echo "✓ 模板在 $BODY —— 填完後: gh issue create --title \"$TITLE\" --body-file $BODY"
 else
