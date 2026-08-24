@@ -37,6 +37,7 @@ import {
 } from "../combat/hitstopHold";
 import { mobProfile } from "../mobs";
 import { isCarried } from "../carry";
+import { stuckEscapePhasing } from "../stuckEscape";
 // 走過去放技能 (`config.cast-approach@1`)。⛔ 單向邊:`abilities/abilitySystem.ts`
 // 不 import 這個檔,所以不會成環。
 import { castApproachSystem } from "../abilities/abilitySystem";
@@ -419,6 +420,13 @@ export function movementSystem(world: SimWorld): void {
         else t.pos = mover.pos;
         continue;
       }
+      // ⭐ GH#677 脫困保險絲的放行窗:互卡累積滿門檻的那具身體,這一小段時間
+      //   與其他單位**互不軟分離** —— 他走得穿人牆(phasing),⛔ 不是瞬移。
+      //   ⚠️ 只有這一個分支被豁免:上面的 static prop(花/守護者)照推、
+      //   `moveWithCollision` 的牆 / `pushOutOfObstacle` 的柱 / `clampToBoundary`
+      //   的場界一格都沒動 —— 保險絲只解單位互卡,不發穿牆逃課券。
+      //   (放這一行、⛔ 不學 flight 在外圈 continue,正是為了讓 static 照舊。)
+      if (stuckEscapePhasing(world, id) || stuckEscapePhasing(world, otherId)) continue;
       const a = { pos: t.pos, radius: t.radius };
       const b = { pos: o.pos, radius: o.radius };
       separatePair(a, b, 0.6);

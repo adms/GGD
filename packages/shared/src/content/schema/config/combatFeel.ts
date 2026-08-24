@@ -360,6 +360,29 @@ export const zConfigCombatFeelDoc = z
       })
       .strict()
       .optional(),
+    /**
+     * ⭐ 單位互卡**脫困保險絲**（GH#677, owner 2026-08-24：「黏超過 N秒一定可以
+     * 離開之類，這些機制做成後台開關，目前 **N 預設2秒**」）。
+     *
+     * 判準沿用 `autoEngage` 的 walk-stall 那一族（有 move 指令、還沒到站、
+     * 硬控的 tick 不算），位移量的是實際座標差；脫困手段是短暫忽略**單位間**
+     * 軟分離（phasing），⛔ 牆 / 柱 / 場界 / 守護者一格都不豁免。語意與出貨
+     * 預設全部在 `sim/combatFeel.ts` 的 `StuckEscapeRules` 與 `sim/stuckEscape.ts`。
+     *
+     * ⚠️ 夾限 0..10 秒與 `normalizeStuckEscapeRules` **逐字相同** ——
+     * admin 的鏡射測試逐格比對兩邊的上下界。ABSENT = 出貨預設（開、N=2）。
+     */
+    stuckEscape: z
+      .object({
+        /** 總開關；false = 保險絲整個不存在（GH#677 之前的行為）。 */
+        enabled: z.boolean().optional(),
+        /** 連續互卡幾秒就放行（owner 的數字：2）。 */
+        thresholdSec: z.number().min(0).max(10).optional(),
+        /** 放行窗長度（秒）：這段期間單位間碰撞不擋他（0 = 只累積不放人）。 */
+        releaseSec: z.number().min(0).max(10).optional(),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 export type ConfigCombatFeelDoc = z.infer<typeof zConfigCombatFeelDoc>;

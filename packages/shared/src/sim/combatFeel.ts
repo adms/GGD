@@ -507,6 +507,11 @@ export interface CombatFeelRules {
    * `DEFAULT_AUTO_ENGAGE`。
    */
   autoEngage?: AutoEngageRules;
+  /**
+   * ⭐ 單位互卡脫困保險絲（GH#677）。選用的理由與 `facing` 逐字相同。
+   * 讀的時候一律走 `sim/stuckEscape.ts` 的 `stuckEscapeRules(world)`。
+   */
+  stuckEscape?: StuckEscapeRules;
   /** 手把／觸控自動瞄準的小怪讓路幅度（GH#315）。見 {@link AimAssistRules}。 */
   aimAssist?: AimAssistRules;
   /**
@@ -614,6 +619,59 @@ export const DEFAULT_AUTO_ENGAGE: AutoEngageRules = Object.freeze({
 });
 
 /**
+ * ⭐ 單位互卡**脫困保險絲**（GH#677, owner 2026-08-24：「黏超過 N秒一定可以離開
+ * 之類，這些機制做成後台開關，目前 **N 預設2秒**」）。
+ *
+ * ── 它治的是哪一種「黏住」（三種黏住、三個機制，⛔ 不要合併）─────────────────
+ *   · hitstop victim-hold / 擊倒 → `hitstop.stuckGuard`（挨打型凍結）
+ *   · 撞牆 / 卡柱子             → `autoEngage`（接敵接手）＋ 導航表繞路
+ *   · **單位互卡**（被人群 / 隊友的身體堵死）→ **這一格**。
+ *     判準沿用 `walkIsStalled` 那一族的同一組門（有 move 指令、還沒到站、
+ *     ⛔ 被硬控按住的 tick 不算），但位移量的是 **tick 與 tick 之間的實際座標差**
+ *     —— `Transform.vel` 是分離 pass **之前**寫的，被人群原地頂回來的單位
+ *     vel 永遠報滿速（`MovementSystem` 步驟 2 的註解），拿它量互卡永遠量不到。
+ *
+ * ── 脫困手段：**短暫忽略單位間碰撞**（phasing），⛔ 不是瞬移 ─────────────────
+ * 觸發後 `releaseSec` 內，這具身體與其他單位的**軟分離**（`separatePair`）互相
+ * 跳過 —— 他走得穿人牆。⚠️ 界線：**牆 / 柱子 / 場界 / 守護者一格都不豁免**
+ * （`moveWithCollision` / `pushOutOfObstacle` / `clampToBoundary` 原封不動），
+ * 否則保險絲變成穿牆逃課機制。⭐ 觸發本身也閘在「此刻真的與別的單位重疊」上 ——
+ * 卡在純牆上的人不觸發（phasing 幫不了他，觸發只會白喊「脫困」）。
+ */
+export interface StuckEscapeRules {
+  /** 總開關。false = 保險絲整個不存在（GH#677 之前的行為，一鍵 rollback）。 */
+  enabled: boolean;
+  /** 連續互卡幾秒就放行。owner 的數字：**2**。 */
+  thresholdSec: number;
+  /** 放行窗長度（秒）：這段期間單位間碰撞不擋他。0 = 只累積不放人 = 等於關。 */
+  releaseSec: number;
+}
+
+/**
+ * 出貨值。`thresholdSec: 2` 是 owner 的原話（「目前 N 預設2秒」）；
+ * `releaseSec: 1` 是**我挑的**（移速 5.8 × 1 秒 ≈ 5.8 單位 ≈ 穿過四五個身位 ——
+ * 夠走出任何一圈人牆，又不足以整場當幽靈），回頭的路就是後台那一格。
+ */
+export const DEFAULT_STUCK_ESCAPE: StuckEscapeRules = Object.freeze({
+  enabled: true,
+  thresholdSec: 2,
+  releaseSec: 1,
+});
+
+/** 正規化。夾限 0..10 與 Zod 的上下界**逐字相同**（admin 的鏡射測試會比對）。 */
+export function normalizeStuckEscapeRules(raw: unknown): StuckEscapeRules {
+  const r = (raw && typeof raw === "object" && !Array.isArray(raw) ? raw : {}) as Record<
+    string,
+    unknown
+  >;
+  return Object.freeze({
+    enabled: typeof r.enabled === "boolean" ? r.enabled : DEFAULT_STUCK_ESCAPE.enabled,
+    thresholdSec: num(r.thresholdSec, DEFAULT_STUCK_ESCAPE.thresholdSec, 0, 10),
+    releaseSec: num(r.releaseSec, DEFAULT_STUCK_ESCAPE.releaseSec, 0, 10),
+  });
+}
+
+/**
  * 出貨預設 = owner 2026-08-03 明說的那一側(「玩家指定攻擊的對象應該是最高
  * 優先級」),**不是**今天的行為。這是刻意的:今天的行為是量到的缺陷
  * (手選目標在搖桿 / 觸控上只活 1 tick),不是一個平起平坐的選項。
@@ -693,6 +751,7 @@ export const DEFAULT_COMBAT_FEEL: CombatFeelRules = Object.freeze({
   predictionHold: DEFAULT_PREDICTION_HOLD,
   hitstop: DEFAULT_HITSTOP,
   autoEngage: DEFAULT_AUTO_ENGAGE,
+  stuckEscape: DEFAULT_STUCK_ESCAPE,
   manualOrder: DEFAULT_MANUAL_ORDER,
   aimAssist: DEFAULT_AIM_ASSIST,
 });
@@ -850,6 +909,7 @@ export function combatFeelFromDoc(doc: unknown): CombatFeelRules {
     standstill?: unknown;
     facing?: unknown;
     autoEngage?: unknown;
+    stuckEscape?: unknown;
     manualOrder?: unknown;
     aimAssist?: unknown;
     predictionHold?: unknown;
@@ -861,6 +921,7 @@ export function combatFeelFromDoc(doc: unknown): CombatFeelRules {
     standstill: normalizeStandstillRules(d.standstill),
     facing: normalizeFacingRules(d.facing),
     autoEngage: normalizeAutoEngageRules(d.autoEngage),
+    stuckEscape: normalizeStuckEscapeRules(d.stuckEscape),
     manualOrder: normalizeManualOrderRules(d.manualOrder),
     aimAssist: normalizeAimAssistRules(d.aimAssist),
     predictionHold: normalizePredictionHold(d.predictionHold),

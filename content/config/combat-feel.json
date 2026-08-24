@@ -36,6 +36,11 @@
   "aimAssist": {
     "mobPenalty": 6
   },
+  "stuckEscape": {
+    "enabled": true,
+    "thresholdSec": 2,
+    "releaseSec": 1
+  },
   "hitstop": {
     "holdsVictimWalk": false,
     "holdsAttackerWalk": true,

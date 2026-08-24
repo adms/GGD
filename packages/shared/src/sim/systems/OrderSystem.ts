@@ -14,6 +14,7 @@ import {
   type ManualOrderRules,
 } from "../combatFeel";
 import { bodyHeldByRules } from "../movementHold";
+import { stuckEscapeRules, stuckEscapeTick } from "../stuckEscape";
 import { berserkDropsOrders, berserkSeek, isBerserk } from "../berserk";
 import { fearDropsOrders, fearPass } from "../fear";
 import { chaosDropsOrders, chaosPass } from "../chaos";
@@ -124,10 +125,16 @@ function armMoveOrderNoAggro(
  * 被控已經夠慘,解控之後角色還往反方向跑,比原本的 bug 更糟。
  */
 function updateWalkStall(world: SimWorld, id: EntityId, rules: AutoEngageRules): void {
+  // ⭐ GH#677 —— 這一族現在有**兩個消費者**:接敵的 `world.walkStall`(vel 系,
+  //   照舊)與單位互卡的脫困保險絲(`sim/stuckEscape.ts`,量實際座標差)。
+  //   **門是同一組**(有 move 指令 / 還沒到站 / 硬控凍結),在這裡算一次,
+  //   verdict 餵給兩邊 —— ⛔ 保險絲那頭沒有第二份 stall 偵測。
+  const escOn = stuckEscapeRules(world).enabled;
   const nav = world.nav.get(id);
   const t = world.transform.get(id);
-  if (!rules.enabled || !nav || !t || nav.order?.kind !== "move" || nav.moveTarget === null) {
+  if ((!rules.enabled && !escOn) || !nav || !t || nav.order?.kind !== "move" || nav.moveTarget === null) {
     world.walkStall.delete(id);
+    if (t) stuckEscapeTick(world, id, "idle");
     return;
   }
   // 已經站在終點上 = 走完了,不是卡住。這一步是必要的:這個 pass 跑在
@@ -136,6 +143,7 @@ function updateWalkStall(world: SimWorld, id: EntityId, rules: AutoEngageRules):
   // 這一行,站在自己指定的定點上一秒之後就會被判定成卡住而自動衝出去。
   if (distSq(t.pos, nav.moveTarget) <= ARRIVE_EPS * ARRIVE_EPS) {
     world.walkStall.delete(id);
+    stuckEscapeTick(world, id, "idle");
     return;
   }
   // ---- 硬控:凍結計數,不累積也不歸零 ----
@@ -147,12 +155,20 @@ function updateWalkStall(world: SimWorld, id: EntityId, rules: AutoEngageRules):
   // 之後應該從 20 繼續數,不是重新等一秒 —— 硬控只是不算證據,不是把之前的證據
   // 抹掉。歸零的話,持續被點控的玩家會永遠攢不到 stallTicks,這條規則對他等於
   // 不存在。
-  if (rules.ccPausesStall && bodyHeldByRules(world, id)) return;
-  if (lenSq(t.vel) >= rules.stallSpeed * rules.stallSpeed) {
-    world.walkStall.set(id, 0);
+  if (rules.ccPausesStall && bodyHeldByRules(world, id)) {
+    stuckEscapeTick(world, id, "frozen");
     return;
   }
-  world.walkStall.set(id, (world.walkStall.get(id) ?? 0) + 1);
+  // 接敵那一半:照舊讀 `t.vel`(分離 pass 之前的值 —— 對牆/柱子誠實,對互卡
+  // 說謊;互卡是保險絲的轄區,牆才是接敵的)。⛔ 接敵關著時不留殭屍計數。
+  if (!rules.enabled) {
+    world.walkStall.delete(id);
+  } else if (lenSq(t.vel) >= rules.stallSpeed * rules.stallSpeed) {
+    world.walkStall.set(id, 0);
+  } else {
+    world.walkStall.set(id, (world.walkStall.get(id) ?? 0) + 1);
+  }
+  stuckEscapeTick(world, id, "walk");
 }
 
 /**
