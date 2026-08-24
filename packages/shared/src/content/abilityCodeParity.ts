@@ -86,9 +86,19 @@ export function abilityCode(name: unknown): string | null {
  *   ① `60.0` 與 `60` 在 JSON 裡是兩個字串，在遊戲裡是同一個數字
  *   ② 物件的鍵順序取決於誰先寫進去，⛔ 不是語意
  */
-export function canonicalJson(value: unknown): string {
+export function canonicalJson(value: unknown, selfHeroId?: string): string {
   const walk = (v: unknown): unknown => {
     if (typeof v === "number") return Number.isInteger(v) ? v : Number(v.toFixed(6));
+    // ⭐ ③ **自我參照的技能 id 正規化**（2026-08-24,GH#673/#684 的 09-002 抓出來的）：
+    //    變身對的兩份 EX 各自有一個 augment 指向**自己形態的 R**
+    //    （godie-o00x.ex → godie-o00x.r / godie-ogrh.ex → godie-ogrh.r）——
+    //    數值逐位相同,差的只有那個**結構上必然不同**的自我參照前綴。
+    //    ⇒ 把自己的英雄 id 摺成 `<self>` 再比 —— 兩邊都變 `<self>.r`,
+    //    真正的數值分歧照樣紅（value 2.5 vs 3 摺完還是不同）。
+    //    ⛔ 只摺**自己**的 id：指向別人的 abilityId 是真的機制差異,照比。
+    if (typeof v === "string" && selfHeroId !== undefined && v.startsWith(`${selfHeroId}.`)) {
+      return `<self>${v.slice(selfHeroId.length)}`;
+    }
     if (Array.isArray(v)) return v.map(walk);
     if (v && typeof v === "object") {
       const out: Record<string, unknown> = {};
@@ -128,7 +138,11 @@ export function scanAbilityCodeDrift(docs: readonly Record<string, unknown>[]): 
     for (const doc of members) for (const f of Object.keys(doc)) if (!COSMETIC_FIELDS.has(f)) fields.add(f);
 
     for (const field of [...fields].sort()) {
-      const values = members.map((doc) => ({ id: String(doc.id), json: canonicalJson(doc[field]) }));
+      const values = members.map((doc) => ({
+        id: String(doc.id),
+        // ⭐ 自我參照摺疊:doc id 是 `<heroId>.<slot>`,英雄 id 是第一段。
+        json: canonicalJson(doc[field], String(doc.id).split(".")[0]),
+      }));
       if (new Set(values.map((v) => v.json)).size > 1) {
         out.push({ code, field, key: `${code}|${field}`, values });
       }

@@ -180,6 +180,30 @@ interface Exemption {
  * Sorted by key, matching the census output order.
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
+  "enum:abilities.augment.targets[].ops[].op=modifierValue": {
+    status: "landing", since: "2026-08-24",
+    why: "augment 家族 09-002 首發只用到 damageCoeffAp/add —— 其餘成員等 #649/#684 的下一批採用者（機制與 schema 一起出貨是刻意的:分批出 schema 會讓 Codex 契約抖動）。",
+  },
+  "enum:abilities.augment.targets[].ops[].op=thresholdPct": {
+    status: "landing", since: "2026-08-24",
+    why: "augment 家族的門檻型 op —— 09-002 首發只用 damageCoeffAp/add,門檻型等 #649/#684 的下一批採用者;schema 整族一次出貨是刻意的(分批出會讓 Codex 契約抖動)。",
+  },
+  "field:abilities.augment.targets[].condition": {
+    status: "landing", since: "2026-08-24",
+    why: "augment 的條件葉掛點 —— 09-002 首發無條件(SSJ3 條件今天表達不出來,EX lane 報告記錄在案),掛點等 #684 模板共用批的採用者。",
+  },
+  "field:abilities.augment.targets[].ops[].hookOn": {
+    status: "landing", since: "2026-08-24",
+    why: "augment 的 hook 掛點 —— 09-002 首發是常駐 add,⛔ 不掛事件;hook 型 augment 等 #670 序列演出批的採用者。",
+  },
+  "field:abilities.augment.targets[].ops[].scope": {
+    status: "landing", since: "2026-08-24",
+    why: "augment 的作用域選擇 —— 09-002 首發只指名單一 abilityId,scope 廣域型等下一批;留在 schema 是讓 #684 不必再動契約。",
+  },
+  "field:abilities.augment.targets[].ops[].stat": {
+    status: "landing", since: "2026-08-24",
+    why: "augment 指名屬性的那一格 —— 首發的 op=damageCoeffAp 自帶屬性語意不需要它;stat 型 op(modifierValue)的採用者到位時這格一起活。",
+  },
   "enum:vfx#vfx@1.orient.yawFrom=world": {
     status: "default-live",
     since: "2026-08-24",
@@ -368,20 +392,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "⛔ 而如果三個月後它還在 0 筆，那代表那個機制沒有人要，該刪的是機制不是這一列。",
   },
   // ═══ GH#606 移動特效離地高度 2026-08-23 ═══════════════════════════════════
-  "field:models.fxSpawnHeight": {
-    status: "default-live",
-    why:
-      "省略 = **0 = 2026-08-23 之前逐位元的行為**。這一格是 #606 的副產品：客戶端舊碼讀 " +
-      "`ev.data.y ?? 0`，而 **sim 從來沒有送過 `y`** ⇒ 每一發移動特效都貼在地板上。⛔ 修的時候" +
-      "不把 0 寫死（第一守則：寫死才需要理由），所以它變成 `model@1` 的一格 —— 理由與 " +
-      "`fxLongAxis` 逐字相同：「這根東西該飛多高」是**網格自己的性質**，同一份 glb 被兩支技能" +
-      "引用時兩邊必須拿到同一個答案（第〇·四守則）。\n" +
-      "⭐ 為什麼是 `default-live` ⛔ 不是 `landing`：零採用**就是正確答案** —— 填任何一份都會" +
-      "**改變那支技能今天的畫面**，而沒有人量過哪一根該抬多高。owner 覺得龜派氣功太貼地，" +
-      "在編輯器填一個數字就好，⛔ 不需要一次部署。\n" +
-      "⭐ 可反駁：哪一天有人**量了** beam 的胸口高度並填進 `imported.netherstrike` 那一族，" +
-      "這一列就該刪掉（它會從 0 筆變成有採用，理由自動失效）。",
-  },
   // ⚠️ 前綴 `#chainLightning.amount.*` 會騙人 —— `amount` 是共用的 `zScaling`，
   //    普查給共用子樹的命名是「字母序第一個宣告它的 effect kind」。理由完整
   //    寫在下面 GH#451 那一段，⛔ 不要以為這只影響連鎖閃電。
