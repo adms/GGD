@@ -22,12 +22,27 @@
         {
           "stat": "ad",
           "op": "pctAdd",
-          "value": 0.35
+          "value": 0.25
         }
       ],
       "duration": 6.0
     }
   ],
+  "augment": {
+    "targets": [
+      {
+        "abilityId": "godie-o00x.r",
+        "ops": [
+          {
+            "op": "damageCoeffAp",
+            "mode": "add",
+            "value": 2.5,
+            "nodeKind": "damage"
+          }
+        ]
+      }
+    ]
+  },
   "vfxKey": "fx.prim.ki.beam-lg",
   "schema": "ability@1",
   "castTimeSec": 1.033
