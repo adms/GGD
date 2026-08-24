@@ -244,6 +244,38 @@ export function isRecovering(world: SimWorld, id: EntityId): boolean {
 }
 
 /**
+ * ⭐ ANIMATION CANCEL (GH#652 細節①) —— 一條新指令砍掉後搖。
+ *
+ * LoL 的規則是「**結算之後**的後搖砍得掉，⭐ 而那一發照樣算數」。這裡逐字照做：
+ * ⛔ 什麼都不回收 —— 傷害早在 `combatResolveSystem` 結算完，冷卻早在起手那一刻
+ * 付掉，`recoveryEnd` 帶著 `ticksSaved` 出去讓表演層知道少放幾格動畫。
+ *
+ * ⚠️ 它砍的是 **DECISION 2** 的那個「OUTPUT 鎖」（不能再放技能、不能普攻），
+ * 以及 `recoveryRoots: true` 的技能那一份腳步鎖 —— 兩者共用同一個 `ab.recovery`，
+ * 所以一行就兩邊都放行了。⛔ **前搖不在這裡**：`ab.cast` 與 `ab.windup` 一格未動。
+ *
+ * ⚠️ **呼叫端負責三道閘**（`systems/OrderSystem.ts`）：機制開著、真人座位、
+ * 這一 tick 真的有一條新指令。⛔ 這支不自己查，因為它也被
+ * 「哪一種指令算數」的未來改動共用 —— 判準留在指令套用的那一段。
+ *
+ * @returns 有沒有真的砍掉一段後搖（呼叫端不需要，測試需要）。
+ */
+export function cancelRecoveryByOrder(world: SimWorld, id: EntityId): boolean {
+  const ab = world.abilities.get(id);
+  const rec = ab?.recovery;
+  if (!ab || !rec || rec.ticksLeft <= 0) return false;
+  ab.recovery = null;
+  world.emit("recoveryEnd", {
+    caster: id,
+    slot: rec.slot,
+    abilityId: rec.abilityId,
+    reason: "cancel",
+    ticksSaved: rec.ticksLeft,
+  });
+  return true;
+}
+
+/**
  * THE HIT-CANCEL. Called from `combatResolveSystem` the moment a damage packet
  * actually resolves against an enemy, on the SAME tick the damage lands.
  * Cancels the source's recovery when the packet came from the ability the

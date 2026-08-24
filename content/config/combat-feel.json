@@ -20,7 +20,9 @@
     "leashUnits": 0,
     "moveOrderNoAggroSec": 1.0,
     "moveOrderNoAggroUntilArrival": true,
-    "lolControlModel": true
+    "lolControlModel": true,
+    "recoveryCancelOnOrder": true,
+    "attackMoveNearestToCursor": true
   },
   "autoEngage": {
     "enabled": true,

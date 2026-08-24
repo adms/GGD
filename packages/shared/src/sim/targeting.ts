@@ -530,10 +530,41 @@ export function isConfused(world: SimWorld, id: EntityId): boolean {
   return false;
 }
 
+/**
+ * ⭐ A 移動的 tie-break (GH#652 細節②) —— 「離**指令點**最近」。
+ *
+ * LoL 的 attack-move 打的是離**游標**最近的那一個，⛔ 不是離角色最近、⛔ 也不是
+ * 英雄優先。上面那個共用排序是替**自動索敵**寫的:玩家沒有指到任何地方，只好用
+ * 「誰比較重要」(kind/threat/hp)代替「他想打誰」。A 移動**有**指令點 ⇒ 那個
+ * 代替品不再需要，而且它會直接和玩家指的地方打架(A 點在小兵身上卻飛去追英雄)。
+ *
+ * ⚠️ 嘲弄仍然排最前面，而且用**同一顆 `priority` 欄位**、擺在**同一個位置** ——
+ * 這個檔案的檔頭就是「同一個問題有兩份答案」的驗屍報告。
+ * ⚠️ 之後只剩 `d2`(此時已被換成「到指令點」的距離)，最終仍由 id 收尾:候選人
+ * 由 `queryOverlap` 保證**遞增 id**，而掃描在完全平手時**留任**，所以最小 id 勝。
+ */
+function beatsFromCursor(
+  a: AcquiredTarget,
+  b: AcquiredTarget,
+  priority: TauntPriority,
+): boolean {
+  if (priority === "absolute" && a.forced !== b.forced) return a.forced < b.forced;
+  if (a.forced !== b.forced) return a.forced < b.forced;
+  return a.d2 < b.d2;
+}
+
 export function acquireTarget(
   world: SimWorld,
   self: EntityId,
   radius: number,
+  /**
+   * ⭐ GH#652 細節②:排序改用「到**這一點**的距離」，⛔ 而不是到身體的距離。
+   * 只有 `attackMove`(A + 點地板)會傳它，傳的就是玩家點的那一點。
+   *
+   * ⚠️ **半徑仍然量身體** —— 半徑的語意是「我看得到/構得到多遠」，換成量指令點
+   * 的話 A 點在場外會索到整張地圖。換掉的只有**比較鍵**。
+   */
+  rankFrom?: Readonly<{ x: number; z: number }>,
 ): AcquiredTarget | null {
   const t = world.transform.get(self);
   if (!t) return null;
@@ -543,6 +574,15 @@ export function acquireTarget(
     { zone: t.zone, aliveOnly: true },
   );
   const maxD2 = radius * radius;
+  // ⭐ 一份候選人**兩種**量法:半徑閘永遠用身體距離(`r.d2`,`rankOf` 算的),
+  // 比較鍵在 A 移動時換成「到指令點」。⛔ 不可以把 `rankOf` 改成算指令點 ——
+  // 那會讓半徑閘跟著漂走(見上面 `rankFrom` 的警告)。
+  const rerank = (r: AcquiredTarget, cand: EntityId): AcquiredTarget => {
+    if (rankFrom === undefined) return r;
+    const p = world.transform.get(cand);
+    return p === undefined ? r : { ...r, d2: distSq(rankFrom, p.pos) };
+  };
+  const better = rankFrom === undefined ? beats : beatsFromCursor;
   let best: AcquiredTarget | null = null;
   // 嘲弄: did the taunter turn up as a REAL candidate (inside the radius)?
   // Tracked rather than re-derived from `best.forced`, and that distinction is
@@ -556,9 +596,10 @@ export function acquireTarget(
   const priority = world.tauntRules.priority;
   for (const cand of ids) {
     const r = rankOf(world, self, cand);
-    if (!r || r.d2 > maxD2) continue;
+    if (!r || r.d2 > maxD2) continue; // ← 半徑閘:永遠是身體距離
     if (r.forced === 0) sawForced = true;
-    if (best === null || beats(r, best, priority)) best = r;
+    const ranked = rerank(r, cand);
+    if (best === null || better(ranked, best, priority)) best = ranked;
   }
   // 嘲弄 IGNORES `radius`, and that is deliberate rather than an oversight.
   // `radius` is 「我自己看多遠」 — for 82 melee champions it is the 6 u floor —
@@ -581,7 +622,13 @@ export function acquireTarget(
     const forced = forcedTargetOf(world, self);
     if (forced !== null) {
       const r = rankOf(world, self, forced);
-      if (r && (best === null || beats(r, best, priority))) best = r;
+      // 救援也走**同一個**比較器與同一份改寫 —— 少了 `rerank`,A 移動下一個
+      // 半徑外的嘲弄者會帶著「到身體的距離」進來和「到指令點的距離」比大小,
+      // 那是兩個空間混算(而且它必然贏,因為身體通常比游標近)。
+      if (r) {
+        const ranked = rerank(r, forced);
+        if (best === null || better(ranked, best, priority)) best = ranked;
+      }
     }
   }
   return best;

@@ -18,6 +18,7 @@ import { berserkDropsOrders, berserkSeek, isBerserk } from "../berserk";
 import { fearDropsOrders, fearPass } from "../fear";
 import { chaosDropsOrders, chaosPass } from "../chaos";
 import { reachTo } from "./BasicAttackSystem";
+import { cancelRecoveryByOrder } from "../abilities/abilityRecovery";
 import {
   ACQUIRE_LEASH,
   acquireRadius,
@@ -238,6 +239,25 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
       const order = frame.order;
       if (!order) continue;
       nav.order = order;
+      // ---- GH#652 細節①: 後搖取消 (animation cancel) ----
+      // LoL:結算**之後**的後搖，任何一條新指令都砍得掉，⭐ 而那一發照樣算數。
+      // ⛔ 前搖不在這裡 —— `ab.windup` / `ab.cast` 一格未動,走開仍然作廢那一刀
+      // (`BasicAttackSystem` 的 `standstillBlocks`,既有語意)。
+      //
+      // ⚠️ 三道閘,和 `armMoveOrderNoAggro` 同一組理由:
+      //   1. **機制開著** —— `recoveryCancelOnOrder` 是 owner 的一鍵 rollback;
+      //   2. **真人座位** —— bot 每 tick 都在下指令,一起放行等於把揮空懲罰整個
+      //      從 AI 身上拿掉;缺席/空集合 ⇒ 舊行為**逐位元**不變(手搭夾具、
+      //      客戶端預測影子、重播的純函式重新武裝全部走那一邊);
+      //   3. **這一 tick 真的有一條指令** —— 上面那個 `if (!order) continue`。
+      // ⚠️ 位置:orderSystem 是 step 4,而 `basicAttackSystem` 是 step 6 ⇒ 砍掉的
+      // 那一 tick 就能出手,⛔ 不必再等一 tick(那會是「開關開著但慢半拍」)。
+      if (
+        mo.recoveryCancelOnOrder &&
+        world.mobRules?.humanSeats?.has(seatId) === true
+      ) {
+        cancelRecoveryByOrder(world, id);
+      }
       // GH#637 —— 任何**非 move** 的新指令(A移動/點名目標/S/H)都是玩家自己
       // 選擇開戰或停手:點地板的冷卻窗口當場作廢(他要打,就讓他打)。
       if (order.kind !== "move") world.moveOrderNoAggroUntil.delete(id);
@@ -863,7 +883,16 @@ function autoAcquirePass(
         ? ae.seekRadius
         : nearRadius;
 
-    const best = acquireTarget(world, id, radius);
+    // ---- GH#652 細節②: A 移動打**離指令點最近**的 ----
+    // LoL 的 attack-move 打離**游標**最近的那一個,⛔ 不是離角色最近、⛔ 也不是
+    // 英雄優先。共用排序(英雄→召喚→小怪)是替**自動索敵**寫的:玩家沒指到任何
+    // 地方,只好用「誰比較重要」代替「他想打誰」——A 有指令點,代替品就不需要了。
+    // ⚠️ 只換**比較鍵**,半徑仍然量身體(見 `targeting.ts::acquireTarget` 的
+    // `rankFrom`)。⚠️ `order` 是這一 tick 套用完的指令,所以「A 點在哪」永遠是
+    // 最新那一次 —— ⛔ 不需要第二個住處記游標。
+    const cursor =
+      mo.attackMoveNearestToCursor && order?.kind === "attackMove" ? order.point : undefined;
+    const best = acquireTarget(world, id, radius, cursor);
 
     // ---- keep, swap, or drop the held AUTO target ----
     if (nav.attackTarget !== null && nav.attackTargetAuto) {

@@ -402,6 +402,19 @@ export interface ManualOrderRules {
    * 想要「跑掉就算了」的人把這一格設成一個距離即可(競技場半徑 24,所以 24
    * 以上等於不限制)。自動索敵自己的 `ACQUIRE_LEASH` 是 2,那是給**系統挑的**
    * 目標用的,故意沒有套在手選目標上。
+   *
+   * ── ⭐ GH#652 細節③「右鍵敵人的視野追擊」在 GGD **不成立**（2026-08-24 查證）──
+   * LoL 的規則是「點名的目標走出**視野**一小段仍然追」。⛔ GGD **沒有戰爭迷霧**：
+   * `sim/vision.ts` 的 `fullVision` 出貨 **true**，那是 owner 2026-08-23 的逐字
+   * 裁決「理論上這個地圖是**全視野，就算牆後也看得到**」；同一份規則也把
+   * `wallBlocksBasicAttack` 關成 false。⇒ 一個目標**永遠不會**離開視野，
+   * 「失去視野後再追 N 秒」沒有任何一個 tick 會執行到。
+   *
+   * ⭐ 唯一近似「看不見」的機制是**隱形**（`sim/stealth.ts` 的 `canSee`），
+   * 而它今天的行為**已經比 LoL 更寬鬆**：`isManuallyTargetable` 只擋「新的點名」，
+   * ⛔ 不會把**已經握著**的手選目標拿掉，追擊迴圈也不查隱形 ⇒ 點名之後對方隱身，
+   * 英雄照追。⇒ ⛔ 這裡不加第二條「視野牽引」欄位：這一格（距離牽引）就是
+   * GGD 版本的答案，而且它已經在了。⭐ 假裝做了才是缺陷（第一·五守則）。
    */
   leashUnits: number;
   /**
@@ -431,6 +444,52 @@ export interface ManualOrderRules {
    * **false ＝ 輔助** —— 這一版之前的 GGD 行為（站著會自動索敵、被打會自動反擊）。
    */
   lolControlModel: boolean;
+  /**
+   * ⭐ **後搖取消（animation cancel）** —— LoL 老玩家最有感的那一項（GH#652 細節①）。
+   *
+   * LoL：技能／普攻**結算之後**的後搖，任何一條新指令（走位、下一發技能、A、S、H）
+   * 都可以把它砍掉，而**那一發照樣算數**（傷害已經結算，⛔ 不回收）。
+   * ⛔ **前搖**不在這條裡：前搖中途走開仍然作廢那一次攻擊（既有語意，
+   * `systems/BasicAttackSystem.ts` 的 `standstillBlocks`，一格都沒動）。
+   *
+   * ── 量到的（2026-08-24，⛔ 不是假設）────────────────────────────────────
+   * GGD 的**普攻本來就沒有後搖**：`basicAttackSystem` 在傷害點那一 tick 把
+   * `ab.windup` 清成 null，下一 tick 完全自由（那個檔案自己的註解寫著
+   * 「傷害點之後沒有任何鎖…hit-and-run 微操是自然浮現的」）。
+   * ⇒ 這一格管的是 sim 裡**唯一真的存在**的後搖：`abilities/abilityRecovery.ts`
+   * 的 `ab.recovery`（技能**揮空**時才武裝，出貨 0.6 s，命中會自己取消）。
+   * 它擋的是 **OUTPUT**（不能再放技能、不能普攻），預設不擋腳步。
+   *
+   * true（出貨）＝ 真人座位下任何一條新指令 ⇒ 後搖當場結束（`recoveryEnd`
+   * 帶 `reason: "cancel"`），走位與下一次出手同一 tick 就放行。
+   * false ＝ DOTA 式的完整揮空懲罰窗口（GH#652 之前的行為，一鍵 rollback）。
+   *
+   * ⚠️ **這一格會抬高有效輸出上限** —— 揮空的成本從 0.6 s 變成 0，
+   * 這正是它必須是一格開關而不是一行修正的理由。
+   * ⚠️ **只管真人座位**（`MobRules.humanSeats`，GH#577 開的同一扇門）：
+   * bot 每 tick 都在下指令，一起放行等於把揮空懲罰從整個 AI 身上拿掉。
+   * 缺席/空集合 ⇒ 舊行為**逐位元**不變。
+   */
+  recoveryCancelOnOrder: boolean;
+  /**
+   * ⭐ **A 移動的 tie-break**（GH#652 細節②）。
+   *
+   * LoL：attack-move 打的是**離游標最近**的那一個 —— ⛔ 不是離角色最近，
+   * ⛔ 也不是英雄優先。GGD 今天走 `targeting.ts` 的共用排序
+   * （英雄 → 召喚物 → 小怪，再比威脅/血量/距離），而那個排序是為**自動索敵**
+   * 寫的：玩家沒有指到任何地方，所以只能用「誰比較重要」代替「他想打誰」。
+   * A 移動有指令點，⇒ 那個代替品不再需要。
+   *
+   * true（出貨）＝ `attackMove` 的候選人**只比一件事**：離**指令點**多遠
+   * （嘲弄仍然贏過一切，`forcedTargetOf`）。
+   * false ＝ 回到共用排序（英雄優先），一鍵 rollback。
+   *
+   * ⚠️ 索敵**半徑**仍然是身體到候選人的距離（那是「我看得到多遠」）；
+   * 換掉的只有**比較鍵**。⛔ 否則 A 點在場外會索到整張地圖。
+   * ⚠️ 只有 `attackMove` 讀它 —— 自動索敵、bot、小怪 aggro 一個 tick 都沒變
+   * （沒有指令點的路徑根本走不到這裡）。
+   */
+  attackMoveNearestToCursor: boolean;
 }
 
 export interface CombatFeelRules {
@@ -571,6 +630,10 @@ export const DEFAULT_MANUAL_ORDER: ManualOrderRules = Object.freeze({
   moveOrderNoAggroUntilArrival: true,
   // ⭐ owner 2026-08-24:「現在玩 LOL 人數最多，最容易被接受」⇒ 預設就是 LoL 語意。
   lolControlModel: true,
+  // ⭐ GH#652 細節①:owner 2026-08-24「do it」⇒ 出貨就是 LoL 那一邊（第〇·六守則）。
+  recoveryCancelOnOrder: true,
+  // ⭐ GH#652 細節②:同上。
+  attackMoveNearestToCursor: true,
 });
 
 /**
@@ -768,6 +831,14 @@ export function normalizeManualOrderRules(raw: unknown): ManualOrderRules {
       typeof r.lolControlModel === "boolean"
         ? r.lolControlModel
         : DEFAULT_MANUAL_ORDER.lolControlModel,
+    recoveryCancelOnOrder:
+      typeof r.recoveryCancelOnOrder === "boolean"
+        ? r.recoveryCancelOnOrder
+        : DEFAULT_MANUAL_ORDER.recoveryCancelOnOrder,
+    attackMoveNearestToCursor:
+      typeof r.attackMoveNearestToCursor === "boolean"
+        ? r.attackMoveNearestToCursor
+        : DEFAULT_MANUAL_ORDER.attackMoveNearestToCursor,
   });
 }
 

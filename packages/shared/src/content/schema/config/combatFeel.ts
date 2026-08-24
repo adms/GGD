@@ -142,6 +142,36 @@ export const zConfigCombatFeelDoc = z
          * 逐位元相同 —— 差別只有「沒有下令的時候會不會自己出手」。
          */
         lolControlModel: z.boolean(),
+        /**
+         * ⭐ **後搖取消**（GH#652 細節①，owner 2026-08-24「do it」）。
+         *
+         * LoL：結算**之後**的後搖任何一條新指令都砍得掉，⭐ 而那一發照樣算數；
+         * ⛔ **前搖**不變（走開仍然作廢那次攻擊）。
+         * ⚠️ 量到的：GGD 的**普攻本來就沒有後搖**（傷害點那一 tick 就自由），
+         * 所以這一格管的是 sim 裡唯一真的存在的後搖 —— 技能**揮空**時武裝的
+         * `ab.recovery`（出貨 0.6 s，擋住「再放一招／普攻」）。
+         *
+         * true（出貨）＝ 真人座位一下指令就結束後搖（走位＋出手同 tick 放行）。
+         * false ＝ DOTA 式完整揮空懲罰（GH#652 之前的行為，一鍵 rollback）。
+         * ⚠️ 它**抬高有效輸出上限**（揮空成本 0.6 s → 0），所以它是開關不是修正。
+         * ⚠️ 只管真人座位（`humanSeats`）—— bot 每 tick 下指令，一起放行等於
+         * 把揮空懲罰整個從 AI 身上拿掉。語意與出貨值見 `sim/combatFeel.ts`。
+         */
+        recoveryCancelOnOrder: z.boolean().optional(),
+        /**
+         * ⭐ **A 移動打離指令點最近的**（GH#652 細節②）。
+         *
+         * LoL 的 attack-move 打**離游標最近**的，⛔ 不是離角色最近、⛔ 也不是
+         * 英雄優先。GGD 的共用排序（英雄→召喚→小怪）是替**自動索敵**寫的：
+         * 玩家沒指任何地方，只好用「誰比較重要」代替「他想打誰」。A 有指令點，
+         * 那個代替品就不需要了。
+         *
+         * true（出貨）＝ `attackMove` 只比「離指令點多遠」（嘲弄仍然贏過一切）。
+         * false ＝ 回到共用排序，一鍵 rollback。
+         * ⚠️ 索敵**半徑**仍然量身體到候選人（⛔ 否則 A 點在場外會索到整張地圖），
+         * 換掉的只有**比較鍵**；⛔ 自動索敵／bot／小怪 aggro 一個 tick 都沒變。
+         */
+        attackMoveNearestToCursor: z.boolean().optional(),
       })
       .strict()
       .optional(),
