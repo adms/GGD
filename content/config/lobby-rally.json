@@ -1,7 +1,7 @@
 {
   "id": "lobby-rally",
   "schema": "config.lobby-rally@1",
-  "note": "大廳集合令（GH#492）。owner 2026-08-21 逐字:「創建房間最重要的就是拉人進來,請你將所有線上在大廳的人都跳出確認視窗是否進入房間一起開始,同意後就一起進入開始遊戲,最多等 10 秒,包含 vs bot,若有其他玩家一起進入房間遊戲,也請出現明顯提示姓名與積分、所選英雄,每回合結算也都要特別再提示一次,因為有可能斷線離開或連線回來房間繼續遊戲」。⭐ 同日 owner 反轉語意:「你說的是對的,預設是加入,五秒是讓人按否定的」⇒ joinMode=opt-out:倒數結束就自動加入,視窗的主要按鈕是「不要」。⛔ 這不是措辭差異:opt-in 要人主動點同意,而這張票的目的是「拉人進來」。⭐ owner 2026-08-21 晚上把窗口改回 10 秒（「調整戰鬥開始的拉人時間 5->10秒」）——＝回到他當天早上的原始規格「最多等 10 秒」。⚠️ 中間那一版的 5 秒（「改成五秒」）已被本則取代（第〇·六守則：同一層新的贏）。⛔ opt-out 不變 —— 「預設是加入」是獨立的裁決，⛔ 不因為窗口變長就回到 opt-in。 ⭐ idleExcludeSeconds 是 opt-out 帶來的新問題的答案:掛機或分頁在背景的人不自動加入(判斷在收件人的瀏覽器,平台的 presence heartbeat 是計時器送的,分不出人在不在)。⛔ enabled=false 是一鍵 rollback:建房不再廣播、一鍵開打回到 2026-08-21 之前那條「立刻開,不等人」的路(POST /rooms/solo);joinMode=opt-in 則是只退回「要按同意才進房」那一版。⚠️ 練習模式永遠走 solo 那條路,跟 includeBotMatch 無關 —— 練習房是測試碼的鑰匙,一間有旁人的練習房就是作弊房。⚠️ 值的唯一真相是 apps/client/src/ui/platform/lobbyRally.ts 的 DEFAULT_LOBBY_RALLY,這一份是內容層的鏡像(apps/admin/src/laneConfigDocs.test.ts 逐格比對)。",
+  "note": "大廳集合令（GH#492）。owner 2026-08-21 逐字:「創建房間最重要的就是拉人進來,請你將所有線上在大廳的人都跳出確認視窗是否進入房間一起開始,同意後就一起進入開始遊戲,最多等 10 秒,包含 vs bot,若有其他玩家一起進入房間遊戲,也請出現明顯提示姓名與積分、所選英雄,每回合結算也都要特別再提示一次,因為有可能斷線離開或連線回來房間繼續遊戲」。⭐ 同日 owner 反轉語意:「你說的是對的,預設是加入,五秒是讓人按否定的」⇒ joinMode=opt-out:倒數結束就自動加入,視窗的主要按鈕是「不要」。⛔ 這不是措辭差異:opt-in 要人主動點同意,而這張票的目的是「拉人進來」。⭐ owner 2026-08-21 晚上把窗口改回 10 秒（「調整戰鬥開始的拉人時間 5->10秒」）——＝回到他當天早上的原始規格「最多等 10 秒」。⚠️ 中間那一版的 5 秒（「改成五秒」）已被本則取代（第〇·六守則：同一層新的贏）。⛔ opt-out 不變 —— 「預設是加入」是獨立的裁決，⛔ 不因為窗口變長就回到 opt-in。 ⭐ idleExcludeSeconds 是 opt-out 帶來的新問題的答案:掛機或分頁在背景的人不自動加入(判斷在收件人的瀏覽器,平台的 presence heartbeat 是計時器送的,分不出人在不在)。⛔ enabled=false 是一鍵 rollback:建房不再廣播、一鍵開打回到 2026-08-21 之前那條「立刻開,不等人」的路(POST /rooms/solo);joinMode=opt-in 則是只退回「要按同意才進房」那一版。⚠️ 練習模式永遠走 solo 那條路,跟 includeBotMatch 無關 —— 練習房是測試碼的鑰匙,一間有旁人的練習房就是作弊房。⚠️ 值的唯一真相是 apps/client/src/ui/platform/lobbyRally.ts 的 DEFAULT_LOBBY_RALLY,這一份是內容層的鏡像(apps/admin/src/laneConfigDocs.test.ts 逐格比對)。 ⭐ GH#655（owner 2026-08-24「大廳邀請對象進房間應該要能選擇是**隊友**還是**敵對方**」）:inviteSideChoice。開著(出貨)=好友面板的邀請鈕變成兩顆(同隊/對面),意向跟著邀請碼帶進房間並在落座時優先照它走;關掉=一顆沒有陣營的邀請鈕(這張票之前的行為),⇒ 一鍵 rollback。⚠️ 意向是**偏好不是硬性**(owner:「建議偏好(滿了就讓位)」),而且換邊在開打前就看得到 —— 房間列表每個人的隊伍是由**落座那支函式本身**(room.PlanSeats)算出來的。",
   "enabled": true,
   "waitSeconds": 10,
   "includeBotMatch": true,
@@ -12,5 +12,6 @@
   "readyOnJoin": true,
   "rosterMinHumans": 2,
   "showRosterInSettlement": true,
-  "showRosterInChampSelect": true
+  "showRosterInChampSelect": true,
+  "inviteSideChoice": true
 }

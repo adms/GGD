@@ -156,6 +156,163 @@ type Member struct {
 	Ready        bool   `json:"ready"`
 	IsHost       bool   `json:"isHost"`
 	LocalPlayers int    `json:"localPlayers"`
+	// Side is the 陣營意向 this member arrived with (GH#655) — SideAlly,
+	// SideEnemy, or "" (walked in from the room list / rally: no preference).
+	// It is a PREFERENCE, not a pin: PlanSeats honours it when the wanted side
+	// has room and falls back to first-fit when it does not (owner:「建議偏好
+	// （滿了就讓位）」).
+	Side string `json:"side,omitempty"`
+	// Team is the team PlanSeats currently puts this member on (0-based).
+	//
+	// ⭐ This is the GH#655 「⛔ 不是靜靜地換邊」 half: the lobby shows it live, so
+	// an invitee whose 同隊 could not be honoured SEES the other team next to
+	// their name **before** the match starts, rather than discovering it in
+	// champ-select. It is derived, never stored — the same function assigns the
+	// real seats at start, so the preview cannot drift from the outcome.
+	Team int `json:"team"`
+}
+
+// Side values for Member.Side / Invite.Side (GH#655).
+const (
+	SideAlly  = "ally"
+	SideEnemy = "enemy"
+)
+
+// NormalizeSide keeps only the two 陣營意向 values; anything else becomes ""
+// (= no preference). Unknown input is normalised rather than rejected so an old
+// client, a hand-made request, or a corrupted hash can never brick an invite.
+func NormalizeSide(v string) string {
+	if v == SideAlly || v == SideEnemy {
+		return v
+	}
+	return ""
+}
+
+// TeamSize is how many seats one team has; TeamCount is how many teams a match
+// has. ⚠️ Both are DERIVED from MaxPlayers so the room and the seat packer can
+// never disagree about the shape of a match.
+const (
+	TeamSize  = 3
+	TeamCount = MaxPlayers / TeamSize
+)
+
+// Placement is one occupied seat: which member owns it, which of that member's
+// couch players sits in it (1 = the member, 2..4 = guests), and where.
+type Placement struct {
+	AccountID  string
+	LocalIndex int
+	Team       int
+	Slot       int
+}
+
+// PlanSeats is THE answer to 「誰坐哪一隊」 — used both by the lobby (to show each
+// member their team live) and by gamelink.BuildSeats (to build the real match
+// seats). ⭐ One function, so the preview and the outcome cannot drift.
+//
+// The rules, in order:
+//  1. members in ULID order, each expanded into its couch group (owner + guests);
+//  2. first-fit: a group lands on the first team with enough free slots, which
+//     is what keeps a couch group together;
+//  3. leftovers spill into any free slot.
+//
+// GH#655 adds ONE thing on top, and only when somebody actually expressed a
+// preference: the QUEUE ORDER becomes host → 同隊 → 沒意向 → 對面, and an 對面
+// group starts its first-fit scan at team 1 instead of team 0. ⛔ It does not
+// touch the capacity rules, so a wanted side that is full simply falls through
+// to the next team — owner:「建議偏好（滿了就讓位）」.
+//
+// ⚠️ With no member carrying a Side this function is byte-identical to the
+// pre-#655 packing: the reorder is skipped entirely, so every existing room,
+// rally and test keeps its exact seats.
+func PlanSeats(members []Member) []Placement {
+	sorted := make([]Member, len(members))
+	copy(sorted, members)
+	sort.Slice(sorted, func(i, j int) bool { return sorted[i].AccountID < sorted[j].AccountID })
+
+	anySide := false
+	for _, m := range sorted {
+		if NormalizeSide(m.Side) != "" {
+			anySide = true
+			break
+		}
+	}
+	if anySide {
+		// ⚠️ Stable, so ULID order still decides between two members with the
+		// same intent — the packing stays a pure function of the room's state.
+		sort.SliceStable(sorted, func(i, j int) bool { return sideRank(sorted[i]) < sideRank(sorted[j]) })
+	}
+
+	teams := make([][]Placement, TeamCount)
+	var overflow []Placement
+	for _, m := range sorted {
+		g := couchGroup(m)
+		placed := false
+		for k := 0; k < TeamCount; k++ {
+			t := k
+			// 對面：從 1 隊開始掃，掃完一圈才回到 0 隊（＝主揪那一隊）。⭐ 主揪一定
+			// 在 0 隊，因為 anySide 時他排在最前面而 first-fit 的第一個團一定進 0 隊。
+			if NormalizeSide(m.Side) == SideEnemy {
+				t = (k + 1) % TeamCount
+			}
+			if TeamSize-len(teams[t]) >= len(g) {
+				teams[t] = append(teams[t], g...)
+				placed = true
+				break
+			}
+		}
+		if !placed {
+			overflow = append(overflow, g...)
+		}
+	}
+	for _, p := range overflow {
+		for t := 0; t < TeamCount; t++ {
+			if len(teams[t]) < TeamSize {
+				teams[t] = append(teams[t], p)
+				break
+			}
+		}
+	}
+
+	out := make([]Placement, 0, MaxPlayers)
+	for t := 0; t < TeamCount; t++ {
+		for sl, p := range teams[t] {
+			p.Team, p.Slot = t, sl
+			out = append(out, p)
+		}
+	}
+	return out
+}
+
+// sideRank is the GH#655 queue order: host first (so 同隊 means "with the host"),
+// then the allies who asked for his team, then everyone with no opinion, then
+// the people who asked for the other side.
+func sideRank(m Member) int {
+	switch {
+	case m.IsHost:
+		return 0
+	case NormalizeSide(m.Side) == SideAlly:
+		return 1
+	case NormalizeSide(m.Side) == SideEnemy:
+		return 3
+	default:
+		return 2
+	}
+}
+
+// couchGroup expands one member into its seats (owner + ":pN" guests).
+func couchGroup(m Member) []Placement {
+	n := m.LocalPlayers
+	if n < 1 {
+		n = 1
+	}
+	if n > MaxLocalPlayers {
+		n = MaxLocalPlayers
+	}
+	g := make([]Placement, 0, n)
+	for k := 1; k <= n; k++ {
+		g = append(g, Placement{AccountID: m.AccountID, LocalIndex: k})
+	}
+	return g
 }
 
 // StartInfo is what a successful start hands back to the host.
@@ -400,6 +557,8 @@ func (s *Service) Leave(ctx context.Context, actor, roomID string) error {
 	pipe.HDel(ctx, redisx.KeyRoomReady(roomID), actor)
 	pipe.HDel(ctx, redisx.KeyRoomChampions(roomID), actor)
 	pipe.HDel(ctx, redisx.KeyRoomLocal(roomID), actor)
+	// GH#655 —— 意向跟著人走：離開再回來的人不該還帶著上一次邀請的陣營。
+	pipe.HDel(ctx, redisx.KeyRoomSide(roomID), actor)
 	if _, err := pipe.Exec(ctx); err != nil {
 		return err
 	}
@@ -422,7 +581,8 @@ func (s *Service) Leave(ctx context.Context, actor, roomID string) error {
 func (s *Service) Dispose(ctx context.Context, roomID string) error {
 	pipe := s.rdb.R.TxPipeline()
 	pipe.Del(ctx, redisx.KeyRoom(roomID), redisx.KeyRoomMembers(roomID), redisx.KeyRoomReady(roomID),
-		redisx.KeyRoomChampions(roomID), redisx.KeyRoomChat(roomID), redisx.KeyRoomLocal(roomID))
+		redisx.KeyRoomChampions(roomID), redisx.KeyRoomChat(roomID), redisx.KeyRoomLocal(roomID),
+		redisx.KeyRoomSide(roomID))
 	pipe.ZRem(ctx, redisx.KeyRoomsOpen(), roomID)
 	_, err := pipe.Exec(ctx)
 	return err
@@ -446,15 +606,33 @@ func (s *Service) Members(ctx context.Context, roomID string) ([]Member, error) 
 	if err != nil {
 		return nil, err
 	}
+	// GH#655 陣營意向. ⚠️ A read error is NOT fatal: the hash only exists once
+	// somebody has accepted an invite that carried a side, and losing it degrades
+	// to 「照舊由排位邏輯決定」 — the pre-#655 behaviour — rather than to a 500 on
+	// every room poll.
+	side, _ := s.rdb.R.HGetAll(ctx, redisx.KeyRoomSide(roomID)).Result()
 	sort.Strings(ids)
 	out := make([]Member, 0, len(ids))
 	for _, id := range ids {
 		out = append(out, Member{
 			AccountID: id, Ready: ready[id] == "1", IsHost: id == rm.HostID,
-			LocalPlayers: parseLocalPlayers(local[id]),
+			LocalPlayers: parseLocalPlayers(local[id]), Side: NormalizeSide(side[id]),
 		})
 	}
 	sort.SliceStable(out, func(i, j int) bool { return out[i].IsHost && !out[j].IsHost })
+	// GH#655 —— the team each member is currently headed for, from the SAME
+	// function that will assign the real seats at start (`PlanSeats`). ⛔ Not a
+	// second implementation: a preview that could disagree with the outcome is
+	// exactly the 「靜靜地換邊」 this ticket exists to kill.
+	teamOf := make(map[string]int, len(out))
+	for _, p := range PlanSeats(out) {
+		if p.LocalIndex == 1 {
+			teamOf[p.AccountID] = p.Team
+		}
+	}
+	for i := range out {
+		out[i].Team = teamOf[out[i].AccountID]
+	}
 	return out, nil
 }
 

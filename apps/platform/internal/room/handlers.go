@@ -272,6 +272,10 @@ func (h *Handlers) startSolo(w http.ResponseWriter, r *http.Request) {
 
 type inviteReq struct {
 	AccountID string `json:"accountId"`
+	// Side is the GH#655 陣營意向 the host picked: "ally" (同隊) / "enemy" (對面).
+	// Absent = no preference, which is exactly how every invite behaved before
+	// that ticket — so an old client keeps working unchanged.
+	Side string `json:"side,omitempty"`
 }
 
 func (h *Handlers) invite(w http.ResponseWriter, r *http.Request) {
@@ -281,7 +285,7 @@ func (h *Handlers) invite(w http.ResponseWriter, r *http.Request) {
 		httpx.WriteError(w, err)
 		return
 	}
-	token, err := h.svc.CreateInvite(r.Context(), me.AccountID, chi.URLParam(r, "id"), req.AccountID, h.inviteTTL)
+	token, err := h.svc.CreateInvite(r.Context(), me.AccountID, chi.URLParam(r, "id"), req.AccountID, h.inviteTTL, req.Side)
 	if err != nil {
 		httpx.WriteError(w, err)
 		return

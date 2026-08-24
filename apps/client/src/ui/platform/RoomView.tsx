@@ -38,6 +38,7 @@ import { rallyCountdown } from "./lobbyRally";
 import { rallyExtendLabel } from "@ggd/shared/content";
 import { uiCues } from "../uiCuesConfig";
 import { arenaLabel } from "./maps";
+import { sideHonored, teamLabel } from "./inviteSide";
 import { GOLD, TEXT_DIM, TEXT_MAIN } from "../theme";
 
 // ⚠️ 從登錄表查（GH#324 之後有 13 張場地）—— 以前查的是一份寫死的五筆清單,
@@ -307,6 +308,17 @@ export function RoomView(): React.JSX.Element | null {
                   {nameOf(m.accountId)}
                 </span>
                 {memberSeatLabel(m.localPlayers) && <Badge color={ACCENT}>🎮 {memberSeatLabel(m.localPlayers)}</Badge>}
+                {/* ⭐ GH#655 —— 「他會坐哪一隊」。⚠️ 這個數字是**落座那支函式本身**
+                    算出來的（Go `room.PlanSeats`，開打時用的同一支），⛔ 不是第二份
+                    推測 —— 所以一個「想跟主揪同隊但那一隊滿了」的人，在**開打之前**
+                    就在這裡看得到自己被排到別隊（owner:「⛔ 不是靜靜地換邊」）。
+                    ⚠️ 舊伺服器不送 `team`，那時整顆徽章不長出來。 */}
+                {m.team !== undefined && (
+                  <Badge color={sideHonored(room.members, m) ? ACCENT : DANGER}>
+                    {teamLabel(m.team)}
+                    {m.side === "ally" ? " · 想同隊" : m.side === "enemy" ? " · 想對面" : ""}
+                  </Badge>
+                )}
                 {m.isHost && <Badge color={GOLD}>host</Badge>}
                 {(!m.isHost || m.ready) && (
                   <Badge color={m.ready ? OK : DANGER}>{m.ready ? "ready" : "not ready"}</Badge>

@@ -78,8 +78,12 @@ describe("練習模式 (GH#343)", () => {
     expect(everLeftCombat(ctl)).toBe(true);
   });
 
-  it("② 練習房場上沒有敵方隊伍的實體（沒有對手可以打）", () => {
-    const ctl = build({ ...DEFAULT_PRACTICE_RULES });
+  // ⚠️ GH#657 之後出貨預設是「對面站三個靶子」（owner 2026-08-24 明說「預設對方
+  // 三個英雄」），所以這一條改用 `dummyCount: 0` 建房 —— 它驗的**始終**是 GH#343
+  // 那個機制（練習房⛔不排對手，敵隊座位從來沒進過世界），⛔ 不是「對面一定是空的」。
+  // 新的出貨預設由 `practiceDummies.test.ts` ① 驗（第〇·六守則：預設改變就測新的預設）。
+  it("② 練習房不排對手：`dummyCount: 0` 時場上沒有敵方隊伍的實體", () => {
+    const ctl = build({ ...DEFAULT_PRACTICE_RULES, dummyCount: 0 });
     const myTeam = ctl.seats.get(SEAT0)!.teamId;
     for (const [id, team] of ctl.world.team) {
       if (!ctl.world.champion.has(id)) continue; // 小怪/召喚物不是「敵方隊伍」

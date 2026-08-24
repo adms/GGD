@@ -10,6 +10,7 @@ import { TEXT_DIM, TEXT_MAIN } from "../theme";
 import { padFocusLanding } from "../padFocusLanding";
 import { orderFriends } from "./friendOrder";
 import { DEFAULT_LOBBY_LAYOUT } from "./lobbyLayout";
+import { activeLobbyRally } from "./lobbyRally";
 
 /** friend REQUESTS have no WS push (only presence does) — poll lightly */
 const FRIENDS_POLL_MS = 10_000;
@@ -25,6 +26,10 @@ export function FriendsPanel(): React.JSX.Element {
   const room = useApp((s) => s.room);
   const meId = useApp((s) => s.account?.id);
   const [name, setName] = useState("");
+  // ⭐ GH#655 —— owner 2026-08-24:「大廳邀請對象進房間應該要能選擇是**隊友**還是
+  // **敵對方**」。⚠️ 讀的是**生效中**的政策(後台 overlay ?? content ?? 出貨值),
+  // 所以 `inviteSideChoice` 關掉的那一刻按鈕就退回這張票之前的一顆(完整 rollback)。
+  const sideChoice = activeLobbyRally().inviteSideChoice;
 
   useEffect(() => {
     const t = setInterval(() => void refreshFriends(), FRIENDS_POLL_MS);
@@ -110,10 +115,33 @@ export function FriendsPanel(): React.JSX.Element {
               <span style={{ fontSize: 10, color: state === "in-match" ? "#f2c637" : online ? OK : TEXT_DIM, marginRight: 6 }}>
                 {state}
               </span>
-              {iAmHost && online && !memberIds.has(f.id) && (
+              {iAmHost && online && !memberIds.has(f.id) && !sideChoice && (
                 <Btn small title="invite to my room" onClick={() => void createInvite(f.id, f.username || f.id)}>
                   Invite
                 </Btn>
+              )}
+              {/* ⭐ GH#655 —— 兩顆按鈕就是那句「選擇是隊友還是敵對方」。
+                  ⚠️ 意向是**偏好不是硬性**(owner:「建議偏好(滿了就讓位)」)——
+                  想要的那一隊滿了伺服器會落到下一隊,而**房間列表上每個人的隊伍**
+                  就是落座那支函式算出來的,所以換邊在開打前就看得見(⛔ 不是靜靜地換)。 */}
+              {iAmHost && online && !memberIds.has(f.id) && sideChoice && (
+                <>
+                  <Btn
+                    small
+                    kind="primary"
+                    title="邀請進我的房間 —— 和我同一隊"
+                    onClick={() => void createInvite(f.id, f.username || f.id, "ally")}
+                  >
+                    同隊
+                  </Btn>
+                  <Btn
+                    small
+                    title="邀請進我的房間 —— 坐到對面"
+                    onClick={() => void createInvite(f.id, f.username || f.id, "enemy")}
+                  >
+                    對面
+                  </Btn>
+                </>
               )}
             </div>
           );

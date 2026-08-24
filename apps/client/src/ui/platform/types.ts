@@ -81,12 +81,28 @@ export interface Room {
   rogueliteMobs?: boolean;
 }
 
+/** GH#655 —— 邀請時選的陣營意向（Go: `room.SideAlly` / `room.SideEnemy`）。 */
+export type InviteSide = "ally" | "enemy";
+
 export interface RoomMember {
   accountId: string;
   ready: boolean;
   isHost: boolean;
   /** couch players on that member's machine (1..4); each claims a seat */
   localPlayers: number;
+  /**
+   * GH#655 —— 這個人是帶著哪一種邀請進來的。缺席＝從房間列表／集合令走進來的人
+   * （沒有意向），也就是這張票之前每一個人的樣子。
+   */
+  side?: InviteSide;
+  /**
+   * GH#655 —— 伺服器**現在**打算把他放在哪一隊（0 起算）。
+   *
+   * ⭐ 它是由**落座那支函式本身**算出來的（Go `room.PlanSeats`），⛔ 不是第二份
+   * 推測 —— 所以「想同隊但那一隊滿了」在開打**之前**就看得見，這正是那張票說的
+   * 「⛔ 不是靜靜地換邊」。⚠️ 舊的伺服器不送這一格，所以它是 optional。
+   */
+  team?: number;
 }
 
 export interface RoomResp {

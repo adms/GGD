@@ -51,6 +51,7 @@ import type {
   AccountPublic,
   Catalog,
   FriendsList,
+  InviteSide,
   LeaderboardResp,
   OpenRoom,
   PlayerMeStanding,
@@ -337,7 +338,11 @@ export interface AppState {
    *   result callback，所以水晶／MMR／賽季積分／M幣／戰績五條路一條都不會跑。
    */
   playBotMatch(mapId?: string, rogueliteMobs?: boolean, practice?: boolean): Promise<void>;
-  createInvite(accountId: string, username: string): Promise<void>;
+  /**
+   * GH#655 —— `side` 是邀請的陣營意向（`"ally"` 同隊 / `"enemy"` 對面）。
+   * 省略＝沒有意向（後台把 `inviteSideChoice` 關掉時走的就是這一條）。
+   */
+  createInvite(accountId: string, username: string, side?: InviteSide): Promise<void>;
   joinByCode(token: string): Promise<void>;
   /**
    * ⭐ 接下這一則集合令 (GH#492)。一個 request 就進房而且是 ready 的
@@ -1155,11 +1160,11 @@ export const appStore = createStore<AppState>()((set, get) => {
       }
     },
 
-    async createInvite(accountId, username) {
+    async createInvite(accountId, username, side) {
       const room = get().room;
       if (!room) return;
       try {
-        const { token } = await apiFns.inviteToRoom(room.room.id, accountId);
+        const { token } = await apiFns.inviteToRoom(room.room.id, accountId, side);
         set({ createdInvite: { token, forName: username } });
       } catch (err) {
         set({ lastError: errText(err) });

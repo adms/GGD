@@ -39,6 +39,11 @@ func KeyRoomMembers(rid string) string          { return "room:" + rid + ":membe
 func KeyRoomReady(rid string) string            { return "room:" + rid + ":ready" }
 func KeyRoomChampions(rid string) string        { return "room:" + rid + ":champions" }
 func KeyRoomLocal(rid string) string            { return "room:" + rid + ":local" }
+
+// KeyRoomSide holds each member's 陣營意向 (GH#655): accountId -> "ally"|"enemy".
+// Written only by AcceptInvite, so a member who walked in from the room list
+// simply has no entry and is packed exactly as they were before that ticket.
+func KeyRoomSide(rid string) string { return "room:" + rid + ":side" }
 func KeyWallet(aid string) string               { return "wallet:" + aid }
 func KeyRoomChat(rid string) string             { return "room:" + rid + ":chat" }
 func KeyRoomsOpen() string                      { return "rooms:open" }

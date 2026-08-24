@@ -100,6 +100,25 @@ export const zConfigLobbyRallyDoc = z
     showRosterInSettlement: z.boolean(),
     /** 選角階段（＝一起進場的那一刻）也顯示一次名冊。 */
     showRosterInChampSelect: z.boolean(),
+    /**
+     * ⭐ **邀請時可以選「隊友」還是「敵對方」**（GH#655）—— owner 2026-08-24 逐字：
+     * 「大廳邀請對象進房間應該要能選擇是**隊友**還是**敵對方**」。
+     *
+     * true（出貨）＝ 好友面板的邀請鈕變成**兩顆**（同隊 / 對面），意向跟著邀請碼
+     * 一路帶到房間，落座時**優先**照它走。
+     * false ＝ 一顆沒有陣營的邀請鈕，也就是這張票之前的行為 ⇒ **一鍵 rollback**。
+     *
+     * ⚠️ 意向是**偏好，⛔ 不是硬性**（owner 同一則：「⭐ 建議偏好（滿了就讓位）」）：
+     * 想要的那一隊滿了就落到下一隊，⛔ 而且不是靜靜地換 —— 房間列表上每個人的
+     * 隊伍是**由落座那支函式本身**算出來的（`room.PlanSeats`），所以換邊在開打
+     * **之前**就看得到。
+     *
+     * ⚠️ 這一格為什麼住在集合令這份文件裡：它是**大廳的邀請行為**，而且它的消費端
+     * 就在同一支 `apps/client/src/ui/platform/lobbyRally.ts` 旁邊。⛔ 另開一份
+     * config 文件會多一份 session-gate 與導覽列接線，而那兩行是全 repo 已知
+     * **唯一真正共用**的檔（CLAUDE.md 第〇·七守則）—— 為了一格布林去動它划不來。
+     */
+    inviteSideChoice: z.boolean(),
   })
   .strict();
 
@@ -138,6 +157,9 @@ export const DEFAULT_LOBBY_RALLY_POLICY: LobbyRallyPolicyDoc = {
   rosterMinHumans: 2,
   showRosterInSettlement: true,
   showRosterInChampSelect: true,
+  // ⭐ GH#655 —— owner 2026-08-24 明說要這個功能,所以它出貨就是 on
+  // (第〇·六守則:優先權大的更新後都是預設啟動)。false 是一鍵 rollback。
+  inviteSideChoice: true,
 };
 
 /**
@@ -163,5 +185,6 @@ export function resolveLobbyRally(
     rosterMinHumans: doc.rosterMinHumans,
     showRosterInSettlement: doc.showRosterInSettlement,
     showRosterInChampSelect: doc.showRosterInChampSelect,
+    inviteSideChoice: doc.inviteSideChoice,
   };
 }

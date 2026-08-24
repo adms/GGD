@@ -32,6 +32,15 @@ export const PRACTICE_DOC_ID = "practice";
  */
 export const PRACTICE_SPAWN_BATCH_MAX = 50;
 
+/**
+ * 練習靶最多幾個（GH#657）。⭐ **5**，照 owner 那張票的「靶子數量（0–5）」。
+ *
+ * ⚠️ 一支隊伍只有 `TEAM_SIZE`（3）個座位，所以 4、5 兩個靶會落到**第二支**敵隊。
+ * 那不是缺陷：練習房沒有配對，「哪一隊」在這間房裡只決定「誰是敵人」，
+ * 而 1 隊與 2 隊對玩家（0 隊）都是敵人。
+ */
+export const PRACTICE_DUMMY_MAX = 5;
+
 export const zConfigPracticeDoc = z
   .object({
     id: z.literal(PRACTICE_DOC_ID),
@@ -86,6 +95,36 @@ export const zConfigPracticeDoc = z
           "天花板是小怪波設定裡的「每區同時存活上限」，生怪指令撞到就停，" +
           "所以這一格調大不會讓練習房被自己生出來的怪淹掉。",
       ),
+    dummyCount: z
+      .number()
+      .int()
+      .min(0)
+      .max(PRACTICE_DUMMY_MAX)
+      .describe(
+        "練習房開場站幾個**靶子**（敵方英雄，⛔ 不移動 ⛔ 不普攻 ⛔ 不施放技能）。" +
+          "3（出貨值）＝ owner 明說的「練習模式預設對方三個英雄」。" +
+          "0 ＝ 對面空著，也就是這個功能出現之前的練習房 —— 它就是一鍵 rollback。" +
+          "⚠️ 靶子是**完整的英雄實體**（有血條、有護甲、吃傷害、掛得上狀態），" +
+          "所以量到的傷害數字與正式比賽一致。",
+      ),
+    dummyFightsBack: z
+      .boolean()
+      .describe(
+        "靶子要不要**還手**。關掉（出貨值）＝ 站著不動被打不還手，這是「靶子」" +
+          "這兩個字的全部意思。開著＝ 靶子拿的是一般的 bot 大腦，會走位、會普攻、" +
+          "會施放技能 —— 也就是**今天的 vs bot 行為**，所以這一格是「我想要會動的" +
+          "對手」時的切換，⛔ 不是另一種靶子。",
+      ),
+    dummyChampionId: z
+      .string()
+      .max(64)
+      .describe(
+        "每個靶子固定用**哪一隻**英雄。空字串（出貨值）＝ 每個各自隨機抽（和 bot " +
+          "同一個池子：白名單 ∩ 有模型）。填一個英雄 id ＝ 全部都用那一隻，" +
+          "用來把「血量／護甲」釘在一個已知的基準上量傷害。" +
+          "⚠️ 填了一個不存在／未上架的 id 會被當成沒填（照樣隨機），" +
+          "⛔ 不會讓練習房開不起來。",
+      ),
   })
   .strict();
 
@@ -101,6 +140,12 @@ export interface PracticeRules {
   fireRing: boolean;
   autoRevive: boolean;
   spawnBatch: number;
+  /** GH#657 —— 開場站幾個靶子（0 = 沒有，＝這個功能出現之前的練習房）。 */
+  dummyCount: number;
+  /** GH#657 —— 靶子拿一般 bot 大腦（＝今天的 vs bot 行為）。 */
+  dummyFightsBack: boolean;
+  /** GH#657 —— 靶子固定用哪一隻英雄；`""` = 各自隨機。 */
+  dummyChampionId: string;
 }
 
 /**
@@ -113,6 +158,12 @@ export const DEFAULT_PRACTICE_RULES: PracticeRules = {
   fireRing: false,
   autoRevive: true,
   spawnBatch: 3,
+  // ⭐ owner 2026-08-24 逐字:「練習模式**預設**對方**三個英雄**但不會移動也不會
+  // 攻擊、施放技能」—— 「預設」兩個字是他自己說的,所以這一格出貨就是 3
+  // (第〇·六守則:優先權大的更新後都是預設啟動)。rollback 是把它調成 0。
+  dummyCount: 3,
+  dummyFightsBack: false,
+  dummyChampionId: "",
 };
 
 /**
@@ -140,5 +191,8 @@ export function resolvePracticeRules(isPracticeRoom: boolean, doc: unknown): Pra
     fireRing: parsed.data.fireRing,
     autoRevive: parsed.data.autoRevive,
     spawnBatch: parsed.data.spawnBatch,
+    dummyCount: parsed.data.dummyCount,
+    dummyFightsBack: parsed.data.dummyFightsBack,
+    dummyChampionId: parsed.data.dummyChampionId,
   };
 }

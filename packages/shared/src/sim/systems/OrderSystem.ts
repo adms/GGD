@@ -585,6 +585,17 @@ function tauntVsManualOrder(
   nav.attackTargetAuto = false;
 }
 
+/**
+ * 這個實體是不是坐在一個**靶子座位**上（GH#657，`MobRules.inertSeats`）。
+ *
+ * ⚠️ 讀的是 `world.team` 的 `seatId`，與 GH#577 的 `humanSeats` 逐字同一條路 ——
+ * sim 沒有「誰是靶子」這個概念，那是 host 每一場戰鬥開始交進來的知識。
+ */
+function isInertSeat(world: SimWorld, id: EntityId): boolean {
+  const seatId = world.team.get(id)?.seatId;
+  return seatId !== undefined && world.mobRules?.inertSeats?.has(seatId) === true;
+}
+
 function autoAcquirePass(
   world: SimWorld,
   ae: AutoEngageRules,
@@ -604,6 +615,27 @@ function autoAcquirePass(
     if (!nav || !t || !hp?.alive || !sc) {
       // GH#216: 死了 / 沒有身體就不可能在接敵。留著鎖的話,復活的那一 tick 這個
       // 單位會帶著上一條命的接敵狀態醒來,而 `walkStall` 早就被重設了。
+      world.autoEngaging.delete(id);
+      continue;
+    }
+
+    // ---- ⭐ GH#657: 練習靶 —— 這個座位整段索敵都不跑 ----
+    // owner 2026-08-24:「練習模式預設對方三個英雄但**不會移動也不會攻擊、施放
+    // 技能**」。⛔ 不移動、⛔ 不施法那兩半由 host 的 driver 負責（它一個 intent
+    // 都不送）；**自動索敵**是 sim 自己會替單位做的唯一一件事，所以它是這裡的事。
+    //
+    // ⚠️ 位置在**最上面**是刻意的：放在 `tauntVsManualOrder` 之後的話，一個被
+    // 嘲弄的靶子會被塞一個目標然後開始揮刀 —— 而「被打不還手」是這個功能的
+    // 全部意義。⭐ 已握的自動目標當場放下（`dummyFightsBack` 從開切到關時，
+    // 上一 tick 咬住的那個目標不可以留著）。
+    //
+    // ⚠️ 空集合（每一份測試夾具、客戶端預測影子、重播重新武裝、以及每一場正式
+    // 比賽）⇒ 這一段逐位元不存在。
+    if (world.mobRules?.inertSeats?.size && isInertSeat(world, id)) {
+      if (nav.attackTargetAuto) {
+        nav.attackTarget = null;
+        nav.attackTargetAuto = false;
+      }
       world.autoEngaging.delete(id);
       continue;
     }

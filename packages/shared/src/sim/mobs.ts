@@ -494,6 +494,25 @@ export interface MobRules {
    */
   humanSeats?: ReadonlySet<SeatId>;
   /**
+   * ⭐ GH#657 —— 哪幾個座位是**靶子**（owner 2026-08-24「不會移動也不會攻擊、
+   * 施放技能」）。這幾個座位的英雄 ⛔ **不進自動索敵**：不挑新目標、被打不反擊、
+   * 嘲弄也拉不走（見 `systems/OrderSystem.ts::autoAcquirePass`）。
+   *
+   * ⚠️ 它只關掉「sim 自己替這個單位做的那一件事」。**移動與施法**那一半由 host
+   * 的 driver 負責（`match/DummyDriver.ts` 一個 intent 都不送）—— 兩半合起來
+   * 才是一個靶子，⛔ 少任何一半都會是「站著不動但會揮刀」或「不揮刀但會追人」。
+   *
+   * ⚠️ 為什麼它在**規則表**上而不是 `SimWorld` 或實體上：與 `humanSeats` 逐字
+   * 同一個理由 —— 「誰是靶子」是 host 的座位知識，而規則表是 host 每一場戰鬥
+   * 開始都會重新交給 sim 的東西。⛔ 它也**不是**一個新的實體種類：靶子是一隻
+   * 完整的英雄（有血條、有護甲、吃傷害、掛得上狀態），這正是 owner 那張票
+   * 要求「傷害數字與正式比賽一致」的原因。
+   *
+   * ⚠️ **省略 ⇒ 空集合 ⇒ 一個 tick 都沒變**（每一份測試夾具、客戶端的預測影子、
+   * 重播的純函式重新武裝全部走這一邊）。
+   */
+  inertSeats?: ReadonlySet<SeatId>;
+  /**
    * 特殊殭屍 (task #262). `null` = no special zombies AND — this is the part
    * that matters — no `world.rng` draw at all, so an arena that does not author
    * the block leaves the shared random stream (crits / evasion / the legendary

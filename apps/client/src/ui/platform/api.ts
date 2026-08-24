@@ -11,6 +11,7 @@ import type {
   ChampionUsageResp,
   ChampionUsageRow,
   FriendsList,
+  InviteSide,
   LeaderboardResp,
   MyChampionRow,
   MyChampionsResp,
@@ -342,8 +343,21 @@ export function setLocalPlayers(roomId: string, count: number): Promise<RoomResp
   });
 }
 
-export function inviteToRoom(roomId: string, accountId: string): Promise<{ token: string }> {
-  return api.request<{ token: string }>(`/rooms/${encodeURIComponent(roomId)}/invite`, { body: { accountId } });
+/**
+ * 邀請一個人進我的房間。
+ *
+ * `side` 是 GH#655 的陣營意向（`"ally"` 同隊 / `"enemy"` 對面）。⚠️ 省略時**一個
+ * 欄位都不送** —— 伺服器把「沒有 side」讀成「沒有意向」，也就是這張票之前的行為，
+ * 所以關掉後台那一格（`inviteSideChoice`）就是完整 rollback。
+ */
+export function inviteToRoom(
+  roomId: string,
+  accountId: string,
+  side?: InviteSide,
+): Promise<{ token: string }> {
+  return api.request<{ token: string }>(`/rooms/${encodeURIComponent(roomId)}/invite`, {
+    body: side ? { accountId, side } : { accountId },
+  });
 }
 
 /**

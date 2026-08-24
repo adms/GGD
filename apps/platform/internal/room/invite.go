@@ -16,6 +16,14 @@ type Invite struct {
 	RoomID string `json:"roomId"`
 	From   string `json:"from"`
 	To     string `json:"to"`
+	// Side is the 陣營意向 (GH#655) the HOST picked when minting this invite:
+	// SideAlly ("和我同一隊") or SideEnemy ("坐到對面"). Empty = the pre-#655
+	// behaviour, i.e. wherever the packer happens to put them.
+	//
+	// ⚠️ It rides on the invite rather than being a second request because the
+	// choice belongs to the moment the host pressed 邀請 — an accept that had to
+	// carry it back would let the invitee overwrite the host's pick.
+	Side string `json:"side,omitempty"`
 }
 
 // InvitePush is the message delivered to the target over the lobby WS.
@@ -51,7 +59,11 @@ type InvitePush struct {
 
 // CreateInvite mints a crypto/rand 256-bit single-use token (TTL ttl) for the
 // room and pushes it to the target's lobby channel. Host-only.
-func (s *Service) CreateInvite(ctx context.Context, actor, roomID, targetID string, ttl time.Duration) (string, error) {
+//
+// side is the GH#655 陣營意向 — SideAlly, SideEnemy, or "" (no preference, the
+// pre-#655 behaviour). An unrecognised value is normalised to "" rather than
+// rejected: a stale client must still be able to invite people.
+func (s *Service) CreateInvite(ctx context.Context, actor, roomID, targetID string, ttl time.Duration, side string) (string, error) {
 	rm, err := s.requireHost(ctx, actor, roomID)
 	if err != nil {
 		return "", err
@@ -64,7 +76,7 @@ func (s *Service) CreateInvite(ctx context.Context, actor, roomID, targetID stri
 		return "", err
 	}
 	token := hex.EncodeToString(raw)
-	payload, err := json.Marshal(Invite{RoomID: roomID, From: actor, To: targetID})
+	payload, err := json.Marshal(Invite{RoomID: roomID, From: actor, To: targetID, Side: NormalizeSide(side)})
 	if err != nil {
 		return "", err
 	}
@@ -98,5 +110,18 @@ func (s *Service) AcceptInvite(ctx context.Context, actor, token string) (Room, 
 	if inv.To != "" && inv.To != actor {
 		return Room{}, httpx.Forbidden("this invite is not for you")
 	}
-	return s.Join(ctx, actor, inv.RoomID)
+	rm, err := s.Join(ctx, actor, inv.RoomID)
+	if err != nil {
+		return rm, err
+	}
+	// GH#655 —— 意向記在**房間**上，⛔ 不是跟著這一次請求就消失：落座是在
+	// `start` 那一刻才算的（見 PlanSeats），而那可能是好幾分鐘之後。
+	//
+	// ⚠️ 寫失敗**不讓加入失敗**：人已經在房裡了，把一個成功的 Join 翻成錯誤只會
+	// 讓客戶端以為沒進去而重試。掉了意向的下場是「照舊由排位邏輯決定」，
+	// 也就是這張票之前的行為 —— 而它在畫面上看得見（房間列表顯示每個人的隊伍）。
+	if side := NormalizeSide(inv.Side); side != "" {
+		_ = s.rdb.R.HSet(ctx, redisx.KeyRoomSide(inv.RoomID), actor, side).Err()
+	}
+	return rm, nil
 }

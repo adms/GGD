@@ -190,85 +190,59 @@ func (s *Service) SetNow(fn func() time.Time) { s.now = fn }
 // (first-fit); oversubscribed leftovers spill into the remaining free slots.
 // Exported for the seam unit tests.
 func BuildSeats(members []room.Member, lookup func(id string) (account.Account, error), difficulty string) ([]Seat, BotFill) {
-	const teamSize = 3
+	const teamSize = room.TeamSize
 	teamCount := TotalSeats / teamSize
 
-	sorted := make([]room.Member, len(members))
-	copy(sorted, members)
-	sort.Slice(sorted, func(i, j int) bool { return sorted[i].AccountID < sorted[j].AccountID })
+	// ⭐ GH#655 —— WHO SITS ON WHICH TEAM is answered in exactly one place,
+	// `room.PlanSeats`, because the lobby has to show that same answer live
+	// (`room.Member.Team`). A packing rule with two implementations is a preview
+	// that can disagree with the outcome, i.e. 「靜靜地換邊」 with extra steps.
+	// This function keeps only what the lobby cannot know: display names, MMR,
+	// and the bots that fill the empty slots.
+	plan := room.PlanSeats(members)
 
-	// Expand each member into its couch group.
-	groups := make([][]Seat, 0, len(sorted))
-	humans := 0
-	for _, m := range sorted {
-		n := m.LocalPlayers
-		if n < 1 {
-			n = 1
-		}
-		if n > room.MaxLocalPlayers {
-			n = room.MaxLocalPlayers
-		}
-		owner := Seat{AccountID: m.AccountID}
-		if a, err := lookup(m.AccountID); err == nil {
-			owner.DisplayName = a.Username
-			owner.MMR = a.MMR
-		}
-		g := []Seat{owner}
-		for k := 2; k <= n; k++ {
-			guest := Seat{AccountID: GuestID(m.AccountID, k), MMR: owner.MMR}
-			if owner.DisplayName != "" {
-				guest.DisplayName = fmt.Sprintf("%s (%dP)", owner.DisplayName, k)
-			} else {
-				guest.DisplayName = fmt.Sprintf("(%dP)", k)
-			}
-			g = append(g, guest)
-		}
-		humans += n
-		groups = append(groups, g)
-	}
-
-	// First-fit team packing, then spill leftovers into any free slot.
-	teams := make([][]Seat, teamCount)
-	var overflow []Seat
-	for _, g := range groups {
-		placed := false
-		for t := 0; t < teamCount; t++ {
-			if teamSize-len(teams[t]) >= len(g) {
-				teams[t] = append(teams[t], g...)
-				placed = true
-				break
-			}
-		}
-		if !placed {
-			overflow = append(overflow, g...)
-		}
-	}
-	for _, s := range overflow {
-		for t := 0; t < teamCount; t++ {
-			if len(teams[t]) < teamSize {
-				teams[t] = append(teams[t], s)
-				break
-			}
-		}
-	}
-
-	// Flatten in team/slot order; empty slots become bots.
-	seats := make([]Seat, 0, TotalSeats)
+	seats := make([]Seat, TotalSeats)
 	for t := 0; t < teamCount; t++ {
 		for sl := 0; sl < teamSize; sl++ {
 			idx := t*teamSize + sl
-			if sl < len(teams[t]) {
-				s := teams[t][sl]
-				s.Team, s.Slot = t, sl
-				seats = append(seats, s)
-			} else {
-				seats = append(seats, Seat{
-					AccountID:   fmt.Sprintf("bot-%02d", idx),
-					DisplayName: fmt.Sprintf("Bot %02d", idx),
-					Team:        t, Slot: sl, IsBot: true,
-				})
+			seats[idx] = Seat{
+				AccountID:   fmt.Sprintf("bot-%02d", idx),
+				DisplayName: fmt.Sprintf("Bot %02d", idx),
+				Team:        t, Slot: sl, IsBot: true,
 			}
 		}
+	}
+
+	// One account read per MEMBER (not per seat): a couch group's guests inherit
+	// the owner's name and rating, exactly as they did before.
+	owners := map[string]Seat{}
+	humans := 0
+	for _, p := range plan {
+		idx := p.Team*teamSize + p.Slot
+		if idx < 0 || idx >= TotalSeats {
+			continue
+		}
+		owner, seen := owners[p.AccountID]
+		if !seen {
+			owner = Seat{AccountID: p.AccountID}
+			if a, err := lookup(p.AccountID); err == nil {
+				owner.DisplayName = a.Username
+				owner.MMR = a.MMR
+			}
+			owners[p.AccountID] = owner
+		}
+		s := owner
+		if p.LocalIndex > 1 {
+			s.AccountID = GuestID(p.AccountID, p.LocalIndex)
+			if owner.DisplayName != "" {
+				s.DisplayName = fmt.Sprintf("%s (%dP)", owner.DisplayName, p.LocalIndex)
+			} else {
+				s.DisplayName = fmt.Sprintf("(%dP)", p.LocalIndex)
+			}
+		}
+		s.Team, s.Slot = p.Team, p.Slot
+		seats[idx] = s
+		humans++
 	}
 	return seats, BotFill{Count: TotalSeats - humans, Difficulty: difficulty}
 }
