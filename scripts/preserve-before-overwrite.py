@@ -23,7 +23,8 @@ repo 外的檔（scratchpad 等）落在 `~/.claude/projects/-Users-Takuro-GGD/o
 會被關掉，而被關掉的閘等於沒有閘。
 """
 from __future__ import annotations
-import json, os, re, shutil, subprocess, sys, time
+import json
+import re, os, re, shutil, subprocess, sys, time
 from pathlib import Path
 
 REPO = Path(os.environ.get("CLAUDE_PROJECT_DIR", "/Users/Takuro/GGD")).resolve()
@@ -228,6 +229,35 @@ def main() -> int:
                 file=sys.stderr,
             )
             return 2
+    # 🎫 開票規格(owner 2026-08-24):「開票要把 [acceptance criteria,] 及
+    # [緊急][重要][優先] 的tag, 採用的 [思考策略] 與 [解決模板] 寫清楚」。
+    # ⭐ 警告⛔ 不擋(exit 0):一張缺欄的票仍然比沒有票好,而被擋掉的開票
+    #    會變成「算了不開了」—— 那正是這個 hook 要防的反面。
+    #    完整檢查/回補工具:scripts/ticket-lint.sh
+    if tool == "Bash":
+        _cmd = ti.get("command") or ""
+        if re.search(r"\bgh\s+issue\s+create\b", _cmd):
+            _missing = []
+            if not re.search(r"acceptance criteria|驗收標準|##\s*驗收", _cmd, re.I):
+                _missing.append("驗收標準(acceptance criteria)")
+            if not re.search(r"\[(緊急|重要|優先|一般)\]", _cmd):
+                _missing.append("[緊急]/[重要]/[優先]/[一般] tag(標題)")
+            if not re.search(
+                r"\[(breaking change|fix|improve|feature|refactor|perf|docs|test|chore|bug|infra)\]",
+                _cmd, re.I,
+            ):
+                _missing.append("[fix]/[feature]/[improve]/[breaking change] 類型 tag(標題)")
+            if not re.search(r"\[思考策略\]|##\s*思考策略", _cmd):
+                _missing.append("[思考策略]")
+            if not re.search(r"\[解決模板\]|##\s*解決模板", _cmd):
+                _missing.append("[解決模板]")
+            if _missing:
+                print(
+                    "🎫 開票規格警告(owner 2026-08-24,⛔ 不擋但要補):這張票缺 "
+                    + " · ".join(_missing)
+                    + "\n   ⇒ 開完用 scripts/ticket-lint.sh <票號> 驗,再 gh issue edit 補上。",
+                    file=sys.stderr,
+                )
     # 🚫 genguard:只攔 Write/Edit(手改)與 Bash 重導 —— 產生器不走這些路
     import os as _os
     if _os.environ.get("GGD_GENGUARD_OFF") != "1":
