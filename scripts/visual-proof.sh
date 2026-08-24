@@ -66,7 +66,12 @@ fi
 CHANGED=$(git diff --name-only "$BASE" HEAD; git diff --name-only; git diff --name-only --cached)
 CHANGED=$(printf '%s\n' "$CHANGED" | sort -u | sed '/^$/d')
 
-TOUCHED=$(printf '%s\n' "$CHANGED" | grep -E "$VISUAL_RE" | grep -v '\.test\.ts$' || true)
+# ⛔ 這一族在 apps/client/src/render/ 底下,但它們**不畫任何像素** ——
+#    它們是「產生 content/ 文件」的離線產生器（node 跑,沒有 scene、沒有材質）。
+#    要它們附終端證據等於要求一份與改動無關的截圖 ⇒ 那會讓閘變成橡皮圖章。
+#    ⚠️ 判準是**檔名 generate*Content*(產物寫入端)**,⛔ 不是「我覺得這次不用驗」。
+GENERATOR_RE='^apps/client/src/render/vfx/generate[A-Za-z]*Content\.ts$'
+TOUCHED=$(printf '%s\n' "$CHANGED" | grep -E "$VISUAL_RE" | grep -v '\.test\.ts$' | grep -vE "$GENERATOR_RE" || true)
 if [ -z "$TOUCHED" ]; then
   echo "✓ visual-proof：這次改動沒有碰到畫面層（apps/client/src/{vfx,render}），不需要像素證據。"
   exit 0
