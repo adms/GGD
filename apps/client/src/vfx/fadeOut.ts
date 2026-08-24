@@ -40,6 +40,23 @@
  * 畫面上看不見、`--check` 不會紅、而發射器要等它死透才還得回池子。
  * 連帶效果是 `W3xEmitterRig` 的 `maxLifeSec`（效果什麼時候被 release）也跟著
  * 縮 —— 那才是「資源真的被回收」，⛔ 不是「變透明後留在場上」。
+ *
+ * ---------------------------------------------------------------------------
+ * 💨 GH#660 —— 上面那個定義**漏掉了一半**，而 owner 又看到同一件事
+ * ---------------------------------------------------------------------------
+ * owner 2026-08-24（逐字，⚠️ 他自己說「我們討論調整過好幾次了」）：
+ *
+ * > 「每次施法會**淡出飛上天的粒子特效** 淡出時間可以縮短
+ * >  我**不喜歡天空有殘留特效**」
+ *
+ * ⭐ **量到的**：`fx.fam.dissipate.*` 整族壽命 1.107 秒，而它的「尾段」
+ * （上面那個定義）只有 **0.443 秒** ⇒ **在 0.5 以下，這道閘一次都沒有叫過**。
+ * 它的 alpha 是 `0.75 → 0.75 → 0.315 → 0` —— 中間多一格就把「淡出」切成兩段，
+ * 於是只有最後一段被量到，而玩家看到的是整段 **0.886 秒**。
+ *
+ * ⇒ 多一個窗口 {@link dissipateWindow}（**峰值** → 歸零）與多一格上限
+ * （`config.vfx-cleanup@1.vfxDissipateMaxSec`，出貨 0.5）。⭐ 兩者共用**同一支**
+ * 夾子與**同一條**時間重映，比較嚴的那個贏，⛔ 不是兩套會各自腐爛的規則。
  */
 import type { VfxDoc } from "@ggd/shared/content";
 
@@ -68,18 +85,54 @@ export interface FadeOutTail {
  * 這份文件的尾段（PURE）。沒有尾段（alpha 從不歸零 / 一開始就是 0）回 `null`。
  */
 export function fadeOutTail(doc: VfxDoc): FadeOutTail | null {
+  return windowFrom(doc, "last-visible");
+}
+
+/**
+ * 💨 GH#660 —— 這份文件的**整段收尾**（PURE）：**最後一個還在峰值 alpha 的
+ * 關鍵格** → **同一個歸零的關鍵格**。
+ *
+ * ⚠️ 它與 {@link fadeOutTail} 的**終點相同、起點不同**，而那個差就是 owner
+ * 2026-08-24 還看得到殘留的原因：`fx.fam.dissipate.*` 的 alpha 是
+ * `0.75 → 0.75 → 0.315 → 0`，中間那一格把「淡出」切成兩段 ⇒
+ * `fadeOutTail` 只量得到最後一段（0.443 秒，在 0.5 以下 ⇒ #569 那道閘一次都
+ * 沒有叫過），而玩家看到的是整段 0.886 秒。
+ *
+ * ⛔ 起點刻意**不**是「最後一個開始下降的關鍵格」——`fadeOutTail` 的檔頭記著
+ * 那個定義量過的後果（293 份文件中位數 2 秒 → 0.5 秒 ＝ 砍掉整個特效）。
+ * 「還在峰值」是同一件事的**保守**版本：只要作者寫了一格「維持全亮」，那一段
+ * 就整段算身體，⛔ 不會被壓縮。
+ */
+export function dissipateWindow(doc: VfxDoc): FadeOutTail | null {
+  return windowFrom(doc, "peak");
+}
+
+/**
+ * 兩個窗口共用的取法（PURE）。終點永遠是「最後一個還看得見的關鍵格**後面**那一
+ * 格」，⭐ 所以兩者一定在同一刻結束 —— 兩個上限才可以直接比誰比較嚴。
+ */
+function windowFrom(doc: VfxDoc, anchor: "last-visible" | "peak"): FadeOutTail | null {
   const stops = stopsOf(doc);
   const life = doc.lifetimeSec.max;
   if (!(life > 0)) return null;
   let lastVisible = -1;
-  for (let i = 0; i < stops.length; i++) if (stops[i]![1][3] > 0) lastVisible = i;
+  let peak = 0;
+  for (let i = 0; i < stops.length; i++) {
+    const a = stops[i]![1][3];
+    if (a > 0) lastVisible = i;
+    if (a > peak) peak = a;
+  }
   // 全程透明（不會畫出任何東西）或最後一格仍然看得見（硬切，沒有 fade）
   if (lastVisible < 0 || lastVisible === stops.length - 1) return null;
-  const tVis = stops[lastVisible]![0];
+  let start = stops[lastVisible]![0];
+  if (anchor === "peak") {
+    start = stops[0]![0];
+    for (let i = 0; i <= lastVisible; i++) if (stops[i]![1][3] >= peak) start = stops[i]![0];
+  }
   const tZero = stops[lastVisible + 1]![0];
   return {
-    bodySec: tVis * life,
-    tailSec: (tZero - tVis) * life,
+    bodySec: start * life,
+    tailSec: (tZero - start) * life,
     deadSec: (1 - tZero) * life,
   };
 }
@@ -107,9 +160,34 @@ function round(v: number): number {
  * `lifetimeSec.min` 按同一個比例縮，且不超過新的 max（`lifetimeSec.max >= min`
  * 是 schema 的硬條件，違反它的文件連載入都過不了）。
  */
-export function clampFadeOutTail(doc: VfxDoc, maxSec: number): VfxDoc {
+export function clampFadeOutTail(
+  doc: VfxDoc,
+  maxSec: number,
+  /**
+   * 💨 GH#660 —— **整段收尾**（{@link dissipateWindow}）的上限。
+   *
+   * ⭐ 預設 `maxSec` 是刻意的：owner 對兩者說的是**同一句話**（「收尾最多
+   * 0.5 秒」），而且這樣一來**沒有傳第三個參數的呼叫端**（`W3xEmitterRig`
+   * 算效果什麼時候被回收的那一支）拿到的壽命與 `toParticleSystem` 真的建出來的
+   * 粒子壽命**一致** —— ⛔ 不是「粒子 0.7 秒就死光而發射器再賴 0.4 秒」那種
+   * 看不見的殘留。傳 `Infinity` = 這一半關掉。
+   */
+  dissipateMaxSec: number = maxSec,
+): VfxDoc {
   const tail = fadeOutTail(doc);
+  const wide = dissipateWindow(doc);
+  // ⭐ 兩個窗口同時結束（見 `windowFrom`），所以「誰比較嚴」＝ 誰算出來的新壽命
+  // 比較短。⛔ 不是兩條各自套一次 —— 那會把身體重映兩次。
+  const lifeOf = (w: FadeOutTail | null, cap: number): number =>
+    w ? w.bodySec + Math.min(w.tailSec, cap) : Infinity;
+  if (wide && lifeOf(wide, dissipateMaxSec) < lifeOf(tail, maxSec)) {
+    return clampWindow(doc, wide, dissipateMaxSec);
+  }
   if (!tail) return doc;
+  return clampWindow(doc, tail, maxSec);
+}
+
+function clampWindow(doc: VfxDoc, tail: FadeOutTail, maxSec: number): VfxDoc {
   if (tail.tailSec <= maxSec && tail.deadSec <= 0) return doc;
   const oldLife = doc.lifetimeSec.max;
   const newTail = Math.min(tail.tailSec, maxSec);

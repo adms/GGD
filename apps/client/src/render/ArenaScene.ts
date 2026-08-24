@@ -78,6 +78,7 @@ import { prefersReducedMotion, setWeatherArena, weatherPolicy } from "./weather"
 // ⭐ GH#610 —— 飄過去的那一片霧（局部層）。⚠️ 它吃的正是下面那個 `weather` 物件，
 // ⛔ 不是第二份設定 —— `FogBankInput` 結構上等於 `WeatherGroundInput`。
 import { buildFogBanks } from "./weatherFogBanks";
+import { buildRain } from "../vfx/WeatherRainFx";
 
 /**
  * ⭐ GH#362 —— `scenery.palette` 的地板／牆兩格 → 渲染層要的 0..1 rgb。
@@ -448,6 +449,14 @@ export function buildArena(
   //    同一個權重、同一條玩法界線。完整推導在 `render/weatherFogBanks.ts` 的檔頭。
   const fogBanks = buildFogBanks(scene, root, arena.id, arena.zones, weather);
   if (fogBanks) handles.materials.push(fogBanks.material);
+
+  // 🌧️ GH#654 —— 天氣的**降水**那一層。owner 2026-08-24:「下雨跟起霧的天氣特效」。
+  // ⭐ 它與上面那兩層（濕地面／積水、飄過去的那一片霧）是**同一個機制**：同一份政策、
+  //    同一格總開關、同一張級別權重表 ⇒ ⛔ 不可能「天氣說晴朗、天上在下雨」。
+  // ⚠️ 出貨**關著**（`config.weather@1.rainEnabled = false`）—— 新功能不是修復。
+  // ⚠️ 不用回傳值：它的生命週期綁在自己那顆看不見的 emitter mesh 上，而那顆是
+  //    `root` 的子節點 ⇒ `disposeArena()` 收 root 的那一刻雨就停了。
+  buildRain(scene, root, arena.id, arena.zones, weather);
 
   return handles;
 }

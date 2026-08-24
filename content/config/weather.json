@@ -19,6 +19,12 @@
   "fogBankLaneFill": 0.85,
   "fogBankDriftSec": 90,
   "fogBankHeight": 1.2,
+  "rainEnabled": false,
+  "rainDropsAtFull": 1200,
+  "rainFallSpeed": 22,
+  "rainTiltDeg": 12,
+  "rainStreak": 9,
+  "rainAlpha": 0.22,
   "arenas": {
     "arena.castle": "indoor-dry",
     "arena.colosseum": "clear",

@@ -18,10 +18,35 @@ import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import type { VfxDoc, VfxBlendMode, VfxOrient } from "@ggd/shared/content";
 import { addSwirl, orientAxis, orientDirection, orientIsIdentity } from "./orient";
 import { clampFadeOutTail } from "./fadeOut";
-import { vfxFadeOutMaxSec } from "./vfxCleanupPolicy";
+import { vfxDissipateMaxSec, vfxFadeOutMaxSec } from "./vfxCleanupPolicy";
 import { markVfxManaged, markVfxPersistent } from "./vfxHardCap";
 
 const CONTENT_BASE = "/content/";
+
+/**
+ * 💨 GH#660 —— 已經喊過的文件（每一份只喊一次）。
+ *
+ * ⚠️ 上限存在的理由和登記表一樣：一個**沒有上限**的 Set 就是下一個洩漏。
+ * 出貨只有 585 份 vfx 文件，所以 4096 這個上限實際上不會到；到了就停止記錄
+ * （＝之後可能重複喊），⛔ 不是停止夾。
+ */
+const clampAnnounced = new Set<string>();
+const MAX_ANNOUNCED = 4096;
+
+/** 說出「這一份被夾了」—— 一行，含前後秒數，指名那份文件。 */
+function noteClamped(before: VfxDoc, after: VfxDoc): void {
+  if (clampAnnounced.has(before.id)) return;
+  if (clampAnnounced.size < MAX_ANNOUNCED) clampAnnounced.add(before.id);
+  console.info(
+    `[vfx] 收尾夾子: ${before.id} ${before.lifetimeSec.max.toFixed(3)}s → ` +
+      `${after.lifetimeSec.max.toFixed(3)}s (config.vfx-cleanup@1 的 vfxFadeOutMaxSec / vfxDissipateMaxSec)`,
+  );
+}
+
+/** 測試接縫：讓「只喊一次」不會跨測試互相污染。 */
+export function resetVfxClampLog(): void {
+  clampAnnounced.clear();
+}
 
 /**
  * 把方位/旋轉裝到一個已經建好的 ParticleSystem 上 (#366)。
@@ -91,6 +116,14 @@ export interface ToParticleSystemOptions {
    * 被回收），⛔ 而不是各讀各的。
    */
   fadeOutMaxSec?: number;
+  /**
+   * 💨 GH#660 —— **整段收尾**（峰值 → 歸零）的上限（秒）。省略 = 讀後台現在
+   * 生效的那一格（`config.vfx-cleanup@1.vfxDissipateMaxSec`，出貨 0.5）。
+   *
+   * ⚠️ 常駐特效（`persistent` / `doc.ambient`）**不吃這一格** —— 那是 GH#660
+   * 原話裡「持續 5 秒的光環 ⛔ 那不該被砍」的落地。
+   */
+  dissipateMaxSec?: number;
   /**
    * ⏳ GH#570 —— 這一份是**常駐**特效（跟著實體 / 整個回合活著），兜底不收它。
    *
@@ -247,13 +280,29 @@ export function toParticleSystem(
   // 粒子系統的**唯一**入口(VfxSystem / AmbientVfx / FireRingFx / W3xEmitterRig /
   // 編輯器預覽都走它),所以沒有任何一條路徑逃得掉 —— 而逐份改 584 個文件是
   // 第〇·四守則點名的 O(N)。已經合規的文件回同一個物件,走一位元不差的舊路徑。
-  const doc = clampFadeOutTail(rawDoc, o.fadeOutMaxSec ?? vfxFadeOutMaxSec());
+  // 💨 GH#660 —— owner 2026-08-24:「淡出飛上天的粒子特效 淡出時間可以縮短
+  // 我不喜歡天空有殘留特效」。上面那個夾子只量得到 alpha 梯度的**最後一段**,
+  // 而 `fx.fam.dissipate.*` 把淡出切成兩段(0.75→0.315→0)⇒ 最後一段 0.443 秒,
+  // 在 0.5 以下,那道閘一次都沒有叫過。這一格量的是**整段收尾**(峰值 → 歸零)。
+  // ⭐ 只夾**非常駐**特效:GH#660 原話點名「持續 5 秒的光環 ⛔ 那不該被砍」,
+  // 而常駐與否早就有一個住處(下面那行 `markVfxPersistent` 讀的正是它)⇒ 判準是
+  // 已經存在的資料,⛔ 不是一張會腐爛的豁免名單。
+  const persistent = o.persistent === true || rawDoc.ambient === true;
+  const doc = clampFadeOutTail(
+    rawDoc,
+    o.fadeOutMaxSec ?? vfxFadeOutMaxSec(),
+    persistent ? Infinity : (o.dissipateMaxSec ?? vfxDissipateMaxSec()),
+  );
+  // ⚠️ fail-open 沒錯，**靜默**才是缺陷（CLAUDE.md 第二守則）：夾下去是一次
+  // 無聲的內容改寫，所以它要說出來。⭐ 每一份文件**只說一次**（池子會拿同一份
+  // doc 建很多個系統），⛔ 不是每建一個系統就洗一行。
+  if (doc !== rawDoc) noteClamped(rawDoc, doc);
   const ps = new ParticleSystem(o.name ?? `vfx-${doc.id}`, capacityFor(doc, scale), scene);
   // ⏳ GH#570 —— 建立當下就決定它是「常駐」還是「該被兜底收掉」。這一行放在
   // **這裡**的理由和上面那個夾子一樣:這支函式是整個 repo 把 vfx@1 變成 Babylon
   // 粒子系統的**唯一**入口,所以⛔ 沒有任何一條路徑逃得掉,也⛔ 沒有「呼叫端忘了
   // 註冊」這個失敗形態。實際的回收在 `vfxHardCap.sweepVfxHardCap()`。
-  if (o.persistent === true || doc.ambient === true) markVfxPersistent(ps);
+  if (persistent) markVfxPersistent(ps);
   else markVfxManaged(ps);
 
   if (doc.texture) {

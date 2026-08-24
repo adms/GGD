@@ -38,6 +38,15 @@ import { zId } from "../common";
 export const VFX_FADE_OUT_MAX_SEC_BOUNDS = { min: 0.05, max: 3 } as const;
 
 /**
+ * 💨 **收尾全長**上限的上下界（GH#660）。⭐ 同上，這是**唯一**的住處。
+ *
+ * 上界 8 秒＝出貨文件裡最長的那一份（`sephboom` 那一族 8.0 秒）⇒ 拉到 8
+ * 就等於「這道夾子實際上不會叫」＝ 一鍵回到 GH#660 之前的畫面（止血閥），
+ * ⛔ 不是建議值。下界 0.05＝三幀，和上面那格同一個理由。
+ */
+export const VFX_DISSIPATE_MAX_SEC_BOUNDS = { min: 0.05, max: 8 } as const;
+
+/**
  * ⏳ **終極**壽命上限的上下界（GH#570）。⭐ 同上，這是**唯一**的住處。
  *
  * 上界 30 秒不是建議值，是**止血閥的量級**：把它拉到 30 就等於「這道兜底
@@ -219,6 +228,40 @@ export const zConfigVfxCleanupDoc = z
       .number()
       .min(VFX_FADE_OUT_MAX_SEC_BOUNDS.min)
       .max(VFX_FADE_OUT_MAX_SEC_BOUNDS.max)
+      .optional(),
+
+    /**
+     * 💨 一顆粒子**從開始變淡到完全消失**最多幾秒（GH#660，出貨 0.5）。
+     *
+     * owner 2026-08-24（逐字，⚠️ 他自己說「我們討論調整過好幾次了」）：
+     *
+     * > 「每次施法會**淡出飛上天的粒子特效** 淡出時間可以縮短
+     * >  我**不喜歡天空有殘留特效**」
+     *
+     * ⚠️ 為什麼上面那格（`vfxFadeOutMaxSec`）抓不到他看到的東西 —— **量到的**：
+     * `fx.fam.dissipate.*` 整族壽命 **1.107 秒**，而它的「尾段」（最後一個還看得見
+     * 的關鍵格 → 第一個歸零的關鍵格）只有 **0.443 秒** ⇒ **在 0.5 以下，那道閘
+     * 一次都沒有叫過**。玩家看到的殘留是從 α 開始掉的那一刻起算的 **0.886 秒**：
+     * 這份文件的 alpha 是 0.75 → 0.75 → 0.315 → 0，中間那一格把「淡出」切成兩段，
+     * 於是只有最後一段被量到。
+     *
+     * ⇒ 這一格量的是**整段收尾**：alpha 梯度上**最後一個還在峰值的關鍵格**
+     * → **同一個歸零的關鍵格**。⭐ 兩格共用同一支夾子與同一條時間重映
+     * （`apps/client/src/vfx/fadeOut.ts`），**比較嚴的那個贏**，⛔ 不是兩套規則。
+     *
+     * ⭐ **只夾非常駐特效**（`toParticleSystem` 的 `persistent` 旗標／文件自己的
+     * `ambient: true`）。GH#660 的原話點名「持續 5 秒的光環 ⛔ 那不該被砍」——
+     * 那一族正是常駐旗標標記的那一族，所以判準是**已經存在的資料**，
+     * ⛔ 不是一張會腐爛的豁免名單。
+     *
+     * ⭐ 出貨 0.5 = owner 在 GH#569 立的那條常設規定的秒數（「fade out 尾段一律
+     * 最多佔 0.5 秒」），⛔ 不是我另外挑的一個數字。
+     * 量到的影響面：585 份出貨文件裡 **173 份非常駐**會被夾，壽命中位數縮 **25%**。
+     */
+    vfxDissipateMaxSec: z
+      .number()
+      .min(VFX_DISSIPATE_MAX_SEC_BOUNDS.min)
+      .max(VFX_DISSIPATE_MAX_SEC_BOUNDS.max)
       .optional(),
 
     /**
@@ -429,6 +472,9 @@ export const DEFAULT_VFX_CLEANUP: ConfigVfxCleanupDoc = {
   // owner 2026-08-23 GH#569 —— 「fade out 尾段一律最多佔 0.5 秒後一定要清理乾淨」
   // 是**常設規定**，所以出貨值就是他說的那個數字，⛔ 不是我挑的。
   vfxFadeOutMaxSec: 0.5,
+  // 💨 owner 2026-08-24 GH#660 —— 「淡出時間可以縮短 我不喜歡天空有殘留特效」。
+  // 出貨值沿用他在 GH#569 立的那條常設規定的秒數（0.5），⛔ 不是我另外挑的數字。
+  vfxDissipateMaxSec: 0.5,
   // owner 2026-08-23 GH#569 —— 「紅色粒子飄上天時間都要減半以上」＝生成窗口減半。
   castMoteEmitShare: 0.5,
   // ⏳ owner 2026-08-23 GH#570 —— 「產生後生命週期最多維持三秒，三秒後一律強制

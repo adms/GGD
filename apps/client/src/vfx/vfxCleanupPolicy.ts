@@ -21,6 +21,7 @@ import {
   Configs,
   DEFAULT_VFX_CLEANUP,
   GROUND_TEX_CACHE_BOUNDS,
+  VFX_DISSIPATE_MAX_SEC_BOUNDS,
   VFX_FADE_OUT_MAX_SEC_BOUNDS,
   VFX_HARD_CAP_SCOPES,
   VFX_HARD_MAX_LIFE_SEC_BOUNDS,
@@ -153,6 +154,23 @@ export function vfxFadeOutMaxSec(policy: ConfigVfxCleanupDoc = vfxCleanupPolicy(
   const fallback = DEFAULT_VFX_CLEANUP.vfxFadeOutMaxSec ?? 0.5;
   if (typeof v !== "number" || !Number.isFinite(v)) return fallback;
   return Math.min(VFX_FADE_OUT_MAX_SEC_BOUNDS.max, Math.max(VFX_FADE_OUT_MAX_SEC_BOUNDS.min, v));
+}
+
+/**
+ * 💨 GH#660 —— 一顆粒子**從開始變淡到完全消失**最多幾秒（出貨 0.5）。
+ *
+ * ⚠️ 同 `vfxFadeOutMaxSec`，這一格**不吃 `enabled`**（同一個理由：它是 owner 對
+ * **畫面**下的規定，⛔ 不是回合邊界的回收動作）。要一鍵回頭就把它拉到上界 8
+ * ＝ 出貨文件裡最長的那一份，於是這道夾子實際上不會叫。
+ *
+ * 界外的數字（寬鬆路徑 `Configs.tryGet` 收得下）在這裡夾回上下界，⛔ 不是在
+ * 消費端 —— 消費端是 `toParticleSystem()`，而它是唯一的解析入口。
+ */
+export function vfxDissipateMaxSec(policy: ConfigVfxCleanupDoc = vfxCleanupPolicy()): number {
+  const v = policy.vfxDissipateMaxSec;
+  const fallback = DEFAULT_VFX_CLEANUP.vfxDissipateMaxSec ?? 0.5;
+  if (typeof v !== "number" || !Number.isFinite(v)) return fallback;
+  return Math.min(VFX_DISSIPATE_MAX_SEC_BOUNDS.max, Math.max(VFX_DISSIPATE_MAX_SEC_BOUNDS.min, v));
 }
 
 /**

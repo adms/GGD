@@ -125,7 +125,7 @@ export function weatherKindIsSheltered(kind: WeatherKind): boolean {
   return kind.startsWith("indoor");
 }
 
-/** 一個級別的三個權重（0..1 的**比例**，⛔ 不是最終值）。 */
+/** 一個級別的權重（0..1 的**比例**，⛔ 不是最終值）。 */
 export interface WeatherWeights {
   /** 地面有多濕（0 = 乾） */
   wet: number;
@@ -133,6 +133,14 @@ export interface WeatherWeights {
   puddle: number;
   /** 霧有多濃（0 = 只有空氣漫反射那一層） */
   fog: number;
+  /**
+   * 🌧️ 天上真的在**掉水**的強度（0 = 不下雨）。GH#654。
+   *
+   * ⚠️ 它與 `wet` / `puddle` **刻意分開**：owner 2026-08-23 的
+   * 「有些場景是室內，請不要下雨」管的是**這一格**，而 `indoor-damp`（洞窟滲水）
+   * 的地面濕、有積水卻 `rain: 0` —— ⭐ 滲水不是雨。合成一格就分不出這件事。
+   */
+  rain: number;
 }
 
 /**
@@ -145,12 +153,13 @@ export interface WeatherWeights {
  * ⇒ 出貨時只有「大聖杯洞窟」用它，其餘室內圖一律 `indoor-dry`。
  */
 export const WEATHER_KIND_WEIGHTS: Record<WeatherKind, WeatherWeights> = {
-  clear: { wet: 0, puddle: 0, fog: 0 },
-  fog: { wet: 0, puddle: 0, fog: 1 },
-  rain: { wet: 1, puddle: 1, fog: 0.45 },
-  storm: { wet: 1, puddle: 1, fog: 0.7 },
-  "indoor-dry": { wet: 0, puddle: 0, fog: 0 },
-  "indoor-damp": { wet: 0.65, puddle: 0.55, fog: 0.3 },
+  clear: { wet: 0, puddle: 0, fog: 0, rain: 0 },
+  fog: { wet: 0, puddle: 0, fog: 1, rain: 0 },
+  rain: { wet: 1, puddle: 1, fog: 0.45, rain: 1 },
+  storm: { wet: 1, puddle: 1, fog: 0.7, rain: 1 },
+  "indoor-dry": { wet: 0, puddle: 0, fog: 0, rain: 0 },
+  // ⭐ 滲水**不是雨** —— 地面濕、有積水，而天上一滴都不掉（owner「室內不要下雨」）。
+  "indoor-damp": { wet: 0.65, puddle: 0.55, fog: 0.3, rain: 0 },
 };
 
 /** 沒有列在表上的場地走這一個。⭐ = 今天的行為，逐像素不變。 */
@@ -282,6 +291,45 @@ export const zConfigWeatherDoc = z
      * ⛔ 不是蓋在頭上的一層天花板 —— 後者會把英雄整個蓋掉。
      */
     fogBankHeight: z.number().min(0.2).max(20),
+    /* ── 🌧️ 降水（GH#654）──────────────────────────────────────────────────
+     *
+     * owner 2026-08-24：「**下雨跟起霧的天氣特效**」。⚠️ 霧那一半 GH#610 已經
+     * 出貨（上面 `fog*` 六格），這一批補的是**天上真的在掉水**的那一半。
+     *
+     * ⭐ 它**沒有第二張表**：下雨在哪幾張圖，答案仍然是同一格 `arenas` 的級別
+     * （`WEATHER_KIND_WEIGHTS[kind].rain`）。⇒ 一張圖不會出現「天氣說晴朗、
+     * 天上在下雨」，而 owner 想讓某張圖下雨就是改那一列的級別，⛔ 不是再開一張表。
+     *
+     * ⚠️ 六格全部 `.optional()`：線上已經有耐久覆蓋層，一份存於新欄位之前的
+     * override 少了必填欄會讓整份 config 被 Zod 退回 ⇒ 內容載入失敗 ⇒ 退回骨架
+     * （2026-08-02 事故的形狀）。
+     */
+
+    /**
+     * 🌧️ 降水總開關。⭐ **出貨 `false`** —— 這是**新功能**，⛔ 不是修復，
+     * 所以它不套「優先權大的更新後都是預設啟動」那一條（第〇·六守則）。
+     * owner 打開它之前，這一版的畫面與上一版**逐像素相同**。
+     */
+    rainEnabled: z.boolean().optional(),
+    /**
+     * 降水權重 = 1 時，場上同時幾滴。⚠️ 這是**滿載**的數字：實際值還會乘上
+     * 畫質階梯的粒子預算（`AdaptiveQuality` 降級時它跟著降），⛔ 不是「開了就永遠在」。
+     */
+    rainDropsAtFull: z.number().int().min(0).max(6000).optional(),
+    /** 一滴掉多快（單位/秒）。⚠️ 太慢會像雪，太快會變成一片直線雜訊。 */
+    rainFallSpeed: z.number().min(1).max(60).optional(),
+    /** 雨斜多少度（0 = 垂直落下）。⭐ 風的方向由場地 id 決定，⛔ 不再開一格。 */
+    rainTiltDeg: z.number().min(0).max(60).optional(),
+    /** 一滴看起來多長（拉長的比例）。⭐ 雨是**線**不是點 —— 1 就變成雪。 */
+    rainStreak: z.number().min(1).max(24).optional(),
+    /**
+     * 一滴多不透明。
+     *
+     * ⚠️ 上界 **0.6** 是**玩法**界線不是品味，理由與霧那兩格同源：雨落在**相機與
+     * 英雄之間**，濃到一定程度就會蓋住血條與技能預告圈，而 owner 說過這張地圖
+     * 是全視野。⭐ 出貨值刻意離上界很遠（裝飾，⛔ 不是遮蔽）。
+     */
+    rainAlpha: z.number().min(0).max(0.6).optional(),
     /**
      * 逐場地的天氣級別。⭐ 沒有列在這裡的場地 = {@link DEFAULT_WEATHER_KIND}
      * （晴朗）＝ 今天的行為 ⇒ 一張新地圖不會因為忘了填而突然下雨。
@@ -329,6 +377,18 @@ export const DEFAULT_WEATHER: WeatherPolicy = {
   fogBankLaneFill: 0.85,
   fogBankDriftSec: 90,
   fogBankHeight: 1.2,
+  // 🌧️ GH#654 —— ⭐ **出貨關著**：這是新功能，⛔ 不是修復，所以它不套
+  //    「優先權大的更新後都是預設啟動」。下面五格是**我挑的**（owner 2026-08-24
+  //    的常設指令「沒做完以前別問我了自己判斷 但是留後台開關可以簡易 rollback」），
+  //    而那格開關就是 rollback。
+  rainEnabled: false,
+  // 1200 滴 ≈ 一場中雨。⚠️ 它是**滿載**值，畫質階梯會再乘一次。
+  rainDropsAtFull: 1200,
+  rainFallSpeed: 22,
+  rainTiltDeg: 12,
+  rainStreak: 9,
+  // ⭐ 離上界 0.6 很遠 —— 雨落在相機與英雄之間，它是裝飾⛔ 不是遮蔽（同霧片）。
+  rainAlpha: 0.22,
   arenas: {
     // ⭐ 名字逐字寫著「（室內）」—— 這一列**不是**我猜的。
     "arena.castle": "indoor-dry",
@@ -401,13 +461,33 @@ export interface WeatherLook {
    * 玩家關掉「霧」那一格 ⇒ 兩層一起是 0；一張晴朗的圖 ⇒ 兩層一起是 0。
    */
   fogBanks: number;
+  /**
+   * 🌧️ 這一場的降水強度（0..1，已經吃過總開關、`rainEnabled` 與玩家設定）。
+   * 0 = 天上不掉水。⭐ 它與 `wet` / `puddle` 分開 —— 洞窟滲水是後兩者不是這一格。
+   */
+  rain: number;
+  /**
+   * 🌧️ 這一場**滿載**時場上同時幾滴（＝ `rain × rainDropsAtFull`）。
+   *
+   * ⚠️ 呼叫端**還要**乘一次畫質階梯的粒子預算 —— 那一格是每幀會變的執行期狀態，
+   * ⛔ 不屬於這份純函式（#614「第一回合就 lag」要的正是那個乘法）。
+   */
+  rainDrops: number;
 }
 
-/** 三樣各自的開關（玩家設定 × 畫質梯子解析過後的布林）。 */
+/** 各樣各自的開關（玩家設定 × 畫質梯子解析過後的布林）。 */
 export interface WeatherToggles {
   wetGround: boolean;
   puddles: boolean;
   fog: boolean;
+  /**
+   * 🌧️ 缺席 = `true`（＝玩家沒有特別關掉它）。
+   *
+   * ⚠️ 它**刻意是 optional**：降水的出貨開關是內容那一格（`rainEnabled`，出貨
+   * `false`），⛔ 不是玩家設定 —— 所以既有的呼叫端一個字都不用改，而且
+   * 「沒有人打開過」的結果仍然是**不下雨**。
+   */
+  rain?: boolean;
 }
 
 export const WEATHER_LOOK_NONE: WeatherLook = {
@@ -416,6 +496,8 @@ export const WEATHER_LOOK_NONE: WeatherLook = {
   puddle: 0,
   fogDensity: 0,
   fogBanks: 0,
+  rain: 0,
+  rainDrops: 0,
 };
 
 /**
@@ -432,6 +514,9 @@ export function weatherLookFor(
   const kind = weatherKindFor(policy, arenaId);
   if (!policy.enabled) return { ...WEATHER_LOOK_NONE, kind };
   const w = WEATHER_KIND_WEIGHTS[kind];
+  // 🌧️ 三個條件全部成立才下雨：天氣總開關 · 降水開關（出貨關著）· 玩家沒關掉。
+  // ⭐ 級別本身仍然是**唯一**的「哪張圖下雨」的住處 —— 這裡只決定「開不開」。
+  const rain = (policy.rainEnabled ?? false) && (toggles.rain ?? true) ? w.rain : 0;
   return {
     kind,
     wet: toggles.wetGround ? w.wet : 0,
@@ -439,5 +524,7 @@ export function weatherLookFor(
     fogDensity: toggles.fog ? w.fog * policy.fogDensityAtFull : 0,
     // ⭐ 同一格開關、同一個權重 —— ⛔ 霧不可以有第二套設定（owner：「同一顆旋鈕」）。
     fogBanks: toggles.fog ? Math.round(w.fog * policy.fogBankCount) : 0,
+    rain,
+    rainDrops: Math.round(rain * (policy.rainDropsAtFull ?? 0)),
   };
 }
