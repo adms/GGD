@@ -65,7 +65,10 @@ function measure(cap: number, atSec: number): { life: number; aliveAt: number } 
   const ps = scene.particleSystems[0]!;
   const life = ps.maxLifeTime;
   // 推到 `atSec`，然後數**還看得見**的那幾顆。
-  for (let i = 0; i < Math.ceil(atSec / 0.016) + 1; i++) ps.animate(true);
+  // `IParticleSystem.animate` 的型別是 0 參數；實作收一個可選的 preWarmOnly。
+  //    這裡要的是「真的推進」⇒ 走實作簽名（與 dissipateCap.test 同一個用法）。
+  const anim = ps as unknown as { animate: (preWarmOnly?: boolean) => void };
+  for (let i = 0; i < Math.ceil(atSec / 0.016) + 1; i++) anim.animate(true);
   const aliveAt = (ps as unknown as { particles: unknown[] }).particles.length;
   rig.dispose();
   scene.dispose();
