@@ -1,0 +1,6538 @@
+{
+ "meta": {
+  "generator": "locust_scan (read-only census, 2026-08-25)",
+  "source": "tools/w3x-import/out/GoDieEX22s-src/OBJECTS.json (units, 461) + UNIT_TINTS.json (resolved tints)",
+  "criteria": "Aloc in abilities OR name contains 特效 OR (hp<=1 AND dmg_base in {0,null}); see units.md for gray areas",
+  "alpha": "null for all: war3map.w3u has NO per-unit alpha field (ucua: 0 occurrences); alpha exists only at runtime via SetUnitVertexColorBJ (57 call sites in war3map.j, arg4 = transparency %)",
+  "tint": "resolved rgb255 from UNIT_TINTS.json (inheritance chain w3u entry -> w3u base -> UnitUI.slk -> 255); null = untinted 255/255/255. OBJECTS.json itself is STALE (predates #263 tint_raw passthrough).",
+  "count": 236
+ },
+ "units": [
+  {
+   "id": "e003",
+   "name": "特效",
+   "model": "Abilities\\Weapons\\RedDragonBreath\\RedDragonMissile.mdl",
+   "scale": 4.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ewsp",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc",
+    "fx-name"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ewsp",
+    "slk:ewsp",
+    "slk:ewsp"
+   ]
+  },
+  {
+   "id": "e004",
+   "name": "隕石特效",
+   "model": "Units\\Demon\\Infernal\\InfernalBirth.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ewsp",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc",
+    "fx-name"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ewsp",
+    "slk:ewsp",
+    "slk:ewsp"
+   ]
+  },
+  {
+   "id": "e00F",
+   "name": "暫存單位",
+   "model": ".mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ewsp",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ewsp",
+    "slk:ewsp",
+    "slk:ewsp"
+   ]
+  },
+  {
+   "id": "e00G",
+   "name": "Chain Ball Effect",
+   "model": "Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl",
+   "scale": 2.700000047683716,
+   "tint": [
+    0,
+    255,
+    255
+   ],
+   "alpha": null,
+   "abilities": [
+    "Avul",
+    "Aloc"
+   ],
+   "base": "ewsp",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:e00G(custom)",
+    "slk:ewsp",
+    "slk:ewsp"
+   ]
+  },
+  {
+   "id": "e00H",
+   "name": "Chain Bolt",
+   "model": "Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl",
+   "scale": 2.0,
+   "tint": [
+    0,
+    255,
+    255
+   ],
+   "alpha": null,
+   "abilities": [
+    "Avul",
+    "Aloc"
+   ],
+   "base": "ewsp",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 400,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:e00H(custom)",
+    "slk:ewsp",
+    "slk:ewsp"
+   ]
+  },
+  {
+   "id": "e00I",
+   "name": "蒸氣球",
+   "model": " .mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Avul",
+    "Aloc"
+   ],
+   "base": "ewsp",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ewsp",
+    "slk:ewsp",
+    "slk:ewsp"
+   ]
+  },
+  {
+   "id": "e00Y",
+   "name": "雷電風暴",
+   "model": "Abilities\\Spells\\Other\\Tornado\\TornadoElemental.mdl",
+   "scale": 3.0,
+   "tint": [
+    150,
+    150,
+    255
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ewsp",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:e00Y(custom)",
+    "w3u:e00Y(custom)",
+    "slk:ewsp"
+   ]
+  },
+  {
+   "id": "e013",
+   "name": "畫龍點睛",
+   "model": "Abilities\\Spells\\Other\\Tornado\\TornadoElemental.mdl",
+   "scale": 2.0,
+   "tint": [
+    150,
+    150,
+    255
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ewsp",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:e013(custom)",
+    "w3u:e013(custom)",
+    "slk:ewsp"
+   ]
+  },
+  {
+   "id": "e016",
+   "name": "雷電風暴-千之雷",
+   "model": "Abilities\\Spells\\Other\\Tornado\\TornadoElemental.mdl",
+   "scale": 2.0,
+   "tint": [
+    255,
+    0,
+    255
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ewsp",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ewsp",
+    "w3u:e016(custom)",
+    "slk:ewsp"
+   ]
+  },
+  {
+   "id": "e017",
+   "name": "30變態紳士",
+   "model": "units\\orc\\HeroShadowHunter\\HeroShadowHunter.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ewsp",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ewsp",
+    "slk:ewsp",
+    "slk:ewsp"
+   ]
+  },
+  {
+   "id": "ewsp",
+   "name": null,
+   "model": null,
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ewsp",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ewsp",
+    "slk:ewsp",
+    "slk:ewsp"
+   ]
+  },
+  {
+   "id": "h000",
+   "name": "龍氣",
+   "model": "Abilities\\Spells\\Other\\Parasite\\ParasiteMissile.mdl",
+   "scale": 2.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 800,
+   "dmg_base": 0,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h002",
+   "name": "幻影",
+   "model": "HeroCloudStrife.mdl",
+   "scale": 1.2999999523162842,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "A09O",
+    "A09P",
+    "Aloc"
+   ],
+   "base": "hwat",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hwat",
+    "slk:hwat",
+    "slk:hwat"
+   ]
+  },
+  {
+   "id": "h006",
+   "name": "龜派氣功",
+   "model": "Abilities\\Spells\\Human\\FlameStrike\\FlameStrike1.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 1,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h007",
+   "name": "特效龜派",
+   "model": "Abilities\\Spells\\Human\\ReviveHuman\\ReviveHuman.mdl",
+   "scale": 1.25,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 1,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "fx-name",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h008",
+   "name": "特效三號",
+   "model": "Abilities\\Weapons\\FragDriller\\FragDriller.mdl",
+   "scale": 2.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 1,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "fx-name",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h009",
+   "name": "手裡劍",
+   "model": "Abilities\\Weapons\\GlaiveMissile\\GlaiveMissile.mdl",
+   "scale": 0.800000011920929,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Avul",
+    "Aeth",
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 10,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h00A",
+   "name": "廣域特效",
+   "model": " .mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Aeth"
+   ],
+   "base": "hpea",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc",
+    "fx-name"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h00C",
+   "name": "Pikeman",
+   "model": "units\\creeps\\BanditSpearThrower\\BanditSpearThrower.mdl",
+   "scale": 1.2999999523162842,
+   "tint": [
+    255,
+    200,
+    200
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aeth",
+    "Aloc"
+   ],
+   "base": "hfoo",
+   "hp": 200,
+   "dmg_base": 10,
+   "move_speed": 250,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "slk:hfoo",
+    "w3u:h00C(custom)",
+    "w3u:h00C(custom)"
+   ]
+  },
+  {
+   "id": "h00E",
+   "name": "Horseman",
+   "model": "units\\human\\Knight\\Knight.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aeth",
+    "Aloc"
+   ],
+   "base": "hfoo",
+   "hp": 100,
+   "dmg_base": 5,
+   "move_speed": 450,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "slk:hfoo",
+    "slk:hfoo",
+    "slk:hfoo"
+   ]
+  },
+  {
+   "id": "h00G",
+   "name": "Samurai",
+   "model": null,
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aeth",
+    "Aloc"
+   ],
+   "base": "hfoo",
+   "hp": 225,
+   "dmg_base": 16,
+   "move_speed": 340,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "slk:hfoo",
+    "slk:hfoo",
+    "slk:hfoo"
+   ]
+  },
+  {
+   "id": "h00H",
+   "name": "仙氣",
+   "model": "Abilities\\Weapons\\Mortar\\MortarMissile.mdl",
+   "scale": 2.5,
+   "tint": [
+    100,
+    100,
+    255
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 1,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:h00H(custom)",
+    "w3u:h00H(custom)",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h00I",
+   "name": "幻影",
+   "model": "SD2.mdl",
+   "scale": 1.2999999523162842,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "A09O",
+    "A09P",
+    "Aloc"
+   ],
+   "base": "hwat",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hwat",
+    "slk:hwat",
+    "slk:hwat"
+   ]
+  },
+  {
+   "id": "h00J",
+   "name": "靈魂衝擊",
+   "model": "Abilities\\Spells\\Human\\Resurrect\\ResurrectCaster.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hwat",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 50,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hwat",
+    "slk:hwat",
+    "slk:hwat"
+   ]
+  },
+  {
+   "id": "h00K",
+   "name": "Holy Strike Missile",
+   "model": "Abilities\\Spells\\Orc\\Shockwave\\ShockwaveMissile.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "A09Z",
+    "Aloc"
+   ],
+   "base": "hwat",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 400,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hwat",
+    "slk:hwat",
+    "slk:hwat"
+   ]
+  },
+  {
+   "id": "h00M",
+   "name": "特效加農炮",
+   "model": "Abilities\\Spells\\Other\\Awaken\\Awaken.mdl",
+   "scale": 1.25,
+   "tint": [
+    150,
+    150,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 1,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "fx-name",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:h00M(custom)",
+    "w3u:h00M(custom)",
+    "w3u:h00M(custom)"
+   ]
+  },
+  {
+   "id": "h00N",
+   "name": "特效全彈",
+   "model": "Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl",
+   "scale": 1.25,
+   "tint": [
+    150,
+    150,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 1,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "fx-name",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:h00N(custom)",
+    "w3u:h00N(custom)",
+    "w3u:h00N(custom)"
+   ]
+  },
+  {
+   "id": "h00O",
+   "name": "特效集氣",
+   "model": "Abilities\\Spells\\Human\\MassTeleport\\MassTeleportTarget.mdl",
+   "scale": 1.25,
+   "tint": [
+    150,
+    150,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 1,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "fx-name",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:h00O(custom)",
+    "w3u:h00O(custom)",
+    "w3u:h00O(custom)"
+   ]
+  },
+  {
+   "id": "h00P",
+   "name": "迴旋標",
+   "model": "Abilities\\Weapons\\BloodElfSpellThiefMISSILE\\BloodElfSpellThiefMISSILE.mdl",
+   "scale": 1.7999999523162842,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Avul",
+    "Aeth",
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h00Q",
+   "name": "雷斬刀",
+   "model": "Abilities\\Spells\\Other\\Monsoon\\MonsoonBoltTarget.mdl",
+   "scale": 10.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 3,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h00R",
+   "name": "神鳴",
+   "model": "LightningTornado.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 3,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h00S",
+   "name": "勝利劍",
+   "model": "Abilities\\Spells\\Human\\ReviveHuman\\ReviveHuman.mdl",
+   "scale": 0.20000000298023224,
+   "tint": [
+    255,
+    100,
+    100
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 1,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "w3u:h00S(custom)",
+    "w3u:h00S(custom)"
+   ]
+  },
+  {
+   "id": "h00T",
+   "name": "Rider幻影",
+   "model": "HeroRider.mdl",
+   "scale": 1.399999976158142,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "A09O",
+    "A09P",
+    "Aloc"
+   ],
+   "base": "hwat",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hwat",
+    "slk:hwat",
+    "slk:hwat"
+   ]
+  },
+  {
+   "id": "h00U",
+   "name": "Frostsphere",
+   "model": "Abilities\\Spells\\Items\\AIfb\\AIfbTarget.mdl",
+   "scale": 5.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A00L"
+   ],
+   "base": "hpea",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h00V",
+   "name": "Frostsphere",
+   "model": "Objects\\Spawnmodels\\Other\\FlameThrower\\FlameThrowerSpawnObj.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "A00M",
+    "Aloc",
+    "A00N"
+   ],
+   "base": "hpea",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 300,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h00X",
+   "name": "勝利劍 黑化",
+   "model": "NetherStrike.mdl",
+   "scale": 0.20000000298023224,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 1,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h00Y",
+   "name": "老二",
+   "model": "buildings\\naga\\TidalGuardian\\TidalGuardian.mdl",
+   "scale": 2.0,
+   "tint": [
+    0,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0HF"
+   ],
+   "base": "hfoo",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:h00Y(custom)",
+    "w3u:h00Y(custom)",
+    "w3u:h00Y(custom)"
+   ]
+  },
+  {
+   "id": "h00Z",
+   "name": "九頭龍閃",
+   "model": "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl",
+   "scale": 2.0,
+   "tint": [
+    255,
+    100,
+    100
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 1,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "w3u:h00Z(custom)",
+    "w3u:h00Z(custom)"
+   ]
+  },
+  {
+   "id": "h010",
+   "name": "夜晚",
+   "model": " .mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0HD",
+    "A0HC"
+   ],
+   "base": "hpea",
+   "hp": 1,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h011",
+   "name": "白天",
+   "model": " .mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0HE"
+   ],
+   "base": "hpea",
+   "hp": 1,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h012",
+   "name": "枷鎖",
+   "model": ".mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 500000,
+   "dmg_base": 0,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h013",
+   "name": "新龍破斬2",
+   "model": "Abilities\\Spells\\Human\\MarkOfChaos\\MarkOfChaosTarget.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 10,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h014",
+   "name": "新龍破斬1",
+   "model": "FireBlast.mdl",
+   "scale": 4.5,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 10,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h015",
+   "name": "騎英之守綱",
+   "model": "AWING.mdl",
+   "scale": 3.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 5,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h016",
+   "name": "飛鼠先生殘影",
+   "model": "units\\undead\\HeroDeathKnight\\HeroDeathKnight.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Avul",
+    "Aeth",
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 5,
+   "dmg_base": 0,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h017",
+   "name": "安云殘影",
+   "model": "HeroKunoichi.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Avul",
+    "Aeth",
+    "Aloc",
+    "A0AB"
+   ],
+   "base": "hpea",
+   "hp": 5,
+   "dmg_base": 0,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h018",
+   "name": "賽飛殘影",
+   "model": "HeroSephiroth.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Avul",
+    "Aeth",
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 5,
+   "dmg_base": 0,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h019",
+   "name": "金鋼狼",
+   "model": "Units\\Demon\\ChaosOrcRange\\ChaosOrcRange.mdl",
+   "scale": 1.600000023841858,
+   "tint": [
+    255,
+    255,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0I5"
+   ],
+   "base": "hpea",
+   "hp": 1,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "w3u:h019(custom)"
+   ]
+  },
+  {
+   "id": "h01A",
+   "name": "三檔",
+   "model": null,
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Avul",
+    "Aeth",
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 5000,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h01B",
+   "name": "二檔",
+   "model": null,
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Avul",
+    "Aeth",
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 5000,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h01C",
+   "name": "魯夫殘影兼隱藏施法",
+   "model": "Luffe.mdl",
+   "scale": 1.2999999523162842,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Avul",
+    "Aeth",
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 3,
+   "dmg_base": 0,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h01D",
+   "name": "集氣用單位",
+   "model": "none.mdl",
+   "scale": 0.5,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Avul"
+   ],
+   "base": "hwat",
+   "hp": 1,
+   "dmg_base": null,
+   "move_speed": 500,
+   "criteria": [
+    "hp1-noatk"
+   ],
+   "gray": [
+    "no-Aloc"
+   ],
+   "tint_source": [
+    "slk:hwat",
+    "slk:hwat",
+    "slk:hwat"
+   ]
+  },
+  {
+   "id": "h01E",
+   "name": "集氣用單位(施法)",
+   "model": "none.mdl",
+   "scale": 1.5,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "A0JC",
+    "Aloc",
+    "Avul"
+   ],
+   "base": "hwat",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 500,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hwat",
+    "slk:hwat",
+    "slk:hwat"
+   ]
+  },
+  {
+   "id": "h01F",
+   "name": "皮卡",
+   "model": "HeroPika.mdl",
+   "scale": 0.4000000059604645,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0FZ",
+    "Avul"
+   ],
+   "base": "hspt",
+   "hp": 10,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hspt",
+    "slk:hspt",
+    "slk:hspt"
+   ]
+  },
+  {
+   "id": "h01G",
+   "name": "和香",
+   "model": "units\\critters\\VillagerWoman\\VillagerWoman.mdl",
+   "scale": 1.0,
+   "tint": [
+    255,
+    100,
+    100
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0FZ",
+    "Avul"
+   ],
+   "base": "hspt",
+   "hp": 10,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hspt",
+    "w3u:h01G(custom)",
+    "w3u:h01G(custom)"
+   ]
+  },
+  {
+   "id": "h01H",
+   "name": "夏娜",
+   "model": "HeroShana.mdl",
+   "scale": 1.25,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0FZ",
+    "Avul"
+   ],
+   "base": "hspt",
+   "hp": 10,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hspt",
+    "slk:hspt",
+    "slk:hspt"
+   ]
+  },
+  {
+   "id": "h01I",
+   "name": "涼宮",
+   "model": "units\\human\\Sorceress\\Sorceress_V1.mdl",
+   "scale": 1.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "A0K4",
+    "Aloc",
+    "A0FZ",
+    "Avul"
+   ],
+   "base": "hspt",
+   "hp": 10,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hspt",
+    "slk:hspt",
+    "slk:hspt"
+   ]
+  },
+  {
+   "id": "h01M",
+   "name": "集氣用單位(施法胖虎)",
+   "model": "none.mdl",
+   "scale": 1.5,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "A0FZ",
+    "Aloc",
+    "A0LW",
+    "Avul"
+   ],
+   "base": "hwat",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 500,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hwat",
+    "slk:hwat",
+    "slk:hwat"
+   ]
+  },
+  {
+   "id": "h01P",
+   "name": "野戰電子砲",
+   "model": "Abilities\\Spells\\Other\\Awaken\\Awaken.mdl",
+   "scale": null,
+   "tint": [
+    100,
+    100,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 1,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:h01P(custom)",
+    "w3u:h01P(custom)",
+    "w3u:h01P(custom)"
+   ]
+  },
+  {
+   "id": "h01R",
+   "name": "光牙",
+   "model": "Units\\NightElf\\Owl\\Owl.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 3,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h01S",
+   "name": "三千世界特效單位(龍捲風)",
+   "model": "Abilities\\Spells\\Other\\Tornado\\TornadoElemental.mdl",
+   "scale": 2.0,
+   "tint": [
+    100,
+    150,
+    255
+   ],
+   "alpha": null,
+   "abilities": [
+    "Avul",
+    "Aeth",
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 3,
+   "dmg_base": 0,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc",
+    "fx-name"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:h01S(custom)",
+    "w3u:h01S(custom)",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h01T",
+   "name": "三千世界特效單位(索隆)",
+   "model": "HeroMusashiMiyamoto.mdl",
+   "scale": 1.5,
+   "tint": [
+    100,
+    150,
+    255
+   ],
+   "alpha": null,
+   "abilities": [
+    "Avul",
+    "Aeth",
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 3,
+   "dmg_base": 0,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc",
+    "fx-name"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:h01T(custom)",
+    "w3u:h01T(custom)",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h01V",
+   "name": "81-03天神烈破",
+   "model": "Abilities\\Spells\\Human\\ReviveHuman\\ReviveHuman.mdl",
+   "scale": 3.0,
+   "tint": [
+    255,
+    50,
+    100
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0NU"
+   ],
+   "base": "hpea",
+   "hp": 1,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "w3u:h01V(custom)",
+    "w3u:h01V(custom)"
+   ]
+  },
+  {
+   "id": "h01X",
+   "name": "大石頭",
+   "model": ".mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 800,
+   "dmg_base": 0,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h01Y",
+   "name": "奈葉魔法陣",
+   "model": "MidchilderNanohaAura.mdl",
+   "scale": null,
+   "tint": [
+    255,
+    100,
+    100
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 1,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "w3u:h01Y(custom)",
+    "w3u:h01Y(custom)"
+   ]
+  },
+  {
+   "id": "h01Z",
+   "name": "奈葉魔法陣（放大）",
+   "model": "MidchilderNanohaAura.mdl",
+   "scale": 2.0,
+   "tint": [
+    255,
+    100,
+    100
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 1,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "w3u:h01Z(custom)",
+    "w3u:h01Z(custom)"
+   ]
+  },
+  {
+   "id": "h023",
+   "name": "熊熊幻影",
+   "model": "units\\creeps\\PolarBear\\PolarBear.mdl",
+   "scale": null,
+   "tint": [
+    255,
+    200,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hfoo",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hfoo",
+    "w3u:h023(custom)",
+    "w3u:h023(custom)"
+   ]
+  },
+  {
+   "id": "h024",
+   "name": "騎英之守綱",
+   "model": "Abilities\\Spells\\Undead\\AbsorbMana\\AbsorbManaBirthMissile.mdl",
+   "scale": 15.0,
+   "tint": [
+    255,
+    0,
+    255
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 5,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "w3u:h024(custom)",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h025",
+   "name": "騎英之守綱(特效)",
+   "model": "Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl",
+   "scale": 4.0,
+   "tint": [
+    255,
+    0,
+    255
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0RP",
+    "A0RN"
+   ],
+   "base": "hpea",
+   "hp": 5,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "fx-name"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "w3u:h025(custom)",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h026",
+   "name": "三檔拳頭",
+   "model": "Luffe punch.mdl",
+   "scale": 10.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hfoo",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hfoo",
+    "slk:hfoo",
+    "slk:hfoo"
+   ]
+  },
+  {
+   "id": "h027",
+   "name": "三檔旋風",
+   "model": "Abilities\\Spells\\Other\\Tornado\\TornadoElemental.mdl",
+   "scale": 2.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hfoo",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hfoo",
+    "slk:hfoo",
+    "slk:hfoo"
+   ]
+  },
+  {
+   "id": "h02A",
+   "name": "白天",
+   "model": " .mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0S9"
+   ],
+   "base": "hpea",
+   "hp": 1,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h02B",
+   "name": "夜晚",
+   "model": " .mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0S8"
+   ],
+   "base": "hpea",
+   "hp": 1,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h02C",
+   "name": "絕對屏障",
+   "model": "Abilities\\Spells\\Undead\\AnimateDead\\AnimateDeadTarget.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0SC"
+   ],
+   "base": "hpea",
+   "hp": 1,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h02D",
+   "name": "騎英魔法陣",
+   "model": "MidchilderNanohaAura.mdl",
+   "scale": 1.5,
+   "tint": [
+    255,
+    100,
+    100
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 1,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "w3u:h02D(custom)",
+    "w3u:h02D(custom)"
+   ]
+  },
+  {
+   "id": "h02E",
+   "name": "黑龍身體",
+   "model": "BlackHole.mdl",
+   "scale": 0.10000000149011612,
+   "tint": [
+    0,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 202,
+   "dmg_base": 0,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "w3u:h02E(custom)",
+    "w3u:h02E(custom)",
+    "w3u:h02E(custom)"
+   ]
+  },
+  {
+   "id": "h02F",
+   "name": "黑龍頭",
+   "model": "Darkraor.mdl",
+   "scale": 2.0,
+   "tint": [
+    0,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 800,
+   "dmg_base": 0,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "w3u:h02F(custom)",
+    "w3u:h02F(custom)",
+    "w3u:h02F(custom)"
+   ]
+  },
+  {
+   "id": "h02G",
+   "name": "Saber殘影",
+   "model": "HeroSaber.mdl",
+   "scale": 1.100000023841858,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Avul",
+    "Aeth",
+    "Aloc",
+    "A0J7"
+   ],
+   "base": "hpea",
+   "hp": 5,
+   "dmg_base": 0,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h02H",
+   "name": "騎英之守綱(特效2)",
+   "model": "Abilities\\Spells\\Orc\\Shockwave\\ShockwaveMissile.mdl",
+   "scale": 3.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 5,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "fx-name"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h02I",
+   "name": "騎英之守綱(特效3)",
+   "model": "Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl",
+   "scale": 5.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 5,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "fx-name"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h02J",
+   "name": "普烏細胞",
+   "model": ".mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "AInv",
+    "Aloc"
+   ],
+   "base": "hmpr",
+   "hp": 60,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hmpr",
+    "slk:hmpr",
+    "slk:hmpr"
+   ]
+  },
+  {
+   "id": "h02L",
+   "name": "剎那施法單位",
+   "model": "none.mdl",
+   "scale": 1.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "A0TY",
+    "A0TW",
+    "A0FZ",
+    "Aloc",
+    "Avul"
+   ],
+   "base": "hwat",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 500,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hwat",
+    "slk:hwat",
+    "slk:hwat"
+   ]
+  },
+  {
+   "id": "h02M",
+   "name": "B叔特效 (聚氣目標)",
+   "model": ".mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "A0FZ",
+    "A0LW",
+    "Avul"
+   ],
+   "base": "hfoo",
+   "hp": 10000,
+   "dmg_base": null,
+   "move_speed": 225,
+   "criteria": [
+    "fx-name"
+   ],
+   "gray": [
+    "no-Aloc"
+   ],
+   "tint_source": [
+    "slk:hfoo",
+    "slk:hfoo",
+    "slk:hfoo"
+   ]
+  },
+  {
+   "id": "h02O",
+   "name": "麒麟特效",
+   "model": ".mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0UN"
+   ],
+   "base": "hfoo",
+   "hp": 3,
+   "dmg_base": 1,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc",
+    "fx-name"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "slk:hfoo",
+    "slk:hfoo",
+    "slk:hfoo"
+   ]
+  },
+  {
+   "id": "h02P",
+   "name": "麒麟特效目標",
+   "model": "collision.mdl",
+   "scale": 0.10000000149011612,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Srtt"
+   ],
+   "base": "hfoo",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 100,
+   "criteria": [
+    "Aloc",
+    "fx-name"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hfoo",
+    "slk:hfoo",
+    "slk:hfoo"
+   ]
+  },
+  {
+   "id": "h02Q",
+   "name": "麒麟特效目標",
+   "model": "collision.mdl",
+   "scale": 0.10000000149011612,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Awan",
+    "Avul"
+   ],
+   "base": "hfoo",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 100,
+   "criteria": [
+    "fx-name"
+   ],
+   "gray": [
+    "no-Aloc"
+   ],
+   "tint_source": [
+    "slk:hfoo",
+    "slk:hfoo",
+    "slk:hfoo"
+   ]
+  },
+  {
+   "id": "h02T",
+   "name": "馬頭",
+   "model": "horsehead.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 20,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h02W",
+   "name": "81-01彗星灼烈",
+   "model": "Abilities\\Spells\\Orc\\StasisTrap\\StasisTotemTarget.mdl",
+   "scale": 5.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "A0XQ",
+    "Aloc"
+   ],
+   "base": "hfoo",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hfoo",
+    "slk:hfoo",
+    "slk:hfoo"
+   ]
+  },
+  {
+   "id": "h02X",
+   "name": "太陽光束",
+   "model": "Abilities\\Spells\\Other\\Parasite\\ParasiteMissile.mdl",
+   "scale": 7.0,
+   "tint": [
+    255,
+    150,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 800,
+   "dmg_base": 0,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "slk:hpea",
+    "w3u:h02X(custom)",
+    "w3u:h02X(custom)"
+   ]
+  },
+  {
+   "id": "h030",
+   "name": "佐助萬花筒效果",
+   "model": "NetherStrike.mdl",
+   "scale": 4.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 3,
+   "dmg_base": 0,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "h032",
+   "name": "龍氣2 GodEye",
+   "model": "AquaSpikeVersion2.mdl",
+   "scale": 2.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "hpea",
+   "hp": 800,
+   "dmg_base": 0,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "hfoo",
+   "name": "共用隱藏施法單位",
+   "model": ".mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "AInv"
+   ],
+   "base": "hfoo",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hfoo",
+    "slk:hfoo",
+    "slk:hfoo"
+   ]
+  },
+  {
+   "id": "hkni",
+   "name": "共用隱藏施法單位",
+   "model": ".mdl",
+   "scale": 3.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "AInv"
+   ],
+   "base": "hkni",
+   "hp": 3,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hkni",
+    "slk:hkni",
+    "slk:hkni"
+   ]
+  },
+  {
+   "id": "hpea",
+   "name": null,
+   "model": "Abilities\\Spells\\Undead\\DeathCoil\\DeathCoilMissile.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Ahar",
+    "Amil",
+    "Ahrp"
+   ],
+   "base": "hpea",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:hpea",
+    "slk:hpea",
+    "slk:hpea"
+   ]
+  },
+  {
+   "id": "n009",
+   "name": "火焰彈",
+   "model": "Meteor.mdl",
+   "scale": 1.600000023841858,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "ACmi"
+   ],
+   "base": "ninf",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ninf",
+    "w3u:n009(custom)",
+    "w3u:n009(custom)"
+   ]
+  },
+  {
+   "id": "n00L",
+   "name": "流星雨",
+   "model": "Meteor.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "ACmi"
+   ],
+   "base": "ninf",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ninf",
+    "slk:ninf",
+    "slk:ninf"
+   ]
+  },
+  {
+   "id": "n00M",
+   "name": "賽飛天使",
+   "model": "Abilities\\Spells\\Demon\\ReviveDemon\\ReviveDemon.mdl",
+   "scale": 2.0,
+   "tint": [
+    255,
+    150,
+    150
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "ACmi"
+   ],
+   "base": "ninf",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ninf",
+    "w3u:n00M(custom)",
+    "w3u:n00M(custom)"
+   ]
+  },
+  {
+   "id": "n00N",
+   "name": "閃電",
+   "model": "Abilities\\Spells\\Other\\Monsoon\\MonsoonBoltTarget.mdl",
+   "scale": 2.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ncg2",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ncg2",
+    "slk:ncg2",
+    "slk:ncg2"
+   ]
+  },
+  {
+   "id": "n00R",
+   "name": "最終流星雨",
+   "model": "Meteor.mdl",
+   "scale": 5.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "ACmi"
+   ],
+   "base": "ninf",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ninf",
+    "slk:ninf",
+    "slk:ninf"
+   ]
+  },
+  {
+   "id": "n00S",
+   "name": "屍暴",
+   "model": "Objects\\Spawnmodels\\Orc\\OrcSmallDeathExplode\\OrcSmallDeathExplode.mdl",
+   "scale": 5.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "A05L"
+   ],
+   "base": "ncg3",
+   "hp": 1,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "hp1-noatk"
+   ],
+   "gray": [
+    "no-Aloc"
+   ],
+   "tint_source": [
+    "slk:ncg3",
+    "slk:ncg3",
+    "slk:ncg3"
+   ]
+  },
+  {
+   "id": "n00T",
+   "name": "天地崩裂",
+   "model": "collision.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "ACmi"
+   ],
+   "base": "ninf",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ninf",
+    "slk:ninf",
+    "slk:ninf"
+   ]
+  },
+  {
+   "id": "n00V",
+   "name": "星光炸裂 delete",
+   "model": "Abilities\\Spells\\Human\\ReviveHuman\\ReviveHuman.mdl",
+   "scale": 2.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "ACmi"
+   ],
+   "base": "ninf",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ninf",
+    "w3u:n00V(custom)",
+    "w3u:n00V(custom)"
+   ]
+  },
+  {
+   "id": "n015",
+   "name": "死之王",
+   "model": "Abilities\\Spells\\Human\\MarkOfChaos\\MarkOfChaosTarget.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "ACmi"
+   ],
+   "base": "ninf",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ninf",
+    "slk:ninf",
+    "slk:ninf"
+   ]
+  },
+  {
+   "id": "n01D",
+   "name": "聖夜",
+   "model": "Abilities\\Spells\\Items\\AIil\\AIilTarget.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "A0T3"
+   ],
+   "base": "ncg3",
+   "hp": 1,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "hp1-noatk"
+   ],
+   "gray": [
+    "no-Aloc"
+   ],
+   "tint_source": [
+    "slk:ncg3",
+    "slk:ncg3",
+    "slk:ncg3"
+   ]
+  },
+  {
+   "id": "n01F",
+   "name": "隕石擊",
+   "model": "Meteor.mdl",
+   "scale": 0.800000011920929,
+   "tint": [
+    200,
+    150,
+    150
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "ACmi"
+   ],
+   "base": "ninf",
+   "hp": 50,
+   "dmg_base": 1,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "w3u:n01F(custom)",
+    "w3u:n01F(custom)",
+    "w3u:n01F(custom)"
+   ]
+  },
+  {
+   "id": "n01I",
+   "name": "星光爆裂",
+   "model": "LasercannonfinalRED.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ninf",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ninf",
+    "slk:ninf",
+    "slk:ninf"
+   ]
+  },
+  {
+   "id": "ngsp",
+   "name": null,
+   "model": null,
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Avul",
+    "Aloc"
+   ],
+   "base": "ngsp",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ngsp",
+    "slk:ngsp",
+    "slk:ngsp"
+   ]
+  },
+  {
+   "id": "o000",
+   "name": "復仇之袍",
+   "model": "Abilities\\Spells\\other\\ANsa\\ANsaTarget.mdl",
+   "scale": null,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "AInv"
+   ],
+   "base": "ogru",
+   "hp": 100,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o001",
+   "name": "北斗神拳",
+   "model": "Units\\Undead\\Abomination\\AbominationExplosion.mdl",
+   "scale": null,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o002",
+   "name": "死亡筆記本",
+   "model": "Abilities\\Spells\\other\\ANsa\\ANsaTarget.mdl",
+   "scale": null,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o003",
+   "name": "生命之音",
+   "model": ".mdl",
+   "scale": null,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o004",
+   "name": "火山爆炸石",
+   "model": "Abilities\\Spells\\Other\\Volcano\\VolcanoDeath.mdl",
+   "scale": 5.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 100,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o006",
+   "name": "雷切",
+   "model": "Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl",
+   "scale": 3.5,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o007",
+   "name": "武神",
+   "model": "cloud.mdl",
+   "scale": 0.800000011920929,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 10,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o008",
+   "name": "流星",
+   "model": ".mdl",
+   "scale": null,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o009",
+   "name": "隱藏特效單位",
+   "model": ".mdl",
+   "scale": null,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 250,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "fx-name"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o00A",
+   "name": "魔界植物",
+   "model": "Abilities\\Spells\\NightElf\\EntangleMine\\Roots.mdl",
+   "scale": null,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Atru"
+   ],
+   "base": "ogru",
+   "hp": 3,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o00B",
+   "name": "天地魔鬥",
+   "model": "Abilities\\Spells\\other\\ANsa\\ANsaTarget.mdl",
+   "scale": null,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o00D",
+   "name": "自動鎖定系統",
+   "model": ".mdl",
+   "scale": null,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o00E",
+   "name": "打雷",
+   "model": "Abilities\\Spells\\Other\\Monsoon\\MonsoonBoltTarget.mdl",
+   "scale": 10.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 10,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o00F",
+   "name": "黑化Saber",
+   "model": ".mdl",
+   "scale": null,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o00G",
+   "name": "avalon",
+   "model": "Abilities\\Spells\\Other\\Monsoon\\MonsoonBoltTarget.mdl",
+   "scale": 6.0,
+   "tint": [
+    100,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0CS"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:o00G(custom)",
+    "w3u:o00G(custom)",
+    "w3u:o00G(custom)"
+   ]
+  },
+  {
+   "id": "o00H",
+   "name": "磁力球",
+   "model": "units\\nightelf\\Wisp\\Wisp.mdl",
+   "scale": null,
+   "tint": [
+    0,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:o00H(custom)",
+    "w3u:o00H(custom)",
+    "w3u:o00H(custom)"
+   ]
+  },
+  {
+   "id": "o00I",
+   "name": "竹蜻蜓",
+   "model": "Abilities\\Spells\\Undead\\DeathPact\\DeathPactTarget.mdl",
+   "scale": 3.0,
+   "tint": [
+    0,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 10,
+   "dmg_base": 1,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "w3u:o00I(custom)",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o00J",
+   "name": "撲克牌",
+   "model": ".mdl",
+   "scale": null,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o00M",
+   "name": "獸王爆裂陣",
+   "model": "Boomnl.mdl",
+   "scale": 1.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0DU"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o00N",
+   "name": "獸王結界",
+   "model": "Abilities\\Spells\\Undead\\VampiricAura\\VampiricAura.mdl",
+   "scale": 0.5,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o00O",
+   "name": "狂戰士",
+   "model": "Objects\\Spawnmodels\\Human\\HCancelDeath\\HCancelDeath.mdl",
+   "scale": 3.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0E4"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:o00O(custom)",
+    "w3u:o00O(custom)"
+   ]
+  },
+  {
+   "id": "o00P",
+   "name": "寒冰",
+   "model": "Abilities\\Spells\\Undead\\FrostNova\\FrostNovaTarget.mdl",
+   "scale": 1.7999999523162842,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 10,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o00Q",
+   "name": "魔法膨脹",
+   "model": "Objects\\Spawnmodels\\Undead\\UCancelDeath\\UCancelDeath.mdl",
+   "scale": 4.0,
+   "tint": [
+    0,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 1,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:o00Q(custom)",
+    "w3u:o00Q(custom)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o00R",
+   "name": "王者之笛",
+   "model": "Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl",
+   "scale": 6.0,
+   "tint": [
+    0,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 1,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:o00R(custom)",
+    "w3u:o00R(custom)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o00S",
+   "name": "黑洞",
+   "model": "Abilities\\Spells\\Undead\\Possession\\PossessionCaster.mdl",
+   "scale": 10.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0FL",
+    "A0FM"
+   ],
+   "base": "ogru",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o00T",
+   "name": "固有結界",
+   "model": "DeathWave.mdl",
+   "scale": null,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o00U",
+   "name": "真夜幻影",
+   "model": "HeroGirl.mdl",
+   "scale": null,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o00V",
+   "name": "蒼月道術特效2",
+   "model": "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl",
+   "scale": 1.5,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "fx-name"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:o00V(custom)",
+    "w3u:o00V(custom)"
+   ]
+  },
+  {
+   "id": "o00W",
+   "name": "蒼月道術特效",
+   "model": "Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",
+   "scale": 3.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "fx-name"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o00Y",
+   "name": "白木束縛",
+   "model": "Abilities\\Spells\\Orc\\EtherealForm\\SpiritWalkerChange.mdl",
+   "scale": 4.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A09O",
+    "A09P",
+    "Atru"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o00Z",
+   "name": "黑龍波",
+   "model": "Abilities\\Spells\\Human\\FlameStrike\\FlameStrikeTarget.mdl",
+   "scale": null,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:o00Z(custom)",
+    "w3u:o00Z(custom)"
+   ]
+  },
+  {
+   "id": "o010",
+   "name": "黑龍波龍形",
+   "model": "units\\critters\\DuneWorm\\DuneWorm.mdl",
+   "scale": null,
+   "tint": [
+    0,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0M4",
+    "A0P3"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:o010(custom)",
+    "w3u:o010(custom)",
+    "w3u:o010(custom)"
+   ]
+  },
+  {
+   "id": "o011",
+   "name": "大地之怒",
+   "model": "Doodads\\Terrain\\RockChunks\\RockChunks0.mdl",
+   "scale": 2.200000047683716,
+   "tint": [
+    100,
+    100,
+    100
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Atru"
+   ],
+   "base": "ogru",
+   "hp": 1,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "hp1-noatk"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:o011(custom)",
+    "w3u:o011(custom)",
+    "w3u:o011(custom)"
+   ]
+  },
+  {
+   "id": "o012",
+   "name": "安云迴切",
+   "model": "Bladestorm_SwordEffect.mdl",
+   "scale": 0.8500000238418579,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o013",
+   "name": "剎那",
+   "model": "mfls.mdl",
+   "scale": 1.2000000476837158,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o014",
+   "name": "獸王牙操彈",
+   "model": "Abilities\\Weapons\\IllidanMissile\\IllidanMissile.mdl",
+   "scale": 3.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 8,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o015",
+   "name": "夏娜封絕",
+   "model": "GrandOrcAura.mdl",
+   "scale": 0.10000000149011612,
+   "tint": [
+    100,
+    100,
+    100
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0HN"
+   ],
+   "base": "ogru",
+   "hp": 100,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "w3u:o015(custom)",
+    "w3u:o015(custom)",
+    "w3u:o015(custom)"
+   ]
+  },
+  {
+   "id": "o016",
+   "name": "拳頭集氣",
+   "model": "Abilities\\Spells\\NightElf\\Barkskin\\BarkSkinTarget.mdl",
+   "scale": 7.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 10,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o017",
+   "name": "九刀流特效",
+   "model": "Abilities\\Spells\\Demon\\DarkPortal\\DarkPortalTarget.mdl",
+   "scale": 2.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc",
+    "fx-name"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o018",
+   "name": "索龍分身",
+   "model": "HeroMusashiMiyamoto.mdl",
+   "scale": null,
+   "tint": [
+    50,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "A0J6",
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:o018(custom)",
+    "w3u:o018(custom)",
+    "w3u:o018(custom)"
+   ]
+  },
+  {
+   "id": "o019",
+   "name": "動地剁",
+   "model": "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl",
+   "scale": 2.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o01A",
+   "name": "閃電",
+   "model": "Abilities\\Spells\\Items\\AIlb\\AIlbSpecialArt.mdl",
+   "scale": 2.5,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o01B",
+   "name": "龍虎-昇龍拳",
+   "model": "Abilities\\Spells\\NightElf\\BattleRoar\\RoarCaster.mdl",
+   "scale": 2.5,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o01C",
+   "name": "殺生丸幻影",
+   "model": "Sesshomaru.mdl",
+   "scale": null,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A05U"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o01D",
+   "name": "百烈櫻華斬",
+   "model": "EarthTornado2.mdl",
+   "scale": 1.5,
+   "tint": [
+    255,
+    100,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:o01D(custom)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o01E",
+   "name": "雷光劍",
+   "model": "Abilities\\Spells\\NightElf\\Blink\\BlinkTarget.mdl",
+   "scale": 5.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o01F",
+   "name": "雷光劍(落雷)",
+   "model": "Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl",
+   "scale": 2.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "A0JC",
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o01G",
+   "name": "東風檜扇南風末廣",
+   "model": "OblivionAura.mdl",
+   "scale": null,
+   "tint": [
+    100,
+    100,
+    100
+   ],
+   "alpha": null,
+   "abilities": [
+    "A0FZ",
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": 100,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "w3u:o01G(custom)",
+    "w3u:o01G(custom)",
+    "w3u:o01G(custom)"
+   ]
+  },
+  {
+   "id": "o01H",
+   "name": "螺旋劍",
+   "model": "Abilities\\Spells\\Other\\Tornado\\TornadoElemental.mdl",
+   "scale": 4.0,
+   "tint": [
+    120,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:o01H(custom)",
+    "w3u:o01H(custom)",
+    "w3u:o01H(custom)"
+   ]
+  },
+  {
+   "id": "o01J",
+   "name": "強吻",
+   "model": "LOVE2.mdl",
+   "scale": 6.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o01L",
+   "name": "召喚顯示特效",
+   "model": "OblivionAura.mdl",
+   "scale": 5.0,
+   "tint": [
+    100,
+    100,
+    100
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0FZ",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": 150,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc",
+    "fx-name"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "w3u:o01L(custom)",
+    "w3u:o01L(custom)",
+    "w3u:o01L(custom)"
+   ]
+  },
+  {
+   "id": "o01M",
+   "name": "火焰爆炸",
+   "model": "Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl",
+   "scale": 8.0,
+   "tint": [
+    100,
+    100,
+    100
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0FZ",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:o01M(custom)",
+    "w3u:o01M(custom)",
+    "w3u:o01M(custom)"
+   ]
+  },
+  {
+   "id": "o01N",
+   "name": "重力之球",
+   "model": "BlackHole1.mdl",
+   "scale": 2.5,
+   "tint": [
+    100,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "A0YK",
+    "Aloc",
+    "A0FZ",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:o01N(custom)",
+    "w3u:o01N(custom)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o01O",
+   "name": "嗜血邪書",
+   "model": "Doodads\\Cityscape\\Props\\MagicRunes\\MagicRunes0.mdl",
+   "scale": 7.0,
+   "tint": [
+    255,
+    0,
+    200
+   ],
+   "alpha": null,
+   "abilities": [
+    "A0Z1",
+    "A0Z0",
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 8,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:o01O(custom)",
+    "w3u:o01O(custom)"
+   ]
+  },
+  {
+   "id": "o01P",
+   "name": "天翔龍閃",
+   "model": "Abilities\\Spells\\Other\\Tornado\\TornadoElemental.mdl",
+   "scale": 3.0,
+   "tint": [
+    200,
+    100,
+    100
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:o01P(custom)",
+    "w3u:o01P(custom)",
+    "w3u:o01P(custom)"
+   ]
+  },
+  {
+   "id": "o01Q",
+   "name": "月牙天衝",
+   "model": "Abilities\\Spells\\Items\\WandOfNeutralization\\NeutralizationMissile.mdl",
+   "scale": 10.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "A0FZ",
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o01R",
+   "name": "月牙天衝(虛化)",
+   "model": "DeathWave.mdl",
+   "scale": 2.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "A0FZ",
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o01S",
+   "name": "卍解",
+   "model": "Abilities\\Spells\\Human\\MarkOfChaos\\MarkOfChaosTarget.mdl",
+   "scale": 5.0,
+   "tint": [
+    255,
+    100,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 100,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:o01S(custom)",
+    "w3u:o01S(custom)"
+   ]
+  },
+  {
+   "id": "o01T",
+   "name": "接技特效兼隱藏施法",
+   "model": "Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl",
+   "scale": 3.5,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": 2,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc",
+    "fx-name"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o01U",
+   "name": "接技特效(動地跺)",
+   "model": "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl",
+   "scale": 5.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": 2,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc",
+    "fx-name"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o01V",
+   "name": "黑龍波龍形2",
+   "model": "units\\critters\\DuneWorm\\DuneWorm.mdl",
+   "scale": 5.0,
+   "tint": [
+    0,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0M4",
+    "A0FZ"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:o01V(custom)",
+    "w3u:o01V(custom)",
+    "w3u:o01V(custom)"
+   ]
+  },
+  {
+   "id": "o01W",
+   "name": "呂布斷光",
+   "model": "Abilities\\Spells\\Items\\WandOfNeutralization\\NeutralizationMissile.mdl",
+   "scale": 6.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": 3,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o01X",
+   "name": "呂布隱藏專用單位",
+   "model": null,
+   "scale": 6.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": 3,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o01Y",
+   "name": "龍拳",
+   "model": "units\\creeps\\BronzeDragon\\BronzeDragon.mdl",
+   "scale": 4.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0FZ"
+   ],
+   "base": "ogru",
+   "hp": 3,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o020",
+   "name": "豪火龍之術",
+   "model": "Darkraor.mdl",
+   "scale": 2.0,
+   "tint": [
+    100,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "A0NH",
+    "A0NI",
+    "A0J5",
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 8,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:o020(custom)",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o021",
+   "name": "豪火龍之術-末日",
+   "model": "Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl",
+   "scale": 2.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "A0NH",
+    "A0NI",
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 3,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o022",
+   "name": "千鳥流閃電",
+   "model": "Abilities\\Spells\\Orc\\Purge\\PurgeBuffTarget.mdl",
+   "scale": 3.0,
+   "tint": [
+    100,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "A0NH",
+    "A0NI",
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 3,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:o022(custom)",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o023",
+   "name": "Accel Shooter",
+   "model": "Abilities\\Weapons\\PhoenixMissile\\Phoenix_Missile_mini.mdl",
+   "scale": 1.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 8,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:o023(custom)",
+    "w3u:o023(custom)"
+   ]
+  },
+  {
+   "id": "o024",
+   "name": "81爆裂",
+   "model": "Abilities\\Spells\\Other\\Volcano\\VolcanoDeath.mdl",
+   "scale": 3.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 10,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:o024(custom)",
+    "w3u:o024(custom)"
+   ]
+  },
+  {
+   "id": "o025",
+   "name": "81衝刺",
+   "model": "Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl",
+   "scale": 3.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 10,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:o025(custom)",
+    "w3u:o025(custom)"
+   ]
+  },
+  {
+   "id": "o026",
+   "name": "23魔法陣",
+   "model": "Abilities\\Spells\\Undead\\UnholyAura\\UnholyAura.mdl",
+   "scale": 2.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 10,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o027",
+   "name": "23魔法陣2",
+   "model": "Abilities\\Spells\\Undead\\UnholyAura\\UnholyAura.mdl",
+   "scale": 3.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": 10,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o029",
+   "name": "毀滅彈",
+   "model": "Abilities\\Spells\\Undead\\Possession\\PossessionCaster.mdl",
+   "scale": 10.0,
+   "tint": [
+    255,
+    100,
+    100
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:o029(custom)",
+    "w3u:o029(custom)"
+   ]
+  },
+  {
+   "id": "o02I",
+   "name": "涅吉隱藏專用單位",
+   "model": null,
+   "scale": 2.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0PJ",
+    "A0PL",
+    "A0FZ",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": 3,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o02J",
+   "name": "涅吉雷之投擲",
+   "model": "Abilities\\Weapons\\Banditmissile\\Banditmissile.mdl",
+   "scale": 4.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0FZ",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": 10,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o02K",
+   "name": "戰鬥涅吉巨神殺",
+   "model": "Abilities\\Weapons\\Banditmissile\\Banditmissile.mdl",
+   "scale": 8.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0FZ",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": 10,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o02M",
+   "name": "疾風怒雷",
+   "model": "Abilities\\Spells\\Other\\Monsoon\\MonsoonBoltTarget.mdl",
+   "scale": 6.0,
+   "tint": [
+    100,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "A0XV",
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:o02M(custom)",
+    "w3u:o02M(custom)",
+    "w3u:o02M(custom)"
+   ]
+  },
+  {
+   "id": "o02T",
+   "name": "B叔殘影",
+   "model": "units\\demon\\FelgaurdBlue\\FelgaurdBlue.mdl",
+   "scale": 1.2999999523162842,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": null,
+   "dmg_base": 0,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o02U",
+   "name": "雷光投射",
+   "model": "LightningTornado.mdl",
+   "scale": 0.5,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "Avul"
+   ],
+   "base": "ogru",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o02X",
+   "name": "96-04x 獨孤九劍殘影",
+   "model": "hzyn.mdl",
+   "scale": 1.0,
+   "tint": [
+    0,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0XZ",
+    "A0XY",
+    "A0XT"
+   ],
+   "base": "ogru",
+   "hp": null,
+   "dmg_base": 29,
+   "move_speed": 400,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "w3u:o02X(custom)",
+    "w3u:o02X(custom)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o02Y",
+   "name": "涅吉風花武裝解除",
+   "model": "AquaSpikeVersion2.mdl",
+   "scale": 2.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0ZT"
+   ],
+   "base": "ogru",
+   "hp": 10,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "o031",
+   "name": "安云加速",
+   "model": "Units\\Demon\\ChaosOrcRange\\ChaosOrcRange.mdl",
+   "scale": 1.399999976158142,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A10K",
+    "Alsh",
+    "Aprg",
+    "Aion"
+   ],
+   "base": "oshm",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:oshm",
+    "slk:oshm",
+    "slk:oshm"
+   ]
+  },
+  {
+   "id": "ogru",
+   "name": "天譴",
+   "model": " .mdl",
+   "scale": 2.299999952316284,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ogru",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ogru",
+    "w3u:ogru(original)",
+    "w3u:ogru(original)"
+   ]
+  },
+  {
+   "id": "oshm",
+   "name": null,
+   "model": "Units\\Demon\\ChaosOrcRange\\ChaosOrcRange.mdl",
+   "scale": 1.399999976158142,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A078",
+    "Alsh",
+    "Aprg",
+    "Aion"
+   ],
+   "base": "oshm",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:oshm",
+    "slk:oshm",
+    "slk:oshm"
+   ]
+  },
+  {
+   "id": "osp1",
+   "name": "教室",
+   "model": "BlackHole1.mdl",
+   "scale": 3.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "osp1",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:osp1",
+    "slk:osp1",
+    "slk:osp1"
+   ]
+  },
+  {
+   "id": "u00A",
+   "name": "蒸汽球",
+   "model": "Abilities\\Spells\\Other\\Tornado\\TornadoElemental.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Avul",
+    "Aloc",
+    "Alit"
+   ],
+   "base": "uban",
+   "hp": 1200,
+   "dmg_base": 75,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "slk:uban",
+    "slk:uban",
+    "slk:uban"
+   ]
+  },
+  {
+   "id": "u00F",
+   "name": "水藍色脈動",
+   "model": "none.mdl",
+   "scale": 0.3499999940395355,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "A0B4",
+    "A0GY",
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "slk:uaco",
+    "slk:uaco"
+   ]
+  },
+  {
+   "id": "u00G",
+   "name": "自動鎖定系統",
+   "model": ".mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "uban",
+   "hp": 1285,
+   "dmg_base": 250,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "slk:uban",
+    "slk:uban",
+    "slk:uban"
+   ]
+  },
+  {
+   "id": "u00I",
+   "name": null,
+   "model": "units\\orc\\SpiritWyvern\\SpiritWyvern.mdl",
+   "scale": 0.4000000059604645,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "A0IG",
+    "Aloc",
+    "A0IA"
+   ],
+   "base": "uloc",
+   "hp": 10,
+   "dmg_base": 159,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "slk:uloc",
+    "w3u:uloc(original)",
+    "w3u:uloc(original)"
+   ]
+  },
+  {
+   "id": "u00P",
+   "name": "式神",
+   "model": "Abilities\\Spells\\Undead\\AbsorbMana\\AbsorbManaBirthMissile.mdl",
+   "scale": 3.0,
+   "tint": [
+    255,
+    150,
+    255
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0JK"
+   ],
+   "base": "uaco",
+   "hp": 1000,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "slk:uaco",
+    "w3u:u00P(custom)",
+    "slk:uaco"
+   ]
+  },
+  {
+   "id": "u00Q",
+   "name": "式神",
+   "model": "units\\creeps\\BansheeGhost\\BansheeGhost.mdl",
+   "scale": 1.2000000476837158,
+   "tint": [
+    100,
+    10,
+    10
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0JY"
+   ],
+   "base": "uaco",
+   "hp": 1000,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "w3u:u00Q(custom)",
+    "w3u:u00Q(custom)",
+    "w3u:u00Q(custom)"
+   ]
+  },
+  {
+   "id": "u00R",
+   "name": "災難之牆",
+   "model": "Doodads\\Cinematic\\TownBurningFireEmitter\\TownBurningFireEmitter.mdl",
+   "scale": 2.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0KD"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 290,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "slk:uaco",
+    "slk:uaco"
+   ]
+  },
+  {
+   "id": "u00S",
+   "name": "打塔隱藏單位",
+   "model": ".mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": 500000,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "slk:uaco",
+    "slk:uaco",
+    "slk:uaco"
+   ]
+  },
+  {
+   "id": "u00T",
+   "name": "白鵠",
+   "model": "Abilities\\Weapons\\SorceressMissile\\SorceressMissile.mdl",
+   "scale": 10.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "slk:uaco",
+    "slk:uaco"
+   ]
+  },
+  {
+   "id": "u00U",
+   "name": "Rider衝刺",
+   "model": "Abilities\\Spells\\Undead\\OrbOfDeath\\OrbOfDeathMissile.mdl",
+   "scale": 7.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "slk:uaco",
+    "slk:uaco"
+   ]
+  },
+  {
+   "id": "u00W",
+   "name": "鬼眼衝刺",
+   "model": "Abilities\\Spells\\Undead\\Unsummon\\UnsummonTarget.mdl",
+   "scale": 2.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": 10,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "slk:uaco",
+    "slk:uaco"
+   ]
+  },
+  {
+   "id": "u00X",
+   "name": "胖虎搖滾",
+   "model": "Abilities\\Spells\\Undead\\OrbOfDeath\\OrbOfDeathMissile.mdl",
+   "scale": 10.0,
+   "tint": [
+    255,
+    150,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "w3u:u00X(custom)",
+    "w3u:u00X(custom)"
+   ]
+  },
+  {
+   "id": "u00Z",
+   "name": "starbreaker",
+   "model": "Abilities\\Spells\\Other\\Tornado\\TornadoElemental.mdl",
+   "scale": 2.0,
+   "tint": [
+    255,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "w3u:u00Z(custom)",
+    "w3u:u00Z(custom)"
+   ]
+  },
+  {
+   "id": "u013",
+   "name": "世界終結",
+   "model": "Abilities\\Spells\\Undead\\FrostNova\\FrostNovaTarget.mdl",
+   "scale": 3.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "A0P6",
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "slk:uaco",
+    "slk:uaco"
+   ]
+  },
+  {
+   "id": "u014",
+   "name": "光箭",
+   "model": "FireFly.mdl",
+   "scale": 3.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": 1000,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "slk:uaco",
+    "slk:uaco",
+    "slk:uaco"
+   ]
+  },
+  {
+   "id": "u017",
+   "name": "大紅蓮斬",
+   "model": "crescent.mdl",
+   "scale": 2.0,
+   "tint": [
+    255,
+    30,
+    30
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "w3u:u017(custom)",
+    "w3u:u017(custom)"
+   ]
+  },
+  {
+   "id": "u018",
+   "name": "安云衝刺",
+   "model": "Abilities\\Spells\\Demon\\DarkPortal\\DarkPortalTarget.mdl",
+   "scale": 2.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": 10,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "slk:uaco",
+    "slk:uaco"
+   ]
+  },
+  {
+   "id": "u01A",
+   "name": "假死之王",
+   "model": "units\\demon\\EredarWarlock\\EredarWarlock.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "slk:uaco",
+    "slk:uaco"
+   ]
+  },
+  {
+   "id": "u01L",
+   "name": "大紅蓮斬",
+   "model": "crescent.mdl",
+   "scale": 2.0,
+   "tint": [
+    255,
+    30,
+    30
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "w3u:u01L(custom)",
+    "w3u:u01L(custom)"
+   ]
+  },
+  {
+   "id": "u01M",
+   "name": "大紅蓮斬",
+   "model": "crescent.mdl",
+   "scale": 2.0,
+   "tint": [
+    255,
+    30,
+    30
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "w3u:u01M(custom)",
+    "w3u:u01M(custom)"
+   ]
+  },
+  {
+   "id": "u01N",
+   "name": "大紅蓮斬",
+   "model": "crescent.mdl",
+   "scale": 2.0,
+   "tint": [
+    255,
+    30,
+    30
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "w3u:u01N(custom)",
+    "w3u:u01N(custom)"
+   ]
+  },
+  {
+   "id": "u01O",
+   "name": "大紅蓮斬",
+   "model": "crescent.mdl",
+   "scale": 2.0,
+   "tint": [
+    255,
+    30,
+    30
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "w3u:u01O(custom)",
+    "w3u:u01O(custom)"
+   ]
+  },
+  {
+   "id": "u01P",
+   "name": "死亡老二映像",
+   "model": "buildings\\naga\\TidalGuardian\\TidalGuardian.mdl",
+   "scale": 1.5,
+   "tint": [
+    50,
+    50,
+    50
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0FR"
+   ],
+   "base": "ugho",
+   "hp": null,
+   "dmg_base": 0,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:u01P(custom)",
+    "w3u:u01P(custom)",
+    "w3u:u01P(custom)"
+   ]
+  },
+  {
+   "id": "u01R",
+   "name": "Rider鎖鏈",
+   "model": "Abilities\\Weapons\\WardenMissile\\WardenMissile.mdl",
+   "scale": 2.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "ushd",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:ushd",
+    "slk:ushd",
+    "slk:ushd"
+   ]
+  },
+  {
+   "id": "u01W",
+   "name": "鳥人",
+   "model": "units\\creeps\\HarpyWitch\\HarpyWitch.mdl",
+   "scale": 1.2000000476837158,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "A0TA",
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "slk:uaco",
+    "slk:uaco"
+   ]
+  },
+  {
+   "id": "u025",
+   "name": "熊貓",
+   "model": "units\\creeps\\FurbolgPanda\\FurbolgPanda.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "A0T7",
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "slk:uaco",
+    "slk:uaco"
+   ]
+  },
+  {
+   "id": "u027",
+   "name": "蜘蛛",
+   "model": "units\\creeps\\Spider\\Spider.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "A0TB",
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "slk:uaco",
+    "slk:uaco"
+   ]
+  },
+  {
+   "id": "u028",
+   "name": "冥龍",
+   "model": "units\\creeps\\NetherDragon\\NetherDragon.mdl",
+   "scale": 0.800000011920929,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "A0TD",
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "slk:uaco",
+    "slk:uaco"
+   ]
+  },
+  {
+   "id": "u02C",
+   "name": "烏龜",
+   "model": "Units\\Creeps\\GiantSeaTurtleRange\\GiantSeaTurtleRange.mdl",
+   "scale": 0.6000000238418579,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "A0T9",
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "slk:uaco",
+    "slk:uaco"
+   ]
+  },
+  {
+   "id": "u02D",
+   "name": "狼",
+   "model": "units\\creeps\\WhiteWolf\\WhiteWolf.mdl",
+   "scale": null,
+   "tint": [
+    150,
+    150,
+    150
+   ],
+   "alpha": null,
+   "abilities": [
+    "A0T6",
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:u02D(custom)",
+    "w3u:u02D(custom)",
+    "w3u:u02D(custom)"
+   ]
+  },
+  {
+   "id": "u02H",
+   "name": "鳳凰",
+   "model": "units\\human\\phoenix\\phoenix.mdl",
+   "scale": 0.8999999761581421,
+   "tint": [
+    180,
+    80,
+    80
+   ],
+   "alpha": null,
+   "abilities": [
+    "A0T8",
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:u02H(custom)",
+    "w3u:u02H(custom)",
+    "w3u:u02H(custom)"
+   ]
+  },
+  {
+   "id": "u02I",
+   "name": "老鷹",
+   "model": "units\\creeps\\WarEagle\\WarEagle.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "A0OJ",
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "slk:uaco",
+    "slk:uaco"
+   ]
+  },
+  {
+   "id": "u02M",
+   "name": "黏液獸",
+   "model": "units\\other\\DalaranReject\\DalaranReject.mdl",
+   "scale": 1.2999999523162842,
+   "tint": [
+    255,
+    0,
+    100
+   ],
+   "alpha": null,
+   "abilities": [
+    "A0TC",
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "w3u:u02M(custom)",
+    "w3u:u02M(custom)"
+   ]
+  },
+  {
+   "id": "u02R",
+   "name": "黃色魔法陣",
+   "model": "Abilities\\Spells\\Undead\\UnholyAura\\UnholyAura.mdl",
+   "scale": 3.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": 10,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "slk:uaco",
+    "slk:uaco"
+   ]
+  },
+  {
+   "id": "u02S",
+   "name": "黑洞聖杯泥",
+   "model": "Units\\Creeps\\ForgottenOne\\ForgottenOneTent.mdl",
+   "scale": 2.0,
+   "tint": [
+    30,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Afbb",
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": 1000,
+   "dmg_base": 10,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "w3u:u02S(custom)",
+    "w3u:u02S(custom)",
+    "w3u:u02S(custom)"
+   ]
+  },
+  {
+   "id": "u02T",
+   "name": "防止雙英雄",
+   "model": ".mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "slk:uaco",
+    "slk:uaco"
+   ]
+  },
+  {
+   "id": "u02V",
+   "name": "聖杯黑泥",
+   "model": "Units\\Creeps\\ForgottenOne\\ForgottenOneTent.mdl",
+   "scale": 1.5,
+   "tint": [
+    30,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aspo",
+    "A0AT",
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": 300,
+   "dmg_base": 30,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "w3u:u02V(custom)",
+    "w3u:u02V(custom)",
+    "w3u:u02V(custom)"
+   ]
+  },
+  {
+   "id": "u02W",
+   "name": "聖杯黑泥",
+   "model": "Units\\Creeps\\ForgottenOne\\ForgottenOneTent.mdl",
+   "scale": 2.0,
+   "tint": [
+    30,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aspo",
+    "A0AT",
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": 500,
+   "dmg_base": 70,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "w3u:u02W(custom)",
+    "w3u:u02W(custom)",
+    "w3u:u02W(custom)"
+   ]
+  },
+  {
+   "id": "u02X",
+   "name": "聖杯黑泥",
+   "model": "Units\\Creeps\\ForgottenOne\\ForgottenOneTent.mdl",
+   "scale": 1.75,
+   "tint": [
+    30,
+    0,
+    0
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aspo",
+    "A0AT",
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": 400,
+   "dmg_base": 50,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [
+    "combat-stats"
+   ],
+   "tint_source": [
+    "w3u:u02X(custom)",
+    "w3u:u02X(custom)",
+    "w3u:u02X(custom)"
+   ]
+  },
+  {
+   "id": "u02Y",
+   "name": "旗子",
+   "model": "Objects\\InventoryItems\\OrcCaptureFlag\\OrcCaptureFlag.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "slk:uaco",
+    "slk:uaco"
+   ]
+  },
+  {
+   "id": "u02Z",
+   "name": "毒液殘留",
+   "model": "Doodads\\LordaeronSummer\\Props\\SmokeSmudge\\SmokeSmudge2.mdl",
+   "scale": 5.0,
+   "tint": [
+    50,
+    100,
+    50
+   ],
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0VF"
+   ],
+   "base": "uaco",
+   "hp": 5,
+   "dmg_base": null,
+   "move_speed": 0,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "w3u:u02Z(custom)",
+    "w3u:u02Z(custom)",
+    "w3u:u02Z(custom)"
+   ]
+  },
+  {
+   "id": "u030",
+   "name": "惡夢天線",
+   "model": "txbbb.mdl",
+   "scale": 6.0,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc"
+   ],
+   "base": "uaco",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": 522,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uaco",
+    "slk:uaco",
+    "slk:uaco"
+   ]
+  },
+  {
+   "id": "u032",
+   "name": null,
+   "model": "Units\\Undead\\PlagueCloud\\PlagueCloudtarget.mdl",
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0W0"
+   ],
+   "base": "uplg",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uplg",
+    "slk:uplg",
+    "slk:uplg"
+   ]
+  },
+  {
+   "id": "u033",
+   "name": "疫病雲(較大)",
+   "model": null,
+   "scale": null,
+   "tint": null,
+   "alpha": null,
+   "abilities": [
+    "Aloc",
+    "A0VZ"
+   ],
+   "base": "uplg",
+   "hp": null,
+   "dmg_base": null,
+   "move_speed": null,
+   "criteria": [
+    "Aloc"
+   ],
+   "gray": [],
+   "tint_source": [
+    "slk:uplg",
+    "slk:uplg",
+    "slk:uplg"
+   ]
+  }
+ ]
+}
