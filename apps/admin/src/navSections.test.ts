@@ -183,6 +183,11 @@ const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
       // tierOverview 同一區：那一頁說「級距表長這樣」，這一頁說「⛔ 但這幾十個
       // 節點不聽它的」，分到兩區等於把警告藏起來。
       "damageTierWarnings",
+      // 2026-08-24 GH#682 / GH#683 —— owner 各逐字點名第二次的兩張唯讀清單
+      //（詠唱>1秒／移速加成）。它們讀的是技能資料的推導表，所以住戰鬥規則區，
+      // 緊鄰同為唯讀的 tierOverview / damageTierWarnings。
+      "castTimeList",
+      "msBuffList",
       "statNormalization",
       "castTime",
       "mitigation",
@@ -319,6 +324,10 @@ describe("分類重編一頁都沒有掉", () => {
       // ⚠️ 它住「系統」而不是「戰鬥規則」：⛔ 沒有一格會改變任何碰撞、視野或傷害
       // （積水沒有實體、霧只是渲染），所以它問的是畫面長什麼樣，不是誰比較強。
       "weather",
+      // 2026-08-24 GH#682 / GH#683：詠唱>1秒清單 ＋ 移速加成清單 —— 兩頁唯讀，
+      // 資料與 docs 的兩份 md 共用 `tools/skill-lists/lists.json` 同一次計算。
+      "castTimeList",
+      "msBuffList",
     ]);
     const added = [...after].filter((p) => !before.has(p) && !SINCE_BASELINE.has(p));
     expect(lost, `搬家把這些頁面弄丟了（元件還在，但左欄按不到）：${lost.join(", ")}`).toEqual([]);

@@ -40,6 +40,7 @@ import { AiSettingsPage } from "./AiSettingsPage";
 import { ModelBudgetPage } from "./ModelBudgetPage";
 import { TierOverviewPage } from "./TierOverviewPage";
 import { DamageTierWarningsPage } from "../damageTierWarnings";
+import { CastTimeListPage, MoveSpeedListPage } from "./SkillListsPage";
 import { IconTrackingPage } from "./IconTrackingPage";
 import { VoxelSkinSheetPage } from "./VoxelSkinSheetPage";
 // 體素鑄造廠 (task #229) — EAGER, like Quick Approval and for the same reason.
@@ -261,6 +262,10 @@ export const NAV: NavItem[] = [
   // 這樣」，這一頁說「⛔ 但這幾十個節點不聽它的」。分開放的話，owner 調完級距
   // 之後不會有任何東西提醒他還有一批數字原地不動 —— 而那正是這一頁在防的誤判。
   { page: "damageTierWarnings", label: "⚠️ 不吃五級距的傷害節點", emoji: "🚫", section: SEC_COMBAT },
+  // GH#682 / GH#683 —— owner 2026-08-24 各逐字點名第二次的兩張清單（md ＋ 後台）。
+  // 唯讀、與 docs 的 md 共用 `tools/skill-lists/lists.json` 同一次計算。
+  { page: "castTimeList", label: "詠唱>1秒清單", emoji: "📜", section: SEC_COMBAT },
+  { page: "msBuffList", label: "移速加成清單", emoji: "💨", section: SEC_COMBAT },
   { page: "uiLexicon", label: "介面用語（Fate）", emoji: "🏆", section: SEC_COMBAT },
   { page: "statNormalization", label: "英雄屬性正規化", emoji: "📐", section: SEC_COMBAT },
   // GH#322 —— 這四頁的 spec 早就寫好了，但導覽列沒有那一列 ⇒ 操作者點不到。
@@ -1092,6 +1097,8 @@ export function Console(): React.JSX.Element {
             {page === "modelBudget" && <ModelBudgetPage />}
             {page === "tierOverview" && <TierOverviewPage />}
             {page === "damageTierWarnings" && <DamageTierWarningsPage />}
+            {page === "castTimeList" && <CastTimeListPage />}
+            {page === "msBuffList" && <MoveSpeedListPage />}
             {page === "iconTracking" && <IconTrackingPage />}
             {page === "voxelSkins" && <VoxelSkinSheetPage />}
             {page === "voxelForge" && <VoxelFoundryPage />}

@@ -288,6 +288,14 @@ export type Page =
    * 唯讀，和 tierOverview 同一類，所以同樣**不**在 SESSION_REQUIRED_PAGES 裡。
    */
   | "damageTierWarnings"
+  /**
+   * 📜 詠唱>1秒清單（GH#682）＋ 💨 移速加成清單（GH#683）—— 唯讀，資料是
+   * `pnpm speedlists:build` 產生的 `tools/skill-lists/lists.json`（build-time
+   * import，與 docs 的兩份 md 共用同一次計算）。一格都不寫，也不打任何 API，
+   * 所以和 tierOverview 同一類，⛔ 不在 SESSION_REQUIRED_PAGES。
+   */
+  | "castTimeList"
+  | "msBuffList"
   | "uiLexicon"
   /**
    * 混音 (`config/audio-mix.json`, owner 2026-08-17「其他角色語音應該是自己的一半」)
