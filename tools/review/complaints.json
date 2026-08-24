@@ -1,0 +1,27 @@
+{
+  "schema": "review-complaints@1",
+  "note": "⭐ 手寫小表 —— owner 抱怨過的資產家族。逐列附 owner 原話（⛔ 不改寫），match 是資產 id 的子字串（不分大小寫），bonus 直接加進 risk 分。加一列的門檻：貼得出 owner 的一句原話。",
+  "families": [
+    {
+      "name": "閃電/雷電",
+      "match": ["lightning", "thunder", "bolt", "spark", "tesla"],
+      "bonus": 4,
+      "quote": "owner 2026-08-23：「你需要認真找一個演算法以及特效貼圖來做出閃電的效果 一堆閃電特效 如皮卡丘 飛鼠先生 雷神之槌 等雷電特效 都沒有真的出現」；owner 2026-08-24：「閃電特效還是沒上線 連鎖閃電 是在連鎖的對象間拉出閃電 但我用飛鼠天譴 什麼閃電都沒看到」",
+      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
+    },
+    {
+      "name": "光束砲/蝗蟲群 beam-roll",
+      "match": ["beam", "laser", "cannon", "gx", "awing", "bwing", "netherstrike", "sonicbreath"],
+      "bonus": 4,
+      "quote": "owner 2026-08-23：「太扯了 這一版一定要上線 而且作為翻轉角度的蝗蟲群單位 通常大小跟顏色都有再做調整，務必檢查，避免出現很小顏色又不對的氣功砲」",
+      "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
+    },
+    {
+      "name": "dissipate 施法殘留",
+      "match": ["dissipate"],
+      "bonus": 3,
+      "quote": "owner 2026-08-24（#660）：「每次施法會淡出飛上天的粒子特效淡出時間可以縮短⋯我不喜歡天空有殘留」（#569 已立 0.5 秒上限；量到 fx.fam.dissipate.* 整族 1.107 秒）",
+      "spec": "施法淡出粒子 ≤0.5 秒（#569），天空不可以有殘留"
+    }
+  ]
+}
