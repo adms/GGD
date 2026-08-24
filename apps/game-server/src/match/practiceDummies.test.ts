@@ -18,6 +18,7 @@
  * `inertSeats` 那一段 ⇒ ② 紅（靶子當場索到玩家），而 ③④ 仍然綠。
  */
 import { describe, it, expect } from "vitest";
+import { TICK_HZ } from "@ggd/shared/constants";
 import { asSeatId, type EntityId } from "@ggd/shared/ids";
 import { DEFAULT_MOB_WAVES_CONFIG, type MobWavesConfig } from "@ggd/shared/content";
 import { DEFAULT_PRACTICE_RULES, type PracticeRules } from "@ggd/shared/content";
@@ -89,5 +90,35 @@ describe("練習靶 (GH#657)", () => {
   it("④ `dummyCount: 0` ⇒ 對面一個實體都沒有（這個功能出現之前的練習房）", () => {
     const ctl = build({ ...DEFAULT_PRACTICE_RULES, dummyCount: 0 });
     expect(dummyEntities(ctl).length).toBe(0);
+  });
+
+  /**
+   * ⑤ ⭐ GH#681（owner 2026-08-24 逐字「被打死過**五秒**會重生」）—— 承重那一條。
+   *
+   * 三個方向一次驗：靶子死了**不是**下一 tick 站起來（舊行為的回歸）；
+   * 等滿 `dummyRespawnSec`（從 config 推導，⛔ 不抄 5）之後**真的**回來；
+   * 回來時**滿血**且**原地**（`restoreForNextRound` 不動 transform）。
+   *
+   * 突變（一批一條）：把 `sustainPractice` 裡靶子那段的 `restoreForNextRound`
+   * 拿掉 ⇒ 「時間到活著」紅。
+   */
+  it("⑤ ⭐ GH#681：靶子被打死 ⇒ 留屍 `dummyRespawnSec` 秒，然後原地滿血復活", () => {
+    const ctl = build({ ...DEFAULT_PRACTICE_RULES });
+    const dummy = dummyEntities(ctl)[0]!;
+    const hp = ctl.world.health.get(dummy)!;
+    const posBefore = { ...ctl.world.transform.get(dummy)!.pos };
+    hp.hp = 0; // 致死一擊的機制入口就是 hp<=0 → DeathSystem 蓋章
+    ctl.tick(); // 這一拍：死亡蓋章 + sustainPractice 記下重生時刻
+    expect(hp.alive).toBe(false);
+
+    const wait = Math.round(DEFAULT_PRACTICE_RULES.dummyRespawnSec * TICK_HZ);
+    const t0 = ctl.world.tick;
+    let guard = 0;
+    while (!hp.alive && guard++ < wait * 2) ctl.tick();
+    expect(hp.alive).toBe(true); // 突變的紅點：拿掉重生 ⇒ 永遠 false
+    expect(hp.hp).toBe(hp.maxHp); // 滿血
+    // ⛔ 不是下一 tick 就站起來 —— 舊行為（GH#343 立即復活）回歸時這一條紅
+    expect(ctl.world.tick - t0).toBeGreaterThanOrEqual(wait - 1);
+    expect(ctl.world.transform.get(dummy)!.pos).toEqual(posBefore); // 原地
   });
 });

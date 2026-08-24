@@ -125,6 +125,18 @@ export const zConfigPracticeDoc = z
           "⚠️ 填了一個不存在／未上架的 id 會被當成沒填（照樣隨機），" +
           "⛔ 不會讓練習房開不起來。",
       ),
+    dummyRespawnSec: z
+      .number()
+      .min(0)
+      .max(60)
+      .describe(
+        "靶子被打死之後幾秒**原地滿血**重生（GH#681，owner 2026-08-24" +
+          "「被打死過五秒會重生」）。5（出貨值）＝ 那句話。0 ＝ 死掉的下一 tick " +
+          "就站起來（＝這個功能出現之前的行為，一鍵 rollback）。" +
+          "⚠️ 這一格**只管靶子**：玩家自己的自動復活是上面的 autoRevive，" +
+          "而靶子的重生**不吃** autoRevive —— 關掉 autoRevive 測死亡表演時，" +
+          "靶子照樣會回來（不然練到後面沒東西打）。",
+      ),
   })
   .strict();
 
@@ -146,6 +158,8 @@ export interface PracticeRules {
   dummyFightsBack: boolean;
   /** GH#657 —— 靶子固定用哪一隻英雄；`""` = 各自隨機。 */
   dummyChampionId: string;
+  /** GH#681 —— 靶子死後幾秒原地滿血重生；0 = 下一 tick（舊行為）。 */
+  dummyRespawnSec: number;
 }
 
 /**
@@ -164,6 +178,8 @@ export const DEFAULT_PRACTICE_RULES: PracticeRules = {
   dummyCount: 3,
   dummyFightsBack: false,
   dummyChampionId: "",
+  // ⭐ owner 2026-08-24 逐字（GH#681）:「被打死過**五秒**會重生」—— 5 是他的數字。
+  dummyRespawnSec: 5,
 };
 
 /**
@@ -194,5 +210,6 @@ export function resolvePracticeRules(isPracticeRoom: boolean, doc: unknown): Pra
     dummyCount: parsed.data.dummyCount,
     dummyFightsBack: parsed.data.dummyFightsBack,
     dummyChampionId: parsed.data.dummyChampionId,
+    dummyRespawnSec: parsed.data.dummyRespawnSec,
   };
 }

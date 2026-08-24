@@ -870,6 +870,14 @@ export class MatchController {
    */
   practice: PracticeRules | null = null;
 
+  /**
+   * GH#681 —— 練習靶的重生時刻表：座位號 → **絕對 tick**（到了就原地滿血復活）。
+   *
+   * ⚠️ 絕對 tick，⛔ 不是遞減計數器（硬性技術約束的口徑，雖然這是 host 側）。
+   * 只有練習房的靶子座位會進這張表；空表對正式比賽是零成本的。
+   */
+  private readonly dummyRespawnAtTick = new Map<SeatId, number>();
+
   constructor(
     public readonly matchId: string,
     seed: number,
@@ -2501,17 +2509,50 @@ export class MatchController {
   }
 
   /**
-   * 練習房的自動復活（GH#343）—— 和 {@link sustainCheats} 同一個位置、同一個理由：
-   * 在 sim 走完之後、快照送出之前把人扶起來，所以玩家看不到那具屍體。
+   * 練習房的自動復活（GH#343）＋ 靶子重生（GH#681）—— 和 {@link sustainCheats}
+   * 同一個位置、同一個理由：在 sim 走完之後、快照送出之前動手。
    *
-   * 沒有這一格的話，被自己召來的殭屍王打死就會讓整場練習卡住 —— 練習房沒有隊友，
-   * 所以復活圈永遠不會有人來踩，而 `endlessCombat` 又讓回合不會結束。
+   * 兩半，⛔ 不是一件事：
+   *   · **玩家**（`autoRevive`）—— 倒下的同一 tick 扶起來，玩家看不到自己的屍體。
+   *     沒有它，被自己召來的殭屍王打死就會讓整場練習卡住 —— 練習房沒有隊友，
+   *     復活圈永遠不會有人來踩，而 `endlessCombat` 又讓回合不會結束。
+   *   · **靶子**（`dummyRespawnSec`，owner 2026-08-24「被打死過五秒會重生」）——
+   *     屍體**留在原地**這麼多秒（死亡表演照播），時間到走**同一支**
+   *     `restoreForNextRound` 原地滿血復活。⛔ 不吃 `autoRevive`。
    */
   private sustainPractice(): void {
     for (const seat of this.seats.values()) {
       if (seat.entityId === null) continue;
       const hp = this.world.health.get(seat.entityId);
-      if (!hp || hp.alive) continue;
+      if (!hp || hp.alive) {
+        // 活著（或剛換過身體）就把殘留的時刻表清掉 —— 不清的話，換英雄之後
+        // 舊座位的一筆過期排程會讓下一次死亡「提早」復活。
+        this.dummyRespawnAtTick.delete(seat.seatId);
+        continue;
+      }
+      if (this.isPracticeDummySeat(seat)) {
+        // ⭐ GH#681（owner 2026-08-24 逐字「被打死過**五秒**會重生」）——
+        // 靶子死了**不是**下一 tick 站起來：記下死亡那一刻，+`dummyRespawnSec`
+        // 才走**同一支** `restoreForNextRound`（既有的復活路，⛔ 不另寫一條）。
+        // 原地復活是它本來的行為 —— 死亡不動 transform，restore 也不動。
+        // ⚠️ 刻意**不吃** `autoRevive`：那一格的語意是「**自己**倒下要不要站起來」
+        // （見 practiceDoc 的 describe），關掉它測死亡表演時靶子照樣要回來，
+        // 不然練到後面沒東西打。rollback 是把 `dummyRespawnSec` 調成 0（＝舊行為）。
+        const at = this.dummyRespawnAtTick.get(seat.seatId);
+        if (at === undefined) {
+          this.dummyRespawnAtTick.set(
+            seat.seatId,
+            this.world.tick + Math.round(this.practice!.dummyRespawnSec * TICK_HZ),
+          );
+          continue;
+        }
+        if (this.world.tick < at) continue;
+        this.dummyRespawnAtTick.delete(seat.seatId);
+        restoreForNextRound(this.world, seat.entityId);
+        continue;
+      }
+      // 玩家自己：照 GH#343 的規則走（`autoRevive` 這一格管的就是他）。
+      if (!this.practice?.autoRevive) continue;
       // 和入場**同一支**：不清乾淨的話，殺死他的那一份延燒會在復活的下一 tick
       // 再殺一次。
       restoreForNextRound(this.world, seat.entityId);
@@ -4094,8 +4135,10 @@ export class MatchController {
     if (this.godModeSeats.size > 0 || this.zeroCdSeats.size > 0 || this.infManaSeats.size > 0) {
       this.sustainCheats();
     }
-    // 4c) 練習房的自動復活 (GH#343)。同一個窗口、同一個理由（見 sustainPractice）。
-    if (this.practice?.autoRevive) this.sustainPractice();
+    // 4c) 練習房的自動復活 (GH#343) 與靶子重生 (GH#681)。同一個窗口、同一個理由
+    //     （見 sustainPractice）。⚠️ 閘是「這是練習房」，⛔ 不再是 `autoRevive` ——
+    //     那一格只管玩家自己，靶子的重生（`dummyRespawnSec`）不吃它。
+    if (this.practice) this.sustainPractice();
   }
 
   /**
