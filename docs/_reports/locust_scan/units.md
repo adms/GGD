@@ -1,4 +1,5 @@
 # 蝗蟲群/特效 dummy 普查（locust_scan · 2026-08-25 · 唯讀）
+> ⚠️ **一次性偵察紀錄（保留，⛔ 不刪）** —— 正式版是產生的：`docs/蝗蟲群對應表.md`＋`tools/locust-census/census.json`（`pnpm locust:build` / `pnpm locust:check`）。
 
 來源：`tools/w3x-import/out/GoDieEX22s-src/OBJECTS.json` 的 `units`（461 隻，非英雄）
 ＋ `UNIT_TINTS.json`（#263 的解析後頂點色）。機讀版：同目錄 `units.json`（236 列）。

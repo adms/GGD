@@ -1,4 +1,5 @@
 # 蝗蟲群移植 —— 三掃描合成（synthesis · 2026-08-25 · GH#688）
+> ⚠️ **一次性偵察紀錄（保留，⛔ 不刪）** —— 正式版是產生的：`docs/蝗蟲群對應表.md`＋`tools/locust-census/census.json`（`pnpm locust:build` / `pnpm locust:check`）。
 
 輸入：同目錄 `units.md`(236 隻普查) · `mdl-params.md`(7 支 stock MDL) · `jass-sites.md`(644 生成點)。
 引擎現況逐格讀自 `packages/shared/src/content/schema/effects/spawnModelFx.ts` ·

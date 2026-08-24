@@ -1,4 +1,5 @@
 # JASS × dummy 交叉表（任務③ locust scan）
+> ⚠️ **一次性偵察紀錄（保留，⛔ 不刪）** —— 正式版是產生的：`docs/蝗蟲群對應表.md`＋`tools/locust-census/census.json`（`pnpm locust:build` / `pnpm locust:check`）。
 
 - 來源: `/Users/Takuro/GGD/tools/w3x-import/out/GoDieEX22s-src/raw/war3map.j`（56,765 行）
 - 掃描呼叫: `CreateUnit` / `CreateNUnitsAtLoc` / `CreateNUnitsAtLocFacingLocBJ`

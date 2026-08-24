@@ -1,4 +1,5 @@
 # MDL 參數掃描 —— owner 點名的 7 支 stock 模型（locust_scan 任務②）
+> ⚠️ **一次性偵察紀錄（保留，⛔ 不刪）** —— 正式版是產生的：`docs/蝗蟲群對應表.md`＋`tools/locust-census/census.json`（`pnpm locust:build` / `pnpm locust:check`）。
 
 - 產生：2026-08-25，唯讀掃描（scratchpad 腳本 `mdl_dump.py`，完整 JSON 傾印在
   `/private/tmp/claude-503/-Users-Takuro-GGD/1fc1e42e-e26b-4bec-88ef-ca25238c0f4c/scratchpad/mdl_dump.json`）
