@@ -3,18 +3,18 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_4a972396daf9",
+    "contentVersion": "cv_c63ea6d32748",
     "collections": {
       "champions": {
-        "hash": "9d7f15d5795b",
+        "hash": "3a216b61944b",
         "count": 71
       },
       "abilities": {
-        "hash": "f20bdc54097c",
+        "hash": "ece4b670009f",
         "count": 421
       },
       "items": {
-        "hash": "0178f480bcd1",
+        "hash": "5c42ba5bc191",
         "count": 142
       },
       "augments": {
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "2e76985c0da9",
+        "hash": "11f300a54849",
         "count": 87
       },
       "models": {
@@ -50,15 +50,15 @@
         "count": 124
       },
       "vfx": {
-        "hash": "d1f905399452",
-        "count": 645
+        "hash": "89201362fc0c",
+        "count": 646
       },
       "skins": {
         "hash": "3d1095f3da83",
         "count": 5
       },
       "ability-templates": {
-        "hash": "c553dd438e68",
+        "hash": "67294829e96f",
         "count": 41
       }
     },
@@ -89,7 +89,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "a0385f89",
+    "fingerprint": "e03d3f48",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -431,6 +431,7 @@
       "stacking",
       "stacks",
       "statusId",
+      "statusImmunity",
       "steps",
       "stopDistance",
       "stopOnCasterDeath",
@@ -1386,9 +1387,10 @@
                 "forward",
                 "toTarget",
                 "orbit",
-                "radial"
+                "radial",
+                "static"
               ],
-              "default": "forward"
+              "default": "static"
             },
             "speed": {
               "type": "number",
@@ -1468,6 +1470,13 @@
               "type": "docRef",
               "default": "explosion",
               "optional": true
+            },
+            "lifeSec": {
+              "type": "number",
+              "default": 2,
+              "min": 0.1,
+              "max": 10,
+              "unit": "s"
             }
           }
         },
@@ -3373,7 +3382,7 @@
       "effectKindsSource": "runtimeCapabilities.effectKinds（⛔ 不在這裡重複一份）"
     },
     "vfx": {
-      "docCount": 645,
+      "docCount": 646,
       "keys": [
         "fx.barkskin",
         "fx.bramble-burst",
@@ -3698,12 +3707,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "a0385f89",
+    "engineFingerprint": "e03d3f48",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 a0385f89 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 e03d3f48 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -4492,5 +4501,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "e7c2531aace2"
+  "profileDigest": "499e9f17e766"
 }

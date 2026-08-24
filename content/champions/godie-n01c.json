@@ -194,7 +194,6 @@
           "kind": "spawnModelFx",
           "shape": "single",
           "preset": "tpl-beam-roll",
-          "path": "forward",
           "scale": 4.5,
           "onArrive": [
             {

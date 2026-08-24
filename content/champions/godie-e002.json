@@ -422,16 +422,6 @@
           "kind": "spawnModelFx",
           "shape": "single",
           "preset": "tpl-beam-roll",
-          "path": "forward",
-          "onTouch": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小"
-              }
-            }
-          ],
           "onArrive": [
             {
               "kind": "spawnVfx",

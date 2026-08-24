@@ -501,8 +501,6 @@
           "kind": "spawnModelFx",
           "shape": "single",
           "preset": "tpl-beam-roll",
-          "path": "toTarget",
-          "distance": 8.25,
           "onArrive": [
             {
               "kind": "spawnVfx",

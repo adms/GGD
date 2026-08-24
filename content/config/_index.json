@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "2e76985c0da9",
+  "hash": "11f300a54849",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -41,8 +41,8 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "85dfd655cc98",
-      "size": 8386
+      "hash": "2a82409c2ae6",
+      "size": 8385
     },
     {
       "id": "audio-map",
@@ -131,8 +131,8 @@
     {
       "id": "combat-feel",
       "path": "config/combat-feel.json",
-      "hash": "c9798eb936e4",
-      "size": 1225
+      "hash": "d8fa8b5214be",
+      "size": 1313
     },
     {
       "id": "combo-strikes",
@@ -179,8 +179,8 @@
     {
       "id": "damage-rules",
       "path": "config/damage-rules.json",
-      "hash": "0a4975f8e3f5",
-      "size": 651
+      "hash": "03e9dd42bdb2",
+      "size": 679
     },
     {
       "id": "damage-tier-exemptions",
@@ -197,8 +197,8 @@
     {
       "id": "dispel",
       "path": "config/dispel.json",
-      "hash": "0ea1baae50a2",
-      "size": 2103
+      "hash": "37c0ea2cf961",
+      "size": 2147
     },
     {
       "id": "displacement-tiers",
@@ -257,8 +257,8 @@
     {
       "id": "lobby-rally",
       "path": "config/lobby-rally.json",
-      "hash": "e3b83db78c07",
-      "size": 2297
+      "hash": "1b2d16e456ef",
+      "size": 2899
     },
     {
       "id": "mana-economy",
@@ -323,8 +323,8 @@
     {
       "id": "practice",
       "path": "config/practice.json",
-      "hash": "0584289e7571",
-      "size": 931
+      "hash": "3431ce6b1ce8",
+      "size": 1800
     },
     {
       "id": "range-guide",
@@ -359,8 +359,8 @@
     {
       "id": "roster",
       "path": "config/roster.json",
-      "hash": "e20cb2ed540e",
-      "size": 6564
+      "hash": "3ed750ef7d2b",
+      "size": 6601
     },
     {
       "id": "round-grade",
@@ -461,8 +461,8 @@
     {
       "id": "vfx-cleanup",
       "path": "config/vfx-cleanup.json",
-      "hash": "3da2883722c5",
-      "size": 10309
+      "hash": "5b194d17e635",
+      "size": 11722
     },
     {
       "id": "vfx-families",
@@ -509,8 +509,8 @@
     {
       "id": "weather",
       "path": "config/weather.json",
-      "hash": "3e946696c38f",
-      "size": 951
+      "hash": "61a63dbd8665",
+      "size": 1106
     },
     {
       "id": "world-cues",

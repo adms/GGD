@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "a0385f89",
+  "fingerprint": "e03d3f48",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -342,6 +342,7 @@
     "stacking",
     "stacks",
     "statusId",
+    "statusImmunity",
     "steps",
     "stopDistance",
     "stopOnCasterDeath",

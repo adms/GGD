@@ -225,7 +225,6 @@
           "kind": "spawnModelFx",
           "shape": "single",
           "preset": "tpl-beam-roll",
-          "path": "forward",
           "onArrive": [
             {
               "kind": "spawnVfx",

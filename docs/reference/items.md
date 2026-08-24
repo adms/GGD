@@ -2,7 +2,7 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_4a972396daf9`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 產生自 contentVersion **`cv_7f512007f553`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
 > 資料列：**142**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-08-20T16:58:56.072938Z`）
 
 `content/items/*.json` 共 **142** 份，依 `content/items/<id>.json` 的 **`craftRole`** 標記分類（來源：source-map triggers，見 `tools/w3x-import/extract_item_roles.py`）。實際能在商店買到的只有 **38** 件最終合成武器（`craftRole:final` 且有效果）＋ **2** 項服務；三選一 draft 抽 **6** 件任務道具，傳說寶玉抽 **84** 件傳說。其餘（16 組件、0 代幣、24 無角色、4 無 payload 的 final）是配方半成品或 w3x 殘件，不會單獨出現在任何商店或抽卡。
@@ -52,7 +52,7 @@
 | `godie-i02e` | 狂暴軒轅劍 | 最終合成 final | — | T2 | ✅ | ✅ | 攻速 +200% | onBasicAttack→applyStatus |
 | `godie-i02r` | 奇蹟之墜 | 最終合成 final | 1200g | T2 | — | ✅ | 法強 +28.9 · 魔力 +87 · 生命 +174 | — |
 | `godie-i031` | 天生牙 | 最終合成 final | — | T2 | ✅ | ✅ | 回血 +20 | onKill→revive · onKill→restore · onInterval→dispel |
-| `godie-i039` | 幻之匕首 | 最終合成 final | — | T2 | ✅ | ✅ | 迴避 +0.1 | onBasicAttack→damage |
+| `godie-i039` | 幻之匕首 | 最終合成 final | — | T2 | ✅ | ✅ | 迴避 +0.1 | onBasicAttack→damage/spawnVfx |
 | `godie-i03b` | 真．雅典娜的驚嘆號 | 最終合成 final | 1200g | T2 | — | ✅ | 法強 +81.6 · 魔力 +245 · 回魔 +81.6% | — |
 | `godie-i03d` | 光明虎徹 | 最終合成 final | 300g | T1 | — | ✅ | 生命 +39 · 攻擊力 +1.9 · 魔力 +23 | — |
 | `godie-i03f` | 甘豆腐之袍 | 最終合成 final | — | T1 | ✅ | ✅ | 魔力 +600 · 回魔 +4 | onKill→grantAttribute |
@@ -135,7 +135,7 @@
 | `godie-i02d` | 消失的密室 | 無角色 none | — | T1 | ✅ | ✅ | 護甲 +100 · 魔抗 +200 · 攻速 +100% · 攻速上限解鎖至 10 · 移速 +4 | onBasicAttack→applyStatus |
 | `godie-i02e` | 狂暴軒轅劍 | 最終合成 final | — | T2 | ✅ | ✅ | 攻速 +200% | onBasicAttack→applyStatus |
 | `godie-i031` | 天生牙 | 最終合成 final | — | T2 | ✅ | ✅ | 回血 +20 | onKill→revive · onKill→restore · onInterval→dispel |
-| `godie-i039` | 幻之匕首 | 最終合成 final | — | T2 | ✅ | ✅ | 迴避 +0.1 | onBasicAttack→damage |
+| `godie-i039` | 幻之匕首 | 最終合成 final | — | T2 | ✅ | ✅ | 迴避 +0.1 | onBasicAttack→damage/spawnVfx |
 | `godie-i03f` | 甘豆腐之袍 | 最終合成 final | — | T1 | ✅ | ✅ | 魔力 +600 · 回魔 +4 | onKill→grantAttribute |
 | `godie-i03h` | 天地崩裂魔杖 | 最終合成 final | — | T2 | ✅ | ✅ | 法強 +255 · 法強 +10% | onAbilityCast→damageArea |
 | `godie-i03m` | 反射之盾 | 無角色 none | — | T1 | ✅ | ✅ | — | onDamageTaken→damage |

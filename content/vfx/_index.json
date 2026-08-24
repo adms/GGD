@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "d1f905399452",
+  "hash": "89201362fc0c",
   "entries": [
     {
       "id": "attach.ex.midchilder-aura",
@@ -685,6 +685,12 @@
       "path": "vfx/fx.prim.blood.slash.json",
       "hash": "121007099e65",
       "size": 1137
+    },
+    {
+      "id": "fx.prim.blood.spray-back",
+      "path": "vfx/fx.prim.blood.spray-back.json",
+      "hash": "a8ffb6f59e4c",
+      "size": 1204
     },
     {
       "id": "fx.prim.blood.summon",
@@ -1985,14 +1991,14 @@
     {
       "id": "fx.w3x.particle.holyawakening.p00",
       "path": "vfx/fx.w3x.particle.holyawakening.p00.json",
-      "hash": "074f5d7b152a",
-      "size": 968
+      "hash": "fbb1bb519c20",
+      "size": 972
     },
     {
       "id": "fx.w3x.particle.holyawakening.p01",
       "path": "vfx/fx.w3x.particle.holyawakening.p01.json",
-      "hash": "039fb2512c03",
-      "size": 962
+      "hash": "8bfc2d96adb5",
+      "size": 966
     },
     {
       "id": "fx.w3x.particle.holyawakening.p02",
@@ -2459,19 +2465,19 @@
     {
       "id": "godie-deathwave-r0",
       "path": "vfx/godie-deathwave-r0.json",
-      "hash": "5cafdab2db3f",
+      "hash": "e500bdb6a5cb",
       "size": 284
     },
     {
       "id": "godie-deathwave-r1",
       "path": "vfx/godie-deathwave-r1.json",
-      "hash": "e90039006da7",
+      "hash": "94c40a2b464e",
       "size": 285
     },
     {
       "id": "godie-deathwave-r2",
       "path": "vfx/godie-deathwave-r2.json",
-      "hash": "dd2e65f060c1",
+      "hash": "d530383e9b24",
       "size": 284
     },
     {
@@ -3269,14 +3275,14 @@
     {
       "id": "godie-holyawakening-p0",
       "path": "vfx/godie-holyawakening-p0.json",
-      "hash": "e9800e58a728",
-      "size": 997
+      "hash": "2fa0dae72238",
+      "size": 999
     },
     {
       "id": "godie-holyawakening-p1",
       "path": "vfx/godie-holyawakening-p1.json",
-      "hash": "da965996bfb3",
-      "size": 993
+      "hash": "786a27883939",
+      "size": 995
     },
     {
       "id": "godie-holyawakening-p2",
@@ -3731,8 +3737,8 @@
     {
       "id": "godie-sd2-r0",
       "path": "vfx/godie-sd2-r0.json",
-      "hash": "271e02536dfe",
-      "size": 300
+      "hash": "259a331ac3b1",
+      "size": 304
     },
     {
       "id": "godie-sd2-r1",
