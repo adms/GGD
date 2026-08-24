@@ -584,7 +584,11 @@ const modelFxFamily: Family = (t, p) => {
         //    禁填）,它的唯一終止條件是 lifeSec。⛔ 其他路徑照舊 —— rollback 到
         //    forward 時這兩格還在。
         ...(path === "static"
-          ? { ...(has(t, p, "lifeSec") ? { lifeSec: num(t, p, "lifeSec") } : {}) }
+          ? {
+              ...(has(t, p, "lifeSec") ? { lifeSec: num(t, p, "lifeSec") } : {}),
+              // ⭐ GH#688 機制①：沿線 N 具的間距（count 在下面那行,兩者成對）。
+              ...(has(t, p, "spacing") ? { spacing: num(t, p, "spacing") } : {}),
+            }
           : { speed: num(t, p, "speed"), distance: num(t, p, "distance") }),
         // ⚠️ `count` 是**傷害次數的乘數**，⛔ 不是一個純視覺的數字：十二具各掃
         //    一次 = 42-04 卡面承諾的「隨機12次區域傷害」。調小它總輸出跟著掉。

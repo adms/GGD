@@ -126,7 +126,16 @@ describe("動畫特效模板 —— 引用它的每一支技能", () => {
     const bad: string[] = [];
     for (const { id, doc } of USERS)
       for (const m of collect(resolveModelFxPreset(doc, TEMPLATES), "spawnModelFx")) {
-        const t = TEMPLATES.get(String(m["preset"] ?? ""));
+        // ⭐ 2026-08-25：**同一份文件可以同時有「用模板的」與「自己寫全的」節點**
+        //    （悟空 09-04：主體走 tpl-beam-roll,火柱是手寫 static 節點）。
+        //    沒有 preset 的節點由 `zSpawnModelFx` 的 refine 守著（它必須自帶
+        //    modelKey/path/身分欄,缺了載入就被拒）⇒ 這一條只管**引用了模板**的那些。
+        //    ⛔ 在此之前它假設「文件裡有一個 preset ⇒ 每一個節點都有 preset」,
+        //    而那個假設 2026-08-25 被真的內容推翻了。
+        //    ⚠️ 那個火柱節點該不該也變成模板 = GH#693（owner:「所有這些球體、蝗蟲群
+        //    特效都要變成模板」）—— 到時它就會被這條守衛涵蓋。
+        if (m["preset"] === undefined) continue;
+        const t = TEMPLATES.get(String(m["preset"]));
         if (t === undefined) {
           bad.push(`${id}: preset "${String(m["preset"])}" 指到一份不存在的模板`);
           continue;
