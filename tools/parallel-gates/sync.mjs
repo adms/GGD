@@ -127,6 +127,17 @@ if (PLAN || CHECK) {
 
 // ── ⭐ 裁剪(--since)────────────────────────────────────────────────────────
 /** 這一輪**當成已經最新**的那幾支（⛔ 空集合 = 全跑）。 */
+// 🔒 產物隔離區(owner 2026-08-24「發生上百次…只能靠產生器去操作修改」):
+//    產物平時 chmod 444,產生器執行期間解鎖、收工重新上鎖 —— genguard hook 看不見的
+//    python/node 檔案 API 直寫從此吃 PermissionError。scripts/product-quarantine.sh。
+import { execFileSync as _qx } from "node:child_process";
+const _quarantine = (mode) => {
+  try { _qx("bash", ["scripts/product-quarantine.sh", mode], { cwd: ROOT, stdio: "inherit" }); }
+  catch (e) { console.error(`⚠️ 隔離區 ${mode} 失敗(不擋 sync): ${String(e)}`); }
+};
+_quarantine("unlock");
+process.on("exit", () => _quarantine("lock"));
+
 const prune = new Set();
 if (SINCE) {
   // ⚠️ `core.quotepath=false` 是必要的:預設 git 會把 CJK 路徑印成 C 風格跳脫 ＋ 雙引號

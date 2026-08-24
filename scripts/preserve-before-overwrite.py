@@ -289,7 +289,8 @@ def main() -> int:
                 print(
                     f"🚫 genguard:{p} 是產生器 **{owner}** 的產物 —— 手改會在下一次 "
                     f"skills:sync 被打回來(2026-08-23 一晚中三次的錯)。\n"
-                    f"   ⇒ 改它的**來源**(tools/ 或上游 content),然後跑 pnpm {owner.replace(':check',':build')} 重生成。\n"
+                    f"   ⇒ 改它的**來源**(tools/ 或上游 content),然後 `bash scripts/genrun.sh {owner.replace(':check',':build')}` 重生成\n"
+                    f"   (genrun = 解鎖該支的產物→跑→重新上鎖;產物平時 chmod 444,見 product-quarantine.sh)。\n"
                     f"   真的要改產物(極罕見):GGD_GENGUARD_OFF=1,並在 commit 訊息裡說為什麼。",
                     file=sys.stderr,
                 )

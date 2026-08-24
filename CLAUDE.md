@@ -1017,6 +1017,29 @@ owner 2026-08-24（在同一個錯第 N 次發生之後）：
 | **為什麼可以擋**（備份那半不擋） | 「改產物」**沒有任何合法情境** —— 產生器自己寫檔走 python/node 檔案 API，⛔ 不經過 Write/Edit/shell 重導。逃生口 `GGD_GENGUARD_OFF=1`，用了要在 commit 訊息裡說為什麼 |
 | **正確動作** | 改**來源**（`tools/` 或上游 content），跑該產生器重生成，驗「重生成之後改動還在」——⭐ 那才是「修好了」的定義 |
 
+### 🔒 產物隔離區 —— hook 的盲區用**檔案權限**關掉（owner 2026-08-24「發生上百次」）
+
+owner 2026-08-24（逐字）：
+
+> 「這個問題發生上百次了，為什麼總是會改到產物而不是產生器？是否可以把產物放在
+>  特定資料夾作為隔離區，**只能靠產生器去操作修改產物內容**？」
+
+⭐ **為什麼 hook 擋不完**：genguard 只攔 `Write`/`Edit`/shell 重導 ——
+而 python/node **檔案 API 直寫**（`open(p,"w")`）hook 根本看不見。
+2026-08-24 我自己就這樣把光束改動寫進兩份產物，下一次 sync 打回來。
+
+⭐ **隔離不搬資料夾**（500+ 個產物路徑是對外契約，搬了每個消費者都斷）——
+隔離用**權限**：產物平時 `chmod 444`，產生器執行期間解鎖、收工重新上鎖
+⇒ 任何通道的直寫（含檔案 API）都吃 **PermissionError**。
+
+| | |
+|---|---|
+| 腳本 | `scripts/product-quarantine.sh lock/unlock/status [--step <name>]`（擁有者表＝量出來的 `sync-io.json`） |
+| 自動接線 | `sync.mjs` 開跑解鎖、`process.on("exit")` 重新上鎖（成功失敗都鎖） |
+| 單獨跑一支產生器 | `bash scripts/genrun.sh <step>`（解鎖那一支的產物→跑→重鎖）。⛔ 不要手動 chmod 再改內容 |
+| 逃生口 | `GGD_QUARANTINE_OFF=1`（commit 訊息要說為什麼） |
+| 守衛 | `packages/shared/src/ops/productQuarantine.test.ts` —— 真的 chmod、真的用檔案 API 寫、真的吃 EACCES |
+
 ### 📛 暫存檔一律叫 `{用途}_temp_{時間戳}`
 
 owner 2026-08-20：
