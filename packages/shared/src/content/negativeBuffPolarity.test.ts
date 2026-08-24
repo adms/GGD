@@ -32,17 +32,32 @@ const COLLECTIONS = ["items", "abilities", "augments", "champions"] as const;
  * ⇒ ⛔ 這張表不可能腐爛成橡皮圖章。
  */
 const EXEMPT: Record<string, string> = {
-  "abilities/godie-emfr.e.json":
-    "產生器 skillremake:json 的產物（genguard 擋手改）。來源：tools/skill-remake/heroes/godie-emfr.py 的 15-03 效果表。⭐ 反駁方式：在來源加 polarity/dispellable 兩格並重生成 —— 那一刻這一列會被下面的自我到期斷言叫。",
-  "champions/godie-emfr.json":
-    "同上，它是 godie-emfr.e 的英雄卡鏡像，同一支產生器同時寫兩份。",
-};
+    };
 
 interface Node {
   kind?: unknown;
   polarity?: unknown;
   modifiers?: unknown;
   perRank?: unknown;
+  /** ⭐ 好處住在別處的兩個訊號 —— 見下面 `upsideLivesElsewhere` 的理由。 */
+  hooks?: unknown;
+  exclusiveGroup?: unknown;
+}
+
+/**
+ * ⛔⛔ **代價型自我強化不算違規** —— 好處住在 `hooks`／`exclusiveGroup` 上，
+ * 而 `modifiers` 只剩那個代價。
+ *
+ * 這一段與 `sim/effects/applyBuff.ts` 的 `upsideLivesElsewhere` 是**同一句判準**：
+ * 引擎不推、這支守衛也不告狀。⛔ 兩邊必須一致，否則會出現「引擎當它是增益、
+ * 守衛逼作者標成減益」這種互相矛盾的狀態。
+ *
+ * 前例：15-03 獄炎煉我（`emfr-form`）—— 唯一的 modifier 是 `ms ×0.5`，
+ * 而那 12 秒真正給的是兩條普攻/命中追打 hook。標成 debuff ⇒ 玩家自己的大招型態
+ * 變成可以被淨化掉的減益。
+ */
+function upsideLivesElsewhere(n: Node): boolean {
+  return (Array.isArray(n.hooks) && n.hooks.length > 0) || n.exclusiveGroup !== undefined;
 }
 
 /** 走訪一份文件，回傳每一個 `applyBuff` 節點。 */
@@ -83,6 +98,7 @@ function offenders(): Map<string, number> {
       let n = 0;
       for (const node of applyBuffNodes(doc)) {
         if (node.polarity !== undefined) continue;
+        if (upsideLivesElsewhere(node)) continue;
         if (!allModifiersDownward(everyModifier(node))) continue;
         n++;
       }

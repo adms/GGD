@@ -132,9 +132,30 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
      * ⚠️ 作者明寫的 `dispellable: false` 仍然贏 —— 內部冷卻記帳那一族
      *（`devour-cooldown`）就是靠它不被自我淨化吃掉。
      */
+    /**
+     * ⛔⛔ **好處住在 `modifiers` 以外的那一族，不可以推。**
+     *
+     * 「每一條 modifier 都往下拉」⇒ 減益 —— 這個推論對**只有 modifiers** 的增益成立，
+     * ⛔ 但對**代價型自我強化**是反的：好處住在 `hooks`（普攻附傷、命中追打）或
+     * 由 `exclusiveGroup` 標示的變身型態上，而 `modifiers` 只剩那個**代價**。
+     *
+     * 量到的（2026-08-24，全 `content/` 掃描）：未標 polarity 且「全部往下拉」的
+     * `applyBuff` 共 14 個，其中 **4 個帶 hooks／exclusiveGroup** ——
+     * 全部是 15-03 獄炎煉我（`emfr-form`）：唯一的 modifier 是 `ms ×0.5`，
+     * 而那 12 秒真正給的是**兩條普攻/命中追打 hook**。
+     * ⇒ 推成 debuff 的話，玩家自己的大招型態變成**可以被淨化掉的減益**，
+     * ⛔ 而 schema 收得下、卡片照印、每一條既有守衛都是綠的（失敗形態②）。
+     *
+     * ⭐ 這一格是**閘不是判準**：⛔ 不靠「作者記得標 polarity」，
+     *   而是「上場的 buff 自己說得出好處在哪裡」——
+     *   有 hook／有型態組 ⇒ 好處在別處 ⇒ 這個推論**沒有資格**下判斷。
+     */
+    const upsideLivesElsewhere =
+      (e.hooks !== undefined && e.hooks.length > 0) || e.exclusiveGroup !== undefined;
     const inferDebuff =
       world.dispelRules.inferDebuffFromNegativeModifiers &&
       e.polarity === undefined &&
+      !upsideLivesElsewhere &&
       allModifiersDownward(modifiers);
     const polarity = inferDebuff ? "debuff" : e.polarity;
     const dispellable = inferDebuff ? (e.dispellable ?? true) : e.dispellable;
