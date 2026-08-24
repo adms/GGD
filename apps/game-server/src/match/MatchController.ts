@@ -252,7 +252,8 @@ import { Ownership } from "../curation/ownership";
 // 隱藏英雄（彩蛋，owner 2026-08-17「隱藏角色可以隨機到 但不能選到」）。
 // ⛔ 刻意**不**走 `Whitelist.allowsChampion` —— 那個 seam 同時餵隨機池
 // (`filterChampions` → `randomChampionPool`)，放進去就等於把隱藏做成下架。
-import { hiddenChampionIds, isHiddenChampionId } from "@ggd/shared/content/championRetirement";
+import { hiddenChampionIds, isHiddenChampionId, ROSTER_DOC_ID } from "@ggd/shared/content/championRetirement";
+import { DEFAULT_HIDDEN_CHAMPIONS_IN_MOB_POOL } from "@ggd/shared/content/schema/config/roster";
 import { PhaseMachine, type MatchPhase, type PhaseConfig, DEFAULT_PHASE_CONFIG } from "./PhaseMachine";
 import { resolveVsBotPacing, type VsBotPacing } from "./phaseConfig";
 import { roundCapReached } from "@ggd/shared/roomSettings";
@@ -1343,6 +1344,22 @@ export class MatchController {
    * so a botted match still runs — the human empty-state is a champ-select
    * concern on the client, never a crashed match here.
    */
+  /**
+   * 殭屍/小兵**外觀**池 —— `randomChampionPool()` 減去隱藏英雄（GH#348）。
+   *
+   * ⛔ 濾完為空時退回未濾的那一份：一場沒有雜兵可長的比賽比一個被劇透的彩蛋糟糕得多
+   * （而且那是「隱藏名單 ⊇ 白名單」這種設定錯誤才會發生的事，⛔ 不該由玩家承擔）。
+   */
+  private mobSkinPool(): ChampionId[] {
+    const pool = this.randomChampionPool();
+    const rosterCfg = Configs.tryGet(ROSTER_DOC_ID) as
+      | { hiddenChampionsInMobPool?: boolean }
+      | undefined;
+    if (rosterCfg?.hiddenChampionsInMobPool ?? DEFAULT_HIDDEN_CHAMPIONS_IN_MOB_POOL) return pool;
+    const visible = pool.filter((cid) => !isHiddenChampionId(cid));
+    return visible.length > 0 ? visible : pool;
+  }
+
   randomChampionPool(): ChampionId[] {
     const all = Champions.ids();
     const withModel = all.filter((cid) => Models.tryGet(Champions.get(cid).modelKey) !== undefined);
@@ -1383,7 +1400,20 @@ export class MatchController {
   private mobChampionPicker(): MobChampionPicker {
     let pool: ChampionId[] | null = null;
     return (slot, round) => {
-      pool ??= this.randomChampionPool();
+      // ⭐ GH#348 —— 殭屍的外觀池**預設不含隱藏英雄**。
+      //
+      // ⚠️ 開票時（08-17）body 逐字寫「出貨的 hiddenChampions 是空陣列，**所以今天
+      //    不會發生**」。08-20（GH#469）owner 填進四位 ⇒ **那句話當場變成謊話**，
+      //    而沒有任何東西紅過一聲（第三守則的形狀）。
+      //
+      // ⭐ 這兩條路在此之前共用同一個 `randomChampionPool()`，而它們要的東西不一樣：
+      //    · 玩家的 🎲（autoPickAndSpawn）—— owner 2026-08-17：「隱藏角色**可以
+      //      隨機到** 但不能選到」⇒ 照舊抽得到，⛔ 這一格不碰它。
+      //    · 殭屍的皮 —— 每一場每一回合都在刷，一位隱藏英雄的臉出現在雜兵身上，
+      //      玩家在自己抽到他之前就看膩了 ⇒ 彩蛋當場沒了。
+      //
+      // 一鍵 rollback：後台 `config.roster@1` 的 `hiddenChampionsInMobPool` 打開。
+      pool ??= this.mobSkinPool();
       // `null` (an empty pool — impossible in practice, `randomChampionPool`
       // falls back to the full roster) degrades to 「沿用」 in the sim.
       return pickMobChampion(pool, this.matchSeed, round, slot) ?? undefined;

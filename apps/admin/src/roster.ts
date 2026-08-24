@@ -20,7 +20,7 @@
  *     「隱藏角色可以隨機到 但不能選到」）
  * 所以同一個 id 同時填進兩張＝自相矛盾，{@link rosterConflicts} 把它擋在儲存之前。
  */
-import { DEFAULT_HIDDEN_CHAMPIONS } from "@ggd/shared/content/schema/config";
+import { DEFAULT_HIDDEN_CHAMPIONS_IN_MOB_POOL, DEFAULT_HIDDEN_CHAMPIONS } from "@ggd/shared/content/schema/config";
 // ⚠️ 刻意**重用**免費名單那個解析器而不是抄一份：它做的事逐字相同（一個 textarea →
 // 去重排序的 id 清單 + 打錯字回報），而抄第二份就是第零守則⑨ 講的「到處改改改」——
 // 兩份會各自腐爛，而它們腐爛的症狀（打錯的 id 靜靜地不生效）長得一模一樣。
@@ -35,6 +35,11 @@ export const ROSTER_SCHEMA = "config.roster@1";
 export interface RosterLists {
   retired: string[];
   hidden: string[];
+  /**
+   * 殭屍/小兵的外觀池要不要包含隱藏英雄（GH#348）。出貨 `false`。
+   * ⛔ 與玩家自己的 🎲 隨機無關 —— 那條路一律抽得到（owner 2026-08-17 逐字）。
+   */
+  hiddenInMobPool: boolean;
   /** 文件自己的說明。⚠️ 不編輯，但**一定要帶著走**，否則存一次就把它刪掉了。 */
   note?: string;
 }
@@ -61,6 +66,9 @@ export function extractRoster(doc: unknown): RosterLists | null {
     Array.isArray(v) ? v.filter((x): x is string => typeof x === "string" && x !== "") : [...fallback];
   return {
     retired: ids(d.retiredChampions, []),
+    hiddenInMobPool: typeof d.hiddenChampionsInMobPool === "boolean"
+      ? d.hiddenChampionsInMobPool
+      : DEFAULT_HIDDEN_CHAMPIONS_IN_MOB_POOL,
     hidden: ids(d.hiddenChampions, DEFAULT_HIDDEN_CHAMPIONS),
     ...(typeof d.note === "string" ? { note: d.note } : {}),
   };
@@ -91,6 +99,10 @@ export function rosterDocFor(lists: RosterLists): Record<string, unknown> {
     ...(lists.note !== undefined ? { note: lists.note } : {}),
     retiredChampions: [...lists.retired].sort(),
     hiddenChampions: [...lists.hidden].sort(),
+    // ⚠️ 這一格**一定要寫**，理由與上面兩張清單完全相同：`rosterDocFor` 寫**整份**
+    //    文件，漏寫的欄位在覆蓋層裡就是「不存在」⇒ 讀端退回預設 ⇒ 使用者剛剛在
+    //    畫面上打開的開關存完之後自己彈回去，而且沒有任何錯誤（GH#348）。
+    hiddenChampionsInMobPool: lists.hiddenInMobPool,
   };
 }
 

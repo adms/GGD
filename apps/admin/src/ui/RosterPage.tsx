@@ -47,6 +47,7 @@ export function RosterPage(): JSX.Element {
   const [shipped, setShipped] = useState<RosterLists | null>(null);
   const [retiredText, setRetiredText] = useState("");
   const [hiddenText, setHiddenText] = useState("");
+  const [hiddenInMobPool, setHiddenInMobPool] = useState(false);
   const [roster, setRoster] = useState<string[] | null>(null);
   const [busy, setBusy] = useState(false);
   const [apiErr, setApiErr] = useState<string | null>(null);
@@ -65,6 +66,7 @@ export function RosterPage(): JSX.Element {
           setLoaded(lists);
           setRetiredText(idListText(lists.retired));
           setHiddenText(idListText(lists.hidden));
+          setHiddenInMobPool(lists.hiddenInMobPool);
         }
       } catch (err) {
         setApiErr(errText(err));
@@ -92,13 +94,21 @@ export function RosterPage(): JSX.Element {
   ));
 
   const preview: RosterLists | null = loaded
-    ? { retired: retired.ids, hidden: hidden.ids, ...(loaded.note !== undefined ? { note: loaded.note } : {}) }
+    ? {
+        retired: retired.ids,
+        hidden: hidden.ids,
+        hiddenInMobPool,
+        ...(loaded.note !== undefined ? { note: loaded.note } : {}),
+      }
     : null;
   const conflicts = preview ? rosterConflicts(preview) : [];
   const dirty =
     loaded !== null &&
     (retired.ids.join("\n") !== idListText(loaded.retired) ||
-      hidden.ids.join("\n") !== idListText(loaded.hidden));
+      hidden.ids.join("\n") !== idListText(loaded.hidden) ||
+      // ⭐ 少了這一項，勾了 checkbox 之後「儲存」是**灰的** —— 一格存不下去的開關
+      //    與沒有那格開關**在畫面上一模一樣**（GH#348 的第一守則那一半）。
+      hiddenInMobPool !== loaded.hiddenInMobPool);
 
   const save = async (): Promise<void> => {
     if (!preview || conflicts.length > 0) return;
@@ -111,6 +121,7 @@ export function RosterPage(): JSX.Element {
       setLoaded(preview);
       setRetiredText(idListText(preview.retired));
       setHiddenText(idListText(preview.hidden));
+      setHiddenInMobPool(preview.hiddenInMobPool);
       setFlash(`✓ 已寫入耐久覆蓋層（generation ${head.generation}）`);
     } catch (err) {
       setFlash(null);
@@ -124,6 +135,8 @@ export function RosterPage(): JSX.Element {
     if (!shipped) return;
     setRetiredText(idListText(shipped.retired));
     setHiddenText(idListText(shipped.hidden));
+    // ⭐「回到出貨值」漏掉一格 = 那一格**回不到出貨值**，而按鈕看起來成功了。
+    setHiddenInMobPool(shipped.hiddenInMobPool);
     setFlash(null);
   };
 
@@ -205,6 +218,23 @@ export function RosterPage(): JSX.Element {
           <b>不會下架任何人</b>，而你本來要擋的那一位<b>照樣出現在選人畫面上</b>。
         </div>
       )}
+
+      <label
+        style={{ display: "flex", alignItems: "center", gap: 8, margin: "16px 0 0", cursor: "pointer" }}
+      >
+        <input
+          type="checkbox"
+          aria-label="殭屍可以穿隱藏英雄的皮"
+          data-field="hiddenChampionsInMobPool"
+          checked={hiddenInMobPool}
+          onChange={(e) => setHiddenInMobPool(e.target.checked)}
+        />
+        <span style={{ color: TEXT_MAIN, fontSize: 13 }}>殭屍/小兵可以穿隱藏英雄的皮</span>
+        <span style={{ color: TEXT_DIM, fontSize: 11 }}>
+          ⛔ 出貨關（GH#348）。打開的話，玩家在自己抽到彩蛋英雄之前就會在雜兵臉上看到他。
+          ⚠️ 與玩家自己的 🎲 隨機無關 —— 那條路一律抽得到。
+        </span>
+      </label>
 
       <div style={{ margin: "16px 0 6px" }}>
         <span style={{ color: TEXT_MAIN, fontSize: 13 }}>隱藏名單（彩蛋）</span>{" "}
