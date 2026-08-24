@@ -366,6 +366,16 @@ const T0 = Date.now();
 // ── ① 序列段 ───────────────────────────────────────────────────────────
 if (!noSync) {
   console.log(`🔒 序列段 ${SERIAL.length} 支（全域鎖）· skills:sync 裁剪: ${syncTrim.why}`);
+  // 🔒 產物隔離區:序列段跑**個別**產生器（content:build 等,不經過 sync.mjs 的
+  //    解鎖）⇒ 這裡也要解鎖。⛔ 不鎖回去交給 sync.mjs 的 exit handler /
+  //    下面的 finally —— 兩邊都鎖是冪等的,少一邊才是洞。
+  try {
+    execFileSync("bash", ["scripts/product-quarantine.sh", "unlock"], { cwd: ROOT, stdio: "inherit" });
+  } catch (e) { console.error(`⚠️ 隔離區 unlock 失敗(不擋): ${String(e)}`); }
+  process.on("exit", () => {
+    try { execFileSync("bash", ["scripts/product-quarantine.sh", "lock"], { cwd: ROOT, stdio: "ignore" }); }
+    catch { /* 鎖不回去不擋出貨 */ }
+  });
   for (const s of SERIAL) {
     process.stdout.write(`🔒 ${s} …`);
     const r = await run(s, "pnpm", [s]);
