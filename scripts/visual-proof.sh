@@ -42,6 +42,27 @@ git rev-parse --verify "$BASE" >/dev/null 2>&1 || BASE=HEAD
 # 「畫面那一層」——⛔ 逐字列出來,⛔ 不是「client 底下全部」（那會把純資料改動也拖進來）
 VISUAL_RE='^apps/client/src/(vfx|render)/'
 
+# ── v2 標記誠實（R3,GH#664）───────────────────────────────────────────────
+# 一個帶 `@visual-proof` 標記的測試檔,必須真的斷言**可見性** —— 否則標記本身
+# 就是第三守則抓的那種宣稱：「已驗證」四個字掛在一支什麼都沒驗的檔上。
+# 判準：檔內至少要出現一個可見性斷言詞彙。⭐ 掃的是**全部**畫面層測試檔
+# （含未追蹤的）,⛔ 不只這次改到的 —— 說謊的標記不因為「今天沒動它」就不是謊。
+VOCAB_RE='readPixels|opacityTexture|getVerticesData|emissive|alpha|isEnabled|bright'
+LIARS=""
+while IFS= read -r f; do
+  [ -f "$f" ] || continue
+  if grep -q '@visual-proof' "$f" && ! grep -Eq "$VOCAB_RE" "$f"; then
+    LIARS="$LIARS$f"$'\n'
+  fi
+done < <(find apps/client/src/vfx apps/client/src/render -name '*.test.ts' 2>/dev/null)
+if [ -n "$LIARS" ]; then
+  echo "⛔ visual-proof：這些測試檔帶著 @visual-proof 標記,卻沒有任何可見性斷言詞彙" >&2
+  echo "   （$VOCAB_RE）—— 標記不是斷言（第三守則）。" >&2
+  printf '%s' "$LIARS" | sed 's/^/     · /' >&2
+  echo "   ⇒ 要嘛讓它真的斷言可見性,要嘛把標記拿掉。" >&2
+  exit 1
+fi
+
 CHANGED=$(git diff --name-only "$BASE" HEAD; git diff --name-only; git diff --name-only --cached)
 CHANGED=$(printf '%s\n' "$CHANGED" | sort -u | sed '/^$/d')
 

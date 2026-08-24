@@ -24,6 +24,22 @@
  * 把時鐘釘住、一格一格走的時候才看得到。
  *
  * ⛔ 出貨的 app 沒有任何東西 import 這一支（`public/*.html` 不是 build entry）。
+ *
+ * ⚠️ **台子自己的兩個坑（`calibrate()` 存在的理由 —— 量尺要先被驗過）**：
+ *   ① **canvas 的背後緩衝預設是 300×150**（HTML 規格的預設），CSS 只是把它放大 ——
+ *      不 resize 就在 300×150 下算圖，一條 0.17 世界單位寬的弧比一個像素還細，
+ *      於是「看不見」是台子造成的，⛔ 不是遊戲（2026-08-24 我就是這樣誤判了一輪）。
+ *   ② **`readPixels` 讀到的是上一幀**（swap 前讀緩衝）—— 抓五幀逐位元相同的那次
+ *      就是它。⇒ `calibrate()` 先 render 兩次再讀；截圖走 `CreateScreenshotAsync`
+ *      （重繪到 render target），不吃這個坑。
+ *   ③ **材質沒 ready 時 `scene.render()` 會靜默跳過那顆 mesh** ——
+ *      KHR_parallel_shader_compile 讓 StandardMaterial 前幾幀 `isReady()=false`，
+ *      畫面上就是「什麼都沒有」而一行錯誤都不報。⇒ 量新 mesh 之前要
+ *      `await material.forceCompilationAsync(mesh)`。
+ *      （2026-08-24 `calibrate()` 第一次跑就是被它打紅的 —— 量尺自驗真的抓到東西。）
+ *   ⇒ 頁面載入時 `calibrate()` 會放一片全亮 quad、render、readPixels 斷言亮像素>0
+ *      —— 量尺自己先量一次已知會亮的東西。它失敗 ⇒ 這一頁之後量到的每一個
+ *      「看不見」都不可信（是台子壞了，⛔ 不是特效壞了）。
  */
 import { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
@@ -50,6 +66,12 @@ export interface ChainAuditionHandle {
     arcsDrawn: number;
   };
   readonly scene: Scene;
+  /**
+   * ⭐ **量尺校準**：放一片全亮 quad → render ×2 → readPixels → 斷言亮像素 > 0
+   * → 移除 quad → 回傳亮像素數。頁面載入時自動跑一次；失敗 ⇒ 拋錯
+   * （頁面的錯誤框會接住）。⇒ 之後任何「量到 0 亮像素」才有資格叫特效缺陷。
+   */
+  calibrate(): Promise<number>;
   /**
    * ⭐ 存一張 PNG（base64，⛔ 不含 `data:` 前綴）。
    * ⚠️ 走 Babylon 的 `CreateScreenshotAsync`（重繪到 render target），
@@ -194,7 +216,50 @@ export async function startChainLightningAudition(
     return drew;
   };
 
+  /**
+   * 量尺校準（見檔頭「台子自己的兩個坑」）。全亮 quad 貼在鏡頭正前方：
+   * emissive 純白 + disableLighting ⇒ 不管燈光怎麼擺它都必須亮。
+   * 它量到 0 ⇒ 壞的是台子（canvas 尺寸／相機／readPixels 時序），⛔ 不是特效。
+   */
+  const calibrate = async (): Promise<number> => {
+    const quad = MeshBuilder.CreatePlane("calib-quad", { size: 4 }, scene);
+    const qm = new StandardMaterial("calib-mat", scene);
+    qm.emissiveColor = new Color3(1, 1, 1);
+    qm.disableLighting = true;
+    quad.material = qm;
+    quad.parent = camera;
+    quad.position.set(0, 0, 5);
+    try {
+      // ⚠️ 坑③：材質沒 ready 時 render 會**靜默跳過**這顆 mesh（parallel shader
+      // compile 讓前幾幀 isReady()=false）⇒ 先等編譯完成再量。
+      await qm.forceCompilationAsync(quad);
+      // ⚠️ 坑②：readPixels 會讀到上一幀 ⇒ 先 render **兩次**再讀。
+      scene.render();
+      scene.render();
+      const w = engine.getRenderWidth();
+      const h = engine.getRenderHeight();
+      const buf = (await engine.readPixels(0, 0, w, h)) as Uint8Array;
+      let bright = 0;
+      for (let i = 0; i + 2 < buf.length; i += 4) {
+        if (Math.max(buf[i]!, buf[i + 1]!, buf[i + 2]!) > 200) bright++;
+      }
+      if (bright <= 0) {
+        throw new Error(
+          `calibrate(): 全亮 quad 在 ${w}×${h} 的畫面上量到 0 個亮像素 —— ` +
+            "量尺本身壞了（canvas 背後緩衝 300×150？readPixels 讀到上一幀？相機沒對到？）。" +
+            "這一頁之後量到的任何「看不見」都不可信,先修台子。",
+        );
+      }
+      return bright;
+    } finally {
+      quad.dispose();
+      qm.dispose();
+      scene.render(); // 把移除 quad 之後的畫面畫回來，⛔ 不讓校準圖殘留進下一張截圖
+    }
+  };
+
   const handle: ChainAuditionHandle = {
+    calibrate,
     async cast(): Promise<void> {
       seen = 0;
       emitted = 0;
@@ -261,5 +326,7 @@ export async function startChainLightningAudition(
   //    而永遠不 resolve（我踩過，卡住 30 秒逾時）。逐 tick 步進仍然由 `step()`
   //    決定，這條迴圈只負責把當前狀態持續畫出來。
   engine.runRenderLoop(() => scene.render());
+  // ⭐ 頁面載入時先校準一次量尺（失敗 ⇒ 拋錯 ⇒ 頁面的錯誤框接住）。
+  await calibrate();
   return handle;
 }
