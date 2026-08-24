@@ -18,6 +18,31 @@ if [ "$1" = "--limit-min" ]; then LIMIT_MIN="$2"; shift 2; fi
 [ "$1" = "--" ] && shift
 [ $# -gt 0 ] || { echo "用法: watchdog.sh [--limit-min N] -- <指令...>" >&2; exit 2; }
 
+
+# ⛔⛔ **殺乾淨**：`pkill -P` 只殺**直接子行程**,而 vitest 的 worker 是孫輩以下。
+#     2026-08-24 量到:清理之前機器上躺著 **7 個 13–21 小時前的 vitest worker**,
+#     全部 0% CPU —— 它們是前幾次看門狗 SIGKILL 之後**被 re-parent 而逃掉**的孤兒。
+#     ⭐ 而它們極可能就是 `packages/shared` 反覆卡死的結構性原因:每一個都佔著
+#     fork 額度與檔案控制代碼,下一輪 vitest 的 pool 就跟它們搶。
+# ⇒ 收整棵樹（與上面 CPU 偵測同一套 BFS）,**由深到淺**殺。
+kill_tree() {
+  local root=$1
+  local pids
+  pids=$(ps -eo pid=,ppid= 2>/dev/null | awk -v root="$root" '
+    { pid[NR]=$1; ppid[NR]=$2; n=NR }
+    END {
+      want[root]=1; changed=1
+      while (changed) {
+        changed=0
+        for (i=1;i<=n;i++) if (!want[pid[i]] && want[ppid[i]]) { want[pid[i]]=1; changed=1 }
+      }
+      for (i=n;i>=1;i--) if (want[pid[i]] && pid[i]!=root) printf "%s ", pid[i]
+      printf "%s", root
+    }')
+  # shellcheck disable=SC2086
+  kill -KILL $pids 2>/dev/null
+}
+
 "$@" &
 PID=$!
 DEADLINE=$(( $(date +%s) + LIMIT_MIN*60 ))
@@ -27,7 +52,7 @@ while kill -0 "$PID" 2>/dev/null; do
   NOW=$(date +%s)
   if [ "$NOW" -ge "$DEADLINE" ]; then
     echo "⏲️ 看門狗：超過 ${LIMIT_MIN} 分鐘 —— SIGKILL（wall 逾時）" >&2
-    pkill -KILL -P "$PID" 2>/dev/null; kill -KILL "$PID" 2>/dev/null; wait "$PID" 2>/dev/null; exit 124
+    kill_tree "$PID"; wait "$PID" 2>/dev/null; exit 124
   fi
   # ② 0% CPU 偵測：本體 + **全部子孫**的 %CPU 總和
   #
@@ -57,7 +82,7 @@ while kill -0 "$PID" 2>/dev/null; do
   if [ "${CPU:-0}" -lt 5 ]; then IDLE=$((IDLE+5)); else IDLE=0; fi
   if [ "$IDLE" -ge 90 ]; then
     echo "⏲️ 看門狗：連續 90 秒 CPU 0% —— worker 卡死,SIGKILL。單獨重跑通常會過。" >&2
-    pkill -KILL -P "$PID" 2>/dev/null; kill -KILL "$PID" 2>/dev/null; wait "$PID" 2>/dev/null; exit 125
+    kill_tree "$PID"; wait "$PID" 2>/dev/null; exit 125
   fi
 done
 wait "$PID"
