@@ -43,7 +43,7 @@ import "@babylonjs/core/Shaders/particles.fragment";
 import type { VfxDoc } from "@ggd/shared/content";
 import { burstNow, toParticleSystem } from "../../vfx/particleFactory";
 import { clampFadeOutTail } from "../../vfx/fadeOut";
-import { vfxFadeOutMaxSec, vfxHardMaxLifeSec } from "../../vfx/vfxCleanupPolicy";
+import { vfxDissipateMaxSec, vfxFadeOutMaxSec, vfxHardMaxLifeSec } from "../../vfx/vfxCleanupPolicy";
 import { resolveAttachment, type AttachResolution } from "./attachment";
 import { applyRateScale, planEffectBudget, type BudgetContext, type EffectBudgetPlan } from "./emitterBudget";
 import { sampleTrack, type W3xEmitterRuntimeFlags } from "./w3xEmitter";
@@ -260,6 +260,13 @@ export class W3xEmitterRig {
     // 下面的 `maxLifeSec`（效果什麼時候被回收）。兩邊各讀一次的話，後台在這
     // 幾毫秒之間被存過就會讓「粒子」與「回收」用不同的上限。
     const fadeOutMaxSec = vfxFadeOutMaxSec();
+    // 💨 GH#660 —— **兩格都要讀**。`clampFadeOutTail` 的第三參數預設等於第二參數，
+    // 而出貨時兩格都是 0.5 ⇒ 看起來一致。⚠️ 但那正好遮住 rollback 那條路：
+    // 只把 `vfxDissipateMaxSec` 拉高（＝ #660 的止血閥）時，這一支仍然拿 fadeOut
+    // 那一格去算「效果什麼時候被回收」⇒ w3x 那一族**只回一半**：
+    // 粒子照新上限活得更久，而發射器照舊上限提早被收走 —— 玩家看到的是特效被
+    // **砍頭**，⛔ 而且沒有任何錯誤（一格轉不回去的旋鈕＝沒有那格旋鈕）。
+    const dissipateMaxSec = vfxDissipateMaxSec();
     const runtimeByDocId = new Map(spec.emitters.map((e) => [e.doc.id, e.runtime]));
     const delayByDocId = new Map(spec.emitters.map((e) => [e.doc.id, e.delaySec ?? 0]));
     // Two emitters can be identical as docs and still be different effects,
@@ -298,7 +305,7 @@ export class W3xEmitterRig {
     let maxLifeSec = 0;
     for (const budgeted of plan.emitters) {
       const doc = applyRateScale(budgeted.doc, budgeted.rateScale);
-      const em = this.acquire(doc, fadeOutMaxSec);
+      const em = this.acquire(doc, fadeOutMaxSec, dissipateMaxSec);
       const runtime = runtimeByDocId.get(budgeted.doc.id);
       em.runtime = runtime;
       // A pooled system was built for the SAME doc id but possibly a different
@@ -346,7 +353,7 @@ export class W3xEmitterRig {
       // （失敗形態②的近親：夾了但沒有人跟著夾）。
       maxLifeSec = Math.max(
         maxLifeSec,
-        clampFadeOutTail(doc, fadeOutMaxSec).lifetimeSec.max + delaySec,
+        clampFadeOutTail(doc, fadeOutMaxSec, dissipateMaxSec).lifetimeSec.max + delaySec,
       );
       emitters.push(em);
     }
@@ -527,7 +534,7 @@ export class W3xEmitterRig {
   }
 
   /** Take a system for `doc` from the pool, or build one. */
-  private acquire(doc: VfxDoc, fadeOutMaxSec: number): LiveEmitter {
+  private acquire(doc: VfxDoc, fadeOutMaxSec: number, dissipateMaxSec: number): LiveEmitter {
     const list = this.pool.get(doc.id);
     const pooled = list?.pop();
     if (pooled && !pooled.mesh.isDisposed()) {
@@ -557,6 +564,7 @@ export class W3xEmitterRig {
     const ps = toParticleSystem(doc, this.scene, {
       name: `w3xfx-${doc.id}`,
       fadeOutMaxSec,
+      dissipateMaxSec,
       ...(this.opts.resolveTextureUrl ? { resolveTextureUrl: this.opts.resolveTextureUrl } : {}),
       ...(this.opts.createTexture ? { createTexture: this.opts.createTexture } : {}),
     });
