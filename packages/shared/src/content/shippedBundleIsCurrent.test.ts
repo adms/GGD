@@ -37,6 +37,7 @@
  * 不要改這個測試。它紅代表 repo 裡的出貨產物與原始檔對不上，而客戶端讀的是產物。
  */
 import { describe, it, expect, afterAll } from "vitest";
+import { unlockSandbox } from "../ops/writeProduct";
 import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
@@ -58,9 +59,13 @@ function rebuiltFromSources(): string {
   const t = mkdtempSync(join(tmpdir(), "ggd-shipped-bundle-"));
   for (const name of COLLECTION_NAMES) {
     const src = join(CONTENT_DIR, name);
-    if (existsSync(src)) cpSync(src, join(t, name), { recursive: true });
+    if (existsSync(src)) {
+      cpSync(src, join(t, name), { recursive: true });
+      unlockSandbox(join(t, name)); // 🔒 cpSync 保留 444;沙盒本來就該可寫
+    }
   }
   cpSync(join(CONTENT_DIR, "manifest.json"), join(t, "manifest.json"));
+  unlockSandbox(t);
   rebuildAllIndexes(t);
   freshTree = t;
   return t;

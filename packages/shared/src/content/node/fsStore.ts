@@ -15,6 +15,7 @@ import {
   existsSync,
 } from "node:fs";
 import { dirname, join, resolve, sep } from "node:path";
+import { writeProduct } from "../../ops/writeProduct";
 import {
   CONTENT_BUNDLE_FILE,
   buildContentBundle,
@@ -113,7 +114,9 @@ export function rebuildCollectionIndex(
   const index: CollectionIndex = { collection, hash: hashCollection(entries), entries };
   if (opts.write !== false) {
     mkdirSync(dir, { recursive: true });
-    writeFileSync(join(dir, "_index.json"), fileJson(index), "utf8");
+    // ⭐ 隔離區：`_index.json` 是**直寫**（⛔ 不像 bundle/manifest 走 tmp+rename ——
+    //    rename 不需要目標的寫權限,所以那兩個天生免疫）⇒ 要先解鎖。
+    writeProduct(join(dir, "_index.json"), fileJson(index));
   }
   return index;
 }
@@ -146,7 +149,7 @@ export function rebuildManifest(
   }
   const manifest: Manifest = { contentVersion: contentVersion(hashes), collections };
   if (opts.write !== false) {
-    writeFileSync(join(rootDir, "manifest.json"), fileJson(manifest), "utf8");
+    writeProduct(join(rootDir, "manifest.json"), fileJson(manifest)); // 同 _index:直寫 ⇒ 要解鎖
   }
   return manifest;
 }

@@ -14,6 +14,7 @@
  *（CLAUDE.md：測試一律在 localhost 或暫存目錄）。
  */
 import { describe, it, expect } from "vitest";
+import { unlockSandbox } from "./writeProduct";
 import { execFileSync } from "node:child_process";
 import { cpSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync, readdirSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -47,6 +48,7 @@ function check(root: string): { code: number; err: string } {
 function sandbox(): string {
   const dir = mkdtempSync(join(tmpdir(), "ggd-skillnorm-"));
   cpSync(join(REPO, "content"), join(dir, "content"), { recursive: true });
+  unlockSandbox(join(dir, "content")); // 🔒 同上
   cpSync(
     join(REPO, "packages/shared/src/content/descriptionClaims.baseline"),
     join(dir, "packages/shared/src/content/descriptionClaims.baseline"),

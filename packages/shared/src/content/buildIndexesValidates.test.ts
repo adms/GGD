@@ -22,6 +22,7 @@
  * 實作會過 —— 而那正是把不可載入的文件烘進 bundle、送進容器的那條路。
  */
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import { unlockSandbox } from "../ops/writeProduct";
 import { execFileSync } from "node:child_process";
 import { cpSync, mkdtempSync, readFileSync, writeFileSync, rmSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -43,6 +44,7 @@ beforeAll(() => {
   // 出貨的那一個,包括它真正的參照網,因為串連錯誤正是原本讓人追錯方向的東西。
   sandbox = mkdtempSync(join(tmpdir(), "ggd-buildidx-"));
   cpSync(REAL_CONTENT, sandbox, { recursive: true });
+  unlockSandbox(sandbox);
 });
 afterAll(() => rmSync(sandbox, { recursive: true, force: true }));
 

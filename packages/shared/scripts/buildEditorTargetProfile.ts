@@ -36,6 +36,7 @@
  */
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { writeProduct } from "../src/ops/writeProduct";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildCapabilityManifest } from "../src/content/editorCapabilities";
@@ -43,7 +44,11 @@ import { buildAuthoringRules } from "../src/content/authoringRules";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "../../..");
-const CONTENT = join(REPO, "content");
+// ⚠️ 2026-08-25（隔離區抓到的既有缺陷）：這一支**永遠寫 repo 的 content/**,
+//    連 `GGD_CONTENT_DIR` 指向沙盒時也一樣 ⇒ 沙盒 build 會**寫進真的工作樹**。
+//    在此之前沒有人發現,因為那次寫入是靜默成功的;產物 chmod 444 之後它變成 EACCES
+//    而讓 buildIndexesValidates 紅（＝隔離區把一個看不見的越界寫變成看得見的紅燈）。
+const CONTENT = process.env.GGD_CONTENT_DIR ?? join(REPO, "content");
 
 export const EDITOR_TARGET_PROFILE_SCHEMA = "ggd-editor-target-profile@1";
 export const EDITOR_PROFILE_FILE = "editor-target-profile.json";
@@ -561,7 +566,7 @@ export function renderEditorTargetProfile(): string {
 /** 寫出檔案。回傳 JSON 文字（守衛拿它比對，⛔ 不重算一次）。 */
 export function writeEditorTargetProfile(): string {
   const text = renderEditorTargetProfile();
-  writeFileSync(join(CONTENT, EDITOR_PROFILE_FILE), text);
+  writeProduct(join(CONTENT, EDITOR_PROFILE_FILE), text);
   return text;
 }
 

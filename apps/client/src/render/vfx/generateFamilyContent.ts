@@ -39,6 +39,7 @@
  * `generateFamilyContent.test.ts`：它把這支腳本跑在沙箱樹上再比對檔案。
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { writeProduct } from "@ggd/shared/ops/writeProduct";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { zConfigVfxFamiliesDoc, type ConfigVfxFamiliesDoc } from "@ggd/shared/content";
@@ -265,11 +266,11 @@ function main(): void {
     removed += 1;
   }
   for (const [id, doc] of [...docs].sort(([a], [b]) => a.localeCompare(b))) {
-    writeFileSync(join(vfxDir, `${id}.json`), stable(doc));
+    writeProduct(join(vfxDir, `${id}.json`), stable(doc));
   }
   // ⚠️ 讀與寫共用 `FAMILY_CONFIG_REL` —— 兩邊各打一次路徑就是兩個「那份檔在哪」，
   //    而它們漂開的那一天，保留邏輯會安靜地退化成「整份重寫」（＝ GH#378 本人）。
-  writeFileSync(join(CONTENT_DIR, FAMILY_CONFIG_REL), stable(shippedFamilyConfig()));
+  writeProduct(join(CONTENT_DIR, FAMILY_CONFIG_REL), stable(shippedFamilyConfig()));
   const perFamily: Record<string, number> = {};
   for (const row of Object.values(w3xFamilyArtRows())) perFamily[row.family] = (perFamily[row.family] ?? 0) + 1;
   process.stdout.write(

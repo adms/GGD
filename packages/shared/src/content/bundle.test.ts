@@ -12,6 +12,7 @@
  *     instead of bricking the client.
  */
 import { describe, it, expect, beforeAll, afterAll, vi } from "vitest";
+import { unlockSandbox } from "../ops/writeProduct";
 import { cpSync, mkdtempSync, readdirSync, readFileSync, rmSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
@@ -95,9 +96,13 @@ function bundleTree(): string {
   const t = mkdtempSync(join(tmpdir(), "ggd-bundle-src-"));
   for (const name of COLLECTION_NAMES) {
     const src = join(CONTENT_DIR, name);
-    if (existsSync(src)) cpSync(src, join(t, name), { recursive: true });
+    if (existsSync(src)) {
+      cpSync(src, join(t, name), { recursive: true });
+      unlockSandbox(join(t, name)); // 🔒 cpSync 保留 444;沙盒本來就該可寫
+    }
   }
   cpSync(join(CONTENT_DIR, "manifest.json"), join(t, "manifest.json"));
+  unlockSandbox(t);
   rebuildAllIndexes(t);
   sharedTree = t;
   return t;
@@ -316,6 +321,7 @@ describe("content bundle — emission", () => {
       if (existsSync(src)) cpSync(src, join(tmp, name), { recursive: true });
     }
     cpSync(join(CONTENT_DIR, "manifest.json"), join(tmp, "manifest.json"));
+    unlockSandbox(tmp);
   });
 
   afterAll(() => {
