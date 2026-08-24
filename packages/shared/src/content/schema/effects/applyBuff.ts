@@ -313,6 +313,15 @@ z
      *（`clearPools.polarityPasses`：「不知道」不當成「是」）。也就是說要讓一發
      * 「淨化敵方增益」（`polarity: "buff"`）拔得到它，`dispellable: true` 與
      * `polarity: "buff"` **兩格都要填**。
+     *
+     * ⭐ GH#662 —— **省略有一個例外**：`modifiers` 解析後**每一條**都明確往下拉
+     *（`flat`/`pctAdd`/`pctMult`/`percentOf` 且 value<0）時，引擎在**掛上去的
+     * 那一刻**把它記成 `debuff` 並視為可驅散（旋鈕
+     * `config.dispel@1.inferDebuffFromNegativeModifiers`，出貨 **true**）。
+     * ⛔ 這**不是**「看修飾詞猜極性」：混了方向的（攻速 +100% 配回血 −10）
+     * 一律不推論。判準住 `sim/negativePolarity.ts`。
+     * ⚠️ 推論是**安全網**，⛔ 不是單一住處 —— 減益請照樣明寫這一格，
+     * 閘 `content/negativeBuffPolarity.test.ts` 會叫沒寫的那些。
      */
     polarity: z.enum(["buff", "debuff"]).optional(),
     /**

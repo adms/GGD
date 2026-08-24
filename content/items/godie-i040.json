@@ -26,6 +26,8 @@
               "value": -12
             }
           ],
+          "dispellable": true,
+          "polarity": "debuff",
           "duration": 5
         }
       ]

@@ -502,6 +502,26 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-18",
     why: "同上（三選一增益卡那一面）：schema 一次補齊四個授權面是刻意的判例，內容今天只走道具那一面（slime-suit）。⛔ 這不是機制沒接線 —— 增益卡與道具共用同一支 `sourceGrants()`，一張「這一回合免疫連續同型傷害」的卡片今天就寫得出來。**到期**：owner 的下一批增益卡填了它。",
   },
+  // ⭐ GH#656【選擇性狀態免疫】—— 第十三格授予。判例與上面 `typeStreakImmunity`
+  //    相同，⛔ 但**授權面是三個不是四個**：`SOURCE_GRANT_SHAPE` 展開在
+  //    `zAbilityPassiveRank` / `zAbilityPassive`(whileOn) / `applyBuff` / `augment`
+  //    上，而 **`item@1` 逐格手列它要的授予、⛔ 不展開那份形狀**（實測：
+  //    `items.statusImmunity` 根本不是一個註冊鍵）。
+  //    ⇒ 道具那一面（抗性靴／淨化護符）是**刻意留白**的：一個沒有任何內容的
+  //    授權面就是 S8 本身，等第一件抗控裝真的要做的那天再開它一格。
+  //    內容今天走**天生技 rank** 那一面（殭屍王的內建天生技
+  //    `godie-zombieking.passive`，所以 `abilities.passive.ranks[].statusImmunity`
+  //    **沒有**豁免，也不該有）。下面兩列是其餘兩面。
+  "field:abilities.effects[]#applyBuff.statusImmunity": {
+    status: "landing",
+    since: "2026-08-24",
+    why: "GH#656 owner「殭屍王**免疫負面狀態** 包含暈眩緩慢詛咒致盲 但可被吸血、暴擊、淨化跟其他技能標記與疊層」。落地成 `SOURCE_GRANT_SHAPE` 的一格 ⇒ 一次出現在四個授權面。內容今天只走天生技 rank 那一面（常駐身分）。⛔ 這不是機制沒接線：消費端 `sim/effects/applyStatus.ts` 走 `StatsComp.sources` 而不問 kind，四面共用同一支 `sourceGrants()`。**到期**：第一支「接下來 N 秒免疫減速／免疫暈眩」的限時 buff 填了它 —— 那是這一面最自然的形狀（LoL 的水銀鞋），這一列會被 STALE 那半邊叫，刪掉即可。",
+  },
+  "field:augments.statusImmunity": {
+    status: "landing",
+    since: "2026-08-24",
+    why: "同上（三選一增益卡那一面）。⛔ 不是接線問題 —— 一張「這一場你不吃減速」的卡片今天就寫得出來。**到期**：owner 的下一批增益卡填了它。",
+  },
   // ⭐ 三格都是 v0.22.0 的新機制，而它們零採用的**理由各不相同** —— ⛔ 不要當成同一批放掉。
   "field:abilities.effects[]#delayed.advance": {
     status: "landing",

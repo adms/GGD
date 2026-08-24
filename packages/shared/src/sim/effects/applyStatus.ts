@@ -35,6 +35,7 @@ import type { EffectKindSpec } from "./effectKind";
 import { rankScalar } from "../perRank";
 import { recordCc } from "../stats/matchStats";
 import { refusesControl } from "./invulnerable";
+import { refusesStatusTags } from "../statusTagImmunity";
 import { Statuses } from "../content/registry";
 import { clampMarkCount } from "../markLimits";
 import { adjustMarkCount } from "../marks";
@@ -92,6 +93,37 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
       //     ENEMY's spells; a self-applied marker or self-root is your own.
       if (isCc && target !== ctx.caster && refusesControl(world, target)) {
         // ② the player must SEE the refusal, not just not-be-stunned.
+        world.emit("immuneControl", { target, source: ctx.caster, statusId: e.statusId, origin: ctx.origin });
+        continue;
+      }
+      // ── 選擇性狀態免疫 (GH#656 殭屍王) ──────────────────────────────────
+      // owner 2026-08-24：「殭屍王**免疫負面狀態** 包含**暈眩 緩慢 詛咒 致盲**
+      // 但**可被吸血、暴擊、淨化跟其他技能標記與疊層**」。
+      //
+      // ⭐ 它與上面那道免控閘是**兩個不同的問題**，⛔ 不是同一個的加強版：
+      //   · 免控問「這個**效果**拿不拿得走操作權」（讀 e.stun / e.root /
+      //     moveSpeedMult…）—— ⚠️ 而那一行**漏掉詛咒與致盲**（兩支走 missChance）；
+      //   · 這一道問「這**一類**狀態掛不掛得上這具身體」（讀 status 文件的 tags）。
+      // 前者是限時授予（`invulnerable.durationSec` 必填），後者是常駐身分。
+      //
+      // ⛔ 三個刻意的窄化，每一個都對應 owner 明說要**保留**的那一半：
+      //   · 只擋 `applyStatus` 這一條掛載路徑 —— 傷害管線（吸血／暴擊）完全沒碰；
+      //   · 位置在 `adjustMarkCount` 路由**之前**，但判準是 tag：出貨 28 份不帶
+      //     `cc` 的狀態（破甲／破魔／禁療／重創／連段窗／存款計數）逐份照掛；
+      //   · ⛔ 完全不碰 `clearPools` —— 免疫擋的是**掛上來**，不是**被拔走**，
+      //     所以「殭屍王可被淨化」仍然成立。
+      //
+      // ⚠️ ⛔ 不排除 `target === ctx.caster`（免控那一行有排除）：一具「不吃暈眩」
+      // 的身體不會因為暈眩是自己給的就吃得下去 —— 免控排除自己是因為它模仿的是
+      // WC3「拒絕**敵人的**法術」，而這一格是**身體本身的性質**。
+      const sc = world.stats.get(target);
+      if (
+        sc !== undefined &&
+        refusesStatusTags(sc.sources, world.tick, Statuses.tryGet(e.statusId)?.tags)
+      ) {
+        // ② 同上：玩家必須**看得見**被免疫了，⛔ 不是「就是沒被暈到」。
+        // 共用 `immuneControl` 這條頻道，⛔ 不開第二個事件 —— 客戶端已經有
+        // 那一條的消費端，而新事件要走 `eventFanout` 白名單（失敗形態⑧）。
         world.emit("immuneControl", { target, source: ctx.caster, statusId: e.statusId, origin: ctx.origin });
         continue;
       }

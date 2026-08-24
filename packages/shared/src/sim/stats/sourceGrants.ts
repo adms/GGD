@@ -47,6 +47,7 @@ import type { PenetrationGrant } from "../combat/penetration";
 import type { TypeStreakImmunityGrant } from "../combat/typeStreakImmunity";
 import type { VisionGrant } from "../stealth";
 import type { AttrGrant, PrimaryAttributeGrant } from "./attributes";
+import type { StatusImmunityGrant } from "../statusTagImmunity";
 
 /**
  * 一份內容文件（道具 / 天生技 rank / 增益卡 / `applyBuff` 效果）上，
@@ -190,6 +191,26 @@ export interface SourceGrantFields {
    * `primaryAttribute` 的同一條規矩），而 `sources` 的順序是決定性的。
    */
   attackType?: AttackTypeGrant;
+  /**
+   * ⭐ GH#656(2026-08-24) —— **選擇性狀態免疫**。**第十三格。**
+   *
+   * owner 逐字：「殭屍王**免疫負面狀態** 包含**暈眩 緩慢 詛咒 致盲** 但
+   * **可被吸血、暴擊、淨化跟其他技能標記與疊層**」。
+   *
+   * ⛔ 前十二格的判例逐字沿用：引擎（`sim/statusTagImmunity.ts`）走
+   * `StatsComp.sources` 而**不問 `kind`**，所以一格 schema + 這一行轉發就同時
+   * 落在**三個**授權面上：天生技 rank（切換技 `whileOn` 共用同一個 rank 形狀）／
+   * 增益卡／`applyBuff`。
+   * ⇒ 殭屍王走天生技 rank 那一面（常駐身分），
+   * 「大招期間免疫減速」走 `applyBuff` 那一面（到期由那份 source 自己收）。
+   * ⚠️ **道具那一面今天不開**（`schema/item.ts` 逐格手列授予，不展開
+   * `SOURCE_GRANT_SHAPE`）—— 理由見 `sim/statusTagImmunity.ts` 檔頭③。
+   *
+   * ⚠️ 分群的依據是 `status-effect@1.tags`，⛔ 不是 `polarity` ——
+   * 【破甲】【破魔】【禁療】【重創】都是 debuff，而 owner 明說標記與疊層要留。
+   * 完整推導與量到的 44 份狀態分群表在 {@link StatusImmunityGrant} 的檔頭。
+   */
+  statusImmunity?: StatusImmunityGrant;
 }
 
 /**
@@ -250,6 +271,7 @@ export function sourceGrants(from: SourceGrantFields): SourceGrantFields {
       ? { primaryAttribute: from.primaryAttribute }
       : {}),
     ...(from.attackType !== undefined ? { attackType: from.attackType } : {}),
+    ...(from.statusImmunity !== undefined ? { statusImmunity: from.statusImmunity } : {}),
   };
 }
 
@@ -275,6 +297,7 @@ export function hasSourceGrant(from: SourceGrantFields): boolean {
     from.deathWard !== undefined ||
     from.immobile !== undefined ||
     from.primaryAttribute !== undefined ||
-    from.attackType !== undefined
+    from.attackType !== undefined ||
+    from.statusImmunity !== undefined
   );
 }

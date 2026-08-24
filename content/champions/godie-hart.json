@@ -218,6 +218,8 @@
               "value": -3
             }
           ],
+          "dispellable": true,
+          "polarity": "debuff",
           "duration": 5.0,
           "perRank": [
             {

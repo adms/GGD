@@ -1137,6 +1137,24 @@ export interface ModifierSource {
    * ⛔ 只接一個 = 「揮的是刀、吃的是遠程倍率」。
    */
   attackType?: import("./sourceGrants").AttackTypeGrant;
+  /**
+   * ⭐ GH#656(2026-08-24) —— **選擇性狀態免疫**（「不吃某一類狀態」）。**第十三格。**
+   *
+   * owner 2026-08-24：「殭屍王**免疫負面狀態** 包含**暈眩 緩慢 詛咒 致盲**
+   * 但**可被吸血、暴擊、淨化跟其他技能標記與疊層**」。
+   *
+   * ⚠️ 讀它的**只有** `sim/statusTagImmunity.ts::refusesStatusTags`，
+   * 而唯一的消費端是 `sim/effects/applyStatus.ts` 的掛載閘 —— 它走
+   * `StatsComp.sources` 且**不問 `kind`**，所以天生技 rank（殭屍王的常駐身分）
+   * 與 `applyBuff` 的限時來源（「6 秒內免疫減速」）是同一條線。
+   *
+   * ⛔ 它**不是** `invulnerable.blocksControl` 的別名：那一格是限時授予、
+   * 而且它的 `isCc` 判準漏掉詛咒與致盲（那兩支走 `missChance`）。
+   * ⛔ 也不是 `polarity: "debuff"` 一刀切：【破甲】【破魔】【禁療】【重創】
+   * 全部是 debuff，而 owner 明說標記與疊層要保留。分群靠的是
+   * `status-effect@1.tags`。
+   */
+  statusImmunity?: import("../statusTagImmunity").StatusImmunityGrant;
 }
 
 /**

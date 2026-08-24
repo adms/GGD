@@ -881,6 +881,45 @@ export const SOURCE_GRANT_SHAPE = {
         "（近戰 `moveSpeedMelee` / 遠程 `moveSpeedRanged`）。留空 = 照英雄卡。",
     )
     .optional(),
+  /**
+   * ⭐ GH#656(2026-08-24) —— **選擇性狀態免疫**。第十三格授予。
+   *
+   * owner 逐字：「殭屍王**免疫負面狀態** 包含**暈眩 緩慢 詛咒 致盲** 但
+   * **可被吸血、暴擊、淨化跟其他技能標記與疊層**」。
+   *
+   * ⭐ 分群靠 **`status-effect@1.tags`**，⛔ 不是 `polarity` —— 量到的（44 份
+   * 出貨狀態）：帶 `cc` 的 16 份逐字就是 owner 點名的四類（暈眩／緩慢／詛咒／
+   * 致盲）加上纏繞恐懼魅惑混亂癱瘓麻痺；不帶的 28 份正是他要**保留**的那一半
+   *（破甲／破魔／禁療／重創／連段窗／存款計數）。⇒ ⛔ 不需要新開一個
+   * `category` 欄位（第〇·四守則：不要有第二個住處）。
+   *
+   * 同前十二格：擋住它的只有這一格 schema 與 `sourceGrants()` 的轉發 ——
+   * 消費端 `sim/effects/applyStatus.ts` 走 `StatsComp.sources` 而不問 `kind`，
+   * 所以天生技 rank（常駐身分）與 `applyBuff` 的限時來源（「6 秒內免疫減速」）
+   * 是同一條線，到期由那份 source 自己的 `expiresAtTick` 收掉。
+   *
+   * ⚠️ `tags` `.min(1)`：一份空清單的免疫掛得上去卻什麼都不擋，
+   * 正是第一·五守則要關的那族洞（同 `zDeathWardGrant.modifiers`）。
+   */
+  statusImmunity: z
+    .object({
+      tags: z
+        .array(z.string().min(1).max(48))
+        .min(1)
+        .max(16)
+        .describe(
+          "要擋下來的**狀態類別**，逐字對 status-effect@1 的 tags。" +
+            "填 `cc` = 暈眩／緩慢／詛咒／致盲／纏繞／恐懼那一整族掛不上來；" +
+            "填 `slow` = 只免減速。⚠️ 這一格擋的是「掛上來」，" +
+            "⛔ 不擋傷害、不擋吸血暴擊、不擋【淨化】把身上的增益拔走，" +
+            "而且不帶這些 tag 的**標記與疊層照樣掛得上**。",
+        ),
+    })
+    .strict()
+    .describe(
+      "持有這份來源期間，帶著指定 tag 的狀態一律**掛不上這具身體**（GH#656 殭屍王）。",
+    )
+    .optional(),
 } as const;
 
 /**

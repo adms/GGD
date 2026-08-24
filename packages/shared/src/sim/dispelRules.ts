@@ -34,6 +34,26 @@ export interface DispelRules {
   dotDefaultDispellable: boolean;
   /** 沒標 `dispellable` 的 `ModifierSource`（道具被動/增益卡/靈氣）算不算可拔。 */
   buffDefaultDispellable: boolean;
+  /**
+   * ⭐ GH#662 —— 沒標 `polarity` 而 modifier **全部**明確往下拉的 `applyBuff`
+   * 來源，在**施加的那一刻**算不算減益。出貨 **true**（＝新語意）。
+   *
+   * ⚠️ 它同時決定那份來源的 `dispellable` 缺席值：推論成減益的那些**不吃**
+   * 上面 `buffDefaultDispellable`（出貨 false）—— 那一格的理由逐字是
+   * 「沒有人預期**自己買的裝備效果**可以被敵人剝掉」，而一份純負向的來源
+   * 就是「**別人塞給你的**」，兩者是相反的處境。
+   * ⇒ 少了這半邊，推論出來的極性會撞上另一道閘而**一筆都拔不掉**
+   *（實測：出貨 28 份標了 `polarity:"debuff"` 的 applyBuff **全部**也寫了
+   * `dispellable: true`，也就是說作者一直在手動繞過這道閘）。
+   *
+   * ⛔ 它**不是**「從欄位猜極性」：判準只認「**每一條**都明確往下拉」，
+   * 混了方向的（攻速 +100% ／ 回血 −10）一律不推論 —— 那 6 個節點是
+   * 代價型自我增益，把它們當成減益拔掉才是真的錯。判準住
+   * `sim/negativePolarity.ts`，⛔ 不在這裡抄第二份。
+   *
+   * 填 **false** ＝ 逐位元回到 2026-08-24 之前的行為（一鍵 rollback）。
+   */
+  inferDebuffFromNegativeModifiers: boolean;
   /** 一份 dispel 文件沒寫 `pools` 時，預設清哪幾池。 */
   defaultPoolStatus: boolean;
   defaultPoolDot: boolean;
@@ -71,6 +91,7 @@ export const DEFAULT_DISPEL_RULES: DispelRules = Object.freeze({
   statusDefaultDispellable: true,
   dotDefaultDispellable: true,
   buffDefaultDispellable: false,
+  inferDebuffFromNegativeModifiers: true,
   defaultPoolStatus: true,
   defaultPoolDot: true,
   defaultPoolShields: false,
@@ -150,6 +171,10 @@ export function normalizeDispelRules(raw: unknown): DispelRules {
     buffDefaultDispellable: bool(
       r.buffDefaultDispellable,
       DEFAULT_DISPEL_RULES.buffDefaultDispellable,
+    ),
+    inferDebuffFromNegativeModifiers: bool(
+      r.inferDebuffFromNegativeModifiers,
+      DEFAULT_DISPEL_RULES.inferDebuffFromNegativeModifiers,
     ),
     defaultPoolStatus: bool(r.defaultPoolStatus, DEFAULT_DISPEL_RULES.defaultPoolStatus),
     defaultPoolDot: bool(r.defaultPoolDot, DEFAULT_DISPEL_RULES.defaultPoolDot),

@@ -9,6 +9,7 @@ import type { EntityId } from "../../ids";
 import { attachSource, detachSource } from "../stats/statPipeline";
 import { sourceGrants } from "../stats/sourceGrants";
 import { ModOp, type ModifierSource } from "../stats/modifiers";
+import { allModifiersDownward } from "../negativePolarity";
 import type { StatsComp } from "../stats/statsComp";
 import type { Stat } from "../stats/statTypes";
 import type { EffectOf } from "./effectKind";
@@ -113,6 +114,31 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
     const modifiers = rk?.modifiers ?? e.modifiers;
     const duration = rk?.duration ?? e.duration;
     /**
+     * ⭐ GH#662 —— **極性在這裡定案，⛔ 不在淨化發生的那一刻**。
+     *
+     * 位置是承重的：`ModifierSource.polarity` 的語意逐字是「住在**施加的那一刻**
+     * 寫下的欄位，不是事後推導的」。在 `clearPools` 那一頭推論的話，同一份來源
+     * 對「淨化」與對「免疫」會各推一次，而它們遲早分歧（`condition.ts` 已經為
+     * 同型的問題留過警告）。這裡推一次，全引擎讀同一格。
+     *
+     * ⚠️ 讀的是**解析後**的 `modifiers`（perRank 贏過扁平那一組）—— 一支
+     * 逐階授予的減速在 rank 3 才變成純負向是真的會發生的，讀 `e.modifiers`
+     * 會對那幾階說謊。
+     *
+     * ⛔ **兩格一起推，不是只推極性**：出貨 28 份標了 `polarity:"debuff"` 的
+     * applyBuff **每一份**也都寫了 `dispellable: true`，也就是作者一直在手動
+     * 繞過 `buffDefaultDispellable`（出貨 false）。只推極性的話會撞上那道閘，
+     * 結果**一筆都拔不掉**，而畫面上跟沒修一模一樣（失敗形態②）。
+     * ⚠️ 作者明寫的 `dispellable: false` 仍然贏 —— 內部冷卻記帳那一族
+     *（`devour-cooldown`）就是靠它不被自我淨化吃掉。
+     */
+    const inferDebuff =
+      world.dispelRules.inferDebuffFromNegativeModifiers &&
+      e.polarity === undefined &&
+      allModifiersDownward(modifiers);
+    const polarity = inferDebuff ? "debuff" : e.polarity;
+    const dispellable = inferDebuff ? (e.dispellable ?? true) : e.dispellable;
+    /**
      * ⭐ S4a —— `undefined` = **永久**。`ModifierSource.expiresAtTick` 缺席時
      * `buffExpirySystem` 的 `s.expiresAtTick !== undefined &&` 那一半就永遠不會
      * 收它（引擎層從第一天就做得到，缺的一直是 authoring 面）。
@@ -204,8 +230,11 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
             // 【淨化】的兩格 —— GH#295。⚠️ 疊層路徑也要帶，理由與上面 `hooks`
             // 同一條：一支技能一旦也填了 `stackKey`，這兩格就會靜默失效，
             // 而畫面上跟正常一模一樣（失敗形態 ②）。
-            dispellable: e.dispellable,
-            polarity: e.polarity,
+            // ⭐ GH#662 —— 走上面推論過的那兩格，⛔ 不是 `e.*`：疊層路徑漏掉推論的話，
+            // 一支同時也填了 `stackKey` 的減速就是免疫不掉的那一支,而它與不填 stackKey 的
+            // 鄰居畫面上一模一樣（與上面 hooks / statusId 逐字相同的形狀）。
+            dispellable,
+            polarity,
             // 格擋 / 暴擊來源（GH#299 第 2 · 6 條）。⚠️ 疊層路徑也要帶，理由與
             // 上面 `hooks` 逐字相同：一支技能一旦也填了 `stackKey`，這兩格就會
             // 靜默失效，而畫面上跟正常一模一樣（失敗形態 ②）。
@@ -271,12 +300,14 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
         // of these reads 「這次施放最多觸發幾次」, not a global cooldown.
         ...(e.hooks !== undefined ? { hooks: e.hooks } : {}),
         // 【淨化】能不能拔掉這一份增益（GH#295），以及它的極性。
-        // ⛔ 兩格都是**施加時寫下**，不從 `modifiers` 推導：一個來源可以同時帶
-        // `{ms,+0.3}` 與 `{armor,-0.5}`，任何啟發式都會在某一張卡上錯。
+        // ⛔ 兩格都是**施加時寫下**（就是本函式開頭那兩行），⛔ 不是在淨化那一頭
+        // 才推導 —— 一個來源可以同時帶 `{ms,+0.3}` 與 `{armor,-0.5}`，
+        // 而**混了方向的一律不推論**（`allModifiersDownward` 對它們回 false）。
         // 缺席的語意：`dispellable` → `dispelRules.buffDefaultDispellable`（出貨
         // false）；`polarity` → 無極性 = 有方向的淨化拔不到它。
-        dispellable: e.dispellable,
-        polarity: e.polarity,
+        // ⭐ GH#662 —— 推論過的那兩格（見本函式開頭）。
+        dispellable,
+        polarity,
         // 【限時格擋 / 限時暴擊來源】(GH#299 第 2 · 6 條) —— 主動技能與「接下來
         // N 秒」兩個授權格的同一個答案。到期走這份 buff 自己的 `expiresAtTick`
         // （`blockCutFor` 與 `rankedGrants` 都已經在跳過過期的 source），所以

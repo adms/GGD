@@ -37,6 +37,27 @@ export const zConfigDispelDoc = z
      * 不是一個預設值。
      */
     buffDefaultDispellable: z.boolean(),
+    /**
+     * ⭐ GH#662 —— 沒標 `polarity` 而 modifier **全部**明確往下拉的
+     * `applyBuff` 來源，算不算減益。出貨 **true**。
+     *
+     * 量到的（2026-08-24）：出貨內容有 **12 份文件**的減速／破甲／降攻速／
+     * 降吸血沒有標 `polarity`，於是 `clearPools` 的「不知道不當成是」讓它們
+     * 在任何【淨化】／免疫面前都是無敵的（實測：初號機暴走期間移速一直是
+     * 被減速後的值）。⇒ 卡片上寫著「免疫所有負面」而遊戲裡只免了一半，
+     * 那是第一·五守則點名的形狀。
+     *
+     * ⚠️ 打開之後這些來源的 `dispellable` 缺席值**不吃**上面那一格
+     *（`buffDefaultDispellable`，出貨 false）—— 那一格管的是「你自己買的
+     * 裝備被動」，而一份純負向的來源是別人塞給你的。
+     *
+     * ⛔ 它**不是**「看修飾詞猜增益/減益」：混了方向的（攻速 +100% ／
+     * 回血 −10 這種代價型自我增益，出貨 6 個節點）一律不推論。
+     * 完整判準在 `packages/shared/src/sim/negativePolarity.ts`。
+     *
+     * 填 **false** ＝ 逐位元回到這一版之前的行為（一鍵 rollback）。
+     */
+    inferDebuffFromNegativeModifiers: z.boolean(),
     /** 文件沒寫 `pools` 時，預設清不清 status。出貨 true。 */
     defaultPoolStatus: z.boolean(),
     /** 同上，dot。出貨 true。 */

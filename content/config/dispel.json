@@ -6,6 +6,7 @@
   "statusDefaultDispellable": true,
   "dotDefaultDispellable": true,
   "buffDefaultDispellable": false,
+  "inferDebuffFromNegativeModifiers": true,
   "defaultPoolStatus": true,
   "defaultPoolDot": true,
   "defaultPoolShields": false,
