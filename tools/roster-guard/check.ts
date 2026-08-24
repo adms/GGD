@@ -474,6 +474,12 @@ const DERIVATION_IMPORT = /from\s+["'][^"']*\/(shippedSurface|balancePopulation)
  * 會 → 它該走推導模組，⛔ 不該進這張表。
  */
 const WHOLE_TREE_BY_DESIGN: Record<string, string> = {
+  // ── 2026-08-24 GH#662 —— polarity 誠實性掃全樹 ────────────────────────────
+  "packages/shared/src/content/negativeBuffPolarity.test.ts":
+    "未標 polarity 的純減益 ⇒ 淨化拔不掉（第一·五守則：卡面說謊）。⭐ 掃**全樹**是刻意的：" +
+    "這是**資料正確性**不是平衡稽核 —— 貨架關著的道具/技能一格後台勾選就上架，" +
+    "而上架動作不重跑測試 ⇒ 缺標要在**進 repo 的當下**紅，⛔ 不是上架之後才被玩家發現。" +
+    "反駁方式：如果哪天上架動作本身會觸發完整稽核（#473 落地），這一列就該改走上架面並刪掉。",
   // ── ⭐ 2026-08-22 GH#544 —— AP 換算稽核**必須**掃全樹 ─────────────────────
   "tools/ap-conversion/apply.py":
     "屬性額外傷害→AP 的換算稽核。⭐ 掃**全部** 142 件（⛔ 不是上架的 89 件）是刻意的：" +
