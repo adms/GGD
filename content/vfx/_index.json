@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "1cc3b9c39fb6",
+  "hash": "d1f905399452",
   "entries": [
     {
       "id": "attach.ex.midchilder-aura",
@@ -1453,6 +1453,12 @@
       "path": "vfx/fx.thorn-lash.json",
       "hash": "68b0d29cd0ac",
       "size": 704
+    },
+    {
+      "id": "fx.trail.berserk-beam",
+      "path": "vfx/fx.trail.berserk-beam.json",
+      "hash": "9566619bc104",
+      "size": 205
     },
     {
       "id": "fx.w3x.locust.boomnl.p00",

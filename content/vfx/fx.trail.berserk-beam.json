@@ -1,0 +1,14 @@
+{
+  "id": "fx.trail.berserk-beam",
+  "schema": "ribbon@1",
+  "widthAbove": 0.6,
+  "widthBelow": 0.6,
+  "lifespanSec": 0.2,
+  "color": [
+    0.72,
+    0.34,
+    1,
+    0.85
+  ],
+  "blendMode": "additive"
+}

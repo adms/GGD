@@ -64,22 +64,53 @@ def berserk_smoke(duration, hz=4.0):
 # ═════════════════════════════════════════════════════════════════════════════
 
 
-def berserk_beam_trail(duration, hz=4.0):
-    """⭐【拖曳光束】暴走期間跟著移動路徑落下的光束（GH#644 ②）。
+# ⭐ GH#661 —— owner 2026-08-24 說了兩次的同一件事：
+#    「暴走狀態**追加身體移動拖曳光束特效**」／「初號機的**暴走移動拖曳特效**」
+#
+# ⚠️ GH#644 ② 落地的版本**不是它**：那是一串 `delayed` 班表，每 0.25 秒在腳下
+#    放一發**定點**的 `fx.prim.ki.beam`（一根光柱）。站著不動 = 原地一直閃光柱，
+#    跑起來 = 一串**離散的**光柱，⛔ 而且與「移動得多快」完全無關。
+#    ⭐ owner 要的是「**移動拖曳**」：跟著身體、沿著路徑、**速度越快越明顯**。
+#
+# ⇒ 三個改動，⛔ 零個新機制（第〇·五守則）：
+#   ① vfxId 指向一份 **`ribbon@1`**（`content/vfx/fx.trail.berserk-beam.json`）。
+#      客戶端的判準就是「它是不是一份緞帶文件」—— 是就交給 `MoveTrailFx`
+#      拉一條**每一幀**跟著身體走的光幕（⛔ 不是名單、⛔ 不是技能 id 的 if）。
+#   ② 節奏從 `delayed` 班表換成增益自己的 **`onInterval` hook**。
+#      ⭐ 這一格是承重的：班表**排下去就一定跑完**，所以暴走被提前拔掉（或
+#      被驅散）時光束還會繼續落 —— 而 hook 是**隨增益生、隨增益死**，
+#      也就是 owner 要的「出暴走當場清乾淨」。順帶解掉 `DELAYED_MAX_COUNT`
+#      32 發的上限（12 秒 × 4Hz = 48 發，原本只能把 hz 降到 2.5 硬塞）。
+#   ③ `durationSec` = 客戶端那一拍的 **hold**（心跳停了多久就拆）。
+#      ⚠️ 它必須 **>** 心跳週期（否則兩拍之間會斷格 ⇒ 拖曳變閃爍），
+#      同時 **<** #569 的 0.5 秒（它是「暴走結束到畫面乾淨」的上界）。
+#
+# ⭐ 一鍵 rollback（後台／內容編輯器一格，⛔ 不必重新部署）：把這一格改回
+#    `fx.prim.ki.beam`（一份 `vfx@1`）⇒ 客戶端認不出緞帶 ⇒ 逐位元退回 GH#644
+#    的定點光柱演出。⇒ 「換一份文件」就是開關本身。
+BERSERK_TRAIL_VFX = "fx.trail.berserk-beam"
+#    ⭐ 0.25 秒一拍：夠密（每一拍之間身體最多走 ~1.5 格，緞帶自己是 60Hz 取樣
+#    所以中間不會斷），也夠疏（12 秒才 48 則事件，⛔ 不是每 tick 30 則）。
+BERSERK_TRAIL_BEAT_SEC = 0.25
+#    ⭐ 0.4 秒 hold：> 0.25（不斷格）且 < 0.5（#569）。
+BERSERK_TRAIL_HOLD_SEC = 0.4
 
-    與 {@link berserk_smoke} 是**同一個組合**（第〇·五守則：⛔ 沒有新機制）：
-    `delayed` 排一串班表，每一發 `spawnVfx at:"self"` 在**到期的當下**才讀
-    施法者座標 —— 身體一路移動，光束就一發一發落在走過的位置上，
-    畫面上是一條拖在身後的光束尾跡；站著不動就是原地的光柱。
-    `stopOnCasterDeath` 讓它在倒下那一刻停。
+
+def berserk_beam_trail_hook():
+    """⭐【移動拖曳光束】的心跳 —— 掛在**暴走增益自己**身上的一條 hook。
+
+    ⛔ 為什麼不是 `persistentVfx`：那一格今天只算得出 `when` **缺席**的那一批，
+       而「暴走中」正是一個 `when` —— 加上去會讓
+       `persistentVfxClientCoverage.test.ts` 當場紅（同 `berserk_smoke` 的理由）。
+    ⛔ 為什麼不是 `delayed`：見上面 ②（班表停不下來）。
+    ⭐ 為什麼 `onInterval` 就夠：`IntervalHookSystem` 每 tick 無條件發射，
+       真正的節奏閘是 `internalCooldown`，而 hook 掛在增益上 ⇒ 增益一沒了
+       （到期／被拔掉／死亡）下一拍就不會來。
     """
-    count = int(round(duration * hz))
-    assert 1 <= count <= 32, f"delayed.count 上界是 32（DELAYED_MAX_COUNT），算出 {count}"
-    return {"kind": "delayed", "shape": "single",
-            "delaySec": 1.0 / hz, "count": count, "intervalSec": 1.0 / hz,
-            "effects": [{"kind": "spawnVfx",
-                         "vfxId": "fx.prim.ki.beam", "at": "self"}],
-            "stopOnCasterDeath": True}
+    return {"on": "onInterval", "target": "self",
+            "internalCooldown": BERSERK_TRAIL_BEAT_SEC,
+            "effects": [{"kind": "spawnVfx", "vfxId": BERSERK_TRAIL_VFX,
+                         "at": "self", "durationSec": BERSERK_TRAIL_HOLD_SEC}]}
 
 
 def _debuff_dispel():
@@ -106,19 +137,23 @@ def berserk_package(dur, mods, hz=4.0):
         例如詛咒/破甲/禁療），`onInterval` 每秒補掃（DoT 與減益型 buff ——
         它們不走 `applyStatus`，上一條聽不到）。增益到期 hook 跟著消失，
         所以「免疫」精確地只活在暴走期間。
+
+    ⭐ GH#661 —— 第三條 hook 是【移動拖曳光束】的心跳，掛在**同一份增益**上
+    正是為了同一個理由：增益到期／被拔掉，下一拍就不會來（見
+    {@link berserk_beam_trail_hook}）。
     """
     return [buff(mods, dur, hooks=[
                 {"on": "onStatusApplied", "target": "self",
                  "effects": [_debuff_dispel()]},
                 {"on": "onInterval", "target": "self", "internalCooldown": 1.0,
-                 "effects": [_debuff_dispel()]}]),
+                 "effects": [_debuff_dispel()]},
+                berserk_beam_trail_hook()]),
             {"kind": "invulnerable", "durationSec": float(dur), "applyTo": "self",
              "blocksDamage": "none", "blocksControl": True},
             # ⭐ [暴走] 的機制本體：拿走方向盤 + 自動尋敵（sim/berserk.ts）。
             #    上面那包是屬性與免疫，這一行才是「暴走」——少了它三個系統都不會動。
             status("berserk", dur, berserk=True, applyTo="self"),
-            berserk_smoke(dur, hz=hz),
-            berserk_beam_trail(dur, hz=hz)]
+            berserk_smoke(dur, hz=hz)]
 
 
 A("59-00", "59-00 暴走", "self", [150], [0], 0,
@@ -343,7 +378,9 @@ A("59-002", "59-001 完全暴走", "self", [150], [0], 0,
        #    4.0 ≤ unlocked 20 有空間（noOpModifierClaims 從 stat-caps 推導放行）。
        #    （2026-08-22 那一版 1.2 在 cap 內所以不寫 capRaise —— 那條理由隨著
        #     400% 失效，⛔ 不要把它抄回來。）
-       # ⭐ 冒煙／光束 hz 調低：12 秒 × 4Hz = 48 發，超過 DELAYED_MAX_COUNT(32)。
+       # ⭐ 冒煙 hz 調低：12 秒 × 4Hz = 48 發，超過 DELAYED_MAX_COUNT(32)。
+       #    ⚠️ 拖曳光束**不受這一格影響**（GH#661 之後它走 `onInterval` hook，
+       #    ⛔ 不是 `delayed` 班表）—— 兩態都是固定 0.25 秒一拍。
        "effects": berserk_package(
            12.0, [M("as", "capRaise", 10.0), M("as", "pctAdd", 4.0),
                   M("lifesteal", "flat", 4.0), M("lifesteal", "capRaise", 4.0),

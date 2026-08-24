@@ -155,6 +155,7 @@ import type {
 } from "@ggd/shared/sim/effects/clientCues";
 import { ScreenFxLayer } from "./ScreenFxLayer";
 import { FloatingTextFx } from "./FloatingTextFx";
+import { MoveTrailFx } from "./MoveTrailFx";
 import {
   screenCueIsForViewer,
   screenCuePolicyFromContent,
@@ -636,6 +637,13 @@ export class VfxSystem {
   private readonly pillarPalettes = new Map<string, PillarPalette>();
   /** entityId → last walking-dust EMIT baseline {x,z} + time (task #147) */
   private readonly walkTrail = new Map<number, { ex: number; ez: number; lastMs: number }>();
+  /**
+   * ⭐ GH#661 —— 【身體移動拖曳光束】。⛔ 它不是上面那格走路灰塵的兄弟：
+   * 灰塵是**腳下的一撮**、按步幅發，這一層是**跟著整具身體**的緞帶，按
+   * **絕對世界速度**變亮（走路淡、衝刺全亮），而且靠 sim 的心跳綁在**狀態**上。
+   * 見 `MoveTrailFx.ts` 的檔頭。
+   */
+  private readonly moveTrail: MoveTrailFx;
   /** reused per-frame scratch for the shadow inputs (no per-frame alloc) */
   private readonly shadowScratch: ShadowInput[] = [];
   /** entityId → last committed aim, consumed by the muzzle flash */
@@ -668,6 +676,15 @@ export class VfxSystem {
    */
   private oneShotEvictions = 0;
 
+  /**
+   * ⭐ GH#661 —— 【移動拖曳光束】那一層（守衛的接縫）。
+   * ⛔ 守衛讀的是**這一層自己的帳**（誰在拖、拖的是哪一份文件、有沒有真的畫），
+   * ⛔ 不是「`mark()` 被呼叫了幾次」（失敗形態③：整條接線可以刪掉而測試全綠）。
+   */
+  get moveTrailLayer(): MoveTrailFx {
+    return this.moveTrail;
+  }
+
   /** Pooled one-shot emitters evicted by the hard cap so far (diagnostic). */
   get oneShotEvictionCount(): number {
     return this.oneShotEvictions;
@@ -692,6 +709,7 @@ export class VfxSystem {
     private readonly ctx: VfxContext,
   ) {
     this.blood = new BloodFx(scene);
+    this.moveTrail = new MoveTrailFx(scene);
     // ⭐ GH#551/#549 —— 三個「演出」層。⚠️ `modelFx` 只在**兩個內容接縫都在**時才建：
     //    缺任一個就整條靜靜不生（⛔ 不是崩潰）—— 測試環境與早期開機沒有 AssetManager。
     this.modelFx =
@@ -2132,6 +2150,14 @@ export class VfxSystem {
         const z = data.z;
         if (x === undefined || z === undefined || !isFinitePos({ x, z })) break; // #131
         const vfxId = data.vfxId;
+        // ⭐ GH#661 —— 【移動拖曳光束】的心跳。判準是「這個 id 是不是一份
+        //    `ribbon@1`」，⛔ 不是一張名單、⛔ 更不是任何技能 id 的 if。
+        //    ⚠️ 在這一行之前，把 `spawnVfx.vfxId` 指到一份緞帶文件是**靜靜的
+        //    no-op**：`VfxDefs` 查不到 ⇒ 掉到下面的 `HitSpark` 退路，於是畫面上
+        //    出現一顆與「條件沒成立」長得一模一樣的火花（失敗形態②）。
+        //    ⭐ `break` 是承重的：認領了就⛔ 不要再走定點那條路，否則同一則
+        //    心跳會既拖曳、又每 0.25 秒噴一顆火花。
+        if (this.moveTrail.mark(vfxId, data.caster, nowMs, data.durationSec)) break;
         const doc = this.doc(vfxId);
         const anchor =
           typeof data.attach === "string"
@@ -2400,7 +2426,7 @@ export class VfxSystem {
     this.gold.noteBody(id, { x, z });
   }
 
-  private syncGroundEntities(nowMs: number): void {
+  private syncGroundEntities(nowMs: number, dtMs: number): void {
     const scratch = this.shadowScratch;
     scratch.length = 0;
     for (const anchor of frameBus.champions.values()) {
@@ -2418,6 +2444,10 @@ export class VfxSystem {
         scratch.push({ id, x: pos.x, z: pos.z, radius: prop ? SHADOW_FLOWER_RADIUS : SHADOW_CHAMPION_RADIUS });
         // walking dust: champions only (a rooted prop never kicks dust)
         if (!prop) this.emitWalkDust(id, pos, nowMs);
+        // ⭐ GH#661 —— 拖曳光束的錨點跟著這一幀**算繪出來的**位置走。
+        //    ⚠️ ⛔ 不是「sim 送來的那個座標」：心跳每 0.25 秒才一則，而拖曳要的
+        //    是**每一幀**的位移（那就是它量得到速度的唯一來源）。
+        this.moveTrail.syncBody(id, pos.x, pos.z, nowMs, dtMs);
       }
     }
     this.shadows.sync(scratch, nowMs);
@@ -2506,7 +2536,10 @@ export class VfxSystem {
     this.feedback.update(nowMs);
     this.status.update(nowMs);
     // ground-follow layer (task #147): shadows + walking dust + cast-scorch fades
-    this.syncGroundEntities(nowMs);
+    this.syncGroundEntities(nowMs, dtMs);
+    // ⭐ GH#661 —— 心跳停了（或身體離場）的拖曳**當場**拆掉。⚠️ 一定要在
+    //    `syncGroundEntities` **之後**：那一圈才是這一幀「誰還在場上」的答案。
+    this.moveTrail.update(nowMs);
     this.castDecals.update(nowMs);
     this.pillars.update(nowMs);
     // ⚡ 電弧：推進亮度,壽命到的還回 free-list。**一跳一閃**,所以絕大多數幀
@@ -2606,6 +2639,8 @@ export class VfxSystem {
     this.gold.reset();
     this.castDecals.clear(); // 地面焦痕 —— 下一回合可能是完全不同的地圖
     this.status.clear(); // 暈/定身/緩速光環
+    // ⭐ GH#661 —— 上一回合最後一秒的暴走拖曳光束⛔ 不可以跟著進商店。
+    this.moveTrail.clear();
     this.shadows.sync([]); // 腳下影子：這一刻場上沒有任何身體
     // #205：上一回合排定的延遲層。不清掉的話「大招 3 秒後的餘燼」會在商店
     // 場景裡爆出來 —— 和 #216 / #259 抓到的殘留是同一種病。
@@ -2666,6 +2701,7 @@ export class VfxSystem {
     this.blood.dispose();
     this.feedback.dispose();
     this.status.dispose();
+    this.moveTrail.dispose();
     this.shadows.dispose();
     this.castDecals.dispose();
     this.pillars.dispose();

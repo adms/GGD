@@ -87,6 +87,19 @@
                     ],
                     "internalCooldown": 1.0,
                     "target": "self"
+                  },
+                  {
+                    "on": "onInterval",
+                    "effects": [
+                      {
+                        "kind": "spawnVfx",
+                        "vfxId": "fx.trail.berserk-beam",
+                        "at": "self",
+                        "durationSec": 0.4
+                      }
+                    ],
+                    "internalCooldown": 0.25,
+                    "target": "self"
                   }
                 ]
               },
@@ -114,21 +127,6 @@
                   {
                     "kind": "spawnVfx",
                     "vfxId": "fx.w3x.particle.flamessmoke.p00",
-                    "at": "self"
-                  }
-                ],
-                "stopOnCasterDeath": true
-              },
-              {
-                "kind": "delayed",
-                "shape": "single",
-                "delaySec": 0.4,
-                "count": 30,
-                "intervalSec": 0.4,
-                "effects": [
-                  {
-                    "kind": "spawnVfx",
-                    "vfxId": "fx.prim.ki.beam",
                     "at": "self"
                   }
                 ],
