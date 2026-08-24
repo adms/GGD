@@ -181,7 +181,7 @@ interface Exemption {
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   "enum:vfx#vfx@1.orient.yawFrom=world": {
-    status: "by-design",
+    status: "default-live",
     since: "2026-08-24",
     why: "`world` 是 `yawFrom` 的**預設值的顯式拼法** —— 欄位省略即 world（文件自己的 yawDeg 直接用），所以永遠不會有內容需要明寫它；它留在 enum 是讓「不跟瞄準轉」可以被**明說**（GH#641 的 aim 是第一個非預設採用者）。⭐ 可反駁：哪天預設改成 aim，這一列就該刪、world 就該有採用者。",
   },
