@@ -346,6 +346,11 @@ export class InputCapture {
     }
 
     switch (ev.code) {
+      case "Escape":
+        // 二段瞄準的第三條取消手勢 (GH#679)：再點格＝取消、右鍵＝取消，Esc 也要是 ——
+        // 它是玩家「退出目前模式」的通用鍵。⚠️ 只清瞄準；A 武裝/面板各自的 Esc 行為一格不動。
+        cancelTwoStageCast();
+        break;
       case "KeyA":
         this.setAttackArmed(true);
         break;

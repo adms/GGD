@@ -36,6 +36,9 @@ const ability = (id: string): AbilityDef =>
 let root: Root, host: HTMLDivElement, scene: HTMLDivElement, capture: InputCapture;
 const commands: Command[] = [];
 const orders: Order[] = [];
+// 每條測試可換的兩格（GH#679 指定型要能瞄）：技能定義與游標下的敵人。
+let abilityStub: { castType: "ground" | "targeted"; range: number };
+let enemyStub: number | null;
 
 beforeEach(async () => {
   globalThis.requestAnimationFrame = (() => 0) as never; // AbilityBar 的 rAF 迴圈
@@ -56,11 +59,13 @@ beforeEach(async () => {
   await act(async () => root.render(createElement(AbilityBar)));
   scene = document.body.appendChild(document.createElement("div"));
   commands.length = orders.length = 0;
+  abilityStub = { castType: "ground", range: 6 };
+  enemyStub = null;
   capture = new InputCapture(scene as unknown as HTMLElement, {
     screenToGround: () => ({ x: 3, z: 2 }),
     getSelfPos: () => ({ x: 0, z: 0 }),
-    getAbility: () => ({ castType: "ground", range: 6 }),
-    pickEnemy: () => null,
+    getAbility: () => abilityStub,
+    pickEnemy: () => enemyStub,
     pickSelf: () => false,
     onOrder: (o) => orders.push(o),
     onCommand: (c) => commands.push(c),
@@ -115,5 +120,29 @@ describe("純滑鼠二段施放 (GH#639)", () => {
     clickScene("contextmenu"); // owner:「右鍵=取消」
     expect(getTwoStageArmedSlot()).toBeNull();
     expect(orders, "取消瞄準的那一下右鍵不可以同時下移動指令").toHaveLength(0);
+  });
+
+  it("Esc＝取消瞄準 (GH#679)", async () => {
+    await pressTile("Q");
+    expect(getTwoStageArmedSlot()).toBe("Q");
+    window.dispatchEvent(new KeyboardEvent("keydown", { code: "Escape" }));
+    expect(getTwoStageArmedSlot(), "Esc 之後瞄準要解除").toBeNull();
+    clickScene();
+    expect(commands, "Esc 取消之後場景左鍵不可以還在施放").toHaveLength(0);
+  });
+
+  it("指定型 (targeted)：點空地維持瞄準；點在敵人上才施放且鎖定該實體 (GH#679)", async () => {
+    abilityStub = { castType: "targeted", range: 6 };
+    await pressTile("Q");
+    clickScene(); // 游標下沒有目標 → 拒絕但**維持瞄準**（取消是玩家自己的手勢）
+    expect(commands, "沒有目標的第二下不可以送出任何 command").toHaveLength(0);
+    expect(getTwoStageArmedSlot(), "沒打中目標要維持瞄準").toBe("Q");
+
+    enemyStub = 42;
+    clickScene();
+    expect(commands, "點在敵人上要送出 entity target 的 castAbility").toEqual([
+      { kind: "castAbility", slot: "Q", target: { type: "entity", entityId: 42 } },
+    ]);
+    expect(getTwoStageArmedSlot(), "施放後瞄準要解除").toBeNull();
   });
 });
