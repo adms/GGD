@@ -46,8 +46,12 @@ const ENEMY_LINE: readonly { x: number; z: number }[] = [
   { x: 10, z: 0 },
 ];
 
-/** 出貨的 09-04 光束模型 key（來自 `tpl-beam-roll` 的 `modelKey` 預設）。 */
-const BEAM_MODEL_KEY = "imported.netherstrike";
+/**
+ * 出貨的 09-04 兩層蝗蟲群（GH#688 Phase 5 pilot）：
+ * 主體＝原作 h007 的 ReviveHuman（節點自己的 `modelKey`，模板 count 6 沿線）、
+ * 火柱＝原作 h006 的 FlameStrike1（沿線 ×6 的第二個 spawnModelFx 節點）。
+ */
+const BEAM_MODEL_KEYS = ["w3x.stock.revivehuman", "w3x.stock.flamestrike1"];
 
 export interface BeamMeshStat {
   name: string;
@@ -166,7 +170,7 @@ export async function startBeamAudition(canvas: HTMLCanvasElement): Promise<Beam
   /** 場上的 beam 根節點（`modelfx-<modelKey>-<serial>`，⛔ 不含 axis 子節點與 glb 複製節點）。 */
   const beamStats = (): BeamMeshStat[] =>
     scene.transformNodes
-      .filter((n) => n.name.startsWith(`modelfx-${BEAM_MODEL_KEY}-`))
+      .filter((n) => BEAM_MODEL_KEYS.some((k) => n.name.startsWith(`modelfx-${k}-`)))
       .map((n) => {
         let vertices = 0;
         for (const m of n.getChildMeshes(false)) vertices += m.getTotalVertices();

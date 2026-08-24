@@ -29,7 +29,9 @@ import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { ContentLoader } from "@ggd/shared/content/loader";
-import { FsContentSource } from "@ggd/shared/content/node/FsContentSource";
+// ⭐ 出貨夾具的檔案樹退路會把 `_index.json`（產物，主 session 統一重生成）先跟
+//    真的目錄對帳 —— 09-04 綁的新 model doc 在 sync 之前也載得到。
+import { shippedContentSource } from "@ggd/shared/content/__fixtures__/shippedContent";
 import { Arenas, Configs, Models, StatusEffects, VfxDefs, registerAll } from "@ggd/shared/content/registries";
 import { Abilities, Augments, Champions, Items, LootTables, Projectiles } from "@ggd/shared/sim/content/registry";
 import { SimWorld } from "@ggd/shared/sim/SimWorld";
@@ -58,7 +60,7 @@ const LOCAL: Record<ModelFxLongAxis, Vector3> = {
 beforeAll(async () => {
   for (const r of [Champions, Abilities, Items, Augments, Projectiles, LootTables]) r.clear();
   for (const r of [Arenas, Configs, Models, VfxDefs, StatusEffects]) r.clear();
-  registerAll((await new ContentLoader(new FsContentSource(CONTENT)).load()).store);
+  registerAll((await new ContentLoader(shippedContentSource(CONTENT)).load()).store);
 });
 
 /** 施放出貨的那一支，回傳 sim **真的**送上線的那一則 `modelFxSpawn`。 */

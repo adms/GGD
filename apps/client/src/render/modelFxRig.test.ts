@@ -147,6 +147,35 @@ describe("model fx tint", () => {
     rig.dispose();
   });
 
+  it("③ fxAlpha 乘進最終素材的 alpha 並解鎖混合（⛔ 不是 visibility 開關）", async () => {
+    // GH#688 Phase 4 機制②：alpha 是缺口表裡唯一「兩側都空白」的欄 —— 原作只存在
+    // runtime（57 個 SetUnitVertexColorBJ 呼叫點），這一格是模型級恆定半透明那一半。
+    const scene = new Scene(new NullEngine());
+    const src = new StandardMaterial("src", scene);
+    const mesh = MeshBuilder.CreateBox("body", { size: 1 }, scene);
+    mesh.material = src;
+    const container = new AssetContainer(scene);
+    container.meshes.push(mesh);
+    container.rootNodes.push(mesh);
+    const rig = new ModelFxRig(scene, {
+      resolveModel: () => ({ glbPath: "assets/models/x.glb", scale: 1, fxAlpha: 0.5 }),
+      loadContainer: () => Promise.resolve(container),
+    });
+    rig.spawn({ ...WIRE, instances: [WIRE.instances[0]!] });
+    await new Promise((r) => setTimeout(r, 0));
+    const painted = scene.meshes.filter((m) => m !== mesh && m.material);
+    expect(painted.length, "一具套過 fxAlpha 的網格都沒有進場景樹").toBeGreaterThan(0);
+    for (const m of painted) {
+      const mat = m.material as StandardMaterial & { transparencyMode?: number };
+      expect(mat.alpha, "fxAlpha 沒有到達畫面 —— 半透明的 dummy 以全不透明出場").toBeCloseTo(0.5, 5);
+      // 素材沒被鎖成 OPAQUE（StandardMaterial 無 transparencyMode 欄則略過）。
+      if (mat.transparencyMode !== undefined && mat.transparencyMode !== null)
+        expect(mat.transparencyMode).toBe(2);
+    }
+    expect(src.alpha, "⛔ 原始素材被就地改掉了（容器共用）").toBe(1);
+    rig.dispose();
+  });
+
   it("② 每一個出貨 fxTint 都引用得到原作普查的一列", () => {
     const root = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
     const census: Record<string, { tint: number[]; model: string }> = JSON.parse(

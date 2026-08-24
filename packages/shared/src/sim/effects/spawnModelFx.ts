@@ -190,9 +190,29 @@ export function modelFxInstances(e: ModelFx, ctx: EffectContext, origin: Vec2): 
       if (f !== undefined && len(f) > 1e-6) sdir = normalize(f);
     }
     // ⛔ 解不到方向就退回無向（`dx=dz=0`）—— 仍然**畫**，⛔ 不是整支消失。
-    return sdir === undefined
-      ? [{ origin: { x: p.x, z: p.z }, travel: 0 }]
-      : [{ origin: { x: p.x, z: p.z }, dir: sdir, travel: 0 }];
+    if (sdir === undefined) return [{ origin: { x: p.x, z: p.z }, travel: 0 }];
+    // ⭐【沿線 N 具】#673-④／GH#688 Phase 4 —— 原作的光束/火柱是**一次擺出一條線**：
+    //   `A03S`（09-04 龜派氣功）@31924 逐行 `loop i=1..6: PolarProjectionBJ(caster,
+    //   i×200, angle)`（火柱 h006）；`A05J`（59-04）@28838 同型 `i=1..10 × 150`。
+    // ⇒ 第 k 具（k=0..count−1）在錨點沿 `sdir` 的 **spacing×k** 處。間距與具數
+    //   照量到的原作值（200 wc3u ÷100 ＝ 2.0 世界單位 × 6 具）；⚠️ 與原作差**一個
+    //   步長的平移**（原作 i=1..6 從 spacing 起，我們第 0 具在錨點上 —— 光束/火柱
+    //   從施法者腳下長出來，⭐ count:1 逐位元等於今天的單具，這是刻意的取捨）。
+    // ⚠️ 純度：只有乘加（單位向量 × 標量），⛔ 沒有三角函式 —— 角度在 `sdir` 裡。
+    const stN = Math.max(1, Math.min(MODEL_FX_MAX_INSTANCES, Math.floor(e.count ?? 1)));
+    const stGap = clamp(e.spacing ?? 0, 0, MODEL_FX_MAX_DISTANCE);
+    const out: Instance[] = [];
+    for (let k = 0; k < stN; k++) {
+      // stGap 0（作者沒填 spacing）⇒ N 具疊同一點也不對 ⇒ 退化成 1 具（refine 擋
+      // 在載入時，這裡只是防第三條路）。
+      if (k > 0 && stGap <= 0) break;
+      out.push({
+        origin: { x: p.x + sdir.x * stGap * k, z: p.z + sdir.z * stGap * k },
+        dir: sdir,
+        travel: 0,
+      });
+    }
+    return out;
   }
   if (e.path === "orbit") {
     // 環上 `count` 個等分位置。⛔ 不做線性推進 —— 繞圈的終點是 `lifeSec`。

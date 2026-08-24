@@ -270,6 +270,50 @@ class ShippedBundleSource implements ContentSource {
 let sourceCache: ContentSource | null = null;
 
 /**
+ * ⭐ 檔案樹那一條路的來源 —— `_index.json` 先跟**真的目錄**對帳（GH#688 Phase 5）。
+ *
+ * `_index.json` 與 `bundle.json` 是**同一支產生器的兩份產物**，而這個夾具的
+ * 存在理由就是「bundle 過期時退回讀樹」。⛔ 但舊的退路 `FsContentSource` 讀的
+ * 索引**還是那個產物** —— 於是併行批次裡新增一份文件（產物由主 session 統一
+ * 重生成，CLAUDE.md 併行鎖）會讓退路也看不見它，硬參照它的每一份文件被
+ * 隔離連坐（量到的：09-04 綁上兩份新 model doc ⇒ 悟空整隻被隔離 ⇒
+ * ~20 支引用他的測試在 sync 之前全紅）。⇒ 退路要對齊 `docsFromTree` 的語意：
+ * **目錄是真相** —— 索引缺的檔補上、索引多的（已刪的）拿掉。
+ * ⭐ 自我過期：`content:build` 落地後索引與目錄一致，這一段是 no-op。
+ */
+class WorkingTreeFsSource extends FsContentSource {
+  override async readIndex(collection: CollectionName): Promise<CollectionIndex> {
+    let idx: CollectionIndex;
+    try {
+      idx = await super.readIndex(collection);
+    } catch {
+      idx = { collection, hash: "0".repeat(12), entries: [] };
+    }
+    const dir = join(SHIPPED_CONTENT_DIR, collection);
+    let names: string[];
+    try {
+      names = readdirSync(dir);
+    } catch {
+      return idx;
+    }
+    const onDisk = new Set(names.filter(isDocFile));
+    const entries: IndexEntry[] = idx.entries.filter((e) => onDisk.has(`${e.id}.json`));
+    const listed = new Set(entries.map((e) => e.id));
+    for (const name of [...onDisk].sort()) {
+      const id = name.slice(0, -".json".length);
+      if (listed.has(id)) continue;
+      entries.push({
+        id,
+        path: `${collection}/${name}`,
+        hash: hashDoc(JSON.parse(readFileSync(join(dir, name), "utf8")) as object),
+        size: statSync(join(dir, name)).size,
+      });
+    }
+    return { ...idx, entries };
+  }
+}
+
+/**
  * `new FsContentSource(dir)` 的 drop-in 替身。
  *
  * ⭐ `rootDir` 不是出貨那棵樹時（temp 樹、`_legacy/`、夾具樹）**原封不動退回
@@ -278,7 +322,7 @@ let sourceCache: ContentSource | null = null;
  */
 export function shippedContentSource(rootDir: string = SHIPPED_CONTENT_DIR): ContentSource {
   if (resolve(rootDir) !== SHIPPED_CONTENT_DIR) return new FsContentSource(rootDir);
-  if (!shippedBundleIsFresh()) return new FsContentSource(SHIPPED_CONTENT_DIR);
+  if (!shippedBundleIsFresh()) return new WorkingTreeFsSource(SHIPPED_CONTENT_DIR);
   if (sourceCache === null) sourceCache = new ShippedBundleSource();
   return sourceCache;
 }

@@ -228,6 +228,7 @@
           "kind": "spawnModelFx",
           "shape": "single",
           "preset": "tpl-beam-roll",
+          "modelKey": "w3x.stock.revivehuman",
           "onArrive": [
             {
               "kind": "spawnVfx",
@@ -235,6 +236,15 @@
               "at": "point"
             }
           ]
+        },
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "path": "static",
+          "count": 6,
+          "spacing": 2,
+          "lifeSec": 2,
+          "modelKey": "w3x.stock.flamestrike1"
         }
       ],
       "vfxKey": "fx.prim.ki.beam-lg",

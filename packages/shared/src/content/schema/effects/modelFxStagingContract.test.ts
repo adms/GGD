@@ -175,12 +175,16 @@ const SOUNDLESS_TEMPLATES = new Set(["tpl-line-blast"]);
  * `ParasiteMissile`）三份 .glb **repo 裡都沒有**，所以拆開也接不到自己的模型。
  * ⭐ 反駁法：`ZERO_PIXEL_FX_MODELS` 少掉 `imported.netherstrike` 的那一天（重烘落地），
  * 這四支就該各自接上自己的模型並刪掉這裡的四列；⛔ 新技能一律不得加進來。
+ *
+ * ⭐ 2026-08-25（GH#688 Phase 5 pilot）：那一天到了 —— 09-04 接上了自己的原作模型
+ * `w3x.stock.revivehuman`（h007 的 ReviveHuman.mdl，stock MPQ→glb 第一支），
+ * `stale` 斷言點名後照規矩刪掉那一列。剩下三支照原作對應：20-03＝h00S/h00X
+ * （ReviveHuman 紅/NetherStrike）、59-04＝h000、08-03＝h01P（Awaken）—— Phase 6。
  */
 const SHARED_MODEL_FENCED_OUT = new Set([
   "20-03 約束與勝利之劍",
   "59-04 野戰型陽電子砲",
   "08-03 龍鬥氣砲咒文",
-  "09-04 龜派氣功",
 ]);
 
 describe("④ 引用特效模板的演出：出得了聲，而且保得住自己的身分", () => {

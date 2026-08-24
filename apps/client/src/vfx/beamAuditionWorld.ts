@@ -13,6 +13,7 @@
  * `content/modelFxPreset.ts` 補上 —— 這一頁量到的就是那條出貨鏈。
  */
 import { ensureContentLoaded } from "../content/bootContent";
+import { HttpContentSource, type ContentSource } from "@ggd/shared/content";
 import { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
 import { Abilities } from "@ggd/shared/sim/content/registry";
@@ -23,6 +24,42 @@ import { zeroAttrBonus } from "@ggd/shared/sim/stats/attributes";
 
 /** 09-04 龜派氣功 —— owner 2026-08-23 點名的四支經典橫放光束砲之一。 */
 const KAMEHAMEHA: AbilityId = "godie-ogrh.r" as AbilityId;
+
+/**
+ * ⭐ audition 量的是**工作樹的出貨檔案**，⛔ 不是 bundle（GH#688 Phase 5）。
+ *
+ * `bundle.json`／`models/_index.json` 是 `content:build` 的產物，而併行批次裡它
+ * 只由主 session 最後統一重生成（CLAUDE.md 併行鎖）⇒ bundle-first 的預設載入會把
+ * 這一頁釘在**上一次 build 的內容**上 —— 對一頁存在目的就是「驗收正在編的演出」
+ * 的台子，那是量到假的東西（測試側的 `shippedContent` 夾具為同一個理由做了
+ * mtime 退回逐檔讀；瀏覽器讀不到 mtime，所以這裡直接走逐檔）。
+ *
+ * pilot 的兩份新 model doc 還不在產物 `models/_index.json` 裡 ⇒ 先在索引上補列。
+ * ⭐ **自我過期**：id 已在索引時不補 —— `content:build` 落地後這一段是 no-op。
+ */
+const PILOT_MODEL_DOCS = ["w3x.stock.revivehuman", "w3x.stock.flamestrike1"];
+
+function workingTreeSource(): ContentSource {
+  const inner = new HttpContentSource({
+    baseUrl: "/content",
+    fetchFn: (input, init) => fetch(input, init),
+  });
+  return {
+    readManifest: () => inner.readManifest(),
+    async readIndex(collection) {
+      const idx = await inner.readIndex(collection);
+      if (collection === "models") {
+        for (const id of PILOT_MODEL_DOCS) {
+          if (!idx.entries.some((e) => e.id === id)) {
+            idx.entries.push({ id, path: `models/${id}.json`, hash: "000000000000", size: 0 });
+          }
+        }
+      }
+      return idx;
+    },
+    readObject: (collection, entry) => inner.readObject(collection, entry),
+  };
+}
 
 export interface BeamAuditionWorld {
   world: SimWorld;
@@ -96,7 +133,7 @@ function spawnFighter(
 export async function buildBeamAuditionWorld(
   enemyOffsets: readonly { x: number; z: number }[],
 ): Promise<BeamAuditionWorld> {
-  await ensureContentLoaded();
+  await ensureContentLoaded({ source: workingTreeSource(), disableOverlay: true });
   if (!Abilities.tryGet(KAMEHAMEHA)) {
     throw new Error(
       `出貨內容裡找不到 ${KAMEHAMEHA}（09-04 龜派氣功）—— 內容沒載起來，⛔ 這一頁的結論不算數`,

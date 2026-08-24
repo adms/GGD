@@ -90,6 +90,11 @@ export interface SpawnModelFxVariant {
   distance?: number;
   /** `radial` / `orbit` 幾個實例等分。⛔ 只有這兩種路徑讀得到。 */
   count?: number;
+  /**
+   * ⭐【沿線 N 具】`path:"static"` 且 `count≥2` 時相鄰兩具的間距（世界單位）。
+   * 原作一次擺出整條線（09-04 h006 `i=1..6 × 200`）—— #673-④／GH#688 Phase 4。
+   */
+  spacing?: number;
   /** ⭐「翻滾」：模型繞自己的軸轉，度/秒。純視覺，⛔ sim 不讀它。 */
   spinDegPerSec?: number;
   /** 模型縮放。純視覺，⛔ sim 不讀它。 */

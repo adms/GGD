@@ -23,7 +23,10 @@ import { fileURLToPath } from "node:url";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { ContentLoader } from "@ggd/shared/content/loader";
-import { FsContentSource } from "@ggd/shared/content/node/FsContentSource";
+// ⭐ 走出貨夾具（⛔ 不是裸的 FsContentSource）：併行批次裡 `_index.json` 是主 session
+//    統一重生成的產物，夾具的檔案樹退路會先跟真的目錄對帳 —— 新增的 model doc
+//    （w3x.stock.revivehuman / flamestrike1）在 sync 之前也載得到。
+import { shippedContentSource } from "@ggd/shared/content/__fixtures__/shippedContent";
 import { zEffectDef } from "@ggd/shared/content/schema/effects/index";
 import { Arenas, Configs, Models, StatusEffects, VfxDefs, registerAll } from "@ggd/shared/content/registries";
 import { Abilities, Augments, Champions, Items, LootTables, Projectiles } from "@ggd/shared/sim/content/registry";
@@ -55,7 +58,7 @@ const NODE = {
 beforeAll(async () => {
   for (const r of [Champions, Abilities, Items, Augments, Projectiles, LootTables]) r.clear();
   for (const r of [Arenas, Configs, Models, VfxDefs, StatusEffects]) r.clear();
-  registerAll((await new ContentLoader(new FsContentSource(CONTENT)).load()).store);
+  registerAll((await new ContentLoader(shippedContentSource(CONTENT)).load()).store);
 });
 
 describe('spawnModelFx path:"static"（#649）', () => {
@@ -109,6 +112,64 @@ describe('spawnModelFx path:"static"（#649）', () => {
     vfx.dispose();
   });
 
+  /**
+   * ⭐【沿線 N 具】#673-④／GH#688 Phase 4+5 —— 原作的光束/火柱是**一次擺出一條線**
+   * （`A03S` 09-04 的 h006 `loop i=1..6 × 200`）。走與上面同一條真鏈：
+   * 真 Zod → 真 sim → **出貨的 09-04**（含 preset 解析）→ 線路上的實例座標。
+   *
+   * ── 突變紀錄（一批一條，挑最承重的那一行）──────────────────────────────
+   *  · ⭐ 承重線 —— `sim/effects/spawnModelFx.ts` static 分支的沿線迴圈改成
+   *    `for (let k = 0; k < 1; k++)`（N 具退化成單具）
+   *      → 紅：「09-04 的沿線層只擺出 1 具 —— #673-④ 的機制被撤銷了」
+   */
+  it("⭐ #673-④ 沿線 N 具：count×spacing 等距、出貨的 09-04 兩層各 6 具", () => {
+    // ① 機制本身：真 Zod → 真 sim。
+    const def = zEffectDef.parse({ ...NODE, anchor: "point", count: 6, spacing: 2 });
+    const world = new SimWorld(SKELETON_ARENA, 1);
+    const caster = spawnChampion(world, {
+      championId: "godie-ogrh" as ChampionId,
+      seatId: asSeatId(0), teamId: asTeamId(0), pos: { x: C.x, z: C.z }, zone: 0,
+    });
+    world.step(new Map());
+    runEffects([def as EffectDef], {
+      world, caster, rank: 1, targets: [], point: { ...P },
+      origin: "ability:test.line", rng: world.rng,
+    } satisfies EffectContext);
+    const wire = world.events.find((e) => e.type === "modelFxSpawn")!.data as unknown as ModelFxSpawnEvent;
+    expect(wire.instances, "count 沒有被讀 —— 整條線退化成 1 具").toHaveLength(6);
+    // 錨點→P，方向＝origin→P 的單位向量；第 k 具在 P + dir×spacing×k（第 0 具在錨點）。
+    const L = Math.hypot(P.x - C.x, P.z - C.z);
+    const dir = { x: (P.x - C.x) / L, z: (P.z - C.z) / L };
+    wire.instances.forEach((inst, k) => {
+      expect(inst.x, `第 ${k} 具的 x 不在線上`).toBeCloseTo(P.x + dir.x * 2 * k, 5);
+      expect(inst.z, `第 ${k} 具的 z 不在線上`).toBeCloseTo(P.z + dir.z * 2 * k, 5);
+      expect(inst.dist, "沿線的定點實例不可以位移").toBe(0);
+      expect(inst.durationSec).toBeCloseTo(NODE.lifeSec, 5);
+    });
+
+    // ② 出貨的 09-04（pilot）：兩層蝗蟲群 —— 主體 ReviveHuman（模板 count 6）＋
+    //    火柱 FlameStrike1（節點 count 6），⛔ 不驗字面值以外的數字。
+    const ability = Abilities.tryGet("godie-ogrh.r" as never) as { effects?: EffectDef[] } | null;
+    expect(ability, "出貨內容裡沒有 godie-ogrh.r").toBeTruthy();
+    world.transform.get(caster)!.facing = { x: 1, z: 0 };
+    world.step(new Map());
+    runEffects(ability!.effects ?? [], {
+      world, caster, rank: 1, targets: [], origin: "ability:godie-ogrh.r", rng: world.rng,
+    } satisfies EffectContext);
+    const evs = world.events
+      .filter((e) => e.type === "modelFxSpawn")
+      .map((e) => e.data as unknown as ModelFxSpawnEvent);
+    const byKey = new Map(evs.map((e) => [e.modelKey, e]));
+    for (const key of ["w3x.stock.revivehuman", "w3x.stock.flamestrike1"]) {
+      const ev = byKey.get(key);
+      expect(ev, `09-04 沒有生出 ${key} 那一層`).toBeDefined();
+      expect(ev!.instances.length, `09-04 的 ${key} 層只擺出 ${ev!.instances.length} 具`).toBe(6);
+      const xs = ev!.instances.map((i) => i.x).sort((a, b) => a - b);
+      for (let k = 1; k < xs.length; k++)
+        expect(xs[k]! - xs[k - 1]!, `${key} 相鄰兩具的間距不是等距`).toBeCloseTo(xs[1]! - xs[0]!, 5);
+    }
+  });
+
   it("refine 的閘：缺 lifeSec／填 speed／非 static 填 anchor 都在載入時被擋", () => {
     const { lifeSec: _omit, ...noLife } = NODE;
     expect(zEffectDef.safeParse(noLife).success, "沒有 lifeSec 的 static 不可以過").toBe(false);
@@ -116,6 +177,12 @@ describe('spawnModelFx path:"static"（#649）', () => {
     expect(
       zEffectDef.safeParse({ ...NODE, path: "forward", speed: 10, distance: 6, anchor: "point" }).success,
       "只有 static 讀得到 anchor",
+    ).toBe(false);
+    // ⭐ #673-④ 的兩道新閘：N 具沒間距＝退化成 1 具；間距沒 N 具＝沒人讀的數字。
+    expect(zEffectDef.safeParse({ ...NODE, count: 6 }).success, "static N 具一定要有 spacing").toBe(false);
+    expect(
+      zEffectDef.safeParse({ ...NODE, path: "forward", speed: 10, distance: 6, spacing: 2 }).success,
+      "只有 static+count≥2 讀得到 spacing",
     ).toBe(false);
   });
 });

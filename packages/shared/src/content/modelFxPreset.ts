@@ -57,6 +57,9 @@ const PRESET_FIELDS = [
   "speed",
   "distance",
   "count",
+  // ⭐ #673-④／GH#688 Phase 4 —— static 沿線 N 具的間距。與 `count` 同一個理由住
+  //    這張表：缺了它，「一條線」只能逐支把 2.0 再抄一份（第〇·四守則的第二住處）。
+  "spacing",
   "spinDegPerSec",
   "scale",
   // ⭐ GH#673-② —— static/orbit 的**唯一終止條件**。2026-08-24 之前不在這張表:

@@ -242,11 +242,9 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // ⚠️ 用 `landing` 而不是 `default-live` 是刻意的:30 天後它會**再紅一次** ——
   //    第 2 批沒做完的話，這條線不可以安靜地消失。
   // ⭐ 可反駁：第 2 批一落地，這兩列就會 stale 而紅，⇒ 刪掉它們就是那時候的修法。
-  "enum:abilities.effects[]#spawnModelFx.path=static": {
-    status: "landing",
-    since: "2026-08-24",
-    why: "定點模型特效（`6e4ae847`）—— 機制＋守衛已出貨（真 Zod → 真 SimWorld → 真事件 → 真 rig → 世界矩陣），內容 0 支是**這一批的邊界**，⛔ 不是漏做。60 支的內容批在 GH#649 第 2 批。",
-  },
+  // （`path=static` 那一列在 2026-08-25 被自己的 stale 斷言點名刪掉 ——
+  //   GH#688 Phase 5 pilot 的 09-04 沿線火柱節點是第一個逐字寫 `path:"static"`
+  //   的內容採用者，豁免照規矩回收。）
   "enum:abilities.effects[]#spawnVfx.at=bone": {
     status: "landing",
     since: "2026-08-24",
@@ -378,6 +376,17 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "⚠️ ⛔ **不要為了讓它變綠去替某一份模型填 `z`** —— 那會讓那支技能的光束轉 90 度。\n" +
       "⭐ 可反駁：哪一天匯入一份長軸真的沿 z 的 `.glb`，`pnpm beam:write` 會提案填它，" +
       "這一列就會從 0 筆變成有採用而自動失效。",
+  },
+  // ═══ GH#688 Phase 4 機制② 模型級透明度 2026-08-25 ═════════════════════════
+  "field:models.fxAlpha": {
+    status: "landing",
+    since: "2026-08-25",
+    why:
+      "蝗蟲群掃描（locust_scan/synthesis 缺口表）量到 alpha 是唯一「兩側都空白」的欄：" +
+      "原作 w3u 結構上沒有 alpha 欄（ucua 全檔 0 次），它只存在 runtime 的 57 個 " +
+      "SetUnitVertexColorBJ 呼叫點。這一格是**模型級恆定半透明**那一半（幻影 50% 那一族），" +
+      "機制先行；採用者要等 57 個呼叫點的逐技能接線批（GH#688 Phase 6 的 alpha 掃描）" +
+      "把「哪幾具 dummy 是恆定半透明」從 JASS 撈出來 —— ⛔ 不要為了讓它變綠自己挑一具調透明。",
   },
   // ═══ 週期領域機制落地 2026-08-23 ══════════════════════════════════════════
   "field:abilities.effects[]#delayed.anchor": {

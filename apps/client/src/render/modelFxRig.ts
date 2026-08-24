@@ -62,6 +62,12 @@ export interface ModelFxModelDoc {
    * 於是 38-002 究極暴走黑龍波的兩具 dummy（原作 `[0,0,0]` 純黑）以素材原色出場。
    */
   fxTint?: readonly [number, number, number];
+  /**
+   * ⭐ 這一份外觀的透明度（`model@1.fxAlpha`，0…1）。缺席 ⇒ 1 ＝ 今天的行為。
+   * 原作只存在 runtime（57 個 `SetUnitVertexColorBJ` 呼叫點，w3u 無此欄）——
+   * 這一格是**模型級恆定半透明**那一半（GH#688 Phase 4 機制②）。
+   */
+  fxAlpha?: number;
 }
 
 /**
@@ -80,7 +86,11 @@ export interface ModelFxModelDoc {
  * ⚠️ 斷言要讀**最終**物件：這裡把 clone 指回 `mesh.material`，所以任何對**原始**
  * 素材物件寫的斷言，不管有沒有生效都會過（見 `views/mobTint.test.ts` 的檔頭）。
  */
-export function applyFxTint(root: TransformNode, tint: readonly [number, number, number]): number {
+export function applyFxTint(
+  root: TransformNode,
+  tint: readonly [number, number, number],
+  alpha?: number,
+): number {
   let painted = 0;
   for (const mesh of root.getChildMeshes(false)) {
     const mat = (mesh as { material?: unknown }).material as
@@ -93,13 +103,24 @@ export function applyFxTint(root: TransformNode, tint: readonly [number, number,
       | null;
     if (!copy) continue;
     // ⭐ 兩種素材各自的漫反射欄位名（StandardMaterial / PBRMaterial）。⛔ 不碰
-    //    `emissiveColor` 與 `alpha` —— 見上面的註解。
+    //    `emissiveColor` 與（無 fxAlpha 時的）`alpha` —— 見上面的註解。
     for (const key of ["diffuseColor", "albedoColor"] as const) {
       const c = copy[key] as { r: number; g: number; b: number } | undefined;
       if (!c) continue;
       c.r *= tint[0];
       c.g *= tint[1];
       c.b *= tint[2];
+    }
+    // ⭐【模型級透明度】`model@1.fxAlpha`（GH#688 Phase 4 機制②）——
+    //    **材質 alpha 乘法**，⛔ 不是 visibility 開關：0.5 的幻影要看得到後面的
+    //    地板。乘法（⛔ 不是覆寫）保住素材自己已有的半透明層次。
+    // ⚠️ glTF 載入器把不透明素材鎖成 `transparencyMode: OPAQUE`（PBR）——
+    //    只改 `alpha` 那一格是**寫了但不會發生**（第一·五守則的形狀），
+    //    所以 <1 時一併解鎖成 ALPHABLEND（=2，PBRMaterial.PBRMATERIAL_ALPHABLEND）。
+    if (alpha !== undefined && alpha < 1) {
+      const a = copy["alpha"];
+      copy["alpha"] = (typeof a === "number" ? a : 1) * alpha;
+      if ("transparencyMode" in copy) copy["transparencyMode"] = 2;
     }
     (mesh as { material?: unknown }).material = copy;
     painted++;
@@ -430,7 +451,10 @@ export class ModelFxRig {
       { doNotInstantiate: true },
     );
     for (const node of inst.rootNodes) node.parent = axis;
-    if (doc.fxTint) applyFxTint(axis, doc.fxTint);
+    // ⭐ fxTint／fxAlpha 共用同一個入口（clone-材質那一套規矩只寫一份）：
+    //    只有 fxAlpha 時 tint 用 [1,1,1]（乘 1 ＝ 不著色）。
+    if (doc.fxTint || doc.fxAlpha !== undefined)
+      applyFxTint(axis, doc.fxTint ?? [1, 1, 1], doc.fxAlpha);
     return true;
   }
 

@@ -100,7 +100,25 @@ export const zSpawnModelFx = z
       .positive()
       .max(MODEL_FX_MAX_INSTANCES)
       .optional()
-      .describe("radial／orbit 幾個實例等分。⛔ 直線路徑讀不到它。"),
+      .describe(
+        "radial／orbit 幾個實例等分；⭐ static 時＝沿開火方向**等距擺幾具**（#673-④，原作一次擺出整條線）。⛔ forward／toTarget 讀不到它。",
+      ),
+    /**
+     * ⭐【沿線 N 具】`path:"static"` 的間距（#673-④／GH#688 Phase 4）。
+     *
+     * 原作的光束/火柱不是一具，是**一條線**：`A03S`（09-04 龜派氣功）的 h006 火柱
+     * `loop i=1..6 × 200`、`A05J`（59-04）的 e003 `i=1..10 × 150` —— 每具之間隔一個
+     * 固定步長。這一格就是那個步長（世界單位；200 wc3u ÷ 100 ＝ 2.0）。
+     * 第 k 具在錨點沿開火方向的 spacing×k 處（第 0 具在錨點上）。
+     */
+    spacing: z
+      .number()
+      .positive()
+      .max(MODEL_FX_MAX_DISTANCE)
+      .optional()
+      .describe(
+        'path:"static" 且 count≥2 時，相鄰兩具的間距（世界單位）。⛔ 其他路徑讀不到它（radial/orbit 的距離住 distance）。',
+      ),
     spinDegPerSec: z
       .number()
       .min(-MODEL_FX_MAX_SPIN_DEG_PER_SEC)
@@ -220,11 +238,32 @@ export const refine = (
       message: `path:"${e.path}" 一定要有 count —— 缺了它整組等分退化成 1 具，而那看起來就跟 path:"forward" 一模一樣`,
     });
   }
-  if (!spread && e.count !== undefined) {
+  // ⭐ #673-④：`static` 也讀 count（沿線 N 具）。⚠️ 帶 `preset` 的節點 path 可能
+  //    要等模板才補上（例：只寫 `count` 覆寫模板預設）⇒ 這一條對它們不判。
+  if (!fromPreset && !spread && e.path !== "static" && e.count !== undefined) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["count"],
-      message: '只有 path:"radial" / "orbit" 讀得到 count —— 直線路徑永遠只有一具模型',
+      message:
+        '只有 path:"radial" / "orbit" / "static" 讀得到 count —— forward/toTarget 永遠只有一具模型',
+    });
+  }
+  // ⭐【沿線 N 具】spacing 只有 static+count≥2 讀得到；反過來 static 擺了 N 具卻
+  //    沒有間距 ⇒ sim 會退化成 1 具（防第三條路），所以缺席在載入時就喊。
+  if (!fromPreset && e.spacing !== undefined && (e.path !== "static" || (e.count ?? 1) < 2)) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["spacing"],
+      message:
+        '只有 path:"static" 且 count≥2 讀得到 spacing —— 這一格現在是一個看起來有設、其實沒有人讀的數字',
+    });
+  }
+  if (!fromPreset && e.path === "static" && (e.count ?? 1) >= 2 && e.spacing === undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["spacing"],
+      message:
+        'path:"static" 擺 N 具一定要有 spacing —— 缺了它整條線退化成 1 具，而那看起來就跟沒寫 count 一模一樣',
     });
   }
   if (e.path === "orbit" && e.lifeSec === undefined) {

@@ -85,9 +85,13 @@ describe("橫放光束砲的特效模板 (beam-roll preset)", () => {
       const beam = beams[0]!;
       // ⭐ 承重：模板補上的每一格都在，而且**逐格等於表上的值**。
       //    ⛔ 這裡沒有任何字面值 —— 表改了它跟著改，表沒被讀它就紅。
-      for (const k of ["modelKey", "speed", "spinDegPerSec"] as const) {
+      for (const k of ["speed", "spinDegPerSec"] as const) {
         expect(beam[k], `${id} 的 ${k} 沒有從 ${PRESET_ID} 補上`).toBe(fromTable(k));
       }
+      // ⭐ `modelKey` 是**身分**不是幾何（staging contract ⑤ 的原話）——
+      //    2026-08-25 起 09-04 帶著自己的 `w3x.stock.revivehuman`（原作 h007），
+      //    其餘仍吃模板預設 ⇒ 這一格只要求「載入後一定有」，逐支的值歸 ⑤ 管。
+      expect(typeof beam["modelKey"], `${id} 的 modelKey 沒有解析出來`).toBe("string");
       // ⭐ `distance` 與 `scale` **允許逐支覆寫**，所以這兩格只要求它們是真的數字。
       //
       //  · `distance` —— 59-04 的光束只走它自己那條線的長度。

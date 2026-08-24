@@ -233,6 +233,28 @@ export const zModelDoc = z
     fxTint: z
       .tuple([z.number().gte(0).lte(1), z.number().gte(0).lte(1), z.number().gte(0).lte(1)])
       .optional(),
+
+    /**
+     * ⭐ 這一份**外觀**的透明度（0…1；1＝不透明）。ABSENT ⇒ 1 ＝ 今天 131 份
+     * 出貨文件的行為，**逐位元不變**。
+     *
+     * ── 為什麼這一格存在（GH#688 Phase 4 機制②）─────────────────────────────
+     * 蝗蟲群掃描（`docs/_reports/locust_scan/synthesis.md` 缺口表）量到 alpha 是
+     * **唯一「兩側都空白」的欄**：原作的 w3u 結構上沒有 alpha 欄（`ucua` 全檔 0 次）
+     * ——它只存在 runtime 的 **57 個 `SetUnitVertexColorBJ` 呼叫點**（黑龍波 60→90%
+     * 漸隱、幻影 50%…），而 GGD 這一側 `applyFxTint` **刻意不動 alpha**（純黑頂點色
+     * 要畫成黑色剪影，⛔ 不是消失）⇒ 半透明的 dummy 一格都表達不了。
+     *
+     * ⭐ 這一格是**模型級**的那一半（恆定半透明的外觀，例：幻影族 50%）——
+     * 換算 `SetUnitVertexColorBJ` 第 4 參數 t%：alpha = (100−t)÷100。
+     * ⚠️ **per-cast 漸變**（同一具在施放中 60%→90%）是另一半，住 `spawnModelFx`
+     * 的後續票（57 個呼叫點逐技能接線），⛔ 這一批只做模型級這一格。
+     *
+     * ⚠️ 客戶端套用是**材質 alpha 乘法**（`applyFxTint`），⛔ 不是 visibility 開關
+     * —— 0.5 的幻影要看得到後面的地板，setEnabled(false) 那種「全有全無」不是它。
+     * ⭐ 一鍵 rollback：編輯器把這一格清空 ⇒ 回到素材原 alpha（live bind-mount）。
+     */
+    fxAlpha: z.number().gte(0).lte(1).optional(),
   })
   .strict();
 
