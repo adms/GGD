@@ -1,4 +1,6 @@
 /**
+ * @visual-proof
+ *
  * ⚡ **這一族閃電從寫出來的那天起，一個像素都沒畫出來過。**（2026-08-24）
  *
  * owner 逐字（**第二次**回報）：
@@ -50,6 +52,31 @@ describe("⚡ 弧要真的畫得出像素（GH#571 的第二輪）", () => {
           "而一條弧在螢幕上只有幾個像素寬 ⇒ 取樣全落在 0 上 ⇒ 玩家什麼都看不到",
       ).toBe(null);
     }
+    fx.dispose();
+    scene.dispose();
+    engine.dispose();
+  });
+
+  it("⛔ 弧的 UV 不可以是退化的（全部同一點）—— 那會讓整條帶子取樣在同一個 texel", () => {
+    // ⚠️ 這是這一次的**第一段根因**：`CreateRibbon` 用「全部 (0,0,0) 的退化路徑」
+    // 建網格 ⇒ Babylon 從路徑長度推的 UV **全是 (0,0)**，而 `{ instance }` 就地
+    // 更新**不重算 UV** ⇒ 那組 (0,0) 從此不會變。⭐ 只要之後有人再掛一張貼圖上去，
+    // 這個缺陷就會**原封不動地復發** —— 所以它自己要有一條守衛。
+    const engine = new NullEngine();
+    const scene = new Scene(engine);
+    const fx = new ArcBoltFx(scene);
+    fx.strike({ x: 0, y: 1, z: 0 }, { x: 5, y: 1, z: 0 }, arcBoltSpec(), 0);
+    const mesh = scene.meshes.find((m) => m.name === "vfx-arc");
+    expect(mesh, "一次 strike 之後應該有弧帶網格").toBeTruthy();
+    const uv = mesh!.getVerticesData("uv");
+    expect(uv, "弧帶沒有 UV").toBeTruthy();
+    const uniq = new Set<string>();
+    for (let i = 0; i + 1 < uv!.length; i += 2) uniq.add(`${uv![i]},${uv![i + 1]}`);
+    expect(
+      uniq.size,
+      "弧帶的 UV 全部相同 —— 整條帶子會取樣到同一個 texel，" +
+        "只要那一格是透明的（或未來有人掛上遮罩），玩家就一個像素都看不到",
+    ).toBeGreaterThan(1);
     fx.dispose();
     scene.dispose();
     engine.dispose();

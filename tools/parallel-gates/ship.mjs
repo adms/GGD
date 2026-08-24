@@ -270,6 +270,9 @@ const SERIAL = syncTrim.steps ? ["content:build", ...syncTrim.steps] : ["content
  */
 const PARALLEL = [
   { name: "skills:check", cmd: ["node", [`${HERE}run.mjs`, "skills:check"]] },
+  // 👁 owner 2026-08-24:「我不想當你的人肉測試機」——改到畫面層卻沒有終端證據 ⇒ 紅。
+  //    ⭐ 它很快（一次 git diff），⛔ 不會拖慢地板（地板是 vitest apps/client ~220s）。
+  { name: "visual-proof", cmd: ["bash", ["scripts/visual-proof.sh"]] },
   ...(noTypecheck ? [] : [{ name: "typecheck", cmd: ["pnpm", ["typecheck"]] }]),
   // ⭐ **這條管線自己的守衛**（分級表 + 閘選擇 + 部署步驟）。
   // ⚠️ 它在此之前**沒有被任何閘跑到**:`pnpm test` 是 `pnpm -r`（逐 package）,
