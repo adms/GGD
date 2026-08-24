@@ -61,7 +61,10 @@ describe("客戶端跨界 import 進 content/ 的檔案（GH#437）", () => {
     // ② Dockerfile 真的 COPY 了哪幾份（⛔ 只認指名到檔案的那種，目錄式的不算）
     const dockerfile = readFileSync(join(REPO, "docker/edge.Dockerfile"), "utf8");
     const copied = new Set<string>();
-    for (const m of dockerfile.matchAll(/^COPY\s+((?:content|tools)\/\S+\.\w+)\s+\S+$/gm)) {
+    // ⚠️ 只認 vite **靜態 import 得進來**的副檔名 —— `tools/deploy/ggd-assets.sh`
+    //    是 runtime 工具的 COPY,⛔ 不是建置脈絡的成對義務(第一版擴到 tools/ 時
+    //    誤把它算成孤兒)。
+    for (const m of dockerfile.matchAll(/^COPY\s+((?:content|tools)\/\S+\.(?:json|ts|tsx|js|css))\s+\S+$/gm)) {
       copied.add(m[1]!);
     }
 
