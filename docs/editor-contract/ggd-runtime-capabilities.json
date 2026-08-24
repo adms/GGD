@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "e03d3f48",
+  "fingerprint": "fd6d35b6",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -334,6 +334,7 @@
     "slot",
     "soundKey",
     "source",
+    "spacing",
     "speed",
     "spinDegPerSec",
     "spread",

@@ -17,6 +17,7 @@ import { bundlePath, rebuildAllIndexes } from "../src/content/node/index";
 import { COLLECTION_NAMES } from "../src/content/schema/index";
 import { ContentLoader } from "../src/content/loader";
 import { FsContentSource } from "../src/content/node/FsContentSource";
+import type { ContentSource, IndexEntry } from "../src/content/types";
 import { registerAll } from "../src/content/registries";
 import {
   findActiveCardsWithNoPayload,
@@ -61,6 +62,7 @@ if (!existsSync(CONTENT_DIR)) {
  * into the bundle is how an unloadable doc reaches a container.
  * ─────────────────────────────────────────────────────────────────────────────
  */
+const fsSource = new FsContentSource(CONTENT_DIR);
 let loaded: Awaited<ReturnType<ContentLoader["load"]>>;
 try {
   // ⛔ **一定要 `fail-closed`**（GH#326）。執行期的出貨政策是 `quarantine`
@@ -75,22 +77,36 @@ try {
   //    ⇒ **建置期**的驗證源改成「索引 ∪ 目錄掃描」：目錄上有而索引沒有的 .json
   //    照樣進驗證 —— 覆蓋只會更嚴,⛔ 不是放寬;runtime 的 FsContentSource 一個
   //    位元不動（出貨仍以 committed 索引為準,shippedBundleHasTrackedSources 照守）。
-  class BuildTimeFsSource extends FsContentSource {
-    override async readIndex(collection: Parameters<FsContentSource["readIndex"]>[0]) {
-      const idx = await super.readIndex(collection).catch(() => ({ collection, hash: "", entries: [] as { id: string; path: string }[] }));
+  const buildTimeSource: ContentSource = {
+    readManifest: () => fsSource.readManifest(),
+    readObject: (c, e) => fsSource.readObject(c, e),
+    async readIndex(collection) {
+      const idx = await fsSource
+        .readIndex(collection)
+        .catch(() => ({ collection, hash: "", entries: [] as IndexEntry[] }));
       const dir = join(CONTENT_DIR, collection);
+      if (!existsSync(dir)) return idx;
       const seen = new Set(idx.entries.map((e) => e.path));
+      const extra: IndexEntry[] = [];
       for (const f of readdirSync(dir).sort()) {
         if (!f.endsWith(".json") || f.startsWith("_")) continue;
-        const rel = join(collection, f);
+        const rel = `${collection}/${f}`;
         if (seen.has(rel)) continue;
-        const doc = JSON.parse(readFileSync(join(dir, f), "utf8")) as { id?: string };
-        idx.entries.push({ id: String(doc.id ?? f.replace(/\.json$/, "")), path: rel });
+        const raw = readFileSync(join(dir, f), "utf8");
+        const doc = JSON.parse(raw) as { id?: string };
+        // hash/size 只餵給進度 UI 與快取鍵；建置期這一趟兩者都不讀,⛔ 但也不留空字串
+        // 假裝它是真的 —— 用內容長度當 size,hash 標記成建置期補的。
+        extra.push({
+          id: String(doc.id ?? f.replace(/\.json$/, "")),
+          path: rel,
+          hash: "buildtime0000",
+          size: Buffer.byteLength(raw),
+        });
       }
-      return idx;
-    }
-  }
-  loaded = await new ContentLoader(new BuildTimeFsSource(CONTENT_DIR)).load({ policy: "fail-closed" });
+      return extra.length ? { ...idx, entries: [...idx.entries, ...extra] } : idx;
+    },
+  };
+  loaded = await new ContentLoader(buildTimeSource).load({ policy: "fail-closed" });
 } catch (err) {
   const errors = (err as { errors?: unknown[] }).errors ?? [err];
   console.error(`\n✖ content 驗證失敗 —— ${errors.length} 個問題，索引與 bundle 都沒有重建：\n`);

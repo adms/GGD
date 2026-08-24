@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_8bdd49d60c2b",
+    "contentVersion": "cv_84fd4c3b96e1",
     "collections": {
       "champions": {
-        "hash": "3a216b61944b",
+        "hash": "9fc69bc0b85e",
         "count": 71
       },
       "abilities": {
-        "hash": "8571dfacadb2",
+        "hash": "7e19c7aea3cc",
         "count": 421
       },
       "items": {
@@ -46,8 +46,8 @@
         "count": 87
       },
       "models": {
-        "hash": "2467df1e8005",
-        "count": 124
+        "hash": "bf2836c20c85",
+        "count": 126
       },
       "vfx": {
         "hash": "89201362fc0c",
@@ -58,7 +58,7 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "546b4acc32b3",
+        "hash": "3b44fd52ed4a",
         "count": 41
       }
     },
@@ -89,7 +89,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "e03d3f48",
+    "fingerprint": "fd6d35b6",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -423,6 +423,7 @@
       "slot",
       "soundKey",
       "source",
+      "spacing",
       "speed",
       "spinDegPerSec",
       "spread",
@@ -1405,6 +1406,18 @@
               "min": 1,
               "max": 48,
               "inert": "同 speed —— static 不位移,唯一終止條件是 lifeSec。"
+            },
+            "count": {
+              "type": "number",
+              "default": 6,
+              "min": 1,
+              "max": 12
+            },
+            "spacing": {
+              "type": "number",
+              "default": 2,
+              "min": 0.5,
+              "max": 48
             },
             "spinDegPerSec": {
               "type": "number",
@@ -3709,12 +3722,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "e03d3f48",
+    "engineFingerprint": "fd6d35b6",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 e03d3f48 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 fd6d35b6 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -4503,5 +4516,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "26e1a3d5d605"
+  "profileDigest": "5da3092afe3c"
 }

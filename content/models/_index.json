@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "2467df1e8005",
+  "hash": "bf2836c20c85",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -745,6 +745,18 @@
       "path": "models/prop.guardian.treant.json",
       "hash": "020df7426127",
       "size": 399
+    },
+    {
+      "id": "w3x.stock.flamestrike1",
+      "path": "models/w3x.stock.flamestrike1.json",
+      "hash": "146e4cbb9484",
+      "size": 308
+    },
+    {
+      "id": "w3x.stock.revivehuman",
+      "path": "models/w3x.stock.revivehuman.json",
+      "hash": "59fce0d3bc56",
+      "size": 352
     }
   ]
 }

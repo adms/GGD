@@ -238,6 +238,9 @@
   "(passive).deathWard": [
    "持續",
    "續效特效"
+  ],
+  "spawnModelFx.spacing": [
+   "路徑"
   ]
  },
  "_topLevelWhy": "技能文件**自己**的欄位（⛔ 不在 effects 樹裡），同樣要被分類 —— 一支 `castTimeSec: 3` 的技能有一段三秒的等待，而它一格 effect 都不必有。",
@@ -457,6 +460,9 @@
    "castTimeSec": [],
    "lifeSec": [
     "等待"
+   ],
+   "spacing": [
+    "路徑"
    ]
   },
   "ignored": {
