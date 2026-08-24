@@ -79,7 +79,12 @@ describe('spawnModelFx path:"static"（#649）', () => {
     const wire = ev!.data as unknown as ModelFxSpawnEvent;
     expect(wire.instances).toHaveLength(1);
     const inst = wire.instances[0]!;
-    expect(inst.dx === 0 && inst.dz === 0, "⛔ static 的實例帶著方向 —— 它不可以位移").toBe(true);
+    // ⚠️ 2026-08-24 前提更新（`2705f145`）：**不動 ≠ 沒有方向**。原作那十具 dummy
+    //    沿一條線擺（A0D5@32322），光束砲原地開火時長軸仍要指著開火方向 ⇒
+    //    static 現在**送 `dir`**（給客戶端算 yaw），⛔ 不動的保證改由 `travel/dist=0`
+    //    承擔（`travelled = dist × frac = 0` ⇒ 位置逐位元不動）。
+    //    ⇒ 這一條從「不帶方向」改成「帶方向也**推不動**」—— 後者才是玩家看得到的性質。
+    expect(inst.dist, "⛔ static 的實例帶著非零 travel —— 它會位移").toBe(0);
     expect({ x: inst.x, z: inst.z }, "⛔ static 的錨點沒有被讀 —— 模型長在施法者腳下,不在施放點上").toEqual(P);
     expect(inst.durationSec, "⛔ lifeSec 沒有走到線路上 —— 這一具會當場消失").toBeCloseTo(NODE.lifeSec, 5);
 

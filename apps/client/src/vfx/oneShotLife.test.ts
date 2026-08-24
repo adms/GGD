@@ -177,7 +177,13 @@ describe("餘燼壽命上限 · 引擎真的拿到的粒子壽命 (vfx-one-shot-
     expect(doc.lifetimeSec.max).toBe(3.5);
     const sys = harness();
     const ps = fire(sys, "test.life.burst.q", 2_000);
-    expect(ps.max).toBeCloseTo(DEFAULT_ONE_SHOT_MAX_LIFE_SEC, 6);
+    // ⚠️ 2026-08-24（GH#660）之後這具文件吃**兩個**天花板：one-shot 上限（這一支測的）
+    //    ＋整段收尾上限 `vfxDissipateMaxSec`（黑洞的 alpha 尾巴超標 ⇒ 0.6 再被夾到 0.5）。
+    //    ⇒ 斷言從「等於 one-shot 上限」改成「**不高於** one-shot 上限、且真的比原作 3.5
+    //    短」—— 這一支守的機制是「burst 也吃天花板」，⛔ 不是「哪一個天花板最緊」
+    //   （那是 dissipateCap.test 的事；釘死等號會讓兩支守衛搶同一個數字的所有權）。
+    expect(ps.max).toBeLessThanOrEqual(DEFAULT_ONE_SHOT_MAX_LIFE_SEC + 1e-6);
+    expect(ps.max, "天花板根本沒生效 —— 3.5 秒原樣出去了").toBeLessThan(doc.lifetimeSec.max);
     sys.dispose();
   });
 

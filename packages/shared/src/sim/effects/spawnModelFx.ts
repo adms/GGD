@@ -277,7 +277,14 @@ export const spawnModelFxEffect: EffectKindSpec<"spawnModelFx"> = {
       const travelTicks = speed > 0 && i.travel > 0 ? Math.ceil(i.travel / (speed * world.dt)) : 0;
       const ticks = lifeTicks !== undefined ? Math.min(travelTicks, lifeTicks) : travelTicks;
       const actual = Math.min(i.travel, speed * world.dt * ticks);
-      return { i, ticks: i.dir === undefined ? (lifeTicks ?? 0) : ticks, actual };
+      // ⚠️ 「不動」的判準是 **`travel === 0`**，⛔ 不是「沒有 dir」——
+      //    static 自 `2705f145` 起帶 `dir`（長軸要指開火方向），若用 dir 判，
+      //    static 會走直線分支 ⇒ `ticks = min(travelTicks=0, lifeTicks) = 0`
+      //    ⇒ durationSec 0 ⇒ **客戶端當場把它收掉**（光束只閃一幀）。
+      //    modelFxStatic.test 的「lifeSec 沒有走到線路上」那一條抓的正是這個。
+      //    ⭐ 順帶把「目標貼臉 ⇒ travel 0」的直線退化也修對：那一具現在也活
+      //    lifeSec（沒填 lifeSec 的照舊 0 —— 出貨行為只在填了 lifeSec 時改變）。
+      return { i, ticks: i.travel === 0 ? (lifeTicks ?? 0) : ticks, actual };
     });
 
     // ⭐ GH#605 —— **落點那一發聲音要等多久**。取整組實例裡走最久的那一個：

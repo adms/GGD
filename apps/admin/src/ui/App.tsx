@@ -264,7 +264,7 @@ export const NAV: NavItem[] = [
   { page: "damageTierWarnings", label: "⚠️ 不吃五級距的傷害節點", emoji: "🚫", section: SEC_COMBAT },
   // GH#682 / GH#683 —— owner 2026-08-24 各逐字點名第二次的兩張清單（md ＋ 後台）。
   // 唯讀、與 docs 的 md 共用 `tools/skill-lists/lists.json` 同一次計算。
-  { page: "castTimeList", label: "詠唱>1秒清單", emoji: "📜", section: SEC_COMBAT },
+  { page: "castTimeList", label: "詠唱超過1秒", emoji: "📜", section: SEC_COMBAT },
   { page: "msBuffList", label: "移速加成清單", emoji: "💨", section: SEC_COMBAT },
   { page: "uiLexicon", label: "介面用語（Fate）", emoji: "🏆", section: SEC_COMBAT },
   { page: "statNormalization", label: "英雄屬性正規化", emoji: "📐", section: SEC_COMBAT },

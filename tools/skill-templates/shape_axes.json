@@ -454,7 +454,10 @@
    "damageTiming": [
     "等待"
    ],
-   "castTimeSec": []
+   "castTimeSec": [],
+   "lifeSec": [
+    "等待"
+   ]
   },
   "ignored": {
    "damage": "純數值",
@@ -521,7 +524,8 @@
   "auras": [
    "持續"
   ],
-  "hooks": []
+  "hooks": [],
+  "statusImmunity": []
  },
  "_ignoredWhy": "⭐ 每一格都要寫**為什麼它不帶形狀**，⛔ 不是「還沒收」（第〇·四守則的豁免規則）。看不順眼可以反駁 —— 反駁的方式是把它移進 fields，掃描器立刻重新分群。",
  "ignored": {

@@ -353,6 +353,11 @@ A("59-04", "59-04 野戰型陽電子砲", "ground", [90, 90, 90], [350, 500, 650
            #    看到**橫放的光束砲**吧」。演出幾何全部住共用表
            #    `content/ability-templates/tpl-beam-roll.json`（第〇·四守則），
            #    這裡只寫兩格「這一支自己的」：往哪去、走多遠。
+           # ⚠️ 2026-08-24 裁決（owner:「光束砲原地開火,只有波飛出去」）:
+           #    這裡**不再寫 `path`/`distance`** —— 值住模板那一格
+           #    （`tpl-beam-roll.params.path.default = "static"`,第〇·四守則:
+           #    一鍵 rollback = 改模板那一格,四支經典一起回去）。
+           # ⛔ 下面這段舊註解**留著當歷史**:它描述的是被取代的 toTarget 行為。
            # ⭐ `path:"toTarget"` 是**原作**：war3map.j:47756-47765（A0GI）生一隻光束
            #    dummy `h01P` 於施法者身上並**面向目標點**，⛔ 不是沿著身體面向噴。
            # ⭐ `distance` 逐字等於上面那條 damageLine 的長度（450 w3x u × 11/600），
@@ -362,7 +367,6 @@ A("59-04", "59-04 野戰型陽電子砲", "ground", [90, 90, 90], [350, 500, 650
            #    ki 系（初號機的陽電子砲同族）⇒ 用既有的 `fx.prim.ki.explosion-lg`,
            #    ⛔ 零新資產。
            {"kind": "spawnModelFx", "shape": "single", "preset": "tpl-beam-roll",
-            "path": "toTarget", "distance": 8.25,
             "onArrive": [{"kind": "spawnVfx", "vfxId": "fx.prim.ki.explosion-lg",
                           "at": "point"}]}])
 

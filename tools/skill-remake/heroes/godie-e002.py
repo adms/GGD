@@ -121,9 +121,12 @@ A("20-03", "20-03 約束與勝利之劍", "ground", [60, 60, 60, 60], [250, 350,
       #    第零守則⑨的反面標記，也是第〇·四守則說的「同一個數字的第二個住處」。
       # ⚠️ `onTouch` 仍然逐支寫：模板刻意**不**自動塞傷害（那會替每一支引用它的
       #    技能加一份沒有人裁決過的數值，第一守則）。
+      # ⚠️ 2026-08-24 兩項裁決（詳 docs/legacy/_w3x-fidelity-superseded.md §2026-08-24）:
+      #    ① `path` 不再寫 —— 住模板那一格（default="static",owner:「原地開火」）。
+      #    ② `onTouch`（magic·級距小）**刪除** —— effects[0] 的 damageLine（級距中·
+      #       length 14）已蓋同一條線,原作只結算一次;這組是重製時加的第二份傷害。
+      #       rollback = 後台覆蓋層把那組 onTouch 貼回來（原文在 superseded 檔裡）。
       {"kind": "spawnModelFx", "shape": "single", "preset": "tpl-beam-roll",
-       "path": "forward",
-       "onTouch": [dmg("magic", dmg_tier="小")],
        # ⭐ GH#607 —— 落點要炸開。在此之前 `onArrive` 只有震動 ⇒ 光束飛到底
        #    **憑空消失**。⚠️ 而 `tpl-beam-roll` 的家族預設早就宣告了 `arriveSoundKey`
        #    ⇒ 聲音說爆炸、畫面什麼都沒有（第一·五守則:說了但不會發生）。
