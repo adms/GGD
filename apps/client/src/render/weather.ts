@@ -204,11 +204,15 @@ export function weatherPolicy(): WeatherPolicy {
 
 let arenaId = "";
 let toggles: WeatherRenderToggles = WEATHER_TOGGLES_OFF;
+// 🌧️ GH#676 —— 這一場的比賽種子。`undefined` = 還沒進房（開機骨架）⇒ 不下雨。
+// 由 `GameApp.onStatePatch` 餵（state.seed 是 MatchRoom.onCreate 寫一次、整場不變
+// 的那一顆），「這一場下不下雨」= matchRainRoll(policy, seed) 的決定性擲骰。
+let matchSeed: number | undefined;
 let look: WeatherLook = WEATHER_LOOK_NONE;
 const listeners = new Set<(w: WeatherLook) => void>();
 
 function recompute(): void {
-  const next = weatherLookFor(weatherPolicy(), arenaId, toggles);
+  const next = weatherLookFor(weatherPolicy(), arenaId, toggles, matchSeed);
   look = next;
   for (const fn of listeners) fn(next);
 }
@@ -218,6 +222,16 @@ export function setWeatherArena(id: string): WeatherLook {
   arenaId = id;
   recompute();
   return look;
+}
+
+/**
+ * 🌧️ 這一場的比賽種子進來了（GH#676）。⚠️ 去重是必要的：快照 20Hz 每格都帶
+ * seed，而 seed 整場只寫一次 —— 沒有這個比較就是每秒 20 次無謂的 recompute。
+ */
+export function setWeatherMatchSeed(seed: number): void {
+  if (seed === matchSeed) return;
+  matchSeed = seed;
+  recompute();
 }
 
 /** 四格開關變了。由 `QualityController.compute()` 呼叫（設定與梯子都經過它）。 */
@@ -253,6 +267,7 @@ export function subscribeWeather(fn: (w: WeatherLook) => void): () => void {
 export function resetWeatherForTest(): void {
   arenaId = "";
   toggles = WEATHER_TOGGLES_OFF;
+  matchSeed = undefined;
   look = WEATHER_LOOK_NONE;
   cachedDoc = Symbol("unread");
   cachedPolicy = resolveWeather(undefined);

@@ -111,9 +111,10 @@ export type WeatherKind = (typeof WEATHER_KINDS)[number];
 
 /** 給人看的名字 —— 後台下拉選單與地圖編輯器共用同一份。 */
 export const WEATHER_KIND_LABELS: Record<WeatherKind, string> = {
-  clear: "晴朗（室外）—— 今天的樣子：地面不濕、沒有積水、沒有額外的霧",
-  fog: "起霧（室外）—— 只有霧。地面**不濕**，所以它可以安全地用在你不確定是不是室內的圖上",
-  rain: "下雨（室外）—— 濕地面 ＋ 積水 ＋ 薄霧",
+  clear:
+    "晴朗（室外）—— 地面不濕、沒有積水、沒有額外的霧。⚠️ 室外＝**每場開賽有機率下雨**（GH#676，機率在天氣頁那一格）",
+  fog: "起霧（室外）—— 有霧、地面**不濕**。⚠️ 室外＝有機率下雨 —— 確定不可以淋雨的圖請用 `indoor-*`，⛔ 不是這一級",
+  rain: "下雨（室外）—— 濕地面 ＋ 積水 ＋ 薄霧（陰天濕地的**觀感**；天上掉不掉水仍看每場的擲骰）",
   storm: "雷雨（室外）—— 濕地面 ＋ 積水 ＋ 中等霧。⚠️ 閃電本身由場地的 `scenery.lighting.wave = storm` 決定，不是這一格",
   "indoor-dry": "室內·乾（大廳／墓所／和室）—— ⛔ 不下雨、不濕、沒有積水、沒有霧",
   "indoor-damp":
@@ -134,7 +135,12 @@ export interface WeatherWeights {
   /** 霧有多濃（0 = 只有空氣漫反射那一層） */
   fog: number;
   /**
-   * 🌧️ 天上真的在**掉水**的強度（0 = 不下雨）。GH#654。
+   * 🌧️ 擲出雨的那一場，天上掉水掉**多大**（0 = 這一級永遠不掉水）。GH#654 · #676。
+   *
+   * ⚠️ GH#676 之後這一格**只管強度，⛔ 不管「下不下」**：下不下是每場開賽用
+   * matchSeed 擲一次的 {@link matchRainRoll}（owner 2026-08-24：「只要是**室外
+   * 場景**，都**有機率**下雨，而**非一定會下或不會下**」）。室內閘看 id 前綴
+   * （{@link weatherKindIsSheltered}），這裡的 0 只是第二條保險帶。
    *
    * ⚠️ 它與 `wet` / `puddle` **刻意分開**：owner 2026-08-23 的
    * 「有些場景是室內，請不要下雨」管的是**這一格**，而 `indoor-damp`（洞窟滲水）
@@ -153,8 +159,11 @@ export interface WeatherWeights {
  * ⇒ 出貨時只有「大聖杯洞窟」用它，其餘室內圖一律 `indoor-dry`。
  */
 export const WEATHER_KIND_WEIGHTS: Record<WeatherKind, WeatherWeights> = {
-  clear: { wet: 0, puddle: 0, fog: 0, rain: 0 },
-  fog: { wet: 0, puddle: 0, fog: 1, rain: 0 },
+  // 🌧️ GH#676：`rain` 欄從「下不下」改成「擲出雨時下多大」，所以**每一個室外**
+  //    級別都是 1（owner：「只要是室外場景，都有機率下雨」）；兩個 `indoor-*`
+  //    維持 0 —— 室內閘的正身是 id 前綴（`weatherKindIsSheltered`），這裡是保險帶。
+  clear: { wet: 0, puddle: 0, fog: 0, rain: 1 },
+  fog: { wet: 0, puddle: 0, fog: 1, rain: 1 },
   rain: { wet: 1, puddle: 1, fog: 0.45, rain: 1 },
   storm: { wet: 1, puddle: 1, fog: 0.7, rain: 1 },
   "indoor-dry": { wet: 0, puddle: 0, fog: 0, rain: 0 },
@@ -291,26 +300,41 @@ export const zConfigWeatherDoc = z
      * ⛔ 不是蓋在頭上的一層天花板 —— 後者會把英雄整個蓋掉。
      */
     fogBankHeight: z.number().min(0.2).max(20),
-    /* ── 🌧️ 降水（GH#654）──────────────────────────────────────────────────
+    /* ── 🌧️ 降水（GH#654 · #676）──────────────────────────────────────────
      *
      * owner 2026-08-24：「**下雨跟起霧的天氣特效**」。⚠️ 霧那一半 GH#610 已經
      * 出貨（上面 `fog*` 六格），這一批補的是**天上真的在掉水**的那一半。
      *
-     * ⭐ 它**沒有第二張表**：下雨在哪幾張圖，答案仍然是同一格 `arenas` 的級別
-     * （`WEATHER_KIND_WEIGHTS[kind].rain`）。⇒ 一張圖不會出現「天氣說晴朗、
-     * 天上在下雨」，而 owner 想讓某張圖下雨就是改那一列的級別，⛔ 不是再開一張表。
+     * ⭐ GH#676（owner 2026-08-24 對 #654 的更正，逐字）：
      *
-     * ⚠️ 六格全部 `.optional()`：線上已經有耐久覆蓋層，一份存於新欄位之前的
+     * > 「只要是**室外場景**，都**有機率**下雨，而**非一定會下或不會下**」
+     *
+     * ⇒ 「下不下」被拆成三個各有一個住處的問題，⛔ 沒有第二張表：
+     *   · **下不下** = 每場開賽用 matchSeed 擲**一次**（{@link matchRainRoll}，
+     *     決定性：同 seed 同結果，回放/觀戰一致）
+     *   · **這張圖進不進機率池** = `arenas` 級別的 id 前綴（`indoor-*` 永遠不進）
+     *   · **下多大** = `WEATHER_KIND_WEIGHTS[kind].rain`（那張共用表）
+     *
+     * ⚠️ 七格全部 `.optional()`：線上已經有耐久覆蓋層，一份存於新欄位之前的
      * override 少了必填欄會讓整份 config 被 Zod 退回 ⇒ 內容載入失敗 ⇒ 退回骨架
      * （2026-08-02 事故的形狀）。
      */
 
     /**
-     * 🌧️ 降水總開關。⭐ **出貨 `false`** —— 這是**新功能**，⛔ 不是修復，
-     * 所以它不套「優先權大的更新後都是預設啟動」那一條（第〇·六守則）。
-     * owner 打開它之前，這一版的畫面與上一版**逐像素相同**。
+     * 🌧️ 降水總開關。⭐ GH#676 之後語意是**止血閥**（出貨 `true`）：
+     * 機率制下「下不下」由 {@link rainChance} 的每場擲骰決定，這一格只留給
+     * 「線上覺得哪裡怪就一鍵全關」（第〇·六守則的一鍵 rollback）。
+     * ⚠️ 它出貨從 `false` 翻成 `true` **正是 #676 的修正**：`false` ＝「不會下」，
+     * 那是 owner 逐字說**不要**的二元。
      */
     rainEnabled: z.boolean().optional(),
+    /**
+     * 🌧️ **一場比賽下雨的機率**（0–1）。GH#676。每場開賽用 matchSeed 擲一次：
+     * 擲中 ⇒ 這一場**所有室外的圖**都下雨；沒擲中 ⇒ 整場乾的。室內永遠不進
+     * 機率池。⚠️ 0 與 1 都會退化回 owner 說不要的二元（永不下／必下）——
+     * 這一格的意義正是在兩個極端之間。缺席 ⇒ 出貨預設（老 override 的相容路）。
+     */
+    rainChance: z.number().min(0).max(1).optional(),
     /**
      * 降水權重 = 1 時，場上同時幾滴。⚠️ 這是**滿載**的數字：實際值還會乘上
      * 畫質階梯的粒子預算（`AdaptiveQuality` 降級時它跟著降），⛔ 不是「開了就永遠在」。
@@ -342,6 +366,47 @@ export type ConfigWeatherDoc = z.infer<typeof zConfigWeatherDoc>;
 
 /** 程式讀的那一份（去掉 id/schema/note 的殼）。 */
 export type WeatherPolicy = Omit<ConfigWeatherDoc, "id" | "schema" | "note">;
+
+/**
+ * 🌧️ 出貨的每場下雨機率。⚠️ **Claude 挑的**（owner 沒給數字，GH#676 票裡已記）。
+ * ⭐ 只是 `DEFAULT_WEATHER.rainChance` 的值**和**老 override 缺這一格時的相容
+ * 退路 —— ⛔ 不是第二個住處：兩處引的是同一個常數。
+ */
+export const DEFAULT_RAIN_CHANCE = 0.3;
+
+/**
+ * 32-bit avalanche hash —— 與 `sim/world/ArenaDef.ts` 的場地輪替是**同一個形狀**
+ * （那一份沒有 export；鏡照它是為了「同 seed 同結果」的同一條理由：⛔ 不碰
+ * `world.rng`、⛔ 不碰 Math.random，一顆 seed 進來永遠吐同一個數）。
+ */
+function hash32(x: number): number {
+  let h = x >>> 0;
+  h = Math.imul(h ^ (h >>> 16), 0x21f0aaad) >>> 0;
+  h = Math.imul(h ^ (h >>> 15), 0x735a2d97) >>> 0;
+  h = (h ^ (h >>> 15)) >>> 0;
+  return h;
+}
+
+/**
+ * 🌧️ **這一場擲不擲得出雨**（GH#676）。每場一次、純函式、決定性：
+ * 同一顆 matchSeed 永遠同一個結果 ⇒ 同場四個玩家、回放、觀戰看到同一場雨。
+ *
+ * ⚠️ 這裡刻意**不看場地**：室內閘住在 {@link weatherLookFor}（級別前綴），
+ * 所以換到室內圖的那一回合雨停、回到室外又下 —— 「這一場是雨天」是**比賽**的
+ * 事實，「這張圖淋不淋得到」是**場地**的事實，兩個各有一個住處。
+ *
+ * ⚠️ `chance >= 1 ⇒ 必下`、`<= 0 ⇒ 必不下` 是**精確**分支，⛔ 不靠浮點運氣 ——
+ * 守衛的「chance=1 且室外 ⇒ 必下」要的是等號成立，不是 4294967295/4294967296。
+ */
+export function matchRainRoll(policy: WeatherPolicy, matchSeed: number): boolean {
+  if (!(policy.rainEnabled ?? false)) return false;
+  const chance = policy.rainChance ?? DEFAULT_RAIN_CHANCE;
+  if (chance <= 0) return false;
+  if (chance >= 1) return true;
+  // 0x7261696e = "rain" —— 鹽讓這一次擲骰與場地輪替（同一顆 seed 的另一個消費者）
+  // 拿到互相獨立的串流，⛔ 兩邊不會因為共用 seed 而綁在一起。
+  return hash32(hash32(matchSeed) ^ 0x7261696e) / 4294967296 < chance;
+}
 
 /**
  * 出貨預設。
@@ -377,11 +442,15 @@ export const DEFAULT_WEATHER: WeatherPolicy = {
   fogBankLaneFill: 0.85,
   fogBankDriftSec: 90,
   fogBankHeight: 1.2,
-  // 🌧️ GH#654 —— ⭐ **出貨關著**：這是新功能，⛔ 不是修復，所以它不套
-  //    「優先權大的更新後都是預設啟動」。下面五格是**我挑的**（owner 2026-08-24
-  //    的常設指令「沒做完以前別問我了自己判斷 但是留後台開關可以簡易 rollback」），
-  //    而那格開關就是 rollback。
-  rainEnabled: false,
+  // 🌧️ GH#676 —— ⭐ 出貨 **true**：owner 2026-08-24「只要是室外場景，都有機率
+  //    下雨，而非一定會下或不會下」。#654 第一版出貨 false ＝「不會下」，正是他
+  //    說不要的二元 ⇒ 這一格翻成 true 是**修正**，套「優先權大的更新後預設啟動」
+  //    （第〇·六守則）。它從此只是止血閥；下不下由下面那格機率的每場擲骰決定。
+  rainEnabled: true,
+  // 🌧️ GH#676 —— ⚠️ 這個機率值是**Claude 挑的**（owner 沒給數字；票 #676 已記，
+  //    ⛔ 不要在 release note 寫成他的裁決）。判準：一晚打五場大約遇到一兩場雨，
+  //    有記憶點又不膩。它是後台一格 —— 我挑錯的成本是 owner 改一格滑桿。
+  rainChance: DEFAULT_RAIN_CHANCE,
   // 1200 滴 ≈ 一場中雨。⚠️ 它是**滿載**值，畫質階梯會再乘一次。
   rainDropsAtFull: 1200,
   rainFallSpeed: 22,
@@ -462,8 +531,9 @@ export interface WeatherLook {
    */
   fogBanks: number;
   /**
-   * 🌧️ 這一場的降水強度（0..1，已經吃過總開關、`rainEnabled` 與玩家設定）。
-   * 0 = 天上不掉水。⭐ 它與 `wet` / `puddle` 分開 —— 洞窟滲水是後兩者不是這一格。
+   * 🌧️ 這一場的降水強度（0..1，已經吃過總開關、`rainEnabled`、**每場的擲骰**
+   * 與玩家設定）。0 = 天上不掉水。⭐ 它與 `wet` / `puddle` 分開 —— 洞窟滲水是
+   * 後兩者不是這一格。
    */
   rain: number;
   /**
@@ -483,9 +553,9 @@ export interface WeatherToggles {
   /**
    * 🌧️ 缺席 = `true`（＝玩家沒有特別關掉它）。
    *
-   * ⚠️ 它**刻意是 optional**：降水的出貨開關是內容那一格（`rainEnabled`，出貨
-   * `false`），⛔ 不是玩家設定 —— 所以既有的呼叫端一個字都不用改，而且
-   * 「沒有人打開過」的結果仍然是**不下雨**。
+   * ⚠️ 它**刻意是 optional**：下不下雨由內容側決定（`rainChance` 的每場擲骰
+   * × `rainEnabled` 止血閥），⛔ 不是玩家設定 —— 所以既有的呼叫端一個字都
+   * 不用改；玩家這一格只是「我不想看雨」的個人退出口。
    */
   rain?: boolean;
 }
@@ -510,13 +580,26 @@ export function weatherLookFor(
   policy: WeatherPolicy,
   arenaId: string,
   toggles: WeatherToggles,
+  /**
+   * 🌧️ 這一場的比賽種子（GH#676）。缺席 ＝ 還沒開賽（開機骨架、大廳預覽）⇒
+   * 不下雨 —— 雨是**一場比賽**的事實，沒有比賽就沒有那一次擲骰。
+   */
+  matchSeed?: number,
 ): WeatherLook {
   const kind = weatherKindFor(policy, arenaId);
   if (!policy.enabled) return { ...WEATHER_LOOK_NONE, kind };
   const w = WEATHER_KIND_WEIGHTS[kind];
-  // 🌧️ 三個條件全部成立才下雨：天氣總開關 · 降水開關（出貨關著）· 玩家沒關掉。
-  // ⭐ 級別本身仍然是**唯一**的「哪張圖下雨」的住處 —— 這裡只決定「開不開」。
-  const rain = (policy.rainEnabled ?? false) && (toggles.rain ?? true) ? w.rain : 0;
+  // 🌧️ GH#676（owner：「只要是**室外場景**，都**有機率**下雨，而**非一定會下或
+  // 不會下**」）—— 五個條件全部成立才下雨：
+  //   ① 這一場擲出了雨（matchRainRoll：每場一次、matchSeed 決定性、含總開關）
+  //   ② 這張圖**有被列在表上**（沒列 = 沒有人判過它是不是室內 ⇒ 走這個檔一貫的
+  //     保守方向：⛔ 不進機率池 —— 「一張新地圖不會因為忘了填而突然下雨」仍然為真）
+  //   ③ 這張圖是室外（id 前綴 —— 室內**永遠不進機率池**，owner 2026-08-23）
+  //   ④ 玩家沒關掉 ⑤ 級別的強度權重 > 0（保險帶，室內兩級是 0）
+  const rolled = matchSeed !== undefined && matchRainRoll(policy, matchSeed);
+  const declared = policy.arenas[arenaId] !== undefined;
+  const rain =
+    rolled && declared && !weatherKindIsSheltered(kind) && (toggles.rain ?? true) ? w.rain : 0;
   return {
     kind,
     wet: toggles.wetGround ? w.wet : 0,

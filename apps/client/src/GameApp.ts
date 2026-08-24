@@ -92,6 +92,7 @@ import { resolvePadTargetMarker } from "./render/views/targetMarker";
 import type { TelegraphRelation } from "./vfx/telegraphChannel";
 import { setupLighting, type LightingHandle } from "./render/Lighting";
 import { buildArena, dressArena, disposeArena, type ArenaHandles } from "./render/ArenaScene";
+import { setWeatherMatchSeed } from "./render/weather";
 import { groundTextureSet } from "./render/groundMaterials";
 import { warmGroundTextures } from "./render/groundTextureCache";
 import { resolveArenaId, type ArenaIdSource } from "./render/arenaSelect";
@@ -1626,6 +1627,11 @@ export class GameApp {
     // and broadcasts its id, so prefer that per-round id and fall back to the
     // match-level mapId while the sim field is still landing. applyArena dedupes
     // + supersedes, so feeding it every patch only rebuilds on an actual change.
+    // 🌧️ GH#676 —— 「這一場下不下雨」是 matchSeed 的決定性擲骰（同 seed 同結果，
+    // 四個玩家/回放/觀戰一致）。seed 由 MatchRoom.onCreate 寫一次、整場不變；
+    // 要在 applyArena **之前**進 store —— 雨在 buildArena 的當下決定建不建。
+    // setWeatherMatchSeed 自己去重，20Hz 快照不會造成每秒 20 次 recompute。
+    if (state.seed) setWeatherMatchSeed(state.seed);
     const arenaId = resolveArenaId(state as unknown as ArenaIdSource);
     if (arenaId) this.applyArena(arenaId);
     this.warmGroundForNextRound(state.phase);

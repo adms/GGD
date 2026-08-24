@@ -453,7 +453,7 @@ export function buildArena(
   // 🌧️ GH#654 —— 天氣的**降水**那一層。owner 2026-08-24:「下雨跟起霧的天氣特效」。
   // ⭐ 它與上面那兩層（濕地面／積水、飄過去的那一片霧）是**同一個機制**：同一份政策、
   //    同一格總開關、同一張級別權重表 ⇒ ⛔ 不可能「天氣說晴朗、天上在下雨」。
-  // ⚠️ 出貨**關著**（`config.weather@1.rainEnabled = false`）—— 新功能不是修復。
+  // ⚠️ GH#676：下不下 = 每場開賽的決定性擲骰（`rainChance` × matchSeed，室外才擲）。
   // ⚠️ 不用回傳值：它的生命週期綁在自己那顆看不見的 emitter mesh 上，而那顆是
   //    `root` 的子節點 ⇒ `disposeArena()` 收 root 的那一刻雨就停了。
   buildRain(scene, root, arena.id, arena.zones, weather);
