@@ -684,3 +684,39 @@ owner **2026-08-22** 給了完整階梯（**重製新說明 > JASS > w3x說明 >
 | 擊退 **800** wc3u（j:50201/50202 的 20 × 40）⚠️ 卡面寫的是 **1000**，JASS 才是 800 | ≡ **14.67** GGD 單位 | `knockback{distanceTier:"極大"}` —— 距離住 `content/config/displacement-tiers.json`，⛔ 不烘進文件 |
 | `collideRadius` **300** wc3u（撞停時的 AoE 半徑） | ≡ **5.5** GGD 單位 | ⛔ **沒有落地** —— 引擎沒有「擊退撞停時觸發」這個掛鉤，要等 `grab-hurl` 整族模板 |
 | `collideDamage` **STR × 3** | — | ⛔ 同上。卡面那句「若受到撞擊停止，周圍敵人將會受到80% [AP]額外傷害」因此被改寫成講真話的那一句（第一·五守則），⛔ 不是刪掉 |
+
+## 2026-08-24 —— 光束砲一族：`path:"forward"` → `"static"`，並刪掉 20-03 的第二份傷害
+
+### ① 演出：四支經典不再位移（⭐ owner 的描述，⛔ 不是我的偏好）
+
+> owner：「光束砲**原地開火**，只有波飛出去」
+
+逐支撈 JASS 驗證（⛔ 不是憑印象）：`A0D5`(20-03)@32322 · `A03S`(09-04)@31907 ·
+`A0GI`(08-03)@47757 · `A05J`(59-04)@28838 —— 四支**一次 `SetUnitPosition` 都沒有**，
+它們是**十具 dummy 沿一條線一次擺好**再 `TriggerSleepAction(2)` → `KillUnit`。
+對照組 12-04 `A04X`@29587 **真的**每 0.02 秒推進 75 ⇒ 缺的不是我們沒實作位移。
+
+**被取代的舊值**（七份 ability doc 的節點各自寫著）：
+`path:"forward"`（20-03 ×2 · 09-04 ×2 · 08-03 ×2）、`path:"toTarget"` + `distance:8.25`（59-04）。
+⇒ 現在**七份都不寫 `path`**，值住 `content/ability-templates/tpl-beam-roll.json`。
+**rollback＝把 `params.path.default` 改回 `"forward"`**（一格，四支一起回去）。
+
+### ② 傷害：刪掉 20-03 的 `spawnModelFx.onTouch`（⭐⭐ 這一格是**我**裁的，⛔ 不是 owner）
+
+**被刪掉的逐字內容**（`godie-e00l.e.json` / `godie-e002.e.json` 各一份）：
+
+```json
+"onTouch": [{ "kind": "damage", "damageType": "magic", "amount": { "damageTier": "小" } }]
+```
+
+**我的理由**（一個能被反駁的理由）：
+1. 20-03 已經有 `effects[0]` 的 `damageLine`（magic · 級距**中** · length 14 · width 2.0 · ap×1.0）
+   蓋住**同一條線**；
+2. 原作 `Trig_Excalibur_Actions` 對那條線**只結算一次**傷害；
+3. ⇒ 這組 `onTouch` 是**重製時加上去的第二份傷害**，⛔ 沒有任何一層階梯支持它。
+
+**依據**：owner 2026-08-23 常設指令「沒做完以前別問我了自己判斷 但是**留後台開關可以簡易 rollback**」。
+**rollback**：後台內容覆蓋層把上面那段 `onTouch` 貼回那兩份文件的 `spawnModelFx` 節點
+（⛔ 不需要改程式、⛔ 不需要部署）。
+
+⚠️ 若 owner 認為 20-03 本來就該打兩段，貼回去即可 —— 這份紀錄的存在就是為了讓那件事是**一次貼上**。
