@@ -347,7 +347,7 @@ var BaseBonusMax = map[string]float64{
 	"ms":                12,
 	"critChance":        1,
 	"cdr":               0.99, // 2026-08-10 owner：「天花板可以是 0.99」，另配秒數地板 0.1
-	"lifesteal":         0.8,
+	"lifesteal":         2, // ⚠️ 與 content/config/stat-caps.json 的 base 同值(owner 調過)；drift 測試在守
 	"evasion":           0.8,
 	"spellVamp":         0.8, // 2026-08-10 新增的技能吸血，區間與 lifesteal 同
 }

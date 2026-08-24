@@ -273,6 +273,11 @@ const PARALLEL = [
   // 👁 owner 2026-08-24:「我不想當你的人肉測試機」——改到畫面層卻沒有終端證據 ⇒ 紅。
   //    ⭐ 它很快（一次 git diff），⛔ 不會拖慢地板（地板是 vitest apps/client ~220s）。
   { name: "visual-proof", cmd: ["bash", ["scripts/visual-proof.sh"]] },
+  // 🐹 GH#653 —— platform 的 Go 對帳**紅了幾天沒人看見**（#633 的 AttrDefaults 漂移,
+  //    keysync_test.go 早就紅著,而 ship:check 只跑 vitest）。~1.6s,⛔ 不動地板。
+  //    ⚠️ 沒有 Go 工具鏈時要**說出來再跳過**,⛔ 不是靜靜過(那是另一個綠的謊)——
+  //    scripts/go-test-or-skip.sh 負責這件事。
+  { name: "go test (platform)", cmd: ["bash", ["scripts/go-test-or-skip.sh"]] },
   ...(noTypecheck ? [] : [{ name: "typecheck", cmd: ["pnpm", ["typecheck"]] }]),
   // ⭐ **這條管線自己的守衛**（分級表 + 閘選擇 + 部署步驟）。
   // ⚠️ 它在此之前**沒有被任何閘跑到**:`pnpm test` 是 `pnpm -r`（逐 package）,

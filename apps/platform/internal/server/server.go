@@ -856,6 +856,12 @@ func (s *Server) Close() {
 	if s.cancel != nil {
 		s.cancel()
 	}
+	// ⭐ JOIN the backgrounded 好友回填 before tearing the stores down. It writes
+	// account JSON; a write that lands after teardown is either a lost link or
+	// an error into a directory that no longer exists (GH#653).
+	if s.Friends != nil {
+		s.Friends.WaitBackground()
+	}
 	_ = s.Ranking.Flush(context.Background())
 	_ = s.Rdb.Close()
 }

@@ -5,6 +5,7 @@
 package friend
 
 import (
+	"sync"
 	"context"
 	"errors"
 	"time"
@@ -51,7 +52,19 @@ type Service struct {
 	// autoAdmin is 管理員預設好友 (GH#499). nil = not wired (every unit test, and
 	// any deploy that never called EnableAdminAutoFriend). See adminfriend.go.
 	autoAdmin *AutoAdmin
+
+	// bg joins the backgrounded backfill. A goroutine that writes accounts to
+	// disk must be JOINABLE: without this it outlives both Server.Close and a
+	// test's t.TempDir, and its next write lands in a directory that is being
+	// removed. GH#653's gate caught exactly that ("TempDir RemoveAll cleanup:
+	// directory not empty") — the same race in production is a write into a
+	// store the process has already torn down.
+	bg sync.WaitGroup
 }
+
+// WaitBackground blocks until every backgrounded job this service started has
+// returned. Safe to call when none was started.
+func (s *Service) WaitBackground() { s.bg.Wait() }
 
 // New builds the friend service.
 func New(store *jsonstore.Store) *Service {

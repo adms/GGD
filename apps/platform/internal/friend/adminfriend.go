@@ -372,7 +372,9 @@ func (s *Service) BackfillAdminFriendsInBackground(ctx context.Context) {
 	if p := a.Policy(); !p.Enabled || !p.BackfillExisting {
 		return
 	}
+	s.bg.Add(1)
 	go func() {
+		defer s.bg.Done()
 		res, err := a.Backfill(ctx)
 		if err != nil {
 			slog.Warn("friend: 管理員預設好友 backfill did not run", "err", err)
