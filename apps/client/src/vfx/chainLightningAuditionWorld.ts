@@ -124,6 +124,12 @@ export async function buildAuditionWorld(
       //    ⛔ 不是 `self`（`abilitySystem.ts:684` 直接回 bad-target）。
       //    往 +x 衝一小段，⭐ 十個敵人在半徑 6 的環上，衝完仍然全部在
       //    `chainLightning` 的 radius 8 之內。
+      // ⭐ audition 頁要能重播：把 R 的冷卻歸零再放（⛔ 只有這一頁這樣做，
+      //    出貨路徑一格都沒動 —— 冷卻是 886 tick，不歸零就只能看一次）。
+      const ab = w.abilities.get(casterId);
+      if (ab) (ab.slots as { R: { cooldownRemainingTicks: number } }).R.cooldownRemainingTicks = 0;
+      const hp = w.health.get(casterId);
+      if (hp) hp.mana = hp.maxMana;
       const verdict = castAbility(w, casterId, "R", { type: "dir", dir: { x: 1, z: 0 } });
       if (verdict !== "ok") {
         throw new Error(`castAbility 拒絕了 65-04：${String(verdict)} —— ⛔ 這一頁的結論不算數`);

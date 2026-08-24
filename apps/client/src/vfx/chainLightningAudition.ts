@@ -50,6 +50,22 @@ export interface ChainAuditionHandle {
     arcsDrawn: number;
   };
   readonly scene: Scene;
+  /**
+   * ⭐ 存一張 PNG（base64，⛔ 不含 `data:` 前綴）。
+   * ⚠️ 走 Babylon 的 `CreateScreenshotAsync`（重繪到 render target），
+   * ⛔ 不吃「`readPixels` 讀到上一幀」那個時序坑 —— 我用後者抓五幀，五張逐位元相同。
+   * ⚠️ 它要等下一幀 ⇒ 這一頁**必須有 render loop**，否則永遠不 resolve。
+   */
+  snapshot(): Promise<string>;
+  /**
+   * ⛔ 診斷用（只在這一頁）：事件型別直方圖 ＋ sim 佇列，用來指出斷在哪一段。
+   */
+  debug(): {
+    eventTypes: Record<string, number>;
+    queue: number;
+    casterMana: number;
+    abilityR: unknown;
+  };
   dispose(): void;
 }
 
@@ -192,7 +208,7 @@ export async function startChainLightningAudition(
         world.step(new Map());
         clockMs += 1000 / 30;
         drew += drainEvents();
-        vfx.update?.(clockMs, 1000 / 30);
+        vfx.update(clockMs);
       }
       scene.render();
       return drew;
@@ -207,6 +223,20 @@ export async function startChainLightningAudition(
       };
     },
     scene,
+    async snapshot(): Promise<string> {
+      // ⚠️ `CreateScreenshotAsync` 的實作住在 `screenshotTools`，⛔ 不在 `Misc/tools`
+      //    —— 只 import 後者會拿到「needs to be imported before」那句 side-effect 錯誤。
+      const [{ Tools }] = await Promise.all([
+        import("@babylonjs/core/Misc/tools"),
+        import("@babylonjs/core/Misc/screenshotTools"),
+      ]);
+      scene.render();
+      const data = await Tools.CreateScreenshotAsync(engine, camera, {
+        width: canvas.width,
+        height: canvas.height,
+      });
+      return String(data).replace(/^data:image\/png;base64,/, "");
+    },
     debug() {
       const hist: Record<string, number> = {};
       for (const e of world.events as readonly { type: string }[]) hist[e.type] = (hist[e.type] ?? 0) + 1;
@@ -227,6 +257,9 @@ export async function startChainLightningAudition(
       engine.dispose();
     },
   };
-  scene.render();
+  // ⚠️ **要有 render loop。** 沒有的話 `Tools.CreateScreenshotAsync` 會等下一幀
+  //    而永遠不 resolve（我踩過，卡住 30 秒逾時）。逐 tick 步進仍然由 `step()`
+  //    決定，這條迴圈只負責把當前狀態持續畫出來。
+  engine.runRenderLoop(() => scene.render());
   return handle;
 }

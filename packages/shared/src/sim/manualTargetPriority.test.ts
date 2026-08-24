@@ -153,11 +153,23 @@ describe("GH#266 玩家點名的攻擊目標 > 自動索敵", () => {
     const { w, hero, special, normal } = scene();
     w.step(seat({ kind: "attackTarget", entity: special }));
     const t = w.transform.get(hero)!;
-    w.step(seat({ kind: "attackMove", point: { x: t.pos.x + 4, z: t.pos.z } }));
+    const point = { x: t.pos.x + 4, z: t.pos.z };
+    w.step(seat({ kind: "attackMove", point }));
 
     const nav = w.nav.get(hero)!;
-    expect(nav.attackTarget, "A 是玩家自己下的另一條戰鬥決策,該覆寫掉舊的點名").toBe(normal);
-    expect(nav.attackTargetAuto).toBe(true);
+    // ⭐ 這一條問的是**「A 有沒有把手選那一格交還給自動索敵」**，⛔ 不是「挑中誰」。
+    // ⚠️ GH#652（LoL 指令模型）之後 `attackMove` 的 tie-break 從「離身體最近」
+    //    改成 **「離指令點最近」**（LoL 的語意）—— 所以期望值要從**規則**推導，
+    //    ⛔ 不可以寫死某一隻（寫死的話就是把舊排序封進測試裡）。
+    const d2 = (id: EntityId): number => {
+      const p = w.transform.get(id)!.pos;
+      return (p.x - point.x) ** 2 + (p.z - point.z) ** 2;
+    };
+    const nearestToCursor = d2(special) <= d2(normal) ? special : normal;
+    expect(nav.attackTarget, "A 是玩家自己下的另一條戰鬥決策,該覆寫掉舊的點名").toBe(
+      nearestToCursor,
+    );
+    expect(nav.attackTargetAuto, "A 挑中的目標是**自動**目標,⛔ 不是新的手選").toBe(true);
   });
 
   it("`leashUnits` 是那個出口:目標超出牽引距離就放手", () => {
