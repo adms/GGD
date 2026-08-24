@@ -179,6 +179,11 @@ export const zModelDoc = z
      * ⚠️ **ABSENT ＝ 0 ＝ 今天的行為**（逐位元不變）—— 所以這一格是**純新增**，
      * ⛔ 不改任何一支出貨技能的畫面。owner 覺得哪一根該抬高，在編輯器填一個數字。
      */
+    /**
+     * 移動/定點特效的離地高度（**施放縮放 1 時**的公尺數;客戶端乘上 spawnModelFx
+     * 的 scale —— 埋掉的量 ∝ 渲染尺寸,所以離地要跟著縮放走,GH#673-③）。
+     * 缺席 = 貼地。
+     */
     fxSpawnHeight: z.number().min(0).max(20).optional(),
 
     /**

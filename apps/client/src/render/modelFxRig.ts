@@ -272,7 +272,12 @@ export class ModelFxRig {
         axis,
         modelKey: ev.modelKey,
         inst,
-        y: doc.fxSpawnHeight ?? 0,
+        // ⭐ GH#673-③ —— 離地**跟施放縮放連動**,⛔ 不是絕對值:埋掉的量 ∝ 渲染尺寸。
+        //    Peer session 量到的兩個點就在同一條比例線上（ev.scale 2.5 ⇒ 半高 2.62 要
+        //    抬 ~2.7;08-03 的 4.5 ⇒ 半高 ~4.7）⇒ fxSpawnHeight 定義為「施放縮放 1 時
+        //    的離地」,這裡乘上 ev.scale。⚠️ 這個語意變更是免費的:fieldAdoption 普查
+        //    證明 netherstrike 是**第一個**採用者,沒有別的消費端要遷移。
+        y: (doc.fxSpawnHeight ?? 0) * (ev.scale ?? 1),
         ...(ev.spinDegPerSec !== undefined ? { spinDegPerSec: ev.spinDegPerSec } : {}),
         ageSec: 0,
         lifeSec,

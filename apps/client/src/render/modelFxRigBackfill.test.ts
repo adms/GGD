@@ -68,7 +68,8 @@ describe("@visual-proof modelFxRig 首發回填 (GH#673-①)", () => {
     ).toBeGreaterThan(0);
 
     // 回收再施放（池子路徑）⇒ 撈回來的那具也要有幾何（①b:空殼不循環）
-    rig.tick(EV as never, 10_000 as never);
+    // 推到壽命之後讓它回池（tick 簽章:毫秒）
+    (rig as unknown as { tick: (ms: number) => void }).tick(10_000);
     (rig as unknown as { releaseAll?: () => void }).releaseAll?.();
     rig.spawn(EV);
     const axes = scene.transformNodes.filter((n) => n.name.startsWith("modelfx-axis-"));
