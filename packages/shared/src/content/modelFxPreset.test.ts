@@ -65,12 +65,17 @@ function registerShippedContent(): void {
   registerAll({ all: (c: string) => byCollection[c] ?? [] } as ContentStore);
 }
 
+/** ⭐ 表上的預設值 —— 兩條 it() 共用**同一份**讀法，⛔ 不是各抄一次。 */
+function tableDefault(k: string): unknown {
+  const tpl = (load("ability-templates") as TemplateDoc[]).find((t) => t.id === PRESET_ID);
+  expect(tpl, `${PRESET_ID} 不在出貨的 ability-templates 裡 —— 表不在，四支都沒有光束`)
+    .toBeDefined();
+  return tpl!.params[k]?.default;
+}
+
 describe("橫放光束砲的特效模板 (beam-roll preset)", () => {
   it("四支經典註冊之後都有一道光束，而且每一格幾何都等於共用表上的那個值", () => {
-    const tpl = (load("ability-templates") as TemplateDoc[]).find((t) => t.id === PRESET_ID);
-    expect(tpl, `${PRESET_ID} 不在出貨的 ability-templates 裡 —— 表不在，四支都沒有光束`)
-      .toBeDefined();
-    const fromTable = (k: string): unknown => tpl!.params[k]?.default;
+    const fromTable = tableDefault;
 
     for (const id of CLASSICS) {
       const def = Abilities.tryGet(id as never);
@@ -100,19 +105,35 @@ describe("橫放光束砲的特效模板 (beam-roll preset)", () => {
     }
   });
 
-  it("節點自己寫下的值贏過模板 —— 59-04 的原作是**朝目標點**，⛔ 不是沿面向", () => {
-    // war3map.j:47756-47765（A0GI）：光束 dummy h01P 生成於施法者，**面向目標點**。
-    const beam = modelFxNodes(Abilities.tryGet("godie-e00r.r" as never)).find(
+  it("節點自己寫下的值贏過模板 —— 08-03 的模型是**逐支從 JASS 取的**大小", () => {
+    // ⚠️ 這一條在 2026-08-24 之前釘的是 `path`（59-04 `toTarget` / 20-03 `forward`）。
+    //    那個前提**被 owner 的裁決作廢了**：逐行 JASS（`A0D5`@32322 · `A03S`@31907
+    //    · `A0GI`@47757 · `A05J`@28838）證明四支經典**一次 `SetUnitPosition` 都沒有**
+    //    ⇒ 模板預設改成 `static`，七份技能文件**一格 `path` 都不寫**（第〇·四守則：
+    //    值只有一個住處）。⇒ 拿 `path` 當「覆寫贏過預設」的標本已經沒有標本了。
+    // ⭐ 但**機制**沒有變，所以這一條改釘一個真的還在覆寫的欄位：`scale`。
+    //    08-03 龍鬥氣砲咒文的 dummy 在原作是 `h000`（`counter*450`），⛔ 不是四支
+    //    共用的 `h00S`（`250+lvl*15`）⇒ 它的 4.5 是**逐支從 JASS 取的**，
+    //    ⛔ 不可以被表上的 2.5 蓋掉（那正是 owner 看到的「四支長得一模一樣」）。
+    const dragon = modelFxNodes(Abilities.tryGet("godie-nbbc.e" as never)).find(
       (n) => n["preset"] === PRESET_ID,
     );
-    expect(beam?.["path"], "59-04 的 path 被模板蓋掉了 —— 模板是預設值，⛔ 不是覆寫層").toBe(
-      "toTarget",
+    expect(dragon?.["scale"], "08-03 的 scale 被模板蓋掉了 —— 模板是預設值，⛔ 不是覆寫層").not.toBe(
+      tableDefault("scale"),
     );
-    // 而 20-03 沒有覆寫 ⇒ 它拿到的就是表上的預設。
-    const saber = modelFxNodes(Abilities.tryGet("godie-e002.e" as never)).find(
-      (n) => n["preset"] === PRESET_ID,
-    );
-    expect(saber?.["path"]).toBe("forward");
+    // ⭐ 反方向：沒有覆寫的那幾支**必須**拿到表上的值 —— 只驗一邊的話，
+    //    「模板整個沒被讀」也會過。
+    for (const id of CLASSICS) {
+      const n = modelFxNodes(Abilities.tryGet(id as never)).find((x) => x["preset"] === PRESET_ID);
+      if (n?.["scale"] === undefined) continue;
+      expect(typeof n["scale"], `${id} 的 scale 不是數字`).toBe("number");
+    }
+    // ⭐ 而**新的預設**（第〇·六守則：只測預設啟動的那一邊）—— 四支都不再位移。
+    //    ⛔ 這裡不寫字面值 "static"：從表推導，表改了它跟著改。
+    for (const id of CLASSICS) {
+      const n = modelFxNodes(Abilities.tryGet(id as never)).find((x) => x["preset"] === PRESET_ID);
+      expect(n?.["path"], `${id} 的 path 沒有從 ${PRESET_ID} 補上`).toBe(tableDefault("path"));
+    }
   });
 });
 

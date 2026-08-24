@@ -172,7 +172,27 @@ export function modelFxInstances(e: ModelFx, ctx: EffectContext, origin: Vec2): 
       at = ctx.point;
     }
     const p = at ?? origin;
-    return [{ origin: { x: p.x, z: p.z }, travel: 0 }];
+    // ⭐⭐ 不動 ≠ 沒有方向。原作那十具 dummy 是**沿一條線**擺的（`A0D5`@32322
+    // 逐行），所以一具橫放的光束砲即使原地不動，它的**長軸仍然要躺在開火方向上**。
+    // ⚠️ 這一格是被守衛抓出來的：`dir` 不送 ⇒ 線上 `dx=dz=0` ⇒ 客戶端走「不動」
+    //    分支 ⇒ `yawRad` 恆為 0 ⇒ `modelFxWireContract` 的 |cos| 從 1 掉到 **0**
+    //    ——**正是 #607 的形狀**（長軸在接縫上被挑掉），⛔ 而畫面上它看起來只是
+    //    「光束躺錯方向」，⛔ 不會有任何錯誤訊息。
+    // ⭐ `travel: 0` 已經讓客戶端 `travelled = dist × frac = 0` ⇒ 位置不動，
+    //    所以送方向**零行客戶端改動**就同時拿到「不位移」與「指向正確」。
+    let sdir: Vec2 | undefined;
+    if (at !== undefined) {
+      const to = sub(at, origin);
+      if (len(to) > 1e-6) sdir = normalize(to);
+    }
+    if (sdir === undefined) {
+      const f = ctx.world.transform.get(ctx.caster)?.facing;
+      if (f !== undefined && len(f) > 1e-6) sdir = normalize(f);
+    }
+    // ⛔ 解不到方向就退回無向（`dx=dz=0`）—— 仍然**畫**，⛔ 不是整支消失。
+    return sdir === undefined
+      ? [{ origin: { x: p.x, z: p.z }, travel: 0 }]
+      : [{ origin: { x: p.x, z: p.z }, dir: sdir, travel: 0 }];
   }
   if (e.path === "orbit") {
     // 環上 `count` 個等分位置。⛔ 不做線性推進 —— 繞圈的終點是 `lifeSec`。
