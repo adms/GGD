@@ -127,9 +127,9 @@ describe("model fx tint", () => {
       resolveModel: () => ({ glbPath: "assets/models/x.glb", scale: 1, fxTint: [0, 0, 0] }),
       loadContainer: () => Promise.resolve(container),
     });
-    // ⚠️ 第一發只是把載入踢起來 —— `ensureContainer` 走 promise，所以這一具是空的。
-    // ⭐ 它**永遠**是空的（節點回收進 free-list 之後不會被補上幾何）：那是一個既有缺陷，
-    //    ⛔ 不是這條守衛要驗的東西，所以這裡刻意讓第二發**超過池子**去造新的。
+    // ⚠️ 第一發把載入踢起來 —— `ensureContainer` 走 promise，await 之後容器 resolve，
+    //    GH#673-① 的回填會把這一具補上幾何（含 fxTint —— 回填走同一份 `fillGeometry`）。
+    //    第二發仍刻意超過池子造新的，讓「造新＋容器已載」那條路也被著色驗到。
     rig.spawn({ ...WIRE, instances: [WIRE.instances[0]!] });
     await new Promise((r) => setTimeout(r, 0));
     rig.tick(2000);
@@ -164,5 +164,65 @@ describe("model fx tint", () => {
       );
     }
     expect(checked, "沒有任何一份文件宣告 fxTint —— 這一格是死的").toBeGreaterThan(0);
+  });
+});
+
+/**
+ * ⭐ GH#673-① —— 首發空殼回填的守衛。BA lane 的像素證據
+ * （`docs/_reports/beam_visual-proof_20260824-2240`）：glb 未載時 acquire 回空 root，
+ * 而「幾何晚幾幀補進來」那句註解**沒有任何人兌現**；空殼 release 進池子後被
+ * pop 直接重用 ⇒ **首發與第二發都整發看不見**（modelKey 首次出現的那一回合 =
+ * owner 開遊戲驗證按的那一發）。
+ *
+ * ── 突變紀錄（一批一條，挑最承重的那一行）────────────────────────────────
+ *  · `modelFxRig.ts::ensureContainer()` 拿掉容器 resolve 後的回填迴圈（①c）
+ *    → a 紅：「首發那具在 glb 載完後仍是 0 頂點」。
+ */
+describe("GH#673-① 首發空殼回填（⛔ 不是永遠空殼循環）", () => {
+  const oneShot: ModelFxSpawnEvent = { ...WIRE, instances: [WIRE.instances[0]!] };
+  /** 從**出貨的場景樹**數每一個 beam 根節點的頂點（0 = 空殼），⛔ 不靠測試用存取器。 */
+  const beamVerts = (scene: Scene): number[] =>
+    scene.transformNodes
+      .filter((n) => n.name.startsWith(`modelfx-${WIRE.modelKey}-`))
+      .map((n) => n.getChildMeshes(false).reduce((s, m) => s + m.getTotalVertices(), 0));
+  const mkRig = (scene: Scene) => {
+    let resolveLoad!: (c: AssetContainer | null) => void;
+    const container = new AssetContainer(scene);
+    const mesh = MeshBuilder.CreateBox("geo", { size: 1 }, scene);
+    container.meshes.push(mesh);
+    container.rootNodes.push(mesh);
+    const rig = new ModelFxRig(scene, {
+      resolveModel: () => ({ glbPath: "assets/models/x.glb", scale: 1 }),
+      loadContainer: () => new Promise((r) => (resolveLoad = r)),
+    });
+    return { rig, finishLoad: async () => { resolveLoad(container); await new Promise((r) => setTimeout(r, 0)); } };
+  };
+
+  it("a. 容器載完的當下，還活著的首發空殼被回填幾何", async () => {
+    const scene = new Scene(new NullEngine());
+    const { rig, finishLoad } = mkRig(scene);
+    rig.spawn(oneShot); // glb 還在串流 ⇒ 空殼準時上場（刻意的，⛔ 不是等載完再生）
+    expect(beamVerts(scene), "前提不成立：此刻應該還是空殼").toEqual([0]);
+    await finishLoad();
+    expect(
+      beamVerts(scene)[0],
+      "首發那具在 glb 載完後仍是 0 頂點 —— 玩家第一次施放永遠看不到光束",
+    ).toBeGreaterThan(0);
+    rig.dispose();
+  });
+
+  it("b. 池子裡的空殼在重用時補幾何 —— 第二發不再看不見", async () => {
+    const scene = new Scene(new NullEngine());
+    const { rig, finishLoad } = mkRig(scene);
+    rig.spawn(oneShot);
+    rig.tick(2000); // 容器還沒到就到期 ⇒ 空殼進 free-list
+    expect(rig.pooledCount).toBe(1);
+    await finishLoad(); // 容器到了，但殼在池子裡（⛔ 不在 live）⇒ 回填輪不到它
+    rig.spawn(oneShot); // 重用那個殼 —— acquire 要在這裡補
+    expect(
+      beamVerts(scene).some((v) => v > 0),
+      "重用的池中空殼沒有補幾何 —— 第二發（glb 已載好幾秒）照樣整發看不見",
+    ).toBe(true);
+    rig.dispose();
   });
 });

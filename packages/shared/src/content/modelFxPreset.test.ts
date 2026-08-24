@@ -135,6 +135,54 @@ describe("橫放光束砲的特效模板 (beam-roll preset)", () => {
       expect(n?.["path"], `${id} 的 path 沒有從 ${PRESET_ID} 補上`).toBe(tableDefault("path"));
     }
   });
+
+  /**
+   * ⭐ GH#673-② —— `lifeSec` 曾**不在** `PRESET_FIELDS`：模板寫了 2 秒而它從未到達
+   * 出貨節點 ⇒ sim wire `durationSec=0` ⇒ 客戶端退到 `vfxHardMaxLifeSec=5`（實測光束
+   * 活 4.97 秒、落點爆炸在施放**瞬間**響）。`modelFxStatic.test.ts` 手寫節點自帶
+   * lifeSec（失敗形態⑤）蓋不到這條路 —— 所以這裡走**出貨內容 × 出貨註冊路徑**。
+   * ⛔ 引用清單從原始檔推導，不抄一份 id 名單。
+   */
+  it("GH#673-②:表上的 lifeSec 真的到達每一個出貨光束節點 —— ⛔ 不是靠 5 秒兜底", () => {
+    const ids = (load("abilities") as { id?: string }[])
+      .filter((d) => modelFxNodes(d).some((n) => n["preset"] === PRESET_ID))
+      .map((d) => String(d.id));
+    expect(ids.length, "沒有任何技能引用 tpl-beam-roll —— 這條守衛在空轉").toBeGreaterThan(0);
+    for (const id of ids) {
+      const n = modelFxNodes(Abilities.tryGet(id as never)).find((x) => x["preset"] === PRESET_ID)!;
+      // 第〇·六守則:只測預設啟動的那一邊（owner 把 path 預設 rollback 回 forward 時，
+      // static 專屬的終止條件自然不再適用）。
+      if (n["path"] !== "static") continue;
+      expect(
+        n["lifeSec"],
+        `${id} 的 lifeSec 沒從 ${PRESET_ID} 補上 ⇒ 光束靠 vfxHardMaxLifeSec 兜底、爆炸在施放瞬間響`,
+      ).toBe(tableDefault("lifeSec"));
+    }
+  });
+
+  /**
+   * ⭐ GH#673-③ —— 橫放的光束（宣告了 `fxLongAxis`）繞軸修正後長軸貼地：模型不宣告
+   * `fxSpawnHeight` ⇒ 出生點 y=0 ⇒ **下半圓埋在地面下**（BA 量到世界包圍盒
+   * y −2.55…+2.54）。⛔ 不釘數字（那是 owner 可調的演出值），只問「有沒有離地」。
+   */
+  it("GH#673-③:光束引用的模型宣告了離地高度 —— 橫放長軸不會下半埋地", () => {
+    const models = load("models") as { id: string; fxLongAxis?: string; fxSpawnHeight?: number }[];
+    const keys = new Set<string>();
+    for (const id of CLASSICS) {
+      const n = modelFxNodes(Abilities.tryGet(id as never)).find((x) => x["preset"] === PRESET_ID);
+      if (typeof n?.["modelKey"] === "string") keys.add(n["modelKey"] as string);
+    }
+    expect(keys.size, "四支經典連 modelKey 都解析不到 —— 上面那條會先紅").toBeGreaterThan(0);
+    for (const k of keys) {
+      const m = models.find((d) => d.id === k);
+      expect(m, `${k} 不在 content/models —— 光束沒有模型`).toBeDefined();
+      if (m!.fxLongAxis === undefined) continue; // 沒橫放的模型不需要離地
+      expect(
+        m!.fxSpawnHeight ?? 0,
+        `${k} 橫放（fxLongAxis:"${m!.fxLongAxis}"）卻沒有 fxSpawnHeight ⇒ 光束下半埋地`,
+      ).toBeGreaterThan(0);
+    }
+  });
 });
 
 registerShippedContent();
