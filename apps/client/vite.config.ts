@@ -415,6 +415,55 @@ function contentApiGuard(): Plugin {
 }
 
 /**
+ * ASSET-REVIEW API (GH#664) — dev-only wiring for public/asset-review.html.
+ *
+ * The queue/ledger logic lives OUTSIDE this app, in tools/review/middleware.mjs
+ * (the cross-lane contract: GET /__review/queue, POST /__review/verdict writing
+ * docs/_review/approvals.json). It is imported DYNAMICALLY at configureServer
+ * time so this config never hard-depends on it: if the module is missing or
+ * throws, the routes answer 503 with a JSON body naming exactly what is absent
+ * — the review page renders that message instead of a white screen.
+ *
+ * `apply: "serve"` + configureServer: this cannot exist in a production build,
+ * and nothing under tools/ is ever bundled.
+ */
+const REVIEW_ROUTE_PREFIX = "/__review";
+
+function assetReviewApi(): Plugin {
+  return {
+    name: "ggd-asset-review-api",
+    apply: "serve",
+    async configureServer(server) {
+      const repoRoot = fileURLToPath(new URL("../..", import.meta.url));
+      try {
+        const href = new URL("../../tools/review/middleware.mjs", import.meta.url).href;
+        const mod = (await import(/* @vite-ignore */ href)) as {
+          createReviewMiddleware: (
+            root: string,
+          ) => (req: IncomingMessage, res: ServerResponse, next: () => void) => void;
+        };
+        server.middlewares.use(mod.createReviewMiddleware(repoRoot));
+      } catch (err) {
+        const detail = err instanceof Error ? err.message : String(err);
+        server.middlewares.use(REVIEW_ROUTE_PREFIX, (_req, res) => {
+          res.statusCode = 503;
+          res.setHeader("Content-Type", "application/json; charset=utf-8");
+          res.end(
+            JSON.stringify({
+              error: "review middleware unavailable",
+              detail,
+              hint:
+                "tools/review/middleware.mjs（GH#664 的跨 lane 契約）尚未落地或載入失敗；" +
+                "asset-review.html 需要它供應 /__review/queue 與 /__review/verdict。",
+            }),
+          );
+        });
+      }
+    },
+  };
+}
+
+/**
  * BUILD STAMP (task #66). Computed ONCE here, at config-evaluation time on the
  * build machine — never at runtime in the browser — and handed to the client as
  * `import.meta.env.VITE_BUILD_STAMP` via `define` below, so the bottom-pinned
@@ -571,6 +620,7 @@ export default defineConfig({
   plugins: [
     react(),
     contentApiGuard(),
+    assetReviewApi(),
     liveBuildStamp(),
     serveIconConsoleStamp(),
     // compressDevModules only wraps the /src, /@fs, /@id, /@vite and

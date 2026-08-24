@@ -24,6 +24,8 @@ const OUTPUT = [
   "model-budget.html",
   "frame-data.html",
   "w3x-emitter-audition.html",
+  // GH#664 asset-review page: dev-only HITL tool, must be stripped like the rest
+  "asset-review.html",
 ];
 
 describe("the build output ships index.html and nothing else that is html", () => {
@@ -31,6 +33,7 @@ describe("the build output ships index.html and nothing else that is html", () =
     const stripped = debugPagesToStrip(OUTPUT);
     expect(stripped).not.toContain("index.html");
     expect(stripped).toEqual([
+      "asset-review.html",
       "bgm-audition.html",
       "frame-data.html",
       "model-budget.html",

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>素材批次審查 — vfx / sfx / model HITL（#664）</title>
+<style>
+  :root { --bg:#07080c; --panel:#12161f; --line:#2a3145; --fg:#e8ecf6; --dim:#98a2bd;
+          --accent:#7dd3fc; --gold:#f0c674; --warn:#f0a674; --bad:#e07272; --ok:#8fd694; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; min-height:100%; }
+  body { background:var(--bg); color:var(--fg); padding:96px 16px 60px;
+         font:14px/1.55 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans TC",sans-serif; }
+  .hud { background:rgba(14,18,28,.92); border:1px solid var(--line);
+         border-radius:10px; padding:12px 14px; backdrop-filter:blur(6px); }
+  #topbar { position:fixed; top:0; left:0; right:0; z-index:5; border-radius:0;
+            border-width:0 0 1px; display:flex; gap:14px; align-items:baseline; flex-wrap:wrap; }
+  #topbar h1 { margin:0; font-size:16px; letter-spacing:.02em; }
+  #topbar .meta { color:var(--dim); font-size:12px; }
+  #topbar .keys { margin-left:auto; color:var(--dim); font-size:11.5px; }
+  #calib.ok { color:var(--ok); } #calib.bad { color:var(--bad); font-weight:700; }
+  #banner { display:none; position:fixed; top:46px; left:0; right:0; z-index:5;
+            background:#3a1414; color:#ffb3b3; border-bottom:1px solid #7f2d2d;
+            padding:8px 16px; font-weight:700; }
+  #err { display:none; max-width:720px; margin:20px auto; border-color:#7f2d2d; background:#2a1212; }
+  code { background:#0009; padding:1px 5px; border-radius:4px; }
+
+  #cards { max-width:1060px; margin:0 auto; display:flex; flex-direction:column; gap:14px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:12px 14px; }
+  .card.selected { border-color:var(--accent); box-shadow:0 0 0 1px var(--accent); }
+  .card.v-pass { border-left:4px solid var(--ok); }
+  .card.v-fail { border-left:4px solid var(--bad); }
+  .card.v-unsure { border-left:4px solid var(--warn); }
+  .card .head { display:flex; gap:10px; align-items:baseline; flex-wrap:wrap; }
+  .card .head .kind { font-size:10px; letter-spacing:.08em; text-transform:uppercase;
+                      padding:1px 6px; border-radius:4px; background:#1d2334; color:var(--accent); }
+  .card .head .id { font-weight:700; }
+  .card .head .risk { color:var(--gold); font-size:12px; font-variant-numeric:tabular-nums; }
+  .card .refs { color:var(--dim); font-size:12px; margin-top:4px; }
+  .card ul.reasons { margin:6px 0 0; padding-left:0; list-style:none; }
+  .card ul.reasons li { font-size:11.5px; margin:0 0 4px; padding-left:9px;
+                        border-left:2px solid var(--warn); color:var(--dim); }
+  .card blockquote.spec { margin:8px 0 0; padding:6px 10px; border-left:3px solid var(--gold);
+                          background:#171308; color:#e8dcb8; font-size:12.5px; white-space:pre-wrap; }
+  .card .media { margin-top:10px; min-height:52px; color:var(--dim); font-size:12.5px; }
+  .card .media.err { color:var(--bad); }
+  .card canvas.strip { display:block; max-width:100%; border:1px solid var(--line);
+                       border-radius:6px; cursor:pointer; background:#0a0c12; }
+  .card canvas.wave { display:block; border:1px solid var(--line); border-radius:6px; background:#0a0c12; }
+  .card .medianote { color:var(--dim); font-size:11.5px; margin-top:4px; }
+  .card .verdicts { display:flex; gap:8px; align-items:center; margin-top:10px; flex-wrap:wrap; }
+  .card .verdicts button { font:inherit; font-size:12.5px; color:var(--fg); background:#1d2334;
+                           border:1px solid var(--line); border-radius:7px; padding:5px 12px; cursor:pointer; }
+  .card .verdicts button:hover { border-color:var(--accent); }
+  .card .verdicts button.on-pass { border-color:var(--ok); color:var(--ok); background:#12220f; }
+  .card .verdicts button.on-fail { border-color:var(--bad); color:var(--bad); background:#2a1212; }
+  .card .verdicts button.on-unsure { border-color:var(--warn); color:var(--warn); background:#2a2211; }
+  .card .verdicts input.note { flex:1 1 180px; min-width:140px; font:inherit; font-size:12.5px;
+                               color:var(--fg); background:#0d1017; border:1px solid var(--line);
+                               border-radius:7px; padding:5px 9px; }
+  .card .verdicts .state { font-size:12px; color:var(--dim); }
+  .card .verdicts .state.warn { color:var(--warn); }
+
+  #modal { display:none; position:fixed; inset:0; z-index:9; background:rgba(0,0,0,.72); }
+  #modal.open { display:flex; align-items:center; justify-content:center; }
+  #modal .box { background:var(--panel); border:1px solid var(--line); border-radius:10px;
+                padding:12px; max-width:calc(100vw - 40px); }
+  #modal .box .bar { display:flex; gap:10px; align-items:baseline; margin-bottom:8px; }
+  #modal .box .bar .t { font-weight:700; }
+  #modal .box .bar button { margin-left:auto; font:inherit; color:var(--fg); background:#1d2334;
+                            border:1px solid var(--line); border-radius:7px; padding:3px 10px; cursor:pointer; }
+  #modal canvas { display:block; width:640px; height:440px; max-width:100%; border-radius:6px; background:#0a0c12; }
+
+  /* 共用渲染引擎的工作畫布：住在 DOM（Babylon 量 clientWidth），但看不見 */
+  #studio { position:fixed; left:-9999px; top:0; width:480px; height:360px; }
+</style>
+</head>
+<body>
+
+<div id="topbar" class="hud">
+  <h1>素材批次審查 <span style="color:var(--dim);font-size:12px">#664 HITL</span></h1>
+  <span class="meta" id="counts">載入佇列中…</span>
+  <span class="meta" id="calib">量尺：未校正</span>
+  <span class="keys">j / k 移動 · y 通過 · n 不通過 · u 不確定 · 點動畫條 → live 重播</span>
+</div>
+<div id="banner"></div>
+
+<div id="err" class="hud">
+  <h1>載入失敗</h1>
+  <p id="errmsg" style="white-space:pre-wrap"></p>
+  <p>這頁只在 <code>vite dev</code> 下可用（直接載入 <code>/src/review/*.ts</code>，
+     並需要 dev server 掛上 <code>tools/review/middleware.mjs</code> 供應
+     <code>/__review/queue</code> 與 <code>/__review/verdict</code>）。</p>
+</div>
+
+<div id="cards"></div>
+
+<div id="modal">
+  <div class="box">
+    <div class="bar"><span class="t" id="modaltitle">—</span><button id="modalclose">✕ 關閉 (Esc)</button></div>
+    <canvas id="modalcanvas" width="640" height="440"></canvas>
+  </div>
+</div>
+
+<div id="studio"></div>
+
+<script type="module">
+const errBox = document.getElementById("err");
+const showErr = (m) => {
+  document.getElementById("errmsg").textContent = String(m);
+  errBox.style.display = "block";
+};
+window.addEventListener("error", (e) => showErr(e.message));
+window.addEventListener("unhandledrejection", (e) => showErr(e.reason?.message ?? e.reason));
+
+try {
+  const { startAssetReview } = await import("/src/review/assetReviewApp.ts");
+  await startAssetReview({
+    cards: document.getElementById("cards"),
+    counts: document.getElementById("counts"),
+    calib: document.getElementById("calib"),
+    banner: document.getElementById("banner"),
+    studio: document.getElementById("studio"),
+    modal: document.getElementById("modal"),
+    modalTitle: document.getElementById("modaltitle"),
+    modalCanvasHost: document.getElementById("modalcanvas").parentElement,
+    modalClose: document.getElementById("modalclose"),
+  });
+} catch (err) {
+  showErr(err instanceof Error ? err.message : err);
+}
+</script>
+</body>
+</html>
