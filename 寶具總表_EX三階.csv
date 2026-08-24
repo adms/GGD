@@ -36,7 +36,7 @@ EX,godie-i06a,妖物碎殺牙,1,2 / 5,—,—,"攻擊力+112
 吸血+15％
 [普通攻擊時] 6%機率造成255傷害，持續3秒",0｜數值型,dot onBasicAttack flat,wc3-import,,
 EX,godie-i039,幻之匕首,1,2 / 5,—,—,"[普通攻擊時] 3%機率造成敵方 20%生命傷害
-[閃避] 閃避 + 10%",0｜數值型,damage onBasicAttack flat,wc3-import,,
+[閃避] 閃避 + 10%",0｜數值型,damage spawnVfx onBasicAttack flat,wc3-import,,
 EX,godie-i06d,斬龍刀,1,2 / 5,—,—,"攻擊力+128
 防禦+12
 [暴擊] 20%機率造成 2倍傷害",0｜數值型,flat,wc3-import,,
