@@ -12,6 +12,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+import { readdirSync } from "node:fs";
 import { bundlePath, rebuildAllIndexes } from "../src/content/node/index";
 import { COLLECTION_NAMES } from "../src/content/schema/index";
 import { ContentLoader } from "../src/content/loader";
@@ -67,7 +68,29 @@ try {
   //    在等**：這裡靜默地隔離一份文件，換來的是一個「bundle 有、來源缺一塊」
   //    的產物被 commit 出貨，而那正是 2026-08-01 / 08-02 兩次事故的形狀。
   //    ⚠️ 隔離在執行期是止血，在這裡是**製造**出血。
-  loaded = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load({ policy: "fail-closed" });
+  // ⭐ GH#688 抓到的雞生蛋（M4 lane「最重要發現」的根治）：strict-then-write 的
+  //    驗證 loader 從**舊的** `_index.json` 讀集合 ⇒ 同一批「新增文件＋引用它」
+  //    永遠 DanglingRef 死鎖（新文件不在舊索引 ⇒ loader 看不見 ⇒ 引用它的一族
+  //    連坐被拒,而 content:build 正是要把它寫進索引的那一步）。
+  //    ⇒ **建置期**的驗證源改成「索引 ∪ 目錄掃描」：目錄上有而索引沒有的 .json
+  //    照樣進驗證 —— 覆蓋只會更嚴,⛔ 不是放寬;runtime 的 FsContentSource 一個
+  //    位元不動（出貨仍以 committed 索引為準,shippedBundleHasTrackedSources 照守）。
+  class BuildTimeFsSource extends FsContentSource {
+    override async readIndex(collection: Parameters<FsContentSource["readIndex"]>[0]) {
+      const idx = await super.readIndex(collection).catch(() => ({ collection, hash: "", entries: [] as { id: string; path: string }[] }));
+      const dir = join(CONTENT_DIR, collection);
+      const seen = new Set(idx.entries.map((e) => e.path));
+      for (const f of readdirSync(dir).sort()) {
+        if (!f.endsWith(".json") || f.startsWith("_")) continue;
+        const rel = join(collection, f);
+        if (seen.has(rel)) continue;
+        const doc = JSON.parse(readFileSync(join(dir, f), "utf8")) as { id?: string };
+        idx.entries.push({ id: String(doc.id ?? f.replace(/\.json$/, "")), path: rel });
+      }
+      return idx;
+    }
+  }
+  loaded = await new ContentLoader(new BuildTimeFsSource(CONTENT_DIR)).load({ policy: "fail-closed" });
 } catch (err) {
   const errors = (err as { errors?: unknown[] }).errors ?? [err];
   console.error(`\n✖ content 驗證失敗 —— ${errors.length} 個問題，索引與 bundle 都沒有重建：\n`);
