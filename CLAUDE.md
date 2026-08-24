@@ -946,6 +946,14 @@ owner 2026-08-24 第 35 條（逐字，同日兩次、第二次補上類型 tag 
 | **[思考策略]** | 這張票用哪種思考方式（盤點→按擋住支數排序 · 五層根因 · 兩個名詞的關係 · 閘不是判準 · 量到再說…） | 讓下一輪（context 斷掉後）不必重新推導「為什麼這樣做」 |
 | **[解決模板]** | 套哪個解決模板（三個住處開關 · 條件葉 · 產生器+`--check` 閘 · HITL 分層 · 承重守衛+突變 · N 同型=K 模板…） | 模板化是 owner 最推崇的方案 —— 票上寫明用哪個，做的時候就不會逐支手刻 |
 
+**⭐ v3 追加的內文六節（owner 2026-08-24 第三則；「v1 2 3 模板是**追加**不是取代」）：**
+
+`Objective`（這張票存在的目的）· `Scope`（包含什麼）· `Files / modules likely affected` ·
+`Implementation constraints`（守則約束：三個住處/purity/append-only/genguard…）·
+`Acceptance criteria`（＝v2 的驗收標準）· `Test / verification criteria`（哪支測試/突變/量什麼）。
+**最好再加**（lint 只警告⛔不擋）：`Dependencies` · `Non-goals` · `Known risks`。
+⚠️ 回補範圍：owner 2026-08-24 裁定「**#300 以前的就算了**」—— 舊票不回補。
+
 **閘（⛔ 不是「要記得」）——兩層：**
 
 | 層 | 什麼時候響 | 指令 |

@@ -27,7 +27,7 @@ describe("開票規格 lint", () => {
 
   it("帶齊四件 ⇒ 0", () => {
     const f = join(dir, "ok.md");
-    writeFileSync(f, "[重要][fix] 標題\n## 驗收\nx\n[思考策略] 閘不是判準\n[解決模板] 三個住處開關\n");
+    writeFileSync(f, "[重要][fix] 標題\n**Objective** o\n**Scope** s\n**Files / modules likely affected** f\n**Implementation constraints** c\n## 驗收\nx\n**Test / verification criteria** t\n[思考策略] 閘不是判準\n[解決模板] 三個住處開關\n");
     expect(run(f).code).toBe(0);
   });
 
@@ -36,7 +36,7 @@ describe("開票規格 lint", () => {
     writeFileSync(f, "只有一句話\n");
     const r = run(f);
     expect(r.code).toBe(1);
-    for (const piece of ["驗收標準", "類型 tag", "[緊急]", "思考策略", "解決模板"]) {
+    for (const piece of ["驗收標準", "類型 tag", "[緊急]", "思考策略", "解決模板", "Objective", "Scope", "Files", "constraints", "verification"]) {
       expect(r.out, `訊息沒指名缺「${piece}」`).toContain(piece);
     }
   });

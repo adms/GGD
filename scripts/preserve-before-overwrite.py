@@ -251,6 +251,16 @@ def main() -> int:
                 _missing.append("[思考策略]")
             if not re.search(r"\[解決模板\]|##\s*解決模板", _cmd):
                 _missing.append("[解決模板]")
+            # v3 追加的六節（owner:模板是**追加**不是取代）
+            for _pat, _name in (
+                (r"\bObjective\b", "Objective"),
+                (r"\bScope\b", "Scope"),
+                (r"Files\s*/?\s*modules|likely affected|影響檔案", "Files/modules affected"),
+                (r"Implementation constraints|實作約束", "Implementation constraints"),
+                (r"Test\s*/?\s*verification|驗證方式|##\s*驗證|verification criteria", "Test/verification criteria"),
+            ):
+                if not re.search(_pat, _cmd, re.I):
+                    _missing.append(_name)
             if _missing:
                 print(
                     "🎫 開票規格警告(owner 2026-08-24,⛔ 不擋但要補):這張票缺 "
