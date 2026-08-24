@@ -407,7 +407,9 @@ export function spatialSourceFor(key: string, source: SpatialSource | null): Spa
  * 這一顆事件發生在哪個 duel zone。
  *
  * 順序：payload 自帶的 `zone`（sim 的 `screenFlash`/`screenShake` 真的送這一格，
- * `sim/effects/clientCues.ts` 的 `ScreenCueRecipients`）→ 空間表
+ * `sim/effects/clientCues.ts` 的 `ScreenCueRecipients`；GH#678 起 `death` 也送 ——
+ * `sim/systems/DeathSystem.ts` 的 `DeathEvent`，因為 defeat 語音喊的那一刻
+ * 實體可能已出快照，客戶端歸不了戶）→ 空間表
  * （{@link EVENT_SPATIAL}）登記的實體欄位逐一問 `zoneOfEntity`。
  *
  * ⭐ 刻意**不**做泛用欄位猜測：不在空間表上的事件（`guardianSlain` / `rankUp` /

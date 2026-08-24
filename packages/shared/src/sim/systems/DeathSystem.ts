@@ -11,6 +11,23 @@ import { killScores, recordChampionDeath, recordFlowerEaten } from "../stats/mat
 import { cancelLeap } from "../movement/leap";
 import { releaseUnit } from "../mindControl";
 
+/**
+ * `death` 的線上 payload —— 型別住 emit 站旁邊（GH#608 規矩：⛔ 不要讓消費端
+ * 非 `as` 不可）。
+ *
+ * ⭐ `zone`（GH#678）：跨場地 cue 隔離的**歸戶欄位**。`death` 在此之前是唯一一則
+ * 有聲音消費端（#223 的 defeat 語音，任何英雄死亡都喊）而歸不了戶的事件 ——
+ * 沒有 zone、沒有座標、也不在 `EVENT_SPATIAL`（它的 SFX 刻意由本地 tally 邊緣
+ * 推導），於是 `cueEventZone` 回 null、fail-open 放行，隔壁場地的死亡吶喊照播。
+ * 客戶端不能自己補：喊的那一刻實體可能已出快照（花被吃掉當 tick 就毀）。
+ * 歸不了戶（無 transform）＝ -1 ⇒ 消費端 fail-open，跟缺席同一個失效方向。
+ */
+export interface DeathEvent {
+  id: EntityId;
+  killer: EntityId | null;
+  zone: number;
+}
+
 export function deathSystem(world: SimWorld): void {
   // last damage source per target this tick (events are ordered)
   const lastDamager = new Map<EntityId, EntityId>();
@@ -51,7 +68,9 @@ export function deathSystem(world: SimWorld): void {
     // 對沒有被借走的身體是零成本的 no-op（`world.mindControl` 空表時直接 miss）。
     releaseUnit(world, id);
     const killer = killingBlowSource.get(id) ?? lastDamager.get(id) ?? null;
-    world.emit("death", { id, killer });
+    // ⚠️ zone 要在 transform 還在的**這一刻**讀（花／硬幣類實體死後即毀）。
+    const payload: DeathEvent = { id, killer, zone: world.transform.get(id)?.zone ?? -1 };
+    world.emit("death", payload as unknown as Record<string, unknown>);
 
     if (world.flower.has(id)) {
       // Flowers are not kills: no XP/gold/onKill — their reward is the HP/MP
