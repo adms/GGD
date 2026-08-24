@@ -534,12 +534,19 @@ type Family = (t: TemplateDoc, p: Record<string, unknown>) => ExpandResult;
  */
 const modelFxFamily: Family = (t, p) => {
   const path = str(t, p, "path");
-  if (path !== "forward" && path !== "toTarget" && path !== "orbit" && path !== "radial") {
+  if (
+    path !== "forward" && path !== "toTarget" && path !== "orbit" && path !== "radial" &&
+    // ⭐ GH#649/#673 —— `static`（原地開火,tpl-beam-roll 2026-08-24 的新預設）。
+    //    這一格漏掉的症狀是:模板表單的**預設值本身**展不開（paramsSchema 守衛紅）,
+    //    也就是編輯器開一張新卡就直接炸。
+    path !== "static"
+  ) {
     throw new ExpandError(`template ${t.id}: param "path"="${path}" 不是合法的路徑`);
   }
-  // ⭐「往哪裡去」決定「要不要瞄」：radial/orbit 從施法者身上往外，⛔ 根本不讀
-  //    目標點；forward/toTarget 需要一個落點。⇒ castType 是 path 的函數。
-  const castType = path === "radial" || path === "orbit" ? "skillshot" : "ground";
+  // ⭐「往哪裡去」決定「要不要瞄」：radial/orbit/static 從施法者身上往外/原地，
+  //    ⛔ 根本不讀目標點；forward/toTarget 需要一個落點。⇒ castType 是 path 的函數。
+  const castType =
+    path === "radial" || path === "orbit" || path === "static" ? "skillshot" : "ground";
   // 落點大爆炸 —— ⭐ 由「模板宣告了 blastDamageTier 沒有」決定，⛔ 不是家族名。
   // ⚠️ `radius` 是 `zDamageArea` 的**必填**格，而真正說話的是 `radiusTier`
   //    （`resolveRadiusTier` 在載入時把 radius 蓋掉）。留著它是因為 AoE 級距表
@@ -573,8 +580,12 @@ const modelFxFamily: Family = (t, p) => {
         shape: "single",
         modelKey: docRef(t, p, "modelKey"),
         path,
-        speed: num(t, p, "speed"),
-        distance: num(t, p, "distance"),
+        // ⭐ `static` 不位移（GH#649/#673）：speed/distance 是死欄位（schema 反過來
+        //    禁填）,它的唯一終止條件是 lifeSec。⛔ 其他路徑照舊 —— rollback 到
+        //    forward 時這兩格還在。
+        ...(path === "static"
+          ? { ...(has(t, p, "lifeSec") ? { lifeSec: num(t, p, "lifeSec") } : {}) }
+          : { speed: num(t, p, "speed"), distance: num(t, p, "distance") }),
         // ⚠️ `count` 是**傷害次數的乘數**，⛔ 不是一個純視覺的數字：十二具各掃
         //    一次 = 42-04 卡面承諾的「隨機12次區域傷害」。調小它總輸出跟著掉。
         ...(has(t, p, "count") ? { count: num(t, p, "count") } : {}),

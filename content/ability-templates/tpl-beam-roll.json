@@ -25,13 +25,15 @@
       "type": "number",
       "default": 30,
       "min": 1,
-      "max": 200
+      "max": 200,
+      "inert": "path 預設 static（2026-08-24 裁決:光束原地開火）⇒ 不位移,speed 讀不到。rollback 把 params.path.default 改回 forward 的那一刻,把這格 inert 拿掉,守衛會逼你。"
     },
     "distance": {
       "type": "number",
       "default": 14,
       "min": 1,
-      "max": 48
+      "max": 48,
+      "inert": "同 speed —— static 不位移,唯一終止條件是 lifeSec。"
     },
     "spinDegPerSec": {
       "type": "number",

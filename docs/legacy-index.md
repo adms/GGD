@@ -23,11 +23,11 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 1064 個檔案**，分佈在 2 個隔離區。
+**目前共 1239 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
-| [`docs/legacy/`](legacy-index.md#docslegacy) | 624 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
+| [`docs/legacy/`](legacy-index.md#docslegacy) | 799 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
 | [`content/_legacy/`](legacy-index.md#contentlegacy) | 440 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
@@ -35,7 +35,7 @@ owner 2026-08-13：
 
 ---
 
-## `docs/legacy/` —— 624 檔
+## `docs/legacy/` —— 799 檔
 
 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）
 
@@ -629,6 +629,181 @@ owner 2026-08-13：
 | `_overwrites/overwrite_temp_20260824-190933/apps/client/src/review/babylonStrips.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260824-191517/apps/client/src/review/babylonStrips.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/overwrite_temp_20260824-191521/apps/client/src/review/babylonStrips.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-201752/packages/shared/src/content/schema/config/arenaRules.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-201800/packages/shared/src/content/schema/config/arenaRules.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-201812/packages/shared/src/content/schema/practiceDoc.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-201817/packages/shared/src/content/schema/practiceDoc.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-201823/packages/shared/src/content/schema/practiceDoc.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-201826/packages/shared/src/content/schema/practiceDoc.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-201916/tools/w3x-import/extract_particles.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-201920/tools/w3x-import/extract_particles.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-201924/apps/game-server/src/match/MatchController.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-201930/packages/shared/src/sim/dispelRules.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-201932/packages/shared/src/sim/dispelRules.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-201933/apps/game-server/src/match/MatchController.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-201933/tools/w3x-import/extract_particles.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-201944/apps/game-server/src/match/MatchController.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-201945/apps/game-server/src/match/botOnlyRingAccel.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-201955/apps/game-server/src/match/MatchController.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202002/apps/admin/src/configForms.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202005/apps/game-server/src/match/botOnlyRingAccel.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202009/apps/game-server/src/match/MatchController.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202011/apps/admin/src/configForms.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202016/apps/game-server/src/match/MatchController.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202038/packages/shared/src/sim/effects/applyBuff.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202048/packages/shared/src/sim/systems/OrderSystem.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202105/packages/shared/src/sim/effects/applyBuff.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202109/packages/shared/src/sim/stats/matchLedger.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202115/apps/admin/src/configForms.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202122/packages/shared/src/sim/stats/matchLedger.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202134/packages/shared/src/sim/stats/matchLedger.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202140/packages/shared/src/sim/stats/matchLedger.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202158/apps/game-server/src/match/MatchController.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202210/apps/game-server/src/stats/damageBoard.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202243/packages/shared/src/content/schema/config/damageRules.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202303/packages/shared/src/sim/stats/sourceGrants.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202307/packages/shared/src/sim/stats/sourceGrants.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202309/apps/admin/src/damageBoard.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202309/packages/shared/src/sim/stats/sourceGrants.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202319/apps/admin/src/damageBoard.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202319/packages/shared/src/content/vfxDocsBirthVisibility.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202355/apps/admin/src/damageBoard.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202358/packages/shared/src/content/schema/config/vfxCleanup.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202400/packages/shared/src/sim/effects/applyStatus.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202404/packages/shared/src/content/schema/config/vfxCleanup.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202416/apps/admin/src/damageBoardPage.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202421/apps/admin/src/damageBoardPage.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202426/apps/admin/src/damageBoardPage.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202437/apps/admin/src/damageBoardPage.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202441/apps/admin/src/damageBoardPage.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202444/content/abilities/godie-zombieking.passive.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202449/apps/admin/src/damageBoardPage.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202452/apps/admin/src/damageBoardPage.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202505/apps/admin/src/configForms.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202515/apps/client/src/vfx/fadeOut.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202541/apps/client/src/vfx/fadeOut.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202555/apps/client/src/vfx/vfxCleanupPolicy.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202606/tools/w3x-import/extract_particles.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202614/apps/client/src/vfx/particleFactory.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202623/tools/w3x-import/extract_particles.py` | （.py 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202625/apps/client/src/vfx/particleFactory.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202631/apps/client/src/vfx/particleFactory.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202632/apps/platform/internal/room/invite.go` | （.go 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202635/apps/client/src/vfx/particleFactory.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202642/apps/platform/internal/room/invite.go` | （.go 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202655/apps/admin/src/configForms.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202726/apps/platform/internal/room/room.go` | （.go 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202728/apps/admin/src/damageBoard.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202740/apps/admin/src/damageBoard.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202810/apps/game-server/src/stats/damageBoardOneShot.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202935/packages/shared/src/content/schema/config/weather.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-202935/packages/shared/src/sim/statusTagImmunity.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-203001/packages/shared/src/content/schema/config/weather.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-203016/packages/shared/src/content/schema/config/weather.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-203030/packages/shared/src/content/schema/config/weather.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-203040/packages/shared/src/content/schema/config/weather.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-203147/packages/shared/src/content/fieldAdoption.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-203153/packages/shared/src/content/fieldAdoption.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-203212/packages/shared/src/sim/statusTagImmunity.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-203217/packages/shared/src/sim/stats/sourceGrants.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-203226/packages/shared/src/sim/statusTagImmunity.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-203227/packages/shared/src/sim/stats/sourceGrants.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-203521/apps/client/src/render/ArenaScene.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-203602/apps/admin/src/configForms.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-204645/apps/client/src/render/vfx/w3xRigHonoursDissipateCap.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-205321/apps/client/src/render/vfx/w3xRigHonoursDissipateCap.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211233/packages/shared/src/content/schema/practiceDoc.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211235/packages/shared/src/content/schema/practiceDoc.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211236/packages/shared/src/content/schema/practiceDoc.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211252/content/config/practice.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211338/apps/game-server/src/match/MatchController.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211343/apps/game-server/src/match/MatchController.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211357/apps/game-server/src/match/MatchController.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211412/apps/client/src/ui/platform/FriendsPanel.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211427/apps/client/src/input/mouseTwoStageCast.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211439/apps/client/src/input/mouseTwoStageCast.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211507/apps/client/src/input/InputCapture.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211521/apps/game-server/src/match/practiceDummies.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211525/apps/client/src/input/InputCapture.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211555/packages/shared/src/content/schema/config/weather.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211606/packages/shared/src/content/schema/config/weather.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211630/packages/shared/src/content/schema/config/weather.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211643/packages/shared/src/content/schema/config/weather.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211704/packages/shared/src/content/schema/config/weather.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211712/packages/shared/src/content/schema/config/weather.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211720/apps/game-server/src/match/MatchController.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211725/packages/shared/src/content/schema/config/weather.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211735/packages/shared/src/content/schema/config/weather.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211744/apps/game-server/src/match/MatchController.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211800/apps/client/src/render/weather.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211817/apps/client/src/GameApp.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211904/apps/admin/src/configForms.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211909/packages/shared/src/sim/systems/DeathSystem.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-211945/content/items/godie-i039.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212000/packages/shared/src/sim/systems/DeathSystem.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212005/packages/shared/src/content/schema/config/weather.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212013/packages/shared/src/sim/systems/DeathSystem.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212125/packages/shared/src/sim/daggerGodieI039.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212150/packages/shared/src/content/schema/config/weather.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212206/packages/shared/src/content/schema/config/weather.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212234/packages/shared/src/sim/combatFeel.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212239/packages/shared/src/sim/combatFeel.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212247/packages/shared/src/sim/combatFeel.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212409/tools/skill-lists/gen.mjs` | （.mjs 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212411/packages/shared/src/sim/systems/OrderSystem.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212411/tools/skill-lists/gen.mjs` | （.mjs 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212413/packages/shared/src/sim/daggerGodieI039.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212427/packages/shared/src/sim/systems/MovementSystem.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212453/package.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212455/package.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212541/apps/admin/src/combatFeel.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212625/apps/admin/src/ui/App.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212626/apps/admin/src/ui/App.tsx` | （.tsx 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212653/apps/admin/src/navSections.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212728/content/items/godie-i039.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212742/content/items/godie-i039.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212835/packages/shared/src/sim/systems/MovementSystem.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212849/packages/shared/src/sim/systems/MovementSystem.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-212923/tools/skill-lists/gen.mjs` | （.mjs 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-221538/packages/shared/src/content/abilityCodeParityForms.baseline.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-222731/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-222742/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-222747/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-222759/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-222803/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-222818/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-222822/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-222829/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-222834/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-222854/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-222858/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-222900/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-222913/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-222916/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-222931/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-222935/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-222938/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-222945/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-222949/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-222953/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-223016/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-223018/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-223023/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-223029/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-223033/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-223037/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-223048/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-223052/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-223055/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-223113/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-223118/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-223120/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-223128/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-223130/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-223152/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-223154/docs/開發守則大全.md` | 開發守則大全 —— 可轉移的工程紀律十五章 —— 這份文件是一個實際專案（多人併行 AI 工作流、內容驅動的線上服務）兩個月踩坑的沉澱， | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-223802/apps/client/src/vfx/beamAudition.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_overwrites/overwrite_temp_20260824-224155/packages/shared/src/sim/exAbilitiesShipped.test.ts` | （.ts 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/04.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/06.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_overwrites/parity-baseline_temp_20260821-034744/abilityCodeParity.baseline/08.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
