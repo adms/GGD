@@ -2163,8 +2163,18 @@ export class VfxSystem {
           typeof data.attach === "string"
             ? this.boneSpawnPos(data.attach, data.caster, x, z)
             : { x, y: 1.0, z };
-        if (doc) this.play(doc, anchor.x, anchor.z, nowMs, anchor.y);
-        else this.sparks.push(new HitSpark(this.scene, anchor.x, anchor.z, nowMs));
+        // ⭐ GH#641 —— 一次性特效也認 `orient.yawFrom:"aim"`。在此之前只有施法
+        //    階梯那條路會走 `applyAimYaw`，於是 hook／道具觸發的 spawnVfx 一律朝
+        //    世界方向噴 ——「受傷角色**背後**大量噴血」在文件裡寫不出來。
+        //    瞄準向量＝發射者（攻擊者）→ 落點（受害者），正是這一下的行進方向，
+        //    所以錐口指向受害者背後。⛔ 這裡沒有任何道具/技能 id 的 if：文件宣告
+        //    aim 才轉（`applyAimYaw` 對其餘文件回傳同一個物件 = 一位元不差的舊路）；
+        //    發射者位置未知 → null → 世界方位（退路，⛔ 不是不畫）。
+        if (doc) {
+          const cpos = data.caster !== undefined ? this.ctx.entityPos(data.caster) : null;
+          const aimYaw = cpos ? yawDegToward(x - cpos.x, z - cpos.z) : null;
+          this.play(applyAimYaw(doc, aimYaw), anchor.x, anchor.z, nowMs, anchor.y);
+        } else this.sparks.push(new HitSpark(this.scene, anchor.x, anchor.z, nowMs));
         // ⚡🌈 GH#549 —— 「**反彈成功**」那一族的**真的電弧**（owner 2026-08-22：
         //    「被反彈的敵方單位 身上要有明顯的**七彩閃電爆炸**」）。
         // ⛔ 這裡沒有任何技能 id 的 if：`reflectArcBurstPlan` 查的是**演出文件的

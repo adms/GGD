@@ -102,25 +102,61 @@ describe("幻之匕首 [普通攻擊時] 3%機率造成敵方 20%生命傷害", 
       );
 
     let basics = 0;
-    const procs: { amount: number; hpBefore: number }[] = [];
+    const r6 = (n: number): number => Number(n.toFixed(6));
+    const quietSwings = new Set<number>(); // basic amounts on NON-proc ticks
+    const procs: { amount: number; hpBefore: number; basicAmt?: number; vfxId?: string }[] = [];
     for (let t = 0; t < 4000; t++) {
       const hpBefore = vh.hp;
       world.step(NO_INTENTS);
+      let basicAmt: number | undefined;
+      let proc: { amount: number; hpBefore: number; basicAmt?: number; vfxId?: string } | undefined;
+      // ⚠️ 順序是量出來的:hook 效果在揮擊當下就 emit vfxSpawn,而傷害封包經
+      // 結算管線**晚一點**才落在同一個 tick 的事件流裡 —— 所以血花要整個 tick
+      // 收完再跟 proc 對上,⛔ 不能假設它跟在 proc 封包後面。
+      const holderVfx: string[] = [];
       for (const ev of world.events) {
+        if (ev.type === "vfxSpawn") {
+          const v = ev.data as { vfxId?: string; caster?: unknown };
+          if (v.caster === holder && v.vfxId !== undefined) holderVfx.push(v.vfxId);
+          continue;
+        }
         if (ev.type !== "damage") continue;
         const d = ev.data as { origin?: string; amount?: number; target?: unknown };
         if (d.target !== victim) continue;
-        if (d.origin === "basic") basics++;
-        else if (String(d.origin).includes(DAGGER)) procs.push({ amount: d.amount ?? 0, hpBefore });
+        if (d.origin === "basic") {
+          basics++;
+          basicAmt = d.amount;
+        } else if (String(d.origin).includes(DAGGER)) {
+          proc = { amount: d.amount ?? 0, hpBefore };
+          procs.push(proc);
+        }
       }
+      if (proc) {
+        proc.basicAmt = basicAmt;
+        proc.vfxId = holderVfx[0];
+      } else if (basicAmt !== undefined) quietSwings.add(r6(basicAmt));
     }
     expect(procs.length, "the 3% never fired in 4000 ticks of auto-attacks").toBeGreaterThanOrEqual(2);
     // 「3%機率」 is a real gate: procs stay RARE relative to swings, not 1:1.
     expect(procs.length).toBeLessThan(basics * 0.2);
+    // GH#641 (reopened) 方向②: the swing that PROCS carries the same basic packet
+    // as any quiet swing — the 20% chunk is a SEPARATE packet, never a swing
+    // inflated by 1.2 (and quiet swings carry no hidden extra: their amounts are
+    // the only members of this set).
+    const vfxBinding = (Items.get(DAGGER).passive ?? [])[0]!.effects.find((e) => e.kind === "spawnVfx");
+    if (vfxBinding?.kind !== "spawnVfx") {
+      throw new Error("幻之匕首的觸發缺噴血綁定 —— passive[0].effects 裡沒有 spawnVfx (GH#641)");
+    }
     for (const p of procs) {
       // basis=current is load-bearing here: hp DECAYS across the duel, so a
       // max-basis (constant chunk) or flat-damage regression cannot track this.
       expect(p.amount / (p.hpBefore * pct * factor())).toBeCloseTo(1, 5);
+      expect(p.basicAmt, "a proc without its swing's own basic packet").toBeDefined();
+      expect(quietSwings.has(r6(p.basicAmt!))).toBe(true);
+      // GH#641 血花綁定: the proc tick REALLY emits the item's declared vfx —
+      // the vfxId is read off the LOADED doc, never a literal (mutation line:
+      // delete the spawnVfx entry from godie-i039.json → red here).
+      expect(p.vfxId).toBe(vfxBinding.vfxId);
     }
   });
 });
