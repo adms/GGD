@@ -276,6 +276,20 @@
       "comment": "#272 verification lane, THIS WORKTREE. Private port so concurrent agent sessions cannot steal :2567 mid-run; no PLATFORM_GAME_SHARED_SECRET so the client's offline 'vs bots' create is accepted; whitelist bypass so an empty curation list cannot filter the roster to zero."
     },
     {
+      "name": "client-beam",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "--filter",
+        "@ggd/client",
+        "dev",
+        "--port",
+        "39673",
+        "--strictPort"
+      ],
+      "port": 39673,
+      "comment": "GH#673 beam visual-proof lane. Private port so concurrent lanes cannot steal :39527; serves public/beam-audition.html + /content in dev."
+    },
+    {
       "name": "client-272",
       "runtimeExecutable": "env",
       "runtimeArgs": [
