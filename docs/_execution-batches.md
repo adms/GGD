@@ -1679,3 +1679,10 @@ watchdog 後代 CPU 修復。
 - ⚔️ #704 超究武神霸斬 3.5s 原作時間軸（jass-combo 產生器）· #705 Saber 20-04 鏡射 Avalon（含 claims.json 舊條目移除）· #692 陽電子砲 count:1 · #703 冷快取預熱＋@visual-proof
 - ✅ 部署：DEPLOY7=0 六項後置條件綠 · BUILD_STAMP v0.27.4 · 煙霧測試 `content loaded: 71 champions (cv_a6eed9666137)` · 帳號 204→204
 - ➡️ 下一批：#688 Phase 6 TornadoElemental ×9（tpl-locust-orb 一族＋九列參數）· #699 PRE2 · #670/#672 驗收批
+
+## v0.27.5（2026-08-25 深夜）—— #688 Phase 6 第二族：TornadoElemental ×9
+
+- 🌪️ 一次轉換＋六支綁定（雷電風暴/千之雷/畫龍點睛/三千世界×2/天翔龍閃/螺旋劍）＋三隻誠實無落點（SHARED_MODEL_UNADOPTED 釘住）
+- #669 已登記（預設 LIVE；rollback＝tpl-locust-orb.params.alpha.default）
+- ✅ 部署 DEPLOY8=0 · BUILD_STAMP v0.27.5 · 煙霧 `cv_7bfa219b05cb` · 帳號 204→204
+- ➡️ 下一族：crescent ×5（lane 已派）· 之後 ReviveHuman 殘餘 ×4 / TomeOfRetrainingCaster ×4 / WarStompCaster ×4 / Meteor ×4 · 隊列另有 #699 PRE2 · #670/#672
