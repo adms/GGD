@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>四批終端像素證據 — 天氣 / 幻之匕首噴血 / 脫困 / 火圈立即縮</title>
+<style>
+  :root { --bg:#05060a; --panel:#12161f; --line:#2a3145; --fg:#e8ecf6; --dim:#98a2bd;
+          --accent:#7dc4fc; --gold:#f0c674; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; }
+  body { background:var(--bg); color:var(--fg); overflow:hidden;
+         font:14px/1.55 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans TC",sans-serif; }
+  #view { position:fixed; inset:0; width:100%; height:100%; display:block; }
+  .hud { position:fixed; z-index:2; background:rgba(14,18,28,.9); border:1px solid var(--line);
+         border-radius:10px; padding:12px 14px; }
+  #panel { top:14px; left:14px; max-width:460px; }
+  #panel h1 { margin:0 0 4px; font-size:16px; }
+  #panel p { margin:6px 0 0; color:var(--dim); font-size:12.5px; }
+  #stats { bottom:14px; left:14px; right:14px; font-variant-numeric:tabular-nums;
+           color:var(--gold); font-size:13px; max-height:34vh; overflow:auto; white-space:pre-wrap; }
+  #err { top:14px; left:14px; right:14px; max-width:760px; border-color:#7f2d2d;
+         background:#2a1212; display:none; white-space:pre-wrap; }
+  code { background:#0009; padding:1px 5px; border-radius:4px; }
+</style>
+</head>
+<body>
+<canvas id="view"></canvas>
+
+<div id="err" class="hud"><h1>失敗</h1><p id="errmsg"></p>
+  <p>這頁只在 <code>vite dev</code> 下可用。</p></div>
+
+<div id="panel" class="hud">
+  <h1>終端像素證據台 <span style="color:var(--dim);font-size:12px" id="which">—</span></h1>
+  <p>⭐ 每一批都走<b>出貨的那條路</b>（出貨 <code>SimWorld</code> / 出貨政策 /
+     出貨 <code>VfxSystem</code>、<code>FireRingFx</code>、<code>WeatherRainFx</code>）。
+     量尺先 <code>calibrate()</code> 自證，量不到已知亮的 control ⇒ 整批作廢。
+     截圖經 <code>shot-sink</code> 寫進 <code>docs/_reports/&lt;id&gt;/</code>。</p>
+  <p>網址參數：<code>?scenario=weather|dagger|stuckescape|firering&amp;dir=&lt;證據目錄&gt;&amp;sink=&lt;port&gt;</code></p>
+</div>
+
+<div id="stats" class="hud"><span id="readout">待命 — 呼叫 window.__proof.run()</span></div>
+
+<script type="module">
+const showErr = (m) => {
+  document.getElementById("errmsg").textContent = String(m);
+  document.getElementById("err").style.display = "block";
+};
+window.addEventListener("error", (e) => showErr(e.message));
+window.addEventListener("unhandledrejection", (e) => showErr(e.reason && e.reason.stack ? e.reason.stack : e.reason));
+
+const qs = new URLSearchParams(location.search);
+/**
+ * ⚠️ 四批**跑在同一次頁面載入**裡是刻意的：`ensureContentLoaded()` 是 single-flight，
+ * 而逐檔載入出貨內容（≈1,900 份文件、序列 await）要好幾分鐘 —— 一批一次頁面載入
+ * ＝ 同一件事做四遍。
+ */
+const SCENARIOS = (qs.get("scenario") ?? "weather,dagger,stuckescape,firering").split(",");
+const STAMP = qs.get("stamp") ?? "20260825";
+const sinkPort = qs.get("sink") ?? "39674";
+const DIRS = {
+  weather: `weather_rain_visual-proof_${STAMP}`,
+  dagger: `dagger_visual-proof_${STAMP}`,
+  stuckescape: `stuckescape_visual-proof_${STAMP}`,
+  firering: `firering_visual-proof_${STAMP}`,
+};
+document.getElementById("which").textContent = SCENARIOS.join(" → ");
+
+try {
+  // ⚠️ `?t=` 是 vite 自己的 HMR 快取破壞參數 —— 不帶它的話，改完模組重新導覽
+  // 仍然會拿到**上一版**的 transform（實測踩過兩輪：錯誤訊息的行號對不上檔案）。
+  const { runFeatureProof } = await import(`/src/vfx/featureProofAudition.ts?t=${Date.now()}`);
+  const readout = document.getElementById("readout");
+  const paint = (extra) => {
+    readout.textContent =
+      Object.entries(window.__proof.results)
+        .map(
+          ([k, r]) =>
+            `▸ ${k}  calibrate=${r.calibrate} @${r.width}×${r.height}\n` +
+            r.frames.map((f) => `   ${f.label}  亮 ${f.bright}  lit ${f.lit}`).join("\n"),
+        )
+        .join("\n") + (extra ? `\n${extra}` : "");
+  };
+  window.__proof = {
+    scenarios: SCENARIOS,
+    dirs: DIRS,
+    state: "idle",
+    current: null,
+    results: {},
+    errors: {},
+    async run() {
+      this.state = "running";
+      for (const s of SCENARIOS) {
+        this.current = s;
+        paint(`⏳ ${s} …`);
+        try {
+          const r = await runFeatureProof(
+            document.getElementById("view"),
+            s,
+            `http://127.0.0.1:${sinkPort}/shot/${DIRS[s]}`,
+          );
+          this.results[s] = r;
+        } catch (e) {
+          this.errors[s] = e && e.stack ? e.stack : String(e);
+          showErr(`[${s}] ${this.errors[s]}`);
+        }
+        paint();
+      }
+      this.current = null;
+      this.state = "done";
+      return this.results;
+    },
+  };
+  readout.textContent = `就緒：${SCENARIOS.join(", ")}（呼叫 window.__proof.run()）`;
+} catch (e) { showErr(e && e.stack ? e.stack : e); }
+</script>
+</body>
+</html>

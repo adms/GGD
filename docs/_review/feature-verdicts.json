@@ -63,6 +63,98 @@
       "verdictHash": null,
       "reason": "",
       "verdictAt": null
+    },
+    "weather_rain_visual-proof_20260825": {
+      "title": "天氣：無雨→下雨→強度階梯→起霧",
+      "family": "weather",
+      "issues": [
+        694,
+        676,
+        654
+      ],
+      "abilities": [],
+      "commit": "898e7c47",
+      "sequenceDir": "docs/_reports/weather_rain_visual-proof_20260825",
+      "rollback": {
+        "configId": "weather",
+        "field": "rainEnabled",
+        "liveValue": true,
+        "rollbackValue": false,
+        "note": "⛔ 紅字：出貨的雨在真瀏覽器上一定擲例外（沒人 import webgl2ParticleSystem），而 ArenaScene 的呼叫點沒有 try/catch ⇒ 擲中雨的那一場整張地圖建不起來。翻 false ＝ 止血閥，一鍵回到「不會下雨」。"
+      },
+      "registeredAt": "2026-08-25T04:22:07.160Z",
+      "verdict": null,
+      "verdictHash": null,
+      "reason": "",
+      "verdictAt": null
+    },
+    "dagger_visual-proof_20260825": {
+      "title": "幻之匕首：3% 觸發 → 受害者背後噴血",
+      "family": "item-proc",
+      "issues": [
+        696,
+        641
+      ],
+      "abilities": [],
+      "commit": "898e7c47",
+      "sequenceDir": "docs/_reports/dagger_visual-proof_20260825",
+      "rollback": {
+        "configId": "gore",
+        "field": "style",
+        "liveValue": "blood",
+        "rollbackValue": "off",
+        "note": "⚠️ 這一格現在**還關不掉它**：resolveGore 只閘 hitImpact 那條血路，⛔ 不閘 spawnVfx（VfxSystem.ts:1396）。真正一鍵關的是 content/items/godie-i039.json passive[0].effects 的 spawnVfx entry（刪即關），⛔ 但登記閘的 SWITCH_DIRS 只認 content/config 與 content/ability-templates。正解＝vfx@1 加一格 gore:true（GH#685 候選票）。"
+      },
+      "registeredAt": "2026-08-25T04:22:22.031Z",
+      "verdict": null,
+      "verdictHash": null,
+      "reason": "",
+      "verdictAt": null
+    },
+    "stuckescape_visual-proof_20260825": {
+      "title": "互卡脫困保險絲：黏 2 秒後穿過去",
+      "family": "combat-feel",
+      "issues": [
+        677
+      ],
+      "abilities": [],
+      "commit": "898e7c47",
+      "sequenceDir": "docs/_reports/stuckescape_visual-proof_20260825",
+      "rollback": {
+        "configId": "combat-feel",
+        "field": "stuckEscape.enabled",
+        "liveValue": true,
+        "rollbackValue": false,
+        "note": "翻 false ＝ 整條保險絲關掉，回到「互卡就卡到死」的舊行為。⛔ 紅字：「脫困」浮字今天零像素（floatingText 沒有任何渲染消費端），這一批只驗到「穿過去」那一半。"
+      },
+      "registeredAt": "2026-08-25T04:22:22.209Z",
+      "verdict": null,
+      "verdictHash": null,
+      "reason": "",
+      "verdictAt": null
+    },
+    "firering_visual-proof_20260825": {
+      "title": "火圈：最後一個人類死亡 → 立即縮圈",
+      "family": "arena-rules",
+      "issues": [
+        659,
+        643
+      ],
+      "abilities": [],
+      "commit": "898e7c47",
+      "sequenceDir": "docs/_reports/firering_visual-proof_20260825",
+      "rollback": {
+        "configId": "arena-rules",
+        "field": "botOnlyRingAccelSec",
+        "liveValue": 0,
+        "rollbackValue": 10,
+        "note": "翻 10 ＝ 回到 v0.26.1 的行為（bot 互毆再打十秒才收圈）；整個機制的總開關是同一份文件的 botOnlyRingAccelEnabled。"
+      },
+      "registeredAt": "2026-08-25T04:22:22.393Z",
+      "verdict": null,
+      "verdictHash": null,
+      "reason": "",
+      "verdictAt": null
     }
   }
 }
