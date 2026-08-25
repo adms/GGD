@@ -57,9 +57,35 @@ const RETROFIT: ReadonlyArray<readonly [string, string, Record<string, unknown>]
   ["godie-uvng.e", "tpl-locust-travel", {"kind": "spawnModelFx", "shape": "single", "modelKey": "imported.blackhole", "path": "forward", "speed": 30.0, "distance": 14.0, "spinDegPerSec": 720.0, "scale": 0.6}],
   ["godie-u010.ex", "tpl-locust-swarm", {"kind": "spawnModelFx", "shape": "single", "modelKey": "imported.blackhole", "path": "radial", "count": 3, "distance": 8.0, "speed": 7.7, "spinDegPerSec": 720.0, "scale": 0.6}],
   ["godie-uvng.ex", "tpl-locust-swarm", {"kind": "spawnModelFx", "shape": "single", "modelKey": "imported.blackhole", "path": "radial", "count": 3, "distance": 8.0, "speed": 7.7, "spinDegPerSec": 720.0, "scale": 0.6}],
+  // ⭐ GH#698 —— o00E「打雷」那一族（`tpl-locust-strike`）。golden 一樣是
+  //    `git show HEAD:content/abilities/<id>.json` 撈出來的那幾行，⛔ 不是回推的。
+  //    ⚠️ 六個節點收攏之後只剩 `preset` ＋ `modelKey`（＋真的不同的那幾格），
+  //    而載入結果與收攏前**逐格相同** —— 那是「等價 retrofit」這句話裡的等價。
+  ["godie-e00l.r", "tpl-locust-strike", {"kind": "spawnModelFx", "shape": "single", "path": "static", "anchor": "point", "modelKey": "w3x.stock.monsoonbolttarget", "scale": 6.0, "lifeSec": 2.0, "clip": "idle", "tint": [0.3922, 0.0, 0.0]}],
+  ["godie-e00x.r", "tpl-locust-strike", {"kind": "spawnModelFx", "shape": "single", "path": "static", "anchor": "target", "modelKey": "w3x.stock.monsoonbolttarget", "scale": 8.0, "lifeSec": 1.0, "clip": "idle"}],
+  ["godie-h020.e", "tpl-locust-strike", {"kind": "spawnModelFx", "shape": "single", "path": "static", "anchor": "point", "modelKey": "w3x.stock.monsoonbolttarget", "scale": 8.0, "lifeSec": 1.0, "clip": "idle"}],
+  ["godie-hjai.e", "tpl-locust-strike", {"kind": "spawnModelFx", "shape": "single", "path": "static", "anchor": "point", "modelKey": "w3x.stock.monsoonbolttarget", "scale": 8.0, "lifeSec": 1.0, "clip": "idle"}],
+  ["godie-u00l.r", "tpl-locust-strike", {"kind": "spawnModelFx", "shape": "single", "path": "static", "anchor": "target", "modelKey": "w3x.stock.monsoonbolttarget", "scale": 10.0, "lifeSec": 1.0, "clip": "idle", "tint": [1.0, 0.0, 0.0]}],
+  ["godie-umal.r", "tpl-locust-strike", {"kind": "spawnModelFx", "shape": "single", "path": "static", "anchor": "self", "modelKey": "w3x.stock.monsoonbolttarget", "scale": 10.0, "lifeSec": 1.0, "clip": "idle", "tint": [1.0, 0.0, 0.0]}],
+  // ⭐ 這兩支的 golden **不是**「改動前的自己」（它們改動前是 `effects: []`）——
+  //    它是 `git show 874c4e1e^:` 撈出來的那一份、以及**變身對子另一邊**的酬載。
+  //    ⇒ #698 之前它們的節點被 `mergeExpansion()` 洗掉,所以先被**刪除**（874c4e1e）;
+  //    現在保留機制在了,它們回來,而且必須逐格等於當初被刪掉的那一份。
+  ["godie-udea.ex", "tpl-locust-strike", {"kind": "spawnModelFx", "shape": "single", "path": "static", "anchor": "self", "modelKey": "w3x.stock.monsoonbolttarget", "scale": 6.0, "lifeSec": 2.0, "clip": "idle", "tint": [0.3922, 0.0, 0.0]}],
+  ["godie-udre.r", "tpl-locust-orb", {"kind": "spawnModelFx", "shape": "single", "modelKey": "imported.heromusashimiyamoto", "path": "orbit", "count": 1, "distance": 0.1, "speed": 1.0, "lifeSec": 2.5, "soundKey": "wc3.blademasterwhirlwind", "arriveSoundKey": "wc3.orcdissipate1"}],
 ];
 
-const LOCUST_IDS = ["tpl-locust-orb", "tpl-locust-line", "tpl-locust-travel", "tpl-locust-swarm"];
+const LOCUST_IDS = [
+  "tpl-locust-orb",
+  "tpl-locust-line",
+  "tpl-locust-travel",
+  "tpl-locust-swarm",
+  // ⭐ GH#698 —— 第五族。⚠️ 它與 `tpl-locust-orb` 是**同一個 census 群
+  //    （static-single 165 隻）的兩種編碼**：orb 的 `orbit + 環半徑 0.1` 是為了
+  //    六支既有節點的逐位元等價留下的 legacy 形狀。完整推導（含「為什麼不是在
+  //    orb 加一格 anchor」的實測欄位數）在 `expand.ts` 的第 25 條註解。
+  "tpl-locust-strike",
+];
 
 /** 深度優先撈出一份文件裡每一個 `spawnModelFx` 節點。 */
 function modelFxNodes(node: unknown, out: Record<string, unknown>[] = []): Record<string, unknown>[] {
@@ -76,7 +102,7 @@ describe("蝗蟲群／球體特效模板（GH#693）", () => {
   const all = templates();
   const locust = all.filter((t) => t.id.startsWith("tpl-locust-"));
 
-  it("① 家族數 ≤6，四族全部 enabled 而且展開得出來（編輯器挑得到）", () => {
+  it("① 家族數 ≤6，全族 enabled 而且展開得出來（編輯器挑得到）", () => {
     expect(
       locust.map((t) => t.id).sort(),
       "出貨的 tpl-locust-* 與 expand.ts 的家族鍵對不上",
@@ -89,7 +115,7 @@ describe("蝗蟲群／球體特效模板（GH#693）", () => {
     }
   });
 
-  it("② 十個既有節點改成引用模板之後，載入結果與改動前逐格相同", () => {
+  it("② 既有節點改成引用模板之後，載入結果與改動前逐格相同", () => {
     const byId = new Map(all.map((t) => [t.id, t]));
     for (const [abilityId, preset, before] of RETROFIT) {
       const doc = JSON.parse(

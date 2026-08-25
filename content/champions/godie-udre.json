@@ -229,7 +229,23 @@
         0.0
       ],
       "range": 0.0,
-      "effects": [],
+      "effects": [
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "preset": "tpl-locust-orb",
+          "modelKey": "imported.heromusashimiyamoto",
+          "soundKey": "wc3.blademasterwhirlwind",
+          "arriveSoundKey": "wc3.orcdissipate1",
+          "onArrive": [
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.wind.nova",
+              "at": "point"
+            }
+          ]
+        }
+      ],
       "vfxKey": "fx.prim.wind.pulse-lg",
       "castTimeSec": 0.667,
       "template": {

@@ -50,12 +50,8 @@
     {
       "kind": "spawnModelFx",
       "shape": "single",
-      "path": "static",
-      "anchor": "point",
-      "modelKey": "w3x.stock.monsoonbolttarget",
-      "lifeSec": 1.0,
-      "scale": 8.0,
-      "clip": "idle"
+      "preset": "tpl-locust-strike",
+      "modelKey": "w3x.stock.monsoonbolttarget"
     }
   ],
   "icon": "assets/icons/abilities/godie-edem.e.webp",

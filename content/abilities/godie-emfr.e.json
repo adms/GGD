@@ -85,12 +85,9 @@
     {
       "kind": "spawnModelFx",
       "shape": "single",
-      "path": "static",
-      "anchor": "self",
+      "preset": "tpl-locust-strike",
       "modelKey": "w3x.stock.monsoonbolttarget",
-      "lifeSec": 1.0,
-      "scale": 8.0,
-      "clip": "idle"
+      "anchor": "self"
     }
   ],
   "vfxKey": "fx.prim.fire.nova",

@@ -62,17 +62,16 @@ function expectedAbilities(): string[] {
 /**
  * ⛔ **接不上的**（帶一個能被反駁的理由，⛔ 不是「還沒做」）。
  *
- * ⚠️ 這幾支的**本體是 template 驅動**，而 `mergeExpansion()` 會把 `effects` **整格覆蓋**
- * ⇒ 手寫在文件上的 `spawnModelFx` 在註冊表裡**根本不存在**（守衛
- * `w3xDummyModelWiring` 逐字說了這件事）。⇒ 寫進去只會多一個「說了但不會發生」。
- * ⭐ 反駁方式：GH#698 讓 template 那條路也接得上模型（模板參數或保留文件自帶節點）
- * 的那一刻，把這一列刪掉 —— 那時它就會被這條守衛涵蓋。
+ * ⭐ **2026-08-25 起是空的，而那是 GH#698 的驗收**：唯一一列
+ * （`godie-udea.ex`，65-002 永恆的愚蠢鄉）的理由是「本體走 `tpl-buff-self`，
+ * `mergeExpansion()` 會把 `effects` 整格覆蓋 ⇒ 節點寫了也不存在」。
+ * #698 讓 `mergeExpansion` **保留文件自帶的 `spawnModelFx`**（展開自己沒產出時），
+ * 那個理由當場被反駁 ⇒ 照規矩刪掉，那一支現在被下面兩條守衛涵蓋。
+ *
+ * ⚠️ 這張表留著是因為它是**帶理由的出口**，⛔ 不是因為預期它會再長出東西：
+ * 要再加一列，得寫得出「為什麼這一支接不上」而且那句話要能被反駁。
  */
-const BLOCKED: Record<string, string> = {
-  "godie-udea.ex":
-    "65-002 永恆的愚蠢鄉：本體走 `tpl-buff-self`，effects 會被 mergeExpansion() 整格覆蓋 ⇒ " +
-    "節點寫了也不存在。等 GH#698 讓模板接得上模型。",
-};
+const BLOCKED: Record<string, string> = {};
 
 /** 那具 dummy 的頂點色 —— 出貨節點的 tint 只能是這幾個之一。 */
 const monsoonTints = new Set(

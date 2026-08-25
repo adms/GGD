@@ -13,11 +13,20 @@
  * `effects` 列在 `EXPANDED_KEYS` 裡 ⇒ 它**先整格刪掉**再貼上展開結果。
  * ⇒ 寫在一份 `template:` 文件上的 `spawnModelFx` 在註冊時**逐字消失**，
  * 而 JSON 上看起來完全正確。
+ *
+ * ⭐ **GH#698 之後這一條換了形狀，而換的理由是它原本問錯了問題。**
+ * 舊版問的是「一份 template 文件上**有沒有** spawnModelFx」——那是一條**屬性**
+ * （失敗形態⑦），而且它把「會被洗掉」寫死成一條規則，於是修好之後它會反過來
+ * 擋住正確的內容。現在問的是**行為**：把出貨的文件餵進**出貨的**
+ * `resolveTemplateExpansion()`，看那個節點在 merge 之後**還在不在**。
+ * ⇒ 它對「保留」與「洗掉」兩種實作都會說實話，⛔ 而且改壞 merge 就紅。
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { SHIPPED_CONTENT_DIR, shippedDocs, shippedDocMap } from "./__fixtures__/shippedContent";
+import { zTemplateDoc, type TemplateDoc } from "./schema/template";
+import { resolveTemplateExpansion } from "./templates/resolve";
 
 type Doc = Record<string, unknown>;
 
@@ -94,21 +103,53 @@ describe("w3x dummy 模型接線", () => {
     expect(bad, `${bad.length} 個接不到網格的 spawnModelFx`).toEqual([]);
   });
 
-  it("⛔ template 驅動的技能文件不可以自己寫 spawnModelFx（展開時會被整格刪掉）", () => {
-    const orphaned: string[] = [];
-    for (const doc of shippedDocs<Doc>("abilities")) {
-      if (doc.template === undefined || doc.template === null) continue;
-      const effects = doc.effects;
-      if (!Array.isArray(effects)) continue;
-      for (const e of effects) {
-        if ((e as Doc)?.kind === "spawnModelFx") {
-          orphaned.push(
-            `abilities/${String(doc.id)}: 有 template 綁定，effects 會被 mergeExpansion() 整格覆蓋 ` +
-              `⇒ 這個 spawnModelFx 在註冊表裡不存在。要接模型請走模板的參數，⛔ 不是寫在文件上`,
+  it("⭐ template 驅動的技能，文件自帶的 spawnModelFx 在展開之後還在（GH#698）", () => {
+    const templates = new Map<string, TemplateDoc>(
+      shippedDocs<Doc>("ability-templates").map((d) => [
+        String(d.id),
+        zTemplateDoc.parse(d) as TemplateDoc,
+      ]),
+    );
+    expect(templates.size, "⛔ 母體空掉 = 真空綠").toBeGreaterThan(0);
+
+    /** 有 template 綁定、而且**文件自己**寫了 spawnModelFx 的那幾份。 */
+    const authored = shippedDocs<Doc>("abilities").filter(
+      (d) =>
+        d.template !== undefined &&
+        d.template !== null &&
+        Array.isArray(d.effects) &&
+        (d.effects as Doc[]).some((e) => e?.kind === "spawnModelFx"),
+    );
+    // ⚠️ 母體空掉這一條就是真空綠 —— 而它正是 2026-08-25 之前的狀態
+    //    （兩份受害文件的節點**被刪掉**了，所以「沒有人違反」）。
+    expect(
+      authored.length,
+      "⛔ 沒有任何一份 template 文件自帶 spawnModelFx —— 這條守衛正在真空裡跑",
+    ).toBeGreaterThan(0);
+
+    const erased: string[] = [];
+    for (const doc of authored) {
+      const before = (doc.effects as Doc[]).filter((e) => e?.kind === "spawnModelFx");
+      // ⭐ 出貨的那一支解析器（`registries.ts` 註冊時走的同一條路），⛔ 不是複刻。
+      const res = resolveTemplateExpansion(doc as Record<string, unknown>, templates);
+      if (!res.ok) {
+        erased.push(`abilities/${String(doc.id)}: 模板展開失敗 —— ${res.failure.message}`);
+        continue;
+      }
+      const after = Array.isArray(res.merged["effects"])
+        ? (res.merged["effects"] as Doc[]).filter((e) => e?.kind === "spawnModelFx")
+        : [];
+      for (const node of before) {
+        if (!after.some((a) => JSON.stringify(a) === JSON.stringify(node))) {
+          erased.push(
+            `abilities/${String(doc.id)}: 文件上的 spawnModelFx(${String(node.modelKey ?? node.preset)}) ` +
+              `在 mergeExpansion() 之後**不見了** —— 卡片印得出來、schema 收得下、遊戲裡不存在。` +
+              `⇒ 展開結果自己也產出了 spawnModelFx 的話（modelFx 那五族），改走模板參數；` +
+              `⇒ 否則是 mergeExpansion 的保留那一段壞了`,
           );
         }
       }
     }
-    expect(orphaned, `${orphaned.length} 份會被展開洗掉的 spawnModelFx`).toEqual([]);
+    expect(erased, `${erased.length} 個「寫了但展開時被洗掉」的 spawnModelFx`).toEqual([]);
   });
 });

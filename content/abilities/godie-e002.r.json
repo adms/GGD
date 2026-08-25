@@ -102,17 +102,16 @@
     {
       "kind": "spawnModelFx",
       "shape": "single",
-      "path": "static",
-      "anchor": "self",
+      "preset": "tpl-locust-strike",
       "modelKey": "w3x.stock.monsoonbolttarget",
+      "anchor": "self",
       "lifeSec": 2.0,
       "scale": 6.0,
       "tint": [
         0.3922,
         0.0,
         0.0
-      ],
-      "clip": "idle"
+      ]
     }
   ],
   "icon": "assets/icons/abilities/godie-e002.r.webp",

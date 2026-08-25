@@ -616,6 +616,14 @@ const modelFxFamily: Family = (t, p) => {
               ...(has(t, p, "lifeSec") ? { lifeSec: num(t, p, "lifeSec") } : {}),
               // ⭐ GH#688 機制①：沿線 N 具的間距（count 在下面那行,兩者成對）。
               ...(has(t, p, "spacing") ? { spacing: num(t, p, "spacing") } : {}),
+              // ⭐ GH#698 —— 落點（`self`／`point`／`target`）。**只有 static 讀得到**
+              //    （`zSpawnModelFx.anchor` 的說明逐字），所以它住在這個分支裡而不是
+              //    外面 —— 掛在外面的話，一份 `forward` 模板宣告了 anchor 就會展開出
+              //    一格沒有人讀的欄位（這張家族表整篇在避免的形狀）。
+              //    ⚠️ 既有四族一格都沒宣告 ⇒ `has()` 回 false ⇒ 展開結果逐位元不變。
+              ...(has(t, p, "anchor")
+                ? { anchor: str(t, p, "anchor") as "self" | "point" | "target" }
+                : {}),
             }
           : {
               speed: num(t, p, "speed"),
@@ -634,6 +642,13 @@ const modelFxFamily: Family = (t, p) => {
         ...(has(t, p, "count") ? { count: num(t, p, "count") } : {}),
         ...(has(t, p, "spinDegPerSec") ? { spinDegPerSec: num(t, p, "spinDegPerSec") } : {}),
         ...(has(t, p, "scale") ? { scale: num(t, p, "scale") } : {}),
+        // ⭐ GH#698【剪輯那兩格】—— `clip` / `clipTimeScale` 在 2026-08-25 之前**只**住
+        //    `content/modelFxPreset.ts` 的 `PRESET_FIELDS`，也就是說：走 `preset:` 引用
+        //    的節點拿得到它們，而**編輯器用同一份模板新建一張卡拿不到** —— 同一份模板
+        //    兩條路產出兩種節點，而兩邊都不會有東西紅（第三守則的形狀）。
+        //    ⚠️ 既有四族一格都沒宣告 ⇒ `has()` 回 false ⇒ 展開結果逐位元不變。
+        ...(has(t, p, "clip") ? { clip: str(t, p, "clip") } : {}),
+        ...(has(t, p, "clipTimeScale") ? { clipTimeScale: num(t, p, "clipTimeScale") } : {}),
         // ⭐ GH#693【外觀那兩格】—— 顏色與透明度是**逐支技能**的參數,⛔ 不是
         //    「換一份已經染好色的模型」。census 量到 133/236 隻 dummy 非白,而且
         //    每一具都不同 ⇒ 沒有這兩格,一個家族的每一種顏色都要多開一份
@@ -1660,13 +1675,12 @@ const FAMILIES: Readonly<Record<string, Family>> = {
   //    （另 40 隻 `modelKind` 是隱形/承襲 ⇒ ⛔ 不進模板：那是 proxyCast 的活，
   //     零視覺移植工作，synthesis §2 逐字）。
   //
-  // ⚠️ **⛔ 沒有第五、第六個家族**，而那是刻意的取捨，⛔ 不是還沒做完：
+  // ⚠️ **⛔ 沒有第六個家族**，而那是刻意的取捨，⛔ 不是還沒做完：
   //    census 還量得到「有 timedLife」「有 anim/timeScale」兩根軸，但
   //      · `timedLife` 與 sleep-清場在 GGD 這一側是**同一格** `lifeSec`
   //        ⇒ 分開就是「一支技能一個模板」（票上的 ≤6 上限正是在擋這個）；
-  //      · `anim`/`timeScale` 的引擎機制（glb 剪輯播放）**還沒落地**（Phase 4-③）
-  //        ⇒ 現在替它開一個家族，就是一格「表單填得下、遊戲不會發生」
-  //        （第一·五守則）。它落地的那天這裡才會有第五個鍵。
+  //      · `anim`/`timeScale`（GH#689 的 `clip`／`clipTimeScale`）是**一格參數**
+  //        ⇒ 四族各加一格就吃得到，⛔ 不需要一個家族。
   //
   // ⭐【與 beam-roll／radial-burst／line-blast 的分界線是**傷害**，⛔ 不是形狀】
   //    四族共用**同一支** `modelFxFamily`（⛔ 零行新程式），差別只有模板宣告了哪幾格：
@@ -1702,6 +1716,31 @@ const FAMILIES: Readonly<Record<string, Family>> = {
   //     radial-burst 宣告 `touchDamageTier`（一次施放 = 12 次區域傷害，卡面承諾），
   //     這一族一格傷害都沒有。⇒ 兩份**資料**，⛔ 零份重複的程式。
   "locust-swarm": modelFxFamily,
+
+  // 25. 定點打擊（census static-single 的**誠實編碼**）—— GH#698。
+  //     `static + anchor + clip`：一具擺在 self／point／target 腳下，播一條剪輯，
+  //     活 `lifeSec` 就收。出貨採用者是 o00E 那一族「打雷」的 13 個節點。
+  //
+  //     ⭐【它為什麼**不是**把 anchor 加進 `locust-orb` 就好】—— 量到的，⛔ 不是偏好：
+  //     `tpl-locust-orb` 的六格預設（`path:"orbit"` · `count:1` · `distance:0.1` ·
+  //     `speed:1` · `lifeSec:2.5`，而且沒有 `clip`/`scale`）**逐格都不是**這 13 個
+  //     節點要的值。所以「orb + anchor」對這 13 個節點收攏的欄位數是 **0** ——
+  //     每一個仍然要自己寫 path／anchor／clip／lifeSec／scale（＋tint），而且還會被
+  //     `fillOne` 補進 `count`/`distance`/`speed` 三格 **static 沒有人讀**的惰性幾何
+  //     （第一·五守則正在擋的形狀）。`tpl-locust-strike` 收攏的是 78 → 19 格，
+  //     其中 6 個節點變成只寫 `preset` ＋ `modelKey`。
+  //
+  //     ⚠️ **anchor 不是 census 的第三根軸**（票上的風險欄擔心「165 隻被再切一半」——
+  //     那不成立）：`anchor` 來自**GGD 技能的 castType**（self→self／ground→point／
+  //     targeted→target，`tools/skill-remake/common.py::static_model` 的檔頭逐字），
+  //     ⛔ 不是那隻 dummy 在 JASS 裡的性質。⇒ 它是一格 param，分群不動。
+  //
+  //     ⚠️ 誠實記一筆：`locust-orb` 與這一族是**同一個 census 群（static-single）的
+  //     兩種編碼** —— orb 的 `orbit + 環半徑 0.1` 是為了六支既有節點的**逐位元等價**
+  //     而留下的 legacy 編碼。哪一天可以動那六支的線路酬載，orb 應該被這一族吸收，
+  //     家族數回到 4。⛔ 在那之前合併它＝把六個節點的等價比對 golden 改掉，
+  //     而那正是「改測試讓它變綠」。
+  "locust-strike": modelFxFamily,
 
   "mark-stacks": (t, p) => {
     const lethalOn = str(t, p, "lethalMode") === "save";
@@ -2267,11 +2306,40 @@ const EXPANDED_KEYS = [
  * which template produced it (and re-expansion stays possible). It is a valid
  * optional field on zAbilityDef.
  */
+/** 一個 `spawnModelFx` 節點（⛔ 只認**這一層**，巢狀的那些跟著它們的宿主走）。 */
+function isSpawnModelFx(n: unknown): n is Record<string, unknown> {
+  return n !== null && typeof n === "object" && (n as Record<string, unknown>)["kind"] === "spawnModelFx";
+}
+
 export function mergeExpansion(
   skeleton: Record<string, unknown>,
   ex: ExpandResult,
 ): Record<string, unknown> {
   const out: Record<string, unknown> = { ...skeleton };
+  // ⭐⭐ GH#698 —— **文件自帶的 `spawnModelFx` 要活下來**。
+  //
+  // ⚠️ 在此之前 `effects` 是 `EXPANDED_KEYS` 的一員 ⇒ 先整格刪掉再貼上展開結果
+  //    ⇒ 一份 `template:` 文件上手寫的 `spawnModelFx`**在註冊表裡逐字消失**，
+  //    而 JSON 上看起來完全正確、Zod 收得下、卡片印得出來、遊戲裡不存在
+  //    （第一·五守則最貴的那個形狀）。2026-08-25 量到兩個受害者：
+  //    `godie-udea.ex`（65-002）與 `godie-udre.r`（11-04）。
+  //
+  // ⭐ 為什麼是**保留節點**而不是「替 `tpl-buff-self` 那族加一組 modelFx 參數」：
+  //    行為模板（45 份）× 演出（locust 五族）是一個**外積** —— 逐族加參數等於把
+  //    第零守則⑨的「N 個同型」搬進模板層。⇒ 兩者**正交**才對：行為來自
+  //    `template.ref`，演出來自節點自己的 `preset:`（`content/modelFxPreset.ts`）。
+  //
+  // ⚠️ 三條性質（缺一條就會變成下一個「兩邊都對、組合是空的」）：
+  //  ① **展開自己產出了 `spawnModelFx` 時 ⛔ 不保留** —— 那是 `modelFxFamily` 那五族，
+  //     兩個節點會變成兩具模型（打架）。這種文件的正解是走模板參數。
+  //  ② **展開沒有 `effects` 時 ⛔ 不保留** —— 純被動／純標記的模板不跑 `effects`，
+  //     硬塞進去只是把「被洗掉」換成「留著但沒有人跑」（同一個謊，更難查）。
+  //     ⇒ 讓 `w3xDummyModelWiring` 那條守衛紅並指名它，⛔ 不要靜默。
+  //  ③ **冪等** —— ①保證重新 merge 一份已經 merge 過的文件不會疊出第二具：
+  //     那時 `effects` 裡已經有一個 spawnModelFx，而展開仍然沒有 ⇒ 保留同一個。
+  const authoredFx = Array.isArray(out["effects"])
+    ? (out["effects"] as unknown[]).filter(isSpawnModelFx)
+    : [];
   // ⚠️ `castTimeSec` 是**推導**欄位，不是作者的行為選擇：它由
   //    `scripts/deriveCastTimes.ts` 從 `castTimeFormula` 蓋進每一份文件。
   //    而 `castTimeSec` 在模板裡是一格 `optional` 參數 —— 文件沒填時
@@ -2290,6 +2358,10 @@ export function mergeExpansion(
   }
   if (out["castTimeSec"] === undefined && authoredCastTime !== undefined) {
     out["castTimeSec"] = authoredCastTime;
+  }
+  if (authoredFx.length > 0 && Array.isArray(out["effects"])) {
+    const expanded = out["effects"] as unknown[];
+    if (!expanded.some(isSpawnModelFx)) out["effects"] = [...expanded, ...authoredFx];
   }
   return out;
 }

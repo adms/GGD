@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_b9b78dbd3d23",
+    "contentVersion": "cv_1cc36b8f659f",
     "collections": {
       "champions": {
-        "hash": "dc1a5bd1b4d8",
+        "hash": "3f864c502509",
         "count": 71
       },
       "abilities": {
-        "hash": "060118a35d15",
+        "hash": "7a4338cae4ce",
         "count": 421
       },
       "items": {
@@ -50,7 +50,7 @@
         "count": 127
       },
       "vfx": {
-        "hash": "89201362fc0c",
+        "hash": "d4dea98c7202",
         "count": 646
       },
       "skins": {
@@ -58,8 +58,8 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "6403dcdbce98",
-        "count": 45
+        "hash": "b1d5a090da1f",
+        "count": 46
       }
     },
     "collectionCount": 14
@@ -89,7 +89,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "c1eebd4f",
+    "fingerprint": "c6d619f8",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -530,6 +530,7 @@
         "color",
         "colorStops",
         "emitter",
+        "gore",
         "gravityY",
         "id",
         "lifetimeSec",
@@ -819,6 +820,7 @@
       "lock-combo",
       "locust-line",
       "locust-orb",
+      "locust-strike",
       "locust-swarm",
       "locust-travel",
       "mark-stacks",
@@ -2603,6 +2605,87 @@
           }
         },
         {
+          "id": "tpl-locust-strike",
+          "family": "locust-strike",
+          "status": "enabled",
+          "params": {
+            "modelKey": {
+              "type": "docRef",
+              "default": "w3x.stock.monsoonbolttarget"
+            },
+            "path": {
+              "type": "enum",
+              "values": [
+                "forward",
+                "toTarget",
+                "orbit",
+                "radial",
+                "static"
+              ],
+              "default": "static"
+            },
+            "anchor": {
+              "type": "enum",
+              "values": [
+                "self",
+                "point",
+                "target"
+              ],
+              "default": "point"
+            },
+            "clip": {
+              "type": "enum",
+              "values": [
+                "idle",
+                "run",
+                "attack",
+                "cast",
+                "hurt",
+                "death"
+              ],
+              "default": "idle"
+            },
+            "lifeSec": {
+              "type": "number",
+              "default": 1,
+              "min": 0.1,
+              "max": 10,
+              "unit": "s"
+            },
+            "scale": {
+              "type": "number",
+              "default": 8,
+              "min": 0.1,
+              "max": 20
+            },
+            "spinDegPerSec": {
+              "type": "number",
+              "min": -3600,
+              "max": 3600,
+              "optional": true
+            },
+            "tint": {
+              "type": "rgb",
+              "optional": true
+            },
+            "alpha": {
+              "type": "number",
+              "min": 0,
+              "max": 1,
+              "unit": "ratio",
+              "optional": true
+            },
+            "soundKey": {
+              "type": "docRef",
+              "optional": true
+            },
+            "arriveSoundKey": {
+              "type": "docRef",
+              "optional": true
+            }
+          }
+        },
+        {
           "id": "tpl-locust-swarm",
           "family": "locust-swarm",
           "status": "enabled",
@@ -3696,7 +3779,7 @@
       ],
       "templateStatus": {
         "draft": 21,
-        "enabled": 24
+        "enabled": 25
       },
       "innateKinds": [
         "active",
@@ -4030,12 +4113,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "c1eebd4f",
+    "engineFingerprint": "c6d619f8",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 c1eebd4f —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 c6d619f8 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -4824,5 +4907,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "fd5ee00f5c67"
+  "profileDigest": "c901ef54024f"
 }

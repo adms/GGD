@@ -183,11 +183,21 @@ function presetNodes(doc: Record<string, unknown>): Record<string, unknown>[] {
  * （77-01 / 14-01 / 79-03 / 11-04）**每一支自己的節點都帶著聲音鍵** ——
  * 所以從第一條斷言的角度看它已經是好的（與 `tpl-radial-burst` 逐字同一個處境）。
  */
+/**
+ * ⭐ `tpl-locust-strike`（GH#698）也在這張表上，理由與 `tpl-locust-line` **逐字相同**：
+ * 它的 13 個採用者用的是 `w3x.stock.monsoonbolttarget` —— 一份 **stock MPQ 抽出來的**
+ * 模型，而 ⑤ 那條的普查（`VFX_SOUND_JOIN.modelBoundSoundsets`）只產得出
+ * `imported.<stem>` 的鍵，**連掃都沒掃到它**。⇒ 給它一個聲音是**設計**不是還原，
+ * ⛔ 不由這條守衛替 owner 決定。
+ * ⭐ 反駁法：模板長出 `soundKey` 預設、或任何一支採用者自己填了聲音的那一天，
+ * 上面那條 `stale` 斷言會紅並指名該把這一列刪掉。
+ */
 const SOUNDLESS_TEMPLATES = new Set([
   "tpl-line-blast",
   "tpl-locust-line",
   "tpl-locust-travel",
   "tpl-locust-swarm",
+  "tpl-locust-strike",
 ]);
 
 /**

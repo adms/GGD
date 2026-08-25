@@ -242,6 +242,41 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "⭐ 可反駁：哪天有一支技能要**覆寫**間距（原作 59-04 是 150 ⇒ 1.5，" +
       "與模板預設 2 不同），它就會在自己的節點上寫出這一格，這一列就 stale 而紅。",
   },
+  // ═══ GH#698 tpl-locust-strike 收攏 o00E 那 13 個節點 2026-08-25 ═══════════
+  // ⚠️ 下面三列與上面的 `spacing` 是**逐字同一件事**：值被收進 `tpl-locust-strike`
+  //    的 `params[*].default`，而這份普查讀的是磁碟原文 ⇒ 必然掉到 0。
+  //    ⛔ 它們**不是**新機制沒人用，是舊機制**不再有第二個住處**。
+  "field:abilities.effects[]#spawnModelFx.clip": {
+    status: "default-live",
+    why:
+      "⭐ **值住模板，⛔ 不住技能** —— 這一格 2026-08-25 之前的 13 個字面採用者" +
+      "（o00E「打雷」那一族，每一支都寫 `clip:\"idle\"`）在 GH#698 改成引用 " +
+      "`tpl-locust-strike` 了，而 `idle` 現在住那份模板的 `params.clip.default`。" +
+      "⇒ 與 `spacing` 逐字同一個形狀：一格「被正確地收進共用表」的欄位在這份" +
+      "**讀磁碟原文**的普查裡必然是 0，那是第〇·四守則要的結果，⛔ 不是 S8。\n" +
+      "⚠️ 守它的不是這一列：`templates/locustTemplates.test.ts` ② 逐格斷言補完之後的" +
+      "節點真的帶著 `clip:\"idle\"`（8 個 golden，其中 7 個是 `git show HEAD:` 撈出來的原文）。\n" +
+      "⭐ 可反駁：哪天有一支要播別的剪輯（h008 FragDriller 的 `death` × 0.15 凍播就是），" +
+      "它會在自己的節點上寫出這一格，這一列就 stale 而紅。",
+  },
+  "enum:abilities.effects[]#spawnModelFx.path=static": {
+    status: "default-live",
+    why:
+      "⭐ 同上一列 —— `static` 現在是 `tpl-locust-strike`／`tpl-locust-line` 的 " +
+      "`params.path.default`，13 個 o00E 節點與 2 支火柱都靠模板補它。" +
+      "⛔ 逐支再寫一次就是把家族的路徑抄成 13 份會各自漂的複本。\n" +
+      "⭐ 可反駁：哪天有一支 static 技能**不**走這兩份模板（手寫節點），它就會寫出 " +
+      "`path:\"static\"`，這一列 stale 而紅。",
+  },
+  "enum:abilities.effects[]#spawnModelFx.anchor=point": {
+    status: "default-live",
+    why:
+      "⭐ 同上一列 —— `point` 是 `tpl-locust-strike` 的 `params.anchor.default`" +
+      "（census 量到 13 個 o00E 節點裡 7 個落在地板點，是這一族最常見的落點）。" +
+      "另外兩個值 `self`／`target` **仍然逐支寫在節點上**（它們與家族預設不同），" +
+      "所以這個 enum 家族並不是整族 0 —— 掉到 0 的只有「等於預設值的那一個成員」。\n" +
+      "⭐ 可反駁：哪天預設換成 `self`，`point` 就會變成逐支明寫的那一個，這一列 stale 而紅。",
+  },
   "field:abilities.effects[]#spawnVfx.attach": {
     status: "landing",
     since: "2026-08-24",

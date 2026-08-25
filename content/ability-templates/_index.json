@@ -1,6 +1,6 @@
 {
   "collection": "ability-templates",
-  "hash": "6403dcdbce98",
+  "hash": "b1d5a090da1f",
   "entries": [
     {
       "id": "tpl-barrier-domain",
@@ -145,6 +145,12 @@
       "path": "ability-templates/tpl-locust-orb.json",
       "hash": "b93eb0211c20",
       "size": 5504
+    },
+    {
+      "id": "tpl-locust-strike",
+      "path": "ability-templates/tpl-locust-strike.json",
+      "hash": "a309af9e8117",
+      "size": 5900
     },
     {
       "id": "tpl-locust-swarm",

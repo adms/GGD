@@ -1,0 +1,92 @@
+{
+  "id": "tpl-locust-strike",
+  "schema": "template@1",
+  "name": "定點打擊（蝗蟲群·擺在腳下的那一具）",
+  "description": "⭐【定點打擊（蝗蟲群·擺在某個人／某個點腳下的那一具）】原作的 `MonsoonBoltTarget` 那一族逐字是`CreateUnit` → `AddSpecialEffect` → `SetUnitAnimation` → `UnitApplyTimedLife`：一具**不位移**的模型擺在施法者／地板點／目標腳下，播它自己的剪輯，到期回收。這一份就是那個形狀 ——`path:\"static\"` ＋ `anchor` ＋ `clip`，⛔ 沒有速度也沒有距離（`static` 一格都不讀）。\n\n⚠️ ⭐【它為什麼是第 5 份而不是「在 `tpl-locust-orb` 加一格 anchor」】—— 那是**量出來的**，⛔ 不是偏好。`tpl-locust-orb` 的預設是 `orbit + count:1 + distance:0.1 + speed:1 + lifeSec:2.5`，而且沒有 `clip`／`scale`；o00E 那一族 13 個節點要的是 `static + anchor + clip:\"idle\" + lifeSec:1 + scale:8`。⇒ **逐格都不一樣**，「orb ＋ anchor」收攏的欄位數是 **0**（13 個節點仍要各寫 6 格），而且 `fillOne` 還會把 `count`／`distance`／`speed` 三格 **static 沒有人讀**的惰性幾何補進去（第一·五守則正在擋的形狀）。這一份收攏的是 **78 → 19 格**，其中 6 個節點變成只寫 `preset` ＋ `modelKey`。\n\n⚠️ **`anchor` ⛔ 不是 census 的第三根軸**（GH#698 風險欄擔心的「165 隻 static-single 被再切一半」不成立）：落點來自 **GGD 技能自己的 `castType`**（self→self／ground→point／targeted→target，`tools/skill-remake/common.py::static_model` 的檔頭逐字），⛔ 不是那隻 dummy 在 JASS 裡的性質。⇒ 它是一格 param，`tools/locust-census/gen.mjs` 的 2×2 分群一個位元組都不用動。\n\n⚠️ ⭐ **誠實記一筆：這一族與 `tpl-locust-orb` 是同一個 census 群（static-single 165 隻）的兩種編碼。**orb 的 `orbit + 環半徑 0.1 + speed 1` 是「定點」在這個引擎裡的 **legacy 編碼**，留著純粹是為了六支既有節點的逐位元等價（`tpl-locust-orb` 的說明逐字寫著）。⇒ 哪一天可以動那六支的線路酬載，orb 應該被這一族**吸收**，家族數回到 4。⛔ 在那之前合併它 = 把六個節點的等價比對 golden 改掉，而那正是「改測試讓它變綠」。\n\n⭐【五欄】census 的每一隻 dummy 只有五種可調的東西 —— **modelKey（身分）· scale（大小）· tint（顏色）· alpha（透明度）· 時序**。這一份的時序只有一格：`lifeSec`（`static` 沒有「走完」可言，它是唯一的終止條件，`zSpawnModelFx` 的 refine 在載入時擋）。⛔ 沒有 `count`／`spacing` —— 那是 `tpl-locust-line`（一次擺出整條線）；這一族是**單具**。\n\n⚠️ **`tint`／`alpha` 刻意沒有預設值**，而那不是漏填：census 量到 236 隻裡 **133 隻非白**，而且**每一具的顏色都不一樣**（`UNIT_TINTS.json` 逐隻解析的繼承鏈）—— 家族層根本沒有一個共同的值。給它一個預設就是替每一支引用它的技能挑一個顏色（第一守則：出貨數值要引用得到 owner 的一句原話）。⇒ 兩格留空，逐支從 `docs/蝗蟲群對應表.md` §五 的建議表填。換算：w3u 的 0–255 ÷255；alpha ＝ `SetUnitVertexColorBJ` 第 4 參數 t% ⇒ `(100−t)÷100`。\n\n⚠️ `clip` 是 `model@1.clipMap` 的**邏輯狀態名**（GH#689）：`idle` 在 `w3x.stock.monsoonbolttarget` 解成它自己的待機序列 —— ⛔ 不填就是一具**定格的雕像**（stock 特效模型的視覺有一半住在那條序列裡：雷柱的閃爍、火焰的翻騰）。\n\n⛔【這一族不含傷害】`tpl-beam-roll` 檔頭立過的規矩逐字適用：「⛔ 不自動塞傷害 —— 那會替每一支引用它的技能各加一份沒有人裁決過的傷害」。所以這裡**一格 `touchDamageTier` 都沒有**，`expand()` 也就不會生出 `onTouch`。\n\n⭐【一鍵 rollback】改**這一份**的 `params[*].default`，整族一起變；⛔ 不必動任何一支技能的 JSON。引用它的節點只寫 `preset` ＋ 自己的 `modelKey`（身分）＋ 真的不同的那幾格，其餘全部留白 —— 那是這一份成為「唯一住處」的方式（第〇·四守則）。",
+  "family": "locust-strike",
+  "status": "enabled",
+  "params": {
+    "modelKey": {
+      "type": "docRef",
+      "default": "w3x.stock.monsoonbolttarget"
+    },
+    "path": {
+      "type": "enum",
+      "values": [
+        "forward",
+        "toTarget",
+        "orbit",
+        "radial",
+        "static"
+      ],
+      "default": "static"
+    },
+    "anchor": {
+      "type": "enum",
+      "values": [
+        "self",
+        "point",
+        "target"
+      ],
+      "default": "point"
+    },
+    "clip": {
+      "type": "enum",
+      "values": [
+        "idle",
+        "run",
+        "attack",
+        "cast",
+        "hurt",
+        "death"
+      ],
+      "default": "idle"
+    },
+    "lifeSec": {
+      "type": "number",
+      "default": 1,
+      "min": 0.1,
+      "max": 10,
+      "unit": "s"
+    },
+    "scale": {
+      "type": "number",
+      "default": 8,
+      "min": 0.1,
+      "max": 20
+    },
+    "spinDegPerSec": {
+      "type": "number",
+      "min": -3600,
+      "max": 3600,
+      "optional": true
+    },
+    "tint": {
+      "type": "rgb",
+      "optional": true
+    },
+    "alpha": {
+      "type": "number",
+      "min": 0,
+      "max": 1,
+      "unit": "ratio",
+      "optional": true
+    },
+    "soundKey": {
+      "type": "docRef",
+      "optional": true
+    },
+    "arriveSoundKey": {
+      "type": "docRef",
+      "optional": true
+    }
+  },
+  "requires": [
+    "modelFx"
+  ],
+  "gapScore": 8,
+  "exemplar": {
+    "skill": "65-002 永恆的愚蠢鄉 / 77-04 打雷（o00E MonsoonBoltTarget，census static-single）",
+    "jass": "o00E"
+  }
+}

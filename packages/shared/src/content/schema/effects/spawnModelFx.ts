@@ -400,7 +400,12 @@ export const refine = (
         "沒有 clip 就沒有人讀 clipTimeScale —— 這一格現在是一個看起來有設、其實沒有人讀的數字（凍播要先指名一條剪輯）",
     });
   }
-  if (e.anchor !== undefined && e.path !== "static") {
+  // ⚠️ GH#698 —— 帶 `preset` 的節點 `path` 要等 `resolveModelFxPreset()` 才補上
+  //    （`tpl-locust-strike` 的預設就是 `static`，而只覆寫落點是**最常見**的寫法：
+  //    13 個 o00E 節點裡有 7 個只寫了 `anchor`）。⇒ 這一條對它們 ⛔ 不判，
+  //    否則會把「模板會補」誤報成「作者填了一格沒有人讀的欄位」——
+  //    與這張 refine 表其他 `fromPreset` 的條目逐字同一個理由。
+  if (!fromPreset && e.anchor !== undefined && e.path !== "static") {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["anchor"],
