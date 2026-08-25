@@ -65,12 +65,13 @@
       "verdictAt": null
     },
     "weather_rain_visual-proof_20260825": {
-      "title": "天氣：無雨→下雨→強度階梯→起霧",
+      "title": "天氣：出貨路徑真的下起來（#700 已驗收）→ 強度階梯 → 室內不下 → ⛔ 霧仍零像素",
       "family": "weather",
       "issues": [
         694,
+        700,
         676,
-        654
+        610
       ],
       "abilities": [],
       "commit": "898e7c47",
@@ -80,7 +81,7 @@
         "field": "rainEnabled",
         "liveValue": true,
         "rollbackValue": false,
-        "note": "⛔ 紅字：出貨的雨在真瀏覽器上一定擲例外（沒人 import webgl2ParticleSystem），而 ArenaScene 的呼叫點沒有 try/catch ⇒ 擲中雨的那一場整張地圖建不起來。翻 false ＝ 止血閥，一鍵回到「不會下雨」。"
+        "note": "第二版：#700 修好後**台子一行 import 都沒補**，出貨 buildRain 不再擲例外（threw null · gpu true · 1,200 活粒子）。⛔ 霧那一層（GH#610）仍然是零像素（w6 與 w5 sha1 相同），本批不宣稱它可見。翻 rainEnabled=false ⇒ 整層雨停掉，⛔ 不動任何技能或場地 JSON"
       },
       "registeredAt": "2026-08-25T04:22:07.160Z",
       "verdict": null,
@@ -89,11 +90,12 @@
       "verdictAt": null
     },
     "dagger_visual-proof_20260825": {
-      "title": "幻之匕首：3% 觸發 → 受害者背後噴血",
-      "family": "item-proc",
+      "title": "幻之匕首：3% 觸發噴血 ＋ ⭐ 翻開關之後一顆粒子都不生（#702 已驗收）",
+      "family": "gore",
       "issues": [
         696,
-        641
+        641,
+        702
       ],
       "abilities": [],
       "commit": "898e7c47",
@@ -103,7 +105,7 @@
         "field": "style",
         "liveValue": "blood",
         "rollbackValue": "off",
-        "note": "⭐ GH#702 已修（2026-08-25）：`vfx@1` 多一格 `gore: true`，血花文件 `content/vfx/fx.prim.blood.spray-back.json` 標上了，而 `VfxSystem.play()`（所有粒子文件變成粒子的同一個門）在播之前問 `goreDocPlayable()` ⇒ 這一格現在**真的關得掉它**：`style: \"off\"`（或 `\"stylized\"`）⇒ 匕首觸發時血花**零粒子、零粒子系統**（連 HitSpark 退路都不補）。守衛 `apps/client/src/vfx/VfxSystem.goreGate.test.ts`（出貨道具文件 → 真 SimWorld → 真事件 → 真 VfxSystem，A/B 量活粒子；突變：拿掉 play() 那道閘 ⇒ 紅）。⚠️ **生效條件**：`content/bundle.json` 要由主 session 重跑 `pnpm content:build` 才會帶上 `gore` 那一格。⛔ 舊註記（已失效，留著說明為什麼會有這一格）：resolveGore 當時只閘 hitImpact 那條血路，⛔ 不閘 spawnVfx。"
+        "note": "第二版：#702 把 gore 閘搬進 VfxSystem.play()、判準住 vfx@1.gore 之後，**這一格真的關得掉那蓬血** —— d6 是同一顆種子、同一條 3%（第 2,942 tick 又擲中）翻開關後的樣子：血花活粒子 0、全場 liveSystems 空。⚠️ S7 第一版登記時這一格是無效的（只閘 hitImpact）"
       },
       "registeredAt": "2026-08-25T04:22:22.031Z",
       "verdict": null,
@@ -151,6 +153,104 @@
         "note": "翻 10 ＝ 回到 v0.26.1 的行為（bot 互毆再打十秒才收圈）；整個機制的總開關是同一份文件的 botOnlyRingAccelEnabled。"
       },
       "registeredAt": "2026-08-25T04:22:22.393Z",
+      "verdict": null,
+      "verdictHash": null,
+      "reason": "",
+      "verdictAt": null
+    },
+    "classic_omnislash_visual-proof_20260825": {
+      "title": "01-04 超究武神霸斬：七連斬 ＋ 收尾閃光（⚠️ 模型層冷快取 0 頂點）",
+      "family": "classics-695",
+      "issues": [
+        695
+      ],
+      "abilities": [
+        "godie-hart.r"
+      ],
+      "commit": null,
+      "sequenceDir": "docs/_reports/classic_omnislash_visual-proof_20260825",
+      "rollback": {
+        "configId": "vfx-families",
+        "field": "families.shockwaveRing.enabled",
+        "liveValue": true,
+        "rollbackValue": false,
+        "note": "01-04 的家族綁定 entry 就是 shockwaveRing（config.vfx-families@1 的 abilities.'godie-hart.r'.family）⇒ 翻它＝這一支的技能特效層整組回到不播。⚠️ 誠實：這一格是**家族級**的（同族其他技能也會一起關），因為 01-04 的 spawnModelFx ⛔ 沒有走 preset ⇒ 沒有自己的模板參數可翻"
+      },
+      "registeredAt": "2026-08-25T10:14:23.784Z",
+      "verdict": null,
+      "verdictHash": null,
+      "reason": "",
+      "verdictAt": null
+    },
+    "classic_avalon_visual-proof_20260825": {
+      "title": "20-002 理想鄉MAX：反彈成功 → 七連斬 → 約束與勝利之劍",
+      "family": "classics-695",
+      "issues": [
+        695,
+        549
+      ],
+      "abilities": [
+        "godie-e002.ex",
+        "godie-e002.r"
+      ],
+      "commit": null,
+      "sequenceDir": "docs/_reports/classic_avalon_visual-proof_20260825",
+      "rollback": {
+        "configId": "screen-fx",
+        "field": "enabled",
+        "liveValue": true,
+        "rollbackValue": false,
+        "note": "這一批新增的可見成果是**反彈成功的回饋**（4 記 screenFlash ＋ 3 記 screenShake ＋ 兩發七彩爆炸）⇒ 一鍵否決＝關掉 config.screen-fx@1。⚠️ 誠實：這一格是**全域**的（所有技能的閃爍/震動一起關），而爆炸粒子本身不受它管；20-002 的 EX ⛔ 沒有自己的 config/ability-template entry 可翻"
+      },
+      "registeredAt": "2026-08-25T10:14:23.964Z",
+      "verdict": null,
+      "verdictHash": null,
+      "reason": "",
+      "verdictAt": null
+    },
+    "classic_dragonslave_visual-proof_20260825": {
+      "title": "04-03 龍破斬：火球出膛 → 飛行（⚠️ 0 亮像素）→ 落點爆炸",
+      "family": "classics-695",
+      "issues": [
+        695
+      ],
+      "abilities": [
+        "godie-h020.e"
+      ],
+      "commit": null,
+      "sequenceDir": "docs/_reports/classic_dragonslave_visual-proof_20260825",
+      "rollback": {
+        "configId": "vfx-families",
+        "field": "families.dissipate.enabled",
+        "liveValue": true,
+        "rollbackValue": false,
+        "note": "04-03 的家族綁定 entry 是 dissipate（config.vfx-families@1 的 abilities.'godie-h020.e'.family，帶 tint [255,0,0]）⇒ 翻它＝這一支的技能特效層回到不播。⚠️ 本批量到飛行段 0 亮像素（模型在、164 頂點、材質不發光），那正是要 owner 批核的那一題"
+      },
+      "registeredAt": "2026-08-25T10:14:36.694Z",
+      "verdict": null,
+      "verdictHash": null,
+      "reason": "",
+      "verdictAt": null
+    },
+    "classic_endworld_visual-proof_20260825": {
+      "title": "42-04 世界終結：十二向放射 → 到點 12 記冰爆",
+      "family": "classics-695",
+      "issues": [
+        695
+      ],
+      "abilities": [
+        "godie-n003.r"
+      ],
+      "commit": null,
+      "sequenceDir": "docs/_reports/classic_endworld_visual-proof_20260825",
+      "rollback": {
+        "configId": "tpl-radial-burst",
+        "field": "params.count.default",
+        "liveValue": 12,
+        "rollbackValue": 2,
+        "note": "42-04 ⛔ 沒有 vfx 家族綁定 entry（config.vfx-families@1 的 abilities 沒有它）⇒ 用它引用的模板參數：tpl-radial-burst 的 count 12 → 2 ＝ 十二向放射收成兩具，⛔ 不必動技能 JSON（那份文件一格參數都沒抄）。⚠️ 誠實：這一格是**模板級**的，同樣引用 tpl-radial-burst 的其他技能會一起變"
+      },
+      "registeredAt": "2026-08-25T10:14:36.898Z",
       "verdict": null,
       "verdictHash": null,
       "reason": "",

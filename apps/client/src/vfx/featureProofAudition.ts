@@ -380,27 +380,21 @@ async function runWeather(st: Stage): Promise<Record<string, unknown>> {
     0,
     2,
   );
-  // ⛔⛔ **GH#694 的紅字**：出貨的 `WeatherRainFx` 在 `GPUParticleSystem.IsSupported`
-  //     為真時走 GPU 路，⛔ 而全 repo **沒有任何地方** import
-  //     `@babylonjs/core/Particles/webgl2ParticleSystem`（那支才會註冊 WebGL2 平台）。
-  //     ⇒ 真瀏覽器（WebGL2）一律擲「The WebGL2ParticleSystem class is not available!」，
-  //     而測試看不到：NullEngine 的 `IsSupported` 是 false ⇒ 測試量的是 CPU 那條路
-  //     （`WeatherRainFx.ts` 的檔頭自己寫著這件事）。
-  //     這一格就是**今天玩家會看到的**：擲骰中了、雨卻擲例外。
+  /**
+   * ⭐⭐ **GH#700 的驗收格**（2026-08-25 第二輪）。第一輪（S7）在這裡量到出貨路徑
+   * 一定擲 `The WebGL2ParticleSystem class is not available!` —— 因為全 repo 沒有
+   * 任何地方 import `@babylonjs/core/Particles/webgl2ParticleSystem`，而 GPU 粒子
+   * 的平台實作住在那一支裡。⇒ 那時這一頁**自己補了那一行**才拍得到雨，
+   * 於是每一張雨的圖只證明「雨畫得出來」，⛔ 不證明「玩家看得到雨」。
+   *
+   * ⭐ #700 修好之後（`WeatherRainFx.ts:69` 自己 import），**這一頁一行都不補** ——
+   * `harnessImportedWebgl2Platform: false` 就是那個差別的證據：走的是出貨路徑，
+   * 而它不再擲例外（`threw: null` ＋ `gpu: true` ＋ 1,200 顆活粒子）。
+   */
+  facts["harnessImportedWebgl2Platform"] = false;
   await rainStep(
-    "w2_shipped_path_throws",
-    "⛔ 出貨路徑（未補 webgl2ParticleSystem import）：擲骰中了，`buildRain` 直接擲例外 ⇒ 一滴雨都沒有",
-    "arena.colosseum",
-    1,
-    10,
-  );
-  // ⚠️ 下面每一張雨的圖，都是**台子補上那一行 import 之後**的樣子 ——
-  //    ⛔ 它證明的是「雨本身畫得出來」，⛔ 不是「玩家今天看得到雨」。
-  await import("@babylonjs/core/Particles/webgl2ParticleSystem");
-  facts["webgl2PlatformImportedByHarness"] = true;
-  await rainStep(
-    "w2_rain_clear_outdoor",
-    "（台子補了那一行 import 之後）rainChance 1 ＋ seed 7919：clear 級的**室外**圖也在機率池裡 —— #676 的核心",
+    "w2_shipped_path_rains",
+    "⭐ 出貨路徑（#700 之後，台子⛔ 沒有補任何 import）：rainChance 1 ＋ seed 7919 ⇒ clear 級的**室外**圖也在機率池裡（#676 的核心），而 buildRain ⛔ 不再擲例外",
     "arena.colosseum",
     1,
     130,
@@ -610,6 +604,47 @@ async function runDagger(st: Stage): Promise<Record<string, unknown>> {
     0,
   );
   await st.capture("d5_dissipated", "消散：血花壽命走完，畫面回到只有兩具替身");
+
+  /**
+   * ⭐⭐ GH#702 的 A/B —— **翻的就是這一批登記的那一格開關**（`config.gore@1.style`
+   * `blood` → `off`），走出貨的 `applyGoreDoc()`（`ContentDb.load()` 用的同一個接縫）。
+   *
+   * ⚠️ 為什麼這一格非拍不可：S7（2026-08-25 第一輪）登記時它**是壞的** ——
+   * `resolveGore()` 只閘 `hitImpact` 那條血路，⛔ 不閘 `vfxSpawn` ⇒ 選「無血」的
+   * 玩家照樣看得到匕首噴血，帳本上那一格 rollback 只是一句沒有人驗過的散文。
+   * #702 之後閘搬進 `VfxSystem.play()` 並且判準住**文件身上**（`vfx@1.gore`）——
+   * 這一張圖就是那件事的終端證據：同一顆種子、同一次 3% 擲中，⛔ 一顆粒子都不生。
+   */
+  const { goreConfig, applyGoreDoc } = await import("./goreConfig");
+  const shippedGore = goreConfig();
+  facts["goreStyleShipped"] = shippedGore.style;
+  applyGoreDoc({ ...shippedGore, style: "off" });
+  facts["goreStyleFlipped"] = goreConfig().style;
+  let offTick = -1;
+  for (let i = 0; i < 6000 && offTick < 0; i++) offTick = step(1);
+  facts["goreOffTriggerTick"] = offTick;
+  const offPool = st.scene.particleSystems.filter((p) => p.name.startsWith(`vfx-${binding.vfxId}`));
+  facts["goreOffLiveParticles"] = offPool.reduce(
+    (n, p) => n + ((p as unknown as { particles?: unknown[] }).particles?.length ?? 0),
+    0,
+  );
+  await st.waitFrames(2);
+  /**
+   * ⚠️ 「血花 0 顆」⛔ 不等於「畫面全黑」—— 同一 tick 還有打擊層在演（task #33 的
+   * impact kit 刻意不受 gore 閘管：拿掉它，命中回饋會跟著消失）。
+   * ⇒ 把**還活著的每一個池**列出來，讓那幾百個亮像素歸得了因，
+   * ⛔ 不要讓讀報告的人以為那是漏掉的血。
+   */
+  facts["goreOffLiveSystems"] = st.scene.particleSystems
+    .map((p) => [p.name, (p as unknown as { particles?: unknown[] }).particles?.length ?? 0] as const)
+    .filter(([, n]) => n > 0);
+  await st.capture(
+    "d6_gore_off_same_trigger",
+    offTick < 0
+      ? "⛔ 翻成 gore=off 之後 6,000 tick 內沒有再擲中 —— 這一格的結論不成立"
+      : `翻開關（config.gore@1.style blood→off）之後第 ${offTick} tick 又擲中同一條 3%：出貨 vfxSpawn 照樣送到 VfxSystem，而 play() 直接回 null ⇒ **一顆粒子都沒生**`,
+  );
+  applyGoreDoc(shippedGore); // ⛔ 台子的旋鈕要轉回去（下一批共用同一次頁面載入）
   return facts;
 }
 
@@ -884,6 +919,329 @@ async function runFireRing(st: Stage): Promise<Record<string, unknown>> {
   return facts;
 }
 
+// ───────────────── ⑤ 四支經典（GH#695）：施放 → 演出 → 到期 ─────────────────
+
+/**
+ * 一支經典的**參數列**，⛔ 不是四份各自會腐爛的程式（第零守則⑨：N 個同型 = K 個
+ * 模板 + 一張表）。四支的差別只有：放哪一支、敵人站哪、每一拍走幾個 tick，
+ * 以及 20-002 那一格「先造出反彈情境」的動作。
+ *
+ * ⭐ 世界那一半**直接用出貨 audition 的 `buildBeamAuditionWorld`**（真的 `SimWorld`
+ * ＋ 真的 `castAbility()` ＋ 目標型別由**文件自己的 `castType`** 推導），
+ * ⛔ 這一頁不自己組一份第二個世界建構器。
+ */
+interface ClassicBeat {
+  label: string;
+  /** 這一拍**之前**要走的 sim tick 數（`until` 存在時，這是**追加**在條件之後的）。 */
+  ticks: number;
+  note: string;
+  /** ⭐ 這一拍要先做的動作：施放，或（20-002）造出一次真的反彈。 */
+  act?: "cast" | "reflectProbe";
+  /**
+   * ⭐⭐ **取樣點用事件對齊，⛔ 不是猜 tick 號。**
+   *
+   * ⚠️ 這一格是被踩出來的（2026-08-25 兩輪）：01-04 的收尾我照
+   * `config.combo-strikes@1` 的 steps 算出「第 108 tick」，拍到的是**空畫面**；
+   * 20-002 的爆炸那一張在兩輪之間從 14,500 亮像素掉到 58 —— 同一份程式、同一顆
+   * 種子，**差別只有我猜的那個 tick 號有沒有剛好落在特效壽命裡**。
+   * ⇒ 一張「剛好沒拍到」的圖與「這個特效不存在」在證據上長得一模一樣，
+   *   而那正是 CLAUDE.md 👁 節要擋的東西。
+   *
+   * ⇒ 走到**第 nth 個這種事件**再拍：演出自己說它到哪了。
+   */
+  until?: { type: string; nth: number; max?: number };
+}
+
+interface ClassicSpec {
+  abilityId: string;
+  /**
+   * ⚠️ 20-002 理想鄉MAX 的實作住 `passive.hooks onReflectSuccess` ⇒ 施放它**什麼
+   * 都不會發生**。要看得到它，得先解鎖 EX、放 20-04（反彈 buff），再讓敵人打一發
+   * **魔法**傷害 —— 反彈封包落地才是它的觸發器。
+   */
+  exAbilityId?: string;
+  enemies: readonly { x: number; z: number }[];
+  /** 相機：站位往前 `lookAhead`、拉高 `height`、退後 `back`。 */
+  cam: { lookAhead: number; height: number; back: number };
+  beats: readonly ClassicBeat[];
+}
+
+async function runClassic(st: Stage, spec: ClassicSpec): Promise<Record<string, unknown>> {
+  const [
+    { buildBeamAuditionWorld },
+    { VfxSystem },
+    { Models, VfxDefs },
+    { AssetManager },
+    { modelFxDocFor },
+    { syncAbilityPassives },
+  ] = await Promise.all([
+    import("./beamAuditionWorld"),
+    import("./VfxSystem"),
+    import("@ggd/shared/content/registries"),
+    import("../render/AssetManager"),
+    import("../render/modelFxRig"),
+    import("@ggd/shared/sim/abilities/abilityPassives"),
+  ]);
+
+  const { world, castOnce, casterId, enemyIds, casterPos } = await buildBeamAuditionWorld(
+    spec.enemies,
+    spec.abilityId as never,
+  );
+
+  const facts: Record<string, unknown> = { abilityId: spec.abilityId };
+  /**
+   * ⚠️ 敵人血量墊高 —— ⛔ 這一格**不碰任何機制**（同 `runDagger` 的理由）：
+   * 一支大招的演出長度是它自己的（連斬 3.5 秒、七次反擊 0.96 秒），而出貨的
+   * 8,000 血在第二段就被打死 ⇒ 後面每一段靜默不跑，於是「演出後半沒東西」
+   * 會被量成缺陷，而真相是**台子讓靶死得太早**（第一輪實測：20-002 的攻擊者
+   * 在第 3 次斬擊就 `death`，7 段浮字只發了 1 段）。
+   */
+  for (const id of enemyIds) {
+    const hp = world.health.get(id) as unknown as { hp: number; maxHp: number };
+    hp.maxHp = 4_000_000;
+    hp.hp = 4_000_000;
+  }
+  if (spec.exAbilityId !== undefined) {
+    // ⭐ 解鎖 EX 走**出貨的資料形狀**（`exSlot` rank 1 ＋ 出貨的 `syncAbilityPassives`），
+    //    ⛔ 不是自己把 hook 塞進 `stats.sources` —— 那會變成一條虛構通道（失敗形態⑤）。
+    const ab = world.abilities.get(casterId) as unknown as {
+      exSlot: { abilityId: string; rank: number; cooldownRemainingTicks: number } | null;
+    };
+    ab.exSlot = { abilityId: spec.exAbilityId, rank: 1, cooldownRemainingTicks: 0 };
+    syncAbilityPassives(world, casterId);
+    const sc = world.stats.get(casterId) as unknown as { sources: { id?: string }[] };
+    facts["exPassiveSources"] = sc.sources.map((s) => s.id).filter((s) => s !== undefined);
+  }
+
+  makeGround(st.scene, casterPos.x + spec.cam.lookAhead, casterPos.z, 46);
+  const bodies = new Map<number, TransformNode>();
+  bodies.set(
+    casterId as unknown as number,
+    makeBody(st.scene, "classic-caster", new Color3(0.36, 0.31, 0.17)),
+  );
+  enemyIds.forEach((id, i) =>
+    bodies.set(id as unknown as number, makeBody(st.scene, `classic-foe-${i}`, new Color3(0.22, 0.24, 0.3))),
+  );
+  /** 替身座標**逐拍從 sim 讀**（⛔ 不是台子自己編的動畫）。 */
+  const place = (): void => {
+    for (const [id, node] of bodies) {
+      const t = world.transform.get(id as never);
+      if (t) node.position.set(t.pos.x, 0.925, t.pos.z);
+    }
+  };
+  place();
+  st.camera.position.set(casterPos.x + spec.cam.lookAhead, spec.cam.height, casterPos.z - spec.cam.back);
+  st.camera.setTarget(new Vector3(casterPos.x + spec.cam.lookAhead, 1.2, casterPos.z));
+
+  const assets = new AssetManager(st.scene);
+  const vfx = new VfxSystem(st.scene, {
+    entityPos: (id: number) => {
+      const t = world.transform.get(id as never);
+      return t ? { x: t.pos.x, z: t.pos.z } : null;
+    },
+    vfxDoc: (key: string) => VfxDefs.tryGet(key) ?? null,
+    // ⭐ 出貨的兩個接縫（GameApp 同一份）—— ⛔ 不手挑欄位組 model doc（#607）。
+    modelDocFor: (k: string) => modelFxDocFor(Models.tryGet(k) ?? null),
+    loadModelContainer: (p: string) => assets.load(p),
+  } as never);
+
+  let clockMs = 0;
+  const eventHist: Record<string, number> = {};
+  /** ⭐ 演出的**時間軸**：哪一個 tick 發了哪一種看得見的事件（報告逐列就是它）。 */
+  const visualTicks: [number, string][] = [];
+  const VISUAL = new Set(["vfxSpawn", "modelFxSpawn", "explosion", "screenFlash", "projectileSpawn", "projectileHit"]);
+  /**
+   * 走一個 sim tick：把**整份**事件餵進出貨的 `handleEvent`，然後畫 2 幀
+   * （一個 tick = 33ms、一幀固定 16ms ⇒ 粒子時間跟 sim 時間對得上）。
+   */
+  const tickOnce = async (): Promise<void> => {
+    world.step(new Map());
+    clockMs += 1000 / 30;
+    for (const ev of world.events) {
+      eventHist[ev.type] = (eventHist[ev.type] ?? 0) + 1;
+      if (VISUAL.has(ev.type)) visualTicks.push([world.tick, ev.type]);
+      vfx.handleEvent(ev as never, clockMs);
+    }
+    vfx.update(clockMs);
+    place();
+    await st.waitFrames(2); // ⭐ 每一 tick 都讓出事件迴圈 ⇒ glb 與貼圖才載得完
+  };
+  const advance = async (ticks: number): Promise<void> => {
+    for (let i = 0; i < ticks; i++) await tickOnce();
+  };
+  /**
+   * 走到**這一拍之內**第 nth 個這種事件為止。回傳走了幾 tick（-1 = 沒等到）。
+   * ⚠️ 從**拍首**起算，⛔ 不是全場累計 —— 全場累計要作者去數前面每一拍發了幾個，
+   * 那又變成一個會過期的數字（同一支技能多一發 vfx 就全部錯位）。
+   */
+  const advanceUntil = async (type: string, nth: number, max: number): Promise<number> => {
+    const base = eventHist[type] ?? 0;
+    for (let i = 0; i < max; i++) {
+      await tickOnce();
+      if ((eventHist[type] ?? 0) - base >= nth) return i + 1;
+    }
+    return -1;
+  };
+
+  /** ⚠️ 「畫面上有東西」要能歸因：這一拍場上有哪些粒子池與哪些模型節點。 */
+  const stageCensus = (): Record<string, unknown> => ({
+    tick: world.tick,
+    particleSystems: st.scene.particleSystems.length,
+    /**
+     * ⭐ **活著的**池子與它們的粒子數 —— ⛔ 不是「場上有幾個池」。
+     * ⚠️ 兩者差很多：池是重複使用的，一個播完的池會留在場上但 `particles` 是 0。
+     * 一張「亮像素 0」的圖，配上這一格才分得出是**沒有生**還是**生了但不亮**，
+     * 而那正是 CLAUDE.md 👁 節在講的差別。
+     */
+    liveSystems: st.scene.particleSystems
+      .map((p) => [p.name, (p as unknown as { particles?: unknown[] }).particles?.length ?? 0] as const)
+      .filter(([, n]) => n > 0),
+    modelFxNodes: st.scene.transformNodes
+      .filter((n) => n.name.startsWith("modelfx-"))
+      .map((n) => {
+        let vertices = 0;
+        for (const m of n.getChildMeshes(false)) vertices += m.getTotalVertices();
+        return { name: n.name, enabled: n.isEnabled(), vertices };
+      }),
+  });
+
+  await st.ready();
+  for (const beat of spec.beats) {
+    if (beat.act === "cast") {
+      // ⚠️ 第一次施放被拒 ⇒ 整批作廢（那代表台子擺錯，⛔ 不是缺陷）；
+      //    **重放**被拒只記進 facts —— 診斷格⛔ 不可以帶走已經拍到的演出證據。
+      const recast = facts["castTick"] !== undefined;
+      try {
+        castOnce();
+        facts[recast ? "recastTick" : "castTick"] = world.tick;
+      } catch (e) {
+        if (!recast) throw e;
+        facts["recastRefused"] = e instanceof Error ? e.message : String(e);
+      }
+    } else if (beat.act === "reflectProbe") {
+      // ⭐ 造出一次**真的**反彈：敵人打一發魔法傷害 → 20-04 的 `onDamageTaken` hook
+      //    排出 `incomingPct` 反彈封包 → 它落地 ⇒ `reflectHookSystem`（出貨 `step()`
+      //    的 8b）發 `onReflectSuccess` ⇒ 20-002 的 hooks 才跑得起來。
+      //    ⛔ 不直接呼叫 `fireHooks` —— 那會跳過四道閘，量到的就不是玩家會遇到的。
+      const attacker = enemyIds[0]!;
+      const before = world.health.get(attacker)!.hp;
+      (world.damageQueue as unknown as Record<string, unknown>[]).push({
+        source: attacker,
+        target: casterId,
+        amount: 200,
+        type: "magic",
+        crit: false,
+        origin: "ability:audition-probe",
+      });
+      await runBeatClock(beat);
+      facts["reflectDamageDealtToAttacker"] = before - world.health.get(attacker)!.hp;
+      facts[`${beat.label}_census`] = stageCensus();
+      await st.capture(beat.label, beat.note);
+      continue;
+    }
+    await runBeatClock(beat);
+    facts[`${beat.label}_census`] = stageCensus();
+    await st.capture(beat.label, beat.note);
+  }
+  facts["eventHist"] = { ...eventHist };
+  facts["visualTicks"] = visualTicks;
+  return facts;
+
+  /** 一拍的時鐘：有 `until` 就等事件（⛔ 不猜 tick），然後再走 `ticks`。 */
+  async function runBeatClock(beat: ClassicBeat): Promise<void> {
+    if (beat.until !== undefined) {
+      const waited = await advanceUntil(beat.until.type, beat.until.nth, beat.until.max ?? 300);
+      facts[`${beat.label}_waitedTicks`] = waited;
+      if (waited < 0) {
+        // ⛔ 等不到就**照實記**，⛔ 不要靜靜地拍一張空畫面然後當成演出
+        //    （fail-open 沒錯，靜默才是缺陷）。
+        facts[`${beat.label}_missed`] = `等不到第 ${beat.until.nth} 個 ${beat.until.type}`;
+      }
+    }
+    await advance(beat.ticks);
+  }
+}
+
+/** 四支的**參數表**（⛔ 不是四份程式）。 */
+const CLASSICS: Record<string, ClassicSpec> = {
+  // 01-04 超究武神霸斬 —— targeted、castTime 1.833s（≈55 tick）、連斬七次 3.5 秒。
+  omnislash: {
+    abilityId: "godie-hart.r",
+    enemies: [{ x: 3, z: 0 }, { x: 6, z: 1.5 }],
+    cam: { lookAhead: 3, height: 7, back: 12 },
+    beats: [
+      { label: "o0_baseline", ticks: 2, note: "基線：克勞德與兩名敵人站定，還沒施放" },
+      { label: "o1_windup", ticks: 40, note: "施放（出貨 castAbility，targeted）—— 1.833 秒詠唱走到一半", act: "cast" },
+      // ⚠️ ＋4 tick：第一記斬擊的貼圖是**冷的**（`thunderclapcaster` 第一次用），
+      //    在事件當格＋2 拍到過一次逐位元同基線的空畫面。
+      { label: "o2_resolve", ticks: 4, until: { type: "vfxSpawn", nth: 1, max: 120 }, note: "詠唱解算後的**第一記斬擊**（等 vfxSpawn ⇒ ⛔ 不猜 tick）：無敵 3.5 秒＋鎖定敵人" },
+      { label: "o3_combo_mid", ticks: 1, until: { type: "vfxSpawn", nth: 3, max: 160 }, note: "連斬中段：comboStrikes（family superff7，steps 0/.5/.6/.7/.8/.9）的第 4 記" },
+      // ⭐ 收尾那一拍等的是**第 8 個** vfxSpawn（6 記連斬 ＋ 模型到點的爆炸 ＋ 收尾的
+      //    warstompcaster）。⚠️ 前兩輪我照 combo-strikes 的秒數算 tick 號，兩次都
+      //    拍到空畫面 —— 一張「剛好沒拍到」的圖與「這個特效不存在」長得一模一樣。
+      // ⭐ 收尾等的是 `screenFlash` —— 出貨 JSON 裡**只有 finisher 有它**，
+      //    所以它是「最後一段打完了」這件事唯一不會數錯的訊號。
+      { label: "o4_combo_finish", ticks: 0, until: { type: "screenFlash", nth: 1, max: 220 }, note: "收尾一擊：warstompcaster ＋ screenFlash ＋ screenShake（出貨 finisher 節點）" },
+      // ⚠️ 90 tick ⛔ 不是隨手挑的：自身的 `omnislash-perform` 是 **3.5 秒的 stun**
+      //    （出貨 JSON），走不完它，下面那一格重放會被 `castAbility` 以 `stunned` 拒絕。
+      { label: "o5_expired", ticks: 90, note: "到期：3.5 秒鎖定與無敵結束，畫面回到只有替身" },
+      // ⚠️ 診斷格（⛔ 不是演出的一部分）：第一次施放時 `imported.herocloudstrife`
+      //    （389 KB）還在載，模型節點 0 頂點就到期了 ⇒ 第二次施放走**熱快取**，
+      //    這一張回答「那一層是載太慢，還是根本畫不出來」。
+      { label: "o6_recast_warm_cache", ticks: 2, until: { type: "vfxSpawn", nth: 1, max: 120 }, note: "熱快取重放：同一支再放一次（glb 已在 AssetManager 快取裡）—— 模型那一層有沒有變", act: "cast" },
+    ],
+  },
+  // 20-002 理想鄉MAX —— ⚠️ 實作住 EX 的 `onReflectSuccess`：先放 20-04 再挨一發魔法傷害。
+  avalon: {
+    abilityId: "godie-e002.r",
+    exAbilityId: "godie-e002.ex",
+    enemies: [{ x: 5, z: 0 }],
+    cam: { lookAhead: 2.5, height: 6.5, back: 11 },
+    beats: [
+      { label: "a0_baseline", ticks: 2, note: "基線：Saber 與一名敵人站定；EX 已解鎖（exSlot rank 1）但尚未觸發" },
+      { label: "a1_avalon_up", ticks: 6, until: { type: "modelFxSpawn", nth: 1, max: 90 }, note: "放 20-04 永恆的理想鄉（castType self）：2 秒反彈 buff ＋ tpl-locust-strike 紅柱", act: "cast" },
+      { label: "a2_reflect_hit", ticks: 1, until: { type: "vfxSpawn", nth: 1, max: 40 }, note: "敵人打一發魔法傷害 ⇒ 反彈成功 ⇒ EX 的 onReflectSuccess 發動：七彩爆炸長在**被反彈者**身上", act: "reflectProbe" },
+      { label: "a3_seven_hits", ticks: 0, until: { type: "vfxSpawn", nth: 3, max: 60 }, note: "連續七斬進行中（delayed count 7 × 0.12 秒，實測每 4 tick 一段，每一段 fx.avalon.reflect-spark）" },
+      { label: "a4_finisher", ticks: 1, until: { type: "screenFlash", nth: 1, max: 90 }, note: "收尾：約束與勝利之劍 damageLine（前方直線）＋ 第二發七彩爆炸 ＋ 全場閃光" },
+      { label: "a5_expired", ticks: 70, note: "到期：反彈 buff 與所有爆炸走完" },
+    ],
+  },
+  // 04-03 龍破斬 —— ground、castTime 1.233s（≈37 tick）、tpl-line-blast 直線飛行 ＋ 四段 delayed。
+  dragonslave: {
+    abilityId: "godie-h020.e",
+    enemies: [{ x: 6, z: 0 }, { x: 9, z: 1.5 }],
+    cam: { lookAhead: 4, height: 7.5, back: 13 },
+    beats: [
+      { label: "g0_baseline", ticks: 2, note: "基線：莉娜與兩名敵人站定" },
+      { label: "g1_windup", ticks: 30, note: "施放（castType ground，落點在前方）—— 1.233 秒詠唱中", act: "cast" },
+      { label: "g2_resolve", ticks: 4, until: { type: "modelFxSpawn", nth: 1, max: 90 }, note: "詠唱解算：tpl-line-blast 的火球出膛（preset 在載入時補齊 modelKey/speed/distance）" },
+      { label: "g3_travel", ticks: 5, note: "飛行中：沿施放方向前進（speed 27.5 · distance 12 ⇒ 約 0.44 秒），途中 touch 判定" },
+      // ⚠️ 落點的 `explosion` 事件**在施放解算那一格就發了**（實測 tick 39，與兩個
+      //    modelFxSpawn 同一格）—— 它⛔ 不是「火球到點」。真正到點的訊號是那一發
+      //    `vfxSpawn`（onArrive 的 fx.prim.fire.explosion-lg，實測晚 14 tick）。
+      // ⚠️ 事件那一格 ＋**1 tick**：粒子系統要走過一次 `update()` 才吐得出第一批粒子，
+      //    在事件當格拍會拍到「已經生了、還沒吐」（實測 1,885 vs 8,671 亮像素）。
+      { label: "g4_blast", ticks: 1, until: { type: "vfxSpawn", nth: 1, max: 90 }, note: "落點爆炸：onArrive 的 fx.prim.fire.explosion-lg ＋ damageArea 8 半徑" },
+      { label: "g5_expired", ticks: 80, note: "到期：爆炸與延遲段全部走完" },
+    ],
+  },
+  // 42-04 世界終結 —— skillshot、投射物 ＋ tpl-radial-burst 十二向 ＋ 三段 delayed。
+  endworld: {
+    abilityId: "godie-n003.r",
+    enemies: [{ x: 5, z: 0 }, { x: 8, z: 2 }],
+    cam: { lookAhead: 3.5, height: 8, back: 12 },
+    beats: [
+      { label: "e0_baseline", ticks: 2, note: "基線：兩名敵人站在施放方向上" },
+      { label: "e1_windup", ticks: 30, note: "施放（castType skillshot，方向 +x）—— 1.233 秒詠唱中", act: "cast" },
+      { label: "e2_resolve", ticks: 10, until: { type: "modelFxSpawn", nth: 1, max: 90 }, note: "詠唱解算：spawnProjectile（imported.wave）＋ tpl-radial-burst 十二向散開" },
+      { label: "e3_burst", ticks: 8, note: "放射中：12 具沿 radial 路徑外擴（speed 6 · distance 4.5），onTouch 減速" },
+      // 同 g4：事件那一格 ＋1 tick（12 記 nova 是同一格一起發的）。
+      { label: "e4_arrive", ticks: 3, until: { type: "vfxSpawn", nth: 6, max: 120 }, note: "到點：12 記 fx.prim.ice.nova ＋ 12 記 screenShake ＋ 三段 delayed 的後續傷害" },
+      { label: "e5_expired", ticks: 80, note: "到期：投射物與放射全部走完" },
+    ],
+  },
+};
+
 // ───────────────────────────── 入口 ─────────────────────────────
 
 const SCENARIOS: Record<string, (st: Stage) => Promise<Record<string, unknown>>> = {
@@ -891,6 +1249,9 @@ const SCENARIOS: Record<string, (st: Stage) => Promise<Record<string, unknown>>>
   dagger: runDagger,
   stuckescape: runStuckEscape,
   firering: runFireRing,
+  ...Object.fromEntries(
+    Object.entries(CLASSICS).map(([k, spec]) => [k, (st: Stage) => runClassic(st, spec)]),
+  ),
 };
 
 /**
