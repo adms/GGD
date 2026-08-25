@@ -422,18 +422,30 @@ async function runWeather(st: Stage): Promise<Record<string, unknown>> {
 
   // ── 霧：無霧 → 起霧（同一份政策、同一格開關，⛔ 不是第二套天氣系統）──────
   await clear();
-  await st.capture("w5_fog_off", "霧那一半的基線：clear 級場地 ⇒ fogBanks 0 ⇒ 不建");
+  // ⚠️ 霧堤是**平躺在 XZ 上**的霧片（`fogBankHeight` 1.2）——
+  //    雨用的那個側視機位看到的是它的**邊緣**，量到的必然是 0。
+  //    ⇒ 霧要換一個**俯視**機位，⛔ 不然量到的「看不見」是機位造成的。
+  st.camera.position.set(cx, zone.boundaryRadius * 1.1, cz - zone.boundaryRadius * 0.55);
+  st.camera.setTarget(new Vector3(cx, 0, cz));
+  await st.waitFrames(4);
+  await st.capture("w5_fog_off", "霧那一半的基線（**俯視**機位）：這一格還沒建霧堤");
   const fogArena = "arena.shiganshina";
   const fogLook = weatherLookFor({ ...shipped, rainChance: 0 }, fogArena, ON, SEED);
   const fog = buildFogBanks(st.scene, root, fogArena, zones, {
     policy: { ...shipped, rainChance: 0 },
     look: fogLook,
-    // ⛔ 這一頁不模擬「減少動態」——它只會把霧凍在 t=0，量不出額外的東西。
-    reducedMotion: false,
+    // ⭐ **刻意**走「減少動態」那條出貨路：它把霧凍在 **t=0** 的姿勢。
+    //    ⚠️ 理由是可重現性 —— 不凍的話霧堤的位置吃 `performance.now()`（90 秒漂移週期），
+    //    同一張證據圖每跑一次都在不同相位，而「這一格量到 0」會分不出是
+    //    **霧看不見** 還是 **這一刻霧剛好飄出畫面**。
+    reducedMotion: true,
   });
   facts["w6_fog_on"] = { arenaId: fogArena, fogBanks: fogLook.fogBanks, built: fog !== null };
   await st.waitFrames(30);
-  await st.capture("w6_fog_on", `起霧：出貨 buildFogBanks 建了 ${fogLook.fogBanks} 片霧堤`);
+  await st.capture(
+    "w6_fog_on",
+    `起霧（俯視、reducedMotion 凍在 t=0）：出貨 buildFogBanks 真的建了 ${fogLook.fogBanks} 片霧堤`,
+  );
   return facts;
 }
 
@@ -742,9 +754,14 @@ async function runStuckEscape(st: Stage): Promise<Record<string, unknown>> {
     `保險絲跳（tick ${escapeTick}）：sim 真的發了 ${escaped.size} 則「脫困」floatingText，` +
       `出貨 VfxSystem 的池裡有 ${liveText} 個活著的字`,
   );
-  step(30, false);
-  await st.capture("s3_phasing_0_5s", "放行窗內：兩具身體開始互相穿過（軟分離對這一對停手）");
-  step(60, false);
+  // ⚠️ 30 tick 剛好等於他們走完全程 ⇒ 這一張會與 s4 **逐位元相同**（實測過）。
+  //    要看到「正在穿過去」就得在半路上取樣。
+  step(12, false);
+  await st.capture(
+    "s3_phasing_mid",
+    `放行窗內、走到一半：軟分離對這一對停手 ⇒ 兩具身體**正在互相穿過**（A x=${posOf(a).toFixed(2)}、B x=${posOf(b).toFixed(2)}）`,
+  );
+  step(78, false);
   facts["endAx"] = posOf(a);
   facts["endBx"] = posOf(b);
   await st.capture(
