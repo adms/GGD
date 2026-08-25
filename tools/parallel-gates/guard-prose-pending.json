@@ -1,0 +1,47 @@
+{
+  "_note": [
+    "guardProseNamesTheGenerator.test.ts 的 PENDING 豁免表 —— ⭐ **棘輪：這張表只准變短。**",
+    "每一列 = 一支 tools/scripts 腳本的 prose（print/echo/註解/docstring）提到 content/ 底下的產物路徑，",
+    "卻整個檔案沒有一個字說那個檔是誰寫的（genguard/genrun/產生器/步驟名都沒有）。",
+    "修法：在那句 prose 旁補「bash scripts/genguard.sh <路徑> → 產物就改來源再 bash scripts/genrun.sh <step>」，",
+    "然後**把這一列刪掉**。⛔ 不准往這張表裡加新的一列 —— 新的違規檔會直接紅。",
+    "product/owner 是量出來的（tools/parallel-gates/sync-io.json 的 steps[].writes），⛔ 不是手寫的。",
+    "",
+    "2026-08-25 首輪：高風險的 5 支（兩句 print 指錯指令、三份 docstring 宣稱產物是手編的）當場修掉，",
+    "其餘進表 —— 多半是 w3x-import 一次性 importer 的歷史 docstring 與 reference 註解。"
+  ],
+  "pending": {
+    "tools/role-classify/src/features.ts": {
+      "product": "content/champions/<id>.json · content/abilities/<id>.ex.json",
+      "owner": "apconv:build · content:build · skillremake:json · tiers:apply"
+    },
+    "tools/tts-gen/src/build-champ-names.mjs": {
+      "product": "content/champions/*.json",
+      "owner": "content:build · skillremake:json · tiers:apply"
+    },
+    "tools/w3x-import/build_vfx_bindings.py": {
+      "product": "content/abilities/*.json",
+      "owner": "apconv:build · content:build · skillremake:json · tiers:apply"
+    },
+    "tools/w3x-import/extract_ex.py": {
+      "product": "content/champions/godie-<rawcode>.json",
+      "owner": "skillremake:json · tiers:apply"
+    },
+    "tools/w3x-import/extract_jass_spells.py": {
+      "product": "content/champions/**",
+      "owner": "content:build · skillremake:json · tiers:apply"
+    },
+    "tools/w3x-import/gen_ex_content.py": {
+      "product": "content/abilities/godie-<rawcode>.ex.json · content/champions/godie-<rawcode>.json",
+      "owner": "apconv:build · skillremake:json · tiers:apply"
+    },
+    "tools/w3x-import/model_audit_61.mjs": {
+      "product": "content/champions/*.json",
+      "owner": "content:build · skillremake:json · tiers:apply"
+    },
+    "tools/w3x-import/strip_teamglow.py": {
+      "product": "content/champions/*.json",
+      "owner": "content:build · skillremake:json · tiers:apply"
+    }
+  }
+}

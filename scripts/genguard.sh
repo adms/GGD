@@ -18,7 +18,9 @@ import { readFileSync } from 'node:fs';
 // ⭐ 2026-08-24 —— 這一段必須與 PreToolUse hook（scripts/preserve-before-overwrite.py）
 //    的裁決**逐字一致**:hook 放行而這支說「擋」，就是散文在說謊（第三守則）。
 //    **正規化器 ≠ 作者**:tiers:apply 讀 530 寫 401，它是就地改欄位，⛔ 不產生那些檔。
-const NORMALIZERS = new Set(['tiers:apply', 'apconv:build', 'apdmg:build', 'prose:apply']);
+//    ⛔ 清單只准放 sync-io 真的有的步驟名（normalizerListIsReal.test.ts 在守）——
+//    2026-08-25 拿掉幽靈名 'prose:apply'（真名 prose:build，且不在 sync-io 的步驟裡）。
+const NORMALIZERS = new Set(['tiers:apply', 'apconv:build', 'apdmg:build']);
 const io=JSON.parse(readFileSync('tools/parallel-gates/sync-io.json','utf8'));
 const p=process.argv[1];
 const hit=[];

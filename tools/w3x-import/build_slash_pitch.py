@@ -640,11 +640,15 @@ def main() -> int:
             print(f"\n⛔ 帳本不存在: {LEDGER}", file=sys.stderr)
             return 1
         if load_json(LEDGER) != ledger:
-            print(f"\n⛔ 帳本過期。跑 `python3 tools/w3x-import/build_pitch.py` 再 git add。", file=sys.stderr)
+            print(f"\n⛔ 帳本過期。跑 `bash scripts/genrun.sh pitch:build` 再 git add。"
+                  "（⛔ 不要直接 python3 build_pitch.py —— 產物在隔離區 chmod 444,直跑會吃 PermissionError）",
+                  file=sys.stderr)
             return 1
         doc, changes = apply_to_content(ledger)
         if changes:
-            print("\n⛔ content/config/vfx-families.json 與量測不一致:", file=sys.stderr)
+            print("\n⛔ content/config/vfx-families.json 與量測不一致:"
+                  "（那一份是 pitch:build 產生器的產物 —— 改來源量測後跑 `bash scripts/genrun.sh pitch:build`,"
+                  "⛔ 不要手改出貨 JSON,下一次 sync 會打回來）", file=sys.stderr)
             for c in changes:
                 print("   " + c, file=sys.stderr)
             return 1

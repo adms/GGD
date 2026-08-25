@@ -18,7 +18,10 @@
  * 誤報會逼人加豁免，而一張長出來的豁免表會訓練大家忽略這條閘。所以：
  * ① 只讀**訊息字串**：`expect(_, 訊息)` 的第二參數（含 `const message = [...]` 這種同檔常數）、
  *    `it/test/describe` 的標題、**檔頭** block comment。⛔ 不讀程式碼、import、路徑常數。
- * ② 只認 `content/{abilities,champions,config}/…` —— 稽核點名的三個目錄。
+ * ② 認 `content/{abilities,champions,config,items,augments,status-effects}/…` ——
+ *    前三個是稽核點名的；後三個 2026-08-25 收進來（content/augments 量到 **60/92
+ *    是 grail:wishes 的產物** ⇒「混著手編檔所以不掃」不再站得住）。
+ *    ⭐ 混目錄天然安全：判定逐檔問 sync-io，不在 writes 裡的手編檔解析成 null（＝跳過）。
  * ③ glob 與 `<id>` 佔位**只在它涵蓋的每一個實檔都是產物時**才算命中：
  *    `content/abilities/*.json`（實測 422/422 全是產物）算，
  *    `content/config/*.json`（7/89）⛔ 不算 —— 那裡絕大多數真的是人在編的。
@@ -33,7 +36,8 @@
  *     測試 × 訊息裡有插值）：40 支候選裡只有 **3 支真的把「檔名」印進失敗訊息**
  *     （`blinkNotDash` · `rangeTierAdoption` · `championFormsResolve`），其餘印的是
  *     **英雄／技能 id**，⛔ 不是「去改這一份檔」。那 3 支已手動補上。
- *   · `content/{items,augments,status-effects}/` 混著手編檔與產物 ⇒ 這一版不掃。
+ *   · tools/** 與 scripts/** 的 print／echo／docstring guidance 不在這支的域裡 ——
+ *     那一半在 `guardProseNamesTheGenerator.test.ts`（同一個 OWNERS 推導，⛔ 不抄第二份表）。
  *   · 已經在 PENDING 上的檔再加一則新的誤導訊息，只要路徑集合不變就不會紅
  *     —— ⭐ 2026-08-25 之後 PENDING 是**空的**，所以這一條暫時沒有母體。
  *
@@ -115,7 +119,7 @@ function messagesOf(sf: ts.SourceFile, text: string): { pos: number; text: strin
   return out;
 }
 
-const PATH_RE = /content\/(?:abilities|champions|config)\/[^\s"'`,)（）。，、｜|\\]+/g;
+const PATH_RE = /content\/(?:abilities|champions|config|items|augments|status-effects)\/[^\s"'`,)（）。，、｜|\\]+/g;
 const MARKERS = ["genguard", "genrun", "skills:sync", "產生器", "不要手改", "改來源"];
 
 const dirCache = new Map<string, string[]>();

@@ -158,7 +158,10 @@ def targets(tool: str, ti: dict, cwd: Path) -> list[Path]:
 #: ⇒ 判準改成:**只有正規化器認領** ⇒ 警告(放行);**有作者認領** ⇒ 照舊擋下。
 #: ⚠️ 放行之後**仍然要跑一次那個正規化器**,不然級距欄位會與新內容不一致 ——
 #: 訊息會這麼說。嚴格模式 `GGD_GENGUARD_NORMALIZER_STRICT=1` 可以把它變回擋。
-NORMALIZER_STEPS = frozenset({"tiers:apply", "apconv:build", "apdmg:build", "prose:apply"})
+#: ⛔ 清單只准放 **sync-io.json 真的有的步驟名**(normalizerListIsReal.test.ts 在守)。
+#: 2026-08-25 拿掉 "prose:apply":那是幽靈名(真名 prose:build,而它**不在** sync-io
+#: 的 38 步裡)⇒ 永遠比不中,掛在這裡只是一句看起來有防的散文。
+NORMALIZER_STEPS = frozenset({"tiers:apply", "apconv:build", "apdmg:build"})
 
 
 def _generator_owner(p: Path) -> tuple[str, bool] | None:

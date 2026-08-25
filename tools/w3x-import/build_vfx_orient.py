@@ -493,7 +493,9 @@ def main(argv: list[str]) -> int:
         print(
             "⛔ content/config/vfx-families.json 的 pitchDeg 與 w3x 推導不一致。\n"
             f"   不一致的技能:{', '.join(diff[:12])}{' …' if len(diff) > 12 else ''}\n"
-            "   ⛔ 不要改測試 —— 跑 `python3 tools/w3x-import/build_pitch.py` 然後 git add content/",
+            "   ⛔ 不要改測試,⛔ 也不要手改那份 JSON(它是 pitch:build 產生器的產物)——\n"
+            "   跑 `bash scripts/genrun.sh pitch:build` 然後 git add content/\n"
+            "   (⛔ 直接 python3 build_pitch.py 會吃 PermissionError:產物在隔離區 chmod 444)",
             file=sys.stderr,
         )
         return 1

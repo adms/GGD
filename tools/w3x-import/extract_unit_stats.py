@@ -59,6 +59,11 @@ fields (ms, as) in content/champions/*.json. It never regenerates content and
 never touches abilities/vfx/name/model. Run with --apply to write; default is a
 dry-run report.
 
+⚠️ 2026-08-25: content/champions/*.json 已是**產生器的產物**（skillremake:json /
+tiers:apply —— 先 `bash scripts/genguard.sh content/champions/<id>.json` 查擁有者，
+產物在隔離區 chmod 444）。這支是 #248 時代的一次性 importer；`--apply` 直接改產物
+會被下一次 sync 打回來 —— 要改 ms/as 請改上游來源再走產生器。
+
   python3 tools/w3x-import/extract_unit_stats.py            # dry-run report
   python3 tools/w3x-import/extract_unit_stats.py --apply    # write ms/as
 """

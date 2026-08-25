@@ -282,8 +282,11 @@ def read_champion_tint(path: Path) -> list[float] | None:
 def insert_tint(path: Path, tint: list[float]) -> None:
     """Insert a `tint` array into a champion doc WITHOUT a JSON round-trip.
 
-    Champion docs are hand-maintained and a parse+dump would reformat the whole
-    file (project rule: content/champions/*.json is edited LINE BY LINE only).
+    A parse+dump would reformat the whole file, so the edit is LINE BY LINE.
+    ⚠️ 2026-08-25: content/champions/*.json 已是**產生器的產物**（skillremake:json /
+    tiers:apply —— 先 `bash scripts/genguard.sh content/champions/<id>.json` 查擁有者）。
+    這支是 #248 時代的一次性 importer,留著是為了 provenance;要再跑之前先確認
+    sync 擁有權,⛔ 直接改產物會被下一次 sync 打回來。
     The new block is placed right after the TOP-LEVEL `"icon"` line, matching
     where every other tinted champion already carries it. The indent is matched
     exactly (2 spaces) because every ability in the doc has an `"icon"` of its

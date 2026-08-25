@@ -2,6 +2,11 @@
 """
 #248 STEP 3 — push the RESOLVED w3x attributes into `content/champions/*.json`.
 
+⚠️ 2026-08-25: content/champions/*.json 已是**產生器的產物**（skillremake:json /
+tiers:apply —— 先 `bash scripts/genguard.sh content/champions/<id>.json` 查擁有者，
+產物在隔離區 chmod 444）。這支是 #248 時代的一次性 importer，留著是為了 provenance；
+直接改產物會被下一次 sync 打回來 —— 屬性要再動請走產生器來源。
+
 WHAT THIS DOES
 --------------
 `resolve_unit_stats.py` already walked every hero's `base` chain (map override →

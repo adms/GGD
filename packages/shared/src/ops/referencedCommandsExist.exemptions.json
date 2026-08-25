@@ -1,0 +1,15 @@
+{
+  "//": [
+    "referencedCommandsExist.test.ts 的豁免表 —— ⭐ 棘輪：只准變短。",
+    "一列＝一個字面名可以合法地指向不存在的指令（歷史紀錄、對外文案…），每列必須帶一個能被反駁的理由。",
+    "測試會驗：①每列有理由 ②每列還罩得住至少一個活的幽靈 —— 修好了就要刪列，⛔ 不准留殭屍列。",
+    "⛔ 不要為了讓閘變綠而加列 —— 先照測試訊息的修法①②試過，真的不該修才進來。"
+  ],
+  "exemptions": [
+    {
+      "ref": "prose:apply",
+      "files": ["scripts/genguard.sh", "scripts/preserve-before-overwrite.py"],
+      "reason": "歷史紀錄，⛔ 不是指令：NORM lane 2026-08-25 修掉幽靈名 prose:apply（真名 prose:build）時，在這兩個檔留下「為什麼拿掉」的註解，引用的是幽靈名本身。註解若被改寫或刪除，這一列會被棘輪要求刪掉。"
+    }
+  ]
+}

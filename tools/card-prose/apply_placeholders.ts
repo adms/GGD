@@ -27,6 +27,10 @@
  * 而一條被放寬的閘等於沒有閘。
  */
 import { readFileSync, readdirSync, writeFileSync, mkdirSync } from "node:fs";
+// 🔒 GH#706 —— ①② 是 skillremake:json 的產物（平時 chmod 444，產物隔離區）:
+//    直寫必吃 EACCES。writeProduct = 寫入點自解鎖（generateFamilyContent 的同一個前例）。
+//    ③ 的 .py 與備份/報告不是產物,照舊 writeFileSync。
+import { writeProduct } from "../../packages/shared/src/ops/writeProduct";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -187,7 +191,7 @@ async function main(): Promise<void> {
       missed.push(`${r.id}（standalone）`);
       continue;
     }
-    writeFileSync(path, next, "utf8");
+    writeProduct(path, next);
     files++;
   }
 
@@ -212,7 +216,7 @@ async function main(): Promise<void> {
       touched = true;
     }
     if (touched) {
-      writeFileSync(path, raw, "utf8");
+      writeProduct(path, raw);
       files++;
     }
   }
