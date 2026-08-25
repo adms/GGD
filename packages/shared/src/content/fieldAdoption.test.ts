@@ -214,19 +214,12 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   //    STALE 斷言逐字點名它「now adopted by 22 doc(s)」並說「DELETE the listed
   //    entries; that is the entire fix」。⇒ 照規矩刪掉，⛔ 不是留著一句謊話。
   // ═══ GH#693 蝗蟲群模板化 2026-08-25 ═══════════════════════════════════════
-  "field:abilities.effects[]#spawnModelFx.alpha": {
-    status: "landing",
-    since: "2026-08-25",
-    why:
-      "**節點級**（per-cast）透明度 —— 與 `field:models.fxAlpha`（模型級那一半）同一批、" +
-      "同一個理由：原作的 alpha **只存在 runtime**（w3u `ucua` 全檔 0 次），它住在 " +
-      "war3map.j 的 **57 個 `SetUnitVertexColorBJ` 呼叫點**上。機制與模板欄位這一批落地" +
-      "（`tpl-locust-*` 四份都有這一格），採用者要等那 57 個呼叫點的逐技能接線批" +
-      "（GH#688 Phase 6）把「哪一發要染多透明」從 JASS 撈出來 —— " +
-      "⛔ 不要為了讓它變綠自己挑一支技能調透明（那是一個引用不到 owner 原話的出貨數值）。\n" +
-      "⭐ 可反駁：`docs/蝗蟲群對應表.md` §五 的 alpha 欄已經逐隻列出建議值，" +
-      "第一支回填的技能出現那天這一列就會 stale 而紅。",
-  },
+  // ⚠️ `field:abilities.effects[]#spawnModelFx.alpha` 的 landing 豁免（同日寫的）
+  //    **兌現了**：GH#690 把 census 的 57 個 `SetUnitVertexColorBJ` 呼叫點回填進
+  //    出貨內容（01-04 超究武神霸斬 α0.6 · 11-04 三千世界 α0.5 ×2，含 champion
+  //    鏡射共 6 份文件），而那一列自己寫著「第一支回填的技能出現那天這一列就會
+  //    stale 而紅」。⇒ 照規矩刪掉，⛔ 不是留著一句謊話。
+  //    值的對帳在 `content/runtimeAlphaBackfill.test.ts`（census ↔ 內容，兩個方向）。
   "field:abilities.effects[]#spawnModelFx.spacing": {
     status: "default-live",
     why:

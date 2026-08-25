@@ -235,6 +235,7 @@
           "shape": "single",
           "preset": "tpl-locust-orb",
           "modelKey": "imported.heromusashimiyamoto",
+          "alpha": 0.5,
           "soundKey": "wc3.blademasterwhirlwind",
           "arriveSoundKey": "wc3.orcdissipate1",
           "onArrive": [

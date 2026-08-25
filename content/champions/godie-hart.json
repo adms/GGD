@@ -406,6 +406,7 @@
           "kind": "spawnModelFx",
           "shape": "single",
           "modelKey": "imported.herocloudstrife",
+          "alpha": 0.6,
           "path": "toTarget",
           "speed": 30.0,
           "onArrive": [

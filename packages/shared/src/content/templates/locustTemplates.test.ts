@@ -126,7 +126,13 @@ describe("蝗蟲群／球體特效模板（GH#693）", () => {
       expect(node, `${abilityId} 沒有引用 ${preset} —— retrofit 掉了`).toBeDefined();
       const got: Record<string, unknown> = {};
       for (const [k, v] of Object.entries(node!)) {
-        if (k !== "preset" && k !== "onTouch" && k !== "onArrive") got[k] = v;
+        // ⭐ GH#690 追加 `alpha`：它**不是演出幾何**，而且 golden 刻意保持
+        //    `git show HEAD:` 的逐字原文（那是「逐位元等價」這句話的出處）——
+        //    把 census 回填的透明度補進 golden 就會讓這張表變成一份「我照著回推的」
+        //    副本。⇒ 這一格由它自己的兩方向對帳守衛管
+        //    （`content/runtimeAlphaBackfill.test.ts`：census 有值沒回填 ⇒ 紅、
+        //     回填的值沒有 census 出處 ⇒ 紅），⛔ 不是這裡放它一馬。
+        if (k !== "preset" && k !== "onTouch" && k !== "onArrive" && k !== "alpha") got[k] = v;
       }
       expect(got, `${abilityId} 引用 ${preset} 之後演出幾何變了 —— ⛔ 這不是等價的 retrofit`)
         .toEqual(before);
