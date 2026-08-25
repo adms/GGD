@@ -1,6 +1,6 @@
 # GGD 遊戲端執行期能力清單（`ggd-runtime-capabilities@1`）
 
-**指紋 `c1eebd4f`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
+**指紋 `c6d619f8`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
 
 ## 這份文件是什麼
 
@@ -126,7 +126,7 @@
 
 模板是「參數化的技能骨架」：填參數就展開成一組 effect。下列家族已在遊戲端出貨且可展開（清單由展開器本人過濾，所以不會宣稱一個展不開的家族）。
 
-`beam-roll` · `buff-self` · `charge-push` · `ground-nova` · `instant-blast` · `leap-strike` · `line-blast` · `line-sweep` · `lock-combo` · `locust-line` · `locust-orb` · `locust-swarm` · `locust-travel` · `mark-stacks` · `on-attack` · `on-hit-react` · `orbit-array` · `proxy-cast` · `proxy-fanout` · `radial-burst` · `random-barrage` · `single-strike` · `teleport` · `traveling-wave`
+`beam-roll` · `buff-self` · `charge-push` · `ground-nova` · `instant-blast` · `leap-strike` · `line-blast` · `line-sweep` · `lock-combo` · `locust-line` · `locust-orb` · `locust-strike` · `locust-swarm` · `locust-travel` · `mark-stacks` · `on-attack` · `on-hit-react` · `orbit-array` · `proxy-cast` · `proxy-fanout` · `radial-burst` · `random-barrage` · `single-strike` · `teleport` · `traveling-wave`
 
 ## 6. 模擬器能力旗標
 
@@ -157,7 +157,7 @@
 
 | 寫在哪 | 欄位 |
 |---|---|
-| `vfx@1` | `ambient` · `anchorBone` · `blendMode` · `burstCount` · `color` · `colorStops` · `emitter` · `gravityY` · `id` · `lifetimeSec` · `mode` · `orient` · `rate` · `schema` · `size` · `sizeStops` · `speed` · `spriteSheet` · `stretched` · `tailLength` · `texture` |
+| `vfx@1` | `ambient` · `anchorBone` · `blendMode` · `burstCount` · `color` · `colorStops` · `emitter` · `gore` · `gravityY` · `id` · `lifetimeSec` · `mode` · `orient` · `rate` · `schema` · `size` · `sizeStops` · `speed` · `spriteSheet` · `stretched` · `tailLength` · `texture` |
 | `vfx@1.orient` | `pitchDeg` · `swirlDegPerSec` · `yawDeg` · `yawFrom` |
 | `ribbon@1` | `anchorBone` · `blendMode` · `color` · `id` · `lifespanSec` · `schema` · `texture` · `uvScrollPerSec` · `widthAbove` · `widthBelow` |
 | `attachment@1` | `anim` · `animLoop` · `follow` · `id` · `modelKey` · `note` · `offsetY` · `points` · `scale` · `schema` |

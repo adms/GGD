@@ -36,12 +36,10 @@
     {
       "kind": "spawnModelFx",
       "shape": "single",
-      "path": "static",
-      "anchor": "target",
+      "preset": "tpl-locust-strike",
       "modelKey": "w3x.stock.monsoonbolttarget",
+      "anchor": "target",
       "scale": 10.0,
-      "lifeSec": 1.0,
-      "clip": "idle",
       "tint": [
         1.0,
         0.0,

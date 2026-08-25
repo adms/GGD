@@ -254,12 +254,9 @@
         {
           "kind": "spawnModelFx",
           "shape": "single",
-          "path": "static",
-          "anchor": "target",
+          "preset": "tpl-locust-strike",
           "modelKey": "w3x.stock.monsoonbolttarget",
-          "scale": 8.0,
-          "lifeSec": 1.0,
-          "clip": "idle"
+          "anchor": "target"
         }
       ],
       "vfxKey": "fx.prim.lightning.beam-lg",

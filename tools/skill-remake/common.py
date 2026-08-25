@@ -505,6 +505,28 @@ _BUFF_FIELDS = frozenset({
 })
 
 
+_LOCUST_STRIKE_TPL = "tpl-locust-strike"
+_locust_strike_defaults_cache = None
+
+
+def _locust_strike_defaults():
+    """⭐ GH#698 —— `tpl-locust-strike` 的出貨預設值，**從那份模板文件讀**。
+
+    ⛔ 這裡不抄一份字面值（第〇·四守則：同一個數字不可以有第二個住處）。
+    模板改了 `lifeSec: 1 → 1.5`，下一次 `skillremake:json` 產出的節點就跟著少寫
+    /多寫那一格 —— ⛔ 不必回頭改這支腳本。
+    """
+    global _locust_strike_defaults_cache
+    if _locust_strike_defaults_cache is None:
+        p = os.path.join(ROOT, "content", "ability-templates", _LOCUST_STRIKE_TPL + ".json")
+        with open(p, encoding="utf-8") as fh:
+            params = json.load(fh)["params"]
+        _locust_strike_defaults_cache = {
+            k: v["default"] for k, v in params.items() if "default" in v
+        }
+    return _locust_strike_defaults_cache
+
+
 def static_model(model_key, anchor, life, scale=None, tint=None, clip=None, **kw):
     """⭐ GH#691 —— 原作那一具**定點的蝗蟲群 dummy**（`model_fx=` 的一列）。
 
@@ -519,18 +541,29 @@ def static_model(model_key, anchor, life, scale=None, tint=None, clip=None, **kw
         —— 中性（白）的一律**不填**，`model@1.fxTint` 那條「tint 有來源」的閘
         只驗有填的，而填一個 [1,1,1] 是一格乘 1 的空宣稱（第一·五守則）。
     ⚠️ `lifeSec` 是 `static` 唯一的終止條件（schema refine 必填）。
+
+    ⭐ GH#698 —— 它現在產出的是一個**引用 `tpl-locust-strike` 的稀疏節點**，
+    ⛔ 不是十來格逐支抄好的幾何。`content/modelFxPreset.ts` 在**載入時**把留白的格
+    從那份模板補上，所以：
+      · 與家族預設相同的值 ⇒ **不寫**（13 個出貨節點裡有 6 個因此只剩 `modelKey`）
+      · 真的不同的值 ⇒ 照寫，節點永遠贏過模板
+      · `modelKey` **永遠寫**（它是**身分**不是幾何 —— `modelFxStagingContract` ⑤ 的
+        原話，而 `animationFxTemplate` 反過來要求共用模板的節點各自寫出它）
+    ⇒ 之後要調整整族的 lifeSec/scale/anchor，改**模板那一格**，⛔ 不必重跑 13 支。
     """
-    n = {"kind": "spawnModelFx", "shape": "single", "path": "static",
-         "anchor": anchor, "modelKey": model_key, "lifeSec": life}
-    if scale is not None:
-        n["scale"] = scale
-    if tint is not None:
-        n["tint"] = tint
-    # ⭐ `clip` 走 `model@1.clipMap` 解名（GH#689 已落地：`modelFxRig` 真的會播）。
-    #    ⛔ 不填 = 這一具是**靜止**的一格畫面 —— stock 特效模型的視覺有一半住在
-    #    它自己的 stand 序列裡（雷柱的閃爍、火焰的翻騰）。
-    if clip is not None:
-        n["clip"] = clip
+    d = _locust_strike_defaults()
+    n = {"kind": "spawnModelFx", "shape": "single", "preset": _LOCUST_STRIKE_TPL,
+         "modelKey": model_key}
+    # ⚠️ `path` 不在這裡出現 —— 模板的預設就是 `static`，而寫死它等於在每一個節點上
+    #    留一份會過期的複本（模板哪天把家族改成別的路徑，這 13 個節點會安靜地不跟）。
+    for k, v in (("anchor", anchor), ("lifeSec", life), ("scale", scale), ("clip", clip),
+                 ("tint", tint)):
+        # ⭐ `clip` 走 `model@1.clipMap` 解名（GH#689 已落地：`modelFxRig` 真的會播）。
+        #    ⛔ 不填 = 這一具是**靜止**的一格畫面 —— stock 特效模型的視覺有一半住在
+        #    它自己的 stand 序列裡（雷柱的閃爍、火焰的翻騰）。
+        if v is None or d.get(k) == v:
+            continue
+        n[k] = v
     n.update(kw)
     return n
 

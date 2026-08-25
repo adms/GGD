@@ -54,6 +54,12 @@ import type { TemplateDoc } from "./schema/template";
 const PRESET_FIELDS = [
   "modelKey",
   "path",
+  // ⭐ GH#698 —— `static` 的落點（self／point／target）。與 `count`/`spacing` 同一個
+  //    理由住這張表：o00E 那一族「打雷」的 13 個節點裡有 **6 個**的落點就是家族預設
+  //    （`point`），少了這一行它們每一個都要把 `point` 再抄一份（第〇·四守則的第二住處）。
+  //    ⚠️ 出貨的四份舊 locust 模板一格都沒宣告 anchor ⇒ `slotDefault` 回 undefined
+  //    ⇒ 既有節點逐位元不變。
+  "anchor",
   "speed",
   "distance",
   "count",

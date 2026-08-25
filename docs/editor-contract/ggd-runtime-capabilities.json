@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "c1eebd4f",
+  "fingerprint": "c6d619f8",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -441,6 +441,7 @@
       "color",
       "colorStops",
       "emitter",
+      "gore",
       "gravityY",
       "id",
       "lifetimeSec",
@@ -730,6 +731,7 @@
     "lock-combo",
     "locust-line",
     "locust-orb",
+    "locust-strike",
     "locust-swarm",
     "locust-travel",
     "mark-stacks",

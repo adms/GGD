@@ -2184,6 +2184,10 @@ const FAMILY_PROBE_LIST: readonly string[] = [
   //    的 21–24 那一段。四份 `tpl-locust-*.json` 同時是 `spawnModelFx.preset` 的
   //    共用表，所以漏列一個 = 外部編輯器看不到它 ⇒ 照著做的內容上線就是死的。
   "locust-orb", "locust-line", "locust-travel", "locust-swarm",
+  // ⭐ GH#698 —— 第五族「定點打擊」（`static + anchor + clip`）。它與 `locust-orb`
+  //    是同一個 census 群（static-single）的兩種編碼；orb 那一種是為了六支既有節點
+  //    的逐位元等價留下的 legacy 形狀，完整推導寫在 `expand.ts` 的第 25 條註解。
+  "locust-strike",
   "random-barrage", "range-gamble", "resource-ops", "single-strike", "strip-transform",
   "summon-agent", "team-synergy", "teleport", "traveling-wave",
 ];
