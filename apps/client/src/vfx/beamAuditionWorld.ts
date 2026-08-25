@@ -47,6 +47,9 @@ const PILOT_MODEL_DOCS = [
   // GH#688 Phase 6 QUAD lane（h025/h02I 騎英之守綱 ＋ n01F/n00R 隕石/流星雨）
   "w3x.stock.tomeofretrainingcaster",
   "imported.meteor",
+  // GH#688 Phase 6 PENTA lane（聖杯黑泥 → godie-zombiex；雷切 → godie-edem.e）
+  "w3x.stock.forgottenonetent",
+  "w3x.stock.thunderclapcaster",
 ];
 
 function workingTreeSource(): ContentSource {

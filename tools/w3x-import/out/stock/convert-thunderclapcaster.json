@@ -1,0 +1,78 @@
+{
+ "name": "thunderclapcaster",
+ "archive": "war3.mpq",
+ "mdxBytes": 40937,
+ "path": "Abilities\\Spells\\Human\\ThunderClap\\ThunderClapCaster.mdl",
+ "textures": [
+  {
+   "texture": "Textures\\LightningBall.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 34.0,
+   "lumStd": 56.7,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "abilities\\Spells\\Human\\Thunderclap\\Lightning2b.blp",
+   "size": [
+    64,
+    128
+   ],
+   "lumMean": 37.7,
+   "lumStd": 53.2,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Zap1.blp",
+   "size": [
+    128,
+    64
+   ],
+   "lumMean": 71.0,
+   "lumStd": 84.2,
+   "alphaMean": 255,
+   "alphaStd": 0.0,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [
+  {
+   "emitter": "BlizParticle01",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 49308,
+ "rawHeight": 138.64,
+ "scaleFactor": 0.02778,
+ "height": 3.851,
+ "visiblePrims": "2/2",
+ "animations": [
+  "nothing",
+  "stand"
+ ],
+ "clipMap": {
+  "idle": "stand",
+  "run": "stand",
+  "attack": "stand",
+  "cast": "stand",
+  "hurt": "stand",
+  "death": "stand"
+ },
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/thunderclapcaster.glb"
+}

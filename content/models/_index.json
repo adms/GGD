@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "23388040d88b",
+  "hash": "f606bf72fbd6",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -759,6 +759,12 @@
       "size": 308
     },
     {
+      "id": "w3x.stock.forgottenonetent",
+      "path": "models/w3x.stock.forgottenonetent.json",
+      "hash": "a22f4d30d67d",
+      "size": 319
+    },
+    {
       "id": "w3x.stock.monsoonbolttarget",
       "path": "models/w3x.stock.monsoonbolttarget.json",
       "hash": "a58012fd42bc",
@@ -769,6 +775,12 @@
       "path": "models/w3x.stock.revivehuman.json",
       "hash": "59fce0d3bc56",
       "size": 352
+    },
+    {
+      "id": "w3x.stock.thunderclapcaster",
+      "path": "models/w3x.stock.thunderclapcaster.json",
+      "hash": "4fbd1a886313",
+      "size": 319
     },
     {
       "id": "w3x.stock.tomeofretrainingcaster",

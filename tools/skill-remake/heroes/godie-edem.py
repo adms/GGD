@@ -90,7 +90,20 @@ A("45-03", "45-03 千鳥", "ground", [45, 45, 45, 45], [120, 185, 250, 315], 12.
   # ⭐ GH#691（#688 Phase 6-1）—— 原作的 `AddSpecialEffect` dummy（`MonsoonBoltTarget.mdl`）。
   #    census 逐列：`orb-timed（war3map.j:41892 LightCutRun）—— 同上,無 dummy`。⛔ 手寫進出貨 JSON 會被下一次 skillremake:json 打回來
   #    （`carry_mechanisms` 只沿用 invulnerable / spawnProjectile），所以它走表格出口。
-  model_fx=[static_model("w3x.stock.monsoonbolttarget", "point", 1.0, scale=8.0, clip="idle")],
+  # ⭐ GH#688 Phase 6（PENTA lane）—— 第二具 dummy：`o006 雷切`（ThunderClapCaster.mdl）。
+  #    生成點 war3map.j:41999（LightCutRun 命中分支）：`UnitDamageTargetBJ` 之後
+  #    `CreateNUnitsAtLoc(1,'o006',…,udg_ZZ_LC_P1,…)` ＋ `UnitApplyTimedLifeBJ(1.00)`，
+  #    而 j:41945 的 `ZZ_LC_P1 = GetUnitLoc(ZZ_LC_Caster)` ＝ **命中瞬間的施法者腳下**
+  #    ⇒ orb（繞施法者、環半徑 0.1 ＝ 定點）。census 逐列：scale 3.5 · tint [1,0,0]
+  #    （w3u 255,0,0）· lifeSec 1（TimedLife 1.00 逐字）。
+  #    soundKey `wc3.thunderclapcaster` ＝ 這顆模型家族自己的聲（orb 家族非 SOUNDLESS）。
+  #    ⚠️ 同 trigger 的另一個生成點（j:31244 HolySword → A0OD＝23-04 雷焰聖劍）屬
+  #    Ntin（菲特，`content/_legacy/`）⇒ 那半不綁 —— 見 PENTA 報告的無落點表。
+  model_fx=[static_model("w3x.stock.monsoonbolttarget", "point", 1.0, scale=8.0, clip="idle"),
+            {"kind": "spawnModelFx", "shape": "single", "preset": "tpl-locust-orb",
+             "modelKey": "w3x.stock.thunderclapcaster", "clip": "idle",
+             "soundKey": "wc3.thunderclapcaster",
+             "scale": 3.5, "tint": [1.0, 0.0, 0.0], "lifeSec": 1.0}],
   effects=[{"kind": "dash", "mode": "toPoint", "speed": 16, "maxDistance": 12.83},
            line("magic", length=12.83, width=12.0, aim="facing",
                 per=[400, 500, 600, 700], ap=1.0)])

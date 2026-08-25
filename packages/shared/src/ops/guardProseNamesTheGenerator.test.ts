@@ -51,7 +51,18 @@ for (const s of (JSON.parse(readFileSync(join(REPO, "tools/parallel-gates/sync-i
     else if (!cur.includes(s.name)) cur.push(s.name);
   }
 }
-const STEP_NAMES = new Set([...OWNERS.values()].flat());
+/**
+ * ⭐ 步驟名的真來源是 `steps[].name`，⛔ **不是** OWNERS 的值 ——
+ * 有些步驟的 `writes` 是空的（trace 沒抓到它寫了什麼，例：`contract:numbers`
+ * 寫的那份文件被歸給 `skillremake:docs`），而它們仍然是**真的步驟**。
+ * ⚠️ 2026-08-25 這條閘就是這樣把 `contract:numbers` 誤判成幽靈名的 —— 一條
+ * 說謊的閘比沒有閘更糟，因為它會叫人把對的東西改掉。
+ */
+const STEP_NAMES = new Set(
+  (JSON.parse(readFileSync(join(REPO, "tools/parallel-gates/sync-io.json"), "utf8")) as {
+    steps: { name: string }[];
+  }).steps.map((s) => s.name),
+);
 
 type Row = { product: string; owner: string };
 const PENDING = (JSON.parse(readFileSync(join(REPO, PENDING_JSON), "utf8")) as { pending: Record<string, Row> })

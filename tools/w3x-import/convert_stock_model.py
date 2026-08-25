@@ -86,6 +86,20 @@ STOCK_MODELS: dict[str, str] = {
     # shipped owner — see the QUAD report's no-landing table.
     "tomeofretrainingcaster":
         "Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl",
+    # GH#688 Phase 6 · PENTA lane — ForgottenOneTent (聖杯黑泥 family): census
+    # rows u02S/u02V/u02W/u02X all belong to E00Q (黑化Saber, legacy) in the
+    # w3x, but the shipped GGD-original champion godie-zombiex (聖杯黑泥醬
+    # 喪標麥可) IS this family's identity — bindings live there, veto via the
+    # #669 review page.
+    "forgottenonetent": "Units\\Creeps\\ForgottenOne\\ForgottenOneTent.mdl",
+    # GH#688 Phase 6 · PENTA lane — ThunderClapCaster geoset half (the PRE2
+    # emitter half already ships as content/vfx/fx.w3x.stock.thunderclapcaster
+    # .p00.json).  Only shipped visible landing spot: o006 雷切 via LightCutRun
+    # (A0IJ = 45-03 千鳥, godie-edem.e).  mdl-params.md warns the overhead
+    # lightning planes live in geoset/material animation — measured honestly in
+    # the conversion record.
+    "thunderclapcaster":
+        "Abilities\\Spells\\Human\\ThunderClap\\ThunderClapCaster.mdl",
 }
 
 

@@ -1247,6 +1247,14 @@ def main():
         if check_only:
             stale.append(f"{doc.name}: {', '.join(actions)}")
             continue
+        # 🔒 產物隔離區（GH#707 同族）:這一份文件的 sync-io 擁有者是 **skillremake:docs**,
+        #    所以 `genrun.sh contract:numbers` 只解鎖 contract:numbers 自己的產物 ——
+        #    這一行會吃 EACCES(444)。⭐ 隔離區的設計要求**寫入點自解鎖**
+        #    (`writeProduct()` 的 python 版),⛔ 不是叫人手動 chmod。
+        try:
+            doc.chmod(0o644)
+        except OSError:
+            pass  # 唯讀檔案系統/別人的檔 —— 讓下面的 write 用它自己的錯誤說話
         doc.write_text(text, encoding="utf-8")
         wrote.append(f"{doc.name} — {', '.join(actions)}")
 

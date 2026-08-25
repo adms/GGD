@@ -242,6 +242,21 @@
           "shape": "single",
           "preset": "tpl-locust-strike",
           "modelKey": "w3x.stock.monsoonbolttarget"
+        },
+        {
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "preset": "tpl-locust-orb",
+          "modelKey": "w3x.stock.thunderclapcaster",
+          "clip": "idle",
+          "soundKey": "wc3.thunderclapcaster",
+          "scale": 3.5,
+          "tint": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "lifeSec": 1.0
         }
       ],
       "icon": "assets/icons/abilities/godie-edem.e.webp",

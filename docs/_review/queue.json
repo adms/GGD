@@ -1,12 +1,45 @@
 {
   "schema": "review-queue@1",
   "counts": {
-    "assets": 1122,
-    "tier0": 795,
+    "assets": 1124,
+    "tier0": 796,
     "reviewed": 0,
-    "pending": 327
+    "pending": 328
   },
   "items": [
+    {
+      "id": "imported.heromusashimiyamoto",
+      "kind": "model",
+      "hash": "743f857a2a14bf9a29e09985603428bcf84ec05c",
+      "risk": 31,
+      "reasons": [
+        "21 支上架技能引用（R/EX ×2 加權後 risk 31）",
+        "未審"
+      ],
+      "refs": [
+        "godie-e00w.q",
+        "godie-e00x.q",
+        "godie-edem.e",
+        "godie-emfr.e",
+        "godie-emfr.r",
+        "godie-etyr.q",
+        "godie-h01n.e",
+        "godie-h01o.e",
+        "godie-h02r.r",
+        "godie-hart.e",
+        "godie-hart.w",
+        "godie-hgam.r",
+        "godie-hvsh.passive",
+        "godie-hvsh.r",
+        "godie-u00j.ex",
+        "godie-u00j.r",
+        "godie-u00v.e",
+        "godie-u01u.r",
+        "godie-udre.r",
+        "godie-zombiex.ex",
+        "godie-zombiex.r"
+      ]
+    },
     {
       "id": "fx.prim.void.explosion-lg",
       "kind": "vfx",
@@ -32,36 +65,6 @@
         "godie-ubal.ex",
         "godie-uvng.e",
         "godie-uvng.ex"
-      ]
-    },
-    {
-      "id": "imported.heromusashimiyamoto",
-      "kind": "model",
-      "hash": "743f857a2a14bf9a29e09985603428bcf84ec05c",
-      "risk": 26,
-      "reasons": [
-        "18 支上架技能引用（R/EX ×2 加權後 risk 26）",
-        "未審"
-      ],
-      "refs": [
-        "godie-e00w.q",
-        "godie-e00x.q",
-        "godie-emfr.e",
-        "godie-emfr.r",
-        "godie-etyr.q",
-        "godie-h01n.e",
-        "godie-h01o.e",
-        "godie-h02r.r",
-        "godie-hart.e",
-        "godie-hart.w",
-        "godie-hgam.r",
-        "godie-hvsh.passive",
-        "godie-hvsh.r",
-        "godie-u00j.ex",
-        "godie-u00j.r",
-        "godie-u00v.e",
-        "godie-u01u.r",
-        "godie-udre.r"
       ]
     },
     {
@@ -523,6 +526,25 @@
       ]
     },
     {
+      "id": "wc3.thunderclapcaster",
+      "kind": "sfx",
+      "hash": "784d25d60774b9d1c3196bae98b001b4a8bcc289",
+      "risk": 10,
+      "reasons": [
+        "5 支上架技能引用（R/EX ×2 加權後 risk 6）",
+        "抱怨族「閃電/雷電」+4",
+        "未審"
+      ],
+      "refs": [
+        "godie-edem.e",
+        "godie-hvsh.passive",
+        "godie-hvsh.r",
+        "godie-n01c.e",
+        "godie-nbbc.e"
+      ],
+      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
+    },
+    {
       "id": "fx.prim.ki.pulse-sm",
       "kind": "vfx",
       "hash": "9842233879a6a3bf8f597ada1e5ffe9a1ec7eb82",
@@ -559,24 +581,6 @@
         "godie-o00k.q",
         "godie-o02l.q",
         "godie-ofar.q"
-      ],
-      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
-    },
-    {
-      "id": "wc3.thunderclapcaster",
-      "kind": "sfx",
-      "hash": "784d25d60774b9d1c3196bae98b001b4a8bcc289",
-      "risk": 9,
-      "reasons": [
-        "4 支上架技能引用（R/EX ×2 加權後 risk 5）",
-        "抱怨族「閃電/雷電」+4",
-        "未審"
-      ],
-      "refs": [
-        "godie-hvsh.passive",
-        "godie-hvsh.r",
-        "godie-n01c.e",
-        "godie-nbbc.e"
       ],
       "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
@@ -1590,6 +1594,21 @@
         "godie-o00k.passive",
         "godie-u00l.r",
         "godie-umal.r"
+      ]
+    },
+    {
+      "id": "wc3.parasite",
+      "kind": "sfx",
+      "hash": "90c221d20458fb7c3f1c20f4ee38e4d11ead687a",
+      "risk": 5,
+      "reasons": [
+        "3 支上架技能引用（R/EX ×2 加權後 risk 5）",
+        "未審"
+      ],
+      "refs": [
+        "godie-u00k.e",
+        "godie-zombiex.ex",
+        "godie-zombiex.r"
       ]
     },
     {
@@ -2753,6 +2772,18 @@
       ],
       "refs": [],
       "spec": "翻轉角度的蝗蟲群（beam-roll）單位通常大小跟顏色都有再做調整 —— 逐支檢查 scale 與 tint，不可以出現很小、顏色又不對的氣功砲"
+    },
+    {
+      "id": "imported.thunderclapcaster",
+      "kind": "model",
+      "hash": "2cdd8716af21dbdb108ae86fb7da1cb36eb70843",
+      "risk": 4,
+      "reasons": [
+        "抱怨族「閃電/雷電」+4",
+        "未審"
+      ],
+      "refs": [],
+      "spec": "連鎖閃電要在連鎖的對象之間拉出閃電；閃電要有真的演算法與特效貼圖，不是通用粒子替身"
     },
     {
       "id": "magicBolt",
@@ -4579,19 +4610,6 @@
       ],
       "refs": [
         "godie-h02k.e"
-      ]
-    },
-    {
-      "id": "wc3.parasite",
-      "kind": "sfx",
-      "hash": "90c221d20458fb7c3f1c20f4ee38e4d11ead687a",
-      "risk": 1,
-      "reasons": [
-        "1 支上架技能引用（R/EX ×2 加權後 risk 1）",
-        "未審"
-      ],
-      "refs": [
-        "godie-u00k.e"
       ]
     },
     {

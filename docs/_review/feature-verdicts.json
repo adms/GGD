@@ -384,6 +384,33 @@
       "verdictHash": null,
       "reason": "",
       "verdictAt": null
+    },
+    "penta_visual-proof_20260825-2300": {
+      "title": "聖杯黑泥（ForgottenOneTent）＋雷切雷環（ThunderClapCaster）— PENTA 三族",
+      "family": "locust-orb",
+      "issues": [
+        688,
+        669
+      ],
+      "abilities": [
+        "godie-zombiex.r",
+        "godie-zombiex.ex",
+        "godie-edem.e"
+      ],
+      "commit": null,
+      "sequenceDir": "docs/_reports/penta_visual-proof_20260825-2300",
+      "rollback": {
+        "configId": "tpl-locust-orb",
+        "field": "params.alpha.default",
+        "liveValue": 1,
+        "rollbackValue": 0,
+        "note": "orb 家族一鍵開關（與 TORNADO/QUAD 批共用）：翻 0 ⇒ 沒寫自己 alpha 的節點（含本批 9+1 具聖杯黑泥與千鳥雷環）一起隱形；寫了的不受影響"
+      },
+      "registeredAt": "2026-08-25T15:32:01.270Z",
+      "verdict": null,
+      "verdictHash": null,
+      "reason": "",
+      "verdictAt": null
     }
   }
 }

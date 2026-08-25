@@ -1048,6 +1048,18 @@
       "rootWhileCasting": true
     },
     {
+      "id": "godie-u00j.ex",
+      "name": "74-002 超新星",
+      "champion": "godie-u00j",
+      "championName": "神性的流失 - 賽菲洛斯",
+      "slot": "EX",
+      "castTimeSec": 1.033,
+      "effectiveSec": 1.033,
+      "castType": "self",
+      "interruptOn": "none",
+      "rootWhileCasting": true
+    },
+    {
       "id": "godie-u00k.ex",
       "name": "71-002 夜之主",
       "champion": "godie-u00k",

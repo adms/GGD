@@ -1,0 +1,102 @@
+{
+ "name": "forgottenonetent",
+ "archive": "War3x.mpq",
+ "mdxBytes": 23981,
+ "path": "Units\\Creeps\\ForgottenOne\\ForgottenOneTent.mdl",
+ "textures": [
+  {
+   "texture": "units\\Creeps\\ForgottenOne\\ForgottenOne.blp",
+   "size": [
+    256,
+    256
+   ],
+   "lumMean": 85.5,
+   "lumStd": 52.5,
+   "alphaMean": 242.0,
+   "alphaStd": 55.4,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\OrcBloodTailParticle0.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 64.5,
+   "lumStd": 14.4,
+   "alphaMean": 91.2,
+   "alphaStd": 95.8,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\Dust5A.blp",
+   "size": [
+    64,
+    64
+   ],
+   "lumMean": 255.0,
+   "lumStd": 0.0,
+   "alphaMean": 39.5,
+   "alphaStd": 39.0,
+   "verdict": "LUMA-KEY-NEEDED"
+  }
+ ],
+ "emitterAlpha": [
+  {
+   "emitter": "BlizParticle01",
+   "segmentAlpha": [
+    255,
+    172,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle02",
+   "segmentAlpha": [
+    255,
+    218,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  },
+  {
+   "emitter": "BlizParticle03dirt",
+   "segmentAlpha": [
+    255,
+    255,
+    0
+   ],
+   "birth": 255,
+   "peak": 255,
+   "verdict": "visible-at-peak"
+  }
+ ],
+ "glbSize": 185572,
+ "rawHeight": 422.02,
+ "scaleFactor": 0.02778,
+ "height": 11.723,
+ "visiblePrims": "1/1",
+ "animations": [
+  "Birth",
+  "Stand",
+  "Attack",
+  "Death"
+ ],
+ "clipMap": {
+  "idle": "Stand",
+  "run": "Stand",
+  "attack": "Attack",
+  "cast": "Attack",
+  "hurt": "Stand",
+  "death": "Death"
+ },
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/forgottenonetent.glb"
+}
