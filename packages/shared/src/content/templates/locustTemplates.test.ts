@@ -61,7 +61,10 @@ const RETROFIT: ReadonlyArray<readonly [string, string, Record<string, unknown>]
   //    `git show HEAD:content/abilities/<id>.json` 撈出來的那幾行，⛔ 不是回推的。
   //    ⚠️ 六個節點收攏之後只剩 `preset` ＋ `modelKey`（＋真的不同的那幾格），
   //    而載入結果與收攏前**逐格相同** —— 那是「等價 retrofit」這句話裡的等價。
-  ["godie-e00l.r", "tpl-locust-strike", {"kind": "spawnModelFx", "shape": "single", "path": "static", "anchor": "point", "modelKey": "w3x.stock.monsoonbolttarget", "scale": 6.0, "lifeSec": 2.0, "clip": "idle", "tint": [0.3922, 0.0, 0.0]}],
+  // ⚠️ GH#705（2026-08-25）：20-04 鏡射本體之後,這一側與 godie-e002.r 同形 ——
+  //    anchor 從 "point"（舊 w3x 落地打擊版）變 "self"（Avalon 反彈盾罩在施法者身上）。
+  //    ⛔ 這是刻意的內容改動,不是 retrofit 漂移;golden 跟著設計走。
+  ["godie-e00l.r", "tpl-locust-strike", {"kind": "spawnModelFx", "shape": "single", "path": "static", "anchor": "self", "modelKey": "w3x.stock.monsoonbolttarget", "scale": 6.0, "lifeSec": 2.0, "clip": "idle", "tint": [0.3922, 0.0, 0.0]}],
   ["godie-e00x.r", "tpl-locust-strike", {"kind": "spawnModelFx", "shape": "single", "path": "static", "anchor": "target", "modelKey": "w3x.stock.monsoonbolttarget", "scale": 8.0, "lifeSec": 1.0, "clip": "idle"}],
   ["godie-h020.e", "tpl-locust-strike", {"kind": "spawnModelFx", "shape": "single", "path": "static", "anchor": "point", "modelKey": "w3x.stock.monsoonbolttarget", "scale": 8.0, "lifeSec": 1.0, "clip": "idle"}],
   ["godie-hjai.e", "tpl-locust-strike", {"kind": "spawnModelFx", "shape": "single", "path": "static", "anchor": "point", "modelKey": "w3x.stock.monsoonbolttarget", "scale": 8.0, "lifeSec": 1.0, "clip": "idle"}],
